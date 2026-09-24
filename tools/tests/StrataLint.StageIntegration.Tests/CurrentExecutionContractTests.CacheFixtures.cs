@@ -37,9 +37,10 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("policy:unrelated/**", false)]
     [InlineData("source-policy:README.md", true)]
     [InlineData("source-policy:docs/develop/theory/**", true)]
-    [InlineData("source-policy:agents/**", false)]
+    [InlineData("source-policy:agents/CONTEXT.md", false)]
     [InlineData("source-policy:Meta/Digestion/atoms/sha256/*", true)]
     [InlineData("declaration", true)]
+    [InlineData("evidence-metadata", true)]
     public void RegisteredScribeFileMapInputsInvalidateEvidenceWhileUnrelatedDocumentationReusesIt(string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
@@ -52,11 +53,14 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_filemap_paths" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
+        RegisterRuntimeSourceOwners(fixture,
+            declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
-            fixture.Write(input, "registered fixture material\n");
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
         var filemap = """
-            schema_version = 4
+            schema_version = 5
             resources = [{ id = "lean-report", cache_layers = [], cache_activation = {} }]
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [[files]]
             pattern = "README.md"
             kind = "reference"
@@ -79,7 +83,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write("Meta/FILEMAP.toml", filemap);
         // Keep the fragment independent of root includes to exercise its explicit glob.
         fixture.Write("Meta/FILEMAP.fixture.toml", """
-            schema_version = 4
+            schema_version = 5
             [[files]]
             pattern = "docs/reports/**"
             kind = "reference"
@@ -95,6 +99,9 @@ public sealed partial class CurrentExecutionContractTests
 
         if (path == "declaration")
             EditRegistration(fixture, rows => rows[0]!["execution_filemap_paths"]!.AsArray().RemoveAt(0));
+        else if (path == "evidence-metadata")
+            fixture.Write("Meta/FILEMAP.toml", filemap.Replace("selectors = [\"result\"]",
+                "selectors = [\"result\", \"proof\"]", StringComparison.Ordinal));
         else if (path.StartsWith("source-policy:", StringComparison.Ordinal))
         {
             var row = Assert.Single(filemap.Split('\n'), line => line.Contains($"pattern = \"{path[14..]}\"", StringComparison.Ordinal));
@@ -166,7 +173,9 @@ public sealed partial class CurrentExecutionContractTests
     public void FileMapQueryDeclarationsBindRuntimeReadersWithoutChangingCompileInputs(bool readsRegistration)
     {
         using var fixture = new ExecutionFixture();
-        fixture.Write("Meta/FILEMAP.toml", "[[files]]\npattern = \"README.md\"\nrequire = []\n");
+        fixture.Write("Meta/FILEMAP.toml",
+            "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n"
+            + "[[files]]\npattern = \"README.md\"\nrequire = []\nkind = \"reference\"\n");
         EditRegistration(fixture, rows =>
         {
             rows[0]!["execution_inputs"] = new JsonArray("Meta/FILEMAP.toml");
@@ -191,7 +200,7 @@ public sealed partial class CurrentExecutionContractTests
     {
         using var fixture = new ExecutionFixture();
         const string target = "Evidence/D5/values.json";
-        const string filemap = "[[files]]\npattern = \"Evidence/D5/values.json\"\nkind = \"generated\"\nrequire = []\n";
+        const string filemap = "schema_version = 5\n[[files]]\npattern = \"Evidence/D5/values.json\"\nkind = \"generated\"\nrequire = []\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
         fixture.Write(target, "{\"fixture\":1}\n");
         EditRegistration(fixture, rows =>
@@ -222,7 +231,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Cache.Tests", "Meta/Digestion/backfill/cache-input-probe.json", false)]
     [InlineData("StrataLint.Cache.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/agent/header-check.sh", false)]
-    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Configuration/RegistryLoader.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Configuration/RepositoryPolicyLoader.cs", false)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_actions.py", true)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
     [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py", true)]
@@ -237,13 +246,11 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/merge-gate.sh", false)]
     [InlineData("StrataLint.HeaderScript.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.Configuration.Tests", "Meta/domains.yaml", false)]
-    [InlineData("StrataLint.Configuration.Tests", "Meta/registry.yaml", false)]
-    [InlineData("StrataLint.Configuration.Tests", "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", true)]
+    [InlineData("StrataLint.Configuration.Tests", "Meta/FILEMAP.toml", false)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/domains.yaml", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/judge-seed.json", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/package-materials.json", true)]
-    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/registry.yaml", true)]
-    [InlineData("StrataLint.RepositoryConfiguration.Tests", "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", false)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/FILEMAP.toml", true)]
     [InlineData("StrataLint.Lean.Tests", "tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
     [InlineData("StrataLint.Lean.Tests", "tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean", true)]
     [InlineData("StrataLint.CoverBatch.Tests", "tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
@@ -265,7 +272,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Tests", "tools/scripts/workflow/playbook-workflows.sh", true)]
     [InlineData("StrataLint.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
     [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]
-    [InlineData("StrataLint.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.Tests", "Meta/FILEMAP.toml", false)]
     [InlineData("StrataLint.TruthRelease.Tests", "D5/S3/Midline/GoldenSpectralMarker.lean", true)]
     [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md", true)]
     [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs", true)]
@@ -275,7 +282,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.TruthRelease.Tests", "D5/S0/Carrier/Unrelated.lean", false)]
     [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     [InlineData("StrataLint.FileMap.Tests", "Meta/domains.yaml", false)]
-    [InlineData("StrataLint.FileMap.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Meta/FILEMAP.toml", false)]
     [InlineData("StrataLint.FileMap.Tests", "tools/scripts/agent/header-check.sh", false)]
     [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "Meta/Digestion/atomizers.toml", true)]
@@ -295,16 +302,19 @@ public sealed partial class CurrentExecutionContractTests
             declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
-                ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+                ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        if (!addInput) fixture.Write(path, "original registered input\n");
+        if (!addInput && path != "Meta/FILEMAP.toml") fixture.Write(path, "original registered input\n");
+        if (path == "Meta/FILEMAP.toml" && !File.Exists(Path.Combine(fixture.Root, path)))
+            fixture.Write(path, "schema_version = 5\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\nrequire = []\n");
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
         var priorEvidence = CommonExecutionEvidence.ValidateTests(fixture.Root);
         var prior = priorEvidence.Projects[0];
 
-        fixture.Write(path, "changed registered input\n");
+        if (path == "Meta/FILEMAP.toml") File.AppendAllText(Path.Combine(fixture.Root, path), "# changed registered input\n");
+        else fixture.Write(path, "changed registered input\n");
         fixture.Track();
 
         var calls = Execute(fixture);

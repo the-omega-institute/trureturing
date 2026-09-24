@@ -1,6 +1,7 @@
 using StrataLint.FileMap;
 using StrataLint.Scribe.Documents;
 using System.Text;
+using StrataLint.Engine;
 using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 

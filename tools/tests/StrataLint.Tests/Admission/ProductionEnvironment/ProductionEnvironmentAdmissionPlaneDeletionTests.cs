@@ -36,12 +36,12 @@ public sealed partial class ProductionEnvironmentTests
 
     [Theory]
     [InlineData(null, "ADMISSION-PLANE-FILEMAP-UNAVAILABLE")]
-    [InlineData("", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
-    [InlineData("[[files]]\npattern = 'other.txt'\nadmission_plane = 'judge'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
-    [InlineData("[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = 'other.txt'\nadmission_plane = 'judge'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = '**'\nadmission_plane = 'judge'\n[[files]]\npattern = 'retired/*'\nadmission_plane = 'content'", "ADMISSION-PLANE-PATH-MATCH-COUNT")]
     [InlineData("[[files]]\npattern = '**'", "ADMISSION-PLANE-FILEMAP-INVALID")]
     [InlineData("[[files]]\npattern = '**'\nadmission_plane = 'observer'", "ADMISSION-PLANE-FILEMAP-INVALID")]
-    [InlineData("[[files]]\npattern = 'retired/?.txt'\nadmission_plane = 'judge'", "FILEMAP-PATTERN-UNSAFE")]
+    [InlineData("schema_version = 2\n[[files]]\npattern = 'retired/?.txt'\nadmission_plane = 'judge'", "FILEMAP-PATTERN-UNSAFE")]
     [InlineData("files = [", "ADMISSION-PLANE-FILEMAP-INVALID")]
     public void DeletedPathRequiresUniqueValidBaselineRegistration(string? baselineManifest, string expectedCode)
     {

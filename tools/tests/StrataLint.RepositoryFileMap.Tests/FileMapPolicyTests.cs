@@ -14,10 +14,9 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier, string resource)
     {
         var root = TestRepositoryLayout.FindRoot();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
-        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy));
         var manifest = FileMapLoader.LoadRepository(root);
         var entry = Assert.Single(manifest.Match(path));
         Assert.Equal(FileMapKind.Data, entry.Kind);
@@ -27,6 +26,25 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         Assert.DoesNotContain(fixture.Findings, finding =>
             finding.Path == path && finding.Code is "FILEMAP-ACTOR-DANGLING"
                 or "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Fact]
+    public void CanonicalFileMapPolicyReloadsWithArtifactKindsAndExactRootCoverage()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.LoadRepository(root)).Policy;
+        var reloaded = Assert.IsType<PolicyLoadOutcome.Accepted>(RepositoryPolicyLoader.Load(
+            policy.CanonicalFileMapBytes.AsSpan(),
+            policy.CanonicalDomainsBytes.AsSpan())).Policy;
+
+        Assert.Equal(policy.FileMapSha256, reloaded.FileMapSha256);
+        Assert.Equal(policy.CanonicalFileMapBytes.ToArray(), reloaded.CanonicalFileMapBytes.ToArray());
+        Assert.Equal(
+            ["csv", "json", "md", "py", "txt", "yaml", "yml"],
+            policy.ArtifactKinds.Keys.Select(static key => key.Value).Order(StringComparer.Ordinal).ToArray());
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("LICENSE"), policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("unregistered.json"), policy));
+        Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown("agents/unregistered.md"), policy));
     }
 
     [Fact]
@@ -70,12 +88,11 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     public void ReportConsumerScopesAreAdmittedByRegisteredRepositoryPolicy(string scope)
     {
         var root = TestRepositoryLayout.FindRoot();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
         var path = $"Meta/ReportConsumers/{scope}.json";
 
-        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy));
         var entry = Assert.Single(FileMapLoader.LoadRepository(root).Match(path));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
@@ -89,15 +106,14 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     public void UnregisteredMetaArtifactsRemainRejected(string path)
     {
         var root = TestRepositoryLayout.FindRoot();
-        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        var policy = Assert.IsType<PolicyLoadOutcome.Accepted>(
+            RepositoryPolicyLoader.LoadRepository(root));
 
-        var issue = RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy);
+        var issue = RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), policy.Policy);
 
         Assert.NotNull(issue);
         Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal("unknown Meta artifact", issue.Message);
+        Assert.Contains("matches=0", issue.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -144,6 +160,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         Assert.DoesNotContain(
             fixture.Findings,
             finding => finding.Path == pattern);
+        Assert.DoesNotContain(fixture.Findings, finding => finding.Code == "FILEMAP-PATTERN-EMPTY");
     }
 
     [Fact]

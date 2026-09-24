@@ -50,7 +50,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint.Engine", "YamlDotNet"],
-            AssemblyReferencePolicy.NonPlatformReferences(typeof(RegistryLoader).Assembly));
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(RepositoryPolicyLoader).Assembly));
     }
 
     /// <summary>

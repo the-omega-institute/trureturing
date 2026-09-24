@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using System.Text;
 using StrataLint.Scribe;
 
@@ -83,8 +84,9 @@ public sealed class FileMapRunLocalTrackingTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 """
-                schema_version = 4
+                schema_version = 5
                 resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"

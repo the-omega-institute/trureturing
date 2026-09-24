@@ -30,6 +30,7 @@ public sealed class RouteTests
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "D5/C/2026-07-11/round-168", "Chronicle/2026/07/11-round-168.md")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "", "D5/L/sample2026paper", "Library/notes/sample2026paper.md")]
     [InlineData("L", "Weil", "sample2026paper", "", "markdown", "", "D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
+    [InlineData("P", "Papers", "D5-P001", "", "recipe", "", "D5/P/D5-P001", "Papers/recipes/D5-P001.yaml")]
     [InlineData("P", "Papers", "D5-P001", "", "frozen", "frozen", "D5/P/D5-P001--frozen", "Papers/frozen/D5-P001/manifest.sha256")]
     public void RouteCoversAllPlanesThroughCanonicalGidCodec(
         string plane,
@@ -280,8 +281,8 @@ public sealed class RouteTests
     }
 
     private static ValidatedPolicy Policy() =>
-        RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 }

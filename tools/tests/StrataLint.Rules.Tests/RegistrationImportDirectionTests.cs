@@ -1,4 +1,6 @@
+using StrataLint.Configuration;
 using System.Collections.Immutable;
+using System.Text;
 using StrataLint.Engine;
 using StrataLint.TestSupport;
 
@@ -251,8 +253,9 @@ public sealed class RegistrationImportDirectionTests
         head[EngineeringRegistrationFixture.Path] = registration;
         var changes = RawChangeSet.Create(changedPaths ?? baseline.Keys.Union(head.Keys)
             .Where(path => baseline.GetValueOrDefault(path) != head.GetValueOrDefault(path)));
-        var policy = ValidatedPolicy.Create([], [], [], ImmutableDictionary<DomainId, Stratum>.Empty,
-            ImmutableDictionary<ArtifactKindId, ArtifactPolicy>.Empty, [], []);
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var meta = BootstrapGate.Evaluate(changes) switch
         {
             BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),

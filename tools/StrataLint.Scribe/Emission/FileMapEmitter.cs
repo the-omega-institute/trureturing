@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 internal static class FileMapEmitter

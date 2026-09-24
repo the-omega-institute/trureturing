@@ -48,7 +48,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Theory]
     [InlineData("Meta/domains.yaml")]
     [InlineData("tools/scripts/agent/header-check.sh")]
-    [InlineData("tools/StrataLint.Configuration/RegistryLoader.cs")]
+    [InlineData("tools/StrataLint.Configuration/RepositoryPolicyLoader.cs")]
     [InlineData("tools/tests/StrataLint.Tests/Commands/Playbook/DepositHeaderWorkflowScriptTests.cs")]
     public void NonCacheInputsDoNotSelectCacheTests(string path)
     {

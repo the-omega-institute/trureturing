@@ -30,10 +30,10 @@ public sealed partial class CurrentExecutionContractTests
         RegisterRuntimeSourceOwners(fixture);
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
-                ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+                ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
                 : "registered fixture material\n");
         var cacheInvalidates = project is "StrataLint.Cache.Tests" or "StrataLint.ScriptTests";
-        const string filemap = "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+        const string filemap = "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
             + "[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nkind = \"data\"\nconsumed_by = [\"automation\"]\n";
         var changes = new[]
         {
@@ -94,11 +94,11 @@ public sealed partial class CurrentExecutionContractTests
             "Meta/ReportConsumers/lean-report.json", "Meta/ReportConsumers/scribe-content.json",
             "Meta/ReportProducers/lean-report.json", "Meta/ReportProducers/scribe-content.json",
             "Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/domains.yaml",
-            EngineeringRegistrationFixture.Path, "Meta/judge-seed.json", "Meta/package-materials.json", "Meta/registry.yaml",
+            EngineeringRegistrationFixture.Path, "Meta/judge-seed.json", "Meta/package-materials.json",
         ];
         foreach (var path in governance)
             if (!File.Exists(Path.Combine(fixture.Root, path))) fixture.Write(path, "registered fixture material\n");
-        fixture.Write("Meta/FILEMAP.toml", "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n");
+        fixture.Write("Meta/FILEMAP.toml", "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n");
         var atom = "Meta/Digestion/atoms/sha256/" + new string('a', 64);
         var backfill = "Meta/Digestion/backfill/theory/residual-open/" + new string('a', 64) + ".yaml";
         foreach (var path in new[] { atom, backfill }) fixture.Write(path, "original content\n");
@@ -448,7 +448,7 @@ public sealed partial class CurrentExecutionContractTests
     {
         using var fixture = new ExecutionFixture();
         fixture.Write("fixtures/input.txt", "material");
-        const string filemap = "[[files]]\npattern = \"fixtures/*.txt\"\nkind = \"data\"\nadmission_plane = \"judge\"\n";
+        const string filemap = "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"fixtures/*.txt\"\nrequire = []\nkind = \"data\"\nadmission_plane = \"judge\"\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
         EditRegistration(fixture, rows =>
         {
@@ -459,7 +459,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
-        fixture.Write("Meta/FILEMAP.toml", filemap + "[[files]]\npattern = \"unrelated/**\"\nkind = \"data\"\n");
+        fixture.Write("Meta/FILEMAP.toml", filemap + "[[files]]\npattern = \"unrelated/**\"\nrequire = []\nkind = \"data\"\n");
         Assert.Empty(Execute(fixture));
         Seed(fixture);
         fixture.Write("Meta/FILEMAP.toml", filemap.Replace("data", "projection", StringComparison.Ordinal));
@@ -472,17 +472,21 @@ public sealed partial class CurrentExecutionContractTests
         using var fixture = new ExecutionFixture();
         fixture.Write("fixtures/input.txt", "material");
         fixture.Write("Meta/FILEMAP.toml", """
-            schema_version = 4
+            schema_version = 5
             include = ["FILEMAP.fixture.toml"]
+            resources = []
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [[files]]
             pattern = "fixtures/*.txt"
+            require = []
             kind = "data"
             admission_plane = "judge"
             """ + "\n");
         fixture.Write("Meta/FILEMAP.fixture.toml", """
-            schema_version = 4
+            schema_version = 5
             [[files]]
             pattern = "unrelated/**"
+            require = []
             kind = "data"
             admission_plane = "judge"
             """ + "\n");

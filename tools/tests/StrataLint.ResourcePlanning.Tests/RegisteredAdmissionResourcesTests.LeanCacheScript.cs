@@ -9,7 +9,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("pr")]
     public void LeanCacheAdapterInputSelectsItsCompleteConsumer(string mode)
     {
-        var plan = Plan("tools/scripts/worktree/lean-cache-run.sh", "", mode);
+        var plan = Plan("tools/scripts/worktree/lean-cache-run.sh", "", mode, "M");
         Assert.Equal(WithWorktreeContract(new[]
         {
             "StrataLint.ArchitectureTests",
@@ -17,10 +17,15 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "StrataLint.Lean.Tests",
             "StrataLint.LeanCacheScript.Tests",
             "StrataLint.NativeTransportIntegration.Tests",
+            "StrataLint.RepositoryConfiguration.Tests",
             "StrataLint.RepositoryContract.Tests",
+            "StrataLint.RepositoryFileMap.Tests",
+            "StrataLint.RepositoryTopology.Tests",
+            "StrataLint.Scribe.Tests",
             "StrataLint.Tests",
         }.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
 
     [Theory]

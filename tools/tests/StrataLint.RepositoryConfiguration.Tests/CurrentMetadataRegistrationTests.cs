@@ -1,4 +1,3 @@
-using System.Text;
 using StrataLint.Configuration;
 using StrataLint.Engine;
 using StrataLint.TestSupport;
@@ -14,19 +13,17 @@ public sealed class CurrentMetadataRegistrationTests
     [InlineData("Meta/unregistered.json", false)]
     public void CurrentChecksRealRepositoryMetadataRegistrationWithoutHistory(string path, bool registered)
     {
-        var registry = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create("Meta/registry.yaml"));
-        var domains = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create("Meta/domains.yaml"));
+        var policy = PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.LoadRepository(TestRepositoryLayout.FindRoot())).Policy;
         var material = registered
             ? TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(path))
             : "{}\n";
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create([
-                RawRepositoryEntry.FromText("Meta/registry.yaml", registry),
-                RawRepositoryEntry.FromText("Meta/domains.yaml", domains),
+                new RawRepositoryEntry("Meta/FILEMAP.toml", policy.CanonicalFileMapBytes),
+                new RawRepositoryEntry("Meta/domains.yaml", policy.CanonicalDomainsBytes),
                 RawRepositoryEntry.FromText(path, material),
             ]))).Snapshot;
-        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(registry), Encoding.UTF8.GetBytes(domains))).Policy;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(
             snapshot, LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()))).Capability;
 
@@ -47,7 +44,7 @@ public sealed class CurrentMetadataRegistrationTests
             var finding = Assert.Single(pathFindings);
             Assert.Equal("SL-000", finding.RuleId.Value);
             Assert.Equal(path, finding.Path);
-            Assert.Equal("unknown Meta artifact", finding.Message);
+            Assert.Equal("path must match exactly one FILEMAP entry; matches=0", finding.Message);
             Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
         }
     }

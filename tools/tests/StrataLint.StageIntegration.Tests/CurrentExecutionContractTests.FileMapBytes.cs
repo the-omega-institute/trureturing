@@ -26,7 +26,7 @@ public sealed partial class CurrentExecutionContractTests
             rows[1]!["execution_inputs"] = new JsonArray("Meta/FILEMAP.toml");
             rows[1]!["execution_filemap_paths"] = new JsonArray("docs/virtual.md");
         });
-        fixture.Write("Meta/FILEMAP.toml", "[[files]]\npattern = \"docs/virtual.md\"\nrequire = []\n");
+        fixture.Write("Meta/FILEMAP.toml", "schema_version = 5\n[[files]]\npattern = \"docs/virtual.md\"\nrequire = []\n");
         fixture.Write("README.md", "original documentation\n");
         fixture.Track();
         var calls = new List<string>();
@@ -89,7 +89,7 @@ public sealed partial class CurrentExecutionContractTests
     public void ExplicitFileMapQueriesKeepTheirProjectionIdentity(string mutation, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
-        const string filemap = "[[files]]\npattern = \"docs/virtual.md\"\nrequire = []\n";
+        const string filemap = "schema_version = 5\n[[files]]\npattern = \"docs/virtual.md\"\nrequire = []\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
         EditRegistration(fixture, rows =>
         {

@@ -8,6 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../Trureturing.Truth/Trureturing.Truth.csproj" />
+    <ProjectReference Include="../../StrataLint.Configuration/StrataLint.Configuration.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />

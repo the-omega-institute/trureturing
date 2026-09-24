@@ -11,3 +11,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.Rules.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Digestion.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.CoverTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.TruthRelease.Tests")]

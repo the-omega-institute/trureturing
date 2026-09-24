@@ -54,3 +54,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.CoverTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.TruthRelease.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ConfigurationTestSupport")]

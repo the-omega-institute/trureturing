@@ -154,6 +154,11 @@ internal sealed class ReportSupervisorFixture : IDisposable
             while ! mkdir "$lock" 2>/dev/null; do :; done
             trap 'rmdir "$lock"' EXIT
             read -r current < "$PWD/step-clock.state"
+            gate="${STRATALINT_TEST_CLOCK_GATE_FILE:-}"
+            if [[ -n "$gate" && ! -s "$gate" ]]; then
+              printf '%s\n' "$current"
+              exit 0
+            fi
             printf '%s\n' "$((current + 1))" > "$PWD/step-clock.state.tmp.$$"
             mv "$PWD/step-clock.state.tmp.$$" "$PWD/step-clock.state"
             printf '%s\n' "$current"
@@ -306,6 +311,8 @@ internal sealed class ReportSupervisorFixture : IDisposable
     internal string DoubleForkPid => ScratchRecord;
     internal string FailingLsofInvocation => Path.Combine(Root, "lsof-invocations.txt");
     internal string ClockEnvironment => $"STRATALINT_SUPERVISOR_CLOCK={StepClock}";
+    internal string ClockAfterScratchEnvironment =>
+        $"STRATALINT_TEST_CLOCK_GATE_FILE={ScratchRecord}";
     internal long ClockReads => long.Parse(
         File.ReadAllText(Path.Combine(Root, "step-clock.state")).Trim(),
         System.Globalization.CultureInfo.InvariantCulture) - 2_000_000_000L;

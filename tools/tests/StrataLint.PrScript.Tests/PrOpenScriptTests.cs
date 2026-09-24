@@ -35,12 +35,111 @@ public sealed class PrOpenScriptTests
     }
 
     [Theory]
-    [InlineData("pending", 124)]
-    [InlineData("missing", 124)]
-    [InlineData("absent", 124)]
-    [InlineData("failed", 1)]
-    [InlineData("green", 0)]
-    public void PrWatchRetainedNativeRefScopesSameHeadBeforeLatestSelection(string ownState, int exitCode)
+    [InlineData(42, false)]
+    [InlineData(42, true)]
+    [InlineData(99, false)]
+    public void PrWatchSharedNativeAssociationsAcceptEitherOrigin(int pr, bool throughMake)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS")))!;
+        snapshot["data"]!["repository"]!["pullRequest"]!["number"] = pr;
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, pr, sharedAssociations: true)).ToJsonString()));
+
+        var result = throughMake ? fixture.RunMakeWatch42() :
+            fixture.RunWatch("--pr", pr.ToString(), "--head-sha", HeadSha, "--interval-seconds", "1");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains($"refs/pull/{pr}/merge", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("\"pull_requests\":[99,42]", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchNativeOriginSurvivesAssociationRemoval(bool throughMake)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(
+            Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))),
+            Ok(Snapshot("MERGED", Check("engineering", "COMPLETED", "SUCCESS"))));
+        var before = NativeRunMetadata(201, 1, 42, sharedAssociations: true);
+        var after = before.DeepClone();
+        // REST workflow-run.pull_requests lists open head matches, not immutable triggering PRs.
+        after["pull_requests"]!.AsArray().RemoveAt(1);
+        fixture.RunResponses(201, Ok(new JsonArray(before).ToJsonString()), Ok(new JsonArray(after).ToJsonString()));
+
+        var result = throughMake ? fixture.RunMakeWatch42() : fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("state=OPEN pending=1 missing=0", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains($"PR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}", Text(result.StandardOutput), StringComparison.Ordinal);
+        var evidence = Text(result.StandardError).Split('\n')
+            .Where(line => line.StartsWith("PR_WATCH_EVIDENCE", StringComparison.Ordinal)).ToArray();
+        Assert.Equal(2, evidence.Length);
+        Assert.Contains("\"pull_requests\":[99,42]", evidence[0], StringComparison.Ordinal);
+        Assert.Contains("\"pull_requests\":[99]", evidence[1], StringComparison.Ordinal);
+        Assert.All(evidence, line => Assert.Contains("refs/pull/42/merge", line, StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData(42, "pending", 124)]
+    [InlineData(42, "missing", 124)]
+    [InlineData(42, "failed", 1)]
+    [InlineData(42, "green", 0)]
+    [InlineData(99, "pending", 124)]
+    [InlineData(99, "missing", 124)]
+    [InlineData(99, "failed", 1)]
+    [InlineData(99, "green", 0)]
+    [InlineData(99, "absent", 124)]
+    public void PrWatchRemainingAssociationCannotChangeNativeMembership(int pr, string ownState, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var checks = new[] { 42, 99 }.Where(origin => ownState != "absent" || origin != pr)
+            .Select(origin => Check(origin == pr && ownState == "missing" ? "resolve" : "engineering",
+                origin == pr && ownState == "pending" ? "IN_PROGRESS" : "COMPLETED",
+                origin == pr ? ownState == "pending" ? null : ownState == "failed" ? "FAILURE" : "SUCCESS" :
+                    ownState == "green" ? "FAILURE" : "SUCCESS",
+                runId: origin == 42 ? 201 : 202, runNumber: origin == 42 ? 1 : 2, pr: origin)).ToArray();
+        var snapshot = JsonNode.Parse(Snapshot(pr == 42 ? "MERGED" : "OPEN", checks))!;
+        snapshot["data"]!["repository"]!["pullRequest"]!["number"] = pr;
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+        var native42 = NativeRunMetadata(201, 1, 42, sharedAssociations: true);
+        native42["pull_requests"]!.AsArray().RemoveAt(1);
+        fixture.RunResponses(201, Ok(new JsonArray(native42).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 99, explicitAssociation: true)).ToJsonString()));
+
+        var result = exitCode == 124 ? fixture.RunWatchWithDeadline(pr) :
+            fixture.RunWatch("--pr", pr.ToString(), "--head-sha", HeadSha, "--interval-seconds", "1");
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain($"\"run_id\":{(pr == 42 ? 202 : 201)}", Text(result.StandardError), StringComparison.Ordinal);
+        if (ownState is "absent" or "missing")
+        {
+            Assert.Contains("pending=0 missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+            Assert.Contains("checks=[]", Text(result.StandardError), StringComparison.Ordinal);
+        }
+        else
+        {
+            Assert.Contains($"\"run_id\":{(pr == 42 ? 201 : 202)}", Text(result.StandardError), StringComparison.Ordinal);
+            Assert.Contains("\"pull_requests\":[99]", Text(result.StandardError), StringComparison.Ordinal);
+            if (ownState == "pending")
+                Assert.Contains("pending=1 missing=0", Text(result.StandardOutput), StringComparison.Ordinal);
+        }
+    }
+
+    [Theory]
+    [InlineData("pending", 124, false)]
+    [InlineData("missing", 124, false)]
+    [InlineData("absent", 124, false)]
+    [InlineData("failed", 1, false)]
+    [InlineData("green", 0, false)]
+    [InlineData("pending", 124, true)]
+    [InlineData("missing", 124, true)]
+    [InlineData("absent", 124, true)]
+    [InlineData("failed", 1, true)]
+    [InlineData("green", 0, true)]
+    public void PrWatchRetainedNativeRefScopesSameHeadBeforeLatestSelection(string ownState, int exitCode, bool sharedAssociations)
     {
         using var fixture = new PrScriptFixture();
         var other = Check("engineering", "COMPLETED", ownState == "green" ? "FAILURE" : "SUCCESS",
@@ -49,8 +148,8 @@ public sealed class PrOpenScriptTests
             [Check(ownState == "missing" ? "resolve" : "engineering",
                 ownState == "pending" ? "IN_PROGRESS" : "COMPLETED",
                 ownState == "pending" ? null : ownState == "failed" ? "FAILURE" : "SUCCESS"), other])));
-        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42)).ToJsonString()));
-        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 99)).ToJsonString()));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42, sharedAssociations: sharedAssociations)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 99, sharedAssociations: sharedAssociations)).ToJsonString()));
 
         var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
 
@@ -114,8 +213,6 @@ public sealed class PrOpenScriptTests
     [InlineData("native-path")]
     [InlineData("native-event")]
     [InlineData("native-repository")]
-    [InlineData("explicit-conflict")]
-    [InlineData("explicit-extra")]
     [InlineData("explicit-head")]
     [InlineData("explicit-with-invalid-ref")]
     [InlineData("members-null")]
@@ -162,10 +259,6 @@ public sealed class PrOpenScriptTests
             case "native-path": run["path"] = ".github/workflows/other.yml"; break;
             case "native-event": run["event"] = "pull_request_target"; break;
             case "native-repository": run["repository"]!["full_name"] = "other/repo"; break;
-            case "explicit-conflict": reference["ref"] = "refs/pull/99/merge"; break;
-            case "explicit-extra":
-                run["pull_requests"]!.AsArray().Add(RunMetadata(201, 1, HeadSha, 99, "pull_request")["pull_requests"]![0]!.DeepClone());
-                break;
             case "explicit-head": run["pull_requests"]![0]!["head"]!["sha"] = OldHeadSha; break;
             case "explicit-with-invalid-ref": reference["ref"] = "refs/pull/42/head"; break;
             case "members-null": run["pull_requests"] = null; break;
@@ -188,6 +281,40 @@ public sealed class PrOpenScriptTests
         fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
 
         Assert.Equal(0, fixture.RunWatch42().ExitCode);
+    }
+
+    [Theory]
+    [InlineData("id")]
+    [InlineData("number")]
+    [InlineData("url")]
+    [InlineData("head")]
+    [InlineData("repository")]
+    [InlineData("null")]
+    [InlineData("duplicate")]
+    public void PrWatchRejectsInvalidSharedNativeAssociation(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var run = NativeRunMetadata(201, 1, 42, sharedAssociations: true);
+        var associations = run["pull_requests"]!.AsArray();
+        associations.RemoveAt(1); // The remaining association must be validated even after origin42 closes.
+        var other = associations[0]!;
+        switch (defect)
+        {
+            case "id": other["id"] = 0; break;
+            case "number": other["number"] = "99"; break;
+            case "url": other["url"] = "https://api.github.com/repos/other/repo/pulls/99"; break;
+            case "head": other["head"]!["sha"] = OldHeadSha; break;
+            case "repository": other["base"]!["repo"]!["id"] = 2; break;
+            case "null": associations[0] = null; break;
+            case "duplicate": associations.Add(other.DeepClone()); break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable step=snapshot attempts=3", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -1396,11 +1523,16 @@ public sealed class PrOpenScriptTests
                 url = $"https://api.github.com/repos/owner/repo/pulls/{pr}",
                 head = new { sha = head }, @base = new { repo = new { id = 1 } } } },
         })!.AsObject();
-    private static JsonObject NativeRunMetadata(int runId, int runNumber, int pr, bool explicitAssociation = false)
+    private static JsonObject NativeRunMetadata(int runId, int runNumber, int pr, bool explicitAssociation = false,
+        bool sharedAssociations = false)
     {
         var run = RunMetadata(runId, runNumber, HeadSha, pr, "pull_request");
         run["path"] = ".github/workflows/ci-pr.yml";
         if (!explicitAssociation) run["pull_requests"] = new JsonArray();
+        if (sharedAssociations)
+            run["pull_requests"] = new JsonArray(
+                RunMetadata(runId, runNumber, HeadSha, 99, "pull_request")["pull_requests"]![0]!.DeepClone(),
+                RunMetadata(runId, runNumber, HeadSha, 42, "pull_request")["pull_requests"]![0]!.DeepClone());
         // The merge commit differs from the PR head; the reusable path binds its exact SHA.
         run["referenced_workflows"] = new JsonArray(new JsonObject
         {
@@ -1493,15 +1625,16 @@ public sealed class PrOpenScriptTests
         internal ProcessOutput RunOpen(params string[] arguments) => Run(["open", .. arguments]);
         internal ProcessOutput RunWatch(params string[] arguments) => Run(["watch", .. arguments]);
         internal ProcessOutput RunWatch42() => RunWatch("--pr", "42", "--head-sha", HeadSha, "--interval-seconds", "1");
-        internal ProcessOutput RunWatch42WithDeadline()
+        internal ProcessOutput RunWatch42WithDeadline() => RunWatchWithDeadline(42);
+        internal ProcessOutput RunWatchWithDeadline(int pr)
         {
             useDeadlineClock = true;
             Directory.CreateDirectory(clock);
             WriteExecutable(Path.Combine(clock, "launch"), DeadlineClockLauncher);
-            var result = RunWatch("--pr", "42", "--head-sha", HeadSha, "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
+            var result = RunWatch("--pr", pr.ToString(), "--head-sha", HeadSha, "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
             var errors = Text(result.StandardError);
             var events = File.ReadAllLines(responseEvents);
-            Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
+            Assert.Contains($"PR_WATCH_PROGRESS pr={pr} state=", errors, StringComparison.Ordinal);
             Assert.Contains("snapshot:1:returned", events);
             if (delayedSnapshot)
             {

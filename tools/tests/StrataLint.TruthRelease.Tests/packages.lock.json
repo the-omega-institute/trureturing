@@ -163,6 +163,14 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
+      "stratalint.configurationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.digestiontestsupport": {
         "type": "Project",
         "dependencies": {

@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Nodes;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -19,7 +20,7 @@ public sealed class FileMapResourceParityTests
                 Assert.Single(map.Match(path)).Require);
         foreach (var path in new[] { "Library/Notes/input.md", "Problems/input.md",
             "Blueprint/D5/S0/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
-            "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
+            "tools/StrataLint.Engine/RepositoryIo/FileMapResources.cs",
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);
         var filemap = Assert.Single(map.Resources, resource => resource.Id == "filemap");

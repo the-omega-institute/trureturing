@@ -708,18 +708,35 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "Golden/Projection/**",
-        "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
-        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "D5/**",
         "Blueprint/**",
+        "D5/**",
+        "Golden/Projection/**",
         "Library/**",
-        "Meta/FILEMAP.toml",
         "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
         "Meta/domains.yaml",
-        "Meta/registry.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/package-materials.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-report-inputs.json",
+        "lean-toolchain",
+        "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs",
+        "tools/StrataLint.EngineeringScope/CommonStages.cs",
+        "tools/lean-inspector/inspect.sh",
+        "tools/scripts/ci-stage.sh",
         "tools/scripts/katex/**",
-        "tools/scripts/renderer/**"
+        "tools/scripts/renderer/**",
+        "tools/scripts/report/lean-report.sh",
+        "tools/scripts/workflow/scribe-content-checks.sh",
+        "tools/scripts/worktree/lean-cache-run.sh",
+        "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -739,7 +756,7 @@
         "D5/ledger.md",
         "CLAUDE.md",
         "tools/scripts/workflow/ci_plan.py",
-        "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
+        "tools/StrataLint.Engine/RepositoryIo/FileMapResources.cs",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       ]
@@ -882,7 +899,6 @@
         "tools/scripts/worktree/lean_actions.py",
         "tools/scripts/worktree/lean_cache.py",
         "tools/scripts/worktree/lean_cache_release.py",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ],
       "execution_excludes": [],
@@ -1469,13 +1485,23 @@
       "execution_filemap_paths": [
         ".gitignore",
         "Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs",
+        "Blueprint/D5/S3/Midline/GoldenHeatSpectrum.md",
+        "Blueprint/D5/S3/Midline/GoldenHeatSpectrum.scribe.cs",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
         "CLAUDE.md",
-        "D5/S0/NumberTheory/AdmissionResourceProbe.lean",
         "D5/InstructionContractProbe.md",
+        "D5/S0/Asymptotics/Bonferroni/TailBounds.lean",
+        "D5/S0/NumberTheory/AdmissionResourceProbe.lean",
+        "D5/S0/WorktreeContractProbe.lean",
         "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
         "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
+        "D5/S3/Constants/ElementaryExactValues.lean",
         "D5/S3/Constants/Values.lean",
-        "D5/S0/WorktreeContractProbe.lean",
+        "D5/S3/Midline/GoldenHeatSpectrum.lean",
+        "D5/S3/Midline/GoldenSpectralMarker.lean",
+        "D5/X_Frontier/Hearts.lean",
+        "D5/X_Frontier/HeartsAuthorizations.md",
         "D5/X_Frontier/ValuesProducer.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
@@ -1484,12 +1510,16 @@
         "Golden/Projection/statement-projection-expansion-v1.json",
         "Golden/Projection/statement-projection-pilot-v1.json",
         "Golden/values-kernels.toml",
+        "LICENSE",
         "Makefile",
         "Meta/Digestion/atomizers.toml",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
         "Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901",
         "Meta/Digestion/backfill/admission-resource-probe.json",
+        "Meta/Digestion/backfill/periodic-tree-registry/residual-open/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901.yaml",
         "Meta/Digestion/backfill/periodic-tree-registry/source.toml",
+        "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml",
+        "Meta/Digestion/backfill/pzg-v170/source.toml",
         "Meta/Digestion/backfill/worktree-contract-probe.json",
         "Meta/FILEMAP.docs.reports.toml",
         "Meta/FILEMAP.toml",
@@ -1500,8 +1530,8 @@
         "Meta/domains.yaml",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "README.md",
+        "Trureturing.lean",
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
@@ -1523,6 +1553,7 @@
         "tools/Makefile",
         "tools/StrataLint.BuildRuntime/Changed.cs",
         "tools/StrataLint.CiArtifacts/Changed.cs",
+        "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs",
         "tools/StrataLint.Cli/Program.cs",
         "tools/StrataLint.Cli/ResourceRoutingProbe.cs",
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
@@ -1532,7 +1563,7 @@
         "tools/StrataLint.Engine/Rules/CapacityRule.cs",
         "tools/StrataLint.Engine/Runtime/ProcessCapture.cs",
         "tools/StrataLint.EngineeringScope/CommonStages.cs",
-        "tools/StrataLint.EngineeringScope/ResourceRoutingProbe.cs",
+        "tools/StrataLint.EngineeringScope/Program.cs",
         "tools/StrataLint.ExecutionEvidence/Changed.cs",
         "tools/StrataLint.FileMap/FileMapPolicy.cs",
         "tools/StrataLint.InspectionScope/Changed.cs",
@@ -1552,7 +1583,8 @@
         "tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestRegistry.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/FrozenLedgerTestData.cs",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestFileMap.cs",
         "tools/TestSupport/StrataLint.CoverTestSupport/AssemblyInfo.cs",
         "tools/TestSupport/StrataLint.CoverTestSupport/CoverAtomFixtures.cs",
         "tools/TestSupport/StrataLint.CoverTestSupport/CoverSpec.ReceiptBinding.cs",
@@ -1640,7 +1672,6 @@
         "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs",
         "tools/tests/StrataLint.CoverBatch.Tests/AssemblyInfo.cs",
         "tools/tests/StrataLint.CoverBatch.Tests/CoverBatchCommandTests.Emission.cs",
@@ -1710,6 +1741,11 @@
         "tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/StrataLint.TruthRelease.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
+        "tools/tests/StrataLint.TruthRelease.Tests/TruthReleaseCommandTests.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/Usings.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json",
         "tools/tests/StrataLint.WorkflowScript.Tests/CacheMaterialScriptTests.cs",
         "tools/tests/StrataLint.WorkflowScript.Tests/Fixtures/cache_material_contract.py",
         "tools/tests/StrataLint.WorkflowScript.Tests/LeanCacheEnsureScriptTests.cs",
@@ -1726,28 +1762,7 @@
         "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeCacheStrategyTests.cs",
         "tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
-        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
-        "D5/X_Frontier/Hearts.lean",
-        "Meta/Digestion/backfill/pzg-v170/source.toml",
-        "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml",
-        "LICENSE",
-        "Trureturing.lean",
-        "D5/X_Frontier/HeartsAuthorizations.md",
-        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
-        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
-        "D5/S3/Midline/GoldenSpectralMarker.lean",
-        "Meta/Digestion/backfill/periodic-tree-registry/residual-open/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901.yaml",
-        "tools/TestSupport/StrataLint.CliTestSupport/FrozenLedgerTestData.cs",
-        "tools/tests/StrataLint.TruthRelease.Tests/AssemblyInfo.cs",
-        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
-        "tools/tests/StrataLint.TruthRelease.Tests/TruthReleaseCommandTests.cs",
-        "tools/tests/StrataLint.TruthRelease.Tests/Usings.cs",
-        "tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json",
-        "D5/S0/Asymptotics/Bonferroni/TailBounds.lean",
-        "D5/S3/Constants/ElementaryExactValues.lean",
-        "D5/S3/Midline/GoldenHeatSpectrum.lean",
-        "Blueprint/D5/S3/Midline/GoldenHeatSpectrum.md",
-        "Blueprint/D5/S3/Midline/GoldenHeatSpectrum.scribe.cs"
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
       ]
     },
     {
@@ -2552,7 +2567,7 @@
         "tools/scripts/workflow/ci.py",
         "tools/scripts/workflow/ci_plan.py",
         "tools/scripts/workflow/scribe-content-checks.sh",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -2572,7 +2587,6 @@
         "Meta/Digestion/backfill/fixture-source/source.toml",
         "Meta/Values/bindings.toml",
         "Meta/domains.yaml",
-        "Meta/registry.yaml",
         "README.md",
         "docs/GOVERNANCE.md",
         "docs/reports/ratchet/0.json",
@@ -2772,7 +2786,9 @@
       "test_partition": null,
       "root_namespace": "StrataLint.Configuration",
       "namespace_exclude": [],
-      "global_namespace_exceptions": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Configuration/AssemblyInfo.cs"
+      ],
       "build_inputs": [
         "global.json",
         "Directory.Build.props",
@@ -2816,9 +2832,7 @@
         "tools/tests/Directory.Build.props",
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
-      "execution_inputs": [
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
-      ],
+      "execution_inputs": [],
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
@@ -2855,10 +2869,28 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
         "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml"
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-report-inputs.json",
+        "lean-toolchain",
+        "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs",
+        "tools/StrataLint.EngineeringScope/CommonStages.cs",
+        "tools/lean-inspector/inspect.sh",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/report/lean-report.sh",
+        "tools/scripts/workflow/scribe-content-checks.sh",
+        "tools/scripts/worktree/lean-cache-run.sh"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -3105,6 +3137,7 @@
       ],
       "exclude": [],
       "references": [
+        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
@@ -3130,8 +3163,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "Meta/Digestion/atomizers.toml",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+        "Meta/Digestion/atomizers.toml"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -3332,8 +3364,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "Meta/Digestion/atomizers.toml",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+        "Meta/Digestion/atomizers.toml"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -3415,8 +3446,7 @@
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProofHelper.lean",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProvenanceWire.lean",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineRealization.lean",
-        "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineRealizationSource.lean",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+        "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineRealizationSource.lean"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -3567,7 +3597,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "README.md",
         "Trureturing.lean",
         "agents/**",
@@ -3634,20 +3663,38 @@
         "**/*.cs",
         "**/*.csproj",
         "Directory.Packages.props",
+        "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
         "Meta/domains.yaml",
         "Meta/engineering-projects.json",
-        "Meta/registry.yaml",
+        "Meta/package-materials.json",
         "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-report-inputs.json",
+        "lean-toolchain",
         "tools/Architecture/BannedSymbols.Determinism.txt",
         "tools/Architecture/BannedSymbols.Guid.txt",
         "tools/Architecture/BannedSymbols.txt",
         "tools/Makefile",
+        "tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs",
         "tools/StrataLint.Cli/packages.lock.json",
         "tools/StrataLint.Engine/packages.lock.json",
+        "tools/StrataLint.EngineeringScope/CommonStages.cs",
         "tools/StrataLint.Scribe/packages.lock.json",
         "tools/StrataLint.sln",
         "tools/TOWER.yaml",
-        "tools/scripts/dotnet-test.sh"
+        "tools/lean-inspector/inspect.sh",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/dotnet-test.sh",
+        "tools/scripts/report/lean-report.sh",
+        "tools/scripts/workflow/scribe-content-checks.sh",
+        "tools/scripts/worktree/lean-cache-run.sh"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -3954,8 +4001,7 @@
         "tools/scripts/worktree/lean-cache-input.sh",
         "tools/scripts/worktree/lean-cache-publish.sh",
         "tools/scripts/worktree/lean-cache-run.sh",
-        "tools/scripts/worktree/lean_cache.py",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+        "tools/scripts/worktree/lean_cache.py"
       ],
       "execution_excludes": [
         "**/.lake/**",
@@ -4061,6 +4107,7 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",

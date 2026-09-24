@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 
 namespace StrataLint.FileMap.Tests;
 
