@@ -4981,3 +4981,387 @@ $$
 证明。每行在 $b=0,1$ 的值相差一，故无恒定行。对 $t\ne0$，$B$ 方向差为 $2bt+t^2$；其在 $b=0,1$ 的差是 $2t\ne0\pmod3$，所以没有非零 $B$ 恒定差方向。一般方向 $(s,t)$ 的差为 $r(a+s)-r(a)+2bt+t^2$，在 $b$ 上恒定先强制 $t=0$。若 $s=1$，剩下的差在 $a=0,1$ 分别为一、负一，两者在模三不同，故还须 $s=0$。于是 $D_f$ 平凡、全部未来核平凡，而 $|S|=2\cdot3\cdot3=18$，定理15.12给所述各最小值。恒定行是命题15.18中的充分条件，并非零节省的必要条件。证毕。
 
 ## 15.99 追加锚
+
+## 16. 和校准时钟的同源接口与任务记忆分裂
+
+### 16.1 单零来源、完整状态与和校准商
+
+**定义 16.60（和校准的封闭预测问题）。** 在定义15.10–15.11中取 $A=B=E$，其中 $E$ 为有限交换群；本节的 $E$ 表示每一端的位置群。仍令 $C=\mathbb Z/m\mathbb Z$、$m\ge1$、$H\le C$，固定已知函数 $g:E\to C$，并取
+
+$$
+S=E\times E\times H,\qquad s_0=(0,0,0),\qquad
+f(a,b)=g(a+b),\qquad \ell(a,b,h)=g(a+b)+h.
+\tag{16.30}
+$$
+
+唯一外部类型顶点固定不变。每个 $(u,v,k)\in S$ 都是处处合法的公开标记，同时作用于两端，使来源变为 $(a+u,b+v,h+k)$。从已知 $s_0$ 出发允许所有有限词；每个来源点都由一个标记可达。指定局部任务为 $o_A=(a,\ell)$、$o_B=(b,\ell)$，另比较只输出 $\ell$ 的任务。精确性要求空词和每个有限前缀均正确。
+
+预测器的初始化固定，更新只读其完整持久状态与当前标记，解码只读其状态。己方位置也须保存在所计状态内；当前来源、传感器、原钟、校准钟、步数、历史和控制状态均不作为额外输入。固定的群运算与 $g$ 属于更新、解码的参数。允许任意依赖过去词的候选状态，不预设候选只依赖当前来源。初始输出是 $g(0)$，不要求 $g(0)=0$。
+
+定义
+
+$$
+\begin{gathered}
+D=\{d\in E:\ g(x+d)-g(x)\text{ 对全部 }x\in E\text{ 是同一 }H\text{ 中元素}\},\\
+\chi(d)=g(d)-g(0)\quad(d\in D),\qquad
+K=\{(d,-\chi(d)):d\in D\}\le E\times H,\\
+\widehat Q=(E\times H)/K,\qquad B_0=E/D,\\
+\Psi:S\to\widehat Q,\quad \Psi(a,b,h)=[(a+b,h)],\qquad
+\sigma:\widehat Q\to B_0,\quad \sigma([(x,h)])=[x].
+\end{gathered}
+\tag{16.31}
+$$
+
+这里 $[x]=x+D$，而 $[(x,h)]$ 是模 $K$ 的类；$B_0$ 与观察端 $B$ 不同。$\widehat Q$ 专指任务商，定义15.11的 $Q$ 仍指实际联合像。恒定差的可加性及取逆性质由定理15.12的式(15.38)给出，故 $D\le E$、$\chi:D\to H$ 是同态、$K$ 是子群。$\sigma$ 良定义，因为改变代表元只使 $x$ 增加 $D$ 中元素。由 $H\le C$，以下涉及 $H$ 的和、差也可在 $C$ 内计算。
+
+### 16.2 未来任务商与两个完全可达的局部空间
+
+**定理 16.61（和校准的最小闭合状态）。** 在定义16.60下，$\widehat Q$ 恰为只钟任务的全部未来行为商，且
+
+$$
+|\widehat Q|=\frac{|E||H|}{|D|},\qquad
+W_A=E\times\widehat Q,\quad W_B=E\times\widehat Q.
+\tag{16.32}
+$$
+
+上述两个局部空间全部可达，分别实现 $o_A,o_B$ 的最小状态数 $|E||\widehat Q|$；只钟任务的最小状态数为 $|\widehat Q|$。这些下界覆盖定义16.60允许的全部历史依赖候选。
+
+令 $q_0=[(0,0)]$，$\delta([(x,h)])=g(x)+h$，$t=u+v$。达到下界的固定状态律为
+
+$$
+\begin{aligned}
+\mathrm{Init}_{\ell}&=q_0,&
+\mathrm{Update}_{\ell}(q;(u,v,k))&=q+[(t,k)],&
+\mathrm{Decode}_{\ell}(q)&=\delta(q),\\
+\mathrm{Init}_A&=(0,q_0),&
+\mathrm{Update}_A((a,q);(u,v,k))&=(a+u,q+[(t,k)]),&
+\mathrm{Decode}_A(a,q)&=(a,\delta(q)),\\
+\mathrm{Init}_B&=(0,q_0),&
+\mathrm{Update}_B((b,q);(u,v,k))&=(b+v,q+[(t,k)]),&
+\mathrm{Decode}_B(b,q)&=(b,\delta(q)).
+\end{aligned}
+\tag{16.33}
+$$
+
+证明。定理15.12的补偿分类在 $f(a,b)=g(a+b)$ 下只需考察总位置 $x=a+b$。两点 $(x,h),(x',h')$ 的全部未来校准输出相同，恰好是
+
+$$
+\forall t\in E,\quad g(x+t)+h=g(x'+t)+h'
+\quad\Longleftrightarrow\quad
+x'-x\in D,\quad h'-h=-\chi(x'-x).
+\tag{16.34}
+$$
+
+未来原钟增量在两边相消，每个 $t$ 由 $(t,0,0)$ 实现。因此该等价关系正是模 $K$ 相等，且 $|K|=|D|$。$\delta$ 良定义是因为 $g(x+d)+h-\chi(d)=g(x)+h$。式(16.33)随来源平移交换，初始解码为 $g(0)$。任取 $q=[(x,h)]$，来源 $(a,x-a,h)$ 达到任意 $A$ 状态 $(a,q)$；来源 $(x-b,b,h)$ 达到任意 $B$ 状态 $(b,q)$。己方位置不同时空续接已区分，位置相同而 $q$ 不同时式(16.34)给一个共同未来标记区分。
+
+最小性所用的是定理15.12及 [TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §2.1–2.3的封闭未来商机制：此处作用群与实际轨道都是 $S$，初态稳定子为 $\{0\}$，类型顶点只有一个。对任意候选，两个历史若到达同一完整内部状态，确定性更新与精确解码使它们所有共同续接的任务输出相同。因此从候选可达状态到这里的任务商、或相应局部空间，按“取产生它的历史的当前来源类”给出良定义满射。每个来源可达保证满射性，故上述状态数下界也适用于不经 $S\to W$ 因子分解的历史摘要。证毕。
+
+### 16.3 局部快照的当前同源条件
+
+**定理 16.62（同一当前来源的精确恢复）。** 对定理16.61中的任意两个单独可达状态 $(a,q_A)$ 与 $(b,q_B)$，它们同属一个来源点的局部像，当且仅当
+
+$$
+q_A=q_B=q,\qquad [a]+[b]=\sigma(q).
+\tag{16.35}
+$$
+
+若条件成立，任取代表元 $q=[(x,r)]$，令 $d=a+b-x\in D$，则唯一来源为
+
+$$
+(a,b,h),\qquad h=r-\chi(d).
+\tag{16.36}
+$$
+
+所得 $h\in H$ 与代表元选择无关。因此实际局部状态对恢复整个 $S$。这里的同源条件是当前来源的可实现性；它不判定两份已发生历史是否相同。
+
+证明。若来源为 $(a,b,h)$，两端任务坐标都等于 $\Psi(a,b,h)$，投影到 $B_0$ 得式(16.35)。反向，$d\in D$ 使
+
+$$
+(a+b,r-\chi(d))=(x,r)+(d,-\chi(d)),
+\tag{16.37}
+$$
+
+故其任务类为 $q$，且来源由一个公开标记可达。若另取 $(x+e,r-\chi(e))$，其中 $e\in D$，则新的差为 $d-e$，恢复值是 $r-\chi(e)-\chi(d-e)=r-\chi(d)$。固定 $a+b$ 后，$[(a+b,h)]=[(a+b,h')]$ 强制 $(0,h'-h)\in K$，而 $K\cap(\{0\}\times H)=\{0\}$，故 $h=h'$。
+
+这证明的是存在同一个当前来源；对这里仅依赖来源的最小实现，也等价于存在一份共同历史实现该对状态。它不恢复给定的过去词：空词与单个零标记已是不同历史，却产生同一来源与同一局部状态。证毕。
+
+### 16.4 可比较的共同标签、矩形支持与锐字母表
+
+**定理 16.63（精确同源接口的最小共同标签）。** 定义两端各自从已计状态计算的标签
+
+$$
+\begin{aligned}
+c_A:E\times\widehat Q&\to B_0\times\widehat Q,&c_A(a,q)&=([a],q),\\
+c_B:E\times\widehat Q&\to B_0\times\widehat Q,&c_B(b,q)&=(\sigma(q)-[b],q).
+\end{aligned}
+\tag{16.38}
+$$
+
+则局部状态对实际同源当且仅当 $c_A=c_B$。其支持由 $|B_0||\widehat Q|$ 个完整的 $|D|\times|D|$ 矩形组成，两侧投影分别互不相交。每个共同标签有恰好 $|D|^2$ 个来源点；完整状态对则只有一个来源点。
+
+在所有以两个确定性标签的相等恰好判定同源性的接口中，实际使用的标签数至少为 $|B_0||\widehat Q|$，式(16.38)达到此数。若 $q$ 已由单独的相等测试匹配，则余下测试条件下的补充字母表至少为 $|B_0|$，也能达到。这里计数的是从现有局部状态算出的接口值，不增加持久状态，也不宣称任意交互通信协议的位数下界。
+
+两端的标签在同一公开标记 $(u,v,k)$ 下都按
+
+$$
+(z,q)\longmapsto\bigl(z+[u],q+[(u+v,k)]\bigr)
+\tag{16.39}
+$$
+
+更新。当任务坐标已经匹配时，缺陷 $[a]+[b]-\sigma(q)$ 在共同运输下不变。
+
+证明。式(16.38)相等正是式(16.35)。固定 $(z,q)\in B_0\times\widehat Q$，相应两侧纤维为
+
+$$
+\begin{aligned}
+\mathcal A_{z,q}&=\{(a,q):[a]=z\},\\
+\mathcal B_{z,q}&=\{(b,q):[b]=\sigma(q)-z\}.
+\end{aligned}
+\tag{16.40}
+$$
+
+两者各有 $|D|$ 个元素且非空。任取其中一对，定理16.62给唯一来源，所以其整个乘积都在实际像内。不同 $(z,q)$ 的两侧纤维分别不交，全部实际对又必在其中某个乘积内。由定理16.62的单射恢复，标签在 $S$ 上的纤维大小就是这个乘积的大小。
+
+将相容关系表示为两侧投影不交的完整矩形，所用的一般关系事实是 Riguet，*Relations binaires, fermetures, correspondances de Galois*（1948），§7，Proposition 11，pp.132–133，[DOI:10.24033/bsmf.1401](https://doi.org/10.24033/bsmf.1401) 的双函数关系刻画。这里已由式(16.35)直接算出具体矩形；该一般刻画只承担支持结构的对应。
+
+设另有 $\lambda_A:W_A\to L$、$\lambda_B:W_B\to L$，对所有局部状态对满足“同源当且仅当标签相等”。在一个非空完整矩形内，固定一侧的一个点，可见另一侧所有点同值；再交换两侧，整个矩形同值。两个不同矩形若共用该值，取第一个的 $A$ 点与第二个的 $B$ 点便被错误接受，故每个矩形必须有不同值。这给锐下界；固定 $q$ 后有 $|B_0|$ 个同样非空的矩形，给条件字母表下界。事实上，只要求两个函数在全部实际对上相等，它们就都经式(16.38)因子分解；要求相等还足以判定同源，才进一步要求不同矩形的值不同。
+
+$A$ 端的标签运输由 $a'=a+u$ 直接得到。$B$ 端则用
+
+$$
+\sigma\bigl(q+[(u+v,k)]\bigr)-[b+v]
+=\sigma(q)+[u+v]-[b]-[v]
+=\sigma(q)-[b]+[u].
+\tag{16.41}
+$$
+
+两侧已匹配的 $q$ 在运输后仍匹配，且新缺陷为 $[a+u]+[b+v]-\sigma(q)-[u+v]$，等于旧缺陷。标签只是式(16.33)状态的函数，上述相等测试本身没有引入运行时的跨端输入。证毕。
+
+### 16.5 共同标签细化与任务扩张的两个正合列
+
+**命题 16.64（同源缺陷取第一位置商）。** 令 $\Gamma=\ker\Psi$，令 $N_A,N_B$ 为定理16.61的两个来源到局部状态同态的核，并令 $N_\Sigma=N_A+N_B$。则
+
+$$
+\begin{gathered}
+\Gamma=\{(u,v,-\chi(u+v)):u+v\in D\},\\
+N_A=\{(0,d,-\chi(d)):d\in D\},\qquad
+N_B=\{(d,0,-\chi(d)):d\in D\},\\
+N_\Sigma=\{(d_1,d_2,-\chi(d_1+d_2)):d_1,d_2\in D\},\qquad
+N_A\cap N_B=\{0\},\\
+\Gamma/N_\Sigma\cong B_0,\quad
+(u,v,k)+N_\Sigma\longmapsto[u],\\
+S/N_\Sigma\cong B_0\times\widehat Q,\quad
+(a,b,h)+N_\Sigma\longmapsto([a],\Psi(a,b,h)).
+\end{gathered}
+\tag{16.42}
+$$
+
+特别地，这里的缺陷同构使用第一位置 $u$ 模 $D$；$u+v$ 在 $\Gamma$ 上模 $D$ 恒为零。
+
+共同标签对任务标签的细化正合列，总能按所示坐标分裂：
+
+$$
+0\longrightarrow B_0\xrightarrow{z\mapsto(z,0)}
+B_0\times\widehat Q\xrightarrow{(z,q)\mapsto q}
+\widehat Q\longrightarrow0.
+\tag{16.43}
+$$
+
+而任务记忆本身具有另一条带标记正合列
+
+$$
+0\longrightarrow H\xrightarrow{\iota}\widehat Q
+\xrightarrow{\sigma}B_0\longrightarrow0,
+\qquad \iota(h)=[(0,h)].
+\tag{16.44}
+$$
+
+它的分裂问题保留所示核与商标记。实际局部对与只匹配任务标签的局部对分别有
+
+$$
+|\mathcal R_{\rm actual}|=|E|^2|H|,
+\qquad
+|\mathcal R_{q}|=|E|^2|\widehat Q|,
+\qquad
+\frac{|\mathcal R_q|}{|\mathcal R_{\rm actual}|}=|B_0|.
+\tag{16.45}
+$$
+
+其中 $\mathcal R_q=\{((a,q),(b,q)):a,b\in E,q\in\widehat Q\}$；在来源上，每个任务标签的纤维有 $|E||D|$ 个点。
+
+证明。各核由式(16.31)、(16.33)直接取得；$\chi$ 可加给 $N_\Sigma$ 的表达式。$\Gamma\to B_0$ 的第一位置投影满射，因为 $(u,-u,0)\in\Gamma$；其核要求 $u\in D$，再由 $u+v\in D$ 得 $v\in D$，所以核恰为 $N_\Sigma$。这证明第一同构。对第二同构，映射 $([a],\Psi(a,b,h))$ 是同态；任给 $(z,[(x,h)])$，选择 $[a]=z$ 并令 $b=x-a$ 得其原像。核同样为 $N_\Sigma$。
+
+一般的实际像与观察核商的对应可用已有 [`finiteObservationQuotientEquivRange`](../../../D5/S3/ConceptDynamics/CanonicalImage/FiniteObservationQuotientRange.lean)：取来源 $X=S$、指标集 $I=\{A,B\}$、预算为两指标全体、观察为两个局部状态映射；余域分别是 $W_A,W_B$，取的是该联合映射的实际像。这里两个核交为零，再由定理16.62取得单射恢复；不能把实际像换成两个余域的全乘积。这个已有构造只要求有限观察指标，不额外要求每个组合可实现。
+
+式(16.43)的截面是 $q\mapsto(0,q)$，在 $S/N_\Sigma$ 中对应选择 $q=[(x,h)]$ 后的 $(0,x,h)+N_\Sigma$，与代表元选择无关。对于式(16.44)，$\iota$ 单射由 $K\cap(\{0\}\times H)=\{0\}$ 得到，$\sigma$ 满射。若 $\sigma([(x,h)])=0$，则 $x\in D$ 且 $[(x,h)]=[(0,h+\chi(x))]$，故 $\ker\sigma=\operatorname{im}\iota$。
+
+实际对按定理16.62与 $S$ 双射，也按定理16.63分为 $|B_0||\widehat Q|$ 个大小 $|D|^2$ 的矩形，二者均给 $|E|^2|H|$。匹配 $q$ 时两个位置各有 $|E|$ 种，得到式(16.45)。$\Gamma$ 中先选 $u\in E$ 及 $u+v\in D$，其余坐标唯一，所以 $|\Gamma|=|E||D|$，即任务来源纤维大小。两条正合列分别描述“补充哪些共同区别才能胶合”和“任务坐标能否按标记加法分开”，它们的核、商及问题均不同。证毕。
+
+### 16.6 原钟值域内的加性校准
+
+**定理 16.65（任务坐标分裂的精确条件）。** 定义16.60的任务扩张(16.44)作为带标记交换群扩张分裂，当且仅当 $\chi:D\to H$ 延拓为同态 $\alpha:E\to H$。等价地，存在这样的同态和函数 $\bar g:B_0\to C$，使
+
+$$
+g(x)=\alpha(x)+\bar g([x])\qquad(x\in E).
+\tag{16.46}
+$$
+
+只要求 $\alpha$ 取值于较大的 $C$ 不足。分裂时，一个保标记的群坐标同构及其闭合任务律为
+
+$$
+\begin{gathered}
+\widehat Q\longrightarrow B_0\times H,\qquad
+[(x,h)]\longmapsto\bigl([x],h+\alpha(x)\bigr),\\
+\mathrm{Init}=(0,0),\qquad
+\mathrm{Update}((y,r);(u,v,k))=
+\bigl(y+[u+v],r+k+\alpha(u+v)\bigr),\\
+\mathrm{Decode}(y,r)=\bar g(y)+r.
+\end{gathered}
+\tag{16.47}
+$$
+
+这仍有 $|\widehat Q|$ 个状态；局部预测器再加上所计的己方位置，按式(16.33)运输该位置。
+
+证明。先在本任务商中使用交换群扩张的标准机制：$\widehat Q$ 是 $0\to D\to E\to B_0\to0$ 沿 $\chi:D\to H$ 的推出，其关系正是 $(d,-\chi(d))=0$。推出及对应的 Hom–Ext 正合段见 Stacks Project，§12.6 “Extensions”，[tag 010I](https://stacks.math.columbia.edu/tag/010I)，推出构造与 Lemma 12.6.4；在该引理中取 $(M_1,M_2,M_3,N)=(D,E,B_0,H)$。连接映射把 $\chi$ 送至这里的扩张类，以下显式核查本校准所需的延拓与分裂对应。
+
+若 $\alpha$ 存在，定义收缩同态
+
+$$
+r_\alpha:\widehat Q\to H,\qquad
+r_\alpha([(x,h)])=\alpha(x)+h,
+\qquad r_\alpha\iota=\operatorname{id}_H.
+\tag{16.48}
+$$
+
+其在 $K$ 上为零，所以良定义。同时 $j([x])=[(x,-\alpha(x))]$ 与代表元无关，且 $\sigma j=\operatorname{id}_{B_0}$。式(16.47)第一行的逆是 $(y,r)\mapsto j(y)+\iota(r)$，得到带标记分裂。
+
+反向，分裂给出一个同态截面 $j:B_0\to\widehat Q$。由 $\ker\sigma=\operatorname{im}\iota$，可定义唯一的收缩同态 $r:\widehat Q\to H$，使 $\iota(r(q))=q-j(\sigma(q))$，于是 $r\iota=\operatorname{id}_H$。令 $\alpha(x)=r([(x,0)])$；它是 $E\to H$ 的同态，而对 $d\in D$，$[(d,0)]=[(0,\chi(d))]$，故 $\alpha(d)=\chi(d)$。
+
+若 $\alpha$ 延拓 $\chi$，则 $g-\alpha$ 在每个 $D$ 陪集上恒定，得到式(16.46)。反之，式(16.46)在 $x$ 与 $x+d$ 的差强制 $\alpha(d)=\chi(d)$。运输 $x\mapsto x+u+v$、$h\mapsto h+k$ 给式(16.47)的更新，解码等于 $g(x)+h$。由于 $\alpha(0)=0$、$\bar g(0)=g(0)$，初始输出也正确。证毕。
+
+### 16.7 不分裂时的固定截面与闭合进位
+
+**命题 16.66（最小任务状态仍有集合乘积坐标）。** 不论式(16.44)是否分裂，固定任一集合截面 $\tau:B_0\to E$，满足 $[\tau(y)]=y$、$\tau(0)=0$。每个 $q\in\widehat Q$ 唯一写为 $[(\tau(y),r)]$，其中 $(y,r)\in B_0\times H$。对代表元 $q=[(x,h)]$，相应坐标及闭合律为
+
+$$
+\begin{gathered}
+y=[x],\qquad r=h+\chi(x-\tau(y)),\qquad \mathrm{Init}=(0,0),\\
+t=u+v,\qquad y'=y+[t],\qquad
+r'=r+k+\chi\bigl(\tau(y)+t-\tau(y')\bigr),\\
+\mathrm{Decode}(y,r)=g(\tau(y))+r.
+\end{gathered}
+\tag{16.49}
+$$
+
+更新中的 $\chi$ 参数总在 $D$ 中；连续更新与标记相加相容，使用恰好 $|B_0||H|=|\widehat Q|$ 个可达状态。不分裂阻止的是按指定原钟群与位置商的加性分离，不阻止精确闭合预测或这种集合编码。
+
+证明。$x-\tau([x])\in D$，由模 $K$ 关系得到表示存在。其 $y$ 被 $\sigma(q)$ 唯一确定，固定第一坐标后 $H$ 坐标由定理16.62证明中的 $K\cap(\{0\}\times H)=\{0\}$ 唯一确定。改变 $(x,h)$ 的代表元时，$h$ 的变化与 $\chi(x-\tau(y))$ 的变化相消。反向，每个 $(y,r)$ 对应 $[(\tau(y),r)]$，所以这确为集合双射。
+
+更新先得到 $[(\tau(y)+t,r+k)]$，再换成 $\tau(y')$ 代表便给式(16.49)。$[\tau(y)+t-\tau(y')]=y+[t]-y'=0$，保证表达式有定义。若再接总位置增量 $t_2$ 及钟增量 $k_2$，记 $y''=y'+[t_2]$，两个进位之和为
+
+$$
+\begin{aligned}
+&\chi\bigl(\tau(y)+t-\tau(y')\bigr)
+ +\chi\bigl(\tau(y')+t_2-\tau(y'')\bigr)\\
+&\hspace{2em}=\chi\bigl(\tau(y)+t+t_2-\tau(y'')\bigr).
+\end{aligned}
+\tag{16.50}
+$$
+
+故连续更新等于合并标记的更新；零标记给恒等，初态及每次解码由代表表达式正确。每个任务类可达，所以全部集合坐标可达。
+
+此处使用的截面进位是 [TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §6.1的已知坐标构造。具体取该节 $(K,G,Q,\iota,q)=(H,\widehat Q,B_0,\iota,\sigma)$，截面为 $s(y)=[(\tau(y),0)]$，则进位的 $H$ 坐标是 $\chi(\tau(y)+\tau(z)-\tau(y+z))$。已有 [截面进位构造](../../../D5/S1/Deficit/Cocycles/AdditiveCarryCocycle.lean)的 `kernelCarry`、`section_carry_cocycle` 取加法交换群 $X=\widehat Q$、$B=B_0$、商同态 $\sigma$ 及右逆 $s$，经 $\iota:H\cong\ker\sigma$ 运输到 $H$；归一化另外由 $\tau(0)=0$ 保证。对一个标记，其核坐标为 $k+\chi(t-\tau([t]))$，与上述两坐标进位相加恰为式(16.49)。标准截面构造在这里只承担任务状态运输这一步。证毕。
+
+### 16.8 模四高位和校准的八值共同接口
+
+**命题 16.67（四态任务不能独自认证十六态局部对）。** 取命题15.16的模型 $E=\mathbb Z/4\mathbb Z$、$C=H=\mathbb Z/2\mathbb Z$，令 $g(0)=g(1)=0$、$g(2)=g(3)=1$。记 $\operatorname{hi}(x)$ 为模四代表 $0,1,2,3$ 的高位。则 $D=\{0,2\}$、$\chi(2)=1$，且
+
+$$
+\widehat Q\cong\mathbb Z/4\mathbb Z,\qquad
+[(x,h)]\longmapsto\rho=x+2h\pmod4.
+\tag{16.51}
+$$
+
+任务初始化为 $\rho=0$，更新为 $\rho'=\rho+u+v+2k$，解码为 $\operatorname{hi}(\rho)$。两端分别保存 $(a,\rho)$、$(b,\rho)$，更新己方位置并解码己方位置与 $\operatorname{hi}(\rho)$。各局部有十六态，任务有四态；精确共同标签有八值。实际对有三十二个，匹配 $\rho$ 的对有六十四个。精确同源条件为
+
+$$
+\rho_A=\rho_B=\rho,\qquad a+b\equiv\rho\pmod2;
+\qquad
+c_A=(a\bmod2,\rho),\quad c_B=((\rho-b)\bmod2,\rho).
+\tag{16.52}
+$$
+
+在“己方位置、任务相位”坐标中，$A=(0,0)$ 与 $B=(1,0)$ 是两个单独可达、任务相位相同而不能同源的状态。任务扩张是非分裂的 $0\to\mathbb Z/2\mathbb Z\xrightarrow{h\mapsto2h}\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z\to0$。
+
+证明。$D$ 与 $\chi$ 的值由命题15.16的恒定差计算取得。式(16.51)的同态核是 $\{(0,0),(2,1)\}=K$，且满射，故给所示同构。$\operatorname{hi}(x+2h)=g(x)+h$，更新由来源平移得到。定理16.61–16.63与命题16.64给可达性、最小值与共同标签计数；每个标签的支持矩形为 $2\times2$，有四个来源。来源 $(0,0,0)$ 实现所列 $A$ 状态，来源 $(3,1,0)$ 实现所列 $B$ 状态；合并后二位置和为奇数，违反式(16.52)。任何同态 $\alpha:\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z$ 都满足 $\alpha(2)=2\alpha(1)=0$，不能等于 $\chi(2)=1$，故由定理16.65非分裂。证毕。
+
+### 16.9 真子群原钟下相同计数与不同扩张
+
+**命题 16.68（计数与较大值域校准均不决定分裂）。** 固定 $E=C=\mathbb Z/4\mathbb Z$、$H=\{0,2\}\le C$，仍取和校准。比较 $g_1(x)=x$ 与 $g_2(0)=g_2(2)=0$、$g_2(1)=g_2(3)=1$。两者均有 $D=\{0,2\}$、$|\widehat Q|=4$、局部最小值十六与十六、共同标签八值、实际对三十二个、只匹配任务类的对六十四个；但 $g_1$ 的任务扩张非分裂，$g_2$ 的任务扩张分裂。具体为
+
+$$
+\begin{aligned}
+g_1:&\quad\chi_1(2)=2,\qquad
+\widehat Q_1\cong\mathbb Z/4\mathbb Z,\quad[(x,h)]\mapsto x+h;\\
+g_2:&\quad\chi_2=0,\qquad
+\widehat Q_2\cong(\mathbb Z/2\mathbb Z)\times H,\quad[(x,h)]\mapsto([x],h).
+\end{aligned}
+\tag{16.53}
+$$
+
+$g_1$ 的恒定差同态延拓到 $E\to C$ 已经存在，却不存在所需 $E\to H$ 延拓。$g_2$ 则给出任务扩张分裂而任务标签相等仍不足以胶合的模型。
+
+证明。对 $g_1$，每个方向的差为该方向本身，要求差落在 $H$ 恰使 $D=H$。同态 $(x,h)\mapsto x+h$ 的核为 $\{(0,0),(2,2)\}=K$，商为模四；$\iota$ 对应嵌入 $H=\{0,2\}$。若 $\alpha:E\to H$ 为同态，则 $\alpha(2)=2\alpha(1)=0$，不可能等于二。恒等映射 $E\to C$ 的确延拓 $\chi_1$，这也证明较大值域条件不足。此任务直接用 $\rho=x+h$，初始零、更新 $\rho'=\rho+u+v+k$、解码 $\rho$，有四态。
+
+对 $g_2$，方向二的差为零，方向一在 $x=0,1$ 的差分别为一、三而不恒定，方向三同样如此，故 $D=\{0,2\}$、$\chi_2=0$。取 $\alpha=0$，$\bar g(0)=0$、$\bar g(1)=1$，式(16.47)给初态 $(0,0)$、更新 $(y,r)\mapsto(y+[u+v],r+k)$、解码 $\bar g(y)+r$。$H\cong\mathbb Z/2\mathbb Z$，所以两个任务群分别为 $\mathbb Z/4\mathbb Z$ 与 $(\mathbb Z/2\mathbb Z)^2$。其余相同计数由共同的 $|E|=4,|H|=|D|=2$ 得到。第二模型中取任务类 $q=0$ 及局部对 $(0,q),(1,q)$；两者单独可达却违反 $[a]+[b]=0$，从而分裂不保证只按任务标签胶合。证毕。
+
+### 16.10 改变指定读出后的非和校准边界
+
+**命题 16.69（非和任务可非分裂而仅按任务类精确胶合）。** 保持命题16.67的来源 $S=(\mathbb Z/4\mathbb Z)^2\times\mathbb Z/2\mathbb Z$、已知零制备、全部公开平移及封闭访问条件，但将指定校准读出改为
+
+$$
+f(a,b)=\operatorname{hi}(a),\qquad
+\ell=\operatorname{hi}(a)+h.
+\tag{16.54}
+$$
+
+这是指定任务的改变；不把原来的 $\operatorname{hi}(a+b)+h$ 作为读出随坐标运输。两个局部任务仍分别输出己方位置与这个新的 $\ell$。令 $\rho=a+2h\pmod4$，只钟任务有四个最小状态；两个局部最小可达空间分别为
+
+$$
+W_A^{\rm reach}=\{(a,\rho)\in(\mathbb Z/4\mathbb Z)^2:a\equiv\rho\pmod2\},
+\quad |W_A^{\rm reach}|=8;
+\qquad
+W_B^{\rm reach}=(\mathbb Z/4\mathbb Z)^2,
+\quad |W_B^{\rm reach}|=16.
+\tag{16.55}
+$$
+
+这些空间上的固定闭合律为
+
+$$
+\begin{aligned}
+\mathrm{Init}_{\ell}&=0,&\mathrm{Update}_{\ell}(\rho;(u,v,k))&=\rho+u+2k,&
+\mathrm{Decode}_{\ell}(\rho)&=\operatorname{hi}(\rho),\\
+\mathrm{Init}_A&=(0,0),&\mathrm{Update}_A((a,\rho);(u,v,k))&=(a+u,\rho+u+2k),&
+\mathrm{Decode}_A(a,\rho)&=(a,\operatorname{hi}(\rho)),\\
+\mathrm{Init}_B&=(0,0),&\mathrm{Update}_B((b,\rho);(u,v,k))&=(b+v,\rho+u+2k),&
+\mathrm{Decode}_B(b,\rho)&=(b,\operatorname{hi}(\rho)).
+\end{aligned}
+\tag{16.56}
+$$
+
+对任意单独可达的局部状态，只要 $\rho_A=\rho_B$ 就恰好同源。全部三十二个任务类匹配对都是实际对，每个对恢复唯一 $h$。任务群仍为带标记的非分裂扩张 $0\to\mathbb Z/2\mathbb Z\xrightarrow{h\mapsto2h}\mathbb Z/4\mathbb Z\to\mathbb Z/2\mathbb Z\to0$，其中商记录 $a\bmod2$。
+
+证明。$\operatorname{hi}(a)+h=\operatorname{hi}(a+2h)$，全部未来只钟输出由 $\rho$ 决定，式(16.56)只使用状态与标记。任意 $\rho$ 由 $(a,b,h)=(\rho,0,0)$ 达到。若 $\rho\ne\rho'$，取共同未来 $u=-\rho$，把第一相位化为零。若差为二或三，高位立即不同；若差为一，改取 $u=1-\rho$，两相位分别为一与二，高位也不同；均可令 $v=k=0$。所以四相位全部未来可分。
+
+$A$ 的奇偶约束由 $\rho=a+2h$ 得到，且在更新中保持。满足它时有唯一 $h\in\mathbb Z/2\mathbb Z$ 使 $2h=\rho-a$，任取 $b$ 即达到该 $A$ 状态。$B$ 的任意 $(b,\rho)$ 可由 $(a,b,h)=(\rho,b,0)$ 达到。$A$ 的不同 $a$、$B$ 的不同 $b$ 由当前己方位置输出区别；己方位置相同而 $\rho$ 不同时，由上段的共同未来标记区别。定理16.61证明中的历史满射论证只用确定性更新、可达性与未来区分，因此在这个改变后的任务中分别给八、十六的下界；式(16.56)达到它们。
+
+现在令两个可达局部状态的相位相等为 $\rho$。$A$ 的可达域已经保证 $2h=\rho-a$ 有唯一解，配上任意所给 $b$ 就是一个共同来源。反向，实际同源显然给相等 $\rho$。每个相位有两个 $A$ 状态、四个 $B$ 状态，形成 $2\times4$ 完整矩形；四个矩形共三十二个对，并各自对应八个来源。任务映射 $S\to\mathbb Z/4\mathbb Z$ 为 $(a,b,h)\mapsto a+2h$，满射且核为 $\{(a,b,h):a+2h=0\}$，故任务群与所示模四群同构。它的核标记为 $h\mapsto2h$、商标记为奇偶；模二非零元的两个模四提升均为四阶，不能给群同态截面，所以非分裂。此例中任务类在 $A$ 的可达域上已约束己方位置奇偶，不能用和校准中 $E\times\widehat Q$ 的全乘积假设替代。证毕。
+
+### 16.11 和校准内部的单向蕴含
+
+**推论 16.70（任务相等、精确胶合与加性分裂的范围）。** 在定义16.60的和校准族内，下列条件等价：对任意单独可达局部状态，任务类相等即足以保证实际同源；$D=E$；$B_0$ 为平凡群。它们都推出任务扩张(16.44)分裂，逆向蕴含不成立。若去掉和校准限制，“非分裂推出仅按任务类胶合失败”也不再成立。
+
+证明。由式(16.45)，任务匹配关系包含实际关系，两者相等当且仅当 $|B_0|=1$，亦即 $D=E$。也可直接由式(16.35)看到：$D=E$ 时位置商条件恒成立；$D\ne E$ 时取 $q=0,a=0$ 和某个 $b\notin D$，得到单独可达的假匹配。$D=E$ 时 $\chi$ 自身已是 $E\to H$ 的延拓，定理16.65给分裂。命题16.68的 $g_2$ 模型给分裂却不能只按任务类胶合。命题16.69则给改变指定读出后的非和模型，其中任务扩张非分裂而任务匹配恰好都是实际对。三个判据分别量化全部共同未来输出、两个当前局部状态的实际来源、以及保留核与商标记的群运算；上述蕴含只在各自声明的来源、任务与可达域下成立。证毕。
+
+## 16.99 追加锚
