@@ -15,3 +15,5 @@ triage: "anchor"
 ## Verified locator
 
 Nature 381, 1996, pages 607-609. Cited only as the origin of the sparse-coding objective used in the fiber-law volume.
+
+Declared identifiers: DOI 10.1038/381607a0.

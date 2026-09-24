@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/0904.4774"
 ## Verified locator
 
 IEEE Transactions on Information Theory 56(7), 2010; arXiv:0904.4774. Cited for local identifiability under random-support models; those hypotheses exclude the strictly hierarchical supports of the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/0904.4774.

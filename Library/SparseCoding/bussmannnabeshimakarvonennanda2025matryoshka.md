@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2503.17547"
 ## Verified locator
 
 ICML 2025; arXiv:2503.17547. Cited as empirical background on hierarchical features; no theorem from it is used.
+
+Declared identifiers: https://arxiv.org/abs/2503.17547.

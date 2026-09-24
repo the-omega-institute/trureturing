@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2110.06914"
 ## Verified locator
 
 ICLR 2022; arXiv:2110.06914. Provides the manifold-flow formalism for label-noise SGD (Katzenberger-type limit). The fiber-law volume uses only the pointwise statement that on the zero set the velocity equals the regularizer term; the limiting flow theorem itself is not re-proved or relied upon.
+
+Declared identifiers: https://arxiv.org/abs/2110.06914.

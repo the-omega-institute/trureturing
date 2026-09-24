@@ -16,3 +16,5 @@ url: "https://transformer-circuits.pub/2023/monosemantic-features/index.html"
 ## Verified locator
 
 Transformer Circuits Thread, October 2023. Cited as background for sparse autoencoders and feature splitting; no theorem from it is used in the fiber-law volume.
+
+Declared identifiers: https://transformer-circuits.pub/2023/monosemantic-features/index.html.

@@ -16,3 +16,5 @@ url: "https://www.lesswrong.com/posts/kcg58WhRxFA9hv9vN/toy-models-of-feature-ab
 ## Verified locator
 
 LessWrong, 7 October 2024. Cited for the empirical report of absorption and partial absorption under co-occurrence and variable magnitudes; used only as a boundary example in the fiber-law volume.
+
+Declared identifiers: https://www.lesswrong.com/posts/kcg58WhRxFA9hv9vN/toy-models-of-feature-absorption-in-saes.

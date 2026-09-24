@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2409.14507"
 ## Verified locator
 
 NeurIPS 2025; arXiv:2409.14507, v6 dated 17 November 2025. Appendix A.2, Propositions 1-2: decoder columns f_1 and f_2 + delta f_1 (the second not unit norm) preserve exact reconstruction while the expected l1 activation falls from 2 p_11 + p_10 to (2 - delta) p_11 + p_10. Used as the empirical report and as the prior descent-family mechanism; not a global-minimizer characterization and no threshold for a nonzero child-alone probability.
+
+Declared identifiers: https://arxiv.org/abs/2409.14507.

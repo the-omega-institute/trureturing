@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2206.04817"
 ## Verified locator
 
 arXiv:2206.04817. Cited only as a report of delayed generalization outside the weight-decay, fixed-feature setting.
+
+Declared identifiers: https://arxiv.org/abs/2206.04817.

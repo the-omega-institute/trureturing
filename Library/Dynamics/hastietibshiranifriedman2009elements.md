@@ -15,3 +15,5 @@ triage: "anchor"
 ## Verified locator
 
 Springer Series in Statistics, second edition, 2009, Section 3.4.1. Used as a textbook locator for the ridge algebra; no theorem from the book is used beyond the closed form.
+
+Declared identifiers: DOI 10.1007/978-0-387-84858-7.

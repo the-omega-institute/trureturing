@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2201.02177"
 ## Verified locator
 
 arXiv:2201.02177. Original report of the phenomenon; cited only as the source of the term.
+
+Declared identifiers: https://arxiv.org/abs/2201.02177.

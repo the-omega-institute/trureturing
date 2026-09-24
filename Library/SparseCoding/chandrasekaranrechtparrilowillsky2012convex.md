@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/1012.0621"
 ## Verified locator
 
 Foundations of Computational Mathematics 12(6), 2012, pages 805-849; arXiv:1012.0621. Used as the general framework behind the unit-atom l1 lower bound; no recovery theorem from the paper is used.
+
+Declared identifiers: DOI 10.1007/s10208-012-9135-7; https://arxiv.org/abs/1012.0621.

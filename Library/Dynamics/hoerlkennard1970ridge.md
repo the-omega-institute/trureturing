@@ -15,3 +15,5 @@ triage: "anchor"
 ## Verified locator
 
 Technometrics 12(1), 1970, pages 55-67. Used for the classical identities theta_lambda = Phi^T (Phi Phi^T + lambda I)^{-1} y and Phi theta_lambda - y = -lambda (Phi Phi^T + lambda I)^{-1} y; the fiber-law volume only re-derives them.
+
+Declared identifiers: DOI 10.1080/00401706.1970.10488634.

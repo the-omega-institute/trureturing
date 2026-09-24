@@ -16,3 +16,5 @@ url: "https://www.lesswrong.com/posts/a5wwqza2cY3W7L9cj/sparse-autoencoders-find
 ## Verified locator
 
 LessWrong, 14 March 2024. Empirical composed-feature report with decoder normalization present; cited as a predecessor and not as a proof of any global optimum.
+
+Declared identifiers: https://www.lesswrong.com/posts/a5wwqza2cY3W7L9cj/sparse-autoencoders-find-composed-features-in-small-toy.

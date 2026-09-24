@@ -16,3 +16,5 @@ url: "https://www.lesswrong.com/posts/QoR8noAB3Mp2KBA4B/do-sparse-autoencoders-f
 ## Verified locator
 
 LessWrong, 22 February 2024. Qualitative predecessor of the composite-atom argument; the fiber-law volume gives the exact unit-atom l1 form of this argument.
+
+Declared identifiers: https://www.lesswrong.com/posts/QoR8noAB3Mp2KBA4B/do-sparse-autoencoders-find-true-features.

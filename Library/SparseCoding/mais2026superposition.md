@@ -16,3 +16,5 @@ url: "https://github.com/lionellevine/MAIS"
 ## Verified locator
 
 Research draft, July 2026, in the MAIS repository, path agendas/A3/MAIS-A3.tex, commit 84b81190dfe64c8627f19589e4b5a0700fa68bf7; proposition labelled Positive-penalty merging. Low-status source (not peer reviewed; author field names an AI model). Its two-atom merging result coincides with the two-atom orthogonal case of the fiber-law volume's strict-hierarchy theorem; the volume's increments are arbitrary atom count, the per-datum equality characterization, the depth-m statement and the three-atom non-compositional-code statement.
+
+Declared identifiers: https://github.com/lionellevine/MAIS.

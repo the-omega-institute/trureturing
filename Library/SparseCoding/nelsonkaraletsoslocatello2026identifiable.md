@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2605.31245"
 ## Verified locator
 
 arXiv:2605.31245. Cited to note that strictly hierarchical supports violate its richness assumption, so its identifiability theorem does not apply to the fiber-law volume's toy model.
+
+Declared identifiers: https://arxiv.org/abs/2605.31245.

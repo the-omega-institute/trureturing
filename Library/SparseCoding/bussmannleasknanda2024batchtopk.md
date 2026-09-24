@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2412.06410"
 ## Verified locator
 
 arXiv:2412.06410. Used only for the definition of the batch-level TopK objective.
+
+Declared identifiers: https://arxiv.org/abs/2412.06410.

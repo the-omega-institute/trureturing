@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2310.02541"
 ## Verified locator
 
 arXiv:2310.02541. Theorem 3.1 under Assumptions A1-A6. Cited only as a proved example of delayed generalization by feature learning without weight decay, outside the fixed-feature theorems of the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/2310.02541.

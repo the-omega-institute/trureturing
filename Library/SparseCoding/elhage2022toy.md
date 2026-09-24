@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2209.10652"
 ## Verified locator
 
 Transformer Circuits Thread, 2022; arXiv:2209.10652. Cited as background for superposition and sparse dictionaries; no theorem from it is used in the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/2209.10652.

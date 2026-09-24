@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2601.19791"
 ## Verified locator
 
 ICML 2026; arXiv:2601.19791. Theorem A.2's proof gives the null-component recursion theta_perp^{t+1} = (1 - eta lambda) theta_perp^t; Theorems 4.1-4.2 separate the fast empirical-error convergence from the slow population-error convergence and Eq. (8) lower-bounds the population threshold time by a term of order log(initialization variance)/(eta lambda). Direct antecedent of the escaped-readout decay and the logarithmic shift in the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/2601.19791.

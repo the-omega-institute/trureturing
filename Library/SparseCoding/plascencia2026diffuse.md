@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2609.10299"
 ## Verified locator
 
 arXiv:2609.10299. Cited as an empirical phase diagram suggesting that trained SAEs need not sit at either of the two canonical dictionaries compared in the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/2609.10299.

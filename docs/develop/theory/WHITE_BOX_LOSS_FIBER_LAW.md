@@ -35,7 +35,7 @@ $$
 
 **定理 2.4（零集上的瞬时动态裁决，repo-derived）。** 设 $R$ 可微，$\theta\in Z$，考虑流 $\dot\theta=-\nabla L(\theta)-\lambda\nabla R(\theta)$。则在 $\theta$ 处 $\dot\theta=-\lambda\nabla R(\theta)$，按 $K(\theta)\oplus K(\theta)^\perp$ 分解为 $-\lambda P_{K(\theta)}\nabla R(\theta)$ 与 $-\lambda P_{K(\theta)^\perp}\nabla R(\theta)$；在定义 2.1 的秩恒定条件下前者是沿 $Z$ 的切向分量、后者是法向分量。此时 $\frac{d}{dt}L(\theta(t))=0$。取 $R=\tfrac12\|\theta\|^2$ 时切向分量为 $-\lambda P_{K(\theta)}\theta$。
 
-证明。$\theta\in Z$ 给 $\nabla L(\theta)=J^\top(F(\theta)-y)=0$，故速度只剩正则项；正交分解与 $\frac{d}{dt}L=\langle\nabla L,\dot\theta\rangle=0$ 都是直接计算。这是一个逐点陈述：$Z$ 在带权重衰减的流下不是不变集，离开 $Z$ 之后 $\nabla L$ 重新出现，长期行为要靠具体模型（第 3 章给线性模型的精确解；在光滑吸引的插值流形与 Morse–Bott 条件下，$\lambda\to0$ 的慢时间极限流 $d\bar\theta/d\tau=-P_{T\bar\theta Z}\bar\theta$ 是文献定理，第 7 章标注，本卷不重证）。证毕。
+证明。$\theta\in Z$ 给 $\nabla L(\theta)=J^\top(F(\theta)-y)=0$，故速度只剩正则项；正交分解与 $\frac{d}{dt}L=\langle\nabla L,\dot\theta\rangle=0$ 都是直接计算。这是一个逐点陈述：$Z$ 在带权重衰减的流下一般不是不变集，离开 $Z$ 之后 $\nabla L$ 重新出现，长期行为要靠具体模型（第 3 章给线性模型的精确解；在光滑吸引的插值流形与 Morse–Bott 条件下，$\lambda\to0$ 的慢时间极限流 $d\bar\theta/d\tau=-P_{T\bar\theta Z}\bar\theta$ 是文献定理，第 7 章标注，本卷不重证）。证毕。
 
 **评注 2.5（纤维律，semantic）。** 定理 2.3 与 2.4 是同一句话的静态形与动态形：主损失 $L$ 以其像为读数，纤维内部对它不可见；在纤维内挑选的是 $R$。精确的纤维图景属于约束问题或 $\lambda\to0^+$ 极限；有限 $\lambda$ 下最优解一般不在 $L$ 的零集上，比较必须同时计入 $L$ 与 $R$ 的变化（第 3 章的平台值与第 4 章的费用表都是这样的完整比较）。白盒解释的对象恰是纤维坐标——它们可从参数直接读出。它们是否也不出现在损失曲线里，取决于正则项是否把纤维坐标耦合回 $L$ 的方向：第 3 章的线性模型加各向同性权重衰减满足这一点（推论 3.2），而一般情形不然——取 $L(x,z)=x^2/2$、$R(x,z)=(x-z)^2/2$、$\lambda=1$，初始化 $(0,0)$ 与 $(0,1)$ 同在零集，前者不动，后者有 $\dot x(0)=1$，故 $L(\theta(t))=t^2/2+O(t^3)$，损失曲线分得开这两个纤维坐标。
 
@@ -87,7 +87,7 @@ $$
 $$
 \big|f_{\theta(t)}(x)-\varphi(x)^\top\theta_0-b(x)\big|\le\|\varphi(x)\|\,e^{-\sigma_N^2t}\|P\theta(0)-\theta_0\| .
 $$
-即测试预测与其极限之差只含训练瞬态的速率，不存在独立于训练瞬态、由零空间分量单独贡献的慢衰减模态。这不排除测试误差进入某容差的时刻可以任意晚：沿一个读到非零瞬态的固定方向放大 $\varphi(x)$，同一瞬态跨过同一容差就越晚（例如 $\Phi=(1,0)$、$y=0$、$\theta(0)=(1,0)$、$\varphi(x)=(M,0)$、$y(x)=0$ 时训练损失为 $\tfrac12e^{-2t}$ 而测试损失为 $\tfrac12M^2e^{-2t}$）；慢的行模态也能造成晚期改善：$\Phi=\operatorname{diag}(1,\delta)$、$y=(1,\delta)$、$\theta(0)=0$、$0<\delta^2<\tfrac12$ 时 $\theta(t)=(1-e^{-t},1-e^{-\delta^2t})$，训练损失 $\tfrac12e^{-2t}+\tfrac12\delta^2e^{-2\delta^2t}$ 早已很小，而测试点 $\varphi(x)=(-\tfrac12,1)$ 的预测 $\tfrac12+\tfrac12e^{-t}-e^{-\delta^2t}$ 在 $t\approx\delta^{-2}\log2$ 才变号。本命题排除的只是与训练瞬态无关的独立慢模态。
+即测试预测与其极限之差只含训练瞬态的速率，不存在独立于训练瞬态、由零空间分量单独贡献的慢衰减模态。这不排除测试误差进入某容差的时刻可以任意晚：沿一个读到非零瞬态的固定方向放大 $\varphi(x)$，同一瞬态跨过同一容差就越晚（例如 $\Phi=(1,0)$、$y=0$、$\theta(0)=(1,0)$、$\varphi(x)=(M,0)$、$y(x)=0$ 时训练损失为 $\tfrac12e^{-2t}$ 而测试损失为 $\tfrac12M^2e^{-2t}$）；慢的行模态也能造成晚期改善：$\Phi=\operatorname{diag}(1,\delta)$、$y=(1,\delta)$、$\theta(0)=0$、$0<\delta^2\le\tfrac14$ 时 $\theta(t)=(1-e^{-t},1-e^{-\delta^2t})$，训练损失为 $\tfrac12e^{-2t}+\tfrac12\delta^2e^{-2\delta^2t}$，而测试点 $\varphi(x)=(-\tfrac12,1)$（目标 $\tfrac12$）的预测 $g(t)=\tfrac12+\tfrac12e^{-t}-e^{-\delta^2t}$ 从 $g(0)=0$ 先降后升，恰有一个正根 $t_\delta$，它满足 $e^{-\delta^2t_\delta}=\tfrac12(1+e^{-t_\delta})$；由 $g(1)<0$ 得 $t_\delta>1$，故 $\delta^{-2}\log\frac{2}{1+e^{-1}}\le t_\delta\le\delta^{-2}\log2$，随 $\delta\to0$ 趋于无穷。本命题排除的只是与训练瞬态无关的独立慢模态。
 
 证明。定理 3.1 取 $\lambda=0$，再对 $\varphi(x)^\top E(t)$ 用 Cauchy–Schwarz 与谱下界。例子由直接代入。证毕。
 
@@ -173,7 +173,7 @@ $$
 
 **开放问题 5.7（富特征区的纤维陈述）。** 在特征学习区是否存在以时变 $K(\theta(t))$ 表述的延迟泛化定理，使定理 3.4（ii）的对数平移律以某种修正形式成立。本卷未证，也未见文献给出。
 
-**可证伪预测 5.8（预登记）。** 对固定特征的线性模型或只训练最后一层的网络，在权重衰减 $\lambda>0$、$P^\perp\theta(0)\ne0$ 下，预测三件可白盒测量的事：（a）$\|P^\perp\theta(t)\|$ 对数线性、斜率 $-\lambda$；（b）投影逃逸读数 $\varphi(x)^\top P^\perp\theta(t)=e^{-\lambda t}b(x)$（把当前参数投到 $\ker\Phi$ 后读出）恒等于 $e^{-\lambda t}b(x)$，把初始化沿 $\ker\Phi$ 的分量放大 $s$ 倍时，凡原进入时刻 $T_\varepsilon(x)>0$ 者恰增加 $\lambda^{-1}\log s$（定理 3.4（ii））而训练曲线逐点不变；（c）当 $\langle a,b\rangle\ge0$、$b\ne0$ 时归约超出量的对数斜率落在 $[-2\lambda,-\lambda]$（定理 3.4（iii））。**不**预测全预测误差 $|a(x)+s(t)b(x)+\varphi(x)^\top E(t)|$ 的进入时刻精确平移，也不预测“测试预测减去岭预测”的进入时刻精确平移（后者仍含瞬态 $\varphi(x)^\top E(t)$）：$\Phi=(1,0)$、$y=0$、$\lambda=1$、$\theta(0)=(1,1)$、$\varphi(x)=(1,1)$、$y(x)=0$、容差 $\tfrac12$ 时 $a(x)=0$，误差为 $e^{-2t}+e^{-t}$，零空间分量放大四倍后为 $e^{-2t}+4e^{-t}$，进入时刻分别为 $\log(1+\sqrt3)\approx1.0051$ 与 $\log(4+3\sqrt2)\approx2.1093$，平移 $1.1043$ 而非 $\log4\approx1.3863$。命题 6.1 在一个六维实例上给出（a）（b）（c）的精确值；在真实的非线性网络上它们是猜想，若实测的平移与 $\lambda^{-1}\log s$ 系统偏离，按第 2.6 条视为对“线性化图景可外推”的反驳，不改本章定理。
+**可证伪预测 5.8（预登记）。** 对固定特征的线性模型或只训练最后一层的网络，在权重衰减 $\lambda>0$、$P^\perp\theta(0)\ne0$ 下，预测三件可白盒测量的事：（a）$\|P^\perp\theta(t)\|$ 对数线性、斜率 $-\lambda$；（b）投影逃逸读数 $\varphi(x)^\top P^\perp\theta(t)=e^{-\lambda t}b(x)$（把当前参数投到 $\ker\Phi$ 后读出）恒等于 $e^{-\lambda t}b(x)$，把初始化沿 $\ker\Phi$ 的分量放大 $s$ 倍时，凡原进入时刻 $T_\varepsilon(x)>0$ 者恰增加 $\lambda^{-1}\log s$（定理 3.4（ii））而训练曲线逐点不变；（c）当 $\langle a,b\rangle\ge0$、$b\ne0$ 时归约超出量的对数斜率落在 $[-2\lambda,-\lambda]$（定理 3.4（iii））。**不**预测全预测误差 $|a(x)+s(t)b(x)+\varphi(x)^\top E(t)|$ 的进入时刻精确平移，也不预测“测试预测减去岭预测”的进入时刻精确平移（后者仍含瞬态 $\varphi(x)^\top E(t)$）：$\Phi=(1,0)$、$y=0$、$\lambda=1$、$\theta(0)=(1,1)$、$\varphi(x)=(1,1)$、$y(x)=0$、容差 $\tfrac12$ 时 $a(x)=0$，误差为 $e^{-2t}+e^{-t}$，零空间分量放大四倍后为 $e^{-2t}+4e^{-t}$，进入时刻分别为 $\log(1+\sqrt3)\approx1.0051$ 与 $\log(4+3\sqrt2)\approx2.1093$，平移 $1.1043$ 而非 $\log4\approx1.3863$。命题 6.1 在一个六维实例上给出（a）（b）（c）的精确值；在真实的非线性网络上它们是猜想，若实测的平移与 $\lambda^{-1}\log s$ 系统偏离，被反驳的是“线性化图景可外推到该网络”这一猜想，不是本章的定理。
 
 ## 6. 一个六维实例
 

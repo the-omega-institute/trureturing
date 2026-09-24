@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2210.01117"
 ## Verified locator
 
 ICLR 2023; arXiv:2210.01117. Empirical dependence of grokking on initialization scale and weight decay. Cited as directionally consistent with the initialization-scaling prediction of the fiber-law volume; not used as verification of that prediction.
+
+Declared identifiers: https://arxiv.org/abs/2210.01117.

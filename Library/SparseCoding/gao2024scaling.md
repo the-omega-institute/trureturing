@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2406.04093"
 ## Verified locator
 
 arXiv:2406.04093. Used only for the definition of the TopK objective; the fiber-law volume's TopK statement concerns an ideal single-atom encoder, not the implemented amortized encoder.
+
+Declared identifiers: https://arxiv.org/abs/2406.04093.

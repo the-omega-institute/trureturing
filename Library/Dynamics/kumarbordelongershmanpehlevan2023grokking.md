@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2310.06110"
 ## Verified locator
 
 ICLR 2024; arXiv:2310.06110. Used only to delimit the fiber-law volume's scope: its fixed-feature theorems do not cover the rich regime.
+
+Declared identifiers: https://arxiv.org/abs/2310.06110.

@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2301.05217"
 ## Verified locator
 
 ICLR 2023; arXiv:2301.05217. The fiber-law volume borrows only the term progress measure for the escaped norm; the modular-addition circuit analysis is not used.
+
+Declared identifiers: https://arxiv.org/abs/2301.05217.

@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2407.14435"
 ## Verified locator
 
 arXiv:2407.14435. Used only for the definition of the JumpReLU objective.
+
+Declared identifiers: https://arxiv.org/abs/2407.14435.

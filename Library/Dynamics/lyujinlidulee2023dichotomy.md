@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2311.18817"
 ## Verified locator
 
 ICLR 2024; arXiv:2311.18817. Two-phase (kernel then rich) picture under large initialization and small weight decay. Cited as background for the boundary of the fiber-law volume's linearized bookkeeping; no theorem from it is re-proved and no breakdown time is inferred from it.
+
+Declared identifiers: https://arxiv.org/abs/2311.18817.

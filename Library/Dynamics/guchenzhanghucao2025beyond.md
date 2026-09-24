@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2504.03162"
 ## Verified locator
 
 arXiv:2504.03162. Definition 3.1 identifies input pairs with equal targets and works on the quotient of inputs; cited only to record that this quotient language concerns task inputs, not parameter directions invisible to the training readout.
+
+Declared identifiers: https://arxiv.org/abs/2504.03162.

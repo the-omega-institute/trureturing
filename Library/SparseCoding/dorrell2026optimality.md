@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2606.02385"
 ## Verified locator
 
 arXiv:2606.02385. Cited as the closest general optimality theory; the fiber-law volume does not use its condition in any proof.
+
+Declared identifiers: https://arxiv.org/abs/2606.02385.

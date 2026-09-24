@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2501.04697"
 ## Verified locator
 
 ICLR 2025; arXiv:2501.04697. Cited only as a report of delayed generalization without weight decay, i.e. outside the fiber-law volume's fixed-feature theorems.
+
+Declared identifiers: https://arxiv.org/abs/2501.04697.

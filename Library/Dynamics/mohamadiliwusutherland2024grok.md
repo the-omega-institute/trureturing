@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2407.12332"
 ## Verified locator
 
 ICML 2024; arXiv:2407.12332. Theorems 3.4, 3.6, 4.3 and 4.5 compare kernel sample lower bounds with sufficient sample sizes for bounded networks. Cited only as background on grokking outside the fixed-feature setting.
+
+Declared identifiers: https://arxiv.org/abs/2407.12332.

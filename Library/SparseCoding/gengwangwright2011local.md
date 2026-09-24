@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/1101.5672"
 ## Verified locator
 
 arXiv:1101.5672 (a later ISIT 2014 version lists Geng and Wright). Used for the classical framing of dictionary learning as minimizing coefficient l1 over the exact-reconstruction fiber; its local-correctness theorem assumes random supports and does not apply to the hierarchical supports of the fiber-law volume.
+
+Declared identifiers: https://arxiv.org/abs/1101.5672.

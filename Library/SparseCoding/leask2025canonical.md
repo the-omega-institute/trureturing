@@ -16,3 +16,5 @@ url: "https://arxiv.org/abs/2502.04878"
 ## Verified locator
 
 ICLR 2025; arXiv:2502.04878. Cited as empirical background on non-canonical units; not used as a mathematical non-identifiability theorem.
+
+Declared identifiers: https://arxiv.org/abs/2502.04878.
