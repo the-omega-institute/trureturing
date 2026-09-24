@@ -1503,3 +1503,307 @@ $$
 证明停时有限。这里只给出错误率与几乎处处停止，不断言期望停时的最优尺度。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 单峰临界窗口的正态极限与精确风险
+
+**定义 13.1（临界坐标与联合恢复率）。** 沿用定义 11.1，置
+$I=F_M(r)$、$\mu=sI$、$v$ 如 (11.4)、$\sigma^2=sv$，并记
+$\Phi$ 为标准正态分布函数。均匀先验下的最优联合恢复率定义为
+
+$$
+\mathcal S^E_{d,r}(s)=\sup_{\widehat z,\widehat\epsilon}
+ \frac1{2M}\sum_{z\in C_+,\epsilon\in\{+,-\}}
+ \mathsf P^{\epsilon,E}_{b_z,s}
+ \{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}.
+\tag{13.1}
+$$
+
+固定增量律下独立随机乘积和的临界质量逃逸见
+[Kabluchko，定理 5](../../../Library/Dynamics/kabluchko2009products.md)；
+单个隐藏枢纽模型的高斯检测与恢复窗口陈述见
+[Narang–Perkins–Wee，定理 1.1、推论 1.8](../../../Library/Dynamics/narang2026stars.md)。
+两者的分布假设均不同于本定义的两个实验。
+
+**定理 13.2（真律与异位双重加权律的联合正态极限）。** 令 $d\to\infty$，
+$r=r_d\in(0,1)$ 任意，$s=s_d$ 为整数，且 $\mu/\log M\to1$。
+在任一真参数 $(z,\epsilon)$ 下，两种实验均满足
+
+$$
+\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma}
+ \ \Longrightarrow\ N(0,1).
+\tag{13.2}
+$$
+
+对任意异位 $z\ne w$，置 $\beta=1-r^2/(2k^2)$，定义概率律
+
+$$
+\frac{d\mathsf T^{\epsilon,E}_{z,w,s}}{d\mathsf U_s^E}
+ =\frac{L^{\epsilon,E}_{b_z,s}L^{\epsilon,E}_{b_w,s}}{\beta^s}.
+\tag{13.3}
+$$
+
+在此律下，两个坐标满足
+
+$$
+\left(\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma},
+       \frac{\log L^{\epsilon,E}_{b_w,s}-\mu}{\sigma}\right)
+ \ \Longrightarrow\ N(0,I_2).
+\tag{13.4}
+$$
+
+结论不限制 $r_d$ 接近 $0$ 或 $1$ 的速度。
+
+证明。以下 $C,c>0$ 为与 $d,r,s,z,w$ 无关的常数，可在各处不同；
+所有估计只需对充分大的 $d$ 成立。置 $q=r/k$，并定义
+
+$$
+B_j(u)=\frac{(1+u)|\log(1+u)|^j+(1-u)|\log(1-u)|^j}{2}.
+$$
+
+在 $u\downarrow0$ 处展开，在 $u\uparrow1$ 处用
+$(1-u)|\log(1-u)|^j\to0$，再在中间紧区间取界，得到
+
+$$
+B_1(u)\le Cu,\quad B_3(u)\le Cu^2,\quad
+cu^2\le\phi(u),\psi(u)\le Cu^2\qquad(0<u<1).
+\tag{13.5}
+$$
+
+同样 $(1\pm u)|\log(1\pm u)|\le Cu$、$|\xi(u)|\le Cu$。
+因此 $I\asymp r^2/n$、$v\asymp I$，且 $|J|\le C/n$。
+若 $a_z(x,y)=\log(nP_{b_z}(x,y))$，则在单边真律下
+
+$$
+\mathbb E|a_z|\le Cr/n,\qquad \mathbb E|a_z|^3\le CI.
+\tag{13.6}
+$$
+
+由 (11.5)，路径方差等于 $sv(1+O(n^{-1}))$。
+因为 $P_{b_z}^2=\Pi$，任何截至第 $j$ 条边的历史与从第 $j+3$ 条边开始的
+未来相互独立：两组端点之间有两步转移，条件分布已重置为均匀律。
+故边变量构成 $2$-依赖序列；独立状态对当然也满足固定依赖阶数的条件。
+中心化后的三阶绝对矩仍至多 $CI$，而
+
+$$
+\frac{sCI}{(sv)^{3/2}}=O(\mu^{-1/2})\longrightarrow0.
+\tag{13.7}
+$$
+
+应用固定依赖阶数三角阵的 Lyapunov 中心极限定理
+[Janson，定理 4.1](../../../Library/Dynamics/janson2021mdependent.md)
+即得 (13.2)。这里调用既有中心极限定理，所需矩界与依赖结构由本核族提供。
+
+下面证明双重加权结论，只需处理正向。以 (10.5) 的 $K=K_{b_zb_w}$ 记
+
+$$
+f=1+b_zb_w,\qquad g=\chi(b_z+b_w),\qquad
+\gamma=\mathbb E(\chi f)=\mathbb E(b_zb_w)=\beta-1.
+$$
+
+有 $\mathbb E f=\beta$、$\mathbb E g=\mathbb E(\chi g)=0$，所以
+
+$$
+K^2(x,y)=\frac{\beta f(x)+\gamma g(x)}n.
+\tag{13.8}
+$$
+
+由于 $K$ 每列之和为 $\beta$，矩阵 $Q=K^\top/\beta$ 是转移核，且
+
+$$
+Q^2(x,y)=\nu(y),\qquad
+\nu(y)=\frac{\beta f(y)+\gamma g(y)}{n\beta^2},\qquad
+\sup_y|n\nu(y)-1|\le Cr^2/n.
+\tag{13.9}
+$$
+
+$Q$ 为正核，$Q^2$ 的共同一行 $\nu$ 是其平稳分布。
+最后一界来自 $|b_zb_w|\le r^2/k$、$|g|\le2r$ 及
+$|\gamma|=r^2/(2k^2)$。
+(13.3) 的路径律倒序后正是均匀启动的 $Q$ 链。
+改为 $\nu$ 启动时，整条任意长路径的全变差变化至多
+$\operatorname{TV}(\operatorname{Unif}(X),\nu)\le Cr^2/n$，
+因为后续均用同一转移核。这一界不随 $s$ 增长。
+
+先分析双重加权独立单边律
+
+$$
+T(x,y)=\frac{K(x,y)}{n\beta}.
+$$
+
+相对于第 $z$ 个真单边律，其密度为
+$(1+\chi(x)\chi(y)b_w(x))/\beta$。
+对 $y$ 的奇偶取平均给出精确均值
+
+$$
+\mathbb E_Ta_z
+=\frac{I+\mathbb E[b_w\xi(b_z)]}{\beta},\qquad
+\mathbb E[b_w\xi(b_z)]
+=-\frac{q}{n}\bigl(\xi(r)+\xi(q)\bigr).
+\tag{13.10}
+$$
+
+在 $z$、$w$、$C_+\setminus\{z,w\}$ 上分别使用
+$b_z,b_w=(r,-q),(-q,r),(-q,-q)$，以及 $|\log(1\pm q)|\le Cq$，
+由 (13.5) 得到
+
+$$
+\begin{aligned}
+|\mathbb E_Ta_z-I|&\le CI/n,\\
+|\mathbb E_Ta_z^2-(v+I^2)|&\le CI/n,\\
+\mathbb E_T|a_za_w|&\le CI/n,\\
+\mathbb E_T|a_z|&\le Cr/n,\qquad
+\mathbb E_T|a_z|^3\le CI.
+\end{aligned}
+\tag{13.11}
+$$
+
+为详核第二行，相对于真律的未归一化二阶矩修正，其绝对值至多
+
+$$
+\frac{q\psi(r)+r\psi(q)+(k-1)q\psi(q)}n
+\le Cr^3/n^2\le CI/n.
+$$
+
+归一化误差满足同一界。第三行中，在两个峰位各有一个对数因子至多 $Cq$，
+另一个因子的加权绝对一阶矩至多 $Cr$；其余非零位置的乘积至多 $Cq^2$。
+故总量至多 $C(qr/n+q^2)\le CI/n$。第一行由 (13.10) 直接得到，
+最后两界由密度至多常数及 (13.6) 得到。对 $w$ 的估计完全相同。
+
+平稳倒序 $Q$ 路径的一条边，按原方向写成 $(x,y)$，其分布为
+$\nu(y)K(x,y)/\beta=n\nu(y)T(x,y)$。
+由 (13.9)，这个额外因子对均值造成的变化至多
+$C(r^2/n)(r/n)\le CI/n$，对二阶矩造成的变化至多 $CI/n$；
+故 (13.11) 的全部界在此单边分布下仍成立。
+
+还须控制相邻边。令 $Y_j$ 为倒序链，
+$A_{i,j}=a_i(Y_{j+1},Y_j)$，其中 $i\in\{z,w\}$。
+其下一条边的条件均值为
+
+$$
+H_i(y)=\frac1\beta\sum_xK(x,y)a_i(x,y),\qquad
+\|H_i\|_\infty\le Cr/n.
+\tag{13.12}
+$$
+
+确实，对每个固定 $y$，峰位那一项的绝对值至多 $Cr/n$，
+其余 $k$ 个非零项之和至多 $Ckq/n=Cr/n$，由
+$(1\pm r)|\log(1\pm r)|\le Cr$ 得到；另一个候选因子至多 $2$。
+因此对 $\ell=1,2$，马尔可夫性给出
+
+$$
+|\mathbb E[A_{i,0}A_{j,\ell}]|
+=|\mathbb E[A_{i,0}(Q^{\ell-1}H_j)(Y_1)]|
+\le Cr^2/n^2\le CI/n.
+\tag{13.13}
+$$
+
+减去均值乘积不改变这个量级。对 $\ell\ge3$，由 $Q^2$ 的共同一行，
+两条边及其两侧历史独立，协方差为零。
+
+综合 (13.11)–(13.13)，在平稳双重加权路径下，两个对数似然的均值向量为
+$(\mu,\mu)+O(\mu/n)$，协方差矩阵为
+
+$$
+svI_2+O(sI/n),
+\tag{13.14}
+$$
+
+其中矩阵余项逐元素有界。独立状态对由 (13.11) 相加也满足此式。
+对任一固定非零线性组合，两种实验的中心化单边三阶绝对矩至多 $CI$，
+总方差渐近于相应系数平方和乘 $sv$。
+再次用 Janson 的定理及 Cramér–Wold 判据，得到以真实均值中心化的二维正态极限。
+由于 $\mu\asymp\log M$，$O(\mu/n)/\sqrt{sv}\to0$；
+再用均匀启动与平稳启动的全变差界，即得 (13.4)。反向由整体倒序或逐对交换得到。$\square$
+
+**定理 13.3（任意振幅的临界窗口与混合似然质量逃逸）。** 令
+$r_d\in(0,1)$ 任意，且整数 $s_d$ 满足
+
+$$
+\frac{s_dF_M(r_d)-\log M}{\sqrt{s_dv}}\longrightarrow t\in\mathbb R.
+\tag{13.15}
+$$
+
+置 $p=\Phi(-t)$。在两种实验各自的均匀参考律下，均有
+
+$$
+\overline L^{+,E}_{s_d}\longrightarrow p,\qquad
+\overline L^{-,E}_{s_d}\longrightarrow p
+\quad\text{依概率},
+\tag{13.16}
+$$
+
+虽然每个混合似然的期望始终为一。最坏方向风险与最优联合恢复率分别满足
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow\frac{\Phi(-t)}2,
+\qquad
+\mathcal S^E_{d,r_d}(s_d)\longrightarrow\Phi(t).
+\tag{13.17}
+$$
+
+方向已知时，最优精确定位成功率也趋于 $\Phi(t)$。
+经有限群对称化的联合最大似然规则具有相同的最坏参数成功率极限。
+
+证明。由 $v\asymp I$，(13.15) 推出
+$\mu/\log M\to1$、$\sigma\asymp\sqrt{\log M}$。
+取 $a=(\log M)^{1/4}$、$h_\pm=\log M\pm a$。
+固定任一方向，置
+
+$$
+T_z=L_z\mathbf1_{\{\log L_z\le h_-\}},\qquad
+\overline T=M^{-1}\sum_zT_z.
+$$
+
+由 (13.2) 及换测度，$\mathbb E_{\mathsf U}\overline T\to p$。
+对角二阶矩满足 $M^{-1}\mathbb E T_z^2\le e^{h_-}/M=e^{-a}\to0$。
+异位项由 (13.3)–(13.4) 满足
+
+$$
+\mathbb E_{\mathsf U}T_zT_w
+=\beta^s\mathsf T_{z,w,s}
+  \{\log L_z\le h_-,\ \log L_w\le h_-\}
+\longrightarrow p^2,
+\tag{13.18}
+$$
+
+因为 $s(1-\beta)=O(\mu/n)\to0$，且两个标准化门槛均趋于 $-t$。
+置换对称性使所有异位项完全相同，故 $\overline T\to p$ 于 $L^2$。
+中间带 $h_-<\log L_z\le h_+$ 对混合似然的期望贡献，
+等于真律下落入该带的概率，由 (13.2) 趋零。
+另一方面，参考律下任一分量超过 $e^{h_+}$ 的概率至多
+$Me^{-h_+}=e^{-a}$。三部分合起来证明 (13.16)。
+
+由 (11.12)，方向风险等于
+$\tfrac12\mathbb E_{\mathsf U}\min(\overline L^+,\overline L^-)$。
+两个混合的乘积期望由 (10.3) 精确等于一。
+对 $K>0$，
+
+$$
+\mathbb E\!\left[
+\min(\overline L^+,\overline L^-)
+\mathbf1_{\{\max(\overline L^+,\overline L^-)>K\}}\right]
+\le\frac{\mathbb E(\overline L^+\overline L^-)}K=\frac1K.
+\tag{13.19}
+$$
+
+因此最小值族一致可积；其依概率极限为 $p$，得到方向风险极限。
+这一步只使用混合之间的交叉内积，未假设两个混合独立。
+
+若方向已知，任意定位规则的成功率由 (11.14) 的分割步骤至多为
+
+$$
+\frac{e^{h_-}}M+
+\mathsf P^{\epsilon,E}_{b_z,s}\{\log L^{\epsilon,E}_{b_z,s}>h_-\}
+\longrightarrow\Phi(t).
+$$
+
+这里不再用 Chebyshev 界，而使用 (13.2)。透露方向只增加信息，
+所以它也是未知方向联合恢复率的上界。
+对联合最大似然，若真似然超过 $e^{h_+}$ 而错误候选均低于此值，恢复必成功。
+由 (11.15) 及 Markov 不等式，错误候选越界的总概率至多
+$(2M-1)e^{-h_+}\to0$；真似然越界概率由 (13.2) 趋于 $\Phi(t)$。
+这给出匹配的联合恢复下界，也给出已知方向定位的下界。
+有限群对称化保留均匀平均成功率，并使每个参数的成功率相等，
+完成最坏参数陈述。$\square$
+
+## 追加锚（本行以下为增补区）
