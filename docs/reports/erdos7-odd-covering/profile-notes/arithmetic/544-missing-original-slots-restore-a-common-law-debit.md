@@ -269,6 +269,8 @@ The zero-completion example identifies a genuine failure of a proposed deduction
 
 A useful next target is a common-source inequality coupling small missing-slot weight with the actual occupied-slot phase geometry or forbidden-fibre overlap. Dense occupancy restricts the completion freedom, but that fact alone does not prove useful overlap. Any such alternative saving must use the same actual kernels, phases, complete tail and final law. Even a uniform two-copy result at 257/51 would still need the separate transport conditions to connect to the unrestricted original problem.
 
+[Report545](545-bounded-completion-payoffs-pass-dense-small-labels.md) supplies a bounded lower witness for this same debit when the eight full labels 11*d, d in {25,125,49,343,175,875,245,1715}, are absent. It gives R_Q<5.038141<257/51 while allowing both copies at all three of55,77,385 and arbitrary other original heights. An actual57-class family satisfies the new condition while every single-pair PD8 test and PS1 is insufficient. The argument bounds the loss of a clipped LOWER payoff on the uncertain removed-source defect; it does not apply a convex upper comparison to that clipped function. Populating the eight additional labels remains outside this sufficient region.
+
 ## 8. Exact finite verification
 
 The self-contained [exact consumer](../../frontier/cover-geometry/phase_debit_completion.py) and its [retained result](../../frontier/cover-geometry/phase_debit_completion.json) use N=K=4. The recorded execution with `python3 -I -S -B -O` exited0, with176 named checks passing. It imports no previous producer and has no external data input.

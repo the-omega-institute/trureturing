@@ -1,0 +1,1581 @@
+{
+  "scope": "Numerical and literal-cylinder support for the ordinary same-PA-law eight-missing-label descendant-slot theorem; not a complete Lean proof or unrestricted Erdos #7 result.",
+  "missing_old_cofactors": [
+    25,
+    125,
+    49,
+    343,
+    175,
+    875,
+    245,
+    1715
+  ],
+  "missing_full_first11_labels": [
+    275,
+    1375,
+    539,
+    3773,
+    1925,
+    9625,
+    2695,
+    18865
+  ],
+  "original_C": {
+    "5": [
+      1,
+      3
+    ],
+    "7": [
+      1,
+      4
+    ]
+  },
+  "original_C_CRT": [
+    35,
+    18
+  ],
+  "fixed_comparison_queries": {
+    "25": {
+      "cylinder": {
+        "5": [
+          2,
+          8
+        ]
+      },
+      "CRT": [
+        25,
+        8
+      ]
+    },
+    "125": {
+      "cylinder": {
+        "5": [
+          3,
+          58
+        ]
+      },
+      "CRT": [
+        125,
+        58
+      ]
+    },
+    "49": {
+      "cylinder": {
+        "7": [
+          2,
+          18
+        ]
+      },
+      "CRT": [
+        49,
+        18
+      ]
+    },
+    "343": {
+      "cylinder": {
+        "7": [
+          3,
+          165
+        ]
+      },
+      "CRT": [
+        343,
+        165
+      ]
+    },
+    "175": {
+      "cylinder": {
+        "5": [
+          2,
+          8
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "CRT": [
+        175,
+        158
+      ]
+    },
+    "875": {
+      "cylinder": {
+        "5": [
+          3,
+          58
+        ],
+        "7": [
+          1,
+          4
+        ]
+      },
+      "CRT": [
+        875,
+        683
+      ]
+    },
+    "245": {
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          2,
+          18
+        ]
+      },
+      "CRT": [
+        245,
+        18
+      ]
+    },
+    "1715": {
+      "cylinder": {
+        "5": [
+          1,
+          3
+        ],
+        "7": [
+          3,
+          165
+        ]
+      },
+      "CRT": [
+        1715,
+        508
+      ]
+    }
+  },
+  "completion_scope": "Only absent full labels 11*d at exponent one are filled in both comparison slots. Original phases, all actual kernels, eta, and final normalization are unchanged. Later exponent and all other original labels are arbitrary.",
+  "conditional_measure": "Haar conditional on C, not eta conditional on C",
+  "distribution5": {
+    "0": "4/5",
+    "1": "4/25",
+    "2": "1/25"
+  },
+  "distribution7": {
+    "0": "6/7",
+    "1": "6/49",
+    "2": "1/49"
+  },
+  "joint_descendant_counts": {
+    "(0, 0)": 840,
+    "(0, 1)": 120,
+    "(0, 2)": 20,
+    "(1, 0)": 168,
+    "(1, 1)": 24,
+    "(1, 2)": 4,
+    "(2, 0)": 42,
+    "(2, 1)": 6,
+    "(2, 2)": 1
+  },
+  "payoff_counts": {
+    "0": 840,
+    "1": 288,
+    "3": 97
+  },
+  "conditional_payoff_expectation": "579/1225",
+  "raw_payoff_integral": "579/42875",
+  "payoff": "1_C * min(3, (2*S5+2*S7-1)_+)",
+  "bounded_transfer": "Integral_eta f >= integral_H f - 3*H(C without U) >= 579/42875-3*delta; f is a nonnegative bounded LOWER witness for the actual completed hinge.",
+  "worst_deletion_breakpoints": [
+    {
+      "deleted_mass": "97/42875",
+      "remaining_integral": "288/42875"
+    },
+    {
+      "deleted_mass": "11/1225",
+      "remaining_integral": "0/1"
+    },
+    {
+      "deleted_mass": "1/35",
+      "remaining_integral": "0/1"
+    }
+  ],
+  "extreme_deletion_checks": {
+    "whole_cells": 1226,
+    "half_cells": 1225
+  },
+  "first11_debit": "J11 >= (10/11)*(579/42875-3*delta)",
+  "uniform_mass_credit": "386/94325",
+  "remaining_delta_coefficient": "1/11",
+  "T": "257/51",
+  "c0": "6168733163201163811/542935350932041267200",
+  "total_credit": "11966/962115",
+  "strict_margin": "4086970802426556683/3800547456524288870400",
+  "uniform_norm_bound": "19147691388545460496117/3800547456524288870400",
+  "separation_fixture": {
+    "originals": [
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            1,
+            1
+          ]
+        },
+        "modulus": 5,
+        "residue": 1,
+        "private": {
+          "5": 1,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            1,
+            2
+          ]
+        },
+        "modulus": 5,
+        "residue": 2,
+        "private": {
+          "5": 2,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            2,
+            5
+          ]
+        },
+        "modulus": 25,
+        "residue": 5,
+        "private": {
+          "5": 5,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            2,
+            10
+          ]
+        },
+        "modulus": 25,
+        "residue": 10,
+        "private": {
+          "5": 10,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            3,
+            25
+          ]
+        },
+        "modulus": 125,
+        "residue": 25,
+        "private": {
+          "5": 25,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            3,
+            50
+          ]
+        },
+        "modulus": 125,
+        "residue": 50,
+        "private": {
+          "5": 50,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            4,
+            125
+          ]
+        },
+        "modulus": 625,
+        "residue": 125,
+        "private": {
+          "5": 125,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure5",
+        "cylinder": {
+          "5": [
+            4,
+            250
+          ]
+        },
+        "modulus": 625,
+        "residue": 250,
+        "private": {
+          "5": 250,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            1,
+            1
+          ]
+        },
+        "modulus": 7,
+        "residue": 1,
+        "private": {
+          "5": 0,
+          "7": 1,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            1,
+            2
+          ]
+        },
+        "modulus": 7,
+        "residue": 2,
+        "private": {
+          "5": 0,
+          "7": 2,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            2,
+            7
+          ]
+        },
+        "modulus": 49,
+        "residue": 7,
+        "private": {
+          "5": 0,
+          "7": 7,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            2,
+            14
+          ]
+        },
+        "modulus": 49,
+        "residue": 14,
+        "private": {
+          "5": 0,
+          "7": 14,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            3,
+            49
+          ]
+        },
+        "modulus": 343,
+        "residue": 49,
+        "private": {
+          "5": 0,
+          "7": 49,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            3,
+            98
+          ]
+        },
+        "modulus": 343,
+        "residue": 98,
+        "private": {
+          "5": 0,
+          "7": 98,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            4,
+            343
+          ]
+        },
+        "modulus": 2401,
+        "residue": 343,
+        "private": {
+          "5": 0,
+          "7": 343,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "pure7",
+        "cylinder": {
+          "7": [
+            4,
+            686
+          ]
+        },
+        "modulus": 2401,
+        "residue": 686,
+        "private": {
+          "5": 0,
+          "7": 686,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            1,
+            3
+          ]
+        },
+        "modulus": 35,
+        "residue": 3,
+        "private": {
+          "5": 3,
+          "7": 3,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            1,
+            4
+          ]
+        },
+        "modulus": 35,
+        "residue": 18,
+        "private": {
+          "5": 3,
+          "7": 4,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            2,
+            21
+          ]
+        },
+        "modulus": 245,
+        "residue": 168,
+        "private": {
+          "5": 3,
+          "7": 21,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            2,
+            28
+          ]
+        },
+        "modulus": 245,
+        "residue": 28,
+        "private": {
+          "5": 3,
+          "7": 28,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            3,
+            147
+          ]
+        },
+        "modulus": 1715,
+        "residue": 833,
+        "private": {
+          "5": 3,
+          "7": 147,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            3,
+            196
+          ]
+        },
+        "modulus": 1715,
+        "residue": 1568,
+        "private": {
+          "5": 3,
+          "7": 196,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            4,
+            1029
+          ]
+        },
+        "modulus": 12005,
+        "residue": 10633,
+        "private": {
+          "5": 3,
+          "7": 1029,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            1,
+            3
+          ],
+          "7": [
+            4,
+            1372
+          ]
+        },
+        "modulus": 12005,
+        "residue": 3773,
+        "private": {
+          "5": 3,
+          "7": 1372,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            1,
+            3
+          ]
+        },
+        "modulus": 175,
+        "residue": 115,
+        "private": {
+          "5": 15,
+          "7": 3,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            1,
+            4
+          ]
+        },
+        "modulus": 175,
+        "residue": 165,
+        "private": {
+          "5": 15,
+          "7": 4,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            2,
+            21
+          ]
+        },
+        "modulus": 1225,
+        "residue": 315,
+        "private": {
+          "5": 15,
+          "7": 21,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            2,
+            28
+          ]
+        },
+        "modulus": 1225,
+        "residue": 665,
+        "private": {
+          "5": 15,
+          "7": 28,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            3,
+            147
+          ]
+        },
+        "modulus": 8575,
+        "residue": 490,
+        "private": {
+          "5": 15,
+          "7": 147,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            3,
+            196
+          ]
+        },
+        "modulus": 8575,
+        "residue": 2940,
+        "private": {
+          "5": 15,
+          "7": 196,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            4,
+            1029
+          ]
+        },
+        "modulus": 60025,
+        "residue": 27440,
+        "private": {
+          "5": 15,
+          "7": 1029,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            2,
+            15
+          ],
+          "7": [
+            4,
+            1372
+          ]
+        },
+        "modulus": 60025,
+        "residue": 44590,
+        "private": {
+          "5": 15,
+          "7": 1372,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            1,
+            3
+          ]
+        },
+        "modulus": 875,
+        "residue": 325,
+        "private": {
+          "5": 75,
+          "7": 3,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            1,
+            4
+          ]
+        },
+        "modulus": 875,
+        "residue": 200,
+        "private": {
+          "5": 75,
+          "7": 4,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            2,
+            21
+          ]
+        },
+        "modulus": 6125,
+        "residue": 5950,
+        "private": {
+          "5": 75,
+          "7": 21,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            2,
+            28
+          ]
+        },
+        "modulus": 6125,
+        "residue": 5075,
+        "private": {
+          "5": 75,
+          "7": 28,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            3,
+            147
+          ]
+        },
+        "modulus": 42875,
+        "residue": 33075,
+        "private": {
+          "5": 75,
+          "7": 147,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            3,
+            196
+          ]
+        },
+        "modulus": 42875,
+        "residue": 26950,
+        "private": {
+          "5": 75,
+          "7": 196,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            4,
+            1029
+          ]
+        },
+        "modulus": 300125,
+        "residue": 51450,
+        "private": {
+          "5": 75,
+          "7": 1029,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            3,
+            75
+          ],
+          "7": [
+            4,
+            1372
+          ]
+        },
+        "modulus": 300125,
+        "residue": 8575,
+        "private": {
+          "5": 75,
+          "7": 1372,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            1,
+            3
+          ]
+        },
+        "modulus": 4375,
+        "residue": 2250,
+        "private": {
+          "5": 375,
+          "7": 3,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            1,
+            4
+          ]
+        },
+        "modulus": 4375,
+        "residue": 375,
+        "private": {
+          "5": 375,
+          "7": 4,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            2,
+            21
+          ]
+        },
+        "modulus": 30625,
+        "residue": 3500,
+        "private": {
+          "5": 375,
+          "7": 21,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            2,
+            28
+          ]
+        },
+        "modulus": 30625,
+        "residue": 21000,
+        "private": {
+          "5": 375,
+          "7": 28,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            3,
+            147
+          ]
+        },
+        "modulus": 214375,
+        "residue": 196000,
+        "private": {
+          "5": 375,
+          "7": 147,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            3,
+            196
+          ]
+        },
+        "modulus": 214375,
+        "residue": 104125,
+        "private": {
+          "5": 375,
+          "7": 196,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            4,
+            1029
+          ]
+        },
+        "modulus": 1500625,
+        "residue": 471625,
+        "private": {
+          "5": 375,
+          "7": 1029,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "mixed57",
+        "cylinder": {
+          "5": [
+            4,
+            375
+          ],
+          "7": [
+            4,
+            1372
+          ]
+        },
+        "modulus": 1500625,
+        "residue": 1329125,
+        "private": {
+          "5": 375,
+          "7": 1372,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "5": [
+            1,
+            4
+          ],
+          "11": [
+            1,
+            1
+          ]
+        },
+        "modulus": 55,
+        "residue": 34,
+        "private": {
+          "5": 4,
+          "7": 0,
+          "11": 1,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "5": [
+            1,
+            4
+          ],
+          "11": [
+            1,
+            2
+          ]
+        },
+        "modulus": 55,
+        "residue": 24,
+        "private": {
+          "5": 4,
+          "7": 0,
+          "11": 2,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "7": [
+            1,
+            5
+          ],
+          "11": [
+            1,
+            3
+          ]
+        },
+        "modulus": 77,
+        "residue": 47,
+        "private": {
+          "5": 0,
+          "7": 5,
+          "11": 3,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "7": [
+            1,
+            5
+          ],
+          "11": [
+            1,
+            4
+          ]
+        },
+        "modulus": 77,
+        "residue": 26,
+        "private": {
+          "5": 0,
+          "7": 5,
+          "11": 4,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "5": [
+            1,
+            4
+          ],
+          "7": [
+            1,
+            5
+          ],
+          "11": [
+            1,
+            5
+          ]
+        },
+        "modulus": 385,
+        "residue": 159,
+        "private": {
+          "5": 4,
+          "7": 5,
+          "11": 5,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "first11",
+        "cylinder": {
+          "5": [
+            1,
+            4
+          ],
+          "7": [
+            1,
+            5
+          ],
+          "11": [
+            1,
+            6
+          ]
+        },
+        "modulus": 385,
+        "residue": 369,
+        "private": {
+          "5": 4,
+          "7": 5,
+          "11": 6,
+          "13": 0,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "laterpure",
+        "cylinder": {
+          "13": [
+            1,
+            1
+          ]
+        },
+        "modulus": 13,
+        "residue": 1,
+        "private": {
+          "5": 0,
+          "7": 0,
+          "11": 0,
+          "13": 1,
+          "17": 0,
+          "19": 0
+        }
+      },
+      {
+        "kind": "laterpure",
+        "cylinder": {
+          "17": [
+            1,
+            1
+          ]
+        },
+        "modulus": 17,
+        "residue": 1,
+        "private": {
+          "5": 0,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 1,
+          "19": 0
+        }
+      },
+      {
+        "kind": "laterpure",
+        "cylinder": {
+          "19": [
+            1,
+            1
+          ]
+        },
+        "modulus": 19,
+        "residue": 1,
+        "private": {
+          "5": 0,
+          "7": 0,
+          "11": 0,
+          "13": 0,
+          "17": 0,
+          "19": 1
+        }
+      }
+    ],
+    "label_counts": {
+      "5": 2,
+      "25": 2,
+      "125": 2,
+      "625": 2,
+      "7": 2,
+      "49": 2,
+      "343": 2,
+      "2401": 2,
+      "35": 2,
+      "245": 2,
+      "1715": 2,
+      "12005": 2,
+      "175": 2,
+      "1225": 2,
+      "8575": 2,
+      "60025": 2,
+      "875": 2,
+      "6125": 2,
+      "42875": 2,
+      "300125": 2,
+      "4375": 2,
+      "30625": 2,
+      "214375": 2,
+      "1500625": 2,
+      "55": 2,
+      "77": 2,
+      "385": 2,
+      "13": 1,
+      "17": 1,
+      "19": 1
+    },
+    "original_count": 57,
+    "label_count": 30,
+    "mixed_mass": "4992/60025",
+    "delta": "121/720300",
+    "d5": "1/1250",
+    "d7": "1/7203",
+    "all_single_pair_Gamma_eta_upper": "1/125",
+    "touching_pair_Gamma": "1/11",
+    "all_single_pair_PD8_upper": "92153606998216691157721/9145067317261570094400000",
+    "old_test_gap": "921646448584542100691/717260181746005497600000",
+    "PS1_usable_counts": [
+      {
+        "C_CRT": [
+          35,
+          3
+        ],
+        "usable": {
+          "5": 0,
+          "7": 0,
+          "35": 0
+        }
+      },
+      {
+        "C_CRT": [
+          35,
+          18
+        ],
+        "usable": {
+          "5": 0,
+          "7": 0,
+          "35": 0
+        }
+      }
+    ],
+    "scope": "One actual family is certified by the new condition and by no old single-pair PD8 or PS1 test. This is not inclusion of all old regions, failure of the general debit identity, or a lower witness."
+  },
+  "scope_notes": [
+    "The actual 35 class is chosen once when delta<1/35; if delta>=1/35 the direct packing credit closes instead.",
+    "No independence of the actual deleted measure eta is assumed.",
+    "Only the finite Haar descendant distribution factorizes.",
+    "The clipped payoff is used from below pointwise, never as a convex upper comparison.",
+    "The arbitrary-family transfer and all-depth PA implication are ordinary proofs, not consequences of finite checking alone."
+  ],
+  "checks": {
+    "eight_distinct_missing_cofactors": true,
+    "all_query_CRT_moduli_are_declared_labels": true,
+    "all_full_labels_have_exactly_one_factor_eleven": true,
+    "no_conflict_between_full_labels_or_unit": true,
+    "nested_five_descendants_preserve_C_phase": true,
+    "nested_seven_descendants_preserve_C_phase": true,
+    "mixed_companions_preserve_both_C_roots": true,
+    "both_slots_available_at_every_selected_full_label": true,
+    "one_fixed_completion_in_both_slots": true,
+    "five_Haar_conditional_count_distribution": true,
+    "seven_Haar_conditional_count_distribution": true,
+    "all_1225_literal_CRT_loads_match_companion_formula": true,
+    "all_1225_payoffs_are_nonnegative_bounded_hinge_lower_witnesses": true,
+    "joint_Haar_distribution_is_product": true,
+    "payoff_histogram": true,
+    "conditional_payoff_expectation": true,
+    "raw_C_payoff_integral": true,
+    "extremal_deletion_order_is_nonincreasing": true,
+    "all_extreme_whole_and_half_cell_deletions_obey_defect_bound": true,
+    "extreme_deletion_checks_cover_all_cells": true,
+    "bounded_loss_constant_three_is_sharp_before_first_breakpoint": true,
+    "32_pointwise_raw_defect_cells_have_correct_direction": true,
+    "both_first_exponent_beta_weights": true,
+    "delta_after_bounded_debit_has_positive_coefficient": true,
+    "uniform_mass_credit_constant": true,
+    "large_delta_branch_already_supplies_same_credit": true,
+    "claimed_exact_total_credit": true,
+    "total_credit_strictly_exceeds_PA_gap": true,
+    "missing_modulus35_branch_closes_directly": true,
+    "separation_fixture_has_57_originals_30_labels": true,
+    "separation_fixture_multiplicity_at_most_two": true,
+    "separation_fixture_full_six_prime_support": true,
+    "separation_fixture_all_zero_survives": true,
+    "separation_fixture_all_57_private_points": true,
+    "separation_fixture_satisfies_all_eight_missing_full_labels": true,
+    "separation_fixture_only_first11_labels_are_55_77_385": true,
+    "separation_fixture_all_three_small_full_labels_are_double": true,
+    "separation_fixture_mixed_rectangles_pairwise_disjoint": true,
+    "separation_fixture_mixed_avoids_pure57": true,
+    "separation_fixture_same_actual_old_source_values": true,
+    "all_low_nontriple_cofactors_are_25_49": true,
+    "only_small_remaining_pair_has_large_lcm": true,
+    "every_touching_pair_Gamma_mass_below_uniform_cap": true,
+    "all_single_pair_PD8_upper_bound_exact": true,
+    "BP7_single_pair_failure_margin_positive": true,
+    "both_actual_35_classes_have_all_PS1_usable_counts_zero": true,
+    "uniform_norm_bound_matches_report545": true
+  },
+  "passed_count": 47,
+  "complete": true
+}
