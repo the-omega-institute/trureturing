@@ -317,3 +317,5 @@ for those supports conditionally; CQ8 establishes its premise only for
 the specified enlarged family. Neither the full3-divisible mixed family
 nor arbitrary P-only mixed supports are settled here. Unrestricted
 Erdős #7 remains open.
+
+[Report561](561-all-three-rooted-supports-have-a-common-query-law.md) supplies the stronger source/query alternative for all mixed originals divisible by3, with arbitrary supports and phases. Its normalized sequential law gives complete query norm below11 and permits arbitrary23/29 extensions. It also treats all fifteen rooted triangles with three full old pair towers. These are new actual-law constructions, not a proof that the original pure-product mixed loss always satisfies CQ6.
