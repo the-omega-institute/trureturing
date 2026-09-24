@@ -37,67 +37,6 @@ noncomputable def cycleWeight (k : ℕ) (p : ℝ) (m : ℕ)
     (v : Fin (m + 1) → State k) : ℝ :=
   ∏ i : Fin (m+1), kernel k p (extension m v i.val) (extension m v (i.val+1))
 
-/-- Signed rotation is a bijection preserving the actual transition product. Its action on
-all extended states is translation by one, including across the complemented seam. -/
-theorem rotation_preserves_weight (k m : ℕ) (p : ℝ) :
-    (∀ (v : Fin (m + 1) → State k) (i : ℕ),
-      extension m (rotation m v) i = extension m v (i+1)) ∧
-    (∀ v : Fin (m + 1) → State k, cycleWeight k p m (rotation m v) = cycleWeight k p m v) := by
-  have hbase (v : Fin (m + 1) → State k) (i : ℕ) (hi : i < m+1) :
-      extension m v i = v ⟨i,hi⟩ := by
-    simp [extension, cycleSign, Nat.mod_eq_of_lt hi, Nat.div_eq_of_lt hi]
-  have hperiod (v : Fin (m + 1) → State k) (i : ℕ) :
-      extension m v (i+(m+1)) = flip (extension m v i) := by
-    have hd : (i+(m+1))/(m+1) = i/(m+1)+1 := by
-      rw [Nat.add_div (by omega : 0 < m+1)]
-      simp [Nat.div_self (by omega : 0 < m+1), Nat.not_le.mpr (Nat.mod_lt i (by omega : 0 < m+1))]
-    have hp : decide (((i/(m+1)+1)%2)=1) = !(decide ((i/(m+1))%2=1)) := by
-      by_cases h : (i/(m+1))%2=1
-      · have hh : (i/(m+1)+1)%2 ≠ 1 := by omega
-        simp [h,hh]
-      · have hh : (i/(m+1)+1)%2 = 1 := by omega
-        simp [h,hh]
-    simp only [extension, cycleSign, Nat.add_mod_right, hd, hp, TwistedResetPaths.flip]
-    congr 1
-    cases (v ⟨i%(m+1),Nat.mod_lt _ (by omega)⟩).1 <;>
-      cases decide ((i/(m+1))%2=1) <;> rfl
-  have hr (v : Fin (m + 1) → State k) (i : Fin (m+1)) :
-      rotation m v i = extension m v (i.val+1) := by
-    refine Fin.lastCases ?_ (fun j => ?_) i
-    · simp only [rotation, Equiv.coe_fn_mk, Fin.snoc_last, Fin.val_last]
-      simpa [hbase] using (hperiod v 0).symm
-    · simp only [rotation, Equiv.coe_fn_mk, Fin.snoc_castSucc, Fin.val_castSucc]
-      rw [hbase v (j.val+1) (by omega)]
-      rfl
-  have hshift (v : Fin (m + 1) → State k) (i : ℕ) :
-      extension m (rotation m v) i = extension m v (i+1) := by
-    induction i using Nat.strong_induction_on with
-    | h i ih =>
-      by_cases hi : i < m+1
-      · rw [hbase _ i hi]
-        exact hr v ⟨i,hi⟩
-      · have he : i = (i-(m+1))+(m+1) := by omega
-        rw [he, hperiod, show i-(m+1)+(m+1)+1 = (i-(m+1)+1)+(m+1) by omega,
-          hperiod, ih (i-(m+1)) (by omega)]
-  refine ⟨hshift, ?_⟩
-  have hQ (s t : State k) : kernel k p (flip s) (flip t) = kernel k p s t := by
-    rcases s with ⟨a,j⟩
-    rcases t with ⟨b,l⟩
-    cases a <;> cases b <;> simp [kernel,TwistedResetPaths.flip]
-  intro v
-  unfold cycleWeight
-  simp_rw [hshift]
-  rw [Fin.prod_univ_castSucc, Fin.prod_univ_succ]
-  have hend : kernel k p (extension m v (m+1)) (extension m v (m+1+1)) =
-      kernel k p (extension m v 0) (extension m v 1) := by
-    rw [show m+1 = 0+(m+1) by omega,
-      show 0+(m+1)+1 = 1+(m+1) by omega, hperiod, hperiod, hQ]
-  simpa only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero, zero_add,
-    hend] using mul_comm
-      (∏ i : Fin m, kernel k p (extension m v (i.val+1)) (extension m v (i.val+1+1)))
-      (kernel k p (extension m v 0) (extension m v 1))
-
-
 /-- Each fixed deterministic rule has twisted defect at least one over the period.
 The same rule under the actual stationary Parry law satisfies the uniform window bound. -/
 theorem parry_window_lower_bound (k : ℕ) (hk : 2 ≤ k)
@@ -239,7 +178,65 @@ theorem parry_window_lower_bound (k : ℕ) (hk : 2 ≤ k)
       simp only [mul_one] at h
       rw [h,Fintype.sum_prod_type,twisted_prefix_total_mass]
       rfl
-    obtain ⟨hshift,hweight⟩ := rotation_preserves_weight k m p
+    have hrotation :
+        (∀ (v : Fin (m + 1) → State k) (i : ℕ),
+          extension m (rotation m v) i = extension m v (i+1)) ∧
+        (∀ v : Fin (m + 1) → State k, cycleWeight k p m (rotation m v) = cycleWeight k p m v) := by
+      have hbase (v : Fin (m + 1) → State k) (i : ℕ) (hi : i < m+1) :
+          extension m v i = v ⟨i,hi⟩ := by
+        simp [extension, cycleSign, Nat.mod_eq_of_lt hi, Nat.div_eq_of_lt hi]
+      have hperiod (v : Fin (m + 1) → State k) (i : ℕ) :
+          extension m v (i+(m+1)) = flip (extension m v i) := by
+        have hd : (i+(m+1))/(m+1) = i/(m+1)+1 := by
+          rw [Nat.add_div (by omega : 0 < m+1)]
+          simp [Nat.div_self (by omega : 0 < m+1), Nat.not_le.mpr (Nat.mod_lt i (by omega : 0 < m+1))]
+        have hp : decide (((i/(m+1)+1)%2)=1) = !(decide ((i/(m+1))%2=1)) := by
+          by_cases h : (i/(m+1))%2=1
+          · have hh : (i/(m+1)+1)%2 ≠ 1 := by omega
+            simp [h,hh]
+          · have hh : (i/(m+1)+1)%2 = 1 := by omega
+            simp [h,hh]
+        simp only [extension, cycleSign, Nat.add_mod_right, hd, hp, TwistedResetPaths.flip]
+        congr 1
+        cases (v ⟨i%(m+1),Nat.mod_lt _ (by omega)⟩).1 <;>
+          cases decide ((i/(m+1))%2=1) <;> rfl
+      have hr (v : Fin (m + 1) → State k) (i : Fin (m+1)) :
+          rotation m v i = extension m v (i.val+1) := by
+        refine Fin.lastCases ?_ (fun j => ?_) i
+        · simp only [rotation, Equiv.coe_fn_mk, Fin.snoc_last, Fin.val_last]
+          simpa [hbase] using (hperiod v 0).symm
+        · simp only [rotation, Equiv.coe_fn_mk, Fin.snoc_castSucc, Fin.val_castSucc]
+          rw [hbase v (j.val+1) (by omega)]
+          rfl
+      have hshift (v : Fin (m + 1) → State k) (i : ℕ) :
+          extension m (rotation m v) i = extension m v (i+1) := by
+        induction i using Nat.strong_induction_on with
+        | h i ih =>
+          by_cases hi : i < m+1
+          · rw [hbase _ i hi]
+            exact hr v ⟨i,hi⟩
+          · have he : i = (i-(m+1))+(m+1) := by omega
+            rw [he, hperiod, show i-(m+1)+(m+1)+1 = (i-(m+1)+1)+(m+1) by omega,
+              hperiod, ih (i-(m+1)) (by omega)]
+      refine ⟨hshift, ?_⟩
+      have hQ (s t : State k) : kernel k p (flip s) (flip t) = kernel k p s t := by
+        rcases s with ⟨a,j⟩
+        rcases t with ⟨b,l⟩
+        cases a <;> cases b <;> simp [kernel,TwistedResetPaths.flip]
+      intro v
+      unfold cycleWeight
+      simp_rw [hshift]
+      rw [Fin.prod_univ_castSucc, Fin.prod_univ_succ]
+      have hend : kernel k p (extension m v (m+1)) (extension m v (m+1+1)) =
+          kernel k p (extension m v 0) (extension m v 1) := by
+        rw [show m+1 = 0+(m+1) by omega,
+          show 0+(m+1)+1 = 1+(m+1) by omega, hperiod, hperiod, hQ]
+      simpa only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero, zero_add,
+        hend] using mul_comm
+          (∏ i : Fin m, kernel k p (extension m v (i.val+1)) (extension m v (i.val+1+1)))
+          (kernel k p (extension m v 0) (extension m v 1))
+
+    obtain ⟨hshift,hweight⟩ := hrotation
     change ∀ v, W (rotation m v) = W v at hweight
     let D : (Fin (m + 1) → State k) → ℕ → Bool := fun v t =>
       ruleDefect (m+1) (by omega) (fun i => (v i).1) R f t
@@ -335,6 +332,5 @@ theorem parry_window_lower_bound (k : ℕ) (hk : 2 ≤ k)
   obtain ⟨fmin,hmin⟩ := Finite.exists_min (stationaryDefect k R)
   exact ⟨hall,fmin,hmin,(hall fmin).2⟩
 
-#print axioms rotation_preserves_weight
 #print axioms parry_window_lower_bound
 end D5.S3.TotalVariation.TwistedRotationDefect

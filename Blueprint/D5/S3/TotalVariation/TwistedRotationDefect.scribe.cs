@@ -11,23 +11,6 @@ internal sealed class TwistedRotationDefectDocument : IScribeDocumentDefinition
         H("Twisted Rotation and Parry Window Defects"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("twistedrotationdefect-rotation-preserves-weight"),
-                DeclarationHandle.Create(Prefix + "rotation_preserves_weight"),
-                H("Rotation of the signed state path"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For every natural k and m and every real parameter p, consider a word v of m+1 states "
-                    + "in Bool times Fin k. Extend it to natural times by complementing the absolute sign "
-                    + "after each turn and repeating the suffix coordinate. The rotation equivalence sends "
-                    + "v to its tail followed by the complement of its first state. Its inverse prepends "
-                    + "the complement of the last state to the initial segment. At every natural time i, "
-                    + "the extension of the rotated word equals the original extension at i+1. The product "
-                    + "of all m+1 transition weights, including the edge to the complemented start, is "
-                    + "unchanged by rotation. The equality uses the actual reset kernel and holds for "
-                    + "every p; no nonnegativity hypothesis is needed for this product identity."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("twistedrotationdefect-parry-window-lower-bound"),
                 DeclarationHandle.Create(Prefix + "parry_window_lower_bound"),
                 H("Uniform bound for each fixed deterministic rule"),
