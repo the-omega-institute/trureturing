@@ -474,6 +474,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("annotation", 3, "SL-022")]
     [InlineData("mixed", 3, "SL-029")]
     [InlineData("mixed-block", 1, "SL-008")]
+    [InlineData("mixed-missing-base", 2, "explicit 40-hex base")]
+    [InlineData("mixed-missing-report", 2, "raw-lean-report.json")]
+    [InlineData("mixed-invalid-report", 2, "Raw Lean report is not valid JSON")]
+    [InlineData("mixed-stale-report", 2, "Raw Lean report source hash does not match")]
+    [InlineData("mixed-missing-report-archive", 2, "materials")]
+    [InlineData("mixed-current-round", 2, "round mismatch")]
+    [InlineData("mixed-unbound-report-archive", 2, "missing required materials")]
+    [InlineData("mixed-contradictory-material", 2, "artifact integrity")]
+    [InlineData("mixed-failed-trx", 2, "artifact integrity")]
     [InlineData("retired-content-delete", 0, "SL-029")]
     [InlineData("retired-content-rename", 0, "SL-029")]
     [InlineData("retired-content-delete-base-missing", 2, "protected-base FILEMAP is unavailable")]
@@ -515,7 +524,11 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     {
         var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
         var afterValid = scenario.StartsWith("after-valid-", StringComparison.Ordinal);
-        var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..] : scenario;
+        var mixedEvidenceFailure = scenario is "mixed-missing-report" or "mixed-invalid-report" or "mixed-stale-report"
+            or "mixed-missing-report-archive" or "mixed-current-round" or "mixed-unbound-report-archive"
+            or "mixed-contradictory-material" or "mixed-failed-trx";
+        var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..]
+            : mixedEvidenceFailure ? scenario["mixed-".Length..] : scenario;
         var template = scenario.StartsWith("template-", StringComparison.Ordinal);
         const string contentPath = "Blueprint/D5/S0/Carrier/DeltaFixture.md";
         using var temporary = new TemporaryDirectory();
@@ -672,6 +685,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         }
         if (scenario.StartsWith("mixed-", StringComparison.Ordinal) && scenario != "mixed-block")
         {
+            Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n");
             Write(contentPath, "# changed\n");
             switch (scenario)
             {
@@ -693,6 +707,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         var currentConsole = new BufferedConsole();
         var currentExit = CliApplication.Run(["check-current", "--candidate-lean-report", report], environment, currentConsole);
         Assert.True(currentExit == 0, currentConsole.Output + currentConsole.Error);
+        Assert.DoesNotContain("SL-029", currentConsole.Output, StringComparison.Ordinal);
         if (scenario == "annotation")
         {
             using var currentJson = JsonDocument.Parse(currentConsole.Output);
@@ -763,11 +778,18 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                         file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
             checks.Seal();
         }
-        if (afterValid)
+        if (afterValid || mixedEvidenceFailure || scenario == "mixed-missing-base")
         {
             var accepted = environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report]);
-            Assert.True(accepted.ExitCode == 0, accepted.Output + accepted.Error);
+            Assert.True(accepted.ExitCode == (afterValid ? 0 : 3), accepted.Output + accepted.Error);
             AssertAcceptedBaseTests(accepted.Output);
+            if (!afterValid)
+            {
+                using var classified = JsonDocument.Parse(accepted.Output);
+                AssertMixedWarning(classified.RootElement);
+                Assert.DoesNotContain(classified.RootElement.GetProperty("executed").EnumerateArray(),
+                    rule => rule.GetString() == "SL-029");
+            }
         }
         switch (defect)
         {
@@ -820,7 +842,9 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 exit = new CommonStages(root, output).Run("delta", basis);
                 console.WriteOutput(output.ToString());
             }
-            else exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
+            else exit = CliApplication.Run(scenario == "mixed-missing-base"
+                ? ["check-delta", "--candidate-lean-report", report]
+                : ["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
         }
         finally
         {
@@ -865,6 +889,26 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                     && finding.GetProperty("AdmissionEffect").GetInt32() == (int)AdmissionEffect.Block);
             }
         }
+        if (mixedEvidenceFailure)
+        {
+            using var failureJson = JsonDocument.Parse(console.Output);
+            AssertMixedWarning(failureJson.RootElement);
+            Assert.Equal(new[] { "diagnostics" }, failureJson.RootElement.EnumerateObject().Select(property => property.Name));
+            Assert.DoesNotContain("ADMITTED", console.Output, StringComparison.Ordinal);
+        }
+        if (scenario is "mixed-invalid-report" or "mixed-stale-report")
+        {
+            var fullConsole = new BufferedConsole();
+            var fullExit = CliApplication.Run(["check", "--protected-base", basis, "--candidate-lean-report", report], environment, fullConsole);
+            Assert.Equal(2, fullExit);
+            Assert.Equal(1, fullConsole.Output.Split("ADMISSION-PLANE-MIXED:", StringSplitOptions.None).Length - 1);
+            Assert.Contains("SL-029", fullConsole.Output, StringComparison.Ordinal);
+            Assert.Contains(diagnostic, fullConsole.Error, StringComparison.Ordinal);
+        }
+        if (scenario is "mixed-missing-base" or "mixed-missing-filemap" or "mixed-malformed-filemap"
+            or "mixed-ambiguous-filemap" or "mixed-unsafe-filemap" or "mixed-policy-content"
+            || scenario.StartsWith("retired-content-", StringComparison.Ordinal) && expectedExit == 2)
+            Assert.DoesNotContain("SL-029", console.Output, StringComparison.Ordinal);
         if (scenario is "valid" or "reused")
         {
             Assert.All(hashes, row => Assert.Equal(1, row.Value));
@@ -917,6 +961,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             var rows = (TomlArray)filemap["files"];
             rows.Add(TomlSerializer.Deserialize<TomlTable>($"pattern = '{pattern}'\nadmission_plane = 'content'\n")!);
             return TomlSerializer.Serialize(filemap);
+        }
+
+        static void AssertMixedWarning(JsonElement result)
+        {
+            var warning = Assert.Single(result.GetProperty("diagnostics").EnumerateArray(),
+                finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-029");
+            Assert.Equal((int)DisplaySeverity.Warning, warning.GetProperty("DisplaySeverity").GetInt32());
+            Assert.Equal((int)AdmissionEffect.Observe, warning.GetProperty("AdmissionEffect").GetInt32());
+            Assert.StartsWith("ADMISSION-PLANE-MIXED:", warning.GetProperty("Message").GetString(), StringComparison.Ordinal);
         }
 
         void Write(string path, string text)

@@ -40,6 +40,12 @@ internal sealed partial class ProductionCliEnvironment
             if (!reportRequired && options.CandidateLeanReport is not null)
                 throw new InvalidDataException("unrequested report cannot be current evidence");
             var raw = repository.ReadCurrent();
+            // Retain the actual delta observation even if report/common evidence later
+            // fails. Reuse this preparation for all remaining cross-tree validation.
+            var prepared = delta ? repository.Prepare(options.ProtectedBase) : null;
+            var baselineRaw = prepared is null ? null : repository.ReadRevision(prepared.Revision);
+            var planeFailure = prepared is null ? null
+                : EvaluateAdmissionPlane(raw, baselineRaw!, prepared.Changes, out planeObservations);
             var current = Decode(raw);
             var validation = new CommonExecutionEvidence.ValidationScope(current);
             var manifest = validation.CheckManifest();
@@ -62,11 +68,9 @@ internal sealed partial class ProductionCliEnvironment
                 LeanValidationOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
             };
             RuleExecutionOutcome result;
-            if (delta)
+            if (prepared is not null)
             {
-                var prepared = repository.Prepare(options.ProtectedBase);
-                var baselineRaw = repository.ReadRevision(prepared.Revision);
-                var baseline = Decode(baselineRaw);
+                var baseline = Decode(baselineRaw!);
                 var baseProjects = EngineeringProjectRegistry.ReadBase(baseline, current)
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
@@ -76,8 +80,8 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
-                if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes, out planeObservations) is { } plane)
-                    return new(2, "", plane.Message + "\n");
+                if (planeFailure is not null)
+                    return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
                 var topology = RepositoryRules.EvaluateSnapshots(baseline, current);
                 if (!topology.IsAccepted) return new(1, RenderPlaneObservations(planeObservations) + "TEST_PROJECT_TOPOLOGY " + topology.Message + "\n", "");
                 var meta = BootstrapGate.Evaluate(prepared.Changes) switch
