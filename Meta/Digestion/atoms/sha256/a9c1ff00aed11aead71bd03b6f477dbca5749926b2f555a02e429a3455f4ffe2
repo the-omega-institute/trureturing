@@ -1,0 +1,57 @@
+**命题 2.2（实际效果空间的充要条件）。** 完整相容效果可用是一份明确的强合同。若装置只有效果集合 $\mathcal F$ 与酉操作菜单 $\{U_a:a\in\mathcal A\}$，实际实验暂限为执行有限操作词后作一次末端读数。对 $w=a_1\cdots a_k$ 取 $U_w=U_{a_k}\cdots U_{a_1}$，空词对应 $I$。定义
+$$
+\mathcal W
+=\operatorname{span}_{\mathbb R}
+\left(\{I\}\cup\{U_w^\dagger F U_w:F\in\mathcal F,\ w\in\mathcal A^*\}\right)
+\subseteq\operatorname{Herm}(\mathcal H).
+\tag{TM.115}
+$$
+
+有限维保证这是闭实子空间，尽管动作菜单或操作词集合可无限。迹循环性给出全部未来读数的精确判据：
+$$
+\boxed{
+\operatorname{Tr}(F U_w\rho U_w^\dagger)
+=\operatorname{Tr}(F U_w\sigma U_w^\dagger)
+\quad\forall F,w
+\quad\Longleftrightarrow\quad
+\rho-\sigma\in\mathcal W^\perp.
+}
+\tag{TM.116}
+$$
+
+**证明。** 每项概率差等于 $\operatorname{Tr}((U_w^\dagger F U_w)(\rho-\sigma))$。这些差全部为零，连同密度态归一化给出的 $\operatorname{Tr}(\rho-\sigma)=0$，恰好等于与式(TM.115)所有生成元正交。实线性性再给与整个 $\mathcal W$ 正交；反向直接取生成元。此处只有实际实验可提供的期望及其线性组合，没有假定两个可测算子之积也成为可测算子，因此不能未经工具核对便把 $\mathcal W$ 换成生成的乘法代数。
+
+对任意允许动作 $a$，把一项未来实验接在 $U_a$ 后面仍是允许的有限词，故 $U_a^\dagger\mathcal W U_a\subseteq\mathcal W$。若 $\rho-\sigma\in\mathcal W^\perp$，则对任意 $A\in\mathcal W$ 有 $\operatorname{Tr}(A U_a(\rho-\sigma)U_a^\dagger)=\operatorname{Tr}(U_a^\dagger A U_a(\rho-\sigma))=0$。所以式(TM.116)定义的纤维关系对这些操作稳定，并保留原末端观察。这是既有全部未来响应与动态闭包机制在 Hermitian 线性表示中的直接实现。
+
+如果每个 $F$ 和每个 $U_a$ 都与 $H$ 交换，则 $\mathcal W\subseteq\mathcal C_H$，pinching 相同必给实际实验相同。在全部密度态上，实际工具恰好实现完整 pinching 商的充要条件为
+$$
+\boxed{
+\bigl[\rho-\sigma\in\mathcal W^\perp
+\ \Longleftrightarrow\ P_H(\rho)=P_H(\sigma)
+\quad\forall\rho,\sigma\in\mathcal D(\mathcal H)\bigr]
+\quad\Longleftrightarrow\quad
+\mathcal W=\mathcal C_H.
+}
+\tag{TM.117}
+$$
+
+**证明。** 若两空间相同，式(TM.110)说明 $P_H$ 为到该空间的正交投影，故正交性等价于 $P_H(\rho-\sigma)=0$。反之，若 $\mathcal W$ 是 $\mathcal C_H$ 的真子空间，有限维正交分解给非零 $D\in\mathcal C_H\cap\mathcal W^\perp$。因为 $I\in\mathcal W$，有 $\operatorname{Tr}D=0$。取
+$$
+\varepsilon=\frac1{2d\|D\|_{\mathrm{op}}}>0,\qquad
+\rho_\pm=\frac Id\pm\varepsilon D,\qquad
+\rho_\pm\succeq\frac{I}{2d},\qquad
+P_H(\rho_+)-P_H(\rho_-)=2\varepsilon D\ne0.
+\tag{TM.118}
+$$
+
+两者都是实际密度态，且差属于 $\mathcal W^\perp$，所以实际工具全部读数相同，却有不同 pinching，否定式(TM.117)左侧。必要性因此使用了整个态空间内部的合法扰动，不能不加说明地迁移到受限制备族。
+
+具体地，若只允许 $\mathcal S\subseteq\mathcal D(\mathcal H)$，记 $\mathcal S-\mathcal S=\{\rho-\sigma:\rho,\sigma\in\mathcal S\}$。在 $\mathcal W\subseteq\mathcal C_H$ 的同一前件下，正确的任务条件是
+$$
+\mathcal W^\perp\cap(\mathcal S-\mathcal S)
+=\ker P_H\cap(\mathcal S-\mathcal S).
+\tag{TM.119}
+$$
+
+这由逐对应用式(TM.116)直接等价于两种观察关系在 $\mathcal S$ 上相同。若目标是识别整个受限态而非其 pinching，则条件改为 $\mathcal W^\perp\cap(\mathcal S-\mathcal S)=\{0\}$。例如 $\mathcal S$ 只有一个态时，即使 $\mathcal W$ 很小也已充分；全态空间的张成必要性在这里没有适用前提。该差集判据对应下文 Carmeli 等的现成受限信息完备性接口。
+

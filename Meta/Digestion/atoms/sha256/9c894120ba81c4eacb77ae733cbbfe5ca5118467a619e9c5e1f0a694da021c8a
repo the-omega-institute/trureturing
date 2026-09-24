@@ -1,0 +1,1 @@
+| `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean:30` | `finite_horizon_value_factorization`，具有 `[Fintype Action] [Nonempty Action]`，并要求转移交织、阶段与终端报酬分解 | 式(TM.133)—(TM.134)使用有限非空菜单；无限相容酉群与随机仪器决策需另匹配接口 

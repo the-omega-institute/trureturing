@@ -1,0 +1,12 @@
+**零能量嵌入不解除内部障碍。** 使用式(TM.84)的等距 $V$，编码 $\mathcal E(A)=VAV^\dagger$ 为 CPTP。取 $P_\perp=I-VV^\dagger=|00\rangle\langle00|+|11\rangle\langle11|$，定义全四维输入上合法的解码
+$$
+\mathcal D(B)=V^\dagger BV+\operatorname{Tr}(P_\perp B)|0\rangle\langle0|,
+\qquad\mathcal D\mathcal E=\operatorname{id},\qquad
+\mathcal D:\ M_4(\mathbb C)\longrightarrow M_2(\mathbb C).
+\tag{TM.108}
+$$
+
+其 Kraus 算子可取 $V^\dagger,|0\rangle\langle00|,|0\rangle\langle11|$；各伴随乘积之和为 $VV^\dagger+P_\perp=I_4$，所以解码完全正且保迹。若存在四维 CPTP 映射 $\Psi$，对全部逻辑密度态 $\rho$ 都满足 $\Psi(\mathcal E\rho)=\mathcal E(N_{p_0}\rho)$，则 $\Phi=\mathcal D\Psi\mathcal E$ 是被式(TM.99)排除的逻辑 CPTP 实现。因此，把全部输入放进同一个简并零能量块，也不会产生这个内部目标的单一通道。该反证甚至不需要额外要求 $\Psi$ 守能。
+
+这一结论的量词是：对所有单份未知输入，以同一确定 CPTP 操作精确实现该最近点规则。数学模型中的条件化、已知输入后选择不同制备、带成功旗标的条件实验，以及多份样本的统计估计，具有另外的知识、样本、成功概率或误差条件，不能用本反例一并否定，也不能省略这些条件后声称已经取得上述单一通道。这里反驳的是“唯一最近点自动可实施”这一具体推断，所用正性、Kraus 表示和外部参考约束均归成熟量子通道结构。
+

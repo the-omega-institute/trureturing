@@ -1,0 +1,2 @@
+**多项式矩确定整个轨道测度。** 坐标多项式在 $C(K,\mathbb C)$ 中形成一个含常数、对复共轭封闭的代数，因为各 $f_j$ 都实值。它分离 $K$ 的点：不同 $X,Y$ 的差 $D=X-Y\ne0$ 是 Hermitian，且 $\operatorname{Tr}(D(X-Y))=\operatorname{Tr}(D^2)>0$；$D$ 是基 $A_j$ 的实线性组合，所以某个坐标必不同。Stone–Weierstrass 定理给该代数在连续函数空间中一致稠密。若多项式 $p_k$ 一致逼近 $f$，则 $|\int(f-p_k)\,d\mu|\le\|f-p_k\|_\infty$，因为测度总质量为一。两份测度的多项式积分相同，取极限即得全部连续函数积分相同。对实连续函数应用 Riesz 表示的测度唯一性，得到 $\mu_\rho=\mu_\sigma$。
+

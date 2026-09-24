@@ -1,0 +1,15 @@
+### 19.4 有限深度稳定与无限未来
+
+若任务只允许深度不超过 $N$，可以先用
+
+$$
+s\approx_{S,N}t
+\iff
+\forall n\le N,\ \forall p,\quad
+\mathcal E(s,p)(n)=\mathcal E(t,p)(n)
+$$
+
+构造有限 horizon 边界。它随 $N$ 增大而细化；只有在某个有限深度关系已经永久稳定，才可把它当作无限未来商。仓内 `FiniteHistoryPermanentStability.finite_history_relation_stable_forever` 给出这种“相邻深度稳定即永久”的有限条件。否则，所有有限层都可有一个商，并不表示存在一个固定有限边界保留全部无限行为。
+
+同理，阶段索引 $n$ 是协议深度，不自动是物理时间。`ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth` 保留了这一区分；实际时钟仍需作为标签或独立可观察量放进 (19.1)。
+

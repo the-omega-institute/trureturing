@@ -1,0 +1,12 @@
+**命题 6.2（逆系统是完成，不是免费全局状态）。** 对一族分辨率边界
+\[
+B_0\leftarrow B_1\leftarrow B_2\leftarrow\cdots
+\]
+，逆极限
+\[
+\varprojlim B_r
+\]
+由相容线程组成。每个有限层相容不保证线程来自原始实际配置；反向恢复原配置还需要实际像、分离性和存在性条件。该边界对应 Recovery 卷的完成—实现区分，以及 InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates 等形式支点的量词范围。
+
+因此“无穷”在本框架中首先是持续细化、仍有未吸收关系的边界，而不是一个观察者已经访问的额外状态。
+

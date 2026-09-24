@@ -11,8 +11,10 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionRecurrences
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFree
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionBoundary
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionBanks
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFreeCollar
 license: citation-only
 triage: anchor
 ---
@@ -98,10 +100,59 @@ hold on the full domain, with derivative one at zero for a singleton word
 and zero for greater depth. Nested induction uses segment primitives and
 the removable `dslope`; disk agreement fixes the branch normalization.
 
-These are intermediate disk, boundary and slit results, not a resolution of
-Conjecture 1.3. They supply no coefficient-sign theorem, global slit
-nonvanishing, bank asymptotics or contour transfer. Solved-problem credit
-is zero. The preregistered target is
+`CompositionBanks.result` supplies the complete local Banks bridge for every
+positive head, positive-entry tail and positive power $\ell$. For the actual
+continued branch, put
+$A(z)=(z^d/\operatorname{continued}_k(z))^\ell$, where $d$ is the depth.
+The theorem produces $0<\rho<1$ such that the actual branch is nonzero on
+$\Omega\cap\{|z-1|\le\rho\}$. On the full slit-domain filter at one, $A$
+tends to $\zeta(k)^{-\ell}$ for an admissible head and to zero for leading
+head one.
+
+For the same $\rho$, jointly chosen upper and lower functions are continuous
+on the closed upper and lower half-collars, agree with $A$ on their respective
+intersections with $\Omega$, take the common endpoint value at one, and obey
+the conjugation identity on the lower half-collar. For every real
+$0<t\le\rho$, the upper boundary value at $1+t$ has strictly negative
+imaginary part. The proof uses the actual branch throughout: source-weight
+induction closes the admissible and leading-one remainder alternatives;
+radial and angular integral identities transport the source estimates; and
+local analytic representatives retain the ordinary-head derivative needed
+for the strict sign.
+
+`CompositionZeroFreeCollar.normalizedContinuation` is the actual
+depth-normalized slit branch. At zero it is `CompositionDisk.normalized`; away
+from zero it is
+$\operatorname{continued}_k(z)/z^d$, with $d$ the composition depth.
+`CompositionZeroFreeCollar.result` proves disk agreement and
+`AnalyticOnNhd` on the full source domain $\Omega$. For each positive
+composition it also produces one $R_0>1$ such that this actual normalized
+continuation is nonzero throughout
+$\Omega\cap\{|z|<R_0\}$.
+
+The proof obtains unit-circle nonvanishing directly from the radial squared
+norm. If $F(r)=\operatorname{continued}_k(r\zeta)$ and
+$H(r)=|F(r)|^2$, then on the interior radial segment
+
+$$
+H'(r)=\frac{2}{r}|F(r)|^2\operatorname{Re}Q(r\zeta)>0,
+$$
+
+using the positive-real logarithmic derivative from
+`CompositionZeroFree.result`. This route avoids taking an endpoint logarithm.
+The actual Banks theorem at $\ell=1$ supplies the neighborhood of the missing
+boundary point one. The union of that Banks ball with the open zero-free locus
+in $\Omega$ contains the closed unit disk; compact thickening then supplies
+$R_0=1+\delta$. This is a source-specific, composition-dependent collar, not
+global slit-domain nonvanishing and not a composition-uniform radius.
+
+These are intermediate disk, boundary, slit, local Banks and zero-free collar
+results, not a resolution of Conjecture 1.3. No general power-log asymptotic is
+asserted. The full Taylor/formal-inverse coefficient correspondence,
+finite-contour sign transfer and all-$j$/$\ell$ assembly remain open. The
+collar therefore supplies no coefficient-sign theorem. Solved-problem credit
+is zero, and this auxiliary carries no `OpenProblemResolutionClaim`, novelty
+claim or worldwide-priority claim. The preregistered target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary

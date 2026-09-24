@@ -55,19 +55,41 @@ origin-correct recurrences. It assumes no continuation or recurrence premise
 and asserts no global slit nonvanishing. This is also an intermediate with
 zero solved-problem credit.
 
-Uniform power-log bank expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
-identity, and the finite-contour sign transfer remain unproved here.
+`CompositionBanks.result` now proves the complete local Banks bridge for every
+positive head, positive-entry tail and positive power $\ell$. It gives an
+actual-branch nonvanishing radius $0<\rho<1$ around one, the reciprocal-power
+endpoint on the full slit-domain filter, jointly continuous conjugate
+extensions on the two closed half-collars, and strictly negative imaginary
+part on the entire upper boundary interval $1+t$ for $0<t\le\rho$. For an
+admissible head the endpoint is $\zeta(k)^{-\ell}$; for leading head one it is
+zero. This is a local, composition-dependent collar theorem, not a general
+power-log asymptotic.
+
+`CompositionZeroFreeCollar.normalizedContinuation` now gives the actual
+depth-normalized slit branch: it uses `CompositionDisk.normalized` at zero and
+the actual continued branch divided by the exact depth power away from zero.
+`CompositionZeroFreeCollar.result` proves agreement with the disk
+normalization, analyticity on the full source slit domain, and, for every
+positive composition, one composition-dependent $R_0>1$ on which this actual
+normalized continuation is zero-free inside the slit domain. It asserts no
+global slit-domain nonvanishing and no radius uniform over compositions.
+
+The full Taylor or formal-inverse coefficient correspondence, the
+finite-contour sign transfer, and the all-$j$/$\ell$ assembly remain unproved
+here.
 The eventual sign and strict binomial conclusions therefore remain open
 in this repository. Preregistration:
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Route
 
-Using the disk, admissible-boundary and slit units, prove the remaining source-specific analytic bridges
-and the negative upper-bank sign. A finite contour gives eventual strict
-negativity. Eventual negativity together with the actual finite radial
-limit yields absolute summability: bound finite sums with radial weights
-first, then pass to radius one. Strict negative tails give the $j=1$
+Using the proved disk, admissible-boundary, slit, local Banks and zero-free
+collar units, identify the Taylor coefficients of the actual normalized
+continuation and its reciprocal powers with the source's formal inverse. A
+finite contour must then transfer the strict upper-bank boundary sign to
+eventual strict negativity. Eventual negativity together with the actual
+finite radial limit yields absolute summability: bound finite sums with radial
+weights first, then pass to radius one. Strict negative tails give the $j=1$
 excess. A uniform positive radial lower bound gives eventually positive
 partial sums, and repeated summation handles every fixed $j\ge2$.
 No coefficient asymptotic equivalent or boundary derivative total is
@@ -101,19 +123,41 @@ claims. Grouping by the largest strict index and deleting only the proved
 zero prefix identifies the totals. Dominated convergence applies to the
 actual normalized series on real radii below one.
 
+`CompositionBanks.lean` adds the single public theorem
+`CompositionBanks.result`. Its five private implementation modules supply
+source-weight induction, radial and arc bounds, leading-block transport,
+leading closure and the ordinary-head transport step. The theorem quantifies
+over `head : PNat`, `tail : List PNat` and `ell : PNat`; its one radius is
+used simultaneously for actual-branch nonvanishing, the full-slit endpoint,
+both continuous closed half-collars, their conjugation identity and the
+strict upper boundary sign for every positive $t$ up to that radius.
+
+`CompositionZeroFreeCollar.lean` adds exactly the public definition
+`CompositionZeroFreeCollar.normalizedContinuation` and theorem
+`CompositionZeroFreeCollar.result`. The radial argument differentiates
+$H(r)=|\operatorname{continued}_k(r\zeta)|^2$ and obtains
+$H'(r)=2|F(r)|^2\operatorname{Re}Q(r\zeta)/r>0$, avoiding an endpoint
+logarithm. Disk agreement glues the removable origin, the actual Banks theorem
+at $\ell=1$ patches the neighborhood of one, and compact thickening of the
+closed unit disk inside their open union gives the claimed $R_0>1$.
+
 ## Triage
 
 `window`: the complete conjecture remains the target. The source settles
 all-one compositions for every $\ell\ge1$ by the all-one identity and
 Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
 and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
-The present disk, admissible-boundary and slit results are intermediates, not a new resolution
-of those known cases or of the full conjecture. Admission uses the actual
-source-specific escape content, not the open-problem-resolution exception.
+The present disk, admissible-boundary, slit, Banks and zero-free collar results
+are intermediates, not a new resolution of those known cases or of the full
+conjecture. The collar is an ordinary auxiliary result with source-specific
+escape content; it does not use the open-problem-resolution exception and
+does not mark this dossier resolved. Taylor/formal-inverse correspondence,
+contour sign transfer and the all-$j$/$\ell$ assembly remain the completion
+boundary.
 
 ## ASSUMED-UNVERIFIED
 
 Worldwide unresolved status and priority are not established by the
 bounded literature assessment. The first-contact argument is classical,
-and no novelty claim is attached to it. Independent semantic review and
-caller-owned admission/CI remain separate from the kernel compilation.
+and no novelty claim is attached to it. This auxiliary makes no worldwide-
+priority claim; caller-owned PR, CI and lifecycle decisions remain separate.

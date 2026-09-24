@@ -1,0 +1,10 @@
+#### 2.1.9 成熟文献供应与统一的适用范围
+
+G. Gour、R. W. Spekkens，*The resource theory of quantum reference frames: manipulations and monotones*，[arXiv:0711.0043v2](https://arxiv.org/pdf/0711.0043v2)，第II.A节、PDF第7—8页、式(13)—(17)，给出群不变态、CP 操作和群平均的基础结构；第8页式(16)及邻接文字明确以群平均相等组织态的等价类。这里引用该处定义与说明，不把它改称为未列出的编号定理。其不变 CP 操作框架比只允许与 Hamiltonian 交换的系统酉更宽；使用时需保持具体工具合同，不能把协变通道和严格守能酉当作同一个操作集合。
+
+S. D. Bartlett、T. Rudolph、R. W. Spekkens，*Reference frames, superselection rules, and quantum information*，[arXiv:quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3)，第II.B节、PDF第5页式(2.9)给出粒子数 pinching，第6页讨论 $\operatorname{span}\{|01\rangle,|10\rangle\}$ 内的允许操作，并明确超选择规则不等于粒子数守恒。第II.C节第7—8页式(2.20)—(2.25)讨论不变效果与 irrep/multiplicity 分解，第8页式(2.25)旁的显示定理给群平均的标准形；其中表示空间的张量分解是虚拟子系统分解，不能自动当作实际空间分区。第9页第III节开头说明，共享同一参考制备的多量子位经历同一个未知变换，为式(TM.131)所区分的共同与独立相位提供成熟语境。第III.C.2节第16—17页式(3.31)、(3.32)的激活与双份蒸馏使用双边局部粒子数超选择规则，属于另一份任务合同；不能将那些结果逐字当作本节可分两份样本的纠缠见证。
+
+C. Carmeli、T. Heinosaari、J. Schultz、A. Toigo，*Tasks and premises in quantum state determination*，[arXiv:1308.5502v2](https://arxiv.org/pdf/1308.5502v2)，§2、PDF第3—4页定义效果范围生成的实算子系统及其 annihilator，第4页式(1)给相应迹正交条件；§3、第5页 Proposition 2 给出在声明的前提态族与目标态族上的信息完备性判据，形如 $\mathcal R(M)^\perp\cap(\mathcal T-\mathcal P)=\{0\}$。式(TM.116)与(TM.119)使用这类线性统计几何，并逐项说明实际动态工具怎样产生效果族。该文关于抽象算子系统对应 POVM 的实现结论不替某个指定 Hamiltonian、指针和控制菜单证明可执行性；后者在B卷第2.1.3节单独承担。
+
+本节给“可组合关系接口”增加的条件可以直接表述：先由实际后续实验确定观察纤维，再说明新接入对象来自什么共同制备、保留哪些记录、允许何种联合操作。独立固定不变参考保持式(TM.127)中的纤维，同源共同相位的两份样本则由式(TM.129)—(TM.131)严格细分原单份纤维；分支记录只有在逐分支下降时才能安全接入旧摘要。这里发生变化的是被允许参与的联合关系，不能从单份状态名、单个守恒数或平均输出独自推出全部未来的充分性。
+

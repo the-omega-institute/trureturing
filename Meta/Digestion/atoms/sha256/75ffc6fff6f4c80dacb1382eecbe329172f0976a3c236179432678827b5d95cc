@@ -1,0 +1,26 @@
+**命题 3.19（两能级精确距离）。** 对 $\Delta>0$，取
+$$
+H_\Delta=\operatorname{diag}(0,\Delta),\qquad
+\rho_+=|+\rangle\langle+|,\qquad
+|+\rangle=(|0\rangle+|1\rangle)/\sqrt2.
+$$
+输出差为
+$$
+\bigl((\mathcal C_\nu^{H_\Delta})^k-\mathcal P_{H_\Delta}\bigr)(\rho_+)
+=\frac12
+\begin{pmatrix}
+0&\overline{\chi(\Delta)^k}\\
+\chi(\Delta)^k&0
+\end{pmatrix}.
+$$
+其特征值为 $\pm|\chi(\Delta)|^k/2$，因此迹范数为
+$|\chi(\Delta)|^k$。结合式（TM.428）在 $r=2$ 时的上界，得到精确公式
+$$
+d_\diamond\!\left(
+(\mathcal C_\nu^{H_\Delta})^k,\mathcal P_{H_\Delta}
+\right)
+=\frac12|\chi(\Delta)|^k.
+\tag{TM.435}
+$$
+该等式是允许全部联合输入及终端效果的通道距离。若具体任务仅允许与 $H_\Delta$ 对易的效果，这类效果完全看不到剩余非对角块；不能把式（TM.435）自动解释为受限任务中的可取得信号。
+
