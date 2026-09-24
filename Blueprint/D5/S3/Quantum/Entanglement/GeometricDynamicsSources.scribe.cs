@@ -122,5 +122,15 @@ internal sealed class GeometricDynamicsSourcesDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/lin2026virasoroarea"),
                     LibraryNoteRef.Create("D5/L/akers2021leadingqes")),
-                Blocks(Paragraph(Text("The Virasoro source retains explicit block, saddle and positivity assumptions. A finite positive-spectrum example shows why leading moments for replica index at least one alone do not control the derivative at one. Subunit-Renyi or rank-tail estimates give sufficient conditions. This does not determine the unknown Virasoro block, identify the finite code with a CFT, or settle the gravitational RT formula.")))))));
+                Blocks(Paragraph(Text("The Virasoro source retains explicit block, saddle and positivity assumptions. A finite positive-spectrum example shows why leading moments for replica index at least one alone do not control the derivative at one. Subunit-Renyi or rank-tail estimates give sufficient conditions. This does not determine the unknown Virasoro block, identify the finite code with a CFT, or settle the gravitational RT formula.")))),
+            Describe.Remark(
+                DescribeId.Create("multisector-optimal-area-coarse-graining"),
+                H("A simultaneous finite-sector optimum and a scale semigroup"),
+                Equal(Id("deltaOptimal"), Call("twoTOverOnePlusT", Id("T"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/harrow2010entanglementspread"),
+                    LibraryNoteRef.Create("D5/L/watrous2009completelybounded"),
+                    LibraryNoteRef.Create("D5/L/harlow2017rtqec"),
+                    LibraryNoteRef.Create("D5/L/akers2019holographicrenyi")),
+                Blocks(Paragraph(Text("For independent local CPTP maps with exact pure outputs on every basis sector, T is the sum of tanh of one quarter of each adjacent distinct discarded-area gap. The written RG theorem proves the joint optimal unhalved diamond error 2T/(1+T), constructs one nested environment family attaining all sector overlaps, and gives a common worst input and measurement. This is a finite-multisector result, not a maximum over independently optimized pairs. Integer power-rank towers induce a scale Lindblad semigroup with rates fixed by adjacent area slopes. Scale is not physical time; errors on basis-sector outputs, shared entanglement and communication require a different optimization. No Lean declaration, independent review or gravitational RT proof is asserted.")))))));
 }
