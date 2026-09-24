@@ -2080,3 +2080,2836 @@ $$
 本节只组织既有过程、完成化、目标闭包和对角逃逸结果的关系，没有新增 Lean 声明；正文中的“稳定”“严格细化”和“实际来源”均受各自明示条件限制。
 
 ## 22.99 追加锚
+
+## 23. 有限稳定深度与双侧最小边界
+
+第 22 节说明固定任务的完成化何时达到同任务稳定，但还没有给出一个有限系统中可以直接计算的停止深度，也没有把这个深度和实际记忆容量连起来。本节在有限确定性模型中补上这两个接口。设 $X$ 是有限状态载体，$F:X\to X$ 是更新，$q:X\to Q$ 是当前读出。对 $n\in\mathbb N$，令
+
+$$
+x\equiv_n y
+\iff
+\forall 0\le k\le n,\quad q(F^k x)=q(F^k y),
+$$
+
+并令 $\equiv_\infty$ 要求所有有限 $k$ 都相等。这里的等价关系只记录声明的读出和更新；若任务还保存失败、权限、费用或事件记录，就把它们先打包进 $q$ 或扩充成联合读出。
+
+### 23.1 稳定深度是完整动态边界的有限证书
+
+**theorem 23.1: 有限稳定深度达到完整未来商；Claim status: open.** 设 $X$ 为有限类型，$m$ 是最小满足相邻稳定
+
+$$
+\equiv_m=\equiv_{m+1}
+$$
+
+的深度。则
+
+$$
+\boxed{
+\equiv_m=\equiv_{m+1}=\equiv_\infty
+}
+$$
+
+而且对任何 $n$，若 $\equiv_n=\equiv_{n+1}$，则 $m\le n$。因此，在有限状态模型里，第一次相邻稳定不是一次经验截断，而是已经足以恢复全部未来读出律的动态边界。
+
+仓内 `FiniteStabilityClassBound.finite_stability_class_bound` 给出这三个等式与最小性，并给出数量界。写 $C_\infty=X/{\equiv_\infty}$，写 $C_0=X/{\ker q}$，则
+
+$$
+\boxed{
+m\le |C_\infty|-|C_0|
+\le |X|-|\operatorname{ran}q|.
+}
+\tag{23.1}
+$$
+
+右侧不是把状态数当作信息量，而是把每次未来区分可能新增的等价类数作为一个有限预算。若 $q$ 已经是动态充分的，$m=0$；若初始读出把不同未来合并，深度只能在新的等价类出现时增加。
+
+**证明状态。** 这是既有有限未来关系稳定、类数增长和 `Setoid.quotientKerEquivRange` 的组合；本节没有新增 Lean 声明，也不把式（23.1）外推到无限状态或近似读出。
+
+### 23.2 从动态边界到任意精确记忆的唯一因子
+
+**theorem 23.2: 精确有限记忆必须承载完整未来商；Claim status: open.** 设 $r:X\to W$ 是一个有限确定性记忆实现，存在 $G:W\to W$、$q_W:W\to Q$ 使
+
+$$
+r\circ F=G\circ r,
+\qquad
+q=q_W\circ r,
+$$
+
+并且 $r$ 满射。则存在唯一满射
+
+$$
+\theta:W\twoheadrightarrow C_\infty
+$$
+
+满足
+
+$$
+\theta\circ r=\pi_\infty,
+\qquad
+\theta\circ G=\bar F\circ\theta,
+\qquad
+\bar q\circ\theta=q_W,
+$$
+
+其中 $\pi_\infty:X\to C_\infty$ 是完整未来商，$\bar F$ 与 $\bar q$ 是其诱导更新和读出。因此
+
+$$
+\boxed{|C_\infty|\le |W|.}
+\tag{23.2}
+$$
+
+仓内 `DeterministicCompletionMinimality.minimal_deterministic_completion` 正是这一唯一满射因子和三条交换式的有限版本。它的含义是：任意精确记忆都至少包含完整未来行为类；当前显示 $q$ 只有在 $C_0\cong C_\infty$ 时才已经是最小动态记忆。
+
+这也说明“现在的目标后验”通常不是充分边界。它可能把两个状态合成同一当前读数，但两者的下一步更新落在不同未来类中；若要定义单值的记忆更新，必须保留能区分这些残余的结构。
+
+### 23.3 达到界的三状态反例
+
+取
+
+$$
+X=\{a,b,c\},
+\qquad
+q(a)=q(b)=0,\quad q(c)=1,
+$$
+
+并令
+
+$$
+F(a)=a,\qquad F(b)=c,\qquad F(c)=c.
+$$
+
+初始读出把 $a,b$ 合并，所以 $|C_0|=2$。一步之后，$a$ 的读出轨迹为 $0,0,0,\ldots$，$b$ 的轨迹为 $0,1,1,\ldots$，故
+
+$$
+|C_\infty|=3,
+\qquad m=1,
+\qquad |C_\infty|-|C_0|=1.
+$$
+
+这使式（23.1）的第一项界达到等号。只保留 $q$ 还不能定义后继：同一摘要类中，$F(a)=a$ 仍在该类，而 $F(b)=c$ 离开该类。身份记忆 $r=\operatorname{id}_X$ 达到式（23.2）的下界；任何精确确定性记忆都至少需要三个状态。
+
+### 23.4 双侧评价的最小边界
+
+动态边界还必须支持“状态怎样被协议读取”。令
+
+$$
+E:X\times P\to L
+$$
+
+把合法性、读数、记录、费用和终止标签打包到同一个结果值中。定义状态行与协议列
+
+$$
+R_x(p)=E(x,p),
+\qquad
+C_p(x)=E(x,p),
+$$
+
+并令 $x\sim_S y$ 当且仅当 $R_x=R_y$，令 $p\sim_P q$ 当且仅当 $C_p=C_q$。则评价可下降为
+
+$$
+\bar E:(X/{\sim_S})\times(P/{\sim_P})\to L,
+\qquad
+\bar E([x],[p])=E(x,p).
+\tag{23.3}
+$$
+
+**theorem 23.3: 双侧商的普适最小性；Claim status: open.** 式（23.3）良定义，并且两个商都分别具有分离性：不同状态类可由某个协议区分，不同协议类可由某个状态区分。若另有满射 $f:X\to X'$、$g:P\to P'$ 和
+
+$$
+E(x,p)=E'(f(x),g(p)),
+$$
+
+且 $E'$ 的状态行与协议列都分离，那么存在唯一的等价
+
+$$
+X/{\sim_S}\simeq X',
+\qquad
+P/{\sim_P}\simeq P'
+$$
+
+保持代表元与评价。仓内 `RowColumnObserverCore.row_column_observer_core`、`DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 给出相应的商下降和唯一双侧等价；`StateProtocolQuotientOrderCommutation.state_protocol_quotient_order_commutes` 说明先约化状态或先约化协议只改变规范表示，不改变联合评价。
+
+这里的满射条件排除“把从未由共同来源实现的值”误当作观察者状态，外延条件排除“目标内部仍有不可区分副本”。所以空间切面、时间读数和记忆摘要要互相恢复，至少需要同一实际像、状态运输、协议回拉和评价保持；一张数值坐标图或单边边界函数本身不够。
+
+若更新还要运输协议，必须另给 $T:X\to X$ 与 $G:P'\to P$，并证明
+
+$$
+E'(T x,p')=E(x,Gp').
+\tag{23.4}
+$$
+
+式（23.4）才使 $T$ 和 $G$ 在两个商上诱导同一动态评价。没有协议回拉，只能说状态被重标；不能说后续实验被保留。
+
+本节把有限稳定深度、动态记忆下界和双侧协议商接成一条链：
+
+$$
+\boxed{
+\text{首次有限稳定}
+\Rightarrow
+\text{完整未来边界}
+\Rightarrow
+\text{任意精确记忆的唯一因子}
+\Rightarrow
+\text{双侧评价的最小恢复载体}.
+}
+$$
+
+它仍是有限、确定性、任务相对的数学结论；不声称所有物理观察、无限状态或未知概率模型都具有同样的有限界。
+
+## 23.99 追加锚
+
+## 24. 有限时间投影与空间边界的共同恢复
+
+前面的双侧评价给出了抽象的状态—协议商，但还需要一个可以落到过程档案上的空间—时间接口。本节把有限未来读出、当前空间投影和隐藏档案放在同一个联合边界中。它只讨论有限档案与声明的实验族；不把有限投影外推为物理时空的完整坐标。
+
+### 24.1 有限时间投影是逐层增加的边界
+
+设 $X$ 是实际共同来源的状态像，$F:X\to X$ 是合法更新，$r:X\to R$ 是指定的记录读出。对 $N\in\mathbb N$ 定义有限时间投影
+
+$$
+\operatorname{TP}_N(x)(k)=r(F^k x),\qquad 0\le k\le N.
+$$
+
+若 $\pi_{\rm sp}:X\to S$ 是当前空间或端口投影，则联合边界为
+
+$$
+\boxed{
+Q_N(x)=\bigl(\pi_{\rm sp}(x),\operatorname{TP}_N(x)\bigr).
+}
+\tag{24.1}
+$$
+
+这里的“时间”只是沿合法更新取得的一列记录；若任务还需要失败、权限或 inactive archive event，就必须把相应读出并入 $r$ 或扩充 $Q_N$。
+
+仓内 `PredictionExpansionEscape.prediction_escape_iff_expansion_escape`、`TimeExpansionEscape.time_expansion_escape_iff_expansion_escape` 和 `FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws` 给出有限投影的逐项刻画与限制律；`FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone` 给出
+
+$$
+N\le M\Longrightarrow
+\ker(\operatorname{TP}_M)\subseteq\ker(\operatorname{TP}_N).
+\tag{24.2}
+$$
+
+因此 $N$ 增大只会切开原来合并的未来，不会把已经区分的有限记录重新合并。若存在 $x,y$ 使得 $\operatorname{TP}_N(x)=\operatorname{TP}_N(y)$ 而 $\operatorname{TP}_M(x)\ne\operatorname{TP}_M(y)$，这正是有限时间分辨率下的 expansion escape；它表示当前边界还没有承载足够的未来关系，而不是表示某个外部观察者看见了一个额外对象。
+
+### 24.2 目标恢复的纤维条件
+
+**proposition 24.1: 有限联合边界的目标充分性；Claim status: open.** 设 $T:X\to Y$ 是要由该接口回答的目标。存在唯一的实际像映射
+
+$$
+D_N:\operatorname{im}(Q_N)\to\operatorname{im}(T),
+\qquad T=D_N\circ Q_N,
+\tag{24.3}
+$$
+
+当且仅当
+
+$$
+Q_N(x)=Q_N(y)\Longrightarrow T(x)=T(y).
+\tag{24.4}
+$$
+
+这就是“先取空间与有限时间边界，再恢复目标”的准确判据。它只要求目标在 $Q_N$ 的纤维上恒定；不要求 $Q_N$ 反演完整状态。`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 提供相应的有限像因子化支点，`causal_state_factorization` 则说明在实际像上因子是唯一的。
+
+若要说空间摘要与完整时间摘要互相恢复，必须在实际像上同时有两个方向的因子化，等价地满足
+
+$$
+\ker(\pi_{\rm sp})=\ker(\operatorname{TP}_\infty).
+\tag{24.5}
+$$
+
+相同的值域大小、相同的当前读数，或存在一个单向编码，都不足以推出式（24.5）。若只需恢复某一项时间合法性 $L_y(x)$，要求可以弱化为 $L_y$ 在 $\pi_{\rm sp}$ 的纤维上恒定；但这是针对一个指定测试的充分性，不是对全部未来协议的充分性。
+
+### 24.3 隐藏档案反例：当前空间投影不能自动恢复时间域
+
+**theorem 24.2: 当前空间投影对隐藏档案时间域不充分；Claim status: open.** 在 `HiddenArchiveTemporalDomain.hidden_archive_preserves_current_changes_temporal_domain` 的有限构造中，$U$ 与 $U_{\rm old}$ 具有相同的 current/selected 数据和空间投影：
+
+$$
+\pi_{\rm sp}(U)=\pi_{\rm sp}(U_{\rm old})=(0,\delta_0).
+\tag{24.6}
+$$
+
+但 $U_{\rm old}$ 还含有一个 inactive archived event $e$，满足
+
+$$
+\tau(e)=2,\qquad \operatorname{position}(e)=0.
+$$
+
+令 $Y=\operatorname{shiftRich}(U,1)$，使右侧事件 $f$ 的时间为 $1$。则已有构造精确给出
+
+$$
+\operatorname{Guard}(U,Y),
+\qquad
+\neg\operatorname{Guard}(U_{\rm old},Y),
+\tag{24.7}
+$$
+
+因为在后一份档案中需要检查 $\tau(e)<\tau(f)$，即 $2<1$，该条件失败。于是存在同一空间纤维中的两个实际状态，它们对同一个后续时间接续给出不同合法性；式（24.4）对目标 $T=\operatorname{Guard}(-,Y)$ 失败。
+
+这个反例不说明空间投影没有用，而说明它没有截住所有仍影响联合实现的关系。要恢复该时间域，边界至少要保留 inactive archive 的时间资料，或保留一个对所有声明时间协议充分的未来行为摘要。把 archived event 当作“当前不显示所以不存在”，正是把必要的联合约束从边界删掉。
+
+### 24.4 相对时间的恢复与绝对原点的缺失
+
+在 `TemporalComposition` 与 `ProductPaths` 的有限实例中，带标签因果边、严格时间坐标和父节点接口可以共同恢复局部空间—时间结构：`temporal_guard_iff`、`edge_time`、`path_time` 及其 path 分解分别把合法接续、边时间和路径时间联系起来。单独的时间数值不能恢复因果边，单独的当前空间读数也不能恢复全部时间合法性。
+
+另一方面，`shift_attributes`、`shift_causal`、`q_shift` 和 `background_shift` 表明统一平移保持因果关系与指定当前读出；`guard_of_large_shift` 与 `exists_shift` 表明足够大的平移可以建立相对顺序。因此在没有外部原点或参考时钟的模型中，接口至多恢复
+
+$$
+\tau(y)-\tau(x)
+$$
+
+这类相对量，不能从不变的联合读出中恢复一个绝对时间零点。若任务需要绝对原点，必须把校准事件、参考记录或边界条件作为额外接口输入。
+
+本节把空间—时间恢复收束为一条可检验链：
+
+$$
+\boxed{
+\text{有限时间投影}
+\longrightarrow
+\text{联合边界 }Q_N
+\longrightarrow
+\text{目标纤维恒定}
+\longrightarrow
+\text{指定时间域可恢复}.
+}
+$$
+
+所有“充分”“互相恢复”和“相对时间”都限定在声明的实际像与协议族上；本节没有新增 Lean 声明，正文推导的 claim status 保持 open。
+
+### 24.5 追加勘误：实际像类型、联合纤维与时间平移条件
+
+**proposition 24.3: 实际像因子化的准确类型；Claim status: open.** 式（24.3）中的 $Q_N,T$ 若仍取原名义陪域，应先取实际像映射
+\[
+\widehat Q_N:X\to\operatorname{im}(Q_N),\qquad
+\widehat T:X\to\operatorname{im}(T).
+\]
+准确的交换式是
+\[
+\widehat T=D_N\circ\widehat Q_N.
+\tag{24.8}
+\]
+其存在且唯一，当且仅当式（24.4）成立。存在性由纤维恒定使 $D_N(\widehat Q_N(x))=\widehat T(x)$ 无歧义，唯一性由 $\widehat Q_N$ 满射。空 $X$ 时两实际像皆空，取唯一空映射。`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 的名义全域版本要求非空来源，用以给不可达坐标补值；`CausalStateFactorization.causal_state_factorization` 的实际像唯一性不要求把不可达坐标当作观察状态。本节只假设时间窗口有限，不假设状态像或观察像有限。
+
+为免与第23节的有限性条件混淆，那里“有限状态”应理解为 $X$ 带有有限 `Fintype` 结构，而第23.2节的精确记忆实现还应明确 $W$ 带有有限 `Fintype` 结构；仅有有限时间窗口或有限值域读出，不能推出这两个载体有限。第23.4节的动态运输也应使用跨接口类型
+\[
+T:X\to X',\qquad G:P'\to P,
+\]
+并满足
+\[
+E'(Tx,p')=E(x,Gp').
+\tag{24.8a}
+\]
+它首先给出评价保持；由此自动得到状态行 kernel preservation。协议列 kernel preservation 若要按相反方向使用，还需 $T$ 满射、源列由 $\operatorname{im}(T)$ 决定，或显式假设
+\[
+C_{p'}=C_{q'}\Longrightarrow C_{G p'}=C_{G q'}\quad\text{对所有 }x\in X.
+\]
+满足所需方向的这些条件后，才可在实际像上下降到相应商。只有再加满射、双射或明确的实际像双向条件，才可把下降后的映射称为等价或互相恢复。
+
+**proposition 24.4: 隐藏档案反例只否定其实际合并的纤维；Claim status: open.** 第24.3节的既有 Lean 反例无条件否定的是
+\[
+\pi_{\rm sp}(x)=\pi_{\rm sp}(x')
+\Longrightarrow
+\bigl(\operatorname{Guard}(x,Y)\leftrightarrow\operatorname{Guard}(x',Y)\bigr).
+\tag{24.9}
+\]
+它未指定 $F,r$，因而不能直接否定含有 $\operatorname{TP}_N$ 的式（24.4）。例如，若所声明读出本身已分离该合法性，联合边界可以在零窗口就区分两个档案；这种读出的实际可取得性仍须另证。
+
+一个明确的联合边界反例可以取包含 $U,U_{\rm old}$ 的档案状态类、恒等更新 $F=\mathrm{id}$ 以及单点读出 $r\equiv *$。此时对全部 $N$，
+\[
+Q_N(U)=Q_N(U_{\rm old}),
+\]
+而式（24.7）的合法性仍不同。因此，增加同一个不分离读出的窗口长度不能补回隐藏档案差别。所需补充不必是全部不活动事件资料；准确要求只是新摘要切开仍被目标区分的纤维。`HiddenArchiveTemporalDomain.current_spatial_projection_domain_refutation` 承担式（24.9）的有限反驳，以上指定恒等更新的连接是普通数学推导。
+
+**theorem 24.5: 联合未来边界的平移盲性条件；Claim status: open.** 设整数平移 $\sigma_k:X\to X$ 保持实际来源域，并满足
+\[
+\pi_{\rm sp}\sigma_k=\pi_{\rm sp},\qquad
+r\sigma_k=r,\qquad
+F\sigma_k=\sigma_kF.
+\tag{24.10}
+\]
+对迭代次数归纳得 $F^j\sigma_k=\sigma_kF^j$，故对每个有限 $N$，
+\[
+Q_N\sigma_k=Q_N.
+\tag{24.11}
+\]
+若绝对时间目标 $\Theta:X\to\mathbb Z$ 满足
+\[
+\Theta(\sigma_kx)=\Theta(x)+k
+\]
+且实际域中存在 $x,\sigma_kx$ 与 $k\ne0$，则 $\Theta$ 不能经 $Q_N$ 因子化：式（24.11）会迫使两目标值相同，与非零平移矛盾。
+
+`TemporalComposition.shift_attributes`、`shift_causal`、`q_shift` 和 `background_shift` 供应其指定档案字段的平移性质，不自动供应任意 $r,F$ 的式（24.10）。`guard_of_large_shift` 与 `exists_shift` 只移动右档案，以取得一份新的合法接续，不是所有数据不变的同时平移。相对时间差虽在同时平移下不变，也不因此自动可由接口恢复；仍须逐个检查它在观察纤维上恒定。
+
+最后，第24.4节的路径恢复只指所声明的拼接构造：`temporal_guard_iff` 刻画其时间合法性，`path_left_iff`、`path_right_iff` 和 `path_generated_iff` 刻画其来源路径；单独的 `edge_time`、`path_time` 不提供反向恢复。数学上定义的 $\operatorname{TP}_N$ 是指定未来响应表，只有实际执行并保留的记录才属于观察者当前档案。上述勘误保留式（24.1）、（24.2）、（24.4）与 HiddenArchive 的具体反例，并限定原式（24.3）及第24.3—24.4节的推论范围。
+
+还需区分第23节的未来读出商与双侧评价商：$C_\infty=X/{\equiv_\infty}$ 只由 $F,q$ 生成，不会自动包含协议 $P$ 可能读取的隐藏字段。若要把它作为第23.4节的双侧边界，必须另加任务条件
+\[
+x\equiv_\infty y\Longrightarrow\forall p,\ E(x,p)=E(y,p),
+\tag{24.12}
+\]
+其中合法性、记录和费用均已打包在 $E$ 中；若还要声称互相恢复，则需相反方向的分离条件，或直接证明评价行的 kernel 正好是 $\equiv_\infty$。相应地，$\bar F([x])=[F x]$ 与 $\bar q([x])=q(x)$ 的定义只在 $\equiv_\infty$ 对更新和读出稳定时良定义。缺少式（24.12）时，第23节的“完整未来边界”与双侧协议边界只能并列，不能自动串成同一商。
+
+## 24.99 追加锚
+
+### 24.6 再追加勘误：无限投影、共同载体与双侧链条件
+
+式（24.5）中的无限时间投影需先定义为
+\[
+\operatorname{TP}_\infty(x)(k)=r(F^k x)\quad(k\in\mathbb N),
+\]
+或等价地约定 $\ker(\operatorname{TP}_\infty):=\bigcap_{N\in\mathbb N}\ker(\operatorname{TP}_N)$。前文只直接使用有限 $N$；不作此定义，$\ker(\operatorname{TP}_\infty)$ 不是已声明的对象。
+
+HiddenArchive 的联合反例还应明确共同载体：取同一个状态类型 $X$，令 $U,U_{\rm old}\in X$，并令 $\pi_{\rm sp}:X\to S$ 满足 $\pi_{\rm sp}(U)=\pi_{\rm sp}(U_{\rm old})$；再指定 $F=\mathrm{id}_X$ 与 $r\equiv *$。这样才由定义得到对全部 $N$ 的 $Q_N(U)=Q_N(U_{\rm old})$。Lean 反例实际证明的是相应 image/Subtype.val（嵌入后的空间投影）相等及 Guard 的分歧；“current/selected 数据字面相同”不是额外的集合论前提。
+
+第23.4节末尾的链式收束须带条件：
+\[
+\text{有限稳定}
+\Longrightarrow
+\text{完整未来商}
+\Longrightarrow
+\text{精确记忆因子}
+\Longrightarrow
+\text{双侧评价边界}
+\]
+只有在式（24.12）成立且评价行对 $\equiv_\infty$ 具有反向分离（等价地，行 kernel 正好是 $\equiv_\infty$）时才成立；否则最后一步只能作为条件分支，$C_\infty$ 与双侧协议商须分别保留。第23.4节的跨接口动态式亦应按第24.5节解释为 $T:X\to X'$、$G:P'\to P$；同接口写法只是特例。
+
+此外，前述“$W$ 有限 `Fintype`”应读作 $W$ 具有 `Finite` 载体（需要枚举时可选择一个 `Fintype` 实例）。有限时间窗口或有限读出值域本身都不能推出 $W$ 有限；这一修正只限定第23.2节的有限记忆合同，不改变其因子化方向。
+
+## 24.99 追加锚（再追加勘误）
+
+## 25. 共同未来核与空间、时间、边界、记忆的四种表示
+
+第24节的联合边界回答了一个给定目标是否能从空间投影和有限未来窗口恢复。本节把它推广为一个带类型的部分标记接续系统，并区分单个表示充分、多个表示联合充分以及动态更新可下降这三个不同命题。以下都限定在同一个实际共同来源；没有共同来源时，四个值域的相同或同构不能构成同一对象的恢复。
+
+### 25.1 带类型的部分标记接续与完整未来 profile
+
+令 $X$ 为实际状态像，$A$ 为合法操作类型，$L$ 为包含合法性、读数、记录、费用和失败原因的标签类型。一个确定性部分标记接续关系写成
+
+$$
+\mathcal R\subseteq X\times A\times L\times X.
+$$
+
+对固定 $x,a$，若存在 $(x,a,\ell,x')\in\mathcal R$，则操作 $a$ 合法、标签为 $\ell$ 并把状态推进到 $x'$；若不存在这样的元组，定义结果为一个带失败原因的标签。若系统允许多个后继，则把下述单值结果替换成带类型的结果集合或分布，核的定义不变。
+
+对操作词 $w\in A^*$，递归得到完整响应
+
+$$
+\operatorname{Obs}_{\mathcal R,\varepsilon}(x)=\text{初始记录},
+$$
+
+$$
+\operatorname{Obs}_{\mathcal R,wa}(x)
+ =\text{把 }\operatorname{Obs}_{\mathcal R,w}(x)\text{ 的后继状态接入 }a\text{ 后得到的带标签响应}.
+$$
+
+这里的响应必须保留任务声明要求的失败、记录和费用；只留下后继工作态会把不同过程错误地合并。定义共同未来核
+
+$$
+\boxed{
+ x\approx_{\mathcal R}y
+ \iff
+ \forall w\in A^*,\quad
+ \operatorname{Obs}_{\mathcal R,w}(x)
+ =\operatorname{Obs}_{\mathcal R,w}(y).
+}
+\tag{25.1}
+$$
+
+它是“面对所有允许的未来接续都不可区分”的关系版本。若 $x\approx_{\mathcal R}y$，则对任意首操作 $a$，两者要么具有相同的失败标签，要么具有相同的首标签且后继再次处于 $\approx_{\mathcal R}$ 中；否则把该后继词接在 $a$ 后面即可区分二者。因此，(25.1) 是可以继续沿操作词拼接的动态核，而不是只比较当前显示值的静态核。
+
+仓内 `CongruenceKernel.congruence_kernel_laws`、`FiniteStableDepth.finite_state_has_stable_depth` 与 `FiniteHistoryPermanentStability.finite_history_relation_stable_forever` 分别提供核的接续律、有限状态下的稳定深度和稳定后永久保持的支点；本节只把它们组织到统一的带标签关系中，没有新增 Lean 声明。
+
+### 25.2 四种表示何时各自完整
+
+设空间、时间、边界和记忆表示分别为
+
+$$
+q_{\rm sp}:X\to Y_{\rm sp},\quad
+q_{\rm tm}:X\to Y_{\rm tm},\quad
+q_{\rm bd}:X\to Y_{\rm bd},\quad
+q_{\rm mem}:X\to Y_{\rm mem},
+$$
+
+并令完整 profile 为
+
+$$
+\Phi_{\mathcal R}:X\to (A^*\to L),\qquad
+\Phi_{\mathcal R}(x)(w)=\operatorname{Obs}_{\mathcal R,w}(x).
+$$
+
+所有映射都应先限制到实际像。对任意 $q:X\to Y$，以下三件事在实际像上等价：
+
+1. 存在唯一双射 $d_q:\operatorname{im}(q)\to\operatorname{im}(\Phi_{\mathcal R})$，满足
+   $$
+   \widehat\Phi_{\mathcal R}=d_q\circ\widehat q,
+   \qquad
+   \widehat q=d_q^{-1}\circ\widehat\Phi_{\mathcal R};
+   $$
+2.
+   $$
+   \ker(q)=\ker(\Phi_{\mathcal R})=\approx_{\mathcal R};
+   $$
+3. $q$ 是该操作词任务的最小动态边界：它既能恢复所有声明的标签与合法性，又不把未来核中不同的状态合并。
+
+证明只使用实际像因子化：$d_q(\widehat q(x)):=\widehat\Phi_{\mathcal R}(x)$ 由 kernel 相等而良定义，由两侧实际像映射的满射性得到双射与唯一性。`InterfaceKernelCriterion.interface_refinement_iff_kernel_inclusion`、`UniversalSufficiencyFactorization.universal_sufficiency_factorization` 和 `CausalStateFactorization.causal_state_factorization` 是这一判据的仓内支点。
+
+因此，若四个表示都满足
+
+$$
+\boxed{
+\ker(q_{\rm sp})
+=\ker(q_{\rm tm})
+=\ker(q_{\rm bd})
+=\ker(q_{\rm mem})
+=\approx_{\mathcal R},
+}
+\tag{25.2}
+$$
+
+它们才是在同一任务下互相恢复的四种表达。相同的值域基数、相同的当前读数或单向编码均不足以推出 (25.2)。若某一表示只需回答一个指定目标 $T$，则条件可弱化为 $\ker(q)\subseteq\ker(T)$；那是目标充分性，不是完整未来边界。
+
+### 25.3 联合充分严格弱于各自充分
+
+令
+
+$$
+X=\{0,1\}^2,\qquad P=\{0,1\},
+$$
+
+并定义评价
+
+$$
+E((u,v),0)=u,\qquad E((u,v),1)=v,
+$$
+
+于是完整双侧 profile $\Phi(u,v)=(u,v)$。再取四个表示
+
+$$
+q_{\rm sp}(u,v)=u,\quad
+q_{\rm tm}(u,v)=v,\quad
+q_{\rm bd}(u,v)=u\oplus v,\quad
+q_{\rm mem}(u,v)=u\wedge v.
+$$
+
+每个单独表示都把不同状态合并，所以没有一个单独满足 (25.2)。但联合表示
+
+$$
+J=(q_{\rm sp},q_{\rm tm},q_{\rm bd},q_{\rm mem})
+$$
+
+满足
+
+$$
+\ker(J)=\ker(\Phi)=\{((u,v),(u,v)):(u,v)\in X\}.
+\tag{25.3}
+$$
+
+这说明“空间、时间、边界、记忆合起来足够”只要求
+
+$$
+\ker(J)=\bigcap_i\ker(q_i)=\approx_{\mathcal R},
+$$
+
+严格弱于每个 $q_i$ 都能单独恢复完整 profile。联合接口只有在同一 $X$ 上定义，或已有共同来源态射把各分量拉回同一实际像时，才可作这种结论。
+
+### 25.4 有限时间窗口何时在有限层停止细化
+
+第24.1节中的有限投影应带有明确类型：
+
+$$
+\operatorname{TP}_N:X\to(\operatorname{Fin}(N+1)\to R),
+\qquad
+\operatorname{TP}_N(x)(i)=r(F^i x),
+$$
+
+并且
+
+$$
+Q_N:X\to S\times(\operatorname{Fin}(N+1)\to R),
+\qquad
+Q_N(x)=(\pi_{\rm sp}(x),\operatorname{TP}_N(x)).
+\tag{25.4}
+$$
+
+若空间标签沿更新保持，即 $\pi_{\rm sp}\circ F=\pi_{\rm sp}$，令 $q_0=(\pi_{\rm sp},r)$，则 $Q_N$ 的 kernel 正好是由 $q_0$ 生成的长度 $N$ 未来关系。若空间标签不保持，不能直接把现有 `finiteFutureRelation` 套在 $q_0$ 上；此时应改用
+
+$$
+K_N=\ker(\pi_{\rm sp})\cap
+\bigcap_{i=0}^{N}\ker(r\circ F^i)
+$$
+
+并单独证明这条关系链稳定，或者把冻结的空间标签扩展进状态载体后再应用有限稳定定理。
+
+在 $X$ 带有限 `Finite` 载体、操作更新和读出满足相应稳定条件时，仓内 `FiniteFutureCongruence.infinite_relation_stabilizes`、`FiniteHistoryStability.finite_history_stability` 和 `FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound` 给出某个深度 $d$，使
+
+$$
+\ker(Q_d)=\ker(Q_{d+1})=\ker(Q_\infty),
+$$
+
+并且所有 $N\ge d$ 保持同一 kernel。这里
+
+$$
+\operatorname{TP}_\infty(x)(k)=r(F^k x)\quad(k\in\mathbb N)
+$$
+
+是完整未来 profile，或等价地把其 kernel 定义为 $\bigcap_N\ker(\operatorname{TP}_N)$。稳定深度给出的是一个有限精确边界存在的条件，不是有限窗口对任意系统自动足够。
+
+`FiniteStabilityClassBound.finite_stability_class_bound` 与 `FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound` 还给出类数差的上界；在这些有限条件下，$Q_d$ 可以作为空间当前投影加有限时间窗口的最小精确联合边界。若动态更新在该 kernel 上闭合，便有唯一的诱导 $\bar F$；再与任一表示 $q_i$ 比较时，互相恢复仍等价于 $\ker(q_i)=\ker(Q_\infty)$，而不是由窗口长度或值域大小单独推出。
+
+### 25.5 动态下降与关系态射
+
+静态 kernel 相等还不够。若 $q:X\to Y$ 要承担后续更新，必须存在 $\bar F:Y\to Y$ 使
+
+$$
+q\circ F=\bar F\circ q,
+\tag{25.5}
+$$
+
+并且相同 $q$ 值的状态对每个允许操作具有相同合法性、标签和后继摘要。对协议化表示，还要把操作回拉或操作类型映射一并计入；否则两个当前相同的摘要可能选择不同的下一操作，$\bar F$ 就不是一个良定义的内部更新。
+
+若各 $q_i$ 与完整 profile 都满足相应的更新交换式，且 $\ker(q_i)=\ker(\Phi_{\mathcal R})$，则实际像上的恢复双射 $d_i$ 满足
+
+$$
+ d_i\circ \bar F_i=\bar F_{\Phi}\circ d_i.
+\tag{25.6}
+$$
+
+因此换一种表示只是同一动态过程的共轭改写。若只有联合 kernel 条件 (25.3)，则只能得到联合表示 $J$ 的动态下降，不能把每个分量单独宣称为完整动态边界。
+
+关系态射可以统一写成 $(f,g,\lambda)$：状态映射 $f:X\to X'$、协议回拉 $g:P'\to P$ 和标签映射 $\lambda:L\to L'$ 满足
+
+$$
+E'(f(x),p')=\lambda(E(x,g(p'))).
+\tag{25.7}
+$$
+
+它给出评价保持及正向 kernel 保持。要把诱导映射称为反射、双射或两种表示的等价，还需在实际像上加入相应的满射与行列分离条件；单向评价保持本身只给出下降方向。
+
+本节把“空间、时间、边界、记忆是同一个东西”改写为可检验的分层命题：单独互相恢复需要 (25.2)，联合恢复只需 (25.3)，动态可用还需 (25.5)，跨接口运输还需 (25.7)。这些结论是有限经典关系模型中的理论组织，Claim status 均为 open；没有新增 Lean 声明，也不把数学 profile 充当观察者已经实际取得的档案。
+
+## 25.99 追加锚
+
+## 26. 最小切面族与最大动态完成
+
+第25节区分了单个表示充分与多个表示联合充分。本节进一步回答两个精简问题：一组空间、时间、边界和记忆切面中哪些成员不可删除；以及给定当前读出后，怎样得到仍能继续运行的最粗动态边界。
+
+### 26.1 联合切面的交核判据
+
+固定同一个实际来源 $X$、完整未来 profile $\Phi:X\to R$，以及有限索引集 $I$。对每个 $i\in I$ 令
+
+$$
+q_i:X\to Y_i,
+\qquad
+K_i:=\ker(q_i),
+$$
+
+并定义联合读出
+
+$$
+J_I(x):=(q_i(x))_{i\in I}.
+$$
+
+逐点展开立即得到
+
+$$
+\boxed{
+\ker(J_I)=\bigcap_{i\in I}K_i.
+}
+\tag{26.1}
+$$
+
+所以联合切面对目标 $T$ 充分，当且仅当
+
+$$
+\bigcap_{i\in I}K_i\subseteq\ker(T),
+\tag{26.2}
+$$
+
+而联合切面对完整未来任务精确，当且仅当
+
+$$
+\boxed{
+\bigcap_{i\in I}K_i=\ker(\Phi)=\approx_{\mathcal R}.
+}
+\tag{26.3}
+$$
+
+这把“几种表示合起来是否足够”化成了一个只涉及观察纤维的判据；它不要求每个切面单独恢复完整 profile。
+
+若 (26.3) 成立，$I$ inclusion-minimal 当且仅当对每个 $i\in I$ 存在一对见证状态 $x_i,y_i$，满足
+
+$$
+\Phi(x_i)\ne\Phi(y_i),
+\qquad
+q_j(x_i)=q_j(y_i)\quad(j\ne i).
+\tag{26.4}
+$$
+
+因为全族精确，(26.4) 自动迫使 $q_i(x_i)\ne q_i(y_i)$；删去 $i$ 后这对状态落在剩余联合读出的同一纤维中，故剩余切面不再充分。反向地，若删去任一 $i$ 都不充分，就由 (26.2) 的失败取得这样的见证对。这是“哪一项关系不可删”的必要充分条件，属于普通集合论推导；当前仓内没有把它包装成新的 Lean 声明。
+
+### 26.2 一个有冗余切面的有限例子
+
+仍取 $X=\{0,1\}^2$，$\Phi(u,v)=(u,v)$，并令
+
+$$
+q_{\rm sp}(u,v)=u,\qquad q_{\rm tm}(u,v)=v,
+$$
+
+$$
+q_{\rm bd}(u,v)=u\oplus v,\qquad
+q_{\rm mem}(u,v)=u\wedge v.
+$$
+
+由 $(q_{\rm sp},q_{\rm tm})=\Phi$，切面族 $\{\mathrm{sp},\mathrm{tm}\}$ 已满足 (26.3)，且删去任一成员都会丢失一个坐标，因此它是 inclusion-minimal。加入 `bd` 或 `mem` 不改变联合 kernel，它们在这个任务中是冗余切面；但它们可能对另一个目标、另一个协议族或不同的代价函数成为不可删成员。故“冗余”总是相对于声明的未来任务，而不是某个表示的内在属性。
+
+若每个 $q_i$ 都有动态下降
+
+$$
+q_i\circ F=F_i\circ q_i,
+$$
+
+则联合读出自动有坐标逐项的下降
+
+$$
+J_I\circ F=\bigl(\prod_{i\in I}F_i\bigr)\circ J_I.
+\tag{26.5}
+$$
+
+若某个分量没有这样的更新或协议回拉，(26.1)—(26.4) 仍可作为静态判据，但不能把它称为可继续运行的联合边界。
+
+### 26.3 当前读出内的最大前向不变核
+
+令 $\tau:Y\to Y$ 是更新，$q:Y\to O$ 是当前实际读出。定义当前读出核
+
+$$
+K_0=\{(y_1,y_2):q(y_1)=q(y_2)\}.
+$$
+
+在 $K_0$ 中取所有满足前向不变条件
+
+$$
+(y_1,y_2)\in K\Longrightarrow
+(\tau y_1,\tau y_2)\in K
+$$
+
+的关系，其最大者记为 $K_\infty$。等价地，
+
+$$
+K_\infty=\ker\bigl(y\mapsto(k\mapsto q(\tau^k y))\bigr).
+\tag{26.6}
+$$
+
+它正是共同未来 profile 的 kernel。仓内 `PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient` 直接给出四个条件：
+
+1. 完成投影的 kernel 是 $K_\infty$；
+2. $K_\infty$ 是当前读出核内的最大前向不变关系；
+3. 当前读出唯一下降到该商；
+4. 更新唯一下降到该商上的更新。
+
+因此，把 $Y$ 压到 $Y/K_\infty$ 得到的不是任意摘要，而是**保留当前读出且仍可继续更新的最粗动态边界**。若另一个摘要 $h:Y\to B$ 也保留当前读出并有更新 $\bar\tau$，则
+
+$$
+\ker(h)\subseteq K_0,
+\qquad
+(h(y_1)=h(y_2)\Longrightarrow h(\tau y_1)=h(\tau y_2)),
+$$
+
+所以 $\ker(h)$ 是 $K_0$ 内的前向不变关系，从最大性得到
+
+$$
+\ker(h)\subseteq K_\infty.
+\tag{26.7}
+$$
+
+式 (26.7) 表明任意其他精确动态摘要都至少保留 canonical completion 所保留的区别；它可以更细，不能更粗。这里的“最小”是按可区分关系的偏序理解，而不是按某个编码字节数或计算时间理解。若要优化存储大小或取得成本，还需另行指定代价模型。
+
+### 26.4 协议作用下的同一结论
+
+当允许操作由幺半群 $M$ 作用于 $X$，当前读出为 $q:X\to O$ 时，完整协议 profile 为
+
+$$
+\operatorname{controlProfile}(x)(a)=q(a\mathbin{\cdot}x),
+\qquad a\in M.
+$$
+
+`ControlQuotientUniversalMinimality.control_quotient_universal_minimality` 给出该 profile 商的三项结构：当前读出可恢复、每个动作在商上有诱导作用、每个动作的后果可由商读出；并且任意同时满足这三项的候选摘要唯一因子到该商的实际像。`DynamicProfileCausalClosure.dynamic_profile_causal_closure` 则把执行一次动作后的 profile 写成 continuation 坐标的右平移。
+
+所以，自治更新的 (26.6) 与受控协议的完整 action profile 是同一模式的两个特例：前者把未来时间词作为索引，后者把合法操作词作为索引。若空间、时间、边界和记忆各自只记录 profile 的一个投影，它们能否联合恢复，仍由 (26.1)—(26.4) 的交核条件决定；若要每个投影单独可运行，还必须各自满足 (26.5) 的动态下降。
+
+### 26.5 精简结构的三层判定
+
+因此，给定四个表示，精简性应分三层检查：
+
+$$
+\boxed{
+\begin{array}{ll}
+\text{静态充分：}&\displaystyle \bigcap_i\ker(q_i)\subseteq\ker(T);\\[4pt]
+\text{任务精确：}&\displaystyle \bigcap_i\ker(q_i)=\ker(\Phi);\\[4pt]
+\text{动态可运行：}&\displaystyle q_iF=F_iq_i\text{（或联合版本 }JF=F_JJ\text{）}.
+\end{array}
+}
+\tag{26.8}
+$$
+
+第一层只回答一个目标，第二层保留全部声明的未来区别，第三层才保证下一项合法操作可以继续在摘要上定义。把其中任何一层偷换成“值域大小相同”或“当前读数相同”，都会重新引入前面隐藏档案与未来解码的反例。
+
+本节把仓内已形式化的最大不变商、控制 profile 商和实际像因子化接到同一个交核框架中。新增的切面不可删判据、冗余例子和三层判定是普通数学组织，Claim status 均为 open；没有新增 Lean 声明，也不触发消化流程。
+
+## 26.99 追加锚
+
+## 27. 第25—26节的范围勘误：静态核、动态授权与无限联合边界
+
+第25.2节中“最小动态边界”的措辞应按以下条件读取。kernel 与完整操作词 profile 相等，首先只证明一个**静态未来边界**：声明的标签、失败和费用可以从该摘要恢复。要把它称为可继续运行的动态边界，还必须同时满足第25.5节的更新下降，并要求合法操作、权限和选择器在该摘要的纤维上恒定。若动作词已总化且失败标签已纳入 $\Phi_{\mathcal R}$，这些条件可以由动态核的同余律承担；对一般部分操作，不能由 kernel 相等单独推出后续授权。
+
+第25.4节的无限联合边界应明确写成
+
+$$
+\operatorname{TP}_\infty(x)(k)=r(F^k x),\qquad
+Q_\infty(x)=\bigl(\pi_{\rm sp}(x),\operatorname{TP}_\infty(x)\bigr).
+\tag{27.1}
+$$
+
+在 $\pi_{\rm sp}\circ F=\pi_{\rm sp}$ 时，
+
+$$
+\ker(Q_\infty)=\ker(\pi_{\rm sp})\cap\ker(\operatorname{TP}_\infty),
+$$
+
+正是以 $q_0=(\pi_{\rm sp},r)$ 生成的完整未来核；不变性不成立时仍应使用第25.4节的 $K_N$ 链，而不能把 $\ker(\operatorname{TP}_\infty)$ 单独当作空间—时间联合核。有限时间窗口、有限读出值域或一个当前空间读数，都不自动给出这个联合稳定性。
+
+最后，若 (26.3) 成立，则由
+
+$$
+\ker(\Phi)=\bigcap_i\ker(q_i)\subseteq\ker(q_i)
+$$
+
+自动得到每个 $q_i$ 对完整 profile 的目标尊重；无需另加假设。若只知道联合充分的包含关系而没有精确等式，则各个分量可能保留额外区别，仍应把它们称为联合表示而不是同一最小表示。
+
+这些句子只收紧结论量词与对象类型，不改变第25—26节的交核、最大不变核和协议 profile 结果；没有新增 Lean 声明，Claim status 仍为 open。
+
+## 27.99 追加锚
+
+## 28. 部分接续的总化：合法边与失败结果必须分开
+
+第25.1节的
+
+$$
+\mathcal R\subseteq X\times A\times L\times X
+$$
+
+只记录成功的合法边。若某个 $(x,a)$ 没有后继，失败标签并不属于这条四元组关系；因此“把失败原因放入 $L$”本身还不足以使 $\mathcal R$ 成为总函数。准确的单步结果应总化为
+
+$$
+\operatorname{Step}_{\mathcal R}:X\times A
+\longrightarrow
+(L_{\rm ok}\times X)\;\sqcup\;L_{\rm fail},
+\tag{28.1}
+$$
+
+其中左侧表示合法读数、记录和后继，右侧表示失败类型。若失败原因也要和成功标签放在同一个结果载体，需显式取不相交和
+
+$$
+L:=L_{\rm ok}\sqcup L_{\rm fail}
+$$
+
+并保留结果的成功/失败构造子；不能把一个失败标签伪装成缺失的后继。
+
+在确定性部分系统中，$\operatorname{Step}_{\mathcal R}$ 由 $\mathcal R$ 与失败判定唯一确定；在非确定性系统中，应改成有限集合、概率分布或带权限的结果关系。完整词响应递归读取 (28.1) 的构造子，所以未来核要求相同的成功/失败形状、标签和后继 profile。第25.1节中“首操作后标签相同或后继再次处于未来核”的说法，只有在这种确定性总化或已声明的结果集合语义下成立。
+
+仓内 `D5/S0/Automata/TypedPartialDFAO.lean` 与 `TypedPartialDFAOOverBase.lean` 已把部分转移、输出、类型保持和非法接续分开；`runFrom_append`、`evalOutput` 与 `runFrom_type` 支撑合法词的拼接和失败边界。对多个合法操作，`ControlledRelationRecursion.controlledDepthRelation` 给出深度零的当前读出核，以及深度递归中的 successor 前像交；`ControlledFiniteStability.controlled_finite_stability` 在有限载体和相应满射条件下把相邻深度稳定提升为永久稳定。
+
+因此，部分关系的统一边界必须同时记录：
+
+$$
+\boxed{
+\text{当前合法域}
++\text{成功标签与后继}
++\text{失败标签}
++\text{操作类型与权限}.
+}
+\tag{28.2}
+$$
+
+只保存成功路径的后继状态，会把“此操作不可执行”和“此操作尚未被测试”合并；只保存失败原因，又会丢失成功读数与后继。两者都必须通过同一个实际来源和同一个协议接口进入 profile。Claim status 为 open；本节没有新增 Lean 声明。
+
+## 28.99 追加锚
+
+## 29. 有限窗口、逆极限与实际来源的完成边界
+
+前面把完整未来边界写成 $\operatorname{TP}_\infty$ 或操作词 profile，但观察者通常只取得有限前缀。要把两者连接起来，必须同时保留每个有限层的实际可实现性和层间限制相容性。
+
+### 29.1 实际有限词与限制系统
+
+令
+
+$$
+I_m:=\operatorname{im}(\operatorname{TP}_m)
+\subseteq \operatorname{Fin}(m+1)\to R.
+$$
+
+对 $m\le n$，限制映射
+
+$$
+\rho_{m,n}:I_n\to I_m
+$$
+
+把长度 $n+1$ 的读出词截到长度 $m+1$。一个兼容有限族是
+
+$$
+\mathbf u=(u_m)_{m\in\mathbb N}
+$$
+
+满足
+
+$$
+ u_m\in I_m,
+ \qquad
+ \rho_{m,n}(u_n)=u_m\quad(m\le n).
+\tag{29.1}
+$$
+
+因此它属于由实际有限窗口组成的逆极限
+
+$$
+\varprojlim_m I_m.
+$$
+
+条件 $u_m\in I_m$ 不能省略。仅仅给出每层名义值域中的一份相容函数，会产生一个形式上的极限序列，却未必来自任何实际状态。
+
+仓内 `ItineraryCompletion.CompatibleItineraryFamily` 正是把 (29.1) 写成带有 `realized` 与 `compatible` 两个字段的结构；`itineraryToLimit` 把一个实际完整 itinerary 送到其所有有限前缀。
+
+### 29.2 何时逆极限就是实际完整边界
+
+完整实际边界为
+
+$$
+I_\infty:=\operatorname{im}(\operatorname{TP}_\infty).
+$$
+
+总有一个限制映射
+
+$$
+\Lambda:I_\infty\to\varprojlim_m I_m,
+\qquad
+\Lambda(u)=(u\!\upharpoonright_m)_m.
+$$
+
+在任意系统中，$\Lambda$ 的单射只使用函数逐坐标相等；满射则是额外的来源实现性质。若存在一个相容族的每个有限前缀都可由某个状态实现，但这些状态不能统一为同一个实际来源，逆极限会包含一个只在有限层相容的虚拟点。
+
+在仓内 `ItineraryCompletion` 的有限状态假设下，`itineraryLimitEquiv` 给出
+
+$$
+\boxed{
+I_\infty\cong\varprojlim_m I_m.
+}
+\tag{29.2}
+$$
+
+它的证明依赖有限载体以及 `CompatibleItineraryFamily.realized` 的逐层实际性；不能把 (29.2) 外推到没有这些条件的任意无限关系。`itinerary_completion` 还同时给出 kernel 商、实际完整 itinerary 和兼容有限族之间的动态半共轭，并存在一个有限深度 $d$ 使 $I_\infty$ 与 $I_d$ 已经双射。
+
+因此要区分三种断言：
+
+$$
+\boxed{
+\begin{array}{ll}
+\text{逐层相容：}&u_m\text{ 满足层间限制};\\
+\text{实际完成：}&(u_m)_m\text{ 来自同一实际状态的完整 profile};\\
+\text{有限终止：}&\exists d,\ I_\infty\cong I_d.
+\end{array}}
+\tag{29.3}
+$$
+
+第一项是逆极限的语法，第二项是来源存在性，第三项是有限状态下的稳定性。三者不能互换。
+
+### 29.3 完成边界的更新与观察者档案
+
+完整 itinerary 的更新是移去第一个坐标的 shift：
+
+$$
+\operatorname{TP}_\infty(Fx)(k)=
+\operatorname{TP}_\infty(x)(k+1).
+\tag{29.4}
+$$
+
+所以实际完整边界上有一个 `itineraryUpdate`；在兼容有限族上，则由限制相容性诱导 `limitUpdate`。`itinerary_completion` 的半共轭式表明这两种表达承载同一更新。
+
+但数学上的 $I_\infty$ 或逆极限不是观察者当前档案。观察者在预算 $N$ 下最多持有某个 $u_N\in I_N$，以及为取得它所保存的参考、权限和来源记录。若后续协议需要一个未取得的坐标，必须执行相应操作或把足以预测它的 completion 摘要实际写入记忆；不能把理论上的 $I_\infty$ 当作免费输入。
+
+这也解释了为何有限一致不自动给出观察者知道完整未来：
+
+$$
+\text{数学 completion}
+\neq
+\text{当前可访问 archive}.
+$$
+
+前者是用来定义最小动态边界的对象，后者是选择器和更新程序真正可以读取的接口。
+
+### 29.4 与空间、时间、边界和记忆的统一
+
+把空间、时间、边界和记忆分别看作同一完整 profile 的有限或重排投影时，它们的联合恢复需要两个条件：
+
+1. 每个投影都来自同一个实际来源 $X$，或有已证的共同来源态射；
+2. 投影的联合 kernel 等于 $\ker(\operatorname{TP}_\infty)$，并且各投影的更新、协议和失败结果在相应纤维上下降。
+
+在有限稳定深度 $d$ 存在时，可以用 $\operatorname{TP}_d$ 替代完整 profile；否则，逆极限只提供一个候选完成对象，仍需单独证明实际来源满射或接受它作为 completion。若某个空间切面只记录当前坐标，时间切面只记录未来读数，记忆只记录档案摘要，它们各自的缺失关系由 (26.1)—(26.4) 的交核判据定位，而不是由“都来自同一个系统”自动消失。
+
+本节直接对应仓内 `ItineraryCompletion.itineraryLimitEquiv`、`itinerary_completion`、`completionCoordinateEquiv` 和有限未来稳定结果。逆极限的实际来源条件、无限系统中的满射性以及观察者取得 completion 的资源成本仍为 open；没有新增 Lean 声明。
+
+## 29.99 追加锚
+
+## 30. 关系的关系：协议族闭包与联合可观测核
+
+第26节的交核是在固定的有限表示族上取交。本节把“哪些读出被允许”也作为变量，得到关系—读出之间的第二层闭包。这是递归关系不应被误解为重复改写同一公式的地方：只有读出族、操作族或标签语义发生扩展，递归才会产生新的区分。
+
+### 30.1 从关系生成可保持读出，再生成联合核
+
+设 $X$ 为状态载体，$O$ 为一个固定的读出值域，$\mathscr R\subseteq X\times X$ 为一组当前被要求保留的关系。令
+
+$$
+\Pi(\mathscr R):=\{q:X\to O:\forall(x,y)\in\mathscr R,\ q(x)=q(y)\}
+$$
+
+为在 $\mathscr R$ 上不变的读出族，并定义联合可观测核
+
+$$
+\mathsf K(\mathscr R)
+:=\{(x,y):\forall q\in\Pi(\mathscr R),\ q(x)=q(y)\}.
+\tag{30.1}
+$$
+
+逐点展开得到三条关系律：
+
+$$
+\boxed{
+\mathscr R\subseteq\mathsf K(\mathscr R),
+}
+\tag{30.2}
+$$
+
+$$
+\mathscr R\subseteq\mathscr S
+\Longrightarrow
+\mathsf K(\mathscr S)\subseteq\mathsf K(\mathscr R),
+\tag{30.3}
+$$
+
+以及
+
+$$
+\boxed{
+\mathsf K(\mathsf K(\mathscr R))=\mathsf K(\mathscr R).
+}
+\tag{30.4}
+$$
+
+(30.2) 是因为每个 $q\in\Pi(\mathscr R)$ 都保持 $\mathscr R$；(30.3) 是因为约束增多后可用的读出变少；(30.4) 表示对同一读出值域再次取“所有保持读出”的联合核，不会创造新的区别。仓内 `ProtocolRelationClosureLaws.protocol_relation_closure_laws` 直接形式化了这三条关系侧结论。
+
+因此 $\mathsf K$ 是由读出—关系极性产生的固定点算子：它是扩张的、反单调的、幂等的。它不是普通意义上单调的闭包；把 (30.3) 错写成同向单调会颠倒信息增益的方向。
+
+### 30.2 协议扩展才会产生新的分辨率
+
+设 $\mathscr P_0\subseteq\mathscr P_1$ 是两组允许协议，定义协议联合核
+
+$$
+K_{\mathscr P}(x,y)
+\iff
+\forall p\in\mathscr P,\quad E(x,p)=E(y,p).
+$$
+
+则
+
+$$
+\mathscr P_0\subseteq\mathscr P_1
+\Longrightarrow
+K_{\mathscr P_1}\subseteq K_{\mathscr P_0}.
+\tag{30.5}
+$$
+
+若存在 $x,y$ 使 $K_{\mathscr P_0}(x,y)$ 成立而某个新增 $p\in\mathscr P_1$ 区分二者，则包含严格。反之，若新增协议在旧核的每条纤维上恒定，协议扩展不会改变动态边界；它只是对已有资料的重排或重复读取。
+
+同理，若观测族按
+
+$$
+\mathscr Q_0\subseteq\mathscr Q_1\subseteq\cdots
+$$
+
+扩展，则其联合 kernel 形成反向链
+
+$$
+K_{\mathscr Q_0}\supseteq K_{\mathscr Q_1}\supseteq\cdots.
+\tag{30.6}
+$$
+
+空间、时间、边界和记忆可以被理解为四个协议/读出子族；它们的联合恢复只需检查链的交是否达到完整 profile kernel。`QueryKernelHierarchy.query_kernel_hierarchy` 给出观察、干预和反事实查询按可因子化关系形成 kernel 链，并保留严格性见证；它说明“加入更强协议”不是一句信息更多的比喻，而是一个核包含关系。
+
+### 30.3 关系递归何时真正前进
+
+给定初始关系 $\mathscr R_0$ 与逐层协议族 $\mathscr P_n$，可以定义
+
+$$
+\mathscr R_{n+1}:=K_{\mathscr P_n}(\mathscr R_n),
+$$
+
+其中 $K_{\mathscr P_n}$ 表示只取第 $n$ 层允许协议在 $\mathscr R_n$ 约束下的联合核。若协议族固定且只使用 (30.1) 的同一值域，(30.4) 表明关系闭包在一次取核后已经达到固定点；继续写 $\mathscr R_{n+2}$ 不会凭空增加新信息。
+
+真正的递归细化必须满足至少一项：
+
+$$
+\boxed{
+\text{扩大协议族}
+\quad\text{或}\quad
+\text{扩大操作词/失败标签}
+\quad\text{或}\quad
+\text{改变读出值域与任务目标}.
+}
+\tag{30.7}
+$$
+
+否则“关系的关系的关系”只是同一 kernel 的再次命名。若协议族扩展到其并集，极限核为
+
+$$
+K_{\infty}=\bigcap_n K_{\mathscr P_n};
+$$
+
+这与第29节的完整未来 profile 相接，但仍要另证该极限是否来自实际共同来源，以及观察者是否能取得它。
+
+### 30.4 与边界最小性相接
+
+对目标 $T:X\to Z$，协议族 $\mathscr P$ 的联合摘要是 $T$ 可恢复的，当且仅当
+
+$$
+K_{\mathscr P}\subseteq\ker(T).
+\tag{30.8}
+$$
+
+当取等号时，协议商既没有漏掉目标相关区别，也没有保留任务无关的合并；它是该任务的精确边界。若 $K_{\mathscr P}$ 严格小于 $\ker(T)$，说明协议保留了额外区别，可能需要再做目标相关压缩；若它不包含于 $\ker(T)$，则当前协议族确实无法恢复目标。
+
+这把“最小关系结构”分成两个正交操作：先用允许协议求联合 kernel，确定动态上不能合并的关系；再在目标 kernel 内检查是否还存在任务无关的细化。空间、时间、边界和记忆的互相恢复，是它们的协议核都落在同一 $K_{\mathscr P}$ 上，而不是它们的编码格式相同。
+
+本节对应仓内 `ProtocolRelationClosureLaws`、`QueryKernelHierarchy` 与实际像 kernel 因子化结果；反单调闭包、协议扩展的严格性以及无限协议并集的实际来源条件，在理论层保持 open。没有新增 Lean 声明。
+
+## 30.99 追加锚
+
+## 31. 切面变换的完成化自然性
+
+空间切面、时间切面、边界摘要和记忆表示若来自不同载体，不能仅凭它们值域之间存在一个编码就称为同一过程。准确的换切面需要同时运输更新和读出，并在完整未来完成上给出自然的交换。
+
+### 31.1 半共轭与读出翻译
+
+设两个带更新的实际系统为
+
+$$
+(X,F,q),\qquad (Y,G,r),
+$$
+
+其中 $F:X\to X$、$G:Y\to Y$ 是更新，$q:X\to B$、$r:Y\to R$ 是当前读出。设状态运输 $h:X\to Y$、读出翻译 $\eta:B\to R$ 满足
+
+$$
+ h\circ F=G\circ h,
+ \qquad
+ r\circ h=\eta\circ q.
+\tag{31.1}
+$$
+
+第一式是动态半共轭，第二式是当前接口评价保持。对每个 $n$ 归纳可得
+
+$$
+ r(G^n h(x))=\eta(q(F^n x)),
+$$
+
+于是完整 profile 有自然运输
+
+$$
+\widehat h:\operatorname{im}(\operatorname{TP}_\infty^X)\to
+\operatorname{im}(\operatorname{TP}_\infty^Y),
+$$
+
+$$
+\widehat h\bigl((q(F^n x))_{n\ge0}\bigr)
+ =\bigl(r(G^n h(x))\bigr)_{n\ge0}.
+\tag{31.2}
+$$
+
+若同一个 profile 可由多个 $x$ 表示，(31.1) 保证右侧相同；因此 (31.2) 在实际像上良定义。它满足
+
+$$
+\widehat h\circ\operatorname{TP}_\infty^X
+=\operatorname{TP}_\infty^Y\circ h,
+\qquad
+\widehat h\circ\operatorname{shift}_X
+=\operatorname{shift}_Y\circ\widehat h.
+\tag{31.3}
+$$
+
+仓内 `BehaviorCompletionFunctoriality.behavior_completion_is_functorial` 形式化了这两个交换式，并进一步给出运输的唯一性、恒等和复合。因而换切面可被视为完成化对象之间的态射，而不是在原状态空间中任意旋转坐标。
+
+### 31.2 单向精化与双向同一化
+
+(31.1) 只给出单向运输。若 $h$ 或 $\eta$ 合并了两个未来 profile，$\widehat h$ 可以是满射而不是单射；这表示目标切面是源切面的粗化。若要称两种切面互相恢复，需要在实际完成像上证明
+
+$$
+\ker(\operatorname{TP}_\infty^X)
+\stackrel{h}{\longleftrightarrow}
+\ker(\operatorname{TP}_\infty^Y)
+$$
+
+之间的双向反射，等价地要求存在反向运输 $k$，使两边的 profile 映射互为逆。单向读出因子化只能推出 kernel 包含和完成商上的满射，不能推出双射。
+
+更一般地，若只对有限窗口 $N$ 有
+
+$$
+r(G^n h(x))=\eta(q(F^n x))\quad(0\le n\le N),
+$$
+
+则只能构造有限边界运输 $\widehat h_N$；不能把它提升成完整 profile 的自然态射。若未来某个坐标在 $N+1$ 首次分离，有限交换方程会在下一层失效。这正是有限分辨率与完整动态等价之间的缺口。
+
+### 31.3 自然性、恒等与复合
+
+若另有
+
+$$
+(Y,G,r)\xrightarrow{k,\theta}(Z,H,s)
+$$
+
+满足与 (31.1) 同形的交换式，则完成运输满足
+
+$$
+\widehat{(k\circ h)}=\widehat k\circ\widehat h,
+\qquad
+\widehat{\mathrm{id}}=\mathrm{id}.
+\tag{31.4}
+$$
+
+这给“改变切面、再改变参考、再改变记忆编码”的路径独立性一个可检验版本：只要每一步都保存动态半共轭和读出因式分解，完整 profile 上的结果与直接运输一致。若某一步只保存当前数值，不保存未来协议或失败标签，(31.4) 的证明条件就断裂，路径依赖不再是坐标记号问题，而是实际 kernel 被扩大。
+
+### 31.4 与四种表示的恢复
+
+对空间、时间、边界和记忆四个表示 $q_i$，若每个表示都与同一完整 profile 满足 (31.1) 的下降条件，并且
+
+$$
+\ker(q_i)=\ker(\operatorname{TP}_\infty),
+$$
+
+则它们的完成像之间存在唯一的自然双射，且交换各自的更新。若只有联合交核等式
+
+$$
+\bigcap_i\ker(q_i)=\ker(\operatorname{TP}_\infty),
+$$
+
+则只有联合表示 $J=(q_i)_i$ 得到自然等价；单个分量仍可能只是互补的静态投影。由此，互相恢复的强命题与联合充分的弱命题在完成化范畴中仍然严格区分。
+
+本节对应仓内 `BehaviorCompletionFunctoriality`、`BehaviorCompletionTranslation` 和 `PredictionCompletion.observation_refinement_completion`。它把跨切面运输的交换、唯一性、复合和有限窗口限制写成统一条件；没有新增 Lean 声明，理论结论 Claim status 为 open。
+
+## 31.99 追加锚
+
+## 32. 完成运输的实际像与双向条件勘误
+
+第31.2节的“kernel 双向对应”应严格理解为完成像上的诱导映射，而不是把状态映射 $h$ 直接当成两个关系集合之间的双射。令
+
+$$
+I_X=\operatorname{im}(\operatorname{TP}_\infty^X),
+\qquad
+I_Y=\operatorname{im}(\operatorname{TP}_\infty^Y).
+$$
+
+在 (31.1) 下，$\widehat h:I_X\to I_Y$ 首先只是良定义的单向映射；若 $h$ 在实际来源像上满射，则 $\widehat h$ 在相应 profile 像上满射。只有再有反向系统态射、或直接证明 $\widehat h$ 单射并满足反向的更新与读出交换，才能称两种完成表示双向恢复。
+
+若 $h(x)=h(y)$ 蕴含两者的完整 profile 相同，则 $\widehat h$ 的良定义不需要 $h$ 单射；若完整 profile 相同的反向蕴含也成立，则它们在状态 quotient 上反射同一未来核。因而可检验的双向条件是
+
+$$
+\widehat h\text{ 在 }I_X\text{ 与 }I_Y\text{ 之间为双射，且}
+\widehat h\circ\operatorname{itineraryUpdate}_X
+=\operatorname{itineraryUpdate}_Y\circ\widehat h,
+$$
+
+并带有读出翻译的交换式。第31节中的 `shift` 均指这里的 `itineraryUpdate`；有限窗口只得到对应的有限 itinerary 映射。
+
+本勘误只限定跨切面双向恢复的对象和量词，不改变单向半共轭、唯一运输或复合自然性。Claim status 为 open，无新增 Lean 声明。
+
+## 32.99 追加锚
+
+## 33. 未来完成与过去逆极限的方向不对称
+
+第29节把完整未来 profile 与有限前缀的逆极限连接起来，但这仍是单向时间结构。若更新不可逆，未来 completion 不会自动包含全部过去记忆；过去兼容线程只保留能够无限向前追溯的稳定核心。
+
+### 33.1 两种线程载体
+
+先取有限状态载体 $Y$ 与自映射 $F:Y\to Y$。恒等读出下，正向未来线程为
+
+$$
+I_F^+:=\{(F^n y)_{n\ge0}:y\in Y\},
+\qquad
+\operatorname{ev}_0^+:I_F^+\to Y,
+\quad
+\operatorname{ev}_0^+((y_n)_n)=y_0.
+$$
+
+过去兼容线程为
+
+$$
+I_F^-:=\{u:\mathbb N\to Y:\forall n,\ F(u_{n+1})=u_n\},
+\qquad
+\operatorname{ev}_0^-:I_F^-\to Y.
+\tag{33.1}
+$$
+
+正向线程的零坐标恢复初态，因此
+
+$$
+I_F^+\cong Y.
+\tag{33.2}
+$$
+
+过去线程的零坐标只能落在周期核心
+
+$$
+\operatorname{Per}(F):=\{y:\exists n>0,\ F^n y=y\}.
+$$
+
+在有限载体上，`BackwardOrbitCore.backward_orbit_eval_zero_bijective` 与 `pastCoreEquiv` 给出
+
+$$
+I_F^-\cong\operatorname{Per}(F).
+\tag{33.3}
+$$
+
+仓内 `IdentityFuturePastGap.identity_future_completion_exceeds_past_core` 进一步给出：若 $F$ 非双射，则
+
+$$
+\operatorname{Nat.card}(\operatorname{Per}(F))
+<\operatorname{Nat.card}(Y),
+$$
+
+且过去线程严格少于正向 identity completion。未来可区分的瞬态初态不会因为存在一个兼容过去线程而获得过去坐标。
+
+### 33.2 最小有限反例
+
+令
+
+$$
+Y=\{0,1\},qquad F(0)=0,quad F(1)=0.
+$$
+
+恒等读出下，正向线程分别为
+
+$$
+(0,0,0,\ldots),qquad(1,0,0,\ldots),
+$$
+
+所以 $I_F^+$ 有两个元素并能恢复初态。过去兼容条件强迫 $u_0=0$，再递归强迫每个 $u_n=0$；因此 $I_F^-$ 只有常值零线程。
+
+这不是“未来和过去使用了不同坐标”的记号现象，而是 $F$ 把瞬态状态 $1$ 压入稳定状态 $0$ 后，已没有可逆的前驱链可以恢复它。若观察者要保留这份过去区别，必须把档案或可逆辅助变量并入状态；未来 profile 本身不会自动重建已被非单射更新遗忘的前身。
+
+### 33.3 双向恢复的准确条件
+
+若 $F$ 在实际来源上是双射，则有限情形下每个状态都在周期核心中，(33.2) 与 (33.3) 可由双向 shift 互相运输。更一般地，令
+
+$$
+Y_\infty:=\operatorname{range}(F^{[|Y|]}).
+$$
+
+在有限载体上，`StableImagePeriodicCore.iterate_range_card_antitone_and_stable` 给出足够迭代后稳定像等于 $\operatorname{Per}(F)$；把实际来源限制到 $Y_\infty$ 后，更新在该核心上可逆，`FiniteBilateralTrajectory.finite_bilateral_trajectory` 给出双侧轨迹由周期点基准唯一确定。
+
+因此，若统一模型要求空间、时间、边界和记忆同时支持正向与反向恢复，至少要声明下列之一：
+
+$$
+\boxed{
+F\text{ 在实际来源像上双射}
+\quad\text{或}\quad
+\text{先把来源限制到稳定周期核心 }Y_\infty.
+}
+\tag{33.4}
+$$
+
+若只要求正向预测，非双射更新仍可使用第26节的最大前向不变 completion；若还要求过去档案可由同一边界重建，(33.4) 是额外的双向条件，而非未来 kernel 自动提供的结论。
+
+### 33.4 带一般读出的推广
+
+对一般 $q:Y\to O$，正向 completion 是
+
+$$
+I_{F,q}^+=\operatorname{im}\bigl(y\mapsto(q(F^n y))_{n\ge0}\bigr),
+$$
+
+其 kernel 是未来可观测等价；过去线程还需满足同一读出下的双侧兼容。恒等读出反例表明，即使正向 kernel 为最细，过去线程也可能严格缺少瞬态来源。因而一般情况下，双向恢复需要同时证明：
+
+1. 更新在实际来源像上可逆，或已限制到稳定核心；
+2. 过去与未来 profile 的 kernel 在该核心上相等；
+3. 空间、边界和记忆投影在这个双向 kernel 上都满足动态下降。
+
+本节组织仓内 `IdentityFuturePastGap`、`BackwardOrbitCore`、`StableImagePeriodicCore` 与 `FiniteBilateralTrajectory` 的既有结果，强调未来 completion 与过去记忆的方向性差异。没有新增 Lean 声明，理论结论 Claim status 为 open。
+
+## 33.99 追加锚
+
+## 34. 折扣未来伪度量：近似边界与精确核的分层
+
+前面的 kernel 判据是零误差的任务等价。若读出值域 $O$ 带有度量，观察者也可以用一个有界的近似边界来排序仍未完全相同的未来行为，但这不会自动产生一个新的精确商。
+
+### 34.1 折扣未来距离
+
+设 $q:Y\to O$，更新为 $F:Y\to Y$，并假设 $(O,d)$ 是度量空间，存在 $B<\infty$ 使
+
+$$
+ d(a,b)\le B\qquad(a,b\in O).
+$$
+
+对 $0<\gamma<1$ 定义
+
+$$
+D_\gamma(y,y')
+:=\sup_{n\ge0}
+ \gamma^n d\bigl(q(F^n y),q(F^n y')\bigr).
+\tag{34.1}
+$$
+
+仓内 `CanonicalDiscountedFutureGeometry.canonical_discounted_future_geometry` 形式化了以下性质：$D_\gamma$ 是 $Y$ 上的伪度量，满足
+
+$$
+ d(qy,qy')\le D_\gamma(y,y'),
+\tag{34.2}
+$$
+
+$$
+D_\gamma(Fy,Fy')\le\gamma^{-1}D_\gamma(y,y'),
+\tag{34.3}
+$$
+
+以及
+
+$$
+\boxed{
+D_\gamma(y,y')=0
+\iff
+\forall n,\ q(F^n y)=q(F^n y').
+}
+\tag{34.4}
+$$
+
+因此，对任意严格正的折扣，零核仍然是完整未来核；折扣只改变不同非等价状态之间的距离权重，不改变精确空间、时间、边界和记忆在任务上的等价类。
+
+### 34.2 近似纤维不是自动的商
+
+给定容差 $\varepsilon>0$，可定义近似关系
+
+$$
+ y\sim_{\gamma,\varepsilon}y'
+ \iff D_\gamma(y,y')\le\varepsilon.
+$$
+
+它通常不是传递关系：三角不等式只能给出 $D_\gamma(y,z)\le2\varepsilon$。所以不能直接把近似纤维当作精确 quotient 的类，也不能由两个相邻近似运输步骤自动得到零误差的互相恢复。
+
+要让近似表示继续支持拼接，至少需要：
+
+1. 每个局部运输的缺陷上界；
+2. 更新对所选距离的 Lipschitz 或收缩界；
+3. 所有后续协议的读出误差预算；
+4. 合法性/失败标签的判定裕度，避免误差跨过域边界。
+
+若用 $D_\gamma$ 作为边界上的取得优先级，(34.3) 给出一次更新后误差的最坏放大；若同时把折扣与更新改写为相反方向的归一化距离，还需另给相应的收缩合同。几何距离本身不授予观察者取得或认证精确读数的权限。
+
+### 34.3 多切面的加权近似
+
+对有限切面族 $I$、正权重 $w_i$ 和离散读出距离，可定义
+
+$$
+D_{I,\gamma}(x,y)
+:=\sup_{i\in I,\ n\ge0}
+ w_i\gamma^n d_i(q_i(F^n x),q_i(F^n y)).
+\tag{34.5}
+$$
+
+仓内 `DiscountedPrimeTimeUltrametric.discounted_prime_time_distance_strong_triangle` 给出有限正权重、$0<\gamma\le1$ 时的强三角不等式。其零核是所有选定切面、所有未来时刻都相同的联合 kernel；这与第26节的交核判据一致。若权重族或协议族扩展，零核只会收缩，但数值距离是否有统一上界和取得成本，仍须逐项声明。
+
+因此，精简统一结构应保持三层区别：
+
+$$
+\boxed{
+\text{精确未来核}
+\quad\subseteq\quad
+\text{近似距离的零集/商}
+\quad\subseteq\quad
+\text{给定容差的近似纤维}.
+}
+\tag{34.6}
+$$
+
+第一层决定可组合的精确边界；第二层在正折扣下与第一层有相同零核；第三层只提供带误差的分辨率，必须另配误差传播和合法域裕度。本节对应仓内 `CanonicalDiscountedFutureGeometry` 与 `DiscountedPrimeTimeUltrametric`；没有新增 Lean 声明，理论结论 Claim status 为 open。
+
+## 34.99 追加锚
+
+## 35. 四种表达的共同核与双向恢复判据
+
+**本批导航。** 本节把前文的未来行为、过去线程、切面边界和观察者记忆放回同一个实际关系载体，给出四种表示何时可以互相恢复的统一判据。它补充第25—26节的共同未来核、第30—32节的协议闭包与完成运输，以及第33节的过去核心；不改判既有条目，也不新增 Lean 声明。
+
+### 35.1 最小关系载体不是一个坐标，而是一个带作用的商
+
+设实际来源中的联合配置为 $S$。一项合法有类型接续由
+
+$$
+ s\xrightarrow{a/y}s'
+$$
+
+给出；其中 $a$ 包含接口和权限要求，$y$ 包含正常读数、失败标签与本次必须保留的记录。对可接续的动作词 $w$，记
+
+$$
+ \operatorname{Run}_w(s)
+ $$
+
+为从 $s$ 出发的完整带类型结果：它同时包含词是否合法、各步输出、记录和最终配置。于是定义任务族 $\mathcal W$ 的未来核
+
+$$
+ s\equiv^+_{\mathcal W}t
+ \iff
+ \forall w\in\mathcal W,
+ \operatorname{Run}_w(s)=\operatorname{Run}_w(t).
+ \tag{35.1}
+$$
+
+若只保留输出而忘记合法性或档案，所得关系一般更粗；它可能仍是某个较弱任务的核，却不是原任务的动态充分边界。
+
+当更新 $F:S\to S$ 允许无限向前运行时，过去核不能仅由 $F$ 的形式逆函数定义。令
+
+$$
+ S^-_F:=\{u:\mathbb N\to S\mid F(u_{n+1})=u_n\},
+$$
+
+并令 $\operatorname{Past}(s)$ 表示以 $s$ 为零坐标的所有实际兼容线程及其记录。只有当 $\operatorname{Past}(s)$ 非空且所需的过去记录被任务声明为可读时，才定义
+
+$$
+ s\equiv^- t
+ \iff
+ \operatorname{Past}(s)=\operatorname{Past}(t).
+ \tag{35.2}
+$$
+
+在有限非双射系统中，第33节的 `IdentityFuturePastGap` 说明 $S^-_F$ 只覆盖周期核心；因此 $\equiv^-$ 的定义域应写成实际双向来源 $S^{\leftrightarrow}\subseteq S$，不能把瞬态状态默认为有过去坐标。
+
+把合法性和记忆分别纳入核：
+
+$$
+ \equiv^{\mathrm{adm}},\qquad
+ \equiv^{\mathrm{rec}}.
+$$
+
+对要求同时保留未来作用、过去可回溯性、合法选择和档案读出的任务，最小共同核是
+
+$$
+ \boxed{
+ \equiv_\star
+ :=
+ \equiv^+_{\mathcal W}
+ \cap
+ \equiv^-\cap
+ \equiv^{\mathrm{adm}}
+ \cap
+ \equiv^{\mathrm{rec}}.
+ }
+ \tag{35.3}
+$$
+
+这里的“最小”是指不能再合并而仍保持声明的全部续接；它不是说商的元素数对所有未来任务都绝对最少。缩小 $\mathcal W$、删除失败标签或撤销过去读权限，都会改变任务，因而也会改变 $\equiv_\star$。
+
+在这个意义下，真正的最小关系对象是
+
+$$
+ \boxed{(S/\!\equiv_\star,\ \{\overline T_a\},\ \{\overline{\operatorname{Run}}_w\})}
+ \tag{35.4}
+$$
+
+而不是商集合单独。若商上没有诱导的合法动作、输出和记录更新，边界只是静态标签，不能递归拼接。
+
+### 35.2 四种表示的核比较
+
+设四个实际表示分别为
+
+$$
+ r_{\mathrm{sp}}:S\to R_{\mathrm{sp}},\quad
+ r_{\mathrm{tm}}:S\to R_{\mathrm{tm}},\quad
+ r_{\partial}:S\to R_{\partial},\quad
+ r_{\mathrm{mem}}:S\to R_{\mathrm{mem}}.
+ \tag{35.5}
+$$
+
+它们可以分别被解释为：端口与连通关系的空间表示、合法动作词及其顺序的时间表示、对未来接续充分的边界类、以及同一实际来源中观察者可继续调用的档案和控制记忆。它们的值域只取实际像，不把未实现的形式点偷偷加入。
+
+对任一表示 $r_i$，有两个不同的判据：
+
+* $\equiv_\star\subseteq\ker(r_i)$ 表示它至少不把任务已经视为相同的状态拆开；这是从共同商向该表示下降的充分性。
+* $\ker(r_i)\subseteq\equiv_\star$ 表示它没有把仍可由任务区分的状态合并；这是无损性。
+
+所以精确表示满足
+
+$$
+ \boxed{\ker(r_i)=\equiv_\star.}
+ \tag{35.6}
+$$
+
+只满足第一项的表示可以是冗余编码；只满足第二项的表示可以保存区别但未必支持任务所需的统一计算。两项都满足，才是同一任务下的最小充分表示。
+
+### 35.3 四表示互相恢复的充分且必要条件
+
+**命题 35.1（共同核恢复判据）。** 若四个表示均取实际像，且
+
+$$
+ \ker(r_{\mathrm{sp}})=
+ \ker(r_{\mathrm{tm}})=
+ \ker(r_{\partial})=
+ \ker(r_{\mathrm{mem}})=\equiv_\star,
+ \tag{35.7}
+$$
+
+则对任意 $(i,j)$ 存在唯一双射
+
+$$
+ g_{ij}:R_i\to R_j,
+ \qquad
+ g_{ij}(r_i(s))=r_j(s),
+ \tag{35.8}
+$$
+
+并满足 $g_{ii}=\mathrm{id}$、$g_{jk}\circ g_{ij}=g_{ik}$。反之，若这些双射满足 (35.8)，则所有四个核相等。
+
+**证明。** 由 (35.7)，若 $r_i(s)=r_i(t)$，则 $s\equiv_\star t$，从而 $r_j(s)=r_j(t)$，故 (35.8) 良定义。实际像条件给出满射；用 $g_{ji}$ 可得逆映射。唯一性来自每个实际像元素都有表示 $r_i(s)$。复合与恒等式逐点成立。反向若 $g_{ij}\circ r_i=r_j$ 且 $g_{ij}$ 为双射，则 $r_i(s)=r_i(t)$ 当且仅当 $r_j(s)=r_j(t)$，四个核相等。
+
+这个命题把“空间、时间、边界和记忆是同一对象的不同表达”变成可检查的核等式。只有名称相似、值域同构或总数相同，都不能替代 (35.7)。
+
+### 35.4 动力下降与双向恢复的附加条件
+
+对每个合法动作 $a$，若
+
+$$
+ s\equiv_\star t
+ \Longrightarrow
+ \bigl(
+ \operatorname{Adm}_a(s)=\operatorname{Adm}_a(t)
+ \land
+ \operatorname{Out}_a(s)=\operatorname{Out}_a(t)
+ \land
+ T_a(s)\equiv_\star T_a(t)
+ \bigr),
+ \tag{35.9}
+$$
+
+则 $T_a$ 在共同商上下降为 $\overline T_a$，四个表示之间的 $g_{ij}$ 都满足动态半共轭
+
+$$
+ g_{ij}\circ \overline T_a^{\,i}
+ =
+ \overline T_a^{\,j}\circ g_{ij}.
+ \tag{35.10}
+$$
+
+这正是边界方程、时钟方程和观察者更新可以使用同一商的条件。若式 (35.9) 只对未来输出成立而不含合法性、失败或档案，得到的只是输出商，不能声称观察者的完整状态已恢复。
+
+若还要求反向恢复，则需在实际双向来源 $S^{\leftrightarrow}$ 上给出逆作用 $T_a^{-1}$，或证明每个所需的后继都有唯一带记录的前驱。有限载体上，足够迭代后的稳定周期核心满足这一要求；第33节的二点常值映射说明在核心之外不成立。于是双向版本的条件是
+
+$$
+ \boxed{
+ \text{(35.9) 对正向和反向均成立，且更新在 }S^{\leftrightarrow}\text{ 上可逆。}
+ }
+ \tag{35.11}
+$$
+
+没有式 (35.11)，最多得到正向时间、边界和记忆的互相恢复；把过去记忆写成未来边界的函数会把瞬态来源误当成已保存信息。
+
+### 35.5 关系的关系的关系：任务族的递归闭包
+
+令 $\mathcal W_0$ 是原始动作词族。观察者可以把已取得的记录、校准和组合协议重新作为下一层动作，因此定义
+
+$$
+ \mathcal W_{n+1}
+ :=
+ \operatorname{Cl}\bigl(
+ \mathcal W_n,
+ \operatorname{Compose},
+ \operatorname{Read},
+ \operatorname{Record},
+ \operatorname{Calibrate}
+ \bigr),
+ \tag{35.12}
+$$
+
+其中每个生成操作都必须保留共同来源、合法域和失败标签。令
+
+$$
+ K_n:=\equiv^+_{\mathcal W_n}.
+$$
+
+协议族扩张只会增加测试，所以
+
+$$
+ K_{n+1}\subseteq K_n,
+ \qquad
+ K_\infty:=\bigcap_{n\ge0}K_n.
+ \tag{35.13}
+$$
+
+若载体的可达商有限，下降链最终稳定；若商无限，(35.13) 只是极限核，不能声称存在有限阶段的最终边界。这个递归闭包解释了“关系的关系”而不另造系统外观察者：新层仍是同一个接口上的动作，只是测试族和记忆接口被扩展。
+
+每一层的表示若都满足
+
+$$
+ \ker(r_i^{(n)})=K_n,
+ \tag{35.14}
+$$
+
+则层间存在唯一的商运输 $R_i^{(n+1)}\to R_i^{(n)}$，并且四表示的横向运输与纵向细化交换。若某层只保存一个标量（例如总实现数或熵），式 (35.14) 通常失败；这正是“当前信息量相同但未来解码能力不同”的二位 XOR 反例在一般形式上的原因。
+
+### 35.6 适用范围与未解决边界
+
+本节使用的是集合、关系和有限或可数动作词上的普通数学推导。仓内 `IdentityFuturePastGap`、`FiniteBilateralTrajectory`、`CanonicalRowColumnSeparation`、`DoubleExtensionalEvaluationDescent`、`DynamicProfileCausalClosure` 及相关模块是可引用的形式化支点；本节没有新增 Lean 声明，也没有把这些支点包装成新的形式定理。
+
+仍需单独证明的内容包括：无限任务族的实际来源存在性、带概率或量子权重时的正性与归一化、近似边界的误差预算、以及具体系统的有限可取得性。若这些条件缺失，(35.7) 只能作为目标判据，不能报作已经成立的物理统一或全局恢复。
+
+本节的 Claim status 为 open。
+
+## 35.99 追加锚
+
+## 36. 行为商、窗口逆极限、完备化与实际来源的四层区分
+
+**本批导航。** 本节把“completion”拆成四个不同对象，并给出它们之间的规范映射、来源满射条件和最小反例。它补充第29节的有限窗口、第33节的过去逆极限和第34节的折扣距离；不把形式相容点、度量完备化或延拓后的状态冒充原始来源中的实际配置。
+
+### 36.1 四个对象及其规范映射
+
+固定一个处处有定义的更新 $F:X\to X$ 和读出 $q:X\to O$。完整未来行为写成
+
+$$
+ B(x):=(q(F^n x))_{n\ge0}\in O^{\mathbb N}.
+ \tag{36.1}
+$$
+
+由它得到行为商
+
+$$
+ Q_B:=X/\ker B,
+$$
+
+以及已实现的行为像
+
+$$
+ I_B:=B(X)\subseteq O^{\mathbb N}.
+$$
+
+二者有规范双射
+
+$$
+ Q_B\simeq I_B.
+ \tag{36.2}
+$$
+
+对每个 $n$，令有限窗口集合为
+
+$$
+ W_n:=\{(q(x),q(Fx),\ldots,q(F^n x)):x\in X\}
+ \subseteq O^{n+1}.
+$$
+
+删除最后一个坐标给出限制映射 $r_{n+1,n}:W_{n+1}\to W_n$。其逆极限为
+
+$$
+ L_W:=\varprojlim_n W_n.
+ \tag{36.3}
+$$
+
+把完整行为截断到各窗口，得到规范单射
+
+$$
+ I_B\hookrightarrow L_W.
+ \tag{36.4}
+$$
+
+单射来自所有有限前缀相等就逐坐标相等；满射则是额外的来源实现命题。若在 $Q_B$ 上另选一个与行为相容的度量并取完备化，记为 $\widehat Q_B$。于是至少要区分
+
+$$
+\boxed{
+ Q_B
+ \ \simeq\ I_B
+ \ \hookrightarrow\ L_W,
+ \qquad
+ Q_B\longrightarrow\widehat Q_B .
+}
+\tag{36.5}
+$$
+
+这里没有默认 $L_W=\widehat Q_B$，也没有默认任一形式点来自 $X$。四个对象分别回答：
+
+* $Q_B$：哪些原始状态具有相同的全部未来行为；
+* $I_B$：原始来源实际产生了哪些完整行为；
+* $L_W$：每个有限窗口都相容的形式行为有哪些；
+* $\widehat Q_B$：在所选度量下加入哪些 Cauchy 极限。
+
+ItineraryCompletion、BehaviorCompletionFunctoriality 与 CanonicalDiscountedFutureGeometry 分别提供这些层次的部分形式化支点；它们的假设不能在转述时删去。
+
+### 36.2 什么时候有限窗口能被同一个来源实现
+
+给定相容族 $\lambda=(w_n)_n\in L_W$，定义来源纤维
+
+$$
+ C_n(\lambda):=\{x\in X:
+ (q(x),\ldots,q(F^n x))=w_n\}.
+$$
+
+则
+
+$$
+ C_{n+1}(\lambda)\subseteq C_n(\lambda),
+$$
+
+并且有精确等价
+
+$$
+\boxed{
+ \lambda\in I_B
+ \iff
+ \bigcap_{n\ge0}C_n(\lambda)\ne\varnothing .
+}
+\tag{36.6}
+$$
+
+因此，单层窗口满射只说明每个 $C_n(\lambda)$ 非空；限制映射满射只说明有限窗口之间可以逐层延长；它们都不直接给出右端的全体交非空。
+
+下列条件分别提供不同强度的实现结论：
+
+1. 若 $X$ 有限，所有 $C_n(\lambda)$ 非空，则递减有限集合族的交非空；若窗口联合分离 $X$，实现还唯一。
+2. 若 $X$ 紧致 Hausdorff、各 $C_n(\lambda)$ 闭且非空，则紧致性给出全体交非空；连续读出到 Hausdorff 值域是一个常见充分条件。
+3. 若 $X$ 是完备度量空间，$C_n(\lambda)$ 闭、递减、非空且 $\operatorname{diam}(C_n(\lambda))\to0$，则交恰有一个点。
+
+这些条件不能互相替代。特别是“来源本身完备”必须相对于一个明确的、使纤维成为闭集并产生 Cauchy 控制的度量；通常离散度量下的完备性不能证明行为度量下的来源实现。
+
+### 36.3 倒计时反例：逆极限有形式点而原始来源没有
+
+取
+
+$$
+ X=\mathbb N_0,\qquad
+ F(k)=\max(k-1,0),\qquad
+ q(k)=
+ \begin{cases}
+  1,&k>0,\\
+  0,&k=0.
+ \end{cases}
+$$
+
+状态 $k$ 的完整行为为
+
+$$
+ B(k)=1^k0^\infty .
+$$
+
+长度 $n+1$ 的窗口集合包含
+
+$$
+1^j0^{\,n+1-j}\qquad(0\le j\le n+1),
+$$
+
+所有限制映射均可由增加一个前导 $1$ 的窗口实现。于是形式族
+
+$$
+\lambda_n=1^{n+1}
+$$
+
+属于 $L_W$，因为删除最后坐标仍得到 $\lambda_{n-1}$。但不存在有限 $k$ 使
+
+$$
+ B(k)=1^\infty .
+$$
+
+对应来源纤维为
+
+$$
+ C_n(\lambda)=\{k:k\ge n+1\},
+ \qquad
+ \bigcap_nC_n(\lambda)=\varnothing .
+$$
+
+因此
+
+$$
+ I_B\subsetneq L_W.
+ \tag{36.7}
+$$
+
+若使用离散输出的折扣未来距离，则完备化会为这列状态添加一个固定点 $\infty$，其行为为 $1^\infty$；这个固定点是完备化或扩张动力学中的状态，不是原始 $\mathbb N_0$ 中的来源。它说明“形式相容”“完备化新增点”和“原始实际来源”必须写成三种不同的断言。
+
+### 36.4 过去逆极限是另一种 completion
+
+完整过去空间定义为
+
+$$
+ P_F:=
+ \{(x_0,x_{-1},x_{-2},\ldots):
+ F(x_{-n-1})=x_{-n}\ \forall n\ge0\}.
+ \tag{36.8}
+$$
+
+它是平稳逆系统的逆极限。其移位在 $P_F$ 上可以是双射，即使原始 $F$ 不是双射；但零坐标映射
+
+$$
+ \operatorname{ev}_0:P_F\to X
+$$
+
+可能不满射，甚至 $P_F$ 可能为空。有限载体上，公开的 BackwardOrbitCore、IdentityFuturePastGap 与 FiniteBilateralTrajectory 给出
+
+$$
+ \operatorname{im}(\operatorname{ev}_0)
+ =\operatorname{Per}(F),
+ \qquad
+ P_F\simeq\operatorname{Per}(F).
+ \tag{36.9}
+$$
+
+二点反例
+
+$$
+ X=\{0,1\},\qquad F(0)=F(1)=0,\qquad q=\operatorname{id}
+$$
+
+的未来行为商仍有两个元素，但 $P_F$ 只有常值零线程。故正向行为商不能自动恢复被非单射更新抹去的过去。
+
+在无限系统中，$\operatorname{im}(\operatorname{ev}_0)$ 也不必等于稳定像
+$\bigcap_nF^n(X)$：每个有限深度可以有前驱，却可能没有一条可相容的无限分支。要把商上的过去线程提升回原始来源，至少需要逐步后向提升条件
+
+$$
+\forall x\in X,\ \forall b\in Q,\quad
+ \overline F(b)=\pi(x)
+ \Longrightarrow
+ \exists y\in X,\ F(y)=x\land\pi(y)=b,
+ \tag{36.10}
+$$
+
+以及能够把这些局部选择组成一条完整历史的相容性条件。商映射满射和正向半共轭本身不充分。
+
+### 36.5 折扣距离的零核与正误差
+
+若输出距离 $\rho$ 是分离的且有界，$0<\gamma<1$，定义
+
+$$
+ D_\gamma(x,y):=
+ \sup_{n\ge0}\gamma^n
+ \rho(q(F^n x),q(F^n y)).
+ \tag{36.11}
+$$
+
+则严格正权重给出
+
+$$
+D_\gamma(x,y)=0
+ \iff
+ B(x)=B(y)
+ \iff
+ x\equiv^+y.
+ \tag{36.12}
+$$
+
+这只说明零集与精确行为核相同；它不说明每个正距离阈值都能恢复精确等价。若两个行为首次在时刻 $k$ 区分，离散 $0/1$ 输出下距离为 $\gamma^k$，因此不同类可以任意接近。要从 $D_\gamma\le\varepsilon$ 得到精确商，必须另有正分离间隙，例如有限行为商下的类间最小正距离。
+
+此外，Bellman 关系是
+
+$$
+ D_\gamma(x,y)
+ =
+ \max\{\rho(qx,qy),\gamma D_\gamma(Fx,Fy)\},
+ \tag{36.13}
+$$
+
+所以
+
+$$
+D_\gamma(Fx,Fy)\le\gamma^{-1}D_\gamma(x,y).
+$$
+
+这通常是状态更新的扩张界；收缩的是作用在候选距离函数上的 Bellman 算子，而不是 $F$ 本身。CanonicalDiscountedFutureGeometry 与仓内相关距离模块只在各自声明的范围内支持这些结论。
+
+### 36.6 四层映射的正确结算方式
+
+今后正文中使用 “completion” 时，应同时写清下列四项：
+
+1. completion 的载体是 $Q_B$、$I_B$、$L_W$、$\widehat Q_B$ 还是 $P_F$；
+2. 规范映射是哪一个，以及它是否单射或满射；
+3. “实际来源”要求哪个来源映射满射，使用有限性、紧致性、完备性还是直接的纤维交证明；
+4. 若更新在 completion 上延拓，延拓后的状态是否仍有原始来源。
+
+因此，最稳妥的总括不是“相容窗口已经实现了整体”，而是：
+
+$$
+\boxed{
+\text{有限窗口相容性产生形式行为；
+来源实现性是这些来源纤维全体交非空的额外命题。}
+}
+$$
+
+本节的构造与反例是普通数学组织，引用仓内既有模块但没有新增 Lean 声明；Claim status 为 open。
+
+## 36.99 追加锚
+
+## 37. 递归协议闭包与 completion 的正交性
+
+**本批导航。** 本节把递归观察中的三类 completion、全体局部读出的最小 profile 商和协议创新判据放在同一条核细化链上。它补充第30节的协议族闭包与第35—36节的共同核、实际来源区分；不把身份恢复、规范化选择、未来行为充分性或概率极限混为一个“完成”。
+
+### 37.1 三种 completion 不是同一个性质
+
+给定读出 $r:X\to R$、未来目标 $b:X\to B$ 和代表关系 $\mathsf{Rep}\subseteq X\times U$，分别定义：
+
+$$
+\begin{aligned}
+ \operatorname{IdComp}(r)
+ &:\Longleftrightarrow \operatorname{Injective}(r),\\
+ \operatorname{NormComp}(\mathsf{Rep})
+ &:\Longleftrightarrow
+   \forall x,\ \exists!u,\ \mathsf{Rep}(x,u),\\
+ \operatorname{BehComp}(r,b)
+ &:\Longleftrightarrow
+   \forall x,y,\ r(x)=r(y)\Longrightarrow b(x)=b(y).
+\end{aligned}
+\tag{37.1}
+$$
+
+第一项说当前读出保留身份，第二项说每个对象有唯一规范代表，第三项说当前读出足以恢复指定未来目标。它们的量词不同，互相没有一般蕴含。
+
+最小的有限反例已经存在于二点载体：
+
+* 恒等读出满足 $\operatorname{IdComp}$，但“任意代表都合法”的关系不满足 $\operatorname{NormComp}$；
+* 对象等于代表的关系满足 $\operatorname{NormComp}$，但常值读出不满足 $\operatorname{IdComp}$；
+* 常值未来目标与常值读出满足 $\operatorname{BehComp}$，但读出仍不能区分两个当前身份。
+
+仓内 ThreeCompletionOrthogonality 形式化了这些方向的分离。于是理论中每次写“completion”都必须标注它完成的是身份、代表选择、未来行为、联合约束还是某种代数残差。
+
+### 37.2 全体局部读出的规范最小 profile
+
+设协议索引为 $P$，每个协议有可能不同的读出值域 $O_p$，并给出
+
+$$
+ q_p:X\to O_p.
+$$
+
+定义 global profile
+
+$$
+ Q(x):=(q_p(x))_{p\in P},
+ \qquad
+ X_{\mathrm{prof}}:=X/\ker Q.
+ \tag{37.2}
+$$
+
+对每个 $p$，存在唯一局部读出
+
+$$
+ \widehat q_p:X_{\mathrm{prof}}\to O_p,
+ \qquad
+ q_p=\widehat q_p\circ\pi_{\mathrm{prof}}.
+ \tag{37.3}
+$$
+
+若另一个接口 $r:X\to R$ 能恢复全部局部读出，即对每个 $p$ 存在 $d_p:R\to O_p$ 满足
+
+$$
+ q_p=d_p\circ r,
+ \tag{37.4}
+$$
+
+则存在唯一
+
+$$
+ h:R\to X_{\mathrm{prof}},
+ \qquad
+ \pi_{\mathrm{prof}}=h\circ r.
+ \tag{37.5}
+$$
+
+因此 $X_{\mathrm{prof}}$ 是“同时保留这整个局部读出族”的最小接口。仓内 GlobalProfileQuotientUniversality 还表明，只要求每个有限子族存在共同解码器，就足以推出 (37.5)；非空来源条件是为了把因子定义在任意接口值上。
+
+这个 profile 商仍是静态对象。若更新 $F$、合法性和记录没有被纳入索引族 $P$，则 (37.4) 只保证当前局部读出可恢复，不能保证下一步动作或完整未来可恢复。把所有合法续接读出加入 $P$，才会把静态 profile 连接到第35节的动态共同核。
+
+### 37.3 协议创新是切开当前纤维的关系
+
+令当前摘要为 $q:X\to Q$，新增协议律为 $\ell:X\to L$。联合摘要为
+
+$$
+(q,\ell):X\to Q\times L.
+$$
+
+其核严格小于当前核当且仅当存在一对当前不可区分、但被新协议分开的来源：
+
+$$
+\boxed{
+ \ker(q,\ell)\subsetneq\ker q
+ \iff
+ \exists x,y,\ q(x)=q(y)\land\ell(x)\ne\ell(y).
+}
+\tag{37.6}
+$$
+
+这给出递归细化的局部证书。若第 $n$ 步协议为 $\ell_n$，令
+
+$$
+ K_0:=\ker q,
+ \qquad
+ K_{n+1}:=K_n\cap\ker\ell_n,
+ \tag{37.7}
+$$
+
+则 $K_{n+1}\subseteq K_n$；严格性恰由某个仍在 $K_n$ 中的 private witness 见证。有限状态时这条下降链只能有限次严格下降，之后的稳定核才可作为有限阶段证书。无限状态时，充分协议族可能没有包含极小子族：例如 $X=\mathbb N$、$\ell_n(x)=\min(x,n)$，任何无界指标族都能区分所有状态，但删除一个指标后仍无界。
+
+因此三种优化不能互换：
+
+$$
+\text{每个协议都有 private witness}
+\not\Longleftrightarrow
+\text{协议数最少}
+\not\Longleftrightarrow
+\text{读出信息量最少}.
+\tag{37.8}
+$$
+
+(37.6) 只给出严格细化判据；成本最优化需要另行声明成本函数和允许的协议族。
+
+### 37.4 有限前缀的等价不保证无限完成的等价
+
+在概率模型中，有限前缀的所有结果可能都互相绝对连续，而完整无限记录却由某个尾事件严格区分两个来源。仓内 FinitePrefixInfiniteCompletionSeparation 给出这样的形式化实例：两个 Bernoulli 参数的每个有限 transcript law 互相绝对连续，但完整 state laws 互相奇异。
+
+这不是与第36节的集合来源反例相同的现象：
+
+* 第36节的倒计时例说明相容形式行为可能没有原始来源；
+* 本节的概率例说明每个有限观察层都不能作零一判定，但无限记录的可测事件可以把来源分开。
+
+因此，若边界任务包含无限尾事件、几乎处处区分或完成后的可测协议，必须把这些对象加入目标核；只保存每个有限层的统计等价，不能自动推出完成层的等价。
+
+同时，不能把“无限完成后存在一个区分事件”解释成某个有限观察者已经取得了它。它是极限语义中的可测对象；实际观察者还需另有可取得性、资源和记录接口。
+
+### 37.5 refinement 是表示之间的箭头，而不是另一个状态坐标
+
+若接口 $r_1:X\to R_1$ 能由接口 $r_2:X\to R_2$ 解码，记
+
+$$
+ r_1\preceq r_2
+ \iff
+ \exists h:R_2\to R_1,\quad r_1=h\circ r_2.
+ \tag{37.9}
+$$
+
+恒等解码给出自反性，解码复合给出传递性。于是接口表示形成一个预序；互相可解码的表示在反对称化后成为同一 refinement 类。仓内 RefinementCompositionStructure 给出了因子化范畴、恒等、结合律和互相细化后的预序。
+
+在这个预序中：
+
+* global profile 商是恢复指定局部读出族的最小类；
+* 动态行为商是恢复全部声明续接的最小类；
+* 任何夹带额外历史的记忆是更细的表示，未必已经动态闭合；
+* 任何只保留当前标量的摘要可能更粗，若其核超出目标核便失去充分性。
+
+因此“空间、时间、边界和记忆互相恢复”应写成同一 refinement 类中的实际像双射，并同时检查更新和协议作用的交换式；值域字面相同或状态数相同都不够。
+
+### 37.6 与已形式化支点的范围
+
+本节直接复用 ThreeCompletionOrthogonality、GlobalProfileQuotientUniversality、ProtocolInnovationCriterion、FinitePrefixInfiniteCompletionSeparation 和 RefinementCompositionStructure 的公开结论。它们分别支撑 completion 正交性、全体局部读出的最小 profile、严格细化的 private witness、有限—无限概率分离和 refinement 复合；本节只是把这些结果接入共同核叙述，没有新增 Lean 声明。
+
+具体模型仍需声明：索引族是否包含合法性和失败、概率完成是否要求尾事件、接口值是否取实际像、以及更新是否在该核上下降。缺少这些条件时，本节结论只是一组适用判据，不能声称已得到物理时空统一。
+
+本节 Claim status 为 open。
+
+## 37.99 追加锚
+
+## 38. 语义核与类型化 completion 的正交积
+
+**本批导航。** 第26节已经给出 action-profile 的动态闭合判据，第35—37节已经给出共同核、实际来源、三类语义 completion、global profile 与 refinement。本节不重复把这些结果改写成新的 profile 定理，而是加入一个尚未明确分开的轴：边界表示的**语义充分性与可运输性**，和它所附带的**解析或代数 completion 类型**不是同一个偏序。若把它们压成一个“完成度”标量，会把不同的失败原因混在一起。
+
+### 38.1 语义精确性与动态可运行性是两个必要条件
+
+固定一个实际配置空间 $S$。先区分当前静态任务核 $K_{\mathrm{cur}}$ 与把全部声明未来续接、失败和记录纳入后的行为核 $K_{\infty}$；二者都应是相应任务输出的等价关系。若本节写 $K_*$，须先说明它取哪一个。对一个边界表示
+
+$$
+r:S\longrightarrow R
+$$
+
+写
+
+$$
+\operatorname{Sem}_{K_*}(r)\ :\Longleftrightarrow\ \ker r=K_*.
+\tag{38.1}
+$$
+
+这只说当前表示恰好保留指定任务要求区分的状态。它没有说下一项操作可以在 $R$ 上执行。
+
+设 $a$ 是一个声明过的合法操作，完整配置上的后继为 $T_a$；把合法性、指定输出、失败与记录统一记为 $L_a(s)$。动态下降要求存在边界侧的 $\bar T_a$ 与 $\bar L_a$，使
+
+$$
+\boxed{
+ r\circ T_a=\bar T_a\circ r,
+ \qquad
+ L_a=\bar L_a\circ r.
+}
+\tag{38.2}
+$$
+
+当 $T_a$ 只在合法域上定义时，(38.2) 的含义是：若 $r(s)=r(t)$，则 $s,t$ 对 $a$ 同时合法或同时失败；合法时输出和记录相同，且后继的边界值相同。于是可以定义
+
+$$
+\operatorname{Dyn}(r):\Longleftrightarrow
+\text{对每个声明动作，(38.2) 的边界更新存在且唯一。}
+\tag{38.3}
+$$
+
+因此，一个可继续运行的精确边界至少满足
+
+$$
+\boxed{\operatorname{Exact}(r)\ :\Longleftrightarrow\ \operatorname{Sem}_{K_*}(r)\land\operatorname{Dyn}(r).}
+\tag{38.4}
+$$
+
+值域大小、当前读数的熵或一次实验的互信息都不能替代这两个条件。一个摘要可以在当前目标上精确，却把两条要求不同后续的历史合并；也可以动态闭合，却保留了任务永远不会读取的冗余历史。前者损害继续运行，后者只说明它不是最小表示。
+
+### 38.2 解析 completion 另有自己的类型轴
+
+现在给边界或载体附加一个解析对象 $V=(V_n)_n$、测试集 $T$、目标点 $x$ 与操作代数 $A$。可以分别提出四种性质：
+
+* **uniform completion**：投影误差趋于零，例如
+  $\|I-P_{V_n}\|\to0$；
+* **state-family completion**：测试集上的残差趋于零，例如
+  $\sup_{t\in T}\|P_{V_n}^{\perp}t\|\to0$（有界测试集的直观写法；仓内形式化支点使用 $\operatorname{ENNReal}$ 上确界）；
+* **member-target completion**：只要求一个指定 $x\in T$ 的残差趋于零；
+* **algebra equality**：由允许窗口生成的指定 unital 或 $*$-代数恰好等于目标代数；
+* **observable containment**：只要求一族指定 observable 包含于该生成代数；这是较弱的独立标签。
+
+在仓内定理列出的 $RCLike$、$NormedAddCommGroup$、$InnerProductSpace$ 与逐项 $HasOrthogonalProjection$ 条件下，仓内 `FourTypedCompletionHierarchy.four_typed_completion_hierarchy` 给出正向层级
+
+$$
+\boxed{
+\operatorname{Uniform}\Longrightarrow
+\operatorname{StateFamily}\Longrightarrow
+\operatorname{MemberTarget},
+}
+\tag{38.5}
+$$
+
+并给出两个方向都严格的反例。它还分别给出解析收敛与操作代数的独立反例：可以有完整的窗口生成代数而三种 Hilbert 收敛都失败，也可以三种 Hilbert 收敛都成立而 prime-diagonal 代数仍然是 proper 子代数并漏掉指定非对角 observable。
+
+所以 (38.5) 是**解析强度的偏序**，不是语义核的偏序。特别地，不能从
+
+$$
+\operatorname{Sem}_{K_*}(r)\land\operatorname{Dyn}(r)
+$$
+
+推出 Uniform、StateFamily、MemberTarget 或 Algebra 中任何一个；也不能从其中任意一个解析性质反推出 $\ker r=K_*$。这些结论各自需要自己的载体、范数、测试族和运算代数假设。
+
+### 38.3 正确的统一数据是带类型的积，而不是一条总序
+
+给每个表示 $r$ 附上语义核、动态下降和一个明确的 completion 标签 $m$。可以写成
+
+$$
+\boxed{
+\mathsf{TypedBoundary}(r;\mathcal A)=
+\bigl(\ker r,\ \operatorname{Dyn}(r),\ m(r;\mathcal A)\bigr),
+}
+\tag{38.6}
+$$
+
+其中 $\mathcal A$ 包含 $V=(V_n)$、测试族 $T$、目标点或目标集、范数/拓扑、允许窗口和目标代数等辅助数据；$m(r;\mathcal A)$ 取值于所声明的解析/代数模式，而不是只由裸表示 $r$ 决定的数。两个表示 $r_i:S\to R_i$ 只有在以下条件同时成立时，才可以声称是同一个任务下的互相恢复：
+
+1. $\ker r_1=\ker r_2=K_*$；
+2. 两边的全部合法动作、失败、读数和记录都分别下降；
+3. 存在实际像之间的唯一双射 $g_{12}:\operatorname{im}r_1\simeq\operatorname{im}r_2$，满足
+   $g_{12}\circ r_1=r_2$，并与每一个边界更新交换；
+4. 若还要比较解析 completion，则必须另外声明 $m(r_1;\mathcal A_1),m(r_2;\mathcal A_2)$ 相同，或给出携带辅助数据并保持该模式的映射。
+
+前两项是语义与运输条件，第三项是表示间的恢复，第四项才是解析类型的比较。它们组成一个带任务参数的多轴数据结构；语义轴可以严格细化而解析模式不变，也可以解析模式改变而语义核完全不变。
+
+一个直接的有限构造说明这一点。取同一个有限 $S$、同一个 $r$ 和同一组边界更新，令解析载体在两次描述中分别为全空间序列 $V_n=\top$ 与零子空间序列 $V_n=\bot$，并把测试集和目标点按相应类型选择。语义核和动态下降没有改变，但 Uniform、StateFamily、MemberTarget 的真假可以改变。反向地，即使 $V_n=\top$ 使三种 Hilbert 性质都成立，若 $r$ 合并了两个未来输出不同的状态，仍有
+
+$$
+\neg\operatorname{Sem}_{K_*}(r).
+\tag{38.7}
+$$
+
+这排除了“解析完备所以边界完备”的偷换。
+
+### 38.4 与身份、规范化、行为三类 completion 的交叉
+
+第37.1节所定义的
+
+$$
+\operatorname{IdComp},\qquad
+\operatorname{NormComp},\qquad
+\operatorname{BehComp}
+$$
+
+属于语义任务轴；它们分别讨论身份单射、代表的唯一存在和指定未来在读出纤维上的恒定。仓内 `ThreeCompletionOrthogonality` 已给出三者之间的有限反例以及“同一 readout 下身份蕴含行为”的唯一一般方向。
+
+因此，完整描述至少需要记录两类标签：
+
+$$
+\boxed{
+\bigl(\text{语义任务参数与 completion 类型},\ \text{解析/代数辅助数据与 completion 类型}\bigr).
+}
+\tag{38.8}
+$$
+
+不能把 `IdentityCompletion` 当成 Uniform，也不能把 `BehaviorCompletion` 当成 MemberTarget；`NormalizationCompletion` 还依赖代表关系 $\mathsf{Rep}$，并非裸读出 $r$ 的属性。前者讨论读出是否单射，后者讨论未来行为是否在纤维上恒定；Hilbert 投影误差和窗口生成代数又是另一组载体条件。
+
+同样，解析对象的收敛不是一个免费来源。若 $r$ 只在形式极限上有值，必须另行说明该极限是否来自实际配置、是否落在观测者可取得的接口中，以及更新是否仍然保留在来源像内。第36节已经区分有限窗口的形式行为、completion 载体和实际来源；本节只把这一区分提升为类型化积，不把它们重新合并。
+
+### 38.5 双侧恢复时还要保留端口的类型
+
+若统一表示同时有状态端 $X$、协议端 $P$ 和评价
+
+$$
+E:X\times P\to\Lambda,
+$$
+
+则状态行商与协议列商分别由评价核决定。仓内 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 的条件显示：要把两个商与目标端口双射对应，需要目标评价的行、列外延性以及两个原始映射的满射性。没有这些条件，只能得到商上的下降或一个实际像上的因子，不能声称原始空间和协议空间互相恢复。
+
+这为“空间、时间、边界和记忆”的共同核陈述加上了一个类型限制：互相恢复的不是四个裸集合，而是带有端口、动作、记录与评价的 typed interfaces。若某一表示忘记了协议列、参考位或失败标签，它可能仍与另一表示有相同的状态数，却不满足 (38.2) 的记录交换式。
+
+有限反例很简单。令 $X=P=\{0,1\}$，令 $E(x,p)=x\land p$，并把协议映射压成常值。状态行仍可能在某个受限协议像上区分，协议列却不再能区分 $p=0,1$；商上的更新可以下降，但不存在把原协议元素唯一恢复的双射。故“有一个矩阵核”不等于“两侧 typed interface 已互相恢复”。
+
+### 38.6 可检验的后续义务与开放边界
+
+对具体系统，声明统一恢复时至少要逐项提供：
+
+* 目标共同核 $K_*$ 的任务范围，包含哪些失败、记录和未来动作；
+* 表示 $r$ 的实际值域或实际像，以及 $\operatorname{Sem}_{K_*}(r)$ 的证明或反例；
+* 每个合法动作的边界下降式 (38.2)，包括权限、参考和观察者选择器；
+* 解析/代数标签的载体和量词，明确是 Uniform、StateFamily、MemberTarget 还是 Algebra；
+* 若声称空间与时间双向恢复，状态映射与协议映射的满射、目标评价的行列外延性及实际像双射；
+* 有限阶段相容与实际来源存在性之间没有被省略的 completion 条件。
+
+这些义务不能由一个统一术语“全息”“完备”或“时空几何”代替。当前仓内形式化结果为上述每一轴分别提供支点，但尚未给出把语义核、动态下降和任意解析 completion 自动合成为单一总定理的声明；本节是普通数学综合，Claim status 为 open，不新增 Lean 声明。
+
+## 38.99 追加锚
+
+## 39. 局部接口、transition cocycle 与全局恢复
+
+**本批导航。** 本节把局部边界的拼接进一步分成三个层次：读出因子在交叠上的一致、局部坐标或 frame 的 transition 数据、以及沿路径运输时的 holonomy。它接回仓内 `LocalFactorOverlapCompatibility`、`ContinuousLocalFactorGluing`、`GlobalFrameCoboundaryCriterion`、`HistoricalCongruence` 与 `CumulativeInverse`，但不把这些分别已证的支点冒充一条“全局时空统一”定理。
+
+### 39.1 局部因子的一致性先于连续 gluing
+
+设 $q:X\to B$ 是一个边界读出，$U_i\subseteq B$ 是局部接口域，$t:X\to Y$ 是目标读出。局部因子为
+
+$$
+f_i:U_i\to Y,
+\qquad
+t(x)=f_i(q(x))\quad\text{当 }q(x)\in U_i.
+\tag{39.1}
+$$
+
+若 $q$ 满射，则同一交叠点 $b\in U_i\cap U_j$ 必有
+
+$$
+f_i(b)=f_j(b).
+\tag{39.2}
+$$
+
+证明只需取 $x$ 使 $q(x)=b$，再分别应用 (39.1)。这正是仓内 `local_factor_overlap_compatibility` 的内容：开性、覆盖和连续性不是得到 (39.2) 所必需的，真正关键的是同一个满射来源同时解释两份局部因子。
+
+若 $q$ 不满射，(39.2) 只能在 $\operatorname{im}q$ 的交叠上推出。一个有限反例是
+
+$$
+X=\{0\},\quad B=\{0,1\},\quad q(0)=0,
+$$
+
+令两个域都为 $B$，令 $f_1(0)=f_2(0)$ 而 $f_1(1)\ne f_2(1)$。两份局部因子都正确解释 $t(0)$，但在不可达的 $1$ 处不相容。因此“每个局部片都能解释来源”不等于“局部片在整个接口交叠上相容”；必须声明满射，或把断言域限制为实际像。
+
+若进一步假设 $B$ 为拓扑空间、$U_i$ 开且覆盖 $B$，各 $f_i$ 连续，并满足 (39.2)，则存在唯一连续全局因子
+
+$$
+f:B\to Y,
+\qquad
+t=f\circ q,
+\qquad
+f|_{U_i}=f_i.
+\tag{39.3}
+$$
+
+仓内 `continuous_local_factors_glue_uniquely` 给出这一结论。这里的唯一性来自覆盖，而不是来自 $q$ 的满射：满射用于把 $t$ 的来源解释为局部因子，覆盖用于确定 $B$ 上每一点的全局值。若只知道实际像上的覆盖，则 (39.3) 只能先在实际像上得到；对像外的延拓需要额外条件。
+
+### 39.2 transition 数据的 coboundary 判据
+
+局部标架或局部记忆的值域不必是同一个线性坐标。设重叠上的 transition 取值于群 $G$：
+
+$$
+g_{ij}(x)\in G,
+\qquad x\in U_i\cap U_j.
+\tag{39.4}
+$$
+
+在固定方向约定下，局部 frame 系数 $c_i:U_i\to G$ 的相容式可写为
+
+$$
+c_i(x)=g_{ij}(x)c_j(x).
+\tag{39.5}
+$$
+
+如果存在这样的系数，就有
+
+$$
+g_{ij}(x)=c_i(x)^{-1}c_j(x).
+\tag{39.6}
+$$
+
+反过来，(39.6) 代回 (39.5) 即得相容。因此，对单位群值 transition，
+
+$$
+\boxed{
+\text{存在全局非零 frame 系数}
+\Longleftrightarrow
+\text{transition 是一族局部单位的 coboundary}.
+}
+\tag{39.7}
+$$
+
+仓内 `global_frame_iff_transition_coboundary` 正是这个代数判据。它没有自动假设 $g_{ij}$ 满足 cocycle；相反，只要右侧的 coboundary 存在，三重交叠上的 cocycle 会作为结果出现：
+
+$$
+g_{ij}g_{jk}=g_{ik},
+\qquad
+g_{ii}=e,
+\qquad
+g_{ji}=g_{ij}^{-1}.
+\tag{39.8}
+$$
+
+所以要声明一个可以继续拼接的局部 frame，至少要分别检查：交叠域是否真的存在、transition 的方向是否一致、三重交叠上的 cocycle、以及是否存在把它平凡化的 $c_i$。pairwise overlap equality 只处理 (39.2)，并不能替代 (39.8) 或 (39.7)。
+
+### 39.3 路径运输与 holonomy 是另一层条件
+
+把每条有向交叠边 $i\to j$ 的 transition 相乘，可以定义一条路径
+
+$$
+\gamma=(i_0,i_1,\ldots,i_n)
+$$
+
+上的运输
+
+$$
+G(\gamma;x)=g_{i_0i_1}(x)g_{i_1i_2}(x)\cdots g_{i_{n-1}i_n}(x).
+\tag{39.9}
+$$
+
+若路径首尾相同，$G(\gamma;x)$ 是 holonomy。全局 frame 存在时，(39.6) 使每个闭路的运输望远镜相消，故
+
+$$
+G(\gamma;x)=e
+\quad\text{对所有声明的闭路 }\gamma.
+\tag{39.10}
+$$
+
+这是全局 frame 的必要条件。反过来，只有在声明了足够的路径连接、转移的 cocycle、以及从基点到各片的运输与路径无关时，(39.10) 才能构造 $c_i$ 并给出一个充分条件。一般拓扑载体上，局部相容或某一组有限闭路的平凡并不自动证明所有可能的全局 obstruction 消失。
+
+一个纯有限反例说明为什么不能跳过 holonomy。取三个片 $1,2,3$，单位群 $G=\{+1,-1\}$，在每条有向边上令
+
+$$
+g_{12}=g_{23}=g_{31}=-1.
+$$
+
+若存在 $c_i$ 满足 (39.6)，则闭路乘积应为
+
+$$
+g_{12}g_{23}g_{31}=c_1^{-1}c_1=+1,
+$$
+
+但实际乘积为 $-1$。因此没有全局 frame 系数，尽管每条单独的二片交叠都给出了一个合法的 transition。这个失败发生在三边关系上，不能由逐边合法性发现。
+
+### 39.4 历史同构运输的不变量范围
+
+当局部接口带有历史档案、当前集合、选择集合和因果关系时，transition 还必须运输这些结构。仓内 `HistoricalCongruence` 对历史同构的 product、complement 和 temporal composition 逐项运输 attributes、causal、current 与 selection，并保持相应的边界关系。
+
+抽象地，若 $h_i:S_i\simeq S_i'$ 是局部接口的历史同构，则对每个局部操作 $T$ 应有
+
+$$
+h_{\mathrm{out}}\circ T_i
+=
+T_i'\circ h_{\mathrm{in}},
+\tag{39.11}
+$$
+
+并且记录、合法域和失败标签也要交换。仅有状态集合之间的双射不够；它可能把当前显示对应起来，却不保持因果边或选择集合，因而不能作为 transition 参与全局拼接。
+
+若多个局部接口沿路径运输满足 (39.11)，闭路后的 holonomy 至少必须保持声明的记录和操作；是否要求 holonomy 恒等，取决于任务是恢复裸状态、恢复带参考的状态，还是允许一个可观测的 gauge 变换。这里的“允许 gauge”必须写入目标共同核，不能在证明失败后临时扩大等价关系。
+
+### 39.5 累积历史与有限增量的双向恢复
+
+时间或记忆表示可以取增量而不是完整历史。对加法交换群 $R$，设 $c:\mathbb Z\to_0 R$ 是有限支撑增量，定义
+
+$$
+C(n)=\sum_{t\le n}c(t).
+\tag{39.12}
+$$
+
+若 $C$ 在足够左侧恒为零、在足够右侧恒为常值，则相邻差分
+
+$$
+(\nabla C)(n)=C(n)-C(n-1)
+\tag{39.13}
+$$
+
+仍是有限支撑，并满足
+
+$$
+\nabla(\operatorname{cumulative}(c))=c,
+\qquad
+\operatorname{cumulative}(\nabla C)=C.
+\tag{39.14}
+$$
+
+仓内 `CumulativeInverse.cumulative_inverse` 把这一点提升为带加法结构的双射，并进一步给出整数时间乘空间 profile 的版本。
+
+这提供了一个明确的“时间—记忆”双向恢复例子，但条件不能省略。若没有左尾锚定，所有常数平移的历史具有同一差分；若允许无限支撑而不加收敛或尾条件，累积和可能没有定义；若只保存总和而不保存增量位置，则不同路径会被错误合并。因此，时间表示和记忆表示互相恢复的准确对象是
+
+$$
+\boxed{
+\text{有限增量}\ +\ \text{尾部规范化}
+\longleftrightarrow
+\text{满足尾条件的完整历史}.
+}
+\tag{39.15}
+$$
+
+它不是“任何时钟读数都等价于全部历史”的结论。
+
+### 39.6 局部到全局的最小证明义务
+
+对一个声称由局部关系恢复全局结构的具体模型，应按以下顺序检查：
+
+1. 实际来源是否满射到接口，或断言是否明确限制在实际像；
+2. 局部因子是否在真实交叠上相容；
+3. 若有连续结构，域是否开、是否覆盖、局部因子是否连续；
+4. transition 是否满足方向约定和 cocycle；
+5. 声称全局 frame 时，是否证明 coboundary 或等价的 holonomy 平凡条件；
+6. 历史、合法性、记录、参考和权限是否随 transition 一起运输；
+7. completion 或无穷路径是否另有实际来源存在性，而不是只有每个有限窗口相容。
+
+其中前五项分别对应仓内 gluing 与 frame 支点，后三项才把它们接回观察者过程和 completion。缺少任何一项时，最多得到局部表示或形式边界响应，不能声称空间、时间、边界和记忆已经互相恢复。
+
+本节是对既有形式化声明的普通数学综合，没有新增 Lean 声明；局部到全局的统一构造仍按上述义务逐模型开放。
+
+## 39.99 追加锚
+
+## 40. §38 的定义域与双侧因式分解勘误
+
+**本批导航。** 本节只修正上一批 §38 的表述边界，不撤回其“语义轴与解析轴正交”的主旨。修正集中在三个容易把开放综合说得过强的地方：边界更新应定义在实际像、失败分支应总化、双侧评价必须带完整因式分解数据。§26、§35 和 §37 已有的共同核与动态商判据仍是语义轴的主要来源；本节不另造同形定理。
+
+### 40.1 共同核、当前核与实际像
+
+若本节的 $K_*$ 被定义为包含全部合法续接、失败和记录的未来行为核，则它本身已经是一个等价关系，并且在完整未来 profile 的定义下具有动态闭合。为了避免循环，§38.1 的一般记号应作如下区分：
+
+* $K_{\mathrm{cur}}$ 是当前表示任务声明的等价关系，可能只包含有限读数或当前标签；
+* $K_{\infty}$ 是把所有声明的未来合法续接加入后的行为核；
+* 精确边界的语义条件是 $\ker r=K_{\infty}$，而在只给 $K_{\mathrm{cur}}$ 时，还必须另证 $K_{\mathrm{cur}}$ 对每个动作的纤维保持。
+
+因此，§38.1 的 `Sem ∧ Dyn` 是一个防止把当前核误报成未来核的分解写法；若 $K_*$ 已明确取 $K_{\infty}$，则 `Dyn` 应引用第35节的残余闭合结论，而不是再次当作独立假设。
+
+同时，边界更新的唯一性只应在实际像上声称。令
+
+$$
+\bar R:=\operatorname{im}(r),
+\qquad
+\bar r:S\to\bar R,
+\qquad
+\bar r(s)=r(s).
+\tag{40.1}
+$$
+
+若完整操作以总的 tagged successor 表示
+
+$$
+\widehat T_a:S\to S_a^{\mathrm{ok}}\sqcup S_a^{\mathrm{fail}},
+\tag{40.2}
+$$
+
+并把合法性、指定输出和记录一并放入总标签 $\widehat L_a$，则动态下降应写成
+
+$$
+\bar r_a\circ\widehat T_a
+=
+\bar T_a\circ\bar r,
+\qquad
+\widehat L_a=\bar L_a\circ\bar r,
+\tag{40.3}
+$$
+
+其中 $\bar T_a:\bar R\to\overline{R_a}$、$\bar L_a:\bar R\to L_a$ 只要求在实际像上定义。若动作由内生选择器 $\pi:S\to A$ 产生，还要加入策略下降条件
+
+$$
+\operatorname{Policy}(r):\Longleftrightarrow
+r(s)=r(t)\Longrightarrow \pi(s)=\pi(t),
+\tag{40.3a}
+$$
+
+或更弱地要求存在 $\bar\pi:\bar R\to A$ 使 $\pi=\bar\pi\circ\bar r$。此时内生观察者的可运行性应写成 $\operatorname{Sem}_{K_*}(r)\land\operatorname{Dyn}(r)\land\operatorname{Policy}(r)$；若动作序列是外部预先固定的，才可以省略这一项。若仍使用只在合法域上的偏函数，则 (40.3) 必须分别写在合法分支和失败分支，不能把 $r\circ T_a$ 当作全域函数。陪域 $R\setminus\operatorname{im}(r)$ 上可以任意延拓，所以那里没有唯一性内容。
+
+### 40.2 解析与代数标签要分开
+
+§38.2 中的“algebra completion”包含了两个强度不同的断言，应拆成
+
+$$
+\begin{aligned}
+\operatorname{AlgEq}(A,\mathcal A_*)
+&:\Longleftrightarrow A=\mathcal A_*,\\
+\operatorname{ObsContain}(A,\mathcal O_*)
+&:\Longleftrightarrow \mathcal O_*\subseteq A.
+\end{aligned}
+\tag{40.4}
+$$
+
+这里必须另行声明 $A$ 是哪一种 unital 或 $*$-代数、$\mathcal A_*$ 的目标代数是什么，以及 $\mathcal O_*$ 是单个 observable 还是一族 observable。`ObsContain` 由 `AlgEq` 蕴含的方向取决于 $\mathcal O_*\subseteq\mathcal A_*$，反向一般不成立。
+
+`FourTypedCompletionHierarchy` 的窗口生成反例只支持相应的具体包含或 properness 断言；它不提供一个不带载体和量词的统一 `Algebra` 谓词。因而 §38 的 typed 数据应写成
+
+$$
+\bigl(\text{语义核},\ \text{动态下降},\ \text{Uniform/StateFamily/MemberTarget},
+\ \text{AlgEq 或 ObsContain}\bigr),
+\tag{40.5}
+$$
+
+而不是把两个代数命题用“或”并成一个模式。
+
+### 40.3 双侧 quotient 的完整条件
+
+若 $E:X\times P\to\Lambda$ 与 $E':X'\times P'\to\Lambda$ 要被证明为同一 typed interface 的两个表达，数据必须包括
+
+$$
+f:X\to X',\qquad g:P\to P',
+\tag{40.6}
+$$
+
+以及明确的因式分解
+
+$$
+\boxed{
+E(x,p)=E'(f(x),g(p))\quad(\forall x,p).
+}
+\tag{40.7}
+$$
+
+此外，需要 $f,g$ 各自满射，且 $E'$ 的状态行与协议列外延：
+
+$$
+\begin{aligned}
+\bigl(\forall p',E'(x',p')=E'(y',p')\bigr)&\Longrightarrow x'=y',\\
+\bigl(\forall x',E'(x',p')=E'(x',q')\bigr)&\Longrightarrow p'=q'.
+\end{aligned}
+\tag{40.8}
+$$
+
+在这些条件下，评价核的状态商和协议商才分别与 $X'$、$P'$ 唯一等价；仓内 `DoubleExtensionalQuotientUniversality.double_extensional_quotient_universal_minimality` 正是这一完整数据的形式化支点。$E'$ 不需要额外满射到 $\Lambda$；定理需要的是 $f,g$ 的来源满射与 (40.7) 的因式分解。
+
+因此，§38.5 原先的有限提示应精确解释为缺条件反例：取 $E(x,p)=x\land p$ 并把协议映射压成常值时，若试图保持一个仍能区分原协议的目标评价，(40.7) 已经失败；它说明不能省略因式分解和列外延性，不能把该例当作满足双侧 quotient 定理的实例。
+
+### 40.4 §38 的范围收束
+
+经本节修正，§38 的新增内容只保留以下组合结论：语义核与动态运输沿第一轴比较，解析投影或窗口代数沿第二轴比较，双侧接口还要携带 (40.6)—(40.8) 的端口数据；这些轴没有自动的单调合并。§38.1 对既有共同核的复述应读作防止循环的分层说明，§38.4 对三类语义 completion 的定义应读作引用第37.1节，而不是新的形式化成果。
+
+本勘误仍是普通数学组织，没有新增 Lean 声明；其目的只是把定义域、量词、因式分解和结论强度收回到仓内既有形式化结果真正支持的范围。
+
+## 40.99 追加锚
+
+## 41. 实际来源、holonomy 固定点与细化提升
+
+**本批导航。** §39 已给出局部因子、transition coboundary 和连续 gluing 的条件。本节继续追问一个更窄但更关键的问题：局部拼接得到的 global profile 是否真的来自同一个实际来源，并且是否能沿分辨率细化继续提升。这里要区分源交叠、商后的接口交叠、一个相容 section 与一整套 frame，以及形式逆极限与实际来源实现。
+
+### 41.1 源交叠不等于商后交叠
+
+令实际来源被局部子集覆盖：
+
+$$
+\Omega=\bigcup_i\Omega_i,
+\qquad
+q_i:\Omega_i\twoheadrightarrow B_i.
+\tag{41.1}
+$$
+
+在来源交叠 $\Omega_i\cap\Omega_j$ 上，若存在过渡映射
+
+$$
+t_{ij}:q_i(\Omega_i\cap\Omega_j)\to q_j(\Omega_i\cap\Omega_j),
+\qquad
+t_{ij}\circ q_i=q_j,
+\tag{41.2}
+$$
+
+其存在的充分必要条件是
+
+$$
+\ker(q_i|_{\Omega_i\cap\Omega_j})
+\subseteq
+\ker(q_j|_{\Omega_i\cap\Omega_j}).
+\tag{41.3}
+$$
+
+若两侧核相等，$t_{ij}$ 才在这些实际像之间双射。由同一个来源诱导的三重交叠运输自动满足
+
+$$
+t_{jk}\circ t_{ij}=t_{ik}
+\tag{41.4}
+$$
+
+但等式的定义域只是实际三重交叠像。把 (41.4) 延拓到形式上可组合、却没有共同来源代表的接口点，需要另行证明域相容。
+
+一个有限反例说明“各片都能因子化”仍不够。令
+
+$$
+\Omega=\{a,b\},\quad
+\Omega_1=\{a\},\quad\Omega_2=\{b\},\quad
+q(a)=q(b)=*,
+$$
+
+并令目标读出 $f(a)=0,f(b)=1$。两个局部限制的来源交叠为空，所以局部一致性条件真空成立；但全局 $f$ 不能因子化为 $\bar f\circ q$，因为同一商点 $*$ 要求两个不同值。修复方式是要求补丁对 $q$ 饱和，或直接在所有由商合并产生的接口交叠上检查 fiber-constant 条件。
+
+### 41.2 相容 section、global frame 与 holonomy 固定点
+
+在一个有限连通图上，给每个顶点 $i$ 一个纤维 $B_i$，给每条有向边 $e:i\to j$ 一个可逆运输 $T_e:B_i\simeq B_j$，逆边运输为 $T_e^{-1}$。取根 $v$ 和一棵生成树；令 $P_i:B_v\simeq B_i$ 为树路径运输。对每条非树边 $e:i\to j$ 定义根纤维上的 holonomy
+
+$$
+H_e:=P_j^{-1}\circ T_e\circ P_i\in\operatorname{Aut}(B_v).
+\tag{41.5}
+$$
+
+所有运输相容的 section 组成
+
+$$
+\Gamma(T)=\{(b_i)_i:\ T_e(b_i)=b_j\text{ 对所有边 }e:i\to j\}.
+$$
+
+根评价给出一个规范双射
+
+$$
+\boxed{
+\Gamma(T)\simeq
+\bigcap_{e\notin\mathrm{Tree}}\operatorname{Fix}(H_e).
+}
+\tag{41.6}
+$$
+
+树边强制 $b_i=P_i(b_v)$，非树边恰好变成根值的固定点方程。由此得到三个不同结论：
+
+* 相容 section 存在，当且仅当 holonomy 共同固定点非空；
+* 每个根值都能延拓，当且仅当所有 holonomy 恒等；
+* 一整套 transport-compatible frame 存在，才需要后一个更强条件。
+
+所以“有一个全局 profile”与“局部接口之间存在可逆的全局 frame”不是同一命题。取三角形图、纤维 $\{0,1,2\}$，两条边为恒等、第三条边交换 $1,2$ 而固定 $0$，则只有全零 section，却没有 transport-compatible full frame。
+
+若运输只有有向箭头而没有逆，闭路测试也不充分。取菱形 $v\to a\to w$ 与 $v\to b\to w$，令一条路径的复合为交换、另一条为恒等。图中没有有向闭路，但两条平行路径作用不同；正确条件是对声明的平行路径直接要求复合相等。
+
+### 41.3 细化运输与固定点集合的逆极限
+
+设每个分辨率 $n$ 都有纤维 $B_{i,n}$、运输 $T_{e,n}$ 和限制映射
+
+$$
+r_{i,n}:B_{i,n+1}\to B_{i,n}
+$$
+
+满足自然性
+
+$$
+r_{j,n}\circ T_{e,n+1}
+=
+T_{e,n}\circ r_{i,n}.
+\tag{41.7}
+$$
+
+同一生成树下，(41.7) 把细层 holonomy 降到粗层 holonomy，并诱导固定点集合之间的映射
+
+$$
+F_{n+1}:=\bigcap_e\operatorname{Fix}(H_{e,n+1})
+\longrightarrow
+F_n:=\bigcap_e\operatorname{Fix}(H_{e,n}).
+\tag{41.8}
+$$
+
+于是形式上有
+
+$$
+\Gamma\!\left(\varprojlim_n B_{\bullet,n}\right)
+\simeq
+\varprojlim_n\Gamma(B_{\bullet,n})
+\simeq
+\varprojlim_n F_n,
+\tag{41.9}
+$$
+
+但 (41.9) 只是相容 section 的形式重排，不是实际来源存在性定理。
+
+细化限制即使全都满射，也不保证全局 section 能提升。粗层取单点纤维和恒等运输，故 $F_0$ 非空；细层取三角形 bit 纤维，第三边为交换，故 $F_1=\varnothing$。每个 $r_{i,0}:\{0,1\}\twoheadrightarrow\{*\}$ 都满射且满足 (41.7)，但粗 section 没有细层提升。
+
+### 41.4 形式 profile 的实际来源判据
+
+固定任务索引集 $J$ 和实际 profile 映射
+
+$$
+\Phi:\Omega\to\prod_{j\in J}Y_j.
+$$
+
+每个有限或局部片上的相容选择可以拼成一个形式 profile $p=(p_j)_{j\in J}$，但
+
+$$
+\boxed{
+p\text{ 实际可实现}
+\Longleftrightarrow
+p\in\operatorname{im}\Phi.
+}
+\tag{41.10}
+$$
+
+因此，普通函数的 gluing 只解决“存在一个形式函数”，不解决它是否来自同一个来源。一个最小有限反例是
+
+$$
+\Omega=\{00,11\}\subseteq\{0,1\}^2.
+$$
+
+两个坐标的局部读出都允许 $0$ 和 $1$；局部选择 $(0,1)$ 形成了良定义的全局 profile，却不在 $\operatorname{im}\Phi$ 中。
+
+在图运输模型中，若 $r:\Omega\to\Gamma(T)$ 尊重每条运输，且根读出 $\operatorname{ev}_v\circ r:\Omega\to B_v$ 满射，则 (41.6) 的固定点集合必须等于整个 $B_v$，从而 $r$ 满射到全部相容 section。这个正向结论同时说明：不能在同一模型中既假设根值全部实际可达、又保留非平凡 holonomy 固定点限制。
+
+### 41.5 无穷细化的交集条件
+
+给定实际来源 $\Omega$ 和一列读出 $q_n:\Omega\to B_n$，一个相容线程 $b=(b_n)_n$ 的实际实现精确要求
+
+$$
+\bigcap_n q_n^{-1}(\{b_n\})\ne\varnothing.
+\tag{41.11}
+$$
+
+若 $\Omega$ 紧、每个纤维闭、并且这些纤维按 $n$ 嵌套，紧性可保证 (41.11)。没有这类来源完备性条件，所有有限前缀都可实现仍不够。
+
+例如令
+
+$$
+\Omega=\mathbb N,\qquad
+B_n=\{0,\ldots,n\},\qquad
+q_n(k)=\min(k,n).
+$$
+
+线程 $b_n=n$ 的每个有限前缀都由某个自然数实现，但不存在一个 $k\in\mathbb N$ 同时实现全部 $b_n$。这是形式逆极限与实际来源的分离；它不与有限来源的嵌套交集性质矛盾。
+
+### 41.6 动态 gluing 还要运输策略与实际像
+
+静态 transition 不能自动给出过程 transition。对每个动作 $a$，局部运输至少需要交换
+
+$$
+T_{e,j}(D_{i,a})=D_{j,a},
+\qquad
+O_{j,a}\circ T_e=O_{i,a},
+\qquad
+T_e\circ U_{i,a}=U_{j,a}\circ T_e,
+\tag{41.12}
+$$
+
+并且内生策略满足
+
+$$
+\pi_j\circ T_e=\pi_i.
+\tag{41.13}
+$$
+
+这些式子才能把局部更新诱导到相容 section 上。若 $r$ 是实际来源到 global profile 的映射，诱导更新还要求
+
+$$
+U_\Gamma(r(\Omega))\subseteq r(\Omega).
+\tag{41.14}
+$$
+
+否则形式 section 虽有更新，实际来源像却会被送出，不能把它报告为内部观察者可执行的后继。
+
+有限反例是：$q(a)=q(b)=0,q(c)=1$，读出当前因子通过 $q$，但令 $U(a)=a$、$U(b)=U(c)=c$。同一摘要类 $q(a)=q(b)$ 的后继类不同，所以不存在边界更新；静态 factorization 不提供动态 descent。
+
+本节把局部 gluing、holonomy、细化和实际来源放在同一条证明链上，但没有把它们自动合成无限模型的全局存在定理。相关具体来源、拓扑和策略条件仍须逐模型核对；本节是普通数学综合，Claim status 为 open。
+
+## 41.99 追加锚
