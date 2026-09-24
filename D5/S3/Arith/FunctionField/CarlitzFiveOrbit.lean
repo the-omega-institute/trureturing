@@ -7,7 +7,10 @@
    digest: Five Carlitz orbit residuals force the exact quintic difference field. -/
 
 import Mathlib.Algebra.CharP.Defs
-import Mathlib.Tactic
+import Mathlib.Algebra.Field.Defs
+import Mathlib.Tactic.Convert
+import Mathlib.Tactic.NormNum.Basic
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -220,12 +223,20 @@ theorem result {K : Type*} [Field K] [CharP K 19]
       A2 * residual (c-b) (d-b) (-b) (a-b) +
       A3 * residual (d-c) (-c) (a-c) (b-c) +
       A4 * residual (-d) (a-d) (b-d) (c-d) = quintic a := by
-    have hchar : CharP K 19 := inferInstance
-    dsimp [A0, A1, A2, A3, A4, residual, quintic]
-    ring_nf
-    reduce_mod_char!
     have h19 : (19 : K) = 0 := CharP.cast_eq_zero K 19
-    linear_combination (-3 * a) * h19
+    have h38 : (38 : K) = 0 := by
+      rw [show (38 : K) = 2 * 19 by norm_num, h19, mul_zero]
+    have h57 : (57 : K) = 0 := by
+      rw [show (57 : K) = 3 * 19 by norm_num, h19, mul_zero]
+    have h76 : (76 : K) = 0 := by
+      rw [show (76 : K) = 4 * 19 by norm_num, h19, mul_zero]
+    have h95 : (95 : K) = 0 := by
+      rw [show (95 : K) = 5 * 19 by norm_num, h19, mul_zero]
+    dsimp only [A0, A1, A2, A3, A4, residual, quintic]
+    rw [← sub_eq_zero]
+    ring_nf
+    simp only [h19, h38, h57, h76, h95, mul_zero, zero_mul, add_zero, zero_add, neg_zero,
+      sub_zero, zero_sub, sub_self]
   rw [h0, h1, h2, h3, h4] at hcertificate
   simpa only [mul_zero, zero_mul, add_zero, sub_zero] using hcertificate.symm
 
