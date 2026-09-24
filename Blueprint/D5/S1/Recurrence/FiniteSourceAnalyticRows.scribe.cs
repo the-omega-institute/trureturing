@@ -72,7 +72,7 @@ internal sealed class FiniteSourceAnalyticRowsDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(
-            DescribeId.Create("finite-source-analytic-" + name.ToLowerInvariant()),
+            DescribeId.Create("finite-source-analytic-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name),
             H(title),
             StatementSource.WithoutFormula(),
