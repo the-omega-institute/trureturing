@@ -1,0 +1,19 @@
+**将一份态变成轨道概率测度。** 令 $K=\mathcal D_d$，定义连续轨道映射 $\alpha_\rho(U)=U\rho U^\dagger$ 及其推前
+$$
+\mu_\rho=(\alpha_\rho)_*\lambda_G,\qquad
+\int_K f(X)\,d\mu_\rho(X)
+=\int_G f(U\rho U^\dagger)\,d\lambda_G(U).
+\tag{TM.140}
+$$
+
+$K$ 是有限维紧度量空间；这些推前是正则 Borel 概率测度。选取 Hermitian 实空间的一组基 $A_1,\ldots,A_{d^2}$，令 $f_j(X)=\operatorname{Tr}(A_jX)$。它们是实值连续线性坐标。张量迹的乘法性质给出任意次数的混合坐标矩：
+$$
+\int_K\prod_{k=1}^n f_{j_k}(X)\,d\mu_\rho(X)
+=\operatorname{Tr}\!\left[
+(A_{j_1}\otimes\cdots\otimes A_{j_n})P_n(\rho)
+\right].
+\tag{TM.141}
+$$
+
+所以全部 $P_n$ 相同就使两份测度对任意坐标单项式积分相同；常数项由总质量一处理，线性组合给全部坐标多项式相同。这里使用实 Hermitian 坐标，非对角元素的实部和虚部都包含在基中，没有遗漏混合共轭矩。
+

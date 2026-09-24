@@ -1,0 +1,31 @@
+**命题 3.16（生成群与整数别名）。** 定义时刻的整数生成群及其字符零核：
+$$
+G_\nu=\tau_1\mathbb Z+\tau_2\mathbb Z,\qquad
+G_\nu^\perp
+=\{\Delta:\Delta t\in2\pi\mathbb Z\ \text{对全部 }t\in G_\nu\}.
+\tag{TM.424}
+$$
+重复极限保留 $(\lambda,\mu)$ 块，当且仅当
+$\lambda-\mu\in G_\nu^\perp$。这是对时刻关系的共同核取交。
+
+若 $\tau_1=a\tau,\tau_2=b\tau$，其中 $a,b$ 为正整数、$\tau>0$，令 $d=\gcd(a,b)$。Bézout 等式给
+$$
+a\tau\Delta,b\tau\Delta\in2\pi\mathbb Z
+\iff d\tau\Delta\in2\pi\mathbb Z,
+\qquad
+G_\nu^\perp=\frac{2\pi}{d\tau}\mathbb Z .
+\tag{TM.425}
+$$
+因此极限是 $e^{-id\tau H}$ 的本征相位块 pinching。它等于能量 pinching，当且仅当实际有限谱中没有非零能隙落在上述别名格。
+
+若 $a,b$ 互素，只将整数时钟恢复到基础时钟 $\tau$ 的分辨能力，仍不能区分差为 $2\pi n/\tau$ 的频率。具体地，取 $a=2,b=3$ 和
+$H=\operatorname{diag}(0,2\pi/\tau)$，三个时刻的共轭作用全部是恒等；任意次数重复仍不去除这两个能级间的相干。相关结构由最大公因数和字符核决定，不要求 $a,b$ 各自为素数。
+
+若 $\tau_2/\tau_1\notin\mathbb Q$，两个整数整周条件同时成立且 $\Delta\ne0$，会强制 $\tau_2/\tau_1$ 为有理数。因此
+$$
+G_\nu^\perp=\{0\},\qquad
+|\chi(\Delta)|<1\quad(\Delta\ne0).
+\tag{TM.426}
+$$
+每个固定有限谱于是都直接收敛到 $\mathcal P_H$。同一能量内的简并块保留；此结论并不把能量简并进一步消除。
+

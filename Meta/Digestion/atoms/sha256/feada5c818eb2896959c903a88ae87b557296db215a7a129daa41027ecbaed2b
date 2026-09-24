@@ -1,0 +1,8 @@
+**证明。** 若 $s\sim_S t$ 且 $p\sim_P q$，则
+
+$$
+E(s,p)=E(t,p)=E(t,q).
+$$
+
+因此代表元的选择不影响右端。对商上的任意评价，代入 $([s],[p])$ 都必须得到 $E(s,p)$，故唯一。这个构造正是 `DoubleExtensionalEvaluationDescent.double_extensional_evaluation_descent` 的普通数学形式。\(\square\)
+
