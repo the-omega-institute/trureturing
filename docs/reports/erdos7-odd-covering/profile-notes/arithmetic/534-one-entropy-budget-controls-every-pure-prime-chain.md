@@ -202,6 +202,14 @@ their existence cases already lie in report539's sufficient region.
 Retaining nonconstant cofactor weights instead of uniform profile caps
 still requires a further weighted estimate.
 
+[Report541](541-shared-ternary-roots-certify-sixteen-mixed-heads.md)
+constructs the complete survivor-Haar law in this same G for every core
+with at most sixteen shallow mixed labels. It retains the actual joint
+union of the six originals3p and certifies total query sum below158050/14399,
+without requiring its mixed-query sum alone to meet PE8. Every pure and
+deeper mixed original remains present; arbitrary larger shallow cores
+are not settled by that count criterion.
+
 ## Full support without claiming entropy preservation
 
 Report467 supplies a law mu for this same actual U with

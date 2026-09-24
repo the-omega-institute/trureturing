@@ -186,6 +186,8 @@ The [fixed consumer](../../frontier/cover-geometry/pure_survivor_mixed_capacity.
 
 The sufficient criterion need not hold for arbitrary mixed inventories. If its upper bound exceeds 2/3, no impossibility is inferred: actual phase overlap, smaller exact caps, another supported law or the joint methods of reports534--536 may still work. The existence of a suitable law for every larger shallow mixed core remains unresolved by this criterion. No part of this deduction implies that three mixed terms always have small sum under every law in G; it constructs the single required actual survivor-Haar law.
 
+[Report541](541-shared-ternary-roots-certify-sixteen-mixed-heads.md) uses the ACTUAL mixed union loss l instead of v in the conditioning denominator, while preserving the exact unused-cap identity and l<=v. A joint block for the six originals 3p and an infinite-label cap frontier prove l<173/250 for every core with at most sixteen shallow mixed labels, so the same full-survivor Haar law belongs to G and has complete query sum below158050/14399<565/51. Its explicit irredundant 32-class core has eleven shallow mixed labels and actual v>2/3, separating the two sufficient hypotheses without refuting this report's conclusions.
+
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure_survivor_mixed_capacity.py
 ```
