@@ -1,0 +1,86 @@
+**命题 2.18（量子位二阶恢复误差）。** 对B卷第2.2.5节的非退化量子位 Hamiltonian，可以把B卷第2.2.4节的定性连续逆进一步算成显式关系。以下始终固定能量基、共同相位的两份制备和全部所需相容效果。设两态轨道坐标分别为 $(p,r)$ 与 $(q,s)$，其中 $r=|c|$、$s=|c'|$，$r^2\le p(1-p)$、$s^2\le q(1-q)$。为避免混淆，$p,q$ 在本小节表示两份态的第一个能级占据概率，$q$ 不是前文的摘要映射。
+
+任意两份量子位态之差为去迹 Hermitian 矩阵，其特征值为 $\pm\sqrt{(p-q)^2+|c-c'|^2}$。能量相位作用覆盖全部相对相位，因此在固定相干模下使 $|c-c'|$ 最小，恰好得到 $|r-s|$。故式(TM.146)的轨道距离为
+$$
+\boxed{d_G([\rho],[\sigma])=\sqrt{(p-q)^2+(r-s)^2}.}
+\tag{TM.167}
+$$
+
+式(TM.149)中的 $P_2$ 矩阵全部在同一固定正交基 $00,11,\psi_+,\psi_-$ 下对角，特征概率为
+$$
+\Lambda(p,r)=\bigl(p^2,(1-p)^2,p(1-p)+r^2,p(1-p)-r^2\bigr).
+\tag{TM.168}
+$$
+
+四项非负、和为一；相应四个投影都与总能量交换。因此在这个具体族中，输出态半迹距离恰好等于一份实际共同测量的四结果总变差。令 $\delta=p-q$、$t=\delta(1-p-q)$、$u=r^2-s^2$。前两个特征概率差的绝对值之和为 $2|\delta|$，后两个差为 $t+u,t-u$。使用实数恒等式 $\tfrac12(|t+u|+|t-u|)=\max(|t|,|u|)$，得到
+$$
+\boxed{
+D_2:=D(P_2(\rho),P_2(\sigma))
+=\operatorname{TV}(\Lambda(p,r),\Lambda(q,s))
+=|p-q|+\max\bigl(|p-q|\,|1-p-q|,\ |r^2-s^2|\bigr).
+}
+\tag{TM.169}
+$$
+
+这已经给出所有合法两态的精确误差关系，无须只在目标附近线性化。因为 $|\delta|\le1$、$r,s\ge0$，有 $\delta^2\le|\delta|$、$(r-s)^2\le|r^2-s^2|$。另一方面，$|1-p-q|\le1$，且 $r+s\le1$，所以式(TM.169)中的两个最大值分支分别至多为 $|\delta|$、$|r-s|$。因此
+$$
+\boxed{
+d_G([\rho],[\sigma])^2\le D_2\le2\,d_G([\rho],[\sigma]),
+\qquad d_G([\rho],[\sigma])\le\sqrt{D_2}.
+}
+\tag{TM.170}
+$$
+
+下界使用 $D_2\ge|\delta|+|r^2-s^2|$。上界使用 $D_2\le|\delta|+\max(|\delta|,|r-s|)\le2\sqrt{\delta^2+(r-s)^2}$。两端均在同一实际态对上比较，没有分别选择互不相容的最优输入。
+
+平方根逆界的常数一及最大正 Hölder 指数 $1/2$ 都不能改进。取合法态对
+$$
+p=q=\tfrac12,\qquad s=0,\quad0<r\le\tfrac12,\qquad
+D_2=r^2,\qquad d_G=r.
+\tag{TM.171}
+$$
+
+任意 $r>0$ 都达到平方根等号。若存在固定有限 $C$ 及 $\alpha>1/2$，在这些趋近态对上满足 $d_G\le C D_2^\alpha$，就要求 $r^{1-2\alpha}\le C$，与 $r\downarrow0$ 矛盾。这里的目标可以是最大混合态，退化无需发生在纯态边界。
+
+固定目标 $(q,s)$ 且 $s>0$ 时，情况不同。$s\le1/2$，而式(TM.169)给
+$$
+\begin{aligned}
+D_2&\ge|\delta|+(r+s)|r-s|
+\ge|\delta|+s|r-s|
+\ge s\sqrt{\delta^2+(r-s)^2},\\
+&\boxed{d_G([\rho],[\sigma])\le D_2/s.}
+\qquad
+\text{取 }p=q,r=0\text{ 时： }D_2=s^2,\ d_G=s.
+\end{aligned}
+\tag{TM.172}
+$$
+
+第三个不等式可由 $|\delta|\ge s|\delta|$ 与 $|\delta|+|r-s|\ge\sqrt{\delta^2+(r-s)^2}$ 得到。所列达到输入是该占据概率下的合法对角态，所以对于每一份固定的非零相干目标，这个面向全部合法输入的线性常数 $1/s$ 是精确最优值。它不是声称目标附近的微分条件数也恰好为 $1/s$；这里比较的是全局输入域。
+
+固定目标 $s=0$ 时，内部与端点都不能将局部逆指数提高到 $1/2$ 以上。若 $0<q<1$，取 $p=q$ 和任意充分小的 $r>0$，仍有 $D_2=r^2,d_G=r$。若 $q=0$，取合法纯态曲线；$q=1$ 时作能级交换，分别得到
+$$
+\begin{aligned}
+(q,s)&=(0,0),\quad p=\varepsilon,\quad r=\sqrt{\varepsilon(1-\varepsilon)}:\\
+&d_G=\sqrt\varepsilon,\qquad D_2=2\varepsilon-\varepsilon^2;\\
+(q,s)&=(1,0),\quad p=1-\varepsilon,\quad r=\sqrt{\varepsilon(1-\varepsilon)}:\\
+&d_G=\sqrt\varepsilon,\qquad D_2=2\varepsilon-\varepsilon^2,
+\qquad 0<\varepsilon<1.
+\end{aligned}
+\tag{TM.173}
+$$
+
+因为 $2\varepsilon-\varepsilon^2$ 与 $\varepsilon$ 同阶，任何 $\alpha>1/2$ 的有限局部常数仍被 $\varepsilon\downarrow0$ 排除。这个结论已经使用端点的实际正性限制，不将内部的固定 $p$ 扰动照搬到端点。
+
+端点还具有精确的非线性逆模。对目标 $(q,s)=(0,0)$，任意合法输入都满足 $r^2\le p(1-p)$，所以式(TM.169)的最大值固定取 $p(1-p)$；同时 $d_G^2=p^2+r^2\le p$。解出 $p$，得到
+$$
+\boxed{
+D_2=2p-p^2,\qquad
+ d_G\le\sqrt{1-\sqrt{1-D_2}}\qquad(0\le D_2\le1).
+}
+\tag{TM.174}
+$$
+
+对每个 $p\in[0,1]$ 取 $r=\sqrt{p(1-p)}$ 即达到等号，而 $p\mapsto2p-p^2$ 在 $[0,1]$ 上遍历 $[0,1]$，故这份点态误差界在整个输出误差范围内精确。目标 $(1,0)$ 以 $p$ 换成 $1-p$ 得同一模。
+
+这些显式公式补足的是固定量子位模型的B卷第2.2.4节：轨道变量 $r$ 通过二阶统计中的 $r^2$ 进入读数，$r=0$ 处因此出现平方根逆退化。B卷第1.3节研究的是另一个问题——固定线性占据读数的目标纤维及其最近修复，不能把两个平方根机制当作同一任务或同一误差合同。这里 $D_2$ 可以由指定四结果测量的概率误差来表达，但实际有限样本估计的置信度与来源成本仍须另给；精确响应坐标和逆界本身不宣称已经取得这些统计资源。
+

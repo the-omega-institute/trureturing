@@ -1,0 +1,38 @@
+**命题 2.23（零关系的同能量效果）。** 给定一份非零 $\alpha\in S_H$，按B卷第2.3.1节构造 $n=|\alpha|$ 个有序坐标对和字 $I,J$。其核心对应是
+$$
+E_I=E_J,\qquad
+M_\alpha(\rho)=\langle I|\rho^{\otimes n}|J\rangle.
+\tag{TM.185}
+$$
+
+若 $I=J$，投影 $|I\rangle\langle I|$ 的概率就是实数 $M_\alpha(\rho)$。若 $I\ne J$，两个计算基字正交，对任意已控制的块内相位 $\theta$ 定义
+$$
+\begin{aligned}
+|v_\theta\rangle&=(|I\rangle+e^{i\theta}|J\rangle)/\sqrt2,
+\qquad Q_\theta=|v_\theta\rangle\langle v_\theta|,
+\qquad [Q_\theta,H^{(n)}]=0,\\
+q_\theta(\rho)&=\operatorname{Tr}(Q_\theta\rho^{\otimes n})
+=\frac{\langle I|\rho^{\otimes n}|I\rangle+
+       \langle J|\rho^{\otimes n}|J\rangle}{2}
+ +\operatorname{Re}(e^{i\theta}M_\alpha(\rho)).
+\end{aligned}
+\tag{TM.186}
+$$
+
+$Q_\theta$ 是秩一投影，因此 $0\le Q_\theta\le I$；其像落在同一个总能量特征空间，故交换关系成立。展开 $\langle v_\theta|\rho^{\otimes n}|v_\theta\rangle$ 得到所列概率。四个相位设置中的两组差给出
+$$
+\boxed{
+\operatorname{Re}M_\alpha(\rho)=\frac{q_0(\rho)-q_\pi(\rho)}2,
+\qquad
+\operatorname{Im}M_\alpha(\rho)=
+\frac{q_{-\pi/2}(\rho)-q_{\pi/2}(\rho)}2.
+}
+\tag{TM.187}
+$$
+
+虚部的符号由式(TM.186)固定：$\theta=\pi/2$ 的交叉项是 $-\operatorname{Im}M_\alpha$。每组正负投影还可与其共同支撑的正交补组成一份三结果测量；概率差使用全部批次，不删除正交补结果。这是A卷第2.12节两相位强度恢复机制在一份归一化 Born 测量中的具体对应，基线概率由同一密度矩阵给出，不把未归一化强度当成概率。
+
+同能量块内的相对相位不需要外接时间相位参考，因为共同时间作用只在该块乘一个数量相位。但实际读取实部与虚部仍要求相应块内基选择和控制；“数学上对易”不自动意味着某个受限菜单可执行这些投影。若采用B卷第2.1.3节的零 Hamiltonian 指针、纯空白、所需守能联合酉及读出合同，则可对这些效果使用既有扩张；制备、控制与复位成本继续计入。仅可测总能量的装置，或只可使用固定基下实对称效果的装置，不满足这份完整复读数合同。
+
+若先后选择总能量或两字子空间，必须同时保留其通过概率与失败记录，才能还原式(TM.186)的未条件化概率。生成元次数 $n$ 表示同一批实际取得的 $n$ 份同源准备，条件于同一个未知相位独立；它不是把一份未知态免费复制 $n$ 次。整数指数的二进制表示、重复平方的短算术电路、有限个生成元，以及有限个测量设置，都不自动给出小副本数、短物理时间、有限样本精确概率或稳定的逆误差。B卷第2.2.12节已经给出二阶读数在零相干处的平方根逆退化；高次单项式还可能给很小的区分信号。
+

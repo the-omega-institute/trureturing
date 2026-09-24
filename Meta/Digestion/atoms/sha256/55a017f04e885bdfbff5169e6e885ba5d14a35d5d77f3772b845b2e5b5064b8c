@@ -1,0 +1,22 @@
+**命题 3.13（重复时钟与混叠）。** 取 $\tau>0$、$\nu=(\delta_0+\delta_\tau)/2$。独立重复是否等待 $\tau$ 的步骤，系数为
+
+$$
+\widehat\nu(\omega)=\frac{1+e^{-i\tau\omega}}2,\qquad
+|\widehat\nu(\omega)|=|\cos(\tau\omega/2)|,\qquad
+\widehat\nu(\omega)=1\ \Longleftrightarrow\ \tau\omega\in2\pi\mathbb Z.
+\tag{TM.305}
+$$
+
+模长一恰在最后条件发生，并且此时系数等于一，所以直接幂总收敛。极限按 $e^{-i\tau H}$ 的本征相位分块；相差整数整周的能量被合并。它等于 $\mathcal P_H$ 当且仅当没有实际非零能隙满足该整周条件。纯确定步骤 $\delta_\tau$ 不同：只要有实际字符不等于一，其通道幂就不收敛；所有字符为一时通道原本就是恒等。
+
+取率参数 $\gamma>0$ 的非负指数时钟，
+
+$$
+d\nu_\gamma(t)=\mathbf1_{t\ge0}\gamma e^{-\gamma t}\,dt,\qquad
+\widehat\nu_\gamma(\omega)=\frac{\gamma}{\gamma+i\omega},\qquad
+|\widehat\nu_\gamma(\omega)|=\frac{\gamma}{\sqrt{\gamma^2+\omega^2}}.
+\tag{TM.306}
+$$
+
+直接积分得到公式，所有非零能隙的模严格小于一，故独立重复的极限恰为 $\mathcal P_H$。$k$ 次实际增量之和的均值为 $k/\gamma$，无限重复不是有限时间取得精确 pinching。原子时钟混叠由完整支持和实际能隙字符共同决定，不仅取决于原子个数或时间跨度。
+

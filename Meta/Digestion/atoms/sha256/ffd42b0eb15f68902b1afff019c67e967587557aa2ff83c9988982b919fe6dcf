@@ -1,0 +1,30 @@
+### 21.1 协议词的有效商
+
+定义两个词在当前状态载体上作用相同为
+
+$$
+u\equiv_{\mathrm{act}}v
+\iff
+\forall s\in S,\quad \rho(u,s)=\rho(v,s).
+\tag{21.3}
+$$
+
+它是一个双侧同余：若 $u\equiv_{\mathrm{act}}v$，则对任意前缀 $x$ 与后缀 $y$，都有
+
+$$
+xuy\equiv_{\mathrm{act}}xvy.
+\tag{21.4}
+$$
+
+因此 $A^*/\!\equiv_{\mathrm{act}}$ 仍是一个幺半群，并且它在 $S$ 上的诱导作用是 faithful 的；作用不同的词类必在某个状态上留下差别。仓内冻结声明 `EffectiveProtocolActionMonoid.effective_protocol_action_monoid` 正好给出 (21.3)—(21.4) 的两侧同余和忠实商。
+
+状态侧的完整控制 profile 则为
+
+$$
+\Gamma(s)(u)=\widehat q(\rho(u,s)),
+\qquad u\in A^*,
+\tag{21.5}
+$$
+
+其中 $\widehat q$ 已包含合法性、读数、失败和记录。由 (21.2)，对任意前缀动作，后续 profile 在商上唯一运输。`ControlQuotientUniversalMinimality.control_quotient_universal_minimality` 把这个商的核识别为动态闭包，并证明当前读出、每个动作后继和每个动作结果都可从中恢复；`BehaviorUpdateWordAction.behavior_update_well_defined` 则在实际行为像上给出词的空词、拼接和运行运输。
+

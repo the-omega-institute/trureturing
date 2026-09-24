@@ -1,0 +1,40 @@
+**定义 2.19（有序能隙坐标与零关系）。** 固定 $d\ge1$、$H=H^\dagger$，并选定同一个正交能量基。允许重复能量；简并空间内部的基在本节始终固定。写
+$$
+H=\operatorname{diag}(E_0,\ldots,E_{d-1}),\qquad
+z_{ij}(\rho)=\rho_{ij},\qquad w_{ij}=E_i-E_j,
+\qquad
+M_\alpha(\rho)=\prod_{i,j}\rho_{ij}^{\alpha_{ij}},
+\quad |\alpha|=\sum_{i,j}\alpha_{ij},
+\quad \alpha\in\mathbb N^{d\times d}.
+\tag{TM.175}
+$$
+
+指数为零的因子定义为一，包括相应矩阵元为零的情形。沿实际时间作用，每个坐标乘 $e^{-itw_{ij}}$，故一个单项式不变的充要条件是其总权重为零。定义
+$$
+\begin{aligned}
+S_H&=\left\{\alpha\in\mathbb N^{d\times d}:
+\sum_{i,j}\alpha_{ij}(E_i-E_j)=0\right\},\\
+M_\alpha(e^{-itH}\rho e^{itH})
+&=e^{-it\sum_{ij}\alpha_{ij}(E_i-E_j)}M_\alpha(\rho),\\
+\overline{\rho_{ij}}&=\rho_{ji},\qquad
+\overline{M_\alpha(\rho)}=M_{\alpha^{\mathsf T}}(\rho).
+\end{aligned}
+\tag{TM.176}
+$$
+
+这里的不变量指作为全部 Hermitian 输入上的多项式函数保持，而不是某一份态上恰好取零。时间子群在 $G_H=\overline{\{e^{-itH}:t\in\mathbb R\}}$ 中稠密，坐标连续，所以对时间不变与对 $G_H$ 不变等价。使用全部有序坐标很重要：在 Hermitian 实空间的复值多项式代数中，共轭坐标已经由反向矩阵元供应；不能只保留上三角复坐标而丢弃其共轭。例如非退化量子位的 $|\rho_{01}|^2$ 正是 $\rho_{01}\rho_{10}$。
+
+给定 $\alpha$、$n=|\alpha|\ge1$，把每个有序对 $(i,j)$ 重复 $\alpha_{ij}$ 次，按任意固定顺序列出，得到两个长度 $n$ 的字 $I=(i_1,\ldots,i_n)$、$J=(j_1,\ldots,j_n)$。令 $E_I=\sum_kE_{i_k}$，则
+$$
+\langle I|\rho^{\otimes n}|J\rangle=M_\alpha(\rho),\qquad
+E_I-E_J=\sum_{ij}\alpha_{ij}(E_i-E_j),\qquad
+\langle I|P_n(\rho)|J\rangle=
+\begin{cases}
+M_\alpha(\rho),&\alpha\in S_H,\\
+0,&\alpha\notin S_H.
+\end{cases}
+\tag{TM.177}
+$$
+
+最后一式直接使用式(TM.137)的完整总能量 pinching。反过来，每个 $P_n$ 矩阵元都来自某个这样的 $\alpha$。因此全部共同关系矩包含的坐标，恰是全部次数的零权重单项式；没有再逐份平均或删去总能量简并块内部的交叉项。
+

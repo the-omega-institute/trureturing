@@ -1,0 +1,11 @@
+接入局部块 \(e:\Sigma\to\Sigma'\)，其内部可消去变量为 \(z\)，局部核为 \(W_e(b,z,b')\)。若区域之间的全部跨界关联都经过共同边界，且每条约束只计算一次，则
+\[
+\boxed{
+\mathcal H_{\Sigma'}(b')
+=
+\bigoplus_{b,z}
+\mathcal H_\Sigma(b)\otimes W_e(b,z,b').
+}
+\tag{3.2}
+\]
+

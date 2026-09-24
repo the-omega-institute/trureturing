@@ -1,0 +1,9 @@
+**定理 11.2（自适应 profile 的反向恢复）。** 在命题 11.1 的前提和式（11.2）下，
+
+$$
+\Phi(h)=\Phi(h')
+\quad\Longleftrightarrow\quad
+\beta(h)=\beta(h').
+\tag{11.3}
+$$
+
