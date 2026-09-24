@@ -7,6 +7,9 @@ namespace LeanInformationAudit.Tests.DeclaredWitnessRegistration
 open Lean Meta Elab Command
 open D5.S3.ConceptDynamics.InformationEscape CounterexampleRecord
 
+-- The witness fixture owns enrollment of its pure template input.
+register_information_template counterexampleRealization
+
 def claim : Prop := ∀ n : Nat, n ≠ 0 ∧ ∀ b : Bool, b = b
 theorem result : ¬ claim := fun h => (h 0).1 rfl
 theorem literalResult : ¬ ∀ n : Nat, n ≠ 0 ∧ ∀ b : Bool, b = b := result

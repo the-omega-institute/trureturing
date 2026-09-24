@@ -37,7 +37,7 @@ structure Index where
   structural : Array StructuralProvenanceEntry
   named : Std.HashMap Name (Array Name)
 
-/-- Missing governed sidecars make only the binding query incomplete. The
+/-- Missing governed registration producers make only the binding query incomplete. The
 mathematical disposition checker keeps its independent evidence contract. -/
 def prepareBindingSnapshot (evidenceModules : Array Name) :
     MetaM (Except String TemplateBinding.JoinedRecords) := do
@@ -45,7 +45,7 @@ def prepareBindingSnapshot (evidenceModules : Array Name) :
     let env ← getEnv
     for moduleName in evidenceModules do
       unless moduleName == env.header.mainModule || (env.getModuleIdx? moduleName).isSome do
-        throwError "incomplete_closure:dtr.census_sidecar:{moduleName}"
+        throwError "incomplete_closure:dtr.census_registration:{moduleName}"
     return .ok (← TemplateBinding.exportSnapshot)
   catch error => return .error (← error.toMessageData.toString)
 

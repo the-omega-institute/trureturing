@@ -10,7 +10,7 @@ internal static class InformationTemplateFixture
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
             {"schema_version":1,"report_cache_release_semantic_version":9,
-             "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
+             "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true},{"pattern":"Reg/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
              "config_inputs":{"include":[],"exclude":[]},"producer_scopes":{}}

@@ -282,6 +282,231 @@ public sealed partial class LedgerAlignWriterTests
         Assert.Contains("ledger-align", CliApplication.ImplementedCommands);
     }
 
+    [Fact]
+    public void RetirementDeletesOnlyExplicitMissingAddressAndCannotBeResurrected()
+    {
+        var original = BuildCatalog(Module("A"), Module("B"));
+        using var fixture = new AlignFixture(Module("B"));
+        fixture.InstallAccepted(original);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var retainedBytes = fixture.EventBytes("B");
+
+        var result = fixture.Align("--retire-registration", PathFor("A"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("LEDGER_RETIRE registrations=1", result.Output, StringComparison.Ordinal);
+        Assert.False(fixture.StateExists("A"));
+        Assert.Equal(retainedBytes, fixture.EventBytes("B"));
+        Assert.Single(fixture.AcceptedFiles());
+        Assert.All(ReadRepairEvents(fixture.AcceptedFiles()), item => Assert.Equal("Freeze", item.EventType));
+        var after = fixture.AllPublishedBytes();
+        Assert.True(fixture.FromAccepted().Success);
+        Assert.True(fixture.AlignWithAcceptedWritesDenied().Success);
+        Assert.Equal(after, fixture.AllPublishedBytes());
+        Assert.False(fixture.StateExists("A"));
+        // No tombstone or second ledger: an already retired selector is now unknown.
+        var repeated = fixture.Align("--retire-registration", PathFor("A"));
+        Assert.False(repeated.Success);
+        Assert.Contains("not a registered frozen-state member", repeated.Error, StringComparison.Ordinal);
+        Assert.Equal(after, fixture.AllPublishedBytes());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingPinnedSourceRequiresExplicitRetirementEvenWithSelector(bool scoped)
+    {
+        var original = BuildCatalog(Module("A"), Module("B"));
+        using var fixture = new AlignFixture(Module("B"));
+        fixture.InstallAccepted(original);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = scoped ? fixture.Align("--selector", PathFor("B")) : fixture.Align();
+
+        Assert.False(result.Success);
+        Assert.Contains(PathFor("A"), result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Theory]
+    [InlineData("existing")]
+    [InlineData("unknown")]
+    [InlineData("duplicate")]
+    [InlineData("selector-conflict")]
+    [InlineData("add-conflict")]
+    [InlineData("pin-conflict")]
+    [InlineData("missing-event")]
+    [InlineData("root")]
+    [InlineData("reg")]
+    public void RetirementRejectsInvalidRequestsWithoutPublishing(string variant)
+    {
+        var original = BuildCatalog(Module("A"), Module("B"));
+        using var fixture = new AlignFixture(variant == "existing"
+            ? [Module("A"), Module("B")] : [Module("B")]);
+        if (variant != "missing-event") fixture.InstallAccepted(original);
+        fixture.InstallState("A", variant == "pin-conflict"
+            ? StatementId.Create(Sha256("wrong pin")) : original.ByPath[RepoPathFor("A")].StatementId);
+        fixture.InstallState("B", original.ByPath[RepoPathFor("B")].StatementId);
+        var options = new List<string> { "--retire-registration", variant switch
+        {
+            "unknown" => PathFor("Unknown"),
+            "root" => "Trureturing.lean",
+            "reg" => "Reg/" + PathFor("A"),
+            _ => PathFor("A"),
+        } };
+        if (variant is "duplicate" or "selector-conflict" or "add-conflict")
+            options.AddRange([variant switch
+            {
+                "duplicate" => "--retire-registration",
+                "selector-conflict" => "--selector",
+                _ => "--add",
+            }, PathFor("A")]);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align(options.ToArray());
+
+        Assert.False(result.Success);
+        Assert.DoesNotContain("USAGE:", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void RetirementRebuildsRetainedDescendantsAndRepinsChangedContent(bool detachDescendant, bool drift)
+    {
+        var oldModules = RepairModules();
+        var original = BuildCatalog(oldModules);
+        var currentB = Module("B") with { StatementMaterial = drift ? "changed content" : oldModules[1].StatementMaterial };
+        var currentC = detachDescendant ? Module("C") : oldModules[2];
+        using var fixture = new AlignFixture(currentB, currentC, Module("D"));
+        fixture.InstallAccepted(original);
+        foreach (var module in oldModules)
+            fixture.InstallState(module.Name, original.ByPath[RepoPathFor(module.Name)].StatementId);
+        var oldB = fixture.EventBytes("B");
+        var oldC = fixture.EventBytes("C");
+        var untouchedD = fixture.EventBytes("D");
+
+        // The selected unrelated module must not hide the affected retained descendants.
+        var result = fixture.Align("--retire-registration", PathFor("A"), "--selector", PathFor("D"));
+
+        Assert.True(result.Success, result.Error);
+        var events = ReadRepairEvents(fixture.AcceptedFiles());
+        Assert.Equal(3, events.Length);
+        Assert.Equal(3, fixture.StateFileCount());
+        Assert.True(DagLedgerLoader.TryOrderClosedDag(events, [], out _));
+        Assert.NotEqual(oldB, fixture.EventBytes("B"));
+        Assert.NotEqual(oldC, fixture.EventBytes("C"));
+        Assert.Equal(untouchedD, fixture.EventBytes("D"));
+        if (!detachDescendant) AssertPrerequisite(events, "C", "B");
+        foreach (var name in new[] { "B", "C", "D" }) Assert.Equal(fixture.EventPin(name), fixture.StatePin(name));
+        var expected = BuildCatalog(currentB, currentC, Module("D"));
+        Assert.Equal(expected.ByPath[RepoPathFor("B")].StatementId.Value, fixture.StatePin("B"));
+        var after = fixture.AllPublishedBytes();
+        Assert.True(fixture.AlignWithAcceptedWritesDenied().Success);
+        Assert.True(fixture.FromAccepted().Success);
+        Assert.Equal(after, fixture.AllPublishedBytes());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RetirementRejectsRemainingReportImportWithoutPublishing(bool regImporter)
+    {
+        var original = BuildCatalog(Module("A"), Module("B", imports: ["A"]));
+        var importer = regImporter ? "Reg/" + PathFor("B") : PathFor("B");
+        using var fixture = regImporter
+            ? new AlignFixture([Module("B")], new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+            {
+                [importer] = new LeanFileReport(["D5.S0.Carrier.A"], []),
+            })
+            : new AlignFixture(Module("B", imports: ["A"]));
+        fixture.InstallAccepted(original);
+        foreach (var name in new[] { "A", "B" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--retire-registration", PathFor("A"));
+
+        Assert.False(result.Success);
+        Assert.Contains("still imports retired registration", result.Error, StringComparison.Ordinal);
+        Assert.Contains(importer, result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
+    public void RetirementCanRemoveAWholeObsoleteChainInOnePublication()
+    {
+        var original = BuildCatalog(Module("A"), Module("B", imports: ["A"]), Module("C", imports: ["B"]));
+        using var fixture = new AlignFixture(Module("C"));
+        fixture.InstallAccepted(original);
+        foreach (var name in new[] { "A", "B", "C" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+        var incomplete = fixture.Align("--retire-registration", PathFor("A"));
+        Assert.False(incomplete.Success);
+        Assert.Contains(PathFor("B"), incomplete.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+
+        var result = fixture.Align("--retire-registration", PathFor("A"), "--retire-registration", PathFor("B"));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("registrations=2 retained_descendants=1", result.Output, StringComparison.Ordinal);
+        Assert.False(fixture.StateExists("A"));
+        Assert.False(fixture.StateExists("B"));
+        Assert.Equal(fixture.StatePin("C"), fixture.EventPin("C"));
+        Assert.Single(fixture.AcceptedFiles());
+        Assert.True(fixture.FromAccepted().Success);
+        Assert.Equal(1, fixture.StateFileCount());
+    }
+
+    [Fact]
+    public void RetirementIsNotAvailableWithoutCandidateReportOrThroughOtherModes()
+    {
+        using var fixture = new AlignFixture();
+        foreach (var arguments in new string[][]
+        {
+            ["--retire-registration", PathFor("A")],
+            ["--from-accepted", "--retire-registration", PathFor("A")],
+        })
+        {
+            var result = fixture.Invoke(arguments);
+            Assert.False(result.Success);
+            Assert.Contains("USAGE:", result.Error, StringComparison.Ordinal);
+        }
+        var alias = fixture.AppendAlias("--retire-registration", PathFor("A"));
+        Assert.False(alias.Success);
+        Assert.Contains("USAGE:", alias.Error, StringComparison.Ordinal);
+        Assert.Empty(fixture.AcceptedFiles());
+    }
+
+    [Fact]
+    public void RetirementRejectsUnclosedResultingLedgerWithoutPublishing()
+    {
+        var original = BuildCatalog(Module("A"), Module("B"), Module("D"));
+        using var fixture = new AlignFixture(Module("B"), Module("D"));
+        fixture.InstallAccepted(original.ClosedNodes.Select(material => EventFile(
+            "Freeze", FrozenLedgerCanonicalWriter.FreezeElement(FrozenLedgerCanonicalWriter.FreezePayload(
+                material.RepoPath == RepoPathFor("B") ? material with
+                {
+                    PrerequisiteFrozenNodeIds = [FrozenNodeId.Create(Sha256("unresolved unrelated edge"))],
+                } : material)))));
+        foreach (var name in new[] { "A", "B", "D" })
+            fixture.InstallState(name, original.ByPath[RepoPathFor(name)].StatementId);
+        var before = fixture.AllPublishedBytes();
+
+        var result = fixture.Align("--retire-registration", PathFor("A"), "--selector", PathFor("D"));
+
+        Assert.False(result.Success);
+        Assert.Contains("does not form a closed dependency DAG", result.Error, StringComparison.Ordinal);
+        Assert.Equal(before, fixture.AllPublishedBytes());
+    }
+
     private static string Source(string name) =>
         $"theorem {name.ToLowerInvariant()} : True := by trivial\n";
 
@@ -352,7 +577,9 @@ public sealed partial class LedgerAlignWriterTests
         private readonly TemporaryDirectory temporary = new();
         private readonly string reportPath;
 
-        internal AlignFixture(params ModuleSpec[] modules)
+        internal AlignFixture(params ModuleSpec[] modules) : this(modules, []) { }
+
+        internal AlignFixture(ModuleSpec[] modules, Dictionary<string, LeanFileReport> additionalReports)
         {
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -376,6 +603,11 @@ public sealed partial class LedgerAlignWriterTests
                     {
                         NameKey = $"ns(n0,{Encoding.UTF8.GetByteCount(declarationName)}:{declarationName})",
                     }]);
+            }
+            foreach (var (path, additionalReport) in additionalReports)
+            {
+                files[path] = "-- declaration data fixture\n";
+                reports[path] = additionalReport;
             }
 
             var raw = RawRepositorySnapshot.Create(
@@ -434,11 +666,11 @@ public sealed partial class LedgerAlignWriterTests
             }
         }
 
-        internal CommandResult AppendAlias() =>
+        internal CommandResult AppendAlias(params string[] options) =>
             DagLedgerAlignWriter.AppendAlias(
                 temporary.Path,
                 Repository,
-                ["--candidate-lean-report", reportPath]);
+                [.. options, "--candidate-lean-report", reportPath]);
 
         internal CommandResult FromAccepted() =>
             DagLedgerAlignWriter.Align(temporary.Path, Repository, ["--from-accepted"]);
