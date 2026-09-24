@@ -16,6 +16,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     private const string MethodAnchorsHeading = "Method anchors";
     private const string SelfAnchorsHeading = "Self anchors";
 
+    // Exercise this complete project through its registered source consumer.
     [Fact]
     public void ConversationContractWithoutDisclosureModeIsRejected()
     {
