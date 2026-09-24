@@ -13,6 +13,11 @@ When both modulus-11 originals are present, a fixed finite family with 200 actua
 
 A 124-cylinder query already witnesses its failure. This counterexample does not refute the PA construction: retaining the old-prefix credits repairs this particular finite-query score, and a separately specified actual row13 completion has zero mass loss and gives a full-query bound below the target. The finite-query calculation and the full-query conclusion use distinct arguments.
 
+Section6 extends only the old5/7 combs to height five and keeps the same
+first11 originals and query. The resulting270-original family refutes
+the uniform two-row criterion even after the actual old-prefix credit
+is included. Later actual row savings remain available to full NC4.
+
 These are ordinary mathematical deductions and exact arithmetic checks, not Lean results. No unrestricted two-copy closure or Erdős #7 conclusion follows.
 
 [Report559](559-pure-union-savings-control-all-four-later-rows.md) extends
@@ -292,7 +297,104 @@ Retain the SAME full geometric final hinge Phi from PA2--PA4 and this exact fina
 
 This is a complete-query conclusion: the PA hinge applies to every finite query and its full labelwise exhaustion, not only to the124 query that supplied the counterexample. C3 uses actual later-row losses and the full comparison numerator. It does not infer a supremum bound from C2.
 
-## Verification and scope
+## 6. A finite counterexample including the old-prefix credit
+
+Retain the entire first11 table of Section3 and every first11 depth
+c=1,...,4. Replace only the old depth-four combs by depth five: for
+p=5,7 and e=1,...,5 use both pure residues p^(e-1),2*p^(e-1); for
+1<=a,b<=5 use both old mixed cylinders
+
+    (3*5^(a-1),3*7^(b-1)), (3*5^(a-1),4*7^(b-1)).
+
+There are70 old and200 first11 originals, giving270 distinct
+(modulus,residue) pairs at135 numerical labels, exactly two per label.
+Keep Section4's124-cylinder query unchanged. Every original and query
+phase is fixed globally. No13,17,19 originals are used in this witness.
+
+All first11 and query dependence on the old coordinates factors through
+mod5^4 and mod7^4. The extra depth only changes the zero coarse residue
+class. For a common old height H>=4 put u_p=sum_(j=1)^(H-4)p^-j.
+Within that zero class, the conditional masses are
+
+| Coordinate | Pure forbidden | Old mixed channel | Allowed nonmixed |
+| --- | --- | --- | --- |
+|5|2u_5|u_5|1-3u_5|
+|7|2u_7|2u_7|1-4u_7|
+
+Multiply these by p^-4. The first nonzero digit decides the pure and
+mixed status of every other coarse class. Combine the independent
+coordinate measures and remove precisely the pairs with both mixed
+channels active. This yields the exact actual old survivor restriction,
+including its correlations; it is not a product replacement for lambda0.
+
+At H=5 the masses are
+
+    x=1563/3125, y=11205/16807,
+    m=4375162/52521875,
+    lambda0(1)=xy-m=13138253/52521875.
+
+The same186 nonzero color/query profiles suffice. All retain colors3,6
+and omit color9, so the exact g_K,h_K and hinge identity from Section4
+apply unchanged. Weighting them by the new actual old masses gives
+
+    lambda11(1)=19543635187/92276732625,
+    Delta11=12640086692/329559759375,
+    F11=145566677/1260525000,
+    S11=F11/3-Delta11=7707153701/55366039575000,
+    F13=16293608641/83194650000,
+    Hquery=576284087437178357/3165052096247916875.
+
+Use the unchanged NC4 coefficients, reconstructed from the complete
+auxiliary laws:
+
+    A5=44887686823492905683/27146767546602063360,
+    A7=20281636668601030051/20313907687933516800,
+    A57=585035299774741193/203139076879335168.
+
+For T=257/51, the entire actual old-prefix credit is
+
+    credit=[A5*(x-1/2)+A7*(y-2/3)+A57*(x-1/2)*(y-2/3)]/(T-2)
+           +1/12-m
+      =60892116313456328416741/486392060746509978060000000.
+
+Nevertheless,
+
+    score=credit+S11+(F13-Hquery)/4
+      =1847116434978435817595109482171
+         /498226465976533312336177860000000
+      =0.0037073832104805044...,
+    kreq-score=41215601048458182112451566919
+                 /1328603909270755499563140960000000>0.       (C4)
+
+The complete-query supremum is at least Hquery, so replacing Hquery by
+that supremum only decreases score. Thus C4 refutes the uniform
+old-credit-inclusive two-row criterion itself. It leaves Section5's
+height-four finite-query repair intact and supplies no upper bound on
+the complete-query supremum. Actual later-row savings remain omitted
+from this criterion and can repair full NC4. Neither PA failure, an
+all-supported-laws obstruction nor an Erdős #7 conclusion follows.
+
+The [extension verifier](../../frontier/cover-geometry/first11_extended_anchor_counterexample.py)
+and [exact data](../../frontier/cover-geometry/first11_extended_anchor_counterexample.json)
+expand all270 originals and124 query CRT residues, validate every
+full-label multiplicity, recover the earlier height-four fractions,
+and verify the new criterion failure. They also enumerate all19932
+individual mod5^5 and mod7^5 values to check the conditional tail
+compression exactly. No joint52521875-point old CRT scan is needed.
+The original first11 table is parsed as literal data without executing
+its producer; its source hash is included in the result.
+
+All60 explicit checks pass under `python3 -I -S -B -O`. The result SHA256
+is `f23c851aff936b0c2def0a04c3f43906c654bdf9c7f059334922d8cd96ff304d`.
+The additional finite heights and infinite-comb limit in the data are
+diagnostic evaluations, not a universal inequality. Extending pure11
+to height five is unnecessary for C4. No Lean was added or run.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/first11_extended_anchor_counterexample.py
+```
+
+## Verification of Sections1--5 and scope
 
 The [standalone verifier](../../frontier/cover-geometry/first11_inventory_counterexample.py) and [exact data](../../frontier/cover-geometry/first11_inventory_counterexample.json) expand the fixed table into all200 actual first11 CRT originals, all48 old originals, the124 query cylinders and the124 optional actual row13 originals. They check every CRT component, normalized residue and full-label multiplicity; enumerate the actual old survivor and each11-word in all186 profiles; compare the direct and analytic hinge formulas; reconstruct PA/NC4 from complete geometric auxiliary laws; and verify the actual inventory bounds, fixed-family repair and general root11 scarcity constants.
 
