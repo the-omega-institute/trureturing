@@ -8,7 +8,7 @@ url: https://www.erdosproblems.com/699
 claim: Necessary conditions and bounded exact checks for the i=3 lane; not a solution.
 strata_touched: []
 license: citation-only
-triage: research
+triage: anchor
 ---
 
 # Erdős 699：`i=3` 的 Lucas/Kummer 相邻核心约化
