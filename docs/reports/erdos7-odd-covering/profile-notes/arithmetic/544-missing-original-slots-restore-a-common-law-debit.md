@@ -271,6 +271,8 @@ A useful next target is a common-source inequality coupling small missing-slot w
 
 [Report545](545-bounded-completion-payoffs-pass-dense-small-labels.md) supplies a bounded lower witness for this same debit when the eight full labels 11*d, d in {25,125,49,343,175,875,245,1715}, are absent. It gives R_Q<5.038141<257/51 while allowing both copies at all three of55,77,385 and arbitrary other original heights. An actual57-class family satisfies the new condition while every single-pair PD8 test and PS1 is insufficient. The argument bounds the loss of a clipped LOWER payoff on the uncertain removed-source defect; it does not apply a convex upper comparison to that clipped function. Populating the eight additional labels remains outside this sufficient region.
 
+[Report546](546-dense-irredundant-families-separate-stage-debits-from-actual-unions.md) rules out a uniform positive pure/packing/stage credit even for finite irredundant families with dense occupied rectangles: its supremum over ALL comparison completions tends to zero. This does not bound JL or refute PD3. The same constructed family's actual PA law has R_Q<=59509/13850<257/51 because different old cofactors share current-prime phases, reducing the actual forbidden union. A general extension therefore needs the joint relation between completion debits, actual phase overlap and final-query response.
+
 ## 8. Exact finite verification
 
 The self-contained [exact consumer](../../frontier/cover-geometry/phase_debit_completion.py) and its [retained result](../../frontier/cover-geometry/phase_debit_completion.json) use N=K=4. The recorded execution with `python3 -I -S -B -O` exited0, with176 named checks passing. It imports no previous producer and has no external data input.

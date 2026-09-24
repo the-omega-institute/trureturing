@@ -142,6 +142,8 @@ Nevertheless all eight required full labels are absent, so BP6 proves the strict
 
 The argument controls an uncertain removed-source shape by bounding the payoff before subtracting its defect. It still requires the eight specified exponent-one labels to be absent. Dense occupancy of those labels, arbitrary two-copy closure, and the separate joint ternary transport to the unrestricted original problem remain unresolved.
 
+[Report546](546-dense-irredundant-families-separate-stage-debits-from-actual-unions.md) constructs dense irredundant families in which every fixed label is eventually occupied twice and the best credit from all four stage completions tends to zero. The same PA law is nevertheless certified below257/51 by retaining shared current-prime phases in the actual forbidden union. Thus higher missing-slot lists alone cannot force a uniform positive stage credit; the general problem still requires a joint saving beyond those debit terms.
+
 ## 6. Independent exact finite checks
 
 The standalone [consumer](../../frontier/cover-geometry/bounded_descendant_debit.py) and [retained result](../../frontier/cover-geometry/bounded_descendant_debit.json) contain explicit rational inputs and import no previous producer. The recorded execution exited0 with47 named checks passing.
