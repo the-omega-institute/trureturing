@@ -1,0 +1,447 @@
+{
+  "scope": {
+    "primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "heads": [
+      8,
+      7,
+      7,
+      7,
+      7,
+      7,
+      7
+    ],
+    "exponential_parameter": 1,
+    "shallow_cutoff": 1000000000,
+    "base_budget": "4522277/500000",
+    "residual_budget": "51863873/25500000",
+    "verification_scope": "ordinary proof plus exact finite constants; no Lean claim"
+  },
+  "coordinate_certificates": {
+    "3": {
+      "head_depth": 8,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "8/9",
+      "base_atom": "1094/6561",
+      "positive_residual": "88274560/387420489",
+      "allocation_gap": "8/105",
+      "two_thirds_upper_margin": null
+    },
+    "5": {
+      "head_depth": 7,
+      "exponential_lower": "19/7",
+      "root_tail_lower": "5/8",
+      "base_atom": "42969/78125",
+      "positive_residual": "2210844423/257357187500",
+      "allocation_gap": "1/1260",
+      "two_thirds_upper_margin": "171609325/5821208889"
+    },
+    "7": {
+      "head_depth": 7,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "2/5",
+      "base_atom": "568637/823543",
+      "positive_residual": "17163626/428830605",
+      "allocation_gap": "0",
+      "two_thirds_upper_margin": "11157648389/50375992305"
+    },
+    "11": {
+      "head_depth": 7,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "1/4",
+      "base_atom": "15766893/19487171",
+      "positive_residual": "903608075/56824590636",
+      "allocation_gap": "17/4158",
+      "two_thirds_upper_margin": "419902832053/1065214478049"
+    },
+    "13": {
+      "head_depth": 7,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "1/5",
+      "base_atom": "52692665/62748517",
+      "positive_residual": "15520847117/686155033395",
+      "allocation_gap": "6/5005",
+      "two_thirds_upper_margin": "294405939625/670752103173"
+    },
+    "17": {
+      "head_depth": 7,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "3/20",
+      "base_atom": "360554937/410338673",
+      "positive_residual": "305756930599/17948213557020",
+      "allocation_gap": "11/10710",
+      "two_thirds_upper_margin": "10593566432509/21385289492745"
+    },
+    "19": {
+      "head_depth": 7,
+      "exponential_lower": "8/3",
+      "root_tail_lower": "2/15",
+      "base_atom": "797166317/893871739",
+      "positive_residual": "443984558738/29323462397895",
+      "allocation_gap": "32/33915",
+      "two_thirds_upper_margin": "23773573459733/46226236060353"
+    }
+  },
+  "singleton_capacity_upper": "25936399/44625000",
+  "singleton_gap_to_two_thirds": "3813601/44625000",
+  "phasefree_capacity_upper": "51872203/83300000",
+  "phasefree_gap_to_two_thirds": "10983391/249900000",
+  "twenty_label_choices": [
+    {
+      "support": [
+        5,
+        7,
+        11
+      ],
+      "modulus": 1155,
+      "allocation_lower": "1/4",
+      "density_lower": "160/231",
+      "minimum_lower": "1/4",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        7,
+        13
+      ],
+      "modulus": 1365,
+      "allocation_lower": "1/5",
+      "density_lower": "160/273",
+      "minimum_lower": "1/5",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        7,
+        17
+      ],
+      "modulus": 1785,
+      "allocation_lower": "3/20",
+      "density_lower": "160/357",
+      "minimum_lower": "3/20",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        7,
+        19
+      ],
+      "modulus": 1995,
+      "allocation_lower": "2/15",
+      "density_lower": "160/399",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        11,
+        13
+      ],
+      "modulus": 2145,
+      "allocation_lower": "1/5",
+      "density_lower": "160/429",
+      "minimum_lower": "1/5",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        11,
+        17
+      ],
+      "modulus": 2805,
+      "allocation_lower": "3/20",
+      "density_lower": "160/561",
+      "minimum_lower": "3/20",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        11,
+        19
+      ],
+      "modulus": 3135,
+      "allocation_lower": "2/15",
+      "density_lower": "160/627",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        13,
+        17
+      ],
+      "modulus": 3315,
+      "allocation_lower": "3/20",
+      "density_lower": "160/663",
+      "minimum_lower": "3/20",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        13,
+        19
+      ],
+      "modulus": 3705,
+      "allocation_lower": "2/15",
+      "density_lower": "160/741",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        5,
+        17,
+        19
+      ],
+      "modulus": 4845,
+      "allocation_lower": "2/15",
+      "density_lower": "160/969",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        11,
+        13
+      ],
+      "modulus": 3003,
+      "allocation_lower": "1/5",
+      "density_lower": "800/3003",
+      "minimum_lower": "1/5",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        11,
+        17
+      ],
+      "modulus": 3927,
+      "allocation_lower": "3/20",
+      "density_lower": "800/3927",
+      "minimum_lower": "3/20",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        11,
+        19
+      ],
+      "modulus": 4389,
+      "allocation_lower": "2/15",
+      "density_lower": "800/4389",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        13,
+        17
+      ],
+      "modulus": 4641,
+      "allocation_lower": "3/20",
+      "density_lower": "800/4641",
+      "minimum_lower": "3/20",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        13,
+        19
+      ],
+      "modulus": 5187,
+      "allocation_lower": "2/15",
+      "density_lower": "800/5187",
+      "minimum_lower": "2/15",
+      "cheaper_lower_bound": "allocation"
+    },
+    {
+      "support": [
+        7,
+        17,
+        19
+      ],
+      "modulus": 6783,
+      "allocation_lower": "2/15",
+      "density_lower": "800/6783",
+      "minimum_lower": "800/6783",
+      "cheaper_lower_bound": "density"
+    },
+    {
+      "support": [
+        11,
+        13,
+        17
+      ],
+      "modulus": 7293,
+      "allocation_lower": "3/20",
+      "density_lower": "800/7293",
+      "minimum_lower": "800/7293",
+      "cheaper_lower_bound": "density"
+    },
+    {
+      "support": [
+        11,
+        13,
+        19
+      ],
+      "modulus": 8151,
+      "allocation_lower": "2/15",
+      "density_lower": "800/8151",
+      "minimum_lower": "800/8151",
+      "cheaper_lower_bound": "density"
+    },
+    {
+      "support": [
+        11,
+        17,
+        19
+      ],
+      "modulus": 10659,
+      "allocation_lower": "2/15",
+      "density_lower": "800/10659",
+      "minimum_lower": "800/10659",
+      "cheaper_lower_bound": "density"
+    },
+    {
+      "support": [
+        13,
+        17,
+        19
+      ],
+      "modulus": 12597,
+      "allocation_lower": "2/15",
+      "density_lower": "800/12597",
+      "minimum_lower": "800/12597",
+      "cheaper_lower_bound": "density"
+    }
+  ],
+  "twenty_label_minimum_lower": "13891628/4849845",
+  "twenty_label_gap": "402763799413/484984500000",
+  "passed_checks": 104,
+  "checks": {
+    "base_atom_positive_3": true,
+    "root_tail_lower_3": true,
+    "allocation_dominance_3": true,
+    "phasefree_coordinate_ratio_3": true,
+    "strict_head_depth_3_1": true,
+    "strict_head_depth_3_2": true,
+    "strict_head_depth_3_3": true,
+    "strict_head_depth_3_4": true,
+    "strict_head_depth_3_5": true,
+    "strict_head_depth_3_6": true,
+    "strict_head_depth_3_7": true,
+    "tail_depth_equality_3_8": true,
+    "tail_depth_equality_3_9": true,
+    "tail_depth_equality_3_12": true,
+    "base_atom_positive_5": true,
+    "root_tail_lower_5": true,
+    "allocation_dominance_5": true,
+    "phasefree_coordinate_ratio_5": true,
+    "root_tail_below_two_thirds_5": true,
+    "strict_head_depth_5_1": true,
+    "strict_head_depth_5_2": true,
+    "strict_head_depth_5_3": true,
+    "strict_head_depth_5_4": true,
+    "strict_head_depth_5_5": true,
+    "strict_head_depth_5_6": true,
+    "tail_depth_equality_5_7": true,
+    "tail_depth_equality_5_8": true,
+    "tail_depth_equality_5_11": true,
+    "base_atom_positive_7": true,
+    "root_tail_lower_7": true,
+    "allocation_dominance_7": true,
+    "phasefree_coordinate_ratio_7": true,
+    "root_tail_below_two_thirds_7": true,
+    "strict_head_depth_7_1": true,
+    "strict_head_depth_7_2": true,
+    "strict_head_depth_7_3": true,
+    "strict_head_depth_7_4": true,
+    "strict_head_depth_7_5": true,
+    "strict_head_depth_7_6": true,
+    "tail_depth_equality_7_7": true,
+    "tail_depth_equality_7_8": true,
+    "tail_depth_equality_7_11": true,
+    "base_atom_positive_11": true,
+    "root_tail_lower_11": true,
+    "allocation_dominance_11": true,
+    "phasefree_coordinate_ratio_11": true,
+    "root_tail_below_two_thirds_11": true,
+    "strict_head_depth_11_1": true,
+    "strict_head_depth_11_2": true,
+    "strict_head_depth_11_3": true,
+    "strict_head_depth_11_4": true,
+    "strict_head_depth_11_5": true,
+    "strict_head_depth_11_6": true,
+    "tail_depth_equality_11_7": true,
+    "tail_depth_equality_11_8": true,
+    "tail_depth_equality_11_11": true,
+    "base_atom_positive_13": true,
+    "root_tail_lower_13": true,
+    "allocation_dominance_13": true,
+    "phasefree_coordinate_ratio_13": true,
+    "root_tail_below_two_thirds_13": true,
+    "strict_head_depth_13_1": true,
+    "strict_head_depth_13_2": true,
+    "strict_head_depth_13_3": true,
+    "strict_head_depth_13_4": true,
+    "strict_head_depth_13_5": true,
+    "strict_head_depth_13_6": true,
+    "tail_depth_equality_13_7": true,
+    "tail_depth_equality_13_8": true,
+    "tail_depth_equality_13_11": true,
+    "base_atom_positive_17": true,
+    "root_tail_lower_17": true,
+    "allocation_dominance_17": true,
+    "phasefree_coordinate_ratio_17": true,
+    "root_tail_below_two_thirds_17": true,
+    "strict_head_depth_17_1": true,
+    "strict_head_depth_17_2": true,
+    "strict_head_depth_17_3": true,
+    "strict_head_depth_17_4": true,
+    "strict_head_depth_17_5": true,
+    "strict_head_depth_17_6": true,
+    "tail_depth_equality_17_7": true,
+    "tail_depth_equality_17_8": true,
+    "tail_depth_equality_17_11": true,
+    "base_atom_positive_19": true,
+    "root_tail_lower_19": true,
+    "allocation_dominance_19": true,
+    "phasefree_coordinate_ratio_19": true,
+    "root_tail_below_two_thirds_19": true,
+    "strict_head_depth_19_1": true,
+    "strict_head_depth_19_2": true,
+    "strict_head_depth_19_3": true,
+    "strict_head_depth_19_4": true,
+    "strict_head_depth_19_5": true,
+    "strict_head_depth_19_6": true,
+    "tail_depth_equality_19_7": true,
+    "tail_depth_equality_19_8": true,
+    "tail_depth_equality_19_11": true,
+    "singleton_inside_old_region": true,
+    "phasefree_inside_old_region": true,
+    "logarithm_rational_certificate": true,
+    "exponential_lower_nineteen_sevenths": true,
+    "twenty_label_partition_minimum": true,
+    "twenty_label_exceeds_residual_budget": true
+  }
+}

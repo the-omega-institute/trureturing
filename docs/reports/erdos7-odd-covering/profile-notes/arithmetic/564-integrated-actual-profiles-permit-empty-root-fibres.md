@@ -1,4 +1,4 @@
-# Integrated root profiles and a five-depth noncoverage criterion
+# Integrated root profiles, conditional intersections and finite-core criteria
 
 Actual conditional support profiles give a sufficient complete-query
 certificate even when some root fibres have no survivor. Combining this
@@ -24,8 +24,11 @@ and a two-label family shows that applying the support polynomial to
 averaged loads can overstate the actual survivor mass. Section7 gives an
 irredundant110032-label family for which even the integrated IP3 certificate
 falls below its query threshold, despite saturated actual root-cylinder caps.
-Neither arbitrary
-root overlap nor unrestricted Erdős #7 is resolved. The results use ordinary
+Section8 retains one proper-support intersection and certifies every finite
+height in this counterexample family. Its height-five core also permits
+arbitrary additional P-smooth originals outside the finite exponent box,
+including previously omitted non-rooted supports, with query bound11.051678.
+Neither arbitrary root overlap nor unrestricted Erdős #7 is resolved. The results use ordinary
 proofs and exact rational computation; no Lean verification is claimed.
 
 ## 1. Keep the actual conditional profile before integrating
@@ -538,7 +541,181 @@ not of the law or the actual survival threshold. The exact channel
 calculation is a consumer for this specified family, not a uniform
 bound for arbitrary original phases.
 
-## 8. Reproduction and remaining uniform obligation
+## 8. One conditional containment repairs the profile family
+
+### A scope-preserving residual event
+
+In each actual root fibre, choose nonempty supports T strictly contained
+in S. Keep E_T and every other event, and replace only
+
+    E_S by E'_S=E_S minus E_T.
+
+The union of all forbidden events is exactly unchanged. E'_S still
+depends only on the coordinates in S, since T is contained in S.
+Consequently the same product-source dependency graph and IP1 proof
+apply to the residual probabilities p'. No original numerical modulus
+or phase is removed from the arithmetic problem.
+
+Write delta=nuQ(E_S intersect E_T). Only p_S changes, by subtracting
+delta. The support polynomial is affine in that one coordinate, so
+
+    Phi_Q(p')=Phi_Q(p)+delta*Phi_(Q minus S)(p).                  (IP22)
+
+If the old64 tests are positive, p' lies in their positive box; all
+residual tests are positive and the gain in IP22 is nonnegative. If the
+old test fails, the residual vector can be tested on its own. Thus the
+residual version of h is never smaller than h, and taking its maximum
+with the unchanged original collision lower bound never worsens IP3.
+This is an ordinary application of the existing avoidance theorem and
+PF6 derivative identity. It introduces no new probability law.
+
+For this step, T contained in S is essential to the stated support
+assignment. Subtracting an event on unrelated coordinates can enlarge
+the support, requiring a different graph. The actual intersection,
+not the product of its two marginal probabilities, determines delta.
+
+### One nested event cancels the negative cross term
+
+For the actual family in Section7, take T={7} and S={5,7} in every
+root fibre. The pair event uses channel3 at both5 and7. The singleton7
+event uses channel2, except that the missing5_extra7 region has both
+channels2 and3. It is absent on the missing7 region. Therefore
+
+    E_{5,7} intersect E_7 = E_{5,7} on missing5_extra7,
+                           empty on every other region.
+
+The pair has no old non-rooted57 contribution. On the indicated region
+its ordinary root-depth2 group is active; the shifted singleton7 group
+contains its entire7 projection. These facts concern the full channel
+unions over all Q-depth tuples, not one selected residue representative.
+
+Only on this region, replace p_{5,7}=t5*t7 by zero. Its complement
+polynomial is Phi_L(v), unchanged by either singleton phase move.
+Multiplying IP22 by the actual region mass exactly cancels Section7's
+negative cross term. In the H=8,K=4,A=7 example this gives
+
+    G_res=(3279/3281)*Phi_Q(v)+(2/3281)*Phi_old
+         =12225336058273944936775148917353902683139470784942853
+            /69878103243070953218900866574163339591956220339720217
+         =0.17495231683304452...>51*B5/310,
+    R_P(H(.|U))<=5+B5/G_res=10.919692060217889....                (IP23)
+
+The actual survivor and the uniform law are those of Section7. This
+certificate only needs the one conditional containment, rather than the
+full240000-atom calculation of the larger actual survival probability.
+
+### Uniformity at every finite height
+
+Now take H=A=K=n>=3 in the same original construction. Put
+
+    t_q(n)=(1-q^-n)/(q-2+q^-n),
+    N_n=(3^n+1)/2,
+    d_n=(3^(n-2)-1)/2.
+
+The six root-region counts, out of N_n actual pure-survivor words, are
+
+| Region | Count |
+| --- | ---: |
+|zero|1|
+|base|2*3^(n-2)|
+|extra5|3^(n-2)|
+|missing5|(3^(n-2)+1)/2|
+|missing5_extra7|d_n|
+|missing7|d_n|
+
+The moved singleton5 mass equals the total missing5 mass, and the moved
+singleton7 mass equals its missing mass. Their linear polynomial terms
+therefore cancel in the average. The only mixed term is
+-(d_n/N_n)*t5*t7*Phi_L(v), and the residual pair removal cancels it.
+Consequently the exact residual polynomial average is
+
+    G_res,n=(1-1/N_n)*Phi_Q(v_n)+(1/N_n)*Phi_old,n.              (IP24)
+
+Here v_n has weights t_S(n), doubled on the old-L mixed supports,
+and Phi_old,n uses just those old supports with weight t_S(n).
+All t_q(n)<=1/(q-2). Each residual profile lies in the positive box of
+its limiting profile; the384 endpoint values are positive, with minimum
+8302/378675. The positive-box argument therefore applies for every n.
+For the two profiles in IP24 it gives
+
+    Phi_Q(v_n)>=s0=65869/378675,
+    Phi_old,n>=c_old=2689/2805,
+    nu0(U)>=G_res,n>=s0+(c_old-s0)*2/(3^n+1)>s0.                (IP25)
+
+This proves a uniform complete-query bound, with the all-height
+comparison and finite-box exhaustion already supplied by IP5:
+
+    R_P(H(.|U))<=5+B5/s0=10.953938953721723...<565/51.
+
+The query margin is at least0.12449241882729621.... The result covers
+arbitrarily large finite n, including the sequence on which the original
+IP3 certificate converges to233/1377 below its threshold. It does not
+claim a uniform residual-profile bound for arbitrary original phases.
+
+### A fixed height-five core with arbitrary outside originals
+
+Let C_5 be precisely the preceding family with H=A=K=5. It has
+
+    7*5+5*(6^6-1)+(6^4-1-4*5)=234585
+
+distinct original labels. Inside the full exponent box0<=v_p(d)<=5
+for every p in P, retain exactly C_5; the other labels of that box are
+absent. Outside the box allow ANY finite set of additional distinct
+nonunit P-smooth originals, with arbitrary fixed phases. These additions
+can be pure or have any mixed support, including supports involving5 or7
+without3. No phase or height condition applies outside the box.
+
+Use nu0 from the pure originals of C_5 throughout the argument. For
+p in P its mass and saturated cylinder cap are
+
+    w_p=(p-2+p^-5)/(p-1),
+    nu_p([r]_(p^e))<=1/(w_p*p^e).
+
+Additional pure originals are charged as new events under this same
+source; it is not reconditioned when they are added. The complete sum
+of these numerical cylinder caps outside the box is exactly
+
+    J5=product_p(1+1/(p-2+p^-5))
+          -product_p((p-1)/(p-2+p^-5))
+      =118067598971178844770142374636782853
+         /12596688478752606034800835467400970240
+      =0.009372907742406166....                                  (IP26)
+
+The two products sum the full and bounded exponent inventories,
+including the unit in both. Their difference counts each outside
+numerical label once. Numerical distinctness and the union bound thus
+pay every permitted new original, without assuming independence.
+
+The exact height-five value in IP24 is
+
+    G_res,5=111026506737532663970505177806321
+               /615072679626592091543009544306688.
+
+For the survivor U_full of the complete enlarged family,
+
+    nu0(U_full)>=s5=G_res,5-J5
+      =2155755259013490113345803666836671227
+         /12596688478752606034800835467400970240
+      =0.17113666521559998...>51*B5/310,
+    R_P(H(.|U_full))<=5+B5/s5=11.05167711763319...<565/51.       (IP27)
+
+The final law is uniform Haar on U_full because U_full lies in the
+retained pure-source product. That source still satisfies all of IP5's
+cylinder caps; completeness of its pure inventory was not required
+for the conditional convex comparison. Every query height is retained.
+
+Arbitrary additional distinct23/29-touching originals, with arbitrary
+P-smooth cofactors and fixed residues, are paid under this one law.
+Writing W5=product_p w_p, the remaining Haar mass is at least
+
+    W5*s5*[1-(1+5+B5/s5)*51/616]>0.                            (IP28)
+
+No complete-query bound after this last conditioning is asserted.
+The large fixed low-depth core is a genuine hypothesis, not a reduction
+of an arbitrary covering family to C_5. Arbitrary low-depth phases and
+unrestricted prime support remain unresolved.
+
+## 9. Reproduction and remaining uniform obligation
 
 The [producer](../../frontier/cover-geometry/integrated_actual_root_profiles.py)
 and [result](../../frontier/cover-geometry/integrated_actual_root_profiles.json)
@@ -557,10 +734,26 @@ The active-depth inequalities and geometric tail charge prove the uniform
 classes in Section6; the program also checks their exact constants and
 their application to the two earlier actual families.
 
+The [proper-support consumer](../../frontier/cover-geometry/proper_support_profile_residual.py)
+and its [data](../../frontier/cover-geometry/proper_support_profile_residual.json)
+pin Section7's actual-family data, check the literal conditional channel
+containment, independently enumerate the support polynomials by set
+partitions, and retain the384 positive limiting values. All971 explicit
+checks pass, including the exact height-five outside-box consumer.
+The endpoint-box proof and geometric cap sums above carry the unbounded
+height claims; the sampled finite heights do not replace those proofs.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/proper_support_profile_residual.py
+```
+
 Section7 refutes universal success of the present IP1/IP3 certificate,
-even within the rooted-plus-old-L inventory. Extending this route requires
-a stronger estimate of actual survivor mass, or a different source with
-a controlled complete-query numerator. Bad fibres cannot be discarded
+even within the rooted-plus-old-L inventory. Section8 repairs the stated
+counterexample family and gives a finite-core sufficient class, but no
+universal estimate for the residual event probabilities is established.
+An arbitrary-family argument still needs a uniform actual-survival
+estimate or another source with controlled complete-query numerator.
+Bad fibres cannot be discarded
 and nu3 renormalized without paying the changed root query law. Arbitrary
 non-rooted supports remain an additional unresolved obligation.
 There is also no reduction here from arbitrary prime sets to seven
