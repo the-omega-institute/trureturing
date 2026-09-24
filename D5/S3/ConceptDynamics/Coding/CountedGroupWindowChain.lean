@@ -23,45 +23,6 @@ universe u
 variable {H : Type u} [Group H] [Fintype H]
   [TopologicalSpace H] [IsTopologicalGroup H]
 
-section Elementary
-variable {n m : ℕ} (U : GroupMat H n m) (V : GroupMat H m n)
-
-/-- The base edge is determined independently of the input group coordinate. -/
-theorem elementary_future (x y : Path (U * V) × H) (i : ℤ)
-    (h0 : x.1.val i = y.1.val i) (h1 : x.1.val (i + 1) = y.1.val (i + 1)) :
-    ((elementaryHomeomorph U V x).1).val i =
-      ((elementaryHomeomorph U V y).1).val i := by
-  have join_congr (a a' : Edge V) (b b' : Edge U)
-      (h : a.target = b.source) (h' : a'.target = b'.source)
-      (ha : a = a') (hb : b = b') : join V U a b h = join V U a' b' h' := by
-    subst a'
-    subst b'
-    rfl
-  exact join_congr _ _ _ _
-    ((forward (boundary U V) (toAlternating U V x.1)).property i).1
-    ((forward (boundary U V) (toAlternating U V y.1)).property i).1
-    (congrArg (fun a => (split U V a).2) h0)
-    (congrArg (fun a => (split U V a).1) h1)
-
-/-- The inverse uses the preceding and the current output edge. -/
-theorem elementary_past (x y : Path (V * U) × H) (i : ℤ)
-    (hm : x.1.val (i - 1) = y.1.val (i - 1)) (h0 : x.1.val i = y.1.val i) :
-    (((elementaryHomeomorph U V).symm x).1).val i =
-      (((elementaryHomeomorph U V).symm y).1).val i := by
-  have join_congr (a a' : Edge U) (b b' : Edge V)
-      (h : a.target = b.source) (h' : a'.target = b'.source)
-      (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
-    subst a'
-    subst b'
-    rfl
-  exact join_congr _ _ _ _
-    ((backward (boundary U V) (toAlternating V U x.1)).property i).1
-    ((backward (boundary U V) (toAlternating V U y.1)).property i).1
-    (congrArg (fun a => (split V U a).2) hm)
-    (congrArg (fun a => (split V U a).1) h0)
-
-end Elementary
-
 /-- All four finite-observation statements concern this same homeomorphism. -/
 structure WindowGroupConjugacy {a b : ℕ}
     (A : GroupMat H a a) (B : GroupMat H b b) (r : ℕ)
@@ -145,14 +106,34 @@ noncomputable def elementary {n m : ℕ}
     ⟨elementaryHomeomorph U V, elementary_step U V, elementary_equivariant U V⟩
   future := by
     intro x y i h
-    apply elementary_future U V
-    · simpa using h 0 (by omega)
-    · simpa using h 1 (by omega)
+    have h0 : x.1.val i = y.1.val i := by simpa using h 0 (by omega)
+    have h1 : x.1.val (i + 1) = y.1.val (i + 1) := by simpa using h 1 (by omega)
+    have join_congr (a a' : Edge V) (b b' : Edge U)
+        (hab : a.target = b.source) (hab' : a'.target = b'.source)
+        (ha : a = a') (hb : b = b') : join V U a b hab = join V U a' b' hab' := by
+      subst a'
+      subst b'
+      rfl
+    exact join_congr _ _ _ _
+      ((forward (boundary U V) (toAlternating U V x.1)).property i).1
+      ((forward (boundary U V) (toAlternating U V y.1)).property i).1
+      (congrArg (fun a => (split U V a).2) h0)
+      (congrArg (fun a => (split U V a).1) h1)
   past := by
     intro x y i h
-    apply elementary_past U V
-    · simpa using h 1 (by omega)
-    · simpa using h 0 (by omega)
+    have hm : x.1.val (i - 1) = y.1.val (i - 1) := by simpa using h 1 (by omega)
+    have h0 : x.1.val i = y.1.val i := by simpa using h 0 (by omega)
+    have join_congr (a a' : Edge U) (b b' : Edge V)
+        (hab : a.target = b.source) (hab' : a'.target = b'.source)
+        (ha : a = a') (hb : b = b') : join U V a b hab = join U V a' b' hab' := by
+      subst a'
+      subst b'
+      rfl
+    exact join_congr _ _ _ _
+      ((backward (boundary U V) (toAlternating V U x.1)).property i).1
+      ((backward (boundary U V) (toAlternating V U y.1)).property i).1
+      (congrArg (fun a => (split V U a).2) hm)
+      (congrArg (fun a => (split V U a).1) h0)
   coordinate_future := by
     intro x y hc h
     have h0 : x.1.val 0 = y.1.val 0 := by simpa using h 0 (by omega)
@@ -178,8 +159,6 @@ theorem chain_has_window_group_conjugacy {L : ℕ}
         (⟨(elementary U V).trans g⟩ :
           Nonempty (WindowGroupConjugacy (U * V) _ (1 + _)))
 
-#print axioms elementary_future
-#print axioms elementary_past
 #print axioms WindowGroupConjugacy.trans
 #print axioms chain_has_window_group_conjugacy
 
