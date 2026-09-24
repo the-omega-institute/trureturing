@@ -302,3 +302,10 @@ criterion cannot be imposed uniformly on the proposed larger support
 classes. Both examples still have supported laws in G below the query
 target; clipping the single query3 repairs the primary example. The
 star-plus-triangle theorem above is unaffected.
+
+[Report556](556-joint-root-queries-admit-the-old-five-seven-tower.md)
+adds the complete old5/7 family with arbitrary phases and heights. A
+joint-root query bound under the same uniform survivor law gives complete
+query norm at most10.311784634; an additional numerical cap budget also
+allows every old7/13 label, with norm at most10.954935792. Both versions
+retain a positive reserve under arbitrary additional23/29-touching originals.

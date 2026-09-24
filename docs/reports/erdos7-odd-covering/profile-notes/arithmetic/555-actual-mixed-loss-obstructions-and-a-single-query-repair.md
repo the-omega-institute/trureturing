@@ -310,3 +310,10 @@ common-law conclusion: each has a positive survivor and a certified law
 in G. [Report550](550-a-shared-triangle-tower-preserves-one-common-survivor-law.md)'s
 star-plus-triangle theorem remains unchanged. A uniform bound for all
 mixed P-smooth supports, and unrestricted Erdős #7, remain unresolved.
+
+[Report556](556-joint-root-queries-admit-the-old-five-seven-tower.md)
+uses all seven prime-root queries jointly. Its threshold-two truncation
+gives the direct-query loss threshold12808334335598/16672675894875 and
+closes the uniform star-plus-triangle-plus-old5/7 support class. Its extra
+inventory budget also permits every old7/13 label; the two loss
+obstructions above remain valid.
