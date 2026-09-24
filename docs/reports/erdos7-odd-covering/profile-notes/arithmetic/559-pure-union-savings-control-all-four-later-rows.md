@@ -265,3 +265,343 @@ stated sufficient conditions, and its separate connection to unrestricted
 Erdős #7, remain unresolved.
 
 [Report560](560-reordered-pa-pure-union-savings.md) applies the same local pure-union estimate to the fixed order13,11,19,17. It certifies root17 scarcity by itself, with all other two-copy labels unrestricted. Its sufficient region and this report's region are alternatives under their respective complete laws; their union is strictly larger, and savings from the two laws are not added.
+
+## 7. A joint row-loss and query-cap inequality
+
+Keep the actual process, fixed slots and weights of Sections1--3. At a
+current prime q, suppress the q subscript and write
+
+    A=q-1-2t>0, C=(q-1)/A, a=2/A,
+    delta=1-(q-1)r/2, G=sum_(e,j) beta_(e,j)*(n_(e,j)-(t-1))_+.
+
+Let g be the actual allowed Haar fraction. For g>0 define
+kappa=min(C,1/g), the density on the allowed part of the actual row.
+For g=0 the actual kernel is zero; define kappa=C only as its comparison
+cap. This convention avoids an undefined reciprocal and admits the
+usual normalized row completion. With ell=1-min(1,Cg), PU2 and
+b<=t-1 give the simultaneous bounds
+
+    Cg>=1+a(delta-G),
+    ell<=a(G-delta)_+,
+    kappa<=C/[1+a(delta-G)_+].                         (PU7)
+
+For the last bound, G>=delta gives kappa<=C. If G<delta, the first
+bound implies Cg>1, so kappa=1/g and the result follows. At g=0 the
+first bound forces G>=delta+1/a, and all three statements remain valid.
+The second bound also follows directly from ell=(1-Cg)_+. Thus PU7
+is a direct consequence of PU2; the additional information retained
+here is the query cap together with its joint consumption in PU8.
+
+For any fixed Lambda,D>=0 these bounds yield
+
+    Lambda*ell+D*kappa
+      <=Lambda*a*G+D*C
+        -a*delta*min(Lambda,D*C/(1+a*delta)).           (PU8)
+
+If G>=delta, the saving from Lambda*a*G+D*C is at least
+Lambda*a*delta. Otherwise put z=delta-G in[0,delta]. The saving is at
+least
+
+    a[Lambda*(delta-z)+D*C*z/(1+a*z)].
+
+The bracket is concave in z, and its endpoint values are Lambda*delta
+and D*C*delta/(1+a*delta). This proves PU8. In a target-gap application
+Lambda=T-2=155/51; D must come from an independently justified,
+nonnegative downstream coefficient under the same actual construction.
+
+The auxiliary comparison law with cap kappa has atoms
+
+    Pr(N=1)=1-kappa/q,
+    Pr(N=n)=kappa*(q-1)/q^n, n>=2.
+
+Here kappa<=C<q for the stated thresholds. Integrating a fixed payoff
+against this law, with every other comparison factor fixed, is affine
+in kappa whenever finite. This observation does not make later actual
+kernels, normalization or a changing payoff affine in kappa. PU8 is a
+joint row estimate, not yet a new complete-query certificate.
+
+The retained truncated load b in PU2 gives a stronger pointwise form.
+Set v=delta+(t-1)-b, so v>=delta>=0. Then PU2 gives
+
+    Cg>=1+a(v-G).
+
+Every bound in PU7 and PU8 remains valid with delta replaced by this
+actual-row v, by the same proof. This retains shortages of active old
+cofactors even when delta is small. The quantity v depends on the whole
+old history. Its integral or correlation with a downstream coefficient
+cannot be replaced by an independent auxiliary average without a further
+comparison theorem. No uniform positive integrated credit is claimed.
+
+### Local sharpness and the remaining integral
+
+A finite arithmetic construction shows why a uniformly positive local
+saving cannot be inferred merely from dense pure unions. Fix one of
+the displayed q,t pairs, an integer pure height H>=2, and an integer
+mixed height K>=1. At depth1 take pure
+q-words0,1; at each depth e=2,...,H take
+
+    2+q^(e-1), 2+2*q^(e-1) modulo q^e.
+
+Use nonpure old cofactors5^i, i=1,...,t-1, all with old residue0.
+For each cofactor take q-words2i+1,2i+2 at depth1, and at depths
+2<=e<=K take
+
+    2t+1+(2i-1)*q^(e-1), 2t+1+2i*q^(e-1) modulo q^e.
+
+Within this q-coordinate these words are mutually disjoint. There are
+at most two original classes per numerical label. If distinct full
+labels are required before taking a parent fiber, lift the two copies
+to3d q^e and9d q^e, with root residue0 and the displayed old and q
+residues fixed by CRT, then take the parent fiber0 modulo9.
+
+On the actual old cell0 modulo5^(t-1), all t-1 cofactors are active.
+Writing delta=q^(-H) and epsilon=q^(-K), one obtains
+
+    G=0,
+    g=[A+2(delta+(t-1)*epsilon)]/(q-1)>1/C,
+    ell=0,
+    kappa=(q-1)/[A+2(delta+(t-1)*epsilon)].
+
+The root q-1 is untouched. For the normalized conditional q-row, each
+clean cylinder q-1 modulo q^e therefore has mass kappa/q^e. Its complete
+clean-chain deficit from the cap-C comparison is
+
+    Delta_(H,K)=(C-kappa)/(q-1)
+      =2(delta+(t-1)*epsilon)
+         /[A*(A+2(delta+(t-1)*epsilon))].              (PU9)
+
+For K=H, Delta_(H,H)/delta tends to2t/A^2 as H grows. Letting K grow
+first gives Delta_(H,K)/delta tending to2/A^2 as H grows. Thus the
+G=0 reciprocal-cap bound in PU7 can be approached by finite actual
+families. The corresponding pure unions have theta=1-q^(-H) tending
+to one. No positive constant saving, uniform in height, follows from
+these row quantities alone; a saving proportional to delta is fully
+consistent with the construction.
+
+These are genuine conditional rows, but a selected row is not the
+common prefix integral. A complete old query can have count exactly t
+at a selected old point, by choosing its other cylinders away from that
+point. It cannot thereby have count t throughout a cell that restricts
+only the5-coordinate and leaves7 Haar. For example, keeping N5=t and
+using a nested7-query gives
+
+    integral (M_old-t)_+ d rho=t*sum_(e>=1)7^(-e)=t/6
+
+when the other old query factors equal one. Concentrating the5-law on
+0 modulo125 has density125 and does not satisfy the PA anchor caps;
+it cannot be substituted for the actual PA prefix. In fact the displayed
+family has no5/7 anchor exclusions and is covered by the existing
+u=v=0 PA certificate.
+
+To consume PU8 globally one must identify a downstream payoff for the
+same actual process, justify its coefficient D and its dependence on
+the full old history, and integrate without discarding the measure of
+the relevant old cells or changing the anchor law. Current loss savings
+and future-query credits must belong to this same payoff before they
+are added. Report560's alternative coordinate orders remain separate
+complete constructions. PU7--PU9 establish a local joint bound and its
+sharpness; they do not exclude a stronger integrated estimate or settle
+the arbitrary two-copy target.
+
+## 8. Vanishing actual-prefix credits can leave a positive comparison saving
+
+For the actual PA order 5,7,11,13,17,19, a finite, explicitly fixed
+two-copy family can make all three first11 local credits tend to zero:
+the integrated effective shortage v, the integrated reciprocal-cap
+improvement C-kappa, and the improvement of actual loss over aG.
+Nevertheless these same families have a uniform positive PA baseline
+slack S11>=31/1260, enough for the full nonunit query target. Thus they
+obstruct a uniform additive credit from the local ledger alone, not a
+joint theorem using old-query comparison slack.
+
+This is an ordinary exact construction, with the finite verification
+described at the end. No claim of Lean formalization is made.
+
+### Explicit actual old anchor and fixed cofactor inventory
+
+Fix K>=1. For p=5,7 and c in {1,...,p-1}, write
+
+    A_(p,c) = union_(1<=i<=K) [c*p^(i-1)]_(p^i),
+    l_p=(1-p^(-K))/(p-1),  z_p=p^(-K).
+
+All p-classes occurring here are pairwise disjoint across depths and
+colors: their first nonzero base-p digit differs. Each A_(p,c) has Haar
+mass l_p; the remaining all-zero depth-K cylinder has mass z_p.
+
+For the pure5 and pure7 original classes use colors1,2 at every depth.
+For each mixed original numerical label 5^i7^j use the two CRT classes
+with colors (4,4) and (4,5). Thus every used numerical anchor label has
+exactly two originals. Their mixed union has Haar mass
+
+    m=2*l5*l7.
+
+Let lambda0 be UNNORMALIZED Haar restricted to the actual joint
+survivor of these originals. This is exactly a PA anchor, not a
+concentrated substitute law. Its mass is
+
+    L=(1-2*l5)*(1-2*l7)-2*l5*l7
+     =1-2*l5-2*l7+2*l5*l7.
+
+At each future11 exponent and each of its two copy slots, use these
+same fixed old cofactors and CRT residues:
+
+* numerical cofactor 5^i: color3 in5;
+* numerical cofactor 7^j: color3 in7;
+* numerical cofactor 5^i7^j: colors(4,6).
+
+The literal active nonpure cofactor count is consequently
+
+    n=1_(A_(5,3))+1_(A_(7,3))+1_(A_(5,4))*1_(A_(7,6)).
+
+On the actual anchor, n belongs to {0,1,2}. This description concerns
+the explicitly chosen original family; it does not factor an arbitrary
+query or replace any query by independently chosen marginals.
+
+Its exact unnormalized category masses are
+
+    P2=lambda0(n=2)=l5*l7,
+    Z=lambda0(n=0)=z5*(1-3*l7)+l5*z7,
+    P1=lambda0(n=1)=L-Z-P2.
+
+Indeed n=2 is exactly the color3/color3 rectangle. An n=0 survivor
+either has5 in the all-zero tail and7 outside color3, or has5 in color4
+and7 in its all-zero tail. All other survivors have n=1.
+
+Writing u=5^(-K), w=7^(-K) gives
+
+    L=(3+5u+3w+uw)/12,
+    Z=u/2+w/4+uw/4,
+    P2=(1-u)*(1-w)/24.
+
+Hence L->1/4, m->1/12, Z->0, and P2->1/24. This reaches the actual
+worst anchor corner x=1/2,y=2/3,m=1/12; it is not the no-anchor case.
+
+### Three fixed and disjoint current11 channels
+
+Fix H>=1 and epsilon=11^(-H). Define two words per exponent in each of
+three11 channels:
+
+| channel | exponent1 words | exponent e>=2 words |
+| --- | --- | --- |
+| P | 0,1 modulo11 | 2+11^(e-1), 2+2*11^(e-1) modulo11^e |
+| X | 3,4 modulo11 | 5+11^(e-1), 5+2*11^(e-1) modulo11^e |
+| Y | 6,7 modulo11 | 8+11^(e-1), 8+2*11^(e-1) modulo11^e |
+
+All words across these channels are mutually disjoint cylinders.
+Different channels use disjoint root digits. Within a channel, the
+deep words use a separate root and their first nonzero higher digit
+specifies their exponent and copy.
+
+Use P for pure11 originals. Use X for every pure5 and mixed5/7 cofactor
+above; use Y for every pure7 cofactor. For each such cofactor and11
+exponent, its two actual original residues are fixed by CRT with the
+two words in the assigned channel. Every numerical label has exactly
+two copies; there are no extra labels or query-dependent choices.
+
+At n=1 exactly one channel X or Y is active. At n=2 both are active.
+The mixed5/7 channel never overlaps either pure5 or pure7 cofactor
+event. Each active channel excludes the Haar fraction
+
+    r=2*sum_(e=1)^H 11^(-e)=(1-epsilon)/5.
+
+Consequently the literal current allowed fractions are
+
+    g_n=1-(1+n)*(1-epsilon)/5
+       =(4-n+(n+1)*epsilon)/5.
+
+The pure-current deficit is delta=epsilon. Since every exponent-slot
+has the same old count n and the beta weights sum to1-epsilon,
+
+    b=(1-epsilon)*1_(n>=1),
+    G=(1-epsilon)*1_(n=2),
+    v=delta+1-b.
+
+Thus v=1+epsilon at n=0 and v=2epsilon at n>=1. With a=1/3,C=5/3,
+the retained PU2 inequality is in fact equality:
+
+    C*g=1+a*(v-G).
+
+### All three local-ledger credits vanish
+
+The actual row cap and loss are kappa=min(C,1/g), ell=(1-Cg)_+.
+Because H>=1, epsilon<=1/11<1/3, so their values are
+
+| n | g | kappa | ell |
+| --- | --- | --- | --- |
+|0|(4+epsilon)/5|5/(4+epsilon)|0|
+|1|(3+2epsilon)/5|5/(3+2epsilon)|0|
+|2|(2+3epsilon)/5|5/3|1/3-epsilon|
+
+Integrating against the same actual lambda0 gives the exact identities
+
+    integral v = Z+epsilon*(2L-Z),
+
+    integral (C-kappa)
+      =Z*5*(1+epsilon)/(3*(4+epsilon))
+        +P1*10*epsilon/(3*(3+2epsilon)),
+
+    integral G=(1-epsilon)*P2,
+    Loss11=(1/3-epsilon)*P2,
+
+    a*integral G-Loss11=(2*epsilon/3)*P2.
+
+All three nonnegative credits tend to zero as K,H tend to infinity.
+In particular, for fixed Lambda>=0 and ANY nonnegative old payoff D
+uniformly bounded by one finite M independently of K,H,
+
+    integral [Lambda*a*G+D*C-Lambda*ell-D*kappa]
+      <=Lambda*(2*epsilon/3)*P2+M*integral(C-kappa)
+      ->0.
+
+There can therefore be no uniform strictly positive additive gain
+relative to this actual count-and-cap ledger across all actual PA
+anchors and fixed two-copy families. This statement does not cover a
+payoff with unbounded family-dependent D, or an estimate retaining a
+separate old-query comparison gap.
+
+### The same family already crosses the complete-query target
+
+The latter distinction has a useful exact consumer. At the limit,
+
+    F11(1/2,2/3)-integral G
+      ->97/840-1/24=31/420>0.
+
+More strongly, at EVERY finite K,H,
+
+    Loss11=(1/3-epsilon)*l5*l7 <=1/72,
+    F11(x,y)>=F11(1/2,2/3)=97/840.
+
+Hence the ACTUAL PA baseline slack obeys
+
+    S11=a*F11-Loss11 >=97/2520-1/72=31/1260.
+
+Later13/17/19 rows may be arbitrary under the existing two-copy PA
+hypotheses: their corresponding S_q and the packing credit remain
+nonnegative. The existing NC4 identity and PU1 therefore imply
+
+    (T-2)*lambda(1)-Phi
+      >=(T-2)*(31/1260-kreq)>0,
+
+where T=257/51 and
+
+    kreq=6168733163201163811/1650097635185615616000.
+
+The same complete-query comparison and one final normalization give
+
+    R_Q(nu)<=T-(T-2)*(31/1260-kreq)
+      =100057015925264522393/20108716701186713600
+      =4.975803151046415... <257/51.
+
+This uniform strict certificate applies to the explicit first11 family
+with arbitrary permitted later rows; it does not solve arbitrary
+first11 inventories. It demonstrates that vanishing local credits
+need not identify a genuinely difficult full construction. A productive
+remaining theorem could trade cap/loss credit against old-query
+comparison slack, within one actual law.
+
+The [actual-family calculation](../../frontier/cover-geometry/actual_anchor_v_cap_obstruction.py)
+and [data](../../frontier/cover-geometry/actual_anchor_v_cap_obstruction.json)
+check all nine K,H pairs in{1,2,3}^2 using actual CRT originals, the
+old survivor histogram and current allowed sets. All12112 checks pass,
+including the exact full-query bound above. The formulas, rather than
+this finite sample, prove the all-height limits and uniform consumer.

@@ -18,10 +18,13 @@ and phases, and every old mixed tower on L={11,13,17,19} remain arbitrary.
 Section6 proves a common query bound11.011636<565/51 and positive Haar
 survival after arbitrary23/29-touching additions.
 
-Two actual arithmetic counterexamples identify the remaining obstruction:
+Actual arithmetic counterexamples identify the remaining obstruction:
 a twelve-label irredundant family has an empty positive-mass root fibre,
 and a two-label family shows that applying the support polynomial to
-averaged loads can overstate the actual survivor mass. Neither arbitrary
+averaged loads can overstate the actual survivor mass. Section7 gives an
+irredundant110032-label family for which even the integrated IP3 certificate
+falls below its query threshold, despite saturated actual root-cylinder caps.
+Neither arbitrary
 root overlap nor unrestricted Erdős #7 is resolved. The results use ordinary
 proofs and exact rational computation; no Lean verification is claimed.
 
@@ -359,7 +362,183 @@ inherits the low-family polynomial minus that charge. The final uniform
 survivor law and the all-height query comparison in IP5 use the actual
 mass lower bound, so they remain valid.
 
-## 7. Reproduction and remaining uniform obligation
+## 7. An actual family refutes universal success of the integrated certificate
+
+This is a counterexample to the universal certificate inequality G>51B5/310 on its seven-prime rooted-plus-old-L inventory. It is not an upper bound for actual survivor mass, not a counterexample to noncoverage, and not an impossibility result for other laws or other certificates. The family has an explicit avoiding point. Its110032 originals are distinct numerical moduli; an aggregate private-witness argument also makes it irredundant.
+
+### Fully specified finite arithmetic input
+
+Put P={3,5,7,11,13,17,19}, Q=P minus{3}, L={11,13,17,19}. Set H=8,K=4,A=7. For p prime, digit d different from1, and e>=1, write
+
+    c_p(d,e)=d*p^(e-1)+(p^(e-1)-1)/(p-1),
+    C_p(d,e)=[c_p(d,e)] modulo p^e.
+
+Each word consists of e-1 low digits1, then digitd. Cylinders for distinct pairs(d,e) are disjoint. Include every pure original C_p(0,e), p in P,1<=e<=8.
+
+For every nonempty support S subset Q, every exponent tuple(e_q) in{1,2,3,4}^S, and every root exponent1<=a<=7, include one original of numerical modulus
+
+    3^a product_(q in S) q^e_q.
+
+Its Q-coordinates use digits
+
+    d_q(S)=min(|S|+1,q-1),
+
+except that the singleton5 originals at a=2 and singleton7 originals at a>=3 use digit3. Its3-residue is
+
+    r_(a,S)=2 modulo9,                         if S={5},a=2;
+             7+9*c_3(2,a-2) modulo3^a,       if S={7},a>=3;
+             c_3(2,a) modulo3^a,             otherwise.
+
+The full residue is the CRT residue of these stated local residues, fixed once for every numerical label.
+
+For every S subset L with |S|>=2 and every exponent tuple in{1,2,3,4}^S, include the old original of modulus product q^e_q, with Q-digits |S|+6 on its coordinates. These digits are8,9,10, valid even at11 and disjoint from all relevant rooted channels. There are
+
+    7*8 +7*(5^6-1)+(5^4-1-4*4)=110032
+
+originals. Their support and exponent tuples make numerical moduli distinct. Every mixed original either contains3 or is supported on L. No coordinate, phase, original exponent or pure constraint is omitted.
+
+### The complete actual pure source and exact same-support unions
+
+The actual pure survivor law is nu0=product nu_p, with
+
+    w_p=H_p(S_p)=1-sum_(e=1)^8 p^-e
+       =(p-2+p^-8)/(p-1),
+    nu_p=H_p(.|S_p),
+    t_q=nu_q(union_(e=1)^4 C_q(d,e))
+       =(1-q^-4)/(q-2+q^-8), d!=0,1.
+
+Every channel is disjoint from the pure exclusions. Different digit channels are disjoint. For a fixed support S, the union of all its exponent tuples is exactly the Cartesian product of its channels, with mass t_S=product_(q in S)t_q. Distinct channel vectors give disjoint such rectangles. Identical vectors are one actual union event. Therefore all support probabilities below are actual same-support unions, not an uncorrected sum of overlapping events.
+
+In the root coordinate, w3=3281/6561. Let
+
+    A_a=C_3(2,a), a=1,...,7,
+    B=[2] modulo9 subset A_1,
+    D_a=[7+9*c_3(2,a-2)] modulo3^a subset A_2, a=3,...,7,
+    D=union_(a=3)^7 D_a.
+
+The A_a are pairwise disjoint. The D_a are pairwise disjoint, and D is disjoint from B and from all A_a with a>=3. Every one is wholly inside the actual pure3 survivor. In particular EVERY original root cylinder achieves its actual maximum Haar/conditional cap1/(w3*3^a). Pure3 is nearly maximally deleted, and every depth-one original uses the same untouched root. Thus the negative result persists under precisely this strong saturation geometry; the harmful dependence comes from deeper phases.
+
+### Six exact root profiles
+
+Define baseline support weights
+
+    v_S=t_S,                 unless S subset L and |S|>=2;
+        2*t_S,               for S subset L and |S|>=2.
+
+Let phi=Phi_Q(v), phi5=Phi_(Q minus{5})(v), phi7=Phi_(Q minus{7})(v), phi57=Phi_L(v). Let c_old be the old-only profile, with weights t_S for old mixed S and zero elsewhere.
+
+There are exactly3281 allowed root residues modulo6561. Their six regions are:
+
+| Root region | Count | Changes from v | Collision omega |
+|---|---:|---|---|
+| S3 minus union A_a |2|old-only|0|
+| A1 minus B |1458|none|0|
+| B |729|p5 increases by t5|t5|
+| A2 minus D |366|p5 decreases by t5|0|
+| D |363|p5 decreases by t5; p7 increases by t7|t7|
+| union_(a=3)^7 A_a |363|p7 decreases by t7|0|
+
+Masses are the counts divided by3281. The producer independently reconstructs these counts by enumerating only the6561 root residues and the literal original root phases; it never enumerates the full CRT period.
+
+All64 coordinate-subset polynomials are strictly positive on each profile, verified with exact rational arithmetic. Thus h is the displayed full polynomial everywhere. On B and D, t5 and t7 both exceed s0, so the collision fallback(s0-omega)_+ is zero. On every other region h>=s0. Consequently the IP3 repaired certificate satisfies g=h pointwise, and G=G0.
+
+Multiaffinity makes the first-order changes cancel exactly. The only surviving second-order term is negative on D:
+
+    G=G0=(3279/3281)*phi+(2/3281)*c_old
+            -(363/3281)*t5*t7*phi57.
+
+This identity is independently checked against direct averaging of the six full profiles. It pinpoints the obstruction: moving the singleton5 depth-two cylinder removes5-load on A2 and adds it within A1; moving singleton7 deeper cylinders adds7-load inside that same5-depleted A2 region. Both operations preserve every individual depth-cylinder mass and the total marginal support load. Their cross term decreases the integrated nonlinear profile.
+
+The exact result is
+
+    G=11896353657900110917305940184050970099978148851942853
+      /69878103243070953218900866574163339591956220339720217
+     =0.17024436992112751...,
+
+whereas51B5/310=0.1703834060791555.... Their positive difference is
+
+    4936411433087409357209714770245859112260517126744418900719948116625262002836547044493
+    /35504515538274863366028727968178070807877954342958366241989684583167055990970413562656250
+    =0.00013903615802800687....
+
+This refutes a universal success claim for the IP3 threshold. Since G is a LOWER bound for actual survival, its failure provides no upper bound on nu0(U). The all-neutral digit word in every coordinate avoids all originals and supplies an explicit actual survivor.
+
+### Irredundancy
+
+There are452 mixed groups, one for each(root depth,support) and each old support. For a target exponent tuple, set each specified Q-coordinate to the full8-digit all-1 word with its one target position changed to the target channel digit; leave unspecified Q-coordinates all1. Other numerical exponent tuples in the same group cannot match, by disjointness of the comb cylinders.
+
+For a rooted target with a=1 choose root5; for a=2 choose root7. Override these by root2 for the modified singleton5,a2 group, and by its literal D_a residue for a modified singleton7,a>=3 group. For all other a>=3 choose c_3(2,a). For an old target use the all-1 root word.
+
+These choices avoid every pure cylinder. A group with a coordinate outside the target support cannot match the neutral coordinate. A proper subset containing a late prime has a different size-dependent channel there; a subset confined to5/7 is separated by its low-support digit, except the modified singleton channels. The root choices5 and7 avoid the latter's B and D locations for any target pair. Equal supports but different ordinary depths are separated by the disjoint A_a; modified equal-support overlaps use different Q-channels. Old groups have distinct higher channels and a neutral root.
+
+The program checks all452 aggregate private witnesses against every mixed group. Channel membership is independent of the target exponent position, so this lifts to every actual exponent tuple. Each pure original has a private witness with its target coordinate's one digit0 and all other coordinates neutral. Irredundancy is stronger than required to refute the certificate inequality.
+
+The [actual-family producer](../../frontier/cover-geometry/actual_profile_threshold_counterexample.py)
+and [exact data](../../frontier/cover-geometry/actual_profile_threshold_counterexample.json)
+retain the finite input formula, the complete original-label stream digest,
+six actual profiles,384 positive coordinate tests and the strict rational
+gap. Its1942 checks pass, including the saturated endpoint profiles below. The ordinary channel and private-witness
+arguments above explain the realization; the calculation does not prove
+an upper bound on actual survival or a Lean theorem.
+
+### Saturated root caps still permit failure
+
+Take the same input formulas with H=A=K=n>=3. Every n specifies a
+finite actual family, and every root cylinder still lies wholly inside
+the actual pure survivor. As n grows,
+
+    w3->1/2, t_q->1/(q-2), zero_root_mass->0,
+    moved_root_mass->1/9.
+
+All64 polynomials of each of the six limiting profiles are positive;
+the smallest is8302/378675. The finite profiles lie in their positive
+coordinate boxes. On collision regions, t5 and t7 already exceed s0
+at n=3 and increase thereafter. On all other regions the polynomial
+is at least s0 by the baseline-box comparison. Thus g=h for each n>=3.
+At the limiting baseline Phi_Q=s0 and Phi_L=598/935, so the cross-term
+identity gives
+
+    G_n -> s0-(1/9)*(1/3)*(1/5)*(598/935)
+         =233/1377
+         =0.1692084241103849...<51*B5/310.
+
+The limiting target gap is0.0011749819687706168.... Thus even nearly
+maximal pure3 deletion and exact saturation of every individual root
+cap do not rescue the IP3 threshold. The construction preserves one
+shared first-level phase throughout; the loss arises at deeper levels.
+The actual-family producer also retains these exact endpoint tests.
+
+### Keeping the actual channel intersections restores the same-law certificate
+
+The same family has substantially more actual survival than its IP3
+lower bound. For each q in Q, classify the coordinate by its channel
+digit2,...,min(q-1,10), or by the remaining pure-survivor set. Each
+listed digit has probability t_q; the remaining atom has probability
+1 minus the number of listed digits times t_q. These disjoint atoms
+retain all distinctions used by the originals. Their product consists
+of240000 Q-atoms, independent of the much larger CRT period.
+
+On each root region, a mixed group forbids exactly the channel
+assignments matching its specified digits. Summing the product weights
+of assignments avoiding every active group therefore gives the actual
+conditional survival, including all cross-support intersections. The
+[exact channel calculation](../../frontier/cover-geometry/actual_profile_channel_survival.py)
+and [data](../../frontier/cover-geometry/actual_profile_channel_survival.json)
+give
+
+    nu0(U)=17173936624779018562508379164956196001660495079666053
+             /69878103243070953218900866574163339591956220339720217
+          =0.2457699311762869...,
+    nu0(U)-G=0.0755255612551594...,
+    R_P(H(.|U))<=5+B5/nu0(U)=9.213956670437577...<565/51.
+
+This uses the very same uniform full-survivor law. It shows that this
+counterexample is a limitation of the support-probability polynomial,
+not of the law or the actual survival threshold. The exact channel
+calculation is a consumer for this specified family, not a uniform
+bound for arbitrary original phases.
+
+## 8. Reproduction and remaining uniform obligation
 
 The [producer](../../frontier/cover-geometry/integrated_actual_root_profiles.py)
 and [result](../../frontier/cover-geometry/integrated_actual_root_profiles.json)
@@ -378,10 +557,11 @@ The active-depth inequalities and geometric tail charge prove the uniform
 classes in Section6; the program also checks their exact constants and
 their application to the two earlier actual families.
 
-No bound G_*>51*B5/310 has been proved for every unrestricted root-phase
-arrangement or every non-rooted support inventory. Bad fibres cannot be
-discarded and nu3 renormalized without accounting for the changed root
-query law. A uniform integrated estimate or a reweighted replacement with
-a controlled complete-query numerator remains necessary for this route.
+Section7 refutes universal success of the present IP1/IP3 certificate,
+even within the rooted-plus-old-L inventory. Extending this route requires
+a stronger estimate of actual survivor mass, or a different source with
+a controlled complete-query numerator. Bad fibres cannot be discarded
+and nu3 renormalized without paying the changed root query law. Arbitrary
+non-rooted supports remain an additional unresolved obligation.
 There is also no reduction here from arbitrary prime sets to seven
 coordinates. The unrestricted #7 goal remains open.
