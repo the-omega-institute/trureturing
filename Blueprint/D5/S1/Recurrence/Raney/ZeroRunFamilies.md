@@ -44,7 +44,7 @@ Set A=max(k-1,r-1), State=Fin(A+1) x Bool, and Alphabet=State -> ZMod(p). The fa
 
 At state r-1, the ordinary value minus (k-1) times the predecessor value is exactly the literal Raney residue. For sufficiently large j with r-1<p^(j-1), the Lucas readout at n=p^j reduces to k modulo p. Since p does not divide k*r, p does not divide k, so these arbitrarily large values are nonzero. Applying the generic actual-block coefficient theorem with Delta={0} proves the second conjunct.
 
-This is repository proof content assembled from the BKS maximal-block mechanism and the literal Raney source. The formal admission is proof_shape content with admission_basis escape-witness, not the bind-only open-problem exemption. The known (3,2) and Catalan (2,1) cases receive no separate credit. The bounded prior search found no full settlement in the inspected repository, arXiv, Crossref, and issue scope; OpenAlex returned HTTP 429, and worldwide priority remains unverified.
+The two conjuncts have distinct roles: arbitrarily large nonzero residues exclude a terminal infinite zero run, while one finite set C, chosen before the interval endpoints, covers all actual maximal finite zero intervals. This is a containment statement only: it does not assert that every coefficient triple or exponent yields an actual interval, and it supplies no converse realization theorem.
 
 ## References
 

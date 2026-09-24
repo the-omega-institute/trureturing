@@ -44,11 +44,13 @@ internal sealed class BoundaryPivotTransportDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Bks)),
             Node("actual_bks_pivot_state_dynamics_at_power", "Paired states determine the next state and correction",
                 StateDynamicsFormula(),
-                "For one fixed q and a sequence of blocks, two adjacent valid descent edges determine the next "
-                    + "paired pivot state from the current one. Moreover, if two two-edge windows have equal current "
-                    + "and following paired states, their two signed endpoint displacements are equal. The proof "
-                    + "uses the extremal offsets returned by actual_boundary_pivot_transport_at_power, not an "
-                    + "unrealized product of marginal choices.", DescribeRole.Theorem,
+                "For one fixed q and a sequence of blocks, state(k) is the paired pivot state of block(k+1), "
+                    + "and validAt(k) requires the actual descent edges block(k+2)->block(k+1) and "
+                    + "block(k+1)->block(k). Two valid windows with equal current states have equal following "
+                    + "states. If their current and following states agree, their upper-edge signed displacements "
+                    + "block(k+2).first-Q*block(k+1).first and the corresponding last+1 displacement are equal. "
+                    + "The proof uses the extremal offsets returned by actual_boundary_pivot_transport_at_power, "
+                    + "not an unrealized product of marginal choices.", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Bks)),
             Node("exists_eventually_periodic_actual_bks_signed_displacements",
                 "Signed endpoint displacements are eventually periodic", PeriodicFormula(),
@@ -121,8 +123,16 @@ internal sealed class BoundaryPivotTransportDocument : IScribeDocumentDefinition
                 Eqn(Call("state", Add(V("i"), D(1))), Call("state", Add(V("j"), D(1)))))),
             Paren(Implies(And(Eqn(Call("state", V("i")), Call("state", V("j"))),
                     Eqn(Call("state", Add(V("i"), D(1))), Call("state", Add(V("j"), D(1))))),
-                And(Eqn(LeftCorrection(V("i")), LeftCorrection(V("j"))),
-                    Eqn(RightCorrection(V("i")), RightCorrection(V("j"))))))))));
+                And(Eqn(
+                        Sub(Call("first", Call("blocks", Add(V("i"), D(2)))),
+                            Mul(V("Q"), Call("first", Call("blocks", Add(V("i"), D(1)))))),
+                        Sub(Call("first", Call("blocks", Add(V("j"), D(2)))),
+                            Mul(V("Q"), Call("first", Call("blocks", Add(V("j"), D(1))))))),
+                    Eqn(
+                        Sub(Add(Call("last", Call("blocks", Add(V("i"), D(2)))), D(1)),
+                            Mul(V("Q"), Add(Call("last", Call("blocks", Add(V("i"), D(1)))), D(1)))),
+                        Sub(Add(Call("last", Call("blocks", Add(V("j"), D(2)))), D(1)),
+                            Mul(V("Q"), Add(Call("last", Call("blocks", Add(V("j"), D(1)))), D(1))))))))))));
 
     private static Formula PeriodicFormula()
     {
