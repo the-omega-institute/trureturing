@@ -171,9 +171,41 @@ core_margin=minimum-debit
 ck('core17_positive_uniform_margin',core_margin>0)
 core_bound=T-(T-2)*core_margin/maxmass
 ck('core17_strict_target',core_bound<T)
+# A finite 70+200-original core, with arbitrary originals outside its windows.
+# The 17 old13 projections are prescribed only through current height four.
+def combined_offset(x,y):
+ _,_,hh=pa(x,y)
+ pure=(A5*(x-F(1,2))+A7*(y-F(2,3))+A57*(x-F(1,2))*(y-F(2,3)))/(T-2)
+ return pure+F(1,12)-x*y+hh[11]/3+hh[13]/4
+x5=h5['x'];y5=h5['y']
+offsets={(x,y):combined_offset(x,y) for x,y in product((F(1,2),x5),(F(2,3),y5))}
+for y in (F(2,3),y5):
+ ck('finite_offset_decreases_x_'+str(y),offsets[x5,y]<=offsets[F(1,2),y])
+for x in (F(1,2),x5):
+ ck('finite_offset_decreases_y_'+str(x),offsets[x,y5]<=offsets[x,F(2,3)])
+ck('finite_score_telescopes',combined_offset(x5,y5)+h5['lambda11']-h5['clip']-kreq==h5['margin'])
+ap=x5+F(1,4);bp=y5+F(1,6)
+t5=F(1,4*5**5);t7=F(1,6*7**5)
+old_debit=2*(t5*bp+t7*ap-t5*t7)
+old_box=(x5+sum((F(1,5**i) for i in range(1,6)),F()))*(y5+sum((F(1,7**i) for i in range(1,6)),F()))
+ck('finite_complete_old_complement',old_debit==2*(ap*bp-old_box))
+a11=F(1,4*5**4);b11=F(1,6*7**4);c11=F(1,10*11**4)
+j11=2*((a11*bp+b11*ap-a11*b11)/10+(ap-a11)*(bp-b11)*c11)
+box11=(ap-a11)*(bp-b11)*sum((F(1,11**e) for e in range(1,5)),F())
+ck('finite_complete_first11_complement',j11==2*(ap*bp/10-box11))
+corecap5=sum((F(1,5**a) if a else x5)*(F(1,7**b) if b else y5)*(F(5,3*11**c) if c else F(1)) for a,b,c in (r['exponents'] for r in core))
+j13=(ap*bp*F(7,6)-x5*y5-corecap5)/4+corecap5/F(4*13**4)
+finite_margin=h5['margin']-old_debit-F(5,3)*j11-j13
+finite_bound=T-(T-2)*finite_margin/h5['lambda11']
+ck('finite_old_debit',old_debit==F(93413,630262500))
+ck('finite_first11_debit',j11==F(718178719,8388793875000))
+ck('finite_row13_debit',j13==F(292309125085163,104549385540600000))
+ck('finite_window_positive_margin',finite_margin>0)
+ck('finite_window_strict_query_bound',finite_bound<T)
+finite_window={'old_height5':5,'old_height7':5,'first11_box':[4,4,4],'constrained13_depth':4,'prescribed_old_originals':70,'prescribed_first11_originals':200,'constrained13_numerical_labels':68,'pure5_mass_ceiling':x5,'pure7_mass_ceiling':y5,'combined_offset_corners':[{'x':x,'y':y,'offset':z} for (x,y),z in offsets.items()],'old_complement_debit':old_debit,'first11_complement_original_cap':j11,'row13_complement_debit':j13,'margin':finite_margin,'max_lambda11':h5['lambda11'],'query_bound':finite_bound,'query_bound_decimal':float(finite_bound),'scope':'Exact70 old originals in0<=a,b<=5; exact200 first11 originals in0<=a,b<=4,1<=c<=4; the17 old13 projections fixed only at current13 exponents1..4, with no occurrence requirement; every other original and phase arbitrary in any finite two-copy Q-family.'}
 result={'statement':__doc__,'table':table,'source_table_markdown_sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
 'corners':corners,'H5':h5,'margin_coefficients':coef,'uniform_margin':minimum,'max_lambda11':maxmass,'uniform_query_bound':query_bound,'uniform_query_bound_decimal':float(query_bound),
-'core17':core,'core17_complement_debit':debit,'core17_uniform_margin':core_margin,'core17_uniform_query_bound':core_bound,'core17_uniform_query_bound_decimal':float(core_bound),
+'finite_window':finite_window,'core17':core,'core17_complement_debit':debit,'core17_uniform_margin':core_margin,'core17_uniform_query_bound':core_bound,'core17_uniform_query_bound_decimal':float(core_bound),
 'kreq':kreq,'checks':checks,'check_count':len(checks),'scope':'Independent H5,H7>=4; fixed literal first11 depth4 table; old13 projections fixed only at the listed17 cofactors; all other old13 cofactors and phases arbitrary at all finite heights; arbitrary 17/19 originals; at most two copies per full label; ordinary proof and exact arithmetic, not Lean or unrestricted NC4'}
 def enc(x):
  if isinstance(x,F):return str(x)
@@ -184,3 +216,5 @@ print('coefficients',{k:str(v) for k,v in coef.items()})
 print('query_bound',query_bound,float(query_bound),'checks',len(checks))
 
 print('core17 debit',debit,float(debit),'margin',core_margin,float(core_margin),'R',core_bound,float(core_bound),'checks',len(checks))
+
+print('finite_window margin',finite_margin,float(finite_margin),'R',finite_bound,float(finite_bound),'checks',len(checks))

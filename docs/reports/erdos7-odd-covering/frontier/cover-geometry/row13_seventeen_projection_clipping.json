@@ -665,6 +665,51 @@
   "max_lambda11": "1272755929/5991995625",
   "uniform_query_bound": "723076773409562131436960097257/144709874209547238079280572416",
   "uniform_query_bound_decimal": 4.996734171453361,
+  "finite_window": {
+    "old_height5": 5,
+    "old_height7": 5,
+    "first11_box": [
+      4,
+      4,
+      4
+    ],
+    "constrained13_depth": 4,
+    "prescribed_old_originals": 70,
+    "prescribed_first11_originals": 200,
+    "constrained13_numerical_labels": 68,
+    "pure5_mass_ceiling": "1563/3125",
+    "pure7_mass_ceiling": "11205/16807",
+    "combined_offset_corners": [
+      {
+        "x": "1/2",
+        "y": "2/3",
+        "offset": "-3277/20160"
+      },
+      {
+        "x": "1/2",
+        "y": "11205/16807",
+        "offset": "-506009712438162806465549/3112909188777663859584000"
+      },
+      {
+        "x": "1563/3125",
+        "y": "2/3",
+        "offset": "-83827340602447035001117/515655510995504880000000"
+      },
+      {
+        "x": "1563/3125",
+        "y": "11205/16807",
+        "offset": "-79071320205122414363349359/486392060746509978060000000"
+      }
+    ],
+    "old_complement_debit": "93413/630262500",
+    "first11_complement_original_cap": "718178719/8388793875000",
+    "row13_complement_debit": "292309125085163/104549385540600000",
+    "margin": "46107017007224922814812136151/5757283606839940498106944160000000",
+    "max_lambda11": "19543635187/92276732625",
+    "query_bound": "6065177817620522505771624823623547/1203623046973730557227795845376000",
+    "query_bound_decimal": 5.039100765700856,
+    "scope": "Exact70 old originals in0<=a,b<=5; exact200 first11 originals in0<=a,b<=4,1<=c<=4; the17 old13 projections fixed only at current13 exponents1..4, with no occurrence requirement; every other original and phase arbitrary in any finite two-copy Q-family."
+  },
   "core17": [
     {
       "label": 5,
@@ -1156,8 +1201,20 @@
     "full_cap_tail_11_12": true,
     "core17_debit": true,
     "core17_positive_uniform_margin": true,
-    "core17_strict_target": true
+    "core17_strict_target": true,
+    "finite_offset_decreases_x_2/3": true,
+    "finite_offset_decreases_x_11205/16807": true,
+    "finite_offset_decreases_y_1/2": true,
+    "finite_offset_decreases_y_1563/3125": true,
+    "finite_score_telescopes": true,
+    "finite_complete_old_complement": true,
+    "finite_complete_first11_complement": true,
+    "finite_old_debit": true,
+    "finite_first11_debit": true,
+    "finite_row13_debit": true,
+    "finite_window_positive_margin": true,
+    "finite_window_strict_query_bound": true
   },
-  "check_count": 76,
+  "check_count": 88,
   "scope": "Independent H5,H7>=4; fixed literal first11 depth4 table; old13 projections fixed only at the listed17 cofactors; all other old13 cofactors and phases arbitrary at all finite heights; arbitrary 17/19 originals; at most two copies per full label; ordinary proof and exact arithmetic, not Lean or unrestricted NC4"
 }

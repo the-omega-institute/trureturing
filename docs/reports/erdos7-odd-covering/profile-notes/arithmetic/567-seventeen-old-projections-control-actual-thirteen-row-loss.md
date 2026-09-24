@@ -235,9 +235,187 @@ R_Q\le T-\frac{(T-2)\delta_*}{M_*}
 =4.996734171453361\ldots.
 \]
 
+## Finite windows suffice: every outside original is arbitrary
+
+A second consumer removes all prescribed infinite comb continuations and
+all high13 projection restrictions. Keep the complete original family
+finite, Q-smooth, and at most two copies per full numerical modulus.
+Impose only these finite-window conditions:
+
+1. At old labels `5^a7^b` with `0<=a,b<=5`, excluding the unit, retain
+   exactly the70 pure/mixed originals specified at the beginning with
+   `H5=H7=5`.
+2. At labels `5^a7^b11^c` with `0<=a,b<=4` and `1<=c<=4`, retain
+   exactly the200 originals from Report558's table. Every numerical
+   cell of this window has its two prescribed occurrences.
+3. For each `d` in `D17` and `1<=e<=4`, any original at `d*13^e`
+   must have old projection `r_d`. Such originals need not be present;
+   their multiplicities and current13 phases are arbitrary within the
+   common two-copy rule.
+
+Every other original, including all old labels outside the old window,
+all first11 labels outside its window, all higher13 projections, all
+pure13 originals, and every17/19 original, may have arbitrary globally
+fixed phases and arbitrary finite heights. In particular this class has
+only68 constrained row13 numerical labels, rather than a restriction at
+all heights of each of17 cofactors. It satisfies
+
+\[
+R_Q\le
+\frac{6065177817620522505771624823623547}
+     {1203623046973730557227795845376000}
+=5.039100765700856\ldots<257/51.
+\tag{FW1}
+\]
+
+The70+200 prescribed originals are precisely the finite source of
+Report558 Section6. The theorem concerns all the continuations above,
+not just that one finite configuration. The earlier all-height theorem
+also covers shorter old combs; the present theorem has its own stated
+finite-core hypotheses.
+
+### A joint score avoids separating losses from retained mass
+
+Let `lambda0` be the complete actual old survivor restriction and let
+`lambda11`, `lambda13` be its actual PA prefixes. Let `x,y` be the
+complete actual pure5/7 survivor masses and `m=xy-lambda0(1)`.
+With `P(x,y)` denoting the pure-anchor part of `credit`, set
+
+\[
+A(x,y)=P(x,y)+\frac1{12}-xy+\frac{F_{11}(x,y)}3
+                                      +\frac{F_{13}(x,y)}4.
+\]
+
+The definitions give the exact cancellation
+
+\[
+\mathrm{credit}+S_{11}+S_{13}=A(x,y)+\lambda_{13}(1).
+\tag{FW2}
+\]
+
+Indeed `credit=P+1/12-m`, `S11=F11/3-lambda0(1)+lambda11(1)`
+and `S13=F13/4-lambda11(1)+lambda13(1)`.
+Both the mixed deletion mass and the intermediate11 mass cancel.
+Retaining the70 old originals gives
+
+\[
+\tfrac12\le x\le x_5:=1563/3125,\qquad
+\tfrac23\le y\le y_5:=11205/16807.
+\]
+
+The exact PA formulas make `A` bilinear. Its slope in each variable is
+negative at both endpoints of the other variable's interval, so
+`A(x,y)>=A(x5,y5)`. The four exact values are retained in the data.
+
+### Transport a bounded payoff through added originals
+
+Let `lambda0,ref` and `lambda11,ref` use only the70+200 prescribed
+originals, and put
+
+\[
+f=1-\min(1,(L-2)_+/4),\qquad 0\le f\le1.
+\]
+
+Additional old originals give `lambda0<=lambda0,ref`.
+For an11-fibre whose allowed set shrinks from `G` to `G'`, write
+`h=min(5/3,1/H(G))` and `h'=min(5/3,1/H(G'))`, with density5/3
+at zero allowed mass. Since `h'>=h`, the negative variation of the
+kernel change is supported on `G\G'` and has mass
+
+\[
+\int(h\mathbf1_G-h'\mathbf1_{G'})_+
+=h\,H(G\setminus G')\le\tfrac53 H(G\setminus G').
+\tag{FW3}
+\]
+
+The bounded nonnegative payoff can therefore lose at most this amount.
+An old history removed before11 costs at most its old mass because the
+reference11 kernel has total mass at most one. The same source argument
+as the complement estimate above gives
+
+\[
+\lambda_{13}(1)\ge\lambda_{11,\mathrm{ref}}(f)
+                  -D_0-\tfrac53 J_{11}-J_{13}.
+\tag{FW4}
+\]
+
+Here `D0` pays additional old originals, `J11` pays added first11
+forbidden fractions, and `J13` pays every row13 original except the
+pure originals and the constrained finite-core projections. These are
+bounds for one actual process. The reference measure only supplies a
+comparison payoff; the final law uses all actual kernels.
+
+### Complete complementary sums
+
+Set `U=x5+1/4`, `V=y5+1/6`,
+`t5=1/(4*5^5)` and `t7=1/(6*7^5)`. Raw pure-source cylinder caps give
+
+\[
+D_0=2(t_5V+t_7U-t_5t_7)=\frac{93413}{630262500}.
+\]
+
+For the first11 window put
+`a=1/(4*5^4)`, `b=1/(6*7^4)`, `c=1/(10*11^4)`. Then
+
+\[
+J_{11}=2\left[\frac{aV+bU-ab}{10}+(U-a)(V-b)c\right]
+       =\frac{718178719}{8388793875000}.
+\]
+
+The first summand counts every outside old cofactor at all11 heights;
+the second counts higher11 exponents inside the old cofactor box.
+They are disjoint. Actual pure masses are at most `x5,y5`, so these
+same caps dominate all added originals, whatever their phases.
+
+Use the earlier `c_d(x,y)` raw actual-prefix cap and let
+`K17=sum_(d in D17)c_d(x5,y5)`. All pure13 originals remain in the
+retained subunion. The other row13 originals cost at most
+
+\[
+J_{13}=\frac14\left[\frac76 UV-x_5y_5-K_{17}\right]
+             +\frac{K_{17}}{4\,13^4}
+       =\frac{292309125085163}{104549385540600000}.
+\]
+
+The first term pays all other nonunit cofactors at all13 heights; the
+second pays the17 retained cofactors above current height four. Thus
+nothing outside the finite restrictions is omitted. Every sum is a
+convergent upper bound for an arbitrary finite actual inventory.
+
+The independently checked height-five baseline supplies
+
+\[
+A(x_5,y_5)+\lambda_{11,\mathrm{ref}}(f)-k_{\rm req}
+=\frac{1370588963644965884709218881427}
+       {442867969756918499854380320000000}.
+\]
+
+Subtracting all three debits in FW4 leaves
+
+\[
+\delta_{\rm FW}
+=\frac{46107017007224922814812136151}
+       {5757283606839940498106944160000000}
+=0.000008008467214025637\ldots>0.
+\]
+
+Every actual11 fibre has total mass `min(1,5H(G')/3)`, which can only
+shrink when originals are added. Along with the old-source inclusion,
+this gives
+
+\[
+\lambda_{\rm final}(1)\le\lambda_{11}(1)
+\le\lambda_{11,\mathrm{ref}}(1)
+=\frac{19543635187}{92276732625}.
+\]
+
+FW2--FW4 and the nonnegative actual17/19 savings now give
+`(T-2)lambda_final(1)-Phi >= (T-2)delta_FW`. The complete-query
+comparison and one final normalization prove FW1, at every query height.
+
 ## Boundary of the result
 
-The 17 old-projection restrictions, prescribed old combs and fixed first11 table are part of the theorem. Removing one of these hypotheses requires another estimate; the present calculation does not prove an unrestricted result. Different old projections outside the 17-cofactor set are already allowed and are paid for by the complement debit.
+The opening theorem retains its17 old-projection restrictions, prescribed old combs and fixed first11 table. The finite-window theorem instead retains exactly its stated70+200 core and68 finite projection conditions. Removing one of these hypotheses requires another estimate; the present calculation does not prove an unrestricted result. Different old projections outside the 17-cofactor set are already allowed and are paid for by the complement debit.
 
 Report558's H5 two-row-supremum counterexample remains valid. At that finite source, the fixed-query count hinge can obstruct a universal lower bound based only on the untruncated hinge. The present result shows why that obstruction does not automatically become actual row13 loss for this inheritance: one row loses at most all the mass of a fibre.
 
@@ -248,7 +426,9 @@ writes [exact rational data](../../frontier/cover-geometry/row13_seventeen_proje
 It reconstructs the literal first11 table, scans all coarse old residues,
 evaluates the actual first11 response, reconstructs the full PA auxiliary
 hinges without dropping their tails, and computes the17 explicit old CRT
-phases and complete complement debit. All76 explicit checks passed with
+phases and complete complement debit. It also checks the finite-window
+joint-score cancellation, offset monotonicity and all three complete
+complement sums. All88 explicit checks passed with
 Python optimizations enabled. Its checks include the independently
 computed height-five witness and the exact bilinear interpolation there.
 
