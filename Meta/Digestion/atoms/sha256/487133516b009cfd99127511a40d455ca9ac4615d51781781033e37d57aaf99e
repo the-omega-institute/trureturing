@@ -1,0 +1,4 @@
+**lemma 21.1 (DCE1).** For every integer x>=2, x^2+3 is not a perfect power y^e with y>=2 and e>=2.
+
+**Proof.** Exponents e>=3 are excluded by the displayed classical theorem. At e=2, positive factorization gives (y-x)(y+x)=3, so y-x=1 and y+x=3. This forces x=1, contrary to x>=2. This lemma does not say that x^2+3 is never powerful. Mixed exponents are not excluded by the cited equation.
+

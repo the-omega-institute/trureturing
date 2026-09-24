@@ -1,0 +1,10 @@
+**theorem 19.3 (SJC3).** For any prescribed gamma_j in F_p on j in Z/rZ, consider T_gamma(j,z)=(j+1,z+gamma_j). A fiberwise translation z'=z+f(j) changes the drift to
+
+$$\gamma'_j=\gamma_j+f(j+1)-f(j).$$
+
+The sum H=sum_j gamma_j is invariant under every such change. There is a rephasing with all gamma'_j=0 if and only if H=0; when it exists, f is unique up to an additive constant. For the actual golden update, H=-r*q_p, so complete removal of the drift is equivalent to q_p=0.
+
+**Proof.** Substitute z=z'-f(j) in the update. Summing cancels every f term. If H=0, choose f(0) arbitrarily and define f(j+1)=f(j)-gamma_j; the closing equation at r holds exactly because the sum is zero. Conversely zero drift has zero sum. Two solutions have zero successive difference and thus differ by a constant. Since p does not divide r, the actual sum vanishes precisely with q_p.
+
+The obstruction is the accumulated drift of a Z-action over a finite phase cycle, or equivalently the circulation of a labeled cycle graph. It is not being identified with H^1 of the finite group C_r acting trivially on F_p. In that finite-group cohomology, p not dividing r would give a different vanishing statement.
+

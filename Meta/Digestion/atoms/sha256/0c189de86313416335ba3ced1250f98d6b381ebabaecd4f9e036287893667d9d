@@ -1,0 +1,4 @@
+**Definition.** Keep the original field K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, v=phi^2, and the original Fibonacci and Lucas sequences. For an integer d>=4 let D(d) be the squarefree part of (d+1)(d-3). The dimensions belonging to the fixed golden field are exactly
+
+$$d=L_{2n}+1=v^n+v^{-n}+1,\qquad n\ge1.$$
+

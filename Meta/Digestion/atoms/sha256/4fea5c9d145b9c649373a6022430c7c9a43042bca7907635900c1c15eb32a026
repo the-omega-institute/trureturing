@@ -1,0 +1,2 @@
+**Proof.** Multiply (1+phi)(A+Bphi)=(A+B)+(A+2B)phi and use Tr(C+Dphi)=2C+D. The determinant is five, a unit in R, proving the inverse and the claim about future observations. This is a fixed linear observability computation over the actual finite ring; replacing it by an approximate real trace is not part of the assertion.
+

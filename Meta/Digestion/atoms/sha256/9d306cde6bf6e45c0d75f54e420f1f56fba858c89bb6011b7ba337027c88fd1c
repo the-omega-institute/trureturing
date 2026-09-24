@@ -1,0 +1,7 @@
+**lemma 16.1 (STL1).** One has O_B=Z[t]. The Z-span of A_eta(n) for n=1 and good split primes is O_B. More precisely, write t_j=zeta^j+zeta^(-j). There are distinct good split primes ell_1,...,ell_(d-1) such that
+
+$$A_\eta(\ell_j)=t_j,\qquad
+(e_0,e_1,\ldots,e_{d-1})=(1,t_1,\ldots,t_{d-1})$$
+
+is an integral basis. No effective bound for these auxiliary primes is asserted.
+

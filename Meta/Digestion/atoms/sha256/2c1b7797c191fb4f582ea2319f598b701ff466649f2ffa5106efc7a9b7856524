@@ -1,0 +1,4 @@
+### CTG.5 A normalized integral cusp form and the sharp depth bound
+
+**Definition.** For r>=1 let E_(k,r) be the simultaneous scalar-Eisenstein eigenspace in Lambda_k/p^r Lambda_k: its elements satisfy (T_ell-1-chi_5(ell))f=0 for every good prime ell. Congruence here concerns Fourier coefficients in the specified lattice, not reduction of a real-analytic function pointwise modulo p.
+

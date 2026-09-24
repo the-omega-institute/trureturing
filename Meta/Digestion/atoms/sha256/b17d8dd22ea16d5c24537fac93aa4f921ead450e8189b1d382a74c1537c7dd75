@@ -1,0 +1,4 @@
+**Proof.** The Hecke eigenvalue equation shows T_ell(F_a)=F_(a*A_eta(ell)). All eigenvalues are in O_B, and one generator-rotation Frobenius has coefficient t, so the generated ring is exactly Z[t]. The codifferent is an O_B fractional ideal and is principal by STL3, hence is a free rank-one O_B module. Therefore its reduction modulo p realizes the regular ring representation.
+
+In the cyclotomic ring every conjugate of t is two modulo the prime above p, so the monic integer polynomial Psi_m reduces to (X-2)^d modulo p. Its coefficients reduce into F_p, making this an equality of polynomials, not just an equality at a point. Monogenicity gives STL8. Multiplication by epsilon in the truncated polynomial ring has nilpotence index exactly d. This establishes the algebra at the rational modulus p, and distinguishes it from the prime-ideal reduction used in SGN2.
+

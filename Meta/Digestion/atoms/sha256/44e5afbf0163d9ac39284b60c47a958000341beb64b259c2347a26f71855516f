@@ -1,0 +1,11 @@
+**proposition 14.6 (ROC6).** The increase H(mp^2)>H(mp) at a mixed conductor does not imply p is WSS. In fact
+
+$$r(7)=8,\quad h_7=1,\quad r(13)=7,\quad H(91)=2,\quad H(637)=14.$$
+
+**Proof.** F_8=21 and F_1=1,F_2=1,F_4=3 show r(7)=8 and h_7=1. F_7=13 and the prime-index argument show r(13)=7. For coprime prime powers ROC1-ROC2 give
+
+$$H(91)=\frac{8\cdot14}{\operatorname{lcm}(8,7)}=2,\qquad
+H(637)=\frac{56\cdot14}{\operatorname{lcm}(56,7)}=14.$$
+
+The order-seven kernel is caused by v_7(r(13))=1 in ROC5, although seven is non-WSS. Thus the correction b cannot be omitted when inferring initial depths from mixed-conductor growth.
+

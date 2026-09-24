@@ -1,0 +1,7 @@
+**theorem 18.4 (HCR4).** The prime-power sequences of L_int are in bijection with the integer functions b on Z/mZ satisfying
+
+$$\boxed{b_{-r}=-b_r,\qquad
+\sum_{j=0}^{p-1}b_{r+jq}=0\quad(r\in\mathbb Z/q\mathbb Z).}\tag{HCR5}$$
+
+In this correspondence s_n=b_(n+1 mod m) for all n>=0. The first d values b_1,...,b_d are free integer coordinates. Every nonzero rational sequence in this family has exact period m and minimal homogeneous constant-coefficient recurrence order 2d over Q, even though those d samples determine it within the specified family.
+

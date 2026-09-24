@@ -1,0 +1,21 @@
+**theorem 14.2 (ROC2).** For p>5, a>=1, and chi_p=(5/p), the group C_(p^a) is cyclic of order (p-chi_p)p^(a-1). With the actual h_p and
+
+$$M_p=(p-\chi_p)/r(p),$$
+
+one has p not dividing M_p and
+
+$$\boxed{P_{p^a}\simeq
+\mathbb Z/\bigl(M_p p^{\min(a-1,h_p-1)}\bigr)\mathbb Z.}\tag{ROC2}$$
+
+The extension-of-ideals map P_(p^(a+1))->P_(p^a) is surjective, and its kernel has order p when a<h_p and order one when a>=h_p. In particular
+
+$$\boxed{q_p=0\iff\ker(P_{p^2}\longrightarrow P_p)\ne1.}\tag{ROC3}$$
+
+**Proof.** In the split case O tensor Z_p=Z_p x Z_p, and division by scalar units identifies the quotient with (Z/p^aZ)^*. In the inert case the Teichmueller-unit quotient is cyclic of order p+1. The principal-unit logarithm identifies the remaining quotient with
+
+$$pO_p/(p\mathbb Z_p+p^aO_p),$$
+
+a cyclic group of order p^(a-1). The two factors have coprime orders, so their product is cyclic. Reduction from a+1 to a is surjective with a cyclic order-p kernel.
+
+The classical Fibonacci valuation formula gives r(p^a)=r(p)p^max(a-h_p,0). Indeed any zero index is r(p) times an integer j, and its valuation is h_p+v_p(j); r(p) divides p-chi_p and is prime to p. Dividing the order of C_(p^a) by this unit-image order proves ROC2. This use of the full valuation formula retains h_p, as in Medina-Rowland, Theorem 1.4. Quotient reduction stays surjective since the same generator phi maps to phi. Taking the ratio of the displayed orders proves the kernel assertions and ROC3.
+

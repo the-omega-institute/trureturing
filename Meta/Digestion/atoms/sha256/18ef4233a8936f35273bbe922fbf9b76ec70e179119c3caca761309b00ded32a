@@ -1,0 +1,8 @@
+### TBN.2 A companion to the existing GP3 blocks
+
+**Definition.** For j>=1 put n_j=3^j, r_j=3^(j+1), x_j=L_(n_j), and
+
+$$B_j=L_{2n_j}+1=x_j^2+3.$$
+
+The notation B_j is an integer block, not the cyclotomic coefficient field B of SGN. The existing `PERIODIC_TREE.md`, GP3, uses the different blocks C_j=x_j^2+1. Its results are retained and are not recounted as new theorems.
+

@@ -1,0 +1,24 @@
+**theorem 20.4 (TBN4).** The prime factors of each B_j satisfy
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv3\ (4)}}h_p\equiv1\pmod2,}\tag{TBN3}$$
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv4\ (5)}}h_p\equiv1\pmod2,}\tag{TBN4}$$
+
+$$\boxed{\sum_{p\mid B_j}h_p\frac{p-1}{r_j}\equiv(-1)^j\pmod3.}\tag{TBN5}$$
+
+In particular each block has a split prime p with odd initial depth and
+
+$$p\equiv2r_j+1\pmod{4r_j}.$$
+
+Each block also has a prime p with 3 not dividing h_p and v_3(p-1)=j+1. These two existential witnesses are not asserted to be the same prime.
+
+**Proof.** The exact factorization is B_j=product_(p|B_j)p^(h_p) by TBN3. Reduce it modulo4. Since B_j=3 modulo4, the exponents of the prime factors congruent to3 have odd sum. This proves TBN3. All factors split in the golden field, hence are1 or4 modulo5; reducing the same factorization modulo5 and using B_j=4 proves TBN4.
+
+For TBN5 write p=1+r_j a_p, which is legitimate for every factor. Since r_j^2 is divisible by3r_j, expansion of the finite product modulo3r_j gives
+
+$$B_j\equiv1+r_j\sum_{p\mid B_j}h_p a_p\pmod{3r_j}.$$
+
+The last congruence in TBN2 identifies the sum modulo3. Its nonzero right side forces a term with both h_p and a_p nonzero modulo3, proving the second witness claim. The first witness has h_p odd and p=3 modulo4. Combining this with p=1 modulo2r_j, and using r_j odd, gives its displayed class modulo4r_j.
+
+These balances genuinely concern the original h_p, because TBN3 removes index-multiplier contributions. They are elementary joint constraints on one actual finite prime support. They do not specify which factor has depth one.
+

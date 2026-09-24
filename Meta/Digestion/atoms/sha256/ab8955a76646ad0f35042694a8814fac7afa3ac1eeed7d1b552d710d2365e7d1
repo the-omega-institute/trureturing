@@ -1,0 +1,15 @@
+**theorem 19.7 (SJC7).** In the coefficient basis (1,phi), multiplication by phi and v has matrices
+
+$$A=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+B=A^2=\begin{pmatrix}1&1\\1&2\end{pmatrix}.$$
+
+Put S=2A-I, J=((0,1),(-1,0)), and c=2log(phi)/sqrt(5). Then
+
+$$S^2=5I,\qquad B^TJB=J,\qquad B=\exp(cS).$$
+
+The real flow exp(tcS) is Hamiltonian with quadratic Hessian -JcS, which is indefinite. No positive-definite quadratic energy is preserved by B.
+
+**Proof.** The matrix identities follow by multiplication. The eigenvalues of S are sqrt(5) and -sqrt(5), and exp(cS) has eigenvalues phi^2 and phi^(-2) on the same eigenlines as B, proving the exponential identity. The matrix cS has trace zero and is Hamiltonian in dimension two; -JcS is symmetric with eigenvalues 2log(phi) and -2log(phi), so the energy is indefinite. If a positive-definite Q satisfied B^TQB=Q, its value on a real eigenvector of B with eigenvalue phi^2>1 would both remain fixed and multiply by phi^4, a contradiction.
+
+The positive-energy hypothesis in `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2.2, is therefore unavailable for this real golden flow. Its automatic symplectic compression and normalized Gibbs conclusions cannot be applied merely because B is symplectic. The basis here is the coordinate swap of CG.5, with the same arithmetic map. Real interpolation adds a legitimate geometric realization but does not alter any p-adic return.
+

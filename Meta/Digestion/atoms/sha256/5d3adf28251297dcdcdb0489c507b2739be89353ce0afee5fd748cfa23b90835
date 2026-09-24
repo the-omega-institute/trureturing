@@ -1,0 +1,3 @@
+- `GoldenApparition` and `FibonacciRank` control the first Fibonacci zero modulo
+  a prime and the `p ± 1` Frobenius index; `GoldenPrimeSplitting` supplies the
+  split/inert division according to 5 modulo `p`.

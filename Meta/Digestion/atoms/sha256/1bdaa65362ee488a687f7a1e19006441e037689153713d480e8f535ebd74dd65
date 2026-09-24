@@ -1,0 +1,2 @@
+**Proof.** Specialize SGN12-SGN14 and use M_(p,0)=Q. The fields and the packet in these formulas have been constructed under h_p>=2; the formula does not assert that such a field exists at a target prime without that hypothesis.
+

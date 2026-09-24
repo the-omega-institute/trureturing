@@ -1,0 +1,13 @@
+**Proof.** By FPD2, m has a prime factor greater than five. Choose its
+largest prime factor ell. It is at least seven. For each prime p|F_ell,
+FPD3 gives p>ell, so p does not divide m. Write m=ell k. Fibonacci
+divisibility gives p|F_m; powerfulness gives p^2|F_m. In FPD1 the
+alternative p|k is impossible because k|m. Therefore p^2|F_ell.
+This proves powerfulness of the entire prime-index block.
+
+FPD3 gives its actual entry point ell. Apply the golden rank bound to
+obtain ell|N(p), and then F_ell|F_(N(p)). Thus the square divisibility
+also holds at p's own signed Frobenius index. Since p>ell>=7, the small
+and ramified primes are automatically absent from this endpoint.
+The theorem does not assert that the index-prime ell is WSS.
+

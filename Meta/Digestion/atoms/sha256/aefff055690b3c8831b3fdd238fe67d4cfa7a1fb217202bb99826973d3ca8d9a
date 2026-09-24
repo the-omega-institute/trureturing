@@ -1,0 +1,13 @@
+## 7. Evidence
+
+Implement three independent exact calculations for every prime `p < 10^6`,
+excluding and separately reporting ramified and small cases:
+
+1. direct pair-state Pisano periods modulo `p` and `p^2`;
+2. fast-doubling checks of `F_r mod p^2` and `F_{r+1}-1 mod p^2` at `r = pi(p)`;
+3. matrix exponentiation of `A^r mod p^2` and the first-lift matrix `B mod p`.
+
+Receipt fields should include `p`, `legendreSym 5 p`, `rank`, `pi_p`, `pi_p2`,
+`F_r mod p^2`, `F_(r+1)-1 mod p^2`, and agreement of all three formulations.
+This is bridge validation, not evidence that the global existential is false.
+

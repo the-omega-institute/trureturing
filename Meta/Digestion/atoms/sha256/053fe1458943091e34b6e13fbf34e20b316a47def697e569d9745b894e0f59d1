@@ -1,0 +1,9 @@
+**Definition.** Fix K=Q(sqrt(5)), O=Z[phi]. For a positive integer f coprime to ten define
+
+$$O_f=\mathbb Z+fO,\qquad P_f=\operatorname{Pic}(O_f),\qquad H(f)=|P_f|,$$
+
+$$C_f=(O/fO)^\times/(\mathbb Z/f\mathbb Z)^\times,\qquad
+r(f)=\min\{n\ge1:f\mid F_n\},\quad r(1)=1.$$
+
+P_f is the ordinary group of invertible ideal classes, with no positivity restriction on principal ideals. It is not the narrow class group. The field K remains fixed as f varies. At f=1 all finite quotient groups in the formulas are trivial.
+

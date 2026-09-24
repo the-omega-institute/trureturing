@@ -1,0 +1,4 @@
+**proposition 11.4 (CG Fibonacci polynomial derivative).** 对所有 $n\ge0$，在 $\mathbb Z[X]$ 中有
+
+$$(X^2+4)U_n'(X)=nV_n(X)-XU_n(X).$$
+

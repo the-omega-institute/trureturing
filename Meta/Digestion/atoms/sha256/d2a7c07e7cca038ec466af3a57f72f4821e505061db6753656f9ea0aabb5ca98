@@ -1,0 +1,6 @@
+**theorem 19.3 (SJC3).** For any prescribed gamma_j in F_p on j in Z/rZ, consider T_gamma(j,z)=(j+1,z+gamma_j). A fiberwise translation z'=z+f(j) changes the drift to
+
+$$\gamma'_j=\gamma_j+f(j+1)-f(j).$$
+
+The sum H=sum_j gamma_j is invariant under every such change. There is a rephasing with all gamma'_j=0 if and only if H=0; when it exists, f is unique up to an additive constant. For the actual golden update, H=-r*q_p, so complete removal of the drift is equivalent to q_p=0.
+

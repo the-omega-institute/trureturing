@@ -1,0 +1,4 @@
+**corollary 22.4 (GPC4).** For every i<j there are primes p|B_i and q|B_j with both h_p,h_q odd and (q/p)=-1. For every fixed i, at least one such p has infinitely many distinct later witnesses q. In particular there are infinitely many split primes q with odd h_q, (q/19)=-1, and rho(q)=pi(q)=2*3^s for some s>=3.
+
+**Proof.** The odd sum in GPC8 contains a summand with all three factors odd. As j varies, the later supports are disjoint. The fixed finite set of primes in B_i therefore contains one p occurring for infinitely many j. At i=1, B_1=19 is prime and h_19=1 by TBN3, so the first coordinate must be nineteen. The remaining period and splitting assertions follow from GPC1 and TBN3. The odd depth of q may be one or at least three; the corollary does not select one of these alternatives.
+

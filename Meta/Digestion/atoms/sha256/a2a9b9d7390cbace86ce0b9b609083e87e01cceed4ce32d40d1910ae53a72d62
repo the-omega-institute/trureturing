@@ -1,0 +1,14 @@
+**theorem 21.6 (DCE6).** For every odd prime p and every integer a>=2, McConnell's dimension parameter satisfies
+
+$$\boxed{\mathbb D(p^a)\ne5.}\tag{DCE4}$$
+
+This extends TBN1 from square seeds to every pure odd-prime-power seed, including nonsquare exponents.
+
+**Proof.** If D(p^a)=5, TBN1's dimension description gives p^a=L_(2n)+1 for a positive n. If n is odd and n>=3, this is L_n^2+3, prohibited by DCE1. At n=1 the value is four, not an odd prime power. If n is even then n>=2, L_n>=3 and
+
+$$p^a=(L_n-1)(L_n+1).$$
+
+Since p^a is odd, both factors are odd and their gcd, which divides two, is one. Both factors are greater than one. They cannot both be powers of the same prime p. This is a contradiction. No Catalan theorem and no classification of all mixed seed values are used.
+
+The conclusion excludes this unbounded family of parameter inputs from one varying-field construction. It does not exclude any p from being WSS by another mechanism. The fixed-field condition and the prime-power-seed condition are both essential to the stated interpretation.
+

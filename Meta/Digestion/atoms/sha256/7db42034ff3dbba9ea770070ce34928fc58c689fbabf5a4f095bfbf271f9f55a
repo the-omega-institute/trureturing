@@ -1,0 +1,7 @@
+**corollary 21.3 (DCE3).** Fix any real bound X and any integer e>=2. There is a split prime p>X with
+
+$$\rho(p)=2\cdot3^s\quad\text{for some }s\ge2,
+\qquad e\nmid h_p.$$
+
+There are infinitely many such primes for every fixed e. More strongly, the positive integers h_p for the primes p>X in the union of these block supports have gcd one.
+

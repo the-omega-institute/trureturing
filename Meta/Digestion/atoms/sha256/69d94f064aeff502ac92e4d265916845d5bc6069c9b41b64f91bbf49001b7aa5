@@ -1,0 +1,6 @@
+**proposition 19.4 (SJC4).** All lifts v_c=xi(1+pc*delta), c in F_p, have the same complete history after reduction modulo p. Their refined return behaviors differ. The original integer recurrence selects exactly one of them by the fixed polynomial equation v_c^2-3v_c+1=0, and
+
+$$\boxed{q_p=\frac{\operatorname{Tr}(\xi)-3}{5p}\pmod p.}\tag{SJC2}$$
+
+Here Tr(xi)-3 is divisible by p in Z/p^2Z. Divide by p first, then multiply by the inverse of five modulo p; no integer divisibility by five is asserted for an arbitrary representative of the trace.
+

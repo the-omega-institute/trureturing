@@ -1,0 +1,6 @@
+### SJC.1 What is being completed
+
+**Definition.** Retain K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, conjugation bar(phi)=1-phi, and delta=2phi-1. Put v=phi^2=1+phi, so N(v)=1 and Tr(v)=3. For a prime p>5 write chi=(5/p), N=p-chi, q_p=F_N/p modulo p, and h_p=v_p(F_N). Division by p in a residue formula is performed before reduction; denominators prime to p are then inverted in the residue ring.
+
+The prediction task consists of the actual update x mapping to vx and specified observations of its state. Coarse reduction modulo p, full state modulo p^2, and delayed scalar traces are different observation maps. Completeness of an observation means sufficiency for the specified outputs and their future updates; it is not an assertion about incompleteness of arithmetic or of set theory.
+

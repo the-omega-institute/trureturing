@@ -1,0 +1,3 @@
+**Proof.** ROC8 expresses the count in terms of the same actual h_p, and ROC9 expresses the heat coefficient in terms of its unit-image size. No inequality choosing a branch is among the hypotheses or conclusions used to prove those identities. The logical implications in the proposition follow directly from ROC8, but their antecedents require information additional to the formula. The fixed eigenvalue is 1/4 at every conductor, so estimates that only treat growing archimedean spectral parameter do not by themselves supply either antecedent.
+
+

@@ -1,0 +1,2 @@
+**proposition 21.7 (DCE scope).** DCE2 rules out every common-divisor depth pattern on each actual B_j, but does not prove a simple prime factor in every B_j. The vector (2,3) has gcd one and all entries at least two. DCE5 imposes additional residue conditions on a realization of that vector, without eliminating it. No all-WSS block or WSS prime is constructed in DCE.
+

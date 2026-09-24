@@ -1,0 +1,9 @@
+**corollary 13.4a (THS depth specialization).** With the actual initial depth h_p=v_p(F_r), one has
+
+$$
+\kappa_p=0\text{ and }K_p\equiv0\quad(h_p\ge2),\qquad
+\kappa_p=\frac{1-1/p}{2r\log\phi}>0\quad(h_p=1).
+$$
+
+**Proof.** The classical valuation theorem gives R=r in the first case and R=pr in the second. In the first case the exact difference of S-series is zero; in the second case n=r itself supplies a positive term. This uses Lengyel's valuation theorem as recorded in Medina-Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015), Theorem 1.4, arXiv:0910.2907. No branch is chosen in THS4 without this actual arithmetic input.
+

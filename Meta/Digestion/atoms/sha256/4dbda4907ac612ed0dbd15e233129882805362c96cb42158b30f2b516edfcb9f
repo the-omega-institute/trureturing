@@ -1,0 +1,8 @@
+# Wall-Sun-Sun Golden-Unit Research
+
+> **Machine contract.** This volume uses the `generic-v1` atomizer and is
+> append-only after admission. It is reference input: Lean declarations and
+> their kernel-checked proof terms remain the repository's only mathematical
+> truth source. Later corrections belong after the append anchor, with the
+> original text retained.
+

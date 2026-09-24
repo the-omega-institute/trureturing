@@ -1,0 +1,15 @@
+**theorem 11.3 (CG p-adic orbit closure).** $\log$ 给出群同构 $T_1\cong p\mathbb Z_p d$。令 $\beta_p=\log(u^N)$，则 $v_p(\beta_p)=h_p$。映射
+
+$$\Phi_p(t)=\exp(t\beta_p),\qquad t\in\mathbb Z_p$$
+
+连续且解析，并在非负整数 $t$ 处等于 $u^{Nt}$。对 $s\ne t$，
+
+$$\boxed{v_p(\Phi_p(s)-\Phi_p(t))=h_p+v_p(s-t).}$$
+
+此外，
+
+$$\boxed{\overline{\{u^{Nn}:n\ge0\}}=\exp(p^{h_p}\mathbb Z_p d),\qquad
+[T_1:\overline{\{u^{Nn}:n\ge0\}}]=p^{h_p-1}.}$$
+
+**证明。** 对 $z\in p\mathcal O_p$，对数级数首项的估值严格低于其余项；指数级数亦然。于是 $v_p(\log(1+z))=v_p(z)$，且指数与对数在主单位上互逆。范数的对数是迹，因此范数一对应迹零。$\mathcal O_p$ 的迹零部分为 $\mathbb Z_p d$。将 $\beta_p$ 写为 $p^{h_p}cd$，其中 $c\in\mathbb Z_p^\times$，得到估值公式。非负整数在 $\mathbb Z_p$ 中稠密，所以 $\{n\beta_p:n\ge0\}$ 的闭包为 $p^{h_p}\mathbb Z_p d$，指数映射与一维格指数给出结论。
+

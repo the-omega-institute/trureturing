@@ -1,0 +1,9 @@
+**theorem 11.4a (CG fixed-parameter root).** 对每个 $p>5$，
+
+$$\boxed{U_N'(1)\equiv-2/5\not\equiv0\pmod p.}$$
+
+在 $1+p\mathbb Z_p$ 中，$U_N$ 恰有一个根 $a_p$，并且
+
+$$v_p(a_p-1)=h_p,\qquad
+(a_p-1)/p\equiv(5/2)q_p\pmod p.$$
+

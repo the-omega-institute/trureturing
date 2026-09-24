@@ -1,0 +1,20 @@
+**theorem 22.1 (GPC1).** If p is any prime divisor of B_j, then
+
+$$\boxed{\operatorname{ord}_p(v)=r_j,\qquad
+\rho(p)=\pi(p)=2r_j,\qquad
+\pi(p^a)=2r_jp^{\max(a-h_p,0)}\quad(a\ge1).}\tag{GPC1}$$
+
+Every divisor d>1 of B_j has pi(d)=rho(d)=2r_j. More generally, for every a>=1,
+
+$$\boxed{\pi(B_j^a)=2r_j B_j^{a-1}.}\tag{GPC2}$$
+
+In particular pi(B_j^2)=B_j pi(B_j), independently of whether a prime factor has h_p=1 or h_p>=2.
+
+**Proof.** TBN3 proves the first two orders except for pi(p), and proves v_p(B_j)=h_p. Since phi^(2r_j)=v^(r_j)=1 modulo p, pi(p) divides 2r_j. The zero rank rho(p)=2r_j divides every pair-return time, so equality follows.
+
+Put T=2r_j. Its Lucas trace satisfies L_T^2-5F_T^2=4, L_T=2 modulo p and v_p(F_T)=h_p. Since L_T+2 is a unit at p, v_p(L_T-2)=2h_p. Therefore phi^T-1=(L_T-2+sqrt(5)F_T)/2 has valuation h_p in each golden completion above p. For a unit 1+y with v_p(y)=h>=1 and odd p, binomial expansion gives v_p((1+y)^b-1)=h for p not dividing b, and raises the valuation by exactly one on taking a pth power. Iteration gives h+v_p(b). Every lift return is a multiple of T, so its minimum multiple modulo p^a is T p^max(a-h_p,0). This proves the full prime-power formula without assuming h_p=1.
+
+Write B_j=product p^(h_p), the actual factorization from TBN3. A prime-power divisor p^e of B_j has 1<=e<=h_p and hence pair period T; its zero rank also remains T by the classical Fibonacci valuation formula. The Chinese remainder theorem takes least common multiples of the prime-power periods and ranks, proving the divisor assertion. At modulus B_j^a the p component instead has period T p^((a-1)h_p). Every such p is prime to T, so their least common multiple is T times their product of p-parts, namely T B_j^(a-1). This proves GPC2.
+
+The prime-power and CRT mechanisms are classical period theory, as stated in Marc Renault, *The Period, Rank, and Order of the (a,b)-Fibonacci Sequence Mod m*, Mathematics Magazine 86 (2013), 372-380, Theorems 1-2, DOI 10.4169/math.mag.86.5.372, and in the valuation theorem cited in TBN3. The displayed block specialization is proved here. Regular growth of a composite block's period therefore cannot, by itself, distinguish its factors' initial WSS depths.
+

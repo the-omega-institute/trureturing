@@ -1,0 +1,8 @@
+### TBN.1 Calibration of a quantum-information-derived field construction
+
+**Definition.** Keep the original field K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, v=phi^2, and the original Fibonacci and Lucas sequences. For an integer d>=4 let D(d) be the squarefree part of (d+1)(d-3). The dimensions belonging to the fixed golden field are exactly
+
+$$d=L_{2n}+1=v^n+v^{-n}+1,\qquad n\ge1.$$
+
+**Proof.** D(d)=5 means (d-1)^2-5b^2=4 for an integer b>0. The two coordinates have the same parity, and ((d-1)+b sqrt(5))/2 is a totally positive norm-one unit greater than one in O. The golden unit classification gives v^n for a unique positive n. Conversely the Pell identity for L_(2n),F_(2n) gives the displayed square class.
+

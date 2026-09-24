@@ -1,0 +1,23 @@
+## 1. Position, status, and provenance
+
+**Reference-input status.** This volume collects the ordinary mathematical
+arguments developed around the Wall-Sun-Sun golden-unit problem. The arguments
+are paper proofs, not Lean certification. The current formal result in
+`D5/S3/Arith/Lattices/PrimeCyclotomicTraceImage.lean` is narrower than the
+surrounding PH, CG, FPD, THS, ROC, SGN, STL, CTG, HCR, SJC, TBN, DCE, and GPC
+developments; the broader WSS existence question remains open.
+
+**Provenance.** The source is the repository's single WSS research series,
+authored under Lexa's repository account with Mac Studio implementation commits
+from 2026-09-15 through 2026-09-24. It was developed as a sequence of ordinary
+mathematics continuations in the same owner document. Exact model-seat metadata
+is not present in the committed source, so that part of the production record
+is `ASSUMED-UNVERIFIED`. This relocation preserves the mathematical text in one
+theory volume and leaves the literature problem dossier as its stable index.
+
+**Source boundary.** The original literature problem is registered under
+`shi2026second`, DOI `10.48550/arXiv.2603.25343`. Later sections cite their own
+primary sources inline. Literature attribution supports only the ranges stated
+at each citation; repository-derived arguments and literature results are not
+interchanged.
+

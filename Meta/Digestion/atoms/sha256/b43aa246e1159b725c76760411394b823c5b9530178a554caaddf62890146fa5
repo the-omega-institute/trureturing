@@ -1,0 +1,12 @@
+## 9. Unverified boundaries
+
+- Whether the open problem was resolved after arXiv v1 is unverified; this
+  records the paper's statement, not the entire later literature.
+- The order of the reduced golden unit matches the chosen Pisano-period
+  convention without a factor of 2 or a special case; that must be proved, not
+  assumed.
+- A useful local quotient criterion can be stated entirely with the current
+  `GoldenInt` coordinate model.
+- Any novelty of the proposed bridge lemmas is unassessed and belongs to the
+  theorist's search step.
+

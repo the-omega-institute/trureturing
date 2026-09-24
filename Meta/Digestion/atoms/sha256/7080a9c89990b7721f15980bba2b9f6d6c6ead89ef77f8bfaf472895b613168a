@@ -1,0 +1,19 @@
+**theorem 16.3 (STL3).** Put
+
+$$\delta_k=\frac{p^{k-1}(k(p-1)-1)-1}{2},\qquad
+r_k=\delta_k-(k-1)d=\frac{p^{k-1}(p-2)-1}{2}.$$
+
+Then 0<r_k<d, disc(B)=p^(delta_k), and
+
+$$\boxed{[L_{\rm int}:L_{\rm tr}]=p^{\delta_k},}\tag{STL3}$$
+
+$$\boxed{L_{\rm int}/L_{\rm tr}\simeq
+(\mathbb Z/p^k\mathbb Z)^{r_k}\oplus
+(\mathbb Z/p^{k-1}\mathbb Z)^{d-r_k}.}\tag{STL4}$$
+
+The factors of order p^0 at k=1 are trivial. If Psi_m is the monic minimal polynomial of t, then the precise fractional ideal is D_B^(-1)=Psi_m'(t)^(-1)O_B.
+
+**Proof.** The cyclotomic polynomial derivative gives discriminant exponent p^(k-1)(k(p-1)-1) for Q(zeta). By STL1, O_(Q(zeta))=O_B[zeta], with relative quadratic discriminant t^2-4. Its absolute ideal norm is p: (zeta-zeta^(-1))^2=t^2-4, and the absolute norm of 1-zeta^2 is p, since zeta^2 is primitive. Discriminant transitivity gives disc(B)=p^(delta_k). Only p ramifies, and it is totally ramified of degree d with residue field F_p. Thus the different is l_m^(delta_k), where l_m is the prime in SGN2. Monogenicity and the derivative formula give D_B=(Psi_m'(t)).
+
+The classical trace-dual index identity is [D_B^(-1):O_B]=disc(B). The injective map a to F_a and STL2 give STL3. Locally the quotient is O_(B,l_m)/l_m^(delta_k), because l_m is principal. Multiplication by p raises l_m-valuation by d. Consequently the F_p dimension of the i-th successive p-layer is d for 1<=i<k, r_k for i=k, and zero thereafter. The elementary-divisor theorem for finite abelian p-groups yields precisely STL4. The inequalities on r_k follow from p>5 and d=p^(k-1)(p-1)/2. This is a classically determined coefficient-field lattice; it is not an additional restriction on the unknown existence of eta.
+

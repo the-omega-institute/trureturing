@@ -1,0 +1,14 @@
+**theorem 13.4 (THS4).** The exact Fourier difference
+
+$$
+\tfrac14\left[e^{-8\pi y}(C_p(4;y)-C_{p^2}(4;y))
+ +e^{8\pi y}(C_p(-4;y)-C_{p^2}(-4;y))\right]
+$$
+
+is K_p(20pi*y). Moreover K_p(t)=S_r(t)-S_R(t), and for every a>=3 and 0<t<=1,
+
+$$\left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,$$
+
+$$\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
+\kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}$$
+

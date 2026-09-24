@@ -1,0 +1,8 @@
+**theorem 10.7 (PH7).** 固定整数 $d\ge2$。若一个无界素数指标子族的 $M_\ell$ 的全部素因子均有 $h_p\ge d$，则沿该子族
+
+$$\liminf\mathcal Q_\ell\ge d.$$
+
+若只要求 $F_\ell$ 的全部素因子有 $h_p\ge d$，或只要求 $L_\ell$ 的全部素因子有 $h_p\ge d$，则相应子族满足
+
+$$\liminf\mathcal Q_\ell\ge\frac{2d}{d+1}.$$
+

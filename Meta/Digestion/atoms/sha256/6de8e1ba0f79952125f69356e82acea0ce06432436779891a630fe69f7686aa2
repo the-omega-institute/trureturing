@@ -1,0 +1,4 @@
+**lemma 12.3 (FPD3).** Suppose ell>=7 is prime and p is a prime divisor of
+F_ell. Then the least positive Fibonacci zero index for p is ell, and
+p>ell.
+

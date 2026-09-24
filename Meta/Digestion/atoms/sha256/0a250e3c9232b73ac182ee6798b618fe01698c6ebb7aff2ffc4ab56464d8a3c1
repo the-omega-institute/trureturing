@@ -1,0 +1,7 @@
+**Proof.** Coarse equality persists under every power because all lifts reduce to v. For norm-one xi, its inverse is its conjugate and xi^2-Tr(xi)xi+1=0. In the kernel direction, direct first-order expansion gives
+
+$$v_c^2-3v_c+1\equiv
+\xi\bigl(\operatorname{Tr}(\xi)-3+5pc\bigr)\pmod{p^2O}.$$
+
+Indeed modulo p, 2xi-3=delta and delta^2=5. Since xi and five are units, this has exactly one solution c. SJC2 already identifies the original solution as c=-q_p, proving SJC2. The uniqueness shows why choosing the torsion lift c=0 does not construct a WSS example: it must also satisfy the fixed golden polynomial. The other lifts are comparison states, not alternative realizations of that same fixed recurrence.
+

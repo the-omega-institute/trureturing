@@ -1,0 +1,6 @@
+**theorem 10.1 (PH1).** $A_\ell,B_\ell$ 是互素奇数，且 $\gcd(M_\ell,10)=1$。每个 $p\mid A_\ell$ 恰有 $r(p)=\ell$；每个 $p\mid B_\ell$ 恰有 $r(p)=2\ell$。对两种情形均有
+
+$$v_p(M_\ell)=h_p.$$
+
+不同素数指标 $\ell$ 给出的 $M_\ell$ 两两互素。
+

@@ -1,0 +1,6 @@
+**定义。** 在 $\mathcal O_p$ 上令 $\sigma_p$ 为 Frobenius 提升：$\chi=1$ 时取恒等，$\chi=-1$ 时取黄金共轭。定义
+
+$$\delta_p(x)=\frac{\sigma_p(x)-x^p}{p}.$$
+
+分子在 $p\mathcal O_p$ 中，所以此定义在除以 $p$ 后仍取值于 $\mathcal O_p$。
+

@@ -1,0 +1,7 @@
+**theorem 21.4 (DCE4).** Let H>=2 be an integer. If every prime divisor of B_j has h_p>=H, then B_j has at least two distinct prime factors and
+
+$$\boxed{\Omega(B_j):=\sum_{p\mid B_j}h_p\ge2H+1,
+\qquad B_j\ge b(r_j)^{2H+1}.}\tag{DCE2}$$
+
+Here b(r_j) is the explicit residue-class lower bound defined in TBN5. If equality Omega(B_j)=2H+1 holds, there are exactly two distinct prime factors and their depths are exactly H and H+1. In particular, under all-WSS covering, total multiplicity five can only have the form P^2 Q^3 with distinct primes P,Q.
+

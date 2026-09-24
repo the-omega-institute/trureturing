@@ -1,0 +1,6 @@
+**theorem 17.6 (CTG6).** Every unital homomorphism R_k -> Z/p^r has t=2 modulo p. The number of such homomorphisms is p^(r-1) for 1<=r<=k and zero for r>k. For the augmented algebra Rtilde_k the number is
+
+$$\boxed{p^{\min(k,r-1)}.}\tag{CTG13}$$
+
+Its only Z_p-valued character is the scalar Eisenstein evaluation t=2.
+

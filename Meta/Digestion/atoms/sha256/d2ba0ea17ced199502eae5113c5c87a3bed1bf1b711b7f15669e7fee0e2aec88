@@ -1,0 +1,6 @@
+**theorem 11.2 (CG unique period-preserving lift).** 在模 $p^2$ 的范数一群中，固定 $u\bmod p$，其全部提升恰可写成
+
+$$u(1+pz),\qquad z\in\mathcal O/p\mathcal O,\quad\operatorname{Tr}(z)=0.$$
+
+这样的提升有 $p$ 个，且其中恰有一个满足 $[u(1+pz)]^N=1$。这不确定原来的 $u$ 是否就是该提升。
+

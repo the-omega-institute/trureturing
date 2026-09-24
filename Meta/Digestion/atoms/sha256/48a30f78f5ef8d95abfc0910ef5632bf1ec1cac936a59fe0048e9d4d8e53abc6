@@ -1,0 +1,2 @@
+**corollary 17.7 (CTG7).** Fix a prime p>5 and take the complete finite p-power ring-class tower in ROC, whose largest character order is p^(h_p-1). If h_p=1 there is no such cuspidal tower. Otherwise the maximum rational p-adic Eisenstein congruence depth of a primitive integer-coefficient vector in this tower is exactly h_p-1.
+

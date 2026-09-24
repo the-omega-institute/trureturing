@@ -1,0 +1,4 @@
+### CG.3 一维 p-进流与准确轨道闭包
+
+**定义。** 令 $\mathcal O_p=\mathcal O\otimes\mathbb Z_p$，$T_1=\ker(T(\mathbb Z_p)\to T(\mathbb F_p))$。使用主单位上的收敛幂级数定义 $\log$ 与 $\exp$。
+

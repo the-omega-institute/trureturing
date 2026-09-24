@@ -1,0 +1,9 @@
+### CTG.3 The full coefficient lattice across different orders
+
+**Definition.** For a in E_k define the rational trace form
+
+$$\mathcal F_a=\sum_{j=1}^k\ \sum_{\sigma:B_{p^j}\hookrightarrow\mathbb R}
+\sigma(a_j)g_{\eta^{p^{k-j}},\sigma}.$$
+
+Its nth coefficient is tau(a A(n)). Let Lambda_k be the full lattice of integer Fourier coefficients in this rational tower. Let Lambda_sep be the direct sum of the separately saturated primitive-packet lattices in STL, embedded into the same space. Put R_k^vee={a in E_k:tau(aR_k) subset Z}.
+

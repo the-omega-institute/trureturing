@@ -1,0 +1,4 @@
+### SGN.5 The Galois-packet Gram determinant and a global regulator identity
+
+**Definition.** Let G_(p,k) be the d_k by d_k Gram matrix of the forms g_(eta^j) for j in (Z/p^kZ)^*/{+1,-1}, all at their common minimal level N_k, with no L^2 rescaling. For a totally real field M let h(M) be its ordinary ideal class number and Reg(M) its standard Dirichlet regulator; put h(Q)=Reg(Q)=1. These class numbers are not the order class numbers H(f) of ROC and are not the initial depths h_p.
+

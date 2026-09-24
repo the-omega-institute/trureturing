@@ -1,0 +1,5 @@
+source_id = "wall-sun-sun-golden-unit-research"
+path = "docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

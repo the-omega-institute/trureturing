@@ -1,0 +1,18 @@
+**theorem 19.6 (SJC6).** In O_p=O tensor Z_p there is a unique norm-one torsion lift xi of v modulo p with order r. There is a unique a_p in Z_p such that
+
+$$v=\xi\exp(pa_p\delta),\qquad
+v_p(a_p)=h_p-1,\qquad a_p=-q_p\pmod p.$$
+
+At precision p^s the inverse image of C has coordinates
+
+$$\mathbb Z/r\mathbb Z\times\mathbb Z/p^{s-1}\mathbb Z,
+\qquad(j,z)\longmapsto(j+1,z+a_p).$$
+
+It has exactly p^min(s-1,h_p-1) cycles, each of length r*p^max(s-h_p,0). At s=1 the second coordinate is the singleton group.
+
+**Proof.** Simple-root lifting constructs the compatible torsion lift; the norm is one by uniqueness. The convergent logarithm and exponential are inverse valuation-preserving maps between 1+pO_p and pO_p. This follows from their power series for odd p, since the linear term has strictly smaller valuation than the higher terms. Norm one corresponds to trace zero, which is the free line Z_p*delta. Hence log(v/xi)=pa_p*delta with a unique a_p.
+
+Using phi^N=(L_N+F_N delta)/2 and the norm identity, one has v_p(phi^N-chi)=h_p in every completion above p. The factor phi^N+chi is a unit, giving v_p(v^N-1)=h_p. Since N is a p-adic unit and xi^N=1, this is the valuation of log(v/xi), proving the depth of a_p. Reduction to the first layer recovers -q_p. Additivity of logarithms gives the translation action. A return time must be divisible by r and make t*a_p zero modulo p^(s-1); these coprime requirements give the lengths and counts.
+
+The integer time is common to all selected primes. Combining their local states gives the image of that one time parameter, not every point of their Cartesian product. The exact gcd correction in ROC4-ROC5 is an existing arithmetic instance of this joint-compatibility requirement. Neither local cycle counts nor their product imply that the actual fixed drift vanishes at a new prime.
+

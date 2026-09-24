@@ -1,0 +1,19 @@
+**Proof.** The coefficients A_eta(n) are real. Put D_eta(s)=sum_(n>=1)A_eta(n)^2 n^(-s). The ideal Euler factors give
+
+$$D_\eta(s)=\frac{\zeta(s)L(s,\chi_5)L_K(s,\eta^2)}{\zeta(2s)}
+\frac1{1+5^{-s}}\frac{1-\chi_5(p)p^{-s}}{1+p^{-s}}.\tag{SGN8}$$
+
+To check this at every prime, write x=ell^(-s). At a good split prime with eta(q)=z, the squared-coefficient series is
+
+$$\frac{1+x}{(1-x)(1-z^2x)(1-z^{-2}x)}.$$
+
+This follows by squaring sum_(j=0)^a z^(a-2j) and summing geometric series; as a rational identity it includes z=+1,-1 by continuation. At a good inert prime it is (1-x^2)^(-1). At the prime five, its unique prime ideal q has q^2=(5), so eta(q)=1 because eta has odd order and is trivial on rational ideles. The squared-coefficient factor is (1-5^(-s))^(-1), producing the factor (1+5^(-s))^(-1) in SGN8. At p, eta and eta^2 are ramified at every prime above p, so the ideal series has local factor one. Comparison with zeta(s)L(s,chi_5)/zeta(2s) gives the final correction in SGN8.
+
+Let E_infinity(z,s) be the standard weight-zero Eisenstein series for Gamma_0(N), with the stabilizer including both signs. Its residue at s=1 is 1/vol=3/(pi*i_N), where i_N=N product_(ell|N)(1+1/ell). Unfolding and SGN6 give
+
+$$\int_{\Gamma_0(N)\backslash\mathbb H}
+ E_\infty(z,s)|g_\eta(z)|^2\,\frac{dx\,dy}{y^2}
+=\frac{\Gamma(s/2)^4}{4\pi^s\Gamma(s)}D_\eta(s).\tag{SGN9}$$
+
+The scalar at s=1 is pi/4. Taking residues and using zeta(2)=pi^2/6, the factor 5/6 from the prime five, and the factor (1-chi_5(p)/p)/(1+1/p), cancels i_N down to the right side of SGN7. All unfolding operations first take place on Re(s)>1; cusp decay permits the residue passage. The standard Eisenstein residue and this Rankin-Selberg normalization are also recorded in P. Humphries and R. Khan, *On the Random Wave Conjecture for Dihedral Maass Forms*, GAFA 30 (2020), proof of Lemma 4.4 and equation (4.8), DOI 10.1007/s00039-020-00526-4. The present bad-prime factors are computed above and are not taken from a squarefree-level specialization.
+

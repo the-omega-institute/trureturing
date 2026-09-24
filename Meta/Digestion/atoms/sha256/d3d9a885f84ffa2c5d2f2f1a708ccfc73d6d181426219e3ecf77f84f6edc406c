@@ -1,0 +1,13 @@
+**theorem 20.2 (TBN2).** The following exact identities hold:
+
+$$L_{3n_j}=L_{n_j}B_j,\qquad
+B_{j+1}=B_j^3-3B_j^2+3,\qquad B_1=19,$$
+
+$$B_j=\Psi_{r_j}(3),\qquad
+B_j\equiv19\pmod{80},\qquad
+v_3(B_j-1)=j+1,$$
+
+$$\frac{B_j-1}{3^{j+1}}\equiv(-1)^j\pmod3.\tag{TBN1}$$
+
+Here Psi_r is the real cyclotomic polynomial from SJC. Every B_j is odd, greater than one, and nonsquare.
+

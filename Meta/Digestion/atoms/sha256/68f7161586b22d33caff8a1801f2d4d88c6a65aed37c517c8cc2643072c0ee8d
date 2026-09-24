@@ -1,0 +1,4 @@
+**Proof.** DCE4 forces two distinct factors with the indicated depths. Since P is odd, P^2=1 modulo8. The congruence B_j=19 modulo80 gives Q^3=3 modulo8; cubing is the identity on odd residues modulo8, so Q=3 modulo8. Every factor is 1 or4 modulo5, and hence P^2=1 modulo5. The same product gives Q^3=4 modulo5, so Q=4 modulo5. Combining gives Q=19 modulo40.
+
+Write P=1+2r_j u. In TBN5's depth-balance equation modulo3, the contribution from Q has its factor h_Q=3 and vanishes. The remaining contribution is 2*(P-1)/r_j=4u=u modulo3. Thus u=(-1)^j modulo3, proving the displayed class and exact ternary valuation. Finally B_j=3 modulo16 and Q=19 or59 modulo80 give Q^3=11 or3 modulo16 respectively. Multiplication by P^2 yields the two stated square classes. These necessary conditions do not prove existence or impossibility of this two-prime pattern.
+

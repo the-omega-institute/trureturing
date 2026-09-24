@@ -1,0 +1,11 @@
+**Proof.** The eigenvalue t_ell belongs to B_s and generates its full integer ring. For every n,
+
+$$\operatorname{Tr}_{B/\mathbb Q}(cP_n(t_\ell))
+=\operatorname{Tr}_{B_s/\mathbb Q}(c_sP_n(t_\ell)).$$
+
+The first d_s of these polynomials give a full basis of O_(B_s), so they detect c_s exactly. The field trace is surjective in characteristic zero, giving the rational rank. It remains to show
+
+$$\operatorname{Tr}_{B/B_s}(\mathfrak D_B^{-1})=\mathfrak D_{B_s}^{-1}.$$
+
+The inclusion from left to right follows by composing traces. Conversely O_(B_s) is a saturated Z-submodule of O_B: if an integer multiple of x in O_B lies in B_s then x lies in B_s, hence in O_(B_s). Its quotient is therefore a finitely generated torsion-free abelian group, and is free. Any integral functional on O_(B_s) extends to O_B after choosing a free complement. Represent the extension by trace against c in D_B^(-1). Its restriction is trace against Tr_(B/B_s)c, proving surjectivity onto D_(B_s)^(-1). The exact sequence of free abelian groups then gives the integral kernel rank. No cyclic-order or semisimplified residue observation is substituted for this full trace map.
+

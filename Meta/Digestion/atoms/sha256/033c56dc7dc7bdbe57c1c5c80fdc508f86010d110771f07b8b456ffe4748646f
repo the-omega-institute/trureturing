@@ -1,0 +1,9 @@
+**theorem 14.5 (ROC5).** Fix p>5 and m coprime to 10p. Put b=v_p(r(m)). For every a>=1,
+
+$$\boxed{
+\left|\ker(P_{mp^{a+1}}\longrightarrow P_{mp^a})\right|
+=\begin{cases}p,&a<h_p+b,\\1,&a\ge h_p+b.\end{cases}
+}\tag{ROC5}$$
+
+Every nontrivial kernel here is cyclic.
+

@@ -1,0 +1,7 @@
+**Definition.** Let chi_5 denote the quadratic character of conductor five. The standard theta transformation law makes V_d a weight-zero automorphic function of level 20d^2 and character chi_5 induced to that level. It has moderate growth; membership in L^2 is not assumed. At a prime ell not dividing 10d, use the good Hecke normalization
+
+$$
+(T_\ell f)(z)=\ell^{-1/2}\left[
+\chi_5(\ell)f(\ell z)+\sum_{j=0}^{\ell-1}f((z+j)/\ell)\right].
+$$
+

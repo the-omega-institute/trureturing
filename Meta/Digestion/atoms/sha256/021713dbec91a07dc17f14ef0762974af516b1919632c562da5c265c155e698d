@@ -1,0 +1,11 @@
+**theorem 16.7 (STL7).** The greatest common divisor of the Fourier coefficients of the raw trace F_1 is exactly p^(k-1). Its primitive normalization is F_(1/p^(k-1)), whose first coefficient is (p-1)/2. For a good split prime with rotation exponent b, the raw coefficient is
+
+$$\boxed{\operatorname{Tr}_{B/\mathbb Q}(t_b)=
+\begin{cases}
+p^{k-1}(p-1),&p^k\mid b,\\
+-p^{k-1},&p^{k-1}\mid b,\ p^k\nmid b,\\
+0,&p^{k-1}\nmid b.
+\end{cases}}\tag{STL9}$$
+
+**Proof.** The real trace is the Ramanujan sum sum_(a mod p^k,p not dividing a)zeta^(ab). Subtract from the sum over all residues the sum over residues divisible by p. Each complete geometric sum is its length or zero according as the corresponding modulus divides b. This gives STL9. Since 1,t_1,...,t_(d-1) is an integral basis and Tr(1)=d, every trace of an integer of B is divisible by p^(k-1). Conversely Chebotarev supplies a good split coefficient t_(p^(k-1)), whose trace is -p^(k-1). Thus the gcd is exact, and the first coefficient after division is d/p^(k-1). This divisibility is caused by the coefficient-field trace; it supplies no new WSS depth.
+

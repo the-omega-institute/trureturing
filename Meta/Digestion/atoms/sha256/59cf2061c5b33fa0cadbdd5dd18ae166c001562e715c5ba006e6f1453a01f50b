@@ -1,0 +1,14 @@
+### THS.1 The integer Fourier condition
+
+**Definition.** Put phi=(1+sqrt(5))/2, O=Z[phi], and retain the original Fibonacci and Lucas numbers. For z=x+iy with y>0, define
+
+$$
+\Theta(z)=\sum_{n\in\mathbb Z}e^{2\pi i n^2z},\qquad
+V_d(z)=\sqrt y\,\Theta(5d^2z)\overline{\Theta(z)}\quad(d\ge1),
+$$
+
+$$
+C_d(b;y)=\int_0^1\Theta(5d^2z)\overline{\Theta(z)}e^{-2\pi i b x}\,dx
+\quad(b=4,-4).
+$$
+

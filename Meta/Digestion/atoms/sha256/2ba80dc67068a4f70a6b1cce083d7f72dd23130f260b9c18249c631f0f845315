@@ -1,0 +1,13 @@
+**theorem 16.5 (STL5).** For a good split prime ell, write eta(q)=zeta_p^b and interpret b modulo p. The prime coefficients of the integral basis f_j=F_(beta_j) are
+
+$$[\ell]f_0=\begin{cases}
+2,&b=0,\\-1,&b=\pm d,\\0,&\text{otherwise},
+\end{cases}$$
+
+$$\boxed{[\ell]f_j=\mathbf1_{b=\pm j}-\mathbf1_{b=\pm d}
+\quad(1\le j<d).}\tag{STL7}$$
+
+At good inert primes every coefficient is zero. The first coefficient of f_0 is one; all the other f_j have first coefficient zero.
+
+**Proof.** At a split prime A_eta(ell)=t_b. Apply the trace to STL5 after multiplying by t_b, and use t_i*t_b=t_(i+b)+t_(i-b). The trace is p-1 for a t-index zero modulo p and -1 otherwise. For f_0 this gives the three stated cases; for j>0 subtracting the two trace pairs gives p times the stated difference of indicators before division by p. At inert primes A_eta(ell)=0. The first-coefficient assertions are the trace-dual identities against e_0=1. These f_j are usually not Hecke eigenforms; prime coefficient bounds for them do not turn them into new one-dimensional automorphic representations.
+

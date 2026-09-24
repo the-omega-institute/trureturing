@@ -1,0 +1,10 @@
+### CG.5 真实三维黄金映射环面的同调接口
+
+**定义。** 令
+
+$$A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+B=A^2=\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+S=2A-I=\begin{pmatrix}1&2\\2&-1\end{pmatrix}.$$
+
+$B$ 在实紧致环面 $\mathbb R^2/\mathbb Z^2$ 上定义自同构。对正偶数 $n$，令 $M_n$ 为 $B^n$ 的映射环面。
+

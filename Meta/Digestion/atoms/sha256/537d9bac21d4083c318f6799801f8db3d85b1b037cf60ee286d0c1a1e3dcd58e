@@ -1,0 +1,13 @@
+**theorem 14.2 (ROC2).** For p>5, a>=1, and chi_p=(5/p), the group C_(p^a) is cyclic of order (p-chi_p)p^(a-1). With the actual h_p and
+
+$$M_p=(p-\chi_p)/r(p),$$
+
+one has p not dividing M_p and
+
+$$\boxed{P_{p^a}\simeq
+\mathbb Z/\bigl(M_p p^{\min(a-1,h_p-1)}\bigr)\mathbb Z.}\tag{ROC2}$$
+
+The extension-of-ideals map P_(p^(a+1))->P_(p^a) is surjective, and its kernel has order p when a<h_p and order one when a>=h_p. In particular
+
+$$\boxed{q_p=0\iff\ker(P_{p^2}\longrightarrow P_p)\ne1.}\tag{ROC3}$$
+

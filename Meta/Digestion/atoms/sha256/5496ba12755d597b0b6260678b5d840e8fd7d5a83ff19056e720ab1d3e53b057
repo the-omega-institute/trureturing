@@ -1,0 +1,11 @@
+## 6. Falsifier
+
+The existential Wall question has no honest finite falsifier. A proof that no
+prime can satisfy the equality would refute it; a proof of finiteness would
+refute only the stronger infinitely-many conjecture.
+
+The proposed bridge is finitely falsifiable: find a prime `p` for which the
+directly computed pair period disagrees with the order of the Fibonacci
+matrix/golden unit, or for which `A^pi(p) = I (mod p^2)` disagrees with
+`pi(p^2) = pi(p)`.
+

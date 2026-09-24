@@ -1,0 +1,2 @@
+**Proof.** The odd sum in GPC8 contains a summand with all three factors odd. As j varies, the later supports are disjoint. The fixed finite set of primes in B_i therefore contains one p occurring for infinitely many j. At i=1, B_1=19 is prime and h_19=1 by TBN3, so the first coordinate must be nineteen. The remaining period and splitting assertions follow from GPC1 and TBN3. The odd depth of q may be one or at least three; the corollary does not select one of these alternatives.
+

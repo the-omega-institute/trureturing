@@ -1,0 +1,8 @@
+**proposition 11.1 (CG finite norm-one group).** $|T(\mathbb F_p)|=N$，且对每个正整数 $n$，
+
+$$u^n-1=dF_n\psi^{-n}.$$
+
+特别地，$v_p(u^N-1)=h_p$，并有
+
+$$\boxed{(u^N-1)/p\equiv\chi q_p d\pmod p.}$$
+

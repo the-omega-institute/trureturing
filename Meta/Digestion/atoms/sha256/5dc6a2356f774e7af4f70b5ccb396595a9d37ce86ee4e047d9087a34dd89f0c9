@@ -1,0 +1,17 @@
+**theorem 11.4a (CG fixed-parameter root).** 对每个 $p>5$，
+
+$$\boxed{U_N'(1)\equiv-2/5\not\equiv0\pmod p.}$$
+
+在 $1+p\mathbb Z_p$ 中，$U_N$ 恰有一个根 $a_p$，并且
+
+$$v_p(a_p-1)=h_p,\qquad
+(a_p-1)/p\equiv(5/2)q_p\pmod p.$$
+
+**证明。** $U_N(1)=F_N\equiv0$、$V_N(1)=L_N\equiv2\chi$，而 $N\equiv-\chi\pmod p$。导数恒等式给出 $5U_N'(1)\equiv-2$。Hensel 单根提升定理给出唯一根。对于 $x,y\in1+p\mathbb Z_p$，多项式差商模 $p$ 恒为这个非零导数，所以 $v_p(U_N(x)-U_N(y))=v_p(x-y)$。取 $x=1,y=a_p$ 得估值等式。最后 Taylor 展开给出
+
+$$U_N(1+pt)\equiv p(q_p-2t/5)\pmod{p^2},$$
+
+得到首位偏移。
+
+**实例。** $p=7$ 时 $N=8,q_7=3$，唯一参数提升为 $a_7\equiv29\pmod{49}$。这不使七成为 WSS 素数，因为原序列固定参数 $X=1$。WSS 判定是该固定参数是否已经落在根上至模 $p^2$，而不是根是否存在或是否光滑。
+

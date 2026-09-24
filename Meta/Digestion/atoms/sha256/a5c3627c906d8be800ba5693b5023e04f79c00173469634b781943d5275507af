@@ -1,0 +1,4 @@
+### CTG.4 Exact gluing to the scalar Eisenstein system
+
+**Definition.** Write b(n)=sum_(d|n)chi_5(d). The scalar good-Hecke system has eigenvalue b(ell)=1+chi_5(ell). Adjoin its one-dimensional coefficient module to the tower; no analytic normalization of a selected Eisenstein series is required for this definition.
+

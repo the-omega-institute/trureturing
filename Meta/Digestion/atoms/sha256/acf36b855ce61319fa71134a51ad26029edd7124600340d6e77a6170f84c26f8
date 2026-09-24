@@ -1,0 +1,10 @@
+**theorem 16.2 (STL2).** The rational-coefficient part of the real span of the g_sigma is exactly V_Q, and
+
+$$\boxed{L_{\rm int}=\{F_a:a\in\mathfrak D_B^{-1}\}.}\tag{STL1}$$
+
+The forms f_i=F_(beta_i) are a Z-basis of L_int. Their coefficients at n_0=1 and n_j=ell_j are delta_(ij). For arbitrary rational y_0,...,y_(d-1), the unique form in V_Q with these sampled coefficients is
+
+$$\boxed{F_{\sum_i y_i\beta_i}.}\tag{STL2}$$
+
+It has all Fourier coefficients integral if and only if every y_i is an integer. Removing any one of these d independent sample conditions fails to certify integrality.
+

@@ -1,0 +1,37 @@
+**theorem 15.9 (SGN9).** The Gram matrix is diagonal and
+
+$$\boxed{\det G_{p,k}
+=\left[\frac{N_k}{2}\left(1-\frac{\chi_5(p)}p\right)L(1,\chi_5)\right]^{d_k}
+\frac{\operatorname{Res}_{s=1}\zeta_{M_{p,k}}(s)}
+     {\operatorname{Res}_{s=1}\zeta_{M_{p,k-1}}(s)}.}\tag{SGN11}$$
+
+In particular it has the explicit form
+
+$$\boxed{\det G_{p,k}
+=\bigl[4p^k(p-\chi_5(p))\log\phi\bigr]^{d_k}
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+     {h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.}\tag{SGN12}$$
+
+**Proof.** Choose a good split Frobenius generating the rotation group as in SGN2. Its Hecke operator is self-adjoint since chi_5(ell)=1. Its eigenvalues zeta^j+zeta^(-j) on the displayed primitive forms are pairwise distinct, so those forms are orthogonal.
+
+For a dihedral group D_m, the permutation representation on cosets of a reflection is the trivial representation plus each two-dimensional irreducible representation once. The quotient field M_(p,k-1) contributes exactly the representations whose rotation characters factor through the quotient of order p^(k-1). Subtraction leaves precisely the primitive characters indexed by j above. The induction property of Artin L-functions therefore gives the identity, including ramified Euler factors,
+
+$$\frac{\zeta_{M_{p,k}}(s)}{\zeta_{M_{p,k-1}}(s)}
+=\prod_{j\in(\mathbb Z/p^k\mathbb Z)^*/\{\pm1\}}L_K(s,\eta^j).\tag{SGN13}$$
+
+Multiplication by two permutes these classes of exponents. Multiply SGN7 over all j and then take s=1 in SGN13 to obtain SGN11.
+
+The conductor-discriminant formula for the same permutation representation gives
+
+$$\frac{\operatorname{disc}(M_{p,k})}{\operatorname{disc}(M_{p,k-1})}
+=N_k^{d_k}.\tag{SGN14}$$
+
+Here every remaining irreducible constituent has exact conductor N_k by ROC8; both discriminants are positive. Since [M_(p,k):Q]-[M_(p,k-1):Q]=2d_k and both fields are totally real with only two roots of unity, the analytic class number formula gives
+
+$$\frac{\operatorname{Res}\zeta_{M_{p,k}}}{\operatorname{Res}\zeta_{M_{p,k-1}}}
+=\frac{2^{2d_k}}{N_k^{d_k/2}}
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+     {h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.$$
+
+Finally L(1,chi_5)=2log(phi)/sqrt(5), since K has class number one and fundamental unit phi. Inserting this and sqrt(N_k)=sqrt(5)p^(k+1) into SGN11 proves SGN12. The analytic class number formula is classical; see Sutherland, MIT 18.785 Lecture 19 (2021), Theorem 19.12. The Artin induction and conductor-discriminant identities are classical class-field inputs, also used in Tanaka, Section 4.2, for low-degree dihedral examples. No regulator approximation is used in this equality.
+

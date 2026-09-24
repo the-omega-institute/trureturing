@@ -1,0 +1,16 @@
+**theorem 18.4 (HCR4).** The prime-power sequences of L_int are in bijection with the integer functions b on Z/mZ satisfying
+
+$$\boxed{b_{-r}=-b_r,\qquad
+\sum_{j=0}^{p-1}b_{r+jq}=0\quad(r\in\mathbb Z/q\mathbb Z).}\tag{HCR5}$$
+
+In this correspondence s_n=b_(n+1 mod m) for all n>=0. The first d values b_1,...,b_d are free integer coordinates. Every nonzero rational sequence in this family has exact period m and minimal homogeneous constant-coefficient recurrence order 2d over Q, even though those d samples determine it within the specified family.
+
+**Proof.** From HCR2 and Phi_m=(1-Z^m)/(1-Z^q),
+
+$$\sum_{r\ge1}b_rZ^r=\frac{B_c(Z)}{1-Z^m},\qquad
+B_c(Z)=ZN_c(Z)(1-Z^q).$$
+
+The degree of B_c is at most m-1 and its constant term is zero. Width-reciprocity of N_c is equivalent to Z^m B_c(Z^(-1))=-B_c(Z), giving oddness. Divisibility by 1-Z^q is equivalent to zero sums of coefficients in each residue class modulo q. Conversely, start with an odd integer b having these fibre sums. Then B(Z)=sum_(r=0)^(m-1)b_rZ^r is divisible by 1-Z^q in Z[Z], since the latter is monic up to sign. Its quotient has zero constant term, so N=B/[Z(1-Z^q)] is an integer polynomial of degree at most 2d-2. The oddness equation makes N width-reciprocal. HCR2-HCR3 supply a unique c and the asserted entire sequence. HCR3 gives its first-d parametrization.
+
+For nonzero rational c, N_c is nonzero with degree below deg(Phi_m)=2d. Irreducibility of the cyclotomic polynomial implies gcd(N_c,Phi_m)=1 in Q[Z]. Hence Phi_m is the reduced generating-function denominator. Any eventual homogeneous rational linear recurrence must have a characteristic polynomial whose reversed polynomial is divisible by Phi_m, so its order is at least 2d; HCR2 realizes that order. A period T would make the reduced denominator divide 1-Z^T, forcing m|T. Since period m has already been proved, it is exact. The rationality assumption is retained in the minimal-recurrence assertion; it is not asserted for arbitrary real linear combinations of individual conjugate sinusoids.
+

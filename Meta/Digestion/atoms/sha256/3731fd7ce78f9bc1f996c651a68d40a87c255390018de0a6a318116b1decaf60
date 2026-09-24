@@ -1,0 +1,11 @@
+**theorem 19.7 (SJC7).** In the coefficient basis (1,phi), multiplication by phi and v has matrices
+
+$$A=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+B=A^2=\begin{pmatrix}1&1\\1&2\end{pmatrix}.$$
+
+Put S=2A-I, J=((0,1),(-1,0)), and c=2log(phi)/sqrt(5). Then
+
+$$S^2=5I,\qquad B^TJB=J,\qquad B=\exp(cS).$$
+
+The real flow exp(tcS) is Hamiltonian with quadratic Hessian -JcS, which is indefinite. No positive-definite quadratic energy is preserved by B.
+

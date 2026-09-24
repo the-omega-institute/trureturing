@@ -1,0 +1,7 @@
+**Reference-input status.** This volume collects the ordinary mathematical
+arguments developed around the Wall-Sun-Sun golden-unit problem. The arguments
+are paper proofs, not Lean certification. The current formal result in
+`D5/S3/Arith/Lattices/PrimeCyclotomicTraceImage.lean` is narrower than the
+surrounding PH, CG, FPD, THS, ROC, SGN, STL, CTG, HCR, SJC, TBN, DCE, and GPC
+developments; the broader WSS existence question remains open.
+

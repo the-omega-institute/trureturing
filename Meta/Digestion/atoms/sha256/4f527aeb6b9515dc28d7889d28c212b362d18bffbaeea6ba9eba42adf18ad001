@@ -1,0 +1,9 @@
+**Proof.** From HCR2 and Phi_m=(1-Z^m)/(1-Z^q),
+
+$$\sum_{r\ge1}b_rZ^r=\frac{B_c(Z)}{1-Z^m},\qquad
+B_c(Z)=ZN_c(Z)(1-Z^q).$$
+
+The degree of B_c is at most m-1 and its constant term is zero. Width-reciprocity of N_c is equivalent to Z^m B_c(Z^(-1))=-B_c(Z), giving oddness. Divisibility by 1-Z^q is equivalent to zero sums of coefficients in each residue class modulo q. Conversely, start with an odd integer b having these fibre sums. Then B(Z)=sum_(r=0)^(m-1)b_rZ^r is divisible by 1-Z^q in Z[Z], since the latter is monic up to sign. Its quotient has zero constant term, so N=B/[Z(1-Z^q)] is an integer polynomial of degree at most 2d-2. The oddness equation makes N width-reciprocal. HCR2-HCR3 supply a unique c and the asserted entire sequence. HCR3 gives its first-d parametrization.
+
+For nonzero rational c, N_c is nonzero with degree below deg(Phi_m)=2d. Irreducibility of the cyclotomic polynomial implies gcd(N_c,Phi_m)=1 in Q[Z]. Hence Phi_m is the reduced generating-function denominator. Any eventual homogeneous rational linear recurrence must have a characteristic polynomial whose reversed polynomial is divisible by Phi_m, so its order is at least 2d; HCR2 realizes that order. A period T would make the reduced denominator divide 1-Z^T, forcing m|T. Since period m has already been proved, it is exact. The rationality assumption is retained in the minimal-recurrence assertion; it is not asserted for arbitrary real linear combinations of individual conjugate sinusoids.
+

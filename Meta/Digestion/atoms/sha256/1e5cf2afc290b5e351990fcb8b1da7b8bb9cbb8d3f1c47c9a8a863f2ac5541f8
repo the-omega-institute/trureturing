@@ -1,0 +1,18 @@
+**theorem 16.8 (STL8).** Let G_eig be the SGN Gram matrix in the normalized eigenbasis. In any Z-basis of L_tr and any Z-basis of L_int, respectively, the Petersson Gram determinants are
+
+$$\boxed{\det G_{\rm tr}=p^{\delta_k}\det G_{\rm eig},\qquad
+\det G_{\rm int}=p^{-\delta_k}\det G_{\rm eig}.}\tag{STL10}$$
+
+Consequently, with the reflection fields and regulator normalization of SGN,
+
+$$\det G_{\rm int}=p^{-\delta_k}
+[4p^k(p-\chi_5(p))\log\phi]^d
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+{h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.$$
+
+At the WSS threshold k=1 this simplifies to
+
+$$\boxed{\det G_{\rm int}
+=p[4(p-\chi_5(p))\log\phi]^{(p-1)/2}
+ h(M_{p,1})\operatorname{Reg}(M_{p,1}).}\tag{STL11}$$
+

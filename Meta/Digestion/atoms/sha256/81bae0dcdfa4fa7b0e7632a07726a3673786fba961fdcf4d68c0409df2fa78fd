@@ -1,0 +1,16 @@
+**lemma 12.3 (FPD3).** Suppose ell>=7 is prime and p is a prime divisor of
+F_ell. Then the least positive Fibonacci zero index for p is ell, and
+p>ell.
+
+**Proof.** If p|F_j, strong divisibility gives
+p|gcd(F_ell,F_j)=F_(gcd(ell,j)). Unless ell|j, primality of ell makes
+that greatest common divisor one, impossible for p. Thus every zero
+index is a multiple of ell. The initial zero at ell proves exact rank.
+
+The cases p=2,5 are excluded by their zeros at indices3,5 respectively.
+The existing golden Frobenius/rank theorem gives ell|p-1 or ell|p+1.
+In the first case p>ell immediately. In the second, if p<=ell, the only
+positive multiple of ell that can equal p+1 is ell itself. This gives
+p+1=ell, impossible because both primes are odd. Thus p>ell in both
+cases. No lower bound on the value-primes is assumed as an input.
+

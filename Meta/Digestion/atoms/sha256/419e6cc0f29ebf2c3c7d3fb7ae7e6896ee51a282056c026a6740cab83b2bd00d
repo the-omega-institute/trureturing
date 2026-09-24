@@ -1,0 +1,20 @@
+**theorem 16.8 (STL8).** Let G_eig be the SGN Gram matrix in the normalized eigenbasis. In any Z-basis of L_tr and any Z-basis of L_int, respectively, the Petersson Gram determinants are
+
+$$\boxed{\det G_{\rm tr}=p^{\delta_k}\det G_{\rm eig},\qquad
+\det G_{\rm int}=p^{-\delta_k}\det G_{\rm eig}.}\tag{STL10}$$
+
+Consequently, with the reflection fields and regulator normalization of SGN,
+
+$$\det G_{\rm int}=p^{-\delta_k}
+[4p^k(p-\chi_5(p))\log\phi]^d
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+{h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.$$
+
+At the WSS threshold k=1 this simplifies to
+
+$$\boxed{\det G_{\rm int}
+=p[4(p-\chi_5(p))\log\phi]^{(p-1)/2}
+ h(M_{p,1})\operatorname{Reg}(M_{p,1}).}\tag{STL11}$$
+
+**Proof.** The change-of-basis matrix from the normalized eigenforms to trace forms F_(e_i) is the embeddings matrix (sigma(e_i)); the square of its determinant is disc(B)=p^(delta_k). The trace-dual basis changes this matrix by the inverse trace Gram matrix, so its squared determinant is p^(-delta_k). Apply the real Gram determinant transformation law. Unimodular changes among Z-bases do not change either determinant. Substitution of SGN12 gives the displayed regulator ratio; for k=1 use delta_1=d-1. The determinant is a real quantity involving regulators. Its explicit scalar p-power is not by itself an integral divisibility theorem about the entire determinant.
+

@@ -1,0 +1,13 @@
+**theorem 10.3 (PH3).** 无条件地有
+
+$$\boxed{M_\ell=U_\ell W_\ell,\qquad
+R_\ell^2E_\ell=100M_\ell U_\ell,\qquad
+W_\ell E_\ell=100M_\ell^2/R_\ell^2.}$$
+
+对任意整数 $d\ge2$，进一步令 $W_{\ell,\ge d}=\prod_{p\mid M_\ell,h_p\ge d}p^{h_p}$，则
+
+$$\boxed{W_{\ell,\ge d}^{\,d-1}\le
+\left(M_\ell/\operatorname{rad}(M_\ell)\right)^d.}$$
+
+**证明。** 逐素数比较指数。估值为一时，$\operatorname{rad}(M)^2E$ 与 $MU$ 的指数均为二；估值为二时均为二；估值 $h\ge3$ 时均为 $h$。其余两个恒等式由分解与 PH2 得到。对于最后的不等式，若 $h\ge d$，有 $h(d-1)\le d(h-1)$；若 $h<d$，左侧该素数指数为零，右侧非负。将这些整数整除关系相乘即可。
+

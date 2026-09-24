@@ -1,0 +1,11 @@
+**lemma 18.1 (HCR1).** The exact prime-power coefficients and their generating function are
+
+$$A_\eta(\ell^n)=P_n(t)=\sum_{j=0}^n\zeta^{n-2j},\qquad
+\sum_{n\ge0}P_n(t)Z^n=\frac1{1-tZ+Z^2}.\tag{HCR1}$$
+
+The elements P_0(t),...,P_(d-1)(t) are a Z-basis of O_B.
+
+**Proof.** The ideals of norm ell^n are q_ell^j sigma(q_ell)^(n-j), for 0<=j<=n. Their character values sum to the displayed expression. It satisfies the stated recurrence and initial values, which also prove the formal generating function. Each P_j is monic of degree j with integer coefficients. Thus this family is a unitriangular change of the integral power basis 1,t,...,t^(d-1) established in STL1. All equalities are exact; no asymptotic Hecke estimate is used.
+
+The polynomial generating function is classical, NIST DLMF 18.12.10. The input that these ideal sums define the specified Maass forms is the real-quadratic Hecke construction in D. Tanaka, *Explicit Construction of Maass Wave Forms and Their Petersson Inner Products*, arXiv:2601.21588v3, Theorem 1.1 and its defining Fourier expansion. This subsection uses neither that paper's Petersson norm constant nor a nonvanishing assertion at an unknown WSS target. Source roles are recorded in `Library/notes/tanaka2026maass.md`.
+

@@ -1,0 +1,18 @@
+**lemma 15.6 (SGN6).** For Re(s)>0, with the standard modified Bessel function K_0,
+
+$$\boxed{\int_0^\infty y^{s-1}K_0(y)^2\,dy
+=2^{s-3}\frac{\Gamma(s/2)^4}{\Gamma(s)}.}\tag{SGN6}$$
+
+In particular the value at s=1 is pi^2/4.
+
+**Proof.** Schlaefli's representation is
+
+$$K_0(y)=\tfrac12\int_0^\infty e^{-u-y^2/(4u)}\,du/u,$$
+
+as in NIST DLMF 10.32.10. For real s>0, Tonelli's theorem applies to the square. The y-integral is Gamma(s/2)/2 times (4uv/(u+v))^(s/2). The remaining double integral is
+
+$$2^{s-3}\Gamma(s/2)\int_0^\infty\int_0^\infty
+ e^{-u-v}u^{s/2-1}v^{s/2-1}(u+v)^{-s/2}\,du\,dv.$$
+
+Set w=u+v and x=u/(u+v). The w-integral is Gamma(s/2) and the x-integral is Beta(s/2,s/2). This gives SGN6. Absolute convergence on Re(s)>0 and holomorphic continuation within that half-plane prove the complex statement.
+

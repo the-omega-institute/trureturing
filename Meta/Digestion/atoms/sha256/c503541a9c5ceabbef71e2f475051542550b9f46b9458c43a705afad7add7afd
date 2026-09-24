@@ -1,0 +1,12 @@
+**theorem 19.6 (SJC6).** In O_p=O tensor Z_p there is a unique norm-one torsion lift xi of v modulo p with order r. There is a unique a_p in Z_p such that
+
+$$v=\xi\exp(pa_p\delta),\qquad
+v_p(a_p)=h_p-1,\qquad a_p=-q_p\pmod p.$$
+
+At precision p^s the inverse image of C has coordinates
+
+$$\mathbb Z/r\mathbb Z\times\mathbb Z/p^{s-1}\mathbb Z,
+\qquad(j,z)\longmapsto(j+1,z+a_p).$$
+
+It has exactly p^min(s-1,h_p-1) cycles, each of length r*p^max(s-h_p,0). At s=1 the second coordinate is the singleton group.
+

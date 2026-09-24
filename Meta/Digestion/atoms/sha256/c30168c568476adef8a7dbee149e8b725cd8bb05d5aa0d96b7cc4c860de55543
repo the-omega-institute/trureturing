@@ -1,0 +1,7 @@
+**lemma 18.1 (HCR1).** The exact prime-power coefficients and their generating function are
+
+$$A_\eta(\ell^n)=P_n(t)=\sum_{j=0}^n\zeta^{n-2j},\qquad
+\sum_{n\ge0}P_n(t)Z^n=\frac1{1-tZ+Z^2}.\tag{HCR1}$$
+
+The elements P_0(t),...,P_(d-1)(t) are a Z-basis of O_B.
+

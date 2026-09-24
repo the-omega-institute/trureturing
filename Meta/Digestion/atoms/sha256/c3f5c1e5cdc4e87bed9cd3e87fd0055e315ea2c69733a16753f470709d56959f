@@ -1,0 +1,7 @@
+**corollary 22.6 (GPC6).** If B_j has exactly one prime Q of odd initial depth, then Q splits completely in E_j. In particular, if B_j is an all-WSS block of total multiplicity five, DCE4 forces B_j=P^2 Q^3 with distinct primes and
+
+$$\boxed{\left(\frac pQ\right)=1\quad\text{for every }p\mid A_j,
+\qquad \left(\frac Q{B_i}\right)=-1\quad(1\le i<j).}\tag{GPC10}$$
+
+The same Q satisfies Q=19 modulo40 and Q=1 modulo2r_j. For j>=3, in particular, (Q/19)=(Q/5779)=-1.
+

@@ -1,0 +1,12 @@
+**theorem 22.7 (GPC7).** Fix j>=2 and its actual earlier supports. The set of rational primes Q satisfying
+
+$$Q=19\pmod{40},\qquad Q=1\pmod{r_j},\qquad
+(p/Q)=1\text{ for every }p\mid A_j$$
+
+has Dirichlet density
+
+$$\boxed{\frac1{2^{t_j}\varphi(40r_j)}
+=\frac1{2^{t_j+5}3^j}>0.}\tag{GPC11}$$
+
+This set does not impose Q|B_j, pi(Q)=2r_j, or h_Q>=2. For fixed j, the primes with pi(Q)=2r_j and Q>5 form a finite set, in fact exactly the prime divisors of B_j. Thus the positive density in GPC11 supplies no prime of the required exact clock or a WSS prime.
+

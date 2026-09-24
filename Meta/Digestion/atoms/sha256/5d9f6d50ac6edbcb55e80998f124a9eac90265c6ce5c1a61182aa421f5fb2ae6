@@ -1,0 +1,2 @@
+**Proof.** Choose j so large that 2r_j+1>X. Every prime dividing B_j exceeds X by TBN3. DCE2 gives a witness for e and shows that the depths in this finite subset already have gcd one. Different blocks have disjoint prime support, so repeating with arbitrarily large j gives infinitely many witnesses. A common divisor of the depths in the entire tail would divide the gcd in this one finite block, hence is one. These primes may have depth one or larger depths not divisible by e; neither possibility is selected by this argument.
+

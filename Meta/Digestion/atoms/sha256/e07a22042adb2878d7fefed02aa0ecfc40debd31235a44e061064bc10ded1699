@@ -1,0 +1,8 @@
+**Proof.** Conjugation of ideals pairs eta(a) with eta(a)^(-1). A fixed ideal coprime to p under sigma has character value equal to its inverse, hence one because its order is odd. Thus the ideal sum is real and integral in Q(zeta). For a good rational prime ell not dividing 5p, if ell is inert the coefficient is zero. If ell splits as q*sigma(q), then
+
+$$A_\eta(\ell)=\zeta^b+\zeta^{-b},\qquad \eta(\mathfrak q)=\zeta^b.$$
+
+Chebotarev applied to the already-defined L_(p,k)/Q supplies primes with Frobenius the conjugacy class of a generator rotation. For one such ell the coefficient is zeta+zeta^(-1), proving equality of coefficient fields. The action zeta mapping to zeta^j gives the stated Galois orbit; equality of two induced forms forces the characters to agree or be inverse, as in ROC8.
+
+The shifted polynomial Phi_(p^k)(1+X) is Eisenstein at p. Hence p is totally ramified in Q(zeta), with uniformizer 1-zeta and norm p. Since lambda_m=(1-zeta)(1-zeta^(-1)), its valuation in that cyclotomic field is two. Passing to the real subfield divides the valuation by two; its absolute norm there is p, using Phi_(p^k)(1)=p. Total ramification and the displayed degree give the ideal assertions. Chebotarev is used only after the extension exists; see A. V. Sutherland, MIT 18.785 Lecture 28 (2021), Theorem 28.9. It is not an existence theorem for the missing ring-class character at an arbitrary target p.
+

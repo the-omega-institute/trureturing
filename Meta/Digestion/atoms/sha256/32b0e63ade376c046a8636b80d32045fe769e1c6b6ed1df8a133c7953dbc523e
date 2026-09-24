@@ -1,0 +1,17 @@
+**theorem 12.4 (FPD4).** （方法先例：N. Robbins, Fibonacci Quart. 21 (1983) 215–218；V. Andrejić, Univ. Beograd Publ. Elektrotehn. Fak. Ser. Mat. 17 (2006) 38–44） If m>0, m is outside E, and F_m is powerful, then
+there exists a prime ell>=7 such that
+
+$$
+\boxed{
+\ell\mid m,\qquad
+\forall q\text{ prime},\ q\mid m\Longrightarrow q\le\ell,
+\qquad F_\ell\text{ is powerful}.
+}
+$$
+
+Moreover every prime p dividing F_ell satisfies
+
+$$
+\boxed{p>\ell,\qquad p^2\mid F_{N(p)}.}
+$$
+

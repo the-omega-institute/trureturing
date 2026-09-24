@@ -1,0 +1,9 @@
+**theorem 14.4 (ROC4).** For coprime f,g, both coprime to ten, there is a natural exact sequence
+
+$$\boxed{
+1\longrightarrow\mathbb Z/\gcd(r(f),r(g))\mathbb Z
+\longrightarrow P_{fg}\longrightarrow P_f\times P_g\longrightarrow1.
+}\tag{ROC4}$$
+
+In particular H(fg)=H(f)H(g)gcd(r(f),r(g)).
+

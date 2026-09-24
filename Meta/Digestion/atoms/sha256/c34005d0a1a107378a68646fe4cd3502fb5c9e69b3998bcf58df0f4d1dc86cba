@@ -1,0 +1,5 @@
+## 3. Motivation
+
+- Multiplication by `phi` on the basis `(1, phi)` is the Fibonacci matrix.
+  Frozen `Scale/Fibonacci` already expresses powers of `phi` in Fibonacci
+  coordinates.

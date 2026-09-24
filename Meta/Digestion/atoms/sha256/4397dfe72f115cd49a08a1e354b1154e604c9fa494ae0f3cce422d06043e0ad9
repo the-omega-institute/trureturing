@@ -1,0 +1,11 @@
+**theorem 10.3 (PH3).** 无条件地有
+
+$$\boxed{M_\ell=U_\ell W_\ell,\qquad
+R_\ell^2E_\ell=100M_\ell U_\ell,\qquad
+W_\ell E_\ell=100M_\ell^2/R_\ell^2.}$$
+
+对任意整数 $d\ge2$，进一步令 $W_{\ell,\ge d}=\prod_{p\mid M_\ell,h_p\ge d}p^{h_p}$，则
+
+$$\boxed{W_{\ell,\ge d}^{\,d-1}\le
+\left(M_\ell/\operatorname{rad}(M_\ell)\right)^d.}$$
+

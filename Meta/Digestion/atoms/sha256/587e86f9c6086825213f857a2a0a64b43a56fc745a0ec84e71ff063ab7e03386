@@ -1,0 +1,2 @@
+**Definition.** An ordinary ring-class character of conductor dividing f is a character of P_f, inflated along the natural maps for larger conductors. Its least rational conductor is the smallest positive f through which it factors. Through classical ring class field theory it defines a finite Hecke character of K trivial at both real places and on rational ideles. For k>=1 let X_(p,k) be the set of such characters of exact order p^k whose conductor is a power of p, identifying repeated inflations of the same character.
+

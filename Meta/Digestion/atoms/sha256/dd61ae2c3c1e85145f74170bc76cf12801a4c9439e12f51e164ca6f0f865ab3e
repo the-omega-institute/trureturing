@@ -1,0 +1,10 @@
+### PH.3 原始零集合的精确整数账目
+
+**定义。** 在同一个 $M_\ell$ 的实际素因子上，令
+
+$$U_\ell=\prod_{p\mid M_\ell,\ h_p=1}p,\qquad
+W_\ell=\prod_{p\mid M_\ell,\ h_p\ge2}p^{h_p},\qquad
+E_\ell=\prod_{p\mid M_\ell,\ h_p\ge3}p^{h_p-2}.$$
+
+空乘积为一。$W_\ell$ 恰好由原 WSS 初始商零集合、在精确秩 $\ell$ 和 $2\ell$ 上的实际贡献组成。它不是由后来的指标倍乘产生的平方因子。$U_\ell$ 只保留估值恰为一的素数，与按奇数估值定义的平方自由核不同。
+

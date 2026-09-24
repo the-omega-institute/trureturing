@@ -1,0 +1,16 @@
+**theorem 10.6 (PH6).** 若对某个 $1<\kappa<2$ 有 $\mathrm{PH}(\kappa)$，则每个足够大的素数指标 $\ell$ 都有一个素数 $p$，满足
+
+$$r(p)\in\{\ell,2\ell\},\qquad q_p\ne0.$$
+
+若更强地 $1<\kappa<4/3$，则两个通道分别都有这样的素数：存在 $p_\ell\mid F_\ell$ 和 $s_\ell\mid L_\ell$，使
+
+$$\boxed{r(p_\ell)=\ell,\quad r(s_\ell)=2\ell,\quad
+q_{p_\ell}\ne0,\quad q_{s_\ell}\ne0.}$$
+
+可以同时得到实际简单素因子乘积的下界
+
+$$U(F_\ell)\ge c_1F_\ell^{\,4/\kappa-3},\qquad
+U(L_\ell)\ge c_2L_\ell^{\,4/\kappa-3},$$
+
+其中 $U(X)=\prod_{p\parallel X}p$，$c_1,c_2>0$ 与指标无关。
+

@@ -1,0 +1,7 @@
+**theorem 14.8 (ROC8).** Every representation in D_(p,k) has weight zero, Laplace eigenvalue 1/4, central character chi_5, and exact arithmetic conductor 5p^(2k+2). Moreover
+
+$$\boxed{|D_{p,k}|=
+\frac{p^{k-1}(p-1)}2\,\mathbf1_{h_p\ge k+1}.}\tag{ROC8}$$
+
+In particular p is WSS if and only if D_(p,1) is nonempty, in which case its size is (p-1)/2 and its exact conductor is 5p^4.
+

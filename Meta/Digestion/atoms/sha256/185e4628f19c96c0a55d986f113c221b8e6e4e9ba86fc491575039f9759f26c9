@@ -1,0 +1,13 @@
+### GPC.1 The same golden matrix and three different return times
+
+**Definition.** Retain the actual TBN blocks
+
+$$x_j=L_{3^j},\qquad r_j=3^{j+1},\qquad B_j=x_j^2+3\quad(j\ge1),$$
+
+and the original golden unit phi, v=phi^2 and initial depths h_p. Write rho(M) for the least positive Fibonacci zero index modulo M, and pi(M) for the least positive n with (F_n,F_(n+1))=(0,1) modulo M. Thus pi(M) is the order modulo M of the integer matrix
+
+$$U=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+U^n=\begin{pmatrix}F_{n-1}&F_n\\F_n&F_{n+1}\end{pmatrix}.$$
+
+The matrix Q in `PERIODIC_TREE.md`, Section 8.1, is obtained by interchanging these two coordinates; it has the same orders. That section's real golden-return matrices are powers of Q. The real fractional-part clock, the norm-one residue order of v, and the exact finite-ring pair return remain different observations of this common integer matrix.
+

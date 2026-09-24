@@ -1,0 +1,9 @@
+**theorem 16.7 (STL7).** The greatest common divisor of the Fourier coefficients of the raw trace F_1 is exactly p^(k-1). Its primitive normalization is F_(1/p^(k-1)), whose first coefficient is (p-1)/2. For a good split prime with rotation exponent b, the raw coefficient is
+
+$$\boxed{\operatorname{Tr}_{B/\mathbb Q}(t_b)=
+\begin{cases}
+p^{k-1}(p-1),&p^k\mid b,\\
+-p^{k-1},&p^{k-1}\mid b,\ p^k\nmid b,\\
+0,&p^{k-1}\nmid b.
+\end{cases}}\tag{STL9}$$
+

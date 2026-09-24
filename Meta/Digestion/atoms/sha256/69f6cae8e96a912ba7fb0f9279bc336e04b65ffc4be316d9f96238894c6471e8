@@ -1,0 +1,7 @@
+**Definition.** For p>5 set r=rho(p), R=rho(p^2), where rho denotes the least positive Fibonacci zero index. Define
+
+$$
+K_p(t)=\sum_{\substack{n\ge1\\p\parallel F_n}}e^{-tF_n^2},\qquad
+S_a(t)=\sum_{k\ge1}e^{-tF_{ak}^2}\quad(t>0).
+$$
+

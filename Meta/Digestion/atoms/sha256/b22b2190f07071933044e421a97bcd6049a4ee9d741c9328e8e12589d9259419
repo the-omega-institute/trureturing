@@ -1,0 +1,9 @@
+**theorem 13.5 (THS5).** For a>=3, the series Z_a(s)=sum_(k>=1)F_(ak)^(-s), initially on Re(s)>0, has the representation
+
+$$Z_a(s)=\frac{5^{s/2}}{\phi^{as}-1}+H_a(s),$$
+
+where H_a is holomorphic on Re(s)>-2 and H_a(0)=0. Thus D_p(s)=Z_r(s)-Z_R(s) satisfies
+
+$$\operatorname{Res}_{s=0}D_p(s)=\frac{1/r-1/R}{\log\phi},\qquad
+\int_0^\infty K_p(t)t^{s-1}\,dt=\Gamma(s)D_p(2s)\quad(\Re s>0).$$
+

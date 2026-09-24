@@ -1,0 +1,10 @@
+**theorem 21.2 (DCE2).** For every j>=1, retain the actual block B_j=L_(3^j)^2+3 and its original depths from TBN. Then
+
+$$\boxed{\gcd\{h_p:p\text{ prime},\ p\mid B_j\}=1.}\tag{DCE1}$$
+
+Equivalently, for every integer e>=2 there is a prime p|B_j such that e does not divide h_p. In particular B_j cannot be a power of a single WSS prime. If B_j has only one distinct prime factor, that factor has h_p=1 and B_j itself is prime.
+
+**Proof.** The support is finite and nonempty because B_j>1. TBN3 gives the exact integer factorization B_j=product_(p|B_j) p^(h_p), without an index-multiplier contribution. If the gcd of these positive exponents were g>1, the integer Y=product p^(h_p/g) would satisfy B_j=Y^g. But L_(3^j)>=4, so DCE1 prohibits this equality. This proves the gcd. If every exponent were divisible by a chosen e>=2, the gcd would also be divisible by e, proving the witness statement. Conversely the witness statement for every e rules out any gcd greater than one. For a one-prime support the gcd equals its only exponent, giving the last conclusion.
+
+This uses a solved global exponential equation to constrain the actual fixed-golden depth vector. It is stronger than the two parity balances and single modulo-three balance of TBN4: it excludes a common exponent divisor of any size. The implication is a repository specialization of the cited theorem, not a new solution of the Lebesgue-Nagell problem or an independent proof of WSS existence.
+

@@ -1,0 +1,4 @@
+**Proof.** Substitute z=z'-f(j) in the update. Summing cancels every f term. If H=0, choose f(0) arbitrarily and define f(j+1)=f(j)-gamma_j; the closing equation at r holds exactly because the sum is zero. Conversely zero drift has zero sum. Two solutions have zero successive difference and thus differ by a constant. Since p does not divide r, the actual sum vanishes precisely with q_p.
+
+The obstruction is the accumulated drift of a Z-action over a finite phase cycle, or equivalently the circulation of a labeled cycle graph. It is not being identified with H^1 of the finite group C_r acting trivially on F_p. In that finite-group cohomology, p not dividing r would give a different vanishing statement.
+

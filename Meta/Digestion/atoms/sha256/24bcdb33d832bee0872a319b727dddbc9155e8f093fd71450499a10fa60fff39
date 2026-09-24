@@ -1,0 +1,10 @@
+**Proof.** Because r>=3, every real conjugate 2cos(2pi j/r) lies strictly between -2 and 2. Thus every factor of Psi_r(3) lies strictly between one and five, proving positivity and the bound.
+
+Since p=+/-1 modulo r and p does not divide r, p splits completely in the real cyclotomic field, and the conjugate torsion traces are distinct modulo p. Distinctness follows directly: two rth roots with the same sum with their inverse must agree up to inversion, since both solve X^2-tX+1. The canonical torsion lift xi gives one such trace alpha=xi+xi^(-1) with alpha=3 modulo p. It is the unique conjugate with this residue. All other factors of Psi_r(3) are p-adic units.
+
+Finally,
+
+$$3-\alpha=(v-\xi)\bigl(1-(v\xi)^{-1}\bigr).$$
+
+The second factor is a unit because the residue of xi has order r>2. The first factor has valuation h_p by SJC6. Thus the valuation of the entire norm is exactly h_p. At a split p the two golden embeddings exchange xi and xi^(-1), which have the same alpha; they do not create a second norm factor.
+

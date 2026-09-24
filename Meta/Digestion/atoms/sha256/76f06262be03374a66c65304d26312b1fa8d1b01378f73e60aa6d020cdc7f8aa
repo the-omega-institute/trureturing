@@ -1,0 +1,15 @@
+**theorem 17.3 (CTG3).** The map a to F_a identifies the rational-coefficient part of the real tower span with E_k and
+
+$$\boxed{\Lambda_k=\mathcal F(R_k^\vee),\qquad
+[\Lambda_k:\Lambda_{\rm sep}]=p^{J_k}.}\tag{CTG5}$$
+
+With e_0=1, e_i=C_i(t) for 1<=i<D_k, its trace matrix is
+
+$$H_{00}=D_k,\qquad H_{0i}=H_{i0}=-1,\qquad
+H_{ij}=p^k\delta_{ij}-2\quad(i,j>0).\tag{CTG6}$$
+
+Consequently
+
+$$\boxed{\operatorname{disc}(R_k)=(p^k)^{D_k-1},\qquad
+\Lambda_k/\mathcal F(R_k)\simeq(\mathbb Z/p^k\mathbb Z)^{D_k-1}.}\tag{CTG7}$$
+

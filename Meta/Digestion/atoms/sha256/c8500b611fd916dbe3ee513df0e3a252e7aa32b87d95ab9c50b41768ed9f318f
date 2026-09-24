@@ -1,0 +1,5 @@
+**proposition 14.10 (ROC scope).** The identities THS1-THS6 and ROC1-ROC9 leave the actual set of primes with h_p>=2 undetermined. In particular, a vanishing theorem for D_(p,1) on a specified prime family would exclude WSS in that family, while an independently constructed member would give a WSS prime; neither existence nor vanishing on a new family follows from the displayed counts alone.
+
+**Proof.** ROC8 expresses the count in terms of the same actual h_p, and ROC9 expresses the heat coefficient in terms of its unit-image size. No inequality choosing a branch is among the hypotheses or conclusions used to prove those identities. The logical implications in the proposition follow directly from ROC8, but their antecedents require information additional to the formula. The fixed eigenvalue is 1/4 at every conductor, so estimates that only treat growing archimedean spectral parameter do not by themselves supply either antecedent.
+
+

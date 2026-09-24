@@ -1,0 +1,8 @@
+**proposition 15.8 (SGN8).** In the standard K_0 convention, the coefficient 2^(s-2) in Tanaka, arXiv:2601.21588v3, Lemma 4.2, must be replaced by 2^(s-3) when nu=0. For the family in SGN1 the cosine normalization Theta_eta=g_eta/2 therefore has
+
+$$\boxed{\langle\Theta_\eta,\Theta_\eta\rangle_N
+=\frac N8\left(1-\frac{\chi_5(p)}p\right)
+ L(1,\chi_5)L_K(1,\eta^2).}\tag{SGN10}$$
+
+This is half the expression obtained by specializing the printed Theorem 1.3 of that version to this family.
+

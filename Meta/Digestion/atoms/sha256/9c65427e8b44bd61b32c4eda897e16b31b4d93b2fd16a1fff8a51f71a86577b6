@@ -1,0 +1,3 @@
+- The order of the reduced golden unit matches the chosen Pisano-period
+  convention without a factor of 2 or a special case; that must be proved, not
+  assumed.

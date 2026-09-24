@@ -1,0 +1,4 @@
+- The first reachable theorem is not existence. It is an exact bridge among the
+  pair recurrence period, the order of the Fibonacci matrix, and the order of
+  `phi` in an appropriate golden algebra modulo `p^e` for `e = 1, 2`.
+

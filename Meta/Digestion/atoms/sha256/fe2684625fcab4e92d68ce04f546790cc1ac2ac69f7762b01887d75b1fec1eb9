@@ -1,0 +1,7 @@
+**theorem 19.8 (SJC8).** Let r be the norm-one period in SJC.2. For a primitive rth root of unity zeta_r let Psi_r be the minimal polynomial of zeta_r+zeta_r^(-1), and set G_r=Psi_r(3). Then G_r is a positive integer and
+
+$$\boxed{v_p(G_r)=h_p,\qquad
+1<G_r<5^{\varphi(r)/2}.}\tag{SJC5}$$
+
+In particular WSS at p forces p^2|G_r and p^2<5^(varphi(r)/2). This r divides p-chi and is prime to p; it is distinct from the p-power character order used in HCR and SGN.
+

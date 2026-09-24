@@ -1,0 +1,13 @@
+**theorem 17.6 (CTG6).** Every unital homomorphism R_k -> Z/p^r has t=2 modulo p. The number of such homomorphisms is p^(r-1) for 1<=r<=k and zero for r>k. For the augmented algebra Rtilde_k the number is
+
+$$\boxed{p^{\min(k,r-1)}.}\tag{CTG13}$$
+
+Its only Z_p-valued character is the scalar Eisenstein evaluation t=2.
+
+**Proof.** Each monic shifted polynomial Psi_(p^j)(2+U) reduces to U^(d_j) modulo p and has constant term p. Its degree d_j is at least three for p>5. Hence for u in pZ_p, every nonconstant term has valuation at least two and
+
+$$\Psi_{p^j}(2+u)\equiv p\pmod{p^2},\qquad
+v_p(Q_k(2+u))=k.$$
+
+Reduction modulo p of Q_k is (X-2)^(D_k), so a homomorphism has image t=2+u with u divisible by p. For the cusp algebra, Q_k(2+u)=0 modulo p^r holds exactly when r<=k; every such residue u then works, giving p^(r-1) choices. For the augmented algebra the condition is u Q_k(2+u)=0. Thus u must be a multiple of p^max(1,r-k), giving CTG13. Over Z_p the factor Q_k(2+u) is nonzero, so u=0. These are scalar characters with target Z/p^r or Z_p; the genuine cuspidal characters take values in ramified cyclotomic integer rings. This statement does not rule out those ramified characteristic-zero characters.
+

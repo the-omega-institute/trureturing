@@ -1,0 +1,6 @@
+**lemma 12.2 (FPD2).** If m>0 has no prime divisor greater than five, then
+
+$$
+\boxed{F_m\text{ powerful}\quad\Longleftrightarrow\quad m\in E.}
+$$
+

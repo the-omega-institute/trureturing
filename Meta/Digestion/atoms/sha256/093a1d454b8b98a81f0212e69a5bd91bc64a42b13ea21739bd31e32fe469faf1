@@ -1,0 +1,2 @@
+**Definition.** For coprime odd positive integers A,B use the usual Jacobi symbol (A/B), including composite B. A value +1 for a composite denominator is not assumed to mean that A is a square modulo B. For distinct odd primes q,p let epsilon(q,p) be zero or one according as (q/p) is +1 or -1.
+

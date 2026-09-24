@@ -1,0 +1,2 @@
+**Proof.** All the observed eigenvalues lie in the largest of the nested subfields B_s, and multiplicativity puts the product coefficients in the same field. One prime of that largest order already spans O_(B_s) through its power coefficients by HCR1. Thus the common observable coefficient algebra has precisely this field and the asserted kernel. Identity and inert primes add only rational coefficients. For k>=2 the largest proper subfield in this tower has degree d/p. This is a restriction on the stated observation set, not on all possible arithmetic methods.
+

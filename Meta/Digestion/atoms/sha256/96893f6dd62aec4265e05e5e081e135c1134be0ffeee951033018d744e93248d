@@ -1,0 +1,6 @@
+**theorem 13.6 (THS6).** For every p>5 and k>=2, the number of pairs (v,w) modulo p^k with
+
+$$v^2-5w^2=4,\qquad p\mid w,\quad p^2\nmid w$$
+
+is 2(p-1)p^(k-2). Replacing four by minus four gives the same count when p=1 modulo four and zero otherwise.
+

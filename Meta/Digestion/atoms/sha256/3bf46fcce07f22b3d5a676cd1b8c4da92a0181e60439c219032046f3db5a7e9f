@@ -1,0 +1,8 @@
+### STL.1 Actual coefficient span and rational descent
+
+**Definition.** Retain an existing character eta in X_(p,k) of ROC, with p>5, k>=1 and actual h_p>=k+1. Put m=p^k, d=p^(k-1)(p-1)/2, zeta=zeta_m, t=zeta+zeta^(-1), and B=Q(t). For each real embedding sigma of B let g_sigma be the SGN-normalized conjugate of g_eta. For a in B define
+
+$$F_a=\sum_{\sigma:B\hookrightarrow\mathbb R}\sigma(a)g_\sigma.$$
+
+Its nth coefficient is Tr_(B/Q)(a A_eta(n)). Let V_Q be the set of these forms, let L_tr={F_a:a in O_B}, and let L_int be the set of rational-coefficient forms in the real span of the g_sigma whose every Fourier coefficient is in Z. All statements below concern this already-existing finite-order family.
+

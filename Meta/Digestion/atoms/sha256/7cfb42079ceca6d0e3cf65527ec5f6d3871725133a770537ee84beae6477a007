@@ -1,0 +1,2 @@
+**Proof.** A single factor would make the depth gcd at least H, contrary to DCE2. With at least three factors the total is at least 3H>2H+1, since H>=2. With two factors the total is at least 2H, but equality would give the exponent vector (H,H), again contrary to its gcd being one. Hence the total is at least 2H+1. Equality leaves two integers at least H whose sum is 2H+1, necessarily H,H+1. Every actual prime factor is at least b(r_j) by TBN5, so multiplying its powers gives the size bound. No primality of b(r_j) is required.
+

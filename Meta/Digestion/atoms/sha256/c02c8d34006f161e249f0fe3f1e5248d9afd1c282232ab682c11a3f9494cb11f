@@ -1,0 +1,8 @@
+**theorem 21.5 (DCE5).** Suppose all prime factors of B_j are WSS and Omega(B_j)=5. With the forced factorization B_j=P^2 Q^3, one has
+
+$$\boxed{Q\equiv19\pmod{40},\qquad
+P\equiv1+2(-1)^j r_j\pmod{6r_j},\qquad
+v_3(P-1)=j+1.}\tag{DCE3}$$
+
+Both primes also have the split exact rank 2r_j from TBN3. If Q=19 modulo80 then P^2=9 modulo16; if Q=59 modulo80 then P^2=1 modulo16.
+

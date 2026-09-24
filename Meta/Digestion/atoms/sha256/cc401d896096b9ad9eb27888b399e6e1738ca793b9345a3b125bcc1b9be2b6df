@@ -1,0 +1,9 @@
+**corollary 15.10 (SGN WSS-threshold determinant).** At the WSS threshold k=1, put d=(p-1)/2. The reflection field satisfies
+
+$$\operatorname{disc}(M_{p,1})=5^{(p-1)/2}p^{2(p-1)},$$
+
+and the normalized packet has
+
+$$\det G_{p,1}=[4p(p-\chi_5(p))\log\phi]^d
+ h(M_{p,1})\operatorname{Reg}(M_{p,1}).$$
+

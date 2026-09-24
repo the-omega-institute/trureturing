@@ -1,0 +1,7 @@
+**theorem 17.1 (CTG1).** One has
+
+$$\boxed{Q_k(X)=\prod_{j=1}^k\Psi_{p^j}(X),\quad
+Q_k(2)=p^k,\quad R_k\simeq\mathbb Z[X]/(Q_k(X)).}\tag{CTG1}$$
+
+This R_k is exactly the integral algebra of good Hecke operators on the complete tower. The Z-span of its actual Fourier coefficient vectors is all of R_k, already using coefficient one and finitely many good split-prime coefficients.
+

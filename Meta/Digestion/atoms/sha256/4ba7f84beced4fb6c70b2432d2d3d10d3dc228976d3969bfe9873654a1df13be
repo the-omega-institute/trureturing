@@ -1,0 +1,6 @@
+**Boundary cases.** If eta(q_ell)=1 at a split good prime, then
+
+$$[\ell^n]\mathcal F_c=(n+1)\operatorname{Tr}_{B/\mathbb Q}(c).$$
+
+At an inert good prime the coefficient is Tr(c) for even n and zero for odd n. In both cases the observation rank is one, with kernel dimension d-1. The split identity case is not claimed to be periodic in n.
+

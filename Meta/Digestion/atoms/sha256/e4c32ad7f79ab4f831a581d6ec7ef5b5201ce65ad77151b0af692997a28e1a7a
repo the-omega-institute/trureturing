@@ -1,0 +1,14 @@
+**theorem 20.4 (TBN4).** The prime factors of each B_j satisfy
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv3\ (4)}}h_p\equiv1\pmod2,}\tag{TBN3}$$
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv4\ (5)}}h_p\equiv1\pmod2,}\tag{TBN4}$$
+
+$$\boxed{\sum_{p\mid B_j}h_p\frac{p-1}{r_j}\equiv(-1)^j\pmod3.}\tag{TBN5}$$
+
+In particular each block has a split prime p with odd initial depth and
+
+$$p\equiv2r_j+1\pmod{4r_j}.$$
+
+Each block also has a prime p with 3 not dividing h_p and v_3(p-1)=j+1. These two existential witnesses are not asserted to be the same prime.
+

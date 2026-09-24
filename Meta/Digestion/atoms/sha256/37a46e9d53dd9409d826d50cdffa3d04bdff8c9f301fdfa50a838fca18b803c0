@@ -1,0 +1,11 @@
+**theorem 19.5 (SJC5).** Let R=Z/p^aZ for a>=1 and p>5. For x=A+Bphi in O/p^aO, write y_0=Tr(x) and y_1=Tr(vx). Then
+
+$$\begin{pmatrix}y_0\\y_1\end{pmatrix}
+=\begin{pmatrix}2&1\\3&4\end{pmatrix}
+\begin{pmatrix}A\\B\end{pmatrix},\qquad
+\boxed{A=(4y_0-y_1)/5,\quad B=(-3y_0+2y_1)/5.}\tag{SJC3}$$
+
+Consequently, equality of all future exact trace observations under multiplication by v is already decided by these two observations and is equality of the state itself. On X_2 every one of its rp states is distinguishable by this two-observation experiment, independently of which drift branch the fixed v occupies.
+
+**Proof.** Multiply (1+phi)(A+Bphi)=(A+B)+(A+2B)phi and use Tr(C+Dphi)=2C+D. The determinant is five, a unit in R, proving the inverse and the claim about future observations. This is a fixed linear observability computation over the actual finite ring; replacing it by an approximate real trace is not part of the assertion.
+

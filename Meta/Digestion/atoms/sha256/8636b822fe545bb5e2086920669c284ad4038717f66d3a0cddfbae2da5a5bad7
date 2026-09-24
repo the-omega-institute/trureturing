@@ -1,0 +1,17 @@
+**theorem 13.1 (THS1).** For every positive integer d,
+
+$$
+C_d(b;y)=\sum_{5d^2u^2-v^2=b}e^{-2\pi y(5d^2u^2+v^2)},
+$$
+
+$$
+C_d(4;y)=4e^{8\pi y}\sum_{\substack{n\ge1\text{ odd}\\d\mid F_n}}
+ e^{-20\pi yF_n^2},
+$$
+
+$$
+C_d(-4;y)=2e^{-8\pi y}+4e^{-8\pi y}
+ \sum_{\substack{n\ge2\text{ even}\\d\mid F_n}}e^{-20\pi yF_n^2}.
+\tag{THS1}
+$$
+

@@ -1,0 +1,7 @@
+**corollary 13.4a (THS depth specialization).** With the actual initial depth h_p=v_p(F_r), one has
+
+$$
+\kappa_p=0\text{ and }K_p\equiv0\quad(h_p\ge2),\qquad
+\kappa_p=\frac{1-1/p}{2r\log\phi}>0\quad(h_p=1).
+$$
+

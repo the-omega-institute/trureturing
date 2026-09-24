@@ -1,0 +1,12 @@
+**theorem 22.1 (GPC1).** If p is any prime divisor of B_j, then
+
+$$\boxed{\operatorname{ord}_p(v)=r_j,\qquad
+\rho(p)=\pi(p)=2r_j,\qquad
+\pi(p^a)=2r_jp^{\max(a-h_p,0)}\quad(a\ge1).}\tag{GPC1}$$
+
+Every divisor d>1 of B_j has pi(d)=rho(d)=2r_j. More generally, for every a>=1,
+
+$$\boxed{\pi(B_j^a)=2r_j B_j^{a-1}.}\tag{GPC2}$$
+
+In particular pi(B_j^2)=B_j pi(B_j), independently of whether a prime factor has h_p=1 or h_p>=2.
+

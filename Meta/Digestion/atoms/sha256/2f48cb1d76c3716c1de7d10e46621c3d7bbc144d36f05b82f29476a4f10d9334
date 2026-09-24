@@ -1,0 +1,14 @@
+**theorem 15.9 (SGN9).** The Gram matrix is diagonal and
+
+$$\boxed{\det G_{p,k}
+=\left[\frac{N_k}{2}\left(1-\frac{\chi_5(p)}p\right)L(1,\chi_5)\right]^{d_k}
+\frac{\operatorname{Res}_{s=1}\zeta_{M_{p,k}}(s)}
+     {\operatorname{Res}_{s=1}\zeta_{M_{p,k-1}}(s)}.}\tag{SGN11}$$
+
+In particular it has the explicit form
+
+$$\boxed{\det G_{p,k}
+=\bigl[4p^k(p-\chi_5(p))\log\phi\bigr]^{d_k}
+\frac{h(M_{p,k})\operatorname{Reg}(M_{p,k})}
+     {h(M_{p,k-1})\operatorname{Reg}(M_{p,k-1})}.}\tag{SGN12}$$
+

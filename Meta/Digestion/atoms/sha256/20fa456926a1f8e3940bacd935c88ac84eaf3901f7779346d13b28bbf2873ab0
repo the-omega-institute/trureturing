@@ -1,0 +1,2 @@
+**Proof.** The split identity case is P_n(2)=n+1. Inert ideal norms occur only in even powers of ell; the unique such ideal is a rational principal ideal and has character value one. The trace map from the codifferent onto Z is surjective by the same functional-extension argument applied to Z subset O_B.
+

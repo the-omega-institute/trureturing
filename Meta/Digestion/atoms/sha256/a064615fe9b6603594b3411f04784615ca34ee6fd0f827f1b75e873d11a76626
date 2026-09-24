@@ -1,0 +1,2 @@
+**Proof.** STL4 at k=1 gives the quotient, which is killed by p, so the image dimension is d-(d-1)=1. Alternatively, using d=-1/2 modulo p, the displayed Gram matrix is -1/2 times the outer product of (1,2,...,2) with itself. This is not the nondegeneracy statement over Q; ramified reduction has changed the pairing.
+

@@ -1,0 +1,9 @@
+## 4. Gap
+
+- No frozen `pisanoPeriod` or recurrence-period API.
+- `GoldenApparition` works modulo a prime; there is no golden algebra modulo
+  `p^2` and no Hensel or p-adic order-lift theorem.
+- There is no `p`-rational field or p-adic logarithm machinery.
+- PID/UFD facts and the global unit classification alone do not decide the
+  exceptional local lift.
+

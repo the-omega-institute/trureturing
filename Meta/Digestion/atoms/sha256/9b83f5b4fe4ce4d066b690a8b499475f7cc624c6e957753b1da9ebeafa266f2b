@@ -1,0 +1,6 @@
+**corollary 15.4 (SGN4).** As the auxiliary good rational prime ell varies, the set on which the discrepancy in SGN2 has finite l_m-valuation p^j has Dirichlet density
+
+$$\frac{p-1}{2p^{j+1}}\quad(0\le j<k).$$
+
+The set on which that discrepancy is zero has density 1/2+1/(2p^k).
+

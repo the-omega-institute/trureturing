@@ -1,0 +1,16 @@
+## 5. Route
+
+1. Define the Fibonacci matrix `A = [[0,1],[1,1]]` over `ZMod m`; prove that
+   `pi(m)` is its multiplicative order by tracking `(F_n, F_{n+1})`.
+2. Define the reduction of `GoldenInt` over `ZMod m` and identify multiplication
+   by `phi` with `A`.
+3. For `r = pi(p)`, write the first lift as `A^r = I + pB (mod p^2)`. Prove
+   `pi(p^2) = pi(p)` if and only if `B = 0 (mod p)`, and that otherwise the
+   period acquires the expected factor `p`.
+4. Use the frozen split/inert and apparition results to reduce the required
+   congruence to a Fibonacci/Lucas quotient modulo `p`, separately in the two
+   Legendre-symbol cases.
+5. Only after those bridge theorems exist should a theorist choose between a
+   conditional nonexistence theorem for a prime class, a density heuristic, or
+   the global Wall question. Do not jump from a finite scan to existence.
+

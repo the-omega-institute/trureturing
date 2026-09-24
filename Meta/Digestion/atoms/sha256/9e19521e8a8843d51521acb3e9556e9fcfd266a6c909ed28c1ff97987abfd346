@@ -1,0 +1,5 @@
+**corollary 10.5 (PH5).** 如果对每个 $\kappa>1$ 都有 $\mathrm{PH}(\kappa)$，则
+
+$$\lim_{\ell\to\infty,\ \ell\ \mathrm{prime}}
+\frac{\sum_{p\mid F_{2\ell},\ q_p=0}h_p\log p}{\log F_{2\ell}}=0.$$
+

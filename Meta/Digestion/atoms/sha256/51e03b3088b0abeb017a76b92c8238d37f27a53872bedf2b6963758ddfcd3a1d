@@ -1,0 +1,20 @@
+**theorem 17.2 (CTG2).** For j<k,
+
+$$\Psi_{p^k}(t_j)=p\quad\text{in }B_{p^j},\qquad
+\Psi_{p^k}(X)\equiv p\pmod{Q_{k-1}(X)}.\tag{CTG2}$$
+
+For k>=2 there is a ring isomorphism
+
+$$\boxed{R_k\simeq R_{k-1}\times_{R_{k-1}/pR_{k-1}}O_{B_{p^k}},\qquad
+R_{k-1}/pR_{k-1}\simeq\mathbb F_p[e]/(e^{D_{k-1}}).}\tag{CTG3}$$
+
+The map from the new primitive factor to the common quotient sends t_k to 2+e. With S_k=product_(j=1)^k O_(B_(p^j)), the normalization of R_k, the exact additive index is
+
+$$\boxed{[S_k:R_k]=p^{J_k},\qquad
+J_k=\sum_{j=1}^{k-1}D_j
+=\frac12\left(\frac{p(p^{k-1}-1)}{p-1}-(k-1)\right).}\tag{CTG4}$$
+
+**Proof.** The identity Phi_(p^k)(Z)=Z^(d_k) Psi_(p^k)(Z+Z^(-1)), where d_k=p^(k-1)(p-1)/2, evaluated at a primitive p^j-th root for j<k gives p on the left. The exponent d_k is divisible by p^j, proving the first equality. Since the monic factors of Q_(k-1) are distinct, division by Q_(k-1) proves the second equality integrally.
+
+For monic coprime polynomials f,g over Q, the integer polynomial sequence identifies Z[X]/(fg) with the fiber product of Z[X]/(f) and Z[X]/(g) over Z[X]/(f,g). The intersection ideal is (fg), by rational coprimality and monic integer division. Take f=Q_(k-1), g=Psi_(p^k). CTG2 makes (f,g)=(f,p). Every conjugate of t_j reduces to two above p, so Psi_(p^j)(X) reduces to (X-2)^(d_j); hence Q_(k-1) reduces to (X-2)^(D_(k-1)). This proves CTG3, including the specified homomorphisms. Its additive cokernel has size p^(D_(k-1)). Starting from R_1=O_(B_p) and applying the index formula successively gives CTG4. Thus rational decomposition into packets cannot be substituted for an integral direct product.
+

@@ -1,0 +1,8 @@
+**corollary 13.3 (THS3).** If a simultaneous good-Hecke Maass cusp eigenform g has a nonzero Petersson pairing with V_d, its cuspidal representation satisfies
+
+$$\pi_g\simeq\pi_g\otimes\chi_5.$$
+
+It is therefore dihedral. The same conclusion holds for a nonzero cusp pairing with V_p-V_(p^2).
+
+**Proof.** The cusp decay of g and moderate growth of V_d make the pairing convergent. Hecke adjointness, with the nonzero character scalar included, and THS2 force g's eigenvalue at every good inert ell to vanish. At a good split prime twisting leaves its eigenvalue unchanged; at an inert prime the zero eigenvalue is also unchanged. The local determinant is multiplied by chi_5(ell)^2=1. Strong multiplicity one gives the self-twist, and the classical quadratic-self-twist characterization gives the dihedral conclusion. Both inputs are stated in N. Walji, *Further refinement of strong multiplicity one for GL(2)*, arXiv:1308.1469. This argument concerns cuspidal projections, including oldvectors, and does not assert disappearance of all continuous or residual terms in a regularized expansion.
+

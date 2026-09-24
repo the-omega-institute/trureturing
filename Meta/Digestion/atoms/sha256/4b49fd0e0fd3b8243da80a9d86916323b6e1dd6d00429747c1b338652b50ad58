@@ -1,0 +1,11 @@
+**theorem 11.5 (CG mapping-torus homology).** 对每个正偶数 $n$，
+
+$$B^n-I=F_nSA^n,$$
+
+$$\boxed{H_1(M_n;\mathbb Z)\cong\mathbb Z\oplus\mathbb Z/F_n\oplus\mathbb Z/(5F_n).}$$
+
+因此，对 $n=p-(5/p)$、$p>5$，
+
+$$\boxed{\operatorname{Tor}H_1(M_n;\mathbb Z)[p^\infty]
+\cong(\mathbb Z/p^{h_p})^2.}$$
+

@@ -1,0 +1,16 @@
+**theorem 18.3 (HCR3).** Given arbitrary integers y_0,...,y_(d-1), define, for 0<=j<=d-1,
+
+$$n_j=\sum_{a=0}^{\lfloor j/q\rfloor}y_{j-aq},\qquad
+n_{2d-2-j}=n_j.$$
+
+Set
+
+$$N_y(Z)=\sum_{j=0}^{2d-2}n_j Z^j,$$
+
+$$R_y(X)=n_{d-1}+\sum_{j=0}^{d-2}n_jD_{d-1-j}(X),\qquad
+c_y=R_y(t)/\Psi_m'(t).\tag{HCR4}$$
+
+Then F_(c_y) is the unique form in the rational packet with [ell^j]F_(c_y)=y_j for 0<=j<d, and all its Fourier coefficients are integers. The same construction with rational y gives the unique rational-packet form. Omitting any one of these d selected samples leaves a nonintegral form with all remaining selected coefficients integral.
+
+**Proof.** The reciprocal assignment is consistent at its central coefficient. The first d coefficients of Phi_m(Z) times sum y_j Z^j are precisely the n_j displayed above. Therefore N_y/Phi_m has the required first d coefficients. The expansion in D_j gives Z^(d-1)R_y(Z+Z^(-1))=N_y. HCR2-HCR3 prove existence and integrality. If two forms have the same prefix, their traces against the full basis P_j(t) agree; nondegeneracy of the trace pairing makes their c parameters equal. For omitted sample i, take the rational prefix with y_i=1/2 and all other entries zero. The construction gives a form with exactly that nonintegral sampled coefficient. This proves sharpness of these linear sampling conditions. It does not claim that arbitrary d Fourier positions are independent or bound the height ell^(d-1).
+

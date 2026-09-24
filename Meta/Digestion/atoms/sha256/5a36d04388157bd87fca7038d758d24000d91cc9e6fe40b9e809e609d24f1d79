@@ -1,0 +1,11 @@
+### HCR.1 A single actual auxiliary prime
+
+**Definition.** Retain an existing ordinary golden ring-class character eta of exact order m=p^k from ROC, with p>5 and k>=1. Thus the actual hypothesis h_p>=k+1 remains in force. Put q=p^(k-1), h=(p-1)/2 and d=hq. Let zeta be a primitive mth root of unity, t=zeta+zeta^(-1), B=Q(t), and Psi_m the monic minimal polynomial of t. Retain the SGN-normalized forms g_sigma and the rational trace forms
+
+$$\mathcal F_c=\sum_{\sigma:B\hookrightarrow\mathbb R}\sigma(c)g_\sigma,
+\qquad c\in B.$$
+
+The notation F_n without a calligraphic letter continues to denote a Fibonacci number. Choose a good split rational prime ell, ell not dividing 5p, whose rotation Frobenius generates the cyclic group of order m. Relabel zeta so that eta(q_ell)=zeta at one of the two primes above ell. Chebotarev in the already-existing class field supplies such ell; this does not construct eta and gives no bound for the least such ell here.
+
+Define monic polynomials P_0(X)=1, P_1(X)=X and P_(n+1)(X)=X P_n(X)-P_(n-1)(X). These equal the classical Chebyshev polynomials U_n(X/2). Define D_0(X)=2, D_1(X)=X and the same recurrence for D_n; then D_n(t)=zeta^n+zeta^(-n).
+

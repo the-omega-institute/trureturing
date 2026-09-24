@@ -1,0 +1,7 @@
+**theorem 14.9 (ROC9).** The coefficient in THS4 has the exact expression
+
+$$\boxed{\kappa_p=
+\frac{pH(p)-H(p^2)}{2p(p-\chi_p)\log\phi}.}\tag{ROC9}$$
+
+The family D_(p,1) is nonempty exactly in the branch where K_p is identically zero. Nonemptiness of this family therefore does not imply nonvanishing of the particular Fourier difference in THS4.
+

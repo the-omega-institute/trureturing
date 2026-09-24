@@ -1,0 +1,2 @@
+**Definition.** For a>=1 let T^(a) be the group of norm-one units of O/p^aO. Put r=ord_(T^(1))(v mod p), C=<v mod p>, and X_2 the inverse image of C in T^(2). The symbol r here is the period of the norm-one unit phi^2, not the Fibonacci zero rank rho(p). One has r|N, p not dividing r, and r>=3. The first fact follows from the split/inert order N of T^(1). The cases r=1,2 are excluded by v-1=phi and v+1=2+phi, whose norms are -1 and 5.
+

@@ -1,0 +1,21 @@
+**theorem 14.8 (ROC8).** Every representation in D_(p,k) has weight zero, Laplace eigenvalue 1/4, central character chi_5, and exact arithmetic conductor 5p^(2k+2). Moreover
+
+$$\boxed{|D_{p,k}|=
+\frac{p^{k-1}(p-1)}2\,\mathbf1_{h_p\ge k+1}.}\tag{ROC8}$$
+
+In particular p is WSS if and only if D_(p,1) is nonempty, in which case its size is (p-1)/2 and its exact conductor is 5p^4.
+
+**Proof.** Classical Hecke-Maass automorphic induction attaches a normalized eigenform to eta, and is cuspidal when eta is not equal to eta^sigma. Here eta^sigma=eta^(-1) and eta has odd order greater than one, so cuspidality holds. The induced two-dimensional finite-image representation sends complex conjugation to the identity, because K is real and both real components of eta are trivial. Its Maass eigenvalue is therefore 1/4. The central character is chi_5 times the restriction of eta to rational ideles, hence is chi_5. These classical finite-order induction statements, including the eigenvalue, are stated in W.-C. W. Li and Z. Rudnick, *Pair arithmetical equivalence for quadratic fields*, arXiv:2007.13147v2, Section 1.3.
+
+The conductor-discriminant formula for automorphic induction gives the exact conductor |disc(K)|*N_(K/Q)(cond eta)=5p^(2k+2). See P. Humphries, *Archimedean Newform Theory for GL_n*, Theorem 3.12 and Remark 3.13, DOI 10.1017/S1474748024000227. For the same quadratic field, two induced irreducible representations are isomorphic precisely when their inducing characters agree or are conjugate: restrict the induced representation back to K to get eta plus eta^sigma. Thus the fixed-point-free pairing eta with eta^(-1) accounts for the factor two in ROC8.
+
+An explicit normalization of the corresponding even Maass form is
+
+$$
+g_\eta(x+iy)=2\sqrt y\sum_{\substack{\mathfrak a\subset O\\
+(\mathfrak a,p)=1}}\eta(\mathfrak a)
+ K_0(2\pi N\mathfrak a\,y)\cos(2\pi N\mathfrak a\,x).
+$$
+
+The term of norm one has coefficient one in the normalized exponential Fourier expansion, so the constructed form is not zero. The sum converges for y>0 by the exponential decay of K_0. This is the classical Fourier construction in Li-Rudnick, Section 1.3, applied after the ring-class characters have been obtained. It does not establish their existence without the condition in ROC7.
+

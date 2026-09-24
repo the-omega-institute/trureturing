@@ -1,0 +1,7 @@
+**corollary 10.5 (PH5).** 如果对每个 $\kappa>1$ 都有 $\mathrm{PH}(\kappa)$，则
+
+$$\lim_{\ell\to\infty,\ \ell\ \mathrm{prime}}
+\frac{\sum_{p\mid F_{2\ell},\ q_p=0}h_p\log p}{\log F_{2\ell}}=0.$$
+
+**证明。** 分子恰为 $\log W_\ell\ge0$。对每个固定 $\kappa>1$，PH4 将上极限控制为 $2-2/\kappa$；让 $\kappa$ 从上方趋于一。这里是按整数因子大小加权的质量比例，不是 WSS 素数在全部素数中的自然密度或计数密度，也未假设不同素数独立。
+

@@ -1,0 +1,21 @@
+### FPD.6 Source roles and mathematical scope
+
+FPD1 is a recurrence proof of a classical special case of the Fibonacci
+valuation theory of Lengyel, recorded in Medina and Rowland,
+*p-regularity of the p-adic valuation of the Fibonacci sequence*,
+The Fibonacci Quarterly53(2015),265-271, Theorem1.4,
+https://arxiv.org/abs/0910.2907 . The source proof here does not use that
+theorem as an axiom or a lifting hypothesis.
+
+Bates, Jesubalan, Lee, Lu and Shim, *Powerful Fibonacci polynomials over
+finite fields*, arXiv:2601.02664v1 (2026), Theorem1.2 and Section2.1,
+https://arxiv.org/html/2601.02664v1 , classify a polynomial problem over
+finite fields and explicitly distinguish the conditional integer
+powerful-number problem. A finite-field polynomial multiplicity does
+not determine divisibility of an evaluated integer by p squared.
+Their theorem is contextual prior work, not an input to FPD1-FPD4.
+
+The full classification and WSS
+existence remain open targets of this line, not conclusions of FPD4.
+
+

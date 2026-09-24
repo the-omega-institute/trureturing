@@ -1,0 +1,8 @@
+**Proof.** Since n_j is odd, the Lucas triple identity is L_(3n)=L_n^3+3L_n; division gives the first formula. Substituting x_(j+1)=x_j^3+3x_j into x_(j+1)^2+3 gives the displayed cubic in B_j. For r=3^(j+1), the cyclotomic polynomial is 1+Z^(3^j)+Z^(2*3^j). Dividing by Z^(3^j) and evaluating at v, with v+v^(-1)=3, gives B_j=Psi_r(3).
+
+The recursion for x_j sends 4 to -4 and -4 to 4 modulo40. Thus x_j=+/-4 modulo40, giving B_j=19 modulo80. For the ternary claim extend the same definition to B_0=L_2+1=4. The exact factorization
+
+$$B_{j+1}-1=(B_j-1)((B_j-1)^2-3)$$
+
+raises the 3-adic valuation by exactly one and changes the normalized quotient by a minus sign modulo3. Starting with B_0-1=3 proves both ternary statements. Finally x_j>=4, so x_j^2<B_j<(x_j+1)^2. This gives nonsquareness without any factorization.
+

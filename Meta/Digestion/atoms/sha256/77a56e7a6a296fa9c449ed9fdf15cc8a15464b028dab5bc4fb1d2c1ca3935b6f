@@ -1,0 +1,20 @@
+**theorem 10.4 (PH4).** 假设 $\mathrm{PH}(\kappa)$，取其常数 $H,\ell_0$。令
+
+$$K_{\kappa,H}=100(H/\sqrt5)^{2/\kappa}.$$
+
+则全部足够大的素数指标满足
+
+$$\boxed{
+W_\ell\le K_{\kappa,H}M_\ell^{\,2-2/\kappa}/E_\ell,
+\qquad
+U_\ell\ge K_{\kappa,H}^{-1}E_\ell M_\ell^{\,2/\kappa-1}.
+}$$
+
+更一般地，对每个整数 $d\ge2$，
+
+$$\boxed{
+W_{\ell,\ge d}\le
+\left(10(H/\sqrt5)^{1/\kappa}\right)^{d/(d-1)}
+M_\ell^{\,(1-1/\kappa)d/(d-1)}.
+}$$
+

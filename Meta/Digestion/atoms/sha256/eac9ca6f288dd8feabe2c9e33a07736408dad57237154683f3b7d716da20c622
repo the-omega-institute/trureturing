@@ -1,0 +1,19 @@
+**theorem 20.5 (TBN5).** If every prime factor of B_j is WSS, then
+
+$$\sum_{p\mid B_j}h_p\ge5,\qquad
+\boxed{B_j\ge b(r_j)^5.}\tag{TBN6}$$
+
+Consequently B_j<b(r_j)^5 is a sufficient, independently checkable condition for B_j to have a non-WSS factor. It does not construct a WSS prime.
+
+**Proof.** Under the premise all h_p>=2. The first parity balance excludes total exponent two and every possibility of total exponent four, because all exponents would be even. A total exponent three would consist of a single exponent three; the ternary balance excludes that case because every summand would be zero modulo3. Totals zero and one are impossible as B_j>1 and each exponent is at least two. Hence the total is at least five.
+
+Each prime factor is p=1+2r_j t with integer t>=1, and p is1 or4 modulo5. The smallest positive allowed t is respectively4,2,3,1 in the four residue classes of r shown. This gives p>=b(r_j), without asserting that b(r_j) itself is prime. Multiplying these lower bounds with the actual exponents proves TBN6.
+
+For the fixed indices j=1,2,3 the respective pairs (B_j,b(r_j)^5) are
+
+$$(19,2476099),\quad
+(5779,15386239549),\quad
+(192900153619,115139273278249).$$
+
+All satisfy the strict inequality, establishing a non-WSS factor in each of these three known finite blocks without factoring the third one. These bounded checks are not previously unknown WSS-family decisions. At j=4 this same test fails: B_4=7177905237579946589743592924684179 exceeds1459^5. No conclusion about that block follows from this inequality.
+

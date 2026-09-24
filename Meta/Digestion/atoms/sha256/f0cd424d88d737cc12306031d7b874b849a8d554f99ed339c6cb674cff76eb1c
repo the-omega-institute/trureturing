@@ -1,0 +1,9 @@
+### STL.2 Full integral coefficients require the codifferent
+
+**Definition.** The codifferent is the trace-dual fractional ideal
+
+$$\mathfrak D_B^{-1}=
+\{a\in B:\operatorname{Tr}_{B/\mathbb Q}(aO_B)\subseteq\mathbb Z\}.$$
+
+Let beta_0,...,beta_(d-1) be the trace-dual basis to the e_j in STL1, so Tr(beta_i e_j)=delta_(ij). The underlying trace-dual and discriminant facts are classical; see A. V. Sutherland, MIT 18.785 (2021), Lecture 12, Definition 12.2, Proposition 12.6 and Theorem 12.17, https://math.mit.edu/classes/18.785/2021fa/LectureNotes12.pdf .
+

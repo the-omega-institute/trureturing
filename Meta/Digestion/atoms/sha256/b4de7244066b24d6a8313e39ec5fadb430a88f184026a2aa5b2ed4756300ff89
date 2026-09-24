@@ -1,0 +1,16 @@
+### SGN.1 Fixed fields and Fourier normalization
+
+**Definition.** Retain the fixed golden field K=Q(sqrt(5)), O=Z[phi], the original depth h_p, and the ordinary ring-class families X_(p,k), D_(p,k) of ROC. For this section take p>5, k>=1, and assume h_p>=k+1. Choose eta in X_(p,k), put m=p^k, d_k=p^(k-1)(p-1)/2, and N_k=5p^(2k+2). Let L_(p,k)/K be the cyclic class-field extension cut out by eta. All primitive characters of this cyclic quotient have the same kernel. Write sigma for golden conjugation.
+
+The extension L_(p,k)/Q is totally real and dihedral of degree 2m. Indeed its kernel is stable under sigma, which acts by inversion on its cyclic group. A lift s of sigma satisfies s^2=tau^j for a rotation tau. Commutation of s with s^2 and inversion of rotations imply 2j=0 modulo the odd number m, so s^2=1. Let M_(p,k) be the fixed field of a chosen reflection. It is totally real of degree m. Choose the reflections compatibly in the tower, and put M_(p,0)=Q. These fields are different from the radical fields E_n of RNI and the coefficient fields below.
+
+Define the integral ideal coefficients, with eta extended by zero on ideals not coprime to p, by
+
+$$
+A_\eta(n)=\sum_{N\mathfrak a=n}\eta(\mathfrak a),\qquad
+ g_\eta(z)=\sqrt y\sum_{n\ne0}A_\eta(|n|)K_0(2\pi|n|y)e^{2\pi inx}.
+\tag{SGN1}
+$$
+
+Thus A_eta(1)=1 and this g_eta is the form normalized in ROC8. Its Petersson norm at the minimal level is the unscaled integral with measure dx dy/y^2 over Gamma_0(N_k)\H. Daichi Tanaka, *Explicit Construction of Maass Wave Forms and Their Petersson Inner Products*, arXiv:2601.21588v3 (February 3, 2026), Theorem 1.1, uses the cosine sum Theta_eta=g_eta/2. The construction theorem is classical input; all norm constants below are derived with the normalization in SGN1.
+

@@ -1,0 +1,13 @@
+**theorem 22.2 (GPC2).** For every j>=1 and every 1<=i<j,
+
+$$\boxed{x_j=4\prod_{1\le t<j}B_t,\qquad
+B_j=16\left(\prod_{1\le t<j}B_t\right)^2+3,}\tag{GPC3}$$
+
+$$\boxed{B_j\equiv3-3^{2(j-i)-1}B_i^2\pmod{B_i^3}.}\tag{GPC4}$$
+
+Consequently B_j=3 modulo B_i^2, and for each prime p|B_i,
+
+$$\boxed{v_p(B_j-3)=2h_p.}\tag{GPC5}$$
+
+Thus for these fixed i,j and p, p is WSS if and only if p^4 divides B_j-3. This is an exact transport of the original depth, not an independent assertion that the last divisibility occurs.
+

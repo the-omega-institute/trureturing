@@ -1,0 +1,10 @@
+**theorem 20.3 (TBN3).** If p is a prime divisor of B_j, then
+
+$$p>5,\qquad (5/p)=1,\qquad
+\operatorname{ord}_{p}(v)=r_j,\qquad
+\rho(p)=2r_j,\qquad p\equiv1\pmod{2r_j},$$
+
+$$\boxed{v_p(B_j)=h_p.}\tag{TBN2}$$
+
+Here rho(p) is the Fibonacci zero rank, and h_p=v_p(F_(p-(5/p))) is the original initial depth. Different B_j are pairwise coprime.
+

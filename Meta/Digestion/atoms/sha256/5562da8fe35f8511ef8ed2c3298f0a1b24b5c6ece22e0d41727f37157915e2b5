@@ -1,0 +1,12 @@
+**theorem 16.4a (STL4A).** Write n=d-1 and regard H as a map on Z x Z^n. For an integer vector y, the following conditions are equivalent:
+
+$$\boxed{y\in H\mathbb Z^{n+1}
+\quad\Longleftrightarrow\quad
+p\mid y_i-2y_0\text{ for every }1\le i\le n.}\tag{STL6a}$$
+
+When they hold, put z_i=(y_i-2y_0)/p. The unique preimage is
+
+$$\boxed{x_0=y_0+\sum_{i=1}^n z_i,\qquad x_i=x_0+z_i.}\tag{STL6b}$$
+
+Thus the quotient map y mapping to (y_i-2y_0 modulo p) identifies Z^(n+1)/HZ^(n+1) with (Z/pZ)^n. The image and reconstruction assertions in fact hold for every n>=0 with p=2n+3, without requiring that p be prime.
+

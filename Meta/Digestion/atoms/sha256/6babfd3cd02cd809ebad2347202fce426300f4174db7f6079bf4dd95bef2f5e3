@@ -1,0 +1,5 @@
+**proposition 18.7 (HCR7).** At k=1, let y_j=[ell^j]F_c, 0<=j<d, be the single-prime prefix of a coefficient-integral form. Then
+
+$$\boxed{\mathcal F_c\in L_{\rm tr}
+\iff y_j\equiv(j+1)y_0\pmod p\quad(1\le j<d).}\tag{HCR7}$$
+

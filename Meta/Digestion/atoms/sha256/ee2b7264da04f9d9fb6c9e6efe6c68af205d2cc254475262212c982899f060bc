@@ -1,0 +1,9 @@
+**corollary 22.6 (GPC6).** If B_j has exactly one prime Q of odd initial depth, then Q splits completely in E_j. In particular, if B_j is an all-WSS block of total multiplicity five, DCE4 forces B_j=P^2 Q^3 with distinct primes and
+
+$$\boxed{\left(\frac pQ\right)=1\quad\text{for every }p\mid A_j,
+\qquad \left(\frac Q{B_i}\right)=-1\quad(1\le i<j).}\tag{GPC10}$$
+
+The same Q satisfies Q=19 modulo40 and Q=1 modulo2r_j. For j>=3, in particular, (Q/19)=(Q/5779)=-1.
+
+**Proof.** In the group of exponent two, all even h_q terms of GPC9 disappear. The only remaining term is Frob_Q to an odd power, so it must be the identity. This is equivalent to the primewise splitting conditions. Also (B_j/B_i)=(Q/B_i) because all the other exponents are even, giving the second condition. The congruence for Q follows from the s_j congruences when there is only one odd-depth prime, or directly from DCE5 in the two-prime case. The exact period gives Q=1 modulo2r_j. The first two earlier blocks are19 and5779, so the stated Jacobi tests follow without factoring any later block. No existence or impossibility of the two-prime pattern is asserted by these necessary conditions.
+

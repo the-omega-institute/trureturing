@@ -1,0 +1,15 @@
+## 3. Motivation
+
+- Multiplication by `phi` on the basis `(1, phi)` is the Fibonacci matrix.
+  Frozen `Scale/Fibonacci` already expresses powers of `phi` in Fibonacci
+  coordinates.
+- `GoldenApparition` and `FibonacciRank` control the first Fibonacci zero modulo
+  a prime and the `p ± 1` Frobenius index; `GoldenPrimeSplitting` supplies the
+  split/inert division according to 5 modulo `p`.
+- The period can therefore plausibly be re-expressed as an order of the reduced
+  golden unit or Fibonacci matrix. Equality at `p` and `p^2` is then an
+  exceptional failure of the usual order multiplication by `p` under lifting.
+- The first reachable theorem is not existence. It is an exact bridge among the
+  pair recurrence period, the order of the Fibonacci matrix, and the order of
+  `phi` in an appropriate golden algebra modulo `p^e` for `e = 1, 2`.
+

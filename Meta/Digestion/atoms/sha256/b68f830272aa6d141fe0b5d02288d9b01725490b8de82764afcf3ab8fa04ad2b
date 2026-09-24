@@ -1,0 +1,10 @@
+**proposition 15.8 (SGN8).** In the standard K_0 convention, the coefficient 2^(s-2) in Tanaka, arXiv:2601.21588v3, Lemma 4.2, must be replaced by 2^(s-3) when nu=0. For the family in SGN1 the cosine normalization Theta_eta=g_eta/2 therefore has
+
+$$\boxed{\langle\Theta_\eta,\Theta_\eta\rangle_N
+=\frac N8\left(1-\frac{\chi_5(p)}p\right)
+ L(1,\chi_5)L_K(1,\eta^2).}\tag{SGN10}$$
+
+This is half the expression obtained by specializing the printed Theorem 1.3 of that version to this family.
+
+**Proof.** At nu=0,s=1, SGN6 gives pi^2/4, whereas the stated factor 2^(s-2) gives pi^2/2 with the same K_0 integral. The cosine definition in that paper has first exponential Fourier coefficient 1/2, so its norm is one quarter of SGN7. In its printed constants C_1 C_2 C_3, put nu=0 and conductor ideal p^(k+1)O. Then C_2=pi, the first product in C_3 is empty, and the other Euler factors cancel the totient in C_1, yielding N/4 times (1-chi_5(p)/p) times the two L-values. This differs from SGN10 by exactly two. SGN7 was derived independently from the standard Bessel integral and the width-one Eisenstein residue; the uncorrected printed norm is not a premise. This proposition concerns that normalization and specialization, not the validity of the construction theorem or all other assertions of the paper.
+

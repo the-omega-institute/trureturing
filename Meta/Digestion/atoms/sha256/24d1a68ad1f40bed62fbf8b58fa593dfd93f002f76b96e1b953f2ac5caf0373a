@@ -1,0 +1,10 @@
+**theorem 12.1 (FPD1).** （文献：T. Lengyel, Fibonacci Quart. 33 (1995) 234–239；L. A. Medina, E. Rowland, Fibonacci Quart. 53 (2015) 265–271, Theorem 1.4） For every prime p, positive n, and natural k, if
+p|F_n, then
+
+$$
+\boxed{p^2\mid F_{nk}\quad\Longleftrightarrow\quad
+       p^2\mid F_n\ \text{or}\ p\mid k.}
+$$
+
+This includes p=2 and k=0. It does not assume any initial valuation.
+

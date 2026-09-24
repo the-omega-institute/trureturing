@@ -1,0 +1,14 @@
+**theorem 22.5 (GPC5).** Each s_j is a nontrivial squarefree integer, the s_j are pairwise coprime, and
+
+$$s_j=19\pmod{120},\qquad s_j=1\pmod{2r_j}.$$
+
+Removing square factors preserves GPC6:
+
+$$\left(\frac{s_j}{s_i}\right)=-1,\qquad
+\left(\frac{s_i}{s_j}\right)=1\quad(i<j).$$
+
+The degree of E_j is 2^(t_j), and its Frobenius elements at the primes q|B_j obey
+
+$$\boxed{\prod_{q\mid B_j}\operatorname{Frob}_q^{h_q}=1
+\quad\text{in }\operatorname{Gal}(\mathcal E_j/\mathbb Q).}\tag{GPC9}$$
+

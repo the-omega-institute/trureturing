@@ -1,0 +1,6 @@
+**corollary 19.8a (SJC norm converse).** Conversely, for any r>=3 and prime p>5 with p not dividing r, p^2|Psi_r(3) implies that the order of v modulo p is r and that p is WSS.
+
+**Proof.** A zero Psi_r(3) modulo p comes from a primitive rth root whose trace is three, since reduction of rth roots is separable. Its two roots solve X^2-3X+1, the same roots as v and v^(-1) in the quadratic residue algebra. Hence v has order r. Apply SJC8 to identify the full valuation with h_p.
+
+The use of cyclotomic norms and their exact entry-point valuations is classical for regular Lucas sequences. Ross, Shen and Cai, *The p-adic Valuations of Mobius Duals of Lucas Sequences*, arXiv:2512.03481v1, Introduction and Theorem 2.2(c), explicitly credit Carmichael's regular case and extend it to irregular sequences. SJC8 is proved above using the canonical torsion lift; neither the norm scale nor its valuation role is claimed as a new arithmetic discovery. The source does not prove WSS existence in the fixed golden field.
+

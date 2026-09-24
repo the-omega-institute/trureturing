@@ -1,0 +1,8 @@
+**corollary 15.4 (SGN4).** As the auxiliary good rational prime ell varies, the set on which the discrepancy in SGN2 has finite l_m-valuation p^j has Dirichlet density
+
+$$\frac{p-1}{2p^{j+1}}\quad(0\le j<k).$$
+
+The set on which that discrepancy is zero has density 1/2+1/(2p^k).
+
+**Proof.** In the dihedral group of order 2p^k there are (p-1)p^(k-j-1) rotations with exponent of p-valuation j. The union is stable under conjugation, so Chebotarev gives its size divided by 2p^k. All reflections and the identity rotation give zero discrepancy, with combined size p^k+1. These densities concern auxiliary primes in one existing number field. They are not a density theorem for WSS as the target p varies.
+

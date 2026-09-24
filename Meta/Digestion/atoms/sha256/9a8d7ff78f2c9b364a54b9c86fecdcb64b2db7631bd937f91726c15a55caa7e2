@@ -1,0 +1,2 @@
+**Proof.** Their exact conductor 5p^4 divides 20p^4, so oldform inclusion applies. The exclusions follow from the defining restrictions on D_(p,k); no assertion about other spectral components is used in the count.
+

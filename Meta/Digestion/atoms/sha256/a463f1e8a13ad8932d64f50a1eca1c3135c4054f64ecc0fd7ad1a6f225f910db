@@ -1,0 +1,8 @@
+**proposition 11.6 (CG arithmetic differential).** 对任意 $x,y\in\mathcal O_p$，
+
+$$\delta_p(xy)=x^p\delta_p(y)+y^p\delta_p(x)+p\delta_p(x)\delta_p(y).$$
+
+并有
+
+$$\boxed{\delta_p(\phi)\equiv-(d/2)\phi^\chi q_p\pmod p.}$$
+

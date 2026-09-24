@@ -1,0 +1,7 @@
+**theorem 14.1 (ROC1).** There is a natural isomorphism
+
+$$\boxed{P_f\simeq C_f/\langle[\phi]\rangle,\qquad
+\operatorname{ord}_{C_f}([\phi])=r(f).}\tag{ROC1}$$
+
+If f and g are coprime, r(fg)=lcm(r(f),r(g)).
+

@@ -1,0 +1,6 @@
+**Proof.** The ambient C-group has a cyclic order-p reduction kernel. The p-exponent of the image of the global unit at level mp^a is
+
+$$\max\{b,\max(a-h_p,0)\},$$
+
+because its order is lcm(r(m),r(p)p^max(a-h_p,0)) and p does not divide r(p). The unit-image size increases by p at the next level exactly when a>=h_p+b; all its other prime-exponents remain unchanged. The Picard-group size ratio is consequently one in that case and p otherwise. The Picard kernel is a quotient of the ambient cyclic reduction kernel: any element mapping into the lower unit image can be multiplied by a lifted power of phi to enter that reduction kernel. This proves cyclicity as well as its exact size.
+

@@ -1,0 +1,16 @@
+**theorem 22.3 (GPC3).** For every 1<=i<j,
+
+$$\boxed{\left(\frac{B_j}{B_i}\right)=-1,\qquad
+\left(\frac{B_i}{B_j}\right)=+1.}\tag{GPC6}$$
+
+For every individual prime p|B_i one also has the stronger primewise identities
+
+$$\boxed{\prod_{q\mid B_j}\left(\frac{q}{p}\right)^{h_q}
+=\left(\frac3p\right)=(-1)^{(p-1)/2},\qquad
+\prod_{q\mid B_j}\left(\frac{p}{q}\right)^{h_q}=1.}\tag{GPC7}$$
+
+In particular the actual depth vectors of two blocks satisfy
+
+$$\boxed{\sum_{p\mid B_i}\sum_{q\mid B_j}
+ h_p h_q\,\epsilon(q,p)=1\pmod2.}\tag{GPC8}$$
+

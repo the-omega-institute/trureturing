@@ -1,0 +1,7 @@
+**theorem 18.5 (HCR5).** Starting from any prescribed b_1,...,b_d, the only missing positive representatives in HCR5 are r=d+a, 1<=a<=(q-1)/2. They are given by
+
+$$\boxed{b_{d+a}=
+\sum_{j=1}^{h}b_{jq-a}-\sum_{j=0}^{h-1}b_{jq+a}.}\tag{HCR6}$$
+
+Together with b_0=0 and oddness, this is a direct integer reconstruction of the entire period. The corresponding linear map from the prefix with its maximum norm to the full period with its maximum norm has exact operator norm one for k=1 and p-1 for k>=2. The same bounds hold for differences of two prefixes, and hence for bounded real input errors in this fixed linear extension map.
+

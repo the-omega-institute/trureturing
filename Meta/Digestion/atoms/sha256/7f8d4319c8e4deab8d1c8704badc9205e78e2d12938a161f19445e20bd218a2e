@@ -1,0 +1,6 @@
+**proposition 11.4 (CG Fibonacci polynomial derivative).** 对所有 $n\ge0$，在 $\mathbb Z[X]$ 中有
+
+$$(X^2+4)U_n'(X)=nV_n(X)-XU_n(X).$$
+
+**证明。** 在 $\mathbb Q(X,\sqrt{X^2+4})$ 中，取二次方程的两根 $\alpha,\beta$，令 $D=\alpha-\beta$。有 $D^2=X^2+4$、$D'=X/D$、$\alpha'=\alpha/D$、$\beta'=-\beta/D$。对 $U_n=(\alpha^n-\beta^n)/D$ 求导，得到显示公式。两端为整数多项式，故该恒等式回到 $\mathbb Z[X]$。
+

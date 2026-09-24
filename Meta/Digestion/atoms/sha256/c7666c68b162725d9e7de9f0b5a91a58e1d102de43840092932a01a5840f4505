@@ -1,0 +1,16 @@
+**theorem 16.2 (STL2).** The rational-coefficient part of the real span of the g_sigma is exactly V_Q, and
+
+$$\boxed{L_{\rm int}=\{F_a:a\in\mathfrak D_B^{-1}\}.}\tag{STL1}$$
+
+The forms f_i=F_(beta_i) are a Z-basis of L_int. Their coefficients at n_0=1 and n_j=ell_j are delta_(ij). For arbitrary rational y_0,...,y_(d-1), the unique form in V_Q with these sampled coefficients is
+
+$$\boxed{F_{\sum_i y_i\beta_i}.}\tag{STL2}$$
+
+It has all Fourier coefficients integral if and only if every y_i is an integer. Removing any one of these d independent sample conditions fails to certify integrality.
+
+**Proof.** If f=sum c_sigma g_sigma has rational sampled coefficients y_j, set a=sum y_i beta_i. The embeddings matrix (sigma(e_j)) is invertible because its squared determinant is the nonzero discriminant of B. The sample equations for f and F_a therefore force c_sigma=sigma(a). This proves the claimed rational descent and uniqueness. For this a, integrality of every coefficient is equivalent by STL1 to Tr(a O_B) subset Z, exactly the codifferent condition. An element of the codifferent has its unique coordinates Tr(a e_i) in the trace-dual basis all integral; conversely integral coordinates make every trace coefficient integral. Hence the f_i form the claimed basis.
+
+For the last assertion, after omitting sample i take a=beta_i/2. All remaining selected coefficients are zero, while the omitted one is 1/2. This is an explicit false positive for the punctured test, not a search argument. It proves necessity of each selected coordinate; it does not assert that every possible set of d Fourier samples is independent.
+
+The trace-dual reconstruction used here is already supplied by the pinned Mathlib trace-dual basis API. It is not reintroduced as a separate formal theorem. The explicit prime-layer integral-image construction in STL.4 below is the formal consumer; the automorphic coefficient-span and cyclotomic identifications remain ordinary proofs.
+

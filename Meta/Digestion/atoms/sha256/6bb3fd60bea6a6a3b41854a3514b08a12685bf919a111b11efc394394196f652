@@ -1,0 +1,24 @@
+**theorem 19.2 (SJC2).** There is a unique multiplicative section s:C -> X_2 whose image consists of r-torsion. Put xi=s(v mod p). Every state of X_2 has a unique expression
+
+$$x=\xi^j(1+pz\delta),\qquad
+(j,z)\in\mathbb Z/r\mathbb Z\times\mathbb F_p.$$
+
+In these coordinates the actual update by v is
+
+$$\boxed{(j,z)\longmapsto(j+1,z-q_p).}\tag{SJC1}$$
+
+Thus X_2 has p disjoint cycles of length r if q_p=0, and one cycle of length rp otherwise. The orbit of the specified initial state one has length r or rp respectively.
+
+**Proof.** The kernel of norm-one reduction consists of 1+pw with Tr(w)=0 modulo p. Since Tr(1)=2 and delta^2=5, its elements are exactly 1+pz*delta with z in F_p. Multiplication adds z. Reduction is surjective: for any unit lift of a norm-one residue, its norm is 1+pc, and multiplication by the scalar 1-pc/2 corrects the norm modulo p^2.
+
+For a lift x of an element of C, write x^r=1+pb*delta. Multiplication by 1-p*r^(-1)b*delta produces an r-torsion lift. It is unique, because taking the rth power is invertible on the order-p kernel. Products of unique torsion lifts are the unique torsion lift of the product, proving the group section. This also gives the unique displayed coordinates.
+
+The golden identity L_N^2-5F_N^2=4, together with L_N=2chi modulo p, gives L_N=2chi modulo p^2: the other factor L_N+2chi is a unit. Therefore
+
+$$\phi^N\equiv\chi+\tfrac12p q_p\delta\pmod{p^2O},\qquad
+v^N\equiv1+p\chi q_p\delta\pmod{p^2O}.$$
+
+Write v=xi(1+pc*delta). Since xi^N=1 and N=-chi modulo p, comparison of v^N gives Nc=chi*q_p, hence c=-q_p. This proves SJC1. A return after t steps requires r|t and tq_p=0 modulo p. Since p is coprime to r, the asserted cycle lengths and counts follow.
+
+This is the fixed-golden specialization of the square-level Lie-kernel mechanism in Katz, *Wieferich past and future*, Section 4, the exact sequence on printed page 3. The explicit coordinates and task interpretation above do not make Katz's cross-prime equidistribution conjecture a theorem.
+

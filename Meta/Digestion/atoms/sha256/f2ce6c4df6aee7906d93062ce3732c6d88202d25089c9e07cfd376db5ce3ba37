@@ -1,0 +1,20 @@
+**theorem 16.4 (STL4).** Suppose k=1 and d=(p-1)/2. With t_j as in STL1, the trace-dual basis is
+
+$$\boxed{\beta_0=\frac{2-t_d}{p},\qquad
+\beta_j=\frac{t_j-t_d}{p}\quad(1\le j<d).}\tag{STL5}$$
+
+The trace Gram matrix H in the basis e_0=1,e_j=t_j has entries
+
+$$H_{00}=d,\quad H_{0j}=H_{j0}=-1,\quad
+H_{ij}=p\delta_{ij}-2\quad(i,j>0),$$
+
+and
+
+$$\boxed{H^{-1}=\frac1p
+\begin{pmatrix}3&\mathbf1^{\mathsf T}\\
+\mathbf1&I+J\end{pmatrix},\qquad\det H=p^{d-1}.}\tag{STL6}$$
+
+Here J is the all-ones matrix of size d-1.
+
+**Proof.** The sum of all nontrivial pth roots is -1. Hence Tr(t_j)=-1 for 1<=j<p, while Tr(t_0)=2d. The identity t_i*t_j=t_(i+j)+t_(i-j), with t_(-a)=t_a, gives the displayed trace matrix. Multiplication by the asserted inverse gives the identity using p=2d+1. Also 1+sum_(j=1)^d t_j=0, so its columns give exactly STL5. The determinant can be computed by a Schur complement: the lower block pI-2J has eigenvalue3 on the all-ones line and p on its complement; its contribution and the upper Schur factor p/3 give p^(d-1). Alternatively this is STL3 with k=1. This proves the full basis formula, not just linear independence.
+

@@ -1,0 +1,3 @@
+**Proof.** There are (p-1)p^(k-2) choices for w. In the first equation v has the two simple roots +2,-2 modulo p; each uniquely lifts for each w by Hensel's lemma. For minus four, the two roots exist precisely when -1 is a square modulo p, and are again simple. These are local solutions; the count does not assert that any chosen solution is a reduction of a global pair (L_n,F_n) in the simple-divisor window.
+
+

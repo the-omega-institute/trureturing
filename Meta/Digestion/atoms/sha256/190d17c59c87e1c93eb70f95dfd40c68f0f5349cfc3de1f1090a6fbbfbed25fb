@@ -1,0 +1,30 @@
+**theorem 18.6 (HCR6).** Let ell be any good split prime for an existing order-p^k packet, and suppose eta(q_ell) has exact order p^s, with 1<=s<=k. Put
+
+$$B_s=\mathbb Q(\zeta_{p^s}+\zeta_{p^s}^{-1}),\qquad
+ d_s=p^{s-1}(p-1)/2,$$
+
+viewing B_s as the corresponding subfield of B=B_k. All coefficients [ell^n]F_c depend exactly on
+
+$$c_s=\operatorname{Tr}_{B/B_s}(c).$$
+
+The single-prime observation map has rational rank d_s and kernel dimension d-d_s. On coefficient-integral lattices its image is the full codifferent lattice of B_s, and its kernel is free of rank d-d_s.
+
+**Proof.** The eigenvalue t_ell belongs to B_s and generates its full integer ring. For every n,
+
+$$\operatorname{Tr}_{B/\mathbb Q}(cP_n(t_\ell))
+=\operatorname{Tr}_{B_s/\mathbb Q}(c_sP_n(t_\ell)).$$
+
+The first d_s of these polynomials give a full basis of O_(B_s), so they detect c_s exactly. The field trace is surjective in characteristic zero, giving the rational rank. It remains to show
+
+$$\operatorname{Tr}_{B/B_s}(\mathfrak D_B^{-1})=\mathfrak D_{B_s}^{-1}.$$
+
+The inclusion from left to right follows by composing traces. Conversely O_(B_s) is a saturated Z-submodule of O_B: if an integer multiple of x in O_B lies in B_s then x lies in B_s, hence in O_(B_s). Its quotient is therefore a finitely generated torsion-free abelian group, and is free. Any integral functional on O_(B_s) extends to O_B after choosing a free complement. Represent the extension by trace against c in D_B^(-1). Its restriction is trace against Tr_(B/B_s)c, proving surjectivity onto D_(B_s)^(-1). The exact sequence of free abelian groups then gives the integral kernel rank. No cyclic-order or semisimplified residue observation is substituted for this full trace map.
+
+**Boundary cases.** If eta(q_ell)=1 at a split good prime, then
+
+$$[\ell^n]\mathcal F_c=(n+1)\operatorname{Tr}_{B/\mathbb Q}(c).$$
+
+At an inert good prime the coefficient is Tr(c) for even n and zero for odd n. In both cases the observation rank is one, with kernel dimension d-1. The split identity case is not claimed to be periodic in n.
+
+**Proof.** The split identity case is P_n(2)=n+1. Inert ideal norms occur only in even powers of ell; the unique such ideal is a rational principal ideal and has character value one. The trace map from the codifferent onto Z is surjective by the same functional-extension argument applied to Z subset O_B.
+

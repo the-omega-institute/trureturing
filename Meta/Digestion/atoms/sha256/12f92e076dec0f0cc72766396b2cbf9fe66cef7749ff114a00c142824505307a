@@ -1,0 +1,6 @@
+**theorem 21.2 (DCE2).** For every j>=1, retain the actual block B_j=L_(3^j)^2+3 and its original depths from TBN. Then
+
+$$\boxed{\gcd\{h_p:p\text{ prime},\ p\mid B_j\}=1.}\tag{DCE1}$$
+
+Equivalently, for every integer e>=2 there is a prime p|B_j such that e does not divide h_p. In particular B_j cannot be a power of a single WSS prime. If B_j has only one distinct prime factor, that factor has h_p=1 and B_j itself is prime.
+

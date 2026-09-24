@@ -1,0 +1,7 @@
+**theorem 14.7 (ROC7).** For all p>5 and k>=1,
+
+$$\boxed{|X_{p,k}|=
+\begin{cases}p^{k-1}(p-1),&h_p\ge k+1,\\0,&h_p<k+1.\end{cases}}\tag{ROC7}$$
+
+When present, every character in X_(p,k) has least rational conductor p^(k+1) and Hecke conductor ideal p^(k+1)O. It satisfies eta^sigma=eta^(-1), where sigma is golden conjugation.
+

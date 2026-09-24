@@ -1,0 +1,8 @@
+**theorem 15.7 (SGN7).** With N=N_k and the exact Fourier normalization SGN1,
+
+$$\boxed{\langle g_\eta,g_\eta\rangle_N
+=\frac N2\left(1-\frac{\chi_5(p)}p\right)
+ L(1,\chi_5)L_K(1,\eta^2).}\tag{SGN7}$$
+
+All Euler factors at five and p are included in this formula.
+

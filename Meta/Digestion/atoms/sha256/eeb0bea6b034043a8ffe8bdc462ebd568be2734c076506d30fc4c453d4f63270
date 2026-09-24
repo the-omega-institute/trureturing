@@ -1,0 +1,6 @@
+**Example.** For m=49, q=7 and d=21, one missing coordinate is
+
+$$b_{22}=b_6+b_{13}+b_{20}-b_1-b_8-b_{15}.$$
+
+Its maximum amplification is six. This is an abstract cyclotomic recurrence identity. It asserts neither the existence of a golden character of order 49 nor a WSS prime at seven.
+

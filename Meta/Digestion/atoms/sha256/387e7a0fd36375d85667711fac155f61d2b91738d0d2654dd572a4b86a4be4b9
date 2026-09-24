@@ -1,0 +1,26 @@
+**lemma 12.2 (FPD2).** If m>0 has no prime divisor greater than five, then
+
+$$
+\boxed{F_m\text{ powerful}\quad\Longleftrightarrow\quad m\in E.}
+$$
+
+**Proof.** The exact small values are
+
+$$
+F_5=5,\quad F_8=3\cdot7,\quad F_9=2\cdot17,
+\quad F_{25}=5^2\cdot3001.
+$$
+
+The number 3001 is prime, by trial division through its square root,
+which is less than55. If 25|m, the factor3001 remains simple in F_m by
+FPD1, since it cannot divide this small-support index. Thus 25 does not
+divide m. If 5|m, write m=5k. The preceding exclusion makes 5 not divide
+k; FPD1 at F_5 then gives another simple factor, a contradiction.
+Likewise 9|m preserves the simple prime17 from F_9, and 8|m preserves
+seven from F_8. Hence a powerful value forces 5 not dividing m,
+9 not dividing m and 8 not dividing m. Unique factorization now gives
+m|12. The six positive divisors of12 are1,2,3,4,6,12. Indices3 and4
+give the simple values2 and3, and the four remaining values are1,1,8,144,
+all powerful. This proves both directions without an external valuation
+formula or a classification of perfect powers.
+

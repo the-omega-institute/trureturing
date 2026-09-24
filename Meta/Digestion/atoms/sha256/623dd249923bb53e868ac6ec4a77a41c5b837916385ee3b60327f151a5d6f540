@@ -1,0 +1,36 @@
+**theorem 18.2 (HCR2).** For c in B, let R_c(X) be the unique polynomial of degree less than d with
+
+$$R_c(t)=c\Psi_m'(t).$$
+
+Put s_n(c)=[ell^n]F_c=Tr_(B/Q)(c P_n(t)). Then
+
+$$\boxed{\sum_{n\ge0}s_n(c)Z^n
+=\frac{N_c(Z)}{\Phi_m(Z)},\qquad
+N_c(Z)=Z^{d-1}R_c(Z+Z^{-1}).}\tag{HCR2}$$
+
+N_c is a rational polynomial of degree at most 2d-2 and has reciprocity of the fixed width 2d-2:
+
+$$N_c(Z)=Z^{2d-2}N_c(Z^{-1}).$$
+
+Every rational polynomial with this width-reciprocity occurs for a unique c. Moreover
+
+$$\boxed{\mathcal F_c\in L_{\rm int}
+\iff N_c\in\mathbb Z[Z]
+\iff s_0(c),...,s_{d-1}(c)\in\mathbb Z.}\tag{HCR3}$$
+
+The width is fixed even when the leading coefficients vanish; its value is not claimed to be the actual degree of every N_c.
+
+**Proof.** Let t_sigma be the conjugates of t. Partial fractions and Lagrange interpolation give
+
+$$\sum_\sigma\frac{\sigma(c)}{X-t_\sigma}
+=\frac{R_c(X)}{\Psi_m(X)},$$
+
+because the numerator evaluated at t_sigma is sigma(c) Psi_m'(t_sigma). Substitute X=Z+Z^(-1), multiply by Z^(-1), and use
+
+$$Z^d\Psi_m(Z+Z^{-1})=\Phi_m(Z)
+=1+Z^q+\cdots+Z^{(p-1)q}.$$
+
+This proves HCR2 as a formal power-series identity. The elements Z^(d-1) and Z^(d-1)(Z^j+Z^(-j)), 1<=j<=d-1, are a basis of the polynomials with this reciprocity. They correspond to 1,D_1,...,D_(d-1), an integral triangular basis of polynomials of degree less than d. This proves the bijection and N_c integral iff R_c integral.
+
+The monogenic trace-dual formula is D_B^(-1)=Psi_m'(t)^(-1)O_B; equivalently it follows from Lagrange interpolation by pairing the power basis with the coefficients of Psi_m(X)/(X-t). Since O_B=Z[t], R_c integral is equivalent to c belonging to the codifferent, and hence to F_c belonging to L_int by STL2. Alternatively P_0(t),...,P_(d-1)(t) are already an integral basis by HCR1, so their d integer traces are exactly the defining codifferent test. These are classical trace-dual facts, used here with the actual single-prime coefficients.
+

@@ -1,0 +1,7 @@
+**theorem 20.5 (TBN5).** If every prime factor of B_j is WSS, then
+
+$$\sum_{p\mid B_j}h_p\ge5,\qquad
+\boxed{B_j\ge b(r_j)^5.}\tag{TBN6}$$
+
+Consequently B_j<b(r_j)^5 is a sufficient, independently checkable condition for B_j to have a non-WSS factor. It does not construct a WSS prime.
+

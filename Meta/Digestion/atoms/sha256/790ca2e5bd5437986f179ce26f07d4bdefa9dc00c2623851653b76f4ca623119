@@ -1,0 +1,27 @@
+**theorem 13.4 (THS4).** The exact Fourier difference
+
+$$
+\tfrac14\left[e^{-8\pi y}(C_p(4;y)-C_{p^2}(4;y))
+ +e^{8\pi y}(C_p(-4;y)-C_{p^2}(-4;y))\right]
+$$
+
+is K_p(20pi*y). Moreover K_p(t)=S_r(t)-S_R(t), and for every a>=3 and 0<t<=1,
+
+$$\left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,$$
+
+$$\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
+\kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}$$
+
+**Proof.** Subtract THS1 at d=p and d=p^2; the zero-coordinate terms cancel. The zero indices modulo each positive modulus are precisely the multiples of its least zero index, by strong Fibonacci divisibility. This proves the two exact identities.
+
+For the estimate, phi^(n-2)<=F_n<=phi^(n-1) for n>=2. Put Q=phi^(2a) and A(v,Q)=sum_(k>=1)exp(-vQ^k). Then
+
+$$A(t\phi^{-2},Q)\le S_a(t)\le A(t\phi^{-4},Q).$$
+
+For the decreasing function x mapping to exp(-vQ^x), the integral test gives
+
+$$E_1(v)/\log Q-1\le A(v,Q)\le E_1(v)/\log Q,\qquad
+E_1(v)=\int_v^\infty e^{-u}\,du/u.$$
+
+For 0<v<=1, splitting the integral at one gives |E_1(v)+log v|<=1: the integral of (e^(-u)-1)/u from v to one lies in [-1,0], and the remaining tail lies in [0,e^(-1)]. With L=log(phi)>1/3, the resulting upper error is at most (4L+1)/(2aL)<2 and the lower error is at least -1-1/(2aL)>-2. This proves the uniform constant two; subtracting the two estimates proves the constant four.
+

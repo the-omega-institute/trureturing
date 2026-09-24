@@ -1,0 +1,11 @@
+**lemma 16.1 (STL1).** One has O_B=Z[t]. The Z-span of A_eta(n) for n=1 and good split primes is O_B. More precisely, write t_j=zeta^j+zeta^(-j). There are distinct good split primes ell_1,...,ell_(d-1) such that
+
+$$A_\eta(\ell_j)=t_j,\qquad
+(e_0,e_1,\ldots,e_{d-1})=(1,t_1,\ldots,t_{d-1})$$
+
+is an integral basis. No effective bound for these auxiliary primes is asserted.
+
+**Proof.** The classical cyclotomic integer theorem gives O_(Q(zeta))=Z[zeta]. Because zeta^2=t*zeta-1, every cyclotomic integer can be written U(t)+zeta*V(t), with U,V in Z[X]. If it is real, comparison with its conjugate gives (zeta-zeta^(-1))*V(t)=0, hence V(t)=0. Thus the real integers are Z[t]. The degree of t is d. The recurrence t_0=2,t_1=t,t_(j+1)=t*t_j-t_(j-1) makes t_j a monic degree-j polynomial in t for j>=1. The displayed basis is therefore a unitriangular change from the integral power basis.
+
+For each j, Chebotarev in the existing dihedral field L_(p,k) gives a good split prime with rotation Frobenius tau^j or tau^(-j). Its coefficient is t_j. The exponents 1,...,d-1 represent distinct pairs modulo m, so the primes may be chosen distinct. Every other coefficient belongs to O_B by SGN2. This proves the full Z-span, including both containments. The integral-basis fact is classical; see J. J. Liang, *On the integral basis of the maximal real subfield of a cyclotomic field*, J. reine angew. Math. 286-287 (1976), 223-226, DOI 10.1515/crll.1976.286-287.223. The elementary argument above specifies its use here.
+

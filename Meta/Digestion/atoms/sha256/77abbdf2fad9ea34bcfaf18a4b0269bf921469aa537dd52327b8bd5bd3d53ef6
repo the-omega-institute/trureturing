@@ -1,0 +1,6 @@
+**corollary 13.3 (THS3).** If a simultaneous good-Hecke Maass cusp eigenform g has a nonzero Petersson pairing with V_d, its cuspidal representation satisfies
+
+$$\pi_g\simeq\pi_g\otimes\chi_5.$$
+
+It is therefore dihedral. The same conclusion holds for a nonzero cusp pairing with V_p-V_(p^2).
+

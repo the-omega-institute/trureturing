@@ -1,0 +1,14 @@
+**Proof.** Let t_sigma be the conjugates of t. Partial fractions and Lagrange interpolation give
+
+$$\sum_\sigma\frac{\sigma(c)}{X-t_\sigma}
+=\frac{R_c(X)}{\Psi_m(X)},$$
+
+because the numerator evaluated at t_sigma is sigma(c) Psi_m'(t_sigma). Substitute X=Z+Z^(-1), multiply by Z^(-1), and use
+
+$$Z^d\Psi_m(Z+Z^{-1})=\Phi_m(Z)
+=1+Z^q+\cdots+Z^{(p-1)q}.$$
+
+This proves HCR2 as a formal power-series identity. The elements Z^(d-1) and Z^(d-1)(Z^j+Z^(-j)), 1<=j<=d-1, are a basis of the polynomials with this reciprocity. They correspond to 1,D_1,...,D_(d-1), an integral triangular basis of polynomials of degree less than d. This proves the bijection and N_c integral iff R_c integral.
+
+The monogenic trace-dual formula is D_B^(-1)=Psi_m'(t)^(-1)O_B; equivalently it follows from Lagrange interpolation by pairing the power basis with the coefficients of Psi_m(X)/(X-t). Since O_B=Z[t], R_c integral is equivalent to c belonging to the codifferent, and hence to F_c belonging to L_int by STL2. Alternatively P_0(t),...,P_(d-1)(t) are already an integral basis by HCR1, so their d integer traces are exactly the defining codifferent test. These are classical trace-dual facts, used here with the actual single-prime coefficients.
+

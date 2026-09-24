@@ -1,0 +1,3 @@
+**Proof.** SJC1-SJC4 construct the extra coordinate and prove the fixed polynomial determines its drift. SJC3 excludes removing a nonzero cycle displacement by a change of coordinates. SJC5 gives exact reconstruction from two required observations, while SJC7 shows that a positive real energy cannot be assumed. SJC8 replaces the same unknown valuation by a specified global norm without independently bounding it. Thus a new prime-family decision still needs an independent constraint on the fixed torsion trace, on G_r, or on their cross-prime distribution. Arbitrarily choosing another lift, treating local states as independent worlds, or substituting a dual-number ring for characteristic p^2 changes the problem instead of proving that constraint.
+
+

@@ -1,0 +1,13 @@
+**corollary 17.7 (CTG7).** Fix a prime p>5 and take the complete finite p-power ring-class tower in ROC, whose largest character order is p^(h_p-1). If h_p=1 there is no such cuspidal tower. Otherwise the maximum rational p-adic Eisenstein congruence depth of a primitive integer-coefficient vector in this tower is exactly h_p-1.
+
+**Proof.** Apply CTG5 at k=h_p-1. ROC7 gives precisely the available nontrivial orders p,...,p^k. Higher congruence is excluded within their full coefficient-integral span by CTG10. Conversely CTG11 supplies a normalized vector attaining k. The theorem concerns the complete finite-order, fixed-golden tower, not all Maass forms at the same level.
+
+The inter-packet gluing in CTG3 is an extra step beyond the single-packet lattice STL. It does not change any of STL's statements. For the abstract coefficient tower p=7,k=2, the total dimension is24, the two primitive dimensions are3 and21, and [Lambda_2:Lambda_sep]=7^3. The complete congruence module is Z/49, whereas each isolated primitive module gives Z/7. These algebraic examples do not assert the existence of a golden character of order49 or a WSS prime at seven.
+
+The finite-orbit discipline in the separate CarlitzFiveOrbit result is methodologically relevant: projecting to one primitive factor before doing integer elimination can lose compatibility conditions. Its characteristic19 certificate is not a theorem about these characteristic-zero Hecke orders. Here the complete-orbit polynomial Q_k and its integer fiber products are proved directly; no Carlitz theorem is imported.
+
+For comparison, Fretwell-Roberts, *Hilbert modular Eisenstein congruences of local origin*, arXiv:2411.06987v2 (March 3, 2026), Journal of Number Theory280(2026),861-896, proves congruence existence results in parallel holomorphic weight at least three. Those weight hypotheses are absent from the parameter-zero, weight-zero Maass family here. Its existence theorem is not used to create the character eta. Source roles and the current version locators are recorded in the accompanying Library notes.
+
+All spectral conclusions of CTG start with an existing eta, so CTG7 is an exact recovery of the original depth, not an independently proved bound on it. A new WSS prime-family decision would require an independent restriction or construction for the complete integral Hecke system, with all the weight, conductor, evenness and fixed-field conditions retained. Neither the universal polynomial model nor its finite-precision scalar characters establish such existence. No Petersson-norm inequality, general mod-p modularity theorem or unknown class-group order is used to choose a branch.
+
+

@@ -1,0 +1,41 @@
+**corollary 12.5 (FPD consequence).** The following two assertions are equivalent:
+
+$$
+\begin{aligned}
+&\forall m>0,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+&\forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}
+$$
+
+If the first assertion fails, its least counterexample index is prime
+and at least seven.
+
+**Proof.** The forward implication specializes to prime indices. For
+the reverse, a nonclassical counterexample would descend by FPD4 to a
+prime-index counterexample. For the least one, the descending prime
+ell satisfies ell<=m and is itself a counterexample, so minimality
+forces ell=m. Neither assertion is established by this equivalence.
+
+For a prime index ell>=7, the existence of a simple prime divisor of
+F_ell is equivalent to the existence of a non-WSS prime of exact rank
+ell. Indeed, FPD3 supplies the exact rank, and ell|N(p) with p not
+dividing N(p)/ell allows FPD1 to identify the two square-divisibility
+conditions. Thus a remaining target is an independent simple-factor
+existence theorem at prime indices. A primitive-prime theorem only
+supplies a prime with that rank and does not assert exponent one.
+
+Absence of all WSS primes would imply the first classification above,
+since every nontrivial prime-index Fibonacci value has a prime divisor.
+The classification's failure would produce WSS primes by FPD4. The
+converse implication from a single WSS prime to failure of the powerful
+classification is not asserted: the other factors of its rank block
+may still be simple.
+
+A prospective stronger lifting theorem is preservation of the entire
+p-valuation under a multiplier coprime to p. The square-zero argument
+already identifies its mechanism: at an actual initial depth e>=1,
+F_n^2 vanishes modulo p^(e+1). Proving the corresponding depth theorem
+requires retaining the nondivisibility at p^(e+1), the nonzero index and
+the coprime multiplier. The present public transfer theorem certifies
+the square threshold only; it does not silently assert that extension.
+

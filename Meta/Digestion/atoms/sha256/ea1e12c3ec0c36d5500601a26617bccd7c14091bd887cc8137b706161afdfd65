@@ -1,0 +1,14 @@
+### CTG.1 Retain every nontrivial character in one cyclic quotient
+
+**Definition.** Fix p>5 and k>=1, retain K=Q(sqrt(5)), and assume an actual ordinary ring-class character eta of order m=p^k as in ROC. Thus h_p>=k+1 is a hypothesis. Put D_k=(p^k-1)/2. At the common level 5p^(2k+2), take the unscaled oldvector g_(eta^b)(z), not g_(eta^b)(az), for each b=1,...,D_k. This includes all nontrivial characters of the cyclic quotient, modulo inversion, including characters of smaller order. The forms have distinct good eigenvalue systems and are linearly independent. At each order p^j they are the complete primitive packet D_(p,j). No other inducing fields or Hecke characters are added.
+
+Let C_0(X)=2, C_1(X)=X, C_(a+1)(X)=X C_a(X)-C_(a-1)(X). Let Psi_(p^j) be the monic minimal polynomial of zeta_(p^j)+zeta_(p^j)^(-1). Define
+
+$$Q_k(X)=1+\sum_{a=1}^{D_k}C_a(X),\qquad
+E_k=\prod_{j=1}^k B_{p^j},\quad
+B_{p^j}=\mathbb Q(\zeta_{p^j}+\zeta_{p^j}^{-1}),$$
+
+$$t=(\zeta_{p^j}+\zeta_{p^j}^{-1})_{j=1}^k,\qquad R_k=\mathbb Z[t]\subset E_k.$$
+
+The rational algebra E_k is a product of fields, not a number field. Write tau for its algebra trace, the sum of the field traces. Classical real-quadratic Hecke induction supplies the ambient forms, as in Tanaka, arXiv:2601.21588v3, Theorem 1.1 and equation (1.1), with the factor-two Fourier normalization already fixed in SGN1. No Petersson-norm assertion of that paper or SGN is an input below.
+

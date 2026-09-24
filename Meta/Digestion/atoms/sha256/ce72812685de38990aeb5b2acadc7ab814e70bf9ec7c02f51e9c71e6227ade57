@@ -1,0 +1,13 @@
+**theorem 15.5 (SGN5).** Let t=zeta+zeta^(-1). The matrices
+
+$$R=\begin{pmatrix}0&-1\\1&t\end{pmatrix},\qquad
+S=\begin{pmatrix}0&1\\1&0\end{pmatrix}$$
+
+give an integral realization over O_(B_m) of the dihedral representation attached to eta: R^m=I, S^2=I, SRS=R^(-1). After reduction modulo l_m and pullback along Gal(L_(p,k)/Q), the associated Galois representation has a nonsplit exact sequence
+
+$$\boxed{0\longrightarrow\mathbb F_p(\chi_5)
+\longrightarrow\overline\rho_\eta\longrightarrow\mathbb F_p
+\longrightarrow0.}\tag{SGN5}$$
+
+Its semisimplification is 1 plus chi_5, and complex conjugation acts as the identity.
+

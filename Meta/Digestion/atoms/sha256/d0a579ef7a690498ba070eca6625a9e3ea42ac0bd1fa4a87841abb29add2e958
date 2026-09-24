@@ -1,0 +1,4 @@
+**Proof.** SJC1 gives v^r=1-pr*q_p*delta modulo p^2. Its trace is two since Tr(delta)=0. Multiplying by v and using Tr(v)=3 and Tr(v delta)=5 gives the second formula. In the integers Tr(v^(r+1))=L_(2r+2), so the displayed division is legitimate. This does not supply q_p independently of the exact integer traces; it specifies which observation retains it.
+
+The task-quotient principle in `CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Theorems 2.2 and 3.2, applies literally: coarse reduction is closed for the coarse task but fails this refined task. This is a different kind of information loss from HCR's non-generator auxiliary Hecke observation, where the exact kernel is a relative field trace. Both require retaining the actual joint observation map.
+

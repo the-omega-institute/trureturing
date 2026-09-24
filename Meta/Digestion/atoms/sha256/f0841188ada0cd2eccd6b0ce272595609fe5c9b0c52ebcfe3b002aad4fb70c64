@@ -1,0 +1,10 @@
+**proposition 11.1 (CG finite norm-one group).** $|T(\mathbb F_p)|=N$，且对每个正整数 $n$，
+
+$$u^n-1=dF_n\psi^{-n}.$$
+
+特别地，$v_p(u^N-1)=h_p$，并有
+
+$$\boxed{(u^N-1)/p\equiv\chi q_p d\pmod p.}$$
+
+**证明。** 分裂时范数一群为 $\{(x,x^{-1}):x\in\mathbb F_p^\times\}$，阶为 $p-1$；惰性时为 $\mathbb F_{p^2}^\times$ 到 $\mathbb F_p^\times$ 的范数核，阶为 $p+1$。Binet 恒等式给出 $u^n-1=(\phi^n-\psi^n)\psi^{-n}$。$d$ 和 $\psi$ 在 $p$ 处都是单位，得到估值。$N$ 偶数且黄金 Frobenius 给出 $\phi^N\equiv\chi\pmod p$，所以 $\psi^{-N}=\phi^N\equiv\chi$；将已整除的等式除以 $p$ 再降模即得末式。
+

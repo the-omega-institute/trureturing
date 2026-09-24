@@ -1,0 +1,11 @@
+**theorem 18.6 (HCR6).** Let ell be any good split prime for an existing order-p^k packet, and suppose eta(q_ell) has exact order p^s, with 1<=s<=k. Put
+
+$$B_s=\mathbb Q(\zeta_{p^s}+\zeta_{p^s}^{-1}),\qquad
+ d_s=p^{s-1}(p-1)/2,$$
+
+viewing B_s as the corresponding subfield of B=B_k. All coefficients [ell^n]F_c depend exactly on
+
+$$c_s=\operatorname{Tr}_{B/B_s}(c).$$
+
+The single-prime observation map has rational rank d_s and kernel dimension d-d_s. On coefficient-integral lattices its image is the full codifferent lattice of B_s, and its kernel is free of rank d-d_s.
+

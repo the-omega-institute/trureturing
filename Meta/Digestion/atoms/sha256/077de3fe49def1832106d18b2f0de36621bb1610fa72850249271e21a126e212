@@ -1,0 +1,10 @@
+**theorem 13.2 (THS2).** If chi_5(ell)=-1, then T_ell V_d=0. Consequently V_p-V_(p^2), viewed at common level 20p^4, is killed by every such good inert operator with ell not dividing 10p.
+
+**Proof.** Expanding the translation sum introduces
+
+$$
+\sum_{j=0}^{\ell-1}e^{2\pi i j(5d^2u^2-v^2)/\ell}.
+$$
+
+It equals ell or zero, according as 5d^2u^2-v^2 is zero or nonzero modulo ell. Inertness and ell not dividing d force both u and v to be multiples of ell in the first case. Replacing them by ell*u_0,ell*v_0 turns the surviving exponential into its value at ell*z; the scalar factor is ell*sqrt(y/ell)=sqrt(ell*y). Thus the translation sum is V_d(ell*z), and chi_5(ell)=-1 gives cancellation. Gaussian convergence justifies the interchanges. This proof uses no squarefreeness of 5d^2. The last statement follows by linearity.
+

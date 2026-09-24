@@ -1,0 +1,13 @@
+**proposition 10.2 (PH2).** 对全部上述指标，
+
+$$B_\ell^2+4=C_\ell=5A_\ell^2,\qquad
+A_\ell<B_\ell<\sqrt5 A_\ell,$$
+
+且 $(B_\ell^2,4,C_\ell)$ 为两两互素的正整数加法三元组。记
+
+$$R_\ell=\operatorname{rad}(4B_\ell^2C_\ell),$$
+
+其中 $\operatorname{rad}$ 为不同素因子的乘积，则
+
+$$R_\ell=10\operatorname{rad}(M_\ell),\qquad C_\ell>\sqrt5 M_\ell.$$
+

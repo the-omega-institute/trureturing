@@ -1,0 +1,7 @@
+**corollary 19.5a (SJC phase-return trace).** At the phase return r,
+
+$$\operatorname{Tr}(v^r)=2\pmod{p^2},\qquad
+\boxed{\frac{L_{2r+2}-3}{p}=-5r q_p\pmod p.}\tag{SJC4}$$
+
+Thus the return trace alone deletes the first-order defect, while the next exact trace recovers it.
+

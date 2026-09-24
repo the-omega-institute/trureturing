@@ -1,0 +1,2 @@
+**Proof.** ROC1-ROC2 give H(p)=(p-chi_p)/r and H(p^2)=p(p-chi_p)/R. Substitute in THS4. ROC3 and ROC8 identify nonemptiness with h_p>=2; the exact S-series difference in THS4 is then zero. This does not assert that each individual spectral projection of V_p-V_(p^2) vanishes: contributions to a selected Fourier functional may cancel, and a nonzero representation need not occur in that theta projection at all.
+

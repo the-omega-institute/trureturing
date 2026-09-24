@@ -1,0 +1,18 @@
+**theorem 17.5 (CTG5).** The first Fourier coefficient gives an isomorphism
+
+$$\boxed{E_{k,r}\simeq
+\{c\in\mathbb Z/p^r\mathbb Z:p^k c=0\}.}\tag{CTG10}$$
+
+In particular this group is cyclic of order p^min(k,r). A normalized class with first coefficient one exists exactly when r<=k and is then unique. No primitive vector in Lambda_k can satisfy the simultaneous Eisenstein congruence modulo p^(k+1).
+
+An explicit normalized integral cusp form attaining depth k is
+
+$$\boxed{f_m=\mathcal F_{-C_{D_k}(t)},\qquad [1]f_m=1.}\tag{CTG11}$$
+
+For (n,p)=1 it has the exact coefficient formula
+
+$$\boxed{[n]f_m=b(n)-m a_D(n),\qquad
+ a_D(n)=\#\{\mathfrak a:N\mathfrak a=n,\ \eta(\mathfrak a)=\zeta_m^{D_k}\}.}\tag{CTG12}$$
+
+At a good split prime its coefficient is 2-m if the rotation exponent is +/-D_k, and is two otherwise; at a good inert prime it is zero. All coefficients are integers. The class of f_m generates E_(k,r) for r<=k; for r>k the generator is p^(r-k)f_m modulo p^r.
+

@@ -1,0 +1,16 @@
+**theorem 17.2 (CTG2).** For j<k,
+
+$$\Psi_{p^k}(t_j)=p\quad\text{in }B_{p^j},\qquad
+\Psi_{p^k}(X)\equiv p\pmod{Q_{k-1}(X)}.\tag{CTG2}$$
+
+For k>=2 there is a ring isomorphism
+
+$$\boxed{R_k\simeq R_{k-1}\times_{R_{k-1}/pR_{k-1}}O_{B_{p^k}},\qquad
+R_{k-1}/pR_{k-1}\simeq\mathbb F_p[e]/(e^{D_{k-1}}).}\tag{CTG3}$$
+
+The map from the new primitive factor to the common quotient sends t_k to 2+e. With S_k=product_(j=1)^k O_(B_(p^j)), the normalization of R_k, the exact additive index is
+
+$$\boxed{[S_k:R_k]=p^{J_k},\qquad
+J_k=\sum_{j=1}^{k-1}D_j
+=\frac12\left(\frac{p(p^{k-1}-1)}{p-1}-(k-1)\right).}\tag{CTG4}$$
+

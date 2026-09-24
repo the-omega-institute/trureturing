@@ -1,0 +1,6 @@
+**Proof.** Reduction of every root of unity eta(a) modulo 1-zeta gives one. The number of ideals of norm n in K is sum_(a|n)chi_5(a); pairing with the real subfield gives the first congruence. At an inert good prime the discrepancy is zero. At a split prime,
+
+$$A_\eta(\ell)-2=(\zeta^b-1)^2/\zeta^b.$$
+
+The cyclotomic valuation of 1-zeta^b is p^j: zeta^b is a primitive p^(k-j)th root, whose cyclotomic subfield has ramification index smaller by p^j. Its ideal has no support outside p. Squaring and passing to B_m proves both assertions in SGN3. For p not dividing b the ratio (1-zeta^b)/(1-zeta) reduces to b. Since lambda_m=-(zeta-1)^2/zeta, the quotient in SGN4 reduces to -b^2. Every discrepancy therefore belongs to l_m, while a generator Frobenius from SGN2 gives the exact discrepancy -lambda_m. This proves the ideal equality, including the fact that no larger common power of l_m is forced.
+

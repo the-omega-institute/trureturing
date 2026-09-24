@@ -1,0 +1,20 @@
+**theorem 22.3 (GPC3).** For every 1<=i<j,
+
+$$\boxed{\left(\frac{B_j}{B_i}\right)=-1,\qquad
+\left(\frac{B_i}{B_j}\right)=+1.}\tag{GPC6}$$
+
+For every individual prime p|B_i one also has the stronger primewise identities
+
+$$\boxed{\prod_{q\mid B_j}\left(\frac{q}{p}\right)^{h_q}
+=\left(\frac3p\right)=(-1)^{(p-1)/2},\qquad
+\prod_{q\mid B_j}\left(\frac{p}{q}\right)^{h_q}=1.}\tag{GPC7}$$
+
+In particular the actual depth vectors of two blocks satisfy
+
+$$\boxed{\sum_{p\mid B_i}\sum_{q\mid B_j}
+ h_p h_q\,\epsilon(q,p)=1\pmod2.}\tag{GPC8}$$
+
+**Proof.** GPC4 gives (B_j/B_i)=(3/B_i). All B_i are three modulo four and one modulo three, so Jacobi reciprocity with three gives (3/B_i)=-1. The blocks are coprime and both three modulo four; reciprocity between them gives the opposite symbol +1. The extension of reciprocity and the prime-factor definition of the Jacobi symbol are the classical laws in NIST DLMF 27.9.1 and 27.9.3.
+
+For a prime p|B_i, GPC4 gives (B_j/p)=(3/p). TBN3 gives p=1 modulo three, so (3/p)=(-1)^((p-1)/2). Insert B_j=product_(q|B_j)q^(h_q) to obtain the first primewise identity. Reciprocity for p and each q contributes sign (-1)^((p-1)/2) raised to sum h_q*(q-1)/2. This sum is odd because B_j=3 modulo four. The sign cancels (3/p), proving the second identity. Finally expand the Jacobi symbol (B_j/B_i)=-1 using the actual factorizations of BOTH blocks to obtain GPC8. These formulas keep original initial depths, not multiplicities introduced by multiplying a Fibonacci index.
+

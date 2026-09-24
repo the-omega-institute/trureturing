@@ -1,0 +1,9 @@
+### FPD.1 Original objects and the square-factor threshold
+
+Use the original Fibonacci recurrence F_0=0, F_1=1 and
+F_(n+2)=F_n+F_(n+1). A positive integer M is powerful when every prime
+p dividing M also satisfies p^2|M. Thus one is powerful.
+Put E={1,2,6,12}. For an odd prime p different from five, write
+chi(p)=(p/5)=(5/p), and N(p)=p-chi(p). The standard WSS square condition
+is p^2|F_(N(p)). Index primes and value-primes are different variables.
+

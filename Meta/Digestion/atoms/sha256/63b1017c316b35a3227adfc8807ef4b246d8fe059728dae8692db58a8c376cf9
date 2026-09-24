@@ -1,0 +1,12 @@
+**corollary 12.5 (FPD consequence).** The following two assertions are equivalent:
+
+$$
+\begin{aligned}
+&\forall m>0,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+&\forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}
+$$
+
+If the first assertion fails, its least counterexample index is prime
+and at least seven.
+

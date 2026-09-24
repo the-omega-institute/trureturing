@@ -1,0 +1,11 @@
+### TBN.5 A fifth-power budget for an all-WSS block
+
+**Definition.** For r=3^(j+1), define
+
+$$b(r)=\begin{cases}
+8r+1,&r\equiv1\pmod5,\\
+4r+1,&r\equiv2\pmod5,\\
+6r+1,&r\equiv3\pmod5,\\
+2r+1,&r\equiv4\pmod5.
+\end{cases}$$
+

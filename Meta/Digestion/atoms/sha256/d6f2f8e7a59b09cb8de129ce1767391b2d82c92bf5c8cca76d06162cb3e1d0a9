@@ -1,0 +1,15 @@
+**theorem 16.3 (STL3).** Put
+
+$$\delta_k=\frac{p^{k-1}(k(p-1)-1)-1}{2},\qquad
+r_k=\delta_k-(k-1)d=\frac{p^{k-1}(p-2)-1}{2}.$$
+
+Then 0<r_k<d, disc(B)=p^(delta_k), and
+
+$$\boxed{[L_{\rm int}:L_{\rm tr}]=p^{\delta_k},}\tag{STL3}$$
+
+$$\boxed{L_{\rm int}/L_{\rm tr}\simeq
+(\mathbb Z/p^k\mathbb Z)^{r_k}\oplus
+(\mathbb Z/p^{k-1}\mathbb Z)^{d-r_k}.}\tag{STL4}$$
+
+The factors of order p^0 at k=1 are trivial. If Psi_m is the monic minimal polynomial of t, then the precise fractional ideal is D_B^(-1)=Psi_m'(t)^(-1)O_B.
+

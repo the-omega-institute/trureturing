@@ -1,0 +1,11 @@
+**theorem 19.2 (SJC2).** There is a unique multiplicative section s:C -> X_2 whose image consists of r-torsion. Put xi=s(v mod p). Every state of X_2 has a unique expression
+
+$$x=\xi^j(1+pz\delta),\qquad
+(j,z)\in\mathbb Z/r\mathbb Z\times\mathbb F_p.$$
+
+In these coordinates the actual update by v is
+
+$$\boxed{(j,z)\longmapsto(j+1,z-q_p).}\tag{SJC1}$$
+
+Thus X_2 has p disjoint cycles of length r if q_p=0, and one cycle of length rp otherwise. The orbit of the specified initial state one has length r or rp respectively.
+

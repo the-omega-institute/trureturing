@@ -1,0 +1,8 @@
+**corollary 21.4a (DCE depth-budget contrapositive).** For every H>=2, the exact inequality B_j<b(r_j)^(2H+1) guarantees some actual prime p|B_j with h_p<H. For example the fixed fourth block satisfies
+
+$$1459^{10}<B_4=7177905237579946589743592924684179<1459^{11},$$
+
+so it has a prime factor of original depth at most four. This does not decide whether that factor is WSS, and uses no factorization of B_4.
+
+**Proof.** Take the contrapositive of DCE4. In the fourth block r_4=243 and b(r_4)=1459; H=5 gives the conclusion. The two displayed inequalities are exact comparisons of the written integers. The bound permits depths one, two, three or four.
+

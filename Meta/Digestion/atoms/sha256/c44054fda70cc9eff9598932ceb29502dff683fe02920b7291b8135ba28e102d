@@ -1,0 +1,6 @@
+**theorem 21.6 (DCE6).** For every odd prime p and every integer a>=2, McConnell's dimension parameter satisfies
+
+$$\boxed{\mathbb D(p^a)\ne5.}\tag{DCE4}$$
+
+This extends TBN1 from square seeds to every pure odd-prime-power seed, including nonsquare exponents.
+
