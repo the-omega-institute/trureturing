@@ -91,7 +91,7 @@ internal sealed class GeometricDynamicsSourcesDocument : IScribeDocumentDefiniti
             Describe.Remark(
                 DescribeId.Create("local-interaction-and-correlation-memory"),
                 H("Local interactions and overlapping region autonomy"),
-                Equal(Id("delta"), Id("b"))),
+                Equal(Id("delta"), Id("b")),
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/hasenoehrl2022semicausal"),
                     LibraryNoteRef.Create("D5/L/watrous2009completelybounded")),
