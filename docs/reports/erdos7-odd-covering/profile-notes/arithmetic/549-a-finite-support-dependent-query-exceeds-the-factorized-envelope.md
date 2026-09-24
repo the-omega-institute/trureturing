@@ -147,3 +147,5 @@ The result excludes direct reuse of the factorized constant once phases
 can depend on old support. It neither bounds all such queries nor supplies
 an actual 13-row loss. A common quantitative law for arbitrary original
 families, with every original phase fixed globally, remains unresolved.
+
+[The seven-label uniform bound](551-seven-shallow-labels-control-every-rainbow-continuation.md) controls every fixed support-dependent query after the same prefix by0.1793490612..., above this counterexample but below the13-only closure threshold. It removes the continuation restrictions while retaining the fixed original prefix.
