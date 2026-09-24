@@ -260,7 +260,7 @@ def diagnosticName (unitName registrationModule : Name) : Name :=
 from statement identity. Their value is a literal, not executable report logic. -/
 def publishDiagnostic (unitName : Name) (diagnostic : Option String) : MetaM Unit := do
   let name := diagnosticName unitName (← getEnv).header.mainModule
-  if (← getEnv).contains name then throwError "registration diagnostic already exists: {name}"
+  if (← getEnv).contains name then throwError "registration diagnostic name already exists: {name}"
   addDecl <| .defnDecl {
     name, levelParams := [], type := mkConst ``String
     value := mkStrLit (diagnostic.getD ""), hints := .abbrev, safety := .safe }
