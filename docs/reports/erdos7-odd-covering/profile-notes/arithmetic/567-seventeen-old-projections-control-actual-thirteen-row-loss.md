@@ -419,6 +419,125 @@ The opening theorem retains its17 old-projection restrictions, prescribed old co
 
 Report558's H5 two-row-supremum counterexample remains valid. At that finite source, the fixed-query count hinge can obstruct a universal lower bound based only on the untruncated hinge. The present result shows why that obstruction does not automatically become actual row13 loss for this inheritance: one row loses at most all the mass of a fibre.
 
+## All scalar hinge bounds and the actual prefix mass still allow the full charge
+
+The fixed-query clipping improvement above uses the actual joint source.
+It cannot be obtained merely by adding every scalar PA hinge bound to
+the known prefix mass. The following exact relaxation identifies that
+method boundary throughout the full pure-parameter rectangle.
+
+Let `mu=pi5 tensor pi7 tensor pi11` be the complete unnormalized PA
+auxiliary count law before13. Its total mass is `xy`, with
+`1/2<=x<=1`, `2/3<=y<=1`. Its coordinate masses are
+
+\[
+\pi_p(1)=w_p-C_p/p,\qquad
+\pi_p(n)=C_p(p-1)/p^n\quad(n\ge2),
+\]
+
+where `(w5,w7,w11)=(x,y,1)` and `(C5,C7,C11)=(1,1,5/3)`.
+Write `F(t)=integral(M-t)_+ dmu`. All heights remain in this law.
+In this section `F(2)=F13`; it is not the earlier first11 hinge.
+
+For a fixed mass `m` in the entire interval
+
+\[
+A_{11}:=xy-\tfrac1{12}-\tfrac13(x/42+y/20+59/840)
+\le m\le xy,
+\]
+
+consider all nonnegative measures `rho` on the positive integers
+which have mass `m` and satisfy
+
+\[
+\int(L-t)_+\,d\rho\le F(t)\qquad\text{for every real }t.
+\tag{SC1}
+\]
+
+The actual `lambda11` mass lies in this interval. This scalar
+relaxation, however, does not require a load measure to arise from
+a single fixed query on that actual source. Its exact optimum is
+
+\[
+\sup_\rho\int\min(1,(L-2)_+/4)\,d\rho=F(2)/4.
+\tag{SC2}
+\]
+
+The upper bound follows directly from (SC1) at `t=2`. For equality use
+the two-atom measure
+
+\[
+\rho\{4\}=F(2)/2,\qquad
+\rho\{1\}=m-F(2)/2.
+\tag{SC3}
+\]
+
+The following three functions are bilinear in `x,y`. Their four exact
+corner values are positive:
+
+| `(x,y)` | `A11-F(2)/2` | `F(1)-3F(2)/2` | `F(3)-F(2)/2` |
+|---|---|---|---|
+|`(1/2,2/3)`|`229/2016`|`49/480`|`12109/554400`|
+|`(1/2,1)`|`1871/7392`|`857/5280`|`41959/2032800`|
+|`(1,2/3)`|`851/2016`|`277/1440`|`10859/554400`|
+|`(1,1)`|`16123/22176`|`4381/15840`|`105827/6098400`|
+
+Thus (SC3) is nonnegative throughout the rectangle. Its stop-loss
+values at thresholds1,2,3 are respectively `3F(2)/2`, `F(2)`, and
+`F(2)/2`, bounded by the corresponding complete auxiliary hinges.
+At4 its value is zero. Both stop-loss functions are affine between
+successive integer thresholds, so these comparisons cover `1<=t<=4`.
+For `t>=4` the witness has zero stop-loss. For every `t<=1`, including
+negative thresholds, the auxiliary-minus-witness difference is
+
+\[
+F(1)-3F(2)/2+(1-t)(xy-m)\ge0.
+\]
+
+This proves (SC1) for all real thresholds. The clipped payoff is zero
+at1 and `1/2` at4, proving equality in (SC2). The argument concerns
+the stated stop-loss constraints; unequal total masses do not justify
+comparison for arbitrary signed convex functions.
+
+At the literal height-five source, `m=19543635187/92276732625`, and
+(SC3) has weights
+
+\[
+\rho\{4\}=\frac{16293608641}{166389300000},\qquad
+\rho\{1\}=\frac{25217931347629}{221464158300000}.
+\]
+
+Its clipped value is `16293608641/332778600000 = 0.04896230899763386...`.
+The required two-row saving cut on that same source is only
+
+\[
+\mathrm{credit}+S_{11}+F_{13}/4-k_{\rm req}
+=\frac{649004327923538200529792761}
+       {14267500448564292689760000000}
+=0.04548829910770012\ldots .
+\]
+
+Hence even the full scalar hinge profile and the exact actual mass do
+not imply the desired clipped improvement. This is an obstruction to
+that relaxation, not an actual query attaining its optimum, an actual
+row13 loss counterexample, or a failure of the PA law. The fixed query
+used earlier has smaller clipped loss precisely because more of its
+joint realization was retained. Extending that success to arbitrary
+queries or to different query slots requires additional common-source
+incidence constraints. Nor can clipped bounds for separate slots be
+averaged through Jensen: this clipped payoff is not convex.
+
+The general scalar-majorant method and abstract saturation witnesses
+already occur in [Report21](../001-064/21-physical-and-killed-kernel-comparisons-at11-and13.md)
+and [Report243](../193-256/243-all-original-j-costs-have-exact-moment-envelopes-and-a-method-boundary.md).
+Here the calculation resolves the particular first13 clipped-payoff
+relaxation, including all thresholds and all actual pure parameters.
+The [exact producer](../../frontier/cover-geometry/first13_scalar_clipping_boundary.py)
+and [data](../../frontier/cover-geometry/first13_scalar_clipping_boundary.json)
+verify the corner inequalities and the H5 consumer in36 explicit checks.
+The all-real and all-parameter claims are supplied by the proof above;
+no Lean verification is claimed.
+
 ## Exact verification
 
 The [standard-library producer](../../frontier/cover-geometry/row13_seventeen_projection_clipping.py)
