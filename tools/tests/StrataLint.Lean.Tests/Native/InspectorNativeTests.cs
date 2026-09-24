@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using StrataLint.TestSupport;
@@ -55,6 +56,8 @@ internal static class InspectorNativeTestRunner
 
 public sealed class InspectorCompilerFixture : IDisposable
 {
+    private sealed record CompilerMaterial(string Name, byte[] CompressedBytes, UnixFileMode? Mode);
+    private static readonly Lazy<CompilerMaterial[]> Materials = new(CreateMaterials);
     private readonly TemporaryDirectory temporary = new();
     private readonly Lazy<string> stage;
 
@@ -62,15 +65,47 @@ public sealed class InspectorCompilerFixture : IDisposable
     {
         stage = new Lazy<string>(() =>
         {
-            var root = TestRepositoryLayout.FindRoot();
-            var result = TestProcessRunner.Run("python3",
-                ["-B", "test_native_support.py", temporary.Path],
-                System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
-                TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
-            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
-                + Encoding.UTF8.GetString(result.StandardError));
+            // Share immutable compiler material; each class keeps its own stage
+            // and every Python case still restores into its private cold fixture.
+            foreach (var material in Materials.Value)
+            {
+                var path = System.IO.Path.Combine(temporary.Path, material.Name);
+                using (var bytes = new MemoryStream(material.CompressedBytes, writable: false))
+                using (var compressed = new GZipStream(bytes, CompressionMode.Decompress))
+                using (var file = File.Create(path)) compressed.CopyTo(file);
+                if (!OperatingSystem.IsWindows() && material.Mode is { } mode)
+                    File.SetUnixFileMode(path, mode);
+            }
             return temporary.Path;
         });
+    }
+
+    private static CompilerMaterial[] CreateMaterials()
+    {
+        using var source = new TemporaryDirectory();
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            ["-B", "test_native_support.py", source.Path],
+            System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
+            TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
+            + Encoding.UTF8.GetString(result.StandardError));
+        var materials = Directory.GetFileSystemEntries(source.Path).Order(StringComparer.Ordinal).Select(path =>
+        {
+            var info = new FileInfo(path);
+            Assert.True(info.Exists && info.LinkTarget is null
+                && (info.Attributes & (FileAttributes.Directory | FileAttributes.ReparsePoint | FileAttributes.Device)) == 0,
+                "compiler stage must contain only regular files: " + path);
+            using var bytes = new MemoryStream();
+            using (var file = File.OpenRead(path))
+            using (var compressed = new GZipStream(bytes, CompressionLevel.Fastest, leaveOpen: true))
+                file.CopyTo(compressed);
+            return new CompilerMaterial(info.Name, bytes.ToArray(),
+                OperatingSystem.IsWindows() ? null : File.GetUnixFileMode(path));
+        }).ToArray();
+        Assert.NotEmpty(materials);
+        Console.WriteLine($"NATIVE_COMPILER_STAGE files={materials.Length} compressed_bytes={materials.Sum(material => (long)material.CompressedBytes.Length)}");
+        return materials;
     }
 
     public string Path => stage.Value;
