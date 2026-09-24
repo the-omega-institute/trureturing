@@ -68,17 +68,6 @@ noncomputable def twoBasicOpenCechComplex (f g : R) :
       IsLocalization.Away.awayToAwayRight_eq,
       IsLocalization.Away.awayToAwayLeft_eq])
 
-private lemma diagonal_injective {f g : R} (hspan : Ideal.span {f, g} = ⊤) :
-    Function.Injective (diagonal f g) := by
-  intro x y hxy
-  apply Localization.algebraMap_injective_of_span_eq_top ({f, g} : Set R) hspan
-  funext a
-  rcases a with ⟨a, ha⟩
-  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha
-  rcases ha with rfl | rfl
-  · exact congrArg Prod.fst hxy
-  · exact congrArg Prod.snd hxy
-
 private lemma diagonal_exact {f g : R} (hspan : Ideal.span {f, g} = ⊤) :
     Function.Exact (diagonal f g) (overlapDifference f g) := by
   intro p
@@ -302,7 +291,14 @@ theorem two_basic_open_cech_short_exact {f g : R}
   · change Function.Exact (diagonal f g) (overlapDifference f g)
     exact diagonal_exact hspan
   · change Function.Injective (diagonal f g)
-    exact diagonal_injective hspan
+    intro x y hxy
+    apply Localization.algebraMap_injective_of_span_eq_top ({f, g} : Set R) hspan
+    funext a
+    rcases a with ⟨a, ha⟩
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha
+    rcases ha with rfl | rfl
+    · exact congrArg Prod.fst hxy
+    · exact congrArg Prod.snd hxy
   · change Function.Surjective (overlapDifference f g)
     exact overlapDifference_surjective hspan
 
