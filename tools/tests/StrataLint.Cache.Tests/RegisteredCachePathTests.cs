@@ -66,13 +66,13 @@ public sealed class RegisteredCachePathTests
         using var fixture = new Fixture();
         fixture.Manifest([".lake/build/lib"]);
         var before = fixture.Keys("project");
-        fixture.Manifest([".lake/build/lib", ".lake/build/lean-inspector"]);
+        fixture.Manifest([".lake/build/lib", ".lake/build/lean-inspector", ".lake/build/reg"]);
         var after = fixture.Keys("project");
         Assert.True(before.Exit == 0 && after.Exit == 0, before.Text + after.Text);
         foreach (var key in new[] { "mathlib_revision", "partition", "project_key", "project_restore_prefix" })
             Assert.Equal(ReadOutput(before.Output, key), ReadOutput(after.Output, key));
         Assert.NotEqual(ReadOutput(before.Output, "project_archive_path"), ReadOutput(after.Output, "project_archive_path"));
-        fixture.Manifest([".lake/build/lean-inspector", ".lake/build/lib"]);
+        fixture.Manifest([".lake/build/reg", ".lake/build/lean-inspector", ".lake/build/lib"]);
         var reordered = fixture.Keys("project");
         Assert.True(reordered.Exit == 0, reordered.Text);
         Assert.Equal(ReadOutput(after.Output, "project_archive_path"), ReadOutput(reordered.Output, "project_archive_path"));

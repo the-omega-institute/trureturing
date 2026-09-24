@@ -1,0 +1,13 @@
+import LeanInformationAudit.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations
+
+section
+open _root_.D5.S3.ConceptDynamics
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+open _root_.D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations
+open PointwiseRegistrationTemplates LeanInformationAudit
+open EscapeRecord _root_.D5.S3.ConceptDynamics.CIRPT
+register_information_template homogeneousPointwiseEqRealization
+end

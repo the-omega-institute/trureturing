@@ -8,6 +8,53 @@ namespace StrataLint.StageIntegration.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", true)]
+    [InlineData("README.md", false)]
+    [InlineData("tools/lean-inspector/tests/packages/README.md", false)]
+    public void RegisteredNativeFixtureInputsInvalidateConsumedMaterialsOnly(string path, bool invalidates)
+    {
+        using var fixture = new ExecutionFixture();
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
+        var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
+            == "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj")!;
+        // Use the native consumer's actual runtime registration and production
+        // fingerprint/seed path, with synthetic compilation and test execution.
+        EditRegistration(fixture, rows =>
+        {
+            foreach (var field in new[] { "execution_inputs", "execution_excludes" })
+                rows[0]![field] = declaration[field]!.DeepClone();
+        });
+        // This registered C# runtime material needs a compile owner in the fixture.
+        const string lean = "tools/StrataLint.Lean/StrataLint.Lean.csproj";
+        fixture.Write(lean, "<Project />\n");
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(lean, "StrataLint.Lean", "test-support", false, ["tools/StrataLint.Lean/**/*.cs"])));
+        foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
+        fixture.Write(path, "original fixture material\n");
+        fixture.Track();
+        Assert.Equal([ExecutionFixture.First, ExecutionFixture.Second], Execute(fixture));
+        Seed(fixture);
+        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
+
+        fixture.Write(path, "changed fixture material\n");
+        fixture.Track();
+
+        Assert.Equal(invalidates ? new[] { ExecutionFixture.First } : [], Execute(fixture));
+        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        Assert.NotEqual(prior.Candidate, accepted.Candidate);
+        if (invalidates)
+        {
+            Assert.NotEqual(prior.Projects[0].InputFingerprint, accepted.Projects[0].InputFingerprint);
+            Assert.Equal("executed", accepted.Projects[0].Status);
+            Assert.Equal(accepted.Candidate, accepted.Projects[0].ExecutionCandidate);
+        }
+        else Assert.Equal(prior.Projects[0] with { Status = "reused" }, accepted.Projects[0]);
+        Assert.Equal(prior.Projects[1] with { Status = "reused" }, accepted.Projects[1]);
+    }
+
+    [Theory]
     [InlineData("StrataLint.ArchitectureTests", true)]
     [InlineData("StrataLint.Cache.Tests", true)]
     [InlineData("StrataLint.EngineeringScope.Tests", false)]
