@@ -1058,3 +1058,87 @@ ordinary arguments above, with no additional Lean verification.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_pure_deficit.py
 ```
+
+## A lower witness must retain an almost untouched pure-5 root
+
+Let A5 be the actual union of pure-5 original cylinders and put
+
+    m5=max_(r mod5) H5((r mod5) minus A5).
+
+If m5<=24/125, the unchanged CP/PA actual law has the sharper bounds
+
+    R_Q(nu)<=B_root=1827949258812195759/365819281957539530
+                   =4.996864159348399...<5<257/51,
+    H_Q|V<=nu<=D_root H_Q,
+    D_root=8617127815296000/101334981151673<86.         (RC1)
+
+This applies to arbitrary finite two-copy originals on the reference
+Q, without assuming the necessary conditions(NC7). The kernel and
+normalization remain those of(CP2)–(CP3); only the auxiliary comparison
+retains a smaller actual first-level cylinder cap.
+
+### Retain the actual root cap in every charge and query
+
+Set sigma=1/125. The normalized actual pure-5 survivor measure has
+first-level cylinder probabilities at most(1/5-sigma)/w5 and, at each
+depth e>=2, at most1/(w5*5^e). These are valid decreasing bounds in
+[0,1]. The conditional-comparison proposition cited in(CP4) permits
+different deterministic bounds at different exponents and phases.
+Completing the exponent inventory therefore replaces(PA2) for5 by
+
+    pi5_sigma(1)=w5-1/5+sigma,
+    pi5_sigma(2)=4/25-sigma,
+    pi5_sigma(n)=4/5^n, n>=3,
+    integral1=w5, integral N5=w5+1/4-sigma.           (RC2)
+
+The7 factor and all later factors stay unchanged. Every atom in(RC2)
+is nonnegative throughout the PA rectangle. Moving sigma mass from
+N5=2 to N5=1 decreases each old-prefix hinge and the final hinge.
+For the same actual u,v, define alpha_sigma and Phi_sigma by(PA4)
+with these modified hinges. The actual law still satisfies
+
+    lambda(1)>=alpha_sigma,
+    lambda(L-1)<=2*lambda(1)+Phi_sigma.
+
+Both bounds use the same refined comparison. The functions remain
+separately affine in u,v, and all four corner masses are positive.
+The smallest mass and largest paired query ratio are at(1/2,1/3):
+
+    alpha_sigma=101334981151673/957458646144000,
+    Phi_sigma=64424439965747/203116043520000,
+    T-B_root=790143263665675501/18656783379834516030>0. (RC3)
+
+Four-corner interpolation proves(RC1), using the unchanged raw density
+cap9. Some envelope endpoints need not be realizable by an actual
+pure family with this cap; the interpolation bounds the entire
+rectangle, including every actual admissible pair.
+
+### Necessary actual layout
+
+Consequently(NC1) requires m5>24/125. There is a residue r0 mod5 with
+
+    H5(A5 intersect(r0 mod5))<1/125.                  (RC4)
+
+This is the actual union mass of all pure-5 originals in that root,
+including arbitrarily high exponents. By(NC7), r0 is one of the three
+roots not deleted at modulus5, and none of the four listed modulus25
+or125 cylinders can lie in it: each would cost at least1/125.
+Higher pure-5 classes can still occur in this root, with total union
+mass below that threshold. The root need not be entirely free of
+originals, and(RC4) is not sufficient for a lower certificate.
+
+The [root-cap consumer](../../frontier/cover-geometry/two_copy_root_cap.py)
+and [four-corner data](../../frontier/cover-geometry/two_copy_root_cap.json)
+use the pinned PA ledger. For the remaining multiplier N, the exact
+hinge correction is sigma times
+
+    integral((2N-t)_+-(N-t)_+)
+      =integral N-sum_(n<t)(min(2n,t)-n)*pi(N=n).
+
+The full mean retains every high tail. A direct modified low-atom
+convolution checks the same four new corner budgets. The source
+comparison and(RC4) are ordinary proofs, without new Lean verification.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_root_cap.py
+```
