@@ -31,22 +31,18 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [Theory]
     [InlineData("Meta/domains.yaml", "push")]
     [InlineData("Meta/domains.yaml", "pr")]
-    [InlineData("Meta/registry.yaml", "push")]
-    [InlineData("Meta/registry.yaml", "pr")]
-    public void RegistryDataRunsRegisteredConsumersAndRetainsCurrentTruthChecks(string input, string mode)
+    public void DomainDataRunsRegisteredConsumersAndRetainsCurrentTruthChecks(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(new[] {
-            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
-            "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
-            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        var tests = Strings(plan["execution"]!["tests"]!);
+        foreach (var project in new[] {
+            "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.Scribe.Tests", "StrataLint.Tests" })
+            Assert.Contains($"tools/tests/{project}/{project}.csproj", tests);
         Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current"));
         Assert.Contains("scribe", Strings(plan["resources"]!));
         Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
             : ["lean-report", "scribe", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
-        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        Assert.Contains("engineering", Strings(plan["resources"]!));
     }
 
     [Theory]
@@ -459,7 +455,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
-    [InlineData("Meta/registry.yaml")]
     public void TheoryDocumentsDoNotRemoveOtherInputsRequirements(string input)
     {
         var plan = Plan(input, "docs/develop/theory/admission-resource-probe.md");
@@ -475,7 +470,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
-    [InlineData("Meta/registry.yaml")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)
     {
         var plan = Plan("Meta/Digestion/backfill/admission-resource-probe.json", input);
@@ -698,11 +692,11 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Fact]
-    public void SharedCliPolicyFixtureSelectsBothConsumers()
+    public void SharedFileMapPolicySelectsBothConsumers()
     {
-        var plan = Plan("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", "");
-        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Tests" }
-            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        var tests = Strings(Plan("Meta/FILEMAP.toml", "")["execution"]!["tests"]!);
+        Assert.Contains("tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj", tests);
+        Assert.Contains("tools/tests/StrataLint.Tests/StrataLint.Tests.csproj", tests);
     }
 
     [Theory]

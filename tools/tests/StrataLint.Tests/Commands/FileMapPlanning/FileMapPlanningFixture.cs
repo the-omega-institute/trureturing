@@ -105,12 +105,11 @@ internal sealed class FileMapPlanningFixture : IDisposable
         fixture.Write("Meta/ci-resources.json", resources.ToJsonString());
         var checks = Read(Path.Combine(fixture.Root, "Meta/ci-checks.json"));
         checks["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["delta_scope"] = JsonNode.Parse("""
-            {"whole_tree_inputs":["Meta/FILEMAP.toml","Meta/registry.yaml","Meta/domains.yaml"],
+            {"whole_tree_inputs":["Meta/FILEMAP.toml","Meta/domains.yaml"],
              "actor_inputs":["**/*.cs"],"inventory_inputs":["Blueprint/**"],"related":[]}
             """);
         fixture.Write("Meta/ci-checks.json", checks.ToJsonString());
-        fixture.Write("Meta/registry.yaml", TestRegistry.Canonical);
-        fixture.Write("Meta/domains.yaml", TestRegistry.Domains);
+        fixture.Write("Meta/domains.yaml", TestFileMap.Domains);
         fixture.Write(".gitignore", "build/\n.sshx-*\n.echo-review.md\n.caller-review-prompt.md\n/Generated/echo-residuals/\n");
         fixture.Save();
         return fixture;
