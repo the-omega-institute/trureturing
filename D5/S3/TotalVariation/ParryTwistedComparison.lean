@@ -169,6 +169,59 @@ theorem parry_mixing_and_complete_prefix (k : ℕ) (hk : 2 ≤ k) :
       (fun x y => (Q^(G%3)) x y) ⟨Matrix.pow_apply_nonneg hQ _, hrows _⟩
     rw [he,hπe] at hc
     exact hc.trans (hblocks (G/3))
+  have hsuffix (L : ℕ) :
+      (∑ s : State k with L ≤ s.2.val, parryLaw k s) ≤
+        Real.goldenRatio ^ (2 - (L : ℤ)) := by
+    let p := parryParameter k
+    let g := Real.goldenRatio⁻¹
+    have hp : 0 ≤ p := by dsimp [p]; linarith [hr.1]
+    have hg : 0 ≤ g := inv_nonneg.mpr Real.goldenRatio_pos.le
+    have hg1 : g < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
+    have hSpos : 0 < normalizer k := by linarith
+    have hbnd (s : State k) : parryLaw k s ≤ g^s.2.val / 2 := by
+      unfold parryLaw
+      change p^s.2.val * suffixWeight k p s.2 / (2 * normalizer k) ≤ _
+      apply (div_le_iff₀ (by positivity : (0 : ℝ) < 2*normalizer k)).mpr
+      have hpow : p^s.2.val ≤ g^s.2.val := pow_le_pow_left₀ hp hr.2.1 _
+      have h0 : 0 ≤ p^s.2.val := pow_nonneg hp _
+      have hg0 : 0 ≤ g^s.2.val := pow_nonneg hg _
+      nlinarith [(hb s.2).2, mul_le_mul_of_nonneg_left hS hg0,
+        mul_le_mul_of_nonneg_left (hb s.2).2 h0]
+    have hsum : (∑ j : Fin k with L ≤ j.val, g^j.val) =
+        ∑ j ∈ Finset.Ico L k, g^j := by
+      apply Finset.sum_bij (fun j _ => j.val)
+      · intro j hj
+        exact Finset.mem_Ico.mpr ⟨(Finset.mem_filter.mp hj).2,j.isLt⟩
+      · intro a _ b _ he
+        exact Fin.ext he
+      · intro j hj
+        refine ⟨⟨j,(Finset.mem_Ico.mp hj).2⟩, ?_, rfl⟩
+        simp [(Finset.mem_Ico.mp hj).1]
+      · intro j _
+        rfl
+    calc
+      _ ≤ ∑ s : State k with L ≤ s.2.val, g^s.2.val/2 :=
+        Finset.sum_le_sum fun s _ => hbnd s
+      _ = ∑ j ∈ Finset.Ico L k, g^j := by
+        rw [← hsum]
+        simp only [Finset.sum_filter, Fintype.sum_prod_type, Fintype.sum_bool]
+        rw [← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro j _
+        split_ifs <;> ring
+      _ ≤ g^L / (1-g) := geom_sum_Ico_le_of_lt_one hg hg1
+      _ = Real.goldenRatio ^ (2-(L:ℤ)) := by
+        have hφ := Real.goldenRatio_sq
+        have hφ0 := Real.goldenRatio_ne_zero
+        rw [zpow_sub₀ hφ0, zpow_ofNat, zpow_natCast]
+        change (Real.goldenRatio⁻¹)^L / (1-Real.goldenRatio⁻¹) = _
+        rw [inv_pow]
+        generalize hv : Real.goldenRatio = φ at *
+        have hφ1 : φ - 1 ≠ 0 := by
+          have hlt : 1 < φ := by rw [← hv]; exact Real.one_lt_goldenRatio
+          linarith
+        field_simp [hφ1]
+        nlinarith
   have hprefix : ∀ (n G : ℕ), 2 ≤ n+G →
       totalVariation (twistedLaw k (parryParameter k) n G)
         (referenceLaw k (parryParameter k) n π) ≤
@@ -183,7 +236,7 @@ theorem parry_mixing_and_complete_prefix (k : ℕ) (hk : 2 ≤ k) :
       exact h.trans (hmix G s)
     exact (complete_prefix_comparison_of_estimates k hk (parryParameter k) hp n G hL
       hrow π hπ hπsum hflip ((3/4:ℝ)^(G/3)) (by positivity) hpoint).trans
-      (add_le_add le_rfl (parry_suffix_tail k hk (n+G)))
+      (add_le_add le_rfl (hsuffix (n+G)))
   refine ⟨hmix,hprefix,?_⟩
   intro R G hR hG f
   have hp : 0 < parryParameter k := by linarith [hr.1]
