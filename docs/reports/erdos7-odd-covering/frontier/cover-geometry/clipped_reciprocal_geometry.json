@@ -1,0 +1,110 @@
+{
+  "scope": "Fixed arithmetic and one actual D7 sharpness configuration; no parameter scan, general phase enumeration or query-law construction",
+  "S4": "248/315",
+  "S5": "3043/3465",
+  "S6": "43024/45045",
+  "S7": "46027/45045",
+  "stationary_h": "1/13",
+  "stationary_cost": "19346/3465",
+  "minimum_over_beta_maximum_upper": "136289/13860",
+  "alpha_third_band_upper": "303763/27720",
+  "alpha_third_band_margin": "56629/471240",
+  "alpha_hundredth_small_h_lower": "2675191/240240",
+  "alpha_hundredth_small_h_margin": "233047/4084080",
+  "D7_support": {
+    "kappa": "272/1001",
+    "inside_first_three_reciprocal_sum": "71/105",
+    "outside_first_three_reciprocal_sum": "1079/6783",
+    "support_constant": "45031219/4849845",
+    "excluded_h_interval": [
+      "1/100",
+      "1/10"
+    ],
+    "left_lower": "1939597039/174594420",
+    "left_margin": "5364739/174594420",
+    "right_lower": "973840057/87297210",
+    "right_margin": "6723907/87297210"
+  },
+  "D7_sharpness": {
+    "three_five_classes": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 9,
+        "residue": 1
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 15,
+        "residue": 2
+      }
+    ],
+    "roots_inspected": 45,
+    "surviving_roots": [
+      4,
+      7,
+      8,
+      11,
+      13,
+      14,
+      16,
+      22,
+      23,
+      26,
+      29,
+      31,
+      34,
+      38,
+      41,
+      43,
+      44
+    ],
+    "other_pure_classes": [
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 11,
+        "residue": 0
+      },
+      {
+        "modulus": 13,
+        "residue": 0
+      }
+    ],
+    "other_pure_survivor_mass": "720/1001",
+    "complete_survivor_mass": "272/1001"
+  },
+  "checks": {
+    "D7_sharp_root_count": true,
+    "D7_sharp_complete_survivor": true,
+    "D7_universal_bound_arithmetic": true,
+    "D7_mass_above_quarter": true,
+    "D7_support_constant": true,
+    "D7_left_margin": true,
+    "D7_right_margin": true,
+    "D7_right_minus_left": true,
+    "two_term_log_two_lower": true,
+    "only_active_labels_11_13_15": true,
+    "low_branch_increases": true,
+    "middle_stationary_point": true,
+    "high_branch_decreases": true,
+    "maximum_cost": true,
+    "log_maximum_argument": true,
+    "exponential_17_over_4_lower": true,
+    "max_upper_below_10": true,
+    "alpha_third_band_below_target": true,
+    "euler_upper": true,
+    "exp_9_over_2_bound": true,
+    "small_beta_active_seventh_label": true,
+    "small_beta_endpoint_above_target": true,
+    "large_h_small_beta_above_target": true,
+    "large_h_log_argument": true
+  }
+}

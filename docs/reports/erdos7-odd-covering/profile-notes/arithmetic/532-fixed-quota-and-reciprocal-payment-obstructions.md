@@ -324,3 +324,11 @@ of the sampling denominator. Their h=2618/2625 lies in the already
 sufficient uniform-Haar regime, so this does not contradict the exclusions.
 The new rational thresholds above follow by the displayed exact arithmetic;
 no new parameter scan or Lean proof is used.
+
+[Report533](533-clipped-payments-require-retained-tail-geometry.md)
+examines the probability-one truncation min(1,1/(beta*d)). Its scalar
+relaxation can pass, but the seven cheapest labels have a sharp actual
+survivor bound272/1001. The resulting mandatory retained tail gives a
+stronger clipped-cost inequality excluding the entire interval
+1/100<=H(U)<=1/10. This still concerns a specified numerical certificate,
+not the optimum over actual supported laws.
