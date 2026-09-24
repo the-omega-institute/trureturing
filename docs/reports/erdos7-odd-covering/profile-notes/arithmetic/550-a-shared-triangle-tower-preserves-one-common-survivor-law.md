@@ -295,3 +295,10 @@ as cofactors of originals that genuinely touch23 or29 in ST2. Further
 outside-prime supports are not covered. Uniform
 common-law control for those original families, and unrestricted Erdős #7,
 remain unresolved.
+
+[Report555](555-actual-mixed-loss-obstructions-and-a-single-query-repair.md)
+gives actual153/102-original families showing that the old173/250 loss
+criterion cannot be imposed uniformly on the proposed larger support
+classes. Both examples still have supported laws in G below the query
+target; clipping the single query3 repairs the primary example. The
+star-plus-triangle theorem above is unaffected.

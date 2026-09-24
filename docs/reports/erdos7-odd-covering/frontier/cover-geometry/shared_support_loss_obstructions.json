@@ -1,0 +1,6322 @@
+{
+  "scope": "General conditional single-query bound and two actual distinct-modulus loss obstructions; no full-period enumeration; no Lean.",
+  "general_single_query_bridge": {
+    "cap_numerator": "7613/2805",
+    "loss_threshold": "20657/28270",
+    "corner_count": 128,
+    "target": "565/51",
+    "original_alpha": "7235955529/6075000000000",
+    "exp_lower": "19/7",
+    "exp_upper": "68/25",
+    "scope": "Conditional direct-query bound for arbitrary finite distinct P-smooth originals. No general G claim at this loss threshold."
+  },
+  "target": "565/51",
+  "uniform_loss_threshold": "173/250",
+  "expected_values_disclosed": true,
+  "claims_refuted": [
+    "Uniform mixed loss below 173/250 on the two proposed enlarged classes."
+  ],
+  "claims_not_refuted": [
+    "Erdos 7",
+    "Existence of a supported law with R below 565/51"
+  ],
+  "families": [
+    {
+      "family": "primary",
+      "pure_heights": {
+        "3": 7,
+        "5": 3,
+        "7": 3,
+        "11": 3,
+        "13": 3,
+        "17": 3,
+        "19": 3
+      },
+      "pure_count": 25,
+      "original_count": 153,
+      "role_counts": {
+        "pure-3": 7,
+        "pure-5": 3,
+        "pure-7": 3,
+        "pure-11": 3,
+        "pure-13": 3,
+        "pure-17": 3,
+        "pure-19": 3,
+        "star-5": 8,
+        "star-7": 8,
+        "star-11": 8,
+        "star-13": 8,
+        "star-17": 8,
+        "star-19": 8,
+        "pair-5-7": 16,
+        "pair-5-11": 16,
+        "pair-7-11": 16,
+        "pair-7-13": 16,
+        "pair-7-17": 16
+      },
+      "full_period": 9239928178351862116125,
+      "original_rows": [
+        {
+          "role": "pure-3",
+          "modulus": 3,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 321933336549141347031
+        },
+        {
+          "role": "pure-3",
+          "modulus": 9,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 2839993324796836738531
+        },
+        {
+          "role": "pure-3",
+          "modulus": 27,
+          "residue": 4,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 4
+            }
+          ],
+          "private_point": 1154245111188060796906
+        },
+        {
+          "role": "pure-3",
+          "modulus": 81,
+          "residue": 13,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 4,
+              "residue": 13
+            }
+          ],
+          "private_point": 5336928648713595088156
+        },
+        {
+          "role": "pure-3",
+          "modulus": 243,
+          "residue": 40,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 5,
+              "residue": 40
+            }
+          ],
+          "private_point": 8645051082938335845781
+        },
+        {
+          "role": "pure-3",
+          "modulus": 729,
+          "residue": 121,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 6,
+              "residue": 121
+            }
+          ],
+          "private_point": 89562028908833886406
+        },
+        {
+          "role": "pure-3",
+          "modulus": 2187,
+          "residue": 364,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 7,
+              "residue": 364
+            }
+          ],
+          "private_point": 2142879401875914356656
+        },
+        {
+          "role": "pure-5",
+          "modulus": 5,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 5050376801997300302530
+        },
+        {
+          "role": "pure-5",
+          "modulus": 25,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 1280486105229740559151
+        },
+        {
+          "role": "pure-5",
+          "modulus": 125,
+          "residue": 6,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 6
+            }
+          ],
+          "private_point": 910888978095666074506
+        },
+        {
+          "role": "pure-7",
+          "modulus": 7,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 7,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 6659578987600877082031
+        },
+        {
+          "role": "pure-7",
+          "modulus": 49,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 7,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 6039991966895067085906
+        },
+        {
+          "role": "pure-7",
+          "modulus": 343,
+          "residue": 8,
+          "coordinates": [
+            {
+              "prime": 7,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 8
+            }
+          ],
+          "private_point": 1702882821954397113031
+        },
+        {
+          "role": "pure-11",
+          "modulus": 11,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 11,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 6289624028874796628656
+        },
+        {
+          "role": "pure-11",
+          "modulus": 121,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 11,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 4637405466554929473406
+        },
+        {
+          "role": "pure-11",
+          "modulus": 1331,
+          "residue": 12,
+          "coordinates": [
+            {
+              "prime": 11,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 12
+            }
+          ],
+          "private_point": 4942857637740114997906
+        },
+        {
+          "role": "pure-13",
+          "modulus": 13,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 13,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 4841538443497418616031
+        },
+        {
+          "role": "pure-13",
+          "modulus": 169,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 13,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 265734229548021264031
+        },
+        {
+          "role": "pure-13",
+          "modulus": 2197,
+          "residue": 14,
+          "coordinates": [
+            {
+              "prime": 13,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 14
+            }
+          ],
+          "private_point": 5459776696668890500906
+        },
+        {
+          "role": "pure-17",
+          "modulus": 17,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 17,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 1552963368506682912781
+        },
+        {
+          "role": "pure-17",
+          "modulus": 289,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 17,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 4434211072401462632281
+        },
+        {
+          "role": "pure-17",
+          "modulus": 4913,
+          "residue": 18,
+          "coordinates": [
+            {
+              "prime": 17,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 18
+            }
+          ],
+          "private_point": 7215781146853407283156
+        },
+        {
+          "role": "pure-19",
+          "modulus": 19,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 19,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 5684021143358287134406
+        },
+        {
+          "role": "pure-19",
+          "modulus": 361,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 19,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 4745075241577962321031
+        },
+        {
+          "role": "pure-19",
+          "modulus": 6859,
+          "residue": 20,
+          "coordinates": [
+            {
+              "prime": 19,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 20
+            }
+          ],
+          "private_point": 5384959464455515099156
+        },
+        {
+          "role": "star-5",
+          "modulus": 15,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1056328067081301420407
+        },
+        {
+          "role": "star-5",
+          "modulus": 75,
+          "residue": 11,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 4826218763848861163786
+        },
+        {
+          "role": "star-5",
+          "modulus": 45,
+          "residue": 7,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 7778196257185468145032
+        },
+        {
+          "role": "star-5",
+          "modulus": 225,
+          "residue": 61,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 2308158775601165772286
+        },
+        {
+          "role": "star-5",
+          "modulus": 135,
+          "residue": 22,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 224016292442381970532
+        },
+        {
+          "role": "star-5",
+          "modulus": 675,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 3993906989209941713911
+        },
+        {
+          "role": "star-5",
+          "modulus": 405,
+          "residue": 67,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 5281260933268709795407
+        },
+        {
+          "role": "star-5",
+          "modulus": 2025,
+          "residue": 2011,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 9051151630036269538786
+        },
+        {
+          "role": "star-7",
+          "modulus": 21,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 8687054059829586757031
+        },
+        {
+          "role": "star-7",
+          "modulus": 147,
+          "residue": 113,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 66712902183534637031
+        },
+        {
+          "role": "star-7",
+          "modulus": 63,
+          "residue": 16,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 6168994071581891365531
+        },
+        {
+          "role": "star-7",
+          "modulus": 441,
+          "residue": 358,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 6788581092287701361656
+        },
+        {
+          "role": "star-7",
+          "modulus": 189,
+          "residue": 184,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 7854742285190667307156
+        },
+        {
+          "role": "star-7",
+          "modulus": 1323,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 8474329305896477303281
+        },
+        {
+          "role": "star-7",
+          "modulus": 567,
+          "residue": 310,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 3672058747665133015906
+        },
+        {
+          "role": "star-7",
+          "modulus": 3969,
+          "residue": 2416,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 4291645768370943012031
+        },
+        {
+          "role": "star-11",
+          "modulus": 33,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 9057009018555667210406
+        },
+        {
+          "role": "star-11",
+          "modulus": 363,
+          "residue": 23,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 1469299402523672249531
+        },
+        {
+          "role": "star-11",
+          "modulus": 99,
+          "residue": 79,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 6538949030307971818906
+        },
+        {
+          "role": "star-11",
+          "modulus": 1089,
+          "residue": 628,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 8191167592627838974156
+        },
+        {
+          "role": "star-11",
+          "modulus": 297,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 8224697243916747760531
+        },
+        {
+          "role": "star-11",
+          "modulus": 3267,
+          "residue": 265,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 636987627884752799656
+        },
+        {
+          "role": "star-11",
+          "modulus": 891,
+          "residue": 310,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 4042013706391213469281
+        },
+        {
+          "role": "star-11",
+          "modulus": 9801,
+          "residue": 8977,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 5694232268711080624531
+        },
+        {
+          "role": "star-13",
+          "modulus": 39,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1265166425581183106906
+        },
+        {
+          "role": "star-13",
+          "modulus": 507,
+          "residue": 365,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 5840970639530580458906
+        },
+        {
+          "role": "star-13",
+          "modulus": 117,
+          "residue": 106,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 7987034615685349831531
+        },
+        {
+          "role": "star-13",
+          "modulus": 1521,
+          "residue": 196,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 3322910651282885067406
+        },
+        {
+          "role": "star-13",
+          "modulus": 351,
+          "residue": 184,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 432854650942263657031
+        },
+        {
+          "role": "star-13",
+          "modulus": 4563,
+          "residue": 1210,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 5008658864891661009031
+        },
+        {
+          "role": "star-13",
+          "modulus": 1053,
+          "residue": 67,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 5490099291768591481906
+        },
+        {
+          "role": "star-13",
+          "modulus": 13689,
+          "residue": 8815,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 825975327366126717781
+        },
+        {
+          "role": "star-17",
+          "modulus": 51,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 4553741500571918810156
+        },
+        {
+          "role": "star-17",
+          "modulus": 867,
+          "residue": 35,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 1672493796677139090656
+        },
+        {
+          "role": "star-17",
+          "modulus": 153,
+          "residue": 70,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 2035681512324223418656
+        },
+        {
+          "role": "star-17",
+          "modulus": 2601,
+          "residue": 2347,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 8394361986781305815281
+        },
+        {
+          "role": "star-17",
+          "modulus": 459,
+          "residue": 427,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 3721429725932999360281
+        },
+        {
+          "role": "star-17",
+          "modulus": 7803,
+          "residue": 1480,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 840182022038219640781
+        },
+        {
+          "role": "star-17",
+          "modulus": 1377,
+          "residue": 1039,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 8778674366759327185156
+        },
+        {
+          "role": "star-17",
+          "modulus": 23409,
+          "residue": 14485,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 5897426662864547465656
+        },
+        {
+          "role": "star-19",
+          "modulus": 57,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 422683725720314588531
+        },
+        {
+          "role": "star-19",
+          "modulus": 1083,
+          "residue": 761,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 1361629627500639401906
+        },
+        {
+          "role": "star-19",
+          "modulus": 171,
+          "residue": 97,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 7144551915824481313156
+        },
+        {
+          "role": "star-19",
+          "modulus": 3249,
+          "residue": 1483,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 8083497817604806126531
+        },
+        {
+          "role": "star-19",
+          "modulus": 513,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 8830300129433257254781
+        },
+        {
+          "role": "star-19",
+          "modulus": 9747,
+          "residue": 400,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 529317852861719952031
+        },
+        {
+          "role": "star-19",
+          "modulus": 1539,
+          "residue": 553,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 4647616591907722963531
+        },
+        {
+          "role": "star-19",
+          "modulus": 29241,
+          "residue": 26392,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 5586562493688047776906
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 105,
+          "residue": 38,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 7595287852213714256033
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 735,
+          "residue": 218,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 8834461893625334248283
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 525,
+          "residue": 416,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 5895141067396971626666
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 3675,
+          "residue": 1541,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 7134315108808591618916
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 315,
+          "residue": 178,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 5077227863966018864533
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 2205,
+          "residue": 1933,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 6316401905377638856783
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 1575,
+          "residue": 241,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 3377081079149276235166
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 11025,
+          "residue": 7666,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 4616255120560896227416
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 945,
+          "residue": 913,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 6762976077574794806158
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 6615,
+          "residue": 2668,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 8002150118986414798408
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 4725,
+          "residue": 1291,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 5062829292758052176791
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 33075,
+          "residue": 3991,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 6302003334169672169041
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 2835,
+          "residue": 2173,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 2580292540049260514908
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 19845,
+          "residue": 11488,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 3819466581460880507158
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 14175,
+          "residue": 4441,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 880145755232517885541
+        },
+        {
+          "role": "pair-5-7",
+          "modulus": 99225,
+          "residue": 59116,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 2119319796644137877791
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 165,
+          "residue": 14,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 2347724310093868511534
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 1815,
+          "residue": 1244,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 5652161434733602822034
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 825,
+          "residue": 146,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 4417468222044685625546
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 9075,
+          "residue": 2696,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 7721905346684419936046
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 495,
+          "residue": 124,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 9069592500198035236159
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 5445,
+          "residue": 34,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 3134101446485907430534
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 2475,
+          "residue": 421,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1899408233796990234046
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 27225,
+          "residue": 8746,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 5203845358436724544546
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 1485,
+          "residue": 454,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1515412535454949061659
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 16335,
+          "residue": 12739,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 4819849660094683372159
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 7425,
+          "residue": 3721,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 3585156447405766175671
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 81675,
+          "residue": 81346,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 6889593572045500486171
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 4455,
+          "residue": 1444,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 6572657176281276886534
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 49005,
+          "residue": 1849,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 637166122569149080909
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 22275,
+          "residue": 21046,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 8642401088232094000546
+        },
+        {
+          "role": "pair-5-11",
+          "modulus": 245025,
+          "residue": 217471,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 11,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 34
+            }
+          ],
+          "private_point": 2706910034519966194921
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 231,
+          "residue": 158,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 8773253423537359427906
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 2541,
+          "residue": 1376,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 4489980932145098777531
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 1617,
+          "residue": 323,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 1392086307302927300156
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 17787,
+          "residue": 15170,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 6348741994262528765906
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 693,
+          "residue": 466,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 6255193435289664036406
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 7623,
+          "residue": 529,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 1971920943897403386031
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 4851,
+          "residue": 862,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 8113954497407094024781
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 53361,
+          "residue": 9241,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 3830682006014833374406
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 2079,
+          "residue": 697,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 7940941648898439978031
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 22869,
+          "residue": 5611,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 3657669157506179327656
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 14553,
+          "residue": 2479,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 559774532664007850281
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 160083,
+          "residue": 44815,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 5516430219623609316031
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 6237,
+          "residue": 3469,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 3758258111372905686781
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 68607,
+          "residue": 43726,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 8714913798332507152531
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 43659,
+          "residue": 36436,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 5617019173490335675156
+        },
+        {
+          "role": "pair-7-11",
+          "modulus": 480249,
+          "residue": 151537,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            },
+            {
+              "prime": 11,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 45
+            }
+          ],
+          "private_point": 1333746682098075024781
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 273,
+          "residue": 68,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 2059541457214172883656
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 3549,
+          "residue": 1223,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 1971221706761105471531
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 1911,
+          "residue": 575,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 4537889540037412868156
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 24843,
+          "residue": 5279,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 4449569789584345456031
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 819,
+          "residue": 250,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 8781409647318339608281
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 10647,
+          "residue": 3589,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 8693089896865272196156
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 5733,
+          "residue": 3760,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 2019829551789717476656
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 74529,
+          "residue": 21841,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 1931509801336650064531
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 2457,
+          "residue": 1615,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1227229682575253433781
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 31941,
+          "residue": 10687,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 1138909932122186021656
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 17199,
+          "residue": 7582,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 3705577765398493418281
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 223587,
+          "residue": 220585,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 3617258014945426006156
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 7371,
+          "residue": 796,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 6284474323401581258656
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 95823,
+          "residue": 31981,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 1,
+              "residue": 5
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 6196154572948513846531
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 51597,
+          "residue": 1849,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 8762822406224821243156
+        },
+        {
+          "role": "pair-7-13",
+          "modulus": 670761,
+          "residue": 593230,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 5,
+              "exponent": 2,
+              "residue": 36
+            },
+            {
+              "prime": 13,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 40
+            }
+          ],
+          "private_point": 8674502655771753831031
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 357,
+          "residue": 20,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1040015962020060859406
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 6069,
+          "residue": 5543,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 4517448732582363536531
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 2499,
+          "residue": 1856,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 4137951065549110840031
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 42483,
+          "residue": 40223,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 7615383836111413517156
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 1071,
+          "residue": 853,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 7761884152124227584031
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 18207,
+          "residue": 15658,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 1999388744334668145031
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 7497,
+          "residue": 2689,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1619891077301415448531
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 127449,
+          "residue": 26062,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 5097323847863718125656
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 3213,
+          "residue": 1210,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 207704187381141409531
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 54621,
+          "residue": 46003,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 3685136957943444086656
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 22491,
+          "residue": 12685,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 3305639290910191390156
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 382347,
+          "residue": 365926,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 6783072061472494067281
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 9639,
+          "residue": 5494,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 5264948828207469234406
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 163863,
+          "residue": 137038,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 1,
+              "residue": 6
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 8742381598769771911531
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 67473,
+          "residue": 42673,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 8362883931736519215031
+        },
+        {
+          "role": "pair-7-17",
+          "modulus": 1147041,
+          "residue": 1003171,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 6,
+              "exponent": 2,
+              "residue": 43
+            },
+            {
+              "prime": 17,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 52
+            }
+          ],
+          "private_point": 2600388523946959776031
+        }
+      ],
+      "pure_coordinate_masses": {
+        "3": "1094/2187",
+        "5": "94/125",
+        "7": "286/343",
+        "11": "1198/1331",
+        "13": "2014/2197",
+        "17": "4606/4913",
+        "19": "6478/6859"
+      },
+      "pure_source_mass": "15904010429460352/69403740457676625",
+      "mixed_blocks": [
+        {
+          "role": "star-5",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "5": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-7",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "7": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-11",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "11": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-13",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "13": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-17",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "17": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-19",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "19": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "pair-5-7",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "5": [
+              3,
+              2
+            ],
+            "7": [
+              3,
+              2
+            ]
+          }
+        },
+        {
+          "role": "pair-5-11",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "5": [
+              4,
+              2
+            ],
+            "11": [
+              3,
+              2
+            ]
+          }
+        },
+        {
+          "role": "pair-7-11",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "7": [
+              4,
+              2
+            ],
+            "11": [
+              4,
+              2
+            ]
+          }
+        },
+        {
+          "role": "pair-7-13",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "7": [
+              5,
+              2
+            ],
+            "13": [
+              3,
+              2
+            ]
+          }
+        },
+        {
+          "role": "pair-7-17",
+          "coordinates": {
+            "3": [
+              2,
+              4
+            ],
+            "7": [
+              6,
+              2
+            ],
+            "17": [
+              3,
+              2
+            ]
+          }
+        }
+      ],
+      "inclusion_exclusion_subset_count": 2047,
+      "inclusion_exclusion_nonzero_intersections": 151,
+      "inclusion_exclusion_sums_by_size": {
+        "1": "18113647595435460/18523836615563279",
+        "2": "5452369531097368500/16541786097698008147",
+        "3": "846547397669687580/16541786097698008147",
+        "4": "3508623975125520/870620320931474113",
+        "5": "52917351159600/337587471381592003",
+        "6": "297432000/124250081480159",
+        "7": "0",
+        "8": "0",
+        "9": "0",
+        "10": "0",
+        "11": "0"
+      },
+      "mixed_loss": "80458424237490660/115676825858028029",
+      "loss_threshold_gap": "102515185933815983/28919206464507007250",
+      "conditional_survivor_mass": "35218401620537369/115676825858028029",
+      "full_haar_survivor_mass": "346765800571444864/4970375566622841375",
+      "source_complete_query_norm": "4183137340318400011792327/1238951421369984756482048",
+      "global_conditioning_bound": "29281961382228800082546289/2640435704882446344912896",
+      "global_bound_minus_target": "1533857235086619334074499/134662220949004763590557696",
+      "query3_source_mass": "729/1094",
+      "clipped_conditioning_bound": "26143266279751984807415409/2640435704882446344912896",
+      "clipped_target_margin": "158539592991230959697600381/134662220949004763590557696",
+      "required_debit": "1533857235086619334074499/442305657429084558064091136",
+      "label3_guaranteed_debit": "83728472902439765/231353651716056058",
+      "label3_debit_margin": "158539592991230959697600381/442305657429084558064091136",
+      "same_source_mixed_original_cap_sum": "18113647595435460/18523836615563279",
+      "unused_query_bound": "4709029096130540354408049/2640435704882446344912896",
+      "full_survivor_density": "4970375566622841375/346765800571444864"
+    },
+    {
+      "family": "fallback",
+      "pure_heights": {
+        "3": 6,
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 2
+      },
+      "pure_count": 18,
+      "original_count": 102,
+      "role_counts": {
+        "pure-3": 6,
+        "pure-5": 2,
+        "pure-7": 2,
+        "pure-11": 2,
+        "pure-13": 2,
+        "pure-17": 2,
+        "pure-19": 2,
+        "star-5": 10,
+        "star-7": 10,
+        "star-11": 10,
+        "star-13": 10,
+        "star-17": 10,
+        "star-19": 10,
+        "triangle-5-7": 20,
+        "old-5-7": 4
+      },
+      "full_period": 1905200718446025,
+      "original_rows": [
+        {
+          "role": "pure-3",
+          "modulus": 3,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 139949005826631
+        },
+        {
+          "role": "pure-3",
+          "modulus": 9,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 158243114234206
+        },
+        {
+          "role": "pure-3",
+          "modulus": 27,
+          "residue": 4,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 3,
+              "residue": 4
+            }
+          ],
+          "private_point": 213125439456931
+        },
+        {
+          "role": "pure-3",
+          "modulus": 81,
+          "residue": 13,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 4,
+              "residue": 13
+            }
+          ],
+          "private_point": 377772415125106
+        },
+        {
+          "role": "pure-3",
+          "modulus": 243,
+          "residue": 40,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 5,
+              "residue": 40
+            }
+          ],
+          "private_point": 871713342129631
+        },
+        {
+          "role": "pure-3",
+          "modulus": 729,
+          "residue": 121,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 0,
+              "exponent": 6,
+              "residue": 121
+            }
+          ],
+          "private_point": 448335404697181
+        },
+        {
+          "role": "pure-5",
+          "modulus": 5,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 245113994729605
+        },
+        {
+          "role": "pure-5",
+          "modulus": 25,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 702362167156651
+        },
+        {
+          "role": "pure-7",
+          "modulus": 7,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 7,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 1316692194737206
+        },
+        {
+          "role": "pure-7",
+          "modulus": 49,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 7,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 811230779639281
+        },
+        {
+          "role": "pure-11",
+          "modulus": 11,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 11,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 138674681864356
+        },
+        {
+          "role": "pure-11",
+          "modulus": 121,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 11,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 217401984279481
+        },
+        {
+          "role": "pure-13",
+          "modulus": 13,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 13,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 463366574073481
+        },
+        {
+          "role": "pure-13",
+          "modulus": 169,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 13,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 643740606589081
+        },
+        {
+          "role": "pure-17",
+          "modulus": 17,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 17,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 1874489114352856
+        },
+        {
+          "role": "pure-17",
+          "modulus": 289,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 17,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 1195472941342681
+        },
+        {
+          "role": "pure-19",
+          "modulus": 19,
+          "residue": 0,
+          "coordinates": [
+            {
+              "prime": 19,
+              "digit": 0,
+              "exponent": 1,
+              "residue": 0
+            }
+          ],
+          "private_point": 1500329891890831
+        },
+        {
+          "role": "pure-19",
+          "modulus": 361,
+          "residue": 1,
+          "coordinates": [
+            {
+              "prime": 19,
+              "digit": 0,
+              "exponent": 2,
+              "residue": 1
+            }
+          ],
+          "private_point": 1384223476916281
+        },
+        {
+          "role": "star-5",
+          "modulus": 15,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 959943213535307
+        },
+        {
+          "role": "star-5",
+          "modulus": 75,
+          "residue": 11,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 502695041108261
+        },
+        {
+          "role": "star-5",
+          "modulus": 45,
+          "residue": 7,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 941649105127732
+        },
+        {
+          "role": "star-5",
+          "modulus": 225,
+          "residue": 61,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 484400932700686
+        },
+        {
+          "role": "star-5",
+          "modulus": 135,
+          "residue": 22,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 886766779905007
+        },
+        {
+          "role": "star-5",
+          "modulus": 675,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 429518607477961
+        },
+        {
+          "role": "star-5",
+          "modulus": 405,
+          "residue": 67,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 722119804236832
+        },
+        {
+          "role": "star-5",
+          "modulus": 2025,
+          "residue": 2011,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 264871631809786
+        },
+        {
+          "role": "star-5",
+          "modulus": 1215,
+          "residue": 202,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 228178877232307
+        },
+        {
+          "role": "star-5",
+          "modulus": 6075,
+          "residue": 3361,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 11
+            }
+          ],
+          "private_point": 1676131423251286
+        },
+        {
+          "role": "star-7",
+          "modulus": 21,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1793565731973731
+        },
+        {
+          "role": "star-7",
+          "modulus": 147,
+          "residue": 113,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 393826428625631
+        },
+        {
+          "role": "star-7",
+          "modulus": 63,
+          "residue": 16,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1775271623566156
+        },
+        {
+          "role": "star-7",
+          "modulus": 441,
+          "residue": 358,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 375532320218056
+        },
+        {
+          "role": "star-7",
+          "modulus": 189,
+          "residue": 184,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1720389298343431
+        },
+        {
+          "role": "star-7",
+          "modulus": 1323,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 320649994995331
+        },
+        {
+          "role": "star-7",
+          "modulus": 567,
+          "residue": 310,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1555742322675256
+        },
+        {
+          "role": "star-7",
+          "modulus": 3969,
+          "residue": 2416,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 156003019327156
+        },
+        {
+          "role": "star-7",
+          "modulus": 1701,
+          "residue": 688,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1061801395670731
+        },
+        {
+          "role": "star-7",
+          "modulus": 11907,
+          "residue": 5062,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 7,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 15
+            }
+          ],
+          "private_point": 1567262810768656
+        },
+        {
+          "role": "star-11",
+          "modulus": 33,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1066382526400556
+        },
+        {
+          "role": "star-11",
+          "modulus": 363,
+          "residue": 23,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 987655223985431
+        },
+        {
+          "role": "star-11",
+          "modulus": 99,
+          "residue": 79,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1048088417992981
+        },
+        {
+          "role": "star-11",
+          "modulus": 1089,
+          "residue": 628,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 969361115577856
+        },
+        {
+          "role": "star-11",
+          "modulus": 297,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 993206092770256
+        },
+        {
+          "role": "star-11",
+          "modulus": 3267,
+          "residue": 265,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 914478790355131
+        },
+        {
+          "role": "star-11",
+          "modulus": 891,
+          "residue": 310,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 828559117102081
+        },
+        {
+          "role": "star-11",
+          "modulus": 9801,
+          "residue": 8977,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 749831814686956
+        },
+        {
+          "role": "star-11",
+          "modulus": 2673,
+          "residue": 2389,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 334618190097556
+        },
+        {
+          "role": "star-11",
+          "modulus": 29403,
+          "residue": 15511,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 11,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 23
+            }
+          ],
+          "private_point": 255890887682431
+        },
+        {
+          "role": "star-13",
+          "modulus": 39,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 741690634191431
+        },
+        {
+          "role": "star-13",
+          "modulus": 507,
+          "residue": 365,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 561316601675831
+        },
+        {
+          "role": "star-13",
+          "modulus": 117,
+          "residue": 106,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 723396525783856
+        },
+        {
+          "role": "star-13",
+          "modulus": 1521,
+          "residue": 196,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 543022493268256
+        },
+        {
+          "role": "star-13",
+          "modulus": 351,
+          "residue": 184,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 668514200561131
+        },
+        {
+          "role": "star-13",
+          "modulus": 4563,
+          "residue": 1210,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 488140168045531
+        },
+        {
+          "role": "star-13",
+          "modulus": 1053,
+          "residue": 67,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 503867224892956
+        },
+        {
+          "role": "star-13",
+          "modulus": 13689,
+          "residue": 8815,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 323493192377356
+        },
+        {
+          "role": "star-13",
+          "modulus": 3159,
+          "residue": 2875,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 9926297888431
+        },
+        {
+          "role": "star-13",
+          "modulus": 41067,
+          "residue": 17941,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 13,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 27
+            }
+          ],
+          "private_point": 1734752983818856
+        },
+        {
+          "role": "star-17",
+          "modulus": 51,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1235768812358081
+        },
+        {
+          "role": "star-17",
+          "modulus": 867,
+          "residue": 35,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 9584266922231
+        },
+        {
+          "role": "star-17",
+          "modulus": 153,
+          "residue": 70,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1217474703950506
+        },
+        {
+          "role": "star-17",
+          "modulus": 2601,
+          "residue": 2347,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 1896490876960681
+        },
+        {
+          "role": "star-17",
+          "modulus": 459,
+          "residue": 427,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1162592378727781
+        },
+        {
+          "role": "star-17",
+          "modulus": 7803,
+          "residue": 1480,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 1841608551737956
+        },
+        {
+          "role": "star-17",
+          "modulus": 1377,
+          "residue": 1039,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 997945403059606
+        },
+        {
+          "role": "star-17",
+          "modulus": 23409,
+          "residue": 14485,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 1676961576069781
+        },
+        {
+          "role": "star-17",
+          "modulus": 4131,
+          "residue": 2875,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 504004476055081
+        },
+        {
+          "role": "star-17",
+          "modulus": 70227,
+          "residue": 30091,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 17,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 35
+            }
+          ],
+          "private_point": 1183020649065256
+        },
+        {
+          "role": "star-19",
+          "modulus": 57,
+          "residue": 2,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1609928034820106
+        },
+        {
+          "role": "star-19",
+          "modulus": 1083,
+          "residue": 761,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 1726034449794656
+        },
+        {
+          "role": "star-19",
+          "modulus": 171,
+          "residue": 97,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1591633926412531
+        },
+        {
+          "role": "star-19",
+          "modulus": 3249,
+          "residue": 1483,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 1707740341387081
+        },
+        {
+          "role": "star-19",
+          "modulus": 513,
+          "residue": 211,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1536751601189806
+        },
+        {
+          "role": "star-19",
+          "modulus": 9747,
+          "residue": 400,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 1652858016164356
+        },
+        {
+          "role": "star-19",
+          "modulus": 1539,
+          "residue": 553,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 1372104625521631
+        },
+        {
+          "role": "star-19",
+          "modulus": 29241,
+          "residue": 26392,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 1488211040496181
+        },
+        {
+          "role": "star-19",
+          "modulus": 4617,
+          "residue": 3118,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            }
+          ],
+          "private_point": 878163698517106
+        },
+        {
+          "role": "star-19",
+          "modulus": 87723,
+          "residue": 45886,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 19,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 39
+            }
+          ],
+          "private_point": 994270113491656
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 105,
+          "residue": 38,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1331651761868858
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 735,
+          "residue": 218,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 437373873618683
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 525,
+          "residue": 416,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 417155417014766
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 3675,
+          "residue": 1541,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 1,
+              "residue": 2
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 1428078247210616
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 315,
+          "residue": 178,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1313357653461283
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 2205,
+          "residue": 1933,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 419079765211108
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 1575,
+          "residue": 241,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 398861308607191
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 11025,
+          "residue": 7666,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 2,
+              "residue": 7
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 1409784138803041
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 945,
+          "residue": 913,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1258475328238558
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 6615,
+          "residue": 2668,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 364197439988383
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 4725,
+          "residue": 1291,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 343978983384466
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 33075,
+          "residue": 3991,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 3,
+              "residue": 22
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 1354901813580316
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 2835,
+          "residue": 2173,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1093828352570383
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 19845,
+          "residue": 11488,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 199550464320208
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 14175,
+          "residue": 4441,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 179332007716291
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 99225,
+          "residue": 59116,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 4,
+              "residue": 67
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 1190254837912141
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 8505,
+          "residue": 3118,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 599887425565858
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 59535,
+          "residue": 57793,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 1610810255761708
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 42525,
+          "residue": 42241,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 1,
+              "residue": 3
+            }
+          ],
+          "private_point": 1590591799157791
+        },
+        {
+          "role": "triangle-5-7",
+          "modulus": 297675,
+          "residue": 224491,
+          "coordinates": [
+            {
+              "prime": 3,
+              "digit": 2,
+              "exponent": 5,
+              "residue": 202
+            },
+            {
+              "prime": 5,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 16
+            },
+            {
+              "prime": 7,
+              "digit": 3,
+              "exponent": 2,
+              "residue": 22
+            }
+          ],
+          "private_point": 696313910907616
+        },
+        {
+          "role": "old-5-7",
+          "modulus": 35,
+          "residue": 4,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 993196889074534
+        },
+        {
+          "role": "old-5-7",
+          "modulus": 245,
+          "residue": 29,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            }
+          ],
+          "private_point": 604380415922284
+        },
+        {
+          "role": "old-5-7",
+          "modulus": 175,
+          "residue": 46,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 1,
+              "residue": 4
+            }
+          ],
+          "private_point": 1526653090239421
+        },
+        {
+          "role": "old-5-7",
+          "modulus": 1225,
+          "residue": 421,
+          "coordinates": [
+            {
+              "prime": 5,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 21
+            },
+            {
+              "prime": 7,
+              "digit": 4,
+              "exponent": 2,
+              "residue": 29
+            }
+          ],
+          "private_point": 1137836617087171
+        }
+      ],
+      "pure_coordinate_masses": {
+        "3": "365/729",
+        "5": "19/25",
+        "7": "41/49",
+        "11": "109/121",
+        "13": "155/169",
+        "17": "271/289",
+        "19": "341/361"
+      },
+      "pure_source_mass": "84962228147/364631716449",
+      "mixed_blocks": [
+        {
+          "role": "star-5",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "5": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-7",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "7": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-11",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "11": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-13",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "13": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-17",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "17": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "star-19",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "19": [
+              2,
+              2
+            ]
+          }
+        },
+        {
+          "role": "triangle-5-7",
+          "coordinates": {
+            "3": [
+              2,
+              5
+            ],
+            "5": [
+              3,
+              2
+            ],
+            "7": [
+              3,
+              2
+            ]
+          }
+        },
+        {
+          "role": "old-5-7",
+          "coordinates": {
+            "5": [
+              4,
+              2
+            ],
+            "7": [
+              4,
+              2
+            ]
+          }
+        }
+      ],
+      "inclusion_exclusion_subset_count": 255,
+      "inclusion_exclusion_nonzero_intersections": 95,
+      "inclusion_exclusion_sums_by_size": {
+        "1": "1242882479442/1301840592575",
+        "2": "12318870619044/40357058369825",
+        "3": "1876429542504/40357058369825",
+        "4": "149296891392/40357058369825",
+        "5": "5992500096/40357058369825",
+        "6": "19160064/8071411673965",
+        "7": "0",
+        "8": "0"
+      },
+      "mixed_loss": "27943515594546/40357058369825",
+      "loss_threshold_gap": "164312026271/403570583698250",
+      "conditional_survivor_mass": "12413542775279/40357058369825",
+      "full_haar_survivor_mass": "12413542775279/173200065313275",
+      "source_complete_query_norm": "19793237799862001737/5891381494991106048",
+      "global_conditioning_bound": "494830944996550043425/45303671245920620544",
+      "global_bound_minus_target": "-120065353040366130895/770162411180650549248",
+      "query3_source_mass": "243/365",
+      "clipped_conditioning_bound": "442079431086111844129/45303671245920620544",
+      "clipped_target_margin": "1016841089517815518927/770162411180650549248",
+      "required_debit": "-24013070608073226179/500767427074244014080",
+      "label3_guaranteed_debit": "14454307043536/40357058369825",
+      "label3_debit_margin": "1016841089517815518927/2503837135371220070400",
+      "same_source_mixed_original_cap_sum": "1242882479442/1301840592575",
+      "unused_query_bound": "84147242070973392673/45303671245920620544",
+      "full_survivor_density": "173200065313275/12413542775279"
+    }
+  ],
+  "checks_passed": 427,
+  "checks": [
+    "primary: complete original count",
+    "primary: numerical moduli pairwise distinct",
+    "primary: all labels odd greater than one",
+    "primary: canonical residues and exact CRT projections",
+    "primary: all prime/exponent support accounted for",
+    "primary: all required mixed ternary supports",
+    "primary: original 0 has explicit private point",
+    "primary: original 1 has explicit private point",
+    "primary: original 2 has explicit private point",
+    "primary: original 3 has explicit private point",
+    "primary: original 4 has explicit private point",
+    "primary: original 5 has explicit private point",
+    "primary: original 6 has explicit private point",
+    "primary: original 7 has explicit private point",
+    "primary: original 8 has explicit private point",
+    "primary: original 9 has explicit private point",
+    "primary: original 10 has explicit private point",
+    "primary: original 11 has explicit private point",
+    "primary: original 12 has explicit private point",
+    "primary: original 13 has explicit private point",
+    "primary: original 14 has explicit private point",
+    "primary: original 15 has explicit private point",
+    "primary: original 16 has explicit private point",
+    "primary: original 17 has explicit private point",
+    "primary: original 18 has explicit private point",
+    "primary: original 19 has explicit private point",
+    "primary: original 20 has explicit private point",
+    "primary: original 21 has explicit private point",
+    "primary: original 22 has explicit private point",
+    "primary: original 23 has explicit private point",
+    "primary: original 24 has explicit private point",
+    "primary: original 25 has explicit private point",
+    "primary: original 26 has explicit private point",
+    "primary: original 27 has explicit private point",
+    "primary: original 28 has explicit private point",
+    "primary: original 29 has explicit private point",
+    "primary: original 30 has explicit private point",
+    "primary: original 31 has explicit private point",
+    "primary: original 32 has explicit private point",
+    "primary: original 33 has explicit private point",
+    "primary: original 34 has explicit private point",
+    "primary: original 35 has explicit private point",
+    "primary: original 36 has explicit private point",
+    "primary: original 37 has explicit private point",
+    "primary: original 38 has explicit private point",
+    "primary: original 39 has explicit private point",
+    "primary: original 40 has explicit private point",
+    "primary: original 41 has explicit private point",
+    "primary: original 42 has explicit private point",
+    "primary: original 43 has explicit private point",
+    "primary: original 44 has explicit private point",
+    "primary: original 45 has explicit private point",
+    "primary: original 46 has explicit private point",
+    "primary: original 47 has explicit private point",
+    "primary: original 48 has explicit private point",
+    "primary: original 49 has explicit private point",
+    "primary: original 50 has explicit private point",
+    "primary: original 51 has explicit private point",
+    "primary: original 52 has explicit private point",
+    "primary: original 53 has explicit private point",
+    "primary: original 54 has explicit private point",
+    "primary: original 55 has explicit private point",
+    "primary: original 56 has explicit private point",
+    "primary: original 57 has explicit private point",
+    "primary: original 58 has explicit private point",
+    "primary: original 59 has explicit private point",
+    "primary: original 60 has explicit private point",
+    "primary: original 61 has explicit private point",
+    "primary: original 62 has explicit private point",
+    "primary: original 63 has explicit private point",
+    "primary: original 64 has explicit private point",
+    "primary: original 65 has explicit private point",
+    "primary: original 66 has explicit private point",
+    "primary: original 67 has explicit private point",
+    "primary: original 68 has explicit private point",
+    "primary: original 69 has explicit private point",
+    "primary: original 70 has explicit private point",
+    "primary: original 71 has explicit private point",
+    "primary: original 72 has explicit private point",
+    "primary: original 73 has explicit private point",
+    "primary: original 74 has explicit private point",
+    "primary: original 75 has explicit private point",
+    "primary: original 76 has explicit private point",
+    "primary: original 77 has explicit private point",
+    "primary: original 78 has explicit private point",
+    "primary: original 79 has explicit private point",
+    "primary: original 80 has explicit private point",
+    "primary: original 81 has explicit private point",
+    "primary: original 82 has explicit private point",
+    "primary: original 83 has explicit private point",
+    "primary: original 84 has explicit private point",
+    "primary: original 85 has explicit private point",
+    "primary: original 86 has explicit private point",
+    "primary: original 87 has explicit private point",
+    "primary: original 88 has explicit private point",
+    "primary: original 89 has explicit private point",
+    "primary: original 90 has explicit private point",
+    "primary: original 91 has explicit private point",
+    "primary: original 92 has explicit private point",
+    "primary: original 93 has explicit private point",
+    "primary: original 94 has explicit private point",
+    "primary: original 95 has explicit private point",
+    "primary: original 96 has explicit private point",
+    "primary: original 97 has explicit private point",
+    "primary: original 98 has explicit private point",
+    "primary: original 99 has explicit private point",
+    "primary: original 100 has explicit private point",
+    "primary: original 101 has explicit private point",
+    "primary: original 102 has explicit private point",
+    "primary: original 103 has explicit private point",
+    "primary: original 104 has explicit private point",
+    "primary: original 105 has explicit private point",
+    "primary: original 106 has explicit private point",
+    "primary: original 107 has explicit private point",
+    "primary: original 108 has explicit private point",
+    "primary: original 109 has explicit private point",
+    "primary: original 110 has explicit private point",
+    "primary: original 111 has explicit private point",
+    "primary: original 112 has explicit private point",
+    "primary: original 113 has explicit private point",
+    "primary: original 114 has explicit private point",
+    "primary: original 115 has explicit private point",
+    "primary: original 116 has explicit private point",
+    "primary: original 117 has explicit private point",
+    "primary: original 118 has explicit private point",
+    "primary: original 119 has explicit private point",
+    "primary: original 120 has explicit private point",
+    "primary: original 121 has explicit private point",
+    "primary: original 122 has explicit private point",
+    "primary: original 123 has explicit private point",
+    "primary: original 124 has explicit private point",
+    "primary: original 125 has explicit private point",
+    "primary: original 126 has explicit private point",
+    "primary: original 127 has explicit private point",
+    "primary: original 128 has explicit private point",
+    "primary: original 129 has explicit private point",
+    "primary: original 130 has explicit private point",
+    "primary: original 131 has explicit private point",
+    "primary: original 132 has explicit private point",
+    "primary: original 133 has explicit private point",
+    "primary: original 134 has explicit private point",
+    "primary: original 135 has explicit private point",
+    "primary: original 136 has explicit private point",
+    "primary: original 137 has explicit private point",
+    "primary: original 138 has explicit private point",
+    "primary: original 139 has explicit private point",
+    "primary: original 140 has explicit private point",
+    "primary: original 141 has explicit private point",
+    "primary: original 142 has explicit private point",
+    "primary: original 143 has explicit private point",
+    "primary: original 144 has explicit private point",
+    "primary: original 145 has explicit private point",
+    "primary: original 146 has explicit private point",
+    "primary: original 147 has explicit private point",
+    "primary: original 148 has explicit private point",
+    "primary: original 149 has explicit private point",
+    "primary: original 150 has explicit private point",
+    "primary: original 151 has explicit private point",
+    "primary: original 152 has explicit private point",
+    "primary: pure counts match exact coordinate cardinalities",
+    "primary: distinct prefix cells pairwise disjoint on each coordinate",
+    "primary: block inclusion-exclusion agrees with stated exact loss",
+    "primary: strict uniform loss obstruction",
+    "primary: positive exact full Haar survivor",
+    "primary: complete product-query norm exact formula",
+    "primary: ordinary clipped bound strictly below target",
+    "primary: unclipped source-adaptive estimate is above target",
+    "primary: single-label debit exceeds required debit",
+    "primary: exact single-query repair",
+    "primary: unused-label cap sum nonnegative",
+    "primary: actual unused-query bound below two",
+    "primary: actual full survivor density below fifteen",
+    "fallback: complete original count",
+    "fallback: numerical moduli pairwise distinct",
+    "fallback: all labels odd greater than one",
+    "fallback: canonical residues and exact CRT projections",
+    "fallback: all prime/exponent support accounted for",
+    "fallback: all required mixed ternary supports",
+    "fallback: original 0 has explicit private point",
+    "fallback: original 1 has explicit private point",
+    "fallback: original 2 has explicit private point",
+    "fallback: original 3 has explicit private point",
+    "fallback: original 4 has explicit private point",
+    "fallback: original 5 has explicit private point",
+    "fallback: original 6 has explicit private point",
+    "fallback: original 7 has explicit private point",
+    "fallback: original 8 has explicit private point",
+    "fallback: original 9 has explicit private point",
+    "fallback: original 10 has explicit private point",
+    "fallback: original 11 has explicit private point",
+    "fallback: original 12 has explicit private point",
+    "fallback: original 13 has explicit private point",
+    "fallback: original 14 has explicit private point",
+    "fallback: original 15 has explicit private point",
+    "fallback: original 16 has explicit private point",
+    "fallback: original 17 has explicit private point",
+    "fallback: original 18 has explicit private point",
+    "fallback: original 19 has explicit private point",
+    "fallback: original 20 has explicit private point",
+    "fallback: original 21 has explicit private point",
+    "fallback: original 22 has explicit private point",
+    "fallback: original 23 has explicit private point",
+    "fallback: original 24 has explicit private point",
+    "fallback: original 25 has explicit private point",
+    "fallback: original 26 has explicit private point",
+    "fallback: original 27 has explicit private point",
+    "fallback: original 28 has explicit private point",
+    "fallback: original 29 has explicit private point",
+    "fallback: original 30 has explicit private point",
+    "fallback: original 31 has explicit private point",
+    "fallback: original 32 has explicit private point",
+    "fallback: original 33 has explicit private point",
+    "fallback: original 34 has explicit private point",
+    "fallback: original 35 has explicit private point",
+    "fallback: original 36 has explicit private point",
+    "fallback: original 37 has explicit private point",
+    "fallback: original 38 has explicit private point",
+    "fallback: original 39 has explicit private point",
+    "fallback: original 40 has explicit private point",
+    "fallback: original 41 has explicit private point",
+    "fallback: original 42 has explicit private point",
+    "fallback: original 43 has explicit private point",
+    "fallback: original 44 has explicit private point",
+    "fallback: original 45 has explicit private point",
+    "fallback: original 46 has explicit private point",
+    "fallback: original 47 has explicit private point",
+    "fallback: original 48 has explicit private point",
+    "fallback: original 49 has explicit private point",
+    "fallback: original 50 has explicit private point",
+    "fallback: original 51 has explicit private point",
+    "fallback: original 52 has explicit private point",
+    "fallback: original 53 has explicit private point",
+    "fallback: original 54 has explicit private point",
+    "fallback: original 55 has explicit private point",
+    "fallback: original 56 has explicit private point",
+    "fallback: original 57 has explicit private point",
+    "fallback: original 58 has explicit private point",
+    "fallback: original 59 has explicit private point",
+    "fallback: original 60 has explicit private point",
+    "fallback: original 61 has explicit private point",
+    "fallback: original 62 has explicit private point",
+    "fallback: original 63 has explicit private point",
+    "fallback: original 64 has explicit private point",
+    "fallback: original 65 has explicit private point",
+    "fallback: original 66 has explicit private point",
+    "fallback: original 67 has explicit private point",
+    "fallback: original 68 has explicit private point",
+    "fallback: original 69 has explicit private point",
+    "fallback: original 70 has explicit private point",
+    "fallback: original 71 has explicit private point",
+    "fallback: original 72 has explicit private point",
+    "fallback: original 73 has explicit private point",
+    "fallback: original 74 has explicit private point",
+    "fallback: original 75 has explicit private point",
+    "fallback: original 76 has explicit private point",
+    "fallback: original 77 has explicit private point",
+    "fallback: original 78 has explicit private point",
+    "fallback: original 79 has explicit private point",
+    "fallback: original 80 has explicit private point",
+    "fallback: original 81 has explicit private point",
+    "fallback: original 82 has explicit private point",
+    "fallback: original 83 has explicit private point",
+    "fallback: original 84 has explicit private point",
+    "fallback: original 85 has explicit private point",
+    "fallback: original 86 has explicit private point",
+    "fallback: original 87 has explicit private point",
+    "fallback: original 88 has explicit private point",
+    "fallback: original 89 has explicit private point",
+    "fallback: original 90 has explicit private point",
+    "fallback: original 91 has explicit private point",
+    "fallback: original 92 has explicit private point",
+    "fallback: original 93 has explicit private point",
+    "fallback: original 94 has explicit private point",
+    "fallback: original 95 has explicit private point",
+    "fallback: original 96 has explicit private point",
+    "fallback: original 97 has explicit private point",
+    "fallback: original 98 has explicit private point",
+    "fallback: original 99 has explicit private point",
+    "fallback: original 100 has explicit private point",
+    "fallback: original 101 has explicit private point",
+    "fallback: pure counts match exact coordinate cardinalities",
+    "fallback: distinct prefix cells pairwise disjoint on each coordinate",
+    "fallback: block inclusion-exclusion agrees with stated exact loss",
+    "fallback: strict uniform loss obstruction",
+    "fallback: positive exact full Haar survivor",
+    "fallback: complete product-query norm exact formula",
+    "fallback: ordinary clipped bound strictly below target",
+    "fallback: ordinary global estimate already passes",
+    "fallback: unused-label cap sum nonnegative",
+    "fallback: actual unused-query bound below two",
+    "fallback: actual full survivor density below fifteen",
+    "general cap identity at corner 0",
+    "general cap identity at corner 1",
+    "general cap identity at corner 2",
+    "general cap identity at corner 3",
+    "general cap identity at corner 4",
+    "general cap identity at corner 5",
+    "general cap identity at corner 6",
+    "general cap identity at corner 7",
+    "general cap identity at corner 8",
+    "general cap identity at corner 9",
+    "general cap identity at corner 10",
+    "general cap identity at corner 11",
+    "general cap identity at corner 12",
+    "general cap identity at corner 13",
+    "general cap identity at corner 14",
+    "general cap identity at corner 15",
+    "general cap identity at corner 16",
+    "general cap identity at corner 17",
+    "general cap identity at corner 18",
+    "general cap identity at corner 19",
+    "general cap identity at corner 20",
+    "general cap identity at corner 21",
+    "general cap identity at corner 22",
+    "general cap identity at corner 23",
+    "general cap identity at corner 24",
+    "general cap identity at corner 25",
+    "general cap identity at corner 26",
+    "general cap identity at corner 27",
+    "general cap identity at corner 28",
+    "general cap identity at corner 29",
+    "general cap identity at corner 30",
+    "general cap identity at corner 31",
+    "general cap identity at corner 32",
+    "general cap identity at corner 33",
+    "general cap identity at corner 34",
+    "general cap identity at corner 35",
+    "general cap identity at corner 36",
+    "general cap identity at corner 37",
+    "general cap identity at corner 38",
+    "general cap identity at corner 39",
+    "general cap identity at corner 40",
+    "general cap identity at corner 41",
+    "general cap identity at corner 42",
+    "general cap identity at corner 43",
+    "general cap identity at corner 44",
+    "general cap identity at corner 45",
+    "general cap identity at corner 46",
+    "general cap identity at corner 47",
+    "general cap identity at corner 48",
+    "general cap identity at corner 49",
+    "general cap identity at corner 50",
+    "general cap identity at corner 51",
+    "general cap identity at corner 52",
+    "general cap identity at corner 53",
+    "general cap identity at corner 54",
+    "general cap identity at corner 55",
+    "general cap identity at corner 56",
+    "general cap identity at corner 57",
+    "general cap identity at corner 58",
+    "general cap identity at corner 59",
+    "general cap identity at corner 60",
+    "general cap identity at corner 61",
+    "general cap identity at corner 62",
+    "general cap identity at corner 63",
+    "general cap identity at corner 64",
+    "general cap identity at corner 65",
+    "general cap identity at corner 66",
+    "general cap identity at corner 67",
+    "general cap identity at corner 68",
+    "general cap identity at corner 69",
+    "general cap identity at corner 70",
+    "general cap identity at corner 71",
+    "general cap identity at corner 72",
+    "general cap identity at corner 73",
+    "general cap identity at corner 74",
+    "general cap identity at corner 75",
+    "general cap identity at corner 76",
+    "general cap identity at corner 77",
+    "general cap identity at corner 78",
+    "general cap identity at corner 79",
+    "general cap identity at corner 80",
+    "general cap identity at corner 81",
+    "general cap identity at corner 82",
+    "general cap identity at corner 83",
+    "general cap identity at corner 84",
+    "general cap identity at corner 85",
+    "general cap identity at corner 86",
+    "general cap identity at corner 87",
+    "general cap identity at corner 88",
+    "general cap identity at corner 89",
+    "general cap identity at corner 90",
+    "general cap identity at corner 91",
+    "general cap identity at corner 92",
+    "general cap identity at corner 93",
+    "general cap identity at corner 94",
+    "general cap identity at corner 95",
+    "general cap identity at corner 96",
+    "general cap identity at corner 97",
+    "general cap identity at corner 98",
+    "general cap identity at corner 99",
+    "general cap identity at corner 100",
+    "general cap identity at corner 101",
+    "general cap identity at corner 102",
+    "general cap identity at corner 103",
+    "general cap identity at corner 104",
+    "general cap identity at corner 105",
+    "general cap identity at corner 106",
+    "general cap identity at corner 107",
+    "general cap identity at corner 108",
+    "general cap identity at corner 109",
+    "general cap identity at corner 110",
+    "general cap identity at corner 111",
+    "general cap identity at corner 112",
+    "general cap identity at corner 113",
+    "general cap identity at corner 114",
+    "general cap identity at corner 115",
+    "general cap identity at corner 116",
+    "general cap identity at corner 117",
+    "general cap identity at corner 118",
+    "general cap identity at corner 119",
+    "general cap identity at corner 120",
+    "general cap identity at corner 121",
+    "general cap identity at corner 122",
+    "general cap identity at corner 123",
+    "general cap identity at corner 124",
+    "general cap identity at corner 125",
+    "general cap identity at corner 126",
+    "general cap identity at corner 127",
+    "general exact clipped numerator",
+    "general exact direct-query loss threshold",
+    "general threshold strict extension",
+    "original G density cap",
+    "Taylor lower bound for e",
+    "Taylor upper bound for e",
+    "concrete entropy below three",
+    "original log Lambda above twenty thirds"
+  ]
+}
