@@ -173,6 +173,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.CoverTestSupport
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.CoverBatch.Tests", "tests\StrataLint.CoverBatch.Tests\StrataLint.CoverBatch.Tests.csproj", "{4FD44DFD-64F6-44A9-AD4A-2C5735D437D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.WorktreeContract.Tests", "tests\StrataLint.WorktreeContract.Tests\StrataLint.WorktreeContract.Tests.csproj", "{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|x64.Build.0 = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Debug|x86.Build.0 = Debug|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|x64.Build.0 = Release|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}.Release|x86.Build.0 = Release|Any CPU
 		{FC73506B-1D63-5161-BC26-8B436B354030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC73506B-1D63-5161-BC26-8B436B354030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC73506B-1D63-5161-BC26-8B436B354030}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1152,6 +1166,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{8FE8340B-78BD-4D75-A26F-D00F012FCEA2} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{80BA79C9-7710-525D-BEE4-493EBB395DB2} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{290779FB-BD57-5CDA-A1DC-D6FFD570127F} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{14872019-10B1-57D6-ABF0-72F5C96BDF97} = {0AB3BF05-4346-4AA6-1389-037BE0695223}

@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.RepositoryContract.Tests;
+namespace StrataLint.WorktreeContract.Tests;
 
 [Collection("Lean cache environment")]
 public sealed class WorktreeCacheStrategyTests

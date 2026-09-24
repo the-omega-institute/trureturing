@@ -23,7 +23,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ConfigurationTestsRunWithoutCliTestExecution(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "", mode);
-        Assert.Equal(WithRepositoryContract(new[] {
+        Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
@@ -37,10 +37,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void HeaderScriptRunsItsCompleteProjectAndRepositoryContract(string mode)
     {
         var plan = Plan("tools/scripts/agent/header-check.sh", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
             RepositoryContractProject,
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         if (mode == "push") Assert.DoesNotContain("elan", Strings(plan["cache_layers"]!));
     }
@@ -65,7 +65,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ReleaseCacheFixtureSelectsItsCompleteProjectAndMakeDependency(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", "", mode);
-        Assert.Equal(WithRepositoryContract(new[] {
+        Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
         }), Strings(plan["execution"]!["tests"]!));
         Assert.Contains("make", Strings(plan["tools"]!));

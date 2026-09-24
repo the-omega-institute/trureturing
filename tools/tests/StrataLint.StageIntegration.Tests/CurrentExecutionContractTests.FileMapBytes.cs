@@ -18,7 +18,7 @@ public sealed partial class CurrentExecutionContractTests
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
-            == "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj")!;
+            == "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj")!;
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_filemap_paths" })
@@ -113,6 +113,41 @@ public sealed partial class CurrentExecutionContractTests
         Assert.Equal(prior.Projects[1] with { Status = "reused" }, current.Projects[1]);
         AcceptEngineering(fixture);
         CommonExecutionEvidence.ValidateEngineering(fixture.Root);
+    }
+
+    [Theory]
+    [InlineData("README.md", false)]
+    [InlineData("Meta/FILEMAP.toml", false)]
+    [InlineData("Makefile", true)]
+    [InlineData("tools/Makefile", true)]
+    [InlineData("tools/scripts/linkage-probe.sh", true)]
+    [InlineData(".github/scripts/linkage-probe.sh", true)]
+    public void CliLinkageRuntimeInputsExcludeUnrelatedRepositoryText(string path, bool invalidates)
+    {
+        using var fixture = new ExecutionFixture();
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
+        var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
+            == "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj")!;
+        EditRegistration(fixture, rows =>
+        {
+            foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_filemap_paths" })
+                rows[0]![field] = declaration[field]!.DeepClone();
+        });
+        foreach (var input in new[] {
+            "README.md", "Meta/FILEMAP.toml", "Makefile", "tools/Makefile",
+            "tools/scripts/linkage-probe.sh", ".github/scripts/linkage-probe.sh",
+        }) fixture.Write(input, "registered fixture input\n");
+        fixture.Track();
+        Execute(fixture);
+        Seed(fixture);
+        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        File.AppendAllText(Path.Combine(fixture.Root, path), "changed caller bytes\n");
+        Assert.Equal(invalidates ? [ExecutionFixture.First] : [], Execute(fixture));
+        var current = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        if (invalidates) Assert.NotEqual(prior.Projects[0].InputFingerprint, current.Projects[0].InputFingerprint);
+        else Assert.Equal(prior.Projects[0] with { Status = "reused" }, current.Projects[0]);
+        Assert.Equal(prior.Projects[1] with { Status = "reused" }, current.Projects[1]);
+        AcceptEngineering(fixture);
     }
 
     private static (int Exit, string Output) ScanRepositoryText(ExecutionFixture fixture)

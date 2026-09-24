@@ -98,8 +98,7 @@ public sealed partial class CurrentExecutionContractTests
         else if (path.StartsWith("source-policy:", StringComparison.Ordinal))
         {
             var row = Assert.Single(filemap.Split('\n'), line => line.Contains($"pattern = \"{path[14..]}\"", StringComparison.Ordinal));
-            var changed = row.Replace("require = []", "require = [\"filemap\"]", StringComparison.Ordinal)
-                .Replace("require = [\"delta\", \"engineering\", \"filemap\", \"test-repository-contract\"]", "require = [\"filemap\"]", StringComparison.Ordinal)
+            var changed = System.Text.RegularExpressions.Regex.Replace(row, @"require = \[[^\]]*\]", "require = [\"filemap\"]")
                 .Replace("kind = \"ledger\"", "kind = \"data\"", StringComparison.Ordinal);
             Assert.NotEqual(row, changed);
             fixture.Write("Meta/FILEMAP.toml", filemap.Replace(row, changed, StringComparison.Ordinal));

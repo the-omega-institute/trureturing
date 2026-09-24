@@ -10,7 +10,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void FileMapPolicyTestsRunTheirCompleteProjectWithoutCliTests(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.FileMap.Tests/FileMapPolicyTests.cs", "", mode);
-        Assert.Equal(WithRepositoryContract(new[] {
+        Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
