@@ -313,3 +313,10 @@ The23/29 extension allows arbitrary P-smooth cofactors only for originals
 that genuinely touch23 or29. It does not allow an unrestricted P-only
 family or further fresh primes. The joint-root bridge is general, but
 an appropriate uniform actual-loss bound for those families is unresolved.
+
+[Report557](557-complete-query-comparison-allows-three-more-old-pair-towers.md)
+applies the existing complete-query comparison to the same actual source.
+Its sufficient loss allowance33/40 includes the three additional complete
+old5/11, old7/11 and old7/13 towers simultaneously, with query norm below
+565/51 and positive Haar mass after arbitrary23/29-touching originals.
+The unrestricted actual-loss premise remains unproved.
