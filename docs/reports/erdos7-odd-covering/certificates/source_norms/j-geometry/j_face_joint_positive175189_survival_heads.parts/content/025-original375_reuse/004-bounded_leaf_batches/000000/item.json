@@ -1,0 +1,32 @@
+{
+  "length": 54,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 24,
+      "part": {
+        "path": "content/025-original375_reuse/004-bounded_leaf_batches/000000/item/000000-000024.json",
+        "sha256": "608a41c9ccf7f52e182c95cbe035fcdb93e6433e465d915a0b6c2749ce4811cb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 24,
+      "stop": 48,
+      "part": {
+        "path": "content/025-original375_reuse/004-bounded_leaf_batches/000000/item/000024-000048.json",
+        "sha256": "ab24922a9614bd8da1e126f403a880df2b516f6cfb051d80c2b71504d121d315",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 48,
+      "stop": 54,
+      "part": {
+        "path": "content/025-original375_reuse/004-bounded_leaf_batches/000000/item/000048-000054.json",
+        "sha256": "ecde727cb9a28659e3ba94c3dcede0cf1a6b6e4f1f55ac37410fcb9496efef55",
+        "kind": "value"
+      }
+    }
+  ]
+}

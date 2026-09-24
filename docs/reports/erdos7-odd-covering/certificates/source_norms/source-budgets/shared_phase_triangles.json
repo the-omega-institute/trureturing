@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "b8ff3f28c340eed5d995257af54b0725b862e2096a7533ad337eed5bb5c6491e",
+  "parts_directory": "shared_phase_triangles.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "46bd4719c584562070f6265b09327f68b7214989c4d996ae542cd88e2f3a8be3",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "length": 46,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 33,
+      "part": {
+        "path": "content/009-cost_rows/000000-000033.json",
+        "sha256": "7c2cee6c787a3f4e018c8a6deef3d9aecb4de6b022a944921dc23356c9f5891a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 46,
+      "part": {
+        "path": "content/009-cost_rows/000033-000046.json",
+        "sha256": "dd3517734ec6ad4e7ef7c3736253557f4d58b9c8a816c59bc9e83a3a203c52cd",
+        "kind": "value"
+      }
+    }
+  ]
+}

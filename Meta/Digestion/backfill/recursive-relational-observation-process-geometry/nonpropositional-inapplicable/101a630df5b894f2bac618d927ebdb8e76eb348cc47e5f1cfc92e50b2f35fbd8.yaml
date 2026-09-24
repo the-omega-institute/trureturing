@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:101a630df5b894f2bac618d927ebdb8e76eb348cc47e5f1cfc92e50b2f35fbd8
+  normalized_sha256: sha256:101a630df5b894f2bac618d927ebdb8e76eb348cc47e5f1cfc92e50b2f35fbd8
+cas_ref: sha256:101a630df5b894f2bac618d927ebdb8e76eb348cc47e5f1cfc92e50b2f35fbd8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Both acquisition non-guarantees have explicit actual-operation countermodels supplied by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID was identified. For all eventually-zero binary streams, source residuals are finite, zero has Nat.card 1 and every delayed single pulse has Nat.card greater than 1 by Set.finite_Iic, Set.Finite.image, Nat.card_eq_one_iff_exists and Finite.one_lt_card. For an arbitrary deterministic history-driven point-query learner, List.isChain_iff_getElem, List.IsChain.iterate_eq_of_apply_eq and Function.iterate_succ_apply' identify all actual execution prefixes from agreement at consumed reads. Finset.le_sup chooses an unqueried pulse index; Function.iterate_add_apply and Function.iterate_fixed preserve complete termination and output, contradicting exact counting. For all real labels, use one type and one state with all Nat-indexed loops legal, each returning its exact scalar label at unit cost and preserving state. This infinite edge carrier is permitted by Process 1.1 and 6.6. Finite.of_injective and Finite.of_surjective give finite typed residuals; the same actual-execution supplier hides one unqueried changed label, excluding any terminating finite-cost acquisition of the full Nat-to-Real label function. This is the stated non-guarantee, not a universal real-computation impossibility: a primitive exact-real read can acquire one real constant. No finite query-carrier, finite source-family or uniform budget premise, no new Lean declaration or coverage GID."
+    previous_atom_id: 8c179209308acbbee88b59cf9ce1079de5344e1c4a65f5e1c7d5ab32ac9c7e57
+    next_atom_id: 5ba4790e331e61079af35f7c81a28147a6035131950c06e92384da454316bc3e

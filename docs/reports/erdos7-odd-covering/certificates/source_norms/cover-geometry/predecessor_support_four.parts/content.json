@@ -1,0 +1,43 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "predecessor-support-four-v1"
+  },
+  "scalars": {
+    "path": "content/001-scalars.json",
+    "sha256": "a4d53194c19489bef80a3137ef4e95a0f6681b532f36e9a039a1205e7dc291f0",
+    "kind": "object"
+  },
+  "actual_fixtures": {
+    "path": "content/002-actual_fixtures.json",
+    "sha256": "bfc6bd0e9a3f11382417a06a05b8eb8ca9ca160ca23d87947eaabe7f8537a722",
+    "kind": "array"
+  },
+  "growing_inventory": {
+    "kind": "inline",
+    "value": {
+      "cutoff": 1000000,
+      "pointwise_multiplier": "2000004000002/999998000001",
+      "integer_tail_integral": "1/500",
+      "additional_fee": "21/5000",
+      "four_support_fee": "403477/408240",
+      "reserve": "381049/51030000",
+      "conditioning_factor": "51030000/381049",
+      "scope": "Exact scalar certificate; arbitrary-rank Gram bound and infinite integral tail are proved in the accompanying text."
+    }
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/52-two-or-four-exact-predecessor-supports.md": "6ce31e69b18775949e577f4068c5a63da94ad6f62bb8b59c763b85d376c418ee",
+      "problem-details/07-ordered-local-kernels-unbounded-feedback-sets-and-treewidth.md": "1101e53b540deee5175611a11b0e0bf93883482fb80d2477c3730072bcf1735b",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+      "problem-details/41-natural-four-predecessor-orders-are-noncovering.md": "8b16471115e24d67336b49c725eb1086b97df960052bf138871fe330b296ffd4"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "df3aa6d5409469a058709df3a516b3f9c53c6bb2e92aaa6c224ce62d63c67bb3"
+  }
+}

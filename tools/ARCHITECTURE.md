@@ -20,12 +20,31 @@ complete scope and declared resource selection against the fixed candidate befor
 routing work. Missing, corrupt, or mismatched manifests fail even for no-resource
 changes; path lists never travel through process arguments or environment values.
 
-Push checks the final commit H. Its lightweight planner uses the push event's
+Native CI push checks the final commit H. Its lightweight planner uses the push event's
 complete before-to-after path range; initial pushes cover the registered current
 tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,
 and cache layers. The semantic `current` checks have no baseline or changes input;
 only PR `delta` checks compare B to M. Local PR preflight constructs an isolated
 merge-tree candidate from a clean checkout and an explicit base SHA.
+
+Local `make preflight` requires an explicit mode and prints choices with exit 2
+before planning or building when it is absent or invalid. `MODE=fast` delegates
+`make -C tools check-fast`, the quick .NET structure tests, with no Lean or
+admission claim. `MODE=push BASE=<40-hex-commit-sha>` uses the existing push planner
+with explicit BASE/HEAD endpoints to cover the complete baseline-to-worktree
+delta, including multi-commit, staged, unstaged, untracked and deleted inputs.
+BASE must be an existing nonzero commit; it need not be an ancestor.
+`MODE=full` uses that planner's complete current-input scope, including removed
+dirty endpoints for ownership checks. It retains caches
+and incremental production. fast/full reject BASE and push endpoints. Only push
+accepts matching complete CI_PUSH_BEFORE/AFTER copies. Shared local modes reject
+inherited native push events, reusable workflow candidate inputs and stale
+CANDIDATE_SHA, then bind child validation to the actual candidate. `MODE=pr`
+retains the clean private merge candidate and its explicit immutable BASE.
+Choose fast for harness iteration, targeted `make lean` for mathematical
+iteration, push for delta validation, pr for integration, and full for deliberate
+whole-tree diagnostics. CI equivalence covers matching shared check scopes;
+fast has its own limited test scope.
 
 The common build stage restores locked packages, builds the selected candidate
 projects, and seals their identity and outputs. Engineering accepts verified test
@@ -37,11 +56,11 @@ production round before downstream use. Cache seeds are optional inputs to those
 validators and producers; cache hits do not issue a passing verdict. PR runs do
 not publish cache snapshots.
 
-Report compatibility is the explicit `report_semantic_version` in the registered
+Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
 `lean-report-inputs.json`. Native Lake facets own report reuse and always require
-the default Lean/audit targets and current inspector build. Registered configuration
-bytes, module and utility-claim inputs, captured source hashes, and complete
-publication materials determine acceptance. Reused rows retain their actual producer
+the default Lean/audit targets and current inspector build. Lake traces and the explicit
+cache release version decide reuse; validators check structure and artifact integrity
+without comparing stored source digests with current repository bytes. Reused rows retain their actual producer
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
 remains the resolved mathlib revision, with OS/architecture binary isolation.
@@ -73,11 +92,22 @@ neither candidate files nor a successful candidate test job can synthesize appro
 
 ## FILEMAP custody boundary
 
-`Meta/FILEMAP.toml` owns repository file kind and producer/consumer/verifier relations.
-It remains separate from `Meta/registry.yaml`: the registry has a strict semantic-coordinate
-and artifact-kind schema, while FILEMAP has a strict file-custody schema. The architecture
-suite joins them by requiring registry `root_files` to equal tracked root files, without
-copying either schema into the other. The registry lists the FILEMAP authority and its
-generated projection as governance documents. FILEMAP also declares each path's
-required resources and their explicit owners, tools, cache layers, and materials;
-these registrations govern planning without discovering dependencies from code.
+`Meta/FILEMAP.toml` is the single manifest authority: `files` entries own path
+membership, custody, admission plane, symlink declarations and optional
+`digestion_source` eligibility. `evidence.artifact_kinds` owns format profiles,
+selectors and coordinate scopes, including reserved formats. `Meta/domains.yaml`
+remains the strict controlled domain vocabulary. Membership is followed by canonical
+path/GID and domain validation; ambiguous or missing membership fails closed.
+
+FILEMAP also declares each path's required resources and their explicit owners,
+tools, cache layers and materials. These registrations govern planning without
+discovering dependencies from code.
+
+Engine owns the pure current-schema model, parser and canonical policy writer. CLI
+acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
+Current writes use schema 5 and a deterministic TOML encoding. Canonical snapshots use
+schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
+bytes and structured Evidence are checked at the write boundary; unrelated deltas do
+not replay historical byte canonicality. Narrow historical admission-plane and symlink
+readers consume their own snapshot's metadata without imposing the current write
+schema on a protected base. Projections retain their declared run-local residency.

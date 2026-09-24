@@ -11,11 +11,11 @@ import importlib.util
 import json
 import sys
 
-IO_PIN = '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232'
+IO_PIN = '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b'
 SOURCE_PINS = {
-    'verify_joint_frontier.py': 'a40fce0a5cb6a713dc8cb569b874d284b8dd66fb3f0a5e48fc2c69cb8fe286fe',
-    'certificates/joint_frontier_certificate.json': 'be01369024cf8a3a43efdfa5e18334d8ba3d07c96f25801c9a919a364c55a583',
-    'frontier/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
+    'verify_joint_frontier.py': '0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765',
+    'certificates/joint_frontier_certificate.json': 'abee2fd2a2038029cf74c59615501463a4b289d5e071d2c17de2ede6288d6ce8',
+    'frontier/comparison-bounds/fixed_cost.py': '2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d',
     'certificates/fixed_cost_norms.json': 'dc4f440a5718bbf9c2ded831b6cb10c687e18df972270ab7b5f521430b225797',
 }
 
@@ -56,7 +56,7 @@ def main():
             'Every mathematical input has its pinned complete identity')
     source = module('fixed_cost_source', base / 'verify_joint_frontier.py')
     source.source_pins(base)
-    math = module('fixed_cost_math', base / 'frontier/fixed_cost.py')
+    math = module('fixed_cost_math', base / 'frontier/comparison-bounds/fixed_cost.py')
     consumer = json.loads(inputs['certificates/joint_frontier_certificate.json'], object_pairs_hook=unique)
     norms = json.loads(inputs['certificates/fixed_cost_norms.json'], object_pairs_hook=unique)
 

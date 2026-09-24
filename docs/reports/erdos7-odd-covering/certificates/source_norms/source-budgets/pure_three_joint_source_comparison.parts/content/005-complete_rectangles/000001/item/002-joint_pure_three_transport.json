@@ -1,0 +1,74 @@
+{
+  "source_density_upper": {
+    "kind": "inline",
+    "value": [
+      "19/25",
+      "19/25",
+      "13/25",
+      "13/25",
+      "13/25"
+    ]
+  },
+  "attenuation_upper": {
+    "kind": "inline",
+    "value": [
+      "1",
+      "101/125",
+      "101/125",
+      "101/125",
+      "101/125"
+    ]
+  },
+  "cell_reference_caps": {
+    "kind": "inline",
+    "value": [
+      "71/100",
+      "7051/12500",
+      "2001/6250",
+      "2001/6250",
+      "2001/6250"
+    ]
+  },
+  "raw_density_upper": {
+    "kind": "inline",
+    "value": "19/25"
+  },
+  "common_error_envelope": {
+    "kind": "inline",
+    "value": "2749/6250"
+  },
+  "shallow_rows": {
+    "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/005-shallow_rows.json",
+    "sha256": "b087f5a205fe4080474bc0eb4cf5662a22734e2bc8d51274fed1811a083355b7",
+    "kind": "value"
+  },
+  "candidate_rows": {
+    "path": "content/005-complete_rectangles/000001/item/002-joint_pure_three_transport/006-candidate_rows.json",
+    "sha256": "2b15e77d1616803ce1d33a4d4e8346fa7e5f2866a39f326f766ee5110e84df58",
+    "kind": "array"
+  },
+  "joint_upper": {
+    "kind": "inline",
+    "value": "12857499589/14881050000"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": [
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        3,
+        0,
+        1
+      ],
+      [
+        4,
+        0,
+        1
+      ]
+    ]
+  }
+}

@@ -191,12 +191,12 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                 STRATALINT_SUPERVISOR_ROOT=str(Path(directory) / 'supervisor'))
             self.assertFalse((clone / '.lake').exists(), 'ensure must retain donor eligibility')
             manifest = (clone / 'lean-report-inputs.json').read_text()
-            self.write('lean-report-inputs.json', manifest.replace('"report_semantic_version": 1',
-                                                                 '"report_semantic_version": 0'))
+            self.write('lean-report-inputs.json', manifest.replace('"report_cache_release_semantic_version": 1',
+                                                                 '"report_cache_release_semantic_version": 0'))
             rejected = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertNotEqual(rejected.returncode, 0, rejected.stdout + rejected.stderr)
-            self.assertIn('report_semantic_version', rejected.stderr)
+            self.assertIn('report_cache_release_semantic_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
             result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
@@ -245,7 +245,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
         self.assertEqual(before, partition())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_semantic_version'] = 2
+        policy['report_cache_release_semantic_version'] = 2
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.assertEqual(before, partition())
         manifest = json.loads((self.root / 'lake-manifest.json').read_text())
@@ -257,6 +257,11 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
+        self.copy('tools/scripts/workflow/ci_plan.py')
+        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
+            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
+                            lean_targets=['Audit', 'leanInspector/reportInspector'])])))
+        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
         self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
             GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',
@@ -391,7 +396,7 @@ else:
             else:
                 self.assertEqual(expected[suffix], actual)
         releases = {p.name for p in (self.root / 'releases').iterdir()}
-        # Even an already published run cannot bypass ordinary default builds.
+        # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
@@ -414,7 +419,7 @@ else:
         self.release_fixture()
         before = json.loads(self.release_run('address').stdout)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_semantic_version'] += 1
+        policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.assertEqual(before, json.loads(self.release_run('address').stdout))
         policy['report_modules']['exclude'] = ['D5/Alone.lean']

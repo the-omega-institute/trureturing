@@ -1,0 +1,59 @@
+[
+  {
+    "row": 0,
+    "columns": [
+      0
+    ],
+    "unrestricted_max": 63,
+    "common_center_value": 48
+  },
+  {
+    "row": 0,
+    "columns": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "unrestricted_max": 60,
+    "common_center_value": 60
+  },
+  {
+    "row": 1,
+    "columns": [
+      0
+    ],
+    "unrestricted_max": 60,
+    "common_center_value": 60
+  },
+  {
+    "row": 1,
+    "columns": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "unrestricted_max": 42,
+    "common_center_value": 27
+  },
+  {
+    "row": 2,
+    "columns": [
+      0
+    ],
+    "unrestricted_max": 44,
+    "common_center_value": 36
+  },
+  {
+    "row": 2,
+    "columns": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "unrestricted_max": 31,
+    "common_center_value": 21
+  }
+]

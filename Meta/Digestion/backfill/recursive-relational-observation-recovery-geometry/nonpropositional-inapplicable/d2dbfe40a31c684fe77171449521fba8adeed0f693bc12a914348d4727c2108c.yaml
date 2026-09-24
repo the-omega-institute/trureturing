@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2dbfe40a31c684fe77171449521fba8adeed0f693bc12a914348d4727c2108c
+  normalized_sha256: sha256:d2dbfe40a31c684fe77171449521fba8adeed0f693bc12a914348d4727c2108c
+cas_ref: sha256:d2dbfe40a31c684fe77171449521fba8adeed0f693bc12a914348d4727c2108c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. Matrix.PosSemidef.conjTranspose_mul_mul_same supplies K from the actual positive Schur form. Indicator sums, positive diagonal capacities and LinearEquiv.ofBijective identify SR=RD^-1K. ContinuousLinearMap.hasFDerivAt and HasFDerivAt.comp_hasDerivAt transport the arbitrary-curve equation into mean, orthonormal and mass coordinates. K symmetry and K1=0 normalize to zero column sums and stationary capacity distribution. No equal-capacity or positive-hidden-rank premise is added.
+    previous_atom_id: 494348b4bfc1c0b757dff253659afe6b73c2ce4f2d257f1ed0fc5b8fcd2a763f
+    next_atom_id: c22d817db59bdd6584fa9924f73265f669235b230e81de5fbcf32c875f489a85

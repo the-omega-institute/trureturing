@@ -1,0 +1,14 @@
+**命题 21.8（既有奇异 Schur 判据的实际适配）。** 给当前测试族及新测试 $g$，令
+$$
+K=K_n\succeq0,\qquad b_i=B(f_i,g),\qquad c=Q(g),
+\qquad M=\begin{pmatrix}K&b\\b^*&c\end{pmatrix}.
+$$
+则
+$$
+M\succeq0
+\iff b\in\operatorname{ran}K
+\quad\text{且}\quad s:=c-b^*K^\dagger b\ge0.
+\tag{21.15}
+$$
+这里沿用[上下文卷§45.2](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)式（45.10）—（45.11）的范围条件与合同分解证明方法。该处具体像检验在两个相同参考空间组成的密度块上陈述；此处上下块的维数可不同，标量 $c$ 可为任意实数，适用性由下文直接证明。既有方法参见 Watrous，[*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Lemma 3.18，pp. 144–145；Watrous，[*Simpler semidefinite programs for completely bounded norms*](https://arxiv.org/html/1207.5726v2)，§2.1，Lemma 2；Moslehian、Kian、Xu，[*Positivity of $2\times2$ block matrices of operators*](https://arxiv.org/html/1904.08680v1)，Theorem 5.11。恢复卷定理13.2的实标量情形与正定内部块的 Schur 极小化不能单独替代此处的复奇异范围条件。
+

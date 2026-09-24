@@ -1,0 +1,128 @@
+{
+  "height": {
+    "kind": "inline",
+    "value": 12
+  },
+  "original_label_count": {
+    "kind": "inline",
+    "value": 204
+  },
+  "original_classes": {
+    "path": "content/007-results/000001/item/002-original_classes.json",
+    "sha256": "12d8f0fcf86f6456bf8a5349f01da422a574b246cdb7da949a222ae564d73672",
+    "kind": "array"
+  },
+  "private_integer_witnesses": {
+    "path": "content/007-results/000001/item/003-private_integer_witnesses.json",
+    "sha256": "81d460a8bd1086124b8c83172793c6d7629213ef9ded2904465c1cfd5e65df29",
+    "kind": "array"
+  },
+  "private_membership_checks": {
+    "kind": "inline",
+    "value": 41616
+  },
+  "uncovered_integer": {
+    "kind": "inline",
+    "value": 4
+  },
+  "uncovered_coordinates": {
+    "kind": "inline",
+    "value": [
+      4,
+      4,
+      4
+    ]
+  },
+  "raw35_partition": {
+    "kind": "inline",
+    "value": {
+      "three_leaves": 49,
+      "five_leaves": 49,
+      "weighted_cells": 2401,
+      "raw35_period": 129746337890625
+    }
+  },
+  "seven_partition_leaves": {
+    "kind": "inline",
+    "value": 205
+  },
+  "source": {
+    "kind": "inline",
+    "value": {
+      "t": "29524/531441",
+      "q": "61035156/244140625",
+      "r": "2306881200/13841287201",
+      "u7": "11534406001/13841287201",
+      "d": "1977326743/11534406001",
+      "w": [
+        "9557079258/11534406001",
+        "7579752515/11534406001",
+        "1",
+        "1",
+        "1"
+      ],
+      "n": [
+        "216247558889/5189853515625",
+        "183105469/2197265625",
+        "61035157/2197265625",
+        "122070313/2197265625",
+        "600680885177/14416259765625"
+      ],
+      "eta": [
+        "29525/531441",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      "z": "183105469/244140625",
+      "s": "32436706675829/129746337890625",
+      "S": "106896619363526394066296/498848979457799560546875",
+      "S0": "1539313156075932100397623/10262036148697880859375000",
+      "qJ": "48372925099189405605283846925264530700238848/48374564336342018577852286398410797119140625",
+      "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "rho": "7609282399594604502342354273135737/118366491336019765320358037109375000"
+    }
+  },
+  "finite_test": {
+    "path": "content/007-results/000001/item/010-finite_test.json",
+    "sha256": "e77ef7c6d47a2c07542825bcd0ef68964f6a2b2b3a0f152c03df30ac0bbd253c",
+    "kind": "object"
+  },
+  "closed_formula": {
+    "kind": "inline",
+    "value": {
+      "zero7": "45213098789384621754008/99769795891559912109375",
+      "positive7": "66513239064857653328/443421315073599609375",
+      "total": "60178577578977593752808/99769795891559912109375",
+      "raw35_nonunit": "64873107910156/129746337890625"
+    }
+  },
+  "forced_layer_upper": {
+    "kind": "inline",
+    "value": {
+      "forced_layers": 6,
+      "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "mean_upper": "176578667789974008332596915325098643857381470610013/292691269008324110245666815899312496185302734375000"
+    }
+  },
+  "limit_gap": {
+    "kind": "inline",
+    "value": "206267076472636594/698388571240919384765625"
+  },
+  "pair_envelope_gaps": {
+    "path": "content/007-results/000001/item/014-pair_envelope_gaps.json",
+    "sha256": "1bd834ce9223327c0d553c4c350e4bf8d23282f481be77716a370666fd896fa8",
+    "kind": "value"
+  },
+  "unit_refund_geometry": {
+    "path": "content/007-results/000001/item/015-unit_refund_geometry.json",
+    "sha256": "21b16e855b290d341f3964f5a9132065584907f78ddd176ab9ea9abc2de45653",
+    "kind": "value"
+  },
+  "six_label_geometry": {
+    "path": "content/007-results/000001/item/016-six_label_geometry.json",
+    "sha256": "81361c7e67cceee1aa7a04e5c2ee3446a015b55d916237041bcde8281f14f828",
+    "kind": "value"
+  }
+}

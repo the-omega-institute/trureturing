@@ -1,0 +1,57 @@
+{
+  "0": {
+    "path": "content/009-rational_dual_buckets/002-2/000-0.json",
+    "sha256": "87a3e0a919fbd412217694ee93ba4a86af34c6dd4a5c219d724f00cd43c5affa",
+    "kind": "value"
+  },
+  "1": {
+    "path": "content/009-rational_dual_buckets/002-2/001-1.json",
+    "sha256": "3ae753d01c85db2d257697f99ecc6b573bd88b2fc7d3e87a31d51f027dead31e",
+    "kind": "value"
+  },
+  "2": {
+    "path": "content/009-rational_dual_buckets/002-2/002-2.json",
+    "sha256": "723d305499c8a2535344372094a17f691128a2bd36ae112ba9dbe8440e40a2a3",
+    "kind": "object"
+  },
+  "6": {
+    "path": "content/009-rational_dual_buckets/002-2/003-6.json",
+    "sha256": "ad23bed7252b9d442833e36095034e07cef09f81ae8df8b99e25077822fbc3b2",
+    "kind": "object"
+  },
+  "7": {
+    "path": "content/009-rational_dual_buckets/002-2/004-7.json",
+    "sha256": "23745e37d12ac1db47a808f7aba293bd5d6594952b82f7540e653774266d7977",
+    "kind": "object"
+  },
+  "8": {
+    "path": "content/009-rational_dual_buckets/002-2/005-8.json",
+    "sha256": "13e088a217a4caf0b4ec22a4edbc8db311ee88d607af24f58c93537e6dbd0182",
+    "kind": "object"
+  },
+  "9": {
+    "path": "content/009-rational_dual_buckets/002-2/006-9.json",
+    "sha256": "8e2644e2657f0e331a7a9a128535d0c8afbd933fbc5ac3adf84d4c76a7603c17",
+    "kind": "object"
+  },
+  "b": {
+    "path": "content/009-rational_dual_buckets/002-2/007-b.json",
+    "sha256": "315cc37cb0f0105be669cc886d33027e29bbe19a49947958958113ac2233d637",
+    "kind": "object"
+  },
+  "d": {
+    "path": "content/009-rational_dual_buckets/002-2/008-d.json",
+    "sha256": "0c5e8c852f25cb06cc0bb008bbecd66ab965f1590593c3ae6d1e128a013df34b",
+    "kind": "object"
+  },
+  "e": {
+    "path": "content/009-rational_dual_buckets/002-2/009-e.json",
+    "sha256": "35265ab72dea501823c1db07aca54a728d51c0fafa5dedf3916505a4390c6329",
+    "kind": "object"
+  },
+  "f": {
+    "path": "content/009-rational_dual_buckets/002-2/010-f.json",
+    "sha256": "5e78a705bcf7115a3988292b3d8858f91bd1f9825a57a28f3bb01d7dbf15056e",
+    "kind": "object"
+  }
+}

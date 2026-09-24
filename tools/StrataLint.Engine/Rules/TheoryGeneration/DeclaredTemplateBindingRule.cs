@@ -17,7 +17,6 @@ internal sealed record InformationTemplateOccurrence(
     InformationOccurrenceKey Key,
     string RegistrationSourcePath,
     string StatementIdentity,
-    ImmutableArray<InformationTemplateContentInput> ContentInputs,
     InformationTemplateBindingState State,
     string? EvidenceRef,
     string? Diagnostic,

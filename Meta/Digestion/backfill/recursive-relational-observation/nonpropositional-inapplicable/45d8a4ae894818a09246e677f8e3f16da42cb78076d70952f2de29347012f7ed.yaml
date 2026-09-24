@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45d8a4ae894818a09246e677f8e3f16da42cb78076d70952f2de29347012f7ed
+  normalized_sha256: sha256:45d8a4ae894818a09246e677f8e3f16da42cb78076d70952f2de29347012f7ed
+cas_ref: sha256:45d8a4ae894818a09246e677f8e3f16da42cb78076d70952f2de29347012f7ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The current-output clause is supplied by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d and Lean v4.33.0 after unfolding the original Complete, candidates, score, selected and transport definitions; no matching project GID for arbitrary actual-window queue-head recovery was found. Finset.exists_max_image applied to actual candidates at least as long as a given candidate yields an actual undominated later dominator. List.pairwise_mergeSort', List.mergeSort_perm, Finset.nodup_toList and actual complete-run endpoint uniqueness order the entire undominated queue. Its head strictly wins the original length/latest score over ALL candidates by the finite-maximum witness and Nat arithmetic. List.argmax_eq_some_iff identifies that head with the original selected candidate including its index tie condition; the same finite maximum proves queue empty iff candidate set empty. Actual record phases are transport over every intervening relation bit, including discarded runs. List.head?_map and Option normalization give the exact selected endpoints, length, b+1 anchor and transported direction, with None and zero for the empty queue. Signed rebasing preserves b+1-e without a runtime clock. This receipt concerns only this current-output suffix, not permanent future dominance, full-past grammar, continuation domains or all of theorem 140.4. All helper expansion is bind-only; zero new Lean, GID or freeze.
+    previous_atom_id: 7af2aad697ff8a410cb248f3617192ab356bb2f9baa4405867fd1ba387efac15
+    next_atom_id: 1f9b2d5bf3cc26961947fb66e0477cb4f794fb65b2366ce7bdb2890d9c09a31e

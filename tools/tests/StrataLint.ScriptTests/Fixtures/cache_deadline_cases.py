@@ -69,7 +69,7 @@ class CacheDeadlineCases:
         self.assertEqual(215, later.snapshot_seconds())
         self.assertEqual({"save_allowed": True, "save_timeout_minutes": 4}, owner.save_outputs(later))
 
-    def test_cache_deadline_rejects_pull_request_even_with_writes_enabled(self):
+    def test_cache_deadline_allows_pull_request_merge_ref_writes(self):
         for job, stage in (("build", "build"), ("engineering", "engineering"),
                            ("engineering_cache", "engineering"), ("current", "current")):
             with self.subTest(job=job):
@@ -79,17 +79,45 @@ class CacheDeadlineCases:
                                     now=lambda: epoch, monotonic=lambda: clock[0])
                 self.assertGreater(first.save_timeout_minutes(), 0)
                 env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/42/merge",
-                           PR_HEAD_SHA="b" * 40, STRATALINT_CACHE_WRITES="true")
-                jobs["jobs"][0].update(name="push / " + job, head_sha="b" * 40)
+                           GITHUB_SHA="b" * 40, CANDIDATE_SHA="b" * 40,
+                           PR_HEAD_SHA="c" * 40, STRATALINT_CACHE_WRITES="true")
+                jobs["jobs"][0].update(name="push / " + job, head_sha="c" * 40)
                 calls.clear()
-                self.assertEqual(0, owner.load_deadline(self.root, stage, env=env,
-                                 monotonic=lambda: clock[0]).save_timeout_minutes())
-                denied = owner.begin(self.root, stage, 60, env=env, fetch_jobs=fetch,
+                allowed = owner.begin(self.root, stage, 60, env=env, fetch_jobs=fetch,
+                                      now=lambda: epoch, monotonic=lambda: clock[0])
+                self.assertEqual("available", allowed.reason)
+                self.assertEqual({"save_allowed": True, "save_timeout_minutes": 12}, owner.save_outputs(allowed))
+                self.assertEqual(1, len(calls))
+                loaded = owner.load_deadline(self.root, stage, env=env, monotonic=lambda: clock[0])
+                self.assertEqual("available", loaded.reason)
+                for key, value in (("name", job), ("head_sha", "b" * 40), ("run_attempt", 1)):
+                    with self.subTest(field=key):
+                        original = jobs["jobs"][0][key]
+                        jobs["jobs"][0][key] = value
+                        denied = owner.begin(self.root, stage, 60, env=env, fetch_jobs=fetch,
+                                             now=lambda: epoch, monotonic=lambda: clock[0])
+                        self.assertEqual(0, denied.save_timeout_minutes())
+                        jobs["jobs"][0][key] = original
+                for head in ("", "malformed", "0" * 40):
+                    calls.clear()
+                    denied = owner.begin(self.root, stage, 60, env={**env, "PR_HEAD_SHA": head}, fetch_jobs=fetch,
+                                         now=lambda: epoch, monotonic=lambda: clock[0])
+                    self.assertEqual(0, denied.save_timeout_minutes())
+                    self.assertEqual([], calls)
+
+    def test_cache_deadline_rejects_non_merge_pull_request_refs(self):
+        owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+        for ref in ("refs/pull/42/head", "refs/pull/0/merge", "refs/heads/dev"):
+            with self.subTest(ref=ref):
+                calls.clear()
+                env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF=ref,
+                           GITHUB_SHA="b" * 40, CANDIDATE_SHA="b" * 40,
+                           PR_HEAD_SHA="b" * 40, STRATALINT_CACHE_WRITES="true")
+                denied = owner.begin(self.root, "current", 60, env=env, fetch_jobs=fetch,
                                      now=lambda: epoch, monotonic=lambda: clock[0])
                 self.assertEqual("job-metadata-unavailable", denied.reason)
                 self.assertEqual({"save_allowed": False, "save_timeout_minutes": 1}, owner.save_outputs(denied))
                 self.assertEqual([], calls)
-                self.assertFalse(owner.state_path(self.root, stage).exists())
 
     def test_cache_deadline_integration_push_retains_its_write_window(self):
         owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()

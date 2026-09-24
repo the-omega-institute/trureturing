@@ -1,0 +1,12 @@
+{
+  "heavy": {
+    "path": "content/003-domains/000001/item/006-banks/000-heavy.json",
+    "sha256": "f9a65d40459c7055b9e60cb4667d0249b4c16bc8c453acaec024d6be4ee5dc73",
+    "kind": "object"
+  },
+  "survival": {
+    "path": "content/003-domains/000001/item/006-banks/001-survival.json",
+    "sha256": "497cb81697f762d481f9c6aeca3d70df169ff74389fdabd321594ac5f61bd63e",
+    "kind": "object"
+  }
+}

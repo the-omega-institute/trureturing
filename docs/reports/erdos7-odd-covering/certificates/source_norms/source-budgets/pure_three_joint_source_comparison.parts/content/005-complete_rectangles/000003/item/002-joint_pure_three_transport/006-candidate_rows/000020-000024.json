@@ -1,0 +1,794 @@
+[
+  {
+    "first_beta": 4,
+    "first_root": 0,
+    "second_cell": 0,
+    "shallow_source_upper": "9515/23328",
+    "deep_Bellman_candidates": [
+      "257/810",
+      "3691/19440",
+      "1063/14580",
+      "1063/14580",
+      "1063/14580"
+    ],
+    "shallow_prices": [
+      "3",
+      "0",
+      "78/7",
+      "78/7",
+      "8",
+      "0",
+      "8",
+      "405600/46741",
+      "405600/46741"
+    ],
+    "shared_error": {
+      "grouped_prices": [
+        "78/7",
+        "405600/46741",
+        "405600/46741"
+      ],
+      "weights": [
+        "0",
+        "1",
+        "107/52"
+      ],
+      "segments": [
+        {
+          "classes": [
+            0,
+            1
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "1/13000",
+              "156/233705"
+            ]
+          ],
+          "slope": "-806598/327187",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "17188687/327187",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "458900/531441",
+              "shallow_error": "106320629/153333850500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "76260220249/12420041890500"
+            },
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "1",
+              "shallow_error": "156/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16006608073/2392008067800"
+            }
+          ],
+          "upper": "16006608073/2392008067800"
+        },
+        {
+          "classes": [
+            0,
+            2
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "107/676000",
+              "156/233705"
+            ]
+          ],
+          "slope": "-41943096/35009009",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "1883552399/35009009",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "23862800/56864187",
+              "shallow_error": "89300879621/114847054024500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "57901909975001/9302611375984500"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "156/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1388945497111/124384419525600"
+            }
+          ],
+          "upper": "1388945497111/124384419525600"
+        },
+        {
+          "classes": [
+            1,
+            2
+          ],
+          "source_points": [
+            [
+              "1/13000",
+              "156/233705"
+            ],
+            [
+              "107/676000",
+              "156/233705"
+            ]
+          ],
+          "slope": "0",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": null,
+          "knots": [
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "0",
+              "shallow_error": "156/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16006608073/2392008067800"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "156/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1388945497111/124384419525600"
+            }
+          ],
+          "upper": "1388945497111/124384419525600"
+        }
+      ],
+      "upper": "1388945497111/124384419525600"
+    },
+    "upper": "22896977793889/31096104881400"
+  },
+  {
+    "first_beta": 4,
+    "first_root": 0,
+    "second_cell": 1,
+    "shallow_source_upper": "31781/58320",
+    "deep_Bellman_candidates": [
+      "257/1080",
+      "3691/14580",
+      "1063/14580",
+      "1063/14580",
+      "1063/14580"
+    ],
+    "shallow_prices": [
+      "37/9",
+      "0",
+      "29312/903",
+      "78/7",
+      "8",
+      "0",
+      "8",
+      "538200/46741",
+      "538200/46741"
+    ],
+    "shared_error": {
+      "grouped_prices": [
+        "29312/903",
+        "538200/46741",
+        "538200/46741"
+      ],
+      "weights": [
+        "0",
+        "1",
+        "107/52"
+      ],
+      "segments": [
+        {
+          "classes": [
+            0,
+            1
+          ],
+          "source_points": [
+            [
+              "0",
+              "3664/1467375"
+            ],
+            [
+              "1/13000",
+              "207/233705"
+            ]
+          ],
+          "slope": "-20559944/981561",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "33425911/981561",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3664/1467375",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3664/1467375"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "458900/531441",
+              "shallow_error": "133890917284/121095408432375",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "793461347959/121095408432375"
+            },
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "1",
+              "shallow_error": "207/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16528601233/2392008067800"
+            }
+          ],
+          "upper": "16528601233/2392008067800"
+        },
+        {
+          "classes": [
+            0,
+            2
+          ],
+          "source_points": [
+            [
+              "0",
+              "3664/1467375"
+            ],
+            [
+              "107/676000",
+              "207/233705"
+            ]
+          ],
+          "slope": "-1069117088/105027027",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "4707369397/105027027",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3664/1467375",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3664/1467375"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "23862800/56864187",
+              "shallow_error": "165149635369216/90700460915848875",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "659167887944791/90700460915848875"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "207/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1416089141431/124384419525600"
+            }
+          ],
+          "upper": "1416089141431/124384419525600"
+        },
+        {
+          "classes": [
+            1,
+            2
+          ],
+          "source_points": [
+            [
+              "1/13000",
+              "207/233705"
+            ],
+            [
+              "107/676000",
+              "207/233705"
+            ]
+          ],
+          "slope": "0",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": null,
+          "knots": [
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "0",
+              "shallow_error": "207/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16528601233/2392008067800"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "207/233705",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1416089141431/124384419525600"
+            }
+          ],
+          "upper": "1416089141431/124384419525600"
+        }
+      ],
+      "upper": "1416089141431/124384419525600"
+    },
+    "upper": "100686884868781/124384419525600"
+  },
+  {
+    "first_beta": 4,
+    "first_root": 0,
+    "second_cell": 2,
+    "shallow_source_upper": "35533/97200",
+    "deep_Bellman_candidates": [
+      "257/1080",
+      "3691/19440",
+      "1063/9720",
+      "1063/14580",
+      "1063/14580"
+    ],
+    "shallow_prices": [
+      "759/107",
+      "0",
+      "78/7",
+      "78/7",
+      "6",
+      "321/52",
+      "6",
+      "425880/46741",
+      "425880/46741"
+    ],
+    "shared_error": {
+      "grouped_prices": [
+        "78/7",
+        "425880/46741",
+        "425880/46741"
+      ],
+      "weights": [
+        "0",
+        "1",
+        "107/52"
+      ],
+      "segments": [
+        {
+          "classes": [
+            0,
+            1
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "1/13000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "-664638/327187",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "17330647/327187",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "458900/531441",
+              "shallow_error": "2989970983/4140013963500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "76618162249/12420041890500"
+            },
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16086442321/2392008067800"
+            }
+          ],
+          "upper": "16086442321/2392008067800"
+        },
+        {
+          "classes": [
+            0,
+            2
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "107/676000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "-34561176/35009009",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "1890934319/35009009",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "23862800/56864187",
+              "shallow_error": "2454554045767/3100870458661500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "58032200863001/9302611375984500"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1393096878007/124384419525600"
+            }
+          ],
+          "upper": "1393096878007/124384419525600"
+        },
+        {
+          "classes": [
+            1,
+            2
+          ],
+          "source_points": [
+            [
+              "1/13000",
+              "819/1168525"
+            ],
+            [
+              "107/676000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "0",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": null,
+          "knots": [
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "0",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16086442321/2392008067800"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1393096878007/124384419525600"
+            }
+          ],
+          "upper": "1393096878007/124384419525600"
+        }
+      ],
+      "upper": "1393096878007/124384419525600"
+    },
+    "upper": "76462677151981/124384419525600"
+  },
+  {
+    "first_beta": 4,
+    "first_root": 0,
+    "second_cell": 3,
+    "shallow_source_upper": "35533/97200",
+    "deep_Bellman_candidates": [
+      "257/1080",
+      "3691/19440",
+      "1063/14580",
+      "1063/9720",
+      "1063/14580"
+    ],
+    "shallow_prices": [
+      "759/107",
+      "0",
+      "78/7",
+      "78/7",
+      "6",
+      "321/52",
+      "6",
+      "425880/46741",
+      "425880/46741"
+    ],
+    "shared_error": {
+      "grouped_prices": [
+        "78/7",
+        "425880/46741",
+        "425880/46741"
+      ],
+      "weights": [
+        "0",
+        "1",
+        "107/52"
+      ],
+      "segments": [
+        {
+          "classes": [
+            0,
+            1
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "1/13000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "-664638/327187",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "17330647/327187",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "458900/531441",
+              "shallow_error": "2989970983/4140013963500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "76618162249/12420041890500"
+            },
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16086442321/2392008067800"
+            }
+          ],
+          "upper": "16086442321/2392008067800"
+        },
+        {
+          "classes": [
+            0,
+            2
+          ],
+          "source_points": [
+            [
+              "0",
+              "3/3500"
+            ],
+            [
+              "107/676000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "-34561176/35009009",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": "1890934319/35009009",
+          "knots": [
+            {
+              "error_mass": "0",
+              "right_budget_fraction": "0",
+              "shallow_error": "3/3500",
+              "complete_deep_error": {
+                "crossing": null,
+                "upper": "0"
+              },
+              "upper": "3/3500"
+            },
+            {
+              "error_mass": "353/5314410",
+              "right_budget_fraction": "23862800/56864187",
+              "shallow_error": "2454554045767/3100870458661500",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "3883/1062882",
+                "infinite_part": "353/196830",
+                "upper": "14473/2657205"
+              },
+              "upper": "58032200863001/9302611375984500"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1393096878007/124384419525600"
+            }
+          ],
+          "upper": "1393096878007/124384419525600"
+        },
+        {
+          "classes": [
+            1,
+            2
+          ],
+          "source_points": [
+            [
+              "1/13000",
+              "819/1168525"
+            ],
+            [
+              "107/676000",
+              "819/1168525"
+            ]
+          ],
+          "slope": "0",
+          "last_geometric_exponent": 8,
+          "omitted_near_zero_slope_lower": null,
+          "knots": [
+            {
+              "error_mass": "1/13000",
+              "right_budget_fraction": "0",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "11/2600",
+                "infinite_part": "353/196830",
+                "upper": "308293/51175800"
+              },
+              "upper": "16086442321/2392008067800"
+            },
+            {
+              "error_mass": "107/676000",
+              "right_budget_fraction": "1",
+              "shallow_error": "819/1168525",
+              "complete_deep_error": {
+                "crossing": 8,
+                "finite_part": "1177/135200",
+                "infinite_part": "353/196830",
+                "upper": "27939451/2661141600"
+              },
+              "upper": "1393096878007/124384419525600"
+            }
+          ],
+          "upper": "1393096878007/124384419525600"
+        }
+      ],
+      "upper": "1393096878007/124384419525600"
+    },
+    "upper": "76462677151981/124384419525600"
+  }
+]

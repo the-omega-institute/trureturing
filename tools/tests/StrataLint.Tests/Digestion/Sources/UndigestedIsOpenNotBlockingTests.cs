@@ -59,10 +59,10 @@ public sealed class UndigestedIsOpenNotBlockingTests
     [Fact]
     public void ABrandNewVolumeWithNoSourceIsReportedWithoutBlocking()
     {
-        var outcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        var policy = RegistryLoadAssert.Accepted(outcome).Policy;
+        var outcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        var policy = PolicyLoadAssert.Accepted(outcome).Policy;
         var snapshot = DigestionTestSupport.Snapshot(
             (NewVolumePath, Encoding.UTF8.GetBytes("# 全新卷\n\n## 定理 1.1\n\n证。\n")),
             (DeclaredPath, DeclaredBytes));

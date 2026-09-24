@@ -198,12 +198,13 @@ run_cmd Elab.Command.liftTermElabM do
     | .declaredValidated _ => "validated"
     | .undeclared => "undeclared"
   -- Types and bodies debit the same identity budget. Either field can consume
-  -- its last units; normalization reuse can instead reach the shared work debit.
+  -- its last units; normalization reuse can instead reach shared or construction work.
   -- In every case the chain must remain unresolved without a certificate.
   let identityExhausted :=
     actual.contains "reason=incomplete_closure rule=E7.type_identity " ||
     actual.contains "reason=incomplete_closure rule=E7.body_identity " ||
-    actual.contains "reason=incomplete_closure rule=E8.work "
+    actual.contains "reason=incomplete_closure rule=E8.work " ||
+    actual.contains "reason=incomplete_closure rule=E8.construction_work "
   unless identityExhausted do
     throwError "[FAIL] ForwardingExhaustion: {actual}"
   logInfo "[PASS] ForwardingExhaustion"

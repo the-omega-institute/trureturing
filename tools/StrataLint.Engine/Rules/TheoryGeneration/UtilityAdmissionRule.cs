@@ -180,6 +180,14 @@ internal static class UtilityAdmissionRule
             return false;
         }
 
+        // A retired module has no candidate header to compare. Its frozen
+        // registration is handled by the deletion/retirement rules; the
+        // utility ratchet only protects headers that survive in the candidate.
+        if (!context.Current.TryGetFile(path.Value, out _))
+        {
+            return false;
+        }
+
         var baselineValid = TryGetUtility(context.Baseline, path, out var baselineUtility);
         var currentValid = TryGetUtility(context.Current, path, out var currentUtility);
         if (!baselineValid || !currentValid)

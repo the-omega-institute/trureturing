@@ -1,0 +1,52 @@
+{
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/1000",
+      "rbar": "1/520",
+      "h1min": "161/486",
+      "v0": "7/520",
+      "v1": "1291/83720",
+      "gap": "2513/126360",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "41/25272",
+        "1/972",
+        "1/312"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "14/225"
+    }
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "objective_rows": {
+    "path": "content/002-shells/000001/item/002-objective_rows.json",
+    "sha256": "b47f64ef41dae2d5c9674cba8532474b6962304a5a53d976195902f0eb426083",
+    "kind": "array"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

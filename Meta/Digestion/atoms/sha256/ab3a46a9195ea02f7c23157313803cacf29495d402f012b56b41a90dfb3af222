@@ -1,0 +1,7 @@
+**假设 20.1（有限端点记录与自由光滑钟）。** 使用命题18.4的 $k_r$，$r>0$，同源响应为 $F(s)=a k_r(\phi(s))$，$a>0$。真实零点、稳定增益、制备和全部旧档案按[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)假设19.1保留。当前有限记录是
+$$
+0=s_0<s_1<\cdots<s_n<\infty,\qquad
+1=z_0>z_1>\cdots>z_n>0,\qquad F(s_i)=az_i.
+$$
+钟类暂取 $\phi\in C^\infty([0,\infty))$，$\phi(0)=0$，$\phi'>0$，$\phi(s)\to\infty$。$n=0$ 时相邻不等式为空。以下精确纤维针对所列记录；若旧档案另有钟或来源限制，须与其共同相交，不能用本节纤维覆盖旧信息。
+

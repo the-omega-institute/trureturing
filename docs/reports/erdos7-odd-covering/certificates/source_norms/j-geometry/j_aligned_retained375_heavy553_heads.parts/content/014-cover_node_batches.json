@@ -1,0 +1,68 @@
+{
+  "length": 7,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-cover_node_batches/000000/single.json",
+        "sha256": "b16511922cbb521fe8cefa3c916c379b2482ce13aed864c66973da719983dbbc",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-cover_node_batches/000001/single.json",
+        "sha256": "057c12632cfc5a1760a26a0baebce58de69c7437025dba07224798a6b810c37a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-cover_node_batches/000002/single.json",
+        "sha256": "f3a2ac2b1631ffb6a08ff986b9b240d22786295785036158a9f0de39bc8a845e",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/014-cover_node_batches/000003/single.json",
+        "sha256": "f5203dad0bd28066d7a005a89fd023267ca5fdbbfeca22ff123bd26f9db61da1",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/014-cover_node_batches/000004/single.json",
+        "sha256": "c03a956101cd056dfe66af8bfec4fd7eb2913d7e64c80031d54d42c888ba22c0",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/014-cover_node_batches/000005/single.json",
+        "sha256": "510c25a09b310cf4f6ac899acd3f46f073ba35c9a949e3ee4ee801eb28f33ef3",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/014-cover_node_batches/000006-000007.json",
+        "sha256": "79146a4c7d747de524e821c7a6c5ccc39d3dca6d9d01855037a1847685829f01",
+        "kind": "value"
+      }
+    }
+  ]
+}

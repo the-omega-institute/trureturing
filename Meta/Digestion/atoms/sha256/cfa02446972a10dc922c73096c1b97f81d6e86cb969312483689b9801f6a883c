@@ -1,0 +1,72 @@
+**定理 29.3（显式预条件与一个固定凸参数邻域）。** 令 $F,G$ 如（28.104），已知位置比的设计域为
+$$
+\mathcal D=[3/4,5/4]\times[7/4,9/4],\qquad (\lambda,\mu)\in\mathcal D.
+\tag{29.106}
+$$
+对 $3\eta\le r_*$ 定义
+$$
+A_{\eta,\lambda}(p)=\frac{g_p(\lambda\eta)}{\lambda\eta},
+$$
+$$
+B_{\eta,\lambda,\mu}(p)=\frac1\eta\left[
+ \frac{2\{g_p(\mu\eta)-(\mu/\lambda)g_p(\lambda\eta)\}}
+ {\mu(\mu-\lambda)\eta^2}-F(A_{\eta,\lambda}(p))\right],\qquad
+\mathcal P_{\eta,\lambda,\mu}=(A_{\eta,\lambda},B_{\eta,\lambda,\mu}).
+\tag{29.107}
+$$
+存在一个固定闭凸球 $U=\overline B(p_0,\rho)$、共同 $\eta_0>0,K<\infty$，使对所有 $p,q\in U,(\lambda,\mu)\in\mathcal D,0<\eta\le\eta_0$，
+$$
+\|\mathcal P_{\eta,\lambda,\mu}(p)-\mathcal P_{\eta,\lambda,\mu}(q)\|_2
+ \ge\frac{\|p-q\|_2}{2K}.
+\tag{29.108}
+$$
+球 $U$ 在参数空间，不是与 $\eta$ 无关的原始输出球。
+
+证明。固定正 $\eta,\lambda,\mu$ 时，（29.107）是两个输出 $z_1,z_2$ 的可逆变换：$z_1=\lambda\eta A$，
+$z_2=(\mu/\lambda)z_1+\mu(\mu-\lambda)\eta^2[F(A)+\eta B]/2$。它只重表达两条既有记录，不增加测量。
+
+引理28.4给一致于 $\mathcal D$ 的 $C^1(p)$ 展开
+$$
+A=m+\frac\lambda2F(m)\eta+O_{C^1}(\eta^2),\qquad
+\mathcal P_{\eta,\lambda,\mu}\longrightarrow
+\mathcal P_{0,\lambda,\mu}=(m,J_{\lambda,\mu}(m,k)),
+$$
+$$
+J_{\lambda,\mu}=\frac{\lambda+\mu}{3}G(m,k)-\frac\lambda2F'(m)F(m),
+\qquad \partial_kJ_{\lambda,\mu}=-\frac{(\lambda+\mu)m}{30}.
+\tag{29.109}
+$$
+收敛的 $C^1$ 误差为 $O(\eta)$。确实，$B$ 方括号中首项展开成
+$F(m)+(\lambda+\mu)G\eta/3+O_{C^1}(\eta^2)$，而
+$F(A)=F(m)+\lambda F'(m)F(m)\eta/2+O_{C^1}(\eta^2)$；相减除以 $\eta$ 即得。多项式 $F$ 及一致 $C^1$ 余项保证参数导数亦有相同阶数。
+
+令
+$$
+L_{\lambda,\mu}=D\mathcal P_{0,\lambda,\mu}(p_0),\qquad
+K=\max_{(\lambda,\mu)\in\mathcal D}\|L_{\lambda,\mu}^{-1}\|_2.
+\tag{29.110}
+$$
+$L$ 第一行为 $(1,0)$，行列式为 $-(\lambda+\mu)m_0/30\ne0$；连续性和紧性给 $0<K<\infty$。在共同开图参数域内选择
+$0<\rho<\min\{|m_0|/2,k_0/2\}$，使闭球 $U$ 连同邻域留在该域，且
+$$
+K\sup_{p\in U,(\lambda,\mu)\in\mathcal D}
+ \|D\mathcal P_{0,\lambda,\mu}(p)-L_{\lambda,\mu}\|_2\le\tfrac14.
+\tag{29.111}
+$$
+这由紧设计域上的一致连续性实现。再用一致 $C^1$ 收敛选择 $0<\eta_0\le\min\{1,r_*/3\}$，使
+$$
+K\sup_{p\in U,(\lambda,\mu)\in\mathcal D}
+ \|D\mathcal P_{\eta,\lambda,\mu}(p)-D\mathcal P_{0,\lambda,\mu}(p)\|_2
+ \le\tfrac14\quad(0<\eta\le\eta_0).
+\tag{29.112}
+$$
+若一致 $C^1$ 余项界为 $C_R\eta$，$C_R>0$ 时还可用 $\eta_0\le1/(4KC_R)$。这些给定的是导数界的充分条件和有限常数的存在，不给未经计算的数值 PDE 半径。
+
+两项四分之一界合成 $\sup_U\|L^{-1}D\mathcal P_\eta-I\|_2\le1/2$。对 $p,q\in U$，整条直线段在 $U$ 中，故
+$$
+L^{-1}(\mathcal P_\eta(p)-\mathcal P_\eta(q))
+ =(p-q)+\int_0^1(L^{-1}D\mathcal P_\eta(q+s(p-q))-I)(p-q)\,ds.
+\tag{29.113}
+$$
+右侧范数至少 $\|p-q\|_2/2$，左侧至多 $K\|\mathcal P_\eta(p)-\mathcal P_\eta(q)\|_2$，得（29.108）。这一步把点态导数条件提升为统一非线性比较；固定 $U$ 不随 $\eta$ 缩小，其实际预条件输出像上的逆 Lipschitz 常数至多 $2K$。原始输出的误差仍被（29.107）的 $\eta$ 分母放大。$\square$
+

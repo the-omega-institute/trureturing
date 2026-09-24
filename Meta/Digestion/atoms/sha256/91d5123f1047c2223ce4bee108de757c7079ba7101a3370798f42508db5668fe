@@ -1,0 +1,35 @@
+**命题 42.8（普遍联合任务的最小接收维数）。** 在定义42.1确实允许 Bell 准备的来源类中，经档案一侧 CPTP 编码与恢复而精确保留原来的 $J,H_n,M$ 联合态，所需有效寄存器维数至少是
+$$
+d_n=\dim S_n=1,2,3,4,4,\ldots.
+\tag{42.32}
+$$
+在各固定时域取 $S_n$ 的等距编码可达到这个维数；命题42.3以单一 $K=\mathbb C^4$ 的序列实现所有时域，从 $n\ge3$ 起四维尖锐。
+
+证明。实际准备 $|\Phi\rangle_{JM}=(|00\rangle+|11\rangle)/\sqrt2$，使用相同独立空白和同一 $T$。仅为写 Schmidt 分解，把档案放到左侧，演化纯向量为
+$$
+|\Psi_n\rangle=\frac1{\sqrt2}\sum_{i,a}v^n_{i,a}\otimes|i\rangle_J\otimes|a\rangle_M,
+\qquad \operatorname{Tr}_{JM}|\Psi_n\rangle\langle\Psi_n|
+=\Gamma_n(I_M/2)=\frac12\sum_{i,a}|v^n_{i,a}\rangle\langle v^n_{i,a}|.
+\tag{42.33}
+$$
+正项之和的核是四列共同正交补，故其支撑恰为 $S_n$。因此 Schmidt 分解为
+$|\Psi_n\rangle=\sum_{r=1}^{d_n}\sqrt{s_r}|e_r\rangle|f_r\rangle$，所有 $s_r>0$，$e_r$ 张成 $S_n$，$f_r$ 位于实际 $JM$。
+
+设编码 $\mathcal C$ 与恢复 $\mathcal B$ 经过 $k$ 维寄存器，且
+$(\mathcal L\otimes\operatorname{id}_{JM})(|\Psi_n\rangle\langle\Psi_n|)=|\Psi_n\rangle\langle\Psi_n|$，$\mathcal L=\mathcal B\mathcal C$。用 $\langle f_r|$、$|f_s\rangle$ 夹取参考／记忆块得
+$$
+\sqrt{s_rs_s}\,\mathcal L(|e_r\rangle\langle e_s|)
+=\sqrt{s_rs_s}\,|e_r\rangle\langle e_s|.
+\tag{42.34}
+$$
+非零系数强迫 $\mathcal L$ 固定每个支撑矩阵单位，不仅是一个对角混合态。于是 $r\ne s$ 时，迹距离收缩给
+$$
+1=D(|e_r\rangle\langle e_r|,|e_s\rangle\langle e_s|)
+\le D(\mathcal C(|e_r\rangle\langle e_r|),
+       \mathcal C(|e_s\rangle\langle e_s|))\le1.
+\tag{42.35}
+$$
+距离一的密度具有正交支撑：达到距离的二元 Helstrom 效应对一态概率一、对另一态概率零，正性使其分别位于该效应的本征值一、零子空间。故编码密度的 $d_n$ 个非零支撑两两正交，$k\ge d_n$。等价地可用 Q定理7.5的零错误容量结论。这些基态测试是单个合法 Bell 联合约束的代数后果，不需要另假设每个 $e_r$ 都是可单独准备的源态。任何额外携带输入相关信息的接收系统，也须计入编码资源，不能藏在 $K$ 之外。$\square$
+
+这个下界只属于所声明的普遍联合任务。仅恢复来源 qubit、固定已知纯根、复现输出边缘或准备一个已知混态，都不是它的替代假设。Q125.1及恢复卷31.3已给固定 $P_0^{\rm mem}$ 根的档案在 $n\ge1$ 恰为秩二，下文也由记忆行列式核对；它不能见证此处普遍任务的四维必要性。
+

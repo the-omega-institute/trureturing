@@ -10,9 +10,11 @@ from test_native_publication import *
 from test_native_recovery import *
 from test_native_packaging import *
 from test_native_reuse import *
+from test_native_interface import *
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
-                  NativeRecoveryTests, NativePackagingTests, NativeReuseTests, unittest.TestCase):
+                  NativeRecoveryTests, NativePackagingTests, NativeReuseTests,
+                  NativeInterfaceTests, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

@@ -113,7 +113,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV5
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV6
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -751,11 +751,13 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     | throwError "incomplete_closure:E7.type_identity"
   let .ok (bodyIdentity, bodyBytes) ← rawIdentity info.levelParams info.value (state.remaining - typeBytes)
     | throwError "incomplete_closure:E7.body_identity"
-  let inputs ← sourceInputs env state.dependencies
-  let policyIdentity := sourceIdentity (inputs.filter fun input => policyPaths.contains input.path)
+  let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
+    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
+    |>.filter (fun name => (env.getModuleIdx? name).isSome)
+  NativeCoherence.validate
+    (#[env.header.mainModule] ++ policyOwners ++ state.dependencies.map (·.owner))
   let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
-    policyIdentity, sourceInputs := inputs,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
     levelParams := info.levelParams, slots, constructorTypes := constructors,
     typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,

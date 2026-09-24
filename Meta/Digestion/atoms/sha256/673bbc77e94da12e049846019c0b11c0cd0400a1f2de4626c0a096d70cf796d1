@@ -1,0 +1,91 @@
+**定理 41.4（统一恢复尾控制同一来源类的完成距离）。** 固定定义41.1的有限 $J$，取两个联合来源 $\theta_0,\theta\in\mathcal D(J\otimes M)$。定义
+$$
+q_n(\theta)=(\operatorname{id}_J\otimes\Gamma_n)(\theta)\quad(n\ge1),
+\qquad q_0(\theta)=\operatorname{Tr}_M\theta,\qquad
+d_n(\theta)=D(q_n(\theta_0),q_n(\theta)).
+\tag{41.32}
+$$
+则 $d_n(\theta)$ 随 $n\ge0$ 单调不减，且对 $n\ge1$ 有
+$$
+0\le D(\theta_0,\theta)-d_n(\theta)\le\epsilon_n,
+\qquad \sup_{n\ge0}d_n(\theta)=D(\theta_0,\theta).
+\tag{41.33}
+$$
+在有限参考局部代数塔
+$$
+\mathcal A_n^J=\mathcal L(J)\otimes\mathcal L(H_n),\quad n\ge0,
+\qquad A\longmapsto A\otimes I_B,
+\qquad \mathcal A^J=\overline{\bigcup_{n\ge0}\mathcal A_n^J}^{\|\cdot\|}
+\tag{41.34}
+$$
+上，存在唯一态 $\omega_\theta$ 满足 $\omega_\theta(A)=\operatorname{Tr}(q_n(\theta)A)$，$A\in\mathcal A_n^J$，并且
+$$
+\boxed{\tfrac12\|\omega_{\theta_0}-\omega_\theta\|_{(\mathcal A^J)^*}
+=\sup_{n\ge0}d_n(\theta)=D(\theta_0,\theta).}
+\tag{41.35}
+$$
+这里 $\mathcal A^J$ 为固定有限矩阵因子 $\mathcal L(J)$ 与单侧 qubit UHF 代数的空间张量积。
+
+若 $\Theta\subseteq\mathcal D(J\otimes M)$ 是固定非空紧的合法来源类，$\theta_0$ 可在其外，令
+$$
+E_* =\min_{\theta\in\Theta}D(\theta_0,\theta),\qquad
+e_n =\min_{\theta\in\Theta}d_n(\theta).
+\tag{41.36}
+$$
+则两极小值均达到，$e_n\le e_{n+1}$，并且
+$$
+e_n\le E_*\le e_n+\epsilon_n\quad(n\ge1),\qquad
+E_*=\sup_{n\ge0}e_n.
+\tag{41.37}
+$$
+一个实际取得的 $\theta_n\in\Theta$ 若满足 $d_n(\theta_n)\le e_n+\eta$、$\eta\ge0$，则同一来源的完成距离满足
+$$
+\tfrac12\|\omega_{\theta_0}-\omega_{\theta_n}\|
+=D(\theta_0,\theta_n)\le e_n+\eta+\epsilon_n.
+\tag{41.38}
+$$
+
+证明。$q_n$ 是保留 $J$ 的通道输出，故引理10.6给 $d_n(\theta)\le D(\theta_0,\theta)$。将同一个 $\operatorname{id}_J\otimes\mathcal D_n$ 用于两个来源，写恢复态为 $\widehat\theta_0,\widehat\theta$。（41.4）、（41.8）及命题10.7保证 $D(\theta_0,\widehat\theta_0),D(\theta,\widehat\theta)\le\kappa_n$，所以
+$$
+D(\theta_0,\theta)
+\le\kappa_n+D(\widehat\theta_0,\widehat\theta)+\kappa_n
+\le d_n(\theta)+2\kappa_n
+=d_n(\theta)+\epsilon_n.
+\tag{41.39}
+$$
+两个单态误差相加产生这里的 $\epsilon_n$，不是 $\kappa_n$。
+
+从实际递推 $T_{n+1}=(I_{H_n}\otimes T)T_n$ 和 $T^*T=I$，对每个 $A\in\mathcal A_n^J$ 有
+$$
+\operatorname{Tr}\bigl(q_{n+1}(\theta)(A\otimes I_B)\bigr)
+=\operatorname{Tr}(q_n(\theta)A).
+\tag{41.40}
+$$
+故对最新发射端口取偏迹给 $q_n(\theta)$，包括 $n=0$ 时保留的 $J$ 边缘。这里已经忽略最终活动记忆，不与（41.27）对完整观察者取偏迹混淆。偏迹收缩给 $d_n\le d_{n+1}$，再用 $\epsilon_n\to0$ 证明（41.33）。
+
+完成态沿用 Q 命题125.2的构造，但将固定的左参考因子显式保留。（41.34）的每个嵌入都等距、幺且保持乘法和伴随，因此按这些嵌入识别后的代数并具有一致算子范数。（41.40）使局部定义 $\omega_\theta(A)=\operatorname{Tr}(q_n(\theta)A)$ 良定。局部正元的期望非负，$\omega_\theta(I)=1$，而密度的迹范数为一，给 $|\omega_\theta(A)|\le\|A\|$；故唯一连续延拓到 $\mathcal A^J$。为验证延拓正性，取任意 $C\in\mathcal A^J$ 及局部 $C_k\to C$，则 $C_k^*C_k\to C^*C$，从而 $\omega_\theta(C^*C)=\lim_k\omega_\theta(C_k^*C_k)\ge0$。每个正元是其正平方根的平方，单位值仍为一，因此延拓为态，范数亦为一。这不是把具有不同类型的固定左因子偷偷代入齐次张量定理。[^rroctx41_extension]
+
+令 $\delta=\omega_{\theta_0}-\omega_\theta$。在第 $n$ 层，有限矩阵的迹范数／算子范数对偶给
+$$
+\|\delta|_{\mathcal A_n^J}\|
+=\|q_n(\theta_0)-q_n(\theta)\|_1=2d_n(\theta).
+\tag{41.41}
+$$
+具体地，迹不等式给上界；对自伴差取其谱符号算子，范数至多一且期望为差的迹范数，达到上界。由于局部单位球包含在完成单位球中，$\|\delta\|\ge\sup_n2d_n(\theta)$。反向取 $\|A\|\le1$，选局部 $B_k\to A$，再置
+$$
+C_k=\frac{B_k}{\max\{1,\|B_k\|\}}.
+\tag{41.42}
+$$
+每个 $C_k$ 是某一有限层的单位球元素；且
+$\|C_k-B_k\|=\max\{0,\|B_k\|-1\}\le\|B_k-A\|$，故 $C_k\to A$。连续性和（41.41）给 $|\delta(A)|\le\sup_n2d_n(\theta)$，再取单位球上确界证明反向。结合（41.33）得（41.35）。这是恢复卷命题31.9、式（31.31）—（31.32）的局部范数与范数稠密方法在固定 $J$ 上的应用；因子 $1/2$ 来自（41.41），不能只用一个投影的读数代替整个泛函范数。
+
+最后，来源空间有限维，$D(\theta_0,\theta)$ 及 $d_n(\theta)$ 都是有限线性映射后的连续迹范数。非空紧性使（41.36）达到。逐点 $d_n\le d_{n+1}$ 给 $e_n\le e_{n+1}$。在 $E_*$ 的一个极小点 $\theta_*$ 上评价 $d_n\le D$，得 $e_n\le d_n(\theta_*)\le E_*$；在 $e_n$ 的一个极小点 $\theta^{(n)}$ 上评价（41.33），得
+$$
+E_*\le D(\theta_0,\theta^{(n)})
+\le d_n(\theta^{(n)})+\epsilon_n=e_n+\epsilon_n.
+\tag{41.43}
+$$
+令 $n\to\infty$，得到（41.37）。对实际近极小点直接用（41.33）、（41.35）即得（41.38）。此证明在同一个 $\Theta$ 内利用统一尾界，没有交换任意的 $\inf$ 与 $\sup$，也没有把彼此不相容的有限极小点拼成一个来源。$\square$
+
+（41.35）是完成代数上的态泛函范数等式；它不供应事先指定无限表示中的 normal 密度，不断言实际来源映满全部相容目标，也不构造可执行的无限终端解码器。Q 命题125.4的表示边界继续有效。这里的量子迹距离不是第38—39节有限经典世界／标签上的 TV 尾；没有一个已证明的映射将那些 $d_\ell,\tau_\ell$ 与 $\epsilon_n$ 等同，不能直接替换它们的预算。
+

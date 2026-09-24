@@ -1,0 +1,6 @@
+向量／张量仍取原 Euclidean／Frobenius 范数。热散度乘子估计与（25.105）相同，因此在 $X_T=C([0,T];H^{12}_\sigma)$ 上
+$$
+\|\mathcal B_\nu\|_{X_T\times X_T\to X_T}
+ \le2C_{12}\sqrt{T/\underline\nu}=:\Lambda_T.
+\tag{27.104}
+$$

@@ -1,0 +1,33 @@
+**定理 52.7（类概率逆映射与全部可实现坐标）。** 令 $p_A,p_B,p_C,p_D,p_E,p_G$ 为初始六类概率，则
+$$
+\begin{gathered}
+m_0=p_B+p_D+p_G,\qquad m_1=p_C+p_E+p_G,\qquad
+m_2=p_D+p_E+p_G,\\
+c_{01}=p_G,\qquad c_{12}=p_E+p_G.
+\end{gathered}
+\tag{52.14}
+$$
+其逆映射为
+$$
+\boxed{\begin{aligned}
+p_A&=1-m_0-m_1+c_{01},\\
+p_B&=m_0-m_2+c_{12}-c_{01},\\
+p_C&=m_1-c_{12},\\
+p_D&=m_2-c_{12},\\
+p_E&=c_{12}-c_{01},\\
+p_G&=c_{01}.
+\end{aligned}}
+\tag{52.15}
+$$
+实际归一化预测域 $\mathcal P=\{z_\mu:\mu\in\Delta_S\}$ 恰为首坐标等于一且满足下列六式的坐标集合：
+$$
+\boxed{\begin{gathered}
+1-m_0-m_1+c_{01}\ge0,\qquad
+m_0-m_2+c_{12}-c_{01}\ge0,\\
+m_1-c_{12}\ge0,\qquad m_2-c_{12}\ge0,\\
+c_{12}-c_{01}\ge0,\qquad c_{01}\ge0.
+\end{gathered}}
+\tag{52.16}
+$$
+该域与六类概率单纯形 $\Delta_5$ 仿射同构，仿射维数为五。
+

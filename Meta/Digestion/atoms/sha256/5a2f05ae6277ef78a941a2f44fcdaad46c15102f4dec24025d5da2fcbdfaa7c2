@@ -1,0 +1,25 @@
+**命题 31.9（固定窗口、全时域与完成代数的不同极限）。** 对任意 $n\ge0$，
+$$
+D(\rho_{k,n},p_n)\ge1-\frac{|\mathcal W_n^{(k)}|}{2^n}
+\ge1-(1-2^{-k})^{\lfloor n/k\rfloor}.
+\tag{31.30}
+$$
+故每个固定有限 $k$ 有 $\sup_nD(\rho_{k,n},p_n)=1$，而每个固定有限 $n$ 有 $\lim_{k\to\infty}D(\rho_{k,n},p_n)=0$。在完整 qubit UHF 代数 $\mathcal A=\overline{\bigcup_nM_{2^n}(\mathbb C)}$，嵌入为 $A\mapsto A\otimes I_2$，命题31.3的相容态及乘积态分别记为 $\omega_k,\omega_+$。则
+$$
+\tfrac12\|\omega_k-\omega_+\|_{\mathcal A^*}=1\quad(k\ge2),\qquad
+\omega_k\longrightarrow\omega_+\quad\text{弱星}.
+\tag{31.31}
+$$
+完全计算基退相干的族 $\Delta_n(\rho_{k,n})$ 则对固定 $n$ 趋于 $I_{H_n}/2^n$。
+
+证明。令 $P_{k,n}$ 为合法词张成空间的正交投影。由式（31.10），$\operatorname{Tr}(P_{k,n}\rho_{k,n})=1$，而 $\operatorname{Tr}(P_{k,n}p_n)=|\mathcal W_n^{(k)}|/2^n$。Q126.2已有的支撑事件方法应用于这一二结果测量，给第一界。公平独立二元词的每个不交长度 $k$ 块都必须不是 $1^k$，故合法事件包含于 $\lfloor n/k\rfloor$ 个独立块的避免事件，概率至多式（31.30）右项中的幂。未满一块时该下界为零，包括 $n=0$。令 $n\to\infty$ 给距离趋一；固定 $n$ 的另一极限由定理31.8给出。
+
+态延拓直接使用 Q125.2在完整局部代数上的既有构造：命题31.3提供正、归一、偏迹相容这一组输入，因而给唯一范数一态，无需重建 GNS 理论。范数差至多二。为取到其下确界方向，使用局部范数一自伴算子 $A_n=2P_{k,n}-I$，有
+$$
+(\omega_k-\omega_+)(A_n)=2\left(1-|\mathcal W_n^{(k)}|/2^n\right)\longrightarrow2.
+\tag{31.32}
+$$
+单用投影只能给差一，式（31.32）的因子二不可省略。于是得到泛函范数等式。对任意局部 $A\in M_{2^n}$，迹范数上界使两态差值趋零。给一般 $A\in\mathcal A$，选局部 $A'$ 满足 $\|A-A'\|<\delta$；两态范数均一，故差值至多 $2\delta+|(\omega_k-\omega_+)(A')|$，先令 $k\to\infty$ 再令 $\delta\to0$，得弱星收敛。最后退相干是 CPTP，$\Delta_n(p_n)=I/2^n$，其迹距离不增加，所以退相干局部极限如述。$\square$
+
+式（31.31）是完成代数上态泛函的范数，不是无限全局密度矩阵的迹范数。固定窗口近似、固定 $k$ 的全部窗口可区分性、退相干后的经典极限是三个不同结论。
+

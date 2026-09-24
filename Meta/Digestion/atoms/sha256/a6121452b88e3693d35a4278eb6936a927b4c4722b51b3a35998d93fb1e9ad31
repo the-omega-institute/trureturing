@@ -1,0 +1,7 @@
+**定义 20.4（已知共同钟率界）。** 给 $0<m\le M<\infty$，用 $\mathcal C_{m,M}$ 表示全部 $\phi(0)=0$ 且满足
+$$
+m(v-u)\le\phi(v)-\phi(u)\le M(v-u)\qquad(0\le u\le v)
+\tag{20.103}
+$$
+的连续钟。这等价于局部绝对连续且几乎处处 $m\le\phi'\le M$：一个方向积分导数，另一个方向由 Lipschitz 函数的绝对连续性、几乎处处可微性及差商界得到。特别 $\phi(s)\ge ms$，无界性自动成立。定义 $t_i(r)=k_r^{-1}(z_i)$、$t_0=0$、$\Delta_i(r)=t_i(r)-t_{i-1}(r)$ 和 $L_i=s_i-s_{i-1}>0$，逆仅在 $p_r<z_n$ 时使用。
+

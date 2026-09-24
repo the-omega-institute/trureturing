@@ -1,0 +1,89 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "retained139and143"
+  },
+  "H1": {
+    "path": "content/010-comparisons/000000/item/001-H1.json",
+    "sha256": "57a652d496db3d5914a428c2dfd87c6da576775c3f889f8c9232c0a35d2efebb",
+    "kind": "value"
+  },
+  "square": {
+    "path": "content/010-comparisons/000000/item/002-square.json",
+    "sha256": "b534a562b5567748d4233e77408dd475abdb7113037b739e114c2ad312baf320",
+    "kind": "value"
+  },
+  "simple_rows": {
+    "path": "content/010-comparisons/000000/item/003-simple_rows.json",
+    "sha256": "fe11af4dcd0f02d948680fce75dbda25d4c8bb347174e2bf0009af871afd01eb",
+    "kind": "value"
+  },
+  "heavy": {
+    "path": "content/010-comparisons/000000/item/004-heavy.json",
+    "sha256": "3117d7066778bece512ed52af49507fc6ceb09bd638cf226e2fdb4ef9ad64597",
+    "kind": "object"
+  },
+  "retained_raw81_first": {
+    "path": "content/010-comparisons/000000/item/005-retained_raw81_first.json",
+    "sha256": "c7bd60f74d9595a884f5af39522d0c967baec755611010a1304cf96612c3d297",
+    "kind": "value"
+  },
+  "retained_raw81_second": {
+    "path": "content/010-comparisons/000000/item/006-retained_raw81_second.json",
+    "sha256": "b7ab8e55d811bbb7870a2ed892e3976a63fb388820e15084acb66977d51f3f9a",
+    "kind": "value"
+  },
+  "cost_groups": {
+    "kind": "inline",
+    "value": {
+      "mean11": "780595105447945559518061461614596993/83085067061366223764707016220000000",
+      "single28_at_mass_floor": "323432308257621405124656126020780053/237084211427283150889792729896000000",
+      "quadratic9": "12127585620738259050488425006688443973/1233005165349250500559602169920000000",
+      "raw81_second": "43495092737360293/14093288102643750",
+      "heavy2_at_both_mass_floors": "37850419642226913333464167413028860704731441/3439868301010577736262790720566454781000000",
+      "raw81_first": "384649145789679005213/311152116461976562500",
+      "square_at_mass_floor": "181744430653056258403348820696651/217125161860858607448892800000000"
+    }
+  },
+  "signed_mass_floor_term": {
+    "kind": "inline",
+    "value": "-239487086662097082670327/21573978899788328632819200"
+  },
+  "signed_endpoint": {
+    "kind": "inline",
+    "value": "24978250116661761734283829233510712356317999213066171/679736322243962217100120847934441152484432000000000"
+  },
+  "denominator_lower": {
+    "kind": "inline",
+    "value": "44521603346852262766727/567362602925505387000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "3466180505537753269557834275642398210320104398228408013521/7075564518544066319221062411223545311082334517543472000"
+  },
+  "remaining_S_coefficient": {
+    "kind": "inline",
+    "value": "34222292099422315836152689520088214017811990604500986736462988854841/85676178228125081907563663798858331656547456474852333432180000000"
+  },
+  "raw_s_coefficient": {
+    "kind": "inline",
+    "value": "9842264924061537171771956384088145223/143243234143364170129428019217812500"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "509"
+  },
+  "target_margin": {
+    "kind": "inline",
+    "value": "135281834401176486925686491670386353020803871201219234479/7075564518544066319221062411223545311082334517543472000"
+  },
+  "all_original_indices": {
+    "path": "content/010-comparisons/000000/item/017-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  }
+}

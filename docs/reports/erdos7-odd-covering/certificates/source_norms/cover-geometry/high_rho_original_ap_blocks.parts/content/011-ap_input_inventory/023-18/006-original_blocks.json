@@ -1,0 +1,23 @@
+{
+  "length": 52,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 45,
+      "part": {
+        "path": "content/011-ap_input_inventory/023-18/006-original_blocks/000000-000045.json",
+        "sha256": "8267c1b877fe9ef45cb22f8ebd9bb82c2431602a3f1a09bb48175c558ba602b2",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 45,
+      "stop": 52,
+      "part": {
+        "path": "content/011-ap_input_inventory/023-18/006-original_blocks/000045-000052.json",
+        "sha256": "bd686262a947ba4136557e7bd7f41755cdb2872745bf0427f6729902a9d19b15",
+        "kind": "value"
+      }
+    }
+  ]
+}

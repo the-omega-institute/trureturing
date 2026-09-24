@@ -1,0 +1,458 @@
+{
+  "schema": "erdos7-aligned-raw-prime-path-moments-v1",
+  "domain": "Actual aligned312 endpoint, own independent old tests, complete source paths and pair tails.",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
+    "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+    "frontier/source-budgets/joint_selected_source_comparison.py": "849ecfdffec509678ace0ab6e059450a72959a44641a46715bcb489a5d376db8",
+    "frontier/retained-transport/retained_deletion_heavy_comparison.py": "553c281d5de5a9bcd9098ea933f6cccf046b587132e6fa49ec4aa8b44b4ec86f",
+    "frontier/j-geometry/j_face_joint_selected_heads.py": "77c34ea38b4f11aabe721d401dddb1f70d992f991094bd29393f9f0aa4be921b",
+    "certificates/source_norms/j-geometry/j_face_heavy_positive175189_complete_moment_cost_comparison.json": "4c0fe07b96685b510627df37cae3e297118e055496568767d7d082042e3376ab",
+    "profile-notes/257-320/312-an-aligned-j-source-has-a-complete-own-test-and-residual-deletion-interface.md": "ff1ed4852f7eb16e40b587aa4f1de491e39d335475f515c33edd965860931f3d",
+    "certificates/source_norms/j-geometry/j_aligned_own_test_interface.json": "c82d4369189cbe84daa37b97a89e80d7f300bbdc0fcf132de9b334dd5d42128b",
+    "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f",
+    "frontier/j-geometry/j_aligned_joint_selected_heads.py": "dcda5d59b7b168c06ddec177be223dfbbdfb304383b8087d8a8c123baca3c369",
+    "certificates/source_norms/j-geometry/j_aligned_joint_selected_heads.json": "c2f07afe5f89f631326479f0ea8a88d91ab784917ad30cefc5c3c7337408fec3",
+    "frontier/j-geometry/j_face_shared_square_factorial.py": "19f35e9bcac13999e3912fd5d5a2d43ddcef667e5913d4b6d8ec4c171c911e44",
+    "frontier/j-geometry/j_face_raw_prime_path_pairs.py": "8dbb4e0a76285263d8c14fc6f699e3a8d3ef33ebe73be2a218f352172d5ebc4b",
+    "frontier/j-geometry/j_face_coherent_positive7_pairs.py": "e88cd1035ccb6e3283475233584fd0ff101cc12ce33cdbbee52ccced22e637f0",
+    "frontier/j-geometry/j_face_joint_retained_square.py": "4f3bfcb82a0a330a62f6c791318473e0e24cf6abeb550d8648906d45116611ad",
+    "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498"
+  },
+  "actual_raw_mass": "1/4",
+  "actual_survivor_mass": "413/2700",
+  "theta_interval": [
+    "1/405",
+    "1/270"
+  ],
+  "original_head_count": 12500,
+  "endpoint_records": 25000,
+  "all_endpoint_bounds_sha256": "f83d33dfc6053fa46516dc626211cd2c429ae7b7b2d5c252a8013faed0098bfb",
+  "complete_raw_pair_upper": "1093/864",
+  "complete_raw_square_upper": "2321/720",
+  "maximizing_relaxation_witnesses": {
+    "pair": [
+      {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "theta": "1/270",
+        "complete_raw_old_cross": "73/180",
+        "block_changes": {
+          "pair": "-1/144",
+          "square": "-1/36"
+        },
+        "complete_bounds": {
+          "pair": "1093/864",
+          "square": "2321/720"
+        },
+        "complete_prime_blocks": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "square_block": false,
+            "discount": "1/3",
+            "initial_weight": "1/27",
+            "diagonal_geometric_weight": "1/18",
+            "distinct_geometric_weight": "1/36",
+            "old_head_cross": "7/60",
+            "old_distinct_pairs": "1/48",
+            "old_diagonal": "0",
+            "old_complete_block": "11/80",
+            "new_complete_block": "47/360",
+            "block_change": "-1/144",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "19/20",
+                "reward_count_coefficient": "3/4",
+                "potential_constant": "159/80",
+                "potential_count_coefficient": "9/8",
+                "unchanged_component_reward_slack": "3/8",
+                "complete_path_upper": "53/720"
+              },
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "19/20",
+                "reward_count_coefficient": "3/4",
+                "potential_constant": "159/80",
+                "potential_count_coefficient": "9/8",
+                "unchanged_component_reward_slack": "3/8",
+                "complete_path_upper": "53/720"
+              },
+              {
+                "raw_head_cross_coefficient": "1",
+                "raw_density_cap": "3/10",
+                "reward_constant": "1",
+                "reward_count_coefficient": "3/10",
+                "potential_constant": "69/40",
+                "potential_count_coefficient": "9/20",
+                "unchanged_component_reward_slack": "3/20",
+                "complete_path_upper": "23/360"
+              },
+              {
+                "raw_head_cross_coefficient": "7/5",
+                "raw_density_cap": "1/2",
+                "reward_constant": "7/5",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "99/40",
+                "potential_count_coefficient": "3/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "11/120"
+              },
+              {
+                "raw_head_cross_coefficient": "21/10",
+                "raw_density_cap": "1/2",
+                "reward_constant": "21/10",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "141/40",
+                "potential_count_coefficient": "3/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "47/360"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "square_block": false,
+            "discount": "1/5",
+            "initial_weight": "1/25",
+            "diagonal_geometric_weight": "1/20",
+            "distinct_geometric_weight": "1/80",
+            "old_head_cross": "17/180",
+            "old_distinct_pairs": "1/160",
+            "old_diagonal": "0",
+            "old_complete_block": "29/288",
+            "new_complete_block": "29/288",
+            "block_change": "0",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "0",
+                "raw_density_cap": "0",
+                "reward_constant": "0",
+                "reward_count_coefficient": "0",
+                "potential_constant": "0",
+                "potential_count_coefficient": "0",
+                "unchanged_component_reward_slack": "0",
+                "complete_path_upper": "0"
+              },
+              {
+                "raw_head_cross_coefficient": "1/6",
+                "raw_density_cap": "1/6",
+                "reward_constant": "1/6",
+                "reward_count_coefficient": "1/6",
+                "potential_constant": "25/96",
+                "potential_count_coefficient": "5/24",
+                "unchanged_component_reward_slack": "1/24",
+                "complete_path_upper": "1/96"
+              },
+              {
+                "raw_head_cross_coefficient": "13/18",
+                "raw_density_cap": "7/18",
+                "reward_constant": "13/18",
+                "reward_count_coefficient": "7/18",
+                "potential_constant": "295/288",
+                "potential_count_coefficient": "35/72",
+                "unchanged_component_reward_slack": "7/72",
+                "complete_path_upper": "59/1440"
+              },
+              {
+                "raw_head_cross_coefficient": "17/18",
+                "raw_density_cap": "1/2",
+                "reward_constant": "17/18",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "385/288",
+                "potential_count_coefficient": "5/8",
+                "unchanged_component_reward_slack": "1/8",
+                "complete_path_upper": "77/1440"
+              },
+              {
+                "raw_head_cross_coefficient": "17/9",
+                "raw_density_cap": "1/2",
+                "reward_constant": "17/9",
+                "reward_count_coefficient": "1/2",
+                "potential_constant": "725/288",
+                "potential_count_coefficient": "5/8",
+                "unchanged_component_reward_slack": "1/8",
+                "complete_path_upper": "29/288"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          }
+        ]
+      }
+    ],
+    "square": [
+      {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "theta": "1/270",
+        "complete_raw_old_cross": "73/180",
+        "block_changes": {
+          "pair": "-1/144",
+          "square": "-1/36"
+        },
+        "complete_bounds": {
+          "pair": "1093/864",
+          "square": "2321/720"
+        },
+        "complete_prime_blocks": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "square_block": true,
+            "discount": "1/3",
+            "initial_weight": "1/27",
+            "diagonal_geometric_weight": "1/18",
+            "distinct_geometric_weight": "1/36",
+            "old_head_cross": "7/30",
+            "old_distinct_pairs": "1/24",
+            "old_diagonal": "1/24",
+            "old_complete_block": "19/60",
+            "new_complete_block": "13/45",
+            "block_change": "-1/36",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "53/20",
+                "reward_count_coefficient": "3/2",
+                "potential_constant": "51/10",
+                "potential_count_coefficient": "9/4",
+                "unchanged_component_reward_slack": "3/4",
+                "complete_path_upper": "17/90"
+              },
+              {
+                "raw_head_cross_coefficient": "19/20",
+                "raw_density_cap": "3/4",
+                "reward_constant": "53/20",
+                "reward_count_coefficient": "3/2",
+                "potential_constant": "51/10",
+                "potential_count_coefficient": "9/4",
+                "unchanged_component_reward_slack": "3/4",
+                "complete_path_upper": "17/90"
+              },
+              {
+                "raw_head_cross_coefficient": "1",
+                "raw_density_cap": "3/10",
+                "reward_constant": "23/10",
+                "reward_count_coefficient": "3/5",
+                "potential_constant": "39/10",
+                "potential_count_coefficient": "9/10",
+                "unchanged_component_reward_slack": "3/10",
+                "complete_path_upper": "13/90"
+              },
+              {
+                "raw_head_cross_coefficient": "7/5",
+                "raw_density_cap": "1/2",
+                "reward_constant": "33/10",
+                "reward_count_coefficient": "1",
+                "potential_constant": "57/10",
+                "potential_count_coefficient": "3/2",
+                "unchanged_component_reward_slack": "1/2",
+                "complete_path_upper": "19/90"
+              },
+              {
+                "raw_head_cross_coefficient": "21/10",
+                "raw_density_cap": "1/2",
+                "reward_constant": "47/10",
+                "reward_count_coefficient": "1",
+                "potential_constant": "39/5",
+                "potential_count_coefficient": "3/2",
+                "unchanged_component_reward_slack": "1/2",
+                "complete_path_upper": "13/45"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "square_block": true,
+            "discount": "1/5",
+            "initial_weight": "1/25",
+            "diagonal_geometric_weight": "1/20",
+            "distinct_geometric_weight": "1/80",
+            "old_head_cross": "17/90",
+            "old_distinct_pairs": "1/80",
+            "old_diagonal": "1/40",
+            "old_complete_block": "163/720",
+            "new_complete_block": "163/720",
+            "block_change": "0",
+            "path_records": [
+              {
+                "raw_head_cross_coefficient": "0",
+                "raw_density_cap": "0",
+                "reward_constant": "0",
+                "reward_count_coefficient": "0",
+                "potential_constant": "0",
+                "potential_count_coefficient": "0",
+                "unchanged_component_reward_slack": "0",
+                "complete_path_upper": "0"
+              },
+              {
+                "raw_head_cross_coefficient": "1/6",
+                "raw_density_cap": "1/6",
+                "reward_constant": "1/2",
+                "reward_count_coefficient": "1/3",
+                "potential_constant": "35/48",
+                "potential_count_coefficient": "5/12",
+                "unchanged_component_reward_slack": "1/12",
+                "complete_path_upper": "7/240"
+              },
+              {
+                "raw_head_cross_coefficient": "13/18",
+                "raw_density_cap": "7/18",
+                "reward_constant": "11/6",
+                "reward_count_coefficient": "7/9",
+                "potential_constant": "365/144",
+                "potential_count_coefficient": "35/36",
+                "unchanged_component_reward_slack": "7/36",
+                "complete_path_upper": "73/720"
+              },
+              {
+                "raw_head_cross_coefficient": "17/18",
+                "raw_density_cap": "1/2",
+                "reward_constant": "43/18",
+                "reward_count_coefficient": "1",
+                "potential_constant": "475/144",
+                "potential_count_coefficient": "5/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "19/144"
+              },
+              {
+                "raw_head_cross_coefficient": "17/9",
+                "raw_density_cap": "1/2",
+                "reward_constant": "77/18",
+                "reward_count_coefficient": "1",
+                "potential_constant": "815/144",
+                "potential_count_coefficient": "5/4",
+                "unchanged_component_reward_slack": "1/4",
+                "complete_path_upper": "163/720"
+              }
+            ],
+            "maximizing_cells_or_slots": [
+              4
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "complete_raw_omitted_tail": {
+    "raw_pure_coefficients": [
+      "3/4",
+      "1/2",
+      "1/3",
+      "1/9"
+    ],
+    "weighted_pure_blocks_before_halving": {
+      "pure3": "1/24",
+      "pure5": "1/80",
+      "root5": "7/120",
+      "cell5": "13/360"
+    },
+    "weighted_mixed_before_halving": "17/120",
+    "raw_omitted_distinct_pairs": "209/1440",
+    "raw_omitted_diagonal": "37/360",
+    "independent_lcm_prefix_checks": [
+      {
+        "maximum_three_depth": 3,
+        "maximum_five_depth": 2,
+        "old_label_count": 12,
+        "omitted_label_count": 6,
+        "raw_omitted_pair_prefix": "31/675",
+        "complete_pair_remainder": "2143/21600",
+        "raw_omitted_diagonal_prefix": "67/900",
+        "complete_diagonal_remainder": "17/600"
+      },
+      {
+        "maximum_three_depth": 5,
+        "maximum_five_depth": 4,
+        "old_label_count": 30,
+        "omitted_label_count": 24,
+        "raw_omitted_pair_prefix": "77761/607500",
+        "complete_pair_remainder": "83287/4860000",
+        "raw_omitted_diagonal_prefix": "4063/40500",
+        "complete_diagonal_remainder": "199/81000"
+      },
+      {
+        "maximum_three_depth": 8,
+        "maximum_five_depth": 7,
+        "old_label_count": 72,
+        "omitted_label_count": 66,
+        "raw_omitted_pair_prefix": "295687831/2050312500",
+        "complete_pair_remainder": "15137977/16402500000",
+        "raw_omitted_diagonal_prefix": "52640938/512578125",
+        "complete_diagonal_remainder": "325621/4100625000"
+      }
+    ]
+  },
+  "complete_positive7_partition": {
+    "old_raw_complete_assigned_pair_cap": "45/32",
+    "old_raw_complete_assigned_square_cap": "57/16",
+    "old_raw_complete_assigned_diagonal_cap": "3/4",
+    "complete_same_depth_weight": "1/5",
+    "complete_cross_depth_weight": "1/30",
+    "old_PZZ": "2/5",
+    "complete_tail_checks": [
+      {
+        "maximum_seven_depth": 1,
+        "original_label_count": 20,
+        "direct_distinct_pair_cap_sum": "21499/94500",
+        "finite_same_depth_weight": "6/35",
+        "finite_cross_depth_weight": 0,
+        "remaining_same_depth_weight": "1/35",
+        "remaining_cross_depth_weight": "1/30"
+      },
+      {
+        "maximum_seven_depth": 3,
+        "original_label_count": 60,
+        "direct_distinct_pair_cap_sum": "1433821/3858750",
+        "finite_same_depth_weight": "342/1715",
+        "finite_cross_depth_weight": "54/1715",
+        "remaining_same_depth_weight": "1/1715",
+        "remaining_cross_depth_weight": "19/10290"
+      },
+      {
+        "maximum_seven_depth": 7,
+        "original_label_count": 140,
+        "direct_distinct_pair_cap_sum": "1052343667/2779457625",
+        "finite_same_depth_weight": "823542/4117715",
+        "finite_cross_depth_weight": "27450/823543",
+        "remaining_same_depth_weight": "1/4117715",
+        "remaining_cross_depth_weight": "43/24706290"
+      }
+    ]
+  },
+  "complete_PZZ_upper": "3893/10800",
+  "complete_POO_upper": "111/800",
+  "complete_POZ_upper": "121/720",
+  "complete_survivor_tail_distinct_pairs": "14413/21600",
+  "complete_survivor_tail_square": "3391/2160",
+  "scope": "Fresh actual aligned source bounds. Numerical saturated raw moment maxima are not reused. All finite heights pass through complete positive geometric tails. No source realization of LP maxima, full403 consumer, explicit neighborhood or unrestricted resolution."
+}

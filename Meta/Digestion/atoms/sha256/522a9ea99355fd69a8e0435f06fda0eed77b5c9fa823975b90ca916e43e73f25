@@ -1,0 +1,36 @@
+**推论 44.5（生成元、非对角块和矩形交织）。** 定义
+$$G=-h^{-1}\log A,\qquad C_c=FCF^*,\qquad c_0=-\log b/h>0.$$
+有限谱演算给 $C,C_c,G\succeq c_0I$。对任意正定 $X$，
+$$\log X=\int_0^\infty\left((1+u)^{-1}I-(X+uI)^{-1}\right)du.$$
+该积分在零端有界，远端为 $O(u^{-2})$；它来自每个正标量的初等积分并在有限谱上逐项相加。于是同一截断积分中常数项消去，给
+$$C_c-G=h^{-1}\int_0^\infty D(u)\,du\succeq0,$$
+$$\boxed{\|C_c-G\|\le\frac{\delta}{2ha^2},\qquad0\preceq C_c-G.}$$
+这里使用 $\int_0^\infty(a+u)^{-3}du=1/(2a^2)$。又 $[P,R_u]=-R_u[P,S]R_u$，故
+$$[P,\log S]=\int_0^\infty R_u[P,S]R_u\,du.$$
+由自伴分块 $\|[P,C]\|=\|QCP\|$ 及 $\int_0^\infty(a+u)^{-2}du=1/a$，得到
+$$\boxed{\|QCP\|\le\frac{\sqrt\delta}{ha}.}$$
+这些是算子积分估计，单独引用标量对数 Lipschitz 性不构成该证明。
+
+单侧对数交织另有安全备选界。精确矩形 resolvent 恒等式为
+$$
+\boxed{
+F(S+uI_R)^{-1}-(A+uI_E)^{-1}F
+=-(A+uI_E)^{-1}FSQ(S+uI_R)^{-1}.
+}
+$$
+这是因为 $FS-AF=FSQ$。对数积分表示给
+$$
+F\log S-(\log A)F
+=\int_0^\infty
+(A+uI_E)^{-1}FSQ(S+uI_R)^{-1}\,du.
+$$
+由 $\int_0^\infty(a+u)^{-2}du=a^{-1}$ 得
+$$
+\|FC-GF\|\le\frac{\sqrt\delta}{ha}.
+$$
+对 $e^{-(t-s)G}Fe^{-sC}$ 求导，导数为 $e^{-(t-s)G}(GF-FC)e^{-sC}$。积分后右接 $F^*$；两个半群分别以 $c_0$ 衰减，所以得到
+$$
+\|Fe^{-tC}F^*-e^{-tG}\|
+\le \frac{t}{ha}b^{t/h}\sqrt\delta.
+$$
+

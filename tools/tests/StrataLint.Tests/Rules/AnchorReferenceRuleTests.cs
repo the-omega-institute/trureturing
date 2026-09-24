@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -67,11 +68,12 @@ public sealed class AnchorReferenceRuleTests
             ("D5/C.lean", [Target])));
 
     [Theory]
-    [InlineData("LeanInformationAudit.Syntax")]
-    [InlineData("LeanInformationAuditAnalysis.Probe")]
-    public void ImportClosureUsesInspectorSourceRootForTooling(string module)
+    [InlineData("tools/lean-inspector", "LeanInformationAudit.Syntax")]
+    [InlineData("tools/lean-inspector", "LeanInformationAuditAnalysis.Probe")]
+    [InlineData("tools/lean-inspector-interface", "LeanInformationAuditInterface.Syntax")]
+    public void ImportClosureUsesInspectorSourceRootForTooling(string sourceRoot, string module)
     {
-        var path = "tools/lean-inspector/" + module.Replace('.', '/') + ".lean";
+        var path = sourceRoot + "/" + module.Replace('.', '/') + ".lean";
         var report = Report(("D5/A.lean", [module]), (path, ["D5.B"]),
             ("D5/B.lean", [Target]));
         Assert.Equal(module, LeanImportClosure.ModuleName(RepoPath.CreateKnown(path)));
@@ -262,10 +264,9 @@ public sealed class AnchorReferenceRuleTests
             current[changedPath] += "-- changed\n";
         }
 
-        var policy = RegistryLoadAssert.Accepted(RegistryPolicyCompiler.Compile(
-            new RegistrySyntax(1, [], [], [],
-                [new ArtifactKindSyntax("lean", "lean-module", ["module"], ["formal"])]),
-            [new DomainSyntax("Carrier", "S0", "Synthetic carrier")])).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var changes = RawChangeSet.CreateWithKinds(
             [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
         var context = DeltaRuleContext.Create(

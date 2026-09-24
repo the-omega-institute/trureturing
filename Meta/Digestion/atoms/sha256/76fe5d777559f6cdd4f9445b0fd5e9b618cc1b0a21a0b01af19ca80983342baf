@@ -1,0 +1,17 @@
+### 16.3 先压状态还是先压协议
+
+也可以先对原状态取商，再把在状态类上相同的协议取商；或者反过来先压协议，再压状态。这里每个第二阶段等价关系都由同一个 $E$ 的代表无关评价定义，而不是任意另选一个商。则存在保持代表元的规范双射，使两种顺序下的最终评价相同：
+
+$$
+\boxed{
+\text{state-first quotient}
+\cong
+\text{protocol-first quotient},
+\qquad
+\bar E_{S\to P}=\bar E_{P\to S}.
+}
+\tag{16.5}
+$$
+
+`StateProtocolQuotientOrderCommutation.state_protocol_quotient_order_commutes` 给出这个交换的精确商构造、代表元公式和评价等式。它说明“空间切面先固定，时间协议后压缩”与“先合并等效协议，再压缩状态”不是两个不同的整体，只是同一双侧关系的两种消元顺序。
+

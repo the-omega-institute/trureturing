@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5104007a0ec141b11177aa6b756ba4e9e2d85aca619ce188cd1dbea02725fc9c
+  normalized_sha256: sha256:5104007a0ec141b11177aa6b756ba4e9e2d85aca619ce188cd1dbea02725fc9c
+cas_ref: sha256:5104007a0ec141b11177aa6b756ba4e9e2d85aca619ce188cd1dbea02725fc9c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure upstream operator packaging: ContinuousMap and LinearMap.mkContinuous applied to the actual continuous heat paths and the already bounded lp multiplier give bounded linear maps H12->C([0,T],H12). ContinuousMap.norm_le and lp.norm_mapCLM_le retain d_j*nu^(-j); the closed-submodule orthogonal restriction is identity on the proved image. No project GID contributes. Mathlib db584 closes the clause.'
+    previous_atom_id: 7d027a03602896d219e60d07388c04621438e07f8c8215766d43a694d9dd2137
+    next_atom_id: 4449ee672b45b53d9a20e3549be523eef184f77f79dee1ff30cc7aa634727bc9

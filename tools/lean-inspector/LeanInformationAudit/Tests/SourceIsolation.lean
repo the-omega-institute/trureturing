@@ -10,7 +10,7 @@ def withPrivateSources [Monad m] [MonadEnv m] [MonadFinally m] [MonadLiftT IO m]
     (action : m α) : m α := do
   let original ← IO.Process.getCurrentDir
   let env ← getEnv
-  let mut paths := TemplateAudit.policyPaths
+  let mut paths := #["lean-report-inputs.json"]
   for name in env.header.moduleNames.push env.header.mainModule do
     if name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
         name == `Trureturing then

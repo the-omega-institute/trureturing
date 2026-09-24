@@ -1,0 +1,24 @@
+### 50.23 相位占优的路径与全部极限代价
+
+设 $\tau_j>0$、$\tau_j\to0$、$\theta_j\to0$、$\theta_j\ne0$，并且
+$|\theta_j|/\tau_j\to\infty$。则
+$$
+\boxed{F_A(\tau_j,\theta_j)\longrightarrow2c.}
+\tag{50.60}
+$$
+上界沿用有限头部、远端权重至多 $c+\delta$ 的拆分，每个字符差至多二，故上极限至多 $2c$。对下界，取
+$m_j=\lfloor\pi/|\theta_j|\rfloor$。此时 $m_j\to\infty$、$m_j|\theta_j|\to\pi$，而
+$m_j\tau_j\le\pi\tau_j/|\theta_j|\to0$。因此对应字符趋于 $-1$，（50.54）的该项趋于 $2c$。$\square$
+
+综合（50.59）与（50.60）并用 $F_A$ 对相位参数的偶性，对任意最终有 $\tau_j>0$ 且满足 $\tau_j\to0$、$\theta_j\to0$ 及
+$|\theta_j|/\tau_j\to\kappa\in[0,\infty]$ 的路径（允许 $\theta_j\equiv0$），都有
+$$
+\boxed{F_A(\tau_j,\theta_j)\to cG(\kappa).}
+\tag{50.61}
+$$
+每个 $d\in[c,2c]$ 都可由一条实际来源路径得到：先任选正序列 $\tau_j>0$、$\tau_j\to0$；$d<2c$ 时取唯一的有限 $\kappa\ge0$ 使 $cG(\kappa)=d$，并令 $\theta_j=\kappa\tau_j$；$d=2c$ 时可取 $\theta_j=\sqrt{\tau_j}$。这些正阻尼路径均满足 $\theta_j\to0$，在每个固定有限坐标上都收敛到同一相位数组。
+
+对任意 $\tau>0$，令（50.54）中的 $m\to\infty$，得到 $F_A(\tau,\theta)\ge c$。对每条最终满足 $\tau_j>0$ 且趋向 $(0,0)$ 的参数路径，有限头部趋零、远端权重至多 $c+\delta$，故上极限至多 $2c$。因此，只要这条路径的距离值本身有极限，其值必在 $[c,2c]$；结合以上构造，这正是全部可能的距离极限，而不必先假设比值有极限。无最终正阻尼条件的常值无阻尼路径不在此句范围内。
+
+这些是**距离值**的不同极限，不是同一个范数收敛过程拥有多个极限对象。对上述最终正阻尼且趋向 $(0,0)$ 的路径，不存在范数收敛至目标，因为所有极限距离至少为 $c>0$。Context49.13 式（49.45）中的径向全幅度缩小 $(1-\varepsilon)a^\zeta$ 与本稿的逐级阻尼 $D_{e^{-\tau}}a^\zeta$ 也是不同路径；不能因两者距离极限同为 $c$ 就将两种作用认作相同。
+

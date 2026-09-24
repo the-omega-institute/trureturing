@@ -1,0 +1,63 @@
+**零下确界与闭包候选。**
+
+现在令 $\Theta\ne\varnothing$，仍不假设闭或紧；以下下确界均在这个非空类上取值。以同一相容目标定义
+
+$$
+e_n=\inf_{\theta\in\Theta}D(q_n(\theta),\xi_n),\qquad n\ge1,
+$$
+
+闭包取有限维来源空间的迹范数拓扑。则
+
+$$
+\boxed{
+\forall n\ge1,\ e_n=0
+\iff
+\theta_{\rm cand}\in\overline\Theta
+\ \land\ \forall n\ge1,\ q_n(\theta_{\rm cand})=\xi_n.
+}
+\tag{45.16}
+$$
+
+证明：固定 $n$，取 $\theta_k\in\Theta$ 使该层距离趋零。逆在第一层上的等式、（45.5）及对自伴差的偏迹收缩给
+
+$$
+\frac12\|\theta_k-\theta_{\rm cand}\|_1
+\le c^{-1}D(q_1(\theta_k),\xi_1)
+\le c^{-1}D(q_n(\theta_k),\xi_n)\longrightarrow0.
+\tag{45.17}
+$$
+
+即使尚未知道候选正，左侧的自伴差迹范数仍良定；取 $n=1$ 的逼近序列就证明候选是密度极限并属于 $\overline\Theta$。对任意固定 $n$，相同估计与通道连续性给 $q_n(\theta_{\rm cand})=\xi_n$。反向用 $\Theta$ 中趋于候选的序列及通道收缩，即得每层下确界为零。这个证明直接利用有界线性逆，不使用来源类的紧性。
+
+明确反例取 $J=\mathbb C$，声明允许的来源类为
+
+$$
+\Theta=\{\theta\in\mathcal D_2:
+\langle0|\theta|0\rangle>0\},
+\qquad \theta_{\rm cand}=|1\rangle\langle1|,
+\qquad \xi_n=\Gamma_n(\theta_{\rm cand}).
+\tag{45.18}
+$$
+
+这是密度空间中的相对开、非闭类，候选不在其中。对 $0<\varepsilon<1$，
+
+$$
+\theta_\varepsilon
+=\varepsilon|0\rangle\langle0|
+ +(1-\varepsilon)|1\rangle\langle1|\in\Theta,
+\qquad D(\theta_\varepsilon,\theta_{\rm cand})=\varepsilon.
+$$
+
+每层通道收缩给 $D(q_n(\theta_\varepsilon),\xi_n)\le\varepsilon$，故所有 $e_n=0$。若任何 $n\ge1$ 层有精确合法见证，偏迹到第一层和单射性便迫使该见证等于 $\theta_{\rm cand}$，矛盾。所以没有精确第一层见证，也没有共同合法来源。
+
+本卷式（41.35）还给这两份实际来源的完成态距离等于来源距离，即
+
+$$
+\tfrac12\|\omega_{\theta_\varepsilon}-\omega_{\theta_{\rm cand}}\|
+=\varepsilon.
+$$
+
+因此完成距离的下确界也为零而不达到。该用法只应用已有的实际来源对完成范数等式；没有断言任意相容目标自动属于实际来源像。可以共同张量固定参考态得到带参考的同类反例，但一般任务中的已知联合参考关系仍须保留。
+
+空来源类的精确判据已由（45.14）—（45.15）处理；这里不为它定义实数值的 $e_n$ 或声称极小值。若另采用扩展实数距离约定，应取 $\inf\varnothing=+\infty$，不能把它当作零下确界情形。
+

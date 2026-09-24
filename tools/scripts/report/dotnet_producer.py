@@ -16,7 +16,7 @@ PROJECT_MANIFEST = "Meta/engineering-projects.json"
 PROJECT_FIELDS = {"path", "assembly", "role", "ci", "include", "exclude", "references",
                   "owner", "owned_test_assembly", "test_partition",
                   "root_namespace", "namespace_exclude", "global_namespace_exceptions",
-                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment"}
+                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"}
 TEST_ROLES = {"owned-test", "cross-cutting-test"}
 
 
@@ -43,10 +43,15 @@ def registered_path(value, *, pattern=False):
 
 
 def source_glob(value):
-    # Same declared glob language as FileMapGlob: *, ** and optional **/.
     registered_path(value, pattern=True)
     if not value.endswith(".cs"):
         raise ValueError(f"invalid registered source pattern: {value}")
+    return registered_glob(value)
+
+
+def registered_glob(value):
+    # Same declared glob language as FileMapGlob: *, ** and optional **/.
+    registered_path(value, pattern=True)
     expression = re.escape(value).replace(r"\*\*/", "(?:.*/)?").replace(r"\*\*", ".*").replace(r"\*", "[^/]*")
     return re.compile(expression + r"\Z")
 
@@ -113,7 +118,7 @@ def project_registry(root):
                     else:
                         source_glob(value)
             # Execution declarations are validated but never enter compile_projection.
-            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment"):
+            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"):
                 values = row[field]
                 if field != "build_inputs" and role not in TEST_ROLES:
                     if values is not None:
@@ -126,7 +131,11 @@ def project_registry(root):
                         if not re.fullmatch(r"[A-Z_][A-Z0-9_]*", value):
                             raise ValueError(f"invalid registered execution environment: {path}: {value}")
                     else:
-                        registered_path(value, pattern=True)
+                        registered_path(value, pattern=field != "execution_filemap_paths")
+            if row["execution_filemap_paths"] and (
+                    not any(registered_glob(pattern).fullmatch("Meta/FILEMAP.toml") for pattern in row["execution_inputs"])
+                    or any(registered_glob(pattern).fullmatch("Meta/FILEMAP.toml") for pattern in row["execution_excludes"])):
+                raise ValueError(f"execution_filemap_paths require FILEMAP runtime input: {path}")
             namespace = row["root_namespace"]
             if not isinstance(namespace, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*", namespace):
                 raise ValueError(f"invalid registered root_namespace: {path}")
@@ -270,7 +279,15 @@ class SeedRegistrationError(ValueError):
     """Registration errors block preparation; cache transport errors do not."""
 
 
-def seed_registration(root, sdk_root=None):
+def resolved_sdk_version(root):
+    """The SDK the dotnet host resolves for global.json; only its major version is pinned."""
+    result = subprocess.run(["dotnet", "--version"], cwd=root, text=True, capture_output=True)
+    if result.returncode or not result.stdout.strip():
+        raise ValueError("dotnet did not resolve an SDK for global.json: " + result.stderr.strip())
+    return result.stdout.strip()
+
+
+def seed_registration(root, sdk_root=None, resolved=None):
     """Read declared paths only. DOTNET_ROOT is a supplied location, not a probe."""
     def unique_fields(pairs):
         fields = {}
@@ -289,12 +306,17 @@ def seed_registration(root, sdk_root=None):
         version = json.loads((root / "global.json").read_text(), object_pairs_hook=unique_fields)["sdk"]["version"]
         if not isinstance(version, str) or version != registration["sdk_version"]:
             raise ValueError("judge seed SDK registration differs from global.json")
+        resolved = resolved or resolved_sdk_version(root)
+        if resolved.split(".")[0] != version.split(".")[0]:
+            raise ValueError(f"resolved SDK major version differs from the registered SDK: {resolved} vs {version}")
+        # Later stages bind the SDK actually used; compiler identity hashes its materials.
+        registration = dict(registration, sdk_version=resolved)
         if not registration["sdk_files"] or registration["target_framework"] != "net10.0":
             raise ValueError("missing SDK materials or unsupported registered framework")
         location = sdk_root or os.environ.get("DOTNET_ROOT")
         if not location:
             raise ValueError("supply DOTNET_ROOT for the pinned SDK")
-        sdk = pathlib.Path(location).resolve() / "sdk" / version
+        sdk = pathlib.Path(location).resolve() / "sdk" / resolved
 
         def expand(base, patterns):
             if not isinstance(patterns, list) or any(not isinstance(item, str) or not item or

@@ -14,18 +14,26 @@ public sealed class RepositorySymlinkTests
         AddSkillAliases(repository.Path);
         const string fragment = "Meta/FILEMAP.skills.toml";
         var original = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
-        var declarations = "schema_version = 2\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..];
+        var declarations = "schema_version = 3\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..];
         Write(repository.Path, fragment, declarations);
         Write(repository.Path, "Meta/FILEMAP.toml",
-            "schema_version = 2\ninclude = [\"FILEMAP.skills.toml\"]\n");
+            "schema_version = 3\ninclude = [\"FILEMAP.skills.toml\"]\n");
         Commit(repository.Path);
 
-        Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadCurrent(repository.Path), ".codex/skills"));
+        var full = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var visited = new List<RawRepositoryEntry>();
+        GitRepositorySnapshotReader.VisitCurrent(repository.Path, visited.Add);
+        Assert.Equal(full.Entries.Select(entry => entry.Path), visited.Select(entry => entry.Path));
+        foreach (var entry in full.Entries)
+            Assert.Equal<byte>(entry.Bytes, visited.Single(other => other.Path == entry.Path).Bytes);
+        Assert.Equal("../skills", Text(full, ".codex/skills"));
         Write(repository.Path, fragment, declarations.Replace("../skills", "../missing", StringComparison.Ordinal));
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.VisitCurrent(repository.Path, _ => { }));
         Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
         File.Delete(Path.Combine(repository.Path, fragment));
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.VisitCurrent(repository.Path, _ => { }));
         Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
     }
 
@@ -42,13 +50,17 @@ public sealed class RepositorySymlinkTests
         Write(repository.Path, targetPath, "historical target\n");
         Declare(repository.Path, ("alias", "skills", kind));
         Link(repository.Path, "alias", "skills");
+        var schemaTwo = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"))
+            .Replace("schema_version = 3", "schema_version = 2", StringComparison.Ordinal);
+        Write(repository.Path, "Meta/FILEMAP.toml", schemaTwo);
         Commit(repository.Path);
         var historicalRevision = Git(repository.Path, "rev-parse", "HEAD").Trim();
         var historicalManifest = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
         var currentManifest = inline
             ? $$"""
-                schema_version = 4
+                schema_version = 5
                 resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 files = [
                   { pattern = "alias", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "skills", kind = "{{kind}}" } },
                 ]
@@ -58,12 +70,12 @@ public sealed class RepositorySymlinkTests
                 known_violation_count = 0
                 status = "closed"
                 """ + "\n"
-            : historicalManifest.Replace("schema_version = 2", "schema_version = 4\nresources = []", StringComparison.Ordinal)
+            : historicalManifest.Replace("schema_version = 2", "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }", StringComparison.Ordinal)
                 .Replace("[[files]]\n", "[[files]]\nrequire = []\n", StringComparison.Ordinal);
         Write(repository.Path, "Meta/FILEMAP.toml", currentManifest);
         Write(repository.Path, targetPath, "current target\n");
         Assert.StartsWith("schema_version = 2\n", historicalManifest, StringComparison.Ordinal);
-        Assert.StartsWith("schema_version = 4\n", currentManifest, StringComparison.Ordinal);
+        Assert.StartsWith("schema_version = 5\n", currentManifest, StringComparison.Ordinal);
         var current = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
         var historical = GitRepositorySnapshotReader.ReadRevision(repository.Path, historicalRevision);
         Assert.Equal(currentManifest, Text(current, "Meta/FILEMAP.toml"));
@@ -352,7 +364,7 @@ public sealed class RepositorySymlinkTests
     internal static void Declare(string root, params (string Path, string Target, string Kind)[] links)
     {
         var text = """
-            schema_version = 2
+            schema_version = 3
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"
@@ -400,6 +412,7 @@ public sealed class RepositorySymlinkTests
     private static void AssertBothReject(string root)
     {
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(root));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.VisitCurrent(root, _ => { }));
         Commit(root);
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadRevision(root, "HEAD"));
     }

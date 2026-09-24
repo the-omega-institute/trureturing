@@ -1,0 +1,16 @@
+**定理 16.4（对数分支、延拓和截断尾界）。** (a) 在上述收敛圆盘，$\mathscr L$ 是 $-\log_0\det(I-zW)$，下标零表示取在 $z=0$ 值为零的解析对数；不自动等于整个盘上的复主值。证明形式等式在绝对域给解析等式及指数关系，原点值固定分支。取 $W=I_3$、$z=4/5+2i/5$，$|z|^2=4/5<1$，且 $\theta=\arg(1-z)=-\arctan(2)\in(-\pi/2,-\pi/3)$，因为 $2>\sqrt3$。于是 $-3\pi/2<3\theta<-\pi$，行列式 $(1-z)^3$ 的主值辐角为 $3\theta+2\pi$。以 $\log(1-z)$ 表示从 $z=0$ 值为零出发的解析分支、$\operatorname{Log}$ 表示复主值对数，便有 $\operatorname{Log}\det(I-zW)=3\log(1-z)+2\pi i$，从而 $-\operatorname{Log}\det(I-zW)=\mathscr L(z)-2\pi i$。固定参数的 $\det(I-zW)^{-1}$ 为有理亚纯延拓，域外有定义不等于原迹级数或轨道乘积仍收敛。`GoldenTraceLog.matrix_trace_log` 与 `golden_local` 的专门二阶分支条件不能无条件扩张到一般矩阵。
+
+(b) 若诱导范数 $\|W\|\le a$，记 $q=|z|a<1$，则
+$$
+\left\|H(I-zW)^{-1}B_{\rm in}-\sum_{n=0}^Nz^nHW^nB_{\rm in}\right\|
+\le\|H\|\|B_{\rm in}\|\frac{q^{N+1}}{1-q}.
+$$
+证明尾项逐项范数不超过 $\|H\|\|B_{\rm in}\|q^n$，求几何尾即得。该界是端口 Neumann 尾界，不把固定端口增益忽略。$\square$
+
+(c) 维数为 $d$ 时
+$$
+\left|\mathscr L(z)-\sum_{n=1}^N\frac{z^n}{n}\operatorname{tr}W^n\right|
+\le \frac{d q^{N+1}}{(N+1)(1-q)}.
+$$
+证明 $|\operatorname{tr}W^n|\le d\|W^n\|\le da^n$，对 $n>N$ 用 $1/n\le1/(N+1)$ 再求几何尾。$q\uparrow1$ 时这些估计不一致，$d$ 增长时也不统一，故不供应无限图的统一迹类或核极限。$\square$
+

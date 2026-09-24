@@ -1,0 +1,23 @@
+**约定 32.5（关系接口的依赖、来源及未解边界）。** 第30—32节在固定校准准备族内连接同源标量流、潜在局部钟、已获联合顺序与参数任务。命题21.7的双钟单对反例在定理30.3中接到实际 PDE 的完整初始流；命题22.2—22.3关于未知钟、记录核、推进操作及实际费用的区别仍保留。这里变动的是允许世界中的潜在登记，不能用一次共同已知坐标变换消除，也不能由被动流碰撞推出受驱动实验的碰撞。实际正黏性解及时间／参数正则性由恢复卷定理27.2—27.4承担；共同图逆、三阶识别、一次混合 Taylor 余项由本卷定理28.2—引理28.4承担；一份正对纤维由命题26.4及推论28.5承担；两位置解析逆和残差比较由定理29.3—29.4承担。$\alpha$ 的符号、绝对尺度和剪切退化仍按命题28.6，准备场任务的因子化仍按推论28.7的既有接口，不在这里另造一般恢复定理。
+
+这些源推导属于仓内综合（repo-derived）。链式法则、非零导数的逆匹配、积分 Taylor、中值估计、两点三角下界及稠密顺序切割均为成熟机制；逆函数与 Taylor 的具体文献／上游入口已在定理28.2、引理28.4列明，输出导数与有限记录的辨识方法沿用推论28.7、定理29.2所列 Sontag 文献。恢复卷引理15.8只供应其专门共享正半群迹的匹配，不承担任意标记的存在。本节增加的是这些机制在实际异步 PDE 取得合同下的适用前提、完整钟／误差见证、共同逆域裕量和误差运输，未提出一般原创性或新的全 PDE 正则性主张。
+
+数学接口与待解条件可写为如下关系图；`derived` 只指本节在明列假设下的普通推导，`open` 指仍未解决的问题，不表示形式化账目状态。
+
+```text
+actual prepared source + complete retained archive
+  +-- separate local streams ----------> clock-fiber collisions       [derived]
+  +-- registration jets ---------------> third-jet inverse            [derived]
+  +-- two certified paired events -----> local finite-record inverse  [derived]
+  +-- joint noise / timing allowances -> cubic two-world lower bound  [derived]
+  +-- exact dense cross-port order ----> pairing on actual overlap    [derived]
+  +-- acquired finite order brackets --> interval / diameter bounds   [derived]
+  +-- independent unbounded clocks ----> global-history invariants    [open]
+  +-- specified stochastic timing law -> law-specific identification [open]
+  +-- fixed acquisition cost model ----> optimal protocol / constants [open]
+```
+
+仍须分别解决：给定更丰富实际档案是否允许所展示的同一完整竞争世界；独立无界钟的全时间不变量；特定相关定时噪声定律下的精确或稳定识别；固定费用模型下的最优同步协议、常数及资源；不在实际重叠域内的恢复。有限窗上可延长钟并不履行这些问题，这些局部观察结论不扩展其 PDE 适用域。
+
+空间复相位与实际已获初始参考、参考共用误差，以及独立未知增益是另列的接口问题：本节始终固定真实端口方向、相位和有符号 $\alpha$，不以同步数据代替相位校准，不丢弃已获初始参考，也不从本节声称含噪校准逆已解决。整体关系统一的目标还包括空间、边界、记忆及其允许后续实验的保真运输；本节只完成这一固定时钟接口的条件推导，不给物理时空密度、时间涌现、任意流体初态或整个研究目标的结论。
+

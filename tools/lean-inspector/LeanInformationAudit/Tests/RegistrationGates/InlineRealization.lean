@@ -1,3 +1,4 @@
+import LeanInformationAudit.Tests.RegistrationGates.InlineProvenanceWire
 import LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.SourceIsolation
@@ -156,12 +157,12 @@ run_meta LeanInformationAudit.Tests.withPrivateSources do
     |>.map (·.occurrence.key)
   let wires ← TemplateBinding.reportJson #[(root, registered)]
   let some wire := wires[0]? | throwError "inline registration report missing"
-  let .ok wireInputs := wire.getObjValAs? (Array Json) "inputs"
-    | throwError "inline registration report inputs missing"
-  unless wireInputs.any fun input =>
-      (input.getObjValAs? String "path").toOption == some helperPath do
-    throwError "inline proof helper absent from report inputs"
+  unless (wire.getObjVal? "inputs").toOption.isNone do
+    throwError "report retains untraced source hashes"
   logInfo m!"INLINE_PROVENANCE_REPORT={wire.compress}"
+  unless wire.compress == LeanInformationAudit.Tests.InlineProvenanceWire.canonical do
+    throwError ("[FAIL] INLINE_PROVENANCE_WIRE_MISMATCH: set InlineProvenanceWire.canonical to " ++
+      "the JSON after INLINE_PROVENANCE_REPORT= in this module's build log" : String)
   let path : System.FilePath := helperPath
   let original ← IO.FS.readBinFile path
   try

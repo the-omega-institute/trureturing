@@ -1,0 +1,44 @@
+**命题 3.18（固定能隙带的统一界）。** 固定 $0<g\le M<\infty$，限制生成元族的每个非零能隙满足
+$$
+g\le|\lambda-\mu|\le M.
+\tag{TM.430}
+$$
+在无理时刻比条件下，$\chi$ 连续，并在紧集
+$[-M,-g]\cup[g,M]$ 上处处严格模小于一。因此最大值
+$$
+q_{\nu,g,M}
+=\max_{g\le|\Delta|\le M}|\chi(\Delta)|<1
+\tag{TM.431}
+$$
+存在。整个受限生成元族统一满足
+$$
+d_\diamond\!\left((\mathcal C_\nu^H)^k,\mathcal P_H\right)
+\le
+\min\!\left\{1,\frac{r-1}{2}q_{\nu,g,M}^k\right\}.
+\tag{TM.432}
+$$
+若同时限制 $r\le r_0$，可将右侧的 $r$ 换成 $r_0$，取得对该整族的统一常数。
+
+该结论依赖实际能隙带。只给能谱宽度上界而允许非零能隙趋零，因 $\chi(0)=1$ 不能得到相同的严格统一率；只给正下界 $g$ 而不给上界 $M$，则会遇到后文的高频近共振。也可用直接的统一非共振条件替代整个能隙带条件；带宽只是一个充分条件。
+
+一种可检验的相位分离证书是
+$$
+d_j(\Delta)
+=\operatorname{dist}\!\left(\frac{\tau_j\Delta}{2\pi},\mathbb Z\right)
+\in[0,1/2],\qquad j=1,2.
+$$
+由 $\sin(\pi u)\ge2u$ 对 $0\le u\le1/2$ 成立，式（TM.422）推出
+$$
+1-|\chi(\Delta)|^2
+\ge16p_0\bigl(p_1d_1(\Delta)^2+p_2d_2(\Delta)^2\bigr).
+\tag{TM.433}
+$$
+若全部相关能隙满足 $\max(d_1,d_2)\ge\eta>0$，则
+$$
+|\chi(\Delta)|^k
+\le
+\exp\!\left[-8k\,p_0\min(p_1,p_2)\eta^2\right].
+\tag{TM.434}
+$$
+因此有限步骤成本由共同相位分离的裕度控制；仅知不存在精确别名，还未提供这份裕度。
+

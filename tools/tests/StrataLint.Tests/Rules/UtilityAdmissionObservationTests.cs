@@ -156,6 +156,69 @@ public sealed class UtilityAdmissionObservationTests
     }
 
     [Fact]
+    public void SurvivingFrozenModuleWithRemovedUtilityStillBlocksRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("UTILITY-RATCHET module=D5/S0/Carrier/Ring.lean", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SurvivingFrozenModuleWithMalformedHeaderStillBlocksRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace(
+            "   anchors: []\n",
+            "   anchors: []\n   utility:none\n",
+            StringComparison.Ordinal);
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("UTILITY-RATCHET module=D5/S0/Carrier/Ring.lean", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredFrozenModuleDoesNotTriggerUtilityRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+        fixture.Files.Remove(RuleFixture.RingPath);
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.CreateWithKinds(
+            [(RuleFixture.RingPath, RawChangeKind.Deleted)]));
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics;
+        Assert.DoesNotContain(
+            diagnostics,
+            item => item.Message.StartsWith("UTILITY-RATCHET ", StringComparison.Ordinal));
+        Assert.False(UtilityAdmissionRule.IsAffectedBy(context));
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
     public void MalformedAddedFrozenStatePathFailsClosed()
     {
         const string malformed = "Golden/Frozen/state/not-a-module.json";
