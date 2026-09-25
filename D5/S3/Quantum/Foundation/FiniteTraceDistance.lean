@@ -373,7 +373,7 @@ private lemma traceNorm_eq_sum_sqrt_eigenvalues (A : Matrix n n ℂ) :
 
 /-- For square complex matrices, the trace norm is the maximum of `re (Tr[U * A])`
 over unitaries `U`. -/
-private theorem traceNorm_eq_max_re_tr_U (A : Matrix n n ℂ) :
+theorem traceNorm_eq_max_re_tr_U (A : Matrix n n ℂ) :
     IsGreatest {x : ℝ | ∃ U : unitaryGroup n ℂ, Complex.re ((U.val * A).trace) = x} (traceNorm A) := by
   classical
   let hH : (Aᴴ * A).IsHermitian := by
