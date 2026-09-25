@@ -95,3 +95,36 @@ criterion are `literature-attested`. The inspected sources do not supply
 the entire actual-model bridge. This is a bounded source comparison, not a
 global originality certificate; the statement asserts weak convergence,
 not convergence of actual moments or finite-sample posterior independence.
+
+# Microscopic windows and uniform anti-concentration
+
+[The posterior threshold volume, Chapter 37](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+uses the same local theorem in two roles. Applying it to the calibrated
+whole sum and the complementary sum removes the fixed-size conditioning
+on a window with a vanishing fraction of total auxiliary variance.
+Applying it to the window sum itself bounds every point probability by
+an absolute constant divided by its standard deviation. Counting the
+integers in a real interval gives a bound uniform in the interval's
+center. The exact posterior center can therefore be used directly,
+without transferring an unbounded mean through total variation. These
+local-probability and anti-concentration arguments are classical.
+
+The model-specific input is an actual central count group in a nonlattice
+score law. Its signal probability follows from Stirling's formula;
+exact untilting supplies a background contribution of the same leading
+order. The one- and two-row comparisons give concentration of the mixed
+group in both stationary experiments. Its auxiliary variance is of order
+q/lambda, whereas containment in a fixed-width score interval gives an
+o(q) upper bound for the entire shrinking window. The argument needs no
+relative shrinking-window density estimate and no exact asymptotic for
+the whole window variance.
+
+The resulting escape from every bounded interval at normalization
+q^(1/4), with exact posterior centering, is `repo-derived` ordinary
+mathematics. The elementary endpoint-continuity argument then excludes
+J1 tightness of the corresponding microscopic score-window process.
+This strengthens Chapter 33's single-row density obstruction. It does
+not contradict the capacity-indexed process limits or the macroscopic
+threshold-field limit, and it asserts no universal nonlattice tangent
+law or convergence of actual moments. The attribution of the auxiliary
+tools is not a global originality certificate for the model conclusion.
