@@ -1550,3 +1550,360 @@ $`5\rho q/4`$，而 $`K=2R\ge3\rho q/2`$，其中 $`2R\lt M`$ 最终成立。
 全规则下界给出 (24.4) 的另一侧，证明风险等式。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 非格点得分的显式 Hamming 风险系数
+
+**定义 25.1（第三累积量与阈值常数）。** 沿用定义 23.1 的实际平稳实验、
+固定参数、有限内在偏移及实际中心，另假设
+$`\log(1+r)/\log(1-r)\notin\mathbb Q`$。记
+
+```math
+h_\pm=\log(1\pm r),\qquad
+m_3=\frac{(1+r)h_+^3+(1-r)h_-^3}{2},\qquad
+A(z)=\frac{m_3(1-z^2)}{6v^{3/2}},\qquad
+k(z)=\log\frac{\varphi(z)}{\sqrt v\,\Phi(z)}.
+```
+
+式 (25.1)。
+
+**定理 25.2（固定基数后验与两种风险的下一项）。** 在定义 25.1 下，对每个
+$`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$ 和
+$`\xi\in\{\mathrm k,\mathrm o\}`$，有
+
+```math
+\begin{aligned}
+H_{\mathcal E,\mathrm u}^{\xi}
+ &=\Phi(z_M)+\frac{\varphi(z_M)}{\sqrt\lambda}
+       \left[A(z_M)+\frac1{\sqrt v}\right]+o(\lambda^{-1/2}),\\[0pt]
+H_{\mathcal E,q}^{\xi}
+ &=\Phi(z_M)+\frac{\varphi(z_M)}{\sqrt\lambda}
+       \left[A(z_M)+\frac{k(z_M)-\tfrac12\log\lambda}{\sqrt v}\right]
+       +o(\lambda^{-1/2}),\\[0pt]
+H_{\mathcal E,\mathrm u}^{\xi}-H_{\mathcal E,q}^{\xi}
+ &=\frac{\varphi(z_M)}{\sqrt{\lambda v}}
+       \left[\tfrac12\log\lambda+1-k(z_M)\right]+o(\lambda^{-1/2}).
+\end{aligned}
+```
+
+式 (25.2)。
+
+余项对真实支持一致；振幅、稀疏指数与偏移极限均固定。
+这里的无约束损失除以 $`q`$，恰好基数输出的损失除以 $`2q`$，
+所以第三行不比较两种规则的原始 Hamming 损失。
+不要求内在偏移以指定速率收敛，但不能在这些式子中把实际中心直接替换为其极限。
+本结论不包含格点相位系数、振幅趋于端点的统一余项或未知参数规则的显式系数。
+
+证明。先取已知正向，在任一固定真实支持下工作。仍记
+$`W=N_+\log((1+r)/(1-a))+N_-\log((1-r)/(1+a))`$、
+$`Z=h_+N_++h_-N_-`$。比较律下两类计数为独立 Poisson 变量，
+均值分别为 $`\lambda(1+b)/2,\lambda(1-b)/2`$，其中信号取
+$`b=r`$，背景取 $`b=-a`$。实际观测的一行、两行分布使用 (21.5)，
+以下固定 $`D=8`$、$`\delta_M=\ell^3/n`$。
+
+首先记录同一实际支持下的有界矩转移。对各行的任意函数
+$`0\le f_x\le1`$，令 $`m_x`$ 为相应一行比较律的期望，并令
+$`\mu=\sum_xm_x`$。对一行事件积分，对不同行的两个事件作二重积分，得到
+
+```math
+\left|\mathbb E_S\sum_x f_x-\mu\right|
+ \le C\delta_M\mu+CM^{1-D},\qquad
+\mathrm{Var}_S\!\left(\sum_xf_x\right)
+ \le C\left(\mu+\delta_M\mu^2+M^{2-D}\right).
+```
+
+式 (25.3)。
+
+第二式的对角项用平方不超过自身；非对角项的误差为
+$`C\delta_Mm_xm_y+CM^{-D}`$。这同样适用于信号与背景的混合求和，
+不将实际行视为独立。置
+
+```math
+e_M=q^{-1}+\delta_M+\frac{M^{2-D}}{q^2}=o(\lambda^{-1/2}).
+```
+
+式 (25.4)。
+
+接着在比较律中取出显式系数。非格点一阶 Edgeworth 展开是既有概率工具；
+所用连续时间版本见
+[Ferré–Hervé–Ledoux 定理 4.3–4.4](../../../Library/Dynamics/ferre2012limit.md)。
+这里的驱动状态空间只有一点，加性分量是两跳幅复合 Poisson 过程。
+其中心化分量满足该文平稳、谱隙与任意有限阶矩条件；单位时间增量在零和两个跳幅上
+均有正质量，跳幅比无理正好排除格点。均值、方差和第三累积量依次为
+$`\lambda\phi,\lambda v,\lambda m_3`$，其中第三项使用跳幅的原始三阶矩。
+因而对所有实数中心一致有
+
+```math
+Q_r\!\left\{\frac{Z-\lambda\phi}{\sqrt{\lambda v}}\le x\right\}
+ =\Phi(x)+\frac{\varphi(x)A(x)}{\sqrt\lambda}+o(\lambda^{-1/2}).
+```
+
+式 (25.5)。
+
+为明确此处不增加强 Cramér 条件，可直接核对该经典 Fourier 论证的特例。
+标准化特征函数的对数在零点附近为
+$`-u^2/2+m_3(iu)^3/(6v^{3/2}\sqrt\lambda)+O(u^4/\lambda)`$。
+在 $`|u|\le\lambda^{1/12}`$ 上，将特征函数误差除以
+$`|u|`$ 后积分为 $`O(\lambda^{-1})`$；到足够小的固定倍数
+$`\eta\sqrt\lambda`$ 为止，余下部分由高斯衰减控制。
+对任意固定 $`C\gt\eta`$，原始频率所在的紧环上
+
+```math
+\frac{1+r}{2}(1-\cos(th_+))+
+\frac{1-r}{2}(1-\cos(th_-))\gt0\qquad(t\ne0),
+```
+
+式 (25.6)。
+
+故从该处到 $`C\sqrt\lambda`$ 的积分指数衰减。
+有界密度的平滑不等式剩余项为 $`O(1/(C\sqrt\lambda))`$。
+先令样本尺度趋于无穷，再令固定的 $`C`$ 趋于无穷，便给出 (25.5) 的一致余项。
+Edgeworth 密度在极端尾部可能有符号；取其正部并归一化只改变指数小的高斯尾质量，
+同样可使用概率分布版本的平滑不等式。论证对每个实际实数时间成立，
+没有假设特征函数在所有大频率上一致远离一。
+
+由 (25.5) 连续的近似函数，最大原子质量为 $`o(\lambda^{-1/2})`$。
+在两个距离固定的端点相减，得到任意固定 $`h\gt0`$ 的一致区间估计
+
+```math
+\sup_t\left|
+\sqrt\lambda\,Q_r\{t\le Z\lt t+h\}
+-\frac h{\sqrt v}\varphi\!\left(\frac{t-\lambda\phi}{\sqrt{\lambda v}}\right)
+\right|\longrightarrow0.
+```
+
+式 (25.7)。
+
+这也与 [Stone 的非格点局部极限定理](../../../Library/Dynamics/stone1967local.md)
+一致，所述对象为区间概率而非密度。
+在计数截断事件上，$`|W-Z|\le Ca\ell=o(1)`$，补集概率可取为
+$`O(M^{-D})`$。先用任意固定宽度的区间夹逼，再将宽度趋零，
+由 (25.5)–(25.7) 可知用补偿得分替换未补偿得分的分布函数误差为
+$`o(\lambda^{-1/2})`$；区间估计及最大原子结论也一并转移。
+这不要求变化中的补偿跳幅比始终无理。
+
+令 $`z_t=(t-\lambda\phi)/\sqrt{\lambda v}`$。两比较律满足精确恒等式
+$`dQ_r=e^W dQ_{-a}`$，因为总 Poisson 强度相同。
+将上尾分成固定宽度区间，在有限段用 (25.7)，其余用一致区间上界与几何级数，
+再令区间宽度趋零，即得到
+
+```math
+\begin{aligned}
+Q_r\{W\lt t\}
+ &=\Phi(z_t)+\frac{\varphi(z_t)A(z_t)}{\sqrt\lambda}
+       +o(\lambda^{-1/2}),\\[0pt]
+Q_{-a}\{W\ge t\}
+ &=e^{-t}\frac{\varphi(z_t)}{\sqrt{\lambda v}}(1+o(1)),
+ \qquad t=\tau_M+O(\log\lambda).
+\end{aligned}
+```
+
+式 (25.8)。
+
+尾常数中的一来自 $`\int_0^\infty e^{-u}\,du=1`$。
+一行转移中的相对误差与加性误差在本节精度下均可忽略。
+特别地，对固定 $`\epsilon\gt0`$，实际落在阈值邻域的行数
+$`J_\epsilon=\#\{x:|W_x-\tau_M|\le\epsilon\}`$ 满足
+
+```math
+\frac{\mathbb E_SJ_\epsilon}{q}
+ =\frac{\varphi(z_M)}{\sqrt{\lambda v}}
+    \left(2\epsilon+2\sinh\epsilon\right)+o(\lambda^{-1/2}).
+```
+
+式 (25.9)。
+
+两项分别来自信号区间质量和背景上的积分
+$`\int_{-\epsilon}^{\epsilon}e^{-u}\,du`$；最大原子估计允许闭区间端点。
+
+先处理恰好基数输出。置
+$`t_* =\tau_M-\tfrac12\log\lambda+k(z_M)`$，
+令 $`N(t)=\#\{x:W_x\ge t\}`$。对每个固定实数位移，(25.8) 给出
+
+```math
+\frac{\mathbb E_SN(t_*+u)}q
+ =1-\Phi(z_M)+e^{-u}\Phi(z_M)+o(1).
+```
+
+式 (25.10)。
+
+由于正态分布函数在这里一致远离零，对于任意固定正的夹逼宽度，
+左右两个期望与目标基数各有线性间隔。由 (25.3)，排序阈值不在
+$`[t_*-\epsilon,t_*+\epsilon]`$ 中的概率至多
+$`C_\epsilon e_M=o(\lambda^{-1/2})`$。
+在其补集上，真信号被遗漏的比例夹在两个端点的信号分布函数之间。
+端点间质量由 (25.7) 控制为
+$`O(\epsilon/\sqrt\lambda)+o(\lambda^{-1/2})`$。
+先固定宽度取极限，再令宽度趋零，排序规则的期望损失因此为
+$`Q_r\{W\lt t_*\}+o(\lambda^{-1/2})`$。
+定理 21.2 的完整似然与置换对称性已给出此规则在实际两个实验中的精确极小极大性。
+在 (25.8) 中展开中心位移，二次余项为
+$`O((\log\lambda)^2/\lambda)=o(\lambda^{-1/2})`$，得到 (25.2) 第二行。
+
+无约束问题需要更精确的所有规则下界。记 $`w_x=e^{W_x}`$、
+$`B_0=(M-q)/q`$。完整数据的均匀基数先验后验正比于
+$`\prod_{x\in S}w_x`$。
+这种有限乘积后验及 Hamming Bayes 判别的先例见
+[Butucea–Mammen–Ndaoud–Tsybakov](../../../Library/Dynamics/butucea2023selection.md)；
+下面的独立性仅属于辅助后验变量。对每个正的公共倾斜参数，置
+
+```math
+p_x(t)=\frac{t w_x}{B_0+t w_x},\qquad
+I_x\ 	ext{相互独立},\quad I_x\sim\mathrm{Bernoulli}(p_x(t)).
+```
+
+式 (25.11)。
+
+条件于 $`\sum_x I_x=q`$，公共因子全部相消，正好得到上述完整数据后验。
+这是经典条件 Poisson／拒绝抽样表示，见
+[Boistard–Lopuhaä–Ruiz-Gazen 的式 (2.1)、(2.5)](../../../Library/Dynamics/boistard2012rejective.md)。
+实际观测的依赖性不由此消失。
+
+令 $`U(t)=\sum_xp_x(t)`$、$`V(t)=\sum_xp_x(t)(1-p_x(t))`$。
+记 $`U=U(1)`$、$`V=V(1)`$。精确换测度给出比较期望的两条恒等式
+
+```math
+\begin{aligned}
+q\,\mathbb E_{Q_r}p(W)+(M-q)\mathbb E_{Q_{-a}}p(W)&=q,\\[0pt]
+q\,\mathbb E_{Q_r}[p(W)(1-p(W))]
+ +(M-q)\mathbb E_{Q_{-a}}[p(W)(1-p(W))]
+ &=q\,\mathbb E_{Q_r}[1-p(W)].
+\end{aligned}
+```
+
+式 (25.12)。
+
+第一式的被积函数为 $`p+B_0e^{-W}p=1`$，再乘以
+$`1-p`$ 即得第二式。由固定窗口的区间上界，将 logistic 函数与
+阈值阶跃函数比较，且 $`\log B_0=\tau_M+o(1)`$，可得右端为
+$`q[\Phi(z_M)+o(1)]`$。因此 (25.3) 给出真实数据下
+
+```math
+\begin{aligned}
+\mathbb E_SU&=q+O(\delta_Mq+M^{1-D}),&
+\mathbb E_SV&=q[\Phi(z_M)+o(1)],\\[0pt]
+\mathrm{Var}_S U+\mathrm{Var}_S V
+ &\le C(q+\delta_Mq^2+M^{2-D}).
+\end{aligned}
+```
+
+式 (25.13)。
+
+存在固定正数 $`\kappa`$，使对每个固定 $`0\lt \eta\lt 1`$，事件
+
+```math
+G_\eta=\left\{V\ge\kappa q,\quad
+ |U-q|\le\tfrac12\kappa e^{-\eta}\eta q\right\}
+```
+
+式 (25.14)。
+
+的补集概率至多为 $`C_\eta e_M`$。
+总均值从零连续严格增长到行数，所以方程 $`U(t)=q`$ 有唯一正解。
+又因 $`dU(e^\theta)/d\theta=V(e^\theta)`$，而在
+$`|\theta|\le\eta`$ 上每个方差项相对于原项的比值介于
+$`e^{-\eta}`$ 和 $`e^\eta`$ 之间，积分得在该好事件上
+
+```math
+|\log t|\lt \eta,\qquad V(t)\ge e^{-\eta}\kappa q.
+```
+
+式 (25.15)。
+
+现在条件于实际数据，固定这一使总均值等于基数的辅助分布。
+设 $`T_{-x}=\sum_{y\ne x}I_y`$，后验包含概率为 $`\pi_x`$。
+精确后验赔率满足
+
+```math
+\frac{\pi_x}{1-\pi_x}
+ =\frac{t w_x}{B_0}
+   \frac{\mathbb P\{T_{-x}=q-1\}}{\mathbb P\{T_{-x}=q\}}.
+```
+
+式 (25.16)。
+
+这里可直接复用上述拒绝抽样论文的引理 1 与式 (2.10)：
+当总方差 $`d_B=V(t)`$ 趋于无穷，条件某一个变量为一时的总数中心概率，
+除以未条件化概率，等于 $`1+O(d_B^{-1})`$，对所选坐标一致。
+对互补 Bernoulli 数组也使用同一结论，再除两式，(25.16) 中的相邻概率比为
+$`1+O(d_B^{-1})`$。
+这不要求各概率远离零或一，也不要求总方差占坐标数的固定比例。
+于是同时对所有行，在好事件上有
+
+```math
+\log\frac{\pi_x}{1-\pi_x}
+ =W_x-\log B_0+\log t+O(q^{-1}).
+```
+
+式 (25.17)。
+
+此一致界是每个已实现参数数组的确定性结论，无须对行数作并集界。
+令 $`B=\{x:\pi_x\gt 1/2\}`$，相等时不选。
+由后验概率和等于固定基数，输出大小至多为其两倍。
+对每个固定 $`\epsilon\gt0`$，选择足够小的固定倾斜窗口，
+由 (25.15)–(25.17) 得
+
+```math
+\{x:W_x\gt \tau_M+\epsilon\}\subset B
+ \subset\{x:W_x\ge\tau_M-\epsilon\},
+```
+
+式 (25.18)。
+
+其失效概率至多为 $`C_\epsilon e_M`$。
+
+为把这个后验阈值结论转成期望风险，令
+$`A_\tau=\{x:W_x\ge\tau_M\}`$，将其按得分截到至多基数个元素得
+$`C_\tau`$，并在同分处均匀随机化。设
+$`N=|A_\tau|`$、$`\mu=\mathbb E_SN`$。
+由 (25.8)，存在固定正数 $`\kappa_0`$ 使
+$`\mu/q=1-\Phi(z_M)+o(1)\le1-\kappa_0`$。
+结合 (25.3) 和确定性不等式，得到
+
+```math
+(N-q)_+\le\frac{(N-\mu)^2}{4(q-\mu)},\qquad
+\frac{\mathbb E_S|A_\tau\triangle C_\tau|}{q}
+ \le C e_M=o(\lambda^{-1/2}).
+```
+
+式 (25.19)。
+
+这控制的是删除数的期望，未把未截断输出在异常事件上当作有界。
+在 (25.18) 成立时，两集合的差只可能位于阈值窗口；在其补集上，
+后验规则与截断规则的输出大小之和至多为三倍基数。因此
+
+```math
+\mathbb E_S|B\triangle C_\tau|
+ \le\mathbb E_SJ_\epsilon
+     +\mathbb E_S|A_\tau\triangle C_\tau|
+     +3qC_\epsilon e_M.
+```
+
+式 (25.20)。
+
+Hamming 损失对输出集合的变化满足三角不等式。用 (25.9)、(25.19)–(25.20)，
+先固定窗口宽度取尺度极限，再令宽度趋零，证明后验规则与原阈值规则的
+归一化期望损失相差 $`o(\lambda^{-1/2})`$，且对支持一致。
+原阈值风险由一行转移与 (25.8) 得
+
+```math
+\frac{\mathbb E_S|A_\tau\triangle S|}{q}
+ =\Phi(z_M)+\frac{\varphi(z_M)}{\sqrt\lambda}
+       \left[A(z_M)+\frac1{\sqrt v}\right]+o(\lambda^{-1/2}).
+```
+
+式 (25.21)。
+
+后验规则是均匀固定基数先验下的 Hamming Bayes 规则。
+置换正类状态将完整路径或独立对及其分布一并映到置换后的支持，
+该规则连同严格阈值的同分约定均保持等变，所以风险对支持恒定。
+任意完整数据规则的最大风险不小于此先验 Bayes 风险；因此该常风险正是
+无约束极小极大风险。(25.21) 给出 (25.2) 第一行的匹配上下界。
+
+已知反向由完整数据反序得到同一结果。
+未知方向时，定理 23.2 证明中的方向检验误差为 $`o(\lambda^{-1/2})`$。
+正确对齐同一数据后，使用恰好基数排序规则或上面的截断阈值规则；
+两者输出均至多为基数，故错误对齐对相应归一化损失的影响至多为
+方向错误概率的固定倍数。这里不要求方向检验与支持规则独立。
+揭示方向给出匹配下界，完成两种未知方向风险的展开。两式相减即得风险差。∎
+
+## 追加锚（本行以下为增补区）
