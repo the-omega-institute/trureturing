@@ -42026,3 +42026,197 @@ $$
 因此有限设计点可以全部满足精确最优；但当其覆盖半径趋于零时，这些设计不能同时保持统一的导数界。定理192.2还要求每个设计保留至少 $\Gamma(a)$ 的额外成本积分。这里比较的是参数函数的有限点值与连续区间控制，不涉及有限试验次数造成的统计误差，也不将逐个有限集合可重新设计替换为同一程序在整个区间达到。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 193. 局部纯二维程序的精确成本下确界与转置不变约束
+
+**定义 193.1（纯二维邻域精确生成的逐点成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令
+$$
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{193.1}
+$$
+一个局部纯二维程序由包含 $t$ 的非空开区间 $U\subset J_a$、$U$ 上的 $C^1$ 秩一密度矩阵曲线 $\rho_u\in M_2$，以及与 $u$ 无关的 CPTP 映射
+$$
+\mathcal G:M_3\otimes M_2\longrightarrow M_3
+\tag{193.2}
+$$
+组成，要求对每个 $u\in U$ 和每个信号态 $\omega$ 都有 $\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)$。不同程序允许使用不同的 $U$。成本取关于 $u$ 的 SLD 信息量，记
+$$
+\mathfrak P_{2,\mathrm{loc}}(a,t)
+=\inf_{(U,\rho,\mathcal G)}I_Q(\rho_t).
+\tag{193.3}
+$$
+这里要求整个 $U$ 上的严格等式；仅在 $t$ 匹配值和一阶导数的程序不属于此定义。第191节给出了每个这种程序都不能达到 $I_{\rm read}(t)=1/(1-t^2)$ 的结论。以下求出整个程序类的下确界。
+
+**定理 193.2（纯二维局部成本等于经典生成成本）。** 对定义193.1的全部参数，
+$$
+\boxed{\mathfrak P_{2,\mathrm{loc}}(a,t)=B(a,t)}.
+\tag{193.4}
+$$
+每个允许程序在其整个定义区间上满足 $I_Q(\rho_u)\ge B(a,u)$。另一方面，对任意 $\delta>0$，存在秩一解析程序及固定处理器，在包含 $t$ 的真实开区间内精确生成 $\mathcal T_u$，且
+$$
+B(a,t)\le I_Q(\rho_t)<B(a,t)+\delta.
+\tag{193.5}
+$$
+因此纯二维局部下确界与单次可读信息的精确比值为
+$$
+\frac{\mathfrak P_{2,\mathrm{loc}}(a,t)}{I_{\rm read}(t)}
+=1+\frac{a^2(1-t)}{1+t-2a^2}>1.
+\tag{193.6}
+$$
+式（193.4）是下确界陈述，不断言某个允许程序在 $t$ 达到 $B(a,t)$。
+
+证明。 先建立任意处理器的下界。以 Pauli 矩阵记 $\rho_u=(I+r(u)\cdot\sigma)/2$；纯性等价于 $|r(u)|=1$。固定处理器诱导从实 Bloch 向量到信号线性映射的仿射映射，其线性部分为
+$$
+\mathcal L(x)(X)=\frac12\mathcal G\bigl(X\otimes(x\cdot\sigma)\bigr),\qquad x\in\mathbb R^3.
+\tag{193.7}
+$$
+若 $\mathcal L$ 的实秩为三，则它是单射。因为 $\mathcal T_u$ 是关于 $u$ 的非恒定仿射直线，精确性迫使 $r(u)=r(t)+(u-t)v$，其中固定向量 $v\ne0$。但 $|r(t)+(u-t)v|^2=1$ 不可能在开区间上恒成立，因为二次项系数为 $|v|^2>0$。所以
+$$
+\operatorname{rank}_{\mathbb R}\mathcal L\le2.
+\tag{193.8}
+$$
+选择非零核方向，并对程序作固定酉基变换，可令该方向为 Pauli 矩阵 $Y$。于是对所有信号算符 $X$ 都有 $\mathcal G(X\otimes Y)=0$。
+
+固定任意信号态 $\omega$，定义从程序到信号输出的通道
+$$
+\mathcal E_\omega(\tau)=\mathcal G(\omega\otimes\tau).
+\tag{193.9}
+$$
+它从 $M_2$ 映到 $M_3$，是 CPTP，且消去 $Y$。在上述程序基下，转置保持 $I,X,Z$ 而使 $Y$ 变号，故 $\mathcal E_\omega\circ T=\mathcal E_\omega$。其归一化 Choi 态因而满足
+$$
+C_\omega=\frac12\sum_{j,k=0}^1|j\rangle\langle k|\otimes
+\mathcal E_\omega(|j\rangle\langle k|),\qquad
+C_\omega^{T_1}=C_\omega\succeq0.
+\tag{193.10}
+$$
+这里使用 $2\times3$ 系统的 PPT 可分性判据：M. Horodecki、P. Horodecki、R. Horodecki，*Separability of mixed states: necessary and sufficient conditions*，arXiv:quant-ph/9605038v2，定理3及其后关于第一因子转置的注记。因此 $C_\omega$ 可分，有限维中可写成有限和 $\sum_k w_k A_k\otimes\tau_k$，其中 $A_k,\tau_k$ 为密度矩阵、$w_k\ge0$。由 $\operatorname{Tr}_{\rm out}C_\omega=I_2/2$ 以及 Choi 重构公式，得到
+$$
+\mathcal E_\omega(\tau)=\sum_k\operatorname{Tr}(M_k\tau)\tau_k,
+\qquad M_k=2w_k A_k^{\mathsf T}\succeq0,\qquad \sum_kM_k=I_2.
+\tag{193.11}
+$$
+这是可分 Choi 态与测量—制备表示的标准对应；参见 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，arXiv:quant-ph/0302031v2，定理4。上面的重构直接保留二维输入、三维输出，不要求输入输出维数相同。这里取得测量—制备形式的是固定信号输入后的 $\mathcal E_\omega$，不是断言 $\mathcal T_u$ 本身是纠缠破坏通道。
+
+取严格正概率向量 $p=(p_0,p_1,p_2)$，令 $|s_p\rangle=\sum_i\sqrt{p_i}|i\rangle$，并固定 $\omega=|s_p\rangle\langle s_p|$。记 $D_p=\operatorname{diag}(\sqrt p)$、$E_{02}=E_{20}=1$ 且 $E$ 其余项为零，则
+$$
+\Sigma_u=D_pF(a,u)D_p=\sum_k q_k(u)\tau_k,\qquad
+\Sigma_u'=D_pED_p,\qquad q_k(u)=\operatorname{Tr}(M_k\rho_u).
+\tag{193.12}
+$$
+$F(a,u)$ 在 $J_a$ 上正定，故 $\Sigma_u$ 可逆。在任何固定的内部点，若 $q_k(u)=0$，则两侧非负性与可微性给出 $q_k'(u)=0$。以下和式省略这些零项。设 $s_k=q_k'/q_k$，有
+$$
+\begin{pmatrix}\Sigma_u&\Sigma_u'\\\Sigma_u'&Q_u\end{pmatrix}
+=\sum_{k:q_k>0}q_k
+\begin{pmatrix}\tau_k&s_k\tau_k\\s_k\tau_k&s_k^2\tau_k\end{pmatrix}\succeq0,
+\qquad Q_u=\sum_{k:q_k>0}\frac{q_k'^2}{q_k}\tau_k.
+\tag{193.13}
+$$
+Schur 补和取迹遂给出
+$$
+\operatorname{Tr}(\Sigma_u'\Sigma_u^{-1}\Sigma_u')
+\le\operatorname{Tr}Q_u
+=\sum_{k:q_k>0}\frac{q_k'^2}{q_k}
+\le I_Q(\rho_u).
+\tag{193.14}
+$$
+最后一步是固定 POVM 下的 SLD 信息量单调性。前一个不等式是经典反向制备的 RLD 下界的直接分块证明；其一般反向估计背景见 Matsumoto，*Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节。测量界采用 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439 的 SLD 约定。
+
+逆矩阵的两个端点对角元为
+$$
+(F(a,u)^{-1})_{00}=(F(a,u)^{-1})_{22}
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}=B(a,u).
+\tag{193.15}
+$$
+所以由（193.12）及迹的循环性，
+$$
+\operatorname{Tr}(\Sigma_u'\Sigma_u^{-1}\Sigma_u')
+=\operatorname{Tr}\bigl(D_p^2EF(a,u)^{-1}E\bigr)
+=(p_0+p_2)B(a,u).
+\tag{193.16}
+$$
+保持 $p_0,p_2>0$ 而令 $p_1\downarrow0$，即得 $I_Q(\rho_u)\ge B(a,u)$。此极限只作用于下界的数值；每次应用（193.14）时仍使用满支持信号输入与可逆输出，并未在奇异极限态上求逆。秩论证只用各程序自己的非空开区间，不要求全部程序共享一个区间。
+
+再构造逼近下界的纯二维程序。固定名义点 $t$，简记 $B=B(a,t)$、$h_0=(1+t)/2$、$\ell_0=1-h_0$，并置 $c=a\ell_0/(1-a^2)$。使用定理184.2的三个固定通道 $\mathcal R_+,\mathcal R_-,\mathcal R_c$ 及其在整个 $J_a$ 上严格为正的仿射概率
+$$
+\begin{aligned}
+p_c(u)&=\frac{1-(1+u)/2}{1-c^2},\\
+p_+(u)&=\frac{(1+u)/2+a-(1+a)c}{2(1-c)},\\
+p_-(u)&=\frac{(1+u)/2-a+(1-a)c}{2(1+c)}.
+\end{aligned}
+\tag{193.17}
+$$
+令 $p_j=p_j(t)$、$v_j=p_j'(t)$；这些常数满足
+$$
+\sum_jp_j=1,\qquad \sum_jv_j=0,\qquad
+\sum_j\frac{v_j^2}{p_j}=B,
+\qquad p_j(u)=p_j+(u-t)v_j.
+\tag{193.18}
+$$
+三项 $v_j$ 均非零。定义
+$$
+q_j=\frac{v_j^2}{Bp_j},\qquad
+C=1+\max_j\frac{q_j}{p_j},\qquad
+0<\varepsilon<\frac1{2C},\qquad \lambda=\sqrt{1-C\varepsilon}.
+\tag{193.19}
+$$
+于是 $\sum_jq_j=1$、$q_j>0$、$\lambda^2>1/2$。取三个实对称测量算符
+$$
+M_j=\begin{pmatrix}
+\dfrac{p_j-\varepsilon q_j}{1-\varepsilon}&\dfrac{\lambda v_j}{\sqrt B}\\[2mm]
+\dfrac{\lambda v_j}{\sqrt B}&q_j
+\end{pmatrix}.
+\tag{193.20}
+$$
+由（193.18）立即有 $\sum_jM_j=I_2$。两个对角元严格为正，且
+$$
+\det M_j
+=\frac{\varepsilon q_j}{1-\varepsilon}
+\bigl[p_j(1+C-C\varepsilon)-q_j\bigr]>0.
+\tag{193.21}
+$$
+严格正性使用 $q_j/p_j\le C-1$、$C\varepsilon<1/2$；同样有 $\varepsilon q_j<p_j/2$。所以这些算符组成固定 POVM。
+
+令
+$$
+R_\varepsilon=\frac{2\lambda\sqrt{\varepsilon(1-\varepsilon)}}{\sqrt B},\qquad
+U_\varepsilon=J_a\cap(t-R_\varepsilon,t+R_\varepsilon),
+\tag{193.22}
+$$
+并在这个包含 $t$ 的非空开区间上定义 Bloch 向量
+$$
+r_\varepsilon(u)=\left(
+\frac{\sqrt B(u-t)}\lambda,
+\sqrt{4\varepsilon(1-\varepsilon)-\frac{B(u-t)^2}{\lambda^2}},
+1-2\varepsilon
+\right),\qquad
+\rho_u^{(\varepsilon)}=\frac{I+r_\varepsilon(u)\cdot\sigma}{2}.
+\tag{193.23}
+$$
+根号内严格为正，且 $|r_\varepsilon(u)|=1$，故这是一条解析的纯态曲线。实测量算符不读取 $Y$ 分量，直接计算得到
+$$
+\operatorname{Tr}(\rho_u^{(\varepsilon)}M_j)
+=(1-\varepsilon)\frac{p_j-\varepsilon q_j}{1-\varepsilon}
++\varepsilon q_j+\frac{\sqrt B(u-t)}\lambda\frac{\lambda v_j}{\sqrt B}
+=p_j(u).
+\tag{193.24}
+$$
+固定处理器先测量程序的 $M_j$，再对信号执行 $\mathcal R_j$。明确地，对联合输入算符 $Z$ 可写为
+$$
+\mathcal G_\varepsilon(Z)=\sum_j\mathcal R_j\!\left(
+\operatorname{Tr}_{P}\bigl[(I\otimes\sqrt{M_j})Z(I\otimes\sqrt{M_j})\bigr]\right).
+\tag{193.25}
+$$
+它是 CPTP，且（193.17）、（193.24）给出 $\mathcal G_\varepsilon(\omega\otimes\rho_u^{(\varepsilon)})=\mathcal T_u(\omega)$，在整个 $U_\varepsilon$ 上是严格等式。
+
+纯 Bloch 曲线的 SLD 信息量为 $|r_\varepsilon'(u)|^2$。在 $u=t$，只有第一分量的导数非零，因此
+$$
+I_Q(\rho_t^{(\varepsilon)})=\frac B{\lambda^2}
+=\frac B{1-C\varepsilon}\longrightarrow B
+\qquad(\varepsilon\downarrow0).
+\tag{193.26}
+$$
+任意给定 $\delta>0$，再要求 $\varepsilon<\delta/[C(B+\delta)]$ 即得（193.5）。与已经证明的下界合用，得到（193.4），相除并化简得到（193.6）。上述逼近中 $R_\varepsilon\to0$；在 $\varepsilon=0$ 直接取极限不能得到仍有非空定义邻域的纯态曲线，因此这个构造没有把下确界升级为最小值。证毕。
+
+## 追加锚（本行以下为增补区）
