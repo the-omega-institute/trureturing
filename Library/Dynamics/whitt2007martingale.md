@@ -255,3 +255,65 @@ calculations remain under the uniform support prior, and fixed-support
 conclusions use unconditional equivariance and one common direction event.
 The attribution delimits the classical tools and does not certify global
 originality.
+
+# Variable arithmetic phase and a criterion for the one-jump path
+
+Chapter 44 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+keeps the same fixed ultra-Liouville amplitude and allows integer intensities
+satisfying log(Q) = o(lambda) and lambda = o(Q to the fourth power). The
+arithmetic phase theta = lambda/Q squared need not converge. The normalizing
+variance is q/lambda times the positive discrete Gaussian series already
+identified in the preceding section. That series and its small-phase and
+large-phase asymptotics are classical auxiliary facts, not additional new
+theorems of the chapter.
+
+The `repo-derived` conclusion is a single actual-posterior endpoint
+normalization for the entire permitted intensity range, together with the
+necessary and sufficient condition theta tending to zero for J1 tightness
+of the outer-window path. In that regime, the limit is one standard
+Gaussian jump. This assertion is stronger than identifying the endpoint
+law, and it does not say that the actual window contains only the central
+count group. Noncentral groups can contain many labels while their share
+of normalized variance vanishes.
+
+The new subquadratic estimate bounds the whole noncentral Poisson line
+relative to its central atom, including half-mean and off-cutoff tails.
+Actual one/two-row comparisons and calibration turn it into a vanishing
+relative conditional variance. The classical L2 martingale maximal
+inequality controls the ordered complete-group prefixes under the
+independent calibrated law. One full posterior-vector comparison and a
+separate simultaneous bound on the exact posterior centers then control
+the entire actual path. No maximal inequality is asserted directly for
+the fixed-size posterior, and total variation is not multiplied by an
+unbounded label count.
+
+For the converse, every phase sequence not tending to zero has a
+subsequence with a positive finite or infinite phase limit. Two disjoint
+count-line halves then have independent, nondegenerate joint Gaussian
+limits while their score positions collapse to zero. The classical
+interior-triple consequence of Whitt's Theorem 3.2, equations (14)–(15),
+excludes J1 tightness. Extended-real subsequence extraction combines the
+subcritical atom, critical discrete Gaussian, and supercritical integral
+regimes without replacing a changing phase by a fixed one.
+
+A related primary source is Emmanuel Breuillard, *Distributions
+diophantiennes et théorème limite local sur Rd*, Probability Theory and
+Related Fields 132 (2005), 39–73, DOI `10.1007/s00440-004-0388-1`.
+Proposition 3.1, printed page 43, characterizes its Diophantine assumption
+by a polynomial lower bound on one minus the characteristic-function
+modulus at large frequencies. Theorem 3.1, printed page 46, gives a local
+Edgeworth expansion with that assumption and explicit moment and test
+regularity conditions. At frequencies 2 pi Q/h, the fixed unit
+compound-Poisson signal increment here has modulus defect at most a
+constant times Q squared exp(-2 Q to the fourth power). Thus this
+Diophantine assumption also fails. Ordinary nonlattice status does not
+authorize importing that quantitative smooth-test expansion.
+
+The source boundaries for the fixed-width local theorem, strong
+nonlattice refinements, discrete Gaussian series, and conditional Bernoulli
+representation remain those recorded above. These ingredients do not
+supply the changing actual-row occupancy, compensation separation,
+posterior centers, and necessary-and-sufficient path conclusion together.
+This is a bounded attribution assessment, not a global originality
+certificate. The theorem asserts no useful finite onset, actual moment
+convergence, other topology, varying amplitude, or growing-window limit.

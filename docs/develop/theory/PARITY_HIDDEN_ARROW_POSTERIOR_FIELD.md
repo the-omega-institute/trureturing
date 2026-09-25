@@ -1741,3 +1741,544 @@ $`\sqrt{2/\pi}\int_{\mathbb R}\sqrt{\rho(x)}\,dx`$。
 其补事件概率趋零，因此两种方向信息情形同样成立。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 43. 高斯点质量后的一阶随机偶极子
+
+**定义 43.1（移动中心与一阶分布残差）。** 仍取第 39、40、42 章的固定参数及原序列
+$`\lambda=Q^3`$。全部坐标使用同一数据、支持标签及精确后验中心。
+用第 40 章的精确中心 $`W_c`$ 和正步长 $`\Delta`$ 定义
+
+```math
+v_M=\frac{\Delta\sqrt\lambda}{Q},\qquad
+h_M=\frac{v_M}{w},\qquad c_M=\frac{W_c-\tau}{w},\qquad
+x_i=\frac{W_i-W_c}{v_M},\qquad u_i=c_M+h_Mx_i.
+```
+
+式 (43.1)。
+
+这里 $`h_M\gt0`$，且 $`h_M,c_M\to0`$。在共同隔离事件上，计数组的
+$`x_i`$ 等于 $`t\delta_M`$。固定 $`s\gt3/2`$，采用 (42.2) 的实
+$`H^{-s}(\mathbb T_4)`$ 空间，置
+
+```math
+Z_M=\frac1{B_M}\sum_{i\in J}x_i(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad
+\nu_M=\frac{\mu_M-Y_M\delta_{c_M}}{h_M}.
+```
+
+式 (43.2)。
+
+$`\delta'_z`$ 表示分布导数，即对光滑周期测试函数
+$`\langle\delta'_z,f\rangle=-f'(z)`$。
+减去的点质量位于精确移动中心 $`c_M`$。
+
+**定理 43.2（同一轮廓中的随机偶极子）。** 对两个实际实验、两种方向信息情形及所有固定支持，
+一致有
+
+```math
+\|\nu_M+Z_M\delta'_0\|_{-s}\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (43.3)。
+
+令 $`\mathcal W_\rho`$ 为实空间 $`L^2(\mathbb R,\rho(x)\,dx)`$ 上的中心 Gaussian 等距过程，
+协方差为 $`\mathbb E[\mathcal W_\rho(f)\mathcal W_\rho(g)]=\int fg\rho`$。
+集合记号表示作用于指示函数的值；它关于集合均方可加，不要求样本总变差有限。
+以此表示第 40 章的同一 Brownian 轮廓，令
+
+```math
+Y=\mathcal W_\rho(\mathbb R),\qquad
+L(x)=\mathcal W_\rho(( -\infty,x]),\qquad
+Z=\int_{\mathbb R}x\,\mathcal W_\rho(dx).
+```
+
+式 (43.4)。
+
+对每个固定 $`A\gt0`$，有联合收敛
+
+```math
+(Y_M,L_M|_{[-A,A]},Z_M,\nu_M)
+\Longrightarrow
+(Y,L|_{[-A,A]},Z,-Z\delta'_0)
+\quad\text{于 }\mathbb R\times D[-A,A]\times\mathbb R\times H^{-s},
+```
+
+式 (43.5)。
+
+路径因子使用 $`J_1`$ 拓扑。还可共同附加定理 40.2 的桥与原有场坐标，以及 (42.3) 的坐标。
+具体地，
+
+```math
+\mathrm{Var}(Z)=\frac\gamma\kappa,\qquad
+\mathrm{Cov}(Z,Y)=0,\qquad
+\mathrm{Cov}(Z,L(x))=-\frac{c_0}\kappa e^{-\kappa x^2/2}.
+```
+
+式 (43.6)。
+
+因此 $`Z`$ 独立于完整端点和原有场的 Gaussian 原过程，但与轮廓及其桥均不独立。
+这里的 $`Z`$ 来自同一个 $`\mathcal W_\rho`$，不是外加的独立正态量。
+非零 $`\delta'_0`$ 属于 (42.2) 的空间当且仅当 $`s\gt3/2`$；
+这只限定所述空间，不给出边界指数处的其他极限定理。
+
+证明。首先建立带权的实际方差时钟。对固定紧区间，(42.11) 的一致逐组占据数估计及
+网格 $`\delta_M`$ 的 Riemann 和给出带 $`x^2`$ 权的积分极限。
+尾部也需保留这个权。在固定全行截断内，组数为 $`O(\lambda/Q)`$，且
+$`|x_{M,t}|\le C\sqrt\lambda`$。(42.14) 的高斯包络除以 $`B_M^2`$ 后给出
+
+```math
+\frac1{B_M^2}\sum_{|x_{M,t}|\gt R}x_{M,t}^2\mathbb E C_{M,t}
+\le C\delta_M\sum_{|t\delta_M|\gt R}
+           (t\delta_M)^2e^{-c(t\delta_M)^2}+o(1).
+```
+
+式 (43.7)。
+
+该式的求和仅含截断中的确定直线组。某个计数低于其均值一半的组，贡献至多
+$`C\lambda^{5/2}e^{-c\lambda}`$；所有组的加性比较误差贡献至多
+$`C\lambda^{5/2}M^{1-D_0}/q`$，取充分大的固定 $`D_0`$ 后均趋零。
+高斯网格和先取样本上极限、再令 $`R\to\infty`$ 为零。
+由于 $`p_i(1-p_i)\le1/4`$，Markov 不等式、紧区间时钟及截断外事件的概率界遂给出
+
+```math
+K_M:=\frac1{B_M^2}\sum_{i\in J}x_i^2p_i(1-p_i)
+\longrightarrow\int_{\mathbb R}x^2\rho(x)\,dx=\frac\gamma\kappa
+\quad\text{依概率},
+\qquad
+\lim_{R\to\infty}\limsup_M
+ \mathbb P\left\{\frac1{B_M^2}\sum_{\substack{i\in J\\|x_i|\ge R}}
+        x_i^2p_i(1-p_i)\gt\varepsilon\right\}=0
+\quad(\varepsilon\gt0).
+```
+
+式 (43.8)。
+
+这些是实际数据环境中的辅助方差时钟，不是实际中心化和的矩收敛断言。
+
+为转移更细尺度的精确中心，直接扩展 (35.12) 的推导。
+给定数据，令 $`U`$ 为 $`J`$ 或第 40 章的共同并集，补集方差至少为 $`cq`$。
+对任意实 Hilbert 空间中的有限向量族 $`f_i`$，令
+$`T_f=\sum_{i\in U}f_i(\zeta_i-p_i)`$、$`V=\sum_{i\in U}(\zeta_i-p_i)`$，并记
+$`d_f=\sum_{i\in U}p_i(1-p_i)\|f_i\|^2`$。
+乘积律下 $`\mathbb E T_f=0`$、$`\mathbb E\|T_f\|^2=d_f`$。
+在 (35.11) 的密度比中先消去常数项，再取 Hilbert 范数，得到
+
+```math
+\left\|\sum_{i\in U}f_i(\pi_i-p_i)\right\|
+\le \frac Cq\mathbb E_{\mathsf Q_M}(\|T_f\|V^2)
+       +\frac C{\sqrt q}\mathbb E_{\mathsf Q_M}\|T_f\|
+\le C\sqrt{d_f}\left(\frac{\sqrt{3d_U^2+d_U}}q+q^{-1/2}\right).
+```
+
+式 (43.9)。
+
+最后一步用 Cauchy 不等式和 $`\mathbb E V^4\le3d_U^2+d_U`$。
+该界对每个固定环境的全部系数族同时成立；系数可以是数据函数。
+括号中的量记为 $`e_U=o_{\mathbb P}(1)`$。
+它直接适用于差商的系数，不需要将第 42 章的误差除以 $`h_M`$。
+
+[分布矩展开](../../../Library/Dynamics/iyer2025empirical.md)的一阶项在这里可直接由 Fourier 系数计算。
+设 $`\omega_k=\pi k/2`$。Fourier 系数为
+$`\widehat{\delta'_z}(k)=i\omega_ke^{-i\omega_kz}`$。
+由于 $`\sum_k\omega_k^2(1+k^2)^{-s}\lt\infty`$，逐频率微分及支配收敛证明
+$`z\mapsto\delta_z`$ 在 $`H^{-s}`$ 中可微，导数为 $`-\delta'_z`$，且该导数范数连续。
+非零导数的范数平方是 $`\sum_k(1+k^2)^{-s}\pi^2k^2/4`$，
+幂级数判据也给出所述空间边界。
+记
+
+```math
+\Omega_s(a)=\sup_{|z|\le a}\|\delta'_z-\delta'_0\|_{-s}
+\longrightarrow0\quad(a\downarrow0).
+```
+
+式 (43.10)。
+
+取确定 $`a_M\downarrow0`$，使共同截断隔离事件上 $`|c_M|`$ 与所有 $`|u_i|`$
+均不超过 $`a_M`$。对 $`i\in J`$，Hilbert 空间中的微积分恒等式给出
+
+```math
+R_i:=\frac{\delta_{u_i}-\delta_{c_M}}{h_M}+x_i\delta'_0
+=-x_i\int_0^1(\delta'_{c_M+t h_Mx_i}-\delta'_0)\,dt,
+\qquad \|R_i\|_{-s}\le |x_i|\Omega_s(a_M).
+```
+
+式 (43.11)。
+
+在辅助乘积律下，由独立中心化，
+
+```math
+\mathbb E_{\mathsf Q_M}\left\|
+ \frac1{B_M}\sum_{i\in J}R_i(\zeta_i-p_i)\right\|_{-s}^2
+\le K_M\Omega_s(a_M)^2\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (43.12)。
+
+在 (43.9) 中取 $`f_i=R_i/B_M`$ 并在 $`U\setminus J`$ 上置零，精确中心的位移
+至多为 $`C\sqrt{K_M}\Omega_s(a_M)e_U=o_{\mathbb P}(1)`$。
+条件 Markov 不等式以及一次完整向量后验比较转移小误差事件，概率有界性允许取数据期望。
+因 $`B_M^{-1}\sum R_i(\mathbf1_{\{i\in S\}}-\pi_i)=\nu_M+Z_M\delta'_0`$，这就证明 (43.3)。
+
+最后识别 $`Z_M`$ 与整个轮廓的联合律。对固定 $`R\gt0`$，定义只含
+$`-R\lt x_i\le R`$ 的截断和 $`Z_M^R`$。有限带符号测度的分部积分给出精确恒等式
+
+```math
+Z_M^R=R L_M(R)+R L_M(-R)-\int_{-R}^{R}L_M(x)\,dx.
+```
+
+式 (43.13)。
+
+该式中两个端点项也消去了 $`L_M`$ 的共同左尾常数。
+极限轮廓连续，故这些评估与积分在该极限处关于 $`J_1`$ 收敛连续。
+把第 40 章的紧区间扩大到同时包含 $`[-A,A]`$ 和 $`[-R,R]`$，其完整联合定理于是给出
+$`Z_M^R`$ 与端点、轮廓、桥及原有场的联合极限，其中新坐标为
+$`Z^R=\int_{(-R,R]}x\,\mathcal W_\rho(dx)`$。
+
+对 $`Z_M-Z_M^R`$，辅助二阶矩就是 (43.8) 的尾部时钟。
+将 (43.9) 用于 $`f_i=B_M^{-1}x_i\mathbf1_{\{x_i\le-R\text{ 或 }x_i\gt R\}}`$，再一次性比较完整标签向量，得到
+
+```math
+\lim_{R\to\infty}\limsup_M
+       \mathbb P\{|Z_M-Z_M^R|\gt\varepsilon\}=0.
+```
+
+式 (43.14)。
+
+另一方面 $`Z^R\to Z`$ 在 Gaussian 实现的 $`L^2`$ 中成立，因为
+$`\int x^2\rho(x)\,dx\lt\infty`$。截断后共同收敛及两侧尾界证明完整联合收敛。
+所有有限样本坐标始终使用同一标签向量；这里继承的是第 40 章已建立的共同并集联合律。
+
+Gaussian 积分的协方差等于被积函数的强度内积。
+对称性给出 $`\int x\rho(x)\,dx=0`$，而直接积分得到
+$`\int_{-\infty}^x t\rho(t)\,dt=-(c_0/\kappa)e^{-\kappa x^2/2}`$，从而证明 (43.6)。
+桥为 $`L(x)-F_0(x)Y`$，与 $`Z`$ 的协方差仍是 (43.6) 的最后一项。
+原有场的原过程独立于整个 $`\mathcal W_\rho`$，故也独立于 $`Z`$。
+再以 (43.3) 和第 42 章的概率近似应用 Slutsky 定理，得到所有所述坐标的联合结论。
+
+条件论证限定于均匀支持先验空间。全部带权和、移动中心和分布残差都满足共同置换等变，
+因此先验混合的无条件律等于每个固定支持的律。未知方向时使用同一次判决，
+正确事件上整个随机对象相同，补事件概率趋零，故完整结论也适用于工作坐标。∎
+
+
+## 追加锚（本行以下为增补区）
+
+## 44. 算术网格稀释与单跳路径的充要条件
+
+**定义 44.1（同一幅度上的可变算术相位）。** 固定定义 39.1 的
+$`r,\alpha,P_j,Q_j`$ 与 $`\beta\in(1/2,1)`$。取任意正整数序列
+$`\lambda_j`$，满足
+
+```math
+\frac{\lambda_j}{\log Q_j}\longrightarrow\infty,
+\qquad \frac{\lambda_j}{Q_j^4}\longrightarrow0,
+\qquad \theta_j=\frac{\lambda_j}{Q_j^2}.
+```
+
+式 (44.1)。
+
+将 (39.3) 的强度替换为该 $`\lambda_j`$，重新计算全部
+$`N,M,k_0,l_0,z_0,q,\tau,\mathsf T`$；沿用 (39.4) 的补偿参数、实际得分、
+窗口 $`J`$、直线 $`\mathcal L`$ 与精确后验。以下删去参数尚不合法的有限初始段并重新编号，省略下标 $`j`$，记
+
+```math
+c_0=\frac1{4\pi\sqrt{ab}},\qquad
+\mathcal C(\theta)=c_0\sum_{t\in\mathbb Z}
+                  \exp\left(-\frac{\kappa t^2}{2\theta}\right),\quad\theta\gt0,
+\qquad A_M=\sqrt{\frac q\lambda\mathcal C(\theta)}.
+```
+
+式 (44.2)。
+
+$`a,b,\kappa`$ 保持 (39.2) 的固定值。定义
+
+```math
+F_M(u)=\frac1{A_M}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),
+\quad -1\le u\le1,\qquad Y_M=F_M(1),\qquad
+c_M=\frac{W(k_0,l_0)-\tau}{w}.
+```
+
+式 (44.3)。
+
+所有坐标仍使用同一完整数据与标签；未知方向时使用同一次判决及工作正向权重。
+记中心组为 $`J_0=\{i:(N_{i,+},N_{i,-})=(k_0,l_0)\}`$，
+$`d_E=\sum_{i\in E}p_i(1-p_i)`$ 使用正确对齐的校准参数。
+
+**定理 44.2（统一端点归一化与路径相变）。** 定义 44.1 的参数最终合法。
+两个实际平稳实验均对支持一致地满足
+
+```math
+\mathbb P_S\{J=\{i:(N_{i,+},N_{i,-})\in\mathcal L\}\}\longrightarrow1,
+\qquad \frac{|J|}{A_M^2}\longrightarrow4,
+\qquad \frac{d_J}{A_M^2}\longrightarrow1
+\quad\text{依概率}.
+```
+
+式 (44.4)。
+
+无须假设 $`\theta_j`$ 有极限，两种方向信息情形均有
+
+```math
+Y_M\Longrightarrow N(0,1),\qquad
+\{\mathrm{Law}(F_M):j\ge1\}\text{ 在 }D[-1,1]\text{ 的 }J_1\text{ 拓扑下紧}
+\quad\Longleftrightarrow\quad \theta_j\longrightarrow0.
+```
+
+式 (44.5)。
+
+当 $`\theta_j\to0`$ 时，更精确地有
+
+```math
+F_M\Longrightarrow
+\bigl(u\mapsto Z\mathbf1_{[0,1]}(u)\bigr)
+\quad\text{于 }D[-1,1],\ J_1,\qquad Z\sim N(0,1).
+```
+
+式 (44.6)。
+
+特别地，取 $`\lambda_j=\lfloor Q_j^2/\log Q_j\rfloor`$，令
+$`J_{\mathrm{next}}=\{i:(N_{i,+},N_{i,-})=(k_0+Q,l_0+P)\}`$，则单跳极限 (44.6) 成立，
+而 $`|J_{\mathrm{next}}|\to\infty`$ 依概率。
+因此非中心组的归一化路径贡献消失，并不意味着实际窗口只含中心组。
+校准方差的极限是辅助乘积律的结论，不据此主张实际统计量的矩收敛。
+
+证明。由取整仍有 $`z_0=\phi\lambda+O(1)`$、
+$`\log M=\phi\lambda/\beta+O(1)`$、
+$`q=M^{1-\beta+o(1)}`$ 与 $`\tau=z_0+O(q^{-1})`$。
+式 (44.1) 使 $`q`$ 比 $`Q`$ 与 $`\lambda`$ 的任意固定幂更快增长。
+第 27、33、35 章使用的临界、稀疏性、一行、两行和全信号向量比较条件均成立：
+特别是 $`q(\log M)^3/M\to0`$、$`\lambda q^2/M\to0`$，
+以及内在偏移 $`(\lambda-\tau/\phi)/\sqrt{\log M}\to0`$。
+信号增量仍为同一个固定非格点分布，故固定宽度定位及后验校准的前提不变。
+
+在充分大的固定计数截断 $`k+l\le C\lambda`$ 内，(39.10) 的非零整数分子
+给出至少 $`h/(2Q)`$ 的间隙；分子为零恰好是直线。
+(44.1) 的两个增长条件分别控制多项式尺度与算术逼近误差，给出
+
+```math
+Qw\to0,\qquad
+\frac{\lambda e^{-Q^4}}w\to0,\qquad
+\frac{\epsilon\lambda}w\to0,\qquad
+\frac1{qw}\to0,\qquad
+\frac{\alpha-P/Q}{\epsilon}\to0.
+```
+
+式 (44.7)。
+
+所以截断内窗口恰好选出直线，且直线中所有外窗口位置一致趋于零。
+实际行尾界对全部 $`M`$ 行取并集后，截断事件的概率趋于一；这不要求行独立。
+直线上的精确相邻得分差仍满足
+
+```math
+\Delta=Q\log\frac{1+r}{1-\epsilon}
+       +P\log\frac{1-r}{1+\epsilon}
+\sim\epsilon Q(1-\alpha)\gt0,\qquad c_M\to0.
+```
+
+式 (44.8)。
+
+下面验证一个覆盖全部相位的相对概率估计。
+在信号比较 Poisson 律下，记第 $`t`$ 个可行直线点的概率为 $`f_{j,t}`$，
+不可行点置零。则
+
+```math
+\sum_{t\in\mathbb Z}f_{j,t}
+\sim\frac{2\mathcal C(\theta_j)}{\lambda_j},\qquad
+\mathcal C(\theta)\longrightarrow c_0\quad(\theta\downarrow0),\qquad
+\frac{\mathcal C(\theta)}{\sqrt\theta}\longrightarrow
+\gamma=\frac1{2\sqrt{2\pi}\sqrt D}\quad(\theta\to\infty).
+```
+
+式 (44.9)。
+
+级数是第 41 章引用的经典离散高斯归一化；其两个端点渐近分别由可求和高斯界和
+Riemann 和得到。这里需要另证它对实际变化的 Poisson 直线概率给出相对估计。
+
+先取任意子序列，再取使 $`\theta_j`$ 在 $`[0,\infty]`$ 内收敛的子序列。
+若极限为正的有限数 $`\theta_*`$，则对每个固定整数 $`t`$，Stirling 展开给出
+$`\lambda f_{j,t}\to2c_0e^{-\kappa t^2/(2\theta_*)}`$。
+在两计数均不小于各自均值一半的固定线性截断内，有一致界
+$`f_{j,t}\le C_1\lambda^{-1}e^{-c_1t^2Q^2/\lambda}`$，
+这是可求和的离散高斯上界。其余点的边缘指数尾，即使乘以
+$`\lambda(1+\lambda/Q)`$ 仍趋零；截断外总计数尾亦如此。
+因此可对整条直线以及负整数半线求和。
+若 $`\theta_j\to\infty`$，以 $`x=tQ/\sqrt\lambda`$ 为坐标，
+相同的局部 Stirling 展开与高斯尾界给出网格趋零的 Riemann 和，
+其总质量为 $`1/(Q\sqrt{2\pi\lambda}\sqrt D)`$。
+这两个论证分别沿用第 41、39 章的估计，其前提是相位的相应极限，
+并不要求原来两个特殊的强度等式。
+
+还需处理 $`\theta_j\to0`$，不能由固定正相位的公式形式代入。
+中心概率满足 $`f_{j,0}\sim2c_0/\lambda`$。
+在上述半均值区域内，对 $`t\ne0`$ 有 $`|tQ+O(1)|\ge|t|Q/2`$，
+所以归一化的非中心质量至多为
+
+```math
+\frac1{f_{j,0}}\sum_{t\ne0}f_{j,t}
+\le C_2\sum_{t\ne0}e^{-c_2t^2/\theta_j}
+   +C_3\lambda(1+\lambda/Q)e^{-c_3\lambda}+o(1)
+\longrightarrow0.
+```
+
+式 (44.10)。
+
+右端第二项控制截断内低于半均值的点，最后一项控制截断外概率。
+当截断内没有非中心点时相应和为空；不假定 $`\lambda/Q\to\infty`$。
+这证明第三种情形。任意子序列都存在上述三类之一的进一步子序列，故 (44.9)
+对原序列成立。相同论证同时给出中心质量与负半线质量的相对渐近。
+
+在公共截断上，$`W=\tau+o(1)`$ 一致成立。
+精确换测度使背景与信号的人口加权主项相等；两种比较律的截断外余项先分别控制，
+再乘以各自人口数。实际一行、两行比较给出实际组数的均值与方差界。
+总均值渐近为 $`4A_M^2`$，而
+
+```math
+A_M^2\asymp\frac q\lambda\max(1,\sqrt\theta),\qquad
+A_M\to\infty,\qquad
+\frac{A_M^2}q=O\left(\frac1\lambda+\frac1{Q\sqrt\lambda}\right)\to0.
+```
+
+式 (44.11)。
+
+因此均值发散，一行两行比较的相对误差及加性余项在该尺度下趋零，实际组数集中。
+校准使 $`\max_{i\in J}|p_i-1/2|\to0`$ 依概率，空集最大值置零，故得 (44.4)。
+若 $`J_-`$ 为直线上 $`t\lt0`$ 的实际组之并，则同样得到
+
+```math
+\frac{d_{J_0}}{A_M^2}-\frac{c_0}{\mathcal C(\theta_j)}\to0,\qquad
+\frac{d_{J_-}}{A_M^2}
+ -\frac{\mathcal C(\theta_j)-c_0}{2\mathcal C(\theta_j)}\to0
+\quad\text{依概率}.
+```
+
+式 (44.12)。
+
+相对均值退化的子块只需用非负性和一阶界控制，而不把零极限情形当作正均值集中。
+截断外事件在这些依概率陈述中统一移除。
+
+固定好数据，校准独立标签的绝对值界和 $`A_M\to\infty`$ 给出端点的
+Lindeberg 条件；其方差由 (44.4) 趋于一。
+又因 $`|J|=o_{\mathbb P}(q)`$、$`d_J=o_{\mathbb P}(q)`$，
+补集保留 $`q`$ 量级方差，(35.11) 适用于整个 $`J`$ 的标签向量。
+全部子集的精确中心同时满足
+
+```math
+\frac1{A_M}\left|\sum_{i\in E}(\pi_i-p_i)\right|
+\le \frac{C\sqrt{d_E}}{A_M}
+ \left(\frac{d_J+\sqrt{d_J}}q+q^{-1/2}\right),\qquad E\subseteq J.
+```
+
+式 (44.13)。
+
+其对全部子集的一致上界趋零。完整向量比较与该中心界给出确定的标准高斯
+后验条件极限，再取先验期望得到 (44.5) 的端点结论；此处没有转移无界矩。
+
+若 $`\theta_j\to0`$，(44.12) 给出 $`d_{J\setminus J_0}/A_M^2\to0`$
+与 $`d_{J_0}/A_M^2\to1`$。在校准乘积律下，把非中心组按得分排序，
+分别考察中心点两侧的完整组前缀。独立组和形成有限平方可积鞅。
+经典 $`L^2`$ 最大不等式及两侧拼接给出
+
+```math
+\mathbb E_{\mathsf Q_M}\sup_{-1\le u\le1}
+\left|\frac1{A_M}\sum_{i\in J\setminus J_0,\,W_i\le\tau+uw}
+                       (\zeta_i-p_i)\right|^2
+\le\frac{8d_{J\setminus J_0}}{A_M^2}\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (44.14)。
+
+乘积律中使用的是完整得分组，未把同分标签的小跳等同于组的小跳。
+(44.13) 对所有非中心前缀的一致界趋零；一次完整向量比较转移其上确界事件。
+于是令 $`Z_M=A_M^{-1}\sum_{i\in J_0}(\mathbf1_{\{i\in S\}}-\pi_i)`$，得到
+
+```math
+Z_M\Longrightarrow N(0,1),\qquad
+\sup_{-1\le u\le1}
+ |F_M(u)-Z_M\mathbf1_{[c_M,1]}(u)|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (44.15)。
+
+取固定端点、把零送到 $`c_M`$ 的分段线性递增时间变换，
+其到恒等映射的一致距离至多 $`|c_M|\to0`$。
+这证明 (44.6) 及紧性，既不要求非中心组为空，也不推断跳点零处的逐点收敛。
+
+对定理中给出的特别序列，$`\theta_j\sim1/\log Q_j\to0`$，且 (44.1) 成立。
+第一个正邻组的中度偏差 Stirling 展开给出
+
+```math
+\frac{f_{j,1}}{f_{j,0}}
+=\exp\left(-\frac\kappa2\log Q+o(1)\right)
+=Q^{-\kappa/2}(1+o(1)),\qquad
+\frac{|J_{\mathrm{next}}|}
+ {qQ^{-\kappa/2}/(\pi\lambda\sqrt{ab})}\longrightarrow1
+\quad\text{依概率}.
+```
+
+式 (44.16)。
+
+展开余项为 $`O(Q^3/\lambda^2+Q/\lambda)=o(1)`$；
+$`|P/Q-\alpha|\log Q\to0`$ 也控制了指数中系数的替换。
+换测度给出分母所示的混合均值，它由 (44.1) 导出的超多项式增长趋于无穷。
+实际两行方差界除以该均值平方后趋零，因此得到第二式及
+$`|J_{\mathrm{next}}|\to\infty`$。这与 (44.14) 控制的归一化整条远端路径同时成立。
+
+反之，若 $`\theta_j`$ 不趋零，存在子序列及 $`\eta_0\gt0`$，使
+$`\theta_j\ge\eta_0`$；再取子序列使其趋于
+$`\theta_*\in[\eta_0,\infty]`$。定义
+
+```math
+p_*=
+\begin{cases}
+\dfrac{\mathcal C(\theta_*)-c_0}{2\mathcal C(\theta_*)},&\theta_*\lt\infty,\\
+\dfrac12,&\theta_*=\infty.
+\end{cases}
+\qquad 0\lt p_*\le\tfrac12.
+```
+
+式 (44.17)。
+
+负整数组和非负整数组为同一个窗口的互不相交部分。
+(44.4)、(44.12)、联合有界数组中心极限定理及 (44.13) 给出
+
+```math
+\left(\frac1{A_M}\sum_{i\in J_-}(\mathbf1_{\{i\in S\}}-\pi_i),
+      \frac1{A_M}\sum_{i\in J\setminus J_-}(\mathbf1_{\{i\in S\}}-\pi_i)\right)
+\Longrightarrow (G_-,G_+),\qquad
+G_-\sim N(0,p_*),\quad G_+\sim N(0,1-p_*),\quad G_-\perp G_+.
+```
+
+式 (44.18)。
+
+独立性在联合高斯性与零交叉协方差之后得出。
+
+在固定公共计数截断中，可行直线参数构成整数区间
+$`[t_-,t_+]\cap\mathbb Z`$；在当前子序列上 $`t_-\le-1\lt0\le t_+`$
+最终成立，因为 $`\lambda/Q\to\infty`$。令
+
+```math
+u_- =\frac{W_c+(t_--1/2)\Delta-\tau}{w},\qquad
+u_0 =\frac{W_c-\Delta/2-\tau}{w},\qquad
+u_+ =\frac{W_c+(t_++1/2)\Delta-\tau}{w},\qquad W_c=W(k_0,l_0).
+```
+
+式 (44.19)。
+
+这三个确定时点严格递增，均趋于区间内部零点。
+在公共截断事件上，其相邻过程增量恰好是 (44.18) 的两个完整块。
+两增量绝对值同时超过某个固定正数的概率因而有严格正的极限。
+第 39 章从 [Whitt 定理 3.2](../../../Library/Dynamics/whitt2007martingale.md)
+得到的内部三点分割振荡必要条件排除了该子序列的 $`J_1`$ 紧性。
+原分布族也就不紧。这证明充要条件的逆向，而非仅由端点方差推测路径行为。
+
+以上条件后验计算都在均匀支持先验下进行。
+全部对象对共同支持置换等变，其无条件联合律等于任意固定支持下的联合律。
+实际比较界具有支持一致性；未知方向的所有坐标在同一个正确判决事件上逐项相同，
+补事件概率为 $`O(q^{-1})`$。故端点、单跳逼近和振荡下界同时转移到所述两种实验
+及两种方向信息情形。∎
+
+## 追加锚（本行以下为增补区）
