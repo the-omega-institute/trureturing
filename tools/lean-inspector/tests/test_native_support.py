@@ -592,10 +592,17 @@ class NativeArtifactTestSupport(NativeTestSupport):
 
         cls.donor = ValidFixture()
         cls.donor.setUpClass()
-        cls.addClassCleanup(cls.donor.doCleanups)
+        cls.addClassCleanup(cls.cleanup_donor)
         cls.donor.setUp()
         cls.donor.build()
         cls.donor_inventory = cls.inventory(cls.donor.root)
+
+    @classmethod
+    def cleanup_donor(cls):
+        # The donor is not itself run by unittest. Its doCleanups would swallow
+        # errors without a TestResult; let the owning class report them instead.
+        if hasattr(cls.donor, 'temporary'):
+            cls.donor.cleanup_fixture()
 
     @staticmethod
     def inventory(root):
@@ -683,6 +690,32 @@ class GuardedCommandTests(unittest.TestCase):
         self.fixture.root = Path(self.fixture.temporary.name)
         self.fixture.env = dict(os.environ)
         self.addCleanup(self.fixture.cleanup_fixture)
+
+    def test_artifact_donor_cleanup_failure_fails_owning_suite(self):
+        class Consumer(NativeArtifactTestSupport, unittest.TestCase):
+            def setUp(self):
+                pass
+
+            def test_consumer(self):
+                pass
+
+        def prepare(donor):
+            donor.temporary = object()
+            donor.root = Path('unused-donor')
+            donor.addCleanup(donor.cleanup_fixture)
+
+        result = unittest.TestResult()
+        with patch.object(NativeTestSupport, 'setUpClass'), \
+                patch.object(NativeTestSupport, 'setUp', prepare), \
+                patch.object(NativeTestSupport, 'build'), \
+                patch.object(NativeArtifactTestSupport, 'inventory', return_value={}), \
+                patch.object(NativeTestSupport, 'cleanup_fixture',
+                             side_effect=RuntimeError('owned donor cleanup failed')):
+            unittest.defaultTestLoader.loadTestsFromTestCase(Consumer).run(result)
+        self.assertEqual(result.testsRun, 1)
+        self.assertEqual(len(result.errors), 1)
+        self.assertIn('owned donor cleanup failed', result.errors[0][1])
+        self.assertFalse(result.wasSuccessful())
 
     def test_command_preserves_output_and_nonzero_exit(self):
         for enabled, status in [(False, 0), (False, 7), (True, 0), (True, 7)]:
