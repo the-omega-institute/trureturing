@@ -243,3 +243,4 @@ INGEST_TRUTH_ALIGNMENT_REQUIRED existing entry <id> changed status-authority inp
 5. 见到自己用 `**定义 3.1**` 写一条**打算被形式化**的命题——它不会进候选分母,永远等不到人来证。
 6. 见到 `comm -23` 非空(基线 atom 消失了几条)而去重跑、去跑 align——那是在掩盖一次真实的改判。
 7. 见到自己在卷里写「已由 Lean 验证」「已冻结」——账上没有的不冒领,状态以冻结账本为准。
+
