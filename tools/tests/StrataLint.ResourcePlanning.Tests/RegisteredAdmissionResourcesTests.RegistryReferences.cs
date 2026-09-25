@@ -33,7 +33,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
             Assert.Equal(readsBody || structural,
                 Strings(plan["stages"]!["engineering"]!["resources"]!).Contains("test-repository-filemap"));
             Assert.Equal(structural, Strings(plan["execution"]!["tests"]!).Contains(RepositoryTopologyProject));
-            Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+            Assert.Equal(readsBody || structural || path == "CLAUDE.md" || path.StartsWith("D5/", StringComparison.Ordinal)
+                ? "required" : "not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cache", Strings(plan["resources"]!));
             if (path is "LICENSE" or "README.md" or "Trureturing.lean")
