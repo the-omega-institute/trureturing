@@ -1,0 +1,11 @@
+**定理 35.3（相关寄存器的精确张量化与可恢复信息界）。** 对 $n$ 个比特，每个局部信道 $\Phi_i$ 都是定义 35.1 的某个终点信道，或任意前后局部酉修饰的 $\Psi_{a_i,b_i}$，令 $c_i=\eta^{\rm c}(\Phi_i)$。则允许任意跨寄存器纠缠及任意有限外部记忆时，
+\[
+ \boxed{\eta^{\rm c}(\Phi_1\otimes\cdots\otimes\Phi_n)=\max_i c_i.}
+\]
+记 $c=\max_i c_i$、$\sigma=I_{2^n}/2^n\otimes\rho_R$，则
+\[
+ \|(\Phi_1\otimes\cdots\otimes\Phi_n\otimes\operatorname{id})\rho-\sigma\|_1
+ \le\min\{2,\sqrt{2c\,\mathcal D_{A_1\cdots A_n|R}(\rho)}\}
+ \le\min\{2,2\sqrt{c\,n\log2}\}.
+\]
+

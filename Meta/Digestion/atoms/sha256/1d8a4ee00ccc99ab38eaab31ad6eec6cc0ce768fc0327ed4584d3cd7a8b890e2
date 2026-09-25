@@ -1,0 +1,15 @@
+**定理 9.3（有限预测时间的算术下界）。** 设 $0<\varepsilon<1/2$，置
+\[
+ a_\varepsilon=\frac{\arcsin\varepsilon}{\pi},\qquad
+ \Psi_\alpha(s)=\max_{1\le p\le s}\frac{p}{\|p\alpha\|_{\mathbb T}}.
+\]
+若一个 $s$ 状态自主预测器从某个固定初相位起，在 $0\le n\le H$ 内误差至多为 $\varepsilon$，则
+\[
+ H<s+a_\varepsilon\Psi_\alpha(s).
+\]
+若另有 $c>0$、$\nu\ge1$ 满足 $\|p\alpha\|_{\mathbb T}\ge c p^{-\nu}$ 对全部正整数 $p$ 成立，则
+\[
+ H<s+\frac{a_\varepsilon}{c}s^{\nu+1}.
+\]
+这些结论对允许任意复数输出常数的预测器仍成立。
+

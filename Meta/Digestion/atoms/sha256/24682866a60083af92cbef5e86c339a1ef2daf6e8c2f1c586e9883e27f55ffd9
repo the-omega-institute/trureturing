@@ -1,0 +1,11 @@
+**证明。** 全能量满足 $dU/dt=-\|\nabla_xU\|^2-\epsilon^{-1}\|\nabla_zU\|^2\le0$，因此 $\|(x_\epsilon,z_\epsilon)\|\le R_0$，且 $\|\dot x_\epsilon\|\le M_0$。令 $w=z_\epsilon+C^{-1}B^{\mathsf T}x_\epsilon$，直接求导得
+\[
+ \dot w=-\epsilon^{-1}Cw+C^{-1}B^{\mathsf T}\dot x_\epsilon,
+\]
+从而
+\[
+ \|w(t)\|\le e^{-ct/\epsilon}\|w_0\|
+          +\frac{\epsilon D_0M_0}{c}(1-e^{-ct/\epsilon}).
+\]
+又有 $\dot x_\epsilon=-Sx_\epsilon-Bw$。两轨迹初始 $x$ 相同，故差为 $-\int_0^te^{-S(t-s)}Bw(s)ds$。对初始层一项用 $e^{-m(t-s)}\le1$ 及 $\int_0^te^{-cs/\epsilon}ds\le\epsilon/c$；对持续项用 $\int_0^te^{-m(t-s)}ds\le1/m$，相加得到一致界。快慢比例、完整能量正定性和有效谱隙共同提供闭合控制；仅有自由能公式没有给出这些动力学前提。证毕。
+

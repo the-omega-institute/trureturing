@@ -43135,3 +43135,4221 @@ $$
 最后，定理184.2的三个固定通道在其相关矩阵坐标 $(1,a,h)$ 上分别为 $(1,1,1)$、$(1,-1,1)$、$(1,c,c^2)$，对应行列式非零，因为 $|c|<1$。所以它们的仿射混合权重由目标通道唯一确定，正是（184.5）的三概率。要求测量后仅执行这三个通道，遂与（198.3）的固定仿射读出问题等价。将（197.20）的 $V$ 代入即可得到所述受限处理器的精确系数；允许其他处理器会扩大优化域，本定理没有对该扩大域证明同样下界。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 199. 任意纯二维处理器的精确二次成本：算子相关矩阵锁定极限
+
+**定义 199.1（圆弧程序的分块相关矩阵域）。** 固定定义195.1的 $a,t,R$，记 $F=F(a,t)$、$E_{02}=E_{20}=1$ 且其余 $E$ 元素为零。令 $\mathscr M(a,t,R)$ 由参数 $\varepsilon,x,c,C$ 构成，其中
+$$
+0<\varepsilon\le\frac12,\qquad c>0,\qquad x\in\mathbb R,
+\qquad C=C^T\in M_3(\mathbb R),\qquad \operatorname{diag}C=\mathbf1,
+\tag{199.1}
+$$
+并要求
+$$
+\Gamma=
+\begin{pmatrix}
+\dfrac{F-xE/c-\varepsilon C}{1-\varepsilon}&E/c\\[2mm]
+E/c&C
+\end{pmatrix}\succeq0,
+\qquad
+|x|+cR<\sqrt{4\varepsilon(1-\varepsilon)}.
+\tag{199.2}
+$$
+定义该参数的名义成本
+$$
+Q(\varepsilon,x,c)
+=\frac{4c^2\varepsilon(1-\varepsilon)}
+       {4\varepsilon(1-\varepsilon)-x^2}.
+\tag{199.3}
+$$
+式（199.2）使分母严格为正，也使 $C$ 自动成为相关矩阵。
+
+**定理 199.2（六维分块矩阵与全部处理器的精确优化等价）。** 对定义199.1的参数，
+$$
+\mathfrak P_2(a,t;R)
+=\inf_{\mathscr M(a,t,R)}Q(\varepsilon,x,c).
+\tag{199.4}
+$$
+可行集非空，且其中每个参数都满足 $1\le c\le\sqrt Q$。该等价式允许原始程序使用任意固定 CPTP 处理器，不预设其为测量—制备处理器，也不要求下确界达到。
+
+证明。 先从任意原始程序出发。定理196.1将其替换为使用同一处理器、同一完整精确开区间的圆弧程序，名义成本不增加。将圆弧平面中的仿射投影速度作为 $X$ 方向，将固定的不可见方向作为 $Y$，圆心方向作为 $Z$ 并取非负坐标，可写成
+$$
+r(t+u)=
+\left(x+cu,\ \pm\sqrt{h^2-(x+cu)^2},\ 1-2\varepsilon\right),
+\qquad h^2=4\varepsilon(1-\varepsilon),
+\tag{199.5}
+$$
+其中 $c>0$、$0<\varepsilon\le1/2$。大圆对应 $\varepsilon=1/2$，因此这一写法亦包括秩一可见映射的圆弧替代。原开区间包含闭区间，故根号在两个端点都严格为正，得到（199.2）的严格覆盖条件。速度平方即为（199.3）。
+
+依第191.3、194.1节的受控 Stinespring 论证，存在等距映射 $W_i:\mathbb C^2\to\mathcal E$，使处理器的等距扩张为
+$$
+V(|i\rangle\otimes\psi)=|i\rangle\otimes W_i\psi,
+\qquad W_i^\dagger W_i=I_2.
+\tag{199.6}
+$$
+令 $K_{ij}=W_i^\dagger W_j$，则算子 Gram 矩阵 $K=(K_{ij})\succeq0$，且 $K_{ii}=I_2$。须保留指标方向：程序状态 $\rho$ 诱导的 Schur 系数为
+$$
+F_\rho{}_{ij}=\operatorname{Tr}(\rho K_{ji}).
+\tag{199.7}
+$$
+不可见 $Y$ 方向意味着 $\operatorname{Tr}(YK_{ji})=0$，所以每个二阶程序块满足 $K_{ij}^T=K_{ij}$；这一步尚不意味着各块为 Hermitian。
+
+现在把整个 Gram 矩阵替换为
+$$
+K^{\mathbb R}=\frac{K+\overline K}{2}.
+\tag{199.8}
+$$
+它仍正半定，且对角块仍为 $I_2$。它整体为实对称矩阵，各程序块也为实对称矩阵，因此 $K^{\mathbb R}_{ji}=K^{\mathbb R}_{ij}$。由于每个原块都看不到程序的 $Y$ 分量，沿同一条纯曲线有
+$$
+\operatorname{Tr}(\rho K^{\mathbb R}_{ji})
+=\operatorname{Re}\operatorname{Tr}(\rho K_{ji})
+=F(a,t+u)_{ij}.
+\tag{199.9}
+$$
+这构造了另一组合法 Gram 数据，不声称对未知量子输入作复共轭是一条物理通道。实化可以改变可见映射的秩；所得处理器仍属于这里的完整优化域。
+
+按程序基先分组，将 $K^{\mathbb R}$ 重排为 $\left(\begin{smallmatrix}U&A\\A&C\end{smallmatrix}\right)$，其中三个块均为实对称三阶矩阵，$\operatorname{diag}U=\operatorname{diag}C=\mathbf1$、$\operatorname{diag}A=0$。沿（199.5）的 Schur 矩阵为
+$$
+(1-\varepsilon)U+\varepsilon C+(x+cu)A=F+uE.
+\tag{199.10}
+$$
+比较值与导数，得到 $A=E/c$ 及 $U=(F-xE/c-\varepsilon C)/(1-\varepsilon)$，恰为（199.2）。因此每个原始程序对应一个可行参数，成本不超过原成本。
+
+反过来，给定可行的 $\Gamma$，按信号指标重新分块，其程序块为 $\left(\begin{smallmatrix}U_{ij}&E_{ij}/c\\E_{ij}/c&C_{ij}\end{smallmatrix}\right)$。Gram 分解给出 $W_i^\dagger W_j=K_{ij}$，而对角块 $I_2$ 保证（199.6）为等距映射。对环境取偏迹即得 CPTP 处理器。各块实对称且 $K_{ji}=K_{ij}$，故（199.7）与（199.10）给出对全部信号输入的精确目标通道。严格覆盖条件使（199.5）在包含所需闭区间的稍大开域上解析，亦可将其限制在 $J_a$ 内。因此该参数产生名义成本恰为 $Q$ 的实际程序，证明下确界的反向不等式。
+
+第184.3节的两端点程序保证原程序类非空，故矩阵域非空。$\Gamma$ 的六个对角元均为一，其 $E/c$ 块中存在元素 $1/c$；对应二阶主子式非负给出 $c\ge1$。式（199.3）给出 $Q\ge c^2$。证毕。
+
+**定理 199.3（任意处理器的二次首项与显式极限矩阵）。** 对每个固定的 $0<a<1$、$2a-1<t<1$，
+$$
+\boxed{
+\mathfrak P_2(a,t;R)
+=B(a,t)+\frac{a^2B(a,t)^2}{2(1+t-2a^2)}R^2+o(R^2)
+}
+\qquad(R\downarrow0).
+\tag{199.11}
+$$
+特别地，定理196.3的系数为
+$$
+\kappa(a,t)=\frac{a^2(1-a^2)^2}
+{2(1-t)^2(1+t-2a^2)^3}.
+\tag{199.12}
+$$
+记 $d=1-a^2$、$D=1+t-2a^2$、$\eta=(a^2-t)/d$。在定义199.1的可行参数中，任意成本趋向 $B$ 的序列都满足
+$$
+\varepsilon\to0,\qquad c^2\to B,\qquad
+\frac{x^2}{\varepsilon}\to0,\qquad
+C\longrightarrow C_0:=
+\begin{pmatrix}1&0&\eta\\0&1&0\\\eta&0&1\end{pmatrix}.
+\tag{199.13}
+$$
+这里的极限只涉及固定 $a,t$，不要求精确区间具有共同正半径。
+
+证明。 首先证明（199.13）。因为 $1\le c\le\sqrt Q$，成本趋于 $B$ 时 $c$ 有固定上下界；$\Gamma$ 是六阶相关矩阵，所以它及其子块属于固定紧集。若某子列 $\varepsilon\ge\varepsilon_0>0$，则 $h^2=4\varepsilon(1-\varepsilon)$ 有正下界，而
+$$
+h^2-x^2=\frac{c^2h^2}{Q}
+\tag{199.14}
+$$
+也有正下界。取收敛子列，极限分块矩阵仍正半定，且极限圆弧在名义点附近有一个真正的开定义域。按定理199.2的反向构造，它给出名义成本恰为 $B$ 的局部精确纯二维程序，与定理194.1的严格不达到性矛盾。因此 $\varepsilon\to0$，进而 $x\to0$。
+
+上左块趋向正定的 $F$，故充分靠后可取 Schur 补，得到
+$$
+C\succeq\frac{1-\varepsilon}{c^2}\,
+E\left(F-\frac xcE-\varepsilon C\right)^{-1}E.
+\tag{199.15}
+$$
+取 $00$ 对角元并用 $(EF^{-1}E)_{00}=B$，得到 $c^2\ge B+o(1)$。结合 $c^2\le Q\to B$，可知 $c^2\to B$；再用（199.3）可知 $x^2/\varepsilon\to0$。
+
+任一 $C$ 的聚点 $C_\infty$ 满足
+$$
+C_\infty\succeq\frac{EF^{-1}E}{B},\qquad
+\operatorname{diag}C_\infty=\mathbf1.
+\tag{199.16}
+$$
+右侧矩阵的对角为 $(1,0,1)$。因此正半定残差的对角为 $(0,1,0)$，其第零和第二行列必须全部为零。这迫使
+$$
+C_\infty=\frac{EF^{-1}E}{B}+|1\rangle\langle1|=C_0.
+\tag{199.17}
+$$
+聚点唯一，故整个序列收敛，完成（199.13）。
+
+现在提取二次成本。记
+$$
+A_3=(EF^{-1}EF^{-1}E)_{00},\qquad
+A_C=(EF^{-1}C_0F^{-1}E)_{00}.
+\tag{199.18}
+$$
+由（199.15）的 $00$ 对角元及逆矩阵的一阶展开，沿上述低成本序列有
+$$
+c^2-B\ge
+\frac{A_3}{\sqrt B}x+(A_C-B)\varepsilon
++o(|x|+\varepsilon).
+\tag{199.19}
+$$
+展开合法因为 $F$ 正定、$C$ 一致有界且 $c$ 有正下界。未给速率的 $C-C_0$ 总是乘以 $\varepsilon$，所以贡献 $o(\varepsilon)$；将 $1/c$ 替换为 $1/\sqrt B$ 贡献 $o(|x|)$。不需要预先控制 $C$ 的收敛速度。
+
+这两个矩阵系数可直接计算。由
+$$
+F^{-1}e_2=
+\begin{pmatrix}\eta B\\-a/D\\B\end{pmatrix},\qquad
+B(1-\eta^2)=\frac1d,
+\tag{199.20}
+$$
+得到
+$$
+A_3=2\eta B^2,\qquad
+A_C=B^2(1+3\eta^2)+\frac{a^2}{D^2}.
+\tag{199.21}
+$$
+令 $A=A_C/B-1$、$k=A_3/B^{3/2}=2\eta\sqrt B$，则
+$$
+A-k^2
+=B(1-\eta^2)+\frac{a^2}{BD^2}-1
+=\frac{2a^2}{D}>0.
+\tag{199.22}
+$$
+它也等于第197节的 $V/B^2$，但（199.20）—（199.22）直接从任意处理器的极限矩阵取得该数。
+
+设 $T=\varepsilon+x^2/\varepsilon$。式（199.13）使 $T\to0$，且 $|x|\le T/2$。结合（199.3）、（199.19）得到
+$$
+Q-B\ge
+B\left(A\varepsilon+kx+\frac{x^2}{4\varepsilon}\right)+o(T).
+\tag{199.23}
+$$
+括号中的二次式满足
+$$
+A\varepsilon+kx+\frac{x^2}{4\varepsilon}
+=\frac{2a^2}{D}\varepsilon
++\varepsilon\left(\frac{x}{2\varepsilon}+k\right)^2
+\ge c_0T
+\tag{199.24}
+$$
+对某个固定 $c_0>0$ 成立。因此任何 $R\downarrow0$ 且 $Q-B=O(R^2)$ 的可行序列都满足 $T=O(R^2)$。由严格覆盖条件，
+$$
+4\varepsilon(1-\varepsilon)>c^2R^2,
+\qquad
+\liminf\frac{\varepsilon}{R^2}\ge\frac B4.
+\tag{199.25}
+$$
+将（199.24）的平方项丢去，余项因 $T=O(R^2)$ 而为 $o(R^2)$，故
+$$
+\liminf\frac{Q-B}{R^2}
+\ge\frac{2a^2B}{D}\liminf\frac{\varepsilon}{R^2}
+\ge\frac{a^2B^2}{2D}.
+\tag{199.26}
+$$
+定理197.2给出相同系数的实际程序上界。由定理199.2，在任意半径序列上选择成本与下确界相差至多 $R^3$ 的可行参数；结合定理193.2的成本下界，所得参数满足 $Q-B=O(R^2)$，所以（199.26）适用。上下界匹配即得（199.11）与（199.12）。
+
+因此，第197节的三结果测量—制备构造已经在二次首项上达到任意固定处理器类的最优值。这不主张它在每个正半径处取得最小值，也不主张各处理器类的高阶项相同。全部推导保留开邻域精确性、固定程序维数与同一处理器内的联合矩阵正性；Gram 分解与 Schur 补只作为该具体优化的标准工具。固定处理器与程序输入的标准框架可参见 Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Physical Review A 66, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II节。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 200. 二维最优程序的满秩刚性与最大精确续接区间
+
+**定义 200.1（二维名义最优程序与续接域）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令 $\mathcal T_u=\mathcal S_{F(a,u)}$、$I_r(u)=1/(1-u^2)$。本节的程序由一个固定 CPTP 处理器 $\mathcal G:M_6\to M_3$、一个包含 $t$ 的连通开区间 $U\subset J_a$ 和其上的 $C^1$ 二维密度矩阵曲线组成，满足
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\quad(u\in U),\qquad
+I_Q(\rho_t)=I_r(t).
+\tag{200.1}
+$$
+通道等式针对全部信号输入，不只针对一个选定探针；任何点都不预先规定程序秩。这里 $I_Q$ 取点态 SLD 值 $\operatorname{Tr}(\rho_tL^2)$，其中 $\rho_t'= (L\rho_t+\rho_tL)/2$；不将跨秩的度量极限代作该点值。记
+$$
+h_0=\frac{1+t}{2},\qquad
+A_0=\frac{at}{h_0},\qquad
+B_0=2a\sqrt{\frac{1-t}{1+t}},\qquad
+\lambda_*:=\frac{B_0}{\sqrt{1-A_0^2}}.
+\tag{200.2}
+$$
+由 $h_0>a$ 及 $A_0^2+B_0^2=a^2/h_0^2<1$，可知 $0<\lambda_*<1$。
+
+**定理 200.2（名义等号强制全区间仿射正规形）。** 每个定义200.1的程序，经过一个不依赖 $u$ 的程序酉坐标变换，都在整个 $U$ 上具有形式
+$$
+\rho_u=\frac12\left(I+x_\lambda(u)X+uZ\right),\qquad
+x_\lambda(u)=\frac{\lambda(1-tu)}{\sqrt{1-t^2}},
+\qquad \lambda_*\le\lambda<1.
+\tag{200.3}
+$$
+该程序在全部 $U$ 上满秩。反过来，对每个 $\lambda\in[\lambda_*,1)$，存在固定 CPTP 处理器使（200.3）在
+$$
+U_\lambda=J_a\cap\{u:q_\lambda(u)>0\},\qquad
+q_\lambda(u)=1-u^2-\frac{\lambda^2}{1-t^2}(1-tu)^2
+\tag{200.4}
+$$
+上满足定义200.1。每个原程序的精确开区间都包含于其对应的 $U_\lambda$。
+
+证明。 先取任意程序的 Stinespring 等距表示 $V$。对每个 $u\in U$，输入 $|i\rangle\langle i|\otimes\rho_u$ 的信号输出为纯态 $|i\rangle\langle i|$。分解 $\rho_u$ 在其支持上的正权本征投影，利用输出在 $|i\rangle$ 正交补上的概率为零及各分量非负，可知 $V$ 把 $|i\rangle\otimes\operatorname{supp}\rho_u$ 映入 $|i\rangle\otimes\mathcal E$。所有程序支持的线性包必须是整个二维空间；否则所有密度矩阵都为同一个一维投影，诱导通道恒定，与目标随 $u$ 变化矛盾。故由线性性，
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I_2.
+\tag{200.5}
+$$
+这是在整个联合输入空间上的恒等式，不只沿已给程序曲线成立。
+
+以均衡 $02$ 信号输入并读取 $|+\rangle,|-\rangle$，在程序空间得到 POVM
+$$
+M_\pm=\frac12(I\pm\operatorname{Re}A),\qquad
+A=W_2^\dagger W_0,
+\qquad p_\pm(u)=\frac{1\pm u}{2}.
+\tag{200.6}
+$$
+这项读出的经典信息量为 $I_r$，故它在 $t$ 饱和 SLD 测量信息界。设 $L$ 为 $\rho_t$ 的 SLD，$s_+=1/(1+t)$、$s_-=-1/(1-t)$。支持敏感的测量等号条件给出
+$$
+\sqrt{M_\pm}L\sqrt{\rho_t}
+=s_\pm\sqrt{M_\pm}\sqrt{\rho_t}.
+\tag{200.7}
+$$
+此标准条件来自逐效应 Hilbert–Schmidt Cauchy–Schwarz 等号；参见 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（27）。
+
+两个效应非零，而 $s_+\ne s_-$。若 $\rho_t$ 满秩，则可在（200.7）右消去 $\sqrt{\rho_t}$，两个效应分别支持于 $L$ 的两个不同一维本征空间。若 $\rho_t=|\psi\rangle\langle\psi|$ 为纯态，则该式变成 $\sqrt{M_\pm}L\psi=s_\pm\sqrt{M_\pm}\psi$。任一效应若可逆便推出 $L\psi=s_\pm\psi$，但 $\langle\psi,L\psi\rangle=\operatorname{Tr}\rho_t'=0$，与 $s_\pm\ne0$ 矛盾。所以此时两个效应也都为秩一。两种情形下，两个秩一正效应之和为单位算子，必为互补正交投影。
+
+纯态处的 SLD 使用是点态的：在以 $\psi$ 为第一基向量的坐标中，双侧 $C^1$ 正性使核上的对角导数为零，迹为零又使另一个对角导数为零；余下的非对角导数有 Hermitian SLD 解。因此上述论证没有从满秩公式跨秩取极限。选定投影测量的固定程序坐标后，
+$$
+M_\pm=\frac12(I\pm Z),\qquad
+\operatorname{Re}A=Z.
+\tag{200.8}
+$$
+压缩算子 $A$ 在 $Z$ 的两个本征向量上的实期望值已分别达到 $1,-1$，所以对应的范数与 Cauchy–Schwarz 界均饱和，得 $A=Z$。再由等距性得到 $W_2=W_0Z$。这两条恒等式属于固定处理器，因而适用于全部 $U$。
+
+令 $h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$。由于（200.6）的测量已为 $Z$ 投影，程序可写为
+$$
+\rho_u=\begin{pmatrix}h(u)&\overline{z(u)}\\z(u)&\ell(u)\end{pmatrix}.
+\tag{200.9}
+$$
+记 $K=W_0^\dagger W_1=\left(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix}\right)$，则 $\|K\|\le1$。两个固定的实 Schur 系数分别给出 $\operatorname{Tr}(\rho_uK)=a$ 和 $\operatorname{Tr}(\rho_uZK)=a$；其中第一式可从实际 $01$ 系数取复共轭取得。相加相减，得到整个 $U$ 上的两个复数恒等式
+$$
+\alpha h(u)+\beta z(u)=a,\qquad
+\gamma\overline{z(u)}+\delta\ell(u)=0.
+\tag{200.10}
+$$
+若 $\beta=0$，第一式要求固定 $\alpha$ 与非恒定 $h$ 的乘积恒为非零常数 $a$，不可能。因此 $\beta\ne0$，并且 $z(u)=(a-\alpha h(u))/\beta$ 在整个 $U$ 上为仿射函数。
+
+式（200.9）及 $z$ 的仿射性使整个 Bloch 曲线成为非恒定仿射线，其 $Z$ 坐标的导数为一。这样的线不能在 $U$ 的内点接触单位球面：若 $|r(u_0)|=1$，对充分小的 $s>0$，两点平方范数的平均为 $1+s^2|r'|^2>1$，而两点都须为合法态。故程序在整个 $U$ 上满秩，名义点为纯态的情形已经排除。
+
+现在可在（200.7）消去 $\sqrt{\rho_t}$，得到唯一的 $L=\operatorname{diag}(1/(1+t),-1/(1-t))$。将它代入 SLD 方程 $\rho_t'=(L\rho_t+\rho_tL)/2$ 的 $10$ 元，得到
+$$
+z'(t)=-\frac{t}{1-t^2}z(t).
+\tag{200.11}
+$$
+仿射性于是强制
+$$
+z(u)=z(t)\frac{1-tu}{1-t^2}\qquad(u\in U).
+\tag{200.12}
+$$
+$z(t)$ 不能为零，否则 $z$ 恒为零，再与（200.10）第一式矛盾。以一个固定对角程序酉变换令 $z(t)>0$，并置 $\lambda=2z(t)/\sqrt{1-t^2}$。名义满秩性给出 $0<\lambda<1$，而（200.12）恰为（200.3）。
+
+将该表达代回（200.10），逐项比较仿射系数，得到
+$$
+K=\begin{pmatrix}A_0&B_0/\lambda\\0&0\end{pmatrix}.
+\tag{200.13}
+$$
+下行消失是因为 $1-tu$ 与 $1-u$ 线性无关：两者若成比例便要求 $t=1$，与 $t\in J_a$ 矛盾。因此压缩条件给出
+$$
+A_0^2+\frac{B_0^2}{\lambda^2}\le1,
+\qquad \lambda\ge\lambda_*.
+\tag{200.14}
+$$
+至此没有假定处理器的 Bloch 映射单射；程序的全区间仿射性由两个固定的通道系数直接推出。
+
+式（200.3）的正性等价于 $q_\lambda(u)\ge0$。这个严格凹二次式满足 $q_\lambda(t)=(1-\lambda^2)(1-t^2)>0$，所以有两个不同实根，并只在两根之间为正。一个由合法态组成且包含 $t$ 的开区间不能包含任一根，否则根外侧也须属于该开区间而使 $q_\lambda<0$。故 $q_\lambda>0$ 在全部 $U$ 成立，证明满秩性与域的包含关系。
+
+反向构造取（200.13）的压缩算子，使用
+$$
+W_0=\begin{pmatrix}I_2\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I_2-K^\dagger K}\end{pmatrix}.
+\tag{200.15}
+$$
+即使 $\lambda=\lambda_*$ 时 $\|K\|=1$，根号仍正半定，三个 $W_i$ 仍为等距映射。以信号基控制它们，再取环境偏迹，便得到固定 CPTP 处理器。第191.2节的计算对这里的闭端点参数同样成立：$ZK=K$，而 $A_0h(u)+(B_0/\lambda)x_\lambda(u)/2=a$，故三个目标 Schur 系数分别为 $a,a,u$。由第191.2节的满秩信息公式，
+$$
+I_Q(\rho_u)-I_r(u)
+=\frac{\lambda^2(u-t)^2}
+{(1-t^2)(1-u^2)q_\lambda(u)}.
+\tag{200.16}
+$$
+它在 $t$ 为零；（200.4）上程序解析且满秩，完成反向构造。证毕。
+
+**定理 200.3（全部最优二维程序共享的最大续接域）。** 记
+$$
+b_\pm^*(a,t)=
+\frac{a^2t\pm\sqrt{(h_0^2-a^2)(h_0^2-a^2t^2)}}{h_0^2}.
+\tag{200.17}
+$$
+定义200.1中所有允许精确区间均包含于
+$$
+U_*(a,t)=(b_-^*,b_+^*)\cap J_a,
+\tag{200.18}
+$$
+且存在一个程序以整个 $U_*$ 为精确区间。因此 $U_*$ 是这个程序类按包含关系的最大续接域。它也可写为
+$$
+U_*(a,t)=\left\{u\in J_a:
+ h_0^2(1-u^2)>a^2(1+t^2-2tu)\right\}.
+\tag{200.19}
+$$
+有 $-1<b_-^*<t<b_+^*<1$。对任意满足 $[t-R,t+R]\subset J_a$ 的 $R>0$，存在定义200.1的程序在包含该闭区间的开域上精确，当且仅当
+$$
+R<R_*(a,t):=
+\frac{\sqrt{(h_0^2-a^2)(h_0^2-a^2t^2)}
+-|t|(h_0^2-a^2)}{h_0^2}.
+\tag{200.20}
+$$
+
+证明。 对固定 $u\in J_a$，式（200.4）随正参数 $\lambda$ 严格递减，因为 $|tu|<1$。故在 $\lambda\ge\lambda_*$ 的全部正规形中，$\lambda=\lambda_*$ 的正性区间包含其他全部正性区间。定理200.2的反向构造允许这个端点，遂同时给出普遍上界及其达到。
+
+将（200.2）化简得
+$$
+\frac{\lambda_*^2}{1-t^2}
+=\frac{a^2}{h_0^2-a^2t^2}.
+\tag{200.21}
+$$
+分母严格为正。于是
+$$
+(h_0^2-a^2t^2)q_{\lambda_*}(u)
+=h_0^2(1-u^2)-a^2(1+t^2-2tu).
+\tag{200.22}
+$$
+右边为严格凹二次式，解其两个根即得（200.17）—（200.19）。它在 $u=t$ 为正，而在 $u=\pm1$ 分别为 $-a^2(1\mp t)^2<0$，故两根严格位于 $-1,t,1$ 的相应间隙。
+
+一个包含闭区间 $[t-R,t+R]$ 的允许开域存在，等价于两个端点严格位于 $(b_-^*,b_+^*)$ 内；与 $J_a$ 的严格包含已由假设保证。因此条件为
+$$
+R<\min\{t-b_-^*,b_+^*-t\}.
+\tag{200.23}
+$$
+两根中点为 $a^2t/h_0^2$，半宽为（200.17）中的根号除以 $h_0^2$，将名义点到中点的距离减去便得（200.20）。等号 $R=R_*$ 不允许，因为至少一个端点落在物理区间的根上，无法再有包含它的合法开延拓。
+
+这里控制的是点态 SLD 名义等号的精确续接域；式（200.16）同时显示，在域内离开名义点便有正的信息额外成本。结论不要求一个程序在整个 $U_*$ 处处达到 $I_r$，也不从超过该半径时的不达到性推出严格为正的最优成本差距。定理200.2还排除了第191.4节单独保留的名义纯态、邻域变秩的等号情形；这里无需预设恒秩。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 201. 混态二维精确成本的半径阈值：达到、临界不达到与正差距
+
+**定义 201.1（允许混态的固定半径成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$ 及
+$$
+0<R<\min\{t-(2a-1),1-t\}.
+\tag{201.1}
+$$
+令 $\mathfrak M_2(a,t;R)$ 为全部二维程序的名义点态 SLD 信息量下确界，其中程序允许为混态、允许秩变化，要求一个固定 CPTP 处理器在某个包含 $[t-R,t+R]$ 的连通开区间 $U\subset J_a$ 上，对全部信号输入精确产生 $\mathcal T_u$，程序密度矩阵曲线为 $C^1$。这里的点态信息量采用定义200.1的 SLD 约定。与纯程序成本的关系为
+$$
+I_r(t)\le\mathfrak M_2(a,t;R)\le\mathfrak P_2(a,t;R)<\infty.
+\tag{201.2}
+$$
+第一个不等式来自均衡 $02$ 读出的测量信息界，第二个来自程序类的包含关系；有限性由第184.3节的两个固定端点通道程序给出。
+
+**定理 201.2（全部混态程序的仿射替代与有限优化）。** 每个定义201.1的程序均可在同一处理器、同一完整 $U$ 上替换为一个解析满秩仿射程序 $\sigma_u$，在每个 $u\in U$ 都满足
+$$
+\mathcal G(\omega\otimes\sigma_u)=\mathcal T_u(\omega),\qquad
+I_Q(\sigma_u)\le I_Q(\rho_u).
+\tag{201.3}
+$$
+令 $\Phi_{\mathcal G}(b)$ 表示 Bloch 程序 $(I+b\cdot\sigma)/2$ 诱导的信号映射，$\mathcal L_{\mathcal G}$ 表示它对 $b$ 的实线性部分。令 $E_{02}=E_{20}=1$，其他 $E$ 元素为零。以 $\mathscr A_R$ 表示满足
+$$
+\begin{gathered}
+\mathcal G:M_6\to M_3\ \text{为 CPTP},\qquad b,v\in\mathbb R^3,\\
+\Phi_{\mathcal G}(b)=\mathcal T_t,\qquad
+\mathcal L_{\mathcal G}(v)=\mathcal S_E,\\
+|b-Rv|<1,\qquad |b+Rv|<1
+\end{gathered}
+\tag{201.4}
+$$
+的有限变量集合，则
+$$
+\mathfrak M_2(a,t;R)
+=\inf_{\mathscr A_R}\left[|v|^2+
+\frac{(b\cdot v)^2}{1-|b|^2}\right].
+\tag{201.5}
+$$
+这不宣称下确界在严格端点域内达到。
+
+证明。 对给定程序，令 $K=\ker\mathcal L_{\mathcal G}$，并正交分解其 Bloch 向量
+$$
+r(u)=x(u)+y(u),\qquad x(u)\in K^\perp,\quad y(u)\in K.
+\tag{201.6}
+$$
+目标通道仿射，而 $\mathcal L_{\mathcal G}|_{K^\perp}$ 单射，所以 $x(u)=b+(u-t)v$，其中 $v\ne0$。它的范数在 $U$ 上处处严格小于一：投影先给出 $|x|\le1$，若某内点达到一，非恒定仿射线两侧的平方范数平均便严格大于一，矛盾。因此 $\sigma_u=(I+x(u)\cdot\sigma)/2$ 是整个 $U$ 上的解析满秩曲线，且 $y$ 不可见保证它产生同一目标通道。
+
+信息量比较可直接处理秩边界。在原态满秩的一个点，记
+$$
+A=1-|x|^2>0,\qquad q=A-|y|^2>0,\qquad
+\alpha=x\cdot v,\qquad w=y'+\frac{\alpha}{A}y.
+\tag{201.7}
+$$
+代入二维满秩 SLD 公式并完成平方，得到精确恒等式
+$$
+I_Q(\rho_u)-I_Q(\sigma_u)
+=|w|^2+\frac{(y\cdot w)^2}{q}\ge0,
+\qquad I_Q(\sigma_u)=|v|^2+\frac{\alpha^2}{A}.
+\tag{201.8}
+$$
+若原态在该点为纯态，双侧 $C^1$ 正性给出 $r\cdot r'=0$，点态 SLD 公式给出 $I_Q(\rho_u)=|r'|^2$。此时 $|y|^2=A>0$，且 $y\cdot y'=-\alpha$，所以 Cauchy–Schwarz 给出
+$$
+I_Q(\rho_u)=|v|^2+|y'|^2
+\ge |v|^2+\frac{\alpha^2}{A}=I_Q(\sigma_u).
+\tag{201.9}
+$$
+这也覆盖原曲线只在孤立点为纯态的情形。若 $K=\{0\}$，原曲线本来就是上述满秩仿射曲线。这里构造的是另一种状态准备；未把 Bloch 正交投影宣称为 CPTP 操作。所用 SLD 与测量信息框架见 Braunstein、Caves，Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）；秩边界使用点态表达，不从满秩分母公式取极限。
+
+仿射替代在两个闭区间端点仍满秩，所以每个原程序给出（201.4）的一个可行元，且（201.5）的目标值不超过原名义成本。反过来，对任意可行元，平方范数的凸性使 $|b+sv|<1$ 在 $|s|\le R$ 成立。两个端点均严格，故可取包含该闭区间的稍大开域并保持 $t+s\in J_a$。在此域准备 Bloch 向量 $b+sv$，两个通道线性约束给出对所有信号输入的精确 $\mathcal T_{t+s}$，其名义成本恰为（201.5）。两向比较完成证明。
+
+**定理 201.3（精确半径的三个成本区间）。** 以定理200.3的 $b_+^*(a,t)$ 定义
+$$
+R_0(a,t)=b_+^*(a,t)-t>0.
+\tag{201.10}
+$$
+对定义201.1的每个允许半径，成立
+$$
+\begin{array}{c|c|c}
+\text{半径条件}&\mathfrak M_2(a,t;R)&\text{名义下界的达到性}\\ \hline
+R<R_0&I_r(t)&\text{由一个实际程序达到}\\
+R=R_0&I_r(t)&\text{无实际程序达到}\\
+R>R_0&>I_r(t)&\text{与下界有严格正差距}
+\end{array}
+\tag{201.11}
+$$
+每一行均以该半径同时满足（201.1）为条件，不要求临界半径对所有 $a,t$ 都属于允许范围。最后一行的正差距依赖固定的 $a,t,R$，不在参数变化时主张统一下界。
+
+证明。 先把定理200.3的最大域在 $J_a$ 内化简。令 $\ell_a=2a-1$，并记
+$$
+P_*(u)=h_0^2(1-u^2)-a^2(1+t^2-2tu),\qquad h_0=\frac{1+t}{2}.
+\tag{201.12}
+$$
+直接计算给出
+$$
+P_*(\ell_a)=a(t-\ell_a)(1-\ell_at)>0.
+\tag{201.13}
+$$
+两个因子为正，因为 $\ell_a<t$ 且 $|\ell_at|<1$。因此 $b_-^*<\ell_a$，最大域是 $(\ell_a,b_+^*)$。当 $R<R_0$ 且（201.1）成立时，$\lambda=\lambda_*$ 的程序在包含所需闭区间的开域精确，且名义成本为 $I_r(t)$。由（201.2）便得第一行。当 $R=R_0$ 时，闭区间的上端点为 $b_+^*$；定理200.2、200.3排除任何名义等号程序具有所需开延拓，包括名义点发生秩变化的候选。
+
+临界点虽不达到，却可逼近。设 $\mathcal G_*$、$\sigma_z$ 为 $\lambda=\lambda_*$ 的程序，定义于 $(\ell_a,b_+^*)$。令 $\mathcal C_1(X)=\mathcal T_1(\operatorname{Tr}_P X)$ 为忽略程序并对信号施行 $\mathcal T_1$ 的 CPTP 处理器。对 $0<s<1$，取
+$$
+\mathcal G_s=(1-s)\mathcal G_*+s\mathcal C_1,
+\qquad z_s(u)=\frac{u-s}{1-s},\qquad
+\rho_u^{(s)}=\sigma_{z_s(u)}.
+\tag{201.14}
+$$
+$\mathcal T_z$ 关于 $z$ 仿射，故在 $z_s(u)\in(\ell_a,b_+^*)$ 时，对所有信号输入有
+$$
+\mathcal G_s(\omega\otimes\rho_u^{(s)})
+=(1-s)\mathcal T_{z_s(u)}(\omega)+s\mathcal T_1(\omega)
+=\mathcal T_u(\omega).
+\tag{201.15}
+$$
+该程序的精确开域为
+$$
+V_s=\bigl(s+(1-s)\ell_a,\ s+(1-s)b_+^*\bigr)\subset J_a.
+\tag{201.16}
+$$
+其上端点严格大于 $b_+^*=t+R_0$。临界半径允许时，$t-R_0>\ell_a$，所以充分小的 $s>0$ 又使下端点严格小于 $t-R_0$。于是 $V_s$ 包含整个临界闭区间。
+
+在名义点附近 $\sigma_z$ 满秩且解析，故其信息量 $\widehat I(z)$ 连续，且 $\widehat I(t)=I_r(t)$。参数变换的链式法则给出
+$$
+I_Q(\rho_t^{(s)})
+=\frac{\widehat I(z_s(t))}{(1-s)^2}
+\longrightarrow I_r(t)\qquad(s\downarrow0).
+\tag{201.17}
+$$
+每个 $s$ 使用一个固定处理器；混合权不随运行参数 $u$ 变化。结合普遍下界与临界不达到性，得到第二行。
+
+最后证明第三行的严格差距，而不仅是不达到。把（201.4）的两个严格端点条件放宽为 $|b\pm Rv|\le1$，得到闭集合 $\overline{\mathscr A}_R$。这里的横线仅指这个指定的闭松弛，不预先断言它等于 $\mathscr A_R$ 的拓扑闭包。端点平方范数取平均给出
+$$
+|b|^2+R^2|v|^2\le1.
+\tag{201.18}
+$$
+对每个闭松弛可行元，固定均衡 $02$ 信号输入，并在输出读取范数为一的可观测量 $X_{02}=|0\rangle\langle2|+|2\rangle\langle0|$。把这个可观测量经程序到输出的 CPTP 映射拉回，得到一个程序 Hermitian 压缩算子 $H=mI+w\cdot\sigma$，所以 $|w|\le1$。两个通道等式使相应期望沿 $b+sv$ 的导数为一，因此
+$$
+w\cdot v=1,\qquad |v|\ge1,
+\qquad |b|^2\le1-R^2.
+\tag{201.19}
+$$
+所以名义状态一致远离纯态边界，且目标函数分母 $1-|b|^2\ge R^2>0$。有限维 CPTP 映射集合的 Choi 表示紧，式（201.18）使 $b,v$ 有界；约束均闭，故 $\overline{\mathscr A}_R$ 为非空紧集，目标函数在其上连续。记它的最小值为 $m_R$，则
+$$
+\mathfrak M_2(a,t;R)\ge m_R\ge I_r(t).
+\tag{201.20}
+$$
+第二个不等式成立，因为任一闭松弛元在名义点附近仍给出满秩的精确仿射程序；无需在半径端点外延拓就能应用测量信息界。
+
+若 $m_R=I_r(t)$，其一个最小元在名义邻域达到等号，因而满足定理200.2的正规形，参数 $\lambda\ge\lambda_*$。该正规形与最小元的 Bloch 曲线都仿射；它们在邻域相等，故作为仿射函数处处相等。闭端点正性于是迫使
+$$
+t+R\le b_+(\lambda)\le b_+^*(a,t),
+\tag{201.21}
+$$
+其中第二个不等式来自 $q_\lambda\le q_{\lambda_*}$。这与 $R>R_0$ 矛盾。因此 $m_R>I_r(t)$，取 $\delta(a,t,R)=m_R-I_r(t)>0$ 即得
+$$
+\mathfrak M_2(a,t;R)\ge I_r(t)+\delta(a,t,R).
+\tag{201.22}
+$$
+这里没有把闭松弛的最小值等同于严格开延拓问题的下确界，也没有求出超临界成本的精确函数。三行分别给出实际达到、只能逼近及由紧性保证的正差距，证明完成。
+
+## 追加锚（本行以下为增补区）
+
+## 202. 超临界续接成本的二次起步：等距转动与等号稳定性
+
+**定义 202.1（允许的临界点及转动参数）。** 固定定义201.1的 $a,t$，令 $b=b_+^*(a,t)$、$R_0=b-t$，并假设
+$$
+0<R_0<\min\{t-(2a-1),1-t\}.
+\tag{202.1}
+$$
+沿用第200节的 $A_0,\lambda_*$，另记
+$$
+\beta_*:=\sqrt{1-A_0^2},\qquad
+x_*(u)=\frac{2a-A_0(1+u)}{\beta_*}
+=\frac{\lambda_*(1-tu)}{\sqrt{1-t^2}},
+\qquad q_*(u)=1-u^2-x_*(u)^2,
+\tag{202.2}
+$$
+以及
+$$
+\gamma=\frac{2(a-A_0)}{\beta_*}>0,\qquad
+v_*=-\frac{2\gamma x_*(b)}{q_*'(b)}>0,
+\qquad
+\Lambda=\frac{2}{(1-t)(1+t)^2}
++\frac{t^2\gamma^2}{(1-t^2)q_*(t)}>0.
+\tag{202.3}
+$$
+这些量均针对固定的 $a,t$。正性由 $a-A_0=a(1-t)/(1+t)>0$、$x_*(b)>0$、$q_*(t)>0$ 以及上根的 $q_*'(b)<0$ 保证。
+
+**定理 202.2（转动处理器给出的显式二次上界）。** 在定义202.1的参数域内，
+$$
+\limsup_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\frac{\Lambda}{v_*^2}<\infty.
+\tag{202.4}
+$$
+其中充分小的正 $\delta$ 均保持半径合法。这个上界由固定二维程序输入与三维环境的实际 CPTP 处理器族给出。
+
+证明。 令环境标准基为 $e_0,e_1,e_2$，取充分小的实设计参数 $s$，并定义
+$$
+\begin{aligned}
+&W_0=(e_0,e_1),\\
+&W_2=\left(e_0,-(1-2s^2)e_1+2s\sqrt{1-s^2}\,e_2\right),\\
+&f_s=se_1+\sqrt{1-s^2}\,e_2,\qquad
+v=(A_0,\beta_*)^T,\quad v^\perp=(-\beta_*,A_0)^T,\\
+&W_1=e_0v^T+f_s(v^\perp)^T.
+\end{aligned}
+\tag{202.5}
+$$
+各 $W_i:\mathbb C^2\to\mathbb C^3$ 都为等距映射。用信号基控制它们，再对环境取偏迹，得到对全部联合输入定义的固定 CPTP 处理器 $\mathcal G_s$；每个 $s$ 的处理器不随运行参数 $u$ 变化。直接求重叠得到
+$$
+W_0^\dagger W_1=W_2^\dagger W_1
+=\begin{pmatrix}A_0&\beta_*\\-s\beta_*&sA_0\end{pmatrix},
+\qquad
+W_2^\dagger W_0=\operatorname{diag}(1,-1+2s^2).
+\tag{202.6}
+$$
+准备实仿射 Bloch 曲线
+$$
+r_s(u)=\bigl(x_s(u),0,z_s(u)\bigr),\qquad
+x_s(u)=\frac{x_*(u)+\gamma s}{1-s^2},\qquad
+z_s(u)=\frac{u-s^2}{1-s^2}.
+\tag{202.7}
+$$
+实际 Schur 系数取 $\operatorname{Tr}(\rho W_j^\dagger W_i)$。由于程序实对称，（202.6）的两个相邻系数都为
+$$
+A_0(h+s\ell)+\frac{\beta_*(1-s)x_s(u)}2=a,
+\qquad h=\frac{1+z_s(u)}2,\quad\ell=\frac{1-z_s(u)}2;
+\tag{202.8}
+$$
+另一个系数为 $s^2+(1-s^2)z_s(u)=u$。因此在程序物理的每个 $u\in J_a$ 上，对所有信号输入精确产生 $\mathcal T_u$。
+
+满秩条件的分子是
+$$
+\begin{aligned}
+D_s(u)
+&=(1-s^2)^2-[x_*(u)+\gamma s]^2-(u-s^2)^2\\
+&=q_*(u)-2\gamma x_*(u)s-[2(1-u)+\gamma^2]s^2.
+\end{aligned}
+\tag{202.9}
+$$
+$D_0$ 的上根 $b$ 是单根，故隐函数定理给出实解析的邻近上根 $b(s)$，满足
+$$
+b(0)=b,\qquad
+b'(0)=\frac{2\gamma x_*(b)}{q_*'(b)}=-v_*<0.
+\tag{202.10}
+$$
+所以负 $s$ 将上端点一阶向外推。名义点与下端点在临界时已有严格物理余量；第201.3节还给出 $b_-^*<2a-1<t-R_0$，故这些余量在小扰动下保持。
+
+计算名义成本时，全部状态处于名义点的满秩邻域。对任意实平面 Bloch 曲线 $(x,0,z)$，SLD 公式可改写为
+$$
+I_Q=\frac{(z')^2}{1-z^2}
++\frac{[(1-z^2)x'+zz'x]^2}
+{(1-z^2)(1-z^2-x^2)},
+\tag{202.11}
+$$
+其中撇号对运行参数 $u$ 求导。对（202.7），第一项为
+$$
+\frac1{(1-u)(1+u-2s^2)}.
+\tag{202.12}
+$$
+在 $u=t$，第二项的分子括号于 $s=0$ 为零，其对 $s$ 的一阶导数为 $t\gamma$；分母于零为 $(1-t^2)q_*(t)>0$。因此名义成本 $Q_s$ 满足
+$$
+Q_s-I_r(t)=\Lambda s^2+o(s^2).
+\tag{202.13}
+$$
+此处用了 $x_*'(t)=-t x_*(t)/(1-t^2)$，以及（202.12）相对 $I_r(t)$ 的二次系数 $2/[(1-t)(1+t)^2]$。
+
+对小的 $\delta>0$，利用（202.10）选择负 $s=s(\delta)$，使
+$$
+b(s)=b+\delta+\delta^2,
+\qquad s(\delta)=-\frac{\delta}{v_*}+O(\delta^2).
+\tag{202.14}
+$$
+上端点严格超过 $t+R_0+\delta$，下端点的固定余量仍在，故程序具有包含半径 $R_0+\delta$ 闭区间的合法开延拓。代入（202.13）即得（202.4）。这是一族确定的处理器与程序准备，没有参数依赖的后选择。证毕。
+
+**定理 202.3（严格二次下界与唯一正首项）。** 在定义202.1的参数域内，存在 $\kappa_{\mathrm m}(a,t)\in(0,\infty)$，使
+$$
+\boxed{
+\mathfrak M_2(a,t;R_0+\delta)
+=I_r(t)+\kappa_{\mathrm m}(a,t)\delta^2+o(\delta^2)
+}
+\qquad(\delta\downarrow0),
+\tag{202.15}
+$$
+并有 $\kappa_{\mathrm m}\le\Lambda/v_*^2$。成本及该首项系数在相应参数域上半代数；实代数 $a,t$ 给出实代数的 $\kappa_{\mathrm m}(a,t)$。本节不确定该系数的精确值。
+
+证明。 首先证明二次归一下确界严格为正。反设存在 $\delta_n\downarrow0$，使成本额外量为 $o(\delta_n^2)$。选择与下确界相差至多 $\delta_n^3$ 的实际程序，并用定理201.2作同域仿射替代，可得可行元 $(\mathcal G_n,b_n,v_n)$，名义成本 $Q_n$ 满足
+$$
+g_n:=Q_n-I_r(t)=o(\delta_n^2),\qquad g_n\ge0,
+\qquad R_n=R_0+\delta_n.
+\tag{202.16}
+$$
+由（201.18）、（201.19），这些元有界，名义状态一致满秩，且 $|v_n|$ 有固定上界。取收敛子列，极限属于半径 $R_0$ 的闭松弛，目标函数连续且等于 $I_r(t)$。一致名义满秩界使极限在 $t$ 附近仍是一个实际的满秩开域程序，故定理200.2适用；该局部结论与极限曲线均为仿射，因而确定其整个参数线。它属于参数 $\lambda\ge\lambda_*$ 的正规形。上端点正性与 $q_{\lambda_*}(b)=0$ 又迫使 $\lambda=\lambda_*$。因此，作一个固定程序坐标变换后，极限就是（202.2）的状态曲线及其投影读出。
+
+下面所有 $O(\cdot)$ 的常数只依赖这条子列的一个固定邻域及固定 $a,t$。记名义状态为 $\rho_n\succeq\mu I$，其中 $\mu>0$ 一致；$L_n$ 为其 SLD。完整二结果读出为 $M_{\pm,n}$，其概率固定为 $(1\pm t)/2$，得分为
+$$
+s_+=\frac1{1+t},\qquad s_-=-\frac1{1-t}.
+\tag{202.17}
+$$
+支持敏感的测量信息差给出精确恒等式
+$$
+g_n=\sum_{j=\pm}
+\left\|\sqrt{M_{j,n}}(L_n-s_jI)\sqrt{\rho_n}\right\|_{\mathrm{HS}}^2
+\ge\mu\sum_{j=\pm}\operatorname{Tr}\bigl(M_{j,n}(L_n-s_jI)^2\bigr).
+\tag{202.18}
+$$
+这是 Braunstein–Caves 测量界的平方余项，直接展开即可验证；本节两个概率始终正。支持条件的原始表述见 Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）。
+
+对每个 $n$，用一个不随运行参数变化的程序酉变换对角化 $H_n=M_{+,n}-M_{-,n}$，并按极限的两个本征值标号。谱间隙趋于二，可以选择这些坐标使极限仍为 $Z$。在此坐标中写
+$$
+M_{+,n}=\operatorname{diag}(1-e_{+,n},e_{-,n}),
+\qquad e_{\pm,n}\ge0,\quad e_{\pm,n}\to0.
+\tag{202.19}
+$$
+名义状态与其导数的收敛、统一满秩性保证 $L_n\to S:=\operatorname{diag}(s_+,s_-)$。若 $L_n$ 的两个对角元为 $\ell_+,\ell_-$、非对角元为 $z$，则（202.18）右侧除以 $\mu$ 后的迹和为
+$$
+\begin{aligned}
+&2|z|^2+(1-e_+)(\ell_+-s_+)^2+e_+(\ell_+-s_-)^2\\
+&\qquad +e_-(\ell_--s_+)^2+(1-e_-)(\ell_--s_-)^2.
+\end{aligned}
+\tag{202.20}
+$$
+各项非负，且两个得分有固定非零间隙。因此
+$$
+e_{\pm,n}=O(g_n),\qquad L_n-S=O(\sqrt{g_n}).
+\tag{202.21}
+$$
+令 $H_n=\alpha_n I+\beta_nZ$，则 $\alpha_n=O(g_n)$、$\beta_n=1-O(g_n)$。精确读出在整个仿射曲线上满足
+$$
+r_{z,n}(u)=\frac{u-\alpha_n}{\beta_n},
+\qquad r_{z,n}'=1+O(g_n).
+\tag{202.22}
+$$
+
+名义点的非对角元趋于 $\lambda_*\sqrt{1-t^2}/2>0$。用固定对角酉变换令它为正实数 $\zeta_n$，并设 $\lambda_n=2\zeta_n/\sqrt{1-t^2}\to\lambda_*$。SLD 方程及（202.21）给出
+$$
+\rho_{10,n}'(t)=-\frac{t}{1-t^2}\zeta_n+O(\sqrt{g_n}).
+\tag{202.23}
+$$
+程序本身仿射，所以在一切有界的参数位置，其 Bloch 向量都与参数 $\lambda_n$ 的第200节正规形相差 $O(\sqrt{g_n})$。这个比较也适用于所需的两个闭区间端点。
+
+还须约束 $\lambda_n$，不能把任意相近的正规形误当合法处理器。名义状态满秩且信号基态输出纯，使每个处理器具有受控等距表示 $W_{i,n}$。令 $A_n=W_{2,n}^\dagger W_{0,n}$，则 $\operatorname{Re}A_n=H_n$。于是
+$$
+\|W_{2,n}-W_{0,n}Z\|_{\mathrm{HS}}^2
+=4-2\operatorname{Re}\operatorname{Tr}(A_nZ)
+=4-4\beta_n=O(g_n).
+\tag{202.24}
+$$
+此式不要求等距扩张随 $n$ 收敛，也不固定其最小环境维数。
+
+记 $K_n=W_{0,n}^\dagger W_{1,n}$。精确的两个相邻 Schur 系数、（202.24）以及有界的状态导数，给出在 $t$ 的值与导数约束
+$$
+\begin{gathered}
+\operatorname{Tr}(\rho_nK_n)=a,\qquad
+\operatorname{Tr}(\rho_n ZK_n)=a+O(\sqrt{g_n}),\\
+\operatorname{Tr}(\rho_n'K_n)=0,\qquad
+\operatorname{Tr}(\rho_n' ZK_n)=O(\sqrt{g_n}).
+\end{gathered}
+\tag{202.25}
+$$
+第一式从实际 $01$ 系数取复共轭取得，另外一个实际系数为 $\operatorname{Tr}(\rho W_2^\dagger W_1)$。相加相减后，$K_n$ 的上下两行分别由两个二阶线性系统控制。在准确正规形处，这两个系统的行列式为 $-\zeta_n/[2(1-t)]$ 与 $-\zeta_n/[2(1+t)]$；它们一致远离零。结合（202.22）、（202.23），可得
+$$
+K_n=\begin{pmatrix}A_0&B_0/\lambda_n\\0&0\end{pmatrix}
++O(\sqrt{g_n}),\qquad
+B_0=2a\sqrt{\frac{1-t}{1+t}}.
+\tag{202.26}
+$$
+因 $K_n$ 为压缩算子，而 $\lambda_n\to\lambda_*>0$，遂有
+$$
+A_0^2+\frac{B_0^2}{\lambda_n^2}\le1+O(\sqrt{g_n}),
+\qquad \lambda_n\ge\lambda_*-O(\sqrt{g_n}).
+\tag{202.27}
+$$
+
+在上端点 $u_n=b+\delta_n$，实际程序为合法态。与正规形的 $O(\sqrt{g_n})$ 比较及（202.27）说明
+$$
+q_*(b+\delta_n)\ge-O(\sqrt{g_n}).
+\tag{202.28}
+$$
+但 $q_*'(b)<0$，所以对某个固定 $c>0$ 及充分大的 $n$，左边不超过 $-c\delta_n$。因此 $\delta_n=O(\sqrt{g_n})$，与（202.16）矛盾。证明了
+$$
+0<\liminf_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\limsup_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\frac{\Lambda}{v_*^2}.
+\tag{202.29}
+$$
+
+最后把上下二次界提升为确定首项。定理201.2的有限优化用 Choi 正半定性、保迹方程、通道等式和严格端点不等式表示为有限半代数域，目标是正分母上的有理函数。其下确界通过“所有可行值不低于它，且任意正误差内存在可行值”的一阶实数公式定义。因此，按定理196.3证明中的同一量词消去步骤，$\mathfrak M_2$ 是半代数函数；此处并不要求取得下确界。所用标准实代数结果见 Saugata Basu，*Algorithms in Real Algebraic Geometry: A Survey*，arXiv:1409.1534v1，定理2.1、2.27。
+
+$R_0(a,t)$ 亦半代数，所以（202.29）中的归一比值为一维半代数函数。其上、下极限若不同，选居中的水平值，两个互斥的半代数子水平与超水平集都会在零累积，因而各自包含某个右开邻域，矛盾。故归一比值有唯一的严格正有限极限 $\kappa_{\mathrm m}$，即（202.15）。其极限关系也能用一阶实数公式定义，再次量词消去给出联合半代数性。固定实代数 $a,t$ 后，系数是一个由实代数系数符号条件定义的单点，故本身为实代数数。
+
+本结论针对每个固定的允许临界点，不主张靠近参数域边界的统一余项，也不把显式构造的上界系数认定为最优系数。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 203. 超临界首项的显式最优值：二参数构造与任意处理器的切向下界
+
+**定义 203.1（临界二次型及其对偶长度）。** 固定定义202.1的允许临界点，沿用 $A_0,\beta_*,x_*,q_*,\gamma,b,R_0$，并记
+$$
+\begin{gathered}
+\nu=-\frac{2x_*(b)}{q_*'(b)}>0,\qquad
+ d=\frac{2aA_0-1-b}{\beta_*^3},\qquad
+ k=\frac{1+t}{\beta_*}>0,\\
+ D_0=(1-t^2)q_*(t)>0,\qquad
+ c_0=\frac{2}{(1-t)(1+t)^2}>0,\\
+ E_0=1+\frac{td}{k}
+ =\frac{1-tb}{(1+t)\beta_*^2}>0,\\
+ \mathcal J=\nu^2\left(
+ \frac{\gamma^2E_0^2}{c_0}+\frac{d^2D_0}{k^2}\right)>0.
+\end{gathered}
+\tag{203.1}
+$$
+$E_0$ 的第二个表达式使用 $A_0(1+t)=2at$；其正性由 $|t|,|b|<1$ 保证。另设
+$$
+\xi(u)=\left.\frac{\partial}{\partial A}
+\frac{2a-A(1+u)}{\sqrt{1-A^2}}\right|_{A=A_0}
+=\frac{2aA_0-1-u}{\beta_*^3},
+\qquad \xi(b)=d.
+\tag{203.2}
+$$
+
+**定理 203.2（任意二维处理器的精确超临界二次系数）。** 在定义203.1的参数域上，第202节的首项系数为
+$$
+\boxed{\quad
+\kappa_{\mathrm m}(a,t)=\mathcal J^{-1}.
+\quad}
+\tag{203.3}
+$$
+因此，允许任意固定 CPTP 处理器、任意 $C^1$ 二维程序及秩变化，并保持整个闭半径区间的开延拓上对所有信号输入精确相等时，仍有
+$$
+\mathfrak M_2(a,t;R_0+\delta)
+=I_r(t)+\mathcal J^{-1}\delta^2+o(\delta^2).
+\tag{203.4}
+$$
+该系数由三维环境中的二参数受控等距构造渐近达到。结论仅针对固定允许的 $a,t$；不主张有限正 $\delta$ 下的精确最优成本或跨参数边界的统一余项。
+
+证明。 先构造上界。在（202.5）中将设计参数 $A_0,\beta_*$ 换成 $A,\beta(A)=\sqrt{1-A^2}$，仍取
+$$
+ v=(A,\beta(A))^T,\qquad
+ v^\perp=(-\beta(A),A)^T,
+\tag{203.5}
+$$
+其余 $W_0,W_2,f_s$ 不变。对每个固定的邻近 $(A,s)$，这仍是一个固定处理器。令
+$$
+ x_A(u)=\frac{2a-A(1+u)}{\beta(A)},\quad
+ \gamma_A=\frac{2(a-A)}{\beta(A)},\quad
+ x_{A,s}(u)=\frac{x_A(u)+\gamma_A s}{1-s^2},\quad
+ z_s(u)=\frac{u-s^2}{1-s^2}.
+\tag{203.6}
+$$
+第202节的重叠恒等式逐项成立，故三个非平凡 Schur 系数精确为 $a,a,u$；这里 $A,s$ 都是设计参数，不随 $u$ 变化。
+
+取路径 $A=A_0+h\varepsilon$、$s=\sigma\varepsilon$。程序的实横向分量满足
+$$
+ x_{A,s}(u)=x_*(u)+\varepsilon[h\xi(u)+\gamma\sigma]+O(\varepsilon^2),
+\qquad z_s(u)=u+O(\varepsilon^2).
+\tag{203.7}
+$$
+这些展开及其 $u$ 导数在固定有界参数区间上一致。由（202.11）、（202.12）以及
+$$
+ (1-t^2)\xi'(t)+t\xi(t)=-k,
+\tag{203.8}
+$$
+名义成本的二次型为
+$$
+ Q-I_r(t)=\varepsilon^2\left[
+ c_0\sigma^2+\frac{(t\gamma\sigma-kh)^2}{D_0}
+ \right]+o(\varepsilon^2).
+\tag{203.9}
+$$
+邻近物理上根 $b(\varepsilon)$ 的一阶速度则是
+$$
+ b'(0)=-\nu(dh+\gamma\sigma).
+\tag{203.10}
+$$
+
+令 $N=t\gamma\sigma-kh$。端点速度与成本变成
+$$
+ -\nu\left(\gamma E_0\sigma-\frac d k N\right),
+ \qquad c_0\sigma^2+\frac{N^2}{D_0}.
+\tag{203.11}
+$$
+加权 Cauchy–Schwarz 不等式表明，速度至少一时成本至少 $\mathcal J^{-1}$；等号在
+$$
+ \sigma_*=-\frac{\nu\gamma E_0}{c_0\mathcal J},\qquad
+ N_* =\frac{\nu dD_0}{k\mathcal J},\qquad
+ h_* =\frac{t\gamma\sigma_*-N_*}{k}
+\tag{203.12}
+$$
+处取得。沿此设计路径，$b'(0)=1$。隐函数定理允许选择
+$$
+ b(\varepsilon(\delta))=b+\delta+\delta^2,
+ \qquad \varepsilon(\delta)=\delta+O(\delta^2).
+\tag{203.13}
+$$
+临界下端点保有固定物理余量，所以上、下端点均严格位于实际程序的物理开域中。由（203.9）得到
+$$
+ \limsup_{\delta\downarrow0}
+ \frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+ \le\mathcal J^{-1}.
+\tag{203.14}
+$$
+
+下面证明所有处理器都服从相同下界。考虑任一趋于零的 $\delta_n>0$，以及相应成本距下确界至多 $\delta_n^3$ 的实际程序。按定理201.2替换为同域、同处理器的满秩仿射程序。上界（203.14）保证其名义成本差
+$$
+ g_n=Q_n-I_r(t)=O(\delta_n^2).
+\tag{203.15}
+$$
+只需研究归一成本的任一有限下极限子列。以下作必要的进一步子列选择，并省略指标 $n$。
+
+第202节的紧性与等号稳定性允许选择固定于运行参数的程序坐标，使二结果读出及名义 SLD 满足
+$$
+ H=\operatorname{diag}(1-2e_+,-1+2e_-),\qquad
+ e_\pm=O(\delta^2),\qquad
+ L-\operatorname{diag}(s_+,s_-)=O(\delta).
+\tag{203.16}
+$$
+精确读出给出
+$$
+ z(u)=\frac{u-\alpha}{\beta},\qquad
+ \alpha=e_--e_+,\quad\beta=1-e_+-e_-.
+\tag{203.17}
+$$
+相位可选成名义非对角元为正。第202节证明还给出状态曲线与参数 $\lambda$ 的正规形相差 $O(\delta)$，以及 $\lambda\ge\lambda_*-O(\delta)$。在端点 $b+\delta$ 的正性又给出 $\lambda\le\lambda_*+O(\delta)$：其正规形判别式为
+$$
+ q_\lambda(u)=q_*(u)
+ -\frac{(\lambda^2-\lambda_*^2)(1-tu)^2}{1-t^2},
+\tag{203.18}
+$$
+而 $q_\lambda(b+\delta)\ge-O(\delta)$，$1-tb>0$。因此在固定有界区间上连同导数都有
+$$
+ x(u)=x_*(u)+\delta\chi(u)+o(\delta),\qquad
+ y(u)=O(\delta),\qquad z(u)=u+O(\delta^2),
+\tag{203.19}
+$$
+其中 $\chi$ 为某个实仿射函数；这是有界仿射系数取子列后的极限，不假定最优元随 $\delta$ 可微。
+
+用受控等距表示写处理器，记
+$$
+ C=W_2^\dagger W_0,\quad K=W_0^\dagger W_1,\quad
+ \Delta W=W_2-W_0Z,\quad
+ K_0=\begin{pmatrix}A_0&\beta_*\\0&0\end{pmatrix}.
+\tag{203.20}
+$$
+第202节给出 $K=K_0+O(\delta)$。由 $\operatorname{Re}C=H$，逐列精确计算可得
+$$
+ \|\Delta W e_0\|^2=4e_+,\qquad
+ \|\Delta W e_1\|^2=4e_-.
+\tag{203.21}
+$$
+还需要比 $C-Z=O(\delta)$ 更强的估计。写
+$$
+ C=\begin{pmatrix}1-2e_++ip_0&\zeta\\
+ -\overline\zeta&-1+2e_-+ip_1\end{pmatrix}.
+\tag{203.22}
+$$
+先由（203.21）知 $p_j,\zeta=O(\delta)$。由于 $C$ 为压缩算子，$I-C^\dagger C\succeq0$，其两个对角元非负且为 $O(\delta^2)$，故非对角元亦为 $O(\delta^2)$。将其展开为 $-2\zeta+O(\delta^2)$，得到 $\zeta=O(\delta^2)$。实际系数 $\operatorname{Tr}(\rho_uC)=u$ 为实，结合其导数，给 $p_0,p_1$ 一个二阶线性系统；由（203.17），两个布居及其导数的行列式趋于 $-1/2$，而非对角贡献为 $O(\delta^2)$。所以
+$$
+ C-Z=O(\delta^2),\qquad W_0^\dagger\Delta W=O(\delta^2).
+\tag{203.23}
+$$
+
+将 $W_0$ 的两列视为固定的正交基向量，令 $P_\perp$ 投影到它们的正交补，并设
+$$
+ v=(A_0,\beta_*)^T,\quad w=(-\beta_*,A_0)^T,
+ \qquad T=P_\perp W_1.
+\tag{203.24}
+$$
+有 $T^\dagger T=I-K^\dagger K=ww^T+O(\delta)$。因而 $\|Tv\|=O(\sqrt\delta)$、$\|Tw\|=1+O(\delta)$。取 $f=Tw/\|Tw\|$，则
+$$
+ T=fw^T+O(\sqrt\delta).
+\tag{203.25}
+$$
+这一步保留了秩一边界可能产生的平方根误差，并未假设整个 $W_1$ 一阶可微。定义有界实数的子列极限
+$$
+ d_j=\lim\operatorname{Re}\left\langle
+ \frac{\Delta W e_j}{\delta},f\right\rangle,
+ \qquad j=0,1.
+\tag{203.26}
+$$
+由（203.21）和单位向量投影，
+$$
+ \liminf\frac{e_+}{\delta^2}\ge\frac{d_0^2}{4},\qquad
+ \liminf\frac{e_-}{\delta^2}\ge\frac{d_1^2}{4}.
+\tag{203.27}
+$$
+而（203.23）、（203.25）说明 $\delta^{-1}\Delta W^\dagger W_1$ 的逐项实部趋于 $(d_0,d_1)^Tw^T$。所需量只有两列的范数与内积；更大的环境不会改变这些估计。
+
+将 $K$ 第一行的一阶实部写为
+$$
+ \operatorname{Re}(K_{00},K_{01})
+ =v^T+\delta(\theta w^T-\eta v^T)+o(\delta),
+ \qquad \eta\ge0.
+\tag{203.28}
+$$
+$\eta$ 非负来自行范数不超过一。两个精确相邻系数给出
+$$
+ \operatorname{Tr}(\rho K)=a,\qquad
+ 2\operatorname{Tr}(\rho P_-K)
+ =\operatorname{Tr}(\rho\Delta W^\dagger W_1).
+\tag{203.29}
+$$
+将它们在一阶取实部，利用（203.19）、（203.25）—（203.28），得到
+$$
+ \chi(u)=\left(\theta+\frac{d_0}{2}\right)
+ \frac{1+u-2aA_0}{\beta_*^2}
+ +\frac\gamma2 d_1+\frac{2a}{\beta_*}\eta.
+\tag{203.30}
+$$
+例如第二式先消去 $K$ 下行对迹的贡献，余下为 $\beta_*\chi/2$、第一行变化及 $\tfrac12w^T\rho_*(d_0,d_1)^T$；代入 $A_0h+\beta_*x_*/2=a$ 即得（203.30）。因此，令
+$$
+ h=-\beta_*\left(\theta+\frac{d_0}{2}\right),\quad
+ \sigma=\frac{d_1}{2},\quad J=\frac{2a}{\beta_*}\eta\ge0,
+\tag{203.31}
+$$
+便有
+$$
+ \chi(u)=h\xi(u)+\gamma\sigma+J,
+ \qquad
+ N:=(1-t^2)\chi'(t)+t\chi(t)
+ =-kh+t\gamma\sigma+tJ.
+\tag{203.32}
+$$
+
+最后比较成本和端点。丢弃 Bloch 向量的 $y$ 分量不会增加点态 SLD 信息。具体地，若 $q_{xz}=1-x^2-z^2$、$p=xx'+zz'$，两者的信息差恰为
+$$
+ \frac{(q_{xz}y'+py)^2}{q_{xz}(q_{xz}-y^2)}\ge0.
+\tag{203.33}
+$$
+这里分母在名义点一致为正。对实平面投影使用（202.11），其第一项为 $[\beta^2-(t-\alpha)^2]^{-1}$。由（203.17）展开，再用（203.27）、（203.32），得到
+$$
+ \begin{aligned}
+ \liminf\frac{g}{\delta^2}
+ &\ge\frac{(1+t)d_0^2+(1-t)d_1^2}{2(1-t^2)^2}
+ +\frac{N^2}{D_0}\\
+ &\ge c_0\sigma^2+\frac{N^2}{D_0}.
+ \end{aligned}
+\tag{203.34}
+$$
+在 $u=b+\delta$，状态正性及（203.19）给出
+$$
+ q_*'(b)-2x_*(b)\chi(b)\ge0,
+ \qquad -\nu\chi(b)\ge1.
+\tag{203.35}
+$$
+由（203.32）消去 $h$，可写成
+$$
+ \chi(b)=\gamma E_0\sigma-\frac d kN+E_0J.
+\tag{203.36}
+$$
+因 $E_0>0$、$J\ge0$，故
+$$
+ -\nu\left(\gamma E_0\sigma-\frac d kN\right)
+ \ge1+\nu E_0J\ge1.
+\tag{203.37}
+$$
+将（203.11）的同一加权 Cauchy–Schwarz 不等式用于（203.34）、（203.37），便得归一成本下极限至少 $\mathcal J^{-1}$。结合（203.14），证明（203.3）、（203.4）。整个下界保留任意复相位与环境维数，只在不增成本或扩大可行集合的方向舍去非负项；上界则由实际处理器实现。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 204. 有限续接的椭圆完备性：三维环境与两参数精确优化
+
+**定义 204.1（全域候选族及有限半径域）。** 固定 $0<a<1$。对 $-1<A,s<1$，定义
+$$
+\begin{gathered}
+ B_A=\sqrt{1-A^2},\qquad d_s=1-s^2,\\
+ x_{A,s}(u)=\frac{2a-A(1+u)+2(a-A)s}{B_A d_s},\qquad
+ z_s(u)=\frac{u-s^2}{d_s},\\
+ D_{A,s}(u)=d_s^2-
+ \left[\frac{2a-A(1+u)+2(a-A)s}{B_A}\right]^2-(u-s^2)^2.
+\end{gathered}
+\tag{204.1}
+$$
+该程序的 Bloch 向量为 $(x_{A,s}(u),0,z_s(u))$，其满秩条件等价于 $D_{A,s}(u)>0$。对定义201.1的合法 $a,t,R$，记
+$$
+ \mathcal D_{a,t,R}=
+ \{(A,s)\in(-1,1)^2:
+ D_{A,s}(t-R)>0,\ D_{A,s}(t+R)>0\},
+\tag{204.2}
+$$
+以及
+$$
+ \mathcal Q_{a,t}(A,s)=
+ \frac{(1-s)^2-[2a-A(1+s)]^2}
+ {(1-A^2)(1-s)^2D_{A,s}(t)}.
+\tag{204.3}
+$$
+在（204.2）内，仿射曲线在闭区间内满秩，且可延拓到稍大的物理开区间。
+
+**定理 204.2（任意二维精确程序的全域成本不增替代）。** 设一个固定 CPTP 处理器和一条 $C^1$ 二维程序曲线在非空开区间 $U\subset J_a$ 上，对所有信号输入精确生成 $\mathcal T_u$。则存在一对固定的 $A,s\in(-1,1)$，使定义204.1的程序在整个同一 $U$ 满秩、精确生成相同通道，并逐点满足
+$$
+ I_Q(\rho^{A,s}_u)\le I_Q(\rho_u)\qquad(u\in U).
+\tag{204.4}
+$$
+替代处理器可取第203节的三维环境受控等距构造。因此对每个合法有限半径，
+$$
+ \boxed{\qquad
+ \mathfrak M_2(a,t;R)=
+ \inf_{(A,s)\in\mathcal D_{a,t,R}}
+ \mathcal Q_{a,t}(A,s).
+ \qquad}
+\tag{204.5}
+$$
+若另外 $t\ge a$，则有限半径成本在抵达右侧完整边界时满足
+$$
+ \lim_{R\uparrow1-t}\mathfrak M_2(a,t;R)
+ =B(a,t)=\frac{1-a^2}{(1-t)(1+t-2a^2)}.
+\tag{204.6}
+$$
+式（204.5）是严格可行域上的下确界，不断言最小元存在；它也没有给出每个有限 $R$ 的最优参数闭式表达。（204.6）所用全区间上界 $B$ 已由定理190.2确立。
+
+证明。 先用定理201.2，在同一处理器和同一 $U$ 上，把原程序替换为逐点成本不增的满秩仿射程序。其 Bloch 仿射线位于一个至多二维的线性平面内；用一个固定程序酉变换将它放到实 $XZ$ 平面。
+
+在该满秩程序上，信号基态的纯输出迫使处理器具有受控等距形状。把处理器与其 Kraus 矩阵逐项复共轭所得的处理器平均，再与同时交换信号输入、输出基标号 $0,2$ 所得的处理器平均。这些都是固定 CPTP 处理器；实程序与目标 $F(a,u)$ 的实性及交换对称性保证它们保留所有输入上的目标通道，程序曲线及其成本也保持不变。复共轭 Kraus 构造不把反酉映射当作物理操作。
+
+由受控表示，每个程序输入都给出 Schur 通道。对整个实 Bloch 圆盘，两个平均使其 Schur 矩阵都具有形式
+$$
+ F(\alpha,v)=
+ \begin{pmatrix}1&\alpha&v\\\alpha&1&\alpha\\v&\alpha&1\end{pmatrix},
+\tag{204.7}
+$$
+其中 $\alpha,v$ 为圆盘坐标的实仿射函数。该矩阵正半定等价于
+$$
+ 2\alpha^2\le1+v\le2.
+\tag{204.8}
+$$
+故令 $x=\alpha$、$y=(1+v)/2$，圆盘的仿射像是抛物线段
+$$
+ P=\{(x,y):x^2\le y\le1\}
+\tag{204.9}
+$$
+内的椭圆或退化椭圆，记为 $E$。它包含所有目标点 $(a,(1+u)/2)$，所以其仿射维数至少为一。
+
+下面在本证明内确定覆盖 $E$ 所需的椭圆。第203节的等距公式只使用 $A^2+B_A^2=1$ 和 $s^2+(\sqrt{1-s^2})^2=1$，所以对任意 $|A|,|s|<1$ 都定义实际处理器，不限于临界邻域。它在整个实 Bloch 圆盘上的像为
+$$
+\begin{aligned}
+ x&=\frac{A(1+s)}2+
+ \frac{1-s}{2}\bigl(\sqrt{1-A^2}\,r_x+Ar_z\bigr),\\
+ y&=\frac{1+s^2}{2}+\frac{1-s^2}{2}r_z.
+\end{aligned}
+\tag{204.10}
+$$
+令 $\tau=1/(1+s)>1/2$、$w=1-y$，这个椭圆的内域由
+$$
+ Q_{A,\tau}(x,y)=
+ (x-A)^2+2A\tau(x-A)w+\tau^2w^2
+ -(1-A^2)(2\tau-1)w\le0
+\tag{204.11}
+$$
+给出；代入（204.10），左边恰为
+$(1-A^2)(1-s)^2(r_x^2+r_z^2-1)/4$。其两个边界限制为
+$$
+ Q_{A,\tau}(x,1)=(x-A)^2,
+ \qquad
+ Q_{A,\tau}(x,x^2)=
+ [\tau x^2-Ax+1-\tau]^2.
+\tag{204.12}
+$$
+
+若 $E$ 非退化，在包含 $E$ 且位于 $P$ 内的椭圆中取面积最大者 $E_* $。这样的最大者存在：椭圆中心与半轴由紧集 $P$ 一致控制，而包含一个固定非退化椭圆给出最小半轴的一致正下界；用正定形状矩阵表示后，可行集合闭且有界。面积最大者也是按包含关系的极大者。
+
+写 $E_* =\{Q\le0\}$，其中 $Q$ 的二次齐次部分正定。它不能经过 $P$ 的两个角点 $(\pm1,1)$：角点处有两条不同的支撑直线，而非退化椭圆在边界点只有一条支撑直线。椭圆与抛物线的接触都位于 $-1<x<1$，且 $Q(x,x^2)$ 是首项系数为正的四次多项式，在实轴上非负。因此它至多有两个不同实根；每个实根的重数为二或四。
+
+极大者必接触上盖 $y=1$，并且抛物线接触的总重数必为四。为验证这一步，记
+$$
+ L_r(x,y)=y-2rx+r^2,\qquad L_c(x,y)=1-y.
+\tag{204.13}
+$$
+它们在 $P$ 内均非负，$L_r$ 是抛物线在 $r$ 的切线因子。若上盖尚有严格余量，且抛物线有两个二重接触 $r_1,r_2$，则用
+$Q-\varepsilon L_{r_1}L_{r_2}$ 替换 $Q$；在抛物线上仅减小
+$(x-r_1)^2(x-r_2)^2$ 的正系数。若只有一个四重接触，用 $Q-\varepsilon L_r^2$；若只有一个二重接触，同一扰动的四阶消失仍被原二阶正余量控制；若没有接触，用 $Q-\varepsilon$。充分小的正 $\varepsilon$ 保持二次部分正定、抛物线上的非负性及上盖的严格余量，却严格扩大椭圆。
+
+若已经接触上盖而没有抛物线接触，使用 $Q-\varepsilon L_c^2$。若上盖之外只有一个二重抛物线接触 $r$，使用
+$$
+ Q-\varepsilon L_cL_r.
+\tag{204.14}
+$$
+在上盖上该扰动为零，在抛物线上它为
+$-\varepsilon(1-x^2)(x-r)^2$；原限制除以 $(x-r)^2$ 后在 $[-1,1]$ 上有严格正下界，所以小扰动仍非负。各次扰动在旧椭圆内减去非负量，并在部分边界上严格减小，故确实给出严格包含。新椭圆仍含有旧内点；它不能跨越上盖或抛物线，否则跨越处会有边界曲线上的点进入 $Q_{\rm new}<0$，与上述非负性矛盾。这些严格扩大均与极大性冲突，所需接触形状得证。
+
+于是上盖相切于某个 $(A,1)$、$|A|<1$。归一化 $Q$ 使
+$Q(x,1)=(x-A)^2$。总重数四说明
+$Q(x,x^2)=p(x)^2$，其中 $p$ 是实二次多项式，其两个根按重数计算都在 $(-1,1)$。在 $\pm1$ 的值同号；选取正号后，
+$$
+ p(1)=1-A,\qquad p(-1)=1+A,
+ \qquad p(x)=\tau x^2-Ax+1-\tau.
+\tag{204.15}
+$$
+比较两条限制便得到 $Q=Q_{A,\tau}$：两个二次式在抛物线上的差为零时，其差只能是 $y-x^2$ 的常数倍，而上盖限制将该倍数固定为零。椭圆在上盖下方有内点，所以（204.11）中沿向下方向的一阶系数为负，即
+$(1-A^2)(2\tau-1)>0$。故 $\tau>1/2$，并对应某个 $s=1/\tau-1\in(-1,1)$。这证明每个非退化 $E\subset P$ 都被（204.10）的某个实际处理器椭圆包含。
+
+若 $E$ 退化，它必须是竖直线段 $x=a$，因为其中有非恒定的目标直线。它位于 $a^2\le y\le1$。取 $A=a,s=0$ 即可包含整段；沿该竖线的程序为
+$$
+ r_x(u)=\frac{a(1-u)}{\sqrt{1-a^2}},\qquad r_z(u)=u,
+\qquad
+ 1-|r(u)|^2=
+ \frac{(1-u)(u-(2a^2-1))}{1-a^2}\ge0
+\tag{204.16}
+$$
+对 $2a^2-1\le u\le1$ 成立。故退化情况也有同一构造族的覆盖。
+
+还须把几何包含转成信息成本比较。设旧圆盘像映射为 $c+Mr$，包含它的新椭圆映射为 $c_*+M_*r$，其中 $M_*$ 可逆。仿射变换
+$$
+ T(r)=M_*^{-1}(c+Mr-c_*)
+\tag{204.17}
+$$
+把实单位圆盘送入自身，并把旧程序的目标像送到新程序的同一目标像。把任意 Bloch 向量先投影到 $XZ$ 平面，再作用 $T$，得到一个正、保迹的量子比特线性映射 $\Lambda$。这里仅用它定义另一族已知程序制备并比较成本，不声称它是对未知程序可物理实施的 CPTP 变换。
+
+对于任意正保迹的量子比特映射，点态 SLD 信息在满秩处不增。此处可直接用变分公式证明：
+$$
+ I_Q(\rho,\dot\rho)=
+ \sup_{L=L^\dagger}
+ \{2\operatorname{Tr}(\dot\rho L)-\operatorname{Tr}(\rho L^2)\}.
+\tag{204.18}
+$$
+对偶 $\Lambda^*$ 为正的幺映射。将任意二维 Hermitian 矩阵写成 $L=cI+dV$、$V^2=I$，由
+$-I\preceq\Lambda^*(V)\preceq I$ 得
+$$
+ \Lambda^*(L^2)-\Lambda^*(L)^2
+ =d^2[I-\Lambda^*(V)^2]\succeq0.
+\tag{204.19}
+$$
+代回（204.18），每个输出试验矩阵的值都不超过输入端取 $\Lambda^*(L)$ 的值，故
+$I_Q(\Lambda\rho,\Lambda\dot\rho)\le I_Q(\rho,\dot\rho)$。
+
+旧程序在 $U$ 内满秩。若旧圆盘像非退化，它的目标点位于旧椭圆内部，因此也位于新椭圆内部。若像为竖直线段，由 $U\subset J_a\subset(2a^2-1,1)$ 及（204.16）同样得到严格内部性。故新程序在整个同一 $U$ 满秩。它由（204.17）给出仿射曲线；解（204.10）的目标条件 $x=a,y=(1+u)/2$，恰得（204.1）。第203节提供三维环境的实际固定处理器，并保证对全部信号输入精确。因此（204.4）成立，也没有缩小原开域。
+
+每个原问题可行程序都被这样替代，而族内每个满足（204.2）的参数本身可行，所以有限半径的两个下确界相同。计算其名义成本，记
+$$
+ p=\frac{2a-A(1+s)}{B_A(1-s)},\qquad
+ x_{A,s}(u)+\frac A{B_A}z_s(u)=p.
+\tag{204.20}
+$$
+对实平面仿射线，Bloch 公式给出
+$$
+ I_Q=
+ \frac{|r'|^2-(r_xr_z'-r_zr_x')^2}{1-|r|^2}.
+\tag{204.21}
+$$
+此处 $|r'|^2=1/(B_A^2d_s^2)$、叉积为 $p/d_s$，代入即得（204.3）、（204.5）。所有分母都在严格可行域内为正。
+
+最后证明（204.6）。参数 $A=a,s=0$ 在整个 $J_a$ 可行，并由（204.3）给出 $B(a,t)$；这也与定理190.2的既有全区间结算相符。故所有合法有限半径都有成本上界 $B$。取任意 $R_n\uparrow1-t$，选取距（204.5）下确界趋于零的族内可行元。两端点正性给出
+$$
+ |r(t)|^2+R_n^2|r'|^2<1,
+ \qquad B_A(1-s^2)>R_n.
+\tag{204.22}
+$$
+因此 $A,s$ 沿子列收敛于 $(-1,1)^2$ 内部，并且名义状态保持一致满秩。在上端点极限 $u=1$，有 $z_s(1)=1$，所以状态正性迫使
+$$
+ x_{A,s}(1)=\frac{2(a-A)}{B_A(1-s)}=0,
+ \qquad A=a.
+\tag{204.23}
+$$
+在这个极限上，名义成本连续，并简化为
+$$
+ \mathcal Q_{a,t}(a,s)
+ =\frac1{(1-t)\left[
+ (1+t-2a^2)/(1-a^2)-2s^2\right]}
+ \ge B(a,t).
+\tag{204.24}
+$$
+名义一致满秩保证括号为正。上、下界合并即得（204.6）。条件 $t\ge a$ 恰保证 $R\uparrow1-t$ 时仍可从合法对称半径域内趋近；对其他 $t$ 不作该边界极限断言。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 205. 有限最优值与真实可达性的分离：紧松弛、全超临界不达到与单变量归约
+
+**定义 205.1（有限半径的非严格端点域）。** 固定定义201.1的合法 $a,t,R$，沿用定义204.1的候选程序，置
+$$
+\begin{aligned}
+ f_{A,s}(u)&=(1-A^2)(1-u)(1+u-2s^2)
+ -[2a(1+s)-A(1+u+2s)]^2,\\
+ g_{A,s}&=(1-s)^2-[2a-A(1+s)]^2,\\
+ q(A,s)&=\frac{g_{A,s}}{(1-s)^2f_{A,s}(t)}.
+\end{aligned}
+\tag{205.1}
+$$
+于是 $f_{A,s}(u)=(1-A^2)D_{A,s}(u)$，且 $q=\mathcal Q_{a,t}$。记严格域为 $\mathcal D_R=\mathcal D_{a,t,R}$，并定义
+$$
+ \mathcal K_R=\{(A,s)\in(-1,1)^2:
+ f_{A,s}(t-R)\ge0,\ f_{A,s}(t+R)\ge0\}.
+\tag{205.2}
+$$
+$\mathcal K_R$ 只要求两个端点状态为正半定，不先赋予其成员在闭区间外的开放延拓。
+
+**定理 205.2（紧松弛的精确性与任意超临界半径的不达到性）。** 集合 $\mathcal K_R$ 非空且紧，$q$ 在其上连续，并且
+$$
+ \boxed{\quad
+ \mathfrak M_2(a,t;R)=\inf_{\mathcal D_R}q
+ =\min_{\mathcal K_R}q.
+ \quad}
+\tag{205.3}
+$$
+原问题的最优值可由实际程序达到，当且仅当 $\mathcal K_R$ 中存在一个两个端点约束都严格的最小元。结合定义201.1及定理201.3的 $R_0(a,t)$，真实可达性完整分类为
+$$
+\begin{array}{c|c|c}
+ \text{合法半径}&\mathfrak M_2(a,t;R)&\text{原程序类是否有最小元}\\ \hline
+ R<R_0&I_r(t)&\text{有}\\
+ R=R_0&I_r(t)&\text{无}\\
+ R>R_0&>I_r(t)&\text{无}.
+\end{array}
+\tag{205.4}
+$$
+每行仍以该半径满足（201.1）为前提。特别地，在任意合法 $R\ge R_0$，每个松弛最小元至少有一个端点约束取等；尽管这些最小元存在，原问题中没有任何固定 CPTP 处理器及 $C^1$ 二维程序达到该成本，包括允许秩变化的程序。
+
+证明。 先证明紧性和名义分母不退化。参数 $A=a,s=0$ 在全部 $J_a$ 上严格可行，所以两个集合非空。对 $\mathcal K_R$ 中的一个参数，将（204.1）的 Bloch 仿射线记为 $r(u)$。端点正性给出
+$$
+ |r(t)|^2+R^2|r'|^2
+ =\frac{|r(t-R)|^2+|r(t+R)|^2}{2}\le1,
+ \qquad |r'|^2=\frac1{(1-A^2)(1-s^2)^2}.
+\tag{205.5}
+$$
+因此
+$$
+ \sqrt{1-A^2}(1-s^2)\ge R,
+ \qquad |A|\le\sqrt{1-R^2},\qquad
+ |s|\le\sqrt{1-R}.
+\tag{205.6}
+$$
+合法半径满足 $0<R<1$，故这些界将整个集合限制在 $(-1,1)^2$ 内的一个紧矩形；多项式端点约束是闭的。另有
+$$
+ \frac{d^2}{du^2}f_{A,s}(u)=-2,
+ \qquad
+ f_{A,s}(t)=\frac{f_{A,s}(t-R)+f_{A,s}(t+R)}2+R^2
+ \ge R^2>0.
+\tag{205.7}
+$$
+于是 $q$ 连续，松弛最小元存在。
+
+关键是证明严格下确界与该最小值相同，而不是仅把严格符号改成非严格符号。取任意 $(A,s)\in\mathcal K_R$，以（204.11）表示它的椭圆二次式 $Q_0$。令 $Q_1=Q_{a,1}$，即参数 $A=a,s=0$ 的严格可行椭圆；这里 $Q$ 的第二指标为 $\tau=1/(1+s)$。两个目标端点
+$$
+ p_\pm=\left(a,\frac{1+t\pm R}{2}\right)
+\tag{205.8}
+$$
+满足 $Q_0(p_\pm)\le0$、$Q_1(p_\pm)<0$。对 $0<\varepsilon<1$ 定义
+$$
+ Q_\varepsilon=(1-\varepsilon)Q_0+\varepsilon Q_1.
+\tag{205.9}
+$$
+其二次部分正定，在抛物线帽 $P$ 的整个边界上非负，而在两个目标端点严格为负。由定理204.2证明中的边界穿越论证，$E_\varepsilon=\{Q_\varepsilon\le0\}$ 是位于 $P$ 内的非退化椭圆，且两个端点都在其内部。
+
+可连续选取圆盘参数化 $c_\varepsilon+M_\varepsilon r$，使其在 $\varepsilon\downarrow0$ 时趋向原椭圆的参数化：取椭圆形状矩阵的正平方根，再右乘固定的正交因子，使 $\varepsilon=0$ 时等于原 $M_0$。沿目标直线取逆像，所得 Bloch 仿射程序及其导数都收敛到原程序。由（205.7）原名义态满秩，所以这些程序在名义点的 SLD 成本收敛到 $q(A,s)$。
+
+应用定理204.2证明中的椭圆包含引理，把每个 $E_\varepsilon$ 扩为一个显式族的包含椭圆。两个目标端点仍严格在内部。圆盘之间的正保迹映射与 SLD 变分比较给出不更大的名义成本；最终椭圆由第203节的实际固定处理器实现。因此得到 $\mathcal D_R$ 内的程序，其成本上极限不超过 $q(A,s)$。中间椭圆只用于构造和比较，不需要把它另行认作实际处理器的像。对松弛最小元应用这一论证，得
+$$
+ \inf_{\mathcal D_R}q\le\min_{\mathcal K_R}q.
+\tag{205.10}
+$$
+反向由集合包含立即得到；定理204.2遂给出（205.3）。该论证同时处理两个端点取等，不需要预设仅有上端点活跃，也不宣称 $\mathcal K_R$ 的每个参数本身具有开放延拓。
+
+若松弛最小元位于 $\mathcal D_R$，其显式程序可在稍大开域精确实现，所以原问题达到。反过来，若任意原程序达到最优值，定理204.2给出一个 $\mathcal D_R$ 内的替代程序，成本不增；由下确界定义它仍达到最优值，故为严格的松弛最小元。这证明可达性等价。
+
+最后排除所有超临界最小元。名义点的严格物理参数域内置
+$$
+\begin{gathered}
+ b=1+s,\quad j=1-s,\quad
+ c=(1-t)(1+t-2s^2),\\
+ L=1+t-2s,\quad J=1+t-2a^2,\quad f=f_{A,s}(t),\\
+ F_1=bLA-2a(t-s^2),\qquad
+ F_2=2abA-4a^2+L.
+\end{gathered}
+\tag{205.11}
+$$
+这里 $b,j,J,f,c$ 均为正：特别地，$f>0$ 及（205.1）迫使 $c>0$。直接展开给出两个平方分解及导数分解
+$$
+\begin{aligned}
+ q&=\frac1c+\frac{F_1^2}{j^2fc},\\
+ q&=\frac1{2Jj^2}+\frac{F_2^2}{2Jj^2f},\\
+ \partial_Aq&=\frac{2bF_1F_2}{j^2f^2}.
+\end{aligned}
+\tag{205.12}
+$$
+故 $A$ 方向驻点必满足 $F_1=0$ 或 $F_2=0$。在各零集上，平方项对 $s$ 的偏导也为零，因此分别有
+$$
+ F_1=0\Longrightarrow\partial_sq=\frac{4s(1-t)}{c^2},
+ \qquad
+ F_2=0\Longrightarrow\partial_sq=\frac1{J(1-s)^3}>0.
+\tag{205.13}
+$$
+第二支不含二维驻点；第一支只有
+$$
+ s=0,\qquad A=\frac{2at}{1+t},\qquad q=\frac1{1-t^2}=I_r(t).
+\tag{205.14}
+$$
+所以任何严格可行域上的最小元都必须具有成本 $I_r(t)$，因为 $\mathcal D_R$ 为开集。定理201.3在 $R\ge R_0$ 排除了这样的实际达到；在 $R>R_0$ 还给出严格正差距。由可达性等价，全部临界及超临界半径均无原问题最小元。亚临界达到沿用定理201.3，合成（205.4）。证毕。
+
+**定理 205.3（有限成本的单变量精确求值）。** 置
+$$
+ y_\pm=\frac{1+t\pm R}{2},
+ \qquad
+ A_\pm(y,s)=
+ \frac{a(y+s)\pm\sqrt{(1-y)(y-s^2)(y-a^2)}}{y(1+s)}.
+\tag{205.15}
+$$
+对 $|s|<\sqrt{y_-}$ 定义
+$$
+ \ell_s=\max\{A_-(y_-,s),A_-(y_+,s)\},\qquad
+ h_s=\min\{A_+(y_-,s),A_+(y_+,s)\},
+\tag{205.16}
+$$
+并令 $\mathcal S_R$ 为其中满足 $\ell_s<h_s$ 的全部 $s$。对 $s\in\mathcal S_R$，令有限集合 $\mathcal C_s$ 含 $\ell_s,h_s$，并加入下列落在 $[\ell_s,h_s]$ 内的数：
+$$
+ A^{(1)}(s)=\frac{2a(t-s^2)}{(1+s)(1+t-2s)},\qquad
+ A^{(2)}(s)=\frac{4a^2-(1+t-2s)}{2a(1+s)}.
+\tag{205.17}
+$$
+若 $1+t-2s=0$，不加入 $A^{(1)}$。则 $\mathcal S_R$ 非空，所有这些求值均有正的名义分母，且
+$$
+ \boxed{\qquad
+ \mathfrak M_2(a,t;R)
+ =\inf_{s\in\mathcal S_R}\ \min_{A\in\mathcal C_s}q(A,s).
+ \qquad}
+\tag{205.18}
+$$
+每个 $s$ 至多需要四个候选值。端点候选按严格可行程序的极限求值，不能仅因它们出现在公式中便将其计为原问题的实际最优程序。
+
+证明。 合法半径给出 $a<y_-<y_+<1$。在固定端点 $u=2y-1$，式（205.1）变为
+$$
+ \frac14 f_{A,s}(2y-1)
+ =(1-A^2)(1-y)(y-s^2)-[a(1+s)-A(y+s)]^2.
+\tag{205.19}
+$$
+若左边严格为正，必有 $s^2<y$。反过来，固定 $|s|<\sqrt{y}$，右边关于 $A$ 为严格凹二次式，二次项系数为 $-y(1+s)^2$，两根恰为（205.15）。其严格正区间为 $A_-(y,s)<A<A_+(y,s)$；由（205.19），该区间自动位于 $(-1,1)$。两端点条件的交集因此正好是
+$$
+ s\in\mathcal S_R,\qquad \ell_s<A<h_s.
+\tag{205.20}
+$$
+$A=a,s=0$ 提供非空性。
+
+在固定 $s\in\mathcal S_R$，闭区间 $[\ell_s,h_s]$ 属于 $\mathcal K_R$，故由（205.7）名义分母严格为正。连续函数在该闭区间的最小值等于在其开内部的下确界。内部最小元满足 $\partial_Aq=0$；由（205.12），它只能来自（205.17）的两支。若 $L=1+t-2s=0$，则
+$$
+ t-s^2=-\frac{(1-t)^2}{4}<0,
+\tag{205.21}
+$$
+所以 $F_1$ 为非零常数，不遗漏第一支的驻点。第二支的分母总为正。连同两个端点，便得到集合 $\mathcal C_s$。逐 $s$ 取下确界并应用（204.5）即得（205.18）。这里没有求出剩余标量下确界的闭式，也没有把双端点的交集预先替换成单个端点约束。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 206. 有限续接成本的精确解：唯一上端接触与可认证的八次根
+
+**定义 206.1（上端接触的无量纲坐标）。** 固定定义201.1的合法 $a,t,R$，并假定 $R>R_0(a,t)$。置
+$$
+\begin{gathered}
+ h=\frac{1+t}{2},\qquad z=\frac{1+t+R}{2},\qquad
+ \Delta=z-h=\frac R2,\qquad k=1-a^2,\\
+ \alpha=\sqrt{\frac{z-a^2}{k}},\qquad
+ \beta=\sqrt{\frac{h-a^2}{k}},\qquad
+ \sigma=\sqrt{1-\alpha^2}=\sqrt{\frac{1-z}{k}},\qquad
+ \xi_b=\frac{a\sigma}{\sqrt z}.
+\end{gathered}
+\tag{206.1}
+$$
+合法性给出 $a<h<z<1$，以及
+$0<\xi_b<\beta<\alpha<1$、$\xi_b<\sigma$。对 $0\le\xi\le\xi_b$ 定义
+$$
+\begin{gathered}
+ \delta(\xi)=\operatorname{artanh}\alpha-\operatorname{artanh}\xi,\qquad
+ C(\xi)=\cosh\delta(\xi),\quad S(\xi)=\sinh\delta(\xi),\\
+ W(\xi)=\frac{S(\xi)(C(\xi)+a)}{1+aC(\xi)},\qquad
+ \Phi(\xi)=\xi^2+\xi(1-\xi^2)W(\xi).
+\end{gathered}
+\tag{206.2}
+$$
+这些量只用于参数化同一个有限程序优化问题，不改变点态 SLD 信息的定义或精确开放延拓条件。
+
+**定理 206.2（全部超临界半径的唯一代数最优设计）。** 方程
+$$
+ \Phi(\xi_*)=\beta^2,\qquad 0<\xi_*<\xi_b
+\tag{206.3}
+$$
+恰有一个解。令 $r_*=\sqrt{1-\xi_*^2}$，并定义
+$$
+ s_*=\alpha\xi_*-a\sigma r_*,\qquad
+ A_*=\frac{a(1+\alpha\xi_*)-\sigma r_*}
+ {1+\alpha\xi_*-a\sigma r_*}.
+\tag{206.4}
+$$
+则 $(A_*,s_*)$ 是定义205.1的紧松弛问题的唯一最小元，原始开放延拓问题的精确下确界为
+$$
+ \boxed{\quad
+ \mathfrak M_2(a,t;R)=
+ \frac{(\alpha-\xi_*)^2}
+ {4\Delta(\beta^2-\xi_*^2)
+ (1-\alpha\xi_*+a\sigma r_*)^2}.
+ \quad}
+\tag{206.5}
+$$
+该最小元只在上端点接触物理边界。更精确地，置
+$$
+ \ell_*=a^2+k\xi_*^2;
+\tag{206.6}
+$$
+则它的物理区间在 $y=(1+u)/2$ 坐标中的两个根为 $\ell_*,z$，且
+$$
+ \ell_*<\frac{a^2}{z}<a,
+ \qquad
+ f_{A_*,s_*}(t+R)=0,
+ \qquad
+ f_{A_*,s_*}(t-R)>0,
+ \qquad s_*<0.
+\tag{206.7}
+$$
+唯一性指显式族中的参数对，不要求不同物理处理器的实现唯一。原问题仍不达到这个下确界；存在定义204.1的严格可行程序列，其名义成本收敛到（206.5）。
+
+证明。 先将所有处理器经定理204.2归约到显式族。为求下界，暂时仅保留名义点正性和上端点正性。置
+$$
+ v=A(1+s)-a,
+ \qquad
+ H_y(s,v)=\frac14f_{A,s}(2y-1).
+\tag{206.8}
+$$
+直接展开得到
+$$
+ H_y=(1-y)(y-a^2)-(1+a^2-y)s^2+2asv-yv^2.
+\tag{206.9}
+$$
+对每个 $a<y<1$，$H_y\ge0$ 是 $(s,v)$ 平面中的一个中心椭圆。目标函数变成
+$$
+ q_h(s,v)=\frac{g(s,v)}{4(1-s)^2H_h(s,v)},\qquad
+ g(s,v)=(1-s)^2-(a-v)^2.
+\tag{206.10}
+$$
+考虑放大后的集合 $H_h>0,H_z\ge0$。它确实有最小元，且没有通过名义秩退化逃逸的低成本序列。为此记
+$$
+ c_0=s+a^2-av,
+ \qquad H_y=g(y-a^2)-(y-c_0)^2.
+\tag{206.11}
+$$
+在紧交集 $H_h\ge0,H_z\ge0$ 上，$g$ 严格为正；否则 $h=c_0=z$，与 $h<z$ 矛盾。由 $H_h\ge0$ 的椭圆式还得 $|s|\le\sqrt h<1$。因而在该紧集上 $g$ 有一致正下界，而 $q_h$ 在 $H_h\downarrow0$ 时趋于正无穷。集合非空且有有限成本，例如 $s=v=0$。所以放大问题取得有限最小值。
+
+上述集合也没有引入非物理的内部参数：以 $A=(a+v)/(1+s)$ 回代，$H_h>0$ 由（205.19）迫使 $|A|<1$；对闭交集中的 $A=\pm1$，两个不同 $y$ 的正性会要求同一个非恒定一次式同时为零，不可能。坐标变换在此光滑可逆。由（205.12）—（205.14），若放大问题最小元满足 $H_z>0$，它只能是名义等号参数
+$$
+ s=0,\qquad A=2a-\frac ah.
+\tag{206.12}
+$$
+但 $R>R_0$ 时，这个参数不满足上端点正性。因此所有放大问题最小元均在 $H_z=0$ 上。
+
+完整参数化这条接触椭圆。定义
+$$
+ p=\frac{s-av}{k},\qquad w=\frac{v-as}{k}.
+\tag{206.13}
+$$
+式（206.9）在 $y=z$ 等价于
+$$
+ H_z=k^2\alpha^2\sigma^2
+ \left(1-\frac{p^2}{\alpha^2}-\frac{w^2}{\sigma^2}\right).
+\tag{206.14}
+$$
+故全部上端接触点均可写成
+$$
+ \begin{aligned}
+ s&=\alpha\xi+\tau a\sigma\sqrt{1-\xi^2},\\
+ v&=a\alpha\xi+\tau\sigma\sqrt{1-\xi^2},
+ \end{aligned}
+ \qquad -1\le\xi\le1,\quad \tau\in\{-1,1\}.
+\tag{206.15}
+$$
+代入给出两个精确恒等式
+$$
+ H_y=(z-y)(y-\ell(\xi)),\qquad
+ \ell(\xi)=a^2+k\xi^2,\qquad
+ g=k(\alpha-\xi)^2.
+\tag{206.16}
+$$
+名义正性因此恰为 $|\xi|<\beta$，接触边界上的成本为
+$$
+ q_{h,\tau}(\xi)=
+ \frac{(\alpha-\xi)^2}
+ {4\Delta(\beta^2-\xi^2)
+ (1-\alpha\xi-\tau a\sigma\sqrt{1-\xi^2})^2}.
+\tag{206.17}
+$$
+这里两个符号分支的 $1-s$ 均为正。固定 $\xi$，取 $\tau=-1$ 严格增大分母，因此严格减小成本。令
+$$
+ P(\xi)=1-\alpha\xi+a\sigma\sqrt{1-\xi^2},
+ \qquad q_h(\xi)=q_{h,-1}(\xi).
+\tag{206.18}
+$$
+对 $0<\xi<\beta$，交叉相乘可验证
+$$
+ \frac{\alpha-\xi}{P(\xi)}
+ <\frac{\alpha+\xi}{P(-\xi)};
+\tag{206.19}
+$$
+两侧交叉分子的差为
+$2\xi(\alpha^2-1-a\sigma\sqrt{1-\xi^2})<0$。故正 $\xi$ 严格优于负 $\xi$。此外
+$$
+ \left.\frac12\frac{d}{d\xi}\log q_h(\xi)\right|_{\xi=0}
+ =-\frac1\alpha+\frac{\alpha}{1+a\sigma}<0.
+\tag{206.20}
+$$
+于是所有最小元都属于 $\tau=-1,0<\xi<\beta$，这些选择来自成本比较而非预设对称性。
+
+下面在求驻点之前排除下端点接触。固定 $z>a$，置
+$$
+ K_z=\sqrt{\frac{(1-z)(z-a^2)}z},\qquad
+ h_c=\frac{a}{a+K_z}.
+\tag{206.21}
+$$
+有 $a<h_c<z$：分别平方 $K_z<1-a$ 和 $a(1-z)<zK_z$ 后，两者均归结为 $z>a$。名义等号参数（206.12）的上端点条件为
+$$
+ H_z=z\left[K_z^2-\frac{a^2(1-h)^2}{h^2}\right].
+\tag{206.22}
+$$
+因此本问题的超临界条件恰为 $h<h_c$。在 $\xi=\xi_b$，有
+$$
+ \sqrt{1-\xi_b^2}=\frac\alpha{\sqrt z},\qquad
+ s=0,\quad v=-K_z,\quad A=a-K_z=2a-\frac a{h_c},\quad
+ \ell(\xi_b)=\frac{a^2}{z}<a.
+\tag{206.23}
+$$
+这是名义点 $2h_c-1$ 的等号程序，并且该名义点处于其满秩区间内。
+
+对 $\xi_b\le\xi<\beta$，在同一个上端接触处理器上比较名义点 $h,h_c$。由（206.16），
+$$
+ \frac{q_h(\xi)}{q_{h_c}(\xi)}
+ =\frac{z-h_c}{z-h}\,
+ \frac{h_c-\ell(\xi)}{h-\ell(\xi)}.
+\tag{206.24}
+$$
+最后一个因子关于 $\ell$ 严格递增，因为其导数为
+$(h_c-h)/(h-\ell)^2>0$。另一方面，在名义点 $h_c$，测量信息下界及（206.23）给出
+$q_{h_c}(\xi)\ge q_{h_c}(\xi_b)$。故
+$$
+ q_h(\xi)>q_h(\xi_b)\qquad(\xi_b<\xi<\beta).
+\tag{206.25}
+$$
+在 $\xi_b$ 本身，名义等号使 $q_{h_c}'(\xi_b)=0$。微分（206.24）得
+$$
+ \frac{q_h'(\xi_b)}{q_h(\xi_b)}
+ =\frac{2k\xi_b(h_c-h)}
+ {(h_c-\ell(\xi_b))(h-\ell(\xi_b))}>0.
+\tag{206.26}
+$$
+向左移动即可改善。因此所有全局最小元都落在 $0<\xi<\xi_b$。在这一区间，$s=\alpha\xi-a\sigma\sqrt{1-\xi^2}<0$，且
+$\ell(\xi)<a^2/z<a$。原问题的下端点 $y_-=h-R/2>a$ 已严格位于物理区间内部；这个结论没有被用作选根的预设条件。
+
+最后证明剩余根的唯一性。由（206.2），
+$$
+ C=\frac{1-\alpha\xi}{\sigma\sqrt{1-\xi^2}},\qquad
+ S=\frac{\alpha-\xi}{\sigma\sqrt{1-\xi^2}},\qquad
+ q_h(\xi)=\frac{S^2}{4\Delta(\beta^2-\xi^2)(C+a)^2}.
+\tag{206.27}
+$$
+因此
+$$
+ \frac12\frac{d}{d\xi}\log q_h
+ =\frac{\xi}{\beta^2-\xi^2}-\frac1{(1-\xi^2)W}.
+\tag{206.28}
+$$
+其符号恰为 $\Phi(\xi)-\beta^2$ 的符号。下面给出 $\Phi'>0$ 的显式证书。记
+$$
+ \omega=\tanh\delta=\frac{\alpha-\xi}{1-\alpha\xi}.
+\tag{206.29}
+$$
+在 $0\le\xi\le\xi_b<\sigma$ 上，$\alpha^2+\xi^2<1$，所以
+$$
+ 1-3\xi\omega
+ =\frac{1-\alpha^2-\xi^2+(\alpha-2\xi)^2}{1-\alpha\xi}>0.
+\tag{206.30}
+$$
+定义
+$$
+\begin{aligned}
+ N_0&=\frac{(\xi+\omega)(1-3\xi\omega)}{1-\omega^2}>0,\\
+ N_2&=N_0+4\xi S^2>0,\\
+ N_1&=\frac{C^2+1}{C}N_0+
+ \frac{\xi S^2(C^2+3)}C>0.
+\end{aligned}
+\tag{206.31}
+$$
+利用 $\delta'=-1/(1-\xi^2)$ 微分并整理，得到
+$$
+ \Phi'(\xi)=\frac{N_0+aN_1+a^2N_2}{(1+aC)^2}>0.
+\tag{206.32}
+$$
+又 $\Phi(0)=0$，而在比较名义点 $h_c$，$\xi_b$ 为内部名义等号点；由（206.28）得
+$$
+ \Phi(\xi_b)=\frac{h_c-a^2}{k}>
+ \frac{h-a^2}{k}=\beta^2.
+\tag{206.33}
+$$
+严格单调性与介值定理给出唯一根 $\xi_*$；成本在它之前递减、之后递增。（206.25）及两个严格分支比较排除了其余所有全局最小元，于是放大问题的唯一最小元恰为（206.4）。
+
+仍须回到原始开放延拓问题。令
+$$
+ v_*=a\alpha\xi_* -\sigma r_*,\qquad
+ s_\varepsilon=(1-\varepsilon)s_*,\quad
+ v_\varepsilon=(1-\varepsilon)v_*,\quad
+ A_\varepsilon=\frac{a+v_\varepsilon}{1+s_\varepsilon},
+ \qquad 0<\varepsilon<1.
+\tag{206.34}
+$$
+式（206.9）为 $H_y=D_y-Q_y(s,v)$，其中
+$D_y=(1-y)(y-a^2)>0$，$Q_y$ 为正定二次式。故
+$$
+ H_z(s_\varepsilon,v_\varepsilon)
+ =D_z[1-(1-\varepsilon)^2]>0.
+\tag{206.35}
+$$
+下端点在极限参数处已严格为正，缩放后仍严格为正。两个严格椭圆条件保证 $|A_\varepsilon|,|s_\varepsilon|<1$；定理204.2的实际处理器因此给出包含所需闭区间的精确开放延拓，且对全部信号输入成立。名义点在极限处满足
+$H_h=\Delta k(\beta^2-\xi_*^2)>0$，所以满秩 SLD 成本连续收敛到（206.5）。
+
+放大问题的最小值是原下确界的下界，这列实际程序给出反向不等式，故两者相等。唯一放大最小元也满足原非严格双端点条件，所以它是紧松弛的唯一最小元。原问题的不达到性沿用定理205.2；这里没有把上端点纯态误计为允许开放延拓的最优程序。证毕。
+
+**定理 206.3（无剩余极小化的代数选择与严格资源曲线）。** 在定义206.1的条件下，令
+$$
+\begin{aligned}
+ P_3(\xi)&=\sigma^2(\beta^2-\xi^2)
+ -\xi(\alpha-\xi)(1-\alpha\xi),\\
+ P_4(\xi)&=(1-\alpha\xi)(\beta^2-\xi^2)
+ -\xi(\alpha-\xi)(1-\xi^2).
+\end{aligned}
+\tag{206.36}
+$$
+则 $\xi_*$ 也可唯一规定为
+$$
+\begin{gathered}
+ (1-\xi^2)P_3(\xi)^2-a^2\sigma^2P_4(\xi)^2=0,\\
+ 0<\xi<\xi_b,\qquad P_3(\xi)<0<P_4(\xi).
+\end{gathered}
+\tag{206.37}
+$$
+该多项式的次数为八；条件（206.37）完整排除平方消根引入的其他分支。代入 $\xi=\alpha\lambda$ 后，其系数为 $a,h,z$ 的有理函数。
+
+固定 $a,t$，成本 $R\mapsto\mathfrak M_2(a,t;R)$ 在全部合法超临界区间上实解析且导数严格为正。若记
+$$
+ R_{\max}=\min\{t-(2a-1),1-t\},\qquad
+ L=\sup_{0<R<R_{\max}}\mathfrak M_2(a,t;R),
+\tag{206.38}
+$$
+且 $R_0<R_{\max}$，则每个 $I_r(t)<C<L$ 对应唯一的
+$R_C\in(R_0,R_{\max})$，满足 $\mathfrak M_2(a,t;R_C)=C$。在原问题中，存在名义信息成本不超过 $C$ 的实际程序，当且仅当
+$$
+ 0<R<R_C.
+\tag{206.39}
+$$
+因而预算给出的最大续接半径是未达到的上确界；$C\mapsto R_C$ 在这个区间实解析。
+
+证明。 以 $r=\sqrt{1-\xi^2}$，将（206.3）中的双曲函数用（206.27）消去，得到未平方方程
+$$
+ rP_3(\xi)+a\sigma P_4(\xi)=0.
+\tag{206.40}
+$$
+在一个解上，记 $D=\sigma r+a(1-\alpha\xi)>0$；直接代入驻点关系得
+$$
+ P_4(\xi)=\frac{\xi(\alpha-\xi)^3r}{\sigma D}>0,
+ \qquad P_3(\xi)=-\frac{a\sigma}{r}P_4(\xi)<0.
+\tag{206.41}
+$$
+平方（206.40）给出八次方程。反过来，规定的严格符号恢复（206.40），再恢复（206.3）；定理206.2保证唯一性。展开可见
+$P_3=\sigma^2\beta^2-\alpha\xi+2\alpha^2\xi^2-\alpha\xi^3$，
+$P_4=\beta^2-\alpha(\beta^2+1)\xi+2\alpha\xi^3-\xi^4$；代入 $\xi=\alpha\lambda$ 后只出现 $\alpha^2,\beta^2,\sigma^2$，证明有理系数断言。
+
+各系数在合法超临界参数内解析，（206.32）给出非零根导数，所以隐函数定理使 $\xi_*$、$(A_*,s_*)$ 及其成本均实解析。为判成本导数的符号，使用（206.9）坐标下的放大问题。在 $H_z=0$ 上约束梯度不为零，因为它是正定椭圆的边界。其最小元的乘子满足
+$$
+ \nabla q_h=\lambda\nabla H_z,\qquad \lambda\ge0.
+\tag{206.42}
+$$
+若 $\lambda=0$，便得到被超临界条件排除的内部驻点（206.12），故 $\lambda>0$。固定最优参数对时，由（206.16）得
+$\partial_yH_y|_{y=z}=-(z-\ell_*)<0$。沿解析最优分支微分 $H_z=0$ 与目标函数，得到
+$$
+ \frac{d}{dR}\mathfrak M_2(a,t;R)
+ =\frac\lambda2(z-\ell_*)>0.
+\tag{206.43}
+$$
+这里 $q_h$ 自身不显含 $z$，而 $z=h+R/2$。因此每个紧超临界半径区间上，该资源曲线及其逆映射均为 Lipschitz。
+
+在临界点右侧，定理203.2的二次起步给出成本趋于 $I_r(t)$；亚临界成本由定理201.3恒等于 $I_r(t)$。严格单调、连续性与上确界定义给出每个 $C\in(I_r,L)$ 的唯一 $R_C$；其导数非零保证逆函数解析。若 $R<R_C$，下确界严格小于 $C$，故存在成本小于 $C$ 的实际程序。若 $R>R_C$，任何程序成本均大于 $C$；在 $R=R_C$，定理205.2排除实际达到下确界 $C$。三种情形恰得（206.39）。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 207. 全区间满秩程序的维数跃迁与固定三维的有限点校准
+
+**定义 207.1（固定维数的全区间满秩成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$ 及整数 $d\ge1$。令 $\mathfrak F_d(a,t)$ 为以下程序的名义点态 SLD 信息量下确界：程序空间恰为 $\mathbb C^d$，一个固定 CPTP 处理器对所有信号输入、全部 $u\in J_a$ 精确产生 $\mathcal T_u$；程序曲线 $u\mapsto\rho_u$ 为 $C^\infty$，且在每个 $u\in J_a$ 都满足 $\rho_u\succ0$。空类的下确界定义为 $+\infty$。维数包括所有正交旗标，旗标的参数依赖信息也计入 SLD 成本。
+
+**定理 207.2（满秩最优值的完整维数分类）。** 定义207.1的成本满足
+$$
+ \mathfrak F_d(a,t)=
+ \begin{cases}
+ +\infty,&d=1,\\
+ \displaystyle\frac{1-a^2}{(1-t)(1+t-2a^2)},&d=2,\\
+ \displaystyle\frac1{1-t^2},&d\ge3.
+ \end{cases}
+\tag{207.1}
+$$
+所有有限值均由实际满秩程序达到。对于 $d\ge3$，达到程序可以在左端 $u\downarrow2a-1$ 有满秩极限，并且在右端满足
+$$
+ \lambda_{\min}(\rho_u)=c(1-u)
+\tag{207.2}
+$$
+对所有充分接近一的 $u$ 成立，其中 $c>0$。任何有限维的全区间精确程序都不可能在整个 $J_a$ 上具有一致正的最小特征值下界。
+
+证明。 一维程序态恒为一，无法使固定处理器产生非恒定的通道族。二维下界和达到沿用定理190.2及第187节的满秩仿射构造。任意维数均受固定均衡 $02$ 读出的信息下界 $I_Q(\rho_t)\ge I_r(t)$ 约束。下面只构造 $d\ge3$ 的满秩达到；第190.3节已给出三维纯态达到，本节在相同维数增加全区间满秩实现。
+
+置 $l=2a-1$，选取任意 $\zeta\in(l,t)$。取第200节在设计点 $\zeta$ 达到 $I_r(\zeta)$ 的最大物理区间二维程序，记为 $\sigma_v$、处理器为 $\mathcal G_2$，物理区间为 $(b_-,b_+)$。其显式形式也可从定义204.1取
+$$
+ A_\zeta=\frac{2a\zeta}{1+\zeta},\qquad s=0,\qquad
+ \sigma_v=\frac12\left(I+
+ \frac{2a-A_\zeta(1+v)}{\sqrt{1-A_\zeta^2}}X+vZ\right).
+\tag{207.3}
+$$
+Bloch 正性给出整个 $(b_-,b_+)$ 上的满秩性；诱导通道恒等式在这个完整物理区间内仍为 $\mathcal T_v$。定理201.3证明
+$$
+ b_-<l<\zeta<b_+<1,
+ \qquad I_Q(\sigma_\zeta)=\frac1{1-\zeta^2}.
+\tag{207.4}
+$$
+内部程序坐标 $v$ 可以小于 $l$；（207.3）的正性与实际固定处理器保证该内部通道仍为 CPTP，不把 $J_a$ 的端点误当成完整 CP 边界。
+
+选定 $v_c\in(b_-,l)$，并令
+$$
+ \nu=\frac{1-\zeta^2}{1-t^2},\qquad
+ v_{\rm loc}(u)=\zeta+\nu(u-t).
+\tag{207.5}
+$$
+因为 $b_-<\zeta<b_+$ 且 $\zeta<t$，存在 $t$ 的小开邻域 $V\Subset J_a$，使其中始终有
+$b_-<v_{\rm loc}(u)<b_+$ 和 $v_{\rm loc}(u)<u$。取 $0\le\chi\le1$ 的光滑函数，支撑在 $V$ 内，且在 $t$ 的一个邻域恒为一。定义
+$$
+ v(u)=(1-\chi(u))v_c+\chi(u)v_{\rm loc}(u),\qquad
+ w(u)=\frac{u-v(u)}{1-v(u)}.
+\tag{207.6}
+$$
+在 $\chi(u)\ne0$ 处，两个参与插值的坐标都在物理区间内且小于当前 $u$；在其余位置只有常数 $v_c<l<u$。故在整个 $J_a$ 上
+$$
+ b_-<v(u)<b_+,\qquad v(u)<u<1,\qquad 0<w(u)<1.
+\tag{207.7}
+$$
+这些函数为 $C^\infty$，并满足 $v(t)=\zeta$、$v'(t)=\nu$。
+
+将程序空间取为 $\mathbb C^2\oplus\mathbb C^{d-2}$，准备
+$$
+ \rho_u=(1-w(u))\sigma_{v(u)}
+ \oplus\frac{w(u)}{d-2}I_{d-2}.
+\tag{207.8}
+$$
+第一块由 $\mathcal G_2$ 处理；第二块先对程序取迹，再对信号施行固定通道 $\mathcal T_1$；两个块之间的相干项由固定正交分区测量去除。压缩、部分迹和两个 CPTP 处理的和给出一个固定 CPTP 处理器，维数始终为 $d$。由于 $F(a,u)$ 关于 $u$ 仿射，
+$$
+ (1-w(u))\mathcal T_{v(u)}+w(u)\mathcal T_1
+ =\mathcal T_{(1-w(u))v(u)+w(u)}
+ =\mathcal T_u.
+\tag{207.9}
+$$
+所以它对全部信号输入精确，并覆盖整个 $J_a$。由（207.7）和 $\sigma_v\succ0$，每个 $\rho_u$ 都满秩。
+
+还须完整计入旗标的信息成本。若 $L_v$ 为 $\sigma_v$ 的 SLD，则（207.8）的 SLD 在两个块上分别为
+$$
+ -\frac{w'}{1-w}I_2+v'L_v,\qquad
+ \frac{w'}w I_{d-2}.
+\tag{207.10}
+$$
+由 $\operatorname{Tr}(\sigma_vL_v)=0$，平方取期望给出
+$$
+ I_Q(\rho_u)=\frac{w'(u)^2}{w(u)(1-w(u))}
+ +(1-w(u))v'(u)^2I_Q(\sigma_{v(u)}).
+\tag{207.11}
+$$
+第一项就是被计入的经典旗标 Fisher 信息。名义点处，由（207.5）—（207.6）得到
+$$
+ w(t)=\frac{t-\zeta}{1-\zeta},\qquad
+ w'(t)=\frac{w(t)}{1+t},\qquad
+ 1-w(t)=\frac{1-t}{1-\zeta}.
+\tag{207.12}
+$$
+代入（207.11）及（207.4），两项分别为
+$$
+ \frac{t-\zeta}{(1-t)(1+t)^2},\qquad
+ \frac{1+\zeta}{(1-t)(1+t)^2}.
+\tag{207.13}
+$$
+总和恰为 $1/(1-t^2)$。因此没有忽略旗标成本，也没有利用孤立秩变化处的 SLD 跳变，式（207.1）得证。
+
+在 $J_a$ 的两个端点附近，$\chi=0$、$v=v_c$。左端的两个块权重都有严格正极限，故有满秩极限。右端则有
+$$
+ \rho_u=\frac{1-u}{1-v_c}\sigma_{v_c}
+ \oplus\frac{u-v_c}{(1-v_c)(d-2)}I_{d-2}.
+\tag{207.14}
+$$
+第二块的特征值趋于 $1/(d-2)>0$，第一块的特征值线性趋零，所以充分接近一时（207.2）成立，且
+$c=\lambda_{\min}(\sigma_{v_c})/(1-v_c)>0$。
+
+最后，对任意有限维固定处理器，均衡 $02$ 输入及相应二元输出读出在程序上诱导一个固定正效果 $E_-$，满足
+$$
+ \operatorname{Tr}(\rho_uE_-)=\frac{1-u}{2}.
+\tag{207.15}
+$$
+它非零，因为右边在内部为正。由 $\rho_u\succeq\lambda_{\min}(\rho_u)I$ 得
+$$
+ \lambda_{\min}(\rho_u)
+ \le\frac{1-u}{2\operatorname{Tr}E_-}.
+\tag{207.16}
+$$
+故整个开放区间上的一致正下界不可能存在；构造（207.14）达到这个必需退化阶。在每个紧子区间，连续满秩性仍保证一致正下界。所有点态最优断言均针对预先指定的 $t$；不同设计点可选择不同处理器，不宣称同一个程序在整个区间处处达到 $I_r$。证毕。
+
+**定理 207.3（任意有限校准集合只需同一满秩三维程序）。** 对任意有限非空集合 $S=\{t_1,\ldots,t_m\}\subset J_a$，存在一个固定 CPTP 处理器与一条 $C^\infty$ 三维程序曲线，在整个 $J_a$ 满秩、对全部信号输入精确生成 $\mathcal T_u$，并且
+$$
+ I_Q(\rho_{t_i})=I_r(t_i)\qquad(1\le i\le m).
+\tag{207.17}
+$$
+它还可满足定理207.2的左端满秩极限与右端线性最小特征值。程序维数不随 $m$ 增长，并且三维是这种满秩有限校准的最小维数。此结论允许混合程序，与定理192.3的纯程序 $3m$ 维构造属于不同的秩约束。
+
+证明。 取 $l<\zeta<\min S$，固定（207.3）的唯一一份种子程序及处理器，再取同一个 $v_c\in(b_-,l)$。对每个 $t_i$，置
+$$
+ v_i(u)=\zeta+\frac{1-\zeta^2}{1-t_i^2}(u-t_i).
+\tag{207.18}
+$$
+选择两两不交的开邻域 $V_i\Subset J_a$，使其中 $b_-<v_i(u)<b_+$ 且 $v_i(u)<u$。选取支撑在 $V_i$ 的光滑函数 $0\le\chi_i\le1$，在 $t_i$ 附近恒为一，并定义
+$$
+ v(u)=\left(1-\sum_i\chi_i(u)\right)v_c
+       +\sum_i\chi_i(u)v_i(u),\qquad
+ w(u)=\frac{u-v(u)}{1-v(u)}.
+\tag{207.19}
+$$
+任一点至多有一个 $\chi_i$ 非零；（207.7）的凸插值证明因此仍成立。取（207.8）的 $d=3$ 程序及同一个固定分块处理器，便在全部 $J_a$ 精确且满秩。每个 $t_i$ 处的值与一阶导数恰为（207.5）、（207.12）对应的数值，所以（207.11）—（207.13）逐点给出（207.17）。所有截断函数具有紧支撑，因此两端附近仍是（207.14）。定理190.2的二维下界严格大于 $I_r$，给出最小维数三。
+
+此构造的等号条件还可精确区分有限校准与整段校准。令
+$$
+ h_\zeta=\frac{1+\zeta}{2},\qquad
+ k=\frac{a^2}{h_\zeta^2-a^2\zeta^2},\qquad
+ q(v)=1-v^2-k(1-\zeta v)^2.
+\tag{207.20}
+$$
+由（207.3），种子 Bloch 向量为 $(\sqrt{k}(1-\zeta v),0,v)$，故满秩量子比特的 SLD 公式给出
+$$
+ E(v):=I_Q(\sigma_v)-I_r(v)
+ =\frac{k(v-\zeta)^2}{(1-v^2)q(v)}.
+\tag{207.21}
+$$
+把（207.11）展开、用 $w=(u-v)/(1-v)$ 消去旗标权重及其导数，有
+$$
+ I_Q(\rho_u)-I_r(u)
+ =\frac{1-u}{1-v}v'^2E(v)
+ +\frac{\big[(1-u^2)v'-(1-v^2)\big]^2}
+ {(1-u^2)(1-v)^2(1+v)(u-v)}.
+\tag{207.22}
+$$
+这里 $-1<v<u<1$、$q(v)>0$，两项非负。第二项为零迫使 $v'=(1-v^2)/(1-u^2)>0$，随后第一项为零等价于 $v=\zeta$。所以
+$$
+ I_Q(\rho_u)=I_r(u)
+ \quad\Longleftrightarrow\quad
+ v(u)=\zeta,\qquad
+ v'(u)=\frac{1-\zeta^2}{1-u^2}.
+\tag{207.23}
+$$
+每个等号点的导数严格为正，因而在它的某个邻域内只有一个 $v=\zeta$ 的点；等号点都是孤立的，不能把有限集合结论提升为一个开区间上的处处达到。
+
+式（207.22）的第二项也说明旗标为什么不增加设计点的额外成本。把种子的均衡二元读出连同旗标保留，得到三项概率
+$$
+ \left((1-w)\frac{1+v}{2},\ (1-w)\frac{1-v}{2},\ w\right).
+\tag{207.24}
+$$
+合并第一项与第三项后恰为 $((1+u)/2,(1-u)/2)$。在合并的正结果内部，旗标条件概率为 $\eta(u)=2w(u)/(1+u)$；经典 Fisher 链式分解给出被合并区分携带的信息为
+$$
+ \frac{1+u}{2}\frac{\eta'(u)^2}{\eta(u)(1-\eta(u))},
+\tag{207.25}
+$$
+代入即为（207.22）的第二项。在设计点 $\eta'=0$；旗标本身的信息仍是（207.13）的正第一项，只是它与种子的正结果之间不再含额外的一阶信息。有限校准的构造没有免费旗标，也不由点态 SLD 等号推出全族的 CPTP 可恢复性。证毕。
+
+固定处理器对混合程序态的线性作用见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节；包含经典混合信息的估计背景见 Alipour、Rezakhani，Phys. Rev. A **91**, 042104（2015），DOI:10.1103/PhysRevA.91.042104。这里使用固定正交块直接得到（207.11）的等式，再由本通道族的种子和光滑插值得到固定三维的精确校准。SLD 等号与可恢复性的差别见 Gao、Li、Marvian、Rouzé，arXiv:2302.02341v1，命题1.1与定理5.1；后者的正则 Fisher 度量条件不能替换成此处的点态 SLD 条件。
+
+## 追加锚（本行以下为增补区）
+
+## 208. 有理满秩程序的精确校准集合与最小准备次数
+
+**定义 208.1（固定种子混合坐标的有理次数）。** 固定 $0<a<1$、$l=2a-1$、种子点 $\zeta\in J_a$，以及（207.3）的二维种子 $\sigma_v$ 和物理区间 $(b_-,b_+)$。程序采用同一个固定处理器：二维块使用该种子处理器，一维旗标使用 $\mathcal T_1$。其准备曲线由实函数 $v$ 决定，
+$$
+ w(u)=\frac{u-v(u)}{1-v(u)},\qquad
+ \rho_u=(1-w(u))\sigma_{v(u)}\oplus w(u).
+\tag{208.1}
+$$
+要求 $v$ 在 $[l,1]$ 上有定义，且 $b_-<v(u)<b_+$、$v(u)<u$。因此 $\rho_u$ 在 $J_a$ 满秩、精确生成全部 $\mathcal T_u$。若 $v=N/D$ 是既约实有理函数且 $D$ 在 $[l,1]$ 无零点，定义其准备次数为
+$$
+ \deg_{\mathrm{prep}}(v)=\max\{\deg N,\deg D\}.
+\tag{208.2}
+$$
+次数针对固定的物理参数 $u$ 与混合坐标 $v$，不是任意坐标变换下的不变量，也不定义所有量子程序的复杂度。
+
+**定理 208.2（精确指定全部等号点的有理三维准备）。** 固定定义208.1的 $a,\zeta$ 及处理器。对任意有限非空集合
+$$
+ S=\{t_1<\cdots<t_m\}\subset(\zeta,1),
+\tag{208.3}
+$$
+存在满足定义208.1的有理函数 $v$，并且
+$$
+ v(l)<\zeta,\qquad v(1)<\zeta,\qquad
+ \{u\in J_a:I_Q(\rho_u)=I_r(u)\}=S.
+\tag{208.4}
+$$
+可以令 $\deg_{\mathrm{prep}}(v)=2m$；在相同种子、混合方式及 $v(1)<\zeta$ 的端点约束下，任何至少在 $S$ 达到 $I_r$ 的有理准备都满足
+$$
+ \deg_{\mathrm{prep}}(v)\ge2m.
+\tag{208.5}
+$$
+矩阵曲线 $\rho_u$ 在 $[l,1]$ 的一个实开邻域具有有理解析延拓，在左端仍满秩，在右端趋于旗标纯态，并满足
+$$
+ \lambda_{\min}(\rho_u)=c(1-u)+O((1-u)^2),\qquad c>0.
+\tag{208.6}
+$$
+解析延拓不要求 $u>1$ 时仍为密度矩阵。固定处理器可在改变 $S$ 时保持不变；改变的是准备曲线。对下面的构造，旗标概率 $w$ 的既约分子、分母次数分别恰为 $2m+1$、$2m$。
+
+证明。 选取 $v_c\in(b_-,l)$，令
+$$
+ P(u)=\prod_{i=1}^m(u-t_i),\quad
+ s_i=\frac{1-\zeta^2}{1-t_i^2}>0,\quad
+ L_i(u)=\frac{P(u)}{(u-t_i)P'(t_i)}.
+\tag{208.7}
+$$
+这里 $L_i$ 是多项式，满足 $L_i(t_j)=\delta_{ij}$。采用一阶 Hermite 插值多项式
+$$
+ H(u)=\zeta+\sum_{i=1}^m s_i(u-t_i)L_i(u)^2.
+\tag{208.8}
+$$
+它的次数不超过 $2m-1$，且 $H(t_i)=\zeta$、$H'(t_i)=s_i$。对 $\kappa>0$ 定义
+$$
+ D_\kappa(u)=1+\kappa P(u)^2,\qquad
+ N_\kappa(u)=H(u)+\kappa v_cP(u)^2,\qquad
+ v_\kappa(u)=\frac{N_\kappa(u)}{D_\kappa(u)}.
+\tag{208.9}
+$$
+分母在实轴恒正。在每个 $t_i$，$P^2$ 及其一阶导数都为零，所以
+$$
+ v_\kappa(t_i)=\zeta,\qquad v_\kappa'(t_i)=s_i.
+\tag{208.10}
+$$
+
+先验证全区间物理性。由 $b_-<\zeta<b_+$ 且 $\zeta<t_i$，可以选择各 $t_i$ 的两两不交小开邻域 $V_i\Subset(l,1)$，使其中 $b_-<H(u)<b_+$ 且 $H(u)<u$。在这些邻域内，（208.9）是 $H(u)$ 与 $v_c$ 的凸组合，故仍满足同样的三个严格不等式。紧集 $K=[l,1]\setminus\bigcup_iV_i$ 上 $P^2$ 有严格正下界；由
+$$
+ v_\kappa(u)-v_c=\frac{H(u)-v_c}{1+\kappa P(u)^2}
+\tag{208.11}
+$$
+知 $v_\kappa\to v_c$ 在 $K$ 一致成立。常数 $v_c$ 到 $b_-,b_+$ 及所有 $u\in[l,1]$ 都有严格正余量。因此充分大的 $\kappa$ 使三个严格不等式在 $K$ 上也成立，并使 $v_\kappa(l),v_\kappa(1)<\zeta$。
+
+一个只用插值系数和节点间距的充分选择如下。写 $H(u)=\sum_{j=0}^{2m-1}h_ju^j$，令
+$$
+ L=\sum_{j=1}^{2m-1}j|h_j|,\quad
+ M=|h_0-v_c|+\sum_{j=1}^{2m-1}|h_j|,\quad
+ \gamma=\min\{\zeta-b_-,b_+-\zeta,t_1-\zeta\}>0.
+\tag{208.11a}
+$$
+取 $r>0$，满足
+$$
+ 2r<\min\{t_1-l,1-t_m,\min_{i<m}(t_{i+1}-t_i)\},
+ \qquad (L+1)r<\gamma/2,
+\tag{208.11b}
+$$
+其中 $m=1$ 时省去节点间距项。再取
+$$
+ \delta=\tfrac12\min\{v_c-b_-,b_+-v_c,l-v_c\}>0,
+ \qquad \kappa>\frac{M}{\delta r^{2m}}.
+\tag{208.11c}
+$$
+由于 $[l,1]\subset[-1,1]$，$|H'|\le L$、$|H-v_c|\le M$。在 $|u-t_i|<r$ 内，$|H(u)-\zeta|\le Lr$ 给出所需物理余量及 $H(u)<u$；在其余位置，$P^2\ge r^{2m}$，故 $|v_\kappa-v_c|<\delta$，从而 $v_\kappa<l$ 并保留物理余量。该选择也使两端小于 $\zeta$。这只是一个充分界，不断言它优化了系数大小或数值条件。以下固定这样的 $\kappa$。
+
+定义208.1的固定处理器和式（207.9）于是保证全部信号输入上的全区间精确性与内部满秩性。由（207.23）、（208.10），每个 $t_i$ 都达到 $I_r$。还须排除任何额外等号点，这不能只由插值条件推出。
+
+置 $c_i=s_i/P'(t_i)^2>0$。在 $u\notin S$ 时，（208.8）给出
+$$
+ H(u)-\zeta=P(u)^2R(u),\qquad
+ R(u)=\sum_{i=1}^m\frac{c_i}{u-t_i}.
+\tag{208.12}
+$$
+故 $v_\kappa(u)=\zeta$ 的其余解恰满足
+$$
+ R(u)=\kappa(\zeta-v_c),\qquad
+ R'(u)=-\sum_i\frac{c_i}{(u-t_i)^2}<0.
+\tag{208.13}
+$$
+在每个 $(t_i,t_{i+1})$，$R$ 从正无穷严格降至负无穷，因此恰有一解 $r_i$；在 $(t_m,\infty)$，它从正无穷严格降至零，因此恰有一解 $r_m$；在 $(-\infty,t_1)$，它为负，没有解。由于 $v_\kappa(1)<\zeta$，最后一解满足 $r_m<1$。在这些额外根处，由
+$$
+ N_\kappa-\zeta D_\kappa
+ =P^2\bigl[R-\kappa(\zeta-v_c)\bigr]
+\tag{208.14}
+$$
+求导，得到 $v_\kappa'(r_i)=P(r_i)^2R'(r_i)/D_\kappa(r_i)<0$。这些根不满足（207.23）所需的正导数。所以等号集合恰为 $S$，而非只包含 $S$。
+
+准备次数的上界直接来自（208.9）。其精确性也可由根结构核对：多项式 $N_\kappa-\zeta D_\kappa$ 次数为 $2m$，首项系数为 $\kappa(v_c-\zeta)\ne0$，并有刚证明的 $2m$ 个不同实根 $t_1,r_1,\ldots,t_m,r_m$。由于 $D_\kappa$ 没有实根，二者没有公共因子；因此 $N_\kappa,D_\kappa$ 已既约，次数恰为 $2m$。
+
+再证（208.5）。对任何满足该结论前提的有理准备 $v=N/D$，在整个 $[l,1]$ 上将分母符号统一为正。由（207.23），$v(t_i)=\zeta$ 且 $v'(t_i)>0$，所以 $v-\zeta$ 在每个 $t_i$ 从负变正。每两个相邻的指定根之间，连续性迫使它另有一个根；$v(1)<\zeta$ 又迫使 $t_m$ 与一之间至少有一个根。于是非零多项式 $N-\zeta D$ 至少有 $2m$ 个不同实根，给出
+$$
+ 2m\le\deg(N-\zeta D)\le\max\{\deg N,\deg D\}.
+\tag{208.15}
+$$
+若移除右端的同侧条件，此论证只保证 $2m-1$ 个根，不能沿用（208.5）。
+
+最后，$D_\kappa-N_\kappa=D_\kappa(1-v_\kappa)>0$ 在紧区间成立，因而（208.1）各矩阵元都是在其邻域无实极点的有理函数。左端 $v(l)<l$ 与内部物理性给出两个块的正权重和满秩性。右端写 $v_1=v(1)$，则
+$$
+ (1-w(u))\sigma_{v(u)}
+ =\frac{1-u}{1-v_1}\sigma_{v_1}+O((1-u)^2),\qquad
+ w(u)\longrightarrow1.
+\tag{208.16}
+$$
+Hermitian 矩阵的最小特征值关于算子范数为 Lipschitz，且 $\sigma_{v_1}\succ0$，故（208.6）成立，其中 $c=\lambda_{\min}(\sigma_{v_1})/(1-v_1)>0$。这也与（207.16）的普遍上界相容。
+
+旗标概率本身为
+$$
+ w(u)=\frac{uD_\kappa(u)-N_\kappa(u)}{D_\kappa(u)-N_\kappa(u)}.
+\tag{208.17}
+$$
+分子、分母次数分别为 $2m+1$、$2m$。任何公共因子也须整除 $(u-1)D_\kappa$ 与 $D_\kappa-N_\kappa$；前述既约性排除来自 $D_\kappa$ 的因子，而 $D_\kappa(1)-N_\kappa(1)>0$ 排除 $u-1$，所以没有约分。这个次数结论描述实际旗标准备概率；它不提供门数、系数位数或其他准备架构的普遍下界。证毕。
+
+Hermite 插值与有理形状约束的背景可见 Gregory、Delbourgo，*Piecewise Rational Quadratic Interpolation to Monotonic Data*，IMA J. Numer. Anal. **2**（1982），123–130，第2节式（2.2）—（2.7）。该文的分段单调约束在相同函数值处要求零端点导数；本节所有指定节点具有相同值及正导数，其间必须出现回程。这里由（208.12）—（208.14）确定这些回程，并验证它们与固定量子处理器的物理约束及精确 Fisher 等号集合相容。
+
+## 追加锚（本行以下为增补区）
+
+## 209. 仿射准备的维数无关信息缺口与三维严格改进
+
+**定义 209.1（维数受限的仿射程序成本）。** 固定 $0<a<1$、$l=2a-1$、$t\in J_a=(l,1)$ 及整数 $d\ge1$。令 $\mathfrak A_d(a,t)$ 为所有下列程序的名义点态 SLD 信息量下确界：程序的联合支持维数不超过 $d$，状态在物理参数 $u$ 中仿射，$\rho_u=M+uN$；一个不依赖 $u$ 的 CPTP 处理器对全部信号输入、全部 $u\in J_a$ 精确产生 $\mathcal T_u$。允许把较小支持嵌入 $\mathbb C^d$，不要求程序在填充后的整个空间满秩；空类的下确界为 $+\infty$。
+
+**定理 209.2（仿射准备具有维数无关的正额外成本）。** 任意有限维全区间精确仿射程序都满足
+$$
+ I_Q(\rho_t)\ge I_r(t)+
+ \frac{a^2}{4(1+t)^2}>I_r(t),
+ \qquad I_r(t)=\frac1{1-t^2}.
+\tag{209.1}
+$$
+此外 $\mathfrak A_1(a,t)=+\infty$；对于每个有限 $d\ge2$，定义209.1的下确界被实际程序达到，且
+$$
+ I_r(t)+\frac{a^2}{4(1+t)^2}
+ \le\mathfrak A_d(a,t)
+ \le B(a,t)=\frac{1-a^2}{(1-t)(1+t-2a^2)}.
+\tag{209.2}
+$$
+其中 $\mathfrak A_2=B$，$\mathfrak A_{d+1}\le\mathfrak A_d$。维数增加不能使仿射程序成本趋于 $I_r$；这里不宣称（209.1）的附加项是最优常数。
+
+证明。 先处理支持与秩。若 $x\in\ker\rho_t$，则 $\langle x,\rho_u x\rangle=(u-t)\langle x,Nx\rangle$ 在 $t$ 的两侧非负，故 $\langle x,Nx\rangle=0$。该二次型在整个区间为零；由 $\rho_u\succeq0$，有 $\rho_u x=0$。交换两个内部参数可知各内点的核相同。因此仿射程序在共同支持上满秩，导数在其正交补消失，内部 SLD 信息量有限。这一步不要求端点具有相同支持。
+
+先从处理器的全输入约束提取一个算子关系。限制到原程序的共同支持；其内部态满秩。对每个信号基态 $|i\rangle$，输出恒为纯态 $|i\rangle\langle i|$。把一个内部程序态分解为正权本征投影，输出在其正交补的非负概率之和为零，故 Stinespring 等距必在整个共同支持上具有受控形状
+$V=\sum_{i=0}^2|i\rangle\langle i|\otimes V_i$，其中 $V_i^\dagger V_i=I$。这个形状由精确性推出，不是额外架构限制。
+
+依照第204节，将处理器与同时交换信号输入、输出标号 $0,2$ 后的处理器平均。目标通道对此交换不变，程序曲线和成本也不变。平均后的算子 Gram 矩阵可写成
+$$
+ \mathsf G=\begin{pmatrix}
+ I&K&A\\K^\dagger&I&K^\dagger\\A&K&I
+ \end{pmatrix}\succeq0,\qquad A=A^\dagger,
+ \qquad \operatorname{Tr}(\rho_uA)=u,\quad
+ \operatorname{Tr}(\rho_uK)=a.
+\tag{209.3}
+$$
+这里可以取 $A=(V_0^\dagger V_2+V_2^\dagger V_0)/2$、$K=(V_0^\dagger V_1+V_2^\dagger V_1)/2$。在外侧的对称、反对称坐标中对（209.3）作 Schur 补，得到
+$$
+ -I\preceq A\preceq I,\qquad
+ KK^\dagger\preceq E_+:=\frac{I+A}{2},\qquad
+ E_-:=\frac{I-A}{2},\qquad K=\sqrt{E_+}\,C,
+ \quad \|C\|_\infty\le1.
+\tag{209.4}
+$$
+最后的分解可在 $E_+$ 的支持上取逆平方根直接构造；不等式保证 $K$ 的像包含于该支持，且 $CC^\dagger\preceq I$。
+
+使用固定等距嵌入 $Jx=\sqrt{E_+}x\oplus\sqrt{E_-}x$，记两个直和投影为 $P,Q$、第一块嵌入为 $\iota_+$。令
+$$
+ \sigma_u=J\rho_uJ^\dagger,\qquad
+ \widetilde K=\iota_+CJ^\dagger.
+ \quad
+ P\widetilde K=\widetilde K,\qquad
+ \|\widetilde K\|_\infty\le1,\qquad
+ \operatorname{Tr}(\sigma_u\widetilde K)=a.
+\tag{209.5}
+$$
+这是因为 $J^\dagger\widetilde KJ=\sqrt{E_+}C=K$。此外
+$\operatorname{Tr}(P\sigma_u)=(1+u)/2$、$\operatorname{Tr}(Q\sigma_u)=(1-u)/2$。
+嵌入曲线仍仿射，SLD 信息量在固定等距下保持。这里只在扩大空间使用这些算子关系，不要求扩大空间上的任意态产生预先指定的信号通道。
+
+在名义点记 $N_\sigma=\sigma'_t$，取一个满足 SLD 方程的自伴 $L_t$，并置
+$$
+ H_t=\frac{P}{1+t}-\frac{Q}{1-t},\qquad
+ R_t=N_\sigma-\frac12(H_t\sigma_t+\sigma_tH_t),\qquad
+ g=I_Q(\sigma_t)-I_r(t).
+\tag{209.6}
+$$
+概率与导数恒等式给出
+$\operatorname{Tr}(N_\sigma H_t)=\operatorname{Tr}(\sigma_tH_t^2)=I_r(t)$。
+因此第189节的得分残差恒等式在这里成为
+$$
+ g=\operatorname{Tr}[\sigma_t(L_t-H_t)^2],\qquad
+ R_t=\tfrac12[(L_t-H_t)\sigma_t+\sigma_t(L_t-H_t)],
+ \qquad \|R_t\|_1\le\sqrt g.
+\tag{209.7}
+$$
+最后一步由 Schatten Cauchy–Schwarz 与 $\operatorname{Tr}\sigma_t=1$ 得到；公式不要求嵌入态在整个扩大空间可逆，所以也覆盖秩亏程序。
+
+仿射曲线在 $u\uparrow1$ 有密度矩阵极限 $\sigma_1$。由于 $\operatorname{Tr}(\sigma_1Q)=0$，正性迫使 $Q\sigma_1=\sigma_1Q=0$。按照 $P\oplus Q$ 分块，写
+$$
+ \sigma_t=\begin{pmatrix}A_0&C_0\\C_0^\dagger&B_0\end{pmatrix}.
+\tag{209.8}
+$$
+整个曲线的仿射性给出
+$$
+ (N_\sigma)_{QQ}=-\frac{B_0}{1-t},\qquad
+ (N_\sigma)_{PQ}=-\frac{C_0}{1-t},\qquad
+ (R_t)_{QQ}=0,\qquad
+ (R_t)_{PQ}=-\frac{C_0}{1-t^2}.
+\tag{209.9}
+$$
+取实际密度矩阵
+$$
+ \tau=\frac{2Q\sigma_tQ}{1-t},\qquad Z_0=P-Q.
+\tag{209.10}
+$$
+其迹为一。用 $\sigma_{-1}=\sigma_t-(1+t)N_\sigma$ 表示仿射公式的代数延伸；此时不要求 $\sigma_{-1}$ 正定或半正定。由（209.9）以及
+$(R_t)_{PP}=(N_\sigma)_{PP}-A_0/(1+t)$，逐块得到
+$$
+ \sigma_{-1}-\tau
+ =-(1+t)\left(\frac32R_t-\frac12Z_0R_tZ_0\right).
+\tag{209.11}
+$$
+$Z_0$ 为酉自伴算子，故
+$$
+ \|\sigma_{-1}-\tau\|_1\le2(1+t)\sqrt g.
+\tag{209.12}
+$$
+
+恒等式 $\operatorname{Tr}(\sigma_u\widetilde K)=a$ 关于 $u$ 仿射，因而在代数延伸 $u=-1$ 处仍成立。另一方面，$\tau$ 支持于 $Q$，而 $P\widetilde K=\widetilde K$，所以 $\operatorname{Tr}(\tau\widetilde K)=0$。于是
+$$
+ a=\big|\operatorname{Tr}[(\sigma_{-1}-\tau)\widetilde K]\big|
+ \le\|\sigma_{-1}-\tau\|_1\le2(1+t)\sqrt g.
+\tag{209.13}
+$$
+这证明（209.1），其中迹范数没有除以二。全输入约束在这里通过（209.3）—（209.5）的常数通道系数参与估计，不能只用二元概率关系替代。
+
+下面固定维数上界 $d$。任何仿射程序都有密度矩阵端点 $\tau_l,\tau_1$，且
+$$
+ \rho_u=\frac{1-u}{1-l}\tau_l+
+         \frac{u-l}{1-l}\tau_1,
+ \qquad N=\frac{\tau_1-\tau_l}{1-l}.
+\tag{209.14}
+$$
+把所有程序填充到 $\mathbb C^d$，以两个端点态及处理器的 Choi 矩阵作为参数。密度矩阵集合与固定输入、输出维数的 CPTP Choi 集合都紧。要求处理器在两个端点对每个信号矩阵单位给出目标通道，是有限个连续等式，所以可行集闭且紧。端点约束由连续性从原程序得到；反向由（209.14）与目标通道的仿射性保证整个区间精确。
+
+名义点的 SLD 信息量具有变分式
+$$
+ I_Q(\rho_t,N)=
+ \sup_{H=H^\dagger}
+ \{2\operatorname{Tr}(NH)-\operatorname{Tr}(\rho_tH^2)\}.
+\tag{209.15}
+$$
+在共同支持上取 SLD $L$ 并完成平方，花括号等于
+$I_Q(\rho_t)-\operatorname{Tr}[\rho_t(H-L)^2]$，上确界在 $H=L$ 达到；核外部分不改变上确界。每个固定 $H$ 的表达式关于参数连续，故信息量为下半连续函数，紧可行集上的下确界被达到。这里允许极限的支持维数下降，不对满秩态开集使用紧性。
+
+第187节的全区间仿射二维程序达到 $B(a,t)$。填充程序并对额外块选任意固定通道可延拓处理器，所以 $d\ge2$ 时可行集非空且最小值有限。（209.1）给出下界；一维程序不能生成非恒定通道族；定理190.2给出 $\mathfrak A_2=B$；填充关系给出随维数不增。证毕。
+
+**定理 209.3（三维仿射程序严格优于二维最优值）。** 对 $a=t=1/2$，存在一个在整个 $J_a=(0,1)$ 满秩、对全部信号输入精确的三维仿射程序，满足
+$$
+ I_Q(\rho_{1/2})=
+ \frac{320811687543628211492}{214265320278484424375}
+ <\frac32=B(1/2,1/2).
+\tag{209.16}
+$$
+因此 $\mathfrak A_3(1/2,1/2)<\mathfrak A_2(1/2,1/2)$。本式给出严格改进，不断言该三维程序已经最优。
+
+证明。 取
+$$
+ K=\frac1{100}\begin{pmatrix}
+ 72&20&-64\\-55&37&-61\\0&0&0
+ \end{pmatrix},\qquad Z=\operatorname{diag}(1,1,-1),
+\tag{209.17}
+$$
+以及两个端点
+$$
+ R=\begin{pmatrix}
+ 41/100&19/100&-1/4\\
+ 19/100&9/100&-39/305\\
+ -1/4&-39/305&1/2
+ \end{pmatrix},\qquad
+ S=\begin{pmatrix}
+ 39/50&143/350&0\\
+ 143/350&11/50&0\\
+ 0&0&0
+ \end{pmatrix}.
+\tag{209.18}
+$$
+$R$ 的顺序主子式为 $41/100,1/1250,1303/5953600$；$S$ 的非零二阶块的顺序主子式为 $39/50,143/30625$。两矩阵的迹均为一，所以 $R\succ0$、$S\succeq0$，且
+$$
+ \rho_u=(1-u)R+uS\succ0\qquad(0<u<1).
+\tag{209.19}
+$$
+$I-KK^\dagger$ 的上二阶块顺序主子式为 $4/125,8459/6250000$，其余块为一，故 $K$ 是严格压缩算子。定义固定等距映射
+$$
+ W_0=\binom{I_3}{0},\qquad
+ W_2=\binom{Z}{0},\qquad
+ W_1=\binom{K}{\sqrt{I_3-K^\dagger K}}.
+\tag{209.20}
+$$
+受控等距 $V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$ 后取环境偏迹，给出固定 CPTP 处理器。直接相乘有
+$$
+ ZK=K,\qquad
+ \operatorname{Tr}(RK)=\operatorname{Tr}(SK)=\tfrac12,
+ \qquad \operatorname{Tr}(RZ)=0,
+ \quad \operatorname{Tr}(SZ)=1.
+\tag{209.21}
+$$
+因此诱导 Schur 系数为 $C_{01}=C_{12}=1/2$、$C_{02}=u$、$C_{ii}=1$，并由自伴性确定其他项。这逐矩阵单位证明全部信号输入上的恒等式，精确域是整个 $(0,1)$。
+
+在名义点令 $\rho=(R+S)/2$、$N=S-R$。由于 $\rho\succ0$，实对称线性方程
+$$
+ \tfrac12(\rho L+L\rho)=N
+\tag{209.22}
+$$
+有唯一实对称解。将（209.18）代入这组六元线性方程并消元，得到
+$\operatorname{Tr}(NL)=\operatorname{Tr}(\rho L^2)$ 等于（209.16）的有理数。严格差为
+$$
+ \frac32-I_Q(\rho_{1/2})
+ =\frac{1172585748196850141}{428530640556968848750}>0.
+\tag{209.23}
+$$
+由此，二维下界 $B$ 不能作为所有仿射程序的通用下界；它与（209.1）的维数无关正差距相容。证毕。
+
+固定混合程序的线性框架与得分残差沿用第187—189节。混合态的 SLD 公式及量子比特、纯端点特化可参见 de Vicente 等，*Estimation of quantum finite mixtures*，arXiv:0910.1525v2，式（82）—（86）；纯端点混合的成本公式不适用于（209.18）的两个混合端点。这里的维数无关下界使用全区间仿射性与端点正性，三维改进使用显式处理器与上述矩阵。两者共同说明：增加维数可以降低仿射成本，但第207节的三维零额外成本还需要非仿射准备。
+
+## 追加锚（本行以下为增补区）
+
+## 210. 一阶光滑量子程序的有限校准与 Lipschitz 端点聚集
+
+**定义 210.1（校准集合与光滑端点）。** 固定 $0<a<1$、$l=2a-1$，沿用第187节的有限维固定程序：同一个 CPTP 处理器以程序态 $\rho_u$ 对所有信号输入精确产生 $\mathcal T_u$，参数域为 $J_a=(l,1)$。令
+$$
+ \mathcal E(\rho)=\{u\in J_a:I_Q(\rho_u)=I_r(u)\},
+ \qquad I_r(u)=\frac1{1-u^2}.
+\tag{210.1}
+$$
+$I_Q$ 使用点态 SLD 约定，不在秩变化点改用其连续延拓。称程序具有一阶光滑端点，是指其矩阵元素具有包含闭区间 $[l,1]$ 的实开邻域上的 $C^1$ 延拓；只要求延拓在物理参数域内为密度矩阵。允许程序秩随参数变化。
+
+**定理 210.2（一阶光滑程序的孤立校准与局部二次下界）。** 设 $\rho_u$ 在 $J_a$ 上为 $C^1$ 曲线。按第188.3节对固定均衡 $02$ 读出作 Naimark 嵌入，记 $\sigma_u=J\rho_uJ^\dagger$、互补投影为 $P,Q$，并定义
+$$
+ h(u)=\frac{1+u}{2},\quad e(u)=\frac{1-u}{2},\quad
+ K_u=\sqrt{h(u)}P+\sqrt{e(u)}Q,\quad
+ H_u=\frac{P}{1+u}-\frac{Q}{1-u},
+ \qquad R_u=\sigma'_u-\frac12(H_u\sigma_u+\sigma_uH_u).
+\tag{210.2}
+$$
+令 $\Phi$ 为经第188.3节固定 CPTP 解码扩张后的处理器所诱导的线性映射：它把扩大空间上的程序矩阵送到相应的信号线性映射。则 $\mathcal B(u):=\Phi(R_u)$ 为 $C^1$ 函数，并且每个 $t\in\mathcal E(\rho)$ 都满足
+$$
+ R_t=0,\qquad \mathcal B(t)=0,\qquad \mathcal B'(t)\ne0.
+\tag{210.3}
+$$
+因此存在依赖该程序与 $t$ 的 $c,\delta>0$，使
+$$
+ I_Q(\rho_u)-I_r(u)\ge c|u-t|^2
+ \qquad(|u-t|<\delta).
+\tag{210.4}
+$$
+若曲线为 $C^2$，则另有 $R'_t\ne0$；若同时在 $t$ 的一个邻域秩恒定，则存在有限常数 $C$，使同一信息差值至多为 $C|u-t|^2$。不要求该恒秩支持子空间本身固定。
+
+证明。 固定嵌入及 CPTP 解码扩张使 $\Phi$ 对扩大空间上的所有程序矩阵都有定义；密度矩阵经 $\Phi$ 给出 CPTP 通道，且 $\Phi(\sigma_u)=\mathcal T_u$。后面构造的密度矩阵不必位于原嵌入像中。
+
+对任何内点，双侧正性给出 $\sigma'_u$ 在 $\ker\sigma_u$ 上的压缩为零，因此有限自伴 SLD $L_u$ 存在。第189节的平方残差恒等式给出
+$$
+ g(u):=I_Q(\rho_u)-I_r(u)
+ =\operatorname{Tr}[\sigma_u(L_u-H_u)^2],
+ \qquad \|R_u\|_1\le\sqrt{g(u)}.
+\tag{210.5}
+$$
+若 $g(u)=0$，则 $(L_u-H_u)\sqrt{\sigma_u}=0$，故 $R_u=0$。反过来，若 $R_u=0$，则 $H_u$ 本身满足 SLD 方程，而且
+$\operatorname{Tr}(\sigma_uH_u^2)=1/(1-u^2)$，故 $g(u)=0$。这证明等号与 $R_u=0$ 等价，没有对态、SLD 或信息量的可逆性和解析性作假设。
+
+记 $\mathcal M_u(X)=(H_uX+XH_u)/2$。目标通道仿射，全输入精确恒等式给出
+$$
+ \mathcal B(u)=\Phi(R_u)
+ =\mathcal T'-\Phi(\mathcal M_u(\sigma_u)).
+\tag{210.6}
+$$
+右侧只含 $C^1$ 函数 $\sigma_u$ 及光滑算子 $\mathcal M_u$，所以 $\mathcal B$ 为 $C^1$；这一步不要求 $R$ 可微。
+
+固定校准点 $t$，置正矩阵 $A=K_t^{-1}\sigma_tK_t^{-1}$，记
+$A_+=PAP$、$A_-=QAQ$、$D=PAQ$。读出概率为 $h,e$，所以 $A_+$ 和 $A_-$ 都有迹一。定义固定通道 $\mathcal R_\pm=\Phi(A_\pm)$ 及固定线性映射 $\mathcal S=\Phi(D+D^\dagger)$。冻结曲线 $\widehat\sigma_u=K_uAK_u$ 的通道为
+$$
+ \Psi_u=h(u)\mathcal R_++e(u)\mathcal R_-
+       +q(u)\mathcal S,
+ \qquad q(u)=\frac12\sqrt{1-u^2}.
+\tag{210.7}
+$$
+由于 $K'_u=H_uK_u/2$，冻结曲线满足 $\widehat\sigma'_u=\mathcal M_u(\widehat\sigma_u)$。在 $t$，$R_t=0$ 保证冻结曲线与实际曲线有相同的值及一阶导数。因此对（210.6）求导，只使用实际曲线的一阶导数便有
+$$
+ \mathcal B'(t)
+ =-\Phi(\mathcal M'_t(\sigma_t)+\mathcal M_t(\sigma'_t))
+ =-\Psi''_t=-q''(t)\mathcal S,
+ \qquad q''(t)=-\frac1{2(1-t^2)^{3/2}}\ne0.
+\tag{210.8}
+$$
+若 $\mathcal B'(t)=0$，则 $\mathcal S=0$。再匹配冻结曲线与目标通道的值、一阶导数，得到
+$$
+ \mathcal R_-=\mathcal T_t-(1+t)\mathcal T'=\mathcal T_{-1}.
+\tag{210.9}
+$$
+左侧是 CPTP 通道，右侧却不为正：第188.3节的 $n=(1,-2a,1)^{\mathsf T}$ 满足 $n^{\mathsf T}F(a,-1)n=-4a^2$。矛盾证明（210.3）。
+
+在有限维信号映射空间任选一个范数，取 $M>0$ 使 $\|\Phi(X)\|\le M\|X\|_1$ 对所有自伴 $X$ 成立。由 $\mathcal B(t)=0$、$\mathcal B'(t)\ne0$，在充分小的邻域有
+$\|\mathcal B(u)\|\ge\frac12\|\mathcal B'(t)\||u-t|$。结合（210.5）得到（210.4），例如可取 $c=\|\mathcal B'(t)\|^2/(4M^2)$。因此校准点孤立，即使残差本身只有连续性。
+
+若 $\rho$ 为 $C^2$，则 $R$ 为 $C^1$ 且 $\mathcal B'(t)=\Phi(R'_t)\ne0$，所以 $R'_t\ne0$。若秩还局部恒定，所有非零特征值在缩小的邻域具有统一正下界 $\lambda_*>0$。在 $\sigma_u$ 的本征基中，以 $\lambda_i$ 表示特征值，有
+$$
+ g(u)=2\sum_{\lambda_i+\lambda_j>0}
+       \frac{|(R_u)_{ij}|^2}{\lambda_i+\lambda_j}
+ \le\frac2{\lambda_*}\|R_u\|_2^2.
+\tag{210.10}
+$$
+这是把 $(R_u)_{ij}=(\lambda_i+\lambda_j)(L_u-H_u)_{ij}/2$ 代入平方残差后对有序指标对求和所得；核与核之间的项不贡献，支持与核之间的项仍保留。$R_t=0$ 与 $C^1$ 性给出所需二次上界。秩变化时这个统一分母下界不成立；第188.4节的程序在校准点外具有严格正的信息量极限差，不能把上界推广到所有秩变化点。证毕。
+
+**定理 210.3（光滑端点下的全部校准集合恰为有限集合）。** 每个具有定义210.1所述一阶光滑端点的有限维全区间精确程序，其 $\mathcal E(\rho)$ 都是有限集合。反过来，$J_a$ 的每个有限子集，包括空集，都可以成为一个三维程序的完整校准集合；实现程序在 $J_a$ 内满秩，其矩阵元素在 $[l,1]$ 附近有有理解析延拓。非空集合的最小程序维数为三。即使维数固定为三，各程序校准点数也不存在统一有限上界。
+
+证明。 若等号点无限，则在紧区间 $[l,1]$ 上有聚点。内点聚集由 $R$ 的连续性给出 $R_t=0$，而相应的 $\mathcal B$ 零点序列迫使 $\mathcal B(t)=\mathcal B'(t)=0$，与定理210.2矛盾。若聚点为 $l$，由于 $l>-1$，$K_l$ 仍可逆。连续性给出 $\sigma_l\succeq0$、读出概率恒等式及 $R_l=0$；处理器像仍具有（210.6）的 $C^1$ 表达，零点聚集给出 $\mathcal B'(l)=0$。定理210.2对冻结曲线及处理器像的导数论证可在 $l$ 应用，仍得到不为正的 $\mathcal T_{-1}$ 必须为 CPTP，矛盾。此处只对实际曲线使用物理侧的一阶导数极限，不要求延拓在 $u<l$ 时保持正性。
+
+在右端，令 $Z=P-Q$，消去 $H$ 的分母，定义
+$$
+ T(u)=(1-u^2)R_u
+      =(1-u^2)\sigma'_u+u\sigma_u
+       -\frac12(Z\sigma_u+\sigma_uZ).
+\tag{210.11}
+$$
+由 $\operatorname{Tr}(Q\sigma_1)=0$ 与正性，有 $Q\sigma_1=\sigma_1Q=0$，故 $T(1)=0$。一阶光滑性给出 $\sigma_u=\sigma_1+(u-1)\sigma'_1+o(|u-1|)$ 及 $\sigma'_u=\sigma'_1+o(1)$，所以即使 $\sigma''_1$ 不存在，$T$ 仍有左导数 $T'(1)=\sigma_1-\sigma'_1-(Z\sigma'_1+\sigma'_1Z)/2$。若等号点趋于一，则这个导数必须为零。按 $P,Q$ 分块计算，得到
+$$
+ P\sigma'_1P=\frac12\sigma_1,
+ \qquad P\sigma'_1Q=Q\sigma'_1P=0.
+\tag{210.12}
+$$
+从 $u<1$ 一侧的 $Q\sigma_uQ\succeq0$ 得 $Q\sigma'_1Q\preceq0$。而读出概率的导数为 $\operatorname{Tr}(Q\sigma'_1)=-1/2$，所以
+$$
+ \tau_-=-2Q\sigma'_1Q\succeq0,\qquad
+ \operatorname{Tr}\tau_-=1,\qquad
+ \sigma'_1=\frac12(\sigma_1-\tau_-).
+\tag{210.13}
+$$
+送入固定处理器得到
+$\Phi(\tau_-)=\mathcal T_1-2\mathcal T'_1=\mathcal T_{-1}$，再次与正性矛盾。因此两端也不能成为聚点，校准集合有限。
+
+对于非空有限集合 $S\subset J_a$，选 $\zeta\in(l,\min S)$，直接使用定理208.2的有理准备，便有 $\mathcal E(\rho)=S$。其处理器固定于所选种子；同一处理器可以服务 $(\zeta,1)$ 内的任意有限集合。对于空集，在第207节的种子加旗标构造中取恒定 $v(u)=v_c\in(b_-,l)$；整个闭区间上 $v_c<u$，准备保持物理性，内部满秩，且式（207.23）的正导数条件处处不成立。相应旗标权重 $w=(u-v_c)/(1-v_c)$ 与矩阵曲线均在端点附近解析。第190.2节的二维成本严格大于 $I_r$，排除非空集合的二维实现；三维实现给出反向达到。取任意大的有限 $|S|$，说明维数三本身不限制校准点数。证毕。
+
+**定理 210.4（仅有开区间解析性时可以有无穷多个校准点）。** 固定第207节的任意种子 $\zeta\in J_a$ 及其物理区间 $(b_-,b_+)$。选择
+$$
+ b_-<c<l<\zeta<d<b_+,
+ \qquad
+ g(y)=c+\frac{d-c}{1+C e^{-ky}},
+ \quad C=\frac{d-\zeta}{\zeta-c},
+ \quad k=\frac{(1-\zeta^2)(d-c)}{(\zeta-c)(d-\zeta)}.
+\tag{210.14}
+$$
+对充分大的实数 $\beta$，令
+$$
+ x=\operatorname{artanh}u,\qquad
+ \theta_\beta(x)=-\frac\pi2+\log(1+e^{x-\beta}),\qquad
+ r_\beta(x)=\theta'_\beta(x)=\frac{e^{x-\beta}}{1+e^{x-\beta}},
+ \qquad
+ v_\beta(u)=g\!\left(\frac{\sin\theta_\beta(x)}{r_\beta(x)}\right).
+\tag{210.15}
+$$
+使用同一个种子加旗标处理器，存在以此内部坐标准备的全区间精确三维程序，在 $J_a$ 内满秩且实解析，其完整校准集合恰为
+$$
+ \mathcal E(\rho)=
+ \left\{\tanh\!\left[\beta+
+ \log\!\left(e^{\pi/2+2\pi n}-1\right)\right]:n=0,1,2,\ldots\right\}.
+\tag{210.16}
+$$
+这些点递增趋于一。程序在左端具有解析延拓，在右端连续趋于旗标纯态；闭区间上的连续延拓为 Lipschitz 函数，但在右端没有 $C^1$ 延拓。
+
+证明。 函数 $g$ 严格递增，值域为 $(c,d)$，且 $g(0)=\zeta$、$g'(0)=1-\zeta^2$。所有组成函数在 $J_a$ 上解析，$r_\beta>0$，故 $v_\beta$ 解析并始终位于种子的物理区间内。
+
+当 $\beta\to+\infty$，在紧区间 $u\in[l,d]$ 上有 $r_\beta\to0$、$\theta_\beta\to-\pi/2$，且 $\sin\theta_\beta/r_\beta\to-\infty$ 一致成立。因此 $v_\beta\to c<l$ 一致成立。固定充分大的 $\beta$，使该区间上 $v_\beta<l$，并且 $\theta_\beta(\operatorname{artanh}d)<0$。对于 $u>d$，自动有 $v_\beta<d<u$；故整个 $J_a$ 上 $v_\beta<u$。取
+$$
+ w_\beta(u)=\frac{u-v_\beta(u)}{1-v_\beta(u)},\qquad
+ \rho_u=(1-w_\beta(u))\sigma_{v_\beta(u)}\oplus w_\beta(u).
+\tag{210.17}
+$$
+两块权重严格为正，种子态满秩；同一个固定处理器给出 $(1-w_\beta)\mathcal T_{v_\beta}+w_\beta\mathcal T_1=\mathcal T_u$。这证明全区间、全输入的精确性与三维满秩性。
+
+由 $g$ 的单射性，$v_\beta=\zeta$ 当且仅当 $\sin\theta_\beta=0$。在这些点，直接求导得到
+$$
+ \frac{dv_\beta}{dx}=(1-\zeta^2)\cos\theta_\beta,
+ \qquad
+ \frac{dv_\beta}{du}=\frac{1-\zeta^2}{1-u^2}\cos\theta_\beta.
+\tag{210.18}
+$$
+式（207.23）因而恰好选择 $\theta_\beta=2\pi n$。由于 $\theta_\beta$ 严格递增、在 $\operatorname{artanh}l$ 的值位于 $(-\pi/2,0)$，且趋于正无穷，允许的整数恰为 $n\ge0$。解出 $u$ 得（210.16）；第一点已在 $d$ 右侧。
+
+左端 $l\in(-1,1)$，且构造的分母在那里非零，所以左侧矩阵解析延拓存在。在右端，$v_\beta\in(c,d)$ 一致远离一，故活动量子比特块的迹为 $(1-u)/(1-v_\beta(u))\to0$，程序连续趋于旗标纯态。若右端存在左导数，该块迹除以 $1-u$ 应有极限。但沿（210.16）的序列，它恒为 $1/(1-\zeta)$；沿 $\theta_\beta=\pi/2+2\pi n$ 的序列，$r_\beta\to1$、$v_\beta\to g(1)>\zeta$，故该商趋于不同的数 $1/(1-g(1))$。右端导数不存在，因而不与定理210.3矛盾。
+
+还可直接验证整个闭区间上的 Lipschitz 性。令 $y=\sin\theta_\beta/r_\beta$，利用 $\partial_xr_\beta=r_\beta(1-r_\beta)$ 得
+$$
+ \partial_xy=\cos\theta_\beta-
+       \frac{1-r_\beta}{r_\beta}\sin\theta_\beta.
+$$
+对于固定的 $\beta$，在 $x\ge\operatorname{artanh}l$ 上有 $r_\beta\ge r_\beta(\operatorname{artanh}l)>0$，所以 $\partial_xy$ 及 $\partial_xv_\beta$ 有界。置 $A(v)=\sigma_v/(1-v)$，则 $A$ 及 $A'$ 在 $[c,d]$ 上有界，而且活动块的导数为
+$$
+ \frac{d}{du}[(1-u)A(v_\beta(u))]
+ =-A(v_\beta(u))+
+   \frac{A'(v_\beta(u))\,\partial_xv_\beta(u)}{1+u}.
+$$
+由于 $1+u\ge2a>0$，整条程序曲线的导数在开区间一致有界，其闭区间连续延拓因此为 Lipschitz 函数。本构造只实现（210.16）的具体无限集合，不声称实现任意预定无限集合。证毕。
+
+点态 SLD 与秩变化处的连续信息量必须区分，相关一般公式见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）；有限维 SLD 的逆算子及伪逆表达见 Šafránek，*Simple expression for the quantum Fisher information matrix*，arXiv:1801.00945v2，式（4）—（5）、（12）—（13）。这里以（210.5）的残差等价式处理秩变化，并以处理器像的可微性、目标通道的仿射性和 $\mathcal T_{-1}$ 的非正性排除校准点聚集；有限性不以信息量自身连续或解析为前提。上述文献的 $C^2$ 秩变化修正公式不作为本节 $C^1$ 有限性结论的前提。
+
+## 追加锚（本行以下为增补区）
+
+## 211. 精确校准附近的信息曲率及其维数无关最优值
+
+**定义 211.1（点态校准的信息曲率）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$。考虑第187节的所有有限维固定 CPTP 程序：准备态 $\rho_u$ 在 $J_a$ 上为 $C^1$，同一个处理器对全部信号输入、全部 $u\in J_a$ 精确产生 $\mathcal T_u$，并满足 $I_Q(\rho_t)=I_r(t)$。仍取点态 SLD 信息量，令
+$$
+ \kappa(\rho,t)=\liminf_{\substack{u\to t\\u\ne t}}
+       \frac{I_Q(\rho_u)-I_r(u)}{(u-t)^2},
+ \qquad I_r(u)=\frac1{1-u^2}.
+\tag{211.1}
+$$
+允许 $\kappa=+\infty$。记
+$$
+ h=\frac{1+t}{2},\quad \ell=1-h,\quad
+ c_t=(1-t)(1+t)^2,\qquad
+ V_*(a,t)=\frac14\left(
+    \sqrt{1-\frac{a^2}{h}}+\sqrt{h-\frac{a^2}{h}}\right)^2.
+\tag{211.2}
+$$
+由于 $a<h<1$，两个根号均严格为正，且 $0<V_*<1$。
+
+**定理 211.2（任意有限维程序的统一校准曲率下界）。** 定义211.1中的每一个程序均满足
+$$
+ \kappa(\rho,t)\ge
+ \kappa_*(a,t):=\frac{a^2}{c_t^2V_*(a,t)}.
+\tag{211.3}
+$$
+该下界不要求实际准备态具有二阶导数，也不要求秩局部恒定。
+
+证明。 先把第209节的受控等距归约推广到非仿射准备。令 $S$ 为全部实际程序态的支持所张成的子空间。由有限维性，可以选择有限多个实际程序态，其支持张成 $S$；这些态的严格正权平均在 $S$ 上满秩。对于任何信号基态 $|i\rangle$，各程序的输出均为 $|i\rangle\langle i|$，因而平均程序仍有同一纯输出。将平均态分解为正权本征投影，非负输出概率的和为零迫使原处理器的 Stinespring 等距在 $\mathbb C^3\otimes S$ 上具有受控形状。这里平均程序只用于证明原等距的结构，不要求平均态属于原参数曲线。
+
+随后按第209.2节将处理器与交换信号标号 $0,2$ 后的处理器平均，再作其固定 Naimark 嵌入。其 Gram 正性、压缩分解和固定嵌入均不使用准备曲线的仿射性，所以得到固定算子与实际嵌入态
+$$
+ \sigma_u=J\rho_uJ^\dagger,\qquad
+ P+Q=I,\quad PQ=0,\quad PT=T,\quad \|T\|_\infty\le1,
+ \qquad
+ \operatorname{Tr}(P\sigma_u)=\frac{1+u}{2},\quad
+ \operatorname{Tr}(\sigma_uT)=a.
+\tag{211.4}
+$$
+此处 $T$ 为第209.5式的 $\widetilde K$，固定等距嵌入保留 SLD 信息量。所有内点的双侧正性保证 $\sigma'_u$ 的核—核压缩为零，故存在有限点态 SLD $L_u$，包括秩变化点。置
+$$
+ H_u=\frac P{1+u}-\frac Q{1-u},\qquad
+ \mathcal S_u(X)=\frac12(H_uX+XH_u),\qquad
+ R_u=\sigma'_u-\mathcal S_u(\sigma_u),\qquad
+ M=\frac{T+T^\dagger}{2}.
+\tag{211.5}
+$$
+由第210.5式的平方残差恒等式，
+$$
+ g(u):=I_Q(\rho_u)-I_r(u)
+      =\operatorname{Tr}[\sigma_u(L_u-H_u)^2],
+ \qquad R_t=0.
+\tag{211.6}
+$$
+读出概率导数给出 $\operatorname{Tr}R_u=0$。由于 $M$ 自伴，令 $D_u=L_u-H_u$，有
+$\operatorname{Tr}(R_uM)=\operatorname{Re}\operatorname{Tr}[\sigma_uD_u(M-aI)]$。
+对带权 Hilbert–Schmidt 内积使用 Cauchy–Schwarz，得到
+$$
+ |\operatorname{Tr}(R_uM)|^2
+ \le g(u)\operatorname{Tr}[\sigma_u(M-aI)^2].
+\tag{211.7}
+$$
+这一估计直接保留了 SLD 的平方范数，不对信息量取连续延拓。
+
+下面计算左侧标量的一阶变化。按 $P\oplus Q$ 分块，记
+$$
+ x=\operatorname{Tr}(\sigma_{t,PP}T_{PP}),\qquad
+ y=\operatorname{Tr}(\sigma_{t,QP}T_{PQ}).
+$$
+$PT=T$、常数期望及其导数给出
+$$
+ x+y=a,\qquad
+ \frac{x}{1+t}-\frac{t\,y}{1-t^2}=0,
+ \qquad x=at,\quad y=a(1-t).
+\tag{211.8}
+$$
+第二个等式使用了 $\sigma'_t=\mathcal S_t(\sigma_t)$。它也说明 $x,y$ 均为实数，即使原算子不为实矩阵。
+
+令 $K_u=\sqrt{(1+u)/2}\,P+\sqrt{(1-u)/2}\,Q$，并冻结辅助曲线
+$\widehat\sigma_u=K_uK_t^{-1}\sigma_tK_t^{-1}K_u$。
+这条辅助曲线光滑，满足 $\widehat\sigma'_u=\mathcal S_u(\widehat\sigma_u)$，并在 $t$ 与实际曲线具有相同的值和一阶导数。由（211.8），
+$$
+ \operatorname{Tr}(\widehat\sigma_uT)
+ =\frac{1+u}{1+t}\,at
+  +\frac{\sqrt{1-u^2}}{\sqrt{1-t^2}}\,a(1-t),
+ \qquad
+ \operatorname{Tr}(\widehat\sigma''_tT)=-\frac a{c_t}.
+\tag{211.9}
+$$
+实际残差 $R$ 未必可微，但其标量像
+$$
+ e(u):=\operatorname{Tr}(R_uM)
+      =-\operatorname{Tr}[\sigma_u\mathcal S_u(M)]
+\tag{211.10}
+$$
+是 $C^1$：这里用到了 $\operatorname{Tr}(\sigma'_uM)=0$，而右侧只含 $C^1$ 实际态及光滑固定算子。对（211.10）求导，在 $t$ 使用 $\sigma'_t=\mathcal S_t(\sigma_t)$ 及 $\mathcal S_t$ 的迹配对自伴性，得到
+$$
+ e'(t)=-\operatorname{Tr}[
+   (\mathcal S'_t(\sigma_t)+\mathcal S_t^2(\sigma_t))M]
+ =-\operatorname{Tr}(\widehat\sigma''_tM)=\frac a{c_t}.
+\tag{211.11}
+$$
+被求二阶导数的是辅助冻结曲线，未对实际曲线附加二阶光滑性。因此
+$e(u)=(a/c_t)(u-t)+o(|u-t|)$。
+
+还需证明名义态的统一方差界
+$$
+ \operatorname{Tr}[\sigma_t(M-aI)^2]\le V_*(a,t).
+\tag{211.12}
+$$
+将 $\sigma_t$ 纯化为单位向量 $\psi$，并将 $P,Q,T$ 张量辅助恒等算子；全部算子关系及期望值保留。置 $p=P\psi$、$q=Q\psi$，则 $\|p\|^2=h$、$\|q\|^2=\ell$。第211.8式等价于
+$\langle p,Tp\rangle=at$、$\langle p,Tq\rangle=2a\ell$。
+对于 $k=T\psi$ 与 $r=T^\dagger p$，作相对于 $\operatorname{span}\{p,q\}$ 的正交分解，得到
+$$
+ k=\frac ahp+k_\perp,\qquad
+ r=\frac{at}{h}p+2aq+r_\perp.
+\tag{211.13}
+$$
+由于 $PT=T$，$k$ 没有 $q$ 分量；上述期望恒等式给出其余投影系数。压缩性给出
+$$
+ \|k_\perp\|^2\le1-\frac{a^2}{h},\qquad
+ \|r_\perp\|^2
+ \le h-\frac{a^2t^2}{h}-4a^2\ell
+ =h-\frac{a^2}{h}.
+\tag{211.14}
+$$
+又因 $T^\dagger\psi=T^\dagger p$ 及 $1+t=2h$，有
+$(M-aI)\psi=(k_\perp+r_\perp)/2$。
+三角不等式给出（211.12）。
+
+最后，方差 $v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]$ 连续。对于任意 $\varepsilon>0$，充分接近 $t$ 时有 $v(u)\le V_*+\varepsilon$。将这一估计与（211.11）代入（211.7），再取下极限及 $\varepsilon\downarrow0$，得到（211.3）。此论证覆盖 $v(t)=0$、秩变化和信息量不连续的情形；其中没有使用 $R'_t$ 的存在。证毕。
+
+**定理 211.3（实解析纯态程序的全局最优三维实现）。** 对每个定义211.1中的 $a,t$，存在一个固定三维 CPTP 处理器及一条在整个 $J_a$ 上实解析的纯态准备曲线，对所有参数和全部信号输入精确产生 $\mathcal T_u$，而且
+$$
+ \mathcal E(\rho)=\{t\},\qquad
+ \lim_{\substack{u\to t\\u\ne t}}
+ \frac{I_Q(\rho_u)-I_r(u)}{(u-t)^2}=\kappa_*(a,t).
+\tag{211.15}
+$$
+因此，定义211.1中所有有限维 $C^1$ 程序的信息曲率下确界恰为 $\kappa_*$，并被三维实解析纯态程序达到；达到这个最优值并具有精确校准的最小联合支持维数恰为三。
+
+证明。 首先在三维程序空间内构造达到最优值的局部纯态模型。所有以下算子一经 $a,t$ 选定便固定，不依赖待估参数 $u$。令
+$$
+ P_0=\operatorname{diag}(1,1,0),\qquad Z_0=2P_0-I,
+ \qquad \psi_*=(\sqrt h,0,\sqrt\ell)^{\mathsf T},
+ \qquad
+ \gamma=\sqrt{1-\frac{a^2}{h^2}},\quad
+ \alpha=\sqrt{1-\frac{a^2}{h}},
+\tag{211.16}
+$$
+并置
+$$
+ r=\begin{pmatrix}at/h\\\gamma\\2a\sqrt{\ell/h}\end{pmatrix},
+ \qquad s=\frac{\psi_*-(a/\sqrt h)r}{\alpha},
+ \qquad
+ T_0=\begin{pmatrix}r^{\mathsf T}\\s^{\mathsf T}\\0\quad0\quad0\end{pmatrix}.
+\tag{211.17}
+$$
+由 $t^2+4h\ell=1$，有 $\|r\|=1$、$r^{\mathsf T}\psi_*=a/\sqrt h$；继而 $\|s\|=1$ 且 $r^{\mathsf T}s=0$。因此 $T_0T_0^\dagger=P_0$，$T_0$ 为压缩算子，且 $Z_0T_0=T_0$。定义固定等距映射
+$$
+ W_0=\binom{I_3}{0},\qquad
+ W_2=\binom{Z_0}{0},\qquad
+ W_1=\binom{T_0}{\sqrt{I_3-T_0^\dagger T_0}}.
+\tag{211.18}
+$$
+受控等距 $\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$ 后取环境偏迹，给出一个固定三维程序处理器。
+
+令 $h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$，考虑实单位向量及其通道系数
+$$
+ \psi(u,\theta)=\begin{pmatrix}
+ \sqrt{h(u)}\cos\theta\\
+ \sqrt{h(u)}\sin\theta\\
+ \sqrt{\ell(u)}
+ \end{pmatrix},\qquad
+ f(u,\theta)=\psi(u,\theta)^{\mathsf T}T_0\psi(u,\theta).
+\tag{211.19}
+$$
+此程序的 Schur 系数为 $C_{02}=u$、$C_{01}=C_{12}=f(u,\theta)$、$C_{ii}=1$。这是由（211.18）逐矩阵单位得到的恒等式；因为向量和算子均为实数，相关转置给出相同标量。因此 $f(u,\theta)=a$ 即保证对全部信号输入产生 $\mathcal T_u$。
+
+置 $M_0=(T_0+T_0^\dagger)/2$。由（211.17）直接得到
+$$
+ T_0\psi_*=(a/\sqrt h,\alpha,0)^{\mathsf T},\qquad
+ T_0^\dagger\psi_*=(at/\sqrt h,\sqrt h\,\gamma,2a\sqrt\ell)^{\mathsf T},
+ \qquad (M_0-aI)\psi_*=\sqrt{V_*}\,(0,1,0)^{\mathsf T}.
+\tag{211.20}
+$$
+这同时达到证明定理211.2时的方差界。取 $\theta=0$，曲线 $\psi(u,0)$ 正是 $\psi_*$ 的冻结等号曲线，所以（211.9）给出 $f(t,0)=a$、$f_u(t,0)=0$、$f_{uu}(t,0)=-a/c_t$。又由（211.20），
+$$
+ f_\theta(t,0)=2\sqrt h\sqrt{V_*}>0.
+\tag{211.21}
+$$
+实解析隐函数定理因此给出 $t$ 的一个邻域上的实际函数 $\theta(u)$，满足 $f(u,\theta(u))=a$，且
+$$
+ \theta(t)=\theta'(t)=0,\qquad
+ \theta''(t)=\frac{a}{2c_t\sqrt h\sqrt{V_*}}>0.
+\tag{211.22}
+$$
+写 $\psi_u=\psi(u,\theta(u))$。实归一化向量满足 $\langle\psi_u,\psi'_u\rangle=0$，故普通纯态 SLD 信息量为 $4\|\psi'_u\|^2$。将（211.19）求导，得到精确恒等式
+$$
+ I_Q(|\psi_u\rangle\langle\psi_u|)-I_r(u)
+       =4h(u)\theta'(u)^2.
+\tag{211.23}
+$$
+结合（211.22），此局部模型的信息曲率恰为 $a^2/(c_t^2V_*)$。缩小邻域为 $I\Subset J_a$，可令 $\theta''>0$ 在 $I$ 上成立；于是 $\theta'$ 在 $I$ 内的唯一零点为 $t$。
+
+下面证明这个局部纯态模型可以由同一个三维处理器解析延拓到整个 $J_a$。令 $Q_0=I-P_0$、$k=a/h$、$\beta=\sqrt h\,\gamma/\alpha$，则 $0<k,\beta<1$；后一个不等式来自 $\alpha^2-h\gamma^2=1-h>0$。在 $P_0\oplus Q_0$ 分块中写
+$$
+ T_0=\begin{pmatrix}\mathsf A&b\\0&0\end{pmatrix},\qquad
+ \mathsf A=\begin{pmatrix}
+ kt&\gamma\\
+ \sqrt h(1-k^2t)/\alpha&-k\beta
+ \end{pmatrix},\qquad
+ b=\begin{pmatrix}2k\sqrt{h\ell}\\\sqrt\ell(1-2k^2h)/\alpha\end{pmatrix}.
+\tag{211.24}
+$$
+由 $T_0T_0^{\mathsf T}=P_0$，有 $\mathsf A\mathsf A^{\mathsf T}+bb^{\mathsf T}=I_2$。计算得到 $\det\mathsf A=-\beta$，以及
+$$
+ \Delta:=\det(I_2-\mathsf A)
+ =1-kt-(1-k)\beta
+ =2(1-a)-(1-k)(1+\beta),\qquad
+ 0<k(1-t)<\Delta<2(1-a).
+\tag{211.25}
+$$
+因此可以固定一个不依赖 $u$ 的方向
+$$
+ x=(I_2-\mathsf A)^{-1}b,\qquad N=\|x\|,\qquad
+ e=\frac xN=(\cos\bar\theta,\sin\bar\theta)^{\mathsf T}.
+\tag{211.26}
+$$
+直接求逆有
+$x_1=\sqrt\ell(2k\sqrt h+\gamma/\alpha)/\Delta>0$，且
+$\alpha x_2=\sqrt h(1-k)x_1+\sqrt\ell>0$，所以 $0<\bar\theta<\pi/2$。
+
+这一固定方向满足四个恒等式：
+$$
+ N^2=\frac{2(1+\beta)}{\Delta},\qquad
+ b^{\mathsf T}x=1+\beta,\qquad
+ e^{\mathsf T}\mathsf Ae=1-\frac\Delta2,\qquad
+ b^{\mathsf T}e=\frac{\Delta N}{2}>0.
+\tag{211.27}
+$$
+为核对它们，先由 $bb^{\mathsf T}=I_2-\mathsf A\mathsf A^{\mathsf T}$ 得
+$xx^{\mathsf T}=(I_2-\mathsf A)^{-1}+(I_2-\mathsf A^{\mathsf T})^{-1}-I_2$；取迹并使用二维逆矩阵公式，得到第一式。设 $s=\operatorname{Tr}\mathsf A$。从 $\det\mathsf A=-\beta$ 和上述正交关系得 $\|b\|^2=1-\beta^2$；Cayley–Hamilton 恒等式 $\mathsf A^2=s\mathsf A+\beta I_2$ 给出
+$b^{\mathsf T}\mathsf Ab=-s\beta(1+\beta)$。因此
+$b^{\mathsf T}x=[(1-s)(1-\beta^2)-s\beta(1+\beta)]/\Delta=1+\beta$。
+其余两式由 $\mathsf Ax=x-b$ 得到。
+
+将可变的 $P_0$ 概率记为 $p\in[a,1]$。取两个固定角度 $0$ 与 $\bar\theta$，相应实纯态的 $T_0$ 期望分别为
+$$
+ m_0(p)=kt\,p+2k\sqrt{h\ell}\sqrt{p(1-p)},
+ \qquad m_0(h)=a,\quad m'_0(h)=0,
+\tag{211.28}
+$$
+$$
+ m_{\bar\theta}(p)
+ =p\left(1-\frac\Delta2\right)
+  +\frac{\Delta N}{2}\sqrt{p(1-p)}.
+\tag{211.29}
+$$
+$m_0$ 严格凹，故 $m_0(p)\le a$，等号仅在 $p=h$。另一个期望在右端满足
+$m_{\bar\theta}(1)-a=(1-k)(1+\beta)/2>0$；在左端满足
+$m_{\bar\theta}(a)-a=(\Delta/2)[N\sqrt{a(1-a)}-a]>0$，因为
+$N^2>(1+\beta)/(1-a)>a/(1-a)$。式（211.29）的凹性于是给出整个闭区间上的严格夹逼：
+$$
+ m_0(p)\le a<m_{\bar\theta}(p)
+ \qquad(a\le p\le1).
+\tag{211.30}
+$$
+两端和中间的所有期望都属于同一个 $T_0$，没有分别优化处理器。
+
+还须排除所选根的折返。记 $A_0=\mathsf A_{11}$、$D_0=\mathsf A_{22}$、$C_0=\mathsf A_{12}+\mathsf A_{21}>0$、$E_0=b_1>0$、$F_0=b_2$，并令
+$$
+ \begin{aligned}
+ \Phi(p,\theta)={}&p(A_0\cos^2\theta+D_0\sin^2\theta
+                         +C_0\sin\theta\cos\theta)\\
+ &+\sqrt{p(1-p)}(E_0\cos\theta+F_0\sin\theta).
+ \end{aligned}
+\tag{211.31}
+$$
+这就是向量 $(\sqrt p\cos\theta,\sqrt p\sin\theta,\sqrt{1-p})^{\mathsf T}$ 的 $T_0$ 期望。对每个 $p\in(a,1)$，方程 $\Phi(p,\theta)=a$ 在 $[0,\bar\theta)$ 内恰有一个根，且该根处 $\Phi_\theta>0$。证明分两种情形。
+
+若 $F_0\ge0$，则在 $0<\theta<\pi/2$ 上
+$$
+ \frac{\Phi_\theta}{\sin\theta\cos\theta}
+ =2p(D_0-A_0)+pC_0(\cot\theta-\tan\theta)
+ +\sqrt{p(1-p)}\left(\frac{F_0}{\sin\theta}
+                              -\frac{E_0}{\cos\theta}\right)
+\tag{211.32}
+$$
+严格递减，且左右极限分别为正无穷和负无穷。所以 $\Phi$ 先严格增加后严格减少，仅有一个极大值。结合（211.30），在 $\bar\theta$ 之前恰有一次从下方穿过 $a$，根处导数严格为正；$p=h$ 时该根为零，直接求导同样严格为正。
+
+若 $F_0<0$，则 $2k^2h>1$，因而 $h>1/2$ 及 $A_0>0>D_0$。置 $y=\sin\theta$、$q=\sqrt{p(1-p)}$ 及 $G(y)=\Phi(p,\arcsin y)$。直接求导得
+$$
+ G''(y)=2p(D_0-A_0)
+       +\frac{pC_0y(2y^2-3)-qE_0}{(1-y^2)^{3/2}}<0.
+\tag{211.33}
+$$
+因为 $G(0)\le a<G(\sin\bar\theta)$，严格凹性给出唯一根，且从该根到 $\sin\bar\theta$ 的割线斜率严格为正，故根处导数严格为正。这也覆盖 $p=h$、根为零的情形。
+
+把唯一根记为 $\Theta(p)$。非零角导数给出每一点附近的解析隐函数，唯一性使这些局部函数在交叠处一致，因此得到整个 $(a,1)$ 上的实解析函数。此处已证明全域选根相容性，而非直接将局部隐函数定理当作全域延拓。置
+$$
+ \theta(u)=\Theta\!\left(\frac{1+u}{2}\right),\qquad
+ \psi_u=\psi(u,\theta(u)),\qquad
+ \rho_u=\psi_u\psi_u^{\mathsf T}.
+\tag{211.34}
+$$
+这是同一个三维处理器的全区间、全输入精确纯态程序，在开区间实解析。它在 $t$ 附近与此前的局部隐函数重合，所以（211.22）—（211.23）给出所需最优曲率。
+
+最后证明没有额外校准点。在整个 $0\le\theta\le\bar\theta$ 上，$E_0\cos\theta+F_0\sin\theta>0$：$F_0\ge0$ 时直接成立；$F_0<0$ 时除以 $\cos\theta$，所得函数随角度递减，但在 $\bar\theta$ 处仍由 $b^{\mathsf T}e>0$ 保持正性。因此对每个固定角度，$\Phi(p,\theta)$ 关于 $p$ 严格凹。由选根唯一性和（211.30），在 $0<\theta\le\bar\theta$ 上有 $\Phi(h,\theta)>a$。若 $p<h$，从根 $\Phi(p,\Theta(p))=a$ 到 $h$ 的割线斜率严格为正，凹性给出 $\Phi_p>0$；若 $p>h$，相同论证给出 $\Phi_p<0$。结合 $\Phi_\theta>0$，得到
+$$
+ \Theta'(p)<0\quad(p<h),\qquad
+ \Theta'(p)>0\quad(p>h),\qquad
+ \Theta'(h)=0.
+\tag{211.35}
+$$
+于是（211.23）中的信息差值仅在 $u=t$ 为零，完整校准集合恰为 $\{t\}$。
+
+定理211.2给出所有有限维 $C^1$ 程序的统一下界，而上述三维程序达到它。第190.2节对任意二维全区间精确程序给出
+$I_Q(\rho_t)-I_r(t)\ge a^2/[(1+t)(1+t-2a^2)]>0$，一维也不能实现非恒定通道族。因此，达到最优曲率并具有精确校准的最小联合支持维数恰为三；限制为开区间实解析纯态程序仍是同一最小维数。证毕。
+
+**定理 211.4（同一三维处理器中的光滑端点实现）。** 定理211.3的同一个三维处理器还具有一条全区间、全输入精确准备曲线，其矩阵元素在包含 $[2a-1,1]$ 的开邻域具有 $C^\infty$ 延拓，并在 $t$ 的一个邻域与定理211.3的纯态曲线完全相同。因此它也达到 $\kappa_*(a,t)$，其完整校准集合为包含 $t$ 的有限集合。此处不指定其他校准点。具有光滑端点的程序类也以三维达到同一最小曲率及最小联合支持维数。
+
+证明。 先给出同一处理器的两个端点态。右端取
+$$
+ w=T_0\psi_*=(a/\sqrt h,\alpha,0)^{\mathsf T},\qquad
+ \tau_1=ww^{\mathsf T}.
+\tag{211.36}
+$$
+由（211.17），$\psi_*$ 属于 $T_0$ 的初始支持，所以 $\|w\|=1$、$T_0^{\mathsf T}w=\psi_*$。于是 $w^{\mathsf T}T_0w=\psi_*^{\mathsf T}w=a$，且 $\operatorname{Tr}(\tau_1P_0)=1$。
+
+左端令
+$v_-=(\sqrt a,0,\sqrt{1-a})^{\mathsf T}$、
+$v_+=(\sqrt a\,e,\sqrt{1-a})^{\mathsf T}$，并记
+$m_-=m_0(a)<a<m_+=m_{\bar\theta}(a)$。由（211.30），
+$$
+ \lambda=\frac{a-m_-}{m_+-m_-}\in(0,1),\qquad
+ \tau_l=(1-\lambda)v_-v_-^{\mathsf T}+\lambda v_+v_+^{\mathsf T},
+ \qquad l=2a-1.
+\tag{211.37}
+$$
+这是密度矩阵，满足 $\operatorname{Tr}(\tau_lP_0)=a$、$\operatorname{Tr}(\tau_lT_0)=a$。因此仿射参考准备
+$$
+ B_u=\frac{1-u}{1-l}\tau_l+\frac{u-l}{1-l}\tau_1
+\tag{211.38}
+$$
+在整个闭区间都满足 $\operatorname{Tr}(B_uT_0)=a$、$\operatorname{Tr}(B_uP_0)=(1+u)/2$，且为实对称密度矩阵。由固定处理器的逐矩阵单位恒等式，它对所有信号输入精确产生 $\mathcal T_u$。
+
+取实光滑函数 $\eta:J_a\to[0,\pi/2]$，在 $t$ 的一个邻域恒等于零，在两个端点附近恒等于 $\pi/2$。用 $\rho_u^{\rm pure}$ 表示定理211.3的全区间纯态曲线，置
+$$
+ \rho_u^{\rm sm}
+ =\cos^2\eta(u)\,\rho_u^{\rm pure}
+  +\sin^2\eta(u)\,B_u.
+\tag{211.39}
+$$
+这是同一个三维空间中的凸混合。两项均使用同一个固定处理器实现同一目标通道，所以处理器的线性性给出全域、全输入精确性。它在校准点附近与纯态模型相同，在端点附近等于仿射参考准备，因此具有所述矩阵延拓；不要求区间外延拓仍保持正性。
+
+参数相关的混合不会消除准备成本。实际导数包含切换项：
+$$
+ (\rho_u^{\rm sm})'
+ =\cos^2\eta\,(\rho_u^{\rm pure})'
+  +\sin^2\eta\,B'_u
+  +\sin(2\eta)\eta'(B_u-\rho_u^{\rm pure}).
+\tag{211.40}
+$$
+在两个权重都非零处，为估计信息量可先保留一个正交准备标签，再将标签丢弃。丢弃标签是固定 CPTP 映射；其 SLD 信息单调性与保留标签时的直和公式给出
+$$
+ I_Q(\rho_u^{\rm sm})
+ \le \cos^2\eta\,I_Q(\rho_u^{\rm pure})
+    +\sin^2\eta\,I_Q(B_u)+4\eta'(u)^2.
+\tag{211.41}
+$$
+这里是三维混合态的上界，不是同空间混合的直和等式；辅助标签仅用于证明估计，不加入实际程序寄存器。权重取零或一时 $\eta'=0$，相应的单项曲线直接给出点态信息量。对仿射参考准备再保留两个端点的准备标签，还得到
+$$
+ I_Q(B_u)\le\frac1{(u-l)(1-u)}\qquad(u\in J_a).
+\tag{211.42}
+$$
+所以切换区域的信息成本有限，且已被（211.41）显式计入。在 $t$ 附近权重恒定为一，曲率完全保留为 $\kappa_*$。定理210.3给出完整校准集合的有限性；定理211.3的维数下界给出最小联合支持维数为三。
+
+上述纯态曲线本身不能具有右端 $C^1$ 矩阵延拓。事实上，纯态的固定投影读出满足
+$\|P_0\rho_u^{\rm pure}Q_0\|_2^2=p(u)(1-p(u))$，其中 $p(u)=(1+u)/2$。若在右端有 $C^1$ 延拓，由 $\operatorname{Tr}(Q_0\rho_1)=0$ 及正性得到端点交叉块为零，从而左侧为 $O((1-u)^2)$；右侧却渐近等于 $(1-u)/2$。矛盾。因此，开区间的全局纯态实现与具有光滑端点的实现是同一三维处理器上的两条不同准备曲线。证毕。
+
+测量 Fisher 信息与 SLD 的一般关系见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），以及 Barndorff-Nielsen、Gill，*Fisher information in quantum statistics*，arXiv:quant-ph/9808009。秩变化处点态 SLD 与连续 Bures 信息的区别见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）。本节由全输入程序的固定压缩关系、校准点的两个期望约束及其方差上界，确定此通道族的最优局部曲率；实际三维实现的全域性由固定方向夹逼和唯一选根证明，不由逐点可行性替代。光滑端点构造使用同空间混合，信息估计中明确计入参数相关的切换项。
+
+## 追加锚（本行以下为增补区）
+
+## 212. 复相位在纯三维程序中安排完整校准集合
+
+**定义 212.1（固定三维相位处理器）。** 固定 $0<a<1$，记 $L=1-a$，选择
+$$
+ 0<\delta<\min\left\{\frac L4,\frac{1-a^2}{16}\right\},\qquad
+ \lambda=L-\delta,\quad B=2\sqrt{a\lambda},\quad
+ p_\delta=\frac a{1-\delta},\quad u_\delta=2p_\delta-1.
+\tag{212.1}
+$$
+因此 $a<p_\delta<1$、$2a-1<u_\delta<1$。在程序空间 $\mathbb C^3$ 上定义
+$$
+ P=\operatorname{diag}(1,1,0),\quad Q=I-P,\quad Z=2P-I,
+ \qquad
+ K=\begin{pmatrix}
+ a-\lambda&\delta&B\\
+ \delta&a&0\\
+ 0&0&0
+ \end{pmatrix}.
+\tag{212.2}
+$$
+参数域仍为 $J_a=(2a-1,1)$，目标通道仍为第187节的 $\mathcal T_u$，固定均衡读出的信息量为 $I_r(u)=1/(1-u^2)$。本节只要求纯态准备在开区间 $J_a$ 上光滑，不要求闭端点延拓。校准集合沿用定义210.1。
+
+**定理 212.2（标量控制的解析纯三维程序）。** 定义212.1的 $K$ 为严格压缩算子。令
+$$
+ W_0=\binom{I_3}{0},\qquad W_2=\binom{Z}{0},\qquad
+ W_1=\binom{K}{\sqrt{I_3-K^\dagger K}}.
+\tag{212.3}
+$$
+这些固定等距映射定义受控 CPTP 处理器。记
+$$
+ p=\frac{1+u}{2},\quad q=1-p,\quad
+ R(p)=\sqrt{\frac a\lambda}\sqrt{\frac qp},\quad
+ \gamma=\frac\lambda{2\delta},\quad s_c=\frac\lambda L,
+ \qquad
+ G(s)=s^2+\gamma^2\left(s+s^{-1}-2\right)^2\quad(s>0).
+\tag{212.4}
+$$
+若 $s:(a,1)\to(0,\infty)$ 为实解析函数，且
+$$
+ R(p)^2G(s(p))<1\qquad(a<p<1),
+\tag{212.5}
+$$
+则下式定义同一个三维处理器的全区间、全输入精确纯态程序：
+$$
+ \begin{gathered}
+ r=Rs,\qquad y=\gamma R\frac{(s-1)^2}{s},\qquad
+ z=\sqrt{1-r^2-y^2},\qquad v=(r,y+iz)^{\mathsf T},\\
+ \psi_u=(\sqrt p\,r,\sqrt p\,(y+iz),\sqrt q)^{\mathsf T},
+ \qquad \rho_u=\psi_u\psi_u^\dagger.
+ \end{gathered}
+\tag{212.6}
+$$
+其校准条件恰为
+$$
+ I_Q(\rho_u)=I_r(u)
+ \quad\Longleftrightarrow\quad
+ s(p)=1,\qquad \frac{ds}{dp}(p)=\frac1{2p(1-p)}.
+\tag{212.7}
+$$
+常数选择 $s=s_c$ 在全区间严格可行，且没有校准点。
+
+证明。 $KK^\dagger$ 的 $P$ 块为
+$$
+ \begin{pmatrix}
+ (a+\lambda)^2+\delta^2&\delta(2a-\lambda)\\
+ \delta(2a-\lambda)&a^2+\delta^2
+ \end{pmatrix}.
+\tag{212.8}
+$$
+$I_2-(KK^\dagger)_{PP}$ 的两个对角元分别至少为 $\delta$ 与 $(1-a^2)/2$：前者等于 $2\delta(1-\delta)$，后者等于 $1-a^2-\delta^2$。又有 $|2a-\lambda|<2$，所以
+$$
+ \det\bigl[I_2-(KK^\dagger)_{PP}\bigr]
+ \ge\frac{\delta(1-a^2)}2-4\delta^2
+ >\frac{\delta(1-a^2)}4>0.
+\tag{212.9}
+$$
+因此 $KK^\dagger<I_3$，所有（212.3）均为等距映射；程序空间维数为三，等距映射的六维值域是随后被取偏迹的环境。
+
+由（212.5）有 $z>0$，第212.6式为归一化实解析向量。$K_{PP}$ 为实对称矩阵，其第三列只与实坐标 $r$ 耦合，所以期望 $f=\psi_u^\dagger K\psi_u$ 为实数。直接配方得到
+$$
+ f-a=p\bigl[2\delta r y-\lambda(r-R)^2\bigr]=0.
+\tag{212.10}
+$$
+这里使用 $y=\gamma(r-R)^2/r$。又有 $\psi_u^\dagger Z\psi_u=u$、$ZK=K$。因此受控等距映射后取环境偏迹的三个非对角 Schur 系数为 $u,a,a$，对角系数为一；这逐个核对全部信号矩阵单位，故在全部输入上精确产生 $\mathcal T_u$。
+
+以下点表示 $u$ 导数。由纯态信息公式 $I_Q=4(\|\dot\psi\|^2-|\psi^\dagger\dot\psi|^2)$，得到
+$$
+ I_Q(\rho_u)-I_r(u)
+ =4p\left(\|\dot v\|^2-p|v^\dagger\dot v|^2\right)
+ \ge4p(1-p)\|\dot v\|^2.
+\tag{212.11}
+$$
+最后一步使用 $\|v\|=1$。这保留了复相位导数的成本，且校准当且仅当 $\dot v=0$。
+
+用 $p$ 作自变量时，$v'=0$ 蕴含 $r'=y'=0$。在 $r'=0$ 处微分 $y=\gamma(r-R)^2/r$，得到
+$y'=-2\gamma(r-R)R'/r$。因为 $R'\ne0$，必须 $r=R$。反过来，$r=R$、$r'=0$ 给出 $y'=0$，再由 $z>0$ 得 $z'=0$。因此校准等价于 $s=1$、$R'+Rs'=0$，而 $-R'/R=1/(2p(1-p))$，证明（212.7）。
+
+函数 $s+s^{-1}-2$ 在正半轴非负且凸，故它的平方也凸；所以 $G$ 为凸函数，严格次水平集在正半轴为区间。常数 $s_c$ 满足
+$$
+ R(p)^2\le\frac1{s_c},\qquad
+ G(s_c)=s_c^2+\frac{(1-s_c)^2}{4},\qquad
+ R(p)^2G(s_c)\le s_c+\frac{(1-s_c)^2}{4s_c}<1,
+\tag{212.12}
+$$
+因为 $3/4<s_c<1$。这个严格余量对 $p\in[a,1]$ 一致成立，其中仅在本式将 $R(1)$ 连续定义为零。常数 $s_c\ne1$，由（212.7）没有校准点。证毕。
+
+**定理 212.3（任意有限完整校准集合的解析纯三维实现）。** 对定义212.1的固定处理器，任意有限集合 $S\subset(u_\delta,1)$ 都可成为某条全区间实解析纯态程序的完整校准集合。对非空集合 $S=\{t_1<\cdots<t_m\}$，标量控制 $s$ 可以是次数至多 $2m$ 的有理函数。
+
+因此，$J_a$ 的任意有限集合均可由某个实解析纯三维程序精确实现；非空集合的最小联合程序支持维数恰为三。即使处理器固定、程序始终为纯态且在开区间解析，校准点数也没有统一有限上界。
+
+证明。 空集由常数 $s_c$ 实现。其余情形令 $p_i=(1+t_i)/2>p_\delta$，于是 $R(p_i)^2<1$。定义
+$$
+ \begin{gathered}
+ P_m(p)=\prod_{i=1}^m(p-p_i),\qquad
+ L_i(p)=\frac{P_m(p)}{(p-p_i)P_m'(p_i)},\qquad
+ \beta_i=\frac1{2p_i(1-p_i)},\\
+ H(p)=1+\sum_{i=1}^m\beta_i(p-p_i)L_i(p)^2,\qquad
+ s_k(p)=\frac{H(p)+k s_cP_m(p)^2}{1+kP_m(p)^2}\quad(k>0).
+ \end{gathered}
+\tag{212.13}
+$$
+第208节的 Hermite 插值结构在这里用于相位补偿坐标 $s$，不是该节的混合态准备坐标。直接代入给出
+$$
+ s_k(p_i)=1,\qquad s_k'(p_i)=\beta_i.
+\tag{212.14}
+$$
+
+先核对整个参数区间的物理性。在每个 $p_i$ 的小邻域内，$H>0$ 且 $R^2G(H)<1$，因为在节点 $H=1$、$R^2<1$。$G$ 的凸性保证同一个 $p$ 处两个可行标量的凸组合仍可行，故（212.13）在这些邻域中满足（212.5）。在它们的补集 $[a,1]\setminus\bigcup_i U_i$ 上，$P_m^2$ 有正下界，而且
+$$
+ s_k(p)-s_c=\frac{H(p)-s_c}{1+kP_m(p)^2}\longrightarrow0
+\tag{212.15}
+$$
+一致成立。由（212.12）的统一严格余量，充分大的 $k$ 保证整个 $[a,1]$ 上 $s_k>0$ 和 $R^2G(s_k)<1$。分母在实轴恒正，开区间内其余根号也严格为正，故定理212.2给出实际实解析纯态程序。
+
+还须排除额外校准点。对 $p\notin\{p_i\}$，写
+$$
+ H(p)-1=P_m(p)^2\mathcal R(p),\qquad
+ \mathcal R(p)=\sum_i\frac{\beta_i}{P_m'(p_i)^2(p-p_i)},
+ \qquad \mathcal R'(p)<0.
+\tag{212.16}
+$$
+因此 $s_k=1$ 的额外根满足 $\mathcal R=k(1-s_c)$，且在这些根处
+$$
+ s_k'=
+ \frac{P_m^2\mathcal R'}{1+kP_m^2}<0.
+\tag{212.17}
+$$
+它们不满足（212.7）所需的正导数。与（212.14）合并，完整校准集合恰为 $S$。分子、分母次数不超过 $2m$；此处只给有理控制次数上界，不声称最小次数或系数大小的统一界。
+
+对任意有限非空 $S\subset J_a$，令 $p_{\min}=\min_{t\in S}(1+t)/2>a$，在（212.1）之外再取
+$$
+ \delta<1-\frac a{p_{\min}}.
+\tag{212.18}
+$$
+这使全部节点满足 $p_i>p_\delta$。定理190.2排除任何联合支持维数至多二的全区间精确程序在内点达到 $I_r$，因此非空集合的最小联合支持维数恰为三。固定 $a,\delta$ 后，处理器不随节点个数或节点配置改变，只有 $s_k$ 改变。证毕。
+
+**定理 212.4（固定纯三维中的无穷解析校准）。** 固定定义212.1的处理器，任选 $0<b<1-p_\delta$。存在全区间实解析纯态程序，精确生成全部 $\mathcal T_u$，其完整校准集合恰为
+$$
+ \mathcal E(\rho)=\left\{1-\frac{2b}{n}:n=1,2,\ldots\right\}.
+\tag{212.19}
+$$
+这个集合只在参数域外的右端一聚集；最小联合程序支持维数仍为三。
+
+证明。 对 $a<p<1$ 置
+$$
+ \omega(p)=\frac{2\pi b}{1-p},\qquad
+ A(p)=\frac{1-p}{4\pi bp},\qquad
+ H(p)=1+A(p)\sin\omega(p),\qquad
+ D(p)=\sin^2\frac{\omega(p)}2,
+\tag{212.20}
+$$
+并定义
+$$
+ s_k(p)=\frac{H(p)+k s_cD(p)}{1+kD(p)}.
+\tag{212.21}
+$$
+由于 $b<1-p_\delta<1-a$，$D$ 在 $(a,1)$ 内的零点恰为
+$p_n=1-b/n$，全部严格大于 $p_\delta$。在这些点 $D'=0$，而
+$$
+ A\omega'=\frac1{2p(1-p)},\qquad
+ s_k(p_n)=1,\qquad s_k'(p_n)=\frac1{2p_n(1-p_n)}.
+\tag{212.22}
+$$
+
+下面证明同一个有限 $k$ 可以保证全域物理性。$p\uparrow1$ 时 $H(p)\to1$、$R(p)^2\to0$，因此存在一个完整尾区间 $(p_*,1)$，其中 $H>0$ 且 $R^2G(H)<1$。结合（212.12）和 $G$ 的凸性，（212.21）在这个尾区间对全部 $k>0$ 都可行。在紧区间 $[a,p_*]$ 上，$D$ 只有有限个零点，每一个都满足 $H=1$、$R^2<1$，所以各有 $H$ 可行的小邻域。其余紧集上 $D$ 有严格正下界，而 $s_k\to s_c$ 一致成立。充分大的同一个 $k$ 于是保证所有 $a<p<1$ 满足 $s_k>0$ 和（212.5）。定理212.2给出全区间实解析纯态程序。
+
+在 $D\ne0$ 处，$s_k=1$ 等价于
+$$
+ \mathcal R(p):=2A(p)\cot\frac{\omega(p)}2=k(1-s_c)>0.
+\tag{212.23}
+$$
+由于 $A'<0$、$\omega'>0$，在这些额外根处 $\cot(\omega/2)>0$，所以
+$$
+ \mathcal R'
+ =2A'\cot\frac\omega2-A\omega'\csc^2\frac\omega2<0,
+ \qquad s_k'=\frac{D\mathcal R'}{1+kD}<0.
+\tag{212.24}
+$$
+故额外根都不能校准；（212.22）中的节点全部校准，集合恰为（212.19）。维数下界再次来自定理190.2。这里不声称任意离散集合均有解析实现，也不要求右端 $C^1$ 延拓。证毕。
+
+**定理 212.5（同一处理器的实纯态校准限制）。** 对定义212.1的固定处理器，若全区间精确的 $C^1$ 纯态准备 $\rho_u$ 在（212.2）的基底中始终为实矩阵，则
+$$
+ \mathcal E(\rho)\subseteq\{u_\delta\}.
+\tag{212.25}
+$$
+因此定理212.3和212.4中任何非空校准集合的实现均不能在此固定基底中始终取实纯态。本结论针对同一个固定处理器，不是任意实处理器的校准点数上界。
+
+证明。 精确的 $02$ 系数给出 $\operatorname{Tr}(Q\rho_u)=q>0$。实纯态因而具有唯一的第三分量为正的实归一化表示
+$$
+ \psi_u=(\sqrt p\,x(u),\sqrt p\,y(u),\sqrt q)^{\mathsf T},
+ \qquad x^2+y^2=1.
+\tag{212.26}
+$$
+此表示为 $C^1$，例如前两个分量分别等于 $\rho_{13}/\sqrt q$ 与 $\rho_{23}/\sqrt q$。实纯态的信息差值为 $4p[(x')^2+(y')^2]$，其中导数取 $u$，故校准时 $x'=y'=0$。将实际期望 $f=pA(x,y)+Bx\sqrt{pq}=a$ 与其参数导数联立，校准时有 $f_p=0$，消去 $A$ 得 $Bx=2a\sqrt{q/p}$，即 $x=R>0$。另一方面，精确期望的配方为
+$$
+ 0=f-a=p[-\lambda(x-R)^2+2\delta xy].
+\tag{212.27}
+$$
+所以校准时 $y=0$，继而 $x=1$、$R=1$，即 $p=p_\delta$、$u=u_\delta$。证毕。
+
+纯态统计距离与相对相位导数的 Fisher 贡献见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），式（4）及其统计距离推导。固定受控量子处理器的一般形式见 Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Phys. Rev. A **66**, 042302（2002），式（3.4）—（3.6）。本节使用这些标准工具，把同一个三维处理器的全输入精确条件化为相位补偿的平方恒等式，再以标量控制的值和一阶导数确定完整校准集合。维数固定不意味着准备成本有统一上界；第212.11式计入全部相位运动，未声称这些多点程序同时达到第211节的最优局部曲率。所有解析性均指开区间，未声称右端 $C^1$ 延拓。
+
+## 追加锚（本行以下为增补区）
+
+## 213. 尖锐校准的谱容量与同一准备曲线的多点实现
+
+**定义 213.1（同时尖锐校准及其维数）。** 固定 $`0<a<1`$，考虑第187节在 $`J_a=(2a-1,1)`$ 上全输入精确的固定 CPTP 程序，要求实际准备 $`\rho_u`$ 为 $`C^1`$ 纯态曲线。沿用定义211.1的双侧下极限曲率及定理211.2的最优值，置
+
+```math
+\mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
+                         \kappa(\rho,t)=\kappa_*(a,t)\}.
+\tag{213.1}
+```
+
+称其中的点为尖锐校准点。对非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$，令 $`d_r(a,S)`$ 为满足 $`S\subseteq\mathcal E_*(\rho)`$ 的此类程序的最小联合支持维数，其中 $`r=1,\infty,\omega`$ 分别要求准备曲线为 $`C^1`$、$`C^\infty`$、实解析；实解析允许矩阵元素为复数。以下实向量构造是该类中的特例。对 $`h\in(a,1)`$ 定义
+
+```math
+\begin{gathered}
+ b(h)=\sqrt{\frac{h^2-a^2}{h-a^2}},\qquad
+ s(h)=\frac ah\bigl(2h-1-b(h)\bigr),\\[0pt]
+ \lambda_\pm(h)=\frac{s(h)\pm\sqrt{s(h)^2+4b(h)}}2,\qquad
+ N(a,S)=1+m+\#\{\lambda_-((1+t_i)/2):1\le i\le m\}.
+ \end{gathered}
+\tag{213.2}
+```
+
+负特征值按不同取值计数，不预设它随 $`h`$ 单调或逐点不同。
+
+**定理 213.2（每个尖锐点强制原程序空间中的三维不变块）。** 对任意定义213.1程序，在其原联合支持 $`\mathcal H`$ 上按第209.3式固定对称化处理器，取相应的 $`A,K`$ 及 $`E=(I+A)/2`$。对每个尖锐校准点 $`t`$，记
+
+```math
+h=\frac{1+t}{2},\quad \ell=1-h,\quad
+ \alpha=\sqrt{1-a^2/h},\quad \gamma=\sqrt{1-a^2/h^2},\quad
+ c_t=(1-t)(1+t)^2,\quad V_*=(\alpha+\sqrt h\,\gamma)^2/4.
+\tag{213.3}
+```
+
+存在原空间中的正交单位向量 $`e,z,f`$，使 $`Ee=e`$、$`Ez=z`$、$`Ef=0`$，并可选择名义纯向量为 $`\psi_t=\sqrt h\,e+\sqrt\ell\,f`$。子空间 $`\mathcal S_t=\operatorname{span}\{e,z,f\}`$ 被同一个固定算子 $`K^\dagger`$ 保持，且
+
+```math
+\begin{aligned}
+ K^\dagger e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
+ K^\dagger z&=\frac{\psi_t-(a/\sqrt h)K^\dagger e}{\alpha},\qquad
+ K^\dagger f=0.
+ \end{aligned}
+\tag{213.4}
+```
+
+因此这一限制酉等价于第211.17式的 $`T_0(a,t)^\dagger`$，其特征多项式为
+
+```math
+\det\bigl(xI-K^\dagger|_{\mathcal S_t}\bigr)
+   =x\bigl(x^2-s(h)x-b(h)\bigr).
+\tag{213.5}
+```
+
+这里不要求原空间上的整个 $`E`$ 是投影，不以 Naimark 扩大空间的维数代替实际程序维数。
+
+证明。 第211.2节的有限忠实平均论证适用于任意固定处理器：选择有限多个实际准备态，其支持张成 $`\mathcal H`$，它们的严格正权平均在 $`\mathcal H`$ 上忠实。每个信号基态的输出仍为同一个纯基态，非负输出概率的零和迫使原 Stinespring 等距在整个联合支持上具有受控形式。随后作固定信号交换对称化，得到
+
+```math
+0\le E\le I,\quad KK^\dagger\le E,\qquad
+ \langle\psi_u,E\psi_u\rangle=\frac{1+u}{2},\quad
+ \langle\psi_u,K\psi_u\rangle=a.
+\tag{213.6}
+```
+
+此处 $`K`$ 及 $`E`$ 不随校准点改变。选定 $`C=E^{+1/2}K`$，其中 $`E^{+1/2}`$ 表示在正谱上取逆平方根、在核上取零，故 $`K=\sqrt E\,C`$、$`\|C\|\le1`$。采用固定等距与扩大算子
+
+```math
+Jx=\sqrt E\,x\oplus\sqrt{I-E}\,x,\qquad
+ T=\iota_+CJ^\dagger,\qquad
+ P+Q=I,
+\tag{213.7}
+```
+
+其中 $`P,Q`$ 为两个分量的投影，$`\iota_+`$ 为第一分量的嵌入。于是
+
+```math
+PT=T,\quad \|T\|\le1,\quad J^\dagger TJ=K,\quad
+ \operatorname{ran}T^\dagger\subseteq\operatorname{ran}J.
+\tag{213.8}
+```
+
+在 $`t`$ 附近选择 $`C^1`$ 单位向量表示及水平相位，令 $`\phi_u=J\psi_u`$、$`\langle\phi_u,\phi'_u\rangle=0`$。局部表示可由 $`\rho_u w/\sqrt{w^\dagger\rho_u w}`$ 再乘积分相位取得。写
+
+```math
+H_u=\frac P{1+u}-\frac Q{1-u},\qquad
+ d(u)=\phi'_u-\frac12H_u\phi_u,\qquad
+ M=\frac{T+T^\dagger}{2},\qquad v(u)=(M-aI)\phi_u.
+\tag{213.9}
+```
+
+纯态信息公式和固定投影概率导数给出
+
+```math
+g(u):=I_Q(\rho_u)-I_r(u)=4\|d(u)\|^2.
+\tag{213.10}
+```
+
+校准时 $`d(t)=0`$，所以 $`H_t\phi_t=2\phi'_t\in\operatorname{ran}J`$。由于 $`H_t`$ 的两个分量系数不同，$`p=P\phi_t`$、$`q=Q\phi_t`$ 均属于 $`\operatorname{ran}J`$。置 $`Je=p/\sqrt h`$、$`Jf=q/\sqrt\ell`$；由 $`J`$ 的定义得 $`Ee=e`$、$`Ef=0`$。
+
+第211.10—211.14式的标量残差与方差界在纯态上为
+
+```math
+\varepsilon(u)=2\operatorname{Re}\langle d(u),v(u)\rangle,
+ \qquad \frac{\varepsilon(u)}{u-t}\longrightarrow\frac a{c_t},
+ \qquad \|v(t)\|^2\le V_*.
+\tag{213.11}
+```
+
+选取实现尖锐下极限的序列 $`u_n\to t`$。由 Cauchy–Schwarz、（213.10）及 $`\kappa_*=a^2/(c_t^2V_*)`$，有
+
+```math
+\frac{a^2}{c_t^2}
+ \le \kappa_*\|v(t)\|^2\le\kappa_*V_*=
+ \frac{a^2}{c_t^2}.
+\tag{213.12}
+```
+
+故方差界必须取等。第211.13式的正交分解给出
+
+```math
+T\phi_t=\frac ahp+k_\perp,\qquad
+ T^\dagger p=\frac{at}{h}p+2aq+r_\perp,
+ \qquad v(t)=\frac{k_\perp+r_\perp}{2},
+\tag{213.13}
+```
+
+其中两个余向量均正交于 $`p,q`$，且 $`k_\perp\in\operatorname{ran}P`$。它们的范数上界分别为 $`\alpha`$、$`\sqrt h\,\gamma`$，均严格为正。方差取等迫使两个范数取等并正向共线。因此存在单位向量 $`\widetilde z`$，使
+
+```math
+k_\perp=\alpha\widetilde z,\qquad
+ r_\perp=\sqrt h\,\gamma\widetilde z,\qquad
+ \widetilde z\in\operatorname{ran}P\cap\{p,q\}^\perp.
+\tag{213.14}
+```
+
+复 Hilbert 空间的三角等号同样要求正实比例，故这里没有未受约束的相对相位。由（213.8）及 $`p,q\in\operatorname{ran}J`$，$`r_\perp`$ 属于 $`\operatorname{ran}J`$；于是 $`\widetilde z=Jz`$，且 $`Ez=z`$。这把第三个方向放回原程序空间。
+
+式（213.13）现在成为 $`T J\psi_t=(a/\sqrt h)Je+\alpha Jz`$。范数取等还给出 $`\|TJ\psi_t\|=1`$，压缩性因而蕴含 $`T^\dagger TJ\psi_t=J\psi_t`$。对这两个等式及 $`T^\dagger p`$ 的分解施加 $`J^\dagger`$，便得到（213.4）的前两式。由 $`KK^\dagger\le E`$ 及 $`Ef=0`$ 得最后一式。它们直接证明 $`\mathcal S_t`$ 对 $`K^\dagger`$ 不变。在同一正交基 $`(e,z,f)`$ 中，三列恰为 $`T_0^\dagger`$，而不是独立的左右基底变换。第211.24式给出其非零二维块的迹 $`s(h)`$ 和行列式 $`-b(h)`$，故得（213.5）。整个证明仅使用实际曲线的一阶可微性；二阶信息由可微的标量残差取得。证毕。
+
+**定理 213.3（尖锐点数的维数界及三维位置签名）。** 任意有限维的定义213.1程序满足
+
+```math
+\#\mathcal E_*(\rho)\le \dim\mathcal H-2
+ \quad\text{只要 }\mathcal E_*(\rho)\ne\varnothing,
+ \qquad d_1(a,S)\ge N(a,S).
+\tag{213.15}
+```
+
+特别地，维数至多三时至多存在一个尖锐校准点。若维数恰为三且存在尖锐点，则 $`E`$ 是秩二投影，$`KK^\dagger=E`$；固定压缩的读数
+
+```math
+D=\left|\det\left(EKE\big|_{\operatorname{ran}E}\right)\right|^2
+\tag{213.16}
+```
+
+满足 $`0<D<1`$，且该点唯一可能的位置为
+
+```math
+t_*=D+\sqrt{D^2+4a^2(1-D)}-1.
+\tag{213.17}
+```
+
+这些条件是必要条件，不单凭 $`D`$ 声称原处理器存在达到尖锐性的准备。
+
+证明。 对每个 $`h\in(a,1)`$，有 $`0<b(h)<1`$。定理213.2的三维限制是压缩算子，因此其两个非零实特征值满足 $`-1\le\lambda_-<0<\lambda_+\le1`$。此外
+
+```math
+1-s(h)-b(h)
+ =(1-a/h)(1-b(h))+2a(1/h-1)>0,
+\tag{213.18}
+```
+
+故 $`\lambda_+<1`$。对其特征方程求导，得到
+
+```math
+\begin{aligned}
+ b'(h)&=\frac{h^2-2a^2h+a^2}{2b(h)(h-a^2)^2}>0,\\[0pt]
+ \lambda_+'(h)&=
+ \frac{a(1+b(h))\lambda_+(h)/h^2+
+             b'(h)(1-a\lambda_+(h)/h)}
+      {2\lambda_+(h)-s(h)}>0.
+ \end{aligned}
+\tag{213.19}
+```
+
+分子各项严格为正，分母为 $`\sqrt{s(h)^2+4b(h)}`$。因此不同尖锐点强制同一个原算子 $`K^\dagger`$ 具有不同正特征值；此外还必须有零特征值及（213.2）列出的全部不同负特征值。这给出 $`\dim\mathcal H\ge N(a,S)`$。从任意有限尖锐点集应用此计数，便知整个尖锐集合也有限，且至多含 $`\dim\mathcal H-2`$ 个点。
+
+三维时，定理213.2的 $`e,z,f`$ 已张成整个原空间，故 $`E`$ 是秩二投影，$`K`$ 在该基底恰为 $`T_0`$；第211.17式的两个非零行正交归一，故 $`KK^\dagger=E`$。同一投影分解下的酉相似不改变压缩行列式，因而
+
+```math
+D=b(h)^2=\frac{h^2-a^2}{h-a^2},\qquad
+ \frac{dD}{dh}=\frac{(h-a^2)^2+a^2(1-a^2)}{(h-a^2)^2}>0.
+\tag{213.20}
+```
+
+解 $`h^2-Dh-a^2(1-D)=0`$ 的正根，再取 $`t=2h-1`$，即得（213.17）。证毕。
+
+**定理 213.4（谱下界维数中的共同处理器与分别准备）。** 对定义213.1的有限集合 $`S`$，存在维数 $`N(a,S)`$ 的同一个固定 CPTP 处理器，以及 $`m`$ 条分别定义在整个 $`J_a`$ 上的实解析纯态准备曲线。第 $`i`$ 条对全部信号输入精确实现 $`\mathcal T_u`$，完整校准集合与尖锐集合均为 $`\{t_i\}`$。这里是同一处理器上的多条曲线，不是同时经过全部指定尖锐点的一条曲线。
+
+证明。 令 $`\Lambda`$ 为（213.2）中全部不同的零、正、负特征值。规定有限谱的部分等距构造是经典工具，见 Garcia、Sherman，*Matrices Similar to Partial Isometries*，arXiv:1703.02960v2，引理2及定理1；下面同时固定本题所需的各个三维压缩。
+
+先对 $`\Lambda_0=\Lambda\cap(-1,1)`$ 取实向量 $`x_\lambda`$，规定其 Gram 矩阵为
+
+```math
+\langle x_\lambda,x_\mu\rangle=\frac1{1-\lambda\mu}
+       =\sum_{n=0}^\infty\lambda^n\mu^n.
+\tag{213.21}
+```
+
+不同实节点的 Vandermonde 独立性保证该矩阵正定：任一零二次型迫使所有幂矩为零，前 $`|\Lambda_0|`$ 个已经迫使系数全零。在这些线性无关向量张成的空间定义 $`Vx_\lambda=\lambda x_\lambda`$，置 $`q=x_0`$。式（213.21）给出 $`\|q\|=1`$、$`\langle q,x_\lambda\rangle=1`$，以及
+
+```math
+V^\dagger V=I-|q\rangle\langle q|=:P,
+ \qquad T=V^\dagger,\qquad TT^\dagger=P,\quad PT=T.
+\tag{213.22}
+```
+
+若 $`-1\in\Lambda`$，追加一个与前述空间正交的单位向量 $`x_{-1}`$，令 $`Vx_{-1}=-x_{-1}`$；式（213.22）仍成立。其余单位圆特征值由（213.18）排除。因此总维数为 $`|\Lambda|=N(a,S)`$，并未把发散的 $`1/(1-(-1)^2)`$ 当作 Gram 元素。
+
+对每个 $`i`$，子空间
+
+```math
+\mathcal H_i=\operatorname{span}
+       \{x_0,x_{\lambda_+(h_i)},x_{\lambda_-(h_i)}\},
+ \qquad h_i=(1+t_i)/2,
+\tag{213.23}
+```
+
+被 $`V`$ 保持，并且 $`V|_{\mathcal H_i}`$ 酉等价于 $`T_0(a,t_i)^\dagger`$。为证明该酉等价，记后者为 $`V_i`$，其核由第211.16式的第三基向量 $`f_i`$ 张成，且 $`V_i^\dagger V_i=I-|f_i\rangle\langle f_i|`$。它的三个特征值两两不同。若 $`V_i y_\lambda=\lambda y_\lambda`$ 且 $`|\lambda|<1`$，则
+
+```math
+(1-\lambda^2)\|y_\lambda\|^2
+       =|\langle f_i,y_\lambda\rangle|^2>0.
+\tag{213.24}
+```
+
+因此可以实数缩放使 $`\langle f_i,y_\lambda\rangle=1`$。对两个如此归一化的特征向量应用部分等距恒等式，得到
+$`(1-\lambda\mu)\langle y_\lambda,y_\mu\rangle=1`$，恰为（213.21）。若有特征值 $`-1`$，压缩算子的单位模特征向量属于正交的约化子空间：范数取等先给出 $`V_i^\dagger V_i y=y`$，再由 $`V_i y=-y`$ 得 $`V_i^\dagger y=-y`$。它与全部内部特征向量正交，归一化即可对应 $`x_{-1}`$。这证明存在实等距 $`U_i:\mathbb R^3\to\mathcal H_i`$，使
+
+```math
+U_i^\dagger P U_i=P_0,\qquad
+ VU_i=U_iT_0(a,t_i)^\dagger,\qquad
+ U_i^\dagger T U_i=T_0(a,t_i).
+\tag{213.25}
+```
+
+最后一式是压缩恒等式，不要求 $`\mathcal H_i`$ 被 $`T`$ 保持。
+
+采用第211.18式的固定受控处理器，将 $`I_3,T_0,Z_0`$ 分别替换为 $`I,T,Z=2P-I`$。每个 $`U_i\psi_i(u)`$ 都有 $`P`$ 期望 $`(1+u)/2`$ 和 $`T`$ 期望 $`a`$，故逐矩阵单位给出同一精确目标通道。固定等距保留纯态信息量，所以将定理211.3的全域曲线分别嵌入这些子空间，就保留各自唯一的校准点及尖锐曲率。这个构造证明各局部尖锐模型可以共处于一个低维处理器；尚未把这些分别准备连成同一条受约束曲线。证毕。
+
+**定理 213.5（一条全局解析曲线的同时尖锐实现）。** 定义213.1中的维数满足
+
+```math
+N(a,S)\le d_1(a,S)\le d_\infty(a,S)
+             \le d_\omega(a,S)\le3m.
+\tag{213.26}
+```
+
+右端存在一个实际固定处理器与一条全区间实解析纯态曲线达到，并且其完整校准集合与尖锐集合都恰为 $`S`$。两个不同指定点的边界具体为
+
+```math
+\begin{cases}
+ 5\le d_1\le d_\omega\le6,
+       &\lambda_-(h_1)\ne\lambda_-(h_2),\\[0pt]
+ 4\le d_1\le d_\omega\le6,
+       &\lambda_-(h_1)=\lambda_-(h_2).
+ \end{cases}
+\tag{213.27}
+```
+
+这些不等式不判定两点情况下五维或四维是否足够。
+
+证明。 对每个 $`t_i`$，取定理211.3的全域实解析归一化实向量 $`\psi_i(u)`$ 及其固定处理器。令
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+ g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+ \Psi_u=\bigoplus_{i=1}^m g_i(u)\psi_i(u).
+\tag{213.28}
+```
+
+$`\sum_iL_i=1`$ 保证分母在实轴处处严格为正，故 $`g_i`$ 和 $`\Psi`$ 均实解析，且 $`\sum_i g_i^2=1`$。处理器先去除程序块间相干，再在第 $`i`$ 块使用对应的固定处理器；每一块都对全部信号输入实现相同的 $`\mathcal T_u`$，因此其归一化加权和仍精确。
+
+记 $`G_i(u)=I_Q(\psi_i\psi_i^\dagger)-I_r(u)`$。实向量的归一化保证 $`\langle\psi_i,\psi'_i\rangle=0`$，所以实际纯态准备的信息差值为
+
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)
+   =\sum_i g_i(u)^2G_i(u)+4\sum_i g_i'(u)^2.
+\tag{213.29}
+```
+
+其中第二项保留了参数相关块权重的准备成本，未将去相干后混合态的信息当作实际纯态的信息。若 $`u\notin S`$，所有 $`G_i(u)>0`$，故总差值严格为正。在 $`u=t_i`$ 附近置 $`\delta=u-t_i`$，则
+
+```math
+\begin{gathered}
+ g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\[0pt]
+ g_i=1+O(\delta^6),\quad g_i'=O(\delta^5).
+ \end{gathered}
+\tag{213.30}
+```
+
+非名义块的 $`G_j`$ 在此内点有界，因而总差值在 $`t_i`$ 为零，并满足
+
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)=G_i(u)+O(\delta^4),\qquad
+ \lim_{u\to t_i}\frac{I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)}{(u-t_i)^2}
+       =\kappa_*(a,t_i).
+\tag{213.31}
+```
+
+故两种完整集合均恰为 $`S`$。实际程序空间为 $`3m`$ 维，联合支持维数至多 $`3m`$，不要求总等于 $`3m`$。其余维数不等式来自定理213.3与准备正则性类别的包含关系。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 214. 负谱纤维分岔与分别准备的精确容量
+
+**定义 214.1（一个处理器可分别尖锐校准的位置集合）。** 固定 $`0<a<1`$ 和程序空间维数预算 $`d\ge1`$。对一个固定 CPTP 处理器 $`\mathcal G`$，令 $`\mathfrak P_\nu(\mathcal G;a)`$ 为全部在整个 $`J_a`$ 上全输入精确的纯态准备曲线，其中 $`\nu=1`$ 要求 $`C^1`$，$`\nu=\omega`$ 要求实解析。精确性、点态 SLD 信息和尖锐下极限均沿用定义213.1。置
+
+```math
+\mathcal C_\nu(\mathcal G;a)
+ =\{t\in J_a:\exists\rho\in\mathfrak P_\nu(\mathcal G;a),\quad
+                           t\in\mathcal E_*(\rho)\},
+ \qquad \nu\in\{1,\omega\}.
+\tag{214.1}
+```
+
+不同位置允许选择不同的完整准备曲线，处理器始终相同。记
+
+```math
+C_\nu(d,a)=\sup_{\dim\mathcal H\le d,\,\mathcal G}
+                         \#\mathcal C_\nu(\mathcal G;a).
+\tag{214.2}
+```
+
+这一定义不同于同一条准备曲线的尖锐集合大小。预算允许未使用的程序方向，不把它们计作某条曲线的实际联合支持。
+
+**定理 214.2（每个负谱纤维至多三点）。** 沿用第213.2式的 $`b(h),s(h),\lambda_\pm(h)`$。对每个 $`0<r\le1`$，集合
+
+```math
+H_{a,r}=\{h\in(a,1):\lambda_-(h)=-r\}
+\tag{214.3}
+```
+
+至多有三个元素。当 $`a\ge1/2`$ 时，每个纤维至多有一个元素；当 $`0<a<1/2`$ 时，存在非空开区间 $`U_a\subset(0,1)`$，使每个 $`r\in U_a`$ 的纤维都恰含三个元素。单位圆情形更精确地满足
+
+```math
+H_{a,1}=\begin{cases}
+ \{a+2a^2\},&0<a<1/2,\\[0pt]
+ \varnothing,&1/2\le a<1.
+ \end{cases}
+\tag{214.4}
+```
+
+证明。 特征方程 $`r^2+s(h)r-b(h)=0`$ 等价于
+
+```math
+b(h)=\frac{r[h(r+2a)-a]}{h+ar}.
+\tag{214.5}
+```
+
+分母严格为正；实际解的右侧也必须严格为正。两边平方、清除正分母并消去 $`h>0`$，得到首一三次多项式
+
+```math
+\begin{aligned}
+ P_{a,r}(h)={}&h^3+(-4a^2r^2-4ar^3+2ar-r^4)h^2\\[0pt]
+ &+(4a^4r^2+4a^3r^3+a^2r^4+5a^2r^2-a^2+2ar^3)h\\[0pt]
+ &-4a^4r^2-2a^3r^3-2a^3r-a^2r^2.
+ \end{aligned}
+\tag{214.6}
+```
+
+直接展开的恒等式为
+
+```math
+(h^2-a^2)(h+ar)^2-(h-a^2)r^2[h(r+2a)-a]^2
+          =hP_{a,r}(h).
+\tag{214.7}
+```
+
+所以每个实际纤维点都是 $`P_{a,r}`$ 的根。首项系数恒为一，故不可能出现零多项式，实根至多三个。反过来，若 $`h\in(a,1)`$、$`P_{a,r}(h)=0`$ 且 $`h(r+2a)-a>0`$，则两边正根唯一，平方关系恢复为（214.5）；于是 $`-r`$ 是特征方程的负根，确实属于该纤维。这一正号条件不能在使用三次方程构造实际点时省略。
+
+当 $`r=1`$，式（214.6）分解为
+
+```math
+P_{a,1}(h)=(h-1)(h-a-2a^2)^2.
+\tag{214.8}
+```
+
+$`h=1`$ 不在开区间内，另一个候选点 $`h=a+2a^2`$ 属于 $`(a,1)`$ 当且仅当 $`a<1/2`$。此点满足 $`h(1+2a)-a=4a^2(1+a)>0`$，所以确为实际点；重根不计作两个位置。
+
+下面证明两个参数区域的纤维重数。令 $`c=a+2a^2`$，把三次多项式对 $`h`$ 的导数写成关于 $`r`$ 的 Bernstein 形式：
+
+```math
+\partial_hP_{a,r}(h)
+ =\sum_{k=0}^4\binom4k B_k\,r^k(1-r)^{4-k},
+\tag{214.9}
+```
+
+其中
+
+```math
+\begin{aligned}
+ B_0={}&3h^2-a^2,\\[0pt]
+ B_1={}&3h^2-a^2+ah,\\[0pt]
+ B_2={}&3h^2-\frac{a^2}{6}
+          +2ah\left(1-\frac{2a}{3}\right)+\frac{2a^4}{3},\\[0pt]
+ B_3={}&3h(h-a)+4a(1-a)h
+          +2a^4+a^3+\frac32a^2+\frac a2,\\[0pt]
+ B_4={}&(h-c)(3h-c-2).
+ \end{aligned}
+\tag{214.10}
+```
+
+式（214.9）由展开幂次逐项核对。由于 $`0<a<h<1`$，前四个系数严格为正。若 $`a\ge1/2`$，则 $`c\ge1`$，所以 $`h-c<0`$、$`3h-c-2<0`$，第五个系数也严格为正。Bernstein 权重非负且总和为一，故对所有 $`0\le r\le1`$，$`\partial_hP_{a,r}(h)>0`$。每个固定 $`r`$ 因而至多有一个三次方程根，更至多有一个物理原像。
+
+反之，设 $`0<a<1/2`$，记 $`R(h)=-\lambda_-(h)`$，以及 $`h_c=a+2a^2\in(a,1)`$。连续性、第213节的压缩性和（214.4）给出
+
+```math
+0<R(h)\le1,\qquad
+ \lim_{h\downarrow a}R(h)=1-2a,\qquad
+ R(h_c)=1,\qquad
+ \lim_{h\uparrow1}R(h)=1,
+\tag{214.11}
+```
+
+而且 $`h_c`$ 是唯一取值为一的内点。两个端点极限也可直接由 $`b(h)`$ 与 $`s(h)`$ 的定义计算。任选 $`h_M\in(h_c,1)`$，则 $`R(h_M)<1`$，所以
+
+```math
+U_a=\bigl(\max\{1-2a,R(h_M)\},1\bigr)
+\tag{214.12}
+```
+
+是 $`(0,1)`$ 中的非空开区间。对每个 $`r\in U_a`$，中间值定理在 $`(a,h_c)`$、$`(h_c,h_M)`$、$`(h_M,1)`$ 中分别给出一个实际等式 $`R(h)=r`$ 的解。三段互不相交，且总纤维数至多三个，故每段恰有一解，整个纤维恰有三个元素。这一存在论证直接使用未平方的实际特征值函数。证毕。
+
+**定理 214.3（分别准备与单曲线共同遵守的容量上界）。** 对所有定义214.1处理器及所有 $`0<a<1`$，有
+
+```math
+\#\mathcal C_1(\mathcal G;a)
+ \le\left\lfloor\frac{3(d-1)}4\right\rfloor,
+ \qquad C_\omega(d,a)\le C_1(d,a)
+ \le\left\lfloor\frac{3(d-1)}4\right\rfloor.
+\tag{214.13}
+```
+
+当 $`1/2\le a<1`$ 时，上界进一步收紧为
+
+```math
+C_\omega(d,a)\le C_1(d,a)\le
+                 \left\lfloor\frac{d-1}{2}\right\rfloor.
+\tag{214.14}
+```
+
+因此任意一条实际纯态 $`C^1`$ 准备曲线的尖锐集合也满足同一个界。若 $`0<a<1/2`$ 且 $`t_0=2a+4a^2-1`$ 属于该处理器的可分别尖锐校准集合，则还有
+
+```math
+\#\mathcal C_1(\mathcal G;a)
+       \le\left\lfloor\frac{3d-5}4\right\rfloor.
+\tag{214.15}
+```
+
+证明。 从 $`\mathcal C_1`$ 任取 $`m`$ 个不同位置，并为每个位置选择一条见证曲线。把这些曲线所有实际准备态的支持合并张成 $`\mathcal H_0`$，其维数不超过 $`d`$。可以从这些实际态中选择有限个，其支持张成 $`\mathcal H_0`$；严格正权平均在这个共同空间上忠实，并对每个信号基态保留同一纯输出。故第213.2节的受控等距与固定对称化归约在整个共同空间上产生同一对 $`E,K`$。每条曲线都满足相同的固定期望约束，其各自尖锐点的等号证明仍在这个共同空间中成立。因此不能通过换准备曲线来换掉被计数的算子 $`K^\dagger`$。
+
+第213.19式说明这 $`m`$ 个位置贡献 $`m`$ 个不同正特征值；还必须有零特征值。定理214.2说明同一个负特征值最多被三个不同位置共享，所以负谱至少含 $`\lceil m/3\rceil`$ 个不同值。于是
+
+```math
+d\ge1+m+\lceil m/3\rceil
+       =1+\lceil4m/3\rceil,
+ \qquad m\le\left\lfloor\frac{3(d-1)}4\right\rfloor.
+\tag{214.16}
+```
+
+此界适用于任意有限子集，因而整个位置集合也有限并满足该界。实解析准备是 $`C^1`$ 准备的子类，故得（214.13）。若 $`a\ge1/2`$，每个负谱纤维至多一个位置，因而相同论证给出
+
+```math
+d\ge1+2m,\qquad m\le\left\lfloor\frac{d-1}{2}\right\rfloor,
+\tag{214.17}
+```
+
+这证明（214.14）。任意一条曲线的尖锐点都是同一个处理器可分别达到的点，所以上界也约束单曲线。
+
+若所选位置包括 $`t_0`$，对应负特征值为 $`-1`$，其纤维由（214.4）仅含一个点。其余每个不同负特征值最多容纳三个点。设负特征值共有 $`n`$ 个，则 $`m\le1+3(n-1)`$，所以
+
+```math
+d\ge1+m+\left\lceil\frac{m+2}3\right\rceil,
+ \qquad m\le\left\lfloor\frac{3d-5}4\right\rfloor.
+\tag{214.18}
+```
+
+对包含 $`t_0`$ 的任意有限子集应用它，即得（214.15）。这里要求 $`t_0`$ 实际可尖锐校准；未使用的单位圆谱本身不替代这个前提。证毕。
+
+**定理 214.4（分别准备容量的完整参数分界）。** 对每个 $`0<a<1`$ 及每个整数 $`d\ge1`$，有
+
+```math
+C_\omega(d,a)=C_1(d,a)=
+ \begin{cases}
+ \left\lfloor3(d-1)/4\right\rfloor,&0<a<1/2,\\[0pt]
+ \left\lfloor(d-1)/2\right\rfloor,&1/2\le a<1.
+ \end{cases}
+\tag{214.19}
+```
+
+更具体地，对每个 $`m\ge1`$，存在恰含 $`m`$ 个位置的集合 $`S`$ 及一个固定处理器，使
+
+```math
+\mathcal C_\omega(\mathcal G;a)=\mathcal C_1(\mathcal G;a)=S,
+ \qquad
+ \dim\mathcal H=
+ \begin{cases}
+ 1+m+\lceil m/3\rceil,&0<a<1/2,\\[0pt]
+ 1+2m,&1/2\le a<1.
+ \end{cases}
+\tag{214.20}
+```
+
+这些维数达到分别准备 $`m`$ 个尖锐位置的最小预算。每个位置由一条全区间实解析纯态曲线分别达到，各条曲线自身的完整校准集合与尖锐集合均只有这个位置。本定理不将这些曲线合并为一条同时达到全部位置的曲线。
+
+证明。 先设 $`0<a<1/2`$，采用定理214.2给出的非空开区间 $`U_a`$。将 $`m`$ 写成 $`m=3k+j`$，其中 $`j\in\{0,1,2\}`$。从 $`U_a`$ 中选取 $`k`$ 个不同的负谱参数；若 $`j>0`$，再选一个不同参数。前 $`k`$ 组各取三个实际原像，最后一组按需取一根或两根，并置对应位置 $`t=2h-1`$。同一组的三个根不同；不同组也不可能共用一个根，因为单值函数 $`\lambda_-(h)`$ 不会同时等于两个不同的 $`-r`$。因此得到恰含 $`m`$ 点的 $`S`$，具有恰好 $`\lceil m/3\rceil`$ 个不同负特征值。第213.19式保证所有正特征值也不同。
+
+若 $`a\ge1/2`$，直接在 $`(a,1)`$ 中任取 $`m`$ 个不同的 $`h`$。定理214.2保证负特征值两两不同，第213.19式保证正特征值两两不同，所以这时恰有 $`m`$ 个不同负特征值。
+
+分别对这两个集合应用定理213.4，共同处理器所需维数为
+
+```math
+N=1+m+\#\{\lambda_-(h):2h-1\in S\}.
+\tag{214.21}
+```
+
+该定理同时给出 $`m`$ 条分别准备的全域解析尖锐曲线。还须排除该处理器的额外可尖锐校准位置。其构造的固定读出为 $`P`$，系数为 $`T`$，满足 $`PT=T`$；受控处理器的对称化系数仍恰为 $`E=P,K=T`$。$`T`$ 的正特征值集合恰为已选 $`m`$ 个 $`\lambda_+(h)`$。对任何其他见证曲线，定理213.2的等号证明可以直接使用这一固定 $`P,T`$，尖锐位置必须再贡献一个 $`\lambda_+(h)`$。由该函数的严格单调性，它只能是已选的同一个 $`h`$。因此没有额外位置，得到（214.20）。若需在更大的程序预算空间中实现，可对 $`P,T`$ 作零直和并沿用第211.18式的受控构造；增加的零特征值不会创造新的正谱位置。
+
+对 $`d\ge3`$，在低参数区域取 $`m=\lfloor3(d-1)/4\rfloor`$，则整数关系（214.16）给出 $`1+m+\lceil m/3\rceil\le d`$；在高参数区域取 $`m=\lfloor(d-1)/2\rfloor`$，则 $`1+2m\le d`$。因此解析准备达到相应的 $`C^1`$ 上界，证明（214.19）。$`d=1,2`$ 时两式上界均为零；取一个不依赖程序而只输出固定信号态的处理器，其可尖锐校准集合为空，即达到零。最小维数来自定理214.3的谱计数下界与已经给出的实际处理器。
+
+同一条曲线的尖锐集合仍受（214.13）、（214.14）约束，但上述达到性选择了不同的完整准备曲线。尤其对两个负谱签名不同的指定点，本定理仍未把第213.27式的五维下界提升为单曲线的实际达到值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 215. 混态单曲线的最小尖锐维数与精确容量
+
+**定义 215.1（允许秩变化的同时尖锐准备）。** 固定 $`0<a<1`$，沿用第211节的全输入精确目标族、点态 SLD 信息量和双侧下极限曲率。现允许实际准备 $`\rho_u`$ 为任意密度矩阵，不要求纯态，也不要求其秩局部恒定。令
+
+```math
+\mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
+                              \kappa(\rho,t)=\kappa_*(a,t)\}.
+\tag{215.1}
+```
+
+对非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$，记 $`d_r^{\rm mix}(a,S)`$ 为一个固定处理器和一条完整准备曲线满足 $`S\subseteq\mathcal E_*(\rho)`$ 所需的最小联合支持维数，其中 $`r=1,\infty,\omega`$ 分别要求矩阵元素为 $`C^1`$、$`C^\infty`$、实解析。联合支持仍指全部实际准备态的支持张成空间。沿用第213.2式的 $`b(h),s(h),\lambda_\pm(h)`$ 与
+
+```math
+N(a,S)=1+m+\#\{\lambda_-((1+t_i)/2):1\le i\le m\}.
+\tag{215.2}
+```
+
+**定理 215.2（混态尖锐点强制原算子的谱签名）。** 对任意定义215.1的 $`C^1`$ 程序，在原联合支持空间 $`\mathcal H`$ 上固定第213.6式的 $`E,K`$。每个尖锐点 $`t`$ 都强制
+
+```math
+\{0,\lambda_+((1+t)/2),\lambda_-((1+t)/2)\}
+                       \subseteq\operatorname{spec}(K^\dagger).
+\tag{215.3}
+```
+
+因此任意非空有限尖锐点集 $`S`$ 满足
+
+```math
+\dim\mathcal H\ge N(a,S),\qquad
+\#\mathcal E_*(\rho)\le\dim\mathcal H-2
+       \quad\text{若 }\mathcal E_*(\rho)\ne\varnothing.
+\tag{215.4}
+```
+
+这里的谱属于原程序算子；证明所用的纯化空间不计入程序维数。
+
+证明。 第211.2节的有限忠实平均与固定对称化归约适用于混态曲线，得到同一对 $`E,K`$。取第213.7式的固定 Naimark 等距 $`J`$ 及 $`T`$，并记
+
+```math
+\sigma_u=J\rho_uJ^\dagger,\qquad
+\mathcal R=\operatorname{ran}J,\qquad
+\Pi=JJ^\dagger,\qquad M=(T+T^\dagger)/2.
+\tag{215.5}
+```
+
+它们满足 $`PT=T`$、$`\|T\|\le1`$、$`J^\dagger TJ=K`$ 及 $`\operatorname{ran}T^\dagger\subseteq\mathcal R`$。固定等距保留点态 SLD 信息。置 $`g(u)=I_Q(\rho_u)-I_r(u)`$ 与
+$`v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]`$。第211.7、211.11式给出
+
+```math
+e(u)^2\le g(u)v(u),\qquad
+ \frac{e(u)}{u-t}\longrightarrow\frac a{c_t},\qquad
+ v(t)\le V_*(a,t),\qquad c_t=(1-t)(1+t)^2.
+\tag{215.6}
+```
+
+$`v`$ 连续。取实现尖锐下极限的序列 $`u_n\to t`$，便有
+
+```math
+\frac{a^2}{c_t^2}\le\kappa_*(a,t)v(t)
+       \le\kappa_*(a,t)V_*(a,t)=\frac{a^2}{c_t^2}.
+\tag{215.7}
+```
+
+因此名义方差必须取等：$`v(t)=V_*`$。
+
+将固定扩大空间上的算子记为
+$`H_t=P/(1+t)-Q/(1-t)`$。校准等号给出 $`\sigma'_t=(H_t\sigma_t+\sigma_tH_t)/2`$。由于 $`\sigma_t`$ 和 $`\sigma'_t`$ 均支持在固定空间 $`\mathcal R`$ 中，左乘 $`I-\Pi`$ 得
+
+```math
+(I-\Pi)H_t\sigma_t=0,\qquad
+ H_t\operatorname{supp}\sigma_t\subseteq\mathcal R.
+\tag{215.8}
+```
+
+第二式只用到 $`\sigma_t`$ 在其支持上可逆，不要求邻近参数处具有相同的秩。
+
+现在只在 $`t`$ 这个单独位置选择静态纯化。若 $`\sigma_t=\sum_jp_j|x_j\rangle\langle x_j|`$，其中 $`p_j>0`$，取辅助正交基 $`\epsilon_j`$ 并置
+
+```math
+\varphi=\sum_j\sqrt{p_j}\,x_j\otimes\epsilon_j,
+ \qquad \widetilde T=T\otimes I,\quad
+ \widetilde P=P\otimes I,\quad\widetilde Q=Q\otimes I.
+\tag{215.9}
+```
+
+由（215.8），$`\varphi`$ 与 $`(H_t\otimes I)\varphi`$ 均在 $`\mathcal R\otimes\mathcal F`$ 内。$`H_t`$ 在 $`P,Q`$ 两个分量上的系数不同，故
+
+```math
+p=\widetilde P\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad q=\widetilde Q\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad \|p\|^2=h,\quad\|q\|^2=\ell,
+ \quad h=(1+t)/2,\quad\ell=1-h.
+\tag{215.10}
+```
+
+对这份静态纯化应用第211.13—211.14式的正交分解。方差已经取等，三角不等式和两个范数界因而同时取等。令
+$`\alpha=\sqrt{1-a^2/h}>0`$、$`\gamma=\sqrt{1-a^2/h^2}>0`$，便有一个单位向量 $`\widetilde z`$，正交于 $`p,q`$，使
+
+```math
+\widetilde T\varphi=\frac ahp+\alpha\widetilde z,
+ \qquad
+\widetilde T^\dagger p=\frac{at}{h}p+2aq+
+                             \sqrt h\,\gamma\widetilde z,
+ \qquad \widetilde P\widetilde z=\widetilde z.
+\tag{215.11}
+```
+
+$`\operatorname{ran}\widetilde T^\dagger\subseteq\mathcal R\otimes\mathcal F`$，再结合（215.10）和第二式，得到 $`\widetilde z\in\mathcal R\otimes\mathcal F`$。所以三个正交方向都能通过 $`J^\dagger\otimes I`$ 回到 $`\mathcal H\otimes\mathcal F`$。记其归一化像为 $`e,z,f`$，并置 $`\psi=\sqrt h\,e+\sqrt\ell\,f`$、$`\widehat K=K^\dagger\otimes I`$。由 $`J`$ 的形式可得
+$`(E\otimes I)e=e`$、$`(E\otimes I)z=z`$、$`(E\otimes I)f=0`$。
+
+第一式的范数为一，压缩性给出 $`\widetilde T^\dagger\widetilde T\varphi=\varphi`$。将（215.11）及此等式施加 $`J^\dagger\otimes I`$，再用 $`KK^\dagger\le E`$，得到
+
+```math
+\begin{aligned}
+ \widehat K e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
+ \widehat K z&=\frac{\psi-(a/\sqrt h)\widehat K e}{\alpha},
+ \qquad \widehat K f=0.
+\end{aligned}
+\tag{215.12}
+```
+
+因而 $`\operatorname{span}\{e,z,f\}`$ 是 $`K^\dagger\otimes I`$ 的三维不变子空间，限制的矩阵正是第213.4式，特征多项式为
+$`x(x^2-s(h)x-b(h))`$。有限维算子的不变子空间特征值属于整个算子的谱，而
+
+```math
+\operatorname{spec}(K^\dagger\otimes I_{\mathcal F})
+                         =\operatorname{spec}(K^\dagger).
+\tag{215.13}
+```
+
+所以得到原算子的（215.3）。辅助维数只增加特征值的重数，不增加不同特征值，也没有进入维数下界。这里没有选择可微纯化，更没有把秩变化的点态信息量替换为连续延拓。
+
+最后，第213.19式保证 $`\lambda_+`$ 严格递增；不同尖锐点贡献不同的正特征值，还必须保留零及全部不同的负特征值。对任意有限子集计数即得（215.4），并排除无限尖锐集合。证毕。
+
+**定理 215.3（一条解析混态曲线达到精确最小维数）。** 对每个定义215.1中的 $`a,S`$，有
+
+```math
+d_1^{\rm mix}(a,S)=d_\infty^{\rm mix}(a,S)
+                  =d_\omega^{\rm mix}(a,S)=N(a,S).
+\tag{215.14}
+```
+
+存在一个固定 $`N(a,S)`$ 维处理器和一条全区间实解析混态准备，其完整尖锐集合恰为 $`S`$。在每个 $`t_i`$，曲率的双侧普通极限存在且等于 $`\kappa_*(a,t_i)`$；不只具有相同下极限。还可要求准备态在 $`S`$ 上秩为一、在 $`J_a\setminus S`$ 上处处至少为二。
+
+证明。 采用定理213.4在同一个 $`N=N(a,S)`$ 维空间上构造的固定 $`P,T`$、处理器及分别准备的实解析纯态曲线 $`\rho_i(u)`$。它们对所有参数、所有信号输入实现同一目标通道。令
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+ g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+ \rho_u=\sum_i g_i(u)^2\rho_i(u).
+\tag{215.15}
+```
+
+$`\sum_iL_i=1`$ 保证分母在实轴上严格为正，所以权重和密度矩阵均实解析。$`\sum_i g_i^2=1`$ 保证 $`\rho_u`$ 是同一空间上的密度矩阵。处理器固定且线性，各分量实现的通道相同，故这一实际混态曲线全域、全输入精确。实际程序空间仍是 $`N`$ 维。
+
+必须计入依赖参数的混合权重所携带的信息。为估计而暂时保留正交标签，取
+
+```math
+\tau_u=\bigoplus_i g_i(u)^2\rho_i(u),\qquad
+ G_i(u)=I_Q(\rho_i(u))-I_r(u).
+\tag{215.16}
+```
+
+丢弃标签是固定 CPTP 映射。SLD 信息的单调性与正权直和公式给出
+
+```math
+0\le I_Q(\rho_u)-I_r(u)
+ \le\sum_i g_i(u)^2G_i(u)+4\sum_i g_i'(u)^2.
+\tag{215.17}
+```
+
+这是参数相关混合的经典扩展凸性上界，见 Alipour、Rezakhani，*Quantum Metrology: Extended Convexity of Quantum Fisher Information*，Phys. Rev. A **91**, 042104（2015），arXiv:1403.8033v2，式（4）。这里的标签仅用于上界，不属于实际程序寄存器。左侧非负来自精确程序的固定测量读出，不是混合凸性结论。
+
+还须核对权重为零时的点态含义。在所有权重非零处，经典权重项为
+$`\sum_i[(g_i^2)']^2/g_i^2=4\sum_i(g_i')^2`$。权重取零只可能在 $`S`$；三次零点保证此处对应的 $`g_i'=0`$，零块和零块导数都为零，对点态 SLD 不作贡献。保留的唯一权重为一且其导数也为零。因此（215.17）在这些点同样成立，没有通过取极限向点态 SLD 添加权重出生项。单点集合的权重恒为一，也满足该论证。
+
+在 $`t_i`$ 附近令 $`\delta=u-t_i`$，则
+
+```math
+\begin{gathered}
+ g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\[0pt]
+ g_i=1+O(\delta^6),\quad g_i'=O(\delta^5),\\[0pt]
+ \rho_{t_i}=\rho_i(t_i),\qquad \rho'_{t_i}=\rho_i'(t_i).
+\end{gathered}
+\tag{215.18}
+```
+
+点态 SLD 信息只取决于态及其一阶导数，故 $`I_Q(\rho_{t_i})=I_r(t_i)`$。各 $`G_j`$ 在该内点邻域有界，定理211.3及固定等距保留给出
+
+```math
+\begin{aligned}
+ I_Q(\rho_u)-I_r(u)&\le G_i(u)+O(\delta^4),\\[0pt]
+ \limsup_{u\to t_i,\,u\ne t_i}
+ \frac{I_Q(\rho_u)-I_r(u)}{(u-t_i)^2}
+ &\le\kappa_*(a,t_i).
+\end{aligned}
+\tag{215.19}
+```
+
+实际混态曲线已具有校准，所以定理211.2提供反向下极限界。两者夹逼，得到普通双侧极限等于 $`\kappa_*`$。这覆盖名义点与邻近点的秩不同的情形，不使用混态信息关于参数的连续性。
+
+为了排除额外尖锐位置，使用共同处理器在完整 $`N`$ 维空间上的固定系数 $`E=P,K=T`$。定理215.2的证明只需这些固定算子关系与期望约束，所以也可直接在此空间应用；其正谱恰为已选的 $`m`$ 个 $`\lambda_+((1+t_i)/2)`$。任何额外尖锐位置都会强制一个新的正特征值，与严格单调性矛盾。因此
+
+```math
+\mathcal E_*(\rho)=S.
+\tag{215.20}
+```
+
+实际联合支持维数至多为 $`N`$，而定理215.2对这条实际曲线的联合支持又给出至少 $`N`$，所以它恰为 $`N`$。最后，解析曲线属于光滑和 $`C^1`$ 类，与统一下界一起给出（215.14）。
+
+最后加强实际混态的秩条件。在同一处理器的一块三维嵌入中，取定理211.4的仿射精确准备 $`B_u`$。其左端态是两个不同纯态的严格凸组合，故秩至少为二；在每个 $`u\in J_a`$，仿射组合中的左端权重严格为正，所以 $`\operatorname{rank}B_u\ge2`$，而（211.42）给出局部有界的 SLD 信息。令
+
+```math
+F(u)=\prod_i(u-t_i),\qquad
+ \eta(u)=\frac{F(u)^6}{1+F(u)^6},\qquad
+ \widetilde\rho_u=(1-\eta(u))\rho_u+\eta(u)B_u.
+\tag{215.21}
+```
+
+这仍是同一空间、同一处理器的解析精确准备。在 $`S`$ 上其态及一阶导数保持不变；在 $`S`$ 外，$`\eta>0`$ 与正性给出秩至少为二。对这个二项混合再次使用扩展凸性，额外权重成本在 $`u\notin S`$ 为
+
+```math
+\frac{\eta'(u)^2}{\eta(u)(1-\eta(u))}
+ =\frac{36F(u)^4F'(u)^2}{(1+F(u)^6)^2}
+ =O((u-t_i)^4)\qquad(u\to t_i).
+\tag{215.22}
+```
+
+又因 $`\eta=O((u-t_i)^6)`$，加入 $`B_u`$ 不改变最优二阶曲率；在零权重处其导数为零，仍按点态 SLD 计算。相同正谱排除论证给出 $`\mathcal E_*(\widetilde\rho)=S`$，同一个维数下界保证其实际联合支持也恰为 $`N`$。因此得到所要求的秩变化实现。
+
+特别地，两个不同指定点的最小混态维数在负谱签名不同的情形恰为五，在负谱签名相同的情形恰为四。这不判定纯态单曲线是否能达到同一维数。式（215.20）只指定完整尖锐集合；其余非尖锐的普通校准点没有在本证明中被排除。证毕。
+
+**定理 215.4（同一混态曲线的精确尖锐容量）。** 对整数 $`d\ge3`$，在程序预算维数不超过 $`d`$ 的全部定义215.1程序中，实解析曲线和 $`C^1`$ 曲线的最大尖锐点数相同，且为
+
+```math
+\max_{\dim\mathcal H\le d,\ \rho\ \mathrm{analytic}}
+             \#\mathcal E_*(\rho)
+ =\max_{\dim\mathcal H\le d,\ \rho\in C^1}
+             \#\mathcal E_*(\rho)
+ =\begin{cases}
+ \left\lfloor3(d-1)/4\right\rfloor,&0<a<1/2,\\[0pt]
+ \left\lfloor(d-1)/2\right\rfloor,&1/2\le a<1.
+ \end{cases}
+\tag{215.23}
+```
+
+这些最大值由一个固定处理器和一条实际准备曲线达到。程序预算至多二时，任何存在的精确准备曲线都没有尖锐点；本句不声称一维中存在全区间精确准备。
+
+证明。 定理215.2将混态尖锐集合的计数归约为同一个原算子的不同特征值。定理214.2说明，低参数区域每个负谱纤维至多含三个点，高参数区域至多含一个点。因此 $`m`$ 个尖锐点分别要求
+$`d\ge1+m+\lceil m/3\rceil`$ 或 $`d\ge1+2m`$，得到（215.23）的上界。至多二维的结论直接来自每个尖锐点强制三个不同特征值。
+
+达到性沿用定理214.4选择的实际位置集合：低参数区域取互不相同的负谱纤维及其三重原像，最后一组按所需点数截取；高参数区域取任意不同位置。这分别给出 $`N=1+m+\lceil m/3\rceil`$ 和 $`N=1+2m`$。取（215.23）对应的最大整数 $`m\ge1`$，则 $`N\le d`$。定理215.3在这一维数中给出一条实际解析混态曲线，其完整尖锐集合恰是所选集合，故两个上界均达到。证毕。
+
+## 追加锚（本行以下为增补区）
+
+
+## 216. 尖锐校准的秩成本与单位圆例外
+
+**定义 216.1（指定名义秩的尖锐维数）。** 固定 $`0<a<1`$、$`t\in J_a`$ 及整数 $`r\ge1`$，令 $`D_\nu(a,t;r)`$ 为第215节混态程序满足 $`t\in\mathcal E_*(\rho)`$ 和 $`\operatorname{rank}\rho_t=r`$ 所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求完整准备曲线为 $`C^1`$、光滑、实解析。仍使用点态 SLD 信息，允许曲线在别处改变秩。记
+
+```math
+h=(1+t)/2,\qquad h_c=a+2a^2,\qquad
+ V=T_0(a,t)^\dagger,\quad
+ \psi_0=(\sqrt h,0,\sqrt{1-h})^{\mathsf T},\quad
+ f=(0,0,1)^{\mathsf T}.
+\tag{216.1}
+```
+
+$`T_0`$ 为第211.17式的固定三维尖锐模型，满足 $`V^\dagger V=I-|f\rangle\langle f|`$。临界位置 $`h=h_c`$ 属于 $`(a,1)`$ 当且仅当 $`a<1/2`$。
+
+**定理 216.2（名义秩的原空间维数下界）。** 每个定义216.1的 $`C^1`$ 程序都满足
+
+```math
+\dim\mathcal H\ge
+ \begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.2}
+```
+
+在非临界情形，原空间包含 $`r`$ 个两两正交的三维 $`K^\dagger`$ 不变子空间，每个限制都酉等价于 $`V`$。
+
+证明。 在第215.2节中选择 $`\rho_t=\sum_{j=1}^r p_j|x_j\rangle\langle x_j|`$ 的谱纯化，$`p_j>0`$ 且 $`x_j`$ 正交归一。把回到 $`\mathcal H\otimes\mathbb C^r`$ 的三个正交向量按辅助基逐分量展开，得到线性映射 $`A_j:\mathbb C^3\to\mathcal H`$，满足
+
+```math
+K^\dagger A_j=A_jV,\qquad
+ \sum_jA_j^\dagger A_j=I_3,\qquad
+ A_j\psi_0=\sqrt{p_j}\,x_j.
+\tag{216.3}
+```
+
+此处每个 $`A_j`$ 单独不预设为等距。令
+
+```math
+Q_{jk}=A_j^\dagger A_k,\qquad
+ D_{jk}=A_j^\dagger(I-KK^\dagger)A_k
+        =Q_{jk}-V^\dagger Q_{jk}V.
+\tag{216.4}
+```
+
+$`KK^\dagger\le I`$ 保证由 $`D_{jk}`$ 组成的块矩阵半正定；由（216.3）还有
+
+```math
+\sum_jD_{jj}=I-V^\dagger V=|f\rangle\langle f|.
+\tag{216.5}
+```
+
+若 $`y\perp f`$，则所有非负数 $`\langle A_jy,(I-KK^\dagger)A_jy\rangle`$ 的和为零，所以 $`(I-KK^\dagger)^{1/2}A_jy=0`$ 对每个 $`j`$ 成立。这同时消去每个交叉块在 $`f^\perp`$ 上的行与列。因此存在一个半正定标量矩阵 $`C=(c_{jk})`$，使
+
+```math
+D_{jk}=c_{jk}|f\rangle\langle f|,
+ \qquad Q_{jk}-V^\dagger Q_{jk}V=c_{jk}|f\rangle\langle f|.
+\tag{216.6}
+```
+
+下面使用有限维 Stein 方程的经典 Gramian 迭代；稳定情形的级数及唯一性见 Pontes Duff、Kürschner，*Numerical computation and new output bounds for time-limited balanced truncation of discrete-time systems*，arXiv:1902.01652v1，式（4b）、（5b）。这里所需的复矩阵版本直接由以下望远镜恒等式给出。若 $`h\ne h_c`$，定理214.2和第213.18式保证 $`V`$ 的三个特征值模均小于一，故 $`V^n\to0`$。迭代（216.6）并取极限，得到
+
+```math
+Q_{jk}=c_{jk}\sum_{n=0}^{\infty}(V^\dagger)^n
+                   |f\rangle\langle f|V^n=c_{jk}I_3.
+\tag{216.7}
+```
+
+最后一式也可将 $`|f\rangle\langle f|=I-V^\dagger V`$ 代入有限和后望远镜消去取得。将（216.7）在 $`\psi_0`$ 上取矩阵元，由（216.3）及谱向量的正交性得
+$`c_{jk}=p_j\delta_{jk}`$。所以 $`A_j/\sqrt{p_j}`$ 是等距，各自像空间两两正交，并由交织关系保持于 $`K^\dagger`$。这证明 $`3r`$ 的下界及不变块结论。
+
+现在设 $`h=h_c`$。此时 $`0<a<1/2`$，三个特征值为 $`0,2a,-1`$。单位模特征向量属于压缩算子的约化子空间。直接代入第211.17式可取其单位向量及投影为
+
+```math
+z_- =\frac{(1,-2\sqrt{a(1+a)},0)^{\mathsf T}}{1+2a},
+ \qquad Z=|z_-\rangle\langle z_-|,\qquad R=I-Z.
+\tag{216.8}
+```
+
+$`VZ=ZV=-Z`$，$`V|_{\operatorname{ran}R}`$ 严格稳定，且 $`f\in\operatorname{ran}R`$。在 $`R\oplus Z`$ 分块中求解（216.6）：稳定块仍由迭代唯一给出 $`c_{jk}R`$；两个交叉块的齐次方程经迭代趋零；单位块没有强迫项。因此
+
+```math
+Q_{jk}=c_{jk}R+d_{jk}Z.
+\tag{216.9}
+```
+
+在 $`R`$ 中取单位向量检验交叉 Gram 矩阵，可知 $`C=(c_{jk})`$ 半正定；在 $`Z`$ 中同样得到 $`D=(d_{jk})\ge0`$。由 $`\sum_jQ_{jj}=I`$ 得 $`\operatorname{Tr}C=\operatorname{Tr}D=1`$，所以两者秩均至少为一。又有
+
+```math
+w=\langle\psi_0,Z\psi_0\rangle=\frac a{1+2a}>0,
+ \qquad v=1-w=\frac{1+a}{1+2a}>0,
+ \qquad vC+wD=\operatorname{diag}(p_1,\ldots,p_r).
+\tag{216.10}
+```
+
+令 $`c=\operatorname{rank}C`$、$`d=\operatorname{rank}D`$。右侧满秩，故 $`r\le c+d`$。另一方面，所有 $`A_j`$ 合成的映射 $`\bigoplus_j\mathbb C^3\to\mathcal H`$ 的 Gram 矩阵为 $`C\otimes R+D\otimes Z`$，其秩为 $`2c+d`$。于是
+
+```math
+\dim\mathcal H\ge2c+d\ge r+1,
+ \qquad \dim\mathcal H\ge2c+d\ge3.
+\tag{216.11}
+```
+
+这证明临界下界。整个推导只使用单个校准点的谱纯化与原算子的压缩性，没有增加实际程序寄存器。证毕。
+
+**定理 216.3（尖锐秩成本的完整达到性）。** 对所有定义216.1参数，
+
+```math
+D_1(a,t;r)=D_\infty(a,t;r)=D_\omega(a,t;r)
+ =\begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.12}
+```
+
+达到曲线可取为全区间实解析，并使完整尖锐集合恰为 $`\{t\}`$；其在 $`t`$ 的双侧曲率极限存在并等于 $`\kappa_*(a,t)`$。
+
+证明。 先取定理211.3的全域解析纯态曲线 $`\rho_u^0`$ 及其三维处理器。对非临界情形，固定一个 $`r`$ 维满秩密度矩阵 $`\tau`$，置
+
+```math
+\rho_u=\tau\otimes\rho_u^0,\qquad
+ E=I_r\otimes P_0,\qquad K=I_r\otimes T_0.
+\tag{216.13}
+```
+
+处理器忽略常值寄存器并使用原三维处理器，全输入精确性立即保留。常值张量因子不增加 SLD 信息，故其校准及全曲率与原曲线相同，名义秩为 $`r`$。程序预算维数至多 $`3r`$，下界保证实际联合支持恰为 $`3r`$。$`r=1`$ 时，此构造也覆盖临界位置并给出维数三。
+
+设 $`h=h_c`$ 且 $`r\ge2`$。保留（216.8）的二维稳定子空间 $`\operatorname{ran}R`$，用一个 $`r-1`$ 维空间 $`\mathcal U`$ 替代原来的一维单位子空间；固定 $`\mathcal U`$ 上的满秩态 $`\tau`$。定义与参数无关的 CPTP 映射
+
+```math
+\Phi(X)=RXR\big|_{\operatorname{ran}R}
+                    \ \oplus\ \operatorname{Tr}(ZX)\tau,
+ \qquad \widetilde\rho_u=\Phi(\rho_u^0).
+\tag{216.14}
+```
+
+完全正性来自正交块压缩和测量后准备，迹保持来自 $`R+Z=I`$。两个投影都约化 $`T_0`$；$`Z\le P_0`$ 也保证它们约化 $`P_0`$。在 $`\operatorname{ran}R\oplus\mathcal U`$ 上置
+
+```math
+T'=T_0\big|_{\operatorname{ran}R}\oplus(-I_{\mathcal U}),
+ \qquad P'=P_0\big|_{\operatorname{ran}R}\oplus I_{\mathcal U}.
+\tag{216.15}
+```
+
+它们满足 $`T'T'^\dagger=P'`$、$`P'T'=T'`$，且
+
+```math
+\operatorname{Tr}[\Phi(X)T']=\operatorname{Tr}(XT_0),
+ \qquad\operatorname{Tr}[\Phi(X)P']=\operatorname{Tr}(XP_0).
+\tag{216.16}
+```
+
+因此将 $`P',T'`$ 放入第211.18式的固定受控构造，就对 $`\widetilde\rho_u`$ 实现原来的全部目标通道。实际准备空间维数为 $`2+(r-1)=r+1`$，矩阵曲线仍实解析。
+
+名义纯向量在 $`R,Z`$ 中的概率分别为（216.10）的 $`v,w`$，两者严格为正。故 $`\widetilde\rho_t`$ 的稳定块秩为一，单位块秩为 $`r-1`$，总秩恰为 $`r`$。固定 CPTP 映射的点态 SLD 单调性与精确读出下界给出
+
+```math
+0\le I_Q(\widetilde\rho_u)-I_r(u)
+          \le I_Q(\rho_u^0)-I_r(u).
+\tag{216.17}
+```
+
+右侧在 $`t`$ 为零，所以校准成立；其二阶比值极限为 $`\kappa_*`$，而定理211.2对实际混态曲线提供反向下极限界，因此新曲线也具有相同的双侧普通极限。这里没有依赖参数的额外准备标签，替代映射 $`\Phi`$ 始终固定。
+
+构造的正谱始终只含 $`\lambda_+(h)`$：非临界时为原谱的重复，临界时为 $`2a`$。第215.2节的谱必要性及正谱签名的严格单调性排除其他尖锐点。相应维数下界还保证实际联合支持恰为声明的维数。正则性类别的包含关系与这些解析构造共同证明（216.12）。证毕。
+
+**定理 216.4（满秩禁阻与三维混态例外）。** 任意有限维精确 $`C^1`$ 程序在尖锐校准点的态都不是其联合支持上的满秩态。若联合支持维数至多五且 $`h\ne h_c`$，则名义态必须为纯态。存在三维程序具有真正混态的尖锐点，当且仅当 $`a<1/2`$ 及临界位置 $`t=2a+4a^2-1`$；此时可能的混态秩恰为二，并且存在全域解析实现。
+
+证明。 非临界下界 $`d\ge3r`$ 排除 $`r=d`$，并在 $`d\le5`$ 时强制 $`r=1`$。临界下界 $`d\ge r+1`$ 同样排除满秩；在 $`d=3`$ 时，混态只可能有 $`r=2`$。临界点存在的参数条件由定理214.2给出，定理216.3以三维达到该秩二情形。这里的存在是关于可选择的处理器，不声称每一个三维处理器都具有这样的校准。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 217. 多点指定秩的谱重数与共同程序维数
+
+**定义 217.1（尖锐集合上的秩轮廓）。** 固定 $`0<a<1`$、非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$ 及正整数 $`r_1,\ldots,r_m`$。令 $`D_\nu(a,S;\mathbf r)`$ 为第215节的一个固定全输入精确处理器及一条完整混态准备曲线满足
+
+```math
+S\subseteq\mathcal E_*(\rho),\qquad
+\operatorname{rank}\rho_{t_i}=r_i\quad(1\le i\le m)
+\tag{217.1}
+```
+
+所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求 $`C^1`$、光滑、实解析。只指定这些态的秩，不指定其非零特征值。
+
+记 $`h_i=(1+t_i)/2`$。若 $`0<a<1/2`$ 且 $`t_c=2a+4a^2-1\in S`$，称该指标为临界指标 $`c`$，并令 $`\varepsilon=1`$；否则令 $`\varepsilon=0`$。设 $`I`$ 为删去可能的临界指标后的指标集，定义
+
+```math
+R_* =\max\bigl(\{r_i:i\in I\}\cup\{0\}\bigr),\qquad
+M_+=\sum_{i\in I}r_i,
+\qquad
+\Lambda_- =\{\lambda_-(h_i):i\in I\},
+\qquad
+M_- =\sum_{\lambda\in\Lambda_-}
+                 \max\{r_i:i\in I,\ \lambda_-(h_i)=\lambda\}.
+\tag{217.2}
+```
+
+空和取零。秩加权的谱维数定义为
+
+```math
+\mathcal N(a,S;\mathbf r)=
+\begin{cases}
+R_*+M_++M_-,&\varepsilon=0,\\[2pt]
+\max\{R_*,1\}+M_++M_-+\max\{r_c,2\},&\varepsilon=1.
+\end{cases}
+\tag{217.3}
+```
+
+**定理 217.2（原算子的几何重数下界）。** 任意定义217.1的程序都满足
+
+```math
+\dim\mathcal H\ge\mathcal N(a,S;\mathbf r).
+\tag{217.4}
+```
+
+其中 $`\mathcal H`$ 为该曲线的实际联合支持。对每个非临界指标 $`i`$，原空间算子 $`K^\dagger`$ 在 $`0,\lambda_+(h_i),\lambda_-(h_i)`$ 的几何重数均至少为 $`r_i`$。
+
+证明。 对所有位置使用同一个固定归约算子 $`K`$。定理216.2在每个非临界位置给出 $`r_i`$ 个相互正交的三维不变块；每块限制具有三个不同特征值 $`0,\lambda_+(h_i),\lambda_-(h_i)`$，因此这三个特征空间各至少有 $`r_i`$ 个线性无关向量。不同位置所得的块不要求相互正交。零特征空间的维数至少为 $`R_*`$；正签名严格单调，故各位置的正特征值互异，其特征空间维数之和至少为 $`M_+`$；共享同一负签名的位置只要求取各自重数的最大值，得到 $`M_-`$。不同特征值的特征空间线性直和，于是无临界指标时已经得到（217.4）。这里计数的是几何重数，不假设整个 $`K^\dagger`$ 可对角化。
+
+若存在临界指标，取第216.3式在该点的映射 $`A_j`$，令 $`\mathcal A(x_1,\ldots,x_{r_c})=\sum_jA_jx_j`$。第216.9式给出
+
+```math
+\mathcal A^\dagger\mathcal A=C\otimes R+D\otimes Z,
+\qquad K^\dagger\mathcal A=\mathcal A(I\otimes V),
+\qquad c_0=\operatorname{rank}C\ge1,\quad
+d_0=\operatorname{rank}D\ge1,\quad c_0+d_0\ge r_c.
+\tag{217.5}
+```
+
+此处 $`R,Z`$ 是临界三维模型的二维稳定投影和一维单位投影，$`V|_R`$ 的两个不同特征值为 $`0,2a`$，$`V|_Z=-1`$。对 $`V|_R`$ 的任一非零特征向量 $`y`$，映射 $`z\mapsto\mathcal A(z\otimes y)`$ 的 Gram 矩阵为 $`\|y\|^2C`$，故其像维数为 $`c_0`$，且由交织关系全部落在相应的 $`K^\dagger`$ 特征空间。对单位方向同理得到 $`d_0`$。因此 $`0,2a,-1`$ 的几何重数分别至少为 $`c_0,c_0,d_0`$。
+
+非临界正签名不会等于 $`2a`$，非临界负签名也不会等于 $`-1`$。综合所有不同特征空间，有
+
+```math
+\dim\mathcal H\ge
+\max\{R_*,c_0\}+M_++M_-+c_0+d_0
+\ge\max\{R_*,1\}+M_++M_-+\max\{r_c,2\}.
+\tag{217.6}
+```
+
+这正是临界分支的下界。所有向量均在原空间 $`\mathcal H`$ 中，纯化辅助空间没有计入预算。证毕。
+
+**定理 217.3（指定秩轮廓的完整达到性）。** 对所有定义217.1参数，
+
+```math
+D_1(a,S;\mathbf r)=D_\infty(a,S;\mathbf r)
+ =D_\omega(a,S;\mathbf r)=\mathcal N(a,S;\mathbf r).
+\tag{217.7}
+```
+
+达到曲线可以使完整尖锐集合恰为 $`S`$，并在各 $`t_i`$ 具有等于 $`\kappa_*(a,t_i)`$ 的双侧普通曲率极限。
+
+证明。 令 $`L=\max\{R_*,\varepsilon\}`$。由于 $`S`$ 非空，有 $`L\ge1`$。对每层 $`1\le k\le L`$，取不同实节点组成的集合
+
+```math
+\Lambda_k=\{0\}\cup
+ \bigcup_{\substack{i\in I\\r_i\ge k}}
+       \{\lambda_+(h_i),\lambda_-(h_i)\}
+ \cup
+ \begin{cases}
+ \{2a\},&\varepsilon=1,\ k=1,\\[0pt]
+ \varnothing,&\text{其余情形}.
+ \end{cases}
+\tag{217.8}
+```
+
+这些节点均在 $`(-1,1)`$ 内。对每层使用第213.21—213.22式的 Gram 构造：
+
+```math
+\langle x_{k,\lambda},x_{k,\mu}\rangle
+       =\frac1{1-\lambda\mu},\qquad
+V_kx_{k,\lambda}=\lambda x_{k,\lambda},\qquad
+V_k^\dagger V_k=I-|q_k\rangle\langle q_k|,
+\quad q_k=x_{k,0}.
+\tag{217.9}
+```
+
+这是定理213.4已具体给出的规定谱部分等距工具；其经典背景仍见 Garcia、Sherman，*Matrices Similar to Partial Isometries*，arXiv:1703.02960v2，引理2及定理1。不同层取正交直和。若有临界指标，另加维数 $`d_c=\max\{1,r_c-1\}`$ 的正交单位子空间 $`\mathcal U`$，并令 $`V|_{\mathcal U}=-I`$。若无临界指标则不加该空间。置
+
+```math
+V=\bigoplus_{k=1}^{L}V_k\ \oplus\ (-I_{\mathcal U}),
+\qquad T=V^\dagger,\qquad P=V^\dagger V.
+\tag{217.10}
+```
+
+不存在的末块省略。$`P`$ 是投影，且 $`TT^\dagger=P`$、$`PT=T`$，故第211.18式给出一个固定受控 CPTP 处理器。
+
+先数维数。每个非临界正签名出现在前 $`r_i`$ 层；每个负签名出现在以该纤维最大秩为层数的前若干层；每层都有一个零节点。若有临界指标，另有第一层的一个 $`2a`$ 节点以及 $`d_c`$ 个单位方向。因此
+
+```math
+\dim\mathcal H
+=L+M_++M_-+\varepsilon(1+d_c)
+=\mathcal N(a,S;\mathbf r),
+\tag{217.11}
+```
+
+其中无临界指标时把最后一项解释为零。
+
+对每个非临界指标 $`i`$，其三个规范特征值都出现在第 $`1,\ldots,r_i`$ 层。第213.24—213.25式的归一化特征向量 Gram 恒等式给出等距映射 $`U_{ik}`$，把第211节的规范三维模型嵌入各层，并满足
+
+```math
+U_{ik}^\dagger P U_{ik}=P_0,\qquad
+VU_{ik}=U_{ik}T_0(a,t_i)^\dagger,\qquad
+U_{ik}^\dagger T U_{ik}=T_0(a,t_i).
+\tag{217.12}
+```
+
+令 $`\rho_i^0(u)`$ 为相应的全域解析规范纯态曲线，选常值严格正权重 $`p_{ik}`$，使 $`\sum_{k=1}^{r_i}p_{ik}=1`$，并置
+
+```math
+\sigma_i(u)=\sum_{k=1}^{r_i}
+ p_{ik}U_{ik}\rho_i^0(u)U_{ik}^\dagger.
+\tag{217.13}
+```
+
+各像空间位于正交的层中，所以曲线秩为 $`r_i`$；常值正交块权重没有额外 Fisher 项，其点态 SLD 信息等于规范纯曲线的信息。各块都满足精确的 $`P,T`$ 期望约束，因此它在同一个处理器中全区间、全输入精确，并在 $`t_i`$ 保留最优曲率。
+
+若有临界指标，其二维稳定模型的谱为 $`\{0,2a\}`$、缺陷为 $`|f\rangle\langle f|`$。对这两个特征向量使用同一 Gram 恒等式，便把该稳定模型等距嵌入第一层的 $`\{0,2a\}`$ 不变子空间。若 $`r_c=1`$，将它与 $`\mathcal U`$ 中的一个单位方向一起嵌入，就得到完整规范纯曲线。若 $`r_c\ge2`$，在 $`\mathcal U`$ 上选满秩态，使用第216.14式的固定压缩与替代映射。该映射保留两个所需矩，给出名义秩恰为 $`r_c`$ 的解析曲线 $`\sigma_c`$；定理216.3的点态 SLD 单调性及上下界夹逼保留其最优普通曲率极限。此构造使用 $`d_c=r_c-1`$ 个单位方向。
+
+现在所有 $`\sigma_i`$ 都在同一个上述空间和处理器中。取 Lagrange 多项式及三次振幅
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+\rho_u=\sum_i g_i(u)^2\sigma_i(u).
+\tag{217.14}
+```
+
+分母在实轴恒正，因为 $`\sum_iL_i=1`$。因此 $`\rho`$ 在整个 $`J_a`$ 上实解析，并由矩约束的线性保持全输入精确性。各节点满足 $`\rho_{t_i}=\sigma_i(t_i)`$ 及 $`\rho'_{t_i}=\sigma_i'(t_i)`$，故全部指定秩及点态 SLD 校准都精确达到。
+
+参数相关混合的信息上界及零权重处理沿用定理215.3。每个分支的信息局部有界：非临界分支与规范纯曲线相同，临界分支由固定 CPTP 映射的数据处理界控制。在 $`t_i`$ 附近，其余权重为 $`O((u-t_i)^6)`$，振幅导数平方之和为 $`O((u-t_i)^4)`$，从而
+
+```math
+I_Q(\rho_u)-I_r(u)
+\le g_i(u)^2\bigl(I_Q(\sigma_i(u))-I_r(u)\bigr)
+       +O((u-t_i)^4).
+\tag{217.15}
+```
+
+结合通用曲率下界，得到每个指定点的双侧普通极限等于 $`\kappa_*`$。这使用实际准备态的信息上界，没有把一个未保留的标签当作实际信息量。
+
+构造中 $`K^\dagger=V`$ 的正谱恰为 $`\{\lambda_+(h_i):1\le i\le m\}`$。第215.2节的谱必要性与正签名严格单调性排除所有其他尖锐点，所以完整尖锐集合恰为 $`S`$。构造的实际联合支持若低于（217.11），便与定理217.2矛盾，故其实际维数也等于 $`\mathcal N`$。解析构造、正则性类别包含关系及统一下界共同证明（217.7）。证毕。
+
+## 追加锚（本行以下为增补区）

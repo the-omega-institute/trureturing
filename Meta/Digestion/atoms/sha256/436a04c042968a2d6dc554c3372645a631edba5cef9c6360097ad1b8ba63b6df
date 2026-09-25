@@ -1,0 +1,8 @@
+**推论 24.5（三个延迟相关值的稳健记忆下界）。** 在定义 24.1 的条件下，若 $\widehat F_s,\widehat F_t,\widehat F_{s+t}$ 的算子范数误差各不超过 $\delta$，令 $\widehat R=\widehat F_{s+t}-\widehat F_t\widehat F_s$。则无需对经验条件协方差求逆，即有
+\[
+ \boxed{\mathcal I(s,t)\ge\tfrac12
+ \bigl(\|\widehat R\|_F-\sqrt r(3\delta+\delta^2)\bigr)_+^2.}
+\]
+
+**证明。** $\|F_u\|\le1$ 给 $\|\widehat R-R_{s,t}\|\le3\delta+\delta^2$。又 $A_s,C_t\preceq I$，所以 $R_{s,t}=C_t^{1/2}Z_{s,t}A_s^{1/2}$ 给 $\|R_{s,t}\|_F\le\|Z_{s,t}\|_F$。结合 Frobenius 误差至多为 $\sqrt r$ 倍算子范数误差及定理 24.2 的下界即可。该证书可以认证非零记忆；下界等于零仅表示当前精度不足。误差预算应先包含真实白化和传感器误差，不能从未校准相关矩阵直接套用。证毕。
+

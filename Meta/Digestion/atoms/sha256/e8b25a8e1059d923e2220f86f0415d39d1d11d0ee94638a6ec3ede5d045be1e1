@@ -1,0 +1,19 @@
+**定理 42.2（对比度是操作不变量，非矩阵命名的产物）。** 在 $\operatorname{supp}\sigma$ 上定义 $r=\|\sigma^{-1/2}\Delta\sigma^{-1/2}\|$。则
+\[
+ r=\inf\{a\ge0:-a\sigma\preceq\Delta\preceq a\sigma\}
+  =\sup_{0\preceq E\preceq I,\ \operatorname{Tr}\sigma E>0}
+       \frac{|\operatorname{Tr}\Delta E|}{\operatorname{Tr}\sigma E}.
+\]
+对任意 CPTP 映射，$r(\Lambda\mathsf W)\le r(\mathsf W)$ 且 $I(\Lambda\mathsf W)\le I(\mathsf W)$。统计等价保持 $r$、$I$ 和第 39.2 节的 $Q_\sigma(\Delta)$。奇偶合并在统计等价类上良定义，故
+\[
+ \mathfrak G(\mathsf W_1,\mathsf W_2)
+ :=I(\mathsf W_1\boxast\mathsf W_2)-I(\mathsf W_1)I(\mathsf W_2)
+\]
+也是统计等价不变量。
+
+**证明。** 正定支持上的合同变换把第一项算子序条件转成 $-aI\preceq\sigma^{-1/2}\Delta\sigma^{-1/2}\preceq aI$，得到首个等号。该序条件逐效应给比值上界。反向，对达到最大绝对本征值的广义 Rayleigh 向量取秩一效应，按范数缩放使它不超过 $I$，便达到比值。支持外 $\Delta$ 为零，由 $\sigma\pm\Delta\succeq0$ 可知，所以忽略支持外方向无损。
+
+正映射保持两个算子序不等式，故 $r$ 不增。$I=\{D(\rho_+\Vert\sigma)+D(\rho_-\Vert\sigma)\}/(2\log2)$，数据处理给信息不增。统计等价时，正反两条映射给相反不等式，故二者相等。由线性，$\mathcal R\Lambda$ 还固定全部 $\sigma+t\Delta$，$|t|<1$；对 $D(\sigma+t\Delta\Vert\sigma)$ 两次使用数据处理得到恒等，再在 $t=0$ 求二阶导数，得 BKM 二次型不变。
+
+产品映射 $\Lambda_1\otimes\Lambda_2$ 与产品恢复分别作用于合并态，保持轨道内的等权混合。任选标签的翻转只可能交换两个输出标签，不能改变信息，所以合并与 $\mathfrak G$ 在等价类上良定义。该证明给出一个限制：通过统计无损的换基、冗余编码或更换载体，不能将 $r=1$ 变成第 40 节的 $r<1$。要覆盖那个边界，需要额外数学推导。证毕。
+
