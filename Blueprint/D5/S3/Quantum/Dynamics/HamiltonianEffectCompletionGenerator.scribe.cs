@@ -98,7 +98,28 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     Paragraph(Text(
                         "One-by-one complex matrices commute, so the commutator derivative "
                             + "vanishes at time zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Paragraph(
+                Text("Thermal recovery and covariance: "),
+                Ref("D5/L/Quantum/oi2006interference"),
+                Text(" gives the two-state interference ceiling; "),
+                Ref("D5/L/Quantum/marvian2014modes"),
+                Text(" supplies the symmetry-mode selection rule. "),
+                Ref("D5/L/Quantum/lostaglio2015coherence"),
+                Text(" and "),
+                Ref("D5/L/Quantum/faist2015gibbspreserving"),
+                Text(" distinguish Gibbs calibration, coherent covariance and thermal "
+                    + "implementation. The Lean declarations here establish the commutator "
+                    + "derivative and orbit-span identity, not a thermal recovery optimum "
+                    + "or channel-norm bound.")),
+            Paragraph(
+                Text("Joint statistical interpretation: "),
+                Ref("D5/L/Quantum/nuradha2025multivariate"),
+                Text(" poses operational questions for multivariate fidelities. "),
+                Ref("D5/L/Quantum/beny2015inference"),
+                Text(" motivates observation-based scale descriptions. The commutator "
+                    + "identity does not settle these statistical questions or "
+                    + "resource costs.")))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {

@@ -1,0 +1,12 @@
+**证明。** 置 $z=\sum_jw_je^{2i\omega t_j}$，三角恒等式给
+\[
+ G=\tfrac12\begin{pmatrix}1+\operatorname{Re}z&-\operatorname{Im}z\\-\operatorname{Im}z&1-\operatorname{Re}z\end{pmatrix},
+ \qquad \lambda_{\min}(G)=(1-|z|)/2.
+\]
+记 $\Delta=\omega T$。若 $0\le\Delta\le\pi/2$，每个 $2\omega t_j-\Delta$ 属于 $[-\Delta,\Delta]$，所以
+\[
+ \operatorname{Re}(e^{-i\Delta}z)
+ =\sum_jw_j\cos(2\omega t_j-\Delta)\ge\cos\Delta\ge0.
+\]
+从而 $|z|\ge\cos\Delta$。两个端点等权给 $z=e^{i\Delta}\cos\Delta$，达到该下界。若 $\Delta\ge\pi/2$，$\operatorname{tr}G=1$ 给 $\lambda_{\min}\le1/2$，所述四分之一周期双延迟使 $z=0$，达到上界。$T=0$ 时全部方向相同，最小特征值为零，也符合公式。这个证明是第一谐波回归的 E-optimal 设计在本预算下的直接凸几何解，不被表述为一般非线性稳定嵌入开放问题的解决。证毕。[^tcs9-design]
+

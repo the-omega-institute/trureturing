@@ -5,7 +5,7 @@ import shutil
 from test_native_support import publication
 
 
-class NativeRegTests:
+class NativeRegSupport:
     def reg_package(self):
         # Shared setup already supplies the admitted root/Reg dependency graph;
         # these cases additionally select registration sources for reporting.
@@ -27,6 +27,29 @@ class NativeRegTests:
         self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
         return result
 
+    def build_reg_report(self, success=True):
+        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report',
+                             'trureturing/Audit', 'leanInspector/reportInspector',
+                             'reg/LeanInformationAuditRegTests', success=success)
+
+
+class NativeRegTests(NativeRegSupport):
+    def test_reg_manifest_rejected_before_materialization(self):
+        self.reg_package()
+        reg = json.loads((self.root / 'Reg/lake-manifest.json').read_text())
+        reg['packages'][-1]['rev'] = 'a' * 40
+        self.write('Reg/lake-manifest.json', json.dumps(reg))
+        result = self.make_lean('Reg', success=False)
+        self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
+        self.assertFalse((self.root / 'Reg/.lake').exists())
+        self.assertFalse((self.root / '.lake/packages/mathlib').exists())
+        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
+        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
+        self.assertFalse((self.root / 'Reg/.lake').exists())
+
+
+class NativeRegConsumerTests(NativeRegSupport):
     def test_reg_empty_and_nonempty_build_routing(self):
         # Keep the dependency pin stable across the root-only and Reg cases.
         # A pin transition would discard the private compiler artifacts even
@@ -113,22 +136,3 @@ class NativeRegTests:
             self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         finally:
             self.root, self.env = donor, original_env
-
-    def build_reg_report(self, success=True):
-        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report',
-                             'trureturing/Audit', 'leanInspector/reportInspector',
-                             'reg/LeanInformationAuditRegTests', success=success)
-
-    def test_reg_manifest_rejected_before_materialization(self):
-        self.reg_package()
-        reg = json.loads((self.root / 'Reg/lake-manifest.json').read_text())
-        reg['packages'][-1]['rev'] = 'a' * 40
-        self.write('Reg/lake-manifest.json', json.dumps(reg))
-        result = self.make_lean('Reg', success=False)
-        self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
-        self.assertFalse((self.root / 'Reg/.lake').exists())
-        self.assertFalse((self.root / '.lake/packages/mathlib').exists())
-        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
-        self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
-        self.assertFalse((self.root / 'Reg/.lake').exists())

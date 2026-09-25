@@ -23,6 +23,14 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 - `make help` - owns the live catalogue of canonical doors.
 - `tools/` - owns executable admission and repository enforcement.
 
+## Escape-audit delivery (CLAUDE.md §3.9; SPEC A5.5/A5.6)
+
+Attempt faithful registration in the same delivery for each newly authored public `theorem` or `lemma` in a D5 source module selected by the existing delta/first-pin scope, including D5 content templates. Prefer a lawful existing template; otherwise add a meaningful parameterized content template with shared enrollment. Registration completion requires at least one `declared_validated` four-slot registration in the source owner's `Reg/D5/<mirrored source path>.lean`, compiled Lean proof terms and current binding evidence. Check the actual realization bridge, lawful enrolled-template application and required variation/sensitivity proofs. `escape continues` is an `EscapeResidualWitness`, `EscapeResidualEmpty`, or literal `open`; the latter records only an unknown residual, proves neither undecidability nor inexhaustibility, and cannot replace missing evidence. With the other evidence valid, an open residual is a complete registration. CI success or an Observe warning alone is not registration completion.
+
+If a concrete obstacle in template expressiveness, interfaces, or registration proof/evidence production or processing prevents completion, open or reuse a relevant issue identifying the original theorem and source, actual failure and missing evidence or obligation. Link it in delivery, explicitly state that the escape audit is unfinished, and continue mathematical development and delivery without waiting for registration repair. This §3.9 exception takes precedence over §5.4/5.5: no exhaustive encodings, repeated retries, immediate hotfix/repair lane or separate waiver is required. The issue is neither proof nor `declared_validated` nor a new machine status. Do not force a wrong template, weaken the original theorem, add bind-only wrappers or drop Lean/kernel, `sorry`, axiom, freeze or other required checks. Do not backfill historical theorems or introduce a debt ledger. The four Observe statuses, delta scope and judge ownership stay unchanged.
+
+Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Reg proofs are audit evidence, not a new mathematical GID/Scribe/deposit/utility obligation.
+
 ## State machine
 
 Follow these steps in order. Do not pass a step until its postcondition holds.
@@ -60,7 +68,7 @@ Triage the claim class before committing to it; each class below is named by lan
 
 - **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.
 - **Existing machinery is a starting point**: a new standalone module still needs a live escape witness. A bridge, instantiation, or characterization obtained only by binding existing results is not a standalone target.
-- **Never independently first-freeze a bind-only result** (`CLAUDE.md` §3.2). That section owns proof classification, escape witnesses and admission. The sole module-level basis is `admission_basis: escape-witness`: at least one public theorem must be `content` with a valid live escape witness. Upstream thin wrappers, atom prose, API/coverage needs and promised consumers create no exception. If the candidate is bind-only, report `proof_shape: bind-only`, `escape_witness: none`, `admission_basis: none` and stop standalone implementation/deposit. Use an already frozen declaration for `make cover` where it covers the atom verbatim. Otherwise wait for an actual downstream proof, then apply the existing result directly or write a necessary local/private lemma or named companion in that consumer's content module. Named companions require an actual proof consumer in the same delivery and a live `consumer → prerequisite` edge; that module must itself have an escape witness. Never reprove an upstream result to manufacture content. If all reachable targets are bind-only, report the missing analytic input as `open`.
+- **Apply `CLAUDE.md` §3.2 to every new declaration.** That section owns proof classification and admission: no new bind-only declaration, including local/private lemmas or named companions, except its explicitly allowed external open-problem resolution. Judge content per declaration; one content theorem or escape witness cannot shield bind-only siblings. An all-bind-only atom reuses existing results with zero new Lean; report the reuse basis and stop mathematical implementation, handling digestion under §1.2. Apply existing results directly inside admissible content proofs; neither a consumer nor a coverage need permits a wrapper.
 - **Definition clauses — only with an earning theorem** (see the thin-deposit taxonomy below); a definition alone is not a target.
 - **Do not encode — institutional/philosophical prose clauses** (governance clauses, postmortem narratives, interpretive premises): they have no mathematical content, and encoding them as generic set/logic predicates is how thin deposits happen. Report them as not-formalizable prose rather than dressing them in Lean.
 - **Do not attempt without a machinery plan — heavy universal claims** (representation theorems, general-dimension obstructions): landed lanes on these either time out or fabricate. If the machinery gap is real, `open` naming the gap is the valuable output.
@@ -160,13 +168,23 @@ Iterate on the source artifacts, then run the canonical door when they are ready
 make lean
 ```
 
+Attempt the escape audit for each new public D5 theorem/lemma as described above. Compile the mathematical targets and this delivery's actual retained Reg sources through the governed entry; when the mirrored Reg source is retained, for example (the plain root `lake build Reg...` form is not valid):
+
+```sh
+make lean LEAN_TARGETS="D5.<dotted.module> Reg.D5.<mirrored.dotted.module>"
+# equivalent cache wrapper:
+/bin/bash tools/scripts/worktree/lean-cache-run.sh --build D5.<dotted.module> Reg.D5.<mirrored.dotted.module>
+```
+
+When no valid Reg source can be delivered, omit that Reg target and use the linked-issue exception; do not invent a mirror or placeholder target. Retain successful audit sources, compiled proofs and current binding evidence. Remove this attempt's failed audit source additions and imports if they would break the normal build; do not remove pre-existing or successful sources to hide failures. Compile every retained Reg source, including support/enrollment sources, with its existing kernel, `sorry` and axiom checks. A successful D5 build establishes no registration completion.
+
 Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full preflight runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
 
 Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger, so catch defects before depositing rather than creating a conflicting frozen state.
 
-Postcondition: both source artifacts exist in the observed shape and `make lean` exits 0.
+Postcondition: the mathematical Lean and Scribe sources exist in the observed shape and the required build exits 0, covering all retained Reg sources. Each audit is either complete with compiled evidence or explicitly unfinished with the linked issue required above; the latter permits proceeding to mathematical checks and delivery.
 
-If a faithful proof cannot be made to compile, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
+If the faithful mathematical proof cannot be made to compile, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
 ### 6. Run the fidelity and non-hollowness gate
 
@@ -229,9 +247,9 @@ make pr-open HEAD=<branch> MESSAGE=<message-file>   # deposit PRs: no AUTO_MERGE
 
 `AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Deposit lanes must NOT pass it: the sshx review triplet (tests / quality / architecture) runs after the PR opens and must be able to block the merge (memory `review-must-precede-automerge`, #2337 precedent). After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
 
-If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, completed fidelity-gate evidence, and, for every public theorem, `proof_shape` (`content` | `bind-only`), its direct frozen public dependencies (GID + `statement_id`), its `escape_witness` (or `bind-only`) and the module's `admission_basis`. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
+If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code and completed fidelity-gate evidence. For each new public D5 theorem/lemma in scope, report either its retained Reg path, compiled target exit code, validated four-slot/binding-evidence result and continuation kind, or the linked issue and explicit unfinished-audit disclosure under the exception above. Report actual attempted compilation failures without inventing missing Reg targets or successful evidence. Delivery success with an issue does not mean registration completion. `proof_shape` (`content` | `bind-only`), direct frozen public dependencies (GID + `statement_id`), `escape_witness` (or `bind-only`) and the module's `admission_basis` remain required for the mathematical declaration. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
-Postcondition: the task ends with an opened pull request, or with evidence-complete `open`.
+Postcondition: the task ends with an opened pull request (with completed audit evidence or the linked-issue exception disclosed), or with evidence-complete `open`.
 
 ## Fidelity and non-hollowness gate
 

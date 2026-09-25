@@ -1,0 +1,10 @@
+**出处 41.3（文献覆盖与本批承重增量）。** 原题、经典可对易取等通道以及量子信息合并与极化的联系归于 [HR18]；二阶 Rényi 的已解决特例归于 [HGT23]。第 34 节的 BKM 方法和矩阵对数微分已有文献基础。第 39 节给出 Hermitian 方向的逆对数平均比较及其张量推导，第 40 节将其与有限幅度余项共同用于 (HR-upper) 的显式非对易参数区域，按本稿证明列为 `repo-derived`。本轮检索了原文、2023 和 2025 的后续作者论文，以及 BKM tensor product、quantum Jensen–Shannon、weak-signal information combining 等组合，没有找到与 (40.2a)–(40.2b) 完全相同的已发表陈述。这一检索结果不排除未检出的支配定理；本稿的正确性与独立新颖性需要分别复核。
+
+[^tcs7-hr]: Christoph Hirche、David Reeb，*Bounds on Information Combining With Quantum Side Information*，IEEE Transactions on Information Theory 64(7), 4739–4757 (2018)，DOI [10.1109/TIT.2018.2842180](https://doi.org/10.1109/TIT.2018.2842180)，[作者预印本](https://arxiv.org/pdf/1706.09752)。本轮读取 §§III–IV、VII 及相关应用范围，并查看 PDF 第 15 页图像核对 Conjecture VII.2、式 (73)，后续页核对擦除取等与数值证据。本批把自然对数陈述换算成比特，目标限定为独立均匀输入；没有将另一项 Mrs. Gerber 下界自动并入本批结算。
+
+[^tcs7-hgt]: Christoph Hirche、Xinyue Guan、Marco Tomamichel，*Chain Rules for Rényi Information Combining*，[arXiv:2305.02589v1](https://arxiv.org/pdf/2305.02589)。本轮读取引言、§V 的二阶 Rényi 特例和 Conjecture V.6。其 $\alpha=2$ 结果不能通过“取 $\alpha\to1$”直接得到一个没有在邻域证明的全称不等式。本批使用的是 von Neumann 熵自身的精确积分表达。
+
+[^tcs7-hirche]: Christoph Hirche，*Rényi partial orders for BISO channels*，[arXiv:2508.19951v1](https://arxiv.org/html/2508.19951v1)，2025。§4 仍将 [HR18] 的量子信息合并列为开放方向；其主要定理研究经典 BISO 信道的 Rényi 偏序，本批没有把那些经典极值次序直接外推为量子输入的结论。
+
+[^tcs7-dlmf]: NIST Digital Library of Mathematical Functions，§4.36，式 [4.36.1](https://dlmf.nist.gov/4.36.E1)，双曲正弦的无限乘积。本批用它构造 $h(x)=\mathbb E e^{-Tx^2}$ 并独立证明引理 39.1，没有依赖未证明的 Gaussian 乘积猜想。
+

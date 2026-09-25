@@ -1,0 +1,6 @@
+**证明。** 完全替换信道 $E_0(\rho)=I_2/2$ 的归一 Choi 态为 $I_4/4$。因此 $J_\Phi-a_\Phi J_{E_0}\succeq0$。当 $a_\Phi<1$ 时，Choi 完全正判据给
+\[
+ \Phi=a_\Phi E_0+(1-a_\Phi)\Psi,
+\]
+其中 $\Psi$ 完全正、迹保持且保单位，后两项由两边的线性约束直接得到。对任意联合态，$E_0\otimes\operatorname{id}$ 的输出是 $\sigma=I_2/2\otimes\rho_R$，而 $\Psi\otimes\operatorname{id}$ 保持该参考。先用相对熵凸性，再用数据处理，得到输出缺陷至多 $(1-a_\Phi)D(\rho\Vert\sigma)$。$a_\Phi=1$ 时信道恰为完全替换。特征值扰动界给 $a_{\rm cert}\le a_\Phi$，证明稳健式。该式为完全正序文献方法的明确有限维证书，没有证明 Choi 层面的下界是最优相对熵系数。证毕。[^tcs6-cporder]
+

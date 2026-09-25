@@ -1,0 +1,6 @@
+**定义 9.1（圆周旋转及其预测复杂度）。** 令 $\mathbb T=\mathbb R/\mathbb Z$，$\alpha\in\mathbb R\setminus\mathbb Q$，唯一动作是
+\[
+ F_\alpha(x)=x+\alpha\pmod1,\qquad o(x)=\exp(2\pi i x)\in\mathbb C.
+\]
+输出度量为复数绝对值，允许预测输出位于整个 $\mathbb C$。对 $H\in\mathbb N$、$\varepsilon>0$，记 $S_{H,\varepsilon}(\alpha)$ 为同时对全部 $x\in\mathbb T$、$0\le n\le H$ 满足定义 8.1 的最少状态数。该最小值存在，例如将有限相位网格与长度 $H+1$ 的显式计时状态组合即可。对 $t\in\mathbb R$，记 $\|t\|_{\mathbb T}=\min_{k\in\mathbb Z}|t-k|$。
+

@@ -1,0 +1,11 @@
+**定理 20.2（最小势能与积分自由能的同一 Schur 形状）。** 对上述模型和 $\tau>0$，
+\[
+ \min_z U(x,z)=\tfrac12x^{\mathsf T}Sx,
+\]
+\[
+ -\tau\log\int_{\mathbb R^r}e^{-U(x,z)/\tau}dz
+ =\tfrac12x^{\mathsf T}Sx+\frac\tau2\log\det C
+                         -\frac{r\tau}{2}\log(2\pi\tau).
+\]
+所以积分自由能与最小势能对 $x$ 有相同梯度 $Sx$。
+

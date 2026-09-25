@@ -16,16 +16,22 @@ internal sealed class FileMapGlob
 {
     private static readonly ConcurrentDictionary<string, Lazy<FileMapGlob>> compiledPatterns = new(StringComparer.Ordinal);
     private readonly Regex regex;
+    private readonly string literalPrefix;
 
     private FileMapGlob(string pattern, Regex regex)
     {
         Pattern = pattern;
         this.regex = regex;
+        var wildcard = pattern.IndexOf('*');
+        literalPrefix = wildcard < 0 ? pattern : pattern[..wildcard];
     }
 
     internal string Pattern { get; }
 
-    internal bool IsMatch(string path) => regex.IsMatch(path);
+    // Every accepted match begins with this literal prefix. Keep the regex as
+    // the final matcher, including its existing null-input diagnostic.
+    internal bool IsMatch(string path) =>
+        (path is null || path.StartsWith(literalPrefix, StringComparison.Ordinal)) && regex.IsMatch(path!);
 
     internal static FileMapGlob Create(string pattern)
     {

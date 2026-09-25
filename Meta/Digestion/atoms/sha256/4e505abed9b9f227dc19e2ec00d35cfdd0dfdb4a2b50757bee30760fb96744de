@@ -1,0 +1,22 @@
+**出处 7.1（经典结果与本卷推导）。** 定理 2.2 的行为核、商及不动点结构使用已有观察者理论和经典余代数背景。定理 5.3 的秩与最小性对应经典加权自动机结果；定理 5.4 使用行残余坐标推导有限块公式。定理 2.3、第 3 节、第 4 节、引理 5.2、命题 5.5 与第 6 节的具体陈述按正文证明列为 `repo-derived`，其中命题 3.5 已有直接源码构件。这个分类表示本卷的推导来源，不表示这些结果在文献中首次出现。以下文献列为 `literature-attested` 的范围限于各项注明的内容。
+
+[^repo-behavior]: 固定源码：[ControlledBehaviorUniversality.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)，`controlled_behavior_universal_property` 给出有限载体上的受控行为商泛性质及基数界。另见 [StrictOneHoleContexts.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的 `contextual_equivalence_is_greatest`，其对象为带全部实际槽参数的严格部分操作；本文第 2 节采用总确定性动作。
+
+[^repo-closure]: 固定理论来源：[OBSERVER_CLOSURE_SPECTRUM.md](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/docs/develop/theory/OBSERVER_CLOSURE_SPECTRUM.md) 的未来核塔及有限稳定推导；[CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md) 的有限细化与区分词。本文定理 2.3 另写明基本操作计费口径。
+
+[^repo-rigid]: 固定源码：[DFAOStateLowerBound.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S0/Automata/DFAOStateLowerBound.lean)，`state_lower_bound_of_distinguishing_family`；[DistinguishingFamilyCardinalityBound.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S0/Automata/DistinguishingFamilyCardinalityBound.lean)，`card_le_card_output_of_rigid_continuations`。引用保留唯一续接的全称前提。
+
+[^repo-hankel]: 固定源码：[SequenceHankelRealization.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S3/Observer/Hankel/SequenceHankelRealization.lean)，使用单时间索引尾空间构造实现；[ExecutableHoKalman.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S3/Observer/Hankel/ExecutableHoKalman.lean)，`run_exact_recovery` 要求固定阶数参考实现及样本匹配；[HoKalmanPredictionBudget.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S3/Observer/Hankel/HoKalmanPredictionBudget.lean)，`run_prediction_error_bound` 给出带前提的有限样本误差传播。本文第 5 节采用词索引，不把这些源码引用当作多动作版本已被形式化的证据。
+
+[^repo-completion]: 固定理论来源：[RECURSIVE_RELATIONAL_OBSERVATION.md](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，有限观察塔、真实像与完成空间的区分。本文定理 6.2 直接假设紧致载体以及观察纤维组成拓扑基，并在该假设下证明有限层因子化。
+
+[^repo-rice]: 固定源码：[ClosureUndecidable.lean](https://github.com/the-omega-institute/trureturing/blob/6009fa739f232152b73131c472f48c1e8c8b1886/D5/S0/Computability/ClosureUndecidable.lean)，`closure_reading_unreachable` 是 Mathlib Rice 定理的明确封装。本文定理 6.4 独立写出延迟脉冲归约，不声称该具体归约已有 Lean 证明项。
+
+[^lit-rutten]: J. J. M. M. Rutten，*Universal coalgebra: a theory of systems*，CWI Report CS-R9652，1996，[作者机构条目](https://ir.cwi.nl/pub/4802)。`literature-attested` 范围：状态系统、行为关系及余代数的经典框架。本文定理 2.2 给出所用确定性特例的完整证明，不借此引用推广到任意概率或非确定性语义。
+
+[^lit-digits]: Aaron Barnoff、Curtis Bright、Jeffrey Shallit，*Using finite automata to compute the base-b representation of the golden ratio and other quadratic irrationals*，arXiv:2405.02727v1，2024，[原文](https://arxiv.org/html/2405.02727v1)。`literature-attested` 范围：算术编码上的输出自动机及部分实例的 SAT 最小性方法。本文第 3 节没有证明该论文任何尚未解决实例的最小状态数。
+
+[^lit-kiefer]: Stefan Kiefer，*Notes on Equivalence and Minimization of Weighted Automata*，arXiv:2009.01217v1，2020，[第 3、4 节](https://arxiv.org/html/2009.01217v1)。`literature-attested` 范围：域上加权自动机的 Hankel 秩、最小性及 Hankel 实现。本文有限块公式按行残余坐标重新推导；未引入非负、随机或量子实现的约束。
+
+[^lit-computable]: Vasco Brattka、Guido Gherardi，*Effective Choice and Boundedness Principles in Computable Analysis*，arXiv:0905.4685，[作者预印本](https://arxiv.org/abs/0905.4685)。`literature-attested` 范围：数学存在原理需要按输入输出表示区分计算内容。本文第 6 节不声称对所定义问题给出 Weihrauch 度分类，所用不可计算结论仅为正文证明的具体停机归约。
+

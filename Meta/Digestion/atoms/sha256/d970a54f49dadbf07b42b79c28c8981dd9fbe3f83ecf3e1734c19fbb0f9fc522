@@ -1,0 +1,6 @@
+**推论 24.5（三个延迟相关值的稳健记忆下界）。** 在定义 24.1 的条件下，若 $\widehat F_s,\widehat F_t,\widehat F_{s+t}$ 的算子范数误差各不超过 $\delta$，令 $\widehat R=\widehat F_{s+t}-\widehat F_t\widehat F_s$。则无需对经验条件协方差求逆，即有
+\[
+ \boxed{\mathcal I(s,t)\ge\tfrac12
+ \bigl(\|\widehat R\|_F-\sqrt r(3\delta+\delta^2)\bigr)_+^2.}
+\]
+
