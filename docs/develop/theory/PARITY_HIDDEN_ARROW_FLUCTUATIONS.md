@@ -1492,3 +1492,207 @@ $`q/\sqrt\lambda\gg\sqrt q`$ 阶。
 删去这个均值或只按一阶信号比例取容量，一般会移出本定理的临界窗口。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 容量修正内的混合正态标签噪声
+
+**定义 32.1（修正区间的精确后验中心）。** 沿用定义 31.1，先对齐到正确方向。
+所有条件后验均取均匀固定基数支持先验，并条件于完整数据及独立同分优先级，
+记所生的 σ 代数为 $`\mathscr D_M`$。置
+
+```math
+I_M=A_M\triangle T_M,\qquad D_M=|N_M-m_M|=|I_M|,\qquad
+\varepsilon_M=\mathrm{sgn}(N_M-m_M),\qquad
+\widehat G_M=-\frac{N_M-\mathbb E_S N_M}{\sqrt q}.
+```
+
+式 (32.1)。
+
+若 $`D_M=0`$，取 $`\varepsilon_M=0`$。
+记 $`\pi_i=\mathbb P(i\in S\mid\mathscr D_M)`$ 为精确后验包含概率。
+实际遗漏数相对于间隙阈值的修正及其后验中心为
+
+```math
+\Delta_M=|S\setminus T_M|-(q-C_M)
+       =\varepsilon_M|I_M\cap S|,\qquad
+\overline\Delta_M=\varepsilon_M\sum_{i\in I_M}\pi_i,\qquad
+\mathcal R_M=\frac{\Delta_M-\overline\Delta_M}{q^{1/4}}.
+```
+
+式 (32.2)。
+
+这里 $`\Delta_M`$ 与遗漏损失一样依赖真实支持。
+未知方向时先使用第 27 章的方向判决，对所选方向计算同样的得分、排名区间及
+正向模型后验；容量仍为定义 31.1 的确定值。
+令
+
+```math
+v_+=\pi_+(1-\pi_+),\qquad v_-=\pi_-(1-\pi_-),\qquad
+v_s(g)=v_+(-g)_++v_-g_+.
+```
+
+式 (32.3)。
+
+**定理 32.2（随机容量修正所承载的细尺度噪声）。** 在定理 31.2 的条件下，
+对两个实际平稳实验及两种方向信息情形，联合收敛为
+
+```math
+\left(
+ \widehat G_M,
+ \sqrt q\left(\frac{|S\setminus T_M|}{q}-H_{\mathcal E,m_M}^{\xi}\right),
+ \mathcal R_M
+\right)
+\ \Longrightarrow\
+\left(G,\ f_s(G)-\mu_s,\ \sqrt{v_s(G)}\,Z\right),
+```
+
+式 (32.4)。
+
+其中 $`G\sim N(0,\sigma^2)`$，$`Z\sim N(0,1)`$，二者独立。
+结论对支持一致。第三个极限条件于 $`G`$ 为中心正态，其方差由 $`G`$ 决定；
+它与 $`G`$ 不相关但不独立，且其边缘分布也不是正态。
+
+证明。先设方向已知。在均匀支持先验下，给定 $`\mathscr D_M`$ 后，
+取唯一正数 $`t`$，使下面的独立 Bernoulli 参数总和为 $`q`$。
+这个校准对任意数据都有定义；式 (27.11) 还给出总方差的界
+
+```math
+p_i=\frac{t\exp(W_i-t_B)}{1+t\exp(W_i-t_B)},\qquad
+\sum_i p_i=q,\qquad
+c q\le d_M:=\sum_i p_i(1-p_i)\le q
+```
+
+式 (32.5)。
+
+这些结论在概率趋一的后验好事件成立；$`t_B=\log((M-q)/q)`$。
+精确后验是这个独立数组条件于总数为 $`q`$ 的分布。
+$`p_i`$ 是条件化之前的校准参数，不能与 $`\pi_i`$ 混同。
+
+固定 $`L\gt0`$，暂限于 $`D_M\le L\sqrt q`$。
+给定数据，区间 $`I_M`$ 是确定集合。在独立 Bernoulli 数组中，记区间和与
+补集和为 $`Y_I,Y_O`$，其均值与方差分别记作
+$`\mu_I,\mu_O`$ 和 $`d_I,d_O`$。于是
+
+```math
+\mu_I+\mu_O=q,\qquad d_I\le D_M/4,\qquad
+ d_O=d_M-d_I\ge cq/2
+```
+
+式 (32.6)。
+
+最后一个不等式对充分大的 $`M`$ 成立。
+异质 Bernoulli 和的经典局部极限定理给出：若总方差为 $`d\to\infty`$，
+则点概率与相应正态密度的绝对误差一致为 $`O(d^{-1})`$，
+不要求各个参数统一远离零与一；参见
+[Siripraparat–Neammanee 定理 2](../../../Library/Dynamics/siripraparat2021local.md)。
+将此界分别用于全数组与补集，且利用全数组均值恰为整数 $`q`$，得
+
+```math
+\frac{\mathbb P(Y_O=q-k)}{\mathbb P(Y_I+Y_O=q)}
+ =\sqrt{\frac{d_M}{d_O}}
+      \exp\left[-\frac{(k-\mu_I)^2}{2d_O}\right]
+   +O_L(q^{-1/2}),\qquad 0\le k\le D_M.
+```
+
+式 (32.7)。
+
+因为 $`D_M\le L\sqrt q`$ 且 $`q=o(M)`$，这些 $`q-k`$ 最终均属于补集和的
+支持范围。余项对数据所选的区间及上述 $`k`$ 一致。
+
+式 (32.7) 左边是区间内整个标签向量的精确后验相对于独立乘积律的密度，
+在向量上仅通过其总数 $`k`$ 取值。
+利用 $`1-e^{-x}\le x`$、$`\mathbb E(Y_I-\mu_I)^2=d_I`$，并在独立区间律下积分，得到
+
+```math
+d_{\mathrm{TV}}\left(
+ \mathcal L((\mathbf1_{\{i\in S\}})_{i\in I_M}\mid\mathscr D_M),
+ \bigotimes_{i\in I_M}\mathrm{Bernoulli}(p_i)
+\right)
+ \le C\left(\frac{d_I}{q}+q^{-1/2}\right)
+ \le C_Lq^{-1/2}.
+```
+
+式 (32.8)。
+
+全局支持基数的条件化因此可在这个增长区间内消去，而不是假定后验标签独立。
+又因 $`0\le Y_I\le D_M`$，同一总变差界还给出精确中心的误差
+
+```math
+\left|\sum_{i\in I_M}\pi_i-\mu_I\right|
+ \le C_LD_Mq^{-1/2}=O_L(1)=o(q^{1/4}).
+```
+
+式 (32.9)。
+
+固定实数 $`u`$。对独立 Bernoulli 特征函数在
+$`u q^{-1/4}`$ 处作三阶余项展开，三阶绝对矩和不超过 $`d_I`$，故
+
+```math
+\mathbb E\exp\left[
+ iu\varepsilon_M\frac{Y_I-\mu_I}{q^{1/4}}\right]
+ =\exp\left[-\frac{u^2d_I}{2\sqrt q}\right]
+   +O_{u,L}(q^{-1/4}).
+```
+
+式 (32.10)。
+
+这个展开也覆盖很短或空的修正区间，不以 $`D_M`$ 作分母。
+结合 (32.8)–(32.9)，得到精确后验下相同的条件特征函数近似。
+由于 $`\mathbb E_S D_M^2=O(q)`$，
+$`\mathbb P_S(D_M\gt L\sqrt q)\le C/L^2`$。
+先令 $`M\to\infty`$，再令 $`L\to\infty`$，而坏事件上的特征函数误差至多为二，便得
+
+```math
+\mathbb E\left|
+ \mathbb E(e^{iu\mathcal R_M}\mid\mathscr D_M)
+       -\exp(-u^2V_M/2)
+\right|\longrightarrow0,\qquad
+V_M=\frac1{\sqrt q}\sum_{i\in I_M}p_i(1-p_i).
+```
+
+式 (32.11)。
+
+这里及条件期望中使用的是均匀支持先验。
+$`V_M`$ 使用所有数据上均有定义的校准参数。
+
+定理 31.2 的定位说明，删去的区间停在上方相邻格点层，补入的区间停在下方层。
+校准参数在这两层分别一致趋向 $`\pi_+`$ 与 $`\pi_-`$。
+再用 $`D_M/\sqrt q`$ 的紧性及取整误差，得到
+
+```math
+V_M-v_s(\widehat G_M)\longrightarrow0\quad\text{依概率},\qquad
+\widehat G_M\Longrightarrow G.
+```
+
+式 (32.12)。
+
+在 (32.11) 中乘以任意有界的 $`\widehat G_M`$ 特征函数，再取期望，
+便得到 $`(\widehat G_M,\mathcal R_M)`$ 的联合极限
+$`(G,\sqrt{v_s(G)}Z)`$。式 (31.8)、(31.13) 与精确均值转移同时给出
+粗尺度损失为 $`f_s(\widehat G_M)-\mu_s+o_P(1)`$，遂得已知方向的 (32.4)。
+整个随机向量在同时置换支持、数据和优先级后不变，其分布对每个固定支持相同。
+所以先验下的联合分布恰等于每个固定支持下的分布，结论据此转移。
+此处没有声称在固定真实支持下、条件于数据后标签仍有上述后验随机性。
+
+未知方向的全部统计量，在方向判决正确时与正确对齐版本逐项相等。
+该事件的补集概率为 $`O(q^{-1})`$，故相等耦合转移联合分布极限。
+粗尺度损失的未知方向精确风险中心仍由第 31 章的 $`O(q^{-1})`$ 夹逼处理。
+这里不把旧的 $`o(\sqrt q)`$ 误差直接用作 $`o(q^{1/4})`$ 误差；
+细尺度坐标由精确后验中心、(32.8)–(32.11) 及相等耦合单独控制。
+
+最后令 $`V=v_s(G)`$、$`R=\sqrt V Z`$。
+$`V`$ 几乎处处为正且不是常数，并有
+
+```math
+\mathbb EV=\frac{\sigma(v_++v_-)}{\sqrt{2\pi}},\qquad
+\mathbb EV^2=\frac{\sigma^2(v_+^2+v_-^2)}2,\qquad
+\mathbb ER^4=3\mathbb EV^2\gt3(\mathbb EV)^2.
+```
+
+式 (32.13)。
+
+因此 $`R`$ 不是中心正态变量。
+$`\mathbb E(R\mid G)=0`$ 给出不相关，而
+$`\mathbb E(R^2\mid G)=v_s(G)`$ 不是常数，排除独立性。
+这些矩等式属于极限随机变量，不断言实际归一化统计量的矩收敛。∎
+
+## 追加锚（本行以下为增补区）
