@@ -43914,3 +43914,268 @@ $R_0(a,t)$ 亦半代数，所以（202.29）中的归一比值为一维半代数
 本结论针对每个固定的允许临界点，不主张靠近参数域边界的统一余项，也不把显式构造的上界系数认定为最优系数。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 203. 超临界首项的显式最优值：二参数构造与任意处理器的切向下界
+
+**定义 203.1（临界二次型及其对偶长度）。** 固定定义202.1的允许临界点，沿用 $A_0,\beta_*,x_*,q_*,\gamma,b,R_0$，并记
+$$
+\begin{gathered}
+\nu=-\frac{2x_*(b)}{q_*'(b)}>0,\qquad
+ d=\frac{2aA_0-1-b}{\beta_*^3},\qquad
+ k=\frac{1+t}{\beta_*}>0,\\
+ D_0=(1-t^2)q_*(t)>0,\qquad
+ c_0=\frac{2}{(1-t)(1+t)^2}>0,\\
+ E_0=1+\frac{td}{k}
+ =\frac{1-tb}{(1+t)\beta_*^2}>0,\\
+ \mathcal J=\nu^2\left(
+ \frac{\gamma^2E_0^2}{c_0}+\frac{d^2D_0}{k^2}\right)>0.
+\end{gathered}
+\tag{203.1}
+$$
+$E_0$ 的第二个表达式使用 $A_0(1+t)=2at$；其正性由 $|t|,|b|<1$ 保证。另设
+$$
+\xi(u)=\left.\frac{\partial}{\partial A}
+\frac{2a-A(1+u)}{\sqrt{1-A^2}}\right|_{A=A_0}
+=\frac{2aA_0-1-u}{\beta_*^3},
+\qquad \xi(b)=d.
+\tag{203.2}
+$$
+
+**定理 203.2（任意二维处理器的精确超临界二次系数）。** 在定义203.1的参数域上，第202节的首项系数为
+$$
+\boxed{\quad
+\kappa_{\mathrm m}(a,t)=\mathcal J^{-1}.
+\quad}
+\tag{203.3}
+$$
+因此，允许任意固定 CPTP 处理器、任意 $C^1$ 二维程序及秩变化，并保持整个闭半径区间的开延拓上对所有信号输入精确相等时，仍有
+$$
+\mathfrak M_2(a,t;R_0+\delta)
+=I_r(t)+\mathcal J^{-1}\delta^2+o(\delta^2).
+\tag{203.4}
+$$
+该系数由三维环境中的二参数受控等距构造渐近达到。结论仅针对固定允许的 $a,t$；不主张有限正 $\delta$ 下的精确最优成本或跨参数边界的统一余项。
+
+证明。 先构造上界。在（202.5）中将设计参数 $A_0,\beta_*$ 换成 $A,\beta(A)=\sqrt{1-A^2}$，仍取
+$$
+ v=(A,\beta(A))^T,\qquad
+ v^\perp=(-\beta(A),A)^T,
+\tag{203.5}
+$$
+其余 $W_0,W_2,f_s$ 不变。对每个固定的邻近 $(A,s)$，这仍是一个固定处理器。令
+$$
+ x_A(u)=\frac{2a-A(1+u)}{\beta(A)},\quad
+ \gamma_A=\frac{2(a-A)}{\beta(A)},\quad
+ x_{A,s}(u)=\frac{x_A(u)+\gamma_A s}{1-s^2},\quad
+ z_s(u)=\frac{u-s^2}{1-s^2}.
+\tag{203.6}
+$$
+第202节的重叠恒等式逐项成立，故三个非平凡 Schur 系数精确为 $a,a,u$；这里 $A,s$ 都是设计参数，不随 $u$ 变化。
+
+取路径 $A=A_0+h\varepsilon$、$s=\sigma\varepsilon$。程序的实横向分量满足
+$$
+ x_{A,s}(u)=x_*(u)+\varepsilon[h\xi(u)+\gamma\sigma]+O(\varepsilon^2),
+\qquad z_s(u)=u+O(\varepsilon^2).
+\tag{203.7}
+$$
+这些展开及其 $u$ 导数在固定有界参数区间上一致。由（202.11）、（202.12）以及
+$$
+ (1-t^2)\xi'(t)+t\xi(t)=-k,
+\tag{203.8}
+$$
+名义成本的二次型为
+$$
+ Q-I_r(t)=\varepsilon^2\left[
+ c_0\sigma^2+\frac{(t\gamma\sigma-kh)^2}{D_0}
+ \right]+o(\varepsilon^2).
+\tag{203.9}
+$$
+邻近物理上根 $b(\varepsilon)$ 的一阶速度则是
+$$
+ b'(0)=-\nu(dh+\gamma\sigma).
+\tag{203.10}
+$$
+
+令 $N=t\gamma\sigma-kh$。端点速度与成本变成
+$$
+ -\nu\left(\gamma E_0\sigma-\frac d k N\right),
+ \qquad c_0\sigma^2+\frac{N^2}{D_0}.
+\tag{203.11}
+$$
+加权 Cauchy–Schwarz 不等式表明，速度至少一时成本至少 $\mathcal J^{-1}$；等号在
+$$
+ \sigma_*=-\frac{\nu\gamma E_0}{c_0\mathcal J},\qquad
+ N_* =\frac{\nu dD_0}{k\mathcal J},\qquad
+ h_* =\frac{t\gamma\sigma_*-N_*}{k}
+\tag{203.12}
+$$
+处取得。沿此设计路径，$b'(0)=1$。隐函数定理允许选择
+$$
+ b(\varepsilon(\delta))=b+\delta+\delta^2,
+ \qquad \varepsilon(\delta)=\delta+O(\delta^2).
+\tag{203.13}
+$$
+临界下端点保有固定物理余量，所以上、下端点均严格位于实际程序的物理开域中。由（203.9）得到
+$$
+ \limsup_{\delta\downarrow0}
+ \frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+ \le\mathcal J^{-1}.
+\tag{203.14}
+$$
+
+下面证明所有处理器都服从相同下界。考虑任一趋于零的 $\delta_n>0$，以及相应成本距下确界至多 $\delta_n^3$ 的实际程序。按定理201.2替换为同域、同处理器的满秩仿射程序。上界（203.14）保证其名义成本差
+$$
+ g_n=Q_n-I_r(t)=O(\delta_n^2).
+\tag{203.15}
+$$
+只需研究归一成本的任一有限下极限子列。以下作必要的进一步子列选择，并省略指标 $n$。
+
+第202节的紧性与等号稳定性允许选择固定于运行参数的程序坐标，使二结果读出及名义 SLD 满足
+$$
+ H=\operatorname{diag}(1-2e_+,-1+2e_-),\qquad
+ e_\pm=O(\delta^2),\qquad
+ L-\operatorname{diag}(s_+,s_-)=O(\delta).
+\tag{203.16}
+$$
+精确读出给出
+$$
+ z(u)=\frac{u-\alpha}{\beta},\qquad
+ \alpha=e_--e_+,\quad\beta=1-e_+-e_-.
+\tag{203.17}
+$$
+相位可选成名义非对角元为正。第202节证明还给出状态曲线与参数 $\lambda$ 的正规形相差 $O(\delta)$，以及 $\lambda\ge\lambda_*-O(\delta)$。在端点 $b+\delta$ 的正性又给出 $\lambda\le\lambda_*+O(\delta)$：其正规形判别式为
+$$
+ q_\lambda(u)=q_*(u)
+ -\frac{(\lambda^2-\lambda_*^2)(1-tu)^2}{1-t^2},
+\tag{203.18}
+$$
+而 $q_\lambda(b+\delta)\ge-O(\delta)$，$1-tb>0$。因此在固定有界区间上连同导数都有
+$$
+ x(u)=x_*(u)+\delta\chi(u)+o(\delta),\qquad
+ y(u)=O(\delta),\qquad z(u)=u+O(\delta^2),
+\tag{203.19}
+$$
+其中 $\chi$ 为某个实仿射函数；这是有界仿射系数取子列后的极限，不假定最优元随 $\delta$ 可微。
+
+用受控等距表示写处理器，记
+$$
+ C=W_2^\dagger W_0,\quad K=W_0^\dagger W_1,\quad
+ \Delta W=W_2-W_0Z,\quad
+ K_0=\begin{pmatrix}A_0&\beta_*\\0&0\end{pmatrix}.
+\tag{203.20}
+$$
+第202节给出 $K=K_0+O(\delta)$。由 $\operatorname{Re}C=H$，逐列精确计算可得
+$$
+ \|\Delta W e_0\|^2=4e_+,\qquad
+ \|\Delta W e_1\|^2=4e_-.
+\tag{203.21}
+$$
+还需要比 $C-Z=O(\delta)$ 更强的估计。写
+$$
+ C=\begin{pmatrix}1-2e_++ip_0&\zeta\\
+ -\overline\zeta&-1+2e_-+ip_1\end{pmatrix}.
+\tag{203.22}
+$$
+先由（203.21）知 $p_j,\zeta=O(\delta)$。由于 $C$ 为压缩算子，$I-C^\dagger C\succeq0$，其两个对角元非负且为 $O(\delta^2)$，故非对角元亦为 $O(\delta^2)$。将其展开为 $-2\zeta+O(\delta^2)$，得到 $\zeta=O(\delta^2)$。实际系数 $\operatorname{Tr}(\rho_uC)=u$ 为实，结合其导数，给 $p_0,p_1$ 一个二阶线性系统；由（203.17），两个布居及其导数的行列式趋于 $-1/2$，而非对角贡献为 $O(\delta^2)$。所以
+$$
+ C-Z=O(\delta^2),\qquad W_0^\dagger\Delta W=O(\delta^2).
+\tag{203.23}
+$$
+
+将 $W_0$ 的两列视为固定的正交基向量，令 $P_\perp$ 投影到它们的正交补，并设
+$$
+ v=(A_0,\beta_*)^T,\quad w=(-\beta_*,A_0)^T,
+ \qquad T=P_\perp W_1.
+\tag{203.24}
+$$
+有 $T^\dagger T=I-K^\dagger K=ww^T+O(\delta)$。因而 $\|Tv\|=O(\sqrt\delta)$、$\|Tw\|=1+O(\delta)$。取 $f=Tw/\|Tw\|$，则
+$$
+ T=fw^T+O(\sqrt\delta).
+\tag{203.25}
+$$
+这一步保留了秩一边界可能产生的平方根误差，并未假设整个 $W_1$ 一阶可微。定义有界实数的子列极限
+$$
+ d_j=\lim\operatorname{Re}\left\langle
+ \frac{\Delta W e_j}{\delta},f\right\rangle,
+ \qquad j=0,1.
+\tag{203.26}
+$$
+由（203.21）和单位向量投影，
+$$
+ \liminf\frac{e_+}{\delta^2}\ge\frac{d_0^2}{4},\qquad
+ \liminf\frac{e_-}{\delta^2}\ge\frac{d_1^2}{4}.
+\tag{203.27}
+$$
+而（203.23）、（203.25）说明 $\delta^{-1}\Delta W^\dagger W_1$ 的逐项实部趋于 $(d_0,d_1)^Tw^T$。所需量只有两列的范数与内积；更大的环境不会改变这些估计。
+
+将 $K$ 第一行的一阶实部写为
+$$
+ \operatorname{Re}(K_{00},K_{01})
+ =v^T+\delta(\theta w^T-\eta v^T)+o(\delta),
+ \qquad \eta\ge0.
+\tag{203.28}
+$$
+$\eta$ 非负来自行范数不超过一。两个精确相邻系数给出
+$$
+ \operatorname{Tr}(\rho K)=a,\qquad
+ 2\operatorname{Tr}(\rho P_-K)
+ =\operatorname{Tr}(\rho\Delta W^\dagger W_1).
+\tag{203.29}
+$$
+将它们在一阶取实部，利用（203.19）、（203.25）—（203.28），得到
+$$
+ \chi(u)=\left(\theta+\frac{d_0}{2}\right)
+ \frac{1+u-2aA_0}{\beta_*^2}
+ +\frac\gamma2 d_1+\frac{2a}{\beta_*}\eta.
+\tag{203.30}
+$$
+例如第二式先消去 $K$ 下行对迹的贡献，余下为 $\beta_*\chi/2$、第一行变化及 $\tfrac12w^T\rho_*(d_0,d_1)^T$；代入 $A_0h+\beta_*x_*/2=a$ 即得（203.30）。因此，令
+$$
+ h=-\beta_*\left(\theta+\frac{d_0}{2}\right),\quad
+ \sigma=\frac{d_1}{2},\quad J=\frac{2a}{\beta_*}\eta\ge0,
+\tag{203.31}
+$$
+便有
+$$
+ \chi(u)=h\xi(u)+\gamma\sigma+J,
+ \qquad
+ N:=(1-t^2)\chi'(t)+t\chi(t)
+ =-kh+t\gamma\sigma+tJ.
+\tag{203.32}
+$$
+
+最后比较成本和端点。丢弃 Bloch 向量的 $y$ 分量不会增加点态 SLD 信息。具体地，若 $q_{xz}=1-x^2-z^2$、$p=xx'+zz'$，两者的信息差恰为
+$$
+ \frac{(q_{xz}y'+py)^2}{q_{xz}(q_{xz}-y^2)}\ge0.
+\tag{203.33}
+$$
+这里分母在名义点一致为正。对实平面投影使用（202.11），其第一项为 $[\beta^2-(t-\alpha)^2]^{-1}$。由（203.17）展开，再用（203.27）、（203.32），得到
+$$
+ \begin{aligned}
+ \liminf\frac{g}{\delta^2}
+ &\ge\frac{(1+t)d_0^2+(1-t)d_1^2}{2(1-t^2)^2}
+ +\frac{N^2}{D_0}\\
+ &\ge c_0\sigma^2+\frac{N^2}{D_0}.
+ \end{aligned}
+\tag{203.34}
+$$
+在 $u=b+\delta$，状态正性及（203.19）给出
+$$
+ q_*'(b)-2x_*(b)\chi(b)\ge0,
+ \qquad -\nu\chi(b)\ge1.
+\tag{203.35}
+$$
+由（203.32）消去 $h$，可写成
+$$
+ \chi(b)=\gamma E_0\sigma-\frac d kN+E_0J.
+\tag{203.36}
+$$
+因 $E_0>0$、$J\ge0$，故
+$$
+ -\nu\left(\gamma E_0\sigma-\frac d kN\right)
+ \ge1+\nu E_0J\ge1.
+\tag{203.37}
+$$
+将（203.11）的同一加权 Cauchy–Schwarz 不等式用于（203.34）、（203.37），便得归一成本下极限至少 $\mathcal J^{-1}$。结合（203.14），证明（203.3）、（203.4）。整个下界保留任意复相位与环境维数，只在不增成本或扩大可行集合的方向舍去非负项；上界则由实际处理器实现。证毕。
+
+## 追加锚（本行以下为增补区）
