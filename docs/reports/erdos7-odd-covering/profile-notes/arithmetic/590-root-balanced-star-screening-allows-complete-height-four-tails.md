@@ -269,6 +269,14 @@ The same displayed envelope with H=3 has negative minimum joint
 margin. This is failure of this sufficient certificate, not a covering
 example or an impossibility result for actual survivor measures.
 
+[Report591](591-two-centre-star-boundary-closes-complete-height-three-tails.md)
+retains a larger joint boundary, containing both the 3q and 5q stars,
+and changes only the ternary source to complete pure-survivor Haar.
+That construction handles the full H=3 class and gives Haar survivor
+density greater than 1/1000. Its source and coefficients differ from
+the present H=4 construction; the negative H=3 value above remains a
+statement about this report's particular envelope.
+
 The useful remaining work is to control arbitrary mixed exponents
 2 and 3 by their actual shared phases, then construct a continuation
 uniform over additional support primes. Arbitrary pure heights and
