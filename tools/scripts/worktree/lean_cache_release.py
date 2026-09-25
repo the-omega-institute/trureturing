@@ -16,7 +16,7 @@ import tarfile
 import tempfile
 import time
 
-from lean_cache import manifest_mathlib, normalized_platform, partition_path
+from lean_cache import manifest_mathlib, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
 
 ASSET = "lean-build.tgz"
@@ -555,17 +555,20 @@ def fetch(root, partition, writer_owned=False):
 
 def fetch_locked(root, partition, deadline):
     reason = "no published snapshot in this partition"
+    compatible = [partition] + [other for other in seed_partitions(root) if other != partition]
     try:
         releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
             "--json", "tagName,createdAt,isDraft"))
         for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
             tag = release.get("tagName", "")
-            if release.get("isDraft") is not False or not (tag.startswith(prefix(partition)) or legacy_tag(tag)):
+            source = partition if legacy_tag(tag) else next(
+                (candidate for candidate in compatible if tag.startswith(prefix(candidate))), None)
+            if release.get("isDraft") is not False or source is None:
                 continue
             remaining(deadline)
             try:
                 with tempfile.TemporaryDirectory(prefix="lean-fetch-") as temporary:
-                    restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline)
+                    restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline)
                 return 0
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
