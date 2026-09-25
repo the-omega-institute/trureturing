@@ -80,7 +80,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-The column M^(2)_1, ..., M^(2)_5 is 0, 1, 2, 5, 12, so the upper entries of the 4 x 4 matrix are a12 = 0, a13 = 2, a14 = 6, a23 = 2, a24 = 10, a34 = 12, and its Pfaffian is a12 a34 - a13 a24 + a14 a23 = 0 - 20 + 12 = -8. Since 2 divides 2 with m = 1, the printed value is the product of 4km + 2j + k over m = 0 and j = 0, 1, namely 2 times 4, which is 8. The kernel evaluates both sides.
+The column M^(2)_1, ..., M^(2)_5 is 0, 1, 2, 5, 12, so the upper entries of the 4 x 4 matrix are a12 = 0, a13 = 2, a14 = 6, a23 = 2, a24 = 10, a34 = 12, and its Pfaffian is a12 a34 - a13 a24 + a14 a23 = 0 - 20 + 12 = -8. Since 2 divides 2 with m = 1, the printed value is the product of 4ki + 2j + k over i = 0 and j = 0, 1, namely 2 times 4, which is 8. The kernel evaluates both sides.
 
 ## References
 
