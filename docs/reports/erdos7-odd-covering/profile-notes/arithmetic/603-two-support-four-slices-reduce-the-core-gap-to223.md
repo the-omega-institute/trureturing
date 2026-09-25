@@ -236,3 +236,10 @@ No previous head scan is repeated.
 The arbitrary-residue and arbitrary-height conclusions follow from
 the same-source restrictions and continuation proof. The finite
 program does not enumerate all original residue choices.
+
+[Report604](604-fixed-pair-activation-admits-ten-central-square-stars.md)
+uses fixed central phases and an actual pair-activation query grid to
+admit further central-square stars. Its four stronger patterns also
+admit the160-label OC1 slice and separated branches from37. Those
+phase restrictions are essential; this does not reduce the223-label
+phase-unrestricted remainder above.
