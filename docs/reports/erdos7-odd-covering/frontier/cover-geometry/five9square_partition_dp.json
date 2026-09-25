@@ -1,0 +1,55 @@
+{
+  "schema": "five9square-partition-boundary-v1",
+  "status": "COMPLETED_EXACT_PARTITION_DIAGNOSTIC",
+  "scope": "Exact six-leaf partition DP, all6^5 assignments, one declared source corner.",
+  "source_corner": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "outside_primes": [
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "global_layouts": 7776,
+  "strict_minimum": "414845761706/567846054963",
+  "reference_minimum": "-133557956436215235330328257677/212837203661694385213440000000000",
+  "total_regret_upper": "5365048430076122113094630163161/1862325532039825870617600000000000",
+  "uniform_gate_lower": "-8711574065190673896313336557113/2483100709386434494156800000000000",
+  "uniform_positive": false,
+  "reference_minimizer_leaf_assignment": [
+    1,
+    4,
+    4,
+    4,
+    4
+  ],
+  "comparison_cap_gate_at_reference_minimizer": "-934992879319436220663921430853/1489860425631860696494080000000000",
+  "selector_potential_count": 4608,
+  "exact_dp_calls": 292,
+  "elapsed_seconds": 0.7120769999455661,
+  "checks_per_group": {
+    "source_pin": 1,
+    "integer_thinning": 105,
+    "positive_conditional_response": 90112,
+    "all1024_strict_positive": 1,
+    "coherent_partition_witness": 1,
+    "full512_costs_and_menus": 1,
+    "old_theta_comparison_gate_negative": 1,
+    "regret_is_conservative_at_witness": 1,
+    "uniform_strict_value": 1,
+    "complete_gate_value": 1,
+    "partition_lower_value": 1
+  },
+  "check_count": 90226,
+  "dependencies": {
+    "conditional30_fixedstar_augmented_certificate.json": "eb45a79b8943ac56b72153c72472bf40b098366574deb249840ea28f504a9345"
+  },
+  "producer_sha256": "0116d3d691ee2bdf593bb121d8d005c219b883aa07aac3b98eaddce716845191",
+  "new_lean_verification": false,
+  "quantifier_boundary": "All coherent leaf assignments for exact fixed-selector DP extrema, at one comparison source corner and old635 theta. No positive arbitrary-phase theorem, no all-thinning optimality claim; reachability of this comparison corner by finite actual pure tails is not proved."
+}
