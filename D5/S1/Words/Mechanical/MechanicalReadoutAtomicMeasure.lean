@@ -12,6 +12,8 @@ import Mathlib.MeasureTheory.Measure.Support
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Topology.Order.DenselyOrdered
+import Mathlib.Topology.Order.AtTopBotIxx
+import Mathlib.Topology.Instances.ENNReal.Lemmas
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,6 +23,7 @@ namespace D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 
 open Set Finset MeasureTheory
 open scoped BigOperators
+open scoped Topology
 open Classical
 open D5.S1.Words.Mechanical
 open D5.S1.Words.Mechanical.MechanicalReadoutOrder
@@ -366,9 +369,115 @@ theorem geometric_atomic_support (r x : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
     Measure.support_subset_of_isClosed isClosed_Icc (by simpa [mem_ae_iff] using hclosed)
   exact Set.Subset.antisymm hbackward hforward
 
+/-- The left limit of the actual completed readout loses exactly the mass of
+all numbered atoms at the slope. Coincident integer-hit times all contribute. -/
+theorem geometric_readout_left_jump_exact
+    (r x alpha : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
+    (hx : x ∈ Ico (0 : ℝ) 1) (ha : alpha ∈ Ioo (0 : ℝ) 1) :
+    ∃ L : ℝ,
+      Filter.Tendsto (fun beta : ℝ => geometricReadout r beta x)
+        (𝓝[<] alpha) (𝓝 L) ∧
+      L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
+      geometricReadout r alpha x - L =
+        ∑' n : ℕ, if ∃ z : ℤ,
+            (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
+          (1 - r) ^ 2 * r ^ n else 0 := by
+  classical
+  let μ := geometricAtomicMeasure r x
+  letI : IsProbabilityMeasure μ :=
+    (geometric_atomic_probability_and_carrier r x hr0.le hr1 hx).1
+  have hunion : (⋃ beta : Iio alpha, Iic (beta : ℝ)) = Iio alpha := by
+    ext y
+    simp only [Set.mem_iUnion, Set.mem_Iic, Set.mem_Iio]
+    constructor
+    · rintro ⟨beta, hbeta⟩
+      exact lt_of_le_of_lt hbeta beta.property
+    · intro hy
+      obtain ⟨beta, hyb, hba⟩ := exists_between hy
+      exact ⟨⟨beta, hba⟩, hyb.le⟩
+  have hsets : Monotone (fun beta : Iio alpha => Iic (beta : ℝ)) := by
+    intro a b hab
+    exact Iic_subset_Iic.mpr hab
+  have hmeasureSubtype :
+      Filter.Tendsto (fun beta : Iio alpha => μ (Iic (beta : ℝ)))
+        Filter.atTop (𝓝 (μ (Iio alpha))) := by
+    simpa only [Function.comp_def, hunion] using
+      (tendsto_measure_iUnion_atTop (μ := μ) hsets)
+  have hmeasure :
+      Filter.Tendsto (fun beta : ℝ => μ (Iic beta))
+        (𝓝[<] alpha) (𝓝 (μ (Iio alpha))) :=
+    (tendsto_comp_coe_Iio_atTop (a := alpha)).mp hmeasureSubtype
+  have hleftFinite : μ (Iio alpha) ≠ ⊤ := measure_ne_top μ _
+  have hrealMeasure :
+      Filter.Tendsto (fun beta : ℝ => (μ (Iic beta)).toReal)
+        (𝓝[<] alpha) (𝓝 (μ (Iio alpha)).toReal) :=
+    (ENNReal.tendsto_toReal hleftFinite).comp hmeasure
+  have hreadoutNonneg (beta : ℝ) (hbeta : beta ∈ Ico (0 : ℝ) 1) :
+      0 ≤ geometricReadout r beta x := by
+    have h := (geometric_readout_isometric_completion r beta beta hr0.le hr1
+      hbeta hbeta).2.2.1 x 0
+    simpa [weightedPrefix] using h.1
+  have hnear : ∀ᶠ beta : ℝ in 𝓝[<] alpha, beta ∈ Ico (0 : ℝ) 1 := by
+    filter_upwards [Ioo_mem_nhdsLT ha.1] with beta hbeta
+    exact ⟨hbeta.1.le, hbeta.2.trans ha.2⟩
+  have hleft : Filter.Tendsto (fun beta : ℝ => geometricReadout r beta x)
+      (𝓝[<] alpha) (𝓝 (μ (Iio alpha)).toReal) := by
+    apply hrealMeasure.congr'
+    filter_upwards [hnear] with beta hbeta
+    rw [geometric_atomic_apply_Iic r beta x hr0.le hr1
+      ⟨hbeta.1, hbeta.2.le⟩ hx]
+    exact ENNReal.toReal_ofReal (hreadoutNonneg beta hbeta)
+  have hsplit : μ (Iic alpha) = μ (Iio alpha) + μ {alpha} := by
+    have hset : Iic alpha = Iio alpha ∪ {alpha} := by
+      ext y
+      simp [le_iff_lt_or_eq]
+    rw [hset, measure_union]
+    · exact Set.disjoint_left.mpr (by
+        intro y hy hsingleton
+        simp only [Set.mem_singleton_iff] at hsingleton
+        subst y
+        exact (lt_irrefl alpha) hy)
+    · exact measurableSet_singleton alpha
+  have hvalue : geometricReadout r alpha x =
+      (μ (Iio alpha)).toReal + (μ {alpha}).toReal := by
+    have h := congrArg ENNReal.toReal hsplit
+    rw [geometric_atomic_apply_Iic r alpha x hr0.le hr1
+      ⟨ha.1.le, ha.2.le⟩ hx,
+      ENNReal.toReal_ofReal (hreadoutNonneg alpha ⟨ha.1.le, ha.2⟩),
+      ENNReal.toReal_add hleftFinite (measure_ne_top μ {alpha})] at h
+    exact h
+  let f : ℕ → ℝ := fun n =>
+    if ∃ z : ℤ, (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
+      (1 - r) ^ 2 * r ^ n else 0
+  have hf0 (n : ℕ) : 0 ≤ f n := by
+    dsimp [f]
+    split_ifs <;> positivity
+  have hfBound (n : ℕ) : f n ≤ (1 - r) ^ 2 * r ^ n := by
+    dsimp [f]
+    split_ifs
+    · exact le_rfl
+    · exact mul_nonneg (sq_nonneg _) (pow_nonneg hr0.le _)
+  have hgeom : Summable (fun n : ℕ => (1 - r) ^ 2 * r ^ n) := by
+    simpa [mul_comm] using
+      (summable_geometric_of_lt_one hr0.le hr1).mul_left ((1 - r) ^ 2)
+  have hf : Summable f := Summable.of_nonneg_of_le hf0 hfBound hgeom
+  have hmass : μ {alpha} = ENNReal.ofReal (∑' n : ℕ, f n) := by
+    rw [geometric_atomic_singleton_hit r x alpha hx ha]
+    rw [ENNReal.ofReal_tsum_of_nonneg hf0 hf]
+    apply tsum_congr
+    intro n
+    dsimp [f]
+    split_ifs <;> simp
+  have hmassReal : (μ {alpha}).toReal = ∑' n : ℕ, f n := by
+    rw [hmass, ENNReal.toReal_ofReal (tsum_nonneg hf0)]
+  refine ⟨(μ (Iio alpha)).toReal, hleft, rfl, ?_⟩
+  dsimp [f] at hmassReal ⊢
+  linarith [hvalue]
+
 #print axioms geometric_atomic_probability_and_carrier
 #print axioms geometric_atomic_apply_Iic
 #print axioms geometric_atomic_singleton_hit
 #print axioms geometric_atomic_support
+#print axioms geometric_readout_left_jump_exact
 
 end D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
