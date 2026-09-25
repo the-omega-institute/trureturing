@@ -19,6 +19,7 @@ private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx 
   let type ← whnfR (← inferType value)
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
       type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena ||
+      type.isAppOf RegistrationGates.objectDomainArenaName ||
       type.isAppOf RegistrationGates.witnessArenaName then
     return mkAnnotation arenaConstructionMarker value
   return value
@@ -397,7 +398,8 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
-      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
+      let normalized ← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels arenaName)
+      return (← isDefEq legacyArgs[0]! normalized.law) &&
         (← isDefEq legacyArgs[1]! theoremType)
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"

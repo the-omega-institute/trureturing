@@ -111,6 +111,62 @@ elab "observe_escape_records" : command => do
 
 observe_escape_records
 
+def domainArena : ObjectDomainArena where
+  toPrimitiveLawArena := {
+    toArena := Arena.ofFintype Bool
+    signature := cutSignature Bool Bool
+    Law r := (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ r.readout () false = false }
+  Domain := Set Nat
+
+def domainReads : PrimitiveRealization domainArena.signature :=
+  cutRealization (fun b : Bool => b)
+def domainOther : PrimitiveRealization domainArena.signature :=
+  cutRealization (fun _ : Bool => true)
+theorem domainStatement : (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false :=
+  ⟨fun _ _ => rfl, rfl⟩
+theorem domainBridge : LegacyPrimitiveRealization domainArena.toPrimitiveLawArena
+    ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) domainReads := ⟨Iff.rfl⟩
+theorem domainVariation : domainArena.Law domainReads ∧ ¬ domainArena.Law domainOther :=
+  ⟨domainStatement, fun h => Bool.noConfusion h.2⟩
+theorem domainSensitivity : FiniteSlotSensitivity domainArena.toPrimitiveLawArena := by
+  constructor
+  · intro i
+    refine ⟨domainReads, domainOther, ?_, ?_, ?_⟩
+    · intro j ne; cases i; cases j; exact (ne rfl).elim
+    · intro j; exact Fin.elim0 j
+    · exact ⟨fun _ => domainVariation.2, fun _ => domainVariation.1⟩
+  · intro i; exact Fin.elim0 i
+
+elab "observe_object_domain" : command => do
+  let prefix := "register_information_theorem domainStatement in domainArena " ++
+    "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) " ++
+    "primitives domainReads.toPrimitiveBundle realization domainBridge " ++
+    "variation domainVariation sensitivity domainSensitivity "
+  for (label, origin, expected) in #[("infinite_domain", "Set Nat", none),
+      ("wrong_domain", "Nat", some "dtr.escape_from_state")] do
+    let saved ← get
+    modify fun state => { state with messages := {} }
+    let source := prefix ++ "escape from (" ++ origin ++ ") escape continues (open)"
+    let mut failure := ""
+    match Parser.runParserCategory (← getEnv) `command source with
+    | .error message => failure := "parse: " ++ message
+    | .ok command =>
+      try elabCommand command catch error => failure := ← error.toMessageData.toString
+    let row := (TemplateBinding.records (← getEnv)).find? (·.occurrence.key.theoremName == ``domainStatement)
+    let validated := row.any fun row => match row.result with
+      | .declaredValidated _ => true | _ => false
+    if let some row := row then
+      if let .declaredUnresolved diagnostic := row.result then failure := failure ++ diagnostic
+    for message in (← get).messages.toList do
+      if message.severity == .error then failure := failure ++ (← message.data.toString)
+    let ok := match expected with
+      | none => validated && failure.isEmpty && row.any (·.escape.fromObject.any (·.name == ``Set))
+      | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
+    set saved
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
+
+observe_object_domain
+
 
 def nativeArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
