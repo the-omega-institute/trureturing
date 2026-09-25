@@ -8,6 +8,7 @@ import signal
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
@@ -17,12 +18,34 @@ import ci_output
 
 class PresentationTests(unittest.TestCase):
     def test_ci_failure_probe(self):
+        producer = [sys.executable, "-B", "-c",
+                    "for i in range(100000): print(f'information: benchmark [{i+1}/100000]')"]
+        measurements = []
+        with tempfile.TemporaryDirectory() as directory:
+            raw = pathlib.Path(directory) / "console.log"
+            wrapped = [sys.executable, "-B", str(ROOT / "tools/scripts/ci_output.py"),
+                       "--stage", "engineering", "--log", str(raw), "--", *producer]
+            for round_index in range(3):
+                outputs = {}
+                row = {"round": round_index + 1}
+                for mode in (("direct", "summary") if round_index % 2 == 0 else ("summary", "direct")):
+                    started = time.perf_counter()
+                    result = subprocess.run(producer if mode == "direct" else wrapped,
+                                            capture_output=True, timeout=30,
+                                            env={**os.environ, "CI_LOG_INTERVAL_SECONDS": "30"})
+                    row[mode + "_seconds"] = round(time.perf_counter() - started, 6)
+                    row[mode + "_console_bytes"] = len(result.stdout)
+                    self.assertEqual(0, result.returncode, result.stderr)
+                    outputs[mode] = result.stdout
+                self.assertEqual(outputs["direct"], raw.read_bytes())
+                measurements.append(row)
         for index in range(3000):
             print(f"information: CI_LOG_PROBE_ACTIVITY {index}")
         print("warning: CI_LOG_PROBE_WARNING")
         print("  CI_LOG_PROBE_WARNING_DETAIL")
         print("error: CI_LOG_PROBE_ERROR")
         print("  CI_LOG_PROBE_ERROR_DETAIL")
+        print("CI_LOG_PROBE_PERFORMANCE " + json.dumps(measurements))
         self.fail("CI_LOG_PROBE_EXPECTED_FAILURE")
 
     def setUp(self):
