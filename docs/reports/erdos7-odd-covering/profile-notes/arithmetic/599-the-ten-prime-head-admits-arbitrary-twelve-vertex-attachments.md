@@ -258,3 +258,9 @@ actual-domain induction establish the unbounded quantifiers. No
 template scan or original-residue enumeration is repeated.
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/twelve_vertex_attachment_kernel.py
+
+[Report600](600-two-head-coordinates-admit-unbounded-large-prime-entries.md)
+also permits private branches whose entry prime is at least53 and whose
+head-touching labels use two head coordinates. Its additional joint
+blocker fee is summed over all possible entry primes; this relaxes the
+single-head-coordinate interface under an explicit private-branch condition.
