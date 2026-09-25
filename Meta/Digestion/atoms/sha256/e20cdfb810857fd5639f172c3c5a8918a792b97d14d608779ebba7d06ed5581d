@@ -1,0 +1,10 @@
+**出处 55.1（复用与承重增量）。** 观察拓扑的共同核结论直接复用仓库理论和 Lean；Sierpiński 正检验、初始拓扑和乘积拓扑属于经典理论及 Pauly 的表示空间框架。命题 52.2 的 gcd 与 Fourier 计算是既有方法在本读数族中的展开。外部目标固定为 [EYWR18] 的测量设计问题。当前新增的限定答案是：在指定成对谐波类中两对的严格上限、三对的匹配充分性、六维构造的精确下弦增益和稳定秩缺口，以及同一构造在任意有限延迟设计和固定总增益下的精确统计预算。该结果不解决任意光滑测量族的最小维数，不宣称原文的随机标量嵌入保证已经在两个延迟成立，也不把全部原问题结算为已解决。
+
+[^tcs10-repo]: 仓库来源为 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md` 第六至九部，以及 `D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.lean` 中 `partition_inseparable_iff_kernel`、`partitionTopology_eq_of_kernel_iff`。这些结果具有明确的离散值域前件，不承担本文新增的连续观察与噪声结论。
+
+[^tcs10-pauly]: Arno Pauly，*On the topological aspects of the theory of represented spaces*，Computability 5(2), 159–180 (2016)，DOI [10.3233/COM-150049](https://doi.org/10.3233/COM-150049)，作者稿 [arXiv:1204.3763](https://arxiv.org/abs/1204.3763)。核对 §4 的 Sierpiński 值正检验、开集表示与 Proposition 5 的可计算运算，及作者机构的期刊书目信息。期刊正式年份为 2016，在线先行发表于 2015。抽象拓扑连续性与在已指定表示下的可计算性分别使用。本批的概率风险和传感器稳定秩定理不归给该来源。
+
+[^tcs10-eftekhari]: Armin Eftekhari、Han Lun Yap、Michael B. Wakin、Christopher J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，DOI [10.1103/PhysRevE.97.022222](https://doi.org/10.1103/PhysRevE.97.022222)，作者稿 [arXiv:1609.06347v2](https://arxiv.org/abs/1609.06347v2)。核对 §III 的测量族、A1–A3、式 (14)–(16) 及结论部分第二个测量设计问题。原文已区分拓扑嵌入与几何稳定，也分别使用双 Lipschitz 和稳定秩条件。本文没有把这一区分本身计为新发现。所设计的是原定义里的整个基函数族，固定族内的标量系数不改变该族稳定秩。
+
+[^tcs10-design]: `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md` §12 给出四维两谐波提升、所有有限输出维数的下弦裕量障碍、十维五谐波抵消构造及噪声见证。本文减少特定趋极值构造的谐波数量，同时明确不同的裕量损失阶；不声称解决固定裕量下最优常数的剩余问题。
+

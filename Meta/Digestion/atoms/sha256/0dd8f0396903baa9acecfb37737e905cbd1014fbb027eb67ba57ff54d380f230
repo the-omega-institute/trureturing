@@ -1,0 +1,15 @@
+**定理 36.1（一般保单位比特信道的稳健 Choi 下界）。** 对任意保单位单比特信道 $\Phi$，用归一化 $|\Omega\rangle$ 定义 Choi 态 $J_\Phi=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)$。令
+\[
+ a_\Phi=4\lambda_{\min}(J_\Phi)\in[0,1].
+\]
+则
+\[
+ \eta^{\rm c}(\Phi)\le1-a_\Phi.
+\]
+若 Hermitian 估计 $\widehat J$ 满足 $\|\widehat J-J_\Phi\|\le\varepsilon$，则可安全使用
+\[
+ a_{\rm cert}=\max\{0,\min\{1,4(\lambda_{\min}(\widehat J)-\varepsilon)\}\},
+ \qquad \eta^{\rm c}(\Phi)\le1-a_{\rm cert}.
+\]
+这给所有辅助维数相同的上界，不要求待估信道属于双轴分解族。
+

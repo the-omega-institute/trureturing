@@ -1,0 +1,22 @@
+**定理 9.5（黄金旋转的匹配平方根状态律）。** 令
+\[
+ \varphi=\frac{1+\sqrt5}{2},\qquad \alpha=\varphi^{-1},\qquad
+ 0<\varepsilon<1/2.
+\]
+对 $s=S_{H,\varepsilon}(\alpha)$ 有
+\[
+ H<s+3a_\varepsilon s^2,
+\]
+并且
+\[
+ s<2\max\left\{2,\frac{2\pi}{\varepsilon},
+                      \sqrt{\frac{4\pi H}{\varepsilon}}\right\}.
+\]
+因此在固定 $\varepsilon$、$H\to\infty$ 的口径下，
+\[
+ S_{H,\varepsilon}(\varphi^{-1})=\Theta_\varepsilon(\sqrt H),\qquad
+ \left\lceil\log_2 S_{H,\varepsilon}(\varphi^{-1})\right\rceil
+ =\tfrac12\log_2 H+O_\varepsilon(1).
+\]
+这里的比特数仅指定义 8.1 中的当前内部状态。
+

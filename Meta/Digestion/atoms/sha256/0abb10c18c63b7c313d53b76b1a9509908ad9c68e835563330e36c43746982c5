@@ -1,0 +1,7 @@
+**定义 26.1（按热参考中心化的量子相互作用）。** 取有限维子系统 $A,B$，$H=H_A\otimes I+I\otimes H_B+V$，各 Hamilton 算子自伴。令 $\tau_B\succ0$ 为满足 $[H_B,\tau_B]=0$ 的密度矩阵，例如有限温度 Gibbs 态。定义
+\[
+ V_A=\operatorname{Tr}_B[V(I\otimes\tau_B)],\quad
+ H_A^*=H_A+V_A,\quad W=V-V_A\otimes I,\quad g_q=\|W\|.
+\]
+$V_A$ 自伴，$\operatorname{Tr}_B[W(I\otimes\tau_B)]=0$。记 $\Phi_t(\rho)=\operatorname{Tr}_B(e^{-itH}(\rho\otimes\tau_B)e^{itH})$，并以 $\mathcal U_t^A$ 表示 $H_A^*$ 的酉信道。本节取 $\hbar=1$，迹范数不含二分之一。
+
