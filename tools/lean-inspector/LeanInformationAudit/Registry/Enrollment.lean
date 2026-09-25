@@ -909,13 +909,14 @@ def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Na
 
 /-- Extraction helper types satisfy the same E2/E6 judgment. This examines a
 helper's type, not the selected template body, and returns its actual work debit. -/
-def checkExtractionType (type : Expr) (available : Nat)
+def checkExtractionType (theoremName : Name) (type : Expr) (available : Nat)
     (constructors : Array Name := #[]) : MetaM (Array DependencyIdentity × Nat) := do
   let limit := min 524288 available
+  let identity ← RegistrationGates.argumentIdentityState theoremName limit
   let action : CompileM Unit := do
     for ast in constructors do checkConstructorType ast
     discard <| compileExpr (← eraseInput type) 0 true
-  let (_, state) ← action.run { remaining := limit }
+  let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity }
   return (state.dependencies, limit - state.remaining)
 
 end LeanInformationAudit.TemplateAudit
