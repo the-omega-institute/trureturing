@@ -23,10 +23,7 @@ internal sealed class PronkoFredkinAntiAdjointExpansionDocument : IScribeDocumen
             DefinitionNode("claim", "Pronko's Conjecture 2", ClaimDefinitionFormula(),
                 "For every number of sites N there is a single complex coefficient family gamma indexed by Fin of the floor of (N + 1)/2, which equals the ceiling of N/2. The Lean index k corresponds to the printed index k + 1, so the exponent k of the iterated map is the printed exponent k - 1. For the raising sign the iterated map sends X to the anti-adjoint action of totalPlus N on the anti-adjoint action of totalMinus N on X, applied to totalPlus N; for the lowering sign the two total spin operators are exchanged. Sigma N 1 and Sigma N (-1) are the operators of equation (3.1). The printed table lists the coefficients for N from 3 to 10; the statement covers every natural number N."),
             TheoremNode("result", "Conjecture 2 holds", ClaimFormula(),
-                "For spin words y and x let b count the sites with y up and x down, and c the sites with y down and x up. Let Z_r be the matrix with entry one exactly when b = r + 1 and c = r, and E_s the matrix with entry one exactly when b = c = s. Summing single-site flips site by site gives the anticommutator identities {S^-, Z_r} = 2(r + 1) E_(r+1) + (N - 2r) E_r and {S^+, E_s} = 2(s + 1) Z_s + (N - 2s + 1) Z_(s-1), where the counts of sites with equal letters combine to N - b - c. Composing them, the map X to {S^+, {S^-, X}} sends Z_r to 4(r + 1)(r + 2) Z_(r+1) + 2(r + 1)(2N - 4r - 1) Z_r + (N - 2r)(N - 2r + 1) Z_(r-1). The case s = 0 gives S^+ = Z_0 because E_0 is the identity, and the leading coefficient 4(r + 1)(r + 2) is nonzero, so by induction on r each Z_r lies in the span of the first r + 1 iterates of that map applied to S^+. Reading the Kronecker sum (3.1) entrywise gives Sigma^+(y, x) = 1 exactly when b - c = 1, and b + c is at most N, so Sigma^+ is the sum of Z_r over r below the ceiling of N/2 and lies in the span of the first ceiling of N/2 iterates, which yields the coefficients. Transposition exchanges sigmaPlus with sigmaMinus, maps Sigma^+ to Sigma^- and each raising iterate to the corresponding lowering iterate, so the same coefficients give the lowering identity.",
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("pronko-2025-fredkin-anti-adjoint-expansion"),
-                    ResolutionKind.Proved))),
+                "For spin words y and x let b count the sites with y up and x down, and c the sites with y down and x up. Let Z_r be the matrix with entry one exactly when b = r + 1 and c = r, and E_s the matrix with entry one exactly when b = c = s. Summing single-site flips site by site gives the anticommutator identities {S^-, Z_r} = 2(r + 1) E_(r+1) + (N - 2r) E_r and {S^+, E_s} = 2(s + 1) Z_s + (N - 2s + 1) Z_(s-1), where the counts of sites with equal letters combine to N - b - c. Composing them, the map X to {S^+, {S^-, X}} sends Z_r to 4(r + 1)(r + 2) Z_(r+1) + 2(r + 1)(2N - 4r - 1) Z_r + (N - 2r)(N - 2r + 1) Z_(r-1). The case s = 0 gives S^+ = Z_0 because E_0 is the identity, and the leading coefficient 4(r + 1)(r + 2) is nonzero, so by induction on r each Z_r lies in the span of the first r + 1 iterates of that map applied to S^+. Reading the Kronecker sum (3.1) entrywise gives Sigma^+(y, x) = 1 exactly when b - c = 1, and b + c is at most N, so Sigma^+ is the sum of Z_r over r below the ceiling of N/2 and lies in the span of the first ceiling of N/2 iterates, which yields the coefficients. Transposition exchanges sigmaPlus with sigmaMinus, maps Sigma^+ to Sigma^- and each raising iterate to the corresponding lowering iterate, so the same coefficients give the lowering identity.")),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation"))]));
 
@@ -36,12 +33,10 @@ internal sealed class PronkoFredkinAntiAdjointExpansionDocument : IScribeDocumen
             AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))),
             DescribeRole.Definition);
 
-    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose,
-        OpenProblemResolutionClaim resolution) =>
+    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("pronko-antiadjoint-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
-            resolution);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula ComplexNumbers() => Seq(Mathbb, Grp(F.Id("C")));
