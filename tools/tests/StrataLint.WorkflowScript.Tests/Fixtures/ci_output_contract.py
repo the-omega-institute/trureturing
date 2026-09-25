@@ -61,6 +61,25 @@ class PresentationTests(unittest.TestCase):
         self.presenter.line("ordinary progress after tests\n", "stdout")
         self.assertNotIn("ordinary progress after tests", self.output.getvalue())
 
+    def test_xunit_captured_boundaries_preserve_the_outer_step_and_failure_details(self):
+        prefix = "[xUnit.net 00:00:02.60]       "
+        for boundaries in [
+            ['STAGE_STEP {"name":"restore","status":"started"}'],
+            ['STAGE_PROCESS {"child_exit":{"code":0}}'],
+            ['CI_DIAGNOSTIC_BEGIN stage=current', 'CI_DIAGNOSTIC_END'],
+        ]:
+            with self.subTest(boundaries=boundaries):
+                output = io.StringIO()
+                presenter = ci_output.Presenter("engineering", output)
+                presenter.line('STAGE_STEP {"name":"tests","status":"started"}\n', "stdout")
+                for line in ["Tests.ActualFailure [FAIL]", *boundaries,
+                             "unlabelled assertion detail", "  at Tests.ActualFailure()"]:
+                    presenter.line(prefix + line + "\n", "stdout")
+                self.assertIn(prefix + "unlabelled assertion detail", output.getvalue())
+                self.assertIn(prefix + "  at Tests.ActualFailure()", output.getvalue())
+                self.assertEqual("tests", presenter.step)
+                self.assertEqual(0, presenter.block_depth.get("stdout", 0))
+
     def test_periodic_progress_tracks_work_done_not_just_log_volume(self):
         self.presenter.line('STAGE_STEP {"name":"lean-report","status":"started"}\n', "stdout")
         self.presenter.line("ℹ [348/1000] Built D5.Foo\n", "stdout")

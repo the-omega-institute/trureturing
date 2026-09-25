@@ -105,11 +105,11 @@ class Presenter:
             # xUnit frames every line of a failing test's captured output.
             # Classify its payload, but retain the original diagnostic text.
             plain = plain[wrapped.end():]
-        if plain.startswith("CI_DIAGNOSTIC_BEGIN "):
+        if not wrapped and plain.startswith("CI_DIAGNOSTIC_BEGIN "):
             self.block_depth[stream] = self.block_depth.get(stream, 0) + 1
             self.diagnostic(line, "error")
             return
-        if plain == "CI_DIAGNOSTIC_END" and self.block_depth.get(stream, 0) > 0:
+        if not wrapped and plain == "CI_DIAGNOSTIC_END" and self.block_depth.get(stream, 0) > 0:
             self.emit(line)
             self.block_depth[stream] -= 1
             self.failed_operation.discard(stream)
@@ -133,12 +133,12 @@ class Presenter:
         if isinstance(value, dict) and (not self.in_detail(stream) or EVENT.match(plain)
                                        or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level"))
                                        or "scope" in value and "stage" in value):
-            if event == "STAGE_STEP" and isinstance(value.get("name"), str):
+            if not wrapped and event == "STAGE_STEP" and isinstance(value.get("name"), str):
                 self.failed_operation.discard(stream)
                 self.detail[stream] = False
                 self.step = value["name"]
                 self.progress = "unreported"
-            elif event == "STAGE_PROCESS":
+            elif not wrapped and event == "STAGE_PROCESS":
                 # Non-streaming operations emit their process result before
                 # their text. Keep an unsuccessful operation's explanation.
                 child = value.get("child_exit")
