@@ -8,7 +8,7 @@ The infiltration product and its top-degree shuffle stratum are classical and ar
 
 **Definition 1.1 (Overlap infiltrations with multiplicity).**
 
-$$overlapInfiltrations$$
+$$(\forall v,\operatorname{overlapInfiltrations}\left(empty, v\right) = \operatorname{singleton}\left(v\right))\land(\forall u,\operatorname{overlapInfiltrations}\left(u, empty\right) = \operatorname{singleton}\left(u\right))\land\forall a,b,u,v,\operatorname{overlapInfiltrations}\left(\operatorname{cons}\left(a, u\right), \operatorname{cons}\left(b, v\right)\right) = \operatorname{append}\left(\operatorname{append}\left(\operatorname{mapCons}\left(a, \operatorname{overlapInfiltrations}\left(u, \operatorname{cons}\left(b, v\right)\right)\right), \operatorname{mapCons}\left(b, \operatorname{overlapInfiltrations}\left(\operatorname{cons}\left(a, u\right), v\right)\right)\right), \operatorname{ifThenElse}\left(a = b, \operatorname{mapCons}\left(a, \operatorname{overlapInfiltrations}\left(u, v\right)\right), empty\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.overlapInfiltrations` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For words left,right over a decidable alphabet, overlapInfiltrations recursively
 
 **Definition 1.2 (Ordinary shuffles with multiplicity).**
 
-$$ordinaryShuffles$$
+$$(\forall v,\operatorname{ordinaryShuffles}\left(empty, v\right) = \operatorname{singleton}\left(v\right))\land(\forall u,\operatorname{ordinaryShuffles}\left(u, empty\right) = \operatorname{singleton}\left(u\right))\land\forall a,b,u,v,\operatorname{ordinaryShuffles}\left(\operatorname{cons}\left(a, u\right), \operatorname{cons}\left(b, v\right)\right) = \operatorname{append}\left(\operatorname{mapCons}\left(a, \operatorname{ordinaryShuffles}\left(u, \operatorname{cons}\left(b, v\right)\right)\right), \operatorname{mapCons}\left(b, \operatorname{ordinaryShuffles}\left(\operatorname{cons}\left(a, u\right), v\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.ordinaryShuffles` (`✓ std3`).
 
@@ -32,7 +32,7 @@ ordinaryShuffles recursively interleaves the two words using the left-only and r
 
 **Theorem 1.3 (The actual infiltration product identity).**
 
-$$scatteredCountmuleqsumoverlapInfiltrations$$
+$$\forall left,right,source, \operatorname{scatteredCount}\left(left, source\right) \cdot \operatorname{scatteredCount}\left(right, source\right) = \operatorname{sum}\left(\operatorname{overlapInfiltrations}\left(left, right\right), \operatorname{lambda}\left(merged, \operatorname{scatteredCount}\left(merged, source\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.scatteredCount_mul_eq_sum_overlapInfiltrations` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ For all left,right,source over a decidable alphabet, scatteredCount left source 
 
 **Theorem 1.4 (The top-length stratum is shuffle).**
 
-$$overlapInfiltrationsfiltertoplength$$
+$$\forall left,right, \operatorname{filterLength}\left(\operatorname{overlapInfiltrations}\left(left, right\right), \operatorname{length}\left(left\right) + \operatorname{length}\left(right\right)\right) = \operatorname{ordinaryShuffles}\left(left, right\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.overlapInfiltrations_filter_top_length` (`✓ std3`). ∎
 

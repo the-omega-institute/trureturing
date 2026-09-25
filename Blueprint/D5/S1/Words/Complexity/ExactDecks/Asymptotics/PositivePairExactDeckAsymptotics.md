@@ -8,7 +8,7 @@ The lower estimate comes from actual equal-length positive-word constructions. F
 
 **Theorem 1.1 (Full exact k-deck Conjecture 8.1 asymptotics).**
 
-$$actualexactKDeckImageweightedLyndonisTheta$$
+$$\forall A, k, \operatorname{FiniteLinearOrder}\left(A\right), \operatorname{card}\left(A\right) \geq 2, k \geq 1 \Rightarrow \operatorname{RealIsTheta}\left(atTop, \operatorname{lambda}\left(n, \operatorname{castR}\left(\operatorname{card}\left(\operatorname{exactKDeckImage}\left(A, k, n\right)\right)\right)\right), \operatorname{lambda}\left(n, \operatorname{pow}\left(\operatorname{castR}\left(n\right), \operatorname{weightedLyndonExponent}\left(A, k\right) - 1\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta` (`✓ std3`). ∎
 

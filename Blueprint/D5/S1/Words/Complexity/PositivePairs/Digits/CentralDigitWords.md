@@ -8,7 +8,7 @@ This module defines the base-2^r digit arrays, literal powered blocks, complete 
 
 **Definition 1.1 (Degree-dependent digit base).**
 
-$$digitBase$$
+$$\forall r,\operatorname{digitBase}\left(r\right) = \operatorname{pow}\left(2, r\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.digitBase` (`✓ std3`).
 
@@ -22,7 +22,7 @@ digitBase r is 2^r.
 
 **Definition 1.2 (Complete direction-scale digit arrays).**
 
-$$DigitArray$$
+$$\forall A,r,t,\operatorname{DigitArray}\left(A, r, t\right) = \operatorname{functions}\left(\operatorname{Fin}\left(\operatorname{actualLyndonCount}\left(A, r\right)\right), \operatorname{Fin}\left(t\right), \operatorname{Fin}\left(\operatorname{digitBase}\left(r\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.DigitArray` (`✓ std3`).
 
@@ -36,7 +36,7 @@ DigitArray A r t is the function space assigning a base-2^r digit to every selec
 
 **Definition 1.3 (A direction's encoded natural).**
 
-$$digitValue$$
+$$\forall r,t,digits,direction,\operatorname{digitValue}\left(r, t, digits, direction\right) = \operatorname{NatOfDigits}\left(\operatorname{digitBase}\left(r\right), \operatorname{ofFn}\left(\operatorname{Fin}\left(t\right), \operatorname{lambda}\left(scale, \operatorname{nat}\left(\operatorname{apply}\left(digits, direction, scale\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.digitValue` (`✓ std3`).
 
@@ -50,7 +50,7 @@ digitValue reads the t digits of one direction in base digitBase r using Nat.ofD
 
 **Definition 1.4 (An actual positive-word digit block).**
 
-$$digitBlock$$
+$$\forall r,direction,scale,digit,\operatorname{digitBlock}\left(r, direction, scale, digit\right) = \operatorname{append}\left(\operatorname{repeatedWord}\left(digit, \operatorname{literalPowerWord}\left(\operatorname{pow}\left(2, scale\right), \operatorname{left}\left(\operatorname{positivePairWords}\left(r, \operatorname{selectedDirection}\left(r, direction\right)\right)\right)\right)\right), \operatorname{repeatedWord}\left(\operatorname{digitBase}\left(r\right) - 1 - digit, \operatorname{literalPowerWord}\left(\operatorname{pow}\left(2, scale\right), \operatorname{right}\left(\operatorname{positivePairWords}\left(r, \operatorname{selectedDirection}\left(r, direction\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.digitBlock` (`✓ std3`).
 
@@ -64,7 +64,7 @@ For a selected pair (u,v), scale s, and digit j, digitBlock concatenates j copie
 
 **Definition 1.5 (The complete multi-scale positive word).**
 
-$$multiScaleWord$$
+$$\forall r,t,digits,\operatorname{multiScaleWord}\left(r, t, digits\right) = \operatorname{flatten}\left(\operatorname{ofFn}\left(\operatorname{Fin}\left(\operatorname{actualLyndonCount}\left(A, r\right)\right), \operatorname{lambda}\left(direction, \operatorname{flatten}\left(\operatorname{ofFn}\left(\operatorname{Fin}\left(t\right), \operatorname{lambda}\left(scale, \operatorname{digitBlock}\left(r, direction, scale, \operatorname{apply}\left(digits, direction, scale\right)\right)\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.multiScaleWord` (`✓ std3`).
 
@@ -78,7 +78,7 @@ multiScaleWord concatenates every digitBlock in direction-major, scale-minor ord
 
 **Definition 1.6 (The zero-digit reference word).**
 
-$$referenceWord$$
+$$\forall r,t,\operatorname{referenceWord}\left(r, t\right) = \operatorname{multiScaleWord}\left(r, t, \operatorname{lambda}\left(direction, \operatorname{lambda}\left(scale, 0\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.referenceWord` (`✓ std3`).
 
@@ -92,7 +92,7 @@ referenceWord A r t is multiScaleWord at the all-zero digit array, hence uses th
 
 **Definition 1.7 (Common-length coefficient).**
 
-$$baseLength$$
+$$\forall A,r,\operatorname{baseLength}\left(A, r\right) = \left(\operatorname{digitBase}\left(r\right) - 1\right) \cdot \operatorname{sum}\left(\operatorname{Fin}\left(\operatorname{actualLyndonCount}\left(A, r\right)\right), \operatorname{lambda}\left(direction, \operatorname{length}\left(\operatorname{left}\left(\operatorname{positivePairWords}\left(r, \operatorname{selectedDirection}\left(r, direction\right)\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.baseLength` (`✓ std3`).
 

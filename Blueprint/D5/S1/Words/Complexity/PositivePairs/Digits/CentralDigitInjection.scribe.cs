@@ -25,7 +25,52 @@ internal sealed class PositivePairsDigitsCentralDigitInjectionDocument : IScribe
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement())),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement()
+    {
+        var r = F.Id("r");
+        var t = F.Id("t");
+        var direction = F.Id("direction");
+        var digits = F.Id("digits");
+        var pattern = F.Id("pattern");
+        var count = Call("actualLyndonCount", F.Id("A"), r);
+        var selected = Call("selectedDirection", r, direction);
+        var pair = Call("positivePairWords", r, selected);
+        var left = Call("left", pair);
+        var right = Call("right", pair);
+        var word = Call("multiScaleWord", r, t, digits);
+        var reference = Call("referenceWord", r, t);
+        var leading = Call("actualLeadingDifference", r, selected);
+        var lowerCount = Call("scatteredCount", pattern, word);
+        var referenceCount = Call("scatteredCount", pattern, reference);
+        var coefficientSum = Call("sum", Call("Fin", count),
+            Call("lambda", direction,
+                Multiply(Call("castQ", Call("digitValue", r, t, digits, direction)),
+                    Call("coeff", leading, Call("ofList", pattern)))));
+        return Seq(Forall, Sp, F.Id("A"), Comma, r, Comma, t, Comma,
+            F.D(2), Leq, Sp, r, Rightarrow,
+            Call("LinearIndependent", F.Id("Q"),
+                Call("lambda", direction, leading)), Land,
+            Open, Forall, Sp, direction, InMacro, Call("Fin", count), Comma,
+            Open, left, Neq, Sp, F.Id("empty"), Land, Sp, right, Neq,
+            Sp, F.Id("empty"), Land,
+            Equal(Call("length", left), Call("length", right)), Close, Close, Land,
+            Open, Forall, Sp, digits, Comma, pattern, Comma,
+            Call("length", pattern), Lt, Sp, r, Rightarrow,
+            Equal(lowerCount, referenceCount), Close, Land,
+            Open, Forall, Sp, digits, Comma, pattern, Comma,
+            Equal(Call("length", pattern), r), Rightarrow,
+            Equal(Subtract(Call("castQ", lowerCount), Call("castQ", referenceCount)),
+                coefficientSum), Close, Land,
+            Call("Injective", Call("lambda", digits,
+                Call("cutoffMagnus", r, word))), Land,
+            Equal(Call("card", Call("DigitArray", F.Id("A"), r, t)),
+                Call("pow", Call("digitBase", r), Multiply(t, count))), Land,
+            Forall, Sp, digits, Comma,
+            Equal(Call("length", word), Multiply(Call("baseLength", F.Id("A"), r),
+                Subtract(Call("pow", Num(2), t), Num(1)))));
+    }
 }

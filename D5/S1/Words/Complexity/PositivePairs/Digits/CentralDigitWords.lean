@@ -103,7 +103,7 @@ private theorem agreesBelow_append_and_degree_add
   have magnusAppend (left right : List A) :
       rationalMagnus (left ++ right) =
         rationalMagnus left * rationalMagnus right := by
-    simp [rationalMagnus, magnusPolynomial_append]
+    simp [rationalMagnus, magnusPolynomial, List.prod_append]
   have coeffEmpty (source : List A) : (rationalMagnus source).coeff 1 = 1 := by
     have hcount :
         D5.S1.Words.Complexity.VivionBinomialConverseFails.scatteredCount

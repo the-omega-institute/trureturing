@@ -32,7 +32,38 @@ internal sealed class LyndonBracketsLyndonOrderDocument : IScribeDocumentDefinit
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "IsLyndon" => Seq(Forall, Sp, F.Id("w"), Comma, Sp,
+            Call("IsLyndon", F.Id("w")), Iff, Sp, F.Id("w"), Neq,
+            Sp, F.Id("empty"),
+            Land, Forall, Sp, F.Id("u"), Comma, F.Id("v"), Comma,
+            F.Id("u"), Neq, Sp, F.Id("empty"), Land, Sp, F.Id("v"), Neq,
+            Sp, F.Id("empty"),
+            Land, Sp, Equal(F.Id("w"), Call("append", F.Id("u"), F.Id("v"))),
+            Rightarrow, Sp, F.Id("w"), Lt,
+            Call("append", F.Id("v"), F.Id("u"))),
+        "isLyndon_iff_lt_suffix" => Seq(Forall, Sp, F.Id("w"), Comma,
+            Call("IsLyndon", F.Id("w")), Iff, Sp, F.Id("w"), Neq,
+            Sp, F.Id("empty"),
+            Land, Forall, Sp, F.Id("v"), Comma, F.Id("v"), Neq,
+            Sp, F.Id("empty"),
+            Land, Call("ProperSuffix", F.Id("v"), F.Id("w")), Rightarrow,
+            Sp, F.Id("w"), Lt, Sp, F.Id("v")),
+        "isLyndon_append" => Seq(Forall, Sp, F.Id("u"), Comma,
+            F.Id("v"), Comma, Call("IsLyndon", F.Id("u")), Land,
+            Call("IsLyndon", F.Id("v")), Land, Sp, F.Id("u"), Lt,
+            Sp, F.Id("v"),
+            Rightarrow, Call("IsLyndon", Call("append", F.Id("u"), F.Id("v")))),
+        "exists_lyndon_suffix_cut" => Seq(Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow, Exists, Sp,
+            F.Id("i"), Comma, F.D(0), Lt, Sp, F.Id("i"), Lt,
+            Call("length", F.Id("w")), Land,
+            Call("IsLyndon", Call("drop", F.Id("w"), F.Id("i")))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

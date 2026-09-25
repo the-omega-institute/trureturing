@@ -69,7 +69,7 @@ theorem full_positivePair_ratio_filtration [Finite A]
   have rationalMagnus_append (left right : List A) :
       rationalMagnus (left ++ right) =
         rationalMagnus left * rationalMagnus right := by
-    simp [rationalMagnus, magnusPolynomial_append]
+    simp [rationalMagnus, magnusPolynomial, List.prod_append]
   have constant_coeff (source : List A) :
       (rationalMagnus source).coeff 1 = 1 := by
     induction source with
@@ -225,7 +225,7 @@ theorem cutoffMagnus_cancellation [Finite A] :
   have append (r : ℕ) (left right : List A) :
       cutoffMagnus r (left ++ right) =
         cutoffMul r (cutoffMagnus r left) (cutoffMagnus r right) := by
-    simp only [cutoffMagnus, magnusPolynomial_append, map_mul,
+    simp only [cutoffMagnus, magnusPolynomial, List.map_append, List.prod_append, map_mul,
       cutoffRestriction_mul]
   have emptyCoeff (r : ℕ) (source : List A) :
       cutoffMagnus r source ⟨1, by simp⟩ = 1 := by

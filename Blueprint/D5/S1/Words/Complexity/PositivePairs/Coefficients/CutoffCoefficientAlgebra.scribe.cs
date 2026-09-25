@@ -56,7 +56,92 @@ internal sealed class PositivePairsCoefficientsCutoffCoefficientAlgebraDocument 
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration)
+    {
+        var r = F.Id("r");
+        var p = F.Id("p");
+        var q = F.Id("q");
+        var c = F.Id("c");
+        var n = F.Id("n");
+        var w = F.Id("w");
+        var d = F.Id("d");
+        var e = F.Id("e");
+        var one = Call("cutoffOne", r);
+        var inverse = Call("cutoffGeometricInverse", r, c);
+        return declaration switch
+        {
+            "RationalWordPolynomial" => Equal(Call("RationalWordPolynomial", F.Id("A")),
+                Call("MonoidAlgebra", F.Id("Q"), Call("FreeMonoid", F.Id("A")))),
+            "toRationalWordPolynomial" => Seq(Forall, Sp, p, Comma,
+                Equal(Call("toRationalWordPolynomial", p),
+                    Call("mapCoefficients", F.Id("castZQ"), p))),
+            "CutoffWord" => Seq(Forall, Sp, F.Id("A"), Comma, r, Comma,
+                Equal(Call("CutoffWord", F.Id("A"), r),
+                    Call("subtype", w, Seq(Call("length", w), Leq, Sp, r)))),
+            "CutoffCoefficients" => Seq(Forall, Sp, F.Id("A"), Comma, r,
+                Comma, Equal(Call("CutoffCoefficients", F.Id("A"), r),
+                    Call("functions", Call("CutoffWord", F.Id("A"), r), F.Id("Q")))),
+            "cutoffRestriction" => Seq(Forall, Sp, r, Comma, p, Comma, w,
+                Comma, Call("length", w), Leq, Sp, r, Rightarrow,
+                Equal(Call("cutoffRestriction", r, p, w), Call("coeff", p, w))),
+            "cutoffLift" => Seq(Forall, Sp, r, Comma, p, Comma, w,
+                Comma, Equal(Call("coeff", Call("cutoffLift", r, p), w),
+                    Call("ifThenElse", Seq(Call("length", w), Leq, Sp, r),
+                        Call("apply", p, w), Num(0)))),
+            "cutoffMul" => Seq(Forall, Sp, r, Comma, p, Comma, q, Comma, w,
+                Comma, Equal(Call("cutoffMul", r, p, q, w),
+                    Call("sum", Call("range", Add(Call("length", w), Num(1))),
+                        Call("lambda", F.Id("i"), Multiply(
+                            Call("apply", p, Call("take", w, F.Id("i"))),
+                            Call("apply", q, Call("drop", w, F.Id("i")))))))),
+            "cutoffOne" => Seq(Forall, Sp, r, Comma,
+                Equal(one, Call("cutoffRestriction", r, Num(1)))),
+            "cutoffRestriction_mul" => Seq(Forall, Sp, r, Comma, p,
+                Comma, q, Comma,
+                Equal(Call("cutoffRestriction", r, Multiply(p, q)),
+                    Call("cutoffMul", r, Call("cutoffRestriction", r, p),
+                        Call("cutoffRestriction", r, q)))),
+            "VanishesBelow" => Seq(Forall, Sp, r, Comma, d, Comma, p,
+                Comma, Call("VanishesBelow", r, d, p), Iff,
+                Forall, Sp, w, InMacro, Call("CutoffWord", F.Id("A"), r),
+                Comma, Call("length", w), Lt, Sp, d, Rightarrow,
+                Equal(Call("apply", p, w), Num(0))),
+            "cutoffMul_vanishesBelow" => Seq(Forall, Sp, r, Comma, d,
+                Comma, e, Comma, p, Comma, q, Comma,
+                Call("VanishesBelow", r, d, p), Land,
+                Call("VanishesBelow", r, e, q), Rightarrow,
+                Call("VanishesBelow", r, Add(d, e), Call("cutoffMul", r, p, q))),
+            "cutoffPow" => Seq(Forall, Sp, r, Comma, p, Comma, n, Comma,
+                Equal(Call("cutoffPow", r, p, Num(0)), one), Land,
+                Equal(Call("cutoffPow", r, p, Add(n, Num(1))),
+                    Call("cutoffMul", r, p, Call("cutoffPow", r, p, n)))),
+            "cutoffPow_eq_restriction_pow" => Seq(Forall, Sp, r, Comma,
+                p, Comma, n, Comma,
+                Equal(Call("cutoffPow", r, p, n),
+                    Call("cutoffRestriction", r,
+                        Call("pow", Call("cutoffLift", r, p), n)))),
+            "cutoffPow_vanishesBelow" => Seq(Forall, Sp, r, Comma,
+                p, Comma, n, Comma,
+                Call("VanishesBelow", r, Num(1), p), Rightarrow,
+                Call("VanishesBelow", r, n, Call("cutoffPow", r, p, n))),
+            "cutoffGeometricInverse" => Seq(Forall, Sp, r, Comma,
+                c, Comma,
+                Equal(inverse, Call("cutoffRestriction", r,
+                    Call("sum", Call("range", Add(r, Num(1))),
+                        Call("lambda", F.Id("i"),
+                            Call("pow", Call("cutoffLift", r, Subtract(Num(0), c)),
+                                F.Id("i"))))))),
+            "cutoffMul_geometricInverse" => Seq(Forall, Sp, r, Comma,
+                c, Comma, Call("VanishesBelow", r, Num(1), c), Rightarrow,
+                Equal(Call("cutoffMul", r, Add(one, c), inverse), one)),
+            "geometricInverse_cutoffMul" => Seq(Forall, Sp, r, Comma,
+                c, Comma, Call("VanishesBelow", r, Num(1), c), Rightarrow,
+                Equal(Call("cutoffMul", r, inverse, Add(one, c)), one)),
+            _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+        };
+    }
 }

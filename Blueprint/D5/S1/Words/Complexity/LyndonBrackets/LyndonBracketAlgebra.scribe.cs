@@ -38,7 +38,45 @@ internal sealed class LyndonBracketsLyndonBracketAlgebraDocument : IScribeDocume
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "WordPolynomial" => Equal(Call("WordPolynomial", F.Id("A")),
+            Call("MonoidAlgebra", F.Id("Z"), Call("FreeMonoid", F.Id("A")))),
+        "wordMonomial" => Seq(Forall, Sp, F.Id("w"), Comma,
+            Equal(Call("wordMonomial", F.Id("w")),
+                Call("single", Call("ofList", F.Id("w")), Num(1)))),
+        "Homogeneous" => Seq(Forall, Sp, F.Id("p"), Comma, F.Id("n"),
+            Comma, Call("Homogeneous", F.Id("p"), F.Id("n")), Iff,
+            Forall, Sp, F.Id("m"), InMacro, Call("support", F.Id("p")),
+            Comma, Equal(Call("length", F.Id("m")), F.Id("n"))),
+        "HasLeadingWord" => Seq(Forall, Sp, F.Id("p"), Comma, F.Id("w"),
+            Comma, Call("HasLeadingWord", F.Id("p"), F.Id("w")), Iff,
+            Call("Homogeneous", F.Id("p"), Call("length", F.Id("w"))), Land,
+            Equal(Call("coeff", F.Id("p"), Call("ofList", F.Id("w"))), Num(1)),
+            Land, Forall, Sp, F.Id("m"), InMacro, Call("support", F.Id("p")),
+            Comma, F.Id("w"), Leq, Call("toList", F.Id("m"))),
+        "commutator" => Seq(Forall, Sp, F.Id("p"), Comma, F.Id("q"),
+            Comma, Equal(Call("commutator", F.Id("p"), F.Id("q")),
+                Subtract(Multiply(F.Id("p"), F.Id("q")),
+                    Multiply(F.Id("q"), F.Id("p"))))),
+        "standardBracket" => Seq(
+            Equal(Call("standardBracket", F.Id("empty")), Num(0)), Land,
+            Open, Forall, Sp, F.Id("a"), Comma,
+            Equal(Call("standardBracket", Call("singleton", F.Id("a"))),
+                Call("wordMonomial", Call("singleton", F.Id("a")))), Close, Land,
+            Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow,
+            Equal(Call("standardBracket", F.Id("w")),
+                Call("commutator", Call("standardBracket",
+                        Call("standardLeft", F.Id("w"))),
+                    Call("standardBracket", Call("standardRight", F.Id("w")))))),
+        "standardBracket_homogeneous" => Seq(Forall, Sp, F.Id("w"),
+            Comma, Call("Homogeneous", Call("standardBracket", F.Id("w")),
+                Call("length", F.Id("w")))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

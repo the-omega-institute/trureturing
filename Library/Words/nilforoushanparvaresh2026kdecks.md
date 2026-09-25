@@ -105,6 +105,6 @@ outside the searched sources.
 
 The earlier frozen
 `D5/S1/Words/Complexity/VivionBinomialConverseFails` theorem concerns a
-different restricted converse for binomial complexity. Its definitions of
-`scatteredCount` and `PositivePairIndex` are reused here, but its refutation is
-not a proof of Conjecture 8.1 and is not counted as one.
+different restricted converse for binomial complexity. Its definition of
+`scatteredCount` is reused here. `PositivePairIndex` is newly declared in
+`PositivePairFiltration`; the frozen refutation is not a proof of Conjecture 8.1.

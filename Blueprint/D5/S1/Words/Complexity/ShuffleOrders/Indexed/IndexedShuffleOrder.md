@@ -8,7 +8,7 @@ This module iterates the binary fixed-source promotion theorem over a list of fa
 
 **Theorem 1.1 (Ordered Lyndon concatenation is maximal).**
 
-$$evaluateScheduleleflatten$$
+$$\forall factors,schedule,word, (\forall u\in factors,\operatorname{IsLyndon}\left(u\right))\land\operatorname{Pairwise}\left(factors, \operatorname{lambda}\left(u, v, u\geq v\right)\right)\land\operatorname{IsValidSchedule}\left(factors, schedule\right)\land\operatorname{evaluateSchedule}\left(factors, schedule\right) = \operatorname{some}\left(word\right)\Rightarrow word\leq\operatorname{flatten}\left(factors\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedShuffleOrder.evaluateSchedule_le_flatten` (`✓ std3`). ∎
 

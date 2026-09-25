@@ -8,7 +8,7 @@ This module recovers every bounded scattered count from actual Lyndon coordinate
 
 **Theorem 1.1 (Actual Lyndon coordinates recover every bounded count).**
 
-$$scatteredCounteqoflyndoncoordinates$$
+$$\forall A,k,left,right, (\forall v\in\operatorname{ActualLyndonWordsThrough}\left(A, k\right),\operatorname{scatteredCount}\left(v, left\right) = \operatorname{scatteredCount}\left(v, right\right))\Rightarrow\forall w,\operatorname{length}\left(w\right)\leq k\Rightarrow\operatorname{scatteredCount}\left(w, left\right) = \operatorname{scatteredCount}\left(w, right\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/UpperBound/FullLyndonRecovery.scatteredCount_eq_of_lyndon_coordinates` (`✓ std3`). ∎
 

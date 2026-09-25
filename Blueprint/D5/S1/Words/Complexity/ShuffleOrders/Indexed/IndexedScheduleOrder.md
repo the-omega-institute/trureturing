@@ -8,7 +8,7 @@ This module iterates the binary fixed-source promotion theorem over a list of fa
 
 **Definition 1.1 (Indexed source schedules).**
 
-$$IndexedSchedule$$
+$$IndexedSchedule = \operatorname{List}\left(Nat\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.IndexedSchedule` (`✓ std3`).
 
@@ -22,7 +22,7 @@ IndexedSchedule abbreviates List Nat; each entry names a position in the factor 
 
 **Definition 1.2 (Exact occurrence consumption).**
 
-$$IsValidSchedule$$
+$$\forall factors,schedule, \operatorname{IsValidSchedule}\left(factors, schedule\right)\iff\forall i,\operatorname{count}\left(schedule, i\right) = \operatorname{length}\left(\operatorname{getD}\left(factors, i, empty\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.IsValidSchedule` (`✓ std3`).
 
@@ -36,7 +36,7 @@ For factors : List (List A), a schedule is valid when, for every natural source 
 
 **Definition 1.3 (Annotate indexed occurrences).**
 
-$$annotateIndexedFrom$$
+$$\forall used,i,schedule, \operatorname{annotateIndexedFrom}\left(used, empty\right) = empty\land\operatorname{annotateIndexedFrom}\left(used, \operatorname{cons}\left(i, schedule\right)\right) = \operatorname{cons}\left(\operatorname{pair}\left(i, \operatorname{apply}\left(used, i\right)\right), \operatorname{annotateIndexedFrom}\left(\operatorname{update}\left(used, i, \operatorname{apply}\left(used, i\right) + 1\right), schedule\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.annotateIndexedFrom` (`✓ std3`).
 
@@ -50,7 +50,7 @@ Starting from a counter function used : Nat->Nat, annotateIndexedFrom replaces e
 
 **Definition 1.4 (Zero-based indexed annotation).**
 
-$$annotateIndexed$$
+$$\forall schedule,\operatorname{annotateIndexed}\left(schedule\right) = \operatorname{annotateIndexedFrom}\left(\operatorname{lambda}\left(i, 0\right), schedule\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.annotateIndexed` (`✓ std3`).
 
@@ -64,7 +64,7 @@ annotateIndexed starts every source counter at zero.
 
 **Definition 1.5 (Read a fixed indexed occurrence).**
 
-$$readIndexed$$
+$$\forall factors,i,j,\operatorname{readIndexed}\left(factors, \operatorname{pair}\left(i, j\right)\right) = \operatorname{getOptional}\left(\operatorname{getD}\left(factors, i, empty\right), j\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.readIndexed` (`✓ std3`).
 
@@ -78,7 +78,7 @@ readIndexed factors (i,j) reads occurrence j from factors.getD i [] and returns 
 
 **Definition 1.6 (Evaluate a valid indexed schedule).**
 
-$$evaluateSchedule$$
+$$\forall factors,schedule, \operatorname{evaluateSchedule}\left(factors, schedule\right) = \operatorname{ifThenElse}\left(\operatorname{IsValidSchedule}\left(factors, schedule\right), \operatorname{mapM}\left(\operatorname{annotateIndexed}\left(schedule\right), \operatorname{readIndexed}\left(factors\right)\right), none\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.evaluateSchedule` (`✓ std3`).
 

@@ -8,7 +8,7 @@ The alphabet A is an arbitrary linearly ordered type throughout. Lyndon words, s
 
 **Definition 1.1 (Recursive word-theoretic closure).**
 
-$$StandardFactorClosed$$
+$$\operatorname{StandardFactorClosed}\left(empty\right) = False\land(\forall a,\operatorname{StandardFactorClosed}\left(\operatorname{singleton}\left(a\right)\right) = True)\land\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{StandardFactorClosed}\left(w\right)\iff\operatorname{StandardFactorClosed}\left(\operatorname{standardLeft}\left(w\right)\right)\land\operatorname{StandardFactorClosed}\left(\operatorname{standardRight}\left(w\right)\right)\land w<\operatorname{append}\left(\operatorname{standardRight}\left(w\right), \operatorname{standardLeft}\left(w\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading.StandardFactorClosed` (`✓ std3`).
 
@@ -22,7 +22,7 @@ StandardFactorClosed is false on the empty word, true on singletons, and on long
 
 **Theorem 1.2 (Lyndon words satisfy the closure).**
 
-$$isLyndonstandardFactorClosed$$
+$$\forall w,\operatorname{IsLyndon}\left(w\right)\Rightarrow\operatorname{StandardFactorClosed}\left(w\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading.isLyndon_standardFactorClosed` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ Every actual Lyndon word is StandardFactorClosed throughout its recursive longes
 
 **Theorem 1.3 (The bracket is triangular).**
 
-$$standardBrackethasLeadingWord$$
+$$\forall w,\operatorname{StandardFactorClosed}\left(w\right)\Rightarrow\operatorname{HasLeadingWord}\left(\operatorname{standardBracket}\left(w\right), w\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading.standardBracket_hasLeadingWord` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ For every StandardFactorClosed word w, standardBracket w has leading word w with
 
 **Theorem 1.4 (Standard brackets are independent).**
 
-$$standardBracketlinearIndependent$$
+$$\operatorname{LinearIndependent}\left(Z, \operatorname{standardBracket}\left(\operatorname{StandardFactorClosedWords}\left(A\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading.standardBracket_linearIndependent` (`✓ std3`). ∎
 

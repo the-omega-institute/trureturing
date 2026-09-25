@@ -8,7 +8,7 @@ The exponent uses the cardinalities of actual Lyndon-word subtypes at every degr
 
 **Theorem 1.1 (All-radius weighted-Lyndon lower growth).**
 
-$$actualpositiveWordBallweightedLyndonlowerbound$$
+$$\forall A, r, \operatorname{card}\left(A\right)\geq2\land r\geq1\Rightarrow\exists C,N, 0< C\land\forall n\geq N, \operatorname{pow}\left(n, \operatorname{weightedLyndonExponent}\left(A, r\right)\right)\leq C \cdot \operatorname{card}\left(\operatorname{positiveWordBall}\left(A, r, n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/PositivePairBallGrowth.actual_positiveWordBall_weightedLyndon_lower_bound` (`✓ std3`). ∎
 

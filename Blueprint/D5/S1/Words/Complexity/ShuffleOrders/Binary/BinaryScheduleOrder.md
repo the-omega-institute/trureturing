@@ -8,7 +8,7 @@ The source paper uses shuffle products and retains their alignment multiplicitie
 
 **Definition 1.1 (Two source labels).**
 
-$$Side$$
+$$Side = \operatorname{TwoConstructors}\left(first, second\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.Side` (`✓ std3`).
 
@@ -22,7 +22,7 @@ Side is the two-constructor type first|second, with decidable equality; it recor
 
 **Definition 1.2 (Occurrence annotation with offsets).**
 
-$$annotateTwoFrom$$
+$$\forall p,q,s, \operatorname{annotateTwoFrom}\left(p, q, empty\right) = empty\land\operatorname{annotateTwoFrom}\left(p, q, \operatorname{cons}\left(first, s\right)\right) = \operatorname{cons}\left(\operatorname{pair}\left(first, p\right), \operatorname{annotateTwoFrom}\left(p + 1, q, s\right)\right)\land\operatorname{annotateTwoFrom}\left(p, q, \operatorname{cons}\left(second, s\right)\right) = \operatorname{cons}\left(\operatorname{pair}\left(second, q\right), \operatorname{annotateTwoFrom}\left(p, q + 1, s\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.annotateTwoFrom` (`✓ std3`).
 
@@ -36,7 +36,7 @@ Given initial occurrence counters for both sides and a Side list, annotateTwoFro
 
 **Definition 1.3 (Zero-based occurrence annotation).**
 
-$$annotateTwo$$
+$$\forall s,\operatorname{annotateTwo}\left(s\right) = \operatorname{annotateTwoFrom}\left(0, 0, s\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.annotateTwo` (`✓ std3`).
 
@@ -50,7 +50,7 @@ annotateTwo starts annotateTwoFrom at counter zero for both sources.
 
 **Definition 1.4 (Shift occurrence coordinates).**
 
-$$shiftPairOccurrences$$
+$$\forall p,q,i, \operatorname{shiftPairOccurrences}\left(p, q, \operatorname{pair}\left(first, i\right)\right) = \operatorname{pair}\left(first, p + i\right)\land\operatorname{shiftPairOccurrences}\left(p, q, \operatorname{pair}\left(second, i\right)\right) = \operatorname{pair}\left(second, q + i\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.shiftPairOccurrences` (`✓ std3`).
 
@@ -64,7 +64,7 @@ shiftPairOccurrences firstOffset secondOffset adds the matching offset to an ann
 
 **Theorem 1.5 (Offset naturality).**
 
-$$annotateTwoFromadd$$
+$$\forall p,q,u,v,s, \operatorname{annotateTwoFrom}\left(p + u, q + v, s\right) = \operatorname{map}\left(\operatorname{annotateTwoFrom}\left(u, v, s\right), \operatorname{shiftPairOccurrences}\left(p, q\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.annotateTwoFrom_add` (`✓ std3`). ∎
 

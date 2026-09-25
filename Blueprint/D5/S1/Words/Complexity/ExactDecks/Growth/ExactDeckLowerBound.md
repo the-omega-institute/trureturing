@@ -8,7 +8,7 @@ The exact-deck objects formalize the source paper's actual vectors of all length
 
 **Theorem 1.1 (Weighted-Lyndon lower growth for exact decks).**
 
-$$actualexactKDeckImageweightedLyndonlowerbound$$
+$$\forall A, k, \operatorname{card}\left(A\right)\geq2\land k\geq1\Rightarrow\exists C,N, 0< C\land\forall n\geq N, \operatorname{pow}\left(n, \operatorname{weightedLyndonExponent}\left(A, k\right) - 1\right)\leq C \cdot \operatorname{card}\left(\operatorname{exactKDeckImage}\left(A, k, n\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckLowerBound.actual_exactKDeckImage_weightedLyndon_lower_bound` (`✓ std3`). ∎
 

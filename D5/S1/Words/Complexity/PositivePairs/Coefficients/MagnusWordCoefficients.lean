@@ -19,19 +19,8 @@ open D5.S1.Words.Complexity.VivionBinomialConverseFails
 variable {A : Type*}
 
 /-- The actual Magnus polynomial `M(w) = ∏ (1 + X_a)`, in source order. -/
-noncomputable def magnusPolynomial : List A → WordPolynomial A
-  | [] => 1
-  | a :: source =>
-      (1 + wordMonomial [a]) * magnusPolynomial source
-
-/-- The actual Magnus polynomial sends word concatenation to multiplication. -/
-theorem magnusPolynomial_append (left right : List A) :
-    magnusPolynomial (left ++ right) =
-      magnusPolynomial left * magnusPolynomial right := by
-  induction left with
-  | nil => simp [magnusPolynomial]
-  | cons a left ih =>
-      simp only [List.cons_append, magnusPolynomial, ih, mul_assoc]
+noncomputable def magnusPolynomial (source : List A) : WordPolynomial A :=
+  (source.map fun a => 1 + wordMonomial [a]).prod
 
 /-- The coefficient of a word in the actual Magnus polynomial is its frozen
 scattered-subword count. -/
@@ -71,7 +60,8 @@ theorem magnusPolynomial_coeff_scatteredCount [DecidableEq A]
       cases pattern <;>
         simp [magnusPolynomial, scatteredCount, MonoidAlgebra.one_def]
   | cons a source ih =>
-      rw [magnusPolynomial]
+      change ((1 + wordMonomial [a]) * magnusPolynomial source).coeff
+        (FreeMonoid.ofList pattern) = _
       simp only [add_mul, one_mul, MonoidAlgebra.coeff_add,
         Finsupp.add_apply, generator_mul_coeff]
       cases pattern with
@@ -91,16 +81,8 @@ theorem magnusPolynomial_coeff_scatteredCount [DecidableEq A]
           · simp [scatteredCount, h]
 
 /-- The degree-one part of a word is its abelianized letter sum. -/
-noncomputable def wordAbelianization : List A → WordPolynomial A
-  | [] => 0
-  | a :: source => wordMonomial [a] + wordAbelianization source
-
-theorem wordAbelianization_append (left right : List A) :
-    wordAbelianization (left ++ right) =
-      wordAbelianization left + wordAbelianization right := by
-  induction left with
-  | nil => simp [wordAbelianization]
-  | cons a left ih => simp [wordAbelianization, ih, add_assoc]
+noncomputable def wordAbelianization (source : List A) : WordPolynomial A :=
+  (source.map fun a => wordMonomial [a]).sum
 
 theorem wordAbelianization_coeff_singleton [DecidableEq A]
     (source : List A) (b : A) :
@@ -109,7 +91,9 @@ theorem wordAbelianization_coeff_singleton [DecidableEq A]
   induction source with
   | nil => simp [wordAbelianization, scatteredCount]
   | cons a source ih =>
-      rw [wordAbelianization, MonoidAlgebra.coeff_add, Finsupp.add_apply, ih]
+      change (wordMonomial [a] + wordAbelianization source).coeff
+        (FreeMonoid.ofList [b]) = _
+      rw [MonoidAlgebra.coeff_add, Finsupp.add_apply, ih]
       by_cases h : b = a
       · subst b
         simp [wordMonomial, scatteredCount, add_comm]
@@ -128,7 +112,8 @@ theorem wordAbelianization_coeff_empty (source : List A) :
         intro h
         have lists := congrArg FreeMonoid.toList h
         simp at lists
-      simp [wordAbelianization, wordMonomial, hne, ih]
+      change (wordMonomial [a] + wordAbelianization source).coeff 1 = 0
+      simp [wordMonomial, hne, ih]
 
 
 end D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients

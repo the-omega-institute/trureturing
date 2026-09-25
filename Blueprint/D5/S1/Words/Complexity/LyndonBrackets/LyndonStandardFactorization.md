@@ -8,7 +8,7 @@ The alphabet A is an arbitrary linearly ordered type throughout. Lyndon words, s
 
 **Definition 1.1 (The longest-Lyndon-suffix cut).**
 
-$$standardCut$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardCut}\left(w\right) = \operatorname{min}\left(\operatorname{setOf}\left(i, 0, <,  , i, i, <, \operatorname{length}\left(w\right), \operatorname{IsLyndon}\left(\operatorname{drop}\left(w, i\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization.standardCut` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For w of length at least two, standardCut w is the least positive cut index whos
 
 **Definition 1.2 (Standard left factor).**
 
-$$standardLeft$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardLeft}\left(w\right) = \operatorname{take}\left(w, \operatorname{standardCut}\left(w\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization.standardLeft` (`✓ std3`).
 
@@ -32,7 +32,7 @@ standardLeft w hw is w.take (standardCut w hw) for a word whose length is at lea
 
 **Definition 1.3 (Standard right factor).**
 
-$$standardRight$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardRight}\left(w\right) = \operatorname{drop}\left(w, \operatorname{standardCut}\left(w\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization.standardRight` (`✓ std3`).
 
@@ -44,7 +44,7 @@ standardRight w hw is w.drop (standardCut w hw), the longest proper Lyndon suffi
 
 **Theorem 1.4 (The left factor remains Lyndon).**
 
-$$isLyndonstandardLeft$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\land\operatorname{IsLyndon}\left(w\right)\Rightarrow\operatorname{IsLyndon}\left(\operatorname{standardLeft}\left(w\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization.isLyndon_standardLeft` (`✓ std3`). ∎
 

@@ -8,7 +8,7 @@ For each length r, ActualLyndonWord is the subtype of actual words of length r t
 
 **Definition 1.1 (Actual Lyndon words of a fixed length).**
 
-$$ActualLyndonWord$$
+$$\forall A,r, \operatorname{ActualLyndonWord}\left(A, r\right) = \operatorname{subtype}\left(w, \operatorname{length}\left(w\right) = r\land\operatorname{IsLyndon}\left(w\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.ActualLyndonWord` (`✓ std3`).
 
@@ -22,7 +22,7 @@ For linearly ordered A and r:N, ActualLyndonWord A r is the subtype of lists w w
 
 **Definition 1.2 (The actual Lyndon-word count).**
 
-$$actualLyndonCount$$
+$$\forall A,r, \operatorname{actualLyndonCount}\left(A, r\right) = \operatorname{card}\left(\operatorname{ActualLyndonWord}\left(A, r\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.actualLyndonCount` (`✓ std3`).
 
@@ -36,7 +36,7 @@ For finite linearly ordered A, actualLyndonCount A r is Fintype.card (ActualLynd
 
 **Definition 1.3 (Selected independent actual directions).**
 
-$$selectedDirection$$
+$$\forall r,\operatorname{selectedDirection}\left(r\right):\operatorname{Fin}\left(\operatorname{actualLyndonCount}\left(A, r\right)\right)\Rightarrow\operatorname{PositivePairIndex}\left(A, r\right), \operatorname{LinearIndependent}\left(Q, \operatorname{lambda}\left(i, \operatorname{actualLeadingDifference}\left(r, \operatorname{selectedDirection}\left(r, i\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.selectedDirection` (`✓ std3`).
 

@@ -24,7 +24,17 @@ internal sealed class ShuffleOrdersIndexedIndexedShuffleOrderDocument : IScribeD
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("factors"), Comma, F.Id("schedule"), Comma, F.Id("word"),
+                Comma, Sp, Open, Forall, Sp, F.Id("u"), InMacro,
+                Sp, F.Id("factors"), Comma, Call("IsLyndon", F.Id("u")), Close,
+                Land, Call("Pairwise", F.Id("factors"),
+                    Call("lambda", F.Id("u"), F.Id("v"),
+                        Seq(F.Id("u"), Geq, Sp, F.Id("v")))),
+                Land, Call("IsValidSchedule", F.Id("factors"), F.Id("schedule")),
+                Land, Equal(Call("evaluateSchedule", F.Id("factors"), F.Id("schedule")),
+                    Call("some", F.Id("word"))), Rightarrow,
+                Sp, F.Id("word"), Leq, Call("flatten", F.Id("factors"))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

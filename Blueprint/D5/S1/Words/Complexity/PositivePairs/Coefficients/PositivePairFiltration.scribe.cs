@@ -34,7 +34,87 @@ internal sealed class PositivePairsCoefficientsPositivePairFiltrationDocument : 
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "PositivePairIndex" => Seq(Forall, Sp, F.Id("A"), Comma, F.Id("r"),
+            Comma, Equal(Call("PositivePairIndex", F.Id("A"), F.Id("r")),
+                Call("functions", Call("Fin", F.Id("r")), F.Id("A")))),
+        "positivePairWords" => PositivePairWordsStatement(),
+        "cutoffMagnus" => Seq(Forall, Sp, F.Id("r"), Comma,
+            F.Id("source"), Comma,
+            Equal(Call("cutoffMagnus", F.Id("r"), F.Id("source")),
+                Call("cutoffRestriction", F.Id("r"),
+                    Call("toRationalWordPolynomial",
+                        Call("magnusPolynomial", F.Id("source")))))),
+        "positivePairRatio" => Seq(Forall, Sp, F.Id("cutoff"), Comma,
+            F.Id("r"), Comma, F.Id("index"), Comma,
+            Equal(Call("positivePairRatio", F.Id("cutoff"), F.Id("r"),
+                    F.Id("index")),
+                Call("cutoffMul", F.Id("cutoff"),
+                    Call("cutoffMagnus", F.Id("cutoff"),
+                        Call("left", Call("positivePairWords", F.Id("r"),
+                            F.Id("index")))),
+                    Call("cutoffGeometricInverse", F.Id("cutoff"), Subtract(
+                        Call("cutoffMagnus", F.Id("cutoff"), Call("right",
+                            Call("positivePairWords", F.Id("r"), F.Id("index")))),
+                        Call("cutoffOne", F.Id("cutoff"))))))),
+        "full_positivePair_ratio_filtration" => Seq(Forall, Sp,
+            F.Id("cutoff"), Comma, F.Id("r"), Comma, F.Id("index"), Comma,
+            Call("VanishesBelow", F.Id("cutoff"), F.Id("r"), Subtract(
+                Call("cutoffMagnus", F.Id("cutoff"), Call("left",
+                    Call("positivePairWords", F.Id("r"), F.Id("index")))),
+                Call("cutoffMagnus", F.Id("cutoff"), Call("right",
+                    Call("positivePairWords", F.Id("r"), F.Id("index")))))),
+            Land, Call("VanishesBelow", F.Id("cutoff"), F.Id("r"), Subtract(
+                Call("positivePairRatio", F.Id("cutoff"), F.Id("r"), F.Id("index")),
+                Call("cutoffOne", F.Id("cutoff"))))),
+        "cutoffMagnus_cancellation" => Seq(Open, Forall, Sp, F.Id("r"), Comma,
+            F.Id("prefix"), Comma, F.Id("left"), Comma, F.Id("right"), Comma,
+            Equal(Call("cutoffMagnus", F.Id("r"),
+                    Call("append", F.Id("prefix"), F.Id("left"))),
+                Call("cutoffMagnus", F.Id("r"),
+                    Call("append", F.Id("prefix"), F.Id("right")))),
+            Rightarrow, Equal(Call("cutoffMagnus", F.Id("r"), F.Id("left")),
+                Call("cutoffMagnus", F.Id("r"), F.Id("right"))), Close, Land,
+            Open, Forall, Sp, F.Id("r"), Comma, F.Id("left"), Comma,
+            F.Id("right"), Comma, F.Id("suffixLeft"), Comma,
+            F.Id("suffixRight"), Comma,
+            Equal(Call("cutoffMagnus", F.Id("r"), F.Id("suffixLeft")),
+                Call("cutoffMagnus", F.Id("r"), F.Id("suffixRight"))), Land,
+            Equal(Call("cutoffMagnus", F.Id("r"),
+                    Call("append", F.Id("left"), F.Id("suffixLeft"))),
+                Call("cutoffMagnus", F.Id("r"),
+                    Call("append", F.Id("right"), F.Id("suffixRight")))),
+            Rightarrow, Equal(Call("cutoffMagnus", F.Id("r"), F.Id("left")),
+                Call("cutoffMagnus", F.Id("r"), F.Id("right"))), Close),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
+
+    private static Formula PositivePairWordsStatement()
+    {
+        var r = F.Id("r");
+        var index = F.Id("index");
+        var previous = Call("positivePairWords", Add(r, Num(1)),
+            Call("FinInit", index));
+        var a = Call("apply", index, Call("FinLast", Add(r, Num(1))));
+        return Seq(
+            Open, Forall, Sp, F.Id("index0"), Comma,
+            Equal(Call("positivePairWords", Num(0), F.Id("index0")),
+                Call("pair", F.Id("empty"), F.Id("empty"))), Close, Land,
+            Open, Forall, Sp, F.Id("index1"), Comma,
+            Equal(Call("positivePairWords", Num(1), F.Id("index1")),
+                Call("pair", Call("singleton", Call("apply", F.Id("index1"), Num(0))),
+                    F.Id("empty"))), Close, Land,
+            Forall, Sp, r, Comma, index, Comma,
+            Equal(Call("positivePairWords", Add(r, Num(2)), index),
+                Call("pair",
+                    Call("append", Call("left", previous), Call("singleton", a),
+                        Call("right", previous)),
+                    Call("append", Call("right", previous), Call("singleton", a),
+                        Call("left", previous)))));
+    }
 }

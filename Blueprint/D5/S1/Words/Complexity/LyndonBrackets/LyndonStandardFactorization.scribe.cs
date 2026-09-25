@@ -32,7 +32,30 @@ internal sealed class LyndonBracketsLyndonStandardFactorizationDocument : IScrib
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "standardCut" => Seq(Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow,
+            Equal(Call("standardCut", F.Id("w")),
+                Call("min", Call("setOf", F.Id("i"), F.D(0), Lt, Sp, F.Id("i"),
+                    F.Id("i"), Lt, Call("length", F.Id("w")),
+                    Call("IsLyndon", Call("drop", F.Id("w"), F.Id("i"))))))),
+        "standardLeft" => Seq(Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow,
+            Equal(Call("standardLeft", F.Id("w")),
+                Call("take", F.Id("w"), Call("standardCut", F.Id("w"))))),
+        "standardRight" => Seq(Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow,
+            Equal(Call("standardRight", F.Id("w")),
+                Call("drop", F.Id("w"), Call("standardCut", F.Id("w"))))),
+        "isLyndon_standardLeft" => Seq(Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Land,
+            Call("IsLyndon", F.Id("w")), Rightarrow,
+            Call("IsLyndon", Call("standardLeft", F.Id("w")))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

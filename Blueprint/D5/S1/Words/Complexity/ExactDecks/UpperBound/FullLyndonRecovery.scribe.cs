@@ -26,7 +26,17 @@ internal sealed class ExactDecksUpperBoundFullLyndonRecoveryDocument : IScribeDo
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("A"), Comma, F.Id("k"), Comma, F.Id("left"), Comma,
+                F.Id("right"), Comma, Sp,
+                Open, Forall, Sp, F.Id("v"), InMacro,
+                Call("ActualLyndonWordsThrough", F.Id("A"), F.Id("k")), Comma,
+                Equal(Call("scatteredCount", F.Id("v"), F.Id("left")),
+                    Call("scatteredCount", F.Id("v"), F.Id("right"))), Close,
+                Rightarrow, Forall, Sp, F.Id("w"), Comma,
+                Call("length", F.Id("w")), Leq, Sp, F.Id("k"), Rightarrow,
+                Equal(Call("scatteredCount", F.Id("w"), F.Id("left")),
+                    Call("scatteredCount", F.Id("w"), F.Id("right")))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

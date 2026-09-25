@@ -8,7 +8,7 @@ The alphabet A is an arbitrary linearly ordered type throughout. Lyndon words, s
 
 **Definition 1.1 (Rotation-minimal Lyndon words).**
 
-$$IsLyndon$$
+$$\forall w, \operatorname{IsLyndon}\left(w\right)\iff w\neq empty\land\forall u,v,u\neq empty\land v\neq empty\land w = \operatorname{append}\left(u, v\right)\Rightarrow w<\operatorname{append}\left(v, u\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.IsLyndon` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For w : List A, IsLyndon w means w is nonempty and, for every factorization w=u+
 
 **Theorem 1.2 (Suffix characterization).**
 
-$$isLyndoniffltsuffix$$
+$$\forall w,\operatorname{IsLyndon}\left(w\right)\iff w\neq empty\land\forall v,v\neq empty\land\operatorname{ProperSuffix}\left(v, w\right)\Rightarrow w< v$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.isLyndon_iff_lt_suffix` (`✓ std3`). ∎
 
@@ -32,7 +32,7 @@ For every word w, IsLyndon w is equivalent to w being nonempty and strictly smal
 
 **Theorem 1.3 (Increasing concatenation is Lyndon).**
 
-$$isLyndonappend$$
+$$\forall u,v,\operatorname{IsLyndon}\left(u\right)\land\operatorname{IsLyndon}\left(v\right)\land u< v\Rightarrow\operatorname{IsLyndon}\left(\operatorname{append}\left(u, v\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.isLyndon_append` (`✓ std3`). ∎
 
@@ -44,7 +44,7 @@ If u and v are Lyndon and u<v in list lexicographic order, then u++v is Lyndon.
 
 **Theorem 1.4 (A proper Lyndon suffix exists).**
 
-$$existslyndonsuffixcut$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\exists i,0< i<\operatorname{length}\left(w\right)\land\operatorname{IsLyndon}\left(\operatorname{drop}\left(w, i\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder.exists_lyndon_suffix_cut` (`✓ std3`). ∎
 

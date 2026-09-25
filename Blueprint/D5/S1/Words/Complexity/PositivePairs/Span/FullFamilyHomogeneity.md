@@ -8,7 +8,7 @@ The classical Lyndon bracket basis motivates the target directions. The new cont
 
 **Definition 1.1 (Rational homogeneous polynomials).**
 
-$$RationalHomogeneous$$
+$$\forall p,r, \operatorname{RationalHomogeneous}\left(p, r\right)\iff\forall w\in\operatorname{support}\left(p\right),\operatorname{length}\left(w\right) = r$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Span/FullFamilyHomogeneity.RationalHomogeneous` (`✓ std3`).
 
@@ -22,7 +22,7 @@ RationalHomogeneous p r means every free word in the coefficient support of p ha
 
 **Definition 1.2 (An actual indexed leading difference).**
 
-$$actualLeadingDifference$$
+$$\forall r,index, \operatorname{actualLeadingDifference}\left(r, index\right) = \operatorname{cutoffLift}\left(r, \operatorname{cutoffMagnus}\left(r, \operatorname{left}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right) - \operatorname{cutoffMagnus}\left(r, \operatorname{right}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Span/FullFamilyHomogeneity.actualLeadingDifference` (`✓ std3`).
 
@@ -36,7 +36,7 @@ For finite A, level r, and a PositivePairIndex, actualLeadingDifference lifts th
 
 **Definition 1.3 (Span of the full actual family).**
 
-$$fullFamilySpan$$
+$$\forall A,r, \operatorname{fullFamilySpan}\left(A, r\right) = \operatorname{spanQ}\left(\operatorname{range}\left(index, \operatorname{PositivePairIndex}\left(A, r\right), \operatorname{actualLeadingDifference}\left(r, index\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Span/FullFamilyHomogeneity.fullFamilySpan` (`✓ std3`).
 

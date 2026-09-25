@@ -26,7 +26,49 @@ internal sealed class PositivePairsSpanLiteralPowerSubstitutionDocument : IScrib
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration)
+    {
+        var m = F.Id("m");
+        var r = F.Id("r");
+        var pattern = F.Id("pattern");
+        var pair = Call("positivePairWords", r, F.Id("index"));
+        var left = Call("left", pair);
+        var right = Call("right", pair);
+        var poweredLeft = Call("literalPowerWord", m, left);
+        var poweredRight = Call("literalPowerWord", m, right);
+        var countLeft = Call("scatteredCount", pattern, poweredLeft);
+        var countRight = Call("scatteredCount", pattern, poweredRight);
+        return declaration switch
+        {
+            "literalPowerWord" => Seq(Forall, Sp, m, Comma, F.Id("source"),
+                Comma, Equal(Call("literalPowerWord", m, F.Id("source")),
+                    Call("flatMap", F.Id("source"),
+                        Call("lambda", F.Id("a"),
+                            Call("replicate", m, F.Id("a")))))),
+            "literalPowerSubstitution_actual_positivePair" => Seq(Forall, Sp,
+                m, Comma, r, Comma, F.Id("index"), Comma, Sp,
+                Equal(Call("length", poweredLeft), Multiply(Call("length", left), m)),
+                Land, Equal(Call("length", poweredRight),
+                    Multiply(Call("length", right), m)), Land, Open,
+                F.D(2), Leq, Sp, r, Rightarrow,
+                Equal(Call("length", poweredLeft), Call("length", poweredRight)),
+                Close, Land, Open, F.D(0), Lt, Sp, m, Rightarrow,
+                F.D(2), Leq, Sp, r, Rightarrow, Open,
+                poweredLeft, Neq, Sp, F.Id("empty"), Land,
+                Sp, poweredRight, Neq, Sp, F.Id("empty"), Close, Close, Land,
+                Open, Forall, Sp, pattern, Comma, Call("length", pattern), Lt, Sp, r,
+                Rightarrow, Equal(countLeft, countRight), Close, Land,
+                Forall, Sp, pattern, Comma, Equal(Call("length", pattern), r),
+                Rightarrow, Equal(Subtract(Call("castQ", countLeft),
+                        Call("castQ", countRight)),
+                    Multiply(Call("pow", Call("castQ", m), r),
+                        Subtract(Call("castQ", Call("scatteredCount", pattern, left)),
+                            Call("castQ", Call("scatteredCount", pattern, right)))))),
+            _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+        };
+    }
 }

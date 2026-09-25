@@ -77,8 +77,9 @@ private theorem generator_right_letter_mem [Finite A] [LinearOrder A]
       induction v with
       | nil => simp [wordAbelianization]
       | cons a tail ih =>
-          change toRationalWordPolynomial (wordAbelianization tail) = _ at ih
-          simp [wordAbelianization, ih]
+          change toRationalWordPolynomial
+            (wordMonomial [a] + wordAbelianization tail) = _
+          simp [map_add, ih]
     simpa [u, letter] using hsum.symm
   have hsum : (v.map y).sum =
       ((v.length + 1 : ℕ) : ℚ) • ⁅p, u⁆ := by

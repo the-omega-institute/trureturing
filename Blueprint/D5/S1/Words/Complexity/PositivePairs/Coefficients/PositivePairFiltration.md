@@ -8,7 +8,7 @@ Magnus expansions and shuffle or infiltration identities are classical context, 
 
 **Definition 1.1 (Full recursive choice index).**
 
-$$PositivePairIndex$$
+$$\forall A,r,\operatorname{PositivePairIndex}\left(A, r\right) = \operatorname{functions}\left(\operatorname{Fin}\left(r\right), A\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.PositivePairIndex` (`✓ std3`).
 
@@ -22,7 +22,7 @@ PositivePairIndex A r abbreviates Fin r -> A. Distinct indices remain distinct e
 
 **Definition 1.2 (Actual recursive positive pairs).**
 
-$$positivePairWords$$
+$$(\forall index0,\operatorname{positivePairWords}\left(0, index0\right) = \operatorname{pair}\left(empty, empty\right))\land(\forall index1,\operatorname{positivePairWords}\left(1, index1\right) = \operatorname{pair}\left(\operatorname{singleton}\left(\operatorname{apply}\left(index1, 0\right)\right), empty\right))\land\forall r,index,\operatorname{positivePairWords}\left(r + 2, index\right) = \operatorname{pair}\left(\operatorname{append}\left(\operatorname{left}\left(\operatorname{positivePairWords}\left(r + 1, \operatorname{FinInit}\left(index\right)\right)\right), \operatorname{singleton}\left(\operatorname{apply}\left(index, \operatorname{FinLast}\left(r + 1\right)\right)\right), \operatorname{right}\left(\operatorname{positivePairWords}\left(r + 1, \operatorname{FinInit}\left(index\right)\right)\right)\right), \operatorname{append}\left(\operatorname{right}\left(\operatorname{positivePairWords}\left(r + 1, \operatorname{FinInit}\left(index\right)\right)\right), \operatorname{singleton}\left(\operatorname{apply}\left(index, \operatorname{FinLast}\left(r + 1\right)\right)\right), \operatorname{left}\left(\operatorname{positivePairWords}\left(r + 1, \operatorname{FinInit}\left(index\right)\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.positivePairWords` (`✓ std3`).
 
@@ -36,7 +36,7 @@ Level zero is ([],[]), level one is ([a],[]), and a successor step sends (u,v) a
 
 **Definition 1.3 (Actual Magnus cutoff).**
 
-$$cutoffMagnus$$
+$$\forall r,source,\operatorname{cutoffMagnus}\left(r, source\right) = \operatorname{cutoffRestriction}\left(r, \operatorname{toRationalWordPolynomial}\left(\operatorname{magnusPolynomial}\left(source\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.cutoffMagnus` (`✓ std3`).
 
@@ -50,7 +50,7 @@ For finite A, cutoffMagnus r source is the rational coefficient extension of the
 
 **Definition 1.4 (Actual positive-pair Magnus ratio).**
 
-$$positivePairRatio$$
+$$\forall cutoff,r,index,\operatorname{positivePairRatio}\left(cutoff, r, index\right) = \operatorname{cutoffMul}\left(cutoff, \operatorname{cutoffMagnus}\left(cutoff, \operatorname{left}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right), \operatorname{cutoffGeometricInverse}\left(cutoff, \operatorname{cutoffMagnus}\left(cutoff, \operatorname{right}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right) - \operatorname{cutoffOne}\left(cutoff\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.positivePairRatio` (`✓ std3`).
 
@@ -64,7 +64,7 @@ For independent cutoff and level parameters, positivePairRatio is cutoffMagnus(u
 
 **Theorem 1.5 (Full indexed family agrees below its level).**
 
-$$fullpositivePairratiofiltration$$
+$$\forall cutoff,r,index,\operatorname{VanishesBelow}\left(cutoff, r, \operatorname{cutoffMagnus}\left(cutoff, \operatorname{left}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right) - \operatorname{cutoffMagnus}\left(cutoff, \operatorname{right}\left(\operatorname{positivePairWords}\left(r, index\right)\right)\right)\right)\land\operatorname{VanishesBelow}\left(cutoff, r, \operatorname{positivePairRatio}\left(cutoff, r, index\right) - \operatorname{cutoffOne}\left(cutoff\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.full_positivePair_ratio_filtration` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ For every finite alphabet, cutoff, level r, and full PositivePairIndex, both the
 
 **Theorem 1.6 (Cancellation of actual cutoff Magnus factors).**
 
-$$cutoffMagnuscancellation$$
+$$(\forall r,prefix,left,right,\operatorname{cutoffMagnus}\left(r, \operatorname{append}\left(prefix, left\right)\right) = \operatorname{cutoffMagnus}\left(r, \operatorname{append}\left(prefix, right\right)\right)\Rightarrow\operatorname{cutoffMagnus}\left(r, left\right) = \operatorname{cutoffMagnus}\left(r, right\right))\land(\forall r,left,right,suffixLeft,suffixRight,\operatorname{cutoffMagnus}\left(r, suffixLeft\right) = \operatorname{cutoffMagnus}\left(r, suffixRight\right)\land\operatorname{cutoffMagnus}\left(r, \operatorname{append}\left(left, suffixLeft\right)\right) = \operatorname{cutoffMagnus}\left(r, \operatorname{append}\left(right, suffixRight\right)\right)\Rightarrow\operatorname{cutoffMagnus}\left(r, left\right) = \operatorname{cutoffMagnus}\left(r, right\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.cutoffMagnus_cancellation` (`✓ std3`). ∎
 

@@ -8,7 +8,7 @@ The classical Lyndon bracket basis motivates the target directions. The new cont
 
 **Theorem 1.1 (Every standard bracket is realized in the span).**
 
-$$everystandardBracketmem$$
+$$\forall A,w, \operatorname{toRationalWordPolynomial}\left(\operatorname{standardBracket}\left(w\right)\right)\in\operatorname{fullFamilySpan}\left(A, \operatorname{length}\left(w\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/PositivePairs/Span/FullFamilyBracketSpan.every_standardBracket_mem` (`✓ std3`). ∎
 

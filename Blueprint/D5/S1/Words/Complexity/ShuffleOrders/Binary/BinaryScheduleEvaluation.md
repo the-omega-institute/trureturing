@@ -8,7 +8,7 @@ The source paper uses shuffle products and retains their alignment multiplicitie
 
 **Definition 1.1 (Read an annotated binary occurrence).**
 
-$$readTwo$$
+$$\forall first,second,i, \operatorname{readTwo}\left(first, second, \operatorname{pair}\left(firstSide, i\right)\right) = \operatorname{getOptional}\left(first, i\right)\land\operatorname{readTwo}\left(first, second, \operatorname{pair}\left(secondSide, i\right)\right) = \operatorname{getOptional}\left(second, i\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleEvaluation.readTwo` (`✓ std3`).
 
@@ -22,7 +22,7 @@ readTwo first second reads index i from the source selected by Side and returns 
 
 **Definition 1.2 (Evaluate a fixed-source schedule).**
 
-$$evaluateTwo$$
+$$\forall first,second,schedule, \operatorname{evaluateTwo}\left(first, second, schedule\right) = \operatorname{mapM}\left(\operatorname{annotateTwo}\left(schedule\right), \operatorname{readTwo}\left(first, second\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleEvaluation.evaluateTwo` (`✓ std3`).
 
@@ -36,7 +36,7 @@ evaluateTwo maps occurrence annotation through readTwo and sequences the options
 
 **Definition 1.3 (Consume each source exactly once).**
 
-$$ValidTwoSchedule$$
+$$\forall first,second,schedule, \operatorname{ValidTwoSchedule}\left(first, second, schedule\right)\iff\operatorname{count}\left(schedule, firstSide\right) = \operatorname{length}\left(first\right)\land\operatorname{count}\left(schedule, secondSide\right) = \operatorname{length}\left(second\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleEvaluation.ValidTwoSchedule` (`✓ std3`).
 

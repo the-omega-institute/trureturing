@@ -29,7 +29,34 @@ internal sealed class ExactDecksGrowthPositiveWordBallDocument : IScribeDocument
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "positiveWordBall" => Seq(Forall, Sp, F.Id("A"), Comma, F.Id("r"), Comma,
+            F.Id("n"), Comma, Sp, Equal(Call("positiveWordBall", F.Id("A"),
+                F.Id("r"), F.Id("n")), Call("image", Call("cutoffMagnus", F.Id("r")),
+                Call("wordsWithLengthAtMost", F.Id("A"), F.Id("n"))))),
+        "weightedLyndonExponent" => Seq(Forall, Sp, F.Id("A"), Comma,
+            F.Id("r"), Comma, Sp, Equal(Call("weightedLyndonExponent", F.Id("A"),
+                F.Id("r")), Call("sum", Call("range", Add(F.Id("r"), Num(1))),
+                Call("lambda", F.Id("i"), Multiply(F.Id("i"),
+                    Call("actualLyndonCount", F.Id("A"), F.Id("i"))))))),
+        "positiveWordBall_card_step" => Seq(Forall, Sp, F.Id("A"), Comma,
+            F.Id("r"), Comma, F.Id("m"), Comma, F.Id("t"), Comma, F.Id("n"),
+            Comma, Sp, F.Id("r"), Geq, F.D(2), Land, Sp,
+            Add(F.Id("m"), Multiply(Call("baseLength", F.Id("A"), F.Id("r")),
+                Subtract(Call("pow", Num(2), F.Id("t")), Num(1)))),
+            Leq, Sp, F.Id("n"),
+            Rightarrow, Call("card", Call("positiveWordBall", F.Id("A"),
+                F.Id("r"), F.Id("n"))), Geq,
+            Multiply(Call("card", Call("positiveWordBall", F.Id("A"),
+                Subtract(F.Id("r"), Num(1)), F.Id("m"))),
+                Call("pow", Call("digitBase", F.Id("r")),
+                    Multiply(F.Id("t"), Call("actualLyndonCount", F.Id("A"),
+                        F.Id("r")))))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

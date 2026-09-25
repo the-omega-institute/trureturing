@@ -8,7 +8,7 @@ The exact-deck objects formalize the source paper's actual vectors of all length
 
 **Definition 1.1 (An actual exact k-deck).**
 
-$$exactKDeck$$
+$$\forall k,source,pattern,\operatorname{length}\left(pattern\right)= k\Rightarrow\operatorname{exactKDeck}\left(k, source, pattern\right) = \operatorname{scatteredCount}\left(pattern, source\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeck` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For finite A, exactKDeck k source is the function sending each actual pattern of
 
 **Definition 1.2 (Decks realized at one source length).**
 
-$$exactKDeckImage$$
+$$\forall A,k,n, \operatorname{exactKDeckImage}\left(A, k, n\right) = \operatorname{image}\left(\operatorname{exactKDeck}\left(k\right), \operatorname{wordsOfLength}\left(A, n\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeckImage` (`✓ std3`).
 
@@ -32,7 +32,7 @@ exactKDeckImage A k n is the finite image of exactKDeck k on all actual words ov
 
 **Theorem 1.3 (Exact decks recover all shorter counts).**
 
-$$scatteredCounteqofexactKDeckeq$$
+$$\forall k,n,left,right,pattern, \operatorname{length}\left(left\right) = n\land\operatorname{length}\left(right\right) = n\land k\leq n\land\operatorname{length}\left(pattern\right)\leq k\land\operatorname{exactKDeck}\left(k, left\right) = \operatorname{exactKDeck}\left(k, right\right)\Rightarrow\operatorname{scatteredCount}\left(pattern, left\right) = \operatorname{scatteredCount}\left(pattern, right\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.scatteredCount_eq_of_exactKDeck_eq` (`✓ std3`). ∎
 
@@ -46,7 +46,7 @@ For finite A with decidable equality, common length n, k<=n, and a pattern of le
 
 **Theorem 1.4 (Exact-deck and cutoff equality coincide).**
 
-$$exactKDeckeqiffcutoffMagnuseqofcommonlength$$
+$$\forall k,n,left,right, \operatorname{length}\left(left\right) = n\land\operatorname{length}\left(right\right) = n\land k\leq n\Rightarrow\operatorname{exactKDeck}\left(k, left\right) = \operatorname{exactKDeck}\left(k, right\right)\iff\operatorname{cutoffMagnus}\left(k, left\right) = \operatorname{cutoffMagnus}\left(k, right\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeck_eq_iff_cutoffMagnus_eq_of_common_length` (`✓ std3`). ∎
 

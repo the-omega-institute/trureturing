@@ -180,8 +180,12 @@ private theorem powerSubstitution_magnus [Finite A] [DecidableEq A]
   induction source with
   | nil => simp [literalPowerWord, magnusPolynomial]
   | cons a source ih =>
-      rw [literalPowerWord, List.flatMap_cons, magnusPolynomial_append,
-        magnusPolynomial]
+      rw [literalPowerWord, List.flatMap_cons]
+      simp only [magnusPolynomial, List.map_append, List.prod_append]
+      change (MonoidAlgebra.lift ℚ (RationalWordPolynomial A) (FreeMonoid A)
+        (FreeMonoid.lift (letterPowerTail m)))
+          (toRationalWordPolynomial
+            ((1 + wordMonomial [a]) * magnusPolynomial source)) = _
       simp only [map_mul, map_add, map_one, ih]
       rw [show (MonoidAlgebra.lift ℚ (RationalWordPolynomial A) (FreeMonoid A)
         (FreeMonoid.lift (letterPowerTail m)))

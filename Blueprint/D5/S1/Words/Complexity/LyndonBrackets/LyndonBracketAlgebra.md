@@ -8,7 +8,7 @@ The alphabet A is an arbitrary linearly ordered type throughout. Lyndon words, s
 
 **Definition 1.1 (Integral word algebra).**
 
-$$WordPolynomial$$
+$$\operatorname{WordPolynomial}\left(A\right) = \operatorname{MonoidAlgebra}\left(Z, \operatorname{FreeMonoid}\left(A\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.WordPolynomial` (`✓ std3`).
 
@@ -20,7 +20,7 @@ WordPolynomial A abbreviates MonoidAlgebra Z (FreeMonoid A), so monomials are fi
 
 **Definition 1.2 (A word basis monomial).**
 
-$$wordMonomial$$
+$$\forall w,\operatorname{wordMonomial}\left(w\right) = \operatorname{single}\left(\operatorname{ofList}\left(w\right), 1\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.wordMonomial` (`✓ std3`).
 
@@ -34,7 +34,7 @@ wordMonomial w is the monoid-algebra singleton at FreeMonoid.ofList w with coeff
 
 **Definition 1.3 (Homogeneous word polynomials).**
 
-$$Homogeneous$$
+$$\forall p,n,\operatorname{Homogeneous}\left(p, n\right)\iff\forall m\in\operatorname{support}\left(p\right),\operatorname{length}\left(m\right) = n$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.Homogeneous` (`✓ std3`).
 
@@ -48,7 +48,7 @@ Homogeneous p n means every monomial in the coefficient support of p has free-mo
 
 **Definition 1.4 (Triangular leading word).**
 
-$$HasLeadingWord$$
+$$\forall p,w,\operatorname{HasLeadingWord}\left(p, w\right)\iff\operatorname{Homogeneous}\left(p, \operatorname{length}\left(w\right)\right)\land\operatorname{coeff}\left(p, \operatorname{ofList}\left(w\right)\right) = 1\land\forall m\in\operatorname{support}\left(p\right),w\leq\operatorname{toList}\left(m\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.HasLeadingWord` (`✓ std3`).
 
@@ -62,7 +62,7 @@ HasLeadingWord p w requires p homogeneous of degree w.length, coefficient one at
 
 **Definition 1.5 (The word-algebra commutator).**
 
-$$commutator$$
+$$\forall p,q,\operatorname{commutator}\left(p, q\right) = p \cdot q - q \cdot p$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.commutator` (`✓ std3`).
 
@@ -74,7 +74,7 @@ commutator p q is p*q-q*p in the integral noncommutative word algebra.
 
 **Definition 1.6 (Recursive standard bracketing).**
 
-$$standardBracket$$
+$$\operatorname{standardBracket}\left(empty\right) = 0\land(\forall a,\operatorname{standardBracket}\left(\operatorname{singleton}\left(a\right)\right) = \operatorname{wordMonomial}\left(\operatorname{singleton}\left(a\right)\right))\land\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardBracket}\left(w\right) = \operatorname{commutator}\left(\operatorname{standardBracket}\left(\operatorname{standardLeft}\left(w\right)\right), \operatorname{standardBracket}\left(\operatorname{standardRight}\left(w\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.standardBracket` (`✓ std3`).
 
@@ -86,7 +86,7 @@ The empty word maps to zero, a singleton maps to its basis monomial, and a longe
 
 **Theorem 1.7 (Standard brackets preserve length).**
 
-$$standardBrackethomogeneous$$
+$$\forall w,\operatorname{Homogeneous}\left(\operatorname{standardBracket}\left(w\right), \operatorname{length}\left(w\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra.standardBracket_homogeneous` (`✓ std3`). ∎
 

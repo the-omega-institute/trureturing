@@ -28,7 +28,32 @@ internal sealed class ShuffleOrdersBinaryBinaryScheduleEvaluationDocument : IScr
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "readTwo" => Seq(Forall, Sp, F.Id("first"), Comma, F.Id("second"),
+            Comma, F.Id("i"), Comma, Sp,
+            Equal(Call("readTwo", F.Id("first"), F.Id("second"),
+                    Call("pair", F.Id("firstSide"), F.Id("i"))),
+                Call("getOptional", F.Id("first"), F.Id("i"))), Land,
+            Equal(Call("readTwo", F.Id("first"), F.Id("second"),
+                    Call("pair", F.Id("secondSide"), F.Id("i"))),
+                Call("getOptional", F.Id("second"), F.Id("i")))),
+        "evaluateTwo" => Seq(Forall, Sp, F.Id("first"), Comma,
+            F.Id("second"), Comma, F.Id("schedule"), Comma, Sp,
+            Equal(Call("evaluateTwo", F.Id("first"), F.Id("second"), F.Id("schedule")),
+                Call("mapM", Call("annotateTwo", F.Id("schedule")),
+                    Call("readTwo", F.Id("first"), F.Id("second"))))),
+        "ValidTwoSchedule" => Seq(Forall, Sp, F.Id("first"), Comma,
+            F.Id("second"), Comma, F.Id("schedule"), Comma, Sp,
+            Call("ValidTwoSchedule", F.Id("first"), F.Id("second"), F.Id("schedule")),
+            Iff, Equal(Call("count", F.Id("schedule"), F.Id("firstSide")),
+                Call("length", F.Id("first"))), Land,
+            Equal(Call("count", F.Id("schedule"), F.Id("secondSide")),
+                Call("length", F.Id("second")))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

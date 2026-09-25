@@ -31,7 +31,28 @@ internal sealed class PositivePairsDigitsActualLyndonDirectionsDocument : IScrib
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "ActualLyndonWord" => Seq(Forall, Sp, F.Id("A"), Comma, F.Id("r"),
+            Comma, Sp, Equal(Call("ActualLyndonWord", F.Id("A"), F.Id("r")),
+                Call("subtype", F.Id("w"),
+                    Seq(Equal(Call("length", F.Id("w")), F.Id("r")), Land,
+                        Call("IsLyndon", F.Id("w")))))),
+        "actualLyndonCount" => Seq(Forall, Sp, F.Id("A"), Comma, F.Id("r"),
+            Comma, Sp, Equal(Call("actualLyndonCount", F.Id("A"), F.Id("r")),
+                Call("card", Call("ActualLyndonWord", F.Id("A"), F.Id("r"))))),
+        "selectedDirection" => Seq(Forall, Sp, F.Id("r"), Comma,
+            Call("selectedDirection", F.Id("r")), Colon,
+            Call("Fin", Call("actualLyndonCount", F.Id("A"), F.Id("r"))),
+            Rightarrow, Call("PositivePairIndex", F.Id("A"), F.Id("r")),
+            Comma, Sp, Call("LinearIndependent", F.Id("Q"),
+                Call("lambda", F.Id("i"),
+                    Call("actualLeadingDifference", F.Id("r"),
+                        Call("selectedDirection", F.Id("r"), F.Id("i")))))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

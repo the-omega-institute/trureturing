@@ -25,7 +25,17 @@ internal sealed class ExactDecksGrowthPositivePairBallGrowthDocument : IScribeDo
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("A"), Comma, Sp, F.Id("r"), Comma, Sp,
+                Call("card", F.Id("A")), Geq, F.D(2), Land,
+                Sp, F.Id("r"), Geq, F.D(1), Rightarrow,
+                Exists, Sp, F.Id("C"), Comma, F.Id("N"), Comma, Sp,
+                F.D(0), Lt, Sp, F.Id("C"), Land, Forall, Sp, F.Id("n"), Geq,
+                Sp, F.Id("N"),
+                Comma, Sp, Call("pow", F.Id("n"),
+                    Call("weightedLyndonExponent", F.Id("A"), F.Id("r"))),
+                Leq, Sp, Multiply(F.Id("C"), Call("card", Call("positiveWordBall",
+                    F.Id("A"), F.Id("r"), F.Id("n"))))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

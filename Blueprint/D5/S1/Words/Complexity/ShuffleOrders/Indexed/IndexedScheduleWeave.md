@@ -8,7 +8,7 @@ This module iterates the binary fixed-source promotion theorem over a list of fa
 
 **Theorem 1.1 (Successful option traversal preserves length).**
 
-$$mapMlength$$
+$$\forall read,entries,word,\operatorname{mapM}\left(entries, read\right) = \operatorname{some}\left(word\right)\Rightarrow\operatorname{length}\left(word\right) = \operatorname{length}\left(entries\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleWeave.mapM_length` (`✓ std3`). ∎
 

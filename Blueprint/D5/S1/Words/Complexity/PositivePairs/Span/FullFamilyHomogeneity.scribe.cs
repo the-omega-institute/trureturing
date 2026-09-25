@@ -28,7 +28,29 @@ internal sealed class PositivePairsSpanFullFamilyHomogeneityDocument : IScribeDo
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "RationalHomogeneous" => Seq(Forall, Sp, F.Id("p"), Comma,
+            F.Id("r"), Comma, Sp, Call("RationalHomogeneous", F.Id("p"), F.Id("r")),
+            Iff, Forall, Sp, F.Id("w"), InMacro, Call("support", F.Id("p")),
+            Comma, Equal(Call("length", F.Id("w")), F.Id("r"))),
+        "actualLeadingDifference" => Seq(Forall, Sp, F.Id("r"), Comma,
+            F.Id("index"), Comma, Sp,
+            Equal(Call("actualLeadingDifference", F.Id("r"), F.Id("index")),
+                Call("cutoffLift", F.Id("r"), Subtract(
+                    Call("cutoffMagnus", F.Id("r"),
+                        Call("left", Call("positivePairWords", F.Id("r"), F.Id("index")))),
+                    Call("cutoffMagnus", F.Id("r"),
+                        Call("right", Call("positivePairWords", F.Id("r"), F.Id("index")))))))),
+        "fullFamilySpan" => Seq(Forall, Sp, F.Id("A"), Comma, F.Id("r"),
+            Comma, Sp, Equal(Call("fullFamilySpan", F.Id("A"), F.Id("r")),
+                Call("spanQ", Call("range", F.Id("index"),
+                    Call("PositivePairIndex", F.Id("A"), F.Id("r")),
+                    Call("actualLeadingDifference", F.Id("r"), F.Id("index")))))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

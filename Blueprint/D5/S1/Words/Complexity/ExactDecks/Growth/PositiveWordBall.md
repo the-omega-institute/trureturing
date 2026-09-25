@@ -8,7 +8,7 @@ The exponent uses the cardinalities of actual Lyndon-word subtypes at every degr
 
 **Definition 1.1 (The actual cutoff-Magnus ball).**
 
-$$positiveWordBall$$
+$$\forall A,r,n, \operatorname{positiveWordBall}\left(A, r, n\right) = \operatorname{image}\left(\operatorname{cutoffMagnus}\left(r\right), \operatorname{wordsWithLengthAtMost}\left(A, n\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.positiveWordBall` (`✓ std3`).
 
@@ -22,7 +22,7 @@ For finite A, positiveWordBall A r n is the finite image of cutoffMagnus r on al
 
 **Definition 1.2 (Weighted actual Lyndon exponent).**
 
-$$weightedLyndonExponent$$
+$$\forall A,r, \operatorname{weightedLyndonExponent}\left(A, r\right) = \operatorname{sum}\left(\operatorname{range}\left(r + 1\right), \operatorname{lambda}\left(i, i \cdot \operatorname{actualLyndonCount}\left(A, i\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.weightedLyndonExponent` (`✓ std3`).
 
@@ -36,7 +36,7 @@ For finite linearly ordered A, weightedLyndonExponent A r is sum over i in range
 
 **Theorem 1.3 (One central-digit growth step).**
 
-$$positiveWordBallcardstep$$
+$$\forall A,r,m,t,n, r\geq2\land m + \operatorname{baseLength}\left(A, r\right) \cdot \left(\operatorname{pow}\left(2, t\right) - 1\right)\leq n\Rightarrow\operatorname{card}\left(\operatorname{positiveWordBall}\left(A, r, n\right)\right)\geq\operatorname{card}\left(\operatorname{positiveWordBall}\left(A, r - 1, m\right)\right) \cdot \operatorname{pow}\left(\operatorname{digitBase}\left(r\right), t \cdot \operatorname{actualLyndonCount}\left(A, r\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Growth/PositiveWordBall.positiveWordBall_card_step` (`✓ std3`). ∎
 

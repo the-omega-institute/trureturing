@@ -49,7 +49,7 @@ theorem full_positivePair_successor_leading_bracket [Finite A] [DecidableEq A]
   have rationalMagnus_append (left right : List A) :
       rationalMagnus (left ++ right) =
         rationalMagnus left * rationalMagnus right := by
-    simp [rationalMagnus, magnusPolynomial_append]
+    simp [rationalMagnus, magnusPolynomial, List.prod_append]
   have tail_vanishes (source : List A) :
       VanishesBelow cutoff 2
         (cutoffMagnus cutoff source - cutoffOne cutoff - linear source) := by
@@ -96,7 +96,7 @@ theorem full_positivePair_successor_leading_bracket [Finite A] [DecidableEq A]
     intro w hw
     have htail := tail_vanishes ([a] ++ previous.2) w hw
     simpa [cutoffMagnus, cutoffOne, rationalMagnus, linear, x,
-      cutoffRestriction, wordAbelianization_append, wordAbelianization,
+      cutoffRestriction, wordAbelianization, List.sum_append,
       add_comm, add_left_comm, add_assoc] using htail
   have hleftTail : VanishesBelow cutoff 2
       (cutoffRestriction cutoff
@@ -104,7 +104,7 @@ theorem full_positivePair_successor_leading_bracket [Finite A] [DecidableEq A]
     intro w hw
     have htail := tail_vanishes (previous.2 ++ [a]) w hw
     simpa [cutoffMagnus, cutoffOne, rationalMagnus, linear, x, cutoffRestriction,
-      wordAbelianization_append, wordAbelianization, add_comm,
+      wordAbelianization, List.sum_append, add_comm,
       add_left_comm, add_assoc] using htail
   have hrightError := cutoffMul_vanishesBelow cutoff (r + 1) 2
     difference

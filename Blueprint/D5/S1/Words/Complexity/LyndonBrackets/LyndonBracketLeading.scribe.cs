@@ -32,7 +32,32 @@ internal sealed class LyndonBracketsLyndonBracketLeadingDocument : IScribeDocume
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Statement(declaration))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula Statement(string declaration) => declaration switch
+    {
+        "StandardFactorClosed" => Seq(
+            Equal(Call("StandardFactorClosed", F.Id("empty")), F.Id("False")), Land,
+            Open, Forall, Sp, F.Id("a"), Comma,
+            Equal(Call("StandardFactorClosed", Call("singleton", F.Id("a"))),
+                F.Id("True")), Close, Land, Forall, Sp, F.Id("w"), Comma,
+            F.D(2), Leq, Call("length", F.Id("w")), Rightarrow,
+            Call("StandardFactorClosed", F.Id("w")), Iff,
+            Call("StandardFactorClosed", Call("standardLeft", F.Id("w"))), Land,
+            Call("StandardFactorClosed", Call("standardRight", F.Id("w"))), Land,
+            Sp, F.Id("w"), Lt, Call("append", Call("standardRight", F.Id("w")),
+                Call("standardLeft", F.Id("w")))),
+        "isLyndon_standardFactorClosed" => Seq(Forall, Sp, F.Id("w"),
+            Comma, Call("IsLyndon", F.Id("w")), Rightarrow,
+            Call("StandardFactorClosed", F.Id("w"))),
+        "standardBracket_hasLeadingWord" => Seq(Forall, Sp, F.Id("w"),
+            Comma, Call("StandardFactorClosed", F.Id("w")), Rightarrow,
+            Call("HasLeadingWord", Call("standardBracket", F.Id("w")), F.Id("w"))),
+        "standardBracket_linearIndependent" =>
+            Call("LinearIndependent", F.Id("Z"),
+                Call("standardBracket", Call("StandardFactorClosedWords", F.Id("A")))),
+        _ => throw new ArgumentOutOfRangeException(nameof(declaration)),
+    };
 }

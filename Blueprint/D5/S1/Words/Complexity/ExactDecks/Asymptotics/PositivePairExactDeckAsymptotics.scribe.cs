@@ -26,7 +26,17 @@ internal sealed class ExactDecksAsymptoticsPositivePairExactDeckAsymptoticsDocum
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("A"), Comma, Sp, F.Id("k"), Comma, Sp,
+                Call("FiniteLinearOrder", F.Id("A")), Comma, Sp,
+                Call("card", F.Id("A")), Sp, Geq, Sp, F.D(2), Comma, Sp,
+                F.Id("k"), Sp, Geq, Sp, F.D(1), Sp, Rightarrow, Sp,
+                Call("RealIsTheta", F.Id("atTop"),
+                    Call("lambda", F.Id("n"), Call("castR", Call("card",
+                        Call("exactKDeckImage", F.Id("A"), F.Id("k"), F.Id("n"))))),
+                    Call("lambda", F.Id("n"), Call("pow", Call("castR", F.Id("n")),
+                        Subtract(Call("weightedLyndonExponent", F.Id("A"), F.Id("k")),
+                            Num(1)))))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

@@ -24,7 +24,11 @@ internal sealed class ShuffleOrdersIndexedIndexedScheduleWeaveDocument : IScribe
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("read"), Comma, F.Id("entries"), Comma, F.Id("word"), Comma,
+                Equal(Call("mapM", F.Id("entries"), F.Id("read")),
+                    Call("some", F.Id("word"))), Rightarrow,
+                Equal(Call("length", F.Id("word")), Call("length", F.Id("entries")))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }

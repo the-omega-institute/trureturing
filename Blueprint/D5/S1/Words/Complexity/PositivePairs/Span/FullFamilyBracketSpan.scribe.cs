@@ -24,7 +24,10 @@ internal sealed class PositivePairsSpanFullFamilyBracketSpanDocument : IScribeDo
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration),
-            H(title), StatementSource.FromAuthor(Disp(F.Id(declaration.Replace("_", string.Empty)))),
+            H(title), StatementSource.FromAuthor(Disp(Seq(Forall, Sp,
+                F.Id("A"), Comma, F.Id("w"), Comma, Sp,
+                Call("toRationalWordPolynomial", Call("standardBracket", F.Id("w"))),
+                InMacro, Call("fullFamilySpan", F.Id("A"), Call("length", F.Id("w")))))),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);
 }
