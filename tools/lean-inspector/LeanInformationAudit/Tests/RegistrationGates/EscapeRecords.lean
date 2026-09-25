@@ -120,9 +120,9 @@ def domainArena : ObjectDomainArena where
 
 local instance : DecidableEq domainArena.State := domainArena.toArena.stateDecidableEq
 
-def domainReads : PrimitiveRealization domainArena.signature :=
+def domainReads : PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization (fun b : Bool => b)
-def domainOther : PrimitiveRealization domainArena.signature :=
+def domainOther : PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization (fun _ : Bool => true)
 theorem domainStatement : (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false :=
   ⟨fun _ _ => rfl, rfl⟩
