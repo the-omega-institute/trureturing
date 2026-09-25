@@ -151,3 +151,53 @@ originality. Chapter 39 asserts no actual moment convergence, universal
 amplitude law, or conclusion in another path topology. Its conditional
 posterior calculations are on the uniform-support-prior space; the
 fixed-support conclusions are unconditional and use equivariance.
+
+# Resolving the cluster by its compensation scale
+
+Chapter 40 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+uses the same fixed near-arithmetic amplitude and legal subsequence as
+Chapter 39. Its exact compensated score step gives a smaller threshold
+scale, asymptotic to epsilon(1-alpha)sqrt(lambda). On the rational count
+line, this change of coordinates is exact. The uncompensated central
+score differs from the correct center by an unbounded number of these
+smaller scale units, despite a negligible difference at the outer-window
+scale.
+
+The model-specific result is a compact exact-posterior profile jointly
+with its full cluster endpoint and the previous threshold/capacity field.
+Its limiting variance clock is a Gaussian distribution function. The
+endpoint-centered profile has a Brownian-bridge limit independent of the
+endpoint; the whole new Brownian motion is independent of the previous
+primitive field before its random translations. These statements concern
+one common observation and label vector, not separately sampled marginal
+limits.
+
+Whitt's Theorem 2.1(ii), printed pages 270–271, is used on a forward strip
+martingale under the calibrated independent Bernoulli law, after a
+deterministic change of time makes its limiting predictable variance
+linear. Uniform convergence of the monotone variance clock controls the
+maximum variance of a whole equal-score group. The Bernoulli fourth-moment
+bound controls the expected maximum squared jump. Initial and terminal
+tail sums are retained as independent auxiliary coordinates before the
+full-vector comparison transfers the endpoint and entire profile to the
+exact posterior. The weighted estimate described in
+[Siripraparat–Neammanee's note](siripraparat2021local.md) transfers every
+prefix center uniformly. It is not obtained by multiplying total
+variation by the number of labels.
+
+The martingale theorem, Gaussian time changes, Brownian-bridge covariance
+identity, and independence of jointly Gaussian orthogonal coordinates
+are classical. The `repo-derived` content is the compensated arithmetic
+coordinate, actual mixed-row clock, exact posterior process transfer and
+joint separation from the existing scales. The full joint proof verifies
+Gaussianity before using small overlap covariances. Its deterministic
+conditional limit is adjoined to the common data origin using bounded
+continuous origin tests and bounded Lipschitz process tests, as in the
+conditional-limit mechanism attributed above to Pasquazzi.
+
+This attribution does not assert global originality. The conclusion is
+restricted to the fixed Chapter 39 amplitude, each fixed beta and fixed
+compact parameter sets. It asserts neither actual moment convergence nor
+a universal microscopic limit for nonlattice amplitudes. The conditional
+posterior statements are under the uniform support prior; fixed-support
+conclusions use the unconditional permutation-equivariant law.
