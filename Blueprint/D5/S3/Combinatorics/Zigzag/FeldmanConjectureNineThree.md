@@ -40,6 +40,10 @@ $$\operatorname{balancedCount}\left(2\right) = 4 \land \left(\left(\forall r \in
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Zigzag/FeldmanConjectureNineThree.feldman_conjecture_nine_three` (`✓ std3`). ∎
 
+*Resolves.* `Problems/feldman-zigzag-conjecture-nine-three` (proved) by `D5/S3/Combinatorics/Zigzag/FeldmanConjectureNineThree.feldman_conjecture_nine_three`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"feldman-zigzag-conjecture-nine-three","declaration_gid":"D5/S3/Combinatorics/Zigzag/FeldmanConjectureNineThree.feldman_conjecture_nine_three","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David V. Feldman (2026). *The Missing Zigzag: Cycles of Semitone Trichords and a Conservation Law in Equal Temperament*. URL: <https://arxiv.org/html/2609.26114v1>.
@@ -48,7 +52,7 @@ $$\operatorname{balancedCount}\left(2\right) = 4 \land \left(\left(\forall r \in
 
 The sole result states balancedCount 2=4; for every r>=2, balancedCount(2r)=4*balancedCount(2r-1); and for every r>=1, (2r)*balancedCount(2r+1)=6*(2r-1)*balancedCount(2r). The proof specializes the exact even and odd formulas and uses central-binomial and adjacent-choose identities. Every parameter range is preserved.
 
-This is a source-reviewed Lean candidate. The typed open-problem resolution binding is deferred until the result is canonically frozen; the Problems dossier records the question and outstanding delivery boundary without hand-writing a machine resolution status.
+The typed open-problem resolution claim binds this frozen theorem to the Problems dossier for Conjecture 9.3. It does not assert a resolution of the broader Open Problem 13.1 or publication priority.
 
 ## References
 

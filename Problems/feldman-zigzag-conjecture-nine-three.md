@@ -48,11 +48,11 @@ for every `r>=1`, `a(2r)=4*6^(r-1)*choose(2r-2,r-1)` and
 
 The mathematical candidate has a kernel-checked all-parameter proof and an
 independent source review for its exact source checkpoint. The repository
-delivery is not yet complete: the typed Scribe resolution marker, joint first
-Freeze, current required CI, merge into `dev`, and completion audit remain to
-be settled through their canonical owners. No resolution status is
-hand-written here; the typed claim can be attached to the sole result only
-after its declaration is frozen.
+has canonical joint first-Freeze state files for the eleven Zigzag modules.
+The endpoint's typed Scribe `Proved` claim binds the sole Conjecture 9.3 result
+to this dossier, and its emitted Markdown carries the matching resolution
+marker. Current required CI, merge into `dev`, and completion audit remain
+pending. Resolution is derived from the typed claim, not hand-written here.
 
 The bounded prior-art screen in the Library note found no matching later
 public proof in its checked sources. It did not establish global novelty or
@@ -94,8 +94,9 @@ the source review approved all eleven Lean owners and all 68 theorems;
 designated independent tests reported kernel exit 0 over 1489 jobs and
 consumer checks at `t=2,3,4`. The reported axiom closure contains only
 `propext`, `Classical.choice`, and `Quot.sound`. These are source-stage
-readings; the present companion and final Freeze/CI delivery still need their
-own checks. Independent finite table and boundary tests found literal
+readings; the companion, joint first Freeze, and typed binding have separate
+local checks. Current required CI and completion audit remain pending.
+Independent finite table and boundary tests found literal
 balanced counts `4,12,48` at `n=6,9,12`; they do not replace the all-`r`
 proof.
 
@@ -104,7 +105,8 @@ proof.
 `theorem`; Tier 1 external named Conjecture 9.3, preregistered before the
 probe. This record anchors only that conjecture, not the broader Open
 Problem 13.1. The theorem's content admission and source fidelity have
-independent source-stage approval; delivery and KPI credit are still pending.
+independent source-stage approval. Delivery and KPI credit require current
+required CI, merge into `dev`, and completion audit; this record claims neither.
 
 ## ASSUMED-UNVERIFIED
 

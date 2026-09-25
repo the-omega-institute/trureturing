@@ -35,8 +35,11 @@ internal sealed class FeldmanConjectureNineThreeDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "The sole result states balancedCount 2=4; for every r>=2, balancedCount(2r)=4*balancedCount(2r-1); and for every r>=1, (2r)*balancedCount(2r+1)=6*(2r-1)*balancedCount(2r). The proof specializes the exact even and odd formulas and uses central-binomial and adjacent-choose identities. Every parameter range is preserved.")),
                     Paragraph(Text(
-                        "This is a source-reviewed Lean candidate. The typed open-problem resolution binding is deferred until the result is canonically frozen; the Problems dossier records the question and outstanding delivery boundary without hand-writing a machine resolution status."))),
-                DescribeRole.Theorem)), []));
+                        "The typed open-problem resolution claim binds this frozen theorem to the Problems dossier for Conjecture 9.3. It does not assert a resolution of the broader Open Problem 13.1 or publication priority."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("feldman-zigzag-conjecture-nine-three"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
