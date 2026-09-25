@@ -278,9 +278,8 @@ private def independentSource (name : Name) : CompileM Bool := do
   if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
       (`LeanInformationAudit).isPrefixOf sourceOwner || (`Reg).isPrefixOf sourceOwner then
     return false
-  let some sourceIdx := env.getModuleIdx? sourceOwner | return false
-  let some targetIdx := env.getModuleIdx? targetOwner | return true
-  if sourceIdx.toNat < targetIdx.toNat then return true
+  let some _ := env.getModuleIdx? sourceOwner | return false
+  let some _ := env.getModuleIdx? targetOwner | return true
   let mut pending := #[sourceOwner]
   let mut seen : NameSet := {}
   while !pending.isEmpty do
