@@ -201,6 +201,57 @@ theorem geometric_readout_uniform_slope_bound
   · exact ge_of_tendsto he (Eventually.of_forall fun n => (hfiniteFine n).1)
   · exact le_of_tendsto he (Eventually.of_forall fun n => (hfiniteFine n).2)
 
+/-- Taking the observation horizon to infinity recovers the completed
+readout at fixed ratio; flattening the weights first sends each fixed
+prefix to zero, whereas the completed readout tends to the slope. -/
+theorem geometric_readout_iterated_limit_order (alpha x : ℝ)
+    (ha : alpha ∈ Ico (0 : ℝ) 1) :
+    (∀ r : ℝ, r ∈ Ico (0 : ℝ) 1 →
+      Tendsto (fun n : ℕ => weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n)
+        atTop (𝓝 (geometricReadout r alpha x))) ∧
+    Tendsto (fun r : ℝ => geometricReadout r alpha x) (𝓝[<] (1 : ℝ)) (𝓝 alpha) ∧
+    (∀ n : ℕ,
+      Tendsto (fun r : ℝ => weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n)
+        (𝓝[<] (1 : ℝ)) (𝓝 (0 : ℝ))) := by
+  have hid : Tendsto (fun r : ℝ => r) (𝓝[<] (1 : ℝ)) (𝓝 (1 : ℝ)) :=
+    tendsto_id.mono_left nhdsWithin_le_nhds
+  have hrange : Set.Ioo (0 : ℝ) 1 ∈ 𝓝[<] (1 : ℝ) :=
+    (nhdsLT_basis 1).mem_of_mem (by norm_num)
+  have hto0 : Tendsto (fun r : ℝ => 1 - r) (𝓝[<] (1 : ℝ)) (𝓝 (0 : ℝ)) := by
+    convert tendsto_const_nhds.sub hid using 1 <;> norm_num
+  refine ⟨?_, ?_, ?_⟩
+  · intro r hr
+    have hp : Tendsto (fun n : ℕ => r ^ n) atTop (𝓝 (0 : ℝ)) :=
+      tendsto_pow_atTop_nhds_zero_of_lt_one hr.1 hr.2
+    have htail (n : ℕ) :
+        0 ≤ geometricReadout r alpha x -
+          weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n ∧
+        geometricReadout r alpha x -
+          weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n ≤ r ^ n :=
+      (geometric_readout_isometric_completion r alpha alpha hr.1 hr.2 ha ha).2.2.1 x n
+    apply Metric.tendsto_atTop.mpr
+    intro eps heps
+    obtain ⟨N, hN⟩ := Filter.eventually_atTop.mp ((tendsto_order.mp hp).2 eps heps)
+    refine ⟨N, ?_⟩
+    intro n hn
+    rw [Real.dist_eq, abs_sub_comm, abs_of_nonneg (htail n).1]
+    exact lt_of_le_of_lt (htail n).2 (hN n hn)
+  · apply Metric.tendsto_nhds.mpr
+    intro eps heps
+    filter_upwards [hrange, (tendsto_order.mp hto0).2 eps heps] with r hr hsmall
+    have hb := (geometric_readout_uniform_slope_bound r alpha x hr.1.le hr.2 ha).1
+    rw [Real.dist_eq]
+    exact lt_of_le_of_lt hb hsmall
+  · intro n
+    have hcont : Continuous (fun r : ℝ =>
+        weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n) := by
+      simp only [weightedPrefix]
+      fun_prop
+    have hval : weightedPrefix (fun j => (1 - (1 : ℝ)) * (1 : ℝ) ^ j)
+        alpha x n = 0 := by simp [weightedPrefix]
+    simpa only [hval] using (hcont.tendsto 1).mono_left nhdsWithin_le_nhds
+
 #print axioms geometric_readout_uniform_slope_bound
+#print axioms geometric_readout_iterated_limit_order
 
 end D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
