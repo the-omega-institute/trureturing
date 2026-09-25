@@ -45993,3 +45993,222 @@ $\|P_0\rho_u^{\rm pure}Q_0\|_2^2=p(u)(1-p(u))$，其中 $p(u)=(1+u)/2$。若在�
 测量 Fisher 信息与 SLD 的一般关系见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），以及 Barndorff-Nielsen、Gill，*Fisher information in quantum statistics*，arXiv:quant-ph/9808009。秩变化处点态 SLD 与连续 Bures 信息的区别见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）。本节由全输入程序的固定压缩关系、校准点的两个期望约束及其方差上界，确定此通道族的最优局部曲率；实际三维实现的全域性由固定方向夹逼和唯一选根证明，不由逐点可行性替代。光滑端点构造使用同空间混合，信息估计中明确计入参数相关的切换项。
 
 ## 追加锚（本行以下为增补区）
+
+## 212. 复相位在纯三维程序中安排完整校准集合
+
+**定义 212.1（固定三维相位处理器）。** 固定 $0<a<1$，记 $L=1-a$，选择
+$$
+ 0<\delta<\min\left\{\frac L4,\frac{1-a^2}{16}\right\},\qquad
+ \lambda=L-\delta,\quad B=2\sqrt{a\lambda},\quad
+ p_\delta=\frac a{1-\delta},\quad u_\delta=2p_\delta-1.
+\tag{212.1}
+$$
+因此 $a<p_\delta<1$、$2a-1<u_\delta<1$。在程序空间 $\mathbb C^3$ 上定义
+$$
+ P=\operatorname{diag}(1,1,0),\quad Q=I-P,\quad Z=2P-I,
+ \qquad
+ K=\begin{pmatrix}
+ a-\lambda&\delta&B\\
+ \delta&a&0\\
+ 0&0&0
+ \end{pmatrix}.
+\tag{212.2}
+$$
+参数域仍为 $J_a=(2a-1,1)$，目标通道仍为第187节的 $\mathcal T_u$，固定均衡读出的信息量为 $I_r(u)=1/(1-u^2)$。本节只要求纯态准备在开区间 $J_a$ 上光滑，不要求闭端点延拓。校准集合沿用定义210.1。
+
+**定理 212.2（全区间精确相位处理器与无校准纯态基线）。** 定义212.1的 $K$ 为严格压缩算子。固定等距映射
+$$
+ W_0=\binom{I_3}{0},\qquad W_2=\binom{Z}{0},qquad
+ W_1=\binom{K}{\sqrt{I_3-K^\dagger K}}
+\tag{212.3}
+$$
+给出受控处理器 $\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$。它具有一条全区间实解析的纯态准备曲线，对全部信号输入精确产生 $\mathcal T_u$，且完整校准集合为空。
+
+证明。 $KK^\dagger$ 的 $P$ 块为
+$$
+ \begin{pmatrix}
+ (a+\lambda)^2+\delta^2&\delta(2a-\lambda)\\
+ \delta(2a-\lambda)&a^2+\delta^2
+ \end{pmatrix}.
+\tag{212.4}
+$$
+$I_2-(KK^\dagger)_{PP}$ 的两个对角元分别至少为 $\delta$ 与 $(1-a^2)/2$：前者等于 $2\delta(1-\delta)$，后者等于 $1-a^2-\delta^2$。又有 $|2a-\lambda|<2$，所以其行列式满足
+$$
+ \det\bigl[I_2-(KK^\dagger)_{PP}\bigr]
+ \ge\frac{\delta(1-a^2)}2-4\delta^2
+ >\frac{\delta(1-a^2)}4>0.
+\tag{212.5}
+$$
+因此 $KK^\dagger<I_3$，所有（212.3）均为等距映射。处理器在整个证明中保持固定。
+
+令 $p=(1+u)/2$、$q=1-p$。考虑两个实函数 $x\in(0,1)$、$\varphi$，以及纯态向量
+$$
+ \psi(p,x,\varphi)=
+ \begin{pmatrix}
+ \sqrt p\,x\\
+ \sqrt p\sqrt{1-x^2}\,e^{i\varphi}\\
+ \sqrt q
+ \end{pmatrix},\qquad
+ r(p)=\sqrt{\frac a\lambda}\sqrt{\frac{1-p}{p}}.
+\tag{212.6}
+$$
+由于 $K_{PP}$ 为 Hermitian 矩阵、$K_{PQ}=(B,0)^{\mathsf T}$，期望 $f=\psi^\dagger K\psi$ 为实数。配方给出
+$$
+ f(p,x,\varphi)-a
+ =p\left[-\lambda(x-r(p))^2
+         +2\delta x\sqrt{1-x^2}\cos\varphi\right].
+\tag{212.7}
+$$
+$\psi^\dagger Z\psi=2p-1=u$ 及 $ZK=K$ 保证三个非对角 Schur 系数分别为 $u,f,f$；转置位置取复共轭，而 $f$ 为实数。因此 $f=a$ 保证全部信号矩阵单位上的精确性。以下始终在同一个处理器中满足这个等式。
+
+对实际函数 $x(u),\varphi(u)$，纯态 SLD 公式给出
+$$
+ \begin{aligned}
+ I_Q(\psi\psi^\dagger)-I_r(u)
+ ={}&\frac{4p}{1-x^2}\left(\frac{dx}{du}\right)^2\\
+ &+4p(1-x^2)\bigl[1-p(1-x^2)\bigr]
+                    \left(\frac{d\varphi}{du}\right)^2.
+ \end{aligned}
+\tag{212.8}
+$$
+这里使用 $I_Q=4(\|\psi'\|^2-|\psi^\dagger\psi'|^2)$，保留相位导数对纯态信息量的全部贡献。两个系数均严格为正，故校准等价于 $x'=\varphi'=0$。在任意精确曲线的校准点，还有必要条件
+$$
+ x=r(p).
+\tag{212.9}
+$$
+事实上，将 $f$ 写成 $pA(x,\varphi)+Bx\sqrt{pq}$。校准时参数导数只有 $p$ 的贡献，因此 $f_p=0$；将它与 $f=a$ 联立，消去 $A$，得到 $Bx=2a\sqrt{q/p}$，即（212.9）。这一论证不对反余弦求导，因而在 $\varphi=0$ 也成立。
+
+为构造基线，定义
+$$
+ F(r,x)=-\lambda(x-r)^2+2\delta x\sqrt{1-x^2},\qquad
+ x_a=\sqrt{\frac\lambda L}<1,\quad r_a=\sqrt{\frac L\lambda}.
+\tag{212.10}
+$$
+对 $a<p<1$ 有 $0<r(p)<r_a$。$F$ 关于 $0<x<1$ 严格凹，因为
+$$
+ \frac{d^2}{dx^2}\bigl(x\sqrt{1-x^2}\bigr)
+   =\frac{x(2x^2-3)}{(1-x^2)^{3/2}}<0.
+\tag{212.11}
+$$
+另有 $F(r,0)<0$。当 $r\ge x_a$ 时，
+$$
+ F(r,x_a)\ge F(r_a,x_a)
+ =\frac\delta L\bigl(2\sqrt{\lambda\delta}-\delta\bigr)>0,
+\tag{212.12}
+$$
+最后一步来自 $\delta<4\lambda$；当 $r<x_a$ 时，$F(r,r)>0$。严格凹性于是给出唯一的上升零点
+$$
+ 0<x_0(r)<\min\{r,x_a\},\qquad F(r,x_0(r))=0,
+ \qquad F_x(r,x_0(r))>0.
+\tag{212.13}
+$$
+这里唯一的是上升零点，不排除 $F$ 在其后还有下降零点。解析隐函数定理及上升零点的唯一性使 $x_0$ 在 $0<r<r_a$ 上实解析，而且
+$$
+ \frac{dx_0}{dr}=\frac{2\lambda(r-x_0)}{F_x(r,x_0)}>0,
+ \qquad \frac{d}{dp}x_0(r(p))<0.
+\tag{212.14}
+$$
+取 $x(u)=x_0(r(p(u)))$、$\varphi(u)=0$，第212.7式保证全区间精确性，第212.8式和（212.14）保证校准集合为空。所有态始终为纯态。证毕。
+
+**定理 212.3（纯三维程序的指定完整校准集合）。** 固定定义212.1的同一个处理器。若 $S\subset(u_\delta,1)$ 为有限集合，或者为严格递增且仅向右端一聚集的序列，则存在一条全区间 $C^\infty$ 纯态准备曲线，对全部信号输入精确产生 $\mathcal T_u$，并满足
+$$
+ \mathcal E(\rho)=S.
+\tag{212.15}
+$$
+因此，$J_a$ 中任意有限集合均可由某个三维纯态程序精确实现为完整校准集合；非空集合的最小联合程序支持维数恰为三。固定纯三维、固定处理器的校准点数不存在统一有限上界。
+
+证明。 空集由定理212.2处理。其余情形令 $p_i=(1+t_i)/2$，其中 $t_i\in S$。因为 $p_i>p_\delta$，可置
+$$
+ x_i=r(p_i)\in(0,1),\qquad
+ F(r(p_i),x_i)=2\delta x_i\sqrt{1-x_i^2}>0.
+\tag{212.16}
+$$
+选择两两不交的小区间 $U_i\Subset(p_\delta,1)$，各包含 $p_i$，使 $F(r(p),x_i)>0$ 在其闭包成立。由上升零点的性质，$x_i>x_0(r(p))$ 在 $U_i$ 上成立。无穷情形可令这些区间局部有限，且仅向一聚集。
+
+在 $U_i$ 内选择 $C^\infty$ 函数 $\eta_i$，取值于 $[0,\pi/2]$，支撑紧含于 $U_i$，在 $p_i$ 附近恒为 $\pi/2$，在 $p_i$ 左侧单调不减、右侧单调不增。记
+$$
+ \chi_i(p)=\sin^2\eta_i(p),\qquad d_i(p)=x_i-x_0(r(p))>0,
+ \qquad x(p)=x_0(r(p))+\chi_i(p)d_i(p).
+\tag{212.17}
+$$
+所有区间外取 $x(p)=x_0(r(p))$。严格凹性保证 $\chi_i>0$ 时 $F(r(p),x(p))>0$。因而定义
+$$
+ C(p,x)=\frac{\lambda(x-r(p))^2}{2\delta x\sqrt{1-x^2}},
+\tag{212.18}
+$$
+便有 $0\le C(p,x(p))<1$ 在 $\chi_i>0$ 处成立；在 $\chi_i=0$ 处有 $C=1$。
+
+直接写 $\varphi=\arccos C$ 尚不能保证接缝光滑。对此令 $z\in[0,1]$，并定义光滑差商
+$$
+ \begin{aligned}
+ H_i(p,z)
+ &=-d_i(p)\int_0^1
+   C_x\bigl(p,x_0(r(p))+szd_i(p)\bigr)\,ds,\\
+ zH_i(p,z)
+ &=1-C\bigl(p,x_0(r(p))+zd_i(p)\bigr).
+ \end{aligned}
+\tag{212.19}
+$$
+$z>0$ 时，严格凹性给出 $H_i>0$；在 $z=0$，有
+$$
+ H_i(p,0)
+ =\frac{d_i(p)F_x(r(p),x_0(r(p)))}
+        {2\delta x_0(r(p))\sqrt{1-x_0(r(p))^2}}>0.
+\tag{212.20}
+$$
+因此在 $U_i$ 内可定义
+$$
+ \varphi(p)=2\arcsin\left(
+    \sin\eta_i(p)\sqrt{\frac{H_i(p,\sin^2\eta_i(p))}{2}}
+                     \right).
+\tag{212.21}
+$$
+反正弦的自变量位于 $[0,1/\sqrt2]$，所以它是 $C^\infty$ 函数。在 $\eta_i=0$ 的接缝处仍由同一个光滑公式给出零值；区间外取 $\varphi=0$。差商恒等式保证
+$$
+ \cos\varphi(p)=C(p,x(p)).
+\tag{212.22}
+$$
+第212.7式于是给出实际全区间精确纯态曲线
+$\rho_u=\psi(p(u),x(p(u)),\varphi(p(u)))\psi(p(u),x(p(u)),\varphi(p(u)))^\dagger$。无穷区间族的局部有限性保证每个内点附近只需拼接有限多个光滑函数，因此曲线仍为 $C^\infty$。
+
+还须确定全部校准点。在 $p_i$ 附近，$x=x_i$ 恒定；第212.18式表明 $C(p,x_i)$ 在 $p_i$ 有二重零点。因此 $\varphi(p_i)=\pi/2$、$\varphi'(p_i)=0$，第212.8式给出校准。
+
+反过来，在 $U_i$ 内且 $p<p_i$ 时，由 $r$ 严格递减，有 $x(p)\le x_i<r(p)$，故（212.9）排除校准。在 $p>p_i$ 且 $\chi_i=1$ 时，$x=x_i>r(p)$，同样排除。若 $p>p_i$ 且 $\chi_i<1$，则
+$$
+ \frac{dx}{dp}
+ =(1-\chi_i)\frac{d}{dp}x_0(r(p))
+      +\chi_i'(p)d_i(p)<0,
+\tag{212.23}
+$$
+因为第一项严格为负、第二项非正。所以第212.8式再次排除校准。各 $U_i$ 外由（212.14）排除校准，完整集合恰为 $S$。
+
+对任意有限非空 $S\subset J_a$，记 $p_{\min}=\min_{t\in S}(1+t)/2>a$，在（212.1）之外再取
+$$
+ \delta<1-\frac a{p_{\min}}.
+\tag{212.24}
+$$
+这使全部节点满足 $p_i>p_\delta$，从而得到所需实现。定理190.2排除任何联合支持维数至多二的全区间精确程序在内点达到 $I_r$，因此非空集合的最小联合支持维数为三。对固定的 $a,\delta$，$(u_\delta,1)$ 中任意多个节点都由同一个处理器处理，甚至可取 $t_i\uparrow1$；没有把节点数转移到新的正交旗标或辅助程序维数。证毕。
+
+**定理 212.4（同一处理器的实纯态校准限制）。** 对定义212.1的固定处理器，若全区间精确的 $C^1$ 纯态准备 $\rho_u$ 在（212.2）的基底中始终为实矩阵，则
+$$
+ \mathcal E(\rho)\subseteq\{u_\delta\}.
+\tag{212.25}
+$$
+因此定理212.3中任何非空 $S\subset(u_\delta,1)$ 的实现均不能在此固定基底中始终取实纯态。本结论针对同一个固定处理器，不是任意实处理器的校准点数上界。
+
+证明。 精确的 $02$ 系数给出 $\operatorname{Tr}(Q\rho_u)=q>0$。实纯态因而具有唯一的第三分量为正的实归一化表示
+$$
+ \psi_u=(\sqrt p\,x(u),\sqrt p\,y(u),\sqrt q)^{\mathsf T},
+ \qquad x^2+y^2=1.
+\tag{212.26}
+$$
+此表示为 $C^1$，例如前两个分量分别等于 $\rho_{13}/\sqrt q$ 与 $\rho_{23}/\sqrt q$。实纯态的信息差值为 $4p[(x')^2+(y')^2]$，故校准时 $x'=y'=0$。将实际期望 $f=pA(x,y)+Bx\sqrt{pq}$ 与其参数导数联立，如定理212.2的消元得到 $x=r(p)>0$。另一方面，精确期望的配方为
+$$
+ 0=f-a=p[-\lambda(x-r(p))^2+2\delta xy].
+\tag{212.27}
+$$
+所以校准时 $y=0$，继而 $x=1$、$r(p)=1$，即 $p=p_\delta$、$u=u_\delta$。证毕。
+
+纯态统计距离与相对相位导数的 Fisher 贡献见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），式（4）及其统计距离推导。本节使用该标准纯态信息公式，新增的约束是同一个三维处理器的全输入精确矩条件；其平方偏差由相对相位补偿，并通过单调拼接确定完整校准集合。准备仅声称在开区间 $C^\infty$，不声称解析拼接或闭端点光滑延拓；无穷集合的唯一聚集点位于参数域外。
+
+## 追加锚（本行以下为增补区）
