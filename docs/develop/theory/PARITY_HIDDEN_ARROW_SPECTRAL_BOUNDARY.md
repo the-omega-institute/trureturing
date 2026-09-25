@@ -291,3 +291,306 @@ $`J_1`$ 紧集在左端点零处必须一致右连续：否则可取紧集内收
 故确定中心版本的全部结论随之成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 55. 谱边界层的紧化轮廓与精确分离判据
+
+**定义 55.1（同一谱曲线的边界层余项）。** 保持定义 54.1 的原模型及记号，固定 $`U>0`$，
+记 $`S_M=U/\sqrt\delta`$，$`\psi(s)=s/(1+s)`$。定义右连续余项
+
+```math
+\mathcal B_M(s)=
+\begin{cases}
+ \mathcal Z_M(s\sqrt\delta)-\mathcal J_M-2s\sqrt\delta\,T_M,
+       &0\le s<S_M,\\
+ 0,&s\ge S_M,
+\end{cases}
+\qquad
+\widetilde{\mathcal B}_M(x)=
+\begin{cases}
+ \mathcal B_M\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.1)。
+
+$`S_M`$ 处采用右侧的零值；允许该处有跳跃。
+在第 53 章的同一实 Gaussian 空间上，令
+
+```math
+\mathcal E(s)=I_2(K_s^{\rm tail}),\qquad
+K_s^{\rm tail}(x,y)=2\mathrm{Ci}(\omega e^s|x-y|),\qquad s\ge0,
+\qquad
+\widetilde{\mathcal E}(x)=
+\begin{cases}
+ \mathcal E\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.2)。
+
+空间核的对角线取值不参与二重 Wiener 积分。
+
+**定理 55.2（原始数组的完整边界层轮廓）。** $`\mathcal E`$ 有一个在
+$`[0,\infty)`$ 连续且在无穷远几乎处处趋零的版本。
+对该版本，$`\widetilde{\mathcal E}\in C[0,1]`$，且
+
+```math
+\left(\widetilde{\mathcal B}_M,\mathcal J_M,T_M\right)
+\Longrightarrow
+\left(\widetilde{\mathcal E},\mathcal J_\infty,N_2\right)
+\quad\text{于 }D[0,1]_{J_1}\times\mathbb R^2.
+```
+
+式 (55.3)。
+
+该收敛为 C 紧，并可联合保留第 51 章的同一端点、固定紧区间轮廓、桥和偶极子。
+$`\mathcal J_\infty=b_*\gamma+I_2(H)`$ 与整个 $`\widetilde{\mathcal E}`$
+由同一个 $`\mathcal W_\rho`$ 产生，$`N_2`$ 独立于整个 $`\mathcal W_\rho`$。
+条件有界 Lipschitz 收敛依数据概率成立的先验空间、固定支持的无条件一致性
+以及未知方向的共同一致事件，均保持第 54 章的范围。
+若同时将谱曲线中的 $`V_M`$ 及二次坐标的中心换成 $`\gamma`$，
+余项 $`\mathcal B_M`$ 在每个有限样本上完全不变。
+
+证明。先证明连续对象的尾部和版本。
+第 53 章的 Ci 等距式及 Gaussian 卷积包络给出，对 $`s\ge0`$，
+
+```math
+\mathbb E|\mathcal E(s)|^2\le Ce^{-s},\qquad
+\partial_sK_s^{\rm tail}(x,y)=2\cos(\omega e^s|x-y|),\qquad
+\mathbb E|I_2(\partial_sK_s^{\rm tail})|^2\le8\gamma^2.
+```
+
+式 (55.4)。
+
+在每个固定区间上，核及其导数均平方可积。
+Bochner 积分与二重 Wiener 积分的连续性给出具有该弱导数的随机 $`H^1`$ 版本，
+因而有连续版本；可在可数个整端点区间上取相容版本。
+对第 54 章的单位区间不等式取期望，得
+
+```math
+\mathbb E\sup_{n\le s\le n+1}|\mathcal E(s)|^2\le Ce^{-n/2},
+\qquad
+\mathbb E\sup_{s\ge R}|\mathcal E(s)|^2\le Ce^{-\lfloor R\rfloor/2},
+\qquad R\ge0.
+```
+
+式 (55.5)。
+
+第二式把第一式求和。整数 $`R`$ 对应的尾部上确界递减，期望趋零，
+故其极限几乎处处为零。这同时给出所需的无穷远版本和紧化连续性。
+
+现回到实际数组。仍在固定截断索引集上用同一个辅助标签向量，令
+
+```math
+X_M(s)=\sum_{t\ne r}K_s^{\rm tail}(x_t,x_r)U_tU_r.
+```
+
+式 (55.6)。
+
+第 54 章的有限谱分解在 $`0\le s\le S_M`$ 上一致成立，
+其余误差及统一精确中心位移依概率趋零。
+先考虑任意固定 $`R<\infty`$。
+第 54 章的核及导数二阶界给出
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+ \|X_M\|_{H^1[0,R]}^2\le C_R.
+```
+
+式 (55.7)。
+
+因此在辅助联合律下，路径在 $`C[0,R]`$ 中紧。
+此处使用一维 $`H^1`$ 有界集的紧嵌入：
+其函数一致有界，增量至多为导数 $`L^2`$ 范数乘距离的平方根。
+条件版本先用条件 Markov 不等式，再用数据期望控制坏环境。
+
+还需识别与截距的联合有限维律。
+对任意固定 $`s_1,\ldots,s_m\in[0,R]`$，
+把核 $`H,K_{s_1}^{\rm tail},\ldots,K_{s_m}^{\rm tail}`$
+同时在空间远尾和近对角线外截断。
+它们在近对角线均至多为 $`C_R(1+|\log|x-y||)`$，
+远处至多为 Gaussian 空间包络可积的对数或有界函数。
+第 51 章不同组的实际两行估计因而给出
+
+```math
+\begin{aligned}
+\sup_{s\in[0,R]}\mathbb E_S
+ \sum_{\substack{t\ne r\\|x_t-x_r|\le\varepsilon}}
+ |K_s^{\rm tail}(x_t,x_r)|^2v_tv_r
+ &\le C_R\varepsilon(1+|\log\varepsilon|^2)+o(1),\\
+\sup_{s\in[0,R]}\mathbb E_S
+ \sum_{\substack{t\ne r\\|x_t|>A\ \mathrm{or}\ |x_r|>A}}
+ |K_s^{\rm tail}(x_t,x_r)|^2v_tv_r
+ &\le C_Re^{-c_R A^2}+o(1).
+\end{aligned}
+```
+
+式 (55.8)。
+
+这些是实际数据环境上的辅助方差界，不是实际后验噪声的矩收敛。
+截断后的一组连续核可由同一个有限空间分割上的矩形阶梯核逼近。
+对任一阶梯核 $`K=\sum_{i,j}k_{ij}\mathbf1_{I_i}\otimes\mathbf1_{I_j}`$，
+同一辅助向量给出精确恒等式
+
+```math
+\sum_{t\ne r}K(x_t,x_r)U_tU_r
+ =\sum_{i,j}k_{ij}U(I_i)U(I_j)
+  -\sum_i k_{ii}\sum_{x_t\in I_i}U_t^2.
+```
+
+式 (55.9)。
+
+第 49、51 章的混合联合中心极限定理和块内平方和集中，
+同时使这些量收敛到同一 $`\mathcal W_\rho`$ 上的二重积分，
+并与二次坐标的极限 $`N_2`$ 独立。
+有限核族的逼近误差由 (55.8) 和辅助二次型等距式控制；
+连续极限误差由 Wiener 等距式控制。
+这证明所需的联合有限维收敛，而非由不同对象的边缘律拼接联合律。
+结合 (55.7)、已有空间路径紧性及极限的连续性，即得固定 $`R`$ 的联合路径极限。
+
+统一中心位移、一次完整后验向量总变差比较及截断事件移除，
+按第 54 章转移上述有界测试。
+各条件误差在数据概率中趋零，因此亦得到固定 $`R`$ 的条件联合结论。
+没有把 $`H^1`$ 无界范数的期望经总变差传到实际后验。
+
+接着控制增长区间。
+第 54 章的单位区间求和对固定 $`R`$ 也成立，给出
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+ \sup_{R\le s\le S_M}|X_M(s)|^2
+ \le Ce^{-\lfloor R\rfloor/2}
+       +C\delta^{-1/2}\sqrt{\eta_M},\qquad
+\delta^{-1/2}\sqrt{\eta_M}\longrightarrow0.
+```
+
+式 (55.10)。
+
+统一精确中心、有限谱误差和一次向量比较从而证明，对任意 $`\varepsilon>0`$，
+
+```math
+\lim_{R\to\infty}\limsup_M\sup_S
+ \mathbb P_S\left\{\sup_{s\ge R}|\mathcal B_M(s)|>\varepsilon\right\}=0.
+```
+
+式 (55.11)。
+
+条件尾部误差亦在先取 $`M`$、再取 $`R`$ 的意义下依数据概率趋零。
+设 $`\chi_R`$ 在 $`[0,R]`$ 等于一，在 $`[R+1,\infty)`$ 等于零，
+并在中间线性连接。
+固定区间联合收敛给出 $`\chi_R\mathcal B_M`$ 紧化后的联合极限。
+由 (55.5)、(55.11)，去掉 $`\chi_R`$ 的一致范数误差在两端都趋零。
+对有界 Lipschitz 测试作三角估计，再令 $`R\to\infty`$，便得到 (55.3)。
+同一逼近证明 C 紧性；它也控制移动截断处的跳跃，未把有限谱曲线假定为连续。
+具体地，截断处的左极限由原余项在 $`[S_M-1,S_M]`$ 的上确界控制，
+该上确界依 (55.10) 和同一转移依概率趋零。
+被零延拓舍去的原始端点 $`u=U`$ 也由这个闭区间估计控制，
+因而后文对原始闭区间取最大值时不会漏掉端点。
+
+固定支持等价性和共同方向事件作用于整个已构造对象，保持联合结论。
+最后精确代入
+
+```math
+\mathcal Z_M^\circ(u)-\mathcal Z_M(u)
+ =\frac{2u}{\sqrt\delta}(V_M-\gamma),\qquad
+T_M^\circ-T_M=\frac{V_M-\gamma}{\sqrt\delta},
+```
+
+式 (55.12)。
+
+可见余项中两次中心变化完全相消。
+
+**定理 55.3（外层仿射近似的必要充分条件）。** 对任意确定性序列
+$`a_M\in[0,U)`$、$`a_M\to0`$，下列两条件等价：
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \longrightarrow0\quad\text{依概率},
+\qquad
+\frac{a_M}{\sqrt\delta}\longrightarrow\infty.
+```
+
+式 (55.13)。
+
+概率结论可取任意固定支持序列的无条件律；当条件成立时，
+第 54 章的固定支持一致性和条件版本同时成立。
+将中心同时换成 $`\gamma`$ 不改变这个等价关系。
+
+证明。充分性由定理 54.2 给出。
+若比例不趋无穷，则存在子列使 $`a_M/\sqrt\delta\to c<\infty`$。
+定理 55.2 的连续极限及确定性移动时刻取值给出
+
+```math
+\mathcal Z_M(a_M)-\mathcal J_M-2a_MT_M
+ =\mathcal B_M(a_M/\sqrt\delta)
+ \Longrightarrow\mathcal E(c).
+```
+
+式 (55.14)。
+
+$`K_c^{\rm tail}`$ 在对角线附近有非零对数奇性，
+而 $`\rho`$ 处处为正，故
+$`\mathbb E\mathcal E(c)^2=2\|K_c^{\rm tail}\|_{L^2(\rho\otimes\rho)}^2>0`$。
+因此该非零极限不可能同时依概率趋零，否定 (55.13) 的第一个条件。
+这个反证适用于任意固定支持序列，因为整个统计量的固定支持律由置换等变性相同。
+(55.12) 的精确相消最后给出确定中心版本。
+
+**推论 55.4（有限比例的最大误差律及一致概率障碍）。** 记
+$`r_M=a_M/\sqrt\delta`$。
+若 $`r_M\to c<\infty`$，则与定理 55.2 的同一联合对象一起，
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \Longrightarrow \sup_{s\ge c}|\mathcal E(s)|.
+```
+
+式 (55.15)。
+
+右侧保留与截距、端点和空间轮廓的共同 Gaussian 来源，并不声称独立。
+此外，对固定 $`R<\infty`$，令
+
+```math
+\begin{aligned}
+g(d)&=\int_{\mathbb R}\rho(x)\rho(x+d)\,dx
+      =g(0)e^{-\kappa d^2/4},\\
+z_0&=e^{-1-\gamma_{\mathrm E}},\qquad
+d_R=\min\{1,z_0/(\omega e^R)\},\qquad v_R=16d_Rg(1)>0.
+\end{aligned}
+```
+
+式 (55.16)。
+
+在任意满足 $`r_M\le R`$ 的子列上，任意固定支持序列均有
+
+```math
+\liminf_M\mathbb P_S\!\left\{
+ \sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+       >\sqrt{v_R/2}\right\}\ge\frac1{60}.
+```
+
+式 (55.17)。
+
+证明。紧化后的下端点 $`\psi(r_M)`$ 趋于 $`\psi(c)`$。
+在连续极限处，$`J_1`$ 收敛蕴含一致收敛；极限路径的一致连续性
+使移动下端点的尾部上确界成为连续泛函。
+定理 55.2 因而给出零延拓余项的 (55.15)。
+原始 $`u=U`$ 端点与其零替代值的差依概率趋零，故原闭区间也有同一极限。
+
+为证明定量障碍，使用
+$`\mathrm{Ci}(z)=\gamma_{\mathrm E}+\log z+\int_0^z(\cos t-1)\,dt/t`$。
+当 $`0<z\le z_0`$ 时，$`\mathrm{Ci}(z)\le-1`$。
+将方差积分限制在 $`0<|d|\le d_R`$，由 $`g(d)\ge g(1)`$ 得
+$`\inf_{0\le s\le R}\operatorname{Var}\mathcal E(s)\ge v_R`$。
+第二混沌的四阶矩不超过方差平方的十五倍，
+Paley–Zygmund 不等式遂给出
+$`\inf_{0\le s\le R}\mathbb P\{|\mathcal E(s)|>\sqrt{v_R/2}\}\ge1/60`$。
+对任意 $`r_M\le R`$ 的子列，再取比例收敛的子列，
+以 (55.14) 和开集 Portmanteau 将该下界转移到实际下端点余项，
+再用最大误差大于等于该余项的绝对值。
+若整个有界比例子列的下极限小于 $`1/60`$，可先取违反该下界的子列，
+再取比例收敛子列而得到矛盾，故 (55.17) 成立。
+此处始终转移概率，不用实际后验矩的收敛代替概率障碍。
+
+## 追加锚（本行以下为增补区）
