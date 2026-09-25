@@ -3470,3 +3470,374 @@ $$
 $t_M(0)\to\zeta b/\omega$，且 $t_M(\theta)-t_M(0)\to\theta$ 在紧区间上一致。第 60 章的相应奇偶共同连续过程极限可以直接代入；随机常数项抵消，留下 (63.7) 中相应实类的移频积分。这个等式解释有限失谐边缘律的复用，但不能决定不同 proper 类之间的联合关系；后者由 (63.8) 的两套 Gram 极限给出。
 
 ## 追加锚（本行以下为增补区）
+
+## 64. 亚临界载波的共同白噪声与观察区间的可识别性
+
+**定义 64.1（可比载波与细相位关系）。** 保留第 63 章的实际实验、有限截距和同一后验标签向量，固定载波数 $p$。取确定性参考量 $\eta_{*,M}\to\infty$，令
+
+$$
+L_M=\eta_{*,M}^2,\qquad L_M\delta_M\to0,\qquad
+\eta_{a,M}^2/L_M\to c_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad\omega=\pi/2.
+\tag{64.1}
+$$
+
+每个 $D_{a,M}$ 仍由 (63.2) 定义，先放大再在零点锚定。以 $\langle t\rangle\in(-\pi,\pi]$ 表示模 $2\pi$ 的代表，假定
+
+$$
+\frac{L_M}{\omega}\langle\phi_{a,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\pi\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}+\phi_{b,M}\rangle
+\tag{64.2}
+$$
+
+各自具有有限实极限或绝对值趋于无穷，包括 $a=b$。后两类有限极限记为 $d^-_{ab},d^+_{ab}$。有限差或有限和关系确定共同别名簇。零类与 $\pi$ 类的偏移分别是前两类有限极限 $b_a$；其余每类选代表相位 $q_{C,M}$，取相容符号 $\sigma_a\in\{-1,1\}$ 与偏移
+
+$$
+\frac{L_M}{\omega}
+\langle\phi_{a,M}-\sigma_a q_{C,M}\rangle\longrightarrow b_a.
+\tag{64.3}
+$$
+
+相位关系的相容性与第 63 章相同，分辨率改为 $\omega/L_M$。特别是一般类满足
+$L_M\operatorname{dist}(q_{C,M},\pi\mathbb Z)\to\infty$。
+参考量 $\eta_{*,M}$ 仅规定尺度，不要求它本身是某个预先固定相位的载波。
+
+**定理 64.2（实际亚临界联合过程）。** 对每个零类或 $\pi$ 类取一份标准 Brownian motion，并令
+$B_{C,\mathrm{odd}}(t)=\operatorname{sgn}(t)B_C(|t|)$。
+对每个其余的簇取一份标准两侧 Brownian motion $B_{C,\mathrm{two}}$，其正负两半独立。
+不同簇的噪声相互独立。则各固定紧区间上的实际有限过程族联合 C-tight 收敛，其极限为
+
+$$
+D_a(\theta)=4\sqrt{g_0c_a}
+\left[B_{C,\mathrm{odd}}(b_a+\theta/c_a)-B_{C,\mathrm{odd}}(b_a)\right]
+\tag{64.4}
+$$
+
+于实类，以及
+
+$$
+D_a(\theta)=4\sigma_a\sqrt{g_0c_a}
+\left[B_{C,\mathrm{two}}(\sigma_a(b_a+\theta/c_a))
+-B_{C,\mathrm{two}}(\sigma_a b_a)\right]
+\tag{64.5}
+$$
+
+于一般类。整个 Brownian 族、$N_2$ 与旧实高斯测度 $W_\rho$ 相互独立，包括零类。旧联合坐标保持在同一 $W_\rho$ 上，特别是
+$J_\infty=b_\star\gamma+I_2(H;W_\rho)$。
+原先的先验条件 BL 收敛、固定支持下的一致无条件收敛及共同方向事件保持；实际路径取紧区间 $J_1$ 拓扑。
+
+任意有限个正比率 $c_a$、相容簇、偏移与符号均可在原合法算术序列上实现。无需对数余量，也无需一般类代表相位有通常意义的极限。
+
+证明。第 63 章的有符号关系组合证明同样适用。反向闭链迫使代表接近 $0$ 或 $\pi$；(64.2) 排除在两者之间交替的例外类，其他类可以一致定向。实现性可直接取相位目标 $\psi_{a,M}=q_C+\omega b_a/L_M$ 或
+$\psi_{a,M}=\sigma_aq_{C,M}+\omega b_a/L_M$，并选最近整数
+
+$$
+n_{a,M}=\operatorname{round}
+\frac{\omega\sqrt{c_aL_M}-\psi_{a,M}}{2\pi},\qquad
+\eta_{a,M}=\frac{2\pi n_{a,M}+\psi_{a,M}}{\omega}.
+\tag{64.6}
+$$
+
+于是 $\eta_{a,M}=\sqrt{c_aL_M}+O(1)$，相位目标精确实现。
+
+先作实际有限谱比较。记 $\eta=\eta_{a,M}$，固定紧区间 $I$。有限 Fourier 恒等式与精确中心取消给出零对角系数
+
+$$
+K_{a,\theta}(k)=2\delta^{-1/2}b_{a,\theta}(|k|),\qquad
+b_{a,\theta}(k)=\eta^2
+\left[e^{\theta/(2\eta^3)}
+\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}k)
+-\operatorname{Ci}(\omega\eta k)\right].
+\tag{64.7}
+$$
+
+全部 Fourier、权重和 floor 误差乘以至多 $O(Q^{11/4})$，仍被 $e^{-cQ^3}$ 吸收。
+这里 $\eta_a=O(Q^{1/4})$，而 $z_{a,M}(\theta)\sqrt\delta\to0$，所以原频率区间最终包含全部固定紧区间。
+对 $y\ge1$ 与有界小量 $l$，Ci 尾积分及其一次分部积分给出
+
+$$
+|\operatorname{Ci}(ye^l)-\operatorname{Ci}(y)|
+\le C\min(|l|,y^{-1}),\qquad
+|\operatorname{Ci}(y)|\le C/y.
+\tag{64.8}
+$$
+
+拆开放大因子的变化可得
+
+$$
+|b_{a,\theta}(k)|
+\le C_I\left[\min(\eta^{-1},\eta/k)+\frac1{\eta^2k}\right]
+\le C_I\min(\eta^{-1},\eta/k).
+\tag{64.9}
+$$
+
+全计数截止域上的原始矩阵范数因此至多
+$C_I\delta^{-1/2}\eta(1+\log Q)\le C_IQ^{1/2}(1+\log Q)$。
+与第 56 章的 Hilbert 精确中心界组合，新的中心误差为
+$O_P(Q^{-2}(1+\log Q))+o_P(1)$。
+同一 $Q^{-60}$ 尾向量与核心 $q^{-1/8}$ 逆分布耦合同时控制全部有限载波和旧坐标。
+此处核心 Bernoulli 方差下界 $q^{9/10}$ 是未归一化方差。
+在同一标准正态向量上改用 Gaussian 单元质量 $m_j^\circ$，相对误差
+$O_P(Q^{-1}(1+\log Q))$ 产生路径误差
+$O_P(Q^{-1/2}(1+\log Q)^2)$。
+这些是新放大尺度上的界；没有再放大旧的未量化误差。
+
+令 $G_j=\sqrt{m_j^\circ}g_j$。在共同核心上，实际向量由连续参考二次型
+$D^G_{a,M}(\theta)=\sum_{j\ne k}K_{a,\theta}(j-k)G_jG_k$
+一致概率逼近。定义
+
+$$
+w_\delta(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ,\qquad
+g(x)=\int\rho(y)\rho(y+x)\,dy.
+$$
+
+Gaussian 密度的单元平均在 $L^2$ 中逼近原密度，Cauchy–Schwarz 与平移等距给出
+
+$$
+\sup_k|w_\delta(k)-g(k\delta)|\le C\delta+Ce^{-cH_Q^2},
+\qquad 0\le w_\delta(k)\le C.
+\tag{64.10}
+$$
+
+这个估计覆盖增长的滞后。Ci 的两次分部积分还给出
+
+$$
+\ell_{a,\theta}(k)=\frac{\eta_a}{\omega k}
+\left[\sin\left((\phi_a+\omega\theta/\eta_a^2)k\right)
+-\sin(\phi_ak)\right],
+\quad
+\sup_{\theta\in I}\sum_{k\ge1}|b_{a,\theta}(k)-\ell_{a,\theta}(k)|^2\to0.
+\tag{64.11}
+$$
+
+具体地，Ci 三阶余项的 $\ell^2$ 范数为 $O(\eta_a^{-1})$，
+锚定余弦项与正弦振幅误差各为 $O(\eta_a^{-2})$。
+相位线性化误差为 $O_I(\eta_a^{-5})$；由
+$\sum_{k\ge1}\min(k|u|,2)^2/k^2\le C|u|$，
+它的系数平方和为 $O(\eta_a^{-3})$。
+同时 $\sup_{\theta\in I}\sum_k|\ell_{a,\theta}(k)|^2\le C_I$。
+这些估计先用于协方差；路径紧性另由精确系数证明。
+
+两种滞后方向和 Gaussian 配对式给出
+
+$$
+\operatorname{Cov}(D^G_{a,M}(\theta),D^G_{b,M}(\psi))
+=16\sum_{k\ge1}w_\delta(k)b_{a,\theta}(k)b_{b,\psi}(k).
+\tag{64.12}
+$$
+
+对固定 $A$，在 $k\le AL_M$ 上有 $k\delta\to0$，故 (64.10) 的权重一致趋于 $g_0$。
+剩余系数积的绝对和至多 $CL_M\sum_{k>AL_M}k^{-2}\le C/A$。
+先令 $M\to\infty$ 再令 $A\to\infty$，可以把 (64.12) 化为
+$16g_0\sum_k\ell_{a,\theta}(k)\ell_{b,\psi}(k)$，无相位间距分母。
+
+使用经典余弦级数
+$C(t)=\sum_{k\ge1}\cos(kt)/k^2
+=\pi^2/6-\pi|\langle t\rangle|/2+\langle t\rangle^2/4$。
+其唯一尖点位于 $2\pi\mathbb Z$，在代表边界 $\pi$ 处光滑。
+积化和差后，有限相位差与相位和分别留下
+
+$$
+\begin{aligned}
+\Delta_-(d;A,B)&=|d+A-B|-|d+A|-|d-B|+|d|,\\
+\Delta_+(d;A,B)&=|d+A+B|-|d+A|-|d+B|+|d|.
+\end{aligned}
+$$
+
+因此极限协方差是
+
+$$
+8g_0\sqrt{c_ac_b}
+\left[
+-1_{\{d^-_{ab}\ {\rm 有限}\}}
+\Delta_-(d^-_{ab};\theta/c_a,\psi/c_b)
++1_{\{d^+_{ab}\ {\rm 有限}\}}
+\Delta_+(d^+_{ab};\theta/c_a,\psi/c_b)
+\right].
+\tag{64.13}
+$$
+
+若某项的相位距离乘以 $L_M$ 逃逸，四个相位最终处于余弦和的同一光滑二次分支。
+其混合差分只有 $O(L_M^{-2})$，乘以 $\eta_a\eta_b=O(L_M)$ 后趋零。
+有限相位项则由尖点的绝对值给出 (64.13)。
+分别代入奇延拓与两侧 Brownian 协方差，即得 (64.4)—(64.5) 的共同协方差，包括共轭方向外侧的 $\sigma_a$。
+
+还须证明联合 Gaussian 性。把参考矩阵作用在标准正态向量上，以 $\sqrt{m_j^\circ}$ 作 Schur 权重。
+令 $r_a=\eta_a^2\delta$，由 (64.9)，滞后区间 $[1,\eta_a^2]$、
+$(\eta_a^2,\delta^{-1}]$ 和 $(\delta^{-1},\infty)$ 分别给出
+$C\sqrt{r_a}$、$C\sqrt{r_a}(1+|\log r_a|)$ 和 $C\sqrt{r_a}$。
+最后一段只需 $|k|^{-1}\le\delta$ 与总质量有界，故对边缘行同样成立。于是
+
+$$
+\sup_{\theta\in I}\|\mathcal K_{a,\theta}\|_{\rm op}
+\le C_I\sqrt{r_a}(1+|\log r_a|)\longrightarrow0.
+\tag{64.14}
+$$
+
+对角坐标的算子范数为 $O(\sqrt\delta)$，方差趋于 $2g_0$；
+它与全部新零对角矩阵的 Hilbert–Schmidt 内积精确为零。
+任何固定线性组合仍有有界 Hilbert–Schmidt 范数与趋零的算子范数。
+对其特征值展开
+$\sum_j[-it\lambda_j-\frac12\log(1-2it\lambda_j)]$
+证明联合 Gaussian 极限，随后才由零交叉协方差得到与 $N_2$ 的独立性。
+对包含有限旧线性方向的投影 $P$，删除这些方向的误差至多
+$2\sqrt{\operatorname{rank}P}\|\mathcal K\|_{\rm op}$。
+剩余二次型与这些方向精确独立。先作有限圆柱逼近，再保留旧 $H$ 的共同矩形逼近和旧路径紧性，得到与整个旧场的联合独立性。
+零类也适用这一步；决定性条件是新算子范数趋零。
+
+最后证明任意小时间增量的紧性。直接在 (64.7) 使用 (64.8)，对 $d=|\theta-\psi|\le1$ 得
+
+$$
+|b_{a,\theta}(k)-b_{a,\psi}(k)|
+\le C_I\left[\min(d/\eta_a,\eta_a/k)+\frac{d}{\eta_a^2k}\right],
+\qquad
+\sum_{k\ge1}|b_{a,\theta}(k)-b_{a,\psi}(k)|^2\le C_Id.
+\tag{64.15}
+$$
+
+第二个式子在 $k=\eta_a^2/d$ 处分割；该分点超过实际截止也不影响上界。
+Gaussian 配对与第二混沌的第四矩界因此给出
+$\mathbb E|D^G_{a,M}(\theta)-D^G_{a,M}(\psi)|^4\le C_I|\theta-\psi|^2$。
+参考路径从零出发且连续，Kolmogorov 判据给出有限向量的联合紧性。
+统一概率逼近使实际 floor 路径 C-tight。
+旧 $J$、对角和线性坐标始终使用同一耦合；其质量尾、方差时钟及固定频率路径界沿用原证明。
+一次完整标签向量的 TV 比较只转移有界测试和概率事件。
+好环境子序列给出条件 BL 收敛，支持置换等变性给出一致无条件结论，共同方向事件同时保留整个向量。
+这不转移实际无界矩。
+
+**定理 64.3（指定增量的独立性由区间交叠决定）。** 记 $I_{u,v}$ 为有向区间指示函数：
+$u<v$ 时为 $1_{(u,v]}$，$u>v$ 时为 $-1_{(v,u]}$，相等时为零。
+对极限增量 $D_a(v)-D_a(u)$，在一般类定义
+
+$$
+f_{a;u,v}(y)=\sigma_a
+I_{\sigma_a(b_a+u/c_a),\,\sigma_a(b_a+v/c_a)}(y),\qquad y\in\mathbb R,
+\tag{64.16}
+$$
+
+在实类定义
+
+$$
+f_{a;u,v}(y)=
+I_{b_a+u/c_a,\,b_a+v/c_a}(y)
++I_{b_a+u/c_a,\,b_a+v/c_a}(-y),\qquad y>0.
+\tag{64.17}
+$$
+
+同类两个增量的协方差为
+
+$$
+16g_0\sqrt{c_ac_b}\int f_{a;u,v}(y)f_{b;u',v'}(y)\,dy,
+\tag{64.18}
+$$
+
+不同类的协方差为零。任意有限组增量相互独立，当且仅当对应 Gram 矩阵的所有非对角元为零。
+两个非零单增量在同类中独立，当且仅当有效区间交集的 Lebesgue 测度为零：
+一般类使用 (64.16) 的区间，实类使用原区间在绝对值映射下的像。
+实类的折叠重数影响协方差大小，不改变零交叠判据。
+
+对有限线性读数，先在每类把函数改为
+$\sum_a\alpha_a\sqrt{c_a}f_{a;u_a,v_a}$；
+独立性等价于这些直和空间向量正交，此时可以出现带符号的抵消。
+整个限制过程的独立性则要求全部时间读数所张成的闭子空间正交。
+
+证明。把一般类的两侧 Brownian 增量写成实白噪声作用于有向指示函数，即得 (64.16)。
+奇延拓满足
+$B_{\rm odd}(t)=\mathcal W(\operatorname{sgn}(t)1_{(0,|t|]})$，
+故跨过零点时两侧贡献相加，得到 (64.17) 的正折叠。
+每个单增量的函数符号恒为 $\operatorname{sgn}(v-u)$；折叠后可以取重数二，但不能变号。
+因此两个单增量的内积在正测度交叠上不可能抵消。
+Gaussian 联合律把零内积变成独立性，并给出有限向量与闭子空间的判据。
+
+这些区别都可由 (64.6) 实现。例如取 $c_1=c_2=1$。
+在同向一般类中，$b_1=0,b_2=2$ 的正时间一读数使用区间 $[0,1]$ 和 $[2,3]$，相互独立；
+把过程观察区间增至 $[0,3]$ 后，部分读数的区间开始交叠。
+在实类中，$b_1=1,b_2=-2$ 的正时间一读数使用 $[1,2]$ 和 $[-2,-1]$，原区间不交但折叠相同，两个读数相等。
+取两个不交且等长的正径向区间，其独立等方差读数 $X_1,X_2$ 满足
+$X_1+X_2$ 与 $X_1-X_2$ 独立；这里才发生有符号抵消。
+同一一般类、零偏移、相同比率且相反方向还满足
+$D_-(\theta)=-D_+(-\theta)$：
+其两个正半轴限制相互独立，整个双向过程仍共享同一噪声。
+这些是极限律的关系，不宣称有限后验独立或其协方差收敛。
+
+**定理 64.4（单窗口的局部不可辨与全局失谐分类）。** 对单载波仅假定
+$\eta_M\to\infty$、$\eta_M^2\delta_M\to0$，无需固定奇偶性。令
+
+$$
+a_M=\frac{\eta_M^2}{\omega}
+\operatorname{principal}_{\pi}(\omega\eta_M),
+\qquad \operatorname{principal}_{\pi}\in(-\pi/2,\pi/2].
+\tag{64.19}
+$$
+
+若 $a_M\to a\in\mathbb R$，则实际锚定过程趋于
+$4\sqrt{g_0}X_a(\theta)$，其中
+$X_a(\theta)=B_{\rm odd}(a+\theta)-B_{\rm odd}(a)$。
+若 $|a_M|\to\infty$，则极限为 $4\sqrt{g_0}B_{\rm two}$。
+两者都与完整旧场及 $N_2$ 联合独立。
+实际过程在所有固定紧区间上具有一个连续的联合极限，当且仅当 $a_M$ 在实直线的一点紧化中收敛；无穷点表示绝对值逃逸。
+
+对固定 $S,T>0$，参考过程 $X_a$ 在 $[-S,T]$ 上具有标准两侧 Brownian 律，当且仅当
+
+$$
+a\in(-\infty,-T]\cup[S,\infty).
+\tag{64.20}
+$$
+
+因此实际过程在这个固定区间上趋于 $4\sqrt{g_0}B_{\rm two}$ 的充要条件是
+$\operatorname{dist}(a_M,(-\infty,-T]\cup[S,\infty))\to0$；
+在所有紧区间上同时如此的充要条件才是 $|a_M|\to\infty$。
+
+证明。单载波的自协方差中整数奇偶因子自乘消失，所以 (64.12)—(64.15) 的论证无需 (64.2) 中例外类的奇偶稳定。
+余弦和的自差分给出
+
+$$
+\begin{aligned}
+2\operatorname{Cov}(X_a(\theta),X_a(\psi))
+={}&|\theta|+|\psi|-|\theta-\psi|\\
+&+|2a+\theta+\psi|-|2a+\theta|-|2a+\psi|+|2a|.
+\end{aligned}
+\tag{64.21}
+$$
+
+有限 $a_M$ 直接趋于此式；绝对值逃逸时第二行在每个固定区间最终恒为零。
+前述小算子与紧性证明分别识别这两种实际联合极限。
+
+若 $a>0$，有
+$\operatorname{Var}X_a(\theta)-|\theta|
+=2\min\{(-a-\theta)_+,a\}$。
+因此只在 $\theta\ge-a$ 的范围内具有两侧 Brownian 的全部限制律；
+该范围内原 Brownian 时间与锚点 $a$ 均非负，独立增量给出充分性。
+负 $a$ 由时间反射得到。$a=0$ 时每个单点方差虽仍为 $|\theta|$，
+异号时间协方差为 $-\min(|\theta|,|\psi|)$，与两侧独立律不同。
+这证明 (64.20)，含边界点。
+任意不含零点的观察区间还必须核对锚点：
+例如 $a=1$、区间 $[-3,-2]$ 不经过反射中心 $-1$，
+但 $X_1(-2)=-2B(1)$ 的方差为四，不能具有方差为二的两侧 Brownian 读数。
+
+全部有向时间上的过程律识别有限的带符号参数 $a$。
+正 $a$ 的方差偏离集合是 $(-\infty,-a)$，负 $a$ 的偏离集合是 $(-a,\infty)$；
+$a=0$ 与无穷点则由异号协方差区分。
+有限参数下还有同一实现上的关系
+$X_a(\theta)+X_a(-2a-\theta)=X_a(-2a)$。
+把 $a$ 改为 $-a$ 对应时间反射，不是在保留时间方向时得到相同的律。
+
+这一族在一点紧化上连续：有限处由共同 Brownian 连续路径的平移得到，
+无穷处在任意固定紧区间最终已具有两侧 Brownian 律；
+统一界
+$\operatorname{Var}(X_a(\theta)-X_a(\psi))\le2|\theta-\psi|$
+给出共同紧性。实际过程的紧性也对相位一致。
+对子列取一点紧化中的聚点，实际极限定理与过程律的单射性给出全局收敛的充要条件。
+在固定 $[-S,T]$ 上同理使用 (64.20)，得到距离条件。
+这些都是路径律与有界测试的推论，没有利用实际矩收敛。
+
+最后，固定 $A>\max(S,T)$，取 $m_M=\lfloor Q^{1/8}\rfloor$，
+令 $b_M$ 在 $A,-A$ 间交替，设
+$\eta_M=2m_M+b_M/(4m_M^2)$。
+则 $\eta_M^2\delta_M\to0$，$a_M=b_M+o(1)$。
+该实际序列在指定有限区间上有同一个两侧 Brownian 极限，全局却有两个不同的子列极限。
+这在原实验内实现了局部读数不足以识别全局失谐的区别。
+
+## 追加锚（本行以下为增补区）
