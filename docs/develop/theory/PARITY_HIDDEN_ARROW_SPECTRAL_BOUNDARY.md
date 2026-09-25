@@ -1107,3 +1107,286 @@ D_Q&=\sum_{j\in\mathcal C_Q}\frac{m_j^\circ}{\sqrt\delta}\,e_j\otimes e_j,\\
 不包含数据自适应频率、增长的 $`I`$ 或 $`R_M\delta`$ 趋于正数的情形。
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 临界谱网格、共振及跨尺度独立性
+
+**定义 57.1（临界网格过程）。** 保持定义 54.1 的原始模型和有限截距，
+固定 $`\varrho\in(0,\infty)`$，取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad
+r_M=e^{s_M}\delta\longrightarrow\varrho,
+\qquad
+\mathcal U_M^{\rm cr}(t)=e^{(s_M+t)/2}
+ \{\mathcal Z_M((s_M+t)\sqrt\delta)-\mathcal J_M
+                       -2(s_M+t)\sqrt\delta\,T_M\}.
+```
+
+式 (57.1)。
+
+参数 $`\varrho`$ 表示网格尺度，与固定信号幅度不同。
+在独立于旧 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上定义
+
+```math
+G_\varrho(t)=4\sqrt{\varrho g_0}\,e^{t/2}
+       \sum_{k\ge1}\mathrm{Ci}(\omega\varrho e^t k)\xi_k,
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (57.2)。
+
+级数先按均方定义，再取下面证明的连续版本。
+所有 $`\varrho>0`$ 共用这一个序列。
+
+**定理 57.2（两种实际实验的临界网格律）。** 对每个固定紧时间区间 $`I`$，
+两种原始平稳实验都满足
+
+```math
+(\mathcal U_M^{\rm cr}|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(G_\varrho|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0.
+```
+
+式 (57.3)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight；
+旧坐标保持定理 56.2 的共同来源。
+新过程独立于整个联合对象 $`(N_2,W_\rho)`$，协方差是
+
+```math
+C_\varrho(t,u)=16\varrho g_0e^{(t+u)/2}
+ \sum_{k\ge1}\mathrm{Ci}(\omega\varrho e^t k)
+                  \mathrm{Ci}(\omega\varrho e^u k).
+```
+
+式 (57.4)。
+
+条件先验、无条件固定支持一致性和共同方向事件保持定理 56.2 的范围。
+同时改变两个方差中心时放大余项仍逐样本相同。
+
+证明。这里 $`e^{s_M}\le C\delta^{-1}`$，
+且谱曲线的取值点最终落在任意固定正外区间内。
+第 56 章从实际占用到同一个 Gaussian 格向量的误差估计
+(56.5)–(56.18) 只需 $`R\le C\delta^{-1}`$；
+其中常数可随此处固定 $`\varrho`$ 和时间紧区间改变。
+具体而言，增长核心 $`H_Q=\sqrt{K\log Q}`$ 上的方差相对误差仍为
+$`O_{\mathbb P}(Q^{-3/2}(1+\log Q)^{3/2})`$，
+最小组方差至少 $`q^{9/10}`$，非核心加权方差质量可取至多 $`Q^{-60}`$。
+完整截断上矩阵范数至多 $`CQ^{9/4}(1+\log Q)`$，
+故放大后的精确中心误差、共同逆分布耦合误差、有限 Fourier 取整误差
+及核心外误差全部趋零。
+格质量替换的核心误差仍为 $`O_{\mathbb P}(Q^{-1/4}(1+\log Q)^{5/2})`$。
+这些步骤联合保留旧截距、二次坐标和线性路径。
+
+因此只需研究同一格向量 $`G_j=W_\rho(1_{I_j})`$ 的二次型。
+记 $`m_j^\circ=\int_{I_j}\rho`$，核心外将此质量置零，并令
+$`h_Q(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ`$。
+Gaussian 密度的格和给出
+
+```math
+0\le h_Q(k)\le C\quad(k\in\mathbb Z),\qquad
+h_Q(k)\longrightarrow g_0\quad\hbox{对每个固定 }k.
+```
+
+式 (57.5)。
+
+前者也由 $`\max_jm_j^\circ\le C\delta`$ 与质量总和有界得到；
+后者是固定间距 $`k\delta\to0`$ 下的 Riemann 和，核心外由 Gaussian 尾移除。
+在独立标准正态格坐标下，参考矩阵的非对角元为
+
+```math
+(A_Q(t))_{jl}=2\sqrt{r_M/\delta}\,e^{t/2}
+ \mathrm{Ci}(\omega r_Me^t|j-l|)\sqrt{m_j^\circ m_l^\circ},
+\qquad (A_Q(t))_{jj}=0.
+```
+
+式 (57.6)。
+
+Wick 恒等式于是给出
+
+```math
+2\operatorname{tr}(A_Q(t)A_Q(u))
+ =8r_Me^{(t+u)/2}\sum_{k\ne0}
+    \mathrm{Ci}(\omega r_Me^t|k|)
+    \mathrm{Ci}(\omega r_Me^u|k|)h_Q(k).
+```
+
+式 (57.7)。
+
+因为 $`r_M`$ 保持在正的紧区间内，Ci 的倒数包络将每个求和项
+一致控制在 $`C_I/k^2`$ 之下。
+(57.5) 与支配收敛证明 (57.4)，其中两个距离方向产生额外的因子二。
+采样核此时保留离散间距，所以不需要连续核近似。
+
+同一倒数界还给出
+
+```math
+|(A_Q(t))_{jl}|\le \frac{C_I\sqrt\delta}{|j-l|},\qquad
+\sup_{t\in I}\|A_Q(t)\|_{\rm op}
+ \le C_I\sqrt\delta(1+\log|\mathcal C_Q|)\longrightarrow0.
+```
+
+式 (57.8)。
+
+这是真正的算子范数控制；仅有逐行方差小不能排除一个存活的大特征值。
+二次坐标的格矩阵 $`D_Q`$ 仍满足 (56.27)，
+且 $`\operatorname{tr}(A_Q(t)D_Q)=0`$ 严格成立。
+对任意有限时刻及 $`D_Q`$ 的混合线性组合应用 (56.28)，
+先得联合 Gaussian 极限，再由交叉协方差为零推出与 $`N_2`$ 的独立性。
+(56.29) 的有限秩删除论证同时使这个联合对象独立于整个旧 $`W_\rho`$。
+(56.30) 又在同一个空间识别 $`\mathcal J_\infty`$，
+故旧非 Gaussian 截距不需重新抽取。
+
+紧性直接从整数距离级数获得。
+对 $`c`$ 在正的紧集内，置
+$`q_{c,k}(t)=e^{t/2}\mathrm{Ci}(\omega ce^t k)`$。
+在固定时间紧集上，$`|q_{c,k}|\le C_I/k`$、$`|q'_{c,k}|\le C_I`$，故
+
+```math
+|q_{c,k}(t)-q_{c,k}(u)|\le C_I\min\{|t-u|,k^{-1}\},\qquad
+\sum_{k\ge1}|q_{c,k}(t)-q_{c,k}(u)|^2\le C_I|t-u|.
+```
+
+式 (57.9)。
+
+最后一式在 $`k=|t-u|^{-1}`$ 处分割求和，
+对任意小的时间间距都成立，不要求时间格。
+(57.5)、二次型等距式与第二混沌四阶界遂给出参考路径的
+二阶增量 $`C_I|t-u|`$ 和四阶增量 $`C_I|t-u|^2`$。
+Kolmogorov 判据给出连续参考路径的紧性。
+同一增量计算应用于 (57.2)，证明该 Gaussian 级数有连续版本。
+不能把级数逐项求导后要求导数平方可和，因为余弦项不满足该条件。
+
+共同向量耦合给出整个紧区间的一致概率逼近。
+最后以一次完整后验向量比较转移有界测试和紧性事件；
+坏环境、计数截断及方向错误只按概率移除。
+条件数据子列论证和支持置换等变性与定理 56.2 相同。
+由一致逼近可知原始取整路径的跳幅趋零，得到 (57.3) 的 C-tight 性。
+上述论证没有转移实际后验无界矩。
+
+**定理 57.3（同一临界过程族的连续极限与共振）。** 以同一正态序列实现的
+连续过程可以选为满足
+
+```math
+G_\varrho(t+c)=G_{\varrho e^c}(t),\qquad
+C_\varrho(t+c,u+c)=C_{\varrho e^c}(t,u).
+```
+
+式 (57.10)。
+
+当 $`\varrho\downarrow0`$ 时，$`G_\varrho|_I`$ 在每个 $`C(I)`$ 中趋于
+协方差为 (56.4) 的平稳 OU 过程；该收敛相对于
+$`\sigma(\xi_1,\xi_2,\ldots)`$ 是 mixing。
+每个固定正 $`\varrho`$ 的全实轴过程则非平稳。
+置 $`V(z)=C_z(0,0)`$，当 $`z\to\infty`$，令
+$`\theta=\omega z\bmod\pi\in[0,\pi)`$，则一致地有
+
+```math
+V(z)=\frac{8g_0}{\omega^2z}\theta(\pi-\theta)+O(z^{-2}).
+```
+
+式 (57.11)。
+
+在精确共振 $`\omega z\in\pi\mathbb Z`$ 上，更强地有
+
+```math
+V(z)=\frac{16g_0\zeta(4)}{\omega^4z^3}+O(z^{-5}).
+```
+
+式 (57.12)。
+
+这些 $`z`$ 渐近结论描述已识别的 Gaussian 过程族，不改变实际定理 (57.3)
+要求网格比例趋于固定正数的量词。
+
+证明。先在有理参数上由级数逐项核对 (57.10)，
+再用 $`G_\varrho(t)=G_1(t+\log\varrho)`$ 选择所有连续版本。
+对固定时间紧集，Ci 乘积近零由 $`C(1+|\log|x||)^2`$ 控制，
+远处由 $`C/x^2`$ 控制；环带上关于空间与时间一致连续。
+删去中心小带和远尾后用一致 Riemann 和，再恢复它们，得
+
+```math
+\varrho\sum_{k\ne0}
+ \mathrm{Ci}(\omega\varrho e^t|k|)\mathrm{Ci}(\omega\varrho e^u|k|)
+ \longrightarrow
+ \int_{\mathbb R}\mathrm{Ci}(\omega e^t|x|)
+                 \mathrm{Ci}(\omega e^u|x|)\,dx
+ =\frac{\pi}{\omega e^{\max(t,u)}}.
+```
+
+式 (57.13)。
+
+最后一个恒等式是 (56.19) 的同一 $`L^2`$ Fourier 计算。
+因此协方差一致趋于 $`16g_0e^{-|t-u|/2}`$。
+紧性不能直接套 (57.9) 中依赖正下界的常数；
+改用 (56.25) 及归一化格和
+$`r\sum_k\min\{d^2,(rk)^{-2}\}\le Cd`$，
+便得对 $`0<\varrho\le1`$ 一致的二阶增量 $`C_I|t-u|`$。
+Gaussian 四阶矩和 Kolmogorov 判据补上 $`C(I)`$ 收敛。
+对每个固定 $`k`$，(57.2) 的系数是
+$`O_I(\sqrt\varrho(1+|\log\varrho|))\to0`$。
+因而新路径与任意有限组 $`\xi_k`$ 的交叉协方差趋零，
+联合 Gaussian 性先给出与有限柱的独立极限；
+对整个序列的有界可测测试作 $`L^1`$ 柱条件期望逼近，得到 mixing。
+
+由 (57.13)，$`V(z)\to16g_0`$ 当 $`z\downarrow0`$；
+倒数包络则给出 $`V(z)\le C/z\to0`$ 当 $`z\to\infty`$。
+所以 $`C_\varrho(t,t)=V(\varrho e^t)`$ 在全实轴上不恒定。
+此结论不要求方差在每个小区间严格单调。
+
+两次分部积分给出
+$`\mathrm{Ci}(x)=\sin x/x-\cos x/x^2+O(x^{-3})`$，$`x\ge1`$。
+在 (57.4) 的方差级数中逐项平方，余项由可和的 $`k^{-3}`$、$`k^{-4}`$ 控制，得
+$`V(z)=16g_0(\omega^2z)^{-1}\sum_{k\ge1}\sin^2(\omega zk)/k^2+O(z^{-2})`$。
+经典 Bernoulli 多项式 Fourier 级数给出
+$`\sum_{k\ge1}\sin^2(k\theta)/k^2=\theta(\pi-\theta)/2`$，
+即 (57.11)，其误差在相位上一致。
+在精确共振上正弦项全消；再作两次分部积分，得
+$`\mathrm{Ci}(\omega zk)=-\cos(\omega zk)/(\omega zk)^2+O((zk)^{-4})`$。
+平方求和即 (57.12)。不能用 (57.11) 的绝对误差在接近共振时直接推出等价式。
+
+**定理 57.4（同一实际数据的两个分离谱尺度）。** 在同一个完整后验标签向量上，
+分别取确定性序列
+
+```math
+R_M^{\rm lo}\longrightarrow\infty,\quad
+r_M^{\rm lo}=R_M^{\rm lo}\delta\longrightarrow0,
+\qquad R_M^{\rm cr}\delta\longrightarrow\varrho\in(0,\infty),
+```
+
+式 (57.14)。
+
+以 (56.2) 的同一公式构造两个放大余项。
+在各自固定紧时间区间上，两个过程与全部旧坐标联合收敛到
+$`(\mathcal U,G_\varrho,N_2,W_\rho)`$ 所决定的对象，
+其中 $`\mathcal U`$、$`G_\varrho`$、$`N_2`$ 三者相互独立，
+且联合独立于整个旧 $`W_\rho`$。
+条件先验、无条件支持一致性及方向范围与定理 57.2 相同。
+
+证明。用同一增长核心、同一组均匀变量和同一格 Gaussian 向量，
+同时进行第 56 章及定理 57.2 的实际误差替换。
+有限个过程的误差仍一致依概率趋零，两个边缘的紧性给出乘积紧性。
+剩下的义务是混合协方差，而不是再拼接两个边缘极限。
+写 $`r=r_M^{\rm lo}`$。由 (57.5) 和临界 Ci 的倒数包络，
+两个 Gaussian 二次型的交叉协方差绝对值至多为
+
+```math
+C\sqrt r\sum_{k\ge1}\frac{|\mathrm{Ci}(\omega r e^t k)|}{k}
+ \le C\sqrt r(1+|\log r|^2)\longrightarrow0,
+```
+
+式 (57.15)。
+
+常数在两个时间紧区间上一致。
+对 $`k\le1/r`$ 使用对数包络，调和求和给出 $`O(1+|\log r|^2)`$；
+对 $`k>1/r`$ 用倒数包络，余和为 $`O(1)`$。
+所有低频与临界矩阵的算子范数分别由 (56.23)、(57.8) 趋零，
+混合有限线性组合也如此。
+其与 $`D_Q`$ 的内积均为零。
+所以 (56.28) 对全部混合组合证明联合 Gaussian 性，
+然后 (57.15) 和对角正交给出三者相互独立。
+有限秩删除和旧核逼近保留与整个旧噪声的联合独立性。
+最后仍只对完整原后验向量作一次总变差比较，得到实际联合结论。
+
+## 追加锚（本行以下为增补区）
