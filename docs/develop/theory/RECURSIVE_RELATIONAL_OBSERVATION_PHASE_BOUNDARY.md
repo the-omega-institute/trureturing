@@ -14196,3 +14196,432 @@ $$
 本节没有排除全部七维接收器。第二终端秩二的候选须满足上述三种尾模式及环境交叠下界；第二终端纯而第一终端秩二的候选仍未结算。全部早期终端纯的非周期环境也未在此归约。一般六终端固定 CPTP 接收容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
 
 ## 追加锚（本行以下为增补区）
+
+## 54. 七维第一终端秩二时的尾环境封闭性
+
+### 54.1 实际来源、早期等距块与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器 $K$ 独立纯启动，同一个全域 CPTP 通道逐轮作用，前六个终端恢复完整参考—活动记忆—原档案联合态。记可逆编码固定附加态的秩为 $r_n$，本节取 $r_2=1$、$r_1=2$。
+
+固定该通道同一份 Stinespring 等距，记 $V_i x=V(x\otimes|i\rangle)$。第一步与第二步纯化比较给两个正数 $\lambda_1,\lambda_2$，四个正交单位接收向量 $p_1,q_1,p_2,q_2$，以及两组正交单位环境向量 $e_1,e_2$ 和 $f_1,f_2$，满足
+$$
+V_0k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,p_\alpha\otimes e_\alpha,
+\qquad
+V_1k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,q_\alpha\otimes e_\alpha,
+\tag{54.1}
+$$
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+\tag{54.2}
+$$
+这里 $k$ 是单位初态，$u,v,w$ 正交归一，$\lambda_1+\lambda_2=1$。令
+$$
+P_0=\operatorname{span}(p_1,p_2),\quad
+X=\operatorname{span}(p_1,q_1,p_2,q_2),\quad
+F=\operatorname{span}(f_1,f_2),\quad
+U=\operatorname{span}(u,w).
+$$
+所以 $\dim P_0=2$、$\dim X=4$、$\dim F=2$，且
+$$
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{54.3}
+$$
+第二至第六终端均纯；第三至第六轮新环境是输入无关单位向量 $\eta_3,\eta_4,\eta_5,\eta_6$。写实际来源两列
+$$
+\Psi_n^i=|0\rangle_Mu_n^i+|1\rangle_Mv_n^i,\qquad
+H_n=\operatorname{span}(u_n^0,u_n^1),\quad
+G_n=\operatorname{span}(v_n^0,v_n^1),\quad C_n=H_n+G_n.
+$$
+各 $H_n,G_n$ 二维，$C_2$ 三维、$C_n$ 在 $n\ge3$ 时四维；第二终端有
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U.
+\tag{54.4}
+$$
+对 $3\le n\le6$，有二维 $Q_n$ 使
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{54.5}
+$$
+同轮来源递推使 $H_n$ 到 $G_n$ 和 $Q_n$ 的两个正交投影均为同构，且 $C_n=G_n\oplus Q_n$。
+
+**定理54.1（秩二第一终端的二维尾环境封闭性）。** 在上述七维六终端合同中，若第一终端可逆附加态秩为二、第二终端纯，则
+$$
+\boxed{
+\operatorname{span}(\eta_3,\eta_4,\eta_5,\eta_6)=F,
+\qquad \dim F=2.
+}
+$$
+因此四个纯尾环境都属于第二轮排出附加因子的同一二维环境空间，并且不能全部沿一条射线。结论不要求这些射线彼此正交，也不排除二维空间内的其余候选。
+
+下面先给矩形像约束下的一般环境模式，再证明共同纯尾的交叠限制，并排除两种外部模式，最后合并得到主结论。
+
+### 54.2 矩形像后的环境模式
+
+设 $K$ 七维，$E$ 为环境 Hilbert 空间，$V_0,V_1:K\to K\otimes E$ 为固定等距。给二维子空间 $A\subset K$、$F\subset E$，满足
+$$
+A\otimes F\subset V_0K.
+\tag{54.6}
+$$
+给有限尾长 $L\ge2$、二维接收子空间 $G_0=A,G_1,\ldots,G_L$，二维 $Q_1,\ldots,Q_L$，以及单位环境向量 $\eta_1,\ldots,\eta_L$，满足
+$$
+G_j\otimes\eta_j\subset V_0K,\qquad
+V_1G_{j-1}=Q_j\otimes\eta_j\quad(1\le j\le L).
+\tag{54.7}
+$$
+该抽象引理不要求 $V_0K\perp V_1K$；实际 CPTP 接收器还满足这个额外正交条件。
+
+**引理54.2（矩形像后的环境模式）。** 尾环境只有以下三种可能形式：
+
+1. 全部 $\eta_j\in F$；此项不限制它们在 $F$ 内的射线。
+2. 存在一条不包含于 $F$ 的射线 $O$，全部 $\eta_j\in O$。
+3. 存在一条不包含于 $F$ 的射线 $O$ 和一条包含于 $F$ 的射线 $B$，尾环境严格按 $O,B,O,B,\ldots$ 交替。
+
+这只是必要模式，不主张每种模式均可实现。
+
+**证明。** 两个简单的张量维数事实先单独说明。
+
+第一，所有 $\eta_j$ 在 $E/F$ 中的像至多张成一维。若两个像独立，则 $A\otimes F$ 与这两个对应的 $G_j\otimes\eta_j$ 为 $4+2+2=8$ 维代数直和，不能同处七维 $V_0K$。
+
+第二，若 $J$ 是一组环境在 $F$ 内的指标，且
+$$
+R_F=(A\otimes F)+\sum_{j\in J}G_j\otimes\eta_j,
+\qquad \dim R_F\le5,
+\tag{54.8}
+$$
+则
+$$
+\dim\left(A+\sum_{j\in J}G_j\right)\le3.
+\tag{54.9}
+$$
+令 $\pi_A:K\to K/A$。$(\pi_A\otimes I_E)|_{R_F}$ 的核恰为四维 $A\otimes F$，所以其像至多一维。如果像为零，（54.9）立即成立。否则该像含有某个非零纯张量 $u\otimes f$，且全部 $\pi_A(G_j)\otimes\eta_j$ 都在此单线内；因此所有非零 $\pi_A(G_j)$ 都在共同接收商线 $\mathbb Cu$ 内，仍给（54.9）。
+
+**首环境在 $F$ 内时不会离开。** 若 $\eta_1\in F$，反设 $t\ge2$ 是第一个 $\eta_t\notin F$ 的指标。式（54.8）对 $J=\{1,\ldots,t-1\}$ 的 $R_F$ 与 $G_t\otimes\eta_t$ 交零，故 $\dim R_F\le5$。由（54.9），二维 $G_{t-2}$ 和 $G_{t-1}$（当 $t=2$ 时前者是 $G_0=A$）都在同一至多三维空间中，交非零。固定 $V_1$ 将它们分别送到环境 $\eta_{t-1}\in F$ 和 $\eta_t\notin F$，不同环境线迫使输入交为零，矛盾。因此全部环境在 $F$ 内。
+
+**首环境在 $F$ 外时，全部外部环境同射线。** 现在取 $\eta_1\notin F$。若 $\eta_j\notin F$、$\eta_j\not\parallel\eta_1$，第一条维数事实给
+$$
+\eta_j=c\eta_1+f,\qquad c\ne0,\quad0\ne f\in F.
+$$
+逐个环境分量比较得到
+$$
+\bigl(A\otimes F+G_1\otimes\eta_1\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_1\cap G_j)\otimes\eta_j.
+\tag{54.10}
+$$
+左侧两个空间分别六维和二维，同处七维 $V_0K$，故交非零，特别有 $A\cap G_1\ne0$。固定 $V_1$ 因而强制 $\eta_2\parallel\eta_1$。
+
+若 $\eta_2\parallel\eta_1$，当 $L=2$ 时已得到全部尾环境共线；当 $L\ge3$ 时，$G_1+G_2$ 至多三维，因为其张量共同外部环境的像与 $A\otimes F$ 交零。因此 $G_1\cap G_2\ne0$，固定 $V_1$ 给 $\eta_3\parallel\eta_2$。对每个仍有后继的指标重复该论证，全部后续环境都与 $\eta_1$ 共线。这与上面选取的 $\eta_j$ 矛盾。
+
+所以全部外部环境均属于同一射线 $O=\mathbb C\eta_1$。若 $\eta_2\in O$，已经得到全 $O$ 模式；只需讨论 $\eta_2\in F$。
+
+**外部与内部的后继被固定。** 令
+$$
+R_O=\sum_{\eta_j\in O}G_j,
+\qquad
+R_F=(A\otimes F)+\sum_{\eta_j\in F}G_j\otimes\eta_j.
+$$
+两份零位像 $R_O\otimes\eta_1$ 和 $R_F$ 交零。$\dim R_F\ge4$、$\dim R_O\ge2$，故
+$$
+\dim R_O\le3,\qquad \dim R_F\le5.
+\tag{54.11}
+$$
+于是（54.9）给 $A+\sum_{\eta_j\in F}G_j$ 至多三维。
+
+每个内部指标 $j<L$ 都有 $A\cap G_j\ne0$；固定 $V_1$ 在 $A=G_0$ 上产生环境 $\eta_1\in O$，在 $G_j$ 上产生 $\eta_{j+1}$，所以
+$$
+\eta_j\in F\Longrightarrow\eta_{j+1}\in O.
+\tag{54.12}
+$$
+另一方面，每个外部指标 $j<L$ 都有 $G_1\cap G_j\ne0$，因为它们均二维且都位于至多三维 $R_O$。固定 $V_1$ 在 $G_1$ 上产生 $\eta_2$，故
+$$
+\eta_j\in O\Longrightarrow\eta_{j+1}\parallel\eta_2.
+\tag{54.13}
+$$
+式（54.12）、（54.13）给严格交替模式，内部环境的射线固定为 $B=\mathbb C\eta_2\subset F$。证明完毕。
+
+### 54.3 共同纯尾的环境交叠限制
+
+考虑七维固定 CPTP 接收器服务前六个完整参考终端的非退化来源，且第二终端纯。沿标准早期可逆编码，记第二终端接收向量 $u,v,w$ 正交单位，
+$$
+U=G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad ab\ne0.
+\tag{54.14}
+$$
+第二轮排出第一终端附加因子的环境空间记为 $F$。它维数等于第一终端附加态秩 $r_1\ge1$，且固定 Stinespring 等距的两个位块满足
+$$
+U\otimes F\subseteq V_0K,\qquad
+\mathbb Cv\otimes F\subseteq V_1K.
+\tag{54.15}
+$$
+假设第三至第六轮的新环境为同一条纯射线；统一选取单位代表 $\eta$。实际系数空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta,\qquad
+V_1G_{n-1}=Q_n\otimes\eta\quad(3\le n\le6),
+\tag{54.16}
+$$
+其中各 $H_n,G_n,Q_n$ 二维，$C_2=H_2+G_2$ 三维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。实际 $H_n$ 到 $G_n$、$Q_n$ 的两个正交投影均为同构。
+
+**引理54.3（共同纯尾的环境交叠限制）。** 上述共同纯尾环境必须满足
+$$
+\boxed{\eta\perp F.}
+\tag{54.17}
+$$
+
+**证明。** 反设 $\eta$ 与 $F$ 有非零交叠。令
+$$
+S_0=H_2+H_3+H_4+H_5,\qquad
+S_1=U+G_3+G_4+G_5.
+$$
+去掉共同环境得到等距 $f:S_0\to K$、$g:S_1\to K$。置
+$$
+R=fS_0=G_3+G_4+G_5+G_6,\qquad W=gS_1.
+\tag{54.18}
+$$
+不同输入位正交给 $R\perp W$，所以
+$$
+\dim S_0+\dim S_1\le7.
+\tag{54.19}
+$$
+式（54.15）与非零环境交叠又给
+$$
+U\perp W,\qquad v\perp R.
+\tag{54.20}
+$$
+
+两个输入和的维数都至少三。若 $\dim S_1=2$，则 $U=G_3=G_4$，进而 $fH_2=fH_3$，与 $C_2$ 三维、$C_3$ 四维矛盾。若 $\dim S_0=2$，则 $H_2=H_3=H_4$、$G_3=G_4$；这使 $(H_3,G_3)=(H_4,G_4)$，但第53节式（53.14）的两个来源主角特征值相乘给
+$$
+\delta_n=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0,
+\quad x=|a|^2,\ y=|b|^2,\ t_j=1-y t_{j-1},\ t_0=1.
+\tag{54.21}
+$$
+因此只需处理 $\dim S_0=3$ 或 $4$。
+
+**若 $\dim S_0=3$。** 此时 $R$ 三维，并且 $G_3+G_4+G_5=R$：否则三个二维空间相等，由 $f$ 单射得 $H_2=H_3=H_4$，仍与（54.21）矛盾。因此 $S_1=U+R$。式（54.20）及 $R\perp W$ 使 $S_1\perp W$，于是 $2\dim S_1\le7$。故 $\dim S_1=3$、$S_1=R$、$U\subset R$。
+
+对 $n=3,4,5$，来源递推给 $P_RH_n=G_n$，所以 $P_RS_0=R$。因此三维 $S_0$ 是一个线性映射 $T:R\to R^\perp$ 的图。由（54.14）、（54.20）及同轮满投影，
+$$
+Tw=0,\quad T(U)=\mathbb Cv,\quad
+T(G_3)=gU,\quad T(G_4)=gG_3.
+\tag{54.22}
+$$
+$w\ne0$ 使 $\operatorname{rank}T\le2$，而后两个像各二维，因此 $gU=gG_3$。$g$ 单射给 $U=G_3$；（54.22）却使同一限制 $T|_U$ 的秩同时是一和二，矛盾。
+
+**若 $\dim S_0=4$。** 式（54.19）使 $\dim S_1=3$，$R$ 四维、$W$ 三维，故 $K=R\oplus W$。由（54.20）得 $U\subset R$，从而 $S_1\subset R$。定义
+$$
+D=f^{-1}(S_1)\subset S_0.
+$$
+$f:S_0\to R$ 是满等距，所以 $D$ 三维；它包含 $H_2,H_3,H_4$，因为这三个空间的像分别为 $G_3,G_4,G_5\subset S_1$。
+
+若 $U+G_3+G_4$ 只有二维，则 $U=G_3=G_4$，与 $C_2,C_3$ 的秩差矛盾。因此
+$$
+U+G_3+G_4=S_1.
+\tag{54.23}
+$$
+由（54.14）、（54.20）、$Q_3,Q_4\subset W\perp S_1$ 得
+$$
+P_{S_1}H_2=U,\qquad P_{S_1}H_3=G_3,\qquad
+P_{S_1}H_4=G_4.
+$$
+式（54.23）给 $P_{S_1}D=S_1$。三维 $D$ 因而是某个 $T:S_1\to S_1^\perp$ 的图。同样有
+$$
+Tw=0,\quad T(U)=\mathbb Cv,\quad
+T(G_3)=gU,\quad T(G_4)=gG_3.
+$$
+完全相同的秩一／秩二矛盾排除此情形。
+
+两个可能维数均已排除，故共同尾环境与 $F$ 正交。证明完毕。
+
+### 54.4 共同外部尾环境的排除
+
+**引理54.4（排除共同外部尾环境）。** 回到54.1节的 $r_1=2,r_2=1$ 合同，不可能有
+$$
+\eta_3\parallel\eta_4\parallel\eta_5\parallel\eta_6,
+\qquad \eta_3\notin F.
+\tag{54.24}
+$$
+该结论没有要求外部射线事先正交于 $F$。
+
+**证明。** 选择共同单位代表 $\eta$，相应重标各终端纯向量的整体相位。令
+$$
+S_0=H_2+H_3+H_4+H_5,\qquad
+S_1=U+G_3+G_4+G_5.
+$$
+去掉共同环境，在这些域上写
+$$
+V_0x=f(x)\otimes\eta\quad(x\in S_0),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in S_1),
+$$
+其中 $f,g$ 等距。置
+$$
+R=fS_0=G_3+G_4+G_5+G_6,\qquad W=gS_1.
+\tag{54.25}
+$$
+不同输入位正交给 $R\perp W$。
+
+因为 $\eta\notin F$，$U\otimes F$ 与 $R\otimes\eta$ 的交为零；两者都包含于七维 $V_0K$。因此
+$$
+\dim S_0=\dim R\le3.
+\tag{54.26}
+$$
+实际上
+$$
+\dim S_0=\dim R=3,\qquad G_3+G_4+G_5=R.
+\tag{54.27}
+$$
+为核对这一点，若 $\dim S_0=2$，则 $H_2=H_3=H_4$，并由 $f$ 单射得 $G_3=G_4$。若 $\dim(G_3+G_4+G_5)=2$，则 $G_3=G_4=G_5$，再由 $f$ 单射同样得 $H_2=H_3=H_4$。两种情形均使 $(H_3,G_3)=(H_4,G_4)$，但实际来源的主角乘积在这两个终端不同。具体地，置 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$。第53节式（53.14）的两个来源主角特征值相乘给
+$$
+\delta_n=\det\bigl(P_{H_n}P_{G_n}|_{H_n}\bigr)
+=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{54.28}
+$$
+故上述两种情形均不成立，证明（54.27）。
+
+于是 $S_1=U+R$，其维数至少三。由 $R\perp W$、$\dim W=\dim S_1$ 得
+$$
+\dim S_1\in\{3,4\}.
+\tag{54.29}
+$$
+对 $n=3,4,5$，因为 $Q_n\subset W\perp R$，来源递推给
+$$
+P_RH_n=G_n.
+$$
+式（54.27）因此给 $P_RS_0=R$。三维 $S_0$ 是一个线性映射 $T:R\to R^\perp$ 的图，并且
+$$
+T(G_3)=Q_3=gU,\qquad
+T(G_4)=Q_4=gG_3,\qquad
+T(G_5)=Q_5=gG_4.
+\tag{54.30}
+$$
+
+先排除 $\dim S_1=3$。这时 $U\subset R$，而 $0\ne w\in H_2\cap U\subset S_0\cap R$，故 $Tw=0$、$\operatorname{rank}T\le2$。式（54.30）的三个像都是二维，必相等。$g$ 单射给
+$$
+U=G_3=G_4.
+$$
+由 $fH_2=G_3$、$fH_3=G_4$ 再得 $H_2=H_3$，从而 $C_2=C_3$，违反三维、四维秩差。因此
+$$
+\dim S_1=\dim W=4,\qquad K=R\oplus W.
+\tag{54.31}
+$$
+
+若 $\eta$ 与 $F$ 有非零交叠，$V_0X=U\otimes F$ 与 $V_1S_1=W\otimes\eta$ 的正交性会给 $U\perp W$，进而 $U\subset R$，与 $\dim S_1=4$ 矛盾。因此
+$$
+\eta\perp F.
+\tag{54.32}
+$$
+由（54.3）和等距性，这迫使
+$$
+S_0\perp X,\qquad S_1\perp P_0,
+\quad\text{故}\quad P_0\perp S_0+S_1.
+\tag{54.33}
+$$
+
+接着证明 $\eta$ 也正交于第一轮环境支撑。对（54.1）的零位像取环境 $\eta$ 分量，置
+$$
+p_\eta=(I_K\otimes\langle\eta|)V_0k
+=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,
+\langle\eta,e_\alpha\rangle p_\alpha.
+$$
+$V_0k\perp V_1S_1=W\otimes\eta$ 给 $p_\eta\perp W$，式（54.31）给 $p_\eta\in R$。但 $p_\eta\in P_0$，且（54.33）使它正交于包含 $R$ 的 $S_1$。所以 $p_\eta=0$。$p_1,p_2$ 正交且两个 $\lambda_\alpha$ 严格正，故
+$$
+\eta\perp e_1,e_2.
+\tag{54.34}
+$$
+结合（54.1）和两个尾像，等距性再给
+$$
+k\perp S_0+S_1.
+\tag{54.35}
+$$
+
+最后，$k\notin P_0$。否则（54.3）使 $V_1k\in\mathbb Cv\otimes F$ 为非零纯张量；但（54.1）的 Schmidt 秩为二，矛盾。因此 $P_0+\mathbb Ck$ 三维，并由（54.33）、（54.35）正交于 $S_0+S_1$。七维性给
+$$
+\dim(S_0+S_1)\le4.
+\tag{54.36}
+$$
+两个四维终端支撑 $C_3,C_4$ 都包含于 $S_0+S_1$，故 $C_3=C_4=S_0+S_1$。固定等距 $V$ 将
+$$
+(H_2\otimes|0\rangle)\oplus(U\otimes|1\rangle)
+\quad\text{和}\quad
+(H_3\otimes|0\rangle)\oplus(G_3\otimes|1\rangle)
+$$
+分别映到相同的 $C_3\otimes\eta=C_4\otimes\eta$。单射性使两域相同，按输入位比较得 $H_2=H_3$、$U=G_3$。于是 $C_2=C_3$，再次违反秩差。证明完毕。
+
+### 54.5 外部交替尾环境的排除
+
+仍采用54.1节第一终端秩二、第二终端纯的七维六终端精确接收合同。特别地，
+$$
+U=G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),\quad
+V_0X=U\otimes F,
+\quad\dim U=\dim F=2.
+\tag{54.37}
+$$
+$u,v,w$ 正交单位，$ab\ne0$。各纯尾满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n\quad(3\le n\le6).
+\tag{54.38}
+$$
+各 $H_n,G_n,Q_n$ 二维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。$H_n$ 到同轮 $G_n,Q_n$ 的正交投影均为同构。
+
+**引理54.5（排除外部交替尾环境）。** 不可能存在单位环境向量 $O\notin F$、$B\in F$，使
+$$
+\eta_3=\eta_5=O,\qquad\eta_4=\eta_6=B.
+\tag{54.39}
+$$
+这里同射线的整体相位已统一选取；未假设 $O$ 和 $F$ 的任何正交关系。
+
+**证明。** 令
+$$
+R=G_3+G_5,\qquad
+L=U+G_4+G_6,\qquad r=\dim R,\quad d=\dim L-2.
+$$
+全部零位像包含
+$$
+R\otimes O
+\quad\text{和}\quad
+(U\otimes F)+(G_4+G_6)\otimes B.
+$$
+前后两项交为零，因为 $O\notin F$。后一项的维数是 $4+d$：对 $U$ 取接收商，其核恰为 $U\otimes F$，像为 $\pi_U(G_4+G_6)\otimes B$。七维性给
+$$
+r+d\le3,\qquad r\ge2,\quad d\ge0.
+\tag{54.40}
+$$
+
+若 $r=3$，则 $d=0$，从而 $G_4=G_6=U$。固定 $V_0$ 及（54.39）给 $H_3=H_5$；固定 $V_1$ 在 $G_2=G_4=U$ 上给 $Q_3=Q_5=:Q$。共同外部环境上的不同输入位正交给
+$$
+R\perp Q.
+$$
+因此 $P_RH_3=G_3$、$P_RH_5=G_5$。$H_3=H_5$ 便迫使 $G_3=G_5$，使 $r=2$，矛盾。
+
+所以 $r=2$，即 $G_3=G_5$。固定 $V_0$ 及共同环境 $O$ 立刻给
+$$
+H_2=H_4.
+\tag{54.41}
+$$
+由于 $B\in F$，早期零位块 $U\otimes F$ 与第四轮一位像 $Q_4\otimes B$ 的正交性给 $Q_4\perp U$。同时同轮零、一位像给 $Q_4\perp G_4$。因此
+$$
+U+G_4\subseteq Q_4^\perp.
+\tag{54.42}
+$$
+但 $0\ne w\in H_2\cap U=H_4\cap U$，所以（54.42）使 $P_{Q_4}w=0$。这与 $P_{Q_4}|_{H_4}$ 单射矛盾。证明完毕。
+
+### 54.6 主结论与保留范围
+
+将引理54.2用于54.1节的 $A=U=G_2$、二维 $F$ 与四轮纯尾，抽象指标 $1,2,3,4$ 对应实际轮次 $3,4,5,6$。它只允许全部尾环境在 $F$ 内、共同外部射线 $OOOO$，或一条外部射线与一条内部射线严格交替 $OBOB$。引理54.4和54.5排除后两项，所以
+$$
+\eta_3,\eta_4,\eta_5,\eta_6\in F.
+$$
+若它们只张成一维，选择共同单位代表 $\eta\in F$；引理54.3却给 $\eta\perp F$，与单位范数矛盾。因此四份尾环境张成整个二维 $F$，定理54.1得证。
+
+本节没有排除这个二维环境内的全部非共线序列。第一终端的混合附加因子始终计入接收器，前两轮环境仍可彼此纠缠。第二终端秩二的分支仍由第53节约束，早期全部纯的非周期环境也未在此结算。一般六终端固定 CPTP 接收容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}\le8.
+$$
+
+## 追加锚（本行以下为增补区）
