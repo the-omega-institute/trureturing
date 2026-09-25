@@ -1,0 +1,107 @@
+{
+  "scope": "Same-law shallow-defect and pure-union sensitivity, finite cofactor windows, and arbitrary pure tails from exponent9, within the stated nine-prime support. Ordinary mathematics; no Lean claim.",
+  "source": "normalized_joint_hinge_transfer.json",
+  "source_sha256": "4b99d5aa933ef0722ce2b4bf2efca94055ef9310753e0eba9b8b79ad9efd796d",
+  "D": 200000000,
+  "nonunit_cofactor_count": 2654,
+  "checks": {
+    "source_pin": true,
+    "source_margin_identity": true,
+    "positive_hinge_and_mass_contracts": true,
+    "original_gate_positive": true,
+    "smooth_inventory_independent_agreement": true,
+    "inventory_unique_complete_recursion": true,
+    "nonunit_inventory_count": true,
+    "full_euler_mass": true,
+    "positive_complete_tail": true,
+    "max_e2_weight_six": true,
+    "max_e3_weight_two": true,
+    "unselected_e2_e3_budget_eight": true,
+    "tail_below_uniform_gate": true,
+    "rho_below_uniform_gate": true,
+    "window_gate_positive": true,
+    "haar_lower_above_one_in_three_million": true,
+    "single_e3_5pow7_qualifies": true,
+    "defect_coefficient_identity": true,
+    "pure_geometric_tail": true,
+    "positive_pure_slope": true,
+    "pure_tail_alone_positive": true,
+    "shallower_uniform_pure_budget_fails_this_bound": true,
+    "extended_inventory_independent_agreement": true,
+    "extended_nonunit_inventory_count": true,
+    "extended_tail_positive": true,
+    "joint_pure_and_shallow_margin_positive": true,
+    "joint_haar_above_one_in_23_million": true,
+    "original_zero_defect_margin_recovered": true
+  },
+  "check_count": 28,
+  "rho_critical": {
+    "exact": "15902170284510797327529/3505774518890717753386765",
+    "decimal": 0.00453599345845622
+  },
+  "e3_incidence_critical": {
+    "exact": "15902170284510797327529/7011549037781435506773530",
+    "decimal": 0.00226799672922811
+  },
+  "full_reciprocal_tail": {
+    "exact": "1730518949990034594107507351455704035339060047/453873446302914661773719565414768954104100000000000",
+    "decimal": 3.812778570956733e-06
+  },
+  "tail_critical": {
+    "exact": "5300723428170265775843/809571358022960794060800000",
+    "decimal": 6.547567889648497e-06
+  },
+  "shallow_defect_upper": {
+    "exact": "41532454799760830258580176434936896848137441128/15723658670293463674749919495914657230391523203125",
+    "decimal": 0.0026413989053468605
+  },
+  "continuation_gate_lower": {
+    "exact": "5620372089525276794176531877172400584024813638434/6934133473599417480564714497698363838602661732578125",
+    "decimal": 0.0008105370499318952
+  },
+  "haar_survivor_lower": {
+    "exact": "2810186044762638397088265938586200292012406819217/7548823158910076654620503811978437244659391200000000000",
+    "decimal": 3.7226809869637773e-07
+  },
+  "exceptional_e3_reciprocal_sum_critical": {
+    "exact": "5300723428170265775843/202392839505740198515200000",
+    "decimal": 2.619027155859399e-05
+  },
+  "pure_damage_slope": {
+    "exact": "681540917546759880630781/1821020686490938196988885",
+    "decimal": 0.37426313858085397
+  },
+  "pure_damage_critical_without_shallow_defect": {
+    "exact": "10601446856340531551686/2044622752640279641892343",
+    "decimal": 0.005185038092063967
+  },
+  "pure_tail_alone_margin": {
+    "exact": "35435255563364635011157/88501605363459596373659811",
+    "decimal": 0.0004003911049730527
+  },
+  "pure_tail_window": {
+    "pure_tail_start": 9,
+    "pure_union_weight_upper": {
+      "exact": "1/243",
+      "decimal": 0.00411522633744856
+    },
+    "D": 1000000000,
+    "nonunit_cofactor_count": 3821,
+    "full_reciprocal_tail": {
+      "exact": "746990843725653324133008345392602190367354544388681/733738621394986385943321655242996712738999621500000000000",
+      "decimal": 1.0180612304494368e-06
+    },
+    "shallow_defect_upper": {
+      "exact": "17927780249415679779192200289422452568816509065328344/25419102461276467778555841105888073598509392283019921875",
+      "decimal": 0.0007052876975781072
+    },
+    "continuation_gate_lower": {
+      "exact": "89581087492995455138648224792634532052831160753744825117/907995759019256705517793200143427877012354001741754629296875",
+      "decimal": 9.865804614523054e-05
+    },
+    "haar_survivor_lower": {
+      "exact": "89581087492995455138648224792634532052831160753744825117/1976973601668708998503510774740246454856556756175656000000000000",
+      "decimal": 4.531223250395581e-08
+    }
+  }
+}

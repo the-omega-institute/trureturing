@@ -24,9 +24,12 @@ normalized actual prefix. It combines row loss and cap slack before
 using those bounds. This closes the high-query gap within the above
 slice left in [Report587](587-actual-tail-obstruction-and-source-query-repair.md)
 and [Report588](588-query-prefix-incidence-strengthens-actual-source-debits.md).
-It does not settle unrestricted Erdős #7, remove either displayed
-hypothesis, or permit additional support primes. These are ordinary
-mathematical proofs with exact rational arithmetic, not new Lean results.
+Sections8--10 further replace the global shallow restriction by finite
+cofactor windows and allow arbitrary additional pure tails from a
+specified depth. Unrestricted low ternary phases, arbitrary pure3
+geometry and additional support primes remain outside the conclusions.
+These are ordinary mathematical proofs with exact rational arithmetic,
+not new Lean results or a resolution of unrestricted Erdős #7.
 
 ## 1. One actual construction and a uniform prefix contract
 
@@ -356,3 +359,214 @@ and handling unrestricted prime supports remain open obligations for
 this route to Erdős #7. The four-number envelope is sufficient for
 these inequalities; it is not asserted to be a minimal exact boundary
 state for arbitrary future operations.
+
+## 8. Unselected shallow originals have a same-source defect budget
+
+The two-phase assumption can be replaced by a quantitative actual-union
+condition, and then restricted to a finite cofactor window. First retain
+the two fixed pure3 originals and the nine-prime support above. At each
+nonunit Q cofactor d, choose at most two phases A_d once, with only
+finitely many A_d nonempty (for example, choose from the actual shallow
+projections), and construct the corresponding law nu from Sections1--5.
+The selection need not
+contain every projection through ternary exponent3.
+
+Let E be precisely the P-supported nonpure originals at exponents
+e=0,1,2,3 whose Q phase is not in A_d. Let chi0 be the P-original
+survivor mask after omitting only E, and chi the full P mask. With the
+normalized branch laws u_A,u_B of Section6, put
+
+    c_j^0=integral chi0 du_j, c_j=integral chi du_j,
+    Z=12(c_A^0-c_A)+18(c_B^0-c_B)>=0,
+    rho=E_nu Z.                                          (DF1)
+
+This is the actual union increment after the deep originals have already
+acted. Overlaps within E and with those deep originals are counted once.
+Every original phase remains globally fixed, and the entire estimate
+uses the same selected nu.
+
+For a ternary cylinder C_e(t) define its weight
+
+    w_e(t)=12u_A(C_e(t))+18u_B(C_e(t)).
+
+The weights are30 at e=0; at e=1 they are12,0,18 on roots0,1,2.
+For e>=2 they are zero inside the two pure forbidden classes and
+`54*3^(-e)` otherwise. Thus w2<=6 and w3<=2. Union bounding and NJ11 give
+
+    rho<=sum_(originals in E) w_e(t) nu([a_d]_d)
+        <=(9/alpha_new) sum_(originals in E) w_e(t)/d.    (DF2)
+
+Write W0 using c_j^0 as in Section6. On the selected source all remaining
+shallow originals vanish, so the complete deep-height mixture still
+gives `E W0<=R` and `E(W0-3)_+<=K3`, where R=R_Q(nu). Since W=W0+Z,
+
+    E W<=R+rho, tau=E(W-3)_+<=K3+rho,
+    E U<=R+rho-tau.                                     (DF3)
+
+Use the same clipped law eta with D=27,r=4/9, now formed from the complete
+mask chi. CJ6 and `R_Q(U nu)<=3K2+2E U` imply
+
+    R_P(eta)<=1+2R+(3K2-3-3tau+3rho)/27,
+    Gs-R_P(eta)>=delta-G rho/27.                         (DF4)
+
+The defect is paid once in this joint loss/query inequality. In
+particular it suffices that
+
+    rho<rho_crit=27delta/G
+       =15902170284510797327529/3505774518890717753386765
+       =0.00453599345845622... .                        (DF5)
+
+This also gives tau<27 and positive mass s. The density and23/29
+continuation are unchanged, giving
+
+    H(full survivor)>=(49 alpha_new/11088)
+                              (delta-G rho/27)>0.       (DF6)
+
+DF5 has not been proved for some selection in every original family.
+It is a computable sufficient defect budget, not a redefinition of
+the unrestricted objective.
+
+## 9. Only a finite cofactor window needs the shallow restriction
+
+The full reciprocal tail is
+
+    T_Q(D)=sum_(Q-smooth d>D)1/d
+          =323323/165888-sum_(Q-smooth d<=D)1/d.
+
+For nonunit d<=D, suppose the original projections at e=0,1,2,3
+fit at most two phases and select them. For every d>D, select just
+the e=0 and e=1 phases if present. Numerical distinctness guarantees
+at most two such phases. All other projections outside the window
+are unrestricted. The only unselected shallow originals there have
+e=2 or3, so
+
+    rho<=(72/alpha_new)T_Q(D).                           (DF7)
+
+At D=200000000 there are2654 nonunit Q-smooth cofactors, and exactly
+
+    T_Q(D)=1730518949990034594107507351455704035339060047
+             /453873446302914661773719565414768954104100000000000.
+
+Consequently rho<=0.0026413989053468605...<rho_crit and
+
+    delta-G rho/27 >=0.0008105370499318952...,
+    H(full survivor)>=
+      2810186044762638397088265938586200292012406819217
+       /7548823158910076654620503811978437244659391200000000000
+      =0.00000037226809869637773...>1/3000000.             (DF8)
+
+Only actual labels3^e d inside the finite rectangle d<=2e8,e<=3
+need the two-phase condition. Their presence is not required. Every
+larger cofactor, every deeper nonpure original, and every original
+touching23 or29 retains arbitrary fixed phases and finite heights.
+
+Report569 SD19--SD21 already supplies the finite-window mechanism.
+Its explicit window has534 nonunit cofactors up to500000 and depths
+through5. The new window is larger in cofactor size but restricts
+only depths through3. Neither hypothesis set contains the other.
+In particular, third and fourth phases at e=4,5 on small cofactors
+are allowed here. This is a new consumer of NJ10, not a new PA kernel.
+
+Alternatively, impose the two-phase condition through e=2 globally,
+and let E3 be the cofactors of the unselected e=3 originals outside
+the pure forbidden classes. They form one fixed partial query L3.
+The sufficient conditions
+
+    E_nu L3<rho_crit/2=0.00226799672922811...,
+
+or, without computing nu,
+
+    sum_(d in E3)1/d <
+      5300723428170265775843/202392839505740198515200000
+      =0.00002619027155859399...                         (DF9)
+
+follow from rho<=2E L3 and the same-law density cap. All other
+allowed originals remain arbitrary. The actual union DF1 may be
+smaller than these additive sufficient estimates.
+
+## 10. Pure-tail constraints and shallow defects share the same margin
+
+Now allow additional pure3 originals beyond the base classes1 mod3
+and3 mod9. They have distinct numerical labels3^e, e>=3. Let U_pure
+be their actual ternary union inside the base pure survivor, and put
+
+    c=54 H_3(U_pure).
+
+This is a fixed geometric quantity; pure overlaps are counted once.
+Define chi0 by omitting these extra pure originals and the unselected
+shallow originals E. First insert the extra pure originals, then E.
+Let Z be the weighted increment caused by that second insertion and
+rho=E_nu Z. Both insertions use the original fixed phases and the
+same selected law nu. The extra pure increment at each Q point is
+at most c: on the two supported branches the weighted Haar densities
+are both54. Hence the original deep mixture Y from Section6 gives
+
+    W<=Y+c+Z, E W<=R+c+rho,
+    tau<=Theta(3-c)+rho, E U<=R+c+rho-tau.              (DF10)
+
+The Theta in DF10 is the final all-layout envelope from NJ2 with its
+integer interpolation. Jensen applies first to the fixed deep-height
+mixture Y; the 1-Lipschitz hinge then pays Z. It does not assume that
+pure damage, shallow damage and query counts are independent.
+
+Substitution into the SAME CJ6 formula proves
+
+    Gs-R_P(eta)
+      >=G-1-2B-[3K2-3+3c+(G-3)Theta(3-c)]/27
+                  -G rho/27.                           (DF11)
+
+For 0<=c<=1, `Theta(3-c)=K3+c(K2-K3)`. In this range DF11 is
+
+    Gs-R_P(eta)>=delta-A_pure c-G rho/27,
+    A_pure=[3+(G-3)(K2-K3)]/27
+           =0.37426313858085397... .                   (DF12)
+
+A positive right side certifies s>0: eta is nonnegative, and s=0
+would force eta=0 and contradict DF12. The identical density and
+23/29 continuation then give Haar mass at least49 alpha_new/11088
+times that right side. Thus both losses spend ONE common margin.
+Passing each separate test does not permit adding their conclusions.
+
+An explicit joint finite-window result follows. Keep the base pure
+classes, prohibit additional pure numerical labels3^e for3<=e<=8,
+and allow any finite collection of pure originals at e>=9, with
+arbitrary fixed phases. Their complete geometric budget is
+
+    c<=54 sum_(e>=9)3^(-e)=1/243.
+
+Use a shallow window D=1000000000, containing3821 nonunit Q-smooth
+cofactors, with the same selection rule as Section9. Then
+
+    T_Q(D)=0.0000010180612304494368...,
+    delta-A_pure/243-(8G/(3 alpha_new))T_Q(D)
+         =0.00009865804614523054...>0,
+    H(full survivor)>=0.00000004531223250395581...
+                    >1/23000000.                       (DF13)
+
+All figures in DF13 are displays of exact rationals stored in the
+data file. Both the arbitrary pure tail and the unrestricted
+projections outside the finite window are present simultaneously.
+Every nonpure original at exponent e>=4 remains unrestricted,
+including exponents4 through8. The absence condition in this
+corollary concerns only pure numerical moduli.
+
+With no shallow defect, the same bound permits c<0.005185038092063967....
+The worst-case pure tail from exponent8 already exceeds that allowance.
+This only limits the displayed estimate; it is not a covering example
+or an impossibility claim for a different source construction.
+
+The [defect/window producer](../../frontier/cover-geometry/shallow_defect_finite_window.py)
+and [exact data](../../frontier/cover-geometry/shallow_defect_finite_window.json)
+pin NJ10--NJ12's supplier data and independently enumerate each finite
+cofactor complement by prime recursion and a heap. Complete tails are
+obtained by subtracting these finite sums from the exact Euler product.
+All28 named checks pass. Sections8--10 supply the general proofs;
+the computations certify their explicit rational windows and margins.
+No new Lean verification is claimed.
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/shallow_defect_finite_window.py
+
+The remaining obligations include unrestricted low pure3 geometry,
+uncontrolled shallow defects on the finite window, and arbitrary
+support primes. Neither numerical height exhaustion nor the positive
+restricted margin resolves those obligations.
