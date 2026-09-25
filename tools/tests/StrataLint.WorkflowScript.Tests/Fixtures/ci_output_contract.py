@@ -141,6 +141,14 @@ class PresentationTests(unittest.TestCase):
         self.presenter.line("  Passed MyTest [12 ms]\n", "stdout")
         self.assertEqual("foo.cs(1,1): warning CS0168: unused variable\n", self.output.getvalue())
 
+    def test_lean_spinner_after_warning_resumes_periodic_progress(self):
+        self.presenter.line("warning: unused variable\n", "stdout")
+        self.presenter.line("⣷ [2/10] Building D5.Bar\n", "stdout")
+        self.assertEqual("warning: unused variable\n", self.output.getvalue())
+        self.now = 30
+        self.presenter.tick()
+        self.assertIn("progress=[2/10]", self.output.getvalue())
+
     def test_failed_command_block_preserves_unlabelled_details(self):
         messages = ["CI_DIAGNOSTIC_BEGIN step=restore raw_exit=155\n", "No .NET SDKs were found.\n",
                     "info: additional failure context\n", '{"detail":"cannot start"}\n', "CI_DIAGNOSTIC_END\n"]
