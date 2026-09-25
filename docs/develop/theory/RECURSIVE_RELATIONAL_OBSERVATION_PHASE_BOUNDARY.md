@@ -463,3 +463,122 @@ f_\vartheta
 [^phase_clock]: Yuxiang Yang, Giulio Chiribella and Masahito Hayashi, *Compression for Qubit Clocks*, [arXiv:2209.06519](https://arxiv.org/abs/2209.06519)。该文的频率投影用于独立同分布 qubit 时钟的渐近近似压缩；本节的来源为（1.1）的相关发射，误差合同为（5.1），上下界均按该来源重新计算。
 
 ## 5.99 追加锚
+
+## 6. 共同存活事件下的全部前缀接收
+
+**定义 6.1（固定时域的同一被动接收器）。** 保留定义5.1的等权、全圆相位和全部初始联合来源，预先给定有限时域 \(N\ge2\)。接收器从固定纯态开始，每步只以一个已知 CPTP 映射作用于同一寄存器 \(K\) 与最新发出位，之后把该位置成与其余系统独立的纯空白并丢弃；无持久辅助标签留在 \(K\) 之外。源的活动记忆与参考均不可访问，也没有向源反馈。门可依赖 \(N,\epsilon\) 和当前步数，不能依赖未知相位或输入。若在任一事先指定的 \(n\le N\) 选择停止，均有解码器满足（5.1）。最小 \(\dim K\) 记为 \(k_{\le N}^{(\epsilon)}\)。
+
+此合同只在所选终端解码，不要求解码后保留一份档案副本并原样继续，也不要求保持任意中途干预下的过程距离。计数、门控制、瞬时空白及丢弃环境的成本按定义1.2另计。允许的是固定相干基下的普通 CPTP 操作；未知 \(\vartheta\) 不附加所有门必须相位协变的超选择限制。保持不可访问环境关联的局部压缩是既有任务；[^phase_tensor] 本节进一步要求同一逐步接收实现与共同误差预算。
+
+置
+\[
+s_{N,\epsilon}=\sqrt{\frac{N-1}{2}\log\frac4{\epsilon^2}},\qquad
+R_{N,\epsilon}=\frac{s_{N,\epsilon}+1}{1+p}.
+\tag{6.1}
+\]
+称合法词 \(w\in\mathcal W_n\) 存活，若其每个前缀都满足
+\[
+\left|\sum_{t=1}^kw_t-k\mu\right|\le R_{N,\epsilon}
+\quad(1\le k\le n).
+\tag{6.2}
+\]
+令 \(\mathcal W_n^{\rm s}\) 为存活词集；空词存活。对非空首末荷扇区定义
+\[
+g_{ijq}^{n,\rm s}
+=\sum_{\substack{w\in\mathcal W_n^{\rm s}\cap\mathcal W_n^{ij}\\
+\sum_tw_t=q}}A(w)|w\rangle,
+\qquad W_n^{\rm s}=\operatorname{span}\{g_{ijq}^{n,\rm s}\},
+\qquad W_0^{\rm s}=\mathbb C.
+\tag{6.3}
+\]
+空扇区不计入生成集，\(d_n^{\rm s}=\dim W_n^{\rm s}\)。这是保留全部过去未越界条件的子空间，不是各终端独立选择的荷窗口。
+
+**定理 6.2（单个接收器的平方根容量与共同误差）。** 对定义6.1的合同，
+\[
+\boxed{k_{\le N}^{(\epsilon)}
+\le\min\left\{2N-1,1+\max_{0\le n\le N}d_n^{\rm s}\right\}
+\le\min\{2N-1,8R_{N,\epsilon}+5\}.}
+\tag{6.4}
+\]
+同一个接收器在每个可选终端 \(n\le N\) 的完整联合半迹距离均至多 \(\epsilon\)，误差预算不乘以 \(N\)。对每个固定 \(0<\epsilon<1\)，有
+\[
+k_{\le N}^{(\epsilon)}\asymp_\epsilon\sqrt N\qquad(N\ge4).
+\tag{6.5}
+\]
+
+证明。先在（5.5）的实际词链上固定任一初位，令
+\[
+Y_t=X_t-\mu,\qquad
+\eta_t=Y_t+pY_{t-1}\quad(t\ge2),\qquad
+M_k=\sum_{t=2}^k\eta_t,\quad M_1=0.
+\tag{6.6}
+\]
+由 \(\mathbb E[Y_t\mid X_1,\ldots,X_{t-1}]=-pY_{t-1}\)，\(M_k\) 是鞅，每个增量的条件取值区间宽度至多一。直接求和得
+\[
+(1+p)(S_k-k\mu)=M_k+Y_1+pY_k,
+\qquad -p\le Y_1+pY_k\le1.
+\tag{6.7}
+\]
+
+条件 Hoeffding 估计使
+\(\exp[\lambda M_k-(k-1)\lambda^2/8]\)
+为非负超鞅。若 \(M_k\) 在 \(k\le N\) 首次达到 \(s>0\)，该时刻超鞅至少为 \(\exp[\lambda s-(N-1)\lambda^2/8]\)。对首次到达时刻截停并取期望，得上尾概率至多 \(\exp[-\lambda s+(N-1)\lambda^2/8]\)；负尾同理。取 \(\lambda=4s/(N-1)\)，得到
+\[
+\Pr_i\left\{\max_{1\le k\le N}|M_k|\ge s\right\}
+\le2e^{-2s^2/(N-1)}.
+\tag{6.8}
+\]
+这是标准非负超鞅最大估计在本链上的应用。由（6.1）、（6.7），只要（6.2）曾经失败，必有 \(|M_k|>s_{N,\epsilon}\)。因此对两个初位同时有
+\[
+\Pr_i\{\text{时域内至少一次不存活}\}\le\epsilon^2/2.
+\tag{6.9}
+\]
+这里估计的是同一个实际路径事件，没有把各终端失败概率相加。
+
+现构造物理接收。每条存活历史的前缀仍存活。记 \(a_{bj}=(m_b)_j\)，把带外或空扇区向量视为零，则
+\[
+g_{ijq}^{n+1,\rm s}
+=\mathbf1_{\{|q-(n+1)\mu|\le R_{N,\epsilon}\}}
+\sum_{b=0}^1a_{bj}\,g_{ib,q-j}^{n,\rm s}\otimes|j\rangle
+\quad(n\ge1).
+\tag{6.10}
+\]
+故 \(W_{n+1}^{\rm s}\subseteq W_n^{\rm s}\otimes B\)，\(n=0\) 也由一维空档案成立。等权相位在每个此类向量上仅给标量 \(e^{iq\vartheta}\)，所有 \(W_n^{\rm s}\) 均不依赖实际相位。
+
+取
+\(K=K_{\rm g}\oplus\mathbb C|\bot\rangle\)，其中
+\(\dim K_{\rm g}=\max_{n\le N}d_n^{\rm s}\)，并选等距
+\(F_n:W_n^{\rm s}\to K_{\rm g}\)。将 \(F_n^*\) 在其编码像的正交补上置零，令 \(P_{n+1}^{\rm s}\) 是到 \(W_{n+1}^{\rm s}\) 的投影。在 \(K\otimes B\) 上定义成功算子
+\[
+A_n=F_{n+1}P_{n+1}^{\rm s}(F_n^*\otimes I_B),
+\qquad
+\mathcal C_n(X)=A_nXA_n^*
++\operatorname{Tr}[(I-A_n^*A_n)X]|\bot\rangle\langle\bot|.
+\tag{6.11}
+\]
+包含关系使 \(A_n\) 是两个相同维数子空间之间的部分等距，故 \(A_n^*A_n\) 是投影，\(\mathcal C_n\) 为全域 CPTP 映射。把其输出张量 \(|0\rangle\langle0|_B\) 就将已消费位置为独立纯空白。旧失败旗标满足 \(F_n^*|\bot\rangle=0\)，所以失败分支吸收。整个操作只需要当前 \(K\) 与新位；被丢弃环境未作为隐含接收记忆保留。
+
+令 \(Q_n^{\rm s}\) 是档案空间中选取全部存活计算基词的投影。原来源的存活部分满足
+\[
+(Q_n^{\rm s}\otimes I_M)T_{\vartheta,n}|i\rangle
+=\sum_{j,q}e^{iq\vartheta}g_{ijq}^{n,\rm s}\otimes m_j.
+\tag{6.12}
+\]
+据此归纳（6.11）：连续成功的未归一化联合分支恰为原来源经 \(Q_n^{\rm s}\) 投影，再由 \(F_n\) 编码的状态。其余分支落在 \(|\bot\rangle\)；没有将某次失败后重新进入带内的历史当作成功。尤其 \(P_{n+1}^{\rm s}\) 在实际成功来源上所做的操作，与追加位后检查（6.2）一致，而非另一次不相关的状态估计。
+
+与（5.10）相同的首位正交性给
+\[
+T_{\vartheta,n}^*[(I-Q_n^{\rm s})\otimes I_M]T_{\vartheta,n}
+=\operatorname{diag}(\delta_{0,n},\delta_{1,n})
+\preceq(\epsilon^2/2)I_M,
+\tag{6.13}
+\]
+其中 \(\delta_{i,n}\) 是截至第 \(n\) 步曾越界的概率，由（6.9）统一控制。这覆盖全部相位、初始相干及有限参考。终端解码对好块用 \(F_n^*\)，对失败及未使用编码空间输出固定态。纯化后，成功项与目标的重叠至少为 \((1-\epsilon^2/2)^2\)，其余项为正；（5.12）的证明给联合半迹距离至多 \(\epsilon\)。
+
+在任一时刻，存活荷只落在长度 \(2R_{N,\epsilon}\) 的区间，四首末扇区故给 \(d_n^{\rm s}\le4(2R_{N,\epsilon}+1)\)；\(n=0\) 的一维也满足此界。加一维失败旗标得（6.4）的第二项。也可使用定理3.1—3.2的 \(2N-1\) 维精确接收器，得到较小值。
+
+最后，无反馈的接收操作与其后的源发射作用在不交系统上，可以交换次序。因此整个时域接收在终端等价于只作用于完整档案的一个 CPTP 编码，必须满足定理5.3在 \(n=N\) 的下界。结合（6.1）、（6.4）得（6.5）。门序列依赖预定 \(N\)；这些量词没有给出一个与终端时域无关的无限门序列。证明完毕。
+
+[^phase_tensor]: Ge Bai, Yuxiang Yang and Giulio Chiribella, *Quantum Compression of Tensor Network States*, New Journal of Physics **22**, 043015 (2020)，[arXiv:1904.06772](https://arxiv.org/abs/1904.06772)。§II.A给出参数无关精确压缩；§V式（35）—（36）及命题4处理不可访问环境关联；附录B命题6处理未知共同变换。这些是第1—4节任务与支撑压缩的一般先例；本卷的字符秩及显式容量来自对应来源计算。第2节行列式还保证整个共同支撑代数被同一通道固定，这比单独得到最小维数更强；它不是一般局部压缩容量下界的必要方法。
+
+## 6.99 追加锚
