@@ -337,12 +337,18 @@ private def dataTypes : Array Name :=
 private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
 private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
 
-private def hasIndependentCarrier (type : Expr) : Bool :=
-  (type.find? fun part => match part with
-    | .const name _ =>
-      !(dataTypes.contains name || propTypes.contains name ||
-        dictionaryTypes.contains name || interfaceTypes.contains name)
-    | _ => false).isSome
+private partial def hasIndependentInputCarrier (type : Expr) : Bool :=
+  match type with
+  | .forallE _ domain body _ =>
+    let inputCarrier :=
+      !dictionaryTypes.contains domain.getAppFn.constName?.getD .anonymous &&
+        (domain.find? fun part => match part with
+          | .const name _ =>
+            !(dataTypes.contains name || propTypes.contains name ||
+              dictionaryTypes.contains name || interfaceTypes.contains name)
+          | _ => false).isSome
+    inputCarrier || hasIndependentInputCarrier body
+  | _ => false
 
 private def interfaceProjection (env : Environment) (name : Name) : Bool :=
   match env.getProjectionFnInfo? name with
@@ -606,7 +612,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
         for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
         rule "E2.independent_carrier"
         return plan
-    if args.isEmpty && hasIndependentCarrier info.type && (← independentSource name) then
+    if args.isEmpty && hasIndependentInputCarrier info.type && (← independentSource name) then
       if let .defnInfo defn := info then
         if defn.safety == .safe && defn.all.length == 1 &&
             !(← isRecursiveDefinition name) then
