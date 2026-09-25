@@ -11,7 +11,7 @@ Every displayed exponent is positive. The actual family is finite, all numerical
                  /165993227993981410199733519903914391457
              =11.476156651500299... <566/49.
 
-Arbitrary additional distinct originals touching23 or29, with arbitrary P-smooth cofactors, phases and finite heights, leave Haar survivor mass greater than1/20000. This is a support extension of the existing three-pair triangle class at the improved pure23/29 continuation target. It does not replace that class's stronger old query or Haar constants.
+Arbitrary additional distinct originals touching23 or29, with arbitrary P-smooth cofactors, phases and finite heights, leave Haar survivor mass greater than1/20000. Restarting from this actual nine-coordinate Haar survivor also admits arbitrarily many additional primes strictly greater than2,000,000, with arbitrary tail-touching supports and a final positive distorted mass greater than1/50000. This is a support extension of the existing three-pair triangle class at the improved pure23/29 continuation target. It does not replace that class's stronger old query or Haar constants.
 
 This is a normalized actual-law construction, not a two-phase-selector example. The gain is the complete-query certificate for a larger support class; no claim that its bare noncoverage range is new to the literature is made. No new Lean declaration or verification is claimed.
 
@@ -123,7 +123,7 @@ The surviving submeasure mass is at least PG9/567, and its density is at most La
          /3934653841647313764202450739562994944000000
        =0.00005158581324559556... >1/20000.              (PG10)
 
-This uses the actual pure-coordinate continuation in [report569, SD15–16](569-complete-suffix-debits-close-the-six-prime-query-target.md). All original supports touching23 or29 are allowed within the nine-prime carrier. No further-prime continuation or query bound for the newly conditioned extended law is asserted.
+This uses the actual pure-coordinate continuation in [report569, SD15–16](569-complete-suffix-debits-close-the-six-prime-query-target.md). All original supports touching23 or29 are allowed within the nine-prime carrier. This tensor step does not supply a query bound for the newly conditioned extended law. The large-prime continuation below instead restarts from actual restricted Haar.
 
 The ordered-slot transport already proved in report561 Section7 also
 applies here. Replace P by any seven ordered odd primes r0<...<r6,
@@ -138,6 +138,42 @@ distinct additional primes u>=23,v>=29 outside the carrier have the
 same or smaller conditioned query sums and density factor. Thus the
 same constants transport to these slots; this does not add head
 coordinates or remove the graph restriction.
+
+## Actual Haar restart and arbitrary primes above two million
+
+This is a direct application of [report569, SD22–23](569-complete-suffix-debits-close-the-six-prime-query-target.md) and [Chapter33, SH5–SH13](../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md), with the inherited Rosser--Schoenfeld prime-product premise. It changes neither the large-prime proof nor its ell=12 parameter.
+
+Suppose every original prime belongs to P9={3,5,7,11,13,17,19,23,29} or is strictly greater than2,000,000. The P-supported originals retain the nine-edge shape condition above. Head originals touching23 or29 remain arbitrary. Every tail-touching original may have arbitrary head cofactors, other tail primes, finite heights and globally fixed phases, subject only to distinct full numerical moduli.
+
+Resolve all head coordinates to the exponents used anywhere in the complete original family, including the tail-touching originals. Let U be the complete head-only survivor. Restart from the unnormalized measure
+
+    nu0=H_P9 restricted to U.
+
+Its mass is at least the PG10 head bound and hence greater than1/20000. Its joint density relative to head Haar is at most1. It is not the conditional probability H(.|U), and the earlier normalized-query cap is not transferred to it. Haar lifting to the enlarged finite head period preserves both this mass and the density bound.
+
+The complete joint-load second moment is bounded by
+
+    M2=product_(p in P9) p(p+1)/(p-1)^2=14003665/540672.
+
+Chapter33's homogeneous transfer charges every tail original once, at its largest tail prime. At B=2,000,000 and ell=12, the source conditions B>=286, ell>=4, 3^ell<=B hold. With
+
+    c=(2ell^2+1)/(2ell^2-1)=289/287,
+    tau7(B,ell)=c^7/B * (B/(B-3))^2
+                 *sum_(j=0)^7 7!/[(7-j)! ell^j],
+
+the full tail loss is at most
+
+    M2 tau7 =988643510345833942508989848828125
+                /35490204709719259009199798947341533184
+             =0.000027856799317787156... <3/100000.
+
+It follows immediately that the final surviving distorted submeasure has mass
+
+    >1/20000-3/100000=1/50000.
+
+The exact coarse-head margin is0.000022143200682212843..., and using the full rational PG10 bound gives0.00002372901392780841.... Both are retained in the data. At the old cutoff1,000,000 the same tail-charge certificate exceeds the exact PG10 lower bound; this only shows that those two retained bounds do not certify that cutoff.
+
+All normalized tail kernels preserve the entire previous joint measure, and the complete tail bad union is deleted only at the end. Thus the positive mass belongs to one actual complete survivor and yields an uncovered integer by finite CRT. The displayed number is distorted mass, not a final Haar-density lower bound or a final query bound. Extra support primes from31 through2,000,000 remain excluded. The exponent7 in tau7 comes from the transfer's prime-factor-growth estimate, not from counting the nine head coordinates.
 
 ## Scope comparison and remaining support gap
 
@@ -161,7 +197,7 @@ The standalone [evaluator](../../frontier/cover-geometry/rooted_triangle_pair_gr
 and [exact data](../../frontier/cover-geometry/rooted_triangle_pair_graph.json)
 retain the final nine-edge certificate, the old three-edge comparison and
 two fixed complete-graph diagnostics. Run the producer with standard-library
-Python; its24 explicit checks remain active under optimization. An independent
+Python; its31 explicit checks remain active under optimization. An independent
 direct enumeration of the low events and complete means passed179 exact
 checks, including the earlier two-edge regression. The ordinary comparison
 argument above carries the arbitrary-family and all-height quantifiers;

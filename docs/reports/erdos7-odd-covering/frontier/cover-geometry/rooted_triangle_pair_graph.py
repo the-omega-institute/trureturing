@@ -5,7 +5,7 @@ One normalized actual source uses the complete assigned bad set at each row.
 This is an ordinary theorem calculation, not Lean or a selector construction.
 """
 from fractions import Fraction as F
-from math import prod,ceil
+from math import prod,ceil,factorial
 from itertools import combinations
 from pathlib import Path
 import argparse,json
@@ -117,6 +117,41 @@ def final_certificate():
         'retains_one_actual_preconditioning_law':True}
     result['previous_pair_graph']=sorted(E0)
     result['new_pair_supports']=sorted(NINE_EDGES-E0)
+    # Reuse Chapter33 SH5--SH13 with the actual nine-head Haar restriction.
+    # This is a new seed of density at most1, not a transported query cap.
+    head_primes=P+(23,29)
+    moment2=prod((F(p*(p+1),(p-1)**2) for p in head_primes),start=F(1))
+    ell=12
+    c=F(2*ell*ell+1,2*ell*ell-1)
+    polynomial=sum((F(factorial(7),factorial(7-j)*ell**j) for j in range(8)),F(0))
+    def tail_charge(cutoff):
+        return moment2*c**7/F(cutoff)*F(cutoff,cutoff-3)**2*polynomial
+    cutoff=2000000
+    charge=tail_charge(cutoff)
+    old_charge=tail_charge(1000000)
+    coarse_head=F(1,20000)
+    need('large_tail_head_moment',moment2==F(14003665,540672))
+    need('large_tail_analytic_parameters',cutoff>=286 and ell>=4 and 3**ell<=cutoff)
+    need('large_tail_reference_charge',old_charge==F(18784226696570844907670807127734375,
+                                                   337155933270740130462847785506306260992))
+    need('old_cutoff_certificate_insufficient',extended-old_charge<0)
+    need('large_tail_simple_charge_upper',charge<F(3,100000))
+    need('large_tail_simple_positive_margin',coarse_head-charge>F(1,50000))
+    need('large_tail_exact_positive_margin',extended-charge>F(1,50000))
+    result['large_prime_tail']={
+        'scope':'Actual nine-head Haar restart and Chapter33 SH5--SH13. All extra primes strictly greater than2000000, arbitrary finite original heights, tail support sizes and complete head cofactors. The remaining mass is distorted mass, not Haar density or a continued query bound.',
+        'analytic_premise':'The inherited Rosser--Schoenfeld prime-product estimate SH11, with B>=286, ell>=4 and 3^ell<=B; no new analytic proof.',
+        'head_primes':head_primes,'head_seed_joint_density_cap':F(1),
+        'exact_rational_head_Haar_lower':extended,'simple_head_Haar_lower':coarse_head,
+        'cutoff':cutoff,'ell':ell,'c':c,'moment2':moment2,
+        'positive_tail_polynomial':polynomial,'tail_charge_upper':charge,
+        'simple_tail_charge_upper':F(3,100000),
+        'remaining_mass_lower_from_exact_head':extended-charge,
+        'remaining_mass_lower_from_simple_head':coarse_head-charge,
+        'simple_remaining_distorted_mass_lower':F(1,50000),
+        'old_cutoff':1000000,'old_tail_charge_upper':old_charge,
+        'old_exact_head_certificate_margin':extended-old_charge,
+        'final_Haar_density_bound_asserted':False,'final_query_bound_asserted':False}
     old_three=calculate(DEFAULT,E0)
     all15_default=calculate(DEFAULT,EDGES)
     all15_alternative=calculate({5:F(0),7:F(1),11:F(3),13:F(5),17:F(7),19:F(8)},EDGES)

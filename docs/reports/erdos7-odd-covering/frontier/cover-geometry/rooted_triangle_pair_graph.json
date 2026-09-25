@@ -328,6 +328,39 @@
       19
     ]
   ],
+  "large_prime_tail": {
+    "scope": "Actual nine-head Haar restart and Chapter33 SH5--SH13. All extra primes strictly greater than2000000, arbitrary finite original heights, tail support sizes and complete head cofactors. The remaining mass is distorted mass, not Haar density or a continued query bound.",
+    "analytic_premise": "The inherited Rosser--Schoenfeld prime-product estimate SH11, with B>=286, ell>=4 and 3^ell<=B; no new analytic proof.",
+    "head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "head_seed_joint_density_cap": "1",
+    "exact_rational_head_Haar_lower": "202972318261283472997395138475101055867/3934653841647313764202450739562994944000000",
+    "simple_head_Haar_lower": "1/20000",
+    "cutoff": 2000000,
+    "ell": 12,
+    "c": "289/287",
+    "moment2": "14003665/540672",
+    "positive_tail_polynomial": "509855/248832",
+    "tail_charge_upper": "988643510345833942508989848828125/35490204709719259009199798947341533184",
+    "simple_tail_charge_upper": "3/100000",
+    "remaining_mass_lower_from_exact_head": "78978843930405954710235501042700068035306055218973582243375721/3328366032009842126561244619052355504476385669882630103836672000000",
+    "remaining_mass_lower_from_simple_head": "491166703212580629969375061586844787/22181377943574536880749874342088458240000",
+    "simple_remaining_distorted_mass_lower": "1/50000",
+    "old_cutoff": 1000000,
+    "old_tail_charge_upper": "18784226696570844907670807127734375/337155933270740130462847785506306260992",
+    "old_exact_head_certificate_margin": "-2479942886344876862122291796097331355802229447139208538459495063/600768266466218437860046165098936669679163246988118986426077184000000",
+    "final_Haar_density_bound_asserted": false,
+    "final_query_bound_asserted": false
+  },
   "diagnostics": {
     "scope": "These are three fixed graph/schedule comparisons, not graph or schedule optimality claims. Failed estimates do not rule out another actual law.",
     "old_three_pairs_integrated": {
@@ -1233,9 +1266,16 @@
     "positive_raw_gate": true,
     "same_law_pure23_29_continuation": true,
     "continuation_density_cancellation": true,
+    "large_tail_head_moment": true,
+    "large_tail_analytic_parameters": true,
+    "large_tail_reference_charge": true,
+    "old_cutoff_certificate_insufficient": true,
+    "large_tail_simple_charge_upper": true,
+    "large_tail_simple_positive_margin": true,
+    "large_tail_exact_positive_margin": true,
     "old_three_graph_passes": true,
     "all15_default_estimate_fails": true,
     "all15_alternative_estimate_fails": true
   },
-  "passed_count": 24
+  "passed_count": 31
 }
