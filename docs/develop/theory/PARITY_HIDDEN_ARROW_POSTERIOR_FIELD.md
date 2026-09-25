@@ -1019,3 +1019,233 @@ $`J_1`$ 紧性所必需的模量条件失败。
 这既不把固定支持下的标签重新解释为随机后验标签，也不声称其他路径拓扑下的结论。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 补偿尺度上的聚簇轮廓与后验桥
+
+**定义 40.1（按精确中心展开聚簇）。** 沿用定义 39.1 的固定幅度、固定 $`\beta\in(1/2,1)`$
+及其序列，保留同一实际数据、优先级与精确后验标签。置
+
+```math
+W_c=W(k_0,l_0),\qquad
+\Delta=Q\log\frac{1+r}{1-\epsilon}
+       +P\log\frac{1-r}{1+\epsilon},\qquad
+v=\frac{\sqrt\lambda}{Q}\Delta,\qquad
+F_0(x)=\Phi(\sqrt\kappa\,x),\qquad V(x)=\gamma F_0(x),
+```
+
+式 (40.1)。
+
+其中 $`\Phi`$ 是标准正态分布函数。以下仅取使 $`\Delta\gt0`$ 的充分大下标。
+对 $`x\in\mathbb R`$ 定义右连续的轮廓与桥
+
+```math
+J_x=\{i\in J:W_i\le W_c+xv\},\qquad
+L_M(x)=\frac1B\sum_{i\in J_x}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+\mathcal C_M(x)=L_M(x)-F_0(x)Y.
+```
+
+式 (40.2)。
+
+这里 $`J,B,Y,\gamma,\kappa`$ 均取第 39 章定义。
+未知方向版本共同使用一次方向判决及其工作正向得分、后验权重；$`W_c,v`$ 仍由上述确定参数计算。
+
+**定理 40.2（聚簇展开的联合过程极限）。** 对任意固定 $`R\gt0`$，
+两个实际实验、两种方向信息情形均对支持一致地满足
+
+```math
+\bigl(Y,L_M(\cdot),\mathcal C_M(\cdot)\bigr)
+\Longrightarrow
+\bigl(\mathcal W(\gamma),\mathcal W(V(\cdot)),
+       \mathcal W(V(\cdot))-F_0(\cdot)\mathcal W(\gamma)\bigr)
+```
+
+式 (40.3)。
+
+空间为 $`\mathbb R\times D[-R,R]^2`$，路径空间取 $`J_1`$ 拓扑，
+$`\mathcal W`$ 是标准 Brownian 运动。末坐标与首坐标独立，
+其分布为 $`\sqrt\gamma\,\mathcal B(F_0(\cdot))`$，其中 $`\mathcal B`$ 是标准 Brownian 桥。
+
+此收敛可与定义 36.1 的任意固定紧阈值区间、有限个互异内点和固定紧容量区间同时成立：
+
+```math
+\left((X_{M,j})_{j=1}^d,U_M(\cdot),(R_{M,j}(\cdot))_{j=1}^d,
+             Y,L_M(\cdot),\mathcal C_M(\cdot)\right)
+\Longrightarrow
+\left((G)_{j=1}^d,H(\cdot),(K_j(G+\cdot))_{j=1}^d,
+ \mathcal W(\gamma),\mathcal W(V(\cdot)),
+ \mathcal W(V(\cdot))-F_0(\cdot)\mathcal W(\gamma)\right).
+```
+
+式 (40.4)。
+
+所有路径空间仍取乘积 $`J_1`$ 拓扑，$`\mathcal W`$ 独立于 $`G,H,K_1,\ldots,K_d`$。
+第 36 章的 $`\mathcal P_{M,j}`$ 也可同时加入，并保留其原极限。
+证明中的条件后验计算在均匀支持先验空间上解释；固定支持结论为整个对象的无条件分布收敛。
+此外，展开尺度与中心满足
+
+```math
+v\sim\epsilon(1-\alpha)\sqrt\lambda,\qquad
+\frac vw\longrightarrow0,\qquad
+\frac{W_c-z_0}{v\sqrt\lambda}\longrightarrow\frac r{1-\alpha}\gt0.
+```
+
+式 (40.5)。
+
+证明。由 (39.8)、(39.9)，$`\log(1/\epsilon)=O(Q^3)`$，故
+$`(\alpha-P/Q)/\epsilon\to0`$。在 (39.18) 中除以 $`\epsilon Q`$ 得到
+$`\Delta/(\epsilon Q)\to1-\alpha`$，证明 (40.5) 的第一式。
+又有
+
+```math
+\frac vw\sim(1-\alpha)\epsilon\sqrt q\longrightarrow0,\qquad
+W_c-z_0=\epsilon(k_0-l_0)+O(\epsilon^2\lambda),\qquad
+k_0-l_0=r\lambda+O(1).
+```
+
+式 (40.6)。
+
+这里 $`\epsilon\sqrt q=O(q^{3/2}/M)\to0`$，而 $`\lambda\to\infty`$。
+其余两式给出 (40.5) 的最后一式。因此未补偿中心与精确中心的差在原窗口中消失，
+在展开尺度上却发散；下文始终使用 $`W_c`$。
+在计数直线上有精确恒等式
+
+```math
+\frac{W(k_0+tQ,l_0+tP)-W_c}{v}=\frac{tQ}{\sqrt\lambda}.
+```
+
+式 (40.7)。
+
+先取正确方向。令 $`d_M(x)=\sum_{i\in J_x}p_i(1-p_i)`$、
+$`d_J=\sum_{i\in J}p_i(1-p_i)`$。
+第 39 章的计数直线隔离、固定块概率与相对尾界，使任意固定 $`x`$ 满足
+$`d_M(x)/B^2\to V(x)`$ 依概率。
+半无限区间的结论由固定有限区间逼近，再使用相对高斯尾界得到。
+实际占据数的一行、两行比较及 $`p_i\to1/2`$ 的一致校准在此均保留；
+它们不是把实际观测行替换成独立 Poisson 行。
+方差时钟单调非减，极限连续。在固定有限网格上取收敛，再用单调性夹住网格间的值，得到
+
+```math
+\sup_{|x|\le R+1}\left|\frac{d_M(x)}{B^2}-V(x)\right|
+\longrightarrow0,\qquad \frac{d_J}{B^2}\longrightarrow\gamma
+\quad\text{依概率}.
+```
+
+式 (40.8)。
+
+在校准独立标签律 $`\mathsf Q_M`$ 下，按递增得分揭示 $`J`$ 中的标签。
+定义左尾、正向条带过程和右尾
+
+```math
+T_-^M=\frac1B\sum_{i\in J_{-R}}(\zeta_i-p_i),\qquad
+D_M(x)=\frac1B\sum_{i\in J_x\setminus J_{-R}}(\zeta_i-p_i),
+\quad -R\le x\le R,\qquad
+T_+^M=\frac1B\sum_{i\in J\setminus J_R}(\zeta_i-p_i).
+```
+
+式 (40.9)。
+
+三个对象相互独立；$`D_M`$ 是从零开始的右连续独立增量鞅，
+其可预测方差时钟为 $`(d_M(x)-d_M(-R))/B^2`$。
+等分标签必须整组跳跃。对展开位置位于 $`(-R,R]`$ 的得分组 $`E_z`$，
+记 $`d_z=\sum_{i\in E_z}p_i(1-p_i)`$。
+(40.8) 在稍大区间成立，连续极限因而使 $`\max_z d_z/B^2\to0`$。
+在任何满足这些时钟极限的确定数据环境序列上，独立 Bernoulli 和的四阶矩界给出
+
+```math
+\sum_z\mathbb E_{\mathsf Q_M}|\Delta_zD_M|^4
+\le3\left(\max_z\frac{d_z}{B^2}\right)\frac{d_J}{B^2}
+    +\frac1{B^2}\frac{d_J}{B^2}\longrightarrow0.
+```
+
+式 (40.10)。
+
+故最大跳幅平方的期望趋零，可预测方差时钟的最大跳跃也趋零。
+$`V(x)-V(-R)`$ 连续且严格递增；以其反函数作确定时间变换，
+为按半直线表述应用定理，在变换后的末时刻接上独立标准 Brownian 增量，
+其可预测方差时钟便在每个紧时间区间趋于恒等时钟，新增部分无跳跃。
+[Whitt 定理 2.1(ii)](../../../Library/Dynamics/whitt2007martingale.md)
+给出极限后，再限制回原区间并逆变换，得到该条带的连续 Brownian 时间变换极限。
+两侧尾变量由有界独立数组中心极限定理收敛，方差分别为
+$`V(-R)`$ 和 $`\gamma-V(R)`$，并保持与整个条带独立。
+因此辅助轮廓与完整端点共同收敛为
+$`(\mathcal W(V(\cdot)),\mathcal W(\gamma))`$。
+这一步既控制路径，也保留端点与路径的正确相关性。
+
+后验转移始终使用一个完整并集。
+先仅取 $`J`$，其方差为 $`O_{\mathbb P}(B^2)=o_{\mathbb P}(q)`$，补集保留 $`q`$ 量级方差。
+(35.11) 给出完整标签向量的总变差趋零；(35.12) 对同一数据实现的全部子集同时成立，故
+
+```math
+\sup_{x\in\mathbb R}\frac1B
+ \left|\sum_{i\in J_x}(\pi_i-p_i)\right|
+\le\frac{C\sqrt{d_J}}B
+ \left(\frac{d_J}{q}+\frac{\sqrt{d_J}}q+q^{-1/2}\right)
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (40.11)。
+
+端点也满足相同界。总变差的映射收缩与一致中心位移遂转移整个过程。
+从任一数据子序列抽取使时钟、跳跃和中心界几乎处处成立的子序列，
+在其确定环境上使用上述论证，得到联合条件律在有界 Lipschitz 距离中依概率趋于确定极限。
+该距离有界，故取期望也成立。
+
+映射 $`(y,l)\mapsto l-F_0y`$ 在连续极限处连续。
+极限桥与端点的协方差为
+$`V(x)-F_0(x)\gamma=0`$；它们联合高斯，因而独立。
+桥的协方差为
+$`\gamma[F_0(\min(x,y))-F_0(x)F_0(y)]`$，即 (40.3) 的 Brownian 桥分布。
+
+为证明 (40.4)，固定排名截断 $`H_0`$，
+将 $`J`$ 加入第 36 章覆盖全部阈值尾集和各边界两侧排名块的同一个并集 $`\mathcal U`$。
+$`|J|=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)`$，且
+
+```math
+d_{\mathcal U}=O_{\mathbb P}(q/\sqrt\lambda),\qquad
+ d_{\mathcal U^c}\ge cq/2
+```
+
+式 (40.12)。
+
+在概率趋一的事件上成立。
+以 $`d_{\mathcal U}`$ 替换 (40.11) 右边括号内的 $`d_J`$，
+新轮廓的全部中心位移仍一致趋零；原阈值和排名前缀的中心界也在各自尺度上保留。
+所以一次完整向量比较同时转移所有坐标。
+
+在乘积律下，取有限多个轮廓时刻、阈值时刻与排名时刻。
+任意固定线性组合的最大单标签系数趋零，故有联合数组中心极限定理。
+新轮廓或端点与旧阈值坐标的协方差绝对值，除以各自归一化后至多为
+
+```math
+O_{\mathbb P}\left(\frac{B}{b_M^\circ}\right)
+=O_{\mathbb P}(Q^{-1/2})\longrightarrow0.
+```
+
+式 (40.13)。
+
+与截断排名块的相同界为
+
+```math
+O_{H_0}\left(\frac{\sqrt q}{Bq^{1/4}}\right)
+=O_{H_0}\left(\frac{\sqrt Q\,\lambda^{1/4}}{q^{1/4}}\right)
+\longrightarrow0.
+```
+
+式 (40.14)。
+
+即使新聚簇与排名块相交，此上界也成立。
+先有联合高斯性，再由这些消失的交叉协方差得到
+$`\mathcal W`$ 与原始 $`H,K_1,\ldots,K_d`$ 独立。
+各过程的紧性给出乘积空间紧性。
+确定的条件有界 Lipschitz 极限与数据原点的有界连续测试相乘，
+使整个原始过程族共同独立于粗尺度原点。
+最后按第 36 章加入共同原点、作随机平移、控制排名取整并去掉 $`H_0`$ 截断，
+得到 (40.4) 及附加的 $`\mathcal P_{M,j}`$ 坐标。
+
+全部集合、权重、中心及联合对象在共同支持置换下等变，
+先验无条件联合分布因而等于每个固定支持下的分布。
+实际比较界对支持一致，保留所述一致结论。
+未知方向的全部坐标在同一个正确判决事件上与正确对齐版本相等，
+其补事件概率为 $`O(q^{-1})`$，故整个联合结论一并转移。∎
+
+## 追加锚（本行以下为增补区）
