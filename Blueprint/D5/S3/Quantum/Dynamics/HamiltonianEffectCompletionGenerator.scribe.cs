@@ -101,13 +101,13 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                 DescribeRole.Theorem),
             Paragraph(
                 Text("Thermal recovery and covariance: "),
-                Ref("D5/L/PredictiveReduction/oi2006interference"),
+                Ref("D5/L/Quantum/oi2006interference"),
                 Text(" gives the two-state interference ceiling; "),
-                Ref("D5/L/PredictiveReduction/marvian2014modes"),
+                Ref("D5/L/Quantum/marvian2014modes"),
                 Text(" supplies the symmetry-mode selection rule. "),
-                Ref("D5/L/PredictiveReduction/lostaglio2015coherence"),
+                Ref("D5/L/Quantum/lostaglio2015coherence"),
                 Text(" and "),
-                Ref("D5/L/PredictiveReduction/faist2015gibbspreserving"),
+                Ref("D5/L/Quantum/faist2015gibbspreserving"),
                 Text(" distinguish Gibbs calibration, coherent covariance and thermal "
                     + "implementation. Sections 56-58 of the computational-behavior theory "
                     + "volume combine these conditions in one recovery map, deriving "
@@ -116,11 +116,11 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     + "not those paper-level optimization or channel-norm claims.")),
             Paragraph(
                 Text("Joint statistical interpretation: "),
-                Ref("D5/L/PredictiveReduction/nuradha2025multivariate"),
+                Ref("D5/L/Quantum/nuradha2025multivariate"),
                 Text(" poses operational questions for multivariate fidelities; the "
                     + "two-label dynamic refinement does not solve the unrestricted "
                     + "multi-label problem. "),
-                Ref("D5/L/PredictiveReduction/beny2015inference"),
+                Ref("D5/L/Quantum/beny2015inference"),
                 Text(" motivates observation-based scale descriptions. Section 59 keeps "
                     + "statistical information loss and dynamical intertwining error "
                     + "as separate composable quantities; it does not identify their "

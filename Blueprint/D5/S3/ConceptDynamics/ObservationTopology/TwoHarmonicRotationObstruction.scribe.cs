@@ -32,7 +32,7 @@ internal sealed class TwoHarmonicRotationObstructionDocument : IScribeDocumentDe
             Paragraph(
                 Text("The discrete frequency obstruction applies to the stable-rank "
                     + "measurement-design question of Eftekhari et al. (2018), recorded in "
-                    + "Library/Topology/eftekhari2018embedology.md, when the sensor class "
+                    + "Library/ConceptDynamics/eftekhari2018embedology.md, when the sensor class "
                     + "is restricted to paired circle harmonics at "
                     + "a sixth-turn delay. It does not by itself assert "
                     + "the analytic stable-rank formula or a dimension bound for arbitrary "
