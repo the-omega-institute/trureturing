@@ -42220,3 +42220,199 @@ $$
 任意给定 $\delta>0$，再要求 $\varepsilon<\delta/[C(B+\delta)]$ 即得（193.5）。与已经证明的下界合用，得到（193.4），相除并化简得到（193.6）。上述逼近中 $R_\varepsilon\to0$；在 $\varepsilon=0$ 直接取极限不能得到仍有非空定义邻域的纯态曲线，因此这个构造没有把下确界升级为最小值。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 194. 纯二维成本下确界的不达到性与固定精确邻域的正差距
+
+**定理 194.1（每个局部纯二维程序严格高于下确界）。** 在定义193.1的程序类中，对每个 $t\in U$ 都有
+$$
+I_Q(\rho_t)>B(a,t).
+\tag{194.1}
+$$
+因此定理193.2的下确界不由任何一个允许程序达到。
+
+证明。 固定一个允许程序及内部点 $t$。沿用（193.7）的实线性映射 $\mathcal L$，记 $K=\ker\mathcal L\ne\{0\}$、$A=K^\perp$，以及 Bloch 向量 $r(u)$。$\mathcal L$ 在 $A$ 上单射，故目标通道的非恒定仿射性迫使
+$$
+P_A r(u)=a_0+(u-t)v,\qquad v\in A\setminus\{0\}.
+\tag{194.2}
+$$
+若 $r(t)\perp K$，则 $|a_0|=1$。但非恒定仿射线不可能在内点经过单位球面而两侧都留在闭单位球内；具体地，两个对称参数的平方范数平均为 $1+s^2|v|^2>1$。所以可以选择单位向量 $n\in K$ 使 $n\cdot r(t)\ne0$。
+
+以固定程序酉变换将 $n$ 转到 $Y$ 方向。于是 $\mathcal G(X\otimes Y)=0$，而 $r_y(t)\ne0$。在 $t$ 的一个较小邻域内定义
+$$
+\sigma_u=\frac{\rho_u+\rho_u^{\mathsf T}}2
+=\frac{I+r_x(u)X+r_z(u)Z}{2}\succ0.
+\tag{194.3}
+$$
+它生成同一条通道。这个式子只构造另一条合法状态曲线，不把转置平均视为 CPTP 操作，也不对它使用信息量单调性。记 $s=(r_x,r_z)$。由纯性 $|s|^2+r_y^2=1$ 以及 $r_y\ne0$，直接得到
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|s'(u)|^2+\frac{(s(u)\cdot s'(u))^2}{1-|s(u)|^2}
+=I_Q(\sigma_u).
+\tag{194.4}
+$$
+最后一项使用满秩 qubit 的 SLD 公式。
+
+还需要固定信号输入之间的共同实现。第191.3节的受控 Stinespring 推导适用于当前任意处理器：程序向量张成整个二维空间，而每个信号基态输出固定为同一纯基态，所以
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I_2.
+\tag{194.5}
+$$
+因而对所有程序态 $\tau$，诱导通道都是 Schur 通道。令 $|s_0\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$，并定义
+$$
+\mathcal E_0(\tau)=\mathcal G(|s_0\rangle\langle s_0|\otimes\tau).
+\tag{194.6}
+$$
+$3\mathcal E_0(\tau)$ 就是整个诱导通道的相关矩阵，且 $\operatorname{diag}\mathcal E_0(\tau)=(1/3,1/3,1/3)$ 对所有程序态恒成立。对任意概率向量 $p$，定义 $D_p=\operatorname{diag}(\sqrt p)$、$|s_p\rangle=\sum_i\sqrt{p_i}|i\rangle$，则同一处理器满足
+$$
+\mathcal E_p(\tau):=\mathcal G(|s_p\rangle\langle s_p|\otimes\tau)
+=3D_p\mathcal E_0(\tau)D_p.
+\tag{194.7}
+$$
+
+$\mathcal E_0$ 从二维映到三维且消去 $Y$。由第193节使用的 $2\times3$ PPT 判据和 Choi 重构，它存在一个有限测量—制备表示。因为 $\mathcal E_0\circ T=\mathcal E_0$，把各测量效应换成其与转置的平均，可以得到实对称效应的同一个表示：
+$$
+\mathcal E_0(\tau)=\sum_k\operatorname{Tr}(N_k\tau)\tau_k,
+\qquad N_k=N_k^{\mathsf T}\succeq0,\quad \sum_kN_k=I_2.
+\tag{194.8}
+$$
+这里 $\tau_k$ 为固定三维密度矩阵。删去零效应后，$q_k(u)=\operatorname{Tr}(N_k\sigma_u)>0$ 在所取邻域内恒成立；并有 $q_k(u)=\operatorname{Tr}(N_k\rho_u)$。
+
+对每个 $p$ 定义
+$$
+w_k(p)=3\operatorname{Tr}(D_p^2\tau_k)
+=3\sum_i p_i(\tau_k)_{ii},\qquad
+\mathcal F(p)=\sum_k w_k(p)\frac{q_k'(t)^2}{q_k(t)}.
+\tag{194.9}
+$$
+由（194.7）及其保迹性，$\{w_k(p)N_k\}_k$ 对每个 $p$ 都是 POVM。对于严格正的 $p$，相应的归一输出态为 $3D_p\tau_kD_p/w_k(p)$；因此（193.13）—（193.16）的同一分块证明及测量界给出
+$$
+(1-p_1)B(a,t)\le\mathcal F(p)\le I_Q(\sigma_t).
+\tag{194.10}
+$$
+这里的测量—制备分解固定于 $\mathcal E_0$，只按（194.7）对输出作变换，故 $\mathcal F(p)$ 是 $p$ 的一个有限线性函数。
+
+假设 $I_Q(\rho_t)=B(a,t)$。由（194.4）、（194.10）和连续性，令 $p\to p_*=(1/2,0,1/2)$ 得到
+$$
+\mathcal F(p_*)=I_Q(\sigma_t)=B(a,t).
+\tag{194.11}
+$$
+此步取有限标量函数的极限，不在奇异信号输出上使用逆矩阵。
+
+令 $L$ 为满秩态 $\sigma_t$ 的唯一 SLD。它是实对称矩阵，因为 $\sigma_t,\sigma_t'$ 都是实对称矩阵，SLD 方程及其转置有同一个唯一解。测量 $\{w_k(p_*)N_k\}$ 达到（194.11）的信息量。满秩 SLD 的测量等号条件要求，对每个非零效应 $H_k=w_k(p_*)N_k$，
+$$
+\sqrt{H_k}L=s_k\sqrt{H_k},\qquad s_k\in\mathbb R.
+\tag{194.12}
+$$
+它可由逐效应 Hilbert–Schmidt Cauchy–Schwarz 等号及 $\sigma_t$ 可逆直接推出；原始表述见 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（27）。因此每个这种效应支持在 $L$ 的一个本征空间中。$L$ 不是标量矩阵，否则迹为零的导数迫使 $L=0$，与 $I_Q=B>0$ 矛盾。故它有两个互异本征值，记其秩一实投影为 $P_+,P_-$。
+
+若 $w_k(p_*)>0$，则 $N_k$ 支持在其中一个本征空间中。若 $w_k(p_*)=0$，则 $\tau_k$ 的 $00,22$ 对角元均为零，半正定性迫使相应行列也为零，故 $\tau_k=|1\rangle\langle1|$。这些零权重项的聚合效应满足
+$$
+N_0:=\sum_{k:w_k(p_*)=0}N_k
+=I_2-\sum_{k:w_k(p_*)>0}N_k,
+\tag{194.13}
+$$
+也在 $P_+,P_-$ 基下对角。因此（194.8）对全部程序态只依赖两个数 $\operatorname{Tr}(P_\pm\tau)$：正权重项分别为本征投影的倍数，零权重项具有同一个输出态并可合并。于是
+$$
+\mathcal E_0(\tau)=\sum_{\nu\in\{+,-\}}
+\operatorname{Tr}(P_\nu\tau)\mathcal E_0(P_\nu).
+\tag{194.14}
+$$
+因 $\mathcal E_0$ 决定全部诱导 Schur 系数，（194.14）提升为诱导信号通道的同一个二项分解。令固定 CPTP 通道 $\mathcal R_\nu(\omega)=\mathcal G(\omega\otimes P_\nu)$，便有
+$$
+\mathcal T_u=p(u)\mathcal R_++[1-p(u)]\mathcal R_-,\qquad
+p(u)=\operatorname{Tr}(P_+\rho_u)=\operatorname{Tr}(P_+\sigma_u).
+\tag{194.15}
+$$
+在所取邻域内，$0<p(u)<1$。名义点的 SLD 投影测量给出
+$$
+\frac{p'(t)^2}{p(t)[1-p(t)]}=I_Q(\sigma_t)=B(a,t).
+\tag{194.16}
+$$
+这却是一个二符号经典精确程序，而定理184.3要求它的成本至少为 $B(a,t)/(1-a^2)>B(a,t)$，矛盾。结合定理193.2的非严格下界，得到（194.1）。证毕。
+
+**定理 194.2（固定邻域上的统一正差距）。** 固定 $0<a<1$、$t\in J_a$，以及
+$$
+0<R<\min\{t-(2a-1),1-t\}.
+\tag{194.17}
+$$
+存在 $\eta(a,t,R)>0$，使每个在包含 $[t-R,t+R]$ 的开区间上精确生成 $\mathcal T_u$ 的纯二维 $C^1$ 程序都满足
+$$
+I_Q(\rho_t)\ge B(a,t)+\eta(a,t,R).
+\tag{194.18}
+$$
+特别地，若局部纯二维程序序列的名义成本趋于 $B(a,t)$，则对每个固定的 $R$，充分靠后的程序都不能在包含 $[t-R,t+R]$ 的开区间上保持上述精确性。
+
+证明。 简记
+$$
+J_c=\frac1{(t-(2a^2-1))(1-t)}=\frac{B(a,t)}{1-a^2}.
+\tag{194.19}
+$$
+考虑以下有限维集合 $\mathscr K_R$。它的元素为五元组 $(\mathcal G,\rho_-,\rho_0,\rho_+,d)$：$\mathcal G:M_6\to M_3$ 为 CPTP；其（193.7）中的实 Bloch 线性部分满足 $\operatorname{rank}\mathcal L\le2$；三个 $\rho_\nu$ 为纯 qubit 密度矩阵，分别通过同一处理器精确生成 $\mathcal T_{t-R},\mathcal T_t,\mathcal T_{t+R}$。还要求
+$$
+d=d^\dagger,\qquad \operatorname{Tr}d=0,\qquad
+\rho_0d+d\rho_0=d,\qquad 2\operatorname{Tr}(d^2)\le J_c,
+\tag{194.20}
+$$
+以及对每个信号算符 $X$ 都有
+$$
+\mathcal G(X\otimes d)=\mathcal S_E(X),\qquad
+E_{02}=E_{20}=1,\quad E_{ij}=0\ \text{于其余位置}.
+\tag{194.21}
+$$
+这些条件都是有限维闭条件。CPTP 映射的 Choi 矩阵集合紧，纯密度矩阵集合紧，（194.20）又控制 $d$ 的 Hilbert–Schmidt 范数，所以 $\mathscr K_R$ 紧。这里不固定 Stinespring 环境维数，也不需要曲线空间的紧性。
+
+该集合非空。取完整 CP 区间的两个端点通道 $\mathcal T_{2a^2-1}$、$\mathcal T_1$，用仿射概率的纯正交标记程序
+$$
+|\psi_u\rangle=\sqrt{p(u)}|0\rangle+\sqrt{1-p(u)}|1\rangle,
+\qquad p(u)=\frac{1-u}{2(1-a^2)}
+\tag{194.22}
+$$
+控制这两个通道。它在完整 CP 区间内部精确，Bloch 线性部分秩为一，且在 $t$ 的信息量等于 $J_c$。取其三个状态及导数即可得到集合中的元素。
+
+关键是 $\mathscr K_R$ 中每个五元组都能实现为某个较小开邻域内的纯态精确曲线，并保留 $\rho_0,d$。以 $r_-,r_0,r_+$ 表示其三个 Bloch 向量，以 $\dot r$ 表示 $d=(\dot r\cdot\sigma)/2$。令 $K=\ker\mathcal L$、$A=K^\perp$，写成
+$$
+r_0=a_0+b_0,\qquad \dot r=v+w,\qquad a_0,v\in A,\quad b_0,w\in K.
+\tag{194.23}
+$$
+由值、导数与端点匹配，以及 $\mathcal L|_A$ 的单射性，
+$$
+P_A r_\pm=a_0\pm Rv,\qquad v\ne0.
+\tag{194.24}
+$$
+两个端点投影的范数不超过一，故平方相加得到
+$$
+|a_0|^2+R^2|v|^2\le1,
+\qquad |a_0|<1,\quad b_0\ne0.
+\tag{194.25}
+$$
+纯切向条件（194.20）等价于 $r_0\cdot\dot r=0$，亦即 $a_0\cdot v+b_0\cdot w=0$。
+
+对充分小的实数 $s$ 定义
+$$
+a(s)=a_0+sv,\qquad
+b(s)=\sqrt{1-|a(s)|^2}\,\frac{b_0+sw}{|b_0+sw|},\qquad
+r(s)=a(s)+b(s).
+\tag{194.26}
+$$
+由（194.25），根号与分母在零附近均严格为正。该曲线解析、$|r(s)|=1$，且 $r(0)=r_0$。求导并用切向条件得
+$$
+b'(0)=w-\frac{a_0\cdot v+b_0\cdot w}{|b_0|^2}b_0=w,
+\qquad r'(0)=\dot r.
+\tag{194.27}
+$$
+又因 $b(s)\in K$，通过同一固定处理器得到的通道恰为 $\mathcal T_{t+s}$。所以这是定义193.1中的一个真实局部纯二维程序，其名义成本为
+$$
+I_Q=|\dot r|^2=2\operatorname{Tr}(d^2).
+\tag{194.28}
+$$
+这个实现不声称覆盖原来的整个半径 $R$；只需在零的某个开邻域内成立，就能应用定理194.1。因此紧集 $\mathscr K_R$ 上的连续函数 $Q=2\operatorname{Tr}(d^2)$ 处处严格大于 $B(a,t)$。它取得最小值 $m_R$，并满足
+$$
+B(a,t)<m_R\le J_c.
+\tag{194.29}
+$$
+取 $\eta=m_R-B(a,t)>0$。
+
+任意满足本定理固定邻域要求的实际程序，若 $I_Q(\rho_t)\le J_c$，则其处理器、三个状态与导数组成 $\mathscr K_R$ 的元素：秩约束由第193节的纯性论证保证，且纯态成本等于（194.28）。所以它的成本至少为 $m_R$。若成本大于 $J_c$，则由（194.29）也至少为 $m_R$。这证明（194.18）及其序列结论。所用 $m_R$ 是有限维松弛集合的最小值，不据此断言原固定邻域程序类存在最优程序；此论证也没有给出 $\eta$ 对 $R$ 的显式速率。证毕。
+
+## 追加锚（本行以下为增补区）
