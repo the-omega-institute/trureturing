@@ -9,7 +9,19 @@
 /-
 Ported from https://github.com/StatLean/Stat-Lean
 at immutable revision e1ef06bf52d2a8896439c5b59d982d9aad28a254.
-Copyright 2024 Junwei Lu. Licensed under Apache-2.0 (full text below).
+Copyright 2024 Junwei Lu. The upstream LICENSE at this exact revision is
+modified Apache-2.0 text, not the standard Apache-2.0 full text. Its complete
+original terms and attribution are retained verbatim below.
+Upstream LICENSE SHA-256:
+  d5945fe0f38866a919940212b0e3b5b0c30629b923c3e26dcce026571a29cd93
+The upstream heading identifies Apache License, Version 2.0, but its text differs:
+the Contribution definition begins "shall mean, as submitted"; section 4 changes
+the paragraph on licensing modifications and additional grants; section 8 uses
+"exemplary" instead of "consequential" damages; section 9 changes the warranty
+obligations and says exclusions may conflict with this License; and the appendix
+says additional terms or conditions may be added. These differences are present
+in upstream's LICENSE; they were not introduced by this port. This notice
+identifies the source text and does not replace or amend its terms.
 
 Original sources:
   StatLean/HypothesisTesting/ForMathlib/EsseenSmoothing.lean

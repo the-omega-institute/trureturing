@@ -29,7 +29,7 @@ internal sealed class CompoundPoissonEdgeworthFoundationDocument : IScribeDocume
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Write V for p times a squared plus q times b squared, and use the raw cubic and quartic jump moments. On a sufficiently small fixed raw-frequency interval, the cubic and quartic exponent terms are bounded by V times u squared divided by four, leaving Gaussian decay exp(-V u squared / 4).")),
+                    Paragraph(Text("Let p, q, a, b, and delta be real numbers. Assume p >= 0 and q >= 0; write V = p×a^2 + q×b^2 and assume V > 0. Assume delta >= 0, delta×abs(a) <= 1, delta×abs(b) <= 1, and abs(p×a^3 + q×b^3)×delta/6 + (p×a^4 + q×b^4)×delta^2 <= V/4. On the rescaled interval 0 <= u <= delta×w for w >= 1, these hypotheses bound the cubic and quartic exponent terms by V×u^2/4, leaving the Gaussian envelope exp(-V×u^2/4).")),
                     Paragraph(Text("After rescaling by square-root time w, the error divided by frequency is bounded by a Gaussian times a polynomial of degrees three, five, and seven, divided by w squared. This integrable envelope makes w times the low-frequency integral tend to zero."))),
                 DescribeRole.Theorem))));
 }
