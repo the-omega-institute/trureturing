@@ -608,7 +608,7 @@ $`a_M\log M`$、$`q^{-1}`$ 和 $`w=\sqrt{\lambda/q}`$
 都比任意固定的 $`\log M`$ 负幂更快趋零。因此截断内
 
 ```math
-(k,l)\ne(k_0,l_0)quad\Longrightarrow\quad
+(k,l)\ne(k_0,l_0)\quad\Longrightarrow\quad
 |W(k,l)-\tau|\ge\tfrac12(\log M)^{-C_1}\gt w.
 ```
 
