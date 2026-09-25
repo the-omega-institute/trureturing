@@ -7,6 +7,7 @@
    digest: Dyadic lower slopes converge in precision but miss an exact mechanical boundary bit. -/
 
 import D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
+import Mathlib.Analysis.SpecificLimits.Normed
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -14,10 +15,15 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
+open Finset Filter
+open scoped Topology
 open D5.S1.Words.Mechanical
 
 def dyadicLower (alpha : ℝ) (p : ℕ) : ℝ :=
   (⌊((2 ^ p : ℕ) : ℝ) * alpha⌋ : ℝ) / ((2 ^ p : ℕ) : ℝ)
+
+def dyadicUpper (alpha : ℝ) (p : ℕ) : ℝ :=
+  (⌈((2 ^ p : ℕ) : ℝ) * alpha⌉ : ℝ) / ((2 ^ p : ℕ) : ℝ)
 
 /-- Every finite lower binary approximation misses the exact boundary bit,
 despite its error being strictly less than the requested binary unit. -/
@@ -85,6 +91,105 @@ theorem dyadic_lower_boundary_mismatch
   · change lowerMechanicalWord beta x 0 = false
     simp [lowerMechanicalWord, hletterbeta]
 
+/-- A fixed finite mechanical observation is eventually exact under upper
+binary slope approximations, including phases on an integer boundary. -/
+theorem dyadic_upper_eventually_word_eq (alpha x : ℝ) (n : ℕ) :
+    ∃ p₀ : ℕ, ∀ p ≥ p₀, ∀ j < n,
+      lowerMechanicalWord (dyadicUpper alpha p) x j =
+        lowerMechanicalWord alpha x j := by
+  let margin (k : ℕ) : ℝ :=
+    (⌊x + (k : ℝ) * alpha⌋ : ℝ) + 1 - (x + (k : ℝ) * alpha)
+  have hmargin (k : ℕ) : 0 < margin k := by
+    dsimp [margin]
+    linarith [Int.lt_floor_add_one (x + (k : ℝ) * alpha)]
+  let gaps : Finset ℝ := (Finset.range (n + 1)).image margin
+  have hnonempty : gaps.Nonempty := by
+    refine ⟨margin 0, Finset.mem_image.mpr ?_⟩
+    exact ⟨0, Finset.mem_range.mpr (by omega), rfl⟩
+  let g := gaps.min' hnonempty
+  have hg : 0 < g := by
+    obtain ⟨k, _, hk⟩ := Finset.mem_image.mp (Finset.min'_mem gaps hnonempty)
+    change 0 < gaps.min' hnonempty
+    rw [← hk]
+    exact hmargin k
+  let radius : ℝ := g / ((n + 1 : ℕ) : ℝ)
+  have hden : (0 : ℝ) < ((n + 1 : ℕ) : ℝ) := by positivity
+  have hradius : 0 < radius := div_pos hg hden
+  have hstable (beta : ℝ) (hlo : alpha ≤ beta) (hsmall : beta - alpha < radius)
+      (k : ℕ) (hk : k ≤ n) :
+      ⌊x + (k : ℝ) * beta⌋ = ⌊x + (k : ℝ) * alpha⌋ := by
+    let t : ℝ := x + (k : ℝ) * alpha
+    have hkgap : g ≤ margin k := Finset.min'_le gaps _
+      (Finset.mem_image.mpr
+        ⟨k, Finset.mem_range.mpr (Nat.lt_succ_of_le hk), rfl⟩)
+    have hdelta : 0 ≤ beta - alpha := sub_nonneg.mpr hlo
+    have hkcast : (k : ℝ) ≤ ((n + 1 : ℕ) : ℝ) := by
+      exact_mod_cast Nat.le_succ_of_le hk
+    have hprod : (beta - alpha) * ((n + 1 : ℕ) : ℝ) < g := by
+      exact (lt_div_iff₀ hden).mp hsmall
+    have hstep : (k : ℝ) * (beta - alpha) < g := by
+      calc
+        (k : ℝ) * (beta - alpha) ≤
+            ((n + 1 : ℕ) : ℝ) * (beta - alpha) :=
+          mul_le_mul_of_nonneg_right hkcast hdelta
+        _ = (beta - alpha) * ((n + 1 : ℕ) : ℝ) := by ring
+        _ < g := hprod
+    have hbase : t ≤ x + (k : ℝ) * beta := by
+      dsimp [t]
+      nlinarith [mul_nonneg (Nat.cast_nonneg' k) hdelta]
+    have htop : x + (k : ℝ) * beta < (⌊t⌋ : ℝ) + 1 := by
+      have heq : x + (k : ℝ) * beta = t + (k : ℝ) * (beta - alpha) := by
+        dsimp [t]
+        ring
+      change g ≤ (⌊t⌋ : ℝ) + 1 - t at hkgap
+      rw [heq]
+      linarith
+    exact le_antisymm (Int.floor_le_iff.mpr htop) (Int.floor_mono hbase)
+  have hpow : Tendsto (fun p : ℕ => (1 / 2 : ℝ) ^ p) atTop (𝓝 (0 : ℝ)) :=
+    tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
+  obtain ⟨p₀, hp₀⟩ := Filter.eventually_atTop.mp
+    ((tendsto_order.mp hpow).2 radius hradius)
+  refine ⟨p₀, ?_⟩
+  intro p hp j hj
+  let N : ℕ := 2 ^ p
+  let t : ℝ := (N : ℝ) * alpha
+  let beta : ℝ := dyadicUpper alpha p
+  have hN : (0 : ℝ) < N := by dsimp [N]; positivity
+  have hbetadef : beta = (⌈t⌉ : ℝ) / (N : ℝ) := by rfl
+  have hbetalo : alpha ≤ beta := by
+    rw [hbetadef]
+    apply (le_div_iff₀ hN).2
+    calc
+      alpha * (N : ℝ) = t := by dsimp [t]; ring
+      _ ≤ (⌈t⌉ : ℝ) := Int.le_ceil t
+  have hbetaerr : beta - alpha < (1 : ℝ) / (N : ℝ) := by
+    have hnum : (⌈t⌉ : ℝ) - t < 1 := by
+      linarith [Int.ceil_lt_add_one t]
+    have halpha : alpha = t / (N : ℝ) := by
+      dsimp [t]
+      field_simp [ne_of_gt hN]
+    rw [hbetadef, halpha]
+    have heq : (⌈t⌉ : ℝ) / (N : ℝ) - t / (N : ℝ) =
+        ((⌈t⌉ : ℝ) - t) / (N : ℝ) := by ring
+    rw [heq]
+    apply (div_lt_iff₀ hN).2
+    simpa [ne_of_gt hN] using hnum
+  have hunit : (1 : ℝ) / (N : ℝ) = (1 / 2 : ℝ) ^ p := by
+    simp [N, Nat.cast_pow, one_div, inv_pow]
+  have hsmall : beta - alpha < radius :=
+    lt_trans (hbetaerr.trans_eq hunit) (hp₀ p hp)
+  have hj0 : j ≤ n := Nat.le_of_lt hj
+  have hj1 : j + 1 ≤ n := hj
+  have hfloor0 := hstable beta hbetalo hsmall j hj0
+  have hfloor1 := hstable beta hbetalo hsmall (j + 1) hj1
+  have hfloor1' : ⌊x + ((j : ℝ) + 1) * beta⌋ =
+      ⌊x + ((j : ℝ) + 1) * alpha⌋ := by
+    simpa only [Nat.cast_add, Nat.cast_one] using hfloor1
+  change decide (⌊x + ((j : ℝ) + 1) * beta⌋ - ⌊x + (j : ℝ) * beta⌋ = 1) =
+    decide (⌊x + ((j : ℝ) + 1) * alpha⌋ - ⌊x + (j : ℝ) * alpha⌋ = 1)
+  rw [hfloor0, hfloor1']
+
 #print axioms dyadic_lower_boundary_mismatch
+#print axioms dyadic_upper_eventually_word_eq
 
 end D5.S1.Words.Mechanical.MechanicalDyadicBoundary
