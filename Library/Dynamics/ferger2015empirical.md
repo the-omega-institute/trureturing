@@ -3,6 +3,7 @@ bibkey: "ferger2015empirical"
 authors: "Dietmar Ferger; Daniel Vogel"
 year: 2015
 title: "Weak convergence of the empirical process and the rescaled empirical distribution function in the Skorokhod product space"
+doi: null
 url: "https://arxiv.org/abs/1506.04324v1"
 claim: "Theorem 2.1 gives independent limits for the global empirical process and a locally rescaled empirical distribution: a time-transformed Brownian bridge and a two-sided Poisson process."
 strata_touched: []
