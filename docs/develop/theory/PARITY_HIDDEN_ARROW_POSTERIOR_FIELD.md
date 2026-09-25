@@ -1741,3 +1741,225 @@ $`\sqrt{2/\pi}\int_{\mathbb R}\sqrt{\rho(x)}\,dx`$。
 其补事件概率趋零，因此两种方向信息情形同样成立。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 43. 高斯点质量后的一阶随机偶极子
+
+**定义 43.1（移动中心与一阶分布残差）。** 仍取第 39、40、42 章的固定参数及原序列
+$`\lambda=Q^3`$。全部坐标使用同一数据、支持标签及精确后验中心。
+用第 40 章的精确中心 $`W_c`$ 和正步长 $`\Delta`$ 定义
+
+```math
+v_M=\frac{\Delta\sqrt\lambda}{Q},\qquad
+h_M=\frac{v_M}{w},\qquad c_M=\frac{W_c-\tau}{w},\qquad
+x_i=\frac{W_i-W_c}{v_M},\qquad u_i=c_M+h_Mx_i.
+```
+
+式 (43.1)。
+
+这里 $`h_M\gt0`$，且 $`h_M,c_M\to0`$。在共同隔离事件上，计数组的
+$`x_i`$ 等于 $`t\delta_M`$。固定 $`s\gt3/2`$，采用 (42.2) 的实
+$`H^{-s}(\mathbb T_4)`$ 空间，置
+
+```math
+Z_M=\frac1{B_M}\sum_{i\in J}x_i(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad
+\nu_M=\frac{\mu_M-Y_M\delta_{c_M}}{h_M}.
+```
+
+式 (43.2)。
+
+$`\delta'_z`$ 表示分布导数，即对光滑周期测试函数
+$`\langle\delta'_z,f\rangle=-f'(z)`$。
+减去的点质量位于精确移动中心 $`c_M`$。
+
+**定理 43.2（同一轮廓中的随机偶极子）。** 对两个实际实验、两种方向信息情形及所有固定支持，
+一致有
+
+```math
+\|\nu_M+Z_M\delta'_0\|_{-s}\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (43.3)。
+
+令 $`\mathcal W_\rho`$ 为实空间 $`L^2(\mathbb R,\rho(x)\,dx)`$ 上的中心 Gaussian 等距过程，
+协方差为 $`\mathbb E[\mathcal W_\rho(f)\mathcal W_\rho(g)]=\int fg\rho`$。
+集合记号表示作用于指示函数的值；它关于集合均方可加，不要求样本总变差有限。
+以此表示第 40 章的同一 Brownian 轮廓，令
+
+```math
+Y=\mathcal W_\rho(\mathbb R),\qquad
+L(x)=\mathcal W_\rho(( -\infty,x]),\qquad
+Z=\int_{\mathbb R}x\,\mathcal W_\rho(dx).
+```
+
+式 (43.4)。
+
+对每个固定 $`A\gt0`$，有联合收敛
+
+```math
+(Y_M,L_M|_{[-A,A]},Z_M,\nu_M)
+\Longrightarrow
+(Y,L|_{[-A,A]},Z,-Z\delta'_0)
+\quad\text{于 }\mathbb R\times D[-A,A]\times\mathbb R\times H^{-s},
+```
+
+式 (43.5)。
+
+路径因子使用 $`J_1`$ 拓扑。还可共同附加定理 40.2 的桥与原有场坐标，以及 (42.3) 的坐标。
+具体地，
+
+```math
+\mathrm{Var}(Z)=\frac\gamma\kappa,\qquad
+\mathrm{Cov}(Z,Y)=0,\qquad
+\mathrm{Cov}(Z,L(x))=-\frac{c_0}\kappa e^{-\kappa x^2/2}.
+```
+
+式 (43.6)。
+
+因此 $`Z`$ 独立于完整端点和原有场的 Gaussian 原过程，但与轮廓及其桥均不独立。
+这里的 $`Z`$ 来自同一个 $`\mathcal W_\rho`$，不是外加的独立正态量。
+非零 $`\delta'_0`$ 属于 (42.2) 的空间当且仅当 $`s\gt3/2`$；
+这只限定所述空间，不给出边界指数处的其他极限定理。
+
+证明。首先建立带权的实际方差时钟。对固定紧区间，(42.11) 的一致逐组占据数估计及
+网格 $`\delta_M`$ 的 Riemann 和给出带 $`x^2`$ 权的积分极限。
+尾部也需保留这个权。在固定全行截断内，组数为 $`O(\lambda/Q)`$，且
+$`|x_{M,t}|\le C\sqrt\lambda`$。(42.14) 的高斯包络除以 $`B_M^2`$ 后给出
+
+```math
+\frac1{B_M^2}\sum_{|x_{M,t}|\gt R}x_{M,t}^2\mathbb E C_{M,t}
+\le C\delta_M\sum_{|t\delta_M|\gt R}
+           (t\delta_M)^2e^{-c(t\delta_M)^2}+o(1).
+```
+
+式 (43.7)。
+
+该式的求和仅含截断中的确定直线组。某个计数低于其均值一半的组，贡献至多
+$`C\lambda^{5/2}e^{-c\lambda}`$；所有组的加性比较误差贡献至多
+$`C\lambda^{5/2}M^{1-D_0}/q`$，取充分大的固定 $`D_0`$ 后均趋零。
+高斯网格和先取样本上极限、再令 $`R\to\infty`$ 为零。
+由于 $`p_i(1-p_i)\le1/4`$，Markov 不等式、紧区间时钟及截断外事件的概率界遂给出
+
+```math
+K_M:=\frac1{B_M^2}\sum_{i\in J}x_i^2p_i(1-p_i)
+\longrightarrow\int_{\mathbb R}x^2\rho(x)\,dx=\frac\gamma\kappa
+\quad\text{依概率},
+\qquad
+\lim_{R\to\infty}\limsup_M
+ \mathbb P\left\{\frac1{B_M^2}\sum_{\substack{i\in J\\|x_i|\ge R}}
+        x_i^2p_i(1-p_i)\gt\varepsilon\right\}=0
+\quad(\varepsilon\gt0).
+```
+
+式 (43.8)。
+
+这些是实际数据环境中的辅助方差时钟，不是实际中心化和的矩收敛断言。
+
+为转移更细尺度的精确中心，直接扩展 (35.12) 的推导。
+给定数据，令 $`U`$ 为 $`J`$ 或第 40 章的共同并集，补集方差至少为 $`cq`$。
+对任意实 Hilbert 空间中的有限向量族 $`f_i`$，令
+$`T_f=\sum_{i\in U}f_i(\zeta_i-p_i)`$、$`V=\sum_{i\in U}(\zeta_i-p_i)`$，并记
+$`d_f=\sum_{i\in U}p_i(1-p_i)\|f_i\|^2`$。
+乘积律下 $`\mathbb E T_f=0`$、$`\mathbb E\|T_f\|^2=d_f`$。
+在 (35.11) 的密度比中先消去常数项，再取 Hilbert 范数，得到
+
+```math
+\left\|\sum_{i\in U}f_i(\pi_i-p_i)\right\|
+\le \frac Cq\mathbb E_{\mathsf Q_M}(\|T_f\|V^2)
+       +\frac C{\sqrt q}\mathbb E_{\mathsf Q_M}\|T_f\|
+\le C\sqrt{d_f}\left(\frac{\sqrt{3d_U^2+d_U}}q+q^{-1/2}\right).
+```
+
+式 (43.9)。
+
+最后一步用 Cauchy 不等式和 $`\mathbb E V^4\le3d_U^2+d_U`$。
+该界对每个固定环境的全部系数族同时成立；系数可以是数据函数。
+括号中的量记为 $`e_U=o_{\mathbb P}(1)`$。
+它直接适用于差商的系数，不需要将第 42 章的误差除以 $`h_M`$。
+
+[分布矩展开](../../../Library/Dynamics/iyer2025empirical.md)的一阶项在这里可直接由 Fourier 系数计算。
+设 $`\omega_k=\pi k/2`$。Fourier 系数为
+$`\widehat{\delta'_z}(k)=i\omega_ke^{-i\omega_kz}`$。
+由于 $`\sum_k\omega_k^2(1+k^2)^{-s}\lt\infty`$，逐频率微分及支配收敛证明
+$`z\mapsto\delta_z`$ 在 $`H^{-s}`$ 中可微，导数为 $`-\delta'_z`$，且该导数范数连续。
+非零导数的范数平方是 $`\sum_k(1+k^2)^{-s}\pi^2k^2/4`$，
+幂级数判据也给出所述空间边界。
+记
+
+```math
+\Omega_s(a)=\sup_{|z|\le a}\|\delta'_z-\delta'_0\|_{-s}
+\longrightarrow0\quad(a\downarrow0).
+```
+
+式 (43.10)。
+
+取确定 $`a_M\downarrow0`$，使共同截断隔离事件上 $`|c_M|`$ 与所有 $`|u_i|`$
+均不超过 $`a_M`$。对 $`i\in J`$，Hilbert 空间中的微积分恒等式给出
+
+```math
+R_i:=\frac{\delta_{u_i}-\delta_{c_M}}{h_M}+x_i\delta'_0
+=-x_i\int_0^1(\delta'_{c_M+t h_Mx_i}-\delta'_0)\,dt,
+\qquad \|R_i\|_{-s}\le |x_i|\Omega_s(a_M).
+```
+
+式 (43.11)。
+
+在辅助乘积律下，由独立中心化，
+
+```math
+\mathbb E_{\mathsf Q_M}\left\|
+ \frac1{B_M}\sum_{i\in J}R_i(\zeta_i-p_i)\right\|_{-s}^2
+\le K_M\Omega_s(a_M)^2\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (43.12)。
+
+在 (43.9) 中取 $`f_i=R_i/B_M`$ 并在 $`U\setminus J`$ 上置零，精确中心的位移
+至多为 $`C\sqrt{K_M}\Omega_s(a_M)e_U=o_{\mathbb P}(1)`$。
+条件 Markov 不等式以及一次完整向量后验比较转移小误差事件，概率有界性允许取数据期望。
+因 $`B_M^{-1}\sum R_i(\mathbf1_{\{i\in S\}}-\pi_i)=\nu_M+Z_M\delta'_0`$，这就证明 (43.3)。
+
+最后识别 $`Z_M`$ 与整个轮廓的联合律。对固定 $`R\gt0`$，定义只含
+$`-R\lt x_i\le R`$ 的截断和 $`Z_M^R`$。有限带符号测度的分部积分给出精确恒等式
+
+```math
+Z_M^R=R L_M(R)+R L_M(-R)-\int_{-R}^{R}L_M(x)\,dx.
+```
+
+式 (43.13)。
+
+该式中两个端点项也消去了 $`L_M`$ 的共同左尾常数。
+极限轮廓连续，故这些评估与积分在该极限处关于 $`J_1`$ 收敛连续。
+把第 40 章的紧区间扩大到同时包含 $`[-A,A]`$ 和 $`[-R,R]`$，其完整联合定理于是给出
+$`Z_M^R`$ 与端点、轮廓、桥及原有场的联合极限，其中新坐标为
+$`Z^R=\int_{(-R,R]}x\,\mathcal W_\rho(dx)`$。
+
+对 $`Z_M-Z_M^R`$，辅助二阶矩就是 (43.8) 的尾部时钟。
+将 (43.9) 用于 $`f_i=B_M^{-1}x_i\mathbf1_{\{x_i\le-R\text{ 或 }x_i\gt R\}}`$，再一次性比较完整标签向量，得到
+
+```math
+\lim_{R\to\infty}\limsup_M
+       \mathbb P\{|Z_M-Z_M^R|\gt\varepsilon\}=0.
+```
+
+式 (43.14)。
+
+另一方面 $`Z^R\to Z`$ 在 Gaussian 实现的 $`L^2`$ 中成立，因为
+$`\int x^2\rho(x)\,dx\lt\infty`$。截断后共同收敛及两侧尾界证明完整联合收敛。
+所有有限样本坐标始终使用同一标签向量；这里继承的是第 40 章已建立的共同并集联合律。
+
+Gaussian 积分的协方差等于被积函数的强度内积。
+对称性给出 $`\int x\rho(x)\,dx=0`$，而直接积分得到
+$`\int_{-\infty}^x t\rho(t)\,dt=-(c_0/\kappa)e^{-\kappa x^2/2}`$，从而证明 (43.6)。
+桥为 $`L(x)-F_0(x)Y`$，与 $`Z`$ 的协方差仍是 (43.6) 的最后一项。
+原有场的原过程独立于整个 $`\mathcal W_\rho`$，故也独立于 $`Z`$。
+再以 (43.3) 和第 42 章的概率近似应用 Slutsky 定理，得到所有所述坐标的联合结论。
+
+条件论证限定于均匀支持先验空间。全部带权和、移动中心和分布残差都满足共同置换等变，
+因此先验混合的无条件律等于每个固定支持的律。未知方向时使用同一次判决，
+正确事件上整个随机对象相同，补事件概率趋零，故完整结论也适用于工作坐标。∎
+
+
+## 追加锚（本行以下为增补区）

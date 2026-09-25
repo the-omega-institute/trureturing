@@ -71,3 +71,63 @@ Gaussian amplitude, assert a different path topology, or provide an
 all-amplitude or growing-window theorem. The primary precedents delimit
 the classical tools; the bounded comparison is not a global originality
 certificate.
+
+## First spatial moment after the collapsed mass
+
+Chapter 43 of [the posterior-field volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+subtracts the exact moving point mass and resolves the first spatial
+moment of the same posterior noise. In the explicitly normalized real
+negative Sobolev space, differentiation of a moving Dirac mass is a
+classical distributional operation. Its spatial derivative is the
+negative of its distributional derivative. Fourier summability gives
+the stated threshold and continuity directly; those facts are used
+inside the model theorem and are not presented as new standalone results.
+
+A direct precedent for the moment/Dirac-derivative expansion is Neyt
+and Vindas, *Asymptotic boundedness and moment asymptotic expansion in
+ultradistribution spaces*, [arXiv:1906.06232v3](https://arxiv.org/pdf/1906.06232v3)
+(2019 preprint, version dated 17 August 2021). Equation (1), PDF page 2,
+records the classical expansion with signed moment coefficients and
+Dirac derivatives. Definition 1 and equation (19), page 9, specify its
+test-function meaning; Theorem 5, page 10, concerns a fixed element of
+the stated ultradistribution dual space. These are not norm-uniform
+estimates for a changing random posterior measure. Chapter 43 proves
+its own Hilbert remainder, weighted environment bounds and exact-center
+transfer. No ultradistribution theorem is imported without its topology
+and fixed-object hypotheses.
+
+The Hilbert second-moment mechanism has the same elementary independence
+and centering basis as Iyer–Venkatraman's Proposition 2.2, discussed
+above. The new proof must use weighted second moments of the actual
+count-group environment. The unweighted collapsed-measure estimate from
+Chapter 42 cannot be divided by the much smaller spatial scale.
+Instead a fresh Hilbert-valued exact-center bound follows from the
+conditional Bernoulli density ratio: cancel its constant term, then
+apply Cauchy–Schwarz and the fourth moment of the unweighted label sum.
+This estimate acts directly on the difference-quotient coefficients.
+It does not infer actual moments from posterior total variation.
+
+Classical Gaussian random-measure integration describes the resulting
+joint law. The dipole coefficient is the first mark integrated against
+the same Gaussian noise that supplies the resolved profile. Symmetry
+makes it independent of the total mass, while its covariance with each
+finite profile value is explicitly nonzero. Subtracting the endpoint
+projection to form the bridge preserves this covariance.
+
+The actual-model bridge also proves weighted remote-group control,
+including the low-count Poisson tail and the additive actual-row
+comparison remainders. On a compact mark interval, exact Stieltjes
+integration by parts expresses the first mark as a functional of the
+already jointly convergent profile. Weighted tail control then removes
+the truncation. This constructs the new coordinate on the same actual
+label realization and the same limiting Gaussian noise, jointly with
+the old threshold and capacity fields.
+
+The `repo-derived` assertion is restricted to this compensated arithmetic
+posterior construction, its exact moving center, and the stated joint
+distributional limit. The distributional Taylor expansion, Gaussian
+integrals, integration by parts and Sobolev threshold are classical.
+No all-amplitude law, actual moment convergence, alternative path
+topology or critical-regularity theorem is asserted. The moving center
+cannot be replaced by zero merely from its convergence to zero: that
+replacement requires control relative to the finer spatial scale.
