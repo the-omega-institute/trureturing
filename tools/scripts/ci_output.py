@@ -32,7 +32,13 @@ class Presenter:
         self.latest = "waiting for output"
         self.previous_information = 0
         self.progress = "unreported"
-        self.failure_detail = set()
+        # Replayed blocks may contain nested stage/process events. Only their
+        # matching end marker closes the block, independently of live operations.
+        self.block_depth = {}
+        self.failed_operation = set()
+
+    def in_detail(self, stream):
+        return self.detail.get(stream) or self.block_depth.get(stream, 0) > 0 or stream in self.failed_operation
 
     def information(self, text=None):
         self.counts["information"] += 1
@@ -92,12 +98,13 @@ class Presenter:
     def line(self, line, stream):
         plain = ANSI.sub("", line).strip()
         if plain.startswith("CI_DIAGNOSTIC_BEGIN "):
-            self.failure_detail.add(stream)
+            self.block_depth[stream] = self.block_depth.get(stream, 0) + 1
             self.diagnostic(line, "error")
             return
-        if plain == "CI_DIAGNOSTIC_END" and stream in self.failure_detail:
+        if plain == "CI_DIAGNOSTIC_END" and self.block_depth.get(stream, 0) > 0:
             self.emit(line)
-            self.failure_detail.remove(stream)
+            self.block_depth[stream] -= 1
+            self.failed_operation.discard(stream)
             self.detail[stream] = False
             return
         event, _, payload = plain.partition(" ")
@@ -114,11 +121,11 @@ class Presenter:
                 value = json.loads(candidate)
             except ValueError:
                 pass
-        if isinstance(value, dict) and (not (self.detail.get(stream) or stream in self.failure_detail) or EVENT.match(plain)
+        if isinstance(value, dict) and (not self.in_detail(stream) or EVENT.match(plain)
                                        or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level"))
                                        or "scope" in value and "stage" in value):
             if event == "STAGE_STEP" and isinstance(value.get("name"), str):
-                self.failure_detail.discard(stream)
+                self.failed_operation.discard(stream)
                 self.detail[stream] = False
                 self.step = value["name"]
                 self.progress = "unreported"
@@ -129,9 +136,9 @@ class Presenter:
                 failed = self.severity(value) == "error" or isinstance(child, dict) and child.get("code") not in (None, 0)
                 self.detail[stream] = False
                 if failed:
-                    self.failure_detail.add(stream)
+                    self.failed_operation.add(stream)
                 else:
-                    self.failure_detail.discard(stream)
+                    self.failed_operation.discard(stream)
             self.structured(value, line)
         elif INFO.match(plain) or BUILD_INFO.match(plain):
             self.detail[stream] = False
@@ -143,7 +150,7 @@ class Presenter:
         elif EVENT.match(plain):
             # Concurrent resource sampling is not a diagnostic boundary.
             self.information(plain)
-        elif self.detail.get(stream) or stream in self.failure_detail:
+        elif self.in_detail(stream):
             self.emit(line)
         elif PROGRESS.search(plain):
             self.information(plain)
@@ -216,7 +223,7 @@ def run(command, stage, log, interval):
                 # Unknown output may explain the failure. Explicit information
                 # remains summarized even when the command fails.
                 replay = Presenter(stage, sys.stdout, interval)
-                replay.failure_detail.add("stdout")
+                replay.block_depth["stdout"] = 1
                 for line in raw:
                     for part in re.split(r"\r\n|\r|\n", line.decode("utf-8", "replace").rstrip("\n")):
                         replay.line(part + "\n", "stdout")
