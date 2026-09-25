@@ -41060,3 +41060,219 @@ $$
 （187.5）给出达到最优最坏相对成本的固定量子处理器。这个极小极大结论并不声称其信息量在每个参数点都最小；对任意精确量子程序，SLD 数据处理及第181节的达到输入仅给出必要下界 $I_Q\ge1/(1-u^2)$。式（187.7）的更强障碍以整条程序族交换为条件，不能移除该条件后用于任意量子程序。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 188. 量子程序的逐点下确界、统一等号障碍与秩变化边界
+
+**定义 188.1（逐点设计与局部恒秩设计）。** 固定 $0<a<1$ 和名义点 $u_0\in J_a=(2a-1,1)$。在第187.1节所有有限维固定量子程序中，定义
+$$
+\mathfrak Q(a,u_0)=\inf I_Q(\rho_{u_0}),\qquad
+\mathfrak Q_{\rm reg}(a,u_0)
+=\inf_{\operatorname{rank}\rho_u\text{ 在 }u_0\text{ 邻域恒定}}I_Q(\rho_{u_0}).
+\tag{188.1}
+$$
+两种下确界都要求每个候选精确模拟整个 $J_a$，但允许为不同 $u_0$ 选择不同固定处理器及程序曲线。信息量采用（187.2）的点态 SLD 约定。记
+$$
+I_{r}(u)=\frac1{1-u^2}.
+\tag{188.2}
+$$
+它是第181节同一通道的一次最大可读信息量。以下讨论逐点下确界与同一程序同时达到下界的区别；第187节归一于 $B(a,u)$ 的极小极大值仍为一。
+
+**定理 188.2（恒秩程序也能逼近可读下界）。** 对每个允许的 $a,u_0$，
+$$
+\mathfrak Q(a,u_0)=\mathfrak Q_{\rm reg}(a,u_0)=I_{r}(u_0).
+\tag{188.3}
+$$
+更具体地，对任意 $0<\lambda<1$，存在一个程序空间维数为十、在 $u_0$ 附近秩恒定的固定程序，精确模拟整个 $J_a$，并满足
+$$
+I_Q(\rho_{u_0})=\frac{I_{r}(u_0)}\lambda.
+\tag{188.4}
+$$
+因此只要 $I_{r}(u_0)/B(a,u_0)<\lambda<1$，它在设计点的成本就严格低于第187节显式量子比特程序的成本 $B(a,u_0)$。
+
+证明。 第187节的固定探针与数据处理给出所有候选的下界 $I_Q\ge I_{r}$。为构造逼近程序，令
+$$
+h=\frac{1+u_0}{2},\quad \ell=1-h,\quad q=h-a^2,\quad
+\gamma^2=\frac1{16h\ell}=\frac{I_{r}(u_0)}4.
+\tag{188.5}
+$$
+取第181节随参数变化的实环境向量
+$$
+v_0(u)=(\sqrt{(1+u)/2},\sqrt{(1-u)/2},0),\quad
+v_2(u)=(\sqrt{(1+u)/2},-\sqrt{(1-u)/2},0),
+$$
+$$
+v_1(u)=\left(\frac a{\sqrt{(1+u)/2}},0,
+\sqrt{1-\frac{a^2}{(1+u)/2}}\right).
+\tag{188.6}
+$$
+它们的 Gram 矩阵为 $F(a,u)$。以下向量与导数均在 $u_0$ 取值，有
+$$
+\langle v_i,v_i'\rangle=0,\qquad
+\|v_0'\|^2=\|v_2'\|^2=\gamma^2,
+\qquad
+\|v_1'\|^2=\frac{a^2}{16h^2q}<\gamma^2.
+\tag{188.7}
+$$
+最后的不等式等价于 $a^2<h^2$，由 $h>a$ 得到。在四维环境中取单位向量 $e$，与原三维空间正交，并令
+$$
+w_i=\frac{v_i'}\gamma+
+\sqrt{1-\frac{\|v_i'\|^2}{\gamma^2}}\,e.
+\tag{188.8}
+$$
+每对 $(v_i,w_i)$ 正交归一，故固定映射 $V_i|0\rangle=v_i$、$V_i|1\rangle=w_i$ 是等距映射。受数据基控制的等距映射 $\sum_i|i\rangle\langle i|\otimes V_i$ 后接环境迹，定义一个固定处理器。
+
+令 $x=u-u_0$，给该处理器输入纯程序
+$$
+|\phi_x\rangle=\cos(\gamma x)|0\rangle+\sin(\gamma x)|1\rangle.
+\tag{188.9}
+$$
+输出通道的实相关矩阵记为 $G(x)$。因为 $e$ 与全部 $v_i$ 正交，Gram 矩阵求导给出
+$$
+G(0)=F_0:=F(a,u_0),\qquad G'(0)=E:=\partial_uF(a,u),
+\qquad I_Q(|\phi_x\rangle)=4\gamma^2.
+\tag{188.10}
+$$
+这里 $G$ 为解析的相关矩阵曲线；尚未要求它在零点外等于目标。
+
+固定 $0<\lambda<1$，定义修正矩阵
+$$
+H(x)=\frac{F_0+xE-\lambda G(x/\lambda)}{1-\lambda}.
+\tag{188.11}
+$$
+则 $H(0)=F_0\succ0$、$H'(0)=0$，且对角恒为一。连续性保证它在零点邻域仍为实正定相关矩阵。
+
+令 $E_1,E_2,E_3$ 为三种实对称非对角坐标矩阵。选取足够小的 $r>0$，使六个固定矩阵 $C_{k,\pm}=F_0\pm rE_k$ 都正定。写
+$H(x)-F_0=\sum_{k=1}^3\delta_k(x)E_k$，取
+$$
+p_{k,\pm}(x)=\frac16\pm\frac{\delta_k(x)}{2r}.
+\tag{188.12}
+$$
+在足够小的邻域，六项概率都严格为正、总和为一，且其相关矩阵平均为 $H(x)$。因为 $\delta_k'(0)=0$，全部概率在零点的导数为零。
+
+在量子比特块与六维经典块的正交直和上，使用程序
+$$
+\tau_x=\lambda|\phi_{x/\lambda}\rangle\langle\phi_{x/\lambda}|
+\ \oplus\ (1-\lambda)\operatorname{diag}(p_{k,\pm}(x)).
+\tag{188.13}
+$$
+固定处理器按块分别执行上述等距处理器及六个 Schur 通道。式（188.11）保证混合后的相关矩阵恰为 $F_0+xE$，所以它在邻域内精确模拟目标。两个块的总权重固定；经典块在零点没有一阶变化，因此其点态信息量为零，而量子块给出
+$$
+I_Q(\tau_0)=\lambda\frac{4\gamma^2}{\lambda^2}
+=\frac{I_{r}(u_0)}\lambda.
+\tag{188.14}
+$$
+该局部程序在整个充分小的邻域内秩恒为七。
+
+取光滑截断函数 $\chi(u)\in[0,1]$，在 $u_0$ 附近恒为一，其支撑紧含于局部程序成立的邻域。以另一个正交量子比特块放置第187节的全区间程序，形成
+$\chi(u)\tau_{u-u_0}\oplus[1-\chi(u)]\rho_u^{(187)}$。在局部块未定义的区域将其加权块置零；截断函数在该区域的邻域已经为零，故整条态曲线光滑。固定处理器按块执行相应通道，两分支在实际使用处都等于目标，因而在全部 $J_a$ 精确模拟。总维数为 $2+6+2=10$；设计点附近保持（188.14）与恒秩性质。令 $\lambda\uparrow1$，结合普遍下界，证明（188.3）。证毕。
+
+**定理 188.3（同一量子程序不可能在开区间处处达到可读下界）。** 任何第187.1节的有限维固定程序，都不存在非空开区间 $K\subseteq J_a$，使
+$$
+I_Q(\rho_u)=I_{r}(u)\qquad\text{对所有 }u\in K.
+\tag{188.15}
+$$
+该断言不要求程序族交换，也不要求其秩恒定。
+
+证明。 固定第181节的均衡 $02$ 输入。令 $|\pm\rangle=(|0\rangle\pm|2\rangle)/\sqrt2$，取整个输出空间上的二元 POVM
+$M_+=|+\rangle\langle+|+|1\rangle\langle1|$、$M_-=|-\rangle\langle-|$，使两效应之和为恒等算符。目标输出的中间基态权重为零，故测量得到概率
+$h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$。该试验连同固定处理器，在程序上诱导一个不依赖参数的二元 POVM，其经典信息量恰为 $I_{r}$。
+
+使用固定的 Naimark 等距嵌入 $J$，将该 POVM 表为更大有限维程序空间上的正交投影 $P_+,P_-$，满足 $P_++P_-=I$。嵌入态 $\sigma_u=J\rho_uJ^\dagger$ 的 SLD 信息量不变。为使处理器在整个扩大的程序空间上有定义，取任一固定原程序态 $\rho_*$，使用 CPTP 映射
+$$
+\mathcal D(\tau)=J^\dagger\tau J+
+\operatorname{Tr}[(I-JJ^\dagger)\tau]\rho_*.
+\tag{188.16}
+$$
+它在嵌入态上还原原程序。将原处理器与 $\mathcal D$ 组合，就得到固定扩展处理器，仍对任意数据输入精确生成同一通道。
+
+现假设（188.15）成立。SLD 测量信息不等式及其等号条件的原始框架见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）。这里直接保留支持上的平方根因子，以免将满秩简化条件用于秩亏态。
+
+对每个 $u\in K$，双侧非负性使 $\sigma_u'$ 在 $\sigma_u$ 的核上的压缩为零，故可取有限 Hermitian SLD $L_u$，满足
+$\sigma_u'=(L_u\sigma_u+\sigma_uL_u)/2$。对 $j\in\{+,-\}$，设
+$A_j=P_j\sqrt{\sigma_u}$、$B_j=P_jL_u\sqrt{\sigma_u}$。在 Hilbert–Schmidt 内积下，
+$$
+\|A_j\|_2^2=p_j,
+\quad\operatorname{Re}\langle A_j,B_j\rangle=p_j',
+\quad\sum_j\|B_j\|_2^2=I_Q(\sigma_u).
+\tag{188.17}
+$$
+Cauchy–Schwarz 给出 $(p_j')^2/p_j\le\|B_j\|_2^2$。所有 $p_j$ 严格为正；若总和达到等号，则每项都达到等号，并有 $B_j=s_jA_j$，其中
+$$
+s_+=\frac1{2h},\qquad s_-=-\frac1{2\ell}.
+\tag{188.18}
+$$
+因此，令 $D_u=s_+P_++s_-P_-$，相加得到
+$L_u\sqrt{\sigma_u}=D_u\sqrt{\sigma_u}$。右乘平方根并取伴随，遂得
+$$
+\sigma_u'=\frac12(D_u\sigma_u+\sigma_uD_u).
+\tag{188.19}
+$$
+这个论证不需要逆转 $\sigma_u$，所以也适用于非满秩情形。
+
+令 $K_u=\sqrt h\,P_++\sqrt\ell\,P_-$。它在区间内可逆，且 $K_u'=D_uK_u/2$；（188.19）表明 $K_u^{-1}\sigma_uK_u^{-1}$ 的导数为零。故存在固定的正半定矩阵 $A$，使 $\sigma_u=K_uAK_u$。写
+$$
+A_+=P_+AP_+,\quad A_-=P_-AP_-,\quad C=P_+AP_-,
+$$
+$$
+\sigma_u=hA_++\ell A_-+\sqrt{h\ell}(C+C^\dagger).
+\tag{188.20}
+$$
+由测量概率 $\operatorname{Tr}(P_+\sigma_u)=h$、$\operatorname{Tr}(P_-\sigma_u)=\ell$，可得 $\operatorname{Tr}A_+=\operatorname{Tr}A_-=1$，所以两者都是固定密度矩阵。
+
+将（188.20）送入固定扩展处理器，对所有数据输入同时得到通道恒等式
+$$
+\mathcal T_u=h\mathcal R_++\ell\mathcal R_-
++\sqrt{h\ell}\,\mathcal S,
+\tag{188.21}
+$$
+其中 $\mathcal R_\pm$ 是以 $A_\pm$ 为程序的固定 CPTP 通道，$\mathcal S$ 是以交叉项 $C+C^\dagger$ 定义的固定线性映射。目标 $\mathcal T_u$ 对 $u$ 仿射，而 $1,u,\sqrt{1-u^2}$ 在任何非空开区间上线性无关。故（188.21）迫使
+$\mathcal S=0$、$\mathcal R_+=\mathcal T_1$、$\mathcal R_-=\mathcal T_{-1}$。这里后两个等式只是由仿射系数决定，不假定程序在端点存在。
+
+但 $\mathcal T_{-1}$ 不是完全正映射。事实上，对 $n=(1,-2a,1)^{\mathsf T}$，
+$$
+n^{\mathsf T}F(a,-1)n=-4a^2<0.
+\tag{188.22}
+$$
+将该 Schur 乘子作用于均匀相干输入 $\frac13\sum_{i,j}|i\rangle\langle j|$，输出正是 $F(a,-1)/3$，不是正半定矩阵。这已经违背正性，与 $\mathcal R_-$ 为 CPTP 矛盾。证毕。
+
+**定理 188.4（秩变化允许点态达到，但不消除邻近成本）。** 若使用（187.2）的点态信息量约定，则对任意 $a,u_0$，存在一个有限维光滑固定程序，精确模拟全部 $J_a$，并在设计点满足 $I_Q(\rho_{u_0})=I_{r}(u_0)$。可以使它在充分小的去心邻域满足
+$$
+\lim_{u\to u_0,\ u\ne u_0}I_Q(\rho_u)
+=I_{r}(u_0)+4k,
+\qquad k>0.
+\tag{188.23}
+$$
+因此这种达到不属于定理188.2的局部恒秩逼近，不提供开区间上平滑达到下界的程序。
+
+证明。 沿用（188.9）—（188.10）的解析相关矩阵 $G(x)$。取足够大的常数 $k>0$，令 $\epsilon(x)=kx^2$，并在零点外定义
+$$
+H(x)=G(x)+\frac{F_0+xE-G(x)}{kx^2}.
+\tag{188.24}
+$$
+由于 $G(0)=F_0$、$G'(0)=E$，该式在零点有解析延拓，且
+$$
+H(0)=F_0-\frac{G''(0)}{2k}.
+\tag{188.25}
+$$
+取 $k$ 足够大即可使它正定；$H$ 的对角仍恒为一，因此它在零点邻域为实正定相关矩阵。用以 $H(0)$ 为中心的六个固定矩阵 $H(0)\pm rE_j$，照（188.12）构造严格正的解析经典概率 $p_j(x)$，精确实现 $H(x)$。
+
+在足够小的邻域，$0\le\epsilon<1$，程序
+$$
+\tau_x=[1-kx^2]|\phi_x\rangle\langle\phi_x|
+\ \oplus\ kx^2\operatorname{diag}(p_j(x))
+\tag{188.26}
+$$
+精确生成 $(1-\epsilon)G+\epsilon H=F_0+xE$。在 $x=0$，经典块及其导数都为零，量子块的一阶切向量与 $|\phi_x\rangle$ 相同，所以（187.2）给出 $I_Q(\tau_0)=4\gamma^2=I_{r}(u_0)$。
+
+在去心邻域，直和各块的 SLD 信息量分解为
+$$
+I_Q(\tau_x)
+=(1-kx^2)4\gamma^2+kx^2I_{c}(x)
++\frac{4k}{1-kx^2},
+\tag{188.27}
+$$
+其中 $I_{c}$ 是严格正的解析经典概率曲线的信息量，在零点附近有界。取极限即得（188.23）。再照定理188.2用光滑截断函数接到第187节的全区间程序，保持设计点附近全部性质。
+
+程序在设计点秩为一，在充分小的去心邻域秩为七。点态 SLD 与连续延拓的差别符合既有的秩变化边界：Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），DOI:10.1103/PhysRevA.95.052320，定理1式（13）对 $C^2$ 态族给出 $H_c=H+2\sum_{p_j=0}p_j''$。在当前构造中，新出现的六个本征值之和为 $kx^2$，所以 Bures 信息在设计点等于 $I_{r}(u_0)+4k$，并未降到点态 SLD 的值。证毕。
+
+## 追加锚（本行以下为增补区）
