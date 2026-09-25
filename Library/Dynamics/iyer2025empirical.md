@@ -724,3 +724,90 @@ H1 紧嵌入、连续映射、截断逼近、Gaussian 谱公式及概率不等�
 固定幅度、固定 beta、固定 U、条件先验空间与无条件固定支持的边界保持不变。
 同时改用确定性 gamma 中心时余项逐样本完全相消，并非另一次渐近近似。
 本章不证明增长 s_M 下放大余项的实际 OU 极限、实际后验矩收敛、变化 U 或其它拓扑。
+
+## 实际增长频率的 OU 极限与网格解析条件
+
+归属：`repo-derived`。
+对应 [谱边界卷第 56 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+该章把固定紧区间上的连续第二混沌 OU 尾极限连接到原始平稳独立对和连续路径实验，
+允许任意确定性 s_M→∞、exp(s_M)δ→0，不另要求幂次或对数分离余量。
+承重新增内容是增长核心的实际方差相对误差、放大后的精确中心控制、
+一个共同组向量的定量 Gaussian 耦合、零对角 Ci 采样的平方核误差，
+以及同一联合极限中与旧二次坐标和整个旧噪声的独立性。
+有限截距是定义 54.1 的实际统计量；只有相同弱极限的另一截距不足以替代它。
+
+Siripraparat–Neammanee，*A local limit theorem for Poisson binomial random variables*，
+ScienceAsia 47 (2021), 111–116，
+[DOI 10.2306/scienceasia1513-1874.2021.006](https://doi.org/10.2306/scienceasia1513-1874.2021.006)，
+Theorem 2，第 112 页，是前述 Bernoulli 局部近似的来源。
+独立 Bernoulli 输入可有不同成功概率；总方差 σ²>1 时，
+点概率与匹配正态密度的最大绝对差为 O(σ⁻²)。
+本章只把它用于辅助独立标签律，先证明补集方差与合法条件计数，
+再推出一次完整后验向量比较。
+在每个增长核心组中，方差 d_j≥q^(9/10)；
+截断标准化坐标于 d_j^(1/6) 后对局部误差求和，给出 CDF 误差 O(d_j^(-1/3))。
+逆分布函数共同耦合再使全部核心组同时接近同一个 Gaussian 向量。
+局部定理本身不声称实际观测行独立，也不提供精确后验中心的放大误差。
+
+Nourdin–Peccati–Reinert，*Invariance principles for homogeneous sums:
+Universality of Gaussian Wiener chaos*，Annals of Probability 38 (2010), 1947–1985，
+[arXiv:0904.1153v2](https://arxiv.org/abs/0904.1153v2)，2010-11-05，
+Theorem 7.1，PDF 第 26 页，给出独立中心单位方差输入的齐次和替换原理。
+该处要求输入三阶绝对矩一致有界、对称核在对角线上消失、
+各坐标方差为一，并控制各输入最大影响量之和。
+对三次可微且三阶导数有界的测试，误差受最大影响量平方根控制。
+标准化核心组的四阶矩至多 3+d_j⁻¹，满足所需矩界；
+固定有限个归一化异组核的影响量和由平方核范数控制，
+最大影响量则由算子范数趋零推出。
+它因而是有限维异组替换的可用经典路线，
+但不直接包含对角二次坐标 T_M、整个变化频率路径或实际后验转移。
+本章的共同逆分布耦合同时承担这些额外义务。
+
+Döbler–Peccati，*Quantitative de Jong theorems in any dimension*，
+[arXiv:1603.00804v4](https://arxiv.org/abs/1603.00804v4)，2016-12-20，
+Theorem 1.7，PDF 第 10 页，研究独立输入上固定阶数、
+中心单位方差 Hoeffding 退化 U-statistic 的固定有限维向量。
+条件包括协方差收敛、最大影响量趋零、四阶矩趋于三，
+以及相同阶数坐标的混合平方条件。
+所核 v4 原 PDF 在条件 (iv) 中将标准化 Gaussian 恒等式印为
+E[N(j)²N(k)²]=1+Σ(j,k)²；正确式是 1+2Σ(j,k)²。
+相同坐标的四阶矩为三而不是二，且该陈述允许半正定协方差。
+这是此指定版本原页的公式缺项，不据此判断其他版本或整个 de Jong 机制。
+本章不使用该印刷公式，而以中心 Gaussian 平方的特征函数
+对所有混合线性组合直接证明联合 Gaussian 收敛。
+
+de Jong 1987 的广义二次型定理、Nualart–Peccati 2005 的固定混沌定理
+及前节已核的第二混沌谱表示是同一 Gaussian 极限机制的经典先例。
+这里算子范数趋零与有界 Hilbert–Schmidt 范数使四阶收缩消失。
+对角坐标的算子范数为 O(√δ)，与异组 Ci 核的 Hilbert–Schmidt 内积严格为零；
+只有在联合 Gaussian 性已证后才从此推出独立性。
+固定有限秩投影删除界再将新联合对象与整个旧 Gaussian 噪声分离。
+先前所核 Tudor 2606.14812v1 的固定旧变量结论不能直接替代
+对移动 T_M 的这个联合论证。
+
+Döbler–Kasprzak–Peccati，*The multivariate functional de Jong CLT*，
+[arXiv:2104.01858v3](https://arxiv.org/abs/2104.01858v3)，2022-03-17，
+Theorem 1.4，PDF 第 3 页及 Conditions 1.1–1.3，
+使用部分样本索引过程、极限方差时钟、加强的 Lindeberg 条件及末端四阶矩条件。
+本章参数改变每一对上的 Ci 核，不是逐次纳入观测的索引。
+因此该定理不直接给出所需过程紧性；
+本章在离散网格上证明二阶增量 O(|t-v|)、四阶增量 O(|t-v|²)，
+再使用经典 Kolmogorov 判据。
+
+Hao–Barnett–Martinsson–Young，*High-order accurate methods for Nyström
+discretization of integral equations on smooth curves in the plane*，
+[arXiv:1112.6262v2](https://arxiv.org/abs/1112.6262v2)，2012-11-21，
+§1，PDF 第 1–3 页，讨论光滑周期曲线上的对数奇异核及经过近对角修正的高阶求积。
+arXiv 元数据的标题用语略有不同，为 *High-order accurate Nystrom
+discretization of integral equations with weakly singular kernels on smooth curves in the plane*。
+其设置不直接覆盖本章未作求积修正、同格置零、频率增长的 Ci 核。
+本章将同格、邻格和远格分别估计，得到平方 Hilbert–Schmidt 误差
+O(r(1+|log r|²))+O(exp(-cH_Q²))，r=exp(s_M)δ。
+没有从该文移入某个未经核对的数值收敛阶。
+
+所核来源没有直接给出本章原始补偿模型的完整联合结论；
+这只是所查范围内的比较，不认证全局原创。
+Fourier 乘子、Gaussian 谱展开、局部极限、概率耦合、格点求和和有限秩投影均为经典工具。
+本章的 repo-derived 综合明确补上其与实际同一数据实现之间的误差及共同来源关系。
+结论固定原幅度、beta 和 λ=Q³ 序列，紧区间保持固定；
+不声明临界网格的实际定理、任意自适应频率、增长空间窗口或实际后验矩收敛。
