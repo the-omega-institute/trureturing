@@ -414,3 +414,8 @@ rectangle series and actual witness gluing supply the ordinary
 mathematical quantifiers beyond the arithmetic certificate.
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/shared_head_pair_forward_kernels.py
+
+[Report614](614-one-global-two-parent-network-preserves-a-common-survivor.md)
+removes the separation between different head-pair networks, including
+early/late root crossings, by constructing one global forward law. It
+retains one fixed smaller-parent pair per owner and the head restrictions.
