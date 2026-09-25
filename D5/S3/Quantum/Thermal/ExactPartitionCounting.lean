@@ -82,8 +82,7 @@ theorem partition_split {ι : Type*} [Fintype ι] (v : ι → ℕ) (q : ℚ) :
       intro x _
       by_cases hx : v x = 0 <;> simp [hx]
     _ = (∑ x, if v x = 0 then (1 : ℚ) else 0) + tail v q := by
-      rw [Finset.sum_add_distrib]
-      rfl
+      simp only [tail, Finset.sum_add_distrib]
     _ = (zeroCount v : ℚ) + tail v q := by rw [hc]
 
 private theorem small_pow_le_one {q : ℚ} (hq0 : 0 ≤ q) (hq1 : q ≤ 1) (k : ℕ) :

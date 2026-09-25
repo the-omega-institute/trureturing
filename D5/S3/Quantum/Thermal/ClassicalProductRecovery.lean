@@ -7,14 +7,16 @@
 
 import Mathlib.InformationTheory.KullbackLeibler.ChainRule
 import Mathlib.InformationTheory.KullbackLeibler.DataProcessing
+import Mathlib.Probability.Kernel.Disintegration.StandardBorel
 import Mathlib.Tactic
 
 /-!
 Uses Mathlib's ENNReal-valued KL divergence, including its absolute-continuity
 and integrability conditions. No arbitrary divergence function is postulated.
-The joint law is supplied by a Markov disintegration. The integral of the
-pointwise conditional KL, the construction of a Gaussian disintegration, and
-metaplectic quantization are not established by this module.
+For standard Borel hidden spaces the conditional kernel is constructed by
+Mathlib from an arbitrary joint law. The pointwise conditional-KL integral,
+Gaussian density calculation, and metaplectic quantization are not established
+by this module.
 -/
 
 set_option autoImplicit false
@@ -139,8 +141,57 @@ theorem predictive_defect_invariant (μ π : Measure X) (γ : Measure Y)
   rw [hm, klDiv_reference_preserving μ π e hπ,
     klDiv_reference_preserving (μ.map observe) γ f hγ]
 
+
+section StandardBorel
+
+variable [StandardBorelSpace Y] [Nonempty Y]
+
+/-- No disintegration is assumed here: the kernel is constructed from μ. -/
+theorem arbitrary_joint_recovery_chain (μ : Measure (X × Y))
+    (γr : Measure X) (γh : Measure Y)
+    [IsProbabilityMeasure μ] [IsProbabilityMeasure γr] [IsProbabilityMeasure γh] :
+    klDiv μ (γr.prod γh) = klDiv μ.fst γr + klDiv μ (μ.fst.prod γh) := by
+  have hd : μ.fst ⊗ₘ μ.condKernel = μ := μ.disintegrate μ.condKernel
+  simpa only [hd] using product_recovery_chain μ.fst γr γh μ.condKernel
+
+/-- Finite physical deficit equals the KL to the constructed thermal lift. -/
+theorem arbitrary_joint_recovery_defect (μ : Measure (X × Y))
+    (γr : Measure X) (γh : Measure Y)
+    [IsProbabilityMeasure μ] [IsProbabilityMeasure γr] [IsProbabilityMeasure γh]
+    (hfin : klDiv μ (γr.prod γh) ≠ ⊤) :
+    (klDiv μ (γr.prod γh)).toReal - (klDiv μ.fst γr).toReal =
+      (klDiv μ (μ.fst.prod γh)).toReal := by
+  have hd : μ.fst ⊗ₘ μ.condKernel = μ := μ.disintegrate μ.condKernel
+  have hf : klDiv (μ.fst ⊗ₘ μ.condKernel) (γr.prod γh) ≠ ⊤ := by
+    simpa only [hd] using hfin
+  simpa only [hd] using recovery_defect_real μ.fst γr γh μ.condKernel hf
+
+/-- Unique optimum over every joint probability law with the prescribed marginal. -/
+theorem all_joint_laws_unique_minimum (ν γr : Measure X) (γh : Measure Y)
+    [IsProbabilityMeasure ν] [IsProbabilityMeasure γr] [IsProbabilityMeasure γh]
+    (hfin : klDiv ν γr ≠ ⊤) (μ : Measure (X × Y)) [IsProbabilityMeasure μ]
+    (hmarg : μ.fst = ν) :
+    klDiv ν γr ≤ klDiv μ (γr.prod γh) ∧
+      (klDiv μ (γr.prod γh) = klDiv ν γr ↔ μ = ν.prod γh) := by
+  have hd : μ.fst ⊗ₘ μ.condKernel = μ := μ.disintegrate μ.condKernel
+  have hle := (thermalLift_minimizes μ.fst γr γh μ.condKernel).2
+  have he := (thermalLift_minimizes μ.fst γr γh μ.condKernel).1
+  rw [he, hd, hmarg] at hle
+  have hf : klDiv μ.fst γr ≠ ⊤ := by simpa only [hmarg] using hfin
+  have hu := thermalLift_unique_minimum μ.fst γr γh μ.condKernel hf
+  exact ⟨hle, by simpa only [hd, hmarg] using hu⟩
+
+/-- Equality of the actual measures, rather than equality of formal scalar symbols. -/
+theorem zero_recovery_iff_product (μ : Measure (X × Y)) (γh : Measure Y)
+    [IsProbabilityMeasure μ] [IsProbabilityMeasure γh] :
+    klDiv μ (μ.fst.prod γh) = 0 ↔ μ = μ.fst.prod γh := klDiv_eq_zero_iff
+
+end StandardBorel
+
 #print axioms recovery_defect_real
 #print axioms thermalLift_unique_minimum
 #print axioms predictive_defect_invariant
+#print axioms arbitrary_joint_recovery_defect
+#print axioms all_joint_laws_unique_minimum
 
 end D5.S3.Quantum.Thermal.ClassicalProductRecovery

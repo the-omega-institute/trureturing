@@ -43,5 +43,23 @@ internal sealed class ClassicalProductRecoveryDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Quantum/Thermal/ClassicalProductRecovery.predictive_defect_invariant"),
                 H("predictive defect invariant"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("An actual commuting observation/evolution square, with preserved reference measures, preserves both full and observed KL. It does not construct the Hamiltonian flow or a Gaussian disintegration."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("An actual commuting observation/evolution square, with preserved reference measures, preserves both full and observed KL. It does not construct the Hamiltonian flow or a Gaussian density. A later theorem in this module constructs the abstract standard Borel disintegration."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("arbitrary-joint-recovery-chain"),
+                DeclarationHandle.Create("D5/S3/Quantum/Thermal/ClassicalProductRecovery.arbitrary_joint_recovery_chain"),
+                H("Construct the conditional kernel from any joint law"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the standard Borel hidden-space hypotheses, Mathlib constructs the conditional kernel from the arbitrary joint measure itself. No disintegration witness is assumed."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("arbitrary-joint-recovery-defect"),
+                DeclarationHandle.Create("D5/S3/Quantum/Thermal/ClassicalProductRecovery.arbitrary_joint_recovery_defect"),
+                H("Finite real defect for an arbitrary joint law"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The conditional kernel construction connects the original measure directly to the product recovery. Taking real parts is guarded by finite total KL."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("all-joint-laws-unique-minimum"),
+                DeclarationHandle.Create("D5/S3/Quantum/Thermal/ClassicalProductRecovery.all_joint_laws_unique_minimum"),
+                H("Unique minimum over all joint laws with a fixed marginal"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every probability law with the prescribed marginal satisfies the lower bound. At a finite marginal KL value, equality holds exactly for the constructed thermal product law."))), DescribeRole.Theorem))));
 }
