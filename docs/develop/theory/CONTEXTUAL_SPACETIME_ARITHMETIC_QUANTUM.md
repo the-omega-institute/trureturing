@@ -43135,3 +43135,210 @@ $$
 最后，定理184.2的三个固定通道在其相关矩阵坐标 $(1,a,h)$ 上分别为 $(1,1,1)$、$(1,-1,1)$、$(1,c,c^2)$，对应行列式非零，因为 $|c|<1$。所以它们的仿射混合权重由目标通道唯一确定，正是（184.5）的三概率。要求测量后仅执行这三个通道，遂与（198.3）的固定仿射读出问题等价。将（197.20）的 $V$ 代入即可得到所述受限处理器的精确系数；允许其他处理器会扩大优化域，本定理没有对该扩大域证明同样下界。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 199. 任意纯二维处理器的精确二次成本：算子相关矩阵锁定极限
+
+**定义 199.1（圆弧程序的分块相关矩阵域）。** 固定定义195.1的 $a,t,R$，记 $F=F(a,t)$、$E_{02}=E_{20}=1$ 且其余 $E$ 元素为零。令 $\mathscr M(a,t,R)$ 由参数 $\varepsilon,x,c,C$ 构成，其中
+$$
+0<\varepsilon\le\frac12,\qquad c>0,\qquad x\in\mathbb R,
+\qquad C=C^T\in M_3(\mathbb R),\qquad \operatorname{diag}C=\mathbf1,
+\tag{199.1}
+$$
+并要求
+$$
+\Gamma=
+\begin{pmatrix}
+\dfrac{F-xE/c-\varepsilon C}{1-\varepsilon}&E/c\\[2mm]
+E/c&C
+\end{pmatrix}\succeq0,
+\qquad
+|x|+cR<\sqrt{4\varepsilon(1-\varepsilon)}.
+\tag{199.2}
+$$
+定义该参数的名义成本
+$$
+Q(\varepsilon,x,c)
+=\frac{4c^2\varepsilon(1-\varepsilon)}
+       {4\varepsilon(1-\varepsilon)-x^2}.
+\tag{199.3}
+$$
+式（199.2）使分母严格为正，也使 $C$ 自动成为相关矩阵。
+
+**定理 199.2（六维分块矩阵与全部处理器的精确优化等价）。** 对定义199.1的参数，
+$$
+\mathfrak P_2(a,t;R)
+=\inf_{\mathscr M(a,t,R)}Q(\varepsilon,x,c).
+\tag{199.4}
+$$
+可行集非空，且其中每个参数都满足 $1\le c\le\sqrt Q$。该等价式允许原始程序使用任意固定 CPTP 处理器，不预设其为测量—制备处理器，也不要求下确界达到。
+
+证明。 先从任意原始程序出发。定理196.1将其替换为使用同一处理器、同一完整精确开区间的圆弧程序，名义成本不增加。将圆弧平面中的仿射投影速度作为 $X$ 方向，将固定的不可见方向作为 $Y$，圆心方向作为 $Z$ 并取非负坐标，可写成
+$$
+r(t+u)=
+\left(x+cu,\ \pm\sqrt{h^2-(x+cu)^2},\ 1-2\varepsilon\right),
+\qquad h^2=4\varepsilon(1-\varepsilon),
+\tag{199.5}
+$$
+其中 $c>0$、$0<\varepsilon\le1/2$。大圆对应 $\varepsilon=1/2$，因此这一写法亦包括秩一可见映射的圆弧替代。原开区间包含闭区间，故根号在两个端点都严格为正，得到（199.2）的严格覆盖条件。速度平方即为（199.3）。
+
+依第191.3、194.1节的受控 Stinespring 论证，存在等距映射 $W_i:\mathbb C^2\to\mathcal E$，使处理器的等距扩张为
+$$
+V(|i\rangle\otimes\psi)=|i\rangle\otimes W_i\psi,
+\qquad W_i^\dagger W_i=I_2.
+\tag{199.6}
+$$
+令 $K_{ij}=W_i^\dagger W_j$，则算子 Gram 矩阵 $K=(K_{ij})\succeq0$，且 $K_{ii}=I_2$。须保留指标方向：程序状态 $\rho$ 诱导的 Schur 系数为
+$$
+F_\rho{}_{ij}=\operatorname{Tr}(\rho K_{ji}).
+\tag{199.7}
+$$
+不可见 $Y$ 方向意味着 $\operatorname{Tr}(YK_{ji})=0$，所以每个二阶程序块满足 $K_{ij}^T=K_{ij}$；这一步尚不意味着各块为 Hermitian。
+
+现在把整个 Gram 矩阵替换为
+$$
+K^{\mathbb R}=\frac{K+\overline K}{2}.
+\tag{199.8}
+$$
+它仍正半定，且对角块仍为 $I_2$。它整体为实对称矩阵，各程序块也为实对称矩阵，因此 $K^{\mathbb R}_{ji}=K^{\mathbb R}_{ij}$。由于每个原块都看不到程序的 $Y$ 分量，沿同一条纯曲线有
+$$
+\operatorname{Tr}(\rho K^{\mathbb R}_{ji})
+=\operatorname{Re}\operatorname{Tr}(\rho K_{ji})
+=F(a,t+u)_{ij}.
+\tag{199.9}
+$$
+这构造了另一组合法 Gram 数据，不声称对未知量子输入作复共轭是一条物理通道。实化可以改变可见映射的秩；所得处理器仍属于这里的完整优化域。
+
+按程序基先分组，将 $K^{\mathbb R}$ 重排为 $\left(\begin{smallmatrix}U&A\\A&C\end{smallmatrix}\right)$，其中三个块均为实对称三阶矩阵，$\operatorname{diag}U=\operatorname{diag}C=\mathbf1$、$\operatorname{diag}A=0$。沿（199.5）的 Schur 矩阵为
+$$
+(1-\varepsilon)U+\varepsilon C+(x+cu)A=F+uE.
+\tag{199.10}
+$$
+比较值与导数，得到 $A=E/c$ 及 $U=(F-xE/c-\varepsilon C)/(1-\varepsilon)$，恰为（199.2）。因此每个原始程序对应一个可行参数，成本不超过原成本。
+
+反过来，给定可行的 $\Gamma$，按信号指标重新分块，其程序块为 $\left(\begin{smallmatrix}U_{ij}&E_{ij}/c\\E_{ij}/c&C_{ij}\end{smallmatrix}\right)$。Gram 分解给出 $W_i^\dagger W_j=K_{ij}$，而对角块 $I_2$ 保证（199.6）为等距映射。对环境取偏迹即得 CPTP 处理器。各块实对称且 $K_{ji}=K_{ij}$，故（199.7）与（199.10）给出对全部信号输入的精确目标通道。严格覆盖条件使（199.5）在包含所需闭区间的稍大开域上解析，亦可将其限制在 $J_a$ 内。因此该参数产生名义成本恰为 $Q$ 的实际程序，证明下确界的反向不等式。
+
+第184.3节的两端点程序保证原程序类非空，故矩阵域非空。$\Gamma$ 的六个对角元均为一，其 $E/c$ 块中存在元素 $1/c$；对应二阶主子式非负给出 $c\ge1$。式（199.3）给出 $Q\ge c^2$。证毕。
+
+**定理 199.3（任意处理器的二次首项与显式极限矩阵）。** 对每个固定的 $0<a<1$、$2a-1<t<1$，
+$$
+\boxed{
+\mathfrak P_2(a,t;R)
+=B(a,t)+\frac{a^2B(a,t)^2}{2(1+t-2a^2)}R^2+o(R^2)
+}
+\qquad(R\downarrow0).
+\tag{199.11}
+$$
+特别地，定理196.3的系数为
+$$
+\kappa(a,t)=\frac{a^2(1-a^2)^2}
+{2(1-t)^2(1+t-2a^2)^3}.
+\tag{199.12}
+$$
+记 $d=1-a^2$、$D=1+t-2a^2$、$\eta=(a^2-t)/d$。在定义199.1的可行参数中，任意成本趋向 $B$ 的序列都满足
+$$
+\varepsilon\to0,\qquad c^2\to B,\qquad
+\frac{x^2}{\varepsilon}\to0,\qquad
+C\longrightarrow C_0:=
+\begin{pmatrix}1&0&\eta\\0&1&0\\\eta&0&1\end{pmatrix}.
+\tag{199.13}
+$$
+这里的极限只涉及固定 $a,t$，不要求精确区间具有共同正半径。
+
+证明。 首先证明（199.13）。因为 $1\le c\le\sqrt Q$，成本趋于 $B$ 时 $c$ 有固定上下界；$\Gamma$ 是六阶相关矩阵，所以它及其子块属于固定紧集。若某子列 $\varepsilon\ge\varepsilon_0>0$，则 $h^2=4\varepsilon(1-\varepsilon)$ 有正下界，而
+$$
+h^2-x^2=\frac{c^2h^2}{Q}
+\tag{199.14}
+$$
+也有正下界。取收敛子列，极限分块矩阵仍正半定，且极限圆弧在名义点附近有一个真正的开定义域。按定理199.2的反向构造，它给出名义成本恰为 $B$ 的局部精确纯二维程序，与定理194.1的严格不达到性矛盾。因此 $\varepsilon\to0$，进而 $x\to0$。
+
+上左块趋向正定的 $F$，故充分靠后可取 Schur 补，得到
+$$
+C\succeq\frac{1-\varepsilon}{c^2}\,
+E\left(F-\frac xcE-\varepsilon C\right)^{-1}E.
+\tag{199.15}
+$$
+取 $00$ 对角元并用 $(EF^{-1}E)_{00}=B$，得到 $c^2\ge B+o(1)$。结合 $c^2\le Q\to B$，可知 $c^2\to B$；再用（199.3）可知 $x^2/\varepsilon\to0$。
+
+任一 $C$ 的聚点 $C_\infty$ 满足
+$$
+C_\infty\succeq\frac{EF^{-1}E}{B},\qquad
+\operatorname{diag}C_\infty=\mathbf1.
+\tag{199.16}
+$$
+右侧矩阵的对角为 $(1,0,1)$。因此正半定残差的对角为 $(0,1,0)$，其第零和第二行列必须全部为零。这迫使
+$$
+C_\infty=\frac{EF^{-1}E}{B}+|1\rangle\langle1|=C_0.
+\tag{199.17}
+$$
+聚点唯一，故整个序列收敛，完成（199.13）。
+
+现在提取二次成本。记
+$$
+A_3=(EF^{-1}EF^{-1}E)_{00},\qquad
+A_C=(EF^{-1}C_0F^{-1}E)_{00}.
+\tag{199.18}
+$$
+由（199.15）的 $00$ 对角元及逆矩阵的一阶展开，沿上述低成本序列有
+$$
+c^2-B\ge
+\frac{A_3}{\sqrt B}x+(A_C-B)\varepsilon
++o(|x|+\varepsilon).
+\tag{199.19}
+$$
+展开合法因为 $F$ 正定、$C$ 一致有界且 $c$ 有正下界。未给速率的 $C-C_0$ 总是乘以 $\varepsilon$，所以贡献 $o(\varepsilon)$；将 $1/c$ 替换为 $1/\sqrt B$ 贡献 $o(|x|)$。不需要预先控制 $C$ 的收敛速度。
+
+这两个矩阵系数可直接计算。由
+$$
+F^{-1}e_2=
+\begin{pmatrix}\eta B\\-a/D\\B\end{pmatrix},\qquad
+B(1-\eta^2)=\frac1d,
+\tag{199.20}
+$$
+得到
+$$
+A_3=2\eta B^2,\qquad
+A_C=B^2(1+3\eta^2)+\frac{a^2}{D^2}.
+\tag{199.21}
+$$
+令 $A=A_C/B-1$、$k=A_3/B^{3/2}=2\eta\sqrt B$，则
+$$
+A-k^2
+=B(1-\eta^2)+\frac{a^2}{BD^2}-1
+=\frac{2a^2}{D}>0.
+\tag{199.22}
+$$
+它也等于第197节的 $V/B^2$，但（199.20）—（199.22）直接从任意处理器的极限矩阵取得该数。
+
+设 $T=\varepsilon+x^2/\varepsilon$。式（199.13）使 $T\to0$，且 $|x|\le T/2$。结合（199.3）、（199.19）得到
+$$
+Q-B\ge
+B\left(A\varepsilon+kx+\frac{x^2}{4\varepsilon}\right)+o(T).
+\tag{199.23}
+$$
+括号中的二次式满足
+$$
+A\varepsilon+kx+\frac{x^2}{4\varepsilon}
+=\frac{2a^2}{D}\varepsilon
++\varepsilon\left(\frac{x}{2\varepsilon}+k\right)^2
+\ge c_0T
+\tag{199.24}
+$$
+对某个固定 $c_0>0$ 成立。因此任何 $R\downarrow0$ 且 $Q-B=O(R^2)$ 的可行序列都满足 $T=O(R^2)$。由严格覆盖条件，
+$$
+4\varepsilon(1-\varepsilon)>c^2R^2,
+\qquad
+\liminf\frac{\varepsilon}{R^2}\ge\frac B4.
+\tag{199.25}
+$$
+将（199.24）的平方项丢去，余项因 $T=O(R^2)$ 而为 $o(R^2)$，故
+$$
+\liminf\frac{Q-B}{R^2}
+\ge\frac{2a^2B}{D}\liminf\frac{\varepsilon}{R^2}
+\ge\frac{a^2B^2}{2D}.
+\tag{199.26}
+$$
+定理197.2给出相同系数的实际程序上界。由定理199.2，在任意半径序列上选择成本与下确界相差至多 $R^3$ 的可行参数；结合定理193.2的成本下界，所得参数满足 $Q-B=O(R^2)$，所以（199.26）适用。上下界匹配即得（199.11）与（199.12）。
+
+因此，第197节的三结果测量—制备构造已经在二次首项上达到任意固定处理器类的最优值。这不主张它在每个正半径处取得最小值，也不主张各处理器类的高阶项相同。全部推导保留开邻域精确性、固定程序维数与同一处理器内的联合矩阵正性；Gram 分解与 Schur 补只作为该具体优化的标准工具。固定处理器与程序输入的标准框架可参见 Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Physical Review A 66, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II节。证毕。
+
+## 追加锚（本行以下为增补区）
