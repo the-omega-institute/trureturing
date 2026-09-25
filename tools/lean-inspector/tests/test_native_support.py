@@ -580,8 +580,8 @@ defaultFacets = ["static"]
              for r in identities if r['part'] == 'private'})
 
 
-class NativeArtifactTestSupport(NativeTestSupport):
-    """Build one valid fixture, then give each artifact consumer a private copy."""
+class NativeSharedTestSupport(NativeTestSupport):
+    """Give each consumer a private copy of a class-owned prepared fixture."""
 
     @classmethod
     def setUpClass(cls):
@@ -594,8 +594,12 @@ class NativeArtifactTestSupport(NativeTestSupport):
         cls.donor.setUpClass()
         cls.addClassCleanup(cls.cleanup_donor)
         cls.donor.setUp()
-        cls.donor.build()
+        cls.prepare_donor()
         cls.donor_inventory = cls.inventory(cls.donor.root)
+
+    @classmethod
+    def prepare_donor(cls):
+        raise NotImplementedError
 
     @classmethod
     def cleanup_donor(cls):
@@ -618,7 +622,7 @@ class NativeArtifactTestSupport(NativeTestSupport):
         return entries
 
     def setUp(self):
-        self.temporary = tempfile.TemporaryDirectory(prefix='inspector-artifact.',
+        self.temporary = tempfile.TemporaryDirectory(prefix='inspector-consumer.',
             dir=os.environ.get('STRATALINT_NATIVE_TMPDIR'))
         self.addCleanup(self.cleanup_fixture)
         self.addCleanup(self.check_donor)
@@ -629,8 +633,7 @@ class NativeArtifactTestSupport(NativeTestSupport):
                         symlinks=True, copy_function=shutil.copy2)
         self.env = {key: value.replace(str(self.donor.root), str(self.root))
                     for key, value in self.donor.env.items()}
-        self.compiler_seed = None
-        self.initial_build = True
+        self.compiler_seed = self.donor.compiler_seed
         self.assertEqual(self.inventory(self.root), self.donor_inventory)
         for relative, entry in self.donor_inventory.items():
             if entry[0] == 'file':
@@ -639,6 +642,39 @@ class NativeArtifactTestSupport(NativeTestSupport):
 
     def check_donor(self):
         self.assertEqual(self.inventory(self.donor.root), self.donor_inventory)
+
+class NativeDependencyTestSupport(NativeSharedTestSupport):
+    """Share dependency preparation while every project/report build stays cold."""
+
+    @classmethod
+    def prepare_donor(cls):
+        receipt = cls.donor.ensure()
+        cls.donor.assertEqual(receipt['mathlib_olean_state'], 'warm')
+        cls.donor.assertEqual(receipt['project_olean_state'], 'cold')
+        cls.check_cold_project(cls.donor)
+
+    @staticmethod
+    def check_cold_project(fixture):
+        for package in [fixture.root, fixture.root / 'Reg']:
+            fixture.assertFalse((package / '.lake/build').exists(),
+                                'dependency preparation must not build project/report outputs')
+        fixture.assertFalse((fixture.root / 'public.json').exists())
+
+    def setUp(self):
+        super().setUp()
+        self.check_cold_project(self)
+
+
+class NativeArtifactTestSupport(NativeSharedTestSupport):
+    """Build one valid report for consumers that subsequently mutate artifacts."""
+
+    @classmethod
+    def prepare_donor(cls):
+        cls.donor.build()
+
+    def setUp(self):
+        super().setUp()
+        self.initial_build = True
 
     def build(self, success=True, *, targets=()):
         initial = self.initial_build
@@ -716,6 +752,64 @@ class GuardedCommandTests(unittest.TestCase):
         self.assertEqual(len(result.errors), 1)
         self.assertIn('owned donor cleanup failed', result.errors[0][1])
         self.assertFalse(result.wasSuccessful())
+
+    def test_dependency_consumers_start_private_and_cold_with_unconsumed_compiler_seed(self):
+        class Consumers(NativeDependencyTestSupport, unittest.TestCase):
+            def test_first(self):
+                self.assertEqual(self.compiler_seed, '/immutable/compiler-stage')
+                self.assertEqual((self.root / 'Fixture.lean').read_text(), 'original')
+                self.write('Fixture.lean', 'first consumer mutation')
+                self.compiler_seed = None
+
+            def test_second(self):
+                self.assertEqual(self.compiler_seed, '/immutable/compiler-stage')
+                self.assertEqual((self.root / 'Fixture.lean').read_text(), 'original')
+                self.assertEqual(self.env['FIXTURE_ROOT'], str(self.root))
+
+        def prepare(donor):
+            donor.temporary = tempfile.TemporaryDirectory(prefix='dependency-fixture.')
+            donor.addCleanup(donor.cleanup_fixture)
+            donor.root = Path(donor.temporary.name)
+            donor.env = dict(FIXTURE_ROOT=str(donor.root))
+            donor.compiler_seed = '/immutable/compiler-stage'
+            donor.write('Fixture.lean', 'original')
+
+        def ensure(donor):
+            donor.write('.lake/packages/mathlib/.lake/build/lib/lean/Cache.olean', 'dependency')
+            return dict(mathlib_olean_state='warm', project_olean_state='cold')
+
+        result = unittest.TestResult()
+        with patch.object(NativeTestSupport, 'setUpClass'), \
+                patch.object(NativeTestSupport, 'setUp', prepare), \
+                patch.object(NativeTestSupport, 'ensure', autospec=True, side_effect=ensure) as ensured, \
+                patch.object(NativeTestSupport, 'build', side_effect=AssertionError('project must stay cold')):
+            unittest.defaultTestLoader.loadTestsFromTestCase(Consumers).run(result)
+        self.assertEqual(ensured.call_count, 1)
+        self.assertEqual(result.testsRun, 2)
+        self.assertTrue(result.wasSuccessful(), result.errors + result.failures)
+        self.assertFalse(Consumers.donor.root.exists())
+
+    def test_dependency_preparation_rejects_project_outputs_despite_cold_receipt(self):
+        class Consumer(NativeDependencyTestSupport, unittest.TestCase):
+            def test_consumer(self):
+                self.fail('invalid preparation must fail before any consumer')
+
+        def prepare(donor):
+            donor.temporary = tempfile.TemporaryDirectory(prefix='dependency-fixture.')
+            donor.addCleanup(donor.cleanup_fixture)
+            donor.root = Path(donor.temporary.name)
+            donor.write('.lake/build/lib/lean/Fixture.olean', 'premature project output')
+
+        result = unittest.TestResult()
+        with patch.object(NativeTestSupport, 'setUpClass'), \
+                patch.object(NativeTestSupport, 'setUp', prepare), \
+                patch.object(NativeTestSupport, 'ensure', return_value=dict(
+                    mathlib_olean_state='warm', project_olean_state='cold')):
+            unittest.defaultTestLoader.loadTestsFromTestCase(Consumer).run(result)
+        self.assertEqual(result.testsRun, 0)
+        self.assertEqual(len(result.errors), 1)
+        self.assertIn('must not build project/report outputs', result.errors[0][1])
+        self.assertFalse(Consumer.donor.root.exists())
 
     def test_command_preserves_output_and_nonzero_exit(self):
         for enabled, status in [(False, 0), (False, 7), (True, 0), (True, 7)]:

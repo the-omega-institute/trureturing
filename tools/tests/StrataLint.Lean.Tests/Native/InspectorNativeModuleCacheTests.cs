@@ -5,7 +5,6 @@ public sealed class InspectorNativeModuleCacheTests(InspectorCompilerFixture com
     // Module cache validation uses a class-owned compiler stage.
     [Theory]
     [InlineData("test_native.NativeArtifactTests")]
-    [InlineData("test_native.NativeTests.test_native_module_validation_uses_lake_trace")]
     [InlineData("test_native.NativeTests.test_imported_comment_warm_report_equals_fresh")]
     [InlineData("test_native.NativeTests.test_native_compatibility_preimage")]
     public void ModuleCacheValidation(string suite) => InspectorNativeTestRunner.Run(compiler, suite);

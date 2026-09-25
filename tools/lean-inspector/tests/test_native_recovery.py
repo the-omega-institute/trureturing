@@ -27,7 +27,7 @@ import native
 
 from test_native_support import *
 
-class NativeRecoveryTests:
+class NativeRecoveryConsumerTests:
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
@@ -343,6 +343,9 @@ class NativeRecoveryTests:
         self.copy('tools/lean-inspector/Inspector.lean')
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)
+
+
+class NativeModuleFacetTests:
     def test_public_module_validates_and_private_job_is_not_a_target(self):
         self.build()
         path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'
