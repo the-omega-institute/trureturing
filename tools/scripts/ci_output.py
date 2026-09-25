@@ -101,6 +101,12 @@ class Presenter:
             self.detail[stream] = False
             return
         event, _, payload = plain.partition(" ")
+        # A textual diagnostic may itself contain JSON. Its outer label owns
+        # severity; arbitrary fields in its payload must not turn it into info.
+        if not plain.startswith("{") and (ERROR.search(event) or WARNING.search(event)):
+            self.detail[stream] = True
+            self.diagnostic(line, "error" if ERROR.search(event) else "warning")
+            return
         candidate = plain if plain.startswith("{") else payload
         value = None
         if candidate.startswith("{"):
@@ -109,8 +115,10 @@ class Presenter:
             except ValueError:
                 pass
         if isinstance(value, dict) and (not (self.detail.get(stream) or stream in self.failure_detail) or EVENT.match(plain)
-                                       or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level", "stage"))):
+                                       or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level"))
+                                       or "scope" in value and "stage" in value):
             if event == "STAGE_STEP" and isinstance(value.get("name"), str):
+                self.failure_detail.discard(stream)
                 self.detail[stream] = False
                 self.step = value["name"]
                 self.progress = "unreported"
@@ -118,7 +126,12 @@ class Presenter:
                 # Non-streaming operations emit their process result before
                 # their text. Keep an unsuccessful operation's explanation.
                 child = value.get("child_exit")
-                self.detail[stream] = isinstance(child, dict) and child.get("code") not in (None, 0)
+                failed = self.severity(value) == "error" or isinstance(child, dict) and child.get("code") not in (None, 0)
+                self.detail[stream] = False
+                if failed:
+                    self.failure_detail.add(stream)
+                else:
+                    self.failure_detail.discard(stream)
             self.structured(value, line)
         elif INFO.match(plain) or BUILD_INFO.match(plain):
             self.detail[stream] = False

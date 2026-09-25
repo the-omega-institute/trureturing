@@ -83,6 +83,11 @@ class PresentationTests(unittest.TestCase):
         self.assertIn("line one\\nline two", rendered)
         self.assertIn("blocked", rendered)
 
+    def test_compact_json_information_uses_its_explicit_severity(self):
+        self.presenter.line('{"severity":"information","message":"error:example"}\n', "stdout")
+        self.assertEqual("", self.output.getvalue())
+        self.assertEqual(1, self.presenter.counts["information"])
+
     def test_progress_records_and_success_json_do_not_leak(self):
         self.presenter.line('STAGE_STEP {"stage":"current","name":"lean-report","status":"started"}\n', "stdout")
         self.presenter.line('{"stage":"current","exit":0,"error":null,"scope":{"paths":["huge-list"]}}\n', "stdout")
@@ -200,6 +205,33 @@ class PresentationTests(unittest.TestCase):
         self.presenter.line("No .NET SDKs were found.\n", "stdout")
         self.presenter.line("Install a .NET SDK to run this application.\n", "stdout")
         self.assertIn("No .NET SDKs were found.\nInstall a .NET SDK", self.output.getvalue())
+
+    def test_failed_operation_context_survives_information_until_next_step(self):
+        for result in ({"child_exit": {"code": 155}}, {"outcome": "cancelled", "child_exit": {"code": 0}}):
+            with self.subTest(result=result):
+                output = io.StringIO()
+                presenter = ci_output.Presenter("engineering", output)
+                presenter.line("STAGE_PROCESS " + json.dumps(result) + "\n", "stdout")
+                presenter.line("information: host initialization\n", "stdout")
+                presenter.line("No .NET SDKs were found.\n", "stdout")
+                presenter.line('STAGE_STEP {"name":"next","status":"started"}\n', "stdout")
+                presenter.line("ordinary activity in next step\n", "stdout")
+                self.assertIn("No .NET SDKs were found.", output.getvalue())
+                self.assertNotIn("host initialization", output.getvalue())
+                self.assertNotIn("ordinary activity", output.getvalue())
+
+    def test_diagnostic_json_keeps_outer_severity_and_unclassified_failure_fields(self):
+        messages = ['error: {"stage":"check","detail":"cannot load required input"}\n',
+                    '{"stage":"check","detail":"failed input path"}\n']
+        for block in (False, True):
+            with self.subTest(block=block):
+                output = io.StringIO()
+                presenter = ci_output.Presenter("current", output)
+                if block:
+                    presenter.line("CI_DIAGNOSTIC_BEGIN step=check raw_exit=1\n", "stdout")
+                for line in messages:
+                    presenter.line(line, "stdout")
+                self.assertIn("".join(messages), output.getvalue())
 
 
 class ProcessTests(unittest.TestCase):
