@@ -49,3 +49,12 @@ and Mathlib's existing cfc commutation theorem implies that W commutes with
 Y(X). The computed identity W Q W = P then proves the actual spectral
 transpose candidate recovers X. This argument does not assume that Y is a
 multiplicative representation on the whole physical algebra.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1088/1751-8113/42/24/245303 resolves to the Journal
+  of Physics A article titled above.
+- Preprint: https://arxiv.org/abs/0811.0947 .
+- The literature anchor concerns multiplicative domains and correctable
+  observables. The finite equality-defect and recovery proofs above are
+  repository arguments, not claims of a verbatim theorem in this source.

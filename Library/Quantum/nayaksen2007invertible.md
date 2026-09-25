@@ -19,3 +19,10 @@ Source: https://arxiv.org/abs/quant-ph/0605041
 Publisher record: https://www.rintonpress.com/journals/doi/QIC7.1-2-6.html
 
 The candidate Lean module proves a finite matrix decoding identity for supplied orthogonal copies; it does not formalize the entire channel classification theorem or its smooth global extension.
+
+## Verified locator
+
+- DOI: https://doi.org/10.26421/QIC7.1-2-6 resolves to the Quantum Information
+  and Computation publisher record titled above.
+- Preprint: https://arxiv.org/abs/quant-ph/0605041 . The citation uses Theorem
+  2.1 for the finite reversible-channel normal form, not for a smooth extension.

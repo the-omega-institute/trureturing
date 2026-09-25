@@ -21,3 +21,12 @@ Source: https://arxiv.org/abs/quant-ph/0004088
 The arXiv record reports revision v2 on 18 January 2026. Its authors state that the revision corrects an error in the proof of the main theorem that obstructed extension to ensembles containing more than one density matrix. The abstract/version note was checked; this note does not assert a line-by-line verification of the revised general approximate-fidelity proof. The repository's exact finite recovery construction is proved directly from the scalar Kraus-product condition and does not rely on that general ensemble theorem.
 
 Version-specific record: https://arxiv.org/abs/quant-ph/0004088v2
+
+## Verified locator
+
+- DOI: https://doi.org/10.1063/1.1459754 resolves to the Journal of Mathematical
+  Physics article titled above. The publisher page returned HTTP 403 here.
+- Version-specific preprint: https://arxiv.org/abs/quant-ph/0004088v2 .
+- The citation locates the reference-state reversal construction and its
+  published fidelity result. The corrected general proof is not a premise of
+  the repository's exact finite recovery theorem.

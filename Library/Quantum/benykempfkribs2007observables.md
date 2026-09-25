@@ -36,3 +36,11 @@ Companion announcement: C. Bény, A. Kempf and D. W. Kribs, *Generalization of
 Quantum Error Correction via the Heisenberg Picture*, Physical Review Letters
 98, 100502 (7 March 2007), DOI 10.1103/PhysRevLett.98.100502,
 arXiv:quant-ph/0608071. The detailed PRA paper was published 2 October 2007.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1103/PhysRevA.76.042303 resolves to the Physical
+  Review A article titled above.
+- Preprint: https://arxiv.org/abs/0705.1574 .
+- The cited scope is correctable observable algebras in the Heisenberg picture;
+  the repository proves only its stated finite orthogonal-syndrome instance.

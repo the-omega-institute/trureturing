@@ -36,3 +36,11 @@ HasDerivAt hypotheses. The general full-matrix-unit averaging formula is not
 attributed as a theorem of Kato's paper. No new universal adiabatic estimate,
 Dyson-series convergence, parameter-bundle trivialization, or physical control
 cost theorem is claimed by the algebraic declarations.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1143/JPSJ.5.435 resolves to the Journal of the
+  Physical Society of Japan article titled above. The publisher page returned
+  HTTP 403 here.
+- The citation is for projector-based adiabatic transport. The finite
+  matrix-unit generator in this note is the repository's separate construction.
