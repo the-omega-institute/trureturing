@@ -289,9 +289,11 @@ def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInp
     if origin.hasFVar || origin.hasMVar || origin.hasLooseBVars then
       throwError "unclassified_form:dtr.escape_from_identity"
     let type ← inferType origin
-    let state ← match normalized.domain with
-      | some domain => pure domain
-      | none => mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
+    let state ← if normalized.witness then
+        mkAppM (RegistrationGates.witnessArenaName.str "Domain") #[normalized.original]
+      else match normalized.domain with
+        | some domain => pure domain
+        | none => mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
     let represented := if ← isType origin then origin else type
     unless ← isDefEq represented state do
       throwError "unclassified_form:dtr.escape_from_state"
