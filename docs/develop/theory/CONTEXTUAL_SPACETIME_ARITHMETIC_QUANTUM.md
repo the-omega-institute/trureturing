@@ -40418,3 +40418,142 @@ $\zeta,\zeta a,\widetilde c=-D/4-\zeta(1+v)/2$。因为 $(1+v)/2>a>a^2$，有 $\
 中间区间的 $g>0$ 且 $g-c=(q-c)^2/L>0$，所以 $g>\max(c,0)$，证明严格差距。分母次序给出 $b_-<k<b_+$；代入 $b=k$ 得 $c=0$、$q=ka$、$s_*=a/(1+2a)$、$g=ka^2/(1+2a)$，正是第182节的值。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 184. 经典程序的精确生成成本与可读信息的严格差距
+
+**定义 184.1（有限经典程序的一阶生成成本）。** 固定 $0<a<1$、$2a-1<u<1$，记 $\mathcal T_v=\mathcal S_{F(a,v)}$、$h=(1+u)/2$、$\ell=1-h$。在名义点 $u$ 的有限经典程序由有限多个与参数无关的 CPTP 映射 $\mathcal R_j$，以及在 $u$ 附近可微的概率 $p_j(v)$ 组成，要求全部 $p_j(u)>0$，并满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u,
+\qquad
+\sum_jp_j'(u)\mathcal R_j=\partial_u\mathcal T_u.
+\tag{184.1}
+$$
+定义其局部成本及最优值为
+$$
+I_{\rm prog}(u)=\sum_j\frac{p_j'(u)^2}{p_j(u)},
+\qquad
+\mathfrak C(a,u)=\inf I_{\rm prog}(u),
+\tag{184.2}
+$$
+下确界取遍任意有限字母数的程序。若要求在一个邻域内精确满足 $\sum_jp_j(v)\mathcal R_j=\mathcal T_v$，则记相应最优值为 $\mathfrak C_{\rm exact}(a,u)$。这两种优化都在名义点逐点进行，程序组件在求导时保持固定。
+
+这个操作量属于既有的通道切向模拟框架：Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节定义以经典程序 Fisher 信息量计量的 $G^{\max}$。量子态版本的反向估计及 RLD 输入下界见同作者 *Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节的一阶匹配构造与输入信息量不等式。以下给出当前通道族的显式最优值与达到它的固定程序，直接证明所需下界，不把量子态模拟结论直接当作通道模拟等号。
+
+**定理 184.2（三个经典符号达到全局最小生成成本）。** 在第184.1节的范围内，
+$$
+\mathfrak C(a,u)=\mathfrak C_{\rm exact}(a,u)
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}
+=\frac{1-a^2}{4\ell(h-a^2)}.
+\tag{184.3}
+$$
+下确界由三个固定通道达到。更具体地，按名义点选择
+$$
+c=\frac{a\ell}{1-a^2},\qquad
+\mathcal R_+=\mathcal S_{F(1,1)},\quad
+\mathcal R_-=\mathcal S_{F(-1,1)},\quad
+\mathcal R_c=\mathcal S_{F(c,2c^2-1)}.
+\tag{184.4}
+$$
+令 $H=(1+v)/2$，定义
+$$
+p_c(v)=\frac{1-H}{1-c^2},\qquad
+p_+(v)=\frac{H+a-(1+a)c}{2(1-c)},\qquad
+p_-(v)=\frac{H-a+(1-a)c}{2(1+c)}.
+\tag{184.5}
+$$
+这些权重在整个 $2a-1<v<1$ 内都严格为正，并精确模拟 $\mathcal T_v$；它们在设计点 $v=u$ 的信息量达到（184.3）。
+
+证明。 首先不得把优化域预先缩成 Schur 通道。设 $P_i=|i\rangle\langle i|$。因为 $\mathcal T_u(P_i)=P_i$ 为纯态，而（184.1）将它写成正权重状态凸组合，所以每个 $\mathcal R_j(P_i)=P_i$。取 $\mathcal R_j$ 的任一 Kraus 表示，正性迫使每个 $K_{j\alpha}|i\rangle$ 都落在 $\mathbb C|i\rangle$ 内；各 Kraus 算符遂为对角矩阵。因此每个组件自动是某个相关矩阵 $C_j\succeq0$、$\operatorname{diag}C_j=\mathbf1$ 的 Schur 通道。
+
+令 $F=F(a,u)$，$E$ 为只有 $02,20$ 两项等于一的矩阵，并令 $s_j=p_j'(u)/p_j(u)$。值与切向量匹配给出 $\sum_jp_jC_j=F$、$\sum_jp_js_jC_j=E$。于是
+$$
+\begin{pmatrix}F&E\\E&Q\end{pmatrix}
+=\sum_jp_j
+\begin{pmatrix}C_j&s_jC_j\\s_jC_j&s_j^2C_j\end{pmatrix}\succeq0,
+\qquad Q=\sum_jp_js_j^2C_j.
+\tag{184.6}
+$$
+每个加项正半定，因为它是 $C_j$ 与 $\left(\begin{smallmatrix}1&s_j\\s_j&s_j^2\end{smallmatrix}\right)$ 的张量积，按分块顺序表示。$F$ 正定，故 Schur 补给出 $Q\succeq EF^{-1}E$。$Q$ 的每个对角元都等于 $I_{\rm prog}$，而
+$$
+(EF^{-1}E)_{00}=(F^{-1})_{22}
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{184.7}
+$$
+取该对角元即得适用于全部有限程序的下界；它只使用一阶匹配，所以也适用于精确模拟。
+
+现核对达到性。$h>a$ 给出 $0<c<a/(1+a)<1$。前两个组件为秩一相关矩阵；第三个是单位向量
+$ (c,\sqrt{1-c^2})$、$(1,0)$、$(c,-\sqrt{1-c^2})$ 的 Gram 矩阵，故也定义通道。（184.5）满足
+$$
+p_++p_-+p_c=1,\qquad
+p_+-p_-+c p_c=a,\qquad
+p_++p_-+c^2p_c=H.
+\tag{184.8}
+$$
+相应混合矩阵的相邻项为 $a$，端点项为 $2H-1=v$，从而精确实现整族通道。任意允许的 $v$ 都有 $H>a$，故 $p_->0$；由 $(1+a)c<a$ 得 $p_+>0$；$p_c>0$ 由 $H<1$ 得到。
+
+令 $d=1-a^2$、$q=h-a^2>0$。在设计点，固定 $c=a\ell/d$ 后可化简为
+$$
+p_+(u)=\frac{q}{2(1-a)(1-c)},\quad
+p_-(u)=\frac{q}{2(1+a)(1+c)},\quad
+p_c(u)=\frac{\ell}{1-c^2}.
+\tag{184.9}
+$$
+对 $v$ 求导时 $c$ 保持不变，三项导数分别为
+$1/[4(1-c)]$、$1/[4(1+c)]$、$-1/[2(1-c^2)]$。代入（184.2）得
+$$
+I_{\rm prog}(u)
+=\frac1{4(1-c^2)}\left[\frac1\ell+\frac{1-ac}{q}\right]
+=\frac d{4\ell q},
+\tag{184.10}
+$$
+最后一步使用 $dc=a\ell$。这同时达到一阶模拟与精确模拟的下界，证明（184.3）。证毕。
+
+**定理 184.3（二符号限制的严格额外成本）。** 若第184.1节的程序只允许两个正权重符号，则最小成本为
+$$
+\mathfrak C_2(a,u)=\frac1{(1-u)(1+u-2a^2)}
+=\frac{\mathfrak C(a,u)}{1-a^2}>\mathfrak C(a,u).
+\tag{184.11}
+$$
+因而三个符号是达到（184.3）所需的最少有限字母数。
+
+证明。 设程序为 $p(v)\mathcal R_1+[1-p(v)]\mathcal R_2$。目标切向量非零，所以 $p'(u)\ne0$。由值与切向量的两条线性方程，$\mathcal R_1,\mathcal R_2$ 都必须落在通过 $\mathcal T_u$、方向为 $\partial_u\mathcal T_u$ 的同一仿射直线上，即它们为固定相邻系数 $a$ 的 $\mathcal T_{v_-},\mathcal T_{v_+}$。交换符号后可取 $v_-<u<v_+$。
+
+$F(a,v)$ 正半定的完整条件为 $2a^2-1\le v\le1$：反对称特征值为 $1-v$，对称块为 $\left(\begin{smallmatrix}1+v&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。所以 $2a^2-1\le v_-<u<v_+\le1$。匹配方程迫使程序的局部信息量为
+$$
+\frac1{(u-v_-)(v_+-u)}
+\ge\frac1{(u-2a^2+1)(1-u)}.
+\tag{184.12}
+$$
+取两个端点通道达到等号，且其线性混合在 $u$ 邻域精确模拟。一个符号的固定通道无法产生非零切向量，结合定理184.2即得最少符号数。证毕。
+
+**定理 184.4（生成与读取的严格信息比）。** 对同一条通道，最大单次可读 SLD 信息量为 $I_{\rm read}(a,u)=1/(1-u^2)$，而
+$$
+\frac{\mathfrak C(a,u)}{I_{\rm read}(a,u)}
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1.
+\tag{184.13}
+$$
+特别地，对第179节的二步接口，以未知配对参数 $w$ 求导、令 $\varepsilon=1-r$，有
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{\varepsilon^3}-12\right|\longrightarrow0,
+\qquad
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{I_1^{(2)}(r,w)}-\frac43\right|\longrightarrow0.
+\tag{184.14}
+$$
+这里 $\mathfrak C_w$ 仍指对同一二步终端通道逐点优化的有限经典程序成本；生成所用程序标签不属于查询者可访问的输出。
+
+证明。 第181节的实 Stinespring 标架在全部 $0<a<h<1$ 的同一范围内给出可读值 $1/(1-u^2)$，且均衡输入达到它。将（184.3）相除，利用
+$(1-a^2)(1+u)-(1+u-2a^2)=a^2(1-u)$，即得（184.13）。
+
+二步接口中 $a=\beta^2$、$u=u_2(w)$、$u_2'(w)=2J$。第178—179节给出在全部允许 $w$ 上统一成立的
+$$
+1-a^2=4\varepsilon+O(\varepsilon^2),\qquad
+\ell=\varepsilon+O(\varepsilon^2),\qquad
+h-a^2=3\varepsilon+O(\varepsilon^2),\qquad
+J/\varepsilon^2\longrightarrow3.
+\tag{184.15}
+$$
+因此 $\mathfrak C(a,u)\sim1/(3\varepsilon)$。重新参数化将程序信息量乘以 $(2J)^2$，得到 $\mathfrak C_w\sim12\varepsilon^3$；由第181节 $I_1^{(2)}\sim9\varepsilon^3$，再得比值 $4/3$，两者都为一致极限。第179节系数18的程序仍是合法上界；（184.14）求出了这个接口的最小经典程序成本，而可读信息的精确系数仍为9。证毕。
+
+## 追加锚（本行以下为增补区）
