@@ -98,7 +98,266 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     Paragraph(Text(
                         "One-by-one complex matrices commute, so the commutator derivative "
                             + "vanishes at time zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Remark(
+                DescribeId.Create("autonomous-information-objective-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Observation projection and autonomous state selection"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/giraldi2018projection"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/spantini2017goaloriented")),
+                Blocks(Paragraph(Text(
+                    "Giraldi and coauthors optimize projections of observations under "
+                    + "posterior KL, average KL and mutual-information objectives. Section 14 "
+                    + "of docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md instead "
+                    + "selects whole nonresonant state modes, retaining their exact posterior "
+                    + "marginal and recovering discarded modes from the thermal prior. The "
+                    + "resulting minimum principal-precision log-determinant is a distinct "
+                    + "objective. The declaration named here proves commutator-generated "
+                    + "observable closure only; it does not prove the statistical "
+                    + "selection or approximation claims.")))),
+            Describe.Remark(
+                DescribeId.Create("determinantal-forest-approximation-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Determinantal complexity and conditional forest guarantees"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/ohsaka2024determinant"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/althani2023tridiagonal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/fampa2025maximumentropy")),
+                Blocks(Paragraph(Text(
+                    "Ohsaka studies determinant maximization hardness, including sparse "
+                    + "arrowhead support. Al-Thani and Lee give exact maximum-entropy "
+                    + "algorithms under special support assumptions; Fampa and Lee review "
+                    + "recent determinantal design. Section 14 supplies a separate minimum "
+                    + "KL reduction and exactly optimizes a pairwise surrogate on a forest. "
+                    + "Its full-objective guarantee is additive and fourth-order under a "
+                    + "normalized weak-coupling condition. The graph belongs to statistical "
+                    + "precision, not necessarily physical interactions. These remarks "
+                    + "acknowledge prior art without adding Lean claims or asserting "
+                    + "that a tree always permits exact determinant optimization.")))),
+            Describe.Remark(
+                DescribeId.Create("rounded-schur-modal-kl-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Rounded precision messages retain an explicit information budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/mahalanabis2012subset"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/althani2023tridiagonal")),
+                Blocks(Paragraph(Text(
+                    "Mahalanabis and Stefankovic already use precision-matrix messages and "
+                    + "finite grids for Gaussian subset selection on bounded-treewidth "
+                    + "graphs. Their squared-prediction-error objective and conditioning "
+                    + "dependence are retained as prior-art boundaries. A separately "
+                    + "referenced rounded-message proposal concerns an additive KL guarantee "
+                    + "for whole modal blocks on a forest, representing upward pivot rounding "
+                    + "by positive semidefinite diagonal increments of the selected precision "
+                    + "matrix. Its full proof has not been incorporated in this main-volume "
+                    + "snapshot, so this remark does not assign it a section or verified "
+                    + "theorem. Any runtime claim still needs a certified spectral margin "
+                    + "and must not be called an unconditional bit-polynomial FPTAS. The "
+                    + "existing Lean declaration certifies none of these algorithmic claims; "
+                    + "no new Lean handle is introduced.")))),
+            Describe.Remark(
+                DescribeId.Create("statistical-reduction-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Statistical reduction is a separate objective"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/spantini2017goaloriented")),
+                Blocks(Paragraph(Text(
+                    "Spantini and coauthors study goal-oriented low-rank Gaussian posterior "
+                    + "approximations with a specified statistical loss. Their posterior-precision "
+                    + "weighted objective is distinct from the energy-coordinate loss and invariant "
+                    + "projection constraint used in Section 13 of "
+                    + "docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md. The Lean declaration "
+                    + "referenced here concerns commutator-generated observable closure only; it "
+                    + "does not prove that section's Bayesian optimum or error bounds.")))),
+            Describe.Remark(
+                DescribeId.Create("symplectic-reduction-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Symplectic representation and exact dynamical descent"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/buchfink2022optimal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/feng2026symplectic")),
+                Blocks(Paragraph(Text(
+                    "Buchfink, Glas and Haasdonk provide prior art for optimal symplectic bases "
+                    + "in energy coordinates under their periodic linear-system assumptions. "
+                    + "Only their institutional abstract and bibliographic record were retrieved "
+                    + "in this research pass. Feng and coauthors' 2026 preprint studies "
+                    + "symplectic-embedding approximation on compact contractible domains. "
+                    + "A structure-preserving representation does not alone establish that a "
+                    + "particular full vector field descends to it. These are contextual sources, "
+                    + "not additional conclusions certified by the existing Lean declaration.")))),
+            Describe.Remark(
+                DescribeId.Create("quantum-sufficiency-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("A sufficient quantum family needs a recovery channel"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/koashi2002nondisturbance"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/vanluijk2026sufficiency")),
+                Blocks(Paragraph(Text(
+                    "Koashi and Imoto analyze the information-bearing and redundant factors "
+                    + "of specified quantum-state families. Van Luijk and Wilming distinguish "
+                    + "CPTP-sufficient algebras from structures sufficient only for positive maps. "
+                    + "The unified theory's logical-qubit example uses actual CPTP encoding and "
+                    + "decoding on a restricted invariant family. Closure of a linear span of "
+                    + "effects, by itself, does not establish recovery of arbitrary quantum "
+                    + "states. These literature acknowledgements add no Lean theorem or "
+                    + "machine-verified claim about statistical sufficiency.")))),
+            Describe.Remark(
+                DescribeId.Create("finite-horizon-autonomous-rollout-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Finite-horizon autonomous rollout has a specified model class"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/goyal2019timelimited"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/redmann2020timelimited"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/peng2017marginal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/koenig2023dataassimilation")),
+                Blocks(Paragraph(Text(
+                    "Finite-time H2 reduction, time-limited error bounds, Bayesian balancing "
+                    + "and symplectic projection are established prior art. A separately "
+                    + "referenced finite-horizon proposal fixes one initial feature, a "
+                    + "canonical encoder/decoder and a reference generator, then evaluates "
+                    + "autonomous rollout. Its full derivation is not present in this "
+                    + "main-volume snapshot, so this remark assigns no section or verified "
+                    + "optimum. Peng and Carlberg's abstract was retrieved; its interior "
+                    + "theorems were not checked here. The existing Lean declaration proves "
+                    + "observable closure, not finite-horizon statistical optimization.")))),
+            Describe.Remark(
+                DescribeId.Create("supervised-finite-horizon-score-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Supervised trajectory scores require joint data and a noise budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/sakamoto2026regularized"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/tropp2012matrix")),
+                Blocks(Paragraph(Text(
+                    "Sakamoto and Sato's version 2 uses noisy impulse responses to construct "
+                    + "a regularized finite-time objective and gradient. The separately "
+                    + "referenced finite-horizon proposal instead pairs an initial feature "
+                    + "with a later supervised state target. A sample-score certificate "
+                    + "using Tropp's matrix Bernstein inequality requires independence, "
+                    + "centering, a norm bound and a variance bound. Unpaired observations, "
+                    + "overlapping trajectories and empirical maxima do not automatically "
+                    + "satisfy those premises. These remarks add literature links, not a "
+                    + "new kernel-verified theorem or an incorporated proof of that draft.")))),
+            Describe.Remark(
+                DescribeId.Create("finite-time-frequency-coherence-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Frequency clustering keeps its time scale and physical assumptions"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/xie2021spectral"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/trushechkin2021unified")),
+                Blocks(Paragraph(Text(
+                    "Xie and E study coarse spectral components for quantum unitary dynamics. "
+                    + "Trushechkin treats nearly degenerate Bohr-frequency clusters with an "
+                    + "explicit weak-coupling bath limit. Finite-time phase averaging is a "
+                    + "related mechanism in the unified theory, but a classical Gaussian "
+                    + "risk optimizer is not thereby a quantum channel or a GKLS generator. "
+                    + "The referenced Lean statement supplies the commutator-orbit interface "
+                    + "only; complete positivity and finite-temperature recovery retain "
+                    + "their separate hypotheses.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-population-coherence-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("A common thermal recovery must use jointly compatible amplitudes"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/oi2006interference"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate")),
+                Blocks(Paragraph(Text(
+                    "Oi and Aberg identify root fidelity with optimal two-path coherence in "
+                    + "their specified operation class. Nuradha and coauthors define the "
+                    + "multivariate positive-block SDP and ask for operational interpretations "
+                    + "in Section 6 item 2. Section 15 of the unified theory realizes that "
+                    + "existing SDP as fixed-phase tests after a population-preserving, "
+                    + "conditional-Gibbs-calibrated CPTP recovery. Modulus tests have a "
+                    + "different objective. The positive-block correspondence and pairwise "
+                    + "Uhlmann optimum are established ingredients, not new Lean results.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-projective-holonomy-gap-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Projective loop compatibility limits joint coherence"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/aberg2007uhlmann"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate")),
+                Blocks(Paragraph(Text(
+                    "Discrete Uhlmann transport and its interference meaning are prior art. "
+                    + "The paper derivation in Section 15 bounds the sum of pairwise "
+                    + "coherence deficits using distance of a polar-unitary loop from scalar "
+                    + "phase. Its coisometry proof includes arbitrary common purifying "
+                    + "dimensions. Three orthogonal thermal qubit states give matching "
+                    + "fourth-order lower and realizable upper bounds. Scalar holonomy does "
+                    + "not obstruct all coherence moduli. No equivalence to physical Maxwell "
+                    + "curvature, independent novelty determination, or kernel verification "
+                    + "is asserted by this literature remark.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-covariance-resource-boundary"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Gibbs calibration and autonomous update are separate requirements"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/faist2015gibbspreserving"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/lostaglio2015coherence")),
+                Blocks(Paragraph(Text(
+                    "Faist, Oppenheim and Renner distinguish Gibbs-preserving maps from "
+                    + "thermal operations. Lostaglio, Jennings and Rudolph identify "
+                    + "time-translation covariance as an additional coherent thermodynamic "
+                    + "constraint. The unified theory independently specifies Gibbs "
+                    + "calibration, exact covariance, and visible-round-trip coherence; "
+                    + "commuting conditional Hamiltonians restrict useful recovery blocks "
+                    + "to exact energy-gap classes. The Ising example separates arbitrary "
+                    + "logical gaps from the Hamiltonian fixed by the visible Gibbs state. "
+                    + "Neither CPTP realizability nor these two conditions alone certifies "
+                    + "a zero-work thermal implementation. The existing declaration proves "
+                    + "commutator-generated observable closure only.")))),
+            Describe.Remark(
+                DescribeId.Create("compatibility-versus-complexity-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Common feasibility and uniform computational cost are distinct"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/cook2000pnp"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/singer2011synchronization")),
+                Blocks(Paragraph(Text(
+                    "Cook's decision and certificate definitions do not identify local-to-global "
+                    + "incompatibility with NP-hardness. Singer supplies established tree-based "
+                    + "synchronization methods. Section 16 of the unified predictive theory "
+                    + "checks faithful-state saturation through fundamental projective loops. "
+                    + "Its matrix-operation count assumes given transports; exact real input "
+                    + "representations and noisy polar factors retain separate obligations. "
+                    + "The existing Lean statement concerns commutator closure only, and "
+                    + "does not prove P versus NP or a complexity classification.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-triple-primal-dual-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Full-temperature triple optima have explicit matched witnesses"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/lostaglio2015coherence")),
+                Blocks(Paragraph(Text(
+                    "The multivariate fidelity SDP and time-covariance framework are prior art. "
+                    + "Section 16 constructs a primal feasible common recovery and a dual "
+                    + "positive-block witness of identical value for three orthogonal thermal "
+                    + "qubit states at every faithful temperature. With the Gibbs-compatible "
+                    + "scalar logical Hamiltonian, a second energy-sector construction solves "
+                    + "the exact covariant fixed-phase problem. These are paper-level special "
+                    + "case optima, not an all-temperature modulus optimum, an arbitrary-state "
+                    + "compression theorem, a free thermal operation, or a Lean result. "
+                    + "Finite floating checks are separate from the analytic certificates.")))),
+            Describe.Remark(
+                DescribeId.Create("common-response-binary-phase-maxcut-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Binary phases reuse the actual complete-mediator cut law"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/goemans1995maxcut"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/cook2000pnp")),
+                Blocks(Paragraph(Text(
+                    "CompleteMediatorCutSharpBounds.complete_mediator_maxcut_sharp already "
+                    + "maximizes on one whole Boolean response-table carrier, and its "
+                    + "complementOutcomeLaw_benefit constructs an attaining shared law. "
+                    + "Section 16 maps that same table to a thermally calibrated, covariant "
+                    + "binary phase-flip controller. General thresholds encode MAX-CUT, "
+                    + "whereas perfect saturation has the easy bipartiteness criterion. "
+                    + "Allowing arbitrary PSD correlations enlarges the controller class "
+                    + "to the Goemans-Williamson relaxation; hyperplane rounding returns "
+                    + "legal binary controls. The causal Lean source is reused with its "
+                    + "own scope, not as a new kernel proof of this physical interpretation "
+                    + "or of an efficient exact MAX-CUT algorithm.")))))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {

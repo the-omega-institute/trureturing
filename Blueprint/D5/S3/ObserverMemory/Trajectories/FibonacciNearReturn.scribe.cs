@@ -38,7 +38,86 @@ internal sealed class FibonacciNearReturnDocument : IScribeDocumentDefinition
                         "The source's description of Fibonacci times as canonical return times is "
                             + "qualitative and has no in-scope predicate; the displayed mathematical "
                             + "clauses are formalized without inventing one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Remark(
+                DescribeId.Create("bounded-band-golden-clock-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Exact returns provide near-alias examples, not universal clock optimality"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/zeng2024sampling")),
+                Blocks(Paragraph(Text(
+                    "Zeng and coauthors study generator ambiguity under finite-period sampling. "
+                    + "The arithmetic-clock addition in PR #8891 independently derives an explicit "
+                    + "two-time Hilbert-Schmidt estimate for finite-dimensional Hermitian "
+                    + "generators. The existing Fibonacci residual supplies matching quadratic "
+                    + "bandwidth amplification and rational clock approximants. Noise, cross-spectral "
+                    + "bandwidth and clock calibration are separate premises. This remark does not "
+                    + "claim that the golden ratio optimizes every finite experiment, that the new "
+                    + "estimate is Lean-verified, or that the pending Section 18 has already been "
+                    + "appended to the main-volume file.")))),
+            Describe.Remark(
+                DescribeId.Create("prime-cycle-and-fourier-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Prime observability and golden frequency have different assumptions"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/parlangeli2012cycles"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/tao2005primefourier")),
+                Blocks(Paragraph(Text(
+                    "Parlangeli and Notarstefano already give the cycle-Laplacian gcd sensor "
+                    + "criterion and its prime-length corollary. Tao records the prime Fourier "
+                    + "nonzero-minor theorem. The arithmetic-clock draft applies these established "
+                    + "results to explicitly specified modal observations, including a five-site "
+                    + "positive-energy ring whose two frequencies have golden ratio. The free "
+                    + "common mode must be removed for the stated Gibbs model. Exact rank does "
+                    + "not supply a uniform noise margin, and no WSS or P/NP inference follows. "
+                    + "The finite Prony observation source retains its own consecutive-window "
+                    + "scope; this source only proves the displayed Fibonacci-return statement.")))),
+            Describe.Remark(
+                DescribeId.Create("multiscale-horizon-phase-source-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Finite-horizon validation and phase reconstruction are different tasks"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/kimmel2015robustphase"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/li2023robustmultiphase")),
+                Blocks(Paragraph(Text(
+                    "Kimmel, Low and Yoder supply prior art for geometric-time robust phase "
+                    + "estimation; their 2021 erratum changes the branch-error margin. The "
+                    + "new scalar decoder uses and independently proves the three-errors-below-pi "
+                    + "condition. Li, Ni and Ying already use prime or coprime amplification "
+                    + "factors for multiple-phase collision avoidance. The proposed Section 19 "
+                    + "instead proves a Hilbert-Schmidt finite-horizon intertwining estimate "
+                    + "from a logarithmic number of dyadic settings, including a matched-time "
+                    + "relative-calibration bound. It does not infer unknown multimode recovery "
+                    + "from a single phase, or universal superiority over a two-clock design. "
+                    + "The complete proof is currently in the original PR discussion and "
+                    + "append patch; the main-volume file has not yet incorporated Sections "
+                    + "17 through 19. This declaration certifies only its original return law.")))),
+            Describe.Remark(
+                DescribeId.Create("multiscale-validation-statistical-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Random probes and sample lower bounds retain an experiment budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/avron2011trace"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/scarlett2021fano")),
+                Blocks(Paragraph(Text(
+                    "Avron and Toledo analyze randomized trace estimates; the current "
+                    + "one-sided complex Gaussian probe bound is derived explicitly and "
+                    + "requires a model fixed before independent validation. Scarlett and "
+                    + "Cevher supply the Fano and adaptive-information framework used for "
+                    + "the fixed-amplitude noisy-phase lower bound. Arbitrary Gaussian "
+                    + "superoperator inputs are not free quantum preparations. Frobenius "
+                    + "bounds are not dimension-free diamond bounds, and fixed per-reading "
+                    + "noise is not interchangeable with a fixed total noise budget. The "
+                    + "constructive sample bound still has a log-log gap. These paper "
+                    + "results are not proved by the existing Fibonacci Lean theorem.")))))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {
