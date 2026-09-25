@@ -333,7 +333,21 @@ theorem literalPowerSubstitution_actual_positivePair
     induction source with
     | nil => simp [literalPowerWord]
     | cons a source ih => simp [literalPowerWord, Nat.add_mul, Nat.add_comm]
-  have hpair := (full_positivePair_coefficient_checkpoint r index).1
+  have hpair (hr : 2 ≤ r) :
+      (positivePairWords r index).1 ≠ [] ∧
+      (positivePairWords r index).2 ≠ [] ∧
+      (positivePairWords r index).1.length =
+        (positivePairWords r index).2.length := by
+    obtain ⟨level, rfl⟩ : ∃ level, r = level + 2 := ⟨r - 2, by omega⟩
+    simp only [positivePairWords]
+    let previous := positivePairWords (level + 1) (Fin.init index)
+    let a := index (Fin.last (level + 1))
+    change previous.1 ++ [a] ++ previous.2 ≠ [] ∧
+      previous.2 ++ [a] ++ previous.1 ≠ [] ∧
+      (previous.1 ++ [a] ++ previous.2).length =
+        (previous.2 ++ [a] ++ previous.1).length
+    simp only [List.length_append, List.length_singleton]
+    exact ⟨by simp, by simp, by omega⟩
   let p : RationalWordPolynomial A := toRationalWordPolynomial
     (magnusPolynomial pair.1 - magnusPolynomial pair.2)
   have hp : ∀ w, FreeMonoid.length w < r → p.coeff w = 0 := by

@@ -164,107 +164,6 @@ theorem positiveWordBall_card_step [Fintype A] [LinearOrder A]
         DigitArray (A := A) r t) : List A :=
     ballRepresentative (r - 1) m input.1 ++
       multiScaleWord (A := A) r t input.2
-  have cutoffMagnus_append (r : ℕ) (left right : List A) :
-      cutoffMagnus r (left ++ right) =
-        cutoffMul r (cutoffMagnus r left) (cutoffMagnus r right) := by
-    simp only [cutoffMagnus, magnusPolynomial_append, map_mul,
-      cutoffRestriction_mul]
-  have cutoffMagnus_empty_coeff (r : ℕ) (source : List A) :
-      cutoffMagnus r source ⟨1, by simp⟩ = 1 := by
-    simp only [cutoffMagnus, cutoffRestriction, toRationalWordPolynomial,
-      MonoidAlgebra.coeff_mapRingHom]
-    change ((magnusPolynomial source).coeff (FreeMonoid.ofList []) : ℚ) = 1
-    rw [magnusPolynomial_coeff_scatteredCount source []]
-    norm_num [D5.S1.Words.Complexity.VivionBinomialConverseFails.scatteredCount]
-  have cutoffMagnus_tail_vanishes (r : ℕ) (source : List A) :
-      VanishesBelow r 1 (cutoffMagnus r source - cutoffOne r) := by
-    intro w hw
-    have hlength : FreeMonoid.length w.1 = 0 := by omega
-    have hword : w.1 = 1 := by
-      apply FreeMonoid.toList.injective
-      apply List.length_eq_zero_iff.mp
-      simpa [FreeMonoid.length] using hlength
-    have hwSubtype : w = ⟨1, by simp⟩ := Subtype.ext hword
-    rw [hwSubtype]
-    simp [cutoffMagnus_empty_coeff, cutoffOne, cutoffRestriction]
-  have cutoffMagnus_eq_one_add_tail (r : ℕ) (source : List A) :
-      cutoffMagnus r source =
-        cutoffOne r + (cutoffMagnus r source - cutoffOne r) := by
-    abel
-  have cutoffLeftUnit (r : ℕ) (p : CutoffCoefficients A r) :
-      cutoffMul r (cutoffOne r) p = p := by
-    have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
-      funext w
-      simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
-    calc
-      _ = cutoffMul r (cutoffRestriction r 1)
-          (cutoffRestriction r (cutoffLift r p)) := by rw [cutoffOne, hrestrict]
-      _ = cutoffRestriction r (1 * cutoffLift r p) :=
-        (cutoffRestriction_mul r 1 (cutoffLift r p)).symm
-      _ = p := by simpa using hrestrict
-  have cutoffRightUnit (r : ℕ) (p : CutoffCoefficients A r) :
-      cutoffMul r p (cutoffOne r) = p := by
-    have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
-      funext w
-      simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
-    calc
-      _ = cutoffMul r (cutoffRestriction r (cutoffLift r p))
-          (cutoffRestriction r 1) := by rw [cutoffOne, hrestrict]
-      _ = cutoffRestriction r (cutoffLift r p * 1) :=
-        (cutoffRestriction_mul r (cutoffLift r p) 1).symm
-      _ = p := by simpa using hrestrict
-  have cutoffAssoc (r : ℕ) (p q s : CutoffCoefficients A r) :
-      cutoffMul r (cutoffMul r p q) s = cutoffMul r p (cutoffMul r q s) := by
-    have hrestrict (x : CutoffCoefficients A r) :
-        cutoffRestriction r (cutoffLift r x) = x := by
-      funext w
-      simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
-    have hp := hrestrict p
-    have hq := hrestrict q
-    have hs := hrestrict s
-    calc
-      _ = cutoffRestriction r
-          ((cutoffLift r p * cutoffLift r q) * cutoffLift r s) := by
-            rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
-      _ = cutoffRestriction r
-          (cutoffLift r p * (cutoffLift r q * cutoffLift r s)) := by rw [mul_assoc]
-      _ = _ := by rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
-  have cutoffMagnus_cancel_left (r : ℕ)
-      (prefixWord left right : List A)
-      (h : cutoffMagnus r (prefixWord ++ left) =
-        cutoffMagnus r (prefixWord ++ right)) :
-      cutoffMagnus r left = cutoffMagnus r right := by
-    rw [cutoffMagnus_append, cutoffMagnus_append] at h
-    let tail := cutoffMagnus r prefixWord - cutoffOne r
-    let inverse := cutoffGeometricInverse r tail
-    have htail : VanishesBelow r 1 tail :=
-      cutoffMagnus_tail_vanishes r prefixWord
-    have hinverse : cutoffMul r inverse (cutoffMagnus r prefixWord) =
-        cutoffOne r := by
-      rw [cutoffMagnus_eq_one_add_tail r prefixWord]
-      exact geometricInverse_cutoffMul r tail htail
-    have h' := congrArg (cutoffMul r inverse) h
-    simpa only [← cutoffAssoc, hinverse, cutoffLeftUnit] using h'
-  have cutoffMagnus_cancel_right (r : ℕ)
-      (left right suffixLeft suffixRight : List A)
-      (hsuffix : cutoffMagnus r suffixLeft = cutoffMagnus r suffixRight)
-      (h : cutoffMagnus r (left ++ suffixLeft) =
-        cutoffMagnus r (right ++ suffixRight)) :
-      cutoffMagnus r left = cutoffMagnus r right := by
-    rw [cutoffMagnus_append, cutoffMagnus_append, hsuffix] at h
-    let tail := cutoffMagnus r suffixRight - cutoffOne r
-    let inverse := cutoffGeometricInverse r tail
-    have htail : VanishesBelow r 1 tail :=
-      cutoffMagnus_tail_vanishes r suffixRight
-    have hinverse : cutoffMul r (cutoffMagnus r suffixRight) inverse =
-        cutoffOne r := by
-      rw [cutoffMagnus_eq_one_add_tail r suffixRight]
-      exact cutoffMul_geometricInverse r tail htail
-    have h' := congrArg (fun x ↦ cutoffMul r x inverse) h
-    simpa only [cutoffAssoc, hinverse, cutoffRightUnit] using h'
   have cutoffMagnus_eq_of_higher_eq (low high : ℕ) (hlow : low ≤ high)
       (left right : List A)
       (h : cutoffMagnus high left = cutoffMagnus high right) :
@@ -310,7 +209,7 @@ theorem positiveWordBall_card_step [Fintype A] [LinearOrder A]
       (ballDigitProductWord r m t (rightClass, rightDigits)) h
     have hsuffix := multiScaleWord_cutoff_lower_eq r t hr leftDigits rightDigits
     dsimp only [ballDigitProductWord] at hlower
-    have hclassCutoff := cutoffMagnus_cancel_right (r - 1)
+    have hclassCutoff := (cutoffMagnus_cancellation (A := A)).2 (r - 1)
       (ballRepresentative (r - 1) m leftClass)
       (ballRepresentative (r - 1) m rightClass)
       (multiScaleWord (A := A) r t leftDigits)
@@ -324,7 +223,7 @@ theorem positiveWordBall_card_step [Fintype A] [LinearOrder A]
     change cutoffMagnus r (ballDigitProductWord r m t (leftClass, leftDigits)) =
       cutoffMagnus r (ballDigitProductWord r m t (leftClass, rightDigits)) at h
     dsimp only [ballDigitProductWord] at h
-    have hdigitCutoff := cutoffMagnus_cancel_left r
+    have hdigitCutoff := (cutoffMagnus_cancellation (A := A)).1 r
       (ballRepresentative (r - 1) m leftClass)
       (multiScaleWord (A := A) r t leftDigits)
       (multiScaleWord (A := A) r t rightDigits) h

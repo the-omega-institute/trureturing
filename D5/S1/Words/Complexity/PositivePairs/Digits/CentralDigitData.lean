@@ -88,8 +88,13 @@ private theorem digitBlock_central_data
           simp [actualLeadingDifference, cutoffRestriction, cutoffLift,
             Finsupp.mapDomain_apply Subtype.val_injective]
         rw [hcoeffAt]
-        simpa [cutoffMagnus, cutoffRestriction] using
-          (full_positivePair_coefficient_checkpoint r index).2 bounded
+        simp only [Pi.sub_apply, cutoffMagnus, cutoffRestriction,
+          toRationalWordPolynomial, MonoidAlgebra.coeff_mapRingHom]
+        rw [show bounded.1 = FreeMonoid.ofList (FreeMonoid.toList bounded.1) by
+          exact (FreeMonoid.ofList_toList bounded.1).symm,
+          magnusPolynomial_coeff_scatteredCount,
+          magnusPolynomial_coeff_scatteredCount]
+        norm_num
       rw [show ((2 ^ scale' : ℕ) : ℚ) ^ r =
           ((digitBase r : ℕ) ^ scale' : ℚ) by
         norm_num [digitBase, ← pow_mul, Nat.mul_comm]] at hdegree

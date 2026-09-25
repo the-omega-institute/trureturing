@@ -27,7 +27,9 @@ internal sealed class PositivePairsCoefficientsPositivePairFiltrationDocument : 
             D("positive-pair-ratio", "positivePairRatio", "Actual positive-pair Magnus ratio",
                 "For independent cutoff and level parameters, positivePairRatio is cutoffMagnus(u) multiplied by the finite geometric inverse of cutoffMagnus(v)-1 for the actual pair (u,v).", DescribeRole.Definition),
             D("positive-pair-ratio-filtration", "full_positivePair_ratio_filtration", "Full indexed family agrees below its level",
-                "For every finite alphabet, cutoff, level r, and full PositivePairIndex, both the actual cutoff-Magnus difference M(u)-M(v) and the ratio minus one vanish below r. Duplicate pairs and zero leading directions remain in the quantified family."))));
+                "For every finite alphabet, cutoff, level r, and full PositivePairIndex, both the actual cutoff-Magnus difference M(u)-M(v) and the ratio minus one vanish below r. Duplicate pairs and zero leading directions remain in the quantified family."),
+            D("cutoff-magnus-cancellation", "cutoffMagnus_cancellation", "Cancellation of actual cutoff Magnus factors",
+                "The empty-word coefficient of every actual Magnus image is one. Finite geometric inverses in the truncated split-convolution algebra therefore cancel common left factors and equal right factors in appended positive words at every cutoff."))));
 
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>

@@ -16,7 +16,7 @@ Direct unfrozen dependencies: the split Lyndon, positive-pair, growth, and
 escape_witness: the proof-local injection from exact-deck images into the
   dependent retained-coordinate box is live in the upper asymptotic bound and
   is not supplied by any provider or pinned Mathlib declaration.
-admission_basis: escape-witness.
+admission_basis: open-problem-resolution; preregistration #9512.
 utility: none; this is a general structural and asymptotic theorem, not a finite
   enumeration, checker, numeric reduction, or certified instance.
 Library search: no project declaration packages the exact upper injection or

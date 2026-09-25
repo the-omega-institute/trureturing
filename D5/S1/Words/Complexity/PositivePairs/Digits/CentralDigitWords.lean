@@ -20,6 +20,8 @@ open D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
 open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 open D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
 open D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
+open private coeff_mul_eq_split_sum from
+  D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
 
 variable {A : Type*}
 
@@ -98,64 +100,6 @@ private theorem agreesBelow_append_and_degree_add
           ((rationalMagnus v).coeff (FreeMonoid.ofList pattern) -
             (rationalMagnus v0).coeff (FreeMonoid.ofList pattern)) := by
   classical
-  let centralWordSplits (w : FreeMonoid A) :
-      Finset (FreeMonoid A × FreeMonoid A) :=
-    (Finset.range (FreeMonoid.length w + 1)).image fun i ↦
-      (FreeMonoid.ofList ((FreeMonoid.toList w).take i),
-        FreeMonoid.ofList ((FreeMonoid.toList w).drop i))
-  have mem_centralWordSplits_iff
-      (w : FreeMonoid A) (pair : FreeMonoid A × FreeMonoid A) :
-      pair ∈ centralWordSplits w ↔ pair.1 * pair.2 = w := by
-    change pair ∈ (Finset.range (FreeMonoid.length w + 1)).image
-        (fun i ↦
-          (FreeMonoid.ofList ((FreeMonoid.toList w).take i),
-            FreeMonoid.ofList ((FreeMonoid.toList w).drop i))) ↔ _
-    constructor
-    · intro hpair
-      rcases Finset.mem_image.mp hpair with ⟨i, _, rfl⟩
-      apply FreeMonoid.toList.injective
-      simp [List.take_append_drop]
-    · intro hpair
-      apply Finset.mem_image.mpr
-      refine ⟨FreeMonoid.length pair.1, ?_, ?_⟩
-      · rw [Finset.mem_range, ← hpair, FreeMonoid.length_mul]
-        omega
-      · apply Prod.ext
-        · apply FreeMonoid.toList.injective
-          have hlist := congrArg FreeMonoid.toList hpair
-          simpa [FreeMonoid.toList_mul, FreeMonoid.length,
-            List.take_append_of_le_length] using
-            congrArg (List.take (FreeMonoid.length pair.1)) hlist.symm
-        · apply FreeMonoid.toList.injective
-          have hlist := congrArg FreeMonoid.toList hpair
-          simpa [FreeMonoid.toList_mul, FreeMonoid.length,
-            List.drop_append_of_le_length] using
-            congrArg (List.drop (FreeMonoid.length pair.1)) hlist.symm
-  have central_coeff_mul_eq_split_sum
-      (p q : RationalWordPolynomial A) (w : FreeMonoid A) :
-      (p * q).coeff w =
-        ∑ i ∈ Finset.range (FreeMonoid.length w + 1),
-          p.coeff (FreeMonoid.ofList ((FreeMonoid.toList w).take i)) *
-            q.coeff (FreeMonoid.ofList ((FreeMonoid.toList w).drop i)) := by
-    rw [MonoidAlgebra.coeff_mul_antidiag p q w (centralWordSplits w)
-      (fun {pair} ↦ mem_centralWordSplits_iff w pair)]
-    dsimp only [centralWordSplits]
-    rw [Finset.sum_image]
-    intro i hi j hj hij
-    have hi' : i ≤ FreeMonoid.length w := by
-      have : i < FreeMonoid.length w + 1 := by simpa using hi
-      omega
-    have hj' : j ≤ FreeMonoid.length w := by
-      have : j < FreeMonoid.length w + 1 := by simpa using hj
-      omega
-    have hi'' : i ≤ (FreeMonoid.toList w).length := by
-      simpa [FreeMonoid.length] using hi'
-    have hj'' : j ≤ (FreeMonoid.toList w).length := by
-      simpa [FreeMonoid.length] using hj'
-    have hlength := congrArg (fun pair : FreeMonoid A × FreeMonoid A ↦
-      FreeMonoid.length pair.1) hij
-    simpa [FreeMonoid.length, List.length_take, Nat.min_eq_left hi'',
-      Nat.min_eq_left hj''] using hlength
   have magnusAppend (left right : List A) :
       rationalMagnus (left ++ right) =
         rationalMagnus left * rationalMagnus right := by
@@ -175,7 +119,7 @@ private theorem agreesBelow_append_and_degree_add
     norm_num [hcount]
   constructor
   · intro pattern hp
-    simp only [magnusAppend, central_coeff_mul_eq_split_sum,
+    simp only [magnusAppend, coeff_mul_eq_split_sum,
       FreeMonoid.length, FreeMonoid.toList_ofList]
     apply Finset.sum_congr rfl
     intro i hi
@@ -186,7 +130,7 @@ private theorem agreesBelow_append_and_degree_add
       omega
     rw [hu _ htake, hv _ hdrop]
   · intro pattern hp
-    simp only [magnusAppend, central_coeff_mul_eq_split_sum,
+    simp only [magnusAppend, coeff_mul_eq_split_sum,
       FreeMonoid.length, FreeMonoid.toList_ofList, ← Finset.sum_sub_distrib]
     calc
       ∑ i ∈ Finset.range (pattern.length + 1),

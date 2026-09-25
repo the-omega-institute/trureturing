@@ -283,54 +283,6 @@ theorem full_positivePair_successor_ratio_leading_bracket
   simpa [cutoff, pair, difference] using
     full_positivePair_successor_leading_bracket r index
 
-/-- The first vertical checkpoint: every full-family pair after level one is
-made of equally long positive words, and after genuine coefficientwise
-`ℤ → ℚ` extension and cutoff restriction, its Magnus difference is exactly
-the difference of the frozen scattered-subword counts. -/
-theorem full_positivePair_coefficient_checkpoint [Finite A] [DecidableEq A]
-    (r : ℕ) (index : PositivePairIndex A r) :
-    (2 ≤ r →
-      (positivePairWords r index).1 ≠ [] ∧
-      (positivePairWords r index).2 ≠ [] ∧
-      (positivePairWords r index).1.length =
-        (positivePairWords r index).2.length) ∧
-    ∀ pattern : CutoffWord A r,
-      cutoffRestriction r
-          (toRationalWordPolynomial
-            (magnusPolynomial (positivePairWords r index).1 -
-              magnusPolynomial (positivePairWords r index).2)) pattern =
-        (scatteredCount (FreeMonoid.toList pattern.1)
-              (positivePairWords r index).1 : ℚ) -
-          (scatteredCount (FreeMonoid.toList pattern.1)
-              (positivePairWords r index).2 : ℚ) := by
-  classical
-  constructor
-  · intro hr
-    obtain ⟨level, rfl⟩ : ∃ level, r = level + 2 := ⟨r - 2, by omega⟩
-    simp only [positivePairWords]
-    let previous := positivePairWords (level + 1) (Fin.init index)
-    let a := index (Fin.last (level + 1))
-    change
-      previous.1 ++ [a] ++ previous.2 ≠ [] ∧
-      previous.2 ++ [a] ++ previous.1 ≠ [] ∧
-      (previous.1 ++ [a] ++ previous.2).length =
-        (previous.2 ++ [a] ++ previous.1).length
-    simp only [List.length_append, List.length_singleton]
-    exact ⟨by simp, by simp, by omega⟩
-  · intro pattern
-    change
-      (toRationalWordPolynomial
-        (magnusPolynomial (positivePairWords r index).1 -
-          magnusPolynomial (positivePairWords r index).2)).coeff pattern.1 = _
-    simp only [toRationalWordPolynomial, MonoidAlgebra.coeff_mapRingHom,
-      map_sub, MonoidAlgebra.coeff_sub, Finsupp.sub_apply]
-    rw [show pattern.1 = FreeMonoid.ofList (FreeMonoid.toList pattern.1) by
-      exact (FreeMonoid.ofList_toList pattern.1).symm,
-      magnusPolynomial_coeff_scatteredCount,
-      magnusPolynomial_coeff_scatteredCount]
-    norm_num
-
-#print axioms full_positivePair_coefficient_checkpoint
 #print axioms full_positivePair_ratio_filtration
 #print axioms full_positivePair_successor_leading_bracket
 #print axioms full_positivePair_successor_ratio_leading_bracket

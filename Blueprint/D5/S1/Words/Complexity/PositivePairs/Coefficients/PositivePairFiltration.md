@@ -76,10 +76,25 @@ $$fullpositivePairratiofiltration$$
 
 For every finite alphabet, cutoff, level r, and full PositivePairIndex, both the actual cutoff-Magnus difference M(u)-M(v) and the ratio minus one vanish below r. Duplicate pairs and zero leading directions remain in the quantified family.
 
+**Theorem 1.6 (Cancellation of actual cutoff Magnus factors).**
+
+$$cutoffMagnuscancellation$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.cutoffMagnus_cancellation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Arman Nilforoushan; Farzad Parvaresh (2026). *Improved upper bound on the number of distinct k-decks for any k and alphabet size by counting the independent parameters*. DOI: [10.48550/arXiv.2609.23106](https://doi.org/10.48550/arXiv.2609.23106). URL: <https://arxiv.org/html/2609.23106v1>.
+
+*Commentary.*
+
+The empty-word coefficient of every actual Magnus image is one. Finite geometric inverses in the truncated split-convolution algebra therefore cancel common left factors and equal right factors in appended positive words at every cutoff.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.PositivePairIndex`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.cutoffMagnus`
+- Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.cutoffMagnus_cancellation`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.full_positivePair_ratio_filtration`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.positivePairRatio`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration.positivePairWords`

@@ -71,79 +71,6 @@ theorem actual_exactKDeckImage_weightedLyndon_lower_bound
     rw [List.length_append, List.length_replicate]
     have hlength := ballRepresentative_length n x
     omega
-  have cutoffMagnus_append (r : ℕ) (left right : List A) :
-      cutoffMagnus r (left ++ right) =
-        cutoffMul r (cutoffMagnus r left) (cutoffMagnus r right) := by
-    simp only [cutoffMagnus, magnusPolynomial_append, map_mul,
-      cutoffRestriction_mul]
-  have cutoffMagnus_empty_coeff (r : ℕ) (source : List A) :
-      cutoffMagnus r source ⟨1, by simp⟩ = 1 := by
-    simp only [cutoffMagnus, cutoffRestriction, toRationalWordPolynomial,
-      MonoidAlgebra.coeff_mapRingHom]
-    change ((magnusPolynomial source).coeff (FreeMonoid.ofList []) : ℚ) = 1
-    rw [magnusPolynomial_coeff_scatteredCount source []]
-    norm_num [scatteredCount]
-  have cutoffMagnus_tail_vanishes (r : ℕ) (source : List A) :
-      VanishesBelow r 1 (cutoffMagnus r source - cutoffOne r) := by
-    intro word hword
-    have hlength : FreeMonoid.length word.1 = 0 := by omega
-    have hempty : word.1 = 1 := by
-      apply FreeMonoid.toList.injective
-      apply List.length_eq_zero_iff.mp
-      simpa [FreeMonoid.length] using hlength
-    have hwordSubtype : word = ⟨1, by simp⟩ := Subtype.ext hempty
-    rw [hwordSubtype]
-    simp [cutoffMagnus_empty_coeff, cutoffOne, cutoffRestriction]
-  have cutoffMagnus_eq_one_add_tail (r : ℕ) (source : List A) :
-      cutoffMagnus r source =
-        cutoffOne r + (cutoffMagnus r source - cutoffOne r) := by
-    abel
-  have cutoffRightUnit (r : ℕ) (p : CutoffCoefficients A r) :
-      cutoffMul r p (cutoffOne r) = p := by
-    have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
-      funext w
-      simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
-    calc
-      _ = cutoffMul r (cutoffRestriction r (cutoffLift r p))
-          (cutoffRestriction r 1) := by rw [cutoffOne, hrestrict]
-      _ = cutoffRestriction r (cutoffLift r p * 1) :=
-        (cutoffRestriction_mul r (cutoffLift r p) 1).symm
-      _ = p := by simpa using hrestrict
-  have cutoffAssoc (r : ℕ) (p q s : CutoffCoefficients A r) :
-      cutoffMul r (cutoffMul r p q) s = cutoffMul r p (cutoffMul r q s) := by
-    have hrestrict (x : CutoffCoefficients A r) :
-        cutoffRestriction r (cutoffLift r x) = x := by
-      funext w
-      simp [cutoffRestriction, cutoffLift,
-        Finsupp.mapDomain_apply Subtype.val_injective]
-    have hp := hrestrict p
-    have hq := hrestrict q
-    have hs := hrestrict s
-    calc
-      _ = cutoffRestriction r
-          ((cutoffLift r p * cutoffLift r q) * cutoffLift r s) := by
-            rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
-      _ = cutoffRestriction r
-          (cutoffLift r p * (cutoffLift r q * cutoffLift r s)) := by rw [mul_assoc]
-      _ = _ := by rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
-  have cutoffMagnus_cancel_right (r : ℕ)
-      (left right suffixLeft suffixRight : List A)
-      (hsuffix : cutoffMagnus r suffixLeft = cutoffMagnus r suffixRight)
-      (h : cutoffMagnus r (left ++ suffixLeft) =
-        cutoffMagnus r (right ++ suffixRight)) :
-      cutoffMagnus r left = cutoffMagnus r right := by
-    rw [cutoffMagnus_append, cutoffMagnus_append, hsuffix] at h
-    let tail := cutoffMagnus r suffixRight - cutoffOne r
-    let inverse := cutoffGeometricInverse r tail
-    have htail : VanishesBelow r 1 tail :=
-      cutoffMagnus_tail_vanishes r suffixRight
-    have hinverse : cutoffMul r (cutoffMagnus r suffixRight) inverse =
-        cutoffOne r := by
-      rw [cutoffMagnus_eq_one_add_tail r suffixRight]
-      exact cutoffMul_geometricInverse r tail htail
-    have h' := congrArg (fun x ↦ cutoffMul r x inverse) h
-    simpa only [cutoffAssoc, hinverse, cutoffRightUnit] using h'
   have ball_card_le_exact (n : ℕ) (hkn : k ≤ n) :
       (positiveWordBall (A := A) k n).card ≤
         (n + 1) * (exactKDeckImage (A := A) k n).card := by
@@ -181,7 +108,7 @@ theorem actual_exactKDeckImage_weightedLyndon_lower_bound
                 (n - (ballRepresentative n right).length) fixedLetter) := by
         rw [hsuffixWords]
       dsimp only [paddedWord] at hpaddedCutoff
-      have hrepresentatives := cutoffMagnus_cancel_right k
+      have hrepresentatives := (cutoffMagnus_cancellation (A := A)).2 k
         (ballRepresentative n left) (ballRepresentative n right)
         (List.replicate
           (n - (ballRepresentative n left).length) fixedLetter)

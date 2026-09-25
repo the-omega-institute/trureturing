@@ -209,5 +209,108 @@ theorem full_positivePair_ratio_filtration [Finite A]
       (by simpa [pair] using hdifference')
       (by intro w hw; omega)
 
+/-- Cutoff Magnus series have invertible constant term, so equality survives
+removing a common left factor or equal right factors of positive words. -/
+theorem cutoffMagnus_cancellation [Finite A] :
+    (∀ (r : ℕ) (prefixWord left right : List A),
+      cutoffMagnus r (prefixWord ++ left) =
+        cutoffMagnus r (prefixWord ++ right) →
+      cutoffMagnus r left = cutoffMagnus r right) ∧
+    (∀ (r : ℕ) (left right suffixLeft suffixRight : List A),
+      cutoffMagnus r suffixLeft = cutoffMagnus r suffixRight →
+      cutoffMagnus r (left ++ suffixLeft) =
+        cutoffMagnus r (right ++ suffixRight) →
+      cutoffMagnus r left = cutoffMagnus r right) := by
+  classical
+  have append (r : ℕ) (left right : List A) :
+      cutoffMagnus r (left ++ right) =
+        cutoffMul r (cutoffMagnus r left) (cutoffMagnus r right) := by
+    simp only [cutoffMagnus, magnusPolynomial_append, map_mul,
+      cutoffRestriction_mul]
+  have emptyCoeff (r : ℕ) (source : List A) :
+      cutoffMagnus r source ⟨1, by simp⟩ = 1 := by
+    simp only [cutoffMagnus, cutoffRestriction, toRationalWordPolynomial,
+      MonoidAlgebra.coeff_mapRingHom]
+    change ((magnusPolynomial source).coeff (FreeMonoid.ofList []) : ℚ) = 1
+    rw [magnusPolynomial_coeff_scatteredCount source []]
+    norm_num [scatteredCount]
+  have tailVanishes (r : ℕ) (source : List A) :
+      VanishesBelow r 1 (cutoffMagnus r source - cutoffOne r) := by
+    intro w hw
+    have hlength : FreeMonoid.length w.1 = 0 := by omega
+    have hword : w.1 = 1 := by
+      apply FreeMonoid.toList.injective
+      apply List.length_eq_zero_iff.mp
+      simpa [FreeMonoid.length] using hlength
+    have hwSubtype : w = ⟨1, by simp⟩ := Subtype.ext hword
+    rw [hwSubtype]
+    simp [emptyCoeff, cutoffOne, cutoffRestriction]
+  have leftUnit (r : ℕ) (p : CutoffCoefficients A r) :
+      cutoffMul r (cutoffOne r) p = p := by
+    have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
+      funext w
+      simp [cutoffRestriction, cutoffLift,
+        Finsupp.mapDomain_apply Subtype.val_injective]
+    calc
+      _ = cutoffMul r (cutoffRestriction r 1)
+          (cutoffRestriction r (cutoffLift r p)) := by rw [cutoffOne, hrestrict]
+      _ = cutoffRestriction r (1 * cutoffLift r p) :=
+        (cutoffRestriction_mul r 1 (cutoffLift r p)).symm
+      _ = p := by simpa using hrestrict
+  have rightUnit (r : ℕ) (p : CutoffCoefficients A r) :
+      cutoffMul r p (cutoffOne r) = p := by
+    have hrestrict : cutoffRestriction r (cutoffLift r p) = p := by
+      funext w
+      simp [cutoffRestriction, cutoffLift,
+        Finsupp.mapDomain_apply Subtype.val_injective]
+    calc
+      _ = cutoffMul r (cutoffRestriction r (cutoffLift r p))
+          (cutoffRestriction r 1) := by rw [cutoffOne, hrestrict]
+      _ = cutoffRestriction r (cutoffLift r p * 1) :=
+        (cutoffRestriction_mul r (cutoffLift r p) 1).symm
+      _ = p := by simpa using hrestrict
+  have assoc (r : ℕ) (p q s : CutoffCoefficients A r) :
+      cutoffMul r (cutoffMul r p q) s = cutoffMul r p (cutoffMul r q s) := by
+    have hrestrict (x : CutoffCoefficients A r) :
+        cutoffRestriction r (cutoffLift r x) = x := by
+      funext w
+      simp [cutoffRestriction, cutoffLift,
+        Finsupp.mapDomain_apply Subtype.val_injective]
+    have hp := hrestrict p
+    have hq := hrestrict q
+    have hs := hrestrict s
+    calc
+      _ = cutoffRestriction r
+          ((cutoffLift r p * cutoffLift r q) * cutoffLift r s) := by
+            rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
+      _ = cutoffRestriction r
+          (cutoffLift r p * (cutoffLift r q * cutoffLift r s)) := by rw [mul_assoc]
+      _ = _ := by rw [cutoffRestriction_mul, cutoffRestriction_mul, hp, hq, hs]
+  constructor
+  · intro r prefixWord left right h
+    rw [append, append] at h
+    let tail := cutoffMagnus r prefixWord - cutoffOne r
+    let inverse := cutoffGeometricInverse r tail
+    have htail : VanishesBelow r 1 tail := tailVanishes r prefixWord
+    have hinverse : cutoffMul r inverse (cutoffMagnus r prefixWord) =
+        cutoffOne r := by
+      rw [show cutoffMagnus r prefixWord = cutoffOne r + tail by
+        simp [tail]]
+      exact geometricInverse_cutoffMul r tail htail
+    have h' := congrArg (cutoffMul r inverse) h
+    simpa only [← assoc, hinverse, leftUnit] using h'
+  · intro r left right suffixLeft suffixRight hsuffix h
+    rw [append, append, hsuffix] at h
+    let tail := cutoffMagnus r suffixRight - cutoffOne r
+    let inverse := cutoffGeometricInverse r tail
+    have htail : VanishesBelow r 1 tail := tailVanishes r suffixRight
+    have hinverse : cutoffMul r (cutoffMagnus r suffixRight) inverse =
+        cutoffOne r := by
+      rw [show cutoffMagnus r suffixRight = cutoffOne r + tail by
+        simp [tail]]
+      exact cutoffMul_geometricInverse r tail htail
+    have h' := congrArg (fun x ↦ cutoffMul r x inverse) h
+    simpa only [assoc, hinverse, rightUnit] using h'
+
 
 end D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration

@@ -68,8 +68,13 @@ private theorem multiScaleWord_cutoff_injective
             simp [actualLeadingDifference, cutoffRestriction, cutoffLift,
               Finsupp.mapDomain_apply Subtype.val_injective]
           rw [hcoeffAt]
-          simpa [cutoffMagnus, cutoffRestriction] using
-            (full_positivePair_coefficient_checkpoint r index).2 bounded
+          simp only [Pi.sub_apply, cutoffMagnus, cutoffRestriction,
+            toRationalWordPolynomial, MonoidAlgebra.coeff_mapRingHom]
+          rw [show bounded.1 = FreeMonoid.ofList (FreeMonoid.toList bounded.1) by
+            exact (FreeMonoid.ofList_toList bounded.1).symm,
+            magnusPolynomial_coeff_scatteredCount,
+            magnusPolynomial_coeff_scatteredCount]
+          norm_num
         have hzero : (vectors direction).coeff word = 0 := by
           rw [hactual]
           apply sub_eq_zero.mpr
@@ -211,12 +216,26 @@ theorem actual_positivePair_multiScale_central_digits
       (multiScaleWord (A := A) r t digits).length =
         baseLength (A := A) r * (2 ^ t - 1) := by
   classical
+  have pairFacts (index : PositivePairIndex A r) :
+      (positivePairWords r index).1 ≠ [] ∧
+      (positivePairWords r index).2 ≠ [] ∧
+      (positivePairWords r index).1.length =
+        (positivePairWords r index).2.length := by
+    obtain ⟨level, rfl⟩ : ∃ level, r = level + 2 := ⟨r - 2, by omega⟩
+    simp only [positivePairWords]
+    let previous := positivePairWords (level + 1) (Fin.init index)
+    let a := index (Fin.last (level + 1))
+    change previous.1 ++ [a] ++ previous.2 ≠ [] ∧
+      previous.2 ++ [a] ++ previous.1 ≠ [] ∧
+      (previous.1 ++ [a] ++ previous.2).length =
+        (previous.2 ++ [a] ++ previous.1).length
+    simp only [List.length_append, List.length_singleton]
+    exact ⟨by simp, by simp, by omega⟩
   refine ⟨Classical.choose_spec (exists_actual_independent_directions (A := A) r),
     ?_, ?_, ?_,
     multiScaleWord_cutoff_injective (A := A) r t hr, ?_, ?_⟩
   · intro direction
-    exact (full_positivePair_coefficient_checkpoint r
-      (selectedDirection (A := A) r direction)).1 hr
+    exact pairFacts (selectedDirection (A := A) r direction)
   · intro digits pattern hpattern
     have h := (multiScaleWord_central_data (A := A) r t digits).1
       pattern hpattern
@@ -243,8 +262,7 @@ theorem actual_positivePair_multiScale_central_digits
               (selectedDirection (A := A) r direction)).1.length *
                 2 ^ (scale : ℕ) := by
       let pair := positivePairWords r (selectedDirection (A := A) r direction)
-      have hpair := (full_positivePair_coefficient_checkpoint r
-        (selectedDirection (A := A) r direction)).1 hr
+      have hpair := pairFacts (selectedDirection (A := A) r direction)
       have hdigit : (digit : ℕ) ≤ digitBase r - 1 := by omega
       have hrepeated (n : ℕ) (word : List A) :
           (repeatedWord n word).length = n * word.length := by

@@ -21,9 +21,7 @@ internal sealed class PositivePairsCoefficientsPositivePairLeadingCoefficientsDo
             D("successor-leading-bracket", "full_positivePair_successor_leading_bracket", "Successor difference is a commutator",
                 "For finite A with decidable equality and index at level r+2, let c be the preceding actual cutoff-Magnus difference and x the rationalized abelianization of the previous right word plus X_a. The successor Magnus difference equals cutoffMul c x - cutoffMul x c in cutoff r+2."),
             D("successor-ratio-leading-bracket", "full_positivePair_successor_ratio_leading_bracket", "The ratio has the same leading commutator",
-                "Under the same hypotheses and definitions, positivePairRatio at level and cutoff r+2 minus cutoffOne equals cutoffMul c x - cutoffMul x c."),
-            D("positive-pair-coefficient-checkpoint", "full_positivePair_coefficient_checkpoint", "Actual coefficient checkpoint",
-                "For every finite alphabet with decidable equality, level r, and full index: when 2<=r both actual pair words are nonempty and equally long; for every cutoff word, the rational Magnus-difference coefficient is exactly the difference of the two frozen scattered counts."))));
+                "Under the same hypotheses and definitions, positivePairRatio at level and cutoff r+2 minus cutoffOne equals cutoffMul c x - cutoffMul x c."))));
 
     private static DocumentBlock.Describe D(string id, string declaration, string title,
         string prose, DescribeRole role = DescribeRole.Theorem, bool literature = false) =>
