@@ -58,7 +58,10 @@ internal sealed class MiroRoigTranStrictSignDocument : IScribeDocumentDefinition
                             + "is x=7/3, the left closed-core endpoint of C_6, so endpoint "
                             + "strictness is essential. Casting the resulting real inequality "
                             + "back to the integers proves the stated sign."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("miro-roig-tran-strict-sign"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers => Seq(Mathbb, Grp(F.Id("Z")));
