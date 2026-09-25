@@ -27,7 +27,17 @@ Blocks(
                             + "Those are ordinary mathematical results with their own rank "
                             + "and lifting proofs, not conclusions of this real-eigenpair "
                             + "Lean theorem. The formal statement and provenance above "
-                            + "remain unchanged; no WSS prime is constructed by this link."))),
+                            + "remain unchanged; no WSS prime is constructed by this link.")),
+                    Paragraph(
+                        Text("Cubic reciprocity on the same integer block depths: "),
+                        Ref(LibraryNoteRef.Create("D5/L/dunn2024cubicreciprocity").Value),
+                        Text(". GCR in the existing WSS dossier proves single-layer and "
+                            + "interlevel cubic-character balances, individual earlier-prime "
+                            + "conditions and a Kummer interpretation. Under a P-squared "
+                            + "Q-cubed block factorization it constrains the square factor. "
+                            + "These are ordinary proofs using classical reciprocity, "
+                            + "not conclusions of this Lean declaration. No WSS example, "
+                            + "elimination of that pattern or kernel certification is claimed."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
