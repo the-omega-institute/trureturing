@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Zigzag/Choices
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic,
-     mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic]
+   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic]
    utility: none
    digest: Literal labelled zigzag choices and their balance-only cardinality. -/
 
