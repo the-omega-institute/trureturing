@@ -10773,9 +10773,9 @@ $\kappa_\varepsilon\to3/4$，证明式（61.3）。$\square$
 
 ## 追加锚（本行以下为增补区）
 
-## 62. 有限参数的准确修复判据、最优边缘唯一性与更高阶展开
+## 62. 有限参数的准确最优修复、边缘唯一性与更高阶展开
 
-### 62.1. 接口与结论范围
+### 62.1 接口与结论范围
 
 沿用 $2\times2\times3$ 接口、全部量子 tester 事件和纯等距候选
 
@@ -10822,7 +10822,7 @@ $$
 
 $F_\varepsilon$ 与 $L_\varepsilon$ 的使用范围为 $p\ge p_0$，等价于 $B(p)\ge\varepsilon>0$。
 
-**定理 62.1（可直接检验的有限参数判据）。** 对每个 $0<\varepsilon\le1/16$，有
+**定理 62.1（整个参数区间的准确最优修复）。** 对每个 $0<\varepsilon\le1/16$，有
 
 $$
 d<p_0<p_*<\varepsilon.
@@ -10839,27 +10839,27 @@ $$
 在 $(p_0,p_*)$ 内恰有一个解 $\bar p_\varepsilon$，并且
 
 $$
-e_\varepsilon\ge
+e_\varepsilon=
 F_\varepsilon(\bar p_\varepsilon)
 =G_\varepsilon(\bar p_\varepsilon).
 \tag{62.5}
 $$
 
-若这个交点满足显式不等式
+交点处具有统一的严格证书下界
 
 $$
-L_\varepsilon(\bar p_\varepsilon)\ge0,
+L_\varepsilon(\bar p_\varepsilon)>\frac{\varepsilon^2}{34}>0.
 \tag{62.6}
 $$
 
-则式（62.5）取等，$S_{\bar p_\varepsilon}$ 是最优因果修复，而且所有最优修复的早输出边缘参数均满足
+修复 $S_{\bar p_\varepsilon}$ 达到最优值，而且所有最优修复的早输出边缘参数均满足
 
 $$
 \sigma_{11}=\bar p_\varepsilon.
 \tag{62.7}
 $$
 
-**推论 62.2（充分小参数与解析展开）。** 存在 $\varepsilon_0>0$，使对全部 $0<\varepsilon<\varepsilon_0$，条件（62.6）严格成立。写唯一最优边缘参数为 $p_\varepsilon=\bar p_\varepsilon$，则存在实解析函数 $\kappa(\delta)$，在零附近满足 $\kappa(0)=3/4$，且
+**推论 62.2（最优参数的解析展开）。** 写唯一最优边缘参数为 $p_\varepsilon=\bar p_\varepsilon$。存在实解析函数 $\kappa(\delta)$，在零附近满足 $\kappa(0)=3/4$，并对充分小的正 $\varepsilon$ 有
 
 $$
 p_\varepsilon=\varepsilon-\kappa(\sqrt\varepsilon)\varepsilon^{3/2}.
@@ -10880,9 +10880,9 @@ e_\varepsilon
 \tag{62.9}
 $$
 
-唯一性指边缘参数，不宣称完整最优修复算符唯一。条件（62.6）可对单个有限参数直接检验；这里没有声称它对全部 $0<\varepsilon\le1/16$ 都成立。
+唯一性指边缘参数，不宣称完整最优修复算符唯一。准确交点公式覆盖整个 $0<\varepsilon\le1/16$；幂级数展开描述 $\varepsilon\downarrow0$。
 
-### 62.2. 两个方向的事件下界
+### 62.2 两个方向的事件下界
 
 精确单参数约化中，反馈归一化算符为
 $C(q,t)=\operatorname{diag}(q,1-t,1-q,t)$；事件仍遍历整个正区间 $0\preceq E\preceq C\otimes I_D$。记 $\lambda(p;q,t)$ 为加权 $R_\varepsilon-S_p$ 主块的非负最大特征值，则
@@ -10994,7 +10994,7 @@ $$
 
 因为 $d^2[B+4(1-p)]=\varepsilon^2$。$\square$
 
-### 62.3. 一个控制全部 tester 的多项式证书
+### 62.3 一个控制全部 tester 的多项式证书
 
 令
 
@@ -11059,9 +11059,9 @@ $t=0,q=q_*$ 由引理 62.3 达到 $\mu$，证明式（62.16）。$\square$
 
 这个证书明确控制整个 tester 参数方形，不将 $t=0$ 最优先验化。
 
-### 62.4. 唯一交点与全局下界
+### 62.4 唯一交点与条件达界
 
-**定理 62.1 的证明。** 因为 $0<d\le\varepsilon\le1/16$，有
+**定理 62.1 的交点与条件达界部分。** 因为 $0<d\le\varepsilon\le1/16$，有
 
 $$
 p_0>d,\qquad
@@ -11090,7 +11090,7 @@ N(R_\varepsilon-S_p)\ge
 \tag{62.19}
 $$
 
-记交点值为 $m_\varepsilon$。若 $p<\bar p_\varepsilon$，则 $G_\varepsilon(p)>m_\varepsilon$；若 $p>\bar p_\varepsilon$，则 $p>p_0$，故 $J_\varepsilon(p)=F_\varepsilon(p)>m_\varepsilon$。在交点两者同等于 $m_\varepsilon$。因此式（62.19）右端在整个约化区间上的唯一最小点是 $\bar p_\varepsilon$，最小值是 $m_\varepsilon$。这与式（62.1）给出全局下界（62.5）。
+记交点值为 $m_\varepsilon$。若 $p<\bar p_\varepsilon$，则 $G_\varepsilon(p)>m_\varepsilon$；若 $p>\bar p_\varepsilon$，则 $p>p_0$，故 $J_\varepsilon(p)=F_\varepsilon(p)>m_\varepsilon$。在交点两者同等于 $m_\varepsilon$。因此式（62.19）右端在整个约化区间上的唯一最小点是 $\bar p_\varepsilon$，最小值是 $m_\varepsilon$。这与式（62.1）给出 $e_\varepsilon\ge m_\varepsilon$。
 
 如果 $L_\varepsilon(\bar p_\varepsilon)\ge0$，引理 62.4 和正向准确公式给
 
@@ -11101,11 +11101,133 @@ G_\varepsilon(\bar p_\varepsilon)\}=m_\varepsilon.
 \tag{62.20}
 $$
 
-所以达到全局下界。任意原始最优修复的参数 $p=\sigma_{11}$ 均在 $[d,\varepsilon]$，且替换为相同参数的 $S_p$ 不增加误差；式（62.19）的严格性迫使 $p=\bar p_\varepsilon$，证明式（62.7）。$\square$
+所以达到全局下界。任意原始最优修复的参数 $p=\sigma_{11}$ 均在 $[d,\varepsilon]$，且替换为相同参数的 $S_p$ 不增加误差；式（62.19）的严格性迫使 $p=\bar p_\varepsilon$，因此只要该交点满足正性条件，式（62.5）、（62.7）就成立。下面证明整个参数区间都有统一的严格正性余量。
 
-有限参数判据只需要准确约化、单调性与全 tester 证书，不依赖既有的最优参数渐近定位。
+### 62.5 整个参数区间的统一证书
 
-### 62.5. 解析交点与小参数自动达界
+**证明。** 以下固定 $p=\bar p_\varepsilon$，并记
+
+$$
+u=\frac{b^2}{B},\qquad\mu=p+u,
+\qquad\beta=\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+交点关系 $\mu=G_\varepsilon(p)$ 给
+
+$$
+\beta^2=\mu(\mu-\varepsilon).
+\tag{62.21}
+$$
+
+直接展开两项平方还给出恒等式
+
+$$
+\gamma^2=c\beta^2+d\varepsilon-d(c+\varepsilon)p.
+\tag{62.22}
+$$
+
+式（62.21）、（62.22）使 $L_\varepsilon(p)$ 在交点处可完全改写成有理代数式。
+
+令
+
+$$
+\rho=\frac d{2-d}=\frac{1-c}{1+c},
+\qquad w=\frac B\varepsilon.
+\tag{62.23}
+$$
+
+由于 $d\le\varepsilon\le1/16$ 且 $2-d>1$，有
+$0<\rho\le1/16$。又因 $p_0<p<p_*<\varepsilon$，
+
+$$
+1<w<\frac{B(\varepsilon)}\varepsilon=2-\rho<2.
+\tag{62.24}
+$$
+
+利用 $\varepsilon=d(2-d)$ 与
+$\varepsilon^2-4b^2=d^2B$，得到
+
+$$
+\begin{aligned}
+P:=\frac p\varepsilon&=\frac{2+w+\rho}{4},\\
+U:=\frac u\varepsilon&=\frac{1/w-\rho}{4},\\
+M:=\frac\mu\varepsilon&=\frac{(w+1)^2}{4w},\\
+c&=\frac{1-\rho}{1+\rho},\qquad
+\frac d\varepsilon=\frac{1+\rho}{2},\qquad
+\frac{d(c+\varepsilon)}\varepsilon
+=\frac{1+4\rho-\rho^2}{2(1+\rho)}.
+\end{aligned}
+\tag{62.25}
+$$
+
+将式（62.21）、（62.22）代入 $L_\varepsilon$，可得
+
+$$
+\begin{aligned}
+\frac{L_\varepsilon(p)}{\varepsilon^2}
+={}&P(P-1)+(P+1)U-cM(M-1)\\
+&-\frac{1+\rho}{2}
++\frac{1+4\rho-\rho^2}{2(1+\rho)}P.
+\end{aligned}
+\tag{62.26}
+$$
+
+将式（62.25）代入式（62.26），整理为
+
+$$
+16w^2(1+\rho)\frac{L_\varepsilon(p)}{\varepsilon^2}
+=N_0(w)+\rho N_1(w)
+-\rho^2w(w^2+10w-1)-2\rho^3w^2,
+\tag{62.27}
+$$
+
+其中
+
+$$
+\begin{aligned}
+N_0(w)&=2w^3-5w^2+6w-1,\\
+N_1(w)&=2w^4+9w^3-9w^2+7w+1.
+\end{aligned}
+$$
+
+在 $1\le w\le2$ 上，两个正项有直接的下界：
+
+$$
+\begin{aligned}
+N_0(w)
+&=2(w-1)^3+(w-1)^2+2(w-1)+2\ge2,\\
+N_1(w)
+&=2w^4+9w^2(w-1)+7w+1\ge10.
+\end{aligned}
+\tag{62.28}
+$$
+
+同时
+
+$$
+0<w(w^2+10w-1)\le46,\qquad 2w^2\le8.
+$$
+
+所以式（62.27）的右侧满足
+
+$$
+\begin{aligned}
+N_0+\rho N_1-\rho^2w(w^2+10w-1)-2\rho^3w^2
+&\ge2+\rho(10-46\rho-8\rho^2)\\
+&\ge2+\frac{227}{32}\rho>2,
+\end{aligned}
+\tag{62.29}
+$$
+
+最后一步用了 $\rho\le1/16$。另一方面，
+
+$$
+16w^2(1+\rho)<16\cdot4\cdot\frac{17}{16}=68.
+$$
+
+因此 $L_\varepsilon(p)/\varepsilon^2>2/68=1/34$，这就是式（62.6）。第 62.4 节的条件达界部分随即给出式（62.5）、最优修复的达到性及全部最优边缘参数的唯一性，完成定理 62.1 的证明。$\square$
+
+### 62.6 解析交点
 
 令 $\delta=\sqrt\varepsilon$、$p=\delta^2(1-\kappa\delta)$、$c=\sqrt{1-\delta^2}$，并定义缩放函数
 
@@ -11128,7 +11250,7 @@ z(\delta,\kappa)
 g(\delta,\kappa)
 &=\frac{1+\sqrt{1+4z(\delta,\kappa)^2}}2.
 \end{aligned}
-\tag{62.21}
+\tag{62.30}
 $$
 
 在 $(\delta,\kappa)=(0,3/4)$ 附近，分母非零且根号内严格正，所以这些是实解析函数。并有
@@ -11138,7 +11260,7 @@ f(0,\kappa)=\frac98,
 \qquad g(0,\kappa)=\frac{1+\sqrt{1+\kappa^2}}2,
 \qquad
 \partial_\kappa(f-g)(0,3/4)=-\frac3{10}\ne0.
-\tag{62.22}
+\tag{62.31}
 $$
 
 解析隐函数定理给唯一的实解析 $\kappa(\delta)$，满足 $f=g$、$\kappa(0)=3/4$。当 $\delta>0$ 充分小时，其对应参数在 $(p_0,p_*)$：下端关系来自 $p/\varepsilon\to1$ 与 $p_0/\varepsilon\to3/4$，上端关系来自
@@ -11155,21 +11277,21 @@ $$
 \qquad
 \frac{L_\varepsilon(p)}{\varepsilon^2}
 \longrightarrow\frac{1-(3/4)^2}{4}=\frac7{64}>0.
-\tag{62.23}
+\tag{62.32}
 $$
 
-故对充分小的正 $\varepsilon$，有限参数判据（62.6）严格成立，解析交点就是所有最优修复的唯一边缘参数。这证明式（62.8），并且不需要预先假定最优参数的渐近位置。
+定理 62.1 已在整个参数区间给出严格正性与最优性，因此这个解析交点就是所有最优修复的唯一边缘参数。这证明式（62.8），不需要预先假定最优参数的渐近位置。
 
-### 62.6. 更高阶系数
+### 62.7 更高阶系数
 
-直接展开式（62.21）得到
+直接展开式（62.30）得到
 
 $$
 f(\delta,\kappa)
 =\frac98-\frac34\kappa\delta
 +\left(\frac{\kappa^2}{2}-\frac3{64}\right)\delta^2
 +O(\delta^3).
-\tag{62.24}
+\tag{62.33}
 $$
 
 在 $\kappa=3/4$，另一函数的偏导为
@@ -11186,7 +11308,7 @@ $$
 -\frac9{16}
 =-\frac{33}{128}+\frac3{10}\kappa'(0),
 \qquad\kappa'(0)=-\frac{65}{64}.
-\tag{62.25}
+\tag{62.34}
 $$
 
 所以
@@ -11195,7 +11317,7 @@ $$
 \kappa(\delta)=\frac34-\frac{65}{64}\delta+O(\delta^2).
 $$
 
-代入 $p=\delta^2-\kappa(\delta)\delta^3$ 给式（62.9）的第一式。再代入式（62.24），$\delta^2$ 系数为
+代入 $p=\delta^2-\kappa(\delta)\delta^3$ 给式（62.9）的第一式。再代入式（62.33），$\delta^2$ 系数为
 
 $$
 -\frac34\left(-\frac{65}{64}\right)
@@ -11205,11 +11327,11 @@ $$
 
 乘以 $\delta^2=\varepsilon$ 得式（62.9）的第二式。$\square$
 
-### 62.7. 含义与边界
+### 62.8 含义与边界
 
-条件（62.6）成立时，最优边缘由两个相反方向的合法续接事件达到同一误差来确定：正向在 $q=t=1$，负向在 $t=0,q=q_*$。这是具体相同接口上的平衡条件。
+对全部 $0<\varepsilon\le1/16$，最优边缘由两个相反方向的合法续接事件达到同一误差来确定：正向在 $q=t=1$，负向在 $t=0,q=q_*$。这是具体相同接口上的平衡条件。
 
-式（62.4）在上述条件下给有限非零参数的准确修复误差，不只是渐近拟合；充分小参数自动满足条件，但这里没有给出一个对整个区间统一有效的显式阈值。条件（62.6）是充分条件；它未通过时，定理 62.1 仍给下界，不能据此断言交点修复必非最优。
+式（62.4）给整个区间内有限非零参数的准确修复误差，不只是渐近拟合。统一证书下界（62.6）使结果无需逐点检验条件；上述范围与第 59 节全体因果修复的单参数约化范围一致。
 
 所得唯一性限定于早输出边缘的 $\sigma_{11}$；完整最优修复仍可有不同补块或其他等误差实现。结论不推广到其他候选族或其他末输出维数。
 
