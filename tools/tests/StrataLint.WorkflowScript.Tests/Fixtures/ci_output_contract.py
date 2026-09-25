@@ -62,6 +62,16 @@ class PresentationTests(unittest.TestCase):
         self.assertIn("progress=[400/1000]", latest)
         self.assertIn("elapsed=60s", latest)
 
+    def test_resource_heartbeats_keep_the_latest_work_activity_visible(self):
+        self.presenter.line('STAGE_STEP {"name":"check-current","status":"started"}\n', "stdout")
+        self.presenter.line("CURRENT_FINALIZE phase=seal status=started\n", "stdout")
+        self.presenter.line("RESOURCE_SAMPLE sequence=20 phase=periodic\n", "stdout")
+        self.presenter.line('RESOURCE_OBSERVATION {"phase":"sample"}\n', "stdout")
+        self.now = 30
+        self.presenter.tick()
+        self.assertIn('latest="CURRENT_FINALIZE phase=seal status=started"', self.output.getvalue())
+        self.assertIn("information=4", self.output.getvalue())
+
     def test_warnings_and_errors_keep_multiline_details_immediately(self):
         messages = ["warning: D5/Foo.lean:4: unused variable\n", "  variable x\n",
                     "more detail without indentation\n", "error: D5/Foo.lean:9: type mismatch\n",

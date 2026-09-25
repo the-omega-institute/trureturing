@@ -68,7 +68,7 @@ class Presenter:
             return "error"
         return None
 
-    def structured(self, value, original):
+    def structured(self, value, original, activity=True):
         # The CLI's diagnostic severity is authoritative; do not infer it from
         # words such as "error" inside an informational message or file name.
         diagnostics = value.get("diagnostics")
@@ -93,7 +93,7 @@ class Presenter:
                 self.diagnostic(original, severity)
         else:
             fields = ("stage", "name", "phase", "status", "selected", "reused", "executed", "completed", "total")
-            self.information(" ".join(f"{key}={value[key]}" for key in fields if isinstance(value.get(key), (str, int))))
+            self.information(" ".join(f"{key}={value[key]}" for key in fields if isinstance(value.get(key), (str, int))) if activity else None)
 
     def line(self, line, stream):
         plain = ANSI.sub("", line).strip()
@@ -108,6 +108,7 @@ class Presenter:
             self.detail[stream] = False
             return
         event, _, payload = plain.partition(" ")
+        activity = event not in ("RESOURCE_SAMPLE", "RESOURCE_OBSERVATION")
         # A textual diagnostic may itself contain JSON. Its outer label owns
         # severity; arbitrary fields in its payload must not turn it into info.
         if not plain.startswith("{") and (ERROR.search(event) or WARNING.search(event)):
@@ -139,7 +140,7 @@ class Presenter:
                     self.failed_operation.add(stream)
                 else:
                     self.failed_operation.discard(stream)
-            self.structured(value, line)
+            self.structured(value, line, activity=activity)
         elif INFO.match(plain) or BUILD_INFO.match(plain):
             self.detail[stream] = False
             self.information(plain)
@@ -149,7 +150,7 @@ class Presenter:
             self.diagnostic(line, severity)
         elif EVENT.match(plain):
             # Concurrent resource sampling is not a diagnostic boundary.
-            self.information(plain)
+            self.information(plain if activity else None)
         elif self.in_detail(stream):
             self.emit(line)
         elif PROGRESS.search(plain):
