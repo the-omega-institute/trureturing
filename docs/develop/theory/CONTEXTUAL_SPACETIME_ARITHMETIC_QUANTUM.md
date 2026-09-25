@@ -41447,3 +41447,226 @@ $$
 该比值随 $u$ 严格递减，其上确界来自 $u\downarrow2a-1$，证明（189.5）的上界。上述两界未确定 $\widehat R_Q^*(a)$ 的精确值或达到其下确界的程序。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 190. 全区间精确程序的二维障碍与三维纯态逐点达到
+
+**定义 190.1（程序的联合维数与指定点成本）。** 固定 $0<a<1$，令
+$$
+J_a=(2a-1,1),\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)}.
+\tag{190.1}
+$$
+沿用第187.1节的固定 CPTP 处理器、全区间精确性与点态 SLD 信息约定。程序曲线的联合支持空间及其维数定义为
+$$
+\mathcal H_{\rm joint}=\operatorname{span}\!\left(\bigcup_{u\in J_a}\operatorname{ran}\rho_u\right),
+\qquad d_{\rm joint}=\dim\mathcal H_{\rm joint}.
+\tag{190.2}
+$$
+它计算整族程序共同需要的固定空间，不等于单个 $\rho_u$ 的秩。对指定的 $u_0\in J_a$，比较不同固定处理器及其全区间程序在 $u_0$ 的信息成本；处理器可以随设计点 $u_0$ 改变，但一旦选定，就必须对全部 $u\in J_a$ 使用同一个处理器。记
+$$
+I_r(u)=\frac1{1-u^2},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{190.3}
+$$
+
+**定理 190.2（任意固定量子比特处理器的逐点下界）。** 任意满足第187.1节条件、程序空间维数为二的固定处理器，都满足
+$$
+I_Q(\rho_u)\ge B(a,u)\qquad(u\in J_a).
+\tag{190.4}
+$$
+该结论允许复量子比特态、任意固定 CPTP 处理器及 $C^1$ 程序曲线的秩变化。第187.2节的处理器在全区间同时达到（190.4），因此 $B$ 是该二维类中的逐点最小值。
+
+证明。 写 $\rho_u=(I+r(u)\cdot\sigma)/2$。由处理器对程序输入的线性性，诱导信号映射具有形式
+$$
+\Phi_r=\Phi_0+\mathcal Lr,
+\tag{190.5}
+$$
+其中 $\mathcal L$ 是从 $\mathbb R^3$ 到保持 Hermitian 性的信号映射实向量空间的线性映射。全区间精确性给出 $\mathcal Lr(u)=\mathcal T_u-\Phi_0$。右侧是非恒定仿射直线，在两个不同参数处有原像，故对全部实数参数都有原像。令 $N=\ker\mathcal L$；其唯一最小 Euclidean 范数原像为
+$$
+\bar r(u)=c+uv,\qquad c,v\in N^\perp,\quad v\ne0.
+\tag{190.6}
+$$
+于是 $r=\bar r+z$，其中 $z,z'\in N$。对 $u\in J_a$，$|\bar r|\le|r|\le1$，所以 $\bar\rho_u=(I+\bar r(u)\cdot\sigma)/2$ 也是程序态，并经同一处理器给出 $\mathcal T_u$。这是另一条合法制备曲线，不将到 $N^\perp$ 的正交投影宣称为量子通道。
+
+先比较两条曲线的信息量。令
+$$
+A=\bar r\cdot v,\qquad \beta=1-|\bar r|^2.
+\tag{190.7}
+$$
+在 $J_a$ 内有 $\beta>0$：非恒定仿射直线若在内部参数处接触单位球面，就不能在该参数的两侧仍处于闭球内。若实际程序为混态，记 $q=|z|^2<\beta$；由量子比特 SLD 公式和正交分解，
+$$
+I_Q(\rho_u)=|v|^2+|z'|^2+\frac{(A+z\cdot z')^2}{\beta-q},
+\qquad
+I_Q(\bar\rho_u)=|v|^2+\frac{A^2}{\beta}.
+\tag{190.8}
+$$
+取 $w=z'+Az/\beta$，直接完成平方得到
+$$
+I_Q(\rho_u)-I_Q(\bar\rho_u)
+=|w|^2+\frac{(z\cdot w)^2}{\beta-q}\ge0.
+\tag{190.9}
+$$
+若实际程序在该点为纯态，两侧的正性及可微性迫使 $r\cdot r'=0$。点态 SLD 公式给出 $I_Q(\rho_u)=|r'|^2$；此时 $|z|^2=\beta$、$z\cdot z'=-A$，故
+$$
+I_Q(\rho_u)=|v|^2+|z'|^2
+\ge|v|^2+\frac{A^2}{\beta}=I_Q(\bar\rho_u).
+\tag{190.10}
+$$
+所以最小范数制备的信息量不超过实际程序的信息量，包括实际程序发生秩变化的点。这里使用（187.2）的点态值，没有将它替换为邻近 Bures 信息的极限；这一约定的区别见 Šafránek，Phys. Rev. A **95**, 052320（2017），DOI:10.1103/PhysRevA.95.052320，式（2）—（4）及第188.4节。
+
+仿射直线 $\bar r(u)$ 与 Bloch 闭球相交于一个有限非退化弦，对应参数区间 $[b_-,b_+]$，两端程序 $\rho_-,\rho_+$ 为不同纯态。恒等式 $\Phi_{\bar r(u)}=\mathcal T_u$ 对全部实数 $u$ 成立，故弦上每个物理态都生成 $\mathcal T_u$。矩阵 $F(a,u)$ 的反对称端点特征值为 $1-u$，对称块为
+$$
+\begin{pmatrix}1+u&\sqrt2a\\\sqrt2a&1\end{pmatrix}.
+$$
+因此 $\mathcal T_u$ 的完整 CP 参数区间为 $[2a^2-1,1]$。弦包含整个 $J_a$，故
+$$
+b_+=1,\qquad 2a^2-1\le b_-\le2a-1.
+\tag{190.11}
+$$
+这里没有要求原程序曲线在端点收敛；端点程序由仿射直线本身提供。
+
+令 $b=b_-$、$s^2=\operatorname{Tr}(\rho_+\rho_-)<1$。弦上程序是两个纯态的仿射混合，
+$$
+\bar\rho_u=t\rho_++(1-t)\rho_-,\qquad
+ t=\frac{u-b}{1-b},\qquad
+I_Q(\bar\rho_u)=\frac{1-s^2}{(u-b)(1-u)}.
+\tag{190.12}
+$$
+最后一式可由 $1-|\bar r|^2=4(1-s^2)t(1-t)$ 代入量子比特公式直接得到，包含正交端点的情形。
+
+固定均衡 $02$ 输入 $|+\rangle=(|0\rangle+|2\rangle)/\sqrt2$。程序到输出的同一个 CPTP 映射将 $\rho_+$ 送到 $|+\rangle\langle+|$，将 $\rho_-$ 送到
+$$
+\frac{1+b}{2}|+\rangle\langle+|+
+\frac{1-b}{2}|-\rangle\langle-|,
+\qquad | -\rangle=\frac{|0\rangle-|2\rangle}{\sqrt2}.
+$$
+采用平方保真度 $\mathsf F(\rho,\eta)=(\operatorname{Tr}\sqrt{\sqrt\rho\eta\sqrt\rho})^2$，CPTP 单调性给出 $s^2\le(1+b)/2$。于是
+$$
+I_Q(\rho_u)\ge\frac{1-b}{2(u-b)(1-u)}
+\ge\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{190.13}
+$$
+第二步使用 $b\ge2a^2-1$ 及
+$\partial_b[(1-b)/(2(u-b)(1-u))]=1/[2(u-b)^2]>0$。第187.2节给出达到，证毕。
+
+此推导使用整个区间上趋近 $u=1$ 的精确性来固定弦的上端点。它不对仅匹配单点值及一阶导数的局部切向程序断言同一下界。固定程序依赖的线性框架见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）；保真度数据处理及程序信息界的背景见 Pirandola、Lupo，Phys. Rev. Lett. **118**, 100502（2017），DOI:10.1103/PhysRevLett.118.100502，arXiv:1609.02160v3 补充材料式（37）—（40）。本条的弦端点约束与 $B$ 下界由上述当前通道族的计算给出。
+
+**定理 190.3（三维纯态在任意设计点规则达到可读下界）。** 对每个 $u_0\in J_a$，存在一个固定处理器与一条 $C^\infty$ 的三维纯程序态曲线，精确生成全部 $\mathcal T_u$，并满足
+$$
+I_Q(\rho_{u_0})=I_r(u_0).
+\tag{190.14}
+$$
+该程序在整个 $J_a$ 上秩恒为一。
+
+证明。 写 $h=(1+u)/2\in(a,1)$、$\ell=1-h$，以及 $h_0=(1+u_0)/2$、$\ell_0=1-h_0$。以下常数只依赖 $a,u_0$：
+$$
+A_0=\frac{au_0}{h_0},\qquad B_0=2a\sqrt{\frac{\ell_0}{h_0}},\qquad
+s=1-A_0^2-B_0^2=1-\frac{a^2}{h_0^2}>0,
+\tag{190.15}
+$$
+$$
+c=\sqrt{\frac a{1-a}},\qquad
+\delta=\frac{(1-a)s}{s+aB_0^2},\qquad
+A_2=1-\delta,\qquad B_2=\delta c.
+\tag{190.16}
+$$
+因为 $B_0>0$，有 $0<\delta<1-a$，从而 $A_2>a$、$B_2>0$。定义
+$$
+K=\begin{pmatrix}A_0&0&B_0\\0&A_2&B_2\\0&0&0\end{pmatrix},
+\qquad Z=\operatorname{diag}(1,1,-1).
+\tag{190.17}
+$$
+$K$ 是严格压缩算子。事实上，$I-KK^\dagger$ 的第三个对角块为一，其前两个坐标上的块为
+$$
+\begin{pmatrix}
+s&-B_0\delta c\\
+-B_0\delta c&2\delta-\delta^2/(1-a)
+\end{pmatrix}.
+\tag{190.18}
+$$
+左上元为正，而行列式恰为
+$$
+\delta\left[2s-\frac{\delta(s+aB_0^2)}{1-a}\right]=\delta s>0.
+$$
+所以 $I-KK^\dagger\succ0$，亦有 $I-K^\dagger K\succ0$。
+
+取三个从 $\mathbb C^3$ 到 $\mathbb C^6$ 的等距映射
+$$
+W_0=\begin{pmatrix}I\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I-K^\dagger K}\end{pmatrix}.
+\tag{190.19}
+$$
+信号控制的等距映射 $V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$，随后对六维环境取迹，定义一个固定 CPTP 处理器。用实纯程序向量
+$$
+\psi_u=
+\begin{pmatrix}\sqrt h\cos\theta(h)\\\sqrt h\sin\theta(h)\\\sqrt\ell\end{pmatrix},
+\qquad \rho_u=|\psi_u\rangle\langle\psi_u|.
+\tag{190.20}
+$$
+诱导 Schur 系数为 $C_{ij}=\langle W_j\psi_u,W_i\psi_u\rangle$。由于 $ZK=K$、$\psi_u$ 为实向量，
+$$
+C_{02}=u,\qquad C_{01}=C_{12}=f(h,\theta),
+$$
+$$
+f(h,\theta)=h(A_0\cos^2\theta+A_2\sin^2\theta)
++\sqrt{h(1-h)}(B_0\cos\theta+B_2\sin\theta).
+\tag{190.21}
+$$
+故只需全局光滑地选取 $0\le\theta(h)<\pi/2$，使 $f(h,\theta(h))=a$。
+
+先看两端角度。$f(h,0)=hA_0+B_0\sqrt{h(1-h)}$ 关于 $h$ 严格凹；由（190.15），
+$$
+f(h_0,0)=a,\qquad f_h(h_0,0)=0.
+\tag{190.22}
+$$
+因此 $f(h,0)\le a$，等号恰在 $h=h_0$。另一端函数 $f(h,\pi/2)$ 关于 $h$ 凹，且在闭区间 $[a,1]$ 的端点满足
+$$
+f(a,\pi/2)=a,\qquad f(1,\pi/2)=A_2>a.
+\tag{190.23}
+$$
+由凹性，它在每个 $h\in(a,1)$ 严格大于 $a$。
+
+对固定的内部 $h$，在 $0<\theta<\pi/2$ 有
+$$
+\frac{f_\theta(h,\theta)}{\sin\theta\cos\theta}
+=2h(A_2-A_0)+\sqrt{h(1-h)}
+\left(\frac{B_2}{\sin\theta}-\frac{B_0}{\cos\theta}\right).
+\tag{190.24}
+$$
+右侧严格递减，并从正无穷趋向负无穷，所以 $f$ 随角度先严格增、后严格减，只有一个最大点。结合（190.22）—（190.23），方程 $f=a$ 在 $[0,\pi/2)$ 恰有一个根，且总位于严格上升段；下降段的值不小于其右端值，而该值严格大于 $a$。在 $h=h_0$ 时这个根为零，且
+$$
+f_\theta(h_0,0)=\sqrt{h_0\ell_0}\,B_2>0.
+\tag{190.25}
+$$
+因此隐函数定理及根的唯一性给出整个 $(a,1)$ 上的光滑函数 $\theta(h)$，并且
+$$
+\theta(h_0)=0,\qquad
+\theta'(h_0)=-\frac{f_h(h_0,0)}{f_\theta(h_0,0)}=0.
+\tag{190.26}
+$$
+这既保证处理器在整个 $J_a$ 精确生成目标通道，也保证设计点的角度运动没有一阶贡献。
+
+最后，归一实向量满足 $\langle\psi_u,\psi_u'\rangle=0$。径向变化与角度变化正交，直接微分（190.20）得
+$$
+I_Q(\rho_u)=4\|\psi_u'\|^2
+=\frac1{4h\ell}+4h\left(\frac{d\theta}{du}\right)^2
+=I_r(u)+4h\left(\frac{d\theta}{du}\right)^2.
+\tag{190.27}
+$$
+由（190.26），在 $u=u_0$ 恰达到 $I_r(u_0)$。程序为全区间光滑纯态，所以这里没有第188.4节由程序秩变化产生的孤立 SLD 跳变。证毕。
+
+**定理 190.4（规则逐点最优的最小联合程序维数恰为三）。** 在每个指定的 $u_0\in J_a$，所有有限维固定处理器的全区间精确程序，其点态信息成本最小值为 $I_r(u_0)$；即使要求程序在设计点附近秩恒定，该最小值仍被达到。达到它所需的最小联合程序维数恰为三。
+
+证明。 第181节的均衡 $02$ 输入及二元输出测量，在任意精确程序上诱导信息量为 $I_r(u)$ 的固定测量，故测量信息不等式给出 $I_Q(\rho_u)\ge I_r(u)$。第190.3节提供三维且全区间秩恒定的达到。另一方面，
+$$
+\frac{B(a,u)}{I_r(u)}-1
+=\frac{a^2(1-u)}{1+u-2a^2}>0\qquad(u\in J_a).
+\tag{190.28}
+$$
+若联合支持包含于某个固定二维空间，将程序输入限制到该空间仍给出一个固定 CPTP 处理器，第190.2节就排除了达到 $I_r$；一维程序只能产生恒定通道，也不可能精确生成本族。因此最小联合维数为三，第190.3节的纯态曲线必张成整个三维程序空间。
+
+本结论将第188.2节的规则逐点下确界加强为三维纯态达到，而不改变其原有构造。这里的量词是对每个设计点可选择一个处理器；同一个处理器在其余参数处的额外成本由（190.27）保留。第188.3节的开区间等号障碍及第189.2节的统一正差距仍适用，故三维逐点达到不蕴含全区间同时达到。证毕。
+
+## 追加锚（本行以下为增补区）
