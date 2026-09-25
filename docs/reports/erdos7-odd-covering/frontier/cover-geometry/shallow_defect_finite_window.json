@@ -1,5 +1,5 @@
 {
-  "scope": "Same-law shallow-defect and pure-union sensitivity, finite cofactor windows, and arbitrary pure tails from exponent9, within the stated nine-prime support. Ordinary mathematics; no Lean claim.",
+  "scope": "Same-law shallow-defect bounds and finite cofactor windows: fixed pure3 with deep pure tails, and the no-effective9 class with arbitrary higher pure originals. Ordinary mathematics; no Lean claim.",
   "source": "normalized_joint_hinge_transfer.json",
   "source_sha256": "4b99d5aa933ef0722ce2b4bf2efca94055ef9310753e0eba9b8b79ad9efd796d",
   "D": 200000000,
@@ -32,9 +32,28 @@
     "extended_tail_positive": true,
     "joint_pure_and_shallow_margin_positive": true,
     "joint_haar_above_one_in_23_million": true,
-    "original_zero_defect_margin_recovered": true
+    "original_zero_defect_margin_recovered": true,
+    "no_effective9_complete_pure_tail": true,
+    "no_mod3_included": true,
+    "pure_mass_gate_denominator": true,
+    "no_effective9_clip": true,
+    "no_effective9_complete_deep_weight": true,
+    "no_effective9_raw_mass": true,
+    "no_effective9_raw_query": true,
+    "no_effective9_raw_density": true,
+    "no_effective9_global_gate": true,
+    "no_effective9_old_supplier_already_passes": true,
+    "no_effective9_inventory_independent_agreement": true,
+    "no_effective9_inventory_count": true,
+    "no_effective9_complete_tail_positive": true,
+    "no_effective9_defect_weight": true,
+    "no_effective9_combined_gate_identity": true,
+    "no_effective9_window_mass_positive": true,
+    "no_effective9_window_gate_positive": true,
+    "no_effective9_density_conversion": true,
+    "no_effective9_haar_above_one_in_7500": true
   },
-  "check_count": 28,
+  "check_count": 47,
   "rho_critical": {
     "exact": "15902170284510797327529/3505774518890717753386765",
     "decimal": 0.00453599345845622
@@ -102,6 +121,66 @@
     "haar_survivor_lower": {
       "exact": "89581087492995455138648224792634532052831160753744825117/1976973601668708998503510774740246454856556756175656000000000000",
       "decimal": 4.531223250395581e-08
+    }
+  },
+  "no_effective9_window": {
+    "pure_survivor_mass_lower": {
+      "exact": "11/18",
+      "decimal": 0.6111111111111112
+    },
+    "pure_mass_critical_for_global_scalar_clip": {
+      "exact": "40798395037785984579139300/73271440820843763675490287",
+      "decimal": 0.5568116933518787
+    },
+    "clip_threshold": {
+      "exact": "10/11",
+      "decimal": 0.9090909090909091
+    },
+    "complete_deep_weight": {
+      "exact": "1/33",
+      "decimal": 0.030303030303030304
+    },
+    "global_raw_mass_lower": {
+      "exact": "230809236502721588952791/247757916529379346529100",
+      "decimal": 0.9315917720649384
+    },
+    "raw_query_upper": {
+      "exact": "60643022595470428742771/6001056801749672753300",
+      "decimal": 10.105390533512248
+    },
+    "raw_density_upper": {
+      "exact": "78606001193271552000/504290487541989307",
+      "decimal": 155.87444763515688
+    },
+    "global_gate": {
+      "exact": "7957193149903742000653973/12140137909939587979925900",
+      "decimal": 0.6554450376868362
+    },
+    "old_supplier_global_gate": {
+      "exact": "56360634644780942597187139/168028783702179178590966000",
+      "decimal": 0.3354224996633716
+    },
+    "D": 100000,
+    "nonunit_cofactor_count": 317,
+    "full_reciprocal_tail": {
+      "exact": "76465180174000294239661018931/52179010592099340487618080000000",
+      "decimal": 0.0014654394421495266
+    },
+    "actual_shallow_defect_upper": {
+      "exact": "611721441392002353917288151448/19884164955793789482985907628875",
+      "decimal": 0.03076425098825992
+    },
+    "window_raw_mass_lower": {
+      "exact": "754800460112823701427630810003/840768074240752198012089117500",
+      "decimal": 0.8977510959778524
+    },
+    "continuation_gate_lower": {
+      "exact": "468651119602898543501108059549939/1771498332425264881211471770572500",
+      "decimal": 0.26455069757886424
+    },
+    "haar_survivor_lower": {
+      "exact": "468651119602898543501108059549939/3471365216671184923960255626240000000",
+      "decimal": 0.00013500484401704778
     }
   }
 }

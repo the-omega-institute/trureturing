@@ -123,8 +123,69 @@ result['pure_tail_window']={
  'shallow_defect_upper':ex(extended_rho),
  'continuation_gate_lower':ex(extended_gate),
  'haar_survivor_lower':ex(extended_haar)}
+# Report578's existing scalar clip also consumes the new source contract.
+# If 3 is absent, or 9 is absent/redundant under 3, all higher pure
+# originals are included in the actual pure survivor before clipping.
+pure_mass=F(11,18)
+pure_density=1/pure_mass
+pure_query=F(1,2)/pure_mass
+deep_weight=F(1,54)/pure_mass
+clip=1-3*deep_weight
+raw_mass=1-deep_weight*K3/clip
+raw_query=B+pure_query*(1+B)/clip
+raw_density=9*pure_density/(alpha*clip)
+pure_gate=G*raw_mass-raw_query
+pure_mass_critical=(3+(G*K3+27*(1+B))/(G-B))/54
+simple_D=100000
+simple_values=smooth_recursive(simple_D)
+simple_tail=total-sum((F(1,d) for d in simple_values),F())
+simple_defect=pure_density*(F(1,9)+F(1,27))*9*simple_tail/alpha
+simple_mass=raw_mass-simple_defect/clip
+simple_gate=G*simple_mass-raw_query
+simple_haar=49*simple_gate/(616*raw_density)
+old_B=F(432040125182653876501,86355045355449035400)
+old_K3=F(12019840537595758779003,5715264751774801992890)
+old_pure_gate=G*(1-old_K3/30)-(F(19,10)*old_B+F(9,10))
+checks.update({
+ 'no_effective9_complete_pure_tail':pure_mass==1-F(1,3)-F(1,18),
+ 'no_mod3_included':1-F(1,6)>=pure_mass,
+ 'pure_mass_gate_denominator':G>B and F(1,2)<pure_mass_critical<pure_mass,
+ 'no_effective9_clip':clip==F(10,11) and 0<clip<1,
+ 'no_effective9_complete_deep_weight':deep_weight==F(1,33),
+ 'no_effective9_raw_mass':raw_mass==1-K3/30 and raw_mass>0,
+ 'no_effective9_raw_query':raw_query==F(19,10)*B+F(9,10),
+ 'no_effective9_raw_density':raw_density==F(81,5)/alpha,
+ 'no_effective9_global_gate':pure_gate>0,
+ 'no_effective9_old_supplier_already_passes':old_pure_gate>0,
+ 'no_effective9_inventory_independent_agreement':simple_values==smooth_heap(simple_D),
+ 'no_effective9_inventory_count':len(simple_values)-1==317,
+ 'no_effective9_complete_tail_positive':simple_tail>0,
+ 'no_effective9_defect_weight':pure_density*(F(1,9)+F(1,27))==F(8,33),
+ 'no_effective9_combined_gate_identity':simple_gate==pure_gate-F(12,5)*G*simple_tail/alpha,
+ 'no_effective9_window_mass_positive':simple_mass>0,
+ 'no_effective9_window_gate_positive':simple_gate>0,
+ 'no_effective9_density_conversion':simple_haar==245*alpha*simple_gate/49896,
+ 'no_effective9_haar_above_one_in_7500':simple_haar>F(1,7500),
+})
+if not all(checks.values()):raise RuntimeError(checks)
+result['scope']='Same-law shallow-defect bounds and finite cofactor windows: fixed pure3 with deep pure tails, and the no-effective9 class with arbitrary higher pure originals. Ordinary mathematics; no Lean claim.'
+result['no_effective9_window']={
+ 'pure_survivor_mass_lower':ex(pure_mass),
+ 'pure_mass_critical_for_global_scalar_clip':ex(pure_mass_critical),
+ 'clip_threshold':ex(clip),'complete_deep_weight':ex(deep_weight),
+ 'global_raw_mass_lower':ex(raw_mass),'raw_query_upper':ex(raw_query),
+ 'raw_density_upper':ex(raw_density),'global_gate':ex(pure_gate),
+ 'old_supplier_global_gate':ex(old_pure_gate),
+ 'D':simple_D,'nonunit_cofactor_count':len(simple_values)-1,
+ 'full_reciprocal_tail':ex(simple_tail),
+ 'actual_shallow_defect_upper':ex(simple_defect),
+ 'window_raw_mass_lower':ex(simple_mass),
+ 'continuation_gate_lower':ex(simple_gate),
+ 'haar_survivor_lower':ex(simple_haar)}
 result['check_count']=len(checks)
 args.output.write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps({'checks':len(checks),'window_gate':float(gate),
                  'pure_tail_window_gate':float(extended_gate),
-                 'pure_tail_window_haar_lower':float(extended_haar)},indent=2))
+                 'pure_tail_window_haar_lower':float(extended_haar),
+                 'no_effective9_window_gate':float(simple_gate),
+                 'no_effective9_window_haar_lower':float(simple_haar)},indent=2))

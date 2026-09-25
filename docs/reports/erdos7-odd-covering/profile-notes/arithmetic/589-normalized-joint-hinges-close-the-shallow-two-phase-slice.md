@@ -26,8 +26,10 @@ slice left in [Report587](587-actual-tail-obstruction-and-source-query-repair.md
 and [Report588](588-query-prefix-incidence-strengthens-actual-source-debits.md).
 Sections8--10 further replace the global shallow restriction by finite
 cofactor windows and allow arbitrary additional pure tails from a
-specified depth. Unrestricted low ternary phases, arbitrary pure3
-geometry and additional support primes remain outside the conclusions.
+specified depth. Section11 applies the existing scalar clip when there
+is no effective pure9 constraint, allowing arbitrary higher pure3
+originals with a smaller finite window. Unrestricted low ternary phases,
+low pure3 geometry and additional support primes remain outside the conclusions.
 These are ordinary mathematical proofs with exact rational arithmetic,
 not new Lean results or a resolution of unrestricted Erdős #7.
 
@@ -560,7 +562,8 @@ and [exact data](../../frontier/cover-geometry/shallow_defect_finite_window.json
 pin NJ10--NJ12's supplier data and independently enumerate each finite
 cofactor complement by prime recursion and a heap. Complete tails are
 obtained by subtracting these finite sums from the exact Euler product.
-All28 named checks pass. Sections8--10 supply the general proofs;
+All47 named checks pass, including Section11's additional consumer.
+Sections8--11 supply the general proofs;
 the computations certify their explicit rational windows and margins.
 No new Lean verification is claimed.
 
@@ -570,3 +573,140 @@ The remaining obligations include unrestricted low pure3 geometry,
 uncontrolled shallow defects on the finite window, and arbitrary
 support primes. Neither numerical height exhaustion nor the positive
 restricted margin resolves those obligations.
+
+## 11. No effective pure9 constraint allows arbitrary higher pure originals
+
+Retain the nine-prime support, numerical distinctness and globally
+fixed original phases. Replace the prescribed pure3 family by any
+finite pure family satisfying one of these conditions: modulus3 is
+absent; modulus9 is absent; or both are present and the modulus9 class
+is contained in the modulus3 class. All pure originals at27,81 and
+higher powers are arbitrary. Let a be the Haar mass of the COMPLETE
+actual pure3 survivor. In each case,
+
+    a>=11/18.                                            (NP1)
+
+Indeed, without3 the complete deletion is at most1/6. With3 but no
+effective9, it is at most1/3+sum_(e>=3)3^(-e)=7/18.
+Nested pure classes are counted only once in the actual survivor.
+
+Assume the original Q projections at ternary exponents0 through3 fit
+at most two phases for each nonunit Q cofactor d<=100000. No phase
+restriction is imposed at larger cofactors, at nonpure heights e>=4,
+or on originals touching23 or29. Then the complete actual survivor has
+
+    H(full survivor)>=0.00013500484401704778...>1/7500.    (NP2)
+
+There are317 nonunit Q-smooth cofactors in this window. NP2 includes
+families with an original at3 and arbitrary pure originals at every
+higher depth except an effective9; it does not require the pure gap
+through exponent8 used in DF13.
+
+This is a consumer of [Report578 PT12](578-pure-prime-density-query-tradeoff-and-scalar-clip-boundary.md),
+[Report574's scalar clipping proof](574-four-level-query-hinge-removes-pointwise-overlap.md),
+and the finite-window argument above. Even the older Report569/574
+supplier gives a positive global through-exponent3 margin for NP1.
+The new supplier improves that margin and supplies the window and
+density below; no new generic clipping theorem or external novelty
+is claimed. Report574's arbitrary-pure main result requires the
+through-exponent4 condition, while its through-exponent2 specialization
+requires absence of3. Neither assumption is imposed in NP2.
+
+### One pure law and one selected Q law
+
+Let u be Haar conditioned on precisely the actual pure3 survivor.
+Using NP1, its complete cylinder and query bounds are
+
+    u<=18 H3/11,   R_3(u)<=9/11.
+
+For each nonunit d<=100000 select the at most two actual shallow phases;
+for d>100000 select just its e=0,1 phases if present. There are only
+finitely many nonempty selections. Use Sections1--5 to obtain ONE
+actual law nu for this selected family, with NJ10 and density9/alpha_new.
+The original family, including its unselected phases, is unchanged.
+
+Let E be the unselected nonpure P-supported original constraints at
+e=0,1,2,3. Under this selection they all have d>100000 and e=2 or3.
+Let chi0 omit just E
+from the full P-supported original mask chi, and define
+
+    c0(x)=integral chi0(t,x)du(t),
+    c(x)=integral chi(t,x)du(t),
+    Z=c0-c>=0,   rho=E_nu Z.
+
+All pure constraints have already been included in u. Z measures only
+the actual additional deletion caused by E, after every other original
+has acted. It therefore counts overlapping constraints once.
+
+On the selected support every remaining shallow nonpure original
+vanishes. At each e>=4, numerical distinctness gives one partial query
+layout L_e. Consequently the COMPLETE deep mixture
+
+    Y=sum_(e>=4)54*3^(-e)L_e
+
+has coefficients summing to one, and
+
+    1-c0<=Y/33,   E_nu(Y-3)_+<=K3.                     (NP3)
+
+Here the first bound uses u's cylinder cap; the second uses NJ10 on
+the same nu. No restriction on the maximum original height is made.
+
+### Actual clipping and the finite-window margin
+
+Use the existing scalar clip with kappa=10/11:
+
+    eta=chi u nu/max(c,kappa),
+    s=eta(1),   Q-marginal(eta)=min(1,c/kappa)nu.
+
+This is well-defined even on c=0. By the1-Lipschitz positive part and
+NP3,
+
+    s>=1-K3/30-(11/10)rho,
+    R_P(eta)<=B+(9/10)(1+B)=(19B+9)/10=:N,
+    eta<=81 H_P/(5 alpha_new).                         (NP4)
+
+For the query bound, pure-Q queries use the dominated marginal.
+Every positive ternary query uses eta<=u nu/kappa; summing all such
+heights, including the Q-unit once each, costs at most
+`(R_3(u)/kappa)(1+B)`. These bounds all concern this same eta.
+
+The global margin with rho=0 is
+
+    g0=G(1-K3/30)-N
+      =7957193149903742000653973/12140137909939587979925900
+      =0.6554450376868362... .                         (NP5)
+
+With the older B and K3 it was already0.3354224996633716...>0.
+This comparison does not transport any old-source debit to the new law.
+
+Only one original per numerical label3^e d is present. Hence the
+outside-window shallow increment satisfies
+
+    rho <= (18/11)(1/9+1/27)(9/alpha_new)T_Q(100000)
+         = (8/33)(9/alpha_new)T_Q(100000).
+
+The exact Euler-product complement is
+`T_Q(100000)=0.0014654394421495266...`. Thus
+
+    Gs-R_P(eta)
+      >=g0-(12G/(5 alpha_new))T_Q(100000)
+       =0.26455069757886424...=:g_win>0.                (NP6)
+
+In particular eta has positive mass. Apply the SAME23/29
+pure-conditioned continuation SD15 to eta before normalization. Its
+remaining mass is at least49*g_win/567, and the extra density factor
+is616/567. With NP4 this gives
+
+    H(full survivor)>=245 alpha_new*g_win/49896,
+
+which is NP2. Every23/29 original, all outside-window phases and all
+higher pure originals occur simultaneously in this estimate.
+
+The existing defect/window producer and exact data include all NP
+constants, the complete geometric and Euler tails, and two independent
+enumerations of the317-cofactor window. Finite arithmetic certifies
+these displayed bounds; the preceding argument supplies the
+arbitrary-family and all-height quantifiers. This does not handle an
+effective pair of3/9 originals with arbitrary additional low pure
+classes, arbitrary shallow phases inside the window, or unrestricted
+prime support. It adds no Lean verification.
