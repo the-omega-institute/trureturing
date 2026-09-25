@@ -42,7 +42,7 @@ internal sealed class FiniteSupportSelectionMinimaxDocument : IScribeDocumentDef
         Forall, Sp, F.Id("M"), Comma, Sp, F.Id("q"), Comma, Sp, F.Id("s"), Colon, Sp,
         F.Id("Nat"), Comma, Sp, F.Id("r"), Colon, Sp, F.Id("Real"), Comma, Sp,
         F.Id("e"), Colon, Sp, F.Id("Experiment"), Comma, Sp,
-        Num(1), Leq, F.Id("q"), Lt, F.Id("M"), Sp, Land, Sp,
+        Num(1), Leq, Sp, F.Id("q"), Lt, F.Id("M"), Sp, Land, Sp,
         Num(0), Lt, F.Id("r"), Lt, Num(1), Sp, Land, Sp,
         Num(0), Leq, Call("compensation", F.Id("M"), F.Id("q"), F.Id("r")), Lt, Num(1),
         Sp, Rightarrow, Sp,
