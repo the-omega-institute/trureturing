@@ -218,7 +218,8 @@ theorem geometric_readout_iterated_limit_order (alpha x : ℝ)
   have hrange : Set.Ioo (0 : ℝ) 1 ∈ 𝓝[<] (1 : ℝ) :=
     (nhdsLT_basis 1).mem_of_mem (by norm_num)
   have hto0 : Tendsto (fun r : ℝ => 1 - r) (𝓝[<] (1 : ℝ)) (𝓝 (0 : ℝ)) := by
-    convert tendsto_const_nhds.sub hid using 1 <;> norm_num
+    convert tendsto_const_nhds.sub hid using 1
+    norm_num
   refine ⟨?_, ?_, ?_⟩
   · intro r hr
     have hp : Tendsto (fun n : ℕ => r ^ n) atTop (𝓝 (0 : ℝ)) :=
