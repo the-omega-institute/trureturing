@@ -278,3 +278,9 @@ joining private branches, and recursively shared two-coordinate
 separators remain outside this theorem. The choice of an earlier
 payment boundary removes an entry-prime restriction; it does not
 remove those joint-constraint gaps.
+
+[Report607](607-two-level-triangle-interfaces-preserve-a-common-survivor.md)
+admits one further level of shared pair interfaces below these entries,
+while retaining a simultaneous positive extension bound. Its secondary
+entries s>q may attach along(p,q) or(r,q); arbitrary recursive shared-pair
+depth and cross-private originals remain outside that extension.
