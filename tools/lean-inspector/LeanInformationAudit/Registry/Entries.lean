@@ -422,7 +422,9 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)
-        unless ← isDefEq legacyArgs[0]! normalized.law do
+        let expectedBridgeArena := if realizationHead == some RegistrationGates.witnessBridgeName then
+          arenaExpr else normalized.law
+        unless ← isDefEq legacyArgs[0]! expectedBridgeArena do
           return .error (statementMismatchError entry.theoremName)
         unless ← isDefEq legacyArgs[1]! theoremType do
           return .error (statementMismatchError entry.theoremName)

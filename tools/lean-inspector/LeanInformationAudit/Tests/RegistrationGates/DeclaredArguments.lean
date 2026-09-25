@@ -14,6 +14,8 @@ def nestedClean := Option (Arena.State (discardClean independent))
 def closedDecision (_ : Bool) : Bool := decide ((0 : Nat) < 24)
 def recursiveArgument (n : Nat) : Bool := Nat.rec true (fun _ b => b) n
 def identity (x : Bool) : Bool := x
+noncomputable def localChoiceReadout (_ : Int) : Nat :=
+  Classical.choice (show Nonempty Nat from ⟨0⟩)
 def keep {p : Prop} (_ : p) (x : Bool) : Bool := x
 def hidden (x : Bool) : Bool := let h := identityTarget; keep h x
 def targetDecision : Decidable (∀ x : Bool, x = x.not.not) := .isTrue identityTarget
@@ -57,6 +59,16 @@ run_meta do
     (some "unclassified_form:E4.recursion:Nat.rec")
   let .defnInfo identityInfo ← getConstInfo ``identity | throwError "setup"
   check "independent_data_argument_accepted" identityInfo.value none
+  check "infinite_carrier_type_accepted" (mkConst ``Int) none
+  check "independent_infinite_readout_accepted" (mkConst ``Int.natAbs) none
+  check "local_unapplied_readout_rejected" (mkConst ``localChoiceReadout)
+    (some "unclassified_form:E5.unsaturated_definition:LeanInformationAudit.Tests.DeclaredArguments.localChoiceReadout")
+  let sourceInfo ← getConstInfo ``Int.natAbs
+  let (_, sourceTypeWork) ← TemplateAudit.checkExtractionType ``target sourceInfo.type 524288
+  unless sourceTypeWork < 524288 do throwError "independent source type exhausted work budget"
+  let infiniteOutput ← mkArrow (mkConst ``Int) (mkConst ``Int)
+  let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
+  check "infinite_function_equality_dictionary_accepted" equalityDictionary none
   check "independent_proof_and_dictionary_accepted" (mkConst ``independent) none
   check "object_projection_accepted"
     (.proj ``Prod 0 (mkConst ``independentPair)) none

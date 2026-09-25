@@ -169,6 +169,45 @@ elab "observe_object_domain" : command => do
 
 observe_object_domain
 
+elab "observe_object_domain_routes" : command => do
+  let readout :=
+    "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) "
+  let slots := "variation domainVariation sensitivity domainSensitivity " ++
+    "escape from (Set Nat) escape continues (open)"
+  let cases : Array (String × String × Name) := #[
+    ("object_domain_native_validated",
+      "information_theorem domainNative in domainArena " ++ readout ++
+        "primitives domainReads " ++ slots ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative),
+    ("object_domain_inline_validated",
+      "register_information_theorem domainStatement in domainArena " ++ readout ++
+        "primitives domainReads.toPrimitiveBundle " ++
+        "realization inline domainReads := domainBridge " ++ slots,
+      ``domainStatement)]
+  for (label, source, theoremName) in cases do
+    let saved ← get
+    modify fun state => { state with messages := {} }
+    let mut failure := ""
+    match Parser.runParserCategory (← getEnv) `command source with
+    | .error message => failure := "parse: " ++ message
+    | .ok command =>
+      try elabCommand command catch error => failure := ← error.toMessageData.toString
+    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
+      record.occurrence.key.theoremName == theoremName
+    let validated := row.any fun record => match record.result with
+      | .declaredValidated _ => true
+      | _ => false
+    if let some record := row then
+      if let .declaredUnresolved diagnostic := record.result then
+        failure := failure ++ diagnostic
+    for message in (← get).messages.toList do
+      if message.severity == .error then failure := failure ++ (← message.data.toString)
+    let ok := validated && failure.isEmpty && row.any (·.escape.fromObject.any (·.name == ``Set))
+    set saved
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
+
+observe_object_domain_routes
 
 def nativeArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
