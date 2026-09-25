@@ -1,0 +1,753 @@
+{
+  "actual59": {
+    "D19_extra": {
+      "decimal": 0.00977709150375282,
+      "exact": "16245701864/1661608859625"
+    },
+    "RQ": {
+      "decimal": 1.4496548412905634,
+      "exact": "214267985/147806208"
+    },
+    "actual_nested_fibres": 46,
+    "all_query_avoidance_proof": "For any nonunit Q-smooth d choose q|d. The phase3 mod d is supported entirely on retained root3 at every prime dividing d, hence maximizes under the product source. It differs from2 mod q and therefore misses E1=[2]_M. beta=1 on that cylinder, so q_d(beta nu)=q_d(nu) at EVERY query height. The omitted unit would have lost mass tau/D.",
+    "layout_separation": "Same actual source and old cap/J data: phase0 at every complete query gives n19=0 and D19=0; phase3 maximizes every query and yields displayed D19_extra. Old constant cap debit is NOT zero.",
+    "old_constant_cap19": {
+      "decimal": 0.00010500968623829957,
+      "exact": "29/276165"
+    },
+    "originals": [
+      {
+        "d": 1,
+        "e": 1,
+        "modulus": 3,
+        "phase": 1,
+        "r": 0,
+        "t": 1
+      },
+      {
+        "d": 1,
+        "e": 2,
+        "modulus": 9,
+        "phase": 3,
+        "r": 0,
+        "t": 3
+      },
+      {
+        "d": 5,
+        "e": 0,
+        "modulus": 5,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 5,
+        "e": 1,
+        "modulus": 15,
+        "phase": 11,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 7,
+        "e": 0,
+        "modulus": 7,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 7,
+        "e": 1,
+        "modulus": 21,
+        "phase": 8,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 11,
+        "e": 0,
+        "modulus": 11,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 11,
+        "e": 1,
+        "modulus": 33,
+        "phase": 23,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 13,
+        "e": 0,
+        "modulus": 13,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 13,
+        "e": 1,
+        "modulus": 39,
+        "phase": 14,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 17,
+        "e": 0,
+        "modulus": 17,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 17,
+        "e": 1,
+        "modulus": 51,
+        "phase": 35,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 19,
+        "e": 0,
+        "modulus": 19,
+        "phase": 0,
+        "r": 0,
+        "t": 0
+      },
+      {
+        "d": 19,
+        "e": 1,
+        "modulus": 57,
+        "phase": 20,
+        "r": 1,
+        "t": 2
+      },
+      {
+        "d": 1616615,
+        "e": 4,
+        "modulus": 130945815,
+        "phase": 61431372,
+        "r": 2,
+        "t": 0
+      },
+      {
+        "d": 8083075,
+        "e": 4,
+        "modulus": 654729075,
+        "phase": 2,
+        "r": 2,
+        "t": 2
+      },
+      {
+        "d": 40415375,
+        "e": 4,
+        "modulus": 3273645375,
+        "phase": 2788660877,
+        "r": 2,
+        "t": 5
+      },
+      {
+        "d": 202076875,
+        "e": 4,
+        "modulus": 16368226875,
+        "phase": 2626999377,
+        "r": 2,
+        "t": 6
+      },
+      {
+        "d": 1010384375,
+        "e": 4,
+        "modulus": 81841134375,
+        "phase": 12124612502,
+        "r": 2,
+        "t": 8
+      },
+      {
+        "d": 5051921875,
+        "e": 4,
+        "modulus": 409205671875,
+        "phase": 368790296877,
+        "r": 2,
+        "t": 9
+      },
+      {
+        "d": 25259609375,
+        "e": 4,
+        "modulus": 2046028359375,
+        "phase": 1818691875002,
+        "r": 2,
+        "t": 11
+      },
+      {
+        "d": 126298046875,
+        "e": 4,
+        "modulus": 10230141796875,
+        "phase": 3788941406252,
+        "r": 2,
+        "t": 14
+      },
+      {
+        "d": 631490234375,
+        "e": 4,
+        "modulus": 51150708984375,
+        "phase": 29680041015627,
+        "r": 2,
+        "t": 15
+      },
+      {
+        "d": 3157451171875,
+        "e": 4,
+        "modulus": 255753544921875,
+        "phase": 132612949218752,
+        "r": 2,
+        "t": 17
+      },
+      {
+        "d": 15787255859375,
+        "e": 4,
+        "modulus": 1278767724609375,
+        "phase": 363106884765627,
+        "r": 2,
+        "t": 18
+      },
+      {
+        "d": 78936279296875,
+        "e": 4,
+        "modulus": 6393838623046875,
+        "phase": 5683412109375002,
+        "r": 2,
+        "t": 20
+      },
+      {
+        "d": 394681396484375,
+        "e": 4,
+        "modulus": 31969193115234375,
+        "phase": 13024486083984377,
+        "r": 2,
+        "t": 23
+      },
+      {
+        "d": 1973406982421875,
+        "e": 4,
+        "modulus": 159845965576171875,
+        "phase": 126298046875000002,
+        "r": 2,
+        "t": 24
+      },
+      {
+        "d": 9867034912109375,
+        "e": 4,
+        "modulus": 799229827880859375,
+        "phase": 384814361572265627,
+        "r": 2,
+        "t": 26
+      },
+      {
+        "d": 49335174560546875,
+        "e": 4,
+        "modulus": 3996149139404296875,
+        "phase": 1233379364013671877,
+        "r": 2,
+        "t": 27
+      },
+      {
+        "d": 246675872802734375,
+        "e": 4,
+        "modulus": 19980745697021484375,
+        "phase": 13320497131347656252,
+        "r": 2,
+        "t": 29
+      },
+      {
+        "d": 1233379364013671875,
+        "e": 4,
+        "modulus": 99903728485107421875,
+        "phase": 81403038024902343752,
+        "r": 2,
+        "t": 32
+      },
+      {
+        "d": 6166896820068359375,
+        "e": 4,
+        "modulus": 499518642425537109375,
+        "phase": 197340698242187500002,
+        "r": 2,
+        "t": 33
+      },
+      {
+        "d": 30834484100341796875,
+        "e": 4,
+        "modulus": 2497593212127685546875,
+        "phase": 2127579402923583984377,
+        "r": 2,
+        "t": 35
+      },
+      {
+        "d": 154172420501708984375,
+        "e": 4,
+        "modulus": 12487966060638427734375,
+        "phase": 12333793640136718750002,
+        "r": 2,
+        "t": 36
+      },
+      {
+        "d": 770862102508544921875,
+        "e": 4,
+        "modulus": 62439830303192138671875,
+        "phase": 27751035690307617187502,
+        "r": 2,
+        "t": 38
+      },
+      {
+        "d": 3854310512542724609375,
+        "e": 4,
+        "modulus": 312199151515960693359375,
+        "phase": 300636219978332519531252,
+        "r": 2,
+        "t": 41
+      },
+      {
+        "d": 19271552562713623046875,
+        "e": 4,
+        "modulus": 1560995757579803466796875,
+        "phase": 308344841003417968750002,
+        "r": 2,
+        "t": 42
+      },
+      {
+        "d": 96357762813568115234375,
+        "e": 4,
+        "modulus": 7804978787899017333984375,
+        "phase": 3757952749729156494140627,
+        "r": 2,
+        "t": 44
+      },
+      {
+        "d": 481788814067840576171875,
+        "e": 4,
+        "modulus": 39024893939495086669921875,
+        "phase": 6263254582881927490234377,
+        "r": 2,
+        "t": 45
+      },
+      {
+        "d": 2408944070339202880859375,
+        "e": 4,
+        "modulus": 195124469697475433349609375,
+        "phase": 151763476431369781494140627,
+        "r": 2,
+        "t": 47
+      },
+      {
+        "d": 12044720351696014404296875,
+        "e": 4,
+        "modulus": 975622348487377166748046875,
+        "phase": 252939127385616302490234377,
+        "r": 2,
+        "t": 50
+      },
+      {
+        "d": 60223601758480072021484375,
+        "e": 4,
+        "modulus": 4878111742436885833740234375,
+        "phase": 481788814067840576171875002,
+        "r": 2,
+        "t": 51
+      },
+      {
+        "d": 301118008792400360107421875,
+        "e": 4,
+        "modulus": 24390558712184429168701171875,
+        "phase": 12646956369280815124511718752,
+        "r": 2,
+        "t": 53
+      },
+      {
+        "d": 1505590043962001800537109375,
+        "e": 4,
+        "modulus": 121952793560922145843505859375,
+        "phase": 111413663253188133239746093752,
+        "r": 2,
+        "t": 54
+      },
+      {
+        "d": 7527950219810009002685546875,
+        "e": 4,
+        "modulus": 609763967804610729217529296875,
+        "phase": 406509311869740486145019531252,
+        "r": 2,
+        "t": 56
+      },
+      {
+        "d": 37639751099050045013427734375,
+        "e": 4,
+        "modulus": 3048819839023053646087646484375,
+        "phase": 1580869546160101890563964843752,
+        "r": 2,
+        "t": 59
+      },
+      {
+        "d": 188198755495250225067138671875,
+        "e": 4,
+        "modulus": 15244099195115268230438232421875,
+        "phase": 752795021981000900268554687502,
+        "r": 2,
+        "t": 60
+      },
+      {
+        "d": 940993777476251125335693359375,
+        "e": 4,
+        "modulus": 76220495975576341152191162109375,
+        "phase": 11291925329715013504028320312502,
+        "r": 2,
+        "t": 62
+      },
+      {
+        "d": 4704968887381255626678466796875,
+        "e": 4,
+        "modulus": 381102479877881705760955810546875,
+        "phase": 47049688873812556266784667968752,
+        "r": 2,
+        "t": 63
+      },
+      {
+        "d": 23524844436906278133392333984375,
+        "e": 4,
+        "modulus": 1905512399389408528804779052734375,
+        "phase": 423447199864313006401062011718752,
+        "r": 2,
+        "t": 65
+      },
+      {
+        "d": 117624222184531390666961669921875,
+        "e": 4,
+        "modulus": 9527561996947042644023895263671875,
+        "phase": 6704580664518289268016815185546877,
+        "r": 2,
+        "t": 68
+      },
+      {
+        "d": 588121110922656953334808349609375,
+        "e": 4,
+        "modulus": 47637809984735213220119476318359375,
+        "phase": 1176242221845313906669616699218752,
+        "r": 2,
+        "t": 69
+      },
+      {
+        "d": 2940605554613284766674041748046875,
+        "e": 4,
+        "modulus": 238189049923676066100597381591796875,
+        "phase": 123505433293757960200309753417968752,
+        "r": 2,
+        "t": 71
+      },
+      {
+        "d": 14703027773066423833370208740234375,
+        "e": 4,
+        "modulus": 1190945249618380330502986907958984375,
+        "phase": 470496888738125562667846679687500002,
+        "r": 2,
+        "t": 72
+      },
+      {
+        "d": 73515138865332119166851043701171875,
+        "e": 4,
+        "modulus": 5954726248091901652514934539794921875,
+        "phase": 3308181248939945362508296966552734377,
+        "r": 2,
+        "t": 74
+      },
+      {
+        "d": 367575694326660595834255218505859375,
+        "e": 4,
+        "modulus": 29773631240459508262574672698974609375,
+        "phase": 2205454165959963575005531311035156252,
+        "r": 2,
+        "t": 77
+      },
+      {
+        "d": 1837878471633302979171276092529296875,
+        "e": 4,
+        "modulus": 148868156202297541312873363494873046875,
+        "phase": 1837878471633302979171276092529296877,
+        "r": 2,
+        "t": 78
+      },
+      {
+        "d": 9189392358166514895856380462646484375,
+        "e": 4,
+        "modulus": 744340781011487706564366817474365234375,
+        "phase": 358386301968494080938398838043212890627,
+        "r": 2,
+        "t": 80
+      }
+    ],
+    "pK1": {
+      "decimal": 0.4022446689113356,
+      "exact": "1792/4455"
+    },
+    "pK2": {
+      "decimal": 0.3569747107715022,
+      "exact": "6443456/18050175"
+    },
+    "prefix_low_categories": 243,
+    "query_avoidance_controls": 728,
+    "raw_query_debit": {
+      "decimal": 0.0,
+      "exact": "0"
+    },
+    "retained_clipped_mass": {
+      "decimal": 0.9999999999997716,
+      "exact": "79643172057312767719849944114685058594/79643172057330957613885402679443359375"
+    },
+    "selected_current_root_overlap": {
+      "decimal": 0.0,
+      "exact": "0"
+    },
+    "source": "actual product law on prime roots outside0,1; prefix mass and final PA mass both3/7.",
+    "tau": {
+      "decimal": 5.633678836293215e-12,
+      "exact": "36379788070917129516601562/6457554491134942509233951568603515625"
+    }
+  },
+  "check_count": 33,
+  "checks": [
+    "559 cap supplier pinned",
+    "closed forms all point controls",
+    "old eta recovered q=11",
+    "old eta recovered q=13",
+    "old eta recovered q=17",
+    "old eta recovered q=19",
+    "q19 coefficients",
+    "suffix growth does not preserve difference monotonicity",
+    "rigidity rational controls",
+    "finite grid exact minimum H=0",
+    "finite grid exact minimum H=1",
+    "finite grid exact minimum H=2",
+    "finite grid exact minimum H=3",
+    "59 distinct actual numerical originals",
+    "actual source row caps inactive",
+    "actual damage event mass",
+    "59 positive exact clipping tail",
+    "59 selected current-root unions have zero overlap",
+    "59 all46 actual nested incidence atoms",
+    "59 positive joint zero-reserve event",
+    "59 maximizing query phase3 avoids whole damage cylinder",
+    "prefix category probability mass",
+    "59 exact low query-prefix probabilities",
+    "59 exact prefix-incidence increment",
+    "59 independent closed expectation",
+    "old cap debit remains separately positive",
+    "59 complete actual source norm",
+    "same old cap slack with zero new prefix increment",
+    "improved CJ6 exact N2",
+    "improved CJ6 exact prefix coefficients",
+    "improved CJ6 exact normalized tail slope",
+    "improved CJ6 strict unclipped margin",
+    "improved CJ6 affine numerator and normalization controls"
+  ],
+  "coefficient_rows": [
+    {
+      "delta_eta_n1": {
+        "decimal": 0.028003320021208294,
+        "exact": "298714736/10667118605"
+      },
+      "delta_eta_n_ge2": {
+        "decimal": 0.09223939354520752,
+        "exact": "983928551/10667118605"
+      },
+      "delta_zeta_n1": {
+        "decimal": 0.04960274452671655,
+        "exact": "4372879/88158005"
+      },
+      "delta_zeta_n2": {
+        "decimal": 0.34300593576272514,
+        "exact": "30238719/88158005"
+      },
+      "old_eta": {
+        "decimal": 0.04697935645479248,
+        "exact": "641451990131/13653911814400"
+      },
+      "q": 11
+    },
+    {
+      "delta_eta_n1": {
+        "decimal": 0.01852859533289121,
+        "exact": "1633444/88158005"
+      },
+      "delta_eta_n_ge2": {
+        "decimal": 0.07997179609497743,
+        "exact": "7050154/88158005"
+      },
+      "delta_zeta_n1": {
+        "decimal": 0.021809851527379732,
+        "exact": "11377/521645"
+      },
+      "delta_zeta_n2": {
+        "decimal": 0.223048241620259,
+        "exact": "116352/521645"
+      },
+      "old_eta": {
+        "decimal": 0.02315320390502258,
+        "exact": "130632977/5642112320"
+      },
+      "q": 13
+    },
+    {
+      "delta_eta_n1": {
+        "decimal": 0.0084118509714461,
+        "exact": "4388/521645"
+      },
+      "delta_eta_n_ge2": {
+        "decimal": 0.06166262496525415,
+        "exact": "32166/521645"
+      },
+      "delta_zeta_n1": {
+        "decimal": 0.004986149584487534,
+        "exact": "9/1805"
+      },
+      "delta_zeta_n2": {
+        "decimal": 0.0997229916897507,
+        "exact": "36/361"
+      },
+      "old_eta": {
+        "decimal": 0.007087375034745852,
+        "exact": "118307/16692640"
+      },
+      "q": 17
+    },
+    {
+      "delta_eta_n1": {
+        "decimal": 0.002770083102493075,
+        "exact": "1/361"
+      },
+      "delta_eta_n_ge2": {
+        "decimal": 0.055401662049861494,
+        "exact": "20/361"
+      },
+      "delta_zeta_n1": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "delta_zeta_n2": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "old_eta": {
+        "decimal": 0.0001538935056940597,
+        "exact": "1/6498"
+      },
+      "q": 19
+    }
+  ],
+  "finite_grid_controls": [
+    {
+      "H": 0,
+      "minimum": {
+        "decimal": 0.0443213296398892,
+        "exact": "16/361"
+      }
+    },
+    {
+      "H": 1,
+      "minimum": {
+        "decimal": 0.004029211785444472,
+        "exact": "16/3971"
+      }
+    },
+    {
+      "H": 2,
+      "minimum": {
+        "decimal": 0.0002205041275616378,
+        "exact": "16/72561"
+      }
+    },
+    {
+      "H": 3,
+      "minimum": {
+        "decimal": 1.1629842466515139e-05,
+        "exact": "16/1375771"
+      }
+    }
+  ],
+  "generic_coefficients": {
+    "delta_eta_n0": "0",
+    "delta_eta_n1": "p1/q^2+p2/q",
+    "delta_eta_n_ge2": "(q+1)*p1/q^2+p2/q",
+    "delta_zeta_n0": "0",
+    "delta_zeta_n1": "1-p1-p2",
+    "delta_zeta_n_ge2": "n-2*p1-p2"
+  },
+  "improved_CJ6": {
+    "B": {
+      "decimal": 5.003067549838209,
+      "exact": "432040125182653876501/86355045355449035400"
+    },
+    "D": {
+      "decimal": 24.666666666666668,
+      "exact": "74/3"
+    },
+    "G": {
+      "decimal": 11.551020408163266,
+      "exact": "566/49"
+    },
+    "K2": {
+      "decimal": 3.00306754983821,
+      "exact": "259330034471755805701/86355045355449035400"
+    },
+    "N2": {
+      "decimal": 11.533825380722519,
+      "exact": "18426074256671263478591/1597568339075807154900"
+    },
+    "coefficients_D_beta_D1_DU_D_layer": [
+      {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      {
+        "decimal": 0.8783783783783784,
+        "exact": "65/74"
+      },
+      {
+        "decimal": 0.21621621621621623,
+        "exact": "8/37"
+      },
+      {
+        "decimal": 0.12162162162162163,
+        "exact": "9/74"
+      }
+    ],
+    "positive_G_minus_N2": {
+      "decimal": 0.0171950274407465,
+      "exact": "1346041340014939222441/78280848614714550590100"
+    },
+    "sufficient_condition": "A_z > (963/3626)*tau - (G-N2), with A_z=D_beta+(65/74)D1+(8/37)DU+(9/74)D_layer.",
+    "tail_slope": {
+      "decimal": 0.2655819084390513,
+      "exact": "963/3626"
+    },
+    "z": {
+      "decimal": 5.333333333333333,
+      "exact": "16/3"
+    }
+  },
+  "limit_audit": "Fix a finite partial query while exhausting complete boxes.0<=delta_eta_H(n)<=Z_full/(q-1),0<=delta_zeta_H(n)<=n permit dominated convergence; no monotonicity of coefficient differences with suffix height is assumed. Then exhaust a fixed countable layout using full coefficients, monotone in its prefix count.",
+  "novelty_boundary": "An explicit prefix-aware refinement of559 CS4 and569 SD5, not a new comparison mechanism. Old eta(0)K and J credits remain untouched; only coefficient differences are added. General proof is separately audited; no Lean.",
+  "point_controls": 216,
+  "rigidity_constant": {
+    "decimal": 0.0997229916897507,
+    "exact": "36/361"
+  },
+  "schema": "prefix-incidence-coefficients-audit-v1",
+  "source": {
+    "path": "pa_cap_slack_numerator.json",
+    "sha256": "43401805c0a3dc294c6a569acfc7d743f44bded57360d7d09debbdd34d1bbcfb"
+  }
+}
