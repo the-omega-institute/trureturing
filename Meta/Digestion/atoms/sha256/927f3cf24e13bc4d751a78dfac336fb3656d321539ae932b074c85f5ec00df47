@@ -1,0 +1,30 @@
+**证明。** 对正整数 $q$，取距离 $q\alpha$ 最近的整数 $p$。因 $0<\alpha<1$，可取 $0\le p\le q$。利用 $\alpha$ 的共轭为 $-\varphi$，有
+\[
+ (p-q\alpha)(p+q\varphi)=p^2+pq-q^2\in\mathbb Z\setminus\{0\}.
+\]
+而 $0<p+q\varphi\le(1+\varphi)q<3q$，故
+\[
+ \|q\alpha\|_{\mathbb T}>\frac1{3q}.
+\]
+在定理 9.3 中取 $c=1/3,\nu=1$ 即得下界。
+
+令 Fibonacci 数满足 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。由 $\alpha^2=1-\alpha$ 及递推归纳，
+\[
+ F_{n+1}\alpha-F_n=(-1)^n\alpha^{n+1}.
+\]
+另外 $F_k<\varphi^k$ 对全部 $k\ge0$ 成立，同样由递推归纳得到。因此对 $p=F_n,q=F_{n+1}$ 有
+\[
+ \left|\alpha-\frac pq\right|
+ =\frac{\alpha^{n+1}}{q}<\frac1{q^2}.
+\]
+这些正分母趋于无穷，相邻分母比至多为 $2$。置
+\[
+ T=\max\left\{2,\frac{2\pi}{\varepsilon},
+                  \sqrt{\frac{4\pi H}{\varepsilon}}\right\},
+\]
+选取第一个满足 $q\ge T$ 的 Fibonacci 分母，则 $q<2T$。定理 9.4 给出的误差小于或等于
+\[
+ \frac\pi q+\frac{2\pi H}{q^2}\le\frac\varepsilon2+\frac\varepsilon2.
+\]
+于是 $S_{H,\varepsilon}\le q<2T$。对固定 $\varepsilon$，上界为 $O_\varepsilon(\sqrt H)$；下界中 $s\ge1$ 使 $s+3a_\varepsilon s^2\le(1+3a_\varepsilon)s^2$，从而给出 $\Omega_\varepsilon(\sqrt H)$。取对数得到最后一个式子。证明同时给出可构造的时钟，没有从试验拟合渐近阶。证毕。[^tcs-golden]
+

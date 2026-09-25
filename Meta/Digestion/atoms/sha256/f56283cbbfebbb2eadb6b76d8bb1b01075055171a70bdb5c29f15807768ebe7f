@@ -1,0 +1,20 @@
+**定理 53.2（精确几何预算、稳定秩渐近及配对维数门槛）。** 每个 $H_\varepsilon$ 都是光滑嵌入，诱导同一个圆周拓扑，并满足
+\[
+ \|H_\varepsilon'(\varphi)\|=U_\varepsilon=1,\qquad
+ \boxed{l_\varepsilon^2=\frac{2\varepsilon}{9+20\varepsilon}.}
+\]
+令 $\eta_\varepsilon=2/R_{H_\varepsilon}-1$，则有精确的一变量极值式
+\[
+ \eta_\varepsilon=
+ \max_{-1\le q\le3}
+ \frac{(\varepsilon/2)|q(q+1)(2-q)|}
+      {q^2[1+\varepsilon(q-1)]+2\varepsilon},
+\]
+且
+\[
+ \eta_\varepsilon\sim\frac{\sqrt\varepsilon}{2\sqrt2},\qquad
+ \boxed{2-R_{H_\varepsilon}\sim\sqrt{\varepsilon/2},\qquad
+        \frac{2-R_{H_\varepsilon}}{l_\varepsilon}\longrightarrow\frac32.}
+\]
+因此，在问题 52.1 的单射成对谐波设计类内，逼近二延迟稳定秩上限二所需的最少谐波对数恰为三，即六个实基函数。这个上确界不由任何有限单射谐波族达到。
+

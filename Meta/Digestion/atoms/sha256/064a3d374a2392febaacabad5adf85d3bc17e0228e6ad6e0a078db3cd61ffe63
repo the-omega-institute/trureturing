@@ -1,0 +1,7 @@
+**定义 18.1（有限路径的参考分布）。** 令 $\Omega$ 是有限非空可行路径集，$R(\omega)>0$ 且 $\sum_\omega R(\omega)=1$，$C:\Omega\to\mathbb R$ 为总费用。对概率分布 $P$ 定义
+\[
+ J_\tau(P)=\mathbb E_PC+\tau\operatorname{KL}(P\Vert R),\quad
+ Z_\tau=\sum_\omega R(\omega)e^{-C(\omega)/\tau},\quad F_\tau=-\tau\log Z_\tau.
+\]
+只有当 $R$ 在 $\Omega$ 上均匀时，$J_\tau=\mathbb E_PC-\tau H(P)+\tau\log|\Omega|$。对一般参考分布，$-\mathbb E_P\log R$ 也是目标的一部分。
+

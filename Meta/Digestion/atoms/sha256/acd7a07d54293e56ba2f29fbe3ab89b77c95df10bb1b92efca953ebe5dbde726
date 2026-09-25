@@ -1,0 +1,4 @@
+**证明。** 直接求导得 $\nabla p_i=-\tau^{-1}p_i(\nabla E_i-\mathbb E_p\nabla E_i)$，代入 $\nabla A_\tau$ 的导数即得 Hessian 公式。协方差半正定，因此隐藏分量的力差异可以降低有效曲率。
+
+对所给双分量，合并指数得到 $\cosh$ 表达式，故 $A_\tau'(x)=x-a\tanh(ax/\tau)$，$A_\tau''(0)=1-a^2/\tau$。若 $\tau\ge a^2$，对 $x>0$ 用 $\tanh u<u$ 得 $A_\tau'(x)>0$，偶对称性给唯一极小点。若 $\tau<a^2$，导数在零点右侧为负，在 $x=a$ 为正；它的导数 $1-(a^2/\tau)\operatorname{sech}^2(ax/\tau)$ 在 $x>0$ 严格递增，所以 $A_\tau'$ 先降后升，并恰有一个正零点。对称性给两个极小点，且 $A_\tau(x)\to+\infty$ 当 $|x|\to\infty$，因此它们都是全局极小点。这是指定潜能和权重的精确分岔，不表示一般熵正则化必定使所有优化目标凸。证毕。
+

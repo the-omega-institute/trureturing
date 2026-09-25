@@ -1,0 +1,14 @@
+**定理 18.2（路径优化的精确 Gibbs 分解及零温极限）。** 令
+\[
+ P_\tau^*(\omega)=Z_\tau^{-1}R(\omega)e^{-C(\omega)/\tau}.
+\]
+对任意 $P$ 有
+\[
+ J_\tau(P)=F_\tau+\tau\operatorname{KL}(P\Vert P_\tau^*).
+\]
+所以 $P_\tau^*$ 是唯一极小点。若 $c_* =\min C$，$r_*=R\{C=c_*\}>0$，则
+\[
+ c_*\le F_\tau\le c_*-\tau\log r_*,\qquad
+ \lim_{\tau\downarrow0}F_\tau=c_*.
+\]
+
