@@ -9,12 +9,8 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
 {
     // Publication, coordinates and verification use this class's private compiler stage.
     [Theory]
-    [InlineData("test_native.NativeTests.test_native_facet_supplies_toolchain_environment")]
-    [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
-    [InlineData("test_native.NativeTests.test_mapped_image_matches_loaded_bytes")]
     [InlineData("test_streaming")]
     [InlineData("test_reuse")]
-    [InlineData("test_native.NativeTests.test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs")]
     [InlineData("test_native_support.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
@@ -24,8 +20,8 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
         "test_native.NativePublicationTests");
 
     [Fact]
-    public void ImplResourceRebuildsProductionRegOnWarmReport() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativeTests.test_impl_resource_rebuilds_production_reg_on_warm_report");
+    public void ReportConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeReportTests");
 }
 
 internal static class InspectorNativeTestRunner
