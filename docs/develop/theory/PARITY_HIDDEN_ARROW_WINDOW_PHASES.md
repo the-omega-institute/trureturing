@@ -2125,3 +2125,236 @@ $`\lambda\sqrt\delta=Q^{11/4}\to\infty`$。
 这里补足的是第 49、51 章替换环境中心所缺的定量条件；原来以 $`V_M`$ 为中心的结论仍然成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 53. 非 Gaussian 谱截距之后的平稳 Gaussian 余项
+
+**定义 53.1（同一极限噪声中的谱尾）。** 本章的对象是第 50、51 章的
+同一连续 Gaussian 极限族，不是对实际数据序列另取增长参数。
+保持实 Gaussian 测度 $`\mathcal W_\rho`$、$`\rho(x)=c_0e^{-\kappa x^2/2}`$、
+$`\gamma=\int\rho`$、$`\omega=\pi/2`$、$`F(v)=\mathcal W_\rho(e^{-i\omega v\cdot})`$
+及 $`Y=F(0)`$。记
+
+```math
+\begin{aligned}
+\mathcal R(s)&=(b_*+2s)Y^2+
+ 2\int_0^{e^s}(|F(v)|^2-Y^2)\,\frac{dv}{v},\\
+\mathcal J_\infty&=b_*\gamma+I_2(H),\qquad
+\mathcal E(s)=\mathcal R(s)-2s\gamma-\mathcal J_\infty,\\
+\mathcal U_s(t)&=e^{(s+t)/2}\mathcal E(s+t),\qquad
+\sigma_*^2=\frac{8\pi}{\omega}\int_{\mathbb R}\rho(x)^2\,dx
+ =16\int_{\mathbb R}\rho(x)^2\,dx.
+\end{aligned}
+```
+
+式 (53.1)。
+
+其中 $`b_*`$、$`H`$ 和二重 Wiener 积分的规范如定义 50.1、51.1。
+令 $`\mathscr G=\sigma\{\mathcal W_\rho(f):f\in L^2(\rho(x)dx)\}`$，
+取其概率完备化。另取独立于 $`\mathscr G`$ 的标准 Brownian 运动 $`B`$，置
+
+```math
+\mathcal U(t)=\sigma_*e^{t/2}B(e^{-t}),\qquad t\in\mathbb R.
+```
+
+式 (53.2)。
+
+这是连续平稳 Gaussian 过程，其协方差为
+$`\sigma_*^2e^{-|t-u|/2}`$，即相应的平稳 Ornstein–Uhlenbeck 律。
+
+**定理 53.2（尖锐谱尾率与混合过程极限）。** 在定义 53.1 的共同实现中，
+
+```math
+\mathcal R(s)-2s\gamma\longrightarrow\mathcal J_\infty
+ \quad\text{于 }L^2,\qquad
+\mathbb E\mathcal E(s)^2=\sigma_*^2e^{-s}+O(e^{-2s})
+ \quad(s\to\infty).
+```
+
+式 (53.3)。
+
+对每个固定紧区间 $`I=[t_0,t_1]`$，$`\mathcal U_s|_I`$ 在 $`C(I)`$ 中
+相对于 $`\mathscr G`$ 混合收敛到 $`\mathcal U|_I`$。精确地，对每个有界
+$`\mathscr G`$ 可测随机变量 $`A`$ 和每个有界连续 $`\Psi:C(I)\to\mathbb R`$，
+
+```math
+\mathbb E[A\Psi(\mathcal U_s|_I)]
+ \longrightarrow \mathbb E[A]\,\mathbb E[\Psi(\mathcal U|_I)].
+```
+
+式 (53.4)。
+
+因而可以联合保留同一个 $`\mathcal J_\infty`$、端点、紧区间轮廓、桥及偶极子，
+而新增的过程极限独立于它们。式 (53.4) 不表示给定整个 $`\mathscr G`$ 的条件律
+依概率收敛到非退化 Gaussian 律，也不把第 50 章的固定参数数据极限升级为同时增长极限。
+
+证明。[Gaussian 二次型谱尾与混合收敛的先例](../../../Library/Dynamics/iyer2025empirical.md)
+给出经典机制及其条件。这里先把两章的非 Gaussian 对象在同一实现中精确接合，
+再求其余项的核与极限。
+
+令 $`\mathrm{Ci}(z)=-\int_z^\infty\cos v\,dv/v`$，$`z>0`$。
+零点附近为对数增长，无穷远为 $`O(z^{-1})`$，故 $`\mathrm{Ci}\in L^2(0,\infty)`$。
+实 Gaussian 乘积公式和 $`\cos(\omega v(x-y))-1`$ 在零频处的二阶消失给出
+
+```math
+\begin{aligned}
+\mathcal R(s)&=(b_*+2s)\gamma+I_2(H_s),\\
+H_s(x,y)&=b_*+2s+
+ 2\int_0^{e^s}\frac{\cos(\omega v(x-y))-1}{v}\,dv,\\
+H_s(x,y)-H(x,y)&=2\mathrm{Ci}(\omega e^s|x-y|)\quad(x\ne y),\\
+\mathcal E(s)&=I_2(K_s),\qquad
+K_s(x,y)=2\mathrm{Ci}(\omega e^s|x-y|)\quad(x\ne y).
+\end{aligned}
+```
+
+式 (53.5)。
+
+前两式首先在有限频率区间上以 $`L^2`$ 积分成立；
+Gaussian 控制测度的四阶空间矩使零频处可积。
+第三式使用
+$`\mathrm{Ci}(z)=\gamma_{\rm E}+\log z+\int_0^z(\cos v-1)\,dv/v`$
+及 $`b_*=1+2\gamma_{\rm E}+2D_{\rm w}`$。
+这些核的对角线值可任取；没有给奇异核 $`H`$ 赋予有限对角迹。
+
+余项协方差由一维卷积决定。置
+
+```math
+g(z)=\int_{\mathbb R}\rho(x)\rho(x-z)\,dx
+ =g(0)e^{-\kappa z^2/4},\qquad
+g(0)=\int\rho^2=c_0^2\sqrt{\pi/\kappa}.
+```
+
+式 (53.6)。
+
+对 $`a,b>0`$，余弦变换的 Plancherel 等式给出
+
+```math
+\int_{\mathbb R}\mathrm{Ci}(a|z|)\mathrm{Ci}(b|z|)\,dz
+ =\frac{\pi}{\max(a,b)}.
+```
+
+式 (53.7)。
+
+具体地，$`\mathrm{Ci}(a|z|)=-\int_a^\infty\cos(uz)\,du/u`$
+以 $`L^2`$ 意义成立。先在两个积分的频率上限截断，应用余弦 Plancherel，
+再令上限趋于无穷，即得 $`\pi\int_{\max(a,b)}^\infty u^{-2}du`$。
+此论证不需要 $`\mathrm{Ci}`$ 的绝对可积性。
+
+由二重 Wiener 等距式和换元 $`w=\omega e^s z`$，
+
+```math
+\mathbb E[\mathcal U_s(t)\mathcal U_s(u)]
+ =\frac8\omega e^{(t+u)/2}\int_{\mathbb R}
+ \mathrm{Ci}(e^t|w|)\mathrm{Ci}(e^u|w|)
+ g\left(\frac{w}{\omega e^s}\right)\,dw
+ \longrightarrow\sigma_*^2e^{-|t-u|/2}.
+```
+
+式 (53.8)。
+
+支配收敛来自 $`0\le g\le g(0)`$、Cauchy–Schwarz 及 (53.7)。
+还可取到统一误差 $`O_I(e^{-s})`$：在固定 $`t,u\in I`$ 上，
+两个 $`\mathrm{Ci}`$ 的乘积绝对值在原点附近由
+$`C_I(1+\log^2|w|)`$ 控制，远处由 $`C_I|w|^{-2}`$ 控制；
+而 $`|g(w/(\omega e^s))-g(0)|\le C\min(e^{-2s}w^2,1)`$。
+分别积分 $`|w|\le1`$、$`1<|w|\le e^s`$ 和 $`|w|>e^s`$，
+得到 $`O(e^{-2s})+O(e^{-s})+O(e^{-s})`$。
+取 $`t=u=0`$ 证明 (53.3)，并由 $`g\le g(0)`$ 得到
+$`e^s\mathbb E\mathcal E(s)^2\le\sigma_*^2`$。
+
+仍须证明 Gaussian 性及与旧噪声的独立性，协方差极限本身不够。
+采用 Fourier 变换规范 $`\widehat f(\zeta)=\int e^{-i\zeta x}f(x)\,dx`$，
+卷积核 $`q_c(z)=2\mathrm{Ci}(c|z|)`$ 的乘子为
+
+```math
+\widehat q_c(\zeta)=-\frac{2\pi}{|\zeta|}
+ \mathbf1_{\{|\zeta|\ge c\}}.
+```
+
+式 (53.9)。
+
+仍先以有限上限截断余弦积分；其乘子有统一上界 $`2\pi/c`$。
+截断核在 $`L^2(\mathbb R)`$ 中收敛，乘以两个 $`\sqrt\rho`$ 后在
+Hilbert–Schmidt 范数中收敛，所以该乘子界保留到极限。
+在 $`L^2(\rho dx)`$ 上的核算子与
+$`M_{\sqrt\rho}(q_c*\cdot)M_{\sqrt\rho}`$ 酉等价。因此
+
+```math
+\|T_{K_{s+t}}\|_{\rm op}
+ \le\frac{2\pi\|\rho\|_\infty}{\omega e^{s+t}},\qquad
+\|T_{e^{(s+t)/2}K_{s+t}}\|_{\rm op}
+ \le C_I e^{-s/2}\quad(t\in I).
+```
+
+式 (53.10)。
+
+对任意有限线性组合，归一化核的 Hilbert–Schmidt 范数由 (53.8) 有界，
+而算子范数由 (53.10) 趋于零。若其特征值为 $`\lambda_{j,s}`$，
+相应二重积分为 $`\sum_j\lambda_{j,s}(G_j^2-1)`$；
+独立 Gaussian 平方的特征函数展开给出
+
+```math
+\log\mathbb E\exp\left(i\theta\sum_j\lambda_{j,s}(G_j^2-1)\right)
+ =-\theta^2\sum_j\lambda_{j,s}^2
+ +O\left(|\theta|^3\max_j|\lambda_{j,s}|
+                  \sum_j\lambda_{j,s}^2\right).
+```
+
+式 (53.11)。
+
+故 Cramér–Wold 与 (53.8) 给出 Gaussian 有限维极限。
+还可同时保留任意有限个旧线性坐标。令 $`P`$ 为投影到这些坐标张成的
+有限维子空间的正交投影，维数为 $`m`$，$`Q=I-P`$。
+对任一归一化核算子 $`T`$，
+$`\|T-QTQ\|_{\rm HS}\le2\sqrt m\|T\|_{\rm op}=O_I(\sqrt m e^{-s/2})`$。
+因此二重 Wiener 等距式表明删去这些坐标只产生趋零的 $`L^2`$ 误差。
+剩余二次型只依赖正交补上的 Gaussian 噪声，与保留坐标独立，
+且有限维极限不变。这证明所需的联合有限维收敛与独立性。
+
+为取得过程紧性，直接对 (53.7) 中的归一化核取差，再用 $`g\le g(0)`$，得
+
+```math
+\mathbb E|\mathcal U_s(t)-\mathcal U_s(u)|^2
+ \le2\sigma_*^2(1-e^{-|t-u|/2})\le\sigma_*^2|t-u|.
+```
+
+式 (53.12)。
+
+二阶 Wiener 混沌的四阶矩至多为其方差平方的十五倍；
+这也可由独立平方展开及
+$`\sum_j\lambda_j^4\le(\sum_j\lambda_j^2)^2`$ 直接核对。
+故
+
+```math
+\mathbb E|\mathcal U_s(t)-\mathcal U_s(u)|^4\le C_I|t-u|^2.
+```
+
+式 (53.13)。
+
+$`\mathcal R`$ 的连续版本已由第 50 章构造，所以上述过程取连续版本。
+Kolmogorov 紧性判据、单点方差界及有限维极限证明 $`C(I)`$ 收敛，
+并保留与任意有限组旧线性坐标的联合收敛。
+
+最后取 $`L^2(\rho dx)`$ 的一个可数正交基，其 Gaussian 坐标生成
+$`\mathscr G`$。对有界 $`A`$，先用前若干坐标条件期望在 $`L^1`$ 中逼近，
+再把该有限维可测函数在 Gaussian 测度下以有界连续函数作 $`L^1`$ 逼近。
+联合收敛处理这些柱函数；误差由 $`\|\Psi\|_\infty`$ 乘以相应
+$`L^1`$ 误差控制，统一于 $`s`$。这证明 (53.4)，并允许附加
+任意固定的、由旧噪声产生的可分空间随机对象，包括上文列出的非线性谱截距。
+
+这与给定整个旧噪声后的条件律有明确区别。
+对任意固定 $`t`$ 和 $`\theta\ne0`$，$`\mathcal U_s(t)`$ 本身是
+$`\mathscr G`$ 可测的，故
+
+```math
+\left|\mathbb E[e^{i\theta\mathcal U_s(t)}\mid\mathscr G]
+          -e^{-\theta^2\sigma_*^2/2}\right|
+ \ge1-e^{-\theta^2\sigma_*^2/2}>0.
+```
+
+式 (53.14)。
+
+因而不能宣称该条件律依概率趋于独立 Gaussian 律。
+本章建立的是同一极限族内的精确接合、尖锐二阶矩率和混合过程极限；
+它不提供在实际后验数据中同时令 $`s=s_M\to\infty`$ 所需的一致近似率。
+
+## 追加锚（本行以下为增补区）
