@@ -42416,3 +42416,194 @@ $$
 任意满足本定理固定邻域要求的实际程序，若 $I_Q(\rho_t)\le J_c$，则其处理器、三个状态与导数组成 $\mathscr K_R$ 的元素：秩约束由第193节的纯性论证保证，且纯态成本等于（194.28）。所以它的成本至少为 $m_R$。若成本大于 $J_c$，则由（194.29）也至少为 $m_R$。这证明（194.18）及其序列结论。所用 $m_R$ 是有限维松弛集合的最小值，不据此断言原固定邻域程序类存在最优程序；此论证也没有给出 $\eta$ 对 $R$ 的显式速率。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 195. 纯二维精确邻域的半径与额外信息成本的二次量级
+
+**定义 195.1（固定半径的纯二维最优成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，记 $d_t=\min\{t-(2a-1),1-t\}>0$。对 $0<R<d_t$，令 $\mathfrak P_2(a,t;R)$ 为定义193.1的纯二维程序在名义点 $t$ 的 SLD 信息量下确界，但要求其精确开区间包含整个闭区间 $[t-R,t+R]$。处理器及程序可依赖 $a,t,R$；一旦选定，在求导及该区间内运行时保持处理器固定。沿用
+$$
+B=B(a,t)=\frac{1-a^2}{(1-t)(1+t-2a^2)},\qquad
+J_c=\frac{B}{1-a^2}.
+\tag{195.1}
+$$
+
+**定理 195.2（固定精确半径的二次成本）。** 对每个固定的 $a,t$，存在常数 $c_1,c_2,R_0>0$，使全部 $0<R<R_0$ 满足
+$$
+c_1R^2\le\mathfrak P_2(a,t;R)-B(a,t)\le c_2R^2.
+\tag{195.2}
+$$
+因此固定精确邻域的额外成本在 $R\downarrow0$ 时为 $\Theta(R^2)$。常数允许依赖 $a,t$；此结论不主张最佳首项系数，也不主张固定半径的下确界一定达到。
+
+证明。 先证明对全部允许程序统一成立的下界。固定
+$$
+H=\frac{J_c-B}{2}>0,\qquad Q_*=B+H<J_c.
+\tag{195.3}
+$$
+设实际程序的名义信息量为 $Q$，超额为 $\delta=Q-B>0$。先处理 $Q\le Q_*$；大于此上限的情形在后面单独估计。
+
+沿第194节的记号，$K=\ker\mathcal L$，名义 Bloch 向量的核分量为 $b_0=P_Kr(t)$，其在 $K^\perp$ 上的仿射投影斜率为 $v$。两个端点均为物理态，故（194.24）—（194.25）给出
+$$
+|b_0|^2\ge R^2|v|^2.
+\tag{195.4}
+$$
+这里还能取得 $|v|\ge1$。事实上，固定均衡 $02$ 信号输入并读取对称、反对称输出之差，得到一个固定程序可观测量 $M=m_0I+b\cdot\sigma$，满足 $-I\preceq M\preceq I$，且在目标程序上的期望值为 $u$。于是 $|b|\le1$。该读数经过诱导通道取得，所以 $b\perp K$，并由求导得 $b\cdot v=1$。因此
+$$
+|b_0|\ge R.
+\tag{195.5}
+$$
+
+将 $b_0/|b_0|$ 转到程序的 $Y$ 方向，并取第194节的满秩实影子曲线 $\sigma_u$。在名义点，它的最小特征值 $\lambda$ 满足
+$$
+\lambda=\frac{1-\sqrt{1-|b_0|^2}}2
+\ge\frac{|b_0|^2}{4}\ge\frac{R^2}{4},
+\qquad I_Q(\sigma_t)=Q.
+\tag{195.6}
+$$
+转置平均仍只用于构造等成本状态曲线，不被当成物理操作。令 $L$ 为 $\sigma_t$ 的 SLD，$g>0$ 为其两个本征值之差。写 $L=l_0I+l\cdot\sigma$，影子 Bloch 向量为 $s$，则 $\operatorname{Tr}(\sigma_tL)=0$ 给出 $l_0=-l\cdot s$，从而
+$$
+Q=|l|^2-(l\cdot s)^2\le|l|^2,
+\qquad g=2|l|\ge2\sqrt Q\ge2\sqrt B.
+\tag{195.7}
+$$
+
+使用（194.8）的同一个有限测量—制备表示
+$$
+\mathcal E_0(Z)=\sum_k\operatorname{Tr}(N_kZ)\tau_k,
+\qquad N_k=N_k^{\mathsf T}\succeq0,\quad \sum_kN_k=I_2,
+\tag{195.8}
+$$
+其中 $\mathcal E_0$ 是均匀信号输入后的程序到输出通道。删去零效应。固定边界信号人口 $p_*=(1/2,0,1/2)$，令
+$$
+w_k=\frac32\bigl[(\tau_k)_{00}+(\tau_k)_{22}\bigr],\qquad
+A_k=w_kN_k,\qquad q_k=\operatorname{Tr}(N_k\sigma_t)>0.
+\tag{195.9}
+$$
+第194节的共同实现及标量极限保证 $\{A_k\}$ 是 POVM，且它在影子状态上的经典信息量 $F_*$ 至少为 $B$。记
+$$
+\Delta=Q-F_*,\qquad 0\le\Delta\le\delta.
+\tag{195.10}
+$$
+
+以下量化满秩测量的等号条件。在 $L$ 的本征基中，令 $o_k=(N_k)_{+-}$、$T_k=\operatorname{Tr}N_k>0$。对 $w_k>0$ 置 $s_k=q_k'/q_k$，其中导数在 $t$ 取值。逐效应展开 SLD 剩余平方得
+$$
+\Delta=\sum_{k:w_k>0}
+\left\|\sqrt{A_k}(L-s_kI)\sqrt{\sigma_t}\right\|_2^2
+\ge\lambda\sum_{k:w_k>0}\operatorname{Tr}\bigl[A_k(L-s_kI)^2\bigr].
+\tag{195.11}
+$$
+$\|\cdot\|_2$ 为 Hilbert–Schmidt 范数。若 $L$ 的本征值为 $\ell_+,\ell_-$，则对任意正效应 $A\ne0$ 和实数 $s$，
+$$
+A_{++}(\ell_+-s)^2+A_{--}(\ell_--s)^2
+\ge g^2\frac{A_{++}A_{--}}{\operatorname{Tr}A}
+\ge g^2\frac{|A_{+-}|^2}{\operatorname{Tr}A}.
+\tag{195.12}
+$$
+第一步是关于 $s$ 的二次函数取最小值，第二步是 $A\succeq0$ 的二阶行列式条件。因此
+$$
+\Delta\ge\lambda g^2\sum_k\frac{w_k|o_k|^2}{T_k},\qquad
+\left(\sum_k\sqrt{w_k}|o_k|\right)^2
+\le\frac{2\Delta}{\lambda g^2}.
+\tag{195.13}
+$$
+最后一步使用 Cauchy–Schwarz 与 $\sum_kT_k=2$；零 $w_k$ 项贡献为零，估计不依赖效应个数。
+
+以下的 SLD 本征投影始终固定在名义点 $t$，不随参数求导。令 $\mathcal D_L$ 为 $L$ 本征基下的投影去相干映射，$\Pi_1=|1\rangle\langle1|$ 为信号态。完备性使 $\sum_k(N_k-\mathcal D_L(N_k))=0$，故对任意 Hermitian 程序算符 $Z$，
+$$
+(\mathcal E_0-\mathcal E_0\circ\mathcal D_L)(Z)
+=\sum_k\operatorname{Tr}\bigl[(N_k-\mathcal D_L(N_k))Z\bigr](\tau_k-\Pi_1).
+\tag{195.14}
+$$
+二维非对角 Hermitian 矩阵的算符范数为其非对角项模，所以该迹系数的绝对值不超过 $|o_k|\|Z\|_1$。另外，
+$$
+\|\tau_k-\Pi_1\|_1
+\le2\sqrt{1-(\tau_k)_{11}}
+=2\sqrt{\frac{2w_k}{3}}.
+\tag{195.15}
+$$
+这一标准纯态距离界可直接验证：先对纯态 $|\psi\rangle$ 在它与 $|1\rangle$ 张成的平面中对角化差矩阵，得到 $2\sqrt{1-|\langle1|\psi\rangle|^2}$；再对 $\tau_k$ 的纯态分解使用迹范数凸性和平方根凹性。
+
+将（195.13）—（195.15）合并，并用（195.6）—（195.7），得到
+$$
+\begin{aligned}
+\|(\mathcal E_0-\mathcal E_0\circ\mathcal D_L)(Z)\|_1
+&\le\frac4{\sqrt3}\frac{\sqrt\Delta}{\sqrt\lambda\,g}\|Z\|_1\\
+&\le\frac4{\sqrt{3B}}\frac{\sqrt\delta}{R}\|Z\|_1.
+\end{aligned}
+\tag{195.16}
+$$
+这一步保留了当前处理器的测量—制备结构及（195.9）的输出权重，不是从一般 SLD 保留推出状态可恢复。一般量子模型中，SLD 信息量保留并不保证可恢复性；反例见 Gao、Li、Marvian、Rouzé，*Sufficient statistic and recoverability via Quantum Fisher Information metrics*，arXiv:2302.02341v1，命题1.1。式（195.11）的测量剩余平方来自 Braunstein–Caves，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439 的测量信息不等式及其等号机制。
+
+现在定量使用二符号障碍。令 $C_+,C_-$ 取遍三维 Hermitian 正半定相关矩阵，即各自对角元全为一；令 $q\in[0,1]$、$z\in\mathbb R$ 满足
+$$
+z^2\le Q_*q(1-q).
+\tag{195.17}
+$$
+这些变量构成非空紧集。在其上定义连续残差
+$$
+\mathcal R(C_+,C_-,q,z)=\max\left\{
+\left\|\frac{F(a,t)-qC_+-(1-q)C_-}{3}\right\|_1,
+\left\|\frac{E-z(C_+-C_-)}{3}\right\|_1
+\right\},
+\tag{195.18}
+$$
+其中 $E_{02}=E_{20}=1$，其余项为零。令 $\zeta$ 为该残差的最小值，则
+$$
+\zeta>0.
+\tag{195.19}
+$$
+否则残差在某一点为零。若 $q=0$ 或 $1$，则（195.17）给出 $z=0$，无法匹配非零 $E$。若 $0<q<1$，两个相关矩阵的通道及概率值、导数 $q,z$ 构成一阶匹配的二符号经典程序，成本不超过 $Q_*<J_c$，违反定理184.3。因此紧集上没有零残差，证明（195.19）。此常数只依赖固定的 $a,t$。
+
+对当前实际程序，取 SLD 本征投影 $P_+,P_-$，并令
+$$
+C_\pm=3\mathcal E_0(P_\pm),\qquad
+q=\operatorname{Tr}(P_+\sigma_t),\qquad
+z=\operatorname{Tr}(P_+\sigma_t').
+\tag{195.20}
+$$
+受控 Stinespring 形式保证 $C_\pm$ 都是相关矩阵。满秩性给出 $0<q<1$，SLD 投影测量给出 $z^2/[q(1-q)]=Q\le Q_*$，故这些变量属于（195.17）的紧集。又因为
+$$
+\mathcal E_0(\sigma_t)=\frac{F(a,t)}3,\qquad
+\mathcal E_0(\sigma_t')=\frac E3,\qquad
+\|\sigma_t'\|_1=|s'(t)|\le\sqrt Q\le\sqrt{Q_*},
+\tag{195.21}
+$$
+将（195.16）分别用于 $Z=\sigma_t$ 与 $Z=\sigma_t'$，得到
+$$
+\zeta\le K_*\frac{\sqrt\delta}{R},\qquad
+K_*:=\frac{4\max\{1,\sqrt{Q_*}\}}{\sqrt{3B}}.
+\tag{195.22}
+$$
+因此在 $Q\le Q_*$ 时有 $\delta\ge(\zeta^2/K_*^2)R^2$。若 $Q>Q_*$，则 $\delta>H$；又因 $R<d_t\le1-a<1$，有 $\delta\ge HR^2$。所以对全部实际程序统一成立
+$$
+I_Q(\rho_t)-B\ge c_1R^2,\qquad
+c_1:=\min\left\{H,\frac{\zeta^2}{K_*^2}\right\}>0.
+\tag{195.23}
+$$
+取下确界即得所需下界。
+
+上界使用第193节的显式纯二维程序。它按固定 $a,t$ 给出常数 $C=1+\max_j(q_j/p_j)\ge2$，以及
+$$
+I_Q(\rho_t^{(\varepsilon)})=\frac B{1-C\varepsilon},\qquad
+R_\varepsilon^2=\frac{4\varepsilon(1-\varepsilon)(1-C\varepsilon)}B.
+\tag{195.24}
+$$
+这里 $R_\varepsilon$ 是该构造在名义点两侧的解析纯态定义半径，精确区间再与 $J_a$ 相交。取
+$$
+R_0=\min\left\{d_t,\frac1{\sqrt{2BC}}\right\},\qquad
+0<R<R_0,\qquad \varepsilon=\frac{BR^2}{2}.
+\tag{195.25}
+$$
+此时 $\varepsilon<1/(4C)$，故 $1-C\varepsilon>3/4$、$1-\varepsilon>3/4$，从而
+$$
+R_\varepsilon^2>\frac{9R^2}{8}>R^2.
+\tag{195.26}
+$$
+所以该程序的精确开区间确实包含闭区间 $[t-R,t+R]$。其成本满足
+$$
+I_Q(\rho_t^{(\varepsilon)})-B
+=\frac{BC\varepsilon}{1-C\varepsilon}
+<\frac23CB^2R^2.
+\tag{195.27}
+$$
+取 $c_2=2CB^2/3$，结合（195.23）得到（195.2）。所给 $c_1$ 通过固定有限维紧集上的正残差定义，$c_2$ 来自一个明确构造；二者都不被断言为最佳系数。证毕。
+
+## 追加锚（本行以下为增补区）
