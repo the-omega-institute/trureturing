@@ -39,6 +39,8 @@ def phaseAverageVolume (input : PhaseAverageInput) : ENNReal :=
 
 abbrev PhaseAverageOutput := PhaseAverageInput → ENNReal
 
+local instance : DecidableEq PhaseAverageOutput := Classical.decEq _
+
 /-- Two CUT roles compare the complete parameterized average and volume functions. -/
 def phaseAverageArena : ObjectDomainArena.{0, 0, 0, 0} where
   toPrimitiveLawArena := by
