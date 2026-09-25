@@ -354,3 +354,10 @@ as 9q and 25q, and does not give unrestricted additional prime support.
 The substantive boundary change is to keep all five overlapping
 squarefree/square blocks on one actual source, while retaining every
 future numerical query and its complete height series.
+
+[Report595](595-outside-square-extension-leaves-an-eighty-label-pair-core.md)
+adds 749 further outside-square labels on the same boundary and keeps
+the ten-prime continuation. In the slice with central3/5 exponents at
+most one, only the eighty labels 3^a5^b q^2 r (q!=r in V, a,b in{0,1})
+remain excluded. Its direct loss/moment continuation criterion replaces
+the seed-180 bound; central-square classes remain outside that extension.
