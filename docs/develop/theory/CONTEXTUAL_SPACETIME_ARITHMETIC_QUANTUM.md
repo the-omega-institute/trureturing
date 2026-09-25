@@ -39836,3 +39836,724 @@ $$
 上述成本属于定义179.1规定的重置查询实验。第178节的一个精确期望值能辨识参数，与（179.18）的实验次数下界相容：辨识映射的单射性不提供该映射的统计精度。这里的自适应下界不涵盖可干预二步内部过程或可读取隐藏记忆的另一种实验接口。
 
 ## 追加锚（本行以下为增补区）
+
+## 180. 查询时长、配对辨识的总调用成本与临界视界的界限
+
+**定义 180.1（可选择时长的终端查询）。** 保留定义178.1的处理器及其显式参数，令 $\varepsilon=1-r$、$\gamma=-\log r$。一次时长为正整数 $N$ 的查询，重新均匀初始化隐藏记忆，让同一系统无中间干预地通过 $N$ 次处理器，只返回终端系统；其成本为 $N$ 次处理器调用。不同查询的记忆独立。初始可访问态、控制规则与私有随机源均不依赖实际未知 $w$，但可依赖已知 $r$ 和待区分的参数对。允许任意有限维量子工作空间与参考系统；查询间操作采用具有有限或标准 Borel 经典结果空间的可测量子仪器，并允许根据已有经典记录选择下一次时长和是否停止；时长选择是经典选择，不包括时长的相干叠加。不得访问隐藏记忆。总预算 $B$ 要求每条记录分支都满足 $\sum_jN_j\le B$，输入准备和重置不另计成本，平均判错率无条件计算。
+
+记时长 $N$ 的查询通道为 $\mathcal T_w^{(N)}$，则其 Schur 系数为
+$$
+a_N=\beta^N,\qquad
+u_N(w)=r^NZ_{N,w/x}(\alpha),\qquad
+F_N(w)=\begin{pmatrix}1&a_N&u_N(w)\\a_N&1&a_N\\u_N(w)&a_N&1\end{pmatrix}.
+\tag{180.1}
+$$
+记 $n(r)=\min\mathcal M_r$ 为最小最大风险视界。对等先验的两个已知假设 $0\le w_0<w_1\le\delta(r)$，令 $d=w_1-w_0$；$B_{1/4}(r;w_0,w_1)$ 是使允许协议的平均判错率下确界不超过 $1/4$ 的最小整数总预算。采用第179节的经典程序模拟方法；允许自适应选择时长时，程序分布按当前所选时长取值，不能直接假设所有程序态同分布。
+
+**定理 180.2（全部整数时长上的统一程序界）。** 存在与 $N,w$ 无关的常数 $c,C>0$，使全部充分近一的 $r$、全部 $N\ge1$ 和 $w\in[0,\delta(r)]$ 都满足
+$$
+\pi_{N,+}(w):=\frac{1+u_N(w)-2a_N}{2}\ge c\min\{\gamma N,1\},
+\qquad
+\pi_{N,-}(w):=\frac{1-u_N(w)}2\ge c\min\{\gamma N,1\}.
+\tag{180.2}
+$$
+因而每个时长都有正的经典程序分解
+$$
+\mathcal T_w^{(N)}
+=a_N\operatorname{Id}+\pi_{N,+}(w)\mathcal Q_+
++\pi_{N,-}(w)\mathcal Q_-.
+\tag{180.3}
+$$
+这里 $\mathcal Q_\pm$ 是第179节相邻系数为零、$02$ 系数为 $\pm1$ 的固定通道。一次查询的参考辅助最优信息量及其程序信息量分别满足
+$$
+I_1^{(N)}(r,w)=\frac{u_N'(w)^2}{1-u_N(w)^2}
+\le I_{{\rm prog},N}(r,w)
+:=\frac{u_N'(w)^2}{4}
+\left(\frac1{\pi_{N,+}(w)}+\frac1{\pi_{N,-}(w)}\right)
+\le\frac{CN}{\varepsilon}.
+\tag{180.4}
+$$
+均衡 $02$ 输入达到第一个等号。另令 $P_{N,w}=(a_N,\pi_{N,+}(w),\pi_{N,-}(w))$ 为程序分布；使用自然对数的经典相对熵满足有限参数差界
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le \frac{CNd^2}{\varepsilon}.
+\tag{180.5}
+$$
+
+证明。 由 $\alpha/\gamma\to\sqrt3<7/4$，可统一取 $\alpha/\gamma\le7/4$、$x\ge1/2$。令 $t=\gamma N$。有 $a_N\le r^N=e^{-t}$，而每条符号路径的相位绝对值不超过 $N\alpha\le7t/4$。
+
+若 $0<t\le1$，用 $\cos z\ge1-z^2/2$ 及指数函数的三阶下界，得到
+$$
+\begin{aligned}
+1+u_N-2a_N
+&\ge e^{-t}\left(e^t-1-\frac{49t^2}{32}\right)\\
+&\ge e^{-t}t\left(1-\frac{33t}{32}+\frac{t^2}{6}\right)
+\ge\frac{13}{96e}\,t.
+\end{aligned}
+\tag{180.6}
+$$
+最后一个二次式在 $[0,1]$ 上递减，末值为 $13/96$。若 $1\le t\le7/6$，则每条相位的绝对值不超过 $49/24<2\pi/3$，所以 $Z_{N,w/x}\ge-1/2$，从而
+$$
+1+u_N-2a_N\ge1-\frac{5}{2e}>0.
+\tag{180.7}
+$$
+若 $t\ge7/6$，则粗界 $Z_{N,w/x}\ge-1$ 给出
+$$
+1+u_N-2a_N\ge1-3e^{-7/6}>0.
+\tag{180.8}
+$$
+另有 $1-u_N\ge1-e^{-t}\ge(1-e^{-1})\min\{t,1\}$。故（180.2）可取
+$$
+c=\min\left\{
+\frac{13}{192e},\frac{1-5/(2e)}2,
+\frac{1-3e^{-7/6}}2,\frac{1-e^{-1}}2
+\right\}>0.
+\tag{180.9}
+$$
+程序权重总和为一，逐系数比较即得（180.3）。这也证明 $2a_N-1<u_N<1$，故第179节证明中的一般 Schur 信息量优化适用，给出（180.4）的精确单次值。
+
+为控制导数，令 $M=N-1$，以 $c_k\in[-1,1]$ 表示在 $M$ 个位置恰有 $k$ 次翻转时终端余弦的平均值。条件符号链给出 Bernstein 多项式
+$$
+Z_{N,p}=\sum_{k=0}^{M}\binom Mk p^k(1-p)^{M-k}c_k,
+\quad
+|\partial_pZ_{N,p}|\le2(N-1),
+\quad
+|\partial_p^2Z_{N,p}|\le4(N-1)(N-2).
+\tag{180.10}
+$$
+后两界分别来自一阶、二阶系数差；$N=1,2$ 的零阶情形按实际多项式解释。于是 $|u_N'(w)|\le2(N-1)e^{-t}/x$。代入（180.2）可得
+$$
+\frac{I_{{\rm prog},N}}N
+\le\frac{2}{cx^2\gamma}
+\frac{t e^{-2t}}{\min\{t,1\}}
+\le\frac{8}{c\varepsilon}.
+\tag{180.11}
+$$
+这里使用 $\gamma\ge\varepsilon$ 及 $t e^{-2t}/\min\{t,1\}\le1$，可取 $C=8/c$。经典模拟和信息量单调性给出（180.4）的其余不等式。
+
+对有限参数差，令 $b_N=[u_N(w_1)-u_N(w_0)]/2$，则 $|b_N|\le e^{-t}(N-1)d/x$。两个程序分布只有后两个权重分别改变 $b_N,-b_N$。由 $D(P\Vert Q)\le\sum_i(P_i-Q_i)^2/Q_i$，
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le b_N^2\left(\frac1{\pi_{N,+}(w_1)}+\frac1{\pi_{N,-}(w_1)}\right)
+\le\frac{CNd^2}{\varepsilon},
+\tag{180.12}
+$$
+证明（180.5）。证毕。
+
+**定理 180.3（允许自适应时长的最优总调用量级）。** 在定义180.1的协议类内，有
+$$
+B_{1/4}(r;w_0,w_1)
+=\Theta\!\left(\frac{1-r}{(w_1-w_0)^2}\right),
+\tag{180.13}
+$$
+其中常数可对全部充分近一的 $r$ 和全部允许的正参数差统一选择。上界由固定时长 $n(r)$ 的独立均衡 $02$ 输入实现，下界覆盖依据已有记录自适应选择时长的全部允许协议。若只允许第179节的二步查询，则相同判错目标的最小总调用数为 $\Theta(\varepsilon^{-3}/d^2)$；因此允许选择时长后的最小成本与二步接口的最小成本之比为 $\Theta(\varepsilon^4)$。
+
+证明。 先证明预算下界。把协议的每次时长 $N$ 查询替换为（180.3）的固定受控通道和一个新鲜程序符号。为分析保留全部程序符号、量子仪器的经典输出、时长选择和停止记录，记其联合分布为 $\mathsf P_j$，$j=0,1$。给定完整的过往记录，当前条件量子态及控制操作不依赖未知假设；因此下一次仪器输出和时长选择具有相同的条件核。只有新程序符号的条件分布 $P_{N,w_j}$ 依赖假设。经典相对熵的链式法则和（180.5）于是给出
+$$
+D(\mathsf P_0\Vert\mathsf P_1)
+\le\frac{Cd^2}{\varepsilon}
+\mathbb E_0\!\left[\sum_jN_j\right]
+\le\frac{CBd^2}{\varepsilon}.
+\tag{180.14}
+$$
+每次时长至少为一，故至多发生 $B$ 次查询；停止后补一个不依赖参数的吸收记录，即可把链式法则写在固定长度上。允许一般经典结果空间时，同式由条件概率核的链式法则给出。
+
+最终条件量子态由完整记录经不依赖假设的制备映射给出。因此最终两个输出的半迹范数距离 $d_{\rm tr}(\sigma_0,\sigma_1)=\tfrac12\lVert\sigma_0-\sigma_1\rVert_1$ 不超过 $\operatorname{TV}(\mathsf P_0,\mathsf P_1)$。经典 Pinsker 不等式及（180.14）给出
+$$
+d_{\rm tr}(\sigma_0,\sigma_1)
+\le\sqrt{\frac{CBd^2}{2\varepsilon}}.
+\tag{180.15}
+$$
+等先验判错率不超过 $1/4$ 要求该距离至少为 $1/2$，故 $B\ge\varepsilon/(2Cd^2)$。对协议下确界取逼近序列仍保留此必要条件。
+
+再构造匹配上界。记
+$$
+T=\frac{\pi}{3\sqrt3},\qquad A=e^{-T},\qquad U=\frac A2,
+\qquad D_* =\frac{A(1-T)}2>0.
+\tag{180.16}
+$$
+已有 $\varepsilon n\to T$、$n\alpha\to\pi/3$、$r^n\to A$。又由 $g_r\le B_1=O(\varepsilon)$、$K_r>n$ 及显式 $\delta$ 得 $\delta=O(\varepsilon^3)$。第179节给出 $r-\beta=O(\varepsilon^2)$，所以 $a_n=\beta^n\to A$。
+
+由（178.17）记 $L_n=\partial_pZ_{n,p}|_{p=0}$，则 $\varepsilon L_n\to(1-T)/2$。二阶导数界（180.10）证明
+$$
+\sup_{0\le w\le\delta}
+\left|u_n'(w)-\frac{r^nL_n}{x}\right|
+\le\frac{4r^n(n-1)(n-2)\delta}{x^2}=O(\varepsilon).
+\tag{180.17}
+$$
+因而 $u_n(w)\to U$ 及 $\varepsilon u_n'(w)\to D_*$ 都在整个区间上一致成立；积分后还有对所有正参数差的一致割线极限
+$$
+\frac{\varepsilon[u_n(w_1)-u_n(w_0)]}{w_1-w_0}\longrightarrow D_*.
+\tag{180.18}
+$$
+这一步不把一个仅对固定参数差有效的余项除以任意小的 $d$。并列最大视界也满足同样的视界极限。
+
+均衡 $02$ 测量给出 Bernoulli 概率 $q_\pm^{(n)}(w)=(1\pm u_n(w))/2$。两个假设的根保真度 $f_n$ 满足精确恒等式
+$$
+1-f_n=\frac{[u_n(w_1)-u_n(w_0)]^2}{8}
+\sum_{\nu=\pm}
+\frac1{\left(\sqrt{q_\nu^{(n)}(w_0)}+
+\sqrt{q_\nu^{(n)}(w_1)}\right)^2}.
+\tag{180.19}
+$$
+于是，在全部允许参数对上一致有
+$$
+\frac{1-f_n}{d^2/\varepsilon^2}\longrightarrow
+\frac{F_*}{8}>0,
+\qquad F_*:=\frac{D_*^2}{1-U^2}
+=\frac{A^2(1-T)^2}{4(1-A^2/4)}.
+\tag{180.20}
+$$
+$m$ 个独立均衡测量的似然比测试具有判错率至多 $f_n^m/2$。故取 $m=O(\varepsilon^2/d^2)$ 即可达到 $1/4$，所需总调用数 $nm=O(\varepsilon/d^2)$。由于 $d\le\delta=O(\varepsilon^3)$，$\varepsilon^2/d^2\to\infty$ 一致成立，整数取整的附加一次查询不改变成本量级。与下界合并即得（180.13）；第179节的二步接口成本再乘每次的固定成本二，得到所述比值。证毕。
+
+**定理 180.4（预测临界视界不等于最佳信息时长）。** 对任意固定 $t>0$ 和满足 $\varepsilon N(r)\to t$ 的整数时长序列，最优单次信息量的每调用极限为
+$$
+\varepsilon\frac{I_1^{(N(r))}(r,w)}{N(r)}
+\longrightarrow
+f(t):=
+\frac{e^{-2t}[\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)]^2}
+{t[1-e^{-2t}\cos^2(\sqrt3t)]},
+\tag{180.21}
+$$
+且收敛对 $w\in[0,\delta(r)]$ 一致。在 $T=\pi/(3\sqrt3)$ 处，$f'(T)>0$；因此存在略长于临界视界的时长，其渐近每调用信息量严格更大。这里不声称已经确定 $f$ 的全局最大点或自适应信息量的精确最佳常数。
+
+证明。 对该序列，（180.10）的二阶导数界与 $\delta=O(\varepsilon^3)$ 仍给出与（180.17）同阶的误差。三角和（178.17）于是给出一致极限
+$$
+\varepsilon u_N'(w)\longrightarrow
+e^{-t}\left[\frac{\sin(\sqrt3t)}{\sqrt3}-t\cos(\sqrt3t)\right],
+\qquad u_N(w)\longrightarrow e^{-t}\cos(\sqrt3t).
+\tag{180.22}
+$$
+将其代入（180.4）的精确单次值，即得（180.21），包括方括号为零的时长。
+
+令 $g(t)=\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)$，则 $g'(t)=\sqrt3t\sin(\sqrt3t)$。在 $T$ 处直接对数微分得到
+$$
+\frac{f'(T)}{f(T)}
+=-2+\frac{6T}{1-T}-\frac1T
+-\frac{2A^2}{1-A^2/4}>0.
+\tag{180.23}
+$$
+确有 $1/2<T<1$，所以前三项之和大于二；又 $e^T>1+T>3/2$，故 $A<2/3$，最后一个正分式小于一。因此右端为正，小幅增加 $T$ 会增加 $f$。这一常数层面的改进与（180.13）的最优成本量级相容。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 181. 实环境标架、精确自适应信息量与最优查询尺度
+
+**定义 181.1（局部信息率与预算优化）。** 沿用第180节的重置终端查询、经典时长选择及分支预算合同。在固定的 $r,w$ 处对未知参数 $w$ 微分；每个候选控制协议在求导时保持固定。令 $I_m^{(N)}(r,w)$ 为 $m$ 次固定时长 $N$ 查询的全部允许自适应协议的最大信息量，令 $I_{B,\mathrm{var}}^*(r,w)$ 为总调用预算 $B$ 下、允许经典自适应时长的最终记录与量子输出之信息量上确界，并定义
+$$
+\mathscr I(r,w):=\sup_{N\ge1}
+\frac{u_N'(w)^2}{N[1-u_N(w)^2]}.
+\tag{181.1}
+$$
+这些量是局部 SLD 信息量准则；固定局部设计点上的优化不自动给出未知参数的有限样本最优判别常数。以下使用的环境扩张与交叉项消去方法属于既有通道估计工具：Demkowicz-Dobrzański、Maccone，*Using entanglement against noise in quantum metrology*，arXiv:1407.2934v3，式（9），给出交叉算符为零时的一般自适应上界。这里直接构造达到单次下界的环境标架，并将其用于当前配对族。
+
+**定理 181.2（所有固定时长的精确自适应加法性）。** 对全部充分近一的 $r$、全部 $w\in[0,\delta(r)]$ 和正整数 $m,N$，有
+$$
+I_m^{(N)}(r,w)
+=m\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.2}
+$$
+独立均衡 $02$ 输入及各次的固定对称、反对称基测量达到等号。特别地，第179节的二步接口满足精确式
+$$
+I_m^{(2)}(r,w)=m\frac{4J(r)^2}{1-u(w)^2},
+\qquad
+\sup_{w\in[0,\delta(r)]}
+\left|\frac{I_m^{(2)}(r,w)}{m(1-r)^3}-9\right|\longrightarrow0,
+\tag{181.3}
+$$
+且极限对所有正整数 $m$ 统一。该式收紧第179节的程序上界，不改变其有限辨识成本结论。
+
+证明。 固定 $N$，略写 $a=a_N$、$u=u_N(w)$、$h=(1+u)/2$、$\ell=(1-u)/2$。由（180.2）有 $0<a<h<1$。在实三维环境中取单位向量
+$$
+v_0=(\sqrt h,\sqrt\ell,0),\qquad
+v_2=(\sqrt h,-\sqrt\ell,0),\qquad
+v_1=\left(\frac a{\sqrt h},0,\sqrt{1-\frac{a^2}{h}}\right).
+\tag{181.4}
+$$
+其 Gram 矩阵恰为 $F(a,u)$，所以等距映射 $V_u|i\rangle=|i\rangle v_i$ 实现该 Schur 通道。各 $v_i$ 为实单位向量，故
+$$
+V_u^\dagger\partial_uV_u=0,
+\qquad
+(\partial_uV_u)^\dagger\partial_uV_u
+=\operatorname{diag}\left(
+\frac1{16h\ell},\frac{a^2}{16h^2(h-a^2)},\frac1{16h\ell}\right).
+\tag{181.5}
+$$
+其中中间项不超过端点项，等价于 $a^2\le h^2$。因此对 $w$ 求导后，记 $A_w=(\partial_wV_w)^\dagger\partial_wV_w$，有
+$$
+V_w^\dagger\partial_wV_w=0,
+\qquad
+4\lVert A_w\rVert=\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.6}
+$$
+
+说明它怎样控制已有参数信息的输入。设信号—参考态的当前切向量满足 $\dot\rho=(L\rho+\rho L)/2$，且 $I(\rho)=\operatorname{Tr}(\rho L^2)<\infty$。取任一纯化 $|\psi\rangle$，令 $|\xi\rangle=(L\otimes I)|\psi\rangle/2$，则
+$$
+\langle\psi|\xi\rangle=0,\qquad
+4\lVert\xi\rVert^2=I(\rho).
+\tag{181.7}
+$$
+局部归一化曲线 $\bigl(|\psi\rangle+s|\xi\rangle\bigr)/\sqrt{1+s^2\lVert\xi\rVert^2}$ 的约化态具有相同的当前态和一阶切向量。这里仅匹配切向量，不要求它在邻域中纯化原来的整条输入曲线，因此不需要把任意变秩输入的 SLD 值误等同于整条曲线的最小纯化速度。
+
+施加 $V_w$ 后，纯态切向量为 $\dot V_w|\psi\rangle+V_w|\xi\rangle$。由（181.6），交叉内积消失，纯态切向量与纯态本身仍正交。偏迹的信息量单调性遂给出
+$$
+I\bigl((\mathcal T_w^{(N)}\otimes\operatorname{Id})(\rho_w)\bigr)
+\le I(\rho_w)+4\operatorname{Tr}(\rho_wA_w)
+\le I(\rho_w)+\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.8}
+$$
+参考上的恒等因子在迹中省略；无限输入信息量时上界按扩展实数理解。该论证也覆盖秩亏的有限 SLD 切向量，因为约化态的 SLD 信息量只依赖当前态与一阶切向量。
+
+从不依赖未知参数的初态开始，每次查询间控制都不增加信息量，每次查询最多增加（181.8）的第二项。归纳得到（181.2）的上界。独立均衡输入达到单次最优信息量，其固定基测量产生独立 Bernoulli 样本，信息量可加，给出匹配下界。（181.3）再由第179节的一致单次极限得到。端点按通道的光滑局部延伸取单侧值。证毕。
+
+**定理 181.3（自适应预算的信息率）。** 第181.1式的上确界对每个允许的 $r,w$ 都由某个有限整数时长达到，并有
+$$
+I_{B,\mathrm{var}}^*(r,w)\le B\,\mathscr I(r,w),
+\qquad
+\lim_{B\to\infty}\frac{I_{B,\mathrm{var}}^*(r,w)}B=\mathscr I(r,w).
+\tag{181.9}
+$$
+因此经典反馈选择时长不能超过最佳固定时长的局部每调用信息率。此结论不把有限预算中不能整除的剩余调用算成已经使用。
+
+证明。 在当前选择的时长寄存器上，（181.6）的等距映射作分块受控作用，停止分支取恒等映射。交叉算符在每块都为零。对每条已有记录应用（181.8）并保留经典记录的信息量，得到一次查询的信息增量不超过当前时长 $N$ 的 $I_1^{(N)}(r,w)$ 的期望。对全部查询求和，
+$$
+I_{\rm out}(r,w)
+\le\mathbb E_w\sum_j I_1^{(N_j)}(r,w)
+\le\mathscr I(r,w)\,\mathbb E_w\sum_jN_j
+\le B\,\mathscr I(r,w).
+\tag{181.10}
+$$
+这里使用带经典记录的条件信息量分解；标准 Borel 结果空间以相应条件积分表示。也可把整个有限预算协议纯化，保留正交的记录环境：参数无关的仪器扩张保持切向量范数，每个受控 $V_N$ 的交叉项为零，其新增平方范数按当前记录概率加权，直接得到同一个界。停止后补恒等映射，使总槽数不超过 $B$。
+
+对固定 $r,w$，由（180.10）及 $|u_N|\le r^N$，
+$$
+\frac{I_1^{(N)}(r,w)}N
+\le\frac{4(N-1)^2r^{2N}}{x^2N(1-r^{2N})}\longrightarrow0
+\qquad(N\to\infty).
+\tag{181.11}
+$$
+而 $N=2$ 的信息量严格为正，所以最大值由有限 $N_*$ 达到。预算 $B$ 时使用 $\lfloor B/N_*\rfloor$ 次独立均衡查询，达到 $\lfloor B/N_*\rfloor I_1^{(N_*)}$；除以 $B$ 并令 $B\to\infty$，与上界合并证明（181.9）。证毕。
+
+**定理 181.4（全时长最优常数的变分表达）。** 令 $f(t)$ 为（180.21）的显式曲线，则
+$$
+F_{\max}:=\max_{t>0}f(t)
+\tag{181.12}
+$$
+存在、有限且严格为正，并有
+$$
+\sup_{w\in[0,\delta(r)]}
+\left|(1-r)\mathscr I(r,w)-F_{\max}\right|
+\longrightarrow0.
+\tag{181.13}
+$$
+任何最优整数时长 $N_*(r,w)$ 的归一化值 $(1-r)N_*(r,w)$ 都最终落在一个固定紧区间内；沿任意 $r\uparrow1$、允许的 $w=w(r)$ 及最优时长选择，其聚点均属于 $\operatorname*{arg\,max}_{t>0}f(t)$。反过来，任取该最大点集中的 $t_0$，按 $N(r)=\lfloor t_0/(1-r)\rfloor$ 选择查询时长，就在全部允许 $w$ 上统一达到极限信息率 $F_{\max}/(1-r)$。不要求最大点唯一。
+
+证明。 必须同时控制短时长、紧区间和长时长，不能仅对（180.21）的逐点极限取上确界。令 $s=\gamma N$，其中 $\gamma=-\log r$。翻转一个 Bernoulli 位至多使相位改变 $2N\alpha$，且改变前后的相位绝对值都不超过 $N\alpha$。用余弦导数界 $|\sin z|\le|z|$，得到另一条统一导数界
+$$
+|\partial_p Z_{N,p}|\le2(N-1)N^2\alpha^2\le2N^3\alpha^2.
+\tag{181.14}
+$$
+因为 $\alpha/\gamma$ 有界、$x\ge1/2$、$\varepsilon\le\gamma$，以及 $1-u_N^2\ge1-e^{-2s}$，对 $0<s\le1$ 可用（181.14）证明
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_0s^4.
+\tag{181.15}
+$$
+具体地，左侧不超过常数倍的 $\varepsilon N^5\alpha^4/s$，而 $\alpha\le C\gamma$ 将其界为常数倍的 $(\varepsilon/\gamma)s^4$。对 $s\ge1$，改用（180.10）的一阶粗界，得到
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_\infty s e^{-2s}.
+\tag{181.16}
+$$
+两个常数都可与 $N,w,r$ 无关。这两条界分别在 $s\downarrow0$ 和 $s\to\infty$ 一致趋零。
+
+在任一固定 $0<b\le\varepsilon N\le B_0<\infty$ 的区间上，（180.17）的误差控制统一成立：$N=O(\varepsilon^{-1})$、$\delta=O(\varepsilon^3)$，所以导数误差为 $O(\varepsilon)$。结合三角和（178.17）及 $\alpha/\varepsilon\to\sqrt3$，可得（180.22）及（180.21）在这个区间和全部允许 $w$ 上的统一版本。分母有固定正下界 $1-r^{2N}$，故取平方与商不破坏统一收敛。
+
+显式 $f$ 连续，并由上述尾界满足 $f(t)\to0$，当 $t\downarrow0$ 或 $t\to\infty$；在 $T=\pi/(3\sqrt3)$ 处 $f(T)>0$。因此 $F_{\max}$ 存在且最大点集是 $(0,\infty)$ 内的非空紧集。先把两端的统一尾界压到任意给定误差之下，再在中间紧区间取统一极限，即得（181.13）。
+
+同样的尾界与 $f(T)>0$ 把所有离散最优时长限制在统一紧区间。若其归一化时长沿子列收敛到 $t$，紧区间上的统一极限及（181.13）强迫 $f(t)=F_{\max}$。最后，$\varepsilon\lfloor t_0/\varepsilon\rfloor\to t_0$，代入统一紧区间极限即证明反向可达性。由（180.23），$T$ 自身不是该最大点集的成员；这里仍不提供全局最大点的唯一性或闭式表达。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 182. 偏置判别的三能级增益与最优读出的任务依赖
+
+**定义 182.1（同一实 Schur 族的二元决策）。** 固定 $0<a<1$ 和
+$$
+2a-1<u_0<u_1<1,
+\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},
+\qquad
+\mathcal T_u(X)=F(a,u)\odot X.
+\tag{182.1}
+$$
+该范围内 $F(a,u)$ 正定且对角为一，因此 $\mathcal T_u$ 是通道。一次实验可自由选择与未知假设无关的信号—参考输入，使用一次 $\mathcal T_{u_j}$，再作联合测量。假设 $H_j$ 的先验为 $\pi_j$；损失为猜错的概率。定义
+$$
+h_j=\frac{1+u_j}{2},\quad \ell_j=1-h_j,\quad
+\pi_0=\frac{h_1}{h_0+h_1},\quad
+\pi_1=\frac{h_0}{h_0+h_1},\quad
+k=\pi_0-\pi_1=\frac{u_1-u_0}{2+u_0+u_1}>0.
+\tag{182.2}
+$$
+这里先固定两条候选通道，再指定这一组合法先验；它不是对全部先验的最优式。均衡 $02$ 探针 $|+\rangle=(|0\rangle+|2\rangle)/\sqrt2$ 的输出为
+$$
+\tau_j=h_j|+\rangle\langle+|+\ell_j|-\rangle\langle-|,
+\qquad | -\rangle=(|0\rangle-|2\rangle)/\sqrt2.
+\tag{182.3}
+$$
+故保留整个输出态与保留二项概率 $(h_j,\ell_j)$ 对这组实验等价。本文使用第15.3节的 Schur 输出等距表示与第121节的实验比较原则。一般量子统计比较的文献为 Buscemi，*Comparison of quantum statistical models: equivalent conditions for sufficiency*，arXiv:1004.3794v4：定义7比较全部决策集合与收益，式（49）—（50）定义 CPTP 充分性；定理3的统计态射与命题5的完全比较须区分。以下通过具体风险差与正性障碍论证，不借用任意维度下未经限定的比较逆定理。
+
+**定理 182.2（选定偏置先验的精确全局最优风险）。** 在（182.1）—（182.2）的实验中，均衡 $02$ 输出的最小风险为 $\pi_1$，而允许任意信号—参考输入时的最小风险为
+$$
+P_{\rm err}^*=\pi_1-k\frac{a^2}{1+2a}<\pi_1.
+\tag{182.4}
+$$
+令 $d=1+2a$、$\nu_*=a^2/d$。达到等号的输入与猜测 $H_1$ 的测量效应分别为
+$$
+|\psi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)+\sqrt{\frac ad}|1\rangle,
+\qquad
+M_1=|\chi_*\rangle\langle\chi_*|,
+\quad
+|\chi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)-\sqrt{\frac ad}|1\rangle.
+\tag{182.5}
+$$
+另一个效应为 $M_0=I-M_1$；无需参考系统。
+
+证明。 由先验的选法，$\pi_1h_1=\pi_0h_0$，故均衡输出的加权差为 $-k|-\rangle\langle-|$。其正部为零，始终猜 $H_0$ 已达到风险 $\pi_1$。对一般输入，通道的加权差满足
+$$
+\Delta:=\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}
+=-k\,\mathcal S_{F_-},\qquad F_-:=F(a,-1),
+\quad \mathcal S_C(X):=C\odot X.
+\tag{182.6}
+$$
+这里 $\mathcal S_{F_-}$ 只是 Hermitian 保持线性映射，并不假定它为通道。
+
+先将任意混合信号—参考输入纯化；丢弃额外纯化系统不增加 Hermitian 迹范数，因此求上界只需纯输入。写 $|\Psi\rangle=\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$、$D_p=\operatorname{diag}(\sqrt{p_i})$。信号标签保证 $|i\rangle|v_i\rangle/\sqrt{p_i}$ 两两正交，零人口处任选参考单位向量即可补成等距映射 $V$。对任意 Hermitian 矩阵 $C$，
+$$
+(\mathcal S_C\otimes\operatorname{Id})(|\Psi\rangle\langle\Psi|)
+=VD_pCD_pV^\dagger.
+\tag{182.7}
+$$
+因此迹范数只依赖 $p$，同样的值可由信号纯态 $\sum_i\sqrt{p_i}|i\rangle$ 达到。
+
+以下正半定分解同时控制所有人口分布，无须先假定最优输入对称。令 $q=(1,-1,1)^{\mathsf T}$、$z=(a,1+a,a)^{\mathsf T}$，则直接逐项计算得
+$$
+C:=F_-+\nu_*qq^{\mathsf T}
+=2|-\rangle\langle-|+\frac{zz^{\mathsf T}}d\succeq0.
+\tag{182.8}
+$$
+由于 $C$ 的每个对角元为 $1+\nu_*$，而 $q$ 的分量平方均为一，矩阵
+$D_pF_-D_p=D_pCD_p-\nu_*D_pqq^{\mathsf T}D_p$ 的右侧两项分别正半定，迹为 $1+\nu_*$ 与 $\nu_*$。迹范数三角不等式遂给出
+$$
+\lVert D_pF_-D_p\rVert_1\le1+2\nu_*.
+\tag{182.9}
+$$
+
+取（182.5）的输入人口 $p_*=(\frac{1+a}{2d},\frac ad,\frac{1+a}{2d})$，令 $s=a/d$、$t=1-s$。在 $|-\rangle$ 方向，$D_{p_*}F_-D_{p_*}$ 的特征值为 $t>0$；在 $|+\rangle,|1\rangle$ 张成的空间内，其矩阵为
+$$
+\begin{pmatrix}0&a\sqrt{st}\\a\sqrt{st}&s\end{pmatrix}.
+\tag{182.10}
+$$
+向量 $\sqrt t|+\rangle-\sqrt s|1\rangle=|\chi_*\rangle$ 的特征值为 $-a s=-\nu_*$，另一个特征值为正。因此（182.9）达到等号，而 $M_1$ 正是加权输出差 $-kD_{p_*}F_-D_{p_*}$ 的正谱投影。使用二元 Helstrom 公式 $P_{\rm err}=(1-\lVert\Delta(\rho)\rVert_1)/2$，得到（182.4）。
+
+也可直接核对两种条件概率：
+$$
+m_j:=\Pr(M_1\mid H_j)
+=\frac{(1+a)^2h_j}{d^2}-\frac{a^2}d,
+\qquad
+\pi_1m_1-\pi_0m_0=k\nu_*.
+\tag{182.11}
+$$
+所以 $\pi_0m_0+\pi_1(1-m_1)=\pi_1-k\nu_*$，与谱计算一致。证毕。
+
+**定理 182.3（两能级可恢复与三能级不可恢复的精确分界）。** 固定任一纯信号—参考输入，并以 $p_i$ 表示其三个信号人口。存在与 $j$ 无关的 CPTP 解码器，将两个均衡输出 $\tau_j$ 分别变成该输入的两个通道输出，当且仅当
+$$
+p_0p_1p_2=0.
+\tag{182.12}
+$$
+在（182.2）的偏置任务中，所有满足（182.12）的纯输入最小风险都恰为 $\pi_1$；所有 $p_0p_1p_2>0$ 的纯输入都能取得严格小于 $\pi_1$ 的风险。此分类包括任意参考，但不将任意混合输入按其对角人口作同样分类。
+
+证明。 因为 $\tau_j$ 在同一基中对角，任何解码器对这两个态的作用等于按 $+$、$-$ 制备两个固定状态 $\sigma_+,\sigma_-$。由 $h_0\ne h_1$，方程 $\rho_j=h_j\sigma_++\ell_j\sigma_-$ 唯一确定
+$$
+\sigma_\pm=VD_pF(a,\pm1)D_pV^\dagger.
+\tag{182.13}
+$$
+两者迹均为一。$F(a,1)$ 正半定，其反对称特征值为零、对称块行列式为 $2(1-a^2)>0$，故 $\sigma_+$ 总为状态。另一方面，
+$$
+\det(D_pF_-D_p)=-4a^2p_0p_1p_2.
+\tag{182.14}
+$$
+三个人口均正时该行列式为负，$\sigma_-$ 不正，故解码器不存在；同时加权输出差 $-kVD_pF_-D_pV^\dagger$ 有严格正部，Helstrom 风险严格小于 $\pi_1$。任一人口为零时，剩余的至多二阶主子矩阵正半定：相邻块行列式为 $1-a^2>0$，$02$ 块行列式为零。这时 $\sigma_-$ 也是状态，制备（182.13）即给出解码器，且加权输出差负半定，风险等于 $\pi_1$。证毕。
+
+**定理 182.4（不存在对所有先验统一最优的一次探针）。** 对（182.1）的同一对候选通道，没有一个固定的一次信号—参考输入，能在所有二元先验下都达到允许任意输入的最小风险，即使允许测量随先验变化。特别地，第179—181节的均衡探针在局部 SLD 信息量和等先验判别上的最优性，不使它成为全部决策任务的充分读出。
+
+证明。 先验相等时，未加权通道差仅有 $02,20$ 系数 $u_1-u_0$。由（182.7），任一纯输入给出的迹范数为
+$$
+2(u_1-u_0)\sqrt{p_0p_2}\le u_1-u_0.
+\tag{182.15}
+$$
+等号强迫 $p_1=0$、$p_0=p_2=1/2$。因此均衡探针达到等先验全局最小风险 $1/2-(u_1-u_0)/4$，而每个达到该最小值的纯信号—参考输入，在（182.2）下的风险均为 $\pi_1$，严格大于（182.4）。这排除纯输入的统一最优性。
+
+若某个混合输入在所有先验下统一最优，将其额外纯化且保留纯化参考后，丢弃该参考能复现原实验，所以纯化实验在每个先验下至少一样好。原实验已是全局最优，纯化也必须在每个先验下最优，与上述结论矛盾。
+
+同一个障碍还排除更强的程序模拟：不存在固定 CPTP 处理器，以任意信号输入及一份 $\tau_j$ 为输入，精确实现整个 $\mathcal T_{u_j}$。否则固定程序基态 $+$、$-$ 得到两个 CPTP 映射 $\mathcal R_+,\mathcal R_-$，线性方程唯一强迫 $\mathcal R_\pm=\mathcal S_{F(a,\pm1)}$。但 $F_-$ 有负特征值，$\mathcal S_{F_-}$ 作用于均匀信号纯态给出 $F_-/3$，甚至不保持正性，矛盾。
+
+对第177—181节的终端查询，可取 $a=a_N$、$u_j=u_N(w_j)$，只要选出的两值满足 $u_0<u_1$；第180节保证（182.1）的严格域，二步查询的 $w_0<w_1$ 总满足这一顺序。此时（182.4）的风险差完全发生在一次完整重置查询内部，不要求访问隐藏记忆，也不改变既有等先验多次判别的成本界。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 183. 全先验判别曲线与三能级探针的精确适用区间
+
+**定义 183.1（有序候选与先验偏置）。** 沿用（182.1）的同一对通道，记
+$$
+D=u_1-u_0>0,\qquad v=\frac{u_0+u_1}{2},\qquad
+\pi_0=\frac{1+b}{2},\quad\pi_1=\frac{1-b}{2},\qquad -1\le b\le1.
+\tag{183.1}
+$$
+令 $R^*(b)$ 为一次通道调用、任意信号—参考输入及联合测量的最小平均误判概率。探针和测量可以依赖已知的候选通道与先验，不可依赖实际未知标签。以下给出全部先验的最优值；采用的 Helstrom 公式和参考归约与第182节相同。加权通道范数的一般框架可参见 Jenčová，*Comparison of quantum channels and statistical experiments*，arXiv:1512.07016v2，第2.2节式（1）—（3）；这里直接求出当前三阶符号的最优值。
+
+对 $b>0$，定义
+$$
+c=\frac{D-2b(1+v)}4,\qquad q=ba,\qquad
+b_-:=\frac{D}{2+u_0+u_1+4a},\qquad
+b_+:=\frac{D}{2+u_0+u_1-4a^2}.
+\tag{183.2}
+$$
+这些符号中的 $c,q$ 随 $b$ 变化，且 $0<b_-<b_+<1$。
+
+**定理 183.2（偏向较小参数时的三个最优区间）。** 对 $0<b\le1$，有
+$$
+R^*(b)=\frac{1-b}{2}-G(b),
+\qquad
+G(b)=
+\begin{cases}
+c,&0<b\le b_-,\\[2pt]
+\displaystyle\frac{q^2+bc}{b-c+2q},&b_-<b<b_+,\\[6pt]
+0,&b_+\le b\le1.
+\end{cases}
+\tag{183.3}
+$$
+第一个区间可用均衡 $02$ 输入，读到 $|+\rangle$ 时猜 $H_1$；最后一个区间始终猜 $H_0$ 即最优。中间区间令
+$$
+s_*:=\frac{q-c}{b-c+2q},\qquad t_*:=1-s_*=
+\frac{b+q}{b-c+2q}.
+\tag{183.4}
+$$
+此时 $0<s_*<1$，输入 $\sqrt{t_*}|+\rangle+\sqrt{s_*}|1\rangle$，并以
+$|\eta_*\rangle=\sqrt{t_*}|+\rangle-\sqrt{s_*}|1\rangle$ 的投影为猜 $H_1$ 的效应，即达到（183.3）。全部最优值都无需参考系统；端点可以存在额外的最优决策，不要求最优实现唯一。
+
+证明。 加权通道差 $\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}$ 的 Schur 符号为
+$$
+M=\begin{pmatrix}-b&-q&z\\-q&-b&-q\\z&-q&-b\end{pmatrix},
+\qquad z=\frac D2-bv=b+2c.
+\tag{183.5}
+$$
+其输出的迹恒为 $-b$，故给定输入的误判率为 $\pi_1$ 减去加权输出正部的迹。由（182.7）及纯化，只需对人口 $p$ 最大化 $\operatorname{Tr}(D_pMD_p)_+$。
+
+为求该最大值，可以将 $p_0,p_2$ 对称化，但须保留相干旗标。令 $U$ 交换能级 $0,2$，将任意纯输入 $|\Psi\rangle$ 替换成
+$$
+\frac{|\Psi\rangle|0\rangle_F+(U\otimes I)|\Psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{183.6}
+$$
+新输入的人口为 $((p_0+p_2)/2,p_1,(p_0+p_2)/2)$。对输出旗标去相干后，得到两个等权且酉等价的 Hermitian 块，迹范数之和等于原输入的迹范数。去相干不增加 Hermitian 迹范数，所以未去相干的新输出至少一样好；又因迹固定，正部迹也至少一样大。再由（182.7），可用同人口的信号纯态达到新值。
+
+因此取 $p_1=s$、$p_0=p_2=(1-s)/2$。在 $|-\rangle$ 方向，矩阵 $D_pMD_p$ 的特征值为 $-(b+c)(1-s)\le0$，其中
+$b+c=[D+2b(1-v)]/4>0$；对称块为
+$$
+B_s=\begin{pmatrix}
+c(1-s)&-q\sqrt{s(1-s)}\\
+-q\sqrt{s(1-s)}&-bs
+\end{pmatrix}.
+\tag{183.7}
+$$
+它至多有一个严格正特征值。
+
+当 $c\ge q$ 时，$cI-B_s$ 的对角元非负，且行列式为
+$$
+s\bigl[c^2-q^2+s(bc+q^2)\bigr]\ge0.
+\tag{183.8}
+$$
+所以正部迹至多为 $c$；$s=0$ 达到该值。此条件恰为 $b\le b_-$。
+
+当 $-ba^2<c<q$ 时，令 $L=b-c+2q>b+q>0$、$g=(q^2+bc)/L>0$。下面给出对任意人口都有效的上界。令 $r=(1,-1,1)^{\mathsf T}$，则
+$$
+M-g rr^{\mathsf T}\preceq0.
+\tag{183.9}
+$$
+确实，反对称特征值为 $-2(b+c)<0$；对称块为
+$\left(\begin{smallmatrix}2(c-g)&\sqrt2(g-q)\\\sqrt2(g-q)&-b-g\end{smallmatrix}\right)$，其行列式为
+$2[g(b-c+2q)-(bc+q^2)]=0$，而 $g-c=(q-c)^2/L>0$，故两对角元非正。由（183.9），
+$$
+D_pMD_p\preceq gD_prr^{\mathsf T}D_p,
+\qquad \operatorname{Tr}(D_pMD_p)_+\le g.
+\tag{183.10}
+$$
+最后一个不等式来自 $\operatorname{Tr}X_+=\max_{0\le E\le I}\operatorname{Tr}(EX)$ 及 $\lVert D_pr\rVert^2=1$。
+
+取（183.4）的 $s_*,t_*$，则
+$c t_*+q s_*=q t_*-b s_*=g$。因此 $|\eta_*\rangle$ 是（183.7）的特征值 $g$ 所属单位向量。另一个对称特征值非正，反对称特征值亦非正，故所给测量达到正部迹 $g$。该中间条件恰为 $b_-<b<b_+$。
+
+当 $c\le-ba^2=-q^2/b$ 时，（183.5）的对称块
+$\left(\begin{smallmatrix}2c&-\sqrt2q\\-\sqrt2q&-b\end{smallmatrix}\right)$ 两对角元非正、行列式 $-2(bc+q^2)\ge0$；反对称特征值也为负，故 $M\preceq0$，所有输入的增益均为零。此条件恰为 $b\ge b_+$。公式在两处分界连续相接。最后，$h_0=(1+u_0)/2>a>a^2$，故 $2+u_0+u_1-4a^2>D$；结合分母次序得到所述阈值范围。证毕。
+
+**定理 183.3（相反偏置与三能级增益的不对称性）。** 当 $-1\le b\le0$ 时，令 $\zeta=-b$，则
+$$
+R^*(b)=\frac{1-\zeta}{2}
+-\max\left\{0,\frac{D-\zeta(2-u_0-u_1)}4\right\}.
+\tag{183.11}
+$$
+均衡 $02$ 输入对这整个先验半区都最优。括号内为正时，读到 $|-\rangle$ 猜 $H_0$，否则始终猜 $H_1$。在 $b=0$，两种表达都给出 $R^*(0)=1/2-D/4$。
+
+证明。 对 $\zeta>0$，改看较小先验假设 $H_0$ 的加权差 $\pi_0\mathcal T_{u_0}-\pi_1\mathcal T_{u_1}$。其符号对角为 $-\zeta$、相邻项为 $-\zeta a$、端点项为 $-D/2-\zeta v$。仍可用（183.6）对称化。反对称特征值是
+$$
+(1-s)\frac{D-2\zeta(1-v)}4.
+\tag{183.12}
+$$
+对称块具有（183.7）的形状，只需将 $b,q,c$ 换成
+$\zeta,\zeta a,\widetilde c=-D/4-\zeta(1+v)/2$。因为 $(1+v)/2>a>a^2$，有 $\widetilde c<-\zeta a^2$，所以这个块负半定。正部迹遂不超过（183.12）在 $s=0$ 时的正部，均衡输入达到该值。$\zeta=0$ 则直接由（182.15）处理。证毕。
+
+**定理 183.4（严格三能级区间与校准先验的嵌入）。** 在 $b_-<b<b_+$ 内，每一个支持于至多两个信号能级的纯输入，都严格劣于（183.4）的探针，即使该输入带有参考。第182节的先验 $b=k=D/(2+u_0+u_1)$ 严格位于此区间内，且（183.3）—（183.4）还原（182.4）—（182.5）。
+
+证明。 支持于相邻两个能级时，加权差只含相应负半定主块，增益为零。支持于 $02$ 时，两个对角系数为 $-b$、非对角系数为 $z=b+2c>-b$。其可达最大正部迹为 $\max(c,0)$：$z\le b$ 时该主块负半定；$z>b$ 时，固定总人口为一的最大特征值由均衡人口达到，值为 $(z-b)/2=c$。参考不改变这些迹范数。
+
+中间区间的 $g>0$ 且 $g-c=(q-c)^2/L>0$，所以 $g>\max(c,0)$，证明严格差距。分母次序给出 $b_-<k<b_+$；代入 $b=k$ 得 $c=0$、$q=ka$、$s_*=a/(1+2a)$、$g=ka^2/(1+2a)$，正是第182节的值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 184. 经典程序的精确生成成本与可读信息的严格差距
+
+**定义 184.1（有限经典程序的一阶生成成本）。** 固定 $0<a<1$、$2a-1<u<1$，记 $\mathcal T_v=\mathcal S_{F(a,v)}$、$h=(1+u)/2$、$\ell=1-h$。在名义点 $u$ 的有限经典程序由有限多个与参数无关的 CPTP 映射 $\mathcal R_j$，以及在 $u$ 附近可微的概率 $p_j(v)$ 组成，要求全部 $p_j(u)>0$，并满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u,
+\qquad
+\sum_jp_j'(u)\mathcal R_j=\partial_u\mathcal T_u.
+\tag{184.1}
+$$
+定义其局部成本及最优值为
+$$
+I_{\rm prog}(u)=\sum_j\frac{p_j'(u)^2}{p_j(u)},
+\qquad
+\mathfrak C(a,u)=\inf I_{\rm prog}(u),
+\tag{184.2}
+$$
+下确界取遍任意有限字母数的程序。若要求在一个邻域内精确满足 $\sum_jp_j(v)\mathcal R_j=\mathcal T_v$，则记相应最优值为 $\mathfrak C_{\rm exact}(a,u)$。这两种优化都在名义点逐点进行，程序组件在求导时保持固定。
+
+这个操作量属于既有的通道切向模拟框架：Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节定义以经典程序 Fisher 信息量计量的 $G^{\max}$。量子态版本的反向估计及 RLD 输入下界见同作者 *Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节的一阶匹配构造与输入信息量不等式。以下给出当前通道族的显式最优值与达到它的固定程序，直接证明所需下界，不把量子态模拟结论直接当作通道模拟等号。
+
+**定理 184.2（三个经典符号达到全局最小生成成本）。** 在第184.1节的范围内，
+$$
+\mathfrak C(a,u)=\mathfrak C_{\rm exact}(a,u)
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}
+=\frac{1-a^2}{4\ell(h-a^2)}.
+\tag{184.3}
+$$
+下确界由三个固定通道达到。更具体地，按名义点选择
+$$
+c=\frac{a\ell}{1-a^2},\qquad
+\mathcal R_+=\mathcal S_{F(1,1)},\quad
+\mathcal R_-=\mathcal S_{F(-1,1)},\quad
+\mathcal R_c=\mathcal S_{F(c,2c^2-1)}.
+\tag{184.4}
+$$
+令 $H=(1+v)/2$，定义
+$$
+p_c(v)=\frac{1-H}{1-c^2},\qquad
+p_+(v)=\frac{H+a-(1+a)c}{2(1-c)},\qquad
+p_-(v)=\frac{H-a+(1-a)c}{2(1+c)}.
+\tag{184.5}
+$$
+这些权重在整个 $2a-1<v<1$ 内都严格为正，并精确模拟 $\mathcal T_v$；它们在设计点 $v=u$ 的信息量达到（184.3）。
+
+证明。 首先不得把优化域预先缩成 Schur 通道。设 $P_i=|i\rangle\langle i|$。因为 $\mathcal T_u(P_i)=P_i$ 为纯态，而（184.1）将它写成正权重状态凸组合，所以每个 $\mathcal R_j(P_i)=P_i$。取 $\mathcal R_j$ 的任一 Kraus 表示，正性迫使每个 $K_{j\alpha}|i\rangle$ 都落在 $\mathbb C|i\rangle$ 内；各 Kraus 算符遂为对角矩阵。因此每个组件自动是某个相关矩阵 $C_j\succeq0$、$\operatorname{diag}C_j=\mathbf1$ 的 Schur 通道。
+
+令 $F=F(a,u)$，$E$ 为只有 $02,20$ 两项等于一的矩阵，并令 $s_j=p_j'(u)/p_j(u)$。值与切向量匹配给出 $\sum_jp_jC_j=F$、$\sum_jp_js_jC_j=E$。于是
+$$
+\begin{pmatrix}F&E\\E&Q\end{pmatrix}
+=\sum_jp_j
+\begin{pmatrix}C_j&s_jC_j\\s_jC_j&s_j^2C_j\end{pmatrix}\succeq0,
+\qquad Q=\sum_jp_js_j^2C_j.
+\tag{184.6}
+$$
+每个加项正半定，因为它是 $C_j$ 与 $\left(\begin{smallmatrix}1&s_j\\s_j&s_j^2\end{smallmatrix}\right)$ 的张量积，按分块顺序表示。$F$ 正定，故 Schur 补给出 $Q\succeq EF^{-1}E$。$Q$ 的每个对角元都等于 $I_{\rm prog}$，而
+$$
+(EF^{-1}E)_{00}=(F^{-1})_{22}
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{184.7}
+$$
+取该对角元即得适用于全部有限程序的下界；它只使用一阶匹配，所以也适用于精确模拟。
+
+现核对达到性。$h>a$ 给出 $0<c<a/(1+a)<1$。前两个组件为秩一相关矩阵；第三个是单位向量
+$ (c,\sqrt{1-c^2})$、$(1,0)$、$(c,-\sqrt{1-c^2})$ 的 Gram 矩阵，故也定义通道。（184.5）满足
+$$
+p_++p_-+p_c=1,\qquad
+p_+-p_-+c p_c=a,\qquad
+p_++p_-+c^2p_c=H.
+\tag{184.8}
+$$
+相应混合矩阵的相邻项为 $a$，端点项为 $2H-1=v$，从而精确实现整族通道。任意允许的 $v$ 都有 $H>a$，故 $p_->0$；由 $(1+a)c<a$ 得 $p_+>0$；$p_c>0$ 由 $H<1$ 得到。
+
+令 $d=1-a^2$、$q=h-a^2>0$。在设计点，固定 $c=a\ell/d$ 后可化简为
+$$
+p_+(u)=\frac{q}{2(1-a)(1-c)},\quad
+p_-(u)=\frac{q}{2(1+a)(1+c)},\quad
+p_c(u)=\frac{\ell}{1-c^2}.
+\tag{184.9}
+$$
+对 $v$ 求导时 $c$ 保持不变，三项导数分别为
+$1/[4(1-c)]$、$1/[4(1+c)]$、$-1/[2(1-c^2)]$。代入（184.2）得
+$$
+I_{\rm prog}(u)
+=\frac1{4(1-c^2)}\left[\frac1\ell+\frac{1-ac}{q}\right]
+=\frac d{4\ell q},
+\tag{184.10}
+$$
+最后一步使用 $dc=a\ell$。这同时达到一阶模拟与精确模拟的下界，证明（184.3）。证毕。
+
+**定理 184.3（二符号限制的严格额外成本）。** 若第184.1节的程序只允许两个正权重符号，则最小成本为
+$$
+\mathfrak C_2(a,u)=\frac1{(1-u)(1+u-2a^2)}
+=\frac{\mathfrak C(a,u)}{1-a^2}>\mathfrak C(a,u).
+\tag{184.11}
+$$
+因而三个符号是达到（184.3）所需的最少有限字母数。
+
+证明。 设程序为 $p(v)\mathcal R_1+[1-p(v)]\mathcal R_2$。目标切向量非零，所以 $p'(u)\ne0$。由值与切向量的两条线性方程，$\mathcal R_1,\mathcal R_2$ 都必须落在通过 $\mathcal T_u$、方向为 $\partial_u\mathcal T_u$ 的同一仿射直线上，即它们为固定相邻系数 $a$ 的 $\mathcal T_{v_-},\mathcal T_{v_+}$。交换符号后可取 $v_-<u<v_+$。
+
+$F(a,v)$ 正半定的完整条件为 $2a^2-1\le v\le1$：反对称特征值为 $1-v$，对称块为 $\left(\begin{smallmatrix}1+v&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。所以 $2a^2-1\le v_-<u<v_+\le1$。匹配方程迫使程序的局部信息量为
+$$
+\frac1{(u-v_-)(v_+-u)}
+\ge\frac1{(u-2a^2+1)(1-u)}.
+\tag{184.12}
+$$
+取两个端点通道达到等号，且其线性混合在 $u$ 邻域精确模拟。一个符号的固定通道无法产生非零切向量，结合定理184.2即得最少符号数。证毕。
+
+**定理 184.4（生成与读取的严格信息比）。** 对同一条通道，最大单次可读 SLD 信息量为 $I_{\rm read}(a,u)=1/(1-u^2)$，而
+$$
+\frac{\mathfrak C(a,u)}{I_{\rm read}(a,u)}
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1.
+\tag{184.13}
+$$
+特别地，对第179节的二步接口，以未知配对参数 $w$ 求导、令 $\varepsilon=1-r$，有
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{\varepsilon^3}-12\right|\longrightarrow0,
+\qquad
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{I_1^{(2)}(r,w)}-\frac43\right|\longrightarrow0.
+\tag{184.14}
+$$
+这里 $\mathfrak C_w$ 仍指对同一二步终端通道逐点优化的有限经典程序成本；生成所用程序标签不属于查询者可访问的输出。
+
+证明。 第181节的实 Stinespring 标架在全部 $0<a<h<1$ 的同一范围内给出可读值 $1/(1-u^2)$，且均衡输入达到它。将（184.3）相除，利用
+$(1-a^2)(1+u)-(1+u-2a^2)=a^2(1-u)$，即得（184.13）。
+
+二步接口中 $a=\beta^2$、$u=u_2(w)$、$u_2'(w)=2J$。第178—179节给出在全部允许 $w$ 上统一成立的
+$$
+1-a^2=4\varepsilon+O(\varepsilon^2),\qquad
+\ell=\varepsilon+O(\varepsilon^2),\qquad
+h-a^2=3\varepsilon+O(\varepsilon^2),\qquad
+J/\varepsilon^2\longrightarrow3.
+\tag{184.15}
+$$
+因此 $\mathfrak C(a,u)\sim1/(3\varepsilon)$。重新参数化将程序信息量乘以 $(2J)^2$，得到 $\mathfrak C_w\sim12\varepsilon^3$；由第181节 $I_1^{(2)}\sim9\varepsilon^3$，再得比值 $4/3$，两者都为一致极限。第179节系数18的程序仍是合法上界；（184.14）求出了这个接口的最小经典程序成本，而可读信息的精确系数仍为9。证毕。
+
+## 追加锚（本行以下为增补区）
