@@ -292,3 +292,215 @@ $`\mathrm{Var}|G|=\sigma^2(1-2/\pi)`$，即得 (36.8)。
 其自身的绝对起点值，后者仍有推论 34.3 的负协方差。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 微观得分窗口的后验噪声逃逸
+
+**定义 37.1（中心计数原子与收缩窗口）。** 沿用[波动卷定义 27.1、33.1](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md)的两个实际平稳实验，固定
+$`r=1/2`$、$`\beta\in(1/2,1)`$。记信号漂移为
+$`\phi=\tfrac34\log(3/2)-\tfrac14\log2\gt0`$，沿允许的
+$`M=2^{d-1}\to\infty`$ 取
+
+```math
+\lambda_M=4\left\lfloor\frac{\beta\log M}{4\phi}\right\rfloor,
+\qquad q_M=\left\lfloor M e^{-\lambda_M\phi}\right\rfloor,
+\qquad \mathsf T_M=2M\lambda_M,\qquad
+\tau_M=\log(M/q_M),\qquad w_M=\sqrt{\lambda_M/q_M}.
+```
+
+式 (37.1)。
+
+下文略去 $`q,\lambda,\tau,w`$ 的下标。所有标签使用同一真实支持
+$`S`$，$`\pi_i`$ 为正确对齐数据下、均匀基数先验的精确后验边缘概率。
+令
+
+```math
+J_M=\{i:\tau-w\lt W_i\le\tau+w\},\qquad
+V_M=q^{-1/4}\sum_{i\in J_M}(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad
+F_M(u)=q^{-1/4}\sum_{\tau-w\lt W_i\le\tau+uw}
+              (\mathbf1_{\{i\in S\}}-\pi_i),\quad -1\le u\le1.
+```
+
+式 (37.2)。
+
+路径取右连续版本，同分位置同时进入。于是 $`F_M(-1)=0`$、
+$`F_M(1)=V_M`$。未知方向时，按定义 35.1 的同一次方向判决计算工作得分与工作概率，
+得到相应的工作统计量；错误方向上的这些概率不被解释为未知方向模型的精确后验。
+
+**定理 37.2（实际后验中心化噪声在微观窗口内不紧）。** 序列 (37.1) 满足非格点临界条件，
+内在偏移极限为零。对两个实际实验，正确对齐的均匀先验联合空间中，对每个固定
+$`0\le K\lt\infty`$，有
+
+```math
+\mathbb P\{|V_M|\le K\mid\mathscr D_M\}
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (37.3)。
+
+对每个固定真实支持及两种方向信息情形，相应统计量还满足
+
+```math
+\sup_{S:\,|S|=q}\mathbb P_S\{|V_M|\le K\}\longrightarrow0.
+```
+
+式 (37.4)。
+
+因此 $`F_M`$ 的分布族在 $`D[-1,1]`$ 的 $`J_1`$ 拓扑下不紧。
+此结论使用得分窗口 $`w_M`$，不改变按容量或排序位置索引的细尺度极限。
+
+证明。非格点性及中心原子的构造见[波动卷命题 33.3](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md)。
+这里具体地，$`\log(3/2)/(-\log2)`$ 为无理数，否则会使三的非零整数次幂等于二的整数次幂。
+取整给出
+
+```math
+\lambda\sim\frac\beta\phi\log M,\qquad
+q=M^{1-\beta+o(1)},\qquad
+\tau-\lambda\phi=O(q^{-1}),\qquad
+z_M\longrightarrow0.
+```
+
+式 (37.5)。
+
+特别地 $`q`$ 比 $`\lambda`$ 的每个固定幂增长更快。
+令 $`B_M`$ 为实际计数对恰等于
+$`(3\lambda/4,\lambda/4)`$ 的全部位置，包含信号与背景位置。
+这些计数是整数，且所有这些位置的补偿得分相同。记
+$`a_M=rq/(M-q)`$，该得分为
+
+```math
+W_c=\frac{3\lambda}{4}\log\frac{3/2}{1-a_M}
+       +\frac\lambda4\log\frac{1/2}{1+a_M},\qquad
+|W_c-\tau|\le C(a_M\lambda+q^{-1})=o(w).
+```
+
+式 (37.6)。
+
+最后一个等式由
+$`a_M\lambda/w=O(q^{3/2}\sqrt\lambda/M)\to0`$
+及 $`1/(qw)=1/\sqrt{\lambda q}\to0`$ 得到。
+因此 $`B_M\subseteq J_M`$ 对充分大的 $`M`$ 恒成立。
+
+在信号 Poisson 行比较律 $`Q_r`$ 下，经典 Stirling 公式给出中心计数对的概率
+$`h_\lambda\sim2/(\pi\sqrt3\lambda)`$。
+补偿背景比较律记为 $`Q_{-a_M}`$，精确换测度关系为
+$`dQ_r=e^W dQ_{-a_M}`$。故全部位置的比较期望为
+
+```math
+\mu_B=qh_\lambda+(M-q)e^{-W_c}h_\lambda
+=qh_\lambda\left(1+\frac{M-q}{q}e^{-W_c}\right)
+\sim\frac{4q}{\pi\sqrt3\lambda}.
+```
+
+式 (37.7)。
+
+这是同一实际对象中的混合计数；背景项与信号项具有相同主阶。
+对中心计数对的确定指示函数应用波动卷 (35.8)，令
+$`\delta_M=(\log M)^3/(2M)`$，有
+
+```math
+|\mathbb E_S|B_M|-\mu_B|\le C\delta_M\mu_B+CM^{1-D},\qquad
+\mathrm{Var}_S(|B_M|)
+\le C(\mu_B+\delta_M\mu_B^2+M^{2-D}),\qquad
+\frac{|B_M|}{q/\lambda}\longrightarrow\frac4{\pi\sqrt3}
+\quad\text{依概率}.
+```
+
+式 (37.8)。
+
+这里 $`D`$ 可取任意充分大的固定数。除以相应主阶后，均值误差趋零，相对方差由
+$`C(\lambda/q+\delta_M+M^{2-D}\lambda^2/q^2)`$ 控制并趋零。
+实际一、二行比较同时适用于独立对与路径实验，不要求实际行相互独立。
+
+现在在同一校准独立 Bernoulli 表示中工作：
+$`p_i=\mathrm{logistic}(W_i-\log((M-q)/q)+\theta_M)`$，
+$`\sum_i p_i=q`$，乘积律记为 $`\mathsf Q_M`$。
+波动卷第 35 章给出
+$`\theta_M=O_{\mathbb P}(q^{-1/2})`$ 及
+$`cq\le d_{\mathrm{tot}}:=\sum_i p_i(1-p_i)\le q`$
+在概率趋一的事件上成立。
+因为 $`w\to0`$、$`\log((M-q)/q)-\tau=o(1)`$，所以
+$`\max_{i\in J_M}|p_i-1/2|\to0`$ 依概率，空集时该最大值置零。
+由 (37.8)，中心组的辅助方差满足
+
+```math
+\frac{\sum_{i\in B_M}p_i(1-p_i)}{q/\lambda}
+\longrightarrow\frac1{\pi\sqrt3},\qquad
+ d_J:=\sum_{i\in J_M}p_i(1-p_i)\ge c_1q/\lambda
+\quad\text{以趋一概率成立}.
+```
+
+式 (37.9)。
+
+为了控制其上界，只须把收缩窗口包含在固定区间
+$`\{\tau-1\lt W\le\tau+1\}`$。
+固定宽度局部界使该区间的信号概率为 $`O(\lambda^{-1/2})`$。
+在该区间内 $`e^{-W}\le e q/M`$，换测度后整个混合比较期望为
+$`O(q/\sqrt\lambda)`$。再用 (35.8) 的一阶矩界和 Markov 不等式，得到
+
+```math
+|J_M|/q\longrightarrow0,\qquad d_J/q\longrightarrow0,
+\qquad d_O:=d_{\mathrm{tot}}-d_J\ge cq/2
+\quad\text{以趋一概率成立}.
+```
+
+式 (37.10)。
+
+同时可令 $`|J_M|\lt q`$、$`M-|J_M|\gt q`$。
+这里没有在收缩窗口上使用相对密度近似，也没有求整个窗口方差的精确主项。
+
+给定这样的数据，在乘积律下写
+$`S_J=\sum_{i\in J_M}\zeta_i`$、$`\mu_J=\sum_{i\in J_M}p_i`$，
+并以 $`S_O`$ 表示补集和。条件于全体和为 $`q`$ 就是精确固定基数后验。
+由 [Siripraparat–Neammanee 定理 2](../../../Library/Dynamics/siripraparat2021local.md)
+对全体和及补集和的一致局部概率界，完整向量的条件密度比满足
+
+```math
+\frac{\mathsf Q_M(S_O=q-k)}{\mathsf Q_M(S_J+S_O=q)}
+=\sqrt{\frac{d_{\mathrm{tot}}}{d_O}}
+  \exp\left(-\frac{(k-\mu_J)^2}{2d_O}\right)+O(q^{-1/2}),
+\qquad 0\le k\le|J_M|.
+```
+
+式 (37.11)。
+
+分母的均值正好是整数 $`q`$；上述基数界使所有补集取值合法。
+与波动卷 (35.11) 同样积分，精确后验完整边缘律 $`\mathsf P_J`$ 满足
+
+```math
+d_{\mathrm{TV}}(\mathsf P_J,\mathsf Q_J)
+\le C(d_J/q+q^{-1/2})\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (37.12)。
+
+此处移除条件化所需的是消失的方差比例，窗口可以含远多于 $`\sqrt q`$ 个位置。
+
+最后把同一局部定理用于 $`S_J`$ 本身。由 $`d_J\to\infty`$，一致地对整数 $`k`$，
+$`\mathsf Q_M(S_J=k)\le C/\sqrt{d_J}`$。
+任何半径为 $`L`$ 的实区间至多包含 $`2L+2`$ 个整数。因此对任意实数中心
+$`x`$，包括任意给定数据后的中心，均有
+
+```math
+\mathsf Q_M\{|S_J-x|\le Kq^{1/4}\}
+\le\frac{C(Kq^{1/4}+1)}{\sqrt{d_J}}
+\le C_K\left(\frac{\sqrt\lambda}{q^{1/4}}
+                   +\sqrt{\frac\lambda q}\right)\longrightarrow0.
+```
+
+式 (37.13)。
+
+取 $`x=\sum_{i\in J_M}\pi_i`$，再加上 (37.12) 的误差，便得到 (37.3)。
+反集中估计对中心一致，因而不需要把无界均值经总变差转移，
+也不需要将辅助中心替换为精确中心的更高阶展开。
+条件概率被一控制，其期望也趋零。事件及统计量在共同置换支持和数据时不变，
+所以先验联合概率等于每个固定支持下的概率，给出正确方向的 (37.4)。
+未知方向的工作统计量在同一次方向判决正确时与正确对齐统计量逐项相等；
+补事件概率为 $`O(q^{-1})`$，故相等耦合转移 (37.4)。
+
+最后，$`J_1`$ 时间变换固定区间端点，因此端点评价
+$`f\mapsto f(1)`$ 连续。若 $`F_M`$ 的分布族紧，则
+$`F_M(1)=V_M`$ 的分布族也紧，与 (37.4) 矛盾。∎
+
+## 追加锚（本行以下为增补区）
