@@ -33,8 +33,10 @@ internal sealed class IntegerCharacterCoercivityDocument : IScribeDocumentDefini
                     "A bounded preimage for the linear phase map gives a uniform distance "
                     + "bound to each affine kernel fiber. In a uniform neighborhood of any "
                     + "periodic zero y, the scalar cosine inequality bounds the sum of squared "
-                    + "phases of x - y. On a compact cube outside that neighborhood, continuity gives "
-                    + "a positive minimum. Translations by 2 pi times integer coordinate vectors "
+                    + "phases of x - y. On the part of the compact cube at least a fixed positive "
+                    + "distance from the full zero set, continuity gives a uniform positive lower "
+                    + "bound for the defect, vacuously when that part is empty. "
+                    + "Translations by 2 pi times integer coordinate vectors "
                     + "preserve both the defect and distance to the full zero set, extending the bound "
                     + "to every vector.")),
                 Paragraph(Text(
