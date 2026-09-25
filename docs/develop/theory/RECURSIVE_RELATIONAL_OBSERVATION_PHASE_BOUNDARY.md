@@ -1187,3 +1187,212 @@ $$
 由线性性，$`W`$ 因而把三维 $`S_0+S_1`$ 等距送入同一个二维 $`K\otimes\mathbb C\eta`$，矛盾。因此二维不可能，三维构造最小。证明完毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 11. 每个正精度的有限固定接收与零误差极限
+
+**定义 11.1（同一装置在全部终端的近似联合任务）。** 固定定义10.1中的已知 $`a,b\ne0`$，令 $`p=|b|^2\in(0,1)`$。将（10.2）放宽为
+
+$$
+\sup_{n\ge1}\ \sup_{J,\rho}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)\right\|_1\le\epsilon,
+\qquad 0<\epsilon<1.
+\tag{11.1}
+$$
+
+仍要求一个独立纯接收初态和一个固定全域 CPTP 接收通道服务全部 $`n`$，新环境可以丢弃，所有持久控制计入 $`K`$；仅终端解码器可以依赖 $`n`$。记最小有限接收维数为 $`d_\infty^{(\epsilon)}(a,b)`$。设计可以使用已知振幅，未放入未知共同相位族。
+
+**定理 11.2（全时域对数容量上界与零误差发散）。** 令
+
+$$
+\rho_*={|m_0\rangle\langle m_0|+p|0\rangle\langle0|\over1+p},
+\qquad \lambda_*:=\lambda_{\min}(\rho_*)>0,
+\qquad C_p={\sqrt{2p}\over(1+p)\sqrt{\lambda_*}},
+\tag{11.2}
+$$
+
+以及
+
+$$
+T=\max\left\{3,\,
+1+\left\lceil{\log(2C_p/\epsilon)\over\log(1/p)}\right\rceil\right\}.
+\tag{11.3}
+$$
+
+则
+
+$$
+\boxed{
+d_\infty^{(\epsilon)}(a,b)\le4T-2
+=O_p\!\left(\log{1\over\epsilon}\right),
+\qquad
+\lim_{\epsilon\downarrow0}d_\infty^{(\epsilon)}(a,b)=\infty.
+}
+\tag{11.4}
+$$
+
+更具体地，对每个固定维数 $`D`$，可取显式时域 $`N_D=6D^2(4D^2+1)`$，并存在 $`\eta_D>0`$，使任一维数不超过 $`D`$ 的固定接收器，至少在一个 $`n\le N_D`$ 上具有不小于 $`\eta_D`$ 的最坏参考完整半迹误差。特别地，若一个 $`D`$ 维固定接收器精确服务前 $`N`$ 步，则必有 $`N<6D^2(4D^2+1)`$，因而 $`D>(N/30)^{1/4}`$。这个精确时域下界不主张最优；$`\eta_D`$ 仍只是存在性结论。
+
+证明。先在有限启动时刻建立一份共同编码。沿用（10.4）的 $`F=R_0-R_1`$。对两个初始记忆基态，$`T`$ 步后的活动记忆边缘为
+
+$$
+\rho_{i,T}=\rho_*+c_i(-p)^{T-1}F,
+\qquad c_0={p\over1+p},\quad c_1=-{1\over1+p}.
+\tag{11.5}
+$$
+
+$`T\ge3`$ 时，两份边缘均秩二。实际档案按首发位 $`i`$ 分成两个正交扇区；每个扇区在该初始基态下的 Schmidt 支撑维数为二。因此实际总支撑 $`S_T`$ 为四维，纯化之间的等距对应给
+
+$$
+F_T:S_T\xrightarrow{\ \cong\ }Q\otimes R,
+\qquad \dim Q=\dim R=2,
+\qquad
+(I_M\otimes F_T)T_T|i\rangle
+=|i\rangle_Q\otimes|\operatorname{vec}\sqrt{\rho_{i,T}}\rangle_{MR}.
+\tag{11.6}
+$$
+
+因子置换按所标系统理解。这里 $`T_T`$ 是来源的累计等距，$`\operatorname{vec}A=\sum_{j,k}A_{jk}|j\rangle_M|k\rangle_R`$ 使用固定基。式（11.6）分别在两份正交档案扇区上定义，故合起来是同一个仅作用于档案的等距同构；未操作活动 $`M`$。
+
+定义比较等距
+
+$$
+W_\infty|i\rangle=|i\rangle_Q|\Xi\rangle_{MR},
+\qquad |\Xi\rangle=|\operatorname{vec}\sqrt{\rho_*}\rangle.
+\tag{11.7}
+$$
+
+两份 $`Q`$ 标签正交，因而
+
+$$
+\left\|(I_M\otimes F_T)T_T-W_\infty\right\|
+=\max_{i=0,1}\left\|\sqrt{\rho_{i,T}}-\sqrt{\rho_*}\right\|_{\rm HS}.
+\tag{11.8}
+$$
+
+这个算子范数控制相干输入，并在张量任意参考后保持，不能只解释为两份经典基态的比较。
+
+直接计算有 $`\det\rho_*=p^2/(1+p)^2>0`$ 和 $`\|F\|_{\rm HS}=\sqrt{2p}`$。取 $`A=\sqrt{\rho_{i,T}}`$、$`B=\sqrt{\rho_*}`$、$`Z=A-B`$，则
+
+$$
+AZ+ZB=\rho_{i,T}-\rho_*.
+\tag{11.9}
+$$
+
+在两边正算子的各自本征基组成的矩阵基中，Sylvester 算子 $`Z\mapsto AZ+ZB`$ 的本征值为两本征值之和，均至少为 $`\sqrt{\lambda_*}`$。所以
+
+$$
+\left\|\sqrt{\rho_{i,T}}-\sqrt{\rho_*}\right\|_{\rm HS}
+\le{\|\rho_{i,T}-\rho_*\|_{\rm HS}\over\sqrt{\lambda_*}}
+\le C_pp^{T-1}=:\delta.
+\tag{11.10}
+$$
+
+于是对全部参考完整输入，真实 $`T`$ 步编码态 $`\alpha_T`$ 与比较态
+
+$$
+\beta_T=\rho_{JQ}\otimes|\Xi\rangle\langle\Xi|_{MR}
+\tag{11.11}
+$$
+
+的半迹距离至多 $`\delta`$。这里 $`\rho_{JQ}`$ 是把原输入的记忆因子同构为 $`Q`$ 所得的同一输入态。纯态半迹距离不超过相应单位向量之差的范数，对任意混合态取纯化后偏迹即可得到该界。$`\beta_T`$ 只用于比较；装置实际生成的是 $`\alpha_T`$，没有免费供应共同平稳初始化。
+
+由 $`E(\rho_*)=\rho_*`$，采用推论8.4所引 Godley–Guţă 相干吸收构造：[^phase_burnin_absorber] 存在 $`R\otimes\mathcal B`$ 上的同一个酉 $`U_*`$，使
+
+$$
+(I_M\otimes U_*)(T_{a,b}\otimes I_R)|\Xi\rangle
+=|\Xi\rangle\otimes|0\rangle_{\mathcal B}.
+\tag{11.12}
+$$
+
+这也可直接将发射后同一 $`\rho_*`$ 的两份正交 Schmidt 纯化向量，送回 $`R`$ 的对应基向量张量空白，再延拓为酉。启动后的运行通道为
+
+$$
+\mathcal C_{\rm run}(X)
+=\operatorname{Tr}_{\mathcal B}
+\bigl[(I_Q\otimes U_*)X(I_Q\otimes U_*^*)\bigr].
+\tag{11.13}
+$$
+
+比较态（11.11）经每轮“源发射＋运行接收”完全不变。实际态执行同一个 CPTP 演化，半迹距离收缩，故对全部 $`n\ge T`$，其运行态 $`\sigma_n`$ 满足
+
+$$
+D(\sigma_n,\beta_T)\le\delta,
+\qquad D(X,Y):=\tfrac12\|X-Y\|_1.
+\tag{11.14}
+$$
+
+这个比较保留 $`J,M,Q,R`$ 全部系统，后续误差没有按步相加。
+
+终端解码只访问接收器。对 $`n=T+\ell`$，在 $`R`$ 旁加入 $`\ell`$ 个纯空白位，按逆时间顺序运行 $`U_*^*`$，再对 $`QR`$ 执行 $`F_T^*`$，得到前 $`T`$ 位和后续 $`\ell`$ 位档案。为验证它，把每个接收门与其后的源发射交换次序：前者作用于接收器及已经发出的位，后者只作用于活动 $`M`$ 及未来新位。因此全部接收门可推到源发射之后，逆接收电路确实不操作 $`M`$。
+
+令 $`G_n`$ 表示先用 $`F_T^*`$ 展开前缀，再让源执行 $`\ell`$ 步的联合等距；它可以作用于 $`M`$，仅用于下面的数学比较。记上述实际局部解码器为 $`\mathcal D_n`$，则
+
+$$
+\Omega_n=G_n\alpha_TG_n^*,
+\qquad
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\beta_T
+=G_n\beta_TG_n^*.
+\tag{11.15}
+$$
+
+第二式只在平稳比较态上使用（11.12），没有断言局部解码器将任意 $`\alpha_T`$ 直接变成未来目标。结合（11.14）、等距保持距离及通道收缩性，得到
+
+$$
+\begin{aligned}
+D\bigl((\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n,\Omega_n\bigr)
+&\le D(\sigma_n,\beta_T)+D(\beta_T,\alpha_T)\\
+&\le2\delta\le\epsilon.
+\end{aligned}
+\tag{11.16}
+$$
+
+还需将启动门与运行门合成一台固定装置。对 $`0\le t<T`$，取精确前缀编码扇区 $`K_t`$；其维数依次为 $`1,2,3,4,\ldots,4`$，运行扇区为 $`K_{\rm run}=Q\otimes R`$。置
+
+$$
+K=\bigoplus_{t=0}^{T-1}K_t\ \oplus\ K_{\rm run},
+\qquad \dim K=1+2+3+4(T-2)=4T-2.
+\tag{11.17}
+$$
+
+在启动扇区上，使用实际包含关系 $`S_{t+1}\subseteq S_t\otimes\mathcal B`$ 给出的精确压缩部分等距；最后一步的目标编码选为（11.6）。每块在实际支撑正交补上补以输出固定态的 Kraus 算子，使其全域保迹。运行扇区采用（11.13）。先按输入扇区投影、再用相应 Kraus 算子，便构成一个全域固定 CPTP 通道。
+
+实际运行每时刻只处于一个确定扇区，故没有源数据的扇区间相干被此投影删除。初态在 $`K_0`$，到第 $`T`$ 步进入运行扇区，此后永久留在其中。全部启动控制已计入（11.17）；运行中不调用外部步数来换门。$`n\le T`$ 的前缀均精确编码，解码误差为零；$`n>T`$ 用（11.16）。未使用扇区上的终端解码可任意 CPTP 完成。因此（11.1）的两个上确界同时满足，得到容量上界。
+
+先给固定维数的显式精确障碍。取 $`\dim K=D`$，仅选定理10.2证明中的纯初态 $`|0\rangle_M`$。令 $`V=\operatorname{Herm}(M\otimes K)`$，其实维数为 $`q=4D^2`$。固定接收器与发射合成实线性映射 $`\mathcal R:V\to V`$，保留实际轨道 $`\sigma_n=\mathcal R^n\sigma_0`$。在实对称张量子空间 $`W=\operatorname{Sym}^2V`$ 上，$`\mathcal R\otimes\mathcal R`$ 限制为线性映射 $`L`$，且
+
+$$
+s:=\dim W={q(q+1)\over2},\qquad
+\tau_n=\sigma_n\otimes\sigma_n,\qquad \tau_{n+1}=L\tau_n.
+\tag{11.18}
+$$
+
+把两个实对称双线性型
+ $`(X,Y)\mapsto\operatorname{Tr}[(\operatorname{Tr}_M X)(\operatorname{Tr}_M Y)]`$
+及 $`(X,Y)\mapsto\operatorname{Tr}(XY)`$
+线性化并限制到 $`W`$，分别记为 $`u,v`$。于是 $`u(\tau_n)=\operatorname{Tr}\sigma_{K,n}^2`$、$`v(\tau_n)=\operatorname{Tr}\sigma_n^2`$。按（10.5）写 $`q_n=q_*+\beta(-p)^{n-1}+\gamma p^{2n-2}`$，并置
+
+$$
+\begin{aligned}
+z_n&=(\tau_n,(-p)^{n-1}\tau_n,p^{2n-2}\tau_n),\\
+z_1&=(\tau_1,\tau_1,\tau_1),\qquad
+z_{n+1}=\operatorname{diag}(L,-pL,p^2L)z_n,\\
+f_n&=u(\tau_n)-q_nv(\tau_n)
+=(u-q_*v)(z_n^{(1)})-\beta v(z_n^{(2)})-\gamma v(z_n^{(3)}).
+\end{aligned}
+\tag{11.19}
+$$
+
+这是一份维数 $`3s=6D^2(4D^2+1)=N_D`$ 的固定线性递推及线性读出。Cayley–Hamilton 恒等式给首项系数为一的 $`N_D`$ 阶标量递推，所以 $`f_1,\ldots,f_{N_D}`$ 全为零就强制所有 $`f_n`$ 为零；不需要 $`f_0`$，也不要求 $`L`$ 可逆。
+
+定理10.2证明中（10.9）—（10.12）的最低模代数论证直接排除了这一恒零序列。因此任何固定接收器都不可能精确服务前 $`N_D`$ 步：精确恢复会由（10.8）使这些 $`f_n`$ 全为零。这里没有从纯度恒等式反推出未来解码器，只在有限合同之外继续迭代同一个全域通道以应用线性递推。若精确服务前 $`N`$ 步，必有 $`N<N_D\le30D^4`$，即得陈述中的四次根下界。
+
+最后证明正误差障碍和发散。固定 $`D`$ 后，纯接收初态、固定接收通道以及前 $`N_D`$ 个终端解码器构成紧参数集：纯态集合闭且有界，各有限维通道的 Choi 集合也闭且有界。目标函数取前 $`N_D`$ 个终端的最大参考完整半迹误差。输入维数为二，通道差的钻石范数可以用二维参考取得，故这是有限维参数的连续函数。它在紧集上取得最小值；前述显式精确障碍排除零点，故其最小值 $`\eta_D`$ 严格正。维数较小的装置可补到 $`D`$ 维并在未使用空间任意完成通道，所以同一障碍覆盖全部维数不超过 $`D`$ 的装置。
+
+所以 $`\epsilon<\eta_D`$ 时必有 $`d_\infty^{(\epsilon)}(a,b)>D`$。这对每个 $`D`$ 成立，即得（11.4）的发散结论。紧性论证没有提供 $`\eta_D`$ 的数值或有效求法，上界的常数也只针对固定 $`p\in(0,1)`$；不主张在振幅退化极限上一致，更没有证明对数上界最优。证明完毕。
+
+[^phase_burnin_absorber]: 平稳纯化的固定相干吸收使用 Godley–Guţă (2023), Lemma 4.1，来源及初始化条件见[既有文献说明](../../../Library/Dynamics/godley2023absorber.md)。该已知构造在本证明中作为有限启动后的运行步骤；有限启动编码、所有终端共用误差界及固定通道容量的零误差极限在同一合同下组合。
+
+## 追加锚（本行以下为增补区）
