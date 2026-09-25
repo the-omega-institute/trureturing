@@ -8,6 +8,7 @@
 -/
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
+import Mathlib.Data.Fintype.Sigma
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -63,7 +64,10 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
       rfl
   | @cons d i j t a tail ih =>
       intro r
-      simp [sweep, unsweep, ih r]
+      rcases hs : sweep phi tail r with ⟨u, s, beta⟩
+      have htail : unsweep phi s beta = ⟨t, tail, r⟩ := by
+        simpa [hs] using ih r
+      simp only [sweep, hs, unsweep, Equiv.symm_apply_apply, htail]
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
@@ -124,7 +128,12 @@ private def edgeCoordinates : Edge R ≃
 
 noncomputable instance : Fintype (Edge R) := by
   classical
-  exact Fintype.ofEquiv _ (edgeCoordinates (R := R)).symm
+  letI : (i : Fin n) → Fintype (Σ z : Fin k, Fin (R i z)) :=
+    fun _ => Sigma.instFintype
+  letI : Fintype (Σ i : Fin n, Σ z : Fin k, Fin (R i z)) :=
+    Sigma.instFintype
+  exact Fintype.ofEquiv (Σ i : Fin n, Σ z : Fin k, Fin (R i z))
+    (edgeCoordinates (R := R)).symm
 
 private def squareCoordinates (c : CompatibleCertificate A B R S m) :
     Square c ≃ Σ i : Fin n, Σ z : Fin k, EdgePair A R i z where
@@ -139,7 +148,14 @@ private def squareCoordinates (c : CompatibleCertificate A B R S m) :
 
 noncomputable instance (c : CompatibleCertificate A B R S m) : Fintype (Square c) := by
   classical
-  exact Fintype.ofEquiv _ (squareCoordinates c).symm
+  letI : (i : Fin n) → (z : Fin k) → Fintype (EdgePair A R i z) :=
+    fun _ _ => Sigma.instFintype
+  letI : (i : Fin n) → Fintype (Σ z : Fin k, EdgePair A R i z) :=
+    fun _ => Sigma.instFintype
+  letI : Fintype (Σ i : Fin n, Σ z : Fin k, EdgePair A R i z) :=
+    Sigma.instFintype
+  exact Fintype.ofEquiv (Σ i : Fin n, Σ z : Fin k, EdgePair A R i z)
+    (squareCoordinates c).symm
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
@@ -250,7 +266,10 @@ theorem square_lifts_left_forgetting (c : CompatibleCertificate A B R S m) :
           rfl
       | @cons d i j t a tail ih =>
           intro r
-          simp only [liftIncomingPath, sweep, ih r, incomingSquare] <;> rfl
+          rcases hs : sweep c.phi tail r with ⟨u, s, beta⟩
+          have hlift : c.liftIncomingPath tail r = ⟨u, s⟩ := by
+            simpa [hs] using ih r
+          simp [liftIncomingPath, sweep, hs, hlift, incomingSquare]
     intro i j z alpha r
     rw [hbridge alpha r, c.compatible alpha r]
     rfl
@@ -269,9 +288,16 @@ theorem square_lifts_right_forgetting (c : CompatibleCertificate A B R S m) :
   intro i t z r beta
   let sr := (c.psiB t z).symm beta
   let alpha := (c.psiA i sr.1) ⟨t, r, sr.2.1⟩
+  have hA : (c.psiA i sr.1).symm alpha = ⟨t, r, sr.2.1⟩ :=
+    (c.psiA i sr.1).symm_apply_apply _
+  have hB : (c.psiB t z) ⟨sr.1, sr.2.1, sr.2.2⟩ = beta := by
+    change (c.psiB t z) sr = beta
+    exact (c.psiB t z).apply_symm_apply beta
   have hsweep : sweep c.phi alpha sr.2.2 = ⟨t, r, beta⟩ := by
     rw [c.compatible]
-    simp [alpha, sr]
+    simpa only [hA] using
+      congrArg (fun path : FinitePath B m t z =>
+        (⟨t, r, path⟩ : Σ u : Fin k, Fin (R i u) × FinitePath B m u z)) hB
   have hundo := unsweep_sweep c.phi alpha sr.2.2
   rw [hsweep] at hundo
   exact congrArg (fun p : Σ j : Fin n,
@@ -290,7 +316,7 @@ theorem square_graph_essential_and_projections
     Function.Surjective (fun r : Edge R => r.target) ∧
     ((∀ u, ∃ v, c.squareMatrix u v ≠ 0) ∧
       (∀ v, ∃ u, c.squareMatrix u v ≠ 0)) := by
-  have hForward : ∀ d (i : Fin n), ∃ j, FinitePath A d i j := by
+  have hForward : ∀ d (i : Fin n), Σ j, FinitePath A d i j := by
     intro d
     induction d with
     | zero => intro i; exact ⟨i, .nil i⟩
@@ -299,7 +325,7 @@ theorem square_graph_essential_and_projections
         obtain ⟨j, hj⟩ := c.essentialA.1 i
         obtain ⟨z, path⟩ := ih j
         exact ⟨z, .cons ⟨0, Nat.pos_of_ne_zero hj⟩ path⟩
-  have hBackward : ∀ d (z : Fin k), ∃ t, FinitePath B d t z := by
+  have hBackward : ∀ d (z : Fin k), Σ t, FinitePath B d t z := by
     intro d
     induction d with
     | zero => intro z; exact ⟨z, .nil z⟩
