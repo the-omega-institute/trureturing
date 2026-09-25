@@ -33,7 +33,11 @@ The proof uses existing normalized distortion and conditional convex
 comparison, with a support-specific cofactor count. It is ordinary
 mathematics and exact rational computation, not new Lean verification.
 Section6 also treats all fifteen rooted triangle towers together with
-three specified non-3 pair towers. Unrestricted mixed supports and
+three specified non-3 pair towers. [Report570](570-rooted-triangles-and-nine-old-pairs-share-a-query-law.md)
+extends that triangle support class to nine specified non-3 pair towers,
+with a weaker query constant that still passes the actual pure23/29
+continuation threshold. The stronger constants here remain valid on
+their original classes. Unrestricted mixed supports and
 Erdős #7 remain unresolved.
 
 ## 1. A single normalized construction retains the actual pure source
