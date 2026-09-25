@@ -399,3 +399,12 @@ beyond this arithmetic certificate.
 uses the actual single-head and head-pair marginal bounds to admit owners
 with three fixed smaller parents, at least two outside the head. All
 existing two-parent owners and global root crossings remain permitted.
+
+## A capped root admits a different three-parent extension
+
+[Report618](618-a-capped-root-admits-three-two-head-one-outside-children.md)
+changes the first root's normalized row and jointly pays three children
+with two head parents and that same outside root. It retains all later
+two-parent crossings and the present head class, with extendible head
+Haar mass greater than1/220000. These triples differ from Report616's
+class with at least two outside parents.
