@@ -4548,3 +4548,551 @@ $$
 七维构造与下界合并，得到受限合同的精确值。它也属于定义12.1的一般接收类，从而给出（25.1a）的上界；其下界由四终端最小值五得到。一般五终端是否能进一步压到五维或六维，本定理不作判定。证明完毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 一般五终端固定 CPTP 接收需要至少六维
+
+来源为 $`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，
+$`ab\ne0`$、$`|a|^2+|b|^2=1`$。合同为定义12.1：独立纯接收初始化、同一个全域 CPTP 接收通道、所有持久系统计入接收器，且每个指定终端恢复全部参考—活动记忆—档案联合态。这里不预先限制新环境的纯度、维数、相互重叠或累计纠缠。
+
+**定理 26.1（五终端的一般下界）。** 对任意上述已知非退化复振幅来源，
+
+$$
+6\le d_{\mathrm{CPTP},5}(a,b)\le7.
+\tag{26.1}
+$$
+
+上界是第25节的七维构造。本节证明一般五维接收器不可能；四维及以下已由第23节排除。本节不判定一般六维是否可达。
+
+**证明：纯终端与早期混合附加因子。**
+
+反设 $`\dim K=5`$。固定一次接收通道的 Stinespring 等距映射
+$`V:K\otimes B\to K\otimes E`$，写
+$`V_0x=V(x\otimes|0\rangle)`$、$`V_1x=V(x\otimes|1\rangle)`$。
+只需使用允许的 Bell 输入。终端档案相对 $`JM`$ 的 Schmidt 秩在第一步为二、第二步为三、第三步及以后为四。由第23节证明中的标准可逆编码分解，支撑秩 $`s`$ 与可逆附加因子的秩 $`r`$ 满足 $`sr\le5`$。
+因此第二至第五步的实际 $`JMK`$ 联合态均为纯态；第一步的附加因子秩
+$`r\in\{1,2\}`$，暂不假定为一。
+
+对 $`n=2,3,4,5`$ 写纯联合态为
+
+$$
+\Psi_n=\frac1{\sqrt2}\sum_{i=0}^1|i\rangle_J
+\bigl(|0\rangle_Mu_n^i+|1\rangle_Mv_n^i\bigr),
+\qquad
+H_n=\operatorname{span}\{u_n^0,u_n^1\},\quad
+G_n=\operatorname{span}\{v_n^0,v_n^1\}.
+\tag{26.2}
+$$
+
+这些空间满足
+
+$$
+\dim H_n=\dim G_n=2,
+\qquad
+\dim(H_2+G_2)=3,
+\qquad
+\dim(H_n+G_n)=4\quad(n=3,4,5).
+\tag{26.3}
+$$
+
+例如第二步可选择正交单位向量 $`u,v,w\in K`$，使两列为
+
+$$
+\Psi_2^0=a m_0u+b m_1v,
+\qquad \Psi_2^1=m_0w.
+\tag{26.4}
+$$
+
+从而 $`H_2=\operatorname{span}\{a^2u+bv,w\}`$，
+$`G_2=\operatorname{span}\{u,w\}`$。第三步的四维秩由第21节给出；往后 $`JM`$ 边缘仍正定，因为来源通道 $`\mathcal T`$ 满足 $`\mathcal T(I)>0`$。各活动记忆对角块在参考的两个计算基标签上都有正权，给出（26.3）中各二维空间。
+
+第二至第五步纯度还给出第三、四、五轮各自的新环境纯向量
+$`\eta_3,\eta_4,\eta_5`$。记这些轮次的实际输入支撑
+
+$$
+D_j=(H_{j-1}\otimes|0\rangle)\oplus
+(G_{j-1}\otimes|1\rangle),\qquad j=3,4,5.
+\tag{26.5}
+$$
+
+均有维数四，且 $`V(D_j)=(H_j+G_j)\otimes\eta_j`$。
+存在二维空间 $`Q_j`$，满足
+
+$$
+V_0(H_{j-1})=G_j\otimes\eta_j,
+\qquad
+V_1(G_{j-1})=Q_j\otimes\eta_j,
+\qquad
+G_j\perp Q_j.
+\tag{26.6}
+$$
+
+这里 $`G_j`$ 作为零位像空间，来自活动记忆 $`|1\rangle`$ 系数仅等于零位接收系数的非零倍数 $`b`$。还可写
+
+$$
+H_j\subset G_j\oplus Q_j,
+\qquad \operatorname{rank}(P_{G_j}|_{H_j})=2.
+\tag{26.7}
+$$
+
+后一秩来自 $`u_j^i=a A_ju_{j-1}^i+B_jv_{j-1}^i`$ 中
+$`A_j:H_{j-1}\to G_j`$ 等距、$`a\ne0`$，且 $`B_jv_{j-1}^i\in Q_j\perp G_j`$。
+
+**第二轮零位输入的关键结构。** 第一轮的标准可逆编码分解可写为
+
+$$
+V(k0)=\sum_{\alpha=1}^r\sqrt{\lambda_\alpha}\,p_\alpha e_\alpha,
+\qquad
+V(k1)=\sum_{\alpha=1}^r\sqrt{\lambda_\alpha}\,q_\alpha e_\alpha,
+\tag{26.8}
+$$
+
+其中 $`\lambda_\alpha>0`$、$`\sum\lambda_\alpha=1`$，
+$`p_1,q_1,\ldots,p_r,q_r`$ 是接收器中的正交单位向量，
+$`e_\alpha`$ 是第一轮环境的正交单位向量。第二步联合 $`JMK`$ 为纯态，故累计环境 $`E_1E_2`$ 为独立的纯态。第一轮环境的边缘不变，所以该累计环境可写为
+$`\sum_\alpha\sqrt{\lambda_\alpha}e_\alpha f_\alpha`$，其中
+$`f_\alpha`$ 在第二轮环境中正交归一。
+
+把两步全局纯向量按 $`e_\alpha`$、参考标签和线性独立的
+$`m_0,m_1`$ 比较，得到
+
+$$
+V_0p_\alpha=u f_\alpha,
+\qquad V_1p_\alpha=v f_\alpha,
+\qquad V_0q_\alpha=w f_\alpha.
+\tag{26.9}
+$$
+
+因此存在
+
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha:1\le\alpha\le r\},
+\qquad F=\operatorname{span}\{f_\alpha:1\le\alpha\le r\},
+\tag{26.10}
+$$
+
+满足
+
+$$
+\boxed{\dim X=2r\ge2,\qquad \dim F=r,\qquad V_0(X)=G_2\otimes F.}
+\tag{26.11}
+$$
+
+这一步保留了早期混合附加因子，也允许 $`E_1,E_2`$ 彼此纠缠；没有把第二步纯度误用为第一步纯度。
+
+**最后三轮环境只有两类。**
+
+以下仅比较环境射线，写 $`\eta\parallel\xi`$ 表示同一射线。
+若 $`\eta_i\not\parallel\eta_j`$，则 $`D_i\cap D_j=\{0\}`$；
+若 $`\eta_i\perp\eta_j`$，则 $`D_i\perp D_j`$。两者均由固定
+$`V`$ 等距及相应输出张量子空间直接得到。
+若 $`\langle\eta_i,\eta_j\rangle\ne0`$，不同输入位的正交性给
+
+$$
+G_i\perp Q_j,\qquad Q_i\perp G_j.
+\tag{26.12}
+$$
+
+如果 $`\langle\eta_3,\eta_4\rangle\ne0`$，则
+$`Q_4\perp G_3+G_4`$。五维 $`K`$ 中 $`\dim Q_4=2`$，因此
+$`\dim(G_3+G_4)\le3`$，所以 $`G_3\cap G_4\ne\{0\}`$。
+该非零交空间在第四、五轮均作为一位输入，固定 $`V_1`$ 强制
+$`\eta_4\parallel\eta_5`$。
+
+余下设 $`\eta_3\perp\eta_4`$。若 $`\eta_5`$ 与两者均不同射线，且与两者内积均非零，则由（26.12）仍有
+$`Q_5\perp G_3+G_4`$，继而同样得到
+$`\eta_4\parallel\eta_5`$，矛盾。所以 $`\eta_5`$ 必正交于
+$`\eta_3`$ 或 $`\eta_4`$ 中至少一个。
+若正交于 $`\eta_3`$，则 $`D_3`$ 同时正交于 $`D_4,D_5`$，
+而不同环境射线又给 $`D_4\cap D_5=\{0\}`$。于是三者总维数为十二，超过 $`\dim(K\otimes B)=10`$。正交于 $`\eta_4`$ 的情形相同。
+
+因此只剩
+
+$$
+\boxed{\eta_4\parallel\eta_5\quad\text{或}\quad
+\eta_3\parallel\eta_5\perp\eta_4.}
+\tag{26.13}
+$$
+
+**排除末两轮同射线。**
+
+先设 $`\eta_4\parallel\eta_5`$。固定 $`V`$ 把
+$`D_4+D_5`$ 等距送入五维 $`K\otimes\eta_4`$，故
+
+$$
+\dim(H_3+H_4)+\dim(G_3+G_4)\le5.
+\tag{26.14}
+$$
+
+各单项子空间均二维，因此 $`H_3=H_4`$ 或 $`G_3=G_4`$。
+
+**先处理 $`\eta_3\not\parallel\eta_4`$。** 如果 $`G_3=G_4`$，
+不同环境射线给 $`H_2\cap H_3=G_2\cap G_3=\{0\}`$。
+由（26.6），$`V_0(H_2+H_3)`$ 包含于
+$`G_3\otimes E`$，而（26.11）的 $`V_0(X)`$ 包含于
+$`G_2\otimes E`$。两者交为零，故
+$`X\cap(H_2+H_3)=\{0\}`$，与
+$`\dim X\ge2`$、$`\dim(H_2+H_3)=4`$、$`\dim K=5`$ 矛盾。
+
+所以仅需 $`H_3=H_4`$ 且 $`G_3\ne G_4`$；由（26.14），
+$`\dim(G_3+G_4)=3`$。
+若 $`\eta_3\perp\eta_4`$，则 $`D_3`$ 同时正交于
+$`D_4,D_5`$，所以
+
+$$
+H_2\perp H_3,
+\qquad G_2\perp G_3+G_4.
+\tag{26.15}
+$$
+
+于是 $`H_2+H_3`$ 是四维，而 $`V_0(H_2+H_3)`$ 的接收器分量包含于
+$`G_3+G_4\subset G_2^\perp`$，与 $`V_0(X)=G_2\otimes F`$ 正交。
+故 $`X\perp H_2+H_3`$，又需至少六维，矛盾。
+
+若 $`\eta_3`$ 与 $`\eta_4`$ 不同射线且内积非零，（26.12）使
+$`Q_3,Q_4\subset(G_3+G_4)^\perp`$；两者二维，故都等于同一个二维空间 $`Q`$。由（26.7），共同空间 $`H=H_3=H_4`$ 满足
+
+$$
+H\subset (G_3\oplus Q)\cap(G_4\oplus Q)
+=(G_3\cap G_4)\oplus Q.
+\tag{26.16}
+$$
+
+但 $`G_3\cap G_4`$ 仅一维，故 $`P_{G_3}|_H`$ 的秩至多一，
+与（26.7）的秩二矛盾。所有不同射线的情况均被排除。
+
+**再处理三个环境全为同一射线。** 此时令
+$`H_\Sigma=H_2+H_3+H_4`$、$`G_\Sigma=G_2+G_3+G_4`$，
+固定接收等距性给
+
+$$
+\dim H_\Sigma+\dim G_\Sigma\le5.
+\tag{26.17}
+$$
+
+各自至少二维，因此至少一个恰为二维。
+若 $`\dim G_\Sigma=2`$，则 $`G_2=G_3=G_4`$。同一环境下
+$`V_0(H_2)=G_3\otimes\eta_3`$ 与
+$`V_0(H_3)=G_4\otimes\eta_3`$ 相等，等距性给
+$`H_2=H_3`$。这与（26.3）的三维、四维支撑秩矛盾。
+
+若 $`\dim H_\Sigma=2`$，则 $`H_2=H_3=H_4`$，同理得
+$`G_3=G_4`$。还需排除这一对共同子空间；不能只沿用前面的不同射线条件。
+置 $`x=|a|^2`$、$`y=|b|^2`$，定义
+
+$$
+t_1=x,\qquad t_2=x^2+y,\qquad
+t_3=1-yt_2,\qquad t_4=1-yt_3.
+\tag{26.18}
+$$
+
+来源的两列满足 $`\|u_n^0\|^2=t_n`$、
+$`\|u_n^1\|^2=t_{n-1}`$（此处 $`n=2,3,4`$）。不同参考标签的档案支撑正交，故各组 $`u_n^0,u_n^1`$ 正交。
+在 $`n=3,4`$ 时，由（26.7）的系数更新，$`P_{H_n}P_{G_n}|_{H_n}`$ 的两个特征值为
+
+$$
+x\frac{\|u_{n-1}^i\|^2}{\|u_n^i\|^2},\qquad i=0,1.
+\tag{26.19}
+$$
+
+因此其第三、第四步行列式分别为
+
+$$
+\delta_3=\frac{x^3}{t_3},\qquad
+\delta_4=\frac{x^2t_2}{t_4},
+\qquad
+\delta_4-\delta_3
+=\frac{x^3y^2}{t_3t_4}>0.
+\tag{26.20}
+$$
+
+最后等式用了 $`t_2+xy=1`$ 和 $`t_3-x=xy^2`$。
+但 $`H_3=H_4`$、$`G_3=G_4`$ 会使两个投影压缩相同，矛盾。
+至此三个环境同射线也被排除，故（26.13）的第一类完全不可能。
+
+**交替尾强制完整的正交交替五字。**
+
+剩余情况为 $`\eta_3\parallel\eta_5\perp\eta_4`$。固定单位代表
+$`A,B`$，使第三至第五轮的环境射线为 $`A,B,A`$。
+由 $`D_3\perp D_4`$ 得
+
+$$
+H_2\perp H_3,\qquad G_2\perp G_3.
+\tag{26.21}
+$$
+
+（26.11）及 $`V_0(H_2)=G_3\otimes A`$ 的接收器分量正交，故
+$`X\perp H_2`$。于是 $`2r=\dim X\le\dim H_2^\perp=3`$，
+强制 $`r=1`$。
+第一步实际联合态因而为纯态，第一轮新环境为纯向量 $`\eta_1`$；
+第二轮新环境也为纯向量 $`\eta_2`$，且 $`F=\mathbb C\eta_2`$。
+
+现在 $`X,H_3`$ 均为三维 $`H_2^\perp`$ 中的二维子空间，故
+$`X\cap H_3\ne\{0\}`$。它们的 $`V_0`$ 像分别为
+$`G_2\otimes\eta_2`$、$`G_4\otimes B`$，非零交强制
+
+$$
+\eta_2\parallel B.
+\tag{26.22}
+$$
+
+令纯第一步两列为 $`m_0p,m_1q`$，其中 $`p,q`$ 正交归一，
+初态为 $`k`$。于是 $`V_0k=p\otimes\eta_1`$、
+$`V_1k=q\otimes\eta_1`$，且第一步系数空间为
+$`H_1=\operatorname{span}\{p,q\}`$、$`G_1=\mathbb Cp`$。
+
+合并第三、第五轮（环境 $`A`$）的输入，记
+
+$$
+H_A=H_2+H_4,\qquad G_A=G_2+G_4.
+\tag{26.23}
+$$
+
+固定 $`V`$ 把这两个输入位的直和等距送入 $`K\otimes A`$，故
+$`\dim H_A+\dim G_A\le5`$。若和为四，则两项各二维，意味着
+$`H_2=H_4`$、$`G_2=G_4`$，与（26.3）第二、第四步总支撑维数不同矛盾。
+所以
+
+$$
+\dim H_A+\dim G_A=5.
+\tag{26.24}
+$$
+
+第二、第四轮（环境 $`B`$）的零位输入合并为
+$`H_B=H_1+H_3`$。其像空间精确为
+
+$$
+V_0(H_B)=(G_2+G_4)\otimes B=G_A\otimes B,
+\qquad \dim H_B=\dim G_A.
+\tag{26.25}
+$$
+
+又因 $`A\perp B`$，有 $`H_A\perp H_B`$；结合（26.24），两者张成整个五维 $`K`$。因此固定 $`V_0`$ 的全域像包含于
+
+$$
+V_0(K)\subset K\otimes\operatorname{span}\{A,B\},
+\qquad
+(I_K\otimes\langle B|)V_0(K)\subset G_A.
+\tag{26.26}
+$$
+
+第一步向量 $`p`$ 作为第二轮环境 $`B`$ 的一位输入，与第三、第五轮环境 $`A`$ 的全部一位输入正交，所以
+
+$$
+p\perp G_A.
+\tag{26.27}
+$$
+
+而 $`V_0k=p\otimes\eta_1`$。由（26.26），$`\eta_1`$ 只能属于
+$`\operatorname{span}\{A,B\}`$；若它的 $`B`$ 分量非零，同式又强制
+$`p\in G_A`$，与（26.27）矛盾。故
+
+$$
+\eta_1\parallel A.
+\tag{26.28}
+$$
+
+全部五轮的新环境现在均为确定独立纯态，射线序列为
+$`A,B,A,B,A`$，且 $`A\perp B`$。第一步及后续步骤的环境向量对初始两个基态共用，故线性性同时给全部输入与参考这一环境合同。
+第25节已经证明该额外合同至少需要七维，与假设 $`\dim K=5`$ 矛盾。
+
+一般五维实现的所有环境分支均已排除。结合第23节对四维及以下的排除，以及第25节的一般七维上界，得到（26.1）。本证明允许最初的混合附加因子，并且仅在实际推导出 $`r=1`$ 后才使用前两轮新环境纯度；未将累计环境纯度误当成逐轮纯度。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 六维接收中秩二附加态对后续环境的约束
+
+本节只研究以下分支：已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，
+$`ab\ne0`$、$`|a|^2+|b|^2=1`$；一个六维寄存器从独立纯态启动，使用同一个全域 CPTP 通道，精确服务前五个完整参考终端；第二终端可逆编码中的固定附加态秩为二。第一终端的附加态允许秩一、二或三。
+
+按第23节的标准可逆编码结构，第二终端的三维档案支撑与二维附加因子已占满六维寄存器，可取
+
+$$
+K=Q\otimes\Gamma,
+\qquad Q=\operatorname{span}\{u,v,w\},\quad
+\dim\Gamma=2,
+\tag{27.1}
+$$
+
+其中 $`u,v,w`$ 正交归一，第二终端的固定附加态在 $`\Gamma`$ 上正定。这里的张量分解只描述可逆编码，并不声称附加态纯，也不把它免费移出接收器。
+
+记
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\}.
+\tag{27.2}
+$$
+
+有 $`H+G=Q`$、$`H\cap G=\mathbb Cw`$。第三轮接收前的实际输入支撑为
+
+$$
+L_3=(H\otimes\Gamma\otimes|0\rangle)
+\oplus(G\otimes\Gamma\otimes|1\rangle),
+\qquad \dim L_3=8.
+\tag{27.3}
+$$
+
+后续三个终端的 Bell 档案秩均为四，而 $`6<2\cdot4`$，所以其可逆编码均为单个等距，接收后的 $`JMK`$ 联合态纯。固定每轮的 Stinespring 等距
+$`V:K\otimes B\to K\otimes E`$。精确可逆编码的相邻纯化结构给一份等距 $`R:\Gamma\to E`$ 及 $`K`$ 中四个正交单位向量 $`s,r,t,j`$，使
+
+$$
+\begin{aligned}
+V(z\otimes\xi\otimes|0\rangle)&=s\otimes R\xi,&
+V(u\otimes\xi\otimes|1\rangle)&=r\otimes R\xi,\\
+V(w\otimes\xi\otimes|0\rangle)&=t\otimes R\xi,&
+V(w\otimes\xi\otimes|1\rangle)&=j\otimes R\xi
+\end{aligned}
+\quad(\xi\in\Gamma).
+\tag{27.4}
+$$
+
+为说明这里未额外假定第三轮环境纯，取第二终端附加态与旧环境的一份 Schmidt 展开
+
+$$
+\chi_2=\sum_{j=1}^2\sqrt{\lambda_j}\,\xi_j\otimes e_j,
+\qquad \lambda_j>0,
+\tag{27.4a}
+$$
+
+其中两侧各自正交归一。第三终端的 $`JMK`$ 边缘纯，故与累计环境成乘积。旧环境边缘未被后续局部操作改变，所以第三终端的固定环境纯态必可写为
+$`\sum_j\sqrt{\lambda_j}\,e_j\otimes R\xi_j`$，其中 $`R\xi_1,R\xi_2`$ 正交归一。对旧环境的 $`e_j`$ 系数以及四个线性独立的 $`JM`$ 系数分别比较，即得（27.4）在整个 $`\Gamma`$ 上成立；接收向量的正交归一性也由第三终端的等距编码给出。
+
+因此第三轮把附加因子等距排入新环境，前三轮累计环境仍可是一份内部纠缠的固定纯态。这里没有把 $`\xi`$ 固定成单一向量，也没有把旧环境的某个分支当成可访问的控制。
+
+置
+
+$$
+C_3=\operatorname{span}\{s,r,t,j\},\qquad
+F=R\Gamma\subseteq E.
+\tag{27.5}
+$$
+
+于是 $`\dim C_3=4`$、$`\dim F=2`$ 且
+
+$$
+V(L_3)=C_3\otimes F.
+\tag{27.6}
+$$
+
+记第四、第五终端的四维接收器支撑为 $`C_4,C_5`$。因为第三至第五终端的联合态纯，第四、第五轮新环境分别为来源无关的单位纯向量 $`\eta_4,\eta_5`$。记相应四维接收输入支撑为 $`L_4,L_5`$，则
+
+$$
+V(L_4)=C_4\otimes\mathbb C\eta_4,
+\qquad
+V(L_5)=C_5\otimes\mathbb C\eta_5.
+\tag{27.7}
+$$
+
+**命题 27.1（秩二附加态的后续环境限制）。** 在上述分支中，若精确服务全部五个终端，则
+
+$$
+\boxed{\eta_4,\eta_5\in F,
+\qquad C_4\ne C_3,
+\qquad C_5\ne C_3.}
+\tag{27.8}
+$$
+
+因此第四、第五轮的纯环境都必须落在第三轮排出附加因子的同一个二维环境空间内。两者仍可非正交，也可共线；本结论没有排除这两种剩余情形。
+
+证明。使用实际来源的记忆系数，写第三、第四终端的纯联合态为
+
+$$
+|\Psi_m\rangle
+=\frac1{\sqrt2}\sum_{i=0}^1|i\rangle_J
+\bigl(|0\rangle_Mx_m^i+|1\rangle_My_m^i\bigr),
+\quad
+H_m=\operatorname{span}\{x_m^0,x_m^1\},\quad
+G_m=\operatorname{span}\{y_m^0,y_m^1\},
+\qquad m=3,4.
+\tag{27.9}
+$$
+
+已知来源的实际档案列及等距编码给
+
+$$
+\dim H_m=\dim G_m=2,
+\qquad H_m+G_m=C_m,
+\qquad \dim C_m=4.
+\tag{27.10}
+$$
+
+下一次发射后的接收输入因此为
+
+$$
+L_{m+1}=(H_m\otimes|0\rangle)
+\oplus(G_m\otimes|1\rangle).
+\tag{27.11}
+$$
+
+这里同时使用参考与活动记忆的独立系数；未把活动记忆当成可访问的控制。
+
+**先排除一种支撑回返。** 若 $`\eta\in F`$ 为单位向量，取唯一单位 $`\xi\in\Gamma`$ 使 $`R\xi=\eta`$。由（27.4），
+
+$$
+V^{-1}(C_3\otimes\mathbb C\eta)
+=(H\otimes\mathbb C\xi\otimes|0\rangle)
+\oplus(G\otimes\mathbb C\xi\otimes|1\rangle).
+\tag{27.12}
+$$
+
+这里逆像在 $`V`$ 的像上理解；等距的单射性保证没有其它输入向量映到同一子空间。右边的零位、一位接收系数合起来只张成
+$`(H+G)\otimes\mathbb C\xi=Q\otimes\mathbb C\xi`$，维数为三。
+因此，当 $`n=4`$ 或 $`5`$ 时，不可能同时有
+
+$$
+C_n=C_3,\qquad \eta_n\in F:
+\tag{27.13}
+$$
+
+否则（27.7）、（27.11）及（27.12）会使前一终端的接收支撑 $`C_{n-1}`$ 只有三维，与（27.10）矛盾。
+
+**第四轮环境不能在 $`F`$ 外。** 反设 $`\eta_4\notin F`$。式（27.6）、（27.7）的两个像交为零，所以 $`L_3\cap L_4=0`$。两者维数和为 $`8+4=12=\dim(K\otimes B)`$，故同一个全域等距的整个像恰为
+
+$$
+\mathcal R:=V(K\otimes B)
+=C_3\otimes F+C_4\otimes\mathbb C\eta_4.
+\tag{27.14}
+$$
+
+若 $`C_4=C_3`$，则（27.14）使每次接收后的接收器支撑都包含于同一四维 $`C_3`$。但第二终端的接收器边缘支撑维数为
+$`3\cdot2=6`$，矛盾。因此此时 $`C_4\ne C_3`$，且
+$`\dim(C_3\cap C_4)\le3`$。
+
+第五轮像 $`C_5\otimes\mathbb C\eta_5`$ 必须包含于（27.14）。在环境商空间 $`E/F`$ 上投影，分三种情形：
+
+- 若 $`\eta_5\in F`$，则
+  $`\mathcal R\cap(K\otimes F)=C_3\otimes F`$，从而 $`C_5\subseteq C_3`$。两者均四维，所以 $`C_5=C_3`$，违反（27.13）。
+- 若 $`\eta_5\notin F`$，商空间投影强制
+  $`\eta_5=c\eta_4+f`$，其中 $`c\ne0`$、$`f\in F`$，并且 $`C_5\subseteq C_4`$，故 $`C_5=C_4`$。
+  若 $`f\ne0`$，减去 $`c(C_4\otimes\eta_4)`$ 又给
+  $`C_4\otimes f\subseteq C_3\otimes F`$，从而 $`C_4=C_3`$，矛盾。
+- 余下 $`f=0`$ 时，$`\eta_5\parallel\eta_4`$ 且 $`C_5=C_4`$。两轮像相同，固定等距单射性给 $`L_5=L_4`$。分别取新位零与一的系数空间，得到 $`H_4=H_3`$、$`G_4=G_3`$，故 $`C_4=C_3`$，仍矛盾。
+
+所有情形均不成立，故 $`\eta_4\in F`$。结合（27.13）得到 $`C_4\ne C_3`$。
+
+**第五轮环境也不能离开 $`F`$。** 现在（27.6）、（27.7）的交空间为
+
+$$
+V(L_3)\cap V(L_4)
+=(C_3\cap C_4)\otimes\mathbb C\eta_4.
+\tag{27.15}
+$$
+
+其维数至多三，所以
+
+$$
+\dim(L_3+L_4)
+=8+4-\dim(C_3\cap C_4)\ge9.
+\tag{27.16}
+$$
+
+同时 $`V(L_3+L_4)\subseteq K\otimes F`$。若 $`\eta_5\notin F`$，则
+$`V(L_5)=C_5\otimes\mathbb C\eta_5`$ 与该像交零。因此
+$`L_5\cap(L_3+L_4)=0`$，要求十二维输入空间中容纳至少 $`9+4=13`$ 维，矛盾。故 $`\eta_5\in F`$；再由（27.13）得 $`C_5\ne C_3`$。证明完毕。
+
+本命题保留第二终端的秩二附加态及其与过去环境的纠缠，也没有限制第一终端附加态的秩。它把此分支的后续纯环境限定到同一二维空间，没有给出剩余交叉 Gram 方程的可行解或矛盾，因而不能据此排除一般五终端六维接收器。
+
+## 追加锚（本行以下为增补区）
