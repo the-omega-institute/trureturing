@@ -41670,3 +41670,179 @@ $$
 本结论将第188.2节的规则逐点下确界加强为三维纯态达到，而不改变其原有构造。这里的量词是对每个设计点可选择一个处理器；同一个处理器在其余参数处的额外成本由（190.27）保留。第188.3节的开区间等号障碍及第189.2节的统一正差距仍适用，故三维逐点达到不蕴含全区间同时达到。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 191. 局部精确最优的混态节省与纯态二维障碍
+
+**定义 191.1（局部精确程序及规则达到）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$。局部精确程序由一个包含 $t$ 的开区间 $U\subset J_a$、一个固定 CPTP 处理器和一条定义在 $U$ 上的 $C^1$ 程序曲线组成，要求
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\qquad(u\in U)
+\tag{191.1}
+$$
+对全部信号输入成立。称在 $t$ 规则达到，若程序秩在 $t$ 的某个邻域恒定且 $I_Q(\rho_t)=I_r(t)$，其中 $I_r(u)=1/(1-u^2)$。这是在一个真实开区间内精确生成通道的要求，比仅匹配 $\mathcal T_t$ 与其一阶导数强；其覆盖域又小于第190节要求的整个 $J_a$。
+
+量子估计文献中的局部模拟可采用切向意义：Kołodyński、Demkowicz-Dobrzański，*Efficient tools for quantum metrology with uncorrelated noise*，New J. Phys. **15**, 073043（2013），DOI:10.1088/1367-2630/15/7/073043，arXiv:1303.7271v2，第4.1.2节与附录D式（D.1），允许通道等式具有 $O((u-t)^2)$ 余项。本节（191.1）要求开区间内严格相等，以下二维构造与纯态障碍均针对这个更强条件。
+
+**定理 191.2（局部二维满秩程序精确达到）。** 对每个 $t\in J_a$，存在一个二维满秩的解析局部精确程序，在 $t$ 达到 $I_r(t)$。
+
+证明。 令 $h_0=(1+t)/2$、$\ell_0=1-h_0$，并取
+$$
+A_0=\frac{at}{h_0},\qquad B_0=2a\sqrt{\frac{\ell_0}{h_0}},\qquad
+\frac{B_0}{\sqrt{1-A_0^2}}<\lambda<1.
+\tag{191.2}
+$$
+由 $h_0>a$ 得 $A_0^2+B_0^2=a^2/h_0^2<1$，所以这个 $\lambda$ 区间非空。定义
+$$
+\beta=\frac{B_0}{\lambda},\qquad
+K=\begin{pmatrix}A_0&\beta\\0&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1).
+\tag{191.3}
+$$
+$A_0^2+\beta^2<1$，故 $K$ 是严格压缩算子。与第190节相同，从二维程序空间到四维环境取等距映射
+$$
+W_0=\begin{pmatrix}I\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I-K^\dagger K}\end{pmatrix}.
+\tag{191.4}
+$$
+用信号基控制这些等距映射，再对环境取迹，得到固定 CPTP 处理器。
+
+令 $X$ 为 Pauli 矩阵，取仿射程序曲线
+$$
+\rho_u=\frac12(I+x(u)X+uZ),\qquad
+x(u)=\frac{\lambda(1-tu)}{\sqrt{1-t^2}},\qquad
+k=\frac{\lambda^2}{1-t^2}.
+\tag{191.5}
+$$
+其满秩物理区间为 $(b_-,b_+)$，其中
+$$
+b_\pm=\frac{kt\pm\sqrt{1-\lambda^2}}{1+kt^2}.
+\tag{191.6}
+$$
+事实上，$\rho_u\succ0$ 等价于
+$$
+q(u):=1-u^2-k(1-tu)^2>0.
+\tag{191.7}
+$$
+这个二次函数的根为（191.6），且 $q(t)=(1-\lambda^2)(1-t^2)>0$，故 $b_-<t<b_+$。取 $U=(b_-,b_+)\cap J_a$，它是包含 $t$ 的非空开区间。
+
+处理器的 Schur 系数由 $\operatorname{Tr}(\rho_uW_j^\dagger W_i)$ 给出。由于 $ZK=K$、程序矩阵为实对称矩阵，
+$$
+C_{02}=u,\qquad
+C_{01}=C_{12}=A_0\frac{1+u}{2}+\frac{\beta x(u)}2=a.
+\tag{191.8}
+$$
+因此处理器在全部 $U$ 精确生成目标通道。这个恒等式也表明整个闭弦 $[b_-,b_+]$ 都位于 $F(a,u)$ 的 CP 区间 $[2a^2-1,1]$；不过它不包含 $J_a$ 的完整上尾。具体地，$q(1)=-k(1-t)^2<0$，而 $q(t)>0$、$t<1$，所以 $b_+<1$。
+
+对 Bloch 向量 $(x(u),0,u)$，满秩 SLD 公式为
+$$
+I_Q(\rho_u)=1+(x')^2+\frac{(u+xx')^2}{1-u^2-x^2}.
+\tag{191.9}
+$$
+将可读下界移到左边，完成平方可得
+$$
+I_Q(\rho_u)-I_r(u)
+=\frac{[(1-u^2)x'+ux]^2}{(1-u^2)(1-u^2-x^2)}
+=\frac{k(u-t)^2}{(1-u^2)q(u)}.
+\tag{191.10}
+$$
+它在 $t$ 恰为零，在 $U\setminus\{t\}$ 严格为正。程序在 $U$ 始终满秩且解析，所以这是规则达到。证毕。
+
+例如，当 $0<a<1/2$、$t=0$ 时，可取 $2a<\lambda<1$，有 $K=\left(\begin{smallmatrix}0&2a/\lambda\\0&0\end{smallmatrix}\right)$、$\rho_u=(I+\lambda X+uZ)/2$，物理区间为 $|u|<\sqrt{1-\lambda^2}$。此时（191.10）成为 $\lambda^2u^2/[(1-u^2)(1-u^2-\lambda^2)]$，直接显示在零点达到及其邻域的正额外成本。这是本定理的参数特化，不改变全区间二维下界的覆盖假设。
+
+**定理 191.3（局部纯程序达到仍不能使用二维空间）。** 设一个固定处理器在包含 $t\in J_a$ 的开区间上精确生成 $\mathcal T_u$，且程序曲线在该区间为 $C^1$ 纯态。若程序联合空间维数不超过二，则
+$$
+I_Q(\rho_t)>I_r(t).
+\tag{191.11}
+$$
+
+证明。 一维程序只能生成恒定通道，所以只需考虑二维。取处理器的 Stinespring 等距表示 $V$。对信号基态 $|i\rangle$，目标通道保持纯输出 $|i\rangle\langle i|$，故对每个程序向量 $\psi_u$，
+$$
+V(|i\rangle\otimes\psi_u)=|i\rangle\otimes w_i(u).
+\tag{191.12}
+$$
+程序向量在任一非空精确开区间内张成整个二维空间：否则所有程序投影相同，诱导通道不随 $u$ 变化。由线性性，（191.12）因此推广为
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I
+\tag{191.13}
+$$
+在整个信号与二维程序输入空间上的恒等式。这里的受控等距形状由纯基态输出推出，没有预先限制处理器类型。
+
+固定均衡 $02$ 输入并测量 $|+\rangle,|-\rangle$。由（191.13），其在任意程序输入上的信号输出均位于 $02$ 子空间；因此得到完整的二维程序 POVM
+$$
+M_\pm=\frac12(I\pm\operatorname{Re}A),\qquad
+A=W_2^\dagger W_0,
+\qquad p_+=h=\frac{1+u}{2},\quad p_-=\ell=1-h.
+\tag{191.14}
+$$
+$A$ 是压缩算子，且 $\operatorname{Re}A=(A+A^\dagger)/2$。测量的信息量为 $I_r$，所以一般测量信息不等式已给出 $I_Q\ge I_r$。
+
+反设在 $t$ 取等号。令 $L$ 为该点的 SLD，$\psi=\psi_t$。支持敏感的测量等号条件要求
+$$
+\sqrt{M_j}L\psi=s_j\sqrt{M_j}\psi,
+\qquad s_j=\frac{p_j'}{p_j}\ne0,
+\qquad j\in\{+,-\}.
+\tag{191.15}
+$$
+这一条件可由每项 Hilbert 空间 Cauchy–Schwarz 等号直接取得，亦见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）的支持敏感等号条件。若某个 $M_j$ 可逆，（191.15）就给出 $L\psi=s_j\psi$；但 $\langle\psi,L\psi\rangle=\operatorname{Tr}\rho'=0$，与 $s_j\ne0$ 矛盾。故两个非零效应都是秩一。二维中两个秩一正效应之和为单位算子，必为互补正交投影。
+
+选择其本征基，令 $M_\pm=(I\pm Z)/2$，从而 $\operatorname{Re}A=Z$。由 $\|A\|\le1$，在 $Z$ 的两个本征向量上，实部为 $\pm1$ 的期望值已经饱和 Cauchy–Schwarz；因此 $A=Z$。又因 $W_0,W_2$ 为等距映射，$W_2^\dagger W_0=Z$ 蕴含 $W_2=W_0Z$。
+
+在 $t$ 附近选择连续可微的归一纯态向量，并用固定基向量相位令
+$$
+\psi_u=\begin{pmatrix}\sqrt h\\ e^{i\varphi(u)}\sqrt\ell\end{pmatrix},
+\qquad\varphi(t)=0.
+\tag{191.16}
+$$
+这里对 $C^1$ 曲线只需取 $C^1$ 的局部相位。纯态信息量为
+$$
+I_Q(\rho_u)=I_r(u)+4h\ell(\varphi')^2.
+\tag{191.17}
+$$
+所以等号迫使 $\varphi'(t)=0$，并有
+$$
+\psi_t=\begin{pmatrix}\sqrt{h_0}\\\sqrt{\ell_0}\end{pmatrix},
+\qquad
+v:=\psi_t'=\begin{pmatrix}1/(4\sqrt{h_0})\\-1/(4\sqrt{\ell_0})\end{pmatrix}.
+\tag{191.18}
+$$
+令 $K=W_0^\dagger W_1$。通道的两个固定实系数给出
+$$
+\langle\psi_u,K\psi_u\rangle=a,
+\qquad
+\langle Z\psi_u,K\psi_u\rangle=a.
+\tag{191.19}
+$$
+第一式使用 $C_{01}$ 的复共轭仍等于实数 $a$，第二式使用 $W_2=W_0Z$。两式相加相减先给出整个邻域的向量恒等式；再在 $t$ 求导，得到
+$$
+K\psi_u=\begin{pmatrix}a/\sqrt h\\0\end{pmatrix},
+\qquad
+Kv=\begin{pmatrix}-a/(4h_0\sqrt{h_0})\\0\end{pmatrix}.
+\tag{191.20}
+$$
+两个实向量 $\psi_t,v$ 线性无关，故它们的像唯一确定整个复矩阵：
+$$
+K=\begin{pmatrix}A_0&B_0\\0&0\end{pmatrix},
+\qquad A_0=\frac{at}{h_0},\quad B_0=2a\sqrt{\frac{\ell_0}{h_0}}>0.
+\tag{191.21}
+$$
+于是（191.19）第一式在附近每个参数的实部都必须满足
+$$
+a=A_0h+B_0\sqrt{h\ell}\cos\varphi(u)
+\le A_0h+B_0\sqrt{h\ell}
+$$
+$$
+=a-\frac a{h_0}
+\left(\sqrt{h\ell_0}-\sqrt{\ell h_0}\right)^2.
+\tag{191.22}
+$$
+对 $u\ne t$，最后的平方严格为正，矛盾。因此不能在 $t$ 达到等号，结合测量信息下界即得（191.11）。证毕。
+
+**定理 191.4（局部与全区间、纯态与混态的维数分离）。** 对任意 $t\in J_a$，达到可读下界所需的最小联合程序维数具有以下取值：允许混态且只要求局部精确、规则达到时为二；要求局部程序曲线为纯态时为三；要求精确覆盖整个 $J_a$ 时为三，且三维达到可用全程纯态完成。
+
+证明。 局部一维程序不能产生非恒定通道，定理191.2给出二维满秩达到。定理191.3排除局部纯二维达到，定理190.3给出三维纯态的全区间达到，因而也给出局部纯态达到。全区间的下界与达到由定理190.4给出。
+
+特别地，二维局部规则达到若在设计点为纯态，则恒秩条件使它在邻域仍为纯态，与定理191.3矛盾。因此二维局部规则达到在设计点必须满秩。这里没有排除只在单点为纯态、周围发生秩变化的程序；也没有求出局部纯二维程序信息量的精确下确界。上述维数分别针对已写明的覆盖域与秩条件，不能将局部混态构造带入第190节的全区间类。证毕。
+
+## 追加锚（本行以下为增补区）
