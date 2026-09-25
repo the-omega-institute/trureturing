@@ -1569,3 +1569,303 @@ Gaussian 四阶矩展开及独立性遂给出
 第 48 章整个固定 $`p`$ 区间上的一致二阶展开。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 51. 同时放大的谱尺度与随机仿射极限
+
+**定义 51.1（对数二次核与增长谱坐标）。** 沿用定义 49.1、50.1 的原序列、
+同一完整后验标签及精确中心，记 $`\delta=\delta_M=Q^{-1/2}`$、
+$`h=h_M`$、$`\mathfrak L=\log(1/h)`$、$`\omega=\pi/2`$。
+保留同一组电荷 $`A_t`$、标记 $`x_t=t\delta`$、
+$`\mathcal Q_M=\sum_t A_t^2`$、$`V_M=d_J/B_M^2`$ 和 $`T_M`$。
+置
+
+```math
+D_{\mathrm w}=\sum_{k\ge1}\{(1+k^2)^{-1/2}-k^{-1}\},\qquad
+H(x,y)=1+2D_{\mathrm w}-2\log(\omega|x-y|)\quad(x\ne y).
+```
+
+式 (51.1)。
+
+对实对称核 $`K\in L^2(\rho\otimes\rho)`$，以第 43 章的同一实 Gaussian
+测度 $`\mathcal W_\rho`$ 定义二重 Wiener 积分 $`I_2(K)`$，其规范为
+
+```math
+I_2(f\widetilde\otimes g)
+ =\mathcal W_\rho(f)\mathcal W_\rho(g)-\int fg\rho,\qquad
+\mathbb E I_2(K)^2=2\iint K(x,y)^2\rho(x)\rho(y)\,dx\,dy.
+```
+
+式 (51.2)。
+
+有限对称张量和及此等距式给出完备化定义。下述证明核对 $`H`$ 属于该空间；
+其对角线取值不影响这个定义。对 $`u>0`$，定义实际有限谱过程
+
+```math
+s_M(u)=\frac{u}{\sqrt\delta},\qquad
+N_M(u)=\left\lfloor\frac{e^{s_M(u)}}h\right\rfloor,\qquad
+\mathcal Z_M(u)=\sum_{|k|\le N_M(u)}(1+k^2)^{-1/2}
+ |\widehat\mu_M(k)|^2-2\mathfrak L Y_M^2-2s_M(u)V_M.
+```
+
+式 (51.3)。
+
+这里 $`u`$ 是谱尺度参数，不是得分阈值；$`V_M`$ 仍为观测环境中的辅助方差中心。
+
+**定理 51.2（共同轮廓的二次截距与独立高斯斜率）。** 对固定
+$`0<u_0<u_1<\infty`$ 及 $`R>0`$，在定义 51.1 的两个实际实验中有联合收敛
+
+```math
+\left(\mathcal Z_M|_{[u_0,u_1]},T_M,Y_M,
+ L_M|_{[-R,R]},C_M|_{[-R,R]},Z_M\right)
+\Longrightarrow
+\left(\bigl(b_*\gamma+I_2(H)+2uN_2\bigr)_{u\in[u_0,u_1]},
+ N_2,Y,L|_{[-R,R]},C|_{[-R,R]},Z\right).
+```
+
+式 (51.4)。
+
+其中 $`b_*`$ 如 (50.2)，$`N_2\sim N(0,\nu_2)`$ 与整个
+$`\mathcal W_\rho`$ 独立，故也独立于 $`I_2(H)`$。
+所有路径取 $`J_1`$ 拓扑，极限连续。结论对固定支持一致，并在两种方向信息情形下成立。
+后验条件核的有界 Lipschitz 收敛，在均匀固定基数先验空间中依数据概率成立。
+在任意固定 $`u>0`$，谱极限为非 Gaussian 变量；这一断言及下文的矩计算只涉及极限对象。
+
+证明。[二次型、Wiener 积分与渐近独立性的先例及边界](../../../Library/Dynamics/iyer2025empirical.md)
+给出所用经典机制。新增的分析在于实际组的对数平方控制、共同实现以及同时增长的截断。
+
+先固定充分大的全行计数截断。其共同事件概率趋于一；事件上原窗口恰为观测直线组，
+组数 $`g_M\le CQ^2`$，且 $`|x_t|\le C\sqrt\lambda`$。
+令 $`C_t`$ 为截断直线点的实际占据数，$`m_t`$ 为其两总体 Poisson 比较均值，
+$`d_t=\sum_{i\in J_t}p_i(1-p_i)`$、$`v_t=d_t/B_M^2`$。
+这些截断点上的变量可在全部数据上定义，以便先取数据期望。
+两点 $`t\ne r`$ 不能由同一行同时占据；原实际模型的相对点比较 (17.8)
+在两倍固定截断中直接给出
+
+```math
+\mathbb E_S(C_tC_r)\le C m_tm_r,\qquad
+\mathbb E_S(v_tv_r)\le C a_ta_r,\qquad
+a_t=\frac{m_t}{B_M^2}\qquad(t\ne r).
+```
+
+式 (51.5)。
+
+第一式把 $`C_tC_r`$ 展为不同实际行的指示量乘积，再逐项使用同一真实支持下的两行比较。
+这里没有同一行的对角贡献，也不需要对任意事件作截断而产生的加性误差。
+第二式只用 $`d_t\le C_t/4`$，故允许校准根依赖全部数据。
+
+第 42 章使用的精确换测度和 Poisson 点包络，在两个计数均不低于其信号均值一半时给出
+$`a_t\le C\delta e^{-c x_t^2}`$；其余截断点满足
+$`a_t\le C Q^{5/2}e^{-c\lambda}`$。
+这是 $`m_t\le C(q/\lambda)e^{-c x_t^2}`$、$`m_t\le Cq e^{-c\lambda}`$
+分别除以 $`B_M^2=q/Q^{5/2}`$ 的结果。低计数组只有 $`O(Q^2)`$ 个；
+涉及它们的双和乘以 $`(1+\log Q)^2`$ 仍指数趋零。
+
+对充分小的固定 $`\varepsilon>0`$，Gaussian 网格和满足
+
+```math
+\begin{split}
+&\delta^2\sum_{0<|t-r|\delta\le\varepsilon}
+ e^{-c\{(t\delta)^2+(r\delta)^2\}}
+ \{1+|\log(\omega|t-r|\delta)|\}^2\\
+&\qquad\le C\delta\sum_{1\le|m|\le\varepsilon/\delta}
+       (1+|\log(|m|\delta)|)^2
+ \le C\varepsilon(1+\log^2\varepsilon).
+\end{split}
+```
+
+式 (51.6)。
+
+第一步固定差 $`m=r-t`$，再用平移 Gaussian 网格和的一致界。
+第二步把递减函数的右端点和与零端点处可积的积分比较；$`\delta>\varepsilon`$ 时和为空。
+若 $`|t\delta|>R`$ 或 $`|r\delta|>R`$，先抽出 Gaussian 因子
+$`e^{-cR^2/2}`$。剩余的 $`|t-r|\delta\le1`$ 部分由同一积分界控制，
+其余部分用 $`\log^2(\omega|x-y|)\le C(1+x^2+y^2)`$。
+于是 (51.5) 给出支持一致的实际数据界
+
+```math
+\begin{split}
+\mathbb E_S\sum_{\substack{t\ne r\\|x_t-x_r|\le\varepsilon}}
+ H(x_t,x_r)^2v_tv_r
+ &\le C\varepsilon(1+\log^2\varepsilon)+o(1),\\
+\mathbb E_S\sum_{\substack{t\ne r\\|x_t|>R\ \mathrm{or}\ |x_r|>R}}
+ H(x_t,x_r)^2v_tv_r
+ &\le Ce^{-c'R^2}+o(1).
+\end{split}
+```
+
+式 (51.7)。
+
+余项来自低计数点，在固定截断参数下指数趋零。远处相邻组也包含在第二式中。
+对应的连续积分界同时证明 $`H\in L^2(\rho\otimes\rho)`$。
+无权尾质量趋零本身不能给出 (51.7)：例如在
+$`R_\delta=(\log(1/\delta))^{1/4}`$ 附近放置两个相邻网格点，
+各赋权 $`1/\log(1/\delta)`$，总权及二阶位置加权总权都趋零，
+但两点的对数平方加权乘积趋于一。直接代入可得这些结论。
+该数组只反驳不足的尾界推理；实际模型由 (51.5) 的 Gaussian 包络排除它。
+
+给定数据，在同一个辅助独立标签律 $`\mathsf Q`$ 下，置
+$`U_t=B_M^{-1}\sum_{i\in J_t}(\zeta_i-p_i)`$。
+不同组独立、中心化，方差为 $`v_t`$。对任意实对称核 $`K`$，记
+$`S_M(K)=\sum_{t\ne r}K(x_t,x_r)U_tU_r`$，则精确有
+
+```math
+\mathbb E_{\mathsf Q}S_M(K)=0,\qquad
+\mathbb E_{\mathsf Q}|S_M(K)|^2
+ =2\sum_{t\ne r}K(x_t,x_r)^2v_tv_r.
+```
+
+式 (51.8)。
+
+只需配对两个不同组，无须实际数据的四行独立性。
+先取支撑于固定紧区间的对称矩形阶梯核
+$`K=\sum_{a,b}k_{ab}\mathbf1_{I_a}\otimes\mathbf1_{I_b}`$，其中 $`I_a`$ 两两不交。
+写 $`U(I_a)=\sum_{x_t\in I_a}U_t`$，得到恒等式
+
+```math
+S_M(K)=\sum_{a,b}k_{ab}U(I_a)U(I_b)
+ -\sum_a k_{aa}\sum_{x_t\in I_a}U_t^2.
+```
+
+式 (51.9)。
+
+第 49 章证明中的混合 Lyapunov 论证，使这些有限区间和、辅助二次坐标以及
+同一端点、轮廓和一阶矩联合趋于 Gaussian 向量。
+其二次坐标与全部线性块独立；这里先有联合 Gaussian 性，再使用协方差趋零。
+又区间平方和的均值趋于 $`\int_{I_a}\rho`$，其方差由
+$`C\{\sum_t v_t^2+V_M/B_M^2\}\to0`$ 控制。
+故 (51.9) 联合趋于 $`I_2(K)`$，并保持与同一个 $`N_2`$ 的独立性。
+
+现在把 $`H`$ 连续截断在 $`[-R-1,R+1]^2`$，并在
+$`|x-y|\le\varepsilon`$ 上置零，过渡到 $`|x-y|\ge2\varepsilon`$。
+所得核连续、有界，再以对称矩形阶梯核一致逼近。
+(51.5) 使 $`\mathbb E_S\sum_{t\ne r}v_tv_r`$ 一致有界，故 (51.8)
+控制阶梯逼近误差；(51.7) 控制删去的近对角线与远尾。
+具体地，条件误差概率的数据期望至多为
+
+```math
+\frac C{b^2}\{e^{-c'R^2}+\varepsilon(1+\log^2\varepsilon)\}
+ \quad\text{的样本上极限}\qquad(b>0).
+```
+
+式 (51.10)。
+
+Gaussian 极限侧由 (51.2) 有相同的二阶逼近。
+逐次令阶梯网格变细、$`\varepsilon\downarrow0`$、$`R\to\infty`$，
+收敛逼近给出辅助二次坐标、$`S_M(H)`$ 与整个指定线性束的共同极限。
+有限块极限中的乘积律在这些逼近下保留，所以 $`N_2`$ 独立于
+$`I_2(H)`$ 和同一 Gaussian 测度的所有区间坐标。
+这也给出与整个 $`\mathcal W_\rho`$ 独立的实现。
+这里未将不同 Wiener 阶的正交性当作独立性。
+
+还需在此尺度转移精确中心。令
+$`e_t=B_M^{-1}\sum_{i\in J_t}(\pi_i-p_i)`$，
+$`r_M=(d_J+\sqrt{d_J})/q+q^{-1/2}`$。
+(43.9) 用于正交组向量给出
+
+```math
+\|e\|_2\le C\sqrt{V_M}\,r_M,\qquad
+r_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2}),\qquad
+Q^2(1+\log Q)r_M\longrightarrow0.
+```
+
+式 (51.11)。
+
+在截断组上 $`\delta\le|x_t-x_r|\le C\sqrt\lambda`$，故
+对角线为零、非对角元素为 $`H(x_t,x_r)`$ 的矩阵满足
+$`\|H_M^\circ\|_{\mathrm{op}}\le CQ^2(1+\log Q)`$。
+辅助律下 $`\mathbb E_{\mathsf Q}\|U\|_2^2=V_M=O_{\mathbb P}(1)`$，因此
+
+```math
+\left|(U-e)^{\mathsf T}H_M^\circ(U-e)-U^{\mathsf T}H_M^\circ U\right|
+\le CQ^2(1+\log Q)(2\|U\|_2\|e\|_2+\|e\|_2^2)
+ \longrightarrow0
+```
+
+式 (51.12)。
+
+以辅助条件概率、依数据概率成立。二次坐标的位移由 (49.13) 控制，
+线性束的位移由既有子集与带权中心界控制。
+补集保留与 $`q`$ 同阶的方差，所有条件计数合法；一次完整后验向量比较
+遂转移这一整束精确中心函数，得到
+
+```math
+\left(T_M,\sum_{t\ne r}H(x_t,x_r)A_tA_r,Y_M,L_M,C_M,Z_M\right)
+\Longrightarrow (N_2,I_2(H),Y,L,C,Z).
+```
+
+式 (51.13)。
+
+路径仍限制于任意固定紧区间。条件版本使用 (51.10) 的条件误差概率期望和 Markov 界，
+结合有限逼近的条件有界 Lipschitz 收敛；不要求每个固定截断误差在每条数据实现上消失。
+全行截断外只付出其概率，没有转移无界二次矩。
+
+最后直接估计同时增长的有限 Fourier 核。
+设 $`a_k=(1+k^2)^{-1/2}`$、$`d_k=a_k-1/k`$，
+$`K_N(z)=1+2\sum_{k=1}^Na_k\cos(\omega kz)`$。
+由 $`d_k=O(k^{-3})`$ 和调和和的常数项，
+$`K_N(0)=2\log N+b_*+O(N^{-1})`$。
+对 $`0<|\theta|\le1`$，几何级数及分部求和给出
+
+```math
+\sum_{k=1}^N\frac{\cos(k\theta)}k
+ =-\log(2|\sin(\theta/2)|)+O((N|\theta|)^{-1}),\qquad
+\left|\sum_{k=1}^Nd_k\cos(k\theta)-D_{\mathrm w}\right|
+ \le C\theta^2(1+|\log|\theta||)+CN^{-2}.
+```
+
+式 (51.14)。
+
+第一式可由 $`-\log(1-ze^{i\theta})`$ 的实部令 $`z\uparrow1`$ 得到无穷和，
+尾和再用 $`|\sum_{k=m}^ne^{ik\theta}|\le C/|\theta|`$。
+第二式在 $`k=1/|\theta|`$ 两侧分别用
+$`1-\cos(k\theta)\le Ck^2\theta^2`$ 与 $`\sum_{k>1/|\theta|}k^{-3}\le C\theta^2`$。
+结合 $`-\log(2|\sin(\theta/2)|)=-\log|\theta|+O(\theta^2)`$，
+截断组间的 $`|\theta|=\omega h|x_t-x_r|`$ 位于
+$`[\omega h\delta,Ch\sqrt\lambda]`$，后者趋零。
+于是对 $`u\in[u_0,u_1]`$ 及所有不同组，一致地有
+
+```math
+\begin{split}
+K_{N_M(u)}(0)&=2\mathfrak L+2s_M(u)+b_*+O(he^{-s_M(u)}),\\
+K_{N_M(u)}(h(x_t-x_r))&=2\mathfrak L+H(x_t,x_r)+O(\eta_M),\\
+\eta_M&\le C\left\{\frac{e^{-u_0/\sqrt\delta}}\delta
+       +h^2\lambda(1+\mathfrak L+\log\lambda)+he^{-u_0/\sqrt\delta}\right\},
+\qquad Q^2\eta_M\longrightarrow0.
+\end{split}
+```
+
+式 (51.15)。
+
+最后一式使用 $`\lambda=Q^3`$、$`\mathfrak L\asymp Q^3`$ 和
+$`Q^{5/2}e^{-u_0Q^{1/4}}\to0`$。
+频率取整已包含在 $`\log N_M(u)=\mathfrak L+s_M(u)+O(he^{-s_M(u)})`$ 中。
+平移相位精确相消，双和展开及 $`(\sum_t|A_t|)^2\le g_M\mathcal Q_M`$ 给出
+
+```math
+\sup_{u\in[u_0,u_1]}
+\left|\mathcal Z_M(u)-2uT_M-b_*\mathcal Q_M
+       -\sum_{t\ne r}H(x_t,x_r)A_tA_r\right|
+ \le CQ^2\eta_M\mathcal Q_M\longrightarrow0
+ \quad\text{依概率}.
+```
+
+式 (51.16)。
+
+此处先精确消去同一个 $`2\mathfrak L Y_M^2`$，再处理剩余的对数矩阵；
+没有分别近似两个发散项后相减。由 $`\mathcal Q_M\to\gamma`$、(51.13)
+及连续仿射映射，得到整个紧区间上的路径结论 (51.4)。
+辅助平方范数的条件期望有界、中心界及同一次向量比较也给出 (51.16) 的条件概率版本。
+
+为核对非 Gaussian 性，把 $`H`$ 对应的实对称 Hilbert–Schmidt 算子特征值记为
+$`(\lambda_j)`$。经典谱分解给出
+$`I_2(H)=\sum_j\lambda_j(G_j^2-1)`$，其中 $`G_j`$ 独立标准正态，级数在二阶均方收敛。
+由于 $`\sum_j\lambda_j^2<\infty`$，中心化矩生成函数在零点邻域收敛，
+其四阶累积量为 $`48\sum_j\lambda_j^4`$。
+$`H`$ 非零，故该量严格为正；加上独立 Gaussian 的 $`2uN_2`$ 不改变四阶累积量。
+这证明固定谱坐标的非 Gaussian 性，不给出实际统计量的矩收敛。
+
+最后，支持置换保留整个数据、校准、后验与谱束，把先验混合律转移为固定支持一致的
+无条件律。两种方向信息情形使用同一个方向决定；其一致事件上全部坐标精确相同，
+补事件只付出趋零概率，因而保留完整联合结论。∎
+
+## 追加锚（本行以下为增补区）
