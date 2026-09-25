@@ -6,7 +6,7 @@
    utility: none
    digest: Phase averaging and volume are compared as functions on admissible real parameters and measurable sets. -/
 
-import D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
+import D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 
