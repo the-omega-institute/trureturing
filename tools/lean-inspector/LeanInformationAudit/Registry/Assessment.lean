@@ -111,7 +111,8 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
               forwarded := forwarded.push argument
         return forwarded == expected).run state
     unless ← forwarding do return actual
-    let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining (← get).constructorTypes
+    let (dependencies, typeWork) ← checkExtractionType theoremName info.type
+      (← get).remaining (← get).constructorTypes
     debit typeWork
     let indices := indexPositions info.type
     debit indices.size

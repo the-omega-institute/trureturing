@@ -59,6 +59,9 @@ run_meta do
   check "independent_data_argument_accepted" identityInfo.value none
   check "infinite_carrier_type_accepted" (mkConst ``Int) none
   check "independent_infinite_readout_accepted" (mkConst ``Int.natAbs) none
+  let sourceInfo ← getConstInfo ``Int.natAbs
+  let (_, sourceTypeWork) ← TemplateAudit.checkExtractionType ``target sourceInfo.type 524288
+  unless sourceTypeWork < 524288 do throwError "independent source type exhausted work budget"
   let infiniteOutput ← mkArrow (mkConst ``Int) (mkConst ``Int)
   let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
   check "infinite_function_equality_dictionary_accepted" equalityDictionary none
