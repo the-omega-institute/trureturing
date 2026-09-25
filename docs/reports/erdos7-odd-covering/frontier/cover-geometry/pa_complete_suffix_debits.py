@@ -7,7 +7,8 @@ moments retain all heights; only atoms below thresholds need enumeration.
 import argparse
 from collections import defaultdict
 from fractions import Fraction as F
-from itertools import product
+from itertools import combinations, product
+from math import factorial, prod
 from pathlib import Path
 import json
 
@@ -39,6 +40,75 @@ def multiply(a,b):
 def hinge(law, threshold):
     return law[1]-threshold*law[0]+sum(
         ((threshold-i)*w for i,w in law[2].items() if i < threshold),F())
+
+
+def shared_ternary_union(bound):
+    """Actual irredundant input refuting automatic additive certification."""
+    primes = (5,7,11,13,17,19)
+    pure = ((3,2),(9,4),(27,19),(81,37))
+
+    def crt(coordinates):
+        value,modulus = 0,1
+        for m,a in coordinates:
+            value += modulus*((a-value)*pow(modulus,-1,m)%m)
+            modulus *= m
+        return value%modulus
+
+    originals = [dict(m=m,a=a,kind='pure3') for m,a in pure]
+    for p in primes:
+        for e,old,phase in ((0,0,0),(1,0,1),(3,1,2)):
+            originals.append(dict(m=3**e*p,a=crt(((3**e,old),(p,phase))),
+                                  kind='mixed',p=p,e=e,old=old,phase=phase))
+    survivor = [x for x in range(81) if all(x%m != a for m,a in pure)]
+    check('shared_union_22_distinct_originals',len(originals) == len({r['m'] for r in originals}) == 22)
+    check('shared_union_pure_survivor',len(survivor) == 41)
+    check('shared_union_pure_disjoint',all(not set(range(a,81,m))&set(range(b,81,n))
+          for i,(m,a) in enumerate(pure) for n,b in pure[i+1:]))
+    check('shared_union_untouched_root',all(x in survivor for x in range(0,81,3)))
+    check('shared_union_untouched_cylinder',all(x in survivor for x in range(1,81,27)))
+    for row in originals:
+        roots = {p:3 for p in primes}
+        old = row['a'] if row['kind'] == 'pure3' else row['old']
+        if row['kind'] == 'mixed':
+            roots[row['p']] = row['phase']
+        witness = crt(((81,old),)+tuple((p,roots[p]) for p in primes))
+        check('shared_union_private_'+str(row['m']),
+              [r['m'] for r in originals if witness%r['m'] == r['a']] == [row['m']])
+        row['private_witness'] = witness
+    weights = (F(1),F(27,41),F(3,41))
+    local_minima = {}
+    for p in primes:
+        candidates = []
+        for k in range(3):
+            for chosen in combinations(range(3),k):
+                residual = sum((weights[i] for i in range(3) if i not in chosen),F())
+                candidates.append((residual/(p-k),chosen))
+        optimum = min(v for v,_ in candidates)
+        check('shared_union_selector_'+str(p),optimum == F(3,41*(p-2)) and
+              [a for v,a in candidates if v == optimum] == [(0,1)])
+        local_minima[p] = optimum
+    for q,_,cap in ROWS:
+        check('shared_union_actual_pa_cap_'+str(q),F(q,q-2) <= cap)
+    r3 = F(81,82)
+    rq = prod(1+F(p,(p-1)*(p-2)) for p in primes)-1
+    envelope = sum(local_minima.values(),F())
+    gate = 1-F(49,566)*(1+2*bound)
+    refined_gate = 1-F(49,566)*(r3+(1+r3)*bound)
+    loss = F(3,41)*(1-prod(F(p-3,p-2) for p in primes))
+    mass = (566*(1-loss)-49*(1+2*bound))/567
+    density = F(81,41)*prod(F(p,p-2) for p in primes)
+    haar = mass/density*F(21,22)*F(27,28)
+    check('shared_union_law_has_full_query_budget',rq < bound)
+    check('shared_union_exact_envelope',envelope == F(7244,115005))
+    check('shared_union_exact_loss',loss == F(47063,1035045))
+    check('shared_union_envelope_fails_both_gates',loss < gate < refined_gate < envelope)
+    check('shared_union_exact_density',density == F(1729,205))
+    check('shared_union_nine_head_haar',haar > F(1,5500))
+    return dict(scope='Twenty-two fixed actual originals; limitation of the weighted-max additive sufficient certificate, repaired by their actual union under the same law. Not an odd covering.',
+                originals=originals,period=81*prod(primes),ternary_weights=weights,
+                ternary_query=r3,q_query=rq,local_envelope_minima=local_minima,
+                envelope_minimum=envelope,universal_gate=gate,refined_gate=refined_gate,
+                actual_union=loss,source_density=density,nine_head_mass=mass,nine_head_haar=haar)
 
 
 def main():
@@ -163,7 +233,52 @@ def main():
         seven_query_bound=seven_bound,pure_extension_charge=pure_extension_charge,
         residual_limit=residual_limit,extension_density=extension_density,
         phase_tails=phase_tails)
-    result = dict(scope='Arbitrary finite two-copy family on Q={5,7,11,13,17,19}; one actual PA law, complete queries at every height. Restricted nine-prime consumer requires at most two distinct projected residues per nonunit Q cofactor after removing powers of3 from P-only originals. Not unrestricted Erdos7 or an arbitrary ternary-prefix transfer.',
+    # A finite cofactor window: only small d need the five-level phase
+    # restriction. For larger d, select e=0,1 and pay the remaining tower
+    # with the SAME PA law's Haar density bound.
+    primes = (5,7,11,13,17,19)
+    reciprocal_total = prod(F(p,p-1) for p in primes)-1
+    density = 9/min(row['alpha'] for row in corners)
+    windows = []
+    for cutoff,expected_count in ((200000,399),(500000,534)):
+        values = [1]
+        for p in primes:
+            extended = []
+            for n in values:
+                while n <= cutoff:
+                    extended.append(n)
+                    n *= p
+            values = extended
+        nonunit = sorted(n for n in values if n > 1)
+        check('window_unique_'+str(cutoff),len(nonunit) == len(set(nonunit)) == expected_count)
+        reciprocal_tail = reciprocal_total-sum((F(1,n) for n in nonunit),F())
+        delta = joint/243+F(80,243)*density*reciprocal_tail
+        live = (566*(1-delta)-49*seven_bound)/567
+        haar = live/(2*density*extension_density)
+        check('window_tail_positive_'+str(cutoff),reciprocal_tail > 0)
+        check('window_residual_positive_'+str(cutoff),0 < delta < residual_limit)
+        check('window_haar_positive_'+str(cutoff),haar > F(1,150000))
+        windows.append(dict(cofactor_cutoff=cutoff,nonunit_count=len(nonunit),
+                            cofactors=nonunit,reciprocal_tail=reciprocal_tail,
+                            residual_upper=delta,survivor_reserve=live,haar_lower=haar))
+    tail_cutoff,ell = 1000000,12
+    head_primes = (3,)+primes+(23,29)
+    moment2 = prod(F(p*(p+1),(p-1)**2) for p in head_primes)
+    c = F(2*ell*ell+1,2*ell*ell-1)
+    polynomial = sum((F(factorial(7),factorial(7-j)*ell**j) for j in range(8)),F())
+    tau = c**7/tail_cutoff*F(tail_cutoff,tail_cutoff-3)**2*polynomial
+    tail_charge = moment2*tau
+    check('nine_head_second_moment',moment2 == F(14003665,540672))
+    check('large_tail_analytic_parameters',tail_cutoff >= 286 and ell >= 4 and 3**ell <= tail_cutoff)
+    check('large_tail_full_five_level_margin',phase_tails[4]['haar_lower']-tail_charge > F(1,12000))
+    check('large_tail_finite_window_margin',windows[1]['haar_lower']-tail_charge > F(1,60000))
+    large_tail = dict(scope='Chapter33 joint-load transfer, with its inherited analytic prime-product premise. All outside primes strictly above cutoff, arbitrary finite heights and original supports. Remaining mass is distorted, not Haar.',
+                      cutoff=tail_cutoff,ell=ell,c=c,head_primes=head_primes,
+                      moment2=moment2,tau=tau,tail_charge=tail_charge,
+                      full_five_level_remaining=phase_tails[4]['haar_lower']-tail_charge,
+                      finite_window_remaining=windows[1]['haar_lower']-tail_charge)
+    joint_union_example = shared_ternary_union(joint)
+    result = dict(scope='Arbitrary finite two-copy family on Q={5,7,11,13,17,19}; one actual PA law, complete queries at every height. Nine-prime consumers impose explicit projection or residual conditions; finite-window and large-prime-tail versions retain their stated restrictions. Not unrestricted Erdos7 or an arbitrary ternary-prefix transfer.',
                   suffixes=suffixes,coefficients=coefficients,corners=corners,
                   simple_bound=simple,joint_bound=joint,
                   simple_bound_decimal=float(simple),joint_bound_decimal=float(joint),
@@ -171,6 +286,8 @@ def main():
                   restricted_nine=dict(seven_query_bound=seven_bound,outside_charge=outside_charge,
                                        survivor_reserve=reserve,haar_lower=haar_lower),
                   weighted_projection=weighted_projection,
+                  finite_cofactor_windows=windows,large_prime_tail=large_tail,
+                  shared_ternary_union=joint_union_example,
                   checks=checks,check_count=len(checks))
     args.output.write_text(json.dumps(result,default=str,indent=2)+'\n')
     print('simple_bound',simple,float(simple))

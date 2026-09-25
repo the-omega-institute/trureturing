@@ -37,7 +37,12 @@ projected phases at the same numerical cofactor. A restricted
 nine-prime consumer, with that multiplicity hypothesis explicit,
 is given below. A weighted residual extension requires the two-phase
 condition only through ternary exponent5, allowing arbitrary deeper
-phases and arbitrary23/29 originals. Unrestricted Erdős #7 remains open.
+phases and arbitrary23/29 originals. A density bound restricts this
+condition further to534 nonunit cofactors at most500000; that finite
+window permits arbitrary additional support primes greater than1000000.
+A22-original counterexample to the additive residual certificate
+is repaired by retaining the actual cross-cofactor union under the
+same law. Unrestricted Erdős #7 remains open.
 
 ## One actual law and its existing mass bounds
 
@@ -421,7 +426,8 @@ original family and the already fixed pure3 law. SD1 then produces
 one `nu_Q` for the entire selected family. No law or original residue
 is reselected for individual queries.
 
-Let `delta<1` be any certified bound in SD14, and restrict `rho` to
+Let `delta<1` bound the actual remaining original union, for example
+by any of the estimates in SD14, and restrict `rho` to
 the actual `P`-only survivor, obtaining the unnormalized measure
 `sigma`. It has mass `s>=1-delta`, density at most `18/alpha_min`,
 and complete nonunit query sum at most `A=1+2B*`. Deletion only
@@ -493,17 +499,237 @@ The unrestricted problem requires control of arbitrary low-level
 projections as well. SD14 does not prove that its residual threshold
 always holds, and the new consumer does not close that missing bridge.
 
+## A finite cofactor window suffices
+
+The same law's density bound makes it unnecessary to restrict the
+shallow phases at every possible cofactor. Put
+
+\[
+\Lambda_Q=9/\alpha_{\min},\qquad
+T_Q(D)=\sum_{\substack{d>D\\d\ Q\text{-smooth}}}\frac1d
+=\frac{157435}{165888}
+ -\sum_{\substack{1<d\le D\\d\ Q\text{-smooth}}}\frac1d.
+\tag{SD19}
+\]
+
+Suppose only that, for each nonunit numerical `d<=D`, its original
+projections at `e=0,...,5` have at most two phases. Select these
+phases for such `d`. For `d>D`, select just the phases at `e=0,1`,
+if present. Every other phase at every height is unrestricted.
+
+The corresponding shadow costs satisfy `rho_d<=1/243` on the
+small cofactors and `rho_d<=1/3` on the large ones. Both
+`sum p_d<=B*` and `p_d<=Lambda_Q/d` hold for the same selected
+`nu_Q`. Thus, separating the two inventories without changing the
+law, SD14 gives
+
+\[
+\delta\le\delta_D:=\frac{B_*}{243}
+              +\frac{80\Lambda_Q}{243}T_Q(D).
+\tag{SD20}
+\]
+
+The residual cannot be evaluated by choosing a different maximizing
+source for each cofactor; the two displayed caps concern its one
+actual query vector. The reciprocal series is exact at all heights,
+since it is the product of six convergent geometric series. Only
+its finite complement is enumerated.
+
+| Cofactor cutoff `D` | Nonunit `Q`-smooth cofactors at most `D` | `delta_D` | Actual nine-head Haar survivor lower bound |
+|---|---:|---:|---:|
+|200000|399|0.045794994205...|`>1/150000`|
+|500000|534|0.033201344500...|`>1/14000`|
+
+For the second row the exact Haar bound from SD16 is
+
+\[
+h_{\rm win}=
+\frac{65309357447174553501464811666318913123}
+ {891295583254235091928801373698690560000000}.
+\tag{SD21}
+\]
+
+Consequently only a finite set of full original labels is restricted:
+`3^e d` with `0<=e<=5`, nonunit `Q`-smooth `d<=500000`.
+The condition concerns the actual projections grouped by `d`; it
+does not prescribe their values or require these labels to occur.
+Every `P`-only original outside this window, and every original
+touching23 or29, is arbitrary. No phase multiplicity bound is imposed
+at large cofactors or at higher ternary exponents.
+
+## Arbitrarily many sufficiently large prime coordinates
+
+Let every support prime belong to
+`P9={3,5,7,11,13,17,19,23,29}` or be strictly greater than1000000.
+Impose the finite-window condition of SD21 only on the `P`-supported
+originals. All tail-touching originals have arbitrary phases, heights
+and support sizes; their old projections are not restricted by the
+window condition.
+
+Resolve the nine head coordinates to every exponent occurring in the
+complete original family, including classes touching tail primes.
+The actual head-only survivor `U` has Haar mass at least `h_win`.
+Use the new unnormalized seed `H_P9 restricted to U`, with joint
+density at most one. Its complete query second moment is bounded by
+
+\[
+M_2=\prod_{p\in P9}\frac{p(p+1)}{(p-1)^2}
+    =\frac{14003665}{540672}.
+\]
+
+This uses Haar domination, not an unproved transfer of the old PA
+query bound to the changed seed. Apply the existing homogeneous
+joint-load transfer of [Chapter33, SH5--SH13](../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md).
+For `B=1000000`, `ell=12`, its full prime-tail charge is at most
+
+\[
+\begin{aligned}
+M_2\tau_7(B,\ell),\qquad
+\tau_7(B,\ell)
+ &=\frac{c_\ell^7}{B}\left(\frac B{B-3}\right)^2
+   \sum_{j=0}^7\frac{7!}{(7-j)!\ell^j},\\
+c_\ell&=\frac{2\ell^2+1}{2\ell^2-1}=\frac{289}{287}.
+\end{aligned}
+\tag{SD22}
+\]
+
+The applicable prime-product estimate is the literature premise
+specified in Chapter33 SH11 and Chapter32 JR20. Its original
+Rosser--Schoenfeld Theorem8 inequalities have been read directly;
+the rational producer does not prove that analytic theorem. Its required
+`3^12<=1000000` and the remaining parameter inequalities hold.
+Exact arithmetic gives
+
+\[
+M_2\tau_7
+=\frac{18784226696570844907670807127734375}
+       {337155933270740130462847785506306260992},\qquad
+h_{\rm win}-M_2\tau_7>\frac1{60000}>0.
+\tag{SD23}
+\]
+
+Assign each tail original once to its largest tail prime, retaining
+all earlier head and tail exponents and the original phases. The
+normalized current kernels preserve the entire previous joint
+measure; all tail bad sets are removed together at the end. Hence
+the positive margin is mass on one actual complete survivor law,
+and supplies an uncovered integer by finite CRT. It is **not** a
+final Haar-density lower bound: the tail kernels change the density.
+
+The stronger all-cofactor five-level assumption of SD18 gives a
+larger head mass and final distorted mass `>1/12000` at the same
+cutoff. The finite-window version above already allows arbitrarily
+many tail primes. It still excludes extra support primes from31
+through1000000 and retains its explicit finite head condition.
+Neither restriction is removed by this continuation.
+
+## A shared original cylinder defeats the additive certificate
+
+The cross-cofactor sum in SD14 can fail even when the actual union
+under the same law passes SD15. Take the four pure3 originals
+`(modulus,residue)=(3,2),(9,4),(27,19),(81,37)`. For each `p in Q`,
+take exactly the following three further originals, with their full
+residue fixed by CRT:
+
+| Original modulus | Ternary condition | `Q` condition |
+|---|---|---|
+|`p`|none|`x_p=0 mod p`|
+|`3p`|`x_3=0 mod3`|`x_p=1 mod p`|
+|`27p`|`x_3=1 mod27`|`x_p=2 mod p`|
+
+These22 original moduli are distinct and odd. The pure3 cylinders
+are disjoint and avoid both displayed ternary cylinders. Their
+survivor Haar mass is `41/81`; normalized Haar on it gives the three
+phase weights `1,27/41,3/41` at every cofactor `p`. Its complete
+positive-depth query norm is `81/82`, since root0 is untouched.
+
+The family is irredundant. A private point for a pure3 original has
+its displayed3-residue and every `Q` root equal to3. A private point
+for the chosen `p`, `3p` or `27p` original uses respectively
+`(x_3,x_p)=(0,0),(0,1),(1,2)` and every other `Q` root3.
+CRT joins these coordinates. Each point hits only its named class;
+the exact producer supplies all22 integer witnesses.
+
+Consider any selector of at most two phases per cofactor and any
+one `Q` probability avoiding those phases. If `k` roots are selected
+at `p`, its maximum root mass is at least `1/(p-k)`. Selecting
+outside the three actual phases cannot decrease the residual.
+For `k=0,1,2` the best local lower bounds for `rho_p p_p` are
+respectively `71/(41p)`, `30/(41(p-1))`, `3/(41(p-2))`.
+The last is strictly smallest for every `p>=5`. Hence
+
+\[
+\sum_p\rho_p p_p\ge\frac3{41}\sum_{p\in Q}\frac1{p-2}
+=\frac{7244}{115005}=0.0629885657145\ldots
+>\delta_*:=1-\frac{49(1+2B_*)}{566}.
+\tag{SD24}
+\]
+
+This fails SD14's weighted-maximum sufficient certificate even
+after replacing the coarse ternary norm1 by `81/82`: the resulting
+threshold is only `0.0535098569215...`. It does not lower-bound the
+actual union or the phase-resolved sum for an arbitrary supported law.
+
+Select phases0 and1 at every `p`. One product law uniform on roots
+`2,...,p-1` attains all six lower bounds in SD24 simultaneously.
+Its complete query norm is
+
+\[
+R_Q=\prod_{p\in Q}\left(1+\frac{p}{(p-1)(p-2)}\right)-1
+=\frac{214267985}{147806208}<B_*.
+\tag{SD25}
+\]
+
+This is also the actual PA law for these selected pure-prime
+inputs: there is no mixed5/7 deletion, and every later pure-root
+row has normalized density `p/(p-2)` below its PA cap. Thus the
+minimum in SD24 is attained by one admissible actual law.
+
+All unselected originals share the single ternary cylinder1mod27.
+Under this very law their joint remaining union has exact mass
+
+\[
+\delta_{\rm joint}
+=\frac3{41}\left[1-\prod_{p\in Q}\left(1-\frac1{p-2}\right)\right]
+=\frac{47063}{1035045}
+=0.0454695206488\ldots<\delta_*.
+\tag{SD26}
+\]
+
+No phase, source or law changed between SD24 and SD26. The additive
+account counted overlapping events more than once. Using SD26 in
+SD15 with the unchanged conservative budget `A=1+2B*` yields positive
+mass. The actual source density here is `1729/205`, giving
+
+\[
+H(U_9)\ge
+M(\delta_{\rm joint})\frac{205}{1729}\frac{21}{22}\frac{27}{28}
+=\frac{220847911852866873499201}{1190705023034810768709876960}
+>\frac1{5500}.
+\tag{SD27}
+\]
+
+Thus this fixed22-class head admits arbitrary additional distinct
+original moduli supported on `P9` and touching23 or29. It lies
+outside SD18's two-phase condition already at ternary exponent3.
+The example refutes automatic success of the specified additive
+certificate and identifies a sufficient joint-union repair; it
+neither supplies a covering nor proves the repair works for every
+head. It does not require improving the universal query budget.
+
 ## Verification
 
 The [standard-library producer](../../frontier/cover-geometry/pa_complete_suffix_debits.py)
 and [exact data](../../frontier/cover-geometry/pa_complete_suffix_debits.json)
 reconstruct full moments, suffix hinges, cap slopes, prefix mass
 bounds, signed-penalty corrections, all four corners and the restricted
-nine-prime consumers and the weighted residual threshold. All170 checks pass with Python optimizations
+nine-prime consumers, finite cofactor windows, large-prime continuation
+and the22-original shared-cylinder example.
+All225 checks pass with Python optimizations
 enabled. Independent arithmetic reconstructs the four corners and
 both bounds without importing the producer. The finite-box and
 all-height arguments above supply the arbitrary-family proof; finite
-checks do not replace it. No Lean was added or run.
+checks do not replace it. No Lean statements were added for these results.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pa_complete_suffix_debits.py
