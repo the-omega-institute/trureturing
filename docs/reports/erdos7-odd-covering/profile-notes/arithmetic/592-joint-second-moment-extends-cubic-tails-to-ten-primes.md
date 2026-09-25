@@ -226,6 +226,13 @@ The two outstanding directions remain arbitrary first-seven mixed
 squares and unrestricted additional primes. The former needs the actual
 joint prefix phases, as the following regression makes explicit.
 
+[Report594](594-five-joint-blocks-admit-ten-mixed-square-labels.md)
+admits all ten additional labels 3q^2 and5q^2 for q=7,11,13,17,19
+while retaining the ten-prime continuation. Its different common head
+uses a seed-180 moment certificate and retains its positive same-source
+margin through the three fixed kernels. This does not remove arbitrary
+remaining core mixed squares or admit unrestricted additional primes.
+
 ## 7. An actual mixed-square fibre that the old marginal cannot preserve
 
 On P take pure originals 1 mod p for every p, and all eleven star

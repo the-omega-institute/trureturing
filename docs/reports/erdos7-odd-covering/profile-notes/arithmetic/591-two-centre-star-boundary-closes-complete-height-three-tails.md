@@ -288,5 +288,10 @@ available independently.
 instead retains 105,147,245 in one joint prefix block. It allows arbitrary
 phases at the two added mixed-square labels 147 and245, within the
 nine-prime support, without a separate extra-weight charge for them.
-Its wider square inventory and Report592's wider prime support have not
-been combined into one theorem.
+[Report594](594-five-joint-blocks-admit-ten-mixed-square-labels.md)
+retains all five 15q blocks together with 3q^2 and5q^2 for
+q=7,11,13,17,19. A common thinned source and a separate second-moment
+certificate combine all ten added square labels with the ten-prime
+continuation, giving Haar density greater than1/3400; on nine primes
+the stronger bound is greater than1/500. Remaining core mixed squares
+and unrestricted additional prime support are still outside this result.

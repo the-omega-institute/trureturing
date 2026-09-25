@@ -219,3 +219,9 @@ support are still unresolved. The positive result identifies a useful
 relation to retain next: original classes sharing the same prime-power
 prefix must be combined with the squarefree constraints crossing that
 prefix, while all subsequent queries are charged on the same source.
+
+[Report594](594-five-joint-blocks-admit-ten-mixed-square-labels.md)
+implements all five such joint blocks and permits ten added square labels.
+Its new same-source seed-180 certificate combines that wider inventory
+with continuation through31. The negative seed-170 envelope above is
+retained as stated; it did not rule out another sufficient seed bound.
