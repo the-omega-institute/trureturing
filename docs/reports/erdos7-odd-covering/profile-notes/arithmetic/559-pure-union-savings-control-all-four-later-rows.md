@@ -605,3 +605,224 @@ check all nine K,H pairs in{1,2,3}^2 using actual CRT originals, the
 old survivor histogram and current allowed sets. All12112 checks pass,
 including the exact full-query bound above. The formulas, rather than
 this finite sample, prove the all-height limits and uniform consumer.
+
+## 9. Actual cap slack gives an additive complete-query debit
+
+For the fixed PA order and caps of this report, Section7's conditional
+cap improvement has a complete-query consumer. Let `lambda_<q` be the
+actual unnormalized prefix before row `q`, and retain its actual allowed
+fraction `g_q(h)` and `kappa_q(h)=min(C_q,1/g_q(h))`, with `kappa_q=C_q`
+when `g_q=0`. Define
+
+\[
+K_q=\int(C_q-\kappa_q(h))\,d\lambda_{<q}(h),\qquad
+D_{\rm cap}=\sum_{q=11,13,17,19}\eta_q K_q.
+\tag{CS1}
+\]
+
+The four positive coefficients are
+
+| `q` | `C_q` | `eta_q` |
+|---|---|---|
+|11|`5/3`|`641451990131/13653911814400`|
+|13|`3/2`|`130632977/5642112320`|
+|17|`2`|`118307/16692640`|
+|19|`9/5`|`1/6498`|
+
+For every finite query with one globally fixed phase per numerical
+label and its unit included once, the same final actual measure obeys
+
+\[
+\int(L-3)_+\,d\lambda_{\rm final}
+\le\Phi(x,y)-D_{\rm cap}.
+\tag{CS2}
+\]
+
+Consequently, writing `s=lambda_final(1)>0` and normalizing this law
+only once,
+
+\[
+R_Q(\lambda_{\rm final}/s)
+\le 2+\frac{\Phi(x,y)-D_{\rm cap}}s.
+\tag{CS3}
+\]
+
+This strictly improves the previous numerator whenever `Dcap>0`.
+No uniform positive lower bound for `Dcap` is asserted. The result
+allows arbitrary finite original inventories, phases and heights under
+the two-copy rule on `Q={5,7,11,13,17,19}`.
+
+### A compulsory part of the complete query controls the cap slope
+
+First fix a complete finite exponent box and every query phase. Use the
+conditional convex comparison of Report348, processing the last
+coordinate first. At row `q`, the later coordinates have already been
+replaced in the main term by their full-cap auxiliary uniforms.
+Condition on these uniforms and on the actual earlier history.
+
+Let `S_e` count the active labels in current exponent layer `e`, after
+all earlier and later tests except the current `q` test. Put
+`A_e=S_0+...+S_e` and `phi(n)=(n-3)_+`. Comparing the current cylinders
+to one common nested uniform with cap `c<q` gives the affine envelope
+
+\[
+B(c)=\phi(A_0)+c\sum_{e=1}^{H_q}q^{-e}
+                            [\phi(A_e)-\phi(A_{e-1})].
+\tag{CS4}
+\]
+
+This comparison permits arbitrary original query-phase overlaps; it
+does not choose new actual residues conditional on the history.
+The complete box contains every label with zero exponents on earlier
+primes. Thus, in every current layer including layer zero,
+
+\[
+S_e\ge Z_H:=\prod_{r>q}\left(1+
+                \sum_{f=1}^{H_r}\mathbf1_{\{U_r\le C_r/r^f\}}\right).
+\]
+
+Convexity and monotonicity of `phi` give
+
+\[
+\phi(A_e)-\phi(A_{e-1})
+\ge\phi((e+1)Z_H)-\phi(eZ_H).
+\]
+
+In particular `B(C_q)-B(kappa_q)` is at least
+`(C_q-kappa_q) beta_(q,H_q)(Z_H)`, where
+
+\[
+\beta_{q,H}(z)=\sum_{e=1}^H q^{-e}
+                     [\phi((e+1)z)-\phi(ez)].
+\tag{CS5}
+\]
+
+Averaging the already replaced later uniforms gives a coefficient
+`eta_(q,H)=E beta_(q,H_q)(Z_H)` independent of the actual earlier
+history. Its geometric-sum limit is
+
+\[
+\beta_q(z)=
+\begin{cases}
+1/[q^2(q-1)]&z=1,\\
+(q+1)/[q(q-1)]&z=2,\\
+z/(q-1)&z\ge3.
+\end{cases}
+\]
+
+For `Z=product_(r>q) N_(r,C_r)`, this yields
+
+\[
+\eta_q=\frac{\mathbb EZ}{q-1}
+       -\frac{q+1}{q^2}\Pr(Z=1)-\frac1q\Pr(Z=2).
+\tag{CS6}
+\]
+
+The necessary exact moments are
+
+| `q` | `E Z` | `Pr(Z=1)` | `Pr(Z=2)` |
+|---|---|---|---|
+|11|`891/640`|`2967/4199`|`21492961/88158005`|
+|13|`99/80`|`258/323`|`93598/521645`|
+|17|`11/10`|`86/95`|`162/1805`|
+|19|1|1|0|
+
+### Backward extraction preserves the actual source of every debit
+
+Where `g_q>1/C_q`, the actual row is already normalized, with density
+`kappa_q=1/g_q` on its allowed set. Therefore CS4--CS5 subtract the
+stated cap debit from the full-cap comparison. Where `g_q<=1/C_q`,
+the debit is zero; the ordinary normalized completion dominates the
+subprobability row for this nonnegative payoff. This includes `g_q=0`.
+
+Integrating the conditional inequality against the actual `lambda_<q`
+extracts the scalar `eta_(q,H)K_q`. Keep it outside subsequent backward
+comparisons. Only the remaining main term is compared at the preceding
+row. This gives, successively for19,17,13,11,
+
+\[
+\int\phi(L_H)\,d\lambda_{\rm final}
+\le\Phi_H(x,y)-\sum_q\eta_{q,H}K_q.
+\tag{CS7}
+\]
+
+At the last step the actual old survivor is dominated by the product
+of its actual pure5/7 restrictions, as in the original PA argument.
+Each `K_q` still uses its own actual unnormalized prefix; no debit has
+been transported to an auxiliary law or multiplied by another prefix
+mass.
+
+Complete any prescribed finite query to larger boxes with arbitrary
+globally fixed phases. Its hinge can only increase. Independently,
+`Phi_H` increases to `Phi`, and `eta_(q,H)` increases to `eta_q`;
+CS5 is increasing both in its height and in `z`, and is bounded by
+`z/(q-1)`. The full future product has finite first moment. Taking the
+two limits in CS7 proves CS2, without assuming that their difference
+is monotone. Simultaneous phase maximization on each finite inventory
+and exhaustion under this one final law then prove CS3.
+
+### A same-law consumer and its remaining quantitative condition
+
+Since the cap slack is supported on rows of mass exactly one,
+
+\[
+K_q=\int_{1/C_q}^1
+        \lambda_{<q}\{g_q>t\}\,\frac{dt}{t^2}.
+\tag{CS8}
+\]
+
+An actual bin of prefix mass `b` with `g_q>=r>1/C_q` contributes at
+least `b(C_q-1/r)`. Several disjoint bins can be added. This uses no
+claim about query/original intersection and no killed mass.
+
+For `T=257/51`, the precise sufficient condition from CS3 is
+
+\[
+D_{\rm cap}\ge\Phi-(T-2)s \quad\Longrightarrow\quad R_Q\le T.
+\tag{CS9}
+\]
+
+A strict premise gives `R_Q<T`. In particular, using only the old
+lower bound `s>=alpha(x,y)`, write
+`Gamma(x,y)=Phi-(T-2)alpha`. Then `Dcap>=Gamma` suffices.
+The full actual mass identity gives the sharper condition
+
+\[
+D_{\rm cap}+(T-2)
+ \left(\tfrac1{12}-m_{\rm mixed}+\sum_qS_q\right)
+\ge\Gamma(x,y).
+\tag{CS10}
+\]
+
+Every term here comes from the same actual process. At the formal
+corner `x=1/2,y=2/3`, `Gamma` equals
+`c=6168733163201163811/542935350932041267200`. The sufficient numerical
+assumptions `K11>=1/6`, `K13>=1/8`, `K17>=1/10` give
+
+\[
+D_{\rm cap}-c\ge
+\frac{3502514252639023}{49357759175640115200}>0.
+\]
+
+These are arithmetic assumptions, not claimed universal or jointly
+attained slack values. The first11 slack alone cannot supply this
+corner deficit using the old mass lower bound: `K11<=2/9` and
+
+\[
+c-\tfrac29\eta_{11}
+=\frac{26345565509485633}{28575544785896908800}>0.
+\]
+
+For Report348's all-supported-laws witness with strict query lower
+bound above `T`, CS9 imposes the additional necessary strict inequality
+`Dcap<Phi-(T-2)s`. Proving this impossible for every remaining family
+requires a further actual joint estimate. CS2 also supplies the
+previously missing nonnegative coefficient `D=eta_q` for PU8 within
+this fixed complete-query construction. It neither settles arbitrary
+two-copy families nor unrestricted Erdős #7.
+
+The [exact coefficient producer](../../frontier/cover-geometry/pa_cap_slack_numerator.py)
+and [rational data](../../frontier/cover-geometry/pa_cap_slack_numerator.json)
+verify CS6, finite-height coefficients and the stated consumer margins.
+The arbitrary-phase and all-height conclusions follow from CS4--CS7's
+proof, not from finite samples. No Lean was added or run.
