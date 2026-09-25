@@ -10,7 +10,7 @@ internal sealed class TwoHarmonicRotationObstructionDocument : IScribeDocumentDe
         "D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Coprime frequency pairs meet a sharp half-cosine barrier at a sixth-turn rotation.",
+        "Coprime frequency pairs meet a sharp half-cosine barrier at angle pi/6.",
         H("Two-Harmonic Rotation Obstruction"),
         Blocks(
             Describe.Lean(
@@ -34,7 +34,7 @@ internal sealed class TwoHarmonicRotationObstructionDocument : IScribeDocumentDe
                     + "measurement-design question of Eftekhari et al. (2018), recorded in "
                     + "Library/ConceptDynamics/eftekhari2018embedology.md, when the sensor class "
                     + "is restricted to paired circle harmonics at "
-                    + "a sixth-turn delay. It does not by itself assert "
+                    + "a pi/6 delay. It does not by itself assert "
                     + "the analytic stable-rank formula or a dimension bound for arbitrary "
                     + "smooth sensors.")))));
 

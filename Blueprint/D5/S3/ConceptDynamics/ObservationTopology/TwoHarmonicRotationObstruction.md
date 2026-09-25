@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Coprime frequency pairs meet a sharp half-cosine barrier at a sixth-turn rotation.
+Coprime frequency pairs meet a sharp half-cosine barrier at angle pi/6.
 
 **Theorem 1.1 (Coprime frequency pairs cannot both avoid the half-cosine barrier).**
 
@@ -18,7 +18,7 @@ Reducing a frequency modulo six lists every possible cosine magnitude at a rotat
 
 If both frequencies had magnitude below one half, both would be divisible by three. That common divisor contradicts their coprimality, so at least one magnitude reaches the barrier.
 
-The discrete frequency obstruction applies to the stable-rank measurement-design question of Eftekhari et al. (2018), recorded in Library/ConceptDynamics/eftekhari2018embedology.md, when the sensor class is restricted to paired circle harmonics at a sixth-turn delay. It does not by itself assert the analytic stable-rank formula or a dimension bound for arbitrary smooth sensors.
+The discrete frequency obstruction applies to the stable-rank measurement-design question of Eftekhari et al. (2018), recorded in Library/ConceptDynamics/eftekhari2018embedology.md, when the sensor class is restricted to paired circle harmonics at a pi/6 delay. It does not by itself assert the analytic stable-rank formula or a dimension bound for arbitrary smooth sensors.
 
 ## References
 

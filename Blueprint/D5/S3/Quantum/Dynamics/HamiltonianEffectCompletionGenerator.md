@@ -92,6 +92,10 @@ $$\forall H, E \in \operatorname{Matrix}(\operatorname{Fin}(1), \operatorname{Fi
 
 One-by-one complex matrices commute, so the commutator derivative vanishes at time zero.
 
+Thermal recovery and covariance: `D5/L/Quantum/oi2006interference` gives the two-state interference ceiling; `D5/L/Quantum/marvian2014modes` supplies the symmetry-mode selection rule. `D5/L/Quantum/lostaglio2015coherence` and `D5/L/Quantum/faist2015gibbspreserving` distinguish Gibbs calibration, coherent covariance and thermal implementation. Sections 56-58 of the computational-behavior theory volume combine these conditions in one recovery map, deriving a noncommuting spectral optimum and a finite-window error frontier. The Lean declarations here establish the commutator interface, not those paper-level optimization or channel-norm claims.
+
+Joint statistical interpretation: `D5/L/Quantum/nuradha2025multivariate` poses operational questions for multivariate fidelities; the two-label dynamic refinement does not solve the unrestricted multi-label problem. `D5/L/Quantum/beny2015inference` motivates observation-based scale descriptions. Section 59 keeps statistical information loss and dynamical intertwining error as separate composable quantities; it does not identify their bounds with physical heat or a complete renormalisation flow.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.empty_hamiltonian_effect_orbit`
