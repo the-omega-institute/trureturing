@@ -15145,3 +15145,253 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 七维纯第二终端强制纯第一终端
+
+### 57.1 实际来源、早期编码与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器 $K$ 从独立单位初态 $k$ 启动，每轮使用同一个全域 CPTP 通道，前六个终端要求完整参考—活动记忆—原档案的精确恢复。本节研究第二终端可逆附加态纯的合同。为排除第一终端附加态秩二的分支，以下编码资料先在 $r_1=2,r_2=1$ 的反设下引入。
+
+固定一次 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$，两像正交。早期标准编码给四个正交单位接收向量 $p_1,q_1,p_2,q_2$、两个正交单位环境 $f_1,f_2$ 及正交单位 $u,v,w$，满足
+$$
+V_0p_i=u\otimes f_i,\quad V_0q_i=w\otimes f_i,\quad
+V_1p_i=v\otimes f_i\qquad(i=1,2).
+\tag{57.1}
+$$
+置
+$$
+U=\operatorname{span}(u,w)=G_2,\quad
+P_0=\operatorname{span}(p_1,p_2),\quad
+X=\operatorname{span}(p_1,q_1,p_2,q_2),\quad
+F=\operatorname{span}(f_1,f_2).
+$$
+第二终端的零记忆系数空间为
+$$
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{57.2}
+$$
+第一轮真实输出仍有两个严格正的 Schmidt 权重：存在正交单位 $e_1,e_2$ 和 $\lambda_1,\lambda_2>0$，使
+$$
+V_0k=\sum_{i=1}^2\sqrt{\lambda_i}\,p_i\otimes e_i,
+\qquad
+V_1k=\sum_{i=1}^2\sqrt{\lambda_i}\,q_i\otimes e_i.
+\tag{57.3}
+$$
+两个环境组 $e_i$、$f_i$ 未预设相互正交或相同。
+
+对 $\xi=\xi_1f_1+\xi_2f_2\in F$，定义 $p_\xi=\xi_1p_1+\xi_2p_2$、$q_\xi=\xi_1q_1+\xi_2q_2$ 及 $X_\xi=\operatorname{span}(p_\xi,q_\xi)$。单位 $\xi$ 对应单位 $p_\xi$，且
+$$
+V_0X_\xi=U\otimes\xi,\qquad V_1p_\xi=v\otimes\xi.
+\tag{57.4}
+$$
+对纯尾 $3\le n\le6$，有二维 $H_n,G_n,Q_n$，满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{57.5}
+$$
+实际 $H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构；特别 $H_n\cap G_n=0$。第54节给尾环境均在 $F$ 中，故（57.1）及位像正交使
+$$
+v\perp U+G_3+G_4+G_5+G_6,\qquad Q_n\perp U.
+\tag{57.6}
+$$
+
+**定理57.1（纯第二终端强制纯第一终端）。** 对上述非退化来源、独立纯启动及全部持久资源计费的合同，七维固定 CPTP 接收器若精确服务前六个完整参考终端，且第二终端的可逆附加态纯，则第一终端的可逆附加态也纯：
+$$
+\boxed{r_2=1\Longrightarrow r_1=1.}
+$$
+证明将先排除 $r_1=2,r_2=1$ 的剩余两个尾模式，再结合第53节对 $r_1=3,r_2=1$ 的排除。该结论没有排除 $r_2=2$ 的分支，也没有结算早期全部纯的七维候选。
+
+### 57.2 非正交 ABAA 的排除
+
+**引理57.2（非正交 ABAA 的排除）。** 不可能有
+$$
+\eta_3=\eta_5=\eta_6=A,\qquad\eta_4=B,\qquad
+0<|\langle A,B\rangle|<1,\qquad A,B\in F.
+\tag{57.7}
+$$
+
+**证明。** 先使用 ABAA 的无正交结构归约
+$$
+G_4=G_5=U.
+\tag{57.8}
+$$
+为使来源依赖完整，简要复核：令 $L=U+G_4+G_5$、$R=U+G_3+G_5+G_6$、$T=U+G_5$。固定 $V_1$ 在 $L$ 上使用 $A$、在 $G_3$ 上使用 $B$，故 $G_3\cap L=0$。环境 $A$ 的零、一位正交像给
+$$
+7\ge\dim R+\dim L\ge2\dim T+2,
+$$
+所以 $T=U$、$G_5=U$。此时 $\dim L\in\{2,3\}$。若 $\dim L=3$，则 $\dim R=4$，环境 $A$ 的两个位像饱和为接收正交分解 $K=R\oplus Q_A$，$V_1L=Q_A\otimes A$。式（57.6）给 $v\in Q_A$，故（57.4）和单射性使 $p_A\in L$。另一方面 $G_5=U$ 使 $H_4=X_A$，故 $p_A\in H_4$。环境 $B$ 的零位像包含 $L\otimes B$，一位像包含 $Q_4\otimes B$，所以 $Q_4\perp L$。$H_4\subset G_4\oplus Q_4$ 到 $Q_4$ 的投影单射，且 $G_4\subset L$，因而 $H_4\cap L=0$，矛盾。故 $L=U$，得到（57.8）。该归约未使用 $A,B$ 正交。
+
+由（57.8）及固定零位映射，
+$$
+H_3=X_B,\qquad H_4=X_A,\qquad X=H_3+H_4.
+\tag{57.9}
+$$
+最后一个等式使用 $A,B$ 张成二维 $F$。固定一位映射还给
+$$
+Q_3=Q_5=Q_6.
+\tag{57.10}
+$$
+
+令
+$$
+S=U+G_3,\qquad W=Q_3+Q_4.
+\tag{57.11}
+$$
+$V_1U$ 与 $V_1G_3$ 分属不同射线，所以 $U\cap G_3=0$、$\dim S=4$。所有尾环境都在两条非正交射线中，跨位正交和（57.6）给
+$$
+S\perp W,\qquad v\perp S,\qquad\dim W\in\{2,3\}.
+\tag{57.12}
+$$
+若 $v\in Q_3$，由 $V_1p_A=v\otimes A\in Q_3\otimes A=V_1U$ 得 $p_A\in U$，但（57.9）使 $p_A\in H_4$，违反 $H_4\cap U=0$。同理，$v\in Q_4$ 会使 $p_B\in G_3\cap H_3=0$。因此
+$$
+v\notin Q_3\cup Q_4.
+\tag{57.13}
+$$
+
+**三维 $W$：同一内积给出的投影约束。**
+
+假设 $\dim W=3$。式（57.12）使 $K=S\oplus W$，所以 $v\in W$。
+
+定义等距 $f:U\to Q_3$、$g:G_3\to Q_4$，使
+$$
+V_1u'=f(u')\otimes A,\qquad
+V_1z=g(z)\otimes B.
+$$
+由 $p_A\in H_4\subset U\oplus Q_4$，写 $p_A=u_A+q_A$。式（57.12）给 $q_A\perp S$，所以 $u_A=P_Up_A$。等距投影和（57.4）给
+$$
+f(u_A)=P_{Q_3}v.
+\tag{57.14}
+$$
+对任意 $z\in G_3$，一方面
+$$
+\langle p_A,z\rangle
+=\langle u_A,z\rangle
+=\langle A,B\rangle\,\langle P_{Q_3}v,g(z)\rangle,
+$$
+另一方面，直接使用 $V_1p_A=v\otimes A$ 得
+$$
+\langle p_A,z\rangle
+=\langle A,B\rangle\,\langle v,g(z)\rangle.
+$$
+非零 $\langle A,B\rangle$ 可消去，$g$ 满射到 $Q_4$，所以
+$$
+P_{Q_4}v=P_{Q_4}P_{Q_3}v.
+\tag{57.15}
+$$
+于是 $v-P_{Q_3}v$ 同时正交于 $Q_3$、$Q_4$，也即正交于 $W$。但 $v,P_{Q_3}v\in W$，故 $v=P_{Q_3}v\in Q_3$，违反（57.13）。
+
+**二维 $W$：第一轮环境与独立初态的冲突。**
+
+只剩 $W=Q_3=Q_4=:Q$。式（57.10）使全部 $Q_n=Q$，且
+$$
+V_1S=Q\otimes F.
+\tag{57.16}
+$$
+令 $T=S\oplus Q$，它六维，$Z=T^\perp$ 一维。由（57.9），$X=H_3+H_4\subset T$，所以 $P_0\subset T$。式（57.12）、（57.13）给正交分解
+$$
+v=v_Q+v_Z,\qquad v_Q=P_Qv,\quad 0\ne v_Z\in Z.
+\tag{57.17}
+$$
+
+对任意 $\xi\in F$，（57.4）、（57.16）及等距性给
+$$
+V_1(P_Sp_\xi)=v_Q\otimes\xi.
+$$
+因为 $p_\xi\in T$，余下分量是 $P_Qp_\xi$，故
+$$
+V_1(P_Qp_\xi)=v_Z\otimes\xi.
+\tag{57.18}
+$$
+$\xi\mapsto P_Qp_\xi$ 的范数等于 $\|v_Z\|\,\|\xi\|$，因此它是 $F$ 到二维 $Q$ 的线性同构。特别 $P_Qp_1,P_Qp_2$ 线性无关，并且
+$$
+V_1Q=\mathbb Cv_Z\otimes F,\qquad
+V_1T=(Q\oplus\mathbb Cv_Z)\otimes F.
+\tag{57.19}
+$$
+
+第一轮零位像 $V_0k$ 必正交于 $V_1S=Q\otimes F$。用真实 Schmidt 分解（57.3），投影到 $Q\otimes F$ 得
+$$
+\sum_{i=1}^2\sqrt{\lambda_i}\,(P_Qp_i)\otimes(P_Fe_i)=0.
+$$
+两个接收向量 $P_Qp_i$ 线性无关、两个权重严格正，故
+$$
+e_1,e_2\perp F.
+\tag{57.20}
+$$
+
+由（57.3）、（57.20），$V_0k$ 正交于 $V_0H_2=G_3\otimes A$，所以 $k\perp H_2$。同样 $V_1k$ 正交于（57.19）中的整个 $V_1T$，所以
+$$
+k\in T^\perp=Z.
+\tag{57.21}
+$$
+$u\in S\subset T$，而 $a^2u+bv\in H_2$，结合 $b\ne0$、$k\perp H_2$ 得 $\langle k,v\rangle=0$。但 $k$ 是一维 $Z$ 中的单位向量，式（57.17）给 $v$ 在 $Z$ 中的分量非零，因此不可能 $k\perp v$。矛盾。
+
+两个可能的 $W$ 维数都被排除，定理得证。
+
+### 57.3 整个 ABAB 的排除
+
+**引理57.3（整个 ABAB 的排除）。** 不可能存在不同环境射线的单位代表 $A,B\in F$，使
+$$
+\eta_3=\eta_5=A,\qquad\eta_4=\eta_6=B.
+\tag{57.22}
+$$
+该结论不要求 $A,B$ 正交，也不要求二者非正交。
+
+**证明。** 令 $\pi:K\to K/U$。四维旧块使
+$$
+Z=(\pi\otimes I_E)V_0K,\qquad\dim Z\le3.
+\tag{57.23}
+$$
+$V_1$ 在 $U,G_3,G_5$ 上分别使用 $A,B,B$，所以 $U\cap G_3=U\cap G_5=0$。于是
+$$
+M=\pi(G_3+G_5),\qquad m=\dim M\in\{2,3\},\qquad M\otimes A\subset Z.
+\tag{57.24}
+$$
+
+若 $m=3$，则 $Z=M\otimes A$。不同环境 $B$ 的零位商像 $\pi(G_4)\otimes B$、$\pi(G_6)\otimes B$ 必为零，故
+$$
+G_4=G_6=U.
+$$
+固定零位等距给 $H_3=H_5$；固定一位等距在 $G_2=G_4=U$ 上给 $Q_3=Q_5=:Q$。共同环境 $A$ 的位像正交使 $G_3+G_5\perp Q$。于是同一空间 $H_3=H_5$ 到 $G_3+G_5$ 的投影像既等于 $G_3$、又等于 $G_5$，强制 $G_3=G_5$，与 $m=3$ 矛盾。
+
+因此 $m=2$。置
+$$
+S=U+G_3+G_5,\qquad\dim S=4.
+$$
+因 $U\cap G_3=U\cap G_5=0$，
+$$
+S=U+G_3=U+G_5.
+\tag{57.25}
+$$
+固定一位等距使
+$$
+V_1S=(Q_3\otimes A)+(Q_4\otimes B),\qquad
+Q_6\otimes B=V_1G_5\subseteq V_1S.
+\tag{57.26}
+$$
+$A,B$ 线性无关。逐个环境分量比较（57.26），任意 $q\otimes B\in Q_6\otimes B$ 的 $A$ 分量为零，所以 $q\in Q_4$。因此 $Q_6\subseteq Q_4$；两者二维，故 $Q_6=Q_4$。于是
+$$
+V_1G_5=Q_4\otimes B=V_1G_3.
+$$
+$V_1$ 单射给 $G_5=G_3$。再由两个零位像共用环境 $A$，
+$$
+V_0H_2=G_3\otimes A=G_5\otimes A=V_0H_4,\qquad H_2=H_4.
+\tag{57.27}
+$$
+但非零 $w\in H_2\cap U=H_4\cap U$，式（57.6）使 $P_{Q_4}w=0$，违反 $P_{Q_4}|_{H_4}$ 单射。矛盾。
+
+两种商维数均已排除，定理得证。
+
+### 57.4 早期秩结论及保留范围
+
+若 $r_2=1$，七维性与第一终端档案秩二给 $r_1\in\{1,2,3\}$。第53节已排除 $r_1=3$。若 $r_1=2$，第56节将全部候选压到非正交 $ABAA$ 或非正交 $ABAB$；引理57.2和57.3分别排除这两个模式。因此只余 $r_1=1$，定理57.1得证。
+
+此结算使用同一实际来源、同一固定 Stinespring 等距和第一轮真实 Schmidt 分解；第一轮环境与第二轮排出空间的正交关系是在证明内部推出，没有被当作预设资源。全部论证只使用前六个终端。
+
+一般七维候选仍可能落在第53节约束的 $r_2=2$ 分支，或 $r_1=r_2=1$ 的全部早期纯分支。这里没有排除这些剩余情况，故一般六终端固定 CPTP 接收容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}\le8.
+$$
+
+## 追加锚（本行以下为增补区）
