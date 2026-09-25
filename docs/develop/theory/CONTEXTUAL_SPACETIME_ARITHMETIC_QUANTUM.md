@@ -46220,313 +46220,313 @@ $$
 
 ## 213. 尖锐校准的谱容量与同一准备曲线的多点实现
 
-**定义 213.1（同时尖锐校准及其维数）。** 固定 $0<a<1$，考虑第187节在 $J_a=(2a-1,1)$ 上全输入精确的固定 CPTP 程序，要求实际准备 $\rho_u$ 为 $C^1$ 纯态曲线。沿用定义211.1的双侧下极限曲率及定理211.2的最优值，置
+**定义 213.1（同时尖锐校准及其维数）。** 固定 $`0<a<1`$，考虑第187节在 $`J_a=(2a-1,1)`$ 上全输入精确的固定 CPTP 程序，要求实际准备 $`\rho_u`$ 为 $`C^1`$ 纯态曲线。沿用定义211.1的双侧下极限曲率及定理211.2的最优值，置
 
-$$
- \mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
+```math
+\mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
                          \kappa(\rho,t)=\kappa_*(a,t)\}.
 \tag{213.1}
-$$
+```
 
-称其中的点为尖锐校准点。对非空有限集合 $S=\{t_1,\ldots,t_m\}\subset J_a$，令 $d_r(a,S)$ 为满足 $S\subseteq\mathcal E_*(\rho)$ 的此类程序的最小联合支持维数，其中 $r=1,\infty,\omega$ 分别要求准备曲线为 $C^1$、$C^\infty$、实解析；实解析允许矩阵元素为复数。以下实向量构造是该类中的特例。对 $h\in(a,1)$ 定义
+称其中的点为尖锐校准点。对非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$，令 $`d_r(a,S)`$ 为满足 $`S\subseteq\mathcal E_*(\rho)`$ 的此类程序的最小联合支持维数，其中 $`r=1,\infty,\omega`$ 分别要求准备曲线为 $`C^1`$、$`C^\infty`$、实解析；实解析允许矩阵元素为复数。以下实向量构造是该类中的特例。对 $`h\in(a,1)`$ 定义
 
-$$
- \begin{gathered}
+```math
+\begin{gathered}
  b(h)=\sqrt{\frac{h^2-a^2}{h-a^2}},\qquad
- s(h)=\frac ah\bigl(2h-1-b(h)\bigr),\\
+ s(h)=\frac ah\bigl(2h-1-b(h)\bigr),\\[0pt]
  \lambda_\pm(h)=\frac{s(h)\pm\sqrt{s(h)^2+4b(h)}}2,\qquad
  N(a,S)=1+m+\#\{\lambda_-((1+t_i)/2):1\le i\le m\}.
  \end{gathered}
 \tag{213.2}
-$$
+```
 
-负特征值按不同取值计数，不预设它随 $h$ 单调或逐点不同。
+负特征值按不同取值计数，不预设它随 $`h`$ 单调或逐点不同。
 
-**定理 213.2（每个尖锐点强制原程序空间中的三维不变块）。** 对任意定义213.1程序，在其原联合支持 $\mathcal H$ 上按第209.3式固定对称化处理器，取相应的 $A,K$ 及 $E=(I+A)/2$。对每个尖锐校准点 $t$，记
+**定理 213.2（每个尖锐点强制原程序空间中的三维不变块）。** 对任意定义213.1程序，在其原联合支持 $`\mathcal H`$ 上按第209.3式固定对称化处理器，取相应的 $`A,K`$ 及 $`E=(I+A)/2`$。对每个尖锐校准点 $`t`$，记
 
-$$
- h=\frac{1+t}{2},\quad \ell=1-h,\quad
+```math
+h=\frac{1+t}{2},\quad \ell=1-h,\quad
  \alpha=\sqrt{1-a^2/h},\quad \gamma=\sqrt{1-a^2/h^2},\quad
  c_t=(1-t)(1+t)^2,\quad V_*=(\alpha+\sqrt h\,\gamma)^2/4.
 \tag{213.3}
-$$
+```
 
-存在原空间中的正交单位向量 $e,z,f$，使 $Ee=e$、$Ez=z$、$Ef=0$，并可选择名义纯向量为 $\psi_t=\sqrt h\,e+\sqrt\ell\,f$。子空间 $\mathcal S_t=\operatorname{span}\{e,z,f\}$ 被同一个固定算子 $K^\dagger$ 保持，且
+存在原空间中的正交单位向量 $`e,z,f`$，使 $`Ee=e`$、$`Ez=z`$、$`Ef=0`$，并可选择名义纯向量为 $`\psi_t=\sqrt h\,e+\sqrt\ell\,f`$。子空间 $`\mathcal S_t=\operatorname{span}\{e,z,f\}`$ 被同一个固定算子 $`K^\dagger`$ 保持，且
 
-$$
- \begin{aligned}
- K^\dagger e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\
+```math
+\begin{aligned}
+ K^\dagger e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
  K^\dagger z&=\frac{\psi_t-(a/\sqrt h)K^\dagger e}{\alpha},\qquad
  K^\dagger f=0.
  \end{aligned}
 \tag{213.4}
-$$
+```
 
-因此这一限制酉等价于第211.17式的 $T_0(a,t)^\dagger$，其特征多项式为
+因此这一限制酉等价于第211.17式的 $`T_0(a,t)^\dagger`$，其特征多项式为
 
-$$
- \det\bigl(xI-K^\dagger|_{\mathcal S_t}\bigr)
+```math
+\det\bigl(xI-K^\dagger|_{\mathcal S_t}\bigr)
    =x\bigl(x^2-s(h)x-b(h)\bigr).
 \tag{213.5}
-$$
+```
 
-这里不要求原空间上的整个 $E$ 是投影，不以 Naimark 扩大空间的维数代替实际程序维数。
+这里不要求原空间上的整个 $`E`$ 是投影，不以 Naimark 扩大空间的维数代替实际程序维数。
 
-证明。 第211.2节的有限忠实平均论证适用于任意固定处理器：选择有限多个实际准备态，其支持张成 $\mathcal H$，它们的严格正权平均在 $\mathcal H$ 上忠实。每个信号基态的输出仍为同一个纯基态，非负输出概率的零和迫使原 Stinespring 等距在整个联合支持上具有受控形式。随后作固定信号交换对称化，得到
+证明。 第211.2节的有限忠实平均论证适用于任意固定处理器：选择有限多个实际准备态，其支持张成 $`\mathcal H`$，它们的严格正权平均在 $`\mathcal H`$ 上忠实。每个信号基态的输出仍为同一个纯基态，非负输出概率的零和迫使原 Stinespring 等距在整个联合支持上具有受控形式。随后作固定信号交换对称化，得到
 
-$$
- 0\le E\le I,\quad KK^\dagger\le E,\qquad
+```math
+0\le E\le I,\quad KK^\dagger\le E,\qquad
  \langle\psi_u,E\psi_u\rangle=\frac{1+u}{2},\quad
  \langle\psi_u,K\psi_u\rangle=a.
 \tag{213.6}
-$$
+```
 
-此处 $K$ 及 $E$ 不随校准点改变。选定 $C=E^{+1/2}K$，其中 $E^{+1/2}$ 表示在正谱上取逆平方根、在核上取零，故 $K=\sqrt E\,C$、$\|C\|\le1$。采用固定等距与扩大算子
+此处 $`K`$ 及 $`E`$ 不随校准点改变。选定 $`C=E^{+1/2}K`$，其中 $`E^{+1/2}`$ 表示在正谱上取逆平方根、在核上取零，故 $`K=\sqrt E\,C`$、$`\|C\|\le1`$。采用固定等距与扩大算子
 
-$$
- Jx=\sqrt E\,x\oplus\sqrt{I-E}\,x,\qquad
+```math
+Jx=\sqrt E\,x\oplus\sqrt{I-E}\,x,\qquad
  T=\iota_+CJ^\dagger,\qquad
  P+Q=I,
 \tag{213.7}
-$$
+```
 
-其中 $P,Q$ 为两个分量的投影，$\iota_+$ 为第一分量的嵌入。于是
+其中 $`P,Q`$ 为两个分量的投影，$`\iota_+`$ 为第一分量的嵌入。于是
 
-$$
- PT=T,\quad \|T\|\le1,\quad J^\dagger TJ=K,\quad
+```math
+PT=T,\quad \|T\|\le1,\quad J^\dagger TJ=K,\quad
  \operatorname{ran}T^\dagger\subseteq\operatorname{ran}J.
 \tag{213.8}
-$$
+```
 
-在 $t$ 附近选择 $C^1$ 单位向量表示及水平相位，令 $\phi_u=J\psi_u$、$\langle\phi_u,\phi'_u\rangle=0$。局部表示可由 $\rho_u w/\sqrt{w^\dagger\rho_u w}$ 再乘积分相位取得。写
+在 $`t`$ 附近选择 $`C^1`$ 单位向量表示及水平相位，令 $`\phi_u=J\psi_u`$、$`\langle\phi_u,\phi'_u\rangle=0`$。局部表示可由 $`\rho_u w/\sqrt{w^\dagger\rho_u w}`$ 再乘积分相位取得。写
 
-$$
- H_u=\frac P{1+u}-\frac Q{1-u},\qquad
+```math
+H_u=\frac P{1+u}-\frac Q{1-u},\qquad
  d(u)=\phi'_u-\frac12H_u\phi_u,\qquad
  M=\frac{T+T^\dagger}{2},\qquad v(u)=(M-aI)\phi_u.
 \tag{213.9}
-$$
+```
 
 纯态信息公式和固定投影概率导数给出
 
-$$
- g(u):=I_Q(\rho_u)-I_r(u)=4\|d(u)\|^2.
+```math
+g(u):=I_Q(\rho_u)-I_r(u)=4\|d(u)\|^2.
 \tag{213.10}
-$$
+```
 
-校准时 $d(t)=0$，所以 $H_t\phi_t=2\phi'_t\in\operatorname{ran}J$。由于 $H_t$ 的两个分量系数不同，$p=P\phi_t$、$q=Q\phi_t$ 均属于 $\operatorname{ran}J$。置 $Je=p/\sqrt h$、$Jf=q/\sqrt\ell$；由 $J$ 的定义得 $Ee=e$、$Ef=0$。
+校准时 $`d(t)=0`$，所以 $`H_t\phi_t=2\phi'_t\in\operatorname{ran}J`$。由于 $`H_t`$ 的两个分量系数不同，$`p=P\phi_t`$、$`q=Q\phi_t`$ 均属于 $`\operatorname{ran}J`$。置 $`Je=p/\sqrt h`$、$`Jf=q/\sqrt\ell`$；由 $`J`$ 的定义得 $`Ee=e`$、$`Ef=0`$。
 
 第211.10—211.14式的标量残差与方差界在纯态上为
 
-$$
- \varepsilon(u)=2\operatorname{Re}\langle d(u),v(u)\rangle,
+```math
+\varepsilon(u)=2\operatorname{Re}\langle d(u),v(u)\rangle,
  \qquad \frac{\varepsilon(u)}{u-t}\longrightarrow\frac a{c_t},
  \qquad \|v(t)\|^2\le V_*.
 \tag{213.11}
-$$
+```
 
-选取实现尖锐下极限的序列 $u_n\to t$。由 Cauchy–Schwarz、（213.10）及 $\kappa_*=a^2/(c_t^2V_*)$，有
+选取实现尖锐下极限的序列 $`u_n\to t`$。由 Cauchy–Schwarz、（213.10）及 $`\kappa_*=a^2/(c_t^2V_*)`$，有
 
-$$
- \frac{a^2}{c_t^2}
+```math
+\frac{a^2}{c_t^2}
  \le \kappa_*\|v(t)\|^2\le\kappa_*V_*=
  \frac{a^2}{c_t^2}.
 \tag{213.12}
-$$
+```
 
 故方差界必须取等。第211.13式的正交分解给出
 
-$$
- T\phi_t=\frac ahp+k_\perp,\qquad
+```math
+T\phi_t=\frac ahp+k_\perp,\qquad
  T^\dagger p=\frac{at}{h}p+2aq+r_\perp,
  \qquad v(t)=\frac{k_\perp+r_\perp}{2},
 \tag{213.13}
-$$
+```
 
-其中两个余向量均正交于 $p,q$，且 $k_\perp\in\operatorname{ran}P$。它们的范数上界分别为 $\alpha$、$\sqrt h\,\gamma$，均严格为正。方差取等迫使两个范数取等并正向共线。因此存在单位向量 $\widetilde z$，使
+其中两个余向量均正交于 $`p,q`$，且 $`k_\perp\in\operatorname{ran}P`$。它们的范数上界分别为 $`\alpha`$、$`\sqrt h\,\gamma`$，均严格为正。方差取等迫使两个范数取等并正向共线。因此存在单位向量 $`\widetilde z`$，使
 
-$$
- k_\perp=\alpha\widetilde z,\qquad
+```math
+k_\perp=\alpha\widetilde z,\qquad
  r_\perp=\sqrt h\,\gamma\widetilde z,\qquad
  \widetilde z\in\operatorname{ran}P\cap\{p,q\}^\perp.
 \tag{213.14}
-$$
+```
 
-复 Hilbert 空间的三角等号同样要求正实比例，故这里没有未受约束的相对相位。由（213.8）及 $p,q\in\operatorname{ran}J$，$r_\perp$ 属于 $\operatorname{ran}J$；于是 $\widetilde z=Jz$，且 $Ez=z$。这把第三个方向放回原程序空间。
+复 Hilbert 空间的三角等号同样要求正实比例，故这里没有未受约束的相对相位。由（213.8）及 $`p,q\in\operatorname{ran}J`$，$`r_\perp`$ 属于 $`\operatorname{ran}J`$；于是 $`\widetilde z=Jz`$，且 $`Ez=z`$。这把第三个方向放回原程序空间。
 
-式（213.13）现在成为 $T J\psi_t=(a/\sqrt h)Je+\alpha Jz$。范数取等还给出 $\|TJ\psi_t\|=1$，压缩性因而蕴含 $T^\dagger TJ\psi_t=J\psi_t$。对这两个等式及 $T^\dagger p$ 的分解施加 $J^\dagger$，便得到（213.4）的前两式。由 $KK^\dagger\le E$ 及 $Ef=0$ 得最后一式。它们直接证明 $\mathcal S_t$ 对 $K^\dagger$ 不变。在同一正交基 $(e,z,f)$ 中，三列恰为 $T_0^\dagger$，而不是独立的左右基底变换。第211.24式给出其非零二维块的迹 $s(h)$ 和行列式 $-b(h)$，故得（213.5）。整个证明仅使用实际曲线的一阶可微性；二阶信息由可微的标量残差取得。证毕。
+式（213.13）现在成为 $`T J\psi_t=(a/\sqrt h)Je+\alpha Jz`$。范数取等还给出 $`\|TJ\psi_t\|=1`$，压缩性因而蕴含 $`T^\dagger TJ\psi_t=J\psi_t`$。对这两个等式及 $`T^\dagger p`$ 的分解施加 $`J^\dagger`$，便得到（213.4）的前两式。由 $`KK^\dagger\le E`$ 及 $`Ef=0`$ 得最后一式。它们直接证明 $`\mathcal S_t`$ 对 $`K^\dagger`$ 不变。在同一正交基 $`(e,z,f)`$ 中，三列恰为 $`T_0^\dagger`$，而不是独立的左右基底变换。第211.24式给出其非零二维块的迹 $`s(h)`$ 和行列式 $`-b(h)`$，故得（213.5）。整个证明仅使用实际曲线的一阶可微性；二阶信息由可微的标量残差取得。证毕。
 
 **定理 213.3（尖锐点数的维数界及三维位置签名）。** 任意有限维的定义213.1程序满足
 
-$$
- \#\mathcal E_*(\rho)\le \dim\mathcal H-2
+```math
+\#\mathcal E_*(\rho)\le \dim\mathcal H-2
  \quad\text{只要 }\mathcal E_*(\rho)\ne\varnothing,
  \qquad d_1(a,S)\ge N(a,S).
 \tag{213.15}
-$$
+```
 
-特别地，维数至多三时至多存在一个尖锐校准点。若维数恰为三且存在尖锐点，则 $E$ 是秩二投影，$KK^\dagger=E$；固定压缩的读数
+特别地，维数至多三时至多存在一个尖锐校准点。若维数恰为三且存在尖锐点，则 $`E`$ 是秩二投影，$`KK^\dagger=E`$；固定压缩的读数
 
-$$
- D=\left|\det\left(EKE\big|_{\operatorname{ran}E}\right)\right|^2
+```math
+D=\left|\det\left(EKE\big|_{\operatorname{ran}E}\right)\right|^2
 \tag{213.16}
-$$
+```
 
-满足 $0<D<1$，且该点唯一可能的位置为
+满足 $`0<D<1`$，且该点唯一可能的位置为
 
-$$
- t_*=D+\sqrt{D^2+4a^2(1-D)}-1.
+```math
+t_*=D+\sqrt{D^2+4a^2(1-D)}-1.
 \tag{213.17}
-$$
+```
 
-这些条件是必要条件，不单凭 $D$ 声称原处理器存在达到尖锐性的准备。
+这些条件是必要条件，不单凭 $`D`$ 声称原处理器存在达到尖锐性的准备。
 
-证明。 对每个 $h\in(a,1)$，有 $0<b(h)<1$。定理213.2的三维限制是压缩算子，因此其两个非零实特征值满足 $-1\le\lambda_-<0<\lambda_+\le1$。此外
+证明。 对每个 $`h\in(a,1)`$，有 $`0<b(h)<1`$。定理213.2的三维限制是压缩算子，因此其两个非零实特征值满足 $`-1\le\lambda_-<0<\lambda_+\le1`$。此外
 
-$$
- 1-s(h)-b(h)
+```math
+1-s(h)-b(h)
  =(1-a/h)(1-b(h))+2a(1/h-1)>0,
 \tag{213.18}
-$$
+```
 
-故 $\lambda_+<1$。对其特征方程求导，得到
+故 $`\lambda_+<1`$。对其特征方程求导，得到
 
-$$
- \begin{aligned}
- b'(h)&=\frac{h^2-2a^2h+a^2}{2b(h)(h-a^2)^2}>0,\\
+```math
+\begin{aligned}
+ b'(h)&=\frac{h^2-2a^2h+a^2}{2b(h)(h-a^2)^2}>0,\\[0pt]
  \lambda_+'(h)&=
  \frac{a(1+b(h))\lambda_+(h)/h^2+
              b'(h)(1-a\lambda_+(h)/h)}
       {2\lambda_+(h)-s(h)}>0.
  \end{aligned}
 \tag{213.19}
-$$
+```
 
-分子各项严格为正，分母为 $\sqrt{s(h)^2+4b(h)}$。因此不同尖锐点强制同一个原算子 $K^\dagger$ 具有不同正特征值；此外还必须有零特征值及（213.2）列出的全部不同负特征值。这给出 $\dim\mathcal H\ge N(a,S)$。从任意有限尖锐点集应用此计数，便知整个尖锐集合也有限，且至多含 $\dim\mathcal H-2$ 个点。
+分子各项严格为正，分母为 $`\sqrt{s(h)^2+4b(h)}`$。因此不同尖锐点强制同一个原算子 $`K^\dagger`$ 具有不同正特征值；此外还必须有零特征值及（213.2）列出的全部不同负特征值。这给出 $`\dim\mathcal H\ge N(a,S)`$。从任意有限尖锐点集应用此计数，便知整个尖锐集合也有限，且至多含 $`\dim\mathcal H-2`$ 个点。
 
-三维时，定理213.2的 $e,z,f$ 已张成整个原空间，故 $E$ 是秩二投影，$K$ 在该基底恰为 $T_0$；第211.17式的两个非零行正交归一，故 $KK^\dagger=E$。同一投影分解下的酉相似不改变压缩行列式，因而
+三维时，定理213.2的 $`e,z,f`$ 已张成整个原空间，故 $`E`$ 是秩二投影，$`K`$ 在该基底恰为 $`T_0`$；第211.17式的两个非零行正交归一，故 $`KK^\dagger=E`$。同一投影分解下的酉相似不改变压缩行列式，因而
 
-$$
- D=b(h)^2=\frac{h^2-a^2}{h-a^2},\qquad
+```math
+D=b(h)^2=\frac{h^2-a^2}{h-a^2},\qquad
  \frac{dD}{dh}=\frac{(h-a^2)^2+a^2(1-a^2)}{(h-a^2)^2}>0.
 \tag{213.20}
-$$
+```
 
-解 $h^2-Dh-a^2(1-D)=0$ 的正根，再取 $t=2h-1$，即得（213.17）。证毕。
+解 $`h^2-Dh-a^2(1-D)=0`$ 的正根，再取 $`t=2h-1`$，即得（213.17）。证毕。
 
-**定理 213.4（谱下界维数中的共同处理器与分别准备）。** 对定义213.1的有限集合 $S$，存在维数 $N(a,S)$ 的同一个固定 CPTP 处理器，以及 $m$ 条分别定义在整个 $J_a$ 上的实解析纯态准备曲线。第 $i$ 条对全部信号输入精确实现 $\mathcal T_u$，完整校准集合与尖锐集合均为 $\{t_i\}$。这里是同一处理器上的多条曲线，不是同时经过全部指定尖锐点的一条曲线。
+**定理 213.4（谱下界维数中的共同处理器与分别准备）。** 对定义213.1的有限集合 $`S`$，存在维数 $`N(a,S)`$ 的同一个固定 CPTP 处理器，以及 $`m`$ 条分别定义在整个 $`J_a`$ 上的实解析纯态准备曲线。第 $`i`$ 条对全部信号输入精确实现 $`\mathcal T_u`$，完整校准集合与尖锐集合均为 $`\{t_i\}`$。这里是同一处理器上的多条曲线，不是同时经过全部指定尖锐点的一条曲线。
 
-证明。 令 $\Lambda$ 为（213.2）中全部不同的零、正、负特征值。规定有限谱的部分等距构造是经典工具，见 Garcia、Sherman，*Matrices Similar to Partial Isometries*，arXiv:1703.02960v2，引理2及定理1；下面同时固定本题所需的各个三维压缩。
+证明。 令 $`\Lambda`$ 为（213.2）中全部不同的零、正、负特征值。规定有限谱的部分等距构造是经典工具，见 Garcia、Sherman，*Matrices Similar to Partial Isometries*，arXiv:1703.02960v2，引理2及定理1；下面同时固定本题所需的各个三维压缩。
 
-先对 $\Lambda_0=\Lambda\cap(-1,1)$ 取实向量 $x_\lambda$，规定其 Gram 矩阵为
+先对 $`\Lambda_0=\Lambda\cap(-1,1)`$ 取实向量 $`x_\lambda`$，规定其 Gram 矩阵为
 
-$$
- \langle x_\lambda,x_\mu\rangle=\frac1{1-\lambda\mu}
+```math
+\langle x_\lambda,x_\mu\rangle=\frac1{1-\lambda\mu}
        =\sum_{n=0}^\infty\lambda^n\mu^n.
 \tag{213.21}
-$$
+```
 
-不同实节点的 Vandermonde 独立性保证该矩阵正定：任一零二次型迫使所有幂矩为零，前 $|\Lambda_0|$ 个已经迫使系数全零。在这些线性无关向量张成的空间定义 $Vx_\lambda=\lambda x_\lambda$，置 $q=x_0$。式（213.21）给出 $\|q\|=1$、$\langle q,x_\lambda\rangle=1$，以及
+不同实节点的 Vandermonde 独立性保证该矩阵正定：任一零二次型迫使所有幂矩为零，前 $`|\Lambda_0|`$ 个已经迫使系数全零。在这些线性无关向量张成的空间定义 $`Vx_\lambda=\lambda x_\lambda`$，置 $`q=x_0`$。式（213.21）给出 $`\|q\|=1`$、$`\langle q,x_\lambda\rangle=1`$，以及
 
-$$
- V^\dagger V=I-|q\rangle\langle q|=:P,
+```math
+V^\dagger V=I-|q\rangle\langle q|=:P,
  \qquad T=V^\dagger,\qquad TT^\dagger=P,\quad PT=T.
 \tag{213.22}
-$$
+```
 
-若 $-1\in\Lambda$，追加一个与前述空间正交的单位向量 $x_{-1}$，令 $Vx_{-1}=-x_{-1}$；式（213.22）仍成立。其余单位圆特征值由（213.18）排除。因此总维数为 $|\Lambda|=N(a,S)$，并未把发散的 $1/(1-(-1)^2)$ 当作 Gram 元素。
+若 $`-1\in\Lambda`$，追加一个与前述空间正交的单位向量 $`x_{-1}`$，令 $`Vx_{-1}=-x_{-1}`$；式（213.22）仍成立。其余单位圆特征值由（213.18）排除。因此总维数为 $`|\Lambda|=N(a,S)`$，并未把发散的 $`1/(1-(-1)^2)`$ 当作 Gram 元素。
 
-对每个 $i$，子空间
+对每个 $`i`$，子空间
 
-$$
- \mathcal H_i=\operatorname{span}
+```math
+\mathcal H_i=\operatorname{span}
        \{x_0,x_{\lambda_+(h_i)},x_{\lambda_-(h_i)}\},
  \qquad h_i=(1+t_i)/2,
 \tag{213.23}
-$$
+```
 
-被 $V$ 保持，并且 $V|_{\mathcal H_i}$ 酉等价于 $T_0(a,t_i)^\dagger$。为证明该酉等价，记后者为 $V_i$，其核由第211.16式的第三基向量 $f_i$ 张成，且 $V_i^\dagger V_i=I-|f_i\rangle\langle f_i|$。它的三个特征值两两不同。若 $V_i y_\lambda=\lambda y_\lambda$ 且 $|\lambda|<1$，则
+被 $`V`$ 保持，并且 $`V|_{\mathcal H_i}`$ 酉等价于 $`T_0(a,t_i)^\dagger`$。为证明该酉等价，记后者为 $`V_i`$，其核由第211.16式的第三基向量 $`f_i`$ 张成，且 $`V_i^\dagger V_i=I-|f_i\rangle\langle f_i|`$。它的三个特征值两两不同。若 $`V_i y_\lambda=\lambda y_\lambda`$ 且 $`|\lambda|<1`$，则
 
-$$
- (1-\lambda^2)\|y_\lambda\|^2
+```math
+(1-\lambda^2)\|y_\lambda\|^2
        =|\langle f_i,y_\lambda\rangle|^2>0.
 \tag{213.24}
-$$
+```
 
-因此可以实数缩放使 $\langle f_i,y_\lambda\rangle=1$。对两个如此归一化的特征向量应用部分等距恒等式，得到
-$(1-\lambda\mu)\langle y_\lambda,y_\mu\rangle=1$，恰为（213.21）。若有特征值 $-1$，压缩算子的单位模特征向量属于正交的约化子空间：范数取等先给出 $V_i^\dagger V_i y=y$，再由 $V_i y=-y$ 得 $V_i^\dagger y=-y$。它与全部内部特征向量正交，归一化即可对应 $x_{-1}$。这证明存在实等距 $U_i:\mathbb R^3\to\mathcal H_i$，使
+因此可以实数缩放使 $`\langle f_i,y_\lambda\rangle=1`$。对两个如此归一化的特征向量应用部分等距恒等式，得到
+$`(1-\lambda\mu)\langle y_\lambda,y_\mu\rangle=1`$，恰为（213.21）。若有特征值 $`-1`$，压缩算子的单位模特征向量属于正交的约化子空间：范数取等先给出 $`V_i^\dagger V_i y=y`$，再由 $`V_i y=-y`$ 得 $`V_i^\dagger y=-y`$。它与全部内部特征向量正交，归一化即可对应 $`x_{-1}`$。这证明存在实等距 $`U_i:\mathbb R^3\to\mathcal H_i`$，使
 
-$$
- U_i^\dagger P U_i=P_0,\qquad
+```math
+U_i^\dagger P U_i=P_0,\qquad
  VU_i=U_iT_0(a,t_i)^\dagger,\qquad
  U_i^\dagger T U_i=T_0(a,t_i).
 \tag{213.25}
-$$
+```
 
-最后一式是压缩恒等式，不要求 $\mathcal H_i$ 被 $T$ 保持。
+最后一式是压缩恒等式，不要求 $`\mathcal H_i`$ 被 $`T`$ 保持。
 
-采用第211.18式的固定受控处理器，将 $I_3,T_0,Z_0$ 分别替换为 $I,T,Z=2P-I$。每个 $U_i\psi_i(u)$ 都有 $P$ 期望 $(1+u)/2$ 和 $T$ 期望 $a$，故逐矩阵单位给出同一精确目标通道。固定等距保留纯态信息量，所以将定理211.3的全域曲线分别嵌入这些子空间，就保留各自唯一的校准点及尖锐曲率。这个构造证明各局部尖锐模型可以共处于一个低维处理器；尚未把这些分别准备连成同一条受约束曲线。证毕。
+采用第211.18式的固定受控处理器，将 $`I_3,T_0,Z_0`$ 分别替换为 $`I,T,Z=2P-I`$。每个 $`U_i\psi_i(u)`$ 都有 $`P`$ 期望 $`(1+u)/2`$ 和 $`T`$ 期望 $`a`$，故逐矩阵单位给出同一精确目标通道。固定等距保留纯态信息量，所以将定理211.3的全域曲线分别嵌入这些子空间，就保留各自唯一的校准点及尖锐曲率。这个构造证明各局部尖锐模型可以共处于一个低维处理器；尚未把这些分别准备连成同一条受约束曲线。证毕。
 
 **定理 213.5（一条全局解析曲线的同时尖锐实现）。** 定义213.1中的维数满足
 
-$$
- N(a,S)\le d_1(a,S)\le d_\infty(a,S)
+```math
+N(a,S)\le d_1(a,S)\le d_\infty(a,S)
              \le d_\omega(a,S)\le3m.
 \tag{213.26}
-$$
+```
 
-右端存在一个实际固定处理器与一条全区间实解析纯态曲线达到，并且其完整校准集合与尖锐集合都恰为 $S$。两个不同指定点的边界具体为
+右端存在一个实际固定处理器与一条全区间实解析纯态曲线达到，并且其完整校准集合与尖锐集合都恰为 $`S`$。两个不同指定点的边界具体为
 
-$$
- \begin{cases}
+```math
+\begin{cases}
  5\le d_1\le d_\omega\le6,
-       &\lambda_-(h_1)\ne\lambda_-(h_2),\\
+       &\lambda_-(h_1)\ne\lambda_-(h_2),\\[0pt]
  4\le d_1\le d_\omega\le6,
        &\lambda_-(h_1)=\lambda_-(h_2).
  \end{cases}
 \tag{213.27}
-$$
+```
 
 这些不等式不判定两点情况下五维或四维是否足够。
 
-证明。 对每个 $t_i$，取定理211.3的全域实解析归一化实向量 $\psi_i(u)$ 及其固定处理器。令
+证明。 对每个 $`t_i`$，取定理211.3的全域实解析归一化实向量 $`\psi_i(u)`$ 及其固定处理器。令
 
-$$
- L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
  g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
  \Psi_u=\bigoplus_{i=1}^m g_i(u)\psi_i(u).
 \tag{213.28}
-$$
+```
 
-$\sum_iL_i=1$ 保证分母在实轴处处严格为正，故 $g_i$ 和 $\Psi$ 均实解析，且 $\sum_i g_i^2=1$。处理器先去除程序块间相干，再在第 $i$ 块使用对应的固定处理器；每一块都对全部信号输入实现相同的 $\mathcal T_u$，因此其归一化加权和仍精确。
+$`\sum_iL_i=1`$ 保证分母在实轴处处严格为正，故 $`g_i`$ 和 $`\Psi`$ 均实解析，且 $`\sum_i g_i^2=1`$。处理器先去除程序块间相干，再在第 $`i`$ 块使用对应的固定处理器；每一块都对全部信号输入实现相同的 $`\mathcal T_u`$，因此其归一化加权和仍精确。
 
-记 $G_i(u)=I_Q(\psi_i\psi_i^\dagger)-I_r(u)$。实向量的归一化保证 $\langle\psi_i,\psi'_i\rangle=0$，所以实际纯态准备的信息差值为
+记 $`G_i(u)=I_Q(\psi_i\psi_i^\dagger)-I_r(u)`$。实向量的归一化保证 $`\langle\psi_i,\psi'_i\rangle=0`$，所以实际纯态准备的信息差值为
 
-$$
- I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)
    =\sum_i g_i(u)^2G_i(u)+4\sum_i g_i'(u)^2.
 \tag{213.29}
-$$
+```
 
-其中第二项保留了参数相关块权重的准备成本，未将去相干后混合态的信息当作实际纯态的信息。若 $u\notin S$，所有 $G_i(u)>0$，故总差值严格为正。在 $u=t_i$ 附近置 $\delta=u-t_i$，则
+其中第二项保留了参数相关块权重的准备成本，未将去相干后混合态的信息当作实际纯态的信息。若 $`u\notin S`$，所有 $`G_i(u)>0`$，故总差值严格为正。在 $`u=t_i`$ 附近置 $`\delta=u-t_i`$，则
 
-$$
- \begin{gathered}
- g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\
+```math
+\begin{gathered}
+ g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\[0pt]
  g_i=1+O(\delta^6),\quad g_i'=O(\delta^5).
  \end{gathered}
 \tag{213.30}
-$$
+```
 
-非名义块的 $G_j$ 在此内点有界，因而总差值在 $t_i$ 为零，并满足
+非名义块的 $`G_j`$ 在此内点有界，因而总差值在 $`t_i`$ 为零，并满足
 
-$$
- I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)=G_i(u)+O(\delta^4),\qquad
+```math
+I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)=G_i(u)+O(\delta^4),\qquad
  \lim_{u\to t_i}\frac{I_Q(\Psi_u\Psi_u^\dagger)-I_r(u)}{(u-t_i)^2}
        =\kappa_*(a,t_i).
 \tag{213.31}
-$$
+```
 
-故两种完整集合均恰为 $S$。实际程序空间为 $3m$ 维，联合支持维数至多 $3m$，不要求总等于 $3m$。其余维数不等式来自定理213.3与准备正则性类别的包含关系。证毕。
+故两种完整集合均恰为 $`S`$。实际程序空间为 $`3m`$ 维，联合支持维数至多 $`3m`$，不要求总等于 $`3m`$。其余维数不等式来自定理213.3与准备正则性类别的包含关系。证毕。
 
 ## 追加锚（本行以下为增补区）
