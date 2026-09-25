@@ -186,6 +186,25 @@ class PresentationTests(unittest.TestCase):
         self.presenter.tick()
         self.assertIn("information=2000", self.output.getvalue())
 
+    def test_failed_test_replay_summarizes_framework_progress_and_success_totals(self):
+        self.presenter.line("CI_DIAGNOSTIC_BEGIN step=tests raw_exit=1\n", "stdout")
+        messages = ["VSTest version 18.7.0 (arm64)",
+                    "[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4",
+                    "[xUnit.net 00:00:00.16]   Discovering: Tests",
+                    "[xUnit.net 00:00:00.22]   Discovered:  Tests",
+                    "[xUnit.net 00:00:00.25]   Starting:    Tests",
+                    "[xUnit.net 00:01:57.24]   Finished:    Tests",
+                    "Test Run Successful.", "Total tests: 55", "     Passed: 55", " Total time: 1.9636 Minutes"]
+        for line in messages:
+            self.presenter.line(line + "\n", "stdout")
+        self.assertEqual("CI_DIAGNOSTIC_BEGIN step=tests raw_exit=1\n", self.output.getvalue())
+        failure = ["[xUnit.net 00:02:20.26] Tests.ActualFailure [FAIL]\n",
+                   "Test Run Failed.\n", "Failed: 1\n", "  Stack Trace:\n", "    at Tests.ActualFailure()\n"]
+        for line in failure:
+            self.presenter.line(line, "stdout")
+        self.assertIn("".join(failure), self.output.getvalue())
+        self.assertEqual(len(messages), self.presenter.counts["information"])
+
     def test_resource_samples_do_not_interrupt_warning_context(self):
         self.presenter.line("warning: diagnostic\n", "stdout")
         self.presenter.line("RESOURCE_SAMPLE sequence=1 phase=periodic\n", "stdout")
