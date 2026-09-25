@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Strictly increasing Jacobi coefficients force the weighted Turan inequality
-     on the right tail. -/
+   digest: Strictly increasing Jacobi coefficients force the weighted Turan inequality on the right tail. -/
 
 import Mathlib.Tactic
 
