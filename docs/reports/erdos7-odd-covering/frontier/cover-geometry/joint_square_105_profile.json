@@ -1,0 +1,869 @@
+{
+  "source_sha256": {
+    "joint_square_105_profile.py": "67b43235b591994bcf3a3b4f38d8e79c453d4b00c0176d41e3eb75d30242dc21",
+    "joint_square_105_scan.cpp": "88809452fb165ce74140e21b2ac9c3fb9d92182d06f531fc52cc76715ce25663",
+    "two_centre_star_profile.py": "c144149d6416506c65b89e197534d04999b1e557e7b4debdea45bffea03b2116"
+  },
+  "generated_input_sha256": "d7da3c4ac58c4c957363184edaa0e41585face1766a21cc811a881423fe608e3",
+  "scale": 1000000000,
+  "screen_denominator": 87091200,
+  "rounded_accumulation_bound": 2278969786717747200,
+  "rounded_bound_bits": 61,
+  "unrounded_accumulation_bound": 42525959690400321240499968000,
+  "unrounded_bound_bits": 96,
+  "uniform_rounding_error_upper": "553963066979323/5831302603826700000000",
+  "vector_counts": [
+    374,
+    347,
+    416,
+    320,
+    347,
+    277,
+    410,
+    311
+  ],
+  "cases": 367263744,
+  "minimum_lower_gate": "304081382950091/3110400000000000",
+  "haar_lower_bound": "304081382950091/333864960000000000",
+  "witness": {
+    "code": 279618,
+    "t0": "2/3",
+    "block": 2,
+    "vector": 94,
+    "factors": [
+      0,
+      93,
+      169,
+      169,
+      210,
+      169,
+      210,
+      210
+    ],
+    "geometry": [
+      0,
+      1,
+      2,
+      2,
+      false,
+      6,
+      6,
+      0,
+      1,
+      3
+    ],
+    "direct": {
+      "block_mass": "4494263/8709120",
+      "squarefree_nonblock_charge": "185671/1209600",
+      "all_height_mixed_tail_charge": "18731143358765171/114245928564768000",
+      "mass_lower": "90751741908361771/456983714259072000",
+      "nonunit_query_upper": "452668744229/206120376000",
+      "gate": "1094562606487082737/11196100999347264000",
+      "weighted_query_upper": "997080364126744033/28494080778240000",
+      "169_mass_minus_weighted_query": "-144881316693256843009/101239469005086720000"
+    }
+  },
+  "through31_diagnostic": {
+    "code": 419682,
+    "t0": "2/3",
+    "block": 2,
+    "vector": 94,
+    "direct": {
+      "block_mass": "11143159/21772800",
+      "squarefree_nonblock_charge": "860381/5443200",
+      "all_height_mixed_tail_charge": "2989109314020647/19200996397440000",
+      "mass_lower": "26619658763210221/134406974782080000",
+      "nonunit_query_upper": "294888966059/137413584000",
+      "gate": "466661940688580083/3292970882160960000",
+      "weighted_query_upper": "326571723197924737/9498026926080000",
+      "169_mass_minus_weighted_query": "-1810821875393558417/1985087627550720000"
+    }
+  },
+  "coefficients": [
+    {
+      "exact": "0",
+      "rounded_up_integer": 0
+    },
+    {
+      "exact": "1/5",
+      "rounded_up_integer": 200000000
+    },
+    {
+      "exact": "1/9",
+      "rounded_up_integer": 111111112
+    },
+    {
+      "exact": "568259/2546775",
+      "rounded_up_integer": 223128860
+    },
+    {
+      "exact": "1/11",
+      "rounded_up_integer": 90909091
+    },
+    {
+      "exact": "18141/98098",
+      "rounded_up_integer": 184927318
+    },
+    {
+      "exact": "2250923/20810790",
+      "rounded_up_integer": 108161344
+    },
+    {
+      "exact": "829069/43702659",
+      "rounded_up_integer": 18970677
+    },
+    {
+      "exact": "1/15",
+      "rounded_up_integer": 66666667
+    },
+    {
+      "exact": "1447121/10495800",
+      "rounded_up_integer": 137876199
+    },
+    {
+      "exact": "3992599/49480200",
+      "rounded_up_integer": 80690842
+    },
+    {
+      "exact": "73431877/5195421000",
+      "rounded_up_integer": 14133961
+    },
+    {
+      "exact": "574001/8576568",
+      "rounded_up_integer": 66926655
+    },
+    {
+      "exact": "42181109/3602158560",
+      "rounded_up_integer": 11709954
+    },
+    {
+      "exact": "2369743/346563360",
+      "rounded_up_integer": 6837835
+    },
+    {
+      "exact": "268209749/222883560900",
+      "rounded_up_integer": 1203363
+    },
+    {
+      "exact": "1/17",
+      "rounded_up_integer": 58823530
+    },
+    {
+      "exact": "609937/4985505",
+      "rounded_up_integer": 122342070
+    },
+    {
+      "exact": "459037/6409935",
+      "rounded_up_integer": 71613363
+    },
+    {
+      "exact": "16878299/1346086350",
+      "rounded_up_integer": 12538794
+    },
+    {
+      "exact": "2419877/40738698",
+      "rounded_up_integer": 59399960
+    },
+    {
+      "exact": "1481296/142585443",
+      "rounded_up_integer": 10388831
+    },
+    {
+      "exact": "33370237/5499724230",
+      "rounded_up_integer": 6067621
+    },
+    {
+      "exact": "493091597/461976835320",
+      "rounded_up_integer": 1067352
+    },
+    {
+      "exact": "1840133/41511960",
+      "rounded_up_integer": 44327780
+    },
+    {
+      "exact": "236246363/30511290600",
+      "rounded_up_integer": 7742917
+    },
+    {
+      "exact": "29585851/6538133700",
+      "rounded_up_integer": 4525122
+    },
+    {
+      "exact": "4365752999/5492032308000",
+      "rounded_up_integer": 794925
+    },
+    {
+      "exact": "53456885/14246904672",
+      "rounded_up_integer": 3752176
+    },
+    {
+      "exact": "3447106153/5235737466960",
+      "rounded_up_integer": 658381
+    },
+    {
+      "exact": "1722755009/4487774971680",
+      "rounded_up_integer": 383878
+    },
+    {
+      "exact": "127728834419/1884865488105600",
+      "rounded_up_integer": 67766
+    },
+    {
+      "exact": "1/3",
+      "rounded_up_integer": 333333334
+    },
+    {
+      "exact": "37843/308700",
+      "rounded_up_integer": 122588274
+    },
+    {
+      "exact": "90407/1455300",
+      "rounded_up_integer": 62122587
+    },
+    {
+      "exact": "2386514/38201625",
+      "rounded_up_integer": 62471531
+    },
+    {
+      "exact": "3599/72072",
+      "rounded_up_integer": 49936175
+    },
+    {
+      "exact": "2737019/52972920",
+      "rounded_up_integer": 51668268
+    },
+    {
+      "exact": "1495721/49945896",
+      "rounded_up_integer": 29946825
+    },
+    {
+      "exact": "140559163/26221595400",
+      "rounded_up_integer": 5360436
+    },
+    {
+      "exact": "215633/5997600",
+      "rounded_up_integer": 35953215
+    },
+    {
+      "exact": "24200189/629748000",
+      "rounded_up_integer": 38428370
+    },
+    {
+      "exact": "66170911/2968812000",
+      "rounded_up_integer": 22288684
+    },
+    {
+      "exact": "620879069/155862630000",
+      "rounded_up_integer": 3983502
+    },
+    {
+      "exact": "339089/18378360",
+      "rounded_up_integer": 18450450
+    },
+    {
+      "exact": "711767669/216129513600",
+      "rounded_up_integer": 3293247
+    },
+    {
+      "exact": "1941101011/1018896278400",
+      "rounded_up_integer": 1905102
+    },
+    {
+      "exact": "36630453553/106984109232000",
+      "rounded_up_integer": 342392
+    },
+    {
+      "exact": "14197/449820",
+      "rounded_up_integer": 31561514
+    },
+    {
+      "exact": "402319/11807775",
+      "rounded_up_integer": 34072381
+    },
+    {
+      "exact": "200057/10120950",
+      "rounded_up_integer": 19766623
+    },
+    {
+      "exact": "15009719/4250799000",
+      "rounded_up_integer": 3531035
+    },
+    {
+      "exact": "74299/4540536",
+      "rounded_up_integer": 16363487
+    },
+    {
+      "exact": "23660783/8104856760",
+      "rounded_up_integer": 2919334
+    },
+    {
+      "exact": "2933713/1736755020",
+      "rounded_up_integer": 1689193
+    },
+    {
+      "exact": "442672319/1458874216800",
+      "rounded_up_integer": 303435
+    },
+    {
+      "exact": "11180081/917632800",
+      "rounded_up_integer": 12183611
+    },
+    {
+      "exact": "52279037/24087861000",
+      "rounded_up_integer": 2170348
+    },
+    {
+      "exact": "51894257/41293476000",
+      "rounded_up_integer": 1256719
+    },
+    {
+      "exact": "3909025049/17343259920000",
+      "rounded_up_integer": 225392
+    },
+    {
+      "exact": "327511061/314931576960",
+      "rounded_up_integer": 1039944
+    },
+    {
+      "exact": "6159388853/33067815580800",
+      "rounded_up_integer": 186266
+    },
+    {
+      "exact": "762202981/7085960481600",
+      "rounded_up_integer": 107566
+    },
+    {
+      "exact": "115488428969/5952206804544000",
+      "rounded_up_integer": 19403
+    },
+    {
+      "exact": "1",
+      "rounded_up_integer": 1000000000
+    },
+    {
+      "exact": "1312/5145",
+      "rounded_up_integer": 255004860
+    },
+    {
+      "exact": "2978/24255",
+      "rounded_up_integer": 122778809
+    },
+    {
+      "exact": "568259/2546775",
+      "rounded_up_integer": 223128860
+    },
+    {
+      "exact": "4105/42042",
+      "rounded_up_integer": 97640455
+    },
+    {
+      "exact": "18141/98098",
+      "rounded_up_integer": 184927318
+    },
+    {
+      "exact": "2250923/20810790",
+      "rounded_up_integer": 108161344
+    },
+    {
+      "exact": "829069/43702659",
+      "rounded_up_integer": 18970677
+    },
+    {
+      "exact": "6947/99960",
+      "rounded_up_integer": 69497800
+    },
+    {
+      "exact": "1447121/10495800",
+      "rounded_up_integer": 137876199
+    },
+    {
+      "exact": "3992599/49480200",
+      "rounded_up_integer": 80690842
+    },
+    {
+      "exact": "73431877/5195421000",
+      "rounded_up_integer": 14133961
+    },
+    {
+      "exact": "574001/8576568",
+      "rounded_up_integer": 66926655
+    },
+    {
+      "exact": "42181109/3602158560",
+      "rounded_up_integer": 11709954
+    },
+    {
+      "exact": "2369743/346563360",
+      "rounded_up_integer": 6837835
+    },
+    {
+      "exact": "268209749/222883560900",
+      "rounded_up_integer": 1203363
+    },
+    {
+      "exact": "8662/142443",
+      "rounded_up_integer": 60810290
+    },
+    {
+      "exact": "609937/4985505",
+      "rounded_up_integer": 122342070
+    },
+    {
+      "exact": "459037/6409935",
+      "rounded_up_integer": 71613363
+    },
+    {
+      "exact": "16878299/1346086350",
+      "rounded_up_integer": 12538794
+    },
+    {
+      "exact": "2419877/40738698",
+      "rounded_up_integer": 59399960
+    },
+    {
+      "exact": "1481296/142585443",
+      "rounded_up_integer": 10388831
+    },
+    {
+      "exact": "33370237/5499724230",
+      "rounded_up_integer": 6067621
+    },
+    {
+      "exact": "493091597/461976835320",
+      "rounded_up_integer": 1067352
+    },
+    {
+      "exact": "1840133/41511960",
+      "rounded_up_integer": 44327780
+    },
+    {
+      "exact": "236246363/30511290600",
+      "rounded_up_integer": 7742917
+    },
+    {
+      "exact": "29585851/6538133700",
+      "rounded_up_integer": 4525122
+    },
+    {
+      "exact": "4365752999/5492032308000",
+      "rounded_up_integer": 794925
+    },
+    {
+      "exact": "53456885/14246904672",
+      "rounded_up_integer": 3752176
+    },
+    {
+      "exact": "3447106153/5235737466960",
+      "rounded_up_integer": 658381
+    },
+    {
+      "exact": "1722755009/4487774971680",
+      "rounded_up_integer": 383878
+    },
+    {
+      "exact": "127728834419/1884865488105600",
+      "rounded_up_integer": 67766
+    },
+    {
+      "exact": "1",
+      "rounded_up_integer": 1000000000
+    },
+    {
+      "exact": "15539/15435",
+      "rounded_up_integer": 1006737934
+    },
+    {
+      "exact": "5683/10395",
+      "rounded_up_integer": 546705147
+    },
+    {
+      "exact": "866248/7640325",
+      "rounded_up_integer": 113378424
+    },
+    {
+      "exact": "28090/63063",
+      "rounded_up_integer": 445427589
+    },
+    {
+      "exact": "244729/2648646",
+      "rounded_up_integer": 92397777
+    },
+    {
+      "exact": "626753/12486474",
+      "rounded_up_integer": 50194555
+    },
+    {
+      "exact": "27279883/2622159540",
+      "rounded_up_integer": 10403594
+    },
+    {
+      "exact": "48767/149940",
+      "rounded_up_integer": 325243431
+    },
+    {
+      "exact": "2124907/31487400",
+      "rounded_up_integer": 67484359
+    },
+    {
+      "exact": "5441063/148440600",
+      "rounded_up_integer": 36654817
+    },
+    {
+      "exact": "236884183/31172526000",
+      "rounded_up_integer": 7599134
+    },
+    {
+      "exact": "1536869/51459408",
+      "rounded_up_integer": 29865657
+    },
+    {
+      "exact": "66925981/10806475680",
+      "rounded_up_integer": 6193137
+    },
+    {
+      "exact": "24490439/7277830560",
+      "rounded_up_integer": 3365075
+    },
+    {
+      "exact": "7459334713/10698410923200",
+      "rounded_up_integer": 697238
+    },
+    {
+      "exact": "122489/427329",
+      "rounded_up_integer": 286638633
+    },
+    {
+      "exact": "2668772/44869545",
+      "rounded_up_integer": 59478473
+    },
+    {
+      "exact": "621218/19229805",
+      "rounded_up_integer": 32304956
+    },
+    {
+      "exact": "27047413/4038259050",
+      "rounded_up_integer": 6697791
+    },
+    {
+      "exact": "567685/21567546",
+      "rounded_up_integer": 26321261
+    },
+    {
+      "exact": "84057011/15399227844",
+      "rounded_up_integer": 5458522
+    },
+    {
+      "exact": "2796179/942809868",
+      "rounded_up_integer": 2965794
+    },
+    {
+      "exact": "851720593/1385930505960",
+      "rounded_up_integer": 614548
+    },
+    {
+      "exact": "16755007/871751160",
+      "rounded_up_integer": 19219943
+    },
+    {
+      "exact": "729862607/183067743600",
+      "rounded_up_integer": 3986845
+    },
+    {
+      "exact": "169927553/78457604400",
+      "rounded_up_integer": 2165852
+    },
+    {
+      "exact": "7396102873/16476096924000",
+      "rounded_up_integer": 448899
+    },
+    {
+      "exact": "527986681/299184998112",
+      "rounded_up_integer": 1764750
+    },
+    {
+      "exact": "4597232461/12565769920704",
+      "rounded_up_integer": 365854
+    },
+    {
+      "exact": "5353568783/26926649830080",
+      "rounded_up_integer": 198821
+    },
+    {
+      "exact": "232883403943/5654596464316800",
+      "rounded_up_integer": 41185
+    },
+    {
+      "exact": "773/1470",
+      "rounded_up_integer": 525850341
+    },
+    {
+      "exact": "37843/308700",
+      "rounded_up_integer": 122588274
+    },
+    {
+      "exact": "255331/727650",
+      "rounded_up_integer": 350898097
+    },
+    {
+      "exact": "2386514/38201625",
+      "rounded_up_integer": 62471531
+    },
+    {
+      "exact": "18325/63063",
+      "rounded_up_integer": 290582434
+    },
+    {
+      "exact": "2737019/52972920",
+      "rounded_up_integer": 51668268
+    },
+    {
+      "exact": "1495721/49945896",
+      "rounded_up_integer": 29946825
+    },
+    {
+      "exact": "140559163/26221595400",
+      "rounded_up_integer": 5360436
+    },
+    {
+      "exact": "6623/30600",
+      "rounded_up_integer": 216437909
+    },
+    {
+      "exact": "24200189/629748000",
+      "rounded_up_integer": 38428370
+    },
+    {
+      "exact": "66170911/2968812000",
+      "rounded_up_integer": 22288684
+    },
+    {
+      "exact": "620879069/155862630000",
+      "rounded_up_integer": 3983502
+    },
+    {
+      "exact": "339089/18378360",
+      "rounded_up_integer": 18450450
+    },
+    {
+      "exact": "711767669/216129513600",
+      "rounded_up_integer": 3293247
+    },
+    {
+      "exact": "1941101011/1018896278400",
+      "rounded_up_integer": 1905102
+    },
+    {
+      "exact": "36630453553/106984109232000",
+      "rounded_up_integer": 342392
+    },
+    {
+      "exact": "43181/224910",
+      "rounded_up_integer": 191992353
+    },
+    {
+      "exact": "402319/11807775",
+      "rounded_up_integer": 34072381
+    },
+    {
+      "exact": "200057/10120950",
+      "rounded_up_integer": 19766623
+    },
+    {
+      "exact": "15009719/4250799000",
+      "rounded_up_integer": 3531035
+    },
+    {
+      "exact": "74299/4540536",
+      "rounded_up_integer": 16363487
+    },
+    {
+      "exact": "23660783/8104856760",
+      "rounded_up_integer": 2919334
+    },
+    {
+      "exact": "2933713/1736755020",
+      "rounded_up_integer": 1689193
+    },
+    {
+      "exact": "442672319/1458874216800",
+      "rounded_up_integer": 303435
+    },
+    {
+      "exact": "11180081/917632800",
+      "rounded_up_integer": 12183611
+    },
+    {
+      "exact": "52279037/24087861000",
+      "rounded_up_integer": 2170348
+    },
+    {
+      "exact": "51894257/41293476000",
+      "rounded_up_integer": 1256719
+    },
+    {
+      "exact": "3909025049/17343259920000",
+      "rounded_up_integer": 225392
+    },
+    {
+      "exact": "327511061/314931576960",
+      "rounded_up_integer": 1039944
+    },
+    {
+      "exact": "6159388853/33067815580800",
+      "rounded_up_integer": 186266
+    },
+    {
+      "exact": "762202981/7085960481600",
+      "rounded_up_integer": 107566
+    },
+    {
+      "exact": "115488428969/5952206804544000",
+      "rounded_up_integer": 19403
+    },
+    {
+      "exact": "3848/2205",
+      "rounded_up_integer": 1745124717
+    },
+    {
+      "exact": "166993/463050",
+      "rounded_up_integer": 360637081
+    },
+    {
+      "exact": "428657/2182950",
+      "rounded_up_integer": 196365927
+    },
+    {
+      "exact": "18589687/458419500",
+      "rounded_up_integer": 40551694
+    },
+    {
+      "exact": "121133/756756",
+      "rounded_up_integer": 160068768
+    },
+    {
+      "exact": "5254273/158918760",
+      "rounded_up_integer": 33062636
+    },
+    {
+      "exact": "275333/15289560",
+      "rounded_up_integer": 18007909
+    },
+    {
+      "exact": "584804197/157329572400",
+      "rounded_up_integer": 3717065
+    },
+    {
+      "exact": "1052033/8996400",
+      "rounded_up_integer": 116939332
+    },
+    {
+      "exact": "45642553/1889244000",
+      "rounded_up_integer": 24159163
+    },
+    {
+      "exact": "117180797/8906436000",
+      "rounded_up_integer": 13156868
+    },
+    {
+      "exact": "5080424677/1870351560000",
+      "rounded_up_integer": 2716294
+    },
+    {
+      "exact": "33114863/3087564480",
+      "rounded_up_integer": 10725238
+    },
+    {
+      "exact": "1435996423/648388540800",
+      "rounded_up_integer": 2214716
+    },
+    {
+      "exact": "3687807107/3056688835200",
+      "rounded_up_integer": 1206472
+    },
+    {
+      "exact": "159811665787/641904655392000",
+      "rounded_up_integer": 248965
+    },
+    {
+      "exact": "4091/39690",
+      "rounded_up_integer": 103073823
+    },
+    {
+      "exact": "3017477/141693300",
+      "rounded_up_integer": 21295835
+    },
+    {
+      "exact": "704243/60725700",
+      "rounded_up_integer": 11597117
+    },
+    {
+      "exact": "30534463/12752397000",
+      "rounded_up_integer": 2394410
+    },
+    {
+      "exact": "2189167/231567336",
+      "rounded_up_integer": 9453696
+    },
+    {
+      "exact": "94936607/48629140560",
+      "rounded_up_integer": 1952258
+    },
+    {
+      "exact": "22163633/20841060240",
+      "rounded_up_integer": 1063460
+    },
+    {
+      "exact": "960516553/4376622650400",
+      "rounded_up_integer": 219466
+    },
+    {
+      "exact": "19013287/2752898400",
+      "rounded_up_integer": 6906644
+    },
+    {
+      "exact": "824710367/578108664000",
+      "rounded_up_integer": 1426567
+    },
+    {
+      "exact": "27501479/35394408000",
+      "rounded_up_integer": 777001
+    },
+    {
+      "exact": "8344580473/52029779760000",
+      "rounded_up_integer": 160381
+    },
+    {
+      "exact": "598445017/944794730880",
+      "rounded_up_integer": 633413
+    },
+    {
+      "exact": "25945412417/198406893484800",
+      "rounded_up_integer": 130769
+    },
+    {
+      "exact": "6058152143/85031525779200",
+      "rounded_up_integer": 71246
+    },
+    {
+      "exact": "262475905063/17856620413632000",
+      "rounded_up_integer": 14700
+    }
+  ],
+  "checks": {
+    "coefficient_nonnegative": true,
+    "outward_rounding": true,
+    "rounding_error": true,
+    "int64_accumulation_bound": true,
+    "vector_counts": true,
+    "engine_shape": true,
+    "engine_full_coverage": true,
+    "engine_denominator": true,
+    "engine_witness_range": true,
+    "rounded_witness_reconstruction": true,
+    "independent_direct_reconstruction": true,
+    "actual_rounding_gap": true,
+    "positive_uniform_gate": true,
+    "haar_certificate": true,
+    "through31_bound_not_inherited": true
+  }
+}

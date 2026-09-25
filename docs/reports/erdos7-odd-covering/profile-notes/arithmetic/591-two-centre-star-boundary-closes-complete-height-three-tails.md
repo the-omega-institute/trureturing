@@ -283,3 +283,10 @@ records an actual mixed-square dead fibre showing why the complete old
 first-root marginal cannot always be preserved when that restriction is
 removed. The present nine-prime density and extra-square budget remain
 available independently.
+
+[Report593](593-a-joint-triple-block-admits-two-mixed-square-labels.md)
+instead retains 105,147,245 in one joint prefix block. It allows arbitrary
+phases at the two added mixed-square labels 147 and245, within the
+nine-prime support, without a separate extra-weight charge for them.
+Its wider square inventory and Report592's wider prime support have not
+been combined into one theorem.
