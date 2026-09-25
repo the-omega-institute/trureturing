@@ -3841,3 +3841,360 @@ $\eta_M=2m_M+b_M/(4m_M^2)$。
 这在原实验内实现了局部读数不足以识别全局失谐的区别。
 
 ## 追加锚（本行以下为增补区）
+
+## 65. 未锚定谱的失谐紧性与三种常数分量
+
+**定义 65.1（未锚定残差和统一失谐幅度）。** 保留原实际实验、固定幅度与 beta、完整固定总量后验、精确中心及定义 54.1 的有限截距。对确定性 $\eta_M\to\infty$，令
+
+$$
+r_M=\eta_M^2\delta_M,\quad s_M=\log(\eta_M/\delta_M),\quad
+s_M\sqrt{\delta_M}\le U/2,\quad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+\tag{65.1}
+$$
+
+记 $\omega=\pi/2$，唯一选取
+$d_M\in(-\pi/2,\pi/2]$ 与整数 $m_M$ 使
+$\omega\eta_M=\pi m_M+d_M$。本章使用未在零点锚定的过程
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)
+&=\eta_M^{3/2}e^{z_M(\theta)/2}
+\left[\mathcal Z_M(z_M(\theta)\sqrt\delta)-J_M
+-2z_M(\theta)\sqrt\delta\,T_M\right],\\
+\mathcal D_M(\theta)&=\mathcal V_M(\theta)-\mathcal V_M(0),\qquad
+\mathcal A_M^2=\frac{\eta_M^2d_M^2}{\delta_M+|d_M|}.
+\end{aligned}
+\tag{65.2}
+$$
+
+所有时间与旧坐标均使用同一个后验标签向量。$r_M$ 表示网格尺度比，不表示原模型的固定信号幅度。
+
+**定理 65.2（实际未锚定过程的紧性充要条件）。** 在每个包含零的固定紧区间 $I$ 上，实际 $\mathcal V_M$ 的紧 $J_1$ 路径律紧，当且仅当 $\limsup_M\mathcal A_M<\infty$。条件成立时极限支撑于连续路径；加入旧联合坐标和 $T_M$ 不改变该判据。$\mathcal D_M$ 对所有满足 (65.1) 的序列均 C-tight，无需 $\mathcal A_M$ 有界。
+
+紧性同时具有两种原实验意义：每个固定支持下的一致无条件紧性，以及先验数据概率中的后验紧性。后者意为对任意 $\varepsilon,\alpha>0$，存在紧集 $K\subset D(I)$ 满足
+
+$$
+\limsup_M\Pr_{\rm data}\{\Pi_M(K^c)>\varepsilon\}\le\alpha.
+\tag{65.3}
+$$
+
+若沿某子列 $\mathcal A_M\to\infty$，则对每个有限 $R$，
+
+$$
+\Pr_{\rm data}\left\{
+\Pi_M(|\mathcal V_M(0)|>R)>1/240
+\right\}\longrightarrow1.
+\tag{65.4}
+$$
+
+这里的必要性是实际概率结论，不由实际方差发散推断。单点区间 $I=\{0\}$ 按标量结论理解。
+
+证明。先在最终放大尺度作有限恒等式比较。第 54 章的 Fourier 权重、调和项与 Ci 展开在完整计数截止域上给出
+
+$$
+\mathcal V_M(\theta)=\sum_{j\ne l}K_M(\theta,j-l)A_jA_l+o_P(1),\quad
+K_M(\theta,k)=\frac{2\eta^2}{\sqrt\delta}e^{\theta/(2\eta^3)}
+\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|).
+\tag{65.5}
+$$
+
+误差在固定时间紧区间一致。该比较使用精确的
+$\mathcal Q_M=V_M+\sqrt\delta T_M$ 和原 $J_M$，所以大项在放大前恰好取消。
+原 Fourier 误差记为 $\varepsilon_M$；其界为 $e^{-cQ^3}$ 乘以固定次幂因子。
+由 (65.1) 有 $\log\eta=O(Q^{1/4})$，故
+
+$$
+Q^2\eta^2\delta^{-1/2}\varepsilon_M\to0,
+\qquad Q^2\eta^3\varepsilon_M\to0.
+\tag{65.6}
+$$
+
+第二项预先保留给 $\sqrt r\mathcal D_M$。floor 改变 Ci 自变量的对数至多 $O(he^{-z})$，而 $d\operatorname{Ci}(v)/d\log v=\cos v$，因此这个误差也受控。上述论证允许 $\eta$ 达到 $\exp(O(Q^{1/4}))$。
+
+零点分解为正弦、余弦与余项：
+
+$$
+\begin{aligned}
+S_M(\theta,k)&=\frac{2\eta}{\omega\sqrt\delta}
+\frac{\sin[(\omega\eta+\omega\theta/\eta^2)k]}{k},\\
+C_M(k)&=-\frac{2\cos(\omega\eta k)}{\omega^2\sqrt\delta k^2},\\
+K_M(0,k)&=S_M(0,k)+C_M(k)+E_M(k),\qquad
+|E_M(k)|\le\frac{C}{\eta\sqrt\delta |k|^3}.
+\end{aligned}
+\tag{65.7}
+$$
+
+对 $h_M=1+\mathcal A_M$，先将静态矩阵除以 $h_M$。令 $D=|d_M|$。
+当 $D\le\delta$ 时，$|S_M(0,k)|/h_M\le C$；当 $D\ge\delta$ 时，
+
+$$
+\frac{|S_M(0,k)|}{h_M}
+\le\frac{C}{\sqrt{\delta D}}\min(D,|k|^{-1}).
+\tag{65.8}
+$$
+
+全截止域有至多 $CQ^2$ 个组，所以相应原始矩阵范数分别至多
+$CQ^2$ 与 $C\delta^{-1}(1+\log Q)$。余弦、余项的范数至多
+$C\delta^{-1/2}$ 与 $C/(\eta\sqrt\delta)$。
+另一方面精确微分给出
+
+$$
+\partial_\theta K_M(\theta,k)=
+\frac{2e^{\theta/(2\eta^3)}}{\eta\sqrt\delta}
+\left[\cos(\omega\eta e^{\theta/\eta^3}k)
++\tfrac12\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|)\right].
+\tag{65.9}
+$$
+
+其绝对值至多 $C_I/\sqrt r$，乘以 $\sqrt r$ 后至多 $C_I$。
+故锚定矩阵范数至多 $C_IQ^2/\sqrt r$，缩放锚定矩阵范数至多 $C_IQ^2$。
+第 56 章 Hilbert 精确中心位移
+$\|e\|_2=O_P(Q^{-5/2}+q^{-1/2})$ 因此在归一化静态量上消失；
+锚定量上的误差为 $O_P(Q^{-1/2}/\sqrt r)+o_P(1)
+=O_P(Q^{-1/4}/\eta)+o_P(1)$，缩放锚定量上的误差为 $O_P(Q^{-1/2})+o_P(1)$。
+这一步没有把任意大 $\eta$ 的未归一化原始矩阵误当成多项式有界。
+
+在同一核心 $|j\delta|\le R_c=\sqrt{D_*\log Q}$ 上保留环境方差
+$v_j=d_j/B^2$，不另换确定性质量。原实际一行、两行比较与 Stirling 界给出共同好环境：
+
+$$
+v_j=\delta\rho(j\delta)(1+o(1))\text{ 一致成立},\quad
+v_j\le C\delta e^{-c(j\delta)^2},\quad d_j\ge q^{9/10}.
+\tag{65.10}
+$$
+
+最后的下界针对未归一化 Bernoulli 方差 $d_j$。不同组的环境乘积满足
+$E_{\rm data}v_jv_l\le Ca_ja_l$，其中 $a_j$ 是比较组占用均值除以 $B^2$，具有同一 Gaussian 包络和指数小的远计数尾。
+归一化静态系数逐项至多 $C\delta^{-1/2}$，锚定导数至多 $C_I/\sqrt r$。
+由独立辅助组的二次型等距，含至少一个核心外标记的项，其平均条件方差分别至多
+
+$$
+C\delta^{-1}\left[e^{-cR_c^2}+Q^Ce^{-c\lambda}\right],\qquad
+C_Ir^{-1}\left[e^{-cR_c^2}+Q^Ce^{-c\lambda}\right].
+\tag{65.11}
+$$
+
+锚定项先积分导数再取上确界；缩放锚定项的界去掉 $r^{-1}$。
+由于 $r^{-1}\le\delta^{-1}$ 最终成立，取一个固定且充分大的 $D_*$ 即使全部尾消失。
+旧 $H$ 的对角邻域与空间尾、旧对角量和线性路径也用同一个核心。
+上述期望先对每个数据集上定义的截止组计算，再按概率删去坏数据事件，不在无界矩中丢弃事件。
+
+一次核心逆分布耦合产生 $G_j=\sqrt{v_j}\xi_j$，$\xi_j$ 为共同独立标准正态。
+核心未归一化方差指数增长，既有耦合误差乘以前述全部多项式矩阵范数仍趋零。
+因此在一次最终后验 TV 转移之前，可以同时比较
+$\mathcal V_M(0)/(1+\mathcal A_M)$、完整 $\mathcal D_M$、所需的 $\sqrt r\mathcal D_M$ 与旧联合坐标。
+这里没有推断发散静态量的未归一化比较。
+
+令 $\Gamma_M(k)=\sum_jv_jv_{j+k}$，求和仅用核心。
+(65.10) 的平方配方和固定空间内的下界给出
+
+$$
+\Gamma_M(k)\le C\delta e^{-c(k\delta)^2},\qquad
+\Gamma_M(k)\ge c_{D_0}\delta\quad(1\le k\le D_0/\delta).
+\tag{65.12}
+$$
+
+固定滞后时 $\Gamma_M(k)/\delta\to g_0$；若 $r\to0$，则对每个固定 $A$，
+该收敛在 $k\le A\eta^2$ 上一致，因为此时 $k\delta\le Ar\to0$。
+核心相对误差乘以有界的自相关质量，Gaussian 网格积分误差在有界平移上一致趋零。
+
+记 $P_M(0)=\sum_{j\ne l}S_M(0,j-l)G_jG_l$。
+两种滞后方向与 Gaussian 配对给出
+
+$$
+\operatorname{Var}_G P_M(0)
+=\frac{16\eta^2}{\omega^2\delta}
+\sum_{k\ge1}\Gamma_M(k)\frac{\sin^2(d_Mk)}{k^2}
+\asymp\eta^2\min(D,D^2/\delta)\asymp\mathcal A_M^2.
+\tag{65.13}
+$$
+
+常数对相位和 $\eta$ 一致。上界在 $D\le\delta$ 时用 Gaussian 滞后总质量，在 $D\ge\delta$ 时于 $1/D$ 分割。
+下界在前一情形取 $1\le k\le\lfloor1/\delta\rfloor$；后一情形取
+$1\le k\le\lfloor\pi/(2D)\rfloor$。
+这些区间内 $\sin(Dk)\ge2Dk/\pi$，并分别至少含 $c/\delta$ 与 $c/D$ 个整数。
+配合 (65.12) 即得下界。这样连 $D$ 离零有固定距离的情况也被覆盖，不用全域连续近似代替离散别名。
+余弦项方差一致有界，Ci 余项方差为 $O(\eta^{-2})$。
+
+还要控制任意小时间增量。令
+$b_\theta(k)=\eta^2[e^{\theta/(2\eta^3)}\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}k)-\operatorname{Ci}(\omega\eta k)]$。
+第 64 章的精确 Ci 增量论证仅使用 $\eta\to\infty$，故此处仍给出，对 $h=|\theta-\psi|\le1$，
+
+$$
+|b_\theta(k)-b_\psi(k)|
+\le C_I\left[\min(h/\eta,\eta/k)+h/(\eta^2k)\right],\quad
+\sum_{k\ge1}|b_\theta(k)-b_\psi(k)|^2\le C_Ih.
+\tag{65.14}
+$$
+
+(65.12) 与配对式使锚定 Gaussian 二次型的二阶增量至多 $C_Ih$。
+中心 Gaussian 二次型满足 $EX^4\le15(EX^2)^2$，于是四阶增量至多 $C_Ih^2$。
+Kolmogorov 判据给出锚定参考路径的一致紧性，前述统一比较给出实际 C-tightness。
+若 $\mathcal A_M$ 有界，(65.13) 又使零点紧，得到充分性。
+
+若 $\mathcal A_M\to\infty$，则 $P_M(0)/\mathcal A_M$ 的参考方差介于两个正常数之间。
+对其平方应用 Paley–Zygmund 和四阶矩界得
+
+$$
+\Pr_G\{|P_M(0)|/\mathcal A_M>\sqrt{c/2}\}\ge1/60.
+\tag{65.15}
+$$
+
+除以 $\mathcal A_M$ 后余弦和 Ci 余项均消失。先前证明的归一化比较和完整标签向量 TV 界，只对这个有界概率事件转移，即给出 (65.4)。
+任意 $J_1$ 紧集的上确界范数有界，因为 $J_1$ 收敛的时间变换保持全区间上确界；
+因此 (65.4) 足以排除紧性，不需要把内部零点的评价映射误当成处处连续。
+
+最后，(65.3) 与先验平均紧性由 Markov 不等式及
+$E\Pi_M(K^c)\le\varepsilon+\Pr\{\Pi_M(K^c)>\varepsilon\}$ 相互推出。
+原支持置换等变性使先验平均联合律恰等于每个固定支持的无条件律。
+实际 pair/path 环境估计一致，未知方向继续使用一个共同相等事件。
+这些步骤不转移实际无界矩，也不声称逐个无限数据实现上的几乎处处后验紧性。
+
+**定理 65.3（三种未锚定极限及同一端点平方）。** 令
+$Z_0\sim N(0,128g_0/45)$，$N_2\sim N(0,2g_0)$。
+在下列各子列上，过程与旧联合坐标在固定紧区间联合 C-tight 收敛。
+
+当 $r_M\to0$ 且 $a_M=\eta_M^2d_M/\omega\to a\in\mathbb R$ 时，
+
+$$
+\mathcal V_M(\theta)\Rightarrow
+Z_0+4\sqrt{g_0}B_{\rm odd}(a+\theta).
+\tag{65.16}
+$$
+
+$B_{\rm odd}$ 是同一标准 Brownian motion 的奇延拓，且 $B,Z_0,N_2$ 与整个旧实场相互独立。此分支无需固定 $m_M$ 奇偶性。
+
+当 $r_M\to\zeta\in(0,\infty)$、$d_M/\delta_M\to b$，且 $m_M$ 奇偶性固定时，
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)&\Rightarrow Z_0+I_2(q_{\zeta,b,\theta};W_\sigma),\\
+q_{\zeta,b,\theta}(x,y)&=
+\frac{2\sqrt\zeta}{\omega}\frac{\sin[(b+\omega\theta/\zeta)(x-y)]}{x-y},\\
+I_2(q_{\zeta,b,\theta};W_\sigma)&=
+2\sqrt\zeta\int_0^{b/\omega+\theta/\zeta}
+\left(|F_\sigma(v)|^2-\gamma\right)dv.
+\end{aligned}
+\tag{65.17}
+$$
+
+核在对角线上连续延拓。偶数 $m_M$ 时 $W_\sigma$ 为旧场，奇数时为其独立实副本。
+$Z_0,N_2$ 相互独立，且与两份场联合独立；旧 $J_\infty$ 始终使用旧场。
+
+当 $r_M\to\infty$、$b_M=\eta_Md_M/\sqrt\delta_M\to b$，并固定奇偶子列时，联合有
+
+$$
+\left(\mathcal V_M(\theta),\sqrt{r_M}\mathcal D_M(\theta)\right)
+\Rightarrow
+\left(Z_0+\frac{2b}{\omega}(Y_\sigma^2-\gamma),
+2\theta(Y_\sigma^2-\gamma)\right).
+\tag{65.18}
+$$
+
+$Y_\sigma=W_\sigma(1)$，两处平方是同一个随机量。第一坐标为常数路径，独立性和奇偶约定同 (65.17)。
+全部结论保留先验条件 BL 数据概率收敛、一致固定支持无条件收敛及共同方向事件。
+
+证明。三种参数条件都使 $\mathcal A_M$ 有界，因此前一定理提供未归一化共同 Gaussian 比较和路径紧性。又由
+$\eta^2|d|^2\le C(\delta+|d|)$ 得 $d\to0$。
+令 $\chi_j=(-1)^{m_Mj}$。余弦项的参考 $L^2$ 极限与
+
+$$
+O_M^\chi=-\frac2{\omega^2\sqrt\delta}
+\sum_{j\ne l}\frac{\chi_j\chi_l}{(j-l)^2}G_jG_l
+\tag{65.19}
+$$
+
+相同，因为逐个固定滞后的 $\cos(dk)\to1$，且 $k^{-4}$ 可求和。
+标准正态矩阵的算子范数为 $O(\sqrt\delta)$，参考方差趋于 $128g_0/45$。
+旧移动对角矩阵也有小算子范数，与此零对角矩阵的迹内积为零。
+联合二次型—线性型特征函数或同一有限秩删除证明：这两个量先有联合 Gaussian 极限，再与所有旧及移动符号线性方向独立。
+这给出所述 $Z_0,N_2$，不能由零协方差单独代替这一步。
+
+对固定有限个时间，(65.7) 的正弦核同样逼近完整 Ci 核扣除静态余弦项。
+具体地，Ci 三阶余项的二次均方为 $O(\eta^{-2})$；锚定余弦和正弦振幅的系数平方和为 $O(\eta^{-4})$；
+相位线性化用 $\sum k^{-2}\min(k|u|,2)^2\le C|u|$，给出 $O_I(\eta^{-3})$。
+这些有限维误差结合 (65.14) 的精确路径紧性即可使用连续极限；无需先将一个粗振幅误差乘以 $r^{-1}$。
+
+亚临界时，正弦系数为
+$2\eta\chi_j\chi_l\sin[\omega(a_M+\theta)k/\eta^2]/(\omega\sqrt\delta k)$。
+同第 64 章的滞后分割与余弦尖点计算，其协方差趋于
+$8g_0(|2a+\theta+\psi|-|\theta-\psi|)$。
+标准正态矩阵的算子范数至多 $C_I\sqrt r(1+|\log r|)\to0$。
+与 (65.19) 的协方差至多
+$C_I\eta\sum k^{-3}\min(k/\eta^2,1)=O_I(\eta^{-1})$，与旧对角量的迹内积恰为零。
+对所有这些矩阵的线性组合一起作特征函数展开，得到联合 Gaussian 极限和 (65.16) 的独立性；奇偶符号在新协方差中消失。
+
+临界时，正弦核恰好是 $\chi_j\chi_l q_{M,\theta}(x_j-x_l)$，其中
+
+$$
+q_{M,\theta}(y)=\frac{2\sqrt r}{\omega}
+\frac{\sin[(d/\delta+\omega\theta/r)y]}{y}.
+\tag{65.20}
+$$
+
+核及时间导数在固定时间紧区间全空间有界，在固定空间紧集上一致趋于 (65.17)。
+相邻单元的交替求和给出旧场与符号场的完整 Gram：偶数时两者相同，奇数时极限独立。
+共同矩形逼近同时保留旧 $H$ 和新核，块内平方扣除给出 Wick 常数。
+Gaussian 尾控制空间截断，时间紧性已由精确 Ci 获得。
+该推导无需 $r-\zeta$ 或 $d/\delta-b$ 的额外速率；积分表达式由 Gaussian 乘积公式直接得到。
+
+超临界时，$d/\delta=b_M/\sqrt r\to0$。在零点，由 $|\sin u-u|\le C|u|^3$，
+
+$$
+\left|q_{M,0}(y)-2b_M/\omega\right|\le C y^2/r.
+\tag{65.21}
+$$
+
+(65.10) 使 $\sum_{j,l}|x_j-x_l|^4v_jv_l\le C$，所以正弦二次型在参考 $L^2$ 中逼近
+$(2b_M/\omega)Q_M^\chi$，其中
+$Q_M^\chi=(\sum_j\chi_jG_j)^2-\sum_jG_j^2$。
+后者趋于同一个 $Y_\sigma^2-\gamma$。
+
+对更细的增量重新使用 (65.9)，不放大前面的未量化误差。
+置 $\tau_\eta(\theta)=\eta^3(e^{\theta/\eta^3}-1)$，则余弦中的新增空间频率为
+$b_M/\sqrt r+\omega\tau_\eta(\theta)/r=O_I(r^{-1/2})$。
+用 $|\cos u-1|\le Cu^2$、同一四阶空间界和 Ci 尾界，得到
+
+$$
+E_G\sup_{\theta\in I}
+\left|\sqrt r\sum_{j\ne l}[K_M(\theta,j-l)-K_M(0,j-l)]G_jG_l
+-2\theta Q_M^\chi\right|^2
+\le C_I\left[r^{-2}+\eta^{-6}+\delta/\eta^2\right]\to0.
+\tag{65.22}
+$$
+
+先对导数使用二次型等距，再从零积分即可取得上确界。
+(65.6) 的第二个误差预算、缩放中心界和同一耦合使该比较适用于实际过程。
+因此两坐标共享 $Q_M^\chi$，且未缩放增量消失，证明 (65.18)。
+
+最后，旧非线性截距由共同矩形逼近加入；旧路径由质量尾和方差时钟保持。
+一次完整后验向量 TV 比较只转移有界测试与误差事件，好环境子序列给出条件 BL 收敛。
+这个论证不把新过程的边缘收敛误用为与旧场的联合收敛，也没有断言实际无界矩收敛。
+
+**推论 65.4（完整子列分类与合法分离实例）。** 令 $\alpha_M=\eta_M^2d_M$。恒有
+
+$$
+\mathcal A_M^2=\frac{\alpha_M^2}{r_M+|\alpha_M|}.
+\tag{65.23}
+$$
+
+在紧性条件下，先选 $r_M$ 在 $[0,\infty]$ 中的收敛子列。
+若其极限为零，则 $\alpha_M$ 有界；若为正有限值，则 $d_M/\delta_M$ 有界；
+若为无穷，则 $\alpha_M/\sqrt{r_M}$ 有界。再抽取相应失谐参数和所需奇偶子列，
+定理 65.3 就覆盖全部所得联合极限。这里不假定原序列的参数、奇偶分布或极限律唯一。
+
+这些分支均可在同一原合法算术中实现。取 $m_M\asymp Q^c$：
+$0<c<1/4$ 时令 $\eta_M=2m_M+a/(4m_M^2)$；
+临界时取指定奇偶的 $m_M$ 最接近 $(\sqrt\zeta/2)Q^{1/4}$，再令 $\eta_M=2m_M+b\delta_M/\omega$；
+$c>1/4$ 时令 $\eta_M=2m_M+b\sqrt\delta_M/(2\omega m_M)$。
+分别得到三种指定有限参数。另取任意固定 $d_0\in(0,\pi/2)$ 并令 $\eta_M=2m_M+d_0/\omega$，
+则每种尺度中均有 $\mathcal A_M\to\infty$，从而实际未锚定谱不紧而锚定谱仍紧。
+
+在超临界分支，$b=0$ 时未缩放极限是独立 Gaussian 常数，细增量仍含端点平方；
+$b\ne0$ 时该常数含一个与细增量共享的非 Gaussian 分量。
+不同奇偶分支可有相同新过程边缘律，却与旧场有不同联合律。
+这些是已识别极限的性质，不能改写为有限后验独立性或实际矩收敛。
+
+## 追加锚（本行以下为增补区）
