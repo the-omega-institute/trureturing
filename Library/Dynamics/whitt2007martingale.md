@@ -98,3 +98,56 @@ or its common exact posterior centers. This attribution concerns the checked
 proof ingredients and does not certify global originality. The result does
 not assert a fine-scale process over continuously varying thresholds, a
 shrinking-threshold tangent limit, or convergence of actual moments.
+
+
+# A Gaussian endpoint inside a collapsing score cluster
+
+The same primary paper also states the classical tightness criterion in
+Theorem 3.2, printed page 279. Equations (14)–(15) define the ordinary and
+partition oscillation moduli. Tightness requires the partition modulus to
+vanish in probability as its mesh parameter tends to zero. The partition
+uses half-open intervals and controls the spacing of its internal points;
+the stated half-line version has a separate last-interval convention.
+An ordered triple collapsing at an interior point encounters at most one
+partition point. Hence one of its adjacent increments is bounded by a
+within-partition oscillation. Two adjacent increments that both stay
+nonzero with positive probability violate this necessary condition.
+This criterion and its elementary three-point consequence are classical.
+
+Chapter 39 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+constructs one fixed nonlattice amplitude with exceptionally accurate
+rational approximations to its logarithmic jump ratio. On a legal
+subsequence, an entire rational line of count pairs fits inside the
+microscopic score window. Uniform Stirling estimates and a Riemann sum,
+with relative tail control, calculate its comparison mass. Actual
+one/two-row estimates, compensation and exact untilting transfer the
+mixed occupancy. One posterior-vector comparison and variance-weighted
+center estimate then give a Gaussian endpoint at scale
+sqrt(q/(Q sqrt(lambda))). Two disjoint portions of the same count line
+produce nondegenerate joint Gaussian increments at three deterministic
+score locations tending to zero. Their oscillation violates J1 tightness
+even at that endpoint normalization.
+
+The arithmetic approximation, Poisson asymptotics, array Gaussian limits
+and topology criterion are established methods. The fixed-amplitude
+construction, its actual pair/path transport, sharp posterior scale and
+collapsed-cluster obstruction are the `repo-derived` result. An endpoint
+Gaussian alone neither proves tightness nor permits replacing the
+cluster by one jump. Equal-score labels remain grouped throughout.
+
+For comparison, Borovkov–Borovkov's *A refined version of the integro-local
+Stone theorem*, DOI [10.1016/j.spl.2016.12.004](https://doi.org/10.1016/j.spl.2016.12.004),
+[arXiv:1607.05879v2](https://arxiv.org/abs/1607.05879v2), imposes the strong
+nonlattice characteristic-function condition (2), page 3, in Theorem 1.
+Its Remark 1, page 4, already explains a classical atom obstruction to
+arbitrarily small intervals. The fixed two-jump compound-Poisson law
+here is discrete and does not satisfy that strong condition. Its ordinary
+nonlattice status is insufficient to import the refined shrinking-window
+estimate. That theorem does not provide the present actual-data,
+fixed-cardinality posterior cluster or its process conclusion.
+
+These comparisons delimit the inspected inputs and do not certify global
+originality. Chapter 39 asserts no actual moment convergence, universal
+amplitude law, or conclusion in another path topology. Its conditional
+posterior calculations are on the uniform-support-prior space; the
+fixed-support conclusions are unconditional and use equivariance.
