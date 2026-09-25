@@ -61,7 +61,9 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
         funext x
         dsimp [T, Function.comp_def]
         ring
-      rw [hcomp, Measure.map_map (by fun_prop) (by fun_prop)]
+      have hscale : Measurable (fun y : ℝ => k⁻¹ * y) := by fun_prop
+      have hreflect : Measurable (fun x : ℝ => j - x) := by fun_prop
+      rw [hcomp, ← Measure.map_map hscale hreflect]
       rw [(volume.measurePreserving_sub_left j).map_eq]
       rw [Real.map_volume_mul_left (inv_ne_zero hk0)]
       simp [abs_of_pos hk]
@@ -81,12 +83,12 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
         change (i.val : ℝ) / k < y ∧ y ≤ j / k at hy
         refine ⟨j - k * y, ?_, ?_⟩
         · constructor
-          · have h := (div_le_iff₀ hk).1 hy.2
-            nlinarith
+          · have h := (le_div_iff₀ hk).1 hy.2
+            linarith
           · have h := (div_lt_iff₀ hk).1 hy.1
-            dsimp [j]
-            push_cast at h
-            nlinarith
+            have hj : j = (i.val : ℝ) + 1 := by
+              simp [j]
+            linarith
         · dsimp [T]
           field_simp [hk0]
           ring
@@ -132,7 +134,8 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
     have hk : 0 < k := by dsimp [k]; positivity
     have hcover : (⋃ i : Fin (n + 1), cell n i) = Set.Ioc (0 : ℝ) 1 := by
       apply Set.Subset.antisymm
-      · rintro y ⟨i, hi⟩
+      · apply Set.iUnion_subset
+        intro i y hi
         change (i.val : ℝ) / k < y ∧
           y ≤ (((i.val + 1 : ℕ) : ℝ)) / k at hi
         constructor
@@ -150,8 +153,11 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
         have htop : (((n + 1 : ℕ) : ℝ)) / k = 1 := by
           change k / k = 1
           exact div_self (ne_of_gt hk)
-        have hy' : y ∈ Set.Ioc ((0 : ℝ) / k) (((n + 1 : ℕ) : ℝ) / k) := by
-          simpa [htop] using hy
+        have hy' : y ∈ Set.Ioc (((0 : ℕ) : ℝ) / k)
+            (((n + 1 : ℕ) : ℝ) / k) := by
+          constructor
+          · simpa only [Nat.cast_zero, zero_div] using hy.1
+          · simpa only [htop] using hy.2
         rcases Set.mem_iUnion.mp (hsub hy') with ⟨m, hm⟩
         rcases Set.mem_iUnion.mp hm with ⟨hmrange, hcellmem⟩
         exact Set.mem_iUnion.mpr
@@ -226,6 +232,7 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
           ENNReal.ofReal (atomicCoefficient r a) *
             Measure.dirac (atomicPoint x a) A ∂volume := by
       simp_rw [geometricAtomicMeasure, Measure.sum_apply _ hA, Measure.smul_apply]
+      simp_rw [smul_eq_mul]
       rw [lintegral_tsum (fun a => (htermMeas a).aemeasurable)]
     _ = ∑' n : ℕ, ENNReal.ofReal ((1 - r) ^ 2 * r ^ n) *
           ENNReal.ofReal (((n + 1 : ℕ) : ℝ)) * volume (A ∩ Set.Ioc 0 1) := by
