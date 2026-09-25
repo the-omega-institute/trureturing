@@ -201,3 +201,57 @@ compact parameter sets. It asserts neither actual moment convergence nor
 a universal microscopic limit for nonlattice amplitudes. The conditional
 posterior statements are under the uniform support prior; fixed-support
 conclusions use the unconditional permutation-equivariant law.
+
+# The critical arithmetic mesh and Gaussian staircase
+
+Chapter 41 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+keeps the fixed amplitude of Chapters 39–40 and changes the legal count
+intensity to floor(theta Q squared), for fixed positive theta. Its
+compensated score step gives exact integer coordinates on the count line.
+The limiting group variances are discrete Gaussian weights, and the
+complete fixed-size posterior profile is a Gaussian staircase. The
+endpoint has the same sqrt(q/lambda) normalization as the isolated-atom
+example, while two nondegenerate group increments still obstruct J1
+tightness in the original collapsing score window. An endpoint scale
+therefore does not determine a one-jump path law.
+
+This is a different actual-model limit from the continuous profile in
+Chapter 40. Each complete count group now has positive limiting variance.
+Whitt's continuous Brownian martingale limit theorem cannot be invoked
+by claiming its maximum-group-jump condition. Instead, on a fixed compact
+interval the jump positions are exactly the same finite set of integers
+at every sample size. The proof retains a left-tail variable, the finite
+whole-group vector and a right-tail endpoint variable. A bounded-label
+joint CLT and the continuous fixed-step reconstruction yield the compact
+J1 conclusion, including integer endpoints. Relative summable Poisson
+tails establish the full endpoint variance before this finite-vector
+argument is used.
+
+The normalized weights are the real one-dimensional discrete Gaussian
+in Agostini and Améndola, *Discrete Gaussian Distributions via Theta
+Functions*, SIAM Journal on Applied Algebra and Geometry (2019),
+DOI `10.1137/18M1164937`, [arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2),
+equations (2.2)–(2.3) and Definition 2.3, page 3. In their exponential
+convention the parameters are u = 0 and B = kappa/(2 pi theta) > 0.
+Only this explicitly positive, convergent series is used; no arbitrary
+prescribed-moment existence assertion is needed.
+
+Independent Gaussian sums, discrete Gaussian weights, fixed-step path
+reconstruction and the Gaussian bridge projection are classical. So are
+Whitt's necessary partition-modulus criterion, the exact conditional
+Bernoulli representation and the local probability bound described in
+[Siripraparat–Neammanee's note](siripraparat2021local.md). The
+`repo-derived` content is the critical arithmetic sampling sequence,
+its actual mixed occupancy, exact posterior staircase, separation from
+the previous field, and an outer-path obstruction despite the matching
+endpoint normalization. One complete posterior union and its weighted
+center estimate preserve the common realization throughout.
+
+The variance and covariance expressions describe the limiting Gaussian
+objects. They assert no actual moment convergence. The result fixes theta,
+beta, the amplitude and compact intervals; it does not supply a simultaneous
+law for varying theta or all nonlattice amplitudes. Conditional posterior
+calculations remain under the uniform support prior, and fixed-support
+conclusions use unconditional equivariance and one common direction event.
+The attribution delimits the classical tools and does not certify global
+originality.
