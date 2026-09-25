@@ -48,10 +48,8 @@ def phaseAverageArena : ObjectDomainArena.{0, 0, 0, 0} where
     exact homogeneousPointwiseEqArena (Arena.ofFintype Unit) PhaseAverageOutput
   Domain := Set ℝ
 
-def phaseAverageRealization :
-    PrimitiveRealization (homogeneousPointwiseEqSignature Unit PhaseAverageOutput) := by
-  letI : DecidableEq PhaseAverageOutput := Classical.decEq _
-  exact homogeneousPointwiseEqRealization
+def phaseAverageRealization :=
+  @homogeneousPointwiseEqRealization Unit PhaseAverageOutput (Classical.decEq _)
     (fun _ : Unit => phaseAverageIntegral)
     (fun _ : Unit => phaseAverageVolume)
 
