@@ -269,3 +269,14 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/unr
 Independent numerical-lcm and positive-layer implementations separately
 reproduced the moment and tail arithmetic; the source, conditional kernel
 and gluing arguments remain the ordinary proof above.
+
+## Larger fixed parent unions
+
+[Report620](620-growing-parent-sets-preserve-a-common-survivor.md)
+retains this conditional interface and permits four parents from1253 and
+arbitrarily large finite parent sets under an explicit growth threshold.
+Several tuple descriptions are combined into one fixed parent union and
+one normalized row, retaining their cross terms. It also applies the
+relational-root version of Report617's same actual source. Neither the
+growth condition nor the remaining head and private-interface restrictions
+are removed.

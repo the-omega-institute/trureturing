@@ -377,3 +377,199 @@ or two heads and one outside parent. It samples the entire head first
 and then all owners by the same normalized construction. Its complete
 whole-prime fee leaves extendible head Haar mass greater than1/53000.
 The present head and ordinary-interface restrictions remain.
+
+## The root labels can be specified by their relations
+
+The literal outside digits in this report can be replaced by the following
+coordinatewise conditions, with the same constants and the same5320-template
+certificate. Fix q in{7,11,13,17,19}. Let f_q be its actual forbidden
+first pure root, or an auxiliary first-root deletion if that pure slot is
+absent. Choose five pairwise distinct roots u_(q,1),...,u_(q,5), all
+different from f_q. The outside first-root components of3q,5q,15q,9q,25q
+are respectively these five roots. The two square stars3q² and5q² may
+have ANY lifts of u_(q,1) and u_(q,2) modulo q². At every retained pair
+label incident to q, its q-component must project to u_(q,1); its higher
+digits may vary freely between labels. The choices at each prime are
+fixed throughout the actual family. Higher pure-q phases and all retained
+central star and pair phases remain arbitrary. All the other head and
+outside-network hypotheses remain as stated above.
+
+These conditions concern actual equalities, inequalities and prefix
+incidence. They do not identify arbitrary high-digit assignments with one
+literal assignment by a single permutation. In particular several pair
+square cylinders with different lifts cannot all be sent to the same
+square cylinder by an injective transport.
+
+To prove the extension directly, take the actual root-balanced pure source
+rho_q with first root f_q deleted. Each of the other q−1 roots has mass
+r_q=1/(q−1), and each square cylinder has mass at most
+alpha_q=1/[q(q−2)]. At a fixed central leaf, thin its actual star survivor
+to the following root masses:
+
+    u_(q,1): (1−R1)(r_q−alpha_q R2),
+    u_(q,2): (1−C1)(r_q−alpha_q C2),
+    u_(q,3),u_(q,4),u_(q,5):
+                    r_q(1−P),r_q(1−L9),r_q(1−L25),
+    every other live root: r_q.
+
+The square-cylinder cap makes each required thinning possible on this
+same actual source, whatever the square lifts or higher pure deletions.
+The distinguished mass B_q and its complementary mass A_q are exactly
+those in Section1. This construction therefore produces the same entire
+central response vectors, rather than merely equal total masses.
+
+The unconditional qr original has endpoints u_(q,1),u_(r,1). Its
+rectangle contains every other retained original on that pair, since
+all of their endpoint cylinders have these first roots. If the qr slot
+is absent, impose this rectangle as an auxiliary deletion. Restricting
+the product of the thinned sources to at most one distinguished root
+therefore avoids all retained pair originals, irrespective of their
+central phases and of all square lifts. Its exact mass and query grids
+are the same H_T in(A).
+
+For every query support T, dropping restrictions touching T and restoring
+rho_q on its queried coordinates is domination of this one supported
+source. The full-height caps are unchanged, so the same complete L/W
+arrays, fixed theta=1, convex reduction and integer certificate apply.
+The density caps of rho and the resulting head law are also unchanged;
+hence both the head conclusion and the stated same-source network
+corollary extend under these relational root hypotheses.
+
+Equivalently, one may transport all first roots at q by a single
+permutation sending f_q,u_(q,1),...,u_(q,5) to0,1,...,5. Carrying higher
+digits within their exchanged subtrees defines a Haar-preserving rooted
+tree map that sends every cylinder to a cylinder at the same height.
+The same map must act on all actual originals and queries at that prime.
+Higher pure phases are permitted to change because their scope was
+already arbitrary. This explains the first-root covariance; the direct
+construction above, not an impossible simultaneous identification of
+distinct higher lifts, justifies the full extension.
+
+The distinguished root must still be the first star's root u_(q,1).
+Allowing a different distinguished role, or allowing different incident
+pairs to use different roots at q, changes the retained response and is
+not covered by this reuse of the certificate. This paragraph adds no new
+finite computation or Lean declaration.
+
+## The remaining endpoint-pattern problem
+
+This is a finite structural reduction, not a positive continuation gate.
+Keep the preceding relational star hypotheses, but now
+allow edge{q,r} to have its own root d_(q,r) at q and d_(r,q) at r. All
+twelve retained originals on this edge must project to these same two
+roots; their central roles and their higher lifts may be arbitrary. This
+still does not admit different first roots among the twelve labels of one
+edge. Those would require a larger relation table.
+
+### One actual source and its complete boundary
+
+Use the same rootwise-thinned actual star submeasure nu_q. At each fixed
+central leaf its five marked root masses are
+
+    w1=(1−R1)(r−alpha R2), w2=(1−C1)(r−alpha C2),
+    w3=r(1−P), w4=r(1−L9), w5=r(1−L25).
+
+Each of the q−6 remaining live roots has mass r. Their total together with
+the five marked masses is Z_q. One unconditional qr rectangle removes
+the forbidden pair of roots on that edge; all other retained labels there
+are contained in it. An absent qr slot can again be imposed auxiliary.
+Thus the exact retained response is a five-variable factor network with
+one forbidden root pair per edge. It need not have the at-most-one-root
+form used by617.
+
+For S=Q minus a query support T, let E(S) be the induced pair edges. For
+F subset E(S), call F compatible if, at every vertex incident to F, all
+its selected incident edges specify the same endpoint root. In that case
+call the common root d_q(F). Inclusion-exclusion gives the exact polynomial
+
+    H_T=sum_(F subset E(S), F compatible) (−1)^|F|
+          product_(q incident to F) w_(q,d_q(F))
+          product_(q in S not incident to F) Z_q.       (EP1)
+
+Here an unmarked endpoint root has weight r_q. The empty F contribution
+is product Z_q. EP1 has at most2^10=1024 terms. It is an identity for the
+one product of actual thinned star sources, subsequently restricted by
+all edge rectangles, not an independently chosen law for each F or T.
+Multiplying by the central15 mask gives the full central grid.
+
+Every queried-coordinate restriction can be dropped on this same source.
+Its remaining factor graph is exactly E(S), so the full-height query
+caps multiply EP1 in precisely the same domination argument as617. The
+existing central screens and complete L/W arrays can therefore consume
+these grids. Their positivity remains a separate obligation.
+
+### A finite classification preserves precisely the missing relation
+
+At vertex q the five star roots are distinguished and cannot be permuted
+independently of their central activation roles. The other live roots
+have equal prescribed mass r_q and enter no star. Among four ordered
+incident endpoints, retain each endpoint's marked-star identity, or else
+its membership in a common partition of the unmarked occurrences. Name
+the unmarked blocks by first occurrence. There can be at most q−6 such
+blocks. A single root relabelling acts on the whole endpoint list at q;
+independent relabelling per incident edge is not allowed.
+
+For a sufficient theorem one may restrict to live endpoint roots. If a
+pair's endpoint is the forbidden pure root, all its actual pair cylinders
+already have zero source mass. Replacing its unconditional rectangle by
+an auxiliary live-root rectangle only strengthens the required avoidance.
+This is a monotonic sufficient reduction, not equality of the two families.
+
+Let B_k be the Bell numbers1,1,2,5,15 for k=0,...,4. For q>=11, there are
+
+    sum_(k=0..4) binomial(4,k) 5^(4−k) B_k =1540
+
+possible endpoint patterns. At q=7 only one unmarked root is available,
+so there are6^4=1296 patterns. The full labelled five-prime graph therefore
+has at most1296*1540^4=7289334581760000 combinations before exploiting any
+further response equality. No permutation of the five numerical primes
+is licensed by this count. This is a complete finite parameterization,
+not an exhaustive evaluation of that many gates.
+
+At q, a direct variable-elimination state can use the five marked roots,
+the at most four unmarked endpoint blocks, and a single aggregate for
+all unused unmarked roots. It has at most ten categories; their masses
+sum to Z_q. This preserves every declared pair event. The aggregate's
+mass is(q−6−number_of_used_unmarked_roots)r_q. EP1 is an alternative
+evaluation that avoids enumerating all category assignments.
+
+### Why endpoint incidence cannot be discarded
+
+Take only the pure first-root deletions0 at7,11,13, with all higher pure
+slots and all stars absent. The actual source is uniform on the6,10,12
+live roots. Keep just the unconditional7*11 and7*13 pair slots.
+
+If both slots use the same live root at7, their avoiding mass is
+
+    1−1/60−1/72+1/720=233/240.
+
+If the two slots use different live roots at7, their avoiding mass is
+
+    1−1/60−1/72=349/360.
+
+Each individual event has the same mass in the two actual families; the
+overlap, and hence the simultaneous survivor, differs by1/720. The fixed
+central source/mask and two unused outside coordinates can be multiplied
+into both examples without removing the distinction. This is a finite
+counterexample to compression that records the separate edge masses but
+forgets common-root incidence. It is not a counterexample to Erdős #7 or
+to existence of a positive full continuation gate.
+
+### The actual open gate
+
+The task is still to prove, for every coherent endpoint pattern and every
+globally fixed central-star layout, one supported source/thinning with a
+positive complete L/W gate. Neither the cardinality calculation nor EP1
+settles it. In particular the617 convex corner for a quinary column can
+make that individual root weight negative; its old proof only required
+the grouped A_q to remain positive. When endpoints expose that root
+separately, the old coefficient monotonicity cannot be copied unchanged.
+One can retain the15960 genuine local star profiles instead, or prove a
+new bound whose signed extension is justified on the exposed categories.
+
+Useful search targets are correspondence constraints on a complete graph,
+inclusion-exclusion with inconsistent endpoint assignments, partition
+functions with one forbidden pair per edge, and jointly sufficient
+boundary compression. Any new certificate must retain the incidence
+partition at each actual prime and keep one set of central roles and one
+actual source through every query.
