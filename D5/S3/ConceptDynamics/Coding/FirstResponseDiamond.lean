@@ -1,50 +1,23 @@
-/- GID: D5/S3/ConceptDynamics/Coding/ResponseFactorization
+/- GID: D5/S3/ConceptDynamics/Coding/FirstResponseDiamond
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResponseFactorization
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/FirstResponseDiamond
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Numbered response decompositions give SSE steps; equal first-level row and column classes construct an explicit quotient diamond.
+   digest: Equal first-level row and column classes construct an explicit quotient diamond.
 -/
 
-import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
+import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-import Mathlib.Data.Fintype.BigOperators
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.Coding.ResponseFactorization
+namespace D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 
 open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 
-/- A response step keeps the numbered intermediate fibre.  The edge
-   decomposition is the finite-path witness; it is stronger than a bare
-   equality of matrix entries. -/
-structure NumberedResponseStep {q r : ℕ} (C : CountMat q q) where
-  left : CountMat q r
-  right : CountMat r q
-  decompose : ∀ i k, Fin (C i k) ≃
-    Σ j : Fin r, Fin (left i j) × Fin (right j k)
-
-variable {q r : ℕ} {C : CountMat q q}
-
-theorem matrix_eq_of_numbered_response_step
-    (s : NumberedResponseStep C) : C = s.left * s.right := by
-  ext i k
-  have hcard := Fintype.card_congr (s.decompose i k)
-  simpa [Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod] using hcard.symm
-
-/- The finite-path witness therefore produces an actual one-step SSE, with
-   the swapped product as its target rather than a separately assumed chain. -/
-theorem response_step_is_sse (s : NumberedResponseStep C) :
-    Nonempty (ExchangeChain ℕ C (s.right * s.left) 1) := by
-  have hC : C = s.left * s.right := matrix_eq_of_numbered_response_step s
-  rw [hC]
-  exact ⟨ExchangeChain.cons s.left s.right (ExchangeChain.nil _)⟩
-
-/- Membership and representative matrices for the first response classes. -/
 def columnMembership {q r : ℕ} (class : Fin q → Fin r) : CountMat r q :=
   fun f v => if class v = f then 1 else 0
 
@@ -57,9 +30,8 @@ def columnSelector {q r : ℕ} (representative : Fin r → Fin q) : CountMat q r
 def rowSelector {q s : ℕ} (representative : Fin s → Fin q) : CountMat s q :=
   fun h u => if representative h = u then 1 else 0
 
-/- The two first-level response partitions determine a common rectangular
-   matrix.  In particular the SSE factors are calculated from C and the
-   partitions; no factorization or chain is an input. -/
+/- The two response partitions calculate the common rectangular matrix and
+   both exchanged products directly from the entries of C. -/
 theorem first_response_diamond {q r s : ℕ} (C : CountMat q q)
     (leftClass : Fin q → Fin r) (rightClass : Fin q → Fin s)
     (leftRep : Fin r → Fin q) (rightRep : Fin s → Fin q)
@@ -118,8 +90,6 @@ theorem first_response_diamond {q r s : ℕ} (C : CountMat q q)
   rw [hcol, hrow]
   exact ⟨ExchangeChain.cons (IL * IJ) D (ExchangeChain.nil _)⟩
 
-#print axioms matrix_eq_of_numbered_response_step
-#print axioms response_step_is_sse
 #print axioms first_response_diamond
 
-end D5.S3.ConceptDynamics.Coding.ResponseFactorization
+end D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
