@@ -45,12 +45,30 @@ internal static class InspectorNativeTestRunner
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));
         var executed = clock.GetTimestamp();
         var result = TestProcessRunner.Run("env",
-            [.. environment, "python3", "-B", "-m", "unittest", suite, "-v"],
+            [.. environment, "STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "-m", "unittest", suite, "-v"],
             Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "child-exit", suite,
-            utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode }));
+            utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode,
+            stdout_bytes = result.StandardOutput.Length, stderr_bytes = result.StandardError.Length }));
+        WriteCommandObservations(result.StandardOutput);
+        WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    internal static void WriteCommandObservations(byte[] output)
+    {
+        try
+        {
+            using var reader = new StringReader(Encoding.UTF8.GetString(output));
+            while (reader.ReadLine() is { } line)
+                if (line.StartsWith("NATIVE_COMMAND_OBSERVATION ", StringComparison.Ordinal))
+                    Console.WriteLine(line);
+        }
+        catch (Exception error) when (error is IOException or ObjectDisposedException)
+        {
+            // Optional observation must not replace the original child result.
+        }
     }
 }
 
@@ -84,10 +102,12 @@ public sealed class InspectorCompilerFixture : IDisposable
     {
         using var source = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
-            ["-B", "test_native_support.py", source.Path],
+        var result = TestProcessRunner.Run("env",
+            ["STRATALINT_NATIVE_COMMAND_OBSERVATION=1", "python3", "-B", "test_native_support.py", source.Path],
             System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
             TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+        InspectorNativeTestRunner.WriteCommandObservations(result.StandardOutput);
+        InspectorNativeTestRunner.WriteCommandObservations(result.StandardError);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
         var materials = Directory.GetFileSystemEntries(source.Path).Order(StringComparer.Ordinal).Select(path =>

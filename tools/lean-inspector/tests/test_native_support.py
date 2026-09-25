@@ -3,6 +3,7 @@ import codecs
 import hashlib
 import io
 import json
+import math
 import os
 import signal
 from pathlib import Path
@@ -17,6 +18,29 @@ import unittest
 from unittest.mock import patch
 import zipfile
 import zlib
+
+try:
+    import resource
+except ImportError:
+    resource = None
+
+
+def observation_value(read):
+    # None is an unavailable reading, never a zero-cost claim.
+    try:
+        return read()
+    except Exception:
+        return None
+
+
+def observation_delta(before, after):
+    return observation_value(lambda: after - before if math.isfinite(after - before) and after >= before else None)
+
+
+def reaped_children_cpu():
+    usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+    return usage.ru_utime + usage.ru_stime
+
 
 HERE = Path(__file__).resolve().parents[1]
 ROOT = HERE.parents[1]
@@ -188,7 +212,7 @@ defaultFacets = ["static"]
 
     def owned_processes(self, command, *, sessions=False):
         process, identities = command
-        rows = self.command_processes()
+        rows = self.observed_processes()
         owned = {pid for pid, identity in identities.items()
                  if pid in rows and rows[pid]['identity'] == identity}
         if process.poll() is None and process.pid in rows:
@@ -211,6 +235,19 @@ defaultFacets = ["static"]
         for pid in owned:
             identities[pid] = rows[pid]['identity']
         return [rows[pid] for pid in owned if not rows[pid]['state'].startswith('Z')]
+
+    def observed_processes(self):
+        observation = getattr(self, '_command_observation', None)
+        if observation is None:
+            return self.command_processes()
+        started = observation_value(time.perf_counter)
+        try:
+            return self.command_processes()
+        finally:
+            elapsed = observation_delta(started, observation_value(time.perf_counter))
+            observation['process_scan_count'] += 1
+            total = observation['process_scan_seconds']
+            observation['process_scan_seconds'] = total + elapsed if total is not None and elapsed is not None else None
 
     def command_diagnostics(self, command, args, stdout, stderr):
         roots = [self.root / '.lake/build/stratalint', self.root / 'tmp']
@@ -250,7 +287,7 @@ defaultFacets = ["static"]
                 if row['pid'] in parents:
                     continue
                 try:
-                    current = self.command_processes().get(row['pid'])
+                    current = self.observed_processes().get(row['pid'])
                     if current and current['identity'] == row['identity']:
                         os.kill(row['pid'], signal.SIGTERM if time.monotonic() < terminate_until else signal.SIGKILL)
                 except ProcessLookupError:
@@ -269,6 +306,44 @@ defaultFacets = ["static"]
 
     def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
                         observe_output=None):
+        if os.environ.get('STRATALINT_NATIVE_COMMAND_OBSERVATION') != '1':
+            return self._guarded_command(args, cwd=cwd, env=env, text=text, capture_output=capture_output,
+                timeout=timeout, observe_output=observe_output)
+        # Observation uses its own clock, never the command's injected deadline
+        # clock. CPU is process-wide reaped children, including ps and cleanup;
+        # it is not an isolated measurement of the compiler or the direct child.
+        started = observation_value(time.perf_counter)
+        cpu = observation_value(reaped_children_cpu)
+        previous = getattr(self, '_command_observation', None)
+        observation = dict(process_scan_count=0, process_scan_seconds=0.0)
+        self._command_observation = observation
+        self._command_sequence = getattr(self, '_command_sequence', 0) + 1
+        sequence = self._command_sequence
+        result = None
+        try:
+            result = self._guarded_command(args, cwd=cwd, env=env, text=text, capture_output=capture_output,
+                timeout=timeout, observe_output=observe_output)
+            return result
+        finally:
+            self._command_observation = previous
+            # Diagnostics must not replace the command/cleanup result, including
+            # when resource counters or the output stream are unavailable.
+            try:
+                print('NATIVE_COMMAND_OBSERVATION ' + json.dumps(dict(
+                    suite=self.id() if isinstance(self, unittest.TestCase) else type(self).__name__,
+                    sequence=sequence, executable=Path(args[0]).name,
+                    operations=[arg for arg in args[1:] if arg in
+                        ('lean-cache-ensure', 'lean-report', 'build', 'cache', 'stage', 'unstage', ':report')],
+                    elapsed_seconds=observation_delta(started, observation_value(time.perf_counter)),
+                    reaped_children_cpu_seconds=observation_delta(cpu, observation_value(reaped_children_cpu)),
+                    cpu_scope='process-wide-reaped-children-including-observers',
+                    raw_exit=result.returncode if result is not None else None,
+                    outcome='returned' if result is not None else 'raised', **observation)), file=sys.stderr, flush=True)
+            except Exception:
+                pass
+
+    def _guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
+                         observe_output=None):
         if timeout != 120 or not text or not capture_output:
             raise ValueError('native fixture commands require the 120s guard and text capture')
         temporary = self.root / 'tmp'
@@ -541,11 +616,44 @@ class GuardedCommandTests(unittest.TestCase):
         self.addCleanup(self.fixture.cleanup_fixture)
 
     def test_command_preserves_output_and_nonzero_exit(self):
-        for status in [0, 7]:
-            with self.subTest(status=status):
-                result = self.fixture.guarded_command([sys.executable, '-c',
-                    f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
+        for enabled, status in [(False, 0), (False, 7), (True, 0), (True, 7)]:
+            with self.subTest(enabled=enabled, status=status):
+                output = io.StringIO()
+                with patch.dict(os.environ, STRATALINT_NATIVE_COMMAND_OBSERVATION='1' if enabled else ''), \
+                        patch.object(sys, 'stderr', output):
+                    result = self.fixture.guarded_command([sys.executable, '-c',
+                        f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+                if not enabled:
+                    self.assertEqual(output.getvalue(), '')
+                    continue
+                observation = json.loads(output.getvalue().removeprefix('NATIVE_COMMAND_OBSERVATION '))
+                self.assertEqual(observation['raw_exit'], status)
+                self.assertEqual(observation['outcome'], 'returned')
+                self.assertGreater(observation['process_scan_count'], 0)
+                self.assertIsInstance(observation['process_scan_seconds'], float)
+                self.assertIsInstance(observation['elapsed_seconds'], float)
+
+    def test_unavailable_observation_does_not_replace_command_results_or_errors(self):
+        output = io.StringIO()
+        with patch.dict(os.environ, STRATALINT_NATIVE_COMMAND_OBSERVATION='1'), \
+                patch.object(time, 'perf_counter', side_effect=OSError('clock unavailable')), \
+                patch(__name__ + '.reaped_children_cpu', side_effect=OSError('counter unavailable')), \
+                patch.object(sys, 'stderr', output):
+            result = self.fixture.guarded_command([sys.executable, '-c', 'raise SystemExit(7)'])
+        self.assertEqual(result.returncode, 7)
+        observation = json.loads(output.getvalue().removeprefix('NATIVE_COMMAND_OBSERVATION '))
+        self.assertIsNone(observation['elapsed_seconds'])
+        self.assertIsNone(observation['reaped_children_cpu_seconds'])
+        self.assertIsNone(observation['process_scan_seconds'])
+        self.assertGreater(observation['process_scan_count'], 0)
+        launch_error = OSError('original command launch failure')
+        with patch.dict(os.environ, STRATALINT_NATIVE_COMMAND_OBSERVATION='1'), \
+                patch.object(subprocess, 'Popen', side_effect=launch_error), \
+                patch('builtins.print', side_effect=BrokenPipeError('observation output unavailable')):
+            with self.assertRaises(OSError) as raised:
+                self.fixture.guarded_command(['unused-command'])
+        self.assertIs(raised.exception, launch_error)
 
     def test_sampling_and_cleanup_errors_stop_and_join_observer(self):
         started = threading.Event()
