@@ -47006,3 +47006,177 @@ $`d\ge1+m+\lceil m/3\rceil`$ 或 $`d\ge1+2m`$，得到（215.23）的上界。�
 达到性沿用定理214.4选择的实际位置集合：低参数区域取互不相同的负谱纤维及其三重原像，最后一组按所需点数截取；高参数区域取任意不同位置。这分别给出 $`N=1+m+\lceil m/3\rceil`$ 和 $`N=1+2m`$。取（215.23）对应的最大整数 $`m\ge1`$，则 $`N\le d`$。定理215.3在这一维数中给出一条实际解析混态曲线，其完整尖锐集合恰是所选集合，故两个上界均达到。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 216. 尖锐校准的秩成本与单位圆例外
+
+**定义 216.1（指定名义秩的尖锐维数）。** 固定 $`0<a<1`$、$`t\in J_a`$ 及整数 $`r\ge1`$，令 $`D_\nu(a,t;r)`$ 为第215节混态程序满足 $`t\in\mathcal E_*(\rho)`$ 和 $`\operatorname{rank}\rho_t=r`$ 所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求完整准备曲线为 $`C^1`$、光滑、实解析。仍使用点态 SLD 信息，允许曲线在别处改变秩。记
+
+```math
+h=(1+t)/2,\qquad h_c=a+2a^2,\qquad
+ V=T_0(a,t)^\dagger,\quad
+ \psi_0=(\sqrt h,0,\sqrt{1-h})^{\mathsf T},\quad
+ f=(0,0,1)^{\mathsf T}.
+\tag{216.1}
+```
+
+$`T_0`$ 为第211.17式的固定三维尖锐模型，满足 $`V^\dagger V=I-|f\rangle\langle f|`$。临界位置 $`h=h_c`$ 属于 $`(a,1)`$ 当且仅当 $`a<1/2`$。
+
+**定理 216.2（名义秩的原空间维数下界）。** 每个定义216.1的 $`C^1`$ 程序都满足
+
+```math
+\dim\mathcal H\ge
+ \begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.2}
+```
+
+在非临界情形，原空间包含 $`r`$ 个两两正交的三维 $`K^\dagger`$ 不变子空间，每个限制都酉等价于 $`V`$。
+
+证明。 在第215.2节中选择 $`\rho_t=\sum_{j=1}^r p_j|x_j\rangle\langle x_j|`$ 的谱纯化，$`p_j>0`$ 且 $`x_j`$ 正交归一。把回到 $`\mathcal H\otimes\mathbb C^r`$ 的三个正交向量按辅助基逐分量展开，得到线性映射 $`A_j:\mathbb C^3\to\mathcal H`$，满足
+
+```math
+K^\dagger A_j=A_jV,\qquad
+ \sum_jA_j^\dagger A_j=I_3,\qquad
+ A_j\psi_0=\sqrt{p_j}\,x_j.
+\tag{216.3}
+```
+
+此处每个 $`A_j`$ 单独不预设为等距。令
+
+```math
+Q_{jk}=A_j^\dagger A_k,\qquad
+ D_{jk}=A_j^\dagger(I-KK^\dagger)A_k
+        =Q_{jk}-V^\dagger Q_{jk}V.
+\tag{216.4}
+```
+
+$`KK^\dagger\le I`$ 保证由 $`D_{jk}`$ 组成的块矩阵半正定；由（216.3）还有
+
+```math
+\sum_jD_{jj}=I-V^\dagger V=|f\rangle\langle f|.
+\tag{216.5}
+```
+
+若 $`y\perp f`$，则所有非负数 $`\langle A_jy,(I-KK^\dagger)A_jy\rangle`$ 的和为零，所以 $`(I-KK^\dagger)^{1/2}A_jy=0`$ 对每个 $`j`$ 成立。这同时消去每个交叉块在 $`f^\perp`$ 上的行与列。因此存在一个半正定标量矩阵 $`C=(c_{jk})`$，使
+
+```math
+D_{jk}=c_{jk}|f\rangle\langle f|,
+ \qquad Q_{jk}-V^\dagger Q_{jk}V=c_{jk}|f\rangle\langle f|.
+\tag{216.6}
+```
+
+下面使用有限维 Stein 方程的经典 Gramian 迭代；稳定情形的级数及唯一性见 Pontes Duff、Kürschner，*Numerical computation and new output bounds for time-limited balanced truncation of discrete-time systems*，arXiv:1902.01652v1，式（4b）、（5b）。这里所需的复矩阵版本直接由以下望远镜恒等式给出。若 $`h\ne h_c`$，定理214.2和第213.18式保证 $`V`$ 的三个特征值模均小于一，故 $`V^n\to0`$。迭代（216.6）并取极限，得到
+
+```math
+Q_{jk}=c_{jk}\sum_{n=0}^{\infty}(V^\dagger)^n
+                   |f\rangle\langle f|V^n=c_{jk}I_3.
+\tag{216.7}
+```
+
+最后一式也可将 $`|f\rangle\langle f|=I-V^\dagger V`$ 代入有限和后望远镜消去取得。将（216.7）在 $`\psi_0`$ 上取矩阵元，由（216.3）及谱向量的正交性得
+$`c_{jk}=p_j\delta_{jk}`$。所以 $`A_j/\sqrt{p_j}`$ 是等距，各自像空间两两正交，并由交织关系保持于 $`K^\dagger`$。这证明 $`3r`$ 的下界及不变块结论。
+
+现在设 $`h=h_c`$。此时 $`0<a<1/2`$，三个特征值为 $`0,2a,-1`$。单位模特征向量属于压缩算子的约化子空间。直接代入第211.17式可取其单位向量及投影为
+
+```math
+z_- =\frac{(1,-2\sqrt{a(1+a)},0)^{\mathsf T}}{1+2a},
+ \qquad Z=|z_-\rangle\langle z_-|,\qquad R=I-Z.
+\tag{216.8}
+```
+
+$`VZ=ZV=-Z`$，$`V|_{\operatorname{ran}R}`$ 严格稳定，且 $`f\in\operatorname{ran}R`$。在 $`R\oplus Z`$ 分块中求解（216.6）：稳定块仍由迭代唯一给出 $`c_{jk}R`$；两个交叉块的齐次方程经迭代趋零；单位块没有强迫项。因此
+
+```math
+Q_{jk}=c_{jk}R+d_{jk}Z.
+\tag{216.9}
+```
+
+在 $`R`$ 中取单位向量检验交叉 Gram 矩阵，可知 $`C=(c_{jk})`$ 半正定；在 $`Z`$ 中同样得到 $`D=(d_{jk})\ge0`$。由 $`\sum_jQ_{jj}=I`$ 得 $`\operatorname{Tr}C=\operatorname{Tr}D=1`$，所以两者秩均至少为一。又有
+
+```math
+w=\langle\psi_0,Z\psi_0\rangle=\frac a{1+2a}>0,
+ \qquad v=1-w=\frac{1+a}{1+2a}>0,
+ \qquad vC+wD=\operatorname{diag}(p_1,\ldots,p_r).
+\tag{216.10}
+```
+
+令 $`c=\operatorname{rank}C`$、$`d=\operatorname{rank}D`$。右侧满秩，故 $`r\le c+d`$。另一方面，所有 $`A_j`$ 合成的映射 $`\bigoplus_j\mathbb C^3\to\mathcal H`$ 的 Gram 矩阵为 $`C\otimes R+D\otimes Z`$，其秩为 $`2c+d`$。于是
+
+```math
+\dim\mathcal H\ge2c+d\ge r+1,
+ \qquad \dim\mathcal H\ge2c+d\ge3.
+\tag{216.11}
+```
+
+这证明临界下界。整个推导只使用单个校准点的谱纯化与原算子的压缩性，没有增加实际程序寄存器。证毕。
+
+**定理 216.3（尖锐秩成本的完整达到性）。** 对所有定义216.1参数，
+
+```math
+D_1(a,t;r)=D_\infty(a,t;r)=D_\omega(a,t;r)
+ =\begin{cases}
+ 3r,&h\ne h_c,\\[0pt]
+ \max\{3,r+1\},&h=h_c.
+ \end{cases}
+\tag{216.12}
+```
+
+达到曲线可取为全区间实解析，并使完整尖锐集合恰为 $`\{t\}`$；其在 $`t`$ 的双侧曲率极限存在并等于 $`\kappa_*(a,t)`$。
+
+证明。 先取定理211.3的全域解析纯态曲线 $`\rho_u^0`$ 及其三维处理器。对非临界情形，固定一个 $`r`$ 维满秩密度矩阵 $`\tau`$，置
+
+```math
+\rho_u=\tau\otimes\rho_u^0,\qquad
+ E=I_r\otimes P_0,\qquad K=I_r\otimes T_0.
+\tag{216.13}
+```
+
+处理器忽略常值寄存器并使用原三维处理器，全输入精确性立即保留。常值张量因子不增加 SLD 信息，故其校准及全曲率与原曲线相同，名义秩为 $`r`$。程序预算维数至多 $`3r`$，下界保证实际联合支持恰为 $`3r`$。$`r=1`$ 时，此构造也覆盖临界位置并给出维数三。
+
+设 $`h=h_c`$ 且 $`r\ge2`$。保留（216.8）的二维稳定子空间 $`\operatorname{ran}R`$，用一个 $`r-1`$ 维空间 $`\mathcal U`$ 替代原来的一维单位子空间；固定 $`\mathcal U`$ 上的满秩态 $`\tau`$。定义与参数无关的 CPTP 映射
+
+```math
+\Phi(X)=RXR\big|_{\operatorname{ran}R}
+                    \ \oplus\ \operatorname{Tr}(ZX)\tau,
+ \qquad \widetilde\rho_u=\Phi(\rho_u^0).
+\tag{216.14}
+```
+
+完全正性来自正交块压缩和测量后准备，迹保持来自 $`R+Z=I`$。两个投影都约化 $`T_0`$；$`Z\le P_0`$ 也保证它们约化 $`P_0`$。在 $`\operatorname{ran}R\oplus\mathcal U`$ 上置
+
+```math
+T'=T_0\big|_{\operatorname{ran}R}\oplus(-I_{\mathcal U}),
+ \qquad P'=P_0\big|_{\operatorname{ran}R}\oplus I_{\mathcal U}.
+\tag{216.15}
+```
+
+它们满足 $`T'T'^\dagger=P'`$、$`P'T'=T'`$，且
+
+```math
+\operatorname{Tr}[\Phi(X)T']=\operatorname{Tr}(XT_0),
+ \qquad\operatorname{Tr}[\Phi(X)P']=\operatorname{Tr}(XP_0).
+\tag{216.16}
+```
+
+因此将 $`P',T'`$ 放入第211.18式的固定受控构造，就对 $`\widetilde\rho_u`$ 实现原来的全部目标通道。实际准备空间维数为 $`2+(r-1)=r+1`$，矩阵曲线仍实解析。
+
+名义纯向量在 $`R,Z`$ 中的概率分别为（216.10）的 $`v,w`$，两者严格为正。故 $`\widetilde\rho_t`$ 的稳定块秩为一，单位块秩为 $`r-1`$，总秩恰为 $`r`$。固定 CPTP 映射的点态 SLD 单调性与精确读出下界给出
+
+```math
+0\le I_Q(\widetilde\rho_u)-I_r(u)
+          \le I_Q(\rho_u^0)-I_r(u).
+\tag{216.17}
+```
+
+右侧在 $`t`$ 为零，所以校准成立；其二阶比值极限为 $`\kappa_*`$，而定理211.2对实际混态曲线提供反向下极限界，因此新曲线也具有相同的双侧普通极限。这里没有依赖参数的额外准备标签，替代映射 $`\Phi`$ 始终固定。
+
+构造的正谱始终只含 $`\lambda_+(h)`$：非临界时为原谱的重复，临界时为 $`2a`$。第215.2节的谱必要性及正谱签名的严格单调性排除其他尖锐点。相应维数下界还保证实际联合支持恰为声明的维数。正则性类别的包含关系与这些解析构造共同证明（216.12）。证毕。
+
+**定理 216.4（满秩禁阻与三维混态例外）。** 任意有限维精确 $`C^1`$ 程序在尖锐校准点的态都不是其联合支持上的满秩态。若联合支持维数至多五且 $`h\ne h_c`$，则名义态必须为纯态。存在三维程序具有真正混态的尖锐点，当且仅当 $`a<1/2`$ 及临界位置 $`t=2a+4a^2-1`$；此时可能的混态秩恰为二，并且存在全域解析实现。
+
+证明。 非临界下界 $`d\ge3r`$ 排除 $`r=d`$，并在 $`d\le5`$ 时强制 $`r=1`$。临界下界 $`d\ge r+1`$ 同样排除满秩；在 $`d=3`$ 时，混态只可能有 $`r=2`$。临界点存在的参数条件由定理214.2给出，定理216.3以三维达到该秩二情形。这里的存在是关于可选择的处理器，不声称每一个三维处理器都具有这样的校准。证毕。
+
+## 追加锚（本行以下为增补区）
