@@ -432,3 +432,173 @@ Proposition 3.5（PDF 第 15–17 页）把一个方差型估计量的极限表�
 均保留为已有工具；本章的新增内容是这些工具在实际算术得分组与精确后验中的共同实现和统一谱律。
 这里的文献对应是所列原文范围内的比较，不是全局原创性认证。
 结论不包含实际谱能量矩的收敛、旧场联合性、变化振幅、增长空间窗口或有效有限起始尺度。
+
+## Arithmetic-line variance bias and deterministic centering
+
+Chapter 52 of
+[the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+adds a quantitative expansion of the actual calibrated posterior variance
+clock on the original fixed Liouville-amplitude sequence. Its leading
+relative bias is of order inverse intensity and depends explicitly on the
+fractional part of the signal mean. The phase need not converge. This rate
+permits deterministic centering in the quadratic fluctuation and the
+simultaneous spectral curve of Chapters 49 and 51.
+
+Stirling expansion, Gaussian moments and Poisson summation are classical
+ingredients. The coefficient is a local Edgeworth-type coefficient with a
+moving target. The substantive model calculation is the transfer from
+dependent stationary pair/path observations and globally calibrated
+posterior weights to a single primitive count-line mass, followed by a
+uniform expansion on that line. Neither the Poisson comparison law nor
+the auxiliary Bernoulli law is substituted for the actual observation
+law. The theorem is repo-derived in this stated sense, without a global
+originality claim.
+
+J. P. Buhler, A. C. Gamst, R. L. Graham and A. W. Hales,
+*Explicit error bounds for lattice Edgeworth expansions*,
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1), study sums of a
+fixed bounded integer-valued IID law. Their Theorem 1 expresses the
+leading tilt about the mean through the third moment and a congruence
+phase, and the subsequent bounds make the one-term approximation
+effective. The fixed law, its span and its Fourier constants are part of
+that statement. A congruence-dependent correction is therefore a
+classical precedent; it is not a new general principle of Chapter 52.
+That theorem does not itself provide a uniform local mass estimate for
+the present triangular array whose primitive integer coefficients grow.
+
+Sergey G. Bobkov, *Central limit theorem and Diophantine approximations*,
+[arXiv:1706.09643v1](https://arxiv.org/abs/1706.09643v1), Theorem 1.1,
+relates an Edgeworth-corrected Kolmogorov rate for fixed IID sums with a
+finite fourth absolute moment to polynomial separation of the
+characteristic function from modulus one, with logarithmic factors.
+Corollary 1.2 specializes this relation to the four-point law on plus or
+minus one and plus or minus an irrational parameter, using its finite
+Diophantine type. Thus nonlattice support alone does not supply arbitrary
+polynomial approximation rates. These are distribution-function
+statements with stated arithmetic conditions; no shrinking local-density
+or growing-span conclusion for the ultra-Liouville model is imported.
+Both references here identify the exact arXiv versions; the manuscripts
+also display later dates than their archive-version headers.
+
+Dmitry Dolgopyat and Yeor Hafouta, *Edgeworth expansions for independent
+bounded integer valued random variables*,
+[arXiv:2011.14852v2](https://arxiv.org/abs/2011.14852v2), Theorem 1.5,
+characterize classical local expansions through the characteristic
+function and its derivatives at nonzero resonant points. Their
+Theorem 11.1 explicitly covers triangular arrays, with polynomial and
+trigonometric corrections. Its common bound on the absolute size of all
+summands is essential to the stated resonance set and constants. The
+present projected Poisson law has unbounded compound increments; a
+bounded-jump decomposition would still have jumps growing with the
+arithmetic denominator. The word triangular therefore does not itself
+verify the uniformity needed here.
+
+Yeor Hafouta, *Non-uniform Edgeworth expansions for weakly dependent
+random variables and their applications*,
+[arXiv:2511.06414v1](https://arxiv.org/abs/2511.06414v1), Theorem 8,
+requires both the small-frequency logarithmic-characteristic derivative
+bounds of Assumption 4 and the growing-frequency integral bound of
+Assumption 6. Its conclusion is a distribution-function expansion with
+polynomial spatial decay. This recent dependent-data result retains a
+quantitative frequency hypothesis and does not by itself turn CDF errors
+into the relative microscopic point-mass estimate used in Chapter 52.
+
+Chapter 52 instead uses the explicit two-Poisson mass on the count line.
+The actual one-/two-row relative point comparison gives an occupancy
+error smaller than every fixed inverse power of the intensity, and the
+calibration variance has zero first derivative at the midpoint. On the
+deterministic line, the odd first correction cancels in a symmetric
+Gaussian lattice sum. Poisson summation bounds the remaining nonzero
+dual-grid contributions exponentially in the arithmetic denominator.
+Integrating the even correction retains the moving floor phase and gives
+the displayed bias coefficient. This mechanism does not require a
+uniform nonlattice local limit theorem.
+
+The result concerns convergence in actual-data probability and the
+previously specified weak joint posterior limits. It does not identify
+the auxiliary variance with the finite actual posterior mean energy,
+prove actual moment convergence, describe the distribution of the floor
+phase, extend the spectral parameter to zero, or give a useful finite
+onset. The bounded comparison above distinguishes relevant classical
+mechanisms from the actual-model synthesis; it does not certify the
+absence of other antecedents.
+
+## 连续谱尾的 Gaussian 化与混合 OU 极限
+
+[窗口相位卷第 53 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+研究第 50、51 章已经定义的同一连续 Gaussian 极限对象。
+减去线性均值和同噪声的非 Gaussian 截距后，余项恰为核
+2Ci(omega exp(s)|x−y|) 的二重 Wiener 积分。
+其方差为 16 exp(−s) integral rho² 加上 O(exp(−2s))；
+在固定对数分辨率窗口内放大 exp((s+t)/2)，得到平稳 OU 过程。
+该极限相对于整个原始 Gaussian sigma-field 混合收敛。
+以下区分这一具体谱尾计算和已有的概率机制。
+
+David Nualart、Giovanni Peccati，
+*Central limit theorems for sequences of multiple stochastic integrals*，
+Annals of Probability 33(1), 177–193 (2005)，
+[DOI:10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621)，
+[arXiv:math/0503598v1](https://arxiv.org/pdf/math/0503598v1)，
+Theorem 1（所引电子重印版 PDF 第 3 页）固定实 isonormal Hilbert 空间上的混沌阶数 n≥2，
+在方差趋于一时，把 Gaussian 收敛等价为四阶矩趋于三，或全部非平凡收缩趋零。
+第 53 章的归一化核具有有界 Hilbert–Schmidt 范数及 O(exp(−s/2)) 的算子范数，
+所以二阶混沌的一阶收缩的平方范数为 O(exp(−s))。
+这直接验证该经典定理在每个非退化有限线性组合上的条件；
+退化组合直接在 L² 中趋零。标量 Gaussian 机制不是新增理论。
+
+Giovanni Peccati、Murad Taqqu，
+*Stable convergence of multiple Wiener–Itô integrals*，
+[arXiv:math/0604530v1](https://arxiv.org/pdf/math/0604530v1)，
+Definition IV（PDF 第 7 页）以与参考 sigma-field 上变量的联合特征函数刻画稳定收敛。
+Theorem 7（第 7–8 页）是更广的稳定混合律结论，使用适应的广义积分、
+投影分解、早期投影范数消失、嵌套 sigma-fields 及积分范数平方的概率极限。
+第 53 章不未经构造就假定这些附加结构；它直接删去任意固定有限组 Gaussian 坐标，
+用算子范数控制删去部分的 L² 误差，再以柱函数的 L¹ 逼近取得混合结论。
+这是经典投影与稳定收敛方法的具体应用。
+
+Ciprian A. Tudor，
+*Joint convergence in Wiener chaos via transport hierarchy and Malliavin covariances*，
+[arXiv:2606.14812v1](https://arxiv.org/pdf/2606.14812v1)，
+Theorem 1（PDF 第 7–8 页）对固定阶 p≥2 的多重 Wiener 积分，
+在其分布趋于方差严格为正的 Gaussian 时，给出与同一 Gaussian 空间上
+任意固定平方可积变量的联合独立极限。
+这直接涵盖本章每个非退化标量组合与固定谱截距、端点或线性坐标的渐近独立性。
+该 v1 的 arXiv 页眉日期为 2026 年 6 月 12 日，正文日期为 6 月 16 日；
+引用以明确版本为准，不把此固定变量结论算作本仓新机制。
+从有限维结论到 C(I) 路径仍须本章的统一增量估计。
+
+Shuyang Bai、Mamikon S. Ginovyan、Murad S. Taqqu，
+*Functional Limit Theorems for Toeplitz Quadratic Functionals of Continuous time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/pdf/1501.05574v2)，
+研究实平稳 Gaussian 过程在增长时间区间内、对固定差核的中心化二次泛函。
+Theorem 2.1（PDF 第 2 页）在全文的 f,g 可积前提下，要求 fg 同时属于 L¹、L²，
+并要求所列方差极限。Theorem 2.2（第 3 页）的 C[0,1] Brownian 极限另用
+协方差 r 属于 Lᵖ、生成核 a 属于 Lᑫ，且 p,q≥1、1/p+1/q≥3/2。
+这提供二次型、协方差时钟与四阶矩路径紧性的直接先例。
+本章的移动高通乘子作用在带权 Gaussian 测度上，
+尚未建立与该固定核、增长观察区间模型的等价关系。
+Ci 核不绝对可积；原实噪声 Fourier 场的非共轭协方差又依赖两频率之和，
+不能把它直接当成该文的实标量平稳过程。
+
+Samir Ben Hariz、Duc-Quang Bui、Youssef Esstafa，
+*Quantitative central limit theorem for an integrated periodogram via the fourth moment theorem*，
+[arXiv:2604.00642v2](https://arxiv.org/pdf/2604.00642v2)，
+Theorem 2.1（PDF 第 2 页）处理离散实平稳 Gaussian 序列和固定偶实谱权重。
+其 f,g 可积，且分别写成零点幂次乘慢变函数，指数在 (−1,1)，两指数之和小于 1/2。
+定量 Wasserstein 率另外要求 (2.3) 的相对局部光滑性。
+该文通过二阶混沌、方差、收缩和算子迹控制正态逼近，是相邻的近期结果；
+它未直接给出本章移动至无穷的频率截断及对数分辨率 OU 路径，
+本章也不借用未经验证的 Wasserstein 率。
+
+本章的具体连接是：同噪声谱截距与曲线之差的 Ci 核；
+余弦 Plancherel 给出的精确双尺度内积；带权高通算子的范数衰减；
+以及由此计算的方差系数、统一协方差误差和路径紧性。
+Fourier 变换、谱分解、四阶矩定理、有限投影及 Brownian 时间变换均为已有工具。
+所列原文中未见同时陈述该曲线、余项、常数与路径耦合的定理；
+这是有限文献范围内的比较，不是全局原创性认证。
+
+混合收敛允许联合保留整个旧噪声产生的任意固定可分空间随机对象，
+却不表示给定整个旧噪声后的条件律依概率趋于 Gaussian：
+前极限在该 sigma-field 下已知，条件特征函数的模恒为一。
+本章没有把此连续对象的再取极限代入实际数据的弱收敛，
+不提供实际增长参数近似率、实际后验矩收敛或 u=0 的路径延拓。
