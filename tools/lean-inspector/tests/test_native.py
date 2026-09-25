@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from test_native_support import NativeTestSupport
+from test_native_support import NativeTestSupport, NativeArtifactTestSupport
 from test_native_invalidation import *
 from test_native_publication import *
 from test_native_recovery import *
@@ -18,6 +18,9 @@ from Census.tests.relocation_fixture import NativeRelocationTests
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
                   NativeRecoveryTests, NativePackagingTests, NativeReuseTests,
                   NativeInterfaceTests, NativeRecordTests, NativeRegTests, unittest.TestCase):
+    pass
+
+class NativeArtifactTests(NativeArtifactTestSupport, NativeArtifactConsumerTests, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

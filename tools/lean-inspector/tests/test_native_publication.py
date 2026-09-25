@@ -61,31 +61,6 @@ class NativePublicationTests:
                     for path, original in zip(paths, originals):
                         path.write_bytes(original)
 
-    def test_native_module_integrity_rejections(self):
-        self.build()
-        state = native.state(self.root)
-        artifact = state / 'modules/D5.Alone.zip'
-        utility = state / 'inputs/D5.Alone.json'
-        with zipfile.ZipFile(artifact) as archive:
-            original = {entry.filename: archive.read(entry) for entry in archive.infolist()}
-        candidate = self.root / 'corrupt-module.zip'
-        for damage in ['report_sha256', 'missing_member', 'noncanonical_json']:
-            with self.subTest(damage=damage):
-                entries = dict(original)
-                if damage == 'report_sha256':
-                    key = publication.RAW + '.provenance.json'
-                    origin = json.loads(entries[key])
-                    origin['report_sha256'] = '0' * 64
-                    entries[key] = materials.canonical_json(origin)
-                elif damage == 'missing_member':
-                    del entries[publication.RAW + '.materials.zip']
-                else:
-                    entries[publication.RAW] = json.dumps(json.loads(entries[publication.RAW]), indent=2).encode()
-                with zipfile.ZipFile(candidate, 'w') as archive:
-                    for name, data in entries.items():
-                        archive.writestr(name, data)
-                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage):
-                    native.validate('module', self.root, 'D5.Alone', utility, candidate)
 
     def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
         self.build()
@@ -439,6 +414,113 @@ class NativePublicationTests:
         self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
                                   for path in stage.iterdir()})
 
+    def test_native_semantic_version_and_config(self):
+        self.build()
+        self.write('activity.jsonl', '')
+        self.run_lake('--no-build', 'build', ':report')
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        before = self.stamps()
+        original = self.report()[1:]
+        origins = self.origins()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_cache_release_semantic_version'] = 2
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.build()
+        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
+        self.assertEqual(original, self.report()[1:])
+        self.assertNotEqual(origins['Fixture']['compatibility_sha256'], self.origins()['Fixture']['compatibility_sha256'])
+        self.publish()
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        before = self.stamps()
+        origins = self.origins()
+        oleans = {str(path.relative_to(self.root)): (path.stat().st_mtime_ns, publication.digest(path))
+                  for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')}
+        inputs = publication.coordinates(self.root)
+        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
+        current = publication.coordinates(self.root)
+        self.assertNotEqual(inputs['config'], current['config'])
+        with self.assertRaisesRegex(ValueError, 'stale input/provenance'):
+            publication.validate_bundle(self.root / 'public.json', current, self.root)
+        self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
+        built = self.build()
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        result = dict(extracted=sum(r['count'] for r in records if r['kind'] == 'extract'),
+            aggregated=sum(r['count'] for r in records if r['kind'] == 'aggregate'),
+            compiled_modules=[name for name in [*before, 'Audit', 'External', 'ClaimSupport', 'Cache']
+                              if f'Built {name} (' in built.stdout + built.stderr],
+            unchanged_rows=before == self.stamps(), unchanged_origins=origins == self.origins(),
+            unchanged_oleans=oleans == {str(path.relative_to(self.root)):
+                (path.stat().st_mtime_ns, publication.digest(path))
+                for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')})
+        self.record_result('config-metadata', result)
+        self.assertEqual(result['extracted'], 0)
+        self.assertEqual(result['aggregated'], 1)
+        self.assertEqual(result['compiled_modules'], [])
+        self.assertTrue(result['unchanged_rows'])
+        self.assertTrue(result['unchanged_origins'])
+        self.assertTrue(result['unchanged_oleans'])
+        self.assertEqual(original, self.report()[1:])
+        self.publish()
+        published = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())
+        self.assertEqual(published['lean_config_sha256'], current['config'])
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
+    def test_native_invalid_semantic_versions(self):
+        self.build()
+        before = self.stamps()
+        original = (self.root / 'lean-report-inputs.json').read_text()
+        for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
+            self.write('lean-report-inputs.json', original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": ' + value))
+            result = self.build(success=False)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
+            self.assertEqual(before, self.stamps())
+            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        for invalid in [original.replace('"report_cache_release_semantic_version": 1, ', ''),
+                        original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": 1, "report_cache_release_semantic_version": 1')]:
+            self.write('lean-report-inputs.json', invalid)
+            result = self.build(success=False)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
+            self.assertEqual(before, self.stamps())
+            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+
+class NativeArtifactConsumerTests:
+    """Consumers of a valid report; subsequent mutations stay private."""
+
+    def test_native_module_integrity_rejections(self):
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/D5.Alone.zip'
+        utility = state / 'inputs/D5.Alone.json'
+        with zipfile.ZipFile(artifact) as archive:
+            original = {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        candidate = self.root / 'corrupt-module.zip'
+        for damage in ['report_sha256', 'missing_member', 'noncanonical_json']:
+            with self.subTest(damage=damage):
+                entries = dict(original)
+                if damage == 'report_sha256':
+                    key = publication.RAW + '.provenance.json'
+                    origin = json.loads(entries[key])
+                    origin['report_sha256'] = '0' * 64
+                    entries[key] = materials.canonical_json(origin)
+                elif damage == 'missing_member':
+                    del entries[publication.RAW + '.materials.zip']
+                else:
+                    entries[publication.RAW] = json.dumps(json.loads(entries[publication.RAW]), indent=2).encode()
+                with zipfile.ZipFile(candidate, 'w') as archive:
+                    for name, data in entries.items():
+                        archive.writestr(name, data)
+                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage):
+                    native.validate('module', self.root, 'D5.Alone', utility, candidate)
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
@@ -520,79 +602,44 @@ class NativePublicationTests:
         for name in mixed:
             if name != 'D5.B': self.assertEqual(mixed[name], recovered[name])
         self.publish()
-    def test_native_semantic_version_and_config(self):
-        self.build()
-        self.write('activity.jsonl', '')
-        self.run_lake('--no-build', 'build', ':report')
+
+    def test_native_recovers_only_row_with_encrypted_member(self):
+        self.check_row_decoder_recovery(self.encrypted_member, ValueError)
+
+    def test_native_no_build_rejects_corruption_without_production(self):
+        cases = [('modules/D5.Alone.zip', targets) for targets in [(':report',),
+            ('D5.Alone:report',), (':report', 'D5.Alone:report'), ('D5.Alone:report', ':report')]]
+        cases.append(('report.zip', (':report',)))
+        for artifact, targets in cases:
+            with self.subTest(artifact=artifact, targets=targets):
+                self.build()
+                path = self.root / '.lake/build/lean-inspector' / artifact
+                expected = path.read_bytes()
+                path.unlink()  # Never mutate a Lake cache hard link.
+                path.write_bytes(b'corrupt optional artifact')
+                self.write('activity.jsonl', '')
+                rejected = self.run_lake('--no-build', 'build', *targets, success=False)
+                self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
+                self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
+                                 'no-build must reject before repair extraction or aggregation')
+                self.assertTrue(path.is_file(), 'no-build must not remove the rejected artifact')
+                self.assertEqual(path.read_bytes(), b'corrupt optional artifact',
+                                 'no-build must not start private reconstruction')
+                recovered = self.build() if targets == (':report',) else self.run_lake('build', *targets)
+                self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
+                self.assertEqual(path.read_bytes(), expected)
+                self.assertEqual(path.stat().st_nlink, 1)
+                records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+                self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'),
+                                 0 if artifact == 'report.zip' else 1)
+                aggregates = sum(row['count'] for row in records if row['kind'] == 'aggregate')
+                if artifact == 'report.zip':
+                    self.assertEqual(aggregates, 1)
+                else:
+                    self.assertLessEqual(aggregates, int(':report' in targets))
+                self.build()
+                self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- native miss\n')
+        rejected = self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        before = self.stamps()
-        original = self.report()[1:]
-        origins = self.origins()
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] = 2
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.run_lake('--no-build', 'build', ':report', success=False)
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
-        self.assertEqual(original, self.report()[1:])
-        self.assertNotEqual(origins['Fixture']['compatibility_sha256'], self.origins()['Fixture']['compatibility_sha256'])
-        self.publish()
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        before = self.stamps()
-        origins = self.origins()
-        oleans = {str(path.relative_to(self.root)): (path.stat().st_mtime_ns, publication.digest(path))
-                  for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')}
-        inputs = publication.coordinates(self.root)
-        self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
-        current = publication.coordinates(self.root)
-        self.assertNotEqual(inputs['config'], current['config'])
-        with self.assertRaisesRegex(ValueError, 'stale input/provenance'):
-            publication.validate_bundle(self.root / 'public.json', current, self.root)
-        self.run_lake('--no-build', 'build', ':report', success=False)
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.assertEqual(before, self.stamps())
-        built = self.build()
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        result = dict(extracted=sum(r['count'] for r in records if r['kind'] == 'extract'),
-            aggregated=sum(r['count'] for r in records if r['kind'] == 'aggregate'),
-            compiled_modules=[name for name in [*before, 'Audit', 'External', 'ClaimSupport', 'Cache']
-                              if f'Built {name} (' in built.stdout + built.stderr],
-            unchanged_rows=before == self.stamps(), unchanged_origins=origins == self.origins(),
-            unchanged_oleans=oleans == {str(path.relative_to(self.root)):
-                (path.stat().st_mtime_ns, publication.digest(path))
-                for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')})
-        self.record_result('config-metadata', result)
-        self.assertEqual(result['extracted'], 0)
-        self.assertEqual(result['aggregated'], 1)
-        self.assertEqual(result['compiled_modules'], [])
-        self.assertTrue(result['unchanged_rows'])
-        self.assertTrue(result['unchanged_origins'])
-        self.assertTrue(result['unchanged_oleans'])
-        self.assertEqual(original, self.report()[1:])
-        self.publish()
-        published = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())
-        self.assertEqual(published['lean_config_sha256'], current['config'])
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.assertEqual(before, self.stamps())
-    def test_native_invalid_semantic_versions(self):
-        self.build()
-        before = self.stamps()
-        original = (self.root / 'lean-report-inputs.json').read_text()
-        for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
-            self.write('lean-report-inputs.json', original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": ' + value))
-            result = self.build(success=False)
-            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
-            self.assertEqual(before, self.stamps())
-            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        for invalid in [original.replace('"report_cache_release_semantic_version": 1, ', ''),
-                        original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": 1, "report_cache_release_semantic_version": 1')]:
-            self.write('lean-report-inputs.json', invalid)
-            result = self.build(success=False)
-            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
-            self.assertEqual(before, self.stamps())
-            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

@@ -580,6 +580,74 @@ defaultFacets = ["static"]
              for r in identities if r['part'] == 'private'})
 
 
+class NativeArtifactTestSupport(NativeTestSupport):
+    """Build one valid fixture, then give each artifact consumer a private copy."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        class ValidFixture(NativeTestSupport, unittest.TestCase):
+            pass
+
+        cls.donor = ValidFixture()
+        cls.donor.setUpClass()
+        cls.addClassCleanup(cls.donor.doCleanups)
+        cls.donor.setUp()
+        cls.donor.build()
+        cls.donor_inventory = cls.inventory(cls.donor.root)
+
+    @staticmethod
+    def inventory(root):
+        entries = {}
+        for path in root.rglob('*'):
+            info = path.lstat()
+            relative = str(path.relative_to(root))
+            if path.is_symlink():
+                entries[relative] = ('link', os.readlink(path), info.st_mode)
+            elif path.is_file():
+                entries[relative] = ('file', publication.digest(path), info.st_mode,
+                                     info.st_size, info.st_mtime_ns)
+        return entries
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix='inspector-artifact.',
+            dir=os.environ.get('STRATALINT_NATIVE_TMPDIR'))
+        self.addCleanup(self.cleanup_fixture)
+        self.addCleanup(self.check_donor)
+        self.root = Path(self.temporary.name)
+        # copy2 preserves Lake's timestamps without sharing writable inodes.
+        # The unchanged Git provider URL refers to the live class-owned donor.
+        shutil.copytree(self.donor.root, self.root, dirs_exist_ok=True,
+                        symlinks=True, copy_function=shutil.copy2)
+        self.env = {key: value.replace(str(self.donor.root), str(self.root))
+                    for key, value in self.donor.env.items()}
+        self.compiler_seed = None
+        self.initial_build = True
+        self.assertEqual(self.inventory(self.root), self.donor_inventory)
+        for relative, entry in self.donor_inventory.items():
+            if entry[0] == 'file':
+                self.assertNotEqual((self.donor.root / relative).stat().st_ino,
+                                    (self.root / relative).stat().st_ino)
+
+    def check_donor(self):
+        self.assertEqual(self.inventory(self.donor.root), self.donor_inventory)
+
+    def build(self, success=True, *, targets=()):
+        initial = self.initial_build
+        self.initial_build = False
+        if initial:
+            before = self.stamps(), self.origins(), self.report()
+        result = super().build(success=success, targets=targets)
+        if initial:
+            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+            self.assertEqual((self.stamps(), self.origins(), self.report()), before)
+            state = native.state(self.root)
+            native.validate('module', self.root, 'D5.Alone',
+                            state / 'inputs/D5.Alone.json', state / 'modules/D5.Alone.zip')
+        return result
+
+
 def stage_compiler(output):
     """Build the declared compiler target once; Lake owns its staged materials."""
     registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
