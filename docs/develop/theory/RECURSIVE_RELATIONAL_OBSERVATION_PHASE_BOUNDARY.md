@@ -2447,3 +2447,310 @@ $$
 这不是对所有有限参数不确定性的结论；定理17.2使用 $`a>0`$，不处理零测度候选族。误差下界也允许终端的最坏相位随 $`n`$ 改变；它没有额外证明同一个固定相位的误差必然趋于一。对每个固定区间，容量发散已经足以排除统一装置。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 18. 校准分辨率与有限终端容量的统一尺度
+
+**定义 18.1（已知候选弧与完整联合压缩）。** 固定定义1.1的等权来源。令 $`I`$ 为相位圆上一条已知闭弧，弧长 $`0\le\ell\le2\pi`$；$`\ell=0`$ 表示一个已知相位，$`\ell=2\pi`$ 表示全圆。给定 $`n\ge4`$ 及 $`0<\epsilon<1`$，记 $`k_n^{(\epsilon)}(I)`$ 为满足定义1.2权限、对全部 $`\vartheta\in I`$ 及全部参考完整输入具有半迹恢复误差至多 $`\epsilon`$ 的最小接收维数。编码与解码可以依赖已知的 $`I,n,\epsilon`$，不能依赖实际相位或输入。此处的资源只跨越一个指定终端的编码—解码间隔，不要求不同 $`n`$ 的装置由同一接收通道实现。
+
+沿用（5.2）的 $`h_r,b_n`$，定义
+
+$$
+g_n^2:=\sum_{r=1}^n h_r^2\le n,
+\qquad
+N_{n,I,\epsilon}:=
+\max\left\{1,\left\lceil
+\frac{\ell g_n}{2\sqrt2\,\epsilon}
+\right\rceil\right\}.
+\tag{18.1}
+$$
+
+**定理 18.2（弧宽与涨落尺度的双边容量律）。** 对定义18.1中的全部参数，
+
+$$
+\boxed{
+\max\left\{1,
+\frac{\ell(1-\epsilon)}{4\pi^{3/2}}
+\sqrt{\alpha^3\left\lfloor\frac{n-1}{3}\right\rfloor}
+\right\}
+\le k_n^{(\epsilon)}(I)
+\le \min\{2n-1,\ 4N_{n,I,\epsilon}\}
+\le4+\frac{\sqrt2\,\ell\sqrt n}{\epsilon}.
+}
+\tag{18.2}
+$$
+
+因此，对每个固定 $`0<\epsilon<1`$，存在只依赖 $`\epsilon`$ 的正常数 $`c_\epsilon,C_\epsilon`$，使
+
+$$
+\boxed{
+c_\epsilon(1+\ell\sqrt n)
+\le k_n^{(\epsilon)}(I)
+\le C_\epsilon(1+\ell\sqrt n).
+}
+\tag{18.3}
+$$
+
+常数统一于终端编号、弧长和弧的位置，因而允许弧长随 $`n`$ 改变。这里的平方根尺度与量子时钟压缩及量子 Markov 输出的局部统计尺度相联系；[^phase_calibration_lan] 以下证明直接保留本来源的参考与活动记忆，给出有限 $`n`$ 的共同物理编码。
+
+证明。下界在 $`\ell>0`$ 时由定理17.2取 $`a=\ell/(2\pi)`$ 得到，其论证逐终端成立，不要求本处的 $`I`$ 在不同终端相同。$`\ell=0`$ 时只使用任何非零接收系统的维数至少为一。
+
+为构造上界，先控制邻近相位在整个输入空间上的变化。（5.7）的 Doob 鞅增量具有条件均值零及条件取值区间宽度至多 $`h_{n-t+1}`$。区间宽度为 $`h`$ 的实随机变量方差至多 $`h^2/4`$：减去区间中点后，其平方不超过 $`h^2/4`$，再减均值只使二阶矩下降。鞅增量彼此正交，所以
+
+$$
+\operatorname{Var}_i(S_n)
+\le\frac14\sum_{r=1}^{n-1}h_r^2.
+\tag{18.4}
+$$
+
+由（5.6），$`\mathbb E_iS_n-b_n=(i-\tfrac12)h_n`$，从而对两个初位均有
+
+$$
+\mathbb E_i(S_n-b_n)^2\le\frac{g_n^2}{4}.
+\tag{18.5}
+$$
+
+把弧提升为实轴上的长度 $`\ell`$ 区间。对区间内的两个相位 $`\vartheta,\varphi`$，置 $`\delta=\vartheta-\varphi`$，并以同一个标量相位比较两份累计等距：
+
+$$
+Q_{\vartheta,\varphi}
+:=T_{\vartheta,n}-e^{ib_n\delta}T_{\varphi,n}.
+\tag{18.6}
+$$
+
+两个输入基向量的输出档案首位不同，故 $`Q_{\vartheta,\varphi}|0\rangle`$ 与 $`Q_{\vartheta,\varphi}|1\rangle`$ 正交。在各自首位扇区逐词展开，利用 $`|e^{ix}-1|\le|x|`$ 及（18.5），得到
+
+$$
+\begin{aligned}
+\|Q_{\vartheta,\varphi}|i\rangle\|^2
+&=\mathbb E_i\left|
+e^{i\delta S_n}-e^{i\delta b_n}
+\right|^2\\
+&\le\delta^2\mathbb E_i(S_n-b_n)^2
+\le\frac{\delta^2g_n^2}{4}.
+\end{aligned}
+\tag{18.7}
+$$
+
+因此
+
+$$
+Q_{\vartheta,\varphi}^*Q_{\vartheta,\varphi}
+\preceq\frac{\delta^2g_n^2}{4}I_M.
+\tag{18.8}
+$$
+
+式（18.8）没有分别调整两个输入分量的相位；同一算子界在张量任意参考后仍然成立。
+
+将提升区间等分为 $`N=N_{n,I,\epsilon}`$ 段，取各段中点 $`\varphi_1,\ldots,\varphi_N`$；退化弧只取其唯一点。每个相位距某个网格点不超过
+
+$$
+\frac{\ell}{2N}\le
+h:=\frac{\sqrt2\,\epsilon}{g_n}.
+\tag{18.9}
+$$
+
+对已知相位 $`\varphi_j`$，令 $`S_n(\varphi_j)`$ 为全部实际档案的共同支撑。定理3.2给 $`\dim S_n(\varphi_j)=4`$。令 $`P`$ 为这些支撑之和上的正交投影，记 $`r=\operatorname{rank}P`$，则
+
+$$
+r\le4N,
+\qquad
+(P\otimes I_M)T_{\varphi_j,n}=T_{\varphi_j,n}.
+\tag{18.10}
+$$
+
+对实际相位选取（18.9）的网格点，将（18.8）投影到 $`P`$ 的补空间，得到
+
+$$
+T_{\vartheta,n}^*[(I-P)\otimes I_M]T_{\vartheta,n}
+\preceq\frac{h^2g_n^2}{4}I_M
+=\frac{\epsilon^2}{2}I_M.
+\tag{18.11}
+$$
+
+取等距满射 $`F:PH_n\to\mathbb C^r`$ 和一份固定编码态 $`\kappa`$。定义全域 CPTP 编解码
+
+$$
+\mathcal E(X)=FPXP F^*
++\operatorname{Tr}[(I-P)X]\kappa,
+\qquad
+\mathcal D(Y)=F^*YF.
+\tag{18.12}
+$$
+
+$`F^*`$ 的值域按原支撑嵌入 $`H_n`$。失败结果直接重置到同一编码空间，不额外保留可读旗标；该合同不要求报告是否失败。对任意纯化输入，记真实纯联合目标为 $`|\psi\rangle`$。式（18.11）保证失败质量 $`d\le\epsilon^2/2`$。恢复态含有正的成功项
+
+$$
+(P\otimes I_R)|\psi\rangle\langle\psi|(P\otimes I_R),
+\tag{18.13}
+$$
+
+其中 $`R`$ 包含参考与活动记忆；其余失败项也为正。因此恢复态与目标的重叠至少为 $`(1-d)^2`$。应用（5.12）中的纯目标迹距离界，并对混合输入丢弃额外纯化参考，统一恢复误差至多
+
+$$
+\sqrt{1-(1-d)^2}\le\sqrt{2d}\le\epsilon.
+\tag{18.14}
+$$
+
+网格、投影和通道仅使用声明的候选弧；（18.6）中的实际相位差只用于证明误差界，不是装置取得的额外读数。这给 $`k_n^{(\epsilon)}(I)\le4N`$。定理3.2的全圆精确编码另给 $`2n-1`$；由（18.1）的取整界及 $`g_n\le\sqrt n`$，得到（18.2）的全部上界。
+
+最后，$`\lfloor(n-1)/3\rfloor\ge n/6`$ 对 $`n\ge4`$ 成立。令
+
+$$
+A_\epsilon=\frac{(1-\epsilon)\alpha^{3/2}}
+{4\pi^{3/2}\sqrt6}>0.
+\tag{18.15}
+$$
+
+则（18.2）下界至少为 $`\max\{1,A_\epsilon\ell\sqrt n\}`$，进而至少为 $`\tfrac12\min\{1,A_\epsilon\}(1+\ell\sqrt n)`$。上界可取 $`C_\epsilon=\max\{4,\sqrt2/\epsilon\}`$。这证明（18.3）。证明完毕。
+
+**推论 18.3（有界终端容量的校准阈值）。** 固定 $`0<\epsilon<1`$，给定一列已知候选弧 $`I_n`$，弧长为 $`\ell_n`$。则
+
+$$
+\boxed{
+\sup_{n\ge4}k_n^{(\epsilon)}(I_n)<\infty
+\quad\Longleftrightarrow\quad
+\ell_n\sqrt n=O(1).
+}
+\tag{18.16}
+$$
+
+若 $`\ell_n=n^{-\gamma}`$，其中 $`\gamma\ge0`$，则
+
+$$
+k_n^{(\epsilon)}(I_n)
+=\Theta_\epsilon\!\left(1+n^{1/2-\gamma}\right).
+\tag{18.17}
+$$
+
+证明。直接使用（18.3）的统一常数；有限个起始终端不影响有界性。证明完毕。
+
+上述容量律不提供候选弧本身的取得程序。若候选弧来自额外观察，取得这些读数的资源仍是另一个任务。式（18.12）也不声明不同终端的支撑投影具有合法续接关系；将这些编码组成同一个固定接收器，还需要相应的动态闭合及共同误差证明。
+
+[^phase_calibration_lan]: Mădălin Guţă and Jukka Kiukas，*Equivalence classes and local asymptotic normality in system identification for quantum Markov chains*，[arXiv:1402.3535](https://arxiv.org/abs/1402.3535)。该文研究可识别参数的 $`n^{-1/2}`$ 局部尺度与 Gaussian 极限；本节不将该渐近统计结论当作有限终端、全参考恢复的容量定理。量子时钟压缩的相关先例见本卷 [^phase_clock]。本节的有限网格编码及相位弧双边容量式由（5.7）、定理17.2及实际档案支撑共同推出。
+
+## 追加锚（本行以下为增补区）
+
+
+## 19. 有限候选与无限候选的全时域接收分界
+
+**定义 19.1（同一候选族的固定近似接收）。** 固定定义1.1的等权两态来源，令 $`\Theta`$ 为相位圆的非空子集，不要求其具有正测度或可测性。对固定 $`0<\epsilon<1`$，接收器仍从独立纯态启动，只作用于持久寄存器与最新发出位；每步使用同一个全域 CPTP 接收通道，所有持久控制均计入寄存器。来源活动记忆与参考不可访问。接收器与终端解码器可以依赖已知的候选集合，不能依赖实际 $`\vartheta\in\Theta`$。要求每个有限终端、每个候选相位和每份参考完整输入的联合半迹恢复误差均至多 $`\epsilon`$。
+
+**定理 19.2（候选相位基数的精确存在性判据）。** 定义19.1中的任务存在有限维固定接收器，当且仅当 $`\Theta`$ 是有限集。
+
+若 $`\Theta`$ 无限，则更强地，对任意固定容量 $`D<\infty`$ 的方案，即使允许接收门随终端或步数改变，在本卷指定 Bell 输入上的逐终端最坏误差也满足
+
+$$
+\boxed{
+\lim_{n\to\infty}\sup_{\vartheta\in\Theta}
+d\bigl(\widehat\Omega_{\vartheta,n},\Omega_{\vartheta,n}\bigr)=1.
+}
+\tag{19.1}
+$$
+
+这里允许每个终端的最坏相位不同；结论不声称某一个固定相位的误差必然趋于一。
+
+证明。先设 $`\Theta=\{\vartheta_1,\ldots,\vartheta_q\}`$ 有限。引入只供数学构造使用的标签空间 $`L=\mathbb C^q`$，把扩展来源记忆取为 $`\widetilde M=L\otimes M`$。按来源记忆在前的因子约定，定义固定等距
+
+$$
+\widetilde T(|j\rangle_L\otimes|\psi\rangle_M)
+=|j\rangle_L\otimes
+\operatorname{swap}_{B,M}T_{\vartheta_j}|\psi\rangle_M.
+\tag{19.2}
+$$
+
+不同标签的像正交，每个 $`T_{\vartheta_j}`$ 等距，因此 $`\widetilde T`$ 是一份已知有限维等距来源，$`\dim\widetilde M=2q`$。应用定理16.2，得到一个从独立纯态启动的有限固定接收器，对扩展来源的全部参考完整输入、全部终端都保持误差至多 $`\epsilon`$。
+
+将输入限制为
+
+$$
+|j\rangle\langle j|_L\otimes\rho_{JM},
+\tag{19.3}
+$$
+
+并丢弃不可访问标签，恰得到原候选 $`\vartheta_j`$ 的发射与恢复合同。所构造接收通道只作用于其自身寄存器及每个发出位，不读取 $`L`$；没有向接收器免费交付实际相位。扩展来源上更强的相干输入合同只是充分性证明的工具，原模型不需要允许不同实际相位相干叠加。维数的一个有限上界由定理16.2取 $`m=2q`$ 给出，其中启动长度由整份已知扩展来源及所需误差决定。
+
+现设 $`\Theta`$ 无限。任取 $`q\ge2`$ 个不同候选 $`\vartheta_1,\ldots,\vartheta_q`$。对相同 Bell 初态，令长度 $`n`$ 的纯目标向量为 $`|\Psi_{j,n}\rangle`$。由（5.14），两份目标的重叠是实际总荷的特征函数：
+
+$$
+\langle\Psi_{j,n}|\Psi_{k,n}\rangle
+=\mathbb E\,e^{i(\vartheta_k-\vartheta_j)S_n}.
+\tag{19.4}
+$$
+
+令
+
+$$
+m_n=\left\lfloor\frac{n-1}{3}\right\rfloor,
+\qquad
+c_q=\alpha^3\min_{j\ne k}
+\sin^2\frac{\vartheta_k-\vartheta_j}{2}>0.
+\tag{19.5}
+$$
+
+这些相位彼此不同模 $`2\pi`$，且取的是有限个数，故最小值严格正。由（5.17）的三步转移估计，对 $`j\ne k`$ 有
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le e^{-c_qm_n}.
+\tag{19.6}
+$$
+
+记平均目标
+
+$$
+Q_{q,n}=\frac1q\sum_{j=1}^q
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|.
+\tag{19.7}
+$$
+
+令 $`V:\mathbb C^q\to H_n\otimes R`$ 的第 $`j`$ 列为 $`|\Psi_{j,n}\rangle`$，其中 $`R=JM`$ 为不可访问的四维系统。$`VV^*`$ 与 Gram 矩阵 $`V^*V`$ 具有相同的非零特征值。后者对角为一，各非对角项由（19.6）控制；以最大绝对行和界其谱半径，得到
+
+$$
+\|Q_{q,n}\|_\infty
+\le\frac{1+(q-1)e^{-c_qm_n}}q.
+\tag{19.8}
+$$
+
+对任意 $`D`$ 维接收器产生的终端态 $`\tau_{j,n}`$，以及同一个 CPTP 解码器 $`\mathcal D_n`$，采用（17.9）的正性估计，平均目标重叠至多
+
+$$
+\begin{aligned}
+\frac1q\sum_{j=1}^q
+\operatorname{Tr}\!\left[
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|
+(\mathcal D_n\otimes\operatorname{id}_R)(\tau_{j,n})
+\right]
+&\le\operatorname{Tr}
+\left[(\mathcal D_n^*\otimes\operatorname{id}_R)(Q_{q,n})\right]\\
+&\le\frac{4D}{q}\left[1+(q-1)e^{-c_qm_n}\right].
+\end{aligned}
+\tag{19.9}
+$$
+
+因此以 $`e_n`$ 记全候选集合上的最坏半迹误差，便有
+
+$$
+e_n\ge
+\max\left\{0,
+1-\frac{4D}{q}\left[1+(q-1)e^{-c_qm_n}\right]
+\right\}.
+\tag{19.10}
+$$
+
+先固定这 $`q`$ 个候选，让 $`n\to\infty`$，得 $`\liminf_ne_n\ge1-4D/q`$。无限集合允许任意大的有限 $`q`$，故 $`\liminf_ne_n\ge1`$。半迹距离至多为一，得到（19.1），并排除任何固定 $`\epsilon<1`$ 的有限容量实现。这里先取时间极限、再取任意大的有限候选子集，不假定 $`c_q`$ 随 $`q`$ 有统一正下界。证明完毕。
+
+**推论 19.3（零测度校准残余仍可阻止有限固定接收）。** 候选集
+
+$$
+\Theta=\{0\}\cup\{1/j:j\ge1\}
+\tag{19.11}
+$$
+
+是紧、可数、Haar 零测度集合，却不允许定义19.1中的有限固定接收器；每个有限子集均允许这种接收器。
+
+证明。该集合在相位圆上只以零为聚点，因而紧；可数性给零测度。分别应用定理19.2的无限与有限方向。证明完毕。
+
+本节将定理17.2的固定容量发散结论延伸到任意无限候选相位集，未改变其正测度情形的显式平方根速率。对一般无限集合，（19.10）的衰减常数依赖所选有限子集，因而本证明不给统一的平方根容量增长率。不同的长期容量结论仍以相同的完整档案及参考恢复任务为前提。
+
+## 追加锚（本行以下为增补区）
