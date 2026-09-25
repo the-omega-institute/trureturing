@@ -6,8 +6,8 @@
    utility: none
    digest: The squared real cosine-integral tail has a uniform bound on every positive lattice. -/
 
-import Mathlib.Fourier.Asymptotics.ImproperIntegrals
-import Mathlib.Fourier.Asymptotics.Trigonometric.Bounds
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Tactic
 
