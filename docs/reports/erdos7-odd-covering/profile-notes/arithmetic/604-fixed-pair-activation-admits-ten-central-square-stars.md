@@ -350,3 +350,11 @@ optimization output or a dependency on any earlier negative-envelope
 experiment. The conditional-law, complete-height and family-quantifier
 arguments are the ordinary proof above; the arithmetic is not presented
 as new Lean verification.
+
+[Report606](606-common-envelopes-free-all-square-pair-central-roles.md)
+keeps four primary squarefree pair patterns and frees all central phases
+of the80 secondary square-pair labels. Uniform monotone comparison grids
+and one fixed thinning matrix per primary pattern cover every secondary
+role assignment, with head Haar mass greater than1/6500. That extension
+does not include the additional ten squares or the160-label/branch
+corollary above; those costs are not paid by its stated gate.
