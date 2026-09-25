@@ -538,6 +538,98 @@ verify the corner inequalities and the H5 consumer in36 explicit checks.
 The all-real and all-parameter claims are supplied by the proof above;
 no Lean verification is claimed.
 
+## An actual fixed query also crosses the clipped cut
+
+The preceding abstract relaxation has a separate, actual-source
+counterexample to a stronger proposed shortcut. On precisely the
+Report558 height-five source, let
+
+\[
+C(L):=\int\min(1,(L-2)_+/4)\,d\lambda_{11},\qquad
+c_*:=\mathrm{credit}+S_{11}+F_{13}/4-k_{\rm req}.
+\]
+
+The assertion `C(L)<=c_* for every finite fixed old query L` is false.
+Keep all70 old originals and all200 first11 originals unchanged,
+with their literal phases. One query with51 nonunit numerical cofactors,
+each with one globally fixed CRT phase, and the unit included once, gives
+
+\[
+C(L)=\frac{8639521551969395023}{189903125774875012500}
+     =0.04549436201598552\ldots,
+\]
+
+\[
+C(L)-c_*
+=\frac{8055203649533692011747669319}
+       {1328603909270755499563140960000000}
+=0.000006062908285400902\ldots>0.
+\tag{AC1}
+\]
+
+The [literal query and exact verifier](../../frontier/cover-geometry/first13_actual_clipped_query.py)
+and its [rational data](../../frontier/cover-geometry/first13_actual_clipped_query.json)
+specify every cofactor, full CRT residue and load mass. The query contains
+all47 nonunit labels `5^a 7^b 11^c` with `0<=a,b<=3`, `0<=c<=2`,
+together with the four labels
+
+| Cofactor | Exponents `(a,b,c)` | CRT phase `(r5,r7,r11)` |
+|---|---|---|
+|625|`(4,0,0)`|`(184,0,0)`|
+|6875|`(4,0,1)`|`(49,0,0)`|
+|75625|`(4,0,2)`|`(49,0,0)`|
+|4375|`(4,1,0)`|`(45,6,0)`|
+
+The other47 phases are also fixed before evaluation, not selected at
+individual old histories. Completing this query to any larger finite
+box by arbitrary fixed phases cannot decrease `C`, since its payoff is
+increasing. No query label is inserted into the original family.
+
+### Exact common-source computation
+
+Enumerate the pure-surviving coordinates modulo `5^5` and `7^5`,
+retaining for each coordinate its old mixed-comb status, all50 first11
+slot incidences, and all51 query incidences. Intersect the two incidence
+masks and remove histories where both mixed-comb flags hold. For each
+resulting profile retain its count `n`, active color mask `A`, and query
+incidence mask. This is exact finite compression of one joint source.
+
+Write `k=|A|`. The first11 allowed fraction and density are
+
+\[
+g_k=1-1464k/14641,\qquad h_k=\min(5/3,1/g_k).
+\]
+
+The number `n_A(z)` of allowed full eleven-words over `z mod121` is
+zero when the first non-10 digit among its two digits belongs to `A`;
+it is `121-12k` at `z=120`, and121 otherwise. These counts retain the
+original combs through height four, including over the unresolved
+two-digit branch. The verifier also obtains them by enumerating all
+14641 full words against the literal original combs. Thus
+
+\[
+C(L)=\sum_{\text{profiles}}\frac{n}{5^5 7^5}
+       \frac{h_k}{14641}\sum_{z=0}^{120}n_A(z)
+                     \min(1,(L(z)-2)_+/4).
+\tag{AC2}
+\]
+
+All summands are rational. Their unweighted total is the same actual
+prefix mass `19543635187/92276732625`. The exact PA formulas reconstruct
+the cut `c_*` above and put this source strictly inside the joint NC4
+necessary region. Equation (AC2) proves (AC1) without replacing the
+source by independent marginal laws.
+
+This refutes a uniform clipped-query bound even on the fixed source.
+It does not contradict either theorem above: those theorems retain
+their specified17 old projections, whereas (AC1) concerns a different
+query. It does not identify `C(L)` with an actual row13 loss, prove
+failure of the PA law, or produce an odd cover. Actual row13 originals
+must still satisfy their common current-coordinate unions across slots
+and heights. Those additional joint constraints are absent from this
+single-query shortcut. The earlier abstract optimum `F13/4` is still
+not claimed to be realized by any actual query.
+
 ## Exact verification
 
 The [standard-library producer](../../frontier/cover-geometry/row13_seventeen_projection_clipping.py)
@@ -563,3 +655,11 @@ The17 prescribed projections are a sufficient restriction within this
 construction, not a claim of17 DP states or a globally minimal boundary.
 The two-copy, fixed-prime route is a sufficient research route toward the
 original covering problem; it is not an equivalence to unrestricted Erdős#7.
+
+The actual51-query counterexample has its own standard-library exact
+verification, including all CRT phases, the complete height-four11
+comb projection, the full load histogram and the same-source cut:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/first13_actual_clipped_query.py
+```

@@ -1,0 +1,996 @@
+{
+  "scope": "One fixed 51-cylinder query refutes the H5 uniform clipped-query cut.\n\nReconstruct the literal 70+200-original source. This is a query\ncounterexample, not an actual row13 loss or an odd covering system.\n",
+  "source_sha256": "22787e51f27d2da324cda1d70ff41d0cc5b24001f495792818ba6768326a95e2",
+  "old_originals": 70,
+  "first11_originals": 200,
+  "query_count": 51,
+  "unit_count": 1,
+  "queries": [
+    {
+      "exponents": [
+        0,
+        0,
+        1
+      ],
+      "components": [
+        0,
+        0,
+        9
+      ],
+      "modulus": 11,
+      "residue": 9
+    },
+    {
+      "exponents": [
+        0,
+        0,
+        2
+      ],
+      "components": [
+        0,
+        0,
+        9
+      ],
+      "modulus": 121,
+      "residue": 9
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        0
+      ],
+      "components": [
+        0,
+        6,
+        0
+      ],
+      "modulus": 7,
+      "residue": 6
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        1
+      ],
+      "components": [
+        0,
+        5,
+        9
+      ],
+      "modulus": 77,
+      "residue": 75
+    },
+    {
+      "exponents": [
+        0,
+        1,
+        2
+      ],
+      "components": [
+        0,
+        5,
+        53
+      ],
+      "modulus": 847,
+      "residue": 537
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        0
+      ],
+      "components": [
+        0,
+        34,
+        0
+      ],
+      "modulus": 49,
+      "residue": 34
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        1
+      ],
+      "components": [
+        0,
+        6,
+        1
+      ],
+      "modulus": 539,
+      "residue": 496
+    },
+    {
+      "exponents": [
+        0,
+        2,
+        2
+      ],
+      "components": [
+        0,
+        47,
+        20
+      ],
+      "modulus": 5929,
+      "residue": 3771
+    },
+    {
+      "exponents": [
+        0,
+        3,
+        0
+      ],
+      "components": [
+        0,
+        41,
+        0
+      ],
+      "modulus": 343,
+      "residue": 41
+    },
+    {
+      "exponents": [
+        0,
+        3,
+        1
+      ],
+      "components": [
+        0,
+        6,
+        1
+      ],
+      "modulus": 3773,
+      "residue": 1035
+    },
+    {
+      "exponents": [
+        0,
+        3,
+        2
+      ],
+      "components": [
+        0,
+        47,
+        31
+      ],
+      "modulus": 41503,
+      "residue": 8622
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        0
+      ],
+      "components": [
+        4,
+        0,
+        0
+      ],
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        1
+      ],
+      "components": [
+        4,
+        0,
+        9
+      ],
+      "modulus": 55,
+      "residue": 9
+    },
+    {
+      "exponents": [
+        1,
+        0,
+        2
+      ],
+      "components": [
+        4,
+        0,
+        109
+      ],
+      "modulus": 605,
+      "residue": 109
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        0
+      ],
+      "components": [
+        3,
+        6,
+        0
+      ],
+      "modulus": 35,
+      "residue": 13
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        1
+      ],
+      "components": [
+        3,
+        5,
+        9
+      ],
+      "modulus": 385,
+      "residue": 383
+    },
+    {
+      "exponents": [
+        1,
+        1,
+        2
+      ],
+      "components": [
+        4,
+        3,
+        109
+      ],
+      "modulus": 4235,
+      "residue": 1319
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        0
+      ],
+      "components": [
+        3,
+        6,
+        0
+      ],
+      "modulus": 245,
+      "residue": 153
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        1
+      ],
+      "components": [
+        4,
+        3,
+        5
+      ],
+      "modulus": 2695,
+      "residue": 1424
+    },
+    {
+      "exponents": [
+        1,
+        2,
+        2
+      ],
+      "components": [
+        3,
+        19,
+        31
+      ],
+      "modulus": 29645,
+      "residue": 6928
+    },
+    {
+      "exponents": [
+        1,
+        3,
+        0
+      ],
+      "components": [
+        3,
+        48,
+        0
+      ],
+      "modulus": 1715,
+      "residue": 48
+    },
+    {
+      "exponents": [
+        1,
+        3,
+        1
+      ],
+      "components": [
+        3,
+        68,
+        9
+      ],
+      "modulus": 18865,
+      "residue": 6928
+    },
+    {
+      "exponents": [
+        1,
+        3,
+        2
+      ],
+      "components": [
+        3,
+        19,
+        20
+      ],
+      "modulus": 207515,
+      "residue": 85083
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        0
+      ],
+      "components": [
+        14,
+        0,
+        0
+      ],
+      "modulus": 25,
+      "residue": 14
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        1
+      ],
+      "components": [
+        19,
+        0,
+        0
+      ],
+      "modulus": 275,
+      "residue": 44
+    },
+    {
+      "exponents": [
+        2,
+        0,
+        2
+      ],
+      "components": [
+        4,
+        0,
+        109
+      ],
+      "modulus": 3025,
+      "residue": 2529
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        0
+      ],
+      "components": [
+        15,
+        6,
+        0
+      ],
+      "modulus": 175,
+      "residue": 90
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        1
+      ],
+      "components": [
+        4,
+        4,
+        4
+      ],
+      "modulus": 1925,
+      "residue": 4
+    },
+    {
+      "exponents": [
+        2,
+        1,
+        2
+      ],
+      "components": [
+        4,
+        3,
+        53
+      ],
+      "modulus": 21175,
+      "residue": 3804
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        0
+      ],
+      "components": [
+        3,
+        20,
+        0
+      ],
+      "modulus": 1225,
+      "residue": 853
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        1
+      ],
+      "components": [
+        4,
+        3,
+        5
+      ],
+      "modulus": 13475,
+      "residue": 12204
+    },
+    {
+      "exponents": [
+        2,
+        2,
+        2
+      ],
+      "components": [
+        3,
+        19,
+        42
+      ],
+      "modulus": 148225,
+      "residue": 47353
+    },
+    {
+      "exponents": [
+        2,
+        3,
+        0
+      ],
+      "components": [
+        3,
+        13,
+        0
+      ],
+      "modulus": 8575,
+      "residue": 1728
+    },
+    {
+      "exponents": [
+        2,
+        3,
+        1
+      ],
+      "components": [
+        3,
+        33,
+        9
+      ],
+      "modulus": 94325,
+      "residue": 22328
+    },
+    {
+      "exponents": [
+        2,
+        3,
+        2
+      ],
+      "components": [
+        3,
+        19,
+        64
+      ],
+      "modulus": 1037575,
+      "residue": 424653
+    },
+    {
+      "exponents": [
+        3,
+        0,
+        0
+      ],
+      "components": [
+        109,
+        0,
+        0
+      ],
+      "modulus": 125,
+      "residue": 109
+    },
+    {
+      "exponents": [
+        3,
+        0,
+        1
+      ],
+      "components": [
+        74,
+        0,
+        0
+      ],
+      "modulus": 1375,
+      "residue": 1199
+    },
+    {
+      "exponents": [
+        3,
+        0,
+        2
+      ],
+      "components": [
+        24,
+        0,
+        109
+      ],
+      "modulus": 15125,
+      "residue": 14024
+    },
+    {
+      "exponents": [
+        3,
+        1,
+        0
+      ],
+      "components": [
+        20,
+        6,
+        0
+      ],
+      "modulus": 875,
+      "residue": 20
+    },
+    {
+      "exponents": [
+        3,
+        1,
+        1
+      ],
+      "components": [
+        4,
+        3,
+        9
+      ],
+      "modulus": 9625,
+      "residue": 1879
+    },
+    {
+      "exponents": [
+        3,
+        1,
+        2
+      ],
+      "components": [
+        4,
+        3,
+        20
+      ],
+      "modulus": 105875,
+      "residue": 30754
+    },
+    {
+      "exponents": [
+        3,
+        2,
+        0
+      ],
+      "components": [
+        3,
+        27,
+        0
+      ],
+      "modulus": 6125,
+      "residue": 4878
+    },
+    {
+      "exponents": [
+        3,
+        2,
+        1
+      ],
+      "components": [
+        124,
+        27,
+        5
+      ],
+      "modulus": 67375,
+      "residue": 39374
+    },
+    {
+      "exponents": [
+        3,
+        2,
+        2
+      ],
+      "components": [
+        59,
+        38,
+        75
+      ],
+      "modulus": 741125,
+      "residue": 76184
+    },
+    {
+      "exponents": [
+        3,
+        3,
+        0
+      ],
+      "components": [
+        9,
+        4,
+        0
+      ],
+      "modulus": 42875,
+      "residue": 12009
+    },
+    {
+      "exponents": [
+        3,
+        3,
+        1
+      ],
+      "components": [
+        3,
+        19,
+        9
+      ],
+      "modulus": 471625,
+      "residue": 236003
+    },
+    {
+      "exponents": [
+        3,
+        3,
+        2
+      ],
+      "components": [
+        3,
+        19,
+        75
+      ],
+      "modulus": 5187875,
+      "residue": 1650878
+    },
+    {
+      "exponents": [
+        4,
+        0,
+        0
+      ],
+      "components": [
+        184,
+        0,
+        0
+      ],
+      "modulus": 625,
+      "residue": 184
+    },
+    {
+      "exponents": [
+        4,
+        0,
+        1
+      ],
+      "components": [
+        49,
+        0,
+        0
+      ],
+      "modulus": 6875,
+      "residue": 5049
+    },
+    {
+      "exponents": [
+        4,
+        0,
+        2
+      ],
+      "components": [
+        49,
+        0,
+        0
+      ],
+      "modulus": 75625,
+      "residue": 32549
+    },
+    {
+      "exponents": [
+        4,
+        1,
+        0
+      ],
+      "components": [
+        45,
+        6,
+        0
+      ],
+      "modulus": 4375,
+      "residue": 3170
+    }
+  ],
+  "profiles": 266,
+  "active_masks": 41,
+  "x": "1563/3125",
+  "y": "11205/16807",
+  "oldmass": "13138253/52521875",
+  "lambda11": "19543635187/92276732625",
+  "credit": "60892116313456328416741/486392060746509978060000000",
+  "S11": "7707153701/55366039575000",
+  "F13": "16293608641/83194650000",
+  "kreq": "6168733163201163811/1650097635185615616000",
+  "cut": "649004327923538200529792761/14267500448564292689760000000",
+  "clip": "8639521551969395023/189903125774875012500",
+  "excess": "8055203649533692011747669319/1328603909270755499563140960000000",
+  "clip_decimal": 0.04549436201598552,
+  "excess_decimal": 6.062908285400902e-06,
+  "histogram": {
+    "1": "136979951659516248/2260751497319940625",
+    "2": "1983966875004375776/47475781443718753125",
+    "3": "2771490720327629887/47475781443718753125",
+    "4": "1597895097445489798/47475781443718753125",
+    "5": "101819427553804/7693369217909375",
+    "6": "474651997433377/130787276704459375",
+    "7": "342123619/683632228125",
+    "8": "30008/1883284375"
+  },
+  "checks": {
+    "literal25rows": true,
+    "original_phase_0": true,
+    "original_phase_1": true,
+    "original_phase_2": true,
+    "original_phase_3": true,
+    "original_phase_4": true,
+    "original_phase_5": true,
+    "original_phase_6": true,
+    "original_phase_7": true,
+    "original_phase_8": true,
+    "original_phase_9": true,
+    "original_phase_10": true,
+    "original_phase_11": true,
+    "original_phase_12": true,
+    "original_phase_13": true,
+    "original_phase_14": true,
+    "original_phase_15": true,
+    "original_phase_16": true,
+    "original_phase_17": true,
+    "original_phase_18": true,
+    "original_phase_19": true,
+    "original_phase_20": true,
+    "original_phase_21": true,
+    "original_phase_22": true,
+    "original_phase_23": true,
+    "original_phase_24": true,
+    "original_phase_25": true,
+    "original_phase_26": true,
+    "original_phase_27": true,
+    "original_phase_28": true,
+    "original_phase_29": true,
+    "original_phase_30": true,
+    "original_phase_31": true,
+    "original_phase_32": true,
+    "original_phase_33": true,
+    "original_phase_34": true,
+    "original_phase_35": true,
+    "original_phase_36": true,
+    "original_phase_37": true,
+    "original_phase_38": true,
+    "original_phase_39": true,
+    "original_phase_40": true,
+    "original_phase_41": true,
+    "original_phase_42": true,
+    "original_phase_43": true,
+    "original_phase_44": true,
+    "original_phase_45": true,
+    "original_phase_46": true,
+    "original_phase_47": true,
+    "original_phase_48": true,
+    "original_phase_49": true,
+    "query51_distinct": true,
+    "query_phase_0": true,
+    "query_crt_0": true,
+    "query_phase_1": true,
+    "query_crt_1": true,
+    "query_phase_2": true,
+    "query_crt_2": true,
+    "query_phase_3": true,
+    "query_crt_3": true,
+    "query_phase_4": true,
+    "query_crt_4": true,
+    "query_phase_5": true,
+    "query_crt_5": true,
+    "query_phase_6": true,
+    "query_crt_6": true,
+    "query_phase_7": true,
+    "query_crt_7": true,
+    "query_phase_8": true,
+    "query_crt_8": true,
+    "query_phase_9": true,
+    "query_crt_9": true,
+    "query_phase_10": true,
+    "query_crt_10": true,
+    "query_phase_11": true,
+    "query_crt_11": true,
+    "query_phase_12": true,
+    "query_crt_12": true,
+    "query_phase_13": true,
+    "query_crt_13": true,
+    "query_phase_14": true,
+    "query_crt_14": true,
+    "query_phase_15": true,
+    "query_crt_15": true,
+    "query_phase_16": true,
+    "query_crt_16": true,
+    "query_phase_17": true,
+    "query_crt_17": true,
+    "query_phase_18": true,
+    "query_crt_18": true,
+    "query_phase_19": true,
+    "query_crt_19": true,
+    "query_phase_20": true,
+    "query_crt_20": true,
+    "query_phase_21": true,
+    "query_crt_21": true,
+    "query_phase_22": true,
+    "query_crt_22": true,
+    "query_phase_23": true,
+    "query_crt_23": true,
+    "query_phase_24": true,
+    "query_crt_24": true,
+    "query_phase_25": true,
+    "query_crt_25": true,
+    "query_phase_26": true,
+    "query_crt_26": true,
+    "query_phase_27": true,
+    "query_crt_27": true,
+    "query_phase_28": true,
+    "query_crt_28": true,
+    "query_phase_29": true,
+    "query_crt_29": true,
+    "query_phase_30": true,
+    "query_crt_30": true,
+    "query_phase_31": true,
+    "query_crt_31": true,
+    "query_phase_32": true,
+    "query_crt_32": true,
+    "query_phase_33": true,
+    "query_crt_33": true,
+    "query_phase_34": true,
+    "query_crt_34": true,
+    "query_phase_35": true,
+    "query_crt_35": true,
+    "query_phase_36": true,
+    "query_crt_36": true,
+    "query_phase_37": true,
+    "query_crt_37": true,
+    "query_phase_38": true,
+    "query_crt_38": true,
+    "query_phase_39": true,
+    "query_crt_39": true,
+    "query_phase_40": true,
+    "query_crt_40": true,
+    "query_phase_41": true,
+    "query_crt_41": true,
+    "query_phase_42": true,
+    "query_crt_42": true,
+    "query_phase_43": true,
+    "query_crt_43": true,
+    "query_phase_44": true,
+    "query_crt_44": true,
+    "query_phase_45": true,
+    "query_crt_45": true,
+    "query_phase_46": true,
+    "query_crt_46": true,
+    "query_phase_47": true,
+    "query_crt_47": true,
+    "query_phase_48": true,
+    "query_crt_48": true,
+    "query_phase_49": true,
+    "query_crt_49": true,
+    "query_phase_50": true,
+    "query_crt_50": true,
+    "pure_count_5": true,
+    "pure_count_7": true,
+    "old_source_mass": true,
+    "allowed_mass_72": true,
+    "allowed_projection_72": true,
+    "allowed_mass_106": true,
+    "allowed_projection_106": true,
+    "allowed_mass_107": true,
+    "allowed_projection_107": true,
+    "allowed_mass_110": true,
+    "allowed_projection_110": true,
+    "allowed_mass_122": true,
+    "allowed_projection_122": true,
+    "allowed_mass_123": true,
+    "allowed_projection_123": true,
+    "allowed_mass_234": true,
+    "allowed_projection_234": true,
+    "allowed_mass_238": true,
+    "allowed_projection_238": true,
+    "allowed_mass_250": true,
+    "allowed_projection_250": true,
+    "allowed_mass_251": true,
+    "allowed_projection_251": true,
+    "allowed_mass_254": true,
+    "allowed_projection_254": true,
+    "allowed_mass_332": true,
+    "allowed_projection_332": true,
+    "allowed_mass_333": true,
+    "allowed_projection_333": true,
+    "allowed_mass_334": true,
+    "allowed_projection_334": true,
+    "allowed_mass_335": true,
+    "allowed_projection_335": true,
+    "allowed_mass_348": true,
+    "allowed_projection_348": true,
+    "allowed_mass_349": true,
+    "allowed_projection_349": true,
+    "allowed_mass_350": true,
+    "allowed_projection_350": true,
+    "allowed_mass_351": true,
+    "allowed_projection_351": true,
+    "allowed_mass_362": true,
+    "allowed_projection_362": true,
+    "allowed_mass_365": true,
+    "allowed_projection_365": true,
+    "allowed_mass_366": true,
+    "allowed_projection_366": true,
+    "allowed_mass_367": true,
+    "allowed_projection_367": true,
+    "allowed_mass_379": true,
+    "allowed_projection_379": true,
+    "allowed_mass_382": true,
+    "allowed_projection_382": true,
+    "allowed_mass_383": true,
+    "allowed_projection_383": true,
+    "allowed_mass_460": true,
+    "allowed_projection_460": true,
+    "allowed_mass_461": true,
+    "allowed_projection_461": true,
+    "allowed_mass_462": true,
+    "allowed_projection_462": true,
+    "allowed_mass_463": true,
+    "allowed_projection_463": true,
+    "allowed_mass_476": true,
+    "allowed_projection_476": true,
+    "allowed_mass_477": true,
+    "allowed_projection_477": true,
+    "allowed_mass_478": true,
+    "allowed_projection_478": true,
+    "allowed_mass_479": true,
+    "allowed_projection_479": true,
+    "allowed_mass_490": true,
+    "allowed_projection_490": true,
+    "allowed_mass_492": true,
+    "allowed_projection_492": true,
+    "allowed_mass_493": true,
+    "allowed_projection_493": true,
+    "allowed_mass_494": true,
+    "allowed_projection_494": true,
+    "allowed_mass_495": true,
+    "allowed_projection_495": true,
+    "allowed_mass_510": true,
+    "allowed_projection_510": true,
+    "allowed_mass_511": true,
+    "allowed_projection_511": true,
+    "actual_lambda11_mass": true,
+    "NC4_strict_hard_region": true,
+    "exact_F13": true,
+    "exact_cut": true,
+    "fixed_query_above_cut": true
+  },
+  "check_count": 244
+}
