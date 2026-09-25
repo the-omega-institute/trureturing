@@ -19,4 +19,5 @@ For every ratio strictly between zero and one, every slope strictly between zero
 ## References
 
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutRegularity.geometric_readout_continuity_and_jump`
+- Dependency: [D5/S1/Words/Mechanical/MechanicalDyadicBoundary](MechanicalDyadicBoundary.md)
 - Dependency: [D5/S1/Words/Mechanical/MechanicalReadoutOrder](MechanicalReadoutOrder.md)
