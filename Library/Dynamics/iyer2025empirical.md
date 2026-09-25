@@ -1205,3 +1205,82 @@ Theorem A 对局部二阶矩有限、平移作用本质自由且完全正熵的�
 Theorem B 的零熵平稳遍历反例具有有界连续、几乎处处正的 Bartlett 密度，
 但沿扩张窗口 Fourier CLT 失败；良好二阶谱本身不是充分假设。
 本章不假设实际条件数组满足这些熵条件，也不以几乎处处定理替代相位尺度证明。
+
+## 多载波的共同别名关系（第 63 章）
+
+`repo-derived`：第 63 章在同一实际 pair/path 后验标签向量上，联合识别有限多个临界载波的锚定谱过程。
+相位差与相位和在 delta 尺度上的极限共同决定 Hermitian Gram 与伪 Gram；
+这些极限来自同一组相位，必须满足加法与反射相容性。
+零相位类保留旧实场，pi 相位类保留一份共同独立实场，其余每个带符号别名类使用一份共同 proper 复场。
+类内成员通过有限调制或共轭相连，不得分别重抽。
+对本模型 Gaussian 方差轮廓，任意两个非零时间极限能量独立当且仅当属于不同类；
+严格正的 Fourier 变换使同类能量的 Wick 交叉协方差非零，其符号由时间方向决定。
+这是共同实现与实际后验比较的结论，未断言有限后验的独立性或实际无界矩收敛。
+
+Yang–Guan，*Fourier analysis of spatial point processes*，
+[arXiv:2401.06403v1](https://arxiv.org/abs/2401.06403v1)，
+Theorems 3.1–3.2，PDF 第 9–12 页；Lemma C.2，第 49–50 页。
+其平稳简单点过程、可比扩张矩形窗口、累积量密度可积、连续紧支撑 taper 和多项式混合条件，
+给出在有效窗口尺度上到零及两两和、差分离的移动 Fourier 频率的联合复 Gaussian 极限。
+允许频率极限重合或到零，分离机制不要求对数余量。
+这是两套交叉关系及移动频率消振的直接先例；
+第 63 章还保留未分离时的共同调制/共轭，处理异质实际环境、固定总量标签及旧非线性截距。
+不把 Abel 求和、调制和 Gaussian Gram 收敛称作新的一般定理。
+
+Panaretos–Tavakoli，*Fourier analysis of stationary time series in function space*，
+[arXiv:1305.2073v1](https://arxiv.org/abs/1305.2073v1)，
+Theorem 2.2 与 Remark 2.3，PDF 第 7–9 页。
+输入为平稳实 L² 函数值序列，要求各阶矩与可和累积量核及协方差算子核范数可和。
+精确零与 pi 频率为实 Gaussian；不同正 Fourier 格频率为独立复 Gaussian，
+即使极限频率重合或到端点。
+本章实类与复类的区分属于这个经典谱背景；Gaussian 方差轮廓的连续调制 Gram
+不同于矩形窗口在离散 Fourier 格上的精确正交，不能交换二者的必要条件。
+
+Peligrad–Wu，*Central limit theorem for Fourier transforms of stationary processes*，
+[arXiv:0910.3451v3](https://arxiv.org/abs/0910.3451v3)，
+Theorem 2.1，PDF 第 1–4 页及第 4 页的频率对独立性说明，
+要求平稳遍历平方可积输入及对远过去的正则性条件。
+结论是几乎处处固定频率及几乎处处频率对的结论，
+不能直接用于指定的例外频率或相互逼近的三角载波。
+
+Chen–Chen–Liu，*An improved complex fourth moment theorem*，
+[arXiv:2304.08088v1](https://arxiv.org/abs/2304.08088v1)，
+PDF 第 7–8 页的 proper 复 Gaussian 定义及第 11–12 页 Theorem 3.8。
+其向量第四矩定理要求前极限的联合圆对称性。
+本章的实共振类及含共同共轭成员的向量一般不满足该前提，不能直接借用该定理。
+正文在一个实 Gaussian 向量上计算完整实虚 Gram，并以联合特征函数/有限秩删除处理移动对角量。
+复方差为 gamma 时实虚方差各为 gamma/2 的约定沿用这些经典定义。
+
+Wick 配对式 Cov(|X|²,|Y|²)=|E X conjugate(Y)|²+|E XY|²、Gaussian 独立性判据、
+有限秩投影和连续映射均为经典工具。
+仅报告各载波的边缘分布不会保留同类之间的两项关系。
+有限失谐单窗口还能由第 60 章作精确有限参数重定位后直接取得，因而不另建重复的边缘定理章节。
+本章新增承重面是同一个实际实验的联合别名类、相容实现及极限能量独立性的精确判据。
+
+Brillinger，*Asymptotic Normality of Finite Fourier Transforms of Stationary Generalized Processes*，
+Journal of Multivariate Analysis 12 (1982), 64–71，
+[作者原始 PDF](https://www.stat.berkeley.edu/~brill/Papers/generalizedprocess.pdf)，印刷第 66–68 页。
+Assumptions I–II 要求实平稳广义过程的相应累积量谱局部界及在零点集中的归一化 taper；
+定理另要求指定频率处二阶谱连续且非零。
+这提供固定频率 Fourier 正态极限的经典背景，不给出本章 delta 尺度的相位合并与后验比较。
+实输入和实 taper 在相反频率上的变换互为共轭，因此不能仅凭“频率不同”推断独立；
+正文保留完整伪 Gram，不借未区分相反频率的独立性措辞跳过这一检查。
+
+Ben Hariz–Bui–Esstafa，*Quantitative central limit theorem for an integrated periodogram via the fourth moment theorem*，
+[arXiv:2604.00642v2](https://arxiv.org/abs/2604.00642v2)，Theorem 2.1，PDF 第 2 页，
+对中心实平稳 Gaussian 序列与固定偶权重，要求谱密度及权重具有给定正则变差指数，
+两指数各在 (-1,1)，和小于 1/2；定量 Wasserstein 速率另要求 (2.3) 的局部 Lipschitz 界。
+其固定权重积分周期图在 sqrt(n) 尺度上为 Gaussian，
+不替代这里保留非 Gaussian 二次能量的临界窗口联合律。
+
+Ghosh–McElroy–Lahiri，*Polyspectral Mean Estimation of General Nonlinear Processes*，
+[arXiv:2410.15187v2](https://arxiv.org/abs/2410.15187v2)，
+Assumption A[k]，PDF 第 7 页；Theorem 1 与 Corollary 2，第 11–12 页。
+在各阶加权累积量可和、所需矩存在、对称可积权重及指定 Riemann 逼近速率下，
+给出固定权重多谱均值及有限多个同阶权重的 sqrt(T) Gaussian 极限。
+所阅版本 Corollary 2 的另一分支仍有未解析的 “Theorem ??” 引用；这里仅比较明确的 Theorem 1 分支。
+该固定权重均值结论不识别本章的合并载波、共同共轭与实际固定总量后验。
+
+有限原始文献核对未命中完整实际后验联合陈述；这不认证全球原创性。
+结论限于固定有限载波数、固定参数紧区间、原幅度与 beta、临界 eta_a²delta→zeta_a>0。
+不声称载波数增长、随机或适应性相位、实际矩收敛、无限族统一结论或未锚定谱的紧性。
