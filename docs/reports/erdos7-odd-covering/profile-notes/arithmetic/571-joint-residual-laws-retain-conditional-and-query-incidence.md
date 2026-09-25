@@ -242,6 +242,13 @@ Thus this example does not separate all product/deletion sources from
 all joint laws. It separates the source with the stipulated fixed
 ternary Haar conditional.
 
+The different actual family `2 mod3, 4 mod5, 0 mod15, 1 mod45` does
+separate those larger classes: [Report573](573-free-product-priors-still-miss-the-optimal-joint-law.md)
+proves that its unrestricted complete-query optimum203/144 is strictly
+below the infimum over product/deletion laws even when both priors may
+vary. That result uses an exact dual, its entire optimal face and two
+necessary product cycles. It does not obstruct the continuation gate.
+
 The [exact primal/dual producer](../../frontier/cover-geometry/fixed_ternary_variational_gap.py)
 and its [data](../../frontier/cover-geometry/fixed_ternary_variational_gap.json)
 check163 identities and inequalities for ten prime instances, including
@@ -504,3 +511,11 @@ actual fibres, or prove the needed compatibility for its specific
 supplier. It cannot promise to retain every marginal satisfying only
 the scalar Q-query bound. Whether optimizing pi in C_u(U) always passes
 the threshold for an arbitrary actual family remains unresolved.
+
+[Report572](572-compatible-fibres-lift-one-six-prime-query-law.md)
+provides a positive compatibility condition: if the chosen marginal
+is supported on actual fibres of pure-3 mass at least c0, its lift
+has R_P<=R_Q+[R_3(u)/c0](1+R_Q). A class with two selected shallow
+phases through exponent3 and at most two active residual numerical
+cofactors per surviving Q point meets the continuation threshold.
+This separate incidence premise is not implied by a small R_Q.
