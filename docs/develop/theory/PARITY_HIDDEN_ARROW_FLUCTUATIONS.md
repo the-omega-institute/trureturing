@@ -1996,7 +1996,7 @@ m_M(a)=\lfloor\nu_M+a\sqrt q\rfloor\quad(-A\le a\le A),\qquad
 
 这里的期望按所选实验和正确方向对齐计算，支持位置不影响这些确定量。
 令 $`T_M(a)`$ 为前 $`m_M(a)`$ 个位置，$`I_M(a)=A_M\triangle T_M(a)`$，
-$`e_M(a)=\operatorname{sgn}(N_M-m_M(a))`$。在均匀基数先验下，
+$`e_M(a)=\mathrm{sgn}(N_M-m_M(a))`$。在均匀基数先验下，
 给定全部对齐数据与优先级 $`\mathscr D_M`$，记精确后验边缘概率为 $`\pi_i`$，并定义
 
 ```math
@@ -2017,9 +2017,9 @@ Y_M(a)&=\frac{|S\setminus T_M(a)|-qH_{\mathcal E,m_M(a)}^\xi}{\sqrt q},
 确定容量、$`\nu_M`$ 和 $`\overline H_M`$ 保持正确对齐定义。
 错误方向上的工作权重不定义为未知方向的精确后验。
 
-格点情形取 $`\pi_+=\operatorname{logistic}(s+h)`$、
-$`\pi_-=\operatorname{logistic}(s)`$；非格点情形取
-$`\pi_+=\pi_-=p_s=\operatorname{logistic}(s)`$。置
+格点情形取 $`\pi_+=\mathrm{logistic}(s+h)`$、
+$`\pi_-=\mathrm{logistic}(s)`$；非格点情形取
+$`\pi_+=\pi_-=p_s=\mathrm{logistic}(s)`$。置
 
 ```math
 v_\pm=\pi_\pm(1-\pi_\pm),\qquad
