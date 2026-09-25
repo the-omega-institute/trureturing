@@ -10,7 +10,7 @@ open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 private def measureSourceType (name : Name) : CommandElabM Unit := do
   let info ← getConstInfo name
   let mut pending : List (Expr × Nat) := [(info.type, 0)]
-  let mut unique : Std.HashSet Expr := {}
+  let mut unique : Std.HashSet ExprStructEq := {}
   let mut visits : Nat := 0
   let mut nameBytes : Nat := 0
   let mut metadata : Nat := 0
@@ -19,7 +19,7 @@ private def measureSourceType (name : Name) : CommandElabM Unit := do
     pending := rest
     visits := visits + 1
     maxDepth := max maxDepth depth
-    unique := unique.insert e
+    unique := unique.insert ⟨e⟩
     match e with
     | .const n _ => nameBytes := nameBytes + n.toString.utf8ByteSize
     | .app f a => pending := (f, depth + 1) :: (a, depth + 1) :: pending
@@ -35,17 +35,19 @@ private def measureSourceType (name : Name) : CommandElabM Unit := do
       pending := (b, depth + 1) :: pending
     | _ => pure ()
   let raw := TemplateAudit.rawStatementIdentity info.levelParams info.type
-  let compact := TemplateAudit.compactRawIdentity info.levelParams info.type
-  let compactBytes := (TemplateAudit.compactRawEncoding info.levelParams info.type).map (·.1.size)
   let start ← IO.monoMsNow
-  let erased ← liftTermElabM <| TemplateAudit.rawIdentity info.levelParams info.type
+  let heartbeats ← IO.getNumHeartbeats
+  let .ok (bytes, work) := TemplateAudit.compactRawEncoding info.levelParams info.type
+    | throwError "[FAIL] full_source_identity_budget {name}"
+  let heartbeats := (← IO.getNumHeartbeats) - heartbeats
   let elapsed := (← IO.monoMsNow) - start
-  logInfo m!"SOURCE_COST {name}: raw_visits={visits} unique={unique.size} repeated={visits-unique.size} depth={maxDepth} name_bytes={nameBytes} metadata_entries={metadata} raw_identity={repr raw} erased_identity={repr erased} erased_ms={elapsed} compact_identity={repr compact} compact_bytes={repr compactBytes} proof_body_expansions=0"
+  logInfo m!"SOURCE_COST {name}: raw_visits={visits} structural_unique={unique.size} depth={maxDepth} name_bytes={nameBytes} metadata_entries={metadata} raw_identity={repr raw} compact_identity={Sha256.hex bytes} compact_work={work} compact_bytes={bytes.size} compact_ms={elapsed} compact_internal_heartbeats={heartbeats} proof_body_expansions=0"
 
 run_cmd measureSourceType ``D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.history_law_conditional_expectation
 run_cmd measureSourceType ``D5.S3.Quantum.Information.InfiniteCalibrationControl.result
 run_cmd measureSourceType ``D5.S3.Quantum.Information.ActualQubitChordObstruction.actual_two_probe_chord_and_qfi
 run_cmd measureSourceType ``D5.S1.Words.Patterns.CyclicStackPreimages.process_eq_run
+run_cmd measureSourceType ``D5.S1.Words.Patterns.CyclicStackPreimages.process_perm
 
 private partial def sourceReadoutPaths (e : Expr) (path : Array String := #[])
     (scope : Nat := 0) : Array (Array String × Nat) := Id.run do

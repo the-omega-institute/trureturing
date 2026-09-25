@@ -52,7 +52,7 @@ private structure WireState where
   bytes : ByteArray := {}
   remaining : Nat := 524288
   tokens : Option (Std.HashMap String Nat) := none
-  expressions : Option (Std.HashMap Expr Nat) := none
+  expressions : Option (Std.HashMap ExprStructEq Nat) := none
 
 private abbrev WireM := StateT WireState (Except String)
 
@@ -135,17 +135,18 @@ private def wireData (depth : Nat) : DataValue → WireM Unit
   | .ofInt value => do emit "int"; emit (toString value)
   | .ofSyntax value => do emit "syntax"; wireSyntax depth value
 
-private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : WireM Unit := do
+private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr)
+    (key : Expr := e) : WireM Unit := do
   if depth > 256 then throw "incomplete_closure:E8.expression_depth"
   if let some expressions := (← get).expressions then
-    if let some index := expressions[e]? then
+    if let some index := expressions[ExprStructEq.mk key]? then
       emit "expr-ref"
       emit (toString index)
       return
     emit "expr-node"
-    modify fun state => { state with expressions := some (expressions.insert e expressions.size) }
+    modify fun state => { state with expressions := some (expressions.insert ⟨key⟩ expressions.size) }
 
-  let child := fun x => wireExpr params (depth + 1) x
+  let child := fun x k => wireExpr params (depth + 1) x k
   match e with
   | .bvar index => emit "bvar"; emit (toString index)
   | .fvar _ | .mvar _ => throw "incomplete_closure:E7.open_expression"
@@ -153,18 +154,22 @@ private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : Wir
   | .const name levels =>
     emit "const"; wireName name; emit (toString levels.length)
     for level in levels do wireLevel params level
-  | .app f a => emit "app"; child f; child a
-  | .lam _ type body bi => emit "lambda"; emit (reprStr bi); child type; child body
-  | .forallE _ type body bi => emit "forall"; emit (reprStr bi); child type; child body
+  | .app f a => emit "app"; child f key.appFn!; child a key.appArg!
+  | .lam _ type body bi =>
+    emit "lambda"; emit (reprStr bi); child type key.bindingDomain!; child body key.bindingBody!
+  | .forallE _ type body bi =>
+    emit "forall"; emit (reprStr bi); child type key.bindingDomain!; child body key.bindingBody!
   | .letE _ type value body nd =>
-    emit "let"; emit (toString nd); child type; child value; child body
+    emit "let"; emit (toString nd)
+    child type key.letType!; child value key.letValue!; child body key.letBody!
   | .lit (.natVal n) => emit "natLiteral"; emit (toString n)
   | .lit (.strVal s) => emit "stringLiteral"; emit s
   | .mdata data body =>
     emit "metadata"; emit (toString data.entries.length)
     for (key, value) in data.entries do wireName key; wireData (depth + 1) value
-    child body
-  | .proj name index body => emit "projection"; wireName name; emit (toString index); child body
+    child body key.mdataExpr!
+  | .proj name index body =>
+    emit "projection"; wireName name; emit (toString index); child body key.projExpr!
 
 /-- Domain-separated, length-prefixed raw Expr/Level identity. Binder names are
 anonymous; instances, lets and metadata retain their complete structural bytes. -/
@@ -181,37 +186,44 @@ def rawStatementIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) 
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
 
-private abbrev HeightM := StateT (Nat × Std.HashMap Expr Nat) (Except String)
-
-private partial def sourceHeight (e : Expr) (depth : Nat := 0) : HeightM Nat := do
+-- Expr.eqv ignores BinderInfo; even Expr.equal compares metadata Syntax modulo
+-- source information. Build structural keys with anonymous binder names and
+-- exact metadata wire bytes. The emitted expression itself is never rewritten.
+-- This bounded independent walk also checks every occurrence's actual depth,
+-- including repeated subtrees that the subsequent wire pass will reference.
+private partial def sourceKey (e : Expr) (depth : Nat := 0) :
+    StateT Nat (Except String) Expr := do
   if depth > 256 then throw "incomplete_closure:E8.expression_depth"
-  let (remaining, heights) ← get
+  let remaining ← get
   if remaining == 0 then throw "incomplete_closure:E8.source_identity_work"
-  set (remaining - 1, heights)
-  if let some height := heights[e]? then
-    if depth + height > 256 then throw "incomplete_closure:E8.expression_depth"
-    return height
-  let height ← match e with
-    | .app f a => return 1 + max (← sourceHeight f (depth + 1)) (← sourceHeight a (depth + 1))
-    | .lam _ t b _ | .forallE _ t b _ => return 1 + max (← sourceHeight t (depth + 1)) (← sourceHeight b (depth + 1))
-    | .letE _ t v b _ => return 1 + max (← sourceHeight t (depth + 1)) (max (← sourceHeight v (depth + 1)) (← sourceHeight b (depth + 1)))
-    | .mdata _ b | .proj _ _ b => return 1 + (← sourceHeight b (depth + 1))
-    | _ => pure 0
-  if height > 256 then throw "incomplete_closure:E8.expression_depth"
-  modify fun (remaining, heights) => (remaining, heights.insert e height)
-  return height
+  set (remaining - 1)
+  let child := fun x => sourceKey x (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam _ t b bi => return .lam .anonymous (← child t) (← child b) bi
+  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← child b) bi
+  | .letE _ t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
+  | .mdata data b =>
+    let action : WireM Unit := do
+      emit (toString data.entries.length)
+      for (name, value) in data.entries do wireName name; wireData (depth + 1) value
+    let (_, state) ← action.run { remaining := ← get }
+    set state.remaining
+    return .mdata ⟨[(.anonymous, .ofString (String.fromUTF8! state.bytes))]⟩ (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | _ => return e
 
 /-- Canonical shared raw Expr references for source-bound contracts. This does
 not change the mathematical statement_id or the existing raw identity dialect.
-The independent height pass prevents a repeated deep subtree from hiding depth.
+The independent key pass prevents a repeated deep subtree from hiding depth.
 Raw proof subterms, levels, metadata, lets and BinderInfo remain in the encoding. -/
 def compactRawEncoding (params : List Name) (e : Expr) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let limit := min 524288 fuel
-  let (_, (remaining, _)) ← sourceHeight e |>.run (limit, {})
+  let (key, remaining) ← sourceKey e |>.run limit
   let action : WireM Unit := do
     emit "DTR-source-expr-dag-v1"
-    wireExpr params 0 e
+    wireExpr params 0 e key
   let (_, state) ← action.run { remaining, tokens := some {}, expressions := some {} }
   if state.bytes.size > 65536 then throw "incomplete_closure:E8.source_identity_bytes"
   return (state.bytes, limit - state.remaining)
