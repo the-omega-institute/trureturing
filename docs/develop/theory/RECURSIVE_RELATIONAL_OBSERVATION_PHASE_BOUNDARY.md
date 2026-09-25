@@ -15395,3 +15395,404 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 58. 七维第二终端秩二排除共同外部尾环境
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+七维接收器 $K$ 独立纯启动，全部持久系统计费，同一个全域 CPTP 接收通道精确服务前六个完整参考终端。第二终端可逆附加态秩为二，第三至第六终端纯。固定同一 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$，两像正交。
+
+### 58.1 实际第二终端与第三轮排出块
+
+沿第53节，第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 为 $Q$ 中正交单位向量。附加态 $\tau_\Gamma$ 在 $\Gamma$ 上正定。置
+$$
+G=\operatorname{span}(u,w),\quad
+H=\operatorname{span}(z,w),\quad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮将整个附加因子排到二维环境 $F\subset E$，给二维正交接收子空间
+$$
+A_0=G_3,\qquad B_0=Q_3,\qquad A_0\perp B_0,
+$$
+使
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F.
+\tag{58.1}
+$$
+两个旧位像均四维。这里第三轮新环境可以与旧环境纠缠，未被改称纯向量。
+
+对 $n=4,5,6$，实际纯终端空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{58.2}
+$$
+各 $H_n,G_n,Q_n$ 二维；$H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构。
+
+**定理58.1（共同外部纯尾环境不可能）。** 不可能有
+$$
+\eta_4\parallel\eta_5\parallel\eta_6,\qquad \eta_4\notin F.
+\tag{58.3}
+$$
+因此第53节的 $OOO$ 必要模式实际上不能由该接收器实现。
+
+**证明。** 选择共同单位代表 $\eta$。第53节的严格环境交叠下界给
+$$
+0<\|P_F\eta\|<1.
+\tag{58.4}
+$$
+右侧只用 $\eta\notin F$；左侧是完整六终端合同下已证必要条件，没有额外假设环境非正交。
+
+置
+$$
+S_0=H_3+H_4+H_5,\qquad
+S_1=G_3+G_4+G_5,
+$$
+并去掉共同环境，写等距 $f:S_0\to K$、$g:S_1\to K$。令
+$$
+R=fS_0=G_4+G_5+G_6,\qquad
+W=gS_1=Q_4+Q_5+Q_6.
+\tag{58.5}
+$$
+由于 $\eta\notin F$，$A_0\otimes F$ 与 $R\otimes\eta$ 交零；同理 $B_0\otimes F$ 与 $W\otimes\eta$ 交零。这些空间分别包含于七维 $V_0K,V_1K$，所以
+$$
+\dim S_0=\dim R\le3,\qquad
+\dim S_1=\dim W\le3.
+\tag{58.6}
+$$
+
+两项实际都等于三。若 $\dim S_0=2$，则 $H_3=H_4=H_5$，固定 $f$ 使 $G_4=G_5$，因而 $(H_4,G_4)=(H_5,G_5)$。若 $\dim S_1=2$，则 $G_3=G_4=G_5$，固定 $f$ 给 $H_3=H_4$，因而 $(H_3,G_3)=(H_4,G_4)$。这些都违反实际来源的主角谱变化。具体地，第53节式（53.14）的两个特征值之积给
+$$
+\delta_n=\det(P_{H_n}P_{G_n}|_{H_n})
+=x^2\frac{t_{n-2}}{t_n},\quad
+x=|a|^2,\quad y=|b|^2,\quad t_0=1,\quad t_j=1-y t_{j-1},
+$$
+并有
+$$
+\delta_{n+1}-\delta_n
+=\frac{x^3(-y)^{n-1}}{t_nt_{n+1}}\ne0
+\qquad(n=3,4).
+\tag{58.7}
+$$
+故
+$$
+\dim S_0=\dim S_1=\dim R=\dim W=3.
+\tag{58.8}
+$$
+
+### 58.2 两个全域位像同时饱和
+
+式（58.1）、（58.5）、（58.8）现在饱和两个七维位像：
+$$
+V_0K=(A_0\otimes F)+(R\otimes\eta),\qquad
+V_1K=(B_0\otimes F)+(W\otimes\eta).
+\tag{58.9}
+$$
+两项都是代数直和；未声称它们在同一个位像内正交。
+
+由于 $V_0K\perp V_1K$，有 $A_0\perp B_0$、$R\perp W$。式（58.4）的非零环境交叠还给
+$$
+A_0\perp W,\qquad R\perp B_0.
+$$
+所以接收子空间
+$$
+L_0=A_0+R,\qquad L_1=B_0+W
+$$
+满足
+$$
+L_0\perp L_1,\qquad
+V_0K\subseteq L_0\otimes E,\qquad
+V_1K\subseteq L_1\otimes E.
+\tag{58.10}
+$$
+$W$ 三维使 $\dim L_1\ge3$，故
+$$
+\dim L_0\le4.
+\tag{58.11}
+$$
+这些已经是整个固定通道的位像约束，不只对后面三个纯终端成立。
+
+### 58.3 同一来源的早期支撑约束
+
+来源每次发射后，活动记忆的 $|1\rangle$ 分量只来自 $m_0$ 中的 $b|1\rangle$；$m_1=|0\rangle$ 不贡献该分量。因此，任何一步接收后的记忆 $|1\rangle$ 条件接收态，都由 $V_0$ 的像产生。式（58.10）使其接收支撑包含于 $L_0$。这对实际第二终端同样成立，因为每轮使用的是同一个全域通道。
+
+第二终端的标准可逆编码对两个来源基态给
+$$
+\Psi_2^0=a\,m_0\otimes u+b\,m_1\otimes v,\qquad
+\Psi_2^1=m_0\otimes w,
+$$
+再张量固定混合附加态 $\tau_\Gamma$。对 Bell 参考输入，投影活动记忆为 $|1\rangle$、迹掉参考后，未归一化接收态为
+$$
+\frac{|b|^2}{2}
+\bigl(|a|^2|u\rangle\langle u|+|w\rangle\langle w|\bigr)
+\otimes\tau_\Gamma.
+\tag{58.12}
+$$
+$ab\ne0$ 且 $\tau_\Gamma$ 正定，所以（58.12）的支撑恰为四维 $G\otimes\Gamma$。由上一段以及（58.11），
+$$
+G\otimes\Gamma\subseteq L_0,\qquad
+L_0=G\otimes\Gamma.
+\tag{58.13}
+$$
+这一步使用完整混合附加态，没有把其某个纯切片当作实际第二终端。
+
+### 58.4 固定一位像的矛盾
+
+$S_1=G_3+G_4+G_5$，其中 $G_3=A_0$、$G_4,G_5\subset R$。因此（58.13）给
+$$
+S_1\subseteq A_0+R=L_0=G\otimes\Gamma.
+$$
+固定一位映射一方面由旧块（58.1）使
+$$
+V_1S_1\subseteq B_0\otimes F,
+$$
+另一方面由纯尾定义使 $V_1S_1=W\otimes\eta$。因为 $\eta\notin F$，这两份张量子空间交为零，所以 $V_1S_1=0$。但 $V_1$ 等距且 $\dim S_1=3$，矛盾。证明完毕。
+
+本定理仅排除 $r_2=2$ 分支的 $OOO$ 模式；第53节的 $FFF$ 与 $OFO$ 尚未由此结算。第57节的结论仍只适用于纯第二终端。一般六终端容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
+
+## 59. 七维第二终端秩二的尾环境二维封闭性
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+七维接收器 $K$ 独立纯启动，全部持久系统计费，同一个全域 CPTP 接收通道精确服务前六个完整参考终端。第二终端可逆附加态秩为二，第三至第六终端纯。固定同一 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$，二者均等距且两像正交。
+
+沿第53节，实际第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 为 $Q$ 中正交单位向量，附加态 $\tau_\Gamma$ 在 $\Gamma$ 上正定。置
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}(z,w),\qquad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮给等距 $R_\Gamma:\Gamma\to E$、二维环境 $F=R_\Gamma\Gamma$，以及正交单位接收向量 $s,t,r,j$，使
+$$
+V_0(z\otimes\xi)=s\otimes R_\Gamma\xi,\qquad
+V_0(w\otimes\xi)=t\otimes R_\Gamma\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R_\Gamma\xi,\qquad
+V_1(w\otimes\xi)=j\otimes R_\Gamma\xi.
+\tag{59.1}
+$$
+写
+$$
+A_0=\operatorname{span}(s,t)=G_3,\qquad
+B_0=\operatorname{span}(r,j)=Q_3.
+$$
+于是 $A_0\perp B_0$，并有两个四维旧块
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F.
+\tag{59.2}
+$$
+第三轮新环境可以与旧环境纠缠，未被假设为纯向量。
+
+对 $n=4,5,6$，纯尾环境和实际来源空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{59.3}
+$$
+各 $H_n,G_n,Q_n$ 二维；$C_n=G_n\oplus Q_n$ 四维，$H_n\subset C_n$ 到两个正交因子的投影均为同构，特别地 $H_n\cap G_n=0$。
+
+**定理59.1（交替外部尾环境不可能）。** 在上述合同下，不可能有第53节的 $OFO$ 模式：
+$$
+\eta_4\parallel\eta_6,\qquad
+\eta_4\notin F,\qquad \eta_5\in F.
+\tag{59.4}
+$$
+
+**证明。** 选单位环境代表
+$$
+\eta_4=\eta_6=o\notin F,\qquad \eta_5=\beta\in F.
+$$
+这里等式只统一射线代表；（59.3）是子空间等式，不受整体相位影响。第53节的六终端环境交叠下界给
+$$
+P_Fo\ne0.
+\tag{59.5}
+$$
+不预设 $o$ 与 $\beta$ 是否正交。
+
+### 59.1 两个全域位像的维数饱和
+
+令
+$$
+R=G_4+G_6,\qquad W=Q_4+Q_6,\qquad
+r=\dim R,\quad k=\dim W,
+$$
+$$
+d_0=\dim(A_0+G_5)-2,\qquad
+d_1=\dim(B_0+Q_5)-2.
+\tag{59.6}
+$$
+因为 $\beta\in F$，
+$$
+\dim\bigl((A_0\otimes F)+(G_5\otimes\beta)\bigr)=4+d_0.
+$$
+因为 $o\notin F$，$R\otimes o$ 与上述空间交零。两者都包含于七维 $V_0K$，所以
+$$
+r+d_0\le3.
+\tag{59.7}
+$$
+$r\ge2$，因此 $d_0\in\{0,1\}$。同理对一位像有
+$$
+k+d_1\le3.
+\tag{59.8}
+$$
+另一方面，固定 $V_1$ 在 $A_0=G_3$ 和 $G_5$ 上都使用同一射线 $o$，由（59.3）及等距性，
+$$
+V_1(A_0+G_5)=(Q_4+Q_6)\otimes o=W\otimes o,
+\qquad k=2+d_0.
+\tag{59.9}
+$$
+合并（59.8）得 $d_0+d_1\le1$。故只有
+$$
+(d_0,d_1)=(0,0),\ (1,0),\ (0,1).
+\tag{59.10}
+$$
+
+**排除 $(0,0)$。** 此时 $G_5=A_0$、$Q_5=B_0$。取单位 $\xi\in\Gamma$ 使 $R_\Gamma\xi=\beta$。由（59.1）、（59.3），
+$$
+V_0(H\otimes\mathbb C\xi)=A_0\otimes\beta=V_0H_4,
+$$
+$$
+V_1(G\otimes\mathbb C\xi)=B_0\otimes\beta=V_1G_4.
+$$
+两个固定等距均单射，因而
+$$
+H_4=H\otimes\mathbb C\xi,\qquad
+G_4=G\otimes\mathbb C\xi.
+$$
+这两者包含同一非零向量 $w\otimes\xi$，违反 $H_4\cap G_4=0$。
+
+**情形 $(1,0)$。** 式（59.9）给 $k=3$，式（59.7）给 $r=2$。两个已知位像的维数分别为 $4+1+2=7$ 和 $4+0+3=7$。
+
+**情形 $(0,1)$。** 此时 $G_5=A_0=G_3$、$k=2$。若 $r=2$，则 $G_4=G_6$。固定 $V_0$ 和共同环境 $o$ 给 $H_3=H_5$，故 $(H_3,G_3)=(H_5,G_5)$。这违反实际来源的主角谱。具体地，令
+$$
+x=|a|^2,\quad y=|b|^2,\quad t_0=1,\quad t_j=1-y t_{j-1}.
+$$
+第53节式（53.14）的两个主角特征值之积为
+$$
+\delta_n=\det(P_{H_n}P_{G_n}|_{H_n})
+=x^2\frac{t_{n-2}}{t_n},
+$$
+且
+$$
+\delta_5-\delta_3
+=\frac{x^4y^2}{t_3t_5}>0.
+\tag{59.11}
+$$
+因此 $r=3$，两个已知位像的维数分别为 $4+0+3=7$ 和 $4+1+2=7$。
+
+综上，任意尚存候选均使两个全域位像恰好饱和：
+$$
+V_0K=(A_0\otimes F)+(G_5\otimes\beta)+(R\otimes o),
+$$
+$$
+V_1K=(B_0\otimes F)+(Q_5\otimes\beta)+(W\otimes o).
+\tag{59.12}
+$$
+这些和空间未被默认视为正交和。
+
+### 59.2 非正交尾环境与实际第二终端矛盾
+
+先设 $\langle o,\beta\rangle\ne0$。由 $V_0K\perp V_1K$，环境因子的非零交叠给全部跨位接收因子正交：
+$$
+A_0\perp B_0,Q_5,W,\qquad
+G_5\perp B_0,Q_5,W,\qquad
+R\perp B_0,Q_5,W.
+\tag{59.13}
+$$
+其中跨 $F,o$ 的两项使用（59.5），跨 $\beta,o$ 的两项使用当前非零交叠；其余使用相同环境，或 $\beta\in F$。
+
+因此
+$$
+L_0=A_0+G_5+R,\qquad L_1=B_0+Q_5+W
+$$
+满足
+$$
+L_0\perp L_1,\qquad
+V_iK\subseteq L_i\otimes E\quad(i=0,1).
+\tag{59.14}
+$$
+$(d_0,d_1)=(1,0)$ 时 $\dim W=3$；$(d_0,d_1)=(0,1)$ 时 $\dim(B_0+Q_5)=3$。所以总有
+$$
+\dim L_1\ge3,\qquad \dim L_0\le4.
+\tag{59.15}
+$$
+
+现在使用同一固定通道的实际早期来源。来源每次发射后，活动记忆的 $|1\rangle$ 分量仅来自 $m_0$ 中的 $b|1\rangle$，因此任何轮次的记忆 $|1\rangle$ 条件接收态均由 $V_0$ 的像产生。（59.14）使其接收支撑位于 $L_0$。该断言同样适用于第二终端，没有假设第二终端纯。
+
+第二终端的标准可逆编码为
+$$
+\Psi_2^0=a\,m_0\otimes u+b\,m_1\otimes v,\qquad
+\Psi_2^1=m_0\otimes w,
+$$
+并张量固定正定附加态 $\tau_\Gamma$。对 Bell 参考输入，投影活动记忆为 $|1\rangle$ 后再迹掉参考，所得未归一化接收态为
+$$
+\frac{|b|^2}{2}
+\bigl(|a|^2|u\rangle\langle u|+|w\rangle\langle w|\bigr)
+\otimes\tau_\Gamma.
+\tag{59.16}
+$$
+其支撑恰好是四维 $G\otimes\Gamma$。由（59.14）、（59.15），
+$$
+L_0=G\otimes\Gamma.
+\tag{59.17}
+$$
+特别地 $A_0\subseteq G\otimes\Gamma$。旧一位块（59.2）遂使
+$$
+V_1A_0\subseteq B_0\otimes F.
+$$
+然而实际第四轮又给
+$$
+V_1A_0=Q_4\otimes o.
+$$
+由于 $o\notin F$，这两个张量子空间交零，违反 $V_1$ 单射及 $\dim A_0=2$。非正交情形不可能。
+
+### 59.3 正交尾环境迫使两个四维终端支撑正交
+
+余下设 $o\perp\beta$。由（59.3），固定等距保持内积，给
+$$
+A_0\perp G_4,\qquad H_3\perp H_4.
+\tag{59.18}
+$$
+第一项来自 $V_1A_0=Q_4\otimes o$ 和 $V_1G_4=Q_5\otimes\beta$；第二项来自 $V_0H_3=G_4\otimes o$ 和 $V_0H_4=G_5\otimes\beta$。
+
+跨位正交连同（59.2）、（59.5）另给
+$$
+A_0\perp Q_4,\qquad B_0\perp G_4.
+\tag{59.19}
+$$
+现在 $H_3\subset A_0\oplus B_0$、$H_4\subset G_4\oplus Q_4$。对任意 $h\in H_3$、$h'\in H_4$，用（59.18）、（59.19）消去其余三种交叉配对，得到
+$$
+0=\langle h,h'\rangle
+=\langle P_{B_0}h,P_{Q_4}h'\rangle.
+$$
+实际来源给 $P_{B_0}H_3=B_0$、$P_{Q_4}H_4=Q_4$，故
+$$
+B_0\perp Q_4.
+\tag{59.20}
+$$
+合并（59.18）—（59.20），
+$$
+C_3=A_0\oplus B_0\ \perp\ C_4=G_4\oplus Q_4.
+$$
+这要求七维 $K$ 包含两个正交的四维子空间，矛盾。正交情形亦不可能。证明完毕。
+
+### 59.4 第二终端秩二的必要环境封闭性
+
+**推论59.2（全部纯尾环境留在同一二维空间）。** 结合第53节的 $FFF/OFO/OOO$ 必要模式、第58节的共同外部尾环境排除与定理59.1，第二终端秩二的任意七维六终端候选必须满足
+$$
+\eta_4,\eta_5,\eta_6\in F.
+$$
+这一结论尚未排除 $FFF$，也未处理早期终端全部纯的其余候选。一般六终端容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
