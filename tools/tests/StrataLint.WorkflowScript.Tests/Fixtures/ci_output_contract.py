@@ -16,6 +16,15 @@ import ci_output
 
 
 class PresentationTests(unittest.TestCase):
+    def test_ci_failure_probe(self):
+        for index in range(3000):
+            print(f"information: CI_LOG_PROBE_ACTIVITY {index}")
+        print("warning: CI_LOG_PROBE_WARNING")
+        print("  CI_LOG_PROBE_WARNING_DETAIL")
+        print("error: CI_LOG_PROBE_ERROR")
+        print("  CI_LOG_PROBE_ERROR_DETAIL")
+        self.fail("CI_LOG_PROBE_EXPECTED_FAILURE")
+
     def setUp(self):
         self.now = 0
         self.output = io.StringIO()
