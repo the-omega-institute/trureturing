@@ -2146,3 +2146,336 @@ $`b_*\eta_M^2e^{\theta/(2\eta_M^3)}T_M`$，也不能由旧弱收敛略去。
 增长参数区间、数据自适应频率、其它 Liouville 幅度或实际后验矩收敛。
 
 ## 追加锚（本行以下为增补区）
+
+## 60. 临界共振使旧噪声重现
+
+**定义 60.1（临界共振与双场）。** 保持定义 54.1 的原始实际模型、精确中心与有限截距。
+取确定性序列
+
+```math
+\eta_M=2m_M\longrightarrow\infty,\qquad
+\zeta_M=\eta_M^2\delta\longrightarrow\zeta\in(0,\infty),
+\qquad s_M=\log(\eta_M/\delta),\qquad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+```
+
+式 (60.1)。
+
+定义实际过程
+
+```math
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                          -2z_M(\theta)\sqrt\delta T_M\}.
+```
+
+式 (60.2)。
+
+现在 $`s_M=(3/4)\log Q+O(1)`$，因此任意固定参数紧区间的取值点最终落在原 $`[0,U]`$ 内。
+令 $`W_\rho`$ 是旧噪声，$`W_\rho'`$ 是它的独立副本；
+在 $`m_M`$ 全为偶数的子列上令 $`W_\sigma=W_\rho`$，
+在全为奇数的子列上令 $`W_\sigma=W_\rho'`$。
+定义连续对称核
+
+```math
+q_{\zeta,\theta}(x,y)=
+\begin{cases}
+ \displaystyle\frac{2\sqrt\zeta}{\omega}
+       \frac{\sin(\omega\theta|x-y|/\zeta)}{|x-y|},&x\ne y,\\[4pt]
+ 2\theta/\sqrt\zeta,&x=y,
+\end{cases}
+\qquad \omega=\pi/2.
+```
+
+式 (60.3)。
+
+它属于 $`L^2(\rho\otimes\rho)`$；对角值是连续延拓，不改变二重 Wiener 积分。
+
+**定理 60.2（实际临界共振的奇偶联合律）。** 在 (60.1) 的每个固定奇偶子列上，
+两种原始平稳实验均有紧区间 C-tight $`J_1`$ 联合收敛
+
+```math
+(\mathcal R_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal R_\zeta^\sigma|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),
+\qquad
+\mathcal R_\zeta^\sigma(\theta)=Z_0+I_2(q_{\zeta,\theta};W_\sigma),
+```
+
+式 (60.4)。
+
+其中 $`I`$ 固定且紧，$`A>0`$，
+$`Z_0\sim N(0,16g_0\zeta_{\rm R}(4)/\omega^4)`$、$`N_2\sim N(0,2g_0)`$，
+两者相互独立并联合独立于 $`(W_\rho,W_\rho')`$。
+这里 $`\zeta_{\rm R}`$ 表示 Riemann zeta 函数，区别于临界参数 $`\zeta`$。
+旧元组仍在同一个 $`W_\rho`$ 上，特别是 $`\mathcal J_\infty=b_*\gamma+I_2(H;W_\rho)`$。
+可联合保留旧固定频率紧区间上的 Fourier 场及旧负 Sobolev 测度、偶极子逼近。
+先验条件有界 Lipschitz 收敛于数据概率中成立；固定支持版本无条件且一致；
+未知方向使用同一个判向一致事件。
+
+令 $`F_\sigma(v)=W_\sigma(e^{-i\omega vx})`$，则同一实现中
+
+```math
+I_2(q_{\zeta,\theta};W_\sigma)
+ =2\sqrt\zeta\int_0^{\theta/\zeta}(|F_\sigma(v)|^2-\gamma)\,dv.
+```
+
+式 (60.5)。
+
+所以偶数支的非 Gaussian 部分由旧 Fourier 场本身生成；奇数支使用独立副本。
+
+证明。整个论证保留一个完整后验标签向量。
+(58.6)–(58.8) 的有限谱恒等式先在原数组上应用。
+放大因子为 $`\eta^2\delta^{-1/2}e^{\theta/(2\eta^3)}=O_I(Q^{3/4})`$，
+故乘上完整截断组数 $`O(Q^2)`$ 后的 Fourier 与取整误差仍趋零。
+精确抵消仍用 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$ 和原始截距。
+所得原始矩阵正是 (59.6)。
+
+先说明实际比较的估计可延伸到这里的有界 $`\zeta_M`$。
+(59.7) 的共振包络及 (59.8) 的原始算子界只用
+$`\eta\le C Q^{1/4}`$，没有使用 $`\eta^2\delta\to0`$。
+因此精确中心误差仍至多 $`O_{\mathbb P}(Q^{-2}(1+\log Q))+o_{\mathbb P}(1)`$。
+第 56 章 $`Q^{-60}`$ 尾质量去掉全部核心外向量，
+同一个逆分布耦合再将所有核心组换成独立 Gaussian 组。
+用 (56.18) 的相对质量误差和这个原始算子界，
+实际环境方差可进一步换成确定格质量
+$`m_j^\circ=\int_{I_j}\rho`$，路径误差至多
+$`O_{\mathbb P}(Q^{-1/2}(1+\log Q)^2)`$。
+旧截距、对角量和线性束在同一耦合中保持第 59 章证明里的界。
+这一阶段得到 $`G_j=\sqrt{m_j^\circ}\xi_j`$ 的同一格模型。
+下面不会把 (59.11) 的趋零结论用于临界参数。
+
+记 $`a=\theta/\eta^3`$、$`d=(j-l)\delta`$、$`\chi_j=(-1)^{mj}`$，并令
+
+```math
+b_M(\theta)=\frac{\omega\eta(e^a-1)}\delta,\qquad
+q_{M,\theta}(d)=\frac{2\sqrt{\zeta_M}}\omega e^{-a/2}
+                           \frac{\sin(b_M(\theta)d)}d.
+```
+
+式 (60.6)。
+
+在 $`d=0`$ 连续延拓。
+$`b_M(\theta)\to\omega\theta/\zeta`$ 且
+$`b'_M(\theta)=\omega e^a/\zeta_M`$。
+对固定 $`I`$，核及其时间导数对所有 $`d`$ 一致有界；
+核向 (60.3) 的收敛在固定空间紧区间上一致。
+这不要求 $`|\zeta_M-\zeta|\sqrt{\log Q}\to0`$。
+
+两次分部积分并保留共振符号，给出逐个非零整数 $`k=j-l`$ 的精确分解
+
+```math
+\frac{2\eta^2}{\sqrt\delta}e^{a/2}\mathrm{Ci}(\omega\eta e^a|k|)
+ =\chi_j\chi_l q_{M,\theta}(k\delta)
+ -\frac{2\chi_j\chi_l}{\omega^2\sqrt\delta}
+           \frac{e^{-3a/2}\cos(b_M(\theta)k\delta)}{k^2}
+ +E_M(\theta,k),
+```
+
+式 (60.7)。
+
+```math
+|E_M(\theta,k)|\le\frac{C_I}{\eta\sqrt\delta|k|^3},\qquad
+|\partial_\theta E_M(\theta,k)|
+ \le\frac{C_I}{\eta^3\sqrt\delta k^2}.
+```
+
+式 (60.8)。
+
+导数界直接来自
+$`R_3(v)=\mathrm{Ci}(v)-\sin v/v+\cos v/v^2`$ 的
+$`R_3'(v)=-2\cos v/v^3`$，并包括前因子的导数。
+(59.10) 的卷积界 $`\sum_jm_j^\circ m_{j+k}^\circ\le C\delta`$
+将余项二次型的方差与导数方差分别界为 $`C\eta^{-2}`$、$`C\eta^{-6}`$。
+对有限可微函数使用
+
+```math
+\sup_I|f|^2\le C_I\left\{\int_I|f|^2+
+              \left(\int_I|f|^2\int_I|f'|^2\right)^{1/2}\right\}.
+```
+
+式 (60.9)。
+
+取一点使其平方不超过平均值，再积分 $`(|f|^2)'`$ 即可证明。
+这使余项在路径范数中趋零。
+
+余弦项可一致换成在零点的随机常数
+
+```math
+O_Q=-\frac{2}{\omega^2\sqrt\delta}
+       \sum_{j\ne l}\frac{\chi_j\chi_l}{(j-l)^2}G_jG_l.
+```
+
+式 (60.10)。
+
+因为前因子与余弦相对一的误差至多
+$`C_I\{\eta^{-3}+\min((k\delta)^2,1)\}`$，其导数至多
+$`C_I\{\eta^{-3}+|k\delta|\min(|k\delta|,1)\}`$。
+用同一卷积界并在 $`k=1/\delta`$ 分割，二次型差及其导数的方差均至多
+$`C_I(\eta^{-6}+\delta^3)=O_I(\delta^3)`$。
+(60.9) 给出一致依概率趋零。因此格模型为
+
+```math
+O_Q+\sum_{j\ne l}q_{M,\theta}(x_j-x_l)(\chi_jG_j)(\chi_lG_l)
+                  +o_{\mathbb P}(1)\quad\hbox{于 }C(I).
+```
+
+式 (60.11)。
+
+现考察同一 Gaussian 向量上的两个线性场
+$`W_Q(f)=\sum G_jf(x_j)`$、$`W_Q^\chi(f)=\sum\chi_jG_jf(x_j)`$。
+若 $`m`$ 为偶数，两者逐样本相同。
+若 $`m`$ 为奇数，对有界区间阶梯函数 $`f,g`$，其交叉 Gram 为
+$`\sum(-1)^jm_j^\circ f(x_j)g(x_j)`$。
+相邻格成对，平滑 $`\rho`$ 的质量差与有限区间端点贡献使此和为 $`O(\delta)`$。
+各自 Gram 均趋于 $`\int fg\rho`$。
+总质量和 $`x^2`$ 尾扩展到端点、偶极子及固定频率 Fourier 测试，故
+
+```math
+(W_Q,W_Q^\chi)\Longrightarrow
+\begin{cases}(W_\rho,W_\rho),&m\text{ 偶},\\
+              (W_\rho,W_\rho'),&m\text{ 奇},
+\end{cases}
+```
+
+式 (60.12)。
+
+此处先是柱面联合收敛；所需旧路径由同一方差时钟的紧性补全。
+奇数支的独立副本由确定符号调制的极限产生，有限实验中没有重抽标签。
+
+偏移 (60.10) 的标准化矩阵 $`C_Q`$ 有算子范数 $`O(\sqrt\delta)`$，
+由 $`m_j^\circ\le C\delta`$ 和可和的 $`k^{-2}`$ 行包络得到。
+又由逐固定滞后 $`w_\delta(k)\to g_0`$，
+
+```math
+2\operatorname{tr}C_Q^2
+ =\frac8{\omega^4}\sum_{k\ne0}\frac{w_\delta(k)}{k^4}
+ \longrightarrow\frac{16g_0\zeta_{\rm R}(4)}{\omega^4}.
+```
+
+式 (60.13)。
+
+对角矩阵 $`D_Q=\operatorname{diag}(m_j^\circ/\sqrt\delta)`$ 也有趋零算子范数，
+方差趋于 $`2g_0`$，且 $`\operatorname{tr}(C_QD_Q)=0`$。
+对任意固定线性组合 $`A=cC_Q+dD_Q`$，
+(59.20) 先给出偏移与对角量的联合 Gaussian 极限。
+加入旧场与调制场的任意有限组合系数向量 $`\ell_Q`$ 时，联合特征函数为
+
+```math
+e^{-i\operatorname{tr}A}\det(1-2iA)^{-1/2}
+ \exp\{-\tfrac12\ell_Q^\top(1-2iA)^{-1}\ell_Q\}.
+```
+
+式 (60.14)。
+
+$`\|\ell_Q\|_2`$ 有界，故末项指数与 $`-\|\ell_Q\|_2^2/2`$ 的差趋零。
+配合 (60.12) 的全部 Gram 极限，这证明 $`Z_0,N_2`$ 相互独立并独立于两个场。
+没有把随规模改变的对角量或调制坐标当作固定旧变量。
+
+对固定空间紧区间上的矩形阶梯核 $`K=\sum k_{ab}1_{I_a}\otimes1_{I_b}`$，
+异格二次型恒等于
+
+```math
+\sum_{a,b}k_{ab}W_Q^\chi(I_a)W_Q^\chi(I_b)
+                    -\sum_a k_{aa}\sum_{x_j\in I_a}G_j^2.
+```
+
+式 (60.15)。
+
+块平方和的方差 $`2\sum m_j^{\circ2}`$ 趋零，均值趋于 $`\int_{I_a}\rho`$，
+故极限恰为 $`I_2(K;W_\sigma)`$。
+将 $`q_{M,\theta}`$ 在固定空间紧区间上统一逼近，再用有界核和 Gaussian 质量尾，
+即可得到 (60.11) 在有限多个时间的共同极限。
+同时对旧对数核先去掉近对角与远端，再用同一个矩形划分，保留旧 $`I_2(H;W_\rho)`$。
+新的确定迹为 $`2\theta\gamma/\sqrt\zeta`$，由异格扣除产生 Wick 中心；
+有限对角随机误差只是 $`q_{M,\theta}(0)\sqrt\delta T_Q^G=o_{\mathbb P}(1)`$。
+
+由 $`q_{M,\theta}`$ 的一致有界导数，正弦二次型的增量方差至多
+$`C_I|\theta-u|^2(\sum m_j^\circ)^2`$，第四矩至多 $`C_I|\theta-u|^4`$。
+因此它在 $`C(I)`$ 中紧，偏移为一个紧的随机常数，(60.8)–(60.10) 的余项已在路径范数中去掉。
+旧前缀、Fourier 场及负 Sobolev 坐标的共同逼近仍使用同一总质量与 $`x^2`$ 尾。
+任意有界 Gaussian 柱面测试再以 $`L^1`$ 逼近，给出整个场的独立关系。
+
+实际收敛由前述共同耦合和精确中心误差恢复，最后仅一次对完整标签向量应用后验 TV。
+它只传递事件和有界测试，不传递无界矩。
+良好环境的子列原则给出条件有界 Lipschitz 版本；
+支持置换给出固定支持的一致无条件版本。
+同一方向事件同时控制所有工作坐标，补集只以概率进入误差。
+连续格路径与实际取整路径的一致距离趋零，遂得 C-tight $`J_1`$ 结论。
+
+最后，Gaussian 乘积公式给出
+$`|F_\sigma(v)|^2-\gamma=I_2(\cos(\omega v(x-y));W_\sigma)`$。
+有限有向频率区间上的 Bochner 积分可由二重积分的等距性交换，
+其核积分为 (60.3)，证明 (60.5)。连续版本使等式同时对所有参数成立。
+
+**定理 60.3（同边缘律而不同联合律）。** 两个奇偶分支有相同过程边缘律。
+任意 $`\theta\ne0`$ 的边缘分布均非 Gaussian；在零点只有 Gaussian 偏移。
+若 $`Y=W_\rho(1)`$，则
+
+```math
+\operatorname{Cov}(\mathcal R_\zeta^{\rm even}(\theta),Y^2-\gamma)
+ =\frac{4\pi g_0\sqrt\zeta}{\omega}
+        \operatorname{erf}\left(\frac{\omega\theta}{\zeta\sqrt\kappa}\right),
+\qquad
+\operatorname{Cov}(\mathcal R_\zeta^{\rm odd}(\theta),Y^2-\gamma)=0.
+```
+
+式 (60.16)。
+
+证明。两场同律且各自独立于同分布偏移，故边缘过程同律。
+核算子 $`T_{\zeta,\theta}`$ 的实特征值为 $`(\lambda_n)`$，
+二阶混沌的经典谱公式给出第四累积量 $`48\sum\lambda_n^4`$。
+当 $`\theta\ne0`$，核在对角附近非零，$`\rho>0`$，
+所以自伴 Hilbert–Schmidt 算子非零，至少一个特征值非零。
+独立 Gaussian 偏移不改变第四累积量，证明非 Gaussian 性。
+偶数支的协方差由二阶等距公式化为
+$`(4g_0\sqrt\zeta/\omega)\int e^{-\kappa d^2/4}\sin(\omega\theta d/\zeta)/d\,dd`$。
+该积分对频率求导为 $`2\sqrt{\pi/\kappa}e^{-a^2/\kappa}`$，
+在零频率取零，积分得 $`\pi\operatorname{erf}(a/\sqrt\kappa)`$。
+奇数支由独立性取零。这些是极限变量的矩恒等式，不声称实际矩收敛。
+
+对任一规定奇偶性，选同奇偶整数 $`m_M`$ 最近于
+$`\sqrt\zeta/(2\sqrt\delta)`$，误差至多一，便有
+$`(2m_M)^2\delta-\zeta=O(\sqrt\delta)`$。
+所以两分支都可由合法确定探测尺度实现。
+奇偶性不稳定时，新过程本身仍由两子列论证收敛到共同边缘律；
+若两种奇偶性均出现无穷次，(60.16) 表明不能宣称一个不分支的旧场联合极限。
+
+**定理 60.4（已识别临界族的低参数边界）。** 在固定的 $`W_\sigma`$ 上构造
+$`I_2(q_{\zeta,\theta};W_\sigma)`$。当 $`\zeta\downarrow0`$，
+此族在每个固定 $`C(I)`$ 中趋于 $`4\sqrt{g_0}B_{\rm odd}`$，
+且相对于整个 $`W_\sigma`$ mixing；可联合附加独立偏移 $`Z_0`$。
+这是已识别 Gaussian 混沌族的极限，不通过代入定理 60.2 取得实际数组结论。
+
+证明。角频率 Fourier 变换下，sinc 核的乘子为
+$`(2\pi\sqrt\zeta/\omega)\operatorname{sgn}(\theta)
+1_{\{|\xi|<\omega|\theta|/\zeta\}}`$。
+在 Lebesgue $`L^2`$ 上以 $`\sqrt\rho`$ 共轭，Plancherel 给出
+$`\|T_{\zeta,\theta}\|_{\rm op}\le
+2\pi\|\rho\|_\infty\sqrt\zeta/\omega`$。
+二阶协方差为
+
+```math
+\frac{8\zeta}{\omega^2}\int
+  \frac{\sin(\omega\theta d/\zeta)\sin(\omega u d/\zeta)}{d^2}g(d)\,dd
+ \longrightarrow16g_0\operatorname{sgn}(\theta u)\min(|\theta|,|u|).
+```
+
+式 (60.17)。
+
+用 $`d=\zeta v`$、$`g(0)=g_0`$ 和可积的倒数平方尾支配，
+再用 $`\int\sin(av)\sin(bv)/v^2\,dv
+=\pi\operatorname{sgn}(ab)\min(|a|,|b|)`$ 即得。
+有限组合的小算子范数和有界 Hilbert–Schmidt 范数使谱特征函数趋于 Gaussian。
+同一积分恒等式给出任意符号时间的增量方差至多 $`C|\theta-u|`$，
+第二混沌第四矩至多 $`C|\theta-u|^2`$，故在 $`C(I)`$ 中紧。
+最后按 (59.21) 删除固定有限秩柱面，再作 $`L^1`$ 柱面逼近，取得 mixing。
+协方差 (60.17) 识别的是同一 Brownian motion 的奇反射。
+
+经典 Gaussian 谱、混沌独立性及 sinc Fourier 工具的适用条件见
+[文献说明](../../../Library/Dynamics/iyer2025empirical.md)。
+本章不包含失谐、随机奇偶分布、实际矩收敛、增长参数区间、其它幅度或临界参数趋零、无穷时的实际数组定理。
+
+## 追加锚（本行以下为增补区）
