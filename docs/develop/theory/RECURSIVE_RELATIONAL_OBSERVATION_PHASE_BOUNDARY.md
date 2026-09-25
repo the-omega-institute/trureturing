@@ -8532,3 +8532,6096 @@ $\exp(-C D^2)$ 或 $\exp(-CD)$ 级的误差下界。
 本节使用与第20节相同的实代数正最小值定理及适用范围。[^phase_positive_polynomial_minimum] 新增参数化以额外的有限轨道状态坐标换取固定次数约束；零点排除和误差转换保持原有依据。
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 已知非退化来源的五终端固定接收容量恰为七
+
+本节继续固定第26节的已知来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+$$
+
+接收器从独立纯态启动，每轮使用同一个全域 CPTP 通道；所有持久系统均计入接收器，活动记忆和任意外部参考不可访问。前五个终端各自要求精确恢复完整参考—活动记忆—原始档案联合态，终端解码器允许依终端而异。来源参数已知，接收通道可以针对这份来源校准。
+
+第29节已把六维候选归约到五个终端均为纯编码，第30节证明后三轮纯环境的张成恰为二维，第34节排除其中三条射线互异的情形。本节处理余下的全部两射线模式。
+
+**定理 36.1（五终端的一般精确容量）。** 在上述合同下，
+
+$$
+\boxed{d_{\mathrm{CPTP},5}(a,b)=7.}
+\tag{36.1}
+$$
+
+证明的七维上界直接复用第25节的显式构造；以下排除一般六维候选，不预设其早期环境正交或来自同一个二维空间。
+
+**共同资料。** 反设有六维接收空间 $K$ 和固定 Stinespring 等距 $V$。记 $V_i x=V(x\otimes|i\rangle)$，则 $V_0K\perp V_1K$。纯终端归约给单位环境向量 $\eta_1,\ldots,\eta_5$、正交单位向量 $p,q$ 及正交单位向量 $u,v,w$，满足
+
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes\eta_2,&V_1p&=v\otimes\eta_2,&V_0q&=w\otimes\eta_2.
+\end{aligned}
+\tag{36.2}
+$$
+
+早期系数空间为
+
+$$
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\tag{36.3}
+$$
+
+对 $n=3,4,5$，已有二维空间 $H_n,G_n,Q_n$，满足
+
+$$
+\begin{aligned}
+V_0H_{n-1}&=G_n\otimes\eta_n,&
+V_1G_{n-1}&=Q_n\otimes\eta_n,\\
+G_n&\perp Q_n,&
+H_n&\subset G_n\oplus Q_n,
+\end{aligned}
+\tag{36.4}
+$$
+
+且 $H_n$ 到 $G_n,Q_n$ 的两个正交投影均为同构。这里的满投影来自实际来源的非零系数，不是对任意二维子空间的额外假设。
+
+第30、34节使后三轮射线只可能为 $AAB$、$ABA$ 或 $ABB$，其中不同字母表示不同射线。各段可以一致吸收环境射线相位；这不改变 $a,b$，也不增加轮次控制。下文的 $S,Q,F$ 等辅助符号均在各段局部使用。
+
+**两个线性代数事实。** 若 $U:S\to Q\otimes F$ 为满等距，对单位 $\xi\in F$ 定义
+
+$$
+W_\xi z=U^{-1}(z\otimes\xi),\qquad
+W_\xi^*W_\zeta=\langle\xi,\zeta\rangle I_Q.
+\tag{36.5}
+$$
+
+因此两个对应平面的主角余弦均为 $|\langle\xi,\zeta\rangle|$。固定等距保持子空间交叠矩阵的奇异值。
+
+另若 $H\subset G\oplus Q$ 到两个二维因子的投影均为同构，则 $H$ 是可逆映射 $T:G\to Q$ 的图。对 $z\perp Q$，置 $z_G=P_Gz$，有
+
+$$
+\|P_Hz\|^2
+=\langle z_G,(I+T^*T)^{-1}z_G\rangle
+<\|P_Gz\|^2\quad(z_G\ne0).
+\tag{36.6}
+$$
+
+严格性来自 $T$ 可逆。这一恒等式将用于同一个单位向量的两份投影读数；不会把不同过程的最优值拼在一起。
+
+### 36.1 AAB 尾环境不可能
+
+取 $A=\eta_3=\eta_4$、$B=\eta_5$，两射线不同。
+
+若 $A\perp B$，由 $V_1G_3=Q_4\otimes A$、$V_1G_4=Q_5\otimes B$ 得 $G_3\perp G_4$。同一环境 $A$ 下的跨位正交给
+
+$$
+Q_3,Q_4\perp G_3+G_4.
+$$
+
+维数迫使
+
+$$
+K=G_3\oplus G_4\oplus Q_4.
+\tag{36.7}
+$$
+
+$H_4\subset G_4\oplus Q_4$，故 $G_3\perp H_4$。又 $V_0H_3=G_4\otimes A$ 与 $V_0H_4=G_5\otimes B$ 正交，故 $H_3\perp H_4$。利用 $H_3$ 到 $Q_3$ 的满投影，得到 $Q_3\perp H_4$；再用 $Q_3\perp G_4$ 和 $H_4$ 到 $Q_4$ 的满投影，得到 $Q_3\perp Q_4$。于是 $Q_3$ 正交于(36.7)的全部三个因子，矛盾。
+
+现在设 $0<|\langle A,B\rangle|<1$。所有尾环境两两非正交，跨位正交给
+
+$$
+(G_3+G_4+G_5)\perp(Q_3+Q_4+Q_5).
+$$
+
+$V_1G_3$、$V_1G_4$ 的环境射线不同，所以 $G_3\cap G_4=0$。维数只能为四加二。因此存在
+
+$$
+S=G_3+G_4,\qquad Q=S^\perp,
+\qquad Q_3=Q_4=Q_5=Q,\qquad G_5\subset S.
+$$
+
+令 $F=\operatorname{span}\{A,B\}$，则 $U=V_1|_S:S\to Q\otimes F$ 为满等距。由 $V_1G_2=Q\otimes A=V_1G_3$ 得
+
+$$
+G_2=G_3=\operatorname{im}W_A,\qquad
+G_4=\operatorname{im}W_B.
+\tag{36.8}
+$$
+
+零位的四维像 $V_0(H_2+H_3)=S\otimes A$，与二维像 $V_0H_4=G_5\otimes B$ 作代数直和，饱和整个零位像：
+
+$$
+V_0K=(S\otimes A)\dotplus(G_5\otimes B)\subset S\otimes F.
+\tag{36.9}
+$$
+
+早期等式给 $\eta_1,\eta_2\in F$、$p\in S$，再由 $V_1p=v\otimes\eta_2\in Q\otimes F$ 得 $v\in Q$。
+
+若 $\eta_2$ 不平行 $A$，早期矩形 $G_2\otimes\eta_2\subset V_0K$ 的 $B$ 坐标迫使 $G_5=G_2$。于是 $H_2,H_4$ 的两个主角余弦均为 $r=|\langle A,B\rangle|>0$，而(36.8)使 $G_2,G_4$ 的主角余弦也是 $r$。单位 $w\in H_2\cap G_2$ 因而满足
+
+$$
+\|P_{H_4}w\|=r=\|P_{G_4}w\|,
+$$
+
+违反(36.6)，因为 $H_4$ 是 $G_4\to Q$ 的可逆图、$w\perp Q$。
+
+若 $\eta_2\parallel A$，则 $V_0H_1=V_0H_2$，故 $H_1=H_2$。由于 $p\in S$ 而 $H_2\cap S=\mathbb Cw$，有 $p\parallel w$，继而 $q\parallel a^2u+bv$。所以 $q_S=P_Sq\ne0$。
+
+令 $k_Q=P_Qk$。由实际初轮等式、$V_1S=Q\otimes F$ 和固定等距性，
+
+$$
+V_1k_Q=q_S\otimes\eta_1
+\in R:=(S\otimes F)\cap(V_0K)^\perp.
+$$
+
+(36.9)给
+
+$$
+R=(S\cap G_5^\perp)\otimes A^\perp,
+\tag{36.10}
+$$
+
+其中 $A^\perp$ 是二维 $F$ 中的环境线。因 $q_S\ne0$，必须 $k_Q\ne0$、$\eta_1\perp A$。于是 $V_0k=p\otimes\eta_1$ 正交于 $V_0(H_2+H_3)=S\otimes A$，故 $k\perp H_2+H_3$。但 $H_2,H_3\subset G_2\oplus Q$，它们的和四维，故 $H_2+H_3=G_2\oplus Q$。这给 $k_Q=0$，矛盾。AAB 的两个分支均被排除。
+
+### 36.2 非正交 ABA 尾环境不可能
+
+取 $\eta_3=\eta_5=A$、$\eta_4=B$，且 $0<|\langle A,B\rangle|<1$。$V_1G_3$、$V_1G_4$ 的环境射线不同，故 $G_3\cap G_4=0$。全部尾跨位正交再次迫使
+
+$$
+K=S\oplus Q,\quad S=G_3+G_4,\quad
+Q_3=Q_4=Q_5=Q,\quad G_5\subset S,
+$$
+
+其中维数为四加二。取 $F=\operatorname{span}\{A,B\}$、$U=V_1|_S:S\to Q\otimes F$。$V_1G_2=V_1G_4$ 使
+
+$$
+G_2=G_4=\operatorname{im}W_A,\qquad
+G_3=\operatorname{im}W_B.
+\tag{36.11}
+$$
+
+先证明 $\eta_2\in F$。若不成立，零位像包含独立环境方向上的
+
+$$
+((G_3+G_5)\otimes A)\dotplus(G_2\otimes B)
+\dotplus(G_2\otimes\eta_2).
+$$
+
+维数至多六使 $G_5=G_3$，且该和饱和 $V_0K$。其全部 receiver 因子属于 $S$，所以 $p\in S$。但 $V_1p=v\otimes\eta_2\in Q\otimes F$，矛盾。
+
+若 $\eta_2\parallel B$，早期 $v\otimes B$ 与 $G_3\otimes A$、$G_2\otimes B$ 跨位正交，使 $v\in Q$，继而 $V_1p\in Q\otimes B=V_1G_3$，故 $p\in G_3$。同时 $V_0H_1=G_2\otimes B=V_0H_3$，给 $p\in H_1=H_3$，违反 $H_3\cap G_3=0$。
+
+因此 $\eta_2$ 的 $A$ 坐标非零。早期矩形与 $G_2\otimes B$ 联合给 $G_2\otimes A$，再加 $G_3\otimes A$ 得六维饱和：
+
+$$
+V_0K=(S\otimes A)\dotplus(G_2\otimes B).
+\tag{36.12}
+$$
+
+所以 $\eta_1\in F$、$p\in S$、$v\in Q$，并有 $p=W_{\eta_2}v$。如(36.10)，实际初轮等式给
+
+$$
+V_1k_Q=q_S\otimes\eta_1
+\in(S\cap G_2^\perp)\otimes A^\perp,
+\qquad q\perp G_2.
+\tag{36.13}
+$$
+
+对 $V_0k=p\otimes\eta_1$ 的 receiver 因子作用 $U$，由(36.12)得到
+
+$$
+\eta_2\otimes\eta_1\in F\otimes A+A\otimes F.
+$$
+
+在两个 $F/\mathbb CA$ 因子上取商，得到二择一
+
+$$
+\eta_2\parallel A\quad\hbox{或}\quad\eta_1\parallel A.
+\tag{36.14}
+$$
+
+若 $\eta_2\parallel A$，取 $Q$ 的正交单位基 $r,s$ 使 $u=W_A r,w=W_A s$。令 $c_0=\sqrt{|a|^4+|b|^2}$。在 $H_1$ 的基 $p,q$ 与 $H_2$ 的基 $(a^2u+bv)/c_0,w$ 中，交叠矩阵为
+
+$$
+M=\begin{pmatrix}
+a^2\langle v,r\rangle/c_0&\langle v,s\rangle\\
+b\langle q,v\rangle/c_0&0
+\end{pmatrix}.
+\tag{36.15}
+$$
+
+(36.11)及固定 $V_0$ 使 $MM^*=t^2I$，其中 $t=|\langle A,B\rangle|\in(0,1)$。满秩与两行正交迫使 $\langle v,r\rangle=0$，从而 $|\langle v,s\rangle|=1$。第一行范数为一，与 $t<1$ 矛盾。
+
+若 $\eta_2$ 不平行 $A$，(36.14)迫使 $\eta_1\parallel A$。由(36.13)得 $k_Q=0$、$q_S=0$，即 $k\in S$、$q\in Q$，且 $k\in\operatorname{im}W_A=G_2$。记 $z=\langle\eta_2,A\rangle$。若 $z\ne0$，(36.15)第一行两项各乘 $z$，而固定 $V_0$ 要求 $MM^*=|z|^2t^2I$。同样的满秩与正交行论证使第一行范数为 $|z|$，仍与 $t<1$ 矛盾。因此 $\eta_2\perp A$，从而 $p\perp G_2$。
+
+现在 $V_0k=p\otimes\eta_1$ 正交于 $V_0H_3=G_2\otimes B$，故 $k\perp H_3$。但 $k\in G_2\subset Q^\perp$，$H_3$ 到 $G_3$ 的投影满射，所以 $k\perp G_3$；(36.11)的非零等角关系又使 $G_2$ 到 $G_3$ 的投影单射，只能 $k=0$，矛盾。
+
+### 36.3 正交 ABA 强制已被排除的完整交替环境
+
+取 $\eta_3=\eta_5=A\perp B=\eta_4$。置
+
+$$
+L=G_2+G_4,\quad l=\dim L,\qquad
+M=H_2+H_4,\quad m=\dim M.
+$$
+
+共同环境 $A$ 下的跨位正交给
+
+$$
+m+l\le6,
+\qquad G_3\perp L,\qquad H_3\perp M.
+\tag{36.16}
+$$
+
+若 $\eta_2\notin F=\operatorname{span}\{A,B\}$，零位像包含
+
+$$
+((G_3+G_5)\otimes A)\dotplus(G_4\otimes B)
+\dotplus(G_2\otimes\eta_2),
+$$
+
+维数为 $m+4\le6$。故 $m=2$、$G_5=G_3$，且零位像饱和，所有 receiver 因子属于 $G_3+L$。这迫使 $p\in G_3+L$，而 $V_1(G_3+L)\subset K\otimes F$ 与 $V_1p=v\otimes\eta_2$ 矛盾。因此 $\eta_2\in F$。
+
+若 $\langle\eta_2,A\rangle\ne0$，早期与第三轮的跨位正交给 $G_2\perp Q_3$、$v\perp G_3$。再用(36.16)，$H_2\perp G_3$、$H_2\perp H_3$；$H_3$ 到 $Q_3$ 满投影使 $H_2\perp Q_3$，从而 $v\perp Q_3$。于是三维 $C_2=G_2\oplus\mathbb Cv$ 正交于四维 $C_3=G_3\oplus Q_3$，矛盾。所以
+
+$$
+\eta_2\parallel B.
+\tag{36.17}
+$$
+
+由(36.17)，$V_1p$ 与 $V_1L$ 的环境正交，给 $p\perp L$。同 $B$ 跨位正交还给 $v,Q_4\perp L$。因此 $H_2+H_4$ 到 $L$ 的正交投影满射，$m\ge l$；结合(36.16)，只有 $l=2,3$。
+
+若 $l=3$，则 $m=3$，已有零位像
+
+$$
+((G_3+G_5)\otimes A)\dotplus(L\otimes B)
+$$
+
+维数六，饱和 $V_0K$。由 $V_0k=p\otimes\eta_1$ 得 $\eta_1\in F$；其 $B$ 系数若非零，就有 $p\in L$，与 $p\perp L$ 矛盾。因此 $\eta_1\parallel A$。
+
+若 $l=2$，则 $G_4=G_2$，同 $B$ 零位像使 $H_1=H_3$，特别地 $p\in H_3$。$m=2$ 会使 $H_2=H_4$，与 $0\ne w\in H_2\cap G_2=H_4\cap G_4=0$ 矛盾。$m=4$ 再次饱和上述零位像，同理迫使 $\eta_1\parallel A$。
+
+只剩 $m=3$。此时 $H_2,H_4$ 分别是同一 $G_2$ 上两个映射的图：
+
+$$
+T_2u=(b/a^2)v,\quad T_2w=0,\qquad
+T_4:G_2\longrightarrow Q_4\ \hbox{可逆}.
+$$
+
+图的维数公式给
+
+$$
+3=\dim(H_2+H_4)=2+\operatorname{rank}(T_4-T_2).
+$$
+
+若 $v\notin Q_4$，$(T_4-T_2)x=0$ 会使 $T_4x=T_2x\in Q_4\cap\mathbb Cv=0$，故 $x=0$，与差映射秩一矛盾。因此 $v\in Q_4$。于是 $V_1p=v\otimes B\in V_1G_3$，故 $p\in G_3$，与 $p\in H_3$、$H_3\cap G_3=0$ 矛盾。
+
+所有余下情形都给 $\eta_1\parallel A$，五轮环境必为 $A,B,A,B,A$。这满足第25节确定、正交、交替环境的合同；定理25.2已经证明该合同需要至少七维。因此正交 ABA 也不可能。
+
+### 36.4 非正交 ABB 尾环境不可能
+
+取 $\eta_3=A$、$\eta_4=\eta_5=B$，且 $0<|\langle A,B\rangle|<1$。令 $F=\operatorname{span}\{A,B\}$。置
+
+$$
+\begin{aligned}
+M&=H_3+H_4,&m&=\dim M,&L&=G_3+G_4,&l&=\dim L,\\
+R&=G_4+G_5,&W&=Q_4+Q_5,&S&=G_3+G_4+G_5,&T&=Q_3+Q_4+Q_5.
+\end{aligned}
+$$
+
+共同环境 $B$ 给 $\dim R=m$、$\dim W=l$、$R\perp W$，故 $m+l\le6$。全部尾环境非正交又给 $S\perp T$；$M$ 到 $S$ 的投影像恰为 $L$，所以 $m\ge l$。因此 $2\le l\le3$。
+
+若 $l=3$，则 $m=3$，维数使 $S=R=L$、$T=W$，各三维。$V_1S=W\otimes B$ 与 $V_1G_2=Q_3\otimes A$ 的环境不同，故 $G_2\cap S=0$。尾零位像 $(G_3\otimes A)\dotplus(S\otimes B)$ 五维，全部 receiver 因子在 $S$；早期 $G_2\otimes\eta_2$ 与其交为零，另加两维，矛盾。
+
+故 $l=2$，即 $G_3=G_4$、$Q_4=Q_5=:Q$。$m=2$ 会使 $H_3=H_4$，这与第26节式(26.20)的来源主角行列式严格变化矛盾：置 $x=|a|^2$、$y=|b|^2$、$t_2=x^2+y$、$t_3=1-yt_2$、$t_4=1-yt_3$，则
+
+$$
+\delta_3=\frac{x^3}{t_3},\qquad
+\delta_4=\frac{x^2t_2}{t_4},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{36.18}
+$$
+
+同一对 $H,G$ 的投影压缩不可能有两个不同的行列式。因此只剩 $m=3,4$，此时 $S=G_3+G_5=R$。
+
+若 $m=4$，$S^\perp$ 二维，故 $Q_3=Q_4=Q_5=Q=S^\perp$。尾零位像
+
+$$
+V_0K=(G_3\otimes A)\dotplus(S\otimes B)
+\tag{36.19}
+$$
+
+六维饱和，使早期 $G_2\subset S$。$V_1G_2=Q\otimes A$、$V_1G_3=Q\otimes B$ 给 $G_2\cap G_3=0$，故 $G_2+G_3=S$，$U=V_1|_S:S\to Q\otimes F$ 为满等距。$G_2,G_3$ 是 $A,B$ 对应的平面，两个主角余弦为 $r=|\langle A,B\rangle|>0$。
+
+另一方面，$V_0H_2=G_3\otimes A$、$V_0H_3=G_4\otimes B=G_3\otimes B$，使 $H_2,H_3$ 的两个主角余弦也为 $r$。单位 $w\in H_2\cap G_2$ 的投影应满足
+
+$$
+\|P_{H_3}w\|=r=\|P_{G_3}w\|,
+$$
+
+而 $H_3$ 是 $G_3\to Q$ 的可逆图、$w\perp Q$，违反(36.6)。
+
+若 $m=3$，尾零位像
+
+$$
+Z=(G_3\otimes A)\dotplus(S\otimes B)
+$$
+
+五维。早期矩形 $E_0=G_2\otimes\eta_2$ 二维，$E_0+Z\subset V_0K$ 使 $\dim(E_0\cap Z)\ge1$。又 $G_2\cap G_3=0$，而 $G_3\subset S$ 的维数为二、三，故 $\dim(G_2\cap S)\le1$。从交集中的非零 $x\otimes\eta_2$ 得
+
+$$
+\dim(G_2\cap S)=1,\qquad\eta_2\in F.
+$$
+
+若 $\eta_2$ 的 $A$ 系数非零，逐环境坐标比较 $Z$ 会给 $x\in G_3$，与 $x\in G_2\setminus\{0\}$ 矛盾。因此 $\eta_2\parallel B$。令 $S'=S+G_2$，维数四，早期和尾像联合饱和为
+
+$$
+V_0K=(G_3\otimes A)\dotplus(S'\otimes B).
+\tag{36.20}
+$$
+
+$G_2\otimes B$ 与 $Q_3\otimes A$、$Q\otimes B$ 跨位正交，使 $G_2\perp Q_3+Q$；原有 $S\perp Q_3+Q$，所以 $Q_3=Q=(S')^\perp$。于是 $G_2+G_3=S'$，$V_1|_{S'}$ 给相同的 $A,B$ 张量平面。再对单位 $w$ 使用与上一段完全相同的两个主角读数和(36.6)，得到矛盾。非正交 ABB 被排除。
+
+### 36.5 正交 ABB 尾环境不可能
+
+最后取 $\eta_3=A\perp B=\eta_4=\eta_5$。尾正交给
+
+$$
+G_2\perp G_3+G_4,\qquad H_2\perp H_3+H_4.
+\tag{36.21}
+$$
+
+先证明 $\eta_2\in F=\operatorname{span}\{A,B\}$。否则零位像包含
+
+$$
+(G_3\otimes A)\dotplus((G_4+G_5)\otimes B)
+\dotplus(G_2\otimes\eta_2).
+$$
+
+六维限制迫使 $G_4=G_5$，且此和饱和 $V_0K$。所有 receiver 因子属于 $G_2+G_3+G_4$，故 $p$ 属于此和；但 $V_1$ 在该和上只产生 $F$ 中环境，与 $V_1p=v\otimes\eta_2$ 矛盾。
+
+若 $\langle\eta_2,A\rangle\ne0$，跨位正交给 $G_2\perp Q_3$、$v\perp G_3$。结合(36.21)，$H_2\perp G_3$ 且 $H_2\perp H_3$；满 $Q_3$ 投影使 $H_2\perp Q_3$，继而 $v\perp Q_3$。又得到三维 $C_2$ 正交于四维 $C_3$ 的矛盾。因此
+
+$$
+\eta_2\parallel B.
+\tag{36.22}
+$$
+
+第二、第四、第五轮现在共用环境射线 $B$。其零位接收像包含 $R'\otimes B$、一位接收像包含 $W'\otimes B$，其中
+
+$$
+R'=G_2+G_4+G_5,\qquad
+W'=\mathbb Cv+Q_4+Q_5,\qquad R'\perp W'.
+$$
+
+由(36.21)，$G_2\perp G_4$，故 $\dim R'\ge4$。$W'$ 至少二维，所以六维限制使 $\dim W'=2$。固定 $V_1$ 在 $\operatorname{span}\{p\}+G_3+G_4$ 上的像恰为 $W'\otimes B$，等距性迫使
+
+$$
+G_3=G_4,\qquad p\in G_3.
+\tag{36.23}
+$$
+
+另一方面，$V_0H_1=G_2\otimes B$ 与 $V_0H_3=G_4\otimes B$ 正交，故 $H_1\perp H_3$。非零 $p\in H_1$ 因而正交于 $H_3$，但(36.23)使 $p\in G_3$，而 $H_3$ 到 $G_3$ 投影满射。这只能给 $p=0$，矛盾。
+
+### 36.6 完整容量结算及适用边界
+
+第29节排除六维候选的全部混合附加态分支，将其归约为五个纯终端。第30节把后三轮环境张成限制为恰二维，第34节排除三条互异射线。本节逐项排除剩余的 AAB、ABA、ABB，每个模式均包含正交与非正交两类，因而没有留下环境 Gram 参数分支。
+
+所以一般六维固定接收器不可能。第26节已排除五维及以下，第25节为每份已知非退化复振幅来源给出了七维固定 CPTP 构造。因此得到(36.1)。证明完毕。
+
+这个数值对应五个精确、参考完整终端及同一个固定接收通道；它不等同于单个终端的档案秩，也不覆盖未知来源共用通道、无限终端、近似恢复或额外持久资源。第23节的四终端精确值五与本节的五终端精确值七属于不同终端合同，没有改写旧结论。环境射线只是固定通道的 Stinespring 表示资料；证明没有向接收器免费提供轮次标记或外部控制。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 消去终端解码器的有限维保真度不变量
+
+本文保留第10—12节的两态来源、独立纯接收初态、同一个全域 CPTP 接收通道和全部持久控制计入容量的合同。对象是一个有限维可优化工具，不替代第20节及第35节已经取得的显式误差下界，也不把一个尚未估计的新不变量写成新的显式渐近率。
+
+来源为
+
+$$
+T_{a,b}|i\rangle=|i\rangle_{\mathcal B}\otimes m_i,\qquad
+m_0=a|0\rangle+b|1\rangle,\quad m_1=|0\rangle,\quad
+|a|^2+|b|^2=1,\quad ab\ne0.
+\tag{37.1}
+$$
+
+记容量为 $D$，接收空间 $K=\mathbb C^D$。固定基变换可将任意独立纯接收初态送至同一个 $e_0$，同时共轭接收通道及解码器；故以下固定初态，不损失任何允许的装置。
+
+**定理37.1（有限共同接收器的保真度优化）。** 对（37.1）的任一非退化来源，下文（37.8）的共同接收器最大值取得，且 $\Delta_D>0$。其操作误差界为（37.10）；针对指定初态的有限子任务还满足（37.11）的双侧比较。同一个优化可消去全部终端解码器和指数大小档案，以（37.14）的 $388D^4+1$ 个实变量表示为紧半代数问题。代数振幅允许原则上的认证计算；对任意实振幅，不作无有效参数表示的算法声明。这些结论共同由下文的连续纯化、单终端消元、固定接收器有限期限与全局参数化证明。
+
+**连续的规范纯化与单终端恒等式。**
+
+对固定接收通道 $\mathcal C$，令 $\mathcal R_{\mathcal C}$ 为一次来源发射和接收合成的 $M\otimes K$ 上通道。只取允许的指定来源输入 $|0\rangle_M$，置
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|,\qquad
+\sigma_n=\mathcal R_{\mathcal C}^{\,n}(\sigma_0),\qquad
+\rho_n=\operatorname{Tr}_K\sigma_n.
+\tag{37.2}
+$$
+
+局部接收不改变来源记忆边缘，所以 $\rho_n$ 也是未接收的真实纯目标
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$ 的 $M$ 边缘。
+
+始终使用同一个辅助空间 $E=\mathbb C^{2D}$，并在 $M\otimes K$ 选定基
+$\{|z\rangle\}_{z=1}^{2D}$。定义
+
+$$
+|\Omega\rangle=\sum_{z=1}^{2D}|z\rangle_{MK}|z\rangle_E,\qquad
+|\Gamma_n\rangle=(\sqrt{\sigma_n}\otimes I_E)|\Omega\rangle,\qquad
+\omega_n=\operatorname{Tr}_K|\Gamma_n\rangle\langle\Gamma_n|.
+\tag{37.3}
+$$
+
+$|\Omega\rangle$ 未归一化，$|\Gamma_n\rangle$ 则因
+$\operatorname{Tr}\sigma_n=1$ 归一化。它是 $\sigma_n$ 的纯化，且
+$\omega_n$ 是 $M\otimes E$ 上的密度矩阵。
+
+正半定矩阵平方根在整个正半定锥上连续，包括秩发生变化的边界。因而
+$\mathcal C\mapsto\sigma_n\mapsto|\Gamma_n\rangle\mapsto\omega_n$ 连续。
+这里不能仅说“任选一个纯化”就推出所选纯化连续；（37.3）提供了所需的全局规范。
+
+本文使用根保真度
+
+$$
+F(A,B)=\operatorname{Tr}\sqrt{\sqrt A B\sqrt A}.
+$$
+
+对每个终端定义
+
+$$
+f_n(\mathcal C)=
+\max_{\tau\in\mathcal D(E)}
+F(\omega_n,\rho_n\otimes\tau).
+\tag{37.4}
+$$
+
+**单终端恒等式。** 对每个 $n\ge1$，
+
+$$
+\boxed{
+f_n(\mathcal C)=
+\max_{\mathcal D_n:K\to\mathcal B^{\otimes n}\ {\rm CPTP}}
+F\!\left((\operatorname{id}_M\otimes\mathcal D_n)(\sigma_n),
+|\Psi_n\rangle\langle\Psi_n|\right).
+}
+\tag{37.5}
+$$
+
+两侧均取得最大值，且
+
+$$
+f_n(\mathcal C)=1
+\quad\Longleftrightarrow\quad
+\text{该指定初态在终端 $n$ 有精确的 $K$-局部解码。}
+\tag{37.6}
+$$
+
+证明。记目标档案空间为 $A=\mathcal B^{\otimes n}$。对一个解码器取 Stinespring 等距
+$V:K\to A\otimes F$，并把环境维数按需补大。输出的全局纯化为
+
+$$
+|\zeta_V\rangle=(I_{ME}\otimes V)|\Gamma_n\rangle
+$$
+
+（这里只作固定的张量因子重排）。它在 $MA$ 上与纯目标的根保真度等于
+
+$$
+\max_{\|\xi\|=1,\ \xi\in E\otimes F}
+|\langle\Psi_n\otimes\xi\,|\,\zeta_V\rangle|.
+\tag{37.7}
+$$
+
+这是把 $\zeta_V$ 投影到目标纯态后所得环境向量的范数。
+
+对固定 $\xi$，令 $\tau=\operatorname{Tr}_F|\xi\rangle\langle\xi|$。
+$|\Psi_n\rangle\otimes|\xi\rangle$ 是
+$\rho_n\otimes\tau$ 在 $ME$ 上的一份纯化，而 $\Gamma_n$ 是
+$\omega_n$ 的纯化，所余纯化腿为 $K$。
+有限维 Uhlmann 变分恒等式于是给[^phase_uhlmann_transition]
+
+$$
+\max_{V:K\hookrightarrow A\otimes F}
+|\langle\Psi_n\otimes\xi|(I_{ME}\otimes V)|\Gamma_n\rangle|
+=F(\omega_n,\rho_n\otimes\tau).
+$$
+
+可取足够大的 $F$，使 Uhlmann 在纯化支撑上的等距延拓到整个 $K$；该等距因而定义全域 CPTP 解码器，而不是只定义于可达支撑的操作。这个变分恒等式也可由纯化振幅矩阵的极分解直接得到：最大重叠为相应乘积的迹范数。
+
+任意 $\tau$ 都有 $\xi$ 纯化，任意解码器和 $\xi$ 也都给这样一个 $\tau$。交换对这两个独立选择的最大化，得到（37.5）。有限维通道集和密度矩阵集紧，目标连续；上述等距构造也直接给最大值实现。根保真度等于一当且仅当两个密度矩阵相同，故（37.6）成立。证明完毕。
+
+（37.5）表明 $f_n$ 与纯化规范无关。固定 $\sigma_n$ 的两份同维纯化只差 $E$ 上酉变换，$\tau$ 的完整优化集随之双射；非最小辅助空间只需补零。这也是后面可用任意矩阵因子代替平方根而不改变优化值的原因。
+
+**有限期限、正性与操作误差。**
+
+置
+
+$$
+N_D=8D^2,\qquad
+\gamma_D(a,b)=\max_{\mathcal C}\min_{1\le n\le N_D}f_n(\mathcal C),
+\qquad
+\Delta_D(a,b)=1-\gamma_D(a,b).
+\tag{37.8}
+$$
+
+通道 $\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$ 全域且固定，不允许随 $n$ 更换。终端的 $\tau_n$ 和解码器则可分别依赖 $n$，与原合同一致。
+
+由（37.3）的连续性、根保真度的连续性和固定紧集
+$\mathcal D(E)$ 上最大值的连续性，所有 $f_n$ 都是 $\mathcal C$ 的连续函数。Choi 表示中的 CPTP 通道集紧，有限个 $f_n$ 的最小值也连续，所以（37.8）的最大值取得。
+
+若 $\Delta_D=0$，同一个最大点通道使前 $8D^2$ 个 $f_n$ 全为一。由（37.5）分别选择终端解码器，就能对指定输入 $|0\rangle$ 精确服务这些终端。
+
+这里需要核对第12节障碍的实际量词。第12节证明从开头即只取 $|0\rangle_M$，由其每个精确终端推出记忆—累计环境乘积分解，再延拓环境交叉等式；整个矛盾没有使用其他来源初态或参考。因此它已经排除了上述只针对 $|0\rangle$ 的接收器，给出
+
+$$
+\boxed{\Delta_D(a,b)>0.}
+\tag{37.9}
+$$
+
+这一步不是仅凭一个“全输入任务无解”定理就推断子任务无解，而是复用其针对该指定输入的证明范围。
+
+令 $\epsilon_D^\star(a,b)$ 为维数不超过 $D$ 的允许装置在全部终端、全部初始来源和参考上的最优半迹误差下确界。则
+
+$$
+\boxed{
+\epsilon_D^\star(a,b)\ge
+1-\gamma_D(a,b)^2
+=2\Delta_D(a,b)-\Delta_D(a,b)^2
+\ge\Delta_D(a,b)>0.
+}
+\tag{37.10}
+$$
+
+证明。若某装置的全合同误差至多 $\epsilon$，限制到指定初态和前 $N_D$ 个终端。纯目标投影是一个效果，因此其恢复概率至少为 $1-\epsilon$。其根保真度至少为 $\sqrt{1-\epsilon}$，所以
+
+$$
+f_n(\mathcal C)\ge\sqrt{1-\epsilon}
+\quad(1\le n\le N_D),\qquad
+\gamma_D\ge\sqrt{1-\epsilon}.
+$$
+
+平方即得（37.10），再对所有装置取下确界。维数较小的装置可嵌入 $D$ 维，并在未访问部分全域完成固定通道。证明完毕。
+
+这比只使用 $F\ge1-\epsilon$ 的 $\epsilon\ge\Delta_D$ 转换稍强，但仍没有估计 $\Delta_D$ 随 $D$ 的衰减率。
+
+也可精确标定这个工具对应的任务。令 $\varepsilon^0_{D,N_D}$ 为只要求指定初态 $|0\rangle$、只要求前 $N_D$ 个终端的最佳最坏半迹误差，接收通道仍须同一固定通道。定义
+
+$$
+Q_D=1-\gamma_D^2.
+$$
+
+由（37.5）与纯目标的迹距离／保真度关系，
+
+$$
+\boxed{
+Q_D\le\varepsilon^0_{D,N_D}\le\sqrt{Q_D}.
+}
+\tag{37.11}
+$$
+
+下界是上面的纯目标投影论证。上界取（37.8）的最大点通道，并分别取实现（37.5）的各终端解码器；它们的误差都不超过
+$\sqrt{1-f_n^2}\le\sqrt{Q_D}$。
+（37.11）的上界只属于这个指定初态的有限子任务，不是全部来源／参考、全部终端合同的上界。
+
+**每个固定接收器的 SDP 与全局有限变量优化。**
+
+对固定的正半定矩阵 $A,B$，根保真度有变分形式。[^phase_watrous_fidelity_sdp]
+
+$$
+F(A,B)=
+\max_X\left\{\operatorname{Re}\operatorname{Tr}X:
+\begin{pmatrix}A&X\\X^*&B\end{pmatrix}\succeq0\right\}.
+\tag{37.12}
+$$
+
+该式可由块正性给出的
+$X=\sqrt A\,C\,\sqrt B$、$\|C\|_{\rm op}\le1$ 及极分解验证，奇异情形按支撑限制或连续性处理。
+
+所以当 $\mathcal C$ 固定时，（37.4）是以下 SDP：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Re}\operatorname{Tr}X_n,\\
+\text{满足}\quad&
+\tau_n\succeq0,\quad\operatorname{Tr}\tau_n=1,\\
+&
+\begin{pmatrix}
+\omega_n&X_n\\X_n^*&\rho_n\otimes\tau_n
+\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{37.13}
+$$
+
+$\omega_n,\rho_n$ 此时固定，故右下块对 $\tau_n$ 仿射。
+$E$ 的维数为 $2D$，$\omega_n$ 和 $X_n$ 的矩阵大小是 $4D$，整个保真度块大小为 $8D$。这些状态矩阵的大小只随 $D$ 线性增长。
+
+全局优化接收器时，可以完全不引入大小为 $2^n$ 的档案或终端解码器。采用以下实坐标：
+
+- 接收 Choi 矩阵 $J_{\mathcal C}$ 的大小为 $2D^2\times2D^2$，Hermitian 坐标共 $4D^4$ 个，满足 $J_{\mathcal C}\succeq0$ 及对输出偏迹等于 $I_{2D}$。
+- 每个终端 $n=1,\ldots,N_D$ 有一个 $2D\times2D$ Hermitian 状态变量 $S_n$，坐标数 $4D^2$，满足从固定 $S_0=\sigma_0$ 出发的同一一步递推
+  $S_{n+1}=\mathcal R_{\mathcal C}(S_n)$。
+- 每个终端有一个复矩阵 $Y_n\in\mathbb C^{2D\times2D}$，共 $8D^2$ 个实坐标，满足 $`Y_nY_n^*=S_n`$。令 $\Gamma(Y_n)=\operatorname{vec}(Y_n)$，$\omega(Y_n)=\operatorname{Tr}_K|\Gamma(Y_n)\rangle\langle\Gamma(Y_n)|$。
+- 每个终端有一个 $2D\times2D$ Hermitian 密度变量 $\tau_n$，坐标数 $4D^2$，及 $4D\times4D$ 复矩阵 $X_n$，坐标数 $32D^2$。
+- 一个共同实标量 $s\in[0,1]$，要求 $s\le\operatorname{Re}\operatorname{Tr}X_n$ 对全部终端成立，并加入（37.13）的块正性，使用 $\omega(Y_n)$ 和 $\rho_n=\operatorname{Tr}_K S_n$。
+
+不同 $n$ 的 $Y_n$ 只是在各终端表示同一真实状态的辅助纯化；它们不需要是一个物理累计环境的前缀。由（37.5）的纯化不变性，这种自由度既不改变单终端值，也不放松同一接收通道的要求。同一通道要求完整保留在 $S_n$ 的共同递推中。
+
+最大化 $s$ 得到的值恰为 $\gamma_D$。对于固定接收器，每个终端的 $\tau_n,X_n$ 独立优化，故共同下界的最大值就是各 $f_n$ 的最小值；反向，任何可行点都定义一台合法接收器和这些终端的可行保真度见证。
+
+按上述坐标选择，总实变量数恰为
+
+$$
+4D^4+N_D(4+8+4+32)D^2+1
+=388D^4+1.
+\tag{37.14}
+$$
+
+若把纯初态也当变量优化，会再增加 $O(D)$ 坐标；固定初态的基变换已经消去了这项。Choi 矩阵本身大小为 $O(D^2)$，不能与其余 $O(D)$ 大小的状态矩阵混为一谈。
+
+该可行集紧。Choi 正性和固定偏迹使 Choi 坐标有界；一步递推从密度矩阵出发始终保持密度矩阵；$`Y_nY_n^*=S_n`$ 给 $\|Y_n\|_{\rm HS}=1$；$\tau_n$ 为密度矩阵；保真度块正性给
+
+$$
+|(X_n)_{uv}|^2
+\le(\omega_n)_{uu}(\rho_n\otimes\tau_n)_{vv}\le1.
+$$
+
+全部等式和非严格正性约束闭，所以可行集紧。
+
+对固定 $a,b$，递推对 Choi 和状态变量是双线性的，$`Y_nY_n^*=S_n`$ 是二次等式，块矩阵条目也是次数至多二的多项式。将有限大小的 Hermitian 正性用主子式非负表述，就得到一个有限基本闭半代数优化；它在全局上并非凸优化，尽管固定接收器后的每个终端是 SDP。主子式展开的个数和次数随 $D$ 增长，式（37.14）的变量计数不等于多项式时间算法或固定次数标量约束。
+
+**可计算性范围和可复用边界。**
+
+若 $a,b$ 的实、虚分量是明确给定的实代数数，则上述紧半代数优化使用代数系数。实闭域量词消去和代数数隔离可在原则上确定 $\gamma_D$，并为每个固定 $D$ 输出经过认证的有理数
+
+$$
+0<q_D\le\Delta_D
+\quad\text{或}\quad
+0<q'_D\le Q_D.
+\tag{37.15}
+$$
+
+严格正性（37.9）保证存在这样的正有理下界；没有实用运行时间、条件数或精度复杂度声明。“全局多项式优化”只有带有效的全局证书或已证明收敛的认证算法时才能承担此结论，未经认证的局部数值最大值不能作下界证书。
+
+对未提供有效表示的任意实振幅，不声称能从其符号值运行算法得到逐来源的 $\Delta_D(a,b)$。如果只要求统一于
+$|a|^2,|b|^2\ge1/k$ 的下界，可以把 $a,b$ 的四个实坐标也加入优化，并加入第20节的整数系数归一化及端点距离约束。所得紧集依然没有 $\gamma=1$ 的点，故统一 $\Delta_{D,k}>0$；其优化系数是整数，原则上的有理证书计算只需输入 $D,k$。这扩大了证书的参数范围，但不自动给出足够强的数值界或实用算法。
+
+第20节和第35节的显式下界也给出此优化量的定量界。对一个终端取达到 $f_n$ 的 $\tau_n$，由
+
+$$
+D(\omega_n,\rho_n\otimes\tau_n)\le\sqrt{1-f_n^2}
+$$
+
+及边缘收缩、三角不等式，
+
+$$
+h(\sigma_n)\le16(1-f_n^2).
+\tag{37.16}
+$$
+
+在取得 $\gamma_D$ 的接收器上，全部 $f_n\ge\gamma_D$，于是
+
+$$
+G\le16N_DQ_D.
+$$
+
+若第35节给 $G\ge\kappa'_{D,k}$，则
+
+$$
+Q_D\ge\eta'_{D,k},\qquad
+\Delta_D\ge1-\sqrt{1-\eta'_{D,k}}.
+\tag{37.17}
+$$
+
+因此这一工具至少重现既有显式下界；进一步改进必须来自对全局保真度优化的更强估计或认证结果，不能仅凭重新定义不变量宣布新速率。
+
+一个可直接核对的低维边界是 $D=1$。此时接收通道唯一，只能丢弃输入，$\sigma_n=\rho_n$。对任意纯化，极分解或 Schmidt 展开给
+
+$$
+f_n=\lambda_{\max}(\rho_n),\qquad
+\Delta_1=1-\min_{1\le n\le8}\lambda_{\max}(\rho_n).
+\tag{37.18}
+$$
+
+确切地，根保真度平方的优化为
+$\max_{\tau}\operatorname{Tr}(\rho_n^2\tau^{\mathsf T})
+=\lambda_{\max}(\rho_n)^2$；平方根才给上式。它检验了根保真度与平方保真度的区别。一般 $D$ 的全局优化仍保留真实接收器自由度，不能由这一例子外推速率。
+
+本工具给出的新接口是：全部终端解码器和指数大小档案被消去，留下固定通道、前 $8D^2$ 个 $2D$ 维联合态及 $O(D)$ 大小的保真度块。下一步可研究某个可认证的全局上界
+$\gamma_D\le1-\zeta_D$，或等价的 $Q_D$ 下界。若目标为
+$\exp(-CD^2)$ 或 $\exp(-CD)$ 级误差下界，仍须提供相应的 $\zeta_D$ 定量估计；本文没有完成这一部分。
+
+[^phase_uhlmann_transition]: Armin Uhlmann, “The ‘transition probability’ in the state space of a *-algebra,” *Reports on Mathematical Physics* **9** (1976), 273–279, [doi:10.1016/0034-4877(76)90060-4](https://doi.org/10.1016/0034-4877(76)90060-4), [作者原文 PDF](https://www.physik.uni-leipzig.de/~uhlmann/PDF/Uh76a.pdf)。§2 式（4）定义所有共同表示中向量重叠模平方的上确界，§5 式（23）计算密度矩阵情形为平方保真度；本文的根保真度为其平方根。固定一份有限维纯化、对另一纯化腿取等距的形式使用纯化唯一性；把支撑等距完成到全输入的义务由（37.5）的证明给出。
+
+[^phase_watrous_fidelity_sdp]: John Watrous, “Simpler semidefinite programs for completely bounded norms,” [arXiv:1207.5726v2](https://arxiv.org/abs/1207.5726v2), 2 August 2012。式（3）明确采用根保真度；§2.1（原文第5—6页）的 primal problem 正是最大化 Re Tr X、约束 [[P,X],[X*,Q]]≥0，并由 Lemma 2 的收缩算子分解证明最优值等于根保真度，适用于奇异正半定矩阵。本文仅引用这一固定矩阵 SDP 工具，不将其计算复杂度结论扩展到共同接收器的非凸全局优化。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 指定纯输入前三终端的二维障碍与精确容量
+
+本节研究与保真度不变量 $\Delta_D$ 相同的指定来源输入 $|0\rangle_M$。同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端，而一个明确的三维固定接收器可以恢复前三个终端，所以这个指定输入任务的精确最小容量是三。二维障碍还把原来用于排除零点的 $32=8D^2$ 步缩短到三步，并给出相应的显式全局有理证书。这里的容量结算只要求指定输入，不等同于完整参考输入族的合同。
+
+**模型与纯输出必要性。**
+
+取来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+|a|^2+|b|^2=1,\quad ab\ne0,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B}.
+\tag{38.1}
+$$
+
+这里只将来源记忆排在张量因子前面。接收器 $K=\mathbb C^2$ 从独立纯态 $e$ 启动，重复使用同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。
+固定其一份 Stinespring 等距
+
+$$
+V:K\otimes\mathcal B\longrightarrow K\otimes E.
+\tag{38.2}
+$$
+
+环境每步可立即丢弃，不要求环境空白，不限制 Choi 秩。来源初态固定为 $|0\rangle_M$。接收后的联合态记为 $\sigma_n$。
+
+置 $p=|b|^2\in(0,1)$。真实来源边缘通道为
+
+$$
+\mathcal E(\rho)=\rho_{00}|m_0\rangle\langle m_0|
++\rho_{11}|0\rangle\langle0|.
+$$
+
+所以
+
+$$
+\rho_2=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\qquad
+\det\rho_2=p^2(1-p)>0.
+\tag{38.3}
+$$
+
+又有 $(\rho_2)_{11}=p(1-p)\in(0,1)$，故 $\rho_3$ 也是正定矩阵。
+
+**定理38.1（指定初态的最短二维障碍）。** 对（38.1）的任一非退化复振幅来源，从指定初态 $|0\rangle_M$ 和独立纯接收初态出发，同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端的活动记忆与全部档案。前两个终端则可由同一个二维通道精确恢复，因此第三终端是这一指定输入任务的首个障碍。由此得到（38.23）—（38.24）的短期限显式正误差证书。证明保留任意丢弃环境和任意 Choi 秩，不借用完整参考输入族的较强要求。
+
+**纯输出必要性。** 若某终端的真实记忆边缘 $\rho_n$ 正定，且仅作用于二维 $K$ 的通道精确恢复原来的 $M$—档案纯目标，则 $\sigma_n$ 必为纯态。
+
+证明。取实际累计环境给出的 $\sigma_n$ 纯化。精确恢复纯目标迫使记忆与累计环境的边缘为
+$\rho_n\otimes\omega_E$。其秩又等于接收器边缘的秩，不超过二。因此
+
+$$
+2\operatorname{rank}\omega_E
+=\operatorname{rank}(\rho_n\otimes\omega_E)
+\le2.
+$$
+
+环境为纯态，原来的 $\sigma_n$ 也纯。反过来，若 $\sigma_n$ 纯且具有正确的 $\rho_n$，它与真实目标是同一 $\rho_n$ 的两份纯化；可将 $K$ 等距映入目标的档案 Schmidt 支撑，得到全域局部解码。证明完毕。
+
+因此，第二、第三终端均可精确解码，当且仅当 $\sigma_2,\sigma_3$ 均为纯态。以下直接排除后一个条件。
+
+**第二终端纯性强制第一接收态纯。**
+
+首次来源发射的档案恒为 $|0\rangle_{\mathcal B}$，所以
+
+$$
+\sigma_1=|m_0\rangle\langle m_0|\otimes\tau,\qquad
+\tau=\mathcal C(|e,0\rangle\langle e,0|).
+\tag{38.4}
+$$
+
+假设 $\sigma_2$ 纯。若 $\tau$ 秩二，取其谱分解
+$\tau=\lambda_0|q_0\rangle\langle q_0|+\lambda_1|q_1\rangle\langle q_1|$，
+其中 $\lambda_0,\lambda_1>0$，$q_0,q_1$ 正交归一。
+
+第二次发射前后的 $M\mathcal B$ 纯态为
+
+$$
+|\Theta\rangle
+=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B},
+\tag{38.5}
+$$
+
+它的记忆边缘为正定的 $\rho_2$，故在 $\mathcal B$ 上具有满 Schmidt 支撑。接收第二步时，这个纯态与 $\tau$ 张量相乘。
+
+两个正权谱分支接收后的混合态等于同一个纯态 $\sigma_2$，所以每个分支的 $MK$ 输出都等于这份纯态。两份关于正定 $\rho_2$ 的纯化只差 $K$ 上酉变换，因此存在一个共同酉 $U:\mathcal B\to K$ 和单位环境向量 $\zeta_0,\zeta_1$，满足
+
+$$
+V(q_j\otimes|b\rangle)
+=U|b\rangle\otimes\zeta_j
+\quad(j,b\in\{0,1\}).
+\tag{38.6}
+$$
+
+这里对全部 $b$ 的结论来自（38.5）的满 Schmidt 支撑，不能只比较一条输入向量。
+
+等距 $V$ 保持 $q_0\otimes|b\rangle$ 与 $q_1\otimes|b\rangle$ 的正交性，故 $\zeta_0\perp\zeta_1$。由于 $\{q_j\otimes|b\rangle\}$ 已是整个四维输入空间的基，（38.6）给出全域通道
+
+$$
+\mathcal C(X)=U(\operatorname{Tr}_K X)U^*.
+\tag{38.7}
+$$
+
+将它用于首步，得到 $\tau=U|0\rangle\langle0|U^*$ 为纯态，矛盾。
+
+所以 $\tau$ 必为纯态。取单位向量 $k\in K$，使 $\tau=|k\rangle\langle k|$。首步和第二步的固定等距因而可写为
+
+$$
+V(e\otimes|0\rangle)=k\otimes\eta_1,\qquad
+V(k\otimes|b\rangle)=u_b\otimes\eta_2
+\quad(b=0,1),
+\tag{38.8}
+$$
+
+其中 $\eta_1,\eta_2$ 单位，$u_0,u_1$ 是 $K$ 的一组正交归一基。
+
+**第三终端与固定等距的交叉 Gram 矛盾。**
+
+由（38.5）、（38.8），第二终端的联合纯态是
+
+$$
+|\psi_2\rangle
+=a|m_0\rangle\otimes u_0+b|0\rangle\otimes u_1
+=|0\rangle\otimes(a^2u_0+bu_1)
++|1\rangle\otimes ab\,u_0.
+\tag{38.9}
+$$
+
+定义
+
+$$
+r=\sqrt{|a|^4+|b|^2}>0,\qquad
+q=(a^2u_0+bu_1)/r.
+\tag{38.10}
+$$
+
+$q$ 单位，且因 $b\ne0$，$q$ 与 $u_0$ 不共线。
+
+第三次发射后，实际的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,\ u_0\otimes|1\rangle\}.
+\tag{38.11}
+$$
+
+理由是其两个记忆系数为线性无关的 $m_0,|0\rangle$，两个接收输入系数分别为非零的
+$r q\otimes|0\rangle$、$ab\,u_0\otimes|1\rangle$。
+
+若 $\sigma_3$ 也纯，则这整个二维支撑经 $V$ 后位于
+$K\otimes\mathbb C\eta_3$，并因两边维数都是二而占满该空间。所以存在正交归一基 $v_0,v_1$ 和单位 $\eta_3$，使
+
+$$
+V(q\otimes|0\rangle)=v_0\otimes\eta_3,\qquad
+V(u_0\otimes|1\rangle)=v_1\otimes\eta_3.
+\tag{38.12}
+$$
+
+令 $c_{23}=\langle\eta_2,\eta_3\rangle$。把（38.8）的两个第二步输入与（38.12）的两个第三步输入交叉取内积，得到
+
+$$
+\begin{pmatrix}
+\langle k,q\rangle&0\\
+0&\langle k,u_0\rangle
+\end{pmatrix}
+=
+c_{23}
+\begin{pmatrix}
+\langle u_0,v_0\rangle&\langle u_0,v_1\rangle\\
+\langle u_1,v_0\rangle&\langle u_1,v_1\rangle
+\end{pmatrix}.
+\tag{38.13}
+$$
+
+右边第二个矩阵是酉矩阵。若 $c_{23}=0$，则 $k$ 同时正交于张满 $K$ 的 $q,u_0$，矛盾。故 $c_{23}\ne0$，两项非对角元必须为零，于是
+
+$$
+v_0\parallel u_0,\qquad v_1\parallel u_1,\qquad
+|\langle k,q\rangle|=|\langle k,u_0\rangle|.
+\tag{38.14}
+$$
+
+特别地，$k$ 不可能平行于 $u_0$：否则（38.14）使 $q\parallel u_0$，与（38.10）矛盾。因此
+
+$$
+\langle k,u_1\rangle\ne0.
+\tag{38.15}
+$$
+
+现在把首次输入 $e\otimes|0\rangle$ 与第二步的
+$k\otimes|1\rangle$ 比较。输入正交，而输出内积为
+$\langle k,u_1\rangle\langle\eta_1,\eta_2\rangle$。
+由（38.15），$\langle\eta_1,\eta_2\rangle=0$。
+再与 $k\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,k\rangle
+=\langle k,u_0\rangle\langle\eta_1,\eta_2\rangle=0.
+\tag{38.16}
+$$
+
+同理，把首次输入与第三步的 $u_0\otimes|1\rangle$ 比较，利用
+$v_1\parallel u_1$ 及（38.15），得到
+$\langle\eta_1,\eta_3\rangle=0$。
+再与 $q\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,q\rangle
+=\langle k,v_0\rangle\langle\eta_1,\eta_3\rangle=0.
+\tag{38.17}
+$$
+
+二维空间中，非零 $e$ 的正交补是一条直线。（38.16）、（38.17）迫使
+$q\parallel k$，再由（38.14）得到 $k\parallel u_0$，最终又给
+$q\parallel u_0$，矛盾。
+
+**结论。** 对任意非退化复振幅 $a,b$，同一个二维固定 CPTP 接收器从指定输入 $|0\rangle$ 出发，不能使第二、第三终端同时精确可恢复。证明没有假设第一接收态纯，也没有假设各轮环境相同、正交或空白；所需纯性和两个环境正交关系均由实际合同推出。
+
+这个期限是该指定输入任务的首个障碍：取
+$\mathcal C(X)=\operatorname{Tr}_K X$，把每个新发出位存入二维接收器，前两个终端可精确恢复。终端一输出固定 $|0\rangle$；终端二将接收位前面附上首位 $|0\rangle$，就恢复完整档案。首步后继续使用同一个通道即可，不需免费控制或终端知识。
+
+**对 $\Delta_2$ 的短期限与显式全局证书。**
+
+令 $f_n(\mathcal C)$ 为指定来源输入下终端 $n$ 最优局部解码的根保真度，等价于消去解码器后的
+$\max_\tau F(\omega_n,\rho_n\otimes\tau)$。定义
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\quad
+\Delta_2^{[3]}=1-\gamma_2^{[3]},
+\quad
+Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{38.18}
+$$
+
+首终端对所有 $\mathcal C$ 都有 $f_1=1$，因为其真实档案恒为已知纯态
+$|0\rangle$。所以省略 $f_1$ 不改变前三终端的值。
+
+有限维 CPTP 集紧、$f_n$ 连续；上述精确障碍使最大值严格小于一。因此
+$\Delta_2^{[3]}>0$。原来使用前32终端的 $\Delta_2$ 满足
+
+$$
+\Delta_2\ge\Delta_2^{[3]}.
+\tag{38.19}
+$$
+
+还可将这个短期限零点排除代入既有的环境缺陷／实代数方法，给出无需数值搜索的有理证书。取整数 $k\ge2$，假设
+$|a|^2,|b|^2\ge1/k$，并令
+
+$$
+G_3=h(\sigma_2)+h(\sigma_3),
+\tag{38.20}
+$$
+
+其中 $h$ 是第20节的完整环境解耦缺陷多项式。若 $G_3=0$，则两个终端的记忆与累计环境均成乘积；由（38.3）及其第三步版本，秩论证迫使
+$\sigma_2,\sigma_3$ 都纯，已被上面的几何证明排除。所以整个合法参数集上
+$G_3>0$。
+
+使用第35节的固定次数展开，但只保留三个轨道变量
+$S_1,S_2,S_3$。二维接收通道的一份通用等距为
+$W:\mathbb C^4\to\mathbb C^2\otimes\mathbb C^8$，含128个实变量。
+保留复 $a,b$ 的四个实变量，再加三个 $4\times4$ Hermitian 状态的48个变量，总数为
+
+$$
+v_3=180.
+$$
+
+等距约束16条、来源归一化及端点约束3条、三个递推48条、状态实坐标的双侧盒约束96条，总数为
+
+$$
+s_3=163.
+$$
+
+递推次数至多五、目标次数至多四，取固定偶数 $d_3=6$。
+每个 $h(S_n)$ 的整数系数范数不超过
+$400\cdot2^4=6400$，两项之和不超过12800；递推约束的系数界不超过4128。因此可取
+
+$$
+H_3=\max\{k,12800\},\qquad
+\widehat H_3=\max\{H_3,2v_3+2s_3\}=H_3.
+\tag{38.21}
+$$
+
+状态正性和迹一仍由合法递推保证，没有添加高次主子式约束。
+
+与第35节相同的正最小值定理于是给出完全显式的正有理数
+
+$$
+\kappa_{2,k}^{[3]}
+=(16H_3\,6^{180})^{-180\,12^{180}},
+\qquad
+\min G_3\ge\kappa_{2,k}^{[3]}.
+\tag{38.22}
+$$
+
+对任何达到 $f_n$ 的产品环境态，
+$h(\sigma_n)\le16(1-f_n^2)$。在达到
+$\gamma_2^{[3]}$ 的接收器上，因此有
+$G_3\le32Q_2^{[3]}$。得到
+
+$$
+\boxed{
+Q_2^{[3]}\ge\frac{\kappa_{2,k}^{[3]}}{32},
+\qquad
+\Delta_2\ge\Delta_2^{[3]}
+\ge1-\sqrt{1-\kappa_{2,k}^{[3]}/32}.
+}
+\tag{38.23}
+$$
+
+若只要有理数形式，也有
+
+$$
+\Delta_2\ge\frac{\kappa_{2,k}^{[3]}}{64},
+\tag{38.24}
+$$
+
+因为 $1-\sqrt{1-x}\ge x/2$ 对 $0\le x\le1$ 成立。完整合同的最坏误差也至少为
+$\kappa_{2,k}^{[3]}/32$，指定输入的第二、第三终端已经见证此下界。
+
+这里使用了既有实代数最小值定理，但新增的零点排除是只用第二、第三终端的二维几何矛盾。对 $D=2$，展开所需变量从第35节通用构造的644个减到180个。证书仍极保守；它只证明一个明确正有理下界，没有计算真正的 $\Delta_2$、宣称数值最优或给出一般 $D$ 的新渐近率。全部结论均针对固定的全域 CPTP 接收器，不是假设接收酉或预设纯环境的受限模型。
+
+**源相位的固定换基。** 对已知的非零复振幅，令
+
+$$
+D_M=\operatorname{diag}(1,e^{i(\arg a-\arg b)}),\qquad
+U_{\mathcal B}=\operatorname{diag}
+(e^{-i\arg a},e^{i(\arg a-\arg b)}).
+\tag{38.25}
+$$
+
+逐列计算得到
+
+$$
+(D_M\otimes U_{\mathcal B})T_{a,b}D_M^*
+=T_{|a|,|b|}.
+\tag{38.26}
+$$
+
+在正实振幅来源上，把每个新发出位先作用 $U_{\mathcal B}^*$，再使用原来的固定接收通道；终端解码档案再作用 $U_{\mathcal B}^{\otimes n}$。该预处理每轮相同，可直接并入一个全域 CPTP 接收门，不增加持久控制。指定初态 $|0\rangle$ 被 $D_M$ 保持；完整参考合同则同时对来源初态作固定酉换基，而其全输入上确界不变。因此本节的指定输入误差、相应保真度不变量以及完整参考容量都只依赖 $p=|b|^2$，后续可在 $a=\sqrt{1-p},b=\sqrt p$ 上研究。
+
+这一等价没有把接收通道限制为实矩阵，也没有通过平均通道来选取对称接收器；被改变的是固定的物理基和每轮相同的新位预处理。
+
+**三维达到构造与精确容量。**
+
+**定理38.2（指定输入前三终端的精确容量三）。** 对（38.1）的任一非退化复振幅来源，以 $|0\rangle_M$ 为指定来源初态，要求同一个全域 CPTP 接收器从独立纯态启动，并在每个 $n=1,2,3$ 终端由仅作用于接收器的解码恢复活动记忆与完整档案，则接收空间的最小维数为三。达到下界的接收门及各终端解码门都可以与 $a,b$ 无关。
+
+证明。二维不可能性已由定理38.1给出；一维装置可嵌入二维并将通道全域扩展，因此更小维数也不可能。下面构造三维装置。
+
+取 $K=\operatorname{span}\{e_0,e_1,e_2\}$，接收初态为 $e_0$，单轮丢弃环境为
+$E=\operatorname{span}\{A,B\}$。定义固定酉
+$V:K\otimes\mathcal B\to K\otimes E$ 为以下基向量置换：
+
+$$
+\begin{array}{lll}
+V(e_0\otimes|0\rangle)=e_2\otimes A,&
+V(e_1\otimes|0\rangle)=e_0\otimes A,&
+V(e_2\otimes|0\rangle)=e_0\otimes B,\\
+V(e_0\otimes|1\rangle)=e_1\otimes A,&
+V(e_2\otimes|1\rangle)=e_1\otimes B,&
+V(e_1\otimes|1\rangle)=e_2\otimes B.
+\end{array}
+\tag{38.27}
+$$
+
+输入六个基向量和输出六个基向量分别构成整个六维空间的正交归一基，故此表定义了全域酉。每轮都使用
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{38.28}
+$$
+
+从 $|0\rangle_M\otimes e_0$ 逐轮作用真实来源等距及（38.27），得到接收后的纯联合态
+
+$$
+\begin{aligned}
+|\Phi_1\rangle_{MK}&=m_0\otimes e_2,\\
+|\Phi_2\rangle_{MK}&=a\,m_0\otimes e_0+b\,m_1\otimes e_1,\\
+|\Phi_3\rangle_{MK}&=m_0\otimes(a^2e_2+be_0)+ab\,m_1\otimes e_1.
+\end{aligned}
+\tag{38.29}
+$$
+
+相应累计环境恰为 $A$、$A\otimes B$、$A\otimes B\otimes A$，每个终端都与 $MK$ 解耦。这些等式保留复振幅本身，未对来源作相位换基。
+
+终端 $n\le3$ 的解码器在本地附加这个已知的环境前缀，然后按逆序对接收器和第 $n,n-1,\ldots,1$ 个环境作用 $V^*$，每次保留复原的档案位。最后丢弃复原的初始接收寄存器。这个过程是定义在整个 $\mathcal L(K)$ 上的 CPTP 通道；实际输入上最终寄存器恢复为 $e_0$，所有档案位均恢复为原来的次序。早期接收操作与其后的来源发射作用于不交系统，故可把累计接收视为全部发射后仅作用于档案和接收器的酉；其逆不访问活动记忆，因此同时保留活动记忆与档案的完整联合态。
+
+门表和附加的环境前缀均不含 $a,b$；接收过程中只持久保存三维 $K$，终端解码可按已知的 $n$ 选择。记这一指定输入任务的最小维数为 $D_{\min}^{0,[3]}$，便有
+
+$$
+\boxed{D_{\min}^{0,[3]}=3.}
+\tag{38.30}
+$$
+
+证明完毕。该达到构造只保证指定初态 $|0\rangle_M$ 的前三终端，完整参考输入族的三终端最小容量四属于不同合同；也没有由（38.30）推出四步以后或所有终端的精确恢复。
+
+## 追加锚（本行以下为增补区）
+
+## 39. 六终端的八维固定接收器与指定核心延拓的精确容量
+
+本节固定已知非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+\tag{39.1}
+$$
+
+源的一步等距为 $|i\rangle_M\mapsto m_i\otimes|i\rangle_B$。接收器从独立纯态启动，每轮对接收器与最新发出位使用同一个全域 CPTP 通道；所有持久系统均计入接收器，活动记忆和任意外部参考不可访问。要求前六个终端各自精确恢复完整参考—活动记忆—原始档案联合态，终端解码器允许依终端而异。
+
+**定理 39.1（六终端的八维上界）。** 对每份满足（39.1）的已知来源，存在一个八维固定接收通道，精确服务上述六个终端。因此，结合第36节的五终端精确容量，
+
+$$
+\boxed{7\le d_{\mathrm{CPTP},6}(a,b)\le8.}
+\tag{39.2}
+$$
+
+以下给出完整构造。接收通道可以针对已知 $a,b$ 校准，但实际执行不依赖轮次控制。
+
+### 39.1 五维向量核心与三个新增方向
+
+取接收空间 $K$ 的八元正交单位基
+
+$$
+u,v,w,p,e,g,h,t,
+\tag{39.3}
+$$
+
+初始接收态为 $w$。环境 $E$ 二维，正交单位基为 $A,B$。沿用第23节的五维向量核心，令
+
+$$
+\begin{aligned}
+c&=\sqrt{|a|^4+|b|^2},&
+d&=\sqrt{c^2+|b|^2},\\
+z&=\frac{a^2u+bv}{c},&
+y&=\frac{-\overline b\,u+\overline a^{\,2}v}{c},\\
+q&=\frac{\overline b\,y+\overline a^{\,2}e}{c},&
+f&=\frac{-a^2y+be}{c},\\
+s&=\frac{-cv+be}{d},&
+r&=\frac{df-cs}{b}.
+\end{aligned}
+\tag{39.4}
+$$
+
+这些向量满足
+
+$$
+\begin{gathered}
+(z,y),\quad(q,f),\quad(p,q,s,r)
+\quad\text{分别是正交单位族},\\
+q,f\in\operatorname{span}\{y,e\},\qquad
+q,f\perp z,w,p,\qquad s\perp u,w,p,\\
+cs+br=df,\qquad
+\operatorname{span}\{p,q,s,r\}
+=\operatorname{span}\{u,v,p,e\}.
+\end{gathered}
+\tag{39.5}
+$$
+
+最后一个空间等式也可直接核对：由 $r=(df-cs)/b$ 可在左侧得到 $f$，由 $(q,f)$ 得到 $\operatorname{span}\{y,e\}$，由 $s=(-cv+be)/d$ 得到 $v$，最后由 $y$ 的非零 $u$ 系数得到 $u$。
+
+在新增平面 $\operatorname{span}\{g,h\}$ 中置
+
+$$
+\begin{aligned}
+\kappa&=\sqrt{|a|^4d^2+|b|^2c^2},\\
+x&=\frac{a^2dg+cbh}{\kappa},&
+y_4&=\frac{-c\overline b\,g+\overline a^{\,2}dh}{\kappa}.
+\end{aligned}
+\tag{39.6}
+$$
+
+直接取内积得 $\|x\|=\|y_4\|=1$、$\langle x,y_4\rangle=0$。再定义
+
+$$
+\lambda=\sqrt{\kappa^2+|b|^2d^2},\qquad
+z_6=\frac{\kappa t+bd\,y_4}{\lambda}.
+\tag{39.7}
+$$
+
+于是 $z_6$ 单位，且正交于 $x$ 及整个五维核心。$c,d,\kappa,\lambda$ 均严格正，且 $b\ne0$，所以所有分母均非零。
+
+### 39.2 同一个部分酉的十三行作用
+
+记输入 $v0=v\otimes|0\rangle$、$v1=v\otimes|1\rangle$；输出 $vA=v\otimes A$、$vB=v\otimes B$。规定
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+x0&tA&s1&hB\\
+g1&y_4A&z_6 0&pB\\
+&&t1&eB
+\end{array}
+\tag{39.8}
+$$
+
+左半表的零位输入族为 $(w,z,x)$，一位输入族为 $(w,u,g)$；右半表分别为 $(p,q,f,z_6)$ 和 $(p,s,t)$。四族各自正交归一。
+
+两半表的零位族彼此正交：原核心给 $w,z\perp p,q,f$，新增 $x$ 正交于核心，$z_6$ 正交于核心及 $x$。两半表的一位族也彼此正交：原核心给 $w,u\perp p,s$，新增 $g,t$ 正交于核心且相互正交。不同输入位之间自动正交，所以十三个输入构成正交单位族。
+
+环境 $A$ 块中的接收输出为 $(p,q,s,r,t,y_4)$，是六个正交单位向量；环境 $B$ 块为 $(u,v,w,g,h,p,e)$，是七个正交单位向量。两个环境正交，所以十三个输出也构成正交单位族。
+
+把两侧各自补成十六维空间的正交单位基，得到全域酉
+
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E.
+\tag{39.9}
+$$
+
+每轮固定使用同一个通道
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{39.10}
+$$
+
+环境逐轮丢弃，没有任何环境系统作为额外持久接收记忆保留。
+
+### 39.3 两个初始列的全部六轮轨迹
+
+以 $\Psi_n^i\in M\otimes K$ 表示初始活动记忆为 $|i\rangle$ 时，第 $n$ 轮之后的联合列；记 $m_jv=m_j\otimes v$，省略共同环境字。前两轮为
+
+$$
+\begin{array}{ll}
+\Psi_1^0=m_0p,&\Psi_1^1=m_1q,\\[2pt]
+\Psi_2^0=a\,m_0u+b\,m_1v,&\Psi_2^1=m_0w.
+\end{array}
+\tag{39.11}
+$$
+
+第三轮给
+
+$$
+\Psi_3^0=c\,m_0s+ab\,m_1r,\qquad
+\Psi_3^1=a\,m_0p+b\,m_1q.
+\tag{39.12}
+$$
+
+利用 $cs+br=df$，第四轮为
+
+$$
+\begin{aligned}
+\Psi_4^0&=ad\,m_0g+cb\,m_1h,\\
+\Psi_4^1&=m_0(a^2u+bw)+ab\,m_1v.
+\end{aligned}
+\tag{39.13}
+$$
+
+第五轮第一列的零位输入系数为 $a^2dg+cbh=\kappa x$，一位输入系数为 $abd\,g$，故
+
+$$
+\begin{aligned}
+\Psi_5^0&=\kappa m_0t+abd\,m_1y_4,\\
+\Psi_5^1&=a\,m_0(cs+bp)+b\,m_1(a^2r+bq).
+\end{aligned}
+\tag{39.14}
+$$
+
+第六轮第一列的两个输入系数为
+
+$$
+a\kappa t+abd\,y_4=a\lambda z_6,\qquad b\kappa t.
+\tag{39.15}
+$$
+
+第二列的两个输入系数为
+
+$$
+\begin{aligned}
+a^2(cs+bp)+b(a^2r+bq)
+&=a^2df+a^2bp+b^2q,\\
+ab(cs+bp)&=abc\,s+ab^2p.
+\end{aligned}
+\tag{39.16}
+$$
+
+表（39.8）于是给出最后一轮
+
+$$
+\begin{aligned}
+\Psi_6^0&=a\lambda\,m_0p+b\kappa\,m_1e,\\
+\Psi_6^1&=m_0(a^2dg+a^2bu+b^2w)
+          +m_1(abc\,h+ab^2v).
+\end{aligned}
+\tag{39.17}
+$$
+
+每一轮的两个初始列都具有同一个纯输出环境，六轮依次为 $A,B,A,B,A,B$。因此这些等式通过线性性保持任意初始叠加，并保持与任意不可访问参考的相干关联。
+
+### 39.4 只在接收端运行的完整解码
+
+固定终端 $n\le6$，记 $\eta_1\cdots\eta_n$ 为 $ABABAB$ 的前 $n$ 位。解码端准备这份已知纯环境字，从 $\eta_n$ 开始逆序施加 $V^*$，每次恢复一个发出位，最后恢复独立接收初态 $w$。将发出位排列回原有档案次序并丢弃 $w$，得到一个定义在整个接收空间上的 CPTP 解码器。
+
+早期接收门与其后的源发射分别作用于接收器—既有档案和活动记忆—新发出位，因此可以交换次序。全部接收门在终端等价于只作用于完整档案及初态 $w$ 的累计酉。上述逆运算正是该累计酉在实际输入像上的逆，始终只访问接收器、解码端准备的环境以及已恢复的档案位。
+
+于是对任意参考 $R$、任意初始联合态 $\rho_{RM}$，都有
+
+$$
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\bigl(\rho^{\mathrm{received}}_{RMK,n}\bigr)
+=\rho^{\mathrm{source}}_{RM B_1\cdots B_n}.
+\tag{39.18}
+$$
+
+这证明八维上界。六终端合同包含前五个终端要求，而第36节给 $d_{\mathrm{CPTP},5}(a,b)=7$，所以得到（39.2）。定理39.1证明完毕。
+
+### 39.5 固定第25节前四轮九行部分表的延拓下界
+
+以下另外限制实现类。固定第25节构造（25.39）的前四轮九行部分表
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+&&s1&hB
+\end{array}
+\tag{39.19}
+$$
+
+其中五维向量核心仍为（39.4），$g,h$ 是与核心正交的单位方向。只允许在尚未指定的输入上选择等距完成，要求前六轮的新环境为同一对正交单位向量构成的 $ABABAB$。
+
+**定理 39.2（指定九行核心的六终端最优容量）。** 在（39.19）及确定正交交替环境的附加限制下，六终端最小接收维数恰为八。
+
+证明：表（39.8）已给八维上界。反设七维完成存在，则 $K$ 的正交单位基为 $u,v,w,p,e,g,h$。第五轮第一来源列的两个新输入为 $x0$ 和 $g1$，其中 $x$ 由（39.6）定义。由于第五轮要求环境 $A$，而 $m_0,m_1$ 线性无关且两个系数均非零，必有
+
+$$
+V(x0)=j\otimes A,\qquad V(g1)=k\otimes A,
+\tag{39.20}
+$$
+
+其中 $j,k$ 正交归一。它们与已有环境 $A$ 输出 $p,q,s,r$ 正交，所以（39.5）给
+
+$$
+j,k\in\operatorname{span}\{w,g,h\}.
+\tag{39.21}
+$$
+
+这里保留了该三维正交补中全部第五轮自由。第五轮第一列必为
+
+$$
+\Psi_5^0=\kappa m_0j+abd\,m_1k.
+\tag{39.22}
+$$
+
+第六轮的一位输入系数为非零倍数 $b\kappa j$。该方向必须输出环境 $B$，所以固定等距使 $j1$ 正交于旧环境 $A$ 的一位输入 $w1,u1,g1$。结合（39.21）得到
+
+$$
+j=\zeta h,\qquad |\zeta|=1,\qquad
+k\in\operatorname{span}\{w,g\}.
+\tag{39.23}
+$$
+
+第六轮零位输入系数是 $a(\kappa j+bdk)$。它同样必须输出环境 $B$，故
+
+$$
+\kappa j+bdk\perp\operatorname{span}\{w,z,x\}.
+\tag{39.24}
+$$
+
+先与 $w$ 取内积，由 $bd\ne0$ 得 $k\perp w$。于是
+
+$$
+k=\xi g,\qquad |\xi|=1.
+\tag{39.25}
+$$
+
+再与 $x$ 取内积，得到
+
+$$
+\begin{aligned}
+0
+&=\langle x,\kappa\zeta h+bd\,\xi g\rangle\\
+&=c\overline b\,\zeta+
+\frac{b\overline a^{\,2}d^2}{\kappa}\,\xi.
+\end{aligned}
+\tag{39.26}
+$$
+
+因此取绝对值必须满足
+
+$$
+c\kappa=|a|^2d^2.
+\tag{39.27}
+$$
+
+但令 $X=|a|^2$、$Y=|b|^2>0$，由 $c^2=X^2+Y$、$d^2=X^2+2Y$、$\kappa^2=X^2d^2+Yc^2$，有
+
+$$
+\begin{aligned}
+c^2\kappa^2-X^2d^4
+&=c^2(X^2d^2+Yc^2)-X^2d^4\\
+&=Y(c^4-X^2d^2)\\
+&=Y^3>0,
+\end{aligned}
+\tag{39.28}
+$$
+
+与（39.27）矛盾。七维完成不可能；更低维数本来不能容纳（39.19）要求的七个正交单位核心方向。结合八维构造，受限最优值恰为八。证明完毕。
+
+定理39.2固定的是第25节的前四轮九行实现，不能将任意七维接收器归约到该表。一般七维候选可以改变早期实现或采用尚未排除的早期混合附加态，因此一般六终端问题在本节仍只有（39.2）：最优值为七或八。八维构造也没有给出一个统一服务任意多终端的八维固定通道。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 二维固定接收器的初等误差隙与三终端校准
+
+本节对第38节指定输入 $|0\rangle_M$ 的三终端障碍作定量化。来源、独立纯接收初态、同一个全域 CPTP 接收通道以及任意丢弃环境均保持不变。结论仅使用第二、第三终端，不使用实代数正最小值界。
+
+**显式结论与保真度约定。**
+
+来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B},\qquad
+|a|^2+|b|^2=1,\quad ab\ne0.
+\tag{40.1}
+$$
+
+接收器 $K=\mathbb C^2$ 从纯态 $e$ 启动，每轮重复同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。固定一份全域 Stinespring 等距
+$V:K\otimes\mathcal B\to K\otimes E$。
+只取来源初态 $|0\rangle_M$，接收联合态记为 $\sigma_n$，未接收的完整纯目标记为
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$。
+
+令 $f_n(\mathcal C)$ 为终端 $n$ 的最佳局部解码根保真度；所以
+$f_n^2$ 是最佳解码后对纯目标投影的概率。置
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\qquad Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{40.2}
+$$
+
+最大值取得，但下面的逐装置论证不依赖寻找这个最大点。
+
+记
+
+$$
+p=|b|^2,\qquad
+r=\sqrt{(1-p)^2+p},\qquad
+g=1-\frac{1-p}{r}\in(0,1).
+\tag{40.3}
+$$
+
+真实记忆边缘满足
+
+$$
+\begin{aligned}
+\rho_2&=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\\
+\rho_3&=(1-p(1-p))|m_0\rangle\langle m_0|
++p(1-p)|0\rangle\langle0|.
+\end{aligned}
+$$
+
+令
+
+$$
+\mu=\min\{\lambda_{\min}(\rho_2),\lambda_{\min}(\rho_3)\}
+=\frac{1-\sqrt{1-4p^2(1-p)(1-p+p^2)}}2>0.
+\tag{40.4}
+$$
+
+后一等号使用 $\det\rho_3=(1-p+p^2)\det\rho_2\le\det\rho_2$ 和迹一二阶矩阵的最小特征值公式。
+
+**定理40.1（二维初等显式误差隙）。** 定义
+
+$$
+\epsilon_{\rm el}(p)=2^{-96}\mu^4g^{16}.
+\tag{40.5}
+$$
+
+则
+
+$$
+\boxed{Q_2^{[3]}\ge\epsilon_{\rm el}(p).}
+\tag{40.6}
+$$
+
+因此任意二维固定接收器及第二、第三终端解码器中，至少一个终端的指定输入完整半迹恢复误差不小于 $\epsilon_{\rm el}(p)$。
+原来使用前32终端的指定输入不变量还满足
+
+$$
+\Delta_2\ge1-\sqrt{1-\epsilon_{\rm el}(p)}
+\ge\epsilon_{\rm el}(p)/2.
+\tag{40.7}
+$$
+
+完整参考合同包含这个指定输入，所以受相同必要下界约束；本定理没有把指定输入任务当成完整合同的充分条件。
+
+若 $|a|^2,|b|^2\ge1/k$，$k\ge2$ 为整数，则有简洁的统一有理证书
+
+$$
+\boxed{
+Q_2^{[3]}\ge\frac1{2^{116}k^{24}},
+\qquad
+\Delta_2\ge\frac1{2^{117}k^{24}}.
+}
+\tag{40.8}
+$$
+
+这些常数为保守值，不声称最优。
+
+证明分为近纯性、同一门的首步约束和二维 Gram 稳定性三部分。
+
+**维数二与满秩记忆把近恢复转为近纯化。**
+
+先证明一个使用维数饱和的估计。设 $|\Gamma\rangle_{MKE}$ 是接收联合态
+$\sigma_{MK}$ 的实际纯化，$\dim M=\dim K=2$，且
+$\rho_M\succeq\mu I_M$。
+若存在环境态 $\tau_E$ 满足
+
+$$
+D(\omega_{ME},\rho_M\otimes\tau_E)\le\delta,
+\qquad
+\omega_{ME}=\operatorname{Tr}_K|\Gamma\rangle\langle\Gamma|,
+\tag{40.9}
+$$
+
+则
+
+$$
+\lambda_{\max}(\sigma_{MK})\ge1-\frac{2\delta}{\mu}.
+\tag{40.10}
+$$
+
+为证此式，记 $\rho_M$ 的特征值为 $\alpha\ge\beta\ge\mu$，
+$\tau_E$ 的特征值为 $t_1\ge t_2\ge\cdots$，不足两项时补零。
+$\rho_M\otimes\tau_E$ 的最大特征值是 $\alpha t_1$，次大值是
+$\max\{\beta t_1,\alpha t_2\}$。
+若次大值为 $\beta t_1$，最大的两个特征值之和为 $t_1$；
+否则其和至多 $\alpha(t_1+t_2)\le\alpha$，所以余下谱质量至少为
+$\beta\ge\mu$。两种情况均给
+
+$$
+1-\|\rho_M\otimes\tau_E\|_{(2)}
+\ge\mu(1-t_1),
+\tag{40.11}
+$$
+
+其中 $\|\cdot\|_{(2)}$ 是最大的两个特征值之和。
+
+$\omega_{ME}$ 的秩不超过 $\dim K=2$。用其支撑投影作为（40.9）的测量效果，
+得到 $\|\rho_M\otimes\tau_E\|_{(2)}\ge1-\delta$，故
+$1-t_1\le\delta/\mu$。再偏迹到 $E$，对 $\tau_E$ 的最大特征向量作投影，得
+$\lambda_{\max}(\omega_E)\ge t_1-\delta$。
+$\omega_E$ 与 $\sigma_{MK}$ 非零谱相同，因此
+
+$$
+\lambda_{\max}(\sigma_{MK})
+\ge1-\delta/\mu-\delta\ge1-2\delta/\mu.
+$$
+
+这证明（40.10），不限制环境维数或其秩。
+
+现在假设某终端最佳目标投影概率 $f_n^2\ge1-\epsilon$。
+选择达到最优值的解码器，并对其取 Stinespring 等距。
+将解码后全局纯态在真实目标方向上的分量归一化，就得到某环境态
+$\tau_E$，使（40.9）以 $\delta=\sqrt\epsilon$ 成立。
+这一过程只用目标投影概率，不要求预先有半迹误差上界。
+于是对于 $n=2,3$，令
+
+$$
+t=\frac{2\sqrt\epsilon}{\mu},
+$$
+
+便有 $\lambda_{\max}(\sigma_n)\ge1-t$。
+
+取最大特征向量 $\psi_n$。在实际纯化中，其对应环境向量可选为单位
+$\zeta_n$，满足
+
+$$
+\|\Gamma_n-\psi_n\otimes\zeta_n\|
+\le\sqrt{2t}.
+$$
+
+另一方面，$|\psi_n\rangle\langle\psi_n|$ 与 $\sigma_n$ 的半迹距离不超过
+$t$，其记忆边缘与真实 $\rho_n$ 的距离也不超过 $t$。
+由 Uhlmann 及 $F\ge1-D$，存在同一个二维 $K$ 上的纯化
+$\phi_n$，满足 $\operatorname{Tr}_K|\phi_n\rangle\langle\phi_n|=\rho_n$ 且
+$\|\psi_n-\phi_n\|\le\sqrt{2t}$。
+因此
+
+$$
+\boxed{
+\|\Gamma_n-\phi_n\otimes\zeta_n\|\le
+\zeta:=\frac{4\epsilon^{1/4}}{\sqrt\mu},
+\qquad n=2,3.
+}
+\tag{40.12}
+$$
+
+各纯态相位已选择使相关重叠为非负实数。稍后的反证阈值保证 $t<1$，所以全部近纯化选择都合法。
+
+**第二步的近等距结构及首态混合程度。**
+
+首步后记
+
+$$
+\Gamma_1=|m_0\rangle_M\otimes|\alpha\rangle_{KE_1},
+\qquad
+|\alpha\rangle=V(e\otimes|0\rangle),\qquad
+\tau=\operatorname{Tr}_{E_1}|\alpha\rangle\langle\alpha|.
+\tag{40.13}
+$$
+
+第二次发射的记忆—新位纯态为
+
+$$
+|\Theta\rangle=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B}.
+$$
+
+它的记忆边缘为 $\rho_2\succeq\mu I$。定义等距
+
+$$
+A:\mathcal B\longrightarrow K\otimes E_2\otimes E_1,
+\qquad
+A|b\rangle=(V\otimes I_{E_1})(\alpha\otimes|b\rangle).
+$$
+
+（40.12）的 $\phi_2$ 和 $\Theta$ 是同一正定 $\rho_2$ 在二维纯化空间上的纯化，
+所以存在酉 $U:\mathcal B\to K$，使
+$\phi_2=(I_M\otimes U)\Theta$。把（40.12）应用于第二步，并使用
+$\Theta$ 在新位上的最小 Schmidt 权重至少为 $\mu$，得到
+
+$$
+\boxed{
+\|A-U\otimes\zeta_2\|_{\rm op}
+\le\eta:=\frac{\zeta}{\sqrt\mu}
+=\frac{4\epsilon^{1/4}}{\mu}.
+}
+\tag{40.14}
+$$
+
+具体地，对差算子 $B$，
+$\|(I_M\otimes B)\Theta\|^2
+=\operatorname{Tr}(\rho_{\mathcal B}B^*B)\ge\mu\|B\|_{\rm op}^2$。
+
+记 $\lambda=\lambda_{\min}(\tau)$。
+下面利用首步与第二步确实使用同一个 $V$，证明
+
+$$
+\boxed{\lambda\le\eta.}
+\tag{40.15}
+$$
+
+若 $\lambda=0$ 无须证明。否则取 Schmidt 分解
+
+$$
+\alpha=\sum_{j=0}^1\sqrt{\lambda_j}\,q_j\otimes r_j,
+\qquad
+\lambda_0=1-\lambda,\quad\lambda_1=\lambda,
+$$
+
+并将 $\zeta_2$ 在 $E_1$ 的 $r_j$ 方向上的分量记为
+$\xi_j\in E_2$。由（40.14），对 $b=0$，误差向量
+
+$$
+z_j=\sqrt{\lambda_j}\,V(q_j\otimes|0\rangle)
+-U|0\rangle\otimes\xi_j
+$$
+
+满足 $\sum_j\|z_j\|^2\le\eta^2$；$\zeta_2$ 在其余 $E_1$ 方向的分量只会增加总误差。
+
+写 $e=\sum_j c_jq_j$，并令 $P=|U0\rangle\langle U0|$ 为输出 $K$ 上投影。
+由于 $P^\perp$ 消去各 $U0\otimes\xi_j$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\|(P^\perp\otimes I)V(e\otimes|0\rangle)\|
+&=\left\|\sum_j\frac{c_j}{\sqrt{\lambda_j}}
+(P^\perp\otimes I)z_j\right\|\\
+&\le\left(\sum_j\frac{|c_j|^2}{\lambda_j}\right)^{1/2}
+\left(\sum_j\|z_j\|^2\right)^{1/2}
+\le\frac{\eta}{\sqrt\lambda}.
+\end{aligned}
+\tag{40.16}
+$$
+
+左侧平方恰为 $1-\langle U0|\tau|U0\rangle$，至少为 $\lambda$。
+所以 $\lambda^2\le\eta^2$，得到（40.15）。
+
+取 $k=q_0$ 为首态的最大特征向量，令 $\eta_1=r_0$。由（40.15），
+
+$$
+\|V(e\otimes|0\rangle)-k\otimes\eta_1\|
+\le\sqrt{2\eta}.
+\tag{40.17}
+$$
+
+若 $\tau$ 纯，按其唯一 Schmidt 项定义同样的 $k,\eta_1$。
+
+将（40.14）投影到 $r_0$ 后，置 $w=\xi_0/\sqrt{\lambda_0}$，得
+
+$$
+\|V(k\otimes\cdot)-U(\cdot)\otimes w\|_{\rm op}
+\le\eta/\sqrt{1-\eta}\le\sqrt2\,\eta
+$$
+
+（取 $\eta\le1/2$）。
+$|\|w\|-1|\le\sqrt2\,\eta$；取 $\eta\le1/4$ 可将 $w$ 归一化为单位
+$\eta_2$，并得到
+
+$$
+\boxed{
+\|V(k\otimes|b\rangle)-u_b\otimes\eta_2\|
+\le3\eta,\quad u_b=U|b\rangle,\quad b=0,1.
+}
+\tag{40.18}
+$$
+
+$u_0,u_1$ 是正交归一基。
+
+**第三步作用在正确的理想前缀上。**
+
+（40.12）中的 $\phi_2$ 具有正确的记忆边缘，且由 $U$ 写为
+
+$$
+\phi_2=a\,m_0\otimes u_0+b\,|0\rangle\otimes u_1.
+$$
+
+定义
+
+$$
+q=(a^2u_0+bu_1)/r.
+$$
+
+它单位，且 $|\langle q,u_0\rangle|=(1-p)/r=1-g$。
+
+对理想前缀 $\phi_2$ 再作一次真实来源发射和真实接收 $V$，得到纯态
+$\chi_3\in M\otimes K\otimes E_3$。实际第三步纯化 $\Gamma_3$ 与
+$\chi_3\otimes\zeta_2$ 的向量距离至多 $\zeta$，因为实际第二步与
+$\phi_2\otimes\zeta_2$ 的距离至多 $\zeta$，之后使用同一个等距。
+
+又由（40.12），$\Gamma_3$ 与 $\phi_3\otimes\zeta_3$ 的距离至多 $\zeta$。
+所以
+
+$$
+\|\chi_3\otimes\zeta_2-\phi_3\otimes\zeta_3\|\le2\zeta.
+$$
+
+对旧环境施以 $\langle\zeta_2|$，得到
+$\|\chi_3-\phi_3\otimes w_3\|\le2\zeta$。
+当 $2\zeta<1$ 时，归一化 $w_3$ 为单位 $\eta_3$，给
+
+$$
+\|\chi_3-\phi_3\otimes\eta_3\|\le4\zeta.
+\tag{40.19}
+$$
+
+这一步保留旧环境整体相干，没有按环境分支选择不同接收门。
+
+理想第三步的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,u_0\otimes|1\rangle\}.
+$$
+
+它的记忆边缘是正确的 $\rho_3\succeq\mu I$，而 $\phi_3$ 也是该边缘的二维纯化。
+再次用最小 Schmidt 权重除去源侧振幅，可得一组正交归一 $v_0,v_1$，使
+
+$$
+\boxed{
+\|V(q\otimes|0\rangle)-v_0\otimes\eta_3\|\le4\eta,\qquad
+\|V(u_0\otimes|1\rangle)-v_1\otimes\eta_3\|\le4\eta.
+}
+\tag{40.20}
+$$
+
+（40.17）、（40.18）、（40.20）涉及的所有实际输入和理想乘积输出均为单位向量。
+因此不同块间每个内积的误差至多相应两项向量误差之和。
+当 $\eta\le1$ 时，所有这些交叉 Gram 误差统一不超过
+
+$$
+\delta_G=8\sqrt\eta
+=\frac{16\epsilon^{1/8}}{\sqrt\mu}.
+\tag{40.21}
+$$
+
+**二维交叉 Gram 关系的显式稳定矛盾。**
+
+下面只使用二维几何。将 $\delta_G$ 暂记为 $\delta$，假设
+
+$$
+\delta\le g^2/256.
+\tag{40.22}
+$$
+
+令
+
+$$
+x=\langle k,q\rangle,\qquad y=\langle k,u_0\rangle,\qquad
+c_{23}=\langle\eta_2,\eta_3\rangle.
+$$
+
+两个后续输入块的交叉 Gram 矩阵为 $\operatorname{diag}(x,y)$，相应理想输出的矩阵为 $c_{23}(\langle u_i,v_j\rangle)_{i,j=0}^1$。因此
+
+$$
+\max_{i,j\in\{0,1\}}
+\left|\operatorname{diag}(x,y)_{ij}
+-c_{23}\langle u_i,v_j\rangle\right|\le\delta,
+$$
+
+故矩阵算子范数误差至多 $2\delta$。
+矩阵 $(\langle u_i,v_j\rangle)_{i,j=0}^1$ 是酉矩阵，奇异值扰动界给
+
+$$
+\big||x|-|y|\big|\le4\delta.
+\tag{40.23}
+$$
+
+而
+
+$$
+|x|^2+|y|^2
+=\langle k,(|q\rangle\langle q|+|u_0\rangle\langle u_0|)k\rangle
+\ge1-|\langle q,u_0\rangle|=g.
+$$
+
+因此
+
+$$
+|c_{23}|\ge\sqrt{g/2}-2\delta\ge\sqrt g/4.
+$$
+
+非对角 Gram 项遂给
+
+$$
+|\langle u_0,v_1\rangle|,\ |\langle u_1,v_0\rangle|
+\le4\delta/\sqrt g.
+$$
+
+适当选择 $v_i$ 相对于 $u_i$ 的比较相位，得到
+
+$$
+\min_{\theta}\|v_i-e^{i\theta}u_i\|
+\le8\delta/\sqrt g,\qquad i=0,1.
+\tag{40.24}
+$$
+
+令 $\beta=|\langle k,u_1\rangle|$，于是 $|y|=\sqrt{1-\beta^2}$。
+由 $q$ 在 $u$ 基中的系数模为 $1-g,\sqrt{1-(1-g)^2}$，
+
+$$
+|x|\le(1-g)|y|+\beta.
+$$
+
+结合（40.23），有 $g|y|\le\beta+4\delta$。
+若 $\beta\le g/4$，则 $|y|\ge1/2$，而（40.22）蕴含
+$\delta\le g/32$，于是右侧至多 $3g/8$，左侧至少 $g/2$，矛盾。
+所以
+
+$$
+\beta\ge g/4.
+\tag{40.25}
+$$
+
+（40.22）还保证 $8\delta/\sqrt g\le g/8$，因此（40.24）给
+
+$$
+|\langle k,v_1\rangle|\ge g/8.
+$$
+
+首次输入与第二块的一位输入正交。其近似输出内积给
+
+$$
+|\langle\eta_1,\eta_2\rangle|\le4\delta/g.
+$$
+
+再比较首次输入与第二块的零位输入，得到
+
+$$
+|\langle e,k\rangle|\le5\delta/g.
+$$
+
+同理，首次输入与第三块的一位输入正交，得到
+$|\langle\eta_1,\eta_3\rangle|\le8\delta/g$，
+继而与第三块零位输入比较，得
+
+$$
+|\langle e,q\rangle|\le9\delta/g.
+\tag{40.26}
+$$
+
+置 $h=9\delta/g<1$。二维空间中，$k,q$ 沿同一个 $e$ 的分量均不超过
+$h$，故沿 $e^\perp$ 的分量模均至少为 $\sqrt{1-h^2}$。于是
+
+$$
+|x|=|\langle k,q\rangle|\ge1-2h^2.
+$$
+
+由（40.23），$|y|\ge1-2h^2-4\delta$，所以
+
+$$
+\beta^2=1-|y|^2
+\le4h^2+8\delta
+=\frac{324\delta^2}{g^2}+8\delta
+\le\left(\frac{324}{256^2}+\frac8{256}\right)g^2
+<g^2/16.
+\tag{40.27}
+$$
+
+这与（40.25）矛盾。由此，只要（40.22）成立，就不存在这些近似块数据。
+
+**常数闭合、统一来源界与适用边界。**
+
+反设某个固定接收器有
+$f_2^2,f_3^2\ge1-\epsilon_{\rm el}(p)$，在以上推导中取
+$\epsilon=\epsilon_{\rm el}(p)$。
+则
+
+$$
+\eta=4\epsilon^{1/4}/\mu=2^{-22}g^4<1/4,\qquad
+\zeta=\eta\sqrt\mu<1/2,
+$$
+
+所有归一化条件成立；并且
+
+$$
+\delta_G=8\sqrt\eta=g^2/256.
+$$
+
+这恰落入二维几何矛盾范围。因此每个接收器至少有一个终端的最佳目标投影概率小于
+$1-\epsilon_{\rm el}(p)$，取共同接收器最优值即得（40.6）。
+对任意实际解码，半迹距离至少为目标投影概率的损失，因此得到操作误差下界。原来的前32终端目标更强，且
+$1-\sqrt{1-x}\ge x/2$，于是（40.7）成立。
+
+最后说明（40.8）。对归一化 $2\times2$ 正矩阵有
+$\lambda_{\min}\ge\det$。写 $x=1-p$，则
+
+$$
+\mu=\lambda_{\min}(\rho_3)\ge\det\rho_3=p^2xr^2,
+\qquad
+g=\frac{p}{r(r+x)}.
+$$
+
+保留同一来源的归一化关系，便有
+
+$$
+\mu^4g^{16}
+\ge\frac{p^{24}x^4}{r^8(r+x)^{16}}
+\ge2^{-16}p^{24}(1-p)^4,
+$$
+
+其中用了 $r\le1$、$r+x\le2$。函数
+$24\log p+4\log(1-p)$ 在 $[1/k,1-1/k]$ 上凹，
+故最小值取在端点；当 $k\ge2$ 时左端值不大于右端值。因此
+
+$$
+p^{24}(1-p)^4
+\ge\frac{(k-1)^4}{k^{28}}
+\ge\frac1{16k^{24}}.
+$$
+
+代回（40.5），得到更细的统一估计及其简化式
+
+$$
+\epsilon_{\rm el}(p)
+\ge\frac{(k-1)^4}{2^{112}k^{28}}
+\ge\frac1{2^{116}k^{24}}.
+$$
+
+再用（40.7）即得（40.8）。
+证明完毕。
+
+本定理的必要性只取指定来源输入，完整参考任务因包含这一输入而继承下界。其证明没有假设实际接收态、首态或环境原本为纯态；（40.10）、（40.15）及三个近乘积块均由恢复精度、二维容量和同一固定通道推出。结论是 $D=2$ 的初等定量结果，不给一般 $D$ 的 $\exp(-CD)$ 或 $\exp(-CD^2)$ 下界。常数选择重在闭合全部误差传播，未作数值最优声明。
+
+**校准例：同一存新位通道的三终端上界。**
+
+用第38节的固定相位换基取 $a,b>0$，仍令 $r=\sqrt{a^4+b^2}$。
+选择全域固定通道
+
+$$
+\mathcal C_{\rm store}(X)=\operatorname{Tr}_{K_{\rm old}}X,
+\tag{40.28}
+$$
+
+把新发出位的二维空间固定识别为新的 $K$。首终端输出固定首位零，第二终端在当前接收位前附上首位零，因此这两个终端精确；接收门本身始终不变。
+
+第三终端省去恒定首位零后，真实目标是
+
+$$
+a^2m_0\otimes|00\rangle
++ab\,m_1\otimes|01\rangle
++b\,m_0\otimes|10\rangle.
+$$
+
+定义正交归一档案向量
+
+$$
+\chi_0=(a^2|00\rangle+b|10\rangle)/r,\qquad
+\chi_1=|01\rangle.
+$$
+
+第三终端解码取全域等距
+$|0\rangle_K\mapsto|0\rangle\otimes\chi_0$、
+$|1\rangle_K\mapsto|0\rangle\otimes\chi_1$。
+在正交归一联合向量 $m_0\otimes\chi_0,m_1\otimes\chi_1$ 上，
+目标和解码输出的矩阵分别为
+
+$$
+\begin{pmatrix}r^2&rab\\rab&a^2b^2\end{pmatrix},
+\qquad
+\begin{pmatrix}r^2&a^3b\\a^3b&a^2b^2\end{pmatrix}.
+\tag{40.29}
+$$
+
+两矩阵迹均为一；区别只在这组联合正交向量上的两个非对角元。
+因此这份完整联合恢复的半迹误差及目标投影损失分别为
+
+$$
+\delta_{\rm store}=ab(r-a^2),\qquad
+q_{\rm store}=2a^2b^2r(r-a^2).
+\tag{40.30}
+$$
+
+这给出
+
+$$
+\boxed{
+\epsilon_{\rm el}(p)\le Q_2^{[3]}\le q_{\rm store},\qquad
+\epsilon_{\rm el}(p)\le
+\varepsilon^0_{2,[3]}\le\delta_{\rm store},
+}
+\tag{40.31}
+$$
+
+其中 $\varepsilon^0_{2,[3]}$ 是指定输入 $|0\rangle$、只要求前三终端的最佳最坏半迹误差。上界只用这份明确装置及解码器，不声称它们最优。
+
+平衡来源 $a=b=1/\sqrt2$ 时，
+
+$$
+q_{\rm store}=\frac{3-\sqrt3}{8},\qquad
+\delta_{\rm store}=\frac{\sqrt3-1}{4},
+$$
+
+而（40.8）给 $Q_2^{[3]}\ge2^{-140}$。
+这一校准仅覆盖指定输入的前三终端；它既不是完整参考合同的上界，也不是前32终端 $\Delta_2$ 的上界。
+
+## 追加锚（本行以下为增补区）
+
+## 41. 任意有限终端固定接收的线性上界
+
+本节继续固定已知来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中 $ab\ne0$、$|a|^2+|b|^2=1$。一步发射为 $|i\rangle_M\mapsto m_i\otimes|i\rangle_B$。接收器独立纯启动，每轮使用同一个全域 CPTP 通道，全部持久资源计入接收器；参考和活动记忆不可访问。每个终端 $n\le N$ 都须精确恢复完整参考—活动记忆—档案联合态。
+
+**定理 41.1（共同固定通道的有限终端上界）。** 对任意整数 $N\ge6$，
+
+$$
+\boxed{d_{\mathrm{CPTP},N}(a,b)\le
+\left\lceil\frac{3N}{2}\right\rceil-1.}
+\tag{41.1}
+$$
+
+与第9节非退化来源的 $2N-1$ 维精确空白接收容量相比，本节利用允许丢弃环境的固定 CPTP 合同改进线性上界的系数。两者仍为线性阶；本节不声称容量最优，也不提供与 $N$ 无关的固定有限维接收器。
+
+### 41.1 前五轮核心和二步递推
+
+使用第39节的八维空间 $K_5=\operatorname{span}\{u,v,w,p,e,g,h,t\}$、（39.4）—（39.7）的向量及前五轮十一行
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+x0&tA&s1&hB\\
+g1&y_4A&&
+\end{array}
+\tag{41.2}
+$$
+
+其中 $A,B$ 为正交单位环境。前五轮的两个初始列为第39节（39.11）—（39.14）。特别地，
+
+$$
+\Psi_2^1=m_0w,\qquad
+\Psi_5^0=\kappa m_0t+abd\,m_1y_4.
+\tag{41.3}
+$$
+
+第六轮第一列两个输入为 $z_6 0,t1$，对应系数为 $a\lambda,b\kappa$；这两个输入与十一行核心全部输入正交。
+
+记 $\eta_n=A$（$n$ 奇数）、$\eta_n=B$（$n$ 偶数），$F$ 为一次源发射和固定接收等距的联合映射。所有已经构造的轮次满足
+
+$$
+\Psi_n^1=a\Psi_{n-2}^0+b\Psi_{n-2}^1\qquad(n\ge2).
+\tag{41.4}
+$$
+
+证明从 $\Psi_0^i=|i\rangle w$ 和 $\Psi_2^1=m_0w$ 开始。若第 $n$ 轮关系成立，则
+
+$$
+F\Psi_n^1
+=(a\Psi_{n-1}^0+b\Psi_{n-1}^1)\otimes\eta_{n-1}
+=(a\Psi_{n-1}^0+b\Psi_{n-1}^1)\otimes\eta_{n+1}.
+\tag{41.5}
+$$
+
+右侧只调用第 $n-1$ 轮已经定义的作用，故同时给出下一轮第二列和共同环境；没有要求额外的新表行。因此后面只需构造第一列。
+
+### 41.2 不同轮次使用的新增方向
+
+若 $N=6$，第39节已经给维数八的结论。下文设 $N\ge7$。
+
+对每个偶数 $n$，$6\le n<N$，增加一对正交单位向量 $P_n,Q_n$；对每个奇数 $n$，$7\le n<N$，只增加一个正交单位向量 $P_n$。所有这些新增向量彼此正交，且正交于 $K_5$。奇数轮的 $Q_n$ 将定义为上一偶数轮平面内的向量，不再增加维数。
+
+中间轮数为 $N-6$，从偶数六开始交替增加二、一维。因此
+
+$$
+\begin{aligned}
+\dim K
+&=8+3\left\lfloor\frac{N-6}{2}\right\rfloor
+  +2\bigl((N-6)\bmod2\bigr)\\
+&=\left\lceil\frac{3N}{2}\right\rceil-1.
+\end{aligned}
+\tag{41.6}
+$$
+
+第六轮规定
+
+$$
+V(z_6 0)=P_6\otimes B,\qquad V(t1)=Q_6\otimes B.
+\tag{41.7}
+$$
+
+于是
+
+$$
+\Psi_6^0=A_6m_0P_6+B_6m_1Q_6,\qquad
+A_6=a\lambda,\quad B_6=b\kappa.
+\tag{41.8}
+$$
+
+### 41.3 偶数中间轮用新平面，奇数中间轮复用正交补
+
+已给第 $n-1$ 轮第一列
+
+$$
+\Psi_{n-1}^0=A_{n-1}m_0P_{n-1}+B_{n-1}m_1Q_{n-1}
+\tag{41.9}
+$$
+
+后，对 $7\le n<N$ 置
+
+$$
+\begin{aligned}
+s_{n-1}&=\sqrt{|aA_{n-1}|^2+|B_{n-1}|^2},\\
+Z_n&=\frac{aA_{n-1}P_{n-1}+B_{n-1}Q_{n-1}}{s_{n-1}},\\
+Y_n&=\frac{-\overline{B_{n-1}}P_{n-1}
+       +\overline{aA_{n-1}}Q_{n-1}}{s_{n-1}},\\
+A_n&=s_{n-1},\qquad B_n=bA_{n-1}.
+\end{aligned}
+\tag{41.10}
+$$
+
+$(Z_n,Y_n)$ 是上一对 $(P_{n-1},Q_{n-1})$ 平面的正交单位基。所有 $A_n,B_n$ 非零，所以各分母正。
+
+若 $n$ 为偶数，使用第二部分已经新增的正交对 $(P_n,Q_n)$。若 $n$ 为奇数，定义
+
+$$
+Q_n=Y_n.
+\tag{41.11}
+$$
+
+两种情况均规定
+
+$$
+V(Z_n0)=P_n\otimes\eta_n,\qquad
+V(P_{n-1}1)=Q_n\otimes\eta_n.
+\tag{41.12}
+$$
+
+于是第一列递推为
+
+$$
+\Psi_n^0=A_nm_0P_n+B_nm_1Q_n.
+\tag{41.13}
+$$
+
+每个奇数中间轮只把上一新平面中与刚用零位输入正交的方向作为输出，另一个输出使用一维新方向。下一偶数轮再使用全新平面。
+
+### 41.4 终端使用核心中尚未占用的环境输出方向
+
+最后仍定义
+
+$$
+s_{N-1}=\sqrt{|aA_{N-1}|^2+|B_{N-1}|^2},\qquad
+Z_N=\frac{aA_{N-1}P_{N-1}+B_{N-1}Q_{N-1}}{s_{N-1}}.
+\tag{41.14}
+$$
+
+终端输出不再增加方向。若 $N$ 为偶数，规定
+
+$$
+V(Z_N0)=p\otimes B,\qquad V(P_{N-1}1)=e\otimes B.
+\tag{41.15}
+$$
+
+若 $N$ 为奇数，规定
+
+$$
+V(Z_N0)=w\otimes A,\qquad V(P_{N-1}1)=x\otimes A.
+\tag{41.16}
+$$
+
+前五轮环境 $B$ 的接收输出为 $u,v,w,g,h$，正交于 $p,e$；环境 $A$ 的接收输出为 $p,q,s,r,t,y_4$，正交于 $w,x$。所有中间轮输出都属于新增方向张成的空间。因此这两个终端选择均正交于全部同环境的既有输出，且各自为正交单位对。
+
+最终第一列为
+
+$$
+\Psi_N^0=
+\begin{cases}
+s_{N-1}m_0p+bA_{N-1}m_1e,&N\text{ 偶},\\
+s_{N-1}m_0w+bA_{N-1}m_1x,&N\text{ 奇}.
+\end{cases}
+\tag{41.17}
+$$
+
+### 41.5 整张表的输入和输出正交
+
+每步增加一个零位输入和一个一位输入，不同位自动正交。
+
+第六轮两个输入与核心正交。对后续零位输入分两类：
+
+- 若其前一轮为偶数，$(P_{n-1},Q_{n-1})$ 是前一轮首次引入的全新平面，此前只用作输出，尚未出现于任何输入，所以 $Z_n0$ 正交于所有旧零位输入。
+- 若其前一轮为奇数，则 $P_{n-1}$ 是新方向，$Q_{n-1}=Y_{n-1}$ 位于再前一轮的全新平面内。那个平面此前唯一的零位输入是 $Z_{n-1}$，而 $Y_{n-1}\perp Z_{n-1}$；更早的零位输入正交于整个新平面。因此 $Z_n0$ 仍正交于所有旧零位输入。
+
+一位输入总为 $P_{n-1}1$；每个 $P_{n-1}$ 在前一轮首次加入，在该步首次作为一位输入，故正交于全部旧一位输入。这个论证同样覆盖最后一轮。
+
+再看输出。偶数中间轮使用全新平面，因此正交于全部旧输出。奇数中间轮的 $P_n$ 是新方向，$Q_n=Y_n$ 位于上一偶数轮首次加入的平面中；该平面此前仅在环境 $B$ 下出现，而当前环境为 $A$，故两个新输出正交于全部旧输出。终端输出的正交性已在第四部分验证。
+
+因此全部输入、输出各自构成正交单位族。总行数为 $11+2(N-5)=2N+1$，且
+
+$$
+2N+1\le2\left(\left\lceil\frac{3N}{2}\right\rceil-1\right)
+\qquad(N\ge6).
+\tag{41.18}
+$$
+
+可将两侧补为正交单位基，得到同一个全域酉 $V:K\otimes\mathbb C^2\to K\otimes\mathbb C^2$。逐轮第一列由表给出，第二列由第一部分的二步关系给出，所以两列每轮均输出同一纯环境 $\eta_n$。
+
+### 41.6 参考完整的终端逆运算
+
+令 $\mathcal C(X)=\operatorname{Tr}_E(VXV^*)$。任意终端 $n\le N$ 的解码器准备已知纯环境字 $\eta_1\cdots\eta_n$，逆序施加 $V^*$，恢复完整原始档案和独立接收初态 $w$，再丢弃 $w$。接收门与后续源发射作用于不交系统，故逆运算只在接收端运行。两个来源列保持同一环境，通过线性性保持任意参考及活动记忆关联，得到全部规定终端的精确联合恢复。
+
+上述维数即为所述上界。它对每个预先给定有限 $N$ 构造一个固定通道，不把不同 $N$ 的终端独立最优值当成同一个无限时域实现。
+
+
+## 追加锚（本行以下为增补区）
+
+## 42. 一般整数边荷的相干窗口：字符合并、相位商与同轴增长
+
+第33节每条边各有独立相位，不同长度必有不同字符，因而容量含乘法因子 $W$。一般整数边荷不具备这一性质：不同长度可以具有相同总荷，其振幅必须合成同一个相干向量。本节先给准确的精确容量与相位商，再证明一个长度窗口只沿已有荷方向拉长的实例。
+
+仍取第31节的有限状态 primitive 行随机矩阵 $P$，支持边集为 $\mathcal E$，每条边保留完整正交标签，并赋整数荷 $g_{ij}\in\mathbb Z^q$。一步等距仍为（31.1）。取 $N\ge1$、$1\le W\le N+1$，记
+
+$$
+M_*=N+W-1,\qquad \mathcal I=\{N,\ldots,M_*\},\qquad
+\mathcal A=\bigoplus_{n\in\mathcal I}B^{\otimes n}.
+\tag{42.1}
+$$
+
+活动记忆写在前面，定义具有已固定跨长度相位的来源
+
+$$
+\mathcal T_{\theta;N,W}
+=\frac1{\sqrt W}\sum_{n\in\mathcal I}(I_M\otimes\iota_n)T_{\theta,n},
+\qquad\theta\in\mathbb T^q.
+\tag{42.2}
+$$
+
+接收合同与第33节相同：共同全域 CPTP 编解码仅访问档案或接收器，对全部相位、任意初始活动记忆和任意外部参考恢复完整联合态。长度属于档案的一部分，不能作为免费旁信息测量。本节只给单终端块编码，不给在线生成、固定接收门或物理钟成本。以 $k_{N,W}^{\epsilon,\mathrm{coh}}(P,g)$ 表示最小接收维数。
+
+### 42.1 同字符跨长度合并后的精确容量
+
+对端点 $i,j$ 和长度 $n$，令 $C_n(i,j)$ 为可达总荷集合，并置
+
+$$
+C_{\mathcal I}(i,j)=\bigcup_{n\in\mathcal I}C_n(i,j).
+\tag{42.3}
+$$
+
+对 $c\in C_{\mathcal I}(i,j)$，定义一个跨长度向量
+
+$$
+b_{ij,c}^{\mathcal I}
+=\frac1{\sqrt W}
+\sum_{n\in\mathcal I}
+\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\g(\gamma)=c}}
+\sqrt{p(\gamma)}\,|n,\gamma\rangle,
+\qquad p(\gamma)=\prod_{e\in\gamma}P_e.
+\tag{42.4}
+$$
+
+**定理42.1（一般标签的精确相干窗口容量）。** 对全部上述 $N,W$，
+
+$$
+\boxed{
+k_{N,W}^{0,\mathrm{coh}}(P,g)
+=\sum_{i,j}|C_{\mathcal I}(i,j)|.
+}
+\tag{42.5}
+$$
+
+证明。不同 $(i,j,c)$ 的向量（42.4）非零且正交。对固定相位，档案侧的端点支撑向量是
+
+$$
+\chi_{ij}^{\mathcal I}(\theta)
+=\sum_{c\in C_{\mathcal I}(i,j)}
+e^{i\theta\cdot c}b_{ij,c}^{\mathcal I}.
+\tag{42.6}
+$$
+
+$N\ge1$ 和完整边标签使不同端点扇区正交。整数荷对应的环面字符线性无关，因此共同档案支撑恰为全部（42.4）的张成，维数等于（42.5）右侧。
+
+为得到物理容量下界，对初始 $M$ 使用 $m$ 维 Bell 参考。精确保持其完整纯目标，强制共同恢复通道在每个 $\operatorname{span}\{\chi_{ij}^{\mathcal I}(\theta)\}$ 的全部算子上恒等。固定一份恢复通道的 Stinespring 等距；在这个支撑上，它必为 $x\mapsto x\otimes e_\theta$。端点向量连续且非零，所以邻近相位的同一端点向量内积非零，等距内积保持强制相应 $e_\theta$ 相等。连通环面使环境向量全局相同。线性性于是使恢复通道在整个共同档案支撑上恒等，编码必须在其算子空间上单射，故接收维数不小于该支撑维数。这正是定理32.3的共同 Stinespring 论证，所有条件在（42.6）中仍成立。
+
+反向将整个共同支撑作一次等距编码，并在正交补上完成全域 CPTP 通道，得到精确上界。证明完毕。
+
+式（42.5）使用荷集合的并集，不是各长度基数之和。一个 $b_{ij,c}^{\mathcal I}$ 保留同荷的全部长度相干，并没有识别或测量实际长度。独立边荷时，总荷的所有坐标之和就是长度，各长度集合不交，才恢复（33.2）。
+
+### 42.2 纯势差子群、有限别名与连续维数
+
+沿用（32.1）的关联矩阵 $\mathsf D$、边荷矩阵 $G$，记
+
+$$
+\begin{aligned}
+\Lambda&=G\ker_{\mathbb Z}
+\begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\end{pmatrix},
+&L&=\operatorname{span}_{\mathbb R}\Lambda,\qquad r=\operatorname{rank}\Lambda,\\
+\Lambda_0&=G\ker_{\mathbb Z}\mathsf D,
+&r_0&=\operatorname{rank}\Lambda_0.
+\end{aligned}
+\tag{42.7}
+$$
+
+第31节固定长度子群为 $\mathcal H=\Lambda^\perp$。纯端点势差子群定义为
+
+$$
+\mathcal H_0=
+\{h\in\mathbb T^q:\exists |z_i|=1,
+e^{ih\cdot g_{ij}}=z_i\overline{z_j}\text{ 对全部支持边}\}.
+\tag{42.8}
+$$
+
+这里的商仍指端点支撑的退化方向，含义与第31节相同。端点势差可能改变完整目标中的端点相干；它们被已有有限个端点支撑保存，并不是断言这些完整目标密度矩阵全都相同。
+
+**命题42.2（相干窗口的格与商）。** 有
+
+$$
+\mathcal H_0=\Lambda_0^\perp,\qquad
+\Lambda\subseteq\Lambda_0,\qquad r_0-r\in\{0,1\}.
+\tag{42.9}
+$$
+
+更具体地，存在 $v\in\ker_{\mathbb Z}\mathsf D$ 满足 $\mathbf1^{\mathsf T}v=1$。令 $\gamma=Gv$，则
+
+$$
+\Lambda_0=\Lambda+\mathbb Z\gamma.
+\tag{42.10}
+$$
+
+若 $\gamma\notin L$，则 $r_0=r+1$，且 $\mathcal H/\mathcal H_0$ 为一个圆群。若 $\gamma\in L$，则 $r_0=r$，但 $\mathcal H/\mathcal H_0$ 可以是非平凡有限循环群，其阶为满足 $d\gamma\in\Lambda$ 的最小正整数 $d$。特别地，商维数不增加不等于两个子群相同。
+
+证明。强连通支持图中的整数循环满足：每个 $z\in\ker_{\mathbb Z}\mathsf D$ 都能写成两条同起终点实际路径的计数差。具体取严格正的整数循环计数 $c$，对充分大的整数 $k$，$kc$ 与 $kc+z$ 都有从同一顶点开始的 Euler 回路；这里不要求它们等长。因此 $\Lambda_0$ 正是所有同端点、允许不同长度的路径荷差生成的格。
+
+纯势差沿同端点路径相消，所以 $\mathcal H_0\subseteq\Lambda_0^\perp$。反向，若所有整数循环荷的相位都为一，从固定根顶点沿路径定义顶点相位，闭走法相位为一保证定义与路径选择无关；每条边相位于是为端点相位比。因此 $\mathcal H_0=\Lambda_0^\perp$。
+
+primitive 性使所有有向闭走法长度的最大公因子为一。对有限条长度作 Bézout 整数组合，得到长度一的有符号整数循环 $v$。任意 $z\in\ker_{\mathbb Z}\mathsf D$ 满足
+$z-(\mathbf1^{\mathsf T}z)v\in\ker_{\mathbb Z}[\mathsf D;\mathbf1^{\mathsf T}]$，从而（42.10）成立。
+
+对 $h\in\mathcal H$，其 scalar-plus-coboundary 表达中的标量相位唯一：两个表达之比沿任意闭走法给 $e^{i\Delta\omega |\gamma'|}=1$，长度最大公因子一迫使 $e^{i\Delta\omega}=1$。将表达乘在长度一循环 $v$ 上，得到
+
+$$
+\chi(h):=e^{ih\cdot\gamma}=e^{i\omega(h)},\qquad
+\ker\chi=\mathcal H_0.
+\tag{42.11}
+$$
+
+（42.10）使 $\Lambda_0/\Lambda$ 为由 $\gamma+\Lambda$ 生成的循环群。若 $\gamma\notin L$，此群为无限循环群，其对偶为圆群；若 $\gamma\in L$，整数格的有理结构保证存在上述最小正整数 $d$，商群及其对偶都是阶 $d$ 的循环群。这也给秩结论。证明完毕。
+
+**有限窗口的准确条件。** 定义
+
+$$
+\Lambda_{N,W}
+=\left\langle c-c':
+ c,c'\in C_{\mathcal I}(i,j)\text{，某个共同端点 }i,j\right\rangle_{\mathbb Z}.
+\tag{42.12}
+$$
+
+对于有限 $N,W$，端点支撑的准确相位子群是 $\Lambda_{N,W}^\perp$：同一端点向量（42.6）在相移后只乘一个标量，当且仅当所有所含字符获得同一相位。始终有 $\Lambda_{N,W}\subseteq\Lambda_0$。
+
+存在仅依赖支持图与标签的整数 $N_0$，使
+
+$$
+\Lambda_{N,1}=\Lambda\quad(N\ge N_0),\qquad
+\Lambda_{N,W}=\Lambda_0\quad(N\ge N_0,\ W\ge2).
+\tag{42.13}
+$$
+
+证明。先取有限个实际等长同端点路径对，其荷差生成 $\Lambda$。如引理31.3的共同桥处理，把这些路径对加上共同前后缀，统一到一个起终点和一个长度。primitive 性允许继续加共同后缀，将它们放入每个充分大的指定长度 $N$；因此该长度的差格包含 $\Lambda$，反向包含本来成立。
+
+再取同一对端点的 $N$ 步和 $N+1$ 步路径；充分大的 $N$ 保证两者都存在。其计数差 $z$ 是长度一整数循环，所以 $Gz-\gamma\in\Lambda$。只要窗口含这两个相邻长度，窗口差格便包含 $\Lambda$ 和 $\gamma$，由（42.10）得到 $\Lambda_0$。证明完毕。
+
+这一区分保留有限长度的偶然退化；并未把 $W\ge2$ 单独当作全部小 $N$ 的充分条件。即使（42.13）使连续商增加一维，一个有界宽度的窗口也只在新方向给有限分辨率，不能仅凭商维数断言新增一个 $N$ 的幂次。
+
+平稳边频率 $f_{ij}=\pi_iP_{ij}$ 满足 $\mathsf Df=0$、$\mathbf1^{\mathsf T}f=1$。令平稳漂移
+
+$$
+\mu=\sum_{i,j}\pi_iP_{ij}g_{ij}=Gf.
+\tag{42.14}
+$$
+
+因为 $f-v\in\ker_{\mathbb R}[\mathsf D;\mathbf1^{\mathsf T}]$，有 $\mu-\gamma\in L$，所以
+
+$$
+\boxed{r_0=r+1\ \Longleftrightarrow\ \mu\notin L.}
+\tag{42.15}
+$$
+
+若漂移已经在固定长度荷差空间中，相干长度无需增加连续商维数；它仍可以沿该空间中已有方向改变分辨尺度。
+
+例如，在两态全正图上取 $g_{ij}=1+2j$，其中 $i,j\in\{0,1\}$，则（32.7）给 $\Lambda=2\mathbb Z$，而自环荷一给 $\Lambda_0=\mathbb Z$。故 $\mathcal H=\{0,\pi\}$、$\mathcal H_0=\{0\}$，两商都是一维。相移 $\pi$ 给每条边乘 $-1$：固定长度只有整体符号，相邻长度相干则使这个符号可见。这是消除有限别名，未增加连续维数。
+
+### 42.3 伯努利标签：精确 $4M_*$，近似 $\sqrt N+W$
+
+现在取
+
+$$
+m=2,\qquad P_{ij}=\frac12\quad(i,j\in\{0,1\}),\qquad g_{ij}=j\in\mathbb Z.
+\tag{42.16}
+$$
+
+经典路径中的 $X_1,\ldots,X_n$ 是独立均匀位，总荷 $S_n=\sum_{t=1}^nX_t$ 为二项变量，初态 $X_0=i$ 不改变这一定律。完整边标签仍保留初始和终止状态，不能把来源替换成只保留成功数的经典装置。
+
+**定理42.3（同一荷轴上的相干窗口容量）。** 对（42.16），全部 $N\ge1$、$1\le W\le N+1$ 满足
+
+$$
+\boxed{k_{N,W}^{0,\mathrm{coh}}=4(N+W-1).}
+\tag{42.17}
+$$
+
+对每个 $0<\epsilon<1$，有显式界
+
+$$
+\boxed{
+\frac{1-\epsilon}{12}(\sqrt N+W)
+\le k_{N,W}^{\epsilon,\mathrm{coh}}
+\le 2W+\frac8\epsilon\sqrt N+3.
+}
+\tag{42.18}
+$$
+
+因此固定正误差容量为 $\Theta_\epsilon(\sqrt N+W)$，常数统一于所列全部 $N,W$。这一模型的 $\mathcal H=\mathcal H_0=\{0\}$；长度相干没有增加相位商维数。
+
+证明。对每个起点 $i$，终态 $j$ 决定最后一位，而此前 $n-1$ 位可以任意选择，所以
+
+$$
+C_n(i,0)=\{0,\ldots,n-1\},\qquad
+C_n(i,1)=\{1,\ldots,n\}.
+\tag{42.19}
+$$
+
+相同终态的荷集随 $n$ 嵌套，窗口并集分别为 $\{0,\ldots,M_*-1\}$ 和 $\{1,\ldots,M_*\}$。两种初态各有这两份集合，定理42.1立即给精确值 $4M_*$。此外，（32.7）的两个格基在 $G$ 下分别变为 $-1,1$，故 $\Lambda=\mathbb Z$，并且 $\Lambda_0=\mathbb Z$，得到两个平凡子群。
+
+近似下界用 Bell 参考输入。按总荷合成完整联合向量后，目标及其 Haar 平均为
+
+$$
+|\Psi_\theta\rangle=\sum_k e^{ik\theta}|\beta_k\rangle,
+\qquad
+\overline\rho=\int_{\mathbb T}|\Psi_\theta\rangle\langle\Psi_\theta|\,d\theta
+=\sum_k|\beta_k\rangle\langle\beta_k|.
+\tag{42.20}
+$$
+
+这里 $\beta_k=2^{-1/2}\sum_{i,j}|i\rangle_J|j\rangle_M\otimes b_{ij,k}^{\mathcal I}$，不同 $k$ 正交。求和包括全部端点与同荷长度分量。准确的非零特征值是
+
+$$
+\nu(k)=\|\beta_k\|^2
+=\frac1W\sum_{n=N}^{M_*}\binom nk2^{-n},
+\tag{42.21}
+$$
+
+约定不可达的二项系数为零。其等式可直接从
+$\Pr_i(S_n=k,X_n=j)=2^{-n}\binom{n-1}{k-j}$ 求和得到；初态数二与 Bell 归一化因子相消。
+
+对每个 $n\ge1$，Fourier 反演及 $\cos u\le e^{-u^2/2}$（$0\le u\le\pi/2$）给
+
+$$
+\begin{aligned}
+\max_k\binom nk2^{-n}
+&\le\frac1{2\pi}\int_{-\pi}^{\pi}|\cos(t/2)|^n\,dt\\
+&\le\sqrt{\frac2{\pi n}}\le n^{-1/2}.
+\end{aligned}
+\tag{42.22}
+$$
+
+另一方面，二项生成函数给每个 $k\ge0$ 的恒等式
+$\sum_{n=k}^{\infty}\binom nk2^{-n}=2$。所以
+
+$$
+\|\overline\rho\|=\max_k\nu(k)
+\le\min\{N^{-1/2},2/W\}
+\le\frac3{\sqrt N+W}.
+\tag{42.23}
+$$
+
+最后一步来自：若一个非负数同时不超过 $a/x$ 和 $b/y$，则不超过 $(a+b)/(x+y)$。
+
+设共同编码维数为 $D_K$、共同解码为 $\mathcal D$，置 $\tau=\mathcal D(I_K)$，故 $\operatorname{Tr}\tau=D_K$。编码后的联合态不超过 $I_{JM}\otimes I_K$，解码正性使恢复态不超过 $I_{JM}\otimes\tau$。完整半迹误差至多 $\epsilon$ 给每个纯目标的投影概率至少 $1-\epsilon$。Haar 平均后，用 $\dim(JM)=4$ 得
+
+$$
+1-\epsilon
+\le\operatorname{Tr}[\overline\rho(I_{JM}\otimes\tau)]
+\le\frac{12D_K}{\sqrt N+W}.
+\tag{42.24}
+$$
+
+这证明下界，没有测量长度或相位。
+
+上界只保留整数荷带
+
+$$
+\mathcal B_{\rm good}
+=\mathbb Z\cap
+\left[\frac N2-\frac{\sqrt N}{\epsilon},\,
+\frac{M_*}2+\frac{\sqrt N}{\epsilon}\right].
+\tag{42.25}
+$$
+
+令 $\mathcal W_{\rm good}$ 是所有 $i,j$ 及 $k\in\mathcal B_{\rm good}$ 的完整跨长度向量 $b_{ij,k}^{\mathcal I}$ 的张成，$\Pi$ 为其投影。对窗口中任一长度，$\mathbb E_iS_n=n/2$ 位于荷带的中心区间，而
+$\operatorname{Var}_i S_n=n/4\le N/2$。荷落在带外必有 $|S_n-n/2|>\sqrt N/\epsilon$，故 Chebyshev 不等式给每个初态、每个长度的漏出概率至多 $\epsilon^2/2$。
+
+投影在实际来源支撑上保留或删去整个总荷分量，所以跨长度的总漏出是这些概率的等权平均。投影还保持初态首边标签扇区，因此严格有
+
+$$
+\mathcal T_{\theta;N,W}^*[I_M\otimes(I-\Pi)]
+\mathcal T_{\theta;N,W}
+\preceq\frac{\epsilon^2}{2}I_M
+\tag{42.26}
+$$
+
+对全部相位成立，并可张量任意参考。
+
+荷带内整数个数至多 $(W-1)/2+2\sqrt N/\epsilon+1$。每个荷至多有四个端点向量，所以将 $\mathcal W_{\rm good}$ 等距编码、再加一维失败旗标，所需维数不超过
+$2W+8\sqrt N/\epsilon+3$。明确地，取等距 $F:\mathcal W_{\rm good}\to K_{\rm good}$ 并在正交补以零延拓，定义
+
+$$
+\begin{aligned}
+\mathcal E(X)&=F\Pi X\Pi F^*
++\operatorname{Tr}[(I-\Pi)X]|\perp\rangle\langle\perp|,\\
+\mathcal D(Y)&=F^*YF+\langle\perp|Y|\perp\rangle\tau_0,
+\end{aligned}
+\tag{42.27}
+$$
+
+其中 $\tau_0$ 是任一预定档案态。两者全域 CPTP；成功项是一个整体 Kraus 算子，保留所有选中向量之间的相干，包括不同长度与不同荷。对任意参考纯化，令纯目标的漏出为 $d\le\epsilon^2/2$，解码后的目标重叠至少 $(1-d)^2$，故半迹误差至多 $\sqrt{2d}\le\epsilon$。这证明上界和定理。证明完毕。
+
+在此实例中，窗口均值由 $N/2$ 移到 $M_*/2$，仍在同一条总荷轴上。宽度 $W\ll\sqrt N$ 时，已有 $\sqrt N$ 波动尺度控制近似容量；宽度 $W\gg\sqrt N$ 时，均值区间长度控制容量。精确容量则始终计数合并后的荷值，不能把每个长度分别编码的维数相加作为必要下界。
+
+### 42.4 协方差结构与尚未推出的结论
+
+一般模型也具有与上述两种尺度相符的局部协方差结构。先令 Markov 链平稳启动，令 $L_{N,W}$ 独立地均匀取窗口长度，总荷为 $S_{L_{N,W}}$。有限 primitive 链的混合使平稳边荷的协方差级数绝对可和，并使其带一个滞后因子的级数也可和。因此存在渐近协方差矩阵 $\Sigma\succeq0$，满足
+$\operatorname{Cov}(S_n)=n\Sigma+O_{P,g}(1)$，余项在算子范数中一致有界。全协方差公式给
+
+$$
+\operatorname{Cov}(S_{L_{N,W}})
+=\left(N+\frac{W-1}{2}\right)\Sigma
++\frac{W^2-1}{12}\mu\mu^{\mathsf T}
++O_{P,g}(1).
+\tag{42.28}
+$$
+
+这里 $O(1)$ 不依赖 $N,W$；平稳启动使各条件均值严格等于 $n\mu$。
+
+而且
+
+$$
+\ker\Sigma=L^\perp,\qquad \operatorname{im}\Sigma=L.
+\tag{42.29}
+$$
+
+一个直接证明使用有限链 Poisson 方程。令 $m_i=\sum_jP_{ij}g_{ij}$，取向量值解
+$(I-P)u=m-\mu$；其存在来自 $\sum_i\pi_i(m_i-\mu)=0$。边增量
+$\xi_{ij}=g_{ij}-\mu+u_j-u_i$ 条件均值为零，所以累积为 martingale，且
+$S_n-n\mu=\sum_{t=1}^n\xi_{X_{t-1}X_t}+u_{X_0}-u_{X_n}$。边界项有界，除以 $n$ 后其方差及交叉项消失，从而
+$\Sigma=\sum_{i,j}\pi_iP_{ij}\xi_{ij}\xi_{ij}^{\mathsf T}$。
+方向 $h$ 位于其核，当且仅当
+$h\cdot g_{ij}=h\cdot\mu+h\cdot u_i-h\cdot u_j$ 对全部支持边成立；这等价于 $h$ 消去全部等长同端点荷差，即 $h\in L^\perp$。等价性的反向也可从（32.3）的实线性核得到：消去 $G\ker_{\mathbb R}[\mathsf D;\mathbf1^{\mathsf T}]$ 的边函数位于该矩阵行空间中。由对称性即得像空间结论。
+
+这些等式把固定长度的 $N\Sigma$ 波动与长度随机性的秩一项分开，但它们是局部二阶结构，不单独确定全局相位别名或一般容量。一个准确对照是：取各行相同的转移矩阵，使目的状态独立抽样。第一份来源的整数荷为 $-1,1$，概率各 $1/2$；第二份来源的整数荷为 $-2,0,2$，概率分别为 $1/8,3/4,1/8$。两者每步都具有 $\mu=0$、$\Sigma=1$，且任意窗口的总荷协方差都严格等于 $\mathbb E L_{N,W}$。但第一份有 $\Lambda=2\mathbb Z$、$\Lambda_0=\mathbb Z$，第二份有 $\Lambda=\Lambda_0=2\mathbb Z$。相干相邻长度只在第一份中消除相移 $\pi$ 的别名。相同协方差因而不能替代整数格条件。
+
+本节确定一般标签的精确字符并集公式、相位商条件及伯努利实例的完整容量界。协方差公式提供二阶结构；一般容量估计还须结合最大荷概率与实际整数格。上面的反例证明，不能仅凭协方差恢复全局别名。
+
+## 追加锚（本行以下为增补区）
+
+## 43. 周期纯环境的线性下界与固定核心的精确容量
+
+本节固定已知非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中 $ab\ne0$、$|a|^2+|b|^2=1$。接收器从独立纯态启动，活动记忆和参考不可访问，每轮使用同一个全域 CPTP 通道，所有持久资源计入接收器；每个规定终端都要求完整参考—活动记忆—原始档案联合态的精确恢复。
+
+第一项结果只要求同一 Stinespring 表示下的实际新环境为输入无关纯态，且按有限周期重复，不要求不同相位的环境正交，也不固定早期接收作用。第二项另外固定第25节的九行核心和正交交替环境，并求出这一较小实现类的精确容量。两项都不改变一般 CPTP 接收容量尚未收紧的下界。
+
+### 43.1 周期纯环境的循环钟归约
+
+**定理 43.1（周期纯环境的容量下界）。** 假设维数 $D$ 的接收器使用同一个 CPTP 通道，并且有一份固定 Stinespring 等距 $V:K\otimes\mathbb C^2\to K\otimes E$，其每轮实际新环境均是输入无关的单位纯向量 $\eta_n$。若存在整数 $k\ge1$ 使前 $N\ge2$ 轮满足 $\eta_{n+k}=\eta_n$（有定义时），则
+
+$$
+\boxed{kD\ge2N-1.}
+\tag{43.1}
+$$
+
+因此 $D\ge\lceil(2N-1)/k\rceil$。特别地，任何纯 $ABAB\cdots$ 实现都满足 $D\ge N$，不要求固定第25节九行核心，也不要求 $A\perp B$。
+
+证明：对任意输入纯态可将参考包括在内。初始接收态纯，且每轮丢弃环境为输入无关纯态，所以每轮接收后的参考—活动记忆—接收器仍纯，保留原输入相干。写第 $n-1$ 轮每个来源基态列为
+
+$$
+\Psi_{n-1}^i=|0\rangle x_{n-1}^i+|1\rangle y_{n-1}^i.
+\tag{43.2}
+$$
+
+下一轮源发射后，$V$ 作用给
+
+$$
+m_0\otimes V(x_{n-1}^i0)+m_1\otimes V(y_{n-1}^i1).
+\tag{43.3}
+$$
+
+因为 $m_0,m_1$ 线性无关、实际新环境属于 $\mathbb C\eta_n$，向该环境线的正交补投影可知
+
+$$
+V(x_{n-1}^i0),\ V(y_{n-1}^i1)\in K\otimes\mathbb C\eta_n.
+\tag{43.4}
+$$
+
+对每个钟相位 $j=0,\ldots,k-1$，令 $D_j\subseteq K\otimes\mathbb C^2$ 是所有 $n-1\equiv j\pmod k$、$n\le N$ 的这些实际输入系数方向的线性张成。对有实际轮次的相位，周期性给
+
+$$
+V(D_j)\subseteq K\otimes\mathbb C\eta_{j+1},
+\tag{43.5}
+$$
+
+对没有实际轮次的相位取 $D_j=0$。在非空相位上定义
+
+$$
+W_j=(I_K\otimes\langle\eta_{j+1}|)\,V|_{D_j}:D_j\to K.
+\tag{43.6}
+$$
+
+空相位的 $W_j$ 取零维映射。$V$ 等距且其像在同一单位环境线上，所以每个 $W_j$ 都等距；特别地 $\dim D_j\le D$。
+
+新增一个 $k$ 维持久循环钟 $C$，正交基为 $|j\rangle$。在 $(K\otimes C)\otimes\mathbb C^2$ 上定义部分作用
+
+$$
+U(\xi\otimes|j\rangle)
+=W_j\xi\otimes|j+1\bmod k\rangle\otimes|0\rangle,
+\qquad \xi\in D_j,
+\tag{43.7}
+$$
+
+输入因子按固定次序重排。各输入钟相位正交，各输出下一钟相位也正交，每个块又等距。因此这是同一输入输出维数空间中的部分等距，可补全为全域酉。
+
+初态为原接收初态乘 $|0\rangle_C$。逐轮应用同一个 $U$，在实际来源上复制原来的接收状态，钟相位循环推进，每个发出位都成为独立纯空白。全部持久容量是 $kD$，没有免费外部时变门。各终端可逆运行 $U$ 恢复完整档案及参考—活动记忆关联，故它满足第9节的非退化、独立纯初始化、同一固定酉、逐轮纯空白合同。
+
+该合同精确最小维数为 $2N-1$，于是 $kD\ge2N-1$。证明完毕。
+
+这里要求的是同一 Stinespring 表示下的实际输入无关纯环境周期。仅有有限维环境张成或有限种环境射线，不足以保证该周期前提；混合附加态也未由本定理处理。因此不从此推导一般 CPTP 接收容量的线性下界。
+
+### 43.2 固定九行核心的受限合同
+
+本节再固定第25节（25.39）的前四轮九行 Stinespring 作用，并要求各轮实际新环境为正交单位向量 $A,B$ 构成的确定交替字。允许环境空间更大、允许任意未指定输入上的等距完成；不把通道限制为置换矩阵，不预设后续接收方向正交或全新。
+
+**定理 43.2（固定九行核心的精确容量）。** 在上述受限合同下，对每个 $N\ge5$，最小接收维数恰为
+
+$$
+\boxed{d^{\mathrm{core},AB}_N(a,b)
+=\left\lceil\frac{3N}{2}\right\rceil-1.}
+\tag{43.8}
+$$
+
+该下界只适用于固定九行核心和纯正交交替环境；它不是一般 CPTP 容量下界。
+
+### 43.3 固定核心和输入—输出空间包含
+
+沿用第39节（39.4）的 $c,d,z,q,f,s,r$，固定接收器中七个正交单位方向 $u,v,w,p,e,g,h$、初态 $w$，以及
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+&&s1&hB
+\end{array}
+\tag{43.9}
+$$
+
+这里 $cs+br=df$，$z\in\operatorname{span}\{u,v\}$，且全部九个输入、九个输出各为正交单位族。
+
+对任意已规定部分表及 $\eta\in\{A,B\}$，记：
+- $D_\eta$ 是输出环境为 $\eta$ 的所有行的**接收器输入方向**张成空间，遗忘输入位；
+- $O_\eta$ 是这些行的接收器输出方向张成空间。
+
+本核心满足
+
+$$
+\begin{aligned}
+D_A&=\operatorname{span}\{w,z,u\}
+\subseteq \operatorname{span}\{u,v,w,g,h\}=O_B,\\
+D_B&=\operatorname{span}\{p,q,f,s\}
+\subseteq \operatorname{span}\{p,q,s,r\}=O_A.
+\end{aligned}
+\tag{43.10}
+$$
+
+这里 $D_A,D_B$ 未声明彼此正交；原输入位已经被遗忘。关键是交叉包含
+
+$$
+D_A\subseteq O_B,\qquad D_B\subseteq O_A.
+\tag{43.11}
+$$
+
+### 43.4 实际第一列产生的两条新行
+
+记第 $n$ 轮第一来源列为
+
+$$
+\Psi_n^0=A_nm_0P_n+B_nm_1Q_n.
+\tag{43.12}
+$$
+
+已知前四轮可取
+
+$$
+\begin{array}{c|c|c|c|c}
+n&A_n&B_n&P_n&Q_n\\ \hline
+2&a&b&u&v\\
+3&c&ab&s&r\\
+4&ad&cb&g&h
+\end{array}
+\tag{43.13}
+$$
+
+其中每个 $(P_n,Q_n)$ 正交归一，且两系数非零。另取 $A_1=1$、$P_1=p$。
+
+对 $n\ge4$，如果第 $n$ 轮第一列已为这种形式，下一轮发射的两个接收输入系数为
+
+$$
+aA_nP_n+B_nQ_n,\qquad bA_nP_n.
+\tag{43.14}
+$$
+
+置
+
+$$
+A_{n+1}=\sqrt{|aA_n|^2+|B_n|^2}>0,\qquad
+B_{n+1}=bA_n,\qquad
+Z_{n+1}=\frac{aA_nP_n+B_nQ_n}{A_{n+1}}.
+\tag{43.15}
+$$
+
+若下一轮要求共同纯环境 $\eta_{n+1}$，因为 $m_0,m_1$ 线性无关，向环境正交补投影实际发射—接收等式，分别得到
+
+$$
+V(Z_{n+1}0)=P_{n+1}\otimes\eta_{n+1},\qquad
+V(P_n1)=Q_{n+1}\otimes\eta_{n+1}
+\tag{43.16}
+$$
+
+的一对单位输出向量。等距性及输入位不同给 $P_{n+1}\perp Q_{n+1}$，故第一列继续具有同样形式。这是任何满足受限合同的实际装置都必须满足的两行，不是为了构造而另加的输入假设。
+
+第5轮的两条输入具体为
+
+$$
+Z_5=x=\frac{a^2dg+cbh}{\kappa},\qquad P_4=g.
+\tag{43.17}
+$$
+
+$x0,g1$ 正交于九行核心的全部输入。因此其两个新输出正交于旧的同环境 $A$ 输出。这给下面强制归纳的起点。
+
+### 43.5 全表正交由固定等距强制
+
+断言：把每轮第一列强制产生的两行依次加入核心后，全部已加入输入、输出各为正交单位族，并且交叉包含 $D_A\subseteq O_B,D_B\subseteq O_A$ 始终成立。
+
+核心以及第5轮已经核对。假设结论已到第 $n$ 轮。其最新接收输出 $P_n,Q_n$ 正交于**加入这两行前**的同环境输出空间 $O_{\eta_n}^{\mathrm{old}}$。下一轮输入 $Z_{n+1},P_n$ 属于 $\operatorname{span}\{P_n,Q_n\}$。
+
+对下一轮同环境 $\eta_{n+1}\ne\eta_n$ 的任一旧输入行，其接收方向属于
+
+$$
+D_{\eta_{n+1}}^{\mathrm{old}}
+\subseteq O_{\eta_n}^{\mathrm{old}},
+\tag{43.18}
+$$
+
+所以两个新接收输入方向均与之正交，因而同输入位的完整输入正交。
+
+对环境 $\eta_n$ 的任一旧行，新的实际输出处在 $K\otimes\eta_{n+1}$，旧输出处在 $K\otimes\eta_n$，两环境正交。固定 $V$ 等距，故相应完整输入也正交。不同输入位之间本来就正交；两个新行之间亦然。
+
+所以新输入与全部旧输入正交，固定等距使新输出与全部旧输出正交。最后，两个新输入接收方向位于上一轮输出空间 $O_{\eta_n}$，因此新扩大的 $D_{\eta_{n+1}}$ 仍包含于 $O_{\eta_n}$；另一项包含未改变。归纳完成。
+
+特别地，所有零位接收输入
+
+$$
+w,p,q,Z_3,Z_4,\ldots,Z_N
+\tag{43.19}
+$$
+
+构成正交单位族，其中 $Z_3=z$、$Z_4=f$。所有一位接收输入
+
+$$
+w,p,P_2,P_3,\ldots,P_{N-1}
+\tag{43.20}
+$$
+
+也构成正交单位族。这两族之间可以有非零交叠；没有将它们合并为一个正交族。
+
+### 43.6 来源决定两族交叠的严格奇偶分离
+
+置
+
+$$
+\alpha_n=|A_n|^2,\qquad x_0=|a|^2,\qquad y_0=|b|^2.
+\tag{43.21}
+$$
+
+由于第一列单位且 $P_n\perp Q_n$，
+
+$$
+|A_n|^2+|B_n|^2=1.
+\tag{43.22}
+$$
+
+因此 $|B_n|^2=y_0\alpha_{n-1}$，并有
+
+$$
+\alpha_1=1,\qquad
+\alpha_n=1-y_0\alpha_{n-1}
+=\frac{1-(-y_0)^n}{1+y_0}.
+\tag{43.23}
+$$
+
+故
+
+$$
+\alpha_n-\alpha_{n+1}=(-1)^{n+1}y_0^n.
+\tag{43.24}
+$$
+
+对于 $2\le n\le N-1$，记
+
+$$
+r_n=\frac{aA_n}{A_{n+1}}.
+\tag{43.25}
+$$
+
+前四轮的既有系数相位按表保留；例如 $r_3=c/d$。所有这些系数都满足
+
+$$
+|r_n|^2
+=x_0\frac{\alpha_n}{\alpha_{n+1}}
+\begin{cases}
+<x_0,&n\text{ 偶},\\
+>x_0,&n\text{ 奇}.
+\end{cases}
+\tag{43.26}
+$$
+
+如果 $m,n$ 同奇偶，输出环境相同。$P_m$ 来自零位输入，$Q_n$ 来自一位输入，因此固定等距给 $P_m\perp Q_n$。结合第43.5节的 $P_n$ 正交族和 $Z_{n+1}$ 公式（$n=2,3$ 分别由 $Z_3=z,Z_4=f$ 直接核对），得到
+
+$$
+\langle P_m,Z_{n+1}\rangle
+=r_n\delta_{mn}
+\qquad(m\equiv n\pmod2).
+\tag{43.27}
+$$
+
+不同奇偶的交叠不预设为零。
+
+### 43.7 收缩矩阵的秩缺陷下界
+
+取两个长度 $L=N-2$ 的正交单位族
+
+$$
+(P_n)_{n=2}^{N-1},\qquad (Z_{n+1})_{n=2}^{N-1},
+\tag{43.28}
+$$
+
+令其交叠矩阵为
+
+$$
+M_{mn}=\langle P_m,Z_{n+1}\rangle.
+\tag{43.29}
+$$
+
+它是两个等距嵌入的交叠矩阵，所以 $\|M\|\le1$。按偶、奇指标排序，
+
+$$
+M=
+\begin{pmatrix}
+D_{\mathrm e}&U\\
+W&D_{\mathrm o}
+\end{pmatrix},
+\tag{43.30}
+$$
+
+其中 $D_{\mathrm e},D_{\mathrm o}$ 分别是相应 $r_n$ 组成的对角矩阵，偶指标数
+
+$$
+e_N=\left\lfloor\frac{N-1}{2}\right\rfloor.
+\tag{43.31}
+$$
+
+由 $M^*M\preceq I$ 的奇列主块，
+
+$$
+U^*U+D_{\mathrm o}^*D_{\mathrm o}\preceq I.
+\tag{43.32}
+$$
+
+第43.6节使 $D_{\mathrm o}^*D_{\mathrm o}\succ x_0 I$。指标有限，所以
+
+$$
+\|U\|^2<1-x_0.
+\tag{43.33}
+$$
+
+同时 $D_{\mathrm e}D_{\mathrm e}^*\prec x_0I$。因此 $I-MM^*$ 的偶行主块满足
+
+$$
+I-D_{\mathrm e}D_{\mathrm e}^*-UU^*\succ0.
+\tag{43.34}
+$$
+
+这个主块维数为 $e_N$，故
+
+$$
+\operatorname{rank}(I-MM^*)\ge e_N.
+\tag{43.35}
+$$
+
+两个正交族的联合 Gram 矩阵为
+
+$$
+\begin{pmatrix}I&M\\M^*&I\end{pmatrix}.
+\tag{43.36}
+$$
+
+可逆分块消元给其秩为
+
+$$
+L+\operatorname{rank}(I-M^*M)
+=L+\operatorname{rank}(I-MM^*).
+\tag{43.37}
+$$
+
+因此两个族共同张成的接收子空间至少有 $L+e_N$ 维。
+
+第43.5节又给 $w,p$ 彼此正交，且同时正交于上述两个族。所以
+
+$$
+\begin{aligned}
+\dim K
+&\ge L+e_N+2\\
+&=N+\left\lfloor\frac{N-1}{2}\right\rfloor\\
+&=\left\lceil\frac{3N}{2}\right\rceil-1.
+\end{aligned}
+\tag{43.38}
+$$
+
+### 43.8 达到与范围
+
+当 $N=5$ 时，第25节十一行表在固定九行后追加 $x0\mapsto gA$、$g1\mapsto hA$，给七维达到。当 $N\ge6$ 时，第41节构造保留同一九行核心及确定正交交替环境，给 $\lceil3N/2\rceil-1$ 维达到。因此受限精确值成立。
+
+特别地，该实现类在 $N=5,6,7,8,9,10$ 的精确容量为
+
+$$
+7,\ 8,\ 10,\ 11,\ 13,\ 14.
+\tag{43.39}
+$$
+
+这里的必要正交由固定九行核心和交替环境共同推出。去掉其中任一条件，第43.5节的强制归纳没有建立；所以该结论没有排除一般七维六终端或一般九维七终端 CPTP 接收器，也不升级为一般线性容量下界。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 一般整数边荷相干长度窗口的容量三分律
+
+沿用第42节有限 primitive 行随机矩阵 $P$、完整边标签、整数边荷 $g$ 和相干均匀长度窗口的来源与完整参考块编码合同。所有相位遍历整个 $\mathbb T^q$。写 $M_*=N+W-1$，其中 $1\le W\le N+1$。以下常数允许依赖固定的 $P,g$，误差常数另依赖固定 $0<\epsilon<1$，但不依赖 $N,W$。
+
+记
+$$
+\Lambda=G\ker_{\mathbb Z}[\mathsf D;\mathbf1^{\mathsf T}],\qquad
+L=\operatorname{span}_{\mathbb R}\Lambda,\qquad r=\dim L,
+\qquad \mu=\sum_{i,j}\pi_iP_{ij}g_{ij}.
+$$
+第42节已给 $\Lambda_0=G\ker_{\mathbb Z}\mathsf D=\Lambda+\mathbb Z\gamma$，且 $\mu-\gamma\in L$。整数格及其有限别名保留为实际模型数据。
+
+**定理44.1（相干窗口的三个统一容量尺度）。** 对所有充分大的 $N$ 和全部 $1\le W\le N+1$，
+$$
+k_{N,W}^{\epsilon,\mathrm{coh}}(P,g)\asymp_{P,g,\epsilon}
+\begin{cases}
+W N^{r/2},&\mu\notin L,\\
+N^{(r-1)/2}(\sqrt N+W),&0\ne\mu\in L,\\
+N^{r/2},&\mu=0.
+\end{cases}
+\tag{44.1}
+$$
+第二种情形自动有 $r\ge1$。第一种允许 $r=0$，此时尺度为 $W$；第三种允许 $r=0$，此时容量保持有界。本定理只要求每个给定窗口的一次共同块编解码，不提供一个固定接收门、因果在线实现或适应性停止保证。
+
+### 44.1 固定长度最大原子的统一上界
+
+从初始状态 $i$ 出发，记经典边路径总荷为 $S_n$，末状态为 $X_n$，并定义
+$$
+p_n(i,j,c)=\Pr_i(X_n=j,S_n=c),\qquad c\in\mathbb Z^q.
+$$
+
+引理31.3的有限矩阵谱幂估计（31.9）给
+$$
+\|P(\theta)^n\|_{\infty\to\infty}\le C\exp\{-c_0n\,d(\theta,\mathcal H)^2\},\qquad
+P(\theta)_{ij}=P_{ij}e^{i\theta\cdot g_{ij}},\qquad
+\mathcal H=\Lambda^\perp.
+\tag{44.2}
+$$
+所有模一外围点已经包含在完整闭子群 $\mathcal H$ 中，包括其有限连通分支；不能只使用其切空间。Fourier 反演给
+$$
+p_n(i,j,c)=\int_{\mathbb T^q}
+e^{-i\theta\cdot c}(P(\theta)^n)_{ij}\,d\theta.
+$$
+这里 Haar 测度归一化。商环面 $\mathbb T^q/\mathcal H$ 的维数为 $r$，其固定平坦度量的小球体积为 $O(t^r)$；积分（44.2）于是给
+$$
+\boxed{\sup_{i,j,c}p_n(i,j,c)\le C_1 n^{-r/2}\qquad(n\ge1).}
+\tag{44.3}
+$$
+$r=0$ 时积分只给常数，正是所需的退化情形。这一步仅复用固定长度谱估计，并未假设无算术周期或标签格饱和。
+
+### 44.2 非平稳初态下的指数尾与路径二分
+
+给向量值状态函数 $u$ 解有限链 Poisson 方程
+$$
+(I-P)u=\bar g-\mu,\qquad
+\bar g(i)=\sum_jP_{ij}g_{ij}.
+$$
+因为右侧在平稳律下均值为零，且 $P$ primitive，解存在。置
+$$
+\xi(i,j)=g_{ij}-\mu+u(j)-u(i).
+$$
+这些向量条件均值为零、范数一致有界，并且对任意初态都有
+$$
+S_n-n\mu=\sum_{t=1}^n\xi(X_{t-1},X_t)+u(X_0)-u(X_n).
+\tag{44.4}
+$$
+对任意一个坐标，若对应第 $t$ 步增量 $\xi_t$ 的绝对值至多 $B$，条件均值为零及凸性给条件指数矩界
+$\mathbb E(e^{\lambda\xi_t}\mid\mathcal F_{t-1})\le e^{\lambda^2B^2/2}$。逐步取条件期望，再优化 Chernoff 参数 $\lambda$，得该坐标的双侧尾界 $2e^{-s^2/(2nB^2)}$。对有限个坐标并合，并吸收（44.4）的有界端点项，得到常数 $C_2,c_2>0$，使
+$$
+\boxed{\Pr_i(\|S_n-n\mu\|\ge t)
+\le C_2e^{-c_2t^2/n}\qquad(n\ge1,t\ge0).}
+\tag{44.5}
+$$
+若所有 martingale 增量为零，左侧仅由有界端点项产生，同样通过增大 $C_2$ 取得（44.5）。因此不要求协方差正定，也不要求初态平稳。
+
+结合（44.3）和（44.5）可得包含前置因子的荷点上界。将 $n\ge2$ 分成 $n_1=\lfloor n/2\rfloor$、$n_2=n-n_1$。Markov 性给
+$$
+p_n(i,j,c)=\sum_\ell\sum_y
+p_{n_1}(i,\ell,y)p_{n_2}(\ell,j,c-y).
+\tag{44.6}
+$$
+若 $t=\|c-n\mu\|$，每个被加项至少满足
+$$
+\|y-n_1\mu\|\ge t/2
+\quad\text{或}\quad
+\|c-y-n_2\mu\|\ge t/2.
+$$
+在第一类项中，用（44.3）上界第二因子，再将第一因子求和，使用（44.5）；第二类交换两因子的角色。有限个中间状态只增加固定常数。因 $n_1,n_2\asymp n$，得到
+$$
+\boxed{p_n(i,j,c)\le C_3 n^{-r/2}
+\exp\{-c_3\|c-n\mu\|^2/n\}.}
+\tag{44.7}
+$$
+调整常数即可包括 $n=1$ 的有限支持。此处指数点界由最大原子与尾界共同推出，不引用未经核对的全局局部极限定理。
+
+### 44.3 不同长度在荷空间中的位置
+
+若 $\mu\notin L$，由 $\mu-\gamma\in L$，可取实线性泛函 $\ell$ 满足
+$$
+\ell|_L=0,\qquad \ell(\gamma)=\ell(\mu)=1.
+$$
+对同端点两条路径 $\alpha,\beta$，其计数差 $z$ 满足 $\mathsf Dz=0$，且
+$Gz-(\mathbf1^{\mathsf T}z)\gamma\in\Lambda$。所以
+$$
+\ell(g(\alpha)-g(\beta))=|\alpha|-|\beta|.
+\tag{44.8}
+$$
+因此，在固定端点 $i,j$ 后，一个总荷 $c$ 至多属于一个长度。固定长度 $n$ 的全部总荷又处在某个 $\Lambda$ 的陪集中；这个陪集的实方向空间为 $L$。
+
+若 $\mu\in L$，则 $\gamma\in L$，故 $\Lambda_0$ 是 $L$ 中的一个满秩格。对同端点的全部长度，总荷都落在一个共同的 $\Lambda_0$ 陪集中。该陪集可以依赖端点，但无需依赖窗口。若 $\Lambda_0/\Lambda$ 是非平凡有限群，不同长度可以落在不同 $\Lambda$ 陪集，以下计数始终在较大的实际格 $\Lambda_0$ 内进行，保留这项有限别名差别。
+
+### 44.4 Haar 平均目标与容量下界
+
+取活动记忆与 $m$ 维参考的 Bell 输入。按第42节的同荷跨长度向量合成完整联合目标
+$$
+|\Psi_\theta\rangle=\sum_c e^{i\theta\cdot c}|\beta_c\rangle.
+$$
+不同 $c$ 的向量正交；Haar 平均目标的非零特征值为
+$$
+\nu(c)=\|\beta_c\|^2
+=\frac1{mW}\sum_{n=N}^{M_*}\sum_{i,j}p_n(i,j,c).
+\tag{44.9}
+$$
+此等式已经将同一个字符的不同长度相干合成，没有对长度作经典测量。
+
+在 $\mu\notin L$ 情形，（44.8）说明每个端点对在（44.9）中至多有一个非零长度项；（44.3）给
+$$
+\max_c\nu(c)\le \frac{C}{W N^{r/2}}.
+\tag{44.10}
+$$
+
+在 $0\ne\mu\in L$ 情形，先由（44.3）得 $\max_c\nu(c)\le C N^{-r/2}$。另一方面，对任意 $c$，令 $a_c=\langle c,\mu\rangle/\|\mu\|^2$。由于 $N\le n\le2N$，
+$$
+\sum_{n=N}^{M_*}e^{-c_3\|c-n\mu\|^2/n}
+\le\sum_{n\in\mathbb Z}
+e^{-(c_3\|\mu\|^2/(2N))(n-a_c)^2}
+\le C\sqrt N.
+$$
+最后的格点高斯和界对任意中心 $a_c$ 一致，可按与中心的整数距离分组后比较积分。由（44.7）、（44.9）得
+$$
+\max_c\nu(c)\le C N^{-r/2}
+\min\{1,\sqrt N/W\}
+\le\frac{C'}{N^{(r-1)/2}(\sqrt N+W)}.
+\tag{44.11}
+$$
+在 $\mu=0$ 情形，直接由（44.3）得到
+$$
+\max_c\nu(c)\le C N^{-r/2}.
+\tag{44.12}
+$$
+
+以下同一个解码正性论证将三式转为容量下界。设共同接收维数为 $D_K$，解码为 $\mathcal D$，置 $\tau=\mathcal D(I_K)$，则 $\operatorname{Tr}\tau=D_K$。编码后的联合密度矩阵不超过 $I_{JM}\otimes I_K$，所以恢复态不超过 $I_{JM}\otimes\tau$。每个纯目标的投影概率至少为 $1-\epsilon$，Haar 平均后得到
+$$
+1-\epsilon\le
+\operatorname{Tr}[\overline\rho(I_{JM}\otimes\tau)]
+\le m^2D_K\|\overline\rho\|
+=m^2D_K\max_c\nu(c).
+\tag{44.13}
+$$
+代入（44.10）—（44.12），即得（44.1）的全部必要下界。
+
+### 44.5 保持相干的荷管道上界
+
+取只依赖 $P,g,\epsilon$ 的常数 $R\ge1$，并令半径 $a=R\sqrt N$。定义荷管道
+$$
+\mathcal T_{\rm good}
+=\{c\in\mathbb Z^q:
+\operatorname{dist}(c,[N\mu,M_*\mu])\le a\}.
+\tag{44.14}
+$$
+对每个端点，只保留（42.4）中 $c\in\mathcal T_{\rm good}$ 的整个跨长度向量 $b_{ij,c}^{\mathcal I}$，其张成记为 $\mathcal W$，投影为 $\Pi$。
+
+任意窗口长度的中心点 $n\mu$ 位于管道轴上；非平稳初态的实际均值不必严格等于该中心，（44.5）已经包括这个差别。一个荷未被保留，必有 $\|S_n-n\mu\|>a$。由（44.5）及 $n\le2N$，其概率至多 $C_2e^{-c_2R^2/2}$。选 $R$ 使此数不超过 $\epsilon^2/2$。首边起点扇区使漏出算子在初态基中对角，因而对全部相位和任意参考，
+$$
+\mathcal T_{\theta;N,W}^*
+[I_M\otimes(I-\Pi)]\mathcal T_{\theta;N,W}
+\preceq (\epsilon^2/2)I_M.
+\tag{44.15}
+$$
+与（42.27）相同，对 $\mathcal W$ 作一次等距编码，增加一维失败旗标，在失败时输出固定档案态。成功项只有一个 Kraus 算子，保留所有选中荷和长度之间的相干。对任意参考纯化，若漏出为 $d\le\epsilon^2/2$，解码后与纯目标的重叠至少为 $(1-d)^2$，故半迹误差至多 $\sqrt{2d}\le\epsilon$。所需维数不超过 $\dim\mathcal W+1$。
+
+剩下只需估计每个端点扇区中选中荷的数量。固定的秩 $r$ 格在任意半径 $a\ge1$ 的球内有 $O(a^r)$ 个点，常数对陪集和平移中心一致。可由格的固定基本域或最小点距的球打包得到；$r=0$ 时每个陪集至多一个点。
+
+若 $\mu\notin L$，对每个固定长度分别使用其 $\Lambda$ 陪集。荷满足（44.8），所以固定长度的支持超平面与管道轴只在该长度附近相交；更直接地，可以把保留条件改为：对每个长度 $n$，保留 $\|c-n\mu\|\le a$ 的荷。端点和总荷唯一确定长度，故此条件仍选择整个 $b_{ij,c}^{\mathcal I}$，不分割同荷向量；（44.15）和原证明不变。每个长度有 $O(a^r)$ 个保留荷，总数 $O(Wa^r)$。
+
+若 $0\ne\mu\in L$，全部荷处于一个 $\Lambda_0$ 陪集，且轴方向 $\mu$ 位于 $L$。将轴分成至多 $C(1+W/a)$ 段，每段长度不超过 $a$；管道被同样数量的半径 $3a$ 球覆盖。每球与该陪集至多相交 $O(a^r)$ 个格点，故所选荷数为
+$$
+O(a^r+Wa^{r-1})=O(N^{r/2}+WN^{(r-1)/2}).
+\tag{44.16}
+$$
+陪集可位于 $L$ 的平移中，正交投影到其仿射支撑或直接使用最小格距，均给同一计数界。
+
+若 $\mu=0$，管道退化为半径 $a$ 的球，每个端点陪集内至多有 $O(a^r)=O(N^{r/2})$ 个荷。
+
+总端点数至多 $m^2$，失败旗标只加一维。以上三种上界与（44.13）的下界一致，证明（44.1）。
+
+### 44.6 精确容量的二分律
+
+**推论44.2（相同窗口的精确容量）。** 在同一模型与窗口范围内，
+$$
+k_{N,W}^{0,\mathrm{coh}}(P,g)\asymp_{P,g}
+\begin{cases}
+W N^r,&\mu\notin L,\\
+N^r,&\mu\in L.
+\end{cases}
+\tag{44.17}
+$$
+
+证明。第32节的固定长度荷计数给
+$\sum_{i,j}|C_n(i,j)|\asymp_{P,g}n^r$。
+若 $\mu\notin L$，（44.8）使每个端点的不同长度荷集互不相交。第42节精确并集公式因而变成固定长度基数之和，在 $N\le n\le2N$ 上为 $\Theta(WN^r)$。
+
+若 $\mu\in L$，每个端点的全部窗口荷位于一个秩 $r$ 的 $\Lambda_0$ 陪集中。边荷有界、路径长度至多 $2N$，故这些荷全部位于半径 $2N\max_e\|g_e\|$ 的球中；格点计数给每个端点 $O(N^r)$ 个荷。窗口又包含长度 $N$ 的全部荷，固定长度下界给 $\Omega(N^r)$。端点数固定，第42节精确并集公式完成证明。$r=0$ 时每个陪集至多一个点，论证仍然成立。
+
+### 44.7 几何含义与合同边界
+
+如果平均荷不在固定长度的波动空间 $L$ 中，改变长度沿一个新的方向移动支持，窗口贡献乘法因子 $W$。如果平均荷已经位于 $L$ 且非零，长度只把原波动空间中的一条轴由 $\sqrt N$ 拉长到 $\sqrt N+W$，其余 $r-1$ 条轴仍为 $\sqrt N$。如果平均荷为零，长度窗口不产生均值轴的额外拉长。
+
+整数格决定精确字符与全部全局别名；最大原子和尾界决定固定正误差尺度。有限格指数可以改变常数与精确容量，以上推导未将其抹去，也没有仅由协方差矩阵猜测下界。结论统一于 $1\le W\le N+1$，不推及任意长窗口、任意相位候选子集、非 primitive 来源、经典去相干长度或同一个固定在线接收器。
+
+## 追加锚（本行以下为增补区）
+
+## 45. 无周期假设的纯轨道延拓与接收容量线性下界
+
+### 45.1 有限维通道的纯轨道延拓
+
+**引理45.1（有限纯前缀强制全时域纯轨道）。** 设 $\mathcal R$ 是 $d$ 维复 Hilbert 空间 $H$ 上的 CPTP 通道，$\sigma_0$ 是纯态，且 $\sigma_n=\mathcal R^n(\sigma_0)$。如果 $\sigma_0,\ldots,\sigma_{2d-1}$ 全为纯态，则所有 $\sigma_n$ 均为纯态。
+
+这里不要求通道单酉、不要求不同时间的纯态正交，也不预设 Stinespring 环境周期。
+
+证明。取有限 Kraus 表 $\mathcal R(X)=\sum_u K_uXK_u^*$。记 $N=2d-1$，为已知纯态选单位向量 $\psi_n$。正项之和秩一迫使
+
+$$
+K_u\psi_n=\kappa_{u,n}\psi_{n+1},\qquad
+\sum_u|\kappa_{u,n}|^2=1,
+\qquad 0\le n<N.
+\tag{45.1}
+$$
+
+选取复数 $h_u$，避开有限个真超平面，使
+
+$$
+c_n:=\sum_u h_u\kappa_{u,n}\ne0\qquad(0\le n<N).
+$$
+
+令 $A=\sum_u h_uK_u$。于是 $A\psi_n=c_n\psi_{n+1}$，且 $A^n\psi_0$ 与 $\psi_n$ 共线，对 $0\le n\le N$ 均非零。
+
+考虑循环空间 $H_c=\operatorname{span}\{A^n\psi_0:n\ge0\}$，维数为 $m\le d$。循环向量的最小多项式写为 $z^tq(z)$，其中 $q(0)\ne0$、$\deg q=r$、$t+r=m$。由于 $A^N\psi_0\ne0$ 且 $N\ge d$，该多项式不可能是纯幂，故 $r\ge1$。稳定循环空间
+
+$$
+R=A^tH_c
+=\operatorname{span}\{A^{t+j}\psi_0:j\ge0\}
+\tag{45.2}
+$$
+
+维数为 $r$，$A_R=A|_R$ 可逆，而 $y_j=A^{t+j}\psi_0$，$0\le j<r$，是 $R$ 的一组基。
+
+因为 $t+r=m\le d\le N$，（45.1）覆盖这组基及其后继，故每个 $K_u$ 都保持 $R$。限制通道仍在 $R$ 上保迹。定义
+
+$$
+B_u=A_R^{-1}K_u|_R.
+$$
+
+每个 $y_j$ 是所有 $B_u$ 的共同本征向量，所以这些算子同时可对角化。将相同共同本征值元组的空间合并，得到代数直和
+
+$$
+R=S_1\oplus\cdots\oplus S_s,
+\qquad s\ge1.
+\tag{45.3}
+$$
+
+这些空间不要求正交。$\sum_u h_uB_u=I_R$。
+
+对非零 $x\in R$，$\mathcal R(|x\rangle\langle x|)$ 秩一，当且仅当 $x$ 属于某个 $S_\alpha$。确实，秩一等价于所有 $K_ux$ 共线；$A_R$ 可逆，故等价于所有 $B_ux$ 共线。它们的线性组合为 $x$，所以每个 $B_ux$ 都是 $x$ 的标量倍数，即 $x$ 为共同本征向量。反向直接成立。在这些纯输入上，下一纯态方向为 $Ax$。
+
+若 $s=1$，则整个 $R$ 都是纯输入空间，而且 $AR=R$，所以从时刻 $t$ 开始立即得到无限纯轨道。以下设 $s\ge2$。
+
+对每个长度 $L\ge1$ 的环境类型词 $\alpha_0\cdots\alpha_{L-1}$，取非零线性空间
+
+$$
+C_{\alpha_0\cdots\alpha_{L-1}}
+=\bigcap_{j=0}^{L-1}A_R^{-j}S_{\alpha_j},
+\tag{45.4}
+$$
+
+将全部非零者组成族 $\mathscr C_L$。其并集恰为前 $L$ 个迭代方向全部属于纯输入集合的非零向量。每个 $\mathscr C_L$ 的成员构成代数直和族：$L=1$ 由（45.3）成立；延长一个符号时，每个旧成员被它与直和族 $A_R^{-L}S_\alpha$ 的交空间细分，因此各子空间仍为直和，不同旧成员之间也保持直和。
+
+定义非负整数势
+
+$$
+\Phi_L=\sum_{C\in\mathscr C_L}(2\dim C-1).
+\tag{45.5}
+$$
+
+一个 $q$ 维旧成员若产生 $k$ 个非零子空间，维数为 $q_1,\ldots,q_k$，则 $\sum_iq_i\le q$。如果 $k=0$，势下降 $2q-1\ge1$；如果 $k=1$ 且子空间真小，势至少下降二；如果 $k\ge2$，势至少下降 $k-1\ge1$。所以只要 $\mathscr C_{L+1}$ 与 $\mathscr C_L$ 不是完全相同的子空间族，就有 $\Phi_{L+1}<\Phi_L$。
+
+一旦两族相同，每个旧成员恰有一个与自身相同的延长子空间。对该成员中的任意非零 $x$，向前作用 $A_R$ 后，其长度 $L$ 的后缀又落在 $\mathscr C_L$ 的一个成员内。因此该子空间并集前向不变，其中每个方向都产生无限纯轨道。
+
+初始势满足
+
+$$
+\Phi_1=2r-s\le2r-2.
+$$
+
+已知纯轨道在时刻 $t$ 以后至少还有
+
+$$
+N-t=2d-1-t\ge2r-1
+\tag{45.6}
+$$
+
+次纯输出，故 $y_0$ 属于 $\mathscr C_{2r-1}$ 的一个成员，特别地 $\Phi_{2r-1}\ge1$。如果前 $2r-2$ 次细分全严格，势将降到零，矛盾。所以在这之前已经稳定；$y_0$ 在相应稳定并集中，从而以后永远产生纯态。时刻 $t$ 之前也已知纯，证明完毕。
+
+**命题45.1a（每个维数的精确纯轨道阈值）。** 对每个 $d\ge2$，存在一个 $d$ 维 CPTP 通道及纯初态，使时刻 $0,\ldots,2d-2$ 的态全部纯，而时刻 $2d-1$ 的态混合。因此引理45.1的阈值 $2d-1$ 对每个维数均为最小可能值。
+
+证明：取正交单位基 $e_0,\ldots,e_{d-1}$，置
+
+$$
+v=\frac{e_0+e_1}{\sqrt2},\qquad
+K_0=\sum_{i=0}^{d-2}|e_{i+1}\rangle\langle e_i|,
+\qquad K_1=|v\rangle\langle e_{d-1}|.
+$$
+
+有
+
+$$
+K_0^*K_0=\sum_{i=0}^{d-2}|e_i\rangle\langle e_i|,
+\qquad K_1^*K_1=|e_{d-1}\rangle\langle e_{d-1}|,
+$$
+
+所以 $\mathcal R(X)=K_0XK_0^*+K_1XK_1^*$ 是 CPTP。以 $e_0$ 为初始纯态方向，前 $d$ 个时刻依次为
+
+$$
+\psi_t=e_t\quad(0\le t\le d-1).
+$$
+
+下一步由 $K_1$ 复位到 $v$。其后，只要两个分量均未跨过最后一维，$K_0$ 将它们共同右移而 $K_1$ 为零。因此
+
+$$
+\psi_{d+j}=\frac{e_j+e_{j+1}}{\sqrt2},
+\qquad 0\le j\le d-2.
+$$
+
+最后纯时刻恰为 $2d-2$；下一次分别由两份 Kraus 输出 $e_{d-1}/\sqrt2$ 与 $v/\sqrt2$，得到
+
+$$
+\sigma_{2d-1}
+=\frac12|e_{d-1}\rangle\langle e_{d-1}|
++\frac12|v\rangle\langle v|.
+$$
+
+这两个方向在每个 $d\ge2$ 都线性独立，所以该态秩为二。$d=2$ 时两方向虽然不正交，仍线性独立，证明同样成立。结合引理45.1，得到每个维数上的精确阈值。$d=1$ 的轨道恒纯，另行平凡处理。证明完毕。
+
+该例满足 $\mathcal R(I)=I-|e_0\rangle\langle e_0|+|v\rangle\langle v|\ne I$，所以不保单位；它与第45.4节更强的保单位特例并不冲突。
+
+### 45.2 对固定来源接收的线性必要维数
+
+仍取本卷非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$，来源初态为 $|0\rangle_M$。接收器维数为 $D$，独立纯启动，使用同一个全域 CPTP 通道。
+
+**推论45.2（任意纯终端接收类的线性必要维数）。** 如果接收后的实际 $MK$ 态在每个 $0\le n\le N$ 都纯，则
+
+$$
+\boxed{N\le4D-2,\qquad D\ge\left\lceil\frac{N+2}{4}\right\rceil.}
+\tag{45.7}
+$$
+
+特别地，若要求一份固定 Stinespring 表示在这些轮次的实际新环境都是输入无关纯态，则该下界成立；这些纯环境可以任意非正交、无周期，也无需固定早期核心。
+
+证明。一次来源发射与固定接收合成 $MK$ 上的固定 CPTP 通道 $\mathcal R$，其 Hilbert 空间维数为 $d=2D$。若 $N\ge4D-1$，引理使全部实际 $\sigma_n$ 均纯。每个 $\sigma_n$ 的来源边缘仍为真实的 $\rho_{M,n}$。记 $q_n=\operatorname{Tr}\rho_{M,n}^2$；纯双体态的两侧边缘具有相同非零谱，所以对全部 $n$ 有
+
+$$
+\operatorname{Tr}\sigma_{K,n}^2=q_n,\qquad
+\operatorname{Tr}\sigma_n^2=1,
+$$
+
+从而直接满足第10节（10.8）的全时域纯度乘积恒等式。该节针对指定来源输入 $|0\rangle_M$ 的最低谱模矛盾排除了这种轨道，不需要引入未来解码器。故 $N<4D-1$，即（45.7）。
+
+推论只需指定输入的实际联合态纯，不把它当作一般 CPTP 合同的自动后果。对一般完整参考合同，第23节的可逆编码结构在 $n\ge3$ 只给 $4r_n\le D$，其中 $r_n$ 是附加态秩；当 $D\ge8$ 时允许 $r_n\ge2$。因此（45.7）尚不能替代第12节的一般平方根下界。要取得一般线性下界，仍需把上述纯轨道有限延拓机制扩展到同一固定通道的混合可逆子系统轨道，或证明最小容量装置可保持纯终端而不增加维数。
+
+### 45.3 一般小容量接收器的纯尾与有限终端障碍
+
+完整参考合同可以在小容量下自动产生纯尾，不要求最早两个终端的接收态纯。
+
+**推论45.3（七维以下的一般固定 CPTP 终端界）。** 对本卷已知非退化来源，设一个 $D\le7$ 维接收器从独立纯态启动，逐轮使用同一个全域 CPTP 通道，并精确服务全部 $1\le n\le N$ 的完整参考、活动记忆与档案恢复合同。则
+
+$$
+\boxed{N\le4D+1.}
+\tag{45.8}
+$$
+
+特别地，一般七维固定 CPTP 接收器不能服务前三十个精确终端；因此 $N\ge30$ 时有 $d_{\mathrm{CPTP},N}(a,b)\ge8$。这里允许早期混合附加态，未对 Stinespring 环境的纯度、正交性、周期或维数另加限制。
+
+证明。只需反设 $N\ge4D+2$，此时 $N\ge3$。取第23节的 Bell 参考输入；从第三轮开始，其真实档案的 Schmidt 秩为四，并在以后每轮保持为四。该节的可逆编码分解因而给每个 $3\le n\le N$ 的附加态秩 $r_n$ 满足
+
+$$
+4r_n\le D\le7.
+\tag{45.9}
+$$
+
+若 $D<4$，第三终端本身已不可能；其余情形强制 $r_n=1$。于是累计编码在该终端的整个实际档案支撑上为单个等距，特别地，对指定初始来源 $|0\rangle_M$，实际 $MK$ 态 $\sigma_n$ 在所有 $3\le n\le N$ 均纯。此推断没有限制 $\sigma_1,\sigma_2$。
+
+一次来源发射与固定接收仍为同一个 $2D$ 维空间上的通道 $\mathcal R$。从纯态 $\sigma_3$ 开始，已知的纯输出次数为 $N-3\ge4D-1$。引理45.1因此使实际轨道在每个 $n\ge3$ 均纯。沿用原来从 $|0\rangle_M$ 启动的真实来源纯度 $q_n$，得到
+
+$$
+\operatorname{Tr}\sigma_{K,n}^2=q_n,
+\qquad\operatorname{Tr}\sigma_n^2=1,
+\qquad n\ge3.
+\tag{45.10}
+$$
+
+第10节的最低谱模反证只需要其（10.8）在一个整数尾部成立。具体地，（10.9）的 Jordan 轨道表达本来就先丢弃零特征值的有限幂零前缀；不同非零基底的指数多项式在整数尾部仍线性独立。若实际非零轨道基底的最小模为 $s>0$，联合纯度的正实基底 $s^2$ 具有非零正最高次系数，而 $q_n$ 中的正实基底 $p^2$ 具有严格正系数。乘积右侧因此出现 $p^2s^2<s^2$，偏迹侧却没有这样小的基底。删除任何有限前缀都不改变这一矛盾。所以（45.10）所给的尾部纯度恒等式已经不可能。
+
+反设被排除，得到（45.8）。容量界对 $D\le7$ 统一成立，故 $N\ge30$ 必须 $D\ge8$。证明完毕。
+
+这里的纯尾是四维档案支撑和 $D<8$ 共同强制的结果。当 $D\ge8$ 时，（45.9）允许混合附加态秩至少为二，上述归约不再成立；本推论没有将一般有限时域 CPTP 容量的平方根下界改为所有 $D$ 上的线性下界。
+
+### 45.4 乘法域文献、保单位特例及非保单位桥梁
+
+本节的细分势有明确的方法先例。Rahaman 在 [《Multiplicative properties of quantum channels》](https://doi.org/10.1088/1751-8121/aa7b57)（2017，Remark 2.7）引入乘法指数；Jaques–Rahaman 的 [《Spectral properties of tensor products of channels》](https://doi.org/10.1016/j.jmaa.2018.05.052)（2018，Lemma 3.5、Theorem 3.6）以势
+
+$$
+\chi(\mathcal A)=\sum_j(2n_j-1)
+$$
+
+控制有限维含幺 $*$-子代数链，并证明保单位、保迹的完全正通道在 $d\ge2$ 时满足
+
+$$
+\kappa(\Phi)\le2d-2.
+\tag{45.11}
+$$
+
+这里的保单位意为 $\Phi(I)=I$，不意为通道由单个酉算子实现。上述标签对应 [arXiv:1710.00427v3](https://arxiv.org/pdf/1710.00427v3) 的 Lemma 3.5（第15—16页）及 Theorem 3.6（第16—17页）。Rahaman 的 [arXiv:1701.06205v4](https://arxiv.org/pdf/1701.06205v4) 给出较早的 $\kappa<d^2$ 讨论，不能作为（45.11）的出处。
+
+这些既有结果还直接给出一个更强的保单位特例。设 $P$ 是秩一投影，$\Phi$ 保单位且 CPTP。如果 $\Phi^{2d-2}(P)$ 是纯态，则全部 $\Phi^n(P)$ 都是纯态，无须另行假设中间时刻纯。
+
+证明：令 $k=2d-2$。纯输出是投影，而 $P^*P=PP^*=P$，故
+
+$$
+\Phi^k(P^*P)=\Phi^k(P)^*\Phi^k(P),\qquad
+\Phi^k(PP^*)=\Phi^k(P)\Phi^k(P)^*.
+$$
+
+乘法域的 Schwarz 等号判据给 $P\in\mathcal M_{\Phi^k}$。乘法指数上界使该代数已稳定为 $\bigcap_{n\ge1}\mathcal M_{\Phi^n}$，所以每个 $\Phi^n(P)$ 均为投影。保迹使其迹为一，因此秩为一。$d=1$ 的情形直接成立。
+
+引理45.1允许不保单位的 CPTP 通道，使用不要求正交的共同本征子空间及其细分。这些子空间尚未被等同于通道各次幂的乘法 $*$-代数；匹配的势函数不能替代该对应。取伴随也不自动补齐条件：任意 CPTP 通道的伴随保单位，但一般不保迹，而上述乘法域链结论使用了保迹性。Rahaman 的 [《A New Bound on Quantum Wielandt Inequality》](https://doi.org/10.1109/TIT.2019.2945776)（2020，Proposition 3.11）又明确证明，其保迹 Schwarz 映射自动保单位，因此该表述同样不能直接越过这里的非保单位边界。
+
+命题45.1a给每个 $d\ge2$ 一份不保单位通道：它在 $2d-2$ 时仍纯，却在下一时刻混合，阻止了将保单位阈值原样推广。本节承认代数链势的方法先例，并给出自身所需的非保单位推导；对上述三篇原文的核对不等于穷尽相关文献，也不据此宣称本节结论的文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 46. 伯努利相干窗口的有限误差证书
+
+第42节确定伯努利标签来源的精确容量与固定正误差增长阶，第44节给一般标签的窗口三分律。本节保留误差参数，给每个有限窗口的可计算双界。上界来自一份明确的共同 CPTP 编解码，下界来自对任意编解码都有效的相位探针；只在该探针族内部优化下界，不把它称为全 CPTP 容量的最优值。
+
+继续取两态来源 $P_{ij}=1/2$、$g_{ij}=j$，其中 $i,j\in\{0,1\}$，保留完整边标签。窗口为 $\{N,\ldots,M_*\}$，$M_*=N+W-1$，$N\ge1$、$1\le W\le N+1$；不同长度按（42.2）等幅相干叠加。所有相位遍历 $\mathbb T$，编解码共同固定且只作用于档案或接收器。记原来的任意参考、任意来源初态、全相位最坏半迹误差容量为 $k_{\rm mm}(\epsilon)$。
+
+另定义较弱的 $k_{\rm av,Bell}(\epsilon)$：只取初始来源记忆与二态参考的 Bell 纯态，要求对相位 Haar 平均的半迹恢复误差不超过 $\epsilon$。它仍使用同一份与实际相位无关的全域 CPTP 编解码，但不要求其他来源输入或每个相位分别达到误差预算。因此
+
+$$
+k_{\rm av,Bell}(\epsilon)\le k_{\rm mm}(\epsilon).
+\tag{46.1}
+$$
+
+下面的必要下界连这个较弱的平均合同也适用；构造上界则满足较强的全相位完整参考合同。两者没有被认作同一个最优化问题。
+
+### 46.1 档案的端点与相位态分解
+
+定义 $M_*$ 个严格正的有理权重
+
+$$
+a_\ell=\frac1W\sum_{n=N}^{M_*}
+2^{-(n-1)}\binom{n-1}{\ell},
+\qquad 0\le\ell\le M_*-1,
+\qquad \sum_\ell a_\ell=1,
+\tag{46.2}
+$$
+
+其中不可达二项系数取零。令
+
+$$
+|\psi_\theta\rangle_C
+=\sum_{\ell=0}^{M_*-1}\sqrt{a_\ell}\,e^{i\ell\theta}|\ell\rangle_C,
+\qquad
+|\Phi_\theta\rangle_{MJ}
+=\frac{|0,0\rangle+e^{i\theta}|1,1\rangle}{\sqrt2}.
+\tag{46.3}
+$$
+
+这里 $J$ 是下文档案中的末态寄存器，外部参考另记为 $R$。
+
+第42节的同荷跨长度向量满足
+
+$$
+\|b_{ij,k}^{\mathcal I}\|^2
+=\frac1W\sum_{n=N}^{M_*}2^{-n}\binom{n-1}{k-j}
+=\frac12a_{k-j}.
+\tag{46.4}
+$$
+
+因此，全部共同档案支撑上存在一份已知的满射等距 $U_{\rm ar}$，把归一化向量 $b_{ij,k}^{\mathcal I}/\|b_{ij,k}^{\mathcal I}\|$ 送到
+$|i\rangle_I\otimes|j\rangle_J\otimes|k-j\rangle_C$。其像为
+$\mathbb C^2_I\otimes\mathbb C^2_J\otimes\mathbb C^{M_*}_C$，维数 $4M_*$。
+
+由（42.6）逐项代入，任意初始联合态 $\rho_{RM_0}$ 的完整来源输出经这份档案换坐标后恰为
+
+$$
+\boxed{
+\rho_{RI}\otimes
+|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi_\theta\rangle\langle\psi_\theta|_C.
+}
+\tag{46.5}
+$$
+
+这里 $M_0$ 的基被同名搬到 $I$，$M$ 是最终活动记忆。证明对初始基态 $|i\rangle$ 给
+$|i\rangle_I\otimes|\Phi_\theta\rangle_{MJ}\otimes|\psi_\theta\rangle_C$，线性性保持任意输入叠加及参考，再延拓到混合态。$U_{\rm ar}$ 不依赖实际相位，不是长度测量；每个 $b_{ij,k}^{\mathcal I}$ 中的长度相干保持完整。
+
+式（46.5）用于构造编码，并不是把原容量问题改成没有端点与参考的单个相位态任务。任意编码器仍可在三个档案因子之间联合操作；后面的下界不限制它采用上述张量分解式编码。
+
+### 46.2 一份无额外旗标的截断复位码
+
+将权重递减排序为 $a_{(1)}\ge\cdots\ge a_{(M_*)}>0$，只排序已知权重，保留每个所选项原来的整数相位频率。对 $1\le s\le M_*$，令 $S_s$ 为最大的 $s$ 项对应的频率集合，置
+
+$$
+p_s=\sum_{\ell\in S_s}a_\ell,
+\qquad d_s=1-p_s,
+\qquad a_*=a_{(1)}.
+\tag{46.6}
+$$
+
+取 $\ell_*\in S_s$ 使 $a_{\ell_*}=a_*$。在 $C$ 上保留投影 $P_s$，将失败直接复位到 $|\ell_*\rangle$。编码到 $s$ 维空间并按原频率等距解码后的通道为
+
+$$
+\mathcal R_s(X)=P_sXP_s+
+\operatorname{Tr}[(I-P_s)X]|\ell_*\rangle\langle\ell_*|.
+\tag{46.7}
+$$
+
+这确实通过 $s$ 维系统分解：成功 Kraus 是从 $P_sC$ 到代码空间的等距，其他 Kraus 分别将每个未选频率送到同一个代码基态。保留整个 $I\otimes J$，故实际接收维数为 $4s$，不需再加失败旗标。将 $U_{\rm ar}$ 的定义在共同支撑外完成为任意 CPTP 编码，解码用其逆等距，得到整个原档案空间上的全域编解码。
+
+对相位态，解码结果是
+
+$$
+\sigma_{s,\theta}
+=P_s|\psi_\theta\rangle\langle\psi_\theta|P_s
++d_s|\ell_*\rangle\langle\ell_*|.
+\tag{46.8}
+$$
+
+该通道与相位对角作用协变，故误差与 $\theta$ 无关；（46.5）及半迹距离对张量一个共同密度矩阵的不变性，使同一个数也是全部参考和全部初态的最坏误差。
+
+**命题46.1（截断复位码的准确误差）。** 若 $d_s=0$，误差 $E_s=0$。若 $d_s>0$，其完整联合半迹误差 $E_s$ 是方程
+
+$$
+\boxed{E_s^3-d_sE_s-d_s^2(p_s-a_*)=0}
+\tag{46.9}
+$$
+
+的唯一正根。因此，对 $0<\epsilon<1$，这份 $4s$ 维装置满足合同，当且仅当
+
+$$
+\boxed{\epsilon^3\ge d_s\epsilon+d_s^2(p_s-a_*).}
+\tag{46.10}
+$$
+
+证明。只需在 $\theta=0$ 下计算，记 $p=p_s$、$d=d_s$，$|v\rangle=P_s|\psi_0\rangle$。差算子
+
+$$
+A=|\psi_0\rangle\langle\psi_0|
+-|v\rangle\langle v|-d|\ell_*\rangle\langle\ell_*|
+\tag{46.11}
+$$
+
+迹为零，且是一个秩一正算子减去正算子，所以至多有一个正特征值。其支撑至多由保留方向、保留方向内的 $|\ell_*\rangle$ 分量以及丢弃方向张成，维数至多三。
+
+具体取单位 $|s_0\rangle=|v\rangle/\sqrt p$、单位丢弃方向 $|o\rangle$，并在保留空间中把
+$|\ell_*\rangle=\sqrt t\,|s_0\rangle+\sqrt{1-t}\,|u\rangle$，其中相位可吸收且 $t=a_*/p$。在这组至多三维基中，$A$ 的矩阵为
+
+$$
+\begin{pmatrix}
+-dt&-d\sqrt{t(1-t)}&\sqrt{pd}\\
+-d\sqrt{t(1-t)}&-d(1-t)&0\\
+\sqrt{pd}&0&d
+\end{pmatrix}.
+\tag{46.12}
+$$
+
+若 $t=1$，第二方向无须存在，可补一个零行列来计算同一特征多项式。直接计算得
+$\operatorname{Tr}A^2=2d$、$\det A=d^2(p-a_*)$。故特征多项式是
+$z^3-dz-d^2(p-a_*)$。$d>0$ 时 $A$ 非零，唯一正特征值等于半迹距离；多项式在正半轴上只有一个正根，得到（46.9）。对正的 $\epsilon$，多项式值非负当且仅当 $\epsilon$ 不小于这个根，得到（46.10）。证明完毕。
+
+$\epsilon=0$ 不能不加区分地使用（46.10）：当 $s=1$ 时三次式还有零根，而真正误差是 $\sqrt{d_s}$。零误差统一由 $s=M_*$ 以及第42节精确容量处理。
+
+### 46.3 对任意编码器有效的有限相位探针
+
+给任意概率向量 $w=(w_0,\ldots,w_{M_*-1})$，定义探针相位态
+
+$$
+|\psi^w_\theta\rangle
+=\sum_\ell\sqrt{w_\ell}e^{i\ell\theta}|\ell\rangle.
+\tag{46.13}
+$$
+
+对固定 Bell 初始输入，在（46.5）的完整目标中只把 $|\psi_\theta\rangle$ 替换为 $|\psi^w_\theta\rangle$，得到单位探针 $|\Xi^w_\theta\rangle$。真实目标与探针的投影重叠恰为
+
+$$
+|\langle\Xi^w_\theta,\Psi_\theta\rangle|^2
+=\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2.
+\tag{46.14}
+$$
+
+若 Bell 输入的 Haar 平均半迹误差不超过 $\epsilon$，测量这个依相位定义的探针投影并积分，恢复输出的平均投影概率至少为（46.14）减去 $\epsilon$。探针只用于下界证明，不要求编码器知道实际相位或实施这个测量。
+
+设接收维数为 $D_K$、共同解码为 $\mathcal D$，记 $\tau=\mathcal D(I_K)$，故 $\operatorname{Tr}\tau=D_K$。每个编码联合态不超过 $I_{RM}\otimes I_K$，解码正性给恢复态不超过 $I_{RM}\otimes\tau$。将探针投影先对外部参考和活动记忆偏迹，再作相位 Haar 平均，在规范档案坐标中恰得
+
+$$
+\int\operatorname{Tr}_{RM}
+|\Xi^w_\theta\rangle\langle\Xi^w_\theta|\,d\theta
+=\frac{I_{IJ}}4\otimes
+\sum_\ell w_\ell|\ell\rangle\langle\ell|.
+\tag{46.15}
+$$
+
+其中最大特征值为 $\max_\ell w_\ell/4$。返回原档案支撑的等距不改变该谱，支撑外只有零特征值。因此
+
+$$
+\boxed{
+D_K\ge
+4\frac{\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2-\epsilon}
+{\max_\ell w_\ell}.
+}
+\tag{46.16}
+$$
+
+该必要界对任意共同 CPTP 编解码成立，包括联合操作端点与相位寄存器的编码器。它也适用于较弱的 Haar 平均 Bell 合同，所以当然适用于全相位最坏误差。这里精确使用探针平均态的档案边缘谱，没有把源 Haar 平均谱的最佳低秩截断当成全相位最优压缩，也没有把某个 Schmidt 切面的尾质量当成压缩合同的充分必要条件。
+
+### 46.4 探针下界的有限排序解
+
+令 $v_\ell=\sqrt{a_\ell}$。对 $0<\epsilon<1$ 定义
+
+$$
+\mathfrak L_a(\epsilon)
+=\max_{0\le x_\ell\le1}
+\left\{\left(\sum_\ell v_\ell x_\ell\right)^2
+-\epsilon\sum_\ell x_\ell^2\right\}.
+\tag{46.17}
+$$
+
+它恰为（46.16）右侧除以四后，对全部概率探针 $w$ 的最优值。因为由 $w$ 置 $x_\ell=\sqrt{w_\ell/\max w}$ 就得到同一目标；反向取 $w_\ell=x_\ell^2/\sum x_j^2$ 即可。该最大值为正，例如 $x=v/\max v$ 给 $(1-\epsilon)/a_*$；正值的最大点必有一个坐标达到一，否则可整体放大。
+
+**命题46.2（探针优化的唯一阈值）。** 存在唯一正数 $c$ 满足
+
+$$
+\sum_\ell\min\left\{a_\ell,\frac{\sqrt{a_\ell}}c\right\}
+=\epsilon.
+\tag{46.18}
+$$
+
+（46.17）的一个最大点为 $x_\ell=\min\{1,c\sqrt{a_\ell}\}$。置
+$H=\{\ell:c\sqrt{a_\ell}\ge1\}$、$h=|H|$、
+$d_H=\sum_{\ell\notin H}a_\ell$、$S_H=\sum_{\ell\in H}\sqrt{a_\ell}$，则
+
+$$
+c=\frac{S_H}{\epsilon-d_H},\qquad
+\boxed{\mathfrak L_a(\epsilon)
+=\frac{\epsilon S_H^2}{\epsilon-d_H}-\epsilon h.}
+\tag{46.19}
+$$
+
+证明。对非负数 $A$ 有 $A^2=\max_{t\ge0}(2tA-t^2)$。对 $x$ 和 $t$ 的两个最大值可以交换次序，因此（46.17）等于
+
+$$
+\max_{t\ge0}\left[
+-t^2+\sum_\ell
+\max_{0\le x\le1}(2t v_\ell x-\epsilon x^2)
+\right].
+\tag{46.20}
+$$
+
+内层最大点为 $x=\min\{1,tv_\ell/\epsilon\}$。所得外层函数连续可微；置 $t=\epsilon c>0$ 后，其导数的符号与
+$\sum_\ell\min\{a_\ell,v_\ell/c\}-\epsilon$ 相同。该和从一开始，越过初始常值区后严格下降到零，所以对 $0<\epsilon<1$ 有唯一根。导数先正后负，该根给全局最大。集合 $H$ 非空，且（46.18）等价于
+$\epsilon=d_H+S_H/c$，故 $d_H<\epsilon$。代回目标，得到（46.19）。证明完毕。
+
+这个计算只需有限排序：对 $h=1,\ldots,M_*$ 依次取最大的 $h$ 个权重，计算相应 $d_h,S_h$。当 $\epsilon>d_h$ 且
+$c_h=S_h/(\epsilon-d_h)$ 满足
+$c_h\sqrt{a_{(h)}}\ge1\ge c_h\sqrt{a_{(h+1)}}$ 时，即得到所需值；约定 $a_{(M_*+1)}=0$。阈值处的并列权重不改变答案。这里只精确优化探针证书，没有证明其等于实际容量。
+
+### 46.5 对全部有限误差的容量双界
+
+对 $0<\epsilon<1$，定义
+
+$$
+s_a(\epsilon)=
+\min\left\{1\le s\le M_*:
+\epsilon^3\ge d_s\epsilon+d_s^2(p_s-a_*)\right\}.
+\tag{46.21}
+$$
+
+全集 $s=M_*$ 总满足条件，所以这个整数必存在。
+
+**定理46.3（有限窗口的平均下界与最坏误差上界）。** 对每个上述有限窗口和每个 $0<\epsilon<1$，
+
+$$
+\boxed{
+\left\lceil4\mathfrak L_a(\epsilon)\right\rceil
+\le k_{\rm av,Bell}(\epsilon)
+\le k_{\rm mm}(\epsilon)
+\le4s_a(\epsilon).
+}
+\tag{46.22}
+$$
+
+证明。必要下界是（46.16）对全部探针的优化，并使用维数为整数；中间不等式是合同包含。充分上界由命题46.1给出的明确 $4s_a(\epsilon)$ 维编解码达到，其误差对所有相位和任意参考输入均等于相应 $E_s$。证明完毕。
+
+例如，仅取探针 $w=a$ 或在最大的 $h$ 个权重上取均匀分布，就分别给可直接使用的弱化证书
+
+$$
+D_K\ge\frac{4(1-\epsilon)}{a_*},\qquad
+D_K\ge4\left[
+\left(\sum_{j=1}^h\sqrt{a_{(j)}}\right)^2-h\epsilon
+\right].
+\tag{46.23}
+$$
+
+前者完全由有理权重与误差给出；优化式（46.19）可以进一步加强它们。
+
+端点误差也可明确处理。$\epsilon=0$ 时，平均误差为零使连续且非负的相位误差处处为零；Bell 输入上的精确恢复是来源输入通道的 Choi 等式，因而保持全部初始输入。第42节于是给
+$k_{\rm av,Bell}(0)=k_{\rm mm}(0)=4M_*$。$\epsilon=1$ 时任何两个态的半迹距离至多一，一维固定输出已经满足两个合同，故两容量都是一。
+
+式（46.22）对 $N,W,\epsilon$ 是逐实例的有限证书，不要求 $\epsilon$ 随 $N$ 保持常数。对于有理 $\epsilon>0$，（46.21）的可行性只需比较有理数，不必数值求解三次根。下界则由有限个平方根、排序和（46.19）确定。
+
+### 46.6 分位数形式与误差依赖
+
+命题46.1还给
+
+$$
+\sqrt{d_s}\le E_s\le
+\delta(d_s):=\frac{d_s+\sqrt{4d_s-3d_s^2}}2.
+\tag{46.24}
+$$
+
+左侧由三次方程及 $p_s-a_*\ge0$ 得到。右侧可直接用（46.11）：删去负项 $-d_s|\ell_*\rangle\langle\ell_*|$ 只会增大最大特征值，而剩余秩二算子的正特征值正是 $\delta(d_s)$。
+
+对 $0<\epsilon<1$，置
+
+$$
+\eta(\epsilon)
+=\frac{1+\epsilon-\sqrt{(1-\epsilon)(1+3\epsilon)}}2
+=\frac{2\epsilon^2}
+{1+\epsilon+\sqrt{(1-\epsilon)(1+3\epsilon)}}.
+\tag{46.25}
+$$
+
+$\delta(d)\le\epsilon$ 当且仅当 $d\le\eta(\epsilon)$。若
+$Q_a(t)=\min\{s:d_s\le t\}$ 是有限权重的保留分位数，则
+
+$$
+Q_a(\epsilon^2)\le s_a(\epsilon)
+\le Q_a(\eta(\epsilon)),\qquad
+k_{\rm mm}(\epsilon)\le4Q_a(\eta(\epsilon)).
+\tag{46.26}
+$$
+
+第一项只描述这一截断复位码族所需的最小保留数，不是对任意编码器的新下界。因为 $\eta(\epsilon)\sim\epsilon^2$，相比分别保留每个长度或只用二阶矩球，这个分位数直接使用实际有限荷权重及其尾部。
+
+还可给一个无需排序的上界。权重（46.2）是窗口内 $\operatorname{Bin}(n-1,1/2)$ 的平均。对 $M_*>1$，置
+
+$$
+t_\epsilon=
+\sqrt{\frac{M_*-1}{2}
+\log\frac2{\eta(\epsilon)}}.
+\tag{46.27}
+$$
+
+二项变量的 Hoeffding 界说明：区间
+$[(N-1)/2-t_\epsilon,(M_*-1)/2+t_\epsilon]$ 外的总权重至多 $\eta(\epsilon)$。$n=1$ 的退化变量恒零，也满足这个保留条件。因此
+
+$$
+k_{\rm mm}(\epsilon)\le
+4\min\left\{M_*,\,
+\left\lfloor\frac{W-1}{2}+2t_\epsilon\right\rfloor+1\right\}.
+\tag{46.28}
+$$
+
+$M_*=1$ 时直接取上界四。由于 $M_*\le2N$ 且 $\eta(\epsilon)\ge\epsilon^2/2$，这给统一的
+$O(\min\{M_*,W+\sqrt{N\log(2/\epsilon)}\})$ 上界；（46.21）的实际分位数证书可以更小。
+
+作为一个无需数值近似的校准，$N=2,W=1$ 时 $M_*=2$、$a=(1/2,1/2)$，探针最优值为 $2(1-\epsilon)$。由（46.22）及精确八维上界，得到
+$k_{\rm mm}(\epsilon)=8$ 对全部 $0\le\epsilon<1/8$ 成立。这个区间结论来自两个实际容量界相合；一般权重下（46.22）可以存在间隙，仍不能宣称确定了全部误差下的最优压缩。
+
+本节没有把 Haar 平均误差等同于全相位最坏误差。下界对前者有效，上界装置达到后者；探针族的最优性、截断复位码的准确误差与全部 CPTP 编解码的最优容量是三个不同陈述。
+
+## 追加锚（本行以下为增补区）
+
+## 47. 二步回归刚性与正交交替环境的六终端容量
+
+固定已知非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\qquad |a|^2+|b|^2=1.
+\tag{47.1}
+$$
+
+接收器独立纯启动，全部持久系统计入 $K$，活动记忆和参考不可访问，每轮使用同一个全域 CPTP 通道，全部规定终端精确恢复完整参考—活动记忆—档案联合态。
+
+本节只研究同一 Stinespring 等距 $V$ 在实际前缀上输出确定纯环境 $A,B,A,B,\ldots$ 的合同，其中 $A\perp B$。同一环境射线上的全局相位可以统一选择；不预设任何接收器基、不固定第25节九行坐标。
+
+以下两个结论分开：
+1. 如果第二轮第二来源列的接收方向回到初态，则任意维数下都有三比二容量下界，并由既有构造达到。
+2. 只有在 $D=\dim K\le7$ 且已服务前五个终端时，才证明这种回归被强制；不将它推广到全部 $D$。
+
+### 47.1 一般前三轮资料
+
+设初始接收向量为单位 $k$。定义
+
+$$
+\begin{aligned}
+V(k0)&=pA,&V(k1)&=qA,\\
+V(p0)&=uB,&V(p1)&=vB,&V(q0)&=wB.
+\end{aligned}
+\tag{47.2}
+$$
+
+其中 $p,q$ 正交归一，$u,v,w$ 正交归一，但 $w$ 暂不等于 $k$。第二轮两列为
+
+$$
+\Psi_2^0=a m_0u+b m_1v,\qquad
+\Psi_2^1=m_0w.
+\tag{47.3}
+$$
+
+置
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\qquad
+G=\operatorname{span}\{u,w\},\qquad
+L=H+G=\operatorname{span}\{u,v,w\}.
+\tag{47.4}
+$$
+
+则 $H,G$ 二维、$H\cap G=\mathbb Cw$。第三轮的实际纯环境给
+
+$$
+V(z0)=sA,\qquad V(u1)=rA,\qquad
+V(w0)=tA,\qquad V(w1)=jA.
+\tag{47.5}
+$$
+
+四个输入正交，故 $s,r,t,j$ 正交归一。记
+
+$$
+S=\operatorname{span}\{s,t\},\qquad
+R=\operatorname{span}\{r,j\},\qquad
+L_3=S\oplus R.
+\tag{47.6}
+$$
+
+第三轮两列及第四轮所需系数空间为
+
+$$
+\begin{aligned}
+\Psi_3^0&=c m_0s+ab m_1r,&
+\Psi_3^1&=a m_0t+b m_1j,\\
+H_3&=\operatorname{span}\{cs+br,\ a^2t+bj\},&
+G_3&=S.
+\end{aligned}
+\tag{47.7}
+$$
+
+$H_3$ 到 $S,R$ 的两个投影均为同构，因此 $H_3\cap S=H_3\cap R=0$。
+
+固定等距的跨位正交给 $p\perp R$、$q\perp S$。第三轮与第二轮的环境不同，还给 $p\perp H+G=L$，因为 $p$ 同时正交于 $z,u,w$。
+
+对截至第五轮的实际输入，按环境及输入位定义累计接收方向空间
+
+$$
+\begin{aligned}
+H_A^0&=\operatorname{span}(k,H),&
+G_A^0&=\operatorname{span}(k,G),\\
+H_B&=\operatorname{span}(p,q,H_3),&
+G_B&=\operatorname{span}(p,S),\\
+H_A&=H_A^0+H_4,&G_A&=G_A^0+G_4.
+\end{aligned}
+\tag{47.8}
+$$
+
+这里 $H_4,G_4$ 是第四轮两列的零、一位接收系数空间。两个环境正交给
+
+$$
+H_A\perp H_B,\qquad G_A\perp G_B.
+\tag{47.9}
+$$
+
+令 $U_\eta,W_\eta$ 分别为固定 $V$ 在 $H_\eta0,G_\eta1$ 上去掉共同环境后的接收像；则
+
+$$
+U_\eta\perp W_\eta,\qquad
+\dim U_\eta=\dim H_\eta,\qquad
+\dim W_\eta=\dim G_\eta.
+\tag{47.10}
+$$
+
+特别地每个环境有 $\dim H_\eta+\dim G_\eta\le D$。只看前一、三轮还有
+
+$$
+\dim\operatorname{span}(p,q,L_3)=\dim H_A^0+\dim G_A^0.
+\tag{47.11}
+$$
+
+第四轮的零位像为
+
+$$
+U_B=G+G_4.
+\tag{47.12}
+$$
+
+这是因为 $H_B=\operatorname{span}(p,q,H_3)$，其前三类零位像分别张成 $G$ 和 $G_4$。第四轮实际零系数空间 $H_4$ 的另一投影满到 $V_1S$；具体地，第三轮的两个一位系数为非零倍数的 $s,t$，所以投影满秩没有额外假设。
+
+### 47.2 七维以下的前五轮强制二步回归
+
+**定理 47.1（七维以下的二步回归刚性）。** 若 $D\le7$ 且上述正交交替环境合同服务前五个终端，则 $k\parallel w$。
+
+证明：第25节定理25.2已经排除同一确定正交交替环境合同下的 $D\le6$，所以只需处理 $D=7$。分 $k$ 相对 $H,G$ 的位置。
+
+#### 47.2.1 情形甲：$k\notin H$ 且 $k\notin G$
+
+此时 $\dim H_A^0=\dim G_A^0=3$。初始环境 $A$ 的接收像维数为六，所以 $p,q$ 在 $K/L_3$ 中线性独立。于是
+
+$$
+\dim H_B=4,\qquad \dim G_B=3.
+\tag{47.13}
+$$
+
+$H_A\perp H_B$ 及 $H_A\supset H_A^0$ 强制 $H_A=H_A^0$，维数三。环境 $B$ 的两类像饱和七维：
+
+$$
+K=U_B\oplus W_B,\qquad \dim U_B=4,\quad\dim W_B=3.
+\tag{47.14}
+$$
+
+第五轮一位输入使 $G_A\supset G+G_4=U_B$。又 $G_A\perp G_B$，故
+
+$$
+G_A=U_B=G_B^\perp,\qquad \dim G_A=4.
+\tag{47.15}
+$$
+
+环境 $A$ 的零位像为
+
+$$
+U_A=\operatorname{span}(p,S)=G_B.
+\tag{47.16}
+$$
+
+所以 $W_A=G_A$。固定 $V_1$ 在 $G_A$ 上去掉环境 $A$ 后，给 $G_A$ 到自身的酉 $T$。有
+
+$$
+Tk=q,\qquad T(G)=R.
+\tag{47.17}
+$$
+
+$k,w$ 是 $G_A$ 中两个线性独立向量。因 $H_3\subset H_B=(H_A^0)^\perp$，且 $s,t\in S\subset G_B\perp G_A$，对 $cs+br,a^2t+bj$ 分别取与 $k,w$ 的内积，得到
+
+$$
+R\perp\operatorname{span}\{k,w\}.
+\tag{47.18}
+$$
+
+两边余维恰好给
+
+$$
+R=G_A\cap\operatorname{span}\{k,w\}^\perp.
+\tag{47.19}
+$$
+
+但 $q=Tk\in G_A$，且 $q\in H_B$，所以 $q\perp k,w$，即 $q\in R=T(G)$。$T$ 单射于是强制 $k\in G$，矛盾。
+
+#### 47.2.2 情形乙：$k\in G\setminus H$
+
+此时 $\dim H_A^0=3,\dim G_A^0=2$，且 $q\in R$。环境 $A$ 的初始像维数五，所以 $p\notin L_3$。由于 $H_3\cap R=0$，
+
+$$
+\dim H_B=4,\qquad \dim G_B=3.
+\tag{47.20}
+$$
+
+与情形甲相同的饱和论证给
+
+$$
+H_A=H_A^0=L,\quad H_B=L^\perp,\quad
+G_A=U_B=G_B^\perp,\quad W_B=G_B,\quad W_A=G_A.
+\tag{47.21}
+$$
+
+特别地 $v\in W_B=G_B$。$H_3\perp v$，其中 $r,j\in R\subset G_A\perp v$，所以 $s,t\perp v$。因 $S$ 二维、$G_B$ 三维，
+
+$$
+S=G_B\cap v^\perp.
+\tag{47.22}
+$$
+
+而 $p\in G_B$ 且 $p\perp L$，所以 $p\perp v$，从而 $p\in S\subset L_3$，与 $p\notin L_3$ 矛盾。
+
+#### 47.2.3 情形丙：$k\in H\setminus G$
+
+这时 $H_A^0=H$、$G_A^0=L$，且 $p\in S$。初始环境 $A$ 像维数五，所以 $q\notin L_3$。由于 $H_3\cap S=0$，
+
+$$
+\dim H_B=4,\qquad G_B=S,\qquad\dim G_B=2.
+\tag{47.23}
+$$
+
+于是 $\dim U_B=4,\dim W_B=2$，且 $v\in W_B$，从而 $U_B\perp v$。利用 $U_B=G+G_4$，
+
+$$
+G_A=L+G_4=U_B\oplus\mathbb Cv,\qquad \dim G_A=5.
+\tag{47.24}
+$$
+
+环境 $A$ 的接收像维数不超过七，而 $H_A\supset H$ 二维，所以
+
+$$
+H_A=H.
+\tag{47.25}
+$$
+
+因此第四轮零系数空间 $H_4\subset H\subset L\subset G_A$。
+
+另一方面，在相应环境 $B$ 的输入域上记 $\widehat V_i x=(I_K\otimes\langle B|)V(xi)$。第四轮两个零系数明确为
+
+$$
+\begin{aligned}
+X_4^0&=a^2\widehat V_0(cs+br)+bc\widehat V_1s,\\
+X_4^1&=a\widehat V_0(a^2t+bj)+ab\widehat V_1t.
+\end{aligned}
+\tag{47.26}
+$$
+
+左侧均在 $H_4\subset G_A$，右侧第一项均在 $G_4\subset U_B\subset G_A$。分别相减并用 $bc,ab\ne0$，得到 $\widehat V_1s,\widehat V_1t\in G_A$，即 $W_B=\widehat V_1S\subset G_A$。这要求正交和 $U_B\oplus W_B$ 的六维空间包含在五维 $G_A$ 中，矛盾。
+
+#### 47.2.4 唯一余下位置
+
+只能 $k\in H\cap G=\mathbb Cw$。两者单位，所以 $k\parallel w$。证明完毕。
+
+本证明只在 $D=7$ 的维数饱和处排除三类自由度。不能将这一步结论推广到 $D\ge8$。
+
+### 47.3 二步回归足以推出全表正交，无需固定九行坐标
+
+现在允许任意维数 $D$，另假设 $k\parallel w$。写 $w=\zeta k$、$|\zeta|=1$，在 Stinespring 输出环境上施加固定相位酉 $A\mapsto A$、$B\mapsto\overline\zeta B$。第二轮三个接收向量整体乘 $\overline\zeta$，于是新 $w=k$；后续按同一个等距重新定义 $z,s,r,t,j$。这不改变来源 $a,b$ 或物理 CPTP 通道，也没有增加依赖轮次的操作。固定 $V$ 立即给 $t=p,j=q$。于是第三轮四个接收输出 $p,q,s,r$ 正交归一。
+
+置
+
+$$
+d=\sqrt{c^2+|b|^2},\qquad f=\frac{cs+br}{d}.
+\tag{47.27}
+$$
+
+$f$ 单位且正交于 $p,q$，而 $s\perp p$。第四轮的新实际输入是 $f0,s1$，它们与旧的同环境 $B$ 输入 $p0,p1,q0$ 正交；与环境 $A$ 的旧输入正交则由实际新环境为 $B$ 和固定等距性强制。故可记
+
+$$
+V(f0)=gB,\qquad V(s1)=hB,
+\tag{47.28}
+$$
+
+其中 $u,v,w,g,h$ 正交归一。这里没有规定 $g,h$ 必须正交于全部其余接收向量。
+
+前四轮九行的接收方向仍满足
+
+$$
+\begin{aligned}
+D_A&=\operatorname{span}\{w,z,u\}
+\subseteq\operatorname{span}\{u,v,w,g,h\}=O_B,\\
+D_B&=\operatorname{span}\{p,q,f,s\}
+\subseteq\operatorname{span}\{p,q,s,r\}=O_A.
+\end{aligned}
+\tag{47.29}
+$$
+
+这些包含只用 $z\in\operatorname{span}\{u,v\}$、$df=cs+br$，没有使用第25节构造的特殊坐标。
+
+第五轮的两条新输入为
+
+$$
+x0,\quad g1,\qquad
+x=\frac{a^2dg+cbh}{\sqrt{|a|^4d^2+|b|^2c^2}}.
+\tag{47.30}
+$$
+
+由于 $g,h\perp u,v,w$，它们正交于所有旧的同环境 $A$ 输入；与旧环境 $B$ 输入的正交则由环境正交及固定等距性强制。因此全部十一行完整输入在 $K\otimes\mathbb C^2$ 中正交归一，完整输出在 $K\otimes E$ 中正交归一；没有要求不同环境的接收向量在 $K$ 内相互正交。
+
+此后完全采用第43节的交叉包含归纳：上一轮新增输出正交旧同环境像，下一轮同环境旧输入又包含在这些旧像里，所以新输入正交同环境旧输入；异环境正交由 $A\perp B$ 和固定 $V$ 强制。两条新输入均在上一轮输出空间中，故交叉包含继续保持。
+
+所以各轮第一列写为
+
+$$
+\Psi_n^0=A_nm_0P_n+B_nm_1Q_n
+\tag{47.31}
+$$
+
+时，零位输入族 $w,p,q,Z_3,\ldots,Z_N$ 与一位输入族 $w,p,P_2,\ldots,P_{N-1}$ 各自正交归一。两族彼此之间不要求正交。
+
+### 47.4 二步回归合同的精确容量
+
+**定理 47.2（二步回归合同的精确容量）。** 对任意 $N\ge5$，在纯正交交替环境及二步回归 $k\parallel w$ 的合同下，最小接收维数恰为
+
+$$
+\boxed{d_N^{\mathrm{return},AB}(a,b)
+=\left\lceil\frac{3N}{2}\right\rceil-1.}
+\tag{47.32}
+$$
+
+不需要固定第25节的九行向量坐标。
+
+证明：第47.3节已得到第43节 Gram 缺陷证明所需的全部正交族。为明确对应，令 $\alpha_n=|A_n|^2$，则
+
+$$
+\alpha_1=1,\qquad
+\alpha_n=1-|b|^2\alpha_{n-1}
+=\frac{1-(-|b|^2)^n}{1+|b|^2}.
+\tag{47.33}
+$$
+
+取 $n=2,\ldots,N-1$ 的两个正交族 $(P_n)$、$(Z_{n+1})$，令 $M$ 为其交叠矩阵，$\|M\|\le1$。同环境跨位正交使其按奇偶排序的对角块为 $\operatorname{diag}(r_n)$，其中
+
+$$
+r_n=\frac{aA_n}{A_{n+1}},\qquad
+|r_n|^2=|a|^2\frac{\alpha_n}{\alpha_{n+1}}
+\begin{cases}
+<|a|^2,&n\text{ 偶},\\
+>|a|^2,&n\text{ 奇}.
+\end{cases}
+\tag{47.34}
+$$
+
+所以第43节的块收缩论证给
+
+$$
+\operatorname{rank}(I-MM^*)\ge
+\left\lfloor\frac{N-1}{2}\right\rfloor.
+\tag{47.35}
+$$
+
+两个族联合张成的维数至少为 $N-2$ 加这个缺秩；共同正交的 $w,p$ 再给两维，于是
+
+$$
+D\ge N+\left\lfloor\frac{N-1}{2}\right\rfloor
+=\left\lceil\frac{3N}{2}\right\rceil-1.
+\tag{47.36}
+$$
+
+第25节的五终端七维构造和第41节的 $N\ge6$ 构造都满足二步回归与正交交替环境，因此达到。证明完毕。
+
+### 47.5 一般正交交替环境的六终端精确值
+
+**推论 47.3（一般正交交替环境的六终端精确容量）。** 不固定任何早期向量坐标，仅要求纯正交交替环境时，六终端最小接收维数恰为八。
+
+证明：第39节给八维达到。若存在七维以下实现，其前五轮由第47.2节强制二步回归。第47.4节在 $N=6$ 给
+
+$$
+D\ge\left\lceil9\right\rceil-1=8,
+\tag{47.37}
+$$
+
+矛盾。因此该环境合同的六终端精确值为八。
+
+一般固定 CPTP 六终端容量仍只有 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$；七维候选若存在，必须离开纯正交交替环境合同。对七终端九维的正交交替环境候选，第47.2节的低维回归刚性不适用，但第47.4节表明它必须满足 $k\not\parallel w$。这是必要自由度，尚未给出九维构造或排除定理。
+
+
+## 追加锚（本行以下为增补区）
+
+## 48. 一般低秩轨道的有限判据与多周期同步障碍
+
+第45节证明：任意 $d$ 维 CPTP 通道的纯态轨道，只要时刻 $0,\ldots,2d-1$ 全纯，就永久保持纯态。该阈值对每个 $d\ge2$ 都锐。本节说明，把“纯”直接替换成“秩不超过 $r$”，不能得到适用于全部 CPTP 通道和全部 $r$ 的多项式维数阈值。即使初态纯、通道仅作经典测量与制备，互不相交的周期组件在同一时刻分支，也能把首次越过秩界的时刻推到超多项式尺度。
+
+这个反例只处理低秩轨道判据。它没有实现本卷给定非退化来源的完整参考—活动记忆—档案恢复合同，不反驳一般精确接收容量的线性下界猜想。
+
+### 48.1 待检验的统一低秩延拓命题
+
+对通道 $\Phi:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^d)$ 和初态 $\sigma_0$，记 $\sigma_t=\Phi^t(\sigma_0)$。所考察的是如下统一命题：存在仅依赖 $d,r$ 的阈值 $L(d,r)$，使
+
+$$
+\operatorname{rank}\sigma_t\le r\quad(0\le t\le L(d,r))
+\quad\Longrightarrow\quad
+\operatorname{rank}\sigma_t\le r\quad(t\ge0).
+\tag{48.1}
+$$
+
+**定理48.1（一般低秩延拓没有统一多项式阈值）。** 不存在固定常数 $C_0,C>0$，使对全部 $d$、$1\le r<d$ 及全部 $d$ 维 CPTP 通道，检查时刻 $0,\ldots,\lfloor C_0d^C\rfloor$ 的秩界就足以推出（48.1）的全时域结论。该否定在只允许纯初态时仍成立。因此一般情形不存在统一的 $O(dr)$、$O(d^2)$，或任何固定次数的 $d,r$ 多项式阈值。
+
+最后一项使用 $r<d$：任意固定的 $d,r$ 多项式都被某个 $C_0d^C$ 控制。本定理不否定任一固定 $d,r$ 下存在更大的有限阈值，也不否定附加结构所允许的较短阈值。
+
+### 48.2 具有单、双节点周期类的经典通道
+
+取整数 $k\ge2$ 和两两互素的整数周期 $p_1,\ldots,p_k\ge2$。在通道的 Hilbert 空间中取正交基，由一个根向量 $o$ 及以下 $k$ 个互不相交的组件组成：组件 $i$ 有单节点
+
+$$
+x_{i,0},\ldots,x_{i,p_i-2}
+$$
+
+和双节点 $y_{i,0},y_{i,1}$。因此总维数为
+
+$$
+d=1+\sum_{i=1}^k(p_i+1).
+\tag{48.2}
+$$
+
+组件 $i$ 的周期类 $0,\ldots,p_i-2$ 各有一个节点，周期类 $p_i-1$ 有两个节点。转移规则为：根以概率 $1/k$ 进入每个组件的类零；单节点沿类次序确定前进；进入最后的双节点类时等概率分支；两个末节点随后都确定回到类零。
+
+将这些转移明确写成 Kraus 算子：
+
+$$
+\begin{aligned}
+R_i&=\frac1{\sqrt k}|x_{i,0}\rangle\langle o|,
+&&1\le i\le k,\\
+T_{i,j}&=|x_{i,j+1}\rangle\langle x_{i,j}|,
+&&0\le j\le p_i-3,\\
+B_{i,\alpha}&=\frac1{\sqrt2}|y_{i,\alpha}\rangle
+  \langle x_{i,p_i-2}|,
+&&\alpha\in\{0,1\},\\
+C_{i,\alpha}&=|x_{i,0}\rangle\langle y_{i,\alpha}|,
+&&\alpha\in\{0,1\}.
+\end{aligned}
+\tag{48.3}
+$$
+
+当 $p_i=2$ 时，$T_{i,j}$ 的指标集合为空；分支与合并仍按同一公式定义。令 $\Phi$ 为对（48.3）全部 Kraus 项求和的映射。每个输入节点的出边概率之和为一，具体有
+
+$$
+\begin{aligned}
+\sum_iR_i^*R_i&=|o\rangle\langle o|,\\
+\sum_jT_{i,j}^*T_{i,j}
++\sum_{\alpha}B_{i,\alpha}^*B_{i,\alpha}
++\sum_{\alpha}C_{i,\alpha}^*C_{i,\alpha}
+&=\sum_{j=0}^{p_i-2}|x_{i,j}\rangle\langle x_{i,j}|
++\sum_{\alpha=0}^1|y_{i,\alpha}\rangle\langle y_{i,\alpha}|.
+\end{aligned}
+\tag{48.4}
+$$
+
+所以全部 Kraus 平方和为 $I$，$\Phi$ 是同一个全域 CPTP 通道。它在所列基上先测量、再依照转移概率制备，后续论证只涉及对角态。其新环境可以携带被丢弃的经典信息；这里没有施加第45节的纯轨道或其他接收恢复条件。
+
+### 48.3 精确轨道及首次越界时刻
+
+从纯态 $\sigma_0=|o\rangle\langle o|$ 启动。在组件 $i$ 内定义类态
+
+$$
+\omega_{i,j}=
+\begin{cases}
+|x_{i,j}\rangle\langle x_{i,j}|,&0\le j\le p_i-2,\\[2pt]
+\dfrac12\bigl(|y_{i,0}\rangle\langle y_{i,0}|
++|y_{i,1}\rangle\langle y_{i,1}|\bigr),&j=p_i-1.
+\end{cases}
+\tag{48.5}
+$$
+
+由转移规则，每个类态确定变成下一个类态，类号模 $p_i$ 计算。根一步后的每个组件质量为 $1/k$，以后不再改变。因此，对所有整数 $t\ge1$，
+
+$$
+\sigma_t=\frac1k\sum_{i=1}^k
+\omega_{i,(t-1)\bmod p_i}.
+\tag{48.6}
+$$
+
+不同组件正交，而且每个非零对角权重均严格为正。一个组件通常贡献秩一，恰在 $(t-1)\bmod p_i=p_i-1$，即 $p_i\mid t$ 时贡献秩二。故
+
+$$
+\boxed{\operatorname{rank}\sigma_t
+=k+\#\{i:p_i\mid t\}\qquad(t\ge1).}
+\tag{48.7}
+$$
+
+置
+
+$$
+r=2k-1,\qquad P=\prod_{i=1}^kp_i.
+\tag{48.8}
+$$
+
+有 $1\le r<d$。两两互素使 $P$ 为所有周期的最小公倍数，因而第一次同时满足全部整除条件的正时刻正是 $P$。结合根初态秩一，得到
+
+$$
+\operatorname{rank}\sigma_t\le r\quad(0\le t<P),
+\qquad
+\operatorname{rank}\sigma_P=2k=r+1.
+\tag{48.9}
+$$
+
+在 $t=P+1$ 时，所有组件又回到单节点类零，所以秩降回 $k$。一般非保单位通道的秩无需单调；这里的首次越界来自多个周期同时处于双节点类，而非单个支撑持续扩张。
+
+例如取 $k=2$、$p_1=3$、$p_2=5$，则 $d=11$、$r=3$，且
+
+$$
+\operatorname{rank}\sigma_t
+=2+\mathbf1_{3\mid t}+\mathbf1_{5\mid t}\quad(t\ge1).
+\tag{48.10}
+$$
+
+时刻 $0,\ldots,14$ 的秩全部不超过三，时刻十五首次达到四；时刻十六又降到二。
+
+### 48.4 只用 Bertrand 定理的超多项式估计
+
+令 $p_i$ 为第 $i$ 个素数。由 Bertrand 定理相邻素数满足 $p_{i+1}<2p_i$，配合 $p_1=2$，有 $p_i\le2^i$。另一方面，第 $i$ 个素数满足 $p_i\ge i+1$。因此
+
+$$
+d_k=1+k+\sum_{i=1}^kp_i
+\le2^{k+1}+k-1\le2^{k+2},
+\qquad
+P_k=\prod_{i=1}^kp_i\ge(k+1)!.
+\tag{48.11}
+$$
+
+对任意固定实数 $C>0$，
+
+$$
+\frac{P_k}{d_k^C}
+\ge\frac{(k+1)!}{2^{C(k+2)}}\longrightarrow\infty.
+\tag{48.12}
+$$
+
+右侧相邻项之比为 $(k+2)/2^C$，故该发散不需要素数定理。给定任意固定 $C_0,C>0$，取足够大的 $k$，便有 $P_k>C_0d_k^C$。相应通道在全部被要求检查的时刻仍满足秩界，却在时刻 $P_k$ 越界，证明定理48.1。
+
+### 48.5 反对称检测给出的通用有限上界
+
+没有统一多项式阈值，不等于没有有限判据。以下上界与定理48.1相容：其指数依赖允许的秩。
+
+**定理48.2（一般低秩轨道的有限延拓上界）。** 对任意 $d$ 维 CPTP 通道、任意初态及 $1\le r<d$，若
+
+$$
+\operatorname{rank}\sigma_n\le r
+\qquad(0\le n\le d^{r+1}-1),
+\tag{48.13}
+$$
+
+则全部以后时刻也满足该秩界。
+
+证明。置 $\ell=r+1\le d$，在 $\widetilde H=(\mathbb C^d)^{\otimes\ell}$ 上取反对称投影 $P_{\mathrm{alt}}$。对半正定态 $\sigma$，按其谱分解直接计算可得
+
+$$
+\operatorname{Tr}(P_{\mathrm{alt}}\sigma^{\otimes\ell})
+=\sum_{1\le i_1<\cdots<i_\ell\le d}
+\lambda_{i_1}(\sigma)\cdots\lambda_{i_\ell}(\sigma).
+\tag{48.14}
+$$
+
+各特征值非负，所以该式为零当且仅当 $\operatorname{rank}\sigma\le r$。又因 $P_{\mathrm{alt}}$ 是正交投影、$\sigma^{\otimes\ell}$ 半正定，迹为零当且仅当后者的支撑包含于 $\ker P_{\mathrm{alt}}$。
+
+令 $\widetilde\Phi=\Phi^{\otimes\ell}$，则 $\sigma_n^{\otimes\ell}=\widetilde\Phi^n(\sigma_0^{\otimes\ell})$。记 $\mathcal A$ 为其有限张量 Kraus 表，定义
+
+$$
+S_n=\operatorname{supp}(\sigma_n^{\otimes\ell}),\qquad
+W_n=\sum_{j=0}^nS_j.
+\tag{48.15}
+$$
+
+正项之和的支撑为各正项支撑之和，因此
+
+$$
+S_{n+1}=\sum_{A\in\mathcal A}AS_n,
+\qquad
+W_{n+1}=W_0+\sum_{A\in\mathcal A}AW_n.
+\tag{48.16}
+$$
+
+特别地，若 $W_{n+1}=W_n$，则每个 $A$ 都保持 $W_n$，所以之后的全部支撑均留在 $W_n$。
+
+置 $\widetilde d=d^\ell$。由（48.13）—（48.14），$W_0,\ldots,W_{\widetilde d-1}$ 全部包含于 $\ker P_{\mathrm{alt}}$。由于 $\ell\le d$，反对称子空间非零，故这个核是真子空间，维数至多 $\widetilde d-1$。另一方面，$W_0$ 至少一维。如果这 $\widetilde d-1$ 次相邻包含全部严格，则 $W_{\widetilde d-1}$ 至少 $\widetilde d$ 维，矛盾。因此某次相邻包含相等，此后的支撑永久留在同一个 $\ker P_{\mathrm{alt}}$ 内。再用（48.14），得到所有未来时刻的秩界。证明完毕。
+
+这个上界只用于区分“没有统一多项式界”与“没有有限界”。它未声称最优；特别在 $r=1$ 时，第45节已将这里的平方级界 $d^2-1$ 收紧到逐维精确的线性阈值 $2d-1$。
+
+### 48.6 对接收容量研究的含义与边界
+
+该构造由多个封闭的周期组件组成，且根是暂态；它没有不可约性或本原性。低秩轨道的读数可以只记录有多少周期组件当前分支，不能据此控制这些组件何时同时分支。因此，第45节的纯轨道线性延拓不能仅靠把秩一换成一般秩界，就升级为适用于全部 CPTP 的多项式有限检验。
+
+这里的长周期存于混合态的不同周期分量；秩是状态的数学属性，不是一份单次测量可精确读出的钟值。不同时间的密度矩阵也不自动成为可完美区分的时间标签。例如 $\sigma_1$ 与 $\sigma_{1+p_1}$ 在第一个组件都对 $x_{1,0}$ 赋予权重 $1/k$，支撑相交，所以不能被单次测量完美区分。因此不能把长同步周期当作免费外部控制器来驱动接收门；它在这里提供的是低秩判据本身的反例。
+
+在本卷的实际接收问题中，第23节的可逆编码结构给出同一终端上档案支撑、接收等距与附加态之间的联合关系。把这组关系只投影成 $4r_n\le D$ 或实际联合态的秩上界，会丢失它们来自同一个来源递推和同一个固定接收通道的约束。本节的经典轨道没有提供这一组来源与恢复对应，故不能据（48.9）构造精确接收器，也不能据此否定一般接收容量的线性增长。
+
+后续要取得容量下界，必须保留足以排除这种任意周期附加动力学的共同来源与恢复结构，或利用该结构推出新的支撑、交叠或相容性约束。仅延长对单条轨道低秩性的观察，在一般通道类中无法完成这一步。
+
+## 追加锚（本行以下为增补区）
+
+## 49. 固定 Bell 边缘态与小维数接收器的准确误差
+
+第46节把伯努利相干窗口化为端点与相位钟的张量积，并给出有限探针证书。本节使用 Bell 初始输入留下的固定边缘态，改进接收维数小于四时的必要界，再构造达到该界的装置。所得最优性分别针对维数一、二、四；维数三及一般较大维数不由这些结论插值得到。
+
+沿用（46.2）的严格正权重 $a=(a_0,\ldots,a_{M_*-1})$，记 $v_\ell=\sqrt{a_\ell}$，$E=I\otimes J$，$A=R\otimes M$。档案换坐标后的来源输出仍为
+
+$$
+\rho_{RI}\otimes|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi^a_\theta\rangle\langle\psi^a_\theta|_C.
+\tag{49.1}
+$$
+
+初始 $RI$ 取 Bell 态时，$AE$ 是四维最大纠缠纯态，$A$ 的边缘态对全部相位恒为 $I_A/4$。编码只作用于档案 $EC$，所以编码后 $AK$ 的边缘态也恒为 $I_A/4$。
+
+本节记接收维数至多为 $D$ 时，最优全相位、全初态、完整参考半迹误差为 $e_{\rm mm}(D)$；只要求初始 Bell 输入并取相位 Haar 平均的最优误差为 $e_{\rm av,Bell}(D)$。二者分别对所有共同 CPTP 编解码取下确界，且
+
+$$
+e_{\rm av,Bell}(D)\le e_{\rm mm}(D).
+\tag{49.2}
+$$
+
+### 49.1 固定最大混合边缘态的谱上界
+
+**引理49.1。** 若密度矩阵 $\omega_{AK}$ 满足 $\dim A=r$、$\dim K=D$ 及 $\operatorname{Tr}_K\omega=I_A/r$，则
+
+$$
+\boxed{\omega_{AK}\preceq\min\{1,D/r\}\,I_{AK}.}
+\tag{49.3}
+$$
+
+证明。取任一正特征值 $\lambda$ 及相应单位特征向量 $|\chi\rangle$。由
+$\lambda|\chi\rangle\langle\chi|\preceq\omega$，偏迹得
+$\lambda\chi_A\preceq I_A/r$。令 $Q$ 是 $\chi_A$ 的支撑投影；Schmidt 分解给 $\operatorname{rank}Q\le\min\{r,D\}$。两边乘 $Q$ 后取迹，得
+
+$$
+\lambda=\lambda\operatorname{Tr}(Q\chi_A)
+\le\frac{\operatorname{rank}Q}{r}
+\le\min\{1,D/r\}.
+$$
+
+每个特征值都满足此界，证明完毕。
+
+取共同解码器 $\mathcal D$，置 $\tau=\mathcal D(I_K)$，于是 $\tau\succeq0$、$\operatorname{Tr}\tau=D$。由（49.3）及解码正性，Bell 输入的每个恢复态满足
+
+$$
+\sigma_\theta\preceq
+\min\{1,D/4\}\,I_A\otimes\tau.
+\tag{49.4}
+$$
+
+对第46节任意概率向量探针 $|\Xi^w_\theta\rangle$，（46.15）的准确平均边缘谱给
+
+$$
+\int\langle\Xi^w_\theta|\sigma_\theta|\Xi^w_\theta\rangle\,d\theta
+\le\frac D4\min\{1,D/4\}\max_\ell w_\ell.
+\tag{49.5}
+$$
+
+因此，若 Bell 输入的平均半迹误差不超过 $\epsilon$，则
+
+$$
+\left(\sum_\ell\sqrt{a_\ell w_\ell}\right)^2-\epsilon
+\le\frac D4\min\{1,D/4\}\max_\ell w_\ell.
+\tag{49.6}
+$$
+
+继续使用（46.17）的有限优化，并把端点定义为
+
+$$
+\mathfrak L_a(0)=\left(\sum_\ell\sqrt{a_\ell}\right)^2,
+\qquad \mathfrak L_a(1)=0.
+\tag{49.7}
+$$
+
+对全部探针优化（49.6）得到
+
+$$
+\boxed{\mathfrak L_a(\epsilon)
+\le\frac D4\min\{1,D/4\}.}
+\tag{49.8}
+$$
+
+等价地，对 $0\le\epsilon<1$，
+
+$$
+\boxed{
+\left\lceil4\max\left\{\mathfrak L_a(\epsilon),
+\sqrt{\mathfrak L_a(\epsilon)}\right\}\right\rceil
+\le k_{\rm av,Bell}(\epsilon)
+\le k_{\rm mm}(\epsilon).
+}
+\tag{49.9}
+$$
+
+当 $\mathfrak L_a(\epsilon)<1$ 时，连续下界严格强于第46节的 $4\mathfrak L_a(\epsilon)$；取整后的整数下界不必每次都严格增大。对 $D\ge4$，式（49.8）回到第46节的必要界。
+
+### 49.2 投影概率上界的可达性及其范围
+
+式（49.5）在每个 $1\le D\le4$、每个固定探针 $w$ 下都有一份真正的共同编码达到等号。其构造也适用于一般端点维数 $r$ 和 $D\le r$。
+
+选端点空间 $E$ 的 $D$ 个坐标基向量，记它们的支撑投影为 $P$，并选其中一个单位基向量 $|e_0\rangle$。编码丢弃钟 $C$，把 $PE$ 等距送入 $D$ 维接收器；每个未选端点基向量均复位为 $|e_0\rangle$ 对应的代码态。解码等距嵌回 $PE$，并准备钟基态 $|\ell_*\rangle$，其中 $w_{\ell_*}=\max w$。恢复后的端点通道具有 Kraus 算子
+
+$$
+K_0=P,\qquad K_j=|e_0\rangle\langle e_j|\quad(e_j\perp PE),
+\qquad \sum_jK_j^*K_j=I_E.
+\tag{49.10}
+$$
+
+对任一 $r$ 维最大纠缠态 $|\Phi_U\rangle=(I\otimes U)|\Phi_r\rangle$，其端点恢复投影概率是
+
+$$
+\sum_j\left|\langle\Phi_U|(I\otimes K_j)|\Phi_U\rangle\right|^2
+=\frac1{r^2}\sum_j|\operatorname{Tr}(U^*K_jU)|^2
+=\frac{D^2}{r^2}.
+\tag{49.11}
+$$
+
+这里 $\operatorname{Tr}K_0=D$，其余 Kraus 的迹为零。钟探针的投影概率是 $w_{\ell_*}$，故完整投影概率对每个相位都等于
+
+$$
+\frac{D^2}{r^2}\max_\ell w_\ell.
+\tag{49.12}
+$$
+
+特别地，$r=4$ 时达到（49.5）的上界。编码和解码只用固定坐标与已选 $\ell_*$，完全不依赖实际相位。这个结论只说明投影概率不等式本身准确；一般情形中，某个探针投影差达到下界，并不等于该装置的完整半迹误差达到下界。
+
+### 49.3 由有限探针优化构造最优的钟准备态
+
+下面先给出同时用于三个维数的矩阵构造。函数 $\mathfrak L_a$ 在 $[0,1]$ 上连续并严格递减。连续性来自紧盒上连续目标的最大值；当 $\epsilon<1$ 时最大值为正，且任一最大点都有 $\max_\ell x_\ell=1$。因此对 $0\le\epsilon_1<\epsilon_2<1$，取第二个参数的最大点即得
+
+$$
+\mathfrak L_a(\epsilon_1)
+\ge\mathfrak L_a(\epsilon_2)+
+(\epsilon_2-\epsilon_1)\|x\|^2
+\ge\mathfrak L_a(\epsilon_2)+\epsilon_2-\epsilon_1.
+\tag{49.13}
+$$
+
+与 $\epsilon_2=1$ 的严格比较由 $\mathfrak L_a(\epsilon_1)>0$ 得到。又因所有权重严格正，$\mathfrak L_a(0)\ge1$，且等号恰在 $M_*=1$ 时成立。
+
+**引理49.2（钟准备态）。** 给定 $0<\kappa<\mathfrak L_a(0)$，令 $e\in(0,1)$ 是唯一满足
+
+$$
+\mathfrak L_a(e)=\kappa
+\tag{49.14}
+$$
+
+的数。存在一个可由（46.18）有限求出的概率向量 $b$，使矩阵
+
+$$
+B_\kappa=vv^* -\kappa\operatorname{diag}b
+\tag{49.15}
+$$
+
+只有一个正特征值，且该特征值恰为 $e$。同时
+
+$$
+\sum_\ell\frac{a_\ell}{e+\kappa b_\ell}=1.
+\tag{49.16}
+$$
+
+证明。取（46.18）的最大点 $x_\ell=\min\{1,c v_\ell\}$，记 $S=v^*x>0$ 及 $H=\{\ell:x_\ell=1\}$。每个坐标都严格正。内部坐标的一阶条件和上端点的一阶条件分别是
+
+$$
+S v_\ell=e x_\ell\quad(\ell\notin H),
+\qquad S v_\ell\ge e\quad(\ell\in H).
+\tag{49.17}
+$$
+
+定义
+
+$$
+b_\ell=
+\begin{cases}
+(Sv_\ell-e)/\kappa,&\ell\in H,\\
+0,&\ell\notin H.
+\end{cases}
+\tag{49.18}
+$$
+
+式（49.17）给非负性，而且
+
+$$
+\kappa=S^2-e\|x\|^2
+=\sum_\ell x_\ell(Sv_\ell-e x_\ell)
+=\sum_{\ell\in H}(Sv_\ell-e),
+\tag{49.19}
+$$
+
+所以 $\sum_\ell b_\ell=1$。逐坐标计算得
+
+$$
+B_\kappa x=e x,
+\qquad (e+\kappa b_\ell)x_\ell=S v_\ell.
+\tag{49.20}
+$$
+
+秩一正算子减去正算子至多有一个正特征值：在 $v^\perp$ 上二次型非正，故不可能存在二维正谱子空间。由于 $e>0$ 是其特征值，它就是唯一正特征值。将（49.20）除以正分母，乘 $v_\ell$ 后求和并约去 $S$，得到（49.16）。证明完毕。
+
+相位对角酉只共轭 $vv^*$，并保持 $\operatorname{diag}b$ 不变，所以同一特征值结论对全部相位成立。边界情形 $M_*=1$、$\kappa=1$ 另取 $b=(1)$、$e=0$。
+
+### 49.4 维数一、二、四的准确最优误差
+
+置
+
+$$
+\kappa_1=\frac1{16},\qquad
+\kappa_2=\frac14,\qquad
+\kappa_4=1.
+\tag{49.21}
+$$
+
+对 $D\in\{1,2,4\}$，令 $e_D\in[0,1)$ 为唯一满足
+
+$$
+\mathfrak L_a(e_D)=\kappa_D
+\tag{49.22}
+$$
+
+的解。其中 $e_D=0$ 恰发生在 $D=4$、$M_*=1$；其余情形使用引理49.2取相应的 $b$。
+
+**定理49.3（三个维数的共同最优值）。** 对每个第46节的伯努利相干窗口，
+
+$$
+\boxed{
+e_{\rm av,Bell}(D)=e_{\rm mm}(D)=e_D,
+\qquad D\in\{1,2,4\}.
+}
+\tag{49.23}
+$$
+
+证明分为构造与必要性。
+
+**维数一。** 编码丢弃整个档案，解码准备
+
+$$
+\tau_{EC}=\frac{I_E}{r}\otimes\operatorname{diag}b,
+\qquad r=4,\quad\kappa=1/r^2.
+\tag{49.24}
+$$
+
+先看初始 Bell 输入。恢复态是
+$I_{AE}/r^2\otimes\operatorname{diag}b$。在目标端点最大纠缠向量张成的一维空间上，目标减恢复的矩阵是
+
+$$
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\frac1{r^2}\operatorname{diag}b;
+\tag{49.25}
+$$
+
+端点正交补上的所有块都非正。引理49.2给完整差算子唯一正特征值 $e_1$。完整差算子迹为零，故半迹误差恰为 $e_1$，与相位无关。
+
+还须证明这个实际擦除码对任意来源输入和参考的误差都不超过 $e_1$。可以证明更强的陈述：固定 $\dim E=r$，对任意参考系统 $A$、任意纯态 $|\zeta\rangle_{AE}$，其钟仍为独立的 $|\psi^a_\theta\rangle$ 时，（49.24）的误差不超过最大纠缠输入的误差。
+
+取 Schmidt 概率 $\lambda_1,\ldots,\lambda_r$，缺项补零。目标减恢复为
+
+$$
+|\zeta\rangle\langle\zeta|\otimes
+|\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\zeta_A\otimes\frac{I_E}{r}\otimes\operatorname{diag}b.
+\tag{49.26}
+$$
+
+这是迹零的秩一正算子减去正算子，且 $r=4$ 时不为零，因而有且只有一个正特征值 $t$；它就是半迹误差。在 Schmidt 基与钟坐标中，正特征值方程由秩一扰动直接给出：若 $u$ 是目标单位向量、$T$ 是被减去的正算子，则正特征向量必须正比于 $(tI+T)^{-1}u$，并满足 $\langle u,(tI+T)^{-1}u\rangle=1$。因此这里有
+
+$$
+\sum_{i=1}^r\sum_\ell
+\frac{\lambda_i a_\ell}{t+\lambda_i b_\ell/r}=1.
+\tag{49.27}
+$$
+
+对任意固定 $t>0$、$c\ge0$，函数 $z\mapsto z/(t+cz)$ 在非负半轴上凹。由 $\sum_i\lambda_i=1$，Jensen 不等式给
+
+$$
+\sum_{i=1}^r\frac{\lambda_i}{t+\lambda_i b_\ell/r}
+\le\frac1{t+b_\ell/r^2}.
+\tag{49.28}
+$$
+
+把 $t=e_1$ 代入（49.27）的左侧，再用（49.28）与（49.16），所得值不超过一。该左侧随 $t>0$ 严格下降，所以其根不大于 $e_1$。混合态由半迹范数凸性得到同一上界。实际来源（49.1）是上述输入集合的子集，且包含最大纠缠 $AE$ 输入；故该码的完整最坏误差正好为 $e_1$。
+
+**维数二。** 编码完整保留二态寄存器 $I$，丢弃 $J,C$；解码准备
+$I_J/2\otimes\operatorname{diag}b$。任意 $\rho_{RI}$ 都原样保留，目标与恢复态分别是
+
+$$
+\rho_{RI}\otimes|\Phi_\theta\rangle\langle\Phi_\theta|_{MJ}
+\otimes|\psi^a_\theta\rangle\langle\psi^a_\theta|_C,
+\qquad
+\rho_{RI}\otimes\frac{I_{MJ}}4\otimes\operatorname{diag}b.
+\tag{49.29}
+$$
+
+张量相同的密度矩阵 $\rho_{RI}$ 不改变半迹距离。在 $MJ$ 的目标 Bell 方向上，差算子为
+$|\psi^a_\theta\rangle\langle\psi^a_\theta|-(1/4)\operatorname{diag}b$；其余三个端点方向均给非正块。因此引理49.2给误差恰为 $e_2$，对每个相位、每个来源初态和参考都成立。
+
+**维数四。** 编码完整保留 $I,J$，丢弃 $C$；解码准备 $\operatorname{diag}b$。误差就是钟的半迹距离
+
+$$
+\frac12\left\||\psi^a_\theta\rangle\langle\psi^a_\theta|
+-\operatorname{diag}b\right\|_1=e_4.
+\tag{49.30}
+$$
+
+对 $M_*>1$，等号由引理49.2及差算子迹零得到；$M_*=1$ 时钟是已知固定纯态，误差为零。端点和参考均完整保留。
+
+以上三个构造通过 $U_{\rm ar}$ 返回原档案，并在共同支撑外任意完成为全域 CPTP 编码；它们均与实际相位无关。因此 $e_{\rm mm}(D)\le e_D$。反向，对任意维数至多为 $D$ 的装置，（49.8）给
+$\mathfrak L_a(\epsilon)\le\kappa_D$；严格单调性迫使 $\epsilon\ge e_D$。这一必要界已经适用于较弱的 Bell 平均合同，故与（49.2）合并得到（49.23）。证明完毕。
+
+维数三只得到
+
+$$
+\underline e_3\le e_{\rm av,Bell}(3)
+\le e_{\rm mm}(3)\le e_2,
+\qquad \mathfrak L_a(\underline e_3)=\frac9{16}.
+\tag{49.31}
+$$
+
+下界来自（49.8），上界由把维数二的代码嵌入三维空间得到。第49.2节虽然在 $D=3$ 也使投影概率上界达到等号，但没有证明该码的半迹误差达到 $\underline e_3$；本节不把两种可达性混同。
+
+### 49.5 平坦相位钟的准确校准
+
+若权重平坦，即 $a_\ell=1/M_*$，Cauchy–Schwarz 不等式给
+
+$$
+\frac1{M_*}\left(\sum_\ell x_\ell\right)^2
+-\epsilon\sum_\ell x_\ell^2
+\le(1-\epsilon)\sum_\ell x_\ell^2
+\le M_*(1-\epsilon),
+$$
+
+而 $x_\ell=1$ 达到等号。因此
+
+$$
+\mathfrak L_a(\epsilon)=M_*(1-\epsilon),
+\qquad
+\boxed{
+e_1=1-\frac1{16M_*},\quad
+ e_2=1-\frac1{4M_*},\quad
+ e_4=1-\frac1{M_*}.
+}
+\tag{49.32}
+$$
+
+对应准备态可以统一取 $b_\ell=1/M_*$。伯努利窗口中，$N=W=1$ 给 $M_*=1$，三个准确误差依次为 $15/16,3/4,0$；$N=2,W=1$ 给 $a=(1/2,1/2)$，三个准确误差依次为 $31/32,7/8,1/2$。一般伯努利窗口的权重不是平坦的，其误差由（49.22）和第46节的有限排序公式计算。
+
+平坦钟还给较大接收维数的准确族。考虑同样端点分解（49.1），但将钟取为任意给定长度 $M_*$ 的平坦相位态；这定义一个辅助来源，不声称每个平坦权重都来自伯努利长度窗口。若 $M_*=st$，按频率 $\ell=j+sk$ 重排钟基，便有与实际相位无关的分解
+
+$$
+\frac1{\sqrt{M_*}}\sum_{\ell=0}^{M_*-1}e^{i\ell\theta}|\ell\rangle
+\longmapsto
+\left(\frac1{\sqrt s}\sum_{j=0}^{s-1}e^{ij\theta}|j\rangle\right)
+\otimes
+\left(\frac1{\sqrt t}\sum_{k=0}^{t-1}e^{iks\theta}|k\rangle\right).
+\tag{49.33}
+$$
+
+保留端点 $IJ$ 与第一个钟因子，所需维数 $D=4s$；丢弃第二个因子并在解码时准备 $I_t/t$。纯态与 $I_t/t$ 的差具有特征值 $1-1/t$ 以及 $t-1$ 个 $-1/t$，故对全部来源输入、参考和相位，误差恰为 $1-1/t$。另一方面（49.8）在 $D=4s$ 时给
+$M_*(1-\epsilon)\le s$。两边匹配，得到
+
+$$
+\boxed{
+e_{\rm av,Bell}(4s)=e_{\rm mm}(4s)
+=1-\frac{s}{M_*},\qquad s\mid M_*.
+}
+\tag{49.34}
+$$
+
+因此，在固定 Bell 边缘态的这一来源类中，$D\ge4$ 的原探针界已经有实际共同 CPTP 编码达到等号，不能在整个该区间对所有此类来源统一作严格加强。非平坦权重、非整除关系和其他维数仍须使用各自的联合编码条件分析；（49.34）没有给这些情形作最优性结算。
+
+## 追加锚（本行以下为增补区）
+
+## 50. 非正交二周期环境的支撑增长与六终端容量
+
+固定非退化已知来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+$$
+接收器独立纯启动，活动记忆和参考不可访问，每轮使用同一个全域 CPTP 通道，全部持久系统计入 $K$，记 $D=\dim K$。要求前 $N\ge2$ 个终端精确恢复完整参考—活动记忆—原档案联合态。
+
+本节先假设同一固定 Stinespring 表示的实际新环境为输入无关的纯向量 $A,B,A,B,\ldots$，且
+$$
+0<|\langle A,B\rangle|<1.
+$$
+
+**定理50.1（非正交二周期环境的累计支撑下界）。** 对 $N\ge3$，任意这种接收器满足
+$$
+\boxed{D\ge\left\lceil\frac{3N}{2}\right\rceil.}
+\tag{50.1}
+$$
+
+证明。对两份来源列写
+$$
+\Psi_n^i=m_0A_n^i+m_1B_n^i,
+$$
+并令
+$$
+P=\operatorname{span}\{A_n^i:1\le n\le N\},\qquad
+Q=\operatorname{span}\{B_n^i:1\le n\le N\}.
+$$
+令 $V_i x=V(x\otimes|i\rangle)$。每个 $A_n^i\otimes\eta_n$ 属于 $V_0K$，每个 $B_m^j\otimes\eta_m$ 属于 $V_1K$。两个全域像正交，而每对实际环境内积非零，因此
+$$
+P\perp Q.
+$$
+
+记单轮子空间
+$$
+G_n=\operatorname{span}\{A_n^0,A_n^1\},\qquad
+H_n=\operatorname{span}\{aA_n^0+B_n^0,aA_n^1+B_n^1\},\qquad
+Q_n=\operatorname{span}\{B_n^0,B_n^1\}.
+$$
+首步 $G_1=\mathbb Cp$、$H_1=\operatorname{span}(p,q)$，其中 $p\in P,q\in Q$ 是正交单位向量；$\dim G_n=\dim H_n=2$ 对 $n\ge2$ 成立。逐步有
+$$
+V_0H_n=G_{n+1}\otimes\eta_{n+1},\qquad
+V_1G_n=Q_{n+1}\otimes\eta_{n+1}.
+$$
+第一式在 $P$ 上的输入投影满足 $P_PH_n=G_n$，因为 $a\ne0$。这些维数可从 $\dim H_1=2$ 直接归纳：$V_0$ 单射给 $\dim G_{n+1}=\dim H_n$，而 $H_n$ 到 $G_n$ 的投影满秩且两者均由两个向量生成，故 $n\ge2$ 时都恰为二维。进一步，$n\ge3$ 时 $\dim Q_n=2$，所以四个 $A_n^i,B_n^i$ 线性独立；这也与完整参考 Bell 档案的 Schmidt 秩四在纯可逆编码下保持一致。
+
+定义累计奇偶空间
+$$
+E_m=G_2+G_4+\cdots+G_{2m},\qquad
+O_m=G_1+G_3+\cdots+G_{2m-1},
+$$
+及 $e_m=\dim E_m,o_m=\dim O_m$，只使用指标不超过 $N$ 的项。
+
+同一偶数轮环境给
+$$
+\dim(H_1+H_3+\cdots+H_{2m-1})=e_m.
+$$
+该输入空间在 $P$ 上的投影是 $O_m$，且包含非零 $q\in H_1\cap Q$。因此其投影核至少一维，得到
+$$
+e_m\ge o_m+1.\tag{50.2}
+$$
+同一奇数轮环境又给
+$$
+\dim(H_2+H_4+\cdots+H_{2m})
+=\dim(G_3+G_5+\cdots+G_{2m+1})\le o_{m+1}.
+$$
+其 $P$ 投影是 $E_m$，故
+$$
+o_{m+1}\ge e_m.\tag{50.3}
+$$
+由 $o_1=1$、$e_1=2$ 归纳可得
+$$
+e_m\ge m+1,\qquad o_m\ge m.\tag{50.4}
+$$
+
+只要累计空间中的最大终端指标不超过 $N-1$，$V_1$ 将 $E_m$ 送入 $Q\otimes A$，将 $O_l$ 送入 $Q\otimes B$。不同环境射线给
+$$
+E_m\cap O_l=0.\tag{50.5}
+$$
+同一等距还给
+$$
+\dim Q\ge\max(e_m,o_l).\tag{50.6}
+$$
+
+若 $N=2m+1$，取截至 $N-1$ 的 $E_m,O_m$。式（50.4）—（50.6）给
+$$
+\dim P\ge2m+1,\qquad \dim Q\ge m+1,
+$$
+故 $D\ge3m+2=\lceil3N/2\rceil$。
+
+若 $N=2m\ge4$，取截至 $N-1$ 的 $E_{m-1},O_m$。此时 $e_{m-1}\ge m,o_m\ge m$，故
+$$
+\dim P\ge2m,\qquad \dim Q\ge m,
+$$
+得到 $D\ge3m=\lceil3N/2\rceil$。证明完毕。
+
+定理50.1在五终端给出 $D\ge8$。对 $N\ge6$，它比第41节正交交替构造的 $\lceil3N/2\rceil-1$ 上界高一维，因此非正交二周期纯环境不能改善该既有构造的容量。下面对二步回归子类给出精确值，并进一步排除六终端的九维等号情形。
+
+记 $V_i x=V(x\otimes|i\rangle)$，初态为 $k$。前两轮资料为
+$$
+V_0k=pA,\quad V_1k=qA,
+\qquad V_0p=uB,\quad V_1p=vB,\quad V_0q=wB.
+$$
+$p,q$ 正交归一，$u,v,w$ 正交归一。两步回归指 $w\parallel k$。若 $w=\zeta k$，则重选同一环境射线的单位代表 $B'=\zeta B$，并将所有偶数轮对应的接收系数按该坐标选择重标，首个 $w$ 便成为 $k$。这是同一个 $V$ 的坐标变化，不是在非正交环境上实施独立相位的环境酉；物理接收通道保持相同。以下使用这一共同相位约定，写 $w=k$。
+
+**定理50.2（非正交交替环境的回归精确容量）。** 对 $N\ge2$，非正交交替纯环境且两步回归的精确容量为
+$$
+\boxed{d_N^{\mathrm{return},\mathrm{nonorth}\,AB}=2N+1.}
+\tag{50.7}
+$$
+
+证明。先证下界。因环境内积非零，$V_0q=kB$ 与 $V_1k=qA$ 的正交给 $k\perp q$。再比较同一个 $V_0$ 在 $k,q$ 上的像，得到 $p\perp k$；比较它在 $k,p$ 上的像得到 $p\perp u$。比较 $V_1$ 在 $k,p$ 上的像得到 $q\perp v$。不同输入位的像还给 $p\perp v$、$q\perp u$。结合两轮内部的正交性，得到
+$$
+p,q,u,v,k\quad\text{正交归一}.\tag{50.8}
+$$
+因此前五行输入也正交归一。
+
+对第一来源列，取非零标量 $\lambda_n,\mu_n$ 和正交单位向量 $P_n,Q_n$，使
+$$
+\Psi_n^0=\lambda_nm_0P_n+\mu_nm_1Q_n\qquad(n\ge2),
+$$
+初值为 $(\lambda_2,\mu_2,P_2,Q_2)=(a,b,u,v)$。递归令
+$$
+\lambda_{n+1}=\sqrt{|a\lambda_n|^2+|\mu_n|^2},\qquad
+\mu_{n+1}=b\lambda_n,\qquad
+Z_{n+1}=\frac{a\lambda_nP_n+\mu_nQ_n}{\lambda_{n+1}}.
+$$
+每轮第一列的实际纯环境要求
+$$
+V_0Z_{n+1}=P_{n+1}\eta_{n+1},\qquad
+V_1P_n=Q_{n+1}\eta_{n+1}.\tag{50.9}
+$$
+
+归纳证明（50.9）每轮添加两个新的正交接收输出。假设截至第 $n\ge2$ 轮，已经得到
+$$
+p,q,u,v,k,P_3,Q_3,\ldots,P_n,Q_n
+$$
+两两正交归一。下一轮零位输入 $Z_{n+1}$ 位于最后两个新方向 $P_n,Q_n$ 的张成内，因而正交于全部旧零位输入 $k,p,q,Z_3,\ldots,Z_n$；下一轮一位输入 $P_n$ 正交于全部旧一位输入 $k,p,P_2,\ldots,P_{n-1}$。两类输入位又彼此正交。因此两个新增输入行与全部已列输入行正交归一。固定 $V$ 保持这些内积，且任意两轮环境内积非零，所以新增接收向量 $P_{n+1},Q_{n+1}$ 与全部旧接收输出正交归一。初始的 $n=2$ 用（50.8）成立。于是总共有 $5+2(N-2)=2N+1$ 个正交接收向量。
+
+为达到下界，直接选取上述 $2N+1$ 个正交单位向量，将前五行与（50.9）作为部分作用规定。所列输入正交归一，所列输出接收向量也正交归一，因此无论 $A,B$ 的非零交叠是多少，全部带环境输出仍正交归一。把部分作用补成 $K\otimes\mathbb C^2\to K\otimes\operatorname{span}(A,B)$ 的全域酉。
+
+第一来源列按构造逐步成立。第二来源列满足
+$$
+\Psi_2^1=m_0k=a\Psi_0^0+b\Psi_0^1,
+$$
+令 $\mathcal L$ 为一次来源发射接上固定 $V$ 的联合等距。实际前缀满足 $\mathcal L\Psi_{j-1}^i=\Psi_j^i\otimes\eta_j$。若上一步已有 $\Psi_{n-1}^1=a\Psi_{n-3}^0+b\Psi_{n-3}^1$，对其施加同一个 $\mathcal L$，右侧只使用两步前已规定的行表，并且 $\eta_n=\eta_{n-2}$。消去共同环境因子便得到
+$$
+\Psi_n^1=a\Psi_{n-2}^0+b\Psi_{n-2}^1\qquad(n\ge2).
+$$
+初值是前述 $n=2$ 等式。
+这说明第二列的每一步也落在上述部分作用的已规定域内，不另外增加行。固定单位环境前缀与来源输入解耦，逐终端可附加已知环境前缀并逆序运行 $V^*$，恢复全部原档案且保持参考与活动记忆。全部持久资源恰为 $2N+1$ 维。证明完毕。
+
+**定理50.3（非正交交替环境的六终端强化下界）。** 非正交交替纯环境的六终端接收器必须满足 $D\ge10$。
+
+证明。定理50.1的一般增长下界先给 $D\ge9$。反设 $D=9$。沿用该节的全局正交空间 $P\perp Q$、单轮 $G_n,H_n,Q_n$，以及累计
+$$
+E=G_2+G_4,\qquad O=G_1+G_3+G_5.
+$$
+增长下界的等号条件给
+$$
+\dim P=6,\quad \dim Q=3,\quad
+\dim E=\dim O=3,\quad P=E\dotplus O.
+\tag{50.10}
+$$
+固定 $V_1$ 分别将 $E,O$ 送入 $Q\otimes A,Q\otimes B$；维数饱和使
+$$
+V_1E=Q\otimes A,\qquad V_1O=Q\otimes B.
+\tag{50.11}
+$$
+由于 $V_1k=qA$，单射性和（50.11）迫使 $k\in E\subset P$。
+
+置 $L=H_2+H_4$。同一奇数轮环境给
+$$
+V_0L=(G_3+G_5)\otimes A\subset O\otimes A.
+$$
+故 $\dim L\le3$。另一方面，$L$ 到 $P$ 的投影为 $E$，所以恰有 $\dim L=3$，且 $L$ 是某个线性映射 $T:E\to Q$ 的图。
+
+由
+$$
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+得到 $Tw=0$、$Tu=(b/a^2)v$。因此 $T(G_2)=\mathbb Cv$。又因 $H_4$ 到 $G_4$ 和 $Q_4$ 的投影都是同构，
+$$
+T(G_4)=Q_4,\qquad \dim Q_4=2.
+$$
+$E$ 三维且 $w\ne0$ 在核中，所以 $\operatorname{rank}T=2$，继而
+$$
+\operatorname{im}T=Q_4\quad\text{且}\quad v\in Q_4.
+$$
+现在比较 $V_1p=vB$ 与 $V_1G_3=Q_4\otimes B$。单射性给 $p\in G_3$。再比较 $V_0k=pA$ 与 $V_0H_2=G_3\otimes A$，得到 $k\in H_2$。
+
+但 $k\in P$，且 $P\perp Q$、$b\ne0$ 使
+$$
+H_2\cap P=\mathbb Cw.
+$$
+故 $k\parallel w$。定理50.2在六终端要求 $D\ge13$，与 $D=9$ 矛盾。因此 $D\ge10$。证明完毕。
+
+**推论50.4（任意二周期纯环境的六终端精确容量）。** 在同一固定 Stinespring 表示的实际新环境输入无关且具有周期至多二的接收器类中，服务前六个完整参考终端的精确最小接收维数为
+$$
+\boxed{d_{6}^{\mathrm{pure},\,\mathrm{period}\le2}=8.}
+\tag{50.12}
+$$
+
+证明。共同环境射线的情形，在每轮实际输入空间的和上去掉这个共同环境，就得到单个部分等距；将其补成逐轮纯空白的固定接收酉，第9节给出 $D\ge2\cdot6-1=11$。不同的两个环境射线若非正交，定理50.3给出更强的 $D\ge10$；若正交，第47节的五终端低维回归刚性及回归容量界排除 $D\le7$ 的六终端实现。第39节的八维正交交替构造达到下界。证明完毕。
+
+周期条件指同一 Stinespring 表示下的实际纯环境射线；可将同射线向量的相位吸入相应轮次的全部接收系数，统一选取周期代表。这个坐标选择不改变物理接收通道，不提供额外轮次控制。
+
+本节没有将任意七维纯环境序列归约为两周期，也未排除早期混合附加态。定理50.1、50.3没有证明非正交子类的下界可达；定理50.2的精确值另有二步回归前提。一般六终端问题仍只有 $7\le d_{\mathrm{CPTP},6}\le8$；式（50.12）只结算上述二周期纯环境子类。
+
+## 追加锚（本行以下为增补区）
+
+## 51. 二维本原指数与一项 Wielandt 界的版本核对
+
+第45节的二维纯轨道例子同时给出一个本原 CPTP 通道，其严格正性指数恰为三。它的伴随是保单位完全正映射，严格正性指数也恰为三。本节逐项计算这两个指数，并与一份明确版本的文献陈述比较。
+
+核对对象为 Owen Ekblad 的 *A note on the quantum Wielandt inequality*，arXiv:2504.21638v3，PDF 首页日期为2025年12月11日。以下关于原文的定位均指这份七页版本，不把未核对的其他版本或出版文本视为相同陈述。[^ekblad_v3]
+
+### 51.1 本原性与待核对的数值界
+
+记 $M_d$ 为复 $d\times d$ 矩阵。一个正映射 $\Lambda:M_d\to M_d$ 称为严格正，如果它把每个非零半正定矩阵送到正定矩阵；如果某个正整数次迭代严格正，则称其本原。对本原映射定义
+
+$$
+q(\Lambda)=\min\{n\ge1:
+\Lambda^n(X)>0\text{ 对全部 }0\ne X\succeq0\text{ 成立}\}.
+\tag{51.1}
+$$
+
+所核对版本的第1页 Theorem A 声称：对保单位本原 Schwarz 映射，
+
+$$
+q(\Lambda)\le2(d-1)^2.
+\tag{51.2}
+$$
+
+第2页 Theorem B 对全部本原 2-positive 映射声称同一界，并紧接着明确说明既不要求保单位，也不要求保迹。这里的 $d$ 是矩阵的阶数；原文将 $M_D$ 定义为 $D\times D$ 矩阵，而不是把 $D$ 用作矩阵空间的维数 $d^2$。
+
+下面给出的二维映射分别满足这两条陈述的假设，但都有 $q=3$；（51.2）在 $d=2$ 时的右侧为二。
+
+### 51.2 一个严格正性指数为三的 CPTP 通道
+
+在 $\mathbb C^2$ 的正交基 $|0\rangle,|1\rangle$ 上置
+
+$$
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\qquad
+L_0=|1\rangle\langle0|,
+\qquad
+L_1=|+\rangle\langle1|.
+\tag{51.3}
+$$
+
+由 $L_0^*L_0+L_1^*L_1=I$，映射
+
+$$
+\Theta(X)=L_0XL_0^*+L_1XL_1^*
+=X_{00}|1\rangle\langle1|+X_{11}|+\rangle\langle+|
+\tag{51.4}
+$$
+
+是 CPTP，特别也是 2-positive。
+
+**命题51.1。** 通道 $\Theta$ 本原，且 $q(\Theta)=3$。
+
+证明。直接迭代（51.4）给
+
+$$
+\Theta^2(X)=\frac{X_{11}}2|1\rangle\langle1|
++\left(X_{00}+\frac{X_{11}}2\right)|+\rangle\langle+|,
+\tag{51.5}
+$$
+
+$$
+\Theta^3(X)=
+\left(\frac{X_{00}}2+\frac{X_{11}}4\right)|1\rangle\langle1|
++\left(\frac{X_{00}}2+\frac{3X_{11}}4\right)|+\rangle\langle+|.
+\tag{51.6}
+$$
+
+对任意 $0\ne X\succeq0$，两个对角元非负，且 $X_{00}+X_{11}=\operatorname{Tr}X>0$。所以（51.6）的两个系数均严格正。$|1\rangle,|+\rangle$ 线性独立，两个秩一正算子的正权和因此正定。故 $\Theta^3$ 严格正。
+
+另一方面，
+
+$$
+\Theta(|0\rangle\langle0|)=|1\rangle\langle1|,
+\qquad
+\Theta^2(|0\rangle\langle0|)=|+\rangle\langle+|,
+\tag{51.7}
+$$
+
+均为秩一，前两次迭代都非严格正。这就证明 $q(\Theta)=3$。证明完毕。
+
+该通道正是第45节二维锐性例子。这里不仅追踪其中一条轨道，还用（51.6）对全部非零半正定输入验证本原性，因此它满足所核对 Theorem B 的全部假设。
+
+### 51.3 保单位伴随仍具有指数三
+
+取 Hilbert–Schmidt 伴随 $\Phi=\Theta^*$。由（51.3），
+
+$$
+\Phi(X)=L_0^*XL_0+L_1^*XL_1
+=\operatorname{diag}\bigl(\langle1|X|1\rangle,
+\langle+|X|+\rangle\bigr).
+\tag{51.8}
+$$
+
+这是完全正映射，且 $\Phi(I)=I$。保单位完全正映射满足 Schwarz 不等式，所以它属于所核对 Theorem A 的映射类。
+
+**命题51.2。** 映射 $\Phi$ 本原，且 $q(\Phi)=3$。
+
+证明。对任意 $X$，记
+
+$$
+\beta=\langle1|X|1\rangle,\qquad
+\gamma=\langle+|X|+\rangle.
+$$
+
+逐次应用（51.8）得到
+
+$$
+\Phi^2(X)=\operatorname{diag}\left(
+\gamma,\frac{\beta+\gamma}{2}\right),
+\qquad
+\Phi^3(X)=\operatorname{diag}\left(
+\frac{\beta+\gamma}{2},\frac{\beta+3\gamma}{4}\right).
+\tag{51.9}
+$$
+
+当 $0\ne X\succeq0$ 时，$\beta,\gamma\ge0$。若两者均为零，则 $X^{1/2}$ 同时消灭 $|1\rangle$ 和 $|+\rangle$；这两个向量张成整个空间，迫使 $X=0$，矛盾。所以 $\beta+\gamma>0$，（51.9）的两个末态对角元均严格正。
+
+取 $|-\rangle=(|0\rangle-|1\rangle)/\sqrt2$，则
+
+$$
+\Phi(|-\rangle\langle-|)=\operatorname{diag}(1/2,0),
+\qquad
+\Phi^2(|-\rangle\langle-|)=\operatorname{diag}(0,1/4).
+\tag{51.10}
+$$
+
+前两次均非正定，而第三次对全部非零半正定输入正定。因此 $q(\Phi)=3$。证明完毕。
+
+命题51.1、51.2是分别对两类映射的直接核验。它们排除了该精确版本 Theorem B、Theorem A 在二维所写的上界二；这个结论不以某个证明步骤有缺口为推断依据。
+
+### 51.4 加权迹不能直接替代普通秩
+
+原文还有一处可单独定位的机制问题。其第2页把投影关系 $p\sim q$ 定义为普通迹相等 $\operatorname{Tr}p=\operatorname{Tr}q$。第4页 Corollary 3.4 的证明在得到
+
+$$
+0\preceq\varrho^{1/2}\Lambda^\kappa(p)\varrho^{1/2}
+\preceq\varrho^{1/2}q\varrho^{1/2},
+\qquad \Lambda^*(\varrho)=\varrho>0
+\tag{51.11}
+$$
+
+后，声称取迹即可推出 $\Lambda^\kappa(p)=q$。但普通迹相等并不保证 $\operatorname{Tr}(\varrho p)=\operatorname{Tr}(\varrho q)$。下面的三维例子把这两个量明确分开。
+
+在 $M_3$ 上定义
+
+$$
+\mathcal F(X)=\operatorname{diag}\left(
+X_{33},X_{33},\frac{\operatorname{Tr}X}{3}\right).
+\tag{51.12}
+$$
+
+它的 Kraus 算子为
+
+$$
+|1\rangle\langle3|,\quad |2\rangle\langle3|,
+\quad \frac1{\sqrt3}|3\rangle\langle j|\quad(j=1,2,3).
+\tag{51.13}
+$$
+
+所以 $\mathcal F$ 完全正且保单位，但不保迹：
+$\mathcal F^*(I)=\operatorname{diag}(1/3,1/3,7/3)$。直接计算得
+
+$$
+\mathcal F^2(X)=\operatorname{diag}\left(
+\frac{\operatorname{Tr}X}{3},\frac{\operatorname{Tr}X}{3},
+\frac{2X_{33}}3+\frac{\operatorname{Tr}X}{9}\right).
+\tag{51.14}
+$$
+
+该式对全部非零半正定输入正定；$\mathcal F$ 自身并非严格正。因此 $\mathcal F$ 本原且 $q(\mathcal F)=2$。归一化正定不动密度为
+
+$$
+\varrho=\operatorname{diag}(1/5,1/5,3/5),
+\qquad \mathcal F^*(\varrho)=\varrho.
+\tag{51.15}
+$$
+
+它的乘法域恰为标量矩阵。确实，若 $X$ 在乘法域中，则第三个对角元的 Schwarz 等号要求
+
+$$
+\frac{\operatorname{Tr}(X^*X)}3
+=\left|\frac{\operatorname{Tr}X}{3}\right|^2,
+\tag{51.16}
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz 的等号条件迫使 $X$ 为标量矩阵。
+
+这一结论对全部迭代也成立，可直接核验而不依赖有争议的秩增长步骤。$\mathcal F^n$ 对角输出的权重来自随机矩阵
+
+$$
+T=\begin{pmatrix}
+0&0&1\\
+0&0&1\\
+1/3&1/3&1/3
+\end{pmatrix}^{\!n}.
+\tag{51.17}
+$$
+
+当 $n=1$ 时第三行全正；当 $n\ge2$ 时全部行全正。任取一行正权重 $t_j$，令 $m=\sum_jt_jX_{jj}$。相应的单侧 Schwarz 缺陷是
+
+$$
+\sum_jt_j\sum_{i\ne j}|X_{ij}|^2
++\sum_jt_j|X_{jj}-m|^2.
+\tag{51.18}
+$$
+
+它为零即迫使非对角项全部为零、对角项全部相等。因此所有迭代的乘法域都是 $\mathbb CI$，乘法指数 $\kappa(\mathcal F)=1$。
+
+现在取两个等普通秩投影
+
+$$
+p=\operatorname{diag}(1,1,0),\qquad
+q=\operatorname{diag}(1,0,1).
+\tag{51.19}
+$$
+
+则
+
+$$
+\mathcal F^\kappa(p)=\operatorname{diag}(0,0,2/3)\preceq q,
+\qquad \mathcal F^\kappa(p)\ne q,
+\tag{51.20}
+$$
+
+而
+
+$$
+\operatorname{Tr}(\varrho p)=2/5,\qquad
+\operatorname{Tr}(\varrho q)=4/5.
+\tag{51.21}
+$$
+
+该映射满足原文所列的保单位、本原、Schwarz 假设，乘法域也已经稳定，却把投影 $p$ 的普通秩从二降到一。因此原文 Corollary 3.4 的相应结论及第5页 Corollary 3.5 的普通秩严格增长结论均不成立。这个三维例子本身没有违反（51.2），因为其指数二小于右侧八；它只定位从忠实加权迹到普通秩的错误迁移。
+
+原文 Lemma 3.1 的式（3.3）明确要求 $X$ 和 $X^*$ 的两条加权范数等号。只满足单侧 Schwarz 等号的矩阵不能反驳这条双侧判据，本节也不把它列为额外缺口。
+
+### 51.5 结论的适用范围
+
+二维计算直接针对 arXiv:2504.21638v3 所写的具体常数及假设，三维计算解释其普通秩增长论证中缺失的等式。它们不否定保留保单位与保迹条件的既有结果，也没有判定替代常数、其他正确的二次阶界或其他版本的状态。本节不据这些核对作文献原创性断言。
+
+第48节的低秩长延迟反例由多个周期组件构成，并非本原；其超多项式结论和一般有限上界均不依赖这份文献。这里的本原指数反例则满足本原性，解决的是不同的、已写出具体常数的原文陈述。
+
+[^ekblad_v3]: Owen Ekblad, *A note on the quantum Wielandt inequality*, [arXiv:2504.21638v3](https://arxiv.org/pdf/2504.21638v3)，2025年12月11日版本。第1页：$M_D$、本原性、严格正性指数及 Theorem A；第2页：Theorem B、无保单位或保迹要求的说明，以及 $p\sim q$ 的普通迹定义；第4页：Corollary 3.4 的加权迹步骤；第5页：Corollary 3.5 的秩增长陈述。
+
+## 追加锚（本行以下为增补区）
+
+## 52. 三个线性无关循环纯环境的六终端下界
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。接收器独立纯启动，每轮使用同一个全域 CPTP 通道，全部持久系统计入接收空间 $K$，活动记忆和参考不可访问，前六个终端恢复完整参考—活动记忆—原档案联合态。
+
+**定理52.1（三周期独立环境的六终端容量下界）。** 如果同一固定 Stinespring 表示的前六轮实际新环境依次为输入无关纯向量
+$$
+A,B,C,A,B,C,
+$$
+且 $A,B,C$ 线性无关，则
+$$
+\boxed{D:=\dim K\ge8.}
+\tag{52.1}
+$$
+不要求三条环境方向正交。
+
+证明。记 $V_i x=V(x\otimes|i\rangle)$、初始接收态为单位 $k$。每个终端的来源两列写成
+$$
+\Psi_n^i=|0\rangle x_n^i+|1\rangle y_n^i,
+$$
+令 $H_n=\operatorname{span}\{x_n^0,x_n^1\}$、$G_n=\operatorname{span}\{y_n^0,y_n^1\}$。首步有正交单位向量 $p,q$，第二步有正交单位向量 $u,v,w$，使
+$$
+H_1=\operatorname{span}(p,q),\quad G_1=\mathbb Cp,
+$$
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\quad G_2=\operatorname{span}(u,w),
+\quad H_2\cap G_2=\mathbb Cw.
+$$
+对 $n\ge2$，$H_n,G_n$ 均二维。对 $n\ge3$，来源按初始位与最后发射位给出四个非零、支撑互不相交的档案向量；$m_0,m_1$ 线性独立，故 Bell 输入的参考—活动记忆边缘秩为四。实际环境纯且与来源输入无关，使接收后的参考—活动记忆—接收器联合态纯，并保持这个不可访问边缘。因此四个接收系数向量线性独立，得到
+$$
+H_n\cap G_n=0.
+\tag{52.2}
+$$
+
+依第1/4、第2/5、第3/6轮分组，定义两类输入位的累计接收域
+$$
+\begin{array}{lll}
+H_A=\mathbb Ck+H_3,&H_B=H_1+H_4,&H_C=H_2+H_5,\\
+G_A=\mathbb Ck+G_3,&G_B=G_1+G_4,&G_C=G_2+G_5.
+\end{array}
+\tag{52.3}
+$$
+$V_0H_A,V_0H_B,V_0H_C$ 分别落在 $K\otimes A,K\otimes B,K\otimes C$，三个环境向量线性无关，故这些像为代数直和。$V_0$ 单射，于是
+$$
+\dim H_A+\dim H_B+\dim H_C\le D.
+\tag{52.4}
+$$
+同理，
+$$
+\dim G_A+\dim G_B+\dim G_C\le D.
+\tag{52.5}
+$$
+
+逐个环境块都需要至少五维的两位输入总量：
+
+- $H_3,G_3$ 各二维且交零，非零 $k$ 不可能同时属于它们。因此 $\dim H_A+\dim G_A\ge5$。
+- 若 $\dim H_B+\dim G_B=4$，两项必都为二，故 $H_1=H_4$ 且 $p\in G_4$。这使非零 $p\in H_4\cap G_4$，矛盾。因此该和至少五。
+- 若 $\dim H_C+\dim G_C=4$，则 $H_2=H_5$、$G_2=G_5$，从而非零 $w\in H_5\cap G_5$，矛盾。因此该和也至少五。
+
+三式相加给
+$$
+2D\ge15,
+\tag{52.6}
+$$
+故整数 $D\ge8$。证明完毕。
+
+本命题不覆盖三个不同环境射线只张成二维的情况，也不将任意六轮纯环境预设为三周期；初始混合附加态同样不在这个子类内。
+
+一般六终端固定 CPTP 接收的容量仍保留 $7\le d_{\mathrm{CPTP},6}\le8$；本节只排除上述三周期、线性无关纯环境子类中的七维候选。
+
+## 追加锚（本行以下为增补区）
+
+## 53. 七维混合分支的环境交叠约束
+
+固定非退化已知来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。接收器独立纯启动，全部持久系统计入七维 $K$，每轮使用同一个全域 CPTP 接收通道，活动记忆和参考不可访问，前六个终端精确恢复完整参考—活动记忆—原档案联合态。
+
+记可逆编码固定附加态的秩为 $r_n$。档案支撑秩为 $2,3,4,4,4,4$，因此
+$$
+r_1\le3,\quad r_2\le2,\quad r_3=r_4=r_5=r_6=1.
+$$
+前面各款先讨论 $r_2=2$ 分支；最后一款处理 $r_2=1$ 时第一终端附加态的秩。第三终端纯不表示第三轮新环境纯：该轮会把第二终端的混合附加因子排入新环境，并可与旧环境纠缠。第四、第五、第六轮的新环境才由相邻纯终端保证是输入无关纯向量 $\eta_4,\eta_5,\eta_6$。
+
+### 53.1 第二终端秩二与第三轮固定等距块
+
+第二终端的六维编码支撑可写成 $Q\otimes\Gamma\subset K$，其中 $\dim Q=3$、$\dim\Gamma=2$，余下的 $Z=(Q\otimes\Gamma)^\perp$ 一维。取 $Q$ 中正交单位 $u,v,w$，置
+$$
+c=\sqrt{|a|^4+|b|^2},\quad
+z=\frac{a^2u+bv}{c},\quad
+H=\operatorname{span}(z,w),\quad G=\operatorname{span}(u,w).
+$$
+固定 $V_i x=V(x\otimes|i\rangle)$。沿第27节的纯化系数比较，存在等距 $R:\Gamma\to E$、二维环境 $F=R\Gamma$，以及正交单位接收向量 $s,t,r,j$，使对全部 $\xi\in\Gamma$ 有
+$$
+V_0(z\otimes\xi)=s\otimes R\xi,\quad
+V_0(w\otimes\xi)=t\otimes R\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R\xi,\quad
+V_1(w\otimes\xi)=j\otimes R\xi.
+$$
+令 $A=\operatorname{span}(s,t)=G_3$、$B=\operatorname{span}(r,j)$，则
+$$
+V_0(H\otimes\Gamma)=A\otimes F,\qquad
+V_1(G\otimes\Gamma)=B\otimes F.
+\tag{53.1}
+$$
+两像各四维，$A\perp B$。实际第三终端支撑为 $C_3=A\oplus B$。
+
+对 $n=3,4,5,6$，在标准活动记忆基下明确写实际来源两列为
+$$
+\Psi_n^i=|0\rangle_Mu_n^i+|1\rangle_Mv_n^i,
+\qquad
+H_n=\operatorname{span}\{u_n^0,u_n^1\},\quad
+G_n=\operatorname{span}\{v_n^0,v_n^1\}.
+$$
+它们均二维、交零，$C_n=H_n+G_n$ 四维。第三轮等距块具体产生
+$$
+\Psi_3^0=c\,m_0s+ab\,m_1r,\qquad
+\Psi_3^1=a\,m_0t+b\,m_1j.
+$$
+因为 $m_0=a|0\rangle+b|1\rangle$ 且 $ab\ne0$，这里 $A=G_3$，另一实际输出空间为 $B=Q_3=\operatorname{span}(r,j)$。这使下文 $V_1A$ 使用第四轮环境 $\eta_4$ 的对应明确成立。
+
+对 $n=4,5,6$，有二维 $Q_n$，满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{53.2}
+$$
+
+### 53.2 环境商维数
+
+**定理53.1（环境商维数约束）。** 第二终端秩二的七维候选必须满足
+$$
+\dim\operatorname{span}(F,\eta_4,\eta_5,\eta_6)\le3.
+\tag{53.3}
+$$
+
+证明。若在 $E/F$ 中存在两个独立的尾环境类，选对应 $\eta_n,\eta_m$。则
+$$
+(A\otimes F)+(G_n\otimes\eta_n)+(G_m\otimes\eta_m)
+$$
+为维数 $4+2+2=8$ 的代数直和。它包含于七维 $V_0K$，矛盾。证明完毕。
+
+更精确地，任意这种候选都满足两个有限维商空间秩约束
+$$
+\dim\frac{A\otimes F+\sum_{n=4}^6G_n\otimes\eta_n}{A\otimes F}\le3,
+\qquad
+\dim\frac{B\otimes F+\sum_{n=4}^6Q_n\otimes\eta_n}{B\otimes F}\le3.
+\tag{53.4}
+$$
+这是两份七维全域位像扣除各自已占四维后的精确剩余容量。各项必须在同一实际向量空间中合计，不把分别的商维数直接相加。
+
+### 53.3 尾环境的三种必要模式
+
+**定理53.2（尾环境模式限制）。** 该七维、第二终端秩二分支的三个纯尾环境，只能有以下三种相对于 $F$ 的模式：
+$$
+(F,F,F),\qquad(O,F,O),\qquad(O,O,O).
+\tag{53.5}
+$$
+这里每个 $F$ 表示该向量属于二维空间 $F$，不同位置可以是不同射线；每个 $O$ 表示同一条不包含于 $F$ 的环境射线。声明的是必要模式，不宣称这三类均可实现。
+
+证明。先设 $\eta_4\in F$。若 $\eta_5\notin F$，则 $V_1G_3=Q_4\otimes\eta_4$ 与 $V_1G_4=Q_5\otimes\eta_5$ 的不同环境射线迫使 $A\cap G_4=0$。于是 $V_0K$ 中的
+$$
+(A\otimes F)+(G_4\otimes\eta_4)+(G_5\otimes\eta_5)
+$$
+是 $4+2+2=8$ 维直和，矛盾。因此 $\eta_5\in F$。
+
+若进一步有 $\eta_6\notin F$，则 $V_0K$ 中位于 $K\otimes F$ 的子空间
+$$
+R=(A\otimes F)+(G_4\otimes\eta_4)+(G_5\otimes\eta_5)
+$$
+必须至多五维，以容纳与它交零的二维 $G_6\otimes\eta_6$。令 $\pi_A:K\to K/A$。于是 $\dim (\pi_A\otimes I)R\le1$。若 $\eta_4,\eta_5$ 不共线，固定 $V_1$ 又使 $A\cap G_4=0$，给二维的 $\pi_A(G_4)\otimes\eta_4$，矛盾。因此 $\eta_4\parallel\eta_5$。此时商维数至多一意味着
+$$
+\dim(A+G_4+G_5)\le3.
+$$
+但 $\eta_5\in F$、$\eta_6\notin F$，固定 $V_1$ 迫使 $G_4\cap G_5=0$，两个二维空间不能同时位于上述三维空间中。矛盾。因此 $\eta_6\in F$，得到第一种模式。
+
+现在设 $\eta_4\notin F$。先记一个交空间约束：若另有 $\eta_j\notin F$，且 $\eta_j\not\parallel\eta_4$，定理53.1使
+$$
+\eta_j=c\eta_4+f,\qquad c\ne0,\quad 0\ne f\in F.
+$$
+逐个独立环境分量比较可知
+$$
+\bigl((A\otimes F)+(G_4\otimes\eta_4)\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_4\cap G_j)\otimes\eta_j.
+\tag{53.6}
+$$
+前一个空间六维，后一个二维，联合包含于七维 $V_0K$，故（53.6）的交至少一维。特别地 $A\cap G_4\ne0$。
+
+若 $\eta_5\notin F$，则它必须与 $\eta_4$ 共线：否则（53.6）给 $A\cap G_4\ne0$，而 $V_1A\subset K\otimes\eta_4$、$V_1G_4\subset K\otimes\eta_5$ 强制这个交为零。共同外部射线又使
+$$
+\dim(G_4+G_5)\le3,
+$$
+因为其张量该射线与四维 $A\otimes F$ 交零。故 $G_4\cap G_5\ne0$，固定 $V_1$ 进一步强制 $\eta_6\parallel\eta_5$。得到第三种模式。
+
+最后取 $\eta_5\in F$。如果 $\eta_6\notin F$，它必须与 $\eta_4$ 共线：否则（53.6）再次给 $A\cap G_4\ne0$，但 $V_1$ 在 $A,G_4$ 上分别使用 $\eta_4\notin F$、$\eta_5\in F$，迫使交为零。若反而 $\eta_6\in F$，则
+$$
+R_F=(A\otimes F)+(G_5\otimes\eta_5)+(G_6\otimes\eta_6)
+$$
+与 $G_4\otimes\eta_4$ 交零，且两者都包含于七维 $V_0K$，所以 $\dim R_F\le5$。对 $A$ 取接收商，四维 $A\otimes F$ 是商映射在 $R_F$ 上的核，故
+$$
+\dim(\pi_A\otimes I)R_F\le1.
+$$
+特别有 $\dim\pi_A(G_5)\le1$，因此 $A\cap G_5\ne0$。但固定 $V_1$ 在 $A=G_3$ 上使用 $\eta_4\notin F$，在 $G_5$ 上使用 $\eta_6\in F$；不同射线迫使 $A\cap G_5=0$，矛盾。因此 $\eta_6$ 必须位于与 $\eta_4$ 相同的外部射线，得到第二种模式。证明完毕。
+
+### 53.4 定量环境交叠
+
+置
+$$
+x=|a|^2,\quad y=|b|^2,\quad d=x^2+y,
+\qquad \kappa=\frac{x}{\sqrt d}.
+$$
+令 $t_j$ 为来源初态 $|0\rangle$ 在第 $j$ 终端的零记忆概率，则
+$$
+t_0=1,\qquad t_j=1-y t_{j-1},\qquad
+t_j=x+y^2t_{j-2}\quad(j\ge2).
+\tag{53.7}
+$$
+定义
+$$
+\sigma_m=\sqrt{\min\left\{
+ x\frac{t_{m-1}}{t_m},\ x\frac{t_{m-2}}{t_{m-1}}
+\right\}}\quad(m\ge3).
+\tag{53.8}
+$$
+这是实际两个记忆系数空间 $H_m,G_m$ 的最小主角奇异值。
+
+**定理53.3（环境交叠的显式正下界）。** 对 $n=5,6$，上述七维、第二终端秩二分支必须满足
+$$
+\boxed{
+\|P_F\eta_n\|^2
+\ge\frac{(\sigma_{n-1}-\kappa)^2}{4}>0.
+}
+\tag{53.9}
+$$
+所以第五、第六轮新环境都不能正交于第三轮排出附加因子的环境 $F$。
+
+证明。记 $m=n-1\ge4$、$s_n=\|P_F\eta_n\|^2$。由（53.1）、（53.2）及 $V_0$ 等距，对任意单位 $\xi\in H_m$ 有
+$$
+\|P_{H\otimes\Gamma}\xi\|^2
+=\|P_{A\otimes F}V_0\xi\|^2
+=s_n\|P_A\widehat V_0\xi\|^2\le s_n.
+\tag{53.10}
+$$
+这里 $\widehat V_0$ 是 $V_0$ 在该实际域上去掉共同单位环境 $\eta_n$ 后的等距。同理，对任意单位 $\gamma\in G_m$，
+$$
+\|P_{G\otimes\Gamma}\gamma\|\le\sqrt{s_n}.
+\tag{53.11}
+$$
+
+取
+$$
+h=\frac{\overline b\,u-\overline a^{\,2}v}{c}.
+$$
+则 $H^\perp\cap Q=\mathbb Ch$、$G^\perp\cap Q=\mathbb Cv$，且 $|\langle h,v\rangle|=\kappa$。$H_m$ 二维而 $Z$ 一维，故可选单位向量 $\zeta\in H_m\cap Z^\perp$。将它正交分解为
+$$
+\zeta=\zeta_H+\zeta_h,
+\qquad \zeta_H\in H\otimes\Gamma,
+\quad \zeta_h\in\mathbb Ch\otimes\Gamma.
+$$
+式（53.10）给 $\|\zeta_H\|\le\sqrt{s_n}$，而 $\|\zeta_h\|\le1$。记 $W=(G\otimes\Gamma)^\perp=(\mathbb Cv\otimes\Gamma)\oplus Z$，则
+$$
+\|P_W\zeta\|
+\le\|P_W\zeta_h\|+\|\zeta_H\|
+\le\kappa+\sqrt{s_n}.
+\tag{53.12}
+$$
+对任意单位 $\gamma\in G_m$，沿 $W\oplus(G\otimes\Gamma)$ 分解内积，并用（53.11），得到
+$$
+|\langle\gamma,\zeta\rangle|
+\le\|P_W\zeta\|
++\|P_{G\otimes\Gamma}\gamma\|\,
+ \|P_{G\otimes\Gamma}\zeta\|
+\le\kappa+2\sqrt{s_n}.
+$$
+取单位 $\gamma$ 的上确界，便有
+$$
+\|P_{G_m}\zeta\|\le\kappa+2\sqrt{s_n}.
+\tag{53.13}
+$$
+
+实际来源的内积给出反向下界。对两个来源初始标签，零记忆系数范数平方分别为 $t_m,t_{m-1}$。不同标签的档案支撑正交，精确可逆编码保持这些内积。沿第26节的同轮零、一输入像正交计算，$P_{H_m}P_{G_m}|_{H_m}$ 的两个特征值恰为
+$$
+\lambda_m=x\frac{t_{m-1}}{t_m},\qquad
+\lambda_{m-1}=x\frac{t_{m-2}}{t_{m-1}}.
+\tag{53.14}
+$$
+因此每个单位 $\zeta\in H_m$ 都满足 $\|P_{G_m}\zeta\|\ge\sigma_m$。与（53.13）合并给
+$$
+\sigma_m\le\kappa+2\sqrt{s_n}.
+$$
+
+最后证明严格正间隙。由（53.7），$t_j>x$ 对全部 $j\ge2$ 成立。对任意 $j\ge3$，利用 $d+xy=1$，有
+$$
+\lambda_j>\kappa^2
+\iff d t_{j-1}>x(1-y t_{j-1})
+\iff t_{j-1}>x.
+\tag{53.15}
+$$
+$m\ge4$ 使（53.14）的两个指标都至少三，所以 $\sigma_m>\kappa$。移项、平方即得（53.9）。证明完毕。
+
+这两个终端可以使用同一个显式正界。式（53.7）的闭式为
+$$
+t_j=\frac{1+y(-y)^j}{1+y},\qquad
+\lambda_j-x=\frac{xy(-y)^{j-1}}{t_j}.
+$$
+故 $\lambda_3,\lambda_5>x>\lambda_4$，从而
+$$
+\sigma_4=\sigma_5=\sqrt{x\frac{t_3}{t_4}},
+\qquad
+\|P_F\eta_5\|^2,\ \|P_F\eta_6\|^2
+\ge\frac14\left(\sqrt{x\frac{t_3}{t_4}}-
+\frac{x}{\sqrt{x^2+y}}\right)^2>0.
+\tag{53.16}
+$$
+
+第四轮的前一终端是 $m=3$，其较小特征值恰为 $\lambda_2=x^2/d=\kappa^2$，所以上述主角估计在该轮本身只给零下界。不过，六终端完整合同下的模式限制（53.5）给出额外推论：$FFF$ 中 $\|P_F\eta_4\|^2=1$；$OFO$、$OOO$ 中 $\eta_4\parallel\eta_6$，单位向量的投影范数相同。式（53.16）的右端至多 $1/4$，因为 $0\le\kappa<\sigma_4\le1$。故三个纯尾环境共同满足
+$$
+\boxed{
+\|P_F\eta_n\|^2
+\ge\frac14\left(\sqrt{x\frac{t_3}{t_4}}-
+\frac{x}{\sqrt{x^2+y}}\right)^2>0,
+\qquad n=4,5,6.
+}
+$$
+第四轮的正界是结合环境模式继承的结果，没有把 $m=3$ 本身的主角间隙改称严格正。外部射线虽然不包含于 $F$，却不能正交于 $F$。这些条件都是必要条件，未被宣称为充分条件。
+
+### 53.5 纯第二终端的早期秩限制
+
+**定理53.4（纯第二终端排除秩三第一终端）。** 在同一七维合同中，若 $r_2=1$，则 $r_1=3$ 不可能。证明只需前五个完整参考终端，因而该分支只余 $r_1=1$ 或 $2$。
+
+证明。反设 $r_1=3$。第一终端附加态的纯化与第二终端纯性，沿第29节式（29.37）给出六个正交单位接收向量 $p_\alpha,q_\alpha$、三个正交单位 $u,v,w$ 和三个正交单位环境向量 $f_\alpha$，使对 $\alpha=1,2,3$ 有
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+$$
+这里 $V_i x=V(x\otimes|i\rangle)$，同一个 $V$ 是固定通道的 Stinespring 等距。记
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha\},\quad
+F=\operatorname{span}\{f_\alpha\},\quad
+U=\operatorname{span}(u,w)=G_2.
+$$
+则
+$$
+\dim X=6,\quad\dim F=3,\quad V_0X=U\otimes F.
+\tag{53.17}
+$$
+第二终端的实际系数空间为
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U,
+\qquad \dim(H_2+G_2)=3.
+\tag{53.18}
+$$
+第三至第五轮的新环境 $\eta_3,\eta_4,\eta_5$ 为输入无关纯向量，并有
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\quad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(n=3,4,5).
+\tag{53.19}
+$$
+各 $H_n,G_n,Q_n$ 均二维；$n\ge3$ 时 $C_n=H_n+G_n=G_n\oplus Q_n$ 四维，且 $H_n$ 到 $G_n,Q_n$ 的两个投影都是同构。
+
+**尾环境共线。**
+
+首先，各 $\eta_n$ 都属于 $F$。否则（53.17）与 $G_n\otimes\eta_n$ 形成 $6+2=8$ 维直和，不能包含在七维 $V_0K$ 中。
+
+令 $\pi:K\to K/U$ 为商映射。因为 $(\pi\otimes I_E)V_0$ 在六维 $X$ 上为零，
+$$
+\mathcal Z:=(\pi\otimes I_E)V_0K,
+\qquad \dim\mathcal Z\le1.
+\tag{53.20}
+$$
+对每个尾终端，$\pi(G_n)\otimes\eta_n\subseteq\mathcal Z$。
+
+若 $\eta_3,\eta_4$ 不共线，固定 $V_1$ 在 $U=G_2$、$G_3$ 上的像分别属于两条不同环境线，因此 $U\cap G_3=0$。于是 $\dim\pi(G_3)=2$，违反（53.20）。故可统一选取 $\eta_3=\eta_4=\eta$。
+
+$G_3,G_4$ 不可能都等于 $U$：否则（53.19）和 $V_0$ 单射性使 $H_2=H_3$，继而 $C_3=C_2$，与三维、四维支撑秩差矛盾。因此（53.20）恰为一维，其接收商方向由 $\pi(G_3)$ 或 $\pi(G_4)$ 确定，且
+$$
+W:=U+G_3+G_4,\qquad \dim W=3.
+\tag{53.21}
+$$
+若 $\eta_5$ 不共线于 $\eta$，固定 $V_1$ 在 $G_3,G_4$ 上的不同环境像会迫使 $G_3\cap G_4=0$。但这两个二维空间都在三维 $W$ 中，矛盾。故 $\eta_5=\eta$ 也可统一选取，且（53.20）使 $G_5\subseteq W$。
+
+**三维图空间的秩冲突。**
+
+因为 $\eta\in F$，取单位系数向量 $\xi=(\xi_1,\xi_2,\xi_3)$ 使 $\eta=\sum_\alpha\xi_\alpha f_\alpha$，并令
+$$
+p_\xi=\sum_\alpha\xi_\alpha p_\alpha,\qquad
+q_\xi=\sum_\alpha\xi_\alpha q_\alpha.
+$$
+则
+$$
+V_0p_\xi=u\eta,\quad V_0q_\xi=w\eta,\quad
+V_1p_\xi=v\eta.
+\tag{53.22}
+$$
+（53.17）、（53.19）、（53.21）使整个 $W\otimes\eta$ 包含在 $V_0K$ 中。令
+$$
+S_0=V_0^{-1}(W\otimes\eta),\qquad S_1=\mathbb Cp_\xi+W.
+$$
+$S_0$ 恰三维，包含 $p_\xi,q_\xi,H_2,H_3,H_4$。$S_1$ 包含 $p_\xi,G_2,G_3,G_4$，所以共同环境上可写
+$$
+V_0x=f(x)\otimes\eta\quad(x\in S_0),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in S_1),
+$$
+其中 $f,g$ 等距，$fS_0=W$，且不同输入位正交给
+$$
+gS_1\perp W.
+\tag{53.23}
+$$
+
+由（53.18）、（53.22）、（53.23），$H_2$ 到 $W$ 的投影为 $U$。来源同轮系数递推又给 $H_3,H_4$ 到 $W$ 的投影分别为 $G_3,G_4$：其另一个分量分别在 $Q_3=gU$、$Q_4=gG_3$ 中，由（53.23）正交于 $W$。因此
+$$
+P_WS_0\supseteq U+G_3+G_4=W.
+$$
+两空间同为三维，所以该投影为同构；存在唯一线性映射 $T:W\to W^\perp$，使 $S_0$ 为其图。
+
+从（53.18）得到
+$$
+Tw=0,\qquad T(U)=\mathbb Cv.
+\tag{53.24}
+$$
+从 $H_3,H_4$ 到同轮两个接收输出空间的满投影，又得到
+$$
+T(G_3)=Q_3=gU,\qquad T(G_4)=Q_4=gG_3.
+\tag{53.25}
+$$
+由于 $w\ne0$ 在三维域 $W$ 的核中，$\operatorname{rank}T\le2$；（53.25）的第一项已有秩二，所以 $\operatorname{im}T=gU$。再用（53.25）的第二项，得到 $gG_3\subseteq gU$。$g$ 单射给 $G_3\subseteq U$，两者均二维，故 $G_3=U$。
+
+然而（53.24）称 $T(U)$ 一维，（53.25）称 $T(G_3)$ 二维，矛盾。证明完毕。
+
+本节没有排除全部七维接收器。第二终端秩二的候选须满足上述三种尾模式及环境交叠下界；第二终端纯而第一终端秩二的候选仍未结算。全部早期终端纯的非周期环境也未在此归约。一般六终端固定 CPTP 接收容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
+
+## 54. 七维第一终端秩二时的尾环境封闭性
+
+### 54.1 实际来源、早期等距块与主结论
+
+固定非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$。七维接收器 $K$ 独立纯启动，同一个全域 CPTP 通道逐轮作用，前六个终端恢复完整参考—活动记忆—原档案联合态。记可逆编码固定附加态的秩为 $r_n$，本节取 $r_2=1$、$r_1=2$。
+
+固定该通道同一份 Stinespring 等距，记 $V_i x=V(x\otimes|i\rangle)$。第一步与第二步纯化比较给两个正数 $\lambda_1,\lambda_2$，四个正交单位接收向量 $p_1,q_1,p_2,q_2$，以及两组正交单位环境向量 $e_1,e_2$ 和 $f_1,f_2$，满足
+$$
+V_0k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,p_\alpha\otimes e_\alpha,
+\qquad
+V_1k=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,q_\alpha\otimes e_\alpha,
+\tag{54.1}
+$$
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+\tag{54.2}
+$$
+这里 $k$ 是单位初态，$u,v,w$ 正交归一，$\lambda_1+\lambda_2=1$。令
+$$
+P_0=\operatorname{span}(p_1,p_2),\quad
+X=\operatorname{span}(p_1,q_1,p_2,q_2),\quad
+F=\operatorname{span}(f_1,f_2),\quad
+U=\operatorname{span}(u,w).
+$$
+所以 $\dim P_0=2$、$\dim X=4$、$\dim F=2$，且
+$$
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{54.3}
+$$
+第二至第六终端均纯；第三至第六轮新环境是输入无关单位向量 $\eta_3,\eta_4,\eta_5,\eta_6$。写实际来源两列
+$$
+\Psi_n^i=|0\rangle_Mu_n^i+|1\rangle_Mv_n^i,\qquad
+H_n=\operatorname{span}(u_n^0,u_n^1),\quad
+G_n=\operatorname{span}(v_n^0,v_n^1),\quad C_n=H_n+G_n.
+$$
+各 $H_n,G_n$ 二维，$C_2$ 三维、$C_n$ 在 $n\ge3$ 时四维；第二终端有
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad G_2=U.
+\tag{54.4}
+$$
+对 $3\le n\le6$，有二维 $Q_n$ 使
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad G_n\perp Q_n.
+\tag{54.5}
+$$
+同轮来源递推使 $H_n$ 到 $G_n$ 和 $Q_n$ 的两个正交投影均为同构，且 $C_n=G_n\oplus Q_n$。
+
+**定理54.1（秩二第一终端的二维尾环境封闭性）。** 在上述七维六终端合同中，若第一终端可逆附加态秩为二、第二终端纯，则
+$$
+\boxed{
+\operatorname{span}(\eta_3,\eta_4,\eta_5,\eta_6)=F,
+\qquad \dim F=2.
+}
+$$
+因此四个纯尾环境都属于第二轮排出附加因子的同一二维环境空间，并且不能全部沿一条射线。结论不要求这些射线彼此正交，也不排除二维空间内的其余候选。
+
+下面先给矩形像约束下的一般环境模式，再证明共同纯尾的交叠限制，并排除两种外部模式，最后合并得到主结论。
+
+### 54.2 矩形像后的环境模式
+
+设 $K$ 七维，$E$ 为环境 Hilbert 空间，$V_0,V_1:K\to K\otimes E$ 为固定等距。给二维子空间 $A\subset K$、$F\subset E$，满足
+$$
+A\otimes F\subset V_0K.
+\tag{54.6}
+$$
+给有限尾长 $L\ge2$、二维接收子空间 $G_0=A,G_1,\ldots,G_L$，二维 $Q_1,\ldots,Q_L$，以及单位环境向量 $\eta_1,\ldots,\eta_L$，满足
+$$
+G_j\otimes\eta_j\subset V_0K,\qquad
+V_1G_{j-1}=Q_j\otimes\eta_j\quad(1\le j\le L).
+\tag{54.7}
+$$
+该抽象引理不要求 $V_0K\perp V_1K$；实际 CPTP 接收器还满足这个额外正交条件。
+
+**引理54.2（矩形像后的环境模式）。** 尾环境只有以下三种可能形式：
+
+1. 全部 $\eta_j\in F$；此项不限制它们在 $F$ 内的射线。
+2. 存在一条不包含于 $F$ 的射线 $O$，全部 $\eta_j\in O$。
+3. 存在一条不包含于 $F$ 的射线 $O$ 和一条包含于 $F$ 的射线 $B$，尾环境严格按 $O,B,O,B,\ldots$ 交替。
+
+这只是必要模式，不主张每种模式均可实现。
+
+**证明。** 两个简单的张量维数事实先单独说明。
+
+第一，所有 $\eta_j$ 在 $E/F$ 中的像至多张成一维。若两个像独立，则 $A\otimes F$ 与这两个对应的 $G_j\otimes\eta_j$ 为 $4+2+2=8$ 维代数直和，不能同处七维 $V_0K$。
+
+第二，若 $J$ 是一组环境在 $F$ 内的指标，且
+$$
+R_F=(A\otimes F)+\sum_{j\in J}G_j\otimes\eta_j,
+\qquad \dim R_F\le5,
+\tag{54.8}
+$$
+则
+$$
+\dim\left(A+\sum_{j\in J}G_j\right)\le3.
+\tag{54.9}
+$$
+令 $\pi_A:K\to K/A$。$(\pi_A\otimes I_E)|_{R_F}$ 的核恰为四维 $A\otimes F$，所以其像至多一维。如果像为零，（54.9）立即成立。否则该像含有某个非零纯张量 $u\otimes f$，且全部 $\pi_A(G_j)\otimes\eta_j$ 都在此单线内；因此所有非零 $\pi_A(G_j)$ 都在共同接收商线 $\mathbb Cu$ 内，仍给（54.9）。
+
+**首环境在 $F$ 内时不会离开。** 若 $\eta_1\in F$，反设 $t\ge2$ 是第一个 $\eta_t\notin F$ 的指标。式（54.8）对 $J=\{1,\ldots,t-1\}$ 的 $R_F$ 与 $G_t\otimes\eta_t$ 交零，故 $\dim R_F\le5$。由（54.9），二维 $G_{t-2}$ 和 $G_{t-1}$（当 $t=2$ 时前者是 $G_0=A$）都在同一至多三维空间中，交非零。固定 $V_1$ 将它们分别送到环境 $\eta_{t-1}\in F$ 和 $\eta_t\notin F$，不同环境线迫使输入交为零，矛盾。因此全部环境在 $F$ 内。
+
+**首环境在 $F$ 外时，全部外部环境同射线。** 现在取 $\eta_1\notin F$。若 $\eta_j\notin F$、$\eta_j\not\parallel\eta_1$，第一条维数事实给
+$$
+\eta_j=c\eta_1+f,\qquad c\ne0,\quad0\ne f\in F.
+$$
+逐个环境分量比较得到
+$$
+\bigl(A\otimes F+G_1\otimes\eta_1\bigr)
+\cap(G_j\otimes\eta_j)
+=(A\cap G_1\cap G_j)\otimes\eta_j.
+\tag{54.10}
+$$
+左侧两个空间分别六维和二维，同处七维 $V_0K$，故交非零，特别有 $A\cap G_1\ne0$。固定 $V_1$ 因而强制 $\eta_2\parallel\eta_1$。
+
+若 $\eta_2\parallel\eta_1$，当 $L=2$ 时已得到全部尾环境共线；当 $L\ge3$ 时，$G_1+G_2$ 至多三维，因为其张量共同外部环境的像与 $A\otimes F$ 交零。因此 $G_1\cap G_2\ne0$，固定 $V_1$ 给 $\eta_3\parallel\eta_2$。对每个仍有后继的指标重复该论证，全部后续环境都与 $\eta_1$ 共线。这与上面选取的 $\eta_j$ 矛盾。
+
+所以全部外部环境均属于同一射线 $O=\mathbb C\eta_1$。若 $\eta_2\in O$，已经得到全 $O$ 模式；只需讨论 $\eta_2\in F$。
+
+**外部与内部的后继被固定。** 令
+$$
+R_O=\sum_{\eta_j\in O}G_j,
+\qquad
+R_F=(A\otimes F)+\sum_{\eta_j\in F}G_j\otimes\eta_j.
+$$
+两份零位像 $R_O\otimes\eta_1$ 和 $R_F$ 交零。$\dim R_F\ge4$、$\dim R_O\ge2$，故
+$$
+\dim R_O\le3,\qquad \dim R_F\le5.
+\tag{54.11}
+$$
+于是（54.9）给 $A+\sum_{\eta_j\in F}G_j$ 至多三维。
+
+每个内部指标 $j<L$ 都有 $A\cap G_j\ne0$；固定 $V_1$ 在 $A=G_0$ 上产生环境 $\eta_1\in O$，在 $G_j$ 上产生 $\eta_{j+1}$，所以
+$$
+\eta_j\in F\Longrightarrow\eta_{j+1}\in O.
+\tag{54.12}
+$$
+另一方面，每个外部指标 $j<L$ 都有 $G_1\cap G_j\ne0$，因为它们均二维且都位于至多三维 $R_O$。固定 $V_1$ 在 $G_1$ 上产生 $\eta_2$，故
+$$
+\eta_j\in O\Longrightarrow\eta_{j+1}\parallel\eta_2.
+\tag{54.13}
+$$
+式（54.12）、（54.13）给严格交替模式，内部环境的射线固定为 $B=\mathbb C\eta_2\subset F$。证明完毕。
+
+### 54.3 共同纯尾的环境交叠限制
+
+考虑七维固定 CPTP 接收器服务前六个完整参考终端的非退化来源，且第二终端纯。沿标准早期可逆编码，记第二终端接收向量 $u,v,w$ 正交单位，
+$$
+U=G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad ab\ne0.
+\tag{54.14}
+$$
+第二轮排出第一终端附加因子的环境空间记为 $F$。它维数等于第一终端附加态秩 $r_1\ge1$，且固定 Stinespring 等距的两个位块满足
+$$
+U\otimes F\subseteq V_0K,\qquad
+\mathbb Cv\otimes F\subseteq V_1K.
+\tag{54.15}
+$$
+假设第三至第六轮的新环境为同一条纯射线；统一选取单位代表 $\eta$。实际系数空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta,\qquad
+V_1G_{n-1}=Q_n\otimes\eta\quad(3\le n\le6),
+\tag{54.16}
+$$
+其中各 $H_n,G_n,Q_n$ 二维，$C_2=H_2+G_2$ 三维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。实际 $H_n$ 到 $G_n$、$Q_n$ 的两个正交投影均为同构。
+
+**引理54.3（共同纯尾的环境交叠限制）。** 上述共同纯尾环境必须满足
+$$
+\boxed{\eta\perp F.}
+\tag{54.17}
+$$
+
+**证明。** 反设 $\eta$ 与 $F$ 有非零交叠。令
+$$
+S_0=H_2+H_3+H_4+H_5,\qquad
+S_1=U+G_3+G_4+G_5.
+$$
+去掉共同环境得到等距 $f:S_0\to K$、$g:S_1\to K$。置
+$$
+R=fS_0=G_3+G_4+G_5+G_6,\qquad W=gS_1.
+\tag{54.18}
+$$
+不同输入位正交给 $R\perp W$，所以
+$$
+\dim S_0+\dim S_1\le7.
+\tag{54.19}
+$$
+式（54.15）与非零环境交叠又给
+$$
+U\perp W,\qquad v\perp R.
+\tag{54.20}
+$$
+
+两个输入和的维数都至少三。若 $\dim S_1=2$，则 $U=G_3=G_4$，进而 $fH_2=fH_3$，与 $C_2$ 三维、$C_3$ 四维矛盾。若 $\dim S_0=2$，则 $H_2=H_3=H_4$、$G_3=G_4$；这使 $(H_3,G_3)=(H_4,G_4)$，但第53节式（53.14）的两个来源主角特征值相乘给
+$$
+\delta_n=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0,
+\quad x=|a|^2,\ y=|b|^2,\ t_j=1-y t_{j-1},\ t_0=1.
+\tag{54.21}
+$$
+因此只需处理 $\dim S_0=3$ 或 $4$。
+
+**若 $\dim S_0=3$。** 此时 $R$ 三维，并且 $G_3+G_4+G_5=R$：否则三个二维空间相等，由 $f$ 单射得 $H_2=H_3=H_4$，仍与（54.21）矛盾。因此 $S_1=U+R$。式（54.20）及 $R\perp W$ 使 $S_1\perp W$，于是 $2\dim S_1\le7$。故 $\dim S_1=3$、$S_1=R$、$U\subset R$。
+
+对 $n=3,4,5$，来源递推给 $P_RH_n=G_n$，所以 $P_RS_0=R$。因此三维 $S_0$ 是一个线性映射 $T:R\to R^\perp$ 的图。由（54.14）、（54.20）及同轮满投影，
+$$
+Tw=0,\quad T(U)=\mathbb Cv,\quad
+T(G_3)=gU,\quad T(G_4)=gG_3.
+\tag{54.22}
+$$
+$w\ne0$ 使 $\operatorname{rank}T\le2$，而后两个像各二维，因此 $gU=gG_3$。$g$ 单射给 $U=G_3$；（54.22）却使同一限制 $T|_U$ 的秩同时是一和二，矛盾。
+
+**若 $\dim S_0=4$。** 式（54.19）使 $\dim S_1=3$，$R$ 四维、$W$ 三维，故 $K=R\oplus W$。由（54.20）得 $U\subset R$，从而 $S_1\subset R$。定义
+$$
+D=f^{-1}(S_1)\subset S_0.
+$$
+$f:S_0\to R$ 是满等距，所以 $D$ 三维；它包含 $H_2,H_3,H_4$，因为这三个空间的像分别为 $G_3,G_4,G_5\subset S_1$。
+
+若 $U+G_3+G_4$ 只有二维，则 $U=G_3=G_4$，与 $C_2,C_3$ 的秩差矛盾。因此
+$$
+U+G_3+G_4=S_1.
+\tag{54.23}
+$$
+由（54.14）、（54.20）、$Q_3,Q_4\subset W\perp S_1$ 得
+$$
+P_{S_1}H_2=U,\qquad P_{S_1}H_3=G_3,\qquad
+P_{S_1}H_4=G_4.
+$$
+式（54.23）给 $P_{S_1}D=S_1$。三维 $D$ 因而是某个 $T:S_1\to S_1^\perp$ 的图。同样有
+$$
+Tw=0,\quad T(U)=\mathbb Cv,\quad
+T(G_3)=gU,\quad T(G_4)=gG_3.
+$$
+完全相同的秩一／秩二矛盾排除此情形。
+
+两个可能维数均已排除，故共同尾环境与 $F$ 正交。证明完毕。
+
+### 54.4 共同外部尾环境的排除
+
+**引理54.4（排除共同外部尾环境）。** 回到54.1节的 $r_1=2,r_2=1$ 合同，不可能有
+$$
+\eta_3\parallel\eta_4\parallel\eta_5\parallel\eta_6,
+\qquad \eta_3\notin F.
+\tag{54.24}
+$$
+该结论没有要求外部射线事先正交于 $F$。
+
+**证明。** 选择共同单位代表 $\eta$，相应重标各终端纯向量的整体相位。令
+$$
+S_0=H_2+H_3+H_4+H_5,\qquad
+S_1=U+G_3+G_4+G_5.
+$$
+去掉共同环境，在这些域上写
+$$
+V_0x=f(x)\otimes\eta\quad(x\in S_0),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in S_1),
+$$
+其中 $f,g$ 等距。置
+$$
+R=fS_0=G_3+G_4+G_5+G_6,\qquad W=gS_1.
+\tag{54.25}
+$$
+不同输入位正交给 $R\perp W$。
+
+因为 $\eta\notin F$，$U\otimes F$ 与 $R\otimes\eta$ 的交为零；两者都包含于七维 $V_0K$。因此
+$$
+\dim S_0=\dim R\le3.
+\tag{54.26}
+$$
+实际上
+$$
+\dim S_0=\dim R=3,\qquad G_3+G_4+G_5=R.
+\tag{54.27}
+$$
+为核对这一点，若 $\dim S_0=2$，则 $H_2=H_3=H_4$，并由 $f$ 单射得 $G_3=G_4$。若 $\dim(G_3+G_4+G_5)=2$，则 $G_3=G_4=G_5$，再由 $f$ 单射同样得 $H_2=H_3=H_4$。两种情形均使 $(H_3,G_3)=(H_4,G_4)$，但实际来源的主角乘积在这两个终端不同。具体地，置 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$。第53节式（53.14）的两个来源主角特征值相乘给
+$$
+\delta_n=\det\bigl(P_{H_n}P_{G_n}|_{H_n}\bigr)
+=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{54.28}
+$$
+故上述两种情形均不成立，证明（54.27）。
+
+于是 $S_1=U+R$，其维数至少三。由 $R\perp W$、$\dim W=\dim S_1$ 得
+$$
+\dim S_1\in\{3,4\}.
+\tag{54.29}
+$$
+对 $n=3,4,5$，因为 $Q_n\subset W\perp R$，来源递推给
+$$
+P_RH_n=G_n.
+$$
+式（54.27）因此给 $P_RS_0=R$。三维 $S_0$ 是一个线性映射 $T:R\to R^\perp$ 的图，并且
+$$
+T(G_3)=Q_3=gU,\qquad
+T(G_4)=Q_4=gG_3,\qquad
+T(G_5)=Q_5=gG_4.
+\tag{54.30}
+$$
+
+先排除 $\dim S_1=3$。这时 $U\subset R$，而 $0\ne w\in H_2\cap U\subset S_0\cap R$，故 $Tw=0$、$\operatorname{rank}T\le2$。式（54.30）的三个像都是二维，必相等。$g$ 单射给
+$$
+U=G_3=G_4.
+$$
+由 $fH_2=G_3$、$fH_3=G_4$ 再得 $H_2=H_3$，从而 $C_2=C_3$，违反三维、四维秩差。因此
+$$
+\dim S_1=\dim W=4,\qquad K=R\oplus W.
+\tag{54.31}
+$$
+
+若 $\eta$ 与 $F$ 有非零交叠，$V_0X=U\otimes F$ 与 $V_1S_1=W\otimes\eta$ 的正交性会给 $U\perp W$，进而 $U\subset R$，与 $\dim S_1=4$ 矛盾。因此
+$$
+\eta\perp F.
+\tag{54.32}
+$$
+由（54.3）和等距性，这迫使
+$$
+S_0\perp X,\qquad S_1\perp P_0,
+\quad\text{故}\quad P_0\perp S_0+S_1.
+\tag{54.33}
+$$
+
+接着证明 $\eta$ 也正交于第一轮环境支撑。对（54.1）的零位像取环境 $\eta$ 分量，置
+$$
+p_\eta=(I_K\otimes\langle\eta|)V_0k
+=\sum_{\alpha=1}^2\sqrt{\lambda_\alpha}\,
+\langle\eta,e_\alpha\rangle p_\alpha.
+$$
+$V_0k\perp V_1S_1=W\otimes\eta$ 给 $p_\eta\perp W$，式（54.31）给 $p_\eta\in R$。但 $p_\eta\in P_0$，且（54.33）使它正交于包含 $R$ 的 $S_1$。所以 $p_\eta=0$。$p_1,p_2$ 正交且两个 $\lambda_\alpha$ 严格正，故
+$$
+\eta\perp e_1,e_2.
+\tag{54.34}
+$$
+结合（54.1）和两个尾像，等距性再给
+$$
+k\perp S_0+S_1.
+\tag{54.35}
+$$
+
+最后，$k\notin P_0$。否则（54.3）使 $V_1k\in\mathbb Cv\otimes F$ 为非零纯张量；但（54.1）的 Schmidt 秩为二，矛盾。因此 $P_0+\mathbb Ck$ 三维，并由（54.33）、（54.35）正交于 $S_0+S_1$。七维性给
+$$
+\dim(S_0+S_1)\le4.
+\tag{54.36}
+$$
+两个四维终端支撑 $C_3,C_4$ 都包含于 $S_0+S_1$，故 $C_3=C_4=S_0+S_1$。固定等距 $V$ 将
+$$
+(H_2\otimes|0\rangle)\oplus(U\otimes|1\rangle)
+\quad\text{和}\quad
+(H_3\otimes|0\rangle)\oplus(G_3\otimes|1\rangle)
+$$
+分别映到相同的 $C_3\otimes\eta=C_4\otimes\eta$。单射性使两域相同，按输入位比较得 $H_2=H_3$、$U=G_3$。于是 $C_2=C_3$，再次违反秩差。证明完毕。
+
+### 54.5 外部交替尾环境的排除
+
+仍采用54.1节第一终端秩二、第二终端纯的七维六终端精确接收合同。特别地，
+$$
+U=G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),\quad
+V_0X=U\otimes F,
+\quad\dim U=\dim F=2.
+\tag{54.37}
+$$
+$u,v,w$ 正交单位，$ab\ne0$。各纯尾满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n\quad(3\le n\le6).
+\tag{54.38}
+$$
+各 $H_n,G_n,Q_n$ 二维，$C_n=H_n+G_n=G_n\oplus Q_n$ 在 $n\ge3$ 时四维。$H_n$ 到同轮 $G_n,Q_n$ 的正交投影均为同构。
+
+**引理54.5（排除外部交替尾环境）。** 不可能存在单位环境向量 $O\notin F$、$B\in F$，使
+$$
+\eta_3=\eta_5=O,\qquad\eta_4=\eta_6=B.
+\tag{54.39}
+$$
+这里同射线的整体相位已统一选取；未假设 $O$ 和 $F$ 的任何正交关系。
+
+**证明。** 令
+$$
+R=G_3+G_5,\qquad
+L=U+G_4+G_6,\qquad r=\dim R,\quad d=\dim L-2.
+$$
+全部零位像包含
+$$
+R\otimes O
+\quad\text{和}\quad
+(U\otimes F)+(G_4+G_6)\otimes B.
+$$
+前后两项交为零，因为 $O\notin F$。后一项的维数是 $4+d$：对 $U$ 取接收商，其核恰为 $U\otimes F$，像为 $\pi_U(G_4+G_6)\otimes B$。七维性给
+$$
+r+d\le3,\qquad r\ge2,\quad d\ge0.
+\tag{54.40}
+$$
+
+若 $r=3$，则 $d=0$，从而 $G_4=G_6=U$。固定 $V_0$ 及（54.39）给 $H_3=H_5$；固定 $V_1$ 在 $G_2=G_4=U$ 上给 $Q_3=Q_5=:Q$。共同外部环境上的不同输入位正交给
+$$
+R\perp Q.
+$$
+因此 $P_RH_3=G_3$、$P_RH_5=G_5$。$H_3=H_5$ 便迫使 $G_3=G_5$，使 $r=2$，矛盾。
+
+所以 $r=2$，即 $G_3=G_5$。固定 $V_0$ 及共同环境 $O$ 立刻给
+$$
+H_2=H_4.
+\tag{54.41}
+$$
+由于 $B\in F$，早期零位块 $U\otimes F$ 与第四轮一位像 $Q_4\otimes B$ 的正交性给 $Q_4\perp U$。同时同轮零、一位像给 $Q_4\perp G_4$。因此
+$$
+U+G_4\subseteq Q_4^\perp.
+\tag{54.42}
+$$
+但 $0\ne w\in H_2\cap U=H_4\cap U$，所以（54.42）使 $P_{Q_4}w=0$。这与 $P_{Q_4}|_{H_4}$ 单射矛盾。证明完毕。
+
+### 54.6 主结论与保留范围
+
+将引理54.2用于54.1节的 $A=U=G_2$、二维 $F$ 与四轮纯尾，抽象指标 $1,2,3,4$ 对应实际轮次 $3,4,5,6$。它只允许全部尾环境在 $F$ 内、共同外部射线 $OOOO$，或一条外部射线与一条内部射线严格交替 $OBOB$。引理54.4和54.5排除后两项，所以
+$$
+\eta_3,\eta_4,\eta_5,\eta_6\in F.
+$$
+若它们只张成一维，选择共同单位代表 $\eta\in F$；引理54.3却给 $\eta\perp F$，与单位范数矛盾。因此四份尾环境张成整个二维 $F$，定理54.1得证。
+
+本节没有排除这个二维环境内的全部非共线序列。第一终端的混合附加因子始终计入接收器，前两轮环境仍可彼此纠缠。第二终端秩二的分支仍由第53节约束，早期全部纯的非周期环境也未在此结算。一般六终端固定 CPTP 接收容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}\le8.
+$$
+
+## 追加锚（本行以下为增补区）

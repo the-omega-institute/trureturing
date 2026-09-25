@@ -208,6 +208,13 @@ Commit each logical change and push it to your fork immediately; run any local
 checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
 local preflight modes are **optional** early feedback and
 diagnostics. Current remote CI checks remain **required and authoritative**.
+CI stages print progress summaries every 30 seconds and once at completion:
+the active step, latest reported work count or percentage, elapsed time, new
+information count and latest activity. Quiet stages keep reporting their last
+known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
+interval. Warnings and errors appear immediately with their details; complete
+command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
+JSON and check evidence keep their complete contents.
 Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
 before any work. For delta validation, resolve the intended baseline commit and
 select the complete baseline-to-worktree scope:

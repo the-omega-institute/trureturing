@@ -7,7 +7,7 @@ internal static class PreflightFixture
 {
     internal static void Configure(ResourceFixture fixture)
     {
-        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh",
+        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py",
                      "tools/scripts/lib/resource-observation-lib.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         // Explicit external adapters: empty seed preparation, supervisor pass-through,
