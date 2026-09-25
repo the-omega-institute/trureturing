@@ -36,6 +36,34 @@ public sealed class PrOpenScriptTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchRejectsNativeReusableShaWithTrailingNewline(bool withCompanion)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
+        var run = NativeRunMetadata(201, 1, 42, explicitAssociation: true);
+        var references = run["referenced_workflows"]!.AsArray();
+        if (withCompanion)
+        {
+            var cache = references[0]!.DeepClone();
+            cache["path"] = $"owner/repo/.github/workflows/ci-engineering-cache.yml@{OldHeadSha}";
+            references.Insert(0, cache);
+        }
+        foreach (var reference in references)
+        {
+            reference!["sha"] = OldHeadSha + "\n";
+            reference["path"] = reference["path"]!.GetValue<string>() + "\n";
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("duplicate-companion")]
     [InlineData("missing-anchor")]
     [InlineData("different-candidate")]
