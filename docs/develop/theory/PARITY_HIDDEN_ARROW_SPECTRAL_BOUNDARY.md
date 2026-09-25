@@ -1753,3 +1753,396 @@ Brownian bridge 的 sine 展开、Gaussian 二次型谱公式和二分连续性�
 文献条件与本模型桥接的范围见 [Library 归因](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（本行以下为增补区）
+
+## 59. 精确共振处的 Gaussian 偏移与共同 Brownian 反射
+
+**定义 59.1（共振微观尺度）。** 保持定义 54.1 的原始模型与有限截距。
+取确定性序列，满足
+
+```math
+\eta_M\longrightarrow\infty,\qquad
+\eta_M^2\delta\longrightarrow0,\qquad
+\eta_M=2m_M,\quad m_M\in\mathbb N,
+\qquad R_M=\eta_M/\delta,\quad s_M=\log R_M.
+```
+
+式 (59.1)。
+
+这等价于精确共振 $`\omega\eta_M=\pi m_M`$，$`\omega=\pi/2`$。
+不限制 $`m_M`$ 的奇偶性。
+对固定紧区间 $`I\subset\mathbb R`$ 定义
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M^3,\qquad
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                      -2z_M(\theta)\sqrt\delta\,T_M\}.
+```
+
+式 (59.2)。
+
+由 (59.1)，最终 $`\eta_M\le Q^{1/4}`$、$`R_M\le Q^{3/4}`$，
+所以 $`z_M(\theta)\sqrt\delta`$ 一致趋零且最终为正。
+
+**定理 59.2（完整共振分离范围的实际路径律）。** 对 (59.1) 的每个序列，
+两种原始平稳实验均有
+
+```math
+(\mathcal R_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal R|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0,
+```
+
+式 (59.3)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight。
+令 $`B`$ 是 $`[0,\infty)`$ 上一条标准 Brownian motion，
+则新过程可以实现为
+
+```math
+\mathcal R(\theta)=Z_0+4\sqrt{g_0}\,B_{\rm odd}(\theta),\qquad
+B_{\rm odd}(\theta)=
+\begin{cases}B(\theta),&\theta\ge0,\\-B(-\theta),&\theta<0,
+\end{cases}
+\qquad
+Z_0\sim N\left(0,\frac{16g_0\zeta(4)}{\omega^4}\right)
+       =N(0,128g_0/45).
+```
+
+式 (59.4)。
+
+$`Z_0`$、$`B`$、$`N_2`$ 相互独立，并联合独立于整个旧 $`W_\rho`$。
+旧坐标仍为定理 56.2 的共同实现，特别是
+$`\mathcal J_\infty=b_*\gamma+I_2(H)`$。
+条件先验、无条件固定支持一致性及共同方向事件保持该定理的范围。
+两侧的 Brownian 部分来自同一条路径；对每个固定 $`A_0>0`$，
+
+```math
+\sup_{0\le\theta\le A_0}
+ |\mathcal R_M(\theta)+\mathcal R_M(-\theta)-2\mathcal R_M(0)|
+ \longrightarrow0\quad\hbox{依概率}.
+```
+
+式 (59.5)。
+
+证明。仍在同一个完整标签向量上比较。
+为分析联合路径可先把 $`I`$ 扩到包含零的固定对称紧区间。
+(58.6) 的有限谱估计及精确恒等式
+$`\mathcal Q_M=V_M+\sqrt\delta T_M`$ 使 (59.2) 的括号等于
+$`E_M(z)-2\mathfrak L Y_M^2-2z\mathcal Q_M-\mathcal J_M`$。
+定义零对角原始系数矩阵
+
+```math
+K_{\eta,\theta}(j,l)=\frac{2\eta^2}{\sqrt\delta}
+ e^{\theta/(2\eta^3)}\mathrm{Ci}
+       (\omega\eta e^{\theta/\eta^3}|j-l|),\qquad j\ne l.
+```
+
+式 (59.6)。
+
+完整计数截断上有限谱误差可取 (56.14) 的形式，因 $`z=O_I(\log Q)`$。
+它与 $`\eta^2\delta^{-1/2}Q^2\le Q^{11/4}`$ 的乘积趋零，
+因为 $`h`$ 在 $`Q^3`$ 尺度指数小。
+于是原路径一致依概率逼近 $`A^\top K_{\eta,\theta}A`$。
+取整在此有限恒等式内已受控制，未在旧弱极限中代入增长参数。
+
+先估计真实中心和耦合的成本。
+写 $`a_\theta=\omega\eta e^{\theta/\eta^3}`$、
+$`\beta_\theta=a_\theta-\pi m=\omega\eta(e^{\theta/\eta^3}-1)`$，
+则 $`|\beta_\theta|\le C_I/\eta^2`$。
+分部积分给出 $`\mathrm{Ci}(y)=\sin y/y-\cos y/y^2+O(y^{-3})`$。
+精确共振下 $`\sin(a_\theta k)=(-1)^{mk}\sin(\beta_\theta k)`$，因此
+
+```math
+|K_{\eta,\theta}(j,j+k)|\le C_I\delta^{-1/2}
+ \{\min(\eta^{-1},\eta/|k|)+|k|^{-2}\},\qquad k\ne0.
+```
+
+式 (59.7)。
+
+在完整截断的 $`O(Q^2)`$ 指标直径上，按 $`|k|=\eta^2`$ 分割调和和，得
+
+```math
+\sup_I\|K_{\eta,\theta}\|_{\rm op}
+ \le C_I\delta^{-1/2}\{\eta(1+\log Q)+1\}
+ \le C_IQ^{1/2}(1+\log Q).
+```
+
+式 (59.8)。
+
+这里矩阵作用于原始组和，尚未乘入方差权重。
+(56.11) 的精确中心向量界乘上 (59.8) 后，给出一致条件概率误差
+$`O_{\mathbb P}(Q^{-2}(1+\log Q))+o_{\mathbb P}(1)`$。
+增长核心外向量的平方范数条件期望至多 $`Q^{-60}`$，
+所以同一矩阵界也同时去除全部核心外路径项。
+旧截距、二次坐标、轮廓和偶极子的多项式范数与尾估计保持适用。
+
+在核心内，用 (56.16)–(56.17) 的同一逆分布耦合，
+把乘积标签组和替换为 $`\sqrt{v_j}g_j`$。
+$`q^{-1/8}`$ 的共同标准化误差压过上述所有多项式成本。
+再令 $`I_j=[(j-1/2)\delta,(j+1/2)\delta)`$，
+$`m_j^\circ=\int_{I_j}\rho`$，核心外置零，
+并用同一 $`g_j`$ 定义 $`G_j=\sqrt{m_j^\circ}g_j`$。
+(56.18) 的相对质量误差为 $`O_{\mathbb P}(Q^{-1}(1+\log Q))`$，
+其与 (59.8) 的乘积为
+$`O_{\mathbb P}(Q^{-1/2}(1+\log Q)^2)\to0`$。
+旧截距在核心上的原始矩阵范数只有
+$`O(Q^{1/2}(1+\log Q)^{3/2})`$，亦可作同一替换。
+对角坐标两侧各减其对应方差；额外的
+$`\delta^{-1/2}Q^{-1}(1+\log Q)`$ 仍趋零。
+所以实际整个联合对象被同一确定 Gaussian 格模型逼近。
+
+下面直接分析此模型。令
+
+```math
+w_\delta(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ,\qquad
+\bar\rho_\delta=\sum_{j\in\mathcal C_Q}(m_j^\circ/\delta)1_{I_j},
+\qquad g(z)=\int\rho(x)\rho(x+z)\,dx=g_0e^{-\kappa z^2/4}.
+```
+
+式 (59.9)。
+
+格平均的 Poincaré 界与 Gaussian 尾给出
+$`\|\bar\rho_\delta-\rho\|_2\le C\delta+Ce^{-cH_Q^2}`$。
+又 $`w_\delta(k)=\int\bar\rho_\delta(x)\bar\rho_\delta(x+k\delta)\,dx`$，
+Cauchy–Schwarz 遂得
+
+```math
+0\le w_\delta(k)\le C,\qquad
+\sup_{k\in\mathbb Z}|w_\delta(k)-g(k\delta)|
+ \le C\delta+Ce^{-cH_Q^2}.
+```
+
+式 (59.10)。
+
+这在增长的滞后尺度上仍成立。
+方差加权算子的矩阵元是
+$`K_{\eta,\theta}(j,l)\sqrt{m_j^\circ m_l^\circ}`$。
+取 Schur 权 $`\sqrt{m_j^\circ}`$，其算子范数被
+$`\sup_j\sum_l|K_{\eta,\theta}(j,l)|m_l^\circ`$ 控制。
+写 $`r=\eta^2\delta\to0`$，按
+$`1\le|k|\le\eta^2`$、$`\eta^2<|k|\le\delta^{-1}`$ 和
+$`|k|>\delta^{-1}`$ 三段分割。
+使用 $`m_j^\circ\le C\delta`$ 与 $`\sum m_j^\circ\le\gamma`$，
+(59.7) 第一项在乘 $`\delta^{-1/2}`$ 前分别至多为
+$`C\delta\eta`$、$`C\delta\eta(1+|\log r|)`$、$`C\eta\delta`$；
+倒数平方项的和至多 $`C\delta`$。
+所以加权算子 $`T_{\eta,\theta}`$ 满足
+
+```math
+\sup_{\theta\in I}\|T_{\eta,\theta}\|_{\rm op}
+ \le C_I\{\sqrt r(1+|\log r|)+\sqrt\delta\}\longrightarrow0.
+```
+
+式 (59.11)。
+
+最后一段利用 $`1/|k|\le\delta`$ 和总质量，故核心边缘的行也满足同一界。
+此处没有附加 $`r`$ 与 $`\log Q`$ 的收敛条件。
+
+记正滞后系数为
+
+```math
+b_{\eta,\theta}(k)=\eta^2e^{\theta/(2\eta^3)}\mathrm{Ci}(a_\theta k),
+\qquad
+\mathcal R_Q^G(\theta)=4\delta^{-1/2}
+ \sum_{k\ge1}b_{\eta,\theta}(k)\sum_jG_jG_{j+k}.
+```
+
+式 (59.12)。
+
+不同正滞后的无序指标对不同。Gaussian 二次矩公式因而给出
+
+```math
+\operatorname{Cov}(\mathcal R_Q^G(\theta),\mathcal R_Q^G(u))
+ =16\sum_{k\ge1}b_{\eta,\theta}(k)b_{\eta,u}(k)w_\delta(k).
+```
+
+式 (59.13)。
+
+共振展开更精确地写成
+
+```math
+b_{\eta,\theta}(k)=(-1)^{mk}\left\{
+ \frac{\eta}{\omega}e^{-\theta/(2\eta^3)}
+       \frac{\sin(\beta_\theta k)}k
+ -\frac1{\omega^2}e^{-3\theta/(2\eta^3)}
+       \frac{\cos(\beta_\theta k)}{k^2}\right\}
+ +r_{\eta,\theta}(k),\qquad
+ |r_{\eta,\theta}(k)|\le\frac{C_I}{\eta k^3}.
+```
+
+式 (59.14)。
+
+余项的 $`\ell^2`$ 范数趋零。正弦项的平方和由
+$`|\sin(\beta_\theta k)|\le\min(C_Ik/\eta^2,1)`$ 控制而一致有界，
+余弦项亦然。结合 (59.10)，所有协方差替换均可用 Cauchy–Schwarz 控制。
+余弦项在 $`\ell^2`$ 中可替换为
+$`-(-1)^{mk}/(\omega^2k^2)`$，因为
+$`|\cos(\beta k)-1|\le|\beta|k`$。
+这部分在 (59.13) 除去因子 16 后的极限为
+$`g_0\zeta(4)/\omega^4`$，且与时间参数无关。
+正弦项与该低滞后项的交叉和至多
+
+```math
+C_I\eta\sum_{k\ge1}\frac{|\sin(\beta_\theta k)|}{k^3}
+ \le C_I\eta|\beta_\theta|\sum_{k\ge1}k^{-2}
+ \le C_I/\eta\longrightarrow0.
+```
+
+式 (59.15)。
+
+对两个正弦项，先固定 $`H>0`$。在 $`k\le H\eta^2`$ 上，
+(59.10) 和 $`\eta^2\delta\to0`$ 给出
+$`\sup|w_\delta(k)-g_0|\to0`$；在其余滞后上，两系数乘积的绝对和至多
+$`C_I\eta^2\sum_{k>H\eta^2}k^{-2}\le C_I/H`$。
+先取 $`M\to\infty`$ 再取 $`H\to\infty`$，即可将权重统一换为 $`g_0`$。
+使用经典 Dirichlet Green 核恒等式
+
+```math
+\sum_{k\ge1}\frac{\sin(kx)\sin(ky)}{k^2}
+ =\frac\pi2\min(x,y)-\frac{xy}{2},\qquad 0\le x,y\le\pi.
+```
+
+式 (59.16)。
+
+其归一化可由 $`\min(x,y)-xy/\pi`$ 在 $`x=y`$ 处大小为负一的导数跳跃，
+计算 sine 系数 $`2\sin(ky)/(\pi k^2)`$ 得到；这也是第 58 章所引经典桥协方差。
+将 (59.16) 用于 $`|\beta_\theta|,|\beta_u|`$，保留 sine 的符号，
+并用 $`\eta^2\beta_\theta\to\omega\theta`$ 和 $`\pi/(2\omega)=1`$，得
+
+```math
+\lim\operatorname{Cov}(\mathcal R_Q^G(\theta),\mathcal R_Q^G(u))
+ =\frac{16g_0\zeta(4)}{\omega^4}
+  +16g_0\operatorname{sgn}(\theta u)\min(|\theta|,|u|).
+```
+
+式 (59.17)。
+
+任一参数为零时第二项取零。所有乘积中的 $`(-1)^{mk}`$ 相消，
+(59.11) 也不依赖奇偶性，故无需再取奇偶子列。
+
+为取得路径紧性，令 $`d=|\theta-u|\le1`$。
+精确积分与一次分部积分同时给出
+$`|\mathrm{Ci}(ye^l)-\mathrm{Ci}(y)|\le C\min(l,y^{-1})`$。
+这里 $`l=d/\eta^3`$、$`y\asymp\eta k`$，所以
+
+```math
+|b_{\eta,\theta}(k)-b_{\eta,u}(k)|
+ \le C_I\left\{\frac d{\eta^3}|b_{\eta,u}(k)|
+                     +\min(d/\eta,\eta/k)\right\},
+\qquad
+\sum_{k\ge1}|b_{\eta,\theta}(k)-b_{\eta,u}(k)|^2\le C_Id.
+```
+
+式 (59.18)。
+
+最后一步在 $`k=\eta^2/d`$ 处分割；即使它超过所有实际滞后，
+仍可扩展到整个正整数和，故对任意小的 $`d`$ 成立。
+第二 Gaussian 混沌的谱公式给出
+$`\mathbb EX^4=3(\mathbb EX^2)^2+48\operatorname{tr}(T_X^4)
+\le15(\mathbb EX^2)^2`$。由 (59.10)、(59.13)、(59.18)，
+
+```math
+\mathbb E|\mathcal R_Q^G(\theta)-\mathcal R_Q^G(u)|^2\le C_I|\theta-u|,
+\qquad
+\mathbb E|\mathcal R_Q^G(\theta)-\mathcal R_Q^G(u)|^4\le C_I|\theta-u|^2.
+```
+
+式 (59.19)。
+
+有限 Gaussian 路径连续，起点方差有界，因此 Kolmogorov 判据给出 $`C(I)`$ 紧性。
+这里未对无限余弦级数逐项求导后取平方和。
+
+同一 Gaussian 实现上的对角坐标是
+$`\delta^{-1/2}\sum_j(G_j^2-m_j^\circ)`$。
+其算子 $`D_Q`$ 的范数至多 $`C\sqrt\delta`$，方差趋于 $`2g_0=\nu_2`$，
+与每个零对角核的 Hilbert–Schmidt 内积恒为零。
+将它与有限多个 $`T_{\eta,\theta}`$ 作任意固定实线性组合。
+(59.11)、(59.17) 给出小算子范数、有界 Hilbert–Schmidt 范数和收敛的方差。
+若该组合的特征值为 $`\lambda_l`$，则
+
+```math
+\log\mathbb E\exp\left(it\sum_l\lambda_l(\xi_l^2-1)\right)
+ =-t^2\sum_l\lambda_l^2
+  +O_t\left(\max_l|\lambda_l|\sum_l\lambda_l^2\right).
+```
+
+式 (59.20)。
+
+误差趋零，退化组合由方差趋零处理。Cramér–Wold 先给出联合 Gaussian 极限，
+随后才由 (59.17) 的分解与对角正交性得到 $`Z_0,B,N_2`$ 的相互独立。
+极限对称点之和减两倍原点的方差为零，连续性使该等式同时对所有参数成立。
+这确定了 (59.4) 中同一条 Brownian 路径的反射关系。
+
+独立于整个旧噪声的论证仍需单独完成。
+对 $`L^2(\rho\,dx)`$ 的固定有限秩正交投影 $`P`$，
+
+```math
+\|T-(1-P)T(1-P)\|_{\rm HS}
+ \le2\sqrt{\operatorname{rank}P}\,\|T\|_{\rm op}.
+```
+
+式 (59.21)。
+
+它将每个新核及对角核接触这个有限噪声柱面的部分以趋零 $`L^2`$ 误差去掉。
+剩余二重积分独立于该柱面。配合 (59.19) 的紧性，先得路径与有限柱面的联合收敛，
+再以柱面条件期望的 $`L^1`$ 逼近处理任意有界 $`\sigma(W_\rho)`$ 可测变量。
+所以新过程与 $`N_2`$ 联合相对于整个旧噪声 mixing。
+这表示联合有界测试的因子分解；不是给定全部旧噪声后的条件律收敛。
+
+旧 Gaussian 前缀路径在同一噪声上按连续方差时钟一致收敛；端点与偶极子在 $`L^2`$ 中收敛。
+截距的核 $`H`$ 也在同一实现中保留。
+其异格矩形近似 $`H_Q^\circ`$ 满足
+$`\|H_Q^\circ-H\|_{L^2(\rho\otimes\rho)}^2
+\le C\delta(1+|\log\delta|^2)+o(1)`$：
+同格和邻格用 $`\int_0^{3\delta}(1+|\log x|^2)dx`$，
+远格用对数导数和 $`\sum_{k\ge2}\delta/k^2`$，其余用 Gaussian 尾。
+又 $`\sum G_j^2\to\gamma`$ 于 $`L^2`$，故旧截距趋于
+$`b_*\gamma+I_2(H)`$，没有另抽一个与旧场无关的截距。
+旧束的依概率收敛与前述 mixing 一起给出 (59.3) 的全部联合关系。
+
+最后在良好数据环境上合并实际有限谱、精确中心、核心截断和共同耦合误差。
+对环境任一子列取使这些条件误差界几乎处处成立的进一步子列，
+确定 Gaussian 格结论便给出条件有界 Lipschitz 距离于数据概率中趋零。
+仅一次对完整标签向量的后验总变差比较，将事件与有界测试转移到全部实际坐标。
+未转移辅助 Gaussian 模型的无界矩。
+一致逼近连续路径给出实际取整路径的 C-tight $`J_1`$ 收敛。
+支持置换使每个固定支持的无条件律等于先验混合律；
+逆方向的配对或整路径反转，以及同一个方向判定一致事件，保留全部坐标的共同实现。
+方向事件补集只以其概率进入有界测试，故无需控制该事件上的放大统计量。
+(59.5) 随后由连续极限映射得到。
+
+本条的经典 sine 桥、二次谱展开与混沌判据归因见
+[文献说明](../../../Library/Dynamics/iyer2025empirical.md)。
+新增连接是实际共振数组的放大控制、增长滞后卷积和无额外余量的 (59.11)，
+它们共同使局部反射律在原后验实验上成立。
+
+**定理 59.3（反射、截距精度与范围）。** 定理 59.2 的极限不能换成
+在正负半线上独立的 Brownian motion 加同一偏移。
+将有限截距换成 $`\widetilde{\mathcal J}_M`$ 时，原路径与替换路径之差在
+每个非空固定紧区间上一致依概率趋零，当且仅当
+
+```math
+\frac{\eta_M^2}{\sqrt\delta}
+ (\widetilde{\mathcal J}_M-\mathcal J_M)\longrightarrow0
+ \quad\hbox{依概率}.
+```
+
+式 (59.22)。
+
+证明。若两半线独立，则在固定 $`\theta>0`$ 处的反射和方差是
+$`32g_0\theta>0`$，与 (59.5) 矛盾。
+截距替换产生的路径差恰为 (59.22) 左边乘
+$`-e^{\theta/(2\eta_M^3)}`$；该乘子的绝对值在固定紧区间上一致趋一，证明充要性。
+相同弱极限不提供 (59.22) 的速率。
+若只把截距中的 $`b_*\mathcal Q_M`$ 换为 $`b_*V_M`$，
+则截距差值为 $`-b_*\sqrt\delta T_M`$，替换路径减原路径包含
+$`b_*\eta_M^2e^{\theta/(2\eta_M^3)}T_M`$，也不能由旧弱收敛略去。
+
+本章仅处理精确共振与 $`\eta_M^2\delta\to0`$。
+没有声称覆盖失谐、临界或超临界的 $`\eta_M^2\delta`$、
+增长参数区间、数据自适应频率、其它 Liouville 幅度或实际后验矩收敛。
+
+## 追加锚（本行以下为增补区）
