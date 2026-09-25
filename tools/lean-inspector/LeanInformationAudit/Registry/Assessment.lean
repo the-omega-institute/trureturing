@@ -1,4 +1,4 @@
-import LeanInformationAudit.Registry.Enrollment
+import LeanInformationAudit.Registry.SourceContract
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
@@ -455,7 +455,7 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) (input : EscapeRecordInput) : MetaM TemplateBindingCertificate :=
   RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
@@ -469,6 +469,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
       descriptor.getAppArgs.size == plan.slots.size do
     throwError "unclassified_form:dtr.descriptor_telescope"
+  if plan.sourceBound then
+    return ← SourceContract.validate event descriptor plan input
+  if input.sourceSelection.isSome then throwError "unclassified_form:source.plan_kind"
   let initialBudget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
   let (descriptor, eraseWork) ← eraseProofs descriptor initialBudget
   let arguments := descriptor.getAppArgs
@@ -567,7 +570,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        let certificate ← validate event descriptor claim.owner escape
+        let certificate ← validate event descriptor claim.owner escape claim.escapeInput
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
         let message ← error.toMessageData.toString
@@ -575,7 +578,9 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         let provenance ← diagnosticProvenance event claim reason
         return .declaredUnresolved (diagnosticMessage event.key reason provenance))
-    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape }
+    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape := match result with
+      | .declaredValidated certificate => certificate.escape
+      | _ => escape }
 
 private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
   Option (Name × Nat × Nat × Bool)
@@ -641,6 +646,7 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
 
 private def retainAssessment (record : BindingRecord) (claim : TemplateBindingClaim)
     (certificate : TemplateBindingCertificate) : MetaM Unit := do
+  if certificate.sourceBinding.isSome then return
   let some descriptor := claim.descriptor | return
   let .const name _ := descriptor.getAppFn | return
   let env ← getEnv

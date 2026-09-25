@@ -697,3 +697,43 @@ private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
     (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
 
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command
+
+@[command_elab registerInformationSourceTheoremCmd]
+private def elabSourceRegistration : CommandElab := fun stx => registrationTransaction do
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
+  let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let recordName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[10]
+  let selection ← liftTermElabM do
+    let value ← Term.elabTermEnsuringType stx[15] (mkConst ``SourceSelection)
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    if value.hasMVar then throwError "unclassified_form:source.selection_open"
+    -- Syntax transport is evaluated, never a mathematical proposition or readout.
+    unsafe evalExpr SourceSelection (mkConst ``SourceSelection) value
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[7]⟩
+  let residual ← if stx[20].getKind == ``escapeOpenContinuation then
+      pure ({ openContinuation := true } : EscapeRecordInput)
+    else do
+      let value ← liftTermElabM <| Term.elabTerm stx[20][0] none
+      pure ({ continuation := some value } : EscapeRecordInput)
+  let info ← getConstInfo recordName
+  let source ← getConstInfo theoremName
+  let descriptor := descriptor.map (fun e => e.instantiateLevelParams info.levelParams
+    (source.levelParams.map Level.param))
+  let root := (← getEnv).header.mainModule
+  let unit := catalogQualifiedName root arenaName .anonymous theoremName theoremUnitSuffix
+  liftCoreM <| addAndCompile <| .defnDecl {
+    name := unit, levelParams := info.levelParams, type := info.type,
+    value := mkConst recordName (info.levelParams.map Level.param), hints := .abbrev, safety := .safe }
+  TemplateBinding.withDeclaration {
+    theoremName, arena := arenaName, descriptor, diagnostic,
+    escapeInput := { residual with sourceSelection := some selection } } do
+    registerValidatedEntry {
+      theoremName, unitName := unit, arenaName, realizationName := recordName,
+      sourceBound := true, objectArenaName := arenaName, resolvedArenaName := arenaName,
+      registrationModuleName := root, localRegistrationNames := false }
+
+end LeanInformationAudit
