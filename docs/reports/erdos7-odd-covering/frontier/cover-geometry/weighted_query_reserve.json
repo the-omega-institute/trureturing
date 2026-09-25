@@ -1,0 +1,222 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "K3": {
+    "decimal": 2.103111764658523,
+    "exact": "12019840537595758779003/5715264751774801992890"
+  },
+  "alpha": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "check_count": 45,
+  "checks": [
+    "source SHA256 height_three_clipping_envelope.json",
+    "source SHA256 four_level_query_hinge_lift.json",
+    "same actual source B",
+    "same all-layout third hinge",
+    "same actual source density constant",
+    "same continuation target",
+    "critical auxiliary event probabilities",
+    "unused reciprocal strictness is insufficient by itself",
+    "positive complete query-box tail 1",
+    "strict finite completion bound 1",
+    "positive complete query-box tail 2",
+    "strict finite completion bound 2",
+    "positive complete query-box tail 3",
+    "strict finite completion bound 3",
+    "positive complete query-box tail 6",
+    "strict finite completion bound 6",
+    "positive complete query-box tail 12",
+    "strict finite completion bound 12",
+    "complete weighted-law deep query tail 2",
+    "complete general original load tail 2",
+    "complete weighted-law deep query tail 3",
+    "complete general original load tail 3",
+    "complete weighted-law deep query tail 6",
+    "complete general original load tail 6",
+    "complete weighted-law deep query tail 12",
+    "complete general original load tail 12",
+    "same deep coefficients for the two actual roots",
+    "root and deep budget base",
+    "actual density uses disjoint roots",
+    "complete 23/29 density and mass conversion",
+    "five-ninths reserve gives exact weight cap",
+    "U9 exact query value",
+    "U9 passes full continuation gate",
+    "original two-height weights",
+    "two-height counts imply five-ninths reserve",
+    "same-source two-height mean weight",
+    "U10 exact query value",
+    "U10 passes full continuation gate",
+    "actual mean-loss threshold exact",
+    "bare all-height union mean misses threshold",
+    "581 raw-capacity barrier remains above target",
+    "positive same-law Haar continuation 18675891604964416972141967/1645996248511142973952320",
+    "same density continuation identity 18675891604964416972141967/1645996248511142973952320",
+    "positive same-law Haar continuation 849159137346241243429752067/74069831183001433827854400",
+    "same density continuation identity 849159137346241243429752067/74069831183001433827854400"
+  ],
+  "event_budget": {
+    "complete_box_examples": [
+      {
+        "delta": {
+          "decimal": 0.1532916978754545,
+          "exact": "1174551775/7662200832"
+        },
+        "height": 1,
+        "six_tail_upper": {
+          "decimal": 0.6669575688400489,
+          "exact": "220331177434625718172603087872/330352615711099311006443863955"
+        }
+      },
+      {
+        "delta": {
+          "decimal": 0.024227033602483676,
+          "exact": "4156455921301/171562725734400"
+        },
+        "height": 2,
+        "six_tail_upper": {
+          "decimal": 0.6954212568337765,
+          "exact": "18746878232025129230715933731589120/26957585848581721959176320748061799"
+        }
+      },
+      {
+        "delta": {
+          "decimal": 0.004168098453756838,
+          "exact": "15106798125494003/3624386106301728768"
+        },
+        "height": 3,
+        "six_tail_upper": {
+          "decimal": 0.7000646088149971,
+          "exact": "288701924773186990153025379466472448/412393257904972805841939579968827135"
+        }
+      },
+      {
+        "delta": {
+          "decimal": 2.7452395531655257e-05,
+          "exact": "81289573246170038323336203907551063403/2961110375684166685714087156368653088000000"
+        },
+        "height": 6,
+        "six_tail_upper": {
+          "decimal": 0.7010308398942088,
+          "exact": "47173686238311910482474038568452262999731661592665993600000/67291884399024161241821407302226133194218929950429104051883"
+        }
+      },
+      {
+        "delta": {
+          "decimal": 1.6168361791351435e-09,
+          "exact": "85459478747035936667357709945633263094878319815758120011093307544745691/52855991132477495467199433223596224428305438061551262095250895515600500000000000"
+        },
+        "height": 12,
+        "six_tail_upper": {
+          "decimal": 0.7010372545083535,
+          "exact": "842053022397851473176524127877534075569826867929150248151603191785082260592963434927350000000000/1201153030003225929857497244036291497743080198596715408528788030298751919690575197921894140724251"
+        }
+      }
+    ],
+    "p": {
+      "decimal": 0.7010372548861743,
+      "exact": "4006613512531919593001/5715264751774801992890"
+    },
+    "pcrit": {
+      "decimal": 0.5677319297996932,
+      "exact": "41990008813586335863981/73960978077102722725055"
+    },
+    "prime_root_inventory_delta": {
+      "decimal": 0.326899514207729,
+      "exact": "87666940541/268177029120"
+    },
+    "prime_root_inventory_six_tail_upper": {
+      "decimal": 0.6321536781249493,
+      "exact": "1542318242042380027208221615104/2439783703572046233359436662021"
+    },
+    "required_delta": {
+      "decimal": 0.7044098706946801,
+      "exact": "11269807372958716454006018088624770091248993/15998934486600217184592873157947757251273006"
+    }
+  },
+  "schema": "weighted-query-reserve-v1",
+  "scope": "Ordinary conditional query theorem, exact source constants and consumers; no Lean or unrestricted Erdos7 claim.",
+  "sources": [
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    },
+    {
+      "path": "four_level_query_hinge_lift.json",
+      "sha256": "b224c79716585f16b52aeda277810a1a001a4f2d92d3e092cfc1cc41345dbcfd"
+    }
+  ],
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  },
+  "weighted_query_consumers": {
+    "581_raw_uniform_cap_barrier": {
+      "decimal": 11.573992840877331,
+      "exact": "14792195615420544545011/1278054671260645723920"
+    },
+    "U10": {
+      "Haar_survivor_lower": {
+        "decimal": 3.4999241734809106e-05,
+        "exact": "314726719612990618507739117/8992386806482544389289164800000"
+      },
+      "query_margin": {
+        "decimal": 0.08671538972388225,
+        "exact": "314726719612990618507739117/3629421727967070257564865600"
+      },
+      "query_upper": {
+        "decimal": 11.464305018439383,
+        "exact": "849159137346241243429752067/74069831183001433827854400"
+      }
+    },
+    "U10_additional_conditions": "Only nonzero residual A original layers are4 and5, and each actual layer count is at most6. Query heights are unrestricted.",
+    "U9": {
+      "Haar_survivor_lower": {
+        "decimal": 8.264585105441824e-05,
+        "exact": "16515188014050491622056737/199830817921834319761981440000"
+      },
+      "query_margin": {
+        "decimal": 0.20476635572701762,
+        "exact": "16515188014050491622056737/80653816177046005723663680"
+      },
+      "query_upper": {
+        "decimal": 11.346254052436247,
+        "exact": "18675891604964416972141967/1645996248511142973952320"
+      }
+    },
+    "U9_additional_conditions": "cA>=5/9 and cA=1 outside one actual E with nu(E)<=K3/3.",
+    "all_height_actual_mean_threshold": {
+      "decimal": 0.20697764557312648,
+      "exact": "22258049305083630332220427/107538421569394674298218240"
+    },
+    "bare_all_height_mean_upper": {
+      "decimal": 0.2084611479099254,
+      "exact": "432040125182653876501/2072521088530776849600"
+    },
+    "base_query_budget": {
+      "decimal": 10.255751655946643,
+      "exact": "472339146348530093021/46056024189572818880"
+    },
+    "compatibility_boundary": "The weighted estimate keeps f nu query incidence omitted by the raw uniform M,lambda numerator; it does not refute581 or all older actual certificates.",
+    "general_U7": "0<=f<=h => R_Q(f nu)<=h K_t+t integral(f dnu), when the same-source ALL-layout K_t contract holds.",
+    "general_U8": "aA=cA/2,aB=1-cA/2,f=(1-cA)/2; R_P<=B+7/8(1+B)+hK_t+(t+1)Ef, f<=h.",
+    "h_at_cA_five_ninths": {
+      "decimal": 0.2222222222222222,
+      "exact": "2/9"
+    },
+    "missing_mean_credit": {
+      "decimal": 0.0014835023367989286,
+      "exact": "2393002495407979559445911/1613076323540920114473273600"
+    },
+    "required_contract": "ONE actual selected PA nu; all finite alternative one-phase query layouts obey the common third-hinge bound.",
+    "required_geometry": "Exactly pure3 originals 1 mod3 and3 mod9; fixed actual residues and distinct numerical moduli; selected <=2 Q phases per cofactor covers every original through exponent3; actual cB=1 and cA>=1/2.",
+    "source_density_upper": {
+      "decimal": 197.08470097545313,
+      "exact": "1492917394000032000/7575003978548161"
+    }
+  }
+}
