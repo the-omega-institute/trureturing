@@ -37,7 +37,17 @@ Blocks(
                             + "Q-cubed block factorization it constrains the square factor. "
                             + "These are ordinary proofs using classical reciprocity, "
                             + "not conclusions of this Lean declaration. No WSS example, "
-                            + "elimination of that pattern or kernel certification is claimed."))),
+                            + "elimination of that pattern or kernel certification is claimed.")),
+                    Paragraph(
+                        Text("The continuation GCR.7-GCR.12 retains both conjugate prime "
+                            + "directions, the inert-prime-two balance and the resulting "
+                            + "normal Kummer extension. It derives rational cubic conditions "
+                            + "on the square factor, proves their comparison-prime compatibility "
+                            + "and gives an exact irreducible cubic Thue descent with its "
+                            + "original Lucas-coordinate condition. Source roles remain in "),
+                        Ref(LibraryNoteRef.Create("D5/L/dunn2024cubicreciprocity").Value),
+                        Text(". These are ordinary mathematical statements; the Lean "
+                            + "declaration, authored formula and provenance above are unchanged."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(

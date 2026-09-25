@@ -627,7 +627,6 @@ Their theorem is contextual prior work, not an input to FPD1-FPD4.
 
 The full classification and WSS
 existence remain open targets of this line, not conclusions of FPD4.
-
 ### CF. Carlitz degree-five exactness within the same Wieferich family
 
 The integer WSS target and the following function-field subproblem share
@@ -1057,7 +1056,6 @@ $$\boxed{\{P_p(T-a):a\in\mathbb F_{p^s}\}.}$$
 **Proof.** For p=263, a root d of m_p gives
 
 $$\theta_0=42d^4-16d^3+13d^2+115d+123.$$
-
 For p=r use
 
 $$\theta_0=228292315964840347d^4+128383604335500605d^3
@@ -1623,3 +1621,292 @@ paper, no GRH estimate from Dunn-Radziwill, and no new density hypothesis
 is used as an unstated premise of GCR. The remaining arithmetic target is
 a contradiction or realization of an actual depth pattern under the full
 rank and character conditions, rather than a redefinition of the lift.
+
+
+#### GCR.7 Both conjugate directions and a rational cubic condition
+
+Retain the actual objects, primary normalization and cubic symbols of
+GCR.0-GCR.6. For an earlier prime p in S_j, write pi_p for its selected
+primary generator, bar(pi_p) for its conjugate, and kappa_p=(lambda/pi_p)_3.
+Both generators are primary, their product is the rational prime p, and
+p=1 modulo nine. They are distinct prime elements.
+
+**Theorem GCC1.** For every earlier p and every later layer j,
+
+$$\boxed{\prod_{q\mid B_j}
+(\overline{\pi_p}/\varpi_{j,q})_3^{h_q}=\kappa_p^{-1},\qquad
+\prod_{q\mid B_j}(p/\varpi_{j,q})_3^{h_q}=1.}\tag{GCC1}$$
+
+If exactly one current prime P has depth not divisible by three, then
+
+$$\boxed{p^{(P-1)/3}\equiv1\pmod P\quad\text{for every }p\in S_j.}\tag{GCC2}$$
+
+This applies in particular to B_j=P^2 Q^3. It imposes cubic residuosity
+on the square factor P, in addition to the older quadratic residuosity
+conditions on Q.
+
+**Proof.** The defining residue-field exponent gives
+(bar(a)/bar(b))_3=overline((a/b)_3). Since bar(lambda)=-lambda and -1
+is a cube, (lambda/bar(pi_p))_3=kappa_p^(-1). Also
+(omega/bar(pi_p))_3=1, since p=1 modulo nine. The integer x_j is divisible
+by p, and hence by BOTH pi_p and bar(pi_p). Consequently eta_j=omega*lambda
+modulo bar(pi_p). Cubic reciprocity followed by the exact factorization
+GCRc gives the first identity. Multiply it by GCR7, and use
+pi_p*bar(pi_p)=p, to obtain the second. If only P has depth nonzero
+modulo three, all other terms vanish in this group of order three.
+Raising to h_P is then an automorphism, so (p/varpi_(j,P))_3=1. Its residue
+field is F_P, giving GCC2. No claim of individual cubic residuosity is
+made when two or more current depths are nonzero modulo three.
+
+These arguments use classical cubic reciprocity, including its inert
+prime case, as recorded in Dunn-Radziwill, equations (1.4)-(1.5). The
+conjugation rule also follows directly from the defining residue-field
+exponent. Grechuk-Ratcliffe, arXiv:2603.29831v1, Section 2, uses primary
+elements equal to two modulo three instead. Negating its primary
+generators converts to the present normalization, without changing any
+symbol, since minus one is a cube. Its particular no-integer-solution
+theorem is not a premise here.
+
+#### GCR.8 The inert prime two and simultaneous multiplicative clocks
+
+**Theorem GCC2.** Every layer satisfies a second nonzero balance
+
+$$\boxed{(2/\eta_j)_3=
+\prod_{q\mid B_j}(2/\varpi_{j,q})_3^{h_q}=\omega.}\tag{GCC3}$$
+
+Under B_j=P^2 Q^3, in the direction selected by eta_j,
+
+$$\boxed{(2/\varpi_{j,P})_3=(3/\varpi_{j,P})_3=\omega^2.}\tag{GCC4}$$
+
+Thus two and three are both noncubes modulo P; twelve and eighteen are
+cubes modulo P. More precisely,
+
+$$\boxed{v_3(\operatorname{ord}_P(2))=
+ v_3(\operatorname{ord}_P(3))=v_3(P-1)=j+1.}\tag{GCC5}$$
+
+**Proof.** The primary element -2 generates the inert prime ideal above
+two, whose residue field has four elements. Since x_j is even,
+eta_j=omega modulo two. Cubic reciprocity applies to -2 and eta_j;
+the defining exponent at this prime is (4-1)/3=1. Therefore
+(2/eta_j)_3=(-2/eta_j)_3=(eta_j/-2)_3=omega. Factor eta_j to prove GCC3.
+In the P^2 Q^3 case the Q contribution is a cube, and squaring is its own
+inverse on mu_3. This gives the first equality in GCC4; GCR10 supplies
+the second. Multiplicativity makes 12=2^2*3 and 18=2*3^2 cubes.
+
+For the exact ternary valuation, put r_j=3^(j+1), and temporarily extend
+the sequence by B_0=4. The original recurrence implies
+
+$$B_{j+1}-1=(B_j-1)((B_j-1)^2-3).$$
+
+Starting at B_0-1=3, division by successive powers of three gives
+v_3(B_j-1)=j+1 and (B_j-1)/r_j=(-1)^j modulo three. Every current prime
+is one modulo 2r_j. Expanding P^2 Q^3 modulo 3r_j therefore gives
+
+$$2(P-1)/r_j\equiv(-1)^j\pmod3.$$
+
+In particular v_3(P-1)=j+1. A noncube in the cyclic group F_P^times
+retains the full three-part of its order, proving GCC5 for both bases.
+This ternary valuation calculation recovers a prior TBN/DCE condition;
+the new use is its combination with the inert-prime-two balance.
+
+The separate general-layer balances at two and three need not have the
+same witnessing prime. GCC4 uses the actual P^2 Q^3 hypothesis.
+
+#### GCR.9 Conjugate-complete Kummer realization
+
+Let t=|S_j| and define
+
+$$\widehat{\mathcal M}_j
+=E(\sqrt[3]{\pi_p},\sqrt[3]{\overline{\pi_p}}:p\in S_j),$$
+
+$$\mathcal L_j=\widehat{\mathcal M}_j(\sqrt[3]2,\sqrt[3]3).$$
+
+**Theorem GCC3.** These fields exist without a WSS assumption and satisfy
+
+$$\boxed{[\widehat{\mathcal M}_j:E]=3^{2t},\qquad
+[\mathcal L_j:E]=3^{2t+2}.}\tag{GCC6}$$
+
+The first field is the normal closure over Q of the earlier one-direction
+field M_j. Both displayed fields are Galois over Q. Choose conjugate pairs
+of cube roots, and the real cube roots of two and three. In additive
+coordinates for Gal(L_j/E), complex conjugation acts by
+
+$$\boxed{c(u,v,(a_p,b_p)_p)c^{-1}
+=(-u,-v,(-b_p,-a_p)_p).}\tag{GCC7}$$
+
+Here u,v act on the cube roots of two and three; a_p,b_p act on the two
+selected conjugate cube roots. If kappa_p=omega^(k_p), the product of
+arithmetic Frobenius elements at all current oriented primes, weighted
+by their original depths, is exactly
+
+$$\boxed{\prod_{q\mid B_j}\operatorname{Frob}_{(\varpi_{j,q})}^{h_q}
+=(1,1,(k_p,-k_p)_p).}\tag{GCC8}$$
+
+In particular B_j=P^2 Q^3 forces the Frobenius at the oriented P-prime to be
+
+$$g_j=(2,2,(2k_p,-2k_p)_p).\tag{GCC9}$$
+
+**Proof.** Each pi_p and bar(pi_p) has valuation one at its own prime
+ideal and zero at all the others in this list. Valuation at the prime
+above two detects the exponent of two. Valuation at lambda detects twice
+the exponent of three. Since two is invertible modulo three, these
+2t+2 classes are independent in E^times/E^(times 3). Kummer theory gives
+the degrees and the indicated elementary abelian Galois groups.
+The degree theorem and the character pairing are Milne, *Fields and Galois
+Theory*, v5.10, Theorem 5.30 and Remark 5.32.
+
+Conjugation exchanges the paired radicands, fixes the real radicands and
+inverts omega. Applying it to the chosen roots gives GCC7. It follows
+that the fields are normal over Q, and adjoining all conjugates of the
+old field gives exactly the first field above. Current prime ideals lie
+outside two, three and the earlier supports, so they are unramified.
+Their actions on the roots are the cubic residue symbols. The balances
+at two and three, GCR7 and the conjugate balance GCC1 give GCC8 in its
+respective coordinates. Raising to three
+kills the Q term and raising to two is invertible, giving GCC9.
+
+For rational radicand p=pi_p*bar(pi_p), the corresponding coordinate is
+a_p+b_p. In GCC9 it is zero. Thus GCC2 is literally complete splitting
+at P in every polynomial T^3-p, not a statistical interpretation of it.
+The original auxiliary field had only one of each pair of coordinates;
+its degree 3^t must not be substituted for this conjugate-complete degree.
+
+#### GCR.10 Compatibility of all these P-side character conditions
+
+**Theorem GCC4.** Fix j>=1 and its actual earlier support. Put
+m_j=80*3^(j+2). For any fixed unit residue a modulo m_j with a=1 modulo
+three, the unrestricted rational primes P in that residue class for
+which ONE prime of E above P has Frobenius g_j in L_j/E have Dirichlet
+density
+
+$$\boxed{\frac{2}{\varphi(m_j)3^{2t+2}}>0.}\tag{GCC10}$$
+
+This theorem does not impose P|B_j, h_P=2, or a second prime Q. In
+particular it is a compatibility theorem for necessary P-side character
+conditions, not a realization of the integer factorization.
+
+**Proof.** Write C=Q(zeta_(m_j)); it contains E. We first prove
+L_j intersect C=E. Any such intersection is an elementary abelian
+three-extension over E. The three-Sylow subgroup of Gal(C/E) is cyclic,
+so a nontrivial intersection would contain the unique degree-three
+subextension E(zeta_9)=E(sqrt[3](omega)). By the Kummer correspondence this
+would put the class of omega in the span of the radicands defining L_j.
+Taking valuations at all earlier pi_p, bar(pi_p), at two and at lambda
+forces every exponent in that putative relation to vanish modulo three.
+It would follow that omega itself is a cube in E. That is impossible:
+a cube root of omega would have order nine, whereas E has only six
+roots of unity. The intersection is therefore E.
+
+The residue a specifies an automorphism sigma_a of C fixing E. It
+combines with g_j to give an element of Gal(L_j C/Q). Elements fixing E
+commute with g_j. Complex conjugation takes g_j to
+(1,1,(2k_p,-2k_p)_p), a different element. Since C/Q is abelian, it leaves
+sigma_a unchanged under conjugacy. The resulting conjugacy class has
+exactly two elements. The group order is phi(m_j)*3^(2t+2), by the
+intersection just proved. The Chebotarev density theorem gives GCC10.
+For a primary locator see Sutherland, MIT 18.785 Lecture 28 (2021),
+Theorem 28.9. No effective least-prime estimate or GRH premise is used.
+
+There are unit classes a which also satisfy (5/a)=1 and
+
+$$a\equiv1+2(-1)^j r_j\pmod{6r_j}.$$
+
+Indeed the last condition fixes a unit class modulo 2*3^(j+2);
+choose an odd compatible class modulo sixteen and one of the nonzero
+square classes modulo five, and apply CRT. Thus even the older exact
+ternary-valuation residue restriction on P is compatible with GCC9.
+However the exact Fibonacci-period requirement remains much stronger:
+for this fixed j its possible primes are precisely the finite support
+of B_j, as proved in GCR.6. Positive density among unrestricted primes
+cannot supply a prime in that finite support.
+
+#### GCR.11 Exact cubic Thue descent of the minimal all-WSS pattern
+
+**Theorem GCC5.** Suppose B_j=P^2 Q^3 with distinct primes P,Q. Write
+pi=varpi_(j,P)=a+b*omega and gamma=varpi_(j,Q)=u+v*omega. Define
+
+$$A=a^2-b^2,\qquad D=2ab-b^2,$$
+
+$$U=u^3-3uv^2+v^3,\qquad V=3uv(u-v).$$
+
+Then the actual factorization eta_j=pi^2*gamma^3 gives the integer system
+
+$$\boxed{f_\pi(u,v):=A u^3-3D u^2v+3(D-A)uv^2+A v^3=-2,}\tag{GCC11}$$
+
+$$\boxed{g_\pi(u,v):=D U+(A-D)V=L_{3^j}-1,\qquad
+u^2-uv+v^2=Q.}\tag{GCC12}$$
+
+The two generators satisfy their primary congruences. The cubic binary
+form is irreducible over Q and has discriminant
+
+$$\boxed{\operatorname{disc}(f_\pi)=81P^4.}\tag{GCC13}$$
+
+Its splitting field is a totally real cyclic cubic field. For each fixed
+pi, equation GCC11 has only finitely many integer solutions.
+
+**Proof.** Eisenstein multiplication gives pi^2=A+D*omega and
+gamma^3=U+V*omega. Their product has coefficients A U-D V and
+D U+(A-D)V. Since eta_j=-2+(L_(3^j)-1)*omega, these are exactly GCC11-GCC12.
+For all integers a,b,u,v, independently of this factorization, the
+coefficient norm identity is
+
+$$\boxed{f_\pi^2-f_\pi g_\pi+g_\pi^2
+=(a^2-ab+b^2)^2(u^2-uv+v^2)^3.}\tag{GCC14}$$
+
+Substituting the four coefficients (A,-3D,3(D-A),A) into the usual
+binary-cubic discriminant yields
+
+$$81(A^2-AD+D^2)^2=81(a^2-ab+b^2)^4.$$
+
+This proves GCC13. In the Hessian normalization
+(b_1^2-3a_1c_1)u^2+(b_1c_1-9a_1d_1)uv+(c_1^2-3b_1d_1)v^2,
+the same four coefficients give 9P^2(u^2-uv+v^2).
+
+For irreducibility, A is nonzero: a=b would make P=a^2, and a=-b
+would make P=3a^2, both impossible here. If f_pi had a rational
+projective zero (u:v), put z=u+v*omega. It is nonzero, and pi^2 z^3
+a nonzero rational multiple of omega. Dividing this relation by its
+conjugate gives
+
+$$(z/\bar z)^3=\omega^2(\bar\pi/\pi)^2.$$
+
+Valuation at the prime ideal (pi) is divisible by three on the left
+and equal to minus two on the right, a contradiction. A reducible cubic
+over Q has a rational projective zero, proving irreducibility. Its
+positive square discriminant makes its Galois group A_3; hence its
+splitting field is a totally real cyclic cubic field. Classical Thue
+finiteness now applies to the fixed irreducible form and nonzero right
+side. The last step is a cited classical theorem, not a new finiteness
+proof for arbitrary Thue equations.
+
+Conversely, fix a primary pi of prime norm P and an integer pair (u,v)
+whose norm Q is a distinct prime. If GCC11 holds and g_pi(u,v)+1 is
+EXACTLY L_(3^j), then GCC14 proves B_j=P^2 Q^3. Thus the displayed
+integer system, with its prime-norm and exact-Lucas conditions, is an
+exact descent. Omitting the latter condition solves a different problem.
+
+The general cubic Thue framework, its classical finite-solution theory,
+and certified reconstruction through Mordell equations are documented in
+von Kaenel-Matschke, arXiv:1605.06079, Sections 5.1-5.3. Their Algorithms
+5.2 and 5.4 apply to fixed input data; the latter additionally needs a
+Mordell-Weil basis. No such solver, complete Thue solution list, or uniform
+bound over the varying primes P is claimed here. The explicit form and
+its discriminant above are derived from the retained golden factors.
+
+#### GCR.12 What has been narrowed and what remains to prove
+
+The full conjugate calculation adds conditions on original depth vectors
+that the previous one-direction calculation did not state. Under a
+single depth not divisible by three, all earlier rational primes must
+be cubes at that factor. Under the minimal P^2 Q^3 pattern, this combines
+with two simultaneous noncube clocks and an exact irreducible cubic Thue
+system. These conclusions retain the actual h_p and exact rank.
+
+GCC4 also proves that the expanded P-side character conditions alone
+are mutually compatible among unrestricted primes. Thus simply adding
+those character equations cannot be presented as a contradiction.
+A genuine pattern exclusion still needs the actual integer equation,
+its exact-Lucas condition, or an independent uniform arithmetic bound.
+Fixed-P Thue finiteness does not imply finiteness as P varies. No WSS
+prime, new decided WSS prime family, complete exclusion of P^2 Q^3,
+global-priority result or Lean kernel certification is asserted.

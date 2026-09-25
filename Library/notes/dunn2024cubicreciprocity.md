@@ -100,3 +100,65 @@ does not eliminate the full P^2 Q^3 branch, exhibit a WSS prime, decide a
 new WSS prime family, establish global priority, or carry Lean kernel
 certification. The existing Scribe reference marks this as ordinary
 research context and leaves its authored Lean statement unchanged.
+
+## Conjugate completion and the inert-prime-two input
+
+The continuation GCR.7-GCR.12 keeps both primary primes above every
+previous rational prime. The defining cubic residue exponent implies
+(bar(a)/bar(b))_3=overline((a/b)_3); bar(lambda)=-lambda and the fact that
+minus one is a cube fix the inverse phase. Multiplying both directions
+produces the rational-prime cubic balance in GCC1.
+
+For the primary inert prime -2, the residue field is F4 and the defining
+cubic exponent is one. The original eta_j reduces to omega modulo two.
+Cubic reciprocity therefore gives (2/eta_j)_3=omega, without assuming a
+split denominator. Grechuk-Ratcliffe uses primary generators equal to
+two modulo three, whereas Dunn-Radziwill and this dossier use one.
+Negating generators converts the normalizations; it does not change the
+symbols. The source definition, rather than a choice of the other prime
+above a split rational prime, determines every phase.
+
+The Kummer field with both directions has degree 3^(2t) over E. Adding
+cube roots of two and three raises this to 3^(2t+2). Valuations at the
+individual selected primes, at two and at lambda prove independence.
+Milne's Theorem 5.30 supplies the general correspondence; GCC3 proves
+its specific input and the complex-conjugation action explicitly.
+
+## Chebotarev source and exact comparison-prime scope
+
+Andrew V. Sutherland, MIT 18.785 Number Theory I, Fall 2021,
+Lecture 28, Theorem 28.9, printed page 6:
+https://math.mit.edu/classes/18.785/2021fa/LectureNotes28.pdf .
+
+The theorem assigns density |C|/|G| to an unramified Frobenius set
+stable under conjugacy in a finite Galois extension. GCC4 proves the
+specific field intersection with Q(zeta_(80*3^(j+2))) and computes the
+conjugacy class of size two before applying it. This yields a positive
+Dirichlet density for unrestricted comparison primes satisfying the
+specified P-side characters and a fixed admissible congruence class.
+It is not a density assertion on the finite exact-period support of B_j,
+and provides neither a WSS example nor an effective least-prime bound.
+
+## Cubic Thue source and the exact integer descent
+
+Rafael von Kaenel and Benjamin Matschke, *Solving S-unit, Mordell, Thue,
+Thue-Mahler and generalized Ramanujan-Nagell equations via Shimura-Taniyama
+conjecture*, arXiv:1605.06079:
+https://arxiv.org/abs/1605.06079 ;
+https://arxiv.org/pdf/1605.06079 .
+
+Sections 5.1-5.3 describe the cubic Thue framework, classical methods,
+explicit reconstruction from Mordell equations, and Algorithms 5.2/5.4.
+The latter needs a Mordell-Weil basis in its input. Classical invariant
+theory is credited there to earlier work; it is not attributed to this
+WSS project as a new general theory.
+
+GCC5 derives the particular form directly from eta_j=pi^2*gamma^3:
+with pi=a+b*omega, A=a^2-b^2 and D=2ab-b^2, it is
+f_pi(u,v)=A*u^3-3D*u^2*v+3(D-A)*u*v^2+A*v^3=-2.
+Its discriminant is 81*P^4. Irreducibility is proved using valuation at
+the actual prime (pi), not assumed from the discriminant. The second
+coordinate must still equal L_(3^j)-1, and the norm of u+v*omega must be
+a distinct prime. The fixed-form finiteness theorem does not supply a
+uniform bound as P varies. No complete Thue solver or solution list was
+executed or asserted in this continuation.
