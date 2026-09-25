@@ -2423,7 +2423,7 @@ $`\eta\downarrow0`$，其质量为 $`o(\lambda^{-1/2})`$。
 先取样本极限，再令 $`T\to\infty`$，得到
 
 ```math
-\sqrt\lambda\,mathbb E_{Q_r}
+\sqrt\lambda\,\mathbb E_{Q_r}
  \bigl[(1-p^0(W))1_{A_M}(W)\bigr]
 \longrightarrow d_*\int_s^\infty\frac{dy}{1+e^y}
 =d_*\log(1+e^{-s}).
