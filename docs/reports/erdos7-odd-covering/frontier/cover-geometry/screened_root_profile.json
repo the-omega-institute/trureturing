@@ -1,0 +1,3753 @@
+{
+  "check_count": 17,
+  "checks": {
+    "H3_certificate_does_not_close": true,
+    "H4_joint_loss_extremum_regression": true,
+    "H4_normalized_query_extremum_regression": true,
+    "H4_same_partition_gate_extremum_regression": true,
+    "H4_uniform_positive_Haar_above_one_over_185": true,
+    "complete_coordinate_geometric_tail_recurrence": true,
+    "complete_mixed_tail_support_expansion_matches_product_complement": true,
+    "complete_unscreened_query_profile": true,
+    "exchange_of_retained_ternary_roots_preserves_every_bound": true,
+    "extra_shallow_three_over_forty_Haar_above_one_over_19000": true,
+    "extra_shallow_three_over_forty_leaves_positive_gate": true,
+    "positive_retained_mass_in_declared_finite_cases": true,
+    "product_density_cap_constant": true,
+    "same_law_continuation_density_conversion": true,
+    "screened_query_does_not_exceed_unscreened_profile": true,
+    "six_star_union_matches_inclusion_exclusion": true,
+    "support_screen_probability_bounds": true
+  },
+  "constants": {
+    "P": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "Q": [
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "continuation_threshold_G": "566/49",
+    "cutoffs": [
+      3,
+      4
+    ],
+    "density_cap_D": "1729/135",
+    "extra_shallow_weight_cap": "3/40",
+    "partitions_per_cutoff": 64,
+    "raw_unscreened_query_cap": "3161/935"
+  },
+  "contract": {
+    "auxiliary_stars": "retain every rho-active actual 3p star; fill other slots on retained roots",
+    "eta": "rho times ALL actual mixed survivor mask times auxiliary star survivor mask",
+    "extra_shallow_scope_H4": "actual mixed labels with maximum exponent2 or3; sum w(m)<=3/40",
+    "negative_margin": "certificate not closed; no actual covering counterexample inferred",
+    "same_source": "one fixed rho, auxiliary-star layout, original family and submeasure for all queries",
+    "scope": "all pure originals, all squarefree mixed originals, all mixed max-exponent>=H originals; all originals touching23 or29"
+  },
+  "cutoff_results": {
+    "3": {
+      "complete_unscreened_mixed_tail": "1057282770889283/4260920412672000",
+      "partitions": [
+        {
+          "extra_haar_certificate_rhs": "-7313273541799061299/600885064992128716800",
+          "extra_mass_lower_bound": "61831557115290341/609311619012096000",
+          "extra_same_partition_gate_Gs_minus_R": "-7313273541799061299/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4080113763416126899/600885064992128716800",
+          "mask": 0,
+          "mass_lower_bound": "107529928541197541/609311619012096000",
+          "mixed_tail_loss": "149636540056941559/609311619012096000",
+          "normalized_query_upper_bound": "1908221421666261702/107529928541197541",
+          "raw_query_upper_bound": "983650725779/314088192000",
+          "same_partition_gate_Gs_minus_R": "-4080113763416126899/3732033666449088000",
+          "squarefree_nonstar_loss": "507967/1658880",
+          "star_groups": [
+            [],
+            [
+              5,
+              7,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1113/4096",
+          "total_loss_bound": "501781690470898459/609311619012096000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1731872509696031789/171681447140608204800",
+          "extra_mass_lower_bound": "2028771114015851/21761129250432000",
+          "extra_same_partition_gate_Gs_minus_R": "-1731872509696031789/1066295333271168000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-808112573015193389/171681447140608204800",
+          "mask": 1,
+          "mass_lower_bound": "3660855807798251/21761129250432000",
+          "mixed_tail_loss": "9465872505586373/43522258500864000",
+          "normalized_query_upper_bound": "58778713474061295/3660855807798251",
+          "raw_query_upper_bound": "84837967877/31408819200",
+          "same_partition_gate_Gs_minus_R": "-808112573015193389/1066295333271168000",
+          "squarefree_nonstar_loss": "16237/55296",
+          "star_groups": [
+            [
+              5
+            ],
+            [
+              7,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "18100273442633749/21761129250432000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-24197401150184807101/2403540259968514867200",
+          "extra_mass_lower_bound": "31261536223229953/304655809506048000",
+          "extra_same_partition_gate_Gs_minus_R": "-24197401150184807101/14928134665796352000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11264762036653069501/2403540259968514867200",
+          "mask": 2,
+          "mass_lower_bound": "54110721936183553/304655809506048000",
+          "mixed_tail_loss": "8339797312010209/38081976188256000",
+          "normalized_query_upper_bound": "854927156174142051/54110721936183553",
+          "raw_query_upper_bound": "293798790193/104696064000",
+          "same_partition_gate_Gs_minus_R": "-11264762036653069501/14928134665796352000",
+          "squarefree_nonstar_loss": "121921/414720",
+          "star_groups": [
+            [
+              7
+            ],
+            [
+              5,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1901/6144",
+          "total_loss_bound": "250545087569864447/304655809506048000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-716473620424659997/85840723570304102400",
+          "extra_mass_lower_bound": "1199352457872433/10880564625216000",
+          "extra_same_partition_gate_Gs_minus_R": "-716473620424659997/533147666635584000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-254593652084240797/85840723570304102400",
+          "mask": 3,
+          "mass_lower_bound": "2015394804763633/10880564625216000",
+          "mixed_tail_loss": "17830384377522661/87044517001728000",
+          "normalized_query_upper_bound": "28475655338376675/2015394804763633",
+          "raw_query_upper_bound": "2740013167/1046960640",
+          "same_partition_gate_Gs_minus_R": "-254593652084240797/533147666635584000",
+          "squarefree_nonstar_loss": "477199/1658880",
+          "star_groups": [
+            [
+              5,
+              7
+            ],
+            [
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "165/512",
+          "total_loss_bound": "8865169820452367/10880564625216000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-126590773824882203351/12017701299842574336000",
+          "extra_mass_lower_bound": "161091160290606179/1523279047530240000",
+          "extra_same_partition_gate_Gs_minus_R": "-126590773824882203351/74640673328981760000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-61927578257223515351/12017701299842574336000",
+          "mask": 4,
+          "mass_lower_bound": "275337088855374179/1523279047530240000",
+          "mixed_tail_loss": "344901794736203071/1523279047530240000",
+          "normalized_query_upper_bound": "4444252460191128585/275337088855374179",
+          "raw_query_upper_bound": "916369999493/314088192000",
+          "same_partition_gate_Gs_minus_R": "-61927578257223515351/74640673328981760000",
+          "squarefree_nonstar_loss": "245897/829440",
+          "star_groups": [
+            [
+              11
+            ],
+            [
+              5,
+              7,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "27313/92160",
+          "total_loss_bound": "1247941958674865821/1523279047530240000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-26192522647769320709/3004425324960643584000",
+          "extra_mass_lower_bound": "38900792218563491/380819761882560000",
+          "extra_same_partition_gate_Gs_minus_R": "-26192522647769320709/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-10026723755854648709/3004425324960643584000",
+          "mask": 5,
+          "mass_lower_bound": "67462274359755491/380819761882560000",
+          "mixed_tail_loss": "637498773042054197/3046558095060480000",
+          "normalized_query_upper_bound": "983885123336250135/67462274359755491",
+          "raw_query_upper_bound": "202869395483/78522048000",
+          "same_partition_gate_Gs_minus_R": "-10026723755854648709/18660168332245440000",
+          "squarefree_nonstar_loss": "159959/552960",
+          "star_groups": [
+            [
+              5,
+              11
+            ],
+            [
+              7,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "22417/69120",
+          "total_loss_bound": "313357487522804509/380819761882560000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-53189704791724613443/6008850649921287168000",
+          "extra_mass_lower_bound": "81358504670711347/761639523765120000",
+          "extra_same_partition_gate_Gs_minus_R": "-53189704791724613443/37320336664490880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-20858107007895269443/6008850649921287168000",
+          "mask": 6,
+          "mass_lower_bound": "138481468953095347/761639523765120000",
+          "mixed_tail_loss": "634723599993035237/3046558095060480000",
+          "normalized_query_upper_bound": "2025277927251984405/138481468953095347",
+          "raw_query_upper_bound": "139198807883/52348032000",
+          "same_partition_gate_Gs_minus_R": "-20858107007895269443/37320336664490880000",
+          "squarefree_nonstar_loss": "479749/1658880",
+          "star_groups": [
+            [
+              7,
+              11
+            ],
+            [
+              5,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "623158054812024653/761639523765120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-13060596786039628087/1502212662480321792000",
+          "extra_mass_lower_bound": "21857597578483663/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-13060596786039628087/9330084166122720000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4977697340082292087/1502212662480321792000",
+          "mask": 7,
+          "mass_lower_bound": "36138338649079663/190409880941280000",
+          "mixed_tail_loss": "635779965184317017/3046558095060480000",
+          "normalized_query_upper_bound": "519020347254313905/36138338649079663",
+          "raw_query_upper_bound": "35672641583/13087008000",
+          "same_partition_gate_Gs_minus_R": "-4977697340082292087/9330084166122720000",
+          "squarefree_nonstar_loss": "478729/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11
+            ],
+            [
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "721/2304",
+          "total_loss_bound": "154271542292200337/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12882300885554682221/1201770129984257433600",
+          "extra_mass_lower_bound": "3226506944337889/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-12882300885554682221/7464067332898176000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-6415981328788813421/1201770129984257433600",
+          "mask": 8,
+          "mass_lower_bound": "5511425515633249/30465580950604800",
+          "mixed_tail_loss": "13952945655209137/60931161901209600",
+          "normalized_query_upper_bound": "449251337510834859/27557127578166245",
+          "raw_query_upper_bound": "17154092993/5816448000",
+          "same_partition_gate_Gs_minus_R": "-6415981328788813421/7464067332898176000",
+          "squarefree_nonstar_loss": "246721/829440",
+          "star_groups": [
+            [
+              13
+            ],
+            [
+              5,
+              7,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "899/3072",
+          "total_loss_bound": "24954155434971551/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-41699945129784941/4694414570251005600",
+          "extra_mass_lower_bound": "7697163378603487/76163952376512000",
+          "extra_same_partition_gate_Gs_minus_R": "-41699945129784941/29156513019133500",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-8220442180584133/2347207285125502800",
+          "mask": 9,
+          "mass_lower_bound": "13409459806841887/76163952376512000",
+          "mixed_tail_loss": "127889707083022579/609311619012096000",
+          "normalized_query_upper_bound": "197840560181674410/13409459806841887",
+          "raw_query_upper_bound": "755429107/290822400",
+          "same_partition_gate_Gs_minus_R": "-8220442180584133/14578256509566750",
+          "squarefree_nonstar_loss": "480791/1658880",
+          "star_groups": [
+            [
+              5,
+              13
+            ],
+            [
+              7,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "62754492569670113/76163952376512000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-70339366205047963/7906382434106956800",
+          "extra_mass_lower_bound": "34497186634733/320690325795840",
+          "extra_same_partition_gate_Gs_minus_R": "-70339366205047963/49105706137488000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-27797790173693563/7906382434106956800",
+          "mask": 10,
+          "mass_lower_bound": "58548961069421/320690325795840",
+          "mixed_tail_loss": "53487444801533/256552260636672",
+          "normalized_query_upper_bound": "21445920826976646/1463724026735525",
+          "raw_query_upper_bound": "23338231297/8724672000",
+          "same_partition_gate_Gs_minus_R": "-27797790173693563/49105706137488000",
+          "squarefree_nonstar_loss": "160201/552960",
+          "star_groups": [
+            [
+              7,
+              13
+            ],
+            [
+              5,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1471/4608",
+          "total_loss_bound": "262141364726419/320690325795840"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5153419569436756483/600885064992128716800",
+          "extra_mass_lower_bound": "17411217249644459/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-5153419569436756483/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1920259791053822083/600885064992128716800",
+          "mask": 11,
+          "mass_lower_bound": "28835810106121259/152327904753024000",
+          "mixed_tail_loss": "126109638056854489/609311619012096000",
+          "normalized_query_upper_bound": "411460981676985240/28835810106121259",
+          "raw_query_upper_bound": "1178333711/436233600",
+          "same_partition_gate_Gs_minus_R": "-1920259791053822083/3732033666449088000",
+          "squarefree_nonstar_loss": "478793/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              13
+            ],
+            [
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "121/384",
+          "total_loss_bound": "123492094646902741/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-27514745104443444083/3004425324960643584000",
+          "extra_mass_lower_bound": "21204980410487131/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-27514745104443444083/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11348946212528772083/3004425324960643584000",
+          "mask": 12,
+          "mass_lower_bound": "35485721481083131/190409880941280000",
+          "mixed_tail_loss": "647029906496626529/3046558095060480000",
+          "normalized_query_upper_bound": "1051403733247242375/70971442962166262",
+          "raw_query_upper_bound": "321172153/116328960",
+          "same_partition_gate_Gs_minus_R": "-11348946212528772083/18660168332245440000",
+          "squarefree_nonstar_loss": "481817/1658880",
+          "star_groups": [
+            [
+              11,
+              13
+            ],
+            [
+              5,
+              7,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "2387/7680",
+          "total_loss_bound": "154924159460196869/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-3246176457254272561/375553165620080448000",
+          "extra_mass_lower_bound": "20547116834314321/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-3246176457254272561/2332521041530680000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1225451595764938561/375553165620080448000",
+          "mask": 13,
+          "mass_lower_bound": "34827857904910321/190409880941280000",
+          "mixed_tail_loss": "630878506021014239/3046558095060480000",
+          "normalized_query_upper_bound": "502334162392632570/34827857904910321",
+          "raw_query_upper_bound": "1918099339/727056000",
+          "same_partition_gate_Gs_minus_R": "-1225451595764938561/2332521041530680000",
+          "squarefree_nonstar_loss": "478271/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13
+            ],
+            [
+              7,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1853/5760",
+          "total_loss_bound": "155582023036369679/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12985733096433154819/1502212662480321792000",
+          "extra_mass_lower_bound": "19767534121728091/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-12985733096433154819/9330084166122720000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4902833650475818819/1502212662480321792000",
+          "mask": 14,
+          "mass_lower_bound": "34048275192324091/190409880941280000",
+          "mixed_tail_loss": "634767958053571169/3046558095060480000",
+          "normalized_query_upper_bound": "493350151210841925/34048275192324091",
+          "raw_query_upper_bound": "2260554037/872467200",
+          "same_partition_gate_Gs_minus_R": "-4902833650475818819/9330084166122720000",
+          "squarefree_nonstar_loss": "478769/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              13
+            ],
+            [
+              5,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "156361605748955909/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-7440428450570580167/751106331240160896000",
+          "extra_mass_lower_bound": "2636923432157657/23801235117660000",
+          "extra_same_partition_gate_Gs_minus_R": "-7440428450570580167/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-3398978727591912167/751106331240160896000",
+          "mask": 15,
+          "mass_lower_bound": "4422016065982157/23801235117660000",
+          "mixed_tail_loss": "675174115093979279/3046558095060480000",
+          "normalized_query_upper_bound": "273682104101541135/17688064263928628",
+          "raw_query_upper_bound": "6270122587/2181168000",
+          "same_partition_gate_Gs_minus_R": "-3398978727591912167/4665042083061360000",
+          "squarefree_nonstar_loss": "486239/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13
+            ],
+            [
+              17,
+              19
+            ]
+          ],
+          "star_loss": "115/384",
+          "total_loss_bound": "19379219051677843/23801235117660000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-3303402041281062197/300442532496064358400",
+          "extra_mass_lower_bound": "2012317034716993/19040988094128000",
+          "extra_same_partition_gate_Gs_minus_R": "-3303402041281062197/1866016833224544000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1686822152089594997/300442532496064358400",
+          "mask": 16,
+          "mass_lower_bound": "3440391141776593/19040988094128000",
+          "mixed_tail_loss": "70855296746785487/304655809506048000",
+          "normalized_query_upper_bound": "113904998460830577/6880782283553186",
+          "raw_query_upper_bound": "117431586433/39261024000",
+          "same_partition_gate_Gs_minus_R": "-1686822152089594997/1866016833224544000",
+          "squarefree_nonstar_loss": "247987/829440",
+          "star_groups": [
+            [
+              17
+            ],
+            [
+              5,
+              7,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "221/768",
+          "total_loss_bound": "15600596952351407/19040988094128000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-194902532914331533/21460180892576025600",
+          "extra_mass_lower_bound": "135938434011011/1360070578152000",
+          "extra_same_partition_gate_Gs_minus_R": "-194902532914331533/133286916658896000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-79432540829226733/21460180892576025600",
+          "mask": 17,
+          "mass_lower_bound": "237943727372411/1360070578152000",
+          "mixed_tail_loss": "18338531608711621/87044517001728000",
+          "normalized_query_upper_bound": "7118057963567265/475887454744822",
+          "raw_query_upper_bound": "10273814059/3926102400",
+          "same_partition_gate_Gs_minus_R": "-79432540829226733/133286916658896000",
+          "squarefree_nonstar_loss": "482047/1658880",
+          "star_groups": [
+            [
+              5,
+              17
+            ],
+            [
+              7,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "1122126850779589/1360070578152000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5385433822168536859/600885064992128716800",
+          "extra_mass_lower_bound": "16531861576414139/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-5385433822168536859/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2152274043785602459/600885064992128716800",
+          "mask": 18,
+          "mass_lower_bound": "27956454432890939/152327904753024000",
+          "mixed_tail_loss": "127326274688401969/609311619012096000",
+          "normalized_query_upper_bound": "410773495848724008/27956454432890939",
+          "raw_query_upper_bound": "17645473543/6543504000",
+          "same_partition_gate_Gs_minus_R": "-2152274043785602459/3732033666449088000",
+          "squarefree_nonstar_loss": "481601/1658880",
+          "star_groups": [
+            [
+              7,
+              17
+            ],
+            [
+              5,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "203/640",
+          "total_loss_bound": "124371450320133061/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-65369864401986887/7803702142754918400",
+          "extra_mass_lower_bound": "226379090190661/1978284477312000",
+          "extra_same_partition_gate_Gs_minus_R": "-65369864401986887/48467969694144000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-23380776371039687/7803702142754918400",
+          "mask": 19,
+          "mass_lower_bound": "374750425989061/1978284477312000",
+          "mixed_tail_loss": "1619834945447231/7913137909248000",
+          "normalized_query_upper_bound": "5283067221467100/374750425989061",
+          "raw_query_upper_bound": "1397969681/523480320",
+          "same_partition_gate_Gs_minus_R": "-23380776371039687/48467969694144000",
+          "squarefree_nonstar_loss": "478451/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              17
+            ],
+            [
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "1219/3840",
+          "total_loss_bound": "1603534051322939/1978284477312000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-7036493292507807941/751106331240160896000",
+          "extra_mass_lower_bound": "10607151050771339/95204940470640000",
+          "extra_same_partition_gate_Gs_minus_R": "-7036493292507807941/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2995043569529139941/751106331240160896000",
+          "mask": 20,
+          "mass_lower_bound": "17747521586069339/95204940470640000",
+          "mixed_tail_loss": "655207518700808027/3046558095060480000",
+          "normalized_query_upper_bound": "266125322188660935/17747521586069339",
+          "raw_query_upper_bound": "54872954123/19630512000",
+          "same_partition_gate_Gs_minus_R": "-2995043569529139941/4665042083061360000",
+          "squarefree_nonstar_loss": "96527/331776",
+          "star_groups": [
+            [
+              11,
+              17
+            ],
+            [
+              5,
+              7,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "1063/3456",
+          "total_loss_bound": "77457418884570661/95204940470640000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-26130433357155833/3040916320810368000",
+          "extra_mass_lower_bound": "165077109756443/1541780412480000",
+          "extra_same_partition_gate_Gs_minus_R": "-26130433357155833/18886810052880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-9768288729711833/3040916320810368000",
+          "mask": 21,
+          "mass_lower_bound": "280710640692443/1541780412480000",
+          "mixed_tail_loss": "2553545090038331/12334243299840000",
+          "normalized_query_upper_bound": "4039905664301430/280710640692443",
+          "raw_query_upper_bound": "102875112409/39261024000",
+          "same_partition_gate_Gs_minus_R": "-9768288729711833/18886810052880000",
+          "squarefree_nonstar_loss": "159271/552960",
+          "star_groups": [
+            [
+              5,
+              11,
+              17
+            ],
+            [
+              7,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "6695/20736",
+          "total_loss_bound": "1261069771787557/1541780412480000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-6452949523893164951/751106331240160896000",
+          "extra_mass_lower_bound": "5026769447140627/47602470235320000",
+          "extra_same_partition_gate_Gs_minus_R": "-6452949523893164951/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2411499800914496951/751106331240160896000",
+          "mask": 22,
+          "mass_lower_bound": "8596954714789627/47602470235320000",
+          "mixed_tail_loss": "632104724087725997/3046558095060480000",
+          "normalized_query_upper_bound": "247821480368497035/17193909429579254",
+          "raw_query_upper_bound": "17032948501/6543504000",
+          "same_partition_gate_Gs_minus_R": "-2411499800914496951/4665042083061360000",
+          "squarefree_nonstar_loss": "5901/20480",
+          "star_groups": [
+            [
+              7,
+              11,
+              17
+            ],
+            [
+              5,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "39005515520530373/47602470235320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-2627905758610754179/273129574996422144000",
+          "extra_mass_lower_bound": "3856972135656421/34619978352960000",
+          "extra_same_partition_gate_Gs_minus_R": "-2627905758610754179/1696378939295040000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1158287677527602179/273129574996422144000",
+          "mask": 23,
+          "mass_lower_bound": "6453470512128421/34619978352960000",
+          "mixed_tail_loss": "60461261013159757/276959826823680000",
+          "normalized_query_upper_bound": "98182693620250785/6453470512128421",
+          "raw_query_upper_bound": "74229838261/26174016000",
+          "same_partition_gate_Gs_minus_R": "-1158287677527602179/1696378939295040000",
+          "squarefree_nonstar_loss": "484111/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              17
+            ],
+            [
+              13,
+              19
+            ]
+          ],
+          "star_loss": "4195/13824",
+          "total_loss_bound": "28166507840831579/34619978352960000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5714822936146016503/600885064992128716800",
+          "extra_mass_lower_bound": "3406958988935251/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-5714822936146016503/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2481663157763082103/600885064992128716800",
+          "mask": 24,
+          "mass_lower_bound": "5691877560230611/30465580950604800",
+          "mixed_tail_loss": "26461304266835441/121862323802419200",
+          "normalized_query_upper_bound": "430027343081199864/28459387801153055",
+          "raw_query_upper_bound": "2052506141/727056000",
+          "same_partition_gate_Gs_minus_R": "-2481663157763082103/3732033666449088000",
+          "squarefree_nonstar_loss": "483301/1658880",
+          "star_groups": [
+            [
+              13,
+              17
+            ],
+            [
+              5,
+              7,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "39/128",
+          "total_loss_bound": "24773703390374189/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1288208698537808797/150221266248032179200",
+          "extra_mass_lower_bound": "16177744692981299/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-1288208698537808797/933008416612272000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-479918753942075197/150221266248032179200",
+          "mask": 25,
+          "mass_lower_bound": "27602337549458099/152327904753024000",
+          "mixed_tail_loss": "126280342835886529/609311619012096000",
+          "normalized_query_upper_bound": "397189246623058890/27602337549458099",
+          "raw_query_upper_bound": "1516616803/581644800",
+          "same_partition_gate_Gs_minus_R": "-479918753942075197/933008416612272000",
+          "squarefree_nonstar_loss": "477721/1658880",
+          "star_groups": [
+            [
+              5,
+              13,
+              17
+            ],
+            [
+              7,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "124725567203565901/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5148378923870886283/600885064992128716800",
+          "extra_mass_lower_bound": "3256901222381941/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-5148378923870886283/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1915219145487951883/600885064992128716800",
+          "mask": 26,
+          "mass_lower_bound": "5541819793677301/30465580950604800",
+          "mixed_tail_loss": "25223551065629381/121862323802419200",
+          "normalized_query_upper_bound": "398240577695564604/27709098968386505",
+          "raw_query_upper_bound": "11404733831/4362336000",
+          "same_partition_gate_Gs_minus_R": "-1915219145487951883/3732033666449088000",
+          "squarefree_nonstar_loss": "477649/1658880",
+          "star_groups": [
+            [
+              7,
+              13,
+              17
+            ],
+            [
+              5,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "1241/3840",
+          "total_loss_bound": "24923761156927499/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1032039670176472141/109251829998568857600",
+          "extra_mass_lower_bound": "96378185294329/865499458824000",
+          "extra_same_partition_gate_Gs_minus_R": "-1032039670176472141/678551575718016000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-444192437743211341/109251829998568857600",
+          "mask": 27,
+          "mass_lower_bound": "161290644706129/865499458824000",
+          "mixed_tail_loss": "11966380577506319/55391965364736000",
+          "normalized_query_upper_bound": "38874296249018685/2580650315298064",
+          "raw_query_upper_bound": "9796813867/3489868800",
+          "same_partition_gate_Gs_minus_R": "-444192437743211341/678551575718016000",
+          "squarefree_nonstar_loss": "483013/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              17
+            ],
+            [
+              11,
+              19
+            ]
+          ],
+          "star_loss": "1569/5120",
+          "total_loss_bound": "704208814117871/865499458824000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-25150306636656003623/3004425324960643584000",
+          "extra_mass_lower_bound": "86775097092498469/761639523765120000",
+          "extra_same_partition_gate_Gs_minus_R": "-25150306636656003623/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-8984507744741331623/3004425324960643584000",
+          "mask": 28,
+          "mass_lower_bound": "143898061374882469/761639523765120000",
+          "mixed_tail_loss": "623448232489198499/3046558095060480000",
+          "normalized_query_upper_bound": "2028884045462574300/143898061374882469",
+          "raw_query_upper_bound": "774703661/290822400",
+          "same_partition_gate_Gs_minus_R": "-8984507744741331623/18660168332245440000",
+          "squarefree_nonstar_loss": "478231/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              17
+            ],
+            [
+              5,
+              7,
+              19
+            ]
+          ],
+          "star_loss": "733/2304",
+          "total_loss_bound": "617741462390237531/761639523765120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-4188022677496109437/462219280763175936000",
+          "extra_mass_lower_bound": "197958649018919/1830864239820000",
+          "extra_same_partition_gate_Gs_minus_R": "-4188022677496109437/2870795128037760000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1700976694124621437/462219280763175936000",
+          "mask": 29,
+          "mass_lower_bound": "335273467005419/1830864239820000",
+          "mixed_tail_loss": "49194561203306243/234350622696960000",
+          "normalized_query_upper_bound": "158641831194423885/10728750944173408",
+          "raw_query_upper_bound": "15749596927/5816448000",
+          "same_partition_gate_Gs_minus_R": "-1700976694124621437/2870795128037760000",
+          "squarefree_nonstar_loss": "481931/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              17
+            ],
+            [
+              7,
+              19
+            ]
+          ],
+          "star_loss": "8749/27648",
+          "total_loss_bound": "1495590772814581/1830864239820000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-27497142791090620853/3004425324960643584000",
+          "extra_mass_lower_bound": "592450780730153/5950308779415000",
+          "extra_same_partition_gate_Gs_minus_R": "-27497142791090620853/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11331343899175948853/3004425324960643584000",
+          "mask": 30,
+          "mass_lower_bound": "519361969593139/2975154389707500",
+          "mixed_tail_loss": "642872650581413789/3046558095060480000",
+          "normalized_query_upper_bound": "999144487188973125/66478332107921792",
+          "raw_query_upper_bound": "183125117/69797376",
+          "same_partition_gate_Gs_minus_R": "-11331343899175948853/18660168332245440000",
+          "squarefree_nonstar_loss": "96497/331776",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              5,
+              19
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "2455792420114361/2975154389707500"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12125510156227567537/1092518299985688576000",
+          "extra_mass_lower_bound": "14608877213394433/138479913411840000",
+          "extra_same_partition_gate_Gs_minus_R": "-12125510156227567537/6785515757180160000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-6247037831894959537/1092518299985688576000",
+          "mask": 31,
+          "mass_lower_bound": "24994870719282433/138479913411840000",
+          "mixed_tail_loss": "32384203935369317/138479913411840000",
+          "normalized_query_upper_bound": "416206829775690135/24994870719282433",
+          "raw_query_upper_bound": "104889380257/34898688000",
+          "same_partition_gate_Gs_minus_R": "-6247037831894959537/6785515757180160000",
+          "squarefree_nonstar_loss": "248477/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              19
+            ]
+          ],
+          "star_loss": "5273/18432",
+          "total_loss_bound": "113485042692557567/138479913411840000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12125510156227567537/1092518299985688576000",
+          "extra_mass_lower_bound": "14608877213394433/138479913411840000",
+          "extra_same_partition_gate_Gs_minus_R": "-12125510156227567537/6785515757180160000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-6247037831894959537/1092518299985688576000",
+          "mask": 32,
+          "mass_lower_bound": "24994870719282433/138479913411840000",
+          "mixed_tail_loss": "32384203935369317/138479913411840000",
+          "normalized_query_upper_bound": "416206829775690135/24994870719282433",
+          "raw_query_upper_bound": "104889380257/34898688000",
+          "same_partition_gate_Gs_minus_R": "-6247037831894959537/6785515757180160000",
+          "squarefree_nonstar_loss": "248477/829440",
+          "star_groups": [
+            [
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "5273/18432",
+          "total_loss_bound": "113485042692557567/138479913411840000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-27497142791090620853/3004425324960643584000",
+          "extra_mass_lower_bound": "592450780730153/5950308779415000",
+          "extra_same_partition_gate_Gs_minus_R": "-27497142791090620853/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11331343899175948853/3004425324960643584000",
+          "mask": 33,
+          "mass_lower_bound": "519361969593139/2975154389707500",
+          "mixed_tail_loss": "642872650581413789/3046558095060480000",
+          "normalized_query_upper_bound": "999144487188973125/66478332107921792",
+          "raw_query_upper_bound": "183125117/69797376",
+          "same_partition_gate_Gs_minus_R": "-11331343899175948853/18660168332245440000",
+          "squarefree_nonstar_loss": "96497/331776",
+          "star_groups": [
+            [
+              5,
+              19
+            ],
+            [
+              7,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "2455792420114361/2975154389707500"
+        },
+        {
+          "extra_haar_certificate_rhs": "-4188022677496109437/462219280763175936000",
+          "extra_mass_lower_bound": "197958649018919/1830864239820000",
+          "extra_same_partition_gate_Gs_minus_R": "-4188022677496109437/2870795128037760000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1700976694124621437/462219280763175936000",
+          "mask": 34,
+          "mass_lower_bound": "335273467005419/1830864239820000",
+          "mixed_tail_loss": "49194561203306243/234350622696960000",
+          "normalized_query_upper_bound": "158641831194423885/10728750944173408",
+          "raw_query_upper_bound": "15749596927/5816448000",
+          "same_partition_gate_Gs_minus_R": "-1700976694124621437/2870795128037760000",
+          "squarefree_nonstar_loss": "481931/1658880",
+          "star_groups": [
+            [
+              7,
+              19
+            ],
+            [
+              5,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "8749/27648",
+          "total_loss_bound": "1495590772814581/1830864239820000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-25150306636656003623/3004425324960643584000",
+          "extra_mass_lower_bound": "86775097092498469/761639523765120000",
+          "extra_same_partition_gate_Gs_minus_R": "-25150306636656003623/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-8984507744741331623/3004425324960643584000",
+          "mask": 35,
+          "mass_lower_bound": "143898061374882469/761639523765120000",
+          "mixed_tail_loss": "623448232489198499/3046558095060480000",
+          "normalized_query_upper_bound": "2028884045462574300/143898061374882469",
+          "raw_query_upper_bound": "774703661/290822400",
+          "same_partition_gate_Gs_minus_R": "-8984507744741331623/18660168332245440000",
+          "squarefree_nonstar_loss": "478231/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              19
+            ],
+            [
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "733/2304",
+          "total_loss_bound": "617741462390237531/761639523765120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1032039670176472141/109251829998568857600",
+          "extra_mass_lower_bound": "96378185294329/865499458824000",
+          "extra_same_partition_gate_Gs_minus_R": "-1032039670176472141/678551575718016000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-444192437743211341/109251829998568857600",
+          "mask": 36,
+          "mass_lower_bound": "161290644706129/865499458824000",
+          "mixed_tail_loss": "11966380577506319/55391965364736000",
+          "normalized_query_upper_bound": "38874296249018685/2580650315298064",
+          "raw_query_upper_bound": "9796813867/3489868800",
+          "same_partition_gate_Gs_minus_R": "-444192437743211341/678551575718016000",
+          "squarefree_nonstar_loss": "483013/1658880",
+          "star_groups": [
+            [
+              11,
+              19
+            ],
+            [
+              5,
+              7,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "1569/5120",
+          "total_loss_bound": "704208814117871/865499458824000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5148378923870886283/600885064992128716800",
+          "extra_mass_lower_bound": "3256901222381941/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-5148378923870886283/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1915219145487951883/600885064992128716800",
+          "mask": 37,
+          "mass_lower_bound": "5541819793677301/30465580950604800",
+          "mixed_tail_loss": "25223551065629381/121862323802419200",
+          "normalized_query_upper_bound": "398240577695564604/27709098968386505",
+          "raw_query_upper_bound": "11404733831/4362336000",
+          "same_partition_gate_Gs_minus_R": "-1915219145487951883/3732033666449088000",
+          "squarefree_nonstar_loss": "477649/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              19
+            ],
+            [
+              7,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "1241/3840",
+          "total_loss_bound": "24923761156927499/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1288208698537808797/150221266248032179200",
+          "extra_mass_lower_bound": "16177744692981299/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-1288208698537808797/933008416612272000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-479918753942075197/150221266248032179200",
+          "mask": 38,
+          "mass_lower_bound": "27602337549458099/152327904753024000",
+          "mixed_tail_loss": "126280342835886529/609311619012096000",
+          "normalized_query_upper_bound": "397189246623058890/27602337549458099",
+          "raw_query_upper_bound": "1516616803/581644800",
+          "same_partition_gate_Gs_minus_R": "-479918753942075197/933008416612272000",
+          "squarefree_nonstar_loss": "477721/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              19
+            ],
+            [
+              5,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "124725567203565901/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5714822936146016503/600885064992128716800",
+          "extra_mass_lower_bound": "3406958988935251/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-5714822936146016503/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2481663157763082103/600885064992128716800",
+          "mask": 39,
+          "mass_lower_bound": "5691877560230611/30465580950604800",
+          "mixed_tail_loss": "26461304266835441/121862323802419200",
+          "normalized_query_upper_bound": "430027343081199864/28459387801153055",
+          "raw_query_upper_bound": "2052506141/727056000",
+          "same_partition_gate_Gs_minus_R": "-2481663157763082103/3732033666449088000",
+          "squarefree_nonstar_loss": "483301/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              19
+            ],
+            [
+              13,
+              17
+            ]
+          ],
+          "star_loss": "39/128",
+          "total_loss_bound": "24773703390374189/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-2627905758610754179/273129574996422144000",
+          "extra_mass_lower_bound": "3856972135656421/34619978352960000",
+          "extra_same_partition_gate_Gs_minus_R": "-2627905758610754179/1696378939295040000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1158287677527602179/273129574996422144000",
+          "mask": 40,
+          "mass_lower_bound": "6453470512128421/34619978352960000",
+          "mixed_tail_loss": "60461261013159757/276959826823680000",
+          "normalized_query_upper_bound": "98182693620250785/6453470512128421",
+          "raw_query_upper_bound": "74229838261/26174016000",
+          "same_partition_gate_Gs_minus_R": "-1158287677527602179/1696378939295040000",
+          "squarefree_nonstar_loss": "484111/1658880",
+          "star_groups": [
+            [
+              13,
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "4195/13824",
+          "total_loss_bound": "28166507840831579/34619978352960000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-6452949523893164951/751106331240160896000",
+          "extra_mass_lower_bound": "5026769447140627/47602470235320000",
+          "extra_same_partition_gate_Gs_minus_R": "-6452949523893164951/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2411499800914496951/751106331240160896000",
+          "mask": 41,
+          "mass_lower_bound": "8596954714789627/47602470235320000",
+          "mixed_tail_loss": "632104724087725997/3046558095060480000",
+          "normalized_query_upper_bound": "247821480368497035/17193909429579254",
+          "raw_query_upper_bound": "17032948501/6543504000",
+          "same_partition_gate_Gs_minus_R": "-2411499800914496951/4665042083061360000",
+          "squarefree_nonstar_loss": "5901/20480",
+          "star_groups": [
+            [
+              5,
+              13,
+              19
+            ],
+            [
+              7,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "39005515520530373/47602470235320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-26130433357155833/3040916320810368000",
+          "extra_mass_lower_bound": "165077109756443/1541780412480000",
+          "extra_same_partition_gate_Gs_minus_R": "-26130433357155833/18886810052880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-9768288729711833/3040916320810368000",
+          "mask": 42,
+          "mass_lower_bound": "280710640692443/1541780412480000",
+          "mixed_tail_loss": "2553545090038331/12334243299840000",
+          "normalized_query_upper_bound": "4039905664301430/280710640692443",
+          "raw_query_upper_bound": "102875112409/39261024000",
+          "same_partition_gate_Gs_minus_R": "-9768288729711833/18886810052880000",
+          "squarefree_nonstar_loss": "159271/552960",
+          "star_groups": [
+            [
+              7,
+              13,
+              19
+            ],
+            [
+              5,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "6695/20736",
+          "total_loss_bound": "1261069771787557/1541780412480000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-7036493292507807941/751106331240160896000",
+          "extra_mass_lower_bound": "10607151050771339/95204940470640000",
+          "extra_same_partition_gate_Gs_minus_R": "-7036493292507807941/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2995043569529139941/751106331240160896000",
+          "mask": 43,
+          "mass_lower_bound": "17747521586069339/95204940470640000",
+          "mixed_tail_loss": "655207518700808027/3046558095060480000",
+          "normalized_query_upper_bound": "266125322188660935/17747521586069339",
+          "raw_query_upper_bound": "54872954123/19630512000",
+          "same_partition_gate_Gs_minus_R": "-2995043569529139941/4665042083061360000",
+          "squarefree_nonstar_loss": "96527/331776",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              19
+            ],
+            [
+              11,
+              17
+            ]
+          ],
+          "star_loss": "1063/3456",
+          "total_loss_bound": "77457418884570661/95204940470640000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-65369864401986887/7803702142754918400",
+          "extra_mass_lower_bound": "226379090190661/1978284477312000",
+          "extra_same_partition_gate_Gs_minus_R": "-65369864401986887/48467969694144000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-23380776371039687/7803702142754918400",
+          "mask": 44,
+          "mass_lower_bound": "374750425989061/1978284477312000",
+          "mixed_tail_loss": "1619834945447231/7913137909248000",
+          "normalized_query_upper_bound": "5283067221467100/374750425989061",
+          "raw_query_upper_bound": "1397969681/523480320",
+          "same_partition_gate_Gs_minus_R": "-23380776371039687/48467969694144000",
+          "squarefree_nonstar_loss": "478451/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              19
+            ],
+            [
+              5,
+              7,
+              17
+            ]
+          ],
+          "star_loss": "1219/3840",
+          "total_loss_bound": "1603534051322939/1978284477312000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5385433822168536859/600885064992128716800",
+          "extra_mass_lower_bound": "16531861576414139/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-5385433822168536859/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-2152274043785602459/600885064992128716800",
+          "mask": 45,
+          "mass_lower_bound": "27956454432890939/152327904753024000",
+          "mixed_tail_loss": "127326274688401969/609311619012096000",
+          "normalized_query_upper_bound": "410773495848724008/27956454432890939",
+          "raw_query_upper_bound": "17645473543/6543504000",
+          "same_partition_gate_Gs_minus_R": "-2152274043785602459/3732033666449088000",
+          "squarefree_nonstar_loss": "481601/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              19
+            ],
+            [
+              7,
+              17
+            ]
+          ],
+          "star_loss": "203/640",
+          "total_loss_bound": "124371450320133061/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-194902532914331533/21460180892576025600",
+          "extra_mass_lower_bound": "135938434011011/1360070578152000",
+          "extra_same_partition_gate_Gs_minus_R": "-194902532914331533/133286916658896000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-79432540829226733/21460180892576025600",
+          "mask": 46,
+          "mass_lower_bound": "237943727372411/1360070578152000",
+          "mixed_tail_loss": "18338531608711621/87044517001728000",
+          "normalized_query_upper_bound": "7118057963567265/475887454744822",
+          "raw_query_upper_bound": "10273814059/3926102400",
+          "same_partition_gate_Gs_minus_R": "-79432540829226733/133286916658896000",
+          "squarefree_nonstar_loss": "482047/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              19
+            ],
+            [
+              5,
+              17
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "1122126850779589/1360070578152000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-3303402041281062197/300442532496064358400",
+          "extra_mass_lower_bound": "2012317034716993/19040988094128000",
+          "extra_same_partition_gate_Gs_minus_R": "-3303402041281062197/1866016833224544000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1686822152089594997/300442532496064358400",
+          "mask": 47,
+          "mass_lower_bound": "3440391141776593/19040988094128000",
+          "mixed_tail_loss": "70855296746785487/304655809506048000",
+          "normalized_query_upper_bound": "113904998460830577/6880782283553186",
+          "raw_query_upper_bound": "117431586433/39261024000",
+          "same_partition_gate_Gs_minus_R": "-1686822152089594997/1866016833224544000",
+          "squarefree_nonstar_loss": "247987/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              19
+            ],
+            [
+              17
+            ]
+          ],
+          "star_loss": "221/768",
+          "total_loss_bound": "15600596952351407/19040988094128000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-7440428450570580167/751106331240160896000",
+          "extra_mass_lower_bound": "2636923432157657/23801235117660000",
+          "extra_same_partition_gate_Gs_minus_R": "-7440428450570580167/4665042083061360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-3398978727591912167/751106331240160896000",
+          "mask": 48,
+          "mass_lower_bound": "4422016065982157/23801235117660000",
+          "mixed_tail_loss": "675174115093979279/3046558095060480000",
+          "normalized_query_upper_bound": "273682104101541135/17688064263928628",
+          "raw_query_upper_bound": "6270122587/2181168000",
+          "same_partition_gate_Gs_minus_R": "-3398978727591912167/4665042083061360000",
+          "squarefree_nonstar_loss": "486239/1658880",
+          "star_groups": [
+            [
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "115/384",
+          "total_loss_bound": "19379219051677843/23801235117660000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12985733096433154819/1502212662480321792000",
+          "extra_mass_lower_bound": "19767534121728091/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-12985733096433154819/9330084166122720000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4902833650475818819/1502212662480321792000",
+          "mask": 49,
+          "mass_lower_bound": "34048275192324091/190409880941280000",
+          "mixed_tail_loss": "634767958053571169/3046558095060480000",
+          "normalized_query_upper_bound": "493350151210841925/34048275192324091",
+          "raw_query_upper_bound": "2260554037/872467200",
+          "same_partition_gate_Gs_minus_R": "-4902833650475818819/9330084166122720000",
+          "squarefree_nonstar_loss": "478769/1658880",
+          "star_groups": [
+            [
+              5,
+              17,
+              19
+            ],
+            [
+              7,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "156361605748955909/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-3246176457254272561/375553165620080448000",
+          "extra_mass_lower_bound": "20547116834314321/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-3246176457254272561/2332521041530680000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1225451595764938561/375553165620080448000",
+          "mask": 50,
+          "mass_lower_bound": "34827857904910321/190409880941280000",
+          "mixed_tail_loss": "630878506021014239/3046558095060480000",
+          "normalized_query_upper_bound": "502334162392632570/34827857904910321",
+          "raw_query_upper_bound": "1918099339/727056000",
+          "same_partition_gate_Gs_minus_R": "-1225451595764938561/2332521041530680000",
+          "squarefree_nonstar_loss": "478271/1658880",
+          "star_groups": [
+            [
+              7,
+              17,
+              19
+            ],
+            [
+              5,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "1853/5760",
+          "total_loss_bound": "155582023036369679/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-27514745104443444083/3004425324960643584000",
+          "extra_mass_lower_bound": "21204980410487131/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-27514745104443444083/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11348946212528772083/3004425324960643584000",
+          "mask": 51,
+          "mass_lower_bound": "35485721481083131/190409880941280000",
+          "mixed_tail_loss": "647029906496626529/3046558095060480000",
+          "normalized_query_upper_bound": "1051403733247242375/70971442962166262",
+          "raw_query_upper_bound": "321172153/116328960",
+          "same_partition_gate_Gs_minus_R": "-11348946212528772083/18660168332245440000",
+          "squarefree_nonstar_loss": "481817/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              17,
+              19
+            ],
+            [
+              11,
+              13
+            ]
+          ],
+          "star_loss": "2387/7680",
+          "total_loss_bound": "154924159460196869/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-5153419569436756483/600885064992128716800",
+          "extra_mass_lower_bound": "17411217249644459/152327904753024000",
+          "extra_same_partition_gate_Gs_minus_R": "-5153419569436756483/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-1920259791053822083/600885064992128716800",
+          "mask": 52,
+          "mass_lower_bound": "28835810106121259/152327904753024000",
+          "mixed_tail_loss": "126109638056854489/609311619012096000",
+          "normalized_query_upper_bound": "411460981676985240/28835810106121259",
+          "raw_query_upper_bound": "1178333711/436233600",
+          "same_partition_gate_Gs_minus_R": "-1920259791053822083/3732033666449088000",
+          "squarefree_nonstar_loss": "478793/1658880",
+          "star_groups": [
+            [
+              11,
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              13
+            ]
+          ],
+          "star_loss": "121/384",
+          "total_loss_bound": "123492094646902741/152327904753024000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-70339366205047963/7906382434106956800",
+          "extra_mass_lower_bound": "34497186634733/320690325795840",
+          "extra_same_partition_gate_Gs_minus_R": "-70339366205047963/49105706137488000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-27797790173693563/7906382434106956800",
+          "mask": 53,
+          "mass_lower_bound": "58548961069421/320690325795840",
+          "mixed_tail_loss": "53487444801533/256552260636672",
+          "normalized_query_upper_bound": "21445920826976646/1463724026735525",
+          "raw_query_upper_bound": "23338231297/8724672000",
+          "same_partition_gate_Gs_minus_R": "-27797790173693563/49105706137488000",
+          "squarefree_nonstar_loss": "160201/552960",
+          "star_groups": [
+            [
+              5,
+              11,
+              17,
+              19
+            ],
+            [
+              7,
+              13
+            ]
+          ],
+          "star_loss": "1471/4608",
+          "total_loss_bound": "262141364726419/320690325795840"
+        },
+        {
+          "extra_haar_certificate_rhs": "-41699945129784941/4694414570251005600",
+          "extra_mass_lower_bound": "7697163378603487/76163952376512000",
+          "extra_same_partition_gate_Gs_minus_R": "-41699945129784941/29156513019133500",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-8220442180584133/2347207285125502800",
+          "mask": 54,
+          "mass_lower_bound": "13409459806841887/76163952376512000",
+          "mixed_tail_loss": "127889707083022579/609311619012096000",
+          "normalized_query_upper_bound": "197840560181674410/13409459806841887",
+          "raw_query_upper_bound": "755429107/290822400",
+          "same_partition_gate_Gs_minus_R": "-8220442180584133/14578256509566750",
+          "squarefree_nonstar_loss": "480791/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              17,
+              19
+            ],
+            [
+              5,
+              13
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "62754492569670113/76163952376512000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-12882300885554682221/1201770129984257433600",
+          "extra_mass_lower_bound": "3226506944337889/30465580950604800",
+          "extra_same_partition_gate_Gs_minus_R": "-12882300885554682221/7464067332898176000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-6415981328788813421/1201770129984257433600",
+          "mask": 55,
+          "mass_lower_bound": "5511425515633249/30465580950604800",
+          "mixed_tail_loss": "13952945655209137/60931161901209600",
+          "normalized_query_upper_bound": "449251337510834859/27557127578166245",
+          "raw_query_upper_bound": "17154092993/5816448000",
+          "same_partition_gate_Gs_minus_R": "-6415981328788813421/7464067332898176000",
+          "squarefree_nonstar_loss": "246721/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              17,
+              19
+            ],
+            [
+              13
+            ]
+          ],
+          "star_loss": "899/3072",
+          "total_loss_bound": "24954155434971551/30465580950604800"
+        },
+        {
+          "extra_haar_certificate_rhs": "-13060596786039628087/1502212662480321792000",
+          "extra_mass_lower_bound": "21857597578483663/190409880941280000",
+          "extra_same_partition_gate_Gs_minus_R": "-13060596786039628087/9330084166122720000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4977697340082292087/1502212662480321792000",
+          "mask": 56,
+          "mass_lower_bound": "36138338649079663/190409880941280000",
+          "mixed_tail_loss": "635779965184317017/3046558095060480000",
+          "normalized_query_upper_bound": "519020347254313905/36138338649079663",
+          "raw_query_upper_bound": "35672641583/13087008000",
+          "same_partition_gate_Gs_minus_R": "-4977697340082292087/9330084166122720000",
+          "squarefree_nonstar_loss": "478729/1658880",
+          "star_groups": [
+            [
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              11
+            ]
+          ],
+          "star_loss": "721/2304",
+          "total_loss_bound": "154271542292200337/190409880941280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-53189704791724613443/6008850649921287168000",
+          "extra_mass_lower_bound": "81358504670711347/761639523765120000",
+          "extra_same_partition_gate_Gs_minus_R": "-53189704791724613443/37320336664490880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-20858107007895269443/6008850649921287168000",
+          "mask": 57,
+          "mass_lower_bound": "138481468953095347/761639523765120000",
+          "mixed_tail_loss": "634723599993035237/3046558095060480000",
+          "normalized_query_upper_bound": "2025277927251984405/138481468953095347",
+          "raw_query_upper_bound": "139198807883/52348032000",
+          "same_partition_gate_Gs_minus_R": "-20858107007895269443/37320336664490880000",
+          "squarefree_nonstar_loss": "479749/1658880",
+          "star_groups": [
+            [
+              5,
+              13,
+              17,
+              19
+            ],
+            [
+              7,
+              11
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "623158054812024653/761639523765120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-26192522647769320709/3004425324960643584000",
+          "extra_mass_lower_bound": "38900792218563491/380819761882560000",
+          "extra_same_partition_gate_Gs_minus_R": "-26192522647769320709/18660168332245440000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-10026723755854648709/3004425324960643584000",
+          "mask": 58,
+          "mass_lower_bound": "67462274359755491/380819761882560000",
+          "mixed_tail_loss": "637498773042054197/3046558095060480000",
+          "normalized_query_upper_bound": "983885123336250135/67462274359755491",
+          "raw_query_upper_bound": "202869395483/78522048000",
+          "same_partition_gate_Gs_minus_R": "-10026723755854648709/18660168332245440000",
+          "squarefree_nonstar_loss": "159959/552960",
+          "star_groups": [
+            [
+              7,
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              11
+            ]
+          ],
+          "star_loss": "22417/69120",
+          "total_loss_bound": "313357487522804509/380819761882560000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-126590773824882203351/12017701299842574336000",
+          "extra_mass_lower_bound": "161091160290606179/1523279047530240000",
+          "extra_same_partition_gate_Gs_minus_R": "-126590773824882203351/74640673328981760000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-61927578257223515351/12017701299842574336000",
+          "mask": 59,
+          "mass_lower_bound": "275337088855374179/1523279047530240000",
+          "mixed_tail_loss": "344901794736203071/1523279047530240000",
+          "normalized_query_upper_bound": "4444252460191128585/275337088855374179",
+          "raw_query_upper_bound": "916369999493/314088192000",
+          "same_partition_gate_Gs_minus_R": "-61927578257223515351/74640673328981760000",
+          "squarefree_nonstar_loss": "245897/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              17,
+              19
+            ],
+            [
+              11
+            ]
+          ],
+          "star_loss": "27313/92160",
+          "total_loss_bound": "1247941958674865821/1523279047530240000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-716473620424659997/85840723570304102400",
+          "extra_mass_lower_bound": "1199352457872433/10880564625216000",
+          "extra_same_partition_gate_Gs_minus_R": "-716473620424659997/533147666635584000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-254593652084240797/85840723570304102400",
+          "mask": 60,
+          "mass_lower_bound": "2015394804763633/10880564625216000",
+          "mixed_tail_loss": "17830384377522661/87044517001728000",
+          "normalized_query_upper_bound": "28475655338376675/2015394804763633",
+          "raw_query_upper_bound": "2740013167/1046960640",
+          "same_partition_gate_Gs_minus_R": "-254593652084240797/533147666635584000",
+          "squarefree_nonstar_loss": "477199/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          "star_loss": "165/512",
+          "total_loss_bound": "8865169820452367/10880564625216000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-24197401150184807101/2403540259968514867200",
+          "extra_mass_lower_bound": "31261536223229953/304655809506048000",
+          "extra_same_partition_gate_Gs_minus_R": "-24197401150184807101/14928134665796352000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-11264762036653069501/2403540259968514867200",
+          "mask": 61,
+          "mass_lower_bound": "54110721936183553/304655809506048000",
+          "mixed_tail_loss": "8339797312010209/38081976188256000",
+          "normalized_query_upper_bound": "854927156174142051/54110721936183553",
+          "raw_query_upper_bound": "293798790193/104696064000",
+          "same_partition_gate_Gs_minus_R": "-11264762036653069501/14928134665796352000",
+          "squarefree_nonstar_loss": "121921/414720",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              7
+            ]
+          ],
+          "star_loss": "1901/6144",
+          "total_loss_bound": "250545087569864447/304655809506048000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-1731872509696031789/171681447140608204800",
+          "extra_mass_lower_bound": "2028771114015851/21761129250432000",
+          "extra_same_partition_gate_Gs_minus_R": "-1731872509696031789/1066295333271168000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-808112573015193389/171681447140608204800",
+          "mask": 62,
+          "mass_lower_bound": "3660855807798251/21761129250432000",
+          "mixed_tail_loss": "9465872505586373/43522258500864000",
+          "normalized_query_upper_bound": "58778713474061295/3660855807798251",
+          "raw_query_upper_bound": "84837967877/31408819200",
+          "same_partition_gate_Gs_minus_R": "-808112573015193389/1066295333271168000",
+          "squarefree_nonstar_loss": "16237/55296",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              5
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "18100273442633749/21761129250432000"
+        },
+        {
+          "extra_haar_certificate_rhs": "-7313273541799061299/600885064992128716800",
+          "extra_mass_lower_bound": "61831557115290341/609311619012096000",
+          "extra_same_partition_gate_Gs_minus_R": "-7313273541799061299/3732033666449088000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "-4080113763416126899/600885064992128716800",
+          "mask": 63,
+          "mass_lower_bound": "107529928541197541/609311619012096000",
+          "mixed_tail_loss": "149636540056941559/609311619012096000",
+          "normalized_query_upper_bound": "1908221421666261702/107529928541197541",
+          "raw_query_upper_bound": "983650725779/314088192000",
+          "same_partition_gate_Gs_minus_R": "-4080113763416126899/3732033666449088000",
+          "squarefree_nonstar_loss": "507967/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              17,
+              19
+            ],
+            []
+          ],
+          "star_loss": "1113/4096",
+          "total_loss_bound": "501781690470898459/609311619012096000"
+        }
+      ],
+      "summary": {
+        "extra_raw_weight_open_budget": "-4080113763416126899/43108797045105792000",
+        "maximum_loss": {
+          "masks": [
+            1,
+            62
+          ],
+          "value": "18100273442633749/21761129250432000"
+        },
+        "maximum_normalized_query": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "1908221421666261702/107529928541197541"
+        },
+        "minimum_extra_gate": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "-7313273541799061299/3732033666449088000"
+        },
+        "minimum_extra_haar_certificate_rhs": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "-7313273541799061299/600885064992128716800"
+        },
+        "minimum_haar_certificate_rhs": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "-4080113763416126899/600885064992128716800"
+        },
+        "minimum_same_partition_gate": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "-4080113763416126899/3732033666449088000"
+        }
+      }
+    },
+    "4": {
+      "complete_unscreened_mixed_tail": "150505991406086180881/1989944046402504192000",
+      "partitions": [
+        {
+          "extra_haar_certificate_rhs": "519459310409718024887/9812119286285355207168000",
+          "extra_mass_lower_bound": "8114868887440179681083/29849160696037562880000",
+          "extra_same_partition_gate_Gs_minus_R": "519459310409718024887/60942036421076690880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "53315162291526157368887/9812119286285355207168000",
+          "mask": 0,
+          "mass_lower_bound": "10353555939642996897083/29849160696037562880000",
+          "mixed_tail_loss": "2244600746198840713417/29849160696037562880000",
+          "normalized_query_upper_bound": "93480587078394050344810/10353555939642996897083",
+          "raw_query_upper_bound": "983650725779/314088192000",
+          "same_partition_gate_Gs_minus_R": "53315162291526157368887/60942036421076690880000",
+          "squarefree_nonstar_loss": "507967/1658880",
+          "star_groups": [
+            [],
+            [
+              5,
+              7,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1113/4096",
+          "total_loss_bound": "19495604756394565982917/29849160696037562880000"
+        },
+        {
+          "extra_haar_certificate_rhs": "18357043179643350855671/23985180477586423839744000",
+          "extra_mass_lower_bound": "20070468261116245207387/82085191914103297920000",
+          "extra_same_partition_gate_Gs_minus_R": "18357043179643350855671/148969422362631911040000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "147413206022372424807671/23985180477586423839744000",
+          "mask": 1,
+          "mass_lower_bound": "26226857654673992551387/82085191914103297920000",
+          "mixed_tail_loss": "10870758733472806322851/164170383828206595840000",
+          "normalized_query_upper_bound": "221719283060029067638325/26226857654673992551387",
+          "raw_query_upper_bound": "84837967877/31408819200",
+          "same_partition_gate_Gs_minus_R": "147413206022372424807671/148969422362631911040000",
+          "squarefree_nonstar_loss": "16237/55296",
+          "star_groups": [
+            [
+              5
+            ],
+            [
+              7,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "55858334259429305368613/82085191914103297920000"
+        },
+        {
+          "extra_haar_certificate_rhs": "122510824658103246351139/143911082865518543038464000",
+          "extra_mass_lower_bound": "13943876605833011305177/54723461276068865280000",
+          "extra_same_partition_gate_Gs_minus_R": "122510824658103246351139/893816534175791466240000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "896847801714477690063139/143911082865518543038464000",
+          "mask": 2,
+          "mass_lower_bound": "18048136201538176201177/54723461276068865280000",
+          "mixed_tail_loss": "1827828354525714494599/27361730638034432640000",
+          "normalized_query_upper_bound": "153565340508717850197485/18048136201538176201177",
+          "raw_query_upper_bound": "293798790193/104696064000",
+          "same_partition_gate_Gs_minus_R": "896847801714477690063139/893816534175791466240000",
+          "squarefree_nonstar_loss": "121921/414720",
+          "star_groups": [
+            [
+              7
+            ],
+            [
+              5,
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1901/6144",
+          "total_loss_bound": "36675325074530689078823/54723461276068865280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "67516405965088525935641/35977770716379635759616000",
+          "extra_mass_lower_bound": "3457531174788157538353/13680865319017216320000",
+          "extra_same_partition_gate_Gs_minus_R": "67516405965088525935641/223454133543947866560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "261100650229182136863641/35977770716379635759616000",
+          "mask": 3,
+          "mass_lower_bound": "4483596073714448762353/13680865319017216320000",
+          "mixed_tail_loss": "6823303224978561876301/109446922552137730560000",
+          "normalized_query_upper_bound": "35804355653772073242875/4483596073714448762353",
+          "raw_query_upper_bound": "2740013167/1046960640",
+          "same_partition_gate_Gs_minus_R": "261100650229182136863641/223454133543947866560000",
+          "squarefree_nonstar_loss": "477199/1658880",
+          "star_groups": [
+            [
+              5,
+              7
+            ],
+            [
+              11,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "165/512",
+          "total_loss_bound": "9197269245302767557647/13680865319017216320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8608975271958190083089/11543669748571006126080000",
+          "extra_mass_lower_bound": "1154351201912183000587/4389582455299641600000",
+          "extra_same_partition_gate_Gs_minus_R": "8608975271958190083089/71696513436560812800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "70721567014448118723089/11543669748571006126080000",
+          "mask": 4,
+          "mass_lower_bound": "1483569886059656120587/4389582455299641600000",
+          "mixed_tail_loss": "303751830156738988163/4389582455299641600000",
+          "normalized_query_upper_bound": "12806854172784102205775/1483569886059656120587",
+          "raw_query_upper_bound": "916369999493/314088192000",
+          "same_partition_gate_Gs_minus_R": "70721567014448118723089/71696513436560812800000",
+          "squarefree_nonstar_loss": "245897/829440",
+          "star_groups": [
+            [
+              11
+            ],
+            [
+              5,
+              7,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "27313/92160",
+          "total_loss_bound": "2906012569239985479413/4389582455299641600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5446205751488302913627/3155944799682424189440000",
+          "extra_mass_lower_bound": "2675572488872043480619/10800683146592539200000",
+          "extra_same_partition_gate_Gs_minus_R": "5446205751488302913627/19601239784556830400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "22427279809742128433627/3155944799682424189440000",
+          "mask": 5,
+          "mass_lower_bound": "3485623724866483920619/10800683146592539200000",
+          "mixed_tail_loss": "5502278206228644956923/86405465172740313600000",
+          "normalized_query_upper_bound": "27904621906354947578825/3485623724866483920619",
+          "raw_query_upper_bound": "202869395483/78522048000",
+          "same_partition_gate_Gs_minus_R": "22427279809742128433627/19601239784556830400000",
+          "squarefree_nonstar_loss": "159959/552960",
+          "star_groups": [
+            [
+              5,
+              11
+            ],
+            [
+              7,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "22417/69120",
+          "total_loss_bound": "7315059421726055279381/10800683146592539200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "32656349046875374813229/21163394539046844564480000",
+          "extra_mass_lower_bound": "2025680770391633394707/8047567834716009600000",
+          "extra_same_partition_gate_Gs_minus_R": "32656349046875374813229/131443607967028156800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "146529433908106910653229/21163394539046844564480000",
+          "mask": 6,
+          "mass_lower_bound": "2629248357995334114707/8047567834716009600000",
+          "mixed_tail_loss": "2042409001542673980547/32190271338864038400000",
+          "normalized_query_upper_bound": "21399311610225272999275/2629248357995334114707",
+          "raw_query_upper_bound": "139198807883/52348032000",
+          "same_partition_gate_Gs_minus_R": "146529433908106910653229/131443607967028156800000",
+          "squarefree_nonstar_loss": "479749/1658880",
+          "star_groups": [
+            [
+              7,
+              11
+            ],
+            [
+              5,
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "5418319476720675485293/8047567834716009600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "308127122955675398570059/179888853581898178798080000",
+          "extra_mass_lower_bound": "35550423254850191506669/136808653190172163200000",
+          "extra_same_partition_gate_Gs_minus_R": "308127122955675398570059/1117270667719739332800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1276048344276143453210059/179888853581898178798080000",
+          "mask": 7,
+          "mass_lower_bound": "45811072244113103746669/136808653190172163200000",
+          "mixed_tail_loss": "34817923665698181107699/547234612760688652800000",
+          "normalized_query_upper_bound": "372913812745125632680700/45811072244113103746669",
+          "raw_query_upper_bound": "35672641583/13087008000",
+          "same_partition_gate_Gs_minus_R": "1276048344276143453210059/1117270667719739332800000",
+          "squarefree_nonstar_loss": "478729/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11
+            ],
+            [
+              13,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "721/2304",
+          "total_loss_bound": "90997580946059059453331/136808653190172163200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "4490336388233036966717/6541412857523570138112000",
+          "extra_mass_lower_bound": "219632639741460830107/829143352667710080000",
+          "extra_same_partition_gate_Gs_minus_R": "4490336388233036966717/40628024280717793920000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "39687471708977329862717/6541412857523570138112000",
+          "mask": 8,
+          "mass_lower_bound": "281818391191539086107/829143352667710080000",
+          "mixed_tail_loss": "116098025029494364411/1658286705335420160000",
+          "normalized_query_upper_bound": "2445341585825179446405/281818391191539086107",
+          "raw_query_upper_bound": "17154092993/5816448000",
+          "same_partition_gate_Gs_minus_R": "39687471708977329862717/40628024280717793920000",
+          "squarefree_nonstar_loss": "246721/829440",
+          "star_groups": [
+            [
+              13
+            ],
+            [
+              5,
+              7,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "899/3072",
+          "total_loss_bound": "547324961476170993893/829143352667710080000"
+        },
+        {
+          "extra_haar_certificate_rhs": "842898605835006424807/529084863476171114112000",
+          "extra_mass_lower_bound": "66280709650799683733/268252261157200320000",
+          "extra_same_partition_gate_Gs_minus_R": "842898605835006424807/3286090199175703920000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "3689725727365794820807/529084863476171114112000",
+          "mask": 9,
+          "mass_lower_bound": "86399629237589707733/268252261157200320000",
+          "mixed_tail_loss": "137064163792358860511/2146018089257602560000",
+          "normalized_query_upper_bound": "696801780388012148850/86399629237589707733",
+          "raw_query_upper_bound": "755429107/290822400",
+          "same_partition_gate_Gs_minus_R": "3689725727365794820807/3286090199175703920000",
+          "squarefree_nonstar_loss": "480791/1658880",
+          "star_groups": [
+            [
+              5,
+              13
+            ],
+            [
+              7,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "181852631919610612267/268252261157200320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "54149827985340125472079/35977770716379635759616000",
+          "extra_mass_lower_bound": "63985356765711513653/253349357759578080000",
+          "extra_same_partition_gate_Gs_minus_R": "54149827985340125472079/223454133543947866560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "247734072249433736400079/35977770716379635759616000",
+          "mask": 10,
+          "mass_lower_bound": "82986558597679869653/253349357759578080000",
+          "mixed_tail_loss": "257400588263898834427/4053589724153249280000",
+          "normalized_query_upper_bound": "12198632382525077053565/1493758054758237653754",
+          "raw_query_upper_bound": "23338231297/8724672000",
+          "same_partition_gate_Gs_minus_R": "247734072249433736400079/223454133543947866560000",
+          "squarefree_nonstar_loss": "160201/552960",
+          "star_groups": [
+            [
+              7,
+              13
+            ],
+            [
+              5,
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1471/4608",
+          "total_loss_bound": "170362799161898210347/253349357759578080000"
+        },
+        {
+          "extra_haar_certificate_rhs": "1848719773258329807811/1058169726952342228224000",
+          "extra_mass_lower_bound": "855088111442321507/3311756310582720000",
+          "extra_same_partition_gate_Gs_minus_R": "1848719773258329807811/6572180398351407840000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "7542374016319906599811/1058169726952342228224000",
+          "mask": 11,
+          "mass_lower_bound": "1103469834736025507/3311756310582720000",
+          "mixed_tail_loss": "15039725311281810121/238446454361955840000",
+          "normalized_query_upper_bound": "724590408380979840700/89381056613618066067",
+          "raw_query_upper_bound": "1178333711/436233600",
+          "same_partition_gate_Gs_minus_R": "7542374016319906599811/6572180398351407840000",
+          "squarefree_nonstar_loss": "478793/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              13
+            ],
+            [
+              11,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "121/384",
+          "total_loss_bound": "2208286475846694493/3311756310582720000"
+        },
+        {
+          "extra_haar_certificate_rhs": "3342545966493371362607/2336218877686989335040000",
+          "extra_mass_lower_bound": "76684045850810617477/296122625952753600000",
+          "extra_same_partition_gate_Gs_minus_R": "3342545966493371362607/14510008671684926400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "15912951438187761682607/2336218877686989335040000",
+          "mask": 12,
+          "mass_lower_bound": "98893242797267137477/296122625952753600000",
+          "mixed_tail_loss": "153474666763422875809/2368981007622028800000",
+          "normalized_query_upper_bound": "817563754797253839375/98893242797267137477",
+          "raw_query_upper_bound": "321172153/116328960",
+          "same_partition_gate_Gs_minus_R": "15912951438187761682607/14510008671684926400000",
+          "squarefree_nonstar_loss": "481817/1658880",
+          "star_groups": [
+            [
+              11,
+              13
+            ],
+            [
+              5,
+              7,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "2387/7680",
+          "total_loss_bound": "197229383155486462523/296122625952753600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "75985438054230915291091/44972213395474544699520000",
+          "extra_mass_lower_bound": "718086307580983981663/2850180274795253400000",
+          "extra_same_partition_gate_Gs_minus_R": "75985438054230915291091/279317666929934833200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "317965743384347928951091/44972213395474544699520000",
+          "mask": 13,
+          "mass_lower_bound": "931849828190627986663/2850180274795253400000",
+          "mixed_tail_loss": "11500109370700087050443/182411537586896217600000",
+          "normalized_query_upper_bound": "15038535961784550039825/1863699656381255973326",
+          "raw_query_upper_bound": "1918099339/727056000",
+          "same_partition_gate_Gs_minus_R": "317965743384347928951091/279317666929934833200000",
+          "squarefree_nonstar_loss": "478271/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13
+            ],
+            [
+              7,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "1853/5760",
+          "total_loss_bound": "1918330446604625413337/2850180274795253400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5634683030203271806549/3212300956819610335680000",
+          "extra_mass_lower_bound": "90032522650612338193/361927653942254400000",
+          "extra_same_partition_gate_Gs_minus_R": "5634683030203271806549/19951261923566773800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "22918990553783058496549/3212300956819610335680000",
+          "mask": 14,
+          "mass_lower_bound": "117177096696281418193/361927653942254400000",
+          "mixed_tail_loss": "183607706682187291331/2895421231538035200000",
+          "normalized_query_upper_bound": "8439759308991695434750/1054593870266532763737",
+          "raw_query_upper_bound": "2260554037/872467200",
+          "same_partition_gate_Gs_minus_R": "22918990553783058496549/19951261923566773800000",
+          "squarefree_nonstar_loss": "478769/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              13
+            ],
+            [
+              5,
+              17,
+              19
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "244750557245972981807/361927653942254400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "102186627618264659928247/89944426790949089399040000",
+          "extra_mass_lower_bound": "223540748634123961717/844497859198593600000",
+          "extra_same_partition_gate_Gs_minus_R": "102186627618264659928247/558635333859869666400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "586147238278498687248247/89944426790949089399040000",
+          "mask": 15,
+          "mass_lower_bound": "286878088074018481717/844497859198593600000",
+          "mixed_tail_loss": "1372250505127443840667/20267948620766246400000",
+          "normalized_query_upper_bound": "65546458477350062512300/7745708377998499006359",
+          "raw_query_upper_bound": "6270122587/2181168000",
+          "same_partition_gate_Gs_minus_R": "586147238278498687248247/558635333859869666400000",
+          "squarefree_nonstar_loss": "486239/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13
+            ],
+            [
+              17,
+              19
+            ]
+          ],
+          "star_loss": "115/384",
+          "total_loss_bound": "557619771124575118283/844497859198593600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "10908432972461899607/18583559254328324256000",
+          "extra_mass_lower_bound": "90607216359735709943/339195007909517760000",
+          "extra_same_partition_gate_Gs_minus_R": "10908432972461899607/115420523524766460000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "110900294679121822607/18583559254328324256000",
+          "mask": 16,
+          "mass_lower_bound": "116046841952949541943/339195007909517760000",
+          "mixed_tail_loss": "96513299849125497103/1356780031638071040000",
+          "normalized_query_upper_bound": "1014548369623997924170/116046841952949541943",
+          "raw_query_upper_bound": "117431586433/39261024000",
+          "same_partition_gate_Gs_minus_R": "110900294679121822607/115420523524766460000",
+          "squarefree_nonstar_loss": "247987/829440",
+          "star_groups": [
+            [
+              17
+            ],
+            [
+              5,
+              7,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "221/768",
+          "total_loss_bound": "223148165956568218057/339195007909517760000"
+        },
+        {
+          "extra_haar_certificate_rhs": "334967047042904950763/233621887768698933504000",
+          "extra_mass_lower_bound": "131404521030027582499/533020726714956480000",
+          "extra_same_partition_gate_Gs_minus_R": "334967047042904950763/1451000867168492640000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1592007594212343982763/233621887768698933504000",
+          "mask": 17,
+          "mass_lower_bound": "171381075533649318499/533020726714956480000",
+          "mixed_tail_loss": "273339359412349407883/4264165813719651840000",
+          "normalized_query_upper_bound": "1394807184820884134300/171381075533649318499",
+          "raw_query_upper_bound": "10273814059/3926102400",
+          "same_partition_gate_Gs_minus_R": "1592007594212343982763/1451000867168492640000",
+          "squarefree_nonstar_loss": "482047/1658880",
+          "star_groups": [
+            [
+              5,
+              17
+            ],
+            [
+              7,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "361639651181307161501/533020726714956480000"
+        },
+        {
+          "extra_haar_certificate_rhs": "26306790584671287268427/17988885358189817879808000",
+          "extra_mass_lower_bound": "3472732679400006102517/13680865319017216320000",
+          "extra_same_partition_gate_Gs_minus_R": "26306790584671287268427/111727066771973933280000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "123098912716718092732427/17988885358189817879808000",
+          "mask": 18,
+          "mass_lower_bound": "4498797578326297326517/13680865319017216320000",
+          "mixed_tail_loss": "6967048249778831445739/109446922552137730560000",
+          "normalized_query_upper_bound": "36892366388415831232940/4498797578326297326517",
+          "raw_query_upper_bound": "17645473543/6543504000",
+          "same_partition_gate_Gs_minus_R": "123098912716718092732427/111727066771973933280000",
+          "squarefree_nonstar_loss": "481601/1658880",
+          "star_groups": [
+            [
+              7,
+              17
+            ],
+            [
+              5,
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "203/640",
+          "total_loss_bound": "9182067740690918993483/13680865319017216320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "524206637467515621629/285537862828409807616000",
+          "extra_mass_lower_bound": "250930430539236970763/977204665644086880000",
+          "extra_same_partition_gate_Gs_minus_R": "524206637467515621629/1773445504317046560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "2060589528452385549629/285537862828409807616000",
+          "mask": 19,
+          "mass_lower_bound": "324220780462543486763/977204665644086880000",
+          "mixed_tail_loss": "974860758124791557167/15635274650305390080000",
+          "normalized_query_upper_bound": "2609653968848677625875/324220780462543486763",
+          "raw_query_upper_bound": "1397969681/523480320",
+          "same_partition_gate_Gs_minus_R": "2060589528452385549629/1773445504317046560000",
+          "squarefree_nonstar_loss": "478451/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              17
+            ],
+            [
+              11,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "1219/3840",
+          "total_loss_bound": "652983885181543393237/977204665644086880000"
+        },
+        {
+          "extra_haar_certificate_rhs": "59122975990240276001/43726021774890174720000",
+          "extra_mass_lower_bound": "26022439027792782173/99763237620446400000",
+          "extra_same_partition_gate_Gs_minus_R": "59122975990240276001/271577702411215200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "294397944711793036001/43726021774890174720000",
+          "mask": 20,
+          "mass_lower_bound": "33504681849326262173/99763237620446400000",
+          "mixed_tail_loss": "52385071591411336991/798105900963571200000",
+          "normalized_query_upper_bound": "278867080038905913100/33504681849326262173",
+          "raw_query_upper_bound": "54872954123/19630512000",
+          "same_partition_gate_Gs_minus_R": "294397944711793036001/271577702411215200000",
+          "squarefree_nonstar_loss": "96527/331776",
+          "star_groups": [
+            [
+              11,
+              17
+            ],
+            [
+              5,
+              7,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "1063/3456",
+          "total_loss_bound": "66258555771120137827/99763237620446400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "4738514768557343382529/2725588690634820890880000",
+          "extra_mass_lower_bound": "2342017041153790839913/9327862717511738400000",
+          "extra_same_partition_gate_Gs_minus_R": "4738514768557343382529/16928343450299080800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "19403987818867465422529/2725588690634820890880000",
+          "mask": 21,
+          "mass_lower_bound": "3041606744967171219913/9327862717511738400000",
+          "mixed_tail_loss": "9405545597926391363267/149245803480187814400000",
+          "normalized_query_upper_bound": "24441668296775456001275/3041606744967171219913",
+          "raw_query_upper_bound": "102875112409/39261024000",
+          "same_partition_gate_Gs_minus_R": "19403987818867465422529/16928343450299080800000",
+          "squarefree_nonstar_loss": "159271/552960",
+          "star_groups": [
+            [
+              5,
+              11,
+              17
+            ],
+            [
+              7,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "6695/20736",
+          "total_loss_bound": "6286255972544567180087/9327862717511738400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "9330117715360592705651/5290848634761711141120000",
+          "extra_mass_lower_bound": "1005668778377571302041/4023783917358004800000",
+          "extra_same_partition_gate_Gs_minus_R": "9330117715360592705651/32860901991757039200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "37798388930668476665651/5290848634761711141120000",
+          "mask": 22,
+          "mass_lower_bound": "1307452572179421662041/4023783917358004800000",
+          "mixed_tail_loss": "2032796410087866345547/32190271338864038400000",
+          "normalized_query_upper_bound": "10474037189174322463700/1307452572179421662041",
+          "raw_query_upper_bound": "17032948501/6543504000",
+          "same_partition_gate_Gs_minus_R": "37798388930668476665651/32860901991757039200000",
+          "squarefree_nonstar_loss": "5901/20480",
+          "star_groups": [
+            [
+              7,
+              11,
+              17
+            ],
+            [
+              5,
+              13,
+              19
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "2716331345178583137959/4023783917358004800000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8378651880278405124317/6662550132662895511040000",
+          "extra_mass_lower_bound": "17993731024499997236147/68404326595086081600000",
+          "extra_same_partition_gate_Gs_minus_R": "8378651880278405124317/41380395100731086400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "44227586003258703444317/6662550132662895511040000",
+          "mask": 23,
+          "mass_lower_bound": "23124055519131453356147/68404326595086081600000",
+          "mixed_tail_loss": "36480088359565789806449/547234612760688652800000",
+          "normalized_query_upper_bound": "193995529746213216746725/23124055519131453356147",
+          "raw_query_upper_bound": "74229838261/26174016000",
+          "same_partition_gate_Gs_minus_R": "44227586003258703444317/41380395100731086400000",
+          "squarefree_nonstar_loss": "484111/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              17
+            ],
+            [
+              13,
+              19
+            ]
+          ],
+          "star_loss": "4195/13824",
+          "total_loss_bound": "45280271075954628243853/68404326595086081600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "268020502020154750883/204419151797611566816000",
+          "extra_mass_lower_bound": "54448357038769664759/207285838166927520000",
+          "extra_same_partition_gate_Gs_minus_R": "268020502020154750883/1269625758772431060000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1367930980793413903883/204419151797611566816000",
+          "mask": 24,
+          "mass_lower_bound": "69994794901289228759/207285838166927520000",
+          "mixed_tail_loss": "219881934196527445231/3316573410670840320000",
+          "normalized_query_upper_bound": "585175634036375351970/69994794901289228759",
+          "raw_query_upper_bound": "2052506141/727056000",
+          "same_partition_gate_Gs_minus_R": "1367930980793413903883/1269625758772431060000",
+          "squarefree_nonstar_loss": "483301/1658880",
+          "star_groups": [
+            [
+              13,
+              17
+            ],
+            [
+              5,
+              7,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "39/128",
+          "total_loss_bound": "137291043265638291241/207285838166927520000"
+        },
+        {
+          "extra_haar_certificate_rhs": "340081799473495171319/192394495809516768768000",
+          "extra_mass_lower_bound": "6105737730248972659/24386569196109120000",
+          "extra_same_partition_gate_Gs_minus_R": "340081799473495171319/1194941890609346880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1375291661848327315319/192394495809516768768000",
+          "mask": 25,
+          "mass_lower_bound": "7934730419957156659/24386569196109120000",
+          "mixed_tail_loss": "12306689835768676603/195092553568872960000",
+          "normalized_query_upper_bound": "63587056241784150075/7934730419957156659",
+          "raw_query_upper_bound": "1516616803/581644800",
+          "same_partition_gate_Gs_minus_R": "1375291661848327315319/1194941890609346880000",
+          "squarefree_nonstar_loss": "477721/1658880",
+          "star_groups": [
+            [
+              5,
+              13,
+              17
+            ],
+            [
+              7,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "16451838776151963341/24386569196109120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "17372221716087007807/9862327499007575592000",
+          "extra_mass_lower_bound": "60216132471552110299/240015181035389760000",
+          "extra_same_partition_gate_Gs_minus_R": "17372221716087007807/61253874326740095000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "70438078148130212557/9862327499007575592000",
+          "mask": 26,
+          "mass_lower_bound": "78217271049206342299/240015181035389760000",
+          "mixed_tail_loss": "120974570680276762483/1920121448283118080000",
+          "normalized_query_upper_bound": "627487028763465080210/78217271049206342299",
+          "raw_query_upper_bound": "11404733831/4362336000",
+          "same_partition_gate_Gs_minus_R": "70438078148130212557/61253874326740095000",
+          "squarefree_nonstar_loss": "477649/1658880",
+          "star_groups": [
+            [
+              7,
+              13,
+              17
+            ],
+            [
+              5,
+              11,
+              19
+            ]
+          ],
+          "star_loss": "1241/3840",
+          "total_loss_bound": "161797909986183417701/240015181035389760000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5592461013618912685661/4232678907809368912896000",
+          "extra_mass_lower_bound": "35066505449845298549/134126130578600160000",
+          "extra_same_partition_gate_Gs_minus_R": "5592461013618912685661/26288721593405631360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "28367077985865219853661/4232678907809368912896000",
+          "mask": 27,
+          "mass_lower_bound": "45125965243240310549/134126130578600160000",
+          "mixed_tail_loss": "141513371199319878841/2146018089257602560000",
+          "normalized_query_upper_bound": "1506083822955731494475/180503860972961242196",
+          "raw_query_upper_bound": "9796813867/3489868800",
+          "same_partition_gate_Gs_minus_R": "28367077985865219853661/26288721593405631360000",
+          "squarefree_nonstar_loss": "483013/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              17
+            ],
+            [
+              11,
+              19
+            ]
+          ],
+          "star_loss": "1569/5120",
+          "total_loss_bound": "89000165335359849451/134126130578600160000"
+        },
+        {
+          "extra_haar_certificate_rhs": "7517892723695299427791/4088383035952231336320000",
+          "extra_mass_lower_bound": "531162055740319953029/2072858381669275200000",
+          "extra_same_partition_gate_Gs_minus_R": "7517892723695299427791/25392515175448621200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "29516102299160482487791/4088383035952231336320000",
+          "mask": 28,
+          "mass_lower_bound": "686626434365515593029/2072858381669275200000",
+          "mixed_tail_loss": "1033543482394892501393/16582867053354201600000",
+          "normalized_query_upper_bound": "5521758217433467259250/686626434365515593029",
+          "raw_query_upper_bound": "774703661/290822400",
+          "same_partition_gate_Gs_minus_R": "29516102299160482487791/25392515175448621200000",
+          "squarefree_nonstar_loss": "478231/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              17
+            ],
+            [
+              5,
+              7,
+              19
+            ]
+          ],
+          "star_loss": "733/2304",
+          "total_loss_bound": "1386231947303759606971/2072858381669275200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "941831784699097687897/667491107910568381440000",
+          "extra_mass_lower_bound": "335895391193710553/1321976008717650000",
+          "extra_same_partition_gate_Gs_minus_R": "941831784699097687897/4145716763338550400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "4533376205183209207897/667491107910568381440000",
+          "mask": 29,
+          "mass_lower_bound": "435043591847534303/1321976008717650000",
+          "mixed_tail_loss": "21644312009868604057/338425858231718400000",
+          "normalized_query_upper_bound": "229094752365344354775/27842789878242195392",
+          "raw_query_upper_bound": "15749596927/5816448000",
+          "same_partition_gate_Gs_minus_R": "4533376205183209207897/4145716763338550400000",
+          "squarefree_nonstar_loss": "481931/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              17
+            ],
+            [
+              7,
+              19
+            ]
+          ],
+          "star_loss": "8749/27648",
+          "total_loss_bound": "886932416870115697/1321976008717650000"
+        },
+        {
+          "extra_haar_certificate_rhs": "82780540920613668448403/59962951193966059599360000",
+          "extra_mass_lower_bound": "5617824244684124772899/22801442198362027200000",
+          "extra_same_partition_gate_Gs_minus_R": "82780540920613668448403/372423555906579777600000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "405420948027436353328403/59962951193966059599360000",
+          "mask": 30,
+          "mass_lower_bound": "7327932409561276812899/22801442198362027200000",
+          "mixed_tail_loss": "11711226682948902337433/182411537586896217600000",
+          "normalized_query_upper_bound": "59823406116925992165625/7327932409561276812899",
+          "raw_query_upper_bound": "183125117/69797376",
+          "same_partition_gate_Gs_minus_R": "405420948027436353328403/372423555906579777600000",
+          "squarefree_nonstar_loss": "96497/331776",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              5,
+              19
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "15473509788800750387101/22801442198362027200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8025692352110723342989/14684804374032504391680000",
+          "extra_mass_lower_bound": "498495088260901054429/1861342220274451200000",
+          "extra_same_partition_gate_Gs_minus_R": "8025692352110723342989/91205768793448108800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "87039669602761176782989/14684804374032504391680000",
+          "mask": 31,
+          "mass_lower_bound": "638095754781484894429/1861342220274451200000",
+          "mixed_tail_loss": "133150352929118451821/1861342220274451200000",
+          "normalized_query_upper_bound": "5594337298031821907425/638095754781484894429",
+          "raw_query_upper_bound": "104889380257/34898688000",
+          "same_partition_gate_Gs_minus_R": "87039669602761176782989/91205768793448108800000",
+          "squarefree_nonstar_loss": "248477/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              17
+            ],
+            [
+              19
+            ]
+          ],
+          "star_loss": "5273/18432",
+          "total_loss_bound": "1223246465492966305571/1861342220274451200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8025692352110723342989/14684804374032504391680000",
+          "extra_mass_lower_bound": "498495088260901054429/1861342220274451200000",
+          "extra_same_partition_gate_Gs_minus_R": "8025692352110723342989/91205768793448108800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "87039669602761176782989/14684804374032504391680000",
+          "mask": 32,
+          "mass_lower_bound": "638095754781484894429/1861342220274451200000",
+          "mixed_tail_loss": "133150352929118451821/1861342220274451200000",
+          "normalized_query_upper_bound": "5594337298031821907425/638095754781484894429",
+          "raw_query_upper_bound": "104889380257/34898688000",
+          "same_partition_gate_Gs_minus_R": "87039669602761176782989/91205768793448108800000",
+          "squarefree_nonstar_loss": "248477/829440",
+          "star_groups": [
+            [
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "5273/18432",
+          "total_loss_bound": "1223246465492966305571/1861342220274451200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "82780540920613668448403/59962951193966059599360000",
+          "extra_mass_lower_bound": "5617824244684124772899/22801442198362027200000",
+          "extra_same_partition_gate_Gs_minus_R": "82780540920613668448403/372423555906579777600000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "405420948027436353328403/59962951193966059599360000",
+          "mask": 33,
+          "mass_lower_bound": "7327932409561276812899/22801442198362027200000",
+          "mixed_tail_loss": "11711226682948902337433/182411537586896217600000",
+          "normalized_query_upper_bound": "59823406116925992165625/7327932409561276812899",
+          "raw_query_upper_bound": "183125117/69797376",
+          "same_partition_gate_Gs_minus_R": "405420948027436353328403/372423555906579777600000",
+          "squarefree_nonstar_loss": "96497/331776",
+          "star_groups": [
+            [
+              5,
+              19
+            ],
+            [
+              7,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "15473509788800750387101/22801442198362027200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "941831784699097687897/667491107910568381440000",
+          "extra_mass_lower_bound": "335895391193710553/1321976008717650000",
+          "extra_same_partition_gate_Gs_minus_R": "941831784699097687897/4145716763338550400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "4533376205183209207897/667491107910568381440000",
+          "mask": 34,
+          "mass_lower_bound": "435043591847534303/1321976008717650000",
+          "mixed_tail_loss": "21644312009868604057/338425858231718400000",
+          "normalized_query_upper_bound": "229094752365344354775/27842789878242195392",
+          "raw_query_upper_bound": "15749596927/5816448000",
+          "same_partition_gate_Gs_minus_R": "4533376205183209207897/4145716763338550400000",
+          "squarefree_nonstar_loss": "481931/1658880",
+          "star_groups": [
+            [
+              7,
+              19
+            ],
+            [
+              5,
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "8749/27648",
+          "total_loss_bound": "886932416870115697/1321976008717650000"
+        },
+        {
+          "extra_haar_certificate_rhs": "7517892723695299427791/4088383035952231336320000",
+          "extra_mass_lower_bound": "531162055740319953029/2072858381669275200000",
+          "extra_same_partition_gate_Gs_minus_R": "7517892723695299427791/25392515175448621200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "29516102299160482487791/4088383035952231336320000",
+          "mask": 35,
+          "mass_lower_bound": "686626434365515593029/2072858381669275200000",
+          "mixed_tail_loss": "1033543482394892501393/16582867053354201600000",
+          "normalized_query_upper_bound": "5521758217433467259250/686626434365515593029",
+          "raw_query_upper_bound": "774703661/290822400",
+          "same_partition_gate_Gs_minus_R": "29516102299160482487791/25392515175448621200000",
+          "squarefree_nonstar_loss": "478231/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              19
+            ],
+            [
+              11,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "733/2304",
+          "total_loss_bound": "1386231947303759606971/2072858381669275200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5592461013618912685661/4232678907809368912896000",
+          "extra_mass_lower_bound": "35066505449845298549/134126130578600160000",
+          "extra_same_partition_gate_Gs_minus_R": "5592461013618912685661/26288721593405631360000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "28367077985865219853661/4232678907809368912896000",
+          "mask": 36,
+          "mass_lower_bound": "45125965243240310549/134126130578600160000",
+          "mixed_tail_loss": "141513371199319878841/2146018089257602560000",
+          "normalized_query_upper_bound": "1506083822955731494475/180503860972961242196",
+          "raw_query_upper_bound": "9796813867/3489868800",
+          "same_partition_gate_Gs_minus_R": "28367077985865219853661/26288721593405631360000",
+          "squarefree_nonstar_loss": "483013/1658880",
+          "star_groups": [
+            [
+              11,
+              19
+            ],
+            [
+              5,
+              7,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "1569/5120",
+          "total_loss_bound": "89000165335359849451/134126130578600160000"
+        },
+        {
+          "extra_haar_certificate_rhs": "17372221716087007807/9862327499007575592000",
+          "extra_mass_lower_bound": "60216132471552110299/240015181035389760000",
+          "extra_same_partition_gate_Gs_minus_R": "17372221716087007807/61253874326740095000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "70438078148130212557/9862327499007575592000",
+          "mask": 37,
+          "mass_lower_bound": "78217271049206342299/240015181035389760000",
+          "mixed_tail_loss": "120974570680276762483/1920121448283118080000",
+          "normalized_query_upper_bound": "627487028763465080210/78217271049206342299",
+          "raw_query_upper_bound": "11404733831/4362336000",
+          "same_partition_gate_Gs_minus_R": "70438078148130212557/61253874326740095000",
+          "squarefree_nonstar_loss": "477649/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              19
+            ],
+            [
+              7,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "1241/3840",
+          "total_loss_bound": "161797909986183417701/240015181035389760000"
+        },
+        {
+          "extra_haar_certificate_rhs": "340081799473495171319/192394495809516768768000",
+          "extra_mass_lower_bound": "6105737730248972659/24386569196109120000",
+          "extra_same_partition_gate_Gs_minus_R": "340081799473495171319/1194941890609346880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1375291661848327315319/192394495809516768768000",
+          "mask": 38,
+          "mass_lower_bound": "7934730419957156659/24386569196109120000",
+          "mixed_tail_loss": "12306689835768676603/195092553568872960000",
+          "normalized_query_upper_bound": "63587056241784150075/7934730419957156659",
+          "raw_query_upper_bound": "1516616803/581644800",
+          "same_partition_gate_Gs_minus_R": "1375291661848327315319/1194941890609346880000",
+          "squarefree_nonstar_loss": "477721/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              19
+            ],
+            [
+              5,
+              13,
+              17
+            ]
+          ],
+          "star_loss": "497/1536",
+          "total_loss_bound": "16451838776151963341/24386569196109120000"
+        },
+        {
+          "extra_haar_certificate_rhs": "268020502020154750883/204419151797611566816000",
+          "extra_mass_lower_bound": "54448357038769664759/207285838166927520000",
+          "extra_same_partition_gate_Gs_minus_R": "268020502020154750883/1269625758772431060000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1367930980793413903883/204419151797611566816000",
+          "mask": 39,
+          "mass_lower_bound": "69994794901289228759/207285838166927520000",
+          "mixed_tail_loss": "219881934196527445231/3316573410670840320000",
+          "normalized_query_upper_bound": "585175634036375351970/69994794901289228759",
+          "raw_query_upper_bound": "2052506141/727056000",
+          "same_partition_gate_Gs_minus_R": "1367930980793413903883/1269625758772431060000",
+          "squarefree_nonstar_loss": "483301/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              19
+            ],
+            [
+              13,
+              17
+            ]
+          ],
+          "star_loss": "39/128",
+          "total_loss_bound": "137291043265638291241/207285838166927520000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8378651880278405124317/6662550132662895511040000",
+          "extra_mass_lower_bound": "17993731024499997236147/68404326595086081600000",
+          "extra_same_partition_gate_Gs_minus_R": "8378651880278405124317/41380395100731086400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "44227586003258703444317/6662550132662895511040000",
+          "mask": 40,
+          "mass_lower_bound": "23124055519131453356147/68404326595086081600000",
+          "mixed_tail_loss": "36480088359565789806449/547234612760688652800000",
+          "normalized_query_upper_bound": "193995529746213216746725/23124055519131453356147",
+          "raw_query_upper_bound": "74229838261/26174016000",
+          "same_partition_gate_Gs_minus_R": "44227586003258703444317/41380395100731086400000",
+          "squarefree_nonstar_loss": "484111/1658880",
+          "star_groups": [
+            [
+              13,
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "4195/13824",
+          "total_loss_bound": "45280271075954628243853/68404326595086081600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "9330117715360592705651/5290848634761711141120000",
+          "extra_mass_lower_bound": "1005668778377571302041/4023783917358004800000",
+          "extra_same_partition_gate_Gs_minus_R": "9330117715360592705651/32860901991757039200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "37798388930668476665651/5290848634761711141120000",
+          "mask": 41,
+          "mass_lower_bound": "1307452572179421662041/4023783917358004800000",
+          "mixed_tail_loss": "2032796410087866345547/32190271338864038400000",
+          "normalized_query_upper_bound": "10474037189174322463700/1307452572179421662041",
+          "raw_query_upper_bound": "17032948501/6543504000",
+          "same_partition_gate_Gs_minus_R": "37798388930668476665651/32860901991757039200000",
+          "squarefree_nonstar_loss": "5901/20480",
+          "star_groups": [
+            [
+              5,
+              13,
+              19
+            ],
+            [
+              7,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "2716331345178583137959/4023783917358004800000"
+        },
+        {
+          "extra_haar_certificate_rhs": "4738514768557343382529/2725588690634820890880000",
+          "extra_mass_lower_bound": "2342017041153790839913/9327862717511738400000",
+          "extra_same_partition_gate_Gs_minus_R": "4738514768557343382529/16928343450299080800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "19403987818867465422529/2725588690634820890880000",
+          "mask": 42,
+          "mass_lower_bound": "3041606744967171219913/9327862717511738400000",
+          "mixed_tail_loss": "9405545597926391363267/149245803480187814400000",
+          "normalized_query_upper_bound": "24441668296775456001275/3041606744967171219913",
+          "raw_query_upper_bound": "102875112409/39261024000",
+          "same_partition_gate_Gs_minus_R": "19403987818867465422529/16928343450299080800000",
+          "squarefree_nonstar_loss": "159271/552960",
+          "star_groups": [
+            [
+              7,
+              13,
+              19
+            ],
+            [
+              5,
+              11,
+              17
+            ]
+          ],
+          "star_loss": "6695/20736",
+          "total_loss_bound": "6286255972544567180087/9327862717511738400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "59122975990240276001/43726021774890174720000",
+          "extra_mass_lower_bound": "26022439027792782173/99763237620446400000",
+          "extra_same_partition_gate_Gs_minus_R": "59122975990240276001/271577702411215200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "294397944711793036001/43726021774890174720000",
+          "mask": 43,
+          "mass_lower_bound": "33504681849326262173/99763237620446400000",
+          "mixed_tail_loss": "52385071591411336991/798105900963571200000",
+          "normalized_query_upper_bound": "278867080038905913100/33504681849326262173",
+          "raw_query_upper_bound": "54872954123/19630512000",
+          "same_partition_gate_Gs_minus_R": "294397944711793036001/271577702411215200000",
+          "squarefree_nonstar_loss": "96527/331776",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              19
+            ],
+            [
+              11,
+              17
+            ]
+          ],
+          "star_loss": "1063/3456",
+          "total_loss_bound": "66258555771120137827/99763237620446400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "524206637467515621629/285537862828409807616000",
+          "extra_mass_lower_bound": "250930430539236970763/977204665644086880000",
+          "extra_same_partition_gate_Gs_minus_R": "524206637467515621629/1773445504317046560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "2060589528452385549629/285537862828409807616000",
+          "mask": 44,
+          "mass_lower_bound": "324220780462543486763/977204665644086880000",
+          "mixed_tail_loss": "974860758124791557167/15635274650305390080000",
+          "normalized_query_upper_bound": "2609653968848677625875/324220780462543486763",
+          "raw_query_upper_bound": "1397969681/523480320",
+          "same_partition_gate_Gs_minus_R": "2060589528452385549629/1773445504317046560000",
+          "squarefree_nonstar_loss": "478451/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              19
+            ],
+            [
+              5,
+              7,
+              17
+            ]
+          ],
+          "star_loss": "1219/3840",
+          "total_loss_bound": "652983885181543393237/977204665644086880000"
+        },
+        {
+          "extra_haar_certificate_rhs": "26306790584671287268427/17988885358189817879808000",
+          "extra_mass_lower_bound": "3472732679400006102517/13680865319017216320000",
+          "extra_same_partition_gate_Gs_minus_R": "26306790584671287268427/111727066771973933280000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "123098912716718092732427/17988885358189817879808000",
+          "mask": 45,
+          "mass_lower_bound": "4498797578326297326517/13680865319017216320000",
+          "mixed_tail_loss": "6967048249778831445739/109446922552137730560000",
+          "normalized_query_upper_bound": "36892366388415831232940/4498797578326297326517",
+          "raw_query_upper_bound": "17645473543/6543504000",
+          "same_partition_gate_Gs_minus_R": "123098912716718092732427/111727066771973933280000",
+          "squarefree_nonstar_loss": "481601/1658880",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              19
+            ],
+            [
+              7,
+              17
+            ]
+          ],
+          "star_loss": "203/640",
+          "total_loss_bound": "9182067740690918993483/13680865319017216320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "334967047042904950763/233621887768698933504000",
+          "extra_mass_lower_bound": "131404521030027582499/533020726714956480000",
+          "extra_same_partition_gate_Gs_minus_R": "334967047042904950763/1451000867168492640000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1592007594212343982763/233621887768698933504000",
+          "mask": 46,
+          "mass_lower_bound": "171381075533649318499/533020726714956480000",
+          "mixed_tail_loss": "273339359412349407883/4264165813719651840000",
+          "normalized_query_upper_bound": "1394807184820884134300/171381075533649318499",
+          "raw_query_upper_bound": "10273814059/3926102400",
+          "same_partition_gate_Gs_minus_R": "1592007594212343982763/1451000867168492640000",
+          "squarefree_nonstar_loss": "482047/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              19
+            ],
+            [
+              5,
+              17
+            ]
+          ],
+          "star_loss": "373/1152",
+          "total_loss_bound": "361639651181307161501/533020726714956480000"
+        },
+        {
+          "extra_haar_certificate_rhs": "10908432972461899607/18583559254328324256000",
+          "extra_mass_lower_bound": "90607216359735709943/339195007909517760000",
+          "extra_same_partition_gate_Gs_minus_R": "10908432972461899607/115420523524766460000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "110900294679121822607/18583559254328324256000",
+          "mask": 47,
+          "mass_lower_bound": "116046841952949541943/339195007909517760000",
+          "mixed_tail_loss": "96513299849125497103/1356780031638071040000",
+          "normalized_query_upper_bound": "1014548369623997924170/116046841952949541943",
+          "raw_query_upper_bound": "117431586433/39261024000",
+          "same_partition_gate_Gs_minus_R": "110900294679121822607/115420523524766460000",
+          "squarefree_nonstar_loss": "247987/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              19
+            ],
+            [
+              17
+            ]
+          ],
+          "star_loss": "221/768",
+          "total_loss_bound": "223148165956568218057/339195007909517760000"
+        },
+        {
+          "extra_haar_certificate_rhs": "102186627618264659928247/89944426790949089399040000",
+          "extra_mass_lower_bound": "223540748634123961717/844497859198593600000",
+          "extra_same_partition_gate_Gs_minus_R": "102186627618264659928247/558635333859869666400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "586147238278498687248247/89944426790949089399040000",
+          "mask": 48,
+          "mass_lower_bound": "286878088074018481717/844497859198593600000",
+          "mixed_tail_loss": "1372250505127443840667/20267948620766246400000",
+          "normalized_query_upper_bound": "65546458477350062512300/7745708377998499006359",
+          "raw_query_upper_bound": "6270122587/2181168000",
+          "same_partition_gate_Gs_minus_R": "586147238278498687248247/558635333859869666400000",
+          "squarefree_nonstar_loss": "486239/1658880",
+          "star_groups": [
+            [
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "115/384",
+          "total_loss_bound": "557619771124575118283/844497859198593600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5634683030203271806549/3212300956819610335680000",
+          "extra_mass_lower_bound": "90032522650612338193/361927653942254400000",
+          "extra_same_partition_gate_Gs_minus_R": "5634683030203271806549/19951261923566773800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "22918990553783058496549/3212300956819610335680000",
+          "mask": 49,
+          "mass_lower_bound": "117177096696281418193/361927653942254400000",
+          "mixed_tail_loss": "183607706682187291331/2895421231538035200000",
+          "normalized_query_upper_bound": "8439759308991695434750/1054593870266532763737",
+          "raw_query_upper_bound": "2260554037/872467200",
+          "same_partition_gate_Gs_minus_R": "22918990553783058496549/19951261923566773800000",
+          "squarefree_nonstar_loss": "478769/1658880",
+          "star_groups": [
+            [
+              5,
+              17,
+              19
+            ],
+            [
+              7,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "244750557245972981807/361927653942254400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "75985438054230915291091/44972213395474544699520000",
+          "extra_mass_lower_bound": "718086307580983981663/2850180274795253400000",
+          "extra_same_partition_gate_Gs_minus_R": "75985438054230915291091/279317666929934833200000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "317965743384347928951091/44972213395474544699520000",
+          "mask": 50,
+          "mass_lower_bound": "931849828190627986663/2850180274795253400000",
+          "mixed_tail_loss": "11500109370700087050443/182411537586896217600000",
+          "normalized_query_upper_bound": "15038535961784550039825/1863699656381255973326",
+          "raw_query_upper_bound": "1918099339/727056000",
+          "same_partition_gate_Gs_minus_R": "317965743384347928951091/279317666929934833200000",
+          "squarefree_nonstar_loss": "478271/1658880",
+          "star_groups": [
+            [
+              7,
+              17,
+              19
+            ],
+            [
+              5,
+              11,
+              13
+            ]
+          ],
+          "star_loss": "1853/5760",
+          "total_loss_bound": "1918330446604625413337/2850180274795253400000"
+        },
+        {
+          "extra_haar_certificate_rhs": "3342545966493371362607/2336218877686989335040000",
+          "extra_mass_lower_bound": "76684045850810617477/296122625952753600000",
+          "extra_same_partition_gate_Gs_minus_R": "3342545966493371362607/14510008671684926400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "15912951438187761682607/2336218877686989335040000",
+          "mask": 51,
+          "mass_lower_bound": "98893242797267137477/296122625952753600000",
+          "mixed_tail_loss": "153474666763422875809/2368981007622028800000",
+          "normalized_query_upper_bound": "817563754797253839375/98893242797267137477",
+          "raw_query_upper_bound": "321172153/116328960",
+          "same_partition_gate_Gs_minus_R": "15912951438187761682607/14510008671684926400000",
+          "squarefree_nonstar_loss": "481817/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              17,
+              19
+            ],
+            [
+              11,
+              13
+            ]
+          ],
+          "star_loss": "2387/7680",
+          "total_loss_bound": "197229383155486462523/296122625952753600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "1848719773258329807811/1058169726952342228224000",
+          "extra_mass_lower_bound": "855088111442321507/3311756310582720000",
+          "extra_same_partition_gate_Gs_minus_R": "1848719773258329807811/6572180398351407840000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "7542374016319906599811/1058169726952342228224000",
+          "mask": 52,
+          "mass_lower_bound": "1103469834736025507/3311756310582720000",
+          "mixed_tail_loss": "15039725311281810121/238446454361955840000",
+          "normalized_query_upper_bound": "724590408380979840700/89381056613618066067",
+          "raw_query_upper_bound": "1178333711/436233600",
+          "same_partition_gate_Gs_minus_R": "7542374016319906599811/6572180398351407840000",
+          "squarefree_nonstar_loss": "478793/1658880",
+          "star_groups": [
+            [
+              11,
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              13
+            ]
+          ],
+          "star_loss": "121/384",
+          "total_loss_bound": "2208286475846694493/3311756310582720000"
+        },
+        {
+          "extra_haar_certificate_rhs": "54149827985340125472079/35977770716379635759616000",
+          "extra_mass_lower_bound": "63985356765711513653/253349357759578080000",
+          "extra_same_partition_gate_Gs_minus_R": "54149827985340125472079/223454133543947866560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "247734072249433736400079/35977770716379635759616000",
+          "mask": 53,
+          "mass_lower_bound": "82986558597679869653/253349357759578080000",
+          "mixed_tail_loss": "257400588263898834427/4053589724153249280000",
+          "normalized_query_upper_bound": "12198632382525077053565/1493758054758237653754",
+          "raw_query_upper_bound": "23338231297/8724672000",
+          "same_partition_gate_Gs_minus_R": "247734072249433736400079/223454133543947866560000",
+          "squarefree_nonstar_loss": "160201/552960",
+          "star_groups": [
+            [
+              5,
+              11,
+              17,
+              19
+            ],
+            [
+              7,
+              13
+            ]
+          ],
+          "star_loss": "1471/4608",
+          "total_loss_bound": "170362799161898210347/253349357759578080000"
+        },
+        {
+          "extra_haar_certificate_rhs": "842898605835006424807/529084863476171114112000",
+          "extra_mass_lower_bound": "66280709650799683733/268252261157200320000",
+          "extra_same_partition_gate_Gs_minus_R": "842898605835006424807/3286090199175703920000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "3689725727365794820807/529084863476171114112000",
+          "mask": 54,
+          "mass_lower_bound": "86399629237589707733/268252261157200320000",
+          "mixed_tail_loss": "137064163792358860511/2146018089257602560000",
+          "normalized_query_upper_bound": "696801780388012148850/86399629237589707733",
+          "raw_query_upper_bound": "755429107/290822400",
+          "same_partition_gate_Gs_minus_R": "3689725727365794820807/3286090199175703920000",
+          "squarefree_nonstar_loss": "480791/1658880",
+          "star_groups": [
+            [
+              7,
+              11,
+              17,
+              19
+            ],
+            [
+              5,
+              13
+            ]
+          ],
+          "star_loss": "83/256",
+          "total_loss_bound": "181852631919610612267/268252261157200320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "4490336388233036966717/6541412857523570138112000",
+          "extra_mass_lower_bound": "219632639741460830107/829143352667710080000",
+          "extra_same_partition_gate_Gs_minus_R": "4490336388233036966717/40628024280717793920000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "39687471708977329862717/6541412857523570138112000",
+          "mask": 55,
+          "mass_lower_bound": "281818391191539086107/829143352667710080000",
+          "mixed_tail_loss": "116098025029494364411/1658286705335420160000",
+          "normalized_query_upper_bound": "2445341585825179446405/281818391191539086107",
+          "raw_query_upper_bound": "17154092993/5816448000",
+          "same_partition_gate_Gs_minus_R": "39687471708977329862717/40628024280717793920000",
+          "squarefree_nonstar_loss": "246721/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              17,
+              19
+            ],
+            [
+              13
+            ]
+          ],
+          "star_loss": "899/3072",
+          "total_loss_bound": "547324961476170993893/829143352667710080000"
+        },
+        {
+          "extra_haar_certificate_rhs": "308127122955675398570059/179888853581898178798080000",
+          "extra_mass_lower_bound": "35550423254850191506669/136808653190172163200000",
+          "extra_same_partition_gate_Gs_minus_R": "308127122955675398570059/1117270667719739332800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "1276048344276143453210059/179888853581898178798080000",
+          "mask": 56,
+          "mass_lower_bound": "45811072244113103746669/136808653190172163200000",
+          "mixed_tail_loss": "34817923665698181107699/547234612760688652800000",
+          "normalized_query_upper_bound": "372913812745125632680700/45811072244113103746669",
+          "raw_query_upper_bound": "35672641583/13087008000",
+          "same_partition_gate_Gs_minus_R": "1276048344276143453210059/1117270667719739332800000",
+          "squarefree_nonstar_loss": "478729/1658880",
+          "star_groups": [
+            [
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              7,
+              11
+            ]
+          ],
+          "star_loss": "721/2304",
+          "total_loss_bound": "90997580946059059453331/136808653190172163200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "32656349046875374813229/21163394539046844564480000",
+          "extra_mass_lower_bound": "2025680770391633394707/8047567834716009600000",
+          "extra_same_partition_gate_Gs_minus_R": "32656349046875374813229/131443607967028156800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "146529433908106910653229/21163394539046844564480000",
+          "mask": 57,
+          "mass_lower_bound": "2629248357995334114707/8047567834716009600000",
+          "mixed_tail_loss": "2042409001542673980547/32190271338864038400000",
+          "normalized_query_upper_bound": "21399311610225272999275/2629248357995334114707",
+          "raw_query_upper_bound": "139198807883/52348032000",
+          "same_partition_gate_Gs_minus_R": "146529433908106910653229/131443607967028156800000",
+          "squarefree_nonstar_loss": "479749/1658880",
+          "star_groups": [
+            [
+              5,
+              13,
+              17,
+              19
+            ],
+            [
+              7,
+              11
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "5418319476720675485293/8047567834716009600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "5446205751488302913627/3155944799682424189440000",
+          "extra_mass_lower_bound": "2675572488872043480619/10800683146592539200000",
+          "extra_same_partition_gate_Gs_minus_R": "5446205751488302913627/19601239784556830400000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "22427279809742128433627/3155944799682424189440000",
+          "mask": 58,
+          "mass_lower_bound": "3485623724866483920619/10800683146592539200000",
+          "mixed_tail_loss": "5502278206228644956923/86405465172740313600000",
+          "normalized_query_upper_bound": "27904621906354947578825/3485623724866483920619",
+          "raw_query_upper_bound": "202869395483/78522048000",
+          "same_partition_gate_Gs_minus_R": "22427279809742128433627/19601239784556830400000",
+          "squarefree_nonstar_loss": "159959/552960",
+          "star_groups": [
+            [
+              7,
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              11
+            ]
+          ],
+          "star_loss": "22417/69120",
+          "total_loss_bound": "7315059421726055279381/10800683146592539200000"
+        },
+        {
+          "extra_haar_certificate_rhs": "8608975271958190083089/11543669748571006126080000",
+          "extra_mass_lower_bound": "1154351201912183000587/4389582455299641600000",
+          "extra_same_partition_gate_Gs_minus_R": "8608975271958190083089/71696513436560812800000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "70721567014448118723089/11543669748571006126080000",
+          "mask": 59,
+          "mass_lower_bound": "1483569886059656120587/4389582455299641600000",
+          "mixed_tail_loss": "303751830156738988163/4389582455299641600000",
+          "normalized_query_upper_bound": "12806854172784102205775/1483569886059656120587",
+          "raw_query_upper_bound": "916369999493/314088192000",
+          "same_partition_gate_Gs_minus_R": "70721567014448118723089/71696513436560812800000",
+          "squarefree_nonstar_loss": "245897/829440",
+          "star_groups": [
+            [
+              5,
+              7,
+              13,
+              17,
+              19
+            ],
+            [
+              11
+            ]
+          ],
+          "star_loss": "27313/92160",
+          "total_loss_bound": "2906012569239985479413/4389582455299641600000"
+        },
+        {
+          "extra_haar_certificate_rhs": "67516405965088525935641/35977770716379635759616000",
+          "extra_mass_lower_bound": "3457531174788157538353/13680865319017216320000",
+          "extra_same_partition_gate_Gs_minus_R": "67516405965088525935641/223454133543947866560000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "261100650229182136863641/35977770716379635759616000",
+          "mask": 60,
+          "mass_lower_bound": "4483596073714448762353/13680865319017216320000",
+          "mixed_tail_loss": "6823303224978561876301/109446922552137730560000",
+          "normalized_query_upper_bound": "35804355653772073242875/4483596073714448762353",
+          "raw_query_upper_bound": "2740013167/1046960640",
+          "same_partition_gate_Gs_minus_R": "261100650229182136863641/223454133543947866560000",
+          "squarefree_nonstar_loss": "477199/1658880",
+          "star_groups": [
+            [
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          "star_loss": "165/512",
+          "total_loss_bound": "9197269245302767557647/13680865319017216320000"
+        },
+        {
+          "extra_haar_certificate_rhs": "122510824658103246351139/143911082865518543038464000",
+          "extra_mass_lower_bound": "13943876605833011305177/54723461276068865280000",
+          "extra_same_partition_gate_Gs_minus_R": "122510824658103246351139/893816534175791466240000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "896847801714477690063139/143911082865518543038464000",
+          "mask": 61,
+          "mass_lower_bound": "18048136201538176201177/54723461276068865280000",
+          "mixed_tail_loss": "1827828354525714494599/27361730638034432640000",
+          "normalized_query_upper_bound": "153565340508717850197485/18048136201538176201177",
+          "raw_query_upper_bound": "293798790193/104696064000",
+          "same_partition_gate_Gs_minus_R": "896847801714477690063139/893816534175791466240000",
+          "squarefree_nonstar_loss": "121921/414720",
+          "star_groups": [
+            [
+              5,
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              7
+            ]
+          ],
+          "star_loss": "1901/6144",
+          "total_loss_bound": "36675325074530689078823/54723461276068865280000"
+        },
+        {
+          "extra_haar_certificate_rhs": "18357043179643350855671/23985180477586423839744000",
+          "extra_mass_lower_bound": "20070468261116245207387/82085191914103297920000",
+          "extra_same_partition_gate_Gs_minus_R": "18357043179643350855671/148969422362631911040000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "147413206022372424807671/23985180477586423839744000",
+          "mask": 62,
+          "mass_lower_bound": "26226857654673992551387/82085191914103297920000",
+          "mixed_tail_loss": "10870758733472806322851/164170383828206595840000",
+          "normalized_query_upper_bound": "221719283060029067638325/26226857654673992551387",
+          "raw_query_upper_bound": "84837967877/31408819200",
+          "same_partition_gate_Gs_minus_R": "147413206022372424807671/148969422362631911040000",
+          "squarefree_nonstar_loss": "16237/55296",
+          "star_groups": [
+            [
+              7,
+              11,
+              13,
+              17,
+              19
+            ],
+            [
+              5
+            ]
+          ],
+          "star_loss": "985/3072",
+          "total_loss_bound": "55858334259429305368613/82085191914103297920000"
+        },
+        {
+          "extra_haar_certificate_rhs": "519459310409718024887/9812119286285355207168000",
+          "extra_mass_lower_bound": "8114868887440179681083/29849160696037562880000",
+          "extra_same_partition_gate_Gs_minus_R": "519459310409718024887/60942036421076690880000",
+          "extra_shallow_weight_cap": "3/40",
+          "haar_certificate_rhs": "53315162291526157368887/9812119286285355207168000",
+          "mask": 63,
+          "mass_lower_bound": "10353555939642996897083/29849160696037562880000",
+          "mixed_tail_loss": "2244600746198840713417/29849160696037562880000",
+          "normalized_query_upper_bound": "93480587078394050344810/10353555939642996897083",
+          "raw_query_upper_bound": "983650725779/314088192000",
+          "same_partition_gate_Gs_minus_R": "53315162291526157368887/60942036421076690880000",
+          "squarefree_nonstar_loss": "507967/1658880",
+          "star_groups": [
+            [
+              5,
+              7,
+              11,
+              13,
+              17,
+              19
+            ],
+            []
+          ],
+          "star_loss": "1113/4096",
+          "total_loss_bound": "19495604756394565982917/29849160696037562880000"
+        }
+      ],
+      "summary": {
+        "extra_raw_weight_open_budget": "53315162291526157368887/703942706414885857920000",
+        "maximum_loss": {
+          "masks": [
+            1,
+            62
+          ],
+          "value": "55858334259429305368613/82085191914103297920000"
+        },
+        "maximum_normalized_query": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "93480587078394050344810/10353555939642996897083"
+        },
+        "minimum_extra_gate": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "519459310409718024887/60942036421076690880000"
+        },
+        "minimum_extra_haar_certificate_rhs": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "519459310409718024887/9812119286285355207168000"
+        },
+        "minimum_haar_certificate_rhs": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "53315162291526157368887/9812119286285355207168000"
+        },
+        "minimum_same_partition_gate": {
+          "masks": [
+            0,
+            63
+          ],
+          "value": "53315162291526157368887/60942036421076690880000"
+        }
+      }
+    }
+  },
+  "schema": "screened-root-profile-v1",
+  "source": {
+    "continuation_reference": {
+      "equations": [
+        "SD15",
+        "SD16"
+      ],
+      "path": "docs/reports/erdos7-odd-covering/profile-notes/arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md"
+    },
+    "program_name": "screened_root_profile.py",
+    "program_sha256": "51958d3576c58fbef469bafa4f7ab1ade2fe4d2681269e4379de47ee085cfed4"
+  },
+  "verification_kind": "exact finite arithmetic; ordinary proof premises; no Lean verification"
+}
