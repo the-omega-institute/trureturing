@@ -343,7 +343,7 @@ The last equality uses rqy=30r-27-57B; its last factor is positive. Therefore ev
 
 This covers all weights and independent clips at each of the three depths. It does not determine their individual exact minima or order the best ACTUAL laws. The result is that this particular scalar relaxation discards the cell-allocation information immediately after subdivision, so the existing dual continues to obstruct an improved certificate.
 
-For h>4, an actual residual depth 4 cylinder can intersect several depth-h cells. The displayed one-original/one-cell partition of Y is then unavailable, and this proof makes no assertion in that range. Retaining actual cell allocation, same-law query-loss debits or stronger source constraints remains outside the corollary.
+For h>4, an actual residual depth 4 cylinder can intersect several depth-h cells. The displayed one-original/one-cell partition of Y is then unavailable. Section 7 replaces that partition by exact Haar-overlap allocation, extending the bounded-loss obstruction to arbitrary finite prefix cuts. Retaining actual cell allocation, same-law query-loss debits or stronger source constraints remains outside these scalar certificates.
 
 ### Individual cell-loss caps still leave a strict certificate gap
 
@@ -388,12 +388,124 @@ Its value at z=1/5 is
 
 Thus for h=2,3,4 even the sharp allocation envelope with all individual cell-loss caps and total loss<=1 cannot make these retained raw-query and scalar-moment certificates pass the gate. This is a LOWER BARRIER, not the exact optimum of the capped problem. It is not a lower bound on actual attainable query norms. Same-law query debits, actual allocation constraints or a stronger source profile remain outside this conclusion.
 
+## 7. Arbitrary fixed finite prefix cuts retain the bounded-loss obstruction
+
+Keep precisely the actual-family and same-source assumptions of section 1.
+Let C_1,...,C_n be any finite prefix-free partition of the SAME ternary
+survivor T into complete cylinders. Write C_i=[r_i]_(3^d_i) and require
+d_i>=2. The depths may differ and have no fixed upper bound. The cut,
+weights w_i>=0 with sum_i w_i=1, and clips 0<kappa_i<=1 are all fixed
+before sampling the Q coordinate or choosing queries. They may depend
+on the given original family; a Q-coordinate-dependent cut is not
+included. Let u_i be conditional Haar on C_i and set
+
+    s_i=54*3^(-d_i), t_i=s_i(1-kappa_i),
+    lambda_i=w_i/(s_i-t_i), v=sum_i w_i u_i.
+
+Use the same actual c_i and eta_i as in section 6, followed by one
+normalization of eta=sum_i eta_i. Prefix gluing and the finite Kraft
+identity are already used in [Report410](410-an-initial-ternary-budget-allows-asynchronous-stopping.md).
+The additional issue here is the allocation of originals that cross
+several leaves and the resulting scalar-certificate obstruction.
+
+### Exact allocation of every original height
+
+For each residual original modulo 3^e d with e>=4, d>1, let A_(e,d)
+be its fixed ternary cylinder and B_(e,d) its fixed Q cylinder. Define
+
+    alpha_(i;e,d)=H3(C_i intersect A_(e,d))/H3(A_(e,d)),
+    Y_i(x)=sum_(actual residual originals)
+                2*3^(3-e)*alpha_(i;e,d)*1_B(e,d)(x).
+
+If A_(e,d) lies in T, its alpha values sum to one. If it is outside T,
+they are all zero. These are the only possibilities because T is a
+union of depth 2 cylinders. No original numerical label or phase is
+changed. At each e the surviving originals still supply a partial
+single-phase Q layout. Consequently sum_i Y_i is the same Y as before,
+under the same nu, with E Y<=B0 and E(Y-t)_+<=K_t.
+
+Since H3(C_i)=3^(-d_i), there is the exact identity
+
+    [2*3^(3-e)*alpha_(i;e,d)]/s_i
+       =H3(C_i intersect A_(e,d))/H3(C_i)
+       =u_i(A_(e,d)).
+
+Thus the actual union bound gives 1-c_i<=Y_i/s_i for every leaf,
+including e<d_i. An original that contains many leaves is distributed
+over them; its load is not counted once in each leaf.
+
+The raw loss is therefore bounded by the allocation envelope
+
+    F_cut(Y)=sup_(y_i>=0,sum_i y_i=Y)
+                 sum_i min{w_i,lambda_i(y_i-t_i)_+}.
+
+The supremum here discards the actual relations among the Y_i. Those
+relations are not asserted to be realizable by an arbitrary allocation.
+
+### The full query numerator, with individual query caps retained
+
+For a ternary cylinder J of positive depth a put
+
+    G(J)=sum_i w_i min{1,u_i(J)/kappa_i},
+    A_cap=sum_(a>=1) max_(J of depth a) G(J).
+
+For every Q query D, both the whole-leaf marginal bound and the
+conditional Haar cap hold under the SAME eta_i. Hence
+
+    eta_i(J x D)<=w_i min{1,u_i(J)/kappa_i} nu(D),
+    R_P(eta)<=N_cut:=B0+(1+B0)A_cap.
+
+The pure-Q marginal is at most nu; positive ternary depths include the
+Q-unit once. This is a finite number with its entire infinite query
+tail: beyond all leaf depths and the finite saturation thresholds,
+every summand decays geometrically as 3^(-a). The minimum with one
+can improve the earlier untruncated query caps and is retained here.
+
+For each J, min{1,u_i(J)/kappa_i}>=u_i(J), so A_cap>=R3(v).
+Let z=max_(J of depth 2) v(J), and let M1=max_(J of depth 1) v(J).
+The five live depth 2 cylinders give z>=1/5. The root with two such
+children has mass at most 2z, so M1>=1-2z. A maximizing depth 2
+cylinder has 3^(a-2) descendants at depth a, and at least one has
+v-mass at least z/3^(a-2). Summing every depth, including the full tail, gives
+
+    A_cap>=R3(v)>=M1+(3/2)z>=1-z/2,
+    N_cut>=1+2B0-(1+B0)z/2.
+
+### A depth-independent saturation budget
+
+Choose a depth 2 cylinder J_* with mass z. Its leaves form a complete
+partition, so the same-source Haar identity gives
+
+    sum_(C_i subset J_*) s_i
+      =54 sum_(C_i subset J_*)3^(-d_i)=54/9=6.
+
+At the old dual atom y>6, allocate y_i=s_i to these leaves and zero
+elsewhere, then add y-6 to any one of the selected leaves. Each selected
+loss already equals w_i and cannot decrease. Therefore F_cut(y)>=z.
+The old auxiliary probability q delta_y+(1-q)delta_0 satisfies every
+retained scalar moment constraint. Any D uniformly bounding E F_cut(Y)
+from ONLY those constraints must satisfy D>=qz. For 1-D>0,
+
+    N_cut/(1-D)
+      >=[1+2B0-(1+B0)z/2]/(1-qz)
+      >=r_sat=12.024000951507533... >566/49.
+
+The last monotonicity and exact constant are those of section 6.
+Thus arbitrary fixed finite prefix refinement, unequal leaf depths,
+independent weights and clips, and individual query and loss caps
+do not remove this scalar-certificate gap. This includes uniform
+depth h for EVERY h>=2, not just h<=4. It is still only a lower
+barrier for the specified certificates, not their exact optimum or
+an actual-law lower bound. It does not cover changing nu, non-Haar
+within-leaf sources, cuts depending on the sampled Q coordinate,
+actual allocation constraints, or joint query-loss debits.
+
 ## Verification
 
 The [exact producer](../../frontier/cover-geometry/two_root_convex_clipping.py)
 checks RC10--RC16, the supporting inequality, hinge decompositions on
 252 rational parameter controls, and the actual finite family above.
-The 55 named checks pass with exit 0, including bounded-root controls at the dual atom, 3,159 actual ternary phase-partition controls and the bounded-loss prefix allocations; [exact data](../../frontier/cover-geometry/two_root_convex_clipping.json)
+The 79 named checks pass with exit 0, including bounded-root controls at the dual atom, 3,159 actual ternary phase-partition controls, the bounded-loss prefix allocations, and 4,212 further original-cylinder overlap controls on uniform and unequal-depth cuts. The latter also check exact saturation budgets and the entire capped query tail; [exact data](../../frontier/cover-geometry/two_root_convex_clipping.json)
 include the hash of the retained moment input. The ordinary dual proof
 establishes the universal optimization; the finite controls do not
 substitute for its continuous quantifiers.

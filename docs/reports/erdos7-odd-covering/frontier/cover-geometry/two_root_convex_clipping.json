@@ -169,7 +169,79 @@
       "added_named_checks": 9
     }
   },
-  "check_count": 55,
+  "arbitrary_prefix_cut": {
+    "scope": "Every fixed finite prefix-cylinder partition of the pure survivor, with all leaf depths at least2, fixed independent leaf weights/clips and conditional Haar leaves. Exact Haar-overlap allocation preserves the same scalar profile. Both query and loss caps are retained. The barrier is not an exact optimum or an actual-law lower bound; Q-dependent cuts and actual joint incidence constraints are excluded.",
+    "lower_barrier": "33914609213286804860799851870837955027791000698/2820576058673273244795335584651143056943842655",
+    "controls": [
+      {
+        "name": "uniform5",
+        "leaves": 135,
+        "depths": [
+          5
+        ],
+        "actual_phase_controls": 1053,
+        "largest_depth2_mass": "6/29",
+        "saturation_cost": "6",
+        "capped_query_sum": "263/270",
+        "pure_query_sum": "14863/15660",
+        "query_tail_start": 7,
+        "capped_query_tail": "131/23490"
+      },
+      {
+        "name": "uniform6",
+        "leaves": 405,
+        "depths": [
+          6
+        ],
+        "actual_phase_controls": 1053,
+        "largest_depth2_mass": "7140/35293",
+        "saturation_cost": "6",
+        "capped_query_sum": "65507/70586",
+        "pure_query_sum": "129813/141172",
+        "query_tail_start": 8,
+        "capped_query_tail": "401/211758"
+      },
+      {
+        "name": "spine_to_depth8",
+        "leaves": 17,
+        "depths": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "actual_phase_controls": 1053,
+        "largest_depth2_mass": "82/129",
+        "saturation_cost": "6",
+        "capped_query_sum": "328/129",
+        "pure_query_sum": "647/258",
+        "query_tail_start": 10,
+        "capped_query_tail": "1/387"
+      },
+      {
+        "name": "unequal_frontier",
+        "leaves": 31,
+        "depths": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "actual_phase_controls": 1053,
+        "largest_depth2_mass": "214/421",
+        "saturation_cost": "6",
+        "capped_query_sum": "1916/1263",
+        "pure_query_sum": "595/421",
+        "query_tail_start": 7,
+        "capped_query_tail": "16/1263"
+      }
+    ],
+    "added_named_checks": 24
+  },
+  "check_count": 79,
   "checks": [
     "same actual PA query supplier",
     "complete four low-threshold corner profiles",
@@ -225,6 +297,30 @@
     "bounded loss prefix filling is feasible at h3",
     "bounded loss all selected prefix cells saturate at h3",
     "bounded loss prefix filling is feasible at h4",
-    "bounded loss all selected prefix cells saturate at h4"
+    "bounded loss all selected prefix cells saturate at h4",
+    "arbitrary cut is a complete actual prefix partition uniform5",
+    "arbitrary cut overlap conserves actual originals and caps uniform5",
+    "arbitrary cut saturation budget is six at every depth2 prefix uniform5",
+    "arbitrary cut bounded scalar allocation saturates the largest prefix uniform5",
+    "arbitrary cut retains the complete capped query tail uniform5",
+    "arbitrary cut capped-query certificate remains above the scalar barrier uniform5",
+    "arbitrary cut is a complete actual prefix partition uniform6",
+    "arbitrary cut overlap conserves actual originals and caps uniform6",
+    "arbitrary cut saturation budget is six at every depth2 prefix uniform6",
+    "arbitrary cut bounded scalar allocation saturates the largest prefix uniform6",
+    "arbitrary cut retains the complete capped query tail uniform6",
+    "arbitrary cut capped-query certificate remains above the scalar barrier uniform6",
+    "arbitrary cut is a complete actual prefix partition spine_to_depth8",
+    "arbitrary cut overlap conserves actual originals and caps spine_to_depth8",
+    "arbitrary cut saturation budget is six at every depth2 prefix spine_to_depth8",
+    "arbitrary cut bounded scalar allocation saturates the largest prefix spine_to_depth8",
+    "arbitrary cut retains the complete capped query tail spine_to_depth8",
+    "arbitrary cut capped-query certificate remains above the scalar barrier spine_to_depth8",
+    "arbitrary cut is a complete actual prefix partition unequal_frontier",
+    "arbitrary cut overlap conserves actual originals and caps unequal_frontier",
+    "arbitrary cut saturation budget is six at every depth2 prefix unequal_frontier",
+    "arbitrary cut bounded scalar allocation saturates the largest prefix unequal_frontier",
+    "arbitrary cut retains the complete capped query tail unequal_frontier",
+    "arbitrary cut capped-query certificate remains above the scalar barrier unequal_frontier"
   ]
 }

@@ -246,6 +246,112 @@ prefix_refinement['bounded_loss']={'scope':'For h=2,3,4 the sharp scalar allocat
                                   'prefix_fill_controls':prefix_fill_rows,'added_named_checks':9}
 prefix_refinement['added_named_checks']=19
 
+# Complete fixed prefix partitions can have unequal and arbitrarily large
+# depths. Haar overlap, rather than one-original/one-cell assignment,
+# conserves every actual residual load across these cuts.
+def split_cut_leaf(cut,index):
+    residue,depth=cut[index]
+    return cut[:index]+[(residue+j*3**depth,depth+1) for j in range(3)]+cut[index+1:]
+
+base_cut=[(j,2) for j in (0,2,5,6,8)]
+cut_cases=[]
+for depth in (5,6):
+    cut_cases.append(('uniform'+str(depth),[(j,depth) for j in range(3**depth)
+                                          if j%3!=1 and j%9!=3]))
+spine_cut=base_cut[:]
+for _ in range(6):
+    spine_cut=split_cut_leaf(spine_cut,0)
+cut_cases.append(('spine_to_depth8',spine_cut))
+unequal_cut=base_cut[:]
+for step in range(13):
+    unequal_cut=split_cut_leaf(unequal_cut,(7*step+3)%len(unequal_cut))
+cut_cases.append(('unequal_frontier',unequal_cut))
+
+def capped_prefix_max(cut,weights,clips,depth):
+    masses={}
+    candidates=[F(0)]
+    for (residue,leaf_depth),weight,clip in zip(cut,weights,clips):
+        if leaf_depth>=depth:
+            key=residue%(3**depth)
+            masses[key]=masses.get(key,F(0))+weight
+        else:
+            # A query below a stopped leaf meets no other leaf.
+            candidates.append(weight*min(F(1),F(3)**(leaf_depth-depth)/clip))
+    return max(candidates+list(masses.values()))
+
+cut_rows=[]
+for cut_name,cut in cut_cases:
+    cut_size=len(cut)
+    max_depth=max(depth for _,depth in cut)
+    disjoint=all(a%(3**min(da,db))!=b%(3**min(da,db))
+                 for i,(a,da) in enumerate(cut) for b,db in cut[i+1:])
+    need('arbitrary cut is a complete actual prefix partition '+cut_name,
+         disjoint and all(d>=2 and a%3!=1 and a%9!=3 for a,d in cut)
+         and sum((F(1,3**d) for _,d in cut),F(0))==F(5,9))
+    scales=[F(54,3**d) for _,d in cut]
+    partition_controls=0
+    for exponent in (4,5,6):
+        original_weight=F(54,3**exponent)
+        for phase in range(3**exponent):
+            shares=[]
+            for (residue,depth),scale in zip(cut,scales):
+                compatible=(phase%(3**min(depth,exponent))==residue%(3**min(depth,exponent)))
+                share=F(3)**(exponent-max(depth,exponent)) if compatible else F(0)
+                conditional=F(3)**(depth-max(depth,exponent)) if compatible else F(0)
+                if original_weight*share/scale!=conditional:
+                    raise ValueError(('actual cut conditional cap',cut_name,exponent,phase,residue,depth))
+                shares.append(share)
+            if sum(shares)!=int(phase%3!=1 and phase%9!=3):
+                raise ValueError(('actual cut load conservation',cut_name,exponent,phase))
+            partition_controls+=1
+    need('arbitrary cut overlap conserves actual originals and caps '+cut_name,
+         partition_controls==1053)
+    raw_weights=[0 if i%7==0 else i+1 for i in range(cut_size)]
+    weights=[F(w,sum(raw_weights)) for w in raw_weights]
+    clips=[F(1+i%5,6) for i in range(cut_size)]
+    prefix_weights={a:sum((w for (r,_),w in zip(cut,weights) if r%9==a),F(0))
+                    for a in (0,2,5,6,8)}
+    max_prefix=max(prefix_weights,key=prefix_weights.get)
+    z_cut=prefix_weights[max_prefix]
+    chosen=[i for i,(r,_) in enumerate(cut) if r%9==max_prefix]
+    kraft_sums={a:sum((scale for (r,_),scale in zip(cut,scales) if r%9==a),F(0))
+                for a in prefix_weights}
+    need('arbitrary cut saturation budget is six at every depth2 prefix '+cut_name,
+         all(value==6 for value in kraft_sums.values()) and z_cut>=F(1,5))
+    loads=[scale if i in chosen else F(0) for i,scale in enumerate(scales)]
+    loads[chosen[0]]+=y-6
+    losses=[min(w,w/(scale*clip)*max(F(0),load-scale*(1-clip)))
+            for w,scale,clip,load in zip(weights,scales,clips,loads)]
+    need('arbitrary cut bounded scalar allocation saturates the largest prefix '+cut_name,
+         sum(loads)==y and all(value>=0 for value in loads)
+         and sum(losses)==z_cut and all(0<=loss<=w for loss,w in zip(losses,weights)))
+    stop_depth=max_depth
+    while any(F(3)**(d-stop_depth)>clip for (_,d),clip in zip(cut,clips)):
+        stop_depth+=1
+    cap_terms=[capped_prefix_max(cut,weights,clips,a) for a in range(1,stop_depth+1)]
+    plain_terms=[capped_prefix_max(cut,weights,[F(1)]*cut_size,a)
+                 for a in range(1,stop_depth+1)]
+    cap_tail=max(w*F(3)**(d-stop_depth)/clip
+                 for (_,d),w,clip in zip(cut,weights,clips))/2
+    plain_tail=max(w*F(3)**(d-stop_depth) for (_,d),w in zip(cut,weights))/2
+    a_cap=sum(cap_terms)+cap_tail
+    r3=sum(plain_terms)+plain_tail
+    need('arbitrary cut retains the complete capped query tail '+cut_name,
+         all(c>=p for c,p in zip(cap_terms,plain_terms))
+         and cap_tail>=plain_tail
+         and capped_prefix_max(cut,weights,clips,stop_depth+1)==F(2,3)*cap_tail
+         and capped_prefix_max(cut,weights,clips,stop_depth+2)==F(2,9)*cap_tail
+         and a_cap>=r3>=plain_terms[0]+F(3,2)*z_cut>=1-z_cut/2)
+    n_cut=B+(1+B)*a_cap
+    need('arbitrary cut capped-query certificate remains above the scalar barrier '+cut_name,
+         1-q*z_cut>0 and n_cut/(1-q*z_cut)>=prefix_sat_barrier>target)
+    cut_rows.append({'name':cut_name,'leaves':cut_size,'depths':sorted({d for _,d in cut}),
+                     'actual_phase_controls':partition_controls,'largest_depth2_mass':z_cut,
+                     'saturation_cost':sum(scales[i] for i in chosen),'capped_query_sum':a_cap,
+                     'pure_query_sum':r3,'query_tail_start':stop_depth,'capped_query_tail':cap_tail})
+arbitrary_cut={'scope':'Every fixed finite prefix-cylinder partition of the pure survivor, with all leaf depths at least2, fixed independent leaf weights/clips and conditional Haar leaves. Exact Haar-overlap allocation preserves the same scalar profile. Both query and loss caps are retained. The barrier is not an exact optimum or an actual-law lower bound; Q-dependent cuts and actual joint incidence constraints are excluded.',
+               'lower_barrier':prefix_sat_barrier,'controls':cut_rows,'added_named_checks':24}
+
 result={'scope':'Exact global certificate optimum for both the full max-two-hinge envelope and all same-scalar-moment bounded-root-loss estimates retaining the raw query numerator; not an actual-query lower bound or source-realizability claim.',
  'hinge_input_sha256':hashlib.sha256(source_bytes).hexdigest(),'B':B,'K3':K3,'target':target,
  'optimum':r,'gap':r-target,'q':q,'y':y,'alpha':alpha,'dual_mean':q*y,
@@ -254,7 +360,8 @@ result={'scope':'Exact global certificate optimum for both the full max-two-hing
  'actual_originals':originals,'actual_raw_mass':raw_mass,'actual_loss':hinge_mass,
  'actual_all_active_root_conditional':conditional_root_A,
  'actual_fixed_u_all_active_root_conditional':fixed_u_root_A,
- 'prefix_refinement':prefix_refinement,'check_count':len(checks),'checks':checks}
+ 'prefix_refinement':prefix_refinement,'arbitrary_prefix_cut':arbitrary_cut,
+ 'check_count':len(checks),'checks':checks}
 Path(args.output).write_text(json.dumps(result,default=str,indent=2)+'\n')
 print(json.dumps({'checks':len(checks),'parameter_controls':control_count,'optimum':str(r),
                   'optimum_decimal':float(r),'gap':str(r-target),'actual_loss':str(hinge_mass),'bounded_prefix_barrier':str(prefix_sat_barrier)}))

@@ -298,3 +298,151 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pur
 [Report536](536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md) gives the exact ternary-prefix query and entropy transport for this same G. An actual four-class core shows that fixing a full ternary coordinate need not give a two-copy cofactor family. The conditional kernels must satisfy the global density, entropy and original-label query conditions before they can pay the remaining mixed cost.
 
 [Report535](535-mixed-chain-moments-retain-shared-prime-correlations.md) extends the individual moment to mixed divisibility chains. Two actual chains sharing3 defeat multiplication of those bounds, even at simultaneous maximizing phases of one law in G; the remaining mixed estimate must retain their common prime correlations.
+
+## A member of G need not satisfy the residual shallow budget
+
+The universal claim that EVERY member of G automatically satisfies
+the remaining shallow mixed budget is false, even with full actual
+survivor support. The following actual family gives a whole interval
+of members whose shallow mixed sum exceeds even the enlarged budget
+
+    566/49-C0, C0=4522277/500000.
+
+Every law in that interval nevertheless has COMPLETE query sum below
+565/51. Thus the obstruction is to the fixed allocation of separate
+budgets, not to existence of a good member, the total-query target or
+unrestricted Erdős #7. The original existential task in PE8 is unchanged.
+
+### An actual irredundant family and one common law
+
+Take L=315=3^2*5*7 and these eleven original classes. They occupy each
+nonunit divisor of L exactly once; all phases are globally fixed.
+
+| d | original phase | private residue mod315 | surviving residues equal0 mod d |
+|---:|---:|---:|---:|
+|3|2|5|39|
+|5|1|6|20|
+|7|1|15|15|
+|9|1|10|13|
+|15|9|9|15|
+|21|12|12|9|
+|35|2|72|4|
+|45|25|25|5|
+|63|4|4|3|
+|105|18|18|3|
+|315|133|133|1|
+
+Each private residue meets its own original and no other. The complete
+actual survivor U has74 residues modulo315 and contains0. Let H be
+Haar on the full P-adic product, rho=H(.|U), and xi=H(.|[0]_315).
+All higher digits and the11,13,17,19 coordinates retain their Haar
+tails under these same conditional laws. For every REAL parameter
+
+    31/100<=t<=63/200, nu_t=(1-t)rho+t xi,
+
+nu_t has full support on U. Its mass on the zero315-cell is
+v0=t+(1-t)/74; every other surviving315-cell has mass v1=(1-t)/74.
+The density relative to H is therefore at most
+
+    315*v0(63/200)=1511685/14800<103<Lambda.
+
+### Simultaneous maxima and complete geometric tails
+
+For c|315 write n_c for the last table column and n_1=74. Throughout
+the displayed interval, zero is a simultaneous maximizing phase:
+
+    q_c(nu_t)=t+(1-t)n_c/74.
+
+For every other phase a, its mass is (1-t)n_(c,a)/74. Enumeration of
+the actual315 residues verifies the required comparisons at both
+endpoints for EVERY phase. Their differences are affine in t, proving
+the statement on the entire interval, not only at sampled parameters.
+
+For any P-smooth numerical query d put c=gcd(d,315). Haar tails give
+q_d(nu_t)=(c/d)q_c(nu_t). Sum the whole geometric tail for each c:
+
+    R_P(nu_t)=sum_(c|315) w_c q_c(nu_t)-1,
+    w_c=product_(p=11,13,17,19) p/(p-1)
+          *product_(p=3,5,7 with p^E_p dividing c) p/(p-1),
+    (E_3,E_5,E_7)=(2,1,1).
+
+An exponent below E_p is fixed; at E_p it includes every higher
+exponent. The unit is subtracted once. Since the original labels are
+exactly all nonunit divisors of315, there is the EXACT identity
+
+    R_unused(nu_t)=R_P(nu_t)-sum_(c|315,c>1)q_c(nu_t).
+
+This subtracts exact maxima under one law, not upper bounds. Its slope
+is positive, and at the upper endpoint its value is21623760511/4910284800.
+The seven mixed labels are15,21,35,45,63,105,315. Their n_c sum is40,
+so their complete shallow sum is
+
+    R_mixed,shallow(nu_t)=(20+239t)/37>=9409/3700,
+    9409/3700-(566/49-C0)=33093201/906500000>0.
+
+All seven lie below the fixed cutoff10^9. The older budget PE8 is
+smaller and is exceeded as well.
+
+### Membership in the original entropy-density class
+
+Compute the entropy for this SAME mixture directly:
+
+    D_H(nu_t)=v0 log(315v0)+(1-v0)log(315v1).
+
+Positive rational Taylor sums certify log(315v0)<93/20 and
+log(315v1)<27/25 on the whole interval. For the first use the upper
+endpoint of v0; for the second use the lower endpoint of t. Explicitly,
+S20(93/20)>315v0(63/200) and S10(27/25)>315v1(31/100), where
+S_n(x)=sum_(j=0)^n x^j/j!<exp(x) for x>0. Hence
+
+    D_H(nu_t)<27/25+(357/100)v0(t),
+    R_unused(nu_t)+D_H(nu_t)
+       <815274929767/122757120000<20/3<log Lambda.
+
+The combined upper bound increases with t, so its upper endpoint
+controls the interval. For the last logarithmic comparison, the exact
+certificates are Lambda>800, (68/25)^20<800^3, and
+
+    e<S8(1)+(1/9!)/(1-1/10)<68/25.
+
+Thus every nu_t satisfies the original support, density and PE1
+conditions defining G. No unsupported assertion that mixing preserves
+that contract is used; its budget is checked for the mixture itself.
+
+### Complementary savings remain essential
+
+The exact complete query sum increases on the interval and satisfies
+
+    7325525113/818380800<=R_P(nu_t)
+      <=44410467967/4910284800<565/51.
+
+Its endpoint values are8.95124264... and9.04437722.... Each displayed
+law already passes the total target despite failing the proposed
+separate mixed budget. On the SAME family the comparison law rho also
+belongs to G, and recomputing all maximizing phases at t=0 gives
+
+    R_P(rho)=429339997/122757120,
+    R_unused(rho)=198755677/122757120,
+    R_mixed,shallow(rho)=43/74.
+
+The interval's zero-maximizer formula is not extended to t=0.
+Here log(315/74)<3/2 is certified by a positive Taylor sum, and
+R_unused(rho)+3/2<20/3<log Lambda proves the comparison membership.
+
+Consequently G's existing conditions do not make the residual shallow
+budget a universal property of its members. One must select a member
+with a suitable budget, or retain the complementary savings in the
+other queries. The raw-moment counterexamples in530/562 and conditional
+inheritance example in536 do not themselves establish this global
+G-member statement. Report539's construction of a good member remains
+valid; the present example does not challenge any existential conclusion.
+
+The [exact producer](../../frontier/cover-geometry/gibbs_member_shallow_budget.py)
+and [data](../../frontier/cover-geometry/gibbs_member_shallow_budget.json)
+check57 rational conditions, including actual irredundancy, every
+endpoint phase comparison, exact tail sums, density, entropy and both
+strict budget violations. The affine-interval and geometric-tail
+arguments carry the unbounded quantifiers. These are ordinary proofs
+and exact arithmetic, with no new Lean verification.
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/gibbs_member_shallow_budget.py
