@@ -1,6 +1,6 @@
 ---
 name: theory-volume-template
-description: 新建或追加 docs/develop/theory/ 下的理论卷时使用:给出符合 generic-v1 消化系统、且既有 atom 一个都不被改判的卷骨架、追加骨架与落地判据。
+description: 新建或追加 docs/develop/theory/ 下的理论卷时使用:给出 GitHub 可渲染的数学写法、符合 generic-v1 消化系统且不改判既有 atom 的卷骨架与追加骨架。
 ---
 
 # 理论卷模板(消化可用 + 只能追加)
@@ -23,6 +23,35 @@ description: 新建或追加 docs/develop/theory/ 下的理论卷时使用:给�
 | `TEMPLATE.md` | 新卷骨架。复制成 `docs/develop/theory/<VOLUME>.md`,换掉 `<占位符>`,**不要删文末的追加锚**。 |
 | `APPEND.md` | 追加批次骨架与三条硬纪律。每批增补照它写。 |
 | `SKILL.md`(本文件) | 消化器的机器规则、地址碰撞预检、落地流程与判据。 |
+
+## GitHub 公式
+
+理论卷在 GitHub Markdown 中阅读。按 GitHub 官方的[数学表达式文档](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)使用其 MathJax 入口；LaTeX 公式内容合法，不代表外层 Markdown 分隔符也受支持。
+
+- **行内默认用 `$...$`**，例如 `$q(s)=\bar q(\eta(s))$`。中文正文在公式外侧留空格，例如 `读数 $q(s)$ 决定结果`；需要紧邻中文或避开 Markdown 干扰时，用下面示例中的美元号加反引号形式。中文间距是本项目的可靠写法：GitHub Markdown API 实测 `行内：$x^2$。` 未生成数学节点，`行内： $x^2$。` 与美元号加反引号形式可以。
+- 含 `*` 的行内公式优先使用美元号加反引号形式，避免同段多个伴随符号（如 `A^*`、`F^*`）先被 Markdown 配成强调，连带破坏其间的公式。
+- **块级默认用 `$$`**，起止分隔符各占一行，公式块前后留空行。GitHub 也支持 `math` 围栏；使用它时，围栏内不再套 `$$`。
+- **不要以 `\(...\)` 或 `\[...\]` 作为 Markdown 的公式分隔符**；它们不会触发 GitHub 的数学渲染。普通代码围栏、`latex` 围栏和单独的反引号也不能替代数学入口。这不限制公式内部的 LaTeX 命令。
+- 多行推导在一个数学块内使用 `aligned` 等环境；不要把 `=` 或 `---` 单独放一行，以免仓内 Markdown 消化器识别为 setext 标题。
+- 公式内的字面美元号写 `\$`；同一行公式之外的字面美元号按官方示例写 `<span>$</span>`，避免与公式边界混淆。
+
+````markdown
+行内： $q(s)=\bar q(\eta(s))$。
+避免 Markdown 干扰的行内写法：$`A_n^*A_n`$。
+
+$$
+\begin{aligned}
+L(s,uv) &= L(s,u)+L(T_u(s),v),\\
+L(s,\varepsilon) &= 0.
+\end{aligned}
+$$
+
+```math
+q = \bar q \circ \eta
+```
+````
+
+交付前检查新增公式的分隔符和多行布局；可用 GitHub 预览或 `gh api markdown` 核对是否进入数学渲染。API 返回 `math-renderer` 只验证 Markdown 入口，不等于浏览器已完成所有 LaTeX 排版，更不证明数学内容。上述写法用于新增正文和未合并草稿；已合入卷仍遵守追加纪律，不为统一排版重写旧字节。
 
 ## 一、消化系统对卷的机器要求
 
