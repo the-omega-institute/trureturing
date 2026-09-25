@@ -24,3 +24,4 @@ For every finite linearly ordered A with at least two letters and every k>=1, th
 
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckLowerBound.actual_exactKDeckImage_weightedLyndon_lower_bound`
 - Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore](ExactDeckCore.md)
+- Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/PositivePairBallGrowth](PositivePairBallGrowth.md)

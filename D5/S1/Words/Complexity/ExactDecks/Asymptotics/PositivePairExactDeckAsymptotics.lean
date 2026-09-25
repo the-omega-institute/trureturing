@@ -27,6 +27,7 @@ Library search: no project declaration packages the exact upper injection or
 -/
 
 
+import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.FullLyndonRecovery
 
 set_option autoImplicit false

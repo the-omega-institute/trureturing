@@ -4,7 +4,7 @@
 
 Multi-scale central digits are injective with exact length control.
 
-For each length r, ActualLyndonWord is the subtype of actual words of length r that satisfy IsLyndon. The module publicly installs a lifted linear order on this subtype and, for finite A, a Fintype instance obtained by injection into length-r vectors. These two anonymous public instances support the cardinality and deterministic selection below; the digit construction itself is a repository result, not a claim attributed to the cited paper.
+This module combines the private central-coefficient identities with linear independence of the selected actual directions. Its public theorem packages lower-degree agreement, the exact degree-r coordinate formula, injectivity, digit-array cardinality, nonempty equal-length pairs, and exact word length.
 
 **Theorem 1.1 (Full central-digit system from actual pairs).**
 

@@ -64,4 +64,7 @@ For finite A, source words of the same length n, and k<=n, equality of their act
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeckImage`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.exactKDeck_eq_iff_cutoffMagnus_eq_of_common_length`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckCore.scatteredCount_eq_of_exactKDeck_eq`
-- Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/PositivePairBallGrowth](PositivePairBallGrowth.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra](../../PositivePairs/Coefficients/CutoffCoefficientAlgebra.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/MagnusWordCoefficients](../../PositivePairs/Coefficients/MagnusWordCoefficients.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Coefficients/PositivePairFiltration](../../PositivePairs/Coefficients/PositivePairFiltration.md)
+- Dependency: [D5/S1/Words/Complexity/VivionBinomialConverseFails](../../VivionBinomialConverseFails.md)

@@ -6,7 +6,7 @@
    utility: none
    digest: Indexed schedules preserve every occurrence of every fixed source. -/
 
-import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryFrontPromotion
+import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleOrder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

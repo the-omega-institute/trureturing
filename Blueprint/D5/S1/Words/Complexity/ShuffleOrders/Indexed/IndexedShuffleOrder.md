@@ -23,4 +23,5 @@ For linearly ordered A, Lyndon factors in pairwise nonincreasing order, a valid 
 ## References
 
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedShuffleOrder.evaluateSchedule_le_flatten`
+- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonOrder](../../LyndonBrackets/LyndonOrder.md)
 - Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedSchedulePromotion](IndexedSchedulePromotion.md)

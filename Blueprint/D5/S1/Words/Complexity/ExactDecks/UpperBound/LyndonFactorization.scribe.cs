@@ -9,10 +9,9 @@ internal sealed class ExactDecksUpperBoundLyndonFactorizationDocument : IScribeD
         H("LyndonFactorization"),
         Blocks(
             Paragraph(Text(
-                "The infiltration product and its top-degree shuffle stratum are classical and "
-                + "are also used in the cited source. The list-valued definitions retain one "
-                + "entry per alignment, so coincident output words remain repeated. The final "
-                + "unconditional recovery theorem is the repository bridge used by the exact "
-                + "asymptotic upper injection.")))));
+                "This module privately constructs the Chen-Fox-Lyndon factorization by inserting "
+                + "successive letters, joining adjacent factors when the required order fails. "
+                + "Its specification gives the original flattened word, Lyndonhood of every "
+                + "factor, and nonincreasing factor order for the recovery proof.")))));
 
 }

@@ -4,7 +4,7 @@
 
 Literal digit blocks preserve lower coefficients and expose leading coordinates.
 
-For each length r, ActualLyndonWord is the subtype of actual words of length r that satisfy IsLyndon. The module publicly installs a lifted linear order on this subtype and, for finite A, a Fintype instance obtained by injection into length-r vectors. These two anonymous public instances support the cardinality and deterministic selection below; the digit construction itself is a repository result, not a claim attributed to the cited paper.
+This module proves the private coefficient bookkeeping for one digit block, one selected direction, and the complete direction-major word. It shows that the construction preserves every lower-degree coefficient and records the exact degree-r difference consumed by the final injectivity theorem.
 
 ## References
 

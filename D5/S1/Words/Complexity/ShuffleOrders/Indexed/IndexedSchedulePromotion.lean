@@ -6,6 +6,7 @@
    utility: none
    digest: Binary front promotion lifts to one selected pair of indexed sources. -/
 
+import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryFrontPromotion
 import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedScheduleWeave
 
 set_option autoImplicit false

@@ -7,6 +7,7 @@
    digest: Direction-major and scale-minor digits build literal positive words. -/
 
 import D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
+import D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -6,7 +6,7 @@
    utility: none
    digest: Finite cutoff word coefficients form a truncated multiplicative algebra. -/
 
-import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketLeading
+import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketAlgebra
 import D5.S1.Words.Complexity.VivionBinomialConverseFails
 import Mathlib.Data.Set.Finite.List
 

@@ -6,7 +6,8 @@
    utility: none
    digest: Every finite word factors into nonincreasing Lyndon words. -/
 
-import D5.S1.Words.Complexity.ExactDecks.UpperBound.OverlapInfiltration
+import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

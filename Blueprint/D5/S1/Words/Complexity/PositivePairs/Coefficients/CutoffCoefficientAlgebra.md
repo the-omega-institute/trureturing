@@ -261,5 +261,5 @@ Under the same positive-degree hypothesis, the same finite geometric series is a
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra.cutoffRestriction_mul`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra.geometricInverse_cutoffMul`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Coefficients/CutoffCoefficientAlgebra.toRationalWordPolynomial`
-- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading](../../LyndonBrackets/LyndonBracketLeading.md)
+- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketAlgebra](../../LyndonBrackets/LyndonBracketAlgebra.md)
 - Dependency: [D5/S1/Words/Complexity/VivionBinomialConverseFails](../../VivionBinomialConverseFails.md)

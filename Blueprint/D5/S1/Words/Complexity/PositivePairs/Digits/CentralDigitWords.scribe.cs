@@ -15,12 +15,10 @@ internal sealed class PositivePairsDigitsCentralDigitWordsDocument : IScribeDocu
         H("CentralDigitWords"),
         Blocks(
             Paragraph(Text(
-                "For each length r, ActualLyndonWord is the subtype of actual words of length r "
-                + "that satisfy IsLyndon. The module publicly installs a lifted linear order on "
-                + "this subtype and, for finite A, a Fintype instance obtained by injection into "
-                + "length-r vectors. These two anonymous public instances support the cardinality "
-                + "and deterministic selection below; the digit construction itself is a "
-                + "repository result, not a claim attributed to the cited paper.")),
+                "This module defines the base-2^r digit arrays, literal powered blocks, complete "
+                + "direction-major and scale-minor words, their all-zero reference word, and the "
+                + "fixed base-length coefficient. These are repository constructions built from "
+                + "the selected actual directions recorded by the preceding owner.")),
             D("digit-base", "digitBase", "Degree-dependent digit base",
                 "digitBase r is 2^r.", DescribeRole.Definition),
             D("digit-array", "DigitArray", "Complete direction-scale digit arrays",

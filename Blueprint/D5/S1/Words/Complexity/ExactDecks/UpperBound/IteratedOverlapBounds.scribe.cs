@@ -9,10 +9,9 @@ internal sealed class ExactDecksUpperBoundIteratedOverlapBoundsDocument : IScrib
         H("IteratedOverlapBounds"),
         Blocks(
             Paragraph(Text(
-                "The infiltration product and its top-degree shuffle stratum are classical and "
-                + "are also used in the cited source. The list-valued definitions retain one "
-                + "entry per alignment, so coincident output words remain repeated. The final "
-                + "unconditional recovery theorem is the repository bridge used by the exact "
-                + "asymptotic upper injection.")))));
+                "This module lifts the binary infiltration identity to a finite list of factors. "
+                + "It bounds every iterated overlap by the total factor length and identifies the "
+                + "maximal-length filtered stratum exactly with the iterated ordinary shuffles, "
+                + "retaining their list multiplicities.")))));
 
 }

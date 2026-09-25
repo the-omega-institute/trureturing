@@ -53,4 +53,5 @@ For each r, selectedDirection chooses one PositivePairIndex A r for every elemen
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.ActualLyndonWord`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.actualLyndonCount`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections.selectedDirection`
-- Dependency: [D5/S1/Words/Complexity/PositivePairs/Span/LiteralPowerSubstitution](../Span/LiteralPowerSubstitution.md)
+- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading](../../LyndonBrackets/LyndonBracketLeading.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Span/FullFamilyBracketSpan](../Span/FullFamilyBracketSpan.md)

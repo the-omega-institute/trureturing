@@ -7,6 +7,7 @@
    digest: Fixed-length padding loses exactly one degree in the exact-deck lower bound. -/
 
 import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckCore
+import D5.S1.Words.Complexity.ExactDecks.Growth.PositivePairBallGrowth
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

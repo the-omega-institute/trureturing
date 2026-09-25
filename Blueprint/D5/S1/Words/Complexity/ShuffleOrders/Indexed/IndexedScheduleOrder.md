@@ -98,4 +98,4 @@ evaluateSchedule returns none unless IsValidSchedule holds; otherwise it maps al
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.annotateIndexedFrom`
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.evaluateSchedule`
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleOrder.readIndexed`
-- Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryFrontPromotion](../Binary/BinaryFrontPromotion.md)
+- Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder](../Binary/BinaryScheduleOrder.md)

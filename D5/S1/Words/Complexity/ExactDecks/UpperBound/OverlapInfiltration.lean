@@ -6,8 +6,7 @@
    utility: none
    digest: Overlap infiltrations encode products of actual scattered counts with multiplicity. -/
 
-import D5.S1.Words.Complexity.ExactDecks.Growth.ExactDeckLowerBound
-import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedShuffleOrder
+import D5.S1.Words.Complexity.VivionBinomialConverseFails
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

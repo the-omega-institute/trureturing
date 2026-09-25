@@ -7,6 +7,7 @@
    digest: Binary schedule evaluation compares swapped fixed-source prefixes. -/
 
 import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleOrder
+import Mathlib.Data.List.Lex
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -6,7 +6,9 @@
    utility: none
    digest: Binary schedules compose into valid indexed schedules for all factors. -/
 
-import D5.S1.Words.Complexity.ExactDecks.UpperBound.LyndonFactorization
+import D5.S1.Words.Complexity.ExactDecks.UpperBound.OverlapInfiltration
+import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleEvaluation
+import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedScheduleWeave
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

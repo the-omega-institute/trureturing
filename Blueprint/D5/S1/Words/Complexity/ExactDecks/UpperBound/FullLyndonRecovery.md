@@ -4,7 +4,7 @@
 
 All bounded scattered counts are recovered unconditionally from Lyndon coordinates.
 
-The infiltration product and its top-degree shuffle stratum are classical and are also used in the cited source. The list-valued definitions retain one entry per alignment, so coincident output words remain repeated. The final unconditional recovery theorem is the repository bridge used by the exact asymptotic upper injection.
+This module recovers every bounded scattered count from actual Lyndon coordinates. Its minimal-counterexample argument factors the least bad word, uses the infiltration identity to cancel shorter overlaps, and uses indexed shuffle order to isolate its positive top-degree multiplicity. The result supplies the recovery step in the exact-deck upper bound.
 
 **Theorem 1.1 (Actual Lyndon coordinates recover every bounded count).**
 
@@ -24,3 +24,5 @@ For finite linearly ordered A and arbitrary k,left,right, if every actual Lyndon
 
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/UpperBound/FullLyndonRecovery.scatteredCount_eq_of_lyndon_coordinates`
 - Dependency: [D5/S1/Words/Complexity/ExactDecks/UpperBound/IteratedOverlapBounds](IteratedOverlapBounds.md)
+- Dependency: [D5/S1/Words/Complexity/ExactDecks/UpperBound/LyndonFactorization](LyndonFactorization.md)
+- Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedShuffleOrder](../../ShuffleOrders/Indexed/IndexedShuffleOrder.md)

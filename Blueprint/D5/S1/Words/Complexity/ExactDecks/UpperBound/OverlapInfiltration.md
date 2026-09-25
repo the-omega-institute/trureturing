@@ -60,5 +60,4 @@ Filtering overlapInfiltrations left right to merged words of length left.length+
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.overlapInfiltrations`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.overlapInfiltrations_filter_top_length`
 - Truth anchor: `D5/S1/Words/Complexity/ExactDecks/UpperBound/OverlapInfiltration.scatteredCount_mul_eq_sum_overlapInfiltrations`
-- Dependency: [D5/S1/Words/Complexity/ExactDecks/Growth/ExactDeckLowerBound](../Growth/ExactDeckLowerBound.md)
-- Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedShuffleOrder](../../ShuffleOrders/Indexed/IndexedShuffleOrder.md)
+- Dependency: [D5/S1/Words/Complexity/VivionBinomialConverseFails](../../VivionBinomialConverseFails.md)

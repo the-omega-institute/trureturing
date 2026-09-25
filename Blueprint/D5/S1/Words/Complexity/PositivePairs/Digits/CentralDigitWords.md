@@ -4,7 +4,7 @@
 
 Direction-major and scale-minor digits build literal positive words.
 
-For each length r, ActualLyndonWord is the subtype of actual words of length r that satisfy IsLyndon. The module publicly installs a lifted linear order on this subtype and, for finite A, a Fintype instance obtained by injection into length-r vectors. These two anonymous public instances support the cardinality and deterministic selection below; the digit construction itself is a repository result, not a claim attributed to the cited paper.
+This module defines the base-2^r digit arrays, literal powered blocks, complete direction-major and scale-minor words, their all-zero reference word, and the fixed base-length coefficient. These are repository constructions built from the selected actual directions recorded by the preceding owner.
 
 **Definition 1.1 (Degree-dependent digit base).**
 
@@ -114,3 +114,4 @@ baseLength A r is (2^r-1) times the sum of the selected u-word lengths and is th
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.multiScaleWord`
 - Truth anchor: `D5/S1/Words/Complexity/PositivePairs/Digits/CentralDigitWords.referenceWord`
 - Dependency: [D5/S1/Words/Complexity/PositivePairs/Digits/ActualLyndonDirections](ActualLyndonDirections.md)
+- Dependency: [D5/S1/Words/Complexity/PositivePairs/Span/LiteralPowerSubstitution](../Span/LiteralPowerSubstitution.md)

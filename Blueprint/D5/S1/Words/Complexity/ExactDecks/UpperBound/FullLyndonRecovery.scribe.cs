@@ -15,11 +15,11 @@ internal sealed class ExactDecksUpperBoundFullLyndonRecoveryDocument : IScribeDo
         H("FullLyndonRecovery"),
         Blocks(
             Paragraph(Text(
-                "The infiltration product and its top-degree shuffle stratum are classical and "
-                + "are also used in the cited source. The list-valued definitions retain one "
-                + "entry per alignment, so coincident output words remain repeated. The final "
-                + "unconditional recovery theorem is the repository bridge used by the exact "
-                + "asymptotic upper injection.")),
+                "This module recovers every bounded scattered count from actual Lyndon "
+                + "coordinates. Its minimal-counterexample argument factors the least bad word, "
+                + "uses the infiltration identity to cancel shorter overlaps, and uses indexed "
+                + "shuffle order to isolate its positive top-degree multiplicity. The result "
+                + "supplies the recovery step in the exact-deck upper bound.")),
             D("lyndon-coordinate-recovery", "scatteredCount_eq_of_lyndon_coordinates", "Actual Lyndon coordinates recover every bounded count",
                 "For finite linearly ordered A and arbitrary k,left,right, if every actual Lyndon word of length at most k has equal scattered count in left and right, then every word of length at most k has equal scattered count. No common-length premise, exact-deck premise, or guarded recovery hypothesis is required."))));
 

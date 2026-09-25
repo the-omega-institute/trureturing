@@ -6,7 +6,8 @@
    utility: none
    digest: Actual Lyndon words index independent directions in the full positive-pair family. -/
 
-import D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
+import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketLeading
+import D5.S1.Words.Complexity.PositivePairs.Span.FullFamilyBracketSpan
 import Mathlib.Data.List.Indexes
 
 set_option autoImplicit false

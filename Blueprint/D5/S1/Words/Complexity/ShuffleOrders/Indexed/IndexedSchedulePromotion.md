@@ -8,4 +8,5 @@ This module iterates the binary fixed-source promotion theorem over a list of fa
 
 ## References
 
+- Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryFrontPromotion](../Binary/BinaryFrontPromotion.md)
 - Dependency: [D5/S1/Words/Complexity/ShuffleOrders/Indexed/IndexedScheduleWeave](IndexedScheduleWeave.md)

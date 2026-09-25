@@ -7,6 +7,7 @@
    digest: Selected indexed traces can be refilled monotonically in fixed positions. -/
 
 import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedScheduleOrder
+import Mathlib.Data.List.Lex
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

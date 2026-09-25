@@ -6,7 +6,10 @@
    utility: none
    digest: Binary schedules track ordered occurrences from two fixed sources. -/
 
-import D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketLeading
+import Mathlib.Data.List.Basic
+import Mathlib.Data.List.Count
+import Mathlib.Data.Nat.Find
+import Mathlib.Order.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

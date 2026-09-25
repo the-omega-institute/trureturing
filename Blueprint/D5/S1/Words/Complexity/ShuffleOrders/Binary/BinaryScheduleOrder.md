@@ -83,4 +83,3 @@ For all offsets, schedules, and starting counters, annotation from offset starts
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.annotateTwoFrom`
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.annotateTwoFrom_add`
 - Truth anchor: `D5/S1/Words/Complexity/ShuffleOrders/Binary/BinaryScheduleOrder.shiftPairOccurrences`
-- Dependency: [D5/S1/Words/Complexity/LyndonBrackets/LyndonBracketLeading](../../LyndonBrackets/LyndonBracketLeading.md)

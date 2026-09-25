@@ -15,12 +15,10 @@ internal sealed class PositivePairsDigitsCentralDigitInjectionDocument : IScribe
         H("CentralDigitInjection"),
         Blocks(
             Paragraph(Text(
-                "For each length r, ActualLyndonWord is the subtype of actual words of length r "
-                + "that satisfy IsLyndon. The module publicly installs a lifted linear order on "
-                + "this subtype and, for finite A, a Fintype instance obtained by injection into "
-                + "length-r vectors. These two anonymous public instances support the cardinality "
-                + "and deterministic selection below; the digit construction itself is a "
-                + "repository result, not a claim attributed to the cited paper.")),
+                "This module combines the private central-coefficient identities with linear "
+                + "independence of the selected actual directions. Its public theorem packages "
+                + "lower-degree agreement, the exact degree-r coordinate formula, injectivity, "
+                + "digit-array cardinality, nonempty equal-length pairs, and exact word length.")),
             D("actual-positive-pair-central-digits", "actual_positivePair_multiScale_central_digits", "Full central-digit system from actual pairs",
                 "For finite linearly ordered A, r,t:N, and 2<=r, the selected actual leading differences are linearly independent; every selected pair has two nonempty equal-length words; every digit word agrees with referenceWord below degree r; each degree-r coefficient difference is the indicated sum of digitValue times actualLeadingDifference; the cutoffMagnus digit map is injective; the digit-array cardinality is (2^r)^(t*actualLyndonCount A r); and every digit word has length baseLength A r*(2^t-1)."))));
 
