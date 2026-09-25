@@ -4,6 +4,10 @@ authors: H. Barnum and E. Knill
 year: 2002
 title: Reversing quantum dynamics with near-optimal quantum and classical fidelity
 doi: 10.1063/1.1459754
+claim: A reference-state transpose recovery construction attains near-optimal quantum and classical fidelity under the source theorem's conditions.
+strata_touched:
+  - D5/S3/Quantum/Recovery/SpectralTransposeRecovery
+  - D5/S3/Quantum/Recovery/SpectralRecoveryCorrectness
 license: citation-only
 triage: anchor
 ---

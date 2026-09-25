@@ -25,7 +25,7 @@ internal sealed class MatrixUnitDecoderDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/MatrixUnitDecoder." + name),
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/benykempfkribs2007observables"), LibraryNoteRef.Create("D5/L/choijohnstonkribs2009multiplicative")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/benykempfkribs2007observables"), LibraryNoteRef.Create("D5/L/Quantum/choijohnstonkribs2009multiplicative")),
             Blocks(Paragraph(Text("Actual matrix units construct the full decoder without a syndrome basis. Its trace-pairing formula recovers supported commutant-weighted logical matrices and realizes normalized logical instruments. No global bundle or Chern-number claim is made."))),
             DescribeRole.Theorem)).ToArray())));
 }

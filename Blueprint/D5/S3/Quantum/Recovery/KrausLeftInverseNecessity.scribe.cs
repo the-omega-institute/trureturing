@@ -20,7 +20,7 @@ internal sealed class KrausLeftInverseNecessityDocument : IScribeDocumentDefinit
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausLeftInverseNecessity." + name),
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/knilllaflamme1997correction"), LibraryNoteRef.Create("D5/L/choijohnstonkribs2009multiplicative")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/knilllaflamme1997correction"), LibraryNoteRef.Create("D5/L/Quantum/choijohnstonkribs2009multiplicative")),
             Blocks(Paragraph(Text("Actual finite Kraus left inversion forces scalar error products. Scalarity of composite Kraus maps is derived from a positive commutator defect. The represented-family quantifier is explicit."))),
             DescribeRole.Theorem)).ToArray())));
 }

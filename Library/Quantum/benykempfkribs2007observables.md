@@ -4,7 +4,7 @@ authors: Cédric Bény and Achim Kempf and David W. Kribs
 year: 2007
 title: Quantum Error Correction of Observables
 doi: 10.1103/PhysRevA.76.042303
-arxiv: 0705.1574
+claim: Correctable observable algebras can be characterized in the Heisenberg picture without requiring recovery of the whole physical state.
 strata_touched:
   - D5/S3/Quantum/Recovery/OrthogonalSyndromeChannel
 license: citation-only

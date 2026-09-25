@@ -31,8 +31,8 @@ internal sealed class OrthogonalSyndromeChannelDocument : IScribeDocumentDefinit
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/knilllaflamme1997correction"),
-                LibraryNoteRef.Create("D5/L/benykempfkribs2007observables")),
+                LibraryNoteRef.Create("D5/L/Quantum/knilllaflamme1997correction"),
+                LibraryNoteRef.Create("D5/L/Quantum/benykempfkribs2007observables")),
             Blocks(Paragraph(Text("Concrete canonical CPTP encoding and full-space decoding of arbitrary positive unit-trace syndrome densities, together with the multiplicative logical algebra. This is classical orthogonal-syndrome correction, with no novelty claim."))),
             DescribeRole.Theorem)).ToArray())));
 }

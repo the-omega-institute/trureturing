@@ -4,7 +4,7 @@ authors: Man-Duen Choi and Nathaniel Johnston and David W. Kribs
 year: 2009
 title: The multiplicative domain in quantum error correction
 doi: 10.1088/1751-8113/42/24/245303
-arxiv: 0811.0947
+claim: Multiplicative-domain conditions characterize exact correctability of specified observables for quantum channels.
 strata_touched:
   - D5/S3/Quantum/Recovery/KrausLeftInverseNecessity
   - D5/S3/Quantum/Recovery/MatrixUnitDecoder

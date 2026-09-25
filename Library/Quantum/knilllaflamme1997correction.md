@@ -4,6 +4,7 @@ authors: E. Knill and R. Laflamme
 year: 1997
 title: Theory of quantum error-correcting codes
 doi: 10.1103/PhysRevA.55.900
+claim: A quantum code corrects a specified finite error family exactly when the compressed pairwise error products are scalar on the code.
 strata_touched:
   - D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding
 license: citation-only

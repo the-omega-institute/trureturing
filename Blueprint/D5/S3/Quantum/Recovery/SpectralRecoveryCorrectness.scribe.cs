@@ -20,9 +20,9 @@ internal sealed class SpectralRecoveryCorrectnessDocument : IScribeDocumentDefin
             H(name.Replace('_', ' ')),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/barnumknill2002reversal"),
-                LibraryNoteRef.Create("D5/L/nayaksen2007invertible"),
-                LibraryNoteRef.Create("D5/L/choijohnstonkribs2009multiplicative")),
+                LibraryNoteRef.Create("D5/L/Quantum/barnumknill2002reversal"),
+                LibraryNoteRef.Create("D5/L/Quantum/nayaksen2007invertible"),
+                LibraryNoteRef.Create("D5/L/Quantum/choijohnstonkribs2009multiplicative")),
             Blocks(Paragraph(Text("The computed spectral transpose recovery is exact whenever any represented Kraus left inverse exists. The proof derives observable intertwining from that inverse, then reuses cfc commutation and the computed support identity. Together with the finite Kraus criterion this closes the three-way equivalence in the finite representation."))),
             DescribeRole.Theorem)).ToArray())));
 }
