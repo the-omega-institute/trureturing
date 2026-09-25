@@ -25,7 +25,8 @@ def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr
   let declaredOwner := if declaredArena.isAppOf ``PrimitiveLawArena.toArena then
       declaredArena.appArg! else declaredArena
   let declaredOwner := if declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toPrimitiveLawArena") ||
-      declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toArena") then
+      declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toArena") ||
+      declaredOwner.isAppOf (RegistrationGates.objectDomainArenaName.str "toPrimitiveLawArena") then
       declaredOwner.appArg! else declaredOwner
   let canonicalName := declaredOwner.constName?
   unless canonicalName == some arenaName do fail "object-arena"
