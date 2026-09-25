@@ -2339,3 +2339,111 @@ $$
 [^phase_stinespring_continuity]: Dennis Kretschmann, Dirk Schlingemann and Reinhard F. Werner, *A Continuity Theorem for Stinespring's Dilation*, [arXiv:0710.2495v1, Theorem 1 and equations (6)–(7)](https://arxiv.org/pdf/0710.2495v1). 定理给 $`\beta(T_1,T_2)\le\sqrt{\|T_1-T_2\|_{\rm cb}}`$、达到该 Bures 距离的共同 Stinespring 表示，以及两份最小表示的直和可作为共同表示。本文在有限矩阵代数上对通道的 Heisenberg 对偶应用该结论；其 cb 距离等于 Schrödinger 通道的 diamond 距离。原定理没有给出本文的固定在线接收、全终端误差或容量账，这些由本节的外围吸收器和两次距离比较建立。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 17. 同一内部通道与不同校准边界的容量差
+
+前节的装置可以依赖已知来源。本节说明，这个量词不能仅凭内部通道相同而改成“同一装置适用于全部尚未校准的发射接口”。采用定义1.1的两态来源、等权 $`c_t=1`$ 和同一个贯穿全程的相位。按该定义的输出在前约定，一步发射为
+
+$$
+T_\vartheta=(R_\vartheta\otimes I_M)T,
+\qquad R_\vartheta=\operatorname{diag}(1,e^{i\vartheta}).
+\tag{17.1}
+$$
+
+**命题 17.1（相同记忆动力学不供相位校准）。** 全部（17.1）的内部记忆通道严格相同：
+
+$$
+E_\vartheta(X)
+=\operatorname{Tr}_B(T_\vartheta XT_\vartheta^\dagger)
+=\operatorname{Tr}_B(TXT^\dagger)=E(X).
+\tag{17.2}
+$$
+
+因此它们有相同的外围投影、衰减谱及（16.1）的 $`\delta_L`$。对任意固定 $`0<\epsilon<1`$，每个已经校准的 $`\vartheta`$ 都有一台满足定理16.2的有限固定接收器，并且数值容量上界可取相同；接收通道及解码器本身仍可依赖这个已知 $`\vartheta`$。
+
+证明。对被偏迹系统施加酉不改变偏迹，逐矩阵元或由偏迹的定义即得（17.2）。其余谱数据只取决于 $`E`$，故相同。每个已知 $`T_\vartheta`$ 都是固定等距来源，将张量因子作一次固定重排后应用定理16.2。也可在接收每个新位时先施加已知 $`R_\vartheta^\dagger`$，接上零相位的固定接收器，并在终端解码后对每个档案位恢复 $`R_\vartheta`$。这两种构造均使用已知校准，不取得未知相位的免费读数。证明完毕。
+
+**定理 17.2（任意正长度相位区间的统一容量障碍）。** 令 $`I`$ 为相位圆上的可测集合，归一 Haar 测度为
+
+$$
+a:=\mu(I)>0,
+\qquad d\mu(\vartheta)=\frac{d\vartheta}{2\pi}.
+\tag{17.3}
+$$
+
+特别允许任意短的非退化相位弧。取 $`n\ge4`$，记本卷估计（5.18）为
+
+$$
+\beta_n=\frac{\sqrt\pi}
+{2\sqrt{\alpha^3\lfloor(n-1)/3\rfloor}},
+\qquad \alpha=\frac{\sqrt5-1}{2}.
+\tag{17.4}
+$$
+
+若同一个编码—解码方案不能依赖实际 $`\vartheta\in I`$，接收系统维数为 $`D`$，则在指定 Bell 初始参考输入上，它的最坏联合半迹恢复误差 $`e_n`$ 满足
+
+$$
+\boxed{
+e_n\ge\max\left\{0,\ 1-\frac{4D\beta_n}{a}\right\}.
+}
+\tag{17.5}
+$$
+
+所以，若要求全部相位及全部参考输入的误差至多 $`\epsilon<1`$，必有
+
+$$
+D\ge\frac{a(1-\epsilon)}{4\beta_n}
+=\Omega_{a,\epsilon}(\sqrt n).
+\tag{17.6}
+$$
+
+允许每个终端重新设计编码、接收门或解码器仍受此界。特别地，任何固定有限 $`D`$ 的同一装置，其最坏误差随终端编号趋于一，不可能满足全部终端的统一正精度合同。
+
+证明。沿用（5.15）的纯联合 Bell 目标
+ $`P_\vartheta=|\Psi_\vartheta\rangle\langle\Psi_\vartheta|`$，并把不可访问的参考与活动记忆合记为四维系统 $`R=JM`$。定义全圆与局部平均
+
+$$
+\overline P=\int P_\vartheta\,d\mu(\vartheta),
+\qquad
+\overline P_I=\frac1a\int_I P_\vartheta\,d\mu(\vartheta).
+\tag{17.7}
+$$
+
+正算子积分给 $`0\preceq\overline P_I\preceq\overline P/a`$。由（5.15）—（5.18），$`\overline P\preceq\beta_n I`$，因此
+
+$$
+\overline P_I\preceq\frac{\beta_n}{a}I.
+\tag{17.8}
+$$
+
+对任意允许编码所得 $`KR`$ 联合态 $`\tau_\vartheta`$，有 $`0\preceq\tau_\vartheta\preceq I_{KR}`$。令 $`\mathcal D_n`$ 为这个终端的同一 CPTP 解码器。目标重叠满足
+
+$$
+\begin{aligned}
+f_\vartheta
+&=\operatorname{Tr}\left[P_\vartheta
+(\mathcal D_n\otimes\operatorname{id}_R)(\tau_\vartheta)\right]\\
+&\le\operatorname{Tr}
+\left[(\mathcal D_n^*\otimes\operatorname{id}_R)(P_\vartheta)\right].
+\end{aligned}
+\tag{17.9}
+$$
+
+对 $`I`$ 平均，利用解码对偶的正性和幺性，得到
+
+$$
+\frac1a\int_I f_\vartheta\,d\mu(\vartheta)
+\le\operatorname{Tr}
+\left[(\mathcal D_n^*\otimes\operatorname{id}_R)(\overline P_I)\right]
+\le\frac{4D\beta_n}{a}.
+\tag{17.10}
+$$
+
+以纯目标投影作为一个效果，半迹距离至少为 $`1-f_\vartheta`$。最坏误差不小于平均误差，故（17.10）给（17.5）；再移项得到（17.6）。$`\beta_n\to0`$，而半迹距离不超过一，所以固定 $`D`$ 时 $`e_n\to1`$。证明只用了终端接收系统的容量及同一解码器，不假定来源在不同相位之间可作相干叠加，也没有把未知相位认作逐步独立噪声。证明完毕。
+
+本节是定理16.2与既有共同相位平均界的综合应用，不另立新的谱结构原理。它给出一个明确的关系边界：内部记忆边缘、谱和混合速率完全相同，仍不保证这些发射接口具有同一有限维的全时域近似接收实现。装置需要保存哪些关系，还取决于允许来源族及输出相干检验所使用的校准。
+
+这不是对所有有限参数不确定性的结论；定理17.2使用 $`a>0`$，不处理零测度候选族。误差下界也允许终端的最坏相位随 $`n`$ 改变；它没有额外证明同一个固定相位的误差必然趋于一。对每个固定区间，容量发散已经足以排除统一装置。
+
+## 追加锚（本行以下为增补区）
