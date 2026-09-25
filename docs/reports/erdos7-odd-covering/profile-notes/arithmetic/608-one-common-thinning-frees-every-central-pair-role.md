@@ -252,3 +252,11 @@ polynomial lower bound, selector-regret upper bound, gate lower bound and
 Haar lower bound. Finite arithmetic verifies these witnesses. SR4 and
 SR7--SR12 supply the proof that the64 branch bounds cover every actual
 pair-role layout while comparing one actual source per family.
+
+[Report611](611-free-star-phases-require-a-layout-dependent-thinning.md)
+shows why also freeing the star phases requires a different quantifier
+strategy for this cap-and-screen functional. On one finite orbit of
+actual families, every layout has its own positive thinning, but no
+single thinning gives a positive gate for all of them. This leaves the
+fixed-star theorem above unchanged and does not rule out a construction
+that depends on the actual star layout.
