@@ -1062,3 +1062,59 @@ sinc 的区间 Fourier 乘子、Plancherel、谱 Gaussian 极限与有限柱面�
 已检查的原始文献未直接给出此固定 Liouville 模型、奇偶旧场关系及全部实际放大误差。
 有限检索不认证全球原创性。没有声称两分支在有限后验中独立、
 实际无界矩收敛、奇偶性随机分布、增长区间、其它幅度或不分奇偶的旧场联合极限。
+
+## 超临界共振的端点平方（第 61 章）
+
+`repo-derived`：第 61 章在精确 eta=2m、eta²delta→infinity、
+s sqrt(delta)≤U/2 的完整范围内，证明实际谱残差的常 Gaussian 偏移与进一步锚定的端点平方律。
+实际锚定量一致逼近同一标签向量的符号端点平方减实际对角平方和。
+偶数 m 使用旧端点，奇数 m 使用独立副本；两者边缘律相同而旧场联合律不同。
+新推导包括总放大 eta³ 后的有限 Fourier 误差、无附加对数间隔的加权导数界、
+移动符号方向与对角量的共同独立性，以及实际后验的整向量转移。
+未把第 60 章固定临界参数极限代入增长参数。
+
+Nourdin–Peccati，*Noncentral convergence of multiple integrals*，
+Annals of Probability 37 (2009), 1412–1426，
+DOI [10.1214/08-AOP435](https://doi.org/10.1214/08-AOP435)，
+[arXiv:0709.3903v3](https://arxiv.org/abs/0709.3903v3)，
+Theorem 1.2，PDF 第 3 页，假设固定偶数混沌阶 n≥2、方差趋 2nu，
+以矩或收缩条件刻画中心 Gamma 律 2Gamma(nu/2)-nu 的收敛。
+其中矩条件是 E F_k^4 -12 E F_k^3 →12nu²-48nu。
+Proposition 4.5，PDF 第 14 页，在二阶情况下再要求
+每个固定旧方向 h 的收缩内积 <f_k contraction_1 f_k,h tensor h>→0，
+才能得到与该方向独立的联合极限。
+同页 Remark 4.3 以恒定秩一核明确反驳「二阶非中心收敛自动独立」的说法。
+本章符号秩一核的这一内积正比于 (integral chi_Q h rho)²；
+奇数支因交替符号消失，偶数支在 h=1 时不消失。
+这个经典判据不含实际观测行、有限谱放大、后验中心或移动方向的联合比较。
+
+Nourdin–Poly，*Convergence in law in the second Wiener/Wigner chaos*，
+[arXiv:1205.2684v3](https://arxiv.org/abs/1205.2684v3)，
+Proposition 2.1 与紧随的累积量公式，PDF 第 4 页，
+给出 Hilbert–Schmidt 对称核对应的独立中心正态平方谱展开。
+Theorem 3.1，PDF 第 5 页，刻画二阶 Wiener 积分弱极限的分布，
+它可表示为独立 Gaussian 加二阶积分。
+该分布存在性不识别极限与给定旧噪声的共同实现。
+本章以有限秩投影删除直接证明偏移、对角量与移动符号方向的联合关系。
+第四累积量和秩一中心平方结构属于经典工具，不列为新的一般混沌理论。
+
+Peligrad–Wu，*Central limit theorem for Fourier transforms of stationary processes*，
+Annals of Probability 38 (2010), 2009–2022，
+DOI [10.1214/10-AOP530](https://doi.org/10.1214/10-AOP530)，
+[arXiv:0910.3451v3](https://arxiv.org/abs/0910.3451v3)，
+Theorem 2.1，PDF 第 3 页，要求中心、二阶可积、平稳遍历及远过去条件均值为零，
+结论针对 Lebesgue 几乎处处的固定频率。
+它不能直接覆盖本章精确零频或 Nyquist 交替频率，以及异质的移动格质量。
+本章以周期交替函数的有界原函数证明精确频率下的 Gram 极限。
+
+Bernoulli 局部界仍使用 Siripraparat–Neammanee 2021 Theorem 2；
+第 56 章已将其用于整选择向量比较、Hilbert 中心界和核心逆分布耦合。
+de Jong 的 clean 二次型 Gaussian 条件、Nualart–Peccati 的第四矩条件
+适用于小算子偏移机制，不能把锚定秩一项判为 Gaussian。
+Tudor 2606.14812v1 Theorem 1 对固定旧变量的结论不能代替本章移动符号方向；
+这里的投影空间明确同时包含固定和移动方向。
+
+已检查的原始文献未直接给出这个实际 Liouville 后验模型的完整超临界结论；
+有限检索不认证全球原创性。Gaussian 谱展开、交替 Gram 极限、有限秩删除和连续映射均为成熟方法。
+本文没有声称实际无界矩收敛、固定支持的条件后验定理、
+不分奇偶的旧场联合极限、非精确共振、增长空间窗口或超出原频率上界的结论。
