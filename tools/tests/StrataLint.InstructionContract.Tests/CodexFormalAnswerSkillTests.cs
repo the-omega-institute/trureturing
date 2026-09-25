@@ -117,13 +117,13 @@ public sealed partial class CodexFormalAnswerSkillTests
             File.Exists(Path.Combine(
                 TestRepositoryLayout.FindRoot(),
                 "skills",
-                "codex-formal-answer",
+                "formal-thinking-and-answer",
                 "SKILL.md")),
-            "Required skill file is missing: skills/codex-formal-answer/SKILL.md");
+            "Required skill file is missing: skills/formal-thinking-and-answer/SKILL.md");
         Assert.True(DefinesSingleStructurallyTotalAuthority(Parse(File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md")))));
     }
 
@@ -147,7 +147,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesMaximalFormalizableCoreExtraction(Parse(skill)));
@@ -173,7 +173,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesCompleteGeneralizationBridge(Parse(skill)));
@@ -199,7 +199,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesCompleteRepositoryConceptSearch(Parse(skill)));
@@ -278,7 +278,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesInferentialCompletionAndProjectPersistence(Parse(skill)));

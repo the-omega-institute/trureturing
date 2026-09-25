@@ -1,17 +1,17 @@
 ---
-name: codex-formal-answer
-description: Use when answering mathematical, conceptual, philosophical, or metaphysical questions through repository-first scientific reasoning, a clause-complete formal bridge, compiled exact Lean applications, admissible reusable library growth, and an ordinary conversational answer; the formal work stays internal and is shown only when the user asks for it.
+name: formal-thinking-and-answer
+description: Default thinking and answering workflow in this repository, especially for mathematical, conceptual, philosophical, or metaphysical questions. Use repository-first scientific reasoning, a clause-complete formal bridge, compiled exact Lean applications, and admissible reusable library growth to produce an ordinary conversational answer; the formal work stays internal and is shown only when the user asks for it.
 ---
 
-# Codex Formal Answer Workflow
+# Formal Thinking and Answer Workflow
 
 ## Install
 
-This repository copy is the single source of truth for `skills/codex-formal-answer/`; any installed copy is a projection of it.
+This repository copy is the single source of truth for `skills/formal-thinking-and-answer/`; any installed copy is a projection of it.
 
 ## Scope and authority
 
-This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
+This file packages repository obligations for the default thinking and answering workflow; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
 
 This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record; the user sees only that answer unless they ask for the record (see the conversation contract). The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
 
