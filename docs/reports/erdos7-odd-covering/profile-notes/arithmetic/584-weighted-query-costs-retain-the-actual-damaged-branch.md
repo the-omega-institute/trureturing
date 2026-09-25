@@ -101,7 +101,7 @@ For arbitrary original heights, W5 instead gives the actual mean-loss criterion
           /107538421569394674298218240
       =0.20697764557312648... .                            (W10)
 
-The general union estimate supplies only m<=B/24=0.2084611479099254..., which is larger by0.0014835023367989286.... Thus arbitrary heights require additional actual mean-loss information. W10 does not assert that this missing improvement holds for every family.
+The general union estimate supplies only m<=B/24=0.2084611479099254..., which is larger by0.0014835023367989286.... This third-hinge criterion therefore requires additional actual mean-loss information. W10 does not assert that this improvement holds for every family. [Report585](585-joint-damaged-reserves-retain-every-original-height.md) instead uses the sharper second hinge already contained in Report569's proof: it closes this all-height gap under cB=1,cA>=5/9 and further permits both branches to be damaged under its actual joint-capacity condition. The W10 calculation itself is unchanged.
 
 ## 5. Scope relative to the earlier barrier
 

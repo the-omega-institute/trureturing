@@ -1,0 +1,1017 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "actual_family": {
+    "actual_source_RQ": {
+      "decimal": 1.4496548412905634,
+      "exact": "214267985/147806208"
+    },
+    "actual_source_rows": [
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4
+        ],
+        "prime": 5,
+        "root_mass": {
+          "decimal": 0.3333333333333333,
+          "exact": "1/3"
+        },
+        "row_density": {
+          "decimal": 1.6666666666666667,
+          "exact": "5/3"
+        }
+      },
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "prime": 7,
+        "root_mass": {
+          "decimal": 0.2,
+          "exact": "1/5"
+        },
+        "row_density": {
+          "decimal": 1.4,
+          "exact": "7/5"
+        }
+      },
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "prime": 11,
+        "root_mass": {
+          "decimal": 0.1111111111111111,
+          "exact": "1/9"
+        },
+        "row_density": {
+          "decimal": 1.2222222222222223,
+          "exact": "11/9"
+        }
+      },
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "prime": 13,
+        "root_mass": {
+          "decimal": 0.09090909090909091,
+          "exact": "1/11"
+        },
+        "row_density": {
+          "decimal": 1.1818181818181819,
+          "exact": "13/11"
+        }
+      },
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "prime": 17,
+        "root_mass": {
+          "decimal": 0.06666666666666667,
+          "exact": "1/15"
+        },
+        "row_density": {
+          "decimal": 1.1333333333333333,
+          "exact": "17/15"
+        }
+      },
+      {
+        "allowed_roots": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "prime": 19,
+        "root_mass": {
+          "decimal": 0.058823529411764705,
+          "exact": "1/17"
+        },
+        "row_density": {
+          "decimal": 1.1176470588235294,
+          "exact": "19/17"
+        }
+      }
+    ],
+    "all_height_identity": "YA_max(H)=46/9+54*3^(-H); cA_min=1-YA_max/12; cB_min=26/27; H>=5. Only q19 exponent5 is replaced by exponentH, preserving its ternary phase51 and Q phase2.",
+    "arbitrary_height_scope": "The source and all Q labels are fixed for every H>=5. The residual original height is unbounded; every query height is retained. Raw-budget separation is asserted only at H5.",
+    "checked_heights": [
+      {
+        "H": 5,
+        "YA_max": {
+          "decimal": 5.333333333333333,
+          "exact": "16/3"
+        },
+        "YB_max": {
+          "decimal": 0.6666666666666666,
+          "exact": "2/3"
+        },
+        "cA_min": {
+          "decimal": 0.5555555555555556,
+          "exact": "5/9"
+        },
+        "cB_min": {
+          "decimal": 0.9629629629629629,
+          "exact": "26/27"
+        },
+        "incidence_patterns": 96,
+        "joint_2cA_3cB_min": {
+          "decimal": 4.0,
+          "exact": "4"
+        },
+        "originals": [
+          {
+            "d": 1,
+            "e": 1,
+            "modulus": 3,
+            "phase": 1,
+            "r": 0,
+            "t": 1
+          },
+          {
+            "d": 1,
+            "e": 2,
+            "modulus": 9,
+            "phase": 3,
+            "r": 0,
+            "t": 3
+          },
+          {
+            "d": 5,
+            "e": 0,
+            "modulus": 5,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 5,
+            "e": 1,
+            "modulus": 15,
+            "phase": 11,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 5,
+            "e": 4,
+            "modulus": 405,
+            "phase": 162,
+            "r": 2,
+            "t": 0
+          },
+          {
+            "d": 5,
+            "e": 5,
+            "modulus": 1215,
+            "phase": 27,
+            "r": 2,
+            "t": 27
+          },
+          {
+            "d": 7,
+            "e": 0,
+            "modulus": 7,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 7,
+            "e": 1,
+            "modulus": 21,
+            "phase": 8,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 7,
+            "e": 4,
+            "modulus": 567,
+            "phase": 492,
+            "r": 2,
+            "t": 6
+          },
+          {
+            "d": 7,
+            "e": 5,
+            "modulus": 1701,
+            "phase": 1248,
+            "r": 2,
+            "t": 33
+          },
+          {
+            "d": 11,
+            "e": 0,
+            "modulus": 11,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 11,
+            "e": 1,
+            "modulus": 33,
+            "phase": 23,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 11,
+            "e": 4,
+            "modulus": 891,
+            "phase": 90,
+            "r": 2,
+            "t": 9
+          },
+          {
+            "d": 11,
+            "e": 5,
+            "modulus": 2673,
+            "phase": 2466,
+            "r": 2,
+            "t": 36
+          },
+          {
+            "d": 13,
+            "e": 0,
+            "modulus": 13,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 13,
+            "e": 1,
+            "modulus": 39,
+            "phase": 14,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 13,
+            "e": 4,
+            "modulus": 1053,
+            "phase": 15,
+            "r": 2,
+            "t": 15
+          },
+          {
+            "d": 13,
+            "e": 5,
+            "modulus": 3159,
+            "phase": 2472,
+            "r": 2,
+            "t": 42
+          },
+          {
+            "d": 17,
+            "e": 0,
+            "modulus": 17,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 17,
+            "e": 1,
+            "modulus": 51,
+            "phase": 35,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 17,
+            "e": 4,
+            "modulus": 1377,
+            "phase": 342,
+            "r": 2,
+            "t": 18
+          },
+          {
+            "d": 17,
+            "e": 5,
+            "modulus": 4131,
+            "phase": 1260,
+            "r": 2,
+            "t": 45
+          },
+          {
+            "d": 19,
+            "e": 0,
+            "modulus": 19,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 19,
+            "e": 1,
+            "modulus": 57,
+            "phase": 20,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 19,
+            "e": 4,
+            "modulus": 1539,
+            "phase": 2,
+            "r": 2,
+            "t": 2
+          },
+          {
+            "d": 19,
+            "e": 5,
+            "modulus": 4617,
+            "phase": 4182,
+            "r": 2,
+            "t": 51
+          },
+          {
+            "d": 25,
+            "e": 0,
+            "modulus": 25,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 25,
+            "e": 1,
+            "modulus": 75,
+            "phase": 26,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 25,
+            "e": 4,
+            "modulus": 2025,
+            "phase": 1077,
+            "r": 2,
+            "t": 24
+          }
+        ],
+        "raw_capacity_coefficient": {
+          "decimal": 1.0972222222222223,
+          "exact": "79/72"
+        },
+        "raw_query_bound_using_generic_B": {
+          "decimal": 11.5897666670218,
+          "exact": "72060107485661209148251/6217563265592330548800"
+        }
+      },
+      {
+        "H": 11,
+        "YA_max": {
+          "decimal": 5.1114159426916626,
+          "exact": "33536/6561"
+        },
+        "YB_max": {
+          "decimal": 0.6666666666666666,
+          "exact": "2/3"
+        },
+        "cA_min": {
+          "decimal": 0.5740486714423614,
+          "exact": "11299/19683"
+        },
+        "cB_min": {
+          "decimal": 0.9629629629629629,
+          "exact": "26/27"
+        },
+        "incidence_patterns": 96,
+        "joint_2cA_3cB_min": {
+          "decimal": 4.036986231773612,
+          "exact": "79460/19683"
+        },
+        "originals": [
+          {
+            "d": 1,
+            "e": 1,
+            "modulus": 3,
+            "phase": 1,
+            "r": 0,
+            "t": 1
+          },
+          {
+            "d": 1,
+            "e": 2,
+            "modulus": 9,
+            "phase": 3,
+            "r": 0,
+            "t": 3
+          },
+          {
+            "d": 5,
+            "e": 0,
+            "modulus": 5,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 5,
+            "e": 1,
+            "modulus": 15,
+            "phase": 11,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 5,
+            "e": 4,
+            "modulus": 405,
+            "phase": 162,
+            "r": 2,
+            "t": 0
+          },
+          {
+            "d": 5,
+            "e": 5,
+            "modulus": 1215,
+            "phase": 27,
+            "r": 2,
+            "t": 27
+          },
+          {
+            "d": 7,
+            "e": 0,
+            "modulus": 7,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 7,
+            "e": 1,
+            "modulus": 21,
+            "phase": 8,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 7,
+            "e": 4,
+            "modulus": 567,
+            "phase": 492,
+            "r": 2,
+            "t": 6
+          },
+          {
+            "d": 7,
+            "e": 5,
+            "modulus": 1701,
+            "phase": 1248,
+            "r": 2,
+            "t": 33
+          },
+          {
+            "d": 11,
+            "e": 0,
+            "modulus": 11,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 11,
+            "e": 1,
+            "modulus": 33,
+            "phase": 23,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 11,
+            "e": 4,
+            "modulus": 891,
+            "phase": 90,
+            "r": 2,
+            "t": 9
+          },
+          {
+            "d": 11,
+            "e": 5,
+            "modulus": 2673,
+            "phase": 2466,
+            "r": 2,
+            "t": 36
+          },
+          {
+            "d": 13,
+            "e": 0,
+            "modulus": 13,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 13,
+            "e": 1,
+            "modulus": 39,
+            "phase": 14,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 13,
+            "e": 4,
+            "modulus": 1053,
+            "phase": 15,
+            "r": 2,
+            "t": 15
+          },
+          {
+            "d": 13,
+            "e": 5,
+            "modulus": 3159,
+            "phase": 2472,
+            "r": 2,
+            "t": 42
+          },
+          {
+            "d": 17,
+            "e": 0,
+            "modulus": 17,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 17,
+            "e": 1,
+            "modulus": 51,
+            "phase": 35,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 17,
+            "e": 4,
+            "modulus": 1377,
+            "phase": 342,
+            "r": 2,
+            "t": 18
+          },
+          {
+            "d": 17,
+            "e": 5,
+            "modulus": 4131,
+            "phase": 1260,
+            "r": 2,
+            "t": 45
+          },
+          {
+            "d": 19,
+            "e": 0,
+            "modulus": 19,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 19,
+            "e": 1,
+            "modulus": 57,
+            "phase": 20,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 19,
+            "e": 4,
+            "modulus": 1539,
+            "phase": 2,
+            "r": 2,
+            "t": 2
+          },
+          {
+            "d": 19,
+            "e": 11,
+            "modulus": 3365793,
+            "phase": 2834403,
+            "r": 2,
+            "t": 51
+          },
+          {
+            "d": 25,
+            "e": 0,
+            "modulus": 25,
+            "phase": 0,
+            "r": 0,
+            "t": 0
+          },
+          {
+            "d": 25,
+            "e": 1,
+            "modulus": 75,
+            "phase": 26,
+            "r": 1,
+            "t": 2
+          },
+          {
+            "d": 25,
+            "e": 4,
+            "modulus": 2025,
+            "phase": 1077,
+            "r": 2,
+            "t": 24
+          }
+        ],
+        "raw_capacity_coefficient": {
+          "decimal": 1.087169645104455,
+          "exact": "172773/158920"
+        },
+        "raw_query_bound_using_generic_B": {
+          "decimal": 11.529420367533886,
+          "exact": "158224505493407008451410393/13723543807887960705768000"
+        }
+      }
+    ],
+    "family": "29 originals with one ternary original height H>=5",
+    "old580_actual_query_upper": {
+      "decimal": 4.060884111761196,
+      "exact": "707102221910994074060531677750081107305895328407528125/174125191079221796378502817021175335284433526476406784"
+    },
+    "old580_generic_first_moment_query_upper": {
+      "decimal": 11.55369627049965,
+      "exact": "97019172973188844990661620404375247681942506014475/8397241082138396816092921345542792017960721762944"
+    },
+    "rho_A4": {
+      "decimal": 0.8686868686868687,
+      "exact": "86/99"
+    },
+    "scope": "Both branches are damaged simultaneously under one actual PA source. Two shallow25 originals are redundant. The generic580 first-moment gate fails; no claim is made about its whole Gamma test. Existing580 with the actual source norm passes, so no new noncoverage class is claimed for this control.",
+    "selected_phases": {
+      "11": [
+        0,
+        1
+      ],
+      "13": [
+        0,
+        1
+      ],
+      "17": [
+        0,
+        1
+      ],
+      "19": [
+        0,
+        1
+      ],
+      "25": [
+        0,
+        1
+      ],
+      "5": [
+        0,
+        1
+      ],
+      "7": [
+        0,
+        1
+      ]
+    },
+    "sharp_weighted_query_upper": {
+      "decimal": 11.54848344408491,
+      "exact": "1795085660881088508439/155439081639808263720"
+    },
+    "source_density": {
+      "decimal": 4.269135802469136,
+      "exact": "1729/405"
+    },
+    "two_branch_bad_event_mass": {
+      "decimal": 5.281573909024889e-07,
+      "exact": "1/1893375"
+    }
+  },
+  "alpha": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "check_count": 140,
+  "checks": [
+    "source SHA256 pa_complete_suffix_debits.json",
+    "source SHA256 height_three_clipping_envelope.json",
+    "same old-method envelope supplier",
+    "same full query supplier",
+    "same density denominator",
+    "second hinge is supplier proof coefficient",
+    "second hinge exceeds full leading suffix",
+    "positive mass at (1/2,2/3)",
+    "joint cap sum at (1/2,2/3)",
+    "unchanged SD10 quotient at (1/2,2/3)",
+    "SD10 full hinge corner nonnegative (1/2,2/3)",
+    "positive mass at (1/2,1)",
+    "joint cap sum at (1/2,1)",
+    "unchanged SD10 quotient at (1/2,1)",
+    "SD10 full hinge corner nonnegative (1/2,1)",
+    "positive mass at (1,2/3)",
+    "joint cap sum at (1,2/3)",
+    "unchanged SD10 quotient at (1,2/3)",
+    "SD10 full hinge corner nonnegative (1,2/3)",
+    "positive mass at (1,1)",
+    "joint cap sum at (1,1)",
+    "unchanged SD10 quotient at (1,1)",
+    "SD10 full hinge corner nonnegative (1,1)",
+    "suffix-cap identity at 11",
+    "SD9 convex penalty slope at 11",
+    "suffix-cap identity at 13",
+    "SD9 convex penalty slope at 13",
+    "suffix-cap identity at 17",
+    "SD9 convex penalty slope at 17",
+    "suffix-cap identity at 19",
+    "SD9 convex penalty slope at 19",
+    "unit shifts third hinge to nonunit second hinge",
+    "full deep query geometric tail 2",
+    "full original incidence geometric tail 2",
+    "full deep query geometric tail 3",
+    "full original incidence geometric tail 3",
+    "full deep query geometric tail 6",
+    "full original incidence geometric tail 6",
+    "full deep query geometric tail 12",
+    "full original incidence geometric tail 12",
+    "disjoint roots have the same deep coefficient",
+    "root and complete deep coefficients",
+    "joint-load coefficients match reserve condition",
+    "normalized fibre mass 1/2,1",
+    "joint capacity deep B cap 1/2,1",
+    "root B weighted identity 1/2,1",
+    "normalized fibre mass 1/2,1",
+    "joint capacity deep B cap 1/2,1",
+    "root B weighted identity 1/2,1",
+    "normalized fibre mass 1/2,1",
+    "joint capacity deep B cap 1/2,1",
+    "root B weighted identity 1/2,1",
+    "normalized fibre mass 5/9,26/27",
+    "joint capacity deep B cap 5/9,26/27",
+    "root B weighted identity 5/9,26/27",
+    "normalized fibre mass 5/9,53/54",
+    "joint capacity deep B cap 5/9,53/54",
+    "root B weighted identity 5/9,53/54",
+    "normalized fibre mass 5/9,1",
+    "joint capacity deep B cap 5/9,1",
+    "root B weighted identity 5/9,1",
+    "normalized fibre mass 2/3,8/9",
+    "joint capacity deep B cap 2/3,8/9",
+    "root B weighted identity 2/3,8/9",
+    "normalized fibre mass 2/3,17/18",
+    "joint capacity deep B cap 2/3,17/18",
+    "root B weighted identity 2/3,17/18",
+    "normalized fibre mass 2/3,1",
+    "joint capacity deep B cap 2/3,1",
+    "root B weighted identity 2/3,1",
+    "normalized fibre mass 3/4,5/6",
+    "joint capacity deep B cap 3/4,5/6",
+    "root B weighted identity 3/4,5/6",
+    "normalized fibre mass 3/4,11/12",
+    "joint capacity deep B cap 3/4,11/12",
+    "root B weighted identity 3/4,11/12",
+    "normalized fibre mass 3/4,1",
+    "joint capacity deep B cap 3/4,1",
+    "root B weighted identity 3/4,1",
+    "normalized fibre mass 1,2/3",
+    "joint capacity deep B cap 1,2/3",
+    "root B weighted identity 1,2/3",
+    "normalized fibre mass 1,5/6",
+    "joint capacity deep B cap 1,5/6",
+    "root B weighted identity 1,5/6",
+    "normalized fibre mass 1,1",
+    "joint capacity deep B cap 1,1",
+    "root B weighted identity 1,1",
+    "load cap yields five-ninths reserve",
+    "weight cap is two ninths",
+    "all-height budget identity",
+    "exact all-height joint budget",
+    "strict nine-prime continuation gate",
+    "unchanged density from disjoint roots",
+    "same-law complete 23 and 29 continuation",
+    "exact positive Haar lower",
+    "Haar lower exceeds one millionth",
+    "exact load threshold",
+    "simple all-height domain lies below exact threshold",
+    "threshold is the exact zero-margin boundary",
+    "H5 raw uniform-cap coefficient",
+    "H5 raw supplier-budget comparison",
+    "29 source row normalized 5",
+    "29 source row normalized 7",
+    "29 source row normalized 11",
+    "29 source actual PA cap inactive 11",
+    "29 source row normalized 13",
+    "29 source actual PA cap inactive 13",
+    "29 source row normalized 17",
+    "29 source actual PA cap inactive 17",
+    "29 source row normalized 19",
+    "29 source actual PA cap inactive 19",
+    "29 selected25 phases already excluded at root5",
+    "29 exact complete actual source query norm",
+    "29 two branches damaged on one positive event",
+    "29 distinct odd original moduli H=5",
+    "29 actual fixed CRT residues H=5",
+    "29 shallow phases covered H=5",
+    "29 shallow25 redundancy H=5 e=0",
+    "29 shallow25 redundancy H=5 e=1",
+    "29 actual A ternary cylinders disjoint H=5",
+    "29 actual deep branches H=5",
+    "29 all incidence patterns H=5",
+    "29 jointly attained actual minima H=5",
+    "29 distinct odd original moduli H=11",
+    "29 actual fixed CRT residues H=11",
+    "29 shallow phases covered H=11",
+    "29 shallow25 redundancy H=11 e=0",
+    "29 shallow25 redundancy H=11 e=1",
+    "29 actual A ternary cylinders disjoint H=11",
+    "29 actual deep branches H=11",
+    "29 all incidence patterns H=11",
+    "29 jointly attained actual minima H=11",
+    "29 H5 coupled reserve equality",
+    "29 H5 raw supplier certificate misses gate",
+    "29 arbitrary-height load decreases from H5",
+    "29 sharp weighted supplier bound passes",
+    "29 actual fourth-layer A mean",
+    "29 existing580 generic first-moment gate fails",
+    "29 existing580 also passes with actual source norm"
+  ],
+  "joint_reserve_consumer": {
+    "Haar_survivor_lower": {
+      "decimal": 1.023945338118159e-06,
+      "exact": "19322824958140352009/18870953593726484490240000"
+    },
+    "actual_condition": "2cA+3cB>=4 and cA>=5/9 almost everywhere under the SAME nu.",
+    "all_height_mean_bound": {
+      "decimal": 0.2084611479099254,
+      "exact": "432040125182653876501/2072521088530776849600"
+    },
+    "density_upper": {
+      "decimal": 197.08470097545313,
+      "exact": "1492917394000032000/7575003978548161"
+    },
+    "general_load_formula": "For YA<=u,YA+YB<=6 and0<=u<6: R<=2B+7/8+(u/24)(B-2).",
+    "law": "chi[(aA/cA)uA+(aB/cB)uB]nu; aA=cA/2,aB=1-cA/2.",
+    "load_sufficient_condition": "YA<=16/3 and YA+YB<=6; Yj sums54*3^(-e)Lje over ALL e>=4.",
+    "query_margin": {
+      "decimal": 0.0025369640783548487,
+      "exact": "19322824958140352009/7616515000350604922280"
+    },
+    "query_upper": {
+      "decimal": 11.54848344408491,
+      "exact": "1795085660881088508439/155439081639808263720"
+    },
+    "relation_to584": "cB=1,cA>=5/9 implies the joint capacity; the second hinge closes the previously stated arbitrary-original-height mean gap.",
+    "strict_u_threshold": {
+      "decimal": 5.353608314455152,
+      "exact": "68029220008060721916648/12707171689116034479349"
+    },
+    "weight_cap": {
+      "decimal": 0.2222222222222222,
+      "exact": "2/9"
+    }
+  },
+  "raw_supplier_budget_comparison": {
+    "H5_capacity_minima": {
+      "a": "20/3",
+      "b": "52/3",
+      "beta": "24",
+      "r": "20/3"
+    },
+    "coefficient": {
+      "decimal": 1.0972222222222223,
+      "exact": "79/72"
+    },
+    "query_upper": {
+      "decimal": 11.5897666670218,
+      "exact": "72060107485661209148251/6217563265592330548800"
+    },
+    "scope": "Comparison using the same conservative supplier B at H5; does not imply any lower bound on actual query cost or failure of older instance-specific certificates."
+  },
+  "schema": "joint-weighted-query-reserve-v1",
+  "scope": "Conditional same-source theorem with arbitrary finite original heights and complete query heights. Fixed pure3 geometry, shallow two-phase selection, and actual joint reserves remain assumptions. No new Lean or unrestricted Erdos7 claim.",
+  "second_hinge": {
+    "K2": {
+      "decimal": 3.00306754983821,
+      "exact": "259330034471755805701/86355045355449035400"
+    },
+    "SD10_corners": [
+      {
+        "hinge_margin": {
+          "decimal": 0.0,
+          "exact": "0"
+        },
+        "query_quotient": {
+          "decimal": 5.003067549838209,
+          "exact": "432040125182653876501/86355045355449035400"
+        },
+        "x": "1/2",
+        "y": "2/3"
+      },
+      {
+        "hinge_margin": {
+          "decimal": 0.33141726437811353,
+          "exact": "158364218734390828000991712501613/477839375783734917124295131008000"
+        },
+        "query_quotient": {
+          "decimal": 3.6297322737723827,
+          "exact": "17095921854877696987063/4709967723627697810200"
+        },
+        "x": "1/2",
+        "y": "1"
+      },
+      {
+        "hinge_margin": {
+          "decimal": 0.8242847897340466,
+          "exact": "322261960413717825506973828908923/390959489277601295828968743552000"
+        },
+        "query_quotient": {
+          "decimal": 2.992824752176305,
+          "exact": "19596533805846961674769/6547838723799937602600"
+        },
+        "x": "1",
+        "y": "2/3"
+      },
+      {
+        "hinge_margin": {
+          "decimal": 1.6349367902265752,
+          "exact": "1562474350575459823489389403206043/955678751567469834248590262016000"
+        },
+        "query_quotient": {
+          "decimal": 2.7117721004787363,
+          "exact": "37765256683171490533813/13926412428428042620200"
+        },
+        "x": "1",
+        "y": "1"
+      }
+    ],
+    "contract": "Every finite partial nonunit one-phase layout under the SAME actual PA source; derived from SD10 full hinge, not R_Q<=B alone.",
+    "unit_accounting": "Complete query N contains unit once; N>=1+L implies (L-2)+<=(N-3)+."
+  },
+  "sources": [
+    {
+      "path": "pa_complete_suffix_debits.json",
+      "sha256": "b1b204f8728c64ed9265e91d78d3072a2e77f64f6efca57512f3e58f0bdf3ccc"
+    },
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    }
+  ],
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  }
+}
