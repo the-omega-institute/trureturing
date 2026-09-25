@@ -5,9 +5,10 @@ year: 2025
 title: 'Symmetries of the periodic Fredkin chain'
 doi: 10.1088/1751-8121/ae1644
 url: https://doi.org/10.1088/1751-8121/ae1644
-claim: The paper defines the periodic Fredkin Hamiltonian and the operators Sigma plus and minus, then states as Conjecture 1 that they annihilate every non-cyclic invariant eigenstate.
+claim: The paper defines the periodic Fredkin Hamiltonian and the operators Sigma plus and minus, states as Conjecture 1 that they annihilate every non-cyclic invariant eigenstate, and states as Conjecture 2 that they are finite anti-adjoint expansions of the total spin operators.
 strata_touched:
   - D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation
+  - D5/S3/Quantum/Dynamics/PronkoFredkinAntiAdjointExpansion
 license: citation-only
 triage: anchor
 ---
@@ -59,8 +60,26 @@ that is an eigenvector of both `H` and `C`; non-cyclic means that its
 eigenvector hypothesis but establishes annihilation from the `C`-eigenvector
 hypothesis alone.
 
+Section 2.1, printed p. 3, fixes in an unnumbered display the normalization
+of the total spin operators:
+
+> S^± = Σ_{j=1}^N σ_j^±, S^z = ½ Σ_{j=1}^N σ_j^z.
+
+Conjecture 2, printed p. 7, is:
+
+> For the operators Σ^± there exists the representation
+> Σ^± = Σ_{k=1}^{⌈N/2⌉} γ_k (ãd S^± ãd S^∓)^{k−1} S^±,
+> where γ_k are some coefficients and ãd denotes the anti-adjoint action,
+> (ãd a) b ≡ {a, b} = ab + ba.
+
+The paper gives `Σ^± = −¼ S^± + ⅛ {S^±, {S^∓, S^±}}` for `N = 3` and lists
+the coefficients `γ_k` for `N ≤ 10` in Table 1, printed p. 8. The formal
+statement quantifies over every natural number `N`, takes complex
+coefficients, and requires one coefficient family to serve both signs; the
+printed index `k` corresponds to the formal index `k − 1`.
+
 ## Verified locator
 
 - DOI: 10.1088/1751-8121/ae1644
 - URL: https://doi.org/10.1088/1751-8121/ae1644
-- Source locations: section 2.1, printed pp. 3-4; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7.
+- Source locations: section 2.1, printed pp. 3-4; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7; Conjecture 2, printed p. 7; Table 1, printed p. 8.

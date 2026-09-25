@@ -811,3 +811,397 @@ Fourier 乘子、Gaussian 谱展开、局部极限、概率耦合、格点求和
 本章的 repo-derived 综合明确补上其与实际同一数据实现之间的误差及共同来源关系。
 结论固定原幅度、beta 和 λ=Q³ 序列，紧区间保持固定；
 不声明临界网格的实际定理、任意自适应频率、增长空间窗口或实际后验矩收敛。
+
+## 临界谱网格的离散协方差、共振与尺度分离
+
+归属：`repo-derived`。
+对应 [谱边界卷第 57 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+在原始两种实际实验中，exp(s_M)δ 趋于固定正数时，
+放大余项的协方差保留整数距离上的 Ci 级数，得到非平稳 Gaussian 过程。
+此结论继续使用同一完整标签向量及有限截距，并与旧噪声和移动二次坐标联合识别。
+增长核心上的定量替换沿用第 56 章；新的临界协方差与调和行和估计
+直接作用于采样核，不以连续谱协方差代替网格关系。
+同一临界过程族还有小网格的函数 OU 极限及精确共振的方差降阶。
+对同一实际数据同时取低于网格和临界网格两个尺度，
+交叉协方差的 O(√r(1+|log r|²)) 界使两个极限相互独立；
+这一联合断言以一个共同耦合证明，不由边缘极限拼接。
+
+de Jong，*A Central Limit Theorem for Generalized Quadratic Forms*，
+Probability Theory and Related Fields 75 (1987), 261–277，
+[DOI 10.1007/BF00354037](https://doi.org/10.1007/BF00354037)，
+Definition 2.1 和 Theorem 2.1，印刷第 263–264 页，定义独立输入上的 clean 二次型，
+要求逐输入条件期望为零、最大归一化行方差消失、归一化四阶矩趋于三。
+紧随定理的全一非对角矩阵例子说明：行方差小仍可留下一个大特征值及 chi-square 极限。
+本章临界矩阵的算子范数至多 O(√δ log Q)，明确排除这个障碍。
+该原文不处理实际观测行、固定基数后验、放大中心误差或临界 Ci 过程紧性。
+Gaussian 二次型的联合特征函数是经典步骤，其所需模型估计在正文给出。
+
+Peccati–Taqqu，*Stable convergence of multiple Wiener–Itô integrals*，
+[arXiv:math/0604530v1](https://arxiv.org/abs/math/0604530v1)，
+Definition IV 和 Theorem 7，PDF 第 7–8 页，给出稳定收敛定义及 Skorohod 积分判据。
+该判据使用恒等分解所诱导的适应 integrand、消失的早期投影、
+嵌套 sigma 域，以及范数平方趋于非负可测随机方差等条件。
+适应空间在 §2.2 定义；不能由一个边缘 Gaussian 极限自动取得这些假设。
+本章没有假设实际后验标签形成这种适应积分。
+共同矩阵特征函数、有限秩删除及旧对数核逼近直接给出所需联合独立性。
+mixing 表示与旧 sigma 域中有界测试的极限因子分解，
+不表示给定全部旧噪声后的条件分布收敛。
+
+Bai–Ginovyan–Taqqu，*Functional Limit Theorems for Toeplitz Quadratic Functionals
+of Continuous Time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/abs/1501.05574v2)，
+Theorems 2.1–2.2，PDF 第 2–3 页，研究一个平稳 Gaussian 输入的固定 Toeplitz 核，
+过程参数扩大观测区间。
+其基本条件有 f,g∈L1、fg∈L1∩L2 及所述方差极限；
+函数结论还用协方差 r∈Lp、核 a∈Lq，1/p+1/q≥3/2。
+Theorem 2.4，第 4 页，给出另一组正则变化及 Potter 条件下的非中心函数极限。
+本章的参数改变每对上的频率核，且观测环境异质、标签来自固定基数后验，
+所以这些结果是二次型函数极限的相关先例，不直接给出实际临界模型的结论。
+指定 v2 的 arXiv 页戳是 2015-04-29，PDF 首页另印 2018-06-27；引用版本以 v2 为准。
+
+前节 Nualart–Peccati 的固定混沌判据、Nourdin–Poly 的谱与累积量公式、
+Döbler–Kasprzak–Peccati 的变化核紧性工作、Imai 的异质输入近似
+及 Siripraparat–Neammanee 的方差局部近似，继续作为已知工具使用。
+每个有限临界参数的微小时间增量由 min(|t-u|,1/k) 求和控制，
+不是对非平方可和的余弦导数直接求和。
+Fourier–Plancherel、Bernoulli 多项式的正弦平方级数和 Ci 的分部积分渐近式均为经典事实。
+其组合在本章指定协方差族上给出非平稳性、相位依赖和精确共振的 z⁻³ 方差。
+小网格 OU 极限的 mixing 则来自每个固定 Gaussian 级数坐标的系数趋零，
+以及统一增量控制；不是将定理 57.2 的固定参数替换成另一个增长参数。
+
+在已检查的原文中未找到完整实际后验模型、离散 Ci 协方差及上述共同实现结论的直接陈述。
+这不排除未检查来源，也不认证全球原创性。
+新增内容限于所给模型的综合推导及误差关系。
+临界 Gaussian 过程族的大参数共振渐近不宣称实际数组在网格比例趋于无穷时也有同一极限；
+任意数据自适应频率、增长时间区间、其它幅度及实际后验矩收敛均未包含。
+
+## 超临界谱网格的微观桥（第 58 章）
+
+`repo-derived`：第 58 章在原固定 Liouville 幅度、beta∈(1/2,1)、lambda=Q³ 的
+两种实际实验中，推导谱网格 eta=exp(s)delta→∞ 的微观路径极限。
+假设 s sqrt(delta)≤U/2，且确定性相位 omega eta mod 2pi 沿给定子列收敛。
+结论在同一后验标签实现上保留旧截距、二次坐标及整个旧空间噪声。
+新的连接是放大后的有限谱与精确中心控制、实际固定滞后联合极限，
+以及对增长网格一致的滞后尾上确界估计。
+它不从第 57 章固定网格弱极限代入增长参数。
+
+Foster–Habermann，*Brownian bridge expansions for Lévy area approximations and
+particular values of the Riemann zeta function*，
+[arXiv:2102.10095v1](https://arxiv.org/abs/2102.10095v1)，
+式 (1.2)，PDF 第 2 页；§2.1 与 Lemma 2.2，第 7–8 页，
+给出标准 Brownian bridge 的 sine 本征函数 sqrt(2)sin(k pi t)
+与本征值 1/(k²pi²)。余弦随机积分系数相互独立，方差为 1/2。
+以 a=pi t 换元，正是第 58 章 sine 级数及桥协方差的经典归因。
+该文 Theorem 1.1，第 3 页，研究已是 Gaussian 的桥展开之 sqrt(N) 放大尾，
+所得是有限维极限；原文明确指出它们没有 C[0,1] 过程实现。
+本章保留固定滞后并缩放谱相位，另证尾的路径范数界，不能直接使用那个尾极限。
+
+Aletti–Ruffini，*Is the Brownian bridge a good noise model on the circle?*，
+[arXiv:1210.8245v1](https://arxiv.org/abs/1210.8245v1)，
+Definition 2.1、Theorem 2.2，第 3 页，及 Theorem 2.3，第 4 页，
+针对中心平稳周期 Gaussian 过程，使用匹配的独立 sine、cosine 系数族。
+其收敛陈述是逐时均方误差的一致性，不自动给出上确界范数中的收敛。
+本章 sine-only 极限固定在 pi 整数倍处为零，协方差依赖时间和，属于非平稳的奇周期桥。
+各反射区间由同一条桥生成；没有使用独立周期噪声假设。
+本章的路径连续性与 L²(C) 收敛由第四矩和二分估计直接证明。
+
+Formica–Ostrovsky–Sirota，*Modulus of continuity for superlacunar trigonometric
+series and continuity of Gaussian stationary random processes*，
+[arXiv:2110.01998v1](https://arxiv.org/abs/2110.01998v1)，
+Definition 1.1、Proposition 2.1，PDF 第 2–3 页，以及 §3，第 4–5 页。
+其确定性模连续界假设 Fourier 系数绝对可和，稀疏频率例子使用 lacunary/superlacunar 条件，
+Gaussian 讨论限制于平稳周期模型。
+本章具有全部整数谐波、1/k 系数及非平稳 sine-only 结构，不能直接套用这些条件。
+平方可和本身也不替代路径论证；本章逐项控制 min(|theta-psi|,1/k)，再作概率求和。
+
+Sykulski–Olhede–Lilly，*The de-biased Whittle likelihood for second-order
+stationary stochastic processes*，
+[arXiv:1605.06718v1](https://arxiv.org/abs/1605.06718v1)，
+§2.2 式 (2.5)，PDF 第 6 页，是均匀采样下谱折叠的经典公式。
+§2.1，第 5 页，给出 Fourier Gaussian 假设；Theorem 1，第 12 页，
+在平稳性、谱有界且远离零、参数二次可微等条件下证明去偏 Whittle 估计的一致性。
+这些条件与本章异质、条件后验组数组及谱相位二次型不同，
+不能把该估计定理作为实际微观桥定理。
+本章的 aliasing 指整个得分组间距的确定性相位折叠，不导入 Whittle 效率或一致性结论。
+
+第 57 章所引 de Jong 的 clean quadratic form 条件及大特征值反例，
+Nualart–Peccati 的固定阶混沌判据、Nourdin–Poly 的谱与累积量公式，
+以及变化核 U-process 文献继续提供经典背景。
+此处固定正滞后矩阵算子范数 O(sqrt(delta))，不同滞后没有共同无序对；
+联合特征函数先证明包括移动二次坐标在内的 Gaussian 性，随后才得独立性。
+与旧线性噪声的联合公式和旧 H 核的矩形逼近保留同一个随机截距。
+Bernoulli 局部界、共同逆分布耦合、精确中心与全向量后验比较沿用已验证的适用条件。
+
+在已检查的原文中未找到完整实际模型、放大误差与上述共同实现微观桥的直接陈述。
+这是有限文献比较，不认证全球原创性。
+Brownian bridge 的级数表示、Gaussian 谱极限、连续映射及二分方法均不作为新发现。
+相位相差 pi 给出相同边缘过程律，所以本章的 2pi 相位收敛只宣告为充分条件。
+未包含相位随机分布或必要性分类、独立的周期桥、数据自适应频率、增长参数区间、
+其它幅度、实际后验矩收敛或去掉频率上界后的结论。
+
+## 精确共振的反射 Brownian 律（第 59 章）
+
+`repo-derived`：第 59 章在同一实际后验模型中处理 eta=2m→∞、
+eta²delta→0 的全部精确共振范围，不加对数余量，也不要求 m 的奇偶子列。
+窗口 s+theta/eta³ 与放大 eta^(3/2)exp(z/2) 使低滞后余弦项留下 Gaussian 偏移，
+而 k 约为 eta² 的高滞后正弦项留下局部 Brownian 路径。
+两侧路径由同一条 Brownian motion 奇反射得到；偏移、该路径与移动二次坐标相互独立，
+并联合独立于整个旧空间 Gaussian 噪声。
+新的连接包括实际放大误差、精确中心、增长滞后卷积与使用总质量的 Schur 估计。
+旧弱极限中代入增长参数不能替代这些步骤。
+
+Foster–Habermann，*Brownian bridge expansions for Lévy area approximations and
+particular values of the Riemann zeta function*，
+[arXiv:2102.10095v2](https://arxiv.org/abs/2102.10095v2)，
+式 (1.1)–(1.2)，PDF 第 2 页，给出标准桥协方差 min(s,t)−st
+及 sine Karhunen–Loève 展开。
+本章用到的 Dirichlet Green 核级数与局部 Brownian 协方差归于这一经典结构。
+该版本 Theorem 1.1，第 3 页，研究截断桥展开的 sqrt(N) 或 sqrt(2N) 放大余项；
+它给出有限维 Gaussian 极限，并明确说明相应极限场没有连续路径实现。
+这里移动的是趋近共振点的自变量，并保留低滞后偏移；
+对实际数组的紧性须由精确 Ci 小增量另证，不能由那条余项定理推出。
+
+Bai–Ginovyan–Taqqu，*Functional Limit Theorems for Toeplitz Quadratic Functionals
+of Continuous time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/abs/1501.05574v2)，
+Theorems 2.1–2.2，PDF 第 2–3 页。
+其对象是在增长矩形 [0,Tt]² 上积分的固定 Toeplitz 核二次泛函，
+输入是具有谱密度 f 的中心平稳 Gaussian 过程。
+Theorem 2.1 要求 fg 同属 L¹、L²，且末端方差趋于指定常数；
+Theorem 2.2 再以 r∈L^p、a∈L^q、1/p+1/q≥3/2 等条件给出 C[0,1] 收敛。
+本章空间质量非平稳，时间参数改变全部格滞后系数，且同格方块被删去，
+所以不直接满足该文的固定核增长观察区间结构。
+该精确版本的 arXiv 标注为 2015-04-29，PDF 首页日期为 2018-06-27；二者分别保留。
+
+de Jong 1987 Theorem 2.1，第 263–264 页，仍是独立 clean 二次型的经典背景：
+最大行方差可忽略及标准化第四矩趋三是承重假设，不能由“配对很多”替代。
+本章用方差加权算子的范数直接控制特征值，且先由混合特征函数证明联合 Gaussian 性。
+Nourdin–Peccati–Reinert [arXiv:0904.1153v2](https://arxiv.org/abs/0904.1153v2)
+Theorem 7.1，PDF 第 26 页，要求独立标准化输入的一致三阶绝对矩、
+固定阶对称去对角核与小最大 influence；它是有限维替换工具，
+不能单独处理本章移动对角坐标、非线性截距及全路径的共同实现。
+共同逆分布耦合保留这些坐标在同一个标签向量上的关系。
+
+Döbler–Kasprzak–Peccati [arXiv:2104.01858v3](https://arxiv.org/abs/2104.01858v3)
+Theorem 1.4 与 Conditions 1.1–1.3，PDF 第 3 页，处理部分指标累积的退化 U-statistic，
+要求方差时钟、加强的 Lindeberg 条件及末端第四矩条件。
+本章参数改变的是振荡核，并有跨零点的负相关，不能只凭同属二次过程而套用。
+Ci 的 min(d/eta,eta/k) 增量界对任意小的 d 成立，提供本章自己的紧性依据。
+Nualart–Peccati 的固定阶混沌判据和谱特征函数均为经典工具；
+有限柱面删除再作 L¹ 逼近，明确处理与整个旧噪声的 mixing。
+Tudor [arXiv:2606.14812v1](https://arxiv.org/abs/2606.14812v1)
+Theorem 1，PDF 第 7 页，所允许的固定旧变量不能直接代替这里随规模移动的二次坐标。
+Siripraparat–Neammanee 的 Bernoulli 局部界继续只用于满足原假设的辅助独立和，
+不宣称实际相邻观测行独立。
+
+已检查的原始文献没有直接给出本章完整实际模型与共同实现的共振极限。
+有限检索不认证全球原创性；桥级数、Schur 方法、Gaussian 谱公式、
+Kolmogorov 紧性及有限柱面方法均不作为新发现。
+本章未包含失谐、eta²delta 不趋零、增长区间、其它幅度、数据自适应频率或实际矩收敛。
+精确有限截距的允许替换须满足 eta²delta^(−1/2) 倍截距误差趋零；
+只有相同弱极限不满足这个速率要求。
+
+## 临界共振中的旧场重现（第 60 章）
+
+`repo-derived`：第 60 章在 eta=2m、eta²delta→zeta∈(0,infinity) 下，
+把同一实际后验向量的放大谱残差分解为独立 Gaussian 偏移与 sinc 核的二阶混沌。
+偶数 m 的混沌由旧 Fourier 场自身生成，奇数 m 由确定格点交替符号产生独立副本。
+两个分支有相同边缘过程律，却有不同的旧端点平方协方差。
+新内容是实际放大误差、符号调制的共同实现和移动对角坐标的联合控制，
+不是将一般二次型定理改换符号。
+
+Nourdin–Rosiński，*Asymptotic independence of multiple Wiener–Itô integrals
+and the resulting limit laws*，
+[arXiv:1112.5070v1](https://arxiv.org/abs/1112.5070v1)，
+Theorem 3.1，PDF 第 7 页，针对已联合收敛的固定阶多重积分向量，
+把极限矩独立、平方协方差趋零与交叉收缩趋零联系起来。
+由矩独立推出分布独立还需各极限边缘由矩确定。
+Corollary 3.2 与 Remark 3.3，第 8 页，分别给出从边缘收敛到联合收敛的条件，
+以及不能随意删掉矩确定性要求的反例。
+Theorem 4.5，第 17 页，要求阶数 p≥q、一侧为渐近标准 Gaussian，
+另一侧极限矩确定及交叉协方差趋零，才得到独立联合极限。
+这些是偏移与非 Gaussian sinc 混沌关系的经典工具，
+不自动提供实际后验比较、放大中心误差或符号调制后的 Gram 极限。
+本章以混合特征函数和共同矩形核逼近直接完成所需联合关系。
+
+de Jong 1987 Definition 2.1 与 Theorem 2.1，第 263–264 页，
+要求独立 clean 二次项、小最大行方差与标准化第四矩趋三。
+紧随其后的大特征值反例说明小行方差不足。
+本章 Gaussian 偏移的小算子范数与 sinc 部分的非零极限算子，正好区别这两种情形。
+Nualart–Peccati [arXiv:math/0503598v1](https://arxiv.org/abs/math/0503598v1)
+Theorem 1，PDF 第 3 页，给出固定混沌阶与归一化方差下的第四矩、收缩及 Gaussian 极限等价。
+其假设在偏移和对角量成立，在固定正临界参数的非零时间 sinc 核不成立。
+
+Nourdin–Poly [arXiv:1205.2684v3](https://arxiv.org/abs/1205.2684v3)，
+Proposition 2.1 及累积量公式，PDF 第 4 页，给出对称平方可积核对应的
+Hilbert–Schmidt 自伴算子谱表示。
+第四累积量 48 sum(lambda_n^4) 和第二混沌第四矩上界均属于经典结构。
+本章核在非零时间的对角邻域不为零，因此严格正的第四累积量有实际核依据。
+旧对数核与新有界核使用同一有限矩形划分；异格扣除产生 Wick 常数，不能省略。
+
+第 57、58 章所引顺序 U-process、异质独立输入 Gaussian 近似和桥展开文献，
+各自的输入、收缩、参数化及紧性假设仍须保留。
+这些文献没有使固定正临界参数下的非 Gaussian 部分变成 Gaussian。
+Tudor [arXiv:2606.14812v1](https://arxiv.org/abs/2606.14812v1)
+Theorem 1，PDF 第 7 页，对固定旧变量的结论不能代替本章同时移动的对角量和调制坐标；
+本章直接核对两组坐标的全部 Gram 极限并使用混合特征函数。
+此限定针对所引 Theorem 1，不将该论文其它联合定理一概描述成固定变量结果。
+
+实际条件化继续使用 Siripraparat–Neammanee 的独立 Bernoulli 和局部界。
+Arratia–Goldstein–Langholz [arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+Condition 2.1 与 Theorem 2.1 的高阶展开要求总方差至少与 Bernoulli 项数成固定比例，
+并处理有界偏离；这里 q=o(M)，不能据此引入更强的稀疏中心展开。
+第 56 章密度比与加权中心界，以及第 59 章在有界 eta²delta 下仍成立的原始共振矩阵界，
+足以处理本章的实际比较。
+
+定理 60.4 只讨论已识别 sinc 混沌族在 zeta↓0 时的低参数边界；
+sinc 的区间 Fourier 乘子、Plancherel、谱 Gaussian 极限与有限柱面方法均为经典工具。
+它不把固定正 zeta 的实际弱极限直接代入移动 zeta。
+第 59 章的实际反射 Brownian 律仍依赖其单独的数组估计。
+
+已检查的原始文献未直接给出此固定 Liouville 模型、奇偶旧场关系及全部实际放大误差。
+有限检索不认证全球原创性。没有声称两分支在有限后验中独立、
+实际无界矩收敛、奇偶性随机分布、增长区间、其它幅度或不分奇偶的旧场联合极限。
+
+## 超临界共振的端点平方（第 61 章）
+
+`repo-derived`：第 61 章在精确 eta=2m、eta²delta→infinity、
+s sqrt(delta)≤U/2 的完整范围内，证明实际谱残差的常 Gaussian 偏移与进一步锚定的端点平方律。
+实际锚定量一致逼近同一标签向量的符号端点平方减实际对角平方和。
+偶数 m 使用旧端点，奇数 m 使用独立副本；两者边缘律相同而旧场联合律不同。
+新推导包括总放大 eta³ 后的有限 Fourier 误差、无附加对数间隔的加权导数界、
+移动符号方向与对角量的共同独立性，以及实际后验的整向量转移。
+未把第 60 章固定临界参数极限代入增长参数。
+
+Nourdin–Peccati，*Noncentral convergence of multiple integrals*，
+Annals of Probability 37 (2009), 1412–1426，
+DOI [10.1214/08-AOP435](https://doi.org/10.1214/08-AOP435)，
+[arXiv:0709.3903v3](https://arxiv.org/abs/0709.3903v3)，
+Theorem 1.2，PDF 第 3 页，假设固定偶数混沌阶 n≥2、方差趋 2nu，
+以矩或收缩条件刻画中心 Gamma 律 2Gamma(nu/2)-nu 的收敛。
+其中矩条件是 E F_k^4 -12 E F_k^3 →12nu²-48nu。
+Proposition 4.5，PDF 第 14 页，在二阶情况下再要求
+每个固定旧方向 h 的收缩内积 <f_k contraction_1 f_k,h tensor h>→0，
+才能得到与该方向独立的联合极限。
+同页 Remark 4.3 以恒定秩一核明确反驳「二阶非中心收敛自动独立」的说法。
+本章符号秩一核的这一内积正比于 (integral chi_Q h rho)²；
+奇数支因交替符号消失，偶数支在 h=1 时不消失。
+这个经典判据不含实际观测行、有限谱放大、后验中心或移动方向的联合比较。
+
+Nourdin–Poly，*Convergence in law in the second Wiener/Wigner chaos*，
+[arXiv:1205.2684v3](https://arxiv.org/abs/1205.2684v3)，
+Proposition 2.1 与紧随的累积量公式，PDF 第 4 页，
+给出 Hilbert–Schmidt 对称核对应的独立中心正态平方谱展开。
+Theorem 3.1，PDF 第 5 页，刻画二阶 Wiener 积分弱极限的分布，
+它可表示为独立 Gaussian 加二阶积分。
+该分布存在性不识别极限与给定旧噪声的共同实现。
+本章以有限秩投影删除直接证明偏移、对角量与移动符号方向的联合关系。
+第四累积量和秩一中心平方结构属于经典工具，不列为新的一般混沌理论。
+
+Peligrad–Wu，*Central limit theorem for Fourier transforms of stationary processes*，
+Annals of Probability 38 (2010), 2009–2022，
+DOI [10.1214/10-AOP530](https://doi.org/10.1214/10-AOP530)，
+[arXiv:0910.3451v3](https://arxiv.org/abs/0910.3451v3)，
+Theorem 2.1，PDF 第 3 页，要求中心、二阶可积、平稳遍历及远过去条件均值为零，
+结论针对 Lebesgue 几乎处处的固定频率。
+它不能直接覆盖本章精确零频或 Nyquist 交替频率，以及异质的移动格质量。
+本章以周期交替函数的有界原函数证明精确频率下的 Gram 极限。
+
+Bernoulli 局部界仍使用 Siripraparat–Neammanee 2021 Theorem 2；
+第 56 章已将其用于整选择向量比较、Hilbert 中心界和核心逆分布耦合。
+de Jong 的 clean 二次型 Gaussian 条件、Nualart–Peccati 的第四矩条件
+适用于小算子偏移机制，不能把锚定秩一项判为 Gaussian。
+Tudor 2606.14812v1 Theorem 1 对固定旧变量的结论不能代替本章移动符号方向；
+这里的投影空间明确同时包含固定和移动方向。
+
+已检查的原始文献未直接给出这个实际 Liouville 后验模型的完整超临界结论；
+有限检索不认证全球原创性。Gaussian 谱展开、交替 Gram 极限、有限秩删除和连续映射均为成熟方法。
+本文没有声称实际无界矩收敛、固定支持的条件后验定理、
+不分奇偶的旧场联合极限、非精确共振、增长空间窗口或超出原频率上界的结论。
+
+## 非共振载波与圆对称能量（第 62 章）
+
+`repo-derived`：第 62 章证明原始实际 pair/path 后验在 eta²delta→zeta>0，
+dist(omega eta,pi Z)/delta→infinity 下的锚定谱极限，允许相位任意缓慢地靠近共振。
+一个有限实标签向量产生的调制场趋于独立于旧实场的圆对称复 Gaussian 测度；
+新能量过程保留 Wick 扣除，并与移动对角量、旧非线性截距联合收敛。
+新增的实际比较包括放大有限 Fourier 误差、有界锚定导数、
+相位一致的伪协方差及旧场交叉 Gram 消失和单向量后验转移。
+
+Campese，*Fourth Moment Theorems for complex Gaussian approximation*，
+[arXiv:1511.00547v1](https://arxiv.org/abs/1511.00547v1)，
+Definition 2.1 与 Remark 2.2，PDF 第 4–5 页，给出圆对称复 Gaussian 的密度、
+Hermitian 协方差与零 relation/pseudo-covariance。
+本章用其密度与特征函数中的 1/4 因子固定实虚部方差各为一半，
+不以该版本文字中的 “standard” 一词另行指定实分量方差。
+Theorem 4.6，第 16 页，在 Markov diffusion 的 chaotic complex vector 框架、
+正定目标协方差及显式二阶和四阶误差下给出 Wasserstein 界。
+这里场的 Gaussian 阶段由共同耦合与完整 Gram 极限直接处理，未假设那些定量误差。
+固定 zeta 的能量仍有严格正第四累积量，不能借该定理改判为 Gaussian。
+
+`literature-attested`：已识别族的单侧普通 Brownian 弱极限属于连续 Breuer–Major 定理的应用。
+Campese–Nourdin–Nualart，*Continuous Breuer–Major theorem: tightness and non-stationarity*，
+[arXiv:1807.09740v1](https://arxiv.org/abs/1807.09740v1)，
+Theorem 1.1，PDF 第 2 页，要求中心平稳单位方差实 Gaussian 场、Hermite rank d、
+相关函数的 d 次绝对幂可积，以及 f 属于某个 p>2 的 Gaussian Lp。
+本章圆对称 Fourier 场的归一化实虚部为两个独立平稳实场，
+相关为 exp(-omega²v²/(2kappa))，函数 H2=x²-1 满足所有这些条件。
+二者相加给出正半轴的方差常数 16g0；此族结果不作为新的一般功能极限定理。
+正文的共同 Hermitian 频带还核对两侧联合关系及对整个固定场的混合，
+并明确这仍不同于实际数组同时移动 zeta 的结论。
+
+Tilva，*Continuous Breuer–Major theorem for vector valued fields*，
+[arXiv:1901.02317v1](https://arxiv.org/abs/1901.02317v1)，
+C0/C1，PDF 第 3 页，要求联合平稳 Gaussian 向量场、同点协方差归一化及协方差衰减和可积。
+Theorems 3.2–3.4，第 5–6 页，采用扩张对称立方体平均；
+功能版本还有关于 G^(p/2) 的 rank 与相关函数分数幂可积的条件。
+此处不借它直接识别有向两侧积分或与旧场的混合关系。
+
+Mansanarez–Poly–Zheng，*Breuer–Major–Donsker invariance principle*，
+[arXiv:2607.11469v1](https://arxiv.org/abs/2607.11469v1)，
+Theorems 1.3–1.4，PDF 第 4–5 页，分别处理满足非确定性或存在非确定抽稀子列的情形。
+Corollary 1.5 允许绝对可和相关；同页 Remark 1.6 指出仅平方可和不保证每种抽稀产生创新。
+本章离散采样的 Gaussian 相关绝对可和，但从采样和到连续积分仍需单独比较。
+正文直接使用连续场谱结构，没有把该近作描述为无条件解决全部平方可和情形。
+
+Hermitian 中心 Gaussian 二次型的方差 sum(lambda²)、第四累积量 6sum(lambda⁴)
+来自单位指数变量的经典谱展开；等价实混沌算子把每个特征值除以二并重复两次。
+Nourdin–Poly 1205.2684v3 Proposition 2.1 及实混沌累积量公式是同一经典机制。
+保留复核的虚部决定单侧频带；只取其实部会改变正负时间的联合律。
+Nourdin–Rosiński 的矩独立与分布独立条件、de Jong 的大特征值障碍仍按前章范围使用。
+Siripraparat–Neammanee 的异质 Bernoulli 局部界继续支持辅助耦合；
+实际观测行与固定总量标签未被假设独立。
+
+有限原始文献检索未发现直接给出本章完整实际后验与相位一致结论的定理，
+这不认证全球原创性。圆对称性、Gaussian 谱论及单侧 Breuer–Major 结论均有上述归属。
+定理 62.3 的必要性只针对本模型标量载波的圆对称极限，依赖 Gaussian 轮廓 Fourier 变换严格为正；
+不声称非线性能量的充要分类、未锚定量紧性、实际无界矩收敛、增长区间或其它幅度。
+
+
+Yang–Guan，*Fourier analysis of spatial point processes*，
+[arXiv:2401.06403v1](https://arxiv.org/abs/2401.06403v1)，
+Theorems 3.1–3.2，PDF 第 9–12 页，是最接近的移动频率先例。
+其平稳简单空间点过程具有递增可比矩形窗口、相应阶数的可积累积量密度及非负连续紧支撑 taper；
+联合 CLT 另需多项式强混合。频率到零以及两两和、差都在有效窗口尺度上分离，
+允许其极限重合或等于零。Lemma C.2，第 49–50 页，以 Riemann–Lebesgue 消去振荡，
+不要求对数余量。这里的两个别名谐波与其机制对应；
+有界变差 Abel 估计本身不是新增的一般理论。
+异质条件 score 组、固定总量标签、放大 Ci 比较和旧非线性截距的共同转移不在该定理假设内。
+本章先按绝对质量处理环境误差，得到 delta/d_M+epsilon_env，避免人为的 epsilon_env/d_M 损失。
+
+Panaretos–Tavakoli，*Fourier analysis of stationary time series in function space*，
+[arXiv:1305.2073v1](https://arxiv.org/abs/1305.2073v1)，
+Theorem 2.2 与 Remark 2.3，PDF 第 7–9 页，处理平稳实 L² 函数值序列，
+要求各阶矩、累积量核可和及协方差算子的核范数可和。
+精确零频率与 pi 频率产生实 Gaussian；不同正 Fourier 格频率产生独立复 Gaussian，
+即使这些频率的极限重合或趋于端点。定理 62.3 证明内的矩形权重几何和是这一经典边界，
+不是本实际 Gaussian 方差轮廓的反例，也不把本模型必要条件提升为普遍 Fourier 法则。
+
+Björklund，*Completely Positive Entropy and Fourier Central Limit Theorems for Stationary Random Measures*，
+[arXiv:2608.22342v1](https://arxiv.org/abs/2608.22342v1)，
+Theorems A–B，PDF 第 3–5 页。
+Theorem A 对局部二阶矩有限、平移作用本质自由且完全正熵的平稳随机测度，
+给出几乎处处固定频率的 Fourier CLT；它不覆盖任意给定的三角移动频率。
+Theorem B 的零熵平稳遍历反例具有有界连续、几乎处处正的 Bartlett 密度，
+但沿扩张窗口 Fourier CLT 失败；良好二阶谱本身不是充分假设。
+本章不假设实际条件数组满足这些熵条件，也不以几乎处处定理替代相位尺度证明。

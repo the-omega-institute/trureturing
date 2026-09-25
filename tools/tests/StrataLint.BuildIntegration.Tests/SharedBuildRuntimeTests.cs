@@ -36,7 +36,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                 "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
                 "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
                     packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh",
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py", "tools/scripts/lib/resource-observation-lib.sh",
                      "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
@@ -445,14 +445,15 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
                 }
             }
             Assert.True(result.Exit == expected, result.Text);
+            var rawOutput = File.ReadAllText(Path.Combine(root, "build/ci/logs", stage, "console.log"));
             if (stage == "build" && expected == 0)
             {
-                var processes = GraphProcesses(result.Text);
+                var processes = GraphProcesses(rawOutput);
                 Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process.GetProperty("arguments")[0].GetString()));
                 Assert.All(processes, process => Assert.Contains("-m:1",
                     process.GetProperty("arguments").EnumerateArray().Select(argument => argument.GetString())));
             }
-            return result.Text;
+            return rawOutput;
         }
         void Cache(string command, params string[] arguments)
         {
