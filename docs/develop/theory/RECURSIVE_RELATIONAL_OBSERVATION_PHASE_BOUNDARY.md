@@ -9969,3 +9969,642 @@ $$
 定理39.2固定的是第25节的前四轮九行实现，不能将任意七维接收器归约到该表。一般七维候选可以改变早期实现或采用尚未排除的早期混合附加态，因此一般六终端问题在本节仍只有（39.2）：最优值为七或八。八维构造也没有给出一个统一服务任意多终端的八维固定通道。
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 二维固定接收器的初等误差隙与三终端校准
+
+本节对第38节指定输入 $|0\rangle_M$ 的三终端障碍作定量化。来源、独立纯接收初态、同一个全域 CPTP 接收通道以及任意丢弃环境均保持不变。结论仅使用第二、第三终端，不使用实代数正最小值界。
+
+**显式结论与保真度约定。**
+
+来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B},\qquad
+|a|^2+|b|^2=1,\quad ab\ne0.
+\tag{40.1}
+$$
+
+接收器 $K=\mathbb C^2$ 从纯态 $e$ 启动，每轮重复同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。固定一份全域 Stinespring 等距
+$V:K\otimes\mathcal B\to K\otimes E$。
+只取来源初态 $|0\rangle_M$，接收联合态记为 $\sigma_n$，未接收的完整纯目标记为
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$。
+
+令 $f_n(\mathcal C)$ 为终端 $n$ 的最佳局部解码根保真度；所以
+$f_n^2$ 是最佳解码后对纯目标投影的概率。置
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\qquad Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{40.2}
+$$
+
+最大值取得，但下面的逐装置论证不依赖寻找这个最大点。
+
+记
+
+$$
+p=|b|^2,\qquad
+r=\sqrt{(1-p)^2+p},\qquad
+g=1-\frac{1-p}{r}\in(0,1).
+\tag{40.3}
+$$
+
+真实记忆边缘满足
+
+$$
+\begin{aligned}
+\rho_2&=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\\
+\rho_3&=(1-p(1-p))|m_0\rangle\langle m_0|
++p(1-p)|0\rangle\langle0|.
+\end{aligned}
+$$
+
+令
+
+$$
+\mu=\min\{\lambda_{\min}(\rho_2),\lambda_{\min}(\rho_3)\}
+=\frac{1-\sqrt{1-4p^2(1-p)(1-p+p^2)}}2>0.
+\tag{40.4}
+$$
+
+后一等号使用 $\det\rho_3=(1-p+p^2)\det\rho_2\le\det\rho_2$ 和迹一二阶矩阵的最小特征值公式。
+
+**定理40.1（二维初等显式误差隙）。** 定义
+
+$$
+\epsilon_{\rm el}(p)=2^{-96}\mu^4g^{16}.
+\tag{40.5}
+$$
+
+则
+
+$$
+\boxed{Q_2^{[3]}\ge\epsilon_{\rm el}(p).}
+\tag{40.6}
+$$
+
+因此任意二维固定接收器及第二、第三终端解码器中，至少一个终端的指定输入完整半迹恢复误差不小于 $\epsilon_{\rm el}(p)$。
+原来使用前32终端的指定输入不变量还满足
+
+$$
+\Delta_2\ge1-\sqrt{1-\epsilon_{\rm el}(p)}
+\ge\epsilon_{\rm el}(p)/2.
+\tag{40.7}
+$$
+
+完整参考合同包含这个指定输入，所以受相同必要下界约束；本定理没有把指定输入任务当成完整合同的充分条件。
+
+若 $|a|^2,|b|^2\ge1/k$，$k\ge2$ 为整数，则有简洁的统一有理证书
+
+$$
+\boxed{
+Q_2^{[3]}\ge\frac1{2^{116}k^{24}},
+\qquad
+\Delta_2\ge\frac1{2^{117}k^{24}}.
+}
+\tag{40.8}
+$$
+
+这些常数为保守值，不声称最优。
+
+证明分为近纯性、同一门的首步约束和二维 Gram 稳定性三部分。
+
+**维数二与满秩记忆把近恢复转为近纯化。**
+
+先证明一个使用维数饱和的估计。设 $|\Gamma\rangle_{MKE}$ 是接收联合态
+$\sigma_{MK}$ 的实际纯化，$\dim M=\dim K=2$，且
+$\rho_M\succeq\mu I_M$。
+若存在环境态 $\tau_E$ 满足
+
+$$
+D(\omega_{ME},\rho_M\otimes\tau_E)\le\delta,
+\qquad
+\omega_{ME}=\operatorname{Tr}_K|\Gamma\rangle\langle\Gamma|,
+\tag{40.9}
+$$
+
+则
+
+$$
+\lambda_{\max}(\sigma_{MK})\ge1-\frac{2\delta}{\mu}.
+\tag{40.10}
+$$
+
+为证此式，记 $\rho_M$ 的特征值为 $\alpha\ge\beta\ge\mu$，
+$\tau_E$ 的特征值为 $t_1\ge t_2\ge\cdots$，不足两项时补零。
+$\rho_M\otimes\tau_E$ 的最大特征值是 $\alpha t_1$，次大值是
+$\max\{\beta t_1,\alpha t_2\}$。
+若次大值为 $\beta t_1$，最大的两个特征值之和为 $t_1$；
+否则其和至多 $\alpha(t_1+t_2)\le\alpha$，所以余下谱质量至少为
+$\beta\ge\mu$。两种情况均给
+
+$$
+1-\|\rho_M\otimes\tau_E\|_{(2)}
+\ge\mu(1-t_1),
+\tag{40.11}
+$$
+
+其中 $\|\cdot\|_{(2)}$ 是最大的两个特征值之和。
+
+$\omega_{ME}$ 的秩不超过 $\dim K=2$。用其支撑投影作为（40.9）的测量效果，
+得到 $\|\rho_M\otimes\tau_E\|_{(2)}\ge1-\delta$，故
+$1-t_1\le\delta/\mu$。再偏迹到 $E$，对 $\tau_E$ 的最大特征向量作投影，得
+$\lambda_{\max}(\omega_E)\ge t_1-\delta$。
+$\omega_E$ 与 $\sigma_{MK}$ 非零谱相同，因此
+
+$$
+\lambda_{\max}(\sigma_{MK})
+\ge1-\delta/\mu-\delta\ge1-2\delta/\mu.
+$$
+
+这证明（40.10），不限制环境维数或其秩。
+
+现在假设某终端最佳目标投影概率 $f_n^2\ge1-\epsilon$。
+选择达到最优值的解码器，并对其取 Stinespring 等距。
+将解码后全局纯态在真实目标方向上的分量归一化，就得到某环境态
+$\tau_E$，使（40.9）以 $\delta=\sqrt\epsilon$ 成立。
+这一过程只用目标投影概率，不要求预先有半迹误差上界。
+于是对于 $n=2,3$，令
+
+$$
+t=\frac{2\sqrt\epsilon}{\mu},
+$$
+
+便有 $\lambda_{\max}(\sigma_n)\ge1-t$。
+
+取最大特征向量 $\psi_n$。在实际纯化中，其对应环境向量可选为单位
+$\zeta_n$，满足
+
+$$
+\|\Gamma_n-\psi_n\otimes\zeta_n\|
+\le\sqrt{2t}.
+$$
+
+另一方面，$|\psi_n\rangle\langle\psi_n|$ 与 $\sigma_n$ 的半迹距离不超过
+$t$，其记忆边缘与真实 $\rho_n$ 的距离也不超过 $t$。
+由 Uhlmann 及 $F\ge1-D$，存在同一个二维 $K$ 上的纯化
+$\phi_n$，满足 $\operatorname{Tr}_K|\phi_n\rangle\langle\phi_n|=\rho_n$ 且
+$\|\psi_n-\phi_n\|\le\sqrt{2t}$。
+因此
+
+$$
+\boxed{
+\|\Gamma_n-\phi_n\otimes\zeta_n\|\le
+\zeta:=\frac{4\epsilon^{1/4}}{\sqrt\mu},
+\qquad n=2,3.
+}
+\tag{40.12}
+$$
+
+各纯态相位已选择使相关重叠为非负实数。稍后的反证阈值保证 $t<1$，所以全部近纯化选择都合法。
+
+**第二步的近等距结构及首态混合程度。**
+
+首步后记
+
+$$
+\Gamma_1=|m_0\rangle_M\otimes|\alpha\rangle_{KE_1},
+\qquad
+|\alpha\rangle=V(e\otimes|0\rangle),\qquad
+\tau=\operatorname{Tr}_{E_1}|\alpha\rangle\langle\alpha|.
+\tag{40.13}
+$$
+
+第二次发射的记忆—新位纯态为
+
+$$
+|\Theta\rangle=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B}.
+$$
+
+它的记忆边缘为 $\rho_2\succeq\mu I$。定义等距
+
+$$
+A:\mathcal B\longrightarrow K\otimes E_2\otimes E_1,
+\qquad
+A|b\rangle=(V\otimes I_{E_1})(\alpha\otimes|b\rangle).
+$$
+
+（40.12）的 $\phi_2$ 和 $\Theta$ 是同一正定 $\rho_2$ 在二维纯化空间上的纯化，
+所以存在酉 $U:\mathcal B\to K$，使
+$\phi_2=(I_M\otimes U)\Theta$。把（40.12）应用于第二步，并使用
+$\Theta$ 在新位上的最小 Schmidt 权重至少为 $\mu$，得到
+
+$$
+\boxed{
+\|A-U\otimes\zeta_2\|_{\rm op}
+\le\eta:=\frac{\zeta}{\sqrt\mu}
+=\frac{4\epsilon^{1/4}}{\mu}.
+}
+\tag{40.14}
+$$
+
+具体地，对差算子 $B$，
+$\|(I_M\otimes B)\Theta\|^2
+=\operatorname{Tr}(\rho_{\mathcal B}B^*B)\ge\mu\|B\|_{\rm op}^2$。
+
+记 $\lambda=\lambda_{\min}(\tau)$。
+下面利用首步与第二步确实使用同一个 $V$，证明
+
+$$
+\boxed{\lambda\le\eta.}
+\tag{40.15}
+$$
+
+若 $\lambda=0$ 无须证明。否则取 Schmidt 分解
+
+$$
+\alpha=\sum_{j=0}^1\sqrt{\lambda_j}\,q_j\otimes r_j,
+\qquad
+\lambda_0=1-\lambda,\quad\lambda_1=\lambda,
+$$
+
+并将 $\zeta_2$ 在 $E_1$ 的 $r_j$ 方向上的分量记为
+$\xi_j\in E_2$。由（40.14），对 $b=0$，误差向量
+
+$$
+z_j=\sqrt{\lambda_j}\,V(q_j\otimes|0\rangle)
+-U|0\rangle\otimes\xi_j
+$$
+
+满足 $\sum_j\|z_j\|^2\le\eta^2$；$\zeta_2$ 在其余 $E_1$ 方向的分量只会增加总误差。
+
+写 $e=\sum_j c_jq_j$，并令 $P=|U0\rangle\langle U0|$ 为输出 $K$ 上投影。
+由于 $P^\perp$ 消去各 $U0\otimes\xi_j$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\|(P^\perp\otimes I)V(e\otimes|0\rangle)\|
+&=\left\|\sum_j\frac{c_j}{\sqrt{\lambda_j}}
+(P^\perp\otimes I)z_j\right\|\\
+&\le\left(\sum_j\frac{|c_j|^2}{\lambda_j}\right)^{1/2}
+\left(\sum_j\|z_j\|^2\right)^{1/2}
+\le\frac{\eta}{\sqrt\lambda}.
+\end{aligned}
+\tag{40.16}
+$$
+
+左侧平方恰为 $1-\langle U0|\tau|U0\rangle$，至少为 $\lambda$。
+所以 $\lambda^2\le\eta^2$，得到（40.15）。
+
+取 $k=q_0$ 为首态的最大特征向量，令 $\eta_1=r_0$。由（40.15），
+
+$$
+\|V(e\otimes|0\rangle)-k\otimes\eta_1\|
+\le\sqrt{2\eta}.
+\tag{40.17}
+$$
+
+若 $\tau$ 纯，按其唯一 Schmidt 项定义同样的 $k,\eta_1$。
+
+将（40.14）投影到 $r_0$ 后，置 $w=\xi_0/\sqrt{\lambda_0}$，得
+
+$$
+\|V(k\otimes\cdot)-U(\cdot)\otimes w\|_{\rm op}
+\le\eta/\sqrt{1-\eta}\le\sqrt2\,\eta
+$$
+
+（取 $\eta\le1/2$）。
+$|\|w\|-1|\le\sqrt2\,\eta$；取 $\eta\le1/4$ 可将 $w$ 归一化为单位
+$\eta_2$，并得到
+
+$$
+\boxed{
+\|V(k\otimes|b\rangle)-u_b\otimes\eta_2\|
+\le3\eta,\quad u_b=U|b\rangle,\quad b=0,1.
+}
+\tag{40.18}
+$$
+
+$u_0,u_1$ 是正交归一基。
+
+**第三步作用在正确的理想前缀上。**
+
+（40.12）中的 $\phi_2$ 具有正确的记忆边缘，且由 $U$ 写为
+
+$$
+\phi_2=a\,m_0\otimes u_0+b\,|0\rangle\otimes u_1.
+$$
+
+定义
+
+$$
+q=(a^2u_0+bu_1)/r.
+$$
+
+它单位，且 $|\langle q,u_0\rangle|=(1-p)/r=1-g$。
+
+对理想前缀 $\phi_2$ 再作一次真实来源发射和真实接收 $V$，得到纯态
+$\chi_3\in M\otimes K\otimes E_3$。实际第三步纯化 $\Gamma_3$ 与
+$\chi_3\otimes\zeta_2$ 的向量距离至多 $\zeta$，因为实际第二步与
+$\phi_2\otimes\zeta_2$ 的距离至多 $\zeta$，之后使用同一个等距。
+
+又由（40.12），$\Gamma_3$ 与 $\phi_3\otimes\zeta_3$ 的距离至多 $\zeta$。
+所以
+
+$$
+\|\chi_3\otimes\zeta_2-\phi_3\otimes\zeta_3\|\le2\zeta.
+$$
+
+对旧环境施以 $\langle\zeta_2|$，得到
+$\|\chi_3-\phi_3\otimes w_3\|\le2\zeta$。
+当 $2\zeta<1$ 时，归一化 $w_3$ 为单位 $\eta_3$，给
+
+$$
+\|\chi_3-\phi_3\otimes\eta_3\|\le4\zeta.
+\tag{40.19}
+$$
+
+这一步保留旧环境整体相干，没有按环境分支选择不同接收门。
+
+理想第三步的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,u_0\otimes|1\rangle\}.
+$$
+
+它的记忆边缘是正确的 $\rho_3\succeq\mu I$，而 $\phi_3$ 也是该边缘的二维纯化。
+再次用最小 Schmidt 权重除去源侧振幅，可得一组正交归一 $v_0,v_1$，使
+
+$$
+\boxed{
+\|V(q\otimes|0\rangle)-v_0\otimes\eta_3\|\le4\eta,\qquad
+\|V(u_0\otimes|1\rangle)-v_1\otimes\eta_3\|\le4\eta.
+}
+\tag{40.20}
+$$
+
+（40.17）、（40.18）、（40.20）涉及的所有实际输入和理想乘积输出均为单位向量。
+因此不同块间每个内积的误差至多相应两项向量误差之和。
+当 $\eta\le1$ 时，所有这些交叉 Gram 误差统一不超过
+
+$$
+\delta_G=8\sqrt\eta
+=\frac{16\epsilon^{1/8}}{\sqrt\mu}.
+\tag{40.21}
+$$
+
+**二维交叉 Gram 关系的显式稳定矛盾。**
+
+下面只使用二维几何。将 $\delta_G$ 暂记为 $\delta$，假设
+
+$$
+\delta\le g^2/256.
+\tag{40.22}
+$$
+
+令
+
+$$
+x=\langle k,q\rangle,\qquad y=\langle k,u_0\rangle,\qquad
+c_{23}=\langle\eta_2,\eta_3\rangle.
+$$
+
+两个后续输入块的交叉 Gram 矩阵为 $\operatorname{diag}(x,y)$，相应理想输出的矩阵为 $c_{23}(\langle u_i,v_j\rangle)_{i,j=0}^1$。因此
+
+$$
+\max_{i,j\in\{0,1\}}
+\left|\operatorname{diag}(x,y)_{ij}
+-c_{23}\langle u_i,v_j\rangle\right|\le\delta,
+$$
+
+故矩阵算子范数误差至多 $2\delta$。
+矩阵 $(\langle u_i,v_j\rangle)_{i,j=0}^1$ 是酉矩阵，奇异值扰动界给
+
+$$
+\big||x|-|y|\big|\le4\delta.
+\tag{40.23}
+$$
+
+而
+
+$$
+|x|^2+|y|^2
+=\langle k,(|q\rangle\langle q|+|u_0\rangle\langle u_0|)k\rangle
+\ge1-|\langle q,u_0\rangle|=g.
+$$
+
+因此
+
+$$
+|c_{23}|\ge\sqrt{g/2}-2\delta\ge\sqrt g/4.
+$$
+
+非对角 Gram 项遂给
+
+$$
+|\langle u_0,v_1\rangle|,\ |\langle u_1,v_0\rangle|
+\le4\delta/\sqrt g.
+$$
+
+适当选择 $v_i$ 相对于 $u_i$ 的比较相位，得到
+
+$$
+\min_{\theta}\|v_i-e^{i\theta}u_i\|
+\le8\delta/\sqrt g,\qquad i=0,1.
+\tag{40.24}
+$$
+
+令 $\beta=|\langle k,u_1\rangle|$，于是 $|y|=\sqrt{1-\beta^2}$。
+由 $q$ 在 $u$ 基中的系数模为 $1-g,\sqrt{1-(1-g)^2}$，
+
+$$
+|x|\le(1-g)|y|+\beta.
+$$
+
+结合（40.23），有 $g|y|\le\beta+4\delta$。
+若 $\beta\le g/4$，则 $|y|\ge1/2$，而（40.22）蕴含
+$\delta\le g/32$，于是右侧至多 $3g/8$，左侧至少 $g/2$，矛盾。
+所以
+
+$$
+\beta\ge g/4.
+\tag{40.25}
+$$
+
+（40.22）还保证 $8\delta/\sqrt g\le g/8$，因此（40.24）给
+
+$$
+|\langle k,v_1\rangle|\ge g/8.
+$$
+
+首次输入与第二块的一位输入正交。其近似输出内积给
+
+$$
+|\langle\eta_1,\eta_2\rangle|\le4\delta/g.
+$$
+
+再比较首次输入与第二块的零位输入，得到
+
+$$
+|\langle e,k\rangle|\le5\delta/g.
+$$
+
+同理，首次输入与第三块的一位输入正交，得到
+$|\langle\eta_1,\eta_3\rangle|\le8\delta/g$，
+继而与第三块零位输入比较，得
+
+$$
+|\langle e,q\rangle|\le9\delta/g.
+\tag{40.26}
+$$
+
+置 $h=9\delta/g<1$。二维空间中，$k,q$ 沿同一个 $e$ 的分量均不超过
+$h$，故沿 $e^\perp$ 的分量模均至少为 $\sqrt{1-h^2}$。于是
+
+$$
+|x|=|\langle k,q\rangle|\ge1-2h^2.
+$$
+
+由（40.23），$|y|\ge1-2h^2-4\delta$，所以
+
+$$
+\beta^2=1-|y|^2
+\le4h^2+8\delta
+=\frac{324\delta^2}{g^2}+8\delta
+\le\left(\frac{324}{256^2}+\frac8{256}\right)g^2
+<g^2/16.
+\tag{40.27}
+$$
+
+这与（40.25）矛盾。由此，只要（40.22）成立，就不存在这些近似块数据。
+
+**常数闭合、统一来源界与适用边界。**
+
+反设某个固定接收器有
+$f_2^2,f_3^2\ge1-\epsilon_{\rm el}(p)$，在以上推导中取
+$\epsilon=\epsilon_{\rm el}(p)$。
+则
+
+$$
+\eta=4\epsilon^{1/4}/\mu=2^{-22}g^4<1/4,\qquad
+\zeta=\eta\sqrt\mu<1/2,
+$$
+
+所有归一化条件成立；并且
+
+$$
+\delta_G=8\sqrt\eta=g^2/256.
+$$
+
+这恰落入二维几何矛盾范围。因此每个接收器至少有一个终端的最佳目标投影概率小于
+$1-\epsilon_{\rm el}(p)$，取共同接收器最优值即得（40.6）。
+对任意实际解码，半迹距离至少为目标投影概率的损失，因此得到操作误差下界。原来的前32终端目标更强，且
+$1-\sqrt{1-x}\ge x/2$，于是（40.7）成立。
+
+最后说明（40.8）。对归一化 $2\times2$ 正矩阵有
+$\lambda_{\min}\ge\det$。写 $x=1-p$，则
+
+$$
+\mu=\lambda_{\min}(\rho_3)\ge\det\rho_3=p^2xr^2,
+\qquad
+g=\frac{p}{r(r+x)}.
+$$
+
+保留同一来源的归一化关系，便有
+
+$$
+\mu^4g^{16}
+\ge\frac{p^{24}x^4}{r^8(r+x)^{16}}
+\ge2^{-16}p^{24}(1-p)^4,
+$$
+
+其中用了 $r\le1$、$r+x\le2$。函数
+$24\log p+4\log(1-p)$ 在 $[1/k,1-1/k]$ 上凹，
+故最小值取在端点；当 $k\ge2$ 时左端值不大于右端值。因此
+
+$$
+p^{24}(1-p)^4
+\ge\frac{(k-1)^4}{k^{28}}
+\ge\frac1{16k^{24}}.
+$$
+
+代回（40.5），得到更细的统一估计及其简化式
+
+$$
+\epsilon_{\rm el}(p)
+\ge\frac{(k-1)^4}{2^{112}k^{28}}
+\ge\frac1{2^{116}k^{24}}.
+$$
+
+再用（40.7）即得（40.8）。
+证明完毕。
+
+本定理的必要性只取指定来源输入，完整参考任务因包含这一输入而继承下界。其证明没有假设实际接收态、首态或环境原本为纯态；（40.10）、（40.15）及三个近乘积块均由恢复精度、二维容量和同一固定通道推出。结论是 $D=2$ 的初等定量结果，不给一般 $D$ 的 $\exp(-CD)$ 或 $\exp(-CD^2)$ 下界。常数选择重在闭合全部误差传播，未作数值最优声明。
+
+**校准例：同一存新位通道的三终端上界。**
+
+用第38节的固定相位换基取 $a,b>0$，仍令 $r=\sqrt{a^4+b^2}$。
+选择全域固定通道
+
+$$
+\mathcal C_{\rm store}(X)=\operatorname{Tr}_{K_{\rm old}}X,
+\tag{40.28}
+$$
+
+把新发出位的二维空间固定识别为新的 $K$。首终端输出固定首位零，第二终端在当前接收位前附上首位零，因此这两个终端精确；接收门本身始终不变。
+
+第三终端省去恒定首位零后，真实目标是
+
+$$
+a^2m_0\otimes|00\rangle
++ab\,m_1\otimes|01\rangle
++b\,m_0\otimes|10\rangle.
+$$
+
+定义正交归一档案向量
+
+$$
+\chi_0=(a^2|00\rangle+b|10\rangle)/r,\qquad
+\chi_1=|01\rangle.
+$$
+
+第三终端解码取全域等距
+$|0\rangle_K\mapsto|0\rangle\otimes\chi_0$、
+$|1\rangle_K\mapsto|0\rangle\otimes\chi_1$。
+在正交归一联合向量 $m_0\otimes\chi_0,m_1\otimes\chi_1$ 上，
+目标和解码输出的矩阵分别为
+
+$$
+\begin{pmatrix}r^2&rab\\rab&a^2b^2\end{pmatrix},
+\qquad
+\begin{pmatrix}r^2&a^3b\\a^3b&a^2b^2\end{pmatrix}.
+\tag{40.29}
+$$
+
+两矩阵迹均为一；区别只在这组联合正交向量上的两个非对角元。
+因此这份完整联合恢复的半迹误差及目标投影损失分别为
+
+$$
+\delta_{\rm store}=ab(r-a^2),\qquad
+q_{\rm store}=2a^2b^2r(r-a^2).
+\tag{40.30}
+$$
+
+这给出
+
+$$
+\boxed{
+\epsilon_{\rm el}(p)\le Q_2^{[3]}\le q_{\rm store},\qquad
+\epsilon_{\rm el}(p)\le
+\varepsilon^0_{2,[3]}\le\delta_{\rm store},
+}
+\tag{40.31}
+$$
+
+其中 $\varepsilon^0_{2,[3]}$ 是指定输入 $|0\rangle$、只要求前三终端的最佳最坏半迹误差。上界只用这份明确装置及解码器，不声称它们最优。
+
+平衡来源 $a=b=1/\sqrt2$ 时，
+
+$$
+q_{\rm store}=\frac{3-\sqrt3}{8},\qquad
+\delta_{\rm store}=\frac{\sqrt3-1}{4},
+$$
+
+而（40.8）给 $Q_2^{[3]}\ge2^{-140}$。
+这一校准仅覆盖指定输入的前三终端；它既不是完整参考合同的上界，也不是前32终端 $\Delta_2$ 的上界。
+
+## 追加锚（本行以下为增补区）
