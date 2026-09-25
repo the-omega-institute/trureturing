@@ -154,7 +154,121 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "Theorem 3.9. No new kernel, Scribe compilation, projection or "
                         + "independent review receipt is asserted. Full CFMP, an isolated "
                         + "flat using three independent lengths, and larger flat sets "
-                        + "remain outside the displayed conclusions.")))))));
+                        + "remain outside the displayed conclusions.")))),
+            Describe.Remark(
+                DescribeId.Create("written-colouring-flat-interface"),
+                H("Written colouring continuation: states, parity and interfaces"),
+                F.Disp(ColourMismatchFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                Blocks(
+                    Paragraph(Text("This authored research Remark is separate from the original "
+                        + "Lean declaration. StrictBoundaryTriangulations has the existing actual "
+                        + "finite orientable face-pairing meaning. PositiveGeneralizedLengths "
+                        + "means one positive original length per global edge; ZeroEdgeCurvature "
+                        + "means every occurrence-counted angle sum is 2pi. SaturatedDegreeAtLeastThree "
+                        + "requires degree at least three at every edge carrying two pi occurrences.")),
+                    Paragraph(Text("A flat state is one of the three unordered 2+2 vertex partitions. "
+                        + "The two within-class edges carry pi, the four cross-class edges zero. "
+                        + "A flat tetrahedron marks one edge in each triangular face. "
+                        + "MismatchedFlatFaceCount counts paired flat/flat faces once when their "
+                        + "marked edge occurrences disagree under the actual face map. This "
+                        + "does not assert a mismatch of the faces' intrinsic metrics.")),
+                    Paragraph(Text("SaturatedEdgeCount counts actual global edges with two pi "
+                        + "occurrences. Such an edge has no genuine occurrence and its binary "
+                        + "normal cycle has at least two status changes. One mismatched face "
+                        + "accounts for exactly two changed edge slots, with repeated labels "
+                        + "counted as occurrences. Summing proves the displayed inequality "
+                        + "without bounding the number of flat tetrahedra.")),
+                    Paragraph(Text("Rainbow global three-edge colours require all edge degrees "
+                        + "to be even. If degrees are constant within each colour and their "
+                        + "reciprocals sum to less than one half, the classical hyperideal angle "
+                        + "existence and uniqueness theorem constructs a genuine shared metric. "
+                        + "For the triple six,six,eight, cosh-lengths are 2+3sqrt(2)/2, "
+                        + "2+3sqrt(2)/2, 2+sqrt(2). A completely specified 48-tetrahedron "
+                        + "group construction gives four genus-two boundary components.")),
+                    Paragraph(Text("Taut and veering structures are credited combinatorial "
+                        + "frameworks, not automatic hyperideal geometric realizations. The "
+                        + "known nine-degree P4 example cannot have rainbow three-edge colours. "
+                        + "No new formal theorem, compilation or projection receipt, complete "
+                        + "CFMP proof, or mathematical-priority claim accompanies this Remark.")))),
+            Describe.Remark(
+                DescribeId.Create("written-exposed-pi-edge-budget"),
+                H("Written continuation: every flat set exposes a pi edge"),
+                F.Disp(ExposedPiEdgeFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                Blocks(
+                    Paragraph(Text("This authored research Remark records ordinary written "
+                        + "mathematics and names no new Lean declaration. T ranges over actual "
+                        + "finite orientable face-paired ideal triangulations in the existing "
+                        + "strict boundary setting. PositiveGeneralizedLengths assigns one "
+                        + "positive original length to every actual global edge. "
+                        + "ZeroEdgeCurvature requires the occurrence-counted sum at each "
+                        + "global edge to be 2pi. MinimumDegreeSix counts occurrences.")),
+                    Paragraph(Text("FlatSet is the entire set of flat tetrahedra under this "
+                        + "same generalized length vector. For each global edge e, m(e) "
+                        + "counts its pi slots in FlatSet and n(e) counts all its flat slots. "
+                        + "ExposedPiEdges consists of those with m(e)=1 and n(e) equal to one "
+                        + "or two. HasFlat means FlatSet is nonempty. The displayed conclusion "
+                        + "asserts this exact exposed set is nonempty, with no bound of two "
+                        + "on the number of flat tetrahedra and no colouring premise.")),
+                    Paragraph(Text("The existing Cauchy remainder and AM-GM give, for flat "
+                        + "cosh coordinates (r,a,b,o,c,d) with selected pair r,o, "
+                        + "2log(r)+2log(o)-log(a)-log(b)-log(c)-log(d)>log(16). "
+                        + "Summing uses the shared value w(e)=log(cosh(ell(e)))>0 and "
+                        + "coefficient 3m(e)-n(e). At m=2 saturation forces n=degree>=6; "
+                        + "at m=0 the coefficient is nonpositive. Only the exposed edges "
+                        + "can provide the necessary positive sum. Their cosh products "
+                        + "satisfy product x(e)^(3-n(e))>16^card(FlatSet), hence "
+                        + "product x(e)>4^card(FlatSet). The complete positive correction "
+                        + "terms are retained in the written theory.")),
+                    Paragraph(Text("Every exposed edge has at least four genuine local "
+                        + "occurrences, with angle sum exactly pi and at least one angle "
+                        + "at most pi/4. These occurrences need not be distinct tetrahedra. "
+                        + "The pi-selection multigraph has one edge per flat tetrahedron "
+                        + "and graph degree m(e)<=2. Its path count p obeys v_pi=f+p. "
+                        + "Each flat-only face component requires a different path "
+                        + "component by the same signed budget and saturated normal "
+                        + "circle argument, so f<=v_pi-c_F. Cycle components can remain.")),
+                    Paragraph(Text("Luo-Yang Lemma 4.3 defines each positive face-corner "
+                        + "truncation length from the shared original face lengths. "
+                        + "A flat corner's longest side is at least the sum of the two "
+                        + "others. Following longest sides through mismatched flat faces "
+                        + "strictly increases this shared length. A closed all-mismatch "
+                        + "corner walk is impossible; genuine blocks and compatible flat "
+                        + "faces are allowed terminal states. The two local cosh vectors "
+                        + "(2,2,2,20,2,2) and (2,2,2,2,20,2), sharing face123, exhibit "
+                        + "a legal local mismatch. They are not a complete CFMP instance.")),
+                    Paragraph(Text("These are necessary conditions, not a proof that the "
+                        + "small genuine angles or large exposed lengths cannot occur. "
+                        + "The original critical_transition_star statement and Lean source "
+                        + "are unchanged. No Scribe compilation or projection, new kernel "
+                        + "certification, independent referee approval, full CFMP proof "
+                        + "or counterexample is represented by this Remark.")))))));
+
+    private static Formula ExposedPiEdgeFormula()
+    {
+        var t=F.Id("T"); var ell=F.Id("ell");
+        return All([("T",F.Id("StrictBoundaryTriangulations")),
+                    ("ell",Call("GlobalLengthVectors",t))],
+            Imp(And(Call("PositiveGeneralizedLengths",t,ell),
+                    Call("ZeroEdgeCurvature",t,ell),
+                    Call("MinimumDegreeSix",t),Call("HasFlat",t,ell)),
+                Call("Nonempty",Call("ExposedPiEdges",t,ell))));
+    }
+
+    private static Formula ColourMismatchFormula()
+    {
+        var t=F.Id("T"); var ell=F.Id("ell");
+        return All([("T",F.Id("StrictBoundaryTriangulations")),
+                    ("ell",Call("GlobalLengthVectors",t))],
+            Imp(And(Call("PositiveGeneralizedLengths",t,ell),
+                    Call("ZeroEdgeCurvature",t,ell),
+                    Call("SaturatedDegreeAtLeastThree",t,ell)),
+                Le(Call("SaturatedEdgeCount",t,ell),
+                   Call("MismatchedFlatFaceCount",t,ell))));
+    }
 
     private static Formula TwoEdgeWrittenFormula()
     {
