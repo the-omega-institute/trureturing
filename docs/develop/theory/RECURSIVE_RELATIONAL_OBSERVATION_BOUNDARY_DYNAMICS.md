@@ -8393,7 +8393,30 @@ $$
 
 两向结合给式（54.26）的中间上界；由 $u-1\le\Delta(R)$、$1-\ell\le\Delta(R)$ 及 $u\ge1$ 得最后一项。下界仍由整个事件 $E=C$ 给出。$\square$
 
-该界在完整参考和全部序贯 tester 的同一合同下成立，说明修复代价至多线性随归一化缺陷增长。它没有把系数 $2$ 判为最优；将式（54.26）收紧到普遍的系数 $1$，仍需解决上述正延拓或插值问题。
+**推论 54.7（一般界留下的精确范围）。** 记 $\delta=\Delta(R)$，则
+
+$$
+\begin{cases}
+\displaystyle
+\delta\le\inf_{S\in\mathcal S}D(R,S)
+\le\dfrac{2\delta}{1+\delta},&0\le\delta\le1,\\[6pt]
+\displaystyle
+\inf_{S\in\mathcal S}D(R,S)=\delta,&\delta\ge1.
+\end{cases}
+\tag{54.30}
+$$
+
+**证明。** 令 $a=u-1$、$b=1-\ell$，则 $a\ge0$、$0\le b\le1$ 且 $\delta=\max\{a,b\}$。若 $\delta\le1$，由 $a,b\le\delta$ 得
+
+$$
+\frac{a+b}{1+a}
+\le\frac{a+\delta}{1+a}
+\le\frac{2\delta}{1+\delta};
+$$
+
+最后一步等价于 $a(1-\delta)\le\delta(1-\delta)$。同时 $a\le\delta\le2\delta/(1+\delta)$。若 $\delta\ge1$，则 $b\le1$ 给 $(a+b)/(1+a)\le1\le\delta$，而 $a\le\delta$。代入式（54.26），并结合普遍下界即得。$\square$
+
+上述界在完整参考和全部序贯 tester 的同一合同下成立。一般尖锐等式的未决范围因此只剩 $0<\Delta(R)<1$；本节没有把式（54.30）的上界判为最优。将它收紧到普遍的系数 $1$，仍需解决上述正延拓或插值问题。
 
 第 53 节的仿射选择障碍保留了非平凡的末轮输出；定理 54.2 将该输出空间取为一维，因此式（54.15）的正投影与该障碍属于不同接口范围。本节既不将此投影外推为完整两轮的仿射修复，也不把所选因果替代表等同于对原物理来源的识别。
 
