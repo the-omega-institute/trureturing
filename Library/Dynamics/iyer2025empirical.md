@@ -602,3 +602,63 @@ Fourier 变换、谱分解、四阶矩定理、有限投影及 Brownian 时间�
 前极限在该 sigma-field 下已知，条件特征函数的模恒为一。
 本章没有把此连续对象的再取极限代入实际数据的弱收敛，
 不提供实际增长参数近似率、实际后验矩收敛或 u=0 的路径延拓。
+
+## 实际谱曲线的移动边界与端点障碍
+
+[谱边界层卷第 54 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原来的实际成对样本、连续路径和固定 Liouville 序列中研究同一精确中心谱曲线。
+只要左边界 a_M 趋零而 a_M/sqrt(delta) 发散，整个移动区间上的谱曲线
+都一致逼近原来的随机截距加 Gaussian 随机斜率；不要求额外的 log Q 分离。
+但完整闭区间上的曲线不满足 J1 紧性：在宽度 c sqrt(delta) 内，
+同一实现的谱增量收敛到一个非零的有限频带二阶 Wiener 积分。
+该章为 repo-derived 的实际模型桥接；以下工具及相邻结论已有文献。
+
+Christian Döbler、Mikołaj J. Kasprzak、Giovanni Peccati，
+*Functional Convergence of U-Processes with Size-Dependent Kernels*，
+[arXiv:1912.02705v3](https://arxiv.org/pdf/1912.02705v3)，
+Section 2 使用共同分布的独立输入及固定阶数的对称核，允许核随样本量变化。
+Theorem 3.1（PDF 第 8 页）要求归一化 Hoeffding 分量方差极限、
+指定收缩范数趋零以及带额外正幂余量的收缩有界性，得到所列 Gaussian 过程极限。
+这是变化核的函数极限须另行控制紧性的直接先例。
+本章的索引是对数频率，条件组和非同分布，核又与实际得分格相关；
+未建立它与该顺序 U 过程的等价关系。
+这里的有限频带极限和保留的谱截距属于非 Gaussian 二阶混沌，
+所以不能直接套用该文的 Gaussian 过程结论。
+
+Ivan Nourdin、Guillaume Poly，
+*Convergence in law in the second Wiener/Wigner chaos*，
+[arXiv:1205.2684v3](https://arxiv.org/pdf/1205.2684v3)，
+Proposition 2.1 及其后累积量公式（PDF 第 4 页）给出实对称平方可积核的谱表示：
+二阶 Wiener 积分与 sum_j lambda_j (G_j²−1) 同分布，
+第 m 阶累积量为 2^(m−1)(m−1)! sum_j lambda_j^m。
+在本章已识别的 Gaussian 极限空间中，有限频带核有界、对称且不为零，
+故其方差严格为正，四阶矩至多为方差平方的 15 倍。
+结合经典 Paley–Zygmund 不等式，即得明确的正概率增量下界。
+这一计算只作用于极限对象，没有把有限精确后验标签当作 Gaussian，
+也没有通过总变差比较转移实际无界矩。
+
+Andreas Søjmark、Fabrice Wunderlich，
+*Weak Convergence of Stochastic Integrals on Skorokhod Space in Skorokhod's J1 and M1 Topologies*，
+[arXiv:2309.12197v1](https://arxiv.org/pdf/2309.12197v1)，
+Appendix A、Definition A.1（PDF 第 65 页）给出有限闭区间上的 J1 度量，
+时间变换是固定两端点的递增同胚。
+由此定义，J1 紧集在左端点必须一致右连续；本章用收敛子列和时间变换直接证明这一必要条件。
+该文主要的随机积分收敛定理另外要求联合收敛及半鞅分解等条件，
+本章不借它把后验曲线宣称为鞅，也不作 M1 或其它拓扑的结论。
+既有 Whitt 条目的半直线紧性模数有末区间约定；本章的左端点证明直接在有限闭区间内完成。
+
+前一节所引 Ben Hariz–Bui–Esstafa 的 2026 年积分周期图定理，
+要求实平稳 Gaussian 输入及固定谱权重，还不能提供当前实际后验数组的移动区间余项。
+原来的条件 Bernoulli 表示、补集局部极限定理与精确中心估计沿用本卷相应条目及其文献来源。
+有限余弦和、Ci 恒等式、一维 Sobolev 不等式、Gaussian 乘积公式和紧集判据都是经典工具。
+
+新增连接是保留有限 Ci 核后，先对空间格上的条件方差加权，
+得到统一的 exp(−s) 二阶界，再把单位区间的最大值界求和。
+实际不同组的两行占据数估计足够供给该平均界；辅助标签独立性供给二次型等距式。
+统一精确中心位移和一次完整后验向量比较再把最大值事件送回实际模型。
+端点障碍使用同一实现的两个固定分辨率，因此没有把增长参数代入固定参数弱极限。
+
+所核原文未直接给出这一完整模型、尺度、共同噪声及端点下界的联合陈述；
+这是有界文献比较，不是全局原创性认证。
+结论保持原固定幅度、固定 beta 和固定右端点，不主张任意左边界序列的必要充分条件、
+实际无界矩收敛、变化右端点、其它路径拓扑或未知方向下的新后验定义。
