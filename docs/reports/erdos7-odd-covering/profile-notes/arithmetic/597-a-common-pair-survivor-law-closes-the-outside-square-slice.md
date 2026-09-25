@@ -276,3 +276,9 @@ Finally, Report592's finite-height digit-injection averaging preserves
 PS1, every exponent vector and numerical distinctness, so it transports
 PS2 to arbitrary ten ordered odd primes. It does not add further prime
 coordinates or remove the central-square restriction.
+
+[Report598](598-high-support-central-squares-preserve-the-common-survivor-law.md)
+restricts this same actual head by all800 central-square labels with at
+least five prime divisors. Its unit-inclusive moment estimate pays their
+joint deletion while keeping a positive through31 gate;413 low-support
+central-square labels remain outside that extension.
