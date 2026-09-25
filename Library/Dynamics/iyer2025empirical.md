@@ -432,3 +432,93 @@ Proposition 3.5（PDF 第 15–17 页）把一个方差型估计量的极限表�
 均保留为已有工具；本章的新增内容是这些工具在实际算术得分组与精确后验中的共同实现和统一谱律。
 这里的文献对应是所列原文范围内的比较，不是全局原创性认证。
 结论不包含实际谱能量矩的收敛、旧场联合性、变化振幅、增长空间窗口或有效有限起始尺度。
+
+## Arithmetic-line variance bias and deterministic centering
+
+Chapter 52 of
+[the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+adds a quantitative expansion of the actual calibrated posterior variance
+clock on the original fixed Liouville-amplitude sequence. Its leading
+relative bias is of order inverse intensity and depends explicitly on the
+fractional part of the signal mean. The phase need not converge. This rate
+permits deterministic centering in the quadratic fluctuation and the
+simultaneous spectral curve of Chapters 49 and 51.
+
+Stirling expansion, Gaussian moments and Poisson summation are classical
+ingredients. The coefficient is a local Edgeworth-type coefficient with a
+moving target. The substantive model calculation is the transfer from
+dependent stationary pair/path observations and globally calibrated
+posterior weights to a single primitive count-line mass, followed by a
+uniform expansion on that line. Neither the Poisson comparison law nor
+the auxiliary Bernoulli law is substituted for the actual observation
+law. The theorem is repo-derived in this stated sense, without a global
+originality claim.
+
+J. P. Buhler, A. C. Gamst, R. L. Graham and A. W. Hales,
+*Explicit error bounds for lattice Edgeworth expansions*,
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1), study sums of a
+fixed bounded integer-valued IID law. Their Theorem 1 expresses the
+leading tilt about the mean through the third moment and a congruence
+phase, and the subsequent bounds make the one-term approximation
+effective. The fixed law, its span and its Fourier constants are part of
+that statement. A congruence-dependent correction is therefore a
+classical precedent; it is not a new general principle of Chapter 52.
+That theorem does not itself provide a uniform local mass estimate for
+the present triangular array whose primitive integer coefficients grow.
+
+Sergey G. Bobkov, *Central limit theorem and Diophantine approximations*,
+[arXiv:1706.09643v1](https://arxiv.org/abs/1706.09643v1), Theorem 1.1,
+relates an Edgeworth-corrected Kolmogorov rate for fixed IID sums with a
+finite fourth absolute moment to polynomial separation of the
+characteristic function from modulus one, with logarithmic factors.
+Corollary 1.2 specializes this relation to the four-point law on plus or
+minus one and plus or minus an irrational parameter, using its finite
+Diophantine type. Thus nonlattice support alone does not supply arbitrary
+polynomial approximation rates. These are distribution-function
+statements with stated arithmetic conditions; no shrinking local-density
+or growing-span conclusion for the ultra-Liouville model is imported.
+Both references here identify the exact arXiv versions; the manuscripts
+also display later dates than their archive-version headers.
+
+Dmitry Dolgopyat and Yeor Hafouta, *Edgeworth expansions for independent
+bounded integer valued random variables*,
+[arXiv:2011.14852v2](https://arxiv.org/abs/2011.14852v2), Theorem 1.5,
+characterize classical local expansions through the characteristic
+function and its derivatives at nonzero resonant points. Their
+Theorem 11.1 explicitly covers triangular arrays, with polynomial and
+trigonometric corrections. Its common bound on the absolute size of all
+summands is essential to the stated resonance set and constants. The
+present projected Poisson law has unbounded compound increments; a
+bounded-jump decomposition would still have jumps growing with the
+arithmetic denominator. The word triangular therefore does not itself
+verify the uniformity needed here.
+
+Yeor Hafouta, *Non-uniform Edgeworth expansions for weakly dependent
+random variables and their applications*,
+[arXiv:2511.06414v1](https://arxiv.org/abs/2511.06414v1), Theorem 8,
+requires both the small-frequency logarithmic-characteristic derivative
+bounds of Assumption 4 and the growing-frequency integral bound of
+Assumption 6. Its conclusion is a distribution-function expansion with
+polynomial spatial decay. This recent dependent-data result retains a
+quantitative frequency hypothesis and does not by itself turn CDF errors
+into the relative microscopic point-mass estimate used in Chapter 52.
+
+Chapter 52 instead uses the explicit two-Poisson mass on the count line.
+The actual one-/two-row relative point comparison gives an occupancy
+error smaller than every fixed inverse power of the intensity, and the
+calibration variance has zero first derivative at the midpoint. On the
+deterministic line, the odd first correction cancels in a symmetric
+Gaussian lattice sum. Poisson summation bounds the remaining nonzero
+dual-grid contributions exponentially in the arithmetic denominator.
+Integrating the even correction retains the moving floor phase and gives
+the displayed bias coefficient. This mechanism does not require a
+uniform nonlattice local limit theorem.
+
+The result concerns convergence in actual-data probability and the
+previously specified weak joint posterior limits. It does not identify
+the auxiliary variance with the finite actual posterior mean energy,
+prove actual moment convergence, describe the distribution of the floor
+phase, extend the spectral parameter to zero, or give a useful finite
+onset. The bounded comparison above distinguishes relevant classical
+mechanisms from the actual-model synthesis; it does not certify the
+absence of other antecedents.
