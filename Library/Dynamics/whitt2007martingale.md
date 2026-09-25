@@ -317,3 +317,126 @@ posterior centers, and necessary-and-sufficient path conclusion together.
 This is a bounded attribution assessment, not a global originality
 certificate. The theorem asserts no useful finite onset, actual moment
 convergence, other topology, varying amplitude, or growing-window limit.
+
+
+# Approximation error visible in the original score window
+
+Chapter 45 of [the microscopic window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+uses the same fixed ultra-Liouville amplitude but samples at a later
+intensity, of order log of the inverse exact approximation tail, hence
+of order Q to the fifth power. The tail eta and the support size q combine
+into a phase chi = eta sqrt(q), which stays in a fixed positive compact
+interval for the specified rounded intensity construction. Bounded
+rounding errors do not imply that chi converges or that an arbitrary
+chosen phase is attainable.
+
+The arithmetic integer gap still excludes off-line count pairs. In
+contrast to the earlier collapsing regimes, only a finite resolved
+segment of the count line now lies inside the microscopic score window.
+The positive score step is governed by the approximation error rather
+than compensation. Its mesh in the original window coordinate tends to
+zero. A uniform two-Poisson Stirling estimate, exact untilting, actual
+one/two-row comparisons and calibration produce a truncated Gaussian
+variance clock on that original interval.
+
+Whitt's classical Theorem 2.1(ii) again supplies the auxiliary functional
+limit after inverse-clock time change and Brownian continuation. Uniform
+monotone clocks control the largest whole-group variance; the independent
+Bernoulli fourth-moment bound controls whole-group jumps. The full-window
+posterior-vector comparison and a separate simultaneous exact-center
+bound then transfer the complete path. The endpoint variance is the
+mass of the truncated clock, not the variance of the entire count line.
+The endpoint and bridge are projections of the same limiting Brownian
+motion.
+
+The `repo-derived` result is continuous-path subsequential Gaussian
+convergence at the original microscopic scale, and C-tightness along the
+entire rounded intensity sequence. Every phase-convergent subsequence has
+the stated clock; deterministic phase normalization gives a standard
+Gaussian endpoint along the full sequence. This does not extend the
+Chapter 44 criterion past its explicit intensity range. It instead
+separates two questions: whether the score window isolates one count
+line, and whether the relevant part of that line collapses to a single
+window location.
+
+The Gaussian time change, martingale criterion, Stirling expansion,
+compact-subsequence argument and Gaussian bridge projection are
+classical auxiliary tools. The existing source boundaries for
+quantitative nonlattice local limits remain in force: the fixed
+increment distribution still fails the strong nonlattice and
+polynomial Diophantine assumptions discussed above. The present
+restricted sampling sequence and explicit count-line calculation do
+not establish fine-scale smoothing at every intensity.
+
+This bounded attribution is not a global originality certificate.
+The result fixes the amplitude and beta and uses the stated intensity
+construction. It makes no actual-moment, useful finite-onset, arbitrary
+phase-attainment, all-amplitude, growing-window or efficiency claim.
+Conditional posterior arguments remain under the uniform support
+prior; fixed-support laws and the one common direction event transfer
+the whole process and its projections together.
+
+
+# Finite posterior meshes and compact-interval endpoints
+
+Chapter 46 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+uses the same fixed Liouville amplitude at an intensity larger than the
+reopening scale by three times log(Q) divided by the exponential growth
+rate of q. The exact compensated spacing in the original score-window
+coordinate now stays bounded above and away from zero. Only finitely
+many count-line groups can enter that window. All of them have the same
+limiting normalized variance, including groups currently outside the
+window that are retained in one enlarged posterior vector.
+
+The finite vector central limit theorem, conditional-Bernoulli
+representation, absolute Bernoulli local estimate and endpoint-fixing
+time changes are classical. The repository-derived content connects
+them to the recalculated actual pair/path model: uniform bounded-index
+point masses, actual mixed occupancy, calibration, a complementary
+variance reserve, one whole-vector comparison and simultaneous exact
+centers. A uniformly Lipschitz family of changing staircase maps gives
+a moving Gaussian-law approximation even when the path laws are not
+tight. This is not convergence to one fixed limiting process.
+
+The topology is explicitly the ordinary J1 topology on the closed
+interval from minus one to one. Interior jumps approaching either
+endpoint are obstructed, while a jump exactly at the right endpoint is
+permitted. The original score window excludes its exact left endpoint.
+The proof derives both endpoint restrictions directly from the
+endpoint-fixing time-change definition and the one-sided limits of a
+cadlag path. It does not use Whitt's half-line last-interval exception
+as a compact right-endpoint tightness theorem. Nor does it apply the
+Brownian martingale FCLT to the finite mesh: its group jumps have
+nonvanishing limiting variances.
+
+At a reciprocal-integer limiting spacing, the two possible endpoint
+contacts share the same center and spacing phases. Their inclusion and
+interior/exterior status must be checked together. A phase limit alone
+does not determine a unique staircase law. The theorem does not claim
+that every classified boundary pattern, or a nontight resonant pattern,
+is attained by the legal rounded intensities. A sufficiently large fixed
+positive intensity shift does give a proved legal regime containing only
+the central group; its rounding bound is explicit.
+
+A related primary predecessor is D. Ferger and D. Vogel,
+“Weak convergence of the empirical process and the rescaled empirical
+distribution function in the Skorokhod product space,”
+[arXiv:1506.04324v1](https://arxiv.org/pdf/1506.04324v1), Theorem 2.1
+and Condition C.1. Its fixed iid distribution, specified one-sided
+derivatives and local/global scaling yield an independent transformed
+Brownian bridge and two-sided Poisson process. Its convention permits
+an atom at the localization point, with the left limit used on the
+negative side. Those facts are relevant precedents for local process
+limits and endpoint conventions. The source works on the real-line
+Skorokhod space; restriction at a limiting jump does not automatically
+give closed-interval J1 convergence. It does not supply the changing
+actual score law, constrained posterior centers or finite-mesh criterion
+proved here.
+
+The stronger quantitative nonlattice assumptions discussed earlier in
+this note remain absent. The result uses explicit count-line point
+probabilities instead of a universal microscopic score density. This
+bounded source comparison is not a global originality certificate.
+The theorem fixes amplitude and beta, makes no actual-moment or finite
+onset claim, and does not assert another topology, arbitrary phase
+attainment, adaptive parameters, growing windows or efficiency.

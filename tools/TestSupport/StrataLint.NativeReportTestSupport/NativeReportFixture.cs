@@ -16,13 +16,15 @@ internal static class NativeReportFixture
     {
         var repository = TestRepositoryLayout.FindRoot();
         return EngineeringProcess.Process(root, "python3", ["-B", "-c", """
-            import json, pathlib, shutil, sys, time
+            import json, pathlib, shutil, sys, time, unittest
             repository, root, relative = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
-            from test_native import NativeTests
+            from test_native_support import NativeTestSupport
             import publication
-            NativeTests.setUpClass()
-            fixture = NativeTests('test_native_invalidation')
+            class ReportFixture(NativeTestSupport, unittest.TestCase):
+                pass
+            ReportFixture.setUpClass()
+            fixture = ReportFixture()
             fixture.setUp()
             phases = fixture.root / 'native-phases.jsonl'
             fixture.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)

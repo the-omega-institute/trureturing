@@ -50,11 +50,61 @@ internal static partial class CommonExecutionEvidence
         return 0;
     }
 
+    private sealed record InventoryResourceBinding(string Id, string[] Projects, string[] Checks, string[] Steps,
+        string[]? LeanTargets = null);
+    private sealed record InventoryResourceManifest(string Schema, InventoryResourceBinding[] Resources);
+
+    private static void ValidateTestResourceBindings(RepositorySnapshot snapshot,
+        IReadOnlyDictionary<string, EngineeringProjectRegistration> projects)
+    {
+        var declared = projects.Values.Any(project => project.ExecutionPathInventory is { Length: > 0 });
+        if (!snapshot.TryGetFile("Meta/FILEMAP.toml", out var filemap))
+        {
+            if (declared) throw new InvalidDataException("execution_path_inventory requires FILEMAP resources");
+            return;
+        }
+        byte[] Read(string path) => snapshot.TryGetFile(path, out var file) ? file.RawBytes.ToArray()
+            : throw new InvalidDataException("path inventory declaration is unavailable: " + path);
+        var documents = FileMapDocuments.Resolve(filemap.RawBytes.AsSpan(), "Meta/FILEMAP.toml", Read);
+        var root = documents[0].Table;
+        var resourceTables = root.TryGetValue("resources", out var raw)
+            ? FileMapTomlTables.Parse(raw, "resources", allowEmpty: true) : Array.Empty<TomlTable>();
+        if (!declared && !resourceTables.Any(table => table.ContainsKey("path_inventory") || table.ContainsKey("path_inputs"))) return;
+        var manifest = FileMapLoader.Parse(filemap.RawBytes.AsSpan(), "Meta/FILEMAP.toml", Read);
+        if (!declared && manifest.Resources.All(resource => resource.PathInventory.IsDefaultOrEmpty && resource.PathInputs.IsDefaultOrEmpty)) return;
+        var mapping = JsonSerializer.Deserialize<InventoryResourceManifest>(Read("Meta/ci-resources.json"), JsonOptions)
+            ?? throw new InvalidDataException("missing path inventory resource mapping");
+        var resources = manifest.Resources.ToDictionary(resource => resource.Id, StringComparer.Ordinal);
+        if (mapping.Schema != "ci-resource-execution-v1" || mapping.Resources is null
+            || mapping.Resources.Any(row => row is null || row.Projects is null || row.Checks is null || row.Steps is null)
+            || mapping.Resources.Select(row => row.Id).Distinct(StringComparer.Ordinal).Count() != mapping.Resources.Length
+            || !mapping.Resources.Select(row => row.Id).ToHashSet(StringComparer.Ordinal).SetEquals(resources.Keys))
+            throw new InvalidDataException("invalid path inventory resource mapping");
+        var expected = projects.Keys.ToDictionary(path => path, _ => new SortedSet<string>(StringComparer.Ordinal), StringComparer.Ordinal);
+        foreach (var row in mapping.Resources)
+        {
+            if (!row.Projects.SequenceEqual(row.Projects.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal))
+                || row.Projects.Any(path => !projects.ContainsKey(path)))
+                throw new InvalidDataException("invalid path inventory project mapping: " + row.Id);
+            var resource = resources[row.Id];
+            if (resource.PathInventory.IsDefaultOrEmpty && resource.PathInputs.IsDefaultOrEmpty) continue;
+            if (resource.Stage != "engineering" || row.Projects.Length == 0
+                || row.Projects.Any(path => !projects[path].IsTest || !projects[path].Ci))
+                throw new InvalidDataException("path_inventory/path_inputs require explicitly mapped CI test projects: " + row.Id);
+            if (!resource.PathInventory.IsDefaultOrEmpty)
+                foreach (var path in row.Projects) expected[path].UnionWith(resource.PathInventory);
+        }
+        foreach (var project in projects.Values)
+            if (!(project.ExecutionPathInventory ?? []).SequenceEqual(expected[project.Path]))
+                throw new InvalidDataException("execution_path_inventory differs from FILEMAP resource mapping: " + project.Path);
+    }
+
     internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot,
         string[]? selectedProjects = null)
     {
         var registry = EngineeringProjectRegistry.Read(snapshot);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
+        ValidateTestResourceBindings(snapshot, projects);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var sources = registry.SourcePaths(paths);
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -90,8 +140,21 @@ internal static partial class CommonExecutionEvidence
                 excludes = project.ExecutionExcludes!.Order(StringComparer.Ordinal),
                 execution_filemap_paths = project.ExecutionFileMapPaths!.Order(StringComparer.Ordinal),
                 project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition,
-                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(path, fileMapRelevant)), environment,
+                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(
+                    path, fileMapRelevant, project.ExecutionFileMapPaths!.Length != 0)), environment,
             });
+            if (project.ExecutionPathInventory is { Length: > 0 } inventoryPatterns)
+            {
+                if (snapshot.PathInventory.IsDefault)
+                    throw new InvalidDataException($"registered path inventory is unavailable: {project.Path}");
+                var patterns = inventoryPatterns.Select(FileMapGlob.Create).ToArray();
+                fingerprint = Digest(new
+                {
+                    contract = "registered-test-path-inventory-v1", body = fingerprint,
+                    execution_path_inventory = inventoryPatterns,
+                    inventory = snapshot.PathInventory.Where(row => patterns.Any(pattern => pattern.IsMatch(row.Path))),
+                });
+            }
             result.Add(project.Path, new(project.Path, project.Assembly, fingerprint));
         }
         if (result.Count == 0) throw new InvalidDataException("candidate contains zero registered CI test projects");
@@ -122,7 +185,7 @@ internal static partial class CommonExecutionEvidence
             foreach (var reference in projects[path].References) AddCompilePaths(reference, relevant);
         }
 
-        object ExecutionMaterial(string path, HashSet<string> fileMapRelevant)
+        object ExecutionMaterial(string path, HashSet<string> fileMapRelevant, bool queryFileMap)
         {
             // An explicitly declared runtime manifest is consumed as a complete file.
             // Compilation registrations are already scoped by Compile above. FILEMAP
@@ -146,9 +209,10 @@ internal static partial class CommonExecutionEvidence
                 return new { path, policy = documents.Select(document => new
                     {
                         document.Path,
-                        // Root rows are projected below; unrelated rows must not invalidate
-                        // a test. Explicit includes remain whole-file runtime materials.
-                        sha256 = document.Path == path ? null
+                        // Only explicit policy queries project the root document. Other
+                        // runtime readers observe its complete bytes, including comments.
+                        // Includes remain whole-file materials in both modes.
+                        sha256 = document.Path == path && queryFileMap ? null
                             : Convert.ToHexStringLower(SHA256.HashData(document.Bytes.AsSpan())),
                         metadata = document.Table.Where(pair => pair.Key != "files")
                             .OrderBy(pair => pair.Key, StringComparer.Ordinal).ToArray(),
