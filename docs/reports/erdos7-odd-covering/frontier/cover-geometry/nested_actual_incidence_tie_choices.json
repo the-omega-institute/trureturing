@@ -1,0 +1,165 @@
+{
+  "schema": "nested-incidence-fixed-query-ties-v1",
+  "choices": [
+    {
+      "modulus": 3,
+      "phase": 2
+    },
+    {
+      "modulus": 5,
+      "phase": 2
+    },
+    {
+      "modulus": 7,
+      "phase": 5
+    },
+    {
+      "modulus": 11,
+      "phase": 9
+    },
+    {
+      "modulus": 13,
+      "phase": 12
+    },
+    {
+      "modulus": 15,
+      "phase": 7
+    },
+    {
+      "modulus": 17,
+      "phase": 11
+    },
+    {
+      "modulus": 19,
+      "phase": 12
+    },
+    {
+      "modulus": 21,
+      "phase": 20
+    },
+    {
+      "modulus": 33,
+      "phase": 20
+    },
+    {
+      "modulus": 35,
+      "phase": 33
+    },
+    {
+      "modulus": 39,
+      "phase": 23
+    },
+    {
+      "modulus": 51,
+      "phase": 29
+    },
+    {
+      "modulus": 55,
+      "phase": 54
+    },
+    {
+      "modulus": 57,
+      "phase": 47
+    },
+    {
+      "modulus": 65,
+      "phase": 27
+    },
+    {
+      "modulus": 77,
+      "phase": 64
+    },
+    {
+      "modulus": 85,
+      "phase": 67
+    },
+    {
+      "modulus": 91,
+      "phase": 88
+    },
+    {
+      "modulus": 95,
+      "phase": 14
+    },
+    {
+      "modulus": 105,
+      "phase": 58
+    },
+    {
+      "modulus": 119,
+      "phase": 47
+    },
+    {
+      "modulus": 133,
+      "phase": 68
+    },
+    {
+      "modulus": 143,
+      "phase": 135
+    },
+    {
+      "modulus": 165,
+      "phase": 79
+    },
+    {
+      "modulus": 187,
+      "phase": 83
+    },
+    {
+      "modulus": 195,
+      "phase": 67
+    },
+    {
+      "modulus": 209,
+      "phase": 18
+    },
+    {
+      "modulus": 221,
+      "phase": 112
+    },
+    {
+      "modulus": 231,
+      "phase": 218
+    },
+    {
+      "modulus": 247,
+      "phase": 162
+    },
+    {
+      "modulus": 255,
+      "phase": 97
+    },
+    {
+      "modulus": 273,
+      "phase": 74
+    },
+    {
+      "modulus": 285,
+      "phase": 154
+    },
+    {
+      "modulus": 323,
+      "phase": 65
+    },
+    {
+      "modulus": 357,
+      "phase": 188
+    },
+    {
+      "modulus": 385,
+      "phase": 323
+    },
+    {
+      "modulus": 399,
+      "phase": 125
+    },
+    {
+      "modulus": 429,
+      "phase": 302
+    },
+    {
+      "modulus": 455,
+      "phase": 228
+    }
+  ]
+}

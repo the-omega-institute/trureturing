@@ -274,3 +274,9 @@ floating optimizer is required to reproduce the result.
 
 The finite producer verifies the instance and exact constants. Sections2--5
 supply the uniformity over certificate choices and all query heights.
+
+[Report615](615-nested-actual-incidences-force-unbounded-fixed-law-credit.md)
+constructs arbitrarily deep actual incidences that also obstruct linear
+credit under a specified law and canonical maximizing phases. Equally
+maximizing phases can instead keep the full incidence bounded; the result
+does not exclude joint optimization of the source and phase choices.
