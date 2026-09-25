@@ -17,6 +17,7 @@ ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 INFO = re.compile(r"^(?:info(?:rmation)?:|\[info(?:rmation)?\]|debug:|trace:|ℹ|✔|✓|[\u2800-\u28ff]\s*\[)", re.I)
 BUILD_INFO = re.compile(r"^(?:Build succeeded\.|Passed\s|Passed!|Test run|Starting test execution|A total of|Results File:|Determining projects to restore|Restored .*\.[a-z]*proj\b|All projects are up-to-date for restore\.|.* -> .*\.(?:dll|exe)$)")
 TEST_INFO = re.compile(r"^(?:VSTest version |Test Run Successful\.|Total tests:|Passed:|Total time:|\[xUnit\.net [^\]]+\]\s+(?:xUnit\.net VSTest Adapter\b|Discover(?:ing|ed):|Starting:|Finished:))")
+XUNIT_PREFIX = re.compile(r"^\[xUnit\.net [^\]]+\]\s*")
 ERROR = re.compile(r"(?:\b(?:error|fatal)(?:\s+[A-Z]+\d+)?\s*[:\[]|^(?:error|fatal)\b|::error\b|\[(?:ERROR|FAIL(?:ED)?)\]|^\s*Failed\s|^✖|^Traceback\b|^Unhandled exception|\b[A-Z_]+_(?:FAILED|FAILURE|EXHAUSTED|UNRESOLVED)\b)", re.I)
 WARNING = re.compile(r"(?:\bwarn(?:ing)?(?:\s+[A-Z]+\d+)?\s*[:\[]|^warn(?:ing)?\b|::warning\b|\[WARN(?:ING)?\]|^⚠)", re.I)
 PROGRESS = re.compile(r"\[\s*\d+\s*/\s*\d+\s*\]|\b\d+(?:\.\d+)?%")
@@ -98,11 +99,17 @@ class Presenter:
 
     def line(self, line, stream):
         plain = ANSI.sub("", line).strip()
-        if plain.startswith("CI_DIAGNOSTIC_BEGIN "):
+        framework_information = TEST_INFO.match(plain)
+        wrapped = XUNIT_PREFIX.match(plain)
+        if wrapped:
+            # xUnit frames every line of a failing test's captured output.
+            # Classify its payload, but retain the original diagnostic text.
+            plain = plain[wrapped.end():]
+        if not wrapped and plain.startswith("CI_DIAGNOSTIC_BEGIN "):
             self.block_depth[stream] = self.block_depth.get(stream, 0) + 1
             self.diagnostic(line, "error")
             return
-        if plain == "CI_DIAGNOSTIC_END" and self.block_depth.get(stream, 0) > 0:
+        if not wrapped and plain == "CI_DIAGNOSTIC_END" and self.block_depth.get(stream, 0) > 0:
             self.emit(line)
             self.block_depth[stream] -= 1
             self.failed_operation.discard(stream)
@@ -126,12 +133,12 @@ class Presenter:
         if isinstance(value, dict) and (not self.in_detail(stream) or EVENT.match(plain)
                                        or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level"))
                                        or "scope" in value and "stage" in value):
-            if event == "STAGE_STEP" and isinstance(value.get("name"), str):
+            if not wrapped and event == "STAGE_STEP" and isinstance(value.get("name"), str):
                 self.failed_operation.discard(stream)
                 self.detail[stream] = False
                 self.step = value["name"]
                 self.progress = "unreported"
-            elif event == "STAGE_PROCESS":
+            elif not wrapped and event == "STAGE_PROCESS":
                 # Non-streaming operations emit their process result before
                 # their text. Keep an unsuccessful operation's explanation.
                 child = value.get("child_exit")
@@ -142,8 +149,11 @@ class Presenter:
                 else:
                     self.failed_operation.discard(stream)
             self.structured(value, line, activity=activity)
-        elif INFO.match(plain) or BUILD_INFO.match(plain) or TEST_INFO.match(plain):
-            self.detail[stream] = False
+        elif INFO.match(plain) or BUILD_INFO.match(plain) or framework_information:
+            # Information embedded in a failure must not discard its following
+            # assertion/stack details. Framework completion still ends it.
+            if not wrapped or framework_information:
+                self.detail[stream] = False
             self.information(plain)
         elif ERROR.search(plain) or WARNING.search(plain):
             severity = "error" if ERROR.search(plain) else "warning"
