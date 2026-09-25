@@ -202,7 +202,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 - **第一档·新近小猜想**:论文末尾 conjecture/question(多为 2024–2026,较早年份而文献核对仍无人跟进者同属本档,年份不是界)、OEIS 评注、Kourovka 未加星问题等,开放因无人看而非难;预登记须写来源年份与归档理由。实施前联网核对文献无证明,写入预登记评注;按小时级两阶段管线:探针一席 → Stage A → 镜像核对 → Stage B → 三席评审。
 - **第二档·计算前沿**:下一未知情形是未做过或认证过的有限计算;有限归约+穷举/SAT+内核验证须真正推进已知范围。以周级研究线推进。
 - **第三档·核心问题**:LLM 席不能可靠地产生深刻新想法,用于验证/移植/穷举;τ=0 用户点题,GPT PRO deep research 给文献地图/障碍,codex 将已知引理及路径障碍形式化。成果是形式化地形图,突破机会来自暴露的空白;机器不替人选第三档目标。
-**研究线(第二、三档)**:一目标一长期 worktree,一份障碍登记(失败处及必要读数,第 5.10 条),一张已证/在证/阻塞的子引理 DAG;GPT PRO 做地图文献、codex 多席并行子引理。开线预登记成功/推翻/停止判据:多久无边际改进即换 Γ/目标,连续两周无边际改进即触底(第 2.7 条);到期五态端化,不得以进行中拖延。每个子引理 deposit 仍走两阶段管线;不得拿第一档小时节奏让长期线几小时无果即换题。登记只保留可复用结论与边界(第 2.10 条)。
+**研究线(第二、三档)**:长期研究复用所属 session 的 worktree(第 6.1 条),一份障碍登记(失败处及必要读数,第 5.10 条),一张已证/在证/阻塞的子引理 DAG;GPT PRO 做地图文献、codex 多席并行子引理。开线预登记成功/推翻/停止判据:多久无边际改进即换 Γ/目标,连续两周无边际改进即触底(第 2.7 条);到期五态端化,不得以进行中拖延。每个子引理 deposit 仍走两阶段管线;不得拿第一档小时节奏让长期线几小时无果即换题。登记只保留可复用结论与边界(第 2.10 条)。
 **硬规则**:①先答文献有无该陈述;已有只 `make cover`,或在第一/二档靶的真实消费者内用 `FromLiterature` 前置,不绕第 3.2 条独立首次冻结禁令、不单派探针/实施席。②搜题 brief/预登记须写档位及核对结果(查 X 无证明/计算未见于 Y),缺则评审打回。③按解决何已发表问题/推进何已知范围报进展,不用模块/席位/行数;有限证书只有排除此前未排除情形才可称部分进展。④同 lane 第三次因非数学缺陷重做即停(第 7.11 条);卷内事实错误单独勘注,不为证书做第四次 deposit。⑤外部具名开放问题的结算按第 3.2 条「开放问题结算依据」准入:证明步骤为 bind-only 不构成拒绝理由,但该款 (a)–(d) 四项条件缺一即打回。
 *成熟锚*:选择效应、Polymath、人定方向与分布式验证、计算机辅助证明、预登记/停止规则、Goodhart。〔守护:**软+硬投影**·选题/档位真实性靠对手官与第 5.10 条反思;缺档位/文献核对由评审打回,开线缺停止判据无效。不可 lint 不豁免:已知结果派席、有限证书冒称进展均属第 2.4 条冒领〕
 
@@ -377,14 +377,14 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.4 遇题即解与实施让渡
 
-**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。其余问题在既有单更新或立案后，随即开独立 worktree,用 `/sshx` 或按第 5.9 条直接实施,经 PR 落地;不得以“已提 issue/等回应”为完成态。
+**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。其余问题在既有单更新或立案后，随即在所属 session 的独立 worktree 实施(创建与复用见第 6.1 条),用 `/sshx` 或按第 5.9 条直接实施,经 PR 落地;不得以“已提 issue/等回应”为完成态。
 **让渡仅限**①对方已认领且有实测读数或在飞 PR 证明在动;或②唯一真源明确属对方,自己动手会造第二真源。让渡仍写被堵面与恢复动作;对方停滞即在单上认领收回。默认先动手,发现上述条件再让渡,不先设等待窗。
 *成熟锚*:fix-forward、owner-until-handoff、patch 随 issue。〔守护:**全软**·及时动手靠评审/反思;硬投影=立案处置计划须有相应 worktree/PR 或让渡依据,否则属冒领〕
 
 ### 5.5 目标阻塞与最小 hotfix
 
 **目标途中遇阻及时 hotfix,不要等。** 本款对基础设施的最小修复优先于第 5.4 条立案、第 7.11 条权限外转向与第 5.9 条等灯亮;无论阻塞属谁的面,默认当场修通,立案并行。“已立案/等裁决/等对方/等定时任务”都不是完成态或停摆理由。本款不扩张内容语义裁决权,也不把缺失搜索能力说成可用。
-**四项边界**:①独立 worktree,PR 直接对 `dev`,走三 required check;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
+**四项边界**:①所属 session 的独立 worktree(按第 6.1 条创建或复用),PR 直接对 `dev`,走三 required check;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
 绕开只解决本 lane,不得称阻塞已修;未开 worktree 就写“等灯亮/只立案”、让同一阻塞反复挡别的 lane 均违规。*成熟锚*:fix-forward、owner-until-handoff、Andon 当场处理、Boy Scout Rule。〔守护:**全软**·及时修复靠评审/反思;硬投影=登记基础设施/脚本/CI/缓存阻塞时同处给 hotfix worktree 或 PR 号;τ=0 例外须点名待裁决语义,只写等 owner 不算〕
 
 ### 5.6 利益回避与旗判分离
@@ -435,12 +435,15 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 6.1 独立 worktree 与 MERGED 完成态
 
-**实施在独立 worktree,主干可发布;主检出常驻 dev,merge 才算完成。** 所有代码/文档/元层任务(含本文件及一行改动)均由 `make worktree` 建独立树/分支,不在主检出堆改动。多路可并行,各一 PR;安全由地址代数、required checks、SL-022 保证,机器准入与独立质量评审按第 5.6 条分工。
+**实施在独立 worktree,主干可发布;主检出常驻 dev,merge 才算完成。** 所有代码/文档/元层任务(含本文件及一行改动)均在所属 session 的独立 worktree 实施,首次由 `make worktree` 创建,同一 session 复用,不在主检出堆改动。不同 session 可并行,任务各一 PR;安全由地址代数、required checks、SL-022 保证,机器准入与独立质量评审按第 5.6 条分工。
 **逻辑单元完成即 commit 并及时 push,不积长期未提交改动。** 工具不要求先提交:`ledger-align` 默认 `repository.ReadCurrent()` 读当前未提交树、不按 delta 选择;deposit/cover 只改工作树、不自动提交。未提交改动无内容地址,易丢失或与 rebase 失配;全局共享 stash 可跨树误叠,提交推送为 CI/协作/rebase 提供确定锚点。
 
+- **worktree 全部按 session ID 创建**:每个 session 一个独立 worktree,目录统一为主检出同级的 `trureturing-<session-id>`;session ID 取第 5.2 条的真实宿主会话 ID,完整保留,不得用任务码、分支名、日期或随机后缀替代。首次创建显式传 `make worktree KIND=<kind> NAME=<任务码> DEST=<主检出父目录>/trureturing-<session-id>`。
+- **同一 session 复用同一树**:开工或恢复会话时先查 `git worktree list --porcelain`,已有该 session 的树就进入复用;后续任务、重试、上下文压缩、恢复及新 PR 均不另建树。切换任务分支前提交当前成果并确认工作树干净,按第 7.4 条校验新分支名后在原树切换;不同 session 各用自己的树。
+- **目录名与分支名分别命名**:session ID 只决定 worktree 目录;分支继续按第 7.4 条 `<creation-namespace>/<kind>/<任务码>` 命名,`KIND`/`NAME` 表达任务分类与任务码,不以 session ID 代替分支命名规则。
 - **主检出只同步与看 dev**:不建分支、不改文件、不 checkout 他支;开工前、合并后、派席前各 `git pull --ff-only origin dev`。它是移动基线,读数/修改/报告在钉住的 worktree 做。
 - **清理或复用树**:`make -C tools clean-lanes` 列出/回收可回收 worktree,以 `make -C tools help` 为准。已注册关联 worktree 满 24 小时无 Git 更新且落后 dev 至少 300 个提交即强制回收,不以未提交改动、PR 合并状态或进程占用为保留条件;主检出、当前树和锁定树保留。更新时间取自身 HEAD reflog 的最大时间戳与 HEAD commit 的 committer 时间戳之最大值,不取源码文件 mtime。删除前重验身份、锁和时间条件。
-- **完成链**:push → `make pr-open [AUTO_MERGE=1]` → 三 required check 绿 → 显式选 auto-merge 时自动合 dev(缺省不 arm,须后续显式合并) → 同步主检出 → 回收树。完成唯一判据为 PR `MERGED`;开 PR/CI 绿/只差合并仍 open,不得报完成。`CLOSED ≠ MERGED`,须复查 dev 实态,既不能当已合也不能当未修。
+- **完成链**:push → `make pr-open [AUTO_MERGE=1]` → 三 required check 绿 → 显式选 auto-merge 时自动合 dev(缺省不 arm,须后续显式合并) → 同步主检出。同一 session 后续工作继续复用原树,不因单个 PR 合并就回收;回收按本条清理规则执行。完成唯一判据为 PR `MERGED`;开 PR/CI 绿/只差合并仍 open,不得报完成。`CLOSED ≠ MERGED`,须复查 dev 实态,既不能当已合也不能当未修。
 *成熟锚*:worktree 隔离、可发布主干、small commits/push early、内容寻址、definition of done。〔守护:**半硬**·地址与 checks 守并行;独立树/提交推送/主检出常驻/merge 完成靠纪律与评审;完成声明须引用 MERGED 与合入 dev SHA〕
 
 ### 6.2 PR 层序、delta 门与债务收缩
@@ -458,7 +461,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **拆分看冲突面与判词;不拆唯一条件为零冲突面 AND 全批同判。** p75 是冲突风险代理,执行阈值先核理由是否成立;五项零冲突条件只消除文件数这一拆分理由,不能豁免混合判词分区。
 **零冲突面五项 AND**:①全为 `RawChangeKind.Added`,无改删;②路径两两不相交且由内容地址/真源键派生,无共享可变文件;③无跨分区计数/manifest/index/digest 等聚合物;④一个 canonical producer 一次运行产出,同输入逐字节确定,非手写;⑤三门判据不依赖后续 PR。全真则 PR 给五项及读数,不用另写不可再分,评审不得仅因超 p75 打回;任假回第 6.2 条。全真但各部分独立受判且未必同判,拆分仍可防红项连坐绿项。
 **分区顺序**:先量实际判词分布,找哪维使部分红/部分绿,按该维分区,再由依赖闭包限定边界,同连通分量不跨 PR。判词可分性定分区、闭包定不可切处,文件数两者都不定。只按目录/族/连通分量/卷拆而未量判词分布,不得称分区已验证;本条不新设求解器或机器分区规则。
-**成本与收益并列**:N PR 对应 N 轮 required CI、N worktree(缓存随 ff-merge 作废)、N 正文。同文重复只证明重复评审/冲突成本,不证明全批同判或总收益为零。纯新增回滚便利、没有文件数红规则,也不能推出整个 PR 必放行;说拆分由机器要求时须点名红判词,否则给真实理由或不拆。
+**成本与收益并列**:N PR 对应 N 轮 required CI、N 正文;worktree 数由 session 数决定,同一 session 复用(缓存随 ff-merge 作废)。同文重复只证明重复评审/冲突成本,不证明全批同判或总收益为零。纯新增回滚便利、没有文件数红规则,也不能推出整个 PR 必放行;说拆分由机器要求时须点名红判词,否则给真实理由或不拆。
 **有界反例(#6164,2026-09-07)**:37 模块/74 文件一次由 `ledger-align --add ×37` 产生,`selectors_considered=3641 changed=0 added=37 unchanged=3604 conflicts=0`,零冲突五项全真。拆 6 PR 付 6 轮 CI、6 份相同 73 行正文,并 ff-merge 5 条落后 262–2078 提交的 lane;缓存重热成本未测(`ASSUMED-UNVERIFIED`)。其中 20 模块缺 `utility:`,单批会连坐其余 17,拆出头齐的 7 条可合,所以判词维有收益,却不验证当时按连通分量盲拆的方法。全仓无按文件数判红规则,超 p75 说明是软评审义务,非机器硬约束。
 **唤醒域结论**:该样本 36 个初落地未冻模块因 deposit 阻断(#6165)未触发当时首冻门,与 37 补冻/20 缺头/17 连坐/7 已合是不同口径。依赖“本应发生而被别处阻断”的动作唤醒门会静默漏审,分区规则不修此缺口。旧“冻结触发缺口仍 open”已 inactive;第 3.4 条现役 changed-unfrozen D5 Lean ∪ first-pin 已补输入域,正文变更/缺头也唤醒,judge-only 不扫未变历史。此硬保证不证明分类/源句映射语义,后者仍靠独立评审。
 **硬软分列**:同案事件账本样本中 `ValidateChangedAcceptedFreezePins` 对新增/修改 accepted 事件要求同 PR 状态片,缺则硬红;`DagLedgerLoader.DependenciesPlaced` 位于 CLI 路径,不在规则面。当前 loader 同时接受事件身份与派生的 `FrozenNodeId`,仅按 accepted 事件文件名扫描不能判定前置悬空;完整闭合性须由实际 DAG loader 核验(#5214)。事件/状态片硬配对不等于依赖闭包软成组;把软说成机器必须、硬说成建议同样错误,软评审纪律仍有约束力。
@@ -492,7 +495,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 维护者/agent/陌生 fork 均过同一机械门,约束人和 AI 相同;人审/AI 审只增质量,不是准入权威。
 
 - **`dev`** = 集成主分支(default);一切实施经 PR 合入 dev。**`main`** = 发布分支;dev 稳定后经 release PR + `tag E<n>`(spec A14)推进,main 即"已发布/可复现"的冻结态。
-- **实施分支**:在独立 worktree(第 6.1 条),新建分支的 creation grammar 由 `WorktreeCommand` 唯一执行,形如 `<creation-namespace>/<kind>/<任务码>`,其中当前 creation namespace 只取 `WorktreeCommand.CreationNamespace`;精确 kind 词表只在同一 C# 所有者中定义。新建分类与受管生命周期必须分离:前者约束新产出,后者继续识别 `WorktreeCommand.LifecycleNamespaces` 中每个 namespace 的任何非空子路径,避免 creation 词表变化缩窄清理作用域。historical `harness/*` 仅属 lifecycle ownership(可回收),不是可创建 alias;这是前向新建约束,不执行存量分支清理。
+- **实施分支**:在按 session ID 创建并复用的独立 worktree(第 6.1 条),目录命名不改变分支命名;新建分支的 creation grammar 由 `WorktreeCommand` 唯一执行,形如 `<creation-namespace>/<kind>/<任务码>`,其中当前 creation namespace 只取 `WorktreeCommand.CreationNamespace`;精确 kind 词表只在同一 C# 所有者中定义。新建分类与受管生命周期必须分离:前者约束新产出,后者继续识别 `WorktreeCommand.LifecycleNamespaces` 中每个 namespace 的任何非空子路径,避免 creation 词表变化缩窄清理作用域。historical `harness/*` 仅属 lifecycle ownership(可回收),不是可创建 alias;这是前向新建约束,不执行存量分支清理。
 - **合并门(纯机器)**:PR → dev 须过 **三 required check**:`push / engineering` 执行登记的工程检查与测试证据校验、selftest 和两类反证编译;`push / current` 执行 Lean/报告增量入口、Scribe、filemap 与当前树谓词;`delta` 由候选自带判官检查 `B=M^1→M`,只消费本轮公共证据、不重跑公共步骤。base 只作为固定对象数据,不 checkout、不编译执行 base 代码。PR workflow 的候选取源与 merge-ref 隔离缓存权限按第 9.5 条,不提供 base 侧 workflow 文本保证。push 只有 engineering/current,无 delta。冻结面由 SL-008 机器判;合并并集由 PR merge-ref CI 检测,M1→M2 残余由 dev push 检测与第 7.14 条恢复处理。绿且显式选择 auto-merge 才自动合,缺省不 arm;红则修根因。required 名称与已部署版本的对应依第 8.12 条真实核验,文档不冒称远端已切换。
 - **溯源**(H9):PR 载必要来源与第 5.2 条产地三项,用于审计,非准入条件;转录/过程卷宗及其引用不留(第 2.10 条)。
 *成熟锚*:zero-trust(永不信任、始终验证)、OSS 的 required status checks 治理、能力安全模型(权威在门不在人)、merge-ref 隔离缓存与独立发布权限。
@@ -600,7 +603,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 8.1 分层 make 入口与器谱
 
 **一器一门,门随层设**:构建/发射/校验/开工走所属层唯一 make 入口。根 `Makefile` 管内容(`make test` 数学门,`make help` 活器谱);`tools/Makefile` 管工具(`make -C tools test` 及 build/selftest 目标,器谱 `make -C tools help`)。层内只委托 canonical 实现,跨层零配方复制,哪层坏修哪层。
-**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`preflight MODE=fast|push|pr|full`(按任务显式选模式,范围见第 8.2 条)、`gate`、`test`、`worktree KIND=x NAME=y`、`worktree-clean`、`pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr-open 以消息首行为标题,建 PR、隔离 App token、按显式选项 arm 并同步等 required CI,缺省不 arm auto-merge;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
+**有 make 目标就走目标,不现搓配方**:`make lean`/`lean-report`(含 cache ensure)、`preflight MODE=fast|push|pr|full`(按任务显式选模式,范围见第 8.2 条)、`gate`、`test`、`worktree KIND=x NAME=y DEST=<主检出父目录>/trureturing-<session-id>`、`worktree-clean`、`pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]`、`lean-cache-ensure`、`lean-cache-{to,from}-github-without-mathlib`、`emit/ingest/deposit/cover`。pr-open 以消息首行为标题,建 PR、隔离 App token、按显式选项 arm 并同步等 required CI,缺省不 arm auto-merge;不外套轮询。canonical 器的前置/失败/收据契约受测试约束;需重复三遍先铸器并接 make,不留 scratchpad。〔守护:**软+硬投影**·sleep 可搜而原语可用性不可 lint;完成依赖等待须给原语名或哨兵退出码,不认等了多久〕
 
 ### 8.2 本地早反馈与远端 CI 并行
 
@@ -610,7 +613,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 ### 8.3 worktree 与 Lean 缓存入口
 
-**开工先利器**:新 worktree 经 `make worktree`(钉版校验;创建阶段永不物化 Lean 缓存,canonical Lean wrapper 按需 ensure;`make lean-cache-ensure` 仅作可选显式预热;永不 symlink),不手搓。**Lean 构建一律走本层门(`make lean` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:ensure 的 donor clonefile 播种只在 `.lake` **不存在**时可达(`LeanCacheEnsureCommand`;`.lake` 存在而 stamp 缺失时按「missing ≠ stale」保守原地重产,永不 clonefile——该 fail-safe 是对的,不改);故冷树上第一条裸 lake 命令会创建无 stamp 的 `.lake`,**当场作废 donor 资格**,代价为内容层全量重编(2026-08-22 实测两 lane 3h+,收据 `donor:null, clonefile_attempts:0`,worker rollout 在案)。裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
+**开工先利器**:先按第 6.1 条查找并复用当前 session 的 worktree;仅首次创建时经 `make worktree` 显式指定含完整 session ID 的 `DEST`(钉版校验;创建阶段永不物化 Lean 缓存,canonical Lean wrapper 按需 ensure;`make lean-cache-ensure` 仅作可选显式预热;永不 symlink),不手搓。**Lean 构建一律走本层门(`make lean` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:ensure 的 donor clonefile 播种只在 `.lake` **不存在**时可达(`LeanCacheEnsureCommand`;`.lake` 存在而 stamp 缺失时按「missing ≠ stale」保守原地重产,永不 clonefile——该 fail-safe 是对的,不改);故冷树上第一条裸 lake 命令会创建无 stamp 的 `.lake`,**当场作废 donor 资格**,代价为内容层全量重编(2026-08-22 实测两 lane 3h+,收据 `donor:null, clonefile_attempts:0`,worker rollout 在案)。裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
 
 ### 8.4 诊断信号与产生处的质量
 
@@ -682,7 +685,7 @@ Lean LSP 内置 `lean --server`,无需另装;C# 由官方 `csharp-lsp`(`lspServe
 **取源差异下继续可达验证**:可用明确事件(如 pull_request 调钉版 reusable)验证候选程序/复用流程,只证明该事件/版本/权限;逐项披露相对拟上线原生事件的语义/权限/其他缺口。未证可达的原生路线不报已存在,旧绿不抵新资格,同 PR 另有旧 run 不使候选 wrapper 成为重复项可取消。继续可达的逐原 PR 覆盖,但 Ready/merge 仍须全部覆盖/性能/条数/真实事件资格;条数不抵原生缺口,不得先搬未达标 CI 到默认分支以使其可选。本款是事实校正,不创验证豁免。
 **清理与最终对应**:专用探针载荷放触发 PR,验后关闭不合;合法镜像改动/历史留 integration,不为整理交付 diff 撤镜像。清理只删已有实验载荷/临时 wrapper,独立 PR 三门正常合入并分析 push,保留新 CI;复验与重计统一依上述依据及范围。交付前钉原 lane head、已验 integration head/各自基线,列全层候选/修复/优化/安装映射,逐文件核路径、增删、mode、内容,区分候选与已在 dev 的镜像增量。不能仅靠标题/数量/patch-id,不要求整树同一,不重放已验历史替代对应核对。基线差异/冲突适配须说明,遗漏或未经验证差异先回流修复并补验影响面,不因清理或对应核对本身重计。
 **交付收尾**:候选对应与最终覆盖/性能/条数均达标后,原 lane Draft 转 Ready、普通 PR 合 dev;只带本次候选及必要修复,SL-029 按第 7.5 条警告并继续验证,不并入 integration/镜像历史、不把跟踪 Draft 当交付。记录最后镜像 dev SHA,无追平/固定等待要求;交付 PR merge-tree 独立验当时并集并给 M/B,integration 绿不替代。dev 前移不自动重计或逼追平;实际冲突/失败须诊断,依上述依据补验影响面或重计,不重放有效集成单位。M1→M2 残余依第 7.7 条检测恢复,不冒领同树、不启 strict。
-CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完成最终评审,显式 AUTO_MERGE=1 前亦归位,缺省不 arm。交付 PR MERGED 且首个 dev push/适用新 PR 入口核验成功后,关闭跟踪 Draft、保留必要验证证据链接,回收测试分支/worktree;跟踪 CLOSED 只表验证结束,不等于交付完成。**纯政策文档可独立普通 PR 到 dev**,保留其 required checks,不为验证本条防重复政策另造 4/8 个集成 PR,不声称已部署重构或验稳定。
+CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完成最终评审,显式 AUTO_MERGE=1 前亦归位,缺省不 arm。交付 PR MERGED 且首个 dev push/适用新 PR 入口核验成功后,关闭跟踪 Draft、保留必要验证证据链接,回收测试分支,worktree 按第 6.1 条复用或回收;跟踪 CLOSED 只表验证结束,不等于交付完成。**纯政策文档可独立普通 PR 到 dev**,保留其 required checks,不为验证本条防重复政策另造 4/8 个集成 PR,不声称已部署重构或验稳定。
 **验证边界**:preflight 不验事件过滤/拓扑/权限/artifact/CI 目录布局。真实 CWD、旧调用者/新接口错配须靠真实事件暴露;集成目标过滤与 B 取 integration tip 不证明 workflow 文本来自 integration(#4201、#6650→#6658)。旧“只能合 dev 后测/其他 PR 永无窗口/装好 integration 即选其 workflow”推论 inactive;历史 run 只证明实际版本/行为,不同基线一绿一红也不证明无缺陷或持续稳定。
 〔守护:**评审纪律**·feature/重构 Ready 前正文须引原 lane/已验候选对应、逐功能覆盖、逐原 PR 结果、实际 workflow、稳定各 PR/run、异常处置结论、可比性能/缓存证据。hotfix 引回归/三门/真实触发,注明待补落地触发。缺证不报达标,正文可改不冒充新增硬门,required checks 照常〕
 
