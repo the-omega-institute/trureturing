@@ -2754,3 +2754,526 @@ $$
 本节将定理17.2的固定容量发散结论延伸到任意无限候选相位集，未改变其正测度情形的显式平方根速率。对一般无限集合，（19.10）的衰减常数依赖所选有限子集，因而本证明不给统一的平方根容量增长率。不同的长期容量结论仍以相同的完整档案及参考恢复任务为前提。
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 固定容量正误差隙的显式实代数下界
+
+本节保留第10—12节的已知两态来源、独立纯初始化、同一个全域 CPTP 接收通道以及仅依赖终端编号的局部解码器。所有持久控制均计入接收寄存器；允许每轮引入并立即丢弃新的环境。来源振幅可以是复数，满足 $`|a|^2+|b|^2=1`$。误差仍比较参考、活动记忆与完整档案的联合态。
+
+**定义 20.1（离退化端点的整数参数及显式常数）。** 固定整数 $`D\ge1`$、$`k\ge2`$，并限制来源为
+
+$$
+|a|^2\ge\frac1k,\qquad |b|^2\ge\frac1k.
+\tag{20.1}
+$$
+
+每个已知非退化来源都满足某个这样的整数条件，例如可取
+ $`k=\lceil1/\min\{|a|^2,|b|^2\}\rceil`$。
+定义
+
+$$
+\begin{aligned}
+N&=8D^2,& v&=8D^4+4,& s&=4D^2+3,\\
+d&=16N,& B_D&=128D^4,\\
+H&=\max\{k,\ 36ND^4B_D^{4N}\},&
+\widehat H&=\max\{H,\ 2v+2s\},\\
+\kappa_{D,k}&=(16\widehat H d^v)^{-v(2d)^v},&
+\eta_{D,k}&=\frac{\kappa_{D,k}}{16N}.
+\end{aligned}
+\tag{20.2}
+$$
+
+其中 $`v`$ 是下文使用的实变量数，$`s`$ 是约束多项式总数，$`d`$ 是偶数次数上界；它们不是额外物理寄存器的维数。
+
+**定理 20.2（统一于端点距离的显式有限时域误差隙）。** 对满足（20.1）的任一来源、任一维数不超过 $`D`$ 的固定接收器及任意一族终端解码器，有
+
+$$
+\boxed{
+\max_{1\le n\le8D^2}\ \sup_{J,\rho_{JM}}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)
+\right\|_1
+\ge\eta_{D,k}>0.
+}
+\tag{20.3}
+$$
+
+事实上，仅取指定初态 $`|0\rangle_M`$、不附加参考，已经足以得到此下界。因此，定义11.1中的全终端误差若严格小于 $`\eta_{D,k}`$，所需接收维数必大于 $`D`$。本节给出第12节正误差隙的一份显式下界，不主张该数值或其容量依赖最优。
+
+证明。把接收初态的固定单位向量用一个固定基变换送到 $`e_0`$，并同时共轭接收通道及各解码器，不改变容量、固定性或恢复误差。因此先令 $`\dim K=D`$，并取初态
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|_{MK}.
+\tag{20.4}
+$$
+
+以下全过程只使用这一指定纯来源。记一次发射与固定接收的合成通道为 $`\mathcal R`$，并置 $`\sigma_n=\mathcal R^n(\sigma_0)`$、$`\rho_n=\operatorname{Tr}_K\sigma_n`$、$`\sigma_{K,n}=\operatorname{Tr}_M\sigma_n`$。
+
+**环境解耦的有限矩阵表达。** 定义
+
+$$
+h_n=
+\operatorname{Tr}\sigma_{K,n}^2
++\operatorname{Tr}\rho_n^2\operatorname{Tr}\sigma_n^2
+-2\operatorname{Tr}\bigl[(\rho_n\otimes I_K)\sigma_n^2\bigr].
+\tag{20.5}
+$$
+
+取 $`\sigma_n`$ 的任意纯化 $`|\chi_n\rangle_{MKE}`$，则
+
+$$
+h_n=
+\|\rho_{ME,n}-\rho_n\otimes\rho_{E,n}\|_{\rm HS}^2\ge0.
+\tag{20.6}
+$$
+
+为核对交叉项，暂时略去 $`n`$，写
+
+$$
+|\chi\rangle
+=\sum_{i,\alpha,e}c_{i\alpha,e}|i,\alpha,e\rangle,
+\quad
+\sigma_{i\alpha,j\beta}
+=\sum_e c_{i\alpha,e}\overline{c_{j\beta,e}},
+\quad
+(\rho_E)_{ef}
+=\sum_{r,\beta}c_{r\beta,e}\overline{c_{r\beta,f}}.
+\tag{20.7}
+$$
+
+这里 $`i,j,r`$ 是来源指标，$`\alpha,\beta`$ 是接收指标，$`e,f`$ 是纯化环境指标。于是
+
+$$
+\begin{aligned}
+\operatorname{Tr}[\rho_{ME}(\rho_M\otimes\rho_E)]
+&=\langle\chi|\rho_M\otimes I_K\otimes\rho_E|\chi\rangle\\
+&=\sum_{i,j,\alpha,e,f}
+\overline{c_{i\alpha,e}}(\rho_M)_{ij}
+(\rho_E)_{ef}c_{j\alpha,f}\\
+&=\sum_{i,j,\alpha,r,\beta}
+(\rho_M)_{ij}\sigma_{r\beta,i\alpha}
+\sigma_{j\alpha,r\beta}\\
+&=\operatorname{Tr}[(\rho_M\otimes I_K)\sigma^2].
+\end{aligned}
+\tag{20.8}
+$$
+
+纯化两侧边缘具有相同非零谱，另外给出
+ $`\operatorname{Tr}\rho_{ME}^2=\operatorname{Tr}\sigma_K^2`$
+及 $`\operatorname{Tr}\rho_E^2=\operatorname{Tr}\sigma^2`$。
+展开（20.6）的平方范数即得（20.5）。因而（20.5）仅需 $`2D`$ 维联合接收态，虽然其零点检验的是与全部累计环境的解耦。
+
+**终端恢复误差控制解耦缺陷。** 令 $`\epsilon_n`$ 是指定纯来源在终端 $`n`$ 的恢复半迹误差。对解码器取 Stinespring 等距，将 $`\chi_n`$ 送到全局纯态 $`\zeta`$；其档案与活动记忆边缘记为 $`\tau`$，纯目标记为 $`|\Psi_n\rangle`$。由目标纯态投影这一效果，
+
+$$
+f:=\langle\Psi_n|\tau|\Psi_n\rangle\ge1-\epsilon_n.
+\tag{20.9}
+$$
+
+当 $`f>0`$ 时，将 $`\zeta`$ 在目标方向上的分量归一化，得到其余系统上的纯态 $`|\xi\rangle`$，使
+ $`|\langle\zeta|\Psi_n\otimes\xi\rangle|^2=f`$。
+当 $`f=0`$ 时任取 $`\xi`$；此时（20.9）迫使 $`\epsilon_n=1`$，下述界仍成立。纯态距离公式给
+
+$$
+d\bigl(|\zeta\rangle\langle\zeta|,
+|\Psi_n\rangle\langle\Psi_n|\otimes|\xi\rangle\langle\xi|\bigr)
+\le\sqrt{\epsilon_n},
+\qquad d(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{20.10}
+$$
+
+解码只作用于 $`K`$，所以它不改变 $`ME`$ 边缘；真实来源目标的活动记忆边缘也恰为 $`\rho_n`$。对（20.10）偏迹，先得到
+ $`d(\rho_{ME,n},\rho_n\otimes\xi_E)\le\sqrt{\epsilon_n}`$，
+再得到 $`d(\rho_{E,n},\xi_E)\le\sqrt{\epsilon_n}`$。
+由三角不等式以及 $`\|X\|_{\rm HS}\le\|X\|_1`$，
+
+$$
+d(\rho_{ME,n},\rho_n\otimes\rho_{E,n})\le2\sqrt{\epsilon_n},
+\qquad h_n\le16\epsilon_n.
+\tag{20.11}
+$$
+
+因此，若
+
+$$
+G=\sum_{n=1}^{N}h_n,
+\qquad N=8D^2,
+\tag{20.12}
+$$
+
+则 $`G\le16N\max_{1\le n\le N}\epsilon_n`$。
+
+**排除多项式的零点。** 对任何合法接收器及满足（20.1）的来源，都有 $`G>0`$。否则非负性使前 $`N`$ 个 $`h_n`$ 全部为零；由（20.6），记忆与累计环境在这些终端均成乘积。对固定 Kraus 词环境逐矩阵元读取，便得到（12.6）的全部同长度环境交叉等式。第12节的累计词空间在 $`8D^2`$ 层以内稳定，因此这些**精确零等式**延拓到全部字长，并推出（12.14）的全时域纯度恒等式，与非退化来源的谱障碍矛盾。
+
+这里调用的是第12节证明中的环境交叉延拓，不是把单个纯度差当作充分恢复条件，也没有把有限个近似等式延拓到无限时间。下一步将直接对有限多项式 $`G`$ 使用正最小值估计。
+
+**整数半代数参数集。** 任意从 $`2D`$ 维输入到 $`D`$ 维输出的 CPTP 接收通道，其 Kraus 秩至多 $`2D^2`$。补零 Kraus 算子后，可统一写为 Stinespring 等距
+
+$$
+W:\mathbb C^{2D}\longrightarrow
+\mathbb C^D\otimes\mathbb C^{2D^2},
+\qquad W^\dagger W=I_{2D}.
+\tag{20.13}
+$$
+
+$`W`$ 是 $`2D^3\times2D`$ 的复矩阵，共有 $`8D^4`$ 个实参数。再把 $`a,b`$ 的四个实分量也作为变量，共得到（20.2）的 $`v=8D^4+4`$ 个实变量；没有把给定的任意实振幅分量用作不受控制的系数。
+
+等式 $`W^\dagger W=I_{2D}`$ 用对角实方程和非对角项的实部、虚部表示，恰有 $`4D^2`$ 条实二次方程，整数系数高度至多一。另加
+
+$$
+|a|^2+|b|^2-1=0,
+\qquad k|a|^2-1\ge0,
+\qquad k|b|^2-1\ge0.
+\tag{20.14}
+$$
+
+总计 $`s=4D^2+3`$ 条整数二次约束，系数绝对值至多 $`k`$。它们定义一个非空基本闭半代数集 $`\mathscr T_{D,k}\subset\mathbb R^v`$：可取 $`a=b=1/\sqrt2`$ 及任意（20.13）的等距。每个 $`W`$ 列向量的范数为一，来源也归一化，故所有实变量有界；约束闭，因而该集合紧。
+
+每个点都定义一台合法固定接收器和一个非退化来源；前面的零点排除遂给 $`G>0`$ 在整个 $`\mathscr T_{D,k}`$ 上成立。
+
+**次数与系数高度。** 对实变量上的复多项式 $`P=\sum_\alpha c_\alpha x^\alpha`$，使用系数范数
+
+$$
+\|P\|_{\mathrm{coef},1}=\sum_\alpha|c_\alpha|.
+\tag{20.15}
+$$
+
+该范数次可乘，复共轭不改变其值。一个复矩阵元写成 $`x+iy`$ 时范数为二；$`a,b`$ 同样如此。所有计算起于整数及 $`i`$，故中间系数属于 $`\mathbb Z[i]`$。最后取实部是逐系数操作，并满足
+ $`\|\operatorname{Re}P\|_{\mathrm{coef},1}\le\|P\|_{\mathrm{coef},1}`$；
+因此实化不会另增一个二因子。
+
+令 $`t_{ji}=(m_i)_j`$，即 $`t_{00}=a,t_{10}=b,t_{01}=1,t_{11}=0`$。按来源在前的固定因子次序，发射与接收合成的 Kraus 算子为
+
+$$
+(L_u)_{(j,\alpha),(i,\beta)}
+=t_{ji}\,W_{(\alpha,u),(\beta,i)},
+\quad
+1\le u\le2D^2,\quad 1\le\alpha,\beta\le D.
+\tag{20.16}
+$$
+
+每个矩阵元的次数至多二，系数范数至多四。递推
+ $`\sigma_{n+1}=\sum_uL_u\sigma_nL_u^\dagger`$
+的每个矩阵元，至多含 $`(2D^2)(2D)^2`$ 个被加项；左右两个 Kraus 元贡献范数因子至多十六。因此，由（20.4）起归纳，有
+
+$$
+\deg(\sigma_n)_{xy}\le4n,
+\qquad
+\| (\sigma_n)_{xy}\|_{\mathrm{coef},1}
+\le(128D^4)^n=B_D^n.
+\tag{20.17}
+$$
+
+记 $`z=B_D^n`$。接收边缘的每个矩阵元至多是两个 $`\sigma_n`$ 元之和，来源边缘的每个矩阵元至多是 $`D`$ 个之和。逐项求和遂给
+
+$$
+\begin{aligned}
+\|\operatorname{Tr}\sigma_{K,n}^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\rho_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}\sigma_n^2\|_{\mathrm{coef},1}
+&\le4D^2z^2,\\
+\|\operatorname{Tr}[(\rho_n\otimes I_K)\sigma_n^2]\|_{\mathrm{coef},1}
+&\le8D^3z^3.
+\end{aligned}
+\tag{20.18}
+$$
+
+最后一项可具体按来源的两个行列指标及一个接收指标求和，共 $`4D`$ 项；其中 $`\rho_n`$ 元的范数至多 $`Dz`$，$`\sigma_n^2`$ 元的范数至多 $`2Dz^2`$，乘积即给上述界。结合（20.5），
+
+$$
+\begin{aligned}
+\|h_n\|_{\mathrm{coef},1}
+&\le4D^2B_D^{2n}
++16D^4B_D^{4n}
++16D^3B_D^{3n}\\
+&\le36D^4B_D^{4n},\\
+\deg G&\le16N=d,
+\qquad
+\|G\|_{\mathrm{coef},1}\le36ND^4B_D^{4N}.
+\end{aligned}
+\tag{20.19}
+$$
+
+式（20.5）对所有实参数均为实数：递推产生 Hermitian 矩阵，而其中的迹表达为实数。也可在定义目标多项式时直接取该表达的实部；它保持全部实参数上的值。由（20.15），得到的 $`G`$ 属于 $`\mathbb Z[x_1,\ldots,x_v]`$，且（20.19）保持原常数。因此约束与目标的整数系数高度统一不超过（20.2）的 $`H`$。
+
+**紧连通分量上的显式正最小值。** Jeronimo–Perrucci–Tsigaridas 的正最小值界指出：[^phase_positive_polynomial_minimum] 若 $`v`$ 个实变量上的基本闭半代数集由 $`s`$ 个整数多项式的等式及非严格不等式定义，其次数不超过偶数 $`d`$、系数绝对值不超过 $`H`$；整数目标多项式也满足这两个界，则它在任一紧连通分量上的非零最小值，其绝对值至少为
+
+$$
+\left(2^{4-v/2}\widehat H d^v\right)^{-v2^vd^v},
+\qquad \widehat H=\max\{H,2v+2s\}.
+\tag{20.20}
+$$
+
+本处 $`v\ge12`$，$`d=16N`$ 是正偶数，全部条件已经满足。由于 $`\mathscr T_{D,k}`$ 紧且 $`G>0`$，其全局最小值在某点取得且严格正。取包含该点的连通分量；连通分量是紧集中的闭子集，因此紧，而且其最小值就是全局最小值。无需额外假定整个参数集连通。
+
+应用（20.20），再用 $`2^{4-v/2}\le16`$ 及 $`2^vd^v=(2d)^v`$，得到
+
+$$
+\min_{\mathscr T_{D,k}}G
+\ge\left(2^{4-v/2}\widehat H d^v\right)^{-v2^vd^v}
+\ge(16\widehat H d^v)^{-v(2d)^v}
+=\kappa_{D,k}.
+\tag{20.21}
+$$
+
+这里增大底数会减小带负指数的表达，故最后替换是保守的下界。结合（20.11）—（20.12），
+
+$$
+\max_{1\le n\le N}\epsilon_n
+\ge\frac{G}{16N}
+\ge\frac{\kappa_{D,k}}{16N}
+=\eta_{D,k}.
+\tag{20.22}
+$$
+
+全部参考和输入的上确界至少包含这份指定纯来源误差。容量小于 $`D`$ 的装置可嵌入 $`D`$ 维寄存器，并在未使用空间任意完成通道；嵌入不改变实际运行。故（20.3）也覆盖全部容量不超过 $`D`$ 的装置。证明完毕。
+
+对固定 $`k`$，上述显式数值的大小可以直接估计。由（20.2），
+
+$$
+-\log\eta_{D,k}
+=\log(16N)+v(2d)^v\log(16\widehat H d^v).
+\tag{20.23}
+$$
+
+当 $`D\to\infty`$ 时，$`v=O(D^4)`$、$`d=O(D^2)`$、$`\log\widehat H=O_k(D^2\log(D+1))`$，因而存在仅依赖 $`k`$ 的常数 $`C_k`$，使
+
+$$
+-\log\eta_{D,k}
+\le\exp\bigl(C_kD^4\log(D+1)\bigr)
+\qquad(D\ge1).
+\tag{20.24}
+$$
+
+这只描述本节所给显式下界的保守尺度；它没有证明第11节对数容量上界最优。其来源依赖通过整数 $`k`$ 明确进入，未声称在退化端点上一致。本节使用既有环境交叉零点排除与标准实代数最小值定理的组合，不把实代数分离定理本身作为新结论。
+
+**推论 20.3（精度要求给出的显式容量发散）。** 固定一个满足（20.1）的来源及整数 $`k`$。当 $`\epsilon\downarrow0`$ 时，定义11.1的全时域容量满足
+
+$$
+d_{\infty}^{(\epsilon)}(a,b)
+=\Omega_k\!\left(
+\left[
+\frac{\log\log(1/\epsilon)}
+{\log\log\log(1/\epsilon)}
+\right]^{1/4}
+\right).
+\tag{20.25}
+$$
+
+式（20.25）只在误差充分小、全部对数有定义且分母为正时使用；常数及该阈值可以仅依赖 $`k`$。它与定理11.2的 $`O_{a,b}(\log(1/\epsilon))`$ 上界之间仍有缺口。
+
+证明。设容量 $`D`$ 实现误差 $`\epsilon`$，则由（20.3）、（20.24），
+
+$$
+\epsilon\ge\eta_{D,k}
+\ge\exp\{-\exp(C_kD^4\log(D+1))\}.
+\tag{20.26}
+$$
+
+置 $`L=\log\log(1/\epsilon)`$，对充分小的误差取对数得
+ $`L\le C_kD^4\log(D+1)`$。若 $`D\ge L^{1/4}`$，所需下界直接成立；否则对充分大的 $`L`$ 有 $`\log(D+1)\le\log L`$，从而
+
+$$
+D\ge C_k^{-1/4}(L/\log L)^{1/4}.
+\tag{20.27}
+$$
+
+取这两个情形的共同正常数，再对允许的容量取最小值，即得结论。证明完毕。
+
+[^phase_positive_polynomial_minimum]: Gabriela Jeronimo, Daniel Perrucci and Elias Tsigaridas, *On the minimum of a polynomial function on a basic closed semialgebraic set and applications*, [arXiv:1112.0544v1, Theorem 1, equation (1)](https://arxiv.org/html/1112.0544v1), [doi:10.1137/110857751](https://doi.org/10.1137/110857751). 原文的变量数 $`n`$、约束数 $`m`$ 在本节分别记为 $`v,s`$；定理要求偶数次数上界，并允许等式和非严格不等式、奇异可行集及紧连通分量。本节使用其非零最小值下界，不需要原定理同时给出的代数次数上界。原定理不涉及量子接收；环境缺陷多项式、有限时域零点排除及误差转换由本节与第12节给出。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 三步精确接收中丢弃环境的首个严格容量收益
+
+本节固定定义9.1的已知非退化复振幅来源
+ $`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，其中
+ $`ab\ne0`$、$`|a|^2+|b|^2=1`$。
+接收合同取定义12.1：独立纯初始化、同一个全域 CPTP 接收通道、全部持久系统计入接收容量，并在每个指定终端恢复任意参考、活动记忆及完整档案的联合态。每轮新环境可立即丢弃；环境不在后续轮次复用。
+
+**定理 21.1（三步的精确最小固定 CPTP 容量）。** 对上述任意已知非退化来源，
+
+$$
+\boxed{
+d_{\mathrm{CPTP},1}(a,b)=2,\qquad
+d_{\mathrm{CPTP},2}(a,b)=3,\qquad
+d_{\mathrm{CPTP},3}(a,b)=4.
+}
+\tag{21.1}
+$$
+
+因此，第三步是固定 CPTP 合同与同一固定酉、逐步同一纯空白、无额外丢弃环境合同的首个严格容量差：后者由定理9.2需要五维，前者只需四维。以下构造使用同一个固定接收门，其丢弃端口在前三轮依次为确定纯态 $`|0\rangle,|1\rangle,|0\rangle`$；这些端口不携带来源数据，但并非每轮都为同一个纯空白。
+
+证明。先给三步四维构造。取 $`K=\mathbb C^4`$ 的正交单位基
+ $`u,v,w,t`$，接收初态为 $`w`$。置
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+y=\frac{-\overline b\,u+\overline{a}^{2}v}{c}.
+\tag{21.2}
+$$
+
+有 $`c>0`$，且 $`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的一组正交单位基。具体地，两者范数均为一，而
+ $`\langle z,y\rangle=(-\overline{a}^{2}\overline b+\overline b\,\overline{a}^{2})/c^2=0`$。
+这里保留全部复振幅，没有把 $`a,b`$ 假定为正实数。
+
+取每轮新环境 $`E=\mathbb C^2`$，定义
+ $`V:K\otimes\mathcal B\to K\otimes E`$
+在下列八个输入基向量上的作用：
+
+$$
+\begin{aligned}
+V(t\otimes|0\rangle)&=u\otimes|1\rangle,
+&V(z\otimes|0\rangle)&=z\otimes|0\rangle,\\
+V(t\otimes|1\rangle)&=v\otimes|1\rangle,
+&V(u\otimes|1\rangle)&=w\otimes|0\rangle,\\
+V(y\otimes|0\rangle)&=w\otimes|1\rangle,
+&V(w\otimes|0\rangle)&=t\otimes|0\rangle,\\
+V(v\otimes|1\rangle)&=t\otimes|1\rangle,
+&V(w\otimes|1\rangle)&=y\otimes|0\rangle.
+\end{aligned}
+\tag{21.3}
+$$
+
+输入中，新位为零时的四个接收向量是 $`t,y,z,w`$，新位为一时的四个接收向量是 $`t,v,u,w`$；两组分别正交归一。输出中，环境为一时的接收向量是 $`u,v,w,t`$，环境为零时是 $`z,w,t,y`$，也分别正交归一。因此（21.3）把一组八维正交单位基送到另一组，唯一确定一个全域酉。定义同一个接收通道
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger).
+\tag{21.4}
+$$
+
+它在整个 $`K\otimes\mathcal B`$ 上 CPTP，运行时不调用步数来更换门。
+
+**三步的实际联合态。** 将活动记忆写在接收器前方。对初始记忆基态 $`|i\rangle_M`$，记接收后的纯联合向量为 $`\Psi_n^i\in M\otimes K`$。前三轮满足
+
+$$
+\begin{aligned}
+\Psi_1^0&=m_0\otimes t,
+&\Psi_1^1&=m_1\otimes y,\\
+\Psi_2^0&=a\,m_0\otimes u+b\,m_1\otimes v,
+&\Psi_2^1&=m_0\otimes w,\\
+\Psi_3^0&=c\,m_0\otimes z+ab\,m_1\otimes w,
+&\Psi_3^1&=a\,m_0\otimes t+b\,m_1\otimes y.
+\end{aligned}
+\tag{21.5}
+$$
+
+同时，各轮环境的纯向量分别为
+
+$$
+\eta_1=|0\rangle,
+\qquad \eta_2=|1\rangle,
+\qquad \eta_3=|0\rangle,
+\tag{21.6}
+$$
+
+且与其余全部系统成乘积。
+
+逐步验证如下。首轮只使用（21.3）中的 $`w\otimes|0\rangle`$ 与 $`w\otimes|1\rangle`$，两者都输出环境零，给（21.5）第一行。第二轮的两个发射后向量为
+
+$$
+a\,m_0\otimes t\otimes|0\rangle
++b\,m_1\otimes t\otimes|1\rangle,
+\qquad
+m_0\otimes y\otimes|0\rangle.
+\tag{21.7}
+$$
+
+其中全部接收输入都由（21.3）送到环境一，得到第二行。第三轮的两个发射后向量为
+
+$$
+\begin{aligned}
+&m_0\otimes(a^2u+bv)\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle\\
+&\hspace{2em}=c\,m_0\otimes z\otimes|0\rangle
++ab\,m_1\otimes u\otimes|1\rangle,\\
+&a\,m_0\otimes w\otimes|0\rangle
++b\,m_1\otimes w\otimes|1\rangle.
+\end{aligned}
+\tag{21.8}
+$$
+
+全部接收输入都输出环境零，给第三行。以上每轮对两个初始基态使用相同的环境向量；线性性因而同时覆盖任意初始相干及任意参考纠缠。对混态可取纯化再偏迹。若仅为数学验证保留所有环境，则前三个终端的累计环境分别为 $`|0\rangle`$、$`|01\rangle`$、$`|010\rangle`$；实际运行立即丢弃各轮环境，并不将它们作为额外接收记忆。
+
+**完整参考下的本地逆解码。** 对终端 $`n\in\{1,2,3\}`$，在接收器旁准备（21.6）的前 $`n`$ 个已知环境纯态，按逆时间顺序使用同一个 $`V^\dagger`$。每次只作用于当前接收器和该轮重新准备的环境，恢复对应发出位；最后丢弃回到初态的接收寄存器。这是一份只访问接收器的合法解码。
+
+更明确地，令 $`\mathsf V_n`$ 是按正时间顺序把同一个 $`V`$ 依次作用于 $`K`$ 和档案中第 $`1,\ldots,n`$ 个位置的酉，已处理位置随后视为环境，记
+ $`\boldsymbol\eta_n=\eta_1\otimes\cdots\otimes\eta_n`$。
+定义整个 $`K`$ 上的通道
+
+$$
+\mathcal D_n(X)=
+\operatorname{Tr}_K\!\left[
+\mathsf V_n^\dagger
+\bigl(X\otimes|\boldsymbol\eta_n\rangle
+\langle\boldsymbol\eta_n|\bigr)
+\mathsf V_n
+\right].
+\tag{21.9}
+$$
+
+其输出为完整 $`\mathcal B^{\otimes n}`$ 档案，因而（21.9）在全域 CPTP，无需依实际输入另选延拓。
+
+每个较早的接收门只作用于 $`K`$ 和已发出的位置，与后续只作用于活动记忆及新位置的来源发射可交换。因此可以先完成全部来源发射，再运行 $`\mathsf V_n`$；这只是重排作用于不同系统的门，不给接收器访问活动记忆的权限。由（21.5）—（21.6），对全部 $`J,\rho_{JM}`$ 有
+
+$$
+(\operatorname{id}_{JM}\otimes\operatorname{Ad}_{\mathsf V_n})
+\bigl(\Omega_n(\rho)\otimes|w\rangle\langle w|_K\bigr)
+=\sigma_n(\rho)\otimes
+|\boldsymbol\eta_n\rangle\langle\boldsymbol\eta_n|,
+\qquad 1\le n\le3,
+\tag{21.10}
+$$
+
+其中按标记系统作固定张量因子置换。代入（21.9）并逆转酉，就精确恢复 $`\Omega_n(\rho)`$。终端新准备的环境只含已知的确定纯态，不是取回运行中丢弃的系统。
+
+**四维下界及首个严格差。** 为证明一般非退化振幅下的下界，取允许的 Bell 输入
+ $`(|0\rangle_J|0\rangle_M+|1\rangle_J|1\rangle_M)/\sqrt2`$。
+不作接收时，三步目标在档案与 $`JM`$ 的切口可写为
+
+$$
+\begin{aligned}
+|\Omega_3\rangle=\frac1{\sqrt2}\bigl[
+&|0\rangle_Jm_0\otimes(a^2|000\rangle+b|010\rangle)
++ab\,|0\rangle_Jm_1\otimes|001\rangle\\
+&+a\,|1\rangle_Jm_0\otimes|100\rangle
++b\,|1\rangle_Jm_1\otimes|101\rangle
+\bigr].
+\end{aligned}
+\tag{21.11}
+$$
+
+四个档案向量非零且有互不相交的计算基支撑，故线性独立。由于 $`b\ne0`$，$`m_0,m_1`$ 线性独立，四个对应的 $`JM`$ 向量也线性独立。因此此纯目标的 Schmidt 秩为四。
+
+任何 $`D`$ 维接收器的联合 $`JMK`$ 态可分解为纯态之和，每个纯态在 $`JM:K`$ 切口的 Schmidt 秩至多 $`D`$。仅在 $`K`$ 上施加解码 Kraus 算子不会增加这些秩；若最终输出恰为一个纯态，所有非零分支必须与该纯态共线。因此能够恢复（21.11）就必须有 $`D\ge4`$。这里使用的是 Bell 参考与活动记忆的联合四维切口，没有把单个二维活动记忆误当成可承载 Schmidt 秩四的系统。四维构造达到此界。
+
+同样的 Bell 输入在首步给 Schmidt 秩二，第二步的三项展开为
+
+$$
+\frac1{\sqrt2}\bigl[
+a\,|0\rangle_Jm_0\otimes|00\rangle
++b\,|0\rangle_Jm_1\otimes|01\rangle
++|1\rangle_Jm_0\otimes|10\rangle
+\bigr],
+\tag{21.12}
+$$
+
+其 Schmidt 秩为三。故前两步容量至少分别为二、三；定理9.2的同一纯空白固定酉构造分别达到这两个数值，也属于允许的 CPTP 接收合同。结合三步构造，得到（21.1）。定理9.2给三步固定纯空白酉容量为五，遂得到所述首个严格分离。证明完毕。
+
+这份具体通道不能继续精确服务第四个终端。由（21.5），初始来源为一时，第四次发射后的接收输入只含 $`t\otimes|0\rangle`$、$`t\otimes|1\rangle`$ 和 $`y\otimes|0\rangle`$，全部输出环境一。初始来源为零时，第四轮环境一的唯一分量来自 $`cb\,m_1\otimes z\otimes|1\rangle`$ 中的 $`b^2m_1\otimes v\otimes|1\rangle`$，输出为 $`b^2m_1\otimes t\otimes|1\rangle_E`$。因此
+
+$$
+\Pr\{E_4=1\mid i=0\}=|b|^4<1,
+\qquad
+\Pr\{E_4=1\mid i=1\}=1.
+\tag{21.13}
+$$
+
+对 Bell 输入，这给参考的计算基标签与第四轮环境之间的相关性。若能仅由接收器恢复完整纯目标，则解码后的纯目标必须与剩余环境成乘积；局部解码不改变参考—环境边缘，与（21.13）矛盾。此失败只针对（21.3）的具体通道，没有判定四步固定 CPTP 的最小容量。
+
+前三步的容量收益不依赖丢弃来源信息：这三轮环境均与数据及参考独立，承担的是可丢弃的确定阶段输出。将这些输出都强制成同一纯空白且禁止额外丢弃环境，会回到第9节的另一份合同。
+
+## 追加锚（本行以下为增补区）
