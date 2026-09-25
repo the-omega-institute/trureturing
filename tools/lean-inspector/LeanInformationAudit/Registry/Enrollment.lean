@@ -270,6 +270,31 @@ private def ownerOf (env : Environment) (name : Name) : Option Name :=
     some ((RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule)
   else none
 
+private def independentSource (name : Name) : CompileM Bool := do
+  let some identity := (← get).identityState | return false
+  let env ← getEnv
+  let some sourceOwner := ownerOf env name | return false
+  let some targetOwner := ownerOf env identity.theoremName | return false
+  if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
+      (`LeanInformationAudit).isPrefixOf sourceOwner || (`Reg).isPrefixOf sourceOwner then
+    return false
+  let some sourceIdx := env.getModuleIdx? sourceOwner | return false
+  let some targetIdx := env.getModuleIdx? targetOwner | return true
+  if sourceIdx.toNat < targetIdx.toNat then return true
+  let mut pending := #[sourceOwner]
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    charge
+    let owner := pending.back!
+    pending := pending.pop
+    if owner == targetOwner then return false
+    if seen.contains owner then continue
+    seen := seen.insert owner
+    let some idx := env.getModuleIdx? owner | return false
+    let some data := env.header.moduleData[idx.toNat]? | return false
+    pending := pending ++ data.imports.map (·.module)
+  return true
+
 private def dependency (info : ConstantInfo) : CompileM Unit := do
   let state ← get
   if state.dependencies.any (·.name == info.name) then return
@@ -304,6 +329,13 @@ private def dataTypes : Array Name :=
 private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
 private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
 
+private def hasIndependentCarrier (type : Expr) : Bool :=
+  (type.find? fun part => match part with
+    | .const name _ =>
+      !(dataTypes.contains name || propTypes.contains name ||
+        dictionaryTypes.contains name || interfaceTypes.contains name)
+    | _ => false).isSome
+
 private def interfaceProjection (env : Environment) (name : Name) : Bool :=
   match env.getProjectionFnInfo? name with
   | some p => interfaceTypes.contains p.ctorName.getPrefix &&
@@ -325,15 +357,15 @@ private initialize primitivePins : SimplePersistentEnvExtension PrimitivePin (Ar
     addEntryFn := Array.push
     addImportedFn := fun modules => modules.foldl (· ++ ·) #[] }
 
-private def constructiveDictionaryNames : Array Name := #[
+private def standardDictionaryNames : Array Name := #[
   `Unit.fintype, `PUnit.fintype, `Bool.fintype, `Fin.fintype, `instFintypeProd,
   `Sum.instFintype, `Option.instFintype, `Subtype.fintype,
   `instDecidableEqUnit, `instDecidableEqPUnit, `instDecidableEqBool,
   `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
-  `Option.instDecidableEq, `Subtype.instDecidableEq]
+  `Option.instDecidableEq, `Subtype.instDecidableEq, `Classical.decEq]
 
 private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
-  unless constructiveDictionaryNames.contains info.name do return false
+  unless standardDictionaryNames.contains info.name do return false
   let some pin := (primitivePins.getState (← getEnv)).find? (·.identity.name == info.name)
     | throwError "incomplete_closure:E2.dictionary_pin"
   dependency info
@@ -534,7 +566,8 @@ private partial def compileNode (e : Expr) (depth : Nat)
           | .forallE _ _ result bi => fixedCtor && bi.isImplicit && result.getForallBody.hasLooseBVar result.getForallArity
           | _ => false
         plan := .app plan (← compileExpr arg (depth + 1)
-          (typePosition || fixedType || implicitIndex || #[`Fin.fintype, `instDecidableEqFin].contains name))
+          (typePosition || fixedType || implicitIndex ||
+            #[`Fin.fintype, `instDecidableEqFin, `Classical.decEq].contains name))
         if let .forallE _ _ tail _ := telescope then telescope ← instantiate tail arg
       rule (if fixedCase then "E4.cases" else if fixedType then "E2.type" else "E3.constructor")
       return plan
@@ -556,6 +589,25 @@ private partial def compileNode (e : Expr) (depth : Nat)
           plan := .app plan (← child arg)
         rule "E3.constructor_projection"
         return plan
+    if (← isType e) && !(← isProp e) && (← independentSource name) then
+      match info with
+      | .thmInfo _ | .axiomInfo _ => pure ()
+      | _ =>
+        dependency info
+        let mut plan := PlanNode.atom head
+        for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
+        rule "E2.independent_carrier"
+        return plan
+    if args.isEmpty && hasIndependentCarrier info.type && (← independentSource name) then
+      if let .defnInfo defn := info then
+        if defn.safety == .safe && defn.all.length == 1 &&
+            !(← isRecursiveDefinition name) then
+          if let .forallE _ _ result _ := info.type then
+            if !result.hasLooseBVars && !(← isProp result) then
+              let typePlan ← compileExpr info.type (depth + 1) true
+              dependency info
+              rule "E5.independent_source"
+              return .audit typePlan (.atom e)
     match info with
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
@@ -623,7 +675,7 @@ open Lean Meta Elab Command
 def initializeGrammarPins : CommandElabM Unit := do
   unless (← getEnv).header.mainModule == `LeanInformationAudit.Syntax do
     throwError "incomplete_closure:E2.pin_producer_owner"
-  for name in constructiveDictionaryNames do
+  for name in standardDictionaryNames do
     if let some info := (← getEnv).find? name then
       let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
       let .ok (typeId, _) ← liftTermElabM <| rawIdentity info.levelParams info.type
