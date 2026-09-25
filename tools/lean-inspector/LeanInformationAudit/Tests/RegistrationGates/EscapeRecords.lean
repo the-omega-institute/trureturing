@@ -118,6 +118,8 @@ def domainArena : ObjectDomainArena where
     Law r := (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ r.readout () false = false }
   Domain := Set Nat
 
+local instance : DecidableEq domainArena.State := domainArena.toArena.stateDecidableEq
+
 def domainReads : PrimitiveRealization domainArena.signature :=
   cutRealization (fun b : Bool => b)
 def domainOther : PrimitiveRealization domainArena.signature :=
