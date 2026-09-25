@@ -1,0 +1,1807 @@
+{
+  "B": {
+    "decimal": 5.003067549838209,
+    "exact": "432040125182653876501/86355045355449035400"
+  },
+  "actual_source": {
+    "A_count_law": {
+      "0": {
+        "decimal": 0.3778437974516406,
+        "exact": "28616/75735"
+      },
+      "1": {
+        "decimal": 0.42038819568231334,
+        "exact": "106127/252450"
+      },
+      "2": {
+        "decimal": 0.1672265135010233,
+        "exact": "126649/757350"
+      },
+      "3": {
+        "decimal": 0.03138542285601109,
+        "exact": "31693/1009800"
+      },
+      "4": {
+        "decimal": 0.003010827226513501,
+        "exact": "9121/3029400"
+      },
+      "5": {
+        "decimal": 0.00014260249554367202,
+        "exact": "2/14025"
+      },
+      "6": {
+        "decimal": 2.640786954512445e-06,
+        "exact": "1/378675"
+      }
+    },
+    "all_roots2_mass": {
+      "decimal": 2.640786954512445e-06,
+      "exact": "1/378675"
+    },
+    "exact_RQ": {
+      "decimal": 1.4558581220378224,
+      "exact": "29265142103/20101644288"
+    },
+    "head_query_projections": [
+      {
+        "all_height_weight": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "maximum_mass": {
+          "decimal": 1.0,
+          "exact": "1"
+        },
+        "modulus": 1
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.25,
+          "exact": "5/4"
+        },
+        "maximum_mass": {
+          "decimal": 0.3333333333333333,
+          "exact": "1/3"
+        },
+        "modulus": 5
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.1666666666666667,
+          "exact": "7/6"
+        },
+        "maximum_mass": {
+          "decimal": 0.2,
+          "exact": "1/5"
+        },
+        "modulus": 7
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.4583333333333333,
+          "exact": "35/24"
+        },
+        "maximum_mass": {
+          "decimal": 0.06666666666666667,
+          "exact": "1/15"
+        },
+        "modulus": 35
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.1,
+          "exact": "11/10"
+        },
+        "maximum_mass": {
+          "decimal": 0.11203703703703703,
+          "exact": "121/1080"
+        },
+        "modulus": 11
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.375,
+          "exact": "11/8"
+        },
+        "maximum_mass": {
+          "decimal": 0.03796296296296296,
+          "exact": "41/1080"
+        },
+        "modulus": 55
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.2833333333333334,
+          "exact": "77/60"
+        },
+        "maximum_mass": {
+          "decimal": 0.023148148148148147,
+          "exact": "5/216"
+        },
+        "modulus": 77
+      },
+      {
+        "all_height_weight": {
+          "decimal": 1.6041666666666667,
+          "exact": "77/48"
+        },
+        "maximum_mass": {
+          "decimal": 0.008333333333333333,
+          "exact": "1/120"
+        },
+        "modulus": 385
+      }
+    ],
+    "prefix_atoms": 134,
+    "root11_2": {
+      "decimal": 0.11203703703703703,
+      "exact": "121/1080"
+    },
+    "successful_fixed_root_bound_using_actual_RQ": {
+      "decimal": 4.149558359498227,
+      "exact": "37035348066149/8925130063872"
+    }
+  },
+  "alpha": {
+    "decimal": 0.1027477013678608,
+    "exact": "7575003978548161/73724315753088000"
+  },
+  "analytic_optimizer_controls": [
+    {
+      "M": {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      "a": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "b": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "beta": {
+        "decimal": 12.0,
+        "exact": "12"
+      },
+      "coefficient": {
+        "decimal": 1.75,
+        "exact": "7/4"
+      },
+      "lambda": {
+        "decimal": 0.08333333333333333,
+        "exact": "1/12"
+      }
+    },
+    {
+      "M": {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      "a": {
+        "decimal": 0.0,
+        "exact": "0"
+      },
+      "b": {
+        "decimal": 6.0,
+        "exact": "6"
+      },
+      "beta": {
+        "decimal": 6.0,
+        "exact": "6"
+      },
+      "coefficient": {
+        "decimal": 2.5,
+        "exact": "5/2"
+      },
+      "lambda": {
+        "decimal": 0.16666666666666666,
+        "exact": "1/6"
+      }
+    },
+    {
+      "M": {
+        "decimal": 0.6666666666666666,
+        "exact": "2/3"
+      },
+      "a": {
+        "decimal": 6.0,
+        "exact": "6"
+      },
+      "b": {
+        "decimal": 8.0,
+        "exact": "8"
+      },
+      "beta": {
+        "decimal": 18.0,
+        "exact": "18"
+      },
+      "coefficient": {
+        "decimal": 1.1666666666666667,
+        "exact": "7/6"
+      },
+      "lambda": {
+        "decimal": 0.05555555555555555,
+        "exact": "1/18"
+      }
+    },
+    {
+      "M": {
+        "decimal": 0.625,
+        "exact": "5/8"
+      },
+      "a": {
+        "decimal": 9.0,
+        "exact": "9"
+      },
+      "b": {
+        "decimal": 12.0,
+        "exact": "12"
+      },
+      "beta": {
+        "decimal": 24.0,
+        "exact": "24"
+      },
+      "coefficient": {
+        "decimal": 1.0,
+        "exact": "1"
+      },
+      "lambda": {
+        "decimal": 0.041666666666666664,
+        "exact": "1/24"
+      }
+    },
+    {
+      "M": {
+        "decimal": 0.5,
+        "exact": "1/2"
+      },
+      "a": {
+        "decimal": 10.0,
+        "exact": "10"
+      },
+      "b": {
+        "decimal": 12.0,
+        "exact": "12"
+      },
+      "beta": {
+        "decimal": 24.0,
+        "exact": "24"
+      },
+      "coefficient": {
+        "decimal": 0.95,
+        "exact": "19/20"
+      },
+      "lambda": {
+        "decimal": 0.05,
+        "exact": "1/20"
+      }
+    },
+    {
+      "M": {
+        "decimal": 0.5,
+        "exact": "1/2"
+      },
+      "a": {
+        "decimal": 12.0,
+        "exact": "12"
+      },
+      "b": {
+        "decimal": 18.0,
+        "exact": "18"
+      },
+      "beta": {
+        "decimal": 30.0,
+        "exact": "30"
+      },
+      "coefficient": {
+        "decimal": 0.875,
+        "exact": "7/8"
+      },
+      "lambda": {
+        "decimal": 0.041666666666666664,
+        "exact": "1/24"
+      }
+    },
+    {
+      "M": {
+        "decimal": 0.647887323943662,
+        "exact": "46/71"
+      },
+      "a": {
+        "decimal": 7.407407407407407,
+        "exact": "200/27"
+      },
+      "b": {
+        "decimal": 9.037037037037036,
+        "exact": "244/27"
+      },
+      "beta": {
+        "decimal": 21.037037037037038,
+        "exact": "568/27"
+      },
+      "coefficient": {
+        "decimal": 1.0757042253521127,
+        "exact": "611/568"
+      },
+      "lambda": {
+        "decimal": 0.04753521126760563,
+        "exact": "27/568"
+      }
+    }
+  ],
+  "auxiliary_integer_moment_obstruction": {
+    "YA_on_event": {
+      "decimal": 5.333333333333333,
+      "exact": "16/3"
+    },
+    "active_layers": {
+      "A4": 6,
+      "A5": 6
+    },
+    "actual_arithmetic_realization": false,
+    "event_probability": {
+      "decimal": 0.7010372548861743,
+      "exact": "4006613512531919593001/5715264751774801992890"
+    },
+    "margin_above_target": {
+      "decimal": 0.022972432714065835,
+      "exact": "1438641222081202966819/62624678891771640472080"
+    },
+    "query_certificate_barrier": {
+      "decimal": 11.573992840877331,
+      "exact": "14792195615420544545011/1278054671260645723920"
+    },
+    "rational_controls": 49,
+    "raw_coefficient_barrier": {
+      "decimal": 1.0945945945945945,
+      "exact": "81/74"
+    }
+  },
+  "capacities": {
+    "40_tight_envelope": {
+      "M": {
+        "decimal": 0.647887323943662,
+        "exact": "46/71"
+      },
+      "capacity_vertices": [
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.352112676056338,
+            "exact": "25/71"
+          },
+          "aB": {
+            "decimal": 0.647887323943662,
+            "exact": "46/71"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.592592592592593,
+            "exact": "124/27"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.352112676056338,
+            "exact": "25/71"
+          },
+          "aB": {
+            "decimal": 0.647887323943662,
+            "exact": "46/71"
+          },
+          "cA": {
+            "decimal": 0.6172839506172839,
+            "exact": "50/81"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.592592592592593,
+            "exact": "124/27"
+          },
+          "YB": {
+            "decimal": 4.37037037037037,
+            "exact": "118/27"
+          },
+          "aA": {
+            "decimal": 0.352112676056338,
+            "exact": "25/71"
+          },
+          "aB": {
+            "decimal": 0.647887323943662,
+            "exact": "46/71"
+          },
+          "cA": {
+            "decimal": 0.6172839506172839,
+            "exact": "50/81"
+          },
+          "cB": {
+            "decimal": 0.757201646090535,
+            "exact": "184/243"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 8.962962962962964,
+            "exact": "242/27"
+          },
+          "aA": {
+            "decimal": 0.5704225352112676,
+            "exact": "81/142"
+          },
+          "aB": {
+            "decimal": 0.4295774647887324,
+            "exact": "61/142"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 0.5020576131687243,
+            "exact": "122/243"
+          }
+        }
+      ],
+      "coefficient": {
+        "decimal": 1.0757042253521127,
+        "exact": "611/568"
+      },
+      "density_upper": {
+        "decimal": 224.8431095635451,
+        "exact": "120926308914002592000/537825282476919431"
+      },
+      "full_survivor_Haar_lower": {
+        "decimal": 3.199170697991028e-05,
+        "exact": "619193864412289807679/19354824198693830246400000"
+      },
+      "lambda": {
+        "decimal": 0.04753521126760563,
+        "exact": "27/568"
+      },
+      "query_margin": {
+        "decimal": 0.09042772988993918,
+        "exact": "72445682136237907498443/801144540777619184417600"
+      },
+      "query_upper": {
+        "decimal": 11.460592678273326,
+        "exact": "187379413434176093674693/16349888587298350702400"
+      }
+    },
+    "M13_20_lambda1_21": {
+      "M": {
+        "decimal": 0.65,
+        "exact": "13/20"
+      },
+      "capacity_vertices": [
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.35,
+            "exact": "7/20"
+          },
+          "aB": {
+            "decimal": 0.65,
+            "exact": "13/20"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.65,
+            "exact": "93/20"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.35,
+            "exact": "7/20"
+          },
+          "aB": {
+            "decimal": 0.65,
+            "exact": "13/20"
+          },
+          "cA": {
+            "decimal": 0.6125,
+            "exact": "49/80"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.65,
+            "exact": "93/20"
+          },
+          "YB": {
+            "decimal": 4.35,
+            "exact": "87/20"
+          },
+          "aA": {
+            "decimal": 0.35,
+            "exact": "7/20"
+          },
+          "aB": {
+            "decimal": 0.65,
+            "exact": "13/20"
+          },
+          "cA": {
+            "decimal": 0.6125,
+            "exact": "49/80"
+          },
+          "cB": {
+            "decimal": 0.7583333333333333,
+            "exact": "91/120"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 9.0,
+            "exact": "9"
+          },
+          "aA": {
+            "decimal": 0.5714285714285714,
+            "exact": "4/7"
+          },
+          "aB": {
+            "decimal": 0.42857142857142855,
+            "exact": "3/7"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 0.5,
+            "exact": "1/2"
+          }
+        }
+      ],
+      "coefficient": {
+        "decimal": 1.0785714285714285,
+        "exact": "151/140"
+      },
+      "density_upper": {
+        "decimal": 225.2396582576607,
+        "exact": "1706191307428608000/7575003978548161"
+      },
+      "full_survivor_Haar_lower": {
+        "decimal": 2.5856802471149576e-05,
+        "exact": "121492068351127527013/4698650132269277184000000"
+      },
+      "lambda": {
+        "decimal": 0.047619047619047616,
+        "exact": "1/21"
+      },
+      "query_margin": {
+        "decimal": 0.07321571528527228,
+        "exact": "2065365161969167959221/28209314816113351564000"
+      },
+      "query_upper": {
+        "decimal": 11.477804692877992,
+        "exact": "46254429425608360802397/4029902116587621652000"
+      }
+    },
+    "M3_5_lambda1_20": {
+      "M": {
+        "decimal": 0.6,
+        "exact": "3/5"
+      },
+      "capacity_vertices": [
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.4,
+            "exact": "2/5"
+          },
+          "aB": {
+            "decimal": 0.6,
+            "exact": "3/5"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.0,
+            "exact": "4"
+          },
+          "YB": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "aA": {
+            "decimal": 0.4,
+            "exact": "2/5"
+          },
+          "aB": {
+            "decimal": 0.6,
+            "exact": "3/5"
+          },
+          "cA": {
+            "decimal": 0.6666666666666666,
+            "exact": "2/3"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 4.0,
+            "exact": "4"
+          },
+          "YB": {
+            "decimal": 6.0,
+            "exact": "6"
+          },
+          "aA": {
+            "decimal": 0.4,
+            "exact": "2/5"
+          },
+          "aB": {
+            "decimal": 0.6,
+            "exact": "3/5"
+          },
+          "cA": {
+            "decimal": 0.6666666666666666,
+            "exact": "2/3"
+          },
+          "cB": {
+            "decimal": 0.6666666666666666,
+            "exact": "2/3"
+          }
+        },
+        {
+          "YA": {
+            "decimal": 0.0,
+            "exact": "0"
+          },
+          "YB": {
+            "decimal": 10.0,
+            "exact": "10"
+          },
+          "aA": {
+            "decimal": 0.6,
+            "exact": "3/5"
+          },
+          "aB": {
+            "decimal": 0.4,
+            "exact": "2/5"
+          },
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 0.4444444444444444,
+            "exact": "4/9"
+          }
+        }
+      ],
+      "coefficient": {
+        "decimal": 1.05,
+        "exact": "21/20"
+      },
+      "density_upper": {
+        "decimal": 236.50164117054373,
+        "exact": "1791500872800038400/7575003978548161"
+      },
+      "full_survivor_Haar_lower": {
+        "decimal": 8.231364736594311e-05,
+        "exact": "20711160260974385410891/251612714583019793203200000"
+      },
+      "lambda": {
+        "decimal": 0.05,
+        "exact": "1/20"
+      },
+      "query_margin": {
+        "decimal": 0.2447319309949354,
+        "exact": "20711160260974385410891/84627944448340054692000"
+      },
+      "query_upper": {
+        "decimal": 11.30628847716833,
+        "exact": "19527101084953238679941/1727100907108980708000"
+      }
+    }
+  },
+  "capacity_equivalence_control_count": 108,
+  "check_count": 218,
+  "checks": [
+    "source digest height_three_clipping_envelope.json",
+    "source digest four_level_query_hinge_lift.json",
+    "existing B and K3 agree",
+    "complete source mass corners agree",
+    "target is same 23/29 continuation target",
+    "six-prime product",
+    "actual row11 normalized (2, 2)",
+    "actual row11 cap (2, 2)",
+    "actual row11 normalized (2, 3)",
+    "actual row11 cap (2, 3)",
+    "actual row11 normalized (2, 4)",
+    "actual row11 cap (2, 4)",
+    "actual row11 normalized (2, 5)",
+    "actual row11 cap (2, 5)",
+    "actual row11 normalized (2, 6)",
+    "actual row11 cap (2, 6)",
+    "actual row11 normalized (3, 2)",
+    "actual row11 cap (3, 2)",
+    "actual row11 normalized (3, 3)",
+    "actual row11 cap (3, 3)",
+    "actual row11 normalized (3, 4)",
+    "actual row11 cap (3, 4)",
+    "actual row11 normalized (3, 5)",
+    "actual row11 cap (3, 5)",
+    "actual row11 normalized (3, 6)",
+    "actual row11 cap (3, 6)",
+    "actual row11 normalized (4, 2)",
+    "actual row11 cap (4, 2)",
+    "actual row11 normalized (4, 3)",
+    "actual row11 cap (4, 3)",
+    "actual row11 normalized (4, 4)",
+    "actual row11 cap (4, 4)",
+    "actual row11 normalized (4, 5)",
+    "actual row11 cap (4, 5)",
+    "actual row11 normalized (4, 6)",
+    "actual row11 cap (4, 6)",
+    "134 actual source prefix atoms",
+    "actual source prefix mass one",
+    "later actual row cap 13",
+    "later actual row cap 17",
+    "later actual row cap 19",
+    "initial old-coordinate Haar mass",
+    "actual eleventh-root2 marginal",
+    "full A count law normalized",
+    "actual A source first moment",
+    "all root2 source mass",
+    "full A count law all2 mass",
+    "actual all-roots cylinder mass 2",
+    "actual all-roots cylinder mass 3",
+    "actual source projected maximum d=1",
+    "actual source projected maximum d=5",
+    "actual source projected maximum d=7",
+    "actual source projected maximum d=35",
+    "actual source projected maximum d=11",
+    "actual source projected maximum d=55",
+    "actual source projected maximum d=77",
+    "actual source projected maximum d=385",
+    "actual source complete finite-head query sum",
+    "actual source remaining independent coordinate factor",
+    "actual source exact full-height query norm",
+    "actual source supports a successful older fixed-root certificate",
+    "40 original count",
+    "40 distinct odd nonunit labels",
+    "40 exactly two pure3 originals",
+    "40 one through3 selected source",
+    "40 private CRT pure3",
+    "40 private CRT pure9",
+    "40 private CRT q5e0",
+    "40 private CRT q5e1",
+    "40 private CRT q7e0",
+    "40 private CRT q7e1",
+    "40 private CRT q11e0",
+    "40 private CRT q11e1",
+    "40 private CRT q13e0",
+    "40 private CRT q13e1",
+    "40 private CRT q17e0",
+    "40 private CRT q17e1",
+    "40 private CRT q19e0",
+    "40 private CRT q19e1",
+    "40 private CRT Q385",
+    "40 private CRT Aq5",
+    "40 private CRT Aq7",
+    "40 private CRT Aq11",
+    "40 private CRT Aq13",
+    "40 private CRT Aq17",
+    "40 private CRT Aq19",
+    "40 private CRT Adeep0",
+    "40 private CRT Adeep1",
+    "40 private CRT Adeep2",
+    "40 private CRT Adeep3",
+    "40 private CRT B0",
+    "40 private CRT B1",
+    "40 private CRT B2",
+    "40 private CRT B3",
+    "40 private CRT B4",
+    "40 private CRT B5",
+    "40 private CRT B6",
+    "40 private CRT B7",
+    "40 private CRT B8",
+    "40 private CRT B9",
+    "40 private CRT B10",
+    "40 private CRT B11",
+    "40 private CRT B12",
+    "40 private CRT B13",
+    "40 private CRT B14",
+    "40 actual branch original counts",
+    "40 disjoint A ternary cylinders",
+    "40 disjoint B ternary cylinders",
+    "40 A incidences exclude every B incidence",
+    "40 positive extreme A",
+    "40 positive extreme B",
+    "40 A extreme exact survival",
+    "40 B extreme exact survival",
+    "40 actual load maxima",
+    "40 load domain",
+    "40 has same actual fourth-layer A law",
+    "old capacity cap parameters",
+    "old capacity capacity corner (Fraction(0, 1), Fraction(0, 1))",
+    "old capacity capacity corner (Fraction(4, 1), Fraction(0, 1))",
+    "old capacity capacity corner (Fraction(4, 1), Fraction(6, 1))",
+    "old capacity capacity corner (Fraction(0, 1), Fraction(10, 1))",
+    "old capacity all-height query sum 2",
+    "old capacity equal deep cylinder coefficients 2",
+    "old capacity all-height query sum 4",
+    "old capacity equal deep cylinder coefficients 4",
+    "old capacity all-height query sum 6",
+    "old capacity equal deep cylinder coefficients 6",
+    "old capacity all-height query sum 12",
+    "old capacity equal deep cylinder coefficients 12",
+    "old capacity all-height query sum 30",
+    "old capacity equal deep cylinder coefficients 30",
+    "old capacity strict all-height query gate",
+    "old capacity density from disjoint roots",
+    "old capacity continuation uses same joint law",
+    "new capacity cap parameters",
+    "new capacity capacity corner (Fraction(0, 1), Fraction(0, 1))",
+    "new capacity capacity corner (Fraction(93, 20), Fraction(0, 1))",
+    "new capacity capacity corner (Fraction(93, 20), Fraction(87, 20))",
+    "new capacity capacity corner (Fraction(0, 1), Fraction(9, 1))",
+    "new capacity all-height query sum 2",
+    "new capacity equal deep cylinder coefficients 2",
+    "new capacity all-height query sum 4",
+    "new capacity equal deep cylinder coefficients 4",
+    "new capacity all-height query sum 6",
+    "new capacity equal deep cylinder coefficients 6",
+    "new capacity all-height query sum 12",
+    "new capacity equal deep cylinder coefficients 12",
+    "new capacity all-height query sum 30",
+    "new capacity equal deep cylinder coefficients 30",
+    "new capacity strict all-height query gate",
+    "new capacity density from disjoint roots",
+    "new capacity continuation uses same joint law",
+    "40 tight envelope cap parameters",
+    "40 tight envelope capacity corner (Fraction(0, 1), Fraction(0, 1))",
+    "40 tight envelope capacity corner (Fraction(124, 27), Fraction(0, 1))",
+    "40 tight envelope capacity corner (Fraction(124, 27), Fraction(118, 27))",
+    "40 tight envelope capacity corner (Fraction(0, 1), Fraction(242, 27))",
+    "40 tight envelope all-height query sum 2",
+    "40 tight envelope equal deep cylinder coefficients 2",
+    "40 tight envelope all-height query sum 4",
+    "40 tight envelope equal deep cylinder coefficients 4",
+    "40 tight envelope all-height query sum 6",
+    "40 tight envelope equal deep cylinder coefficients 6",
+    "40 tight envelope all-height query sum 12",
+    "40 tight envelope equal deep cylinder coefficients 12",
+    "40 tight envelope all-height query sum 30",
+    "40 tight envelope equal deep cylinder coefficients 30",
+    "40 tight envelope strict all-height query gate",
+    "40 tight envelope density from disjoint roots",
+    "40 tight envelope continuation uses same joint law",
+    "capacity equivalence and zero reserve controls",
+    "all original-height load weights 4",
+    "all original-height load weights 5",
+    "all original-height load weights 6",
+    "all original-height load weights 12",
+    "all original-height load weights 30",
+    "40 uniform no-loss clip budget fails gate",
+    "new domain uniform no-loss clip budget fails gate",
+    "40 exact minimum common-fibre reserve",
+    "40 analytic adaptive attainer",
+    "40 analytic constant-root attainer",
+    "40 retained correlation gain",
+    "new sufficient class continuation bound exceeds one over 40000",
+    "optimized actual family continuation bound exceeds one over 32000",
+    "optimizer consistent reserves (Fraction(0, 1), Fraction(0, 1), Fraction(12, 1))",
+    "optimizer attainer (Fraction(0, 1), Fraction(0, 1), Fraction(12, 1))",
+    "optimizer covers every affine breakpoint (Fraction(0, 1), Fraction(0, 1), Fraction(12, 1))",
+    "optimizer consistent reserves (Fraction(0, 1), Fraction(6, 1), Fraction(6, 1))",
+    "optimizer attainer (Fraction(0, 1), Fraction(6, 1), Fraction(6, 1))",
+    "optimizer covers every affine breakpoint (Fraction(0, 1), Fraction(6, 1), Fraction(6, 1))",
+    "optimizer consistent reserves (Fraction(6, 1), Fraction(8, 1), Fraction(18, 1))",
+    "optimizer attainer (Fraction(6, 1), Fraction(8, 1), Fraction(18, 1))",
+    "optimizer covers every affine breakpoint (Fraction(6, 1), Fraction(8, 1), Fraction(18, 1))",
+    "optimizer consistent reserves (Fraction(9, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer attainer (Fraction(9, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer covers every affine breakpoint (Fraction(9, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer consistent reserves (Fraction(10, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer attainer (Fraction(10, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer covers every affine breakpoint (Fraction(10, 1), Fraction(12, 1), Fraction(24, 1))",
+    "optimizer consistent reserves (Fraction(12, 1), Fraction(18, 1), Fraction(30, 1))",
+    "optimizer attainer (Fraction(12, 1), Fraction(18, 1), Fraction(30, 1))",
+    "optimizer covers every affine breakpoint (Fraction(12, 1), Fraction(18, 1), Fraction(30, 1))",
+    "optimizer consistent reserves (Fraction(200, 27), Fraction(244, 27), Fraction(568, 27))",
+    "optimizer attainer (Fraction(200, 27), Fraction(244, 27), Fraction(568, 27))",
+    "optimizer covers every affine breakpoint (Fraction(200, 27), Fraction(244, 27), Fraction(568, 27))",
+    "40 rho exceeds specific 580 first-moment gate",
+    "same K corner dominates at all four integer endpoints",
+    "40 complete Gamma test fails at s=0",
+    "40 complete Gamma test fails at s=1/2",
+    "40 complete Gamma test fails at s=1",
+    "40 complete Gamma test fails at s=3/2",
+    "auxiliary atom probability and first moment",
+    "same K corner controls all integer auxiliary knots",
+    "auxiliary integer layers obey complete K spectrum",
+    "auxiliary adaptive dual has positive slack",
+    "auxiliary adaptive certificate barrier exceeds target",
+    "auxiliary dual rational controls",
+    "auxiliary point-law attainer"
+  ],
+  "fixed_no_loss_clip_controls": {
+    "40_originals": {
+      "cA": {
+        "decimal": 0.6172839506172839,
+        "exact": "50/81"
+      },
+      "cB": {
+        "decimal": 0.5020576131687243,
+        "exact": "122/243"
+      },
+      "coefficient": {
+        "decimal": 1.0968468468468469,
+        "exact": "487/444"
+      },
+      "piecewise_breakpoints": [
+        {
+          "decimal": 0.0,
+          "exact": "0"
+        },
+        {
+          "decimal": 0.45045045045045046,
+          "exact": "50/111"
+        },
+        {
+          "decimal": 0.5,
+          "exact": "1/2"
+        },
+        {
+          "decimal": 1.0,
+          "exact": "1"
+        }
+      ],
+      "query_upper": {
+        "decimal": 11.587513263286876,
+        "exact": "23383382296481812592749/2017981059885230090400"
+      },
+      "weight_A": {
+        "decimal": 0.45045045045045046,
+        "exact": "50/111"
+      }
+    },
+    "full_new_load_domain": {
+      "cA": {
+        "decimal": 0.6125,
+        "exact": "49/80"
+      },
+      "cB": {
+        "decimal": 0.5,
+        "exact": "1/2"
+      },
+      "coefficient": {
+        "decimal": 1.1009174311926606,
+        "exact": "120/109"
+      },
+      "piecewise_breakpoints": [
+        {
+          "decimal": 0.0,
+          "exact": "0"
+        },
+        {
+          "decimal": 0.44954128440366975,
+          "exact": "49/109"
+        },
+        {
+          "decimal": 0.5,
+          "exact": "1/2"
+        },
+        {
+          "decimal": 1.0,
+          "exact": "1"
+        }
+      ],
+      "query_upper": {
+        "decimal": 11.611949256082111,
+        "exact": "109299794109481621966729/9412699943743944858600"
+      },
+      "weight_A": {
+        "decimal": 0.44954128440366975,
+        "exact": "49/109"
+      }
+    }
+  },
+  "fixtures": {
+    "40_originals": {
+      "YA_max": {
+        "decimal": 4.592592592592593,
+        "exact": "124/27"
+      },
+      "YB_max": {
+        "decimal": 8.962962962962964,
+        "exact": "242/27"
+      },
+      "extreme_fibres": [
+        {
+          "Q_period": "202076875",
+          "Q_phase": 2,
+          "branch": "A",
+          "cA": {
+            "decimal": 0.6172839506172839,
+            "exact": "50/81"
+          },
+          "cB": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "source_mass": {
+            "decimal": 2.1126295636099557e-08,
+            "exact": "1/47334375"
+          }
+        },
+        {
+          "Q_period": "6166896820068359375",
+          "Q_phase": 3,
+          "branch": "B",
+          "cA": {
+            "decimal": 1.0,
+            "exact": "1"
+          },
+          "cB": {
+            "decimal": 0.5020576131687243,
+            "exact": "122/243"
+          },
+          "source_mass": {
+            "decimal": 6.922664554037103e-19,
+            "exact": "1/1444530487060546875"
+          }
+        }
+      ],
+      "original_count": 40,
+      "originals": [
+        {
+          "d": 1,
+          "e": 1,
+          "label": "pure3",
+          "m": 3,
+          "phase": 1,
+          "r": 0,
+          "t": 1
+        },
+        {
+          "d": 1,
+          "e": 2,
+          "label": "pure9",
+          "m": 9,
+          "phase": 3,
+          "r": 0,
+          "t": 3
+        },
+        {
+          "d": 5,
+          "e": 0,
+          "label": "q5e0",
+          "m": 5,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 5,
+          "e": 1,
+          "label": "q5e1",
+          "m": 15,
+          "phase": 11,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 7,
+          "e": 0,
+          "label": "q7e0",
+          "m": 7,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 7,
+          "e": 1,
+          "label": "q7e1",
+          "m": 21,
+          "phase": 8,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 11,
+          "e": 0,
+          "label": "q11e0",
+          "m": 11,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 11,
+          "e": 1,
+          "label": "q11e1",
+          "m": 33,
+          "phase": 23,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 13,
+          "e": 0,
+          "label": "q13e0",
+          "m": 13,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 13,
+          "e": 1,
+          "label": "q13e1",
+          "m": 39,
+          "phase": 14,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 17,
+          "e": 0,
+          "label": "q17e0",
+          "m": 17,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 17,
+          "e": 1,
+          "label": "q17e1",
+          "m": 51,
+          "phase": 35,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 19,
+          "e": 0,
+          "label": "q19e0",
+          "m": 19,
+          "phase": 0,
+          "r": 0,
+          "t": 0
+        },
+        {
+          "d": 19,
+          "e": 1,
+          "label": "q19e1",
+          "m": 57,
+          "phase": 20,
+          "r": 1,
+          "t": 2
+        },
+        {
+          "d": 385,
+          "e": 0,
+          "label": "Q385",
+          "m": 385,
+          "phase": 4,
+          "r": 4,
+          "t": 0
+        },
+        {
+          "d": 5,
+          "e": 4,
+          "label": "Aq5",
+          "m": 405,
+          "phase": 162,
+          "r": 2,
+          "t": 0
+        },
+        {
+          "d": 7,
+          "e": 4,
+          "label": "Aq7",
+          "m": 567,
+          "phase": 492,
+          "r": 2,
+          "t": 6
+        },
+        {
+          "d": 11,
+          "e": 4,
+          "label": "Aq11",
+          "m": 891,
+          "phase": 90,
+          "r": 2,
+          "t": 9
+        },
+        {
+          "d": 13,
+          "e": 4,
+          "label": "Aq13",
+          "m": 1053,
+          "phase": 15,
+          "r": 2,
+          "t": 15
+        },
+        {
+          "d": 17,
+          "e": 4,
+          "label": "Aq17",
+          "m": 1377,
+          "phase": 342,
+          "r": 2,
+          "t": 18
+        },
+        {
+          "d": 19,
+          "e": 4,
+          "label": "Aq19",
+          "m": 1539,
+          "phase": 591,
+          "r": 2,
+          "t": 24
+        },
+        {
+          "d": 1616615,
+          "e": 5,
+          "label": "Adeep0",
+          "m": 392837445,
+          "phase": 17782767,
+          "r": 2,
+          "t": 27
+        },
+        {
+          "d": 8083075,
+          "e": 5,
+          "label": "Adeep1",
+          "m": 1964187225,
+          "phase": 226326102,
+          "r": 2,
+          "t": 33
+        },
+        {
+          "d": 40415375,
+          "e": 6,
+          "label": "Adeep2",
+          "m": 29462808375,
+          "phase": 27239962752,
+          "r": 2,
+          "t": 36
+        },
+        {
+          "d": 202076875,
+          "e": 6,
+          "label": "Adeep3",
+          "m": 147314041875,
+          "phase": 75374674377,
+          "r": 2,
+          "t": 42
+        },
+        {
+          "d": 1010384375,
+          "e": 4,
+          "label": "B0",
+          "m": 81841134375,
+          "phase": 52539987503,
+          "r": 3,
+          "t": 2
+        },
+        {
+          "d": 5051921875,
+          "e": 4,
+          "label": "B1",
+          "m": 409205671875,
+          "phase": 222284562503,
+          "r": 3,
+          "t": 5
+        },
+        {
+          "d": 25259609375,
+          "e": 4,
+          "label": "B2",
+          "m": 2046028359375,
+          "phase": 555711406253,
+          "r": 3,
+          "t": 8
+        },
+        {
+          "d": 126298046875,
+          "e": 4,
+          "label": "B3",
+          "m": 10230141796875,
+          "phase": 2525960937503,
+          "r": 3,
+          "t": 11
+        },
+        {
+          "d": 631490234375,
+          "e": 4,
+          "label": "B4",
+          "m": 51150708984375,
+          "phase": 29048550781253,
+          "r": 3,
+          "t": 14
+        },
+        {
+          "d": 3157451171875,
+          "e": 4,
+          "label": "B5",
+          "m": 255753544921875,
+          "phase": 157872558593753,
+          "r": 3,
+          "t": 17
+        },
+        {
+          "d": 15787255859375,
+          "e": 4,
+          "label": "B6",
+          "m": 1278767724609375,
+          "phase": 1105107910156253,
+          "r": 3,
+          "t": 20
+        },
+        {
+          "d": 78936279296875,
+          "e": 4,
+          "label": "B7",
+          "m": 6393838623046875,
+          "phase": 2052343261718753,
+          "r": 3,
+          "t": 23
+        },
+        {
+          "d": 394681396484375,
+          "e": 4,
+          "label": "B8",
+          "m": 31969193115234375,
+          "phase": 15787255859375003,
+          "r": 3,
+          "t": 26
+        },
+        {
+          "d": 1973406982421875,
+          "e": 4,
+          "label": "B9",
+          "m": 159845965576171875,
+          "phase": 3946813964843753,
+          "r": 3,
+          "t": 29
+        },
+        {
+          "d": 9867034912109375,
+          "e": 4,
+          "label": "B10",
+          "m": 799229827880859375,
+          "phase": 631490234375000003,
+          "r": 3,
+          "t": 32
+        },
+        {
+          "d": 49335174560546875,
+          "e": 4,
+          "label": "B11",
+          "m": 3996149139404296875,
+          "phase": 1578725585937500003,
+          "r": 3,
+          "t": 35
+        },
+        {
+          "d": 246675872802734375,
+          "e": 4,
+          "label": "B12",
+          "m": 19980745697021484375,
+          "phase": 1726731109619140628,
+          "r": 3,
+          "t": 38
+        },
+        {
+          "d": 1233379364013671875,
+          "e": 5,
+          "label": "B13",
+          "m": 299711185455322265625,
+          "phase": 9867034912109375003,
+          "r": 3,
+          "t": 41
+        },
+        {
+          "d": 6166896820068359375,
+          "e": 6,
+          "label": "B14",
+          "m": 4495667781829833984375,
+          "phase": 1856235942840576171878,
+          "r": 3,
+          "t": 44
+        }
+      ],
+      "pointwise_total_max": {
+        "decimal": 8.962962962962964,
+        "exact": "242/27"
+      },
+      "private_CRT_witnesses": [
+        {
+          "label": "pure3",
+          "period": "4495667781829833984375",
+          "point": "567354507446289062503"
+        },
+        {
+          "label": "pure9",
+          "period": "4495667781829833984375",
+          "point": "3"
+        },
+        {
+          "label": "q5e0",
+          "period": "4495667781829833984375",
+          "point": "2158656921386718750000"
+        },
+        {
+          "label": "q5e1",
+          "period": "4495667781829833984375",
+          "point": "2653983287811279296876"
+        },
+        {
+          "label": "q7e0",
+          "period": "4495667781829833984375",
+          "point": "3419984779357910156253"
+        },
+        {
+          "label": "q7e1",
+          "period": "4495667781829833984375",
+          "point": "3494868526458740234378"
+        },
+        {
+          "label": "q11e0",
+          "period": "4495667781829833984375",
+          "point": "3303214187622070312503"
+        },
+        {
+          "label": "q11e1",
+          "period": "4495667781829833984375",
+          "point": "1918465538024902343753"
+        },
+        {
+          "label": "q13e0",
+          "period": "4495667781829833984375",
+          "point": "505211162567138671878"
+        },
+        {
+          "label": "q13e1",
+          "period": "4495667781829833984375",
+          "point": "3050242042541503906253"
+        },
+        {
+          "label": "q17e0",
+          "period": "4495667781829833984375",
+          "point": "1115482807159423828128"
+        },
+        {
+          "label": "q17e1",
+          "period": "4495667781829833984375",
+          "point": "3457089805603027343753"
+        },
+        {
+          "label": "q19e0",
+          "period": "4495667781829833984375",
+          "point": "2743944511413574218753"
+        },
+        {
+          "label": "q19e1",
+          "period": "4495667781829833984375",
+          "point": "47063159942626953128"
+        },
+        {
+          "label": "Q385",
+          "period": "4495667781829833984375",
+          "point": "1738556747436523437504"
+        },
+        {
+          "label": "Aq5",
+          "period": "4495667781829833984375",
+          "point": "4284018669128417968752"
+        },
+        {
+          "label": "Aq7",
+          "period": "4495667781829833984375",
+          "point": "3002397766113281250003"
+        },
+        {
+          "label": "Aq11",
+          "period": "4495667781829833984375",
+          "point": "3610998401641845703128"
+        },
+        {
+          "label": "Aq13",
+          "period": "4495667781829833984375",
+          "point": "2474823131561279296878"
+        },
+        {
+          "label": "Aq17",
+          "period": "4495667781829833984375",
+          "point": "1827215251922607421878"
+        },
+        {
+          "label": "Aq19",
+          "period": "4495667781829833984375",
+          "point": "667972297668457031253"
+        },
+        {
+          "label": "Adeep0",
+          "period": "4495667781829833984375",
+          "point": "1899404220581054687502"
+        },
+        {
+          "label": "Adeep1",
+          "period": "4495667781829833984375",
+          "point": "197340698242187500002"
+        },
+        {
+          "label": "Adeep2",
+          "period": "4495667781829833984375",
+          "point": "3841976718902587890627"
+        },
+        {
+          "label": "Adeep3",
+          "period": "4495667781829833984375",
+          "point": "2139913196563720703127"
+        },
+        {
+          "label": "B0",
+          "period": "4495667781829833984375",
+          "point": "283677253723144531253"
+        },
+        {
+          "label": "B1",
+          "period": "4495667781829833984375",
+          "point": "3928313274383544921878"
+        },
+        {
+          "label": "B2",
+          "period": "4495667781829833984375",
+          "point": "3077281513214111328128"
+        },
+        {
+          "label": "B3",
+          "period": "4495667781829833984375",
+          "point": "2226249752044677734378"
+        },
+        {
+          "label": "B4",
+          "period": "4495667781829833984375",
+          "point": "1375217990875244140628"
+        },
+        {
+          "label": "B5",
+          "period": "4495667781829833984375",
+          "point": "524186229705810546878"
+        },
+        {
+          "label": "B6",
+          "period": "4495667781829833984375",
+          "point": "4168822250366210937503"
+        },
+        {
+          "label": "B7",
+          "period": "4495667781829833984375",
+          "point": "3317790489196777343753"
+        },
+        {
+          "label": "B8",
+          "period": "4495667781829833984375",
+          "point": "2466758728027343750003"
+        },
+        {
+          "label": "B9",
+          "period": "4495667781829833984375",
+          "point": "1615726966857910156253"
+        },
+        {
+          "label": "B10",
+          "period": "4495667781829833984375",
+          "point": "764695205688476562503"
+        },
+        {
+          "label": "B11",
+          "period": "4495667781829833984375",
+          "point": "4409331226348876953128"
+        },
+        {
+          "label": "B12",
+          "period": "4495667781829833984375",
+          "point": "3558299465179443359378"
+        },
+        {
+          "label": "B13",
+          "period": "4495667781829833984375",
+          "point": "2707267704010009765628"
+        },
+        {
+          "label": "B14",
+          "period": "4495667781829833984375",
+          "point": "1856235942840576171878"
+        }
+      ]
+    }
+  },
+  "same_source_580_gate": {
+    "Gamma_star": {
+      "decimal": 1.2755476648516233,
+      "exact": "11272905968952013580460271537329209341001902658427/8837698723131073909321629492102633347188778335000"
+    },
+    "dominant_K_corner": 0,
+    "endpoints": [
+      {
+        "Gamma": {
+          "decimal": 1.2755503597914362,
+          "exact": "20076957460723287134111611/15739839126387804688419060"
+        },
+        "hinge": {
+          "decimal": 0.8617696573578927,
+          "exact": "174043/201960"
+        },
+        "margin_above_gate": {
+          "decimal": 2.694939812849281e-06,
+          "exact": "1929182357577588289969577685755586204669329663/715853596573616986655051988860313301122291045135000"
+        },
+        "s": {
+          "decimal": 0.0,
+          "exact": "0"
+        }
+      },
+      {
+        "Gamma": {
+          "decimal": 1.3741340724305788,
+          "exact": "683009975941434898555099/497047551359614884897444"
+        },
+        "hinge": {
+          "decimal": 0.5506915560837129,
+          "exact": "333653/605880"
+        },
+        "margin_above_gate": {
+          "decimal": 0.09858640757895562,
+          "exact": "211720303316003616604315132231191882426334618475989/2147560789720850959965155966580939903366873135405000"
+        },
+        "s": {
+          "decimal": 0.5,
+          "exact": "1/2"
+        }
+      },
+      {
+        "Gamma": {
+          "decimal": 1.5168434449300583,
+          "exact": "39681227373598331058125/26160397439979730784076"
+        },
+        "hinge": {
+          "decimal": 0.23961345480953325,
+          "exact": "145177/605880"
+        },
+        "margin_above_gate": {
+          "decimal": 0.241295780078435,
+          "exact": "518197356021552654452123430935706919578081409470989/2147560789720850959965155966580939903366873135405000"
+        },
+        "s": {
+          "decimal": 1.0,
+          "exact": "1"
+        }
+      },
+      {
+        "Gamma": {
+          "decimal": 2.040188031619885,
+          "exact": "23408828841871106010799/11473858526306899466700"
+        },
+        "hinge": {
+          "decimal": 0.1387294513765102,
+          "exact": "140089/1009800"
+        },
+        "margin_above_gate": {
+          "decimal": 0.7646403667682616,
+          "exact": "547370556636429686780555736538650096196394802253363/715853596573616986655051988860313301122291045135000"
+        },
+        "s": {
+          "decimal": 1.5,
+          "exact": "3/2"
+        }
+      }
+    ],
+    "rho_A": {
+      "decimal": 0.8617696573578927,
+      "exact": "174043/201960"
+    },
+    "rho_margin": {
+      "decimal": 4.042409719273922e-06,
+      "exact": "1929182357577588289969577685755586204669329663/477235731049077991103367992573542200748194030090000"
+    },
+    "rho_star": {
+      "decimal": 0.8617656149481734,
+      "exact": "15232049749731473125568032040735530696696089170781/17675397446262147818643258984205266694377556670000"
+    }
+  },
+  "schema": "adaptive-branch-capacity-exact-v1",
+  "scope": [
+    "Ordinary conditional theorem; no new Lean or unrestricted Erdos7 claim.",
+    "One displayed selected PA source, fixed global phases and distinct numerical labels.",
+    "40-family Gamma separation concerns only the specified 580 gate, not all possible spare-phase selectors.",
+    "The coefficient separation uses the same generic supplier B; using actual R_Q lets the older fixed-root bound pass.",
+    "Fixed-clip separation concerns the uniform no-loss bound, not every older method or actual-law impossibility."
+  ],
+  "sources": [
+    {
+      "path": "height_three_clipping_envelope.json",
+      "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    },
+    {
+      "path": "four_level_query_hinge_lift.json",
+      "sha256": "b224c79716585f16b52aeda277810a1a001a4f2d92d3e092cfc1cc41345dbcfd"
+    }
+  ],
+  "target": {
+    "decimal": 11.551020408163266,
+    "exact": "566/49"
+  }
+}
