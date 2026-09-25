@@ -42,7 +42,11 @@ condition further to534 nonunit cofactors at most500000; that finite
 window permits arbitrary additional support primes greater than1000000.
 A22-original counterexample to the additive residual certificate
 is repaired by retaining the actual cross-cofactor union under the
-same law. Unrestricted Erdős #7 remains open.
+same law. For the direct seven-core source construction, the analogous
+suffix correction is valid but cannot close its stronger query target
+using the retained early-stage envelopes: one regenerated finest branch
+fails even with maximally generous cap credits, at every real final
+threshold from1 through12. Unrestricted Erdős #7 remains open.
 
 ## One actual law and its existing mass bounds
 
@@ -717,6 +721,193 @@ certificate and identifies a sufficient joint-union repair; it
 neither supplies a covering nor proves the repair works for every
 head. It does not require improving the universal query budget.
 
+## Direct seven-core suffix debits and the charged baseline
+
+Use the actual seven-core measure of
+[Report462](462-the-final-stage-ledger-gives-a-seven-core-common-law.md),
+with its fixed source completion, charged first7 row and physical165
+projection. All quantities below use the same unnormalized actual
+prefixes and135 comparison units per Haar unit. Write
+
+\[
+d_q=135\int(1-s_q)\,d\nu_{<q},\qquad
+k_q=135\int(C_q-\kappa_q)\,d\nu_{<q}
+\quad(q=11,13,17,19).
+\]
+
+The ordinary caps are `(5/3,3/2,2,9/5)`. At7 the source's comparison
+row mass is `S_s=(1,1,6/7,9/14,3/7)`, where `s` is its charged
+projection count; denote the actual surviving row mass by `r_7<=S_s`.
+Define
+
+\[
+B_7=135\int(1-S_s)\,d\nu_{<7},\qquad
+E_7=135\int(S_s-r_7)\,d\nu_{<7},\qquad d_7=B_7+E_7.
+\]
+
+Report462's final comparison already replaces the ordinary zero7 atom
+by `S_s-3/14=(11,11,9,6,3)/14`. It has therefore already paid `B_7`.
+Only `E_7` is available for a new suffix debit.
+
+Let `zeta_q=E[(prod_{r>q} N_r-12)_+]` under the ordinary auxiliary
+laws at11,13,17,19, and put
+`eta_q=(zeta_previous-zeta_q)/C_q`. For every complete finite query
+layout `L`, the refined comparison is
+
+\[
+H:=135\int(L-12)_+\,d\mu_7
+\le10L_{23}-\zeta_7E_7
+ -\sum_{q=11,13,17,19}(\zeta_qd_q+\eta_qk_q).
+\tag{SD28}
+\]
+
+For an ordinary row, labels supported only on later coordinates give
+the completed row a compulsory payoff at least `zeta_q`. Its missing
+mass and its unused cap are handled by the same conditional convex
+comparison used above. Each integrated debit is retained as a scalar
+before the next earlier comparison.
+
+At7, write the ordered-increment majorant as a constant plus
+nonnegative cylinder increments. Its constant costs the actual mass
+`r_7`; the increments retain the source's depth caps. Replacing `r_7`
+by `S_s` adds at least `zeta_7(S_s-r_7)` to this majorant. This remains
+valid when `r_7<3/14`; no negative actual zero atom is introduced.
+The remaining main comparison is exactly Report462's matched positive
+component functional. Finite query boxes increase to the complete
+inventory, with convergent first moments for each coefficient and
+each main expectation. This proves SD28 on one law, without choosing
+the completion or prefixes in response to the query.
+
+Write `m=135 mu_7(1)` and `D_7=R-L_7-L_11-L_13-L_17-L_19`, using
+the retained source reserve and stage upper bounds. For
+`lambda>=zeta_7`, substitution of `E_7=d_7-B_7`, the actual mass
+identity, and the bounds `d_q<=L_q` give
+
+\[
+\lambda m-H\ge G:=\lambda D_7-10L_{23}
+ +\zeta_7(L_7-B_7)+\zeta_{11}L_{11}
+ +\zeta_{13}L_{13}+\zeta_{17}L_{17}
+ +\sum_q\eta_qk_q.
+\tag{SD29}
+\]
+
+The coefficients of the actual losses before substitution are
+`lambda-zeta_q>=0`, which fixes the inequality direction. Since
+`L-1<=11+(L-12)_+`, positivity of `G` at `lambda=27/49` would
+give the desired same-law query norm strictly below `566/49`.
+It is a sufficient certificate, not an evaluation of the actual norm.
+
+The suffix values are
+`zeta_7=0.002242588487415791...`,
+`zeta_11=0.00016597487039070558...`,
+`zeta_13=0.0000011483205094759597...`,
+`zeta_17=1/1164902588982190`, and `zeta_19=0`.
+In particular `eta_19=1/2096824660167942`.
+
+## One finest branch rules out the retained threshold12 certificate
+
+In the pinned edition1.0.1 source verifier, take
+`node=(2,4,1,8,1,2,1,0,13)`, charged projection `(1,4,7,14)`,
+and the physical165 phase14. This is its finest `A1` branch.
+Regeneration gives `R=135/4` and the following stage bounds:
+
+| Stage | Upper bound in135-cell units |
+|---|---:|
+|7|10.4062667005|
+|11|5.2980442211|
+|13|6.175771329875369...|
+|17|3.9061873394797946...|
+|19|4.365028233373036...|
+|23|3.5862096296263943...|
+
+The fixed165 cost and its available budget agree exactly with the
+source's retained `closing.json`. Thus `D_7=3.5987021756718...`,
+and the old surplus `D_7-L_23=0.0124925460454...` remains positive.
+
+Every actual prefix has mass at most one, so `k_q<=135C_q`. Even
+granting `B_7=0` and all four cap slacks their independent generous
+maxima, the additional cap credit is at most
+
+\[
+\sum_q\eta_qk_q\le135\sum_q\eta_qC_q
+=135\zeta_7=0.3027494458011\ldots.
+\tag{SD30}
+\]
+
+The base of SD29 is `-33.8791379545672...`; all suffix deletion
+credits with `B_7=0` add only `0.0242234078673...`. Consequently
+even this optimistic value is
+
+\[
+G_{\rm opt}=
+-\frac{479429892642015605297432820666392256166724042026707948688449009645876336499}
+ {14289089577386851154058862090334325976908866877949621298761228800000000000}
+<-33.
+\tag{SD31}
+\]
+
+No simultaneous attainability of these generous credits is assumed.
+The upper bound is deliberately favorable to the proposed certificate.
+This one comparison branch already refutes uniform positivity of this
+fixed certificate, so its full28001-branch traversal is unnecessary.
+
+## Every real final threshold from1 through12 also fails
+
+Keep all five actual early stages fixed. Change only the dummy query
+threshold to `t in[1,12]`, so its conversion factor is `22-t`, its
+dummy cap is `22/(22-t)`, and
+`lambda_t=566/49-(t-1)`. No23 kernel is added to the actual law.
+Let `Hbar(t)` be the unrounded source upper numerator, recomputing
+the ordinary expectation and both matched zero7 components at that
+same `t`. Keep the source's finite anchor rectangle `u<12,v<9`
+and its full-linear omitted-height bounds. Define `zeta_q(t)` and
+`eta_q(t)` by replacing12 with `t` in the suffix formulas.
+
+The analogous candidate is at most
+
+\[
+G_{\rm opt}(t)=\lambda_tD_7-\overline H(t)
+ +\sum_{q=7,11,13,17,19}\zeta_q(t)L_q+135\zeta_7(t).
+\tag{SD32}
+\]
+
+The `lambda_t>=zeta_7(t)` condition holds throughout: the suffix
+hinge is1-Lipschitz, and `lambda_12>zeta_7(12)`. All12 integer
+values are negative. Their largest is `G_opt(1)=-31.2004179162...`.
+The unrounded numerator is smaller than the rounded source numerator,
+so this test only makes the proposed certificate more favorable.
+
+To cover intervening real thresholds, first express the source
+comparison as positive7-depth components and the nonnegative spatial
+zero component. For `k<t<=k+1`, its split of integer multipliers
+`m<t` is fixed. Each low-multiplier term `m F(t/m)` and each high
+term `mW-tM` is nonincreasing on this half-open interval. Hence
+`Hbar(t)>=Hbar(k+1)`. The nonnegative suffix credits are also
+nonincreasing. Therefore
+
+\[
+G_{\rm opt}(t)\le V_k:=\lambda_kD_7-\overline H(k+1)
+ +\sum_q\zeta_q(k)L_q+135\zeta_7(k)
+\le V_1=-1.7715974684507994\ldots<-7/4
+\tag{SD33}
+\]
+
+for `k=1,...,11`, as checked exactly. Together with the separate
+`t=1` value this covers all real `t in[1,12]`. Global monotonicity
+of `Hbar` is not asserted: crossing an integer changes its multiplier
+split and can introduce an upward jump from the omitted-tail majorant.
+
+This stops the retained early-stage ledger, current geometry/tail
+envelope and these suffix/cap corrections for this threshold range.
+It does not stop changed early kernels, tighter joint geometry,
+additional credits or other laws. In particular it is not an actual
+query lower bound, an actual family attaining the upper envelopes,
+or a covering counterexample. Any future positive finite certificate
+using SD29 must also construct a same-source computable upper bound
+for the actual integral `B_7` and compatible interpolation/screening;
+the old branch fields do not automatically determine it. That missing
+interface is immaterial to the negative result, which granted `B_7=0`.
+
 ## Verification
 
 The [standard-library producer](../../frontier/cover-geometry/pa_complete_suffix_debits.py)
@@ -733,4 +924,28 @@ checks do not replace it. No Lean statements were added for these results.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pa_complete_suffix_debits.py
+```
+
+The separate [seven-core producer](../../frontier/cover-geometry/seven_core_suffix_branch.py)
+and [exact results](../../frontier/cover-geometry/seven_core_suffix_branch.json)
+hash-pin the source manuscript, verifier, C++ enumerator and two
+certificate inputs. It copies the unchanged verifier and enumerator
+into temporary storage, compiles the enumerator and extends only the
+runtime threshold-ratio set from15 to45. It regenerates24 geometry
+batches with10152 integer queries, reconstructs the original branch
+and all12 threshold numerators, and checks all11 interval bounds.
+All107 producer checks pass. Independent exact arithmetic checks the
+suffix coefficients and all11 interval bounds; the ordinary interval
+argument above supplies the passage from endpoints to real thresholds.
+The source verification material is copyright2026 Michael Schroeder,
+MIT licensed; its license is retained with the temporary copies.
+Source identity and attribution are also recorded in
+[the existing library entry](../../../../../Library/Arith/schroeder2026nine.md).
+The source's general comparison theorem remains an attributed premise;
+this bounded replay does not reverify its entire proof or certificate.
+
+Run without `-O`, since the unchanged external verifier uses assertions:
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven_core_suffix_branch.py --source-root /path/to/nine-prime-support
 ```
