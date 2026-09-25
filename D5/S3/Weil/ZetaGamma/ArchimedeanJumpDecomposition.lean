@@ -74,7 +74,7 @@ private theorem jump_energy_nonnegative (f : WeilTestFunction) :
   filter_upwards [self_mem_ae_restrict measurableSet_Ioi] with x hx
   exact mul_nonneg (jump_density_nonnegative hx) (translation_energy_nonnegative f x)
 
-private theorem integral_exp_neg_mul_cos {c t : ℝ} (hc : 0 < c) :
+theorem integral_exp_neg_mul_cos {c t : ℝ} (hc : 0 < c) :
     (∫ x : ℝ in Ioi 0, Real.exp (-c * x) * Real.cos (t * x)) =
       c / (c ^ 2 + t ^ 2) := by
   have hInt : IntegrableOn
