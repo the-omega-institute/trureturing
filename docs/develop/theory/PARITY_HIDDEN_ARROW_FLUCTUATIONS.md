@@ -1254,3 +1254,241 @@ O\left(
 非退化相位时钟。这是同一数据上的两种同时归一化，以上联合证明已给出它们的关系。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 31. 格点间隙上的精确容量与非正态波动
+
+**定义 31.1（与间隙阈值配对的容量）。** 沿用定义 27.1，固定格点振幅，
+其最大格距为 $`h\gt0`$。取 $`b_M\in h\mathbb Z`$ 满足
+$`b_M-\tau_M\to s\in\mathbb R`$。先对齐到正确方向，并置
+
+```math
+A_M=\{i:W_i\gt b_M+h/2\},\qquad
+N_M=|A_M|,\qquad C_M=|A_M\cap S|,\qquad
+m_M=\lfloor\mathbb E_S N_M\rfloor.
+```
+
+式 (31.1)。
+
+支持对称性使这个确定容量不依赖未知的支持位置。
+令 $`T_M`$ 选取补偿得分最大的 $`m_M`$ 个位置，同分处用独立优先级。
+未知方向时先作定义 27.1 的同一方向判决，仍使用这个确定容量。
+对任意确定整数 $`0\le m\le M`$，定义已知方向的固定容量风险
+$`H_{\mathcal E,m}^{k}=\inf_{|T|=m}\sup_{|S|=q}\mathbb E_S^{\mathcal E}[|S\setminus T|/q]`$，
+下确界遍历可随机化的数据规则；未知方向风险 $`H_{\mathcal E,m}^{o}`$
+还对两个方向取上确界，规则不获得方向信息。
+对 $`m=m_M`$，令 $`\xi\in\{k,o\}`$，并定义配对阈值的正确对齐平均风险
+
+```math
+\overline H_M=1-\frac{\mathbb E_S C_M}{q},\qquad
+\sigma^2=p_*(1-p_*),\qquad
+\pi_- =\frac{e^s}{1+e^s},\qquad
+\pi_+ =\frac{e^{s+h}}{1+e^{s+h}}.
+```
+
+式 (31.2)。
+
+令 $`a_+=1-\pi_+`$、$`a_-=1-\pi_-`$，于是
+$`0\lt a_+\lt a_-\lt1`$，并置
+
+```math
+f_s(g)=
+\begin{cases}
+a_+g,&g\le0,\\[0pt]
+a_-g,&g\ge0,
+\end{cases}
+\qquad
+\mu_s=\frac{(a_--a_+)\sigma}{\sqrt{2\pi}}.
+```
+
+式 (31.3)。
+
+**定理 31.2（容量修正的两种斜率）。** 上述容量满足
+$`m_M/q\to1-p_*\in(0,1)`$，且对两个实际平稳实验、两种方向信息情形，
+
+```math
+\begin{aligned}
+\sqrt q\left(H_{\mathcal E,m_M}^{\xi}-\overline H_M\right)
+ &\longrightarrow\mu_s\gt0,\\[0pt]
+\sqrt q\left(\frac{|S\setminus T_M|}{q}
+                       -H_{\mathcal E,m_M}^{\xi}\right)
+ &\Longrightarrow f_s(G)-\mu_s,
+ \qquad G\sim N(0,\sigma^2).
+\end{aligned}
+```
+
+式 (31.4)。
+
+这里的 $`G`$ 就是第 27 章的共同 Gaussian 坐标：与该坐标联合时，极限为
+$`(G,f_s(G)-\mu_s)`$。新极限与对数对比坐标相互独立；在第 29 章时钟
+收敛的进一步子序列上，也可同时加入第 29、30 章的两条预算曲线，新坐标与
+它们及对数对比坐标联合独立。所有结论对支持一致。
+
+式 (31.4) 的第二个极限不是正态分布。其方差为
+
+```math
+\sigma^2\left[
+ \frac{a_+^2+a_-^2}{2}
+ -\frac{(a_--a_+)^2}{2\pi}\right].
+```
+
+式 (31.5)。
+
+这是极限随机变量的方差。
+
+证明。先设方向已知。取充分大的固定截断指数。所有行同时满足
+$`|W_i-Z_i|\le\eta_M=O(q\log M/M)=o(1)`$ 的事件，其补集概率可为
+任意固定次幂的小量。在此事件上，$`A_M`$ 等于
+$`\{Z_i\ge b_M+h\}`$。位于它边界两侧的完整格点层分别为
+$`Z_i=b_M+h`$ 和 $`Z_i=b_M`$；层内仍按 $`W_i`$ 排序。
+
+由第 26 章的格点局部界、精确换测度及单行实际比较，两个相邻层的总占据数
+$`K_+,K_-`$ 各满足
+
+```math
+\mathbb E_S K_\pm\asymp\frac q{\sqrt\lambda},\qquad
+\mathrm{Var}_S K_\pm
+ \le C\left(\frac q{\sqrt\lambda}
+       +\frac{\delta_Mq^2}{\lambda}+M^{2-D}\right),
+\qquad \delta_M=\frac{(\log M)^3}{n}.
+```
+
+式 (31.6)。
+
+格点尾的几何和还给出背景计数 $`F_M=N_M-C_M`$ 的界
+
+```math
+\mathbb E_S F_M
+ =\frac{q}{\sqrt\lambda}
+       d_*L_he^{-s}[1+o(1)],\qquad
+\mathrm{Var}_S F_M=o(q),\qquad
+L_h=\frac{h}{e^h-1}.
+```
+
+式 (31.7)。
+
+这里上尾从 $`b_M+h`$ 开始，故几何系数为 $`L_h`$。
+信号接受比例趋于 $`1-p_*`$。单行、两行比较给出
+$`\mathrm{Var}_S C_M=O(q)`$ 及 $`\mathrm{Var}_S N_M=O(q)`$。
+全信号向量比较和独立 Bernoulli 中心极限定理，再以单行比较转移精确均值，得到
+
+```math
+G_M=-\frac{C_M-\mathbb E_S C_M}{\sqrt q}
+ \Longrightarrow G,\qquad
+\frac{N_M-\mathbb E_S N_M}{\sqrt q}+G_M
+ \longrightarrow0\quad\text{于 }L^2.
+```
+
+式 (31.8)。
+
+$`G_M`$ 的二阶矩一致有界，因此它一致可积。
+这些结论也证明 $`m_M/q\to1-p_*`$，从而容量最终合法。
+
+记 $`D_M=|N_M-m_M|`$。由精确校准和上述方差界，
+$`\mathbb E_S D_M^2=O(q)`$。
+两个相邻层的平均大小为 $`q/\sqrt\lambda`$ 阶，大于 $`\sqrt q`$。
+在这个较大的尺度对 $`N_M`$ 作 Chebyshev 控制，并对两层占据数作下尾控制，
+得到一个补集概率为 $`O(\lambda/q)`$ 的事件，在其上
+$`D_M`$ 小于两个层的大小。
+再交上 (27.11) 的后验好事件，记共同好事件为 $`\mathcal H_M`$，则
+
+```math
+\mathbb P_S(\mathcal H_M^c)=O(\lambda/q),\qquad
+\mathbb E_S[D_M\mathbf1_{\mathcal H_M^c}]
+ \le\sqrt{\mathbb E_S D_M^2\,
+                  \mathbb P_S(\mathcal H_M^c)}
+ =O(\sqrt\lambda)=o(\sqrt q).
+```
+
+式 (31.9)。
+
+如果 $`N_M\gt m_M`$，排序规则从上方层删去 $`N_M-m_M`$ 个位置；
+如果 $`N_M\lt m_M`$，它从下方层补入 $`m_M-N_M`$ 个位置。
+好事件中这些改动均停在相邻层内，不跨越第二个格点。
+
+后验概率的近似必须在这些实际排名区间中成立。
+使用 (27.11) 的乘法倾斜参数 $`t`$ 及 $`t_B=\log((M-q)/q)`$，有
+
+```math
+\log\frac{\pi_i}{1-\pi_i}
+ =W_i-t_B+\log t+O(q^{-1}),\qquad
+|\log t|\le\frac{C|U-q|}{q},\qquad
+\mathbb E_S(U-q)^2=O(q).
+```
+
+式 (31.10)。
+
+因为 $`t_B-\tau_M=o(1)`$，两层内的后验概率分别趋向
+$`\pi_+`$ 和 $`\pi_-`$，而且相应一致误差至多为
+$`\epsilon_M+C|U-q|/q`$，其中确定的 $`\epsilon_M\to0`$ 吸收得分补偿、
+相位收敛和单点条件比余项。
+因此在实际删补区间内，把后验概率和换成层概率乘以改动长度，其绝对期望误差至多为
+
+```math
+\epsilon_M\mathbb E_S D_M
+ +\frac Cq\sqrt{\mathbb E_S D_M^2\,
+                         \mathbb E_S(U-q)^2}
+ =o(\sqrt q).
+```
+
+式 (31.11)。
+
+这不要求同一格点层中的各个位置等权或均匀被选。
+
+条件于完整数据和优先级，删补区间及改动方向均为确定量。
+式 (27.8) 的后验负协方差，将该区间内真实标签数的条件方差控制在
+$`D_M/4`$ 以内。故标签数与其条件均值的绝对误差期望至多为
+$`O((\mathbb E_S D_M)^{1/2})=O(q^{1/4})=o(\sqrt q)`$。
+先在均匀支持先验下完成此条件计算，再由等变性转到每个固定支持。
+在坏事件中，真实标签误差至多为 $`Cq`$，期望代价为
+$`O(\lambda)=o(\sqrt q)`$；线性代理中的 $`D_M`$ 不以基数为界，
+其坏事件贡献另外由 (31.9) 控制。
+结合 (31.11)，记 $`L_M=|S\setminus T_M|`$，得到
+
+```math
+\mathbb E_S\left|
+ L_M-\left[q-C_M
+       +\pi_+(N_M-m_M)_+
+       -\pi_-(m_M-N_M)_+\right]\right|
+ =o(\sqrt q).
+```
+
+式 (31.12)。
+
+利用 (31.8)、正部函数的 Lipschitz 性和取整误差至多为一，便可化为
+
+```math
+\mathbb E_S\left|
+ \frac{L_M-q\overline H_M}{\sqrt q}-f_s(G_M)
+ \right|\longrightarrow0.
+```
+
+式 (31.13)。
+
+连续映射给出 $`f_s(G_M)\Rightarrow f_s(G)`$，一致可积性同时给出均值收敛。
+这种非线性 Gaussian 映射属于经典方向可微极限方法，参见
+[Fang–Santos 定理 2.1](../../../Library/Dynamics/fang2016directional.md)；
+本处所需的真实数据近似和均值误差由 (31.9)–(31.13) 给出。
+因为 $`\mathbb E G_+=\sigma/\sqrt{2\pi}`$，
+$`\mathbb E f_s(G)=\mu_s`$。后验排序在固定输出大小下最优，支持对称性
+把它的已知方向风险识别为精确极小极大风险，证明已知方向的 (31.4)。
+未知方向仍共用第 27 章的方向判决；原始遗漏数的错误方向代价期望为
+$`O(1)`$，揭示方向与组合规则的风险夹逼为 $`O(q^{-1})`$，故两者不改变
+(31.4) 的分布或均值结论。
+
+在零点两侧，$`f_s(G)`$ 的密度极限分别为
+$`(a_+\sigma\sqrt{2\pi})^{-1}`$ 和
+$`(a_-\sigma\sqrt{2\pi})^{-1}`$，二者不相等，因此平移后的分布也不可能为正态。
+又有 $`\mathbb E f_s(G)^2=\sigma^2(a_+^2+a_-^2)/2`$，减去均值平方即得 (31.5)。
+
+最后，间隙阈值与第 27 章基数阈值之间的单行信号质量为
+$`O(\log\lambda/\sqrt\lambda)=o(1)`$。
+其中心化总真实计数的实际方差为 $`o(q)`$；结合第 27 章的排序比较，
+$`G_M`$ 与共同损失坐标之差依概率趋零。
+第 27、29、30 章已有联合极限及连续映射遂给出所述同源关系和独立性。
+各替换沿用自身的归一化尺度，且由支持等变性保持一致性。
+
+校准不能仅保留 $`m_M/q\to1-p_*`$：式 (31.7) 的背景均值本身为
+$`q/\sqrt\lambda\gg\sqrt q`$ 阶。
+删去这个均值或只按一阶信号比例取容量，一般会移出本定理的临界窗口。∎
+
+## 追加锚（本行以下为增补区）
