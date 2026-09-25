@@ -50,3 +50,48 @@ variance correction. The result therefore does not claim that conditioning can
 be removed from arbitrary large subsets, nor that all posterior coordinates
 are jointly independent. It also does not assert convergence of actual fourth
 moments or make a global originality claim.
+
+# Selected posterior noise on two simultaneous scales
+
+Chapter 35 of the same fluctuation volume uses Theorem 2 for an entire
+selected set together with both boundary rank prefixes. The selected set has
+order-support-size cardinality, while its auxiliary Bernoulli variance is a
+vanishing fraction of the full variance. The local theorem is applied to the
+full sum and its complement, both with variance comparable to the support
+size. Its uniform absolute point error therefore yields the needed density
+ratio for every selected count. Small cardinality is not the premise used
+by this calculation.
+
+Transferring the center requires more than multiplying total variation by
+the size of the selected set. The proof integrates a centered subset sum
+against the conditioning ratio; the constant term cancels. Cauchy–Schwarz
+and the independent Bernoulli fourth-moment bound then give one
+variance-weighted bound for every subset of the same union. It controls the
+selected total and all boundary prefixes at their different normalizations.
+These are direct probability estimates inside the model-specific proof,
+not claims of a new general local limit theorem.
+
+The selected variance constant comes from exact signal/background change of
+measure and a logistic-weighted local integral, or its lattice sum beginning
+at the first accepted layer. The fixed-width nonlattice input is attributed
+to [Stone](stone1967local.md). The independent-array process limit and the
+conditional-kernel independence mechanism are attributed to
+[Whitt and Pasquazzi](whitt2007martingale.md). The proof verifies joint
+Gaussian convergence before using the vanishing selected/boundary overlap
+covariance to conclude independence.
+
+[Arratia–Goldstein–Langholz (2005)](https://arxiv.org/abs/math/0506300v1)
+provides the classical conditional Bernoulli representation in Lemma 3.5.
+Its stronger local expansions use Condition 2.1, including a lower bound on
+variance proportional to the number of coordinates. That condition is not
+assumed for this full sparse array. The total-variance local bound above
+suffices, so no sharper inclusion-probability expansion is imported.
+
+The resulting joint actual pair/path law with exact posterior centers, a
+constant intermediate-noise curve and an independent fine boundary process
+is `repo-derived` ordinary mathematics. The auxiliary local theorem,
+rejective sampling, weak-convergence methods and Gaussian independence
+criterion are `literature-attested`. The inspected sources do not supply
+the entire actual-model bridge. This is a bounded source comparison, not a
+global originality certificate; the statement asserts weak convergence,
+not convergence of actual moments or finite-sample posterior independence.
