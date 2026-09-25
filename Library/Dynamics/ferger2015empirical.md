@@ -38,3 +38,20 @@ does not provide the calibrated compensated-score clock, the fixed-size
 posterior comparison, or exact minimax centering. Those hypotheses and transfers
 must be established within that model; a common “local process” description
 does not make the theorem directly applicable.
+
+## A uniform empirical bridge as an auxiliary marginal
+
+The global marginal of Theorem 2.1, with a fixed uniform distribution, supplies
+the classical uniform empirical-process Brownian bridge. This marginal is enough
+for a direct rare-count decomposition: conditional on the total number of rare
+entries, their entry parameters are iid with a normalized distribution function.
+A uniform inverse-distribution representation expresses their process as the
+uniform empirical bridge composed with that distribution function. An independent
+binomial total-count fluctuation supplies the remaining normal component.
+
+The present functional budget proof separately establishes uniform convergence
+of the changing normalized distribution functions to a continuous clock, a
+random-sample-size conditioning argument, and the actual-experiment transfer.
+It does not apply the source's local Poisson limit to a regime with diverging
+local expected count. The arithmetic clock may have corners; continuity is the
+property needed for the composition step.
