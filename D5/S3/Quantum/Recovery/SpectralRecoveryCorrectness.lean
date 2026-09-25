@@ -132,7 +132,7 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
       _ = (E a)ᴴ * (P * Y) * E a := by rw [hWN]
       _ = (E a)ᴴ * P * (Y * E a) := by simp only [Matrix.mul_assoc]
       _ = (E a)ᴴ * (P * E a) * X := by rw [hYE]; simp only [Matrix.mul_assoc]
-      _ = ((E a)ᴴ * E a) * X := by rw [hPE]; simp only [Matrix.mul_assoc]
+      _ = ((E a)ᴴ * E a) * X := by rw [hPE]
   change (∑ a, (E a)ᴴ * W * NX * W * E a) +
     Matrix.trace ((1 - P) * NX) • Matrix.single v v 1 = X
   rw [hz, Matrix.trace_zero, zero_smul, add_zero]
@@ -193,6 +193,7 @@ theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
       rw [complete_kraus_action K P v hP hPP]
       simp only [K, spectralRecoveryAction, Matrix.conjTranspose_mul,
         Matrix.conjTranspose_conjTranspose, hW, Matrix.mul_assoc]
+      rfl
     have hleft : ∀ X : Matrix d d ℂ,
         (∑ b, G b * (∑ a, E a * X * (E a)ᴴ) * (G b)ᴴ) = X := by
       intro X
