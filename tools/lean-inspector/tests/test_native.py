@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from test_native_support import NativeTestSupport, NativeArtifactTestSupport
+from test_native_support import NativeTestSupport, NativeArtifactTestSupport, NativeDependencyTestSupport
 from test_native_invalidation import *
 from test_native_publication import *
 from test_native_recovery import *
@@ -15,12 +15,18 @@ from test_native_records import *
 from packages.reg import NativeRegTests
 from Census.tests.relocation_fixture import NativeRelocationTests
 
-class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
-                  NativeRecoveryTests, NativePackagingTests, NativeReuseTests,
+class NativeTests(NativeTestSupport, NativeInvalidationTests, NativeColdPublicationTests,
+                  NativeModuleFacetTests, NativePackagingTests, NativeReuseTests,
                   NativeInterfaceTests, NativeRecordTests, NativeRegTests, unittest.TestCase):
     pass
 
 class NativeArtifactTests(NativeArtifactTestSupport, NativeArtifactConsumerTests, unittest.TestCase):
+    pass
+
+class NativePublicationTests(NativeDependencyTestSupport, NativePublicationConsumerTests, unittest.TestCase):
+    pass
+
+class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTests, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ import native
 
 from test_native_support import *
 
-class NativePublicationTests:
+class NativePublicationConsumerTests:
     def test_native_module_validation_uses_lake_trace(self):
         self.build()
         state = native.state(self.root)
@@ -122,45 +122,6 @@ class NativePublicationTests:
         native.batch(request, result)
         self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
 
-    def test_coordinates_use_private_temporary_memo_and_clean_up_failures(self):
-        temporary = self.root / 'coordinate temporary files'
-        temporary.mkdir()
-        environment = dict(self.env, TMPDIR=str(temporary))
-        check_output = subprocess.check_output
-        observed = []
-        for fault in ['none', 'none', 'address-error', 'address-malformed',
-                      'coordinates-error', 'coordinates-malformed']:
-            with self.subTest(fault=fault):
-                def invoke(argv, **kwargs):
-                    if argv[1] == 'address':
-                        memo = Path(kwargs['env']['STRATALINT_LEAN_INPUT_MEMO_ROOT'])
-                        self.assertEqual(memo.parent, temporary)
-                        self.assertTrue(memo.is_dir())
-                        self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
-                        observed.append(memo)
-                    result = check_output(argv, **kwargs)
-                    if fault == argv[1] + '-error':
-                        raise subprocess.CalledProcessError(2, argv)
-                    if fault == argv[1] + '-malformed':
-                        return 'malformed\n'
-                    return result
-                with patch.dict(os.environ, environment), patch.object(
-                        publication.subprocess, 'check_output', side_effect=invoke):
-                    if fault == 'none':
-                        result = publication.coordinates(self.root)
-                        self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
-                    else:
-                        error = subprocess.CalledProcessError if fault.endswith('-error') else ValueError
-                        with self.assertRaises(error):
-                            publication.coordinates(self.root)
-                self.assertFalse((self.root / '.lake').exists())
-                self.assertEqual(list(temporary.iterdir()), [])
-        self.assertEqual(len(set(observed)), len(observed), 'each invocation must own its memo')
-        with patch.dict(os.environ, dict(environment, TMPDIR=str(temporary / 'absent'))):
-            with self.assertRaises(FileNotFoundError):
-                publication.coordinates(self.root)
-        self.assertFalse((self.root / '.lake').exists())
-        self.assertEqual(list(temporary.iterdir()), [])
 
     def test_coordinates_reuse_warm_tree_memo(self):
         self.ensure()
@@ -388,31 +349,6 @@ class NativePublicationTests:
                     self.assertTrue(failed)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
-    def test_native_compiler_seed_is_private(self):
-        self.assertFalse((self.root / '.lake').exists())
-        if self.compiler_seed is None:
-            stage = self.root / 'compiler-stage'
-            stage_compiler(stage)
-            self.compiler_seed = str(stage)
-        stage = Path(self.compiler_seed)
-        before = {path.name: (publication.digest(path), path.stat().st_mode)
-                  for path in stage.iterdir()}
-        self.run_lake('env', 'true')
-        # Unstage admits only compiler artifacts; each fixture still creates
-        # its own producer build, reports, utility inputs, and ensure stamp.
-        self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
-        for name in before:
-            if name == 'outputs.jsonl':
-                continue
-            donor = stage / name
-            private = self.root / '.lake/artifact-cache/artifacts' / name
-            self.assertEqual(publication.digest(private), before[name][0])
-            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
-            self.assertEqual(donor.stat().st_mode & 0o222, 0)
-            private.unlink()
-            private.write_bytes(b'fixture-private damage')
-        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
-                                  for path in stage.iterdir()})
 
     def test_native_semantic_version_and_config(self):
         self.build()
@@ -643,3 +579,72 @@ class NativeArtifactConsumerTests:
         rejected = self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+
+class NativeColdPublicationTests:
+    def test_coordinates_use_private_temporary_memo_and_clean_up_failures(self):
+        temporary = self.root / 'coordinate temporary files'
+        temporary.mkdir()
+        environment = dict(self.env, TMPDIR=str(temporary))
+        check_output = subprocess.check_output
+        observed = []
+        for fault in ['none', 'none', 'address-error', 'address-malformed',
+                      'coordinates-error', 'coordinates-malformed']:
+            with self.subTest(fault=fault):
+                def invoke(argv, **kwargs):
+                    if argv[1] == 'address':
+                        memo = Path(kwargs['env']['STRATALINT_LEAN_INPUT_MEMO_ROOT'])
+                        self.assertEqual(memo.parent, temporary)
+                        self.assertTrue(memo.is_dir())
+                        self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
+                        observed.append(memo)
+                    result = check_output(argv, **kwargs)
+                    if fault == argv[1] + '-error':
+                        raise subprocess.CalledProcessError(2, argv)
+                    if fault == argv[1] + '-malformed':
+                        return 'malformed\n'
+                    return result
+                with patch.dict(os.environ, environment), patch.object(
+                        publication.subprocess, 'check_output', side_effect=invoke):
+                    if fault == 'none':
+                        result = publication.coordinates(self.root)
+                        self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
+                    else:
+                        error = subprocess.CalledProcessError if fault.endswith('-error') else ValueError
+                        with self.assertRaises(error):
+                            publication.coordinates(self.root)
+                self.assertFalse((self.root / '.lake').exists())
+                self.assertEqual(list(temporary.iterdir()), [])
+        self.assertEqual(len(set(observed)), len(observed), 'each invocation must own its memo')
+        with patch.dict(os.environ, dict(environment, TMPDIR=str(temporary / 'absent'))):
+            with self.assertRaises(FileNotFoundError):
+                publication.coordinates(self.root)
+        self.assertFalse((self.root / '.lake').exists())
+        self.assertEqual(list(temporary.iterdir()), [])
+
+
+    def test_native_compiler_seed_is_private(self):
+        self.assertFalse((self.root / '.lake').exists())
+        if self.compiler_seed is None:
+            stage = self.root / 'compiler-stage'
+            stage_compiler(stage)
+            self.compiler_seed = str(stage)
+        stage = Path(self.compiler_seed)
+        before = {path.name: (publication.digest(path), path.stat().st_mode)
+                  for path in stage.iterdir()}
+        self.run_lake('env', 'true')
+        # Unstage admits only compiler artifacts; each fixture still creates
+        # its own producer build, reports, utility inputs, and ensure stamp.
+        self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        for name in before:
+            if name == 'outputs.jsonl':
+                continue
+            donor = stage / name
+            private = self.root / '.lake/artifact-cache/artifacts' / name
+            self.assertEqual(publication.digest(private), before[name][0])
+            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
+            self.assertEqual(donor.stat().st_mode & 0o222, 0)
+            private.unlink()
+            private.write_bytes(b'fixture-private damage')
+        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
+                                  for path in stage.iterdir()})
