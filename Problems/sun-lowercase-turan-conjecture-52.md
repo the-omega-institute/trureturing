@@ -75,16 +75,24 @@ as a substitute.
 ## Evidence
 
 The primary versioned HTML was checked for both definitions and both
-Conjecture 5.2 clauses. The six-source joint candidate at
-`36bed987ab16b09126cc4e0c21f465cd22214bc9` has three terminal
-independent source reviews approving literal recurrences, both generic
-closed-domain final types and endpoints. The designated scoped Lean
-build exited zero over 3011 jobs, and a fresh symbolic consumer exited
-zero on both quotient and multiplied recurrences, generic statements,
-initial values, endpoint instances and standard-three axiom closure.
-Those checks establish source readiness; companion validation, joint
-first Freeze, required CI, merge to dev and completion audit are
-separate delivery steps.
+Conjecture 5.2 clauses. All six Lean owners have completed joint first
+Freeze, with twelve canonical accepted/state artifacts. The scoped Lean
+build exited zero over 3011 jobs, and the symbolic consumer checked the
+source recurrences, generic strict statements, endpoints, and standard-three
+axiom closure. Source and companion reviews approved the six-owner result.
+The prebinding candidate `20a91df388d604fffb8c4436538f94995154283e`
+passed required CI run `36160400233` with all six checks successful.
+
+The `GStrict` Describe source attaches one typed `Proved` claim for this slug,
+with frozen members `D5/S1/Recurrence/Sun/GStrict.g_strict_turan` and
+`D5/S1/Recurrence/Sun/VStrict.v_strict_turan`. The GStrict member is the
+host; the VStrict member is an additional `DeclarationHandle`. The five
+theorem selectors without committed projection fixtures use disclosed,
+authored `Formula` statements in their companions. The named-set binding
+passed local canonical `make emit` and Scribe projection, Describe, and
+Markdown checks against the refreshed Lean report. The emitted GStrict
+page has two v1 member markers under the one claim. Prebinding CI does
+not certify this later binding change.
 
 ## Triage
 
@@ -94,14 +102,15 @@ was filed after the ordinary probes and grants no retrospective
 baseline `15664c84561c0ea57b6ca22cf328802a5ba5f897`, the three
 literal definitions and all five public theorems are assessed together.
 Each theorem has live content and `admission_basis: escape-witness`;
-the two final clauses are separate public results, without a conjunction
-wrapper. No proof-shape or completion claim is inferred from this
-problem file itself.
+the two final clauses are separate public results, bound to one problem
+credit without a conjunction wrapper or duplicate claim. No proof-shape
+or completion claim is inferred from this problem file itself.
 
 ## ASSUMED-UNVERIFIED
 
 The bounded prior-art search did not find a later exact proof through
 25 September 2026; worldwide absence and priority are unverified.
 The source mathematical result and repository delivery completion are
-different questions. Freeze, final CI, ordinary merge/sync and a
-separate completion audit remain to be checked by the delivery owner.
+different questions. Final candidate CI, ordinary merge to dev, main
+synchronization, and a separate completion audit remain to be checked by
+the delivery owner.

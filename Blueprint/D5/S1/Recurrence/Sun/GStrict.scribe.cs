@@ -28,7 +28,11 @@ internal sealed class GStrictDocument : IScribeDocumentDefinition
                 + "and weight (n+1)^2/n^2>1 give strictness after splitting the neighbor "
                 + "product by sign. Sign transport returns the literal lowercase g claim. "
                 + "The endpoint, local range and closed tail cover the entire source domain."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("sun-lowercase-turan-conjecture-52"),
+                ResolutionKind.Proved,
+                [DeclarationHandle.Create("D5/S1/Recurrence/Sun/VStrict.v_strict_turan")])))));
 
     private static Formula ResultFormula()
     {

@@ -10,6 +10,12 @@ $$\forall n: \mathbb{N}, 1 \le n \Rightarrow \forall x: \mathbb{R}, x \le -1 \Ri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Sun/GStrict.g_strict_turan` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun-lowercase-turan-conjecture-52` (proved) by `D5/S1/Recurrence/Sun/GStrict.g_strict_turan` and `D5/S1/Recurrence/Sun/VStrict.v_strict_turan`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-lowercase-turan-conjecture-52","declaration_gid":"D5/S1/Recurrence/Sun/GStrict.g_strict_turan","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-lowercase-turan-conjecture-52","declaration_gid":"D5/S1/Recurrence/Sun/VStrict.v_strict_turan","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhi-Hong Sun (2026). *Generalizations of the Christoffel-Darboux formula and congruences involving Apéry-like numbers*. DOI: [10.48550/arXiv.2608.13192](https://doi.org/10.48550/arXiv.2608.13192). URL: <https://arxiv.org/html/2608.13192v1>.
