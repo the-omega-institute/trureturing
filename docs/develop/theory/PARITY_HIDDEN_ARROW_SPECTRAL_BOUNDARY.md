@@ -3230,3 +3230,243 @@ $`d_M=\delta\ell_M\to0`$ 且 $`d_M/\delta=\ell_M\to\infty`$。
 故 (62.1) 包含任意缓慢分离的合法实际谱参数。
 
 ## 追加锚（本行以下为增补区）
+
+## 63. 有限多载波的共同别名簇与后验能量联合律
+
+**定义 63.1（临界窗口与相位关系）。** 沿用第 62 章的原实验、精确组电荷、有限截距及旧联合坐标，固定正整数 $p$。对 $1\le a\le p$ 取确定性序列
+
+$$
+\eta_{a,M}\to\infty,\qquad
+r_{a,M}=\eta_{a,M}^2\delta_M\to\zeta_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad \omega=\pi/2.
+$$
+
+记 $\langle t\rangle$ 为 $t$ 模 $2\pi$ 在 $(-\pi,\pi]$ 内的代表。假定下列有限组实序列各自收敛到一个有限实数，或其绝对值趋于无穷：
+
+$$
+\delta_M^{-1}\langle\phi_{a,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\pi\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}+\phi_{b,M}\rangle.
+\tag{63.1}
+$$
+
+这里 $a=b$ 也包括在内。有限极限分别记作 $b_a^0,b_a^\pi,d_{ab}^-,d_{ab}^+$；不存在有限极限的项记作 $\infty$，不赋予无穷项符号。若 $d_{ab}^-$ 或 $d_{ab}^+$ 有限，则称 $a,b$ 属于同一别名簇。
+
+各窗口都使用同一后验标签向量。令
+
+$$
+s_{a,M}=\log(\eta_{a,M}/\delta_M),\qquad
+z_{a,M}(\theta)=s_{a,M}+\theta/\eta_{a,M}^3,
+$$
+
+$$
+V_{a,M}(\theta)=\eta_{a,M}^{3/2}e^{z_{a,M}(\theta)/2}
+\left[\mathcal Z_M(z_{a,M}(\theta)\sqrt{\delta_M})
+-J_M-2z_{a,M}(\theta)\sqrt{\delta_M}T_M\right],\qquad
+D_{a,M}(\theta)=V_{a,M}(\theta)-V_{a,M}(0).
+\tag{63.2}
+$$
+
+**定理 63.2（共同高斯载波及非高斯能量的联合分类）。** 条件 (63.1) 下，别名关系是等价关系。其每个等价类具有以下一种表示。
+
+零相位类由所有 $b_a^0$ 有限的指标组成，取原实高斯测度 $W_0=W_\rho$，并令
+
+$$
+\mathcal C_a(f)=W_0(e^{ib_a^0x}f(x)).
+\tag{63.3}
+$$
+
+$\pi$ 相位类由所有 $b_a^\pi$ 有限的指标组成，取与旧场独立的一份实高斯测度 $W_\pi$，令
+
+$$
+\mathcal C_a(f)=W_\pi(e^{ib_a^\pi x}f(x)).
+\tag{63.4}
+$$
+
+其他每一类 $L$ 可选一个代表 $a_L$、符号 $\epsilon_a\in\{-1,1\}$ 和实数 $b_a$，使
+
+$$
+\delta_M^{-1}\langle\phi_{a,M}-\epsilon_a\phi_{a_L,M}\rangle\to b_a.
+\tag{63.5}
+$$
+
+这一类取一份 proper 复高斯测度 $\mathcal C_L=(W_{L,1}+iW_{L,2})/\sqrt2$。各类的测度与 $W_0,W_\pi$ 相互独立，并定义
+
+$$
+\mathcal C_a(f)=
+\begin{cases}
+\mathcal C_L(e^{ib_ax}f(x)),&\epsilon_a=1,\\
+\overline{\mathcal C_L(e^{-ib_ax}\overline{f(x)})},&\epsilon_a=-1.
+\end{cases}
+\tag{63.6}
+$$
+
+实测度对复函数按实部与虚部延拓，所有控制测度都是 $\rho(x)dx$。在原先的两个实际实验及概率范围内，有限向量 $(D_{a,M})_{a=1}^p$ 与完整旧联合坐标共同收敛，各固定紧区间上的路径是 C-tight 的。其极限为
+
+$$
+D_a(\theta)=2\sqrt{\zeta_a}\int_0^{\theta/\zeta_a}
+\left(|\mathcal C_a(e^{i\omega vx})|^2-\gamma\right)dv.
+\tag{63.7}
+$$
+
+$N_2$ 与整个载波测度族独立。所有旧坐标仍在 $W_0$ 上，特别是 $J_\infty=b_\star\gamma+I_2(H)$。原先的先验条件 BL 收敛、固定支持下的一致无条件收敛及共同方向事件均保持。
+
+等价地，这个共同复高斯族满足
+
+$$
+\mathbb E\mathcal C_a(f)\overline{\mathcal C_b(g)}=
+\begin{cases}
+\int e^{id_{ab}^-x}f\overline g\,\rho\,dx,&d_{ab}^-\in\mathbb R,\\
+0,&d_{ab}^-=\infty,
+\end{cases}
+$$
+
+$$
+\mathbb E\mathcal C_a(f)\mathcal C_b(g)=
+\begin{cases}
+\int e^{id_{ab}^+x}fg\,\rho\,dx,&d_{ab}^+\in\mathbb R,\\
+0,&d_{ab}^+=\infty.
+\end{cases}
+\tag{63.8}
+$$
+
+这些极限数来自同一组实际相位，不能独立指定为任意矩阵元素。
+
+证明。先核对相位关系。有限差关系与有限和关系分别写成 $\phi_a=\phi_b+\delta d+o(\delta)$ 和 $\phi_a=-\phi_b+\delta d+o(\delta)$，等式均模 $2\pi$。组合两式仍是其中一种，所以关系传递。若一个闭合关系链改变了代表的符号，则 $2\phi_{a_L}=O(\delta)$ 模 $2\pi$。由 (63.1)，该类必落在零相位或 $\pi$ 相位类。非例外类因此可以一致选择符号，并沿关系链得到 (63.5)；两条同符号链所得偏移之差趋于零，异符号链将导致刚排除的情况。例外类的偏移则直接由相对 $0$ 或 $\pi$ 的唯一小提升决定。特别地，非例外代表满足
+
+$$
+\operatorname{dist}(\phi_{a_L,M},\pi\mathbb Z)/\delta_M\to\infty.
+\tag{63.9}
+$$
+
+下面先在同一个高斯参考向量上计算载波，随后才作平方映射。取独立标准实正态 $g_j$，保留实际环境方差 $v_j$，并令
+
+$$
+F_{a,M}(v)=\sum_j e^{i\phi_{a,M}j}\sqrt{v_j}g_j e^{i\omega vx_j},
+\qquad x_j=j\delta_M.
+\tag{63.10}
+$$
+
+对任一固定紧支撑光滑函数 $h$，离散分部求和给出
+
+$$
+\left|\sum_j\delta_M h(j\delta_M)e^{it_Mj}\right|
+\le C_h\frac{\delta_M}{|1-e^{it_M}|}
+\tag{63.11}
+$$
+
+只要分母不为零。若 $|\langle t_M\rangle|/\delta_M\to\infty$，右侧趋零；若 $\langle t_M\rangle/\delta_M\to d\in\mathbb R$，同一和是趋向 $\int h(x)e^{idx}dx$ 的黎曼和。先对固定光滑或区间简单测试作上述计算，再以等距延拓极限场到 $L^2(\rho)$；不对任意等价类直接逐点采样。以固定紧支撑逼近和高斯尾控制将结论扩展到所需 Fourier 测试函数的乘积。环境方差的替换误差按绝对值由总质量乘以其相对误差控制；它不再乘以 (63.11) 的分母。因此这里没有对数余量条件。
+
+在 (63.10) 的两种交叉 Gram 矩阵中分别取 $t_M=\phi_{a,M}-\phi_{b,M}$ 和 $t_M=\phi_{a,M}+\phi_{b,M}$，得到 (63.8)。与旧实线性测试的交叉项取 $t_M=\phi_{a,M}$，只在零相位类留下原场关联。在 $\pi$ 相位类，乘子 $(-1)^j$ 的自乘恒为一而旧场交叉项消失，所以该类是一份共同实副本。非例外类的自身伪协方差消失，故 proper；(63.5) 则确定共享或共轭的关系。不同类的两种交叉项都消失。实、虚部分的联合高斯性把这些 Gram 极限转成联合独立性，并直接验证 (63.3)—(63.6) 构造了同一个极限族。
+
+相位乘子模长恒为一，故在好环境子列的每个固定频率区间 $K$ 上
+
+$$
+\sup_M\mathbb E_G\|F_{a,M}\|_{H^1(K)}^2
+\le C_K\sum_j(1+x_j^2)v_j=O(1).
+\tag{63.12}
+$$
+
+$H^1(K)$ 的有界集在 $C(K)$ 中相对紧，故给出整个有限族的联合紧性。有限维 Gram 极限因此提升为共同的连续路径极限。
+
+回到实际电荷之前，对每个 $a$ 从有限 Fourier 恒等式直接提取锚定系数
+
+$$
+a_{a,M,\theta}(k)=\frac{2\eta_{a,M}^2}{\sqrt{\delta_M}}
+\left[e^{\theta/(2\eta_{a,M}^3)}\operatorname{Ci}
+(\omega\eta_{a,M}e^{\theta/\eta_{a,M}^3}|k|)
+-\operatorname{Ci}(\omega\eta_{a,M}|k|)\right],\quad k\ne0.
+\tag{63.13}
+$$
+
+其导数是
+
+$$
+\partial_\theta a_{a,M,\theta}(k)
+=\frac{2e^{\theta/(2\eta_{a,M}^3)}}{\sqrt{r_{a,M}}}
+\left[\tfrac12\operatorname{Ci}(u)+\cos u\right],
+\qquad u=\omega\eta_{a,M}e^{\theta/\eta_{a,M}^3}|k|.
+\tag{63.14}
+$$
+
+相位的精确整数部分保留在 $e^{i\phi_{a,M}j}$ 中。对 $t$ 在固定紧区间内，余相位与 $\omega t(x_j-x_k)/r_{a,M}$ 的差至多为 $C\eta_{a,M}^{-3}|x_j-x_k|$。Ci 项为 $O(\eta_{a,M}^{-1})$。利用独立参考组的零对角二次型等距式，并对导数积分，可得同一实现上的一致近似
+
+$$
+D_{a,M}(\theta)
+-\frac2{\sqrt{r_{a,M}}}\int_0^\theta
+\left(|F_{a,M}(t/r_{a,M})|^2-\sum_jv_jg_j^2\right)dt
+\longrightarrow0
+\tag{63.15}
+$$
+
+在条件概率中成立，其全部 $a$ 的联合版本由有限性得到。
+
+这里通向实际后验的误差须在新放大尺度上计算。临界条件给 $\eta_{a,M}=O(Q^{1/4})$；有限 Fourier 和 floor 误差乘以 $O(Q^{11/4})$ 仍由 $e^{-cQ^3}$ 吸收。全截止域的锚定矩阵及其导数原始范数为 $O(Q^2)$，故 Hilbert 精确中心误差至多为 $O_P(Q^{-1/2})+o_P(1)$。已有 $Q^{-60}$ 加权尾方差可同时删除全部窗口的尾向量。一份核心逆分布函数耦合把每组标准化误差控制为 $q^{-1/8}$，消去所有这些多项式损失；这里的核心未归一化 Bernoulli 方差下界是 $q^{9/10}$。同一个正态向量保留旧截距与所有旧线性坐标，不为窗口另取样。核心相对方差估计与尾界保证 (63.11)—(63.12) 的条件确定性环境极限。
+
+高斯参考的对角统计具有算子范数 $O(\sqrt\delta)$ 和方差极限 $2g_0$。对有限个旧场及全部载波的实、虚测试方向作共同有限秩投影，删除这些方向的 Hilbert–Schmidt 代价至多为投影秩平方根乘以该算子范数。剩余二次型与投影向量精确独立，谱特征函数给出正态极限 $N_2$。再以有限秩逼近旧对数核 $H$、以路径紧性保留旧过程，得到 $N_2$ 与整个载波族和旧联合坐标的独立关系。
+
+最后 $\sum_jv_jg_j^2\to\gamma$，因为其方差 $2\sum_jv_j^2=O(\delta)$。对共同连续场极限施加积分平方连续映射即得 (63.7)。参考二次型导数的二阶矩一致有界，第四增量矩至多为 $C|\theta-\psi|^4$，适用于任意小增量。实际 floor 路径由一致概率误差转为 C-tight 的 $J_1$ 路径。一次完整选择标签向量的后验 TV 比较只转移有界测试和概率事件；环境子序列论证给先验条件 BL 收敛，支持置换等变性给一致无条件结论，共同方向事件同时保留所有窗口。这些步骤不推出实际无界矩收敛。
+
+**定理 63.3（能量依赖恰由别名簇区分）。** 在定理 63.2 下，取任意 $\theta_a,\theta_b\ne0$。每个非零时间边缘都非 Gaussian；两个极限能量 $D_a(\theta_a),D_b(\theta_b)$ 独立，当且仅当 $a,b$ 属于不同别名簇。不同簇的整个过程族也相互独立。若 $a$ 在零相位类，则 $D_a(\theta)$ 与旧端点平方 $Y^2-\gamma$ 对每个 $\theta>0$ 的协方差严格为正；其余类别的整个过程与旧场独立。
+
+证明。记 $H_{ab}(v,w)=\mathbb EF_a(v)\overline{F_b(w)}$、$P_{ab}(v,w)=\mathbb EF_a(v)F_b(w)$，其中 $F_a(v)=\mathcal C_a(e^{i\omega vx})$。实高斯 Wick 公式给
+
+$$
+\operatorname{Cov}(D_a(\theta),D_b(\psi))
+=4\sqrt{\zeta_a\zeta_b}
+\int_0^{\theta/\zeta_a}\int_0^{\psi/\zeta_b}
+\left(|H_{ab}(v,w)|^2+|P_{ab}(v,w)|^2\right)dv\,dw.
+\tag{63.16}
+$$
+
+若 $d_{ab}^-$ 有限，第一项是 $|\widehat\rho(d_{ab}^-+\omega(v-w))|^2$；若 $d_{ab}^+$ 有限，第二项是 $|\widehat\rho(d_{ab}^++\omega(v+w))|^2$；相应无穷项为零。原高斯密度满足 $\widehat\rho(t)=\gamma e^{-t^2/(2\kappa)}>0$。同簇至少有一项处处为正；将两个积分改写成正向积分后，其协方差非零且符号为 $\operatorname{sgn}(\theta\psi)$，排除独立。异簇的独立来自整个高斯测度的联合独立，强于二次型零协方差。
+正时间还有 $D_a(\theta)\ge-2\gamma\theta/\sqrt{\zeta_a}$，而上述自协方差严格为正；
+非退化且有单侧界的变量不可能 Gaussian。负时间改用相应上界。
+例如同一 proper 类的两个成员取相同 $\zeta$、零偏移与相反符号，则
+$F_-(v)=\overline{F_+(-v)}$，在同一实现上 $D_-(\theta)=-D_+(-\theta)$。
+其 Hermitian 交叉项为零，伪交叉项却为 $\widehat\rho(\omega(v+w))$；
+分别重抽两个场会破坏这条路径关系。
+
+零相位类同理满足
+
+$$
+\operatorname{Cov}(D_a(\theta),Y^2-\gamma)
+=4\sqrt{\zeta_a}\int_0^{\theta/\zeta_a}
+|\widehat\rho(b_a^0+\omega v)|^2dv>0.
+\tag{63.17}
+$$
+
+其余类别使用与 $W_0$ 独立的测度，所以整个路径都与旧场独立。这是极限律的关系；没有断言有限后验能量独立或其协方差已收敛。
+
+**定理 63.4（别名结构的实际可实现性与失谐压缩）。** 任给有限个正数 $\zeta_a$、至多一个零相位类、至多一个 $\pi$ 相位类及有限多个 proper 类，任给类内有限偏移和 proper 类内符号，均可由原 $\delta_M$ 序列上的确定性临界载波实现。有限失谐的单窗口结论则是第 60 章临界过程的确定性时间平移。
+
+证明。为各 proper 类选取模符号彼此分离且不等于 $0,\pi$ 的固定相位 $\alpha_L$。在零类、$\pi$ 类和 proper 类分别设置相位目标 $\delta_Mb_a$、$\pi+\delta_Mb_a$ 和 $\epsilon_a\alpha_L+\delta_Mb_a$。选择整数 $n_{a,M}$ 使
+
+$$
+\eta_{a,M}=\frac{2\pi n_{a,M}+\text{相位目标}}\omega
+=\sqrt{\zeta_a/\delta_M}+O(1).
+\tag{63.18}
+$$
+
+最近整数选择即可做到，且最终 $\eta_{a,M}>0$。于是 $\eta_{a,M}^2\delta_M\to\zeta_a$，同时完整实现指定关系。整数整周部分调节临界宽度，模 $2\pi$ 部分调节载波关系，两者并不冲突。
+
+若 $\omega\eta_M=\pi m_M+\delta_Mb_M$ 且 $b_M\to b$，在 $m_M$ 奇偶性固定的子列上令 $\eta_{0,M}=2m_M$ 及
+
+$$
+t_M(\theta)=\eta_{0,M}^3\log(\eta_M/\eta_{0,M})
++(\eta_{0,M}/\eta_M)^3\theta.
+$$
+
+在同一有限谱分辨率处有精确恒等式
+
+$$
+D_{\eta_M}(\theta)=
+(\eta_M/\eta_{0,M})^{3/2}
+\left[V_{\eta_{0,M}}(t_M(\theta))-V_{\eta_{0,M}}(t_M(0))\right].
+\tag{63.19}
+$$
+
+$t_M(0)\to\zeta b/\omega$，且 $t_M(\theta)-t_M(0)\to\theta$ 在紧区间上一致。第 60 章的相应奇偶共同连续过程极限可以直接代入；随机常数项抵消，留下 (63.7) 中相应实类的移频积分。这个等式解释有限失谐边缘律的复用，但不能决定不同 proper 类之间的联合关系；后者由 (63.8) 的两套 Gram 极限给出。
+
+## 追加锚（本行以下为增补区）
