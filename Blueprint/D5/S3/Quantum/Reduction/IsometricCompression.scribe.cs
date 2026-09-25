@@ -25,7 +25,7 @@ internal sealed class IsometricCompressionDocument : IScribeDocumentDefinition
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Reduction/IsometricCompression." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Exact rectangular-matrix compression, positive leakage, and finite operator-word transport. Analytic norm estimates are outside these declarations."))),
             DescribeRole.Theorem)).ToArray())));

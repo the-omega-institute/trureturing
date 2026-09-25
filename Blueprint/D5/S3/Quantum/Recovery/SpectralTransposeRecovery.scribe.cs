@@ -20,7 +20,7 @@ internal sealed class SpectralTransposeRecoveryDocument : IScribeDocumentDefinit
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/SpectralTransposeRecovery." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/barnumknill2002reversal")),
             Blocks(Paragraph(Text("The existing finite-matrix functional calculus constructs a support projection and spectral inverse square root. Explicit Kraus completion gives a canonical CPTP candidate even for a zero CP branch. Exact recoverability and smoothness are separate conclusions."))),
             DescribeRole.Theorem)).ToArray())));

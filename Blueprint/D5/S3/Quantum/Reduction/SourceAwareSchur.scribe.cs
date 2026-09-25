@@ -24,7 +24,7 @@ internal sealed class SourceAwareSchurDocument : IScribeDocumentDefinition
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Reduction/SourceAwareSchur." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Exact two-probe Schur response, simultaneous gauge/source descent, positive graph Gram metric, and a finite nilpotency-loss witness. Block inversion is reused from pinned Mathlib."))),
             DescribeRole.Theorem)).ToArray())));

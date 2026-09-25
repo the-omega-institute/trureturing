@@ -20,7 +20,7 @@ internal sealed class KrausCompletionDocument : IScribeDocumentDefinition
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausCompletion." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/knilllaflamme1997correction")),
             Blocks(Paragraph(Text("Explicit row-reset Kraus operators complete the input effect and produce the repository canonical CPTP channel. Spectral inverse construction is a separate obligation."))),
             DescribeRole.Theorem)).ToArray())));

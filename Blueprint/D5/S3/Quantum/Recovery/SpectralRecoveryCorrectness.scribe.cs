@@ -18,7 +18,7 @@ internal sealed class SpectralRecoveryCorrectnessDocument : IScribeDocumentDefin
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/SpectralRecoveryCorrectness." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/barnumknill2002reversal"),
                 LibraryNoteRef.Create("D5/L/nayaksen2007invertible"),

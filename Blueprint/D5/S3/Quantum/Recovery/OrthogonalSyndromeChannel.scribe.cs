@@ -29,7 +29,7 @@ internal sealed class OrthogonalSyndromeChannelDocument : IScribeDocumentDefinit
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeChannel." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/knilllaflamme1997correction"),
                 LibraryNoteRef.Create("D5/L/benykempfkribs2007observables")),
