@@ -394,3 +394,8 @@ reverse-sampling-order argument supply the conditional-law obligations
 beyond this arithmetic certificate.
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/global_two_parent_forward_kernels.py
+
+[Report616](616-three-parent-entries-with-two-outside-parents-preserve-a-common-survivor.md)
+uses the actual single-head and head-pair marginal bounds to admit owners
+with three fixed smaller parents, at least two outside the head. All
+existing two-parent owners and global root crossings remain permitted.
