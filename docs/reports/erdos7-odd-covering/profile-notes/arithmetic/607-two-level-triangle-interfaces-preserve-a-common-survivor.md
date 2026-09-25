@@ -343,3 +343,11 @@ its fingerprint; it does not repeat the old full head scan.
 
 The domain, same-source integral, all-height majorants and witness
 gluing above supply the mathematical scope beyond these finite checks.
+
+[Report610](610-normalized-kernels-close-increasing-two-parent-networks.md)
+replaces the two-level restriction by an arbitrary finite increasing
+two-parent network behind each primary. It permits connections between
+earlier branches and unbounded co-occurrence treewidth, while retaining
+the head restrictions and disjoint outside coordinates between primary
+components. One normalized whole-network law gives the stronger
+extendible-head lower bound1/200000.
