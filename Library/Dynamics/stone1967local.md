@@ -92,3 +92,14 @@ The model-specific localization, exact finite minimax mean transfer and joint
 fixed-support coupling are `repo-derived` ordinary mathematics; the source does
 not state them. This comparison neither establishes global originality nor a
 finer universal expansion of the capacity correction's expectation.
+
+Chapter 33 also gives an actual-model obstruction to a shrinking-window
+relative formula. At fixed amplitude one half, a central integer Poisson-count
+pair has probability of order inverse lambda. The support-size and sample-size
+sequence keeps its compensated score inside a window of width
+sqrt(lambda/q); actual one-row comparison transfers the atom to both stationary
+experiments. Its mass exceeds the density-times-width scale q^(-1/2) by an
+unbounded factor. Stirling's formula and the discrete nonlattice obstruction
+are classical; this construction verifies the obstruction with the model's
+compensation, legal integer parameters and actual observation laws. It does
+not refute the fixed-width theorem or establish a finer mean-cost expansion.

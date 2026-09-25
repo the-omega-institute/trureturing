@@ -1907,8 +1907,75 @@ V_M-p_s(1-p_s)|\widehat G_M|\longrightarrow0\quad\text{依概率}.
 令 $`V=p_s(1-p_s)|G|`$。它不是常数，
 所以 $`\mathbb E(\sqrt V Z\mid G)=0`$ 与
 $`\mathbb E((\sqrt V Z)^2\mid G)=V`$ 分别给出不相关与不独立。
-又因 $`\mathbb E(sqrt V Z)^4=3\mathbb EV^2\gt3(\mathbb EV)^2`$，
+又因 $`\mathbb E[(\sqrt{V}\,Z)^4]=3\mathbb E[V^2]\gt3(\mathbb E[V])^2`$，
 第三个极限不是正态。这里使用的只是极限变量的矩，
 不包含实际统计量矩收敛或 (33.3) 以外的更细平均风险展开。∎
+
+**命题 33.3（实际非格点行的收缩窗口反例）。** 存在满足定义 33.1 的序列，
+其内在偏移极限和 $`s`$ 均为零，使得对两个实际平稳实验、任意真实支持及其中任一信号行，
+令 $`w_M=\sqrt{\lambda_M/q_M}`$，都有
+
+```math
+\liminf_M\lambda_M\,
+ \mathbb P_S\{|W_i-\tau_M|\le w_M/2\}
+ \ge\frac{2}{\pi\sqrt3},\qquad
+\frac{\mathbb P_S\{|W_i-\tau_M|\le w_M/2\}}
+     {w_M/\sqrt{\lambda_M}}\longrightarrow\infty.
+```
+
+式 (33.13)。
+
+因此，本模型的非格点条件不足以保证在此收缩尺度上的相对“密度乘宽度”公式。
+
+证明。固定 $`r=1/2`$ 和任意 $`\beta\in(1/2,1)`$。
+两个跳幅为 $`h_+=\log(3/2)`$ 与 $`h_-=-\log2`$。
+若其比为有理数，便会得到某个正整数次幂的三等于某个整数次幂的二，矛盾。
+沿允许的 $`M=2^{d-1}`$，取
+
+```math
+\lambda_M=4\left\lfloor\frac{\beta\log M}{4\phi}\right\rfloor,
+\qquad q_M=\left\lfloor M e^{-\lambda_M\phi}+\tfrac12\right\rfloor,
+\qquad \mathsf T_M=2M\lambda_M,\qquad u_M=\tau_M=\log(M/q_M).
+```
+
+式 (33.14)。
+
+对充分大的 $`M`$，样本数与基数均为合法整数，且
+$`q_M=M^{1-\beta+o(1)}`$、
+$`\tau_M=\lambda_M\phi+O(q_M^{-1})`$。
+所以内在偏移趋零，阈值也满足 $`s_M=0`$。
+
+在信号比较律下，两个独立 Poisson 计数的均值
+$`3\lambda_M/4`$、$`\lambda_M/4`$ 都是整数。
+两者同时等于各自均值的事件，由经典 Stirling 公式有概率
+
+```math
+Q_r\{N_+=3\lambda_M/4,\ N_-=\lambda_M/4\}
+ \sim\frac{2}{\pi\sqrt3\,\lambda_M}.
+```
+
+式 (33.15)。
+
+在该事件上，$`Z_i=\lambda_M\phi`$，而补偿得分满足
+$`W_i-Z_i=O(a_M\lambda_M)`$，其中 $`a_M=rq_M/(M-q_M)`$。
+这些误差在所选窗口内可忽略，因为
+
+```math
+\frac{a_M\lambda_M}{w_M}
+ =O\left(\frac{q_M^{3/2}\sqrt{\lambda_M}}{M}\right)\longrightarrow0,
+\qquad
+\frac{q_M^{-1}}{w_M}\longrightarrow0.
+```
+
+式 (33.16)。
+
+因此整个计数事件最终都落在 $`|W_i-\tau_M|\le w_M/2`$ 中。
+其计数为 $`O(\log M)`$，所以
+[支持恢复卷 (21.5)](PARITY_HIDDEN_ARROW_RECOVERY.md) 的实际一行相对概率比较
+适用于两个实验；其相对误差趋零，单独的多项式小余项也是 $`o(\lambda_M^{-1})`$。
+这把 (33.15) 的下界转到实际信号行，证明 (33.13) 的第一式。
+又因 $`w_M/\sqrt{\lambda_M}=q_M^{-1/2}`$ 且
+$`\sqrt{q_M}/\lambda_M\to\infty`$，第二式随之成立。
+此反例与固定宽度局部极限定理相容，也不推断平均容量代价的更细展开。∎
 
 ## 追加锚（本行以下为增补区）
