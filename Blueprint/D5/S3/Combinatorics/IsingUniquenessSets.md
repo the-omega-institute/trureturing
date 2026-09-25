@@ -82,6 +82,10 @@ $$(\forall k \in \mathbb{N},\; \forall U \in \operatorname{Finset}\left(\operato
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/IsingUniquenessSets.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/skalski-stroinski-2025-ising-uniqueness-sets` (proved) by `D5/S3/Combinatorics/IsingUniquenessSets.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"skalski-stroinski-2025-ising-uniqueness-sets","declaration_gid":"D5/S3/Combinatorics/IsingUniquenessSets.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tomasz Skalski, Tomasz Stroiński (2025). *Level sets and maximum likelihood estimation for the Ising model*. DOI: [10.48550/arXiv.2511.20925](https://doi.org/10.48550/arXiv.2511.20925). URL: <https://arxiv.org/abs/2511.20925v1>.
