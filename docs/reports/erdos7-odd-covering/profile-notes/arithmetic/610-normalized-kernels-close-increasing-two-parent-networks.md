@@ -531,3 +531,11 @@ beyond the arithmetic certificate. The general capped kernel and
 sequential-cap method are existing ingredients; this result adds their
 selected complete-tower tail and a uniform whole-network arithmetic
 budget for this explicit original family.
+
+[Report612](612-shared-head-pair-networks-join-multiple-root-entries.md)
+joins arbitrarily many primary entries based on the same head pair into
+one network and admits originals between their later branches. Starting
+the forward law directly at that head pair removes the primary
+amplification, while retaining every original root fee. Its extendible
+head bound is1/90000. Networks based on different head pairs still have
+disjoint outside coordinates, and the head restrictions remain.
