@@ -191,7 +191,7 @@ S_{n+1}(\vartheta)\subseteq S_n(\vartheta)\otimes B,
 \qquad W_{n+1}\subseteq W_n\otimes B.
 \tag{3.3}
 \]
-约定 \(W_0=H_0=\mathbb C\)，则（3.3）也适用于 \(n=0\)。相位因子仅是该递推的标量，不改变此包含。由（3.1），对每个 \(n\le N\) 可取等距 \(F_n:W_n\to K\)，其中 \(\dim K=d_N\)。在子空间 \((F_n\otimes I_B)W_{n+1}\) 上规定
+约定 \(S_0(\vartheta)=W_0=H_0=\mathbb C\)，则（3.3）也适用于 \(n=0\)。相位因子仅是该递推的标量，不改变此包含。由（3.1），对每个 \(n\le N\) 可取等距 \(F_n:W_n\to K\)，其中 \(\dim K=d_N\)。在子空间 \((F_n\otimes I_B)W_{n+1}\) 上规定
 \[
 U_n[(F_n\otimes I_B)w]=F_{n+1}w\otimes|0\rangle.
 \tag{3.4}
