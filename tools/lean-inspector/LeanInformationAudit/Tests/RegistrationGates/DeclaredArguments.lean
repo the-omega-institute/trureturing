@@ -57,6 +57,11 @@ run_meta do
     (some "unclassified_form:E4.recursion:Nat.rec")
   let .defnInfo identityInfo ← getConstInfo ``identity | throwError "setup"
   check "independent_data_argument_accepted" identityInfo.value none
+  check "infinite_carrier_type_accepted" (mkConst ``Int) none
+  check "independent_infinite_readout_accepted" (mkConst ``Int.natAbs) none
+  let infiniteOutput ← mkArrow (mkConst ``Int) (mkConst ``Int)
+  let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
+  check "infinite_function_equality_dictionary_accepted" equalityDictionary none
   check "independent_proof_and_dictionary_accepted" (mkConst ``independent) none
   check "object_projection_accepted"
     (.proj ``Prod 0 (mkConst ``independentPair)) none
