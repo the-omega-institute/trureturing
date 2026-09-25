@@ -152,15 +152,28 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/lean-inspector/tests/test_native_support.py", "pr")]
     [InlineData("tools/lean-inspector/tests/test_reuse.py", "push")]
     [InlineData("tools/lean-inspector/tests/test_reuse.py", "pr")]
+    [InlineData("tools/lean-inspector/tests/test_native.py", "push")]
+    [InlineData("tools/lean-inspector/tests/test_native.py", "pr")]
+    [InlineData("tools/lean-inspector/tests/test_native_invalidation.py", "push")]
+    [InlineData("tools/lean-inspector/tests/test_native_invalidation.py", "pr")]
+    [InlineData("tools/lean-inspector/tests/test_native_records.py", "push")]
+    [InlineData("tools/lean-inspector/tests/test_native_records.py", "pr")]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", "push")]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", "pr")]
     public void InspectorTestFixturesRunRegisteredTestConsumersWithoutCurrentTruthChecks(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(WithWorktreeContract(new[] {
-            "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
-            "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
-        }.Concat(input.EndsWith("test_reuse.py", StringComparison.Ordinal)
-            ? new[] { "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj" }
-            : []).Order(StringComparer.Ordinal)), Strings(plan["execution"]!["tests"]!));
+        var consumers = new List<string> { "StrataLint.Lean.Tests" };
+        if (input.EndsWith("test_native_support.py", StringComparison.Ordinal))
+            consumers.Add("StrataLint.NativeTransportIntegration.Tests");
+        if (input.EndsWith("test_reuse.py", StringComparison.Ordinal))
+            consumers.Add("StrataLint.TransportIntegration.Tests");
+        if (input.EndsWith("test_native_records.py", StringComparison.Ordinal)
+            || input.EndsWith("packages/reg.py", StringComparison.Ordinal))
+            consumers.Add("StrataLint.Cache.Tests");
+        else consumers.Add("StrataLint.WorktreeContract.Tests");
+        Assert.Equal(consumers.Select(name => $"tools/tests/{name}/{name}.csproj").Order(StringComparer.Ordinal),
+            Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -779,11 +792,23 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
 
     [Theory]
     [InlineData("tools/scripts/report/JudgeSeedTask.cs", "JudgeSeedTask.Tests")]
-    [InlineData("tools/lean-inspector/tests/test_reuse.py", "StrataLint.NativeTransportIntegration.Tests")]
+    [InlineData("tools/lean-inspector/tests/test_native_support.py", "StrataLint.NativeTransportIntegration.Tests")]
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", "StrataLint.TransportIntegration.Tests")]
     public void IndirectAndSourceOwnedInputsSelectTheirCompleteConsumers(string path, string consumer)
     {
         foreach (var mode in new[] { "push", "pr" })
             Assert.Contains($"tools/tests/{consumer}/{consumer}.csproj",
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean")]
+    [InlineData("tools/lean-inspector-interface/lakefile.toml")]
+    [InlineData("tools/lean-inspector-interface/lake-manifest.json")]
+    public void CopiedNativeInterfaceInputsSelectTheCompleteTransportConsumer(string path)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Contains("tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
