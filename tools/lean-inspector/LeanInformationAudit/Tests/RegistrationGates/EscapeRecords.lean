@@ -138,7 +138,7 @@ theorem domainSensitivity : FiniteSlotSensitivity domainArena.toPrimitiveLawAren
   · intro i; exact Fin.elim0 i
 
 elab "observe_object_domain" : command => do
-  let prefix := "register_information_theorem domainStatement in domainArena " ++
+  let commandStartDomain := "register_information_theorem domainStatement in domainArena " ++
     "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) " ++
     "primitives domainReads.toPrimitiveBundle realization domainBridge " ++
     "variation domainVariation sensitivity domainSensitivity "
@@ -146,7 +146,7 @@ elab "observe_object_domain" : command => do
       ("wrong_domain", "Nat", some "dtr.escape_from_state")] do
     let saved ← get
     modify fun state => { state with messages := {} }
-    let source := prefix ++ "escape from (" ++ origin ++ ") escape continues (open)"
+    let source := commandStartDomain ++ "escape from (" ++ origin ++ ") escape continues (open)"
     let mut failure := ""
     match Parser.runParserCategory (← getEnv) `command source with
     | .error message => failure := "parse: " ++ message
