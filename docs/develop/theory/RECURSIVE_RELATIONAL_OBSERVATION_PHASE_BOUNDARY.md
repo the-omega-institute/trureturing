@@ -7605,3 +7605,590 @@ $$
 这里去相干是更换来源及恢复目标；在原合同中测量长度会破坏需要恢复的相干项，不能据此获得一维方案。也没有把未知相位称为已校准物理时间。这个例子确定的是：同一组长度标签，是否保留它们之间的相位关系，会改变必要的边界容量。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 34. 六维五终端接收排除三条互异尾环境射线
+
+本节回到第29—30节的固定接收通道问题。来源仍为
+$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中
+$ab\ne0$、$|a|^2+|b|^2=1$。接收器从独立纯态启动，所有持久系统都计入六维
+$K$，每轮使用同一个全域 CPTP 通道，新环境随即丢弃且不再访问；接收器不能访问活动记忆或参考，须精确恢复前五个完整参考终端。
+
+命题29.1和29.2已将任何这样的候选归约到五个终端全部为纯的联合编码，每轮新环境为输入无关的单位向量
+$\eta_n$。命题30.1又给
+$\dim\operatorname{span}\{\eta_3,\eta_4,\eta_5\}=2$。
+本节证明，这三个尾环境不能占据三条互异射线。因此只保留两条不同尾射线的
+AAB、ABA、ABB 三种模式；字母相同表示射线相同，字母不同不预设正交。本节不决定这些两射线模式的可行性。
+
+固定共同 Stinespring 等距
+$V:K\otimes B\to K\otimes E$，令
+$V_i x=V(x\otimes|i\rangle)$。原始环境 $E$ 的维数不受预先限制，也不假定
+$V_1(K)$ 已落在二维环境中。沿用（30.1）—（30.4）的正交单位向量
+$p,q$ 和正交单位向量 $u,v,w$，以及初态 $k$：
+
+$$
+\begin{gathered}
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,\\
+V_0p=u\otimes\eta_2,\qquad V_1p=v\otimes\eta_2,
+\qquad V_0q=w\otimes\eta_2,\\
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\end{gathered}
+\tag{34.1}
+$$
+
+对于 $n=3,4,5$，（30.5）—（30.7）给出二维空间
+$H_n,G_n,Q_n$，满足
+
+$$
+\begin{gathered}
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\\
+G_n\perp Q_n,\qquad H_n\subseteq G_n\oplus Q_n,\qquad
+P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\end{gathered}
+\tag{34.2}
+$$
+
+最后两个投影在 $H_n$ 上都是同构。这是实际来源的非零系数及支撑秩所强制的关系，后文不会将
+$H_n$ 换成任意二维空间。全节的内积对第一变量共轭线性、对第二变量线性。
+
+**引理34.1（三条互异尾射线强制共同四加二维分解）。** 反设
+$\eta_3,\eta_4,\eta_5$ 的射线两两不同，令
+$F=\operatorname{span}\{\eta_3,\eta_4,\eta_5\}$，则 $\dim F=2$。
+所有五个环境向量均属于 $F$，且存在正交分解
+$K=S\oplus Q$，$\dim S=4$、$\dim Q=2$，满足
+
+$$
+\begin{gathered}
+Q_3=Q_4=Q_5=Q,\qquad
+S=G_3+G_4=G_2+G_3=G_2+G_4,\\
+G_5\subseteq S,\qquad p\in S,\quad v\in Q,\qquad
+V_0K\subseteq S\otimes F.
+\end{gathered}
+\tag{34.3}
+$$
+
+映射 $U:=V_1|_S:S\to Q\otimes F$ 为满等距，且
+
+$$
+U(G_2)=Q\otimes\eta_3,\qquad
+U(G_3)=Q\otimes\eta_4,\qquad
+U(G_4)=Q\otimes\eta_5.
+\tag{34.4}
+$$
+
+三个尾环境还必须两两非正交：
+
+$$
+0<|\langle\eta_i,\eta_j\rangle|<1
+\qquad(3\le i<j\le5).
+\tag{34.5}
+$$
+
+证明。若 $x\in G_3\cap G_4$，固定 $V_1x$ 同时属于
+$Q_4\otimes\eta_4$ 与 $Q_5\otimes\eta_5$。不同环境射线使这两个张量子空间相交为零；等距的单射性给
+$G_3\cap G_4=0$。
+
+以 $\eta_3,\eta_4$ 为 $F$ 的代数基，写
+$\eta_5=\alpha\eta_3+\beta\eta_4$，其中 $\alpha\beta\ne0$。若
+
+$$
+x_3\otimes\eta_3+x_4\otimes\eta_4+x_5\otimes\eta_5=0,
+\qquad x_j\in G_j,
+$$
+
+则环境坐标给 $x_3=-\alpha x_5$、$x_4=-\beta x_5$。所以
+$x_5\in G_3\cap G_4=0$，三个向量均为零。由（34.2），这些像子空间全部包含于
+$V_0K$，其维数和已达六，故
+
+$$
+V_0K=(G_3\otimes\eta_3)\dotplus
+(G_4\otimes\eta_4)\dotplus(G_5\otimes\eta_5)
+\subseteq K\otimes F.
+\tag{34.6}
+$$
+
+此处 $\dotplus$ 是代数直和，不断言正交。又由（34.1），
+$V_0H_1=G_2\otimes\eta_2$、$V_0k=p\otimes\eta_1$，其中接收器因子非零。
+将环境投影到 $F^\perp$ 就得 $\eta_1,\eta_2\in F$。这一步只使用零位像的全域饱和。
+
+二维复空间中的每条射线只有一条正交补射线；在三条不同射线中，至少有一条与另两条都非正交。选其编号
+$j\in\{3,4,5\}$。固定 $V$ 的两个输入位像正交，故比较
+$G_i\otimes\eta_i\subset V_0K$ 与 $Q_j\otimes\eta_j\subset V_1K$，得到
+$Q_j\perp G_i$，对 $i=3,4,5$ 均成立。因此
+
+$$
+S:=G_3+G_4=Q_j^\perp,\qquad \dim S=4,
+\qquad G_5\subseteq S.
+\tag{34.7}
+$$
+
+由（34.6）有 $V_0K\subseteq S\otimes F$；再用早期纯张量像，得到
+$G_2\subseteq S$、$p\in S$。
+
+现在 $V_1(G_2+G_3+G_4)$ 等于
+
+$$
+(Q_3\otimes\eta_3)+(Q_4\otimes\eta_4)+(Q_5\otimes\eta_5).
+$$
+
+其维数恰为
+
+$$
+6-\dim(Q_3\cap Q_4\cap Q_5).
+\tag{34.8}
+$$
+
+确切地说，从 $Q_3\oplus Q_4\oplus Q_5$ 到上述和空间的自然映射，其核是
+$\{(-\alpha x,-\beta x,x):x\in Q_3\cap Q_4\cap Q_5\}$。
+另一方面，输入包含于四维 $S$，所以（34.8）至多为四。这迫使三个二维
+$Q_i$ 全部相等，记为 $Q$；（34.7）给 $K=S\oplus Q$。同时
+
+$$
+V_1S=V_1(G_3+G_4)
+=Q\otimes\eta_4+Q\otimes\eta_5=Q\otimes F.
+\tag{34.9}
+$$
+
+所以 $U=V_1|_S$ 为满等距，（34.4）成立，任意两个不同环境纤维的逆像张成
+$S$。又因 $p\in S$、$V_1p=v\otimes\eta_2$，得到 $v\in Q$。
+
+还须排除尾环境的正交对。若 $\eta_3\perp\eta_4$，由固定
+$V_0,V_1$ 分别得 $H_2\perp H_3$、$G_2\perp G_3$。
+此时 $H_3\subseteq G_3\oplus Q$，且 $P_QH_3=Q$，可取
+$h\in H_3$ 使 $\langle v,h\rangle\ne0$。因为
+$u\in G_2\subset S$，有 $u\perp H_3$，于是
+
+$$
+\langle a^2u+bv,h\rangle
+=\bar b\langle v,h\rangle\ne0,
+$$
+
+违反 $H_2\perp H_3$。若 $\eta_3\perp\eta_5$，改用
+$H_4\subseteq G_4\oplus Q$、$P_QH_4=Q$，同理违反 $H_2\perp H_4$。
+
+若 $\eta_4\perp\eta_5$，则 $H_3\perp H_4$、$G_3\perp G_4$。
+任取单位 $z\in Q$，用两个满投影选取 $h_3\in H_3$、$h_4\in H_4$，使
+$P_Qh_3=P_Qh_4=z$。由 $S\perp Q$、$G_3\perp G_4$，
+
+$$
+\langle h_3,h_4\rangle=\langle z,z\rangle=1,
+$$
+
+又与 $H_3\perp H_4$ 矛盾。三个内积都非零；单位向量不共线给其绝对值严格小于一，证明完毕。
+
+对任意单位 $\xi\in F$，下文记
+
+$$
+W_\xi:Q\to S,\qquad W_\xi z=U^{-1}(z\otimes\xi).
+\qquad
+W_\xi^*W_\zeta=\langle\xi,\zeta\rangle I_Q.
+\tag{34.10}
+$$
+
+于是 $G_2,G_3,G_4$ 分别是 $W_{\eta_3},W_{\eta_4},W_{\eta_5}$ 的像，
+$p=W_{\eta_2}v$。式（34.10）给出了这些二维子空间的完整交叠矩阵。
+
+**引理34.2（早期矩形强制第四纤维和双线性约束）。** 在引理34.1的假设下，取代数基
+$e_0=\eta_3$、$e_1=\eta_4$，写
+
+$$
+\eta_5=\alpha e_0+\beta e_1,\qquad
+\eta_2=ce_0+de_1,\qquad
+\alpha\beta\ne0,\quad(c,d)\ne(0,0).
+\tag{34.11}
+$$
+
+定义辅助非零向量
+
+$$
+\eta_6=\alpha c e_0+(\beta c-\alpha d)e_1.
+\tag{34.12}
+$$
+
+则
+
+$$
+U(G_5)=Q\otimes\mathbb C\eta_6,\qquad
+(U\otimes I_F)V_0K=Q\otimes J,
+\tag{34.13}
+$$
+
+其中
+
+$$
+J=\operatorname{span}\{
+\eta_4\otimes\eta_3,\eta_5\otimes\eta_4,
+\eta_6\otimes\eta_5\}\subset F\otimes F,
+\qquad \dim J=3.
+\tag{34.14}
+$$
+
+令 $\mathcal B:F\times F\to\mathbb C$ 为复双线性形式，其在
+$e_0,e_1$ 基中的矩阵为
+
+$$
+[\mathcal B]=
+\begin{pmatrix}d&-c\\0&\alpha c/\beta\end{pmatrix}.
+\tag{34.15}
+$$
+
+它的线性延拓满足 $J=\ker\mathcal B$，并有
+
+$$
+\mathcal B(\eta_{j+1},\eta_j)=0,\qquad j=1,\ldots,5.
+\tag{34.16}
+$$
+
+$\eta_6$ 只标记一个辅助纤维，不声称第六轮存在或具有这一环境。
+$\mathcal B$ 是双线性形式，不是 Hilbert 内积；其消失值不表示环境正交。
+
+证明。在零位像的接收器因子上作用 $U$，由（34.6）得到
+
+$$
+\begin{aligned}
+(U\otimes I)V_0K
+={}&Q\otimes(e_1\otimes e_0)
++Q\otimes((\alpha e_0+\beta e_1)\otimes e_1)\\
+&+U(G_5)\otimes(\alpha e_0+\beta e_1).
+\end{aligned}
+\tag{34.17}
+$$
+
+前两个标量张量独立，张成二维空间 $L\subset F\otimes F$。定义满射
+$\pi:F\otimes F\to\mathbb C^2$：
+
+$$
+\begin{aligned}
+\pi(e_0\otimes e_0)&=(1,0),&
+\pi(e_0\otimes e_1)&=(0,1),\\
+\pi(e_1\otimes e_0)&=0,&
+\pi(e_1\otimes e_1)&=(0,-\alpha/\beta).
+\end{aligned}
+\tag{34.18}
+$$
+
+其核恰为 $L$。对 $x=x_0\otimes e_0+x_1\otimes e_1\in Q\otimes F$，有
+
+$$
+(I_Q\otimes\pi)(x\otimes\eta_5)
+=(\alpha x_0,\beta x_0-\alpha x_1).
+\tag{34.19}
+$$
+
+右侧定义了 $Q\oplus Q$ 上的可逆线性变换 $T$，因为 $\alpha\ne0$。
+故（34.17）在这个商中的像恰为二维空间 $T(U(G_5))$。
+
+早期矩形 $V_0H_1=G_2\otimes\eta_2$ 也包含于 $V_0K$；在
+$U$ 坐标下，它是 $Q\otimes e_0\otimes(ce_0+de_1)$，商像为
+$\{(cz,dz):z\in Q\}$。此空间二维，故它与 $T(U(G_5))$ 相等。
+解
+
+$$
+\alpha x_0=cz,\qquad \beta x_0-\alpha x_1=dz
+$$
+
+得
+$x_0=(c/\alpha)z$、$x_1=((\beta c-\alpha d)/\alpha^2)z$，即（34.12）—（34.13）的第一式。
+该辅助向量非零：$c\ne0$ 时其 $e_0$ 系数非零；$c=0$ 时
+$d\ne0$，其 $e_1$ 系数为 $-\alpha d\ne0$。
+
+代回（34.17）得像空间等式（34.13）。左侧维数六，$\dim Q=2$，所以
+$\dim J=3$。早期矩形包含进一步给
+$\eta_3\otimes\eta_2\in J$。而由（34.1）、（34.10），
+
+$$
+(U\otimes I)V_0k=v\otimes\eta_2\otimes\eta_1\in Q\otimes J,
+$$
+
+由于 $v\ne0$，还得 $\eta_2\otimes\eta_1\in J$。
+
+直接代入（34.15），$\mathcal B$ 在（34.14）的三个生成张量上均为零。
+它非零且核为三维，故 $J=\ker\mathcal B$，连同两个早期包含即得（34.16）。证明完毕。
+
+两种退化的后果将用于下一步。若 $d=0$，则
+$\eta_2\parallel\eta_3$、$\eta_6\parallel\eta_5$，从而 $G_5=G_4$；
+由 $\mathcal B(\eta_2,\eta_1)=0$ 还得 $\eta_1\parallel\eta_3$。
+若 $c=0$，则 $\eta_2\parallel\eta_4$、$\eta_6\parallel\eta_4$，
+从而 $G_5=G_3$。这两个分支的双线性形式都为秩一，不能提前使用非退化性。
+
+**引理34.3（双线性非退化与早期正交刚性）。** 三条互异尾射线的候选必须进一步满足
+
+$$
+c\ne0,\qquad d\ne0,\qquad
+k\in S,\quad q\in Q,\qquad
+\eta_2\perp\eta_3,\quad q\perp v.
+\tag{34.20}
+$$
+
+证明。先分别排除两个退化分支，再处理非退化双线性形式。
+
+若 $d=0$，前述后果使前三个环境射线相同。逐轮将共同相位吸收入该轮全部接收向量，可以取
+$\eta_1=\eta_2=\eta_3=\eta$；同轮的共同调整保留来源系数的相对值。
+由 $Up=v\otimes\eta$ 和（34.4），$p\in G_2$。
+又因 $V_1k=q\otimes\eta$ 与 $V_0H_1=G_2\otimes\eta$ 正交，
+$q\perp G_2$。而 $V_0k=p\otimes\eta\in V_0H_1$，单射性给 $k\in H_1$。
+
+写 $p=\lambda u+\mu w$，其中 $|\lambda|^2+|\mu|^2=1$。
+$V_0$ 等距给
+$\langle k,p\rangle=\langle p,u\rangle=\bar\lambda$、
+$\langle k,q\rangle=\langle p,w\rangle=\bar\mu$，所以
+$k=\lambda p+\mu q$。再由 $V_1$ 等距，
+$\langle q,v\rangle=\langle k,p\rangle=\bar\lambda$。
+置
+
+$$
+c_0=\sqrt{|a|^4+|b|^2}>0.
+\tag{34.21}
+$$
+
+在 $H_1$ 的正交单位基 $p,q$ 与 $H_2$ 的正交单位基
+$(a^2u+bv)/c_0,w$ 之间，交叠矩阵为
+
+$$
+M=\begin{pmatrix}
+a^2\bar\lambda/c_0&\bar\mu\\
+b\bar\lambda/c_0&0
+\end{pmatrix}.
+\tag{34.22}
+$$
+
+另一方面，$V_0H_1=G_2\otimes\eta$、$V_0H_2=G_3\otimes\eta$，
+而（34.10）使 $G_2,G_3$ 的两个主角余弦均为
+$r=|\langle\eta_3,\eta_4\rangle|\in(0,1)$。故
+$MM^*=r^2I$。其非对角元为
+$a^2\bar b|\lambda|^2/c_0^2$；$ab\ne0$ 迫使 $\lambda=0$，
+但这使 $M$ 的第二行全零，与 $r>0$ 矛盾。因此 $d\ne0$。
+
+若 $c=0$，则 $G_5=G_3$。由
+$V_0H_2=G_3\otimes\eta_3$、$V_0H_4=G_3\otimes\eta_5$，
+$H_2,H_4$ 的两个主角余弦均为
+$r=|\langle\eta_3,\eta_5\rangle|\in(0,1)$。单位向量
+$w\in H_2$ 因而满足 $\|P_{H_4}w\|=r$。
+另一方面，$w\in G_2=\operatorname{im}W_{\eta_3}$，
+$G_4=\operatorname{im}W_{\eta_5}$，所以（34.10）也给
+$\|P_{G_4}w\|=r$。
+
+实际来源的（34.2）使 $H_4$ 是某个可逆映射 $T:G_4\to Q$ 的图。
+对任意 $z\in S$，置 $z_4=P_{G_4}z$，由图空间的正交投影公式得
+
+$$
+\|P_{H_4}z\|^2
+=\langle z_4,(I+T^*T)^{-1}z_4\rangle.
+\tag{34.23}
+$$
+
+$T$ 可逆使 $(I+T^*T)^{-1}<I$ 严格成立。取 $z=w$，因
+$z_4\ne0$，便有 $\|P_{H_4}w\|<\|P_{G_4}w\|=r$，矛盾。
+因此 $c\ne0$。
+
+现在 $cd\ne0$，（34.15）的行列式为 $\alpha cd/\beta\ne0$。
+取非零 $\omega\in J^\perp\subset F\otimes F$。在 $F$ 的任意正交单位基中，
+双线性泛函 $\mathcal B$ 的系数矩阵仍为秩二，而其 Hilbert 表示向量
+$\omega$ 的系数矩阵是该矩阵的复共轭，差一个非零标量。
+所以 $\omega$ 的 Schmidt 秩为二。原代数基不正交只引入可逆基变换，不改变这个秩。
+
+令 $k_Q=P_Qk$、$q_S=P_Sq$。$V_1$ 等距及（34.9）给
+$V_1k_Q\perp Q\otimes F$；同时
+
+$$
+V_1k_Q=V_1k-V_1(P_Sk)\in K\otimes F,
+\tag{34.24}
+$$
+
+因为两项分别是 $q\otimes\eta_1$ 和 $Q\otimes F$ 中的向量。
+所以 $V_1k_Q\in S\otimes F$。再由 $V_0K\perp V_1K$，
+
+$$
+V_1k_Q\in R:=(S\otimes F)\cap(V_0K)^\perp,
+\qquad (U\otimes I)R=Q\otimes J^\perp=Q\otimes\mathbb C\omega.
+\tag{34.25}
+$$
+
+对 $V_1k=q\otimes\eta_1$ 取接收器的 $S$ 投影，得到
+$V_1k_Q=q_S\otimes\eta_1$。若 $k_Q\ne0$，等距性使其非零；
+在 $U$ 坐标下，它既是某个 $z\ne0$ 所给的 $z\otimes\omega$，
+又是 $(Uq_S)\otimes\eta_1$。对于 $(Q\otimes F)\mid F$ 切分，
+前者 Schmidt 秩二、后者至多一，矛盾。故 $k_Q=0$，上述等式再给 $q_S=0$，即
+$k\in S$、$q\in Q$。这个论证只限制实际初态的 $Q$ 分量，没有假定整个
+$V_1(Q)$ 都属于 $K\otimes F$。
+
+最后证明早期正交。由 $p=W_{\eta_2}v$、$u,w\in G_2$，可取
+$Q$ 的正交单位基 $r,s$，使
+
+$$
+u=W_{\eta_3}r,\qquad w=W_{\eta_3}s.
+\tag{34.26}
+$$
+
+记 $z=\langle\eta_2,\eta_3\rangle$、
+$t=|\langle\eta_3,\eta_4\rangle|\in(0,1)$，反设 $z\ne0$。
+在上述 $H_1,H_2$ 正交单位基之间，交叠矩阵现为
+
+$$
+M=\begin{pmatrix}
+a^2z\langle v,r\rangle/c_0&z\langle v,s\rangle\\
+b\langle q,v\rangle/c_0&0
+\end{pmatrix}.
+\tag{34.27}
+$$
+
+这里用到 $p,u,w\in S$、$q,v\in Q$、$S\perp Q$。
+固定等距将两空间送到 $G_2\otimes\eta_2$、$G_3\otimes\eta_3$，所以
+$MM^*=|z|^2t^2I$，且 $M$ 满秩。第二行唯一可能非零项必非零；
+两行正交迫使 $\langle v,r\rangle=0$，继而
+$|\langle v,s\rangle|=1$。这使第一行的平方范数为 $|z|^2$，
+却又必须等于 $|z|^2t^2$，违反 $t<1$。因此
+$\eta_2\perp\eta_3$。
+
+此时 $V_0H_1$、$V_0H_2$ 正交，等距性给 $H_1\perp H_2$。
+特别地，$0=\langle q,a^2u+bv\rangle=b\langle q,v\rangle$，
+故 $q\perp v$，证明完毕。
+
+**定理34.4（排除三条互异尾环境射线）。** 第29—30节合同中的六维五终端精确接收器，
+其 $\eta_3,\eta_4,\eta_5$ 不可能是三条互异射线。结合命题30.1，
+后三轮若有六维实现，其环境必须恰好占据两条不同射线。
+
+证明。反设三条射线互异，使用引理34.1—34.3的全部结论。
+记 $g_{ij}=\langle\eta_i,\eta_j\rangle$。首先有
+
+$$
+g_{13}\ne0,\qquad g_{24}\ne0,\qquad g_{35}\ne0.
+\tag{34.28}
+$$
+
+最后一项已由（34.5）给出。若 $g_{13}=0$，二维 $F$ 和
+$\eta_2\perp\eta_3$ 给 $\eta_1\parallel\eta_2$。
+于是（34.16）的 $\mathcal B(\eta_2,\eta_1)=0$ 给
+$\mathcal B(\eta_2,\eta_2)=0$；再加上
+$\mathcal B(\eta_3,\eta_2)=0$，因 $\eta_2,\eta_3$ 为一组基，
+便得 $\mathcal B(x,\eta_2)=0$ 对所有 $x\in F$ 成立，违反非退化性。
+若 $g_{24}=0$，同一二维正交补关系给 $\eta_4\parallel\eta_3$，
+违反尾射线不同。因此（34.28）全部成立。
+
+由 $k\in S$、$V_1k=q\otimes\eta_1$，以及（34.10），
+
+$$
+k=W_{\eta_1}q,\qquad p=W_{\eta_2}v,\qquad q,v\in Q.
+\tag{34.29}
+$$
+
+取（34.26）的正交单位基 $r,s$。因为
+$(a^2u+bv)/c_0,w$ 是 $H_2$ 的正交单位基，固定
+$V_0H_2=G_3\otimes\eta_3$ 给 $Q$ 的另一组正交单位基 $r_3,s_3$，使
+
+$$
+\begin{aligned}
+V_0(a^2u+bv)&=c_0W_{\eta_4}r_3\otimes\eta_3,\\
+V_0w&=W_{\eta_4}s_3\otimes\eta_3.
+\end{aligned}
+\tag{34.30}
+$$
+
+分别将 $V_0k=p\otimes\eta_1$ 与这两式取内积。由（34.29）、
+$S\perp Q$ 和（34.10），等距关系给
+
+$$
+\begin{aligned}
+a^2g_{13}\langle q,r\rangle
+&=c_0g_{13}g_{24}\langle v,r_3\rangle,\\
+g_{13}\langle q,s\rangle
+&=g_{13}g_{24}\langle v,s_3\rangle.
+\end{aligned}
+$$
+
+消去非零的 $g_{13}$，得到
+
+$$
+a^2\langle q,r\rangle=c_0g_{24}\langle v,r_3\rangle,\qquad
+\langle q,s\rangle=g_{24}\langle v,s_3\rangle.
+\tag{34.31}
+$$
+
+现在使用实际第三轮来源，而不只使用其支撑维数。由（30.4），第二终端的系数为
+
+$$
+x_2^0=a^2u+bv,\quad y_2^0=ab u,\qquad
+x_2^1=aw,\quad y_2^1=bw.
+\tag{34.32}
+$$
+
+来源将旧的零、一记忆系数 $x,y$ 变成新零记忆系数
+$aV_0x+V_1y$。结合（34.30）以及
+$V_1u=r\otimes\eta_3$、$V_1w=s\otimes\eta_3$，
+在同一个实际环境 $\eta_3$ 中得到两个第三轮零记忆系数
+
+$$
+\begin{aligned}
+h_{30}&=a c_0W_{\eta_4}r_3+ab r,\\
+h_{31}&=a^2W_{\eta_4}s_3+b s.
+\end{aligned}
+\tag{34.33}
+$$
+
+它们张成 $H_3$。分别取与 $p,q$ 的内积，用（34.31）得到
+
+$$
+\begin{aligned}
+\langle p,h_{30}\rangle
+&=a c_0g_{24}\langle v,r_3\rangle
+=a^3\langle q,r\rangle,&
+\langle q,h_{30}\rangle&=ab\langle q,r\rangle,\\
+\langle p,h_{31}\rangle
+&=a^2g_{24}\langle v,s_3\rangle
+=a^2\langle q,s\rangle,&
+\langle q,h_{31}\rangle&=b\langle q,s\rangle.
+\end{aligned}
+\tag{34.34}
+$$
+
+$b\ne0$，因此在整个 $H_3$ 上有同一线性关系
+
+$$
+\langle p,h\rangle=\frac{a^2}{b}\langle q,h\rangle
+\qquad(h\in H_3).
+\tag{34.35}
+$$
+
+所以正交投影 $P_{H_1}|_{H_3}:H_3\to H_1$ 的秩至多一。
+
+另一方面，固定等距又给
+
+$$
+V_0H_1=G_2\otimes\eta_2,\qquad
+V_0H_3=G_4\otimes\eta_4.
+\tag{34.36}
+$$
+
+在 $G_2=\operatorname{im}W_{\eta_3}$ 与
+$G_4=\operatorname{im}W_{\eta_5}$ 上，用同一个 $Q$ 正交单位基传来的两组基，
+其交叠矩阵由（34.10）为 $g_{35}I_Q$。再乘上环境内积，
+（34.36）两空间的交叠矩阵便为
+
+$$
+g_{24}g_{35}I_Q.
+\tag{34.37}
+$$
+
+由（34.28），它的秩为二。交叠矩阵的秩不受两侧各自换正交基影响；
+等距 $V_0$ 又保持该秩，所以 $P_{H_1}|_{H_3}$ 的秩必须为二。
+这与（34.35）的秩至多一矛盾，三条互异尾射线分支被排除。证明完毕。
+
+定理34.4将命题30.1的二维尾环境必要条件进一步收紧为两条不同射线，仍允许它们非正交。
+剩余模式是
+
+$$
+\begin{array}{ll}
+\mathrm{AAB}:&\eta_3\parallel\eta_4\not\parallel\eta_5,\\
+\mathrm{ABA}:&\eta_3\parallel\eta_5\not\parallel\eta_4,\\
+\mathrm{ABB}:&\eta_4\parallel\eta_5\not\parallel\eta_3.
+\end{array}
+\tag{34.38}
+$$
+
+本节没有构造或排除这三种模式。因此在本节结论范围内，一般容量仍保持
+$6\le d_{\mathrm{CPTP},5}(a,b)\le7$。
+
+## 追加锚（本行以下为增补区）

@@ -226,21 +226,29 @@ public static class CanonicalMarkdownWriter
         {
             var declarationGid = ((DescribeStatement.LeanDeclaration)describe.Statement).Value.Value;
             var resolutionKind = DescribeVocabulary.CanonicalName(claim.ResolutionKind);
-            var marker = JsonSerializer.Serialize(new
-            {
-                problem_slug = claim.ProblemSlug.Value,
-                declaration_gid = declarationGid,
-                resolution_kind = resolutionKind,
-            });
             builder.Append("\n\n*Resolves.* `Problems/")
                 .Append(claim.ProblemSlug.Value)
                 .Append("` (")
                 .Append(resolutionKind)
                 .Append(") by `")
-                .Append(declarationGid)
-                .Append("`.\n\n<!-- scribe-open-problem-resolution-v1 ")
-                .Append(marker)
-                .Append(" -->");
+                .Append(declarationGid);
+            foreach (var member in claim.AdditionalMembers)
+            {
+                builder.Append("` and `").Append(member);
+            }
+            builder.Append("`.");
+            foreach (var member in claim.Members(declarationGid))
+            {
+                var marker = JsonSerializer.Serialize(new
+                {
+                    problem_slug = claim.ProblemSlug.Value,
+                    declaration_gid = member,
+                    resolution_kind = resolutionKind,
+                });
+                builder.Append("\n\n<!-- scribe-open-problem-resolution-v1 ")
+                    .Append(marker)
+                    .Append(" -->");
+            }
         }
 
         if (describe.LiteratureReference is { } literature)
