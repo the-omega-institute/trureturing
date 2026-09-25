@@ -367,3 +367,13 @@ then3179200 pair-orbit evaluations and1024 shared-column assignments. An
 independent checker recomputed all84480 local interval endpoints using
 positive Bernstein coefficients and checked all160 table witnesses with
 generic selector vectors, as well as the1024 common-column minimum.
+
+## Arbitrary three-parent types on this same head
+
+[Report619](619-one-global-three-parent-network-under-the-root-one-head.md)
+uses this stronger actual head gate to treat every outside owner with
+one fixed tuple of at most three smaller parents, including three heads
+or two heads and one outside parent. It samples the entire head first
+and then all owners by the same normalized construction. Its complete
+whole-prime fee leaves extendible head Haar mass greater than1/53000.
+The present head and ordinary-interface restrictions remain.
