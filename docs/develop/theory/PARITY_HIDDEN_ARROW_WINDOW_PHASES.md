@@ -867,3 +867,235 @@ $`R_M^2/B_M^2=Q/(\sigma_j\sqrt\lambda)=1/\ell_j\to0`$。
 同时转移弱极限与紧性，不要求方向判决独立于数据。这完成证明。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 48. 收缩噪声的临界对数谱与确定高频斜率
+
+**定义 48.1（同一测度的有限频率能量）。** 回到[后验阈值卷第 39、42、43 章](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+的同一个固定振幅、固定 $`\beta\in(1/2,1)`$ 及原序列 $`\lambda=Q^3`$。
+保持该卷的 $`B_M,\mu_M,Y_M,c_M,h_M`$ 与圆周 $`\mathbb T_4`$ 上的 Fourier 约定。
+令
+
+```math
+\mathfrak L_M=\log(1/h_M),\qquad
+K_M(p)=\lfloor e^{p\mathfrak L_M}\rfloor,\qquad
+\mathcal E_M(p)=\sum_{|k|\le K_M(p)}
+ (1+k^2)^{-1/2}|\widehat\mu_M(k)|^2,
+\qquad 0\lt p_0\le p\le p_1\lt\infty.
+```
+
+式 (48.1)。
+
+只取 $`h_M\in(0,1)`$ 的充分大下标。令 $`\mathcal U_M`$ 为原窗口中出现的
+互异位置集合，并对每个 $`u\in\mathcal U_M`$ 定义完整得分组的系数
+
+```math
+A_M(u)=B_M^{-1}\sum_{i\in J:\,u_i=u}
+ (\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+\mathcal Q_M=\sum_{u\in\mathcal U_M}A_M(u)^2.
+```
+
+式 (48.2)。
+
+于是 $`\mu_M=\sum_u A_M(u)\delta_u`$、$`Y_M=\sum_u A_M(u)`$。
+所有能量、系数和既有场坐标均使用同一实际数据、标签及精确后验中心；
+$`\mathcal E_M`$ 是有限 Fourier 和，不把它定义为一个有限的临界 Sobolev 范数。
+
+**定理 48.2（共同随机质量与高频组方差的分离）。** 定义 48.1 下，令
+$`d=\phi(1-\beta)/\beta`$，仍取 (42.4) 的 $`\gamma`$。
+对两个实际实验和两种方向信息情形，以下关系对固定支持一致成立：
+
+```math
+\frac{\mathfrak L_M}{\lambda}\longrightarrow
+ \phi-\frac d2=\frac{\phi(3\beta-1)}{2\beta}\gt0,
+\qquad \mathcal Q_M\longrightarrow\gamma\quad\text{依概率},
+```
+
+```math
+\sup_{p\in[p_0,p_1]}
+\left|\frac{\mathcal E_M(p)}{2\mathfrak L_M}
+ -\min(p,1)Y_M^2-(p-1)_+\gamma\right|
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (48.3)。
+
+因此归一化能量过程与完整端点联合收敛到
+
+```math
+\left(Y,\ p\longmapsto\min(p,1)Y^2+(p-1)_+\gamma\right),
+\qquad Y\sim N(0,\gamma),
+```
+
+式 (48.4)。
+
+能量坐标可取 $`D[p_0,p_1]`$ 的 $`J_1`$ 拓扑，其极限连续。
+它还可与定理 40.2、42.2、43.2 中规定的同一实现、固定紧区间轮廓和有限个
+既有坐标联合；(48.4) 中的 $`Y`$ 就是这些结论的原端点。
+特别地，对固定 $`1\le p_a\lt p_b\lt\infty`$，
+
+```math
+\frac{\mathcal E_M(p_b)-\mathcal E_M(p_a)}
+ {2\mathfrak L_M(p_b-p_a)}\longrightarrow\gamma
+\quad\text{依概率}.
+```
+
+式 (48.5)。
+
+这些是概率与弱收敛结论，不包含实际能量矩的收敛，也不使非零点质量属于
+$`H^{-1/2}`$。
+
+证明。原序列中算术逼近误差比补偿小，精确直线步长满足
+
+```math
+\Delta=(1-\alpha)Q\epsilon(1+o(1)),\qquad
+h_M=\frac{\Delta\sqrt q}{Q}
+ =(1-\alpha)\epsilon\sqrt q(1+o(1)).
+```
+
+式 (48.6)。
+
+$`\log\epsilon=-\phi\lambda+O(1)`$ 和
+$`\log q=d\lambda+O(1)`$ 给出 (48.3) 的第一式。
+故 $`\mathfrak L_M\asymp Q^3`$，而 $`\delta_M=Q/\sqrt\lambda=Q^{-1/2}`$。
+
+先证明组平方和的集中。在第 42 章的公共全行截断与直线隔离事件上，
+$`u_{M,t}=c_M+h_Mt\delta_M`$ 为互异位置，且所有出现的整数均满足
+$`|t|\le C_1\lambda/Q`$。置 $`d_t=\sum_{i\in J_t}p_i(1-p_i)`$。
+完整方差时钟给出 $`d_J/B_M^2\to\gamma`$ 依概率，并有
+
+```math
+\max_t d_t/B_M^2\longrightarrow0\quad\text{依概率}.
+```
+
+式 (48.7)。
+
+为核对全窗口而非只核对固定紧标记区间，先用 (42.11) 得到
+$`\max_{|t\delta_M|\le R}d_t/B_M^2=O_{\mathbb P}(\delta_M)`$。
+对其余截断内的组，(42.14) 的高斯包络给出归一化期望上界
+$`C_2\delta_M\sum_{|t\delta_M|\gt R}e^{-c(t\delta_M)^2}+o(1)`$。
+低于半均值的计数组由 $`e^{-c\lambda}`$ 尾界处理。
+加性实际比较误差至多为
+$`C_2(\lambda/Q)M^{1-D_0}/B_M^2=o(1)`$，取充分大的固定 $`D_0`$ 即可。
+先取样本上极限再令 $`R\to\infty`$，条件外的 Markov 界使尾部总方差任意小。
+最大尾组方差不超过总尾方差，从而证明 (48.7)。截断外只付出趋零的事件概率。
+
+给定一个好环境，在同一个辅助乘积律下，令
+$`S_t=\sum_{i\in J_t}(\zeta_i-p_i)`$，$`\mathcal Q_M^{\mathsf Q}=B_M^{-2}\sum_t S_t^2`$。
+组间独立性以及中心 Bernoulli 和的四阶矩界给出
+
+```math
+\mathbb E_{\mathsf Q}\mathcal Q_M^{\mathsf Q}=d_J/B_M^2,\qquad
+\mathrm{Var}_{\mathsf Q}(\mathcal Q_M^{\mathsf Q})
+\le3\left(\max_t\frac{d_t}{B_M^2}\right)\frac{d_J}{B_M^2}
+ +\frac{d_J}{B_M^4}\longrightarrow0.
+```
+
+式 (48.8)。
+
+这些是辅助条件矩，(48.7)、$`B_M\to\infty`$ 使右端依数据概率趋零。
+将条件尾概率截在 $`1`$ 以内再平均，得到辅助联合空间上的概率收敛。
+(42.8) 另给出组中心误差
+
+```math
+\sum_t\left|B_M^{-1}\sum_{i\in J_t}(\pi_i-p_i)\right|
+\le B_M^{-1}\sum_{i\in J}|\pi_i-p_i|
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (48.9)。
+
+左端控制组误差向量的 $`\ell^2`$ 范数；辅助系数向量的平方范数由 (48.8)
+为 $`O_{\mathbb P}(1)`$。Cauchy 不等式使换中心前后的平方范数差趋零。
+最后一次完整窗口后验向量比较转移这个收敛事件，证明
+$`\mathcal Q_M\to\gamma`$。没有用总变差转移无界平方和的期望。
+
+接着在每个实现上作确定性 Fourier 核计算。
+[对数 Fourier 核及固定测度的原子平方关系](../../../Library/Dynamics/iyer2025empirical.md)
+是经典先例；此处需要一个对移动原子间距和频率截断同时一致的界。
+记
+
+```math
+\mathcal K_N(z)=\sum_{|k|\le N}(1+k^2)^{-1/2}e^{-\pi ikz/2}.
+```
+
+式 (48.10)。
+
+因为 $`\sum_{k\ge1}(k^{-1}-(1+k^2)^{-1/2})\lt\infty`$，
+该核与 $`1+2\sum_{k=1}^N\cos(k\theta)/k`$ 的差一致有界，
+其中 $`\theta=\pi z/2`$。对 $`0\lt|\theta|\le1`$，
+
+```math
+\sum_{k=1}^N\frac{\cos(k\theta)}k
+ =\min\{\log N,\log(1/|\theta|)\}+O(1),\qquad N\ge2,
+```
+
+式 (48.11)。
+
+常数与 $`N,\theta`$ 无关。若 $`N\le1/|\theta|`$，
+$`|1-\cos(k\theta)|\le k^2\theta^2/2`$ 使该和与调和和相差有界。
+若 $`N\gt1/|\theta|`$，先在 $`n=\lfloor1/|\theta|\rfloor`$ 截断，
+其余余弦和的部分和至多为 $`C/|\theta|`$；分部求和使加权尾部至多为
+$`C/(n|\theta|)=O(1)`$。这证明统一界。
+对角线上另有 $`\mathcal K_N(0)=2\log N+O(1)`$。
+
+公共截断事件上，任意两个不同组的位置差满足
+
+```math
+h_M\delta_M\le|u_{M,t}-u_{M,s}|
+ =h_M\delta_M|t-s|\le C_3h_M\sqrt\lambda\longrightarrow0.
+```
+
+式 (48.12)。
+
+所以 $`\log(1/|\pi(u_{M,t}-u_{M,s})/2|)=\mathfrak L_M+O(\log Q)`$
+在所有不同组对上一致。函数 $`x\mapsto\min(\log N,x)`$ 为 $`1`$-Lipschitz，
+由 (48.11) 对全部 $`N\ge2`$ 同时得到
+
+```math
+\mathcal K_N(u_{M,t}-u_{M,s})
+ =2\min(\log N,\mathfrak L_M)+O(1+\log Q),\qquad t\ne s.
+```
+
+式 (48.13)。
+
+这一步不预先令频率超过最小间距的倒数，因而包含交界指数 $`p=1`$。
+用同一个实际精确中心系数 $`A_t=A_M(u_{M,t})`$ 展开有限平方和，
+中心 $`c_M`$ 在位置差中精确消去，得
+
+```math
+\begin{split}
+\sum_{|k|\le N}(1+k^2)^{-1/2}|\widehat\mu_M(k)|^2
+={}&2\min(\log N,\mathfrak L_M)Y_M^2\\
+&+2(\log N-\mathfrak L_M)_+\mathcal Q_M+\mathcal R_{M,N},\\
+\sup_{N\ge2}|\mathcal R_{M,N}|
+\le{}&C_4(1+\log Q)\|\mu_M\|_{\mathrm{TV}}^2.
+\end{split}
+```
+
+式 (48.14)。
+
+这里非对角交叉项保留了同一标签实现，不能把它们替换为独立端点的乘积。
+截断内至多有 $`C_5Q^2`$ 个直线组。Cauchy 不等式给出
+$`\|\mu_M\|_{\mathrm{TV}}^2\le C_5Q^2\mathcal Q_M`$，故
+
+```math
+\frac{1+\log Q}{\mathfrak L_M}\|\mu_M\|_{\mathrm{TV}}^2
+ =O_{\mathbb P}(Q^{-1}\log Q)\longrightarrow0.
+```
+
+式 (48.15)。
+
+以 $`N=K_M(p)`$ 代入；因为 $`p\ge p_0\gt0`$，
+$`\log K_M(p)/\mathfrak L_M\to p`$ 在所取紧区间上一致。
+$`Y_M=O_{\mathbb P}(1)`$、$`\mathcal Q_M\to\gamma`$ 与 (48.14)、(48.15)
+共同证明 (48.3) 的一致概率近似。
+
+映射 $`y\mapsto[p\mapsto\min(p,1)y^2+(p-1)_+\gamma]`$
+从实数到一致范数连续函数空间连续。
+它和第 40、42、43 章的既有联合极限、Slutsky 定理一起给出 (48.4) 及其同实现扩展。
+(48.5) 则由一致近似在两个指数处相减立即得到。
+整个能量及组平方和对共同支持置换等变，故先验论证转移为支持一致的无条件结论。
+一次公共方向一致事件同时保持全部坐标，其趋零补事件不影响概率及弱收敛。
+所有结论仍是有限截断能量的极限；未将发散的临界全谱范数赋予有限值。∎
+
+## 追加锚（本行以下为增补区）

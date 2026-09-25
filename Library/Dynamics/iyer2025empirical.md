@@ -131,3 +131,74 @@ No all-amplitude law, actual moment convergence, alternative path
 topology or critical-regularity theorem is asserted. The moving center
 cannot be replaced by zero merely from its convergence to zero: that
 replacement requires control relative to the finer spatial scale.
+
+## Critical logarithmic energy of the shrinking posterior measure
+
+Chapter 48 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+returns to the original intensity sequence and the same signed measure
+from Chapters 42–43. It examines finite Fourier cutoffs at powers of the
+inverse spatial contraction scale. Its statement concerns a finite
+quadratic statistic, not membership of an atomic measure in the critical
+negative Sobolev space.
+
+The logarithmic Fourier kernel is classical. Frerick, Müller and
+Thomaser, *A Fourier Integral Formula for Logarithmic Energy*,
+Potential Analysis 61 (2024), 685–699,
+[DOI 10.1007/s11118-024-10125-9](https://doi.org/10.1007/s11118-024-10125-9),
+recall the circle Fourier-series energy formula in equation (1), printed
+page 686. Their Theorem 1, printed page 687, states a Euclidean mutual
+logarithmic-energy formula with its integrability conditions. For
+complex measures, absolute logarithmic integrability is material;
+positive measures have a separate existence formulation. The signed
+atomic self-energy in the present construction cannot simply be assumed
+to satisfy those hypotheses. Every finite Fourier sum is nevertheless
+well defined, and the chapter estimates that finite sum directly.
+
+The relevant elementary uniform bound is that the harmonic cosine sum
+through frequency N differs by a bounded amount from the minimum of
+log N and log inverse separation. Taylor's inequality below the inverse
+separation and summation by parts above it prove the bound. Replacing
+the harmonic weights with the specified Sobolev weights changes the
+kernel by a uniformly bounded amount. These facts remain classical
+steps inside the model proof, not newly named mathematical results.
+
+A second antecedent is Wiener's lemma. Cuny, Eisner and Farkas,
+*Wiener's lemma along primes and other subsequences*, Advances in
+Mathematics 347 (2019),
+[DOI 10.1016/j.aim.2019.02.005](https://doi.org/10.1016/j.aim.2019.02.005),
+[arXiv:1701.00101v6](https://arxiv.org/pdf/1701.00101v6)
+(version dated 18 February 2023), Theorem 1.1, state the classical
+Cesàro Fourier-power identity for a fixed finite complex Borel measure:
+the limit is the sum of squared atom masses. This motivates the
+high-frequency diagonal term. It does not provide a rate uniform in a
+changing array of atom locations and random masses. The version's
+qualification concerning a separate polynomial return-time example is
+unrelated to the classical theorem and no such example is used here.
+
+The `repo-derived` assertion is the simultaneous actual-posterior
+transition across logarithmic frequency scales. All distinct count-group
+separations have the same leading logarithm. Their off-diagonal terms
+therefore retain the square of the same random total mass up to the
+inverse contraction scale. Beyond that scale, the extra logarithmic
+energy has a deterministic limiting slope, obtained from concentration
+of the sum of squared whole-group posterior charges. The endpoint,
+resolved profile, bridge and first spatial moment remain on the same
+underlying label realization; no independent copy replaces a cross term.
+
+To justify the deterministic slope, compact uniform actual group
+occupancy is combined with whole-line tail control. Under the calibrated
+product law the group fourth moments give concentration of the squared
+charges. A separate absolute exact-center bound controls their change
+under posterior centering, and one complete-vector comparison transfers
+only probability statements. The uniform Fourier-kernel remainder is
+bounded using the number of possible count groups and their squared
+charges. This supplies a changing-array estimate that a fixed-measure
+Wiener identity alone does not yield.
+
+The result keeps the fixed amplitude, fixed sparsity exponent, original
+intensity sequence, and fixed positive compact range of frequency
+exponents. It asserts convergence in probability and joint distribution,
+not convergence of actual energy moments, finite critical full-spectrum
+energy, or a universal shrinking-window theorem. The classical primary
+sources delimit the ingredients; the bounded source comparison does not
+certify global originality.
