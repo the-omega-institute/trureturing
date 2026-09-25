@@ -340,7 +340,7 @@ private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable
 private partial def hasIndependentInputCarrier (type : Expr) : Bool :=
   match type with
   | .forallE _ domain body _ =>
-    let head := domain.getAppFn.constName?.getD .anonymous
+    let head := domain.consumeMData.getAppFn.constName?.getD .anonymous
     let inputCarrier := !head.isAnonymous &&
       !(dataTypes.contains head || propTypes.contains head ||
         dictionaryTypes.contains head || interfaceTypes.contains head)

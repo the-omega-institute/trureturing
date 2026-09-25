@@ -61,8 +61,8 @@ run_meta do
   check "independent_data_argument_accepted" identityInfo.value none
   check "infinite_carrier_type_accepted" (mkConst ``Int) none
   check "independent_infinite_readout_accepted" (mkConst ``Int.natAbs) none
-  check "local_infinite_readout_does_not_bypass_body_audit" (mkConst ``localChoiceReadout)
-    (some "forbidden_dependency:E6.closed_identity")
+  check "local_unapplied_readout_rejected" (mkConst ``localChoiceReadout)
+    (some "unclassified_form:E5.unsaturated_definition:LeanInformationAudit.Tests.DeclaredArguments.localChoiceReadout")
   let sourceInfo ← getConstInfo ``Int.natAbs
   let (_, sourceTypeWork) ← TemplateAudit.checkExtractionType ``target sourceInfo.type 524288
   unless sourceTypeWork < 524288 do throwError "independent source type exhausted work budget"
