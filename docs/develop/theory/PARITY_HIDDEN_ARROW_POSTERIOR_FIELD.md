@@ -1249,3 +1249,225 @@ $`\mathcal W`$ 与原始 $`H,K_1,\ldots,K_d`$ 独立。
 其补事件概率为 $`O(q^{-1})`$，故整个联合结论一并转移。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 41. 临界算术网格上的高斯阶梯
+
+**定义 41.1（保持幅度，改变计数网格）。** 固定定义 39.1 的同一个 $`r,\alpha,P_j,Q_j`$，
+以及 $`\beta\in(1/2,1)`$、$`\vartheta\gt0`$。
+把 (39.3) 中的 $`\lambda=Q^3`$ 换成 $`\lambda=\lfloor\vartheta Q^2\rfloor`$，
+其余 $`N,M,k_0,l_0,z_0,q,\tau,\mathsf T`$ 按该式重新计算。
+补偿参数、实际得分、窗口 $`J`$、计数直线 $`\mathcal L`$ 与精确后验仍按 (39.4) 定义。
+令 $`W_c=W(k_0,l_0)`$，$`\Delta`$ 按 (39.18) 的精确得分差定义，并置
+
+```math
+B_0=\sqrt{q/\lambda},\qquad
+c_0=\frac1{4\pi\sqrt{ab}},\qquad
+c_t(\vartheta)=c_0\exp\left(-\frac{\kappa t^2}{2\vartheta}\right),\quad t\in\mathbb Z,
+\qquad
+\Gamma_\vartheta=\sum_{t\in\mathbb Z}c_t(\vartheta),\qquad
+F_\vartheta(x)=\frac1{\Gamma_\vartheta}\sum_{t\le x}c_t(\vartheta).
+```
+
+式 (41.1)。
+
+这里 $`a,b,\kappa`$ 保持 (39.2) 的固定值。对充分大下标，$`\Delta\gt0`$，定义
+
+```math
+Y_M^\vartheta=\frac1{B_0}\sum_{i\in J}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+L_M^\vartheta(x)=\frac1{B_0}\sum_{i\in J,\,W_i\le W_c+x\Delta}
+                         (\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+C_M^\vartheta(x)=L_M^\vartheta(x)-F_\vartheta(x)Y_M^\vartheta.
+```
+
+式 (41.2)。
+
+全部坐标使用同一实际数据、优先级和标签；未知方向时共同使用一次方向判决及工作正向权重。
+另取相互独立的 $`G_t^\vartheta\sim N(0,c_t(\vartheta))`$，定义
+
+```math
+Y_\vartheta=\sum_{t\in\mathbb Z}G_t^\vartheta,\qquad
+L_\vartheta(x)=\sum_{t\le x}G_t^\vartheta,\qquad
+C_\vartheta(x)=L_\vartheta(x)-F_\vartheta(x)Y_\vartheta.
+```
+
+式 (41.3)。
+
+**定理 41.2（相同端点尺度与不同路径结构）。** 定义 41.1 的参数最终合法，
+(41.3) 的级数几乎处处绝对收敛。对每个固定 $`R\gt0`$，
+两个实际实验、两种方向信息情形均对支持一致地满足
+
+```math
+(Y_M^\vartheta,L_M^\vartheta(\cdot),C_M^\vartheta(\cdot))
+\Longrightarrow(Y_\vartheta,L_\vartheta(\cdot),C_\vartheta(\cdot))
+\quad\text{于 }\mathbb R\times D[-R,R]^2.
+```
+
+式 (41.4)。
+
+各路径空间取 $`J_1`$ 拓扑；$`R`$ 可以为整数。
+$`Y_\vartheta\sim N(0,\Gamma_\vartheta)`$，$`C_\vartheta`$ 独立于 $`Y_\vartheta`$，
+且与 $`\sqrt{\Gamma_\vartheta}\,\mathcal B(F_\vartheta(\cdot))`$ 同律，
+其中 $`\mathcal B`$ 为标准 Brownian 桥。
+该联合极限可同时加入第 36 章固定紧阈值区间和有限个固定紧容量曲线，
+保留其原极限；整个新阶梯族独立于原始 $`G,H,K_1,\ldots,K_d`$。
+
+另一方面，定义原窗口过程
+
+```math
+F_M^\vartheta(u)=\frac1{B_0}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad -1\le u\le1.
+```
+
+式 (41.5)。
+
+其端点仍收敛到 $`N(0,\Gamma_\vartheta)`$，但整个过程在 $`D[-1,1]`$ 的 $`J_1`$ 拓扑下不紧。
+这里的端点归一化与第 38 章相同，不能据此推断单跳路径极限。
+
+证明。新序列满足 $`\lambda\sim\vartheta Q^2`$，由取整得
+$`z_0=\phi\lambda+O(1)`$、$`\log M=\phi\lambda/\beta+O(1)`$、
+$`q=M^{1-\beta+o(1)}`$ 和 $`\tau=z_0+O(q^{-1})`$。
+特别地，$`\lambda/\log M\to\beta/\phi`$，
+$`(\lambda-\tau/\phi)/\sqrt{\log M}\to0`$，
+$`q(\log M)^3/M\to0`$ 与 $`\lambda q^2/M\to0`$。
+因此实际一行、两行及全信号向量比较仍满足各自条件。
+固定幅度的信号增量为同一个非格点分布；整数 $`\lambda`$ 下的固定宽度定位仍由 Stone 定理给出。
+算术误差 $`0\lt\alpha-P/Q\lt e^{-Q^4}`$ 对应的指数阶严格快于 $`\lambda`$，因此
+
+```math
+\frac{\lambda e^{-Q^4}}w\to0,\qquad
+\frac{\epsilon\lambda}w\to0,\qquad
+\frac1{qw}\to0,\qquad Qw\to0,\qquad
+\frac{\alpha-P/Q}{\epsilon}\to0.
+```
+
+式 (41.6)。
+
+在任意充分大的固定计数截断上，(39.10) 的非零整数分子仍给出 $`h/(2Q)`$ 的间隙。
+分子为零恰好给出直线，其补偿与取整误差由 (41.6) 控制。
+实际行尾界对全部 $`M`$ 行取并集，故窗口恰等于实际直线行的概率趋于一。
+由此在新序列上得到隔离结论。
+此外
+
+```math
+\Delta\sim\epsilon Q(1-\alpha)\gt0,\qquad
+\frac{\Delta}{w}\to0,\qquad
+\frac{W(k_0+tQ,l_0+tP)-W_c}{\Delta}=t.
+```
+
+式 (41.7)。
+
+最后一式精确成立，因此展开后的跳点始终是整数。
+
+在信号比较律下，对每个固定整数 $`t`$，两计数的均值偏差分别为
+$`tQ+O(1)`$ 与 $`tP+O(1)`$。Stirling 展开给出
+
+```math
+\lambda Q_r\{(N_+,N_-)=(k_0+tQ,l_0+tP)\}
+\longrightarrow\frac1{2\pi\sqrt{ab}}
+                 \exp\left(-\frac{\kappa t^2}{2\vartheta}\right).
+```
+
+式 (41.8)。
+
+这里网格没有趋于连续；不能把右边改成积分。
+为对所有整数求和，在两计数均不小于各自均值一半的固定线性截断内，
+Poisson 点概率界给出 $`C\lambda^{-1}\exp(-c t^2Q^2/\lambda)`$。
+因为 $`Q^2/\lambda\to1/\vartheta`$，归一化后的界是固定可求和的高斯序列。
+其余点由边缘 Poisson 指数尾界控制，即使乘以截断中的点数及 $`\lambda`$ 仍趋零。
+截断外的总计数尾也有同样性质。
+因此 (41.8) 可对整条直线、任意固定整数半线或固定整数块求和，且远端余项一致趋零。
+
+在截断直线上 $`W=\tau+o(1)`$ 一致成立，精确换测度使背景与信号的混合贡献渐近相等。
+两种比较律的截断尾分别控制后再乘以各自人口数。
+实际一行、两行比较给出各组、半线和整窗的均值与方差界；
+它们的正均值为 $`q/\lambda`$ 的固定比例，故相应占据数集中。
+校准依然满足 $`\max_{i\in J}|p_i-1/2|\to0`$ 依概率，空集时取零。
+若 $`J_t`$ 为第 $`t`$ 个实际直线计数组，便得到
+
+```math
+\frac1{B_0^2}\sum_{i\in J_t}p_i(1-p_i)\to c_t(\vartheta),\qquad
+\frac{d_J}{B_0^2}\to\Gamma_\vartheta,
+\qquad
+\frac1{B_0^2}\sum_{i\in J,\,W_i\le W_c+x\Delta}p_i(1-p_i)
+ \to\sum_{t\le x}c_t(\vartheta)
+```
+
+式 (41.9)。
+
+最后一式对每个固定实数 $`x`$ 成立，包括整数，均为依概率收敛。
+实际计数组在整数端点的包含约定与右端完全一致。
+
+极限级数满足
+$`\sum_t\mathbb E|G_t^\vartheta|=\sqrt{2/\pi}\sum_t\sqrt{c_t(\vartheta)}\lt\infty`$，
+故绝对收敛几乎处处成立。其路径在紧区间只有有限个整数跳点，且为右连续。
+
+先在同一校准乘积律下证明过程收敛。
+对 $`[-R,R]`$，把所有标签分成左初始尾、区间 $`(-R,R]`$ 内的有限个完整整数计数组，
+以及右终端尾。这些组互不相交。
+每个单标签系数至多为 $`1/B_0\to0`$；(41.9) 给出各组及两尾的方差极限。
+有界独立数组中心极限定理因此给出整个有限向量的联合高斯极限，且各组独立。
+由这个向量到阶梯路径和完整端点的线性映射，在一致范数下连续，
+因为所有跳点都是同一组固定整数。
+这证明辅助过程的联合收敛，包括整数紧区间端点。
+每个完整计数组具有正的极限方差，不能在这里使用要求最大组跳消失的连续极限定理。
+
+$`d_J=O_{\mathbb P}(q/\lambda)=o_{\mathbb P}(q)`$，补集保留 $`q`$ 量级方差。
+对整窗标签向量使用一次 (35.11) 的比较；(35.12) 同时控制全部子集中心，并给出
+
+```math
+\sup_{E\subseteq J}\frac1{B_0}
+ \left|\sum_{i\in E}(\pi_i-p_i)\right|
+\le\frac{C\sqrt{d_J}}{B_0}
+ \left(\frac{d_J+\sqrt{d_J}}q+q^{-1/2}\right)
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (41.10)。
+
+总变差映射收缩及此一致位移转移完整端点和路径。
+确定环境的子序列论证给出后验条件律的有界 Lipschitz 收敛，
+其有界性允许再取先验期望。
+极限协方差是
+$`\mathrm{Cov}(L_\vartheta(x),L_\vartheta(y))=\Gamma_\vartheta F_\vartheta(\min(x,y))`$，
+$`\mathrm{Cov}(L_\vartheta(x),Y_\vartheta)=\Gamma_\vartheta F_\vartheta(x)`$。
+联合高斯投影即得到桥的协方差及其与端点的独立性。
+对有限固定跳点作此投影同样保持一致范数连续；这证明 (41.4)。
+
+加入第 36 章坐标时，使用覆盖旧阈值集、全部截断排名前缀和新 $`J`$ 的一个并集。
+其方差仍为 $`O_{\mathbb P}(q/\sqrt\lambda)`$，补集保留 $`q`$ 量级方差，
+其大小除以 $`q`$ 趋于 $`1/2`$。
+(41.10) 用该并集方差替换括号中的 $`d_J`$ 后仍趋零，旧坐标的中心界亦保留。
+在乘积律下，新坐标与旧阈值或细尺度坐标的归一化交叉协方差分别至多为
+
+```math
+O_{\mathbb P}\left(\frac{B_0}{b_M^\circ}\right)
+=O_{\mathbb P}(\lambda^{-1/4}),\qquad
+O_{H_0}\left(\frac{\sqrt q}{B_0q^{1/4}}\right)
+=O_{H_0}\left(\frac{\sqrt\lambda}{q^{1/4}}\right),
+```
+
+式 (41.11)。
+
+二者均趋零。任意有限坐标的共同标签数组先给出联合高斯性，再给出这些独立关系。
+把上述左尾、有限整数组和右尾的系数向量与旧过程共同处理。
+联合数组极限与旧过程紧性先给出这个有限向量和旧过程的联合收敛，
+再应用固定阶梯重建及桥投影的一致范数连续性。
+因此整数紧区间端点与完整终端尾同样保留，无须在不连续跳点使用一般的评价连续性。
+确定的后验条件极限按有界连续原点测试和有界 Lipschitz 过程测试加入数据原点，
+再作旧排名过程的平移、取整和截断移除，即得所述联合扩展。
+
+最后取外窗口中的三个确定位置，对应 $`t=-1,0,1`$。
+由隔离和 (41.7)，它们严格递增并都趋于内部零点。
+两个相邻过程增量恰为第零组与第一组的中心化标签和；其联合极限是独立的
+$`N(0,c_0)`$ 与 $`N(0,c_1(\vartheta))`$，两方差严格为正。
+因此两增量绝对值同时大于固定正数的概率有严格正的极限。
+第 39 章使用的内部三点分割振荡判据便排除了 $`J_1`$ 紧性，
+而整窗端点的方差极限仍为有限的 $`\Gamma_\vartheta`$。
+
+以上后验计算均在均匀支持先验空间进行。
+共同置换等变把整个无条件律转移到每个固定支持，实际比较界保留支持一致性。
+一个共同正确方向事件使全部工作坐标逐项一致，补事件概率为 $`O(q^{-1})`$，
+所以过程极限、独立关系和外窗口不紧性一并转移。∎
+
+## 追加锚（本行以下为增补区）
