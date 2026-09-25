@@ -7,11 +7,12 @@ empty selector contains every other selector's feasible set in this
 optimization. This removes selector enumeration, but does not remove
 the conditional-law restriction.
 
-Two actual distinct-odd-modulus examples identify separate limits:
-conditional uniformization can increase the complete query norm, and
-positive deleted mass can leave every nonunit query maximum unchanged.
-Thus neither a marginal-only transport nor a mass-only compulsory
-query debit supplies the missing unrestricted estimate.
+Actual distinct-odd-modulus families identify separate limits: fixing
+the ternary conditional can strictly worsen the optimal complete query
+norm; retaining a prescribed low-query Q marginal can force unbounded
+joint query cost; positive deleted mass can leave every nonunit query
+maximum unchanged. Neither a marginal-only transport nor a mass-only
+compulsory debit supplies the missing unrestricted estimate.
 
 These are ordinary proofs and exact arithmetic, not new Lean
 verification. The general all-height LP already exists in
@@ -149,8 +150,233 @@ With Haar tails, JB5 yields
 Independent Haar on the other primes multiplies 1+R by
 product_(p in P\{3,5})p/(p-1), so the strict increase persists on P.
 This refutes a contraction claim for this particular conversion. It
-does not prove that the optima over the two law classes differ, and
-both displayed costs remain below the continuation threshold.
+does not by itself establish different optimal values. The following
+calculation proves that stronger separation for the same actual family
+and its general prime parameter version. Neither result obstructs the
+continuation threshold after optimizing the Q-marginal.
+
+### 3.1. The fixed ternary source has a strictly worse optimum
+
+For any prime p>=5 put n=p-1 and use the actual originals
+`2 mod3` and `1 mod(3p)`. Keep u equal to normalized pure-3 Haar.
+Then, over arbitrary probability laws with the stated support,
+
+    min_(mu supported on U) R_{3,p}(mu)
+      =3/4+7p/(4n^2)-p/(2n^3),
+    min_(mu in C_u(U)) R_{3,p}(mu)
+      =3/4+7p/(4n^2).                                (JB6a)
+
+Both minima are attained, and their positive difference is p/(2n^3).
+In particular p=5 gives161/128 and83/64, with gap5/128.
+
+First average over the unresolved ternary and p-adic tails. The actual
+survivor and the fixed u are invariant. Cylinder maxima are convex and
+translations permute their phases, so no maximum increases. This
+preserves both the full supported-law domain and C_u(U). Hence both
+minimizations reduce exactly to the first-root masses with Haar tails,
+whose full-height norm is
+
+    R=(3/2)M3+(p/n)Mp+(3p/(2n))M3p.                  (JB6b)
+
+Call p-root1 bad: only its ternary root0 survives. All other n roots
+are good and permit both ternary roots. Write b for the bad-cell mass
+and r0,r1 for the row masses. Every supported law satisfies
+
+    r0+r1=1, M3>=max(r0,r1),
+    Mp>=(1-b)/n, M3p>=b, M3p>=r1/n.
+
+Define positive weights
+
+    c2=p/n^2, c1=3p/(2n)-c2,
+    alpha=(3/2+c1/n)/2, beta=(3/2-c1/n)/2.
+
+For n>=4, c1/n<=15/32<3/2, so all weights are nonnegative.
+Apply the preceding inequalities with these weights:
+
+    (3/2)M3 >= alpha*r0+beta*r1,
+    (p/n)Mp >= (p/n^2)(1-b),
+    (3p/(2n))M3p >= c2*b+(c1/n)r1.
+
+Adding cancels b and r1 and gives
+
+    R>=alpha+p/n^2=3/4+7p/(4n^2)-p/(2n^3).
+
+This is a dual lower bound for EVERY supported law. Its attainer gives
+the bad cell mass1/(2n), each good row1 cell mass1/(2n), and each good
+row0 cell mass(n-1)/(2n^2). Both rows have mass1/2. The p-query maximum
+is (2n-1)/(2n^2), and the joint maximum is1/(2n). Substitution in JB6b
+attains the bound, with positive mass at every surviving cell.
+
+In C_u(U), every good column splits equally. Thus
+
+    M3=(1+b)/2, Mp>=(1-b)/n, M3p>=(1-b)/(2n),
+    R>=3/4+7p/(4n^2)+[3/4-7p/(4n^2)]b.
+
+The last coefficient is positive because
+
+    3n^2-7p=(n-4)(3n+5)+13>0.
+
+Its minimum is attained by b=0 and mass1/(2n) at every good cell.
+This is realized by a p-prior uniform on the good roots, with no
+deletion loss. No full-support condition is imposed in JB6a. If one
+adds that requirement, the fixed-class value is only an infimum as
+b decreases to zero; the unrestricted class still attains its own
+smaller minimum.
+
+Unused prime coordinates cannot improve either optimum. Average over
+their whole additive groups: U and u are invariant, and every query
+maximum again cannot increase. The result has independent unused Haar
+coordinates. Therefore for any finite unused prime set F,
+
+    min R_{{3,p} union F}=(1+min R_{3,p}) product_(q in F)q/(q-1)-1
+
+in each respective law class. The exact optimal gap is multiplied by
+that same Euler factor. For p=5 and F={7,11,13,17,19}, the minima are
+66898267/26542080 and11419147/4423680, with gap323323/5308416.
+
+The restriction on u is material. If its ternary weights may change,
+take u'_0=(n-1)/(2n-1), u'_1=n/(2n-1), p-prior bad mass1/n, and each
+good-root mass(n-1)/n^2. Product/deletion on the SAME U has mass
+2(n-1)/(2n-1); normalization gives exactly the unrestricted attainer.
+Thus this example does not separate all product/deletion sources from
+all joint laws. It separates the source with the stipulated fixed
+ternary Haar conditional.
+
+The [exact primal/dual producer](../../frontier/cover-geometry/fixed_ternary_variational_gap.py)
+and its [data](../../frontier/cover-geometry/fixed_ternary_variational_gap.json)
+check163 identities and inequalities for ten prime instances, including
+the dual's constant value on every surviving cell and the reweighted-u
+attainer. The algebra above supplies the arbitrary-prime quantifier.
+
+### 3.2. A small marginal query norm need not admit a small joint lift
+
+There is a stronger obstruction to keeping a prescribed Q marginal.
+It does not require fixed ternary conditionals. Write M_m(mu) for a
+query maximum under one supported probability mu, and let its Q
+marginal be nu. Suppose that, on the actual survivor U, a Q-cylinder
+A=[0 mod K] forces ternary residue0 mod3^N. Here K is Q-smooth.
+For any a>=1 and Q-smooth d, put g=gcd(d,K). Partition the mu-mass
+above A into the d/g compatible d-residues and, when a>N, into the
+3^(a-N) compatible ternary residues. At least one joint cylinder has
+mass at least their average:
+
+    M_(3^a d)(mu)>=nu(A)(g/d)3^(-max(a-N,0)).
+
+Let H_p=v_p(K) and
+
+    A(K)=sum_(d Q-smooth,d>=1)gcd(d,K)/d
+        =product_(p in Q)[H_p+p/(p-1)].
+
+Each coordinate sum has H_p+1 terms equal to1 and a geometric tail
+1/(p-1). Summing ALL positive ternary exponents gives N+1/2. The
+zero-ternary nonunit queries are exactly those of nu. Consequently
+
+    R_P(mu)>=R_Q(nu)+(N+1/2)nu(A)A(K).               (JB6c)
+
+All numerical query labels are counted once. No independence,
+conditional uniformity or Haar tails of mu are assumed; nonnegative
+summation remains valid if its norm is infinite.
+
+To realize this on actual original families, put
+D=7*11*13*17*19=323323. For e=1,...,N and v=1,2 take the original
+modulus and globally fixed CRT residue
+
+    m_(e,v)=3^e 5^(2e-2+v)D,
+    t=v3^(e-1) mod3^e, x_Q=0 mod[5^(2e-2+v)D].       (JB6d)
+
+These2N odd numerical moduli are distinct, each uses all seven primes,
+and every numerical Q cofactor occurs only once. Their ternary
+cylinders specify the first nonzero digit and are pairwise disjoint,
+so the actual originals are also disjoint and irredundant. Every Q
+fibre permits0 mod3^N. On A_N=[0 mod K_N], K_N=5^(2N)D, this is its
+entire ternary survivor: all Q constraints match and the forbidden
+ternary mass is sum_(e=1)^N 2*3^(-e)=1-3^(-N).
+
+There are no pure3 originals, so u is H3. Put
+
+    r_H=R_Q(H_Q)=157435/165888,
+    a_N=A(K_N)=(2N+5/4) product_(p in Q,p!=5)(1+p/(p-1)),
+    eta_N=H_Q(.|A_N),
+    epsilon_N=(2-r_H)/(a_N-1-r_H),
+    nu_N=(1-epsilon_N)H_Q+epsilon_N eta_N.
+
+Here0<epsilon_N<1. Every query maximum of both mixture components
+occurs at phase0, so
+
+    R_Q(nu_N)=(1-epsilon_N)r_H+epsilon_N(a_N-1)=2<B_*.
+
+But every joint probability on the same actual U with Q marginal nu_N
+satisfies, by JB6c,
+
+    R_P(mu)>=2+(N+1/2)nu_N(A_N)a_N
+            >=2+(N+1/2)epsilon_N a_N
+            >2+(N+1/2)(2-r_H).                       (JB6e)
+
+The last bound tends to infinity while the marginal norm stays2.
+For N=12, there are24 original labels and the middle bound is
+
+    93813694601/6187327488=15.162231962498...>566/49.
+
+This nu_N is an explicit low-query marginal, not the claimed PA
+output for a chosen projected family. Its cost alone does not encode
+the correspondence needed for a joint extension.
+
+Supported lifts do exist. Each actual fibre has Haar mass c_x>=3^-N,
+so the law with Q marginal nu_N and conditional H3(.|U_x) is obtained
+by product/deletion from raw prior w proportional to nu_N/c. The
+normalizing integral is finite. Here nu_N is the target marginal,
+not that raw prior. Starting from raw H3 times nu_N instead gives
+marginal proportional to c_x nu_N after deletion; JB6e does not
+assert failure for this different, forward reweighting.
+
+### 3.3. The prescribed marginal can even be the unchanged Haar law
+
+For a source-provenance variant, keep the two Q cofactors fixed:
+d_1=5D,d_2=25D. For each e=1,...,N and v=1,2 use modulus3^e d_v,
+ternary phase v3^(e-1) mod3^e and Q phase0 mod d_v. The full numerical
+labels remain distinct and every (d,e) occurs at most once. On the
+fixed cylinder A=[0 mod25D], the survivor again forces0 mod3^N.
+
+Take the SAME marginal nu=H_Q for every N. It has R_Q=r_H<1 and is
+the actual empty-input PA output: with no selected forbidden Q events,
+the pure source and every normalized PA row are unchanged Haar. JB6c
+now gives
+
+    R_P(mu)>=r_H+(N+1/2)A(25D)/(25D),
+    A(25D)=2407405/18432,
+    A(25D)/(25D)=481/29767680.                        (JB6f)
+
+For N=1000000 the lower bound is
+9166519379/535818240=17.107516494772554...>566/49.
+The displayed family is specified by its formula; no enumeration of
+its two million labels or enormous ternary period is used to prove
+the result. The bound grows linearly in N with one fixed Haar marginal.
+
+The empty selected input is not asserted to be a good selector for
+these actual families. In both JB6d and JB6f, every original projection
+lies inside E=[0 mod5D]. Choose instead pi_good=H_Q(.|E^c). Every
+remaining fibre is untouched, so H3 times pi_good is in C_u(U).
+Every nonunit Q query has a phase1 cylinder disjoint from E, attaining
+its undeleted Haar mass. Thus
+
+    R_P(H3 times pi_good)
+      =1/2+(3/2)r_H/(1-1/(5D))
+      =343904070269/178784575488<2.                   (JB6g)
+
+This very family therefore admits a small joint query law after
+changing the marginal. JB6c–f refute preservation of an arbitrary
+supplied low-query marginal; they do not refute optimization over pi,
+the two-copy PA existence theorem, or noncoverage. Their missing
+interface is the relation between the chosen marginal and the actual
+fibres, which R_Q alone does not preserve.
+
+The [fixed-marginal producer](../../frontier/cover-geometry/fixed_marginal_lift_obstruction.py)
+and [data](../../frontier/cover-geometry/fixed_marginal_lift_obstruction.json)
+retain the24 exact CRT labels, rational complete-query bounds, inverse
+product/deletion profile, and the fixed-cofactor Haar formulas. Finite
+ternary checks verify small depths. The partition argument and the
+geometric sums above establish arbitrary depth and arbitrary joint
+law, without a numerical LP solver or new Lean theorem.
 
 ## 4. Deletion debit depends on every competing query phase
 
@@ -272,3 +498,9 @@ class, or a same-law mass/incidence estimate strong enough for JB9.
 An LP representation does not prove its uniform threshold. Equal
 marginals do not justify changing the conditionals. Positive forbidden
 mass does not guarantee a compensating reduction of maximum queries.
+The fixed-marginal obstruction adds a necessary change of scope: a
+successful existence proof must choose the marginal together with the
+actual fibres, or prove the needed compatibility for its specific
+supplier. It cannot promise to retain every marginal satisfying only
+the scalar Q-query bound. Whether optimizing pi in C_u(U) always passes
+the threshold for an arbitrary actual family remains unresolved.
