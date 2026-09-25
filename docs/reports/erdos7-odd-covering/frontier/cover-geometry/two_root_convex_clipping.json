@@ -1,5 +1,5 @@
 {
-  "scope": "Exact global certificate dual for the full max-two-hinge envelope; not an actual-query lower bound or source-realizability claim.",
+  "scope": "Exact global certificate optimum for both the full max-two-hinge envelope and all same-scalar-moment bounded-root-loss estimates retaining the raw query numerator; not an actual-query lower bound or source-realizability claim.",
   "hinge_input_sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685",
   "B": "432040125182653876501/86355045355449035400",
   "K3": "12019840537595758779003/5715264751774801992890",
@@ -67,6 +67,7 @@
     }
   ],
   "rational_parameter_controls": 252,
+  "bounded_root_parameter_controls": 252,
   "actual_originals": [
     {
       "m": 3,
@@ -101,7 +102,74 @@
   "actual_loss": "1/6126120",
   "actual_all_active_root_conditional": "26/71",
   "actual_fixed_u_all_active_root_conditional": "13/43",
-  "check_count": 34,
+  "prefix_refinement": {
+    "scope": "For h=2,3,4 all live cells may have independent weights and clips; the retained raw-query/untruncated-hinge certificate is at least the existing579 optimum. Not an exact minimum at these depths or an actual-law lower bound. No claim for h>4.",
+    "depths": [
+      {
+        "h": 2,
+        "cells": 5,
+        "scale": "6",
+        "complete_residual_cap": "1/6",
+        "actual_phase_partition_controls": 1053,
+        "ancestor_query_coefficient": "3/2"
+      },
+      {
+        "h": 3,
+        "cells": 15,
+        "scale": "2",
+        "complete_residual_cap": "1/2",
+        "actual_phase_partition_controls": 1053,
+        "ancestor_query_coefficient": "3/2"
+      },
+      {
+        "h": 4,
+        "cells": 45,
+        "scale": "2/3",
+        "complete_residual_cap": "3/2",
+        "actual_phase_partition_controls": 1053,
+        "ancestor_query_coefficient": "3/2"
+      }
+    ],
+    "certificate_lower_barrier": "7548357118614250413488684/625732567524997445251785",
+    "reused_dual_mean": "9427166061543940094525970832892592549412143/2287153408200211188646465291155732900404960",
+    "added_named_checks": 19,
+    "bounded_loss": {
+      "scope": "For h=2,3,4 the sharp scalar allocation envelope also caps each cell loss by its weight and total loss by1. With the same raw query numerator, the feasible moment dual gives this strict lower barrier, not an exact optimum or actual-law lower bound.",
+      "lower_barrier": "33914609213286804860799851870837955027791000698/2820576058673273244795335584651143056943842655",
+      "derivative_numerator": "17390107284801685724248961343831194148679463/3948335574863297592288635491589985266448000",
+      "prefix_fill_controls": [
+        {
+          "h": 2,
+          "prefix_cells": 1,
+          "scale": "6",
+          "max_prefix": 8,
+          "prefix_mass": "1/3",
+          "dual_allocation_total": "179116155169334861795993445824959258438830717/29241169867468513268391830349718421742215023",
+          "capped_loss": "1/3"
+        },
+        {
+          "h": 3,
+          "prefix_cells": 3,
+          "scale": "2",
+          "max_prefix": 8,
+          "prefix_mass": "1/4",
+          "dual_allocation_total": "179116155169334861795993445824959258438830717/29241169867468513268391830349718421742215023",
+          "capped_loss": "1/4"
+        },
+        {
+          "h": 4,
+          "prefix_cells": 9,
+          "scale": "2/3",
+          "max_prefix": 8,
+          "prefix_mass": "5/23",
+          "dual_allocation_total": "179116155169334861795993445824959258438830717/29241169867468513268391830349718421742215023",
+          "capped_loss": "5/23"
+        }
+      ],
+      "added_named_checks": 9
+    }
+  },
+  "check_count": 55,
   "checks": [
     "same actual PA query supplier",
     "complete four low-threshold corner profiles",
@@ -127,15 +195,36 @@
     "dual weight cancellation",
     "global certificate dual has zero constant and coefficients",
     "all rational hinge and global-dual controls",
+    "bounded root envelope equals the hinge at the dual atom",
     "candidate equal slopes and legal clips",
     "candidate positive mass certificate",
     "candidate attains dual globally",
+    "bounded root loss attains the same scalar moment bound",
     "full two-root envelope misses continuation gate",
     "actual original labels are distinct",
     "actual full CRT phases retained",
     "actual root fibre sizes",
     "actual Q atoms form one probability",
     "nonzero actual clipping loss attains its scalar majorant",
-    "root-dependent normalization differs from fixed-u normalization"
+    "root-dependent normalization differs from fixed-u normalization",
+    "prefix refinement complete residual coefficients at h2",
+    "prefix refinement unique actual residual assignment at h2",
+    "prefix refinement entire query and ancestor coefficients at h2",
+    "prefix refinement complete residual coefficients at h3",
+    "prefix refinement unique actual residual assignment at h3",
+    "prefix refinement entire query and ancestor coefficients at h3",
+    "prefix refinement complete residual coefficients at h4",
+    "prefix refinement unique actual residual assignment at h4",
+    "prefix refinement entire query and ancestor coefficients at h4",
+    "prefix refinement reuses the exact probability-dual cancellation",
+    "bounded prefix loss exact rational barrier",
+    "bounded prefix loss ratio increases on its full feasible range",
+    "bounded prefix loss barrier remains above continuation gate",
+    "bounded loss prefix filling is feasible at h2",
+    "bounded loss all selected prefix cells saturate at h2",
+    "bounded loss prefix filling is feasible at h3",
+    "bounded loss all selected prefix cells saturate at h3",
+    "bounded loss prefix filling is feasible at h4",
+    "bounded loss all selected prefix cells saturate at h4"
   ]
 }
