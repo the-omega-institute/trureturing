@@ -242,6 +242,30 @@ class PresentationTests(unittest.TestCase):
                     presenter.line(line, "stdout")
                 self.assertIn("".join(messages), output.getvalue())
 
+    def test_failure_blocks_keep_context_across_nested_operation_boundaries(self):
+        for boundary in ('STAGE_STEP {"name":"restore","status":"started"}\n',
+                         'STAGE_PROCESS {"child_exit":{"code":0}}\n'):
+            with self.subTest(boundary=boundary):
+                output = io.StringIO()
+                presenter = ci_output.Presenter("engineering", output)
+                for line in ("CI_DIAGNOSTIC_BEGIN step=tests raw_exit=1\n", boundary,
+                             "No .NET SDKs were found.\n", "information: finishing\n", "CI_DIAGNOSTIC_END\n"):
+                    presenter.line(line, "stdout")
+                self.assertIn("No .NET SDKs were found.", output.getvalue())
+                self.assertIn("CI_DIAGNOSTIC_END", output.getvalue())
+                self.assertNotIn("information: finishing", output.getvalue())
+
+    def test_nested_diagnostic_block_end_keeps_outer_context(self):
+        for line in ("CI_DIAGNOSTIC_BEGIN step=tests raw_exit=1\n",
+                     "CI_DIAGNOSTIC_BEGIN step=nested raw_exit=1\n",
+                     "inner explanation\n", "CI_DIAGNOSTIC_END\n",
+                     'STAGE_PROCESS {"child_exit":{"code":0}}\n',
+                     "outer explanation\n", "CI_DIAGNOSTIC_END\n", "ordinary activity\n"):
+            self.presenter.line(line, "stdout")
+        self.assertIn("inner explanation", self.output.getvalue())
+        self.assertIn("outer explanation", self.output.getvalue())
+        self.assertNotIn("ordinary activity", self.output.getvalue())
+
 
 class ProcessTests(unittest.TestCase):
     def run_child(self, code, **env):
@@ -272,6 +296,17 @@ class ProcessTests(unittest.TestCase):
         self.assertIn("unlabelled failure context", result.stdout)
         self.assertNotIn("\ninformation: compiling\n", result.stdout)
         self.assertIn("information: compiling", raw)
+
+    def test_failure_fallback_preserves_details_after_operation_boundaries(self):
+        lines = ['STAGE_STEP {"name":"restore","status":"started"}',
+                 "No .NET SDKs were found.", "Install a .NET SDK to run this application.",
+                 "information: finishing"]
+        result, raw = self.run_child("import sys; print(" + repr("\n".join(lines)) + "); sys.exit(9)")
+        self.assertEqual(9, result.returncode)
+        self.assertIn("No .NET SDKs were found.", result.stdout)
+        self.assertIn("Install a .NET SDK", result.stdout)
+        self.assertNotIn("\ninformation: finishing\n", result.stdout)
+        self.assertEqual("\n".join(lines) + "\n", raw)
 
     def test_noisy_success_emits_only_final_summary(self):
         result, raw = self.run_child("for i in range(2000): print('information: file', i)")
