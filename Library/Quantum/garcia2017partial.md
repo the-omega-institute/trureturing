@@ -28,3 +28,5 @@ curve attains sharp calibration at several prescribed points. The former is
 proved there by the normalized eigenvector Gram identity; the latter retains
 the distinct lower and upper bounds of §213.5. No general similarity theorem
 is being promoted to unitary equivalence without that additional argument.
+
+Section 217 uses these same stable Gram models in orthogonal layers to realize prescribed eigenvalue multiplicities at several sharp locations. The resulting mixed preparation occupies that common space; geometric multiplicity lower bounds come from the channel-specific cross-Gram argument, not from a similarity-to-partial-isometry statement. Sections 215 and 217 settle the corresponding mixed single-curve minima; the general pure single-curve problem retains its separate scope.
