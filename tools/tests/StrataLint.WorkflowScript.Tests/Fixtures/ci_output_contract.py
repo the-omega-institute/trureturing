@@ -37,6 +37,30 @@ class PresentationTests(unittest.TestCase):
         self.assertEqual(2, len(self.output.getvalue().splitlines()))
         self.assertIn("new_information=0", self.output.getvalue().splitlines()[-1])
 
+    def test_xunit_failure_context_summarizes_embedded_information_and_keeps_details(self):
+        prefix = "[xUnit.net 00:00:02.60]       "
+        lines = [
+            prefix + "Tests.InformationIsPeriodic [FAIL]",
+            prefix + "information: CI_LOG_PROBE_ACTIVITY 0",
+            prefix + '{"level":"information","message":"embedded structured activity"}',
+            prefix + "unlabelled assertion detail",
+            prefix + "warning: CI_LOG_PROBE_WARNING",
+            prefix + "  CI_LOG_PROBE_WARNING_DETAIL",
+            prefix + "error: CI_LOG_PROBE_ERROR",
+            prefix + "  CI_LOG_PROBE_ERROR_DETAIL",
+        ]
+        for line in lines:
+            self.presenter.line(line + "\n", "stdout")
+        rendered = self.output.getvalue()
+        self.assertNotIn("CI_LOG_PROBE_ACTIVITY", rendered)
+        self.assertNotIn("embedded structured activity", rendered)
+        for line in [lines[0], *lines[3:]]:
+            self.assertIn(line, rendered)
+        self.assertEqual(2, self.presenter.counts["information"])
+        self.presenter.line(prefix + "Finished: Tests\n", "stdout")
+        self.presenter.line("ordinary progress after tests\n", "stdout")
+        self.assertNotIn("ordinary progress after tests", self.output.getvalue())
+
     def test_periodic_progress_tracks_work_done_not_just_log_volume(self):
         self.presenter.line('STAGE_STEP {"name":"lean-report","status":"started"}\n', "stdout")
         self.presenter.line("ℹ [348/1000] Built D5.Foo\n", "stdout")
