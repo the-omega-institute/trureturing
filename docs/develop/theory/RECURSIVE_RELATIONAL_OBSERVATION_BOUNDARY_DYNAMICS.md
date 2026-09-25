@@ -7823,3 +7823,578 @@ $$
 3. Satinder Singh、Michael R. James、Matthew R. Rudary，*Predictive State Representations: A New Theory for Modeling Dynamical Systems*，UAI 2004，作者稿 [arXiv:1207.4167](https://arxiv.org/pdf/1207.4167)。PDF 第 2 页定义动作—观察测试、历史与历史条件预测；第 5 页给出条件预测的比值更新及式（3）的线性 PSR 更新。完整未来响应采用这一预测状态结构，并保留本节固定时域与完整响应的范围。
 
 ## 52.99 追加锚
+
+## 53. 因果修复的权限与线性实现边界
+
+定理 52.9 在完整有限响应表上构造最优因果替代表。将它用于内部观察者，还须区分两种条件：哪些历史与动作实际可读、可选，以及修复怎样从输入资料实现。可见合法菜单随历史变化时，原来的局部递推仍适用；控制器不能区分的历史却可能阻止策略拼接，使归一化缺陷不再控制修复误差。另一方面，即使整表已经给出，也不存在对所有输入通用、保持全部已有因果表的仿射修复。
+
+### 53.1 可见合法执行树与局部证书
+
+**定义 53.1（可见合法执行树）。** 取有限根树。每个非终端节点 $h$ 是完整公开执行历史，具有已知非空有限合法动作集 $A(h)$。动作 $a\in A(h)$ 的输出集 $Y(h,a)$ 非空有限，取得输出 $y$ 后进入唯一子节点 $hay$。动作、输出和终止标签属于公开记录；节点身份、当前菜单及其更新由控制器实际获准读取的历史确定。不同动作可以有不同后续菜单、输出集和终止深度。
+
+允许策略族 $\Pi$ 包含所有逐节点选择 $\pi(h)\in A(h)$，并允许在任意指定的已取得历史之后换入任意合法续接。这个局部可拼接性是操作合同的一部分。若策略必须在不能区分的节点上作同一选择，就不能使用这里的全策略族。
+
+令 $\Lambda$ 为全部合法终端路径，同一来源合同上的完整静态资料为非负叶权 $P:\Lambda\to[0,\infty)$。不假定全部叶权之和为一，也不假定存在对所有输出都合法的固定动作词。令 $\Lambda_\pi$ 为与 $\pi$ 一致的叶路径，定义
+
+$$
+P_\pi(\lambda)=\mathbf1_{\{\lambda\in\Lambda_\pi\}}P(\lambda),
+\qquad
+Z_\pi(P)=\sum_{\lambda\in\Lambda_\pi}P(\lambda).
+\tag{53.1}
+$$
+
+在该合同中，第 52 节的前缀递归按树节点表达为
+
+$$
+m(\mathrm{root})=1,\qquad
+m(\lambda)=P(\lambda)\quad(\lambda\in\Lambda),\qquad
+m(h)\ge0,\qquad
+\sum_{y\in Y(h,a)}m(hay)=m(h)\quad(a\in A(h)).
+\tag{53.2}
+$$
+
+式（53.2）给出顺序核：父质量正时取 $q(y\mid h,a)=m(hay)/m(h)$；父质量零时，各非负子质量均为零，在该合法输出集任选一个共同归一化延拓。沿路径相乘恢复叶表，任意合法策略下从叶到根求和得到质量一。反向，归一化条件核的路径乘积给出这些节点质量。这是定理 52.3 在已知合法树上的直接使用。
+
+归一化也有一份有限局部证书。每个节点先选择参考动作 $\pi_0(h)$，令 $g(h)$ 为从 $h$ 出发、后续按 $\pi_0$ 行动时的未条件化叶权总和。对节点 $h$ 和动作 $a\in A(h)$，构造 $\rho^{h,a}$：沿通向 $h$ 的祖先路径选择对应动作，在 $h$ 选择 $a$，其余节点按 $\pi_0$ 行动。公开历史与合法菜单保证该策略存在。
+
+两份在 $h$ 之外完全相同的策略，树外贡献相消，故
+
+$$
+Z_{\rho^{h,a}}(P)-Z_{\rho^{h,\pi_0(h)}}(P)
+=\sum_{y\in Y(h,a)}g(hay)-g(h).
+\tag{53.3}
+$$
+
+因此，$Z_{\pi_0}(P)=1$ 加上式（53.3）对每个 $h,a$ 的差为零，等价于全部合法策略归一化。正向，因为 $g(\lambda)=P(\lambda)$，这些等式使 $g$ 满足式（53.2）。反向，若全部合法策略归一化，证书两侧均为一。证明没有除以到达 $h$ 的概率，因而也覆盖零质量前缀。这里比较的是同一可见历史之后的合法续接，没有补入非法边。
+
+**命题 53.2（只改变参考策略的一个节点会漏检）。** 不加入到达待测节点的路径准备时，单节点改策检验不足以保证全部合法策略归一化。
+
+**证明。** 根节点可选动作 $a,b$。选择 $a$ 立即到达叶权为一的终点；选择 $b$ 到节点 $h$，在 $h$ 可选 $c,d$，对应叶权分别为一、二，所有输出为单点。参考策略在根选 $a$、在 $h$ 选 $c$。只改根动作为 $b$，质量仍为一；只将 $h$ 的动作改成 $d$，根仍选择 $a$，质量也为一。但同时选择 $b,d$ 的合法策略质量为二。
+
+式（53.3）在 $h$ 先沿根动作 $b$ 到达，再比较 $c,d$，便检出差一。故缺失的是共同可执行背景，不是可以省去的不可达分支。$\square$
+
+### 53.2 合法树上的包络修复
+
+令 $\mathcal C$ 为定义 53.1 的同一合法树上的因果概率叶表，定义
+
+$$
+\begin{aligned}
+D_\Pi(P,Q)&=
+\max_{\pi\in\Pi,\ E\subseteq\Lambda}
+\left|\sum_{\lambda\in E}\bigl(P_\pi(\lambda)-Q_\pi(\lambda)\bigr)\right|,\\
+\Delta_\Pi(P)&=\max_{\pi\in\Pi}|Z_\pi(P)-1|.
+\end{aligned}
+\tag{53.4}
+$$
+
+定理 52.9 的包络构造在每个节点使用其实际 $A(h)$，给出
+
+$$
+\min_{Q\in\mathcal C}D_\Pi(P,Q)=\Delta_\Pi(P).
+\tag{53.5}
+$$
+
+这一应用要求全部合法节点选择均被允许，并保持定义 53.1 的拼接合同。它不对任意受限策略族成立。这里还可容许任意非负叶权，不必先指定归一化参考策略，证明如下。
+
+沿用逆向递推
+
+$$
+\begin{aligned}
+S(\lambda)&=M(\lambda)=P(\lambda),\\
+S(h)&=\max_{a\in A(h)}\sum_{y\in Y(h,a)}S(hay),\\
+M(h)&=\min_{a\in A(h)}\sum_{y\in Y(h,a)}M(hay).
+\end{aligned}
+\tag{53.6}
+$$
+
+各后继子树的续接可以独立选择，故按树高归纳，根值准确等于 $u=\max_\pi Z_\pi(P)$、$l=\min_\pi Z_\pi(P)$。按定理 52.9 的前向公式，在每个动作行以一个固定合法输出接收非负余量，得到因果上包络 $C^+\ge P$，每策略质量为 $u$；把该行 $M$ 按所需父质量缩放，得到 $0\le C^-\le P$，每策略质量为 $l$。非空合法输出集使余量有处安放，下包络分母为零时父质量也为零。两者逐动作保持相同父质量，故原证明逐节点适用。
+
+若 $l\le1\le u$ 且 $u>l$，仍取原来的包络混合；其余质量范围用单侧包络归一化：
+
+$$
+Q=
+\begin{cases}
+C^-+\dfrac{1-l}{u-l}(C^+-C^-),&l\le1\le u,\ u>l,\\[6pt]
+P,&u=l=1,\\[2pt]
+C^-/l,&l>1,\\[2pt]
+C^+/u,&0<u<1.
+\end{cases}
+\tag{53.7}
+$$
+
+第一种情形由逐项夹逼，使事件正、负偏差分别不超过 $u-1$、$1-l$。第二种误差为零。若 $l>1$，则 $Q\le P$，任意策略的全部正差为 $Z_\pi(P)-1\le u-1$，其事件差更小。若 $0<u<1$，则 $Q\ge P$，全部负差为 $1-Z_\pi(P)\le1-l$。最后，若 $u=0$，每个叶节点都属于某个合法策略，非负性迫使 $P=0$；任选同一树的因果概率表，误差为一。
+
+以上上界均为 $\max\{|u-1|,|l-1|\}=\Delta_\Pi(P)$。对任何因果 $Q$，在式（53.4）取 $E=\Lambda$ 给出匹配下界，完成式（53.5）的证明。修复始终位于同一已知合法树中，不认证隐藏权限，也不扩大菜单。
+
+### 53.3 受限策略的零缺陷与正修复误差
+
+**定理 53.3（不闭合策略族的归一化不足）。** 存在两轮模型，所有动作在所有节点分别合法，但允许的常动作策略均归一化，而到真正因果替代表的最优受限事件误差可任意接近一。
+
+取第一轮动作及第二轮输出为单点，$Y_1=A_2=\{1,\ldots,m\}$，$m\ge2$。完整第一轮输出记入任务的终端档案，但在线控制器不能读取它，只能读常值摘要。因此允许策略族 $\Pi_{\mathrm{const}}$ 只含 $a_2\equiv a$。终端测试者可读完整输出档案，不构成在线控制器的额外权限。
+
+对 $0\le\varepsilon\le1$，使用命题 52.8 的同一表族
+
+$$
+r_a(y)=\frac{1-\varepsilon}{m}
++\varepsilon\,\mathbf1_{\{y=a\}}.
+\tag{53.8}
+$$
+
+任何按“先输出、后动作”实现的因果替代表均为与后动作无关的概率分布 $q(y)$。在同一常动作策略族和终端事件族下，有
+
+$$
+\Delta_{\mathrm{const}}(r)=0,\qquad
+\min_qD_{\mathrm{const}}(r,q)
+=\varepsilon\left(1-\frac1m\right),
+\quad
+D_{\mathrm{const}}(r,q)=\max_a\operatorname{TV}(r_a,q).
+\tag{53.9}
+$$
+
+**证明。** 每个常动作策略对应一列概率分布，总质量为一，所以受限缺陷为零。固定动作下两个被比较响应都归一化，故最大事件差正好是该列与 $q$ 的总变差。
+
+对任意 $q$，存在坐标 $a$ 满足 $q(a)\le1/m$。以事件 $\{a\}$ 测试该列，得到
+
+$$
+\operatorname{TV}(r_a,q)
+\ge r_a(a)-q(a)
+\ge\varepsilon\left(1-\frac1m\right).
+$$
+
+取均匀 $q$，该列在坐标 $a$ 的正差为 $\varepsilon(1-1/m)$，其余坐标各为 $-\varepsilon/m$，故每列总变差都达到下界。$\square$
+
+取 $\varepsilon=1$、$m\to\infty$，最优修复误差趋于一，而受限归一化缺陷恒为零。要求严格正表时，可令 $\varepsilon=1-1/m$，仍得到同一极限。二元 $\varepsilon=1/3$ 给最优误差 $1/6$。
+
+这里没有把禁止的分支控制用于实际执行。每个动作分别可用，但控制器的信息接口合并了不同输出分支，不能分别选择动作，策略族因而不对历史分支拼接闭合。把式（53.6）的逐节点最大、最小直接用于这种控制器，会暗中增加它没有的区分能力。
+
+### 53.4 预测边界缺少权限信息的实例
+
+**例 53.4（合法菜单非矩形与隐藏权限）。** 共同来源先产生公平位 $Y_1\in\{0,1\}$，控制器实际取得该位；随后只允许动作 $a_2=Y_1$，最后输出恒为零。两条合法完整路径各有叶权 $1/2$。合法反馈归一化，但不存在对两种第一轮输出都合法的固定第二动作。因此可以使用定义 53.1 的树合同，却不能直接使用矩形的固定动作词基线。
+
+若取得 $Y_1$ 后，控制器只准读取丢掉该位的常值摘要，两个相容历史的合法动作集交为空。未来普通输出仍恒为零，所以完美预测下一输出的摘要不能支持下一合法动作。
+
+更一般地，若两个实际相容来源状态 $\theta=0,1$ 的当前观察相同，而实际合法动作集分别为 $\{0\}$、$\{1\}$，即使各合法动作的输出都为零，也没有一个观察纤维上共同安全的动作。这里直接应用[观察完成与反思卷](FORMAL_OBSERVER_COMPLETION_REFLECTION.md)定理 58.1：只依赖观察的确定性安全选择器存在，当且仅当每个有效观察纤维上的合法动作交非空。来源独立随机化也不能实现逐来源安全，因为随机动作的支持须包含在同一交集中。
+
+两来源等概率时，任何盲选动作的非法概率都是 $1/2$。将各动作在其合法来源上的输出分别记成两列常输出表，这些数学列虽全部归一化，却来自不同来源条件化，不能认证共同干预权限。交集为空时，定义 53.1 的非空可见菜单前提已经失效；不能把空策略族上的全称归一化作为实现证据。
+
+补入拒绝标签同样需要区分数学与操作含义。[过程几何卷](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)定理 3.2 明确区分准入缺失与可执行失败状态。请求、检测、拒绝、扰动及费用本身有合法操作合同，才能把它们作为实际输出并入本卷第 20 节的总化模型。符号补齐不能取得原本缺少的动作权限。
+
+**命题 53.5（当前菜单不足以更新未来权限）。** “未来普通输出预测＋当前合法菜单”可以在两个历史上相同，却不能决定下一步的权限摘要。
+
+**证明。** 取同层两个实际历史 $s_0,s_1$，当前菜单都为 $\{\mathrm{wait}\}$，等待均输出零。等待后分别进入 $t_0,t_1$，菜单为 $\{b_0\}$、$\{b_1\}$，执行各自唯一合法动作后也输出零。两个起点具有相同未来普通输出和当前菜单，却在同一动作后产生不同菜单，故该摘要没有代表元无关的后继。$\square$
+
+最小补全取决于任务。只要求选择一个安全动作时，纤维合法动作交非空即可，不必恢复整个菜单。要保留全部原有动作可用性，菜单须在摘要纤维上相同；要逐步保持这种能力，还须保各合法动作的输出核、正概率后继摘要和终止标签，指定选择器也须通过保留字段运行。这直接使用本卷定理 2.1、4.1 及第 12、13 节的共同细化合同。有限完整载体上的最粗稳定细化可沿用过程几何卷定理 19.8；完整既有档案仍按其原任务保留，未来预测和权限残余不自动重建过去。
+
+### 53.5 保留末轮输出时的仿射修复障碍
+
+**定义 53.6（二元两轮完整响应）。** 第一轮无控制，产生 $x\in\{0,1\}$；第二轮选择 $a\in\{0,1\}$，随后产生 $z\in\{0,1\}$。末轮输出 $z$ 是任务保留的数据。静态响应表及其因果子集为
+
+$$
+\begin{aligned}
+\mathcal P
+&=\left\{P_a(x,z)\ge0:
+\sum_{x,z}P_a(x,z)=1\quad(a=0,1)\right\}
+=\Delta_3\times\Delta_3,\\
+d(P)&=\sum_zP_0(0,z)-\sum_zP_1(0,z),\\
+\mathcal C&=\{P\in\mathcal P:d(P)=0\}.
+\end{aligned}
+\tag{53.10}
+$$
+
+因为两个固定动作列都归一化，$d=0$ 正好表示第一输出的整个边缘不依赖后续动作。满足时可写为 $p(x)q(z\mid x,a)$；零概率父分支按定理 52.3 取共同归一化延拓。
+
+**定理 53.7（不存在通用仿射因果回缩）。** 不存在仿射映射 $\mathcal R:\mathcal P\to\mathcal C$，使每个 $P\in\mathcal C$ 都满足 $\mathcal R(P)=P$。
+
+**证明。** $\mathcal P$ 的仿射包 $A$ 由两条列和为一的等式给出，维数为六。函数 $d$ 在 $A$ 上不是常数；例如一列集中在 $x=0$、另一列集中在 $x=1$ 时 $d\ne0$。因此 $H=\{P\in A:d(P)=0\}$ 是五维仿射超平面。
+
+共同均匀表 $P_a(x,z)=1/4$ 属于 $\mathcal C$，其所有坐标严格为正，所以 $\mathcal C$ 在 $H$ 中包含该点的一个相对开邻域。由此 $\operatorname{aff}(\mathcal C)=H$。
+
+$\mathcal P$ 在 $A$ 中有非空相对内部，仿射映射 $\mathcal R$ 的各坐标具有唯一的仿射延拓。对每个坐标 $i=(a,x,z)$，仿射函数 $\mathcal R(P)_i-P_i$ 在 $\mathcal C$ 为零，故在其仿射包 $H$ 为零。超平面的余维为一，因此存在实常数 $k_i$ 使
+
+$$
+\mathcal R(P)_i=P_i+k_i d(P)
+\qquad(P\in\mathcal P).
+\tag{53.11}
+$$
+
+固定任意 $i=(a,x,z)$，构造两份表 $P^+,P^-$。$P^+$ 的第 $a$ 列集中于 $(x,1-z)$，另一列集中于 $(1-x,0)$；$P^-$ 的第 $a$ 列集中于 $(1-x,0)$，另一列集中于 $(x,0)$。两表均属于 $\mathcal P$，而且
+
+$$
+P_i^+=P_i^-=0,\qquad
+d(P^+)=s,\qquad d(P^-)=-s,\qquad
+s=(-1)^a(1-2x)\in\{1,-1\}.
+\tag{53.12}
+$$
+
+修复表各坐标非负，式（53.11）于是给 $k_i s\ge0$ 和 $-k_i s\ge0$，故 $k_i=0$。所有坐标同理，所以 $\mathcal R$ 在整个 $\mathcal P$ 上是恒等映射。但 $\mathcal P$ 含 $d\ne0$ 的表，不可能全落在 $\mathcal C$。矛盾。$\square$
+
+在这份两轮布局中，三个二元变量都承担实际作用：若动作 $a$ 或第一输出 $x$ 为单点，所有表已经因果；若末输出 $z$ 为单点，取一个固定动作列或各动作列的固定凸组合，再向所有动作列重复同一分布，就得到正的仿射因果回缩。式（53.12）的双符号构造使用了同一 $x$ 下另一个 $z$；保留该末轮输出正是障碍发生的接口差别。
+
+**推论 53.8（通用精确最优修复不能仿射选择）。** 使用第 52 节的全部因果反馈与全部终端事件偏差 $D_{\mathrm{fb}}$。任何对每个 $P\in\mathcal P$ 选择最优因果替代表的映射，都不可能在 $\mathcal P$ 上仿射。
+
+**证明。** 对 $P\in\mathcal C$，最小偏差为零。若 $D_{\mathrm{fb}}(P,Q)=0$，分别取两个固定动作策略和每个单点终端事件 $\{(x,z)\}$，得到全部坐标 $P_a(x,z)=Q_a(x,z)$。所以每个已有因果表的唯一零误差修复是它自身。任何普遍最优选择映射都满足定理 53.7 排除的回缩条件。$\square$
+
+### 53.6 单份编码的确定性物理边界
+
+**推论 53.9（固定单份编码不能实现通用回缩）。** 将定义 53.6 的表编码为
+
+$$
+\rho_P=\frac12
+\sum_{a,x,z}P_a(x,z)
+|a,x,z\rangle\langle a,x,z|.
+\tag{53.13}
+$$
+
+不存在一个固定、确定性的量子通道，对每个输入的一份 $\rho_P$，经过固定线性读出后都准确给出一份因果表，并逐点保持全部原本因果的表。
+
+**证明。** 式（53.13）是密度矩阵，并对 $P$ 仿射。量子通道及固定线性读出均为线性映射，复合后得到 $P$ 的仿射函数。若其结果对全部输入都是因果表，并固定全部因果输入，便构成定理 53.7 中不存在的仿射回缩。固定的、与输入无关的辅助状态可以吸收到通道中，不改变结论。$\square$
+
+该推论使用固定装置的无条件输出。它不把带成功条件的后选择归一化当作确定性通道，也不把概率编码当作可免费读取的完整经典表。已知完整表之后运行第 52 节的非线性算法，不在这一单份编码合同内。多份编码作为输入、受限输入族或不同资料接口也不由本推论判定；它没有证明这些替代接口一定足以精确修复。
+
+因此，因果表的数学构造、允许策略的历史访问和固定物理操作的仿射性是三项独立条件。第 52 节的最优包络不提供缺失的权限；它的非线性数据处理也不能直接被解释为普遍保持既有因果过程的单次线性操作。
+
+## 53.99 追加锚
+
+## 54. 最小量子接口的尖锐因果修复
+
+本节考虑先输出 $B$、后接收 $A$ 的有限维量子接口：第一轮输入和第二轮输出均为一维。静态候选仍可把晚输入 $A$ 映到早输出 $B$；因果替代表必须先准备一个与 $A$ 无关的态。允许的反馈包含全部量子通道、辅助参考、保留记忆及最终测量。在这个完整 tester 合同下，归一化缺陷恰好等于最优因果修复的事件响应误差。
+
+### 54.1 Choi 配对与全部反馈事件
+
+固定非零有限维 Hilbert 空间 $A,B$ 及其基，记 $d_A=\dim A$。静态候选是通道 $\Phi:A\to B$ 的未归一化 Choi 算符
+
+$$
+R\succeq0,\qquad \operatorname{Tr}_B R=I_A,
+\tag{54.1}
+$$
+
+作用于 $B\otimes A$。这里的通道方向描述静态对应关系，而 $B$ 的输出被赋予较早的时刻。此接口上的归一化因果梳恰为
+
+$$
+S_\sigma=\sigma\otimes I_A,
+\qquad \sigma\succeq0,\qquad \operatorname{Tr}\sigma=1.
+\tag{54.2}
+$$
+
+**定义 54.1（完整反馈 tester）。** 反馈归一化算符及其事件集合为
+
+$$
+\mathcal C=
+\{C\succeq0:\operatorname{Tr}_A C=I_B\},
+\qquad C\in\mathcal C,\quad 0\preceq E\preceq C.
+\tag{54.3}
+$$
+
+统一采用配对 $\operatorname{Tr}(RE)$。具体地，若反馈通道 $\Lambda:B\to A$ 的标准 Choi 算符为 $J_\Lambda$，则先交换其张量因子，再取**全转置**，得到式（54.3）的 $C$。全转置保持正性及对应的偏迹条件；该约定吸收量子梳 Born 规则中的全转置，不使用部分转置保持正性的错误推断。
+
+$E$ 与 $C-E$ 正是某个二结果量子 instrument 的两个 Choi 元素。它可以通过辅助态、量子记忆、与 $B$ 的相互作用、输出 $A$ 和最后的测量实现；反过来，每个式（54.3）的正分解都可这样实现。因此，量词已经包含任意有限辅助参考和量子记忆。这个对应是 [Chiribella–D’Ariano–Perinotti，arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2) 定义 11、引理 8 与定理 11–12（PDF 第 17–18 页）的本接口特例。
+
+对非因果候选，$\operatorname{Tr}(RC)$ 不必为一，故 $\operatorname{Tr}(RE)$ 称为事件**响应**，不预先称为概率。定义
+
+$$
+\begin{aligned}
+\Delta(R)
+&=\max_{C\in\mathcal C}
+\left|\operatorname{Tr}(RC)-1\right|,\\
+D(R,S_\sigma)
+&=\max_{\substack{C\in\mathcal C\\0\preceq E\preceq C}}
+\left|\operatorname{Tr}\bigl((R-S_\sigma)E\bigr)\right|.
+\end{aligned}
+\tag{54.4}
+$$
+
+式（54.3）给 $\operatorname{Tr}C=\dim B$，故归一化算符与事件的联合可行集紧，以上最大值均能达到。每个因果替代表都满足 $\operatorname{Tr}(S_\sigma C)=1$。
+
+### 54.2 最优修复等于归一化缺陷
+
+**定理 54.2（最小量子接口的尖锐修复）。** 对每个满足式（54.1）的 $R$，
+
+$$
+\min_{\substack{\sigma\succeq0\\\operatorname{Tr}\sigma=1}}
+D(R,\sigma\otimes I_A)=\Delta(R).
+\tag{54.5}
+$$
+
+而且，任取输入密度算符 $\tau$，通道输出 $\Phi(\tau)$ 都是一个最优的 $\sigma$。
+
+**证明。** 记
+
+$$
+u=\max_{C\in\mathcal C}\operatorname{Tr}(RC),
+\qquad
+\ell=\min_{C\in\mathcal C}\operatorname{Tr}(RC).
+\tag{54.6}
+$$
+
+取任意密度算符 $\omega$，归一化算符 $C=I_B\otimes\omega$ 的响应为一。因此
+
+$$
+0\le\ell\le1\le u,
+\qquad
+\Delta(R)=\max\{u-1,1-\ell\}.
+\tag{54.7}
+$$
+
+式（54.6）的两个半定规划对偶为
+
+$$
+\begin{aligned}
+u&=\min_{U=U^*}
+\{\operatorname{Tr}U:U\otimes I_A\succeq R\},\\
+\ell&=\max_{L=L^*}
+\{\operatorname{Tr}L:L\otimes I_A\preceq R\}.
+\end{aligned}
+\tag{54.8}
+$$
+
+原问题有严格正可行点 $I_B\otimes I_A/d_A$，两个对偶分别有充分大的 $U=tI_B$ 和 $L=-tI_B$ 作为严格可行点；紧性给有限最优值，半定规划强对偶遂给式（54.8）及最优值达到。相关强对偶条件可见 [Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 附录 A 的 Fact 6。上界条件自动给 $U\succeq0$；**下界 $L$ 只要求厄米，不要求正性**。
+
+先固定单位向量 $a\in A$，并令
+
+$$
+\sigma_a=(I_B\otimes\langle a|)R(I_B\otimes|a\rangle).
+\tag{54.9}
+$$
+
+压缩式（54.1）与（54.8），得到
+
+$$
+\sigma_a\succeq0,\qquad
+\operatorname{Tr}\sigma_a=1,\qquad
+L\preceq\sigma_a\preceq U.
+\tag{54.10}
+$$
+
+对任意 $C\in\mathcal C$、$0\preceq E\preceq C$，由 $U-\sigma_a\succeq0$ 得
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl((R-S_{\sigma_a})E\bigr)
+&\le\operatorname{Tr}\bigl(((U-\sigma_a)\otimes I_A)E\bigr)\\
+&\le\operatorname{Tr}\bigl(((U-\sigma_a)\otimes I_A)C\bigr)\\
+&=\operatorname{Tr}(U-\sigma_a)=u-1.
+\end{aligned}
+\tag{54.11}
+$$
+
+同理由 $\sigma_a-L\succeq0$ 得
+
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl((S_{\sigma_a}-R)E\bigr)
+&\le\operatorname{Tr}\bigl(((\sigma_a-L)\otimes I_A)E\bigr)\\
+&\le\operatorname{Tr}\bigl(((\sigma_a-L)\otimes I_A)C\bigr)\\
+&=\operatorname{Tr}(\sigma_a-L)=1-\ell.
+\end{aligned}
+\tag{54.12}
+$$
+
+故 $D(R,S_{\sigma_a})\le\Delta(R)$。另一方面，整个事件 $E=C$ 合法，所以任意因果替代表均满足
+
+$$
+D(R,S_\sigma)
+\ge\max_{C\in\mathcal C}
+\left|\operatorname{Tr}(RC)-\operatorname{Tr}(S_\sigma C)\right|
+=\Delta(R).
+\tag{54.13}
+$$
+
+这证明式（54.5）。
+
+对任意输入态 $\tau$，改用正压缩
+
+$$
+X\longmapsto
+\operatorname{Tr}_A\!\left[
+(I_B\otimes\sqrt{\tau^{\mathsf T}})
+X
+(I_B\otimes\sqrt{\tau^{\mathsf T}})
+\right].
+\tag{54.14}
+$$
+
+它将 $R$ 送到 $\Phi(\tau)$，并分别将 $U\otimes I_A,L\otimes I_A$ 送到 $U,L$，于是同一证明成立。式（54.9）在标准 Choi 约定下对应输入 $|\bar a\rangle\langle\bar a|$，与式（54.14）一致。$\square$
+
+**推论 54.3（统一的线性正投影达到最优修复）。** 定义
+
+$$
+\Pi X=\frac{\operatorname{Tr}_A X}{d_A}\otimes I_A.
+\tag{54.15}
+$$
+
+则 $\Pi$ 是线性、完全正且保持迹的投影，固定每个 $S_\sigma$，并对全部满足式（54.1）的候选给
+
+$$
+D(R,\Pi R)=\Delta(R).
+\tag{54.16}
+$$
+
+**证明。** 式（54.15）是对 $A$ 取偏迹再准备最大混合态的完全正映射，直接计算给保持迹和 $\Pi^2=\Pi$。若 $R$ 满足式（54.1），则 $\operatorname{Tr}_A R/d_A$ 是密度算符；在定理 54.2 中取 $\tau=I_A/d_A$ 即得式（54.16）。$\square$
+
+特别地，$\Delta(R)=0$ 当且仅当 $R$ 已为式（54.2）的因果梳。正向由式（54.16）及事件分离性得到：满支撑归一化算符 $C_0=I_B\otimes I_A/d_A$ 的区间 $0\preceq E\preceq C_0$ 已能分离所有厄米算符。反向由归一化直接成立。
+
+### 54.3 正 Loewner 下包络不能照搬经典构造
+
+**命题 54.4（正下包络的严格损失）。** 存在满足式（54.1）的候选，其最小反馈响应 $\ell>0$，但所有正下包络 $L\succeq0$、$L\otimes I_A\preceq R$ 都只能取 $L=0$。
+
+**证明。** 取 $A=B=\mathbb C^2$，令 $\rho_0,\rho_1$ 为两个不同且不正交的纯态，并定义
+
+$$
+R=\rho_0\otimes|0\rangle\langle0|
+ +\rho_1\otimes|1\rangle\langle1|,
+\qquad
+\delta=\frac12\|\rho_0-\rho_1\|_1\in(0,1).
+\tag{54.17}
+$$
+
+只有 $C$ 的两个 $A$ 对角块 $C_0,C_1$ 参与响应，而它们遍历全部 $C_0,C_1\succeq0$、$C_0+C_1=I_B$。对 $\rho_0-\rho_1$ 取正负谱分解，得到
+
+$$
+u=1+\delta,\qquad \ell=1-\delta,\qquad\Delta(R)=\delta.
+\tag{54.18}
+$$
+
+若 $L\succeq0$ 且 $L\otimes I_A\preceq R$，则 $L\preceq\rho_0,\rho_1$。被秩一正算符支配的正算符，其支撑包含于该秩一支撑。两条不同纯态射线的交为零，故 $L=0$，于是
+
+$$
+\max\{\operatorname{Tr}L:L\succeq0,\ L\otimes I_A\preceq R\}
+=0<\ell.
+\tag{54.19}
+$$
+
+例如取 $\rho_0=|0\rangle\langle0|$、$\rho_1=|+\rangle\langle+|$，则 $\delta=1/\sqrt2$，式（54.8）的一对最优解为
+
+$$
+L=\frac{\rho_0+\rho_1-\delta I_B}{2},
+\qquad
+U=\frac{\rho_0+\rho_1+\delta I_B}{2}.
+\tag{54.20}
+$$
+
+其中 $L$ 有一个负特征值。$\square$
+
+因此，经典逐点正下包络不能仅把大小关系换成 Loewner 序便保留相同最优质量。定理 54.2 使用厄米下界，并通过同一次正压缩取得 $L\preceq\sigma\preceq U$；命题 54.4 不反驳尖锐修复等式。
+
+### 54.4 非归一化候选必须保留迹项
+
+**命题 54.5（事件误差与策略范数的准确关系）。** 对任意厄米算符 $X$ 和固定 $C\succeq0$，
+
+$$
+\max_{0\preceq E\preceq C}|\operatorname{Tr}(XE)|
+=\frac12\left(
+\|\sqrt C X\sqrt C\|_1
++|\operatorname{Tr}(XC)|
+\right).
+\tag{54.21}
+$$
+
+因而本节的事件误差为
+
+$$
+D(R,S)=\frac12\max_{C\in\mathcal C}
+\left[
+\|\sqrt C(R-S)\sqrt C\|_1
++|\operatorname{Tr}((R-S)C)|
+\right].
+\tag{54.22}
+$$
+
+**证明。** 在 $C$ 的支撑上写 $E=\sqrt C F\sqrt C$，其中 $0\preceq F\preceq I$。令 $Y=\sqrt C X\sqrt C$。正向最大值为 $\operatorname{Tr}Y_+$，负向最大值为 $\operatorname{Tr}Y_-$；二者的较大值等于 $(\|Y\|_1+|\operatorname{Tr}Y|)/2$。再对 $C$ 取最大即得式（54.22）。$\square$
+
+若 $R,S$ 均为归一化确定性量子梳，则每个 $C$ 都给 $\operatorname{Tr}((R-S)C)=0$，事件误差才化为通常策略范数的一半。策略范数的半定规划和序区间对偶见 [Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 第 4 节式（1）–（2）、定理 3（PDF 第 14–15 页）；正算符的最小策略上界质量见该文定理 4。对非因果候选，式（54.22）的迹项不能删掉，而且两个项必须在**同一个** $C$ 上相加后再取最大。
+
+### 54.5 与完整两轮问题的边界
+
+完整两轮接口 $A_1\to B_1$、$A_2\to B_2$ 的确定性因果梳满足
+
+$$
+\begin{gathered}
+S\succeq0,\qquad
+\operatorname{Tr}_{B_2}S=I_{A_2}\otimes S_1,\\
+S_1\succeq0,\qquad
+\operatorname{Tr}_{B_1}S_1=I_{A_1}.
+\end{gathered}
+\tag{54.23}
+$$
+
+这里采用张量次序 $B_2\otimes A_2\otimes B_1\otimes A_1$。其全部 tester 归一化算符与事件为
+
+$$
+\begin{gathered}
+C=I_{B_2}\otimes T,\qquad T\succeq0,\\
+\operatorname{Tr}_{A_2}T=I_{B_1}\otimes\tau,
+\qquad\tau\succeq0,\quad\operatorname{Tr}\tau=1,
+\qquad0\preceq E\preceq C.
+\end{gathered}
+\tag{54.24}
+$$
+
+式（54.23）为确定性梳的标准递归条件，见 [Chiribella–D’Ariano–Perinotti，arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2) 定理 5（PDF 第 11 页）；式（54.24）为同文 tester 条件在两轮的展开。
+
+若静态候选仅满足 $R\succeq0$、$\operatorname{Tr}_{B_1B_2}R=I_{A_1A_2}$，仍可用式（54.24）定义 $\Delta,D$。整个事件 $E=C$ 继续证明
+
+$$
+\inf_{S\text{ 满足式（54.23）}}D(R,S)\ge\Delta(R).
+\tag{54.25}
+$$
+
+但定理 54.2 的压缩论证本身没有给出这里的反向不等式：对 $\operatorname{Tr}_{B_2}R$ 压缩可产生早期 Choi 边缘，却还须证明能把它延拓为正的完整 $S$，同时保留足够的 $B_2$ 关联并达到同一事件误差界。这个正延拓步骤没有包含在式（54.9）–（54.12）中。
+
+**命题 54.6（任意有限轮数的统一修复界）。** 对任意有限轮数，令 $\mathcal S$ 为全部归一化确定性因果梳，$\mathcal C$ 为其全部确定性 tester 归一化算符。对 $R\succeq0$ 定义
+
+$$
+u=\max_{C\in\mathcal C}\operatorname{Tr}(RC),
+\qquad
+\ell=\min_{C\in\mathcal C}\operatorname{Tr}(RC),
+$$
+
+并假设 $\ell\le1\le u$。归一化的全局静态通道满足这个假设：选择提前准备全部输入、逐轮送入并丢弃输出的 tester，响应为一。沿用式（54.4）的事件响应定义，则存在 $S^+\in\mathcal S$ 满足
+
+$$
+\Delta(R)\le\inf_{S\in\mathcal S}D(R,S)
+\le D(R,S^+)
+\le\max\left\{u-1,\frac{u-\ell}{u}\right\}
+\le2\Delta(R).
+\tag{54.26}
+$$
+
+**证明。** 每轮使用完全去极化通道便得到一个正定的因果梳 $S_0$。有限维性保证存在 $q>0$ 使 $R/q\preceq S_0$，故 $R/q$ 与 $S_0-R/q$ 是一个二结果 measuring strategy 的正元素。[Gutoski，arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4) 定理 4 的最大响应与最小策略上界质量相等，应用于 $R/q$ 后再乘以 $q$，给出达到最优值的
+
+$$
+R\preceq uS^+,\qquad S^+\in\mathcal S.
+\tag{54.27}
+$$
+
+因此任意合法事件 $0\preceq E\preceq C$ 满足
+
+$$
+\operatorname{Tr}((R-S^+)E)
+\le(u-1)\operatorname{Tr}(S^+E)
+\le u-1.
+\tag{54.28}
+$$
+
+令 $K=uS^+-R\succeq0$。由于 $u\ge1$ 及 $R\succeq0$，
+
+$$
+S^+-R=\frac Ku-\frac{u-1}{u}R\preceq\frac Ku.
+$$
+
+于是另一方向满足
+
+$$
+\operatorname{Tr}((S^+-R)E)
+\le\frac{\operatorname{Tr}(KE)}u
+\le\frac{\operatorname{Tr}(KC)}u
+=\frac{u-\operatorname{Tr}(RC)}u
+\le\frac{u-\ell}u.
+\tag{54.29}
+$$
+
+两向结合给式（54.26）的中间上界；由 $u-1\le\Delta(R)$、$1-\ell\le\Delta(R)$ 及 $u\ge1$ 得最后一项。下界仍由整个事件 $E=C$ 给出。$\square$
+
+该界在完整参考和全部序贯 tester 的同一合同下成立，说明修复代价至多线性随归一化缺陷增长。它没有把系数 $2$ 判为最优；将式（54.26）收紧到普遍的系数 $1$，仍需解决上述正延拓或插值问题。
+
+第 53 节的仿射选择障碍保留了非平凡的末轮输出；定理 54.2 将该输出空间取为一维，因此式（54.15）的正投影与该障碍属于不同接口范围。本节既不将此投影外推为完整两轮的仿射修复，也不把所选因果替代表等同于对原物理来源的识别。
+
+## 54.99 追加锚
