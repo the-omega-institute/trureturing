@@ -202,3 +202,161 @@ not convergence of actual energy moments, finite critical full-spectrum
 energy, or a universal shrinking-window theorem. The classical primary
 sources delimit the ingredients; the bounded source comparison does not
 certify global originality.
+
+## A quadratic fluctuation beneath the deterministic spectral slope
+
+Chapter 49 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+examines the next fluctuation scale of the same whole-score-group energy.
+Its centering is the observed environment's auxiliary variance, not an
+unproved rate-level replacement by its limiting constant. The limiting
+Gaussian coordinate is jointly independent of the endpoint, compact
+profile, bridge and first spatial moment from the same label realization.
+
+Normal limits for quadratic forms are classical. Peter de Jong,
+*A Central Limit Theorem for Generalized Quadratic Forms*, Probability
+Theory and Related Fields 75 (1987), 261–277,
+[DOI 10.1007/BF00354037](https://doi.org/10.1007/BF00354037),
+Definition 2.1, printed page 263, defines clean quadratic forms through
+vanishing conditional expectations with independent underlying inputs.
+Theorem 2.1, page 264, assumes negligible normalized row variance and a
+normalized fourth moment tending to three. Both assumptions matter: the
+following discussion explains that negligible row variances alone allow
+a nonnormal chi-square limit. Theorem 5.2 gives another sufficient
+criterion using tails and eigenvalues for an independent-input quadratic
+form with zero diagonal.
+
+Those results are antecedents for quadratic Gaussian limits, not
+theorems about dependent actual observations or the exact fixed-size
+posterior used here. The chapter uses the simpler independent group-array
+Lyapunov theorem after conditioning on the observed environment. The
+fourth moment of a centered squared group sum follows by expanding the
+eighth moment of bounded independent labels. Mixed linear and quadratic
+forms satisfy the same criterion. Only after their joint Gaussian limit
+is established do vanishing mixed third cumulants prove independence.
+The independent-array theorem, moment expansions and Cramér–Wold step
+remain classical ingredients inside the model proof.
+
+The additional actual-model obligation is a squared variance clock.
+Ordinary cumulative variance convergence does not determine the sum of
+squared group variances. Compact uniform point occupancy provides that
+clock locally; the actual one- and two-row estimates bound second
+moments of remote group occupancy and remove the cutoff. No four-row
+actual comparison or independence of observed rows is assumed. These
+estimates identify the explicit integral of the squared Gaussian
+intensity as the quadratic fluctuation variance.
+
+The sharper noise scale also requires a sharper use of the existing
+exact-center bound. Its explicit rate makes the displacement of the
+whole-group coefficient vector negligible after the new normalization.
+A single full-window posterior comparison then transfers bounded tests
+and events. Auxiliary moment calculations are not promoted into
+convergence of actual unbounded quadratic moments.
+
+The environment center is essential at the stated resolution: convergence
+to a constant alone permits a displacement of order the fourth root of
+the grid size, which diverges after division by its square root. Likewise,
+alternating the variance mass between adjacent groups preserves the
+cumulative clock but doubles its squared-clock limit. These are
+counterexamples to insufficient inference rules, not counterexamples
+within the actual observation model.
+
+The finite high-frequency difference slope from Chapter 48 has a
+remainder small even at this finer scale. It therefore carries the same
+quadratic Gaussian coordinate. The random low-frequency mass term
+cancels in its leading difference, with the cutoff-floor residual
+controlled separately. This connects the spectrum and the grouped
+posterior statistic without introducing a new independent label sample.
+
+The `repo-derived` content is the actual squared-clock and posterior
+transfer together with this same-realization second-order spectral law.
+The assertion keeps the original intensity, fixed amplitude and beta,
+fixed profile windows and fixed frequency exponents. It does not replace
+the environment center by a constant without a convergence rate, assert
+actual moment convergence, or import old-field jointness from marginal
+limits. The comparison with classical quadratic-form theory is bounded
+and does not certify global originality.
+
+## Resolving the critical spectral transition
+
+Chapter 50 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+resolves the cutoff at a fixed multiple of the inverse cluster width.
+After subtracting the logarithmic total-mass square, the actual posterior
+spectrum converges to a random curve built from the Fourier transform of
+the same real Gaussian noise that supplies the spatial profile. Finite
+resolved frequency bands remain random even conditional on the endpoint.
+This is a finer statement than the leading logarithmic slope law.
+
+Gaussian limits of empirical characteristic functions and quadratic
+spectral functionals are classical subjects. John T. Kent,
+*A weak convergence theorem for the empirical characteristic function*,
+Journal of Applied Probability 12(3) (1975), 515–523,
+[DOI 10.1017/S0021900200048324](https://doi.org/10.1017/S0021900200048324),
+is a historical antecedent identified by its publisher abstract. Its
+full theorem conditions are not used here. The chapter proves its own
+conditional Fourier tightness from the already established actual
+weighted variance clock and the independent auxiliary labels.
+
+Richard A. Davis, Muneya Matsui, Thomas Mikosch and Phyllis Wan,
+*Applications of Distance Correlation to Time Series*,
+[arXiv:1606.05481v1](https://arxiv.org/abs/1606.05481v1),
+Theorem 3.2 and Appendix A, Lemma A.1, are closer functional antecedents.
+They establish Gaussian characteristic-function fields on compacts and
+separate near-zero bounds for integrated squared fields under stationary
+mixing, marginal/product moment and weight-integrability assumptions.
+These mechanisms do not directly handle the present triangular posterior
+label array, its random total mass, or its exponentially moving cutoff.
+The chapter supplies those actual-model obligations explicitly.
+
+Thomas Mikosch and Yuwei Zhao,
+*The integrated periodogram of a dependent extremal event sequence*,
+[arXiv:1503.04022v1](https://arxiv.org/abs/1503.04022v1),
+[DOI 10.1016/j.spa.2015.02.017](https://doi.org/10.1016/j.spa.2015.02.017),
+Theorem 15, is a functional Gaussian limit for the centered integrated
+periodogram of a stationary regularly varying sequence. Its assumptions
+include Condition (M1), anti-clustering and mixing-rate requirements,
+summability of the extremogram, and a nonnegative Holder-continuous
+weight with exponent greater than three quarters. It does not apply
+directly to the conditional fixed-size posterior field here. In
+particular, the singular inverse-frequency weight and the changing
+microscopic cutoff require separate estimates.
+
+Norbert Henze and Maria Dolores Jimenez-Gamero,
+*Logarithmic energy distances and Gini covariance for Hilbert-valued
+random elements*, [arXiv:2606.18365v1](https://arxiv.org/abs/2606.18365v1),
+Section 4.1 and Theorem 4.1, study independent two-sample observations
+under equality of distributions and a finite squared logarithmic-distance
+moment. Their degenerate-kernel formulation is an antecedent for
+non-Gaussian quadratic limits. The finite logarithmic moment excludes
+positive-probability collisions between independent copies; the present
+actual score law is atomic. Neither the independent-sample model nor its
+diagonal integrability is silently imported into the posterior problem.
+There is also an internal normalization discrepancy in v1: equation (4.2)
+makes N times the Gini statistic equal to nm/N times the energy statistic,
+whereas the two displayed limits in Theorem 4.1 differ by an additional
+factor p(1-p). No normalization formula from that theorem is used here.
+
+The deterministic calculation uses the classical harmonic-sum constant,
+a summable correction between the Sobolev weights and reciprocal
+integers, and a Riemann-sum estimate for an absolutely continuous
+function divided by its argument. Subtracting the value at zero is
+essential. An H1 bound controls that subtraction uniformly, including
+the first frequency cell. The zero Fourier mode and both signs of the
+frequency determine the explicit finite constant. These are classical
+analysis ingredients within the model-specific argument.
+
+The Gaussian field is driven by a real random measure. Both its ordinary
+covariance and its covariance without complex conjugation must therefore
+be retained. Its odd sine component is independent of the even cosine
+component and the endpoint; its nonzero quadratic contribution proves
+positive conditional band variance. Gaussian conditioning and fourth
+moment identities remain classical and concern the limit object only.
+
+The `repo-derived` contribution is the actual posterior H1 control and
+exact-center transfer, the uniform constant-order cutoff expansion, and
+the common-realization spectral curve with its residual conditional
+randomness. The result keeps fixed frequency intervals and fixed
+additive logarithmic cutoff intervals. It does not assert actual energy
+moment convergence, a finite full critical Sobolev norm, a uniform
+second-order expansion over fixed macroscopic exponent intervals, or
+an unrestricted growing-frequency theorem. This comparison is bounded
+and does not certify global originality.
