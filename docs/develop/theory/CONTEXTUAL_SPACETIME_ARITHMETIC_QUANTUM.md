@@ -41846,3 +41846,183 @@ $$
 特别地，二维局部规则达到若在设计点为纯态，则恒秩条件使它在邻域仍为纯态，与定理191.3矛盾。因此二维局部规则达到在设计点必须满秩。这里没有排除只在单点为纯态、周围发生秩变化的程序；也没有求出局部纯二维程序信息量的精确下确界。上述维数分别针对已写明的覆盖域与秩条件，不能将局部混态构造带入第190节的全区间类。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 192. 有限点全部最优与连续区间的正积分成本
+
+**定义 192.1（归一额外成本与固定比较区间）。** 固定 $0<a<1$，仍考虑精确生成全部 $\mathcal T_u$、$u\in J_a=(2a-1,1)$ 的有限维固定程序。定义
+$$
+D(u)=I_Q(\rho_u)-I_r(u),\qquad
+e(u)=\frac{I_Q(\rho_u)}{I_r(u)}-1=(1-u^2)D(u),
+\qquad I_r(u)=\frac1{1-u^2}.
+\tag{192.1}
+$$
+由固定均衡 $02$ 读出，$D,e\ge0$。取第189节的比较区间
+$$
+I_a=[u_-,u_+],\qquad
+u_- =\frac{3a-1}{2},\quad u_0=a,\quad u_+=\frac{1+a}{2},
+\qquad |I_a|=1-a.
+\tag{192.2}
+$$
+沿用（189.3）的三个实系数 $\alpha_-,\alpha_0,\alpha_+$，即令 $h_i=(1+u_i)/2$、$\ell_i=1-h_i$ 后满足
+$$
+\sum_i\alpha_i h_i=0,\qquad
+\sum_i\alpha_i\ell_i=1,\qquad
+\sum_i\alpha_i\sqrt{h_i\ell_i}=0.
+\tag{192.3}
+$$
+令
+$$
+C_a=\max(|\alpha_-|,|\alpha_+|)>0,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+$$
+$$
+\Gamma(a)=\frac{\mu_a^2(1-a)(1-u_+^2)}{4C_a^2}>0.
+\tag{192.4}
+$$
+$C_a>0$ 由第189.1节 $|\alpha_-|+|\alpha_+|>0$ 得到。
+
+**定理 192.2（任意有限维程序的额外信息具有正积分下界）。** 对任意 $C^1$ 的全区间精确程序曲线，允许秩变化，有
+$$
+\int_{I_a}\sqrt{D(u)}\,du\ge\frac{\mu_a(1-a)}{2C_a},
+\tag{192.5}
+$$
+$$
+\int_{I_a}D(u)\,du\ge\frac{\mu_a^2(1-a)}{4C_a^2},
+\qquad
+\int_{I_a}e(u)\,du\ge\Gamma(a).
+\tag{192.6}
+$$
+积分均取非负函数的 Lebesgue 积分，允许值为正无穷；常数与程序维数无关。
+
+证明。 先说明秩变化时的可测性。对任一内部参数，有限 Hermitian SLD $L$ 满足 $\rho'=(L\rho+\rho L)/2$，因而
+$$
+I_Q(\rho_u)=\sup_{H=H^\dagger}
+\left[2\operatorname{Tr}(\rho_u'H)-\operatorname{Tr}(\rho_uH^2)\right].
+\tag{192.7}
+$$
+对固定 $u$，方括号等于 $I_Q-\operatorname{Tr}(\rho_u(H-L)^2)$，并在 $H=L$ 达到上确界。由于它对有限维变量 $H$ 连续，可以只取一个可数稠密的 Hermitian 矩阵集合。每个固定 $H$ 对应的函数关于 $u$ 连续，所以 $I_Q$ 下半连续，从而 $D,e$ 及 $\sqrt D$ 都是非负 Borel 函数。这使用点态 SLD 约定，不假设 SLD 矩阵沿曲线连续。
+
+沿第189节，用固定 Naimark 嵌入与 CPTP 解码把读出写成互补投影 $P_\pm$，程序记为 $\sigma_u$。令
+$$
+K_u=\sqrt h\,P_++\sqrt\ell\,P_-,\qquad
+\tau_u=K_u^{-1}\sigma_uK_u^{-1},\qquad
+\widehat\sigma_u=K_u\tau_aK_u,
+\tag{192.8}
+$$
+其中 $h=(1+u)/2$、$\ell=1-h$。第189节的精确剩余平方给出
+$$
+\|\tau_u'\|_1\le\frac{\sqrt{D(u)}}{\min(h,\ell)}.
+\tag{192.9}
+$$
+$\tau_u'$ 由连续的程序导数及光滑矩阵直接定义，因此可对它使用微积分基本定理。由于 $\|K_{u_i}\|_\infty^2\le1$，
+$$
+\|\sigma_{u_-}-\widehat\sigma_{u_-}\|_1
+\le\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+$$
+$$
+\|\sigma_{u_+}-\widehat\sigma_{u_+}\|_1
+\le\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+\qquad \sigma_a=\widehat\sigma_a.
+\tag{192.10}
+$$
+上式右边为无穷时不等式仍成立。
+
+向同一扩展处理器输入均衡三能级纯态，实际输出为 $X_u=F(a,u)/3$，参考输出为 $\widehat X_u$。第189节的固定分块展开及（192.3）给出
+$$
+\sum_i\alpha_iX_{u_i}=F(a,-1)/3,
+\qquad
+\sum_i\alpha_i\widehat X_{u_i}=X_-,
+\tag{192.11}
+$$
+其中 $X_-$ 是密度矩阵。$F(a,-1)/3$ 的负特征值为 $-\mu_a$，两者迹均为一，故其迹范数距离至少为 $2\mu_a$。再用固定处理器的迹范数收缩、（192.10）及中点误差为零，得到
+$$
+2\mu_a\le
+|\alpha_-|\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du
++|\alpha_+|\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du.
+\tag{192.12}
+$$
+在 $I_a$ 上，$\min(h,\ell)\ge(1-a)/4$，故
+$$
+2\mu_a\le\frac{4C_a}{1-a}\int_{I_a}\sqrt{D(u)}\,du,
+\tag{192.13}
+$$
+证明（192.5）。若 $\int D$ 有限，Cauchy–Schwarz 给出 $(\int\sqrt D)^2\le(1-a)\int D$；若无穷，所需下界自动成立。最后，$|u_-|\le u_+$，所以 $1-u^2\ge1-u_+^2$，结合 $e=(1-u^2)D$ 即得（192.6）。证毕。
+
+**定理 192.3（任意有限组设计点可由同一纯程序同时达到）。** 对任意有限非空集合 $\mathcal S=\{v_1,\ldots,v_m\}\subset J_a$，存在一个固定处理器和一条 $C^\infty$ 纯程序曲线，精确生成全部 $J_a$，程序空间维数不超过 $3m$，且
+$$
+I_Q(\rho_{v_i})=I_r(v_i)\qquad(1\le i\le m).
+\tag{192.14}
+$$
+因此在这些条件下，有限集合上的最坏信息成本比的最小值为一，并被达到。
+
+证明。 对每个 $v_i$，取定理190.3的三维实归一向量 $\psi_i(u)$ 及固定处理器 $\mathcal G_i$。每个分支在全部 $J_a$ 精确生成同一个 $\mathcal T_u$，且在 $v_i$ 达到下界。
+
+若 $m\ge2$，为 $i=2,\ldots,m$ 选择光滑截断函数 $0\le\chi_i\le1$，其紧支集在 $J_a$ 内两两不交、避开 $v_1$，并且在 $v_i$ 的某邻域恒为一。定义
+$$
+g_1=1-\sum_{i=2}^m\chi_i,\qquad g_i=\chi_i\ (i\ge2),
+\qquad b_i=\frac{g_i}{\sqrt{\sum_jg_j^2}}.
+\tag{192.15}
+$$
+同一参数处至多一个截断函数非零，故 $\sum_jg_j^2\ge1/2$，归一化全局光滑。$b_i$ 在 $v_i$ 附近恒为一，其他振幅在那里恒为零。$m=1$ 时直接取 $b_1=1$。
+
+令 $\mathcal H_P=\bigoplus_{i=1}^m\mathbb C^3$，$E_i$ 为固定块嵌入，并取
+$$
+\Psi_u=\bigoplus_i b_i(u)\psi_i(u),\qquad
+\rho_u=|\Psi_u\rangle\langle\Psi_u|.
+\tag{192.16}
+$$
+这是一条全局光滑、归一且秩恒为一的程序曲线。定义固定处理器
+$$
+\mathcal G(X)=\sum_i\mathcal G_i\!\left[(I\otimes E_i^\dagger)X(I\otimes E_i)\right].
+\tag{192.17}
+$$
+每项为 CP，且 $\sum_iE_iE_i^\dagger=I$ 保证整体保迹。处理器舍弃程序不同块之间的交叉项，故
+$$
+\mathcal G(\omega\otimes\rho_u)
+=\sum_i b_i(u)^2\mathcal T_u(\omega)=\mathcal T_u(\omega).
+\tag{192.18}
+$$
+所有分支的精确性属于同一个实际参数 $u$，因此这里可以直接组合。
+
+实归一分支满足 $\langle\psi_i,\psi_i'\rangle=0$。固定块正交及 $\sum_i b_i^2=1$ 给出
+$$
+I_Q(\rho_u)=4\|\Psi_u'\|^2
+=\sum_i b_i^2 I_Q(\psi_i(u))+4\sum_i(b_i')^2
+$$
+$$
+=I_r(u)+4h\sum_i b_i^2(\theta_i')^2+4\sum_i(b_i')^2,
+\tag{192.19}
+$$
+其中 $\theta_i(u)$ 是第190节角度与 $h=(1+u)/2$ 的复合，所有导数均对 $u$ 求取。该式保留了切换振幅的信息成本。在 $v_i$，只有第 $i$ 个分支被选中，振幅导数全部为零，且 $\theta_i'(v_i)=0$，所以（192.14）成立。结合普遍的 $I_Q\ge I_r$，有限集合上的最小比值确为一。证毕。
+
+固定程序、纯程序与正交控制标签的背景见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）—（2.16）与第III.A节；纯态信息度量见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439。这里的有限点达到来自第190节具体曲线与上述固定块拼接。$3m$ 是充分维数上界，不宣称它最小，也不宣称达到点的数量增加必然要求维数增加。
+
+**定理 192.4（稠密有限校准必须失去统一导数界）。** 第189节的常数 $\Delta(a)>0$ 已在固定比较区间上给出
+$$
+\sup_{u\in I_a} e(u)\ge\Delta(a).
+\tag{192.20}
+$$
+设一个全区间精确的光滑纯程序在有限非空集合 $\mathcal S\subset I_a$ 上满足 $e(s)=0$，并令
+$$
+\rho(\mathcal S)=\max_{u\in I_a}\min_{s\in\mathcal S}|u-s|>0.
+\tag{192.21}
+$$
+则
+$$
+\max_{u\in I_a}|e'(u)|\ge\frac{\Delta(a)}{\rho(\mathcal S)}.
+\tag{192.22}
+$$
+
+证明。 第189.2节的全部积分与三个比较点都位于 $I_a$；将其全区间上确界 $R$ 换成 $\sup_{I_a}I_Q/I_r$，原证明及常数不变，得到（192.20）。光滑纯态的信息量由 $4(\|\Psi'\|^2-|\langle\Psi,\Psi'\rangle|^2)$ 给出，所以 $e$ 在 $I_a$ 光滑并取得最大值。设最大点为 $v$，取距离它最近的 $s\in\mathcal S$。$e(v)\ge\Delta(a)>0=e(s)$，故 $v\ne s$。均值定理给出二者之间一点 $\xi$，使
+$$
+|e'(\xi)|=\frac{e(v)-e(s)}{|v-s|}
+\ge\frac{\Delta(a)}{\rho(\mathcal S)},
+$$
+证明所需结论。更一般地，若已知 $e$ 在 $I_a$ 的 Lipschitz 常数为 $L$，则
+$$
+\max_{I_a}e\le\max_{\mathcal S}e+L\rho(\mathcal S).
+\tag{192.23}
+$$
+因此有限设计点可以全部满足精确最优；但当其覆盖半径趋于零时，这些设计不能同时保持统一的导数界。定理192.2还要求每个设计保留至少 $\Gamma(a)$ 的额外成本积分。这里比较的是参数函数的有限点值与连续区间控制，不涉及有限试验次数造成的统计误差，也不将逐个有限集合可重新设计替换为同一程序在整个区间达到。证毕。
+
+## 追加锚（本行以下为增补区）
