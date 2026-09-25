@@ -80,9 +80,9 @@ therefore at most `|a − f|`, and `η^Tr(Q_0) = |a − f|`.
 
 ## Falsifier
 
-A counterexample would be a channel in `Q_C(a,f)` with `η^Tr < |a − f|`; the
-pair `|0⟩⟨0|, |1⟩⟨1|` already contracts by `|a − f|` under every such
-channel. A failure of attainment would require every channel in `Q_C(a,f)`
+A counterexample would be a channel in `Q_C(a,f)` with `η^Tr < |a − f|`;
+under every such channel the images of the pair `|0⟩⟨0|, |1⟩⟨1|`, which are
+at trace distance one, have trace distance at least `|a − f|`. A failure of attainment would require every channel in `Q_C(a,f)`
 to exceed `|a − f|`; the measure-and-prepare channel does not.
 
 ## Evidence

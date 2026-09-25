@@ -7,11 +7,9 @@
    digest: Over a fixed classical channel the least trace-distance contraction coefficient of a qubit channel is |a - f|. -/
 
 /-
-proof_shape: result: content
-escape_witness: form (2) — the measure-and-prepare channel of the classical channel sends every
-  difference of two qubit states to a diagonal matrix with entries `±(a - f)(ρ₀₀ - σ₀₀)`, whose
-  trace norm is at most `|a - f|` times the trace norm of `ρ - σ` (the local `measurePrepare`
-  inside `result`)
+proof_shape: result: bind-only (instances of the frozen variational trace-norm formula and Kraus
+  construction, Mathlib's unitary entry bound, and normalization)
+escape_witness: null
 admission_basis: open-problem-resolution (issue #10033)
 Direct frozen dependencies: D5/S3/Quantum/Foundation/FiniteTraceDistance
   (`traceNorm_eq_max_re_tr_U`, `traceDistance_contract`, `traceDistance_le_one`),
