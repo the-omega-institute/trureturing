@@ -194,7 +194,15 @@ This small example verifies the construction and separates structural classes. I
 - Report570 permits certain non3 pairs and rooted triangles under a different joint law. The essential Q-only triple in the explicit example excludes inclusion in its support class.
 - Report571 proves that R_Q alone cannot guarantee a good lift. Here the SAME supplied marginal is coupled to the actual fibres by c(x)>=25/27; this is the missing compatibility premise made quantitative. A family with many simultaneously active residual cofactors need not satisfy it.
 
-No bound is proved on residual activation for an arbitrary actual family. Optimizing the marginal when FS6 fails, or replacing the pointwise premise by a useful same-law distributional estimate, remains open.
+No bound is proved on residual activation for an arbitrary actual family.
+[Report574](574-four-level-query-hinge-removes-pointwise-overlap.md)
+replaces the pointwise premise by a same-law positive-part moment and
+adjusts the marginal, provided two phases cover exponents0 through4.
+[Report575](575-periodic-cofactor-selector-rebuilds-a-compatible-marginal.md)
+instead derives the pointwise bound from a periodic selector on a
+two-coordinate exponent antichain with three globally coherent tail
+phases. Neither result resolves arbitrary shallow multiplicities and
+arbitrary tail-phase geometry.
 
 ## Reproducibility
 

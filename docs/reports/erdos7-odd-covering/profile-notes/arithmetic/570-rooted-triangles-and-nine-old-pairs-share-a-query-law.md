@@ -187,6 +187,13 @@ The missing non-3 pairs are
 
 Non-3 supports of three or more primes also remain outside PG1. Rooted supports containing three or more Q primes are outside this particular triangle class; Report561's alternative all-rooted theorem still applies when no non-3 mixed originals are present.
 
+[Report576](576-late-higher-supports-share-one-query-law.md) extends
+this same E9/rooted-triangle class by all four triple supports and the
+quadruple support inside{11,13,17,19}, through their actual joint
+kernels. Its smaller positive query margin gives a weaker nine-prime
+Haar bound; the large-prime cutoff proved here is not inherited by
+that extension.
+
 For the complete15-edge graph, the original schedule gives a best tested query threshold8 and bound15.4082816142.... The separate fixed schedule (0,1,3,5,7,8) gives bound13.3611275448..., still above566/49. These are failed sufficient estimates, not a lower bound on possible laws or an impossibility theorem for other schedules.
 
 The nine-edge graph is one certified graph, not a maximum-edge or optimal graph claim. No exhaustive search of all32768 graphs was used or is claimed.
