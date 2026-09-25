@@ -13,7 +13,7 @@ Blocks(
                 DescribeId.Create("golden-eigenpairs-and-contracting-error"),
                 DeclarationHandle.Create("D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec"),
                 H("Golden eigenpairs and contracting error"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("expandingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("expandingEigenvector")), Eq, Varphi, Operatorname, Grp(F.Id("expandingEigenvector")), Sp, Land, Sp, Operatorname, Grp(F.Id("contractingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("contractingEigenvector")), Eq, Operatorname, Grp(F.Id("contractingEigenvalue")), Operatorname, Grp(F.Id("contractingEigenvector")), Sp, Land, Sp, Open, F.Id("F"), Underscore, Grp(F.Id("n")), Varphi, Minus, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1)), Close, Eq, Minus, Operatorname, Grp(F.Id("contractingEigenvalue")), Caret, Grp(F.Id("n"))))),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("expandingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("expandingEigenvector")), Eq, Varphi, Operatorname, Grp(F.Id("contractingEigenvector")), Sp, Land, Sp, Operatorname, Grp(F.Id("contractingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("contractingEigenvector")), Eq, Operatorname, Grp(F.Id("contractingEigenvalue")), Operatorname, Grp(F.Id("contractingEigenvector")), Sp, Land, Sp, Open, F.Id("F"), Underscore, Grp(F.Id("n")), Varphi, Minus, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1)), Close, Eq, Minus, Operatorname, Grp(F.Id("contractingEigenvalue")), Caret, Grp(F.Id("n"))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(
                     "The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index.")),
@@ -47,7 +47,17 @@ Blocks(
                             + "original Lucas-coordinate condition. Source roles remain in "),
                         Ref(LibraryNoteRef.Create("D5/L/dunn2024cubicreciprocity").Value),
                         Text(". These are ordinary mathematical statements; the Lean "
-                            + "declaration, authored formula and provenance above are unchanged."))),
+                            + "declaration, authored formula and provenance above are unchanged.")),
+                    Paragraph(
+                        Text("GIR in that same companion Library note constructs actual "
+                            + "independent points on two fixed elliptic curves from the "
+                            + "golden blocks, with exact common-field degrees, discriminants "
+                            + "and an orthogonal generated height lattice. It also constructs "
+                            + "a cubic order whose maximal-order index has exactly the "
+                            + "original WSS prime support in each block. These ordinary "
+                            + "proofs use separately credited classical inputs; no rank "
+                            + "oracle, WSS existence result or additional Lean conclusion "
+                            + "is asserted by this context link."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
