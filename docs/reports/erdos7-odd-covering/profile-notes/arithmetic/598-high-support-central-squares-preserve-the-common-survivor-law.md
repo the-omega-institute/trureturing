@@ -124,3 +124,9 @@ independent generating polynomial. All37 named checks pass under
 The deletion inequality above is an ordinary proof; the finite program
 checks its arithmetic inputs and resulting bound. Neither constitutes
 new Lean verification.
+
+[Report599](599-the-ten-prime-head-admits-arbitrary-twelve-vertex-attachments.md)
+uses this actual ten-prime survivor as a head for arbitrarily many
+external blocks. It adds a local eleven-child conditional-kernel bound;
+the permitted exterior includes blocks on at most twelve vertices at
+arbitrary depth, with the stated single-interface graph condition.
