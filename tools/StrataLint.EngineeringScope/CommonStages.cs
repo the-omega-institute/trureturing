@@ -225,6 +225,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private CheckOperation Operation(string name, string[] arguments)
     {
+        output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
+        output.Flush();
         var result = Capture("dotnet", arguments);
         output.WriteLine(result.Text);
         var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
