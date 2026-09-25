@@ -1,0 +1,606 @@
+{
+  "scope": "Arbitrary finite two-copy family on Q={5,7,11,13,17,19}; one actual PA law, complete queries at every height. Restricted nine-prime consumer requires at most two distinct projected residues per nonunit Q cofactor after removing powers of3 from P-only originals. Not unrestricted Erdos7 or an arbitrary ternary-prefix transfer.",
+  "suffixes": [
+    {
+      "mass": "1",
+      "mean": "2079/1280",
+      "low": {
+        "1": "27692/46189",
+        "2": "9734440238/32001355815",
+        "3": "32451481168066/1478110623739035"
+      },
+      "zeta": "208872886945/1638469417728"
+    },
+    {
+      "mass": "1",
+      "mean": "891/640",
+      "low": {
+        "1": "2967/4199",
+        "2": "21492961/88158005",
+        "3": "5718193957/370175462995"
+      },
+      "zeta": "554975819/11284224640"
+    },
+    {
+      "mass": "1",
+      "mean": "99/80",
+      "low": {
+        "1": "258/323",
+        "2": "93598/521645",
+        "3": "1695742/168491335"
+      },
+      "zeta": "120619/8346320"
+    },
+    {
+      "mass": "1",
+      "mean": "11/10",
+      "low": {
+        "1": "86/95",
+        "2": "162/1805",
+        "3": "162/34295"
+      },
+      "zeta": "1/3610"
+    },
+    {
+      "mass": "1",
+      "mean": "1",
+      "low": {
+        "1": "1"
+      },
+      "zeta": "0"
+    }
+  ],
+  "coefficients": [
+    {
+      "q": 11,
+      "t": 2,
+      "cap": "5/3",
+      "a": "1/3",
+      "eta": "641451990131/13653911814400",
+      "zeta": "554975819/11284224640"
+    },
+    {
+      "q": 13,
+      "t": 2,
+      "cap": "3/2",
+      "a": "1/4",
+      "eta": "130632977/5642112320",
+      "zeta": "120619/8346320"
+    },
+    {
+      "q": 17,
+      "t": 4,
+      "cap": "2",
+      "a": "1/4",
+      "eta": "118307/16692640",
+      "zeta": "1/3610"
+    },
+    {
+      "q": 19,
+      "t": 4,
+      "cap": "9/5",
+      "a": "1/5",
+      "eta": "1/6498",
+      "zeta": "0"
+    }
+  ],
+  "corners": [
+    {
+      "x": "1/2",
+      "y": "2/3",
+      "stages": [
+        {
+          "q": 11,
+          "prefix_lower": "1/4",
+          "auxiliary_mass": "1/3",
+          "low_atoms": {
+            "1": "11/70",
+            "2": "443/3675",
+            "3": "2831/128625"
+          },
+          "F": "97/840",
+          "charge": "97/2520",
+          "d": {
+            "1": "641451990131/32769388354560"
+          },
+          "J": "19885011694061/13763143108915200",
+          "deletion": "53832654443/28436246092800"
+        },
+        {
+          "q": 13,
+          "prefix_lower": "533/2520",
+          "auxiliary_mass": "1/3",
+          "low_atoms": {
+            "1": "2/15",
+            "2": "2147/17325",
+            "3": "137689/6670125"
+          },
+          "F": "47/240",
+          "charge": "47/960",
+          "d": {
+            "1": "391898931/56421123200"
+          },
+          "J": "3788356333/47393743488000",
+          "deletion": "5669093/8012467200"
+        },
+        {
+          "q": 17,
+          "prefix_lower": "3277/20160",
+          "auxiliary_mass": "1/3",
+          "low_atoms": {
+            "1": "23/195",
+            "2": "725113/5855850",
+            "3": "567213743/29308529250"
+          },
+          "F": "202266823897/1875745872000",
+          "charge": "202266823897/7502983488000",
+          "d": {
+            "1": "50703/8346320",
+            "2": "118307/25038960",
+            "3": "118307/41731600"
+          },
+          "J": "16564604372011/51931364284800000",
+          "deletion": "202266823897/27085770391680000"
+        },
+        {
+          "q": 19,
+          "prefix_lower": "1017340164703/7502983488000",
+          "auxiliary_mass": "1/3",
+          "low_atoms": {
+            "1": "23/221",
+            "2": "4600131/37607570",
+            "3": "57099833029/3199840093450"
+          },
+          "F": "807126826607839/4914954383539200",
+          "charge": "807126826607839/24574771917696000",
+          "d": {
+            "1": "3/28880",
+            "2": "1/12635",
+            "3": "1/21660"
+          },
+          "J": "274883139337519/354859706491530240000",
+          "deletion": "0"
+        }
+      ],
+      "alpha": "7575003978548161/73724315753088000",
+      "Phi": "22496082952171/69510823782400",
+      "deletion": "51786591556298429/3913893821597760000",
+      "J": "29453940047709845861/15968686792118860800000",
+      "simple_bound": "137303605308635558323/27345764362558861210",
+      "joint_bound": "432040125182653876501/86355045355449035400",
+      "simple_bound_decimal": 5.021019105124311,
+      "joint_bound_decimal": 5.003067549838209,
+      "target_margin": "25377570437213856497/13573383773301031680000",
+      "joint_target_margin": "53066757345018132083/14287772392948454400000"
+    },
+    {
+      "x": "1/2",
+      "y": "1",
+      "stages": [
+        {
+          "q": 11,
+          "prefix_lower": "5/12",
+          "auxiliary_mass": "1/2",
+          "low_atoms": {
+            "1": "9/35",
+            "2": "213/1225",
+            "3": "1401/42875"
+          },
+          "F": "37/280",
+          "charge": "37/840",
+          "d": {
+            "1": "641451990131/32769388354560"
+          },
+          "J": "46825995279563/13763143108915200",
+          "deletion": "20534105303/9478748697600"
+        },
+        {
+          "q": 13,
+          "prefix_lower": "313/840",
+          "auxiliary_mass": "1/2",
+          "low_atoms": {
+            "1": "12/55",
+            "2": "3874/21175",
+            "3": "252278/8152375"
+          },
+          "F": "631/2640",
+          "charge": "631/10560",
+          "d": {
+            "1": "391898931/56421123200"
+          },
+          "J": "109601067703/173777059456000",
+          "deletion": "76110589/88137139200"
+        },
+        {
+          "q": 17,
+          "prefix_lower": "7709/24640",
+          "auxiliary_mass": "1/2",
+          "low_atoms": {
+            "1": "138/715",
+            "2": "662323/3578575",
+            "3": "522318893/17910767875"
+          },
+          "F": "290655258169/2292578288000",
+          "charge": "290655258169/9170313152000",
+          "d": {
+            "1": "50703/8346320",
+            "2": "118307/25038960",
+            "3": "118307/41731600"
+          },
+          "J": "20354455430423281/20501348589321600000",
+          "deletion": "290655258169/33104830478720000"
+        },
+        {
+          "q": 19,
+          "prefix_lower": "2578417148031/9170313152000",
+          "auxiliary_mass": "1/2",
+          "low_atoms": {
+            "1": "414/2431",
+            "2": "38198889/206841635",
+            "3": "474974662311/17599120513975"
+          },
+          "F": "3590523555704509/18021499406310400",
+          "charge": "3590523555704509/90107497031552000",
+          "d": {
+            "1": "3/28880",
+            "2": "1/12635",
+            "3": "1/21660"
+          },
+          "J": "14079948482314989/1301152257135610880000",
+          "deletion": "0"
+        }
+      ],
+      "alpha": "21745003340848097/90107497031552000",
+      "Phi": "315015710196003/764619061606400",
+      "deletion": "73523647522061309/5381604004696920000",
+      "J": "294904023917292587591/58551851571102489600000",
+      "simple_bound": "2579133479427519177439/706495158544154671530",
+      "joint_bound": "17095921854877696987063/4709967723627697810200",
+      "simple_bound_decimal": 3.6506031898962092,
+      "joint_bound_decimal": 3.6297322737723827,
+      "target_margin": "16677816098348090844607/49769073835437116160000",
+      "joint_target_margin": "37618854485950643431243/110597941856526924800000"
+    },
+    {
+      "x": "1",
+      "y": "2/3",
+      "stages": [
+        {
+          "q": 11,
+          "prefix_lower": "7/12",
+          "auxiliary_mass": "2/3",
+          "low_atoms": {
+            "1": "44/105",
+            "2": "668/3675",
+            "3": "3956/128625"
+          },
+          "F": "107/840",
+          "charge": "107/2520",
+          "d": {
+            "1": "641451990131/32769388354560"
+          },
+          "J": "30148243536157/4587714369638400",
+          "deletion": "59382412633/28436246092800"
+        },
+        {
+          "q": 13,
+          "prefix_lower": "1363/2520",
+          "auxiliary_mass": "2/3",
+          "low_atoms": {
+            "1": "16/45",
+            "2": "408/1925",
+            "3": "69688/2223375"
+          },
+          "F": "19/80",
+          "charge": "19/320",
+          "d": {
+            "1": "391898931/56421123200"
+          },
+          "J": "25212164561/15797914496000",
+          "deletion": "120619/140569600"
+        },
+        {
+          "q": 17,
+          "prefix_lower": "9707/20160",
+          "auxiliary_mass": "2/3",
+          "low_atoms": {
+            "1": "184/585",
+            "2": "73316/325325",
+            "3": "149668228/4884754875"
+          },
+          "F": "78453134549/625248624000",
+          "charge": "78453134549/2500994496000",
+          "d": {
+            "1": "50703/8346320",
+            "2": "118307/25038960",
+            "3": "118307/41731600"
+          },
+          "J": "12495159485503/6448992950400000",
+          "deletion": "78453134549/9028590130560000"
+        },
+        {
+          "q": 19,
+          "prefix_lower": "3377312258953/7502983488000",
+          "auxiliary_mass": "2/3",
+          "low_atoms": {
+            "1": "184/663",
+            "2": "39545932/169234065",
+            "3": "418785970468/14399280420525"
+          },
+          "F": "2955374578725467/14744863150617600",
+          "charge": "2955374578725467/73724315753088000",
+          "d": {
+            "1": "3/28880",
+            "2": "1/12635",
+            "3": "1/21660"
+          },
+          "J": "83588090505745921/3193737358423772160000",
+          "deletion": "0"
+        }
+      ],
+      "alpha": "30230095677746711/73724315753088000",
+      "Phi": "269513492721349/625597414041600",
+      "deletion": "26572211262608027/1956946910798880000",
+      "J": "161781056308825929611/15968686792118860800000",
+      "simple_bound": "329305247702596460073/109130645396665626710",
+      "joint_bound": "19596533805846961674769/6547838723799937602600",
+      "simple_bound_decimal": 3.0175323027335277,
+      "joint_bound_decimal": 2.992824752176305,
+      "target_margin": "11252008234110646600747/13573383773301031680000",
+      "joint_target_margin": "75930147546487657606109/90489225155340211200000"
+    },
+    {
+      "x": "1",
+      "y": "1",
+      "stages": [
+        {
+          "q": 11,
+          "prefix_lower": "11/12",
+          "auxiliary_mass": "1",
+          "low_atoms": {
+            "1": "24/35",
+            "2": "288/1225",
+            "3": "1776/42875"
+          },
+          "F": "121/840",
+          "charge": "121/2520",
+          "d": {
+            "1": "641451990131/32769388354560"
+          },
+          "J": "14753395773013/1251194828083200",
+          "deletion": "67152074099/28436246092800"
+        },
+        {
+          "q": 13,
+          "prefix_lower": "2189/2520",
+          "auxiliary_mass": "1",
+          "low_atoms": {
+            "1": "32/55",
+            "2": "6224/21175",
+            "3": "356528/8152375"
+          },
+          "F": "2243/7920",
+          "charge": "2243/31680",
+          "d": {
+            "1": "391898931/56421123200"
+          },
+          "J": "1631213983799/521331178368000",
+          "deletion": "270548417/264411417600"
+        },
+        {
+          "q": 17,
+          "prefix_lower": "19659/24640",
+          "auxiliary_mass": "1",
+          "low_atoms": {
+            "1": "368/715",
+            "2": "1152248/3578575",
+            "3": "778289768/17910767875"
+          },
+          "F": "333667517919/2292578288000",
+          "charge": "333667517919/9170313152000",
+          "d": {
+            "1": "50703/8346320",
+            "2": "118307/25038960",
+            "3": "118307/41731600"
+          },
+          "J": "72639451847215031/20501348589321600000",
+          "deletion": "333667517919/33104830478720000"
+        },
+        {
+          "q": 19,
+          "prefix_lower": "6982857898281/9170313152000",
+          "auxiliary_mass": "1",
+          "low_atoms": {
+            "1": "1104/2431",
+            "2": "70552424/206841635",
+            "3": "733775047736/17599120513975"
+          },
+          "F": "4318028797945659/18021499406310400",
+          "charge": "4318028797945659/90107497031552000",
+          "d": {
+            "1": "3/28880",
+            "2": "1/12635",
+            "3": "1/21660"
+          },
+          "J": "200312691845293217/3903456771406832640000",
+          "deletion": "0"
+        }
+      ],
+      "alpha": "64295532910563447/90107497031552000",
+      "Phi": "413209846699493/764619061606400",
+      "deletion": "603521453788388347/43052832037575360000",
+      "J": "1084079169685301682341/58551851571102489600000",
+      "simple_bound": "5718992460959988664189/2088961864264206393030",
+      "joint_bound": "37765256683171490533813/13926412428428042620200",
+      "simple_bound_decimal": 2.737719897521626,
+      "joint_bound_decimal": 2.7117721004787363,
+      "target_margin": "81731527868980540378357/49769073835437116160000",
+      "joint_target_margin": "551019967754753645388979/331793825569580774400000"
+    }
+  ],
+  "simple_bound": "137303605308635558323/27345764362558861210",
+  "joint_bound": "432040125182653876501/86355045355449035400",
+  "simple_bound_decimal": 5.021019105124311,
+  "joint_bound_decimal": 5.003067549838209,
+  "target": "257/51",
+  "strict_gap_to_target": "53066757345018132083/1468035771042633601800",
+  "restricted_nine": {
+    "seven_query_bound": "475217647860378394201/43177522677724517700",
+    "outside_charge": "8812717899147749502317/8865784656492767634400",
+    "survivor_reserve": "53066757345018132083/8865784656492767634400",
+    "haar_lower": "53066757345018132083/1553164904833455513600000"
+  },
+  "checks": {
+    "suffix_hinge_0": true,
+    "suffix_hinge_1": true,
+    "suffix_hinge_2": true,
+    "suffix_hinge_3": true,
+    "suffix_hinge_4": true,
+    "suffix_cap_slope_identity_11": true,
+    "positive_eta_11": true,
+    "suffix_cap_slope_identity_13": true,
+    "positive_eta_13": true,
+    "suffix_cap_slope_identity_17": true,
+    "positive_eta_17": true,
+    "suffix_cap_slope_identity_19": true,
+    "positive_eta_19": true,
+    "positive_joint_0_11": true,
+    "positive_prefix_0_11": true,
+    "positive_joint_0_13": true,
+    "positive_prefix_0_13": true,
+    "positive_joint_0_17": true,
+    "positive_prefix_0_17": true,
+    "positive_joint_0_19": true,
+    "positive_prefix_0_19": true,
+    "strict_target_simple_0": true,
+    "strict_target_joint_0": true,
+    "positive_joint_1_11": true,
+    "positive_prefix_1_11": true,
+    "positive_joint_1_13": true,
+    "positive_prefix_1_13": true,
+    "positive_joint_1_17": true,
+    "positive_prefix_1_17": true,
+    "positive_joint_1_19": true,
+    "positive_prefix_1_19": true,
+    "strict_target_simple_1": true,
+    "strict_target_joint_1": true,
+    "positive_joint_2_11": true,
+    "positive_prefix_2_11": true,
+    "positive_joint_2_13": true,
+    "positive_prefix_2_13": true,
+    "positive_joint_2_17": true,
+    "positive_prefix_2_17": true,
+    "positive_joint_2_19": true,
+    "positive_prefix_2_19": true,
+    "strict_target_simple_2": true,
+    "strict_target_joint_2": true,
+    "positive_joint_3_11": true,
+    "positive_prefix_3_11": true,
+    "positive_joint_3_13": true,
+    "positive_prefix_3_13": true,
+    "positive_joint_3_17": true,
+    "positive_prefix_3_17": true,
+    "positive_joint_3_19": true,
+    "positive_prefix_3_19": true,
+    "strict_target_simple_3": true,
+    "strict_target_joint_3": true,
+    "worst_corner_simple": true,
+    "worst_corner_joint": true,
+    "exact_simple_target_margin": true,
+    "exact_joint_target_margin": true,
+    "simple_anchor_slope": true,
+    "simple_corner_certificate_0": true,
+    "simple_corner_certificate_1": true,
+    "simple_corner_certificate_2": true,
+    "simple_corner_certificate_3": true,
+    "simple_row_slope_11": true,
+    "simple_row_slope_13": true,
+    "simple_row_slope_17": true,
+    "simple_row_slope_19": true,
+    "joint_anchor_slope": true,
+    "joint_corner_certificate_0": true,
+    "joint_corner_certificate_1": true,
+    "joint_corner_certificate_2": true,
+    "joint_corner_certificate_3": true,
+    "joint_row_slope_11": true,
+    "joint_row_slope_13": true,
+    "joint_row_slope_17": true,
+    "joint_row_slope_19": true,
+    "threshold_match_11": true,
+    "actual_penalty_11_0": true,
+    "actual_penalty_11_1": true,
+    "actual_penalty_11_2": true,
+    "actual_penalty_11_3": true,
+    "actual_penalty_11_4": true,
+    "actual_penalty_11_5": true,
+    "actual_penalty_11_6": true,
+    "actual_penalty_11_7": true,
+    "actual_penalty_11_8": true,
+    "actual_penalty_11_9": true,
+    "actual_penalty_11_10": true,
+    "actual_penalty_11_11": true,
+    "actual_penalty_11_12": true,
+    "actual_penalty_11_13": true,
+    "actual_penalty_11_14": true,
+    "actual_penalty_11_15": true,
+    "actual_penalty_11_16": true,
+    "threshold_match_13": true,
+    "actual_penalty_13_0": true,
+    "actual_penalty_13_1": true,
+    "actual_penalty_13_2": true,
+    "actual_penalty_13_3": true,
+    "actual_penalty_13_4": true,
+    "actual_penalty_13_5": true,
+    "actual_penalty_13_6": true,
+    "actual_penalty_13_7": true,
+    "actual_penalty_13_8": true,
+    "actual_penalty_13_9": true,
+    "actual_penalty_13_10": true,
+    "actual_penalty_13_11": true,
+    "actual_penalty_13_12": true,
+    "actual_penalty_13_13": true,
+    "actual_penalty_13_14": true,
+    "actual_penalty_13_15": true,
+    "actual_penalty_13_16": true,
+    "threshold_match_17": true,
+    "actual_penalty_17_0": true,
+    "actual_penalty_17_1": true,
+    "actual_penalty_17_2": true,
+    "actual_penalty_17_3": true,
+    "actual_penalty_17_4": true,
+    "actual_penalty_17_5": true,
+    "actual_penalty_17_6": true,
+    "actual_penalty_17_7": true,
+    "actual_penalty_17_8": true,
+    "actual_penalty_17_9": true,
+    "actual_penalty_17_10": true,
+    "actual_penalty_17_11": true,
+    "actual_penalty_17_12": true,
+    "actual_penalty_17_13": true,
+    "actual_penalty_17_14": true,
+    "actual_penalty_17_15": true,
+    "actual_penalty_17_16": true,
+    "threshold_match_19": true,
+    "actual_penalty_19_0": true,
+    "actual_penalty_19_1": true,
+    "actual_penalty_19_2": true,
+    "actual_penalty_19_3": true,
+    "actual_penalty_19_4": true,
+    "actual_penalty_19_5": true,
+    "actual_penalty_19_6": true,
+    "actual_penalty_19_7": true,
+    "actual_penalty_19_8": true,
+    "actual_penalty_19_9": true,
+    "actual_penalty_19_10": true,
+    "actual_penalty_19_11": true,
+    "actual_penalty_19_12": true,
+    "actual_penalty_19_13": true,
+    "actual_penalty_19_14": true,
+    "actual_penalty_19_15": true,
+    "actual_penalty_19_16": true,
+    "restricted_seven_query_target": true,
+    "restricted_nine_positive_reserve": true,
+    "restricted_nine_haar_bound": true
+  },
+  "check_count": 150
+}

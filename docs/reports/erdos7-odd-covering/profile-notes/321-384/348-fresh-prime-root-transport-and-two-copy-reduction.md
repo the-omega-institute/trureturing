@@ -886,6 +886,16 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two
 
 ## Necessary query carriers and actual pure labels for the remaining lower target
 
+[Report569](../arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md)
+now excludes the NC1 lower witness throughout the stated two-copy
+domain: complete-suffix deletion and joint cap/loss credits give one
+actual full-height query law with norm at most5.003068<257/51 on the
+reference carrier. NC2 below covers the other carriers. The necessary
+conditions and earlier unrefined bounds below remain valid, but no
+NC1 exceptional family remains in this domain. This does not supply
+an upper bound for arbitrary ternary-prefix families, whose projected
+cofactor multiplicities can exceed two.
+
 Let T=257/51. Consider a finite actual two-copy family supported within a
 declared query-prime carrier Q of at most six odd primes excluding3,
 and its complete actual survivor V. A lower certificate means
