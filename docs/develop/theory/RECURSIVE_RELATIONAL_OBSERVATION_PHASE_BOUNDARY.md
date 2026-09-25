@@ -8935,3 +8935,725 @@ $$
 这个数值对应五个精确、参考完整终端及同一个固定接收通道；它不等同于单个终端的档案秩，也不覆盖未知来源共用通道、无限终端、近似恢复或额外持久资源。第23节的四终端精确值五与本节的五终端精确值七属于不同终端合同，没有改写旧结论。环境射线只是固定通道的 Stinespring 表示资料；证明没有向接收器免费提供轮次标记或外部控制。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 消去终端解码器的有限维保真度不变量
+
+本文保留第10—12节的两态来源、独立纯接收初态、同一个全域 CPTP 接收通道和全部持久控制计入容量的合同。对象是一个有限维可优化工具，不替代第20节及第35节已经取得的显式误差下界，也不把一个尚未估计的新不变量写成新的显式渐近率。
+
+来源为
+
+$$
+T_{a,b}|i\rangle=|i\rangle_{\mathcal B}\otimes m_i,\qquad
+m_0=a|0\rangle+b|1\rangle,\quad m_1=|0\rangle,\quad
+|a|^2+|b|^2=1,\quad ab\ne0.
+\tag{37.1}
+$$
+
+记容量为 $D$，接收空间 $K=\mathbb C^D$。固定基变换可将任意独立纯接收初态送至同一个 $e_0$，同时共轭接收通道及解码器；故以下固定初态，不损失任何允许的装置。
+
+**定理37.1（有限共同接收器的保真度优化）。** 对（37.1）的任一非退化来源，下文（37.8）的共同接收器最大值取得，且 $\Delta_D>0$。其操作误差界为（37.10）；针对指定初态的有限子任务还满足（37.11）的双侧比较。同一个优化可消去全部终端解码器和指数大小档案，以（37.14）的 $388D^4+1$ 个实变量表示为紧半代数问题。代数振幅允许原则上的认证计算；对任意实振幅，不作无有效参数表示的算法声明。这些结论共同由下文的连续纯化、单终端消元、固定接收器有限期限与全局参数化证明。
+
+**连续的规范纯化与单终端恒等式。**
+
+对固定接收通道 $\mathcal C$，令 $\mathcal R_{\mathcal C}$ 为一次来源发射和接收合成的 $M\otimes K$ 上通道。只取允许的指定来源输入 $|0\rangle_M$，置
+
+$$
+\sigma_0=|0,e_0\rangle\langle0,e_0|,\qquad
+\sigma_n=\mathcal R_{\mathcal C}^{\,n}(\sigma_0),\qquad
+\rho_n=\operatorname{Tr}_K\sigma_n.
+\tag{37.2}
+$$
+
+局部接收不改变来源记忆边缘，所以 $\rho_n$ 也是未接收的真实纯目标
+$|\Psi_n\rangle_{M\mathcal B^{\otimes n}}$ 的 $M$ 边缘。
+
+始终使用同一个辅助空间 $E=\mathbb C^{2D}$，并在 $M\otimes K$ 选定基
+$\{|z\rangle\}_{z=1}^{2D}$。定义
+
+$$
+|\Omega\rangle=\sum_{z=1}^{2D}|z\rangle_{MK}|z\rangle_E,\qquad
+|\Gamma_n\rangle=(\sqrt{\sigma_n}\otimes I_E)|\Omega\rangle,\qquad
+\omega_n=\operatorname{Tr}_K|\Gamma_n\rangle\langle\Gamma_n|.
+\tag{37.3}
+$$
+
+$|\Omega\rangle$ 未归一化，$|\Gamma_n\rangle$ 则因
+$\operatorname{Tr}\sigma_n=1$ 归一化。它是 $\sigma_n$ 的纯化，且
+$\omega_n$ 是 $M\otimes E$ 上的密度矩阵。
+
+正半定矩阵平方根在整个正半定锥上连续，包括秩发生变化的边界。因而
+$\mathcal C\mapsto\sigma_n\mapsto|\Gamma_n\rangle\mapsto\omega_n$ 连续。
+这里不能仅说“任选一个纯化”就推出所选纯化连续；（37.3）提供了所需的全局规范。
+
+本文使用根保真度
+
+$$
+F(A,B)=\operatorname{Tr}\sqrt{\sqrt A B\sqrt A}.
+$$
+
+对每个终端定义
+
+$$
+f_n(\mathcal C)=
+\max_{\tau\in\mathcal D(E)}
+F(\omega_n,\rho_n\otimes\tau).
+\tag{37.4}
+$$
+
+**单终端恒等式。** 对每个 $n\ge1$，
+
+$$
+\boxed{
+f_n(\mathcal C)=
+\max_{\mathcal D_n:K\to\mathcal B^{\otimes n}\ {\rm CPTP}}
+F\!\left((\operatorname{id}_M\otimes\mathcal D_n)(\sigma_n),
+|\Psi_n\rangle\langle\Psi_n|\right).
+}
+\tag{37.5}
+$$
+
+两侧均取得最大值，且
+
+$$
+f_n(\mathcal C)=1
+\quad\Longleftrightarrow\quad
+\text{该指定初态在终端 $n$ 有精确的 $K$-局部解码。}
+\tag{37.6}
+$$
+
+证明。记目标档案空间为 $A=\mathcal B^{\otimes n}$。对一个解码器取 Stinespring 等距
+$V:K\to A\otimes F$，并把环境维数按需补大。输出的全局纯化为
+
+$$
+|\zeta_V\rangle=(I_{ME}\otimes V)|\Gamma_n\rangle
+$$
+
+（这里只作固定的张量因子重排）。它在 $MA$ 上与纯目标的根保真度等于
+
+$$
+\max_{\|\xi\|=1,\ \xi\in E\otimes F}
+|\langle\Psi_n\otimes\xi\,|\,\zeta_V\rangle|.
+\tag{37.7}
+$$
+
+这是把 $\zeta_V$ 投影到目标纯态后所得环境向量的范数。
+
+对固定 $\xi$，令 $\tau=\operatorname{Tr}_F|\xi\rangle\langle\xi|$。
+$|\Psi_n\rangle\otimes|\xi\rangle$ 是
+$\rho_n\otimes\tau$ 在 $ME$ 上的一份纯化，而 $\Gamma_n$ 是
+$\omega_n$ 的纯化，所余纯化腿为 $K$。
+有限维 Uhlmann 变分恒等式于是给[^phase_uhlmann_transition]
+
+$$
+\max_{V:K\hookrightarrow A\otimes F}
+|\langle\Psi_n\otimes\xi|(I_{ME}\otimes V)|\Gamma_n\rangle|
+=F(\omega_n,\rho_n\otimes\tau).
+$$
+
+可取足够大的 $F$，使 Uhlmann 在纯化支撑上的等距延拓到整个 $K$；该等距因而定义全域 CPTP 解码器，而不是只定义于可达支撑的操作。这个变分恒等式也可由纯化振幅矩阵的极分解直接得到：最大重叠为相应乘积的迹范数。
+
+任意 $\tau$ 都有 $\xi$ 纯化，任意解码器和 $\xi$ 也都给这样一个 $\tau$。交换对这两个独立选择的最大化，得到（37.5）。有限维通道集和密度矩阵集紧，目标连续；上述等距构造也直接给最大值实现。根保真度等于一当且仅当两个密度矩阵相同，故（37.6）成立。证明完毕。
+
+（37.5）表明 $f_n$ 与纯化规范无关。固定 $\sigma_n$ 的两份同维纯化只差 $E$ 上酉变换，$\tau$ 的完整优化集随之双射；非最小辅助空间只需补零。这也是后面可用任意矩阵因子代替平方根而不改变优化值的原因。
+
+**有限期限、正性与操作误差。**
+
+置
+
+$$
+N_D=8D^2,\qquad
+\gamma_D(a,b)=\max_{\mathcal C}\min_{1\le n\le N_D}f_n(\mathcal C),
+\qquad
+\Delta_D(a,b)=1-\gamma_D(a,b).
+\tag{37.8}
+$$
+
+通道 $\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$ 全域且固定，不允许随 $n$ 更换。终端的 $\tau_n$ 和解码器则可分别依赖 $n$，与原合同一致。
+
+由（37.3）的连续性、根保真度的连续性和固定紧集
+$\mathcal D(E)$ 上最大值的连续性，所有 $f_n$ 都是 $\mathcal C$ 的连续函数。Choi 表示中的 CPTP 通道集紧，有限个 $f_n$ 的最小值也连续，所以（37.8）的最大值取得。
+
+若 $\Delta_D=0$，同一个最大点通道使前 $8D^2$ 个 $f_n$ 全为一。由（37.5）分别选择终端解码器，就能对指定输入 $|0\rangle$ 精确服务这些终端。
+
+这里需要核对第12节障碍的实际量词。第12节证明从开头即只取 $|0\rangle_M$，由其每个精确终端推出记忆—累计环境乘积分解，再延拓环境交叉等式；整个矛盾没有使用其他来源初态或参考。因此它已经排除了上述只针对 $|0\rangle$ 的接收器，给出
+
+$$
+\boxed{\Delta_D(a,b)>0.}
+\tag{37.9}
+$$
+
+这一步不是仅凭一个“全输入任务无解”定理就推断子任务无解，而是复用其针对该指定输入的证明范围。
+
+令 $\epsilon_D^\star(a,b)$ 为维数不超过 $D$ 的允许装置在全部终端、全部初始来源和参考上的最优半迹误差下确界。则
+
+$$
+\boxed{
+\epsilon_D^\star(a,b)\ge
+1-\gamma_D(a,b)^2
+=2\Delta_D(a,b)-\Delta_D(a,b)^2
+\ge\Delta_D(a,b)>0.
+}
+\tag{37.10}
+$$
+
+证明。若某装置的全合同误差至多 $\epsilon$，限制到指定初态和前 $N_D$ 个终端。纯目标投影是一个效果，因此其恢复概率至少为 $1-\epsilon$。其根保真度至少为 $\sqrt{1-\epsilon}$，所以
+
+$$
+f_n(\mathcal C)\ge\sqrt{1-\epsilon}
+\quad(1\le n\le N_D),\qquad
+\gamma_D\ge\sqrt{1-\epsilon}.
+$$
+
+平方即得（37.10），再对所有装置取下确界。维数较小的装置可嵌入 $D$ 维，并在未访问部分全域完成固定通道。证明完毕。
+
+这比只使用 $F\ge1-\epsilon$ 的 $\epsilon\ge\Delta_D$ 转换稍强，但仍没有估计 $\Delta_D$ 随 $D$ 的衰减率。
+
+也可精确标定这个工具对应的任务。令 $\varepsilon^0_{D,N_D}$ 为只要求指定初态 $|0\rangle$、只要求前 $N_D$ 个终端的最佳最坏半迹误差，接收通道仍须同一固定通道。定义
+
+$$
+Q_D=1-\gamma_D^2.
+$$
+
+由（37.5）与纯目标的迹距离／保真度关系，
+
+$$
+\boxed{
+Q_D\le\varepsilon^0_{D,N_D}\le\sqrt{Q_D}.
+}
+\tag{37.11}
+$$
+
+下界是上面的纯目标投影论证。上界取（37.8）的最大点通道，并分别取实现（37.5）的各终端解码器；它们的误差都不超过
+$\sqrt{1-f_n^2}\le\sqrt{Q_D}$。
+（37.11）的上界只属于这个指定初态的有限子任务，不是全部来源／参考、全部终端合同的上界。
+
+**每个固定接收器的 SDP 与全局有限变量优化。**
+
+对固定的正半定矩阵 $A,B$，根保真度有变分形式。[^phase_watrous_fidelity_sdp]
+
+$$
+F(A,B)=
+\max_X\left\{\operatorname{Re}\operatorname{Tr}X:
+\begin{pmatrix}A&X\\X^*&B\end{pmatrix}\succeq0\right\}.
+\tag{37.12}
+$$
+
+该式可由块正性给出的
+$X=\sqrt A\,C\,\sqrt B$、$\|C\|_{\rm op}\le1$ 及极分解验证，奇异情形按支撑限制或连续性处理。
+
+所以当 $\mathcal C$ 固定时，（37.4）是以下 SDP：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Re}\operatorname{Tr}X_n,\\
+\text{满足}\quad&
+\tau_n\succeq0,\quad\operatorname{Tr}\tau_n=1,\\
+&
+\begin{pmatrix}
+\omega_n&X_n\\X_n^*&\rho_n\otimes\tau_n
+\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{37.13}
+$$
+
+$\omega_n,\rho_n$ 此时固定，故右下块对 $\tau_n$ 仿射。
+$E$ 的维数为 $2D$，$\omega_n$ 和 $X_n$ 的矩阵大小是 $4D$，整个保真度块大小为 $8D$。这些状态矩阵的大小只随 $D$ 线性增长。
+
+全局优化接收器时，可以完全不引入大小为 $2^n$ 的档案或终端解码器。采用以下实坐标：
+
+- 接收 Choi 矩阵 $J_{\mathcal C}$ 的大小为 $2D^2\times2D^2$，Hermitian 坐标共 $4D^4$ 个，满足 $J_{\mathcal C}\succeq0$ 及对输出偏迹等于 $I_{2D}$。
+- 每个终端 $n=1,\ldots,N_D$ 有一个 $2D\times2D$ Hermitian 状态变量 $S_n$，坐标数 $4D^2$，满足从固定 $S_0=\sigma_0$ 出发的同一一步递推
+  $S_{n+1}=\mathcal R_{\mathcal C}(S_n)$。
+- 每个终端有一个复矩阵 $Y_n\in\mathbb C^{2D\times2D}$，共 $8D^2$ 个实坐标，满足 $`Y_nY_n^*=S_n`$。令 $\Gamma(Y_n)=\operatorname{vec}(Y_n)$，$\omega(Y_n)=\operatorname{Tr}_K|\Gamma(Y_n)\rangle\langle\Gamma(Y_n)|$。
+- 每个终端有一个 $2D\times2D$ Hermitian 密度变量 $\tau_n$，坐标数 $4D^2$，及 $4D\times4D$ 复矩阵 $X_n$，坐标数 $32D^2$。
+- 一个共同实标量 $s\in[0,1]$，要求 $s\le\operatorname{Re}\operatorname{Tr}X_n$ 对全部终端成立，并加入（37.13）的块正性，使用 $\omega(Y_n)$ 和 $\rho_n=\operatorname{Tr}_K S_n$。
+
+不同 $n$ 的 $Y_n$ 只是在各终端表示同一真实状态的辅助纯化；它们不需要是一个物理累计环境的前缀。由（37.5）的纯化不变性，这种自由度既不改变单终端值，也不放松同一接收通道的要求。同一通道要求完整保留在 $S_n$ 的共同递推中。
+
+最大化 $s$ 得到的值恰为 $\gamma_D$。对于固定接收器，每个终端的 $\tau_n,X_n$ 独立优化，故共同下界的最大值就是各 $f_n$ 的最小值；反向，任何可行点都定义一台合法接收器和这些终端的可行保真度见证。
+
+按上述坐标选择，总实变量数恰为
+
+$$
+4D^4+N_D(4+8+4+32)D^2+1
+=388D^4+1.
+\tag{37.14}
+$$
+
+若把纯初态也当变量优化，会再增加 $O(D)$ 坐标；固定初态的基变换已经消去了这项。Choi 矩阵本身大小为 $O(D^2)$，不能与其余 $O(D)$ 大小的状态矩阵混为一谈。
+
+该可行集紧。Choi 正性和固定偏迹使 Choi 坐标有界；一步递推从密度矩阵出发始终保持密度矩阵；$`Y_nY_n^*=S_n`$ 给 $\|Y_n\|_{\rm HS}=1$；$\tau_n$ 为密度矩阵；保真度块正性给
+
+$$
+|(X_n)_{uv}|^2
+\le(\omega_n)_{uu}(\rho_n\otimes\tau_n)_{vv}\le1.
+$$
+
+全部等式和非严格正性约束闭，所以可行集紧。
+
+对固定 $a,b$，递推对 Choi 和状态变量是双线性的，$`Y_nY_n^*=S_n`$ 是二次等式，块矩阵条目也是次数至多二的多项式。将有限大小的 Hermitian 正性用主子式非负表述，就得到一个有限基本闭半代数优化；它在全局上并非凸优化，尽管固定接收器后的每个终端是 SDP。主子式展开的个数和次数随 $D$ 增长，式（37.14）的变量计数不等于多项式时间算法或固定次数标量约束。
+
+**可计算性范围和可复用边界。**
+
+若 $a,b$ 的实、虚分量是明确给定的实代数数，则上述紧半代数优化使用代数系数。实闭域量词消去和代数数隔离可在原则上确定 $\gamma_D$，并为每个固定 $D$ 输出经过认证的有理数
+
+$$
+0<q_D\le\Delta_D
+\quad\text{或}\quad
+0<q'_D\le Q_D.
+\tag{37.15}
+$$
+
+严格正性（37.9）保证存在这样的正有理下界；没有实用运行时间、条件数或精度复杂度声明。“全局多项式优化”只有带有效的全局证书或已证明收敛的认证算法时才能承担此结论，未经认证的局部数值最大值不能作下界证书。
+
+对未提供有效表示的任意实振幅，不声称能从其符号值运行算法得到逐来源的 $\Delta_D(a,b)$。如果只要求统一于
+$|a|^2,|b|^2\ge1/k$ 的下界，可以把 $a,b$ 的四个实坐标也加入优化，并加入第20节的整数系数归一化及端点距离约束。所得紧集依然没有 $\gamma=1$ 的点，故统一 $\Delta_{D,k}>0$；其优化系数是整数，原则上的有理证书计算只需输入 $D,k$。这扩大了证书的参数范围，但不自动给出足够强的数值界或实用算法。
+
+第20节和第35节的显式下界也给出此优化量的定量界。对一个终端取达到 $f_n$ 的 $\tau_n$，由
+
+$$
+D(\omega_n,\rho_n\otimes\tau_n)\le\sqrt{1-f_n^2}
+$$
+
+及边缘收缩、三角不等式，
+
+$$
+h(\sigma_n)\le16(1-f_n^2).
+\tag{37.16}
+$$
+
+在取得 $\gamma_D$ 的接收器上，全部 $f_n\ge\gamma_D$，于是
+
+$$
+G\le16N_DQ_D.
+$$
+
+若第35节给 $G\ge\kappa'_{D,k}$，则
+
+$$
+Q_D\ge\eta'_{D,k},\qquad
+\Delta_D\ge1-\sqrt{1-\eta'_{D,k}}.
+\tag{37.17}
+$$
+
+因此这一工具至少重现既有显式下界；进一步改进必须来自对全局保真度优化的更强估计或认证结果，不能仅凭重新定义不变量宣布新速率。
+
+一个可直接核对的低维边界是 $D=1$。此时接收通道唯一，只能丢弃输入，$\sigma_n=\rho_n$。对任意纯化，极分解或 Schmidt 展开给
+
+$$
+f_n=\lambda_{\max}(\rho_n),\qquad
+\Delta_1=1-\min_{1\le n\le8}\lambda_{\max}(\rho_n).
+\tag{37.18}
+$$
+
+确切地，根保真度平方的优化为
+$\max_{\tau}\operatorname{Tr}(\rho_n^2\tau^{\mathsf T})
+=\lambda_{\max}(\rho_n)^2$；平方根才给上式。它检验了根保真度与平方保真度的区别。一般 $D$ 的全局优化仍保留真实接收器自由度，不能由这一例子外推速率。
+
+本工具给出的新接口是：全部终端解码器和指数大小档案被消去，留下固定通道、前 $8D^2$ 个 $2D$ 维联合态及 $O(D)$ 大小的保真度块。下一步可研究某个可认证的全局上界
+$\gamma_D\le1-\zeta_D$，或等价的 $Q_D$ 下界。若目标为
+$\exp(-CD^2)$ 或 $\exp(-CD)$ 级误差下界，仍须提供相应的 $\zeta_D$ 定量估计；本文没有完成这一部分。
+
+[^phase_uhlmann_transition]: Armin Uhlmann, “The ‘transition probability’ in the state space of a *-algebra,” *Reports on Mathematical Physics* **9** (1976), 273–279, [doi:10.1016/0034-4877(76)90060-4](https://doi.org/10.1016/0034-4877(76)90060-4), [作者原文 PDF](https://www.physik.uni-leipzig.de/~uhlmann/PDF/Uh76a.pdf)。§2 式（4）定义所有共同表示中向量重叠模平方的上确界，§5 式（23）计算密度矩阵情形为平方保真度；本文的根保真度为其平方根。固定一份有限维纯化、对另一纯化腿取等距的形式使用纯化唯一性；把支撑等距完成到全输入的义务由（37.5）的证明给出。
+
+[^phase_watrous_fidelity_sdp]: John Watrous, “Simpler semidefinite programs for completely bounded norms,” [arXiv:1207.5726v2](https://arxiv.org/abs/1207.5726v2), 2 August 2012。式（3）明确采用根保真度；§2.1（原文第5—6页）的 primal problem 正是最大化 Re Tr X、约束 [[P,X],[X*,Q]]≥0，并由 Lemma 2 的收缩算子分解证明最优值等于根保真度，适用于奇异正半定矩阵。本文仅引用这一固定矩阵 SDP 工具，不将其计算复杂度结论扩展到共同接收器的非凸全局优化。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 指定纯输入前三终端的二维障碍与精确容量
+
+本节研究与保真度不变量 $\Delta_D$ 相同的指定来源输入 $|0\rangle_M$。同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端，而一个明确的三维固定接收器可以恢复前三个终端，所以这个指定输入任务的精确最小容量是三。二维障碍还把原来用于排除零点的 $32=8D^2$ 步缩短到三步，并给出相应的显式全局有理证书。这里的容量结算只要求指定输入，不等同于完整参考输入族的合同。
+
+**模型与纯输出必要性。**
+
+取来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+|a|^2+|b|^2=1,\quad ab\ne0,\qquad
+T|i\rangle=m_i\otimes|i\rangle_{\mathcal B}.
+\tag{38.1}
+$$
+
+这里只将来源记忆排在张量因子前面。接收器 $K=\mathbb C^2$ 从独立纯态 $e$ 启动，重复使用同一个全域 CPTP 通道
+$\mathcal C:\mathcal L(K\otimes\mathcal B)\to\mathcal L(K)$。
+固定其一份 Stinespring 等距
+
+$$
+V:K\otimes\mathcal B\longrightarrow K\otimes E.
+\tag{38.2}
+$$
+
+环境每步可立即丢弃，不要求环境空白，不限制 Choi 秩。来源初态固定为 $|0\rangle_M$。接收后的联合态记为 $\sigma_n$。
+
+置 $p=|b|^2\in(0,1)$。真实来源边缘通道为
+
+$$
+\mathcal E(\rho)=\rho_{00}|m_0\rangle\langle m_0|
++\rho_{11}|0\rangle\langle0|.
+$$
+
+所以
+
+$$
+\rho_2=(1-p)|m_0\rangle\langle m_0|
++p|0\rangle\langle0|,\qquad
+\det\rho_2=p^2(1-p)>0.
+\tag{38.3}
+$$
+
+又有 $(\rho_2)_{11}=p(1-p)\in(0,1)$，故 $\rho_3$ 也是正定矩阵。
+
+**定理38.1（指定初态的最短二维障碍）。** 对（38.1）的任一非退化复振幅来源，从指定初态 $|0\rangle_M$ 和独立纯接收初态出发，同一个二维全域 CPTP 接收器不能同时精确恢复第二、第三终端的活动记忆与全部档案。前两个终端则可由同一个二维通道精确恢复，因此第三终端是这一指定输入任务的首个障碍。由此得到（38.23）—（38.24）的短期限显式正误差证书。证明保留任意丢弃环境和任意 Choi 秩，不借用完整参考输入族的较强要求。
+
+**纯输出必要性。** 若某终端的真实记忆边缘 $\rho_n$ 正定，且仅作用于二维 $K$ 的通道精确恢复原来的 $M$—档案纯目标，则 $\sigma_n$ 必为纯态。
+
+证明。取实际累计环境给出的 $\sigma_n$ 纯化。精确恢复纯目标迫使记忆与累计环境的边缘为
+$\rho_n\otimes\omega_E$。其秩又等于接收器边缘的秩，不超过二。因此
+
+$$
+2\operatorname{rank}\omega_E
+=\operatorname{rank}(\rho_n\otimes\omega_E)
+\le2.
+$$
+
+环境为纯态，原来的 $\sigma_n$ 也纯。反过来，若 $\sigma_n$ 纯且具有正确的 $\rho_n$，它与真实目标是同一 $\rho_n$ 的两份纯化；可将 $K$ 等距映入目标的档案 Schmidt 支撑，得到全域局部解码。证明完毕。
+
+因此，第二、第三终端均可精确解码，当且仅当 $\sigma_2,\sigma_3$ 均为纯态。以下直接排除后一个条件。
+
+**第二终端纯性强制第一接收态纯。**
+
+首次来源发射的档案恒为 $|0\rangle_{\mathcal B}$，所以
+
+$$
+\sigma_1=|m_0\rangle\langle m_0|\otimes\tau,\qquad
+\tau=\mathcal C(|e,0\rangle\langle e,0|).
+\tag{38.4}
+$$
+
+假设 $\sigma_2$ 纯。若 $\tau$ 秩二，取其谱分解
+$\tau=\lambda_0|q_0\rangle\langle q_0|+\lambda_1|q_1\rangle\langle q_1|$，
+其中 $\lambda_0,\lambda_1>0$，$q_0,q_1$ 正交归一。
+
+第二次发射前后的 $M\mathcal B$ 纯态为
+
+$$
+|\Theta\rangle
+=a|m_0\rangle|0\rangle_{\mathcal B}
++b|0\rangle|1\rangle_{\mathcal B},
+\tag{38.5}
+$$
+
+它的记忆边缘为正定的 $\rho_2$，故在 $\mathcal B$ 上具有满 Schmidt 支撑。接收第二步时，这个纯态与 $\tau$ 张量相乘。
+
+两个正权谱分支接收后的混合态等于同一个纯态 $\sigma_2$，所以每个分支的 $MK$ 输出都等于这份纯态。两份关于正定 $\rho_2$ 的纯化只差 $K$ 上酉变换，因此存在一个共同酉 $U:\mathcal B\to K$ 和单位环境向量 $\zeta_0,\zeta_1$，满足
+
+$$
+V(q_j\otimes|b\rangle)
+=U|b\rangle\otimes\zeta_j
+\quad(j,b\in\{0,1\}).
+\tag{38.6}
+$$
+
+这里对全部 $b$ 的结论来自（38.5）的满 Schmidt 支撑，不能只比较一条输入向量。
+
+等距 $V$ 保持 $q_0\otimes|b\rangle$ 与 $q_1\otimes|b\rangle$ 的正交性，故 $\zeta_0\perp\zeta_1$。由于 $\{q_j\otimes|b\rangle\}$ 已是整个四维输入空间的基，（38.6）给出全域通道
+
+$$
+\mathcal C(X)=U(\operatorname{Tr}_K X)U^*.
+\tag{38.7}
+$$
+
+将它用于首步，得到 $\tau=U|0\rangle\langle0|U^*$ 为纯态，矛盾。
+
+所以 $\tau$ 必为纯态。取单位向量 $k\in K$，使 $\tau=|k\rangle\langle k|$。首步和第二步的固定等距因而可写为
+
+$$
+V(e\otimes|0\rangle)=k\otimes\eta_1,\qquad
+V(k\otimes|b\rangle)=u_b\otimes\eta_2
+\quad(b=0,1),
+\tag{38.8}
+$$
+
+其中 $\eta_1,\eta_2$ 单位，$u_0,u_1$ 是 $K$ 的一组正交归一基。
+
+**第三终端与固定等距的交叉 Gram 矛盾。**
+
+由（38.5）、（38.8），第二终端的联合纯态是
+
+$$
+|\psi_2\rangle
+=a|m_0\rangle\otimes u_0+b|0\rangle\otimes u_1
+=|0\rangle\otimes(a^2u_0+bu_1)
++|1\rangle\otimes ab\,u_0.
+\tag{38.9}
+$$
+
+定义
+
+$$
+r=\sqrt{|a|^4+|b|^2}>0,\qquad
+q=(a^2u_0+bu_1)/r.
+\tag{38.10}
+$$
+
+$q$ 单位，且因 $b\ne0$，$q$ 与 $u_0$ 不共线。
+
+第三次发射后，实际的 $K\mathcal B$ Schmidt 支撑为
+
+$$
+S_3=\operatorname{span}\{q\otimes|0\rangle,\ u_0\otimes|1\rangle\}.
+\tag{38.11}
+$$
+
+理由是其两个记忆系数为线性无关的 $m_0,|0\rangle$，两个接收输入系数分别为非零的
+$r q\otimes|0\rangle$、$ab\,u_0\otimes|1\rangle$。
+
+若 $\sigma_3$ 也纯，则这整个二维支撑经 $V$ 后位于
+$K\otimes\mathbb C\eta_3$，并因两边维数都是二而占满该空间。所以存在正交归一基 $v_0,v_1$ 和单位 $\eta_3$，使
+
+$$
+V(q\otimes|0\rangle)=v_0\otimes\eta_3,\qquad
+V(u_0\otimes|1\rangle)=v_1\otimes\eta_3.
+\tag{38.12}
+$$
+
+令 $c_{23}=\langle\eta_2,\eta_3\rangle$。把（38.8）的两个第二步输入与（38.12）的两个第三步输入交叉取内积，得到
+
+$$
+\begin{pmatrix}
+\langle k,q\rangle&0\\
+0&\langle k,u_0\rangle
+\end{pmatrix}
+=
+c_{23}
+\begin{pmatrix}
+\langle u_0,v_0\rangle&\langle u_0,v_1\rangle\\
+\langle u_1,v_0\rangle&\langle u_1,v_1\rangle
+\end{pmatrix}.
+\tag{38.13}
+$$
+
+右边第二个矩阵是酉矩阵。若 $c_{23}=0$，则 $k$ 同时正交于张满 $K$ 的 $q,u_0$，矛盾。故 $c_{23}\ne0$，两项非对角元必须为零，于是
+
+$$
+v_0\parallel u_0,\qquad v_1\parallel u_1,\qquad
+|\langle k,q\rangle|=|\langle k,u_0\rangle|.
+\tag{38.14}
+$$
+
+特别地，$k$ 不可能平行于 $u_0$：否则（38.14）使 $q\parallel u_0$，与（38.10）矛盾。因此
+
+$$
+\langle k,u_1\rangle\ne0.
+\tag{38.15}
+$$
+
+现在把首次输入 $e\otimes|0\rangle$ 与第二步的
+$k\otimes|1\rangle$ 比较。输入正交，而输出内积为
+$\langle k,u_1\rangle\langle\eta_1,\eta_2\rangle$。
+由（38.15），$\langle\eta_1,\eta_2\rangle=0$。
+再与 $k\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,k\rangle
+=\langle k,u_0\rangle\langle\eta_1,\eta_2\rangle=0.
+\tag{38.16}
+$$
+
+同理，把首次输入与第三步的 $u_0\otimes|1\rangle$ 比较，利用
+$v_1\parallel u_1$ 及（38.15），得到
+$\langle\eta_1,\eta_3\rangle=0$。
+再与 $q\otimes|0\rangle$ 比较，得到
+
+$$
+\langle e,q\rangle
+=\langle k,v_0\rangle\langle\eta_1,\eta_3\rangle=0.
+\tag{38.17}
+$$
+
+二维空间中，非零 $e$ 的正交补是一条直线。（38.16）、（38.17）迫使
+$q\parallel k$，再由（38.14）得到 $k\parallel u_0$，最终又给
+$q\parallel u_0$，矛盾。
+
+**结论。** 对任意非退化复振幅 $a,b$，同一个二维固定 CPTP 接收器从指定输入 $|0\rangle$ 出发，不能使第二、第三终端同时精确可恢复。证明没有假设第一接收态纯，也没有假设各轮环境相同、正交或空白；所需纯性和两个环境正交关系均由实际合同推出。
+
+这个期限是该指定输入任务的首个障碍：取
+$\mathcal C(X)=\operatorname{Tr}_K X$，把每个新发出位存入二维接收器，前两个终端可精确恢复。终端一输出固定 $|0\rangle$；终端二将接收位前面附上首位 $|0\rangle$，就恢复完整档案。首步后继续使用同一个通道即可，不需免费控制或终端知识。
+
+**对 $\Delta_2$ 的短期限与显式全局证书。**
+
+令 $f_n(\mathcal C)$ 为指定来源输入下终端 $n$ 最优局部解码的根保真度，等价于消去解码器后的
+$\max_\tau F(\omega_n,\rho_n\otimes\tau)$。定义
+
+$$
+\gamma_2^{[3]}=\max_{\mathcal C}\min\{f_2(\mathcal C),f_3(\mathcal C)\},
+\quad
+\Delta_2^{[3]}=1-\gamma_2^{[3]},
+\quad
+Q_2^{[3]}=1-(\gamma_2^{[3]})^2.
+\tag{38.18}
+$$
+
+首终端对所有 $\mathcal C$ 都有 $f_1=1$，因为其真实档案恒为已知纯态
+$|0\rangle$。所以省略 $f_1$ 不改变前三终端的值。
+
+有限维 CPTP 集紧、$f_n$ 连续；上述精确障碍使最大值严格小于一。因此
+$\Delta_2^{[3]}>0$。原来使用前32终端的 $\Delta_2$ 满足
+
+$$
+\Delta_2\ge\Delta_2^{[3]}.
+\tag{38.19}
+$$
+
+还可将这个短期限零点排除代入既有的环境缺陷／实代数方法，给出无需数值搜索的有理证书。取整数 $k\ge2$，假设
+$|a|^2,|b|^2\ge1/k$，并令
+
+$$
+G_3=h(\sigma_2)+h(\sigma_3),
+\tag{38.20}
+$$
+
+其中 $h$ 是第20节的完整环境解耦缺陷多项式。若 $G_3=0$，则两个终端的记忆与累计环境均成乘积；由（38.3）及其第三步版本，秩论证迫使
+$\sigma_2,\sigma_3$ 都纯，已被上面的几何证明排除。所以整个合法参数集上
+$G_3>0$。
+
+使用第35节的固定次数展开，但只保留三个轨道变量
+$S_1,S_2,S_3$。二维接收通道的一份通用等距为
+$W:\mathbb C^4\to\mathbb C^2\otimes\mathbb C^8$，含128个实变量。
+保留复 $a,b$ 的四个实变量，再加三个 $4\times4$ Hermitian 状态的48个变量，总数为
+
+$$
+v_3=180.
+$$
+
+等距约束16条、来源归一化及端点约束3条、三个递推48条、状态实坐标的双侧盒约束96条，总数为
+
+$$
+s_3=163.
+$$
+
+递推次数至多五、目标次数至多四，取固定偶数 $d_3=6$。
+每个 $h(S_n)$ 的整数系数范数不超过
+$400\cdot2^4=6400$，两项之和不超过12800；递推约束的系数界不超过4128。因此可取
+
+$$
+H_3=\max\{k,12800\},\qquad
+\widehat H_3=\max\{H_3,2v_3+2s_3\}=H_3.
+\tag{38.21}
+$$
+
+状态正性和迹一仍由合法递推保证，没有添加高次主子式约束。
+
+与第35节相同的正最小值定理于是给出完全显式的正有理数
+
+$$
+\kappa_{2,k}^{[3]}
+=(16H_3\,6^{180})^{-180\,12^{180}},
+\qquad
+\min G_3\ge\kappa_{2,k}^{[3]}.
+\tag{38.22}
+$$
+
+对任何达到 $f_n$ 的产品环境态，
+$h(\sigma_n)\le16(1-f_n^2)$。在达到
+$\gamma_2^{[3]}$ 的接收器上，因此有
+$G_3\le32Q_2^{[3]}$。得到
+
+$$
+\boxed{
+Q_2^{[3]}\ge\frac{\kappa_{2,k}^{[3]}}{32},
+\qquad
+\Delta_2\ge\Delta_2^{[3]}
+\ge1-\sqrt{1-\kappa_{2,k}^{[3]}/32}.
+}
+\tag{38.23}
+$$
+
+若只要有理数形式，也有
+
+$$
+\Delta_2\ge\frac{\kappa_{2,k}^{[3]}}{64},
+\tag{38.24}
+$$
+
+因为 $1-\sqrt{1-x}\ge x/2$ 对 $0\le x\le1$ 成立。完整合同的最坏误差也至少为
+$\kappa_{2,k}^{[3]}/32$，指定输入的第二、第三终端已经见证此下界。
+
+这里使用了既有实代数最小值定理，但新增的零点排除是只用第二、第三终端的二维几何矛盾。对 $D=2$，展开所需变量从第35节通用构造的644个减到180个。证书仍极保守；它只证明一个明确正有理下界，没有计算真正的 $\Delta_2$、宣称数值最优或给出一般 $D$ 的新渐近率。全部结论均针对固定的全域 CPTP 接收器，不是假设接收酉或预设纯环境的受限模型。
+
+**源相位的固定换基。** 对已知的非零复振幅，令
+
+$$
+D_M=\operatorname{diag}(1,e^{i(\arg a-\arg b)}),\qquad
+U_{\mathcal B}=\operatorname{diag}
+(e^{-i\arg a},e^{i(\arg a-\arg b)}).
+\tag{38.25}
+$$
+
+逐列计算得到
+
+$$
+(D_M\otimes U_{\mathcal B})T_{a,b}D_M^*
+=T_{|a|,|b|}.
+\tag{38.26}
+$$
+
+在正实振幅来源上，把每个新发出位先作用 $U_{\mathcal B}^*$，再使用原来的固定接收通道；终端解码档案再作用 $U_{\mathcal B}^{\otimes n}$。该预处理每轮相同，可直接并入一个全域 CPTP 接收门，不增加持久控制。指定初态 $|0\rangle$ 被 $D_M$ 保持；完整参考合同则同时对来源初态作固定酉换基，而其全输入上确界不变。因此本节的指定输入误差、相应保真度不变量以及完整参考容量都只依赖 $p=|b|^2$，后续可在 $a=\sqrt{1-p},b=\sqrt p$ 上研究。
+
+这一等价没有把接收通道限制为实矩阵，也没有通过平均通道来选取对称接收器；被改变的是固定的物理基和每轮相同的新位预处理。
+
+**三维达到构造与精确容量。**
+
+**定理38.2（指定输入前三终端的精确容量三）。** 对（38.1）的任一非退化复振幅来源，以 $|0\rangle_M$ 为指定来源初态，要求同一个全域 CPTP 接收器从独立纯态启动，并在每个 $n=1,2,3$ 终端由仅作用于接收器的解码恢复活动记忆与完整档案，则接收空间的最小维数为三。达到下界的接收门及各终端解码门都可以与 $a,b$ 无关。
+
+证明。二维不可能性已由定理38.1给出；一维装置可嵌入二维并将通道全域扩展，因此更小维数也不可能。下面构造三维装置。
+
+取 $K=\operatorname{span}\{e_0,e_1,e_2\}$，接收初态为 $e_0$，单轮丢弃环境为
+$E=\operatorname{span}\{A,B\}$。定义固定酉
+$V:K\otimes\mathcal B\to K\otimes E$ 为以下基向量置换：
+
+$$
+\begin{array}{lll}
+V(e_0\otimes|0\rangle)=e_2\otimes A,&
+V(e_1\otimes|0\rangle)=e_0\otimes A,&
+V(e_2\otimes|0\rangle)=e_0\otimes B,\\
+V(e_0\otimes|1\rangle)=e_1\otimes A,&
+V(e_2\otimes|1\rangle)=e_1\otimes B,&
+V(e_1\otimes|1\rangle)=e_2\otimes B.
+\end{array}
+\tag{38.27}
+$$
+
+输入六个基向量和输出六个基向量分别构成整个六维空间的正交归一基，故此表定义了全域酉。每轮都使用
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{38.28}
+$$
+
+从 $|0\rangle_M\otimes e_0$ 逐轮作用真实来源等距及（38.27），得到接收后的纯联合态
+
+$$
+\begin{aligned}
+|\Phi_1\rangle_{MK}&=m_0\otimes e_2,\\
+|\Phi_2\rangle_{MK}&=a\,m_0\otimes e_0+b\,m_1\otimes e_1,\\
+|\Phi_3\rangle_{MK}&=m_0\otimes(a^2e_2+be_0)+ab\,m_1\otimes e_1.
+\end{aligned}
+\tag{38.29}
+$$
+
+相应累计环境恰为 $A$、$A\otimes B$、$A\otimes B\otimes A$，每个终端都与 $MK$ 解耦。这些等式保留复振幅本身，未对来源作相位换基。
+
+终端 $n\le3$ 的解码器在本地附加这个已知的环境前缀，然后按逆序对接收器和第 $n,n-1,\ldots,1$ 个环境作用 $V^*$，每次保留复原的档案位。最后丢弃复原的初始接收寄存器。这个过程是定义在整个 $\mathcal L(K)$ 上的 CPTP 通道；实际输入上最终寄存器恢复为 $e_0$，所有档案位均恢复为原来的次序。早期接收操作与其后的来源发射作用于不交系统，故可把累计接收视为全部发射后仅作用于档案和接收器的酉；其逆不访问活动记忆，因此同时保留活动记忆与档案的完整联合态。
+
+门表和附加的环境前缀均不含 $a,b$；接收过程中只持久保存三维 $K$，终端解码可按已知的 $n$ 选择。记这一指定输入任务的最小维数为 $D_{\min}^{0,[3]}$，便有
+
+$$
+\boxed{D_{\min}^{0,[3]}=3.}
+\tag{38.30}
+$$
+
+证明完毕。该达到构造只保证指定初态 $|0\rangle_M$ 的前三终端，完整参考输入族的三终端最小容量四属于不同合同；也没有由（38.30）推出四步以后或所有终端的精确恢复。
+
+## 追加锚（本行以下为增补区）
