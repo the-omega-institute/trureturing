@@ -323,3 +323,9 @@ simultaneous reserve is computed.
 The infinite bounds and the original-family interpretation are the ordinary
 proof above. The finite program verifies the arithmetic inputs and strict
 reserve; it is not a substitute for those arguments or new Lean verification.
+
+[Report601](601-staged-payment-admits-every-two-parent-entry-from37.md)
+pays blockers on the earlier seven-coordinate query law when possible,
+then pays the remaining blockers on the completed head. With the same
+private-branch conditions this admits every entry q>=37 and every head
+parent pair, with extendible-head proportion greater than1/65000.
