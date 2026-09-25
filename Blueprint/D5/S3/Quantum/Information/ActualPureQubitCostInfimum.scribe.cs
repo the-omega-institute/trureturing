@@ -19,7 +19,8 @@ internal sealed class ActualPureQubitCostInfimumDocument : IScribeDocumentDefini
                     "In an eigenbasis of the positive semidefinite state, sum twice the squared "
                     + "modulus of each derivative entry divided by the sum of the corresponding "
                     + "eigenvalues. Terms with zero denominator are zero. Positivity on a "
-                    + "two-sided neighborhood forces the derivative to vanish on the zero eigenspace."))),
+                    + "two-sided neighborhood forces the derivative's kernel-to-kernel block to vanish "
+                    + "(Pker D Pker = 0)."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("guarded-real-infimum"),
                 DeclarationHandle.Create(Module + "guardedInfimum"), H("Guarded real infimum"),
@@ -106,10 +107,6 @@ internal sealed class ActualPureQubitCostInfimumDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Module + "actual_rank_two_parameters"), H("Actual rank-two arc and feasible coefficients"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("An actual rank-two affine readout of a pure curve admits a fixed orthonormal frame. The invisible coordinate has constant sign on the connected open interval. The effect coefficients satisfy positivity, normalization, and the exact affine-readout relations; the visible coordinate satisfies the strict radius bound.")))),
-            Describe.Lean(DescribeId.Create("actual-cost-transfer"),
-                DeclarationHandle.Create(Module + "actual_cost_transfer"), H("Spectral cost in the actual arc coordinates"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Differentiating purity identifies twice the state derivative as an SLD. Trace pairing is preserved by the orthogonal Bloch frame, giving the exact spectral cost from the visible speed and arc parameters.")))),
             Describe.Lean(DescribeId.Create("actual-effect-family"),
                 DeclarationHandle.Create(Module + "actual_effect_family"), H("Normalized positive effect family"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -121,7 +118,7 @@ internal sealed class ActualPureQubitCostInfimumDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("actual-fisher"),
                 DeclarationHandle.Create(Module + "actual_fisher"), H("Measurement Fisher lower bound"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every differentiable positive curve with the exact affine measurement probabilities has spectral SLD information at least the classical Fisher information. Two-sided positivity first forces the derivative to vanish on the zero eigenspace, producing an SLD without invertibility. Positive residual squares then give the measurement bound.")))),
+                Blocks(Paragraph(Text("Every differentiable positive curve with the exact affine measurement probabilities has spectral SLD information at least the classical Fisher information. Two-sided positivity first forces the derivative's kernel-to-kernel block to vanish (Pker D Pker = 0), producing an SLD without invertibility. Positive residual squares then give the measurement bound.")))),
             Describe.Lean(DescribeId.Create("actual-rank-alternative"),
                 DeclarationHandle.Create(Module + "actual_rank_alternative"), H("Rank alternative and binary cost gap"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

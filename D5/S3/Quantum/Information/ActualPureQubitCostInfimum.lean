@@ -536,251 +536,6 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
     simp only [reframe,(hrho u hu).2.1,Complex.one_re]
     rw [hcoords u hu]
 
-theorem actual_cost_transfer : ∀
-      (rho : ℝ → Matrix (Fin 2) (Fin 2) ℂ) (I : Set ℝ)
-      (hI : IsOpen I) (h0 : 0 ∈ I) (hc : ContDiffOn ℝ 1 rho I)
-      (hrho : ∀ u ∈ I, (rho u).PosSemidef ∧ Matrix.trace (rho u) = 1 ∧ rho u * rho u = rho u)
-      (O : (EuclideanSpace ℝ (Fin 3)) ≃ₗᵢ[ℝ] (EuclideanSpace ℝ (Fin 3))) (x c ε s : ℝ) (hs : s=1 ∨ s= -1)
-      (hinside : x^2 < 4*ε*(1-ε))
-      (hcoord : ∀ u ∈ I, reframe O (rho u) = blochMatrix 1 (WithLp.toLp 2
-        ![x+c*u,s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2),1-2*ε])),
-      spectralQFI (rho 0) (deriv rho 0) (hrho 0 h0).1 =
-        c^2*(4*ε*(1-ε))/(4*ε*(1-ε)-x^2) := by
-  classical
-  have matrix_bloch_geometry (M : Matrix (Fin 2) (Fin 2) ℂ)
-      (hM : M.IsHermitian) :
-      M = blochMatrix (Matrix.trace M).re (bloch M) := by
-    have h00 : (M 0 0).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 0 0)
-      simp at h
-      linarith
-    have h11 : (M 1 1).im = 0 := by
-      have h := congrArg Complex.im (hM.apply 1 1)
-      simp at h
-      linarith
-    have h10r : (M 1 0).re = (M 0 1).re := by
-      have h := congrArg Complex.re (hM.apply 1 0)
-      simpa using h.symm
-    have h10i : (M 1 0).im = -(M 0 1).im := by
-      have h := congrArg Complex.im (hM.apply 1 0)
-      simpa using h.symm
-    ext i j
-    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
-      simp [blochMatrix, bloch, Matrix.trace, Fin.sum_univ_two, h00, h11, h10r, h10i] <;> ring
-
-  have trace_bloch_pairing (M N : Matrix (Fin 2) (Fin 2) ℂ)
-      (hM : M.IsHermitian) (hN : N.IsHermitian) :
-      (Matrix.trace (M * N)).re =
-        ((Matrix.trace M).re * (Matrix.trace N).re + ⟪bloch M, bloch N⟫_ℝ) / 2 := by
-    have hM' := matrix_bloch_geometry M hM
-    have hN' := matrix_bloch_geometry N hN
-    conv_lhs => rw [hM', hN']
-    simp [blochMatrix, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
-      PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply]
-    ring
-
-  have blochMatrix_properties (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) :
-      (blochMatrix a r).IsHermitian ∧ Matrix.trace (blochMatrix a r) = (a : ℂ) ∧
-      bloch (blochMatrix a r) = r := by
-    refine ⟨?_, ?_, ?_⟩
-    · apply Matrix.IsHermitian.ext
-      intro i j
-      fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp [blochMatrix]
-    · apply Complex.ext <;> simp [blochMatrix, Matrix.trace, Fin.sum_univ_two] <;> ring
-    · ext i
-      fin_cases i <;> simp [bloch, blochMatrix] <;> ring
-
-  have reframe_pairing (O : (EuclideanSpace ℝ (Fin 3)) ≃ₗᵢ[ℝ] (EuclideanSpace ℝ (Fin 3)))
-      (M N : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) (hN : N.IsHermitian) :
-      (Matrix.trace (reframe O M * reframe O N)).re = (Matrix.trace (M * N)).re := by
-    obtain ⟨hMr, htM, hbM⟩ := blochMatrix_properties (Matrix.trace M).re (O (bloch M))
-    obtain ⟨hNr, htN, hbN⟩ := blochMatrix_properties (Matrix.trace N).re (O (bloch N))
-    dsimp only [reframe]
-    rw [trace_bloch_pairing _ _ hMr hNr, trace_bloch_pairing _ _ hM hN]
-    change (((Matrix.trace (blochMatrix _ _)).re * (Matrix.trace (blochMatrix _ _)).re +
-      ⟪bloch (blochMatrix _ _), bloch (blochMatrix _ _)⟫_ℝ) / 2) = _
-    rw [htM, htN, hbM, hbN, O.inner_map_map]
-    simp
-
-  have spectral_energy {n : Type} [Fintype n] [DecidableEq n] (rho B L : Matrix n n ℂ) (hp : rho.PosSemidef)
-      (hL : L.IsHermitian) (hsolve : L * rho + rho * L = (2 : ℂ) • B) :
-      (L * rho * L).trace.re = spectralQFI rho B hp := by
-    classical
-    let U := hp.isHermitian.eigenvectorUnitary
-    let d : n → ℂ := fun i => (hp.isHermitian.eigenvalues i : ℂ)
-    let M := star (U : Matrix n n ℂ) * B * U
-    let N := star (U : Matrix n n ℂ) * L * U
-    have hs : rho = (U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ) := by
-      simpa [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def] using hp.isHermitian.spectral_theorem
-    have hN : N.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hL
-    have hu : star (U : Matrix n n ℂ) * (U : Matrix n n ℂ) = 1 := U.property.1
-    have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
-    have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
-      rw [hs]
-      simp only [← Matrix.mul_assoc, hu, one_mul]
-      simp only [Matrix.mul_assoc, hu, mul_one]
-    have hentry (i j : n) : N i j * (d i + d j) = 2 * M i j := by
-      have he := congrArg (fun X : Matrix n n ℂ =>
-        (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) hsolve
-      have heq : star (U : Matrix n n ℂ) * (L * rho + rho * L) * U =
-          N * diagonal d + diagonal d * N := by
-        rw [← hdiag]
-        dsimp only [N]
-        simp only [mul_add, add_mul, Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [heq] at he
-      change (N * diagonal d + diagonal d * N) i j = _ at he
-      simp only [Matrix.add_apply, mul_diagonal, diagonal_mul, Matrix.mul_smul,
-        Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul] at he
-      change N i j * d j + d i * N i j = 2 * M i j at he
-      linear_combination he
-    have hterm (i j : n) :
-        2 * Complex.normSq (M i j) /
-          (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) =
-        (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 *
-          Complex.normSq (N i j) := by
-      have he := hentry i j
-      have hm : M i j = ((d i + d j) / 2) * N i j := by linear_combination -he / 2
-      rw [hm, map_mul]
-      have hd : (d i + d j) / 2 =
-          (((hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 : ℝ) : ℂ) := by
-        simp [d]
-      rw [hd, Complex.normSq_ofReal]
-      by_cases hz : hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j = 0
-      · simp [hz]
-      · field_simp
-        <;> ring
-    have heTrace : (L * rho * L).trace = (N * diagonal d * N).trace := by
-      rw [← hdiag]
-      dsimp only [N]
-      simp only [Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
-      rw [trace_mul_comm (star (U : Matrix n n ℂ))]
-      simp only [Matrix.mul_assoc, hu', mul_one]
-    have heSum : (L * rho * L).trace.re =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [heTrace]
-      simp only [Matrix.trace, Matrix.diag]
-      simp only [Matrix.mul_apply (M := N * diagonal d) (N := N), mul_diagonal, Complex.re_sum]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      have hn : N j i = star (N i j) := by simpa using (hN.apply j i).symm
-      rw [hn]
-      have : N i j * d j * star (N i j) = d j * (Complex.normSq (N i j) : ℂ) := by
-        rw [Complex.normSq_eq_conj_mul_self]
-        change _ = d j * (star (N i j) * N i j)
-        ring
-      rw [this]
-      simp [d]
-    have hswap : (∑ i, ∑ j, hp.isHermitian.eigenvalues i * Complex.normSq (N i j)) =
-        ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro i _
-      apply Finset.sum_congr rfl
-      intro j _
-      rw [← hN.apply i j]
-      simp only [Complex.star_def, Complex.normSq_conj]
-    rw [heSum]
-    unfold spectralQFI
-    change _ = ∑ i, ∑ j, 2 * Complex.normSq (M i j) / _
-    simp_rw [hterm, add_div, add_mul]
-    simp only [Finset.sum_add_distrib, div_mul_eq_mul_div, ← Finset.sum_div]
-    rw [hswap]
-    ring
-
-  intro rho I hI h0 hc hrho O x c ε s hs hinside hcoord
-  have energy (r d : Matrix (Fin 2) (Fin 2) ℂ) (h : d*r+r*d=d) :
-      (Matrix.trace (((2:ℂ) • d)*r*((2:ℂ) • d))).re =
-        2*(Matrix.trace (d*d)).re := by
-    have ht := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace (M*d)).re) h
-    simp only [add_mul, Matrix.trace_add, Complex.add_re] at ht
-    rw [← Matrix.trace_mul_cycle r d d] at ht
-    simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
-      Complex.mul_re]
-    norm_num
-    rw [← Matrix.trace_mul_cycle r d d]
-    linarith
-  let D := deriv rho 0
-  have hd : HasDerivAt rho D 0 :=
-    (hc.differentiableOn (by norm_num) 0 h0).differentiableAt (hI.mem_nhds h0) |>.hasDerivAt
-  have he (i j : Fin 2) : HasDerivAt (fun u => rho u i j) (D i j) 0 :=
-    hasDerivAt_pi.mp (hasDerivAt_pi.mp hd i) j
-  have hD : D.IsHermitian := by
-    apply Matrix.IsHermitian.ext
-    intro i j
-    apply (he j i).star.unique
-    apply (he i j).congr_of_eventuallyEq
-    filter_upwards [hI.mem_nhds h0] with u hu
-    exact (hrho u hu).1.isHermitian.apply i j
-  have hprod : HasDerivAt (fun u => rho u * rho u) (D*rho 0+rho 0*D) 0 := by
-    apply hasDerivAt_pi.mpr
-    intro i
-    apply hasDerivAt_pi.mpr
-    intro j
-    simp only [Matrix.mul_apply, Matrix.add_apply]
-    rw [← Finset.sum_add_distrib]
-    exact HasDerivAt.fun_sum fun k _ => (he i k).mul (he k j)
-  have htan : D*rho 0+rho 0*D=D := by
-    apply hprod.unique
-    apply hd.congr_of_eventuallyEq
-    filter_upwards [hI.mem_nhds h0] with u hu
-    exact (hrho u hu).2.2
-  have hSLD : ((2:ℂ) • D)*rho 0+rho 0*((2:ℂ) • D)=(2:ℂ) • D := by
-    rw [Matrix.smul_mul, Matrix.mul_smul, ← smul_add, htan]
-  have hQ := spectral_energy (rho 0) D ((2:ℂ) • D)
-    (hrho 0 h0).1 (hD.smul (by norm_num)) hSLD
-  have hpureQ : spectralQFI (rho 0) D (hrho 0 h0).1 =
-      2*(Matrix.trace (D*D)).re := hQ.symm.trans (energy (rho 0) D htan)
-  let y := Real.sqrt (4*ε*(1-ε)-x^2)
-  have hy : 0 < y := Real.sqrt_pos.mpr (sub_pos.mpr hinside)
-  have hy2 : y^2=4*ε*(1-ε)-x^2 := Real.sq_sqrt (sub_nonneg.mpr hinside.le)
-  let r := blochMatrix 1 (WithLp.toLp 2 ![x,s*y,1-2*ε])
-  let d := blochMatrix 0 (WithLp.toLp 2 ![c,-s*x*c/y,0])
-  have hx : HasDerivAt (fun u : ℝ => x+c*u) c 0 := by
-    simpa using ((hasDerivAt_id (0:ℝ)).const_mul c).const_add x
-  have hys : HasDerivAt (fun u : ℝ => s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2))
-      (-s*x*c/y) 0 := by
-    have hh := (((hasDerivAt_const (0:ℝ) (4*ε*(1-ε))).sub (hx.pow 2)).sqrt
-      (by simpa using ne_of_gt (sub_pos.mpr hinside))).const_mul s
-    convert hh using 1 <;> first | rfl | (dsimp [y]; ring)
-  have hxC : HasDerivAt (fun u : ℝ => ((x+c*u : ℝ):ℂ)) (c:ℂ) 0 :=
-    Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hx
-  have hyC : HasDerivAt (fun u : ℝ => ((s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2):ℝ):ℂ))
-      ((-s*x*c/y:ℝ):ℂ) 0 := Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hys
-  have harc : HasDerivAt (fun u : ℝ => blochMatrix 1 (WithLp.toLp 2
-      ![x+c*u,s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2),1-2*ε])) d 0 := by
-    apply hasDerivAt_pi.mpr
-    intro i
-    apply hasDerivAt_pi.mpr
-    intro j
-    fin_cases i <;> fin_cases j
-    · simpa [blochMatrix,d] using hasDerivAt_const (0:ℝ) (((1+(1-2*ε):ℝ):ℂ)/2)
-    · simpa [blochMatrix,d] using (hxC.sub (hyC.mul_const Complex.I)).div_const 2
-    · simpa [blochMatrix,d] using (hxC.add (hyC.mul_const Complex.I)).div_const 2
-    · simpa [blochMatrix,d] using hasDerivAt_const (0:ℝ) (((1-(1-2*ε):ℝ):ℂ)/2)
-  have hframe : HasDerivAt (fun u => reframe O (rho u)) (reframe O D) 0 :=
-    (reframeLinear O).toContinuousLinearMap.hasFDerivAt.comp_hasDerivAt 0 hd
-  have hDd : reframe O D=d := by
-    apply hframe.unique
-    apply harc.congr_of_eventuallyEq
-    filter_upwards [hI.mem_nhds h0] with u hu
-    exact hcoord u hu
-  have hpair : (Matrix.trace (d*d)).re=(Matrix.trace (D*D)).re := by
-    rw [← hDd]
-    exact reframe_pairing O D D hD hD
-  have hdinfo := blochMatrix_properties 0 (WithLp.toLp 2 ![c,-s*x*c/y,0])
-  have hdd : 2*(Matrix.trace (d*d)).re = c^2+(s*x*c/y)^2 := by
-    rw [trace_bloch_pairing d d hdinfo.1 hdinfo.1, hdinfo.2.1, hdinfo.2.2]
-    simp [PiLp.inner_apply, EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three, RCLike.inner_apply]
-    ring
-  have hs2 : s^2=1 := by rcases hs with rfl | rfl <;> norm_num
-  change spectralQFI (rho 0) D (hrho 0 h0).1 = _
-  rw [hpureQ, ← hpair, hdd]
-  simp only [div_pow, mul_pow, hs2, one_mul, hy2]
-  field_simp [ne_of_gt (sub_pos.mpr hinside)]
-  <;> ring
-
 theorem actual_effect_family : ∀ {ι : Type} [Fintype ι]
       (p d : ι → ℝ) (hp : ∀ j, 0 < p j) (hp1 : ∑ j, p j=1) (hd0 : ∑ j, d j=0) (hd : ∑ j, d j^2/p j=1)
       (B : ℝ) (hB : 0 < B),
@@ -1269,14 +1024,164 @@ theorem actual_upper_family : ∀ {m : ℕ}
         nlinarith [hr u hu]
     refine ⟨hc,hpure,?_⟩
     intro h
-    apply actual_cost_transfer (arc e x c) I hI h0 hc hpure
-      (LinearIsometryEquiv.refl ℝ (EuclideanSpace ℝ (Fin 3))) x c e 1 (Or.inl rfl)
-      (by simpa using hinside 0 h0)
-    intro u hu
-    simp only [reframe, arc,
-      (blochMatrix_properties _ _).2.1, (blochMatrix_properties _ _).2.2.1,
-      Complex.one_re, one_mul]
-    rfl
+    have spectral_energy {n : Type} [Fintype n] [DecidableEq n] (rho B L : Matrix n n ℂ) (hp : rho.PosSemidef)
+        (hL : L.IsHermitian) (hsolve : L * rho + rho * L = (2 : ℂ) • B) :
+        (L * rho * L).trace.re = spectralQFI rho B hp := by
+      classical
+      let U := hp.isHermitian.eigenvectorUnitary
+      let d : n → ℂ := fun i => (hp.isHermitian.eigenvalues i : ℂ)
+      let M := star (U : Matrix n n ℂ) * B * U
+      let N := star (U : Matrix n n ℂ) * L * U
+      have hs : rho = (U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ) := by
+        simpa [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def] using hp.isHermitian.spectral_theorem
+      have hN : N.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hL
+      have hu : star (U : Matrix n n ℂ) * (U : Matrix n n ℂ) = 1 := U.property.1
+      have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
+      have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
+        rw [hs]
+        simp only [← Matrix.mul_assoc, hu, one_mul]
+        simp only [Matrix.mul_assoc, hu, mul_one]
+      have hentry (i j : n) : N i j * (d i + d j) = 2 * M i j := by
+        have he := congrArg (fun X : Matrix n n ℂ =>
+          (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) hsolve
+        have heq : star (U : Matrix n n ℂ) * (L * rho + rho * L) * U =
+            N * diagonal d + diagonal d * N := by
+          rw [← hdiag]
+          dsimp only [N]
+          simp only [mul_add, add_mul, Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
+        rw [heq] at he
+        change (N * diagonal d + diagonal d * N) i j = _ at he
+        simp only [Matrix.add_apply, mul_diagonal, diagonal_mul, Matrix.mul_smul,
+          Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul] at he
+        change N i j * d j + d i * N i j = 2 * M i j at he
+        linear_combination he
+      have hterm (i j : n) :
+          2 * Complex.normSq (M i j) /
+            (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) =
+          (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 *
+            Complex.normSq (N i j) := by
+        have he := hentry i j
+        have hm : M i j = ((d i + d j) / 2) * N i j := by linear_combination -he / 2
+        rw [hm, map_mul]
+        have hd : (d i + d j) / 2 =
+            (((hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 : ℝ) : ℂ) := by
+          simp [d]
+        rw [hd, Complex.normSq_ofReal]
+        by_cases hz : hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j = 0
+        · simp [hz]
+        · field_simp
+          <;> ring
+      have heTrace : (L * rho * L).trace = (N * diagonal d * N).trace := by
+        rw [← hdiag]
+        dsimp only [N]
+        simp only [Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
+        rw [trace_mul_comm (star (U : Matrix n n ℂ))]
+        simp only [Matrix.mul_assoc, hu', mul_one]
+      have heSum : (L * rho * L).trace.re =
+          ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
+        rw [heTrace]
+        simp only [Matrix.trace, Matrix.diag]
+        simp only [Matrix.mul_apply (M := N * diagonal d) (N := N), mul_diagonal, Complex.re_sum]
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_congr rfl
+        intro j _
+        have hn : N j i = star (N i j) := by simpa using (hN.apply j i).symm
+        rw [hn]
+        have : N i j * d j * star (N i j) = d j * (Complex.normSq (N i j) : ℂ) := by
+          rw [Complex.normSq_eq_conj_mul_self]
+          change _ = d j * (star (N i j) * N i j)
+          ring
+        rw [this]
+        simp [d]
+      have hswap : (∑ i, ∑ j, hp.isHermitian.eigenvalues i * Complex.normSq (N i j)) =
+          ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro i _
+        apply Finset.sum_congr rfl
+        intro j _
+        rw [← hN.apply i j]
+        simp only [Complex.star_def, Complex.normSq_conj]
+      rw [heSum]
+      unfold spectralQFI
+      change _ = ∑ i, ∑ j, 2 * Complex.normSq (M i j) / _
+      simp_rw [hterm, add_div, add_mul]
+      simp only [Finset.sum_add_distrib, div_mul_eq_mul_div, ← Finset.sum_div]
+      rw [hswap]
+      ring
+
+    have energy (r d : Matrix (Fin 2) (Fin 2) ℂ) (h : d*r+r*d=d) :
+        (Matrix.trace (((2:ℂ) • d)*r*((2:ℂ) • d))).re =
+          2*(Matrix.trace (d*d)).re := by
+      have ht := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace (M*d)).re) h
+      simp only [add_mul, Matrix.trace_add, Complex.add_re] at ht
+      rw [← Matrix.trace_mul_cycle r d d] at ht
+      simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
+        Complex.mul_re]
+      norm_num
+      rw [← Matrix.trace_mul_cycle r d d]
+      linarith
+    let y := Real.sqrt (4*e*(1-e)-x^2)
+    have hinside0 : x^2 < 4*e*(1-e) := by simpa only [mul_zero, add_zero] using hinside 0 h0
+    have hy : 0 < y := Real.sqrt_pos.mpr (sub_pos.mpr hinside0)
+    have hy2 : y^2=4*e*(1-e)-x^2 := Real.sq_sqrt (sub_nonneg.mpr hinside0.le)
+    let D := blochMatrix 0 (WithLp.toLp 2 ![c,-x*c/y,0])
+    have hx : HasDerivAt (fun u : ℝ => x+c*u) c 0 := by
+      simpa using ((hasDerivAt_id (0:ℝ)).const_mul c).const_add x
+    have hys : HasDerivAt (fun u : ℝ => Real.sqrt (4*e*(1-e)-(x+c*u)^2))
+        (-x*c/y) 0 := by
+      have hh := ((hasDerivAt_const (0:ℝ) (4*e*(1-e))).sub (hx.pow 2)).sqrt
+        (by simpa using ne_of_gt (sub_pos.mpr hinside0))
+      convert hh using 1 <;> first | rfl | (dsimp [y]; ring)
+    have hxC : HasDerivAt (fun u : ℝ => ((x+c*u : ℝ):ℂ)) (c:ℂ) 0 :=
+      Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hx
+    have hyC : HasDerivAt (fun u : ℝ => ((Real.sqrt (4*e*(1-e)-(x+c*u)^2):ℝ):ℂ))
+        ((-x*c/y:ℝ):ℂ) 0 := Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hys
+    have hd : HasDerivAt (arc e x c) D 0 := by
+      apply hasDerivAt_pi.mpr
+      intro i
+      apply hasDerivAt_pi.mpr
+      intro j
+      fin_cases i <;> fin_cases j
+      · simpa [arc,blochMatrix,D] using hasDerivAt_const (0:ℝ) (((1+(1-2*e):ℝ):ℂ)/2)
+      · simpa [arc,blochMatrix,D] using (hxC.sub (hyC.mul_const Complex.I)).div_const 2
+      · simpa [arc,blochMatrix,D] using (hxC.add (hyC.mul_const Complex.I)).div_const 2
+      · simpa [arc,blochMatrix,D] using hasDerivAt_const (0:ℝ) (((1-(1-2*e):ℝ):ℂ)/2)
+    have hD : D.IsHermitian := (blochMatrix_properties _ _).1
+    have he (i j : Fin 2) : HasDerivAt (fun u => arc e x c u i j) (D i j) 0 :=
+      hasDerivAt_pi.mp (hasDerivAt_pi.mp hd i) j
+    have hprod : HasDerivAt (fun u => arc e x c u * arc e x c u)
+        (D*arc e x c 0+arc e x c 0*D) 0 := by
+      apply hasDerivAt_pi.mpr
+      intro i
+      apply hasDerivAt_pi.mpr
+      intro j
+      simp only [Matrix.mul_apply, Matrix.add_apply]
+      rw [← Finset.sum_add_distrib]
+      exact HasDerivAt.fun_sum fun k _ => (he i k).mul (he k j)
+    have htan : D*arc e x c 0+arc e x c 0*D=D := by
+      apply hprod.unique
+      apply hd.congr_of_eventuallyEq
+      filter_upwards [hI.mem_nhds h0] with u hu
+      exact (hpure u hu).2.2
+    have hSLD : ((2:ℂ) • D)*arc e x c 0+arc e x c 0*((2:ℂ) • D)=(2:ℂ) • D := by
+      rw [Matrix.smul_mul, Matrix.mul_smul, ← smul_add, htan]
+    have hQ := spectral_energy (arc e x c 0) D ((2:ℂ) • D)
+      h (hD.smul (by norm_num)) hSLD
+    have hdd : 2*(Matrix.trace (D*D)).re = c^2+(x*c/y)^2 := by
+      simp [D, blochMatrix, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two]
+      ring
+    have hderiv : deriv (arc e x c) 0 = D := hd.deriv
+    calc
+      spectralQFI (arc e x c 0) (deriv (arc e x c) 0) h = spectralQFI (arc e x c 0) D h :=
+        congrArg (fun d => spectralQFI (arc e x c 0) d h) hderiv
+      _ = 2*(Matrix.trace (D*D)).re := hQ.symm.trans (energy _ _ htan)
+      _ = c^2+(x*c/y)^2 := hdd
+      _ = _ := by
+        rw [div_pow, hy2]
+        field_simp [ne_of_gt (sub_pos.mpr hinside0)]
+        <;> ring
 
   have born_exact (p d α e w c u : ℝ) (he : e < 1)
       (hA : 0 < p-α*e*w*d)
@@ -1311,27 +1216,33 @@ theorem actual_upper_family : ∀ {m : ℕ}
     have hh := (div_eq_iff (ne_of_gt (mul_pos (by linarith : 0<1+T) hBroot))).mp hr
     dsimp [c,W]
     field_simp [show w (T^2) ≠ 0 from hW.ne']
-    nlinarith [hh]
+    nlinarith only [hh]
   have hinside (u : ℝ) (hu : u ∈ I R) : (α*T^2+c*u)^2<4*T^2*(1-T^2) := by
     have huabs : |u|<R*(1+T) := abs_lt.mpr (by simpa [I,T,neg_mul] using hu)
     have hab : |α*T^2+c*u| < 2*T*Real.sqrt (1-T^2) := by
       calc
         |α*T^2+c*u| ≤ |α*T^2|+|c*u| := abs_add_le _ _
         _ = |α| *T^2+c*|u| := by simp only [abs_mul,abs_of_pos hc,abs_of_nonneg (sq_nonneg T)]
-        _ < |α| *T^2+c*(R*(1+T)) := by nlinarith
+        _ < |α| *T^2+c*(R*(1+T)) := add_lt_add_of_le_of_lt le_rfl (mul_lt_mul_of_pos_left huabs hc)
         _ = _ := hrad
     have hs := Real.sq_sqrt (sub_nonneg.mpr he.le)
     have hp : 0≤2*T*Real.sqrt (1-T^2) := by positivity
     have hsq := (sq_lt_sq₀ (abs_nonneg (α*T^2+c*u)) hp).mpr hab
     rw [sq_abs] at hsq
-    nlinarith [hs]
-  have h0 : 0∈I R := by change -R*(1+T)<0 ∧ 0<R*(1+T); constructor <;> nlinarith
+    have heq : (2*T*Real.sqrt (1-T^2))^2 = 4*T^2*(1-T^2) := by
+      rw [mul_pow, hs]
+      ring
+    rwa [heq] at hsq
+  have h0 : 0∈I R := by
+    change -R*(1+T)<0 ∧ 0<R*(1+T)
+    have hpos := mul_pos hR (show 0<1+T by linarith only [hT])
+    constructor <;> linarith only [hpos]
   obtain ⟨hsmooth,hpure,hcost⟩ := arc_valid (T^2) (α*T^2) c (I R) isOpen_Ioo h0 hinside
   change IsProgram p (fun j => Real.sqrt B*d j) R (N R) (rho R) (I R) _
   refine ⟨isOpen_Ioo, isPreconnected_Ioo, ?_,hN,hN1,hsmooth,?_,?_,?_⟩
   · intro u hu
     change -R*(1+T)<u ∧ u<R*(1+T)
-    constructor <;> linarith [hu.1,hu.2]
+    constructor <;> linarith only [hu.1,hu.2,hLs]
   · intro u hu
     let r := densityBridge (arc (T^2) (α*T^2) c u) (hpure u hu).1 (hpure u hu).2.1
     exact ⟨(hpure u hu).1,(hpure u hu).2.1,(hpure u hu).2.2,r.1,r.2⟩
@@ -1344,17 +1255,9 @@ theorem actual_upper_family : ∀ {m : ℕ}
     have hbound : |u*(Real.sqrt B*d j)|<p j := by
       rw [abs_mul]
       exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right huabs.le (abs_nonneg _)) (hprob j)
-    linarith [neg_abs_le (u*(Real.sqrt B*d j))]
+    linarith only [hbound, neg_abs_le (u*(Real.sqrt B*d j))]
   · intro h
     rw [hcost h]
-    have hden : 0<4*(1-T^2)-α^2*T^2 := by
-      have hz := hinside 0 h0
-      simp only [mul_zero,add_zero] at hz
-      nlinarith
-    have hden' : 4*T^2*(1-T^2)-(α*T^2)^2 ≠ 0 := by
-      have hz := hinside 0 h0
-      simp only [mul_zero,add_zero] at hz
-      linarith
     change (Real.sqrt B/W)^2*(4*T^2*(1-T^2))/(4*T^2*(1-T^2)-(α*T^2)^2) =
       B/W^2*(4*(1-T^2))/(4*(1-T^2)-α^2*T^2)
     rw [div_pow, Real.sq_sqrt hB.le]
@@ -1408,7 +1311,7 @@ theorem actual_fisher : ∀ {n ι : Type} [Fintype n] [DecidableEq n] [Fintype �
       apply Complex.ext
       · exact hmin.hasDerivAt_eq_zero hqr
       · exact hB.im_star_dotProduct_mulVec_self v
-    
+
     have hA : (rho t).PosSemidef := hp.self_of_nhds
     let U : Matrix.unitaryGroup n ℂ := hA.isHermitian.eigenvectorUnitary
     let d : n → ℂ := fun i => (hA.isHermitian.eigenvalues i : ℂ)
@@ -2143,13 +2046,31 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     have hc : B^2/4*((∑ j, d j^4/(p j)^3)-1-(∑ j, d j^3/(p j)^2)^2) =
         ((∑ j, v j^4/(p j)^3)-B^2-(∑ j, v j^3/(p j)^2)^2/B)/4 := by
       rw [hA3,hA4,hs4,div_pow,←pow_mul]
-      norm_num only [Nat.reduceMul] at *
+      norm_num only [Nat.reduceMul]
       rw [hs6]
       field_simp
       <;> ring
     rw [hc] at hlim
     rw [hvd] at hprog
     exact ⟨N,rho,I,Q,hlim,hprog⟩
+
+  have coefficient_inequality (p v b A q e c x : ℝ)
+      (hp : 0 < p) (hc : 0 < c) (he : e < 1)
+      (hb : b = v/c) (hAf : A = (p-b*x-e*q)/(1-e)) (hpsd : b^2 ≤ A*q) :
+      e*(q/p)^2-(1-(x/c)*(v/p))*(q/p)+(1-e)*(1/c^2)*(v/p)^2 ≤ 0 := by
+    clear * - p v b A q e c x hp hc he hb hAf hpsd
+    have ha : 0 < 1-e := sub_pos.mpr he
+    have hap := (eq_div_iff ha.ne').mp hAf
+    have hh := mul_le_mul_of_nonneg_left hpsd ha.le
+    have hid : (e*(q/p)^2-(1-(x/c)*(v/p))*(q/p)+(1-e)*(1/c^2)*(v/p)^2)*p^2 =
+        (1-e)*b^2-(p-b*x-e*q)*q := by
+      rw [hb]
+      field_simp [hp.ne', hc.ne']
+      ring
+    have hh' : (1-e)*b^2-(p-b*x-e*q)*q ≤ 0 := by
+      nlinarith only [hh, congrArg (fun r : ℝ => r*q) hap]
+    rw [← hid] at hh'
+    exact nonpos_of_mul_nonpos_left hh' (sq_pos_of_pos hp)
 
   have coefficient_degeneration {ι : Type} [Fintype ι]
       (p v : ι → ℝ) (B : ℝ)
@@ -2169,6 +2090,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       (hQ : Tendsto Q atTop (𝓝 B)) :
       Tendsto e atTop (𝓝 0) ∧ Tendsto (fun n => c n^2) atTop (𝓝 B) ∧
       ∀ j, Tendsto (fun n => q n j) atTop (𝓝 (v j^2/(B*p j))) := by
+    clear * - p v B hp hpsum hv hvsum hB hthree e c x Q q A b he hc hq hA hqsum hb hAf hpsd hinside hQf hQ coefficient_inequality
     have equality_obstruction
         (p s t : ι → ℝ) (B e u z : ℝ)
         (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -2178,6 +2100,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         (hcost : B * ((1-e)*z-e*u^2) = 1-e)
         (hF : ∀ j, e*t j^2-(1-2*e*u*s j)*t j+(1-e)*z*s j^2 ≤ 0)
         (hthree : ∃ i j k, s i ≠ s j ∧ s i ≠ s k ∧ s j ≠ s k) : False := by
+      clear * - p s t B e u z hp hpsum hsum hB ht hBp he heh hcost hF hthree
       classical
       let L := (1-e)*z-e*u^2
       let r := fun j => t j-1+u*s j
@@ -2221,7 +2144,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         exact (mul_eq_zero.mp hh).resolve_left (sub_ne_zero.mpr hab)
       have hh : L*(s j-s k)=0 := by linear_combination hd i j hij - hd i k hik
       exact hjk (sub_eq_zero.mp ((mul_eq_zero.mp hh).resolve_left (ne_of_gt hL)))
-    
+
     have normalized_convergence
         (p s : ι → ℝ) (B M : ℝ)
         (hp : ∀ j, 0 < p j) (hpsum : ∑ j, p j = 1)
@@ -2241,6 +2164,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         (hQ : Tendsto Q atTop (𝓝 B)) :
         Tendsto e atTop (𝓝 0) ∧ Tendsto z atTop (𝓝 (1/B)) ∧
           Tendsto k atTop (𝓝 0) ∧ ∀ j, Tendsto (fun n => t n j) atTop (𝓝 (s j^2/B)) := by
+      clear * - p s B M hp hpsum hsum hB hBp hthree e z k Q t he hz hk ht htsum hF hinside hcost hlower hQ equality_obstruction
       classical
       let f : ℕ → ℝ × ℝ × ℝ × (ι → ℝ) := fun n => (e n,z n,k n,t n)
       let K : Set (ℝ × ℝ × ℝ × (ι → ℝ)) :=
@@ -2371,23 +2295,18 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       ⟨div_nonneg (hq n j) (hp j).le,div_le_div_of_nonneg_right (hq1 n j) (hp j).le⟩
     have hfn (n : ℕ) (j : ι) :
         e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2 ≤ 0 := by
-      have ha : 0 < 1-e n := by have := (he n).2; linarith only [this]
-      have hap := (eq_div_iff (ne_of_gt ha)).mp (hAf n j)
-      have hh := mul_le_mul_of_nonneg_left (hpsd n j) ha.le
-      have hid : (e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2)*p j^2 =
-          (1-e n)*b n j^2 - (p j-b n j*x n-e n*q n j)*q n j := by
-        rw [hb]; dsimp [t,k,s,z]; field_simp [ne_of_gt (hp j),ne_of_gt (hc n)]; ring
-      have hh' : (1-e n)*b n j^2 - (p j-b n j*x n-e n*q n j)*q n j ≤ 0 := by
-        nlinarith only [hh,congrArg (fun r : ℝ => r*q n j) hap]
-      rw [← hid] at hh'
-      exact nonpos_of_mul_nonpos_left hh' (sq_pos_of_pos (hp j))
+      exact coefficient_inequality (p j) (v j) (b n j) (A n j) (q n j) (e n) (c n) (x n)
+        (hp j) (hc n) (lt_of_le_of_lt (he n).2 (by norm_num)) (hb n j) (hAf n j) (hpsd n j)
+
     have hIn (n : ℕ) : k n^2 ≤ 4*e n*(1-e n)*z n := by
       dsimp [k,z]; rw [div_pow]
       simpa only [div_eq_mul_inv,one_mul,mul_assoc] using
         div_le_div_of_nonneg_right (hinside n).le (sq_nonneg (c n))
     have hCost (n : ℕ) : Q n*(4*e n*(1-e n)*z n-k n^2)=4*e n*(1-e n) := by
-      rw [hQf]; dsimp [z,k]
-      field_simp [ne_of_gt (hc n),ne_of_gt (sub_pos.mpr (hinside n))]
+      have hh := (eq_div_iff (ne_of_gt (sub_pos.mpr (hinside n)))).mp (hQf n)
+      dsimp only [z,k]
+      rw [div_pow, mul_one_div, ← sub_div, ← mul_div_assoc]
+      exact (div_eq_iff (ne_of_gt (sq_pos_of_pos (hc n)))).mpr (by nlinarith only [hh])
     have hlow (n : ℕ) : 1 ≤ Q n*z n := by
       have hepos := (he n).1
       have hale : 0 < 1-e n := by have := (he n).2; linarith only [this]
@@ -2441,6 +2360,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         (hcost : Q*(4*e*(1-e)*z-k^2)=4*e*(1-e))
         (hradius : c^2*R^2 ≤ 4*e*(1-e)) :
         Q*c^2*(B*D-C^2)/(4*(1-e)^2*B) ≤ (Q-B)/R^2 := by
+      clear * - p s t B e z k Q c R C D hp hs hp1 ht1 hB hBp hC hD he hea hQ hR hF hcost hradius
       classical
       let F := fun j => e*t j^2-(1-k*s j)*t j+(1-e)*z*s j^2
       have hsumF : (∑ j,p j*F j)=e*D+k*C+(1-e)*z*B-(1-e) := by
@@ -2472,7 +2392,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       have h2 := mul_le_mul_of_nonneg_left hgap (show 0 ≤ 4*(1-e) by positivity)
       apply (div_le_div_iff₀ (by positivity : 0 < 4*(1-e)^2*B) (sq_pos_of_pos hR)).mpr
       nlinarith only [h1,h2]
-    
+
     have matching_lower_of_limits
         (p s : ι → ℝ) (B : ℝ) (hp : ∀ j,0 ≤ p j)
         (hp1 : ∑ j,p j=1) (hs : ∑ j,p j*s j=0)
@@ -2488,6 +2408,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         (ht0 : ∀ j,Tendsto (fun n => t n j) atTop (𝓝 (s j^2/B))) :
         let V := (∑ j,p j*s j^4)-B^2-(∑ j,p j*s j^3)^2/B
         ∀ d : ℝ,d < V/4 → ∀ᶠ n in atTop,d ≤ (Q n-B)/R n^2 := by
+      clear * - p s B hp hp1 hs hB hBp e z k Q c R t he hQp hR ht1 hF hcost hradius he0 hQ0 hc0 ht0 finite_matching_gap
       classical
       let C := fun n => ∑ j,p j*s j*(t n j-1)
       let D := fun n => ∑ j,p j*(t n j-1)^2
@@ -2545,19 +2466,14 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       simpa only [hid] using hqsum n
     have hfn (n : ℕ) (j : ι) :
         e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2 ≤ 0 := by
-      have ha : 0 < 1-e n := by have := (he n).2; linarith only [this]
-      have hap := (eq_div_iff (ne_of_gt ha)).mp (hAf n j)
-      have hh := mul_le_mul_of_nonneg_left (hpsd n j) ha.le
-      have hid : (e n*t n j^2-(1-k n*s j)*t n j+(1-e n)*z n*s j^2)*p j^2 =
-          (1-e n)*b n j^2 - (p j-b n j*x n-e n*q n j)*q n j := by
-        rw [hb]; dsimp [t,k,s,z]; field_simp [ne_of_gt (hp j),ne_of_gt (hc n)]; ring
-      have hh' : (1-e n)*b n j^2 - (p j-b n j*x n-e n*q n j)*q n j ≤ 0 := by
-        nlinarith only [hh,congrArg (fun r : ℝ => r*q n j) hap]
-      rw [← hid] at hh'
-      exact nonpos_of_mul_nonpos_left hh' (sq_pos_of_pos (hp j))
+      exact coefficient_inequality (p j) (v j) (b n j) (A n j) (q n j) (e n) (c n) (x n)
+        (hp j) (hc n) (lt_of_le_of_lt (he n).2 (by norm_num)) (hb n j) (hAf n j) (hpsd n j)
+
     have hCost (n : ℕ) : Q n*(4*e n*(1-e n)*z n-k n^2)=4*e n*(1-e n) := by
-      rw [hQf]; dsimp [z,k]
-      field_simp [ne_of_gt (hc n),ne_of_gt (sub_pos.mpr (hinside n))]
+      have hh := (eq_div_iff (ne_of_gt (sub_pos.mpr (hinside n)))).mp (hQf n)
+      dsimp only [z,k]
+      rw [div_pow, mul_one_div, ← sub_div, ← mul_div_assoc]
+      exact (div_eq_iff (ne_of_gt (sq_pos_of_pos (hc n)))).mpr (by nlinarith only [hh])
 
     obtain ⟨he0,hc0,hq0⟩ := coefficient_degeneration p v B hp hpsum hv hvsum hB hthree
       e c x Q q A b he hc hq hA hqsum hb hAf hpsd hinside hQf hQ
@@ -2599,6 +2515,290 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       ∀ d : ℝ, d < V/4 → ∀ᶠ n in atTop,
         d ≤ (spectralQFI (rho n 0) (deriv (rho n) 0)
           (hrho n 0 (h0 n)).1-B)/R n^2 := by
+    have htransfer : ∀
+      (rho : ℝ → Matrix (Fin 2) (Fin 2) ℂ) (I : Set ℝ)
+      (hI : IsOpen I) (h0 : 0 ∈ I) (hc : ContDiffOn ℝ 1 rho I)
+      (hrho : ∀ u ∈ I, (rho u).PosSemidef ∧ Matrix.trace (rho u) = 1 ∧ rho u * rho u = rho u)
+      (O : (EuclideanSpace ℝ (Fin 3)) ≃ₗᵢ[ℝ] (EuclideanSpace ℝ (Fin 3))) (x c ε s : ℝ) (hs : s=1 ∨ s= -1)
+      (hinside : x^2 < 4*ε*(1-ε))
+      (hcoord : ∀ u ∈ I, reframe O (rho u) = blochMatrix 1 (WithLp.toLp 2
+        ![x+c*u,s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2),1-2*ε])),
+      spectralQFI (rho 0) (deriv rho 0) (hrho 0 h0).1 =
+        c^2*(4*ε*(1-ε))/(4*ε*(1-ε)-x^2) := by
+      clear * - coefficient_matching_lower
+      classical
+      have matrix_bloch_geometry (M : Matrix (Fin 2) (Fin 2) ℂ)
+          (hM : M.IsHermitian) :
+          M = blochMatrix (Matrix.trace M).re (bloch M) := by
+        have h00 : (M 0 0).im = 0 := by
+          have h := congrArg Complex.im (hM.apply 0 0)
+          simp at h
+          linarith
+        have h11 : (M 1 1).im = 0 := by
+          have h := congrArg Complex.im (hM.apply 1 1)
+          simp at h
+          linarith
+        have h10r : (M 1 0).re = (M 0 1).re := by
+          have h := congrArg Complex.re (hM.apply 1 0)
+          simpa using h.symm
+        have h10i : (M 1 0).im = -(M 0 1).im := by
+          have h := congrArg Complex.im (hM.apply 1 0)
+          simpa using h.symm
+        ext i j
+        fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+          simp only [Fin.zero_eta, Fin.isValue, blochMatrix, trace, diag_apply,
+          Fin.sum_univ_two, Complex.add_re, bloch, neg_mul, Matrix.cons_val,
+          add_add_sub_cancel, Complex.ofReal_add, add_self_div_two, cons_val_zero, Complex.ofReal_mul,
+          Complex.ofReal_ofNat, cons_val_one, Complex.ofReal_neg, sub_neg_eq_add, add_sub_sub_cancel,
+          of_apply, cons_val', cons_val_fin_one, Complex.ofReal_re, h00,
+          Complex.ofReal_im, Fin.mk_one, Complex.div_ofNat_re, Complex.mul_re, Complex.re_ofNat,
+          Complex.im_ofNat, mul_zero, sub_zero, Complex.I_re, Complex.mul_im,
+          zero_mul, add_zero, Complex.I_im, mul_one, sub_self,
+          ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, mul_div_cancel_left₀, Complex.div_ofNat_im,
+          Complex.add_im, zero_add, h10r, Complex.neg_re, neg_zero,
+          h10i, Complex.neg_im, h11] <;> ring
+
+      have trace_bloch_pairing (M N : Matrix (Fin 2) (Fin 2) ℂ)
+          (hM : M.IsHermitian) (hN : N.IsHermitian) :
+          (Matrix.trace (M * N)).re =
+            ((Matrix.trace M).re * (Matrix.trace N).re + ⟪bloch M, bloch N⟫_ℝ) / 2 := by
+        have hM' := matrix_bloch_geometry M hM
+        have hN' := matrix_bloch_geometry N hN
+        conv_lhs => rw [hM', hN']
+        simp only [trace, blochMatrix, Fin.isValue, diag_apply, Fin.sum_univ_succ,
+          Finset.univ_unique, Fin.default_eq_zero, sum_singleton, Fin.succ_zero_eq_one, Complex.add_re,
+          Complex.ofReal_add, Complex.ofReal_sub, cons_mul, Nat.succ_eq_add_one, Nat.reduceAdd,
+          vecMul_cons, head_cons, smul_cons, smul_eq_mul, Matrix.smul_empty,
+          tail_cons, empty_vecMul, add_zero, add_cons, empty_add_empty,
+          Matrix.empty_mul, Equiv.symm_apply_apply, of_apply, cons_val', cons_val_fin_one,
+          cons_val_zero, cons_val_succ, sum_const, Finset.card_singleton, smul_add,
+          one_smul, Complex.mul_re, Complex.div_ofNat_re, Complex.ofReal_re, Complex.div_ofNat_im,
+          Complex.add_im, Complex.ofReal_im, zero_div, mul_zero, sub_zero,
+          Complex.sub_re, Complex.I_re, Complex.I_im, mul_one, sub_self,
+          Complex.sub_im, Complex.mul_im, zero_sub, zero_add, PiLp.inner_apply,
+          RCLike.inner_apply, Real.ringHom_apply, Fin.succ_one_eq_two]
+        ring
+
+      have blochMatrix_properties (a : ℝ) (r : EuclideanSpace ℝ (Fin 3)) :
+          (blochMatrix a r).IsHermitian ∧ Matrix.trace (blochMatrix a r) = (a : ℂ) ∧
+          bloch (blochMatrix a r) = r := by
+        refine ⟨?_, ?_, ?_⟩
+        · apply Matrix.IsHermitian.ext
+          intro i j
+          fin_cases i <;> fin_cases j <;> apply Complex.ext <;> simp only [blochMatrix, Fin.isValue, Complex.ofReal_add, Complex.ofReal_sub, Fin.zero_eta,
+          of_apply, cons_val', cons_val_zero, cons_val_fin_one, star_div₀,
+          star_add, RCLike.star_def, Complex.conj_ofReal, star_ofNat, Complex.div_ofNat_re,
+          Complex.add_re, Complex.ofReal_re, Complex.div_ofNat_im, Complex.add_im, Complex.ofReal_im,
+          add_zero, zero_div, Fin.mk_one, cons_val_one, star_mul',
+          Complex.conj_I, mul_neg, Complex.neg_re, Complex.mul_re, Complex.I_re,
+          mul_zero, Complex.I_im, mul_one, sub_self, neg_zero,
+          Complex.sub_re, sub_zero, Complex.neg_im, Complex.mul_im, zero_add,
+          Complex.sub_im, zero_sub, star_sub, sub_neg_eq_add]
+        · apply Complex.ext <;> simp only [trace, blochMatrix, Fin.isValue, Complex.ofReal_add, Complex.ofReal_sub,
+          diag_apply, of_apply, cons_val', cons_val_fin_one, Fin.sum_univ_two,
+          cons_val_zero, cons_val_one, Complex.add_re, Complex.div_ofNat_re, Complex.ofReal_re,
+          Complex.sub_re, Complex.add_im, Complex.div_ofNat_im, Complex.ofReal_im, add_zero,
+          zero_div, Complex.sub_im, sub_self] <;> ring
+        · ext i
+          fin_cases i <;> simp only [bloch, blochMatrix, Fin.isValue, Complex.ofReal_add, Complex.ofReal_sub,
+          of_apply, cons_val', cons_val_one, cons_val_fin_one, cons_val_zero,
+          Complex.div_ofNat_re, Complex.sub_re, Complex.ofReal_re, Complex.mul_re, Complex.I_re,
+          mul_zero, Complex.ofReal_im, Complex.I_im, mul_one, sub_self,
+          sub_zero, Complex.div_ofNat_im, Complex.sub_im, Complex.mul_im, add_zero,
+          zero_sub, neg_mul, Complex.add_re, Fin.zero_eta, Fin.mk_one,
+          Fin.reduceFinMk, Matrix.cons_val] <;> ring
+
+      have reframe_pairing (O : (EuclideanSpace ℝ (Fin 3)) ≃ₗᵢ[ℝ] (EuclideanSpace ℝ (Fin 3)))
+          (M N : Matrix (Fin 2) (Fin 2) ℂ) (hM : M.IsHermitian) (hN : N.IsHermitian) :
+          (Matrix.trace (reframe O M * reframe O N)).re = (Matrix.trace (M * N)).re := by
+        obtain ⟨hMr, htM, hbM⟩ := blochMatrix_properties (Matrix.trace M).re (O (bloch M))
+        obtain ⟨hNr, htN, hbN⟩ := blochMatrix_properties (Matrix.trace N).re (O (bloch N))
+        dsimp only [reframe]
+        rw [trace_bloch_pairing _ _ hMr hNr, trace_bloch_pairing _ _ hM hN]
+        change (((Matrix.trace (blochMatrix _ _)).re * (Matrix.trace (blochMatrix _ _)).re +
+          ⟪bloch (blochMatrix _ _), bloch (blochMatrix _ _)⟫_ℝ) / 2) = _
+        rw [htM, htN, hbM, hbN, O.inner_map_map]
+        simp
+
+      have spectral_energy {n : Type} [Fintype n] [DecidableEq n] (rho B L : Matrix n n ℂ) (hp : rho.PosSemidef)
+          (hL : L.IsHermitian) (hsolve : L * rho + rho * L = (2 : ℂ) • B) :
+          (L * rho * L).trace.re = spectralQFI rho B hp := by
+        classical
+        let U := hp.isHermitian.eigenvectorUnitary
+        let d : n → ℂ := fun i => (hp.isHermitian.eigenvalues i : ℂ)
+        let M := star (U : Matrix n n ℂ) * B * U
+        let N := star (U : Matrix n n ℂ) * L * U
+        have hs : rho = (U : Matrix n n ℂ) * diagonal d * star (U : Matrix n n ℂ) := by
+          simpa [U, d, Unitary.conjStarAlgAut_apply, Function.comp_def] using hp.isHermitian.spectral_theorem
+        have hN : N.IsHermitian := Matrix.isHermitian_conjTranspose_mul_mul _ hL
+        have hu : star (U : Matrix n n ℂ) * (U : Matrix n n ℂ) = 1 := U.property.1
+        have hu' : (U : Matrix n n ℂ) * star (U : Matrix n n ℂ) = 1 := U.property.2
+        have hdiag : star (U : Matrix n n ℂ) * rho * (U : Matrix n n ℂ) = diagonal d := by
+          rw [hs]
+          simp only [← Matrix.mul_assoc, hu, one_mul]
+          simp only [Matrix.mul_assoc, hu, mul_one]
+        have hentry (i j : n) : N i j * (d i + d j) = 2 * M i j := by
+          have he := congrArg (fun X : Matrix n n ℂ =>
+            (star (U : Matrix n n ℂ) * X * (U : Matrix n n ℂ)) i j) hsolve
+          have heq : star (U : Matrix n n ℂ) * (L * rho + rho * L) * U =
+              N * diagonal d + diagonal d * N := by
+            rw [← hdiag]
+            dsimp only [N]
+            simp only [mul_add, add_mul, Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
+          rw [heq] at he
+          change (N * diagonal d + diagonal d * N) i j = _ at he
+          simp only [Matrix.add_apply, mul_diagonal, diagonal_mul, Matrix.mul_smul,
+            Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul] at he
+          change N i j * d j + d i * N i j = 2 * M i j at he
+          linear_combination he
+        have hterm (i j : n) :
+            2 * Complex.normSq (M i j) /
+              (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) =
+            (hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 *
+              Complex.normSq (N i j) := by
+          have he := hentry i j
+          have hm : M i j = ((d i + d j) / 2) * N i j := by linear_combination -he / 2
+          rw [hm, map_mul]
+          have hd : (d i + d j) / 2 =
+              (((hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j) / 2 : ℝ) : ℂ) := by
+            simp [d]
+          rw [hd, Complex.normSq_ofReal]
+          by_cases hz : hp.isHermitian.eigenvalues i + hp.isHermitian.eigenvalues j = 0
+          · simp [hz]
+          · field_simp
+            <;> ring
+        have heTrace : (L * rho * L).trace = (N * diagonal d * N).trace := by
+          rw [← hdiag]
+          dsimp only [N]
+          simp only [Matrix.mul_assoc, ← mul_assoc (U : Matrix n n ℂ), hu', one_mul]
+          rw [trace_mul_comm (star (U : Matrix n n ℂ))]
+          simp only [Matrix.mul_assoc, hu', mul_one]
+        have heSum : (L * rho * L).trace.re =
+            ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
+          rw [heTrace]
+          simp only [Matrix.trace, Matrix.diag]
+          simp only [Matrix.mul_apply (M := N * diagonal d) (N := N), mul_diagonal, Complex.re_sum]
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          have hn : N j i = star (N i j) := by simpa using (hN.apply j i).symm
+          rw [hn]
+          have : N i j * d j * star (N i j) = d j * (Complex.normSq (N i j) : ℂ) := by
+            rw [Complex.normSq_eq_conj_mul_self]
+            change _ = d j * (star (N i j) * N i j)
+            ring
+          rw [this]
+          simp [d]
+        have hswap : (∑ i, ∑ j, hp.isHermitian.eigenvalues i * Complex.normSq (N i j)) =
+            ∑ i, ∑ j, hp.isHermitian.eigenvalues j * Complex.normSq (N i j) := by
+          rw [Finset.sum_comm]
+          apply Finset.sum_congr rfl
+          intro i _
+          apply Finset.sum_congr rfl
+          intro j _
+          rw [← hN.apply i j]
+          simp only [Complex.star_def, Complex.normSq_conj]
+        rw [heSum]
+        unfold spectralQFI
+        change _ = ∑ i, ∑ j, 2 * Complex.normSq (M i j) / _
+        simp_rw [hterm, add_div, add_mul]
+        simp only [Finset.sum_add_distrib, div_mul_eq_mul_div, ← Finset.sum_div]
+        rw [hswap]
+        ring
+
+      intro rho I hI h0 hc hrho O x c ε s hs hinside hcoord
+      have energy (r d : Matrix (Fin 2) (Fin 2) ℂ) (h : d*r+r*d=d) :
+          (Matrix.trace (((2:ℂ) • d)*r*((2:ℂ) • d))).re =
+            2*(Matrix.trace (d*d)).re := by
+        have ht := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℂ => (Matrix.trace (M*d)).re) h
+        simp only [add_mul, Matrix.trace_add, Complex.add_re] at ht
+        rw [← Matrix.trace_mul_cycle r d d] at ht
+        simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, smul_eq_mul,
+          Complex.mul_re]
+        norm_num
+        rw [← Matrix.trace_mul_cycle r d d]
+        linarith
+      let D := deriv rho 0
+      have hd : HasDerivAt rho D 0 :=
+        (hc.differentiableOn (by norm_num) 0 h0).differentiableAt (hI.mem_nhds h0) |>.hasDerivAt
+      have he (i j : Fin 2) : HasDerivAt (fun u => rho u i j) (D i j) 0 :=
+        hasDerivAt_pi.mp (hasDerivAt_pi.mp hd i) j
+      have hD : D.IsHermitian := by
+        apply Matrix.IsHermitian.ext
+        intro i j
+        apply (he j i).star.unique
+        apply (he i j).congr_of_eventuallyEq
+        filter_upwards [hI.mem_nhds h0] with u hu
+        exact (hrho u hu).1.isHermitian.apply i j
+      have hprod : HasDerivAt (fun u => rho u * rho u) (D*rho 0+rho 0*D) 0 := by
+        apply hasDerivAt_pi.mpr
+        intro i
+        apply hasDerivAt_pi.mpr
+        intro j
+        simp only [Matrix.mul_apply, Matrix.add_apply]
+        rw [← Finset.sum_add_distrib]
+        exact HasDerivAt.fun_sum fun k _ => (he i k).mul (he k j)
+      have htan : D*rho 0+rho 0*D=D := by
+        apply hprod.unique
+        apply hd.congr_of_eventuallyEq
+        filter_upwards [hI.mem_nhds h0] with u hu
+        exact (hrho u hu).2.2
+      have hSLD : ((2:ℂ) • D)*rho 0+rho 0*((2:ℂ) • D)=(2:ℂ) • D := by
+        rw [Matrix.smul_mul, Matrix.mul_smul, ← smul_add, htan]
+      have hQ := spectral_energy (rho 0) D ((2:ℂ) • D)
+        (hrho 0 h0).1 (hD.smul (by norm_num)) hSLD
+      have hpureQ : spectralQFI (rho 0) D (hrho 0 h0).1 =
+          2*(Matrix.trace (D*D)).re := hQ.symm.trans (energy (rho 0) D htan)
+      let y := Real.sqrt (4*ε*(1-ε)-x^2)
+      have hy : 0 < y := Real.sqrt_pos.mpr (sub_pos.mpr hinside)
+      have hy2 : y^2=4*ε*(1-ε)-x^2 := Real.sq_sqrt (sub_nonneg.mpr hinside.le)
+      let r := blochMatrix 1 (WithLp.toLp 2 ![x,s*y,1-2*ε])
+      let d := blochMatrix 0 (WithLp.toLp 2 ![c,-s*x*c/y,0])
+      have hx : HasDerivAt (fun u : ℝ => x+c*u) c 0 := by
+        simpa using ((hasDerivAt_id (0:ℝ)).const_mul c).const_add x
+      have hys : HasDerivAt (fun u : ℝ => s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2))
+          (-s*x*c/y) 0 := by
+        have hh := (((hasDerivAt_const (0:ℝ) (4*ε*(1-ε))).sub (hx.pow 2)).sqrt
+          (by simpa using ne_of_gt (sub_pos.mpr hinside))).const_mul s
+        convert hh using 1 <;> first | rfl | (dsimp [y]; ring)
+      have hxC : HasDerivAt (fun u : ℝ => ((x+c*u : ℝ):ℂ)) (c:ℂ) 0 :=
+        Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hx
+      have hyC : HasDerivAt (fun u : ℝ => ((s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2):ℝ):ℂ))
+          ((-s*x*c/y:ℝ):ℂ) 0 := Complex.ofRealCLM.hasFDerivAt.comp_hasDerivAt 0 hys
+      have harc : HasDerivAt (fun u : ℝ => blochMatrix 1 (WithLp.toLp 2
+          ![x+c*u,s*Real.sqrt (4*ε*(1-ε)-(x+c*u)^2),1-2*ε])) d 0 := by
+        apply hasDerivAt_pi.mpr
+        intro i
+        apply hasDerivAt_pi.mpr
+        intro j
+        fin_cases i <;> fin_cases j
+        · simpa [blochMatrix,d] using hasDerivAt_const (0:ℝ) (((1+(1-2*ε):ℝ):ℂ)/2)
+        · exact (hxC.sub (hyC.mul_const Complex.I)).div_const 2
+        · exact (hxC.add (hyC.mul_const Complex.I)).div_const 2
+        · simpa [blochMatrix,d] using hasDerivAt_const (0:ℝ) (((1-(1-2*ε):ℝ):ℂ)/2)
+      have hframe : HasDerivAt (fun u => reframe O (rho u)) (reframe O D) 0 :=
+        (reframeLinear O).toContinuousLinearMap.hasFDerivAt.comp_hasDerivAt 0 hd
+      have hDd : reframe O D=d := by
+        apply hframe.unique
+        apply harc.congr_of_eventuallyEq
+        filter_upwards [hI.mem_nhds h0] with u hu
+        exact hcoord u hu
+      have hpair : (Matrix.trace (d*d)).re=(Matrix.trace (D*D)).re := by
+        rw [← hDd]
+        exact reframe_pairing O D D hD hD
+      have hdinfo := blochMatrix_properties 0 (WithLp.toLp 2 ![c,-s*x*c/y,0])
+      have hdd : 2*(Matrix.trace (d*d)).re = c^2+(s*x*c/y)^2 := by
+        rw [trace_bloch_pairing d d hdinfo.1 hdinfo.1, hdinfo.2.1, hdinfo.2.2]
+        simp [PiLp.inner_apply, EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_three, RCLike.inner_apply]
+        ring
+      have hs2 : s^2=1 := by rcases hs with rfl | rfl <;> norm_num
+      change spectralQFI (rho 0) D (hrho 0 h0).1 = _
+      rw [hpureQ, ← hpair, hdd]
+      simp only [div_pow, mul_pow, hs2, one_mul, hy2]
+      field_simp [ne_of_gt (sub_pos.mpr hinside)]
+      <;> ring
+
     classical
     choose basis x c e s A q b hcpos hepos hele hs
       hcoeff hqsum hcoord hinside hend using fun n =>
@@ -2607,10 +2807,9 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
     let Q := fun n => spectralQFI (rho n 0) (deriv (rho n) 0)
       (hrho n 0 (h0 n)).1
     have hQf (n : ℕ) : Q n = c n^2*(4*e n*(1-e n))/(4*e n*(1-e n)-x n^2) := by
-      apply actual_cost_transfer (rho n) (I n) (hI n) (h0 n) (hc n) (hrho n)
+      exact htransfer (rho n) (I n) (hI n) (h0 n) (hc n) (hrho n)
         (basis n).repr (x n) (c n) (e n) (s n) (hs n)
-      · simpa using hinside n 0 (h0 n)
-      · exact hcoord n
+        (by simpa only [mul_zero, add_zero] using hinside n 0 (h0 n)) (hcoord n)
     have hRadius (n : ℕ) : c n^2*R n^2 ≤ 4*e n*(1-e n) := by
       have he1 : 0 ≤ 1-e n := by linarith [hele n]
       have hk : 0 ≤ 4*e n*(1-e n) :=
@@ -2636,6 +2835,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       let B := ∑ j,p j*s j^2
       let V := (∑ j,p j*s j^4)-B^2-(∑ j,p j*s j^3)^2/B
       0<B ∧ 0<V ∧ ∃ lo hi, s lo<0 ∧ 0<s hi ∧ B < -s lo*s hi := by
+    clear * - p s hp hp1 hs hthree
     classical
     dsimp only
     let B := ∑ j,p j*s j^2
@@ -2664,12 +2864,12 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       · by_contra! h
         have hz (a : ι) : s a^2-B-C/B*s a=0 := by
           have hh := h a (mem_univ a)
-          have : (s a^2-B-C/B*s a)^2=0 := by nlinarith [hp a,sq_nonneg (s a^2-B-C/B*s a)]
+          have : (s a^2-B-C/B*s a)^2=0 := by nlinarith only [hh, hp a,sq_nonneg (s a^2-B-C/B*s a)]
           exact sq_eq_zero_iff.mp this
-        have hf (a b : ι) : (s a-s b)*(s a+s b-C/B)=0 := by nlinarith [hz a,hz b]
+        have hf (a b : ι) : (s a-s b)*(s a+s b-C/B)=0 := by linear_combination hz a - hz b
         have h1 := (mul_eq_zero.mp (hf i j)).resolve_left (sub_ne_zero.mpr hij)
         have h2 := (mul_eq_zero.mp (hf i k)).resolve_left (sub_ne_zero.mpr hik)
-        exact hjk (by linarith)
+        exact hjk (by linarith only [h1,h2])
     obtain ⟨lo,_,hlo⟩ := exists_min_image univ s ⟨i,mem_univ _⟩
     obtain ⟨hi,_,hhi⟩ := exists_max_image univ s ⟨i,mem_univ _⟩
     have hmin a := hlo a (mem_univ a)
@@ -2688,13 +2888,13 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         (fun b _ => mul_nonneg (hp b).le (sub_nonneg.mpr (hmin b)))
         ⟨a,mem_univ _,mul_pos (hp a) (sub_pos.mpr ha1)⟩
       simp only [mul_sub,sum_sub_distrib,←sum_mul,hs,hp1,one_mul] at hsum
-      linarith
+      linarith only [hsum]
     have hhi0 : 0<s hi := by
       have hsum : 0<∑ b,p b*(s hi-s b) := sum_pos'
         (fun b _ => mul_nonneg (hp b).le (sub_nonneg.mpr (hmax b)))
         ⟨a,mem_univ _,mul_pos (hp a) (sub_pos.mpr ha2)⟩
       simp only [mul_sub,sum_sub_distrib,←sum_mul,hs,hp1,one_mul] at hsum
-      linarith
+      linarith only [hsum]
     have hgap : B < -s lo*s hi := by
       have hsum : 0<∑ b,p b*(s b-s lo)*(s hi-s b) := sum_pos'
         (fun b _ => mul_nonneg (mul_nonneg (hp b).le (sub_nonneg.mpr (hmin b)))
@@ -2705,7 +2905,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       simp_rw [hid] at hsum
       simp only [sum_sub_distrib,←mul_sum,hs,hp1,mul_zero,mul_one] at hsum
       change 0<0-B-s lo*s hi at hsum
-      linarith
+      linarith only [hsum]
     exact ⟨hB,hV,lo,hi,hlo0,hhi0,hgap⟩
 
   have infimum_limit (S : ℝ → Set ℝ) (B K : ℝ) (U : ℝ → ℝ)
@@ -2716,6 +2916,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
         Tendsto R atTop (𝓝[>] 0) → Tendsto Q atTop (𝓝 B) →
         ∀ d<K,∀ᶠ n in atTop,d≤(Q n-B)/R n^2) :
       Tendsto (fun R => (guardedInfimum (S R)-B)/R^2) (𝓝[>] 0) (𝓝 K) := by
+    clear * - S B K U hlower hupper hU hseq
     classical
     apply tendsto_iff_seq_tendsto.mpr
     intro r hr
@@ -2768,7 +2969,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
           have hmul := mul_lt_mul_of_pos_right hsmall hsq
           nlinarith only [hmul,hlow]
         apply (lt_div_iff₀ hsq).mpr
-        linarith [hQa n]
+        linarith only [hQa n, hdiff]
       · intro d hd
         filter_upwards [hUt.eventually (gt_mem_nhds hd)] with n hn
         exact lt_of_le_of_lt (div_le_div_of_nonneg_right (sub_le_sub_right (hCU n) B)
@@ -2780,6 +2981,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       (hp : ∀ j, 0<p j) (hp1 : ∑ j,p j=1) (hv0 : ∑ j,v j=0) (hv : v≠0) :
       (∀ R, 0≤R → ∀ Q ∈ costs p v R, (∑ j,v j^2/p j) ≤ Q) ∧
       (∀ᶠ R in 𝓝[>] 0, (costs p v R).Nonempty ∧ BddBelow (costs p v R)) := by
+    clear * - p v hp hp1 hv0 hv upper_result
     have hlower (R : ℝ) (hR : 0≤R) (Q : ℝ) (hQ : Q ∈ costs p v R) :
         (∑ j,v j^2/p j) ≤ Q := by
       obtain ⟨N,rho,I,hI,hconn,hRI,hN,hNs,hc,hrho,hread,hcost⟩ := hQ
@@ -2813,6 +3015,7 @@ theorem result {m : ℕ} (p v : Fin m → ℝ)
       ∀ d : ℝ, d<((∑ j,p j*(v j/p j)^4)-(∑ j,v j^2/p j)^2-
         (∑ j,p j*(v j/p j)^3)^2/(∑ j,v j^2/p j))/4 →
         ∀ᶠ n in atTop, d≤(Q n-(∑ j,v j^2/p j))/R n^2 := by
+    clear * - p v hp hp1 hv0 hv hthree R Q hR hmem hQ score_separation actual_rank_two_lower
     classical
     let B := ∑ j,v j^2/p j
     have hB : B=∑ j,p j*(v j/p j)^2 := by
