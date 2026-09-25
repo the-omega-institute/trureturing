@@ -1022,3 +1022,168 @@ $$
 最后，$`ab\ne0`$ 的归一化参数可任意接近 $`a=0`$ 或 $`b=0`$，但其容量恒为 $`2N-1`$；端点值为 $`N+1`$，两者之差为 $`N-2`$。该跳变针对零误差、逐步纯空白和同一固定酉的合同；仅把终端恢复条件放宽而仍要求每步精确纯空白，不会降低这里的最小维数，因为反向酉已经给精确恢复。允许非空白泄漏或新丢弃环境时，实际域不再被上述论证强制为正交等距域，（9.2）不声称给出那些合同的容量。证明完毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 10. 允许丢弃新环境后的固定通道容量
+
+**定义 10.1（固定 CPTP 接收与全部终端的精确恢复）。** 对定义9.1的同一已知来源，接收寄存器 $`K`$ 从独立纯态 $`e`$ 开始，每步施加同一个全域 CPTP 映射
+
+$$
+\mathcal C:\mathcal L(K\otimes\mathcal B)\longrightarrow\mathcal L(K).
+\tag{10.1}
+$$
+
+实现（10.1）时允许每步引入并丢弃新的环境；所有持久接收记忆仍全部计入 $`K`$，不访问活动记忆 $`M`$ 或参考 $`J`$，不反馈来源，不按步数改变 $`\mathcal C`$。若保留已消费位作为输出端口，可以另外准备固定纯空白；它不承担任何档案信息。
+
+令 $`\sigma_n(\rho)`$ 为接收后的 $`JMK`$ 联合态，$`\Omega_n(\rho)`$ 为不作接收时同一来源的 $`JM\mathcal B^{\otimes n}`$ 联合态。要求对每个 $`n\ge1`$，存在仅作用于 $`K`$、可依赖终端编号的 CPTP 解码器 $`\mathcal D_n`$，使
+
+$$
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+=\Omega_n(\rho)
+\qquad\text{对全部有限参考 }J\text{ 及输入 }\rho.
+\tag{10.2}
+$$
+
+定义 $`d_{\mathrm{CPTP},\infty}(a,b)`$ 为满足这一合同的最小有限 $`\dim K`$；不存在有限实现时取值 $`\infty`$。这里一个 $`K,e,\mathcal C`$ 同时服务全部终端；每个有限终端另选一台机器是不同量词。
+
+**定理 10.2（固定 CPTP 接收器的无限时域分类）。** 在定义10.1的条件下，
+
+$$
+\boxed{
+d_{\mathrm{CPTP},\infty}(a,b)=
+\begin{cases}
+2,&a=0,\\
+3,&b=0,\\
+\infty,&ab\ne0.
+\end{cases}}
+\tag{10.3}
+$$
+
+非退化情形的不能性甚至只需要：从一个指定纯初态 $`|0\rangle_M`$ 出发，每个终端局部恢复全部档案与活动记忆的纯联合态。它不要求接收后的联合态为纯态，也不要求被丢弃环境保持空白。
+
+证明。先建立非退化情形的障碍。固定 $`p=|b|^2\in(0,1)`$，令
+
+$$
+R_0=|m_0\rangle\langle m_0|,\quad R_1=|0\rangle\langle0|,
+\quad F=R_0-R_1,\quad
+\rho_*={R_0+pR_1\over1+p},\quad D={p\over1+p}F.
+\tag{10.4}
+$$
+
+源边缘通道为 $`E(X)=X_{00}R_0+X_{11}R_1`$。直接计算给 $`E(\rho_*)=\rho_*`$、$`E(F)=-pF`$ 和 $`\operatorname{Tr}F^2=2p`$。因此从 $`|0\rangle_M`$ 出发，对 $`n\ge1`$ 有
+
+$$
+\rho_{M,n}=\rho_*+(-p)^{n-1}D,\qquad
+q_n:=\operatorname{Tr}\rho_{M,n}^2
+=q_*+2\operatorname{Tr}(\rho_*D)(-p)^{n-1}
++\operatorname{Tr}D^2\,p^{2n-2},
+\quad \operatorname{Tr}D^2={2p^3\over(1+p)^2}>0.
+\tag{10.5}
+$$
+
+这里 $`q_*:=\operatorname{Tr}\rho_*^2`$。此纯度序列的指数基底属于 $`\{1,-p,p^2\}`$，最低模基底为唯一的正实数 $`p^2`$，其系数严格正。
+
+假设存在有限接收器。将一次发射与固定接收合成 $`MK`$ 上的固定 CPTP 映射 $`\mathcal R`$，记上述初态的接收结果为
+
+$$
+\sigma_n=\mathcal R^n
+\bigl(|0\rangle\langle0|_M\otimes|e\rangle\langle e|_K\bigr).
+\tag{10.6}
+$$
+
+局部保迹接收不改变 $`M`$ 边缘，所以 $`\operatorname{Tr}_K\sigma_n=\rho_{M,n}`$。原始目标 $`\Omega_n=|\Psi_n\rangle\langle\Psi_n|_{M\mathcal B^{\otimes n}}`$ 是纯态。对（10.2）的解码器取 Kraus 算子，按环境基排列为 Stinespring 等距
+ $`V_n:K\to\mathcal B^{\otimes n}\otimes E_n`$。
+解码后的目标边缘纯，故整个延拓态必为
+
+$$
+(I_M\otimes V_n)\sigma_n(I_M\otimes V_n^*)
+=|\Psi_n\rangle\langle\Psi_n|\otimes\tau_n.
+\tag{10.7}
+$$
+
+这里纯边缘强制乘积可直接由正性看出：目标纯态正交补上的投影期望为零，整个态的支撑只能落在该一维子空间张量 $`E_n`$ 中。等距保持非零谱，而纯态的两侧边缘具有相同非零谱，因此（10.7）给
+
+$$
+\boxed{
+\operatorname{Tr}\sigma_{K,n}^2
+=q_n\operatorname{Tr}\sigma_n^2,
+\qquad \sigma_{K,n}=\operatorname{Tr}_M\sigma_n.
+}
+\tag{10.8}
+$$
+
+这个恒等式完整允许 $`\tau_n`$ 为随 $`n`$ 改变的混合态。
+
+在有限维矩阵空间上对 $`\mathcal R`$ 作 Jordan 分解。丢掉零特征值对应的有限幂零前缀后，其实际轨道可以写成
+
+$$
+\sigma_n=\sum_{\lambda\in\Lambda}\lambda^nP_\lambda(n),
+\qquad r=\min_{\lambda\in\Lambda}|\lambda|>0.
+\tag{10.9}
+$$
+
+$`\Lambda`$ 只收录该轨道实际出现的不同非零特征值，各 $`P_\lambda`$ 为非零矩阵多项式；不要求通道正规或可对角化。由于态的迹为一，$`\Lambda`$ 非空。
+
+不同非零基底的指数多项式在整数尾部线性独立。为见这一点，对一份假设的零线性组合，逐一施加差分算子 $`f(n)\mapsto f(n+1)-zf(n)`$，对每个待消去基底 $`z`$ 使用高于其多项式次数的幂。它消去该基底，对任一不同基底只乘非零的最高次系数。保留一个基底后不可能得到恒零的非零多项式，故原组合的每项均必须为零。
+
+利用 $`\sigma_n`$ Hermitian，以 Hilbert–Schmidt 内积展开其纯度：
+
+$$
+\operatorname{Tr}\sigma_n^2
+=\|\sigma_n\|_{\rm HS}^2
+=\sum_{\lambda,\mu\in\Lambda}
+(\overline\lambda\mu)^n
+\langle P_\lambda(n),P_\mu(n)\rangle_{\rm HS}.
+\tag{10.10}
+$$
+
+所有基底模至少为 $`r^2`$。正实基底 $`r^2`$ 的多项式系数恰为
+
+$$
+A_r(n)=\sum_{|\lambda|=r}\|P_\lambda(n)\|_{\rm HS}^2.
+\tag{10.11}
+$$
+
+因为 $`\overline\lambda\mu=r^2`$ 强制 $`|\lambda|=|\mu|=r`$ 且 $`\lambda=\mu`$，这里没有其他交叉项。该多项式最高次系数是若干非零矩阵系数的平方范数之和，严格正；所以这一最低模项确实存在。
+
+偏迹仅把（10.9）中的 $`P_\lambda`$ 替换为 $`\operatorname{Tr}_M P_\lambda`$，不引入新基底。因此（10.8）左边的指数多项式没有模小于 $`r^2`$ 的项。右边却必含正实基底 $`p^2r^2<r^2`$，系数为
+
+$$
+{\operatorname{Tr}D^2\over p^2}\,A_r(n)\ne0.
+\tag{10.12}
+$$
+
+源纯度的另外两种基底只可能产生模至少 $`r^2`$、$`pr^2`$ 的项，不能抵消（10.12）；源的 $`p^2`$ 项也只有乘上（10.11）才能产生这个正实基底。指数多项式唯一性遂与（10.8）矛盾。这证明 $`ab\ne0`$ 时的不能性，且没有限制终端解码器随 $`n`$ 变化。
+
+现在构造 $`a=0`$ 的二维接收器。取 $`K=\mathbb C^2`$，初态 $`|+\rangle`$，定义从 $`K\otimes\mathcal B`$ 到 $`K\otimes E`$ 的固定酉
+
+$$
+V|k\rangle_K|s\rangle_{\mathcal B}
+=|s\rangle_K|k\mathbin{\oplus}s\rangle_E,
+\qquad k,s\in\{0,1\},\qquad
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{10.13}
+$$
+
+首步满足 $`V(|+\rangle\otimes|s\rangle)=|s\rangle\otimes|+\rangle`$，故环境与数据独立，寄存器保存首位。此后来源逐位交替，接收输入仅支撑于 $`|0\rangle_K|1\rangle_{\mathcal B}`$ 与 $`|1\rangle_K|0\rangle_{\mathcal B}`$ 的张成。两者都使环境成为 $`|1\rangle_E`$，寄存器保存最新位；相干组合的相对相位不变。给定终端 $`n`$，最新位唯一确定整条交替词，故把两份正交寄存器基态等距送到对应词，就恢复全部参考—记忆—档案联合态。来源产生的 $`b`$ 相位始终留在实际振幅中。
+
+首步选最大纠缠输入时，档案与其余系统的 Schmidt 秩为二；一维 $`K`$ 的局部解码不能产生这种跨切口纠缠。因此二维达到最小值。
+
+最后令 $`b=0`$。取三维 $`K`$，正交基为 $`|e\rangle,|d_0\rangle,|d_1\rangle`$，初态 $`|e\rangle`$。定义固定通道的 Kraus 算子
+
+$$
+L_{\rm first}=\sum_{s=0}^1|d_s\rangle\langle e,s|,
+\qquad L_{\rm run}=\sum_{s=0}^1|d_s\rangle\langle d_s,0|,
+\qquad L_s=|e\rangle\langle d_s,1|\quad(s=0,1).
+\tag{10.14}
+$$
+
+四项 $`L^*L`$ 之和为输入空间恒等算子，因此定义全域 CPTP 通道。首步只有 $`L_{\rm first}`$ 起作用，存下首位的整个 qubit；以后活动记忆在 $`|0\rangle_M`$，来源恒发零，只有 $`L_{\rm run}`$ 起作用并保持数据。环境只记录确定的首次或后续阶段，取得不了来源位。终端解码把 $`|d_s\rangle`$ 送到 $`|s0\cdots0\rangle`$，在未使用的 $`|e\rangle`$ 上任意补为通道，即满足（10.2）。来源的单位模振幅 $`a`$ 所产生的相位保留，不要求 $`a=1`$。
+
+还须排除二维 $`K`$。若它存在，首步在实际输入域 $`S_0=\mathbb Ce\otimes\mathcal B`$ 上必须无损传输任意 qubit，因为 $`b=0`$ 时源把初始 qubit 完整发到首位，活动记忆已经复位。二维输入、二维输出且具有 CPTP 左逆的通道必为酉通道：对满 Schmidt 秩 Bell 输入使用（10.7），二维输出限制迫使噪声因子秩为一，于是编码的 Choi 态纯，编码是单个等距算子，等维时即酉。
+
+所以首步后任意 $`K`$ 态及其参考相干均是实际可达的。第二步的新位固定为零，（10.2）又要求同一个 $`\mathcal C`$ 在 $`S_1=K\otimes\mathbb C|0\rangle`$ 上无损传输任意 qubit，也必须为酉编码。固定一个 $`\mathcal C`$ 的 Stinespring 等距 $`W:K\otimes\mathcal B\to K\otimes E`$。在每个 $`S_i`$ 上，它的环境因子都是一个固定纯向量；这是相应限制通道为酉的结果。两域交于一维 $`\mathbb C(e\otimes|0\rangle)`$，同一个 $`W`$ 在这份非零交向量上的像强制两个环境向量共线。
+
+由线性性，$`W`$ 因而把三维 $`S_0+S_1`$ 等距送入同一个二维 $`K\otimes\mathbb C\eta`$，矛盾。因此二维不可能，三维构造最小。证明完毕。
+
+## 追加锚（本行以下为增补区）
