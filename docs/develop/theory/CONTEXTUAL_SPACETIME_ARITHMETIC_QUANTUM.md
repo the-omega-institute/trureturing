@@ -45741,14 +45741,14 @@ $(M-aI)\psi=(k_\perp+r_\perp)/2$。
 
 最后，方差 $v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]$ 连续。对于任意 $\varepsilon>0$，充分接近 $t$ 时有 $v(u)\le V_*+\varepsilon$。将这一估计与（211.11）代入（211.7），再取下极限及 $\varepsilon\downarrow0$，得到（211.3）。此论证覆盖 $v(t)=0$、秩变化和信息量不连续的情形；其中没有使用 $R'_t$ 的存在。证毕。
 
-**定理 211.3（最优曲率由实际五维程序达到）。** 对每个定义211.1中的 $a,t$，存在一个固定五维 CPTP 处理器及两条全区间、全输入精确准备曲线，二者都满足
+**定理 211.3（实解析纯态程序的全局最优三维实现）。** 对每个定义211.1中的 $a,t$，存在一个固定三维 CPTP 处理器及一条在整个 $J_a$ 上实解析的纯态准备曲线，对所有参数和全部信号输入精确产生 $\mathcal T_u$，而且
 $$
  \mathcal E(\rho)=\{t\},\qquad
  \lim_{\substack{u\to t\\u\ne t}}
  \frac{I_Q(\rho_u)-I_r(u)}{(u-t)^2}=\kappa_*(a,t).
 \tag{211.15}
 $$
-第一条曲线在整个开区间 $J_a$ 上为 $C^\infty$ 纯态曲线；第二条曲线在 $t$ 附近为同一纯态曲线，而在两个端点附近采用混合准备，其矩阵元素具有包含 $[2a-1,1]$ 的开邻域上的 $C^\infty$ 延拓。因此，定义211.1中所有有限维 $C^1$ 程序的信息曲率的下确界就是 $\kappa_*(a,t)$，并且被达到；限制为开区间光滑纯态程序或具有光滑端点的程序，分别仍有同一最小值。这里不将纯态性与端点光滑性归于同一条准备曲线，也不声称五维是达到最优值所需的最小维数。
+因此，定义211.1中所有有限维 $C^1$ 程序的信息曲率下确界恰为 $\kappa_*$，并被三维实解析纯态程序达到；达到这个最优值并具有精确校准的最小联合支持维数恰为三。
 
 证明。 首先在三维程序空间内构造达到最优值的局部纯态模型。所有以下算子一经 $a,t$ 选定便固定，不依赖待估参数 $u$。令
 $$
@@ -45814,56 +45814,182 @@ $$
 $$
 结合（211.22），此局部模型的信息曲率恰为 $a^2/(c_t^2V_*)$。缩小邻域为 $I\Subset J_a$，可令 $\theta''>0$ 在 $I$ 上成立；于是 $\theta'$ 在 $I$ 内的唯一零点为 $t$。
 
-为将同一局部模型延拓为实际全区间程序，令 $b=2a^2-1<2a-1$。由第187节的正性条件，$\mathcal T_b$ 与 $\mathcal T_1$ 均为 CPTP 通道。取固定二维程序处理器：测量程序基底，并分别执行这两个通道。定义
+下面证明这个局部纯态模型可以由同一个三维处理器解析延拓到整个 $J_a$。令 $Q_0=I-P_0$、$k=a/h$、$\beta=\sqrt h\,\gamma/\alpha$，则 $0<k,\beta<1$；后一个不等式来自 $\alpha^2-h\gamma^2=1-h>0$。在 $P_0\oplus Q_0$ 分块中写
 $$
- D_u=\operatorname{diag}\left(\frac{1-u}{1-b},\frac{u-b}{1-b}\right),
- \qquad
- \phi_u=\sqrt{\frac{1-u}{1-b}}\,|b\rangle
-       +\sqrt{\frac{u-b}{1-b}}\,|1\rangle.
+ T_0=\begin{pmatrix}\mathsf A&b\\0&0\end{pmatrix},\qquad
+ \mathsf A=\begin{pmatrix}
+ kt&\gamma\\
+ \sqrt h(1-k^2t)/\alpha&-k\beta
+ \end{pmatrix},\qquad
+ b=\begin{pmatrix}2k\sqrt{h\ell}\\\sqrt\ell(1-2k^2h)/\alpha\end{pmatrix}.
 \tag{211.24}
 $$
-$D_u$ 与 $|\phi_u\rangle\langle\phi_u|$ 在整个 $J_a$ 都精确实现 $\mathcal T_u$；测量程序基底使其相干项不参与输出通道。两种准备各自的 SLD 成本均为
+由 $T_0T_0^{\mathsf T}=P_0$，有 $\mathsf A\mathsf A^{\mathsf T}+bb^{\mathsf T}=I_2$。计算得到 $\det\mathsf A=-\beta$，以及
 $$
- I_{\rm cl}(u)=\frac1{(u-b)(1-u)}>I_r(u),\qquad
- I_{\rm cl}(u)-I_r(u)
- =\frac{2a^2}{(u-b)(1-u)(1+u)}>0.
+ \Delta:=\det(I_2-\mathsf A)
+ =1-kt-(1-k)\beta
+ =2(1-a)-(1-k)(1+\beta),\qquad
+ 0<k(1-t)<\Delta<2(1-a).
 \tag{211.25}
 $$
-此基底测量准备的成本等于第187节二维最优值 $B(a,u)$ 的 $1/(1-a^2)$ 倍；它作为全域延拓的固定参考准备。
-
-在 $I$ 内选取 $\beta\in C_c^\infty(I)$，使 $0\le\beta\le1$，并在 $t$ 的一个邻域有 $\beta=1$。令
+因此可以固定一个不依赖 $u$ 的方向
 $$
- \eta(u)=\frac\pi2(1-\beta(u)),\qquad
- \chi(u)=\cos^2\eta(u).
+ x=(I_2-\mathsf A)^{-1}b,\qquad N=\|x\|,\qquad
+ e=\frac xN=(\cos\bar\theta,\sin\bar\theta)^{\mathsf T}.
 \tag{211.26}
 $$
-$\cos\eta=\sin(\pi\beta/2)$ 与 $\chi$ 均紧支撑于 $I$，因此它们与局部向量或矩阵的乘积可向外光滑延拓为零。固定五维处理器先测量 $\mathbb C^3\oplus\mathbb C^2$ 的两个块，再执行（211.18）的局部处理器或上述二维处理器。准备两条不同的曲线
+直接求逆有
+$x_1=\sqrt\ell(2k\sqrt h+\gamma/\alpha)/\Delta>0$，且
+$\alpha x_2=\sqrt h(1-k)x_1+\sqrt\ell>0$，所以 $0<\bar\theta<\pi/2$。
+
+这一固定方向满足四个恒等式：
 $$
- \Psi_u=\cos\eta(u)\,\psi_u\ \oplus\ \sin\eta(u)\,\phi_u,
- \qquad \rho_u^{\rm pure}=|\Psi_u\rangle\langle\Psi_u|,
+ N^2=\frac{2(1+\beta)}{\Delta},\qquad
+ b^{\mathsf T}x=1+\beta,\qquad
+ e^{\mathsf T}\mathsf Ae=1-\frac\Delta2,\qquad
+ b^{\mathsf T}e=\frac{\Delta N}{2}>0.
 \tag{211.27}
 $$
+为核对它们，先由 $bb^{\mathsf T}=I_2-\mathsf A\mathsf A^{\mathsf T}$ 得
+$xx^{\mathsf T}=(I_2-\mathsf A)^{-1}+(I_2-\mathsf A^{\mathsf T})^{-1}-I_2$；取迹并使用二维逆矩阵公式，得到第一式。设 $s=\operatorname{Tr}\mathsf A$。从 $\det\mathsf A=-\beta$ 和上述正交关系得 $\|b\|^2=1-\beta^2$；Cayley–Hamilton 恒等式 $\mathsf A^2=s\mathsf A+\beta I_2$ 给出
+$b^{\mathsf T}\mathsf Ab=-s\beta(1+\beta)$。因此
+$b^{\mathsf T}x=[(1-s)(1-\beta^2)-s\beta(1+\beta)]/\Delta=1+\beta$。
+其余两式由 $\mathsf Ax=x-b$ 得到。
+
+将可变的 $P_0$ 概率记为 $p\in[a,1]$。取两个固定角度 $0$ 与 $\bar\theta$，相应实纯态的 $T_0$ 期望分别为
 $$
- \rho_u^{\rm mix}
- =\chi(u)|\psi_u\rangle\langle\psi_u|
-       \oplus(1-\chi(u))D_u.
+ m_0(p)=kt\,p+2k\sqrt{h\ell}\sqrt{p(1-p)},
+ \qquad m_0(h)=a,\quad m'_0(h)=0,
 \tag{211.28}
 $$
-任一活动块均实现同一个 $\mathcal T_u$；块测量后两种程序的输出都是相同通道的凸组合。因此全区间、全输入精确性成立，没有随 $u$ 更换处理器。
-
-第一条曲线在开区间内光滑且处处为纯态。第二条曲线在端点邻域等于 $0_3\oplus D_u$，因此其矩阵具有所述 $C^\infty$ 延拓；不要求延拓在物理区间之外保持正性。两条曲线在 $t$ 附近均为同一个局部纯态模型。第一条曲线在右端并无 $C^1$ 矩阵延拓：端点附近二维块的非对角元为 $\sqrt{(1-u)(u-b)}/(1-b)$，其导数无界。这说明两种正则性结论确实属于两条不同曲线。
-
-参数相关的切换成本必须计入。对（211.27），由实向量的归一化以及两个块正交，直接求导得到加权的两块成本与 $4\eta'(u)^2$。对（211.28），直和态的 SLD 公式给出相同结果；在 $0<\chi<1$ 处，块概率的经典 Fisher 项为 $\chi'^2/[\chi(1-\chi)]=4\eta'^2$。故两条曲线在活动区域均有
 $$
- I_Q(\rho_u)
- =\chi(u)I_Q(|\psi_u\rangle\langle\psi_u|)
- +(1-\chi(u))I_{\rm cl}(u)+4\eta'(u)^2.
+ m_{\bar\theta}(p)
+ =p\left(1-\frac\Delta2\right)
+  +\frac{\Delta N}{2}\sqrt{p(1-p)}.
 \tag{211.29}
 $$
-在 $\chi=0$ 或 $\chi=1$ 处，光滑函数 $\eta\in[0,\pi/2]$ 的导数为零；新消失块的一阶导数也为零。点态 SLD 因而给出同一公式的相应单块取值，不靠跨秩点的信息量连续性。局部向量未定义的 $I$ 外侧只有二维块，公式取 $I_Q=I_{\rm cl}$。
+$m_0$ 严格凹，故 $m_0(p)\le a$，等号仅在 $p=h$。另一个期望在右端满足
+$m_{\bar\theta}(1)-a=(1-k)(1+\beta)/2>0$；在左端满足
+$m_{\bar\theta}(a)-a=(\Delta/2)[N\sqrt{a(1-a)}-a]>0$，因为
+$N^2>(1+\beta)/(1-a)>a/(1-a)$。式（211.29）的凹性于是给出整个闭区间上的严格夹逼：
+$$
+ m_0(p)\le a<m_{\bar\theta}(p)
+ \qquad(a\le p\le1).
+\tag{211.30}
+$$
+两端和中间的所有期望都属于同一个 $T_0$，没有分别优化处理器。
 
-在 $t$ 附近 $\eta=0$，所以切换项消失，局部曲率保持为 $\kappa_*$。若 $1-\chi(u)>0$，由（211.25）及（211.29），额外成本严格为正；若 $\chi(u)=1$，则 $u\in I$，并由（211.23）及 $\theta'$ 的唯一零点性质，等号只可能在 $u=t$。这证明两条全局曲线的完整校准集合均为 $\{t\}$。再结合定理211.2的统一下界，得到所有所述程序类的最小值。证毕。
+还须排除所选根的折返。记 $A_0=\mathsf A_{11}$、$D_0=\mathsf A_{22}$、$C_0=\mathsf A_{12}+\mathsf A_{21}>0$、$E_0=b_1>0$、$F_0=b_2$，并令
+$$
+ \begin{aligned}
+ \Phi(p,\theta)={}&p(A_0\cos^2\theta+D_0\sin^2\theta
+                         +C_0\sin\theta\cos\theta)\\
+ &+\sqrt{p(1-p)}(E_0\cos\theta+F_0\sin\theta).
+ \end{aligned}
+\tag{211.31}
+$$
+这就是向量 $(\sqrt p\cos\theta,\sqrt p\sin\theta,\sqrt{1-p})^{\mathsf T}$ 的 $T_0$ 期望。对每个 $p\in(a,1)$，方程 $\Phi(p,\theta)=a$ 在 $[0,\bar\theta)$ 内恰有一个根，且该根处 $\Phi_\theta>0$。证明分两种情形。
 
-测量 Fisher 信息与 SLD 的一般关系见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），以及 Barndorff-Nielsen、Gill，*Fisher information in quantum statistics*，arXiv:quant-ph/9808009。秩变化处点态 SLD 与连续 Bures 信息的区别见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）。本节使用前述一般平方残差工具，并由全输入程序的固定压缩关系、校准点的两个期望约束以及达到方差界的实际处理器，确定此通道族的最优局部曲率。全局构造计入切换成本；有限维范围内的最优值不由局部切向模拟或未计费的旗标替代。
+若 $F_0\ge0$，则在 $0<\theta<\pi/2$ 上
+$$
+ \frac{\Phi_\theta}{\sin\theta\cos\theta}
+ =2p(D_0-A_0)+pC_0(\cot\theta-\tan\theta)
+ +\sqrt{p(1-p)}\left(\frac{F_0}{\sin\theta}
+                              -\frac{E_0}{\cos\theta}\right)
+\tag{211.32}
+$$
+严格递减，且左右极限分别为正无穷和负无穷。所以 $\Phi$ 先严格增加后严格减少，仅有一个极大值。结合（211.30），在 $\bar\theta$ 之前恰有一次从下方穿过 $a$，根处导数严格为正；$p=h$ 时该根为零，直接求导同样严格为正。
+
+若 $F_0<0$，则 $2k^2h>1$，因而 $h>1/2$ 及 $A_0>0>D_0$。置 $y=\sin\theta$、$q=\sqrt{p(1-p)}$ 及 $G(y)=\Phi(p,\arcsin y)$。直接求导得
+$$
+ G''(y)=2p(D_0-A_0)
+       +\frac{pC_0y(2y^2-3)-qE_0}{(1-y^2)^{3/2}}<0.
+\tag{211.33}
+$$
+因为 $G(0)\le a<G(\sin\bar\theta)$，严格凹性给出唯一根，且从该根到 $\sin\bar\theta$ 的割线斜率严格为正，故根处导数严格为正。这也覆盖 $p=h$、根为零的情形。
+
+把唯一根记为 $\Theta(p)$。非零角导数给出每一点附近的解析隐函数，唯一性使这些局部函数在交叠处一致，因此得到整个 $(a,1)$ 上的实解析函数。此处已证明全域选根相容性，而非直接将局部隐函数定理当作全域延拓。置
+$$
+ \theta(u)=\Theta\!\left(\frac{1+u}{2}\right),\qquad
+ \psi_u=\psi(u,\theta(u)),\qquad
+ \rho_u=\psi_u\psi_u^{\mathsf T}.
+\tag{211.34}
+$$
+这是同一个三维处理器的全区间、全输入精确纯态程序，在开区间实解析。它在 $t$ 附近与此前的局部隐函数重合，所以（211.22）—（211.23）给出所需最优曲率。
+
+最后证明没有额外校准点。在整个 $0\le\theta\le\bar\theta$ 上，$E_0\cos\theta+F_0\sin\theta>0$：$F_0\ge0$ 时直接成立；$F_0<0$ 时除以 $\cos\theta$，所得函数随角度递减，但在 $\bar\theta$ 处仍由 $b^{\mathsf T}e>0$ 保持正性。因此对每个固定角度，$\Phi(p,\theta)$ 关于 $p$ 严格凹。由选根唯一性和（211.30），在 $0<\theta\le\bar\theta$ 上有 $\Phi(h,\theta)>a$。若 $p<h$，从根 $\Phi(p,\Theta(p))=a$ 到 $h$ 的割线斜率严格为正，凹性给出 $\Phi_p>0$；若 $p>h$，相同论证给出 $\Phi_p<0$。结合 $\Phi_\theta>0$，得到
+$$
+ \Theta'(p)<0\quad(p<h),\qquad
+ \Theta'(p)>0\quad(p>h),\qquad
+ \Theta'(h)=0.
+\tag{211.35}
+$$
+于是（211.23）中的信息差值仅在 $u=t$ 为零，完整校准集合恰为 $\{t\}$。
+
+定理211.2给出所有有限维 $C^1$ 程序的统一下界，而上述三维程序达到它。第190.2节对任意二维全区间精确程序给出
+$I_Q(\rho_t)-I_r(t)\ge a^2/[(1+t)(1+t-2a^2)]>0$，一维也不能实现非恒定通道族。因此，达到最优曲率并具有精确校准的最小联合支持维数恰为三；限制为开区间实解析纯态程序仍是同一最小维数。证毕。
+
+**定理 211.4（同一三维处理器中的光滑端点实现）。** 定理211.3的同一个三维处理器还具有一条全区间、全输入精确准备曲线，其矩阵元素在包含 $[2a-1,1]$ 的开邻域具有 $C^\infty$ 延拓，并在 $t$ 的一个邻域与定理211.3的纯态曲线完全相同。因此它也达到 $\kappa_*(a,t)$，其完整校准集合为包含 $t$ 的有限集合。此处不指定其他校准点。具有光滑端点的程序类也以三维达到同一最小曲率及最小联合支持维数。
+
+证明。 先给出同一处理器的两个端点态。右端取
+$$
+ w=T_0\psi_*=(a/\sqrt h,\alpha,0)^{\mathsf T},\qquad
+ \tau_1=ww^{\mathsf T}.
+\tag{211.36}
+$$
+由（211.17），$\psi_*$ 属于 $T_0$ 的初始支持，所以 $\|w\|=1$、$T_0^{\mathsf T}w=\psi_*$。于是 $w^{\mathsf T}T_0w=\psi_*^{\mathsf T}w=a$，且 $\operatorname{Tr}(\tau_1P_0)=1$。
+
+左端令
+$v_-=(\sqrt a,0,\sqrt{1-a})^{\mathsf T}$、
+$v_+=(\sqrt a\,e,\sqrt{1-a})^{\mathsf T}$，并记
+$m_-=m_0(a)<a<m_+=m_{\bar\theta}(a)$。由（211.30），
+$$
+ \lambda=\frac{a-m_-}{m_+-m_-}\in(0,1),\qquad
+ \tau_l=(1-\lambda)v_-v_-^{\mathsf T}+\lambda v_+v_+^{\mathsf T},
+ \qquad l=2a-1.
+\tag{211.37}
+$$
+这是密度矩阵，满足 $\operatorname{Tr}(\tau_lP_0)=a$、$\operatorname{Tr}(\tau_lT_0)=a$。因此仿射参考准备
+$$
+ B_u=\frac{1-u}{1-l}\tau_l+\frac{u-l}{1-l}\tau_1
+\tag{211.38}
+$$
+在整个闭区间都满足 $\operatorname{Tr}(B_uT_0)=a$、$\operatorname{Tr}(B_uP_0)=(1+u)/2$，且为实对称密度矩阵。由固定处理器的逐矩阵单位恒等式，它对所有信号输入精确产生 $\mathcal T_u$。
+
+取实光滑函数 $\eta:J_a\to[0,\pi/2]$，在 $t$ 的一个邻域恒等于零，在两个端点附近恒等于 $\pi/2$。用 $\rho_u^{\rm pure}$ 表示定理211.3的全区间纯态曲线，置
+$$
+ \rho_u^{\rm sm}
+ =\cos^2\eta(u)\,\rho_u^{\rm pure}
+  +\sin^2\eta(u)\,B_u.
+\tag{211.39}
+$$
+这是同一个三维空间中的凸混合。两项均使用同一个固定处理器实现同一目标通道，所以处理器的线性性给出全域、全输入精确性。它在校准点附近与纯态模型相同，在端点附近等于仿射参考准备，因此具有所述矩阵延拓；不要求区间外延拓仍保持正性。
+
+参数相关的混合不会消除准备成本。实际导数包含切换项：
+$$
+ (\rho_u^{\rm sm})'
+ =\cos^2\eta\,(\rho_u^{\rm pure})'
+  +\sin^2\eta\,B'_u
+  +\sin(2\eta)\eta'(B_u-\rho_u^{\rm pure}).
+\tag{211.40}
+$$
+在两个权重都非零处，为估计信息量可先保留一个正交准备标签，再将标签丢弃。丢弃标签是固定 CPTP 映射；其 SLD 信息单调性与保留标签时的直和公式给出
+$$
+ I_Q(\rho_u^{\rm sm})
+ \le \cos^2\eta\,I_Q(\rho_u^{\rm pure})
+    +\sin^2\eta\,I_Q(B_u)+4\eta'(u)^2.
+\tag{211.41}
+$$
+这里是三维混合态的上界，不是同空间混合的直和等式；辅助标签仅用于证明估计，不加入实际程序寄存器。权重取零或一时 $\eta'=0$，相应的单项曲线直接给出点态信息量。对仿射参考准备再保留两个端点的准备标签，还得到
+$$
+ I_Q(B_u)\le\frac1{(u-l)(1-u)}\qquad(u\in J_a).
+\tag{211.42}
+$$
+所以切换区域的信息成本有限，且已被（211.41）显式计入。在 $t$ 附近权重恒定为一，曲率完全保留为 $\kappa_*$。定理210.3给出完整校准集合的有限性；定理211.3的维数下界给出最小联合支持维数为三。
+
+上述纯态曲线本身不能具有右端 $C^1$ 矩阵延拓。事实上，纯态的固定投影读出满足
+$\|P_0\rho_u^{\rm pure}Q_0\|_2^2=p(u)(1-p(u))$，其中 $p(u)=(1+u)/2$。若在右端有 $C^1$ 延拓，由 $\operatorname{Tr}(Q_0\rho_1)=0$ 及正性得到端点交叉块为零，从而左侧为 $O((1-u)^2)$；右侧却渐近等于 $(1-u)/2$。矛盾。因此，开区间的全局纯态实现与具有光滑端点的实现是同一三维处理器上的两条不同准备曲线。证毕。
+
+测量 Fisher 信息与 SLD 的一般关系见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），以及 Barndorff-Nielsen、Gill，*Fisher information in quantum statistics*，arXiv:quant-ph/9808009。秩变化处点态 SLD 与连续 Bures 信息的区别见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）。本节由全输入程序的固定压缩关系、校准点的两个期望约束及其方差上界，确定此通道族的最优局部曲率；实际三维实现的全域性由固定方向夹逼和唯一选根证明，不由逐点可行性替代。光滑端点构造使用同空间混合，信息估计中明确计入参数相关的切换项。
 
 ## 追加锚（本行以下为增补区）
