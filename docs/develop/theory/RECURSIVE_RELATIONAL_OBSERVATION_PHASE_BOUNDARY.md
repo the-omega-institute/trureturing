@@ -1716,3 +1716,139 @@ $$
 [^phase_anytime_lil]: Yu Miao and Guangyu Yang，*The law of the iterated logarithm for additive functionals of Markov chains*，Statistics & Probability Letters **78** (2008)，[doi:10.1016/j.spl.2007.05.032](https://doi.org/10.1016/j.spl.2007.05.032)，[arXiv:math/0701167v2，Theorem 2.4](https://arxiv.org/pdf/math/0701167v2#page=3)。该定理的条件为平稳遍历链、$`g\in L_0^2(\pi)`$ 以及 $`\|\sum_{k<n}P^kg\|_2=O(n^a)`$ 对某个 $`a<1/2`$ 成立；本文通过 $`Pg=-pg`$ 和（13.13）核对条件及方差，只将已知迭代对数律作为接收失败证明的中间步骤。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. 一般有限维来源的收缩谱障碍
+
+**定义 14.1（固定等距来源及实际谱分量）。** 取有限维非零空间 $`M,B`$ 和固定等距
+
+$$
+T:M\longrightarrow M\otimes B,
+\qquad E(X)=\operatorname{Tr}_B(TXT^*),
+\qquad m=\dim M.
+\tag{14.1}
+$$
+
+每次只对活动 $`M`$ 重复同一个发射，已有档案不再作用于来源。固定纯初态 $`\rho_0=|\psi\rangle\langle\psi|`$，记 $`\rho_n=E^n(\rho_0)`$，其未接收的完整记忆—档案目标为纯态。对复线性映射 $`E`$ 的广义特征空间分解，记谱投影为 $`P_\lambda`$，称 $`\lambda`$ 在此来源轨道上实际出现，若 $`P_\lambda\rho_0\ne0`$。
+
+接收器为有限维 $`K`$、独立纯初态及同一个全域 CPTP 通道 $`\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)`$。每轮新环境可以丢弃，全部持久接收系统计入 $`K`$，不访问活动 $`M`$；终端局部解码器可依赖编号。只要求恢复这一个指定纯来源的完整联合目标，已经构成下面的必要条件。
+
+**定理 14.2（非零收缩谱阻止有限固定精确接收）。** 若存在实际出现的谱值满足
+
+$$
+0<|\lambda|<1,
+\tag{14.2}
+$$
+
+则定义14.1的任务不存在服务全部终端的有限固定接收器。令 $`c_\rho=\dim_{\mathbb C}\operatorname{span}\{E^n(\rho_0):n\ge0\}\le m^2`$。若一个 $`D`$ 维固定接收器精确服务前 $`N`$ 个终端，则
+
+$$
+\boxed{
+N<m^2D^2c_\rho\le m^4D^2,
+\qquad D>\sqrt{\frac{N}{m^2c_\rho}}\ge\frac{\sqrt N}{m^2}.
+}
+\tag{14.3}
+$$
+
+因此，若同一接收器还须对全部初始态精确服务全部终端，则源边缘通道必须满足
+
+$$
+\operatorname{spec}(E)\subseteq\{0\}\cup\{z\in\mathbb C:|z|=1\}.
+\tag{14.4}
+$$
+
+这是必要条件，不在本定理中宣称充分。零特征值对应的有限幂零暂态不受（14.2）排除；非平凡单位圆谱也没有被当作收缩模式。
+
+证明。先说明所需的谱性质。设有限维线性轨道 $`x_n=L^nx_0`$ 去掉零特征值的有限幂零前缀后写为
+
+$$
+x_n=\sum_{\lambda\in\Lambda}\lambda^n A_\lambda(n),
+\qquad r_x=\min_{\lambda\in\Lambda}|\lambda|>0,
+\tag{14.5}
+$$
+
+其中各 $`A_\lambda`$ 为非零向量多项式，$`\Lambda`$ 只收录实际非零谱。对任意正定内积，平方范数是基底 $`\overline\lambda\mu`$ 的指数多项式；其所有基底模至少为 $`r_x^2`$，而正实基底 $`r_x^2`$ 的系数恰为
+
+$$
+\sum_{|\lambda|=r_x}\|A_\lambda(n)\|^2\ne0.
+\tag{14.6}
+$$
+
+这是（10.10）—（10.11）的同一有限谱事实，不要求正规性、对角化或最低模谱值唯一。
+
+另取自主轨道 $`y_n=L'^ny_0`$，实际最低非零谱模为 $`r_y`$。其张量轨道由 $`L\otimes L'`$ 生成，实际最低非零谱模严格等于 $`r_xr_y`$。为核对可能的谱乘积碰撞，把两个空间分别分解为广义特征空间 $`G_\lambda,H_\mu`$。各
+ $`G_\lambda\otimes H_\mu`$
+仍构成直和，并对 $`L\otimes L'`$ 不变；当 $`\lambda\mu\ne0`$ 时，这一块可逆且只有谱值 $`\lambda\mu`$。初始分量为两个实际谱投影之张量，二者非零就给非零张量。即使不同谱对具有同一个乘积，它们也处于不同直和块，不能相消。因此
+
+$$
+r_{x\otimes y}=r_xr_y.
+\tag{14.7}
+$$
+
+这一步使用完整算子轨道的直和分量，不把任意标量指数级数的乘积误认作无抵消。
+
+现在假设有限固定精确接收存在。把一次发射与接收合成 $`H=M\otimes K`$ 上的固定通道 $`\mathcal R`$，得到 $`\sigma_n=\mathcal R^n\sigma_0`$。局部保迹接收不改变活动边缘，所以 $`\operatorname{Tr}_K\sigma_n=\rho_n`$。记两个完整轨道的实际最低非零谱模为 $`r_E,r_{\mathcal R}`$。迹为一使两者的实际非零谱集非空；有限维通道的谱位于闭单位盘，条件（14.2）故给 $`0<r_E<1`$。
+
+对每个终端的解码作纯化，目标纯态强制与其余环境成乘积，正如（10.7）。由纯化两侧非零谱相同，精确接收必须满足
+
+$$
+\|\operatorname{Tr}_M\sigma_n\|_{\rm HS}^2
+=\|\rho_n\|_{\rm HS}^2\|\sigma_n\|_{\rm HS}^2
+=\|\rho_n\otimes\sigma_n\|_{\rm HS}^2.
+\tag{14.8}
+$$
+
+左侧由对 $`\sigma_n`$ 施加线性偏迹后再取平方范数得到，因此没有模小于 $`r_{\mathcal R}^2`$ 的指数基底。右侧由（14.7）、（14.6），必有非零的正实基底
+
+$$
+(r_Er_{\mathcal R})^2<r_{\mathcal R}^2.
+\tag{14.9}
+$$
+
+不同非零基底的指数多项式在整数尾部线性独立，矛盾。这里的 $`\rho_n\otimes\sigma_n`$ 是证明中的数学张量轨道，没有要求接收器复制未知量子态。
+
+再证明显式有限时域界。取一份固定 Kraus 表 $`\mathcal R(X)=\sum_u L_uXL_u^*`$，并按（12.4）保留其词环境。精确终端恢复强制对全部同长度词 $`w,v`$ 及 $`A\in\operatorname{End}(M)`$ 有
+
+$$
+\langle\xi_0|L_w^*(A\otimes I_K)L_v|\xi_0\rangle
+=\operatorname{Tr}[\rho_0(E^*)^n(A)]
+\langle\xi_0|L_w^*L_v|\xi_0\rangle,
+\quad |w|=|v|=n,
+\tag{14.10}
+$$
+
+其中 $`|\xi_0\rangle=|\psi\rangle_M|e\rangle_K`$、$`\sigma_0=|\xi_0\rangle\langle\xi_0|`$。该式与记忆及累计环境的乘积分解逐矩阵元等价。
+
+用实际来源轨道的线性空间
+ $`C_\rho=\operatorname{span}_{\mathbb C}\{\rho_n:n\ge0\}`$
+及其限制映射 $`F=E|_{C_\rho}`$ 表示右侧的时间因子。记 $`t(x)=\operatorname{Tr}x`$、$`a_A(x)=\operatorname{Tr}(xA)`$ 为 $`C_\rho`$ 上的线性泛函；有 $`t(\rho_0)=1`$ 及 $`F^\vee t=t`$，其中 $`F^\vee f=f\circ F`$。取
+
+$$
+\mathcal V=\operatorname{End}(H)\otimes C_\rho^*,
+\qquad v:=\dim\mathcal V=m^2D^2c_\rho,
+\tag{14.11}
+$$
+
+并在线性延拓意义下定义
+
+$$
+\begin{aligned}
+g_A&=(A\otimes I_K)\otimes t-I_H\otimes a_A,\\
+\ell(X\otimes f)&=\operatorname{Tr}(\sigma_0X)f(\rho_0),\\
+\mathcal L_{uv}(X\otimes f)&=L_u^*XL_v\otimes F^\vee f.
+\end{aligned}
+\tag{14.12}
+$$
+
+长度 $`n`$ 的字母对复合把 $`g_A`$ 送到
+
+$$
+L_w^*(A\otimes I_K)L_v\otimes t
+-L_w^*L_v\otimes(F^\vee)^n a_A.
+\tag{14.13}
+$$
+
+用 $`\ell`$ 读取该式，恰得到（14.10）两侧之差；迹泛函的固定性使第一项不增加时间因子。与（12.12）相同，累计生成空间在至多 $`v`$ 层后稳定；长度零的等式由 $`\operatorname{Tr}_K\sigma_0=\rho_0`$ 自动成立。若前 $`v`$ 个终端均精确，$`\ell`$ 就在整个稳定空间上恒零，使（14.10）在全部长度成立。环境乘积分解随之对全部终端成立，并直接给出已被（14.9）排除的（14.8）。不需要假设合同之外存在解码器。因此 $`N<v`$，即得（14.3）。这里 $`c_\rho`$ 计数实际来源轨道的独立线性方向；定义9.1的非退化两态来源在第12节所选初态 $`\rho_0=|0\rangle\langle0|`$ 上有 $`c_\rho=2`$，因而本界恢复（12.1）的 $`8D^2`$ 时域。
+最后，假如 $`E`$ 具有任意非零收缩谱值，其非零谱投影不可能消去全部纯态投影，因为纯态投影复线性张成 $`\operatorname{End}(M)`$。故总能选择一个纯初态使该谱值实际出现；对全部初始态的任务必须包含这个初态，前述不能性适用。于是（14.4）必要。证明完毕。
+
+## 追加锚（本行以下为增补区）
