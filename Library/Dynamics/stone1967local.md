@@ -74,3 +74,32 @@ Stone's paper does not supply those statistical conclusions, a growing-row
 comparison, or an equivalence of complete experiments. Its nonlattice
 specialization does not justify using continuous tail prefactors at an
 arithmetic jump ratio.
+
+# Nonlattice capacity localization
+
+The parity fluctuation volume's Chapter 33 applies the same fixed-width local
+limit to both sides of a critical compensated-score threshold. Actual one-row
+and two-row comparisons put order q/sqrt(lambda) positions in either window
+for each fixed positive width. This exceeds the order sqrt(q) capacity
+correction. The width is sent to zero only after the sample limit. The argument
+therefore does not require a density or a relative local approximation in a
+window shrinking at the rank-fluctuation scale.
+
+The resulting actual pair/path theorem has a linear Gaussian coarse loss but
+retains a smaller posterior-centered Gaussian variance mixture. Stone's local
+limit and the conditional-Bernoulli tools used for that mixture are classical.
+The model-specific localization, exact finite minimax mean transfer and joint
+fixed-support coupling are `repo-derived` ordinary mathematics; the source does
+not state them. This comparison neither establishes global originality nor a
+finer universal expansion of the capacity correction's expectation.
+
+Chapter 33 also gives an actual-model obstruction to a shrinking-window
+relative formula. At fixed amplitude one half, a central integer Poisson-count
+pair has probability of order inverse lambda. The support-size and sample-size
+sequence keeps its compensated score inside a window of width
+sqrt(lambda/q); actual one-row comparison transfers the atom to both stationary
+experiments. Its mass exceeds the density-times-width scale q^(-1/2) by an
+unbounded factor. Stirling's formula and the discrete nonlattice obstruction
+are classical; this construction verifies the obstruction with the model's
+compensation, legal integer parameters and actual observation laws. It does
+not refute the fixed-width theorem or establish a finer mean-cost expansion.
