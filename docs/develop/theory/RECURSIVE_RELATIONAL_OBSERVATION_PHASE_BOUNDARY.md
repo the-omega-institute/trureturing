@@ -15796,3 +15796,540 @@ $$
 这一结论尚未排除 $FFF$，也未处理早期终端全部纯的其余候选。一般六终端容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
 
 ## 追加锚（本行以下为增补区）
+
+## 60. 七维早期纯分支的三维环境上界与非周期排列约束
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+接收器 $K$ 七维，从独立单位初态 $k$ 启动，同一个全域 CPTP 通道精确服务前六个完整参考—活动记忆—原档案恢复终端。本节研究 $r_1=r_2=1$ 分支。第三至第六终端的档案秩为四，七维性使这些终端的附加态也纯。固定同一 Stinespring 等距的两个输入位块 $V_0,V_1$，每轮实际新环境为来源无关单位向量 $\eta_n$。
+
+第50节已结算全六轮周期至多二的纯环境子类，第52节排除三个线性无关环境按 $ABCABC$ 出现。本节不预设周期或环境正交：证明全部六轮环境的张成维数至多三，再排除三个独立环境在后半任意重排的情形。
+
+### 60.1 共同的实际输入空间
+
+前两轮可取正交单位接收向量 $p,q$ 及正交单位向量 $u,v,w$，满足
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes\eta_2,&V_1p&=v\otimes\eta_2,&
+V_0q&=w\otimes\eta_2.
+\end{aligned}
+\tag{60.1}
+$$
+因此
+$$
+\begin{aligned}
+H_1&=\operatorname{span}(p,q),&G_1&=\mathbb Cp,\\
+H_2&=\operatorname{span}(a^2u+bv,w),&
+G_2&=U=\operatorname{span}(u,w).
+\end{aligned}
+\tag{60.2}
+$$
+对 $3\le n\le6$，实际 $H_n,G_n,Q_n$ 均二维，且
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n.
+\tag{60.3}
+$$
+$H_n\subset G_n\oplus Q_n$ 到两个同轮因子的投影均为同构。特别地，
+$$
+H_n\cap G_n=0\quad(n\ge3),\qquad
+H_2\cap G_2=\mathbb Cw.
+\tag{60.4}
+$$
+这些关系保留同一实际初态及固定全域等距，不只记录各终端可分别达到的维数。
+
+### 60.2 三维尾环境强制首轮环境封闭
+
+置
+$$
+F_2=\operatorname{span}\{\eta_2,\eta_3,\eta_4,\eta_5,\eta_6\},
+\qquad
+F_3=\operatorname{span}\{\eta_3,\eta_4,\eta_5,\eta_6\}.
+\tag{60.5}
+$$
+
+**定理60.1（三维尾环境的首轮封闭性）。** 本节合同下有
+$$
+\dim F_2\le3.
+\tag{60.6}
+$$
+若 $\dim F_3=3$，则
+$$
+\eta_1,\eta_2\in F_3,
+\qquad
+\operatorname{span}\{\eta_1,\ldots,\eta_6\}=F_3.
+\tag{60.7}
+$$
+
+**证明。** 第 $n=2$ 轮有 $V_0H_1=U\otimes\eta_2$；第 $n=3,\ldots,6$ 轮的零位像由（60.3）给出，每个接收因子均二维。若 $\eta_2,\ldots,\eta_6$ 中有四个线性无关向量，对应的四个二维像为代数直和，维数八，不能包含于七维 $V_0K$。故（60.6）成立。
+
+现在设 $\dim F_3=3$。取其中三个实际尾环境作为基，指标集为 $J\subset\{3,4,5,6\}$。对应零位像的和六维。若 $\eta_2\notin F_3$，加入 $U\otimes\eta_2$ 得八维，矛盾。因此 $\eta_2\in F_3$。
+
+反设 $\eta_1\notin F_3$。首轮零、一位像各再添加一维，两个全域位像都被饱和：
+$$
+\begin{aligned}
+V_0K&=(\mathbb Cp\otimes\eta_1)
+\dotplus\mathop{\dotplus}_{j\in J}(G_j\otimes\eta_j),\\
+V_1K&=(\mathbb Cq\otimes\eta_1)
+\dotplus\mathop{\dotplus}_{j\in J}(Q_j\otimes\eta_j).
+\end{aligned}
+\tag{60.8}
+$$
+这些是由环境线性独立得到的代数直和，不要求正交。由 $V_1$ 单射，
+$$
+K=\mathbb Ck\dotplus\mathop{\dotplus}_{j\in J}G_{j-1}.
+\tag{60.9}
+$$
+
+写 $\eta_2=\sum_{j\in J}\alpha_j\eta_j$。因为 $U\otimes\eta_2\subset V_0K$，逐环境坐标比较（60.8）得
+$$
+\alpha_j\ne0\quad\Longrightarrow\quad U=G_j.
+\tag{60.10}
+$$
+这里先得到 $U\subseteq G_j$，再用两者均二维。
+
+还有一个共同矛盾：如果推出 $\eta_2\parallel\eta_j$，其中 $j\ge4$，则（60.10）给 $U=G_j$，所以
+$$
+V_0H_1=V_0H_{j-1},\qquad H_1=H_{j-1}.
+$$
+另一方面，$V_1p=v\otimes\eta_2$ 与（60.8）的一位环境坐标比较，给 $v\in Q_j$，继而 $p\in G_{j-1}$。于是
+$$
+0\ne p\in H_{j-1}\cap G_{j-1},
+\tag{60.11}
+$$
+违反 $j-1\ge3$ 时的（60.4）。
+
+可以选择包含 $\eta_3$ 的尾环境基，且只需以下三类：若 $\eta_3,\eta_4,\eta_5$ 独立，取 $J=\{3,4,5\}$；否则 $\eta_6$ 补足第三维，$\eta_3,\eta_4$ 独立时取 $J=\{3,4,6\}$，二者相关时取 $J=\{3,5,6\}$。
+
+取 $J=\{3,4,5\}$ 时，（60.9）中的 $G_2,G_3,G_4$ 为代数直和。（60.10）说明 $\eta_2$ 的 $\eta_3$ 系数非零会给 $U=G_3$，$\eta_4$ 系数非零会给 $U=G_4$，都违反 $U=G_2$ 与这两个输入空间交零。因此 $\eta_2\parallel\eta_5$，由（60.11）矛盾。
+
+取 $J=\{3,4,6\}$ 时，$G_2,G_3,G_5$ 为代数直和。$\eta_2$ 的 $\eta_3$ 系数必须为零。若其 $\eta_4$ 系数非零，则 $U=G_4$。固定 $V_1$ 在相同输入 $G_2=G_4$ 上的像相同，故 $\eta_5\parallel\eta_3$。再比较（60.8）的零位 $\eta_3$ 纤维，得到 $G_5=G_3$，与（60.9）矛盾。因此只剩 $\eta_2\parallel\eta_6$，仍由（60.11）矛盾。
+
+取 $J=\{3,5,6\}$ 时，$G_2,G_4,G_5$ 为代数直和。$\eta_2$ 的 $\eta_5$ 系数非零会给 $U=G_5$，故必须为零。若 $\eta_3$ 系数非零，则 $U=G_3$；固定 $V_1$ 给 $\eta_4\parallel\eta_3$，而（60.8）的零位 $\eta_3$ 纤维给 $G_4=G_3=U$，同样违反（60.9）。因此又只剩 $\eta_2\parallel\eta_6$，由（60.11）矛盾。
+
+三个基选择都排除了 $\eta_1\notin F_3$，所以（60.7）成立。证明完毕。
+
+### 60.3 全部六环境的三维上界
+
+**定理60.2（早期纯分支的环境维数上界）。** 本节七维六终端合同下，
+$$
+\boxed{\dim\operatorname{span}\{\eta_1,\eta_2,\eta_3,\eta_4,\eta_5,\eta_6\}\le3.}
+\tag{60.12}
+$$
+该结论不限制环境射线的相互交叠，不要求它们按周期重复。
+
+**证明。** 定理60.1给 $\dim F_2\le3$，所以全部环境的张成维数至多四。反设总维数为四，则 $\dim F_2=3$、$\eta_1\notin F_2$。若 $\dim F_3=3$，定理60.1又给 $\eta_1\in F_3$，矛盾；若 $\dim F_3\le1$，加入 $\eta_2,\eta_1$ 后总维数至多三。因此必有
+$$
+\dim F_3=2,\qquad
+\eta_2\notin F_3,\qquad
+\eta_1\notin\operatorname{span}(F_3,\eta_2).
+\tag{60.13}
+$$
+
+在 $F_3$ 中选择两份实际独立尾环境 $\alpha,\beta$，对应二维接收因子 $T_\alpha,T_\beta$。四个环境方向 $\eta_1,\eta_2,\alpha,\beta$ 线性独立，已知零位像的维数为 $1+2+2+2=7$，于是
+$$
+V_0K=(\mathbb Cp\otimes\eta_1)
+\dotplus(U\otimes\eta_2)
+\dotplus(T_\alpha\otimes\alpha)
+\dotplus(T_\beta\otimes\beta).
+\tag{60.14}
+$$
+所有实际尾零位像都位于后两个二维块之和。
+
+若出现第三条不同尾射线 $\gamma=c_\alpha\alpha+c_\beta\beta$，其中 $c_\alpha c_\beta\ne0$，其二维接收因子包含于 $T_\alpha\cap T_\beta$，所以两者相等，继而每个 $G_3,\ldots,G_6$ 都相同。固定 $V_1$ 在 $G_3,G_4,G_5$ 上的像相同，给 $\eta_4\parallel\eta_5\parallel\eta_6$。这使四个尾位置最多只有 $\eta_3$ 与这一条共同射线，不能出现第三条。因此实际尾词只有两条不同射线。
+
+将首条记为 $A$。由（60.14），同一环境射线的接收纤维唯一，因此相同字母对应的 $G_n$ 相等。若 $\eta_4\parallel A$，则 $G_3=G_4$，固定 $V_1$ 给 $\eta_4\parallel\eta_5$；再由 $G_4=G_5$ 得 $\eta_5\parallel\eta_6$，使尾环境共线，矛盾。因此 $\eta_4$ 属于第二条射线 $B$。
+
+若 $\eta_5\parallel B$，则 $G_4=G_5$，固定 $V_1$ 给 $\eta_6\parallel B$。同一零位纤维因而使 $G_4=G_5=G_6$、$H_3=H_4=H_5$，与实际来源的主角行列式变化矛盾。具体地，令 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$。第53节式（53.14）给
+$$
+\delta_n=\det(P_{H_n}P_{G_n}|_{H_n})
+=x^2\frac{t_{n-2}}{t_n},
+\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0.
+\tag{60.15}
+$$
+
+因此 $\eta_5\parallel A$。此时 $G_3=G_5$，固定 $V_1$ 给 $\eta_6\parallel\eta_4\parallel B$，并由同一零位纤维得到
+$$
+\eta_3\parallel\eta_5\parallel A,\quad
+\eta_4\parallel\eta_6\parallel B,\quad
+G_3=G_5,\quad G_4=G_6,\quad H_2=H_4.
+\tag{60.16}
+$$
+这是反设内部的必要形状，还须满足第六轮的固定等距约束。
+
+第四、第六轮共用环境射线 $B$，所以
+$$
+V_0H_3=G_4\otimes B=G_6\otimes B=V_0H_5,
+\qquad H_3=H_5.
+\tag{60.17}
+$$
+同轮正交及满投影给
+$$
+Q_3=P_{G_3^\perp}H_3
+=P_{G_5^\perp}H_5=Q_5.
+\tag{60.18}
+$$
+这里等号来自相同实际子空间的投影像，没有仅凭环境相同识别接收空间。固定一位映射在第三、第五轮的输入于是满足
+$$
+V_1U=Q_3\otimes A=Q_5\otimes A=V_1G_4,
+\qquad G_4=U.
+\tag{60.19}
+$$
+结合 $H_2=H_4$，得到
+$$
+0\ne w\in H_2\cap U=H_4\cap G_4,
+\tag{60.20}
+$$
+违反（60.4）。因此四维总环境张成不可能，（60.12）成立。证明完毕。
+
+最后的闭合也可直接由来源主角核对：式（60.16）、（60.17）使 $(H_3,G_3)=(H_5,G_5)$，而实际来源有 $\delta_5-\delta_3=x^4y^2/(t_3t_5)>0$。主证明使用同轮满投影，只依赖实际第六轮，没有调用第七轮或全六轮周期假设。
+
+### 60.4 三个独立环境的后半重排
+
+**定理60.3（独立环境的六种重排词下界）。** 如果前三轮实际环境为线性无关的 $A,B,C$，后三轮再次使用这三条射线，每条恰一次，次序任意，则接收维数必须满足
+$$
+D\ge8.
+\tag{60.21}
+$$
+所以七维不能实现
+$$
+ABCABC,\quad ABCACB,\quad ABCBAC,\quad
+ABCBCA,\quad ABCCAB,\quad ABCCBA.
+\tag{60.22}
+$$
+不同环境不必正交。后五种词没有被假定为三周期。
+
+**证明。** 对每条环境射线 $\xi$，把其两次实际轮次 $i\in\{1,2,3\}$、$j\in\{4,5,6\}$ 分组。零位累计输入记为 $\mathcal H_\xi$，一位累计输入记为 $\mathcal G_\xi$。第1轮的两个输入域均为 $\mathbb Ck$，第2轮为 $H_1,G_1$，第3轮为 $H_2,G_2$；后半第 $j$ 轮为 $H_{j-1},G_{j-1}$。
+
+$A,B,C$ 线性独立，故三份 $V_0\mathcal H_\xi$ 为代数直和，三份 $V_1\mathcal G_\xi$ 也是代数直和。两个位块都等距，所以
+$$
+\sum_{\xi\in\{A,B,C\}}\dim\mathcal H_\xi\le D,
+\qquad
+\sum_{\xi\in\{A,B,C\}}\dim\mathcal G_\xi\le D.
+\tag{60.23}
+$$
+每组的两个输入维数之和至少五：
+
+- 若 $i=1$，后半 $H_{j-1},G_{j-1}$ 各二维且交零，非零 $k$ 不可能同时位于二者。将 $\mathbb Ck$ 分别加入后，总维数至少五。
+- 若 $i=2$，总和只有四就必须有 $H_1=H_{j-1}$ 且 $p\in G_{j-1}$。但 $p\in H_1$，违反 $H_{j-1}\cap G_{j-1}=0$。
+- 若 $i=3$，总和只有四就必须有 $H_2=H_{j-1}$、$G_2=G_{j-1}$，使非零 $w\in H_2\cap G_2$ 落入后半交零子空间，矛盾。
+
+因此
+$$
+2D\ge\sum_{\xi\in\{A,B,C\}}
+\bigl(\dim\mathcal H_\xi+\dim\mathcal G_\xi\bigr)
+\ge15,
+\tag{60.24}
+$$
+整数 $D\ge8$。证明完毕。
+
+第52节的 $ABCABC$ 是此结论的一个特例；新的量词允许后半任意排列，没有把非周期词变换成周期词后套用原结论。
+
+### 60.5 未结算的纯环境范围
+
+定理60.2把全部六轮环境的共同张成限制为至多三维，没有证明这些环境具有周期。三维、二维环境中的全部非周期序列仍未排除；环境 Gram 矩阵秩不超过三也不是完整接收器可实现性的充分条件，仍须满足同一初态和固定全域 Stinespring 等距的全部跨轮关系。
+
+定理60.3排除六种独立环境重排，不覆盖三个不同射线只张成二维的情形。一般七维六终端的 $r_1=r_2=1$ 分支仍未结算；本节也不改变第二终端秩二分支的边界。因此一般容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{60.25}
+$$
+
+## 追加锚（本行以下为增补区）
+
+## 61. 七维第二终端秩二只余非正交的两种尾模式
+
+采用第53、58、59节的实际合同：来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$ 非退化，接收器 $K$ 七维、独立纯启动，全部持久资源计费，同一全域 CPTP 通道精确服务前六个完整参考终端；第二终端可逆附加态秩二。
+
+记旧接收编码 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$。$u,v,w$ 正交单位，
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}((a^2u+bv)/\sqrt{|a|^4+|b|^2},w).
+$$
+第三轮排出附加因子的等距为 $R_\Gamma:\Gamma\to F$，$\dim F=2$。写 $A_0=G_3$、$B_0=Q_3$，则
+$$
+V_0(H\otimes\Gamma)=A_0\otimes F,\qquad
+V_1(G\otimes\Gamma)=B_0\otimes F,
+\qquad A_0\perp B_0.
+\tag{61.1}
+$$
+对 $n=4,5,6$，有
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{61.2}
+$$
+各 $H_n,G_n,Q_n$ 二维；$C_n=G_n\oplus Q_n$ 四维，$H_n$ 到两个正交因子的投影均为同构。本稿只研究
+$$
+\eta_4,\eta_5,\eta_6\in F.
+\tag{61.3}
+$$
+
+### 61.1 三种内部射线模式
+
+**引理61.1（内部尾的射线分类与非正交性）。** 用相同字母表示同一射线、不同字母表示不同射线，三个纯尾环境只可能为
+$$
+AAA,\qquad AAB,\qquad ABA.
+\tag{61.4}
+$$
+在后两种模式中，取不同射线的单位代表 $\alpha,\beta$，必有
+$$
+0<|\langle\alpha,\beta\rangle|<1.
+\tag{61.5}
+$$
+
+**证明。** 若 $\eta_4\parallel\eta_5$，则直接得到 $AAA$ 或 $AAB$。以下设它们不同。
+
+固定 $V_1$ 将 $A_0=G_3$ 和 $G_4$ 分别送到不同环境射线，因此
+$$
+A_0\cap G_4=0.
+$$
+于是 $A_0\otimes F+G_4\otimes\eta_4$ 六维。对接收空间取商 $\pi:K\to K/A_0$。包含于 $V_0K$ 的空间
+$$
+A_0\otimes F+G_4\otimes\eta_4+G_5\otimes\eta_5
+$$
+在此商上的像为
+$$
+\pi(G_4)\otimes\eta_4+\pi(G_5)\otimes\eta_5.
+$$
+两环境向量独立，故维数为 $2+\dim\pi(G_5)$。核恰为四维 $A_0\otimes F$，七维位像给 $\dim\pi(G_5)\le1$。所以
+$$
+A_0\cap G_5\ne0.
+$$
+固定 $V_1$ 在这两个域上分别使用 $\eta_4$、$\eta_6$；单射性迫使它们共线。得到 $ABA$。
+
+再排除正交。若存在 $j\in\{5,6\}$ 使 $\eta_4\perp\eta_j$，式（61.2）和固定等距给
+$$
+A_0\perp G_{j-1},\qquad H_3\perp H_{j-1}.
+\tag{61.6}
+$$
+因为所有尾环境属于 $F$，旧块（61.1）与跨位正交给全部 $n=4,5,6$ 的
+$$
+B_0\perp G_n,\qquad A_0\perp Q_n.
+\tag{61.7}
+$$
+对 $h\in H_3\subset A_0\oplus B_0$、$h'\in H_{j-1}\subset G_{j-1}\oplus Q_{j-1}$，式（61.6）、（61.7）使
+$$
+0=\langle h,h'\rangle
+=\langle P_{B_0}h,P_{Q_{j-1}}h'\rangle.
+$$
+两个投影满射，故 $B_0\perp Q_{j-1}$。于是
+$$
+C_3=A_0\oplus B_0\ \perp\ C_{j-1}=G_{j-1}\oplus Q_{j-1},
+$$
+七维空间不可能包含两个正交四维空间，矛盾。在 $AAB$ 中取 $j=6$，在 $ABA$ 中取 $j=5$，即得（61.5）。证明完毕。
+
+### 61.2 非常值尾的接收空间必为四维加三维
+
+**引理61.2（非常值尾的接收支撑分解）。** 在 $AAB$ 或 $ABA$ 两种模式下，置
+$$
+L_0=A_0+G_4+G_5+G_6,\qquad
+L_1=B_0+Q_4+Q_5+Q_6.
+\tag{61.8}
+$$
+则
+$$
+K=L_0\oplus L_1,\qquad
+\dim L_0=4,\qquad\dim L_1=3,
+\qquad L_0\perp L_1.
+\tag{61.9}
+$$
+进一步，若 $R_\Gamma\xi_\alpha=\alpha$、$R_\Gamma\xi_\beta=\beta$，则
+$$
+\begin{array}{c|c|c|c}
+\text{环境模式}&\text{重复零位接收空间}&\text{实际零记忆空间}&\text{重复一位接收空间}\\ \hline
+AAB&G_4=A_0&H_3=H\otimes\mathbb C\xi_\alpha&Q_5=Q_4\\
+ABA&G_5=A_0&H_4=H\otimes\mathbb C\xi_\beta&Q_6=Q_4
+\end{array}
+\tag{61.10}
+$$
+
+**证明。** （61.1）使 $A_0\perp Q_n$、$B_0\perp G_n$。又因任意两个尾环境的内积均非零，（61.2）和跨位正交给所有 $G_n\perp Q_m$。这证明 $L_0\perp L_1$。
+
+在 $AAB$ 中，$V_1A_0$ 使用 $\alpha$，$V_1G_5$ 使用 $\beta$，故 $A_0\cap G_5=0$；在 $ABA$ 中同理有 $A_0\cap G_4=0$。因此两种模式均满足 $\dim L_0\ge4$，从而 $\dim L_1\le3$。
+
+若 $\dim L_1=2$，则 $Q_4=Q_5=Q_6=B_0$。在 $AAB$ 中，固定 $V_1$ 与旧块给
+$$
+A_0=G_4=G\otimes\mathbb C\xi_\alpha.
+$$
+继而固定 $V_0$ 给
+$$
+H_3=H\otimes\mathbb C\xi_\alpha.
+$$
+非零 $w\otimes\xi_\alpha$ 因而属于 $H_3\cap G_3$，矛盾。
+
+在 $ABA$ 中，固定 $V_1$ 与旧块给
+$$
+G_4=G\otimes\mathbb C\xi_\beta,\qquad
+G_5=A_0=G\otimes\mathbb C\xi_\alpha.
+$$
+继而固定 $V_0$ 给 $H_4=H\otimes\mathbb C\xi_\beta$，非零 $w\otimes\xi_\beta$ 属于 $H_4\cap G_4$，同样矛盾。
+
+所以 $\dim L_1\ge3$。结合正交与 $\dim K=7$，得到（61.9）。
+
+在 $AAB$ 中，$V_1(A_0+G_4)$ 使用 $\alpha$，$V_1G_5$ 使用 $\beta$；两个像交零。所以
+$$
+\dim(A_0+G_4)+2\le\dim L_0=4.
+$$
+因而 $G_4=A_0$。将（61.1）、（61.2）同一环境的像比较，依次得到 $H_3=H\otimes\mathbb C\xi_\alpha$ 及 $Q_5=Q_4$。
+
+在 $ABA$ 中，$V_1(A_0+G_5)$ 使用 $\alpha$，$V_1G_4$ 使用 $\beta$。同理得到 $G_5=A_0$，继而 $H_4=H\otimes\mathbb C\xi_\beta$、$Q_6=Q_4$。证明完毕。
+
+### 61.3 共同内部尾环境不可能
+
+**引理61.3（共同内部尾环境不可能）。** 不可能有
+$$
+\eta_4\parallel\eta_5\parallel\eta_6,\qquad \eta_4\in F.
+\tag{61.11}
+$$
+即第二终端秩二的 $FFF$ 候选不能采用 $AAA$ 模式。
+
+**证明。** 选共同单位环境 $\eta=R_\Gamma\xi$，记
+$$
+H_\xi=H\otimes\mathbb C\xi,\qquad
+G_\xi=G\otimes\mathbb C\xi,\qquad w_\xi=w\otimes\xi.
+$$
+$w_\xi\ne0$ 且 $w_\xi\in H_\xi\cap G_\xi$。这里 $H_\xi,G_\xi$ 只是旧混合编码中的子空间，未把实际第二终端改称纯态。
+
+第三轮旧块使用同一排出等距 $R_\Gamma$，其逐切片等式给 $V_0H_\xi=A_0\otimes\eta$、$V_1G_\xi=B_0\otimes\eta$。连同实际后三轮，全部四组输入子空间都使用同一环境：
+$$
+\begin{array}{c|cccc}
+\text{零位输入}&H_\xi&H_3&H_4&H_5\\
+\text{接收像}&A_0&G_4&G_5&G_6\\ \hline
+\text{一位输入}&G_\xi&A_0&G_4&G_5\\
+\text{接收像}&B_0&Q_4&Q_5&Q_6
+\end{array}
+\tag{61.12}
+$$
+令
+$$
+S_0=H_\xi+H_3+H_4+H_5,\qquad
+S_1=G_\xi+A_0+G_4+G_5.
+$$
+去掉共同环境，得到等距 $f:S_0\to K$、$g:S_1\to K$。它们的接收像为
+$$
+L_0=fS_0=A_0+G_4+G_5+G_6,
+\qquad
+L_1=gS_1=B_0+Q_4+Q_5+Q_6.
+\tag{61.13}
+$$
+跨位正交给 $L_0\perp L_1$。置 $l_i=\dim S_i=\dim L_i$，则
+$$
+l_0+l_1\le7.
+\tag{61.14}
+$$
+实际来源保证各 $H_n,G_n,Q_n$ 二维，$C_n=G_n\oplus Q_n$，$H_n$ 到两个因子的投影均为同构。因此对 $n=3,4,5$，
+$$
+P_{L_0}H_n=G_n,\qquad P_{L_1}H_n=Q_n,
+\qquad H_n\cap L_0=0.
+\tag{61.15}
+$$
+
+**维数只剩三加三、三加四或四加三。**
+
+首先 $l_0,l_1\ge3$。若 $l_0=2$，则（61.12）给 $A_0=G_4=G_5$、$H_3=H_4$，从而 $(H_3,G_3)=(H_4,G_4)$。这违反第53节的实际主角谱：令 $x=|a|^2$、$y=|b|^2$、$t_0=1$、$t_j=1-y t_{j-1}$，则
+$$
+\delta_n=\det(P_{H_n}P_{G_n}|_{H_n})
+=x^2\frac{t_{n-2}}{t_n},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{61.16}
+$$
+若 $l_1=2$，则 $G_\xi=A_0=G_4$。由（61.12）的 $f$ 单射性有 $H_\xi=H_3$，所以 $w_\xi\in H_3\cap G_3$，亦矛盾。
+
+再令
+$$
+U=A_0+G_4+G_5.
+\tag{61.17}
+$$
+有 $U\subseteq L_0$ 及 $U\subseteq S_1$。它不能二维：否则 $A_0=G_4=G_5$，固定 $f$ 再次给 $H_3=H_4$，违反（61.16）。结合（61.14）和 $l_0,l_1\ge3$，得到
+$$
+\dim U=3,
+\qquad(l_0,l_1)\in\{(3,3),(3,4),(4,3)\}.
+\tag{61.18}
+$$
+
+**排除三维零位接收像。**
+
+假设 $l_0=3$，则 $U=L_0$。由（61.15），$H_3,H_4,H_5\subset S_0$ 到 $L_0$ 的投影像共同张成 $U=L_0$。所以 $P_{L_0}|_{S_0}$ 满射；两个空间均三维，故它是同构。存在唯一线性映射
+$$
+T:L_0\to L_0^\perp
+$$
+使 $S_0$ 是其图。式（61.15）和（61.12）给
+$$
+T(A_0)=B_0=gG_\xi,\qquad
+T(G_4)=Q_4=gA_0,\qquad
+T(G_5)=Q_5=gG_4.
+\tag{61.19}
+$$
+
+若 $A_0=G_4$，则图中投影为同一二维平面的子空间唯一，故 $H_3=H_4$。由 $f$ 单射及（61.12）又得 $G_4=G_5$，于是 $U$ 仅二维，违反（61.18）。所以 $A_0\ne G_4$，两个平面共同张成 $L_0$。
+
+由（61.19），$\operatorname{im}T$ 包含
+$$
+B_0+Q_4+Q_5
+=g(G_\xi+A_0+G_4)
+=g(G_\xi+L_0)=gS_1=L_1.
+\tag{61.20}
+$$
+若 $l_1=4$，三维域上的 $T$ 不可能有四维像。若 $l_1=3$，则（61.20）强迫 $T$ 的核为零；但 $S_1=G_\xi+L_0$ 同为三维，故 $G_\xi\subseteq L_0$。非零 $w_\xi$ 同时属于 $H_\xi\subset S_0$ 与 $G_\xi\subset L_0$，所以 $Tw_\xi=0$，矛盾。两种情形均排除。
+
+**排除四维零位接收像。**
+
+只余 $l_0=4,l_1=3$。由（61.18），$U=S_1$，所以
+$$
+G_\xi\subseteq U\subseteq L_0.
+\tag{61.21}
+$$
+$f:S_0\to L_0$ 是满等距，令
+$$
+D=f^{-1}(U).
+$$
+则 $D$ 三维，且（61.12）给
+$$
+H_\xi,H_3,H_4\subseteq D.
+\tag{61.22}
+$$
+若 $A_0=G_4$，则（61.12）强迫 $H_\xi=H_3$。由（61.21），非零 $w_\xi$ 落入 $H_3\cap L_0$，违反（61.15）。因此 $A_0\ne G_4$，二者张成三维 $U$。
+
+$Q_3,Q_4\subset L_1\perp U$，故
+$$
+P_UH_3=A_0,\qquad P_UH_4=G_4.
+$$
+由（61.22），$P_U|_D$ 满射且两个空间同为三维。因此 $D$ 是某个线性映射 $T:U\to U^\perp$ 的图，满足
+$$
+T(A_0)=B_0=gG_\xi,\qquad T(G_4)=Q_4=gA_0.
+\tag{61.23}
+$$
+非零 $w_\xi\in H_\xi\subset D$ 且由（61.21）在 $U$ 中，所以 $Tw_\xi=0$，进而 $\operatorname{rank}T\le2$。（61.23）的两个像各二维，因此
+$$
+B_0=Q_4,\qquad gG_\xi=gA_0.
+$$
+$g$ 单射使 $G_\xi=A_0$。现在 $w_\xi\in A_0$，而（61.23）使 $T|_{A_0}$ 从二维到二维满射，因而单射。这与 $Tw_\xi=0$ 矛盾。
+
+全部可能维数均已排除，故（61.11）不成立。证明完毕。
+
+### 61.4 第二终端秩二的剩余必要形式
+
+**定理61.4（只余两种非正交内部尾）。** 在本节合同下，三个纯尾环境只可能为
+$$
+(\eta_4,\eta_5,\eta_6)=(\alpha,\alpha,\beta)
+\quad\text{或}\quad
+(\alpha,\beta,\alpha),
+$$
+其中 $\alpha,\beta\in F$ 为不同射线的单位代表，且
+$$
+0<|\langle\alpha,\beta\rangle|<1.
+$$
+两种模式均满足引理61.2的四维加三维接收支撑分解及式（61.10）的相应等式。
+
+**证明。** 第58、59节排除外部尾模式；引理61.1把内部尾限定为 $AAA,AAB,ABA$ 且异射线非正交；引理61.3排除 $AAA$。证明完毕。
+
+式（61.9）只给实际第三至第六终端所用接收因子的分解，没有声称 $V_iK\subseteq L_i\otimes E$ 对整个全域位像成立。剩余未被这些纯尾域使用的输入仍须接受同一固定通道的约束。本节尚未排除 $AAB$ 或 $ABA$ 的全部参数，未给出七维实现，也未处理早期终端全部纯的其余候选；一般六终端容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
