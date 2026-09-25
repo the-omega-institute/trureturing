@@ -266,3 +266,9 @@ reconstructions, arithmetic bounds, complete coverage and source
 fingerprints. Reproduce with
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/central_square_63_profile.py
+
+[Report602](602-a-common-pure-tail-budget-preserves-leaf-masses-and-density-references.md)
+keeps the pure-tail budget common across central leaves and carries the
+normalizing density together with their masses. Its finite convex
+boundary preserves arbitrary-depth query caps; it does not add a new
+positive continuation gate to the result above.
