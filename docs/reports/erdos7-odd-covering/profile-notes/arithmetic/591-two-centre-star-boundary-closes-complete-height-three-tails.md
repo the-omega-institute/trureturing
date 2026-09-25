@@ -274,3 +274,12 @@ to control their joint deletion and future queries, together with
 a continuation over arbitrary additional primes. Root independence,
 central-star compatibility, and original numerical-label ownership
 must remain explicit in such a strengthening.
+
+[Report592](592-joint-second-moment-extends-cubic-tails-to-ten-primes.md)
+controls the joint second moment of this same seven-prime source and
+extends continuation to 23,29,31. Its ordered-prime transport gives a
+ten-prime result with the same first-seven exponent restriction. It also
+records an actual mixed-square dead fibre showing why the complete old
+first-root marginal cannot always be preserved when that restriction is
+removed. The present nine-prime density and extra-square budget remain
+available independently.
