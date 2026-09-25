@@ -1,0 +1,7 @@
+{
+  "verify_partition_closure.py": "780614da239b9a26496e70b92b0ff17fa4cfbf88f5f8ae37c70887eb9fa0a1af",
+  "verify_fixed_c2_closure.py": "9afb5b440c297a2c0d73eb927ccfbd4862e435f76368e2759d05c04c7d18a1bc",
+  "verification.json": "4a1128e121baff598bc72412a0df41d41b69571953e1e5aa7bf496aca76726be",
+  "fixed_c2_verification.json": "02b2d23353dc06bc970549b35110d3cf86ef5af6644ccb42b25aaa4f5dcd3664",
+  "literature_ledger.json": "922ee9b367f80d73e6c48b855c414394d0f2175807f899af214a85a83102d972"
+}
