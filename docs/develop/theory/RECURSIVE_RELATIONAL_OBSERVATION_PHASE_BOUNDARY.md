@@ -10907,7 +10907,7 @@ $$
 
 $$
 \mathcal H_0=
-\{h\in\mathbb T^q:\exists |z_i|=1,\ 
+\{h\in\mathbb T^q:\exists |z_i|=1,
 e^{ih\cdot g_{ij}}=z_i\overline{z_j}\text{ 对全部支持边}\}.
 \tag{42.8}
 $$
