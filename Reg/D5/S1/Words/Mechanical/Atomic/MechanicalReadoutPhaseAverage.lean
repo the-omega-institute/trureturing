@@ -99,6 +99,7 @@ register_information_theorem
   variation phaseAverageVariation sensitivity phaseAverageSensitivity
   escape from (Set ℝ) escape continues (open)
 
+open Lean in
 run_meta do
   let row := (TemplateBinding.records (← getEnv)).find? fun record =>
     record.occurrence.key.theoremName ==
