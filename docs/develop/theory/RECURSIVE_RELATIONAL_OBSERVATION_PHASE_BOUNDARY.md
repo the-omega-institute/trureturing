@@ -14888,3 +14888,260 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 56. 七维秩二第一终端只余两种非正交尾模式
+
+### 56.1 实际合同与主结论
+
+固定第54、55节的实际合同：非退化来源 $ab\ne0$，七维接收器独立纯启动，同一个全域 CPTP 接收通道服务前六个完整参考终端，$r_1=2,r_2=1$。沿用二维 $U=G_2=\operatorname{span}(u,w)$、二维环境 $F$、四维早期输入 $X$，以及
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+V_0X=U\otimes F,\qquad V_1P_0=\mathbb Cv\otimes F.
+\tag{56.1}
+$$
+$u,v,w$ 正交单位。对单位 $\xi\in F$，有单位 $p_\xi\in X_\xi$，满足
+$$
+V_0X_\xi=U\otimes\xi,\qquad V_1p_\xi=v\otimes\xi.
+\tag{56.2}
+$$
+各纯尾系数空间满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n\quad(3\le n\le6),
+\tag{56.3}
+$$
+各 $H_n,G_n,Q_n$ 二维，$H_n\subset G_n\oplus Q_n$ 到 $G_n,Q_n$ 的正交投影均为同构。第54节给全部尾环境在 $F$ 内，故旧块与不同输入位正交使
+$$
+v\perp U+G_3+G_4+G_5+G_6,\qquad Q_n\perp U.
+\tag{56.4}
+$$
+同一个 $V$ 的两位像正交；同环境方向中的两份接收像因而正交。
+
+**定理56.1（两种非正交尾模式的必要限制）。** 在上述七维六终端合同中，若 $r_1=2,r_2=1$，则第3至第6轮的纯环境射线只能为
+$$
+\boxed{ABAA\quad\text{或}\quad ABAB,\qquad 0<|\langle A,B\rangle|<1.}
+$$
+其中 $A,B$ 是二维排出环境 $F$ 内的单位代表。两个模式仍只是必要形态，本定理不提供可行接收器，也没有排除全部非正交参数。
+
+### 56.2 三种尾模式的正交参数排除
+
+**引理56.2（三种尾模式的正交参数排除）。** 若四轮尾环境的模式是第55节留下的 $AABA$、$ABAA$ 或 $ABAB$，则两条不同射线不能正交。对单位代表必有
+$$
+\boxed{0<|\langle A,B\rangle|<1.}
+\tag{56.5}
+$$
+
+**证明。** 上界严格小于一只用两条射线不同。以下反设 $A\perp B$，逐项排除三个模式。
+
+**AABA。**
+
+现在 $\eta_3=\eta_4=\eta_6=A$、$\eta_5=B$。令 $L=U+G_3$、$l=\dim L$。固定 $V_1$ 将 $L$ 送入环境 $A$，将 $G_4$ 送入环境 $B$，所以 $L\cap G_4=0$。零位像在环境 $A$ 中包含
+$$
+R\otimes A,\qquad R=U+G_3+G_4+G_6,\qquad\dim R\ge l+2.
+$$
+其中 $U\otimes A$ 来自早期块。一位像在同一环境中包含 $V_1L=Q\otimes A$，$\dim Q=l$。不同输入位正交给
+$$
+7\ge\dim R+\dim Q\ge2l+2.
+$$
+$l\ge2$，故只能 $l=2$，即
+$$
+G_3=U.
+\tag{56.6}
+$$
+又因 $A\perp B$，固定 $V_1$ 给 $U\perp G_4$。第三、第四轮的零位像分别为 $U\otimes A$ 与 $G_4\otimes A$，所以 $H_2\perp H_3$。但 $0\ne w\in H_2\cap U$，而（56.6）及同轮满投影给 $P_UH_3=U$，因此 $w$ 不可能正交于整个 $H_3$。矛盾。
+
+**ABAA。**
+
+现在 $\eta_3=\eta_5=\eta_6=A$、$\eta_4=B$。令
+$$
+L=U+G_4+G_5,\quad l=\dim L,\qquad
+R=U+G_3+G_5+G_6,\quad r=\dim R,\qquad
+T=U+G_5,\quad t=\dim T.
+$$
+$V_1L$ 使用 $A$，$V_1G_3$ 使用 $B$，不同射线给 $G_3\cap L=0$。于是 $r\ge t+2$、$l\ge t$。同一环境 $A$ 上，零位像包含 $R\otimes A$，一位像 $V_1L$ 的接收因子维数为 $l$，故
+$$
+7\ge r+l\ge2t+2.
+$$
+$t\ge2$，所以 $t=2$，即
+$$
+G_5=U,\qquad L=U+G_4,\qquad l\in\{2,3\}.
+\tag{56.7}
+$$
+这里 $l\le3$ 因为 $r\ge4$。
+
+若 $l=3$，则 $r=4$。写 $V_1L=Q_A\otimes A$；同一环境的正交性使 $K=R\oplus Q_A$，$\dim Q_A=3$。式（56.4）给 $v\in Q_A$，所以（56.2）及单射性给 $p_A\in L$。同时（56.7）和（56.3）给 $H_4=X_A$，故 $p_A\in H_4$。
+
+但是 $B$ 环境中的零位像包含 $(U+G_4)\otimes B=L\otimes B$，一位像包含 $Q_4\otimes B$，所以 $Q_4\perp L$。$H_4\subset G_4\oplus Q_4$、$G_4\subset L$，且到 $Q_4$ 的投影单射，因而 $H_4\cap L=0$。这与非零 $p_A\in H_4\cap L$ 矛盾。因此 $l=2$，即
+$$
+G_4=G_5=U.
+\tag{56.8}
+$$
+这一步的结构归约只使用 $A,B$ 不同，尚未使用二者正交。
+
+由 $A\perp B$，固定 $V_1$ 给 $U\perp G_3$。而 $V_0H_2=G_3\otimes A$、$V_0H_4=U\otimes A$，故 $H_2\perp H_4$。式（56.8）使 $P_UH_4=U$，再次与 $0\ne w\in H_2\cap U$ 矛盾。
+
+**ABAB。**
+
+现在 $\eta_3=\eta_5=A$、$\eta_4=\eta_6=B$。令 $\pi:K\to K/U$，由四维旧块得到
+$$
+Z=(\pi\otimes I_E)V_0K,\qquad\dim Z\le3.
+$$
+$V_1$ 在 $U,G_3,G_5$ 上分别使用 $A,B,B$，故 $U\cap G_3=U\cap G_5=0$。因此
+$$
+M=\pi(G_3+G_5),\qquad m=\dim M\in\{2,3\},\qquad M\otimes A\subset Z.
+\tag{56.9}
+$$
+若 $m=3$，则 $Z=M\otimes A$；不同环境 $B$ 的零位商像必须为零，故 $G_4=G_6=U$。固定 $V_0$ 给 $H_3=H_5$，固定 $V_1$ 又给 $Q_3=Q_5=:Q$。共同环境 $A$ 的位像正交使 $G_3+G_5\perp Q$。于是同一空间 $H_3=H_5$ 到 $G_3+G_5$ 的投影像既为 $G_3$、又为 $G_5$，故 $G_3=G_5$，与 $m=3$ 矛盾。
+
+所以 $m=2$。正交环境 $A\perp B$ 使 $U\perp G_3+G_5$，$\pi$ 在 $G_3+G_5$ 上单射；因此 $\dim(G_3+G_5)=2$，即 $G_3=G_5$。固定零位像在共同环境 $A$ 中相同，便有
+$$
+H_2=H_4.
+\tag{56.10}
+$$
+但 $0\ne w\in H_2\cap U=H_4\cap U$，而式（56.4）给 $Q_4\perp U$，所以 $P_{Q_4}w=0$。这违反 $P_{Q_4}|_{H_4}$ 的单射性。矛盾。
+
+三个模式的正交参数均被排除，得到（56.5）。证明完毕。
+
+### 56.3 非正交 AABA 的排除
+
+采用第55节的七维、$r_1=2,r_2=1$、前六个完整参考终端的实际合同。来源 $ab\ne0$，记 $U=G_2$、$H_2=\operatorname{span}(a^2u+bv,w)$，$u,v,w$ 正交单位。第二轮排出空间 $F$ 二维，且
+$$
+U\otimes F\subset V_0K,\qquad
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+\tag{56.11}
+$$
+$H_n\subset G_n\oplus Q_n$ 到两个同轮二维因子的投影均为同构，$V_0K\perp V_1K$。全部尾环境属于 $F$，所以 $Q_n\perp U$。
+
+**引理56.3（非正交 AABA 的排除）。** 不可能有
+$$
+\eta_3=\eta_4=\eta_6=A,\qquad\eta_5=B,\qquad
+0<r:=|\langle A,B\rangle|<1,\qquad A,B\in F.
+\tag{56.12}
+$$
+
+**证明。** 先复核不需要环境正交的归约 $G_3=U$。令 $L=U+G_3$、$l=\dim L$。固定 $V_1$ 将 $L$ 送入环境 $A$，将 $G_4$ 送入环境 $B$，所以 $G_4\cap L=0$。环境 $A$ 中的零位接收像包含 $U+G_3+G_4$，维数至少 $l+2$；一位接收像 $V_1L$ 的因子维数为 $l$。两者正交，因此 $7\ge2l+2$。$l\ge2$ 使 $l=2$，故 $G_3=U$。
+
+再令
+$$
+L_A=U+G_5,\quad l=\dim L_A,\qquad
+R_A=U+G_4+G_6,\quad s=\dim R_A.
+$$
+$V_1L_A$ 使用环境 $A$，$V_1G_4$ 使用环境 $B$，所以 $G_4\cap L_A=0$。因 $U\cap G_4=0$，有 $s\ge4$；环境 $A$ 的零、一位像正交给 $s+l\le7$，因此 $l\in\{2,3\}$。
+
+若 $l=3$，则 $s=4$，所以 $R_A=U+G_4$。$R_A\cap L_A=U$，故
+$$
+\dim(R_A+L_A)=4+3-2=5.
+$$
+写 $V_1L_A=W_A\otimes A$，$\dim W_A=3$。同一环境给 $R_A\perp W_A$。另一零位像包含 $L_A\otimes B$：其中 $U\otimes B$ 来自旧块，$G_5\otimes B$ 来自第五轮。因为 $\langle A,B\rangle\ne0$，跨位正交还给 $L_A\perp W_A$。因此 $R_A+L_A$ 的五维空间正交于三维 $W_A$，七维中不可能。故 $l=2$，得到
+$$
+G_3=G_5=U.
+\tag{56.13}
+$$
+
+式（56.13）使
+$$
+V_0H_2=U\otimes A,\qquad V_0H_4=U\otimes B.
+$$
+这两份完整二维像的两个主角余弦都等于 $r$；等距保持主角。因此任意单位 $h\in H_2$ 满足 $\|P_{H_4}h\|=r$。特别取同一个实际单位向量 $w\in H_2\cap U$，得
+$$
+\|P_{H_4}w\|=r.
+\tag{56.14}
+$$
+另一方面，写 $V_1w=q\otimes A$，其中 $q\in Q_3$ 单位。由 $V_1G_4=Q_5\otimes B$，等距投影公式给
+$$
+\|P_{G_4}w\|
+=\|P_{Q_5\otimes B}(q\otimes A)\|
+=r\|P_{Q_5}q\|\le r.
+\tag{56.15}
+$$
+
+但 $H_4$ 是一个可逆线性映射 $T:G_4\to Q_4$ 的图，而 $w\in U\perp Q_4$。记 $w_G=P_{G_4}w$。图投影公式给
+$$
+\|P_{H_4}w\|^2
+=\langle w_G,(I+T^*T)^{-1}w_G\rangle
+<\|w_G\|^2=\|P_{G_4}w\|^2
+\tag{56.16}
+$$
+只要 $w_G\ne0$。这里（56.14）及 $r>0$ 确保 $w_G\ne0$；$T$ 可逆确保严格性。联立（56.14）—（56.16）得到 $r<r$，矛盾。证明完毕。
+
+### 56.4 ABAA 环境交叠的定量下界
+
+采用第55节七维、$r_1=2,r_2=1$、前六个完整参考终端的实际合同，来源 $ab\ne0$。尾环境为
+$$
+\eta_3=\eta_5=\eta_6=A,\qquad\eta_4=B,\qquad A\not\parallel B.
+$$
+$A,B$ 是二维排出环境 $F$ 中的单位向量。ABAA 的无正交结构归约给
+$$
+G_4=G_5=U=G_2,\qquad
+H_2=\operatorname{span}(a^2u+bv,w),\qquad\|w\|=1,\quad w\in U,
+\tag{56.17}
+$$
+其中 $u,v,w$ 正交单位。这里引用该归约时不假设 $A\perp B$。
+
+置
+$$
+x=|a|^2,\qquad y=|b|^2,\qquad
+t_0=1,\quad t_j=1-y t_{j-1}.
+$$
+
+**命题56.4（ABAA 环境交叠的来源相关下界）。** 环境交叠必须满足
+$$
+\boxed{
+|\langle A,B\rangle|^2\ge x\frac{t_3}{t_4}.
+}
+\tag{56.18}
+$$
+这比仅要求非正交更强；当 $x=y=1/2$ 时，右端为 $5/11$。
+
+**证明。** 对同一个实际单位向量 $w$ 比较三份投影读数。由（56.17）及固定零位等距，
+$$
+V_0H_2=G_3\otimes A,\qquad
+V_0H_4=U\otimes A.
+$$
+因此可写 $V_0w=t\otimes A$，其中 $t\in G_3$ 单位，并有准确等式
+$$
+\|P_{H_4}w\|=\|P_Ut\|.
+\tag{56.19}
+$$
+固定一位等距满足 $V_1G_3=Q_4\otimes B$、$V_1U=Q_3\otimes A$。写 $V_1t=q\otimes B$，其中 $q\in Q_4$ 单位，得到
+$$
+\|P_Ut\|
+=|\langle A,B\rangle|\,\|P_{Q_3}q\|
+\le|\langle A,B\rangle|.
+\tag{56.20}
+$$
+
+另一方面，$w\in U=G_4$，实际来源的第四终端主角给反向下界。第53节式（53.14）中 $H_4,G_4$ 的两个主角余弦平方为
+$$
+\lambda_4=x\frac{t_3}{t_4},\qquad
+\lambda_3=x\frac{t_2}{t_3}.
+$$
+同节的递推计算给 $\lambda_3>x>\lambda_4>0$。所以每个 $G_4$ 中的单位向量都满足
+$$
+\|P_{H_4}w\|\ge\sqrt{\lambda_4}.
+\tag{56.21}
+$$
+联立（56.19）—（56.21）并平方，得到（56.18）。证明完毕。
+
+该下界还满足
+$$
+\sqrt{x\frac{t_3}{t_4}}
+>\frac{x}{\sqrt{x^2+y}},
+$$
+严格间隙由第53节式（53.15）给出。这里的环境交叠始终是同一实际 ABAA 候选的两个单位环境向量的交叠；没有将不同装置的可达最优值组合。
+
+本命题只排除小于来源相关阈值的环境交叠。大交叠参数仍未由此结算，非正交 ABAB 也不在此界的范围内。
+
+### 56.5 主结论与保留范围
+
+第55节已把 $r_1=2,r_2=1$ 分支的四轮尾限制到 $AABA,ABAA,ABAB$。引理56.2排除这三个模式的所有正交参数；引理56.3再排除非正交 $AABA$。两条环境射线不同，单位代表的交叠模严格小于一，因此只余定理56.1所列的两种非正交模式。
+
+$ABAA$ 的证明还给出不要求环境正交的结构约束 $G_4=G_5=U$；$ABAB$ 则必须满足零位商空间中的 $\dim\pi_U(G_3+G_5)=2$。这些都是同一实际候选的必要关系，不能替代其余共同 Gram 等式、初态实现或终端恢复义务。
+
+本节没有排除 $ABAA,ABAB$ 的全部非正交参数，也没有处理第二终端秩二和早期全部纯的其余分支。一般六终端固定 CPTP 接收容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}\le8.
+$$
+
+## 追加锚（本行以下为增补区）
