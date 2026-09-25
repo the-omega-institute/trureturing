@@ -1396,3 +1396,323 @@ $$
 [^phase_burnin_absorber]: 平稳纯化的固定相干吸收使用 Godley–Guţă (2023), Lemma 4.1，来源及初始化条件见[既有文献说明](../../../Library/Dynamics/godley2023absorber.md)。该已知构造在本证明中作为有限启动后的运行步骤；有限启动编码、所有终端共用误差界及固定通道容量的零误差极限在同一合同下组合。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 12. 环境交叉关系给出的平方根精确容量下界
+
+**定义 12.1（有限时域的固定 CPTP 接收容量）。** 固定定义10.1中的已知非退化来源 $`a,b\ne0`$。对整数 $`N\ge1`$，记 $`d_{\mathrm{CPTP},N}(a,b)`$ 为一个独立纯初态、一个固定全域 CPTP 接收通道及仅依赖终端编号的解码器，精确满足（10.2）对全部 $`1\le n\le N`$ 所需的最小持久接收维数。装置可以依赖预定 $`N`$，所有持久控制均计入容量；每轮新环境可立即丢弃，活动记忆与参考不可访问。
+
+**定理 12.2（保留环境相干约束的有限时域障碍）。** 对定义12.1的任务，
+
+$$
+\boxed{
+N<8\,d_{\mathrm{CPTP},N}(a,b)^2,
+\qquad
+d_{\mathrm{CPTP},N}(a,b)>\sqrt{N/8}.
+}
+\tag{12.1}
+$$
+
+对 $`N\ge2`$，已有固定纯空白酉构造同时给
+
+$$
+\sqrt{N/8}<d_{\mathrm{CPTP},N}(a,b)\le2N-1.
+\tag{12.2}
+$$
+
+此外，对每个固定正整数 $`D`$，存在 $`\widehat\eta_D>0`$，使任一维数不超过 $`D`$ 的固定接收器，至少在一个 $`n\le8D^2`$ 上具有不小于 $`\widehat\eta_D`$ 的最坏参考完整半迹恢复误差。这里 $`\widehat\eta_D`$ 可以依赖已固定的 $`a,b`$，未给其数值，也不主张在振幅退化极限上一致。式（12.1）加强定理11.2的精确时域下界，不改动其正误差容量上界，也不主张平方根下界最优。
+
+证明。只取任务允许的纯源初态 $`|0\rangle_M`$，接收初态为 $`|e\rangle_K`$，令
+
+$$
+H=M\otimes K,\quad \dim K=D,\quad
+|\psi_0\rangle=|0\rangle_M|e\rangle_K,\qquad
+\mathcal R(X)=\sum_{u\in\mathsf A}K_uXK_u^*.
+\tag{12.3}
+$$
+
+这里 $`\mathcal R`$ 是一次源发射与固定接收合成的 $`H`$ 上通道，$`\mathsf A`$ 为一份固定有限 Kraus 表的指标集。$`K_u`$ 是算子，寄存器仍记为 $`K`$。对词 $`w=u_1\cdots u_n`$，置 $`K_w=K_{u_n}\cdots K_{u_1}`$，空词取恒等算子。连续使用这份 Kraus 表的一份全局纯化为
+
+$$
+|\chi_n\rangle
+=\sum_{w\in\mathsf A^n}K_w|\psi_0\rangle\otimes|w\rangle_{E_n}.
+\tag{12.4}
+$$
+
+$`E_n`$ 只在数学纯化中保留已丢弃的环境，并不供接收器使用。记 $`\sigma_n=\operatorname{Tr}_{E_n}|\chi_n\rangle\langle\chi_n|`$。
+
+若终端 $`n`$ 的局部解码恢复全部档案与活动记忆的目标纯态，则对解码器取 Stinespring 等距，解码后的全局纯态必分解为目标纯态与其余系统纯态的张量积。因此，解码前后的 $`ME_n`$ 边缘相同，并满足
+
+$$
+\rho_{ME_n}=\rho_{M,n}\otimes\rho_{E_n}.
+\tag{12.5}
+$$
+
+逐环境矩阵元读取（12.5），得到对任意 $`w,v\in\mathsf A^n`$ 及 $`A\in\operatorname{End}(M)`$，
+
+$$
+\langle\psi_0|K_w^*(A\otimes I_K)K_v|\psi_0\rangle
+=\operatorname{Tr}(\rho_{M,n}A)
+\langle\psi_0|K_w^*K_v|\psi_0\rangle.
+\tag{12.6}
+$$
+
+反过来，（12.6）对全部 $`A,w,v`$ 成立也足以逐矩阵元恢复（12.5）。这里包含 $`w\ne v`$ 的环境相干矩阵元，不能只检查各分支概率。由纯目标恢复得到（12.5）的步骤是标准的环境解耦必要条件，本证明将它用于同一固定接收器的全部有限续接。
+
+置 $`p=|b|^2\in(0,1)`$、$`\lambda=-p`$，并沿用（10.4）的平稳态 $`\rho_*`$。令
+
+$$
+\Delta=|0\rangle\langle0|-\rho_*.
+\tag{12.7}
+$$
+
+本来源的边缘通道满足 $`E(\rho_*)=\rho_*`$、$`E(\Delta)=\lambda\Delta`$，所以
+
+$$
+\rho_{M,n}=\rho_*+\lambda^n\Delta\qquad(n\ge0).
+\tag{12.8}
+$$
+
+该式在 $`n=0`$ 也成立；它与（10.5）在 $`n\ge1`$ 的表达相同。
+
+现在把（12.6）的整族关系放进一个有限维线性空间。取
+
+$$
+\mathcal V=\operatorname{End}(H)\oplus\operatorname{End}(H),
+\qquad \dim_{\mathbb C}\mathcal V=8D^2,
+\tag{12.9}
+$$
+
+并定义
+
+$$
+\begin{aligned}
+g_A&=\left(
+(A-\operatorname{Tr}(\rho_*A)I_M)\otimes I_K,
+\operatorname{Tr}(\Delta A)I_H
+\right),\\
+\ell(X,Y)&=\langle\psi_0|(X-Y)|\psi_0\rangle,\\
+\mathcal L_{uv}(X,Y)&=
+(K_u^*XK_v,\ \lambda K_u^*YK_v)
+\qquad(u,v\in\mathsf A).
+\end{aligned}
+\tag{12.10}
+$$
+
+对 $`g_A`$ 作长度 $`n`$ 的字母对复合，所得向量遍历
+
+$$
+\left(
+K_w^*[(A-\operatorname{Tr}(\rho_*A)I_M)\otimes I_K]K_v,
+\lambda^n\operatorname{Tr}(\Delta A)K_w^*K_v
+\right)
+\quad(w,v\in\mathsf A^n).
+\tag{12.11}
+$$
+
+因此（12.6）恰为 $`\ell`$ 在这些向量上等于零。第二坐标携带 $`\lambda^n`$，故把不同长度的等式放在同一线性空间中，没有删去它们各自的时间因子。
+
+定义累计词空间
+
+$$
+W_0=\operatorname{span}_{\mathbb C}\{g_A:A\in\operatorname{End}(M)\},
+\qquad
+W_{t+1}=W_t+\sum_{u,v\in\mathsf A}\mathcal L_{uv}(W_t).
+\tag{12.12}
+$$
+
+归纳可见，$`W_t`$ 正是长度至多 $`t`$ 的全部（12.11）的张成。若 $`W_t=W_{t+1}`$，它就对全部 $`\mathcal L_{uv}`$ 不变，此后永久稳定。每次严格增长至少增加一维，故
+
+$$
+W_{8D^2}=\bigcup_{t\ge0}W_t.
+\tag{12.13}
+$$
+
+这只是有限维可达空间的标准稳定机制；本处的两个算子坐标把随时间变化的边缘目标与全部环境交叉关系一并纳入该机制。
+
+假设同一 $`D`$ 维接收器精确服务前 $`8D^2`$ 个终端。每个这些终端的（12.6）都成立，长度零的等式则由（12.7）自动成立。因此 $`\ell`$ 在 $`W_{8D^2}`$ 上恒零。由（12.13），（12.6）便对所有 $`n\ge0`$ 成立，从而（12.5）也对所有这些 $`n`$ 成立。
+
+这里只对各个时刻已经成立的同长度交叉等式作线性组合，没有要求不同时间之间存在物理相干，也没有假设有限合同之外仍有解码器。被继续迭代的只是同一个已定义于全域的通道。
+
+由（12.4）的全局纯性以及（12.5），有
+
+$$
+\operatorname{Tr}\sigma_{K,n}^2
+=\operatorname{Tr}\rho_{ME_n}^2
+=\operatorname{Tr}\rho_{M,n}^2\operatorname{Tr}\rho_{E_n}^2
+=\operatorname{Tr}\rho_{M,n}^2\operatorname{Tr}\sigma_n^2
+\qquad(n\ge0).
+\tag{12.14}
+$$
+
+定理10.2证明中的（10.9）—（10.12）已排除这条全时域纯度乘积恒等式：源纯度的唯一最低模正实基底为 $`p^2`$ 且系数严格正，与有限维固定通道轨道的最低纯度谱模相乘，会产生偏迹侧不可能具有的更低模项。因此假设矛盾，得到 $`N<8D^2`$ 及（12.1）。定理9.2的固定酉属于这里允许的 CPTP 接收器，给出（12.2）的上界。
+
+最后固定 $`D`$ 和 $`8D^2`$ 个终端。独立纯初态、固定接收通道及这有限多个局部解码器的参数集紧。前 $`8D^2`$ 个终端的最大参考完整半迹误差是连续函数：输入维数为二，可把通道差的参考维数限制为二。上面已排除最小值为零，故该函数的最小值 $`\widehat\eta_D`$ 严格正。较小维数的装置可补到 $`D`$ 维，因而同一结论也覆盖全部不超过 $`D`$ 的容量。证明完毕。
+
+## 追加锚（本行以下为增补区）
+
+
+## 13. 未知共同相位的无终端接收与吸收截断边界
+
+**定义 13.1（与未来终端无关的门序列）。** 回到定义1.1的来源，取 $`\Theta=\mathbb R/(2\pi\mathbb Z)`$、$`c_t=1`$、$`p=\alpha^2`$ 和 $`\mu=p/(1+p)`$。对固定 $`0<\epsilon<1`$，允许预先给定一列有限维寄存器及全域 CPTP 映射
+
+$$
+K_0=\mathbb C,\qquad
+\mathcal C_n:\mathcal L(K_{n-1}\otimes B)\longrightarrow\mathcal L(K_n)
+\quad(n\ge1),
+\qquad
+\mathcal D_n:\mathcal L(K_n)\longrightarrow\mathcal L(H_n).
+\tag{13.1}
+$$
+
+门可以依赖当前编号、已知来源和误差要求，但不能依赖实际相位、输入、参考或未来选择的终端。全部持久且与来源有关的接收系统计入 $`K_n`$；每轮新环境可立即丢弃。不访问活动 $`M`$ 与参考 $`J`$，也不反馈来源。要求每个确定终端的全部参考完整联合态满足（5.1）的半迹误差界。这里不要求固定维数或同一个门，也不增加可依赖未知状态的停止策略合同。
+
+**定理 13.2（无预定终端的近平方根接收）。** 对定义13.1，存在同一门序列满足全部终端误差至多 $`\epsilon`$，且
+
+$$
+\dim K_n
+=O\!\left(\sqrt{n\left[\log\log(en)+\log(1/\epsilon)\right]}+1\right).
+\tag{13.2}
+$$
+
+具体地，置
+
+$$
+\delta={\epsilon^2\over2},\quad
+\delta_r={6\delta\over\pi^2r^2},\quad
+s_r=\sqrt{{2^r-1\over2}\log{2\over\delta_r}},\quad
+r(n)=\max\{1,\lceil\log_2n\rceil\},\quad
+b_n={1+s_{r(n)}\over1+p}.
+\tag{13.3}
+$$
+
+可取
+
+$$
+\dim K_n\le4\bigl(\lfloor2b_n\rfloor+1\bigr)+1
+\le8b_n+5.
+\tag{13.4}
+$$
+
+证明。使用（6.6）的同一实际词链与鞅 $`M_k`$。由（6.8），对两个初位及每个整数 $`r\ge1`$，
+
+$$
+\Pr_i\left\{\max_{1\le k\le2^r}|M_k|\ge s_r\right\}
+\le\delta_r.
+\tag{13.5}
+$$
+
+因 $`\sum_r\delta_r=\delta`$，可数并集界表明：至少以 $`1-\delta`$ 的概率，全部这些 dyadic 时域界同时成立。结合（6.7），在该同一个事件上，所有 $`n\ge1`$ 同时满足
+
+$$
+|S_n-n\mu|\le b_n.
+\tag{13.6}
+$$
+
+按几何时域分配可求和错误预算是标准的时间一致浓缩方法；Howard 等的 stitched boundary 给出同类迭代对数尺度。[^phase_anytime_stitching] 此处直接由已得（6.8）完成所需概率估计。
+
+称词存活，当且仅当它的每个前缀均满足（13.6）。沿用（6.3）的首末荷扇区，但将固定带宽换为每个时刻各自的 $`b_t`$，得到 $`g_{ijq}^{n,\rm s}`$ 及 $`W_n^{\rm s}`$。式（6.10）的末端指示函数相应成为 $`\mathbf1_{\{|q-(n+1)\mu|\le b_{n+1}\}}`$，仍严格给出
+
+$$
+W_{n+1}^{\rm s}\subseteq W_n^{\rm s}\otimes B.
+\tag{13.7}
+$$
+
+全部这些空间只由已知来源和事先固定的带宽序列确定，与实际相位及未来终端无关。
+
+对 $`n\ge1`$，取 $`K_n=W_n^{\rm s}\oplus\mathbb C|\bot\rangle`$，并保持 $`K_0=\mathbb C`$ 及空档案恒等编码 $`F_0`$；用（6.11）的成功部分等距和补空间送到旗标的 Kraus 完成，逐步定义（13.1）。不同步的载体维数可以不同；部分等距的实际输入域与输出像仍等维，补空间处理使每个门全域保迹。初始标量按空档案编码，旧旗标保持吸收。
+
+任一终端的连续成功分支，正是原来源投影到全部前缀存活词后精确编码的分支。由（13.5）的共同事件，两种初位的累计失败概率均至多 $`\delta`$。首位正交性使完整失败效果不超过 $`\delta I_M`$；因此对全部相位、初始相干与任意参考成立。终端在成功块反向展开、在旗标块输出任意固定态，纯化后的目标重叠至少为 $`(1-\delta)^2`$。半迹误差至多 $`\sqrt{2\delta}=\epsilon`$，与终端深度无关。
+
+长度为 $`2b_n`$ 的荷区间最多含 $`\lfloor2b_n\rfloor+1`$ 个整数，四个首末扇区加一维旗标给（13.4）。对 $`n\ge2`$，$`2^{r(n)}\le2n`$ 且 $`\log(2/\delta_{r(n)})=\log(2\pi^2r(n)^2/(3\epsilon^2))`$，故（13.2）成立；$`n=1`$ 可由常数项涵盖。证明完毕。
+
+**定义 13.3（硬区间与一维不可恢复失败旗标）。** 给定非负确定带宽序列 $`b=(b_n)`$。取上一证明的全前缀存活空间和部分等距编码；每次失败把全部输入补空间送入同一个一维旗标，随后旗标永久吸收，且没有其他持久失败档案。终端解码任意，但不得依赖实际相位。令
+
+$$
+s_n={1\over2}\sum_{i=0}^1
+\Pr_i\{|S_t-t\mu|\le b_t\text{ 对所有 }1\le t\le n\}.
+\tag{13.8}
+$$
+
+这是本卷 Bell 初始输入的连续成功质量。
+
+**定理 13.4（存活消失时，联合恢复误差趋于一）。** 对定义13.3中的接收器，在 Bell 初始输入上，任意允许解码器的最坏相位半迹误差满足
+
+$$
+\sup_\vartheta
+D\bigl(\widehat\Omega_{\vartheta,n},\Omega_{\vartheta,n}\bigr)
+\ge(1-s_n)(1-\beta_n),
+\qquad
+\beta_n={\sqrt\pi\over2\sqrt{\alpha^3\lfloor(n-1)/3\rfloor}}
+\quad(n\ge4).
+\tag{13.9}
+$$
+
+特别地，若 $`s_n\to0`$，最坏误差趋于一。令
+
+$$
+\sigma^2={p(1-p)\over(1+p)^3}>0.
+\tag{13.10}
+$$
+
+若
+
+$$
+\limsup_{n\to\infty}{b_n\over\sqrt{2\sigma^2 n\log\log n}}<1,
+\tag{13.11}
+$$
+
+则 $`s_n\to0`$，上述恢复失败成立。因此任意固定 $`C<\infty`$ 的 $`b_n=C\sqrt n`$ 均不能使这个装置类保持小于一的统一误差。
+
+式（13.9）的对象是定义13.3指定的吸收截断码；一般 CPTP 接收器可保留其他失败信息或使用混合的中间表示，本定理不对它们给出迭代对数容量下界。定理13.2提供一个无终端构造，定理5.3只对任意此类构造给逐终端平方根下界，两者之间的迭代对数差距未由这里的证明消除。
+
+证明。记 $`Q_n`$ 为完整档案中选取全部存活计算基词的投影。对 Bell 来源，目标为 $`\Omega_{\vartheta,n}=|\Psi_\vartheta\rangle\langle\Psi_\vartheta|`$。其共同相位作用只在档案一侧，且与 $`Q_n`$ 对易。因此原始 $`JM`$ 边缘和成功分支的 $`JM`$ 边缘均不依赖相位。局部保迹接收不改变总 $`JM`$ 边缘，所以失败分支的未归一化 $`JM`$ 态也不依赖相位：它是这两个边缘之差。
+
+定义13.3的实际输出按成功块与旗标块分块对角，且旗标仅一维。于是解码后的失败项是同一个相位无关的正算子 $`\Gamma_n`$，其迹为 $`1-s_n`$；成功项的迹为 $`s_n`$。这不要求丢弃环境独立于相位，只要求它不再进入接收器和解码器。
+
+以目标纯态投影配对，成功项贡献不超过 $`s_n`$。由（5.15）、（5.18），相位平均目标的谱范数至多 $`\beta_n`$，故
+
+$$
+\begin{aligned}
+{1\over2\pi}\int_{-\pi}^{\pi}
+\langle\Psi_\vartheta|\widehat\Omega_{\vartheta,n}|\Psi_\vartheta\rangle
+\,d\vartheta
+&\le s_n+\operatorname{Tr}(\overline\Omega_n\Gamma_n)\\
+&\le s_n+(1-s_n)\beta_n.
+\end{aligned}
+\tag{13.12}
+$$
+
+半迹距离至少为目标纯态检验的概率差。取相位上确界不小于相位平均，得到（13.9）。半迹距离至多一；$`s_n\to0`$ 与 $`\beta_n\to0`$ 因而给趋于一。
+
+余下验证（13.11）确实使存活消失。实际二状态链有严格正的平稳分布
+ $`\pi=(1/(1+p),p/(1+p))`$，不可约且有自环。对 $`g(x)=x-\mu`$，有 $`Pg=-pg`$。因此 $`g`$ 有零平稳均值且有界，$`\sum_{k=0}^{n-1}P^kg`$ 的 $`L^2(\pi)`$ 范数一致有界，满足 Miao–Yang 的 Markov 加性泛函迭代对数律条件。[^phase_anytime_lil]
+
+更明确地，Poisson 方程的解为 $`h=g/(1+p)`$，其鞅增量为
+ $`H(x,y)=h(y)-Ph(x)=(g(y)+pg(x))/(1+p)`$。
+当 $`x=1`$ 时增量为零；当 $`x=0`$ 时分子分别以概率 $`1-p,p`$ 取 $`-p,1-p`$。故平稳二阶矩为
+
+$$
+\mathbb E_\pi H(X_0,X_1)^2
+={1\over1+p}\,{p(1-p)\over(1+p)^2}
+=\sigma^2.
+\tag{13.13}
+$$
+
+该标准迭代对数律对 $`g`$ 与 $`-g`$ 分别给
+
+$$
+\limsup_{n\to\infty}{S_n-n\mu\over\sqrt{2\sigma^2 n\log\log n}}=1,
+\qquad
+\liminf_{n\to\infty}{S_n-n\mu\over\sqrt{2\sigma^2 n\log\log n}}=-1
+\quad\text{几乎必然}.
+\tag{13.14}
+$$
+
+改变求和起点只差有界端项。由于两个初位的平稳权重均严格正，平稳律下的概率一结论在分别固定每个初位后也为概率一。（13.11）于是保证几乎每条路径最终越界，乃至无穷次越界。全前缀存活事件随 $`n`$ 递减，连续性给两个初位的存活概率均趋零，即 $`s_n\to0`$。证明完毕。
+
+[^phase_anytime_stitching]: Steven R. Howard、Aaditya Ramdas、Jon McAuliffe、Jasjeet Sekhon，*Time-uniform, nonparametric, nonasymptotic confidence sequences*，[arXiv:1810.08240v9，Theorem 1、§3.1](https://arxiv.org/html/1810.08240v9#S3.SS1)。几何时域分配与 stitched boundary 是既有概率方法；本节通过来源的首末荷空间递推，把同一个无限时域事件实现为保持参考联合态的接收门序列。
+
+[^phase_anytime_lil]: Yu Miao and Guangyu Yang，*The law of the iterated logarithm for additive functionals of Markov chains*，Statistics & Probability Letters **78** (2008)，[doi:10.1016/j.spl.2007.05.032](https://doi.org/10.1016/j.spl.2007.05.032)，[arXiv:math/0701167v2，Theorem 2.4](https://arxiv.org/pdf/math/0701167v2#page=3)。该定理的条件为平稳遍历链、$`g\in L_0^2(\pi)`$ 以及 $`\|\sum_{k<n}P^kg\|_2=O(n^a)`$ 对某个 $`a<1/2`$ 成立；本文通过 $`Pg=-pg`$ 和（13.13）核对条件及方差，只将已知迭代对数律作为接收失败证明的中间步骤。
+
+## 追加锚（本行以下为增补区）
