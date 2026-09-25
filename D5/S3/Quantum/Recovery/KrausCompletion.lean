@@ -48,7 +48,8 @@ private theorem sum_row_units (v : b) :
     _ = ∑ j : c, Matrix.single j j (1 : ℂ) := by
       apply Finset.sum_congr rfl
       intro j hj
-      simp [Matrix.conjTranspose_single]
+      simpa only [Matrix.conjTranspose_single, star_one, one_mul] using
+        (Matrix.single_mul_single_same (c := (1 : ℂ)) j v j (1 : ℂ))
     _ = 1 := Matrix.sum_single_one
 
 /-- All discarded rows contribute their exact input effect. -/

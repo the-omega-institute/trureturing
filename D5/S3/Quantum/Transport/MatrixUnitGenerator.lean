@@ -75,11 +75,15 @@ theorem matrix_unit_transport_generator (F D : d → d → Matrix n n ℂ)
       _ = ∑ i, (D i i * P + F i i * V) := by
         simp only [V, P, supportVelocity, unitSupport,
           Matrix.mul_sum, Matrix.sum_mul, Finset.sum_add_distrib]
+        congr 1 <;> exact Finset.sum_comm
       _ = V := by simp_rw [hright]; rfl
   have hcorner : P * V * P = 0 := by
     have hh := congrArg (fun A : Matrix n n ℂ => P * A) hPV
+    have hPVV : P * (P * V) = P * V := by rw [← Matrix.mul_assoc, hPP]
+    simp only [Matrix.mul_add] at hh
+    rw [hPVV] at hh
     have hh' : P * V * P + P * V = P * V := by
-      simpa only [Matrix.mul_add, ← Matrix.mul_assoc, hPP] using hh
+      simpa only [Matrix.mul_add, ← Matrix.mul_assoc] using hh
     exact add_right_cancel (show P * V * P + P * V = 0 + P * V by simpa using hh')
   have hmean (A : d → Matrix n n ℂ) :
       (Fintype.card d : ℂ)⁻¹ • (∑ i, ∑ _j : d, A i) = ∑ i, A i := by
@@ -94,7 +98,7 @@ theorem matrix_unit_transport_generator (F D : d → d → Matrix n n ℂ)
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro j hj
-    simpa only [if_pos rfl] using hD i j j i
+    simpa using hD i j j i
   have hZstar : Z + Zᴴ = V := by
     calc
       _ = (Fintype.card d : ℂ)⁻¹ • (R + Rᴴ) := by
@@ -119,7 +123,7 @@ theorem matrix_unit_transport_generator (F D : d → d → Matrix n n ℂ)
       _ = (∑ j, D k j * F j l) - (Fintype.card d : ℂ) • (D k l * P) := by
         congr 1
         · simp [ite_mul]
-        · simp only [Matrix.mul_assoc, hmul, if_pos rfl,
+        · simp only [Matrix.mul_assoc, hmul, if_true,
             Finset.sum_const, Finset.card_univ, ← Nat.cast_smul_eq_nsmul (R := ℂ)]
           simp only [P, unitSupport, Matrix.mul_sum, Finset.smul_sum]
   have hZcomm (i j : d) : Z * F i j - F i j * Z = D i j * P := by
@@ -136,7 +140,8 @@ theorem matrix_unit_transport_generator (F D : d → d → Matrix n n ℂ)
       _ = (P * V * P) * F i j := by simp only [Matrix.mul_assoc, hPF]
       _ = 0 := by rw [hcorner, Matrix.zero_mul]
   have hKsum : (Z - P * V) + (Z - P * V)ᴴ = 0 := by
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, hPstar, hVstar]
+    have hPstar' : Pᴴ = P := hPstar
+    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, hPstar', hVstar]
     calc
       _ = (Z + Zᴴ) - (V * P + P * V) := by abel
       _ = 0 := by rw [hZstar, hPV, sub_self]
@@ -172,7 +177,8 @@ theorem generator_from_real_path (F : ℝ → d → d → Matrix n n ℂ)
       (fun c _ => (hderiv i j a c).mul (hderiv k l c b))
     have hp : HasDerivAt (fun u => (F u i j * F u k l) a b)
         ((D i j * F t k l + F t i j * D k l) a b) t := by
-      simpa only [Matrix.mul_apply, Matrix.add_apply, Finset.sum_add_distrib] using hh
+      simpa only [Matrix.mul_apply, Matrix.add_apply, Finset.sum_add_distrib,
+        Pi.mul_apply] using hh
     simp_rw [hmul] at hp
     by_cases h : j = k
     · simp only [if_pos h] at hp ⊢

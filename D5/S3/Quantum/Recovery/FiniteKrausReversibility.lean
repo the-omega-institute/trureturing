@@ -54,19 +54,19 @@ private theorem rotated_gram (E : s → Matrix n d ℂ) (c V : Matrix s s ℂ)
     (rotateErrors E V j)ᴴ * rotateErrors E V k =
       (Vᴴ * c * V) j k • (1 : Matrix d d ℂ) := by
   calc
-    _ = ∑ a, ∑ b, (star (V a j) * c a b * V b k) • (1 : Matrix d d ℂ) := by
+    _ = ∑ b, ∑ a, (star (V a j) * c a b * V b k) • (1 : Matrix d d ℂ) := by
       simp only [rotateErrors, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
         Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul]
       apply Finset.sum_congr rfl
-      intro a ha
-      apply Finset.sum_congr rfl
       intro b hb
+      rw [Finset.smul_sum]
+      apply Finset.sum_congr rfl
+      intro a ha
       rw [hE]
       simp [smul_smul, mul_assoc, mul_comm, mul_left_comm]
     _ = _ := by
       simp only [Matrix.mul_apply, Matrix.conjTranspose_apply,
         Finset.sum_mul, Finset.sum_smul]
-      rw [Finset.sum_comm]
 
 private theorem rotated_action (E : s → Matrix n d ℂ) (V : Matrix s s ℂ)
     (hV : V * Vᴴ = 1) (X : Matrix d d ℂ) :
@@ -82,6 +82,8 @@ private theorem rotated_action (E : s → Matrix n d ℂ) (V : Matrix s s ℂ)
       intro j hj
       simp only [rotateErrors, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
         Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul]
+      rw [Finset.sum_comm]
+      simp only [Finset.smul_sum]
       apply Finset.sum_congr rfl
       intro a ha
       apply Finset.sum_congr rfl
@@ -119,7 +121,8 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
   have hcGram : c = Rᴴ * R := by
     ext a b
     have h := congrArg (fun M : Matrix d d ℂ => M v v) (hE a b)
-    simpa only [R, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    change c a b = ∑ j, star (E a j v) * E b j v
+    simpa only [Matrix.mul_apply, Matrix.conjTranspose_apply,
       Matrix.smul_apply, smul_eq_mul, Matrix.one_apply_eq, mul_one] using h.symm
   have hc : c.PosSemidef := by rw [hcGram]; exact Matrix.posSemidef_conjTranspose_mul_self R
   have hcTrace : Matrix.trace c = 1 := by
@@ -134,10 +137,11 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
   let F : s → Matrix n d ℂ := rotateErrors E V
   have hlam (j : s) : 0 ≤ lam j := hc.eigenvalues_nonneg j
   have hV : (V : Matrix s s ℂ) * (V : Matrix s s ℂ)ᴴ = 1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_mul_star_self V
+    simpa only [Unitary.coe_star, Matrix.star_eq_conjTranspose] using
+      Unitary.coe_mul_star_self V
   have hdiagV : (V : Matrix s s ℂ)ᴴ * c * (V : Matrix s s ℂ) =
       Matrix.diagonal (fun j => (lam j : ℂ)) := by
-    simpa only [V, lam, Unitary.conjStarAlgAut_star_apply,
+    simpa [V, lam, Unitary.conjStarAlgAut_star_apply,
       Matrix.star_eq_conjTranspose, Function.comp_def] using
         hc.isHermitian.conjStarAlgAut_star_eigenvectorUnitary
   have hFgram (j k : s) : (F j)ᴴ * F k =
@@ -150,10 +154,12 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
   have hzero (j : s) (hj : ¬ 0 < lam j) : F j = 0 := by
     have hl : lam j = 0 := le_antisymm (le_of_not_gt hj) (hlam j)
     apply Matrix.conjTranspose_mul_self_eq_zero.mp
-    simpa only [hFgram j j, if_pos rfl, hl, Complex.ofReal_zero, zero_smul]
+    simpa [hFgram j j, hl]
   have hlamSum : (∑ j, (lam j : ℂ)) = 1 := by
-    rw [← Matrix.IsHermitian.trace_eq_sum_eigenvalues hc.isHermitian]
-    exact hcTrace
+    have hsum : Matrix.trace c = ∑ j, (lam j : ℂ) := by
+      change Matrix.trace c = ∑ j, (hc.isHermitian.eigenvalues j : ℂ)
+      exact hc.isHermitian.trace_eq_sum_eigenvalues
+    exact hsum.symm.trans hcTrace
   let J := {j : s // 0 < lam j}
   let S : J → Matrix n d ℂ := fun j => (Real.sqrt (lam j) : ℂ)⁻¹ • F j
   have hroot (j : J) : (Real.sqrt (lam j) : ℂ) ≠ 0 := by
@@ -169,7 +175,7 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
     rw [hstar, hFgram]
     by_cases h : j = k
     · subst k
-      simp only [if_pos rfl, smul_smul]
+      simp only [if_true, smul_smul]
       have hz : (Real.sqrt (lam j) : ℂ)⁻¹ * (Real.sqrt (lam j) : ℂ)⁻¹ * (lam j : ℂ) = 1 := by
         rw [← hrootsq j]
         field_simp [hroot j]
@@ -208,7 +214,15 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
               simpa only [pow_two] using hrootsq j
             rw [hsq]
       _ = syndromeEncoding S sigma X := by
-        simp [syndromeEncoding, sigma, Matrix.diagonal_apply, ite_smul]
+        simp only [syndromeEncoding, sigma, Matrix.diagonal_apply, ite_smul,
+          zero_smul]
+        apply Finset.sum_congr rfl
+        intro j hj
+        rw [Finset.sum_eq_single j]
+        · simp
+        · intro k hk hkj
+          simp [Ne.symm hkj]
+        · simp
   let P := codeSupport S
   let A₀ : J ⊕ n → Matrix d n ℂ := completeKraus (fun j => (S j)ᴴ) P v
   obtain ⟨hP, hPP⟩ := code_support_projection S hS
