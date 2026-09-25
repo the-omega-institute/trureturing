@@ -18,7 +18,7 @@ For every natural dimension q, every finite index type I, and every integer row 
 
 No nonemptiness, rank, injectivity, or primitive-image assumption is required. The assertion includes dimension zero, an empty family, zero rows, rank deficiency, and all disconnected periodic components. For the one-dimensional charge 2, pi is a zero as well as 2 pi.
 
-A bounded preimage for the linear phase map gives a uniform distance bound to each affine kernel fiber. In a uniform neighborhood of any periodic zero, the scalar cosine inequality bounds the sum of squared phases. On a compact cube outside that neighborhood, continuity gives a positive minimum. Integral coordinate translations preserve both the defect and distance to the full zero set, extending the bound to every vector.
+A bounded preimage for the linear phase map gives a uniform distance bound to each affine kernel fiber. In a uniform neighborhood of any periodic zero y, the scalar cosine inequality bounds the sum of squared phases of x - y. On the part of the compact cube at least a fixed positive distance from the full zero set, continuity gives a uniform positive lower bound for the defect, vacuously when that part is empty. Translations by 2 pi times integer coordinate vectors preserve both the defect and distance to the full zero set, extending the bound to every vector.
 
 This is a deterministic analytic inequality for the explicitly displayed periodic zero set. It does not identify that set with a Markov model's gauge subgroup or prove Gaussian decay of Markov powers. Actual-path synchronization and the gauge identification are separate obligations.
 
