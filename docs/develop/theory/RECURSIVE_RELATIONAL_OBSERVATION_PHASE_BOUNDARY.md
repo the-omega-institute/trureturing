@@ -5527,3 +5527,891 @@ $$
 前缀支撑的相干逐步接收与等距延拓已有一般先例，[^phase_bcz] 联合纯目标的误差转换使用既有迹距离与保真度不等式。[^phase_fvg] 参数网与压缩指数的联系也有独立同分布规则族的先例。[^phase_metric_population] 本节的具体推导是（28.3）的共同移心历史比较、（28.11）—（28.19）的祖先历史支撑和（28.21）的累计投影关系；这些关系共同给出任意固定候选集的一套完整联合恢复门序列，不由上述文献的合同直接代入而得。
 
 ## 追加锚（本行以下为增补区）
+
+## 29. 六维五终端接收的纯环境必要归约
+
+本节沿用第26节的已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，其中
+$`ab\ne0`$、$`|a|^2+|b|^2=1`$。假设一个六维接收器从独立纯态启动，使用同一个全域 CPTP 接收通道，精确服务前五个参考完整终端；所有持久系统计入接收器，活动记忆及参考均不可访问。
+
+令 $`r_n`$ 为第 $`n`$ 终端可逆编码中固定附加态的秩。第23节的标准可逆编码结构及来源档案秩给
+
+$$
+r_1\in\{1,2,3\},\qquad r_2\in\{1,2\},\qquad
+r_3=r_4=r_5=1.
+\tag{29.1}
+$$
+
+本节先排除第二终端附加态秩二的整个分支，不限制第一终端原本允许的附加态秩；在余下的 $`r_2=1`$ 分支中，再排除 $`r_1=3`$ 和 $`r_1=2`$。因此任何六维候选都必须有 $`r_1=r_2=1`$：对任意纯的参考—记忆联合输入，五个终端的联合接收态全部为纯态，每轮新环境也为输入无关的纯态。这个归约保留环境之间任意的非正交 Gram 参数，尚未决定纯环境六维候选是否存在；第26节的总体界仍为 $`6\le d_{\mathrm{CPTP},5}(a,b)\le7`$。
+
+固定每轮共用的 Stinespring 等距
+$`V:K\otimes B\to K\otimes E`$，写
+$`V_i x=V(x\otimes|i\rangle)`$。下文的环境等式若写作平行，均指同一射线，不暗含不同射线正交。
+
+在联合态为纯态的终端，按活动记忆基写 Bell 输入的两列为
+
+$$
+\Psi_n^i=|0\rangle_Mx_n^i+|1\rangle_My_n^i,
+\qquad
+H_n=\operatorname{span}\{x_n^0,x_n^1\},\quad
+G_n=\operatorname{span}\{y_n^0,y_n^1\},\quad
+C_n=H_n+G_n.
+$$
+
+第三至第五终端均有 $`\dim H_n=\dim G_n=2`$、$`\dim C_n=4`$；在 $`r_2=1`$ 分支中，第二终端亦有两个二维系数空间，但 $`\dim C_2=3`$。这些是第26节已计算的来源支撑，下面只使用其维数和固定门递推。
+
+**秩二第二终端的坐标。** 先取 $`r_2=2`$。沿用第27节的六维分解及记号：
+
+$$
+\begin{gathered}
+K=Q\otimes\Gamma,\qquad
+Q=\operatorname{span}\{u,v,w\},\qquad \dim\Gamma=2,\\
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\}.
+\end{gathered}
+\tag{29.2}
+$$
+
+其中 $`u,v,w`$ 正交归一，$`H+G=Q`$、$`H\cap G=\mathbb Cw`$。第二终端附加态在 $`\Gamma`$ 上正定。式（27.4）给等距 $`R:\Gamma\to E`$ 以及接收器中正交单位向量 $`s,r,t,j`$，使对全部 $`\xi\in\Gamma`$ 有
+
+$$
+\begin{aligned}
+V_0(z\otimes\xi)&=s\otimes R\xi,&
+V_1(u\otimes\xi)&=r\otimes R\xi,\\
+V_0(w\otimes\xi)&=t\otimes R\xi,&
+V_1(w\otimes\xi)&=j\otimes R\xi.
+\end{aligned}
+$$
+
+记 $`F=R\Gamma`$。命题27.1已经给出第四、第五轮新环境
+$`\eta_4,\eta_5\in F`$，并有 $`C_4,C_5\ne C_3`$。这里完整保留第二终端的混合附加态和前三轮累计环境的纠缠，不把（29.2）的某个纯切片当作实际第二终端态。
+
+记
+$$
+A=\operatorname{span}\{s,t\}=G_3,\quad
+B_3=\operatorname{span}\{r,j\},\quad Z=C_3^\perp,
+$$
+故 $`C_3=A\oplus B_3`$、$`\dim A=\dim B_3=\dim Z=2`$。
+对第 $`n=4,5`$ 轮令 $`Q_n`$ 为一位输入的接收器像，即
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n.
+$$
+各 $`G_n,Q_n`$ 正交且二维，$`C_n=G_n\oplus Q_n`$。来源非退化还保证
+$$
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{29.3}
+$$
+这里两个投影限制在二维 $`H_n`$ 上均为同构。对 $`n=3`$，同样有
+$`P_AH_3=A`$、$`P_{B_3}H_3=B_3`$。这些事实来自来源递推的两个非零系数，而非任意四维支撑的性质。
+
+**命题29.1（排除秩二第二终端）。** 六维固定 CPTP 接收器若精确服务前五个完整参考终端，则必有 $`r_2=1`$。
+
+反设 $`r_2=2`$。先证明此分支强制下列几何关系，再与来源系数递推比较导出矛盾。首先必须有
+$$
+\eta_4\parallel\eta_5.
+\tag{29.4}
+$$
+吸收射线相位，写 $`\eta_4=\eta_5=\eta=R\xi`$，其中 $`\xi\in\Gamma`$ 单位。则还必须有
+$$
+G_4=G_3=A,\qquad H_3=H\otimes\mathbb C\xi,
+\tag{29.5}
+$$
+以及
+$$
+\begin{aligned}
+S_0&=(H\otimes\mathbb C\xi)+H_3+H_4,\\
+S_1&=(G\otimes\mathbb C\xi)+A+G_4,
+\end{aligned}
+\qquad \dim S_0=\dim S_1=3.
+\tag{29.6}
+$$
+令 $`\xi^\perp`$ 为任一单位正交补，则
+$$
+C_3=(Q\otimes\mathbb C\xi)\oplus
+\mathbb C(v\otimes\xi^\perp).
+\tag{29.7}
+$$
+在 （29.6） 中，$`H_4\ne H_3`$、$`G\otimes\mathbb C\xi\ne A`$。
+
+**证明：排除两条不同射线。** 由第27节，$`\eta_4,\eta_5\in F`$。固定等距的两个位像正交，且
+$`V_0(H\otimes\Gamma)=A\otimes F`$、
+$`V_1(G\otimes\Gamma)=B_3\otimes F`$。所以
+$$
+G_4,G_5\subseteq B_3^\perp=A\oplus Z,\qquad
+Q_4,Q_5\subseteq A^\perp=B_3\oplus Z.
+\tag{29.8}
+$$
+反设 $`\eta_4,\eta_5`$ 是不同射线。固定 $`V_1`$ 在 $`A=G_3`$ 与 $`G_4`$ 上产生不同的纯环境，故 $`A\cap G_4=0`$。因此 $`P_ZG_4=Z`$。由 $`G_4\perp Q_4`$ 与 （29.8），可得 $`P_ZQ_4=0`$，从而 $`Q_4=B_3`$。取 $`R\xi_4=\eta_4`$。等距单射性和
+$$
+V_1A=B_3\otimes\eta_4=V_1(G\otimes\mathbb C\xi_4)
+$$
+给出 $`A=G\otimes\mathbb C\xi_4`$。
+
+若 $`\eta_4\perp\eta_5`$，输入正交性给 $`A\perp G_4`$、$`H_3\perp H_4`$。结合 （29.8），$`G_4=Z`$。此时 $`H_3\subset A\oplus B_3`$，$`H_4\subset Z\oplus B_3`$，并且两者投影到 $`B_3=Q_4`$ 都是同构。故两空间不可能正交：取其任意基，交叉 Gram 矩阵是两个可逆 $`B_3`$ 系数矩阵的乘积，必可逆。矛盾。
+
+若 $`\langle\eta_4,\eta_5\rangle\ne0`$，跨位输入正交性给 $`Q_5\perp G_4`$，而 （29.8） 给 $`Q_5\perp A`$。由于 $`A+G_4=B_3^\perp`$，得到 $`Q_5=B_3`$。取 $`R\xi_5=\eta_5`$，再次用单射性得 $`G_4=G\otimes\mathbb C\xi_5`$。两 $`\xi`$ 不共线，因此
+$$
+B_3\perp A+G_4=G\otimes\Gamma,
+\qquad B_3=\mathbb Cv\otimes\Gamma.
+\tag{29.9}
+$$
+另一方面，$`V_0H_3\subset K\otimes\eta_4`$，而
+$`V_0(H\otimes\xi_4^\perp)=A\otimes R\xi_4^\perp`$，所以
+$$
+H_3\perp H\otimes\xi_4^\perp.
+\tag{29.10}
+$$
+但 $`A=G\otimes\xi_4`$，而 $`P_{B_3}H_3=B_3`$ 由 （29.3） 成立。由 （29.9），$`H_3`$ 在 $`\xi_4^\perp`$ 切片的像为整个 $`\mathbb Cv`$；这不可能正交于 $`H`$，因为 $`\langle z,v\rangle\ne0`$。与 （29.10） 矛盾，证得 （29.4）。
+
+**共同射线下的六维饱和。** 置 $`H_\xi=H\otimes\mathbb C\xi`$、$`G_\xi=G\otimes\mathbb C\xi`$。在 $`S_0,S_1`$ 上分别写
+$$
+V_0x=f(x)\otimes\eta,\qquad V_1y=g(y)\otimes\eta.
+$$
+$`f,g`$ 各为等距，其像正交，故 $`\dim S_0+\dim S_1\le6`$。它们满足
+$$
+\begin{array}{lll}
+fH_\xi=A,& fH_3=G_4,&fH_4=G_5,\\
+gG_\xi=B_3,&gA=Q_4,&gG_4=Q_5.
+\end{array}
+\tag{29.11}
+$$
+若 $`\dim S_1=2`$，则 $`G_\xi=A=G_4`$；（29.11） 的单射性又给 $`H_\xi=H_3`$，从而
+$`\dim C_3=\dim(H_\xi+G_\xi)=3`$，矛盾。
+若 $`\dim S_0=2`$，则 $`H_\xi=H_3=H_4`$，故 $`A=G_4`$、$`C_4=C_3`$、$`Q_4=B_3`$。再由 （29.11） 得 $`G_\xi=A`$，产生相同矛盾。因此两个维数都至少三，且总和至多六，即 （29.6）。
+
+记
+$$
+U=fS_0=A+G_4+G_5,\qquad
+W=gS_1=B_3+Q_4+Q_5.
+\tag{29.12}
+$$
+则 $`K=U\oplus W`$，二者维数均为三。
+
+**排除 $`G_4\ne A`$。** 反设二者不同。由它们都是 $`U`$ 中二维空间，$`A+G_4=U`$。它们又包含于三维 $`S_1`$，故 $`S_1=U`$。因此 $`G_\xi\subset U`$，且 $`g:U\to W`$ 为满等距。
+由 （29.3），$`P_UH_3=A`$、$`P_UH_4=G_4`$，所以 $`P_US_0=U`$。三维空间 $`S_0`$ 必是某个线性映射 $`T:U\to W`$ 的图：
+$$
+S_0=\{u+Tu:u\in U\}.
+\tag{29.13}
+$$
+又由 （29.3），$`T(A)=B_3`$、$`T(G_4)=Q_4`$，且 $`T|_A`$ 单射。因此
+$$
+\operatorname{im}T=B_3+Q_4=g(G_\xi+A).
+\tag{29.14}
+$$
+然而 $`0\ne w\otimes\xi\in H_\xi\cap G_\xi\subset S_0\cap U`$，故 $`\ker T\ne0`$、$`\operatorname{rank}T\le2`$。式 （29.14） 迫使两个二维空间 $`G_\xi,A`$ 相等。于是 $`w\otimes\xi\in A\cap\ker T`$，与 $`T|_A`$ 单射矛盾。证得 $`G_4=A`$；（29.11） 随即给 $`H_3=H_\xi`$，即 （29.5）。
+
+**第三终端支撑的形状。** 由 （29.5）、（29.6），
+$`S_1=G_\xi+A`$ 为三维，所以 $`\dim(G_\xi\cap A)=1`$。而
+$`H_\xi\cap A=H_3\cap G_3=0`$，且
+$`H_\xi\cap G_\xi=\mathbb C(w\otimes\xi)`$。这两条不同的交线张成 $`G_\xi`$，故
+$$
+Q\otimes\mathbb C\xi=H_\xi+G_\xi
+\subseteq H_\xi+A=C_3.
+\tag{29.15}
+$$
+由 $`V_1A\subset K\otimes\eta`$，输入 $`A`$ 必正交于 $`G\otimes\xi^\perp`$。故
+$`A\subset(Q\otimes\xi)\oplus\mathbb C(v\otimes\xi^\perp)`$。结合 （29.15） 和 $`\dim C_3=4`$，得到 （29.7）。
+
+**共同射线下的系数条件。** 余下的（29.5）情形还须同时满足：
+$$
+\begin{gathered}
+H_3=H_\xi,\quad G_3=G_4=A,\quad
+\dim(H_\xi+H_4)=\dim(G_\xi+A)=3,\\
+f:H_\xi+H_4\overset{\cong}{\longrightarrow}A+G_5,
+\quad g:G_\xi+A\overset{\cong}{\longrightarrow}B_3+Q_4,\\
+(A+G_5)\perp(B_3+Q_4),\quad Q_5=Q_4,
+\end{gathered}
+\tag{29.16}
+$$
+以下 $`n=2`$ 的系数是固定附加因子向量 $`\xi`$ 的纯切片系数，并非把实际混合第二终端态改称纯态。由第27节的式 (27.4)，此切片经第三轮产生同一个实际纯第三终端。因此这些切片与后续实际纯终端必须满足来源系数递推
+$$
+x_{n+1}^i=a f(x_n^i)+g(y_n^i),\qquad
+y_{n+1}^i=b f(x_n^i),\qquad n=2,3,4,
+\tag{29.17}
+$$
+其中 $`x_2^0=c(z\otimes\xi)`$、$`x_2^1=a(w\otimes\xi)`$、
+$`y_2^0=ab(u\otimes\xi)`$、$`y_2^1=b(w\otimes\xi)`$。
+前两轮还必须确实产生第27节假设的满秩二维附加态。下面只用已经得到的后续必要条件导出矛盾，因此无需再对前两轮的实现附加限制。
+
+**排除共同射线下的剩余系数。** 沿用（29.12）的正交分解 $`K=U\oplus W`$，由（29.3）有 $`P_UH_3=A`$，且此投影在 $`H_3`$ 上单射，因此 $`H_3\cap W=0`$。对 $`q\in Q`$ 简记 $`q_\xi=q\otimes\xi`$。由（27.4）及共同环境定义，
+
+$$
+fz_\xi=s,\qquad fw_\xi=t,\qquad
+gu_\xi=r,\qquad gw_\xi=j.
+$$
+
+**系数矩阵的一个秩一差。** 写 $`X_n=[x_n^0\ x_n^1]`$、$`Y_n=[y_n^0\ y_n^1]`$。第二步使用固定 $`\xi`$ 的纯切片，非实际混合第二终端的纯态假设；第27节式 (27.4) 保证该切片生成同一实际纯第三终端。因此
+$$
+X_2=[c z_\xi\quad a w_\xi],\qquad
+Y_2=[ab u_\xi\quad b w_\xi],
+\quad c=\sqrt{|a|^4+|b|^2},
+\tag{29.18}
+$$
+并且对 $`n=2,3,4`$ 有
+$$
+X_{n+1}=a fX_n+gY_n,\qquad Y_{n+1}=b fX_n.
+\tag{29.19}
+$$
+由 $`H_3=H_\xi=\operatorname{ran}X_2`$，存在可逆二阶矩阵 $`T`$ 使
+$$
+X_3=X_2T,\qquad Y_4=Y_3T.
+\tag{29.20}
+$$
+置 $`M=Y_3-Y_2T`$。来源递推给
+$$
+X_4-X_3T=gM.
+\tag{29.21}
+$$
+左侧两组列合起来张成三维 $`H_3+H_4`$，而 $`\operatorname{ran}(gM)\subset W`$、$`H_3\cap W=0`$。故
+$$
+\operatorname{rank}M=1.
+\tag{29.22}
+$$
+
+**零行列式强制列交换。** 设
+$$
+x=|a|^2,\quad y=|b|^2,\quad
+d=c^2=x^2+y,\quad \tau=x(d+y),
+$$
+所以 $`x,y>0`$、$`x+y=1`$，且 $`d^2-x\tau=y^2`$。直接从来源的正交输出列得到
+$$
+D_0=\begin{pmatrix}x&0\\0&1\end{pmatrix},\quad
+D_2=X_2^*X_2=\begin{pmatrix}d&0\\0&x\end{pmatrix},\quad
+D_3=X_3^*X_3=\begin{pmatrix}\tau&0\\0&d\end{pmatrix},
+\tag{29.23}
+$$
+及
+$$
+X_2^*Y_2=\bar a b D_0,\quad
+X_3^*Y_3=\bar a b D_2,\quad
+T^*D_2T=D_3.
+\tag{29.24}
+$$
+取任意非零 $`h\in\ker M`$。由 $`Y_3h=Y_2Th`$，式 （29.24） 给
+$$
+(D_2-T^*D_0T)h=0.
+\tag{29.25}
+$$
+令 $`L=D_2^{1/2}TD_3^{-1/2}`$，则 $`L`$ 酉。置 $`p=|L_{00}|^2`$，二阶酉性还给 $`|L_{11}|^2=p`$、$`|L_{01}|^2=|L_{10}|^2=1-p`$。对 $`N=T^*D_0T`$，有
+$$
+N_{00}=\tau\left(p\frac{x}{d}+(1-p)\frac1x\right),\quad
+N_{11}=(1-p)x+p\frac d x,\quad \det N=\tau.
+\tag{29.26}
+$$
+因此
+$$
+\begin{aligned}
+\det(D_2-T^*D_0T)
+&=dx+\tau-xN_{00}-dN_{11}\\
+&=p\left(xd+\frac{\tau y}{d}-\frac{d^2}{x}\right)
+=-p\frac{y^3}{xd}.
+\end{aligned}
+\tag{29.27}
+$$
+式 （29.25） 使左侧为零，故 $`p=0`$。于是存在单位复数 $`\omega,\nu`$ 满足
+$$
+T=\begin{pmatrix}
+0&\omega\\
+\nu\sqrt{\tau/x}&0
+\end{pmatrix},\qquad
+D_2-T^*D_0T=\begin{pmatrix}-y&0\\0&0\end{pmatrix}.
+\tag{29.28}
+$$
+由 （29.22）、（29.25），$`\ker M`$ 恰是第二坐标轴，故
+$$
+Y_3^1=\omega Y_2^0.
+\tag{29.29}
+$$
+
+**列交换与下一轮纯环境不相容。** 由（27.4）、（29.18）—（29.19），
+$$
+Y_3^1=ab t,\qquad Y_2^0=ab u_\xi,
+$$
+所以 $`t=\omega u_\xi`$。又由
+$$
+X_3^1=a^2t+bj=\omega X_2^0
+=\omega(a^2u_\xi+bv_\xi),
+$$
+得到 $`j=\omega v_\xi`$。四个向量 $`s,r,t,j`$ 正交归一；结合 （29.7），$`s,r`$ 必为
+$`\operatorname{span}\{w_\xi,v\otimes\xi^\perp\}`$ 的一组正交基。
+另一方面，（29.28） 给
+$$
+X_3^0=\kappa w_\xi,
+\qquad \kappa=\nu a\sqrt{\tau/x}\ne0.
+\tag{29.30}
+$$
+写
+$$
+s=\alpha w_\xi+\beta(v\otimes\xi^\perp).
+\tag{29.31}
+$$
+必须有 $`\beta\ne0`$：否则 $`s`$ 沿 $`w_\xi`$，$`r`$ 沿 $`v\otimes\xi^\perp`$，而
+$`X_3^0=ac s+ab r`$ 含非零的后一个分量，违反 （29.30）。
+
+此时 $`S_1=G_\xi+A=\operatorname{span}\{u_\xi,w_\xi,v\otimes\xi^\perp\}`$。所以
+$$
+e=g(v\otimes\xi^\perp)
+\tag{29.32}
+$$
+是单位向量。它正交于 $`gG_\xi=B_3`$，也正交于 $`fH_\xi=A`$，故由 （29.7）
+$$
+e\in C_3^\perp=G\otimes\mathbb C\xi^\perp.
+\tag{29.33}
+$$
+由 （29.11）、（29.19）、（29.30）、（29.31），
+$$
+X_4^0=a\kappa t+bc\,g s
+=a\kappa t+bc\alpha j+bc\beta e.
+\tag{29.34}
+$$
+前两项位于 $`Q\otimes\xi`$，最后一项为 $`e`$ 的非零倍数。
+
+但是 $`V_0H_4\subset K\otimes\eta`$，而第27节的全附加因子等式给
+$$
+V_0(H\otimes\xi^\perp)=A\otimes R\xi^\perp,
+\qquad R\xi^\perp\perp\eta.
+$$
+故等距性要求 $`H_4\perp H\otimes\xi^\perp`$。将 （29.34） 代入，得到
+$`e\perp H\otimes\xi^\perp`$。这与 （29.33） 不相容：$`P_H|_G`$ 单射，因为
+$`G=\operatorname{span}\{u,w\}`$、$`H=\operatorname{span}\{z,w\}`$，且
+$`\langle z,u\rangle=\bar a^2/c\ne0`$。因此 $`e=0`$，违反其单位范数。矛盾，证明完毕。
+
+**纯第二终端的早期支撑。** 现在取 $`r_2=1`$。第二至第五终端的参考—活动记忆—接收器联合态均为纯态，第三至第五轮的新环境分别记为 $`\eta_3,\eta_4,\eta_5`$。
+
+沿用第26节的 $`H_n,G_n`$，置 $`C_n=H_n+G_n`$、$`U=G_2`$。有
+
+$$
+\dim H_n=\dim G_n=2,\qquad
+\dim C_2=3,\qquad \dim C_3=\dim C_4=\dim C_5=4.
+\tag{29.35}
+$$
+
+写 $`V_i x=V(x\otimes|i\rangle)`$。对 $`n=3,4,5`$，存在二维 $`Q_n`$，使
+
+$$
+V_0(H_{n-1})=G_n\otimes\eta_n,\qquad
+V_1(G_{n-1})=Q_n\otimes\eta_n,\qquad
+G_n\perp Q_n.
+\tag{29.36}
+$$
+
+第一终端附加态秩 $`r_1\in\{1,2,3\}`$。第26节的两轮系数比较适用于当前 $`r_2=1`$ 合同，给正交单位向量 $`p_\alpha,q_\alpha`$、$`u,v,w`$ 与正交单位环境向量 $`f_\alpha`$，使
+
+$$
+V_0p_\alpha=u\otimes f_\alpha,\qquad
+V_1p_\alpha=v\otimes f_\alpha,\qquad
+V_0q_\alpha=w\otimes f_\alpha.
+\tag{29.37}
+$$
+
+因此，令
+
+$$
+X=\operatorname{span}\{p_\alpha,q_\alpha:1\le\alpha\le r_1\},
+\quad F=\operatorname{span}\{f_\alpha:1\le\alpha\le r_1\},
+$$
+
+便有
+
+$$
+U=\operatorname{span}\{u,w\},\qquad
+\dim X=2r_1,\quad\dim F=r_1,\qquad V_0(X)=U\otimes F.
+\tag{29.38}
+$$
+
+第一轮的混合附加因子仍保留；$`F`$ 是第二轮环境子空间，不预先等同于第一轮环境支撑。
+
+**命题29.2（纯第二终端强制纯第一终端）。** 在 $`r_2=1`$ 分支中，必有 $`r_1=1`$。证明先排除 $`r_1=3`$，再在 $`r_1=2`$ 时导出二维环境限制及三个射线分支，最后将它们逐一排除。
+
+**证明：排除第一终端秩三。**
+
+若 $`r_1=3`$，则 $`X=K`$，从而 $`V_0(K)=U\otimes F`$。由（29.36），$`G_3,G_4\subseteq U`$，两者均二维，所以 $`G_3=G_4=U`$。固定 $`V_1`$ 对相同输入子空间 $`G_2=G_3=U`$ 的像相同，强制 $`\eta_3\parallel\eta_4`$。于是
+
+$$
+V_0(H_2)=U\otimes\eta_3
+=U\otimes\eta_4=V_0(H_3).
+$$
+
+$`V_0`$ 单射给 $`H_2=H_3`$，继而 $`C_3=H_3+G_3=H_2+U=C_2`$，违反（29.35）。此排除只需服务至第四终端。
+
+**第一终端秩二：后续环境的二维限制。**
+
+以下取 $`r_1=2`$，故 $`\dim X=4`$、$`\dim F=2`$。令 $`\mathcal R_0=V_0(K)`$，维数为六。
+
+反设至少一个 $`\eta_t\notin F`$（$`t\in\{3,4,5\}`$）。由（29.36）、（29.38），两个相交为零的空间 $`U\otimes F`$ 与 $`G_t\otimes\eta_t`$ 的维数和为六，故
+
+$$
+\mathcal R_0=U\otimes F+G_t\otimes\eta_t.
+\tag{29.39}
+$$
+
+若 $`G_t=U`$，则 $`\mathcal R_0`$ 的全部接收器分量均在 $`U`$ 中，因而 $`G_3=G_4=G_5=U`$。固定 $`V_1`$ 再使 $`\eta_3\parallel\eta_4`$，固定 $`V_0`$ 使 $`H_2=H_3`$，仍与（29.35）矛盾。因此只需考虑 $`Z:=G_t\ne U`$。
+
+任意二维矩形子空间 $`G\otimes\eta\subseteq\mathcal R_0`$ 只有下列两种形式：
+
+$$
+\mathrm A:\quad G=U,\ \eta\in F;
+\qquad
+\mathrm B:\quad G=Z,\ \eta\parallel\eta_t.
+\tag{29.40}
+$$
+
+证明：若 $`\eta\in F`$，由 $`\mathcal R_0\cap(K\otimes F)=U\otimes F`$ 得 $`G=U`$。若 $`\eta\notin F`$，投影环境到 $`E/F`$ 后，（29.39）强制 $`G=Z`$、$`\eta=c\eta_t+f`$，其中 $`c\ne0`$、$`f\in F`$。减去 $`cZ\otimes\eta_t`$ 得 $`Z\otimes f\subseteq U\otimes F`$；如果 $`f\ne0`$，则 $`Z\subseteq U`$，与 $`Z\ne U`$ 矛盾。因此 $`f=0`$，证明（29.40）。这里的两项是普通子空间之和，不假设 $`Z\perp U`$ 或 $`\eta_t\perp F`$。
+
+对第三至第五轮的 $`(G_n,\eta_n)`$ 应用（29.40）。
+
+- 若第三轮为A，则 $`G_3=U`$。固定 $`V_1`$ 在 $`G_2=G_3`$ 上给 $`\eta_4\parallel\eta_3\in F`$，故第四轮仍为A，$`G_4=U`$。于是 $`H_2=H_3`$，违反第二、第三终端的支撑秩差。
+- 若第三、第四轮均为B，则 $`G_3=G_4=Z`$。固定 $`V_1`$ 强制 $`\eta_5\parallel\eta_4\parallel\eta_t`$，第五轮也为B。因此 $`G_3=G_4=G_5=Z`$，由固定 $`V_0`$ 又有 $`H_2=H_3=H_4`$。这使 $`(H_3,G_3)`$ 与 $`(H_4,G_4)`$ 为同一对空间，违反式（26.20）的主角度行列式严格变化：若 $`x=|a|^2`$、$`y=|b|^2`$，则 $`\delta_4-\delta_3=x^3y^2/(t_3t_4)>0`$。
+- 唯一余下为第三轮B、第四轮A。因 $`G_4=U=G_2`$，固定 $`V_1`$ 给 $`\eta_5\parallel\eta_3`$，所以第五轮B。固定 $`V_0`$ 对第三、第五轮的相同像给 $`H_2=H_4`$；于是 $`C_4=H_4+G_4=H_2+U=C_2`$，违反（29.35）。
+
+所有分支均矛盾，因此
+
+$$
+\boxed{\eta_3,\eta_4,\eta_5\in F.}
+\tag{29.41}
+$$
+
+这不是提前假设独立或纯的前两轮环境；第一轮与第二轮环境仍可以纠缠。
+
+**第一终端秩二：三种尾环境射线排列。**
+
+令 $`\pi:K\to K/U`$ 为线性商映射。因为 $`(\pi\otimes I_E)V_0`$ 在四维 $`X`$ 上为零，其像
+
+$$
+\mathcal Z:=(\pi\otimes I_E)V_0(K)
+$$
+
+至多二维。对全部 $`n=3,4,5`$ 有
+
+$$
+\pi(G_n)\otimes\eta_n\subseteq\mathcal Z,
+\qquad
+\dim\pi(G_n)=2-\dim(G_n\cap U).
+\tag{29.42}
+$$
+
+不同环境射线产生的这类张量子空间相交为零；若其环境向量线性无关，维数可相加。
+
+**分支一：$`\eta_3\not\parallel\eta_4`$。** 若 $`x\in U\cap G_3`$，固定 $`V_1x`$ 同时属于 $`Q_3\otimes\eta_3`$ 和 $`Q_4\otimes\eta_4`$，只能为零，所以 $`U\cap G_3=0`$，$`\dim\pi(G_3)=2`$。由（29.41），两条不同射线在 $`F`$ 中线性无关；（29.42）的二维上限强制 $`\pi(G_4)=0`$，即 $`G_4=U`$。再在 $`V_1(G_4)=V_1(G_2)`$ 上比较第五、第三轮，得到 $`\eta_5\parallel\eta_3`$。因此
+
+$$
+\boxed{
+\eta_3\parallel\eta_5\not\parallel\eta_4,
+\qquad G_4=U,\qquad G_3\cap U=0.
+}
+\tag{29.43}
+$$
+
+并有更精确的零位全像
+
+$$
+\mathcal R_0=U\otimes F+G_3\otimes\eta_3.
+\tag{29.44}
+$$
+
+（29.44）中两项相交为零，维数和为六；不同于（29.39），此时 $`\eta_3\in F`$，没有环境外方向。又因为 $`\eta_5\parallel\eta_3`$，可从（29.44）取该环境方向的截面，得到
+
+$$
+G_5\subseteq U+G_3.
+\tag{29.45}
+$$
+
+如果定义 $`X_\eta:=V_0^{-1}(U\otimes\eta)`$（非零 $`\eta\in F`$），它是 $`X`$ 内的二维空间，则本分支还有
+
+$$
+H_3=X_{\eta_4},\qquad H_2\cap X=0,\qquad H_4\cap U=0.
+\tag{29.46}
+$$
+
+最后一式是 $`G_4=U`$ 与 $`\dim C_4=4`$ 的直接要求。
+
+**分支二：$`\eta_3\parallel\eta_4`$ 而 $`\eta_5\not\parallel\eta_3`$。** 固定 $`V_1`$ 把 $`U+G_3`$ 送入 $`(Q_3+Q_4)\otimes\eta_3`$，把 $`G_4`$ 送入 $`Q_5\otimes\eta_5`$。两条环境射线不同，单射性给
+
+$$
+G_4\cap(U+G_3)=0.
+\tag{29.47}
+$$
+
+因此
+
+$$
+\dim\pi(G_3+G_4)=\dim\pi(G_3)+2.
+$$
+
+（29.42）同时包含 $`\pi(G_3+G_4)\otimes\eta_3`$ 与 $`\pi(G_5)\otimes\eta_5`$，所以二维上限强制 $`\pi(G_3)=\pi(G_5)=0`$。得到
+
+$$
+\boxed{
+\eta_3\parallel\eta_4\not\parallel\eta_5,
+\qquad G_3=G_5=U,\qquad G_4\cap U=0.
+}
+\tag{29.48}
+$$
+
+相应有
+
+$$
+\mathcal R_0=U\otimes F+G_4\otimes\eta_3,
+\qquad
+H_2=X_{\eta_3},\quad H_4=X_{\eta_5},\quad
+H_2+H_4=X,\quad H_3\cap X=0.
+\tag{29.49}
+$$
+
+因为 $`\eta_3,\eta_5`$ 为 $`F`$ 的一组基，两个 $`X_\eta`$ 的和确实是整个 $`X`$。
+
+**分支三：三个环境同射线。** 即
+
+$$
+\eta_3\parallel\eta_4\parallel\eta_5.
+\tag{29.50}
+$$
+
+第26节同射线分析中与五维上限无关的部分仍可用：若
+
+$$
+H_\Sigma=H_2+H_3+H_4,\qquad
+G_\Sigma=G_2+G_3+G_4,
+$$
+
+则固定 $`V`$ 在同一环境方向上等距给 $`\dim H_\Sigma+\dim G_\Sigma\le6`$。任何一项等于二均不可能：$`\dim G_\Sigma=2`$ 会给 $`G_2=G_3=G_4`$ 与 $`H_2=H_3`$，违反第二、第三终端秩差；$`\dim H_\Sigma=2`$ 会给 $`H_2=H_3=H_4`$、$`G_3=G_4`$，违反（26.20）。故必要条件是
+
+$$
+\boxed{\dim H_\Sigma=\dim G_\Sigma=3.}
+\tag{29.51}
+$$
+
+（29.43）、（29.48）、（29.50）穷尽所有射线排列；特别排除了三条互异射线及 $`\eta_4\parallel\eta_5\not\parallel\eta_3`$。以下将同射线、首末同射线、前两轮同射线分别记为 AAA、ABA、AAB；不同字母只表示不同射线，不预设正交。下面逐一排除这三个分支。
+
+**三个射线分支均与早期接收矛盾。** 仍反设 $`r_1=2`$。定义二维空间 $`P=\operatorname{span}\{p_\alpha:\alpha=1,2\}`$。由（29.37）—（29.38）及第二终端来源系数，
+
+$$
+V_0P=\mathbb Cu\otimes F,\qquad
+V_1P=\mathbb Cv\otimes F,\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\tag{29.52}
+$$
+
+**早期两个位像给出的共同正交约束。** 由 （29.52）、$`V_0K\perp V_1K`$ 和 （29.41），
+$$
+G_n\perp v,\qquad Q_n\perp U,
+\qquad n=3,4,5.
+\tag{29.53}
+$$
+环境属于 $`F`$ 是这一步的必要前提；例如可用同一个 $`\eta_n\in F`$ 将 $`G_n\otimes\eta_n\perp v\otimes F`$ 化为 $`G_n\perp v`$。
+
+**排除 AAA。** 选三个环境的共同单位代表 $`\eta`$，置
+$$
+S_0=H_2+H_3+H_4,\qquad S_1=U+G_3+G_4.
+$$
+它们均为三维。在这两个空间上写 $`V_0x=f(x)\otimes\eta`$、$`V_1y=g(y)\otimes\eta`$。其正交像
+$$
+R=fS_0=G_3+G_4+G_5,\qquad
+W=gS_1=Q_3+Q_4+Q_5
+\tag{29.54}
+$$
+各三维，所以 $`K=R\oplus W`$。由 （29.53），$`v\in W`$、$`U\subset R`$。因此 $`S_1=R`$，$`g:R\to W`$ 为满等距。
+
+式 （29.52） 给 $`P_RH_2=U`$、$`P_WH_2=\mathbb Cv`$，而来源给
+$`P_RH_3=G_3`$、$`P_RH_4=G_4`$。于是 $`P_RS_0=U+G_3+G_4=R`$。三维 $`S_0`$ 为某个线性映射 $`T:R\to W`$ 的图，且
+$$
+T(U)=\mathbb Cv,\qquad T(w)=0,\qquad
+T(G_3)=Q_3=gU,\qquad T(G_4)=Q_4=gG_3.
+\tag{29.55}
+$$
+其中 $`T|_{G_3}`$ 单射。因 $`w\ne0`$，$`\operatorname{rank}T\le2`$。但
+$`g(U+G_3)\subset\operatorname{im}T`$，所以 $`G_3=U`$。这使同一限制 $`T|_U`$ 同时具有秩一和秩二，矛盾。
+
+**排除 ABA。** 选不同环境射线的单位代表 $`\alpha=\eta_3=\eta_5`$、$`\beta=\eta_4`$。由于 $`G_4=U=G_2`$，固定 $`V_1`$ 给 $`Q_5=Q_3`$。由 （29.53） 和 $`G_3\perp Q_3`$，
+$$
+Q_3=(U+G_3)^\perp=:Q,
+\qquad v\in Q,
+\tag{29.56}
+$$
+因为 $`\dim(U+G_3)=4`$、$`v\perp U+G_3`$。
+
+若 $`\alpha\perp\beta`$，固定 $`V_1`$ 对输入 $`U,G_3`$ 的像给 $`U\perp G_3`$，固定 $`V_0`$ 对输入 $`H_2,H_3`$ 的像给 $`H_2\perp H_3`$。此时 $`H_3\subset G_3\oplus Q\subset U^\perp`$，且 $`P_QH_3=Q`$。由 $`v\in Q`$，存在 $`h\in H_3`$ 使 $`\langle v,h\rangle\ne0`$。因 $`u\perp H_3`$，有
+$`\langle a^2u+bv,h\rangle=\bar b\langle v,h\rangle\ne0`$，违反 $`H_2\perp H_3`$。
+
+若 $`\langle\alpha,\beta\rangle\ne0`$，两个不同位的像
+$`G_3\otimes\alpha`$、$`Q_4\otimes\beta`$ 正交，故 $`G_3\perp Q_4`$。结合 $`Q_4\perp U`$ 和 （29.56），得到 $`Q_4=Q_3=Q_5=Q`$。因此
+$$
+V_1(U+G_3)=Q\otimes\operatorname{span}\{\alpha,\beta\}=Q\otimes F.
+\tag{29.57}
+$$
+由 $`v\in Q`$ 和 （29.52），$`V_1P\subset V_1(U+G_3)`$，单射性给 $`P\subset U+G_3=Q^\perp`$。但是 $`H_3\subset G_3\oplus Q`$，且 $`P_Q|_{H_3}`$ 单射，所以 $`H_3\cap Q^\perp=0`$，进而 $`P\cap H_3=0`$。另一方面，
+$$
+V_0P=u\otimes F,\qquad V_0H_3=U\otimes\beta
+$$
+的交恰为一维 $`u\otimes\beta`$。固定等距的单射性要求 $`\dim(P\cap H_3)=1`$，矛盾。
+
+**排除 AAB。** 选单位代表 $`\alpha=\eta_3=\eta_4`$、$`\beta=\eta_5`$，射线不同。因为 $`G_3=U=G_2`$，固定 $`V_1`$ 给 $`Q_3=Q_4=:Q`$。由 （29.53）、$`G_4\perp Q_4`$ 和 $`G_4\cap U=0`$，
+$$
+Q=(U+G_4)^\perp,\qquad v\in Q.
+\tag{29.58}
+$$
+
+若 $`\alpha\perp\beta`$，固定 $`V_1`$ 对输入 $`U,G_4`$ 的像给 $`U\perp G_4`$，固定 $`V_0`$ 对输入 $`H_2,H_4`$ 的像给 $`H_2\perp H_4`$。此时 $`H_4\subset G_4\oplus Q\subset U^\perp`$，并且 $`P_QH_4=Q`$。如上一分支，$`v\in Q`$ 与 $`b\ne0`$ 使 $`a^2u+bv`$ 不可能正交于整个 $`H_4`$，矛盾。
+
+若 $`\langle\alpha,\beta\rangle\ne0`$，跨位正交性给 $`G_4\perp Q_5`$。结合 $`Q_5\perp U`$ 与 （29.58），得到 $`Q_5=Q`$。从而
+$$
+V_1(U+G_4)=Q\otimes F.
+\tag{29.59}
+$$
+式 （29.52） 和 $`v\in Q`$ 再给 $`P\subset U+G_4=Q^\perp`$。由于 $`P_Q|_{H_4}`$ 单射，$`P\cap H_4=0`$。但
+$`V_0P=u\otimes F`$、$`V_0H_4=G_5\otimes\beta=U\otimes\beta`$ 有一维交，单射性要求 $`\dim(P\cap H_4)=1`$，矛盾。
+
+三个分支均已排除，故 $`r_1=2`$ 不可能。结合 $`r_1=3`$ 的排除，得 $`r_1=1`$，命题得证。
+
+
+命题29.1和29.2合并，得到任何一般六维五终端精确接收器都必须满足 $`r_1=r_2=1`$。第三至第五终端本来就因 $`4r_n\le6`$ 具有 $`r_n=1`$，所以对任意纯的参考—记忆联合输入，五个终端的参考—活动记忆—接收器联合态全部为纯态。由独立纯初始化和固定 Stinespring 延拓，每一轮新环境也都是输入无关的纯向量；混合输入可先纯化，仍使用同一环境向量。这里只作必要归约，不限制环境射线的相互重叠。
+
+纯环境候选仍须满足同一个全域接收等距、独立初始接收态和全部跨轮 Gram 等式。本节没有证明这样的六维候选存在或不存在，也不能将任意纯环境词换成第25节的正交交替词。一般容量界仍为 $`6\le d_{\mathrm{CPTP},5}(a,b)\le7`$。
+
+本节复用第23节所述的可逆编码固定附加态结构与 Stinespring 等距工具。具体的六维像空间饱和、共同射线下的图空间与秩一差矛盾，以及纯第二终端的二维商空间和早期像空间交限制，均由上述来源关系推出；这些结论给出纯环境必要归约，尚未决定一般六维的存在性。
+
+## 追加锚（本行以下为增补区）
+
+## 30. 六维纯终端接收的后续环境维数
+
+接续第29节的纯终端必要归约，取第26节的非退化来源 $`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，其中 $`ab\ne0`$、$`|a|^2+|b|^2=1`$。假设六维固定 CPTP 接收器精确服务前五个完整参考终端，并且前两终端的可逆附加态秩均为一。后面三个终端的档案秩为四，所以其附加态也纯。固定每轮共用的 Stinespring 等距 $`V:K\otimes B\to K\otimes E`$，其每轮实际输出环境是来源无关的纯向量 $`\eta_n`$，$`n=1,\ldots,5`$。
+
+结论保留环境向量之间完整的非正交 Gram 参数，仍只是六维候选的必要条件，没有给出接收器构造。
+
+**共同坐标。**
+
+令 $`k\in K`$ 为独立纯接收初态，$`V_i x=V(x\otimes|i\rangle)`$。前两轮可取接收器正交单位向量 $`p,q`$ 及正交单位向量 $`u,v,w`$，使
+
+$$
+V_0k=p\otimes\eta_1,\qquad
+V_1k=q\otimes\eta_1,
+\tag{30.1}
+$$
+
+$$
+V_0p=u\otimes\eta_2,\qquad
+V_1p=v\otimes\eta_2,\qquad
+V_0q=w\otimes\eta_2.
+\tag{30.2}
+$$
+
+接收后的来源两列及系数支撑满足
+
+$$
+\Psi_1^0=m_0p,\quad\Psi_1^1=m_1q,
+\qquad
+H_1=\operatorname{span}\{p,q\},\quad G_1=\mathbb Cp,
+\tag{30.3}
+$$
+
+$$
+\Psi_2^0=a m_0u+b m_1v,\quad\Psi_2^1=m_0w,
+\quad
+H_2=\operatorname{span}\{a^2u+bv,w\},\quad
+G_2=\operatorname{span}\{u,w\}.
+\tag{30.4}
+$$
+
+对纯终端 $`n`$ 写 $`\Psi_n^i=|0\rangle_Mx_n^i+|1\rangle_My_n^i`$，定义 $`H_n=\operatorname{span}\{x_n^0,x_n^1\}`$、$`G_n=\operatorname{span}\{y_n^0,y_n^1\}`$、$`C_n=H_n+G_n`$。则
+
+$$
+\dim H_n=\dim G_n=2\quad(n=2,3,4,5),\qquad
+\dim C_2=3,\quad\dim C_3=\dim C_4=\dim C_5=4.
+\tag{30.5}
+$$
+
+对第三至第五轮，存在二维 $`Q_n`$ 满足
+
+$$
+V_0(H_{n-1})=G_n\otimes\eta_n,\qquad
+V_1(G_{n-1})=Q_n\otimes\eta_n,
+\qquad G_n\perp Q_n,
+\tag{30.6}
+$$
+
+$$
+C_n=G_n\oplus Q_n,\qquad
+P_{G_n}H_n=G_n,\qquad P_{Q_n}H_n=Q_n.
+\tag{30.7}
+$$
+
+两个投影在二维 $`H_n`$ 上均为同构，这是来源的两个非零系数及两个输入系数对独立性给出的事实。对应实际输入支撑为
+
+$$
+D_n=(H_{n-1}\otimes|0\rangle)\oplus
+(G_{n-1}\otimes|1\rangle),\qquad
+V(D_n)=C_n\otimes\eta_n\quad(n=3,4,5).
+\tag{30.8}
+$$
+
+**命题30.1（后三轮环境的张成恰为二维）。** 在上述合同中，
+
+$$
+\boxed{\dim\operatorname{span}\{\eta_3,\eta_4,\eta_5\}=2.}
+\tag{30.9}
+$$
+
+等价地，后三轮环境 Gram 矩阵的秩恰为二；其中可以有两条或三条不同射线，结论不将它们强制正交。
+
+**证明：排除三维环境张成。**
+
+反设 $`\eta_3,\eta_4,\eta_5`$ 线性无关。由（30.6），它们分别给 $`V_0`$ 与 $`V_1`$ 像中三个各二维的代数直和项。每个全域像的维数也恰为六，所以
+
+$$
+\begin{aligned}
+V_0(K)&=(G_3\otimes\eta_3)\dotplus
+(G_4\otimes\eta_4)\dotplus(G_5\otimes\eta_5),\\
+V_1(K)&=(Q_3\otimes\eta_3)\dotplus
+(Q_4\otimes\eta_4)\dotplus(Q_5\otimes\eta_5).
+\end{aligned}
+\tag{30.10}
+$$
+
+这里的直和不要求正交。取单射逆像，还得
+
+$$
+K=H_2\dotplus H_3\dotplus H_4
+=G_2\dotplus G_3\dotplus G_4.
+\tag{30.11}
+$$
+
+由（30.2），$`G_2\otimes\eta_2=V_0(H_1)\subseteq V_0(K)`$。先在环境上投影到 $`E/\operatorname{span}\{\eta_3,\eta_4,\eta_5\}`$，得到 $`\eta_2`$ 属于这三个向量的张成。若 $`\eta_2`$ 的 $`\eta_3`$ 系数非零，按独立环境坐标比较，必须有 $`G_2\subseteq G_3`$，与（30.11）矛盾；其 $`\eta_4`$ 系数也同理必须为零。因此
+
+$$
+\eta_2\parallel\eta_5,\qquad
+G_5=G_2,\qquad H_1=H_4.
+\tag{30.12}
+$$
+
+最后一个等式来自 $`V_0(H_1)=G_2\otimes\eta_2=G_5\otimes\eta_5=V_0(H_4)`$ 的子空间等式及单射性。
+
+再由（30.1）、（30.10）比较 $`p\otimes\eta_1`$。同样先得 $`\eta_1`$ 属于后三轮环境张成。因为（30.11）、（30.12）使 $`G_3,G_4,G_5`$ 成为三个代数直和空间，非零 $`p`$ 不可能同时属于其中两个；故 $`\eta_1`$ 必与某一个 $`\eta_j`$ 共线，$`j\in\{3,4,5\}`$。同时比较（30.10）的零位和一位像，可得
+
+$$
+k\in H_{j-1}\cap G_{j-1}.
+\tag{30.13}
+$$
+
+第三、第四终端各有四维总支撑，所以 $`H_3\cap G_3=H_4\cap G_4=0`$。因此只能 $`j=3`$，并由（30.4）得到
+
+$$
+\eta_1\parallel\eta_3,\qquad k\parallel w.
+\tag{30.14}
+$$
+
+吸收环境射线相位后，（30.1）、（30.14）使 $`V_0w`$、$`V_1w`$ 分别等于 $`p\otimes\eta_3`$、$`q\otimes\eta_3`$ 的同一个非零标量倍数。第二来源列在第二终端的系数为 $`x_2^1=aw`$、$`y_2^1=bw`$，所以其第三终端零记忆系数为
+
+$$
+0\ne x_3^1\in\mathbb C(a^2p+bq)\subseteq H_1=H_4.
+\tag{30.15}
+$$
+
+它按定义也属于 $`H_3`$，违反（30.11）的 $`H_3\cap H_4=0`$。故后三轮环境不可能张成三维。
+
+**排除共同环境射线。**
+
+现在反设 $`\eta_3\parallel\eta_4\parallel\eta_5`$，吸收相位后写为共同单位向量 $`\eta`$。令
+
+$$
+H_\Sigma=H_2+H_3+H_4,\qquad
+G_\Sigma=G_2+G_3+G_4.
+\tag{30.16}
+$$
+
+固定等距在同一环境方向上给 $`\dim H_\Sigma+\dim G_\Sigma\le6`$。两项均至少为三：若 $`\dim G_\Sigma=2`$，则 $`G_2=G_3=G_4`$，由（30.6）得 $`H_2=H_3`$，违反 $`\dim C_2=3`$、$`\dim C_3=4`$；若 $`\dim H_\Sigma=2`$，则 $`H_2=H_3=H_4`$、$`G_3=G_4`$，违反第26节式（26.20）的主角度行列式严格变化。因此
+
+$$
+\dim H_\Sigma=\dim G_\Sigma=3.
+\tag{30.17}
+$$
+
+去掉共同环境因子，写
+
+$$
+V_0x=f(x)\otimes\eta\quad(x\in H_\Sigma),\qquad
+V_1y=g(y)\otimes\eta\quad(y\in G_\Sigma).
+$$
+
+$`f,g`$ 为等距，其像 $`U=fH_\Sigma`$、$`W=gG_\Sigma`$ 正交且均三维，故
+
+$$
+K=U\oplus W,\qquad
+fH_2=G_3,\quad fH_3=G_4,\quad fH_4=G_5,
+\quad gG_2=Q_3,\quad gG_3=Q_4,\quad gG_4=Q_5.
+\tag{30.18}
+$$
+
+**第二轮环境必须正交于共同尾环境。** 反设 $`\langle\eta_2,\eta\rangle\ne0`$。$`V_0(K)\perp V_1(K)`$，结合（30.2）、（30.18）给
+
+$$
+G_2\perp W,\qquad v\perp U,
+\quad\text{所以}\quad G_2\subset U,\ v\in W.
+\tag{30.19}
+$$
+
+而 $`G_3,G_4\subset U`$，所以 $`G_\Sigma=U`$，$`g:U\to W`$ 为满等距。
+
+若 $`G_3\ne G_4`$，两个二维子空间张成三维 $`U`$。由（30.7），$`P_UH_3=G_3`$、$`P_UH_4=G_4`$，故 $`P_UH_\Sigma=U`$。于是三维 $`H_\Sigma`$ 是线性映射 $`T:U\to W`$ 的图，并有
+
+$$
+T(G_3)=Q_3=gG_2,\qquad T(G_4)=Q_4=gG_3,
+\qquad\operatorname{im}T=g(G_2+G_3).
+\tag{30.20}
+$$
+
+因 $`0\ne w\in H_2\cap G_2\subset H_\Sigma\cap U`$，有 $`\ker T\ne0`$，故 $`\operatorname{rank}T\le2`$。（30.20）及 $`g`$ 单射迫使 $`G_2=G_3`$，从而 $`w\in G_3\cap\ker T`$；但（30.7）使 $`T|_{G_3}`$ 单射，矛盾。
+
+若 $`G_3=G_4`$，固定 $`V_0`$ 与共同环境直接给 $`H_2=H_3`$。由（30.4）、（30.19），$`P_UH_2=G_2`$，而（30.7）给 $`P_UH_3=G_3`$，所以 $`G_2=G_3`$，再次违反第二、第三终端支撑秩差。因此
+
+$$
+\eta_2\perp\eta,\qquad H_1\perp H_\Sigma,\qquad p\perp G_\Sigma.
+\tag{30.21}
+$$
+
+后两个正交性由（30.2）、（30.6）及固定等距直接得到。
+
+**第一轮环境也必须正交于共同尾环境。** 反设 $`\langle\eta_1,\eta\rangle\ne0`$。用（30.1）的两个输入位与（30.18）交叉比较，得 $`p\in U`$、$`q\in W`$。二者又都属于 $`H_1`$，故由（30.21）正交于 $`H_\Sigma`$。
+
+若 $`G_3\ne G_4`$，则 $`P_UH_\Sigma`$ 包含 $`G_3+G_4=U`$，从而 $`p\in U`$ 且 $`p\perp U`$，矛盾。若 $`G_3=G_4`$，则 $`G_\Sigma=G_2+G_3`$，并由（30.7）、（30.18）得到
+
+$$
+P_WH_\Sigma\supseteq Q_3+Q_4
+=g(G_2+G_3)=W.
+$$
+
+于是 $`q\in W`$ 且 $`q\perp W`$，也矛盾。因此
+
+$$
+\eta_1\perp\eta.
+\tag{30.22}
+$$
+
+由（30.1）、（30.18）、（30.22），初态 $`k`$ 同时正交于 $`H_\Sigma`$ 与 $`G_\Sigma`$；而（30.21）及 $`p\in H_1`$ 给 $`p`$ 也同时正交于这两个空间。
+
+**最后的支撑秩矛盾。** $`k,p`$ 必线性无关。否则令 $`p=\lambda k`$，由（30.1）、（30.2）的非零纯张量等式可得 $`\eta_1\parallel\eta_2`$、$`u\parallel p`$、$`v\parallel q`$，从而
+
+$$
+H_1=\operatorname{span}\{u,v\}.
+$$
+
+非零向量 $`a^2u+bv`$ 又属于 $`H_2`$，违反（30.21）的 $`H_1\perp H_\Sigma`$。
+
+因此 $`(H_\Sigma+G_\Sigma)^\perp`$ 至少二维，$`\dim(H_\Sigma+G_\Sigma)\le4`$。但是四维 $`C_3=H_3+G_3`$ 和 $`C_4=H_4+G_4`$ 均包含于这个和空间，故
+
+$$
+C_3=C_4=H_\Sigma+G_\Sigma.
+\tag{30.23}
+$$
+
+（30.8）的共同环境现在给 $`V(D_3)=C_3\otimes\eta=C_4\otimes\eta=V(D_4)`$。单射性强制 $`D_3=D_4`$，分别比较两个输入位得到 $`H_2=H_3`$、$`G_2=G_3`$，继而 $`C_2=C_3`$，与（30.5）的三维、四维秩矛盾。
+
+共同尾射线也被排除。三条非零环境向量的张成只能有维数一、二、三；前后两项均不可能，故得到（30.9）。证明完毕。
+
+
+
+（30.9）没有把二维环境中的三个射线限制为两个，也没有将不同射线正交化。它只控制后三轮环境；前两轮是否属于同一个二维环境空间尚未由此证明。一般六维纯终端实现仍须满足（30.1）—（30.8）及全部跨轮 Gram 等式。标准可逆编码和共同 Stinespring工具沿第23节已读来源；本节没有以这些来源替代具体的支撑与射线推导。
+
+## 追加锚（本行以下为增补区）
