@@ -153,10 +153,11 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   let valid <- liftTermElabM do
     try
       let arenaExpr <- mkConstWithFreshMVarLevels arenaName
+      let lawArena := (← RegistrationGates.normalizeArena arenaExpr).law
       let realizationExpr <- mkConstWithFreshMVarLevels realizationName
       let expectedLaw <- mkAppM
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
-        #[arenaExpr, realizationExpr]
+        #[lawArena, realizationExpr]
       let statementExpr <- elabTerm statement (some (mkSort .zero))
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq statementExpr expectedLaw
@@ -174,7 +175,8 @@ private def addInlineLegacyRealization (theoremName arenaName realizationName : 
       let theoremInfo ← getConstInfo theoremName
       withLevelNames theoremInfo.levelParams do
         let statement := theoremInfo.type
-        let arena ← mkConstWithFreshMVarLevels arenaName
+        let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+        let arena := (← RegistrationGates.normalizeArena arenaExpr).law
         let signature ← mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature #[arena]
         let realizationType ← mkAppM
