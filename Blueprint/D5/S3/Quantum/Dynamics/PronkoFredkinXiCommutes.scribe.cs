@@ -23,7 +23,10 @@ internal sealed class PronkoFredkinXiCommutesDocument : IScribeDocumentDefinitio
             DefinitionNode("claim", "The commutation relation of section 4.1", ClaimDefinitionFormula(),
                 "For every even number of sites N at least three, Xi commutes with the periodic Fredkin Hamiltonian H of equation (2.3)."),
             TheoremNode("result", "Xi commutes with the Hamiltonian", ClaimFormula(),
-                "Xi is diagonal: its value at a word is (-1)^a when the word is balanced and lies in C_(a,a)(N), where a is the negative of the smallest height, and zero otherwise. The off-diagonal part of the density F_(j,j+1,j+2) exchanges the letters at j + 1 and j + 2 when the letter at j is up, or the letters at j and j + 1 when the letter at j + 2 is down, indices modulo N. Such an exchange keeps the number of up letters. When it does not wrap around the end of the word it changes a single height by two, and the control letter forces the smaller of the two values to occur at another index, so the smallest height and a are unchanged. When it exchanges the last and the first letter, every interior height moves by the same amount, and the control letter forces an interior height at most zero in both words, so a changes by zero or two. Hence a has the same parity at the two words, Xi commutes with every density, and so with their sum H. The argument uses only N at least three.")),
+                "Xi is diagonal: its value at a word is (-1)^a when the word is balanced and lies in C_(a,a)(N), where a is the negative of the smallest height, and zero otherwise. The off-diagonal part of the density F_(j,j+1,j+2) exchanges the letters at j + 1 and j + 2 when the letter at j is up, or the letters at j and j + 1 when the letter at j + 2 is down, indices modulo N. Such an exchange keeps the number of up letters. When it does not wrap around the end of the word it changes a single height by two, and the control letter forces the smaller of the two values to occur at another index, so the smallest height and a are unchanged. When it exchanges the last and the first letter, every interior height moves by the same amount, and the control letter forces an interior height at most zero in both words, so a changes by zero or two. Hence a has the same parity at the two words, Xi commutes with every density, and so with their sum H. The argument uses only N at least three.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pronko-2025-fredkin-xi-hamiltonian-commutation"),
+                    ResolutionKind.Proved))),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation"))]));
 
@@ -33,10 +36,12 @@ internal sealed class PronkoFredkinXiCommutesDocument : IScribeDocumentDefinitio
             AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))),
             DescribeRole.Definition);
 
-    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose,
+        OpenProblemResolutionClaim resolution) =>
         Describe.Lean(DescribeId.Create("pronko-xi-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name)
