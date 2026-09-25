@@ -41276,3 +41276,174 @@ $$
 程序在设计点秩为一，在充分小的去心邻域秩为七。点态 SLD 与连续延拓的差别符合既有的秩变化边界：Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），DOI:10.1103/PhysRevA.95.052320，定理1式（13）对 $C^2$ 态族给出 $H_c=H+2\sum_{p_j=0}p_j''$。在当前构造中，新出现的六个本征值之和为 $kx^2$，所以 Bures 信息在设计点等于 $I_{r}(u_0)+4k$，并未降到点态 SLD 的值。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 189. 固定量子程序相对于可读信息的维数无关正差距
+
+**定义 189.1（以可读信息归一的统一成本）。** 固定 $0<a<1$，仍以 $J_a=(2a-1,1)$ 为参数区间。对第187.1节的有限维固定量子程序，令
+$$
+\widehat R(\mathcal G,\rho)
+=\sup_{u\in J_a}\frac{I_Q(\rho_u)}{I_r(u)},
+\qquad I_r(u)=\frac1{1-u^2},
+\qquad
+\widehat R_Q^*(a)=\inf_{(\mathcal G,\rho)}\widehat R(\mathcal G,\rho).
+\tag{189.1}
+$$
+每个候选都必须精确模拟全部 $J_a$。下确界允许任意有限程序维数，信息量仍采用（187.2）的点态 SLD 约定。这里的归一分母是实验可读信息 $I_r$，与第187节以逐点经典生成成本 $B$ 为分母的 $R_Q^*$ 不同。
+
+取三个内部参数值
+$$
+u_- =\frac{3a-1}{2},\qquad u_0=a,\qquad u_+=\frac{1+a}{2},
+\qquad h_i=\frac{1+u_i}{2},\quad\ell_i=1-h_i,
+\tag{189.2}
+$$
+并定义
+$$
+M_a=\begin{pmatrix}
+h_-&h_0&h_+\\
+\ell_-&\ell_0&\ell_+\\
+\sqrt{h_-\ell_-}&\sqrt{h_0\ell_0}&\sqrt{h_+\ell_+}
+\end{pmatrix},
+\qquad
+\begin{pmatrix}\alpha_-\\\alpha_0\\\alpha_+\end{pmatrix}
+=M_a^{-1}\begin{pmatrix}0\\1\\0\end{pmatrix}.
+\tag{189.3}
+$$
+函数 $\sqrt{1-u^2}$ 严格凹，故三个点在其图上不共线；结合前两行张成常数与 $u$，可知 $M_a$ 可逆。令
+$$
+S_a=|\alpha_-|+|\alpha_+|,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+\qquad
+\Delta(a)=\frac{\mu_a^2(1-u_+^2)}{S_a^2}.
+\tag{189.4}
+$$
+$S_a>0$：否则（189.3）前两行之和迫使 $\alpha_0=1$，而第一行又要求 $h_0=0$，矛盾。因此 $\Delta(a)>0$，且只依赖已知参数 $a$。
+
+**定理 189.2（任意有限维量子程序都有统一正额外成本）。** 对所有 $0<a<1$，
+$$
+1+\Delta(a)\le\widehat R_Q^*(a)\le1+a.
+\tag{189.5}
+$$
+特别地，即使允许程序维数沿候选序列不断增加，也不能使整区间的最坏成本比趋于一。这比第188.3节的不能处处达到等号更强，同时不改变第188节允许随名义点重新设计时的逐点下确界。
+
+证明。 任取一个精确程序。沿第188.3节，固定均衡 $02$ 输入及完整的二元输出 POVM，用固定 Naimark 嵌入把诱导测量写成互补投影 $P_+,P_-$。将程序态记为 $\sigma_u$；其点态 SLD 信息量保持不变。采用（188.16）的 CPTP 解码，将处理器扩展到整个嵌入程序空间。于是它不仅能处理 $\sigma_u$，还可以处理下文构造的其他密度矩阵。
+
+令 $h=(1+u)/2$、$\ell=(1-u)/2$，并设
+$$
+D_u=\frac{P_+}{2h}-\frac{P_-}{2\ell},
+\qquad
+\mathcal E_u=\sigma_u'-\frac12(D_u\sigma_u+\sigma_uD_u).
+\tag{189.6}
+$$
+对任一 Hermitian SLD $L_u$，第188节所用测量信息不等式具有精确剩余平方
+$$
+\|(L_u-D_u)\sqrt{\sigma_u}\|_2^2
+=I_Q(\sigma_u)-I_r(u).
+\tag{189.7}
+$$
+事实上，$\operatorname{Tr}(\sigma_uD_u^2)=I_r$，而
+$\operatorname{Re}\operatorname{Tr}(\sigma_uD_uL_u)
+=\sum_{j=\pm}(p_j'/p_j)p_j'=I_r$；展开平方即得（189.7）。这沿用 Braunstein–Caves 测量信息不等式的支持敏感形式，出处与边界见第188.3节。
+
+记 $Z_u=(L_u-D_u)\sqrt{\sigma_u}$，则
+$$
+\mathcal E_u=\frac12(Z_u\sqrt{\sigma_u}+\sqrt{\sigma_u}Z_u^\dagger),
+\qquad
+\|\mathcal E_u\|_1\le\|Z_u\|_2
+=\sqrt{I_Q(\sigma_u)-I_r(u)}.
+\tag{189.8}
+$$
+这里使用 Schatten 范数的 Cauchy–Schwarz 不等式及 $\|\sqrt{\sigma_u}\|_2=1$。$\mathcal E_u$ 由 $C^1$ 态曲线和光滑的 $D_u$ 直接定义，因而连续；证明没有要求所选 $L_u$ 连续，也没有对它求导。
+
+令
+$$
+K_u=\sqrt h\,P_++\sqrt\ell\,P_-,\qquad
+\tau_u=K_u^{-1}\sigma_uK_u^{-1}.
+\tag{189.9}
+$$
+由 $K_u'=D_uK_u/2$ 及（189.6），
+$$
+\tau_u'=K_u^{-1}\mathcal E_uK_u^{-1},
+\qquad
+\|\tau_u'\|_1
+\le\frac{\sqrt{I_Q(\sigma_u)-I_r(u)}}{\min(h,\ell)}.
+\tag{189.10}
+$$
+这把信息量超出可读值的部分，转成同一程序曲线在固定表示下的变化界。
+
+在参考点 $u_0=a$ 令 $A=\tau_{u_0}$，并构造
+$$
+\widehat\sigma_u=K_uAK_u
+=hA_++\ell A_-+\sqrt{h\ell}(C+C^\dagger),
+\quad A_\pm=P_\pm AP_\pm,\quad C=P_+AP_-.
+\tag{189.11}
+$$
+$A\succeq0$，而参考点的测量概率保证 $\operatorname{Tr}A_+=\operatorname{Tr}A_-=1$。因此 $\widehat\sigma_u$ 对所有 $-1<u<1$ 都是密度矩阵，且 $\widehat\sigma_{u_0}=\sigma_{u_0}$。
+
+记 $R=\widehat R(\mathcal G,\rho)$。若 $R=\infty$，下界自动成立；否则数据处理给出 $R\ge1$。在闭区间 $[u_-,u_+]$ 上，
+$$
+\min(h,\ell)\ge\frac{1-a}{4},\qquad
+I_r(u)\le\frac1{1-u_+^2},\qquad
+|u_\pm-u_0|=\frac{1-a}{2}.
+\tag{189.12}
+$$
+第二式使用 $|u_-|\le u_+$。将（189.10）在参考点与两端点之间积分，再使用 $\|K_u\|_\infty^2\le1$，得到
+$$
+\|\sigma_{u_i}-\widehat\sigma_{u_i}\|_1
+\le\frac{2}{\sqrt{1-u_+^2}}\sqrt{R-1}
+\quad(i\in\{-,+\});
+\qquad
+\|\sigma_{u_0}-\widehat\sigma_{u_0}\|_1=0.
+\tag{189.13}
+$$
+只对连续的 $\mathcal E_u$ 与 $\tau_u'$ 使用积分，所以该界允许程序在区间内发生秩变化。
+
+现在向同一个固定扩展处理器输入另一个数据态
+$\omega=|s\rangle\langle s|$，其中 $|s\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$。实际程序给出的输出为
+$X_u=F(a,u)/3$；参考程序给出的输出具有形式
+$$
+\widehat X_u=hX_++\ell X_-+\sqrt{h\ell}\,Y,
+\tag{189.14}
+$$
+其中 $X_+,X_-$ 是以密度矩阵 $A_+,A_-$ 为程序得到的密度矩阵，$Y$ 是固定 Hermitian 交叉项的输出。固定输入后的处理器为 CPTP，故迹范数收缩把（189.13）原样传给 $\|X_{u_i}-\widehat X_{u_i}\|_1$。两个试验分别使用同一程序态族与同一固定处理器：前一个给出测量概率与信息剩余，后一个检验生成通道的正性。
+
+由（189.3），有
+$$
+\sum_i\alpha_i=1,\qquad\sum_i\alpha_i u_i=-1,
+\qquad\sum_i\alpha_i\sqrt{h_i\ell_i}=0.
+\tag{189.15}
+$$
+因此
+$$
+\sum_i\alpha_i X_{u_i}=\frac13F(a,-1),
+\qquad
+\sum_i\alpha_i\widehat X_{u_i}=X_-.
+\tag{189.16}
+$$
+这些系数只用于线性恒等式，允许为负，不将它们作为混合概率。
+
+矩阵 $F(a,-1)$ 在反对称端点方向的特征值为二，在对称端点与中间基态张成的子空间上具有矩阵 $\left(\begin{smallmatrix}0&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。因此 $F(a,-1)/3$ 恰有一个负特征值 $-\mu_a$。令 $\Pi$ 为对应的一维谱投影，则
+$$
+\operatorname{Tr}\!\left(\Pi\frac{F(a,-1)}3\right)=-\mu_a,
+\qquad\operatorname{Tr}(\Pi X_-)\ge0.
+\tag{189.17}
+$$
+两个矩阵都具有迹一，所以差为无迹 Hermitian 矩阵。对这种矩阵 $H$，任一效应 $0\le\Pi\le I$ 都满足 $|\operatorname{Tr}(\Pi H)|\le\|H\|_1/2$。于是（189.17）、（189.16）和三角不等式给出
+$$
+2\mu_a\le\left\|\frac13F(a,-1)-X_-\right\|_1
+\le\sum_i|\alpha_i|\,\|X_{u_i}-\widehat X_{u_i}\|_1
+\le\frac{2S_a}{\sqrt{1-u_+^2}}\sqrt{R-1}.
+\tag{189.18}
+$$
+移项平方即得 $R\ge1+\Delta(a)$。其常数与程序维数、所选 Naimark 扩张及处理器无关，故可以对全部有限维程序取下确界。
+
+最后，第187节显式量子比特程序在全区间具有 $I_Q=B$，且
+$$
+\frac{B(a,u)}{I_r(u)}
+=\frac{(1-a^2)(1+u)}{1+u-2a^2},
+\qquad
+\sup_{u\in J_a}\frac{B(a,u)}{I_r(u)}=1+a.
+\tag{189.19}
+$$
+该比值随 $u$ 严格递减，其上确界来自 $u\downarrow2a-1$，证明（189.5）的上界。上述两界未确定 $\widehat R_Q^*(a)$ 的精确值或达到其下确界的程序。证毕。
+
+## 追加锚（本行以下为增补区）
