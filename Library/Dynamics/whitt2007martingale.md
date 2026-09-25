@@ -60,8 +60,8 @@ model-specific bridge; this bounded comparison is not a global novelty claim.
 
 # Threshold groups and several separated rank boundaries
 
-Chapter 36 of the fluctuation volume applies the martingale theorem to a
-forward threshold-strip process under the calibrated independent Bernoulli
+Chapter 36 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+applies the martingale theorem to a forward threshold-strip process under the calibrated independent Bernoulli
 law. All labels at the same observed score jump together. Small individual
 label increments therefore do not verify the theorem's jump hypothesis.
 The proof first establishes uniform convergence of a monotone variance
