@@ -19,7 +19,7 @@ internal sealed class CompoundPoissonEdgeworthDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Let P be any probability measure on the real line, and let q be an integrable real comparison density bounded in absolute value by A. Assume its lower-half-line integral is Lipschitz with constant A. There is a universal positive H such that the distribution-function error is bounded by twice a finite Fourier integral plus 4AH divided by the bandwidth.")),
+                    Paragraph(Text("Let P be any probability measure on the real line, and let q be an integrable real comparison density bounded in absolute value by A. Assume its lower-half-line integral is Lipschitz with constant A. There is a universal positive H such that, for every positive bandwidth on whose frequency interval the weighted Fourier difference is integrable, the distribution-function error is bounded by twice that Fourier integral plus 4AH divided by the bandwidth.")),
                     Paragraph(Text("Convolution with a squared-sinc probability density cuts off Fourier frequencies. Monotonicity of the actual distribution function and the Lipschitz property of the signed comparison absorb the remaining tail discrepancy."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -29,7 +29,7 @@ internal sealed class CompoundPoissonEdgeworthDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Write V for p times a squared plus q times b squared, and use the raw cubic and quartic jump moments. On a sufficiently small fixed raw-frequency interval, the cubic and quartic exponent terms are absorbed by one quarter of the quadratic Gaussian exponent.")),
+                    Paragraph(Text("Write V for p times a squared plus q times b squared, and use the raw cubic and quartic jump moments. On a sufficiently small fixed raw-frequency interval, the cubic and quartic exponent terms are bounded by V times u squared divided by four, leaving Gaussian decay exp(-V u squared / 4).")),
                     Paragraph(Text("After rescaling by square-root time w, the error divided by frequency is bounded by a Gaussian times a polynomial of degrees three, five, and seven, divided by w squared. This integrable envelope makes w times the low-frequency integral tend to zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
