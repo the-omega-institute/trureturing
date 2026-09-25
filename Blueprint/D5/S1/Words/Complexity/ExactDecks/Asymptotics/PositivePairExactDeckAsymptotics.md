@@ -12,6 +12,10 @@ $$\forall A, k, \operatorname{FiniteLinearOrder}\left(A\right), \operatorname{ca
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nilforoushan-parvaresh-conjecture-8-1` (proved) by `D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nilforoushan-parvaresh-conjecture-8-1","declaration_gid":"D5/S1/Words/Complexity/ExactDecks/Asymptotics/PositivePairExactDeckAsymptotics.actual_exactKDeckImage_weightedLyndon_isTheta","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Arman Nilforoushan; Farzad Parvaresh (2026). *Improved upper bound on the number of distinct k-decks for any k and alphabet size by counting the independent parameters*. DOI: [10.48550/arXiv.2609.23106](https://doi.org/10.48550/arXiv.2609.23106). URL: <https://arxiv.org/html/2609.23106v1>.
