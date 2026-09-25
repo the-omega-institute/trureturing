@@ -13,6 +13,10 @@ triage: "anchor"
 
 # Fourier smoothing and Gaussian Hermite suppliers
 
+## Verified locator
+
+Pinned source: https://github.com/StatLean/Stat-Lean/tree/e1ef06bf52d2a8896439c5b59d982d9aad28a254
+
 The source is StatLean/Stat-Lean at immutable revision
 `e1ef06bf52d2a8896439c5b59d982d9aad28a254`. The relevant files are
 `StatLean/HypothesisTesting/ForMathlib/EsseenSmoothing.lean`,
