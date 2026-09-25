@@ -99,4 +99,13 @@ register_information_theorem
   variation phaseAverageVariation sensitivity phaseAverageSensitivity
   escape from (Set ℝ) escape continues (open)
 
+run_meta do
+  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
+    record.occurrence.key.theoremName ==
+      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average
+  let valid := row.any fun record => match record.result with
+    | .declaredValidated _ => true
+    | _ => false
+  unless valid do throwError "phase-average information registration is not declaredValidated"
+
 end Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage

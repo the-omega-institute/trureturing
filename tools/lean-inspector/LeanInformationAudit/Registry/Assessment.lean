@@ -478,11 +478,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
     | .ok result => pure result
     | .error reason => throwError reason
-  logInfo m!"DTR_PROBE arguments budget={budget} work={argumentWork} serialized={plan.serializedBytes}"
   let compare : CompareM TemplateBindingCertificate := do
     debit plan.serializedBytes
     let actual ← extract event
-    logInfo m!"DTR_PROBE extracted remaining={(← get).remaining}"
     closed actual
     let mut body ← levels plan.levelParams universeArgs plan.plan
     let mut type ← levels plan.levelParams universeArgs plan.typePlan
@@ -497,22 +495,18 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | _ => throwError "unclassified_form:dtr.descriptor_telescope"
     obligations := obligations.push ((← materialize type), #[])
     obligations := obligations ++ (← retainedTypes type) ++ (← retainedTypes body)
-    logInfo m!"DTR_PROBE obligations count={obligations.size} remaining={(← get).remaining}"
     let typeWork ← match ← RegistrationGates.templateTypesCurrent event.key.theoremName
         obligations (← get).remaining with
       | .ok work => pure work
       | .error diagnostic => throwError diagnostic
     debit typeWork
-    logInfo m!"DTR_PROBE types work={typeWork} remaining={(← get).remaining}"
     let context : MatchContext := {
       theoremName := event.key.theoremName
       selected := name
       descriptor
       body }
     let actualType ← inferType actual
-    unless ← matchesPlan context type actualType do
-      logInfo m!"DTR_PROBE expectedType={← materialize type} actualType={actualType}"
-      throwError "unclassified_form:dtr.signature_mismatch"
+    unless ← matchesPlan context type actualType do throwError "unclassified_form:dtr.signature_mismatch"
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
