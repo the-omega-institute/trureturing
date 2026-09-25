@@ -8,6 +8,7 @@ url: https://doi.org/10.1088/1751-8121/ae1644
 claim: The paper defines the periodic Fredkin Hamiltonian and the operators Sigma plus and minus, then states as Conjecture 1 that they annihilate every non-cyclic invariant eigenstate.
 strata_touched:
   - D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation
+  - D5/S3/Quantum/Dynamics/PronkoFredkinXiCommutes
 license: citation-only
 triage: anchor
 ---
@@ -59,8 +60,20 @@ that is an eigenvector of both `H` and `C`; non-cyclic means that its
 eigenvector hypothesis but establishes annihilation from the `C`-eigenvector
 hypothesis alone.
 
+Section 2.2, printed pp. 4-5, reads a spin word as a lattice path (a letter
+`↑` is a step up, `↓` a step down) and groups the paths into classes
+`C_{a,b}(N)`: start at height `a`, never go below height `0`, touch height `0`,
+end at height `b`. Section 4.1, printed pp. 9-10, defines for even `N` the
+operator
+
+> Ξ = Σ_{k=0}^{N/2} (−1)^k Σ_{ℓ₁ℓ₂…ℓ_N ∈ C_{k,k}(N)} n_1^{ℓ₁} n_2^{ℓ₂} ⋯ n_N^{ℓ_N} (4.1)
+
+and states on printed p. 10 that it commutes with the Hamiltonian and
+anticommutes with the cyclic shift: "The first relation may require a proof
+though we find it satisfied in all checks".
+
 ## Verified locator
 
 - DOI: 10.1088/1751-8121/ae1644
 - URL: https://doi.org/10.1088/1751-8121/ae1644
-- Source locations: section 2.1, printed pp. 3-4; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7.
+- Source locations: section 2.1, printed pp. 3-4; section 2.2, printed pp. 4-5; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7; section 4.1, equation (4.1), printed pp. 9-10.
