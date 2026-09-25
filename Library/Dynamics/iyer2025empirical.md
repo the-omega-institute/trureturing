@@ -1563,3 +1563,131 @@ Gaussian Gram、Wick 公式、有限秩投影及连续映射都是已知工具�
 Terrin–Taqqu 的相关原文仍只有摘要与访问材料；未据元数据断言其精确定理不能包含某个子结论。
 本章不声称实际无界矩收敛、未锚定过程紧性、增长载波数或区间、适应性频率，
 也不把有限联合场的充分相位条件说成任意非线性能量元组的必要条件。
+
+### 第 68 章：精确后验中心的算术分离与单标量恢复
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 68 章证明：
+原始数据加同一潜在标签实现的一个精确总组能量，或等价的精确对角坐标 T_M，
+在高概率数据事件上同时决定全部可行的组计数和组电荷。
+本模型固定振幅的超越性、完整固定大小后验的有理函数中心，以及实际低计数储备共同承担结论。
+储备使各所选组的后验中心在形式端点具有不同正整数消失阶，排除所有有理仿射关系。
+不要求独立的一般位置中心、不需要偶部测量，也不恢复组内并列站点身份。
+
+A. Baker、G. Wüstholz，*Logarithmic forms and group varieties*，
+Journal für die reine und angewandte Mathematik 442 (1993), 19–62，
+[DOI 10.1515/crll.1993.442.19](https://doi.org/10.1515/crll.1993.442.19)，
+[Göttingen 原始扫描](https://gdz.sub.uni-goettingen.de/download/pdf/PPN243919689_0442/LOG_0005.pdf)。
+原文第 19 页定义代数高度与对数支，第 20 页无编号主定理及其紧后系数高度界为实际调用处。
+它要求固定非零、非一代数数、固定复对数支，以及非零整数线性对数形式；
+给出的下界为固定代数高度和域次数常数乘系数高度，后者至多 log B。
+本章反证中取代数候选 1+r、1-r 的实自然对数，系数 Q、P，
+正十进制尾保证线性形式严格为正；不需要另加乘法独立假设。
+超 Liouville 尾给 exp(-c Q^5) 级上界，与该固定常数的多项式下界矛盾。
+这是该成熟定理在本库固定振幅上的应用，不把对数形式下界或一般超越性方法据为新内容。
+Baker 1966 与 Matveev 2000 原始定理未在此次取得；未借它们的元数据补充证明。
+
+Tamir Bendory、Dan Edidin、Ivan Gonzalez，*Finite Alphabet Phase Retrieval*，
+[arXiv:2301.10647v2](https://arxiv.org/abs/2301.10647v2)。
+版本戳 2023-04-07，正文内部日期 2023-04-10，两者区分。
+Remark 3.2，第 5 页，说明一般位置排除非零多项式零集。
+Proposition 4.2，第 5–6 页，以一般位置的共同有限字母表和周期自相关，
+将相同自相关刻画为字母分区的 homometry；Theorem 4.3 允许其中一个字母固定为零，
+其余字母仍须一般位置。其多项式系数比较是本章离散代数消歧的经典邻近机制。
+本章的各组平移中心却都来自同一固定 r 的数据依赖有理函数，不能视为独立的一般位置字母。
+原文不提供实际后验中心的不同端点消失阶，或依赖观测行的低计数储备事件。
+本章使用无周期混叠的功率多项式，其零滞后总能量已足够；不替换为原文的周期问题。
+
+Ziyang Yuan、Hongxia Wang，*Phase retrieval with background information*，
+[arXiv:1802.01256v1](https://arxiv.org/abs/1802.01256v1)，2018-02-05。
+第 2 节在实向量 z=(x;y) 中给定连续背景块 y，并观测整个向量的 Fourier 模长。
+第 3 页显示的 Theorem 1 要求解集非空、m≥2(n+k)-2、k≥n、y_k≠0；
+该版本周围散文称它 Theorem 2.1，保留此编号差异。
+第 5 页 Theorem 3 改用独立 Gaussian 背景及关于 n、k、p 的指定长度条件，给出几乎必然唯一性。
+本章不提供偶部或追加背景块；精确偏移来自完整后验，故这些侧信息定理不直接适用。
+本章未调用原文算法、数值表现或任何抗噪保证。
+
+Simon Ruetz、Karin Schnass，*Bounds for matrices of inclusion probabilities in rejective sampling*，
+[arXiv:2212.09391v2](https://arxiv.org/abs/2212.09391v2)，2026-08-20。
+第 1 节及 1.1 节把 rejective law 定义为独立 Bernoulli 开关条件于精确总数，
+并给出相应支持概率和包含概率。共同 odds 倾斜在固定大小条件下消去，
+所以正权重的支持乘积律及初等对称多项式归一化属于经典有限代数。
+第 1 页 Featured Theorem A 的包含概率矩阵半正定界与 Hadamard 算子界是非渐近结果；
+本章未调用它们。标签的固定总数依赖与原始平稳路径行之间的依赖不同，
+本章低计数储备由实际一行生成函数与计数 Markov 界控制，不能从 rejective 标签定理取得。
+
+Bing Gao、Qiyu Sun、Yang Wang、Zhiqiang Xu，*Phase Retrieval From the Magnitudes of Affine Linear Measurements*，
+[arXiv:1608.06117v1](https://arxiv.org/abs/1608.06117v1)，2016-08-22。
+原文第 4–5 页 Theorem 2.1 在整个实向量空间上刻画仿射模长测量的单射性，
+等价条件含差平方的双线性分离及处处满秩 Jacobian。
+Theorem 2.2 给出 m≤2d-1 时不能恢复全部实向量，Theorem 2.3 给出 m≥2d 的一般位置充分性。
+本章的可行域是精确中心平移的整数格，单个总平方范数也不同于逐项仿射模长读数；
+不能把连续域样本数下界套到这个离散域，也不能用一般位置设计替代固定后验中心的证明。
+差平方消去中心平方项是经典工具，新增义务在于证明这个实际中心族的有理仿射独立性。
+
+Pulak Sarangi、Ryoma Hattori、Takaki Komiyama、Piya Pal，*Super-resolution with Binary Priors: Theory and Algorithms*，
+[arXiv:2301.01724v2](https://arxiv.org/abs/2301.01724v2)，2023-03-03。
+这篇原文研究二元先验下的线性超分辨，不是相位恢复。
+第 3–4 页式 (8)–(10)、Theorem 1 及第 13 页 Appendix A 用已知幅值二元输入、
+初始静止 AR(1) 滤波器和整数均匀降采样，把每个长度 D 的块化为一个精确加权标量。
+不同二元块之差给出系数在 {-1,0,1} 的非零多项式，固定 D 的坏参数集合有限，所有 D 的并可数。
+所以一个精确实数区分整个离散向量是已有的代数编码机制，不是新的一般信息论结论。
+本章固定频率压缩也使用经典有限候选解析分离；其承重实际结论是固定振幅下的后验中心函数不发生恒等碰撞，
+以及依赖路径观测满足所需储备的概率界。原文线性 AR 权重、自由一般位置参数和算法结果不提供这两步。
+本章不调用其噪声或算法保证。
+
+David Pollard，*Some thoughts on Le Cam's statistical decision theory*，
+[arXiv:1107.3811v1](https://arxiv.org/abs/1107.3811v1)，正文内部日期 2000 年 5 月。
+第 1–2 节 Lemma <1> 用有限被支配实验的密度向量弱收敛构造随机化比较；
+它比若干后验统计量的弱收敛强，不能用后者替代以转移任意解码器。
+原文 TV 采用 L1 归一化，本章采用事件上确界；未使用该版本第 2 页一处对称距离的 minimum 字样。
+本章实际反射联合律距离趋一由成功图像与原偶极反集中直接证明，
+与既有 T_M 的 Gaussian 极限独立于旧场的结论并存，不声称完整实验等价。
+第 68.5 条进一步给出完整组计数条件离散熵的 Q^5 主阶及正积分系数；
+精确单标量在好数据上有相同原子概率表，因此具有同一熵率。
+承重步骤是实际一、二行系数比较在整条宏观计数线上的统一对数占据数估计，
+以及共同计数字母表的对数大小为 O(Q^5)，使一次完整后验 TV 比较足以传递归一化熵。
+零计数端点、稀有空组和阈值区域均包含在证明中；没有从 Gaussian 微分熵或固定维数 CLT 推断该速率。
+
+José A. Adell、Alberto Lekuona、Yaming Yu，*Sharp Bounds on the Entropy of the Poisson Law and Related Quantities*，
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，2010-01-17。
+原文第 4 页 Theorem 4、Corollary 1 及式 (7)，第 7 页相应证明，使用自然对数。
+对 n,m≥1、p∈(0,1)，其显式二项熵上下界在 p 的任意内部紧区间上统一给出
+H(Bin(n,p))=(1/2)log(2pi np(1-p))+1/2+O(1/n)。
+这直接涵盖本章所需较弱的统一 (1/2)log(1+n)+O(1) 界；n=0 单独处理。
+本章亦给出最大原子与离散 Gaussian 比较律的短证明，未把此经典半对数增长据为新结论。
+该文不提供实际相依观测的占据数、宏观率函数或后验计数向量的熵。
+
+Koenraad M. R. Audenaert，*A Sharp Fannes-type Inequality for the von Neumann Entropy*，
+[arXiv:quant-ph/0610146v1](https://arxiv.org/abs/quant-ph/0610146v1)，版本戳 2006-10-18，
+取得的排印正文内部日期为 2018-11-06，两者区分。
+第 2 页 Theorem 1 及第 3 页经典概率向量归约、式 (11)，给同一 d 点字母表上
+|H(P)-H(Q)|≤T log2(d-1)+h2(T)，T 为半 l1 距离。
+它直接涵盖每份原数据纤维上的熵连续性；允许维数增长还需要本章独立给出的 log d 界。
+本章用最大耦合和链式法则重述这一经典特例，没有把 TV 自动传递无界熵当作前提。
+
+Chen、Ma、Nikoufar、Fei，*Sharp Continuity Bounds for Entropy and Conditional Entropy*，
+[arXiv:1701.02398v1](https://arxiv.org/abs/1701.02398v1)，2017-01-10。
+其式 (4) 在引用上述界时把二元熵项写成减号；该版本原始 TeX 源也确认此符号。
+取两点概率向量 (1,0)、(1-T,T)，0<T<1，熵差为正 h2(T)，该右侧却为负 h2(T)，
+故不能按展示式使用。本章使用 Audenaert 的正确加号及直接耦合证明，不调用此误写，
+也不把该版本的单一展示式缺陷外推为其余结论或后续版本的结论。
+
+Hervé Cardot、Camelia Goga、Pauline Lardin，
+*Variance estimation and asymptotic confidence bands for the mean estimator of sampled functional data with high entropy unequal probability sampling designs*，
+[arXiv:1209.6503v3](https://arxiv.org/abs/1209.6503v3)，版本戳 2013-06-28，正文内部日期 2018-10-30。
+第 3.1 节的 n/N→pi∈(0,1)、一二阶包含概率共同正下界、函数轨道矩与正则性、四单位条件
+属于其抽样设计方差及置信带设置。Proposition 3.1 比较同一包含概率的设计与 rejective 设计，
+以 d(pi)^(-1) 与 KL 距离平方根控制四单位差异。
+本模型 q/M 指数趋零，且所求为所选组计数这一压缩向量的熵；其高熵设计背景不提供本章熵率。
+
+Haoran Wang，*Sharp High-Entropy Bounds for Sums of Independent Discrete Random Variables*，
+[arXiv:2609.21459v1](https://arxiv.org/abs/2609.21459v1)，2026-09-18。
+第 2 页 Theorem 1.1 对无挠阿贝尔群上两个独立离散变量、有限熵及最大熵 M>1，
+给和的熵相对两输入平均熵的定量半比特增益；素数域版本另需奇素数及熵缺额 K≥9。
+第 3 页 Corollary 1.2 与二项分布例子保留这些范围。
+本章在给定数据后相加的是各独立二项坐标的熵，不是把坐标相加后取一个熵，
+故未调用该和熵定理，也未核验其全部证明或借其自身原创性声明作为本章新意依据。
+
+有限检索未发现直接涵盖上述完整实际后验结论的原文，不构成全球原创性认证。
+新增综合的范围是固定参数、两种实际实验、完整精确中心和同一标签实现。
+全部恢复读数均为潜在标签的精确增广；没有规模一致分离下界、有限位数、抗噪或计算效率结论。
