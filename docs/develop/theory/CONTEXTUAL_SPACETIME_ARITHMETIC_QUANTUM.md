@@ -35903,3 +35903,7235 @@ $c_*,r_*,E$ 在 $p,\varepsilon,a_*,b_*$ 固定后均不随 $r$ 或观察者变�
 所计成本始终是全部演化观察者状态的基数；若使用时钟、档案或种子，其全部演化取值都须计入状态。精确 $x_w$ 只出现在证明中的比较轨迹，不是观察者寄存器；有限网格的实数标签、更新表和输出表静态存在。基数与标记状态所需的位数不同，本结论没有给出有限位表编码、精确指数求值算法、最少位数或总实现成本。保证涵盖每一个正 Born 质量的有限词，无论多稀有；它不是典型、平均或几乎处处保证，也不需要某个无限词具有正概率。原仪器在 $r=0$ 时各非空报告分支已是测量制备操作，生成器始终只有两个经典隐藏状态；这里的状态阶不推出物理熵界、量子优势、相干性边界或关于普遍经典实在的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 161. 未知循环相位的重复记录预测半径与非一致时间极限
+
+**定义 161.1（已校准两条边的共同记录源）。** 令系统空间为 $\mathcal H_S=\mathbb C^3$，固定有序基 $|0\rangle,|1\rangle,|2\rangle$。设 $0\le r\le1$ 为已知参数，定义 Hermitian 矩阵
+$$
+C(r,z)=\begin{pmatrix}
+1&r&rz\\
+r&1&r\\
+r\overline z&r&1
+\end{pmatrix},\qquad z\in\mathbb C.
+\tag{161.1}
+$$
+允许的未知参数为满足 $C(r,e^{i\phi})\succeq0$ 的 $\phi\in[-\pi,\pi]$。两个端点 $-\pi,\pi$ 表示同一个矩阵。源按第3节的有限 Gram 实现提供单位记录向量 $e_j^{(\phi)}\in\mathbb C^3$，方向固定为
+$$
+\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle
+=C(r,e^{i\phi})_{jk}.
+\tag{161.2}
+$$
+例如可以取 $C(r,e^{i\phi})^{\mathsf T}$ 的正半定平方根的各列；其通常方向的 Gram 矩阵即为 $C(r,e^{i\phi})^{\mathsf T}$。三标签也可使用第14.4节的两个位置 Zeckendorf 合法基底，以下只使用这三个正交标签。
+
+初态为固定空白向量的环境单元，实施受控记录等距映射 $|j\rangle|m_*\rangle\mapsto|j\rangle|e_j^{(\phi)}\rangle$。丢弃该单元后，系统通道为
+$$
+\mathcal M_{r,\phi}(A)=C(r,e^{i\phi})\odot A.
+\tag{161.3}
+$$
+这里 $\odot$ 表示逐项乘积。单位对角与 Gram 实现保证它完全正且保持迹。参数 $\phi$ 在整个重复协议中固定未知；每一步使用同一受控记录规则和一个与系统、参考及既有记录独立的新空白单元。旧记录不再访问，两步之间没有额外控制或中间结果读取。于是 $N$ 步终端通道是同一个 $\mathcal M_{r,\phi}$ 的 $N$ 次复合，不是每步重新抽取独立相位的平均通道。
+
+所有源的逐对记录转移概率均为 $|\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle|^2=r^2$（$j\ne k$），而循环乘积为 $r^3e^{-i\phi}$；故本节参数与第14.6节的有向循环相位相差负号。式（161.1）还声明了相对于系统制备和读出基的两条实际校准边 $C_{01}=C_{12}=r$。它们是来源合同的一部分，不能从逐对模资料推出，也不能以没有运输输入和效果的坐标变换免费取得。以下预测半径针对这一已校准源族；任意未校准边相位的更大源族不在等式的范围内。循环相位作为三态不变量及其可行域使用第8.9、14.6节的既有机制。
+
+逐对区分度之外的三态相位具有成熟先例：A. J. Menssen 等，*Distinguishability and many-particle interference*，[arXiv:1609.09804v1](https://arxiv.org/abs/1609.09804v1)，正文第2页式(4)给三光子 tritter 的符合概率，其中含有 $r_{12}r_{23}r_{31}\cos\varphi$；第3页式(10)—(14)给固定逐对模而改变三者相位的准备。本节使用三标签受控记录通道，不将该三光子散射概率改称式（161.3），也不将循环相位本身当作新增机制。
+
+**定义 161.2（参考安全的终端预测半径）。** 对两个系统 CPTP 通道 $\mathcal T,\mathcal U$，令
+$$
+d_{\rm ref}(\mathcal T,\mathcal U)
+=\sup_{\substack{\dim\mathcal H_R<\infty\\
+\rho_{SR}\succeq0,\ \operatorname{Tr}\rho_{SR}=1}}
+\frac12\left\|\bigl((\mathcal T-\mathcal U)\otimes\operatorname{id}_R\bigr)(\rho_{SR})\right\|_1.
+\tag{161.4}
+$$
+两通道作用于同一份输入和同一个不受操作的参考。它是通常的半 diamond 距离；以下证明直接使用所列态优化，不需要限制参考维数。固定已知 $(r,N)$，预测者选择一个与 $\phi$ 无关的 CPTP 通道 $\mathcal F$。定义
+$$
+\mathcal R_N(r)=\inf_{\mathcal F\ \mathrm{CPTP}}
+\ \sup_{\phi:\ C(r,e^{i\phi})\succeq0}
+ d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F),\qquad N\ge1,
+\qquad \mathcal R_0(r)=0.
+\tag{161.5}
+$$
+这是对未知共同源作统一终端预测的误差，不是已知源通道的恢复误差。允许的预测通道不必属于原来的单参数源族；它须在所有输入及参考上物理合法。没有额外校准试次、环境读出、作用间干预或关于 $\phi$ 的概率先验。
+
+**定理 161.3（全部输入和参考下的精确重复预测半径）。** 定义
+$$
+\alpha(r)=
+\begin{cases}
+\pi,&0\le r\le1/2,\\
+\displaystyle\arccos\!\left(\frac{3r^2-1}{2r^3}\right),&1/2<r<1,\\
+0,&r=1.
+\end{cases}
+\qquad h(t)=\sin\!\bigl(\min\{t,\pi/2\}\bigr)\quad(t\ge0).
+\tag{161.6}
+$$
+则对每个 $N\ge1$，
+$$
+\boxed{\mathcal R_N(r)=\frac{r^N}{2}\,h(N\alpha(r)).}
+\tag{161.7}
+$$
+当 $0<r<1$ 时，令 $s=r^N$、$\beta=N\alpha(r)$，一个达到下确界的预测通道为
+$$
+\mathcal F_{r,N}(A)=C(s,z_*)\odot A,
+\qquad
+z_*=
+\begin{cases}
+\cos\beta,&0\le\beta\le\pi/2,\\
+0,&\beta\ge\pi/2.
+\end{cases}
+\tag{161.8}
+$$
+该通道完全正且保持迹，并且最坏源对的区分无需纠缠参考就能达到式（161.7）的下界。
+
+证明。 对 $0<r<1$，任意二阶主块的行列式为 $1-r^2>0$。用一个二阶主块作 Schur 补，三阶矩阵正半定等价于
+$$
+\det C(r,e^{i\phi})=1-3r^2+2r^3\cos\phi\ge0.
+\tag{161.9}
+$$
+$r\le1/2$ 时，该行列式的最小值为 $(1+r)^2(1-2r)\ge0$，故全部相位允许。对 $1/2<r<1$，阈值 $c(r)=(3r^2-1)/(2r^3)$ 严格递增，因为 $c'(r)=3(1-r^2)/(2r^4)>0$，并从 $-1$ 增至 $1$；允许相位恰为 $[-\alpha(r),\alpha(r)]$。这是第14.6节同一 Schur 补判据在可变 $r$ 上的应用。$r=0$ 时通道不依赖相位；$r=1$ 时正性迫使 $\cos\phi=1$，通道为恒等。后两种情形的预测误差均为零。
+
+由新鲜记录及固定同一参数的合同，逐项复合给出
+$$
+\mathcal M_{r,\phi}^{N}(A)=C(s,e^{iN\phi})\odot A,
+\qquad s=r^N.
+\tag{161.10}
+$$
+对任意两个使 $C(s,z),C(s,w)$ 正半定的复数 $z,w$，对应通道只在 $(0,2),(2,0)$ 两个矩阵元上不同，并满足精确式
+$$
+d_{\rm ref}(M_{C(s,z)},M_{C(s,w)})=\frac{s}{2}|z-w|,
+\qquad M_C(A)=C\odot A.
+\tag{161.11}
+$$
+为证明包括任意参考的上界，将输入态写成系统基下的参考算子块 $X_{jk}$，令 $\delta=s(z-w)$。输出差在 $0,2$ 子块上为
+$$
+\begin{pmatrix}0&\delta X_{02}\\\overline\delta X_{20}&0\end{pmatrix},
+$$
+其迹范数为 $2|\delta|\|X_{02}\|_1$。输入正性给出
+$$
+\|X_{02}\|_1\le\sqrt{\operatorname{Tr}X_{00}\operatorname{Tr}X_{22}}
+\le\frac{\operatorname{Tr}X_{00}+\operatorname{Tr}X_{22}}2\le\frac12.
+\tag{161.12}
+$$
+第一步也可直接由输入的纯态分解证明：写各纯向量为 $\sum_j|j\rangle v_j$，对各项 $|v_0\rangle\langle v_2|$ 使用迹范数的三角不等式，再对带混合权重的 $\|v_0\|\|v_2\|$ 使用 Cauchy–Schwarz。因而半迹范数至多为 $|\delta|/2$。取无参考输入 $(|0\rangle+|2\rangle)/\sqrt2$ 时，输出差的两个非零特征值恰为 $\pm|\delta|/2$，达到该上界。对应的正谱投影也给出达到同一概率差的二结果终端测量。此处使用第9.4节已有的参考算子块估计与二标签达到机制；新的优化对象是整个未知共同相位族。
+
+若 $\beta\le\pi/2$，两个实际源 $\phi=\pm\alpha(r)$ 的终端参数为 $e^{\pm i\beta}$。它们的通道距离为 $s\sin\beta$。对任何 CPTP 预测通道，三角不等式表明其到至少一个端点的距离不小于 $s\sin\beta/2$。端点通道的等权混合就是式（161.8）中 $z_*=\cos\beta$ 的通道，因此物理合法。对任意 $|t|\le\beta$，因 $\cos\beta\ge0$，有
+$$
+|e^{it}-\cos\beta|^2
+=1+\cos^2\beta-2\cos\beta\cos t
+\le1-\cos^2\beta=\sin^2\beta.
+\tag{161.13}
+$$
+结合式（161.11），该预测通道达到下界。
+
+若 $\beta\ge\pi/2$，实际源 $\phi_\pm=\pm\pi/(2N)$ 均在允许区间内，终端参数分别为 $i,-i$。两通道距离为 $s$，故任意预测通道的最坏误差至少为 $s/2$。这两个通道的等权混合使 $z_*=0$，而任意实际终端参数的模长均为一；式（161.11）因此给出恒为 $s/2$ 的误差。式（161.7）在两种情形都成立。证毕。
+
+上述达到通道由实际源通道的凸混合构成，故无须将任意复坐标插值误当成通道。它通常不等于任何一个 $\mathcal M_{r,\phi}^{N}$，因为 $|z_*|<1$。要求预测通道同时来自原始固定逐对模的单一源，是比定义161.2更严格的优化问题，不能将本定理的达到式直接沿用。
+
+**命题 161.4（固定均匀制备与全通道预测的差别）。** 在定义161.1的合同下，若输入限定为 $|s_3\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$，且仍允许全部终端系统测量，则令
+$$
+\rho_{r,\phi}^{(N)}=\mathcal M_{r,\phi}^{N}(|s_3\rangle\langle s_3|)
+=\frac13 C(r^N,e^{iN\phi}).
+\tag{161.14}
+$$
+对全部密度矩阵预测 $\sigma$ 的最坏半迹范数误差恰为
+$$
+\inf_{\sigma\succeq0,\ \operatorname{Tr}\sigma=1}
+\sup_{|\phi|\le\alpha(r)}\frac12\|\rho_{r,\phi}^{(N)}-\sigma\|_1
+=\frac{r^N}{3}h(N\alpha(r)).
+\tag{161.15}
+$$
+特别地，固定均匀制备的误差严格小于非退化情形的全通道误差，不能以一个三路出口或一种输入的最优值代替定义161.2。
+
+证明。 两个候选矩阵只在 $(0,2),(2,0)$ 上不同，差矩阵的两个非零特征值为 $\pm r^N|z-w|/3$，故半迹范数为 $r^N|z-w|/3$。定理161.3使用的同一端点对给出对任意密度矩阵预测的下界；同一端点态的平均给出合法达到态。将该证明中的系数 $1/2$ 换成 $1/3$ 即得。$r=0,1$ 时两种误差都为零。证毕。
+
+**命题 161.5（新鲜记录中的预测误差先增长而相干模仍衰减）。** 对每个 $1/\sqrt2<r<1$，有
+$$
+\frac{\mathcal R_2(r)}{\mathcal R_1(r)}
+=3-\frac1{r^2}>1,
+\qquad
+\lim_{N\to\infty}\mathcal R_N(r)=0.
+\tag{161.16}
+$$
+与此同时，对每个固定实际源 $\phi$ 和每个异标签矩阵元，$N$ 步通道的乘子模长均为 $r^N$，随 $N$ 严格下降。
+
+证明。 在 $r=1/\sqrt2$，式（161.6）给 $\alpha=\pi/4$；$c(r)$ 的严格递增性表明所给范围内 $0<\alpha(r)<\pi/4$。故第一、二步均使用式（161.7）的正弦支，且
+$$
+\frac{r^2\sin(2\alpha)}{r\sin\alpha}
+=2r\cos\alpha
+=\frac{3r^2-1}{r^2}.
+$$
+另一方面，$0\le\mathcal R_N(r)\le r^N/2\to0$。乘子模长的陈述由式（161.10）直接读出。这里不存在与数据处理收缩的矛盾：两个不同未知参数的源在下一步分别作用不同的通道；不能把该比较改写为对两份输出再施加同一个已知通道。环境各步保持新鲜，增长也不要求旧记录回流。证毕。
+
+**定理 161.6（趋于同射线的记录仍有非零统一视界误差）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个固定 $t\ge0$，有
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal R_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=f(t):=\frac{e^{-t}}2\sin\!\bigl(\min\{\sqrt3t,\pi/2\}\bigr).
+\tag{161.17}
+$$
+该收敛在每个有限 $t$ 区间上一致，且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=\frac{\sqrt3}{4}\exp\!\left(-\frac{\pi}{3\sqrt3}\right)>0,
+\qquad
+\forall N<\infty,\quad\lim_{r\uparrow1}\mathcal R_N(r)=0.
+}
+\tag{161.18}
+$$
+对每个 $0<r<1$ 选任一达到 $\sup_{N\ge1}\mathcal R_N(r)$ 的整数 $N_*(r)$，则
+$$
+\lim_{r\uparrow1}(1-r)N_*(r)=\frac{\pi}{3\sqrt3}.
+\tag{161.19}
+$$
+
+证明。 对 $1/2<r<1$，阈值具有精确恒等式
+$$
+1-\cos\alpha(r)
+=\frac{(1-r)^2(2r+1)}{2r^3}.
+\tag{161.20}
+$$
+结合 $2(1-\cos u)/u^2\to1$，得到 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$。同时 $\log(1-\varepsilon)/\varepsilon\to-1$。对 $N=\lfloor t/\varepsilon\rfloor$，有 $|N\varepsilon-t|\le\varepsilon$；因而在任意有限 $t$ 区间上一致地成立
+$$
+(1-\varepsilon)^N\longrightarrow e^{-t},
+\qquad N\alpha(1-\varepsilon)\longrightarrow\sqrt3t.
+$$
+$h$ 连续且为全局 Lipschitz 函数，所以定理161.3给出式（161.17），包括 $t=0$ 处的约定。
+
+对任意整数 $N$，$1-\varepsilon\le e^{-\varepsilon}$ 给出统一尾界
+$$
+0\le\mathcal R_N(1-\varepsilon)\le\frac12e^{-\varepsilon N}.
+\tag{161.21}
+$$
+先选择大的 $T$ 控制全部 $\varepsilon N\ge T$ 的尾，再使用 $[0,T]$ 上的一致收敛与网格间距 $\varepsilon\to0$，得到最大值趋于 $\max_{t\ge0}f(t)$。在 $0<t<\pi/(2\sqrt3)$，
+$$
+f'(t)=\frac{e^{-t}}2\bigl(\sqrt3\cos(\sqrt3t)-\sin(\sqrt3t)\bigr).
+$$
+其唯一零点为 $t_* =\pi/(3\sqrt3)$，此前为正，此后为负；在 $t\ge\pi/(2\sqrt3)$，$f(t)=e^{-t}/2$ 严格下降。因此全局最大点唯一，且 $f(t_*)=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+固定 $0<r<1$ 时，$\mathcal R_1(r)>0$ 且 $\mathcal R_N(r)\to0$，所以最大值由有限整数取得。对任意序列 $r\uparrow1$，尾界使其最大点的缩放参数留在某个有限区间；一致收敛和 $f$ 的唯一最大点表明该参数只能趋于 $t_*$，证明式（161.19）。对固定 $N$，$\alpha(r)\to0$，由式（161.7）直接得到式（161.18）的后一式。证毕。
+
+式（161.18）比较的是先取全部视界上确界与先令 $r\uparrow1$，并不声称两个普通迭代极限 $\lim_{r\uparrow1}\lim_{N\to\infty}\mathcal R_N(r)$ 和 $\lim_{N\to\infty}\lim_{r\uparrow1}\mathcal R_N(r)$ 不同；它们都为零。遗漏相位造成的是预测充分性对视界的不一致性。第14节的已知源恢复问题允许恢复依赖完整 $C$，本节预测者只取得定义161.1的共同校准数据；这两个优化的量词不同。第55节的复用记录回流也不承担本节的新鲜记录结论。
+
+## 追加锚（本行以下为增补区）
+
+## 162. 单步最优预测的迭代刚性与共同相位代价
+
+**定义 162.1（单步最优通道的重复使用）。** 沿用定义161.1的已校准三标签记录源、固定未知相位、新鲜空白记录单元与无中间控制合同，以及定义161.2的距离 $d_{\rm ref}$ 和逐视界预测半径 $\mathcal R_N(r)$。所有预测通道均作用于同一个系统代数 $B(\mathbb C^3)$，没有额外的持久记忆寄存器。令
+$$
+\mathfrak F_1(r)=
+\left\{\mathcal F\ \mathrm{CPTP}:
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F)
+=\mathcal R_1(r)\right\}.
+\tag{162.1}
+$$
+该集合由定理161.3非空。定义
+$$
+\mathcal E_N(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^{N}),
+\qquad N\ge1,\qquad \mathcal E_0(r)=0.
+\tag{162.2}
+$$
+下确界允许 $\mathcal F$ 随 $(r,N)$ 选择，但每次必须达到单步最优，并在这 $N$ 步中重复使用同一通道。真实源也在全部步骤保留同一个 $\phi$。本定义没有给未知参数赋予概率先验。
+
+对 $1/\sqrt3<r<1$，简记
+$$
+\alpha=\alpha(r)\in(0,\pi/2),\qquad
+c=\cos\alpha=\frac{3r^2-1}{2r^3}\in(0,1),\qquad
+\mathcal F_*(A)=C(r,c)\odot A.
+\tag{162.3}
+$$
+由式（161.8），$\mathcal F_*\in\mathfrak F_1(r)$。它等于 $\mathcal M_{r,\alpha}$ 与 $\mathcal M_{r,-\alpha}$ 的等权混合。这里的混合给出一个合法预测器，并不把真实未知源改成每步独立抽样的源。
+
+**定理 162.2（全 CPTP 单步最优类的精确迭代误差）。** 对每个 $1/\sqrt3<r<1$ 和每个整数 $N\ge1$，有
+$$
+\boxed{
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\sqrt{1+c^{2N}-2c^N\cos\!\bigl(\min\{N\alpha,\pi\}\bigr)}.
+}
+\tag{162.4}
+$$
+同一个 $\mathcal F_*$ 对所有 $N$ 都达到式（162.2）的下确界。下界适用于全部 $\mathfrak F_1(r)$，不要求其中的通道为 Schur 乘子，也不要求它保持系统基的各个投影。达到下界的输入不需要参考系统。
+
+证明。 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，并在 $P\mathbb C^3$ 上使用 Pauli 矩阵 $X,Y,Z$。记
+$$
+u_\theta=(\cos\theta,\sin\theta,0),\qquad
+v_\theta=(-\sin\theta,\cos\theta,0),\qquad
+\rho_\theta=\frac12(P+u_\theta\cdot\sigma),
+\qquad q=r\sin\alpha>0.
+\tag{162.5}
+$$
+两端点源作用于 $\rho_\theta$ 后，所得态均支撑于 $P$，其 Bloch 向量构成无序对
+$$
+b_\theta+qv_\theta,\quad b_\theta-qv_\theta,
+\qquad b_\theta=rc\,u_\theta.
+\tag{162.6}
+$$
+这两个态的半迹范数距离为 $q$，且 $\mathcal R_1(r)=q/2$。
+
+先证它们在全三维态空间中半径 $q/2$ 的共同中心唯一。设密度矩阵 $\tau$ 到两态的距离均不大于 $q/2$。令 $t=\langle1|\tau|1\rangle\ge0$，将压缩块写成
+$$
+P\tau P=\frac12\bigl((1-t)P+w\cdot\sigma\bigr),
+\qquad w\in\mathbb R^3.
+\tag{162.7}
+$$
+对分块 $P\oplus(I-P)$ 做 pinching 不增加迹范数。一个 Hermitian 二维矩阵 $(-tP+a\cdot\sigma)/2$ 的迹范数是 $\max\{t,|a|\}$，因为它的两个特征值为 $(-t\pm|a|)/2$。因此上述两个距离分别至少为
+$$
+\frac12\left(\max\{t,|w-b_\theta\mp qv_\theta|\}+t\right).
+\tag{162.8}
+$$
+而
+$$
+\max_{\pm}|w-b_\theta\pm qv_\theta|
+\ge \sqrt{|w-b_\theta|^2+q^2}\ge q.
+\tag{162.9}
+$$
+距离上界迫使 $q+t\le q$，故 $t=0$；再由式（162.9）得 $w=b_\theta$。$\tau$ 正性和 $\langle1|\tau|1\rangle=0$ 还迫使所有与 $|1\rangle$ 相连的非对角元为零。故唯一共同中心为
+$$
+\tau_\theta=\frac12(P+rc\,u_\theta\cdot\sigma).
+\tag{162.10}
+$$
+本步骤使用二维 Bloch 球的 Euclidean 范数公式与 pinching 的迹范数收缩；它不声称任意高维迹范数球的共同中心都唯一。
+
+任取 $\mathcal F\in\mathfrak F_1(r)$。单步全输入距离上界特别适用于每个 $\rho_\theta$，所以前述唯一性给出 $\mathcal F(\rho_\theta)=\tau_\theta$。对 $\theta=0,\pi$ 的等式取和、取差，再用 $\theta=\pi/2,3\pi/2$，由线性性得
+$$
+\mathcal F(P/2)=P/2,\qquad
+\mathcal F(X)=rcX,\qquad
+\mathcal F(Y)=rcY.
+\tag{162.11}
+$$
+因此不论 $\mathcal F$ 在其余方向怎样作用，其在整个赤道圆盘上的迭代已被迫满足
+$$
+\mathcal F^N(\rho_\theta)
+=\frac12\bigl(P+(rc)^Nu_\theta\cdot\sigma\bigr).
+\tag{162.12}
+$$
+真实源在同一输入上的 Bloch 向量为 $r^N u_{\theta-N\phi}$；角度的正负来自式（161.1）的矩阵元约定，不影响以下模长。两输出的半迹范数距离恰为
+$$
+\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.13}
+$$
+由于 $c^N>0$，在 $|\phi|\le\alpha$ 上最大化此模长，等价于最小化 $\cos(N\phi)$。当 $N\alpha\le\pi$ 时最小值为 $\cos(N\alpha)$；当 $N\alpha\ge\pi$ 时可取实际源 $\phi=\pi/N$，最小值为 $-1$。这给每个 $\mathcal F\in\mathfrak F_1(r)$ 同一个式（162.4）下界。
+
+另一方面，$\mathcal F_*^N(A)=C(r^N,c^N)\odot A$，且作为 CPTP 通道的复合仍为 CPTP。它与 $\mathcal M_{r,\phi}^N$ 只在 $(0,2),(2,0)$ 两个乘子上不同。式（161.11）的全参考精确距离给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_*^N)
+=\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.14}
+$$
+故 $\mathcal F_*$ 达到上述下界，同时证明所有有限参考都不能扩大该达到值。证毕。
+
+**命题 162.3（每个后续视界的严格损失与阈值）。** 对所有 $1/\sqrt3<r<1$ 和所有整数 $N\ge2$，
+$$
+\boxed{\mathcal E_N(r)>\mathcal R_N(r).}
+\tag{162.15}
+$$
+对 $0\le r\le1/\sqrt3$，存在同一个单步最优预测通道在每个视界均最优，且
+$$
+\mathcal E_N(r)=\mathcal R_N(r)=\frac{r^N}{2}\qquad(N\ge1).
+\tag{162.16}
+$$
+在 $r=1$，两者对全部 $N$ 均为零。
+
+证明。 先设 $1/\sqrt3<r<1$，令 $\beta=N\alpha$、$a=c^N>0$。若 $\beta<\pi/2$，式（161.7）、（162.4）给出
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2
+-\left(\frac{2\mathcal R_N}{r^N}\right)^2
+=(a-\cos\beta)^2.
+\tag{162.17}
+$$
+由 $0<\alpha$ 和 $N\ge2$，在 $1\le k<N$ 时
+$$
+\cos((k+1)\alpha)
+=c\cos(k\alpha)-\sin(k\alpha)\sin\alpha
+<c\cos(k\alpha).
+$$
+本情形各个中间角均小于 $\pi/2$，故迭代该不等式得到 $\cos(N\alpha)<c^N=a$，式（162.17）严格为正。
+
+若 $\beta\ge\pi/2$，则 $\mathcal R_N=r^N/2$ 且 $\cos(\min\{\beta,\pi\})\le0$，于是
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2-1
+=a^2-2a\cos(\min\{\beta,\pi\})>0.
+\tag{162.18}
+$$
+这也包含 $\beta=\pi/2$，从而证明式（162.15）。
+
+对 $0<r\le1/\sqrt3$，有 $\alpha(r)\ge\pi/2$。式（161.8）的单步最优通道可取 $\mathcal F_0(A)=C(r,0)\odot A$；它是两个合法源 $\phi=\pm\pi/2$ 的平均。对每个 $N\ge1$，$\mathcal F_0^N(A)=C(r^N,0)\odot A$ 正是定理161.3的逐视界达到通道。任何重复预测通道在第 $N$ 步仍为一个 CPTP 通道，因此其误差不能低于无单步限制的 $\mathcal R_N$；这个共同达到者证明式（162.16）。$r=0$ 时唯一真实通道是完全去相干通道，选它作预测即可；$r=1$ 时唯一真实通道是恒等通道，也可精确预测。证毕。
+
+**定理 162.4（单步最优限制的弱记录极限）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个 $t\ge0$，
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal E_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=g(t):=e^{-t}
+\sin\!\left(\min\left\{\frac{\sqrt3\,t}{2},\frac\pi2\right\}\right).
+\tag{162.19}
+$$
+该收敛在每个有限 $t$ 区间上一致。并且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal E_N(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right].
+}
+\tag{162.20}
+$$
+若 $N^\dagger(r)$ 为任一达到 $\sup_{N\ge1}\mathcal E_N(r)$ 的整数，则
+$$
+\lim_{r\uparrow1}(1-r)N^\dagger(r)
+=\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right).
+\tag{162.21}
+$$
+式（162.20）的常数严格大于定理161.6中的 $(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+证明。 定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 以及 $r^{\lfloor t/\varepsilon\rfloor}\to e^{-t}$，后者在有限 $t$ 区间上一致。由式（161.20），
+$$
+1-c=\frac{\varepsilon^2(3-2\varepsilon)}
+{2(1-\varepsilon)^3}=O(\varepsilon^2).
+\tag{162.22}
+$$
+对 $N=\lfloor t/\varepsilon\rfloor$，在 $0\le t\le T$ 上有
+$$
+0\le1-c^N\le N(1-c)=O(T\varepsilon),
+\tag{162.23}
+$$
+故 $c^N\to1$ 一致。将式（162.4）写成
+$$
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\left|e^{i\min\{N\alpha,\pi\}}-c^N\right|
+\tag{162.24}
+$$
+并使用复数模长的 Lipschitz 性，即得有限区间上一致的极限
+$$
+\frac{e^{-t}}2|e^{i\min\{\sqrt3t,\pi\}}-1|
+=g(t).
+$$
+$N=0$ 时该式也按定义为零，因而包含 $t=0$。
+
+对所有 $N\ge1$，式（162.24）给出统一尾界
+$$
+0\le\mathcal E_N(1-\varepsilon)
+\le (1-\varepsilon)^N
+\le e^{-\varepsilon N}.
+\tag{162.25}
+$$
+和定理161.6一样，有限区间上一致收敛、网格间距趋零及该尾界把最大值问题化为 $\max_{t\ge0}g(t)$。令 $a=\sqrt3/2$；在 $0<t<\pi/(2a)$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)).
+$$
+其唯一零点为 $t^\dagger=a^{-1}\arctan a$，此前导数为正，此后为负；在剩余区间 $g(t)=e^{-t}$ 严格下降。唯一最大值为
+$$
+g(t^\dagger)
+=\frac{a}{\sqrt{1+a^2}}e^{-t^\dagger}
+=\sqrt{\frac37}\,e^{-(2/\sqrt3)\arctan(\sqrt3/2)}.
+$$
+固定 $1/\sqrt3<r<1$ 时，$\mathcal E_1(r)>0$ 而 $\mathcal E_N(r)\to0$，所以整数最大点存在。统一尾界和极限的唯一最大点给出式（162.21）。
+
+最后比较定理161.6的函数 $f(t)$。当 $0<t\le\pi/(2\sqrt3)$ 时，写 $x=\sqrt3t/2\in(0,\pi/4]$，有 $g(t)=e^{-t}\sin x>e^{-t}\sin x\cos x=f(t)$。当 $t\ge\pi/(2\sqrt3)$ 时，$f(t)=e^{-t}/2$，而 $g(t)\ge e^{-t}/\sqrt2>f(t)$。在 $f$ 的正最大点代入即得两最大值的严格差。证毕。
+
+为解释上述严格代价，使用通道复合对加法的分配律。在定义162.1的非退化区间内，最优预测器满足
+$$
+\mathcal F_*^N
+=2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N\in\{-1,1\}}
+\mathcal M_{r,\epsilon_N\alpha}\circ\cdots\circ
+\mathcal M_{r,\epsilon_1\alpha}.
+\tag{162.26}
+$$
+其 $(0,2)$ 乘子为 $r^Nc^N$；若在开始时仅抽一次等权端点相位，并在所有步骤保持它，所得平均终端通道的该乘子则为 $r^N\cos(N\alpha)$。二者在 $N=2$ 时的通道距离恰为
+$$
+\frac{r^2}{2}\sin^2\alpha>0.
+\tag{162.27}
+$$
+因此单步上相同的混合预测合同，在独立重抽与保持共同参数两种续接下给出不同的多步通道。
+
+事实上，逐次展开 $\bigl((\mathcal M_{r,\alpha}+\mathcal M_{r,-\alpha})/2\bigr)^N$ 即得式（162.26）。其相位因子的平均是
+$$
+2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N}
+e^{i\alpha(\epsilon_1+\cdots+\epsilon_N)}
+=\left(\frac{e^{i\alpha}+e^{-i\alpha}}2\right)^N=c^N.
+$$
+固定共同端点的平均因子为 $(e^{iN\alpha}+e^{-iN\alpha})/2=\cos(N\alpha)$。在 $N=2$，二者之差为 $c^2-\cos(2\alpha)=\sin^2\alpha$，再用式（161.11）即得（162.27）。
+
+这两种混合是比较预测合同的数学构造，不改变定义161.1的实际源：每个实际 $\phi$ 固定，环境单元逐步新鲜。静态随机参数产生特征函数退相干已有明确文献：C. M. Kropf、C. Gneiting、A. Buchleitner，*Effective Dynamics of Disordered Quantum Systems*，[Phys. Rev. X 6, 031023 (2016)](https://doi.org/10.1103/PhysRevX.6.031023)，第II A节式(1)—(3)保持每个实现的 Hamiltonian 不变再作平均，第V节式(24)—(25)给出由参数分布特征函数控制的非对角元。式（162.26）的独立乘积平均与固定共同参数平均使用这一成熟的随机参数区分；该文的 Hamiltonian 系综平均不替代本节无参数先验的 minimax 优化。
+
+定理162.2说明任何单步最优的三维 CPTP 模型在赤道圆盘上都被迫给出同一种迭代，因此严格差距不只是选择 Schur 预测器的偶然结果。定理162.4给出的最坏视界常数约为 $0.2871395757$，而逐视界重新选择预测通道的常数约为 $0.2365518148$；前者仅在“必须先达到单步最优”的约束下最优，不是所有平稳预测模型的无约束最优值。固定 $r<1$ 时，两种误差仍随 $N\to\infty$ 趋零；逐视界严格差距不意味着关于全部视界的一致正差距。允许额外持久记忆、随步数改变通道、取得校准数据或中间控制，会改变优化域。平均与复合不交换也可发生在经典未知参数模型中；本节的量子内容在于该已校准记录源的全输入、全参考距离和全 CPTP 最优类的精确界，不由此推出普遍的量子与经典分界。
+
+## 追加锚（本行以下为增补区）
+
+## 163. 固定预测通道的全视界最优极限与有限参数间隙
+
+**定义 163.1（一个通道同时服务全部视界）。** 沿用定义161.1的已校准三标签记录源和固定未知共同相位，以及定义161.2的全参考距离。真实过程每步使用一个新鲜空白记录单元，无中间控制、旧记录访问或额外相位校准。固定 $r$ 后，预测者选择一个与 $\phi$、视界 $N$ 均无关的 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，以后只使用其幂 $\mathcal F^N$；不附加持久记忆寄存器。令
+$$
+\mathcal J(r)=
+\inf_{\mathcal F\ \mathrm{CPTP}}\quad
+\sup_{\substack{N\in\mathbb N,\ N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.1}
+$$
+这里不施加单步最优条件。另记第162节的受限全视界问题为
+$$
+\mathcal J_{\rm one}(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.2}
+$$
+两个下确界都在视界上确界之前选定通道。它们不同于允许按 $N$ 重选终端通道的 $\sup_{N\ge1}\mathcal R_N(r)$。
+
+以下使用常数
+$$
+k_*=\frac{3\sqrt3\log2}{\pi},\qquad
+t_*=\frac{\pi}{3\sqrt3},\qquad
+L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{163.3}
+$$
+有 $0<k_*<3$。对 $0<r\le1$ 定义固定预测通道的候选
+$$
+\mathcal T_r(A)=C(r,r^{k_*})\odot A,
+\tag{163.4}
+$$
+并在 $r=0$ 将 $\mathcal T_0$ 定义为系统基下的完全去相干通道。
+
+**定理 163.2（全 CPTP 固定预测的精确弱记录极限）。** 式（163.4）对所有 $0\le r\le1$ 都是 CPTP 通道。令
+$$
+D_N(r)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N),
+\qquad N\ge1,\qquad D_0(r)=0.
+\tag{163.5}
+$$
+则
+$$
+\boxed{
+\lim_{r\uparrow1}\mathcal J(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}D_N(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=L.
+}
+\tag{163.6}
+$$
+具体地，若 $r=1-\varepsilon$、$\varepsilon\downarrow0$，则在每个有限 $t$ 区间上一致地有
+$$
+D_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+\longrightarrow
+G(t):=\frac{e^{-t}}2
+\left|e^{i\min\{\sqrt3t,\pi\}}-e^{-k_*t}\right|.
+\tag{163.7}
+$$
+$G$ 的唯一全局最大点为 $t_*$，最大值为 $L$。对每个 $0<r<1$ 选取任一达到 $\sup_{N\ge1}D_N(r)$ 的整数 $N_T(r)$，都有
+$$
+(1-r)N_T(r)\longrightarrow t_*.
+\tag{163.8}
+$$
+式（163.6）只给出极限等式，不宣称 $\mathcal T_r$ 在每个固定 $r<1$ 都达到 $\mathcal J(r)$。
+
+证明。 先验证合法性。更一般地，对 $0<r\le1$、$0\le k\le3$，令 $z=r^k$。矩阵 $C(r,z)$ 的对角元为一，二阶主子式分别是 $1-r^2$ 与 $1-r^2z^2$，均非负。其三阶行列式可因式分解为
+$$
+\det C(r,z)=(1-rz)(1+rz-2r^2).
+\tag{163.9}
+$$
+因 $rz=r^{1+k}\le1$，第一个因子非负；又因 $1+k\le4$，
+$$
+1+rz-2r^2\ge1+r^4-2r^2=(1-r^2)^2\ge0.
+\tag{163.10}
+$$
+故所有主子式非负，$C(r,r^k)\succeq0$。取 $k=k_*$，再用第3节的 Gram 通道实现，得到完全正且保持迹。$r=0$ 的定义也显然合法；$r=1$ 时 $\mathcal T_1$ 是恒等通道。这里仅使用有限维正性与既有 Gram 实现，不另行假设插值后的系数自动物理合法。
+
+通道复合给出 $\mathcal T_r^N(A)=C(r^N,r^{k_*N})\odot A$。式（161.11）于是给出每个实际源的全参考精确距离
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N)
+=\frac{r^N}{2}|e^{iN\phi}-r^{k_*N}|.
+$$
+实中心 $r^{k_*N}$ 为正，故和定理162.2一样，最坏相位使 $\cos(N\phi)$ 在允许区间上最小，从而
+$$
+D_N(r)=\frac{r^N}{2}
+\left|e^{i\min\{N\alpha(r),\pi\}}-r^{k_*N}\right|.
+\tag{163.11}
+$$
+该式在 $N=0$ 时也给零，在 $r=0$ 时按 $N\ge1$ 给零，在 $r=1$ 时给零。无需参考的平衡两标签输入仍能达到距离。
+
+定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 与 $\log(1-\varepsilon)/\varepsilon\to-1$。当 $N=\lfloor t/\varepsilon\rfloor$ 时，在有限 $t$ 区间上一致地有
+$$
+r^N\to e^{-t},\qquad
+N\alpha(r)\to\sqrt3t,\qquad
+r^{k_*N}\to e^{-k_*t}.
+\tag{163.12}
+$$
+由复数模长的 Lipschitz 性，得到式（163.7），包括 $t=0$。同时
+$$
+0\le D_N(1-\varepsilon)
+\le(1-\varepsilon)^N
+\le e^{-\varepsilon N}
+\tag{163.13}
+$$
+给出与视界一致的尾界。
+
+现在精确定位 $G$ 的全局峰值。令 $b=\sqrt3$、$k=k_*$。在 $0<t<\pi/b$，
+$$
+G(t)^2=
+\frac14\left(e^{-2t}+e^{-2(1+k)t}
+-2e^{-(2+k)t}\cos(bt)\right),
+$$
+所以
+$$
+\frac{d}{dt}G(t)^2
+=\frac12e^{-(2+k)t}H(t),
+\qquad
+H(t)=(2+k)\cos(bt)+b\sin(bt)-e^{kt}-(1+k)e^{-kt}.
+\tag{163.14}
+$$
+有 $H(0)=0$、$H'(0)=b^2+k^2>0$。记
+$$
+A(t)=(2+k)\cos(bt)+b\sin(bt),\qquad
+t_0=\frac{\pi/2+\arctan(b/(2+k))}{b}\in(0,\pi/b).
+\tag{163.15}
+$$
+在 $[0,t_0)$ 上 $A>0$，在 $(t_0,\pi/b]$ 上 $A<0$。前一区间满足
+$$
+H''(t)=-b^2A(t)-k^2\bigl(e^{kt}+(1+k)e^{-kt}\bigr)<0.
+\tag{163.16}
+$$
+因而 $H$ 在 $[0,t_0]$ 严格凹；结合 $H'(0)>0$ 和 $H(t_0)<0$，它在 $(0,t_0)$ 恰有一个零点。唯一性也可由严格凹性推出 $H(t)/t$ 在 $t>0$ 时严格下降。在 $[t_0,\pi/b]$，$H=A-e^{kt}-(1+k)e^{-kt}<0$。因此 $G$ 在 $(0,\pi/b)$ 先严格增后严格减。在 $t\ge\pi/b$，$G(t)=e^{-t}(1+e^{-kt})/2$ 继续严格下降。
+
+由常数选择，$bt_*=\pi/3$、$kt_*=\log2$。代入式（163.14）得
+$$
+H(t_*)=\frac{2+k}{2}+\frac32-2-\frac{1+k}{2}=0.
+$$
+故 $t_*$ 正是上述唯一最大点，并且
+$$
+G(t_*)=
+\frac{e^{-t_*}}2
+\left|e^{i\pi/3}-\frac12\right|
+=\frac{\sqrt3}{4}e^{-t_*}=L.
+\tag{163.17}
+$$
+有限区间上一致收敛、网格间距 $\varepsilon\to0$ 以及式（163.13）的统一尾界，遂给出 $\sup_N D_N(r)\to L$。固定 $0<r<1$ 时 $D_1(r)>0$ 且 $D_N(r)\to0$，所以整数最大点存在；同一尾界排除缩放最大点逃至无穷，$G$ 的唯一最大点再给出式（163.8）。
+
+最后，任意固定 CPTP 通道 $\mathcal F$ 在每个视界的幂仍为一个 CPTP 通道，故定义161.2直接给出
+$$
+\sup_{N,\phi}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge\sup_{N\ge1}\mathcal R_N(r).
+$$
+对 $\mathcal F$ 取下确界，再用合法候选 $\mathcal T_r$，得到逐参数夹逼
+$$
+\sup_{N\ge1}\mathcal R_N(r)
+\le\mathcal J(r)\le\sup_{N\ge1}D_N(r).
+\tag{163.18}
+$$
+两端由定理161.6与以上证明趋于同一个 $L$，即得式（163.6）。这里没有交换通道下确界与视界上确界，也没有把任意 CPTP 通道先验限制成 Schur 乘子。证毕。
+
+**命题 163.3（此固定构造的局部代价与全程改进）。** 定义163.1中的固定通道满足
+$$
+\lim_{r\uparrow1}\frac{D_1(r)}{\mathcal R_1(r)}
+=\sqrt{1+\frac{k_*^2}{3}}>1.
+\tag{163.19}
+$$
+另一方面，
+$$
+\lim_{r\uparrow1}\mathcal J_{\rm one}(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right]
+>L=\lim_{r\uparrow1}\mathcal J(r).
+\tag{163.20}
+$$
+因此对所有充分接近一的 $r<1$，$\mathcal T_r$ 的全视界最坏误差严格小于每一个单步最优固定预测通道的全视界最坏误差。
+
+证明。 令 $\varepsilon=1-r$。当 $\varepsilon\downarrow0$ 时，
+$$
+1-r^{k_*}=k_*\varepsilon+O(\varepsilon^2),\qquad
+1-\cos\alpha(r)=\frac32\varepsilon^2+O(\varepsilon^3).
+$$
+由
+$$
+|e^{i\alpha}-r^{k_*}|^2
+=(1-r^{k_*})^2+2r^{k_*}(1-\cos\alpha)
+$$
+得到
+$$
+D_1(r)=\frac{\sqrt{k_*^2+3}}2\,\varepsilon+o(\varepsilon),
+\qquad
+\mathcal R_1(r)=\frac{\sqrt3}{2}\,\varepsilon+o(\varepsilon).
+\tag{163.21}
+$$
+这证明式（163.19）。
+
+对 $1/\sqrt3<r<1$，每个 $\mathcal F\in\mathfrak F_1(r)$ 的第 $N$ 步误差至少为 $\mathcal E_N(r)$。定理162.2还提供同一个 $\mathcal F_*$ 同时达到每个 $N$ 的下界，因此
+$$
+\mathcal J_{\rm one}(r)=\sup_{N\ge1}\mathcal E_N(r).
+\tag{163.22}
+$$
+应用定理162.4，再用定理163.2，得到式（163.20）及充分接近一时的严格比较。证毕。
+
+式（163.19）的比值约为 $1.1992166662$，是这一显式构造相对于单步最优值的代价，不是所有渐近全视界最优模型必须支付的最小局部代价。式（163.20）消除的是单步最优限制造成的额外常数；残余误差 $L>0$ 仍在，因而没有恢复被遗漏的相位信息，也没有把未知源识别出来。
+
+**命题 163.4（有限参数处仍有严格固定通道间隙）。** 令 $r_0=1/\sqrt2$。则
+$$
+\sup_{N\ge1}\mathcal R_N(r_0)=\frac14,
+\qquad
+\boxed{
+\frac14<\mathcal J(r_0)
+\le \frac1{2\sqrt2}\sqrt{\frac54-\frac1{\sqrt2}}.
+}
+\tag{163.23}
+$$
+右端约为 $0.2605026916$。所以式（163.6）的渐近相等不能升级为所有固定参数上的相等；本命题不确定 $\mathcal J(r_0)$ 的精确值。
+
+证明。 此时 $\alpha(r_0)=\pi/4$，定理161.3给出 $\mathcal R_1(r_0)=\mathcal R_2(r_0)=1/4$；对 $N\ge3$，$\mathcal R_N(r_0)=r_0^N/2<1/4$。
+
+先说明式（163.1）的下确界在固定 $r$ 时可取得。由有限维 Choi 表示，全体三维 CPTP 通道对应于正半定且输出偏迹固定为恒等矩阵的 Choi 矩阵，构成非空紧集。对每个固定 $N$，通道复合与 $d_{\rm ref}$ 连续；具体地，CPTP 通道的距离收缩与复合的 telescoping 给出
+$$
+d_{\rm ref}(\mathcal F^N,\mathcal G^N)
+\le N\,d_{\rm ref}(\mathcal F,\mathcal G).
+\tag{163.24}
+$$
+故每个固定 $(N,\phi)$ 的误差是 $\mathcal F$ 的连续函数，所有 $(N,\phi)$ 的上确界是下半连续函数，在该紧集上达到最小值。这只使用有限维通道空间的紧性，不要求对 $N$ 一致的连续模。
+
+如果 $\mathcal J(r_0)=1/4$，取其达到通道 $\mathcal F$。其单步误差不超过 $1/4=\mathcal R_1(r_0)$，所以 $\mathcal F\in\mathfrak F_1(r_0)$。但定理162.2给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r_0,\phi}^2,\mathcal F^2)
+\ge\mathcal E_2(r_0)=\frac{\sqrt5}{8}>\frac14,
+\tag{163.25}
+$$
+与全视界上界矛盾。结合式（163.18），得到严格下界。
+
+为给上界，取合法通道 $\mathcal Q(A)=C(r_0,1/2)\odot A$。式（163.9）在这里成为 $\det C(r_0,z)=(1-r_0z)r_0z\ge0$，且所有二阶主子式非负，故 $\mathcal Q$ 是 CPTP。其第 $N$ 步最坏误差由式（161.11）等于
+$$
+\frac{r_0^N}{2}
+\left|e^{i\min\{N\pi/4,\pi\}}-2^{-N}\right|.
+\tag{163.26}
+$$
+$N=1$ 时恰为式（163.23）的右端，$N=2$ 时为 $\sqrt{17}/16$；对 $N\ge3$，三角不等式给出不超过
+$$
+\frac{r_0^N}{2}(1+2^{-N})
+\le\frac9{32\sqrt2}<\frac14.
+$$
+而第一步误差严格大于第二步，因为二者平方之差为
+$$
+\left(\frac5{32}-\frac1{8\sqrt2}\right)-\frac{17}{256}
+=\frac{23-16\sqrt2}{256}>0.
+$$
+故 $\mathcal Q$ 的全视界最坏误差由第一步取得，证明所述上界。证毕。
+
+定理163.2与命题163.4共同区分了三个量词层次：逐视界重选的最优终端通道、固定通道服务全部视界，以及再要求该固定通道单步最优。它们使用同一个已校准源族和同一个全参考距离。式（163.4）的预测器增加特定非对角方向的衰减来平衡各视界误差，不改变真实记录源、不访问被丢弃的环境，也不根据实际未知相位选择预测。静态随机参数与每步重抽参数的既有区别仍按第162节所引 Kropf、Gneiting、Buchleitner 的文献范围理解；本节比较的是这些固定预测通道的无先验最坏误差，不由此给出量子性的普遍定义或量子对经典的普遍优势。
+
+## 追加锚（本行以下为增补区）
+
+## 164. 近似单步最优的迭代稳定性与必要局部代价
+
+**定义 164.1（单步超额与固定通道的全视界风险）。** 沿用定义161.1的校准记录源、定义161.2的全参考距离和定义163.1的固定三维 CPTP 预测合同。真实相位在全部步骤固定未知，每步记录单元新鲜；预测者不能访问旧记录、取得额外相位校准、插入中间控制或附加持久记忆。对 $1/\sqrt3<r<1$ 和任意 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，令
+$$
+\ell_r(\mathcal F)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F),
+\qquad
+W_r(\mathcal F)=
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N).
+\tag{164.1}
+$$
+定义非负的单步超额及相对超额
+$$
+\delta_r(\mathcal F)=\ell_r(\mathcal F)-\mathcal R_1(r),
+\qquad
+\xi_r(\mathcal F)=\frac{\delta_r(\mathcal F)}{\mathcal R_1(r)}.
+\tag{164.2}
+$$
+分母在所给区间内严格为正。记
+$$
+q=r\sin\alpha(r)=2\mathcal R_1(r),\qquad
+\eta_r(\mathcal F)=
+\sqrt{\frac43\bigl(q\delta_r(\mathcal F)+\delta_r(\mathcal F)^2\bigr)}
+=\frac{2\mathcal R_1(r)}{\sqrt3}
+\sqrt{\xi_r(\mathcal F)\bigl(2+\xi_r(\mathcal F)\bigr)}.
+\tag{164.3}
+$$
+仍令 $\mathcal F_*(A)=C(r,\cos\alpha(r))\odot A$ 为定理162.2的共同达到通道。对系统态使用距离 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$，对矩阵使用 Hilbert–Schmidt 范数 $\|A\|_2^2=\operatorname{Tr}(A^\dagger A)$。
+
+**定理 164.2（全 CPTP 预测器的近似赤道刚性）。** 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，$X,Y$ 为 $P\mathbb C^3$ 上的 Pauli 矩阵，定义赤道圆盘
+$$
+\mathscr D=
+\left\{\frac12(P+xX+yY):x,y\in\mathbb R,\ x^2+y^2\le1\right\}.
+\tag{164.4}
+$$
+在定义164.1的条件下，对全部 $\rho\in\mathscr D$ 和全部整数 $N\ge1$，
+$$
+D\bigl(\mathcal F(\rho),\mathcal F_*(\rho)\bigr)
+\le\eta_r(\mathcal F),
+\qquad
+D\bigl(\mathcal F^N(\rho),\mathcal F_*^N(\rho)\bigr)
+\le N\eta_r(\mathcal F).
+\tag{164.5}
+$$
+于是每个视界都满足
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F)\bigr]_+,
+}
+\qquad [u]_+=\max\{u,0\}.
+\tag{164.6}
+$$
+这里 $\mathcal F$ 不必为 Schur 通道，也不必保持 $\mathscr D$；保持该圆盘的是比较通道 $\mathcal F_*$。
+
+证明。 对无迹 Hermitian 矩阵 $A$，正、负特征值的绝对值之和各为 $\|A\|_1/2$，故
+$$
+\|A\|_2^2\le2\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.7}
+$$
+若 $A$ 是三维矩阵且非零，设其正、负特征值数目为 $p_+,p_-\ge1$，则 $p_++p_-\le3$。Cauchy–Schwarz 给出
+$$
+\|A\|_2^2
+\ge\left(\frac{\|A\|_1}{2}\right)^2
+\left(\frac1{p_+}+\frac1{p_-}\right)
+\ge\frac32\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.8}
+$$
+零矩阵时同样成立。这两步仅使用有限维 Schatten 范数的初等关系，三维常数用于下面的预测误差估计。
+
+先取圆盘边界上的纯态
+$$
+\rho_\theta=\frac12(P+\cos\theta\,X+\sin\theta\,Y).
+$$
+令 $\sigma_\pm=\mathcal M_{r,\pm\alpha(r)}(\rho_\theta)$、$\tau=\mathcal F(\rho_\theta)$。由定理162.2中的端点表达式，其中点为 $\tau_*=\mathcal F_*(\rho_\theta)$，且
+$$
+\sigma_\pm=\tau_*\pm\frac q2 V_\theta,
+\qquad
+V_\theta^2=P,\quad \operatorname{Tr}(V_\theta)=0.
+\tag{164.9}
+$$
+交换两个端点的标签不影响此式。记 $\delta=\delta_r(\mathcal F)$。单步全输入距离上界特别给出
+$$
+D(\tau,\sigma_\pm)\le\mathcal R_1(r)+\delta=\frac q2+\delta.
+\tag{164.10}
+$$
+对两个无迹 Hermitian 差矩阵应用式（164.7），再取平均。Hilbert–Schmidt 平行四边形恒等式及 $\operatorname{Tr}P=2$ 给出
+$$
+\|\tau-\tau_*\|_2^2+\frac{q^2}{2}
+=\frac12\bigl(\|\tau-\sigma_+\|_2^2+\|\tau-\sigma_-\|_2^2\bigr)
+\le2\left(\frac q2+\delta\right)^2.
+\tag{164.11}
+$$
+因此 $\|\tau-\tau_*\|_2^2\le2q\delta+2\delta^2$。差矩阵 $\tau-\tau_*$ 也是三维无迹 Hermitian 矩阵；式（164.8）遂给出
+$$
+D(\tau,\tau_*)^2
+\le\frac23\|\tau-\tau_*\|_2^2
+\le\frac43(q\delta+\delta^2)=\eta_r(\mathcal F)^2.
+\tag{164.12}
+$$
+此估计已包含向第三标签的泄漏与非对角响应，不把 $\tau$ 预先压回二维子空间。$\mathscr D$ 是这些 $\rho_\theta$ 的凸包，通道线性性和迹范数凸性将同一上界延伸至整个圆盘，得到式（164.5）的第一式。
+
+定理162.2给出 $\mathcal F_*(P/2)=P/2$、$\mathcal F_*(X)=r\cos\alpha\,X$ 与 $\mathcal F_*(Y)=r\cos\alpha\,Y$，故 $\mathcal F_*$ 保持 $\mathscr D$。对非交换线性映射仍成立的 telescoping 恒等式为
+$$
+\mathcal F^N-\mathcal F_*^N
+=\sum_{j=0}^{N-1}
+\mathcal F^{N-1-j}\circ(\mathcal F-\mathcal F_*)\circ\mathcal F_*^j.
+\tag{164.13}
+$$
+将其作用于 $\rho\in\mathscr D$，每个比较输入 $\mathcal F_*^j(\rho)$ 仍在同一圆盘内。CPTP 通道对态差的迹距离收缩，所以每一项的半迹范数至多为 $\eta_r(\mathcal F)$，求和即得第二式。
+
+最后取无参考平衡输入 $\rho_0=(|0\rangle+|2\rangle)(\langle0|+\langle2|)/2$。式（162.13）和（162.14）表明
+$$
+\sup_\phi
+D\bigl(\mathcal M_{r,\phi}^N(\rho_0),\mathcal F_*^N(\rho_0)\bigr)
+=\mathcal E_N(r).
+$$
+三角不等式与刚证出的迭代估计给出 $\mathcal F$ 在该输入上的最坏误差至少为 $\mathcal E_N(r)-N\eta_r(\mathcal F)$；全输入、全参考距离包含这个实验，且误差非负，故式（164.6）成立。证毕。
+
+式（164.5）约束的是赤道圆盘上的系统态输出，不声称 $d_{\rm ref}(\mathcal F,\mathcal F_*)\le\eta_r(\mathcal F)$。全视界下界由同一个圆盘内的比较轨道承担；实际 $\mathcal F$ 的轨道可以离开该圆盘。
+
+**定理 164.3（局部相对误差约束下的全视界下界）。** 对每个充分接近一的 $r<1$，任取一个三维 CPTP 通道 $\mathcal F_r$，不要求其关于 $r$ 连续。定义
+$$
+g(t)=e^{-t}\sin\!\left(\min\left\{\frac{\sqrt3t}{2},\frac\pi2\right\}\right),
+\qquad
+\Phi(\xi)=\sup_{t\ge0}
+\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+,
+\quad \xi\ge0.
+\tag{164.14}
+$$
+若 $\limsup_{r\uparrow1}\xi_r(\mathcal F_r)\le\xi<\infty$，则
+$$
+\boxed{
+\liminf_{r\uparrow1}W_r(\mathcal F_r)\ge\max\{L,\Phi(\xi)\}.
+}
+\tag{164.15}
+$$
+特别地，若单步风险比 $\ell_r(\mathcal F_r)/\mathcal R_1(r)\to1$，则
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge K:=
+\sqrt{\frac37}\exp\!\left[-\frac2{\sqrt3}
+\arctan\!\left(\frac{\sqrt3}{2}\right)\right]>L.
+\tag{164.16}
+$$
+此类预测族中的下界 $K$ 由 $\mathcal F_r=\mathcal F_*$ 达到。式（164.16）不要求每个有限 $r$ 的单步误差已经精确最优。
+
+证明。 令 $\varepsilon=1-r$。由式（163.21），$2\mathcal R_1(r)/(\sqrt3\varepsilon)\to1$，故式（164.3）和所给相对超额假设推出
+$$
+\limsup_{r\uparrow1}
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+\le\sqrt{\xi(2+\xi)}.
+\tag{164.17}
+$$
+固定 $t>0$，取 $N=\lfloor t/\varepsilon\rfloor$，则充分小的 $\varepsilon$ 下 $N\ge1$ 且 $\varepsilon N\to t$。定理162.4给出 $\mathcal E_N(r)\to g(t)$，而定理164.2给出
+$$
+W_r(\mathcal F_r)\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F_r)\bigr]_+.
+$$
+取下极限得到对每个固定 $t>0$ 都成立的
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+.
+\tag{164.18}
+$$
+$t=0$ 时右端为零也成立；随后对这些已成立的不等式取 $t$ 的上确界，得到下界 $\Phi(\xi)$。另一方面，式（163.18）的逐视界下界适用于每个 $\mathcal F_r$，定理161.6因此还给出下界 $L$。合并两者即得（164.15），没有交换未知预测器的优化与视界上确界。$\xi=0$ 时 $\Phi(0)=\max_tg(t)=K$，由定理162.4计算；同一节与式（163.22）还给出 $\mathcal F_*$ 的全视界风险趋于 $K$。证毕。
+
+**命题 164.4（达到最优全视界极限的必要正局部代价）。** 令 $a=\sqrt3/2$、$t^\dagger=\arctan(a)/a$。在区间 $[0,t^\dagger]$ 上，式（164.14）的函数为 $g(t)=e^{-t}\sin(at)$。存在唯一 $t_c\in(0,t^\dagger)$ 使
+$$
+g(t_c)-t_cg'(t_c)=L.
+\tag{164.19}
+$$
+定义
+$$
+B_c=g'(t_c)>0,\qquad
+\xi_c=\sqrt{1+B_c^2}-1>0.
+\tag{164.20}
+$$
+则 $\Phi(\xi_c)=L$，且 $\Phi(\xi)>L$ 当且仅当 $0\le\xi<\xi_c$。若任意固定通道族 $\mathcal F_r$ 满足 $W_r(\mathcal F_r)\to L$，便必须有
+$$
+\boxed{
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+\ge1+\xi_c.
+}
+\tag{164.21}
+$$
+数值上，
+$$
+t_c\approx0.7066490123,\qquad
+B_c\approx0.0662831528,\qquad
+\xi_c\approx0.002194320652.
+\tag{164.22}
+$$
+这是所证下界 $\Phi$ 的临界参数，并非实际最小局部代价已经达到的断言。
+
+证明。 在 $[0,t^\dagger]$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)),\qquad
+g''(t)=e^{-t}\bigl((1-a^2)\sin(at)-2a\cos(at)\bigr)<0.
+\tag{164.23}
+$$
+最后一个严格号可由 $a^2=3/4$、$\tan(at)\le a$ 及 $\cos(at)>0$ 直接得到。因此 $g'$ 从 $g'(0)=a$ 严格下降至 $g'(t^\dagger)=0$。在 $t>t^\dagger$，包括越过相位截断之后，$g$ 仍严格下降。
+
+令 $B=\sqrt{\xi(2+\xi)}$。若 $B\ge a$，因全部 $t\ge0$ 都有 $g(t)\le at$，故 $\Phi(\xi)=0$。若 $0\le B<a$，存在唯一 $t_B\in(0,t^\dagger]$ 使 $g'(t_B)=B$。函数 $g(t)-Bt$ 在该点之前严格增加、之后严格下降，其最大值为正，所以
+$$
+\Phi(\xi)=g(t_B)-Bt_B.
+\tag{164.24}
+$$
+当 $B<a$ 增大时，这个最优值严格下降：若 $B_1<B_2<a$，在 $B_2$ 的正最大点代入 $B_1$ 的目标，即得严格不等式。
+
+函数 $Q(t)=g(t)-tg'(t)$ 在 $(0,t^\dagger)$ 满足 $Q'(t)=-tg''(t)>0$，且 $Q(0)=0$、$Q(t^\dagger)=K>L$。连续性与严格单调性证明式（164.19）唯一可解，并有 $0<B_c<a$。在 $B=B_c$ 时，式（164.24）的最大点正是 $t_c$，所以 $\Phi(\xi_c)=L$；再由上述严格下降与 $B\ge a$ 时的零值，得到所述阈值性质。
+
+为证明不要求局部误差比收敛的式（164.21），设 $W_r(\mathcal F_r)\to L$，令 $\varepsilon=1-r$、$N=\lfloor t_c/\varepsilon\rfloor$。定理164.2直接给出
+$$
+N\eta_r(\mathcal F_r)
+\ge\mathcal E_N(r)-W_r(\mathcal F_r).
+$$
+右端趋于 $g(t_c)-L=t_cB_c>0$，且 $\varepsilon N\to t_c$，故
+$$
+\liminf_{r\uparrow1}\frac{\eta_r(\mathcal F_r)}{\varepsilon}\ge B_c.
+\tag{164.25}
+$$
+再用精确式
+$$
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+=\frac{2\mathcal R_1(r)}{\sqrt3\varepsilon}
+\sqrt{\xi_r(\mathcal F_r)\bigl(2+\xi_r(\mathcal F_r)\bigr)}
+$$
+及前因子趋于一，单调连续函数 $x\mapsto\sqrt{x(2+x)}$ 在非负半轴上的反函数为 $y\mapsto\sqrt{1+y^2}-1$，即得 $\liminf\xi_r(\mathcal F_r)\ge\xi_c$。证毕。
+
+因此约 $0.2194\%$ 是达到 $L$ 的必要相对超额下界，而命题163.3的显式构造给出约 $19.9217\%$ 的可行相对超额。两端之间的差距尚未由这些定理闭合；式（164.21）也不声称 $\Phi$ 对每个 $\xi>0$ 都是可达到的最优权衡。
+
+**命题 164.5（有限参数固定预测风险的定量间隙）。** 令 $r_0=1/\sqrt2$、
+$$
+d=\frac{\sqrt5}{8}-\frac14>0,
+$$
+并令 $x_0$ 为二次方程
+$$
+13x^2+(8+6d)x-3d^2=0
+\tag{164.26}
+$$
+的唯一正根，即
+$$
+x_0=
+\frac{\sqrt{(8+6d)^2+156d^2}-(8+6d)}{26}
+\approx0.0003192995672.
+\tag{164.27}
+$$
+则定义163.1的全 CPTP 固定预测风险满足
+$$
+\boxed{
+\frac14+x_0\le\mathcal J(r_0)
+\le\frac1{2\sqrt2}\sqrt{\frac54-\frac1{\sqrt2}}.
+}
+\tag{164.28}
+$$
+这将命题163.4的严格下界定量化，但不确定 $\mathcal J(r_0)$ 的精确值。
+
+证明。 任取固定 CPTP 通道 $\mathcal F$，设 $w=W_{r_0}(\mathcal F)$、$x=w-1/4$。由 $\mathcal R_1(r_0)=1/4$，有 $x\ge0$，且
+$$
+0\le\delta_{r_0}(\mathcal F)
+=\ell_{r_0}(\mathcal F)-\frac14\le x.
+$$
+此时 $q=1/2$、$\mathcal E_2(r_0)=\sqrt5/8$。定理164.2在 $N=2$ 给出
+$$
+\frac14+x=w
+\ge\frac{\sqrt5}{8}
+-\frac4{\sqrt3}\sqrt{\frac x2+x^2},
+$$
+即
+$$
+x+\frac4{\sqrt3}\sqrt{\frac x2+x^2}\ge d.
+\tag{164.29}
+$$
+左端是 $x\ge0$ 上连续严格增加的函数，从零开始，且在 $x=d$ 时严格大于 $d$。其与 $d$ 相等的唯一解位于 $(0,d)$；在这一区间中两边移项后均非负，可以等价平方，得到式（164.26）。故此唯一解正是 $x_0$，式（164.29）迫使 $x\ge x_0$。对全部 $\mathcal F$ 取下确界即得所述下界；上界由命题163.4的显式通道给出。证毕。
+
+定理164.2把端点中点的精确约束扩展为近似约束，再沿同一个合法比较轨道传播。定理164.3—命题164.4据此比较单步近优与全视界最优的不同要求；源的未知共同相位并未被重新抽取或估计出来。输入域、通道维数和无持久记忆的假设均沿用定义164.1，允许扩维记忆或自适应校准的模型属于不同的优化问题。
+
+## 追加锚（本行以下为增补区）
+
+## 165. 全视界最优预测的精确局部代价与有限尺度盲区
+
+**定义 165.1（渐近全视界最优族的局部代价）。** 沿用定义164.1的固定未知相位、新鲜记录与三维 CPTP 预测合同，以及其中的单步风险 $\ell_r$、全视界风险 $W_r$ 和单步最优值 $\mathcal R_1(r)$；本节将 $\ell_r,W_r$ 按式（164.1）的相同公式定义于全部 $0<r<1$，允许相位域仍取定义161.1。预测者在每个 $r$ 选择一个通道，以其幂服务全部视界，不访问环境记录、不插入中间控制、不附加持久辅助记忆。令
+$$
+\mathscr A=
+\left\{(\mathcal F_r)_{r\uparrow1}:
+\mathcal F_r\text{ 为三维 CPTP 通道},\quad
+W_r(\mathcal F_r)\longrightarrow L\right\},
+\qquad
+L=\frac{\sqrt3}{4}e^{-t_*},\quad
+t_*=\frac\pi{3\sqrt3}.
+\tag{165.1}
+$$
+族只须在某个区间 $r\in(r_0,1)$、$0<r_0<1$ 内定义，不要求连续或可微。记
+$$
+k_*=\frac{\log2}{t_*}=\frac{3\sqrt3\log2}{\pi},\qquad
+h_*=\sqrt{1+\frac{k_*^2}{3}}=\sqrt{1+\frac{9(\log2)^2}{\pi^2}},\qquad
+S_*=\frac12\sqrt{3+k_*^2}.
+\tag{165.2}
+$$
+
+**定理 165.2（任意三维 CPTP 族的精确必要局部代价）。** 每个 $(\mathcal F_r)\in\mathscr A$ 都满足
+$$
+\boxed{
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+\ge h_*.
+}
+\tag{165.3}
+$$
+第163节的合法通道 $\mathcal T_r(A)=C(r,r^{k_*})\odot A$ 属于 $\mathscr A$，且其比值收敛至 $h_*$。因此
+$$
+\inf_{(\mathcal F_r)\in\mathscr A}
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+=h_*=1.1992166662\ldots.
+\tag{165.4}
+$$
+这里的下界允许全部三维 CPTP 通道，不预设 Schur 形式、有限 $r$ 的半群嵌入、参数连续性或局部比值的收敛。结论给出的是趋于 $r=1$ 时的精确最小相对局部代价，不是有限参数处 $\mathcal J(r)$ 的精确值。
+
+证明。 若式（165.3）不成立，可取 $r_n\uparrow1$，使
+$$
+\frac{\ell_{r_n}(\mathcal F_{r_n})}{\mathcal R_1(r_n)}
+\longrightarrow h<h_*.
+\tag{165.5}
+$$
+因单步最优值是所有 CPTP 通道的下确界，必有 $h\ge1$。设 $\varepsilon_n=1-r_n$，由式（163.21），
+$$
+S_n:=\frac{\ell_{r_n}(\mathcal F_{r_n})}{\varepsilon_n}
+\longrightarrow S=\frac{\sqrt3}{2}h<S_*.
+\tag{165.6}
+$$
+把通道视为矩阵空间 $M_3(\mathbb C)$ 上的复线性算子，定义
+$$
+\mathcal G_n=
+\frac{\mathcal F_{r_n}-\mathrm{Id}}{\varepsilon_n},\qquad
+\|\mathcal G\|_{1\to1}=
+\sup_{A\ne0}\frac{\|\mathcal G(A)\|_1}{\|A\|_1}.
+\tag{165.7}
+$$
+令 $\Delta$ 为系统基下的完全去相干通道。允许相位 $\phi=0$ 的真实通道恰为
+$$
+\mathcal M_{r,0}=r\,\mathrm{Id}+(1-r)\Delta.
+$$
+故对每个系统密度矩阵 $\rho$，三角不等式与两个态的距离至多为一给出
+$$
+\|\mathcal G_n(\rho)\|_1
+\le 2(S_n+1).
+\tag{165.8}
+$$
+对 Hermitian 输入 $A=A_+-A_-$，分别归一化其正负部分，得到
+$$
+\|\mathcal G_n(A)\|_1\le2(S_n+1)\|A\|_1.
+$$
+对任意复矩阵写 $A=H+iK$，其中 $H,K$ Hermitian 且 $\|H\|_1,\|K\|_1\le\|A\|_1$，于是
+$$
+\|\mathcal G_n\|_{1\to1}\le4(S_n+1).
+\tag{165.9}
+$$
+有限维有界性允许再取子列，使 $\mathcal G_n\to\mathcal G$ 为算子范数收敛。由于 $3\log2<\pi$，有 $k_*<\sqrt3$、$S_*<3/2$，因而
+$$
+\|\mathcal G\|_{1\to1}
+\le4(S+1)<10<6\sqrt3=\frac{2\pi}{t_*}.
+\tag{165.10}
+$$
+特别地，$\mathcal G$ 的每个复特征值 $\mu$ 都满足 $|\operatorname{Im}\mu|<2\pi/t_*$。
+
+对任意固定 $t\ge0$，有限维 Euler 极限给出
+$$
+\mathcal F_{r_n}^{\lfloor t/\varepsilon_n\rfloor}
+=(\mathrm{Id}+\varepsilon_n\mathcal G_n)^{\lfloor t/\varepsilon_n\rfloor}
+\longrightarrow e^{t\mathcal G}.
+\tag{165.11}
+$$
+具体地，式（165.9）的统一有界性保证充分大的 $n$ 下可用收敛的矩阵对数级数，且
+$$
+\log(\mathrm{Id}+\varepsilon_n\mathcal G_n)
+=\varepsilon_n\mathcal G_n+O(\varepsilon_n^2)
+$$
+在算子范数中成立。乘以 $\lfloor t/\varepsilon_n\rfloor$ 后趋于 $t\mathcal G$，再用指数的连续性即得（165.11）。每个左侧通道都 CPTP，有限维 CPTP 集合闭，故 $e^{t\mathcal G}$ 也 CPTP。这一论证没有要求单个 $\mathcal F_{r_n}$ 本身具有 CPTP 的对数生成元，也不对无界 $t$ 声称一致收敛。
+
+取 $P,X,Y$ 如式（164.4）的赤道圆盘，写
+$$
+\rho_\theta=\frac12(P+\cos\theta\,X+\sin\theta\,Y),\qquad
+N_n=\lfloor t_*/\varepsilon_n\rfloor.
+$$
+真实源的两个允许端点为 $\phi=\pm\alpha(r_n)$。由 $r_n^{N_n}\to e^{-t_*}$ 与 $N_n\alpha(r_n)\to\pi/3$，其在 $\rho_\theta$ 上的输出趋于
+$$
+\sigma_{\theta,\pm}
+=\frac12\left(P+e^{-t_*}
+\left[\cos(\theta\pm\pi/3)X+
+\sin(\theta\pm\pi/3)Y\right]\right).
+\tag{165.12}
+$$
+端点标签可随 $Y$ 的符号约定互换，不影响下述距离与中点。因为 $W_{r_n}(\mathcal F_{r_n})\to L$，式（165.11）推出
+$$
+D(e^{t_*\mathcal G}(\rho_\theta),\sigma_{\theta,\pm})\le L.
+\tag{165.13}
+$$
+两个端点的距离为 $2L$，中点是
+$$
+m_\theta=\frac12\left(P+\lambda
+(\cos\theta\,X+\sin\theta\,Y)\right),\qquad
+\lambda=\frac{e^{-t_*}}2=e^{-(1+k_*)t_*}.
+\tag{165.14}
+$$
+这个中点在整个三维态空间中也是唯一可满足式（165.13）的态。事实上，写 $\sigma_{\theta,\pm}=m_\theta\pm Q_\theta$，则 $Q_\theta$ Hermitian、无迹，且 $Q_\theta^2=L^2P$。对任一满足（165.13）的态 $\tau$，式（164.7）适用于无迹 Hermitian 差 $\tau-\sigma_{\theta,\pm}$。Hilbert–Schmidt 平行四边形恒等式给出
+$$
+\|\tau-m_\theta\|_2^2+2L^2
+=\frac12\left(\|\tau-\sigma_{\theta,+}\|_2^2+
+\|\tau-\sigma_{\theta,-}\|_2^2\right)
+\le2L^2.
+\tag{165.15}
+$$
+故 $\tau=m_\theta$。此处只使用实际端点的极限，不把 $e^{-t_*}$ 当作一个新的源参数并调用不同的完整相位族。对全部 $\theta$ 比较（165.14），得到
+$$
+e^{t_*\mathcal G}(P)=P,\qquad
+e^{t_*\mathcal G}(X)=\lambda X,\qquad
+e^{t_*\mathcal G}(Y)=\lambda Y.
+\tag{165.16}
+$$
+
+下面从这一时刻的算子信息返回生成元。对任意 $b>0$，令 $a=(\log b)/t_*$。整函数
+$$
+e^{t_*z}-b=(z-a)u_b(z),\qquad u_b(a)=t_*b
+\tag{165.17}
+$$
+中的 $u_b$ 只可能在 $a+2\pi i m/t_*$、$m\in\mathbb Z\setminus\{0\}$ 处为零。式（165.10）排除这些点与 $\mathcal G$ 的谱相交，因此 $u_b(\mathcal G)$ 可逆，且与 $\mathcal G-a\mathrm{Id}$ 交换。于是
+$$
+\ker(e^{t_*\mathcal G}-b\mathrm{Id})
+=\ker(\mathcal G-a\mathrm{Id}).
+\tag{165.18}
+$$
+可逆性也可直接在每个 Jordan 块上核对：$u_b$ 作用后的对角元均为非零的 $u_b(\mu)$。因此（165.18）不需要 $\mathcal G$ 可对角化。这里使用的是标准矩阵函数演算及其谱映射性质；相关背景见 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3。谱带界（165.10）承担排除指数不同对数分支的具体义务。
+
+分别取 $b=1$ 和 $b=\lambda$，式（165.16）遂迫使
+$$
+\mathcal G(P)=0,\qquad
+\mathcal G(X)=-(1+k_*)X,\qquad
+\mathcal G(Y)=-(1+k_*)Y.
+\tag{165.19}
+$$
+特别地，对 $\rho_0=(P+X)/2$，有 $\mathcal G(\rho_0)=-(1+k_*)X/2$。真实端点通道在同一个输入上的一阶展开为
+$$
+\frac{\mathcal M_{r_n,\alpha(r_n)}(\rho_0)-\rho_0}{\varepsilon_n}
+\longrightarrow\frac12(-X\pm\sqrt3Y),
+\tag{165.20}
+$$
+其中用到了 $\alpha(r_n)/\varepsilon_n\to\sqrt3$。因此全参考单步风险至少包含这个无参考输入的距离，给出
+$$
+S=\lim_n\frac{\ell_{r_n}(\mathcal F_{r_n})}{\varepsilon_n}
+\ge\frac12\left\|\frac12(-k_*X\mp\sqrt3Y)\right\|_1
+=\frac12\sqrt{k_*^2+3}=S_*.
+\tag{165.21}
+$$
+最后一步由 $X^2=Y^2=P$、$XY+YX=0$，相应矩阵的两个非零特征值为 $\pm\sqrt{k_*^2+3}/2$。这与（165.6）矛盾，证明（165.3），包括局部比值振荡或无上界的族：若其下极限低于 $h_*$，总能选出（165.5）的有限收敛子列。可达到性由定理163.2及命题163.3直接给出，证明（165.4）。证毕。
+
+式（165.3）将命题164.4的必要下界加强到精确值，并确定第163节构造的最小代价性质；这正是前两节尚未确定的部分。此前的有限参数界与近似圆盘估计仍按各自假设成立。
+
+**命题 165.3（相同局部代价和缩放生成元不能认证全部视界）。** 令 $\mathcal R(A)=\operatorname{Tr}(A)|1\rangle\langle1|$ 为重置通道，并设
+$$
+p_r=(1-r)^2,\qquad
+\widehat{\mathcal T}_r=(1-p_r)\mathcal T_r+p_r\mathcal R,
+\qquad 0<r<1.
+\tag{165.22}
+$$
+它是三维 CPTP 通道族，满足
+$$
+\frac{\ell_r(\widehat{\mathcal T}_r)}{\mathcal R_1(r)}\longrightarrow h_*,\qquad
+\left\|\frac{\widehat{\mathcal T}_r-\mathcal T_r}{1-r}\right\|_{1\to1}\longrightarrow0,
+\tag{165.23}
+$$
+并在每个有限缩放视界区间上与 $\mathcal T_r$ 渐近一致：对任意 $T<\infty$，
+$$
+\sup_{0\le t\le T}
+ d_{\rm ref}\left(
+\widehat{\mathcal T}_r^{\lfloor t/(1-r)\rfloor},
+\mathcal T_r^{\lfloor t/(1-r)\rfloor}\right)
+\longrightarrow0.
+\tag{165.24}
+$$
+但它在每个 $0<r<1$ 都有
+$$
+\boxed{W_r(\widehat{\mathcal T}_r)=1,}
+\tag{165.25}
+$$
+所以不属于 $\mathscr A$。
+
+证明。 通道凸组合保持 CPTP，且 $d_{\rm ref}(\widehat{\mathcal T}_r,\mathcal T_r)\le p_r$。距离的三角不等式使两个单步风险之差的绝对值也至多为 $p_r$。因 $\mathcal R_1(r)\sim\sqrt3(1-r)/2$，命题163.3给出（165.23）的第一式。又 $\mathcal T_r\to\mathrm{Id}$，故 $\mathcal R-\mathcal T_r$ 在有限维算子范数中有界，而
+$$
+\frac{\widehat{\mathcal T}_r-\mathcal T_r}{1-r}
+=(1-r)(\mathcal R-\mathcal T_r),
+$$
+证明第二式。$\mathcal T_r$ 的各 Schur 系数在 $r=1$ 有单侧导数，所以 $(\mathcal T_r-\mathrm{Id})/(1-r)$ 确有极限；两族因此有同一个缩放生成元。
+
+复合的 telescoping 估计（163.24）给出第 $N$ 步距离至多为 $Np_r$，在 $N=\lfloor t/(1-r)\rfloor$、$0\le t\le T$ 时不超过 $T(1-r)$，即得（165.24）。
+
+另一方面，$\mathcal T_r$ 固定全部计算基态，并保持迹，故 $\mathcal T_r\mathcal R=\mathcal R\mathcal T_r=\mathcal R$、$\mathcal R^2=\mathcal R$。归纳得到
+$$
+\widehat{\mathcal T}_r^N
+=(1-p_r)^N\mathcal T_r^N+
+\bigl(1-(1-p_r)^N\bigr)\mathcal R.
+\tag{165.26}
+$$
+取输入 $|0\rangle\langle0|$。全部真实源及 $\mathcal T_r^N$ 都保留该态，重置通道则给出正交态 $|1\rangle\langle1|$。因此实际预测距离为 $1-(1-p_r)^N$，对 $N$ 的上确界是一。任意两通道的全参考距离至多为一，故（165.25）成立。证毕。
+
+定理165.2只用一个有限缩放时刻建立必要条件；其达到性使用第163节的统一尾界。命题165.3显示，这两种义务不可互相替代：每步 $O((1-r)^2)$ 的重置在 $N=O((1-r)^{-1})$ 的任何固定缩放区间上消失，却在更长视界累积成完全可区分的误差。局部最小代价和生成元相同均不足以控制无界视界。本节仍只研究定义165.1的已校准量子记录模型，不由这些预测权衡给出量子性的普遍定义或量子相对经典的普遍优势。
+
+## 追加锚（本行以下为增补区）
+
+## 166. 全视界误差的半距门槛与稳定记录空间
+
+**定义 166.1（固定模式、周边模式与一阶匹配）。** 沿用定义165.1的已校准三标签记录源、全参考距离和风险 $W_r$，其中 $0<r<1$，每个预测器为在原三维系统上反复使用的 CPTP 通道。令 $\Delta$ 为计算基下的完全去相干通道。对通道 $\mathcal F$，记
+$$
+\operatorname{Fix}(\mathcal F)=\ker(\mathcal F-\mathrm{Id}),\qquad
+m(\mathcal F)=\dim_{\mathbb C}\operatorname{Fix}(\mathcal F).
+\tag{166.1}
+$$
+周边空间指复线性算子 $\mathcal F$ 的全部模长为一的特征值所对应的广义特征空间之和，其维数记为 $p(\mathcal F)$。CPTP 通道的幂有界，因而周边 Jordan 块均为一阶。固定模式是周边模式的一部分，二者不先验等同。
+
+仍以 $\mathcal T_r(A)=C(r,r^{k_*})\odot A$ 表示第163节的达到通道，$k_*=3\sqrt3\log2/\pi$。称通道族 $\mathcal F_r$ 与它一阶匹配，若该族在某个 $(r_0,1)$ 上定义，且
+$$
+\delta_r:=d_{\rm ref}(\mathcal F_r,\mathcal T_r)=o(1-r).
+\tag{166.2}
+$$
+这里使用整个通道的全参考距离，不只比较一个输入、单步风险值或某个相干分量。
+
+**定理 166.2（小于半距的预测必须保留三个稳定纯态）。** 对固定 $0<r<1$ 和任意三维 CPTP 通道 $\mathcal F$，若
+$$
+W_r(\mathcal F)<\frac12,
+\tag{166.3}
+$$
+则 $m(\mathcal F)=p(\mathcal F)=3$，且存在一组正交归一基 $u_0,u_1,u_2$ 与相关矩阵 $B\succeq0$、$B_{ii}=1$，使
+$$
+\mathcal F(|u_i\rangle\langle u_j|)
+=B_{ij}|u_i\rangle\langle u_j|,
+\qquad |B_{ij}|<1\quad(i\ne j).
+\tag{166.4}
+$$
+因此 $\mathcal F$ 是该基下的严格衰减 Schur 通道，固定三个正交纯态，且 $\mathcal F(I)=I$。设 $\Delta_U$ 为这组基下的完全去相干通道，则
+$$
+\mathcal F^N\longrightarrow\Delta_U,
+\qquad
+d_{\rm ref}(\Delta_U,\Delta)\le W_r(\mathcal F).
+\tag{166.5}
+$$
+更一般地，在本模型内只要 $m(\mathcal F)\ne3$ 或 $p(\mathcal F)\ne3$，便有 $W_r(\mathcal F)\ge1/2$。式（166.4）是低风险的必要结构，不是所有此类 Schur 通道都低风险的充分条件；也不要求 $u_i$ 等于原计算基。
+
+证明。 先说明所用的有限维秩障碍。若两个 CPTP 幂等算子 $\mathcal P,\mathcal Q$ 的复秩不同，不妨设 $\operatorname{rank}\mathcal P>\operatorname{rank}\mathcal Q$。二者保 Hermitian，其 Hermitian 像空间的实维数等于复秩，因此存在非零 Hermitian 矩阵
+$$
+A\in\operatorname{ran}\mathcal P\cap\ker\mathcal Q.
+$$
+于是 $(\mathcal P-\mathcal Q)A=A$。将 $A$ 的正负部分分别归一化为态，用 $d_{\rm ref}$ 所包含的无参考输入距离，得到
+$$
+\|A\|_1
+=\|(\mathcal P-\mathcal Q)A\|_1
+\le2d_{\rm ref}(\mathcal P,\mathcal Q)\|A\|_1.
+$$
+故
+$$
+\operatorname{rank}\mathcal P\ne\operatorname{rank}\mathcal Q
+\quad\Longrightarrow\quad
+d_{\rm ref}(\mathcal P,\mathcal Q)\ge\frac12.
+\tag{166.6}
+$$
+这只是不同秩的投影不能在算子范数一以内相互逼近的标准有限维事实在全参考距离下的归一化。
+
+通道幂的有界性保证 Cesàro 极限存在：
+$$
+\mathcal E_{\mathcal F}
+=\lim_{M\to\infty}\frac1M\sum_{N=1}^{M}\mathcal F^N.
+\tag{166.7}
+$$
+逐个 Jordan 块看，模长小于一的块平均后消失，模长为一但不等于一的特征值平均后也消失，而特征值一的空间保留。因此 $\mathcal E_{\mathcal F}$ 是投影到 $\operatorname{Fix}(\mathcal F)$ 的幂等算子；它是 CPTP 通道的平均之极限，所以也是 CPTP。
+
+相位零属于允许源族，且 $\mathcal M_{r,0}^N\to\Delta$。对平均应用距离的凸性，再取极限，得到
+$$
+d_{\rm ref}(\mathcal E_{\mathcal F},\Delta)
+\le W_r(\mathcal F).
+\tag{166.8}
+$$
+由于 $\operatorname{rank}\Delta=3$，式（166.6）已证明：若 $m(\mathcal F)\ne3$，则风险至少为 $1/2$；在假设（166.3）下，$m(\mathcal F)=3$。
+
+接下来使用任意有限维 CPTP 通道的成熟固定空间结构。Blume-Kohout、Ng、Poulin、Viola，[*Information-preserving structures: A general framework for quantum zero-error information*](https://arxiv.org/abs/1006.1358)，定义10及定理5，给出在固定态共同支撑上的分解
+$$
+\mathcal H=
+\left(\bigoplus_a\mathcal A_a\otimes\mathcal B_a\right)\oplus\mathcal K,
+\qquad
+\operatorname{Fix}(\mathcal F)=
+\left(\bigoplus_a M(\mathcal A_a)\otimes\tau_a\right)\oplus0_{\mathcal K},
+\tag{166.9}
+$$
+其中 $\tau_a$ 为固定的非零正矩阵，可归一化为密度矩阵；$\mathcal K$ 是固定态共同支撑之外的空间。该结构适用于非 unital 通道，不要求预先存在满秩固定态。因而
+$$
+m(\mathcal F)=\sum_a(\dim\mathcal A_a)^2.
+\tag{166.10}
+$$
+当此和等于三时，只能有三个一维 $\mathcal A_a$。物理 Hilbert 空间本身也只有三维，故每个 $\mathcal B_a$ 都一维、$\mathcal K=0$。于是存在三个正交纯态投影 $|u_i\rangle\langle u_i|$ 被 $\mathcal F$ 固定。这也证明了一个后面要用的事实：仅有 $m(\mathcal F)=3$，已经足以推出某个基下的 Schur 形式，不必先假设（166.3）。
+
+取任意 Kraus 表示 $\mathcal F(A)=\sum_\ell K_\ell A K_\ell^\dagger$。纯态固定条件意味着每个 $K_\ell u_i$ 都在 $\mathbb C u_i$ 中，否则正算子之和会在该直线之外产生非零支撑。写 $K_\ell u_i=a_{\ell i}u_i$，便得到 Schur 系数
+$$
+B_{ij}=\sum_\ell a_{\ell i}\overline{a_{\ell j}}.
+$$
+它是 Gram 矩阵，且保持迹给出 $B_{ii}=1$。这证明式（166.4）除严格模长外的部分，同时证明 unital 性。上述外部固定空间定理只承担这个结构步骤；本节的误差门槛由式（166.6）与真实源极限共同给出。
+
+最后处理周边模式。设 $\lambda_1,\ldots,\lambda_s$ 是全部周边特征值。有限个单位圆相位的同时回归给出整数 $N_j\to\infty$，使每个 $\lambda_a^{N_j}\to1$。这可由环面上的同时有理逼近得到；若回归取值有有限公共周期，则取其不断增大的整数倍。幂有界排除了周边非平凡 Jordan 块，其余广义特征空间在这些幂下趋于零。因此
+$$
+\mathcal F^{N_j}\longrightarrow\mathcal P_{\rm per},
+\tag{166.11}
+$$
+其中 $\mathcal P_{\rm per}$ 为周边空间上的 CPTP 幂等投影，秩为 $p(\mathcal F)$。与同一序列上的 $\mathcal M_{r,0}^{N_j}\to\Delta$ 比较，得到
+$$
+d_{\rm ref}(\mathcal P_{\rm per},\Delta)\le W_r(\mathcal F).
+\tag{166.12}
+$$
+式（166.6）故也给出 $p(\mathcal F)\ne3$ 时的半距下界；在（166.3）下，周边空间恰好三维。固定空间已经占满这三维，故 Schur 系数 $B_{ij}$ 在 $i\ne j$ 时都必须满足 $|B_{ij}|<1$。其幂于是收敛至 $\Delta_U$，再用式（166.8）得到（166.5）。证毕。
+
+**命题 166.3（半距门槛在每个参数处都精确）。** 令 $P_i=|i\rangle\langle i|$、$Q=P_0+P_1$，并定义块去相干通道
+$$
+\mathcal B(A)=QAQ+P_2AP_2.
+\tag{166.13}
+$$
+则 $m(\mathcal B)=p(\mathcal B)=5$，但对全部 $0<r<1$，
+$$
+\boxed{W_r(\mathcal B)=\frac12.}
+\tag{166.14}
+$$
+所以定理166.2中的严格不等号不能改成非严格不等号，也不能将门槛提高。
+
+证明。 $\mathcal B^2=\mathcal B$，其像为一个完整二阶矩阵块及一个标量块，维数为 $2^2+1^2=5$。令 $\operatorname{Ad}_U(A)=UAU^\dagger$。有
+$$
+\mathcal B=\frac12\left(\mathrm{Id}+
+\operatorname{Ad}_{\operatorname{diag}(1,1,-1)}\right),
+\qquad
+\Delta=\frac12\left(\mathcal B+
+\operatorname{Ad}_{\operatorname{diag}(1,-1,1)}\circ\mathcal B\right).
+\tag{166.15}
+$$
+两个通道的 diamond 距离至多为二，故这两个等式给出
+$$
+\|\mathrm{Id}-\mathcal B\|_\diamond\le1,
+\qquad
+\|\Delta-\mathcal B\|_\diamond\le1.
+$$
+第一个范数以 $02$ 两标签的平衡叠加作输入达到半迹距离 $1/2$，第二个范数则由 $01$ 平衡叠加达到同一值，故两个上界都是等式。
+
+对任意 $N\ge1$，写 $s=r^N$、$\theta=N\phi$ 和 $U_\theta=\operatorname{diag}(e^{i\theta},1,1)$。逐矩阵元计算得
+$$
+\mathcal M_{r,\phi}^{N}-\mathcal B
+=(1-s)(\Delta-\mathcal B)
++s\,\operatorname{Ad}_{U_\theta}\circ(\mathrm{Id}-\mathcal B).
+\tag{166.16}
+$$
+右端第一项只改变 $01$ 相干，第二项只含连接 $\{0,1\}$ 与 $\{2\}$ 的相干，并给 $02$ 项正确相位。由 diamond 范数的三角不等式及输出酉共轭不变性，右端范数至多为 $(1-s)+s=1$。结合 $\mathcal B^N=\mathcal B$，得到 $W_r(\mathcal B)\le1/2$。当 $N\to\infty$ 时真实通道趋于 $\Delta$，而 $d_{\rm ref}(\Delta,\mathcal B)=1/2$，故下界也成立。证毕。
+
+**定理 166.4（一阶匹配下，稳定记录维数刻画全视界稳定性）。** 设任意三维 CPTP 族 $\mathcal F_r$ 满足式（166.2），不要求参数连续。以下三项等价：
+
+1. 对所有充分接近一的 $r<1$，$m(\mathcal F_r)=3$。
+2. $\sup_{N\ge0}d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)\to0$。
+3. $W_r(\mathcal F_r)\to L$，其中 $L=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+此外，对任意满足式（166.2）的族，$W_r(\mathcal F_r)$ 在 $r\uparrow1$ 时的全部聚点均属于
+$$
+\boxed{\{L\}\cup[1/2,1].}
+\tag{166.17}
+$$
+故在这类一阶匹配族中，风险不能收敛到严格介于 $L$ 与 $1/2$ 之间的数。
+
+证明。 先由第一项推出第二项。令 $\varepsilon=1-r$，并把通道视为带 Hilbert–Schmidt 内积的九维矩阵空间上的线性算子。有限维范数等价与式（166.2）给出
+$$
+A_r:=\frac{\mathcal F_r-\mathrm{Id}}{\varepsilon}
+\longrightarrow G_*:=
+\lim_{r\uparrow1}\frac{\mathcal T_r-\mathrm{Id}}{\varepsilon}.
+\tag{166.18}
+$$
+在原计算基的矩阵单位 $E_{ij}$ 上，$G_*$ 的三个对角方向为零；$01,10,12,21$ 四个方向的特征值为 $-1$；$02,20$ 两个方向的特征值为 $-(1+k_*)$。所以零特征值半单且恰好三重，与其余谱有正间隔。
+
+在零附近取固定的小圆，不包围其余两个特征值。沿该圆定义的 Riesz 谱投影连续依赖于算子，故 $A_r$ 对应的谱投影趋于 $\Delta$，且充分接近一时秩为三。这里使用标准有限维矩阵函数演算；例如见 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3.1的 Jordan、插值与 Cauchy 积分表述。
+
+由第一项，$\ker A_r$ 本身已经三维，因此这个零附近谱簇只能由三个精确零特征值组成，没有从零分裂出来的缓慢模式。定理166.2证明中由式（166.9）—（166.10）推出的结构说明：每个这样的 $\mathcal F_r$ 都是某个正交基下的 Schur 通道。它在该基的矩阵单位上对角化，因而是 Hilbert–Schmidt 内积下的正规算子，$A_r$ 也正规。其零谱投影于是为该基下的去相干投影 $\mathcal E_r$，满足
+$$
+d_{\rm ref}(\mathcal E_r,\Delta)\longrightarrow0.
+\tag{166.19}
+$$
+虽然此基可以随 $r$ 旋转，投影的收敛仍由（166.18）的谱间隔控制。
+
+其余六个特征值 $\mu$ 只能趋近 $-1$ 或 $-(1+k_*)$，故充分接近一时统一满足 $\operatorname{Re}\mu\le-1/2$ 及 $|\mu|\le C_0$，其中 $C_0$ 与 $r$ 无关。对应的 $\mathcal F_r$ 特征值为 $1+\varepsilon\mu$，于是
+$$
+|1+\varepsilon\mu|^2
+\le1-\varepsilon+C_0^2\varepsilon^2
+\le1-\frac\varepsilon2,
+\qquad
+|1+\varepsilon\mu|\le1-\frac\varepsilon4
+\tag{166.20}
+$$
+对所有充分小的 $\varepsilon$ 成立。正规性消除了 Jordan 多项式因子及随基变坏的条件数，故
+$$
+\|\mathcal F_r^N-\mathcal E_r\|_{2\to2}
+\le e^{-\varepsilon N/4},
+\qquad
+\|\mathcal T_r^N-\Delta\|_{2\to2}
+\le r^N\le e^{-\varepsilon N}.
+\tag{166.21}
+$$
+
+为明确参考系统不带来隐含维数成本，任意纯系统—参考输入的 Schmidt 秩至多为三，可将参考限制到三维。输出所在空间至多九维，故迹范数至多为三倍 Hilbert–Schmidt 范数；输入纯态的 Hilbert–Schmidt 范数为一，而张量恒等映射不改变 $2\to2$ 算子范数。再由输入的凸分解，对任意三维通道 $\mathcal H,\mathcal K$ 都有
+$$
+d_{\rm ref}(\mathcal H,\mathcal K)
+\le\frac32\|\mathcal H-\mathcal K\|_{2\to2}.
+\tag{166.22}
+$$
+所以式（166.21）给出统一于全部参考系统和整数视界的指数尾界。
+
+固定 $T>0$。当 $\varepsilon N\le T$ 时，通道复合的 telescoping 与式（166.2）给出
+$$
+d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)
+\le N\delta_r\le T\frac{\delta_r}{\varepsilon}\longrightarrow0.
+\tag{166.23}
+$$
+当 $\varepsilon N>T$ 时，用（166.19）—（166.22），
+$$
+d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)
+\le d_{\rm ref}(\mathcal E_r,\Delta)
++\frac32\left(e^{-T/4}+e^{-T}\right).
+\tag{166.24}
+$$
+先令 $r\uparrow1$，再令 $T\to\infty$，即得第二项。这个顺序同时控制所有整数 $N$，不把逐个有限缩放区间的收敛冒充无界视界收敛。
+
+三角不等式还给出
+$$
+|W_r(\mathcal F_r)-W_r(\mathcal T_r)|
+\le\sup_{N\ge0}d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N).
+\tag{166.25}
+$$
+定理163.2给出 $W_r(\mathcal T_r)\to L$，故第二项推出第三项。若第三项成立，由 $L<1/2$，最终有 $W_r(\mathcal F_r)<1/2$，定理166.2遂推出第一项。
+
+最后，若沿某个 $r_n\uparrow1$ 有风险收敛到 $w<1/2$，则该序列最终满足 $m(\mathcal F_{r_n})=3$。刚才的谱投影、有限区间及尾估计逐项适用于这条序列，故 $w=L$。风险总在 $[0,1]$ 内，得到式（166.17）。证毕。
+
+**命题 166.5（一阶匹配仍可达到半距分支）。** 令 $V$ 交换计算基的 $0,1$ 标签并固定 $2$，定义 $\mathcal S=\operatorname{Ad}_V\circ\Delta$。对 $1/2<r<1$，令 $\varepsilon=1-r$、$p_r=\varepsilon^2$，并取
+$$
+\mathcal H_r=(1-p_r)\mathcal T_r+p_r\mathcal S.
+\tag{166.26}
+$$
+则 $\mathcal H_r$ 为 CPTP 通道，满足式（166.2），且 $m(\mathcal H_r)=2$；对所有充分接近一的 $r<1$，恰有
+$$
+\boxed{W_r(\mathcal H_r)=\frac12.}
+\tag{166.27}
+$$
+因此式（166.17）的上分支可以在其左端点达到，即使单步通道偏差只有 $O((1-r)^2)$。
+
+证明。 通道凸组合保持 CPTP，且 $d_{\rm ref}(\mathcal H_r,\mathcal T_r)\le p_r=o(\varepsilon)$。在对角子空间上，$\mathcal H_r$ 是随机矩阵
+$$
+K_r=(1-p_r)I+p_r\Pi_{01},
+\tag{166.28}
+$$
+其中 $\Pi_{01}$ 交换前两个坐标。它有两个固定方向与一个特征值 $1-2p_r$；因 $0<p_r<1/4$，后者严格介于零与一。在非对角子空间上，$\mathcal S$ 为零，故 $\mathcal H_r$ 的系数为 $(1-p_r)$ 乘以 $\mathcal T_r$ 的系数，模长都严格小于一。这证明 $m(\mathcal H_r)=2$。
+
+取输入 $P_0$。真实源在全部步骤保持 $P_0$，而预测器的两个前部标签发生对称混合，第 $N$ 步距离为
+$$
+a_N=\frac{1-(1-2p_r)^N}{2}.
+\tag{166.29}
+$$
+其上确界为 $1/2$，故每个所给 $r$ 的风险都至少为 $1/2$。
+
+为给出渐近上界，把任意输入的对角与非对角响应分开。对全部参考系统，$\Delta-K_r^N\circ\Delta$ 的半 diamond 范数恰为 $a_N\le1/2$：对角输入块是正矩阵，每列经典转移的总变差至多为 $a_N$，三角不等式给出上界；输入 $P_0$ 达到它。真实通道的非对角乘子模长为 $r^N$，预测器的非对角乘子模长至多为 $(1-p_r)^Nr^N$，所以其差的 $2\to2$ 范数至多为 $2r^N$。与式（166.22）相同的 Schmidt 秩及范数估计适用于这个线性差映射，得到
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
+\le\frac12-\frac12(1-2p_r)^N+3r^N.
+\tag{166.30}
+$$
+保留（166.30）的负项可以得到精确上界。令 $q_r=1-2\varepsilon^2$，当 $0<\varepsilon\le1/4$ 时，
+$$
+\frac r{q_r}=\frac{1-\varepsilon}{1-2\varepsilon^2}
+\le1-\frac\varepsilon2\le e^{-\varepsilon/2}.
+\tag{166.31}
+$$
+取固定常数 $T_0=2\log6$。若 $\varepsilon N\ge T_0$，则 $3r^N\le q_r^N/2$，式（166.30）不超过 $1/2$。若 $\varepsilon N<T_0$，有限视界 telescoping 给出 $d_{\rm ref}(\mathcal H_r^N,\mathcal T_r^N)\le Np_r$，因此
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
+\le W_r(\mathcal T_r)+T_0\varepsilon<\frac12
+\tag{166.32}
+$$
+对所有充分接近一的 $r$ 成立，最后一个严格号由定理163.2的 $W_r(\mathcal T_r)\to L<1/2$ 保证。两个视界范围一起给出 $W_r(\mathcal H_r)\le1/2$；（166.29）给出相反方向，证明（166.27）。证毕。
+
+命题165.3的稀有重置只保留一个固定方向；命题166.5的稀有交换保留两个。它们的每步变化都可以比 $1-r$ 更小，却改变了无限续接后仍然存在的记录空间。定理166.4指出，在完整通道一阶匹配的前提下，精确保留三个固定方向正是排除这类长时失准的条件。这个条件约束最终保留下来的关系，而不只是漂移速度；它仍属于所给三维、无持久辅助记忆的预测合同。
+
+## 追加锚（本行以下为增补区）
+
+## 167. 长期最优反推观察坐标与临界相干律
+
+**定义 167.1（无局部预设的最优族与双标签接口）。** 沿用定义165.1的源族、风险及渐近最优族 $\mathscr A$。以下只假设三维 CPTP 族 $\mathcal F_r$ 在某个 $(r_0,1)$ 上定义，且
+$$
+W_r(\mathcal F_r)\longrightarrow L,
+\qquad
+L=\frac{\sqrt3}{4}e^{-t_*},\quad
+t_* =\frac\pi{3\sqrt3},\quad
+k_* =\frac{\log2}{t_*}.
+\tag{167.1}
+$$
+不附加单步最优、相对局部误差上界、参数连续性或式（166.2）的一阶匹配条件。仍记 $\varepsilon=1-r$、$E_{ij}=|i\rangle\langle j|$、$P_i=E_{ii}$、$P=P_0+P_2$，并取 $X=E_{02}+E_{20}$、$Y=-iE_{02}+iE_{20}$。令 $J:\mathbb C^2\to\mathbb C^3$ 为将标准基送到 $|0\rangle,|2\rangle$ 的等距映射，定义输入通道
+$$
+\iota_{02}(A)=JAJ^\dagger.
+\tag{167.2}
+$$
+对输入维数为二、输出维数为三的通道，$d_{\rm ref}$ 仍按全部有限参考系统上的半迹距离上确界定义。
+
+**定理 167.2（最优族的弱变化尺度、坐标对齐与生成元约束）。** 在定义167.1的唯一风险假设下，
+$$
+\|\mathcal F_r-\mathrm{Id}\|_\diamond=O(1-r).
+\tag{167.3}
+$$
+对所有充分接近一的 $r$，定理166.2给出 $\mathcal F_r$ 的稳定去相干投影 $\mathcal E_r$。这些投影必满足
+$$
+\boxed{d_{\rm ref}(\mathcal E_r,\Delta)\longrightarrow0.}
+\tag{167.4}
+$$
+定义有界的缩放算子族 $G_r=(\mathcal F_r-\mathrm{Id})/(1-r)$。它的每个算子范数聚点 $G$ 都在原计算基下为 Schur 生成元：存在 $\mu_{ij}$，使
+$$
+G(E_{ii})=0,\qquad
+G(E_{ij})=\mu_{ij}E_{ij}\quad(i\ne j),\qquad
+\operatorname{Re}\mu_{ij}<0,
+\tag{167.5}
+$$
+并且关键系数被唯一确定为
+$$
+\boxed{\mu_{02}=\mu_{20}=-(1+k_*).}
+\tag{167.6}
+$$
+特别地，整个族都满足
+$$
+G_r(P_i)\longrightarrow0\quad(i=0,1,2),\qquad
+G_r(E_{02})\longrightarrow-(1+k_*)E_{02},\qquad
+G_r(E_{20})\longrightarrow-(1+k_*)E_{20}.
+\tag{167.7}
+$$
+本定理不确定另外四个相干方向的生成元系数，也不声称整个 $G_r$ 必有唯一极限。
+
+证明。 先从低全视界风险得到（167.3）。选固定 $w\in(L,1/2)$，则 $r$ 充分接近一时 $W_r(\mathcal F_r)\le w$。令
+$$
+c=\frac{1/2-w}{2}>0,\qquad
+a=2(w+c)=w+\frac12<1,\qquad
+\beta=\arcsin a<\frac\pi2,\qquad
+m=\left\lfloor\frac c\varepsilon\right\rfloor.
+\tag{167.8}
+$$
+充分小的 $\varepsilon$ 下 $m\ge1$。由定理166.2，$\mathcal F_r$ 是某个正交基下的严格 Schur 通道，其非对角系数记为 $b_{ij}(r)$。相位零的真实通道满足
+$$
+\mathcal M_{r,0}^N=r^N\mathrm{Id}+(1-r^N)\Delta,
+\qquad
+d_{\rm ref}(\mathrm{Id},\mathcal M_{r,0}^N)
+\le1-r^N\le N\varepsilon.
+$$
+故对 $1\le N\le m$，
+$$
+d_{\rm ref}(\mathrm{Id},\mathcal F_r^N)\le w+c.
+\tag{167.9}
+$$
+在 $\mathcal F_r$ 自己的 Schur 基中取任意两个标签的平衡叠加，便得到对每个非对角系数 $b=b_{ij}(r)$ 都成立的
+$$
+|1-b^N|\le a\qquad(1\le N\le m).
+\tag{167.10}
+$$
+
+因 $a<1$，$b\ne0$。写 $b=|b|e^{i\theta}$，其中 $\theta$ 为主辐角。圆盘 $\{z:|1-z|\le a\}$ 不含原点，其辐角绝对值至多为 $\beta$，而模长至少为 $1-a$。因此
+$$
+|b|^m\ge1-a,
+\qquad
+|\operatorname{Arg}(b^N)|\le\beta\quad(1\le N\le m).
+\tag{167.11}
+$$
+这些主辐角条件还迫使没有绕圈：$|\theta|\le\beta$；若 $|(N-1)\theta|\le\beta$，则 $|N\theta|\le2\beta<\pi$，此时 $N\theta$ 就是主辐角，再用（167.11）可得 $|N\theta|\le\beta$。归纳给出 $m|\theta|\le\beta$。于是
+$$
+|1-b|\le1-|b|+|\theta|
+\le-\log|b|+|\theta|
+\le\frac{-\log(1-a)+\beta}{m}.
+\tag{167.12}
+$$
+Schur 基的矩阵单位是 Hilbert–Schmidt 正交归一的特征基，故 $\|\mathcal F_r-\mathrm{Id}\|_{2\to2}=\max_{i\ne j}|1-b_{ij}(r)|$。当 $\varepsilon\le c/2$ 时 $m\ge c/(2\varepsilon)$，再由式（166.22）的 diamond 与 Hilbert–Schmidt 算子范数比较，得到（167.3）。这里的 $O(\varepsilon)$ 尺度由全视界风险导出，没有从局部假设取得。
+
+现取任意 $r_n\uparrow1$。上述有界性允许取子列，使 $G_{r_n}\to G$。同时可取各预测器的 Schur 基酉矩阵 $U_n$，再由酉群的紧性取子列，使 $U_n\to U$。在这些基中，$G_{r_n}$ 对三个对角方向为零，对其余方向为有界标量乘法。因此 $G$ 在 $U$ 基中也是 Schur 算子，且是 Hilbert–Schmidt 正规算子。
+
+有界生成元的 Euler 极限给出，对每个固定 $t\ge0$，
+$$
+\mathcal F_{r_n}^{\lfloor t/\varepsilon_n\rfloor}
+\longrightarrow e^{tG},\qquad \varepsilon_n=1-r_n.
+\tag{167.13}
+$$
+例如，$\log(\mathrm{Id}+\varepsilon_nG_{r_n})=\varepsilon_nG_{r_n}+O(\varepsilon_n^2)$ 的一致范数估计给出此式；这与定理165.2使用的有限维矩阵函数论证相同。每个左侧都是 CPTP，故 $e^{tG}$ 也 CPTP；其特征值模长至多为一，因而 $G$ 的谱实部非正。
+
+对固定 $u\in[-\sqrt3,\sqrt3]$，选择实际允许的相位
+$$
+\phi_n=\frac u{\sqrt3}\alpha(r_n).
+$$
+由定理161.6的 $\alpha(r_n)/\varepsilon_n\to\sqrt3$，相同视界上的真实源趋于
+$$
+\mathcal R_{t,u}(A)
+=C(e^{-t},e^{iut})\odot A.
+\tag{167.14}
+$$
+因此对每个固定的 $t\ge0$ 与上述 $u$，原风险假设给出
+$$
+d_{\rm ref}(e^{tG},\mathcal R_{t,u})\le L.
+\tag{167.15}
+$$
+$t=0$ 时两侧通道都是恒等通道。对正 $t$，所用离散视界最终至少为一。式（167.14）由合法通道的极限得到，不另行假设任意连续相位族自动完全正。
+
+先排除 $G$ 的额外零衰减模式。对 CPTP 通道 $\mathcal Q=e^G$ 和整数 $N\ge1$，式（167.15）的 $t=N,u=0$ 给出
+$$
+d_{\rm ref}(\mathcal Q^N,\mathcal M_{e^{-1},0}^N)\le L<\frac12.
+\tag{167.16}
+$$
+定理166.2中式（166.8）与（166.12）的秩论证只用了相位零，故直接适用于（167.16）：$\mathcal Q$ 的固定与周边空间维数均为三。$G$ 在 $U$ 基中的三个对角方向已经为零，若任一非对角特征值的实部为零，就会给 $e^G$ 增加周边维数。因此 $G$ 的其余六个 Schur 系数均有严格负实部，且
+$$
+\ker G=\operatorname{span}\{|u_i\rangle\langle u_i|:i=0,1,2\}.
+\tag{167.17}
+$$
+这里先对每个有限 $t$ 建立（167.15），随后研究这个已得到的半群本身的全部整数幂；没有交换原参数极限与原视界上确界。
+
+在 $t=t_*$ 时，取实际端点 $u=\pm\sqrt3$，并对赤道输入 $\rho_\theta=(P+\cos\theta X+\sin\theta Y)/2$ 应用（167.15）。两端输出的 Bloch 方向相差 $2\pi/3$，模长为 $e^{-t_*}$，距离为 $2L$。式（165.15）的无迹 Hermitian 平行四边形论证表明，在整个三维态空间中，同时距两个端点至多 $L$ 的态只能是其中点。因此
+$$
+e^{t_*G}(P)=P,\qquad
+e^{t_*G}(X)=\lambda_*X,\qquad
+e^{t_*G}(Y)=\lambda_*Y,
+\quad
+\lambda_* =\frac{e^{-t_*}}2=e^{-(1+k_*)t_*}.
+\tag{167.18}
+$$
+由于 $G$ 的非零特征值均有负实部，$e^{t_*G}$ 的固定空间就是 $\ker G$；所以 $P$ 在 $U$ 基中为对角矩阵。$P$ 是秩二正交投影，故 $U$ 基的两个向量位于 $\operatorname{span}\{|0\rangle,|2\rangle\}$，第三个位于 $\mathbb C|1\rangle$。
+
+另一方面，$e^{t_*G}$ 保留 $U$ 基下的全部对角元，且 $\lambda_*\ne1$。式（167.18）于是要求 $X,Y$ 在这个基中的全部对角元为零。对其中任一位于 $P\mathbb C^3$ 的基向量 $v=a|0\rangle+b|2\rangle$，这意味着
+$$
+\langle v,Xv\rangle=2\operatorname{Re}(\overline a b)=0,
+\qquad
+\langle v,Yv\rangle=2\operatorname{Im}(\overline a b)=0.
+$$
+故 $\overline a b=0$，每个这样的基向量只能是 $|0\rangle$ 或 $|2\rangle$ 的相位倍数。$U$ 因此是计算基的置换及逐向量相位变换；$G$ 已在原计算基下为 Schur 算子。这证明（167.5）。
+
+记其 $02$ 系数为 $\mu$。由（167.18），
+$$
+e^{t_*\mu}=\lambda_*,
+\qquad
+\mu=-(1+k_*)+\frac{2\pi i j}{t_*}
+\quad\text{某个 }j\in\mathbb Z.
+\tag{167.19}
+$$
+若 $j\ne0$，取 $t_j=t_*/(2|j|)\le t_*/2$。在输入 $(|0\rangle+|2\rangle)(\langle0|+\langle2|)/2$ 上，$e^{t_jG}$ 的相干系数为负实数 $-e^{-(1+k_*)t_j}$，相位零的真实极限通道系数则为正实数 $e^{-t_j}$。于是
+$$
+d_{\rm ref}(e^{t_jG},\mathcal R_{t_j,0})
+\ge\frac{e^{-t_j}+e^{-(1+k_*)t_j}}2
+\ge\frac{e^{-t_*/2}}2>L.
+\tag{167.20}
+$$
+最后一个严格号等价于 $2e^{t_*/2}>\sqrt3$。这与（167.15）矛盾，故 $j=0$；保 Hermitian 性给出 $20$ 系数为其共轭，得到（167.6）。排除对数分支所用的是实际中间时刻的误差约束，不是预先给定的生成元小范数界。
+
+上述推导适用于任意生成元聚点。若（167.4）不成立，可以选一条投影始终远离 $\Delta$ 的参数序列，再同时提取 $G_{r_n}$ 与 $U_n$ 的收敛子列。但已经证明其极限基只差计算基的置换和相位，因此 $\mathcal E_{r_n}=\operatorname{Ad}_{U_n}\circ\Delta\circ\operatorname{Ad}_{U_n^\dagger}\to\Delta$，矛盾。最后，有界族 $G_r$ 的每个聚点都在（167.7）指定的输入上取同一个值，再用相同的子列反证法，得到整个族的（167.7）。证毕。
+
+**定理 167.3（关键双标签接口的全视界唯一行为）。** 在定义167.1的条件下，即使不假设完整通道一阶匹配，仍有
+$$
+\boxed{
+\sup_{N\ge0}
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+\longrightarrow0.
+}
+\tag{167.21}
+$$
+上确界包含所有整数视界，距离包含输入的任意有限参考系统。它只约束 $02$ 双标签输入接口，不宣称所有三标签输入上都有同样的全视界唯一性。
+
+证明。 由（167.4），可以在 $\mathcal F_r$ 的 Schur 基中选择标签与向量相位，使对应酉矩阵满足 $U_r\to I$。说明这种选择为何不需要参数连续性：若无法把基向量逐一对齐到计算基，则可取一条与所有置换、相位对齐均有正距离的序列。酉群紧性给出极限基，而（167.4）要求该极限基的对角代数恰好等于计算基对角代数，其三个最小投影只能是 $P_0,P_1,P_2$ 的置换，与所取正距离矛盾。对齐后逐列选相位，即得 $U_r\to I$。
+
+令
+$$
+\widetilde{\mathcal F}_r
+=\operatorname{Ad}_{U_r^\dagger}\circ\mathcal F_r\circ\operatorname{Ad}_{U_r},
+\qquad
+\widetilde G_r
+=\operatorname{Ad}_{U_r^\dagger}\circ G_r\circ\operatorname{Ad}_{U_r}.
+\tag{167.22}
+$$
+前者在原计算基下为 Schur 通道。由于 $G_r$ 有界且 $U_r\to I$，$\widetilde G_r-G_r\to0$；恒等算子在共轭下不变，所以严格有 $\widetilde{\mathcal F}_r=\mathrm{Id}+\varepsilon\widetilde G_r$。由（167.7），其 $02$ 系数 $b_r$ 满足
+$$
+b_r=1-(1+k_*)\varepsilon+o(\varepsilon).
+\tag{167.23}
+$$
+这里对齐的是有界生成元，因而不需要 $\|U_r-I\|=o(\varepsilon)$ 一类额外速率假设。
+
+$\mathcal T_r$ 在同一方向的系数为 $s_r=r^{1+k_*}=1-(1+k_*)\varepsilon+O(\varepsilon^2)$。因此
+$$
+|b_r-s_r|=o(\varepsilon),\qquad
+q_r:=\max\{|b_r|,s_r\}\le1-c_0\varepsilon
+\tag{167.24}
+$$
+对某个固定 $c_0>0$ 及全部充分接近一的 $r$ 成立。对任意 $N\ge1$，标量幂的 telescoping 给出
+$$
+|b_r^N-s_r^N|
+\le|b_r-s_r|Nq_r^{N-1}
+\le\frac{|b_r-s_r|}{1-q_r}\longrightarrow0,
+\tag{167.25}
+$$
+最后一个上界与 $N$ 无关，其中用到 $Nq^{N-1}\le\sum_{j=0}^{N-1}q^j\le(1-q)^{-1}$。
+
+对 $02$ 输入，这两个 Schur 通道的幂只在该相干系数上不同。式（161.11）的单边块范数论证给出同样的全参考精确距离
+$$
+d_{\rm ref}\bigl(\widetilde{\mathcal F}_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+=\frac12|b_r^N-s_r^N|.
+\tag{167.26}
+$$
+也可直接由二阶正块矩阵的非对角块迹范数至多为 $1/2$ 得到上界，再由无参考的平衡输入达到等号。$N=0$ 时距离为零。
+
+最后，输入与输出的酉共轭差不随迭代次数累积：
+$$
+\mathcal F_r^N
+=\operatorname{Ad}_{U_r}\circ\widetilde{\mathcal F}_r^N\circ
+\operatorname{Ad}_{U_r^\dagger}.
+$$
+通道前后复合对全参考距离收缩，因此对全部 $N\ge0$，
+$$
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\widetilde{\mathcal F}_r^N\circ\iota_{02}\bigr)
+\le d_{\rm ref}(\operatorname{Ad}_{U_r},\mathrm{Id})
++d_{\rm ref}(\operatorname{Ad}_{U_r^\dagger},\mathrm{Id})
+\longrightarrow0.
+\tag{167.27}
+$$
+此式已包含旋转后输入向第三标签的分量，无需假设原 $02$ 子空间被 $\mathcal F_r$ 精确保持。合并（167.25）—（167.27），得到（167.21）。证毕。
+
+定理167.2—167.3由全视界最优性反推弱变化尺度、稳定坐标及关键输入接口的唯一长期行为。第165节的精确局部代价仍成立；本节移除的是对候选族局部接近程度的预设，并不确定其余相干方向的自由度。这里的坐标对齐始终相对于定义161.1给定的校准基；对整个实验作同一酉共轭，会将校准基、源族、预测器及结论中的投影一同共轭。
+
+## 追加锚（本行以下为增补区）
+
+## 168. 最优预测器的连续自由度与完整动力学的不唯一性
+
+**定义 168.1（保留关键相干的附加去相干族）。** 沿用定义165.1的源族、全参考距离、风险 $W_r$ 及常数 $L,t_*,k_*$，并沿用定理163.2的预测器 $\mathcal T_r$。所有预测器仍是同一三维系统上的一个固定 CPTP 通道，以其幂服务全部视界，没有持久辅助记忆。令
+$$
+Z=\operatorname{diag}(1,-1,1),\qquad
+\mathcal D_u=\frac{1+u}{2}\mathrm{Id}
++\frac{1-u}{2}\operatorname{Ad}_Z\quad(0\le u\le1),
+\qquad
+\mathcal F_{h,r}=\mathcal T_r\circ\mathcal D_{r^h}
+\quad(h\ge0).
+\tag{168.1}
+$$
+$\mathcal D_u$ 是酉通道的凸组合，故 $\mathcal F_{h,r}$ 对全部 $0<r<1$ 都为 CPTP。它保留三个对角元，且相干系数为
+$$
+b_{01}=b_{10}=b_{12}=b_{21}=r^{1+h},\qquad
+b_{02}=b_{20}=r^{1+k_*}.
+\tag{168.2}
+$$
+再定义与 $r$ 无关的正数
+$$
+T_0=\log\frac2L,\qquad
+h_0=\frac{1-e^{-k_*T_0}}{2T_0}>0.
+\tag{168.3}
+$$
+该区间是下面构造的充分范围，不定义全部最优预测器的最大参数范围。
+
+**定理 168.2（连续多个预测器的精确风险夹界）。** 对任意 $0<r<1$ 及任意 $h\in[0,h_0]$，
+$$
+\boxed{
+W_r(\mathcal T_r)
+\le W_r(\mathcal F_{h,r})
+\le\max\{W_r(\mathcal T_r),L\}.
+}
+\tag{168.4}
+$$
+因此，对任意函数 $h:(r_0,1)\to[0,h_0]$，不要求它连续或收敛，均有
+$$
+\lim_{r\uparrow1}W_r(\mathcal F_{h(r),r})=L.
+\tag{168.5}
+$$
+
+证明。 固定视界 $N\ge1$ 及合法实际相位 $\phi$，令
+$$
+x=-N\log r>0,\qquad s=e^{-x}=r^N,\qquad
+d=s(1-e^{-hx}),\qquad
+w=s(e^{iN\phi}-e^{-k_*x}),\quad q=|w|.
+\tag{168.6}
+$$
+$\mathcal M_{r,\phi}^N-\mathcal F_{h,r}^N$ 是 Hermitian Schur 乘子，其乘子矩阵为
+$$
+B=\begin{pmatrix}0&d&w\\d&0&d\\\overline w&d&0\end{pmatrix}.
+\tag{168.7}
+$$
+先在本证明内建立所需的支配估计：若 $2d\le q$，则此差的全参考半迹范数恰为 $q/2$。$q=0$ 时 $d=0$，结论直接成立。否则写 $w=qe^{i\theta}$，取
+$$
+Y=\begin{pmatrix}
+q&de^{i\theta}&0\\
+de^{-i\theta}&q&de^{i\theta}\\
+0&de^{-i\theta}&q
+\end{pmatrix}.
+\tag{168.8}
+$$
+两个矩阵 $Y\pm B$ 都半正定。确实，将 $02$ 块排在前面，该块分别为
+$$
+\begin{pmatrix}q&\pm qe^{i\theta}\\\pm qe^{-i\theta}&q\end{pmatrix},
+$$
+其秩为一；连接标签 $1$ 的列向量分别为
+$$
+v_\pm=d\begin{pmatrix}e^{i\theta}\pm1\\e^{-i\theta}\pm1\end{pmatrix}.
+$$
+它们位于对应秩一块的像中。该块的非零特征值为 $2q$，所以 Schur 补条件为
+$$
+q\ge \frac{\|v_\pm\|^2}{2q}
+=\frac{d^2|e^{i\theta}\pm1|^2}{q},
+$$
+这由 $2d\le q$ 保证。正半定乘子给出完全正 Schur 映射，是第161节所用相关矩阵框架的标准正性事实。
+
+记 $S_B,S_Y$ 为对应 Schur 映射。对任意系统与有限参考的联合密度矩阵 $\rho$，令
+$$
+A=(S_Y\otimes\mathrm{Id})(\rho),\qquad
+H=(S_B\otimes\mathrm{Id})(\rho).
+$$
+因为 $S_Y\pm S_B$ 完全正，故 $A\ge0$ 且 $-A\le H\le A$。$Y$ 的三个对角元均为 $q$，从而 $\operatorname{Tr}A=q$。分别以 $H$ 的正、负谱投影压缩上述两个不等式并取迹，可得
+$$
+\|H\|_1\le\operatorname{Tr}A=q.
+\tag{168.9}
+$$
+另一方面，无参考的平衡 $02$ 输入使输出差只含系数 $w/2$ 及其共轭，迹范数为 $q$。因此，当 $2d\le q$ 时，精确距离为
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)=\frac q2.
+\tag{168.10}
+$$
+
+当 $0<x\le T_0$，函数 $1-e^{-k_*x}$ 的凹性及其在零点的零值给出
+$$
+2(1-e^{-hx})\le2hx\le2h_0x
+=\frac{x}{T_0}(1-e^{-k_*T_0})
+\le1-e^{-k_*x}
+\le|e^{iN\phi}-e^{-k_*x}|.
+\tag{168.11}
+$$
+乘以 $s$ 得到 $2d\le q$。故在此范围，式（168.10）与式（161.11）共同给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+=d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal T_r^N).
+\tag{168.12}
+$$
+当 $x\ge T_0$，将（168.7）拆为三个单边乘子，分别使用式（161.11）的正块矩阵估计及三角不等式，得到
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+\le d+\frac q2
+\le2e^{-x}\le2e^{-T_0}=L.
+\tag{168.13}
+$$
+这两段估计都是实际离散视界上的界，不需要交换参数极限与视界上确界。它们证明（168.4）的上界。对于每个 $N,\phi$，平衡 $02$ 输入也总给出下界 $q/2$，而 $\mathcal T_r$ 的完整距离恰为 $q/2$。取上确界便得到（168.4）的下界。最后由定理163.2的 $W_r(\mathcal T_r)\to L$ 夹逼得到（168.5）；夹界与所选 $h$ 无关，所以也允许任意参数函数 $h(r)$。证毕。
+
+**定理 168.3（接近弱记录极限时的有限参数风险相等）。** 存在 $r_1<1$，使对所有 $r\in(r_1,1)$ 及所有 $h\in[0,h_0]$，
+$$
+\boxed{W_r(\mathcal F_{h,r})=W_r(\mathcal T_r)>L.}
+\tag{168.14}
+$$
+此式是这组候选预测器之间的精确比较，不断言它们达到有限 $r$ 的无约束 minimax 值 $\mathcal J(r)$。
+
+证明。 令 $a=-\log r\downarrow0$。式（161.20）等价于
+$$
+\cos\alpha(r)=\frac{3e^a-e^{3a}}2
+=1-\frac32a^2-2a^3+O(a^4).
+$$
+结合 $\alpha(r)/a\to\sqrt3$ 与余弦的 Taylor 展开，得到
+$$
+\frac{\alpha(r)}a=\sqrt3+\frac2{\sqrt3}a+O(a^2).
+\tag{168.15}
+$$
+在 $(t_*,\sqrt3)$ 邻域定义光滑函数
+$$
+f(x,b)=\frac{e^{-x}}2
+\sqrt{1+e^{-2k_*x}-2e^{-k_*x}\cos(bx)}.
+\tag{168.16}
+$$
+它给出 $\mathcal T_r$ 在实际端点相位 $\phi=\alpha(r)$、缩放视界 $x=Na$ 上的精确距离。由 $k_*t_* =\log2$、$\sqrt3t_* =\pi/3$，直接求导得
+$$
+f(t_*,\sqrt3)=L,\qquad
+\partial_x f(t_*,\sqrt3)=0,\qquad
+\partial_b f(t_*,\sqrt3)=\frac{t_*e^{-t_*}}4>0.
+\tag{168.17}
+$$
+取最接近 $t_*/a$ 的正整数 $N_a$，则 $N_aa=t_*+O(a)$。二元 Taylor 展开、（168.15）及（168.17）给出
+$$
+f\left(N_aa,\frac{\alpha(r)}a\right)
+=L+\frac{t_*e^{-t_*}}{2\sqrt3}a+O(a^2)>L
+\tag{168.18}
+$$
+对所有充分小的正 $a$ 成立。此时 $N_a\alpha(r)$ 接近 $\pi/3$，所用端点始终是原合同允许的实际相位。故 $W_r(\mathcal T_r)>L$；代入（168.4），得到对全部 $h\in[0,h_0]$ 同时成立的（168.14）。证毕。
+
+**定理 168.4（相同最优风险不确定完整动力学）。** 对任意不同的 $h_1,h_2\in[0,h_0]$、任意 $0<r<1$ 和整数 $N\ge1$，
+$$
+d_{\rm ref}(\mathcal F_{h_1,r}^N,\mathcal F_{h_2,r}^N)
+=\frac12\left|r^{(1+h_1)N}-r^{(1+h_2)N}\right|.
+\tag{168.19}
+$$
+特别地，虽两族均满足 $W_r\to L$，仍有
+$$
+\liminf_{r\uparrow1}\sup_{N\ge1}
+d_{\rm ref}(\mathcal F_{h_1,r}^N,\mathcal F_{h_2,r}^N)
+\ge\frac12\left|e^{-(1+h_1)}-e^{-(1+h_2)}\right|>0.
+\tag{168.20}
+$$
+还存在渐近最优族，其缩放生成元在 $r\uparrow1$ 时不收敛。
+
+证明。 令 $v=r^{(1+h_1)N}-r^{(1+h_2)N}$。两个通道幂的差只在 $01,10,12,21$ 四个方向乘以 $v$，故严格等于
+$$
+\mathcal F_{h_1,r}^N-\mathcal F_{h_2,r}^N
+=\frac v2(\mathrm{Id}-\operatorname{Ad}_Z).
+\tag{168.21}
+$$
+任意联合密度矩阵被两个酉通道送出的态，其差的迹范数至多为二，所以全参考半距离至多为 $|v|/2$。无参考的平衡 $01$ 输入及其 $Z$ 共轭正交，达到该上界，证明（168.19）。取 $N=\lfloor(1-r)^{-1}\rfloor$，即得（168.20）。差异可在固定校准接口上直接读出，不是对同一通道重命名基向量。
+
+最后取
+$$
+h(r)=\frac{h_0}{2}\left(1+\sin\frac1{1-r}\right),\qquad
+\mathcal F_r=\mathcal F_{h(r),r}.
+\tag{168.22}
+$$
+由（168.5），此族仍渐近最优。记 $G_r=(\mathcal F_r-\mathrm{Id})/(1-r)$；对有界的 $h(r)$，一致 Taylor 展开给出
+$$
+G_r(E_{01})=\bigl(-(1+h(r))+O(1-r)\bigr)E_{01}.
+\tag{168.23}
+$$
+选择 $1/(1-r)=\pi/2+2\pi n$ 与 $1/(1-r)=3\pi/2+2\pi n$ 两条趋于无穷的序列，分别得到系数极限 $-(1+h_0)$ 与 $-1$。故整个生成元族不收敛。其 $02$ 系数和稳定去相干投影仍满足第167节的强制结论。证毕。
+
+第167节确定的关键接口与本节构造的连续自由度可同时存在：全视界最优值限定若干关系，却不唯一规定全部动力学。本节给出的自由度只是一段共同改变 $01,12$ 衰减率的显式充分区间，不是所有最优生成元的分类，也不把风险相等解释成各个输入上的预测等价。
+
+## 追加锚（本行以下为增补区）
+
+## 169. 一个持久经典比特消除局部最优的长期代价
+
+**定义 169.1（同一个联合通道的有限记忆预测合同）。** 沿用定义161.1的三标签源 $\mathcal M_{r,\phi}$、固定未知相位 $|\phi|\le\alpha(r)$、逐步新鲜的真实记录单元，以及定义161.2的全参考距离。取 $1/\sqrt3<r<1$，故 $0<\alpha(r)<\pi/2$。预测者现在允许选一个有限维辅助空间 $K$、其密度矩阵 $\sigma_r$，以及作用于 $B(\mathbb C^3\otimes K)$ 的同一个 CPTP 通道 $\Lambda_r$。它们可以依赖已知的 $r$，但不依赖未知的 $\phi$、视界 $N$ 或系统与参考的输入态。记忆只在开始时初始化，初态与系统及参考独立；定义
+$$
+\mathcal P_{r,N}(A)=\operatorname{Tr}_K
+\Lambda_r^N(A\otimes\sigma_r),\qquad N\ge0,
+\tag{169.1}
+$$
+以及
+$$
+W_r^{\rm mem}(\Lambda_r,\sigma_r)
+=\sup_{N\ge1}\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}).
+\tag{169.2}
+$$
+系统与记忆之间没有额外的随步数改变的控制。这里仍只比较终端系统通道，不访问真实源的旧记录，也不取得额外相位校准。联合通道及记忆初始化的框架是标准有限记忆通道方法，参见 Dennis Kretschmann、Reinhard F. Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III A；该处主要讨论消息串的串接，本定义明确采用同一系统的重复演化。
+
+令 $H(r)=\sup_{N\ge1}\mathcal R_N(r)$。分别以 $J_{\rm mem}(r)$ 与 $J_{{\rm mem},1}(r)$ 表示（169.2）在全部有限维上述合同上的下确界，以及进一步要求
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})
+=\mathcal R_1(r)
+\tag{169.3}
+$$
+时的下确界。维数一恰好退化为定义163.1的通道幂合同；一个被持续保留的随机种子同样属于记忆，不能计为维数一。
+
+**定理 169.2（端点比特的合法实现与精确风险）。** 取 $K=\mathbb C^2$，基向量标为 $s=\pm$，并取 $\sigma=(|+\rangle\langle+|+|-\rangle\langle-|)/2$。令
+$$
+\Lambda_r(X)=\sum_{s=\pm}
+\mathcal M_{r,s\alpha(r)}
+\bigl((I\otimes\langle s|)X(I\otimes|s\rangle)\bigr)
+\otimes|s\rangle\langle s|.
+\tag{169.4}
+$$
+则 $\Lambda_r$ 为 CPTP，其记忆始终可保持为经典比特，且
+$$
+\mathcal P_{r,N}^{\rm bit}
+=\frac12\bigl(\mathcal M_{r,\alpha(r)}^N
++\mathcal M_{r,-\alpha(r)}^N\bigr).
+\tag{169.5}
+$$
+它精确满足单步最优条件（169.3）。若
+$$
+m(x)=
+\begin{cases}
+\sin x,&0\le x\le\pi/2,\\
+1-\cos x,&\pi/2\le x\le\pi,\\
+1+|\cos x|,&x\ge\pi,
+\end{cases}
+\tag{169.6}
+$$
+则每个整数视界的精确风险为
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\rm bit})
+=\frac{r^N}{2}m(N\alpha(r)).
+\tag{169.7}
+$$
+
+证明。 为每个合法端点通道选一组 Kraus 算符 $K_{s,j}$，则（169.4）的 Kraus 算符为 $K_{s,j}\otimes|s\rangle\langle s|$，且其伴随乘积之和为 $I\otimes I_K$。这也在含记忆非对角块的任意联合输入上证明完全正与保迹，未将通道只定义在经典输入上。对初始经典比特逐次应用（169.4），标签 $s$ 不变，条件系统演化为 $\mathcal M_{r,s\alpha}^N$，故得到（169.5）。辅助比特与真实相位独立，它是预测器自行选取的内部标签，不是对真实相位的读取。
+
+第162节已经给出固定端点混合的相干因子 $\cos(N\alpha)$，并区分它与每步重抽后的 $(\cos\alpha)^N$；此处将该既有构造放入（169.1）的联合 CPTP 合同。由（169.5），预测器的 $01,12$ 系数为 $r^N$，$02$ 系数为 $r^N\cos(N\alpha)$。因此式（161.11）给出包含任意参考系统的精确距离
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\rm bit})
+=\frac{r^N}{2}|e^{iN\phi}-\cos(N\alpha)|.
+\tag{169.8}
+$$
+令 $x=N\alpha$。当 $x\le\pi/2$，实中心 $\cos x\ge0$，允许弧上最远点为 $e^{\pm ix}$，距离为 $\sin x$。当 $\pi/2\le x\le\pi$，中心非正，弧包含最远点 $1$，距离为 $1-\cos x$。当 $x\ge\pi$，允许弧覆盖单位圆，最大距离为 $1+|\cos x|$。这证明（169.6）—（169.7）。$N=1$ 时，预测器恰为定义162.1的 $\mathcal F_*$，所以满足（169.3）。证毕。
+
+**定理 169.3（弱记录邻域中的精确有限记忆 minimax 值）。** 存在 $r_2<1$，使对全部 $r\in(r_2,1)$，一个经典比特同时达到
+$$
+\boxed{
+J_{\rm mem}(r)=J_{{\rm mem},1}(r)
+=W_r^{\rm mem}(\Lambda_r,\sigma)=H(r).
+}
+\tag{169.9}
+$$
+因此它单步无超额风险，且全视界风险趋于
+$$
+\boxed{L=\frac{\sqrt3}{4}e^{-t_*},\qquad
+t_* =\frac\pi{3\sqrt3}.}
+\tag{169.10}
+$$
+式（169.9）是充分接近一时的有限参数精确等式，不指定一个未经求出的数值阈值 $r_2$。
+
+证明。 每个 $\mathcal P_{r,N}$ 都是合法 CPTP 通道，故由逐视界最优值的定义，对任意记忆维数、任意 $\Lambda_r,\sigma_r$ 均有
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\ge\mathcal R_N(r).
+\tag{169.11}
+$$
+取上确界和下确界便得 $J_{{\rm mem},1}(r)\ge J_{\rm mem}(r)\ge H(r)$。这个下界也允许记忆维数随 $r$ 改变，不需要紧性或先假设下确界可达。
+
+考察比特构造。令 $\varepsilon=1-r$。函数 $m$ 连续、有界且全局 Lipschitz，故与定理161.6相同的有限区间一致极限给出
+$$
+\frac{r^{\lfloor t/\varepsilon\rfloor}}2
+m(\lfloor t/\varepsilon\rfloor\alpha(r))
+\longrightarrow
+b(t):=\frac{e^{-t}}2m(\sqrt3t).
+\tag{169.12}
+$$
+同时，对全部离散视界都有统一尾界
+$$
+0\le\frac{r^N}{2}m(N\alpha(r))\le e^{-\varepsilon N}.
+\tag{169.13}
+$$
+在第一段 $0\le t\le\pi/(2\sqrt3)$，$b(t)=e^{-t}\sin(\sqrt3t)/2$，其唯一最大点是 $t_*$，值为 $L$。在第二段 $\pi/(2\sqrt3)\le t\le\pi/\sqrt3$，求导可知最大点为 $2t_*$，最大值为
+$$
+B_2=\frac34e^{-2t_*}<L.
+\tag{169.14}
+$$
+最后一段满足
+$$
+b(t)\le e^{-t}\le B_3:=e^{-\pi/\sqrt3}<L.
+\tag{169.15}
+$$
+两严格号分别等价于 $t_*>\log\sqrt3$ 和 $2t_*>\log(4/\sqrt3)$。例如 $\sqrt3<7/4$、$\pi>3$ 给出 $t_*>4/7$；由指数级数 $e^{11/10}>3$ 得 $\log\sqrt3<11/20<4/7$。又 $4/\sqrt3<3$，所以 $\log(4/\sqrt3)<\log3<11/10<8/7<2t_*$。因此两处都有严格余量。有限区间一致收敛及（169.13）已证明比特构造的全视界风险趋于 $L$。
+
+为得到有限 $r$ 的精确等式，还需将晚视界与早视界分开。记 $B=\max\{B_2,B_3\}<L$。有
+$$
+\limsup_{r\uparrow1}
+\sup_{N\alpha(r)\ge\pi/2}
+\frac{r^N}{2}m(N\alpha(r))\le B.
+\tag{169.16}
+$$
+严格说明移动分界的处理：先用（169.13）排除 $\varepsilon N$ 任意大的尾；若（169.16）失败，可选晚视界序列 $N_j$，使 $\varepsilon_jN_j$ 在有界区间内收敛到 $t$。由 $\alpha(r_j)/\varepsilon_j\to\sqrt3$，晚视界条件给出 $\sqrt3t\ge\pi/2$；一致收敛使风险趋于 $b(t)\le B$，矛盾。
+
+另一方面，取 $N_r=\lfloor t_*/\varepsilon\rfloor$，它最终属于早视界 $N_r\alpha(r)<\pi/2$，且风险趋于 $L$。选任意 $\eta\in(0,(L-B)/3)$；充分接近一时，晚视界全部风险至多 $B+\eta$，上述早视界风险至少 $L-\eta>B+\eta$。所以比特构造的全视界上确界只能在早视界取得。由（169.7）和定理161.3，每个早视界的风险精确等于 $\mathcal R_N(r)$，于是
+$$
+W_r^{\rm mem}(\Lambda_r,\sigma)
+=\sup_{N\alpha(r)<\pi/2}\mathcal R_N(r)\le H(r).
+$$
+结合（169.11）的反向不等式，得到（169.9）。比特构造已满足单步限制，故两个下确界同时由它达到。证毕。
+
+**定理 169.4（同时局部与长期最优的最小持久维数）。** 在定义169.1的齐次联合通道合同内，对所有充分接近一的 $r$，要同时满足单步最优条件（169.3）及全视界风险等于 $H(r)$，最小记忆 Hilbert 空间维数恰为二；一个经典比特即可达到。若只要求全视界风险趋于 $L$ 并保持精确单步最优，维数一下界仍成立，甚至不允许维数一在某条 $r\uparrow1$ 的子序列上出现。
+
+证明。 维数二的上界由定理169.3给出。维数一时，$\mathcal P_{r,N}=\mathcal F_r^N$。一旦满足单步最优，定理162.2对全部 CPTP 预测器给出
+$$
+W_r^{\rm mem}\ge\sup_{N\ge1}\mathcal E_N(r).
+\tag{169.17}
+$$
+由定理162.4与定理161.6，两边所需比较量的极限为
+$$
+\sup_N\mathcal E_N(r)\longrightarrow
+G_*:=\sqrt{\frac37}\exp\!\left[-\frac2{\sqrt3}
+\arctan\frac{\sqrt3}{2}\right]>L,
+\qquad H(r)\longrightarrow L.
+\tag{169.18}
+$$
+严格极限差使（169.17）在充分接近一时排除 $W_r^{\rm mem}=H(r)$，也排除沿任意趋于一的维数一子序列有风险趋于 $L$。这对量子记忆也成立，因为维数一只有平凡状态空间。必要性依赖同一联合通道、一次初始化及所给局部要求；未计入的外部时钟或持续随机种子会改变合同。证毕。
+
+**定理 169.5（终端最优不保证干预历史接近）。** 固定任意 $1/\sqrt3<r<1$，令 $q=r\sin\alpha(r)>0$。若扩展实验合同，允许每一步重新制备系统、测量并保存经典结果，则存在不访问预测器记忆的测试，使实际相位零的源与（169.4）的比特预测器，在 $N$ 步测量历史上的总变差距离至少为
+$$
+\max\left\{0,1-\frac8{Nq^2}\right\}.
+\tag{169.19}
+$$
+因此这种干预实验的全视界可区分度上确界为一，包括（169.9）成立的参数范围。
+
+证明。 每步输入 $|+_{02}\rangle=(|0\rangle+|2\rangle)/\sqrt2$，在通道作用后测量 $02$ 子空间的 Pauli $Y$，记录 $Y_j\in\{-1,1\}$，然后重新制备相同输入。两个模型都保持该子空间，所以测量可扩展到全三维空间，而第三个标签的结果概率始终为零。相位零的真实源每步给出均值零的结果；逐步新鲜的环境及重新制备使这些结果独立。对比特预测器，条件于起初保留的标签 $s$，每步结果独立，均值为 $q$ 或 $-q$，符号取决于矩阵元约定。测试者不读取标签，其历史分布是这两种独立样本律的等权混合。
+
+令 $\overline Y_N=N^{-1}\sum_{j=1}^NY_j$，考虑事件 $A_N=\{|\overline Y_N|<q/2\}$。每种条件样本律的单次方差至多为一。由 Chebyshev 不等式，
+$$
+\Pr_{\phi=0}(A_N)\ge1-\frac4{Nq^2},\qquad
+\Pr_{\rm bit}(A_N)\le\frac4{Nq^2}.
+\tag{169.20}
+$$
+第二式分别在均值 $q$ 与 $-q$ 的条件律下成立，再作等权平均。总变差距离至少为任何一个事件的概率差，故得到（169.19）。取 $N\to\infty$，并用总变差距离至多为一，证明上确界等于一。这个测试改变了定义169.1的无中间干预条件，所以与终端风险的最优性不矛盾。证毕。
+
+第165节的精确局部代价在无持久记忆的合同内仍然成立。这里通过保留一个预测器自己的经典标签改变了可用续接关系，在同一终端风险目标下消除了该代价；没有从真实相位取得额外信息。第162节所引静态随机参数文献承担固定混合与逐步重抽的标准区别，本节的新增结论是这一校准源上的有限参数 minimax 达到性、同时局部与长期最优所需的精确记忆维数，以及相应终端保证在干预历史上的明确边界。
+
+## 追加锚（本行以下为增补区）
+
+## 170. 终端趋同与干预历史的统一预测障碍
+
+**定义 170.1（允许中间测试的相位盲预测）。** 沿用定义161.1的源族，取 $1/\sqrt3<r<1$，每个实际 $\phi\in[-\alpha(r),\alpha(r)]$ 在全部使用中保持固定，环境记录单元逐步新鲜。记 $\mathbf M_{r,\phi}^{(N)}$ 为这一源在 $N$ 个系统端口上的过程。现在允许测试者在这些端口之间制备、测量和重置系统，保存经典结果；测试者不访问源的环境或预测器的私有记忆。
+
+过程距离直接采用[上下文几何卷定义11.16](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)的共同 tester 接口：令 $\mathfrak T_N$ 包含所有上述合法顺序测试，$p_T^{\mathbf P}$ 是过程 $\mathbf P$ 在测试 $T$ 下的有限输出律，定义
+$$
+d_{\mathfrak T_N}(\mathbf P,\mathbf Q)
+=\sup_{T\in\mathfrak T_N}
+\operatorname{TV}(p_T^{\mathbf P},p_T^{\mathbf Q}).
+\tag{170.1}
+$$
+其中 $\operatorname{TV}(p,q)=\sup_A|p(A)-q(A)|$。每个预测过程 $\mathbf P$ 可有任意有限私有记忆、相关输出和随端口变化的内部通道，并可依赖已知的 $r,N$；但其选择、初始记忆和测试前的资料均与实际 $\phi$ 无关，也不接收另一个真实源的实验结果。所有输入输出端口均与源匹配。定义
+$$
+\mathcal C_N(r)=\inf_{\mathbf P}
+\sup_{|\phi|\le\alpha(r)}
+d_{\mathfrak T_N}(\mathbf M_{r,\phi}^{(N)},\mathbf P).
+\tag{170.2}
+$$
+有限视界中，任意确定性量子梳也可纳入此预测域。tester 的标准概率解释见 Chiribella、D'Ariano、Perinotti，*Theoretical framework for quantum networks*，[arXiv:0904.4483](https://arxiv.org/pdf/0904.4483)，定义11、定理11；本节只用下面显式实现的制备与测量测试，不从抽象表示额外取得控制权限。
+
+**定理 170.2（任意预测记忆都满足的有限视界下界）。** 取整数 $1\le k\le N$，记
+$$
+m=\left\lfloor\frac Nk\right\rfloor,\qquad
+\beta=\min\{k\alpha(r),\pi/4\},\qquad
+q_k=r^k\sin\beta>0.
+\tag{170.3}
+$$
+则对每个整数 $M\ge2$，
+$$
+\boxed{
+\mathcal C_N(r)\ge
+\max\left\{0,1-\frac1M-
+\frac{(M-1)^2}{m q_k^2}\right\}.
+}
+\tag{170.4}
+$$
+该下界不限制预测器的私有记忆维数，也不要求它的输出独立。特别地，对每个固定的上述 $r$，
+$$
+\lim_{N\to\infty}\mathcal C_N(r)=1.
+\tag{170.5}
+$$
+
+证明。 令 $Y=-iE_{02}+iE_{20}$、$P_1=E_{11}$。采用以下固定测试：每段开始制备 $|+_{02}\rangle=(|0\rangle+|2\rangle)/\sqrt2$，连续使用过程 $k$ 次，段内只作恒等连接；段末测量二值可观测量 $Y+P_1$，保存结果，再重新制备下一段的输入。$Y+P_1$ 的谱为 $\{-1,1\}$，所以即使预测器输出泄漏到第三个标签，测量仍完整合法。制备与重置是 CPTP 通道，测量的两个谱投影给归一化仪器；有限次复合及经典记录保存因此构成实际可实现的共同 tester。共作 $m$ 段，剩余不足 $k$ 次使用可忽略其输出，不修改已保存的记录。
+
+对实际源，输入和输出始终支撑于 $02$ 子空间，每段的相干系数为 $r^ke^{ik\phi}$。段末结果 $Y_j\in\{-1,1\}$ 的均值为
+$$
+\mu(\phi)=-r^k\sin(k\phi).
+\tag{170.6}
+$$
+在固定实际 $\phi$ 后，环境逐步新鲜，段首系统又被重新制备，所以这 $m$ 个结果独立同分布。相位没有在段间重新抽取。将合法相位限制到 $[-\beta/k,\beta/k]$，均值连续且单调地扫过 $[-q_k,q_k]$。
+
+在该均值区间取 $M$ 个等距点
+$$
+\mu_j=-q_k+\frac{2q_k(j-1)}{M-1},\qquad
+\phi_j=-\frac1k\arcsin\frac{\mu_j}{r^k},\qquad
+1\le j\le M.
+\tag{170.7}
+$$
+因为 $\beta\le\pi/4$，有 $|\phi_j|\le\beta/k\le\alpha(r)$，故它们都是同一源合同中的实际允许相位。记 $\overline Y_m=m^{-1}\sum_{i=1}^mY_i$，并定义历史事件
+$$
+A_j=\left\{
+|\overline Y_m-\mu_j|<\frac{q_k}{M-1}
+\right\}.
+\tag{170.8}
+$$
+这些开区间只可能在未包含的端点相接，故事件两两不交。
+
+任取一个预测过程 $\mathbf P$。上述共同测试固定后，它产生某个历史律 $Q$；该律可以相关，但因测试及预测器均不知道实际相位，它对所有 $\phi_j$ 是同一个 $Q$。于是 $\sum_jQ(A_j)\le1$，至少存在一个 $j$ 使 $Q(A_j)\le1/M$。在实际源 $\phi_j$ 下，样本均值的方差至多为 $1/m$，故由 Chebyshev 不等式，
+$$
+\Pr_{\phi_j}(A_j)
+\ge1-\frac{(M-1)^2}{m q_k^2}.
+\tag{170.9}
+$$
+将该事件的概率差代入总变差距离定义，再对实际相位取上确界，得到（170.4）。$j$ 的选择可依赖候选预测律，但测试本身并未依赖实际相位；这恰是先选预测器、再取最坏实际来源的量词。最后对全部预测器取下确界不会改变这个统一下界。
+
+对固定 $r$ 取 $k=1$，则 $q_1>0$ 不依赖 $N$。再取例如 $M_N=\max\{2,\lfloor(Nq_1^2)^{1/3}\rfloor\}$，（170.4）的两个损失项都趋于零。过程距离至多为一，因此得到（170.5）。这里的样本集中与互斥事件计数是标准概率工具；它们作用于同一个实际相位产生的共同历史，而非分别选择不可联合实现的最优读数。证毕。
+
+**定理 170.3（弱记录下同一使用预算的相反结论）。** 令 $r\uparrow1$、$\varepsilon=1-r$，并取任意整数视界函数 $N(r)$，满足
+$$
+\varepsilon N(r)\longrightarrow\infty.
+\tag{170.10}
+$$
+则即使预测过程及其记忆维数都随 $r,N(r)$ 改变，仍有
+$$
+\boxed{\mathcal C_{N(r)}(r)\longrightarrow1.}
+\tag{170.11}
+$$
+另一方面，对定理169.2的同一个比特预测器，在相同使用次数下却有
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})\longrightarrow0.
+}
+\tag{170.12}
+$$
+因此这个比特预测器的终端误差趋零，而其包含允许干预与历史的最坏过程距离趋于一。
+
+证明。 取固定
+$$
+t_0=\frac\pi{6\sqrt3},\qquad
+k_r=\left\lfloor\frac{t_0}{\varepsilon}\right\rfloor.
+\tag{170.13}
+$$
+充分接近一时 $k_r\ge1$，且由定理161.6，
+$$
+\varepsilon k_r\to t_0,\qquad
+k_r\alpha(r)\to\pi/6<\pi/4,\qquad
+q_{k_r}=r^{k_r}\sin(k_r\alpha(r))
+\longrightarrow\frac12e^{-t_0}>0.
+\tag{170.14}
+$$
+式（170.10）还给出 $k_r\le N(r)$ 及
+$$
+m_r=\left\lfloor\frac{N(r)}{k_r}\right\rfloor\longrightarrow\infty.
+\tag{170.15}
+$$
+在（170.4）中取 $k=k_r$ 和 $M_r=\max\{2,\lfloor(m_rq_{k_r}^2)^{1/3}\rfloor\}$，即可使下界趋于一。它对所有预测过程统一成立，因此不需要交换预测器下确界和参数极限，直接得到（170.11）。
+
+对终端读数，式（169.7）的 $m(x)\le2$ 给出
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})
+\le r^{N(r)}\le e^{-\varepsilon N(r)}\longrightarrow0.
+\tag{170.16}
+$$
+该界包含任意有限惰性参考系统。比特预测器的过程也是（170.2）中允许的候选之一，所以其干预距离至少为 $\mathcal C_{N(r)}(r)$、至多为一，得到最后的陈述。终端接线与保存分段测量历史的接线使用相同次数的源；新增资源是声明允许的制备、测量和记录，不是源相位信息。证毕。
+
+式（170.14）中，一段内部的相干合成先把未知相位转成非消失的可测均值，再由多段历史提供多个相互排斥的来源证据。若每次使用后立刻重置，实际单次均值幅度仅为 $r\sin\alpha(r)\sim\sqrt3\varepsilon$，同一集中估计需要 $N\varepsilon^2\to\infty$；分段构造把充分条件改为（170.10），但不声称已求出所有测试的最优有限样本速率。结论依赖本节的允许控制和最坏完整历史损失，不否定从实际数据学习相位的任务，也不把经典样本的可识别性当成量子性的普遍判据。
+
+## 追加锚（本行以下为增补区）
+
+## 171. 终端最优预测的遗忘尺度与有限时刻擦除
+
+**定义 171.1（可遗忘记忆的终端合同）。** 沿用定义169.1的时间齐次联合 CPTP 通道合同、一次初始化及终端距离 $d_{\rm ref}=\frac12\|\cdot\|_\diamond$。真实相位 $\phi$ 在一条运行中固定，真实环境逐步新鲜；预测器的初始私有记忆与真实相位无关。记
+$$
+\varepsilon=1-r,\qquad \alpha=\alpha(r),\qquad
+H(r)=\sup_{N\ge1}\mathcal R_N(r),\qquad
+t_* =\frac\pi{3\sqrt3},\qquad L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{171.1}
+$$
+以下取 $1/\sqrt3<r<1$。记忆的遗忘只指丢弃系统输出之后，最终私有记忆对其初始化的依赖消失；它不要求已经输出的系统或已保存的实验记录丢失初始化信息。对本节的自主记忆更新，还将证明包含任意有限惰性参考 $R$ 的具体迹范数界。有关标准有限记忆通道与遗忘性的定义，见 Kretschmann、Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C 的全局经典开关，以及§V定义3、命题9。该文§VI B式(79)还给出有限步后精确消除初始记忆依赖的严格遗忘定义。该文丢弃消息输出后的记忆遗忘与本节所用方向一致；下面另行计算同一系统反复使用时的约化通道，不把不同接线方式等同。
+
+取 $0<p\le1/2$。在记忆基 $s=\pm1$ 上，令 $T_p(s,s)=1-p$、$T_p(s,-s)=p$，并定义
+$$
+\Lambda_{r,p}^{\rm mix}(X)=
+\sum_{s,u=\pm1}T_p(s,u)
+\mathcal M_{r,s\alpha}(X_{ss})\otimes|u\rangle\langle u|,
+\qquad X_{ss}=(I\otimes\langle s|)X(I\otimes|s\rangle).
+\tag{171.2}
+$$
+初始记忆为 $\sigma=I_2/2$。也就是每一步先使用当前标签的端点通道，再以概率 $p$ 翻转标签；标签不是每步重新读取的真实源参数。以 $\mathcal P_{r,N}^{\rm mix}$ 表示其终端系统通道，$W_r^{\rm mix}$ 表示定义169.1的全视界风险。$p$ 随 $r$ 变化时均指这同一个构造族。
+
+**定理 171.2（自主混合比特的全视界风险与遗忘界）。** 式（171.2）给出合法 CPTP 通道，且对每个 $p$ 精确满足单步最优条件（169.3）。设 $S_1$ 为均匀符号，$S_{j+1}$ 以概率 $p$ 从 $S_j$ 翻转，记
+$$
+z_{N,p}=\mathbb E\exp\!\left(i\alpha\sum_{j=1}^N S_j\right)
+=\mathbb E\cos\!\left(\alpha\sum_{j=1}^N S_j\right).
+\tag{171.3}
+$$
+则 $\mathcal P_{r,N}^{\rm mix}$ 的 $01,12$ 系数为 $r^N$，$02$ 系数为 $r^Nz_{N,p}$，并且对第169节的持续比特有
+$$
+d_{\rm ref}(\mathcal P_{r,N}^{\rm mix},\mathcal P_{r,N}^{\rm bit})
+\le r^N\bigl[1-(1-p)^{N-1}\bigr]
+\le r^N(N-1)p.
+\tag{171.4}
+$$
+因而对全部充分接近一的 $r$、全部 $0<p\le1/2$，
+$$
+\boxed{0<W_r^{\rm mix}-H(r)\le\frac p{1-r}.}
+\tag{171.5}
+$$
+同时，对任意初始联合密度 $\tau_{SKR}$，$N\ge1$ 次无中间干预的运行后，有
+$$
+\frac12\left\|\tau_{KR}^{(N)}-\sigma\otimes\tau_R\right\|_1
+\le\frac{(1-2p)^N}{2}.
+\tag{171.6}
+$$
+特别地，每个固定 $r,p>0$ 都有指数记忆遗忘；该结论没有声称遗忘速率对 $r\uparrow1$ 一致。
+
+证明。 选取端点通道的 Kraus 算符 $K_{s,a}$，则（171.2）的 Kraus 算符为 $\sqrt{T_p(s,u)}K_{s,a}\otimes|u\rangle\langle s|$。其伴随乘积之和为恒等算符，故在任意含记忆相干的联合输入上都是 CPTP。均匀符号为 $T_p$ 的平稳分布，整体符号反转保持路径概率不变，故（171.3）为实数。条件于符号路径，Schur 系数逐步相乘，得到所述终端系数。单步时 $z_{1,p}=\cos\alpha$，所以终端通道正是定理162.2中的 $\mathcal F_*$。
+
+将混合链和持续比特取为相同初始符号；在前 $N-1$ 次更新均未翻转的事件上，两条符号路径一致。其补事件概率为 $1-(1-p)^{N-1}$，而任意两个单位复数相距至多二，因此
+$$
+|z_{N,p}-\cos(N\alpha)|\le2\bigl[1-(1-p)^{N-1}\bigr].
+\tag{171.7}
+$$
+两终端通道只有 $02,20$ 系数不同，式（161.11）将其距离精确写成 $r^N|z_{N,p}-\cos(N\alpha)|/2$；该公式已经包含任意惰性参考。由并集界得到（171.4）。又有
+$$
+(N-1)r^N\le\sum_{j=1}^{N-1}r^j\le\frac1{1-r},
+\tag{171.8}
+$$
+故三角不等式及定理169.3给出 $W_r^{\rm mix}\le H(r)+p/(1-r)$。每个终端预测仍为 CPTP，所以逐视界半径下界给出 $W_r^{\rm mix}\ge H(r)$。
+
+为得到严格号，定理169.3的证明表明，充分接近一时 $H(r)$ 在某个早视界 $N_*\alpha<\pi/2$ 取得；因 $\mathcal R_1(r)\to0$ 而 $H(r)\to L>0$，还可保证 $N_*\ge2$。对每条符号路径，$|\sum S_j|\le N_*$，故余弦至少为 $\cos(N_*\alpha)$。恰有一次内部翻转的路径具有正概率，且严格满足 $|\sum S_j|<N_*$，所以
+$$
+z_{N_*,p}>\cos(N_*\alpha).
+\tag{171.9}
+$$
+在实际允许端点 $\phi=\alpha$ 上，精确距离为
+$$
+\frac{r^{N_*}}2
+\sqrt{\sin^2(N_*\alpha)+
+\bigl[z_{N_*,p}-\cos(N_*\alpha)\bigr]^2}
+>\frac{r^{N_*}}2\sin(N_*\alpha)=H(r).
+\tag{171.10}
+$$
+这证明（171.5），且所需邻域不依赖于正数 $p$ 的大小。
+
+最后设 $A_s=\operatorname{tr}_S\tau_{ss}$ 为参考上的次归一化正算符，则 $A_++A_-=\tau_R$。每个条件系统通道保迹，故丢弃系统后，每一步仅以 $T_p$ 更新这两个参考算符。记 $\rho=1-2p$，直接对二态转移矩阵求幂，得到
+$$
+\tau_{KR}^{(N)}=
+\sigma\otimes\tau_R+
+\frac{\rho^N}{2}
+(|+\rangle\langle+|-|-\rangle\langle-|)
+\otimes(A_+-A_-).
+\tag{171.11}
+$$
+因为 $\|A_+-A_-\|_1\le\operatorname{tr}(A_++A_-)=1$，即得（171.6）。同一计算在逐次送入不同系统、最终丢弃全部系统输出的接线中仍然成立，对联合输入及惰性参考统一，因而也满足所引标准记忆遗忘条件。已经发出的系统仍可携带初始符号的信息；（171.11）不对保留这些输出的联合历史作遗忘断言。证毕。
+
+**定理 171.3（此混合比特族内的锐遗忘尺度）。** 对任意参数函数 $p_r\in(0,1/2]$，有
+$$
+\boxed{
+W_r^{\rm mix}\longrightarrow L
+\quad\Longleftrightarrow\quad
+\frac{p_r}{1-r}\longrightarrow0
+\qquad(r\uparrow1).
+}
+\tag{171.12}
+$$
+这是定义171.1的对称 Markov 比特族内的充要条件，不量化所有有限记忆预测器。
+
+证明。 充分性由（171.5）与 $H(r)\to L$ 直接得到。证明必要性，取
+$$
+N_r=\left\lfloor\frac{t_*}{\varepsilon}\right\rfloor,
+\qquad \theta_r=N_r\alpha\longrightarrow\pi/3.
+\tag{171.13}
+$$
+最终 $N_r\ge2$ 且 $\theta_r<\pi/2$。以下略去下标 $r$。每条符号路径均满足 $\cos(\alpha\sum S_j)\ge\cos\theta$。若恰有一次翻转发生在第 $j$ 次与第 $j+1$ 次通道之间，则该余弦为 $\cos((N-2j)\alpha)$，该事件概率为 $p(1-p)^{N-2}$。这些事件互斥，所以
+$$
+z_{N,p}-\cos\theta\ge
+p(1-p)^{N-2}\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr].
+\tag{171.14}
+$$
+
+先考虑某条子序列满足 $p/\varepsilon\to\lambda\in(0,\infty)$。由 $\alpha/\varepsilon\to\sqrt3$、$\varepsilon N\to t_*$，括号和的 Riemann 极限及翻转概率极限分别为
+$$
+\varepsilon\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr]
+\longrightarrow
+\int_0^{t_*}
+\bigl[\cos(\sqrt3(t_*-2u))-\cos(\sqrt3t_*)\bigr]\,du
+=\frac{1-t_*}{2},
+\tag{171.15}
+$$
+$$
+(1-p)^{N-2}\longrightarrow e^{-\lambda t_*}.
+\tag{171.16}
+$$
+式（171.15）中，余弦积分为 $\sin(\sqrt3t_*)/\sqrt3=1/2$，常数项积分为 $t_*/2$。又 $t_*<1$，所以（171.14）的右侧趋于
+$$
+a_\lambda:=\lambda e^{-\lambda t_*}\frac{1-t_*}{2}>0.
+\tag{171.17}
+$$
+在同一视界取实际端点，使用（171.10）对应的距离公式，得到
+$$
+\liminf W_r^{\rm mix}\ge
+\frac{e^{-t_*}}2\sqrt{\frac34+a_\lambda^2}>L
+\tag{171.18}
+$$
+沿该子序列成立。
+
+再考虑 $p/\varepsilon\to\infty$ 的子序列。平稳符号链有 $\mathbb E S_j=0$ 及 $\mathbb E S_iS_j=(1-2p)^{|i-j|}$。由于 $0\le\rho=1-2p<1$，
+$$
+\mathbb E\left(\sum_{j=1}^N S_j\right)^2
+=N+2\sum_{h=1}^{N-1}(N-h)\rho^h
+\le N\frac{1+\rho}{1-\rho}
+=N\frac{1-p}{p}\le\frac Np.
+\tag{171.19}
+$$
+利用 $0\le1-\cos x\le x^2/2$，有
+$$
+0\le1-z_{N,p}\le\frac{\alpha^2N}{2p}
+\longrightarrow0,
+\tag{171.20}
+$$
+因为 $\alpha^2N=O(\varepsilon)$。所以 $z_{N,p}\to1$，实际端点距离趋于
+$$
+\frac{e^{-t_*}}2|e^{i\pi/3}-1|
+=\frac{e^{-t_*}}2>L.
+\tag{171.21}
+$$
+
+若 $p_r/\varepsilon$ 不趋于零，可选一条子序列使该比值始终至少为某个 $\delta>0$，再选扩展实数意义下收敛的子序列，其极限属于 $[\delta,\infty]$。有限正极限由（171.18）排除，无穷极限由（171.21）排除。因此 $W_r^{\rm mix}\to L$ 必须有 $p_r/\varepsilon\to0$。本证明只用互斥的单次翻转事件与二态链协方差，不需要把离散路径先替换成连续随机过程。证毕。
+
+**定理 171.4（有限时刻完全擦除仍可达到精确终端最优）。** 对所有充分接近一的 $r$，令
+$$
+J(r)=\left\lceil\frac{\log H(r)}{\log r}\right\rceil.
+\tag{171.22}
+$$
+存在维数 $2J(r)+1$ 的经典私有记忆及同一个时间齐次联合 CPTP 通道，使其满足精确单步最优条件（169.3），全视界风险精确等于 $H(r)$，而从任意初始系统—记忆状态出发，私有记忆至多在 $J(r)$ 步后成为同一个纯状态，并与其余系统完全解耦。此构造满足
+$$
+\varepsilon J(r)\longrightarrow\log\frac1L,
+\qquad
+\varepsilon\dim K_r\longrightarrow2\log\frac1L.
+\tag{171.23}
+$$
+维数为所给实现的上界，不声称最小维数或最短擦除期限。
+
+证明。 $0<H(r)<1$ 且 $0<r<1$，故 $J\ge1$、$r^J\le H(r)$。取经典记忆基
+$$
+\{(s,j):s=\pm1,\ 0\le j\le J-1\}\cup\{*\}.
+\tag{171.24}
+$$
+初始记忆均匀分布在 $(+,0)$ 和 $(-,0)$。在 $(s,j)$ 上先应用 $\mathcal M_{r,s\alpha}$，然后当 $j<J-1$ 时将记忆变成 $(s,j+1)$，当 $j=J-1$ 时变成 $*$；在 $*$ 上应用 $\mathcal M_{r,0}$ 并保持 $*$。先在此记忆基上完全退相干，即把定义扩展到任意输入。若 $f(v)$ 表示上述确定性记忆更新、$K_{v,a}$ 为对应系统通道的 Kraus 算符，则联合 Kraus 算符为 $K_{v,a}\otimes|f(v)\rangle\langle v|$，其伴随乘积之和为恒等算符。这既证明 CPTP，也显示时钟已经计入私有记忆；没有外置的随步数改变通道的控制。
+
+对指定初始化，终端 Schur 系数 $01,12$ 始终为 $r^N$，而 $02$ 系数为
+$$
+c_N=r^N\cos\bigl(\min\{N,J\}\alpha\bigr).
+\tag{171.25}
+$$
+因此当 $N<J$ 时，它与第169节的持续比特完全相同；在 $N=1$，包括 $J=1$ 的情形，都有 $c_1=r\cos\alpha$，故精确单步最优。若 $N\ge J$，由（161.11）及两个单位圆盘元素相距至多二，
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal P_{r,N}^{\rm erase})
+=\frac{r^N}{2}
+\sup_{|\phi|\le\alpha}|e^{iN\phi}-\cos(J\alpha)|
+\le r^N\le r^J\le H(r).
+\tag{171.26}
+$$
+充分接近一时，早于 $J$ 的所有风险由定理169.3也不超过 $H(r)$；故全视界风险至多为 $H(r)$。逐视界 CPTP 半径下界使其至少为 $H(r)$，于是精确达到相同最优值。
+
+每一个初始记忆基态至多在 $J$ 步后进入吸收态 $*$，最初的记忆相干又已被去除。因此对任意初始联合密度、任意有限惰性参考，最终态均具有
+$$
+\tau_{SKR}^{(J)}=\omega_{SR}\otimes|*\rangle\langle*|_K
+\tag{171.27}
+$$
+的形式，其中按张量因子次序作自然识别。特别地，丢弃系统后得到 $|*\rangle\langle*|\otimes\tau_R$。这里 $\omega_{SR}$ 仍可依赖初始记忆；擦除的是私有寄存器，未把先前作用于系统的影响倒回，也未擦除已有输出历史。随后每一步都是固定系统通道 $\mathcal M_{r,0}$。
+
+最后由 $\varepsilon/(-\log r)\to1$、$H(r)\to L$，并利用取整误差小于一，得到（171.23）。证毕。
+
+式（171.12）的尺度要求与（171.23）并不矛盾：前者限制只有一个自主对称翻转比特的模型，后者把擦除时刻的计数也存入更大的私有记忆。在第二种实现中，信息先保留到指定阶段，之后完全删除；删除后的所有终端相干已经受到 $r^N\le H(r)$ 的统一抑制。因而“最终会遗忘”“在相关视界内怎样保留”和“用多少内部状态安排删除”是不同的数学条件。标准的全局开关、二态混合与记忆遗忘本身由所引文献承担；本节给出的是当前校准源和终端风险合同下的全视界误差界、混合比特的充要尺度，以及有限期限擦除的精确 minimax 实现。第170节允许中间测试并保留历史时的障碍仍适用，私有记忆擦除不使那个过程距离变成终端距离。
+
+## 追加锚（本行以下为增补区）
+
+## 172. 精确终端最优与可遗忘经典相位记忆的最小状态数
+
+**定义 172.1（自主经典相位选择器）。** 沿用第171节的源族、终端风险、$\varepsilon=1-r$、$\alpha=\alpha(r)$、$H(r)$、$L$ 和 $t_*$。取非空有限状态集 $V$、相位标记 $\theta_v\in[-\alpha,\alpha]$、时间齐次随机矩阵 $T$ 及初始概率分布 $\pi$。每步在当前状态 $v$ 上应用系统通道 $\mathcal M_{r,\theta_v}$，随后按 $T(v,u)$ 更新私有状态。联合通道明确为
+$$
+\Lambda(X)=\sum_{v,u\in V}T(v,u)
+\mathcal M_{r,\theta_v}(X_{vv})\otimes|u\rangle\langle u|,
+\qquad
+\sigma=\sum_v\pi(v)|v\rangle\langle v|.
+\tag{172.1}
+$$
+其中 $X_{vv}$ 为记忆基上的系统对角块，故记忆的任意初始相干也在定义域内。$V,T,\pi,\theta$ 可依赖已知的 $r$，不依赖实际未知相位、使用视界或系统输入；记忆更新不读取系统输出，不另给外置时钟。条件通道的 Kraus 算符与 $\sqrt{T(v,u)}|u\rangle\langle v|$ 的张量积直接证明（172.1）为 CPTP。
+
+称此选择器可遗忘，当
+$$
+\delta_n(T):=\max_{v,w\in V}
+\operatorname{TV}\bigl(T^n(v,\cdot),T^n(w,\cdot)\bigr)
+\longrightarrow0.
+\tag{172.2}
+$$
+这要求私有记忆对任意初始化的依赖消失，不仅针对指定分布 $\pi$。这是有限经典链的标准遗忘条件，方向与第171节所引记忆通道定义一致；它不要求已经发出的系统遗忘初始化。
+
+令 $d_{\rm fg}(r)$ 为全部满足（172.2）且全视界终端风险精确等于 $H(r)$ 的选择器中，$|V|$ 的最小值；若无这样的选择器，定义其值为 $+\infty$。所有演化状态都计入 $V$，包括计时与吸收状态。以下只研究这个明确限定的经典选择器域，不将其最小值等同于任意量子记忆的最小 Hilbert 空间维数。
+
+记
+$$
+B_N(r)=\frac{r^N}{2}m(N\alpha),\qquad
+n_*(r)=\max\operatorname*{arg\,max}_{N\ge1}B_N(r),
+\tag{172.3}
+$$
+其中 $m$ 为式（169.6）的函数。由 $B_1>0$、$B_N\to0$，最大点集合非空且有限。定理169.3的严格晚视界间隙表明，充分接近一时，$\sup_NB_N=H$，所有最大点都满足 $N\alpha<\pi/2$，且此集合也等于逐视界半径 $\mathcal R_N$ 的最大点集合。定理161.6又给出
+$$
+\varepsilon n_*(r)\longrightarrow t_*,
+\qquad n_*(r)\ge2
+\quad\text{最终成立}.
+\tag{172.4}
+$$
+下面统一限于满足这些性质的 $r$ 邻域。
+
+**定理 172.2（最优终端读数强制端点路径保持）。** 设定义172.1的选择器具有全视界风险 $H(r)$，令 $n=n_*(r)$。则由初始分布 $\pi$ 产生的每条正概率的长度 $n$ 状态路径，在这 $n$ 次系统使用中，相位标记必定全为 $+\alpha$ 或全为 $-\alpha$；两类路径的总概率各为 $1/2$。特别地，此精确全视界最优条件已经强制单步终端通道为 $\mathcal F_*$。
+
+证明。 设 $V_1\sim\pi$，随后按 $T$ 更新。条件于整条路径，（172.1）的 Schur 系数相乘，所以终端系数 $01,12$ 为 $r^n$，$02$ 为 $r^nz_n$，其中
+$$
+z_n=\mathbb E\exp\!\left(i\sum_{j=1}^n\theta_{V_j}\right).
+\tag{172.5}
+$$
+令 $x=n\alpha\in(0,\pi/2)$。在两个实际允许端点 $\phi=\pm\alpha$ 上，式（161.11）及 $H=r^n\sin x/2$ 给出
+$$
+|z_n-e^{ix}|\le\sin x,\qquad
+|z_n-e^{-ix}|\le\sin x.
+\tag{172.6}
+$$
+两个圆盘的圆心距离恰为其半径和 $2\sin x$，故交集只有圆心连线的中点；等价地，三角不等式必须处处取等。因此
+$$
+z_n=\cos x.
+\tag{172.7}
+$$
+
+每条路径的累计相位 $a=\sum_j\theta_{V_j}$ 属于 $[-x,x]$，在此区间有 $\cos a\ge\cos x$，且等号只在 $a=\pm x$ 取得。式（172.7）的实部说明这个非负差的期望为零；路径集合有限，所以每条正概率路径都满足 $a=\pm n\alpha$。每一项又属于 $[-\alpha,\alpha]$，故累计取端点只可能由所有项取同一个端点得到。令全正路径的概率为 $q$，则（172.7）的虚部为 $(2q-1)\sin x=0$，得到 $q=1/2$。于是第一步也以相同概率应用两个端点通道，正是 $\mathcal F_*$。证毕。
+
+**定理 172.3（可遗忘选择器的精确最小状态数）。** 对全部充分接近一的 $r$，
+$$
+\boxed{d_{\rm fg}(r)=n_*(r)+1.}
+\tag{172.8}
+$$
+该最小值可由一个吸收型经典选择器达到，它满足单步最优并在每个固定 $r$ 下遗忘初始记忆。因此
+$$
+\boxed{\lim_{r\uparrow1}(1-r)d_{\rm fg}(r)=t_*.}
+\tag{172.9}
+$$
+若以能编码全部私有状态的二进制寄存器位数计成本，则最小所需位数满足
+$$
+\left\lceil\log_2 d_{\rm fg}(r)\right\rceil
+=\log_2\frac1{1-r}+O(1).
+\tag{172.10}
+$$
+
+证明。 先证下界。令 $C_s=\{v:\theta_v=s\alpha\}$，$s=\pm1$。定理172.2说明，初始支持在两个集合中各有正概率，且从任一初始支持状态出发，前 $n-1$ 次更新都不能以正概率离开其符号对应的 $C_s$，其中 $n=n_*(r)$。
+
+至少一个符号必须存在从其初始支持通往 $V\setminus C_s$ 的正概率路径。否则，分别从正、负初始支持中选一个状态 $v_+,v_-$，对所有整数 $k$ 都有 $T^k(v_+,C_+)=1$、$T^k(v_-,C_-)=1$；由于 $C_+\cap C_-=\varnothing$，两分布的总变差距离恒为一，违反（172.2）。
+
+选这样的符号及其初始支持上的起点，并取离开 $C_s$ 的最短正概率路径
+$$
+v_0,v_1,\ldots,v_\ell,
+\qquad v_0,\ldots,v_{\ell-1}\in C_s,
+\quad v_\ell\notin C_s.
+\tag{172.11}
+$$
+路径内部不能重复状态，否则删去两次重复之间的环，就得到更短的正概率离开路径。因此 $\ell\le|C_s|$。另一方面，若 $\ell\le n-1$，第 $\ell+1$ 次系统使用就出现不同相位；将路径任意延长到长度 $n$，仍可选到正概率路径，违反定理172.2。所以 $\ell\ge n$，得到 $|C_s|\ge n$。另一符号的初始支持至少还包含一个不在 $C_s$ 的状态，故 $|V|\ge n+1$。这里使用的有限有向图最短路径计数是标准工具；约束最短离开时间的前提来自（172.6）所强制的精确终端几何。
+
+再证可达到性。取 $n$ 个负相位状态 $0,1,\ldots,n-1$，以及一个正相位吸收态 $*$。初始分布在 $0$ 与 $*$ 上各取 $1/2$。负相位状态均应用 $\mathcal M_{r,-\alpha}$；在 $j<n-1$ 时使用后确定性地变成 $j+1$，在 $j=n-1$ 时使用后以概率 $p$ 进入 $*$，以概率 $1-p$ 留在原状态。吸收态始终应用 $\mathcal M_{r,+\alpha}$ 并保持自身。此更新时间齐次，全部 $n+1$ 个状态均计入记忆。
+
+从初始负相位分支出发，前 $n$ 次系统使用必定全部采用负端点；第一次可能的切换只影响第 $n+1$ 次系统使用。所以对 $N\le n$，终端通道精确等于持续比特通道，风险为 $B_N$。令
+$$
+K=\left\lceil\frac{\log H}{\log r}\right\rceil.
+\tag{172.12}
+$$
+因为 $H=r^n\sin(n\alpha)/2<r^n$，有 $K>n$；而 $r^K\le H$。若 $n<N<K$，将当前选择器与持续比特取相同初始符号，只有负分支在前 $N-1$ 次更新中发生吸收时才会产生差异。至多有 $N-n$ 次相关吸收机会，所以按（171.7）相同的单位圆耦合估计，
+$$
+d_{\rm ref}(\mathcal P_{r,N}^{(p)},\mathcal P_{r,N}^{\rm bit})
+\le r^N(N-n)p.
+\tag{172.13}
+$$
+由 $n$ 是最大的最大点，每个这样的整数 $N$ 都有 $B_N<H$。取
+$$
+p=\min\left\{\frac12,
+\min_{n<N<K}\frac{H-B_N}{2r^N(N-n)}\right\},
+\tag{172.14}
+$$
+其中空集的内层最小值解释为 $+\infty$。这是有限个正数与 $1/2$ 的最小值，故 $0<p\le1/2$。三角不等式给出所有中间视界的严格界
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{(p)})
+\le B_N+r^N(N-n)p
+\le\frac{H+B_N}{2}<H.
+\tag{172.15}
+$$
+对 $N\ge K$，任意路径平均仍满足 $|z_N|\le1$，其余校准系数为 $r^N$，故
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{(p)})
+\le r^N\le r^K\le H.
+\tag{172.16}
+$$
+在 $N=n$ 则精确达到 $B_n=H$。这证明同一个选择器服务全部视界，风险精确为 $H$；第一步也精确最优。取最大的最大点排除了中间有限视界中尚有相同最优值的情形，故没有把一个零余量错误用于选取正数 $p$。
+
+从任意负相位初态出发，至多 $n-1$ 步后到达末端负相位状态，其后每步都有概率 $p$ 吸收。于是对 $k\ge n$，
+$$
+\max_{v\in V}\operatorname{TV}(T^k(v,\cdot),\delta_*)
+\le(1-p)^{k-n+1}\longrightarrow0.
+\tag{172.17}
+$$
+这蕴含（172.2）。对任意初始联合系统—记忆—惰性参考密度，记忆基上的参考正算符块同样按 $T$ 更新；非吸收块的总迹至多为（172.17）的右侧，故丢弃系统后的记忆—参考密度与 $\delta_*\otimes\tau_R$ 的半迹距离也受这个界控制。这里没有要求在有限步后严格擦除：每个有限 $k$ 仍允许以正概率停留在末端负相位状态。
+
+上下界证明（172.8），式（172.4）随即给出（172.9）。取对数及整数编码的取整误差至多一，得到（172.10）。证毕。
+
+Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§V定理10已证明可遗忘通道的稠密性，其证明以稀少噪声构造近似。本节的吸收概率选择还保留了全部最大风险视界的精确终端通道，并分别控制剩余有限视界与无限尾部；式（172.8）的等号由这一构造与路径保持下界共同给出。
+
+第169节的两个永久标签具有固定维数二，但违反（172.2）；第171节的混合比特具有固定维数二并可遗忘，却只在所给尺度条件下渐近最优，有限参数处仍有严格超额风险。式（172.8）针对的是同时要求可遗忘与有限参数精确最优的经典选择器。达到它的更新先用内部状态保证一段绝不切换的路径，再利用其他有限视界的严格余量选择正的吸收概率。式（172.17）没有对 $r\uparrow1$ 给出统一遗忘速度；式（172.8）也不解决严格有限期限擦除的最小维数，或一般量子记忆与系统反馈所允许的维数。
+
+## 追加锚（本行以下为增补区）
+
+## 173. 放宽内部条件通道后的双态精确最优与参数例外集
+
+**定义 173.1（一般可遗忘预测器与唯一最大点参数）。** 沿用定义169.1的时间齐次联合 CPTP 通道 $\Lambda_r$、一次初始化 $\sigma_r$、同一系统的终端通道 $\mathcal P_{r,N}$ 及全视界风险 $W_r^{\rm mem}$。真实源仍为定义161.1的 $\mathcal M_{r,\phi}$，实际相位在全部使用中固定，环境逐步新鲜。预测器可以依赖已知的 $r$，不依赖实际相位、所比较的运行视界或输入态。
+
+对同一个局部处理器，另作标准的逐次新鲜输入接线：令 $\Gamma_{r,N}$ 将初始记忆和 $N$ 个系统输入映到最终记忆及 $N$ 个系统输出，令 $\Phi_{r,N}$ 为丢弃这些输出后的记忆通道。要求存在从系统输入串到最终记忆的 CPTP 通道 $E_{r,N}$，使
+$$
+\left\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_{K_r}\right\|_\diamond
+\longrightarrow0\qquad(N\to\infty).
+\tag{173.1}
+$$
+这是 Kretschmann–Werner 的标准遗忘条件的 Schrödinger 形式，见第171节所引原文定义3及命题9；范数包含任意惰性参考。它与计算 $\mathcal P_{r,N}$ 的同一系统反复接线分别定义，不要求已经输出的历史被擦除。
+
+记 $D_{\rm fg}(r)$ 为同时满足（173.1）、精确单步最优条件（169.3）及 $W_r^{\rm mem}=H(r)$ 的全部有限量子记忆实现中，$\dim K_r$ 的最小值。预测器的内部条件通道不再要求逐个属于原校准源族。选择充分接近一的区间 $I=(r_0,1)$，使定理169.3—169.4及式（172.4）的全部性质成立，并令
+$$
+U=\{r\in I:B_N(r)\text{ 在正整数视界上有唯一最大点}\}.
+\tag{173.2}
+$$
+其中 $B_N$ 是持续端点比特风险。对 $r\in U$，记唯一最大点为 $n=n(r)$；因此 $n\ge2$、$n\alpha(r)<\pi/2$ 且 $B_n(r)=H(r)$。
+
+**定理 173.2（唯一最大点参数上的精确双态实现）。** 集合 $U$ 在 $I$ 中开且稠密，其补集至多可数。对每个 $r\in U$，一个自主、对称、可遗忘的经典比特即可实现定义173.1的全部要求，因而
+$$
+\boxed{D_{\rm fg}(r)=2\quad(r\in U),\qquad
+\liminf_{r\uparrow1}D_{\rm fg}(r)=2.}
+\tag{173.3}
+$$
+这里的双态构造使用合法的条件 Schur 通道，但这些通道偏离定义172.1规定的校准源族。结论没有给出 $I\setminus U$ 上的双态实现，也不把经典记忆改称相干量子记忆。
+
+证明。 先固定 $r\in U$，略去参数 $r$ 的下标，记
+$$
+\alpha=\alpha(r),\qquad c_0=r\cos\alpha,
+\qquad q(\theta)=\frac{c_0}{\cos\theta},\qquad
+a(\theta)=\sqrt{\frac{1-q(\theta)^2}{2(1-c_0)}}.
+\tag{173.4}
+$$
+当 $\theta=\alpha$ 时有 $q=a=r$；后一等式来自端点相关矩阵的行列式为零。对 $\theta>\alpha$ 充分接近 $\alpha$，有 $r<q<1$、$0<a<r$。定义两个条件相关矩阵
+$$
+C_s(\theta)=
+\begin{pmatrix}
+1&a&q e^{is\theta}\\
+a&1&a\\
+q e^{-is\theta}&a&1
+\end{pmatrix},\qquad s=\pm1.
+\tag{173.5}
+$$
+其一阶及二阶主子式非负，而
+$$
+\det C_s=1-2a^2-q^2+2a^2q\cos\theta=0.
+\tag{173.6}
+$$
+所以两矩阵半正定且对角元为一，对应合法 CPTP Schur 通道 $\mathcal Q_{s,\theta}$。在 $\theta=\alpha$ 时，它们正是原源的两个端点通道。
+
+令私有符号以均匀分布初始化。每步先应用 $\mathcal Q_{s,\theta}$，再以概率 $p$ 翻转符号；在任意联合输入上先去除记忆基间的相干，正如式（171.2）的 Kraus 实现。这样得到同一个时间齐次联合 CPTP 通道，记忆维数为二。令
+$$
+Z_{N,p}(\theta)=
+\mathbb E\cos\!\left(\theta\sum_{j=1}^N S_j\right),
+\tag{173.7}
+$$
+其中 $S_j$ 是平稳对称翻转链。由符号反转对称性，终端系数为
+$$
+b_{01}=b_{12}=a(\theta)^N,
+\qquad b_{02}=q(\theta)^N Z_{N,p}(\theta)\in\mathbb R.
+\tag{173.8}
+$$
+
+现在只用已知 $r$ 的唯一最大点 $n$ 来设计这一个固定通道。定义
+$$
+F(p,\theta)=q(\theta)^n Z_{n,p}(\theta)
+-r^n\cos(n\alpha).
+\tag{173.9}
+$$
+有限路径和使 $Z_{n,p}$ 在 $p=0$ 附近具有实解析延拓；只在 $p\ge0$ 时将其解释为概率期望。由于 $Z_{n,0}(\theta)=\cos(n\theta)$，有 $F(0,\alpha)=0$，且
+$$
+\partial_\theta F(0,\alpha)=
+nr^n\bigl[\tan\alpha\cos(n\alpha)-\sin(n\alpha)\bigr]
+=-\frac{nr^n\sin((n-1)\alpha)}{\cos\alpha}<0.
+\tag{173.10}
+$$
+另一方面，零次与一次翻转路径对 $p$ 的一阶贡献给出
+$$
+\partial_p F(0,\alpha)
+=r^n\sum_{j=1}^{n-1}
+\bigl[\cos((n-2j)\alpha)-\cos(n\alpha)\bigr]>0.
+\tag{173.11}
+$$
+每个括号都严格为正，因为 $n\alpha<\pi/2$ 且 $|n-2j|<n$。由通常的实解析隐函数定理，存在 $\theta(p)$，满足
+$$
+\theta(0)=\alpha,\qquad
+F(p,\theta(p))=0,\qquad
+\theta'(0)=-\frac{\partial_pF(0,\alpha)}{\partial_\theta F(0,\alpha)}>0.
+\tag{173.12}
+$$
+因此所有充分小的正 $p$ 都落在上述合法条件通道范围，并且同时精确保留
+$$
+q\cos\theta=r\cos\alpha,
+\qquad q^n Z_{n,p}(\theta)=r^n\cos(n\alpha).
+\tag{173.13}
+$$
+
+还须控制完整三维系统及任意参考，不能只比较 $02$ 输入。定理168.2的证明已经建立以下通用估计：若 Hermitian Schur 差的乘子矩阵为
+$$
+B=\begin{pmatrix}0&d&w\\d&0&d\\\overline w&d&0\end{pmatrix},
+\qquad 0\le2d\le|w|,
+\tag{173.14}
+$$
+则全参考半迹距离精确等于 $|w|/2$。该证明的正半定矩阵 $Y\pm B$ 只用这里所列条件，故直接适用于当前通道差。
+
+在 $N=1,n$ 这两个固定视界，由（173.13）可取
+$$
+d=r^N-a^N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr).
+\tag{173.15}
+$$
+这里 $d\to0$ 当 $p\downarrow0$，而对全部允许的实际相位均有
+$$
+|w|\ge r^N\bigl(1-\cos(N\alpha)\bigr)>0.
+\tag{173.16}
+$$
+故进一步缩小正 $p$，即可对这两个视界同时保证（173.14）。其完整距离于是精确等于只含 $02$ 差的距离，在 $N=1$ 达到单步最优风险 $\mathcal R_1$，在 $N=n$ 达到全视界下界 $H$。
+
+对其他视界，先控制一个对 $p$ 统一的无限尾。固定任意 $\bar q\in(r,1)$，将 $p$ 限制得足够小，使 $q\le\bar q$。由 $a\le r$、$|Z_{N,p}|\le1$，将通道差拆成三个单边 Schur 乘子，应用第161节的单边估计及三角不等式，得到
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{(p)})
+\le r^N-a^N+\frac{r^N+q^N}{2}
+\le2\bar q^N.
+\tag{173.17}
+$$
+选整数 $K>n$ 使 $2\bar q^K<H$，则 $N\ge K$ 的风险统一严格小于 $H$。对剩下的有限集合 $1\le N<K$、$N\ne n$，在 $p=0$ 时风险为 $B_N<H$，其中严格号使用唯一最大点假设。有限次通道复合连续，实际相位区间紧，因此各个最坏风险都随 $p$ 连续。进一步缩小同一个正 $p$，便可保留全部有限严格不等式，同时保留（173.13）—（173.16）。于是这个固定预测器的全视界风险至多为 $H$，又在 $n$ 精确达到 $H$，故为精确最优。所有参数在运行前由 $r$ 确定；并未按被比较的运行视界 $N$ 重新选择通道。
+
+每个条件系统通道都保迹，所以在标准新鲜输入接线中，丢弃系统输出后只有记忆翻转链作用于初始记忆的参考算符块。与式（171.11）相同的计算给出（173.1），可取 $E_{r,N}(A)=\operatorname{Tr}(A)I_2/2$，误差随 $(1-2p)^N$ 指数消失。这里 $p>0$ 对所选 $r$ 固定，没有声称该遗忘速率对 $r\uparrow1$ 一致。因此这是合法的可遗忘二维实现。定理169.4排除同一区间内维数一同时满足精确单步与全视界最优，故 $D_{\rm fg}(r)=2$。
+
+最后证明参数集合的性质。对任意 $r\in U$，可在一个小邻域中选 $\bar r<1$ 使 $B_N(s)\le\bar r^N$，从而统一排除充分大的 $N$ 成为最大点。剩余有限个连续函数在 $r$ 处具有唯一最大者，其严格差距在一个更小邻域内保留。因此 $U$ 是开集。
+
+若 $s\in I\setminus U$，则至少有两个不同的早视界 $j,k$ 并列最大，从而
+$$
+s^j\sin(j\alpha(s))=s^k\sin(k\alpha(s)).
+\tag{173.18}
+$$
+对每对固定 $j\ne k$，两边都是 $(1/\sqrt3,1)$ 上的实解析函数，且不恒等：当 $s\uparrow1$，它们的一阶项分别为 $j\sqrt3(1-s)$ 与 $k\sqrt3(1-s)$。故其相等点为离散集，至多可数。对可数对整数取并集，得 $I\setminus U$ 至多可数，因而不含非空开区间。这证明 $U$ 稠密。任意趋近一的区间均包含 $U$ 中的点，结合一般的维数一下界，得到（173.3）的下极限。证毕。
+
+第172节的下界需要每个内部条件通道都具有校准系数 $01=12=r$ 及 $02=re^{i\theta_v}$、$|\theta_v|\le\alpha$。本节明确改变了这些内部条件：$a<r$、$q>r$、$\theta>\alpha$，但实际源、精确单步最优要求与全视界终端风险合同保持原定义。隐函数调整保留唯一最大视界的接触等式，额外相干方向的距离余量与其他视界的严格风险余量允许正的遗忘率。因此状态数下界依赖允许的内部实现，而不仅取决于相同的最优风险值。并列最大点需要同时保持多个接触等式，当前构造未解决这一例外集；这里也没有给出量子相干记忆相对于经典记忆的优势结论。
+
+## 追加锚（本行以下为增补区）
+
+## 174. 三维相干记忆的精确最优、可遗忘性与相邻接触校准
+
+**定义 174.1（相邻校准视界与启动记忆）。** 沿用定义173.1的一次初始化、时间齐次联合 CPTP 处理器、同一系统终端通道、标准新鲜输入遗忘条件及最小维数 $D_{\rm fg}(r)$。实际源仍为 $\mathcal M_{r,\phi}$，同一次运行的实际相位 $\phi$ 固定，环境逐步新鲜。记
+$$
+c=r\cos\alpha,\qquad b=r\sin\alpha,\qquad z_*=c+ib,
+\qquad \alpha=\alpha(r).
+\tag{174.1}
+$$
+在充分接近一的区间中，令 $n$ 为持续端点比特风险 $B_N(r)$ 的最小最大点，令 $m=n+1$。以下所用记忆为
+$$
+K=\mathbb C|e\rangle\oplus\mathbb C^2,
+\qquad \sigma=|e\rangle\langle e|,
+\tag{174.2}
+$$
+其中 $|e\rangle$ 是启动态，活动子空间的基为 $|+\rangle,|-\rangle$；启动态计入总维数。所有设计参数只依赖已知的 $r$，同一处理器服务全部运行视界 $N$。
+
+**定理 174.2（全部近一参数上的相干三维实现）。** 存在 $r_1<1$，使每个 $r\in(r_1,1)$ 都有定义174.1的三维实现，满足
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})=\mathcal R_1(r),
+\qquad
+\sup_{N\ge1,\,|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})=H(r),
+\tag{174.3}
+$$
+并满足包含任意惰性参考的遗忘条件（173.1）。活动记忆的某个单步输入通道不是纠缠破坏通道；保持其余参数不动而完全擦除活动记忆的相干，会严格改变实际启动运行的第四步终端读数。因此
+$$
+2\le D_{\rm fg}(r)\le3\qquad(r_1<r<1).
+\tag{174.4}
+$$
+与定理173.2结合，在唯一最大点集合 $U$ 上仍有 $D_{\rm fg}(r)=2$。式（174.4）包含并列最大点，但不确定这些点上的最小值究竟是二还是三。
+
+证明。 先说明只需校准两个相邻视界。由定理169.3及式（172.4），充分近一时，$\sup_N B_N=H$ 且全部最大点都在 $N\alpha<\pi/2$ 的早段。令 $\beta=-\log r$，早段的连续延拓为
+$$
+g(t)=\frac12e^{-\beta t}\sin(\alpha t),
+\qquad
+t_c=\frac1\alpha\arctan\frac\alpha\beta.
+\tag{174.5}
+$$
+其导数在 $t_c$ 前正、其后负，故最大整数只可能为 $\lfloor t_c\rfloor,\lceil t_c\rceil$。由 $\alpha/(1-r)\to\sqrt3$、$\beta/(1-r)\to1$，有 $\alpha t_c\to\pi/3$。进一步缩小区间后，$n\ge2$、$m\alpha<\pi/2$，并且全部最大点都属于 $\{n,m\}$。即使只有一个最大点，以下仍同时校准这两个视界。
+
+取 $0<\kappa<r$，稍后把它选得充分接近 $r$。对 $z=u+iv$ 定义
+$$
+B(\kappa,z)=
+\begin{pmatrix}1&\kappa&z\\\kappa&1&\kappa\\\bar z&\kappa&1\end{pmatrix}.
+\tag{174.6}
+$$
+直接检查主子式可得，其半正定条件恰为
+$$
+|z-\kappa^2|\le1-\kappa^2.
+\tag{174.7}
+$$
+在 $z=z_*$ 处，原源的端点行列式为零给出
+$$
+\det B(\kappa,z_*)=2(1-c)(r^2-\kappa^2)>0.
+\tag{174.8}
+$$
+所以固定这样的 $\kappa$ 后，$z_*$ 位于合法圆盘内部。降低另外两条相干系数由此提供完全正性的严格余量。
+
+给出作用于活动子空间的具体相干处理器。取新鲜环境中的实正交单位向量 $f_0,f_1,f_2$，在（174.7）的严格内部定义
+$$
+\eta=\sqrt{\frac{1-u}{2}}f_1,\qquad
+\xi=\kappa f_0+\frac{v}{\sqrt{2(1-u)}}f_1
++\sqrt{\frac{1+u}{2}-\kappa^2-\frac{v^2}{2(1-u)}}f_2.
+\tag{174.9}
+$$
+根号非负正是（174.7）；在当前邻域内 $u<1$。定义单位记录向量
+$$
+e_0^+=\xi+i\eta,\quad e_2^+=\xi-i\eta,\quad
+e_1^+=e_1^-=f_0,\quad
+e_0^-=e_2^+,\quad e_2^-=e_0^+.
+\tag{174.10}
+$$
+等距映射 $V_z|j,s\rangle=|j,s\rangle\otimes e_j^s$ 在丢弃环境后定义联合 CPTP 通道 $\mathcal Q_z$。固定活动标签 $s$ 时，其系统条件通道分别是相关矩阵 $B(\kappa,z)$ 与 $B(\kappa,\bar z)$ 的 Schur 通道。
+
+固定 $\chi=1/4$。在 $\mathcal Q_z$ 后依次对记忆施加：将非对角元乘以 $\chi$ 的去相位通道 $\mathcal D_\chi$、旋转 $U_\gamma=e^{-i\gamma X/2}$、以及
+$$
+\mathcal R_\delta(T)=(1-\delta)T+\delta\operatorname{Tr}(T)I_2/2.
+\tag{174.11}
+$$
+记所得活动处理器为 $\mathcal L_z$。启动块使用通道
+$$
+\mathcal T(A)=\frac12\sum_{s=\pm}
+\operatorname{Schur}(B(\kappa,z_{*,s}))(A)\otimes|s\rangle\langle s|,
+\qquad z_{*,+}=z_*,\quad z_{*,-}=\bar z_*.
+\tag{174.12}
+$$
+对任意系统—记忆输入算符 $X$，同一个时间齐次处理器为
+$$
+\Lambda(X)=\mathcal T(X_{ee})+
+\mathcal L_z(X_{\mathrm{act},\mathrm{act}}).
+\tag{174.13}
+$$
+它先丢弃启动与活动子空间间的非对角块，再分别施加 CPTP 通道，故在任意联合输入上 CPTP。每次输出记忆都位于活动子空间；没有外部时钟切换处理器。
+
+计算同一系统反复使用时的终端通道。其 $01,12$ 系数均为 $\kappa^N$。$02$ 记忆块写成 $(x_NI+iy_NZ+ih_NY)/2$，其中 $X,Y,Z$ 为通常的 Pauli 矩阵，终端 $02$ 系数为实数 $x_N$。令 $s=1-\delta$，直接由记录向量内积得到
+$$
+(x_1,y_1,h_1)=(c,b,0),
+\qquad
+\begin{aligned}
+x_{N+1}&=ux_N-vy_N,\\
+y_{N+1}&=s\bigl[\cos\gamma(vx_N+uy_N)+\chi\sin\gamma h_N\bigr],\\
+h_{N+1}&=s\bigl[-\sin\gamma(vx_N+uy_N)+\chi\cos\gamma h_N\bigr].
+\end{aligned}
+\tag{174.14}
+$$
+具体说，$02$ 块在旋转与重置之前的变换是
+$$
+T\longmapsto
+\begin{pmatrix}zT_{++}&\chi T_{+-}\\\chi T_{-+}&\bar zT_{--}\end{pmatrix};
+\tag{174.15}
+$$
+这也直接验证了递推，没有用正权经典路径分布替代相干处理器。
+
+在 $\delta=\gamma=0$ 时，$x_N=\operatorname{Re}(z_*z^{N-1})$。现在对固定 $r,\kappa$，要求
+$$
+x_n=r^n\cos(n\alpha),\qquad
+x_m=r^m\cos(m\alpha).
+\tag{174.16}
+$$
+在 $(u,v,\delta,\gamma)=(c,b,0,0)$ 处，这两个等式成立。其左侧关于 $(u,v)$ 的 Jacobian 行为
+$$
+\bigl((N-1)r^{N-1}\cos((N-1)\alpha),
+-(N-1)r^{N-1}\sin((N-1)\alpha)\bigr),\qquad N=n,m,
+\tag{174.17}
+$$
+行列式为 $-n(n-1)r^{2n-1}\sin\alpha\ne0$。实解析隐函数定理因此给出 $z=z(\delta,\gamma)$，在零点取值 $z_*$，并精确满足（174.16）。递推式在实参数的零点邻域解析，负 $\delta$ 仅用于解析延拓，不作概率解释。选择充分小的 $\delta=\gamma>0$，利用（174.8）的严格余量，所得 $z$ 仍在合法圆盘内部。
+
+下面验证完整系统及任意参考上的风险。定理168.2证明中的 Schur 支配估计给出：对
+$$
+D(d,w)=\begin{pmatrix}0&d&w\\d&0&d\\\bar w&d&0\end{pmatrix},
+\qquad d\ge0,
+\tag{174.18}
+$$
+当 $2d\le|w|$ 时，$\frac12\|\operatorname{Schur}(D(d,w))\|_\diamond=|w|/2$。固定 $d$，对 $|w|=Q$ 应用该估计，再将圆盘内的 $w$ 写成圆周点的凸组合，得到
+$$
+2d\le Q,\quad |w|\le Q
+\quad\Longrightarrow\quad
+\frac12\|\operatorname{Schur}(D(d,w))\|_\diamond\le Q/2.
+\tag{174.19}
+$$
+对 $N\in\{1,n,m\}$，式（174.14）、（174.16）给出
+$$
+d=r^N-\kappa^N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr),\qquad
+Q=r^N\sin(N\alpha).
+\tag{174.20}
+$$
+因为 $N\alpha<\pi/2$，允许相位弧上有 $|w|\le Q$。选 $\kappa$ 足够接近 $r$，可对这三个视界同时保证 $2d<Q$。故风险至多 $Q/2$；端点相位与均衡 $02$ 输入又达到 $Q/2$。单步风险精确为 $\mathcal R_1$，视界 $n$ 精确达到 $H$。
+
+还须用同一组正参数控制其他全部视界。先令 $\tau=(3+r)/4<1$，将校准解限制在 $|z|<(1+r)/2$。没有 $\mathcal D_\chi$ 时，$02$ 交叉块变换可写成两个等距映射夹住 $T$ 再偏迹，因而在迹范数上压缩。将 $\mathcal D_\chi=\chi\,\mathrm{id}+(1-\chi)\mathcal D_0$ 分解，完全去相位部分在（174.15）中的范数至多 $|z|$，所以一次交叉块传递的诱导迹范数至多
+$$
+\chi+(1-\chi)|z|<\tau.
+\tag{174.21}
+$$
+旋转及重置也是迹范数压缩。启动的 $02$ 块迹范数为 $r$，因此
+$$
+|x_N|\le r\tau^{N-1}\le\tau^N,
+\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-\kappa^N+\frac{r^N+|x_N|}{2}
+\le2\tau^N.
+\tag{174.22}
+$$
+中间的不等式按三个非对角边拆分，使用第161节包含参考的单边距离估计。
+
+先固定整数 $K_0>m$ 使 $2\tau^{K_0}<H$。对有限集合 $N<K_0$、$N\notin\{1,n,m\}$，有 $B_N<H$。当前风险又至多
+$$
+B_N+(r^N-\kappa^N)
++\frac12\left|x_N-r^N\cos(N\alpha)\right|.
+\tag{174.23}
+$$
+因此先选足够接近 $r$ 的 $\kappa<r$，使（174.20）的支配条件成立，并让（174.23）的第一项误差小于各有限严格余量的一半；固定该 $\kappa$ 后，再沿校准解选足够小的 $\delta=\gamma>0$，使第二项误差落在其余余量内，同时保持完全正性与（174.21）。这种顺序保留了严格正的选择区间。式（174.22）控制所有 $N\ge K_0$，式（174.20）控制三个保留视界，遂得（174.3）。
+
+遗忘性使用另一种接线：系统输入逐次新鲜，丢弃系统输出，只比较最终记忆。任意初始记忆经过一次使用后都在活动子空间。以后的每次使用都含概率为 $\delta$、独立于输入的重置分支。给定某次重置已发生，在丢弃此前系统输出后，重置记忆为 $I_2/2$，与尚未使用的输入及参考独立。此前处理对被丢弃部分保迹，故不能改变这些未使用输入及参考的边缘态。因而对具有相同完整系统输入—参考边缘态的任意两份初始联合态 $\rho_1,\rho_2$，有
+$$
+\left\|\operatorname{Tr}_{B^N}
+(\Gamma_{r,N}\otimes\mathrm{id}_R)(\rho_1-\rho_2)\right\|_1
+\le2(1-\delta)^{N-1}.
+\tag{174.24}
+$$
+这里 $B^N$ 表示所有系统输出。具体取任意固定记忆态 $\sigma_0$，定义 $E_{r,N}(A)=\Phi_{r,N}(\sigma_0\otimes A)$，在上式比较 $\rho$ 与 $\sigma_0\otimes\operatorname{Tr}_K\rho$，即得
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-\delta)^{N-1}\longrightarrow0.
+\tag{174.25}
+$$
+态输入与任意参考上的一致界等于这里两 CPTP 通道之差的 diamond 范数界。这正是定义173.1的遗忘条件；它不要求保留在外部的输出历史消失。此框架及稀少重置产生遗忘性的背景见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§V定义3、命题9与定理10；精确保留（174.16）还使用了上述校准与全视界估计。
+
+最后核对相干确实参与该实现。将活动处理器的系统输入固定为 $|1\rangle$，记录向量均为 $f_0$，所以记忆通道恰为 $\mathcal R_\delta\operatorname{Ad}_{U_\gamma}\mathcal D_\chi$。其归一化 Choi 态的部分转置具有特征值
+$$
+\frac\delta4-\frac{(1-\delta)\chi}{2}<0\qquad(0<\delta<1/3).
+\tag{174.26}
+$$
+旋转是局部酉变换，不改变该部分转置的谱。故此通道能保留与参考的纠缠，不是纠缠破坏通道。另一方面，固定已经选好的 $\kappa,z,\delta,\gamma$，只将保留相干的参数 $\chi$ 改为零，由（174.14）得到
+$$
+x_4(\chi)-x_4(0)
+=(1-\delta)^2v\chi\sin^2\gamma\,(vc+ub)>0.
+\tag{174.27}
+$$
+严格正号来自校准解充分接近 $u=c>0,v=b>0$，以及 $0<\gamma<\pi$。对均衡 $02$ 系统输入，终端相干读数因而严格不同。这一比较不重新校准其他参数，证明的是该实现实际使用了记忆相干。三维上界与定理169.4的维数一下界共同给出（174.4）。证毕。
+
+式（174.27）区分了同一实现中是否保留相干，没有比较所有经典实现与所有量子实现的最小资源。当前上界的成立也没有要求在所有 $r\uparrow1$ 上统一选择正的重置率。允许的内部条件通道依旧是定义173.1的较大 CPTP 类，而非定义172.1的校准源选择器；该区别与实际源、未知固定相位及终端风险的定义分别承担不同假设。
+
+## 追加锚（本行以下为增补区）
+
+## 175. 平稳经典三态的双视界校准与精确可遗忘预测
+
+**定义 175.1（带去相位状态的平稳选择器）。** 沿用定义173.1的一般 CPTP 预测器合同及定义174.1的 $n,m=n+1$；在充分近一的区间中，全部最大风险视界都属于 $\{n,m\}$，且 $n\ge2$、$m\alpha<\pi/2$。记 $c_0=r\cos\alpha$，并对零点邻域内的参数 $p,w,\theta$ 定义
+$$
+c=\frac{c_0}{1-w},\qquad q=\frac c{\cos\theta},\qquad
+a=\sqrt{\frac{1-q^2}{2(1-c)}}.
+\tag{175.1}
+$$
+物理取值要求 $0<p,w<1$、$0<a,q<1$、$c<1$。三个经典标签为 $+,-,0$，其初始分布和每次条件通道之后的转移为
+$$
+\pi=\left(\frac{1-w}{2},\frac{1-w}{2},w\right),
+\qquad T=(1-p)I+p\mathbf1\pi.
+\tag{175.2}
+$$
+标签 $\pm$ 的条件通道是相关矩阵
+$$
+C_\pm=
+\begin{pmatrix}1&a&qe^{\pm i\theta}\\a&1&a\\qe^{\mp i\theta}&a&1\end{pmatrix}
+\tag{175.3}
+$$
+的 Schur 通道，标签 $0$ 的条件通道为完全去相位。记这些通道为 $\mathcal Q_v$，则在任意系统—记忆联合输入上的处理器及初始化为
+$$
+\Lambda(X)=\sum_{v,u}T(v,u)\mathcal Q_v(X_{vv})\otimes|u\rangle\langle u|,
+\qquad \sigma=\sum_v\pi_v|v\rangle\langle v|.
+\tag{175.4}
+$$
+它在每步丢弃经典标签间的相干。真实源仍为固定未知相位的 $\mathcal M_{r,\phi}$，其环境逐步新鲜；仅预测器的内部条件通道允许离开原校准源族。
+
+**定理 175.2（不使用记忆相干的全参数三态上界）。** 对每个充分接近一的 $r<1$，存在定义175.1的合法正参数，使同一个平稳初始化、时间齐次的经典三态预测器同时满足
+$$
+\sup_{|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})=\mathcal R_1(r),
+\qquad
+\sup_{N\ge1,\,|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})=H(r),
+\tag{175.5}
+$$
+以及标准遗忘条件（173.1）。该结论包含并列最大点，不使用量子记忆相干或单独的启动状态。参数由已知 $r$ 一次选定，不随所比较的运行视界 $N$ 改变。
+
+证明。 在 $(p,w,\theta)=(0,0,\alpha)$，原端点关系
+$$
+1-r^2=2r^2(1-c_0)
+\tag{175.6}
+$$
+给出 $q=a=r$。此时标签 $0$ 不被初始化，两个端点标签永不切换，故终端预测器正是持续端点比特。
+
+首先计算一般参数的终端系数。由（175.2），转移矩阵限制到两个端点标签的行和为 $1-pw$。因此前 $N$ 次条件通道都避开 $0$ 的概率是 $(1-w)(1-pw)^{N-1}$；最后一次使用后的转移不影响该终端通道。条件于避开 $0$，符号初始均匀，转移为对称翻转链，翻转率
+$$
+f=\frac{p(1-w)}{2(1-pw)}.
+\tag{175.7}
+$$
+任何访问 $0$ 的路径都使非对角系统矩阵元归零，后续 Schur 通道不能重建它们。因此，写 $Z_{N,f}(\theta)$ 为式（173.7）的符号和余弦期望，终端系数恰为
+$$
+A_N=(1-w)a^N(1-pw)^{N-1},\qquad
+u_N=(1-w)q^N(1-pw)^{N-1}Z_{N,f}(\theta),
+\tag{175.8}
+$$
+其中 $01=12=A_N$、$02=u_N\in\mathbb R$。特别地，$u_1=(1-w)q\cos\theta=c_0$，所以关键的单步系数已被恒等地保留。
+
+用 $w,\theta$ 同时校准 $n,m$ 两个视界。定义 $F_N=u_N-r^N\cos(N\alpha)$，有限路径和使其在基点邻域具有实解析延拓。负的 $p,w$ 只用于此延拓。将基点偏导除以 $r^N$，分别记为
+$$
+d_N=\frac{\partial_\theta u_N}{r^N}
+=-\frac{N\sin((N-1)\alpha)}{\cos\alpha},\qquad
+b_N=\frac{\partial_wu_N}{r^N}=(N-1)\cos(N\alpha),
+\tag{175.9}
+$$
+以及
+$$
+h_N=\frac{\partial_pu_N}{r^N}
+=\frac12\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr].
+\tag{175.10}
+$$
+前两式直接微分（175.8）；在基点有 $q_w=r$。第三式中生存因子的一阶贡献为零，而 $f_p=1/2$；零次与一次翻转路径给出
+$$
+2h_N=\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos(N\alpha)\bigr].
+\tag{175.11}
+$$
+三角和恒等式把它化为（175.10）。对当前的早视界 $n,m$，每个括号严格为正，所以 $h_N>0$，同时 $b_N>0,d_N<0$。
+
+令 $x=n\alpha$、$\lambda=d_m/d_n$，消去共同的 $\theta$ 方向，得到两个余项
+$$
+\begin{aligned}
+R_b&=b_m-\lambda b_n
+=\frac{\sin x\cos x-n^2\sin\alpha\cos\alpha}
+{n\sin(x-\alpha)},\\
+R_h&=h_m-\lambda h_n
+=\frac{\cos\alpha\,[n^2\sin^2\alpha-\sin^2x]}
+{2n\sin\alpha\sin(x-\alpha)}.
+\end{aligned}
+\tag{175.12}
+$$
+这两个等式由 $m=n+1$ 及和角公式直接展开得到。其符号无需渐近估计：$\sin t/t$ 在 $(0,\pi)$ 严格递减，而 $0<\alpha<x<\pi/2$、$n\ge2$，所以
+$$
+\sin x<n\sin\alpha,
+\qquad
+\sin x\cos x<n\sin\alpha\cos\alpha
+<n^2\sin\alpha\cos\alpha.
+\tag{175.13}
+$$
+因此 $R_h>0$、$R_b<0$，而 $(F_n,F_m)$ 对 $(\theta,w)$ 的 Jacobian 行列式为 $r^{n+m}d_nR_b>0$。
+
+隐函数定理给出 $w(p),\theta(p)$，满足 $w(0)=0,\theta(0)=\alpha$，并精确保留
+$$
+u_n=r^n\cos(n\alpha),\qquad u_m=r^m\cos(m\alpha).
+\tag{175.14}
+$$
+对两等式微分并消元可得
+$$
+w'(0)=-\frac{R_h}{R_b}>0,\qquad
+\theta'(0)=-\frac{h_n+b_nw'(0)}{d_n}>0.
+\tag{175.15}
+$$
+沿此解支，式（175.1）及（175.6）又给出
+$$
+q'(0)=r\bigl[w'(0)+\tan\alpha\,\theta'(0)\bigr]>0,
+\qquad
+a'(0)=-\frac r2w'(0)
+-\frac{r^3\tan\alpha}{1-r^2}\theta'(0)<0.
+\tag{175.16}
+$$
+例如，对 $a^2$ 分别求偏导，基点值为 $\partial_w(a^2)=-r^2$、$\partial_\theta(a^2)=-2r^4\tan\alpha/(1-r^2)$，即得后一式。故对所选固定 $r$，全部充分小的正 $p$ 都满足 $0<w<1$、$\theta>\alpha$、$r<q<1$、$0<a<r$、$c<1$。
+
+矩阵（175.3）的一阶与二阶主子式为正，且
+$$
+\det C_\pm=1-2a^2-q^2+2a^2q\cos\theta
+=1-q^2-2a^2(1-c)=0.
+\tag{175.17}
+$$
+所以它们为半正定的秩二相关矩阵，条件 Schur 通道合法。若 $K_{v,j}$ 是 $\mathcal Q_v$ 的 Kraus 算符，则（175.4）的 Kraus 算符为 $\sqrt{T(v,u)}K_{v,j}\otimes|u\rangle\langle v|$，其伴随乘积之和为单位算符。这验证了任意联合输入上的完全正性与保迹性。
+
+对三个视界 $S=\{1,n,m\}$，单步恒等式及（175.14）给出 $u_N=r^N\cos(N\alpha)$。又有 $0\le A_N\le r^N$，且 $A_N\to r^N$ 当 $p\downarrow0$。源与预测器的 Schur 差因而为式（174.18）的矩阵，其中
+$$
+d=r^N-A_N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr).
+\tag{175.18}
+$$
+由早段相位弧几何，$|w|\le Q_N:=r^N\sin(N\alpha)$。将正 $p$ 限得充分小，可同时保证 $2(r^N-A_N)<Q_N$。包含任意参考的支配估计（174.19）于是给出风险上界 $Q_N/2$，端点相位与均衡 $02$ 输入达到它。因此单步风险精确为 $\mathcal R_1$，在 $n$ 精确达到 $H$，并在 $m$ 也保留原最优风险 $\mathcal R_m\le H$。
+
+为同时控制其余全部视界，固定 $r<\bar q<1$，缩小正 $p$ 使 $q\le\bar q$。由（175.8）有 $|u_N|\le q^N$，逐边距离估计给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-A_N+\frac{r^N+|u_N|}{2}
+\le2\bar q^N.
+\tag{175.19}
+$$
+选 $K>m$ 使 $2\bar q^K<H$，则所有 $N\ge K$ 都严格低于 $H$。其余有限个 $N<K$、$N\notin S$ 满足 $B_N<H$，而
+$$
+d_{\rm ref}(\mathcal P_{r,N},\mathcal P_{r,N}^{\rm bit})
+\le r^N-A_N+
+\frac12|u_N-r^N\cos(N\alpha)|\longrightarrow0.
+\tag{175.20}
+$$
+故这些严格余量在同一个充分小的正 $p$ 下全部保留。有限多个正邻域的交仍含正参数，并列最大点已由（175.14）精确保持。至此得到（175.5）。
+
+最后在新鲜系统输入、丢弃全部系统输出的接线中检验遗忘。记 $\Pi=\mathbf1\pi$，则 $\Pi^2=\Pi$，故
+$$
+T^N=(1-p)^NI+[1-(1-p)^N]\Pi.
+\tag{175.21}
+$$
+初始记忆可与全部系统输入及惰性参考任意相关。令 $A_v$ 为初始记忆对角块 $v$ 在偏迹全部系统输入后得到的参考正算符，则 $\sum_vA_v=\tau_R$。因为所有条件系统通道保迹，在丢弃输出后这些参考算符块只受 $T$ 作用。因此最终记忆—参考态恰为
+$$
+\tau_{KR}^{(N)}
+=(1-p)^N\sum_v|v\rangle\langle v|\otimes A_v
++[1-(1-p)^N]\sigma\otimes\tau_R.
+\tag{175.22}
+$$
+从而 $\frac12\|\tau_{KR}^{(N)}-\sigma\otimes\tau_R\|_1\le(1-p)^N$。取常值制备通道 $E_{r,N}(A)=\operatorname{Tr}(A)\sigma$，便得到
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-p)^N\longrightarrow0,
+\tag{175.23}
+$$
+即定义173.1的标准遗忘条件。证毕。
+
+这里使用的经典开关与遗忘框架见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C与§V；该文定理10的稀少噪声近似并不单独给出（175.5）的精确等号。当前构造用第三个去相位标签提供第二个可校准方向，（175.12）的相反符号保证了物理正参数下的同时补偿。第174节相干实现的读数差仍成立，但同样的三态维数上界也能由本节的纯经典实现达到；三态上界本身不能作为量子资源优势的依据。并列最大点处是否存在满足同一合同的双态实现，以及能否对 $r\uparrow1$ 保持统一遗忘率，仍未由这些构造确定。
+
+## 追加锚（本行以下为增补区）
+
+## 176. 相干相位反转与全部近一参数的双维精确最优
+
+**定义 176.1（活动比特的相位反转校准）。** 沿用定义173.1的一般 CPTP 预测器合同、最小记忆维数 $D_{\rm fg}(r)$ 及定义174.1的 $c=r\cos\alpha$、$b=r\sin\alpha$、$n,m=n+1$。令 $K=\mathbb C^2$，一次初始化为 $I_2/2$。选 $0<\kappa<r$、$z=c+iv$，采用式（174.9）—（174.10）的记录向量及相干通道 $\mathcal Q_z$。在每次 $\mathcal Q_z$ 后，对记忆依次施加 $\mathcal D_\chi$、$U_\gamma=e^{-i\gamma X/2}$ 及重置 $\mathcal R_\delta$。
+
+这里允许 $-1\le\chi<0$：$\mathcal D_\chi$ 将记忆非对角元乘以 $\chi$，仍是 CPTP 通道，因为
+$$
+\mathcal D_\chi=\frac{1+\chi}{2}\,\mathrm{id}
++\frac{1-\chi}{2}\operatorname{Ad}_Z
+=|\chi|\operatorname{Ad}_Z+(1-|\chi|)\mathcal D_0.
+\tag{176.1}
+$$
+负号表示相干的相位反转，不是负概率。此处理器没有启动标志；全部记忆维数为二。
+
+**定理 176.2（并列最大点也允许双维精确最优）。** 存在 $r_2<1$，使对每个 $r\in(r_2,1)$，都能在定义176.1中选择 $-1<\chi<0$、$0<\delta<1$、$0<\gamma<\pi$ 及合法的 $\kappa,v$，使同一个时间齐次处理器满足精确单步最优、全视界风险 $H(r)$ 及标准遗忘条件（173.1）。因此
+$$
+\boxed{D_{\rm fg}(r)=2\qquad(r_2<r<1).}
+\tag{176.2}
+$$
+这个结论包含两个相邻视界并列最大之处。所得实现实际使用相干；它不单独给出经典双态实现的下界。
+
+证明。 所有最大视界都包含在 $\{n,m\}$，且 $n\ge2$、$m\alpha<\pi/2$，见（174.5）的定位。令
+$$
+\varepsilon=1-r,\qquad \beta=-\log r,\qquad
+t_* =\frac{\pi}{3\sqrt3},\qquad
+\varepsilon n\longrightarrow t_*.
+\tag{176.3}
+$$
+以下先核对校准方程具有物理正的重置率，再选择完全正性与全视界风险所需的参数邻域。
+
+令 $q=1-\cos\gamma$、$s=1-\delta$。为在 $q=0$ 处使用解析变量，将式（174.14）的第三个坐标改写成 $j_N=\sin\gamma\,h_N$。由活动比特初始化可得
+$$
+(x_0,y_0,j_0)=(1,0,0),\qquad
+\begin{aligned}
+x_{N+1}&=cx_N-vy_N,\\
+y_{N+1}&=s\bigl[(1-q)(vx_N+cy_N)+\chi j_N\bigr],\\
+j_{N+1}&=s\bigl[-(2q-q^2)(vx_N+cy_N)+\chi(1-q)j_N\bigr].
+\end{aligned}
+\tag{176.4}
+$$
+对 $0<q<2$，取 $\gamma=\arccos(1-q)$ 即恢复实际通道；零点附近其余实参数只用于递推的解析延拓。终端系数为 $01=12=\kappa^N$、$02=x_N\in\mathbb R$，且 $x_1=c$ 恒成立。
+
+在 $q=\delta=0,v=b$，有 $x_N=r^N\cos(N\alpha)$。先暂取 $\chi=-1$，记此基点的三个偏导为
+$$
+V_N=\partial_vx_N=-Nr^{N-1}\sin((N-1)\alpha),\qquad
+D_N=\partial_\delta x_N,\qquad G_N=\partial_qx_N.
+\tag{176.5}
+$$
+后两者可从生成函数明确计算。设 $\rho^2=c^2+v^2$、$A=s(1-q)$、$B=s^2$，消去递推中的 $y,j$，得到形式幂级数恒等式
+$$
+\sum_{N\ge0}x_N\zeta^N
+=\frac{1+A(1-c)\zeta-Bc\zeta^2}
+{1-[c+A(c-1)]\zeta+[A(\rho^2-c)-Bc]\zeta^2+B\rho^2\zeta^3}.
+\tag{176.6}
+$$
+在基点令 $Q(\zeta)=1-2c\zeta+r^2\zeta^2$，直接求导给出
+$$
+\sum_{N\ge0}D_N\zeta^N=\frac{b^2\zeta^2}{Q(\zeta)^2},
+\qquad
+\sum_{N\ge0}G_N\zeta^N
+=\frac{1-\zeta}{1+\zeta}\frac{b^2\zeta^2}{Q(\zeta)^2}.
+\tag{176.7}
+$$
+特别地，
+$$
+D_N=\frac{r^N}{2}
+\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr].
+\tag{176.8}
+$$
+式（176.7）的额外因子记录相位反转对重置方向的改变。
+
+为确定两个校准方程所需重置率的符号，以下给出统一的近一渐近式。令 $a=\sqrt3$，对实变量 $t$ 定义
+$$
+\begin{aligned}
+d_\varepsilon(t)&=\frac{e^{-(\beta/\varepsilon)t}}2
+\left[\varepsilon\cot\alpha\sin\!\left(\frac\alpha\varepsilon t\right)
+-t\cos\!\left(\frac\alpha\varepsilon t\right)\right],\\
+f_\varepsilon(t)&=-\frac t r e^{-(\beta/\varepsilon)t}
+\sin\!\left(\frac\alpha\varepsilon t-\alpha\right).
+\end{aligned}
+\tag{176.9}
+$$
+于是 $D_N=\varepsilon^{-1}d_\varepsilon(\varepsilon N)$、$V_N=\varepsilon^{-1}f_\varepsilon(\varepsilon N)$。由 $\alpha/\varepsilon\to a$、$\beta/\varepsilon\to1$，这些函数及其任意固定阶导数在 $t_*$ 的紧邻域上一致收敛，极限为
+$$
+d(t)=\frac{e^{-t}}2\left[\frac{\sin(at)}a-t\cos(at)\right],
+\qquad f(t)=-te^{-t}\sin(at).
+\tag{176.10}
+$$
+
+还需把 $G_N$ 与 $d_\varepsilon'$ 联系起来，并控制相位反转的交替项。令 $z_*=re^{i\alpha}$、$k=\cot\alpha$、$a_0(z)=(z-1)/(z+1)$。对式（176.7）取系数，或对等比数列及其 $N$ 倍分别求有限和，得到精确恒等式
+$$
+G_N=-\frac12\operatorname{Re}\!\left[
+\left(a_0(z_*)(N+ik)+\frac{2z_*}{(1+z_*)^2}\right)z_*^N\right]
++\frac{2b^2}{|1+z_*|^4}(-1)^N.
+\tag{176.11}
+$$
+例如，乘子 $(1-\zeta)/(1+\zeta)$ 把数列 $z^N$ 变成 $a_0(z)z^N+2(-1)^N/(1+z)$，再对 $z$ 求导即可核对此式。由于 $z_*$ 接近一，可选趋于零的主支 $\log z_*=-\beta+i\alpha$；有
+$$
+a_0(z_*)=\tfrac12\log z_*+O(\varepsilon^3),
+\qquad
+\frac{2z_*}{(1+z_*)^2}=\frac12+O(\varepsilon^2).
+\tag{176.12}
+$$
+当 $\varepsilon N$ 在上述紧邻域内，$N+ik=O(\varepsilon^{-1})$，交替项也是 $O(\varepsilon^2)$。把（176.8）延拓到实数 $N$ 并求导，遂得
+$$
+G_N=\frac12d_\varepsilon'(\varepsilon N)+O(\varepsilon^2),
+\tag{176.13}
+$$
+余项对该邻域内的整数一致。
+
+令 $\lambda=V_m/V_n$，并设
+$$
+\Delta_D=D_m-\lambda D_n,\qquad
+\Delta_G=G_m-\lambda G_n.
+\tag{176.14}
+$$
+因为 $f(t_*)\ne0$，对 $m=n+1$ 作 Taylor 展开，利用（176.9）、（176.13）可得
+$$
+\Delta_D\longrightarrow
+d'(t_*)-\frac{f'(t_*)}{f(t_*)}d(t_*),\qquad
+\frac{\Delta_G}{\varepsilon}\longrightarrow
+\frac12\left[d''(t_*)-\frac{f'(t_*)}{f(t_*)}d'(t_*)\right].
+\tag{176.15}
+$$
+这里 $at_*=\pi/3$，直接微分（176.10）给出
+$$
+\frac{f'(t_*)}{f(t_*)}=\frac1{t_*},\quad
+d(t_*)=\frac{e^{-t_*}}4(1-t_*),\quad
+d'(t_*)=e^{-t_*}(t_*-1/4),\quad
+d''(t_*)=e^{-t_*}(1-t_*).
+\tag{176.16}
+$$
+因此记 $A_*=e^{-t_*}(t_*-1/(4t_*))>0$，则
+$$
+\Delta_D\longrightarrow A_*,\qquad
+\frac{\Delta_G}{\varepsilon}\longrightarrow-\frac{A_*}{2}.
+\tag{176.17}
+$$
+严格正号使用 $t_*>1/2$。这些极限只要求 $\varepsilon n\to t_*$，不要求最大点唯一。
+
+现在求解
+$$
+x_n(v,\delta,q)=r^n\cos(n\alpha),\qquad
+x_m(v,\delta,q)=r^m\cos(m\alpha).
+\tag{176.18}
+$$
+在基点，其关于 $(v,\delta)$ 的 Jacobian 行列式为 $V_n\Delta_D\ne0$。隐函数定理给出 $v(q),\delta(q)$，满足 $v(0)=b,\delta(0)=0$，且
+$$
+\delta'(0)=-\frac{\Delta_G}{\Delta_D},\qquad
+\frac{\delta'(0)}{1-r}\longrightarrow\frac12>0
+\quad(\chi=-1).
+\tag{176.19}
+$$
+故在充分近一的整个区间，所需重置率的一阶方向为正。基点处 $j_N=0$，所以 $V_N,D_N$ 与 $\chi$ 无关；$G_N$ 对 $\chi$ 连续。对每个这样的固定 $r$，可先选一个 $-1<\chi<0$ 充分接近 $-1$，使同一 Jacobian 仍非零且 $\delta'(0)>0$。随后固定这个 $\chi$，隐函数解对全部充分小的正 $q$ 满足 $0<\delta(q)<1$。这一步把严格相位反转移入带衰减的合法相干通道内部，并保留两个精确接触等式。
+
+接着确定完全正性与全部视界风险。固定 $\bar\rho\in(r,1)$，令
+$$
+\tau=|\chi|+(1-|\chi|)\bar\rho<1.
+\tag{176.20}
+$$
+对 $z$ 足够接近 $z_*$ 有 $|z|<\bar\rho$。由（176.1），一次 $02$ 交叉块传递的迹范数至多 $|\chi|+(1-|\chi|)|z|\le\tau$：相位反转支与原相干支都是迹范数压缩，完全去相位支的界为 $|z|$；旋转与重置仍压缩。初始 $02$ 记忆块是 $I_2/2$，迹范数为一，故
+$$
+|x_N|\le\tau^N,\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-\kappa^N+\frac{r^N+|x_N|}{2}\le2\tau^N.
+\tag{176.21}
+$$
+这同时控制任意惰性参考；最后一步使用 $r<\bar\rho\le\tau$。
+
+先选 $K_0>m$ 使 $2\tau^{K_0}<H$，再选 $\kappa<r$ 充分接近 $r$。对 $N\in\{1,n,m\}$，可保证
+$$
+2(r^N-\kappa^N)<r^N\sin(N\alpha).
+\tag{176.22}
+$$
+对其余有限的 $N<K_0$，$B_N<H$，可同时令 $r^N-\kappa^N$ 小于各严格余量的一半。此 $\kappa$ 又使 $B(\kappa,z_*)$ 严格正定，见（174.8）。固定 $\kappa$ 后，沿（176.18）选足够小的正 $q$，即可保留相关矩阵正性、$|z|<\bar\rho$、正重置率及全部有限余量，因为
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le B_N+(r^N-\kappa^N)
++\frac12|x_N-r^N\cos(N\alpha)|.
+\tag{176.23}
+$$
+在 $1,n,m$，恒等式 $x_1=c$ 与校准（176.18）使（174.19）的完整 Schur 支配估计适用，风险分别精确为 $\mathcal R_1,H,\mathcal R_m$。其他有限视界由（176.23）控制，无限尾由（176.21）控制。因此同一固定处理器在全部视界的最坏风险恰为 $H$。
+
+在新鲜输入、丢弃所有系统输出的接线中，每次使用都含独立概率 $\delta>0$ 的记忆重置。一旦重置发生，未使用的输入与参考的边缘态由保迹性保持，记忆被制备成 $I_2/2$。沿（174.24）—（174.25）的论证，任取固定记忆态 $\sigma_0$ 并令 $E_{r,N}(A)=\Phi_{r,N}(\sigma_0\otimes A)$，有
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-\delta)^N\longrightarrow0.
+\tag{176.24}
+$$
+所以实现满足标准 KW 遗忘合同。这里遗忘接线与计算终端 $x_N$ 的同一系统接线仍分别定义，框架沿用第174节所引 Kretschmann–Werner 原文。
+
+最后，相干确实影响该双维实现。固定其余已选参数，仅将 $\chi$ 改为零，由（176.4）计算前三步可得
+$$
+x_3(\chi)-x_3(0)=(1-\delta)^2\chi v^2\sin^2\gamma\ne0.
+\tag{176.25}
+$$
+对均衡 $02$ 输入，这直接改变终端读数。在系统输入 $|1\rangle$ 上，活动记忆通道的归一化 Choi 态部分转置有特征值 $\delta/4-(1-\delta)|\chi|/2$；进一步缩小正 $q$，它严格为负，因此记忆通道也不是纠缠破坏通道。二维上界结合定理169.4在相同合同中的维数一下界，得到（176.2）。证毕。
+
+本节确定的是允许一般 CPTP 内部处理器时的最小 Hilbert 空间维数。第175节的经典三态上界仍成立；是否能在并列参数处另造经典双态实现，不能由（176.25）的相干使用事实判定。式（176.19）描述零扰动附近的校准方向，不给出对 $r\uparrow1$ 统一的正遗忘率；最终参数还必须同时满足完全正性、有限风险余量与无限尾界。
+
+## 追加锚（本行以下为增补区）
+
+## 177. 经典双态的精确最优、选择器障碍与更新耦合
+
+**定义 177.1（自主经典双态 Schur 选择器的局部参数）。** 系统仍为三维，真实源、固定未知相位及全参考终端风险沿用定义173.1。经典记忆有两个标签 $+,-$，初始分布为 $(\pi,1-\pi)$，每次条件系统通道后按矩阵
+$$
+T=\begin{pmatrix}1-\ell_+&\ell_+\\\ell_-&1-\ell_-\end{pmatrix}
+\tag{177.1}
+$$
+更新，且更新不依赖系统输入。两个条件系统通道可以是任意 CPTP Schur 通道，记其 $02$ 系数为 $z_+,z_-$；不要求它们属于原校准源族，不要求初始分布平稳。其他相干系数只受各条件通道的完全正性约束。
+
+记 $U_N$ 为终端 $02$ 系数。对相应的经典路径 $V_1,\ldots,V_N$，有
+$$
+U_N=\mathbb E\prod_{j=1}^N z_{V_j},\qquad
+U_1=\pi z_++(1-\pi)z_-.
+\tag{177.2}
+$$
+局部比较点是永久端点比特的参数
+$$
+(\pi,z_+,z_-,\ell_+,\ell_-)
+=(1/2,z_*,\bar z_*,0,0),\qquad
+z_*=r e^{i\alpha}=c+ib.
+\tag{177.3}
+$$
+以下邻域只指这些参数的通常有限维拓扑，不对条件通道的其他相干系数另设接近要求。
+
+**定理 177.2（双接触零集与正转移锥的局部隔离）。** 存在 $r_3<1$，使对每个 $r\in(r_3,1)$，若持续端点比特在 $n,m=n+1$ 两个视界并列达到 $H(r)$，则存在定义177.1中（177.3）的邻域 $\mathcal U_r$，其中没有同时满足精确单步最优、全视界风险 $H(r)$ 及标准遗忘条件（173.1）的经典双态选择器。更具体地，在该邻域内，只要满足前两个风险等号，就必有
+$$
+\ell_+=\ell_-=0.
+\tag{177.4}
+$$
+这样的并列参数在每个 $(r_0,1)$ 型的充分近一区间内存在。邻域可以依赖 $r$；结论不排除邻域之外的经典双态实现，也不适用于任意非 Schur 条件通道或依赖系统输入的标签更新。
+
+证明。 先从风险合同推出必须满足的矩条件。在 $N\in\{1,n,m\}$，考虑实际相位 $\phi=\pm\alpha$ 及系统输入 $(|0\rangle+|2\rangle)/\sqrt2$。Schur 通道保持对角元，故输出半迹距离为 $|r^Ne^{\pm iN\alpha}-U_N|/2$。当前三个视界均在早段，$N\alpha<\pi/2$；风险合同因此要求 $U_N$ 同时位于以 $r^Ne^{\pm iN\alpha}$ 为圆心、以 $r^N\sin(N\alpha)$ 为半径的两个闭圆盘内。它们外切于唯一一点，故
+$$
+U_1=c,\qquad
+U_n=r^n\cos(n\alpha),\qquad
+U_m=r^m\cos(m\alpha).
+\tag{177.5}
+$$
+这里在 $n,m$ 使用两者都为最坏视界；若只有一个最大点，另一个等式并非风险合同所必需。
+
+在 $\pi$ 接近 $1/2$ 时，第一式可用复参数 $h$ 完整参数化为
+$$
+z_+=c+(1-\pi)h,\qquad z_-=c-\pi h,
+\tag{177.6}
+$$
+基点为 $h=2ib$。再令
+$$
+S=\ell_++\ell_-,\qquad D=\ell_+-\ell_-.
+\tag{177.7}
+$$
+物理转移率的非负性要求 $S\ge|D|$。有限路径和使 $U_n,U_m$ 对这些实参数解析；使用隐函数定理时允许负转移率的解析延拓，实际选择器仍必须满足非负性。
+
+将（177.5）的后两式拆成四个实方程。先计算基点的 Jacobian。记
+$$
+V_N=-Nr^{N-1}\sin((N-1)\alpha),\qquad
+E_N=\frac{r^N}{2}
+\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr],
+\tag{177.8}
+$$
+以及
+$$
+P_N=2\bigl[r^N\sin(N\alpha)
+-Nb r^{N-1}\cos((N-1)\alpha)\bigr].
+\tag{177.9}
+$$
+在零转移率处，$U_N=\pi z_+^N+(1-\pi)z_-^N$。将（177.6）代入微分，得到
+$$
+\partial_{\operatorname{Im}h}\operatorname{Re}U_N=V_N/2,
+\quad
+\partial_{\operatorname{Re}h}\operatorname{Im}U_N=-V_N/2,
+\quad
+\partial_\pi\operatorname{Im}U_N=P_N.
+\tag{177.10}
+$$
+相应的另一实部或虚部偏导为零。沿 $D=0$ 增加 $S$，两个翻转率均为 $S/2$，零次与一次翻转路径的微分给出
+$$
+\partial_S\operatorname{Re}U_N=E_N,\qquad
+\partial_S\operatorname{Im}U_N=0.
+\tag{177.11}
+$$
+因此，四个方程关于 $(\operatorname{Im}h,S,\operatorname{Re}h,\pi)$ 的 Jacobian 分成两个实块，行分别由 $(V_N/2,E_N)$ 与 $(-V_N/2,P_N)$ 构成，$N=n,m$。
+
+验证两块都非奇异。令 $\lambda=V_m/V_n$，其中 $V_n<0$。式（175.12）中相邻视界的消元恒等式给出
+$$
+\Delta_E:=E_m-\lambda E_n
+=\frac{r^{n+1}\cos\alpha\,[n^2\sin^2\alpha-\sin^2(n\alpha)]}
+{2n\sin\alpha\sin((n-1)\alpha)}>0.
+\tag{177.12}
+$$
+严格正号由 $n\ge2$、$0<n\alpha<\pi/2$ 及 $\sin(n\alpha)<n\sin\alpha$ 得到。对另一块，展开和角公式，直接从（177.8）—（177.9）可得
+$$
+P_N=4\tan\alpha\,E_N
++\frac{2r\sin^2\alpha}{\cos\alpha}\,V_N,
+\qquad
+P_m-\lambda P_n=4\tan\alpha\,\Delta_E>0.
+\tag{177.13}
+$$
+两个实块的行列式分别为 $V_n\Delta_E/2$ 与 $-V_n(P_m-\lambda P_n)/2$，所以均非零。这是有限参数处的精确判据。
+
+对每个这样的固定 $r$，实解析隐函数定理把基点附近的全部四方程解写成一条解析曲线
+$$
+(\operatorname{Im}h,S,\operatorname{Re}h,\pi)
+=(v(D),S(D),u(D),\pi(D)),
+\tag{177.14}
+$$
+并且在 $D=0$ 处取基点值。这个表述覆盖邻域内整个零集，不预设候选实现按某个可微参数族给出。
+
+交换两个标签并对系数取共轭，对上述参数的作用为
+$$
+(D,S,\pi,h)\longmapsto(-D,S,1-\pi,-\bar h).
+\tag{177.15}
+$$
+它把 $U_N$ 变成 $\bar U_N$，保持实目标（177.5），也保持基点。隐函数解的局部唯一性因此蕴含 $S(-D)=S(D)$。由于 $S(0)=0$，解析性给出常数 $C_r<\infty$，使足够小的 $D$ 满足
+$$
+|S(D)|\le C_rD^2.
+\tag{177.16}
+$$
+物理非负率又要求 $S(D)\ge|D|$。进一步缩小邻域，则 $0<|D|<1/C_r$ 时两者不相容；若 $C_r=0$，结论直接成立。因此物理解只能有 $D=0$，继而 $S=0$，得到（177.4）。
+
+当两个转移率为零时，标准新鲜输入接线中，丢弃条件系统通道的输出后，两个初始经典标签各自保留，永不混合。两个标签所对应最终记忆之差的迹范数恒为二，故不满足（173.1）。这证明邻域内不存在所要求的可遗忘选择器。
+
+最后说明并列参数并非空条件。若某个 $(r_0,1)$ 型的近一区间内每个 $r$ 都有唯一最大视界，则该视界作为整数值函数局部常数：统一尾界先将最大值比较限制为有限个视界，唯一最大点的严格差距在小邻域内保留。区间连通使它在整个区间内恒定，与 $\varepsilon n\to t_*>0$ 矛盾。因此每个 $(r_0,1)$ 型的近一区间都包含并列点，且这些点可以趋近一。证毕。
+
+第173节的经典双态构造只需保持一个最大视界；定理177.2使用两个同时必需的接触方程，并允许初始权重与条件复系数作非对称调整。该障碍针对的是“先按当前标签施加通道、再独立更新标签”的分解。下面允许系统操作与标签更新共享同一次随机选择，仍只保留一个经典比特。
+
+**定义 177.3（与翻转共同发生的去相位）。** 固定近一参数 $r$，取 $0<\delta<1-r$，记
+$$
+x=1-\delta,\qquad \rho=\frac r x,\qquad
+\kappa^2=\frac{1-\rho^2}{2(1-\rho\cos\alpha)},\qquad
+\beta=x\kappa.
+\tag{177.17}
+$$
+令 $\mathcal Q_s$ 是相关矩阵
+$$
+G_s=\begin{pmatrix}
+1&\kappa&\rho e^{is\alpha}\\
+\kappa&1&\kappa\\
+\rho e^{-is\alpha}&\kappa&1
+\end{pmatrix},\qquad s=\pm1,
+\tag{177.18}
+$$
+的 Schur 通道，$\Delta$ 是系统完全去相位通道。记忆为两个经典标签，一次均匀初始化。对任意系统—记忆联合输入定义
+$$
+\Lambda_\delta(X)=\sum_{s=\pm1}
+\left[x\mathcal Q_s(X_{ss})\otimes|s\rangle\langle s|
++\delta\Delta(X_{ss})\otimes|-s\rangle\langle-s|\right].
+\tag{177.19}
+$$
+同一次随机选择同时决定系统通道与标签更新：保持标签时施加 $\mathcal Q_s$，翻转时施加 $\Delta$。记忆基间相干在每步被去除，分支随机性来自新鲜环境，不另存为持久记忆。
+
+**定理 177.4（经典记忆也达到全参数双维最优）。** 对每个充分近一的 $r<1$，定义177.3中存在明确的正 $\delta$，使该经典双态记忆满足精确单步最优、全视界风险 $H(r)$ 及标准遗忘条件（173.1），包括全部并列最大点。其 $02$ 终端系数在每个视界都精确等于持续端点比特的系数，而不只是匹配最大点。结合维数一下界，当前合同中的最小记忆维数二可以由经典记忆达到。
+
+此外，存在与（177.19）具有相同单步系统边缘通道及记忆边缘通道的另一经典双态处理器，其全视界风险严格大于 $H(r)$。这两个边缘相同并不确定联合处理器的续接行为。
+
+证明。 首先核对合法性。由 $r<x<1$ 得 $r<\rho<1$，所以（177.17）中的分母为正，且 $\kappa>0$。不等式
+$$
+1-\rho^2\le2(1-\rho\cos\alpha)
+\tag{177.20}
+$$
+等价于 $|\rho-e^{i\alpha}|^2\ge0$，故 $\kappa\le1$。矩阵 $G_s$ 的一阶、二阶主子式非负，行列式由（177.17）恰为零，因而它是半正定相关矩阵。若 $K_{s,a}$ 为 $\mathcal Q_s$ 的 Kraus 算符，则（177.19）的 Kraus 算符可取
+$$
+\sqrt{x}K_{s,a}\otimes|s\rangle\langle s|,
+\qquad
+\sqrt\delta\,|j\rangle\langle j|\otimes|-s\rangle\langle s|.
+\tag{177.21}
+$$
+其伴随乘积之和是单位算符，故处理器在任意联合输入上 CPTP。
+
+端点关系 $2r^2c=3r^2-1$ 又给出
+$$
+\beta^2=\frac{x(x^2-r^2)}{2(x-c)},\qquad
+r^2-\beta^2
+=\frac{\delta(x^2+x+1-3r^2)}{2(x-c)}>0.
+\tag{177.22}
+$$
+严格正号使用 $x>r$ 及 $r^2+r+1-3r^2=(1-r)(2r+1)>0$。因此 $0<\beta<r$，并且 $\beta\to r$ 当 $\delta\downarrow0$。
+
+同一系统重复使用时，一条路径只要有一次翻转，其系统非对角元就被完全去相位，后续 Schur 通道不能重建。只有两条从不翻转的路径贡献相干。长度 $N$ 的保持路径包括 $N$ 次保持事件，因而其 $02$ 权重为
+$$
+x^N\rho^N e^{isN\alpha}=r^N e^{isN\alpha}.
+\tag{177.23}
+$$
+这里最后一次更新也决定最后一次系统通道，与（177.2）中仅后续更新影响路径系数的时序不同。平均两个初始标签后，终端相关矩阵精确为
+$$
+F_N=\begin{pmatrix}
+1&\beta^N&r^N\cos(N\alpha)\\
+\beta^N&1&\beta^N\\
+r^N\cos(N\alpha)&\beta^N&1
+\end{pmatrix}.
+\tag{177.24}
+$$
+
+现在给出同时控制全部视界的正参数。记 $\mathcal M_r=\operatorname*{arg\,max}_{N\ge1}B_N(r)$，选择近一区间使 $\sup_NB_N=H$。由于 $B_N\le r^N$、$H>0$，最大点集非空且有限。定义
+$$
+K_r=\min\{K\in\mathbb N:K\ge2,\ 2r^K<H(r)\},
+\tag{177.25}
+$$
+以及有限正数
+$$
+g_r=\min\left(\{B_1(r),H(r)\}
+\cup\{H(r)-B_N(r):1\le N<K_r,\ N\notin\mathcal M_r,\ N\ne1\}\right).
+\tag{177.26}
+$$
+第二个集合为空时省略它。所有最大视界都小于 $K_r$。取
+$$
+\delta=\min\left\{\frac{1-r}{4},\frac{g_r r(1-r)}{12K_r}\right\}>0.
+\tag{177.27}
+$$
+由 $\delta\le(1-r)/2$ 得 $2(x-c)\ge1-r$；式（177.22）的分子括号至多为三，故
+$$
+r-\beta\le\frac{3\delta}{r(1-r)}\le\frac{g_r}{4K_r},
+\qquad
+d_N:=r^N-\beta^N\le N(r-\beta)<\frac{g_r}{4}\quad(1\le N<K_r).
+\tag{177.28}
+$$
+
+源与（177.24）的差为式（174.18）的 Schur 乘子，其中 $d=d_N$、$w=r^N(e^{iN\phi}-\cos(N\alpha))$。由持续端点比特的风险公式，允许相位上 $\sup_\phi|w|=2B_N$。若 $d_N\le B_N$，则（174.19）的圆盘估计与均衡 $02$ 输入给出完整参考风险的精确等号
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\delta})=B_N.
+\tag{177.29}
+$$
+式（177.28）保证它同时适用于 $N=1$ 与全部 $N\in\mathcal M_r$，从而单步风险为 $\mathcal R_1$，每个最大视界的风险都为 $H$。
+
+其他视界可将与持续端点比特的差拆成两条相邻边，得到
+$$
+d_{\rm ref}(\mathcal P_{r,N}^{\delta},\mathcal P_{r,N}^{\rm bit})\le d_N,
+\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{\delta})\le B_N+d_N.
+\tag{177.30}
+$$
+当 $N<K_r$ 且不是单步或最大视界时，（177.26）、（177.28）使此界严格小于 $H$。当 $N\ge K_r$ 时，它至多 $2r^N\le2r^{K_r}<H$。因此同一个（177.27）精确实现全部风险要求，不需要逐个最大视界求隐函数。
+
+在标准新鲜输入接线中，丢弃系统输出后，保迹性使参考算符块只受对称翻转矩阵作用，其非平稳特征值为 $1-2\delta$。取忽略输入并制备均匀记忆的通道 $E_{r,N}$，对任意初始联合态与惰性参考可得
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-2\delta)^N\longrightarrow0.
+\tag{177.31}
+$$
+这里 $0<\delta<1/4$。此计算与第171节的参考算符块证明相同，因为每条更新分支中的系统通道都保迹。故经典比特满足标准 KW 遗忘条件。维数一下界仍由定理169.4给出。
+
+最后构造边缘相同但续接不同的处理器。令
+$$
+\mathcal A_s=x\mathcal Q_s+\delta\Delta,
+\qquad
+\widetilde\Lambda_\delta(X)=\sum_s\mathcal A_s(X_{ss})
+\otimes\bigl[x|s\rangle\langle s|+\delta|-s\rangle\langle-s|\bigr].
+\tag{177.32}
+$$
+它也是 CPTP，且在全部联合输入上都有
+$$
+\operatorname{Tr}_K\widetilde\Lambda_\delta
+=\operatorname{Tr}_K\Lambda_\delta,
+\qquad
+\operatorname{Tr}_S\widetilde\Lambda_\delta
+=\operatorname{Tr}_S\Lambda_\delta.
+\tag{177.33}
+$$
+第一个等式直接来自 $\mathcal A_s$ 的定义，第二个使用条件通道保迹。两者的单步系统风险、经典记忆转移及标准遗忘率相同。
+
+但是 $\mathcal A_s$ 的 $02$ 系数为 $r e^{is\alpha}$，而（177.32）的标签更新与系统通道独立。因此其第 $N$ 步系数为 $r^NZ_{N,\delta}(\alpha)$，其中 $Z$ 是式（173.7）的对称翻转路径期望。取任何最大视界 $n\ge2$；它满足 $n\alpha<\pi/2$。每条符号路径的余弦至少为 $\cos(n\alpha)$，具有正概率的一次翻转路径则严格大于它，故 $Z_{n,\delta}(\alpha)>\cos(n\alpha)$。端点相位与均衡 $02$ 输入于是给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^n,\widetilde{\mathcal P}_{r,n})
+\ge\frac{r^n}{2}
+\sqrt{\sin^2(n\alpha)+[Z_{n,\delta}(\alpha)-\cos(n\alpha)]^2}
+>H(r).
+\tag{177.34}
+$$
+这证明最后的边缘与续接断言。证毕。
+
+经典记忆通道与标准遗忘框架的来源仍为 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C及§V。当前两个处理器都只保留经典标签；区别在于系统去相位与标签翻转是否属于同一次联合事件。定理177.2的局部障碍要求（177.2）的先按标签施加通道再更新的分解，（177.19）不具有该分解。式（177.33）并不修复这项缺失的联合关系。由此，在当前近一参数合同下，维数二的精确最优不需要相干记忆；第176节的相干实现及其擦除相干后的读数差仍成立。这里没有对参数趋近一给出统一的正遗忘率，也不要求有限时间内严格重置。
+
+## 追加锚（本行以下为增补区）
+
+## 178. 固定边缘下的联合配对、精确风险与二步辨识
+
+**定义 178.1（固定边缘的配对区间）。** 固定充分近一的 $r$，采用定义177.3及式（177.25）—（177.27）的 $\delta,x,\rho,\kappa,\beta,K_r,g_r$，其中 $\delta$ 必须是（177.27）给出的显式选择。记忆一次均匀初始化。对 $0\le w\le\delta$，定义同一个时间齐次联合处理器
+$$
+\begin{aligned}
+\Lambda_w(X)=\sum_s\Big(&[(x-w)\mathcal Q_s(X_{ss})+w\Delta(X_{ss})]
+\otimes|s\rangle\langle s|\\
+&+[w\mathcal Q_s(X_{ss})+(\delta-w)\Delta(X_{ss})]
+\otimes|-s\rangle\langle-s|\Big).
+\end{aligned}
+\tag{178.1}
+$$
+参数 $w$ 同时是“施加 $\mathcal Q_s$ 并翻转”与“完全去相位但保持标签”的概率。四个非负分支的总权重为一。$w=0$ 给出（177.19），$w=x\delta$ 给出独立组合（177.32）。记其同一系统终端通道为 $\mathcal P_{r,N}^{w}$，全视界风险为 $W_r(w)$，并令 $\mathcal M_r=\operatorname*{arg\,max}_NB_N(r)$。
+
+**定理 178.2（整个配对区间的精确风险与唯一最优点）。** 这一族处理器全都 CPTP，使用同一经典双态记忆，具有相同的两个单步边缘通道、相同的精确单步最优风险及相同的标准遗忘界（177.31）。令 $p=w/x$，则终端系数精确为
+$$
+01=12=\beta^N,\qquad
+02=r^N Z_{N,p}(\alpha).
+\tag{178.2}
+$$
+对整个 $0\le w\le\delta$，全参考风险满足
+$$
+W_r(w)=\max_{N\in\mathcal M_r}
+\frac{r^N}{2}
+\sqrt{\sin^2(N\alpha)+[Z_{N,w/x}(\alpha)-\cos(N\alpha)]^2}.
+\tag{178.3}
+$$
+因此 $w=0$ 是这一固定边缘配对区间内唯一达到 $H(r)$ 的点；任意 $w>0$ 都有 $W_r(w)>H(r)$。
+
+证明。 因为 $w\le\delta<x$，式（178.1）是非负 CP 分支之和，总权重为一。对系统输出或记忆输出分别偏迹，四个分支合并为固定的系统通道 $x\mathcal Q_s+\delta\Delta$ 及固定的记忆翻转率 $\delta$。这证明两个边缘通道在全部联合输入上不依赖 $w$，保迹分支也使新鲜输入接线中的参考算符块始终只受同一个经典翻转矩阵作用。故标准遗忘界及单步系统通道都与定理177.4相同。
+
+任何包含 $\Delta$ 的路径都不贡献终端非对角元。每个当前标签下施加 $\mathcal Q_s$ 的总概率为 $x$；条件于全部 $N$ 步都使用该通道，其符号链初始均匀，每步翻转率为 $w/x$。权重 $x^N$ 分别抵消 $\rho^N$ 与合并 $\kappa^N$，得到（178.2）。影响符号和的翻转有 $N-1$ 次，最后一次标签更新不改变最后一次 $\mathcal Q_s$ 的相位。
+
+对任何 $N\in\mathcal M_r$，已有 $N\ge2$、$N\alpha<\pi/2$。符号和的绝对值不超过 $N$，所以
+$$
+\cos(N\alpha)\le Z_{N,p}(\alpha)\le1.
+\tag{178.4}
+$$
+当 $p>0$ 时，$p\le\delta/x<1$，恰有一次翻转的路径具有正概率，故左侧严格。令 $z=Z_{N,p}(\alpha)>0$；实际相位弧上 $|e^{iN\phi}-z|$ 的最大值位于端点，等于 $\sqrt{\sin^2(N\alpha)+(z-\cos(N\alpha))^2}$。该值至少为 $\sin(N\alpha)$。又由（177.28）有 $d_N=r^N-\beta^N<B_N=H$，所以（174.19）的完整参考支配估计适用，端点的均衡 $02$ 输入达到它。故（178.3）右侧每一项都是对应视界的精确风险，且对 $w>0$ 严格大于 $H$。
+
+还须排除其他视界在整个配对区间内超过这些值。对任意 $N$，把有翻转与无翻转的条件符号路径分开，得到
+$$
+|Z_{N,p}(\alpha)-\cos(N\alpha)|
+\le2[1-(1-p)^{N-1}]\le2(N-1)p.
+\tag{178.5}
+$$
+于是三个非对角边的参考距离估计给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{w})
+\le B_N+d_N+r^N(N-1)p.
+\tag{178.6}
+$$
+当 $N<K_r$、$N\notin\mathcal M_r$ 且 $N\ne1$ 时，由（177.27）—（177.28）及 $p\le\delta/x$、$x>r$，有
+$$
+d_N<\frac{g_r}{4},\qquad
+r^N(N-1)p<\frac{K_r\delta}{x}
+\le\frac{g_r r(1-r)}{12x}<\frac{g_r}{12}.
+\tag{178.7}
+$$
+故（178.6）严格小于 $B_N+g_r/3<H$。单步通道固定，其风险是 $\mathcal R_1<H$。当 $N\ge K_r$，由 $|Z_{N,p}|\le1$ 可将风险统一界为
+$$
+r^N-\beta^N+\frac{r^N+r^N|Z_{N,p}|}{2}
+\le2r^N\le2r^{K_r}<H.
+\tag{178.8}
+$$
+全部非最大视界在整个配对区间内都低于 $H$，而最大视界至少达到 $H$，遂得（178.3）及唯一最优断言。证毕。
+
+**定理 178.3（二步充分读数与风险二次项）。** 在定义178.1的固定族内，一个二步相干读数就能恢复 $w$：
+$$
+u_2(w):=(\mathcal P_{r,2}^{w})_{02}
+=r^2\cos(2\alpha)+\frac{2r^2\sin^2\alpha}{x}w.
+\tag{178.9}
+$$
+因此整个族的全部终端通道都由该读数与已知参数唯一决定。两个二步通道的全参考距离为
+$$
+d_{\rm ref}(\mathcal P_{r,2}^{w},\mathcal P_{r,2}^{0})=J(r)w,
+\qquad J(r)=\frac{r^2\sin^2\alpha}{x}>0.
+\tag{178.10}
+$$
+对固定 $r$，当 $w\downarrow0$，有
+$$
+W_r(w)-H(r)=C(r)w^2+O_r(w^3),
+\tag{178.11}
+$$
+其中
+$$
+C(r)=\max_{N\in\mathcal M_r}
+\frac{r^NL_N^2}{4x^2\sin(N\alpha)}>0,
+\qquad
+L_N=\sum_{j=1}^{N-1}
+[\cos((N-2j)\alpha)-\cos(N\alpha)].
+\tag{178.12}
+$$
+令 $\varepsilon=1-r$、$t_* =\pi/(3\sqrt3)$，则
+$$
+\varepsilon^2C(r)\longrightarrow
+C_*:=\frac{e^{-t_*}(1-t_*)^2}{8\sqrt3},
+\qquad
+\frac{J(r)}{\varepsilon^2}\longrightarrow3.
+\tag{178.13}
+$$
+这些式子特别给出有明确取序的极限
+$$
+\lim_{r\uparrow1}(1-r)^3
+\left[\lim_{w\downarrow0}
+\frac{\sqrt{W_r(w)-H(r)}}
+{d_{\rm ref}(\mathcal P_{r,2}^{w},\mathcal P_{r,2}^{0})}\right]
+=\frac{\sqrt{C_*}}3.
+\tag{178.14}
+$$
+
+证明。 两步的符号和只可能为 $\pm2$ 或零，故 $Z_{2,p}=(1-p)\cos(2\alpha)+p$，得到（178.9）。输入 $(|0\rangle+|2\rangle)/\sqrt2$ 后，测量 $|0\rangle\langle2|+|2\rangle\langle0|$ 的期望就是实系数 $u_2(w)$，因而这是可操作的读数。它对 $w$ 仿射且斜率非零；由（178.2）即可计算所有其他终端系数。这一充分性只针对当前固定的一参数族。
+
+两个二步通道的相邻系数均为 $\beta^2$，只在 $02$ 边相差（178.9）的增量。第161节的单边全参考距离因此为增量模长的一半，得到（178.10）。
+
+对任意固定 $N\in\mathcal M_r$，有限路径和给出
+$$
+Z_{N,p}(\alpha)-\cos(N\alpha)=L_Np+O_N(p^2).
+\tag{178.15}
+$$
+每个求和项严格为正，因为 $N\alpha<\pi/2$、$|N-2j|<N$，所以 $L_N>0$。对（178.3）中的平方根在零处展开，并使用 $p=w/x$，其对应视界的风险为
+$$
+H(r)+\frac{r^NL_N^2}{4x^2\sin(N\alpha)}w^2+O_r(w^3).
+\tag{178.16}
+$$
+最大点集只有一个或两个元素；对这些有限个式子取最大，余项仍为 $O_r(w^3)$，二次系数为各二次系数的最大值。这一步不要求最大函数在整个参数区间可微，得到（178.11）。
+
+为计算 $r\uparrow1$ 的极限，三角和给出
+$$
+L_N=\cot\alpha\sin(N\alpha)-N\cos(N\alpha).
+\tag{178.17}
+$$
+每个最大视界都满足 $\varepsilon N\to t_*$、$N\alpha\to\pi/3$、$r^N\to e^{-t_*}$。又有 $\alpha/\varepsilon\to\sqrt3$，故
+$$
+\varepsilon L_N\longrightarrow\frac{1-t_*}{2}.
+\tag{178.18}
+$$
+显式选择 $\delta\le\varepsilon/4$ 使 $x\to1$。把这些极限代入（178.12），一个最大点或两个最大点都给出同一个极限 $C_*$；代入（178.10）则得到 $J/\varepsilon^2\to3$。对每个固定 $r$，先由（178.10）—（178.11）求内层极限 $\sqrt{C(r)}/J(r)$，再取 $r\uparrow1$，即得（178.14）。证毕。
+
+式（178.1）的两个单步边缘在整个区间上恒定，因而不能辨识 $w$；二步读数则在这一族内将这些不同的联合实现逐一分开。式（178.14）比较的是规定次序下的局部风险与通道距离，不声称对所有 $r$ 存在统一的有限误差邻域，也不直接给出有限样本复杂度。所有记忆标签仍为经典；被保留和检测的是系统操作与记忆更新的联合配对关系。
+
+## 追加锚（本行以下为增补区）
+
+## 179. 联合配对的辨识信息量与有限查询成本
+
+**定义 179.1（重置后的二步查询与统计任务）。** 固定定义178.1的一参数族及已知的充分近一参数 $r$，令 $\varepsilon=1-r$。一次查询把隐藏经典记忆重新均匀初始化，对信号连续施加两次同一处理器，只返回最终信号；不同查询使用独立的新记忆。允许任意参考系统，以及完整查询之间不依赖未知 $w$ 的自适应操作；不允许读取隐藏标签或干预一次查询的内部两步。由（178.2）、（178.9），查询通道 $\mathcal T_w:=\mathcal P_{r,2}^{w}$ 是相关矩阵为
+$$
+F(a,u(w))=
+\begin{pmatrix}1&a&u(w)\\a&1&a\\u(w)&a&1\end{pmatrix},
+\qquad
+a=\beta^2,\quad
+u(w)=u_0+2Jw,\quad u_0=r^2\cos(2\alpha)
+\tag{179.1}
+$$
+的实 Schur 通道，其中 $J=r^2\sin^2\alpha/x$、$0\le w\le\delta$。
+
+采用对称对数导数信息量：$\dot\sigma=(L\sigma+\sigma L)/2$ 时 $I(\sigma)=\operatorname{Tr}(\sigma L^2)$。用 $I_1(r,w)$ 表示一次查询在全部信号—参考输入上的最大信息量，用 $I_m(r,w)$ 表示 $m$ 次完整查询的全部允许自适应协议之信息量上确界。参数微分保持 $r$ 固定；端点信息量取连续单侧值。本文使用的参数无关通道下信息量单调性及经典程序模拟界，分别是量子估计与通道模拟的既有工具；经典模拟的具体形式可参见 Demkowicz-Dobrzański、Kołodyński、Guţă，*The elusive Heisenberg limit in quantum enhanced metrology*，arXiv:1201.3940v2，式（18）—（19）。一般可编程通道的自适应归约及其辨识下界见 Pirandola、Lupo，*Ultimate precision of adaptive noise estimation*，arXiv:1609.02160v3，补充材料式（85）；其要求程序界与可达界分开的限制在此保留。
+
+**定理 179.2（这一配对族的精确单次信息量）。** 对全部充分近一的 $r$ 及全部 $w\in[0,\delta(r)]$，有
+$$
+I_1(r,w)=\frac{4J(r)^2}{1-u(w)^2}.
+\tag{179.2}
+$$
+均衡输入 $(|0\rangle+|2\rangle)/\sqrt2$ 和 $02$ 对称、反对称基测量达到此值，加入参考系统不增加这个单次最优值。并且
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{I_1(r,w)}{(1-r)^3}-9\right|\longrightarrow0
+\qquad(r\uparrow1).
+\tag{179.3}
+$$
+
+证明。 先核对适用区间。由（177.27）—（177.28），$r-\beta\le g_r/(4K_r)$。有 $g_r\le B_1=O(\varepsilon)$，而最大视界 $n$ 满足 $\varepsilon n\to t_*>0$、$K_r>n$，故
+$$
+\beta=r+O(\varepsilon^2),\qquad
+a=1-2\varepsilon+O(\varepsilon^2),\qquad
+u(w)=1-2\varepsilon+O(\varepsilon^2)
+\tag{179.4}
+$$
+在整个配对区间上一致成立。最后一个式子使用 $J=O(\varepsilon^2)$、$w\le\delta\le\varepsilon/4$。所以 $0<a<1$ 且 $2a-1<u(w)<1$；上界也可由 $u(w)=r^2Z_{2,w/x}(\alpha)\le r^2<1$ 得到。
+
+以下在保持 $a$ 固定时对 $u$ 微分。任意纯信号—参考输入写成 $\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$。输出与矩阵
+$$
+R_p(u)=\operatorname{diag}(\sqrt p)F(a,u)
+\operatorname{diag}(\sqrt p)
+\tag{179.5}
+$$
+经一个不依赖 $u$ 的等距映射相同，因为不同 $i$ 对应的信号基向量正交。混合输入可先纯化，信息量单调性保证这不会减少信息量。因此优化只需考察概率向量 $p$。
+
+交换信号的 $0,2$ 标签记为 $U$。通道与此交换相容。对给定纯输入 $|\psi\rangle$，考虑保留一个参考标记的纯输入
+$$
+|\widetilde\psi\rangle=
+\frac{|\psi\rangle|0\rangle_F+(U\otimes I)|\psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{179.6}
+$$
+其信号人口满足 $p_0=p_2$。输出后去相位标记，得到两个等权且信息量相同的条件输出，信息量等于原输入所给的值。去相位不增加信息量，故（179.6）的信息量至少与原输入一样大。于是可限制到 $p_0=p_2=t/2$、$p_1=1-t$，而不是仅凭信息量的凸性断言这种限制。
+
+令 $\ell=(1-u)/2$、$h=(1+u)/2$。在 $02$ 反对称、对称及 $1$ 的基下，（179.5）分成特征值 $t\ell$ 和二阶块
+$$
+\begin{pmatrix}
+th&a\sqrt{t(1-t)}\\
+a\sqrt{t(1-t)}&1-t
+\end{pmatrix}.
+\tag{179.7}
+$$
+对 $0<t<1$ 解对称对数导数方程，得到关于 $u$ 的信息量
+$$
+\mathcal I_u(t)=\frac t4\left[
+\frac1\ell+
+\frac{1-t(\ell+a^2)}{(1-t\ell)(h-a^2)}\right],
+\qquad
+\frac{d\mathcal I_u}{dt}=
+\frac{1-a^2/(1-t\ell)^2}{4\ell(h-a^2)}.
+\tag{179.8}
+$$
+第一项来自标量块；二阶块的导数为 $\operatorname{diag}(t/2,0)$，其行列式为 $t(1-t)(h-a^2)$，直接代入方程给出第二项。由于 $h>a$、$1-t\ell\ge h$，导数严格为正。端点由各自支持上的信息量或连续极限得到，故最大值在 $t=1$，等于 $1/(1-u^2)$。均衡 $02$ 输入的输出在固定对称、反对称基下给出概率 $(1\pm u)/2$，这一测量达到该信息量。再使用 $du/dw=2J$，得（179.2）。
+
+由（179.4），$1-u(w)^2=4\varepsilon+O(\varepsilon^2)$ 一致成立；由（178.13），$J/\varepsilon^2\to3$。代入即得（179.3）。$F(a,u)$ 在 $2a-1<u<1$ 内正定，因此各端点附近的通道有光滑延伸，所用连续单侧信息量无额外奇点。证毕。
+
+**定理 179.3（允许查询间自适应的信息量界）。** 定义
+$$
+q_\pm(w)=\frac{1\pm u(w)}2,\qquad
+\pi_+(w)=q_+(w)-a,\quad\pi_-(w)=q_-(w),
+\qquad
+I_{\rm prog}(r,w)=J^2\left(\frac1{\pi_+(w)}+\frac1{\pi_-(w)}\right).
+\tag{179.9}
+$$
+在定理179.2的区间内，两种程序概率严格为正。对任意正整数 $m$，
+$$
+m I_1(r,w)\le I_m(r,w)\le m I_{\rm prog}(r,w),
+\tag{179.10}
+$$
+并有一致极限
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{I_{\rm prog}(r,w)}{(1-r)^3}-18\right|
+\longrightarrow0.
+\tag{179.11}
+$$
+因此最佳自适应信息量为 $\Theta(m(1-r)^3)$，其中常数可对全部 $m\ge1$ 和允许的 $w$ 统一选择；此界不确定 $9$ 与 $18$ 之间的最佳渐近常数。
+
+证明。 令 $\mathcal Q_\pm$ 为相邻系数为零、$02$ 系数为 $\pm1$ 的固定 Schur 通道。其相关矩阵半正定，故它们 CPTP。逐个比较相关矩阵的系数，得到精确分解
+$$
+\mathcal T_w=a\,\operatorname{Id}
++\pi_+(w)\mathcal Q_+
++\pi_-(w)\mathcal Q_-.
+\tag{179.12}
+$$
+三个权重非负、总和为一。将它们作为正交经典程序态的概率，固定控制通道读取程序并执行对应通道，就实现（179.12）。把任意协议的每次查询替换为此固定控制操作，并把全部协议操作合并，最终输出为
+$$
+\sigma_w^{(m)}=\mathcal A\bigl(\tau_w^{\otimes m}\bigr),
+\qquad
+\tau_w=\operatorname{diag}(a,\pi_+(w),\pi_-(w)),
+\tag{179.13}
+$$
+其中 $\mathcal A$ 不依赖 $w$，包含全部输入、参考和适应操作。程序信息量是（179.9），张量积可加性及参数无关通道下的单调性给出（179.10）的上界。分别使用 $m$ 个均衡 $02$ 输入给出下界。这是经典程序模拟方法在当前通道中的应用，不要求当前三维通道具备传态协变性，也不把可编程上界当作自动可达值。
+
+由（179.4），$\pi_\pm(w)=\varepsilon+O(\varepsilon^2)$ 一致成立。结合 $J/\varepsilon^2\to3$，即得（179.11）。与定理179.2的统一极限合用，得到所述量级。证毕。
+
+**定理 179.4（有限查询的二点辨识成本）。** 取同一允许区间中的 $w_0<w_1$，令 $d=w_1-w_0>0$。未知通道等先验地取为 $\mathcal T_{w_0}$ 或 $\mathcal T_{w_1}$，记 $m$ 次查询的最小平均判错概率下确界为 $P_{e,m}^*$。定义两个根保真度
+$$
+\begin{aligned}
+f_{\rm sig}&=\sqrt{q_+(w_0)q_+(w_1)}+
+\sqrt{q_-(w_0)q_-(w_1)},\\
+f_{\rm prog}&=a+\sqrt{\pi_+(w_0)\pi_+(w_1)}+
+\sqrt{\pi_-(w_0)\pi_-(w_1)}.
+\end{aligned}
+\tag{179.14}
+$$
+则有有限次数的界
+$$
+\frac{1-\sqrt{1-f_{\rm prog}^{\,2m}}}{2}
+\le P_{e,m}^*\le\frac{f_{\rm sig}^{\,m}}2.
+\tag{179.15}
+$$
+若 $m_{1/4}$ 是使 $P_{e,m}^*\le1/4$ 的最小正整数，则
+$$
+\frac{\log(4/3)}{-2\log f_{\rm prog}}
+\le m_{1/4}\le
+\left\lceil\frac{\log2}{-\log f_{\rm sig}}\right\rceil.
+\tag{179.16}
+$$
+当 $r\uparrow1$ 时，在全部 $0\le w_0<w_1\le\delta(r)$ 上一致有
+$$
+\frac{1-f_{\rm sig}}{\varepsilon^3d^2}\longrightarrow\frac98,
+\qquad
+\frac{1-f_{\rm prog}}{\varepsilon^3d^2}\longrightarrow\frac94.
+\tag{179.17}
+$$
+特别地，
+$$
+m_{1/4}=\Theta\!\left(\frac1{(1-r)^3(w_1-w_0)^2}\right),
+\tag{179.18}
+$$
+常数在该区间上统一。该上界由独立均衡 $02$ 输入和经典似然比判别保证，无须估计量无偏或渐近正态假设。
+
+证明。 由（179.13），任何自适应输出的半迹范数距离不超过两个 $m$ 份程序态的距离。程序态可交换，其根保真度为 $f_{\rm prog}^m$；根保真度 $f$ 与半迹范数距离 $D$ 的既有不等式 $D\le\sqrt{1-f^2}$，结合等先验 Helstrom 公式，给出（179.15）的下界。它也可直接由经典分布的柯西—施瓦茨不等式得到。
+
+独立使用均衡 $02$ 输入并在对称、反对称基测量，得到 $m$ 份概率向量 $q(w_j)$。两种联合分布的最优经典判错率等于逐结果较小概率之和的一半。用 $\min\{p,q\}\le\sqrt{pq}$，即得（179.15）的可达上界。解下界不超过 $1/4$ 的必要条件及上界不超过 $1/4$ 的充分条件，得（179.16）。
+
+为证明一致尺度，注意相应可变概率之间的差恰为 $\pm Jd$。对任意两个概率向量 $b,c$，有
+$$
+1-\sum_i\sqrt{b_ic_i}
+=\frac12\sum_i(\sqrt{b_i}-\sqrt{c_i})^2.
+\tag{179.19}
+$$
+对（179.14）的两个向量应用此式并有理化平方根，分别得到
+$$
+1-f_{\rm sig}=\frac{J^2d^2}{2}
+\left[
+\frac1{(\sqrt{q_+(w_0)}+\sqrt{q_+(w_1)})^2}
++\frac1{(\sqrt{q_-(w_0)}+\sqrt{q_-(w_1)})^2}
+\right],
+\tag{179.20}
+$$
+$$
+1-f_{\rm prog}=\frac{J^2d^2}{2}
+\left[
+\frac1{(\sqrt{\pi_+(w_0)}+\sqrt{\pi_+(w_1)})^2}
++\frac1{(\sqrt{\pi_-(w_0)}+\sqrt{\pi_-(w_1)})^2}
+\right].
+\tag{179.21}
+$$
+在整个参数区间上，$q_+=1-\varepsilon+O(\varepsilon^2)$、$q_-=\varepsilon+O(\varepsilon^2)$、$\pi_\pm=\varepsilon+O(\varepsilon^2)$，且 $J/\varepsilon^2\to3$。逐项代入即得（179.17）；这些精确恒等式不要求 $d$ 与 $\varepsilon$ 之间有额外下界。由于 $d\le\delta(r)\to0$，两个根保真度均一致趋于一，$-\log f\sim1-f$ 也一致成立。（179.16）遂给出（179.18），整数取整不改其统一量级。证毕。
+
+上述成本属于定义179.1规定的重置查询实验。第178节的一个精确期望值能辨识参数，与（179.18）的实验次数下界相容：辨识映射的单射性不提供该映射的统计精度。这里的自适应下界不涵盖可干预二步内部过程或可读取隐藏记忆的另一种实验接口。
+
+## 追加锚（本行以下为增补区）
+
+## 180. 查询时长、配对辨识的总调用成本与临界视界的界限
+
+**定义 180.1（可选择时长的终端查询）。** 保留定义178.1的处理器及其显式参数，令 $\varepsilon=1-r$、$\gamma=-\log r$。一次时长为正整数 $N$ 的查询，重新均匀初始化隐藏记忆，让同一系统无中间干预地通过 $N$ 次处理器，只返回终端系统；其成本为 $N$ 次处理器调用。不同查询的记忆独立。初始可访问态、控制规则与私有随机源均不依赖实际未知 $w$，但可依赖已知 $r$ 和待区分的参数对。允许任意有限维量子工作空间与参考系统；查询间操作采用具有有限或标准 Borel 经典结果空间的可测量子仪器，并允许根据已有经典记录选择下一次时长和是否停止；时长选择是经典选择，不包括时长的相干叠加。不得访问隐藏记忆。总预算 $B$ 要求每条记录分支都满足 $\sum_jN_j\le B$，输入准备和重置不另计成本，平均判错率无条件计算。
+
+记时长 $N$ 的查询通道为 $\mathcal T_w^{(N)}$，则其 Schur 系数为
+$$
+a_N=\beta^N,\qquad
+u_N(w)=r^NZ_{N,w/x}(\alpha),\qquad
+F_N(w)=\begin{pmatrix}1&a_N&u_N(w)\\a_N&1&a_N\\u_N(w)&a_N&1\end{pmatrix}.
+\tag{180.1}
+$$
+记 $n(r)=\min\mathcal M_r$ 为最小最大风险视界。对等先验的两个已知假设 $0\le w_0<w_1\le\delta(r)$，令 $d=w_1-w_0$；$B_{1/4}(r;w_0,w_1)$ 是使允许协议的平均判错率下确界不超过 $1/4$ 的最小整数总预算。采用第179节的经典程序模拟方法；允许自适应选择时长时，程序分布按当前所选时长取值，不能直接假设所有程序态同分布。
+
+**定理 180.2（全部整数时长上的统一程序界）。** 存在与 $N,w$ 无关的常数 $c,C>0$，使全部充分近一的 $r$、全部 $N\ge1$ 和 $w\in[0,\delta(r)]$ 都满足
+$$
+\pi_{N,+}(w):=\frac{1+u_N(w)-2a_N}{2}\ge c\min\{\gamma N,1\},
+\qquad
+\pi_{N,-}(w):=\frac{1-u_N(w)}2\ge c\min\{\gamma N,1\}.
+\tag{180.2}
+$$
+因而每个时长都有正的经典程序分解
+$$
+\mathcal T_w^{(N)}
+=a_N\operatorname{Id}+\pi_{N,+}(w)\mathcal Q_+
++\pi_{N,-}(w)\mathcal Q_-.
+\tag{180.3}
+$$
+这里 $\mathcal Q_\pm$ 是第179节相邻系数为零、$02$ 系数为 $\pm1$ 的固定通道。一次查询的参考辅助最优信息量及其程序信息量分别满足
+$$
+I_1^{(N)}(r,w)=\frac{u_N'(w)^2}{1-u_N(w)^2}
+\le I_{{\rm prog},N}(r,w)
+:=\frac{u_N'(w)^2}{4}
+\left(\frac1{\pi_{N,+}(w)}+\frac1{\pi_{N,-}(w)}\right)
+\le\frac{CN}{\varepsilon}.
+\tag{180.4}
+$$
+均衡 $02$ 输入达到第一个等号。另令 $P_{N,w}=(a_N,\pi_{N,+}(w),\pi_{N,-}(w))$ 为程序分布；使用自然对数的经典相对熵满足有限参数差界
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le \frac{CNd^2}{\varepsilon}.
+\tag{180.5}
+$$
+
+证明。 由 $\alpha/\gamma\to\sqrt3<7/4$，可统一取 $\alpha/\gamma\le7/4$、$x\ge1/2$。令 $t=\gamma N$。有 $a_N\le r^N=e^{-t}$，而每条符号路径的相位绝对值不超过 $N\alpha\le7t/4$。
+
+若 $0<t\le1$，用 $\cos z\ge1-z^2/2$ 及指数函数的三阶下界，得到
+$$
+\begin{aligned}
+1+u_N-2a_N
+&\ge e^{-t}\left(e^t-1-\frac{49t^2}{32}\right)\\
+&\ge e^{-t}t\left(1-\frac{33t}{32}+\frac{t^2}{6}\right)
+\ge\frac{13}{96e}\,t.
+\end{aligned}
+\tag{180.6}
+$$
+最后一个二次式在 $[0,1]$ 上递减，末值为 $13/96$。若 $1\le t\le7/6$，则每条相位的绝对值不超过 $49/24<2\pi/3$，所以 $Z_{N,w/x}\ge-1/2$，从而
+$$
+1+u_N-2a_N\ge1-\frac{5}{2e}>0.
+\tag{180.7}
+$$
+若 $t\ge7/6$，则粗界 $Z_{N,w/x}\ge-1$ 给出
+$$
+1+u_N-2a_N\ge1-3e^{-7/6}>0.
+\tag{180.8}
+$$
+另有 $1-u_N\ge1-e^{-t}\ge(1-e^{-1})\min\{t,1\}$。故（180.2）可取
+$$
+c=\min\left\{
+\frac{13}{192e},\frac{1-5/(2e)}2,
+\frac{1-3e^{-7/6}}2,\frac{1-e^{-1}}2
+\right\}>0.
+\tag{180.9}
+$$
+程序权重总和为一，逐系数比较即得（180.3）。这也证明 $2a_N-1<u_N<1$，故第179节证明中的一般 Schur 信息量优化适用，给出（180.4）的精确单次值。
+
+为控制导数，令 $M=N-1$，以 $c_k\in[-1,1]$ 表示在 $M$ 个位置恰有 $k$ 次翻转时终端余弦的平均值。条件符号链给出 Bernstein 多项式
+$$
+Z_{N,p}=\sum_{k=0}^{M}\binom Mk p^k(1-p)^{M-k}c_k,
+\quad
+|\partial_pZ_{N,p}|\le2(N-1),
+\quad
+|\partial_p^2Z_{N,p}|\le4(N-1)(N-2).
+\tag{180.10}
+$$
+后两界分别来自一阶、二阶系数差；$N=1,2$ 的零阶情形按实际多项式解释。于是 $|u_N'(w)|\le2(N-1)e^{-t}/x$。代入（180.2）可得
+$$
+\frac{I_{{\rm prog},N}}N
+\le\frac{2}{cx^2\gamma}
+\frac{t e^{-2t}}{\min\{t,1\}}
+\le\frac{8}{c\varepsilon}.
+\tag{180.11}
+$$
+这里使用 $\gamma\ge\varepsilon$ 及 $t e^{-2t}/\min\{t,1\}\le1$，可取 $C=8/c$。经典模拟和信息量单调性给出（180.4）的其余不等式。
+
+对有限参数差，令 $b_N=[u_N(w_1)-u_N(w_0)]/2$，则 $|b_N|\le e^{-t}(N-1)d/x$。两个程序分布只有后两个权重分别改变 $b_N,-b_N$。由 $D(P\Vert Q)\le\sum_i(P_i-Q_i)^2/Q_i$，
+$$
+D(P_{N,w_0}\Vert P_{N,w_1})
+\le b_N^2\left(\frac1{\pi_{N,+}(w_1)}+\frac1{\pi_{N,-}(w_1)}\right)
+\le\frac{CNd^2}{\varepsilon},
+\tag{180.12}
+$$
+证明（180.5）。证毕。
+
+**定理 180.3（允许自适应时长的最优总调用量级）。** 在定义180.1的协议类内，有
+$$
+B_{1/4}(r;w_0,w_1)
+=\Theta\!\left(\frac{1-r}{(w_1-w_0)^2}\right),
+\tag{180.13}
+$$
+其中常数可对全部充分近一的 $r$ 和全部允许的正参数差统一选择。上界由固定时长 $n(r)$ 的独立均衡 $02$ 输入实现，下界覆盖依据已有记录自适应选择时长的全部允许协议。若只允许第179节的二步查询，则相同判错目标的最小总调用数为 $\Theta(\varepsilon^{-3}/d^2)$；因此允许选择时长后的最小成本与二步接口的最小成本之比为 $\Theta(\varepsilon^4)$。
+
+证明。 先证明预算下界。把协议的每次时长 $N$ 查询替换为（180.3）的固定受控通道和一个新鲜程序符号。为分析保留全部程序符号、量子仪器的经典输出、时长选择和停止记录，记其联合分布为 $\mathsf P_j$，$j=0,1$。给定完整的过往记录，当前条件量子态及控制操作不依赖未知假设；因此下一次仪器输出和时长选择具有相同的条件核。只有新程序符号的条件分布 $P_{N,w_j}$ 依赖假设。经典相对熵的链式法则和（180.5）于是给出
+$$
+D(\mathsf P_0\Vert\mathsf P_1)
+\le\frac{Cd^2}{\varepsilon}
+\mathbb E_0\!\left[\sum_jN_j\right]
+\le\frac{CBd^2}{\varepsilon}.
+\tag{180.14}
+$$
+每次时长至少为一，故至多发生 $B$ 次查询；停止后补一个不依赖参数的吸收记录，即可把链式法则写在固定长度上。允许一般经典结果空间时，同式由条件概率核的链式法则给出。
+
+最终条件量子态由完整记录经不依赖假设的制备映射给出。因此最终两个输出的半迹范数距离 $d_{\rm tr}(\sigma_0,\sigma_1)=\tfrac12\lVert\sigma_0-\sigma_1\rVert_1$ 不超过 $\operatorname{TV}(\mathsf P_0,\mathsf P_1)$。经典 Pinsker 不等式及（180.14）给出
+$$
+d_{\rm tr}(\sigma_0,\sigma_1)
+\le\sqrt{\frac{CBd^2}{2\varepsilon}}.
+\tag{180.15}
+$$
+等先验判错率不超过 $1/4$ 要求该距离至少为 $1/2$，故 $B\ge\varepsilon/(2Cd^2)$。对协议下确界取逼近序列仍保留此必要条件。
+
+再构造匹配上界。记
+$$
+T=\frac{\pi}{3\sqrt3},\qquad A=e^{-T},\qquad U=\frac A2,
+\qquad D_* =\frac{A(1-T)}2>0.
+\tag{180.16}
+$$
+已有 $\varepsilon n\to T$、$n\alpha\to\pi/3$、$r^n\to A$。又由 $g_r\le B_1=O(\varepsilon)$、$K_r>n$ 及显式 $\delta$ 得 $\delta=O(\varepsilon^3)$。第179节给出 $r-\beta=O(\varepsilon^2)$，所以 $a_n=\beta^n\to A$。
+
+由（178.17）记 $L_n=\partial_pZ_{n,p}|_{p=0}$，则 $\varepsilon L_n\to(1-T)/2$。二阶导数界（180.10）证明
+$$
+\sup_{0\le w\le\delta}
+\left|u_n'(w)-\frac{r^nL_n}{x}\right|
+\le\frac{4r^n(n-1)(n-2)\delta}{x^2}=O(\varepsilon).
+\tag{180.17}
+$$
+因而 $u_n(w)\to U$ 及 $\varepsilon u_n'(w)\to D_*$ 都在整个区间上一致成立；积分后还有对所有正参数差的一致割线极限
+$$
+\frac{\varepsilon[u_n(w_1)-u_n(w_0)]}{w_1-w_0}\longrightarrow D_*.
+\tag{180.18}
+$$
+这一步不把一个仅对固定参数差有效的余项除以任意小的 $d$。并列最大视界也满足同样的视界极限。
+
+均衡 $02$ 测量给出 Bernoulli 概率 $q_\pm^{(n)}(w)=(1\pm u_n(w))/2$。两个假设的根保真度 $f_n$ 满足精确恒等式
+$$
+1-f_n=\frac{[u_n(w_1)-u_n(w_0)]^2}{8}
+\sum_{\nu=\pm}
+\frac1{\left(\sqrt{q_\nu^{(n)}(w_0)}+
+\sqrt{q_\nu^{(n)}(w_1)}\right)^2}.
+\tag{180.19}
+$$
+于是，在全部允许参数对上一致有
+$$
+\frac{1-f_n}{d^2/\varepsilon^2}\longrightarrow
+\frac{F_*}{8}>0,
+\qquad F_*:=\frac{D_*^2}{1-U^2}
+=\frac{A^2(1-T)^2}{4(1-A^2/4)}.
+\tag{180.20}
+$$
+$m$ 个独立均衡测量的似然比测试具有判错率至多 $f_n^m/2$。故取 $m=O(\varepsilon^2/d^2)$ 即可达到 $1/4$，所需总调用数 $nm=O(\varepsilon/d^2)$。由于 $d\le\delta=O(\varepsilon^3)$，$\varepsilon^2/d^2\to\infty$ 一致成立，整数取整的附加一次查询不改变成本量级。与下界合并即得（180.13）；第179节的二步接口成本再乘每次的固定成本二，得到所述比值。证毕。
+
+**定理 180.4（预测临界视界不等于最佳信息时长）。** 对任意固定 $t>0$ 和满足 $\varepsilon N(r)\to t$ 的整数时长序列，最优单次信息量的每调用极限为
+$$
+\varepsilon\frac{I_1^{(N(r))}(r,w)}{N(r)}
+\longrightarrow
+f(t):=
+\frac{e^{-2t}[\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)]^2}
+{t[1-e^{-2t}\cos^2(\sqrt3t)]},
+\tag{180.21}
+$$
+且收敛对 $w\in[0,\delta(r)]$ 一致。在 $T=\pi/(3\sqrt3)$ 处，$f'(T)>0$；因此存在略长于临界视界的时长，其渐近每调用信息量严格更大。这里不声称已经确定 $f$ 的全局最大点或自适应信息量的精确最佳常数。
+
+证明。 对该序列，（180.10）的二阶导数界与 $\delta=O(\varepsilon^3)$ 仍给出与（180.17）同阶的误差。三角和（178.17）于是给出一致极限
+$$
+\varepsilon u_N'(w)\longrightarrow
+e^{-t}\left[\frac{\sin(\sqrt3t)}{\sqrt3}-t\cos(\sqrt3t)\right],
+\qquad u_N(w)\longrightarrow e^{-t}\cos(\sqrt3t).
+\tag{180.22}
+$$
+将其代入（180.4）的精确单次值，即得（180.21），包括方括号为零的时长。
+
+令 $g(t)=\sin(\sqrt3t)/\sqrt3-t\cos(\sqrt3t)$，则 $g'(t)=\sqrt3t\sin(\sqrt3t)$。在 $T$ 处直接对数微分得到
+$$
+\frac{f'(T)}{f(T)}
+=-2+\frac{6T}{1-T}-\frac1T
+-\frac{2A^2}{1-A^2/4}>0.
+\tag{180.23}
+$$
+确有 $1/2<T<1$，所以前三项之和大于二；又 $e^T>1+T>3/2$，故 $A<2/3$，最后一个正分式小于一。因此右端为正，小幅增加 $T$ 会增加 $f$。这一常数层面的改进与（180.13）的最优成本量级相容。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 181. 实环境标架、精确自适应信息量与最优查询尺度
+
+**定义 181.1（局部信息率与预算优化）。** 沿用第180节的重置终端查询、经典时长选择及分支预算合同。在固定的 $r,w$ 处对未知参数 $w$ 微分；每个候选控制协议在求导时保持固定。令 $I_m^{(N)}(r,w)$ 为 $m$ 次固定时长 $N$ 查询的全部允许自适应协议的最大信息量，令 $I_{B,\mathrm{var}}^*(r,w)$ 为总调用预算 $B$ 下、允许经典自适应时长的最终记录与量子输出之信息量上确界，并定义
+$$
+\mathscr I(r,w):=\sup_{N\ge1}
+\frac{u_N'(w)^2}{N[1-u_N(w)^2]}.
+\tag{181.1}
+$$
+这些量是局部 SLD 信息量准则；固定局部设计点上的优化不自动给出未知参数的有限样本最优判别常数。以下使用的环境扩张与交叉项消去方法属于既有通道估计工具：Demkowicz-Dobrzański、Maccone，*Using entanglement against noise in quantum metrology*，arXiv:1407.2934v3，式（9），给出交叉算符为零时的一般自适应上界。这里直接构造达到单次下界的环境标架，并将其用于当前配对族。
+
+**定理 181.2（所有固定时长的精确自适应加法性）。** 对全部充分近一的 $r$、全部 $w\in[0,\delta(r)]$ 和正整数 $m,N$，有
+$$
+I_m^{(N)}(r,w)
+=m\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.2}
+$$
+独立均衡 $02$ 输入及各次的固定对称、反对称基测量达到等号。特别地，第179节的二步接口满足精确式
+$$
+I_m^{(2)}(r,w)=m\frac{4J(r)^2}{1-u(w)^2},
+\qquad
+\sup_{w\in[0,\delta(r)]}
+\left|\frac{I_m^{(2)}(r,w)}{m(1-r)^3}-9\right|\longrightarrow0,
+\tag{181.3}
+$$
+且极限对所有正整数 $m$ 统一。该式收紧第179节的程序上界，不改变其有限辨识成本结论。
+
+证明。 固定 $N$，略写 $a=a_N$、$u=u_N(w)$、$h=(1+u)/2$、$\ell=(1-u)/2$。由（180.2）有 $0<a<h<1$。在实三维环境中取单位向量
+$$
+v_0=(\sqrt h,\sqrt\ell,0),\qquad
+v_2=(\sqrt h,-\sqrt\ell,0),\qquad
+v_1=\left(\frac a{\sqrt h},0,\sqrt{1-\frac{a^2}{h}}\right).
+\tag{181.4}
+$$
+其 Gram 矩阵恰为 $F(a,u)$，所以等距映射 $V_u|i\rangle=|i\rangle v_i$ 实现该 Schur 通道。各 $v_i$ 为实单位向量，故
+$$
+V_u^\dagger\partial_uV_u=0,
+\qquad
+(\partial_uV_u)^\dagger\partial_uV_u
+=\operatorname{diag}\left(
+\frac1{16h\ell},\frac{a^2}{16h^2(h-a^2)},\frac1{16h\ell}\right).
+\tag{181.5}
+$$
+其中中间项不超过端点项，等价于 $a^2\le h^2$。因此对 $w$ 求导后，记 $A_w=(\partial_wV_w)^\dagger\partial_wV_w$，有
+$$
+V_w^\dagger\partial_wV_w=0,
+\qquad
+4\lVert A_w\rVert=\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.6}
+$$
+
+说明它怎样控制已有参数信息的输入。设信号—参考态的当前切向量满足 $\dot\rho=(L\rho+\rho L)/2$，且 $I(\rho)=\operatorname{Tr}(\rho L^2)<\infty$。取任一纯化 $|\psi\rangle$，令 $|\xi\rangle=(L\otimes I)|\psi\rangle/2$，则
+$$
+\langle\psi|\xi\rangle=0,\qquad
+4\lVert\xi\rVert^2=I(\rho).
+\tag{181.7}
+$$
+局部归一化曲线 $\bigl(|\psi\rangle+s|\xi\rangle\bigr)/\sqrt{1+s^2\lVert\xi\rVert^2}$ 的约化态具有相同的当前态和一阶切向量。这里仅匹配切向量，不要求它在邻域中纯化原来的整条输入曲线，因此不需要把任意变秩输入的 SLD 值误等同于整条曲线的最小纯化速度。
+
+施加 $V_w$ 后，纯态切向量为 $\dot V_w|\psi\rangle+V_w|\xi\rangle$。由（181.6），交叉内积消失，纯态切向量与纯态本身仍正交。偏迹的信息量单调性遂给出
+$$
+I\bigl((\mathcal T_w^{(N)}\otimes\operatorname{Id})(\rho_w)\bigr)
+\le I(\rho_w)+4\operatorname{Tr}(\rho_wA_w)
+\le I(\rho_w)+\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.8}
+$$
+参考上的恒等因子在迹中省略；无限输入信息量时上界按扩展实数理解。该论证也覆盖秩亏的有限 SLD 切向量，因为约化态的 SLD 信息量只依赖当前态与一阶切向量。
+
+从不依赖未知参数的初态开始，每次查询间控制都不增加信息量，每次查询最多增加（181.8）的第二项。归纳得到（181.2）的上界。独立均衡输入达到单次最优信息量，其固定基测量产生独立 Bernoulli 样本，信息量可加，给出匹配下界。（181.3）再由第179节的一致单次极限得到。端点按通道的光滑局部延伸取单侧值。证毕。
+
+**定理 181.3（自适应预算的信息率）。** 第181.1式的上确界对每个允许的 $r,w$ 都由某个有限整数时长达到，并有
+$$
+I_{B,\mathrm{var}}^*(r,w)\le B\,\mathscr I(r,w),
+\qquad
+\lim_{B\to\infty}\frac{I_{B,\mathrm{var}}^*(r,w)}B=\mathscr I(r,w).
+\tag{181.9}
+$$
+因此经典反馈选择时长不能超过最佳固定时长的局部每调用信息率。此结论不把有限预算中不能整除的剩余调用算成已经使用。
+
+证明。 在当前选择的时长寄存器上，（181.6）的等距映射作分块受控作用，停止分支取恒等映射。交叉算符在每块都为零。对每条已有记录应用（181.8）并保留经典记录的信息量，得到一次查询的信息增量不超过当前时长 $N$ 的 $I_1^{(N)}(r,w)$ 的期望。对全部查询求和，
+$$
+I_{\rm out}(r,w)
+\le\mathbb E_w\sum_j I_1^{(N_j)}(r,w)
+\le\mathscr I(r,w)\,\mathbb E_w\sum_jN_j
+\le B\,\mathscr I(r,w).
+\tag{181.10}
+$$
+这里使用带经典记录的条件信息量分解；标准 Borel 结果空间以相应条件积分表示。也可把整个有限预算协议纯化，保留正交的记录环境：参数无关的仪器扩张保持切向量范数，每个受控 $V_N$ 的交叉项为零，其新增平方范数按当前记录概率加权，直接得到同一个界。停止后补恒等映射，使总槽数不超过 $B$。
+
+对固定 $r,w$，由（180.10）及 $|u_N|\le r^N$，
+$$
+\frac{I_1^{(N)}(r,w)}N
+\le\frac{4(N-1)^2r^{2N}}{x^2N(1-r^{2N})}\longrightarrow0
+\qquad(N\to\infty).
+\tag{181.11}
+$$
+而 $N=2$ 的信息量严格为正，所以最大值由有限 $N_*$ 达到。预算 $B$ 时使用 $\lfloor B/N_*\rfloor$ 次独立均衡查询，达到 $\lfloor B/N_*\rfloor I_1^{(N_*)}$；除以 $B$ 并令 $B\to\infty$，与上界合并证明（181.9）。证毕。
+
+**定理 181.4（全时长最优常数的变分表达）。** 令 $f(t)$ 为（180.21）的显式曲线，则
+$$
+F_{\max}:=\max_{t>0}f(t)
+\tag{181.12}
+$$
+存在、有限且严格为正，并有
+$$
+\sup_{w\in[0,\delta(r)]}
+\left|(1-r)\mathscr I(r,w)-F_{\max}\right|
+\longrightarrow0.
+\tag{181.13}
+$$
+任何最优整数时长 $N_*(r,w)$ 的归一化值 $(1-r)N_*(r,w)$ 都最终落在一个固定紧区间内；沿任意 $r\uparrow1$、允许的 $w=w(r)$ 及最优时长选择，其聚点均属于 $\operatorname*{arg\,max}_{t>0}f(t)$。反过来，任取该最大点集中的 $t_0$，按 $N(r)=\lfloor t_0/(1-r)\rfloor$ 选择查询时长，就在全部允许 $w$ 上统一达到极限信息率 $F_{\max}/(1-r)$。不要求最大点唯一。
+
+证明。 必须同时控制短时长、紧区间和长时长，不能仅对（180.21）的逐点极限取上确界。令 $s=\gamma N$，其中 $\gamma=-\log r$。翻转一个 Bernoulli 位至多使相位改变 $2N\alpha$，且改变前后的相位绝对值都不超过 $N\alpha$。用余弦导数界 $|\sin z|\le|z|$，得到另一条统一导数界
+$$
+|\partial_p Z_{N,p}|\le2(N-1)N^2\alpha^2\le2N^3\alpha^2.
+\tag{181.14}
+$$
+因为 $\alpha/\gamma$ 有界、$x\ge1/2$、$\varepsilon\le\gamma$，以及 $1-u_N^2\ge1-e^{-2s}$，对 $0<s\le1$ 可用（181.14）证明
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_0s^4.
+\tag{181.15}
+$$
+具体地，左侧不超过常数倍的 $\varepsilon N^5\alpha^4/s$，而 $\alpha\le C\gamma$ 将其界为常数倍的 $(\varepsilon/\gamma)s^4$。对 $s\ge1$，改用（180.10）的一阶粗界，得到
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_\infty s e^{-2s}.
+\tag{181.16}
+$$
+两个常数都可与 $N,w,r$ 无关。这两条界分别在 $s\downarrow0$ 和 $s\to\infty$ 一致趋零。
+
+在任一固定 $0<b\le\varepsilon N\le B_0<\infty$ 的区间上，（180.17）的误差控制统一成立：$N=O(\varepsilon^{-1})$、$\delta=O(\varepsilon^3)$，所以导数误差为 $O(\varepsilon)$。结合三角和（178.17）及 $\alpha/\varepsilon\to\sqrt3$，可得（180.22）及（180.21）在这个区间和全部允许 $w$ 上的统一版本。分母有固定正下界 $1-r^{2N}$，故取平方与商不破坏统一收敛。
+
+显式 $f$ 连续，并由上述尾界满足 $f(t)\to0$，当 $t\downarrow0$ 或 $t\to\infty$；在 $T=\pi/(3\sqrt3)$ 处 $f(T)>0$。因此 $F_{\max}$ 存在且最大点集是 $(0,\infty)$ 内的非空紧集。先把两端的统一尾界压到任意给定误差之下，再在中间紧区间取统一极限，即得（181.13）。
+
+同样的尾界与 $f(T)>0$ 把所有离散最优时长限制在统一紧区间。若其归一化时长沿子列收敛到 $t$，紧区间上的统一极限及（181.13）强迫 $f(t)=F_{\max}$。最后，$\varepsilon\lfloor t_0/\varepsilon\rfloor\to t_0$，代入统一紧区间极限即证明反向可达性。由（180.23），$T$ 自身不是该最大点集的成员；这里仍不提供全局最大点的唯一性或闭式表达。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 182. 偏置判别的三能级增益与最优读出的任务依赖
+
+**定义 182.1（同一实 Schur 族的二元决策）。** 固定 $0<a<1$ 和
+$$
+2a-1<u_0<u_1<1,
+\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},
+\qquad
+\mathcal T_u(X)=F(a,u)\odot X.
+\tag{182.1}
+$$
+该范围内 $F(a,u)$ 正定且对角为一，因此 $\mathcal T_u$ 是通道。一次实验可自由选择与未知假设无关的信号—参考输入，使用一次 $\mathcal T_{u_j}$，再作联合测量。假设 $H_j$ 的先验为 $\pi_j$；损失为猜错的概率。定义
+$$
+h_j=\frac{1+u_j}{2},\quad \ell_j=1-h_j,\quad
+\pi_0=\frac{h_1}{h_0+h_1},\quad
+\pi_1=\frac{h_0}{h_0+h_1},\quad
+k=\pi_0-\pi_1=\frac{u_1-u_0}{2+u_0+u_1}>0.
+\tag{182.2}
+$$
+这里先固定两条候选通道，再指定这一组合法先验；它不是对全部先验的最优式。均衡 $02$ 探针 $|+\rangle=(|0\rangle+|2\rangle)/\sqrt2$ 的输出为
+$$
+\tau_j=h_j|+\rangle\langle+|+\ell_j|-\rangle\langle-|,
+\qquad | -\rangle=(|0\rangle-|2\rangle)/\sqrt2.
+\tag{182.3}
+$$
+故保留整个输出态与保留二项概率 $(h_j,\ell_j)$ 对这组实验等价。本文使用第15.3节的 Schur 输出等距表示与第121节的实验比较原则。一般量子统计比较的文献为 Buscemi，*Comparison of quantum statistical models: equivalent conditions for sufficiency*，arXiv:1004.3794v4：定义7比较全部决策集合与收益，式（49）—（50）定义 CPTP 充分性；定理3的统计态射与命题5的完全比较须区分。以下通过具体风险差与正性障碍论证，不借用任意维度下未经限定的比较逆定理。
+
+**定理 182.2（选定偏置先验的精确全局最优风险）。** 在（182.1）—（182.2）的实验中，均衡 $02$ 输出的最小风险为 $\pi_1$，而允许任意信号—参考输入时的最小风险为
+$$
+P_{\rm err}^*=\pi_1-k\frac{a^2}{1+2a}<\pi_1.
+\tag{182.4}
+$$
+令 $d=1+2a$、$\nu_*=a^2/d$。达到等号的输入与猜测 $H_1$ 的测量效应分别为
+$$
+|\psi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)+\sqrt{\frac ad}|1\rangle,
+\qquad
+M_1=|\chi_*\rangle\langle\chi_*|,
+\quad
+|\chi_*\rangle=
+\sqrt{\frac{1+a}{2d}}(|0\rangle+|2\rangle)-\sqrt{\frac ad}|1\rangle.
+\tag{182.5}
+$$
+另一个效应为 $M_0=I-M_1$；无需参考系统。
+
+证明。 由先验的选法，$\pi_1h_1=\pi_0h_0$，故均衡输出的加权差为 $-k|-\rangle\langle-|$。其正部为零，始终猜 $H_0$ 已达到风险 $\pi_1$。对一般输入，通道的加权差满足
+$$
+\Delta:=\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}
+=-k\,\mathcal S_{F_-},\qquad F_-:=F(a,-1),
+\quad \mathcal S_C(X):=C\odot X.
+\tag{182.6}
+$$
+这里 $\mathcal S_{F_-}$ 只是 Hermitian 保持线性映射，并不假定它为通道。
+
+先将任意混合信号—参考输入纯化；丢弃额外纯化系统不增加 Hermitian 迹范数，因此求上界只需纯输入。写 $|\Psi\rangle=\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$、$D_p=\operatorname{diag}(\sqrt{p_i})$。信号标签保证 $|i\rangle|v_i\rangle/\sqrt{p_i}$ 两两正交，零人口处任选参考单位向量即可补成等距映射 $V$。对任意 Hermitian 矩阵 $C$，
+$$
+(\mathcal S_C\otimes\operatorname{Id})(|\Psi\rangle\langle\Psi|)
+=VD_pCD_pV^\dagger.
+\tag{182.7}
+$$
+因此迹范数只依赖 $p$，同样的值可由信号纯态 $\sum_i\sqrt{p_i}|i\rangle$ 达到。
+
+以下正半定分解同时控制所有人口分布，无须先假定最优输入对称。令 $q=(1,-1,1)^{\mathsf T}$、$z=(a,1+a,a)^{\mathsf T}$，则直接逐项计算得
+$$
+C:=F_-+\nu_*qq^{\mathsf T}
+=2|-\rangle\langle-|+\frac{zz^{\mathsf T}}d\succeq0.
+\tag{182.8}
+$$
+由于 $C$ 的每个对角元为 $1+\nu_*$，而 $q$ 的分量平方均为一，矩阵
+$D_pF_-D_p=D_pCD_p-\nu_*D_pqq^{\mathsf T}D_p$ 的右侧两项分别正半定，迹为 $1+\nu_*$ 与 $\nu_*$。迹范数三角不等式遂给出
+$$
+\lVert D_pF_-D_p\rVert_1\le1+2\nu_*.
+\tag{182.9}
+$$
+
+取（182.5）的输入人口 $p_*=(\frac{1+a}{2d},\frac ad,\frac{1+a}{2d})$，令 $s=a/d$、$t=1-s$。在 $|-\rangle$ 方向，$D_{p_*}F_-D_{p_*}$ 的特征值为 $t>0$；在 $|+\rangle,|1\rangle$ 张成的空间内，其矩阵为
+$$
+\begin{pmatrix}0&a\sqrt{st}\\a\sqrt{st}&s\end{pmatrix}.
+\tag{182.10}
+$$
+向量 $\sqrt t|+\rangle-\sqrt s|1\rangle=|\chi_*\rangle$ 的特征值为 $-a s=-\nu_*$，另一个特征值为正。因此（182.9）达到等号，而 $M_1$ 正是加权输出差 $-kD_{p_*}F_-D_{p_*}$ 的正谱投影。使用二元 Helstrom 公式 $P_{\rm err}=(1-\lVert\Delta(\rho)\rVert_1)/2$，得到（182.4）。
+
+也可直接核对两种条件概率：
+$$
+m_j:=\Pr(M_1\mid H_j)
+=\frac{(1+a)^2h_j}{d^2}-\frac{a^2}d,
+\qquad
+\pi_1m_1-\pi_0m_0=k\nu_*.
+\tag{182.11}
+$$
+所以 $\pi_0m_0+\pi_1(1-m_1)=\pi_1-k\nu_*$，与谱计算一致。证毕。
+
+**定理 182.3（两能级可恢复与三能级不可恢复的精确分界）。** 固定任一纯信号—参考输入，并以 $p_i$ 表示其三个信号人口。存在与 $j$ 无关的 CPTP 解码器，将两个均衡输出 $\tau_j$ 分别变成该输入的两个通道输出，当且仅当
+$$
+p_0p_1p_2=0.
+\tag{182.12}
+$$
+在（182.2）的偏置任务中，所有满足（182.12）的纯输入最小风险都恰为 $\pi_1$；所有 $p_0p_1p_2>0$ 的纯输入都能取得严格小于 $\pi_1$ 的风险。此分类包括任意参考，但不将任意混合输入按其对角人口作同样分类。
+
+证明。 因为 $\tau_j$ 在同一基中对角，任何解码器对这两个态的作用等于按 $+$、$-$ 制备两个固定状态 $\sigma_+,\sigma_-$。由 $h_0\ne h_1$，方程 $\rho_j=h_j\sigma_++\ell_j\sigma_-$ 唯一确定
+$$
+\sigma_\pm=VD_pF(a,\pm1)D_pV^\dagger.
+\tag{182.13}
+$$
+两者迹均为一。$F(a,1)$ 正半定，其反对称特征值为零、对称块行列式为 $2(1-a^2)>0$，故 $\sigma_+$ 总为状态。另一方面，
+$$
+\det(D_pF_-D_p)=-4a^2p_0p_1p_2.
+\tag{182.14}
+$$
+三个人口均正时该行列式为负，$\sigma_-$ 不正，故解码器不存在；同时加权输出差 $-kVD_pF_-D_pV^\dagger$ 有严格正部，Helstrom 风险严格小于 $\pi_1$。任一人口为零时，剩余的至多二阶主子矩阵正半定：相邻块行列式为 $1-a^2>0$，$02$ 块行列式为零。这时 $\sigma_-$ 也是状态，制备（182.13）即给出解码器，且加权输出差负半定，风险等于 $\pi_1$。证毕。
+
+**定理 182.4（不存在对所有先验统一最优的一次探针）。** 对（182.1）的同一对候选通道，没有一个固定的一次信号—参考输入，能在所有二元先验下都达到允许任意输入的最小风险，即使允许测量随先验变化。特别地，第179—181节的均衡探针在局部 SLD 信息量和等先验判别上的最优性，不使它成为全部决策任务的充分读出。
+
+证明。 先验相等时，未加权通道差仅有 $02,20$ 系数 $u_1-u_0$。由（182.7），任一纯输入给出的迹范数为
+$$
+2(u_1-u_0)\sqrt{p_0p_2}\le u_1-u_0.
+\tag{182.15}
+$$
+等号强迫 $p_1=0$、$p_0=p_2=1/2$。因此均衡探针达到等先验全局最小风险 $1/2-(u_1-u_0)/4$，而每个达到该最小值的纯信号—参考输入，在（182.2）下的风险均为 $\pi_1$，严格大于（182.4）。这排除纯输入的统一最优性。
+
+若某个混合输入在所有先验下统一最优，将其额外纯化且保留纯化参考后，丢弃该参考能复现原实验，所以纯化实验在每个先验下至少一样好。原实验已是全局最优，纯化也必须在每个先验下最优，与上述结论矛盾。
+
+同一个障碍还排除更强的程序模拟：不存在固定 CPTP 处理器，以任意信号输入及一份 $\tau_j$ 为输入，精确实现整个 $\mathcal T_{u_j}$。否则固定程序基态 $+$、$-$ 得到两个 CPTP 映射 $\mathcal R_+,\mathcal R_-$，线性方程唯一强迫 $\mathcal R_\pm=\mathcal S_{F(a,\pm1)}$。但 $F_-$ 有负特征值，$\mathcal S_{F_-}$ 作用于均匀信号纯态给出 $F_-/3$，甚至不保持正性，矛盾。
+
+对第177—181节的终端查询，可取 $a=a_N$、$u_j=u_N(w_j)$，只要选出的两值满足 $u_0<u_1$；第180节保证（182.1）的严格域，二步查询的 $w_0<w_1$ 总满足这一顺序。此时（182.4）的风险差完全发生在一次完整重置查询内部，不要求访问隐藏记忆，也不改变既有等先验多次判别的成本界。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 183. 全先验判别曲线与三能级探针的精确适用区间
+
+**定义 183.1（有序候选与先验偏置）。** 沿用（182.1）的同一对通道，记
+$$
+D=u_1-u_0>0,\qquad v=\frac{u_0+u_1}{2},\qquad
+\pi_0=\frac{1+b}{2},\quad\pi_1=\frac{1-b}{2},\qquad -1\le b\le1.
+\tag{183.1}
+$$
+令 $R^*(b)$ 为一次通道调用、任意信号—参考输入及联合测量的最小平均误判概率。探针和测量可以依赖已知的候选通道与先验，不可依赖实际未知标签。以下给出全部先验的最优值；采用的 Helstrom 公式和参考归约与第182节相同。加权通道范数的一般框架可参见 Jenčová，*Comparison of quantum channels and statistical experiments*，arXiv:1512.07016v2，第2.2节式（1）—（3）；这里直接求出当前三阶符号的最优值。
+
+对 $b>0$，定义
+$$
+c=\frac{D-2b(1+v)}4,\qquad q=ba,\qquad
+b_-:=\frac{D}{2+u_0+u_1+4a},\qquad
+b_+:=\frac{D}{2+u_0+u_1-4a^2}.
+\tag{183.2}
+$$
+这些符号中的 $c,q$ 随 $b$ 变化，且 $0<b_-<b_+<1$。
+
+**定理 183.2（偏向较小参数时的三个最优区间）。** 对 $0<b\le1$，有
+$$
+R^*(b)=\frac{1-b}{2}-G(b),
+\qquad
+G(b)=
+\begin{cases}
+c,&0<b\le b_-,\\[2pt]
+\displaystyle\frac{q^2+bc}{b-c+2q},&b_-<b<b_+,\\[6pt]
+0,&b_+\le b\le1.
+\end{cases}
+\tag{183.3}
+$$
+第一个区间可用均衡 $02$ 输入，读到 $|+\rangle$ 时猜 $H_1$；最后一个区间始终猜 $H_0$ 即最优。中间区间令
+$$
+s_*:=\frac{q-c}{b-c+2q},\qquad t_*:=1-s_*=
+\frac{b+q}{b-c+2q}.
+\tag{183.4}
+$$
+此时 $0<s_*<1$，输入 $\sqrt{t_*}|+\rangle+\sqrt{s_*}|1\rangle$，并以
+$|\eta_*\rangle=\sqrt{t_*}|+\rangle-\sqrt{s_*}|1\rangle$ 的投影为猜 $H_1$ 的效应，即达到（183.3）。全部最优值都无需参考系统；端点可以存在额外的最优决策，不要求最优实现唯一。
+
+证明。 加权通道差 $\pi_1\mathcal T_{u_1}-\pi_0\mathcal T_{u_0}$ 的 Schur 符号为
+$$
+M=\begin{pmatrix}-b&-q&z\\-q&-b&-q\\z&-q&-b\end{pmatrix},
+\qquad z=\frac D2-bv=b+2c.
+\tag{183.5}
+$$
+其输出的迹恒为 $-b$，故给定输入的误判率为 $\pi_1$ 减去加权输出正部的迹。由（182.7）及纯化，只需对人口 $p$ 最大化 $\operatorname{Tr}(D_pMD_p)_+$。
+
+为求该最大值，可以将 $p_0,p_2$ 对称化，但须保留相干旗标。令 $U$ 交换能级 $0,2$，将任意纯输入 $|\Psi\rangle$ 替换成
+$$
+\frac{|\Psi\rangle|0\rangle_F+(U\otimes I)|\Psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{183.6}
+$$
+新输入的人口为 $((p_0+p_2)/2,p_1,(p_0+p_2)/2)$。对输出旗标去相干后，得到两个等权且酉等价的 Hermitian 块，迹范数之和等于原输入的迹范数。去相干不增加 Hermitian 迹范数，所以未去相干的新输出至少一样好；又因迹固定，正部迹也至少一样大。再由（182.7），可用同人口的信号纯态达到新值。
+
+因此取 $p_1=s$、$p_0=p_2=(1-s)/2$。在 $|-\rangle$ 方向，矩阵 $D_pMD_p$ 的特征值为 $-(b+c)(1-s)\le0$，其中
+$b+c=[D+2b(1-v)]/4>0$；对称块为
+$$
+B_s=\begin{pmatrix}
+c(1-s)&-q\sqrt{s(1-s)}\\
+-q\sqrt{s(1-s)}&-bs
+\end{pmatrix}.
+\tag{183.7}
+$$
+它至多有一个严格正特征值。
+
+当 $c\ge q$ 时，$cI-B_s$ 的对角元非负，且行列式为
+$$
+s\bigl[c^2-q^2+s(bc+q^2)\bigr]\ge0.
+\tag{183.8}
+$$
+所以正部迹至多为 $c$；$s=0$ 达到该值。此条件恰为 $b\le b_-$。
+
+当 $-ba^2<c<q$ 时，令 $L=b-c+2q>b+q>0$、$g=(q^2+bc)/L>0$。下面给出对任意人口都有效的上界。令 $r=(1,-1,1)^{\mathsf T}$，则
+$$
+M-g rr^{\mathsf T}\preceq0.
+\tag{183.9}
+$$
+确实，反对称特征值为 $-2(b+c)<0$；对称块为
+$\left(\begin{smallmatrix}2(c-g)&\sqrt2(g-q)\\\sqrt2(g-q)&-b-g\end{smallmatrix}\right)$，其行列式为
+$2[g(b-c+2q)-(bc+q^2)]=0$，而 $g-c=(q-c)^2/L>0$，故两对角元非正。由（183.9），
+$$
+D_pMD_p\preceq gD_prr^{\mathsf T}D_p,
+\qquad \operatorname{Tr}(D_pMD_p)_+\le g.
+\tag{183.10}
+$$
+最后一个不等式来自 $\operatorname{Tr}X_+=\max_{0\le E\le I}\operatorname{Tr}(EX)$ 及 $\lVert D_pr\rVert^2=1$。
+
+取（183.4）的 $s_*,t_*$，则
+$c t_*+q s_*=q t_*-b s_*=g$。因此 $|\eta_*\rangle$ 是（183.7）的特征值 $g$ 所属单位向量。另一个对称特征值非正，反对称特征值亦非正，故所给测量达到正部迹 $g$。该中间条件恰为 $b_-<b<b_+$。
+
+当 $c\le-ba^2=-q^2/b$ 时，（183.5）的对称块
+$\left(\begin{smallmatrix}2c&-\sqrt2q\\-\sqrt2q&-b\end{smallmatrix}\right)$ 两对角元非正、行列式 $-2(bc+q^2)\ge0$；反对称特征值也为负，故 $M\preceq0$，所有输入的增益均为零。此条件恰为 $b\ge b_+$。公式在两处分界连续相接。最后，$h_0=(1+u_0)/2>a>a^2$，故 $2+u_0+u_1-4a^2>D$；结合分母次序得到所述阈值范围。证毕。
+
+**定理 183.3（相反偏置与三能级增益的不对称性）。** 当 $-1\le b\le0$ 时，令 $\zeta=-b$，则
+$$
+R^*(b)=\frac{1-\zeta}{2}
+-\max\left\{0,\frac{D-\zeta(2-u_0-u_1)}4\right\}.
+\tag{183.11}
+$$
+均衡 $02$ 输入对这整个先验半区都最优。括号内为正时，读到 $|-\rangle$ 猜 $H_0$，否则始终猜 $H_1$。在 $b=0$，两种表达都给出 $R^*(0)=1/2-D/4$。
+
+证明。 对 $\zeta>0$，改看较小先验假设 $H_0$ 的加权差 $\pi_0\mathcal T_{u_0}-\pi_1\mathcal T_{u_1}$。其符号对角为 $-\zeta$、相邻项为 $-\zeta a$、端点项为 $-D/2-\zeta v$。仍可用（183.6）对称化。反对称特征值是
+$$
+(1-s)\frac{D-2\zeta(1-v)}4.
+\tag{183.12}
+$$
+对称块具有（183.7）的形状，只需将 $b,q,c$ 换成
+$\zeta,\zeta a,\widetilde c=-D/4-\zeta(1+v)/2$。因为 $(1+v)/2>a>a^2$，有 $\widetilde c<-\zeta a^2$，所以这个块负半定。正部迹遂不超过（183.12）在 $s=0$ 时的正部，均衡输入达到该值。$\zeta=0$ 则直接由（182.15）处理。证毕。
+
+**定理 183.4（严格三能级区间与校准先验的嵌入）。** 在 $b_-<b<b_+$ 内，每一个支持于至多两个信号能级的纯输入，都严格劣于（183.4）的探针，即使该输入带有参考。第182节的先验 $b=k=D/(2+u_0+u_1)$ 严格位于此区间内，且（183.3）—（183.4）还原（182.4）—（182.5）。
+
+证明。 支持于相邻两个能级时，加权差只含相应负半定主块，增益为零。支持于 $02$ 时，两个对角系数为 $-b$、非对角系数为 $z=b+2c>-b$。其可达最大正部迹为 $\max(c,0)$：$z\le b$ 时该主块负半定；$z>b$ 时，固定总人口为一的最大特征值由均衡人口达到，值为 $(z-b)/2=c$。参考不改变这些迹范数。
+
+中间区间的 $g>0$ 且 $g-c=(q-c)^2/L>0$，所以 $g>\max(c,0)$，证明严格差距。分母次序给出 $b_-<k<b_+$；代入 $b=k$ 得 $c=0$、$q=ka$、$s_*=a/(1+2a)$、$g=ka^2/(1+2a)$，正是第182节的值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 184. 经典程序的精确生成成本与可读信息的严格差距
+
+**定义 184.1（有限经典程序的一阶生成成本）。** 固定 $0<a<1$、$2a-1<u<1$，记 $\mathcal T_v=\mathcal S_{F(a,v)}$、$h=(1+u)/2$、$\ell=1-h$。在名义点 $u$ 的有限经典程序由有限多个与参数无关的 CPTP 映射 $\mathcal R_j$，以及在 $u$ 附近可微的概率 $p_j(v)$ 组成，要求全部 $p_j(u)>0$，并满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u,
+\qquad
+\sum_jp_j'(u)\mathcal R_j=\partial_u\mathcal T_u.
+\tag{184.1}
+$$
+定义其局部成本及最优值为
+$$
+I_{\rm prog}(u)=\sum_j\frac{p_j'(u)^2}{p_j(u)},
+\qquad
+\mathfrak C(a,u)=\inf I_{\rm prog}(u),
+\tag{184.2}
+$$
+下确界取遍任意有限字母数的程序。若要求在一个邻域内精确满足 $\sum_jp_j(v)\mathcal R_j=\mathcal T_v$，则记相应最优值为 $\mathfrak C_{\rm exact}(a,u)$。这两种优化都在名义点逐点进行，程序组件在求导时保持固定。
+
+这个操作量属于既有的通道切向模拟框架：Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节定义以经典程序 Fisher 信息量计量的 $G^{\max}$。量子态版本的反向估计及 RLD 输入下界见同作者 *Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节的一阶匹配构造与输入信息量不等式。以下给出当前通道族的显式最优值与达到它的固定程序，直接证明所需下界，不把量子态模拟结论直接当作通道模拟等号。
+
+**定理 184.2（三个经典符号达到全局最小生成成本）。** 在第184.1节的范围内，
+$$
+\mathfrak C(a,u)=\mathfrak C_{\rm exact}(a,u)
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}
+=\frac{1-a^2}{4\ell(h-a^2)}.
+\tag{184.3}
+$$
+下确界由三个固定通道达到。更具体地，按名义点选择
+$$
+c=\frac{a\ell}{1-a^2},\qquad
+\mathcal R_+=\mathcal S_{F(1,1)},\quad
+\mathcal R_-=\mathcal S_{F(-1,1)},\quad
+\mathcal R_c=\mathcal S_{F(c,2c^2-1)}.
+\tag{184.4}
+$$
+令 $H=(1+v)/2$，定义
+$$
+p_c(v)=\frac{1-H}{1-c^2},\qquad
+p_+(v)=\frac{H+a-(1+a)c}{2(1-c)},\qquad
+p_-(v)=\frac{H-a+(1-a)c}{2(1+c)}.
+\tag{184.5}
+$$
+这些权重在整个 $2a-1<v<1$ 内都严格为正，并精确模拟 $\mathcal T_v$；它们在设计点 $v=u$ 的信息量达到（184.3）。
+
+证明。 首先不得把优化域预先缩成 Schur 通道。设 $P_i=|i\rangle\langle i|$。因为 $\mathcal T_u(P_i)=P_i$ 为纯态，而（184.1）将它写成正权重状态凸组合，所以每个 $\mathcal R_j(P_i)=P_i$。取 $\mathcal R_j$ 的任一 Kraus 表示，正性迫使每个 $K_{j\alpha}|i\rangle$ 都落在 $\mathbb C|i\rangle$ 内；各 Kraus 算符遂为对角矩阵。因此每个组件自动是某个相关矩阵 $C_j\succeq0$、$\operatorname{diag}C_j=\mathbf1$ 的 Schur 通道。
+
+令 $F=F(a,u)$，$E$ 为只有 $02,20$ 两项等于一的矩阵，并令 $s_j=p_j'(u)/p_j(u)$。值与切向量匹配给出 $\sum_jp_jC_j=F$、$\sum_jp_js_jC_j=E$。于是
+$$
+\begin{pmatrix}F&E\\E&Q\end{pmatrix}
+=\sum_jp_j
+\begin{pmatrix}C_j&s_jC_j\\s_jC_j&s_j^2C_j\end{pmatrix}\succeq0,
+\qquad Q=\sum_jp_js_j^2C_j.
+\tag{184.6}
+$$
+每个加项正半定，因为它是 $C_j$ 与 $\left(\begin{smallmatrix}1&s_j\\s_j&s_j^2\end{smallmatrix}\right)$ 的张量积，按分块顺序表示。$F$ 正定，故 Schur 补给出 $Q\succeq EF^{-1}E$。$Q$ 的每个对角元都等于 $I_{\rm prog}$，而
+$$
+(EF^{-1}E)_{00}=(F^{-1})_{22}
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{184.7}
+$$
+取该对角元即得适用于全部有限程序的下界；它只使用一阶匹配，所以也适用于精确模拟。
+
+现核对达到性。$h>a$ 给出 $0<c<a/(1+a)<1$。前两个组件为秩一相关矩阵；第三个是单位向量
+$ (c,\sqrt{1-c^2})$、$(1,0)$、$(c,-\sqrt{1-c^2})$ 的 Gram 矩阵，故也定义通道。（184.5）满足
+$$
+p_++p_-+p_c=1,\qquad
+p_+-p_-+c p_c=a,\qquad
+p_++p_-+c^2p_c=H.
+\tag{184.8}
+$$
+相应混合矩阵的相邻项为 $a$，端点项为 $2H-1=v$，从而精确实现整族通道。任意允许的 $v$ 都有 $H>a$，故 $p_->0$；由 $(1+a)c<a$ 得 $p_+>0$；$p_c>0$ 由 $H<1$ 得到。
+
+令 $d=1-a^2$、$q=h-a^2>0$。在设计点，固定 $c=a\ell/d$ 后可化简为
+$$
+p_+(u)=\frac{q}{2(1-a)(1-c)},\quad
+p_-(u)=\frac{q}{2(1+a)(1+c)},\quad
+p_c(u)=\frac{\ell}{1-c^2}.
+\tag{184.9}
+$$
+对 $v$ 求导时 $c$ 保持不变，三项导数分别为
+$1/[4(1-c)]$、$1/[4(1+c)]$、$-1/[2(1-c^2)]$。代入（184.2）得
+$$
+I_{\rm prog}(u)
+=\frac1{4(1-c^2)}\left[\frac1\ell+\frac{1-ac}{q}\right]
+=\frac d{4\ell q},
+\tag{184.10}
+$$
+最后一步使用 $dc=a\ell$。这同时达到一阶模拟与精确模拟的下界，证明（184.3）。证毕。
+
+**定理 184.3（二符号限制的严格额外成本）。** 若第184.1节的程序只允许两个正权重符号，则最小成本为
+$$
+\mathfrak C_2(a,u)=\frac1{(1-u)(1+u-2a^2)}
+=\frac{\mathfrak C(a,u)}{1-a^2}>\mathfrak C(a,u).
+\tag{184.11}
+$$
+因而三个符号是达到（184.3）所需的最少有限字母数。
+
+证明。 设程序为 $p(v)\mathcal R_1+[1-p(v)]\mathcal R_2$。目标切向量非零，所以 $p'(u)\ne0$。由值与切向量的两条线性方程，$\mathcal R_1,\mathcal R_2$ 都必须落在通过 $\mathcal T_u$、方向为 $\partial_u\mathcal T_u$ 的同一仿射直线上，即它们为固定相邻系数 $a$ 的 $\mathcal T_{v_-},\mathcal T_{v_+}$。交换符号后可取 $v_-<u<v_+$。
+
+$F(a,v)$ 正半定的完整条件为 $2a^2-1\le v\le1$：反对称特征值为 $1-v$，对称块为 $\left(\begin{smallmatrix}1+v&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。所以 $2a^2-1\le v_-<u<v_+\le1$。匹配方程迫使程序的局部信息量为
+$$
+\frac1{(u-v_-)(v_+-u)}
+\ge\frac1{(u-2a^2+1)(1-u)}.
+\tag{184.12}
+$$
+取两个端点通道达到等号，且其线性混合在 $u$ 邻域精确模拟。一个符号的固定通道无法产生非零切向量，结合定理184.2即得最少符号数。证毕。
+
+**定理 184.4（生成与读取的严格信息比）。** 对同一条通道，最大单次可读 SLD 信息量为 $I_{\rm read}(a,u)=1/(1-u^2)$，而
+$$
+\frac{\mathfrak C(a,u)}{I_{\rm read}(a,u)}
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1.
+\tag{184.13}
+$$
+特别地，对第179节的二步接口，以未知配对参数 $w$ 求导、令 $\varepsilon=1-r$，有
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{\varepsilon^3}-12\right|\longrightarrow0,
+\qquad
+\sup_{0\le w\le\delta(r)}
+\left|\frac{\mathfrak C_w(r,w)}{I_1^{(2)}(r,w)}-\frac43\right|\longrightarrow0.
+\tag{184.14}
+$$
+这里 $\mathfrak C_w$ 仍指对同一二步终端通道逐点优化的有限经典程序成本；生成所用程序标签不属于查询者可访问的输出。
+
+证明。 第181节的实 Stinespring 标架在全部 $0<a<h<1$ 的同一范围内给出可读值 $1/(1-u^2)$，且均衡输入达到它。将（184.3）相除，利用
+$(1-a^2)(1+u)-(1+u-2a^2)=a^2(1-u)$，即得（184.13）。
+
+二步接口中 $a=\beta^2$、$u=u_2(w)$、$u_2'(w)=2J$。第178—179节给出在全部允许 $w$ 上统一成立的
+$$
+1-a^2=4\varepsilon+O(\varepsilon^2),\qquad
+\ell=\varepsilon+O(\varepsilon^2),\qquad
+h-a^2=3\varepsilon+O(\varepsilon^2),\qquad
+J/\varepsilon^2\longrightarrow3.
+\tag{184.15}
+$$
+因此 $\mathfrak C(a,u)\sim1/(3\varepsilon)$。重新参数化将程序信息量乘以 $(2J)^2$，得到 $\mathfrak C_w\sim12\varepsilon^3$；由第181节 $I_1^{(2)}\sim9\varepsilon^3$，再得比值 $4/3$，两者都为一致极限。第179节系数18的程序仍是合法上界；（184.14）求出了这个接口的最小经典程序成本，而可读信息的精确系数仍为9。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 185. 最优生成程序的等号结构与有限字母的全区间障碍
+
+**定义 185.1（程序得分与名义中心）。** 固定第184节的 $a,u$，记
+$$
+h=\frac{1+u}{2},\quad \ell=1-h,\quad d=1-a^2,\quad q=h-a^2,
+\quad c=\frac{a\ell}{d},\quad B=\frac d{4\ell q}.
+\tag{185.1}
+$$
+对满足（184.1）的正权重有限程序，记其相关矩阵为 $C_j$、权重为 $p_j$、得分为 $s_j=p_j'/p_j$，全部在当前名义点求值。$e_0,e_1,e_2$ 为标准基，$F=F(a,u)$、$E=\partial_uF$。允许 $C_j$ 为复 Hermitian 相关矩阵；不预先限制它们具有实对称形状。
+
+通道切向模拟框架沿用第184节的文献。Matsumoto，arXiv:quant-ph/0511170v1，第6节定理3已给出满秩量子态族全局最优反向估计的交换条件；这里的每个生成组件还必须是保迹通道，因而其相关矩阵逐个具有单位对角。以下等号分类与有限字母计数直接使用这一附加约束，不由量子态版本的全局结论代替。
+
+**定理 185.2（达到最小成本的全部组件类型）。** 程序达到 $I_{\rm prog}=B$ 当且仅当全部正权重组件可分成以下三类，其得分与矩阵分别满足
+$$
+\begin{aligned}
+\mathcal J_+:&\quad C_j=F(1,1),& s_j&=\frac{1-a}{2q},\\
+\mathcal J_-:&\quad C_j=F(-1,1),&s_j&=\frac{1+a}{2q},\\
+\mathcal J_c:&\quad C_j(e_0+e_2)=2c C_je_1,&s_j&=-\frac1{2\ell}.
+\end{aligned}
+\tag{185.2}
+$$
+这里“当且仅当”在已满足值与切向量匹配的程序中判断。三类的总权重均严格为正，且为
+$$
+P_+=\frac{h+a-(1+a)c}{2(1-c)},\quad
+P_-=\frac{h-a+(1-a)c}{2(1+c)},\quad
+P_c=\frac{\ell}{1-c^2}.
+\tag{185.3}
+$$
+中央类的条件平均矩阵恰为
+$$
+\frac1{P_c}\sum_{j\in\mathcal J_c}p_jC_j=F(c,2c^2-1).
+\tag{185.4}
+$$
+所以最优程序合并同类标签后还原第184节的三符号程序；合并不丢失局部 Fisher 信息量，因为每一类内部的得分相同。
+
+证明。 沿用（184.6）的 $Q$，其 Schur 补具有精确平方分解
+$$
+Q-EF^{-1}E
+=\sum_jp_j(s_jI-EF^{-1})C_j(s_jI-F^{-1}E)\succeq0.
+\tag{185.5}
+$$
+展开右侧并使用 $\sum_jp_jC_j=F$、$\sum_jp_js_jC_j=E$ 即得恒等式。若 $I_{\rm prog}=B$，左侧第 $00$、$22$ 对角元都为零；右侧为正权重的非负平方之和，故每一项都必须在这两个方向为零。正半定矩阵 $C_j$ 遂满足
+$$
+C_j(s_je_0-F^{-1}e_2)=0,
+\qquad C_j(s_je_2-F^{-1}e_0)=0.
+\tag{185.6}
+$$
+逆矩阵的相关系数为
+$$
+(F^{-1})_{00}=(F^{-1})_{22}=B,\quad
+(F^{-1})_{02}=A,\quad
+B-A=\frac1{2\ell},\quad B+A=\frac1{2q},\quad
+(F^{-1})_{10}=(F^{-1})_{12}=-\frac a{2q}.
+\tag{185.7}
+$$
+对（185.6）作差与求和，得到
+$$
+\left(s_j+\frac1{2\ell}\right)C_j(e_0-e_2)=0,
+\qquad
+\left(s_j-\frac1{2q}\right)C_j(e_0+e_2)+\frac aq C_je_1=0.
+\tag{185.8}
+$$
+
+若 $s_j\ne-1/(2\ell)$，第一式给出 $C_je_0=C_je_2$。第二式于是迫使
+$C_je_1=\lambda C_je_0$，其中 $\lambda=(1-2q s_j)/a$ 为实数。由 $C_j$ 的对角均为一及 Hermitian 性，先取第0行、再取第1行即得 $1=\lambda^2$。因此 $\lambda=1$ 或 $-1$，三个列向量都确定，分别得到（185.2）的第一类与第二类。这个推理同时排除了未计入的复相位。
+
+若 $s_j=-1/(2\ell)$，代入第二式，并使用 $q+\ell=d$，即得
+$C_j(e_0+e_2)=2c C_je_1$。这正是第三类。反过来，三类条件逐一代回（185.8），再取和差就还原（185.6）。因此（185.5）的端点对角元为零，迫使 $I_{\rm prog}=B$，证明等号分类。
+
+令 $n=e_0+e_2-2c e_1$。中央类满足 $C_jn=0$。将值匹配 $F=\sum_jp_jC_j$ 作用于 $n$，则只有两个端点类留下贡献。第0行与第1行分别给出
+$$
+(1-c)P_++(1+c)P_-=h-ac,
+\qquad
+(1-c)P_+-(1+c)P_-=a-c.
+\tag{185.9}
+$$
+解得（185.3）的前两式，再由总权重为一得到第三式。第184节已给出它们的严格正性。扣除两个端点类后，剩余矩阵唯一确定；（184.8）的精确分解表明它就是 $P_cF(c,2c^2-1)$，证明（185.4）。
+
+最后，若某类得分恒为 $s$，则该类总权重 $P$ 的导数为 $Ps$，聚合后的信息量为 $(Ps)^2/P=Ps^2$，恰等于聚合前的 $\sum p_js^2$。证毕。
+
+**定理 185.3（中央等号面的复参数化）。** 对 $0<c<1$，全部满足 $C(e_0+e_2-2c e_1)=0$ 的 Hermitian 单位对角相关矩阵，恰为
+$$
+C_c(t)=\begin{pmatrix}
+1&c+it&2c^2-1+2ict\\
+c-it&1&c+it\\
+2c^2-1-2ict&c-it&1
+\end{pmatrix},\qquad t\in\mathbb R,\quad t^2\le1-c^2.
+\tag{185.10}
+$$
+令 $\theta=\arccos c$、$z_\pm=(e^{\pm i\theta},1,e^{\mp i\theta})^{\mathsf T}$，则该线段的两端为秩一相关矩阵 $z_\pm z_\pm^\dagger$，且
+$$
+\tfrac12(z_+z_+^\dagger+z_-z_-^\dagger)=F(c,2c^2-1).
+\tag{185.11}
+$$
+因此定理185.2只强迫中央参数 $t$ 的条件平均为零，不强迫每个中央组件为实矩阵。
+
+证明。 写 $C_{01}=x$。核关系的第0行给出 $C_{02}=2cx-1$，第1行给出 $C_{12}=2c-\bar x$。第2行与 Hermitian 性再给出 $C_{12}=x$，故 $\operatorname{Re}x=c$。写 $x=c+it$ 就得到（185.10）的全部项。
+
+核关系表示第三列为前两列的固定线性组合，所以整个矩阵正半定，当且仅当左上二阶块正半定；例如以列系数矩阵 $R=\left(\begin{smallmatrix}1&0&-1\\0&1&2c\end{smallmatrix}\right)$ 可写成 $C=R^\dagger C_{\{0,1\}}R$。二阶块行列式为 $1-c^2-t^2$，即给出所述参数区间。区间两端 $t=\pm\sin\theta$ 分别得到 $z_\pm z_\pm^\dagger$，其共轭平均为（185.11）。将三符号最优程序的中央分支平分成这两个端点，并共用中央得分，就得到中央组件非实的四符号最优程序，证明最后断言。证毕。
+
+**定义 185.4（一个固定字母表上的全区间精确程序）。** 令 $J$ 是 $(2a-1,1)$ 中的非空开区间。固定 $m$ 个 CPTP 映射 $\mathcal R_1,\ldots,\mathcal R_m$，允许各概率 $p_j(v)$ 在 $J$ 上为非负 $C^1$ 函数，并要求 $\sum_jp_j(v)\mathcal R_j=\mathcal T_v$。在某点 $v$，用活跃集合 $A(v)=\{j:p_j(v)>0\}$ 定义点态信息量
+$$
+I(v)=\sum_{j\in A(v)}\frac{p_j'(v)^2}{p_j(v)}.
+\tag{185.12}
+$$
+零权重处因函数在双侧非负而有 $p_j'(v)=0$。这里采用当前概率及一阶切向量确定的点态值，不把邻域信息量的连续延拓当作同一个定义。
+
+**定理 185.5（有限固定程序只能在有限多个点达到最低成本）。** 对第185.4节的程序，若在至少一个点达到 $I(v)=\mathfrak C(a,v)$，则字母表中必须包含 $\mathcal S_{F(1,1)}$ 与 $\mathcal S_{F(-1,1)}$ 两种组件，且达到等号的不同点总数至多为 $m-2$。特别地，任何固定有限程序都不可能在开区间 $J$ 的每一点达到最低成本。若各符号在整个 $J$ 上始终为正权重，则最多只能有一个等号点。
+
+证明。 在任意等号点，删去零权重标签不改变值或切向量；将剩余概率以当前值及导数作局部线性延伸，就得到归一且严格为正的有限切向程序。活跃组件按第184节自动成为 Schur 通道，并满足定理185.2的三类结构。两种端点类的总权重都严格为正，所以固定字母表中必有这两种组件；中央类总权重也严格为正，所以至少有一个非端点组件在该点活跃。
+
+固定某个非端点组件 $C_j$。只要它在一个等号点活跃，就只能属于中央类。取（185.2）中央关系的第1行，得到
+$$
+\frac{(C_j)_{10}+(C_j)_{12}}2
+=c(v)=\frac{a(1-v)}{2(1-a^2)}.
+\tag{185.13}
+$$
+左侧由该固定组件唯一决定，右侧随 $v$ 严格递减。因此一个非端点标签至多能在一个等号点活跃。不同等号点各需至少一个这样的标签，且不能复用；去掉至少两个端点标签后，至多剩 $m-2$ 个，证明计数界。若从未活跃的组件不是 Schur 通道，它不承担任何等号点，因此也不会破坏计数。
+
+若所有标签处处正权重，取任一等号点所需的非端点标签；它在另一假定等号点仍活跃，与（185.13）的唯一性矛盾，故等号点至多一个。开区间有无限多个点，所以有限字母表无法处处达到最小值。该结论限制的是统一达到最低成本；第184节的三符号程序仍可精确模拟整个允许区间。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 186. 固定生成程序的统一正差距与四分支改进
+
+**定义 186.1（固定程序的最坏相对成本）。** 固定 $0<a<1$，令 $J_a=(2a-1,1)$、$\mathcal T_u=\mathcal S_{F(a,u)}$。程序 $\mathcal P$ 由有限多个不随 $u$ 改变的 CPTP 组件 $\mathcal R_j$ 与非负 $C^1$ 概率 $p_j(u)$ 组成，并在整个 $J_a$ 满足
+$$
+\sum_jp_j(u)\mathcal R_j=\mathcal T_u.
+\tag{186.1}
+$$
+采用第185.4节的点态信息量约定，定义
+$$
+I_{\mathcal P}(u)=\sum_{j:p_j(u)>0}\frac{p_j'(u)^2}{p_j(u)},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)},
+$$
+$$
+R(\mathcal P)=\sup_{u\in J_a}\frac{I_{\mathcal P}(u)}{B(a,u)},
+\qquad
+R_*(a)=\inf_{\mathcal P}R(\mathcal P).
+\tag{186.2}
+$$
+下确界允许任意有限字母数，且每个候选必须用同一套固定组件模拟全部参数。$B$ 是第184节允许按名义点重新设计组件时的最小生成成本。因而 $R_*$ 比较的是统一设计与逐点设计，而不是生成成本与实验可读信息量。
+
+这里沿用 Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节的经典切向模拟框架。其量子态反向估计的整体交换条件见 arXiv:quant-ph/0511170v1，第6节；以下统一下界直接处理当前通道族每个组件的单位对角约束，不将该状态条件当作通道的极小极大结论。
+
+**定理 186.2（不依赖字母数的统一正差距）。** 对每个 $0<a<1$，
+$$
+R_*(a)\ge
+1+\frac{a^2}{[1+4a+2(1+a)\log2]^2}>1.
+\tag{186.3}
+$$
+因此即使允许字母数沿程序序列不断增加，也不能使全区间最坏相对成本趋于一。
+
+证明。 任取满足（186.1）的有限程序，记
+$$
+h=\frac{1+u}{2},\quad \ell=1-h,\quad d=1-a^2,\quad q=h-a^2=d-\ell>0.
+\tag{186.4}
+$$
+先将全部 CPTP 组件归约成固定标量支撑。删去在整个区间从未活跃的标签。每个剩余组件在某点具有正权重；因为 $\mathcal T_u$ 固定每个纯基态，第184.2节的纯态凸分解与 Kraus 论证迫使该组件是相关矩阵 $C_j$ 的 Schur 通道。将每个 $C_j$ 在端点交换 $0\leftrightarrow2$ 与复共轭下平均。此操作保持正半定、单位对角以及目标矩阵 $F(a,u)$，故保持精确模拟。概率曲线不变，信息成本也不变。
+
+平均后的矩阵具有形状 $F(x,2H-1)$，其中 $x,H$ 为实数，正半定条件等价于 $x^2\le H\le1$。当 $|x|<1$ 时令 $\lambda=(1-H)/(1-x^2)$，则
+$$
+F(x,2H-1)=\lambda F(x,2x^2-1)
++(1-\lambda)\left[\frac{1+x}{2}F(1,1)+\frac{1-x}{2}F(-1,1)\right].
+\tag{186.5}
+$$
+系数非负且与参数无关；$x=\pm1$ 时矩阵本来就是对应端点。按（186.5）拆分各标签，并保留不同原标签的副本。若拆分比例为 $\theta_k$，则新概率为 $\theta_kp_j$，其信息量之和仍是 $p_j'^2/p_j$。零比例项删去，零概率处的导数为零。所以这一步也精确保留第185.4节约定的信息成本。
+
+归约后只须研究固定有限支撑 $x_j\in[-1,1]$ 上的随机变量 $X$，其概率曲线满足
+$$
+\mathbb E X=a,\qquad \mathbb E X^2=h.
+\tag{186.6}
+$$
+这些约束同时保证相关矩阵混合为 $F(a,u)$。定义另一组归一概率及其均值、方差
+$$
+\nu_j(u)=\frac{(1-x_j^2)p_j(u)}{\ell},\qquad
+m=\mathbb E_\nu X,\qquad \sigma^2=\operatorname{Var}_\nu X.
+\tag{186.7}
+$$
+端点标签的 $\nu$ 权重为零。由（186.6）得到
+$\mathbb E X^3=a-\ell m$、$\mathbb E X^4=h-\ell(m^2+\sigma^2)$。将 $X^2$ 对常数与 $X$ 作线性回归后，剩余方差为
+$$
+\begin{aligned}
+V&=\operatorname{Var}(X^2)-\frac{\operatorname{Cov}(X^2,X)^2}{q}\\
+&=\ell(h-m^2-\sigma^2)-\frac{\ell^2(a-m)^2}{q}\\
+&=\frac{\ell q}{d}
+-\frac{\ell d}{q}\left(m-\frac{a\ell}{d}\right)^2
+-\ell\sigma^2.
+\end{aligned}
+\tag{186.8}
+$$
+这是有限矩恒等式，不对支撑大小作任何限制。
+
+在活跃标签上令 $s_j=p_j'/p_j$，在零权重标签上置 $s_j=0$。非负 $C^1$ 函数在内部零点导数为零，所以对归一性及（186.6）求导，得到
+$$
+\mathbb Es=0,\qquad \mathbb E(sX)=0,\qquad
+\mathbb E(sX^2)=\tfrac12.
+\tag{186.9}
+$$
+以 $Y=X^2-h-\operatorname{Cov}(X^2,X)(X-a)/q$ 表示回归残差，则 $\mathbb EY^2=V$、$\mathbb E(sY)=1/2$。Cauchy–Schwarz 不等式给出
+$$
+I_{\mathcal P}V\ge\tfrac14.
+\tag{186.10}
+$$
+若 $R=R(\mathcal P)=\infty$，所需下界已成立。否则 $I_{\mathcal P}\le RB=Rd/(4\ell q)$；结合（186.8）与（186.10），可得
+$$
+\left|m-\frac{a\ell}{d}\right|
+\le\frac qd\sqrt{1-\frac1R},
+\qquad
+\sigma^2\le\frac qd\left(1-\frac1R\right).
+\tag{186.11}
+$$
+特别地 $R\ge1$。这两式表明，接近逐点最优要求辅助分布同时靠近移动中心 $a\ell/d$ 并具有很小方差。
+
+然而固定支撑上均值的移动也受同一个得分限制。对（186.7）求导，并使用 $\mathbb E[s(1-X^2)]=-1/2$，得到
+$$
+m'=\frac1\ell\mathbb E[s(1-X^2)(X-m)].
+\tag{186.12}
+$$
+由于 $(1-X^2)^2\le1-X^2$，再用 Cauchy–Schwarz 和（186.11），有
+$$
+|m'|^2\le\frac{I_{\mathcal P}}{\ell^2}
+\mathbb E[(1-X^2)^2(X-m)^2]
+\le\frac{I_{\mathcal P}\sigma^2}{\ell}
+\le\frac{R-1}{4\ell^2}.
+\tag{186.13}
+$$
+因此对任意 $2a-1<u_0<u_1<1$，
+$$
+|m(u_1)-m(u_0)|
+\le\sqrt{R-1}\log\frac{1-u_0}{1-u_1}.
+\tag{186.14}
+$$
+
+取 $u_1=a$，让 $u_0\downarrow2a-1$。目标中心 $a\ell/d$ 在这两点间的差趋于 $a/[2(1+a)]$；两处的 $q/d$ 分别趋于 $a/(1+a)$ 与 $(1+2a)/[2(1+a)]$。三角不等式、（186.11）和（186.14）给出
+$$
+\frac{a}{2(1+a)}
+\le\sqrt{R-1}
+\left[\frac{1+4a}{2(1+a)\sqrt R}+\log2\right].
+\tag{186.15}
+$$
+这里只对已成立的不等式取极限，不要求概率或均值在区间左端具有极限。用 $1/\sqrt R\le1$ 放大右端，再移项平方，得到（186.3）对当前任意程序成立；取下确界即证。证毕。
+
+**定理 186.3（三符号设计族内的精确极小极大值）。** 在第184节的三组件族
+$F(1,1),F(-1,1),F(c,2c^2-1)$ 中，固定 $0<c<a/(1+a)$，采用（184.5）的全区间精确权重。其信息量 $I_c$ 满足
+$$
+\frac{I_c(u)}{B(a,u)}=\frac1{1-z_c(u)^2},\qquad
+z_c(u)=\frac{dc-a\ell}{q}.
+\tag{186.16}
+$$
+在上述 $c$ 范围内，唯一使全区间最坏相对成本最小的选择为
+$$
+c_* =\frac a{1+2a},\qquad
+R_3(a)=\frac{(1+2a)^2}{(1+a)(1+3a)}<\frac98.
+\tag{186.17}
+$$
+因此 $R_*(a)\le R_3(a)$；此处的最优性仅针对所述三符号设计族。
+
+证明。 三个支撑点为 $1,-1,c$，故辅助分布 $\nu$ 集中在 $c$，在（186.8）中有 $m=c,\sigma^2=0$。三点均为正概率时，对常数与 $X$ 正交的函数空间为一维，所以得分与非零残差 $Y$ 成比例。（186.9）遂使（186.10）达到等号，给出 $I_c=1/(4V)$。将（186.8）除以 $\ell q/d$ 即得到（186.16）。也可直接对（184.5）求导后相加得到相同恒等式。
+
+由于
+$$
+z_c'(u)=\frac{d(a-c)}{2q^2}>0,\qquad
+\lim_{u\uparrow1}z_c(u)=c,\qquad
+\lim_{u\downarrow2a-1}z_c(u)=\frac{1+a}{a}c-1<0,
+\tag{186.18}
+$$
+全区间上 $|z_c|$ 的上确界为
+$\max\{c,1-(1+a)c/a\}$。前项严格增加、后项严格减少；其最大值在二者相等时唯一最小，解得 $c_*$。代入 $1/(1-c_*^2)$ 即得 $R_3$。最后
+$9(1+a)(1+3a)-8(1+2a)^2=(1-a)(1+5a)>0$，证明严格上界。证毕。
+
+**定理 186.4（四组件严格改进三符号设计族）。** 当 $a=1/2$、$0<u<1$ 时，存在四个固定组件的全区间精确程序，使
+$$
+R(\mathcal P)=\frac{4075}{3822}
+=\frac{16}{15}-\frac3{6370}
+<R_3(\tfrac12).
+\tag{186.19}
+$$
+因而三符号设计族的极小极大值不是所有有限程序的极小极大值，且
+$$
+1+\frac1{36(1+\log2)^2}
+\le R_*(\tfrac12)\le\frac{4075}{3822}.
+\tag{186.20}
+$$
+
+证明。 取四个组件 $F(1,1),F(-1,1),F(1/5,2/25-1),F(3/10,18/100-1)$ 的 Schur 通道。记
+$$
+A(u)=323+265u+5u^2-5u^3,\qquad
+D(u)=111+435u-5u^2+5u^3,
+$$
+$$
+p_+=\frac{A(u)}{784},\qquad p_-=\frac{D(u)}{2184},\qquad
+p_0=\frac{25(1-u)(3+u^2)}{336},\qquad
+p_1=\frac{50(1-u)(4-u^2)}{637}.
+\tag{186.21}
+$$
+四个权重在 $(0,1)$ 严格为正：$A\ge323$，$D\ge111-5>0$，后两项的各因子也严格为正。直接展开得
+$$
+p_++p_-+p_0+p_1=1,\qquad
+p_+-p_-+\tfrac15p_0+\tfrac3{10}p_1=\tfrac12,
+$$
+$$
+p_++p_-+\tfrac1{25}p_0+\tfrac9{100}p_1=\tfrac{1+u}{2}.
+\tag{186.22}
+$$
+所以程序在整个区间精确模拟目标。等价地，它是中心 $1/5$ 与 $3/10$ 的两组三符号程序，以 $\alpha(u)=(3+u^2)/7$ 和 $1-\alpha(u)$ 混合，再合并共同的两个端点标签。
+
+令 $Q(u)=I_{\mathcal P}(u)/B(1/2,u)$。对（186.21）中的完整权重求导，包含 $\alpha$ 的导数，通分后得到恒等式
+$$
+\frac{4075}{3822}-Q(u)
+=\frac{25(1-u)P(u)}{3822(3+u^2)(4-u^2)A(u)D(u)},
+\tag{186.23}
+$$
+其中多项式采用无组合系数的 Bernstein 基展开为
+$$
+P(u)=\sum_{k=0}^9 b_k u^k(1-u)^{9-k},
+$$
+$$
+\begin{aligned}
+(b_0,\ldots,b_9)=(&185868,\ 53289912,\ 399010545,\\
+&1263052704,\ 2112746798,\ 1919242930,\\
+&863793010,\ 153863608,\ 39440664,\ 25769520).
+\end{aligned}
+\tag{186.24}
+$$
+所有系数为正，分母的所有因子在区间内为正，故 $Q(u)<4075/3822$。另一方面，两个端点权重在 $u\uparrow1$ 时保持正值，其信息量除以发散的 $B$ 后趋于零；两个中央权重线性消失，给出
+$$
+\lim_{u\uparrow1}Q(u)
+=\frac{4/7}{1-(1/5)^2}+\frac{3/7}{1-(3/10)^2}
+=\frac{4075}{3822}.
+\tag{186.25}
+$$
+所以该程序的上确界恰为（186.19），而不是仅有一个离散采样上界。结合（186.3）即得（186.20）。这些界没有确定 $R_*(a)$ 的精确值，也没有确定其下确界是否由某个有限程序达到。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 187. 一枚非交换程序消去固定经典设计的统一额外成本
+
+**定义 187.1（固定量子处理器与程序的信息量）。** 仍固定 $0<a<1$、$J_a=(2a-1,1)$。有限维量子程序由固定的 CPTP 映射
+$\mathcal G:\mathcal B(\mathbb C^3\otimes\mathcal H_P)\to\mathcal B(\mathbb C^3)$ 与一条 $C^1$ 密度矩阵曲线 $\rho_u$ 组成，要求对每个输入 $\omega$ 及全部 $u\in J_a$，
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega).
+\tag{187.1}
+$$
+程序与输入初始独立；每次使用提供一份新的程序态，不要求处理器保留程序。以程序态的 SLD 信息量作为输入信息成本，记为 $I_Q(\rho_u)$。若 $\rho_u=\sum_j\lambda_j|j\rangle\langle j|$ 是某一点的谱分解，则采用
+$$
+I_Q(\rho_u)=
+\sum_{j,k:\lambda_j+\lambda_k>0}
+\frac{2|\langle j|\rho_u'|k\rangle|^2}{\lambda_j+\lambda_k}.
+\tag{187.2}
+$$
+这是当前态与切向量确定的点态值。称整条程序曲线为交换的，若 $[\rho_u,\rho_v]=0$ 对全部 $u,v\in J_a$ 成立。定义量子程序的最优最坏相对成本
+$$
+R_Q^*(a)=\inf_{(\mathcal G,\rho)}\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)},
+$$
+下确界取遍满足（187.1）的所有有限维固定处理器及程序曲线。
+
+固定处理器与可变程序寄存器是既有的量子编程框架。Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）处理混合程序，第III.B节的 $Y$ 处理器由数据基控制程序上的幺正操作。下面使用该结构，计算当前三能级通道族的确切信息成本，并与第186节的统一经典下界比较。
+
+**定理 187.2（固定量子比特程序的统一成本与交换障碍）。** 记 $d=1-a^2$，令 $X,Y,Z$ 为程序量子比特上的 Pauli 矩阵。定义
+$$
+\rho_u=\frac12\left[I+\frac{a(1-u)}{\sqrt d}X+uZ\right],
+\qquad
+U_0=I,\quad U_1=\sqrt d\,X+aZ,\quad U_2=Z,
+\tag{187.3}
+$$
+以及固定处理器
+$$
+W=\sum_{i=0}^2|i\rangle\langle i|\otimes U_i,
+\qquad
+\mathcal G(\Omega)=\operatorname{Tr}_P(W\Omega W^\dagger).
+\tag{187.4}
+$$
+则 $\rho_u$ 在 $J_a$ 内为满秩密度矩阵，$\mathcal G$ 精确实现（187.1），并在整个区间满足
+$$
+I_Q(\rho_u)=B(a,u)
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{187.5}
+$$
+该程序族在不同参数处不交换：
+$$
+[\rho_u,\rho_v]=\frac{ia(u-v)}{2\sqrt d}Y\ne0
+\qquad(u\ne v).
+\tag{187.6}
+$$
+与此相对，任何满足（187.1）的有限维交换程序，不论其固定处理器如何选择，都必须满足
+$$
+\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)}
+\ge1+\frac{a^2}{[1+4a+2(1+a)\log2]^2}>1.
+\tag{187.7}
+$$
+而所有有限维量子程序的精确极小极大值为
+$$
+R_Q^*(a)=1.
+$$
+因此（187.3）以一枚非交换量子比特程序达到最优最坏相对成本，而所有有限维交换程序都有统一的正额外成本。
+
+证明。 $\rho_u$ 的迹为一，且
+$$
+\det\rho_u=\frac{(1-u)(1+u-2a^2)}{4d}>0.
+\tag{187.8}
+$$
+因为 $2a-1>2a^2-1$，允许区间中的两个分子因子均为正，所以它确为满秩密度矩阵。$XZ+ZX=0$ 给出 $U_1^\dagger U_1=(d+a^2)I=I$；其他两个 $U_i$ 也幺正，故 $W$ 幺正并定义固定 CPTP 处理器。
+
+处理器作用于输入矩阵单位 $|i\rangle\langle j|$ 后，乘上相关系数
+$$
+C_{ij}(u)=\operatorname{Tr}(U_i\rho_uU_j^\dagger)
+=\operatorname{Tr}(\rho_u U_j^\dagger U_i).
+\tag{187.9}
+$$
+程序态的三个 Pauli 期望为
+$\langle X\rangle=a(1-u)/\sqrt d$、$\langle Y\rangle=0$、$\langle Z\rangle=u$。于是 $C_{ii}=1$，并且
+$$
+C_{01}=\sqrt d\,\langle X\rangle+a\langle Z\rangle=a,
+\qquad C_{02}=\langle Z\rangle=u,
+$$
+$$
+C_{12}=\operatorname{Tr}[\rho_u Z(\sqrt d\,X+aZ)]
+=a+i\sqrt d\,\langle Y\rangle=a.
+\tag{187.10}
+$$
+其余项由 Hermitian 性给出，所以 $C(u)=F(a,u)$。这逐矩阵单位证明（187.1），同时保证与任意外部参考系统张量恒等映射后仍实现同一通道。
+
+接着计算信息量。对满秩量子比特态 $\rho=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，将 SLD 写成 $L=\alpha I+\boldsymbol\beta\cdot\boldsymbol\sigma$，方程 $\rho'=(\rho L+L\rho)/2$ 化为
+$\alpha+\mathbf r\cdot\boldsymbol\beta=0$、$\boldsymbol\beta+\alpha\mathbf r=\mathbf r'$。解出它们并取 $\operatorname{Tr}(\rho L^2)$，得到通常的 Bloch 表达式
+$$
+I_Q=|\mathbf r'|^2+
+\frac{(\mathbf r\cdot\mathbf r')^2}{1-|\mathbf r|^2}.
+\tag{187.11}
+$$
+在当前曲线中，记 $A=(1-u)(1+u-2a^2)$，则
+$$
+|\mathbf r'|^2=\frac1d,\qquad
+\mathbf r\cdot\mathbf r'=\frac{u-a^2}{d},\qquad
+1-|\mathbf r|^2=\frac Ad,
+\qquad A+(u-a^2)^2=d^2.
+\tag{187.12}
+$$
+代入（187.11）即得 $I_Q=1/d+(u-a^2)^2/(dA)=d/A$，证明（187.5）。此外，Pauli 乘法给出
+$[\rho_u,\rho_v]=(i/2)(\mathbf r_u\times\mathbf r_v)\cdot\boldsymbol\sigma$，其叉积只有 $Y$ 分量 $a(u-v)/\sqrt d$，即为（187.6）。
+
+最后设某个有限维程序族处处交换。有限维 Hermitian 交换族可同时对角化，故存在一个不随参数改变的正交基，使
+$$
+\rho_u=\sum_{j=1}^{m}p_j(u)|j\rangle\langle j|.
+\tag{187.13}
+$$
+各 $p_j$ 非负且为 $C^1$ 函数。固定处理器诱导出 $m$ 个固定 CPTP 组件
+$\mathcal R_j(\omega)=\mathcal G(\omega\otimes|j\rangle\langle j|)$，并满足
+$\sum_jp_j(u)\mathcal R_j=\mathcal T_u$。在这个固定基中，$\rho_u'$ 也对角；（187.2）因此恰为
+$$
+I_Q(\rho_u)=\sum_{j:p_j(u)>0}\frac{p_j'(u)^2}{p_j(u)}.
+\tag{187.14}
+$$
+内部零概率处导数为零，所以该等式也适用于支持变化。程序遂属于第186.1节的固定有限经典程序，应用定理186.2即得（187.7）。
+
+对任意精确量子程序，固定输入第181节的均衡端点探针后，整个输出是程序态经过一个与参数无关的 CPTP 映射。SLD 数据处理给出 $I_Q(\rho_u)\ge1/(1-u^2)$，从而
+$$
+\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)}
+\ge\sup_{u\in J_a}\frac{1+u-2a^2}{d(1+u)}=1.
+$$
+最后的上确界由 $u\uparrow1$ 的极限得到；每个区间内的比值都小于一。（187.5）达到这个普遍下界，因此 $R_Q^*(a)=1$。这里最优的是全区间最坏比值，并未把 $B$ 断言为任意内部参数点的最低量子成本。证毕。
+
+**定理 187.3（同一程序的非正交编码与三种信息量）。** 第187.2节的量子程序可由两种固定非正交纯态制备。令
+$$
+|\chi\rangle=a|0\rangle+\sqrt d\,|1\rangle,
+\qquad t(u)=\frac{u-2a^2+1}{2d},
+\tag{187.15}
+$$
+则 $a/(1+a)<t<1$，$|\langle0|\chi\rangle|^2=a^2$，并有
+$$
+\rho_u=t(u)|0\rangle\langle0|+[1-t(u)]|\chi\rangle\langle\chi|.
+\tag{187.16}
+$$
+如果同时保留指示这两种制备方式的正交经典标签，其 Fisher 信息量为 $B(a,u)/d$；仅保留量子程序时为 $B(a,u)$；当前通道的一次最大可读 SLD 信息量为 $1/(1-u^2)$。三者严格满足
+$$
+\frac{B(a,u)}d>B(a,u)>\frac1{1-u^2}.
+\tag{187.17}
+$$
+这里比较的是同一参数在三个不同接口中的信息量，不将保留程序中的信息量等同于其全部制备资源。
+
+证明。 （187.16）的右侧矩阵为
+$\left(\begin{smallmatrix}t+(1-t)a^2&(1-t)a\sqrt d\\(1-t)a\sqrt d&(1-t)d\end{smallmatrix}\right)$。
+代入 $1-t=(1-u)/(2d)$，即还原（187.3）。参数区间给出所述 $t$ 范围。经典制备标签的两个概率为 $t,1-t$，所以其信息量为
+$$
+I_{\rm label}=\frac{t'^2}{t(1-t)}
+=\frac1{(1-u)(1+u-2a^2)}
+=\frac Bd.
+\tag{187.18}
+$$
+也可将标签与相应纯态一同保留；由于条件纯态均与参数无关，所得分块态的信息量仍是这个值。丢弃正交标签后得到（187.16），其信息量由（187.5）给出。$0<d<1$ 证明第一项严格下降。
+
+同一处理器以纯程序 $|0\rangle$ 和 $|\chi\rangle$ 分别生成 $\mathcal T_1$ 与 $\mathcal T_{2a^2-1}$；故保留标签的版本正是第184.3节端点二符号模拟的一个实现。最后，第181节给出通道最大可读值，而第184.4节的精确比值为
+$$
+B(a,u)(1-u^2)
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1,
+\tag{187.19}
+$$
+证明（187.17）。
+
+（187.5）给出达到最优最坏相对成本的固定量子处理器。这个极小极大结论并不声称其信息量在每个参数点都最小；对任意精确量子程序，SLD 数据处理及第181节的达到输入仅给出必要下界 $I_Q\ge1/(1-u^2)$。式（187.7）的更强障碍以整条程序族交换为条件，不能移除该条件后用于任意量子程序。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 188. 量子程序的逐点下确界、统一等号障碍与秩变化边界
+
+**定义 188.1（逐点设计与局部恒秩设计）。** 固定 $0<a<1$ 和名义点 $u_0\in J_a=(2a-1,1)$。在第187.1节所有有限维固定量子程序中，定义
+$$
+\mathfrak Q(a,u_0)=\inf I_Q(\rho_{u_0}),\qquad
+\mathfrak Q_{\rm reg}(a,u_0)
+=\inf_{\operatorname{rank}\rho_u\text{ 在 }u_0\text{ 邻域恒定}}I_Q(\rho_{u_0}).
+\tag{188.1}
+$$
+两种下确界都要求每个候选精确模拟整个 $J_a$，但允许为不同 $u_0$ 选择不同固定处理器及程序曲线。信息量采用（187.2）的点态 SLD 约定。记
+$$
+I_{r}(u)=\frac1{1-u^2}.
+\tag{188.2}
+$$
+它是第181节同一通道的一次最大可读信息量。以下讨论逐点下确界与同一程序同时达到下界的区别；第187节归一于 $B(a,u)$ 的极小极大值仍为一。
+
+**定理 188.2（恒秩程序也能逼近可读下界）。** 对每个允许的 $a,u_0$，
+$$
+\mathfrak Q(a,u_0)=\mathfrak Q_{\rm reg}(a,u_0)=I_{r}(u_0).
+\tag{188.3}
+$$
+更具体地，对任意 $0<\lambda<1$，存在一个程序空间维数为十、在 $u_0$ 附近秩恒定的固定程序，精确模拟整个 $J_a$，并满足
+$$
+I_Q(\rho_{u_0})=\frac{I_{r}(u_0)}\lambda.
+\tag{188.4}
+$$
+因此只要 $I_{r}(u_0)/B(a,u_0)<\lambda<1$，它在设计点的成本就严格低于第187节显式量子比特程序的成本 $B(a,u_0)$。
+
+证明。 第187节的固定探针与数据处理给出所有候选的下界 $I_Q\ge I_{r}$。为构造逼近程序，令
+$$
+h=\frac{1+u_0}{2},\quad \ell=1-h,\quad q=h-a^2,\quad
+\gamma^2=\frac1{16h\ell}=\frac{I_{r}(u_0)}4.
+\tag{188.5}
+$$
+取第181节随参数变化的实环境向量
+$$
+v_0(u)=(\sqrt{(1+u)/2},\sqrt{(1-u)/2},0),\quad
+v_2(u)=(\sqrt{(1+u)/2},-\sqrt{(1-u)/2},0),
+$$
+$$
+v_1(u)=\left(\frac a{\sqrt{(1+u)/2}},0,
+\sqrt{1-\frac{a^2}{(1+u)/2}}\right).
+\tag{188.6}
+$$
+它们的 Gram 矩阵为 $F(a,u)$。以下向量与导数均在 $u_0$ 取值，有
+$$
+\langle v_i,v_i'\rangle=0,\qquad
+\|v_0'\|^2=\|v_2'\|^2=\gamma^2,
+\qquad
+\|v_1'\|^2=\frac{a^2}{16h^2q}<\gamma^2.
+\tag{188.7}
+$$
+最后的不等式等价于 $a^2<h^2$，由 $h>a$ 得到。在四维环境中取单位向量 $e$，与原三维空间正交，并令
+$$
+w_i=\frac{v_i'}\gamma+
+\sqrt{1-\frac{\|v_i'\|^2}{\gamma^2}}\,e.
+\tag{188.8}
+$$
+每对 $(v_i,w_i)$ 正交归一，故固定映射 $V_i|0\rangle=v_i$、$V_i|1\rangle=w_i$ 是等距映射。受数据基控制的等距映射 $\sum_i|i\rangle\langle i|\otimes V_i$ 后接环境迹，定义一个固定处理器。
+
+令 $x=u-u_0$，给该处理器输入纯程序
+$$
+|\phi_x\rangle=\cos(\gamma x)|0\rangle+\sin(\gamma x)|1\rangle.
+\tag{188.9}
+$$
+输出通道的实相关矩阵记为 $G(x)$。因为 $e$ 与全部 $v_i$ 正交，Gram 矩阵求导给出
+$$
+G(0)=F_0:=F(a,u_0),\qquad G'(0)=E:=\partial_uF(a,u),
+\qquad I_Q(|\phi_x\rangle)=4\gamma^2.
+\tag{188.10}
+$$
+这里 $G$ 为解析的相关矩阵曲线；尚未要求它在零点外等于目标。
+
+固定 $0<\lambda<1$，定义修正矩阵
+$$
+H(x)=\frac{F_0+xE-\lambda G(x/\lambda)}{1-\lambda}.
+\tag{188.11}
+$$
+则 $H(0)=F_0\succ0$、$H'(0)=0$，且对角恒为一。连续性保证它在零点邻域仍为实正定相关矩阵。
+
+令 $E_1,E_2,E_3$ 为三种实对称非对角坐标矩阵。选取足够小的 $r>0$，使六个固定矩阵 $C_{k,\pm}=F_0\pm rE_k$ 都正定。写
+$H(x)-F_0=\sum_{k=1}^3\delta_k(x)E_k$，取
+$$
+p_{k,\pm}(x)=\frac16\pm\frac{\delta_k(x)}{2r}.
+\tag{188.12}
+$$
+在足够小的邻域，六项概率都严格为正、总和为一，且其相关矩阵平均为 $H(x)$。因为 $\delta_k'(0)=0$，全部概率在零点的导数为零。
+
+在量子比特块与六维经典块的正交直和上，使用程序
+$$
+\tau_x=\lambda|\phi_{x/\lambda}\rangle\langle\phi_{x/\lambda}|
+\ \oplus\ (1-\lambda)\operatorname{diag}(p_{k,\pm}(x)).
+\tag{188.13}
+$$
+固定处理器按块分别执行上述等距处理器及六个 Schur 通道。式（188.11）保证混合后的相关矩阵恰为 $F_0+xE$，所以它在邻域内精确模拟目标。两个块的总权重固定；经典块在零点没有一阶变化，因此其点态信息量为零，而量子块给出
+$$
+I_Q(\tau_0)=\lambda\frac{4\gamma^2}{\lambda^2}
+=\frac{I_{r}(u_0)}\lambda.
+\tag{188.14}
+$$
+该局部程序在整个充分小的邻域内秩恒为七。
+
+取光滑截断函数 $\chi(u)\in[0,1]$，在 $u_0$ 附近恒为一，其支撑紧含于局部程序成立的邻域。以另一个正交量子比特块放置第187节的全区间程序，形成
+$\chi(u)\tau_{u-u_0}\oplus[1-\chi(u)]\rho_u^{(187)}$。在局部块未定义的区域将其加权块置零；截断函数在该区域的邻域已经为零，故整条态曲线光滑。固定处理器按块执行相应通道，两分支在实际使用处都等于目标，因而在全部 $J_a$ 精确模拟。总维数为 $2+6+2=10$；设计点附近保持（188.14）与恒秩性质。令 $\lambda\uparrow1$，结合普遍下界，证明（188.3）。证毕。
+
+**定理 188.3（同一量子程序不可能在开区间处处达到可读下界）。** 任何第187.1节的有限维固定程序，都不存在非空开区间 $K\subseteq J_a$，使
+$$
+I_Q(\rho_u)=I_{r}(u)\qquad\text{对所有 }u\in K.
+\tag{188.15}
+$$
+该断言不要求程序族交换，也不要求其秩恒定。
+
+证明。 固定第181节的均衡 $02$ 输入。令 $|\pm\rangle=(|0\rangle\pm|2\rangle)/\sqrt2$，取整个输出空间上的二元 POVM
+$M_+=|+\rangle\langle+|+|1\rangle\langle1|$、$M_-=|-\rangle\langle-|$，使两效应之和为恒等算符。目标输出的中间基态权重为零，故测量得到概率
+$h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$。该试验连同固定处理器，在程序上诱导一个不依赖参数的二元 POVM，其经典信息量恰为 $I_{r}$。
+
+使用固定的 Naimark 等距嵌入 $J$，将该 POVM 表为更大有限维程序空间上的正交投影 $P_+,P_-$，满足 $P_++P_-=I$。嵌入态 $\sigma_u=J\rho_uJ^\dagger$ 的 SLD 信息量不变。为使处理器在整个扩大的程序空间上有定义，取任一固定原程序态 $\rho_*$，使用 CPTP 映射
+$$
+\mathcal D(\tau)=J^\dagger\tau J+
+\operatorname{Tr}[(I-JJ^\dagger)\tau]\rho_*.
+\tag{188.16}
+$$
+它在嵌入态上还原原程序。将原处理器与 $\mathcal D$ 组合，就得到固定扩展处理器，仍对任意数据输入精确生成同一通道。
+
+现假设（188.15）成立。SLD 测量信息不等式及其等号条件的原始框架见 Braunstein、Caves，*Statistical Distance and the Geometry of Quantum States*，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）。这里直接保留支持上的平方根因子，以免将满秩简化条件用于秩亏态。
+
+对每个 $u\in K$，双侧非负性使 $\sigma_u'$ 在 $\sigma_u$ 的核上的压缩为零，故可取有限 Hermitian SLD $L_u$，满足
+$\sigma_u'=(L_u\sigma_u+\sigma_uL_u)/2$。对 $j\in\{+,-\}$，设
+$A_j=P_j\sqrt{\sigma_u}$、$B_j=P_jL_u\sqrt{\sigma_u}$。在 Hilbert–Schmidt 内积下，
+$$
+\|A_j\|_2^2=p_j,
+\quad\operatorname{Re}\langle A_j,B_j\rangle=p_j',
+\quad\sum_j\|B_j\|_2^2=I_Q(\sigma_u).
+\tag{188.17}
+$$
+Cauchy–Schwarz 给出 $(p_j')^2/p_j\le\|B_j\|_2^2$。所有 $p_j$ 严格为正；若总和达到等号，则每项都达到等号，并有 $B_j=s_jA_j$，其中
+$$
+s_+=\frac1{2h},\qquad s_-=-\frac1{2\ell}.
+\tag{188.18}
+$$
+因此，令 $D_u=s_+P_++s_-P_-$，相加得到
+$L_u\sqrt{\sigma_u}=D_u\sqrt{\sigma_u}$。右乘平方根并取伴随，遂得
+$$
+\sigma_u'=\frac12(D_u\sigma_u+\sigma_uD_u).
+\tag{188.19}
+$$
+这个论证不需要逆转 $\sigma_u$，所以也适用于非满秩情形。
+
+令 $K_u=\sqrt h\,P_++\sqrt\ell\,P_-$。它在区间内可逆，且 $K_u'=D_uK_u/2$；（188.19）表明 $K_u^{-1}\sigma_uK_u^{-1}$ 的导数为零。故存在固定的正半定矩阵 $A$，使 $\sigma_u=K_uAK_u$。写
+$$
+A_+=P_+AP_+,\quad A_-=P_-AP_-,\quad C=P_+AP_-,
+$$
+$$
+\sigma_u=hA_++\ell A_-+\sqrt{h\ell}(C+C^\dagger).
+\tag{188.20}
+$$
+由测量概率 $\operatorname{Tr}(P_+\sigma_u)=h$、$\operatorname{Tr}(P_-\sigma_u)=\ell$，可得 $\operatorname{Tr}A_+=\operatorname{Tr}A_-=1$，所以两者都是固定密度矩阵。
+
+将（188.20）送入固定扩展处理器，对所有数据输入同时得到通道恒等式
+$$
+\mathcal T_u=h\mathcal R_++\ell\mathcal R_-
++\sqrt{h\ell}\,\mathcal S,
+\tag{188.21}
+$$
+其中 $\mathcal R_\pm$ 是以 $A_\pm$ 为程序的固定 CPTP 通道，$\mathcal S$ 是以交叉项 $C+C^\dagger$ 定义的固定线性映射。目标 $\mathcal T_u$ 对 $u$ 仿射，而 $1,u,\sqrt{1-u^2}$ 在任何非空开区间上线性无关。故（188.21）迫使
+$\mathcal S=0$、$\mathcal R_+=\mathcal T_1$、$\mathcal R_-=\mathcal T_{-1}$。这里后两个等式只是由仿射系数决定，不假定程序在端点存在。
+
+但 $\mathcal T_{-1}$ 不是完全正映射。事实上，对 $n=(1,-2a,1)^{\mathsf T}$，
+$$
+n^{\mathsf T}F(a,-1)n=-4a^2<0.
+\tag{188.22}
+$$
+将该 Schur 乘子作用于均匀相干输入 $\frac13\sum_{i,j}|i\rangle\langle j|$，输出正是 $F(a,-1)/3$，不是正半定矩阵。这已经违背正性，与 $\mathcal R_-$ 为 CPTP 矛盾。证毕。
+
+**定理 188.4（秩变化允许点态达到，但不消除邻近成本）。** 若使用（187.2）的点态信息量约定，则对任意 $a,u_0$，存在一个有限维光滑固定程序，精确模拟全部 $J_a$，并在设计点满足 $I_Q(\rho_{u_0})=I_{r}(u_0)$。可以使它在充分小的去心邻域满足
+$$
+\lim_{u\to u_0,\ u\ne u_0}I_Q(\rho_u)
+=I_{r}(u_0)+4k,
+\qquad k>0.
+\tag{188.23}
+$$
+因此这种达到不属于定理188.2的局部恒秩逼近，不提供开区间上平滑达到下界的程序。
+
+证明。 沿用（188.9）—（188.10）的解析相关矩阵 $G(x)$。取足够大的常数 $k>0$，令 $\epsilon(x)=kx^2$，并在零点外定义
+$$
+H(x)=G(x)+\frac{F_0+xE-G(x)}{kx^2}.
+\tag{188.24}
+$$
+由于 $G(0)=F_0$、$G'(0)=E$，该式在零点有解析延拓，且
+$$
+H(0)=F_0-\frac{G''(0)}{2k}.
+\tag{188.25}
+$$
+取 $k$ 足够大即可使它正定；$H$ 的对角仍恒为一，因此它在零点邻域为实正定相关矩阵。用以 $H(0)$ 为中心的六个固定矩阵 $H(0)\pm rE_j$，照（188.12）构造严格正的解析经典概率 $p_j(x)$，精确实现 $H(x)$。
+
+在足够小的邻域，$0\le\epsilon<1$，程序
+$$
+\tau_x=[1-kx^2]|\phi_x\rangle\langle\phi_x|
+\ \oplus\ kx^2\operatorname{diag}(p_j(x))
+\tag{188.26}
+$$
+精确生成 $(1-\epsilon)G+\epsilon H=F_0+xE$。在 $x=0$，经典块及其导数都为零，量子块的一阶切向量与 $|\phi_x\rangle$ 相同，所以（187.2）给出 $I_Q(\tau_0)=4\gamma^2=I_{r}(u_0)$。
+
+在去心邻域，直和各块的 SLD 信息量分解为
+$$
+I_Q(\tau_x)
+=(1-kx^2)4\gamma^2+kx^2I_{c}(x)
++\frac{4k}{1-kx^2},
+\tag{188.27}
+$$
+其中 $I_{c}$ 是严格正的解析经典概率曲线的信息量，在零点附近有界。取极限即得（188.23）。再照定理188.2用光滑截断函数接到第187节的全区间程序，保持设计点附近全部性质。
+
+程序在设计点秩为一，在充分小的去心邻域秩为七。点态 SLD 与连续延拓的差别符合既有的秩变化边界：Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），DOI:10.1103/PhysRevA.95.052320，定理1式（13）对 $C^2$ 态族给出 $H_c=H+2\sum_{p_j=0}p_j''$。在当前构造中，新出现的六个本征值之和为 $kx^2$，所以 Bures 信息在设计点等于 $I_{r}(u_0)+4k$，并未降到点态 SLD 的值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 189. 固定量子程序相对于可读信息的维数无关正差距
+
+**定义 189.1（以可读信息归一的统一成本）。** 固定 $0<a<1$，仍以 $J_a=(2a-1,1)$ 为参数区间。对第187.1节的有限维固定量子程序，令
+$$
+\widehat R(\mathcal G,\rho)
+=\sup_{u\in J_a}\frac{I_Q(\rho_u)}{I_r(u)},
+\qquad I_r(u)=\frac1{1-u^2},
+\qquad
+\widehat R_Q^*(a)=\inf_{(\mathcal G,\rho)}\widehat R(\mathcal G,\rho).
+\tag{189.1}
+$$
+每个候选都必须精确模拟全部 $J_a$。下确界允许任意有限程序维数，信息量仍采用（187.2）的点态 SLD 约定。这里的归一分母是实验可读信息 $I_r$，与第187节以逐点经典生成成本 $B$ 为分母的 $R_Q^*$ 不同。
+
+取三个内部参数值
+$$
+u_- =\frac{3a-1}{2},\qquad u_0=a,\qquad u_+=\frac{1+a}{2},
+\qquad h_i=\frac{1+u_i}{2},\quad\ell_i=1-h_i,
+\tag{189.2}
+$$
+并定义
+$$
+M_a=\begin{pmatrix}
+h_-&h_0&h_+\\
+\ell_-&\ell_0&\ell_+\\
+\sqrt{h_-\ell_-}&\sqrt{h_0\ell_0}&\sqrt{h_+\ell_+}
+\end{pmatrix},
+\qquad
+\begin{pmatrix}\alpha_-\\\alpha_0\\\alpha_+\end{pmatrix}
+=M_a^{-1}\begin{pmatrix}0\\1\\0\end{pmatrix}.
+\tag{189.3}
+$$
+函数 $\sqrt{1-u^2}$ 严格凹，故三个点在其图上不共线；结合前两行张成常数与 $u$，可知 $M_a$ 可逆。令
+$$
+S_a=|\alpha_-|+|\alpha_+|,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+\qquad
+\Delta(a)=\frac{\mu_a^2(1-u_+^2)}{S_a^2}.
+\tag{189.4}
+$$
+$S_a>0$：否则（189.3）前两行之和迫使 $\alpha_0=1$，而第一行又要求 $h_0=0$，矛盾。因此 $\Delta(a)>0$，且只依赖已知参数 $a$。
+
+**定理 189.2（任意有限维量子程序都有统一正额外成本）。** 对所有 $0<a<1$，
+$$
+1+\Delta(a)\le\widehat R_Q^*(a)\le1+a.
+\tag{189.5}
+$$
+特别地，即使允许程序维数沿候选序列不断增加，也不能使整区间的最坏成本比趋于一。这比第188.3节的不能处处达到等号更强，同时不改变第188节允许随名义点重新设计时的逐点下确界。
+
+证明。 任取一个精确程序。沿第188.3节，固定均衡 $02$ 输入及完整的二元输出 POVM，用固定 Naimark 嵌入把诱导测量写成互补投影 $P_+,P_-$。将程序态记为 $\sigma_u$；其点态 SLD 信息量保持不变。采用（188.16）的 CPTP 解码，将处理器扩展到整个嵌入程序空间。于是它不仅能处理 $\sigma_u$，还可以处理下文构造的其他密度矩阵。
+
+令 $h=(1+u)/2$、$\ell=(1-u)/2$，并设
+$$
+D_u=\frac{P_+}{2h}-\frac{P_-}{2\ell},
+\qquad
+\mathcal E_u=\sigma_u'-\frac12(D_u\sigma_u+\sigma_uD_u).
+\tag{189.6}
+$$
+对任一 Hermitian SLD $L_u$，第188节所用测量信息不等式具有精确剩余平方
+$$
+\|(L_u-D_u)\sqrt{\sigma_u}\|_2^2
+=I_Q(\sigma_u)-I_r(u).
+\tag{189.7}
+$$
+事实上，$\operatorname{Tr}(\sigma_uD_u^2)=I_r$，而
+$\operatorname{Re}\operatorname{Tr}(\sigma_uD_uL_u)
+=\sum_{j=\pm}(p_j'/p_j)p_j'=I_r$；展开平方即得（189.7）。这沿用 Braunstein–Caves 测量信息不等式的支持敏感形式，出处与边界见第188.3节。
+
+记 $Z_u=(L_u-D_u)\sqrt{\sigma_u}$，则
+$$
+\mathcal E_u=\frac12(Z_u\sqrt{\sigma_u}+\sqrt{\sigma_u}Z_u^\dagger),
+\qquad
+\|\mathcal E_u\|_1\le\|Z_u\|_2
+=\sqrt{I_Q(\sigma_u)-I_r(u)}.
+\tag{189.8}
+$$
+这里使用 Schatten 范数的 Cauchy–Schwarz 不等式及 $\|\sqrt{\sigma_u}\|_2=1$。$\mathcal E_u$ 由 $C^1$ 态曲线和光滑的 $D_u$ 直接定义，因而连续；证明没有要求所选 $L_u$ 连续，也没有对它求导。
+
+令
+$$
+K_u=\sqrt h\,P_++\sqrt\ell\,P_-,\qquad
+\tau_u=K_u^{-1}\sigma_uK_u^{-1}.
+\tag{189.9}
+$$
+由 $K_u'=D_uK_u/2$ 及（189.6），
+$$
+\tau_u'=K_u^{-1}\mathcal E_uK_u^{-1},
+\qquad
+\|\tau_u'\|_1
+\le\frac{\sqrt{I_Q(\sigma_u)-I_r(u)}}{\min(h,\ell)}.
+\tag{189.10}
+$$
+这把信息量超出可读值的部分，转成同一程序曲线在固定表示下的变化界。
+
+在参考点 $u_0=a$ 令 $A=\tau_{u_0}$，并构造
+$$
+\widehat\sigma_u=K_uAK_u
+=hA_++\ell A_-+\sqrt{h\ell}(C+C^\dagger),
+\quad A_\pm=P_\pm AP_\pm,\quad C=P_+AP_-.
+\tag{189.11}
+$$
+$A\succeq0$，而参考点的测量概率保证 $\operatorname{Tr}A_+=\operatorname{Tr}A_-=1$。因此 $\widehat\sigma_u$ 对所有 $-1<u<1$ 都是密度矩阵，且 $\widehat\sigma_{u_0}=\sigma_{u_0}$。
+
+记 $R=\widehat R(\mathcal G,\rho)$。若 $R=\infty$，下界自动成立；否则数据处理给出 $R\ge1$。在闭区间 $[u_-,u_+]$ 上，
+$$
+\min(h,\ell)\ge\frac{1-a}{4},\qquad
+I_r(u)\le\frac1{1-u_+^2},\qquad
+|u_\pm-u_0|=\frac{1-a}{2}.
+\tag{189.12}
+$$
+第二式使用 $|u_-|\le u_+$。将（189.10）在参考点与两端点之间积分，再使用 $\|K_u\|_\infty^2\le1$，得到
+$$
+\|\sigma_{u_i}-\widehat\sigma_{u_i}\|_1
+\le\frac{2}{\sqrt{1-u_+^2}}\sqrt{R-1}
+\quad(i\in\{-,+\});
+\qquad
+\|\sigma_{u_0}-\widehat\sigma_{u_0}\|_1=0.
+\tag{189.13}
+$$
+只对连续的 $\mathcal E_u$ 与 $\tau_u'$ 使用积分，所以该界允许程序在区间内发生秩变化。
+
+现在向同一个固定扩展处理器输入另一个数据态
+$\omega=|s\rangle\langle s|$，其中 $|s\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$。实际程序给出的输出为
+$X_u=F(a,u)/3$；参考程序给出的输出具有形式
+$$
+\widehat X_u=hX_++\ell X_-+\sqrt{h\ell}\,Y,
+\tag{189.14}
+$$
+其中 $X_+,X_-$ 是以密度矩阵 $A_+,A_-$ 为程序得到的密度矩阵，$Y$ 是固定 Hermitian 交叉项的输出。固定输入后的处理器为 CPTP，故迹范数收缩把（189.13）原样传给 $\|X_{u_i}-\widehat X_{u_i}\|_1$。两个试验分别使用同一程序态族与同一固定处理器：前一个给出测量概率与信息剩余，后一个检验生成通道的正性。
+
+由（189.3），有
+$$
+\sum_i\alpha_i=1,\qquad\sum_i\alpha_i u_i=-1,
+\qquad\sum_i\alpha_i\sqrt{h_i\ell_i}=0.
+\tag{189.15}
+$$
+因此
+$$
+\sum_i\alpha_i X_{u_i}=\frac13F(a,-1),
+\qquad
+\sum_i\alpha_i\widehat X_{u_i}=X_-.
+\tag{189.16}
+$$
+这些系数只用于线性恒等式，允许为负，不将它们作为混合概率。
+
+矩阵 $F(a,-1)$ 在反对称端点方向的特征值为二，在对称端点与中间基态张成的子空间上具有矩阵 $\left(\begin{smallmatrix}0&\sqrt2a\\\sqrt2a&1\end{smallmatrix}\right)$。因此 $F(a,-1)/3$ 恰有一个负特征值 $-\mu_a$。令 $\Pi$ 为对应的一维谱投影，则
+$$
+\operatorname{Tr}\!\left(\Pi\frac{F(a,-1)}3\right)=-\mu_a,
+\qquad\operatorname{Tr}(\Pi X_-)\ge0.
+\tag{189.17}
+$$
+两个矩阵都具有迹一，所以差为无迹 Hermitian 矩阵。对这种矩阵 $H$，任一效应 $0\le\Pi\le I$ 都满足 $|\operatorname{Tr}(\Pi H)|\le\|H\|_1/2$。于是（189.17）、（189.16）和三角不等式给出
+$$
+2\mu_a\le\left\|\frac13F(a,-1)-X_-\right\|_1
+\le\sum_i|\alpha_i|\,\|X_{u_i}-\widehat X_{u_i}\|_1
+\le\frac{2S_a}{\sqrt{1-u_+^2}}\sqrt{R-1}.
+\tag{189.18}
+$$
+移项平方即得 $R\ge1+\Delta(a)$。其常数与程序维数、所选 Naimark 扩张及处理器无关，故可以对全部有限维程序取下确界。
+
+最后，第187节显式量子比特程序在全区间具有 $I_Q=B$，且
+$$
+\frac{B(a,u)}{I_r(u)}
+=\frac{(1-a^2)(1+u)}{1+u-2a^2},
+\qquad
+\sup_{u\in J_a}\frac{B(a,u)}{I_r(u)}=1+a.
+\tag{189.19}
+$$
+该比值随 $u$ 严格递减，其上确界来自 $u\downarrow2a-1$，证明（189.5）的上界。上述两界未确定 $\widehat R_Q^*(a)$ 的精确值或达到其下确界的程序。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 190. 全区间精确程序的二维障碍与三维纯态逐点达到
+
+**定义 190.1（程序的联合维数与指定点成本）。** 固定 $0<a<1$，令
+$$
+J_a=(2a-1,1),\qquad
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)}.
+\tag{190.1}
+$$
+沿用第187.1节的固定 CPTP 处理器、全区间精确性与点态 SLD 信息约定。程序曲线的联合支持空间及其维数定义为
+$$
+\mathcal H_{\rm joint}=\operatorname{span}\!\left(\bigcup_{u\in J_a}\operatorname{ran}\rho_u\right),
+\qquad d_{\rm joint}=\dim\mathcal H_{\rm joint}.
+\tag{190.2}
+$$
+它计算整族程序共同需要的固定空间，不等于单个 $\rho_u$ 的秩。对指定的 $u_0\in J_a$，比较不同固定处理器及其全区间程序在 $u_0$ 的信息成本；处理器可以随设计点 $u_0$ 改变，但一旦选定，就必须对全部 $u\in J_a$ 使用同一个处理器。记
+$$
+I_r(u)=\frac1{1-u^2},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{190.3}
+$$
+
+**定理 190.2（任意固定量子比特处理器的逐点下界）。** 任意满足第187.1节条件、程序空间维数为二的固定处理器，都满足
+$$
+I_Q(\rho_u)\ge B(a,u)\qquad(u\in J_a).
+\tag{190.4}
+$$
+该结论允许复量子比特态、任意固定 CPTP 处理器及 $C^1$ 程序曲线的秩变化。第187.2节的处理器在全区间同时达到（190.4），因此 $B$ 是该二维类中的逐点最小值。
+
+证明。 写 $\rho_u=(I+r(u)\cdot\sigma)/2$。由处理器对程序输入的线性性，诱导信号映射具有形式
+$$
+\Phi_r=\Phi_0+\mathcal Lr,
+\tag{190.5}
+$$
+其中 $\mathcal L$ 是从 $\mathbb R^3$ 到保持 Hermitian 性的信号映射实向量空间的线性映射。全区间精确性给出 $\mathcal Lr(u)=\mathcal T_u-\Phi_0$。右侧是非恒定仿射直线，在两个不同参数处有原像，故对全部实数参数都有原像。令 $N=\ker\mathcal L$；其唯一最小 Euclidean 范数原像为
+$$
+\bar r(u)=c+uv,\qquad c,v\in N^\perp,\quad v\ne0.
+\tag{190.6}
+$$
+于是 $r=\bar r+z$，其中 $z,z'\in N$。对 $u\in J_a$，$|\bar r|\le|r|\le1$，所以 $\bar\rho_u=(I+\bar r(u)\cdot\sigma)/2$ 也是程序态，并经同一处理器给出 $\mathcal T_u$。这是另一条合法制备曲线，不将到 $N^\perp$ 的正交投影宣称为量子通道。
+
+先比较两条曲线的信息量。令
+$$
+A=\bar r\cdot v,\qquad \beta=1-|\bar r|^2.
+\tag{190.7}
+$$
+在 $J_a$ 内有 $\beta>0$：非恒定仿射直线若在内部参数处接触单位球面，就不能在该参数的两侧仍处于闭球内。若实际程序为混态，记 $q=|z|^2<\beta$；由量子比特 SLD 公式和正交分解，
+$$
+I_Q(\rho_u)=|v|^2+|z'|^2+\frac{(A+z\cdot z')^2}{\beta-q},
+\qquad
+I_Q(\bar\rho_u)=|v|^2+\frac{A^2}{\beta}.
+\tag{190.8}
+$$
+取 $w=z'+Az/\beta$，直接完成平方得到
+$$
+I_Q(\rho_u)-I_Q(\bar\rho_u)
+=|w|^2+\frac{(z\cdot w)^2}{\beta-q}\ge0.
+\tag{190.9}
+$$
+若实际程序在该点为纯态，两侧的正性及可微性迫使 $r\cdot r'=0$。点态 SLD 公式给出 $I_Q(\rho_u)=|r'|^2$；此时 $|z|^2=\beta$、$z\cdot z'=-A$，故
+$$
+I_Q(\rho_u)=|v|^2+|z'|^2
+\ge|v|^2+\frac{A^2}{\beta}=I_Q(\bar\rho_u).
+\tag{190.10}
+$$
+所以最小范数制备的信息量不超过实际程序的信息量，包括实际程序发生秩变化的点。这里使用（187.2）的点态值，没有将它替换为邻近 Bures 信息的极限；这一约定的区别见 Šafránek，Phys. Rev. A **95**, 052320（2017），DOI:10.1103/PhysRevA.95.052320，式（2）—（4）及第188.4节。
+
+仿射直线 $\bar r(u)$ 与 Bloch 闭球相交于一个有限非退化弦，对应参数区间 $[b_-,b_+]$，两端程序 $\rho_-,\rho_+$ 为不同纯态。恒等式 $\Phi_{\bar r(u)}=\mathcal T_u$ 对全部实数 $u$ 成立，故弦上每个物理态都生成 $\mathcal T_u$。矩阵 $F(a,u)$ 的反对称端点特征值为 $1-u$，对称块为
+$$
+\begin{pmatrix}1+u&\sqrt2a\\\sqrt2a&1\end{pmatrix}.
+$$
+因此 $\mathcal T_u$ 的完整 CP 参数区间为 $[2a^2-1,1]$。弦包含整个 $J_a$，故
+$$
+b_+=1,\qquad 2a^2-1\le b_-\le2a-1.
+\tag{190.11}
+$$
+这里没有要求原程序曲线在端点收敛；端点程序由仿射直线本身提供。
+
+令 $b=b_-$、$s^2=\operatorname{Tr}(\rho_+\rho_-)<1$。弦上程序是两个纯态的仿射混合，
+$$
+\bar\rho_u=t\rho_++(1-t)\rho_-,\qquad
+ t=\frac{u-b}{1-b},\qquad
+I_Q(\bar\rho_u)=\frac{1-s^2}{(u-b)(1-u)}.
+\tag{190.12}
+$$
+最后一式可由 $1-|\bar r|^2=4(1-s^2)t(1-t)$ 代入量子比特公式直接得到，包含正交端点的情形。
+
+固定均衡 $02$ 输入 $|+\rangle=(|0\rangle+|2\rangle)/\sqrt2$。程序到输出的同一个 CPTP 映射将 $\rho_+$ 送到 $|+\rangle\langle+|$，将 $\rho_-$ 送到
+$$
+\frac{1+b}{2}|+\rangle\langle+|+
+\frac{1-b}{2}|-\rangle\langle-|,
+\qquad | -\rangle=\frac{|0\rangle-|2\rangle}{\sqrt2}.
+$$
+采用平方保真度 $\mathsf F(\rho,\eta)=(\operatorname{Tr}\sqrt{\sqrt\rho\eta\sqrt\rho})^2$，CPTP 单调性给出 $s^2\le(1+b)/2$。于是
+$$
+I_Q(\rho_u)\ge\frac{1-b}{2(u-b)(1-u)}
+\ge\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{190.13}
+$$
+第二步使用 $b\ge2a^2-1$ 及
+$\partial_b[(1-b)/(2(u-b)(1-u))]=1/[2(u-b)^2]>0$。第187.2节给出达到，证毕。
+
+此推导使用整个区间上趋近 $u=1$ 的精确性来固定弦的上端点。它不对仅匹配单点值及一阶导数的局部切向程序断言同一下界。固定程序依赖的线性框架见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）；保真度数据处理及程序信息界的背景见 Pirandola、Lupo，Phys. Rev. Lett. **118**, 100502（2017），DOI:10.1103/PhysRevLett.118.100502，arXiv:1609.02160v3 补充材料式（37）—（40）。本条的弦端点约束与 $B$ 下界由上述当前通道族的计算给出。
+
+**定理 190.3（三维纯态在任意设计点规则达到可读下界）。** 对每个 $u_0\in J_a$，存在一个固定处理器与一条 $C^\infty$ 的三维纯程序态曲线，精确生成全部 $\mathcal T_u$，并满足
+$$
+I_Q(\rho_{u_0})=I_r(u_0).
+\tag{190.14}
+$$
+该程序在整个 $J_a$ 上秩恒为一。
+
+证明。 写 $h=(1+u)/2\in(a,1)$、$\ell=1-h$，以及 $h_0=(1+u_0)/2$、$\ell_0=1-h_0$。以下常数只依赖 $a,u_0$：
+$$
+A_0=\frac{au_0}{h_0},\qquad B_0=2a\sqrt{\frac{\ell_0}{h_0}},\qquad
+s=1-A_0^2-B_0^2=1-\frac{a^2}{h_0^2}>0,
+\tag{190.15}
+$$
+$$
+c=\sqrt{\frac a{1-a}},\qquad
+\delta=\frac{(1-a)s}{s+aB_0^2},\qquad
+A_2=1-\delta,\qquad B_2=\delta c.
+\tag{190.16}
+$$
+因为 $B_0>0$，有 $0<\delta<1-a$，从而 $A_2>a$、$B_2>0$。定义
+$$
+K=\begin{pmatrix}A_0&0&B_0\\0&A_2&B_2\\0&0&0\end{pmatrix},
+\qquad Z=\operatorname{diag}(1,1,-1).
+\tag{190.17}
+$$
+$K$ 是严格压缩算子。事实上，$I-KK^\dagger$ 的第三个对角块为一，其前两个坐标上的块为
+$$
+\begin{pmatrix}
+s&-B_0\delta c\\
+-B_0\delta c&2\delta-\delta^2/(1-a)
+\end{pmatrix}.
+\tag{190.18}
+$$
+左上元为正，而行列式恰为
+$$
+\delta\left[2s-\frac{\delta(s+aB_0^2)}{1-a}\right]=\delta s>0.
+$$
+所以 $I-KK^\dagger\succ0$，亦有 $I-K^\dagger K\succ0$。
+
+取三个从 $\mathbb C^3$ 到 $\mathbb C^6$ 的等距映射
+$$
+W_0=\begin{pmatrix}I\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I-K^\dagger K}\end{pmatrix}.
+\tag{190.19}
+$$
+信号控制的等距映射 $V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$，随后对六维环境取迹，定义一个固定 CPTP 处理器。用实纯程序向量
+$$
+\psi_u=
+\begin{pmatrix}\sqrt h\cos\theta(h)\\\sqrt h\sin\theta(h)\\\sqrt\ell\end{pmatrix},
+\qquad \rho_u=|\psi_u\rangle\langle\psi_u|.
+\tag{190.20}
+$$
+诱导 Schur 系数为 $C_{ij}=\langle W_j\psi_u,W_i\psi_u\rangle$。由于 $ZK=K$、$\psi_u$ 为实向量，
+$$
+C_{02}=u,\qquad C_{01}=C_{12}=f(h,\theta),
+$$
+$$
+f(h,\theta)=h(A_0\cos^2\theta+A_2\sin^2\theta)
++\sqrt{h(1-h)}(B_0\cos\theta+B_2\sin\theta).
+\tag{190.21}
+$$
+故只需全局光滑地选取 $0\le\theta(h)<\pi/2$，使 $f(h,\theta(h))=a$。
+
+先看两端角度。$f(h,0)=hA_0+B_0\sqrt{h(1-h)}$ 关于 $h$ 严格凹；由（190.15），
+$$
+f(h_0,0)=a,\qquad f_h(h_0,0)=0.
+\tag{190.22}
+$$
+因此 $f(h,0)\le a$，等号恰在 $h=h_0$。另一端函数 $f(h,\pi/2)$ 关于 $h$ 凹，且在闭区间 $[a,1]$ 的端点满足
+$$
+f(a,\pi/2)=a,\qquad f(1,\pi/2)=A_2>a.
+\tag{190.23}
+$$
+由凹性，它在每个 $h\in(a,1)$ 严格大于 $a$。
+
+对固定的内部 $h$，在 $0<\theta<\pi/2$ 有
+$$
+\frac{f_\theta(h,\theta)}{\sin\theta\cos\theta}
+=2h(A_2-A_0)+\sqrt{h(1-h)}
+\left(\frac{B_2}{\sin\theta}-\frac{B_0}{\cos\theta}\right).
+\tag{190.24}
+$$
+右侧严格递减，并从正无穷趋向负无穷，所以 $f$ 随角度先严格增、后严格减，只有一个最大点。结合（190.22）—（190.23），方程 $f=a$ 在 $[0,\pi/2)$ 恰有一个根，且总位于严格上升段；下降段的值不小于其右端值，而该值严格大于 $a$。在 $h=h_0$ 时这个根为零，且
+$$
+f_\theta(h_0,0)=\sqrt{h_0\ell_0}\,B_2>0.
+\tag{190.25}
+$$
+因此隐函数定理及根的唯一性给出整个 $(a,1)$ 上的光滑函数 $\theta(h)$，并且
+$$
+\theta(h_0)=0,\qquad
+\theta'(h_0)=-\frac{f_h(h_0,0)}{f_\theta(h_0,0)}=0.
+\tag{190.26}
+$$
+这既保证处理器在整个 $J_a$ 精确生成目标通道，也保证设计点的角度运动没有一阶贡献。
+
+最后，归一实向量满足 $\langle\psi_u,\psi_u'\rangle=0$。径向变化与角度变化正交，直接微分（190.20）得
+$$
+I_Q(\rho_u)=4\|\psi_u'\|^2
+=\frac1{4h\ell}+4h\left(\frac{d\theta}{du}\right)^2
+=I_r(u)+4h\left(\frac{d\theta}{du}\right)^2.
+\tag{190.27}
+$$
+由（190.26），在 $u=u_0$ 恰达到 $I_r(u_0)$。程序为全区间光滑纯态，所以这里没有第188.4节由程序秩变化产生的孤立 SLD 跳变。证毕。
+
+**定理 190.4（规则逐点最优的最小联合程序维数恰为三）。** 在每个指定的 $u_0\in J_a$，所有有限维固定处理器的全区间精确程序，其点态信息成本最小值为 $I_r(u_0)$；即使要求程序在设计点附近秩恒定，该最小值仍被达到。达到它所需的最小联合程序维数恰为三。
+
+证明。 第181节的均衡 $02$ 输入及二元输出测量，在任意精确程序上诱导信息量为 $I_r(u)$ 的固定测量，故测量信息不等式给出 $I_Q(\rho_u)\ge I_r(u)$。第190.3节提供三维且全区间秩恒定的达到。另一方面，
+$$
+\frac{B(a,u)}{I_r(u)}-1
+=\frac{a^2(1-u)}{1+u-2a^2}>0\qquad(u\in J_a).
+\tag{190.28}
+$$
+若联合支持包含于某个固定二维空间，将程序输入限制到该空间仍给出一个固定 CPTP 处理器，第190.2节就排除了达到 $I_r$；一维程序只能产生恒定通道，也不可能精确生成本族。因此最小联合维数为三，第190.3节的纯态曲线必张成整个三维程序空间。
+
+本结论将第188.2节的规则逐点下确界加强为三维纯态达到，而不改变其原有构造。这里的量词是对每个设计点可选择一个处理器；同一个处理器在其余参数处的额外成本由（190.27）保留。第188.3节的开区间等号障碍及第189.2节的统一正差距仍适用，故三维逐点达到不蕴含全区间同时达到。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 191. 局部精确最优的混态节省与纯态二维障碍
+
+**定义 191.1（局部精确程序及规则达到）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$。局部精确程序由一个包含 $t$ 的开区间 $U\subset J_a$、一个固定 CPTP 处理器和一条定义在 $U$ 上的 $C^1$ 程序曲线组成，要求
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\qquad(u\in U)
+\tag{191.1}
+$$
+对全部信号输入成立。称在 $t$ 规则达到，若程序秩在 $t$ 的某个邻域恒定且 $I_Q(\rho_t)=I_r(t)$，其中 $I_r(u)=1/(1-u^2)$。这是在一个真实开区间内精确生成通道的要求，比仅匹配 $\mathcal T_t$ 与其一阶导数强；其覆盖域又小于第190节要求的整个 $J_a$。
+
+量子估计文献中的局部模拟可采用切向意义：Kołodyński、Demkowicz-Dobrzański，*Efficient tools for quantum metrology with uncorrelated noise*，New J. Phys. **15**, 073043（2013），DOI:10.1088/1367-2630/15/7/073043，arXiv:1303.7271v2，第4.1.2节与附录D式（D.1），允许通道等式具有 $O((u-t)^2)$ 余项。本节（191.1）要求开区间内严格相等，以下二维构造与纯态障碍均针对这个更强条件。
+
+**定理 191.2（局部二维满秩程序精确达到）。** 对每个 $t\in J_a$，存在一个二维满秩的解析局部精确程序，在 $t$ 达到 $I_r(t)$。
+
+证明。 令 $h_0=(1+t)/2$、$\ell_0=1-h_0$，并取
+$$
+A_0=\frac{at}{h_0},\qquad B_0=2a\sqrt{\frac{\ell_0}{h_0}},\qquad
+\frac{B_0}{\sqrt{1-A_0^2}}<\lambda<1.
+\tag{191.2}
+$$
+由 $h_0>a$ 得 $A_0^2+B_0^2=a^2/h_0^2<1$，所以这个 $\lambda$ 区间非空。定义
+$$
+\beta=\frac{B_0}{\lambda},\qquad
+K=\begin{pmatrix}A_0&\beta\\0&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1).
+\tag{191.3}
+$$
+$A_0^2+\beta^2<1$，故 $K$ 是严格压缩算子。与第190节相同，从二维程序空间到四维环境取等距映射
+$$
+W_0=\begin{pmatrix}I\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I-K^\dagger K}\end{pmatrix}.
+\tag{191.4}
+$$
+用信号基控制这些等距映射，再对环境取迹，得到固定 CPTP 处理器。
+
+令 $X$ 为 Pauli 矩阵，取仿射程序曲线
+$$
+\rho_u=\frac12(I+x(u)X+uZ),\qquad
+x(u)=\frac{\lambda(1-tu)}{\sqrt{1-t^2}},\qquad
+k=\frac{\lambda^2}{1-t^2}.
+\tag{191.5}
+$$
+其满秩物理区间为 $(b_-,b_+)$，其中
+$$
+b_\pm=\frac{kt\pm\sqrt{1-\lambda^2}}{1+kt^2}.
+\tag{191.6}
+$$
+事实上，$\rho_u\succ0$ 等价于
+$$
+q(u):=1-u^2-k(1-tu)^2>0.
+\tag{191.7}
+$$
+这个二次函数的根为（191.6），且 $q(t)=(1-\lambda^2)(1-t^2)>0$，故 $b_-<t<b_+$。取 $U=(b_-,b_+)\cap J_a$，它是包含 $t$ 的非空开区间。
+
+处理器的 Schur 系数由 $\operatorname{Tr}(\rho_uW_j^\dagger W_i)$ 给出。由于 $ZK=K$、程序矩阵为实对称矩阵，
+$$
+C_{02}=u,\qquad
+C_{01}=C_{12}=A_0\frac{1+u}{2}+\frac{\beta x(u)}2=a.
+\tag{191.8}
+$$
+因此处理器在全部 $U$ 精确生成目标通道。这个恒等式也表明整个闭弦 $[b_-,b_+]$ 都位于 $F(a,u)$ 的 CP 区间 $[2a^2-1,1]$；不过它不包含 $J_a$ 的完整上尾。具体地，$q(1)=-k(1-t)^2<0$，而 $q(t)>0$、$t<1$，所以 $b_+<1$。
+
+对 Bloch 向量 $(x(u),0,u)$，满秩 SLD 公式为
+$$
+I_Q(\rho_u)=1+(x')^2+\frac{(u+xx')^2}{1-u^2-x^2}.
+\tag{191.9}
+$$
+将可读下界移到左边，完成平方可得
+$$
+I_Q(\rho_u)-I_r(u)
+=\frac{[(1-u^2)x'+ux]^2}{(1-u^2)(1-u^2-x^2)}
+=\frac{k(u-t)^2}{(1-u^2)q(u)}.
+\tag{191.10}
+$$
+它在 $t$ 恰为零，在 $U\setminus\{t\}$ 严格为正。程序在 $U$ 始终满秩且解析，所以这是规则达到。证毕。
+
+例如，当 $0<a<1/2$、$t=0$ 时，可取 $2a<\lambda<1$，有 $K=\left(\begin{smallmatrix}0&2a/\lambda\\0&0\end{smallmatrix}\right)$、$\rho_u=(I+\lambda X+uZ)/2$，物理区间为 $|u|<\sqrt{1-\lambda^2}$。此时（191.10）成为 $\lambda^2u^2/[(1-u^2)(1-u^2-\lambda^2)]$，直接显示在零点达到及其邻域的正额外成本。这是本定理的参数特化，不改变全区间二维下界的覆盖假设。
+
+**定理 191.3（局部纯程序达到仍不能使用二维空间）。** 设一个固定处理器在包含 $t\in J_a$ 的开区间上精确生成 $\mathcal T_u$，且程序曲线在该区间为 $C^1$ 纯态。若程序联合空间维数不超过二，则
+$$
+I_Q(\rho_t)>I_r(t).
+\tag{191.11}
+$$
+
+证明。 一维程序只能生成恒定通道，所以只需考虑二维。取处理器的 Stinespring 等距表示 $V$。对信号基态 $|i\rangle$，目标通道保持纯输出 $|i\rangle\langle i|$，故对每个程序向量 $\psi_u$，
+$$
+V(|i\rangle\otimes\psi_u)=|i\rangle\otimes w_i(u).
+\tag{191.12}
+$$
+程序向量在任一非空精确开区间内张成整个二维空间：否则所有程序投影相同，诱导通道不随 $u$ 变化。由线性性，（191.12）因此推广为
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I
+\tag{191.13}
+$$
+在整个信号与二维程序输入空间上的恒等式。这里的受控等距形状由纯基态输出推出，没有预先限制处理器类型。
+
+固定均衡 $02$ 输入并测量 $|+\rangle,|-\rangle$。由（191.13），其在任意程序输入上的信号输出均位于 $02$ 子空间；因此得到完整的二维程序 POVM
+$$
+M_\pm=\frac12(I\pm\operatorname{Re}A),\qquad
+A=W_2^\dagger W_0,
+\qquad p_+=h=\frac{1+u}{2},\quad p_-=\ell=1-h.
+\tag{191.14}
+$$
+$A$ 是压缩算子，且 $\operatorname{Re}A=(A+A^\dagger)/2$。测量的信息量为 $I_r$，所以一般测量信息不等式已给出 $I_Q\ge I_r$。
+
+反设在 $t$ 取等号。令 $L$ 为该点的 SLD，$\psi=\psi_t$。支持敏感的测量等号条件要求
+$$
+\sqrt{M_j}L\psi=s_j\sqrt{M_j}\psi,
+\qquad s_j=\frac{p_j'}{p_j}\ne0,
+\qquad j\in\{+,-\}.
+\tag{191.15}
+$$
+这一条件可由每项 Hilbert 空间 Cauchy–Schwarz 等号直接取得，亦见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）的支持敏感等号条件。若某个 $M_j$ 可逆，（191.15）就给出 $L\psi=s_j\psi$；但 $\langle\psi,L\psi\rangle=\operatorname{Tr}\rho'=0$，与 $s_j\ne0$ 矛盾。故两个非零效应都是秩一。二维中两个秩一正效应之和为单位算子，必为互补正交投影。
+
+选择其本征基，令 $M_\pm=(I\pm Z)/2$，从而 $\operatorname{Re}A=Z$。由 $\|A\|\le1$，在 $Z$ 的两个本征向量上，实部为 $\pm1$ 的期望值已经饱和 Cauchy–Schwarz；因此 $A=Z$。又因 $W_0,W_2$ 为等距映射，$W_2^\dagger W_0=Z$ 蕴含 $W_2=W_0Z$。
+
+在 $t$ 附近选择连续可微的归一纯态向量，并用固定基向量相位令
+$$
+\psi_u=\begin{pmatrix}\sqrt h\\ e^{i\varphi(u)}\sqrt\ell\end{pmatrix},
+\qquad\varphi(t)=0.
+\tag{191.16}
+$$
+这里对 $C^1$ 曲线只需取 $C^1$ 的局部相位。纯态信息量为
+$$
+I_Q(\rho_u)=I_r(u)+4h\ell(\varphi')^2.
+\tag{191.17}
+$$
+所以等号迫使 $\varphi'(t)=0$，并有
+$$
+\psi_t=\begin{pmatrix}\sqrt{h_0}\\\sqrt{\ell_0}\end{pmatrix},
+\qquad
+v:=\psi_t'=\begin{pmatrix}1/(4\sqrt{h_0})\\-1/(4\sqrt{\ell_0})\end{pmatrix}.
+\tag{191.18}
+$$
+令 $K=W_0^\dagger W_1$。通道的两个固定实系数给出
+$$
+\langle\psi_u,K\psi_u\rangle=a,
+\qquad
+\langle Z\psi_u,K\psi_u\rangle=a.
+\tag{191.19}
+$$
+第一式使用 $C_{01}$ 的复共轭仍等于实数 $a$，第二式使用 $W_2=W_0Z$。两式相加相减先给出整个邻域的向量恒等式；再在 $t$ 求导，得到
+$$
+K\psi_u=\begin{pmatrix}a/\sqrt h\\0\end{pmatrix},
+\qquad
+Kv=\begin{pmatrix}-a/(4h_0\sqrt{h_0})\\0\end{pmatrix}.
+\tag{191.20}
+$$
+两个实向量 $\psi_t,v$ 线性无关，故它们的像唯一确定整个复矩阵：
+$$
+K=\begin{pmatrix}A_0&B_0\\0&0\end{pmatrix},
+\qquad A_0=\frac{at}{h_0},\quad B_0=2a\sqrt{\frac{\ell_0}{h_0}}>0.
+\tag{191.21}
+$$
+于是（191.19）第一式在附近每个参数的实部都必须满足
+$$
+a=A_0h+B_0\sqrt{h\ell}\cos\varphi(u)
+\le A_0h+B_0\sqrt{h\ell}
+$$
+$$
+=a-\frac a{h_0}
+\left(\sqrt{h\ell_0}-\sqrt{\ell h_0}\right)^2.
+\tag{191.22}
+$$
+对 $u\ne t$，最后的平方严格为正，矛盾。因此不能在 $t$ 达到等号，结合测量信息下界即得（191.11）。证毕。
+
+**定理 191.4（局部与全区间、纯态与混态的维数分离）。** 对任意 $t\in J_a$，达到可读下界所需的最小联合程序维数具有以下取值：允许混态且只要求局部精确、规则达到时为二；要求局部程序曲线为纯态时为三；要求精确覆盖整个 $J_a$ 时为三，且三维达到可用全程纯态完成。
+
+证明。 局部一维程序不能产生非恒定通道，定理191.2给出二维满秩达到。定理191.3排除局部纯二维达到，定理190.3给出三维纯态的全区间达到，因而也给出局部纯态达到。全区间的下界与达到由定理190.4给出。
+
+特别地，二维局部规则达到若在设计点为纯态，则恒秩条件使它在邻域仍为纯态，与定理191.3矛盾。因此二维局部规则达到在设计点必须满秩。这里没有排除只在单点为纯态、周围发生秩变化的程序；也没有求出局部纯二维程序信息量的精确下确界。上述维数分别针对已写明的覆盖域与秩条件，不能将局部混态构造带入第190节的全区间类。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 192. 有限点全部最优与连续区间的正积分成本
+
+**定义 192.1（归一额外成本与固定比较区间）。** 固定 $0<a<1$，仍考虑精确生成全部 $\mathcal T_u$、$u\in J_a=(2a-1,1)$ 的有限维固定程序。定义
+$$
+D(u)=I_Q(\rho_u)-I_r(u),\qquad
+e(u)=\frac{I_Q(\rho_u)}{I_r(u)}-1=(1-u^2)D(u),
+\qquad I_r(u)=\frac1{1-u^2}.
+\tag{192.1}
+$$
+由固定均衡 $02$ 读出，$D,e\ge0$。取第189节的比较区间
+$$
+I_a=[u_-,u_+],\qquad
+u_- =\frac{3a-1}{2},\quad u_0=a,\quad u_+=\frac{1+a}{2},
+\qquad |I_a|=1-a.
+\tag{192.2}
+$$
+沿用（189.3）的三个实系数 $\alpha_-,\alpha_0,\alpha_+$，即令 $h_i=(1+u_i)/2$、$\ell_i=1-h_i$ 后满足
+$$
+\sum_i\alpha_i h_i=0,\qquad
+\sum_i\alpha_i\ell_i=1,\qquad
+\sum_i\alpha_i\sqrt{h_i\ell_i}=0.
+\tag{192.3}
+$$
+令
+$$
+C_a=\max(|\alpha_-|,|\alpha_+|)>0,
+\qquad \mu_a=\frac{\sqrt{1+8a^2}-1}{6},
+$$
+$$
+\Gamma(a)=\frac{\mu_a^2(1-a)(1-u_+^2)}{4C_a^2}>0.
+\tag{192.4}
+$$
+$C_a>0$ 由第189.1节 $|\alpha_-|+|\alpha_+|>0$ 得到。
+
+**定理 192.2（任意有限维程序的额外信息具有正积分下界）。** 对任意 $C^1$ 的全区间精确程序曲线，允许秩变化，有
+$$
+\int_{I_a}\sqrt{D(u)}\,du\ge\frac{\mu_a(1-a)}{2C_a},
+\tag{192.5}
+$$
+$$
+\int_{I_a}D(u)\,du\ge\frac{\mu_a^2(1-a)}{4C_a^2},
+\qquad
+\int_{I_a}e(u)\,du\ge\Gamma(a).
+\tag{192.6}
+$$
+积分均取非负函数的 Lebesgue 积分，允许值为正无穷；常数与程序维数无关。
+
+证明。 先说明秩变化时的可测性。对任一内部参数，有限 Hermitian SLD $L$ 满足 $\rho'=(L\rho+\rho L)/2$，因而
+$$
+I_Q(\rho_u)=\sup_{H=H^\dagger}
+\left[2\operatorname{Tr}(\rho_u'H)-\operatorname{Tr}(\rho_uH^2)\right].
+\tag{192.7}
+$$
+对固定 $u$，方括号等于 $I_Q-\operatorname{Tr}(\rho_u(H-L)^2)$，并在 $H=L$ 达到上确界。由于它对有限维变量 $H$ 连续，可以只取一个可数稠密的 Hermitian 矩阵集合。每个固定 $H$ 对应的函数关于 $u$ 连续，所以 $I_Q$ 下半连续，从而 $D,e$ 及 $\sqrt D$ 都是非负 Borel 函数。这使用点态 SLD 约定，不假设 SLD 矩阵沿曲线连续。
+
+沿第189节，用固定 Naimark 嵌入与 CPTP 解码把读出写成互补投影 $P_\pm$，程序记为 $\sigma_u$。令
+$$
+K_u=\sqrt h\,P_++\sqrt\ell\,P_-,\qquad
+\tau_u=K_u^{-1}\sigma_uK_u^{-1},\qquad
+\widehat\sigma_u=K_u\tau_aK_u,
+\tag{192.8}
+$$
+其中 $h=(1+u)/2$、$\ell=1-h$。第189节的精确剩余平方给出
+$$
+\|\tau_u'\|_1\le\frac{\sqrt{D(u)}}{\min(h,\ell)}.
+\tag{192.9}
+$$
+$\tau_u'$ 由连续的程序导数及光滑矩阵直接定义，因此可对它使用微积分基本定理。由于 $\|K_{u_i}\|_\infty^2\le1$，
+$$
+\|\sigma_{u_-}-\widehat\sigma_{u_-}\|_1
+\le\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+$$
+$$
+\|\sigma_{u_+}-\widehat\sigma_{u_+}\|_1
+\le\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du,
+\qquad \sigma_a=\widehat\sigma_a.
+\tag{192.10}
+$$
+上式右边为无穷时不等式仍成立。
+
+向同一扩展处理器输入均衡三能级纯态，实际输出为 $X_u=F(a,u)/3$，参考输出为 $\widehat X_u$。第189节的固定分块展开及（192.3）给出
+$$
+\sum_i\alpha_iX_{u_i}=F(a,-1)/3,
+\qquad
+\sum_i\alpha_i\widehat X_{u_i}=X_-,
+\tag{192.11}
+$$
+其中 $X_-$ 是密度矩阵。$F(a,-1)/3$ 的负特征值为 $-\mu_a$，两者迹均为一，故其迹范数距离至少为 $2\mu_a$。再用固定处理器的迹范数收缩、（192.10）及中点误差为零，得到
+$$
+2\mu_a\le
+|\alpha_-|\int_{u_-}^{a}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du
++|\alpha_+|\int_a^{u_+}\frac{\sqrt{D(u)}}{\min(h,\ell)}\,du.
+\tag{192.12}
+$$
+在 $I_a$ 上，$\min(h,\ell)\ge(1-a)/4$，故
+$$
+2\mu_a\le\frac{4C_a}{1-a}\int_{I_a}\sqrt{D(u)}\,du,
+\tag{192.13}
+$$
+证明（192.5）。若 $\int D$ 有限，Cauchy–Schwarz 给出 $(\int\sqrt D)^2\le(1-a)\int D$；若无穷，所需下界自动成立。最后，$|u_-|\le u_+$，所以 $1-u^2\ge1-u_+^2$，结合 $e=(1-u^2)D$ 即得（192.6）。证毕。
+
+**定理 192.3（任意有限组设计点可由同一纯程序同时达到）。** 对任意有限非空集合 $\mathcal S=\{v_1,\ldots,v_m\}\subset J_a$，存在一个固定处理器和一条 $C^\infty$ 纯程序曲线，精确生成全部 $J_a$，程序空间维数不超过 $3m$，且
+$$
+I_Q(\rho_{v_i})=I_r(v_i)\qquad(1\le i\le m).
+\tag{192.14}
+$$
+因此在这些条件下，有限集合上的最坏信息成本比的最小值为一，并被达到。
+
+证明。 对每个 $v_i$，取定理190.3的三维实归一向量 $\psi_i(u)$ 及固定处理器 $\mathcal G_i$。每个分支在全部 $J_a$ 精确生成同一个 $\mathcal T_u$，且在 $v_i$ 达到下界。
+
+若 $m\ge2$，为 $i=2,\ldots,m$ 选择光滑截断函数 $0\le\chi_i\le1$，其紧支集在 $J_a$ 内两两不交、避开 $v_1$，并且在 $v_i$ 的某邻域恒为一。定义
+$$
+g_1=1-\sum_{i=2}^m\chi_i,\qquad g_i=\chi_i\ (i\ge2),
+\qquad b_i=\frac{g_i}{\sqrt{\sum_jg_j^2}}.
+\tag{192.15}
+$$
+同一参数处至多一个截断函数非零，故 $\sum_jg_j^2\ge1/2$，归一化全局光滑。$b_i$ 在 $v_i$ 附近恒为一，其他振幅在那里恒为零。$m=1$ 时直接取 $b_1=1$。
+
+令 $\mathcal H_P=\bigoplus_{i=1}^m\mathbb C^3$，$E_i$ 为固定块嵌入，并取
+$$
+\Psi_u=\bigoplus_i b_i(u)\psi_i(u),\qquad
+\rho_u=|\Psi_u\rangle\langle\Psi_u|.
+\tag{192.16}
+$$
+这是一条全局光滑、归一且秩恒为一的程序曲线。定义固定处理器
+$$
+\mathcal G(X)=\sum_i\mathcal G_i\!\left[(I\otimes E_i^\dagger)X(I\otimes E_i)\right].
+\tag{192.17}
+$$
+每项为 CP，且 $\sum_iE_iE_i^\dagger=I$ 保证整体保迹。处理器舍弃程序不同块之间的交叉项，故
+$$
+\mathcal G(\omega\otimes\rho_u)
+=\sum_i b_i(u)^2\mathcal T_u(\omega)=\mathcal T_u(\omega).
+\tag{192.18}
+$$
+所有分支的精确性属于同一个实际参数 $u$，因此这里可以直接组合。
+
+实归一分支满足 $\langle\psi_i,\psi_i'\rangle=0$。固定块正交及 $\sum_i b_i^2=1$ 给出
+$$
+I_Q(\rho_u)=4\|\Psi_u'\|^2
+=\sum_i b_i^2 I_Q(\psi_i(u))+4\sum_i(b_i')^2
+$$
+$$
+=I_r(u)+4h\sum_i b_i^2(\theta_i')^2+4\sum_i(b_i')^2,
+\tag{192.19}
+$$
+其中 $\theta_i(u)$ 是第190节角度与 $h=(1+u)/2$ 的复合，所有导数均对 $u$ 求取。该式保留了切换振幅的信息成本。在 $v_i$，只有第 $i$ 个分支被选中，振幅导数全部为零，且 $\theta_i'(v_i)=0$，所以（192.14）成立。结合普遍的 $I_Q\ge I_r$，有限集合上的最小比值确为一。证毕。
+
+固定程序、纯程序与正交控制标签的背景见 Hillery、Ziman、Bužek，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）—（2.16）与第III.A节；纯态信息度量见 Braunstein–Caves，Phys. Rev. Lett. **72**, 3439（1994），DOI:10.1103/PhysRevLett.72.3439。这里的有限点达到来自第190节具体曲线与上述固定块拼接。$3m$ 是充分维数上界，不宣称它最小，也不宣称达到点的数量增加必然要求维数增加。
+
+**定理 192.4（稠密有限校准必须失去统一导数界）。** 第189节的常数 $\Delta(a)>0$ 已在固定比较区间上给出
+$$
+\sup_{u\in I_a} e(u)\ge\Delta(a).
+\tag{192.20}
+$$
+设一个全区间精确的光滑纯程序在有限非空集合 $\mathcal S\subset I_a$ 上满足 $e(s)=0$，并令
+$$
+\rho(\mathcal S)=\max_{u\in I_a}\min_{s\in\mathcal S}|u-s|>0.
+\tag{192.21}
+$$
+则
+$$
+\max_{u\in I_a}|e'(u)|\ge\frac{\Delta(a)}{\rho(\mathcal S)}.
+\tag{192.22}
+$$
+
+证明。 第189.2节的全部积分与三个比较点都位于 $I_a$；将其全区间上确界 $R$ 换成 $\sup_{I_a}I_Q/I_r$，原证明及常数不变，得到（192.20）。光滑纯态的信息量由 $4(\|\Psi'\|^2-|\langle\Psi,\Psi'\rangle|^2)$ 给出，所以 $e$ 在 $I_a$ 光滑并取得最大值。设最大点为 $v$，取距离它最近的 $s\in\mathcal S$。$e(v)\ge\Delta(a)>0=e(s)$，故 $v\ne s$。均值定理给出二者之间一点 $\xi$，使
+$$
+|e'(\xi)|=\frac{e(v)-e(s)}{|v-s|}
+\ge\frac{\Delta(a)}{\rho(\mathcal S)},
+$$
+证明所需结论。更一般地，若已知 $e$ 在 $I_a$ 的 Lipschitz 常数为 $L$，则
+$$
+\max_{I_a}e\le\max_{\mathcal S}e+L\rho(\mathcal S).
+\tag{192.23}
+$$
+因此有限设计点可以全部满足精确最优；但当其覆盖半径趋于零时，这些设计不能同时保持统一的导数界。定理192.2还要求每个设计保留至少 $\Gamma(a)$ 的额外成本积分。这里比较的是参数函数的有限点值与连续区间控制，不涉及有限试验次数造成的统计误差，也不将逐个有限集合可重新设计替换为同一程序在整个区间达到。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 193. 局部纯二维程序的精确成本下确界与转置不变约束
+
+**定义 193.1（纯二维邻域精确生成的逐点成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令
+$$
+F(a,u)=\begin{pmatrix}1&a&u\\a&1&a\\u&a&1\end{pmatrix},\qquad
+\mathcal T_u=\mathcal S_{F(a,u)},\qquad
+B(a,u)=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{193.1}
+$$
+一个局部纯二维程序由包含 $t$ 的非空开区间 $U\subset J_a$、$U$ 上的 $C^1$ 秩一密度矩阵曲线 $\rho_u\in M_2$，以及与 $u$ 无关的 CPTP 映射
+$$
+\mathcal G:M_3\otimes M_2\longrightarrow M_3
+\tag{193.2}
+$$
+组成，要求对每个 $u\in U$ 和每个信号态 $\omega$ 都有 $\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)$。不同程序允许使用不同的 $U$。成本取关于 $u$ 的 SLD 信息量，记
+$$
+\mathfrak P_{2,\mathrm{loc}}(a,t)
+=\inf_{(U,\rho,\mathcal G)}I_Q(\rho_t).
+\tag{193.3}
+$$
+这里要求整个 $U$ 上的严格等式；仅在 $t$ 匹配值和一阶导数的程序不属于此定义。第191节给出了每个这种程序都不能达到 $I_{\rm read}(t)=1/(1-t^2)$ 的结论。以下求出整个程序类的下确界。
+
+**定理 193.2（纯二维局部成本等于经典生成成本）。** 对定义193.1的全部参数，
+$$
+\boxed{\mathfrak P_{2,\mathrm{loc}}(a,t)=B(a,t)}.
+\tag{193.4}
+$$
+每个允许程序在其整个定义区间上满足 $I_Q(\rho_u)\ge B(a,u)$。另一方面，对任意 $\delta>0$，存在秩一解析程序及固定处理器，在包含 $t$ 的真实开区间内精确生成 $\mathcal T_u$，且
+$$
+B(a,t)\le I_Q(\rho_t)<B(a,t)+\delta.
+\tag{193.5}
+$$
+因此纯二维局部下确界与单次可读信息的精确比值为
+$$
+\frac{\mathfrak P_{2,\mathrm{loc}}(a,t)}{I_{\rm read}(t)}
+=1+\frac{a^2(1-t)}{1+t-2a^2}>1.
+\tag{193.6}
+$$
+式（193.4）是下确界陈述，不断言某个允许程序在 $t$ 达到 $B(a,t)$。
+
+证明。 先建立任意处理器的下界。以 Pauli 矩阵记 $\rho_u=(I+r(u)\cdot\sigma)/2$；纯性等价于 $|r(u)|=1$。固定处理器诱导从实 Bloch 向量到信号线性映射的仿射映射，其线性部分为
+$$
+\mathcal L(x)(X)=\frac12\mathcal G\bigl(X\otimes(x\cdot\sigma)\bigr),\qquad x\in\mathbb R^3.
+\tag{193.7}
+$$
+若 $\mathcal L$ 的实秩为三，则它是单射。因为 $\mathcal T_u$ 是关于 $u$ 的非恒定仿射直线，精确性迫使 $r(u)=r(t)+(u-t)v$，其中固定向量 $v\ne0$。但 $|r(t)+(u-t)v|^2=1$ 不可能在开区间上恒成立，因为二次项系数为 $|v|^2>0$。所以
+$$
+\operatorname{rank}_{\mathbb R}\mathcal L\le2.
+\tag{193.8}
+$$
+选择非零核方向，并对程序作固定酉基变换，可令该方向为 Pauli 矩阵 $Y$。于是对所有信号算符 $X$ 都有 $\mathcal G(X\otimes Y)=0$。
+
+固定任意信号态 $\omega$，定义从程序到信号输出的通道
+$$
+\mathcal E_\omega(\tau)=\mathcal G(\omega\otimes\tau).
+\tag{193.9}
+$$
+它从 $M_2$ 映到 $M_3$，是 CPTP，且消去 $Y$。在上述程序基下，转置保持 $I,X,Z$ 而使 $Y$ 变号，故 $\mathcal E_\omega\circ T=\mathcal E_\omega$。其归一化 Choi 态因而满足
+$$
+C_\omega=\frac12\sum_{j,k=0}^1|j\rangle\langle k|\otimes
+\mathcal E_\omega(|j\rangle\langle k|),\qquad
+C_\omega^{T_1}=C_\omega\succeq0.
+\tag{193.10}
+$$
+这里使用 $2\times3$ 系统的 PPT 可分性判据：M. Horodecki、P. Horodecki、R. Horodecki，*Separability of mixed states: necessary and sufficient conditions*，arXiv:quant-ph/9605038v2，定理3及其后关于第一因子转置的注记。因此 $C_\omega$ 可分，有限维中可写成有限和 $\sum_k w_k A_k\otimes\tau_k$，其中 $A_k,\tau_k$ 为密度矩阵、$w_k\ge0$。由 $\operatorname{Tr}_{\rm out}C_\omega=I_2/2$ 以及 Choi 重构公式，得到
+$$
+\mathcal E_\omega(\tau)=\sum_k\operatorname{Tr}(M_k\tau)\tau_k,
+\qquad M_k=2w_k A_k^{\mathsf T}\succeq0,\qquad \sum_kM_k=I_2.
+\tag{193.11}
+$$
+这是可分 Choi 态与测量—制备表示的标准对应；参见 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，arXiv:quant-ph/0302031v2，定理4。上面的重构直接保留二维输入、三维输出，不要求输入输出维数相同。这里取得测量—制备形式的是固定信号输入后的 $\mathcal E_\omega$，不是断言 $\mathcal T_u$ 本身是纠缠破坏通道。
+
+取严格正概率向量 $p=(p_0,p_1,p_2)$，令 $|s_p\rangle=\sum_i\sqrt{p_i}|i\rangle$，并固定 $\omega=|s_p\rangle\langle s_p|$。记 $D_p=\operatorname{diag}(\sqrt p)$、$E_{02}=E_{20}=1$ 且 $E$ 其余项为零，则
+$$
+\Sigma_u=D_pF(a,u)D_p=\sum_k q_k(u)\tau_k,\qquad
+\Sigma_u'=D_pED_p,\qquad q_k(u)=\operatorname{Tr}(M_k\rho_u).
+\tag{193.12}
+$$
+$F(a,u)$ 在 $J_a$ 上正定，故 $\Sigma_u$ 可逆。在任何固定的内部点，若 $q_k(u)=0$，则两侧非负性与可微性给出 $q_k'(u)=0$。以下和式省略这些零项。设 $s_k=q_k'/q_k$，有
+$$
+\begin{pmatrix}\Sigma_u&\Sigma_u'\\\Sigma_u'&Q_u\end{pmatrix}
+=\sum_{k:q_k>0}q_k
+\begin{pmatrix}\tau_k&s_k\tau_k\\s_k\tau_k&s_k^2\tau_k\end{pmatrix}\succeq0,
+\qquad Q_u=\sum_{k:q_k>0}\frac{q_k'^2}{q_k}\tau_k.
+\tag{193.13}
+$$
+Schur 补和取迹遂给出
+$$
+\operatorname{Tr}(\Sigma_u'\Sigma_u^{-1}\Sigma_u')
+\le\operatorname{Tr}Q_u
+=\sum_{k:q_k>0}\frac{q_k'^2}{q_k}
+\le I_Q(\rho_u).
+\tag{193.14}
+$$
+最后一步是固定 POVM 下的 SLD 信息量单调性。前一个不等式是经典反向制备的 RLD 下界的直接分块证明；其一般反向估计背景见 Matsumoto，*Reverse estimation theory, Complementarity between SLD and RLD, and monotone distances*，arXiv:quant-ph/0511170v1，第4节。测量界采用 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439 的 SLD 约定。
+
+逆矩阵的两个端点对角元为
+$$
+(F(a,u)^{-1})_{00}=(F(a,u)^{-1})_{22}
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}=B(a,u).
+\tag{193.15}
+$$
+所以由（193.12）及迹的循环性，
+$$
+\operatorname{Tr}(\Sigma_u'\Sigma_u^{-1}\Sigma_u')
+=\operatorname{Tr}\bigl(D_p^2EF(a,u)^{-1}E\bigr)
+=(p_0+p_2)B(a,u).
+\tag{193.16}
+$$
+保持 $p_0,p_2>0$ 而令 $p_1\downarrow0$，即得 $I_Q(\rho_u)\ge B(a,u)$。此极限只作用于下界的数值；每次应用（193.14）时仍使用满支持信号输入与可逆输出，并未在奇异极限态上求逆。秩论证只用各程序自己的非空开区间，不要求全部程序共享一个区间。
+
+再构造逼近下界的纯二维程序。固定名义点 $t$，简记 $B=B(a,t)$、$h_0=(1+t)/2$、$\ell_0=1-h_0$，并置 $c=a\ell_0/(1-a^2)$。使用定理184.2的三个固定通道 $\mathcal R_+,\mathcal R_-,\mathcal R_c$ 及其在整个 $J_a$ 上严格为正的仿射概率
+$$
+\begin{aligned}
+p_c(u)&=\frac{1-(1+u)/2}{1-c^2},\\
+p_+(u)&=\frac{(1+u)/2+a-(1+a)c}{2(1-c)},\\
+p_-(u)&=\frac{(1+u)/2-a+(1-a)c}{2(1+c)}.
+\end{aligned}
+\tag{193.17}
+$$
+令 $p_j=p_j(t)$、$v_j=p_j'(t)$；这些常数满足
+$$
+\sum_jp_j=1,\qquad \sum_jv_j=0,\qquad
+\sum_j\frac{v_j^2}{p_j}=B,
+\qquad p_j(u)=p_j+(u-t)v_j.
+\tag{193.18}
+$$
+三项 $v_j$ 均非零。定义
+$$
+q_j=\frac{v_j^2}{Bp_j},\qquad
+C=1+\max_j\frac{q_j}{p_j},\qquad
+0<\varepsilon<\frac1{2C},\qquad \lambda=\sqrt{1-C\varepsilon}.
+\tag{193.19}
+$$
+于是 $\sum_jq_j=1$、$q_j>0$、$\lambda^2>1/2$。取三个实对称测量算符
+$$
+M_j=\begin{pmatrix}
+\dfrac{p_j-\varepsilon q_j}{1-\varepsilon}&\dfrac{\lambda v_j}{\sqrt B}\\[2mm]
+\dfrac{\lambda v_j}{\sqrt B}&q_j
+\end{pmatrix}.
+\tag{193.20}
+$$
+由（193.18）立即有 $\sum_jM_j=I_2$。两个对角元严格为正，且
+$$
+\det M_j
+=\frac{\varepsilon q_j}{1-\varepsilon}
+\bigl[p_j(1+C-C\varepsilon)-q_j\bigr]>0.
+\tag{193.21}
+$$
+严格正性使用 $q_j/p_j\le C-1$、$C\varepsilon<1/2$；同样有 $\varepsilon q_j<p_j/2$。所以这些算符组成固定 POVM。
+
+令
+$$
+R_\varepsilon=\frac{2\lambda\sqrt{\varepsilon(1-\varepsilon)}}{\sqrt B},\qquad
+U_\varepsilon=J_a\cap(t-R_\varepsilon,t+R_\varepsilon),
+\tag{193.22}
+$$
+并在这个包含 $t$ 的非空开区间上定义 Bloch 向量
+$$
+r_\varepsilon(u)=\left(
+\frac{\sqrt B(u-t)}\lambda,
+\sqrt{4\varepsilon(1-\varepsilon)-\frac{B(u-t)^2}{\lambda^2}},
+1-2\varepsilon
+\right),\qquad
+\rho_u^{(\varepsilon)}=\frac{I+r_\varepsilon(u)\cdot\sigma}{2}.
+\tag{193.23}
+$$
+根号内严格为正，且 $|r_\varepsilon(u)|=1$，故这是一条解析的纯态曲线。实测量算符不读取 $Y$ 分量，直接计算得到
+$$
+\operatorname{Tr}(\rho_u^{(\varepsilon)}M_j)
+=(1-\varepsilon)\frac{p_j-\varepsilon q_j}{1-\varepsilon}
++\varepsilon q_j+\frac{\sqrt B(u-t)}\lambda\frac{\lambda v_j}{\sqrt B}
+=p_j(u).
+\tag{193.24}
+$$
+固定处理器先测量程序的 $M_j$，再对信号执行 $\mathcal R_j$。明确地，对联合输入算符 $Z$ 可写为
+$$
+\mathcal G_\varepsilon(Z)=\sum_j\mathcal R_j\!\left(
+\operatorname{Tr}_{P}\bigl[(I\otimes\sqrt{M_j})Z(I\otimes\sqrt{M_j})\bigr]\right).
+\tag{193.25}
+$$
+它是 CPTP，且（193.17）、（193.24）给出 $\mathcal G_\varepsilon(\omega\otimes\rho_u^{(\varepsilon)})=\mathcal T_u(\omega)$，在整个 $U_\varepsilon$ 上是严格等式。
+
+纯 Bloch 曲线的 SLD 信息量为 $|r_\varepsilon'(u)|^2$。在 $u=t$，只有第一分量的导数非零，因此
+$$
+I_Q(\rho_t^{(\varepsilon)})=\frac B{\lambda^2}
+=\frac B{1-C\varepsilon}\longrightarrow B
+\qquad(\varepsilon\downarrow0).
+\tag{193.26}
+$$
+任意给定 $\delta>0$，再要求 $\varepsilon<\delta/[C(B+\delta)]$ 即得（193.5）。与已经证明的下界合用，得到（193.4），相除并化简得到（193.6）。上述逼近中 $R_\varepsilon\to0$；在 $\varepsilon=0$ 直接取极限不能得到仍有非空定义邻域的纯态曲线，因此这个构造没有把下确界升级为最小值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 194. 纯二维成本下确界的不达到性与固定精确邻域的正差距
+
+**定理 194.1（每个局部纯二维程序严格高于下确界）。** 在定义193.1的程序类中，对每个 $t\in U$ 都有
+$$
+I_Q(\rho_t)>B(a,t).
+\tag{194.1}
+$$
+因此定理193.2的下确界不由任何一个允许程序达到。
+
+证明。 固定一个允许程序及内部点 $t$。沿用（193.7）的实线性映射 $\mathcal L$，记 $K=\ker\mathcal L\ne\{0\}$、$A=K^\perp$，以及 Bloch 向量 $r(u)$。$\mathcal L$ 在 $A$ 上单射，故目标通道的非恒定仿射性迫使
+$$
+P_A r(u)=a_0+(u-t)v,\qquad v\in A\setminus\{0\}.
+\tag{194.2}
+$$
+若 $r(t)\perp K$，则 $|a_0|=1$。但非恒定仿射线不可能在内点经过单位球面而两侧都留在闭单位球内；具体地，两个对称参数的平方范数平均为 $1+s^2|v|^2>1$。所以可以选择单位向量 $n\in K$ 使 $n\cdot r(t)\ne0$。
+
+以固定程序酉变换将 $n$ 转到 $Y$ 方向。于是 $\mathcal G(X\otimes Y)=0$，而 $r_y(t)\ne0$。在 $t$ 的一个较小邻域内定义
+$$
+\sigma_u=\frac{\rho_u+\rho_u^{\mathsf T}}2
+=\frac{I+r_x(u)X+r_z(u)Z}{2}\succ0.
+\tag{194.3}
+$$
+它生成同一条通道。这个式子只构造另一条合法状态曲线，不把转置平均视为 CPTP 操作，也不对它使用信息量单调性。记 $s=(r_x,r_z)$。由纯性 $|s|^2+r_y^2=1$ 以及 $r_y\ne0$，直接得到
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|s'(u)|^2+\frac{(s(u)\cdot s'(u))^2}{1-|s(u)|^2}
+=I_Q(\sigma_u).
+\tag{194.4}
+$$
+最后一项使用满秩 qubit 的 SLD 公式。
+
+还需要固定信号输入之间的共同实现。第191.3节的受控 Stinespring 推导适用于当前任意处理器：程序向量张成整个二维空间，而每个信号基态输出固定为同一纯基态，所以
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I_2.
+\tag{194.5}
+$$
+因而对所有程序态 $\tau$，诱导通道都是 Schur 通道。令 $|s_0\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$，并定义
+$$
+\mathcal E_0(\tau)=\mathcal G(|s_0\rangle\langle s_0|\otimes\tau).
+\tag{194.6}
+$$
+$3\mathcal E_0(\tau)$ 就是整个诱导通道的相关矩阵，且 $\operatorname{diag}\mathcal E_0(\tau)=(1/3,1/3,1/3)$ 对所有程序态恒成立。对任意概率向量 $p$，定义 $D_p=\operatorname{diag}(\sqrt p)$、$|s_p\rangle=\sum_i\sqrt{p_i}|i\rangle$，则同一处理器满足
+$$
+\mathcal E_p(\tau):=\mathcal G(|s_p\rangle\langle s_p|\otimes\tau)
+=3D_p\mathcal E_0(\tau)D_p.
+\tag{194.7}
+$$
+
+$\mathcal E_0$ 从二维映到三维且消去 $Y$。由第193节使用的 $2\times3$ PPT 判据和 Choi 重构，它存在一个有限测量—制备表示。因为 $\mathcal E_0\circ T=\mathcal E_0$，把各测量效应换成其与转置的平均，可以得到实对称效应的同一个表示：
+$$
+\mathcal E_0(\tau)=\sum_k\operatorname{Tr}(N_k\tau)\tau_k,
+\qquad N_k=N_k^{\mathsf T}\succeq0,\quad \sum_kN_k=I_2.
+\tag{194.8}
+$$
+这里 $\tau_k$ 为固定三维密度矩阵。删去零效应后，$q_k(u)=\operatorname{Tr}(N_k\sigma_u)>0$ 在所取邻域内恒成立；并有 $q_k(u)=\operatorname{Tr}(N_k\rho_u)$。
+
+对每个 $p$ 定义
+$$
+w_k(p)=3\operatorname{Tr}(D_p^2\tau_k)
+=3\sum_i p_i(\tau_k)_{ii},\qquad
+\mathcal F(p)=\sum_k w_k(p)\frac{q_k'(t)^2}{q_k(t)}.
+\tag{194.9}
+$$
+由（194.7）及其保迹性，$\{w_k(p)N_k\}_k$ 对每个 $p$ 都是 POVM。对于严格正的 $p$，相应的归一输出态为 $3D_p\tau_kD_p/w_k(p)$；因此（193.13）—（193.16）的同一分块证明及测量界给出
+$$
+(1-p_1)B(a,t)\le\mathcal F(p)\le I_Q(\sigma_t).
+\tag{194.10}
+$$
+这里的测量—制备分解固定于 $\mathcal E_0$，只按（194.7）对输出作变换，故 $\mathcal F(p)$ 是 $p$ 的一个有限线性函数。
+
+假设 $I_Q(\rho_t)=B(a,t)$。由（194.4）、（194.10）和连续性，令 $p\to p_*=(1/2,0,1/2)$ 得到
+$$
+\mathcal F(p_*)=I_Q(\sigma_t)=B(a,t).
+\tag{194.11}
+$$
+此步取有限标量函数的极限，不在奇异信号输出上使用逆矩阵。
+
+令 $L$ 为满秩态 $\sigma_t$ 的唯一 SLD。它是实对称矩阵，因为 $\sigma_t,\sigma_t'$ 都是实对称矩阵，SLD 方程及其转置有同一个唯一解。测量 $\{w_k(p_*)N_k\}$ 达到（194.11）的信息量。满秩 SLD 的测量等号条件要求，对每个非零效应 $H_k=w_k(p_*)N_k$，
+$$
+\sqrt{H_k}L=s_k\sqrt{H_k},\qquad s_k\in\mathbb R.
+\tag{194.12}
+$$
+它可由逐效应 Hilbert–Schmidt Cauchy–Schwarz 等号及 $\sigma_t$ 可逆直接推出；原始表述见 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（27）。因此每个这种效应支持在 $L$ 的一个本征空间中。$L$ 不是标量矩阵，否则迹为零的导数迫使 $L=0$，与 $I_Q=B>0$ 矛盾。故它有两个互异本征值，记其秩一实投影为 $P_+,P_-$。
+
+若 $w_k(p_*)>0$，则 $N_k$ 支持在其中一个本征空间中。若 $w_k(p_*)=0$，则 $\tau_k$ 的 $00,22$ 对角元均为零，半正定性迫使相应行列也为零，故 $\tau_k=|1\rangle\langle1|$。这些零权重项的聚合效应满足
+$$
+N_0:=\sum_{k:w_k(p_*)=0}N_k
+=I_2-\sum_{k:w_k(p_*)>0}N_k,
+\tag{194.13}
+$$
+也在 $P_+,P_-$ 基下对角。因此（194.8）对全部程序态只依赖两个数 $\operatorname{Tr}(P_\pm\tau)$：正权重项分别为本征投影的倍数，零权重项具有同一个输出态并可合并。于是
+$$
+\mathcal E_0(\tau)=\sum_{\nu\in\{+,-\}}
+\operatorname{Tr}(P_\nu\tau)\mathcal E_0(P_\nu).
+\tag{194.14}
+$$
+因 $\mathcal E_0$ 决定全部诱导 Schur 系数，（194.14）提升为诱导信号通道的同一个二项分解。令固定 CPTP 通道 $\mathcal R_\nu(\omega)=\mathcal G(\omega\otimes P_\nu)$，便有
+$$
+\mathcal T_u=p(u)\mathcal R_++[1-p(u)]\mathcal R_-,\qquad
+p(u)=\operatorname{Tr}(P_+\rho_u)=\operatorname{Tr}(P_+\sigma_u).
+\tag{194.15}
+$$
+在所取邻域内，$0<p(u)<1$。名义点的 SLD 投影测量给出
+$$
+\frac{p'(t)^2}{p(t)[1-p(t)]}=I_Q(\sigma_t)=B(a,t).
+\tag{194.16}
+$$
+这却是一个二符号经典精确程序，而定理184.3要求它的成本至少为 $B(a,t)/(1-a^2)>B(a,t)$，矛盾。结合定理193.2的非严格下界，得到（194.1）。证毕。
+
+**定理 194.2（固定邻域上的统一正差距）。** 固定 $0<a<1$、$t\in J_a$，以及
+$$
+0<R<\min\{t-(2a-1),1-t\}.
+\tag{194.17}
+$$
+存在 $\eta(a,t,R)>0$，使每个在包含 $[t-R,t+R]$ 的开区间上精确生成 $\mathcal T_u$ 的纯二维 $C^1$ 程序都满足
+$$
+I_Q(\rho_t)\ge B(a,t)+\eta(a,t,R).
+\tag{194.18}
+$$
+特别地，若局部纯二维程序序列的名义成本趋于 $B(a,t)$，则对每个固定的 $R$，充分靠后的程序都不能在包含 $[t-R,t+R]$ 的开区间上保持上述精确性。
+
+证明。 简记
+$$
+J_c=\frac1{(t-(2a^2-1))(1-t)}=\frac{B(a,t)}{1-a^2}.
+\tag{194.19}
+$$
+考虑以下有限维集合 $\mathscr K_R$。它的元素为五元组 $(\mathcal G,\rho_-,\rho_0,\rho_+,d)$：$\mathcal G:M_6\to M_3$ 为 CPTP；其（193.7）中的实 Bloch 线性部分满足 $\operatorname{rank}\mathcal L\le2$；三个 $\rho_\nu$ 为纯 qubit 密度矩阵，分别通过同一处理器精确生成 $\mathcal T_{t-R},\mathcal T_t,\mathcal T_{t+R}$。还要求
+$$
+d=d^\dagger,\qquad \operatorname{Tr}d=0,\qquad
+\rho_0d+d\rho_0=d,\qquad 2\operatorname{Tr}(d^2)\le J_c,
+\tag{194.20}
+$$
+以及对每个信号算符 $X$ 都有
+$$
+\mathcal G(X\otimes d)=\mathcal S_E(X),\qquad
+E_{02}=E_{20}=1,\quad E_{ij}=0\ \text{于其余位置}.
+\tag{194.21}
+$$
+这些条件都是有限维闭条件。CPTP 映射的 Choi 矩阵集合紧，纯密度矩阵集合紧，（194.20）又控制 $d$ 的 Hilbert–Schmidt 范数，所以 $\mathscr K_R$ 紧。这里不固定 Stinespring 环境维数，也不需要曲线空间的紧性。
+
+该集合非空。取完整 CP 区间的两个端点通道 $\mathcal T_{2a^2-1}$、$\mathcal T_1$，用仿射概率的纯正交标记程序
+$$
+|\psi_u\rangle=\sqrt{p(u)}|0\rangle+\sqrt{1-p(u)}|1\rangle,
+\qquad p(u)=\frac{1-u}{2(1-a^2)}
+\tag{194.22}
+$$
+控制这两个通道。它在完整 CP 区间内部精确，Bloch 线性部分秩为一，且在 $t$ 的信息量等于 $J_c$。取其三个状态及导数即可得到集合中的元素。
+
+关键是 $\mathscr K_R$ 中每个五元组都能实现为某个较小开邻域内的纯态精确曲线，并保留 $\rho_0,d$。以 $r_-,r_0,r_+$ 表示其三个 Bloch 向量，以 $\dot r$ 表示 $d=(\dot r\cdot\sigma)/2$。令 $K=\ker\mathcal L$、$A=K^\perp$，写成
+$$
+r_0=a_0+b_0,\qquad \dot r=v+w,\qquad a_0,v\in A,\quad b_0,w\in K.
+\tag{194.23}
+$$
+由值、导数与端点匹配，以及 $\mathcal L|_A$ 的单射性，
+$$
+P_A r_\pm=a_0\pm Rv,\qquad v\ne0.
+\tag{194.24}
+$$
+两个端点投影的范数不超过一，故平方相加得到
+$$
+|a_0|^2+R^2|v|^2\le1,
+\qquad |a_0|<1,\quad b_0\ne0.
+\tag{194.25}
+$$
+纯切向条件（194.20）等价于 $r_0\cdot\dot r=0$，亦即 $a_0\cdot v+b_0\cdot w=0$。
+
+对充分小的实数 $s$ 定义
+$$
+a(s)=a_0+sv,\qquad
+b(s)=\sqrt{1-|a(s)|^2}\,\frac{b_0+sw}{|b_0+sw|},\qquad
+r(s)=a(s)+b(s).
+\tag{194.26}
+$$
+由（194.25），根号与分母在零附近均严格为正。该曲线解析、$|r(s)|=1$，且 $r(0)=r_0$。求导并用切向条件得
+$$
+b'(0)=w-\frac{a_0\cdot v+b_0\cdot w}{|b_0|^2}b_0=w,
+\qquad r'(0)=\dot r.
+\tag{194.27}
+$$
+又因 $b(s)\in K$，通过同一固定处理器得到的通道恰为 $\mathcal T_{t+s}$。所以这是定义193.1中的一个真实局部纯二维程序，其名义成本为
+$$
+I_Q=|\dot r|^2=2\operatorname{Tr}(d^2).
+\tag{194.28}
+$$
+这个实现不声称覆盖原来的整个半径 $R$；只需在零的某个开邻域内成立，就能应用定理194.1。因此紧集 $\mathscr K_R$ 上的连续函数 $Q=2\operatorname{Tr}(d^2)$ 处处严格大于 $B(a,t)$。它取得最小值 $m_R$，并满足
+$$
+B(a,t)<m_R\le J_c.
+\tag{194.29}
+$$
+取 $\eta=m_R-B(a,t)>0$。
+
+任意满足本定理固定邻域要求的实际程序，若 $I_Q(\rho_t)\le J_c$，则其处理器、三个状态与导数组成 $\mathscr K_R$ 的元素：秩约束由第193节的纯性论证保证，且纯态成本等于（194.28）。所以它的成本至少为 $m_R$。若成本大于 $J_c$，则由（194.29）也至少为 $m_R$。这证明（194.18）及其序列结论。所用 $m_R$ 是有限维松弛集合的最小值，不据此断言原固定邻域程序类存在最优程序；此论证也没有给出 $\eta$ 对 $R$ 的显式速率。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 195. 纯二维精确邻域的半径与额外信息成本的二次量级
+
+**定义 195.1（固定半径的纯二维最优成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，记 $d_t=\min\{t-(2a-1),1-t\}>0$。对 $0<R<d_t$，令 $\mathfrak P_2(a,t;R)$ 为定义193.1的纯二维程序在名义点 $t$ 的 SLD 信息量下确界，但要求其精确开区间包含整个闭区间 $[t-R,t+R]$。处理器及程序可依赖 $a,t,R$；一旦选定，在求导及该区间内运行时保持处理器固定。沿用
+$$
+B=B(a,t)=\frac{1-a^2}{(1-t)(1+t-2a^2)},\qquad
+J_c=\frac{B}{1-a^2}.
+\tag{195.1}
+$$
+
+**定理 195.2（固定精确半径的二次成本）。** 对每个固定的 $a,t$，存在常数 $c_1,c_2,R_0>0$，使全部 $0<R<R_0$ 满足
+$$
+c_1R^2\le\mathfrak P_2(a,t;R)-B(a,t)\le c_2R^2.
+\tag{195.2}
+$$
+因此固定精确邻域的额外成本在 $R\downarrow0$ 时为 $\Theta(R^2)$。常数允许依赖 $a,t$；此结论不主张最佳首项系数，也不主张固定半径的下确界一定达到。
+
+证明。 先证明对全部允许程序统一成立的下界。固定
+$$
+H=\frac{J_c-B}{2}>0,\qquad Q_*=B+H<J_c.
+\tag{195.3}
+$$
+设实际程序的名义信息量为 $Q$，超额为 $\delta=Q-B>0$。先处理 $Q\le Q_*$；大于此上限的情形在后面单独估计。
+
+沿第194节的记号，$K=\ker\mathcal L$，名义 Bloch 向量的核分量为 $b_0=P_Kr(t)$，其在 $K^\perp$ 上的仿射投影斜率为 $v$。两个端点均为物理态，故（194.24）—（194.25）给出
+$$
+|b_0|^2\ge R^2|v|^2.
+\tag{195.4}
+$$
+这里还能取得 $|v|\ge1$。事实上，固定均衡 $02$ 信号输入并读取对称、反对称输出之差，得到一个固定程序可观测量 $M=m_0I+b\cdot\sigma$，满足 $-I\preceq M\preceq I$，且在目标程序上的期望值为 $u$。于是 $|b|\le1$。该读数经过诱导通道取得，所以 $b\perp K$，并由求导得 $b\cdot v=1$。因此
+$$
+|b_0|\ge R.
+\tag{195.5}
+$$
+
+将 $b_0/|b_0|$ 转到程序的 $Y$ 方向，并取第194节的满秩实影子曲线 $\sigma_u$。在名义点，它的最小特征值 $\lambda$ 满足
+$$
+\lambda=\frac{1-\sqrt{1-|b_0|^2}}2
+\ge\frac{|b_0|^2}{4}\ge\frac{R^2}{4},
+\qquad I_Q(\sigma_t)=Q.
+\tag{195.6}
+$$
+转置平均仍只用于构造等成本状态曲线，不被当成物理操作。令 $L$ 为 $\sigma_t$ 的 SLD，$g>0$ 为其两个本征值之差。写 $L=l_0I+l\cdot\sigma$，影子 Bloch 向量为 $s$，则 $\operatorname{Tr}(\sigma_tL)=0$ 给出 $l_0=-l\cdot s$，从而
+$$
+Q=|l|^2-(l\cdot s)^2\le|l|^2,
+\qquad g=2|l|\ge2\sqrt Q\ge2\sqrt B.
+\tag{195.7}
+$$
+
+使用（194.8）的同一个有限测量—制备表示
+$$
+\mathcal E_0(Z)=\sum_k\operatorname{Tr}(N_kZ)\tau_k,
+\qquad N_k=N_k^{\mathsf T}\succeq0,\quad \sum_kN_k=I_2,
+\tag{195.8}
+$$
+其中 $\mathcal E_0$ 是均匀信号输入后的程序到输出通道。删去零效应。固定边界信号人口 $p_*=(1/2,0,1/2)$，令
+$$
+w_k=\frac32\bigl[(\tau_k)_{00}+(\tau_k)_{22}\bigr],\qquad
+A_k=w_kN_k,\qquad q_k=\operatorname{Tr}(N_k\sigma_t)>0.
+\tag{195.9}
+$$
+第194节的共同实现及标量极限保证 $\{A_k\}$ 是 POVM，且它在影子状态上的经典信息量 $F_*$ 至少为 $B$。记
+$$
+\Delta=Q-F_*,\qquad 0\le\Delta\le\delta.
+\tag{195.10}
+$$
+
+以下量化满秩测量的等号条件。在 $L$ 的本征基中，令 $o_k=(N_k)_{+-}$、$T_k=\operatorname{Tr}N_k>0$。对 $w_k>0$ 置 $s_k=q_k'/q_k$，其中导数在 $t$ 取值。逐效应展开 SLD 剩余平方得
+$$
+\Delta=\sum_{k:w_k>0}
+\left\|\sqrt{A_k}(L-s_kI)\sqrt{\sigma_t}\right\|_2^2
+\ge\lambda\sum_{k:w_k>0}\operatorname{Tr}\bigl[A_k(L-s_kI)^2\bigr].
+\tag{195.11}
+$$
+$\|\cdot\|_2$ 为 Hilbert–Schmidt 范数。若 $L$ 的本征值为 $\ell_+,\ell_-$，则对任意正效应 $A\ne0$ 和实数 $s$，
+$$
+A_{++}(\ell_+-s)^2+A_{--}(\ell_--s)^2
+\ge g^2\frac{A_{++}A_{--}}{\operatorname{Tr}A}
+\ge g^2\frac{|A_{+-}|^2}{\operatorname{Tr}A}.
+\tag{195.12}
+$$
+第一步是关于 $s$ 的二次函数取最小值，第二步是 $A\succeq0$ 的二阶行列式条件。因此
+$$
+\Delta\ge\lambda g^2\sum_k\frac{w_k|o_k|^2}{T_k},\qquad
+\left(\sum_k\sqrt{w_k}|o_k|\right)^2
+\le\frac{2\Delta}{\lambda g^2}.
+\tag{195.13}
+$$
+最后一步使用 Cauchy–Schwarz 与 $\sum_kT_k=2$；零 $w_k$ 项贡献为零，估计不依赖效应个数。
+
+以下的 SLD 本征投影始终固定在名义点 $t$，不随参数求导。令 $\mathcal D_L$ 为 $L$ 本征基下的投影去相干映射，$\Pi_1=|1\rangle\langle1|$ 为信号态。完备性使 $\sum_k(N_k-\mathcal D_L(N_k))=0$，故对任意 Hermitian 程序算符 $Z$，
+$$
+(\mathcal E_0-\mathcal E_0\circ\mathcal D_L)(Z)
+=\sum_k\operatorname{Tr}\bigl[(N_k-\mathcal D_L(N_k))Z\bigr](\tau_k-\Pi_1).
+\tag{195.14}
+$$
+二维非对角 Hermitian 矩阵的算符范数为其非对角项模，所以该迹系数的绝对值不超过 $|o_k|\|Z\|_1$。另外，
+$$
+\|\tau_k-\Pi_1\|_1
+\le2\sqrt{1-(\tau_k)_{11}}
+=2\sqrt{\frac{2w_k}{3}}.
+\tag{195.15}
+$$
+这一标准纯态距离界可直接验证：先对纯态 $|\psi\rangle$ 在它与 $|1\rangle$ 张成的平面中对角化差矩阵，得到 $2\sqrt{1-|\langle1|\psi\rangle|^2}$；再对 $\tau_k$ 的纯态分解使用迹范数凸性和平方根凹性。
+
+将（195.13）—（195.15）合并，并用（195.6）—（195.7），得到
+$$
+\begin{aligned}
+\|(\mathcal E_0-\mathcal E_0\circ\mathcal D_L)(Z)\|_1
+&\le\frac4{\sqrt3}\frac{\sqrt\Delta}{\sqrt\lambda\,g}\|Z\|_1\\
+&\le\frac4{\sqrt{3B}}\frac{\sqrt\delta}{R}\|Z\|_1.
+\end{aligned}
+\tag{195.16}
+$$
+这一步保留了当前处理器的测量—制备结构及（195.9）的输出权重，不是从一般 SLD 保留推出状态可恢复。一般量子模型中，SLD 信息量保留并不保证可恢复性；反例见 Gao、Li、Marvian、Rouzé，*Sufficient statistic and recoverability via Quantum Fisher Information metrics*，arXiv:2302.02341v1，命题1.1。式（195.11）的测量剩余平方来自 Braunstein–Caves，Physical Review Letters 72, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439 的测量信息不等式及其等号机制。
+
+现在定量使用二符号障碍。令 $C_+,C_-$ 取遍三维 Hermitian 正半定相关矩阵，即各自对角元全为一；令 $q\in[0,1]$、$z\in\mathbb R$ 满足
+$$
+z^2\le Q_*q(1-q).
+\tag{195.17}
+$$
+这些变量构成非空紧集。在其上定义连续残差
+$$
+\mathcal R(C_+,C_-,q,z)=\max\left\{
+\left\|\frac{F(a,t)-qC_+-(1-q)C_-}{3}\right\|_1,
+\left\|\frac{E-z(C_+-C_-)}{3}\right\|_1
+\right\},
+\tag{195.18}
+$$
+其中 $E_{02}=E_{20}=1$，其余项为零。令 $\zeta$ 为该残差的最小值，则
+$$
+\zeta>0.
+\tag{195.19}
+$$
+否则残差在某一点为零。若 $q=0$ 或 $1$，则（195.17）给出 $z=0$，无法匹配非零 $E$。若 $0<q<1$，两个相关矩阵的通道及概率值、导数 $q,z$ 构成一阶匹配的二符号经典程序，成本不超过 $Q_*<J_c$，违反定理184.3。因此紧集上没有零残差，证明（195.19）。此常数只依赖固定的 $a,t$。
+
+对当前实际程序，取 SLD 本征投影 $P_+,P_-$，并令
+$$
+C_\pm=3\mathcal E_0(P_\pm),\qquad
+q=\operatorname{Tr}(P_+\sigma_t),\qquad
+z=\operatorname{Tr}(P_+\sigma_t').
+\tag{195.20}
+$$
+受控 Stinespring 形式保证 $C_\pm$ 都是相关矩阵。满秩性给出 $0<q<1$，SLD 投影测量给出 $z^2/[q(1-q)]=Q\le Q_*$，故这些变量属于（195.17）的紧集。又因为
+$$
+\mathcal E_0(\sigma_t)=\frac{F(a,t)}3,\qquad
+\mathcal E_0(\sigma_t')=\frac E3,\qquad
+\|\sigma_t'\|_1=|s'(t)|\le\sqrt Q\le\sqrt{Q_*},
+\tag{195.21}
+$$
+将（195.16）分别用于 $Z=\sigma_t$ 与 $Z=\sigma_t'$，得到
+$$
+\zeta\le K_*\frac{\sqrt\delta}{R},\qquad
+K_*:=\frac{4\max\{1,\sqrt{Q_*}\}}{\sqrt{3B}}.
+\tag{195.22}
+$$
+因此在 $Q\le Q_*$ 时有 $\delta\ge(\zeta^2/K_*^2)R^2$。若 $Q>Q_*$，则 $\delta>H$；又因 $R<d_t\le1-a<1$，有 $\delta\ge HR^2$。所以对全部实际程序统一成立
+$$
+I_Q(\rho_t)-B\ge c_1R^2,\qquad
+c_1:=\min\left\{H,\frac{\zeta^2}{K_*^2}\right\}>0.
+\tag{195.23}
+$$
+取下确界即得所需下界。
+
+上界使用第193节的显式纯二维程序。它按固定 $a,t$ 给出常数 $C=1+\max_j(q_j/p_j)\ge2$，以及
+$$
+I_Q(\rho_t^{(\varepsilon)})=\frac B{1-C\varepsilon},\qquad
+R_\varepsilon^2=\frac{4\varepsilon(1-\varepsilon)(1-C\varepsilon)}B.
+\tag{195.24}
+$$
+这里 $R_\varepsilon$ 是该构造在名义点两侧的解析纯态定义半径，精确区间再与 $J_a$ 相交。取
+$$
+R_0=\min\left\{d_t,\frac1{\sqrt{2BC}}\right\},\qquad
+0<R<R_0,\qquad \varepsilon=\frac{BR^2}{2}.
+\tag{195.25}
+$$
+此时 $\varepsilon<1/(4C)$，故 $1-C\varepsilon>3/4$、$1-\varepsilon>3/4$，从而
+$$
+R_\varepsilon^2>\frac{9R^2}{8}>R^2.
+\tag{195.26}
+$$
+所以该程序的精确开区间确实包含闭区间 $[t-R,t+R]$。其成本满足
+$$
+I_Q(\rho_t^{(\varepsilon)})-B
+=\frac{BC\varepsilon}{1-C\varepsilon}
+<\frac23CB^2R^2.
+\tag{195.27}
+$$
+取 $c_2=2CB^2/3$，结合（195.23）得到（195.2）。所给 $c_1$ 通过固定有限维紧集上的正残差定义，$c_2$ 来自一个明确构造；二者都不被断言为最佳系数。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 196. 纯二维程序的圆弧正规形、有限优化与确定的二次首项
+
+**定理 196.1（圆弧替代与不可见转动的精确信息成本）。** 固定定义193.1中的一个纯二维程序、连通精确开区间 $U$ 及名义点 $t\in U$。存在使用同一处理器、定义在同一个 $U$ 上的解析纯态程序 $\widetilde\rho_u$，满足 $\widetilde\rho_t=\rho_t$，并在每个 $u\in U$ 同时满足
+$$
+\mathcal G(\omega\otimes\widetilde\rho_u)=\mathcal T_u(\omega),\qquad
+I_Q(\widetilde\rho_u)\le I_Q(\rho_u).
+\tag{196.1}
+$$
+替代程序的 Bloch 曲线位于一个平面圆弧上。若处理器的实 Bloch 到通道映射秩为二，则原程序本身已经是这样的解析圆弧。
+
+证明。 令 $K=\ker\mathcal L$，其中 $\mathcal L$ 如（193.7）。第193节给出 $K\ne\{0\}$，而目标非恒定排除 $\mathcal L$ 的秩为零。将原 Bloch 曲线正交分解为
+$$
+r(u)=x(u)+b(u),\qquad
+x(u)=P_{K^\perp}r(u)=x_0+(u-t)v,\qquad v\ne0.
+\tag{196.2}
+$$
+$x(u)$ 的仿射性来自 $\mathcal L|_{K^\perp}$ 单射和目标通道仿射。其范数在每个 $u\in U$ 都严格小于一：若在内点等于一，两个充分小的对称位移之平方范数平均为 $1+s^2|v|^2>1$，与它们都是单位 Bloch 向量的投影矛盾。
+
+因此在整个 $U$ 上可定义
+$$
+\beta(u)=\sqrt{1-|x(u)|^2}>0,\qquad e(u)=\frac{b(u)}{\beta(u)}\in K,\qquad |e(u)|=1.
+\tag{196.3}
+$$
+$e$ 是 $C^1$ 曲线，且 $e\cdot e'=0$。由于 $v\perp K$，求导后所有交叉项消失，得到精确恒等式
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|v|^2+\frac{(x(u)\cdot v)^2}{1-|x(u)|^2}
+ +(1-|x(u)|^2)|e'(u)|^2.
+\tag{196.4}
+$$
+取固定单位向量 $n=e(t)$，并定义
+$$
+\widetilde r(u)=x(u)+\sqrt{1-|x(u)|^2}\,n,
+\qquad \widetilde\rho_u=\frac{I+\widetilde r(u)\cdot\sigma}{2}.
+\tag{196.5}
+$$
+这是一条在整个 $U$ 上解析的纯态曲线。$n\in K$ 保证诱导通道与原曲线相同，在 $t$ 又有 $\widetilde r(t)=r(t)$。并且
+$$
+I_Q(\rho_u)-I_Q(\widetilde\rho_u)
+=(1-|x(u)|^2)|e'(u)|^2\ge0.
+\tag{196.6}
+$$
+该替代指定另一种程序准备，不断言它能由作用在原程序上的 CPTP 映射取得。
+
+令 $x_\perp=x_0-(x_0\cdot v)v/|v|^2$。它同时垂直于 $v,n$，而（196.5）位于平面
+$$
+x_\perp+\operatorname{span}\{v,n\}
+\tag{196.7}
+$$
+与单位球面的交圆上。圆心为 $x_\perp$，半径为 $\sqrt{1-|x_\perp|^2}>0$；正平方根选择其中的半圆弧或更小的弧。当 $\operatorname{rank}\mathcal L=2$ 时，$K$ 为一维，连续单位向量 $e(u)$ 在连通区间上只能恒定，所以原曲线已等于替代曲线。秩为一时，$x_0,v$ 共线，替代曲线是大圆弧，原曲线在二维核内的额外转动恰贡献（196.6）。证毕。
+
+**定理 196.2（固定精确半径的有限优化等价式）。** 固定定义195.1中的 $a,t,R$。以 $\Phi_{\mathcal G}(x)$ 表示处理器在 Bloch 程序态 $(I+x\cdot\sigma)/2$ 下诱导的信号线性映射。令 $\mathscr F(a,t,R)$ 由有限变量 $(\mathcal G,n,x,v)$ 构成，要求 $\mathcal G:M_6\to M_3$ 为 CPTP，$n,x,v\in\mathbb R^3$，并满足
+$$
+\begin{gathered}
+|n|^2=1,\qquad \mathcal L_{\mathcal G}n=0,\qquad
+n\cdot x=n\cdot v=0,\\
+\Phi_{\mathcal G}(x)=\mathcal T_t,\qquad
+\mathcal L_{\mathcal G}v=\mathcal S_E,\\
+|x-Rv|^2<1,\qquad |x+Rv|^2<1,
+\end{gathered}
+\tag{196.8}
+$$
+其中 $E_{02}=E_{20}=1$，其余项为零。于是
+$$
+\mathfrak P_2(a,t;R)
+=\inf_{\mathscr F(a,t,R)}
+\left[|v|^2+\frac{(x\cdot v)^2}{1-|x|^2}\right].
+\tag{196.9}
+$$
+可行集非空；式中的分母严格为正。此等价式不要求下确界在可行集内达到。
+
+证明。 对任意可行元，平方范数的凸性给出
+$$
+\max_{|s|\le R}|x+sv|^2
+\le\max\{|x-Rv|^2,|x+Rv|^2\}<1.
+\tag{196.10}
+$$
+由连续性，这个严格不等式在包含 $[-R,R]$ 的稍大开区间上仍成立，并可把对应的 $t+s$ 保持在 $J_a$ 内。令
+$$
+r(t+s)=x+sv+\sqrt{1-|x+sv|^2}\,n.
+\tag{196.11}
+$$
+正交条件保证 $|r|=1$；处理器的三个线性约束保证它在该开区间内精确生成 $\mathcal T_{t+s}$。程序解析，且名义成本恰为
+$$
+|r'(t)|^2=|v|^2+\frac{(x\cdot v)^2}{1-|x|^2}.
+\tag{196.12}
+$$
+因此原程序类的下确界不超过（196.9）右边。
+
+反过来，任意原程序通过定理196.1得到同处理器的圆弧替代。取其 $x=x(t)$、$v=x'$、$n=e(t)$。因为 $t\pm R$ 都是原开区间的内部点，第196.1节的严格投影范数结论给出（196.8）的两个严格端点条件。其余约束来自同一正交分解和通道精确性。这是一个可行元，且（196.6）说明其目标值不超过原名义成本。取下确界即得反向不等式。
+
+非空性还可直接展示。令 $d=1-a^2$、$b=2a^2-1$；固定处理器测量程序 $Z$，在两个结果下分别执行 $\mathcal T_1$ 与 $\mathcal T_b$，诱导参数为 $u=a^2+dr_z$。取
+$$
+n=e_x,\qquad x=\frac{t-a^2}{d}e_z,\qquad v=\frac1d e_z.
+\tag{196.13}
+$$
+由于 $t\pm R\in J_a\subset(b,1)$，所有约束成立；其目标值为 $J_c=B/(1-a^2)$。因此下确界有限。端点条件取平均还给出 $|x|^2+R^2|v|^2<1$，特别地分母为正。证毕。
+
+**定理 196.3（半代数成本与唯一正二次首项）。** 函数 $(a,t,R)\mapsto\mathfrak P_2(a,t;R)$ 在定义195.1的参数域上是半代数函数。存在一个正的有限函数 $\kappa(a,t)$，使每个固定的 $0<a<1$、$2a-1<t<1$ 都满足
+$$
+\mathfrak P_2(a,t;R)
+=B(a,t)+\kappa(a,t)R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{196.14}
+$$
+$\kappa$ 关于 $(a,t)$ 联合半代数；若 $a,t$ 都是实代数数，则 $\kappa(a,t)$ 也是实代数数。
+
+证明。 先把（196.8）写成有限实代数条件。处理器 $\mathcal G:M_6\to M_3$ 的未归一化 Choi 矩阵 $J_{\mathcal G}$ 为 $18\times18$ Hermitian 矩阵，满足
+$$
+J_{\mathcal G}\succeq0,\qquad
+\operatorname{Tr}_{\rm out}J_{\mathcal G}=I_6.
+\tag{196.15}
+$$
+以实对称部分和虚反对称部分作实坐标，全部主子式非负表达半正定性，保迹条件为线性方程。通道等式只需在信号矩阵空间的固定九元 Hermitian 基上检查；矩阵单位和 Pauli 矩阵的实、虚部系数为有理数，故（196.8）的其余约束成为有限个具有有理系数的实多项式等式或严格不等式。
+
+令 $z$ 汇集这些有限变量，$\mathcal A(a,t,R,z)$ 表示可行性，并记
+$$
+D(z)=1-|x|^2>0,\qquad
+N(z)=|v|^2D(z)+(x\cdot v)^2.
+\tag{196.16}
+$$
+目标值为 $N/D$。在参数域内，$p=\mathfrak P_2(a,t;R)$ 等价于以下一阶实数公式：
+$$
+\begin{aligned}
+&\forall z:\ \mathcal A(a,t,R,z)\ \Longrightarrow\ N(z)\ge pD(z),\\
+&\forall\varepsilon>0\ \exists z:\
+\mathcal A(a,t,R,z)\ \land\ N(z)<(p+\varepsilon)D(z).
+\end{aligned}
+\tag{196.17}
+$$
+第一行给出下界，第二行要求可行值任意接近该下界；它不要求最小值取得。非空性和有限性由定理196.2保证。所有乘去分母的步骤都发生在 $D>0$ 的可行域内。
+
+对（196.17）使用 Tarski–Seidenberg 实数量词消去，得到具有有理系数的无量词多项式符号公式，所以成本函数的图是半代数集。所用标准结果及系数保持可参见 Saugata Basu，*Algorithms in Real Algebraic Geometry: A Survey*，arXiv:1409.1534v1，第2.1节定理2.1及第2.5.2节定理2.27；其第1.1节同时采用实数域与实代数数域作为实闭域实例。严格可行约束和下确界未取得都不妨碍这一量词消去。
+
+现固定 $a,t$，令
+$$
+g(R)=\frac{\mathfrak P_2(a,t;R)-B(a,t)}{R^2}.
+\tag{196.18}
+$$
+这是正半径上的半代数函数。定理195.2保证它在充分小半径内夹在两个固定的严格正常数之间。它在零的右极限必存在：若下极限与上极限不同，选一个严格位于二者之间的数 $c$，则 $\{R:g(R)<c\}$ 与 $\{R:g(R)>c\}$ 都在零点累积。每个实直线上的半代数集都是有限个区间和点的并，所以这两个互斥集合都必须包含一个 $(0,\eta)$，矛盾。这里的一维结构直接来自有限多个实多项式零点对直线的划分，无须额外正则性。于是
+$$
+\kappa(a,t):=\lim_{R\downarrow0}g(R)\in(0,\infty),
+\tag{196.19}
+$$
+并得到（196.14）。该余项对每个固定的 $a,t$ 陈述，不断言参数间一致性。
+
+$\kappa$ 的图也能用一阶公式定义。以 $\Gamma_P(a,t,R,p)$ 表示（196.17）及参数域条件，则 $k=\kappa(a,t)$ 等价于
+$$
+\begin{gathered}
+\forall\varepsilon>0\ \exists\eta>0\ \forall R,p:\\
+\bigl[\Gamma_P(a,t,R,p)\land R<\eta\bigr]
+\ \Longrightarrow\
+-\varepsilon R^2<p-B(a,t)-kR^2<\varepsilon R^2.
+\end{gathered}
+\tag{196.20}
+$$
+$\Gamma_P$ 已包含 $R>0$，且每个允许的 $a,t$ 都有任意小的允许半径，故此公式不空洞。$B$ 的分母在参数域内为正，可安全消去。再次使用实数量词消去，得到 $\kappa$ 的联合半代数性。
+
+最后固定实代数的 $a,t$。（196.20）经量词消去后，以实代数系数的有限多项式符号条件刻画唯一单点 $\{\kappa(a,t)\}$。若该点不是实代数数，则这些非零多项式都不在该点为零；有限多个符号会在其某个开邻域内同时不变，与公式只刻画单点矛盾。因此该点是某个非零实代数系数多项式的根，进而对 $\mathbb Q$ 代数。
+
+这确定了二次首项的存在与数域性质，没有给出 $\kappa$ 的数值、最小多项式或低成本计算方法，也不改变原优化中的下确界与最小值之别。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 197. 得分的二次残差与纯二维程序的显式半径代价
+
+**定义 197.1（三结果程序的得分矩）。** 固定 $0<a<1$、$2a-1<t<1$，取定理184.2以 $t$ 为设计点的三个固定通道及其仿射概率。记
+$$
+p_j=p_j(t)>0,\qquad v_j=p_j'(t),\qquad
+s_j=\frac{v_j}{p_j},\qquad M_k=\sum_jp_js_j^k,
+\qquad j\in\{+,-,c\}.
+\tag{197.1}
+$$
+于是 $M_1=0$、$M_2=B=B(a,t)>0$。定义得分平方相对于常数与得分的加权二次残差
+$$
+V=\sum_jp_j\left(s_j^2-B-\frac{M_3}{B}s_j\right)^2
+=M_4-B^2-\frac{M_3^2}{B}.
+\tag{197.2}
+$$
+这里常数向量与得分向量在 $p$ 加权内积下正交，其平方范数分别为一与 $B$，故（197.2）确为正交投影残差。仿射概率的导数始终对参数求取，三个通道及设计点保持固定。
+
+**定理 197.2（偏移圆弧的精确构造与显式首项上界）。** 定理196.3的二次首项满足
+$$
+0<\kappa(a,t)\le\frac V4
+=\frac{a^2(1-a^2)^2}{2(1-t)^2(1+t-2a^2)^3}
+=\frac{a^2B(a,t)^2}{2(1+t-2a^2)}.
+\tag{197.3}
+$$
+存在一族纯二维程序，分别在包含 $[t-R,t+R]$ 的开邻域内精确生成目标通道，其名义成本满足
+$$
+I_Q(\rho_t^{(R)})
+=B+\frac V4R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{197.4}
+$$
+每个程序使用一个固定的三结果秩一 POVM，随后执行定义197.1的相应固定通道。这里固定是指程序运行时不随未知参数变化；允许程序设计依赖 $a,t,R$。上界不主张该程序在所有处理器中最优。
+
+证明。 先保留任意固定实数偏移系数 $\alpha$。对充分小的 $\varepsilon$ 与 $z$ 在一的邻域，令
+$$
+A_j(\varepsilon,z)=p_j-\alpha\varepsilon\sqrt z\,\frac{v_j}{\sqrt B},
+\qquad
+q_j(\varepsilon,z)=
+\frac{2(1-\varepsilon)zv_j^2}
+{B\left[A_j(\varepsilon,z)+
+\sqrt{A_j(\varepsilon,z)^2-4\varepsilon(1-\varepsilon)zv_j^2/B}\right]}.
+\tag{197.5}
+$$
+所有 $v_j$ 非零。在 $(\varepsilon,z)=(0,1)$ 附近，根号与分母严格为正，故这些函数实解析，并有
+$$
+q_j(0,z)=\frac{zv_j^2}{Bp_j},\qquad
+\sum_jq_j(0,1)=1,\qquad
+\partial_z\sum_jq_j(0,1)=1.
+\tag{197.6}
+$$
+实解析隐函数定理遂给出 $z=z(\varepsilon)$，满足 $z(0)=1$、$z>0$ 及 $\sum_jq_j(\varepsilon,z(\varepsilon))=1$。下文的 $q_j$ 均沿此解析分支取值。式（197.5）是下列二次方程的小根在零点的解析延拓：
+$$
+\varepsilon q_j^2-
+\left(p_j-\alpha\varepsilon\sqrt z\,\frac{v_j}{\sqrt B}\right)q_j
++(1-\varepsilon)z\frac{v_j^2}{B}=0.
+\tag{197.7}
+$$
+令 $q_j^0=v_j^2/(Bp_j)$。在零点对该方程求导，再用 $\sum_jq_j'=0$，得到
+$$
+z'(0)=1-\sum_j\frac{(q_j^0)^2}{p_j}
+-\frac\alpha{\sqrt B}\sum_j\frac{v_jq_j^0}{p_j}
+=1-\frac{M_4}{B^2}-\alpha\frac{M_3}{B^{3/2}}.
+\tag{197.8}
+$$
+本构造只要求 $z>0$，不额外要求 $z\le1$。
+
+对充分小的正 $\varepsilon$，定义实对称效应
+$$
+N_j=
+\begin{pmatrix}
+\dfrac{p_j-\alpha\varepsilon\sqrt z\,v_j/\sqrt B-\varepsilon q_j}{1-\varepsilon}
+&\dfrac{\sqrt z\,v_j}{\sqrt B}\\[2mm]
+\dfrac{\sqrt z\,v_j}{\sqrt B}&q_j
+\end{pmatrix}.
+\tag{197.9}
+$$
+两个对角元严格为正，由（197.7）其行列式为零，故 $N_j$ 是正半定秩一矩阵。又因 $\sum_jv_j=0$、$\sum_jp_j=\sum_jq_j=1$，有 $\sum_jN_j=I_2$。因此测量 $\{N_j\}$ 并条件执行 $\mathcal R_j$ 定义一个固定 CPTP 处理器。
+
+令 $\delta=u-t$，在下式根号严格为正的开区间上定义纯程序 Bloch 曲线
+$$
+r_\varepsilon(\delta)=
+\left(
+\alpha\varepsilon+\sqrt{B/z}\,\delta,
+\sqrt{4\varepsilon(1-\varepsilon)-
+       (\alpha\varepsilon+\sqrt{B/z}\,\delta)^2},
+1-2\varepsilon
+\right),
+\qquad
+\rho_{t+\delta}=\frac{I+r_\varepsilon(\delta)\cdot\sigma}{2}.
+\tag{197.10}
+$$
+它为解析单位 Bloch 曲线。直接代入 Born 概率可见，式（197.9）的左上项与曲线横坐标中的偏移恰相消：
+$$
+\operatorname{Tr}(N_j\rho_{t+\delta})=p_j+\delta v_j.
+\tag{197.11}
+$$
+所以处理器在该开区间与 $J_a$ 的交集上，对所有信号输入精确生成 $\mathcal T_{t+\delta}$。
+
+在名义点，纯态 SLD 信息量为 Bloch 速度平方。由（197.10）有
+$$
+Q_\varepsilon:=I_Q(\rho_t)
+=\frac Bz\,
+\frac{4\varepsilon(1-\varepsilon)}
+     {4\varepsilon(1-\varepsilon)-\alpha^2\varepsilon^2}.
+\tag{197.12}
+$$
+结合（197.8），得到
+$$
+Q_\varepsilon-B
+=B\varepsilon\left[
+\frac{M_4}{B^2}-1+
+\alpha\frac{M_3}{B^{3/2}}+\frac{\alpha^2}{4}
+\right]+O(\varepsilon^2).
+\tag{197.13}
+$$
+
+精确区间随偏移而不再关于零对称，所以还须验证完整的闭区间覆盖。取固定常数
+$$
+C_\alpha=1+\frac{|\alpha|B^{3/2}}4,
+\qquad
+\varepsilon_R=\frac B4R^2+C_\alpha R^3.
+\tag{197.14}
+$$
+对固定的 $a,t,\alpha$，由 $z(\varepsilon_R)=1+O(R^2)$ 可得
+$$
+\begin{aligned}
+&4\varepsilon_R(1-\varepsilon_R)
+-\left(|\alpha|\varepsilon_R+
+       \sqrt{B/z(\varepsilon_R)}\,R\right)^2\\
+&\quad=
+\left(4C_\alpha-\frac{|\alpha|B^{3/2}}2\right)R^3+O(R^4)
+=\left(4+\frac{|\alpha|B^{3/2}}2\right)R^3+O(R^4)>0
+\end{aligned}
+\tag{197.15}
+$$
+只要 $R$ 充分小。左侧严格为正保证（197.10）的根号在整个 $[-R,R]$ 上严格为正，连续性再给出包含该闭区间的开域。取 $R<\min\{t-(2a-1),1-t\}$，亦可将开域限制在 $J_a$ 内。这个论证给出逐个固定参数的充分小半径结论，不给出所有允许半径的统一覆盖保证。
+
+因为 $\varepsilon_R/R^2\to B/4$，式（197.13）给出
+$$
+\lim_{R\downarrow0}\frac{Q_{\varepsilon_R}-B}{R^2}
+=\frac{B^2}{4}\left[
+\frac{M_4}{B^2}-1+
+\alpha\frac{M_3}{B^{3/2}}+\frac{\alpha^2}{4}
+\right].
+\tag{197.16}
+$$
+这个关于 $\alpha$ 的二次式在
+$$
+\alpha_*=-\frac{2M_3}{B^{3/2}}
+\tag{197.17}
+$$
+处取得最小值 $V/4$。于是（197.4）成立；将每个实际程序的成本与定义195.1的下确界比较，再用定理196.3的极限，即得 $\kappa\le V/4$。这只优化当前显式构造中的偏移系数，没有把它升级为对所有处理器的极小性结论。
+
+最后计算当前三结果程序的矩。记 $D=1+t-2a^2>0$、$\ell=(1-t)/2$、$q=D/2$、$d=1-a^2$、$c=a\ell/d$。由（184.9），三个得分分别为
+$$
+s_+=\frac{1-a}{2q},\qquad
+s_-=\frac{1+a}{2q},\qquad
+s_c=-\frac1{2\ell}.
+\tag{197.18}
+$$
+为计算残差，取三个向量 $1,s,s^2$ 的加权 Gram 矩阵。其行列式既可按第一行展开，也可由三点 Vandermonde 矩阵分解，得到
+$$
+BV=
+\det\begin{pmatrix}1&0&B\\0&B&M_3\\B&M_3&M_4\end{pmatrix}
+=p_+p_-p_c\prod_{i<j}(s_i-s_j)^2.
+\tag{197.19}
+$$
+这里 $p_+p_-p_c=q^2\ell/[4d(1-c^2)^2]$，三个得分差为 $a/q$、$d(1-c)/(2q\ell)$、$d(1+c)/(2q\ell)$。代入这些量与 $B=d/(4\ell q)$，并直接求取三阶矩，得到
+$$
+M_3=\frac{2d(a^2-t)}{(1-t)^2D^2},
+\qquad
+V=M_4-B^2-\frac{M_3^2}{B}
+=\frac{2a^2d^2}{(1-t)^2D^3}.
+\tag{197.20}
+$$
+因此（197.3）的两个显式表达相等。$V$ 的严格正性也可直接从（197.2）看出：两个正得分互不相同，第三个得分为负，若残差为零，则一个首项系数为一的二次多项式在这三个不同点都为零，矛盾。
+
+若限制 $\alpha=0$，同一计算给出构造系数 $(M_4-B^2)/4$；允许偏移后，将其降低 $M_3^2/(4B)$，当且仅当 $t\ne a^2$ 时为严格改进。该变化来自同一精确程序中对得分平方的线性部分的消去，其余残差承担（197.4）的二次成本。
+
+本证明沿用第193节的测量后条件执行通道构造与纯态 SLD 速度公式；经典程序信息成本的背景为 Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节。实解析隐函数定理和加权正交投影仅作为标准工具用于上述具体 POVM 与半径构造，不以一般的一阶模拟代替这里的开邻域精确等式。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 198. 有限仿射读出的纯二维成本：二次残差与二值得分的分界
+
+**定义 198.1（有限仿射读出的精确程序成本）。** 给定有限个 $p_j>0$、$v_j\in\mathbb R$，其中 $j\in\{1,\ldots,m\}$、$m\ge2$，并要求向量 $v$ 非零且
+$$
+\sum_jp_j=1,\qquad \sum_jv_j=0.
+\tag{198.1}
+$$
+令 $s_j=v_j/p_j$，允许重复得分与零得分。记
+$$
+B=\sum_jp_js_j^2>0,\qquad
+M_k=\sum_jp_js_j^k,\qquad
+V=M_4-B^2-\frac{M_3^2}{B}\ge0.
+\tag{198.2}
+$$
+非负性来自（197.2）的加权投影残差恒等式。$V=0$ 当且仅当得分恰取两个不同值：残差为零要求一个首一二次多项式在所有得分处为零，而 $B>0$ 与零均值排除单值得分；反向由任意两点上的二次插值给出。对充分小的 $R>0$，令 $\mathfrak C_2(p,v;R)$ 为下列程序的名义 SLD 信息量下确界：固定 $m$ 结果 qubit POVM $\{N_j\}$，以及在某个包含 $[-R,R]$ 的开区间上的 $C^1$ 纯 qubit 曲线 $\rho_u$，满足
+$$
+\operatorname{Tr}(N_j\rho_u)=p_j+uv_j
+\tag{198.3}
+$$
+对全部 $j$ 和该区间内的 $u$ 精确成立。区间限制在所有右侧概率都严格为正的范围内；名义点为 $u=0$。POVM 可随设计半径变化，但运行时与 $u$ 无关。
+
+**定理 198.2（有限仿射读出的精确二次系数与二值得分边界）。** 在定义198.1的条件下，若得分至少取三个不同值，则 $V>0$ 且
+$$
+\mathfrak C_2(p,v;R)=B+\frac V4R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{198.4}
+$$
+若得分恰取两个不同值，则对每个闭区间 $[-R,R]$ 包含于正概率区间内的 $R$，都有 $\mathfrak C_2(p,v;R)=B$，且由同一个在整个正概率区间上精确的纯程序达到。
+
+特别地，若处理器被限制为先作三结果 qubit 测量、再执行第184.2节在固定设计点选择的三个通道，则其纯程序的最优二次系数正是第197.3式的显式上界。此限制下的等号不决定任意 CPTP 处理器类中的 $\kappa(a,t)$。
+
+证明。 先处理二值得分。记两得分为 $s_-<0<s_+$，对应的组概率为 $P_\pm=\sum_{j:s_j=s_\pm}p_j$。令 $W_\pm(u)=P_\pm(1+s_\pm u)$，取纯态向量 $\psi_u=\sqrt{W_+(u)}|0\rangle+\sqrt{W_-(u)}|1\rangle$。对每个组内结果 $j$，取效应 $N_j=(p_j/P_\pm)|\pm\rangle\langle\pm|$，其中 $|+\rangle=|0\rangle$、$|-\rangle=|1\rangle$。这些效应归一，给出精确概率 $p_j(1+s_j u)$；纯态信息量在零点为 $P_+s_+^2+P_-s_-^2=B$。测量信息下界给出反向不等式，故达到 $B$。整个正概率区间内平方根解析，结论同时适用于其中的每个闭区间。
+
+以下假定至少三种不同得分，因此 $V>0$。式（197.5）—（197.17）的构造对任意有限结果数保持相同的归一与矩公式。若 $v_j=0$，相应小根 $q_j$ 和非对角项恒为零，效应为 $\operatorname{diag}(p_j/(1-\varepsilon),0)$，仍为正半定秩一；其余结果沿用原来的严格正对角论证。因此把固定通道省去，便得到满足（198.3）的 POVM 与纯态曲线，并给出
+$$
+\limsup_{R\downarrow0}
+\frac{\mathfrak C_2(p,v;R)-B}{R^2}\le\frac V4.
+\tag{198.5}
+$$
+测量的 SLD 信息不等式给出每个实际程序的成本 $Q\ge B$。以下证明匹配下界。
+
+先排除只有一个可见 Bloch 方向的测量。若从 Bloch 向量到结果概率的线性部分秩为一，则所有效应同时对角化。它等价于先作一个二结果投影测量，再由固定随机矩阵产生 $m$ 个结果。记两个条件概率向量为 $P_-,P_+$，名义二结果权重为 $\lambda$，其导数为 $\dot\lambda\ne0$。因为目标概率沿直线 $p+uv$ 变化，两个 $P_\pm$ 均在该直线上。记相应坐标为 $u_-<0<u_+$。纯程序信息量不小于该二结果测量的信息量，即
+$$
+Q\ge\frac1{(-u_-)u_+}.
+\tag{198.6}
+$$
+令 $s_{\min}=\min_js_j<0<s_{\max}=\max_js_j$。直线上所有概率非负的完整区间是 $[-1/s_{\max},-1/s_{\min}]$，所以
+$$
+Q\ge-s_{\min}s_{\max}>B.
+\tag{198.7}
+$$
+严格性由
+$$
+-s_{\min}s_{\max}-B
+=\sum_jp_j(s_j-s_{\min})(s_{\max}-s_j)>0
+\tag{198.8}
+$$
+给出：至少一个得分严格位于两极值之间且权重为正。秩零不能产生非零的 $v$；秩三亦不可能，因为单射的 Bloch 线性部分会迫使原纯曲线为非恒定仿射直线，而单位球面不含这样的开线段。因此余下只需处理秩二情形。
+
+对秩二测量，令 $K$ 为从 Bloch 向量到概率的线性映射之核。$K$ 为一维；精确等式（198.3）迫使 $K^\perp$ 中的投影沿非恒定仿射直线运动。该投影在精确开区间的每一点都严格位于单位圆盘内，否则两个充分小对称位移的平方范数平均会超过一。故核方向分量不为零，在连通区间内符号固定。
+
+选择可见平面中的坐标，使投影速度沿 $X$、垂直速度的坐标非负；把核方向作为 $Y$。以 $c>0$ 表示可见速度，原纯程序可写成
+$$
+r(u)=\left(x+cu,\ \pm\sqrt{H^2-(x+cu)^2},\ 1-2\varepsilon\right),
+\qquad
+H^2=4\varepsilon(1-\varepsilon),\qquad
+0<\varepsilon\le\frac12.
+\tag{198.9}
+$$
+核分量的符号不影响以下成本。POVM 效应在这个坐标中为实对称矩阵，写作
+$$
+N_j=\begin{pmatrix}A_j&b_j\\b_j&q_j\end{pmatrix},
+\qquad b_j=\frac{v_j}{c},\qquad
+A_j=\frac{p_j-b_jx-\varepsilon q_j}{1-\varepsilon}.
+\tag{198.10}
+$$
+每个效应满足 $0\preceq N_j\preceq I$，且 $\sum_jq_j=1$。纯态信息量及精确闭区间的必要条件为
+$$
+Q=\frac{c^2H^2}{H^2-x^2},\qquad
+|x|+cR<H.
+\tag{198.11}
+$$
+端点仍是精确开区间的内部点，所以不等式严格。
+
+考虑任意 $R_n\downarrow0$ 的程序序列，满足 $Q_n-B=O(R_n^2)$。秩一情形由固定正差距（198.7）排除。以下证明其秩二参数必满足
+$$
+\varepsilon_n\to0,\qquad
+c_n^2\to B,\qquad
+\frac{x_n^2}{\varepsilon_n}\to0.
+\tag{198.12}
+$$
+因 $|b_j|\le1$ 且某个 $v_j\ne0$，有 $c\ge\max_j|v_j|>0$；又由（198.11）有 $c^2\le Q$，故速度有上下界。若沿某子列 $\varepsilon\ge\varepsilon_0>0$，则 $H^2$ 有正下界，而 $Q$ 的有界性给出
+$$
+H^2-x^2=\frac{c^2H^2}{Q}
+\tag{198.13}
+$$
+也有正下界。
+
+去掉 Bloch 向量的 $Y$ 分量，得到满秩影子状态
+$$
+\sigma_0=\frac{I+xX+(1-2\varepsilon)Z}{2},
+\qquad \sigma_0'=\frac{cX}{2}.
+\tag{198.14}
+$$
+所有效应都看不到 $Y$，所以其输出仍为 $p,v$。直接用 qubit SLD 公式可知影子成本恰为（198.11）的 $Q$。由（198.13），其最小特征值一致地远离零；效应、状态与导数遂可取收敛子列。极限中测量的信息量为 $B$，影子的量子信息量也为 $B$，因此达到满秩 SLD 测量等号。若 $L$ 为极限 SLD，等号要求
+$$
+\sqrt{N_j}(L-s_jI)\sqrt{\sigma_0}=0.
+\tag{198.15}
+$$
+满秩性允许消去右侧因子，故每个非零效应的支持必须在 $L$ 的特征值 $s_j$ 对应空间内。所有 $p_j$ 都严格为正，因而所有效应都非零；至少三种不同得分要求二维 Hermitian 矩阵具有至少三个不同特征值，矛盾。这证明 $\varepsilon_n\to0$。所用支持敏感等号为 Braunstein–Caves，Physical Review Letters 72, 3439（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）；这里先建立满秩界再使用等号，不把去掉 $Y$ 的操作当作一般 CPTP 映射。
+
+现在 $|x|<H$ 给出 $x\to0$，式（198.10）给出 $A_j\to p_j$。半正定性意味着 $b_j^2\le A_jq_j$，所以
+$$
+\frac{B}{c^2}=\sum_j\frac{b_j^2}{p_j}
+\le\sum_j\frac{A_jq_j}{p_j}=1+o(1).
+\tag{198.16}
+$$
+结合 $c^2\le Q\to B$，得到 $c^2\to B$；再由（198.11）得到 $x^2/H^2\to0$，从而完成（198.12）。
+
+令 $z=B/c^2$。正性约束（198.10）等价于
+$$
+\varepsilon q_j^2-
+\left(p_j-\sqrt z\,\frac{v_j}{\sqrt B}x\right)q_j
++(1-\varepsilon)z\frac{v_j^2}{B}\le0.
+\tag{198.17}
+$$
+在 $(\varepsilon,x,z)=(0,0,1)$ 附近，将其小根用有理化表达延拓为实解析函数 $f_j(\varepsilon,x,z)$。其形式与（197.5）相同，只把 $\alpha\varepsilon$ 替换为 $x$。实际效应满足 $q_j\ge f_j$，故 $\sum_jf_j\le1$。由于在该点 $\partial_z\sum_jf_j=1$，归一方程 $\sum_jf_j=1$ 定义唯一局部解析函数 $z_*(\varepsilon,x)$，且邻域内 $\sum_jf_j$ 对 $z$ 严格递增。因此
+$$
+z\le z_*(\varepsilon,x).
+\tag{198.18}
+$$
+令 $A=M_4/B^2-1$、$k=M_3/B^{3/2}$。分别对归一方程求导给出
+$$
+z_*(\varepsilon,x)=1-A\varepsilon-kx
++O\bigl((\varepsilon+|x|)^2\bigr).
+\tag{198.19}
+$$
+因为（198.12）把所有低成本序列送入这个同一局部邻域，该展开可用于每个这样的序列，而不预先假定 $x/\varepsilon$ 有界。
+
+令 $T=\varepsilon+x^2/\varepsilon$，则（198.12）给出 $T\to0$。由（198.11）、（198.18）及 $|x|\le T/2$，可取只依赖 $p,v$ 的常数 $K>0$，使
+$$
+Q-B\ge B\left[A\varepsilon+kx+\frac{x^2}{4\varepsilon}\right]
+-KT^2.
+\tag{198.20}
+$$
+对充分小的 $T$ 成立。这个余项界直接来自解析函数倒数及几何因子的展开：$\varepsilon+|x|=O(T)$，所以前者的二阶余项为 $O(T^2)$；$x^2/[4\varepsilon(1-\varepsilon)]=x^2/(4\varepsilon)+O(T^2)$，其平方与两个一阶项的乘积同样为 $O(T^2)$。因此该估计在所有趋近（198.12）区域的序列上使用同一个局部常数，不要求先有界化 $x/\varepsilon$。
+
+关键在于这不是可能退化的二次式。由 $A-k^2=V/B^2>0$，
+$$
+A\varepsilon+kx+\frac{x^2}{4\varepsilon}
+=\frac VB^2\varepsilon+
+\varepsilon\left(\frac{x}{2\varepsilon}+k\right)^2
+\ge c_0\left(\varepsilon+\frac{x^2}{\varepsilon}\right)
+\tag{198.21}
+$$
+对某个只依赖 $p,v$ 的 $c_0>0$ 成立；最后一步是变量 $\sqrt\varepsilon,x/\sqrt\varepsilon$ 上正定二次式的最小特征值界。因此（198.20）和 $Q-B=O(R^2)$ 迫使
+$$
+\varepsilon=O(R^2),\qquad
+\frac{x^2}{\varepsilon}=O(R^2),\qquad x=O(R^2).
+\tag{198.22}
+$$
+这在使用有界偏移展开之前排除了其他退化速率。
+
+闭区间条件（198.11）又给出 $4\varepsilon(1-\varepsilon)>c^2R^2$，故
+$$
+\liminf\frac{\varepsilon}{R^2}\ge\frac B4.
+\tag{198.23}
+$$
+将（198.21）的平方项丢去，并用（198.22）把余项化为 $o(R^2)$，即得每个低成本序列都满足
+$$
+\liminf\frac{Q-B}{R^2}
+\ge\frac VB\liminf\frac{\varepsilon}{R^2}
+\ge\frac V4.
+\tag{198.24}
+$$
+对下确界，在每个 $R_n$ 选择成本不超过 $\mathfrak C_2(p,v;R_n)+R_n^3$ 的实际程序。式（198.5）保证该序列满足上述低成本假设；（198.24）遂给出下确界的匹配下界，结合（198.5）证明（198.4）。整个论证不要求最优程序存在。
+
+最后，定理184.2的三个固定通道在其相关矩阵坐标 $(1,a,h)$ 上分别为 $(1,1,1)$、$(1,-1,1)$、$(1,c,c^2)$，对应行列式非零，因为 $|c|<1$。所以它们的仿射混合权重由目标通道唯一确定，正是（184.5）的三概率。要求测量后仅执行这三个通道，遂与（198.3）的固定仿射读出问题等价。将（197.20）的 $V$ 代入即可得到所述受限处理器的精确系数；允许其他处理器会扩大优化域，本定理没有对该扩大域证明同样下界。证毕。
+
+## 追加锚（本行以下为增补区）

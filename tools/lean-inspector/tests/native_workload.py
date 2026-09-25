@@ -15,6 +15,7 @@ import shutil
 import subprocess
 import sys
 import time
+import tomllib
 
 
 def load(name, path):
@@ -35,10 +36,20 @@ def main():
     if args.modules < 4:
         parser.error('--modules must be at least 4')
     source, output = args.source_root.resolve(), args.output.resolve()
-    output.mkdir(parents=True, exist_ok=True)
     fixture = args.fixture.resolve() if args.fixture else output / 'fixture'
     if fixture.exists() and not args.fixture:
         parser.error('output fixture already exists')
+    if args.fixture:
+        try:
+            package = tomllib.loads((fixture / 'lakefile.toml').read_text())
+        except (OSError, ValueError):
+            parser.error('--fixture must be a synthetic native fixture package')
+        # Production shares the package name; require the existing fixture layout.
+        if (package.get('name') != 'trureturing'
+                or package.get('defaultTargets') != ['Fixture', 'Audit']
+                or not (fixture / 'Fixture.lean').is_file()):
+            parser.error('--fixture must be a synthetic native fixture package')
+    output.mkdir(parents=True, exist_ok=True)
     os.environ['PATH'] = args.tool_path
     tests = load('native_fixture', source / 'tools/lean-inspector/tests/test_native.py')
     tests.ROOT = source
@@ -50,8 +61,9 @@ def main():
     previous = str(case.root)
     if not args.fixture:
         shutil.move(case.root, fixture)
-    elif not (fixture / 'lakefile.toml').read_text().startswith('name = "fixture"\n'):
-        parser.error('--fixture must be a synthetic native fixture package')
+        for relative in ('lakefile.toml', 'lake-manifest.json', 'Reg/lake-manifest.json'):
+            config = fixture / relative
+            config.write_text(config.read_text().replace(previous, str(fixture)))
     case.root = fixture
     case.env = {key: value.replace(previous, str(fixture)) for key, value in case.env.items()}
     case.env['LAKE_ARTIFACT_CACHE'] = 'false'

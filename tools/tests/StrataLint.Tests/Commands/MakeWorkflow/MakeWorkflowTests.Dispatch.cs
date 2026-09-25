@@ -68,15 +68,14 @@ public sealed partial class MakeWorkflowTests
                 StringComparison.Ordinal);
         }
         var leanRecipe = Recipe(makefile, "lean");
-        Assert.Contains(LeanCacheRunScriptPath, leanRecipe, StringComparison.Ordinal);
-        Assert.Contains("lake build", leanRecipe, StringComparison.Ordinal);
+        Assert.Equal($"\t@/bin/bash {LeanCacheRunScriptPath} --build $(LEAN_TARGETS)", leanRecipe);
         Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
         var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
         Assert.DoesNotContain("run_phase report \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$LAKE\" build :report",
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$LAKE\" \"${{workspace[@]}}\" build :report",
             inspector,
             StringComparison.Ordinal);
 

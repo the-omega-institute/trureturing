@@ -8,14 +8,14 @@ public sealed class LeanReportProgramTargetsTests
 {
     [Theory]
     [InlineData("valid", "both", 0, 0,
-        "ensure|build LeanInformationAudit leanInspector/reportInspector", true, true, null)]
+        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null)]
     [InlineData("valid", "audit", 42, 42,
-        "ensure|build LeanInformationAudit", false, false, null)]
+        "ensure|build leanInspector/LeanInformationAudit", false, false, null)]
     [InlineData("missing", "both", 42, 42,
-        "ensure|build :report LeanInformationAudit leanInspector/reportInspector", false, false, null)]
+        "ensure|build :report leanInspector/LeanInformationAudit leanInspector/reportInspector", false, false, null)]
     [InlineData("valid", "none", 0, 0, "", true, true, null)]
     [InlineData("corrupt", "audit", 42, 42,
-        "ensure|build :report LeanInformationAudit", false, false, null)]
+        "ensure|build :report leanInspector/LeanInformationAudit", false, false, null)]
     [InlineData("valid", "invalid", 0, 2, "", false, true, "lean_targets requires", true)]
     [InlineData("valid", "invalid", 0, 2, "", false, false, "lean_targets requires")]
     [InlineData("valid", "malformed", 0, 2, "", false, true, "JSONDecodeError", true)]
@@ -23,11 +23,11 @@ public sealed class LeanReportProgramTargetsTests
     [InlineData("valid", "invalid-registered", 0, 2, "", false, true, "lean_targets requires", true)]
     [InlineData("valid", "registered", 0, 0, "ensure|build FixtureAudit", true, true, null)]
     [InlineData("valid", "both", 0, 0,
-        "ensure|build LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
+        "ensure|build leanInspector/LeanInformationAudit leanInspector/reportInspector", true, true, null, true)]
     [InlineData("valid", "none", 0, 0, "", true, true, null, true)]
-    [InlineData("valid", "audit", 42, 42, "ensure|build LeanInformationAudit", false, true, null, true)]
+    [InlineData("valid", "audit", 42, 42, "ensure|build leanInspector/LeanInformationAudit", false, true, null, true)]
     [InlineData("corrupt", "audit", 42, 42,
-        "ensure|build :report LeanInformationAudit", false, true, null, true)]
+        "ensure|build :report leanInspector/LeanInformationAudit", false, true, null, true)]
     public void ReportEntryHonorsRegisteredProgramObligations(
         string seed, string selection, int buildExit, int expectedExit,
         string expectedCalls, bool receiptExists, bool identicalReports, string? error,
@@ -45,8 +45,8 @@ public sealed class LeanReportProgramTargetsTests
             fixture.setUp()
             try:
                 targets = {
-                    'both': ['LeanInformationAudit', 'leanInspector/reportInspector'],
-                    'audit': ['LeanInformationAudit'], 'none': [],
+                    'both': ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector'],
+                    'audit': ['leanInspector/LeanInformationAudit'], 'none': [],
                     'invalid': ['--invalid-build-option'], 'registered': None,
                     'malformed': '[', 'non-list': '{}', 'invalid-registered': None,
                 }[selection]
@@ -57,6 +57,7 @@ public sealed class LeanReportProgramTargetsTests
                         else ['FixtureAudit'])
                 print(json.dumps(dict(exit=process.returncode, stdout=process.stdout,
                     stderr=process.stderr, calls=calls, lake=str(fixture.lake),
+                    workspace=str((fixture.root / 'Reg').resolve()),
                     receipt_exists=publication.member(fixture.output, '.reuse.json').is_file(),
                     seed_unchanged=all(path.read_bytes() == before
                         for path, before in fixture.seed_before.items()),
@@ -74,8 +75,9 @@ public sealed class LeanReportProgramTargetsTests
         Assert.True(expectedExit == value.GetProperty("exit").GetInt32(),
             value.GetProperty("stdout").GetString() + value.GetProperty("stderr").GetString());
         var lake = value.GetProperty("lake").GetString();
+        var workspace = value.GetProperty("workspace").GetString();
         var calls = expectedCalls.Length == 0 ? [] : expectedCalls.Split('|')
-            .Select(call => call == "ensure" ? call : lake + " " + call).ToArray();
+            .Select(call => call == "ensure" ? call : lake + " -d " + workspace + " " + call).ToArray();
         Assert.Equal(calls, value.GetProperty("calls").EnumerateArray().Select(call => call.GetString()));
         Assert.True(value.GetProperty("seed_unchanged").GetBoolean(), text);
         Assert.True(receiptExists == value.GetProperty("receipt_exists").GetBoolean(),

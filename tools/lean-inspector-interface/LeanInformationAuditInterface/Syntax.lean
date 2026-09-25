@@ -9,7 +9,6 @@ def expect_information_occurrenceKeyword : Parser.Parser := Parser.nonReservedSy
 def information_theoremKeyword : Parser.Parser := Parser.nonReservedSymbol "information_theorem" true
 def register_information_theoremKeyword : Parser.Parser := Parser.nonReservedSymbol "register_information_theorem" true
 def register_information_templateKeyword : Parser.Parser := Parser.nonReservedSymbol "register_information_template" true
-def declare_information_template_bindingKeyword : Parser.Parser := Parser.nonReservedSymbol "declare_information_template_binding" true
 def informationInlineKeyword : Parser.Parser := Parser.nonReservedSymbol "inline" true
 
 /-- Clause delimiters are tokens only while reading the preceding registration
@@ -124,11 +123,5 @@ syntax (name := informationTheoremOccurrenceReadoutCmd)
   (&" variation " ident)? (&" sensitivity " ident)?
   (&" escape " &"from " "(" term ")")?
   (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
-
-syntax (name := declareInformationTemplateBindingCmd)
-  declare_information_template_bindingKeyword ident &" in " ident
-  (&" object_arena " ident &" catalog " ident)? &"readout " &"via " "(" term ")"
-  (&" escape " &"from " "(" term ")")?
-  (&" escape " &"continues " "(" informationEscapeContinuation ")")? : command
 
 end LeanInformationAudit
