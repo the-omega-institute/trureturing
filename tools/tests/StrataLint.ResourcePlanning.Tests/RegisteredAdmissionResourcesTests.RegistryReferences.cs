@@ -38,7 +38,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cache", Strings(plan["resources"]!));
             if (path is "LICENSE" or "README.md" or "Trureturing.lean")
-                Assert.Equal(WithPathInventory(readsBody ? new[] { RepositoryFileMapProject } : [], change), Strings(plan["execution"]!["tests"]!));
+                Assert.Equal(WithPathInventory(readsBody ? new[] { RepositoryFileMapProject, WorktreeContractProject } : [], change), Strings(plan["execution"]!["tests"]!));
         }
     }
 }
