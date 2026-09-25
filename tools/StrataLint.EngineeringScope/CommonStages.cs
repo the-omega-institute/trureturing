@@ -225,6 +225,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private CheckOperation Operation(string name, string[] arguments)
     {
+        output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
+        output.Flush();
         var result = Capture("dotnet", arguments);
         output.WriteLine(result.Text);
         var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
@@ -251,7 +253,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (runReport) RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
         if (ids.Length != 0) RequireBinary(build, CommonExecutionEvidence.CliPath);
         var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
-        if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
+        if (Directory.Exists(logs))
+            foreach (var path in Directory.EnumerateFileSystemEntries(logs))
+            {
+                // The stage console owns this open log across current cleanup.
+                if (Path.GetFileName(path) == "console.log") continue;
+                if (Directory.Exists(path)) Directory.Delete(path, recursive: true);
+                else File.Delete(path);
+            }
         var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
         string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
             ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -349,7 +358,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var exit = proof is null ? CommonExecutionEvidence.Normalize(result.Exit, allowAnnotation)
             : result.Exit is not (0 or 1) ? 2 : proof(result.Exit, result.Text) ? 0 : 1;
         steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
-        if (exit != 0) throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
+        if (exit != 0)
+        {
+            // A failing process can emit useful details without severity labels.
+            output.WriteLine($"CI_DIAGNOSTIC_BEGIN stage={stage} step={name} raw_exit={result.Exit}");
+            output.WriteLine(result.Text);
+            output.WriteLine("CI_DIAGNOSTIC_END");
+            throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
+        }
         return result.Text;
     }
 

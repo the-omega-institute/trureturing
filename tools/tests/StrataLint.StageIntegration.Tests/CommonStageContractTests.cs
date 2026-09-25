@@ -14,6 +14,10 @@ public sealed class CommonStageContractTests
     {
         using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
+        var consoleLog = Path.Combine(fixture.Root, "build/ci/logs/current/console.log");
+        Directory.CreateDirectory(Path.GetDirectoryName(consoleLog)!);
+        TemporaryFileSystem.File.WriteAllText(consoleLog, "outer console is still open\n");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(Path.GetDirectoryName(consoleLog)!, "stale.log"), "stale\n");
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), $"""
             printf 'producer-out-without-newline'
             printf 'producer-error-without-newline' >&2
@@ -22,6 +26,8 @@ public sealed class CommonStageContractTests
         using var output = new StringWriter();
         // Successful production reaches the checker; this fixture has no valid CLI.
         Assert.Equal(2, new CommonStages(fixture.Root, output).Run("current", null));
+        Assert.Equal("outer console is still open\n", TemporaryFileSystem.File.ReadAllText(consoleLog));
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(Path.GetDirectoryName(consoleLog)!, "stale.log")));
         using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
             Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "current-result.json")));
         var step = Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray(),
@@ -40,6 +46,12 @@ public sealed class CommonStageContractTests
         Assert.Equal("eof", observation.GetProperty("stdout").GetProperty("status").GetString());
         Assert.Equal("eof", observation.GetProperty("stderr").GetProperty("status").GetString());
         Assert.DoesNotContain("STAGE_PROCESS", log, StringComparison.Ordinal);
+        if (commandExit != 0)
+        {
+            Assert.Contains("CI_DIAGNOSTIC_BEGIN stage=current step=lean-report", output.ToString(), StringComparison.Ordinal);
+            Assert.Contains(log, output.ToString(), StringComparison.Ordinal);
+            Assert.Contains("CI_DIAGNOSTIC_END", output.ToString(), StringComparison.Ordinal);
+        }
     }
 
     [Fact]

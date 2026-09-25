@@ -1000,3 +1000,65 @@ Kolmogorov 紧性及有限柱面方法均不作为新发现。
 本章未包含失谐、eta²delta 不趋零、增长区间、其它幅度、数据自适应频率或实际矩收敛。
 精确有限截距的允许替换须满足 eta²delta^(−1/2) 倍截距误差趋零；
 只有相同弱极限不满足这个速率要求。
+
+## 临界共振中的旧场重现（第 60 章）
+
+`repo-derived`：第 60 章在 eta=2m、eta²delta→zeta∈(0,infinity) 下，
+把同一实际后验向量的放大谱残差分解为独立 Gaussian 偏移与 sinc 核的二阶混沌。
+偶数 m 的混沌由旧 Fourier 场自身生成，奇数 m 由确定格点交替符号产生独立副本。
+两个分支有相同边缘过程律，却有不同的旧端点平方协方差。
+新内容是实际放大误差、符号调制的共同实现和移动对角坐标的联合控制，
+不是将一般二次型定理改换符号。
+
+Nourdin–Rosiński，*Asymptotic independence of multiple Wiener–Itô integrals
+and the resulting limit laws*，
+[arXiv:1112.5070v1](https://arxiv.org/abs/1112.5070v1)，
+Theorem 3.1，PDF 第 7 页，针对已联合收敛的固定阶多重积分向量，
+把极限矩独立、平方协方差趋零与交叉收缩趋零联系起来。
+由矩独立推出分布独立还需各极限边缘由矩确定。
+Corollary 3.2 与 Remark 3.3，第 8 页，分别给出从边缘收敛到联合收敛的条件，
+以及不能随意删掉矩确定性要求的反例。
+Theorem 4.5，第 17 页，要求阶数 p≥q、一侧为渐近标准 Gaussian，
+另一侧极限矩确定及交叉协方差趋零，才得到独立联合极限。
+这些是偏移与非 Gaussian sinc 混沌关系的经典工具，
+不自动提供实际后验比较、放大中心误差或符号调制后的 Gram 极限。
+本章以混合特征函数和共同矩形核逼近直接完成所需联合关系。
+
+de Jong 1987 Definition 2.1 与 Theorem 2.1，第 263–264 页，
+要求独立 clean 二次项、小最大行方差与标准化第四矩趋三。
+紧随其后的大特征值反例说明小行方差不足。
+本章 Gaussian 偏移的小算子范数与 sinc 部分的非零极限算子，正好区别这两种情形。
+Nualart–Peccati [arXiv:math/0503598v1](https://arxiv.org/abs/math/0503598v1)
+Theorem 1，PDF 第 3 页，给出固定混沌阶与归一化方差下的第四矩、收缩及 Gaussian 极限等价。
+其假设在偏移和对角量成立，在固定正临界参数的非零时间 sinc 核不成立。
+
+Nourdin–Poly [arXiv:1205.2684v3](https://arxiv.org/abs/1205.2684v3)，
+Proposition 2.1 及累积量公式，PDF 第 4 页，给出对称平方可积核对应的
+Hilbert–Schmidt 自伴算子谱表示。
+第四累积量 48 sum(lambda_n^4) 和第二混沌第四矩上界均属于经典结构。
+本章核在非零时间的对角邻域不为零，因此严格正的第四累积量有实际核依据。
+旧对数核与新有界核使用同一有限矩形划分；异格扣除产生 Wick 常数，不能省略。
+
+第 57、58 章所引顺序 U-process、异质独立输入 Gaussian 近似和桥展开文献，
+各自的输入、收缩、参数化及紧性假设仍须保留。
+这些文献没有使固定正临界参数下的非 Gaussian 部分变成 Gaussian。
+Tudor [arXiv:2606.14812v1](https://arxiv.org/abs/2606.14812v1)
+Theorem 1，PDF 第 7 页，对固定旧变量的结论不能代替本章同时移动的对角量和调制坐标；
+本章直接核对两组坐标的全部 Gram 极限并使用混合特征函数。
+此限定针对所引 Theorem 1，不将该论文其它联合定理一概描述成固定变量结果。
+
+实际条件化继续使用 Siripraparat–Neammanee 的独立 Bernoulli 和局部界。
+Arratia–Goldstein–Langholz [arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+Condition 2.1 与 Theorem 2.1 的高阶展开要求总方差至少与 Bernoulli 项数成固定比例，
+并处理有界偏离；这里 q=o(M)，不能据此引入更强的稀疏中心展开。
+第 56 章密度比与加权中心界，以及第 59 章在有界 eta²delta 下仍成立的原始共振矩阵界，
+足以处理本章的实际比较。
+
+定理 60.4 只讨论已识别 sinc 混沌族在 zeta↓0 时的低参数边界；
+sinc 的区间 Fourier 乘子、Plancherel、谱 Gaussian 极限与有限柱面方法均为经典工具。
+它不把固定正 zeta 的实际弱极限直接代入移动 zeta。
+第 59 章的实际反射 Brownian 律仍依赖其单独的数组估计。
+
+已检查的原始文献未直接给出此固定 Liouville 模型、奇偶旧场关系及全部实际放大误差。
+有限检索不认证全球原创性。没有声称两分支在有限后验中独立、
+实际无界矩收敛、奇偶性随机分布、增长区间、其它幅度或不分奇偶的旧场联合极限。
