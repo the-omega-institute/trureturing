@@ -43253,7 +43253,7 @@ $$
 
 上左块趋向正定的 $F$，故充分靠后可取 Schur 补，得到
 $$
-C\succeq\frac{1-\varepsilon}{c^2},
+C\succeq\frac{1-\varepsilon}{c^2}\,
 E\left(F-\frac xcE-\varepsilon C\right)^{-1}E.
 \tag{199.15}
 $$
