@@ -1,0 +1,378 @@
+/- GID: D5/S3/Combinatorics/Parking/OperationalDynamics
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Parking/OperationalDynamics
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Ordered circular parking dynamics, vacancy uniqueness, and rotation equivariance. -/
+
+import D5.S0.Certificates.Combinatorics.UnitIntervalParkingFoata
+
+/-!
+# Circular two-choice parking dynamics
+
+The definitions below implement the ordered two-choice process on `n + 1`
+circular spots. A single bounded scanner is shared by the actual process and
+its one-choice comparison process, with prefix freshness, unique vacancy, and
+rotation equivariance proved for the complete operational state.
+-/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Combinatorics.CircularTwoChoiceParkingBijection
+
+open D5.S0.Certificates.Combinatorics.UnitIntervalParkingFoata
+
+/-- Circular spots for `n` cars. -/
+abbrev Spot (n : Nat) := ZMod (n + 1)
+
+/-- A positive clockwise increment, necessarily at most `n`. -/
+def Increment (n : Nat) := {k : Nat // 1 <= k /\ k <= n}
+
+/-- The literal ordered pair tried by a car. -/
+structure ActualChoice (n : Nat) where
+  anchor : Spot n
+  second : Spot n
+  distinct : second ≠ anchor
+
+/-- One actual ordered choice for every car. -/
+abbrev ActualPreferences (n : Nat) := Fin n -> ActualChoice n
+
+/-- One anchor for every car. -/
+abbrev Anchors (n : Nat) := Fin n -> Spot n
+
+/-- The observable clockwise increment of every actual choice. -/
+abbrev IncrementMatrix (n : Nat) := Fin n -> Increment n
+
+def orbitEquiv (n : Nat) (start : Spot n) : Fin (n + 1) ≃ Spot n :=
+  (ZMod.finEquiv (n + 1)).toEquiv.trans (Equiv.addRight start)
+
+def freeOffsets (n : Nat) (occupied : Finset (Spot n)) (start : Spot n) :
+    Finset (Fin (n + 1)) :=
+  Finset.univ.filter fun r => orbitEquiv n start r ∉ occupied
+
+def firstFreeOffset (n : Nat) (occupied : Finset (Spot n)) (start : Spot n) :
+    Fin (n + 1) :=
+  if h : (freeOffsets n occupied start).Nonempty then
+    (freeOffsets n occupied start).min' h
+  else 0
+
+/-- The sole circular search primitive: inspect offsets `0, ..., n` in order. -/
+def firstFree (n : Nat) (occupied : List (Spot n)) (start : Spot n) : Spot n :=
+  orbitEquiv n start (firstFreeOffset n occupied.toFinset start)
+
+theorem firstFree_of_not_mem {n : Nat} (occupied : List (Spot n))
+    (start : Spot n) (hfree : start ∉ occupied) :
+    firstFree n occupied start = start := by
+  have hzero : (0 : Fin (n + 1)) ∈ freeOffsets n occupied.toFinset start := by
+    simp [freeOffsets, orbitEquiv, hfree]
+  have hne : (freeOffsets n occupied.toFinset start).Nonempty := ⟨0, hzero⟩
+  have hmin : (freeOffsets n occupied.toFinset start).min' hne = 0 :=
+    le_antisymm (Finset.min'_le _ _ hzero) (Fin.zero_le _)
+  simp [firstFree, firstFreeOffset, hne, hmin, orbitEquiv]
+
+private theorem freeOffsets_nonempty (n : Nat) (occupied : Finset (Spot n))
+    (start : Spot n) (hcard : occupied.card <= n) :
+    (freeOffsets n occupied start).Nonempty := by
+  by_contra hnone
+  have hall : ∀ x : Spot n, x ∈ occupied := by
+    intro x
+    by_contra hx
+    let r := (orbitEquiv n start).symm x
+    apply hnone
+    refine ⟨r, ?_⟩
+    simp only [freeOffsets, Finset.mem_filter, Finset.mem_univ, true_and]
+    simpa [r] using hx
+  have huniv : occupied = Finset.univ := Finset.eq_univ_iff_forall.mpr hall
+  have hlarge : n + 1 <= n := by
+    simpa [huniv] using hcard
+  omega
+
+theorem firstFree_fresh (n : Nat) (occupied : List (Spot n)) (start : Spot n)
+    (hnodup : occupied.Nodup) (hcard : occupied.length <= n) :
+    firstFree n occupied start ∉ occupied := by
+  have hc : occupied.toFinset.card <= n := by
+    simpa [occupied.toFinset_card_of_nodup hnodup] using hcard
+  have hne := freeOffsets_nonempty n occupied.toFinset start hc
+  have hm := Finset.min'_mem (freeOffsets n occupied.toFinset start) hne
+  simp only [freeOffsets, Finset.mem_filter, Finset.mem_univ, true_and] at hm
+  change orbitEquiv n start (firstFreeOffset n occupied.toFinset start) ∉ occupied
+  rw [firstFreeOffset, dif_pos hne]
+  exact fun hmem => hm (List.mem_toFinset.mpr hmem)
+
+theorem firstFree_skipped (n : Nat) (occupied : List (Spot n)) (start : Spot n)
+    (hnodup : occupied.Nodup) (hcard : occupied.length <= n)
+    (r : Fin (n + 1)) (hr : r < firstFreeOffset n occupied.toFinset start) :
+    orbitEquiv n start r ∈ occupied := by
+  have hc : occupied.toFinset.card <= n := by
+    simpa [occupied.toFinset_card_of_nodup hnodup] using hcard
+  have hne := freeOffsets_nonempty n occupied.toFinset start hc
+  by_contra hfree
+  have hrmem : r ∈ freeOffsets n occupied.toFinset start := by
+    simp [freeOffsets, hfree]
+  have hle := Finset.min'_le (freeOffsets n occupied.toFinset start) r hrmem
+  simp only [firstFreeOffset, dif_pos hne] at hr
+  exact (not_le_of_gt hr) hle
+
+/-- The actual ordered rule: take the anchor when free, otherwise scan from the second choice. -/
+def actualStep (n : Nat) (occupied : List (Spot n)) (q : ActualChoice n) : Spot n :=
+  if q.anchor ∈ occupied then firstFree n occupied q.second else q.anchor
+
+/-- The comparison rule scans clockwise from its single anchor. -/
+def oneStep (n : Nat) (occupied : List (Spot n)) (anchor : Spot n) : Spot n :=
+  firstFree n occupied anchor
+
+def parkFrom {n : Nat} {α : Type} (step : List (Spot n) -> α -> Spot n)
+    (occupied : List (Spot n)) : List α -> List (Spot n)
+  | [] => []
+  | x :: xs =>
+      let y := step occupied x
+      y :: parkFrom step (y :: occupied) xs
+
+private theorem parkFrom_length {n : Nat} {α : Type}
+    (step : List (Spot n) -> α -> Spot n) (occupied : List (Spot n)) (xs : List α) :
+    (parkFrom step occupied xs).length = xs.length := by
+  induction xs generalizing occupied with
+  | nil => rfl
+  | cons x xs ih => simp [parkFrom, ih]
+
+private theorem parkFrom_nodup_and_fresh {n : Nat} {α : Type}
+    (step : List (Spot n) -> α -> Spot n)
+    (fresh : ∀ occupied x, occupied.Nodup -> occupied.length <= n ->
+      step occupied x ∉ occupied)
+    (occupied : List (Spot n)) (xs : List α)
+    (hnodup : occupied.Nodup) (hcap : occupied.length + xs.length <= n) :
+    (parkFrom step occupied xs).Nodup /\
+      ∀ y ∈ parkFrom step occupied xs, y ∉ occupied := by
+  induction xs generalizing occupied with
+  | nil => simp [parkFrom]
+  | cons x xs ih =>
+      let y := step occupied x
+      have hy : y ∉ occupied := fresh occupied x hnodup (by omega)
+      have hnext : (y :: occupied).length + xs.length <= n := by
+        simp only [List.length_cons]
+        simp only [List.length_cons] at hcap
+        omega
+      have hi := ih (y :: occupied) (List.nodup_cons.mpr ⟨hy, hnodup⟩) hnext
+      constructor
+      · rw [parkFrom, List.nodup_cons]
+        refine ⟨?_, hi.1⟩
+        intro hymem
+        exact (hi.2 y hymem) (by simp)
+      · intro z hz
+        simp only [parkFrom, List.mem_cons] at hz
+        rcases hz with rfl | hz
+        · exact hy
+        · exact fun hzo => hi.2 z hz (by simp [hzo])
+
+private theorem actualStep_fresh (n : Nat) (occupied : List (Spot n))
+    (q : ActualChoice n) (hnodup : occupied.Nodup) (hcard : occupied.length <= n) :
+    actualStep n occupied q ∉ occupied := by
+  simp only [actualStep]
+  split
+  · exact firstFree_fresh n occupied q.second hnodup hcard
+  · assumption
+
+/-- Landing spots of the literal ordered two-choice process, in car order. -/
+def actualSpots (n : Nat) (choices : ActualPreferences n) : List (Spot n) :=
+  parkFrom (actualStep n) [] (List.ofFn choices)
+
+/-- Landing spots of the comparison one-choice process, in car order. -/
+def oneSpots (n : Nat) (anchors : Anchors n) : List (Spot n) :=
+  parkFrom (oneStep n) [] (List.ofFn anchors)
+
+/-- Every actual prefix has its exact number of landings and no spot is repeated. -/
+theorem actual_prefix_fresh (n : Nat) (choices : List (ActualChoice n))
+    (h : choices.length <= n) :
+    (parkFrom (actualStep n) [] choices).length = choices.length /\
+      (parkFrom (actualStep n) [] choices).Nodup := by
+  exact ⟨parkFrom_length _ [] choices,
+    (parkFrom_nodup_and_fresh (actualStep n) (actualStep_fresh n) [] choices
+      (by simp) (by simpa using h)).1⟩
+
+private theorem one_prefix_fresh (n : Nat) (anchors : List (Spot n))
+    (h : anchors.length <= n) :
+    (parkFrom (oneStep n) [] anchors).length = anchors.length /\
+      (parkFrom (oneStep n) [] anchors).Nodup := by
+  exact ⟨parkFrom_length _ [] anchors,
+    (parkFrom_nodup_and_fresh (oneStep n)
+      (fun occupied anchor hnodup hcard =>
+        firstFree_fresh n occupied anchor hnodup hcard) [] anchors
+      (by simp) (by simpa using h)).1⟩
+
+private def vacancy (n : Nat) (landings : List (Spot n)) : Spot n :=
+  firstFree n landings 0
+
+/-- The unique empty spot after all actual choices have run. -/
+def actualEmpty (n : Nat) (choices : ActualPreferences n) : Spot n :=
+  vacancy n (actualSpots n choices)
+
+/-- The unique empty spot after all one-choice anchors have run. -/
+def oneEmpty (n : Nat) (anchors : Anchors n) : Spot n :=
+  vacancy n (oneSpots n anchors)
+
+private theorem unique_vacancy_of_full {n : Nat} (landings : List (Spot n))
+    (hlen : landings.length = n) (hnodup : landings.Nodup) :
+    ∀ x : Spot n, x ∉ landings ↔ x = vacancy n landings := by
+  have hcard : landings.toFinset.card = n := by
+    simpa [landings.toFinset_card_of_nodup hnodup] using hlen
+  have hempty : vacancy n landings ∉ landings := by
+    exact firstFree_fresh n landings 0 hnodup (by omega)
+  intro x
+  constructor
+  · intro hx
+    by_contra hne
+    have hsub : landings.toFinset ∪ {x, vacancy n landings} ⊆ Finset.univ := by simp
+    have hle := Finset.card_le_card hsub
+    have hpair : ({x, vacancy n landings} : Finset (Spot n)).card = 2 := by simp [hne]
+    have hdis : Disjoint landings.toFinset ({x, vacancy n landings} : Finset (Spot n)) := by
+      rw [Finset.disjoint_left]
+      intro a ha hapair
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hapair
+      rcases hapair with rfl | rfl
+      · exact hx (List.mem_toFinset.mp ha)
+      · exact hempty (List.mem_toFinset.mp ha)
+    rw [Finset.card_union_of_disjoint hdis, hcard, hpair] at hle
+    simpa using hle
+  · rintro rfl
+    exact hempty
+
+/-- Exactly one circular spot is empty after the actual run. -/
+theorem actual_unique_vacancy (n : Nat) (choices : ActualPreferences n) :
+    ∀ x : Spot n, x ∉ actualSpots n choices ↔ x = actualEmpty n choices := by
+  apply unique_vacancy_of_full (actualSpots n choices)
+  · simp [actualSpots, parkFrom_length]
+  · exact (actual_prefix_fresh n (List.ofFn choices) (by simp)).2
+
+theorem one_unique_vacancy (n : Nat) (anchors : Anchors n) :
+    ∀ x : Spot n, x ∉ oneSpots n anchors ↔ x = oneEmpty n anchors := by
+  apply unique_vacancy_of_full (oneSpots n anchors)
+  · simp [oneSpots, parkFrom_length]
+  · exact (one_prefix_fresh n (List.ofFn anchors) (by simp)).2
+
+def rotateList {n : Nat} (t : Spot n) (occupied : List (Spot n)) : List (Spot n) :=
+  occupied.map fun x => x + t
+
+theorem mem_rotateList_iff {n : Nat} (t x : Spot n) (occupied : List (Spot n)) :
+    x + t ∈ rotateList t occupied ↔ x ∈ occupied := by
+  constructor
+  · intro h
+    rcases List.mem_map.mp h with ⟨y, hy, heq⟩
+    have : y = x := by simpa using add_right_cancel heq
+    simpa [this] using hy
+  · intro h
+    exact List.mem_map.mpr ⟨x, h, rfl⟩
+
+private theorem freeOffsets_rotate {n : Nat} (t start : Spot n)
+    (occupied : List (Spot n)) :
+    freeOffsets n (rotateList t occupied).toFinset (start + t) =
+      freeOffsets n occupied.toFinset start := by
+  ext r
+  simp only [freeOffsets, Finset.mem_filter, Finset.mem_univ, true_and,
+    List.mem_toFinset]
+  change orbitEquiv n (start + t) r ∉ rotateList t occupied ↔
+    orbitEquiv n start r ∉ occupied
+  rw [show orbitEquiv n (start + t) r = orbitEquiv n start r + t by
+    simp [orbitEquiv, add_assoc, add_comm, add_left_comm]]
+  exact not_congr (mem_rotateList_iff t _ occupied)
+
+theorem firstFree_rotate {n : Nat} (t start : Spot n)
+    (occupied : List (Spot n)) :
+    firstFree n (rotateList t occupied) (start + t) = firstFree n occupied start + t := by
+  have hf := freeOffsets_rotate t start occupied
+  have hoff : firstFreeOffset n (rotateList t occupied).toFinset (start + t) =
+      firstFreeOffset n occupied.toFinset start := by
+    simp only [firstFreeOffset]
+    split <;> split
+    · simpa [hf]
+    · rename_i hleft hright
+      exact (hright (hf ▸ hleft)).elim
+    · rename_i hleft hright
+      exact (hleft (hf.symm ▸ hright)).elim
+    · rfl
+  simp only [firstFree]
+  rw [hoff]
+  simp [orbitEquiv, add_assoc, add_comm, add_left_comm]
+
+/-- Rotate both entries of an actual ordered choice. -/
+def rotateChoice {n : Nat} (t : Spot n) (q : ActualChoice n) : ActualChoice n where
+  anchor := q.anchor + t
+  second := q.second + t
+  distinct := by simpa using q.distinct
+
+/-- Rotate every actual choice by the same displacement. -/
+def rotateActual {n : Nat} (t : Spot n) (choices : ActualPreferences n) :
+    ActualPreferences n := fun i => rotateChoice t (choices i)
+
+/-- Rotate every one-choice anchor by the same displacement. -/
+def rotateAnchors {n : Nat} (t : Spot n) (anchors : Anchors n) : Anchors n :=
+  fun i => anchors i + t
+
+private theorem actualStep_rotate {n : Nat} (t : Spot n) (occupied : List (Spot n))
+    (q : ActualChoice n) :
+    actualStep n (rotateList t occupied) (rotateChoice t q) = actualStep n occupied q + t := by
+  by_cases h : q.anchor ∈ occupied
+  · have hr : q.anchor + t ∈ rotateList t occupied := (mem_rotateList_iff t q.anchor occupied).2 h
+    simp [actualStep, rotateChoice, h, hr, firstFree_rotate]
+  · have hr : q.anchor + t ∉ rotateList t occupied := by
+      simpa only [mem_rotateList_iff] using h
+    simp [actualStep, rotateChoice, h, hr]
+
+private theorem parkFrom_rotate {n : Nat} {α : Type}
+    (step : List (Spot n) -> α -> Spot n) (rotateInput : α -> α) (t : Spot n)
+    (hstep : ∀ occupied x,
+      step (rotateList t occupied) (rotateInput x) = step occupied x + t)
+    (occupied : List (Spot n)) (xs : List α) :
+    parkFrom step (rotateList t occupied) (xs.map rotateInput) =
+      rotateList t (parkFrom step occupied xs) := by
+  induction xs generalizing occupied with
+  | nil => rfl
+  | cons x xs ih =>
+      simp only [List.map_cons, parkFrom]
+      rw [hstep]
+      rw [show (step occupied x + t) :: rotateList t occupied =
+        rotateList t (step occupied x :: occupied) by rfl]
+      rw [ih]
+      rfl
+
+/-- Actual landings rotate with both ordered choices. -/
+theorem actualSpots_rotate {n : Nat} (t : Spot n) (choices : ActualPreferences n) :
+    actualSpots n (rotateActual t choices) = rotateList t (actualSpots n choices) := by
+  have hofFn :
+      List.ofFn (rotateActual t choices) = (List.ofFn choices).map (rotateChoice t) := by
+    ext i hi
+    simp [rotateActual]
+  rw [actualSpots, hofFn]
+  exact parkFrom_rotate (actualStep n) (rotateChoice t) t (actualStep_rotate t) [] _
+
+private theorem oneSpots_rotate {n : Nat} (t : Spot n) (anchors : Anchors n) :
+    oneSpots n (rotateAnchors t anchors) = rotateList t (oneSpots n anchors) := by
+  have hofFn :
+      List.ofFn (rotateAnchors t anchors) = (List.ofFn anchors).map (fun x => x + t) := by
+    ext i hi
+    simp [rotateAnchors]
+  have hstep : ∀ occupied anchor,
+      oneStep n (rotateList t occupied) (anchor + t) = oneStep n occupied anchor + t :=
+    fun occupied anchor => firstFree_rotate t anchor occupied
+  rw [oneSpots, hofFn]
+  exact parkFrom_rotate (oneStep n) (fun x => x + t) t hstep [] _
+
+/-- The actual empty spot obeys the concrete translation law. -/
+theorem actualEmpty_rotate {n : Nat} (t : Spot n) (choices : ActualPreferences n) :
+    actualEmpty n (rotateActual t choices) = actualEmpty n choices + t := by
+  symm
+  apply (actual_unique_vacancy n (rotateActual t choices) _).1
+  rw [actualSpots_rotate]
+  simpa [mem_rotateList_iff] using
+    (actual_unique_vacancy n choices (actualEmpty n choices)).2 rfl
+
+theorem oneEmpty_rotate {n : Nat} (t : Spot n) (anchors : Anchors n) :
+    oneEmpty n (rotateAnchors t anchors) = oneEmpty n anchors + t := by
+  symm
+  apply (one_unique_vacancy n (rotateAnchors t anchors) _).1
+  rw [oneSpots_rotate]
+  simpa [mem_rotateList_iff] using
+    (one_unique_vacancy n anchors (oneEmpty n anchors)).2 rfl
+
+end D5.S3.Combinatorics.CircularTwoChoiceParkingBijection

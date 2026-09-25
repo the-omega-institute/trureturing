@@ -6,9 +6,10 @@
    utility: none
    digest: Six CUT readouts register the complete Somer-Krizek counterexample certificate. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S1.Recurrence.Periodic.SomerUniformSubsequenceRefutation
 import D5.S3.ConceptDynamics.InformationEscape.CertificateWordRegistrationTemplates
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -54,7 +55,7 @@ private theorem altered_not_law (changed : Fin 6) :
   apply bumpCode_ne (actualWord changed)
   simpa [alteredRealization, certificateWordRealization, certificateSignature] using atChanged
 
-private theorem certificateBridge : LegacyPrimitiveRealization certificateArena
+theorem certificateBridge : LegacyPrimitiveRealization certificateArena
     (let counterexample := actualWord; Not fullClaim) certificateRealization := by
   constructor
   constructor
@@ -63,10 +64,10 @@ private theorem certificateBridge : LegacyPrimitiveRealization certificateArena
   · rintro ⟨_, certificate⟩
     exact actualRefutationEvidence.refutes certificate
 
-private theorem certificateVariation : FiniteLawVariation certificateArena := by
+theorem certificateVariation : FiniteLawVariation certificateArena := by
   exact ⟨certificateRealization, alteredRealization 0, certificateLaw, altered_not_law 0⟩
 
-private theorem certificateSensitivity : FiniteSlotSensitivity certificateArena := by
+theorem certificateSensitivity : FiniteSlotSensitivity certificateArena := by
   classical
   constructor
   · intro i
@@ -85,10 +86,6 @@ private theorem certificateSensitivity : FiniteSlotSensitivity certificateArena 
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem result in certificateArena
-  readout via (@certificateWordRealization CertificateWord (fun word index => word index))
-  primitives certificateRealization.toPrimitiveBundle realization certificateBridge
-  variation certificateVariation sensitivity certificateSensitivity
-  escape from (actualWord) escape continues (open)
+
 
 end D5.S3.ConceptDynamics.InformationEscape.SomerUniformSubsequenceCertificateRegistration

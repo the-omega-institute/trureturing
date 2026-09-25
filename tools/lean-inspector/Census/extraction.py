@@ -114,9 +114,10 @@ def add_collision_identities(repository, index, manifest, request, source_path, 
 
 def source_digest(repository):
     inspector = repository / "tools/lean-inspector"
-    paths = [inspector / name for name in [
+    paths = [(inspector / name).resolve() for name in [
         "LeanInformationAudit/Census/Stream.lean", "LeanInformationAudit/Census/Ownership.lean",
-        "LeanInformationAudit/RegistryTypes.lean", "LeanInformationAudit/NameWire.lean",
+        "../lean-inspector-interface/LeanInformationAuditInterface/Records.lean",
+        "LeanInformationAudit/NameWire.lean",
         "Inspector.lean", "Census/scan.lean",
         "Census/extraction.py", "materials.py"]]
     return digest([(str(p.relative_to(repository)), hashlib.sha256(p.read_bytes()).hexdigest()) for p in paths])
