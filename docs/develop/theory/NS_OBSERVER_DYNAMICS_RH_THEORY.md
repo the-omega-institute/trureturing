@@ -2477,7 +2477,7 @@ s_0(\alpha,x)=1,\qquad s_0(\alpha_p^-,x)=0\quad\text{对每个 }p.
 
 已有 `MechanicalPeriodicity` 还证明有理斜率的机械词从起点周期，而 $(0,1)$ 中无理斜率的机械词不最终周期。因此有限精度参数的无限时间周期性，不能被转述为极限动力系统的周期性。普通二进制与带符号数字表示之间的可计算性差异见 [22-A,22-B]。
 
-`MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch` 已从实际机械词证明下方二进制逼近的严格误差界及式 (22.9) 的逐精度首位反例。上方逼近、固定非边界相位的有限词最终正确性及其起始精度依赖相位仍保留本节普通证明。
+`MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch` 已从实际机械词证明下方二进制逼近的严格误差界及式 (22.9) 的逐精度首位反例。`MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq` 已证明上方二进制逼近在任意固定相位、固定有限词长最终逐位正确，包括整数命中相位；起始精度可依赖相位。任意收敛参数序列在固定非边界相位的有限词稳定性仍保留本节普通证明。
 
 ### 22.6 推论：黄金斜率下的显式参数位数预算
 
@@ -2531,7 +2531,7 @@ p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
 
 ### 22.8 证明覆盖与保留边界
 
-本节的核心证明链由七个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch` 给出第 22.5 节的下方二进制边界反例；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数与单位总质量；`MechanicalReadoutAtomicMeasure` 构造概率测度，证明半线分布函数、内部斜率的单点质量及闭拓扑支撑；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位单侧误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5 节除下方边界反例以外的二进制逼近结论，以及第 22.6--22.7 节的黄金预算、联合校准，第 22.11 节的左极限跳变与相位平均，第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
+本节的核心证明链由七个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch` 给出第 22.5 节的下方二进制边界反例，`dyadic_upper_eventually_word_eq` 给出上方逼近的逐相位有限词最终稳定性；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数与单位总质量；`MechanicalReadoutAtomicMeasure` 构造概率测度，证明半线分布函数、内部斜率的单点质量及闭拓扑支撑；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位单侧误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5 节任意收敛参数序列在非边界相位的稳定性，以及第 22.6--22.7 节的黄金预算、联合校准，第 22.11 节的左极限跳变与相位平均，第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
 
 [22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
 
