@@ -10427,3 +10427,348 @@ $(\varepsilon-3/20)/2,3/40$，所以 $N\succeq S-R$。两个方向的上界质�
 因此，“两条相干保留”不是纯反例证明的充分迁移条件；扩展的共同秩、支撑及两个事件方向的正性余量必须一并核对。这个证书没有解决所有末输出为量子比特的候选是否都满足同系数修复。
 
 ## 追加锚（本行以下为增补区）
+
+## 61. 两轮因果修复的 $\varepsilon^{3/2}$ 阶渐近与最优边缘参数
+
+### 61.1 合同与结论
+
+沿用 $A\otimes B\otimes D$ 的 $2\times2\times3$ 接口、完整量子 tester 事件和候选
+
+$$
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|,
+\qquad x=000,\ y=101,\ z=112,
+$$
+
+记全部归一化因果修复中的最优事件误差为 $e_\varepsilon$。采用定理 59.1 的单参数约化：对 $0<\varepsilon\le1/16$，
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\quad c=\sqrt{1-\varepsilon},
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z\rangle
+\langle\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z|
++p|010\rangle\langle010|.
+\tag{61.1}
+$$
+
+$N$ 是完整双向事件误差，不删归一化迹项。
+
+**定理 61.1。** 当 $\varepsilon\downarrow0$，
+
+$$
+e_\varepsilon
+=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.2}
+$$
+
+对任意最优参数的选择 $p_\varepsilon$，都有
+
+$$
+p_\varepsilon
+=\varepsilon-\frac34\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.3}
+$$
+
+式（61.3）还适用于任意原始最优因果修复的边缘参数 $p=\sigma_{11}$，因为单参数约化在保持该 $p$ 时不会增加误差。
+
+证明使用单参数约化、特征值公式和一致的有限维极值分析。
+
+### 61.2 正向事件最大值的准确公式
+
+令 $P_p$ 为式（61.1）在 $x,y,z$ 上的秩一主块，$r=(1,c,\sqrt\varepsilon)^{\mathsf T}$。对反馈参数 $q,t\in[0,1]$，记
+
+$$
+D(q,t)=\operatorname{diag}(\sqrt q,\sqrt{1-q},\sqrt t),
+\quad
+\lambda_\varepsilon(p;q,t)
+=\max\{0,\lambda_{\max}(D(rr^{\mathsf T}-P_p)D)\}.
+$$
+
+精确的两单向函数为
+
+$$
+\begin{aligned}
+f_\varepsilon^+(p)&=\max_{q,t}\lambda_\varepsilon(p;q,t),\\
+f_\varepsilon^-(p)&=\max_{q,t}
+[\lambda_\varepsilon(p;q,t)+\varepsilon(1-q-t)],\\
+N(R_\varepsilon-S_p)&=\max\{f_\varepsilon^+(p),f_\varepsilon^-(p)\}.
+\end{aligned}
+\tag{61.4}
+$$
+
+**引理 61.2。** 对 $1-c\le p\le\varepsilon\le1/16$，正向最大值在 $q=t=1$ 达到，且
+
+$$
+f_\varepsilon^+(p)
+=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2.
+\tag{61.5}
+$$
+
+**证明。** 在该 $p$ 区间，$rr^{\mathsf T}-P_p$ 的非对角元素均非负，且 $zz$ 对角为 $\varepsilon-p\ge0$。增加 $t$ 只增加这些非负元素。因此加共同标量单位阵后的 Perron 比较给 $\lambda$ 随 $t$ 不减，可取 $t=1$。
+
+此时两加权向量的范数平方为 $1+\varepsilon q$ 和 $1$，内积为 $A+Bq$，其中
+
+$$
+A=c\sqrt{1-p}+\sqrt{\varepsilon p},
+\qquad B=(1-c)\sqrt{1-p}.
+$$
+
+Cauchy 给 $A\le1$。又因为 $p\ge1-c$，
+
+$$
+2B\le2(1-c)\sqrt c
+\le(1-c)(1+c)=\varepsilon.
+$$
+
+特征值根式内的多项式是
+
+$$
+4(1-A^2)+4(\varepsilon-2AB)q+(\varepsilon^2-4B^2)q^2.
+$$
+
+三个系数均非负，迹项 $\varepsilon q$ 也随 $q$ 不减，因此可取 $q=1$。这时两个向量的楔积为
+$\sqrt p-\sqrt{\varepsilon(1-p)}$，特征值公式给式（61.5）。$\square$
+
+### 61.3 全部 tester 的一致首阶极限
+
+写
+
+$$
+\delta=\sqrt\varepsilon,
+\qquad p=\delta^2-\kappa\delta^3.
+\tag{61.6}
+$$
+
+当 $\kappa$ 在任意固定有界区间变化时，充分小的 $\delta>0$ 使下列根式有定义。主块有一致展开
+
+$$
+\frac{rr^{\mathsf T}-P_p}{\delta^2}
+=H_\kappa+O(\delta),
+\qquad
+H_\kappa=\frac{uv_\kappa^{\mathsf T}+v_\kappa u^{\mathsf T}}2,
+\quad u=(1,1,0)^{\mathsf T},\quad v_\kappa=(1,0,\kappa)^{\mathsf T}.
+\tag{61.7}
+$$
+
+$D(q,t)u$ 的范数为一，$D(q,t)v_\kappa$ 的范数平方为 $q+\kappa^2t$，内积为 $q$。所以
+
+$$
+\frac{\lambda_\varepsilon(p;q,t)}{\varepsilon}
+=\frac{q+\sqrt{q+\kappa^2t}}2+O(\delta),
+\tag{61.8}
+$$
+
+余项在 $q,t\in[0,1]$ 和有界 $\kappa$ 上一致。这里可以直接使用最大特征值对算符范数的 Lipschitz 界，不要求特征值在原点简单。
+
+因此正向首阶最大值为
+
+$$
+F^+(\kappa)=\frac{1+\sqrt{1+\kappa^2}}2.
+\tag{61.9}
+$$
+
+负向首阶函数是
+
+$$
+G_\kappa(q,t)
+=1-\frac q2-t+\frac12\sqrt{q+\kappa^2t}.
+\tag{61.10}
+$$
+
+令 $w=q+\kappa^2t$，则
+
+$$
+G_\kappa(q,t)
+=1-\frac w2+\frac{\sqrt w}2
+-t\left(1-\frac{\kappa^2}{2}\right).
+$$
+
+当 $\kappa^2<2$ 时，其唯一全局最大点为 $(q,t)=(1/4,0)$，最大值为 $9/8$。特别地，$\kappa_0=3/4$ 满足
+
+$$
+F^+(\kappa_0)=\frac98,
+\qquad
+\partial_tG_{\kappa_0}(1/4,0)
+=-1+\frac{\kappa_0^2}{2}=-\frac{23}{32}<0.
+\tag{61.11}
+$$
+
+这一步检查了整个 tester 参数方形，不只比较两个预选 tester。
+
+### 61.4 负向最大值的一致下一阶
+
+需要证明，在 $\kappa$ 靠近 $\kappa_0$ 时，有限 $\delta$ 的负向最大值仍在边界 $t=0$ 达到。下面写出局部光滑性，避免把一致值收敛误用为导数收敛。
+
+定义可在 $\delta=0$ 光滑延拓的系数
+
+$$
+\begin{aligned}
+a_\delta&=\frac{\sqrt{1-\delta^2+\kappa\delta^3}}{1+\sqrt{1-\delta^2}},\\
+b_\delta&=\frac{-\kappa+\delta-\kappa\delta^2}
+{\sqrt{1-\kappa\delta}+\sqrt{1-\delta^2+\kappa\delta^3}},\\
+d_\delta&=\frac{-\kappa}
+{\sqrt{1-\delta^2}\sqrt{1-\kappa\delta}
++\sqrt{1-\delta^2+\kappa\delta^3}}.
+\end{aligned}
+\tag{61.12}
+$$
+
+它们是两个加权向量的三个楔积系数除以 $\delta^2$，且在 $\delta=0$ 分别为 $1/2,-\kappa/2,-\kappa/2$。令
+
+$$
+\begin{aligned}
+T_\delta&=q+\kappa\delta(t-1),\\
+Q_\delta&=a_\delta^2q(1-q)+b_\delta^2qt+d_\delta^2(1-q)t.
+\end{aligned}
+$$
+
+则准确地有
+
+$$
+\frac{\lambda_\varepsilon(p;q,t)}{\varepsilon}
+=\frac{T_\delta+\sqrt{T_\delta^2+4Q_\delta}}2.
+\tag{61.13}
+$$
+
+在 $(\kappa,q,t)=(3/4,1/4,0)$ 附近，根式内在 $\delta=0$ 为 $q+\kappa^2t>0$，故式（61.13）及其 $q,t$ 导数都连续光滑，并一致趋于首阶表达式。
+
+取 $\kappa_0$ 的一个小闭邻域。式（61.10）的唯一最大点始终为 $(1/4,0)$；紧性和一致收敛使有限 $\delta$ 的全局最大点全部落入该点的任意预定小邻域。缩小邻域后，式（61.11）及导数一致收敛保证整个邻域内的有限 $\delta$ 负向函数对 $t$ 严格递减。因此所有最大点必有 $t=0$。
+
+在 $t=0$ 时，主块只剩 $xy$。由直接展开，
+
+$$
+\frac{D(rr^{\mathsf T}-P_p)D}{\varepsilon}\bigg|_{xy}
+=
+\begin{pmatrix}q&\frac12\sqrt{q(1-q)}\\
+\frac12\sqrt{q(1-q)}&0\end{pmatrix}
+-\kappa\delta
+\begin{pmatrix}q&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&1-q\end{pmatrix}
++O(\delta^2),
+\tag{61.14}
+$$
+
+余项在 $q$ 靠近 $1/4$、$\kappa$ 靠近 $\kappa_0$ 时一致。$q=1/4$ 时，第一个矩阵的单位正特征向量为
+$n=(\sqrt3/2,1/2)^{\mathsf T}$，而第二个矩阵是
+$w w^{\mathsf T}$，$w=(1/2,\sqrt3/2)^{\mathsf T}$。故
+
+$$
+|n^{\mathsf T}w|^2=\frac34.
+$$
+
+局部正特征值简单，因此式（61.14）的一阶特征值改变量为 $-3\kappa\delta/4$。其余 $q$ 的最大点趋于 $1/4$。用固定 $q=1/4$ 给下界、实际最大点和首阶函数的 $\le9/8$ 给上界，得到一致的极值展开
+
+$$
+\frac{f_\varepsilon^-(p)}{\varepsilon}
+=\frac98-\frac34\kappa\delta+o(\delta)
+\qquad(\kappa\to\kappa_0,\ \delta\downarrow0).
+\tag{61.15}
+$$
+
+这里最大点定位与式（61.14）的余项一致性保证可沿变化的 $\kappa$ 使用式（61.15），无需先假设最优 $q$ 的收敛速率。
+
+### 61.5 二阶最优值的下界
+
+对任意最优修复的边缘参数 $p_\varepsilon$，已证区间给 $p_\varepsilon\le\varepsilon$。合法 $xz$ 事件又给
+
+$$
+p_\varepsilon\ge(\sqrt\varepsilon-e_\varepsilon)_+^2,
+\qquad e_\varepsilon<\frac98\varepsilon.
+$$
+
+因此，写 $p_\varepsilon=\varepsilon-\kappa_\varepsilon\varepsilon^{3/2}$ 时，有
+
+$$
+0\le\kappa_\varepsilon\le\frac94
+$$
+
+对充分小的 $\varepsilon$ 成立。单参数约化允许保留同一个 $p_\varepsilon$ 而取 $S_{p_\varepsilon}$ 为最优修复。
+
+若沿某个趋零子列有 $\kappa_\varepsilon\ge3/4+\eta$，其中 $\eta>0$ 固定，则式（61.8）、（61.9）的一致收敛会给
+
+$$
+\frac{e_\varepsilon}{\varepsilon}
+\ge F^+(3/4+\eta)+o(1)>\frac98,
+$$
+
+与已证上界矛盾。所以
+
+$$
+\limsup_{\varepsilon\downarrow0}\kappa_\varepsilon\le\frac34.
+\tag{61.16}
+$$
+
+第 58 节的固定全块事件 $E_*$ 对任意因果修复给准确下界
+
+$$
+D(R_\varepsilon,S)
+\ge\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\tag{61.17}
+$$
+
+代入最优参数并使用式（61.16），得到
+
+$$
+\liminf_{\varepsilon\downarrow0}
+\frac{e_\varepsilon-9\varepsilon/8}{\varepsilon^{3/2}}
+\ge-\frac9{16}.
+\tag{61.18}
+$$
+
+### 61.6 匹配上界与最优参数收敛
+
+选取明确的竞争参数
+
+$$
+\kappa(\delta)=\frac34-\sqrt\delta,
+\qquad
+p(\delta)=\delta^2-\kappa(\delta)\delta^3.
+\tag{61.19}
+$$
+
+充分小的 $\delta>0$ 时，$0<\kappa(\delta)<3/4$ 且
+$1-\sqrt{1-\delta^2}<p(\delta)<\delta^2$，故该修复合法并位于约化区间。
+
+式（61.8）、（61.9）或准确式（61.5）给
+
+$$
+\frac{f_\varepsilon^+(p(\delta))}{\varepsilon}
+=F^+(\kappa(\delta))+O(\delta)
+=\frac98-\frac3{10}\sqrt\delta+O(\delta),
+\tag{61.20}
+$$
+
+其中 $(F^+)'(3/4)=3/10$。另一方面，式（61.15）给
+
+$$
+\frac{f_\varepsilon^-(p(\delta))}{\varepsilon}
+=\frac98-\frac9{16}\delta+o(\delta).
+\tag{61.21}
+$$
+
+正向距 $9/8$ 的裕量为 $\sqrt\delta$ 阶，严格大于负向的 $\delta$ 阶下降，所以充分小的 $\delta$ 时，完整误差由负向决定。式（61.21）给式（61.2）的匹配上界，与式（61.18）合并，证明式（61.2）。
+
+最后，对任意最优参数，在式（61.17）中代入式（61.2），得到
+
+$$
+-\frac9{16}+o(1)
+\ge-\frac34\kappa_\varepsilon-O(\sqrt\varepsilon).
+$$
+
+故 $\liminf\kappa_\varepsilon\ge3/4$。与式（61.16）合并得
+$\kappa_\varepsilon\to3/4$，证明式（61.3）。$\square$
+
+### 61.7 范围
+
+上述结果只描述指定 $2\times2\times3$ 候选族在 $\varepsilon\downarrow0$ 时的最优修复误差及其边缘参数。它没有给有限 $\varepsilon$ 的闭式最优值，也没有给 $p_\varepsilon$ 的 $\varepsilon^2$ 系数。证明不依赖对全体候选的比例猜测或有限点数值外推。
+
+## 追加锚（本行以下为增补区）
