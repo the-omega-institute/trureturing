@@ -332,3 +332,12 @@ survivor bound272/1001. The resulting mandatory retained tail gives a
 stronger clipped-cost inequality excluding the entire interval
 1/100<=H(U)<=1/10. This still concerns a specified numerical certificate,
 not the optimum over actual supported laws.
+
+[Report609](609-linear-schedule-credit-fails-on-an-actual-irredundant-core.md)
+gives a different actual-family obstruction to replacing correlated
+inside survival by all-subset linear schedule credits. An irredundant
+forty-label family has one full-survivor law with all-height query norm
+below4, while every stated fractional-schedule certificate exceeds
+16079/768. Its missing information is the actual incidence pattern of
+the globally selected query cylinders; the exponential budgets above
+are not ruled out by that linear-credit argument.
