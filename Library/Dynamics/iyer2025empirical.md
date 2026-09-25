@@ -874,3 +874,67 @@ Fourier–Plancherel、Bernoulli 多项式的正弦平方级数和 Ci 的分部�
 新增内容限于所给模型的综合推导及误差关系。
 临界 Gaussian 过程族的大参数共振渐近不宣称实际数组在网格比例趋于无穷时也有同一极限；
 任意数据自适应频率、增长时间区间、其它幅度及实际后验矩收敛均未包含。
+
+## 超临界谱网格的微观桥（第 58 章）
+
+`repo-derived`：第 58 章在原固定 Liouville 幅度、beta∈(1/2,1)、lambda=Q³ 的
+两种实际实验中，推导谱网格 eta=exp(s)delta→∞ 的微观路径极限。
+假设 s sqrt(delta)≤U/2，且确定性相位 omega eta mod 2pi 沿给定子列收敛。
+结论在同一后验标签实现上保留旧截距、二次坐标及整个旧空间噪声。
+新的连接是放大后的有限谱与精确中心控制、实际固定滞后联合极限，
+以及对增长网格一致的滞后尾上确界估计。
+它不从第 57 章固定网格弱极限代入增长参数。
+
+Foster–Habermann，*Brownian bridge expansions for Lévy area approximations and
+particular values of the Riemann zeta function*，
+[arXiv:2102.10095v1](https://arxiv.org/abs/2102.10095v1)，
+式 (1.2)，PDF 第 2 页；§2.1 与 Lemma 2.2，第 7–8 页，
+给出标准 Brownian bridge 的 sine 本征函数 sqrt(2)sin(k pi t)
+与本征值 1/(k²pi²)。余弦随机积分系数相互独立，方差为 1/2。
+以 a=pi t 换元，正是第 58 章 sine 级数及桥协方差的经典归因。
+该文 Theorem 1.1，第 3 页，研究已是 Gaussian 的桥展开之 sqrt(N) 放大尾，
+所得是有限维极限；原文明确指出它们没有 C[0,1] 过程实现。
+本章保留固定滞后并缩放谱相位，另证尾的路径范数界，不能直接使用那个尾极限。
+
+Aletti–Ruffini，*Is the Brownian bridge a good noise model on the circle?*，
+[arXiv:1210.8245v1](https://arxiv.org/abs/1210.8245v1)，
+Definition 2.1、Theorem 2.2，第 3 页，及 Theorem 2.3，第 4 页，
+针对中心平稳周期 Gaussian 过程，使用匹配的独立 sine、cosine 系数族。
+其收敛陈述是逐时均方误差的一致性，不自动给出上确界范数中的收敛。
+本章 sine-only 极限固定在 pi 整数倍处为零，协方差依赖时间和，属于非平稳的奇周期桥。
+各反射区间由同一条桥生成；没有使用独立周期噪声假设。
+本章的路径连续性与 L²(C) 收敛由第四矩和二分估计直接证明。
+
+Formica–Ostrovsky–Sirota，*Modulus of continuity for superlacunar trigonometric
+series and continuity of Gaussian stationary random processes*，
+[arXiv:2110.01998v1](https://arxiv.org/abs/2110.01998v1)，
+Definition 1.1、Proposition 2.1，PDF 第 2–3 页，以及 §3，第 4–5 页。
+其确定性模连续界假设 Fourier 系数绝对可和，稀疏频率例子使用 lacunary/superlacunar 条件，
+Gaussian 讨论限制于平稳周期模型。
+本章具有全部整数谐波、1/k 系数及非平稳 sine-only 结构，不能直接套用这些条件。
+平方可和本身也不替代路径论证；本章逐项控制 min(|theta-psi|,1/k)，再作概率求和。
+
+Sykulski–Olhede–Lilly，*The de-biased Whittle likelihood for second-order
+stationary stochastic processes*，
+[arXiv:1605.06718v1](https://arxiv.org/abs/1605.06718v1)，
+§2.2 式 (2.5)，PDF 第 6 页，是均匀采样下谱折叠的经典公式。
+§2.1，第 5 页，给出 Fourier Gaussian 假设；Theorem 1，第 12 页，
+在平稳性、谱有界且远离零、参数二次可微等条件下证明去偏 Whittle 估计的一致性。
+这些条件与本章异质、条件后验组数组及谱相位二次型不同，
+不能把该估计定理作为实际微观桥定理。
+本章的 aliasing 指整个得分组间距的确定性相位折叠，不导入 Whittle 效率或一致性结论。
+
+第 57 章所引 de Jong 的 clean quadratic form 条件及大特征值反例，
+Nualart–Peccati 的固定阶混沌判据、Nourdin–Poly 的谱与累积量公式，
+以及变化核 U-process 文献继续提供经典背景。
+此处固定正滞后矩阵算子范数 O(sqrt(delta))，不同滞后没有共同无序对；
+联合特征函数先证明包括移动二次坐标在内的 Gaussian 性，随后才得独立性。
+与旧线性噪声的联合公式和旧 H 核的矩形逼近保留同一个随机截距。
+Bernoulli 局部界、共同逆分布耦合、精确中心与全向量后验比较沿用已验证的适用条件。
+
+在已检查的原文中未找到完整实际模型、放大误差与上述共同实现微观桥的直接陈述。
+这是有限文献比较，不认证全球原创性。
+Brownian bridge 的级数表示、Gaussian 谱极限、连续映射及二分方法均不作为新发现。
+相位相差 pi 给出相同边缘过程律，所以本章的 2pi 相位收敛只宣告为充分条件。
+未包含相位随机分布或必要性分类、独立的周期桥、数据自适应频率、增长参数区间、
+其它幅度、实际后验矩收敛或去掉频率上界后的结论。
