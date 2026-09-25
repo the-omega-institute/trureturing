@@ -504,3 +504,220 @@ $`f\mapsto f(1)`$ 连续。若 $`F_M`$ 的分布族紧，则
 $`F_M(1)=V_M`$ 的分布族也紧，与 (37.4) 矛盾。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 算术隔离与第三尺度上的单跳极限
+
+**定义 38.1（中心原子的噪声尺度）。** 取定义 37.1 的同一序列、同一数据与精确后验。
+记
+
+```math
+B_M=\{i:(N_{i,+},N_{i,-})=(3\lambda/4,\lambda/4)\},\qquad
+b_M^\bullet=\sqrt{q/\lambda},\qquad
+\gamma_*=\frac1{\pi\sqrt3},\qquad
+Y_M=\frac1{b_M^\bullet}\sum_{i\in J_M}(\mathbf1_{\{i\in S\}}-\pi_i).
+```
+
+式 (38.1)。
+
+在同一收缩窗口内定义右连续过程
+
+```math
+\mathcal A_M(u)=\frac1{b_M^\bullet}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),
+\qquad -1\le u\le1,\qquad
+u_M=\frac{W_c-\tau}{w}.
+```
+
+式 (38.2)。
+
+这里 $`W_c`$ 是 (37.6) 的确定得分，$`u_M\to0`$。
+未知方向时仍按定义 37.1 的同一次判决使用工作得分与工作权重。
+
+**定理 38.2（算术原子的独立高斯跳跃）。** 两个实际平稳实验均对支持一致地满足
+
+```math
+\mathbb P_S(J_M=B_M)\longrightarrow1,\qquad
+\frac1{q/\lambda}\sum_{i\in J_M}p_i(1-p_i)
+\longrightarrow\gamma_*\quad\text{依概率},\qquad
+\mathcal A_M\Longrightarrow
+\bigl(u\mapsto\sqrt{\gamma_*}\,Z\mathbf1_{[0,1]}(u)\bigr)
+\quad\text{于 }D[-1,1],\ J_1.
+```
+
+式 (38.3)。
+
+第一、二项使用正确对齐数据及第 35 章的校准参数 $`p_i`$；
+第三项同时适用于两种方向信息情形，$`Z`$ 为标准正态变量。
+它还与定理 36.2 的全部坐标联合成立，且新变量 $`Z`$ 独立于
+$`G,H,K_1,\ldots,K_d`$：
+
+```math
+\left((X_{M,j})_{j=1}^d,U_M,(R_{M,j})_{j=1}^d,\mathcal A_M\right)
+\Longrightarrow
+\left((G)_{j=1}^d,H,(K_j(G+\cdot))_{j=1}^d,
+       u\mapsto\sqrt{\gamma_*}\,Z\mathbf1_{[0,1]}(u)\right).
+```
+
+式 (38.4)。
+
+空间为 $`\mathbb R^d\times D(I)\times D[-A,A]^d\times D[-1,1]`$，
+各路径空间取 $`J_1`$ 拓扑；定义 36.1 中的固定区间和互异内点任取。
+新尺度严格位于已有两种噪声尺度之间：
+
+```math
+\frac{q^{1/4}}{b_M^\bullet}=\frac{\sqrt\lambda}{q^{1/4}}\longrightarrow0,
+\qquad
+\frac{b_M^\bullet}{b_M^\circ}=\lambda^{-1/4}\longrightarrow0.
+```
+
+式 (38.5)。
+
+证明。先证明窗口的算术隔离。在任意固定计数截断
+$`k+l\le C\log M`$ 内，置
+$`k_0=3\lambda/4`$、$`l_0=\lambda/4`$。未补偿得分满足
+
+```math
+Z(k,l)-\lambda\phi
+=(k-k_0)\log3-(k+l-\lambda)\log2.
+```
+
+式 (38.6)。
+
+右端为零当且仅当 $`k=k_0,l=l_0`$，因为二与三乘法独立。
+[Matveev 推论 2.3](../../../Library/Dynamics/matveev2000logarithms.md)
+用于数域 $`\mathbb Q`$、代数数 $`2,3`$、实对数以及固定高度参数
+$`\log2,\log3`$，给出常数 $`C_0\gt0`$，使对任意不全为零的整数
+$`m,n`$，令 $`H=\max(2,|m|,|n|)`$，都有
+
+```math
+|m\log3-n\log2|\ge H^{-C_0}.
+```
+
+式 (38.7)。
+
+这里将原定理的固定乘法常数吸收到幂指数中；一个系数为零时同样适用。
+此下界来自固定代数数的对数，不能仅由两个跳幅之比无理推出。
+由截断内的系数为 $`O(\log M)`$，存在固定 $`C_1\gt0`$，使每个非中心计数对满足
+$`|Z(k,l)-\lambda\phi|\ge(\log M)^{-C_1}`$，对充分大的 $`M`$ 成立。
+
+同一截断内补偿扰动一致满足
+$`|W(k,l)-Z(k,l)|\le C_2a_M\log M`$，而
+$`|\tau-\lambda\phi|\le q^{-1}`$。
+由于 $`q=M^{1-\beta+o(1)}`$，
+$`a_M\log M`$、$`q^{-1}`$ 和 $`w=\sqrt{\lambda/q}`$
+都比任意固定的 $`\log M`$ 负幂更快趋零。因此截断内
+
+```math
+(k,l)\ne(k_0,l_0)quad\Longrightarrow\quad
+|W(k,l)-\tau|\ge\tfrac12(\log M)^{-C_1}\gt w.
+```
+
+式 (38.8)。
+
+已有实际一行计数尾界允许任取固定的多项式指数，再增大固定截断常数。
+选指数大于二并对全部 $`M`$ 行取并集，得到
+$`\mathbb P_S\{\max_i(N_{i,+}+N_{i,-})\gt C\log M\}\to0`$，
+两个实验均支持一致。结合 (37.6) 的 $`B_M\subseteq J_M`$，得到
+$`J_M=B_M`$ 以趋一概率成立。这个并集界不要求实际行独立。
+
+由 (37.8)、(37.9)，在同一实际数据下有下式；空组的最大偏差记为零：
+
+```math
+\frac{|B_M|}{q/\lambda}\longrightarrow\frac4{\pi\sqrt3},\qquad
+\max_{i\in B_M}|p_i-1/2|\longrightarrow0,\qquad
+\frac{d_B}{(b_M^\bullet)^2}\longrightarrow\gamma_*,\quad
+ d_B:=\sum_{i\in B_M}p_i(1-p_i).
+```
+
+式 (38.9)。
+
+依概率收敛在先验混合空间中也成立。这里混合组的基数包括信号与背景，
+不能只保留信号的半个主项。
+
+先固定好数据。在校准乘积律 $`\mathsf Q_M`$ 下，独立中心化标签均被一控制，
+$`b_M^\bullet\to\infty`$，且 (38.9) 给出归一化方差。
+Lindeberg 中心极限定理遂给出
+$`(b_M^\bullet)^{-1}\sum_{i\in B_M}(\zeta_i-p_i)`$
+趋于 $`N(0,\gamma_*)`$。其条件律的有界 Lipschitz 距离依概率趋零。
+补集保留 $`q`$ 量级的方差，而 $`d_B/q=O_{\mathbb P}(\lambda^{-1})`$，
+故 (35.11) 的完整向量比较移除基数条件化。
+
+精确中心另用 (35.12)，将其中完整集合及子集均取为 $`B_M`$，得到
+
+```math
+\frac1{b_M^\bullet}
+ \left|\sum_{i\in B_M}(\pi_i-p_i)\right|
+\le\frac{C\sqrt{d_B}}{b_M^\bullet}
+ \left(\frac{d_B}{q}+\frac{\sqrt{d_B}}q+q^{-1/2}\right)
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (38.10)。
+
+这不是将总变差乘以组的基数。于是精确后验中心化的组和也有同一条件极限。
+再用 $`J_M=B_M`$ 的趋一事件，得到 $`Y_M\Longrightarrow\sqrt{\gamma_*}Z`$。
+
+在该事件上，整个路径恰好为
+
+```math
+\mathcal A_M(u)=Y_M\mathbf1_{[u_M,1]}(u).
+```
+
+式 (38.11)。
+
+对充分大的 $`M`$，$`u_M\in(-1,1)`$。取严格递增、分段线性的时间变换
+$`\rho_M`$，使其固定端点并满足 $`\rho_M(0)=u_M`$；则
+$`\sup_u|\rho_M(u)-u|\le|u_M|\to0`$，且
+$`\mathbf1_{[u_M,1]}(\rho_M(u))=\mathbf1_{[0,1]}(u)`$。
+由幅度到固定跳跃路径的映射在一致范数下连续，得到 (38.3) 的路径极限。
+这里不要求 $`u_M`$ 始终位于零的同一侧，也不由 $`J_1`$ 收敛推断跳点零处的逐点收敛。
+
+还须验证联合独立性。对定理 36.2 的固定有限阈值族，先将各细边界截在
+$`H_0\sqrt q`$ 个排序位置内。把 $`B_M`$ 加入第 36 章使用的同一次完整并集，
+记所得集合为 $`\mathcal J_M`$。由 $`|B_M|=O_{\mathbb P}(q/\lambda)=o_{\mathbb P}(q)`$，
+原并集的基数极限不变；并集方差仍为
+$`d_{\mathcal J}=O_{\mathbb P}(q/\sqrt\lambda)=o_{\mathbb P}(q)`$，
+补集仍有 $`q`$ 量级方差。故可以对所有坐标使用一次完整向量总变差比较。
+在 (35.12) 中令子集为 $`B_M`$，并集为 $`\mathcal J_M`$，
+除以 $`b_M^\bullet`$ 后的上界为
+
+```math
+\frac{C\sqrt{d_B}}{b_M^\bullet}
+ \left(\frac{d_{\mathcal J}}q+
+       \frac{\sqrt{d_{\mathcal J}}}q+q^{-1/2}\right)
+=O_{\mathbb P}(\lambda^{-1/2})+o_{\mathbb P}(1).
+```
+
+式 (38.12)。
+
+因此共同转移时新坐标的精确中心仍受控制，旧坐标的两种中心界也仍成立。
+
+在乘积律下，把中心组和加入第 36 章的任意有限维线性组合。
+最大的单标签归一化系数仍趋零，联合 Lindeberg 条件成立。
+组和与任一阈值尾的协方差绝对值至多为 $`d_B`$；
+与任一截断细前缀的协方差绝对值至多为 $`C_{H_0}\sqrt q`$。
+归一化后分别为
+
+```math
+\frac{d_B}{b_M^\bullet b_M^\circ}
+=O_{\mathbb P}(\lambda^{-1/4})\longrightarrow0,
+\qquad
+\frac{C_{H_0}\sqrt q}{b_M^\bullet q^{1/4}}
+=O_{H_0}\left(\frac{\sqrt\lambda}{q^{1/4}}\right)\longrightarrow0.
+```
+
+式 (38.13)。
+
+中心组与细前缀允许重叠；这里并未将它们当作有限样本独立块。
+联合高斯极限加上这些消失的协方差，才给出新高斯变量与旧原始过程的独立性。
+原路径族的紧性与新标量的紧性建立乘积空间紧性。
+完整向量比较及 (38.12) 转移整个联合条件律，其确定有界 Lipschitz 极限
+使新变量和旧原始过程共同独立于数据可测的粗尺度原点。
+随后按第 36 章先加入有限个共同原点，再作随机平移、控制取整并去掉 $`H_0`$ 截断。
+最后使用 (38.11) 的确定跳点对齐，即得 (38.4)。
+
+所有集合、中心及联合对象都对共同支持置换等变，故先验联合分布等于每个固定支持下的分布。
+未知方向的全部坐标在同一个正确判决事件上逐项相等，补事件概率为 $`O(q^{-1})`$。
+这分别转移固定支持联合律与工作方向版本，完成证明。∎
+
+## 追加锚（本行以下为增补区）
