@@ -39651,3 +39651,188 @@ $$
 式（178.1）的两个单步边缘在整个区间上恒定，因而不能辨识 $w$；二步读数则在这一族内将这些不同的联合实现逐一分开。式（178.14）比较的是规定次序下的局部风险与通道距离，不声称对所有 $r$ 存在统一的有限误差邻域，也不直接给出有限样本复杂度。所有记忆标签仍为经典；被保留和检测的是系统操作与记忆更新的联合配对关系。
 
 ## 追加锚（本行以下为增补区）
+
+## 179. 联合配对的辨识信息量与有限查询成本
+
+**定义 179.1（重置后的二步查询与统计任务）。** 固定定义178.1的一参数族及已知的充分近一参数 $r$，令 $\varepsilon=1-r$。一次查询把隐藏经典记忆重新均匀初始化，对信号连续施加两次同一处理器，只返回最终信号；不同查询使用独立的新记忆。允许任意参考系统，以及完整查询之间不依赖未知 $w$ 的自适应操作；不允许读取隐藏标签或干预一次查询的内部两步。由（178.2）、（178.9），查询通道 $\mathcal T_w:=\mathcal P_{r,2}^{w}$ 是相关矩阵为
+$$
+F(a,u(w))=
+\begin{pmatrix}1&a&u(w)\\a&1&a\\u(w)&a&1\end{pmatrix},
+\qquad
+a=\beta^2,\quad
+u(w)=u_0+2Jw,\quad u_0=r^2\cos(2\alpha)
+\tag{179.1}
+$$
+的实 Schur 通道，其中 $J=r^2\sin^2\alpha/x$、$0\le w\le\delta$。
+
+采用对称对数导数信息量：$\dot\sigma=(L\sigma+\sigma L)/2$ 时 $I(\sigma)=\operatorname{Tr}(\sigma L^2)$。用 $I_1(r,w)$ 表示一次查询在全部信号—参考输入上的最大信息量，用 $I_m(r,w)$ 表示 $m$ 次完整查询的全部允许自适应协议之信息量上确界。参数微分保持 $r$ 固定；端点信息量取连续单侧值。本文使用的参数无关通道下信息量单调性及经典程序模拟界，分别是量子估计与通道模拟的既有工具；经典模拟的具体形式可参见 Demkowicz-Dobrzański、Kołodyński、Guţă，*The elusive Heisenberg limit in quantum enhanced metrology*，arXiv:1201.3940v2，式（18）—（19）。一般可编程通道的自适应归约及其辨识下界见 Pirandola、Lupo，*Ultimate precision of adaptive noise estimation*，arXiv:1609.02160v3，补充材料式（85）；其要求程序界与可达界分开的限制在此保留。
+
+**定理 179.2（这一配对族的精确单次信息量）。** 对全部充分近一的 $r$ 及全部 $w\in[0,\delta(r)]$，有
+$$
+I_1(r,w)=\frac{4J(r)^2}{1-u(w)^2}.
+\tag{179.2}
+$$
+均衡输入 $(|0\rangle+|2\rangle)/\sqrt2$ 和 $02$ 对称、反对称基测量达到此值，加入参考系统不增加这个单次最优值。并且
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{I_1(r,w)}{(1-r)^3}-9\right|\longrightarrow0
+\qquad(r\uparrow1).
+\tag{179.3}
+$$
+
+证明。 先核对适用区间。由（177.27）—（177.28），$r-\beta\le g_r/(4K_r)$。有 $g_r\le B_1=O(\varepsilon)$，而最大视界 $n$ 满足 $\varepsilon n\to t_*>0$、$K_r>n$，故
+$$
+\beta=r+O(\varepsilon^2),\qquad
+a=1-2\varepsilon+O(\varepsilon^2),\qquad
+u(w)=1-2\varepsilon+O(\varepsilon^2)
+\tag{179.4}
+$$
+在整个配对区间上一致成立。最后一个式子使用 $J=O(\varepsilon^2)$、$w\le\delta\le\varepsilon/4$。所以 $0<a<1$ 且 $2a-1<u(w)<1$；上界也可由 $u(w)=r^2Z_{2,w/x}(\alpha)\le r^2<1$ 得到。
+
+以下在保持 $a$ 固定时对 $u$ 微分。任意纯信号—参考输入写成 $\sum_i|i\rangle|v_i\rangle$，令 $p_i=\lVert v_i\rVert^2$。输出与矩阵
+$$
+R_p(u)=\operatorname{diag}(\sqrt p)F(a,u)
+\operatorname{diag}(\sqrt p)
+\tag{179.5}
+$$
+经一个不依赖 $u$ 的等距映射相同，因为不同 $i$ 对应的信号基向量正交。混合输入可先纯化，信息量单调性保证这不会减少信息量。因此优化只需考察概率向量 $p$。
+
+交换信号的 $0,2$ 标签记为 $U$。通道与此交换相容。对给定纯输入 $|\psi\rangle$，考虑保留一个参考标记的纯输入
+$$
+|\widetilde\psi\rangle=
+\frac{|\psi\rangle|0\rangle_F+(U\otimes I)|\psi\rangle|1\rangle_F}{\sqrt2}.
+\tag{179.6}
+$$
+其信号人口满足 $p_0=p_2$。输出后去相位标记，得到两个等权且信息量相同的条件输出，信息量等于原输入所给的值。去相位不增加信息量，故（179.6）的信息量至少与原输入一样大。于是可限制到 $p_0=p_2=t/2$、$p_1=1-t$，而不是仅凭信息量的凸性断言这种限制。
+
+令 $\ell=(1-u)/2$、$h=(1+u)/2$。在 $02$ 反对称、对称及 $1$ 的基下，（179.5）分成特征值 $t\ell$ 和二阶块
+$$
+\begin{pmatrix}
+th&a\sqrt{t(1-t)}\\
+a\sqrt{t(1-t)}&1-t
+\end{pmatrix}.
+\tag{179.7}
+$$
+对 $0<t<1$ 解对称对数导数方程，得到关于 $u$ 的信息量
+$$
+\mathcal I_u(t)=\frac t4\left[
+\frac1\ell+
+\frac{1-t(\ell+a^2)}{(1-t\ell)(h-a^2)}\right],
+\qquad
+\frac{d\mathcal I_u}{dt}=
+\frac{1-a^2/(1-t\ell)^2}{4\ell(h-a^2)}.
+\tag{179.8}
+$$
+第一项来自标量块；二阶块的导数为 $\operatorname{diag}(t/2,0)$，其行列式为 $t(1-t)(h-a^2)$，直接代入方程给出第二项。由于 $h>a$、$1-t\ell\ge h$，导数严格为正。端点由各自支持上的信息量或连续极限得到，故最大值在 $t=1$，等于 $1/(1-u^2)$。均衡 $02$ 输入的输出在固定对称、反对称基下给出概率 $(1\pm u)/2$，这一测量达到该信息量。再使用 $du/dw=2J$，得（179.2）。
+
+由（179.4），$1-u(w)^2=4\varepsilon+O(\varepsilon^2)$ 一致成立；由（178.13），$J/\varepsilon^2\to3$。代入即得（179.3）。$F(a,u)$ 在 $2a-1<u<1$ 内正定，因此各端点附近的通道有光滑延伸，所用连续单侧信息量无额外奇点。证毕。
+
+**定理 179.3（允许查询间自适应的信息量界）。** 定义
+$$
+q_\pm(w)=\frac{1\pm u(w)}2,\qquad
+\pi_+(w)=q_+(w)-a,\quad\pi_-(w)=q_-(w),
+\qquad
+I_{\rm prog}(r,w)=J^2\left(\frac1{\pi_+(w)}+\frac1{\pi_-(w)}\right).
+\tag{179.9}
+$$
+在定理179.2的区间内，两种程序概率严格为正。对任意正整数 $m$，
+$$
+m I_1(r,w)\le I_m(r,w)\le m I_{\rm prog}(r,w),
+\tag{179.10}
+$$
+并有一致极限
+$$
+\sup_{0\le w\le\delta(r)}
+\left|\frac{I_{\rm prog}(r,w)}{(1-r)^3}-18\right|
+\longrightarrow0.
+\tag{179.11}
+$$
+因此最佳自适应信息量为 $\Theta(m(1-r)^3)$，其中常数可对全部 $m\ge1$ 和允许的 $w$ 统一选择；此界不确定 $9$ 与 $18$ 之间的最佳渐近常数。
+
+证明。 令 $\mathcal Q_\pm$ 为相邻系数为零、$02$ 系数为 $\pm1$ 的固定 Schur 通道。其相关矩阵半正定，故它们 CPTP。逐个比较相关矩阵的系数，得到精确分解
+$$
+\mathcal T_w=a\,\operatorname{Id}
++\pi_+(w)\mathcal Q_+
++\pi_-(w)\mathcal Q_-.
+\tag{179.12}
+$$
+三个权重非负、总和为一。将它们作为正交经典程序态的概率，固定控制通道读取程序并执行对应通道，就实现（179.12）。把任意协议的每次查询替换为此固定控制操作，并把全部协议操作合并，最终输出为
+$$
+\sigma_w^{(m)}=\mathcal A\bigl(\tau_w^{\otimes m}\bigr),
+\qquad
+\tau_w=\operatorname{diag}(a,\pi_+(w),\pi_-(w)),
+\tag{179.13}
+$$
+其中 $\mathcal A$ 不依赖 $w$，包含全部输入、参考和适应操作。程序信息量是（179.9），张量积可加性及参数无关通道下的单调性给出（179.10）的上界。分别使用 $m$ 个均衡 $02$ 输入给出下界。这是经典程序模拟方法在当前通道中的应用，不要求当前三维通道具备传态协变性，也不把可编程上界当作自动可达值。
+
+由（179.4），$\pi_\pm(w)=\varepsilon+O(\varepsilon^2)$ 一致成立。结合 $J/\varepsilon^2\to3$，即得（179.11）。与定理179.2的统一极限合用，得到所述量级。证毕。
+
+**定理 179.4（有限查询的二点辨识成本）。** 取同一允许区间中的 $w_0<w_1$，令 $d=w_1-w_0>0$。未知通道等先验地取为 $\mathcal T_{w_0}$ 或 $\mathcal T_{w_1}$，记 $m$ 次查询的最小平均判错概率下确界为 $P_{e,m}^*$。定义两个根保真度
+$$
+\begin{aligned}
+f_{\rm sig}&=\sqrt{q_+(w_0)q_+(w_1)}+
+\sqrt{q_-(w_0)q_-(w_1)},\\
+f_{\rm prog}&=a+\sqrt{\pi_+(w_0)\pi_+(w_1)}+
+\sqrt{\pi_-(w_0)\pi_-(w_1)}.
+\end{aligned}
+\tag{179.14}
+$$
+则有有限次数的界
+$$
+\frac{1-\sqrt{1-f_{\rm prog}^{\,2m}}}{2}
+\le P_{e,m}^*\le\frac{f_{\rm sig}^{\,m}}2.
+\tag{179.15}
+$$
+若 $m_{1/4}$ 是使 $P_{e,m}^*\le1/4$ 的最小正整数，则
+$$
+\frac{\log(4/3)}{-2\log f_{\rm prog}}
+\le m_{1/4}\le
+\left\lceil\frac{\log2}{-\log f_{\rm sig}}\right\rceil.
+\tag{179.16}
+$$
+当 $r\uparrow1$ 时，在全部 $0\le w_0<w_1\le\delta(r)$ 上一致有
+$$
+\frac{1-f_{\rm sig}}{\varepsilon^3d^2}\longrightarrow\frac98,
+\qquad
+\frac{1-f_{\rm prog}}{\varepsilon^3d^2}\longrightarrow\frac94.
+\tag{179.17}
+$$
+特别地，
+$$
+m_{1/4}=\Theta\!\left(\frac1{(1-r)^3(w_1-w_0)^2}\right),
+\tag{179.18}
+$$
+常数在该区间上统一。该上界由独立均衡 $02$ 输入和经典似然比判别保证，无须估计量无偏或渐近正态假设。
+
+证明。 由（179.13），任何自适应输出的半迹范数距离不超过两个 $m$ 份程序态的距离。程序态可交换，其根保真度为 $f_{\rm prog}^m$；根保真度 $f$ 与半迹范数距离 $D$ 的既有不等式 $D\le\sqrt{1-f^2}$，结合等先验 Helstrom 公式，给出（179.15）的下界。它也可直接由经典分布的柯西—施瓦茨不等式得到。
+
+独立使用均衡 $02$ 输入并在对称、反对称基测量，得到 $m$ 份概率向量 $q(w_j)$。两种联合分布的最优经典判错率等于逐结果较小概率之和的一半。用 $\min\{p,q\}\le\sqrt{pq}$，即得（179.15）的可达上界。解下界不超过 $1/4$ 的必要条件及上界不超过 $1/4$ 的充分条件，得（179.16）。
+
+为证明一致尺度，注意相应可变概率之间的差恰为 $\pm Jd$。对任意两个概率向量 $b,c$，有
+$$
+1-\sum_i\sqrt{b_ic_i}
+=\frac12\sum_i(\sqrt{b_i}-\sqrt{c_i})^2.
+\tag{179.19}
+$$
+对（179.14）的两个向量应用此式并有理化平方根，分别得到
+$$
+1-f_{\rm sig}=\frac{J^2d^2}{2}
+\left[
+\frac1{(\sqrt{q_+(w_0)}+\sqrt{q_+(w_1)})^2}
++\frac1{(\sqrt{q_-(w_0)}+\sqrt{q_-(w_1)})^2}
+\right],
+\tag{179.20}
+$$
+$$
+1-f_{\rm prog}=\frac{J^2d^2}{2}
+\left[
+\frac1{(\sqrt{\pi_+(w_0)}+\sqrt{\pi_+(w_1)})^2}
++\frac1{(\sqrt{\pi_-(w_0)}+\sqrt{\pi_-(w_1)})^2}
+\right].
+\tag{179.21}
+$$
+在整个参数区间上，$q_+=1-\varepsilon+O(\varepsilon^2)$、$q_-=\varepsilon+O(\varepsilon^2)$、$\pi_\pm=\varepsilon+O(\varepsilon^2)$，且 $J/\varepsilon^2\to3$。逐项代入即得（179.17）；这些精确恒等式不要求 $d$ 与 $\varepsilon$ 之间有额外下界。由于 $d\le\delta(r)\to0$，两个根保真度均一致趋于一，$-\log f\sim1-f$ 也一致成立。（179.16）遂给出（179.18），整数取整不改其统一量级。证毕。
+
+上述成本属于定义179.1规定的重置查询实验。第178节的一个精确期望值能辨识参数，与（179.18）的实验次数下界相容：辨识映射的单射性不提供该映射的统计精度。这里的自适应下界不涵盖可干预二步内部过程或可读取隐藏记忆的另一种实验接口。
+
+## 追加锚（本行以下为增补区）
