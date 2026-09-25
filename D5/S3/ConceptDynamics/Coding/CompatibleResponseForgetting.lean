@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A compatible numbered path certificate constructs an essential finite square graph with both boundaries forgetting after its lag.
+   digest: Compatible numbered paths construct an essential square graph and forget both boundaries.
 -/
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
@@ -66,7 +66,10 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
       intro r
       rcases hs : sweep phi tail r with ⟨u, s, beta⟩
       have htail : unsweep phi s beta = ⟨t, tail, r⟩ := by
-        simpa [hs] using ih r
+        have h := ih r
+        dsimp at h
+        rw [hs] at h
+        exact h
       simp only [sweep, hs, unsweep, Equiv.symm_apply_apply, htail]
 
 def appendPath {k : ℕ} {B : CountMat k k} :
@@ -268,11 +271,13 @@ theorem square_lifts_left_forgetting (c : CompatibleCertificate A B R S m) :
           intro r
           rcases hs : sweep c.phi tail r with ⟨u, s, beta⟩
           have hlift : c.liftIncomingPath tail r = ⟨u, s⟩ := by
-            simpa [hs] using ih r
+            have h := ih r
+            dsimp at h
+            rw [hs] at h
+            exact h
           simp [liftIncomingPath, sweep, hs, hlift, incomingSquare]
     intro i j z alpha r
-    rw [hbridge alpha r, c.compatible alpha r]
-    rfl
+    simpa only [hbridge alpha r, c.compatible alpha r]
 
 #print axioms square_lifts_left_forgetting
 
@@ -295,9 +300,9 @@ theorem square_lifts_right_forgetting (c : CompatibleCertificate A B R S m) :
     exact (c.psiB t z).apply_symm_apply beta
   have hsweep : sweep c.phi alpha sr.2.2 = ⟨t, r, beta⟩ := by
     rw [c.compatible]
-    simpa only [hA] using
-      congrArg (fun path : FinitePath B m t z =>
-        (⟨t, r, path⟩ : Σ u : Fin k, Fin (R i u) × FinitePath B m u z)) hB
+    rw [hA]
+    exact congrArg (fun path : FinitePath B m t z =>
+      (⟨t, r, path⟩ : Σ u : Fin k, Fin (R i u) × FinitePath B m u z)) hB
   have hundo := unsweep_sweep c.phi alpha sr.2.2
   rw [hsweep] at hundo
   exact congrArg (fun p : Σ j : Fin n,
@@ -317,21 +322,25 @@ theorem square_graph_essential_and_projections
     ((∀ u, ∃ v, c.squareMatrix u v ≠ 0) ∧
       (∀ v, ∃ u, c.squareMatrix u v ≠ 0)) := by
   have hForward : ∀ d (i : Fin n), Σ j, FinitePath A d i j := by
+    classical
     intro d
     induction d with
     | zero => intro i; exact ⟨i, .nil i⟩
     | succ d ih =>
         intro i
-        obtain ⟨j, hj⟩ := c.essentialA.1 i
+        let j := Classical.choose (c.essentialA.1 i)
+        have hj : A i j ≠ 0 := Classical.choose_spec (c.essentialA.1 i)
         obtain ⟨z, path⟩ := ih j
         exact ⟨z, .cons ⟨0, Nat.pos_of_ne_zero hj⟩ path⟩
   have hBackward : ∀ d (z : Fin k), Σ t, FinitePath B d t z := by
+    classical
     intro d
     induction d with
     | zero => intro z; exact ⟨z, .nil z⟩
     | succ d ih =>
         intro z
-        obtain ⟨j, hj⟩ := c.essentialB.2 z
+        let j := Classical.choose (c.essentialB.2 z)
+        have hj : B j z ≠ 0 := Classical.choose_spec (c.essentialB.2 z)
         obtain ⟨t, path⟩ := ih j
         exact ⟨t, appendPath path ⟨0, Nat.pos_of_ne_zero hj⟩⟩
   have hout : ∀ r : Edge R, ∃ sq : Square c, sq.initialR = r := by
