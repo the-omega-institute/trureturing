@@ -42607,3 +42607,167 @@ $$
 取 $c_2=2CB^2/3$，结合（195.23）得到（195.2）。所给 $c_1$ 通过固定有限维紧集上的正残差定义，$c_2$ 来自一个明确构造；二者都不被断言为最佳系数。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 196. 纯二维程序的圆弧正规形、有限优化与确定的二次首项
+
+**定理 196.1（圆弧替代与不可见转动的精确信息成本）。** 固定定义193.1中的一个纯二维程序、连通精确开区间 $U$ 及名义点 $t\in U$。存在使用同一处理器、定义在同一个 $U$ 上的解析纯态程序 $\widetilde\rho_u$，满足 $\widetilde\rho_t=\rho_t$，并在每个 $u\in U$ 同时满足
+$$
+\mathcal G(\omega\otimes\widetilde\rho_u)=\mathcal T_u(\omega),\qquad
+I_Q(\widetilde\rho_u)\le I_Q(\rho_u).
+\tag{196.1}
+$$
+替代程序的 Bloch 曲线位于一个平面圆弧上。若处理器的实 Bloch 到通道映射秩为二，则原程序本身已经是这样的解析圆弧。
+
+证明。 令 $K=\ker\mathcal L$，其中 $\mathcal L$ 如（193.7）。第193节给出 $K\ne\{0\}$，而目标非恒定排除 $\mathcal L$ 的秩为零。将原 Bloch 曲线正交分解为
+$$
+r(u)=x(u)+b(u),\qquad
+x(u)=P_{K^\perp}r(u)=x_0+(u-t)v,\qquad v\ne0.
+\tag{196.2}
+$$
+$x(u)$ 的仿射性来自 $\mathcal L|_{K^\perp}$ 单射和目标通道仿射。其范数在每个 $u\in U$ 都严格小于一：若在内点等于一，两个充分小的对称位移之平方范数平均为 $1+s^2|v|^2>1$，与它们都是单位 Bloch 向量的投影矛盾。
+
+因此在整个 $U$ 上可定义
+$$
+\beta(u)=\sqrt{1-|x(u)|^2}>0,\qquad e(u)=\frac{b(u)}{\beta(u)}\in K,\qquad |e(u)|=1.
+\tag{196.3}
+$$
+$e$ 是 $C^1$ 曲线，且 $e\cdot e'=0$。由于 $v\perp K$，求导后所有交叉项消失，得到精确恒等式
+$$
+I_Q(\rho_u)=|r'(u)|^2
+=|v|^2+\frac{(x(u)\cdot v)^2}{1-|x(u)|^2}
+ +(1-|x(u)|^2)|e'(u)|^2.
+\tag{196.4}
+$$
+取固定单位向量 $n=e(t)$，并定义
+$$
+\widetilde r(u)=x(u)+\sqrt{1-|x(u)|^2}\,n,
+\qquad \widetilde\rho_u=\frac{I+\widetilde r(u)\cdot\sigma}{2}.
+\tag{196.5}
+$$
+这是一条在整个 $U$ 上解析的纯态曲线。$n\in K$ 保证诱导通道与原曲线相同，在 $t$ 又有 $\widetilde r(t)=r(t)$。并且
+$$
+I_Q(\rho_u)-I_Q(\widetilde\rho_u)
+=(1-|x(u)|^2)|e'(u)|^2\ge0.
+\tag{196.6}
+$$
+该替代指定另一种程序准备，不断言它能由作用在原程序上的 CPTP 映射取得。
+
+令 $x_\perp=x_0-(x_0\cdot v)v/|v|^2$。它同时垂直于 $v,n$，而（196.5）位于平面
+$$
+x_\perp+\operatorname{span}\{v,n\}
+\tag{196.7}
+$$
+与单位球面的交圆上。圆心为 $x_\perp$，半径为 $\sqrt{1-|x_\perp|^2}>0$；正平方根选择其中的半圆弧或更小的弧。当 $\operatorname{rank}\mathcal L=2$ 时，$K$ 为一维，连续单位向量 $e(u)$ 在连通区间上只能恒定，所以原曲线已等于替代曲线。秩为一时，$x_0,v$ 共线，替代曲线是大圆弧，原曲线在二维核内的额外转动恰贡献（196.6）。证毕。
+
+**定理 196.2（固定精确半径的有限优化等价式）。** 固定定义195.1中的 $a,t,R$。以 $\Phi_{\mathcal G}(x)$ 表示处理器在 Bloch 程序态 $(I+x\cdot\sigma)/2$ 下诱导的信号线性映射。令 $\mathscr F(a,t,R)$ 由有限变量 $(\mathcal G,n,x,v)$ 构成，要求 $\mathcal G:M_6\to M_3$ 为 CPTP，$n,x,v\in\mathbb R^3$，并满足
+$$
+\begin{gathered}
+|n|^2=1,\qquad \mathcal L_{\mathcal G}n=0,\qquad
+n\cdot x=n\cdot v=0,\\
+\Phi_{\mathcal G}(x)=\mathcal T_t,\qquad
+\mathcal L_{\mathcal G}v=\mathcal S_E,\\
+|x-Rv|^2<1,\qquad |x+Rv|^2<1,
+\end{gathered}
+\tag{196.8}
+$$
+其中 $E_{02}=E_{20}=1$，其余项为零。于是
+$$
+\mathfrak P_2(a,t;R)
+=\inf_{\mathscr F(a,t,R)}
+\left[|v|^2+\frac{(x\cdot v)^2}{1-|x|^2}\right].
+\tag{196.9}
+$$
+可行集非空；式中的分母严格为正。此等价式不要求下确界在可行集内达到。
+
+证明。 对任意可行元，平方范数的凸性给出
+$$
+\max_{|s|\le R}|x+sv|^2
+\le\max\{|x-Rv|^2,|x+Rv|^2\}<1.
+\tag{196.10}
+$$
+由连续性，这个严格不等式在包含 $[-R,R]$ 的稍大开区间上仍成立，并可把对应的 $t+s$ 保持在 $J_a$ 内。令
+$$
+r(t+s)=x+sv+\sqrt{1-|x+sv|^2}\,n.
+\tag{196.11}
+$$
+正交条件保证 $|r|=1$；处理器的三个线性约束保证它在该开区间内精确生成 $\mathcal T_{t+s}$。程序解析，且名义成本恰为
+$$
+|r'(t)|^2=|v|^2+\frac{(x\cdot v)^2}{1-|x|^2}.
+\tag{196.12}
+$$
+因此原程序类的下确界不超过（196.9）右边。
+
+反过来，任意原程序通过定理196.1得到同处理器的圆弧替代。取其 $x=x(t)$、$v=x'$、$n=e(t)$。因为 $t\pm R$ 都是原开区间的内部点，第196.1节的严格投影范数结论给出（196.8）的两个严格端点条件。其余约束来自同一正交分解和通道精确性。这是一个可行元，且（196.6）说明其目标值不超过原名义成本。取下确界即得反向不等式。
+
+非空性还可直接展示。令 $d=1-a^2$、$b=2a^2-1$；固定处理器测量程序 $Z$，在两个结果下分别执行 $\mathcal T_1$ 与 $\mathcal T_b$，诱导参数为 $u=a^2+dr_z$。取
+$$
+n=e_x,\qquad x=\frac{t-a^2}{d}e_z,\qquad v=\frac1d e_z.
+\tag{196.13}
+$$
+由于 $t\pm R\in J_a\subset(b,1)$，所有约束成立；其目标值为 $J_c=B/(1-a^2)$。因此下确界有限。端点条件取平均还给出 $|x|^2+R^2|v|^2<1$，特别地分母为正。证毕。
+
+**定理 196.3（半代数成本与唯一正二次首项）。** 函数 $(a,t,R)\mapsto\mathfrak P_2(a,t;R)$ 在定义195.1的参数域上是半代数函数。存在一个正的有限函数 $\kappa(a,t)$，使每个固定的 $0<a<1$、$2a-1<t<1$ 都满足
+$$
+\mathfrak P_2(a,t;R)
+=B(a,t)+\kappa(a,t)R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{196.14}
+$$
+$\kappa$ 关于 $(a,t)$ 联合半代数；若 $a,t$ 都是实代数数，则 $\kappa(a,t)$ 也是实代数数。
+
+证明。 先把（196.8）写成有限实代数条件。处理器 $\mathcal G:M_6\to M_3$ 的未归一化 Choi 矩阵 $J_{\mathcal G}$ 为 $18\times18$ Hermitian 矩阵，满足
+$$
+J_{\mathcal G}\succeq0,\qquad
+\operatorname{Tr}_{\rm out}J_{\mathcal G}=I_6.
+\tag{196.15}
+$$
+以实对称部分和虚反对称部分作实坐标，全部主子式非负表达半正定性，保迹条件为线性方程。通道等式只需在信号矩阵空间的固定九元 Hermitian 基上检查；矩阵单位和 Pauli 矩阵的实、虚部系数为有理数，故（196.8）的其余约束成为有限个具有有理系数的实多项式等式或严格不等式。
+
+令 $z$ 汇集这些有限变量，$\mathcal A(a,t,R,z)$ 表示可行性，并记
+$$
+D(z)=1-|x|^2>0,\qquad
+N(z)=|v|^2D(z)+(x\cdot v)^2.
+\tag{196.16}
+$$
+目标值为 $N/D$。在参数域内，$p=\mathfrak P_2(a,t;R)$ 等价于以下一阶实数公式：
+$$
+\begin{aligned}
+&\forall z:\ \mathcal A(a,t,R,z)\ \Longrightarrow\ N(z)\ge pD(z),\\
+&\forall\varepsilon>0\ \exists z:\
+\mathcal A(a,t,R,z)\ \land\ N(z)<(p+\varepsilon)D(z).
+\end{aligned}
+\tag{196.17}
+$$
+第一行给出下界，第二行要求可行值任意接近该下界；它不要求最小值取得。非空性和有限性由定理196.2保证。所有乘去分母的步骤都发生在 $D>0$ 的可行域内。
+
+对（196.17）使用 Tarski–Seidenberg 实数量词消去，得到具有有理系数的无量词多项式符号公式，所以成本函数的图是半代数集。所用标准结果及系数保持可参见 Saugata Basu，*Algorithms in Real Algebraic Geometry: A Survey*，arXiv:1409.1534v1，第2.1节定理2.1及第2.5.2节定理2.27；其第1.1节同时采用实数域与实代数数域作为实闭域实例。严格可行约束和下确界未取得都不妨碍这一量词消去。
+
+现固定 $a,t$，令
+$$
+g(R)=\frac{\mathfrak P_2(a,t;R)-B(a,t)}{R^2}.
+\tag{196.18}
+$$
+这是正半径上的半代数函数。定理195.2保证它在充分小半径内夹在两个固定的严格正常数之间。它在零的右极限必存在：若下极限与上极限不同，选一个严格位于二者之间的数 $c$，则 $\{R:g(R)<c\}$ 与 $\{R:g(R)>c\}$ 都在零点累积。每个实直线上的半代数集都是有限个区间和点的并，所以这两个互斥集合都必须包含一个 $(0,\eta)$，矛盾。这里的一维结构直接来自有限多个实多项式零点对直线的划分，无须额外正则性。于是
+$$
+\kappa(a,t):=\lim_{R\downarrow0}g(R)\in(0,\infty),
+\tag{196.19}
+$$
+并得到（196.14）。该余项对每个固定的 $a,t$ 陈述，不断言参数间一致性。
+
+$\kappa$ 的图也能用一阶公式定义。以 $\Gamma_P(a,t,R,p)$ 表示（196.17）及参数域条件，则 $k=\kappa(a,t)$ 等价于
+$$
+\begin{gathered}
+\forall\varepsilon>0\ \exists\eta>0\ \forall R,p:\\
+\bigl[\Gamma_P(a,t,R,p)\land R<\eta\bigr]
+\ \Longrightarrow\
+-\varepsilon R^2<p-B(a,t)-kR^2<\varepsilon R^2.
+\end{gathered}
+\tag{196.20}
+$$
+$\Gamma_P$ 已包含 $R>0$，且每个允许的 $a,t$ 都有任意小的允许半径，故此公式不空洞。$B$ 的分母在参数域内为正，可安全消去。再次使用实数量词消去，得到 $\kappa$ 的联合半代数性。
+
+最后固定实代数的 $a,t$。（196.20）经量词消去后，以实代数系数的有限多项式符号条件刻画唯一单点 $\{\kappa(a,t)\}$。若该点不是实代数数，则这些非零多项式都不在该点为零；有限多个符号会在其某个开邻域内同时不变，与公式只刻画单点矛盾。因此该点是某个非零实代数系数多项式的根，进而对 $\mathbb Q$ 代数。
+
+这确定了二次首项的存在与数域性质，没有给出 $\kappa$ 的数值、最小多项式或低成本计算方法，也不改变原优化中的下确界与最小值之别。证毕。
+
+## 追加锚（本行以下为增补区）
