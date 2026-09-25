@@ -1346,7 +1346,7 @@ $`K_+,K_-`$ 各满足
 
 ```math
 \mathbb E_S K_\pm\asymp\frac q{\sqrt\lambda},\qquad
-\operatorname{Var}_S K_\pm
+\mathrm{Var}_S K_\pm
  \le C\left(\frac q{\sqrt\lambda}
        +\frac{\delta_Mq^2}{\lambda}+M^{2-D}\right),
 \qquad \delta_M=\frac{(\log M)^3}{n}.
@@ -1360,7 +1360,7 @@ $`K_+,K_-`$ 各满足
 \mathbb E_S F_M
  =\frac{q}{\sqrt\lambda}
        d_*L_he^{-s}[1+o(1)],\qquad
-\operatorname{Var}_S F_M=o(q),\qquad
+\mathrm{Var}_S F_M=o(q),\qquad
 L_h=\frac{h}{e^h-1}.
 ```
 
@@ -1368,7 +1368,7 @@ L_h=\frac{h}{e^h-1}.
 
 这里上尾从 $`b_M+h`$ 开始，故几何系数为 $`L_h`$。
 信号接受比例趋于 $`1-p_*`$。单行、两行比较给出
-$`\operatorname{Var}_S C_M=O(q)`$ 及 $`\operatorname{Var}_S N_M=O(q)`$。
+$`\mathrm{Var}_S C_M=O(q)`$ 及 $`\mathrm{Var}_S N_M=O(q)`$。
 全信号向量比较和独立 Bernoulli 中心极限定理，再以单行比较转移精确均值，得到
 
 ```math
