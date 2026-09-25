@@ -243,3 +243,11 @@ admit further central-square stars. Its four stronger patterns also
 admit the160-label OC1 slice and separated branches from37. Those
 phase restrictions are essential; this does not reduce the223-label
 phase-unrestricted remainder above.
+
+[Report605](605-an-actual-phase-obstruction-and-source-repair-for-joint-debits.md)
+gives a real phase family in which the exact joint source debit for the
+remaining90 support-four labels exceeds even the unspent Report598
+worst-case budget. All old mixed slots are present. A different explicit
+common source succeeds for that same family. The fixed-gate/product-source
+rebate alone cannot repair this example; a phase-dependent gate estimate
+or a change of the common source remains available.
