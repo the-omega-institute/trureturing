@@ -14,8 +14,8 @@ import time
 
 
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
-INFO = re.compile(r"^(?:info(?:rmation)?\b|\[info(?:rmation)?\]|debug:|trace:|ℹ|✔|✓|[\u2800-\u28ff]\s*\[)", re.I)
-BUILD_INFO = re.compile(r"^(?:Build succeeded\.|Passed\s|Passed!|Test run|Starting test execution|A total of|Results File:|.* -> .*\.(?:dll|exe)$)")
+INFO = re.compile(r"^(?:info(?:rmation)?:|\[info(?:rmation)?\]|debug:|trace:|ℹ|✔|✓|[\u2800-\u28ff]\s*\[)", re.I)
+BUILD_INFO = re.compile(r"^(?:Build succeeded\.|Passed\s|Passed!|Test run|Starting test execution|A total of|Results File:|Determining projects to restore|Restored .*\.[a-z]*proj\b|All projects are up-to-date for restore\.|.* -> .*\.(?:dll|exe)$)")
 ERROR = re.compile(r"(?:\b(?:error|fatal)(?:\s+[A-Z]+\d+)?\s*[:\[]|^(?:error|fatal)\b|::error\b|\[(?:ERROR|FAIL(?:ED)?)\]|^\s*Failed\s|^✖|^Traceback\b|^Unhandled exception|\b[A-Z_]+_(?:FAILED|FAILURE|EXHAUSTED|UNRESOLVED)\b)", re.I)
 WARNING = re.compile(r"(?:\bwarn(?:ing)?(?:\s+[A-Z]+\d+)?\s*[:\[]|^warn(?:ing)?\b|::warning\b|\[WARN(?:ING)?\]|^⚠)", re.I)
 PROGRESS = re.compile(r"\[\s*\d+\s*/\s*\d+\s*\]|\b\d+(?:\.\d+)?%")
@@ -32,7 +32,7 @@ class Presenter:
         self.latest = "waiting for output"
         self.previous_information = 0
         self.progress = "unreported"
-        self.verbatim = set()
+        self.failure_detail = set()
 
     def information(self, text=None):
         self.counts["information"] += 1
@@ -92,14 +92,13 @@ class Presenter:
     def line(self, line, stream):
         plain = ANSI.sub("", line).strip()
         if plain.startswith("CI_DIAGNOSTIC_BEGIN "):
-            self.verbatim.add(stream)
+            self.failure_detail.add(stream)
             self.diagnostic(line, "error")
             return
-        if stream in self.verbatim:
+        if plain == "CI_DIAGNOSTIC_END" and stream in self.failure_detail:
             self.emit(line)
-            if plain == "CI_DIAGNOSTIC_END":
-                self.verbatim.remove(stream)
-                self.detail[stream] = False
+            self.failure_detail.remove(stream)
+            self.detail[stream] = False
             return
         event, _, payload = plain.partition(" ")
         candidate = plain if plain.startswith("{") else payload
@@ -109,12 +108,17 @@ class Presenter:
                 value = json.loads(candidate)
             except ValueError:
                 pass
-        if isinstance(value, dict) and (not self.detail.get(stream) or EVENT.match(plain)
+        if isinstance(value, dict) and (not (self.detail.get(stream) or stream in self.failure_detail) or EVENT.match(plain)
                                        or any(key in value for key in ("diagnostics", "DisplaySeverity", "severity", "level", "stage"))):
-            self.detail[stream] = False
             if event == "STAGE_STEP" and isinstance(value.get("name"), str):
+                self.detail[stream] = False
                 self.step = value["name"]
                 self.progress = "unreported"
+            elif event == "STAGE_PROCESS":
+                # Non-streaming operations emit their process result before
+                # their text. Keep an unsuccessful operation's explanation.
+                child = value.get("child_exit")
+                self.detail[stream] = isinstance(child, dict) and child.get("code") not in (None, 0)
             self.structured(value, line)
         elif INFO.match(plain) or BUILD_INFO.match(plain):
             self.detail[stream] = False
@@ -124,9 +128,9 @@ class Presenter:
             self.detail[stream] = True
             self.diagnostic(line, severity)
         elif EVENT.match(plain):
-            self.detail[stream] = False
+            # Concurrent resource sampling is not a diagnostic boundary.
             self.information(plain)
-        elif self.detail.get(stream):
+        elif self.detail.get(stream) or stream in self.failure_detail:
             self.emit(line)
         elif PROGRESS.search(plain):
             self.information(plain)
@@ -194,14 +198,15 @@ def run(command, stage, log, interval):
             exit_code = child.wait()
             exit_code = exit_code if exit_code >= 0 else 128 - exit_code
             if exit_code and presenter.counts["error"] == 0:
-                presenter.diagnostic(f"error: stage={stage} exit={exit_code}; full command output follows", "error")
+                presenter.diagnostic(f"error: stage={stage} exit={exit_code}; command diagnostics follow", "error")
                 raw.seek(0)
-                # A failing tool need not label its diagnostic. Replay its full
-                # retained output, with no line/byte limit that could hide it.
-                decoder = codecs.getincrementaldecoder("utf-8")("replace")
-                while chunk := raw.read(65536):
-                    presenter.emit(decoder.decode(chunk))
-                presenter.emit(decoder.decode(b"", final=True) + "\n")
+                # Unknown output may explain the failure. Explicit information
+                # remains summarized even when the command fails.
+                replay = Presenter(stage, sys.stdout, interval)
+                replay.failure_detail.add("stdout")
+                for line in raw:
+                    for part in re.split(r"\r\n|\r|\n", line.decode("utf-8", "replace").rstrip("\n")):
+                        replay.line(part + "\n", "stdout")
             presenter.finish(exit_code)
             return exit_code
         finally:

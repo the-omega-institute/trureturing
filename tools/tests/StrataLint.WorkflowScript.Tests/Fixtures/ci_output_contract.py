@@ -151,12 +151,55 @@ class PresentationTests(unittest.TestCase):
 
     def test_failed_command_block_preserves_unlabelled_details(self):
         messages = ["CI_DIAGNOSTIC_BEGIN step=restore raw_exit=155\n", "No .NET SDKs were found.\n",
-                    "info: additional failure context\n", '{"detail":"cannot start"}\n', "CI_DIAGNOSTIC_END\n"]
+                    '{"detail":"cannot start"}\n', "CI_DIAGNOSTIC_END\n"]
         for line in messages:
             self.presenter.line(line, "stdout")
         self.assertEqual("".join(messages), self.output.getvalue())
         self.presenter.line("info: finishing\n", "stdout")
         self.assertEqual("".join(messages), self.output.getvalue())
+
+    def test_failure_block_summarizes_information_and_preserves_error_details(self):
+        self.presenter.line("CI_DIAGNOSTIC_BEGIN step=build raw_exit=1\n", "stdout")
+        for index in range(2000):
+            self.presenter.line(f"information: checked module {index}\n", "stdout")
+        self.presenter.line("error: type mismatch\n", "stdout")
+        self.presenter.line("expected Nat\n", "stdout")
+        self.presenter.line("CI_DIAGNOSTIC_END\n", "stdout")
+        self.assertNotIn("checked module", self.output.getvalue())
+        self.assertIn("error: type mismatch\nexpected Nat\n", self.output.getvalue())
+        self.now = 30
+        self.presenter.tick()
+        self.assertIn("information=2000", self.output.getvalue())
+
+    def test_resource_samples_do_not_interrupt_warning_context(self):
+        self.presenter.line("warning: diagnostic\n", "stdout")
+        self.presenter.line("RESOURCE_SAMPLE sequence=1 phase=periodic\n", "stdout")
+        self.presenter.line("  first detail\n", "stdout")
+        self.presenter.line('RESOURCE_OBSERVATION {"phase":"sample"}\n', "stdout")
+        self.presenter.line("  second detail\n", "stdout")
+        self.presenter.line("information: next operation\n", "stdout")
+        self.assertEqual("warning: diagnostic\n  first detail\n  second detail\n", self.output.getvalue())
+
+    def test_lean_variable_named_info_does_not_hide_goal_context(self):
+        messages = ["error: unsolved goals\n", "info : Nat\n", "⊢ info = 0\n"]
+        for line in messages:
+            self.presenter.line(line, "stdout")
+        self.assertEqual("".join(messages), self.output.getvalue())
+
+    def test_restore_activity_after_warning_returns_to_summary(self):
+        self.presenter.line("Foo.csproj : warning NU1901: package vulnerability\n", "stdout")
+        for index in range(100):
+            self.presenter.line(f"  Restored /src/Project{index}.csproj (in 20 ms).\n", "stdout")
+        self.assertNotIn("Restored", self.output.getvalue())
+        self.now = 30
+        self.presenter.tick()
+        self.assertIn("information=100", self.output.getvalue())
+
+    def test_failed_operation_metadata_preserves_following_explanation(self):
+        self.presenter.line('STAGE_PROCESS {"stage":"engineering","child_exit":{"code":155}}\n', "stdout")
+        self.presenter.line("No .NET SDKs were found.\n", "stdout")
+        self.presenter.line("Install a .NET SDK to run this application.\n", "stdout")
+        self.assertIn("No .NET SDKs were found.\nInstall a .NET SDK", self.output.getvalue())
 
 
 class ProcessTests(unittest.TestCase):
@@ -181,6 +224,13 @@ class ProcessTests(unittest.TestCase):
         self.assertEqual(9, result.returncode, result.stderr)
         self.assertIn("unlabelled failure context", result.stdout)
         self.assertEqual("unlabelled failure context", raw)
+
+    def test_failure_fallback_does_not_replay_information(self):
+        result, raw = self.run_child("import sys; print('information: compiling'); print('unlabelled failure context'); sys.exit(9)")
+        self.assertEqual(9, result.returncode, result.stderr)
+        self.assertIn("unlabelled failure context", result.stdout)
+        self.assertNotIn("\ninformation: compiling\n", result.stdout)
+        self.assertIn("information: compiling", raw)
 
     def test_noisy_success_emits_only_final_summary(self):
         result, raw = self.run_child("for i in range(2000): print('information: file', i)")
