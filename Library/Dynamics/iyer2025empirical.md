@@ -275,3 +275,88 @@ the environment center by a constant without a convergence rate, assert
 actual moment convergence, or import old-field jointness from marginal
 limits. The comparison with classical quadratic-form theory is bounded
 and does not certify global originality.
+
+## Resolving the critical spectral transition
+
+Chapter 50 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+resolves the cutoff at a fixed multiple of the inverse cluster width.
+After subtracting the logarithmic total-mass square, the actual posterior
+spectrum converges to a random curve built from the Fourier transform of
+the same real Gaussian noise that supplies the spatial profile. Finite
+resolved frequency bands remain random even conditional on the endpoint.
+This is a finer statement than the leading logarithmic slope law.
+
+Gaussian limits of empirical characteristic functions and quadratic
+spectral functionals are classical subjects. John T. Kent,
+*A weak convergence theorem for the empirical characteristic function*,
+Journal of Applied Probability 12(3) (1975), 515–523,
+[DOI 10.1017/S0021900200048324](https://doi.org/10.1017/S0021900200048324),
+is a historical antecedent identified by its publisher abstract. Its
+full theorem conditions are not used here. The chapter proves its own
+conditional Fourier tightness from the already established actual
+weighted variance clock and the independent auxiliary labels.
+
+Richard A. Davis, Muneya Matsui, Thomas Mikosch and Phyllis Wan,
+*Applications of Distance Correlation to Time Series*,
+[arXiv:1606.05481v1](https://arxiv.org/abs/1606.05481v1),
+Theorem 3.2 and Appendix A, Lemma A.1, are closer functional antecedents.
+They establish Gaussian characteristic-function fields on compacts and
+separate near-zero bounds for integrated squared fields under stationary
+mixing, marginal/product moment and weight-integrability assumptions.
+These mechanisms do not directly handle the present triangular posterior
+label array, its random total mass, or its exponentially moving cutoff.
+The chapter supplies those actual-model obligations explicitly.
+
+Thomas Mikosch and Yuwei Zhao,
+*The integrated periodogram of a dependent extremal event sequence*,
+[arXiv:1503.04022v1](https://arxiv.org/abs/1503.04022v1),
+[DOI 10.1016/j.spa.2015.02.017](https://doi.org/10.1016/j.spa.2015.02.017),
+Theorem 15, is a functional Gaussian limit for the centered integrated
+periodogram of a stationary regularly varying sequence. Its assumptions
+include Condition (M1), anti-clustering and mixing-rate requirements,
+summability of the extremogram, and a nonnegative Holder-continuous
+weight with exponent greater than three quarters. It does not apply
+directly to the conditional fixed-size posterior field here. In
+particular, the singular inverse-frequency weight and the changing
+microscopic cutoff require separate estimates.
+
+Norbert Henze and Maria Dolores Jimenez-Gamero,
+*Logarithmic energy distances and Gini covariance for Hilbert-valued
+random elements*, [arXiv:2606.18365v1](https://arxiv.org/abs/2606.18365v1),
+Section 4.1 and Theorem 4.1, study independent two-sample observations
+under equality of distributions and a finite squared logarithmic-distance
+moment. Their degenerate-kernel formulation is an antecedent for
+non-Gaussian quadratic limits. The finite logarithmic moment excludes
+positive-probability collisions between independent copies; the present
+actual score law is atomic. Neither the independent-sample model nor its
+diagonal integrability is silently imported into the posterior problem.
+There is also an internal normalization discrepancy in v1: equation (4.2)
+makes N times the Gini statistic equal to nm/N times the energy statistic,
+whereas the two displayed limits in Theorem 4.1 differ by an additional
+factor p(1-p). No normalization formula from that theorem is used here.
+
+The deterministic calculation uses the classical harmonic-sum constant,
+a summable correction between the Sobolev weights and reciprocal
+integers, and a Riemann-sum estimate for an absolutely continuous
+function divided by its argument. Subtracting the value at zero is
+essential. An H1 bound controls that subtraction uniformly, including
+the first frequency cell. The zero Fourier mode and both signs of the
+frequency determine the explicit finite constant. These are classical
+analysis ingredients within the model-specific argument.
+
+The Gaussian field is driven by a real random measure. Both its ordinary
+covariance and its covariance without complex conjugation must therefore
+be retained. Its odd sine component is independent of the even cosine
+component and the endpoint; its nonzero quadratic contribution proves
+positive conditional band variance. Gaussian conditioning and fourth
+moment identities remain classical and concern the limit object only.
+
+The `repo-derived` contribution is the actual posterior H1 control and
+exact-center transfer, the uniform constant-order cutoff expansion, and
+the common-realization spectral curve with its residual conditional
+randomness. The result keeps fixed frequency intervals and fixed
+additive logarithmic cutoff intervals. It does not assert actual energy
+moment convergence, a finite full critical Sobolev norm, a uniform
+second-order expansion over fixed macroscopic exponent intervals, or
+an unrestricted growing-frequency theorem. This comparison is bounded
+and does not certify global originality.

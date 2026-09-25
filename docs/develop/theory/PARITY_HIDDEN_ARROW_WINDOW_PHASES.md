@@ -1319,3 +1319,253 @@ $`\log K_M(p)=p\mathfrak L_M+O(e^{-p_a\mathfrak L_M})`$，
 同时保持所有统计量，趋零补事件只用于概率与分布转移。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 50. 临界谱转折的随机曲线
+
+**定义 50.1（分辨聚簇尺度的 Fourier 坐标）。** 取定义 48.1 的同一原序列、实际数据、
+完整后验标签和精确中心，保留后验阈值卷第 43 章的 $`x_i,c_M,h_M`$。
+置 $`\omega=\pi/2`$，并定义
+
+```math
+F_M(v)=\frac1{B_M}\sum_{i\in J}
+ (\mathbf1_{\{i\in S\}}-\pi_i)e^{-i\omega vx_i},\qquad
+N_M(s)=\lfloor e^s/h_M\rfloor,\qquad
+\mathcal R_M(s)=\sum_{|k|\le N_M(s)}
+ (1+k^2)^{-1/2}|\widehat\mu_M(k)|^2-2\mathfrak L_M Y_M^2.
+```
+
+式 (50.1)。
+
+这里 $`F_M(0)=Y_M`$，且由既定圆周约定精确有
+$`\widehat\mu_M(k)=e^{-i\omega k c_M}F_M(kh_M)`$。
+下述常数中的级数绝对收敛：
+
+```math
+b_* =1+2\gamma_{\mathrm E}
+ +2\sum_{k=1}^{\infty}\left\{(1+k^2)^{-1/2}-k^{-1}\right\},
+```
+
+式 (50.2)。
+
+其中 $`\gamma_{\mathrm E}`$ 为 Euler 常数，与方差 $`\gamma`$ 区别。
+取第 43 章的同一个实 Gaussian 等距过程 $`\mathcal W_\rho`$，置
+
+```math
+F(v)=\int_{\mathbb R}e^{-i\omega vx}\,\mathcal W_\rho(dx),\qquad
+r(v)=e^{-\omega^2v^2/(2\kappa)},\qquad
+\mathcal R(s)=(b_*+2s)Y^2
+ +2\int_0^{e^s}\frac{|F(v)|^2-Y^2}{v}\,dv.
+```
+
+式 (50.3)。
+
+复积分表示实部和虚部分别作用于同一个实等距过程，并非两个独立的复噪声。
+
+**定理 50.2（共同轮廓的有限分辨率谱律）。** 对固定 $`A\gt0`$ 和紧区间
+$`I=[s_0,s_1]`$，在定义 50.1 的两个实际实验与两种方向信息情形下，
+以下联合收敛对固定支持一致成立：
+
+```math
+\left(F_M|_{[0,A]},\mathcal R_M|_I,Y_M,L_M|_{[-H,H]},
+ C_M|_{[-H,H]},Z_M\right)
+\Longrightarrow
+\left(F|_{[0,A]},\mathcal R|_I,Y,L|_{[-H,H]},C|_{[-H,H]},Z\right)
+\qquad(H\gt0).
+```
+
+式 (50.4)。
+
+Fourier 因子取复值连续函数的一致拓扑，其余路径取既有 $`J_1`$ 拓扑。
+谱曲线极限连续，且可取满足
+
+```math
+\mathcal R'(s)=2|F(e^s)|^2
+```
+
+式 (50.5)。
+
+的版本。后验条件核结论在均匀固定基数先验空间中依数据概率成立。
+极限 Fourier 坐标的协方差和不带共轭的二阶关系分别为
+
+```math
+\mathbb E[F(u)\overline{F(v)}]=\gamma r(u-v),\qquad
+\mathbb E[F(u)F(v)]=\gamma r(u+v),\qquad F(0)=Y.
+```
+
+式 (50.6)。
+
+特别地，任取固定 $`0<b_0<b_1<\infty`$，同一有限谱带能量满足
+
+```math
+\sum_{N_M(\log b_0)<|k|\le N_M(\log b_1)}
+ (1+k^2)^{-1/2}|\widehat\mu_M(k)|^2
+\Longrightarrow
+\mathcal B_{b_0,b_1}:=2\int_{b_0}^{b_1} |F(v)|^2\,\frac{dv}{v}.
+```
+
+式 (50.7)。
+
+这是非高斯且非退化的随机变量；即使给定同一端点 $`Y`$，仍有正条件方差。
+极限变量满足
+
+```math
+\begin{split}
+\mathbb E[\mathcal B_{b_0,b_1}\mid Y]
+ &=2\int_{b_0}^{b_1}
+       \{\gamma+(Y^2-\gamma)r(v)^2\}\,\frac{dv}{v},\\
+\mathrm{Cov}(\mathcal B_{b_0,b_1},Y^2)
+ &=4\gamma^2\int_{b_0}^{b_1} r(v)^2\,\frac{dv}{v}>0.
+\end{split}
+```
+
+式 (50.8)。
+
+这些是极限 Gaussian 对象的矩恒等式，不主张实际谱能量矩的收敛。
+
+证明。[经验 Fourier 过程与二次谱泛函的先例及适用边界](../../../Library/Dynamics/iyer2025empirical.md)
+归于经典理论；下面核对实际后验的带权时钟与常数级截断误差。
+先建立保留整个标记分布的 Fourier 紧性。把复 Hilbert 空间
+$`H^1[0,A]`$ 视为实 Hilbert 空间。在同一个辅助独立标签律下，令
+$`F_M^{\mathsf Q}(v)=B_M^{-1}\sum_{i\in J}(\zeta_i-p_i)e^{-i\omega vx_i}`$。
+第 42、43 章的总时钟和二阶带权时钟给出
+
+```math
+V_M=\frac{d_J}{B_M^2}\longrightarrow\gamma,\qquad
+K_M^{(2)}=\frac1{B_M^2}\sum_{i\in J}x_i^2p_i(1-p_i)
+ \longrightarrow\frac\gamma\kappa,
+\qquad
+\mathbb E_{\mathsf Q}\|F_M^{\mathsf Q}\|_{H^1[0,A]}^2
+ =A(V_M+\omega^2K_M^{(2)}).
+```
+
+式 (50.9)。
+
+将 (43.9) 用于 Hilbert 系数
+$`f_i(v)=B_M^{-1}e^{-i\omega vx_i}`$，其方差和正是 (50.9) 右端，故
+
+```math
+\left\|B_M^{-1}\sum_{i\in J}(\pi_i-p_i)e^{-i\omega(\cdot)x_i}
+ \right\|_{H^1[0,A]}
+ \le C\{A(V_M+\omega^2K_M^{(2)})\}^{1/2}e_J
+ \longrightarrow0\quad\text{依概率}.
+```
+
+式 (50.10)。
+
+这里 $`e_J`$ 为 (43.9) 的趋零括号。
+条件 Markov 界、一次完整后验向量比较及独立的中心界，遂使实际
+$`\|F_M\|_{H^1[0,A]}`$ 在概率意义下有界。没有转移无界范数的期望。
+有界 $`H^1`$ 集在一维 $`C[0,A]`$ 中相对紧，因而得到实际 Fourier 过程紧性。
+
+同一论证用于 $`|x_i|>R`$ 的尾部；(43.8) 及总方差尾使其 $`H^1`$ 范数
+先取样本上极限、再令 $`R\to\infty`$ 后依概率消失。
+固定 $`R`$ 时，对带符号计数测度分部积分，将截断的 Fourier 和写成
+$`L_M|_{[-R,R]}`$ 的连续线性积分和两个端点项。
+既有轮廓极限连续，故 $`J_1`$ 收敛足以给出该截断和在固定频率区间上一致收敛，
+并保留同一端点、桥及 $`Z_M`$ 的联合律。
+Gaussian 极限一侧有相同的带权尾界，因此可移除 $`R`$。
+这识别 $`F`$ 为同一个 $`\mathcal W_\rho`$ 的 Fourier 积分，证明 Fourier 部分的联合收敛。
+其二阶关系由实等距性和 Gaussian 密度的 Fourier 变换得到 (50.6)。
+此外 $`\mathbb E\|F\|_{H^1[0,A]}^2=A\gamma(1+\omega^2/\kappa)<\infty`$，
+故可取局部 $`H^1`$ 的连续版本。
+
+接着需要在常数级而非 $`\mathfrak L_M`$ 级控制频率和。
+对任意 $`f\in H^1[0,A]`$，令 $`g(v)=|f(v)|^2-|f(0)|^2`$。
+则 $`g(0)=0`$ 且
+
+```math
+\|g'\|_2\le2\|f\|_\infty\|f'\|_2,\qquad
+|g(v)|\le\sqrt v\,\|g'\|_2,\qquad
+\left|\int_0^\varepsilon\frac{g(v)}v\,dv\right|
+ \le2\sqrt\varepsilon\,\|g'\|_2.
+```
+
+式 (50.11)。
+
+固定 $`0<A_0<A`$，对 $`b\in[A_0,A]`$ 和 $`n=\lfloor b/h\rfloor`$，
+按网格区间比较右端点和积分，有
+
+```math
+\sup_{A_0\le b\le A}
+\left|\sum_{k=1}^{\lfloor b/h\rfloor}\frac{g(kh)}k
+ -\int_0^b\frac{g(v)}v\,dv\right|
+ \le C_{A_0,A}\sqrt h\,\|f\|_{H^1[0,A]}^2.
+```
+
+式 (50.12)。
+
+为核对零端点，第一格的和项与积分都由 $`C\sqrt h\|g'\|_2`$ 控制。
+对第 $`k\ge2`$ 格，函数变化项的和由
+$`\sqrt h\sum_{k\ge2}k^{-1}\|g'\|_{L^2((k-1)h,kh)}`$ 控制，
+Cauchy 不等式给出同一界。分母变化项用 $`|g(v)|\le\sqrt v\|g'\|_2`$，
+其和由 $`C\sqrt h\|g'\|_2\sum_{k\ge2}k^{-3/2}`$ 控制。
+余下长度小于 $`h`$ 的终格由 $`A_0>0`$ 控制。这证明 (50.12)。
+
+记 $`r_k=(1+k^2)^{-1/2}-1/k=O(k^{-3})`$。
+由 (50.11)，一致地对上述 $`b`$，
+
+```math
+\sum_{k=1}^{\lfloor b/h\rfloor}r_k|f(kh)|^2
+ =|f(0)|^2\sum_{k=1}^{\infty}r_k
+   +O_{A_0,A}(\sqrt h\,\|f\|_{H^1}^2),\qquad
+\sum_{k=1}^{\lfloor b/h\rfloor}\frac1k
+ =\log(1/h)+\log b+\gamma_{\mathrm E}+O_{A_0,A}(h).
+```
+
+式 (50.13)。
+
+后一式保留了频率取整误差。
+取 $`A>e^{s_1}`$，代入同一个实际函数 $`f=F_M`$、$`h=h_M`$，
+零频率贡献恰为 $`Y_M^2`$，正负频率贡献相等。因此
+
+```math
+\sup_{s\in I}\left|\mathcal R_M(s)
+ -(b_*+2s)Y_M^2
+ -2\int_0^{e^s}\frac{|F_M(v)|^2-Y_M^2}{v}\,dv\right|
+ \le C_I\sqrt{h_M}\|F_M\|_{H^1[0,A]}^2
+ \longrightarrow0\quad\text{依概率}.
+```
+
+式 (50.14)。
+
+这个估计直接处理指数多的频率，没有用发散的测度总变差逐项累加误差。
+
+在积分下端先截于 $`\varepsilon>0`$，得到连续函数空间上的连续映射。
+(50.11) 与实际 $`H^1`$ 范数的概率有界性使被删积分在
+$`\varepsilon\downarrow0`$ 时一致依概率趋零；极限一侧同样成立。
+因此连续映射定理、截断及 (50.14) 给出 (50.4) 的谱部分，并保持全部共同坐标。
+(50.11) 还证明定义 50.1 中的反常积分存在。
+微积分基本定理随后给出 (50.5)，两点相减给出 (50.7)。
+
+最后识别谱带中不能由端点恢复的随机性。联合 Gaussian 性给出
+$`F(v)=r(v)Y+G(v)`$，其中 $`G`$ 与 $`Y`$ 独立。
+由于 $`\rho`$ 为偶函数，$`\Im F`$ 与整个实部过程和 $`Y`$ 独立，且
+
+```math
+K_{\mathrm{im}}(u,v)=\mathbb E[\Im F(u)\Im F(v)]
+ =\frac\gamma2\{r(u-v)-r(u+v)\}>0\qquad(u,v>0).
+```
+
+式 (50.15)。
+
+Gaussian 四阶矩展开及独立性遂给出
+
+```math
+\mathrm{Var}(\mathcal B_{b_0,b_1}\mid Y)
+ \ge8\int_{b_0}^{b_1}\int_{b_0}^{b_1}
+       K_{\mathrm{im}}(u,v)^2\,\frac{du\,dv}{uv}>0.
+```
+
+式 (50.16)。
+
+谱带变量非负且非退化，所以不能为 Gaussian 变量。
+同一分解给出 (50.8) 的条件期望；再用 $`\mathrm{Var}(Y^2)=2\gamma^2`$
+即得其协方差。此处仅计算极限对象的有限矩。
+
+各条件论证在好环境子序列上成为确定数组论证，条件尾概率和有界测试距离可截于一后平均，
+故给出依数据概率的后验条件核结论。共同支持置换等变性及原实际时钟的统一性给出
+固定支持一致的无条件结论；一次方向一致事件同时保持 Fourier 和谱坐标。
+结论只取固定频率区间与固定 $`s`$ 区间，不把这里的常数级展开宣称为
+第 48 章整个固定 $`p`$ 区间上的一致二阶展开。∎
+
+## 追加锚（本行以下为增补区）
