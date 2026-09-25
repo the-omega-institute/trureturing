@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Information/ActualPureQubitGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Rank-two affine readouts of pure qubit curves admit strict arc coordinates. -/
 

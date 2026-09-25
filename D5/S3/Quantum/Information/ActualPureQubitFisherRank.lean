@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Information/ActualPureQubitFisherRank
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Spectral Fisher lower bounds and the rank alternative for pure-qubit readouts. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Information/ActualPureQubitUpperFamily
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib]
+   anchors: []
    utility: none
    digest: Normalized effect families yield actual pure-qubit programs with a matching cost limit. -/
 
