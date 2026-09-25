@@ -57,3 +57,44 @@ for origin-independent increments follows from that process and logistic
 variance symmetry. Independence from the absolute fine value at the origin
 is explicitly false. The inspected sources do not supply this entire
 model-specific bridge; this bounded comparison is not a global novelty claim.
+
+# Threshold groups and several separated rank boundaries
+
+Chapter 36 of [the posterior threshold volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+applies the martingale theorem to a forward threshold-strip process under the calibrated independent Bernoulli
+law. All labels at the same observed score jump together. Small individual
+label increments therefore do not verify the theorem's jump hypothesis.
+The proof first establishes uniform convergence of a monotone variance
+clock to a continuous function. This bounds the largest score-group variance.
+The independent Bernoulli fourth-moment bound then controls the sum of all
+grouped fourth moments, implying the required expected maximum squared-jump
+bound. A deterministic time change reduces the limiting clock to linear
+time, as required by Whitt's stated theorem.
+
+The threshold tail is reconstructed from a terminal tail variable and a
+forward strip martingale with the correct strict/non-strict endpoint
+conventions. This supplies a right-continuous finite process even when the
+nonlattice score law has atoms. It does not reverse a step process and assume
+that its path remains right-continuous. Nonlattice fixed-width localization
+is attributed to [Stone](stone1967local.md), and the one-union posterior
+comparison and weighted exact-center bound use the local input described in
+[Siripraparat–Neammanee](siripraparat2021local.md).
+
+The new `repo-derived` statement couples the entire compact threshold-tail
+field to finitely many separated critical-capacity processes in the actual
+stationary pair/path experiments. The common coarse origin is proved using
+actual interval-count variance and exact means. Joint Gaussian convergence
+establishes independence between the threshold field and the primitive
+boundary processes before their common random translation. Their absolute
+fine values retain dependence through that shared origin; their relative
+increment processes have an origin-independent product law. The covariance
+identities concern the limiting random variables only.
+
+Monotone-clock convergence, martingale functional limits, Brownian tail
+covariance and stationary increments are classical auxiliary facts. Neither
+the martingale theorem nor the conditional-design independence mechanism
+alone provides this actual-model joint law, its grouped-atom verification,
+or its common exact posterior centers. This attribution concerns the checked
+proof ingredients and does not certify global originality. The result does
+not assert a fine-scale process over continuously varying thresholds, a
+shrinking-threshold tangent limit, or convergence of actual moments.
