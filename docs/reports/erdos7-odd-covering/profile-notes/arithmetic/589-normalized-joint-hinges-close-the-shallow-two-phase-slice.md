@@ -710,3 +710,137 @@ arbitrary-family and all-height quantifiers. This does not handle an
 effective pair of3/9 originals with arbitrary additional low pure
 classes, arbitrary shallow phases inside the window, or unrestricted
 prime support. It adds no Lean verification.
+
+## 12. Branch capacities and the first hinge admit the complete pure tail from exponent8
+
+This is a same-law ordinary-mathematical extension of Report589. Retain its
+one selected Q law nu, all globally fixed original phases, the shallow
+two-phase condition through ternary exponent3, all deeper nonpure originals,
+and all arbitrary originals touching23 or29. The base pure originals remain
+1 mod3 and3 mod9. Allow additional pure originals3^e at arbitrary finite
+exponents e>=3. The statement below is a sufficient branch-budget condition,
+not an unrestricted pure-geometry or Erdos7 result.
+
+Let A=[0]_9 union[6]_9 and Bbranch=[2]_3, with conditional Haar u_A,u_B.
+For their actual additional pure unions define
+
+    p_A=12 u_A(U_A)=54 H_3(U_A),
+    p_B=18 u_B(U_B)=54 H_3(U_B).
+
+Overlaps count once. Put p=p_A+p_B, A0=12-p_A, B0=18-p_B and D=27-p.
+Assume p<=3. Since at most one numerical modulus3^e occurs for each e,
+
+    p<=54 sum_(e in actual extra heights)3^(-e).
+
+Let chi be the complete survivor mask, and put
+
+    c_A=integral chi du_A, c_B=integral chi du_B,
+    X=A0-12c_A, V=B0-18c_B, W=X+V,
+    T=(W-3)_+, U=min(X,(3-V)_+), tau=E_nu T.
+
+X,V>=0 because fixed pure damage has already been subtracted. As in586 CJ3,
+residual nonpure damage at exponent e>=4 uses one partial nonunit Q query
+layout L_e, combining both branches. Removing the actual pure union can only
+reduce that damage. Hence
+
+    W<=sum_(e>=4)54*3^(-e)L_e, sum_(e>=4)54*3^(-e)=1.
+
+Writing R=R_Q(nu), the SAME589 all-layout contracts give
+
+    E W<=R<=B,
+    E(W-1)_+<=B-1,
+    E(W-2)_+<=K2,
+    tau<=K3.
+
+The first hinge B-1 is589's actual first-hinge contract. It does not follow
+merely from the scalar mean bound R<=B.
+
+Define m_A=12c_A/D, m_B=min(1-m_A,18c_B/D), and the supported submeasure
+
+    eta=chi[(12/D)u_A+(m_B/c_B)u_B]nu,
+
+with zero B coefficient on c_B=0. Exactly,
+
+    m_A+m_B=1-T/D,
+    (m_B-(1-A0/D))_+=U/D.
+
+Because p<=3, B0-A0>=3 and D>=2A0, so m_A<=A0/D<=1-A0/D.
+The depth-one root cap is therefore1-A0/D+U/D. For e>=2 both branch
+cylinder coefficients are at most(54/D)3^(-e). Thus the complete tail costs
+9/D, and the all-height586 CJ6 calculation becomes
+
+    R_P(eta)<=R_Q((1-T/D)nu)
+       +[1-(A0-9)/D](1+R)
+       +[E U+R_Q(U nu)]/D.                                  (BP1)
+
+Its Q marginal is(1-T/D)nu and its mass is s=1-tau/D.
+
+The gain comes from splitting U at1 before applying the second hinge:
+
+    U=min(U,1)+(U-1)_+, 0<=(U-1)_+<=2,
+    R_Q(U nu)<=R+2K2+2E(U-1)_+.
+
+Here the last step is584 W3 on the actual weight(U-1)_+. The pointwise
+relations U+T<=W and(U-1)_++T<=(W-1)_+ yield
+
+    E U+R_Q(U nu)<=2R+2(B-1)+2K2-3tau.
+
+Substituting into BP1, the coefficient of R in the resulting gate is
+`-2+(A0-11)/D<=-2+1/24<0`, since A0<=12 and D>=24. Thus replacing
+R by B gives a lower bound for the gate. Equivalently, the query upper
+bound is increasing in R, so R<=B gives
+
+    R_P(eta)<=1+2B+[B+2K2-5+(1+B)p_A-3tau]/D.
+
+Consequently, for G=566/49,
+
+    Gs-R_P(eta)>=Delta(p_A,p_B),
+    Delta=G-1-2B
+      -[B+2K2-5+(1+B)p_A+(G-3)K3]/(27-p_A-p_B).             (BP2)
+
+All constants B,K2,K3,alpha are exactly589 NJ10--NJ11. No source is chosen
+separately for different queries. No query or original height is truncated.
+The ternary density is54/D, so eta<=486 H_P/(D alpha). Existing23/29
+continuation yields
+
+    H(full survivor)>=49 D alpha Delta/299376, if Delta>0.   (BP3)
+
+At p_A=p_B=0,
+
+    Delta=10999819866679987100885/3277837235683688754579993
+         =.0033558163739590484...,
+    Delta-old_delta=(K2-B+2)/27>0.
+
+For an arbitrary finite pure tail from e>=8, p<=1/81. At fixed p, BP2 is
+worst for p_A=p; its numerator in BP3 decreases with both p and p_A, since
+G-1-2B>0 and1+B>0. Hence use p_A=1/81,p_B=0:
+
+    Delta=768582889694815809995707/2653834147112793932411801740
+          =.00028961225422884324...>0,
+    H(full survivor)>=
+       768582889694815809995707/5780820089881635678828748800000
+       =1.3295395423913856e-7...>1/8000000.
+
+This improves589's uniform pure cutoff e>=9 to e>=8 in the complete
+shallow-two-phase slice. Reports590/591 do not dominate this family: they
+permit arbitrary pure geometry but restrict mixed exponent patterns,
+whereas this result still admits the shallow mixed-square labels under
+its stated selector. No novelty claim beyond this project comparison.
+
+The exact one-branch thresholds from BP2 are
+
+    p_A<109998198666799871008850/8141271202315973741721143
+        =.013511182213842517...,
+    p_B<54999099333399935504425/522715269037558835951318
+        =.10521808447391666... .
+
+A single A-branch e=7 cylinder gives p_A=2/81 and makes this specific BP2
+bound negative. This does NOT certify optimality over every joint-root
+kernel or every clipping parameter, and does NOT provide a covering.
+
+The [exact arithmetic producer](../../frontier/cover-geometry/branch_capacity_three_hinge.py)
+consumes the existing normalized-joint-hinge data and checks17 source and
+rational-arithmetic conditions. Its [data](../../frontier/cover-geometry/branch_capacity_three_hinge.json)
+retain the source fingerprint and exact bounds. The original624 hinge
+checks are reused, not rerun. This is an ordinary proof with exact arithmetic,
+not new Lean verification.
