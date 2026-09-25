@@ -44557,3 +44557,337 @@ $$
 所以 $F_1$ 为非零常数，不遗漏第一支的驻点。第二支的分母总为正。连同两个端点，便得到集合 $\mathcal C_s$。逐 $s$ 取下确界并应用（204.5）即得（205.18）。这里没有求出剩余标量下确界的闭式，也没有把双端点的交集预先替换成单个端点约束。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 206. 有限续接成本的精确解：唯一上端接触与可认证的八次根
+
+**定义 206.1（上端接触的无量纲坐标）。** 固定定义201.1的合法 $a,t,R$，并假定 $R>R_0(a,t)$。置
+$$
+\begin{gathered}
+ h=\frac{1+t}{2},\qquad z=\frac{1+t+R}{2},\qquad
+ \Delta=z-h=\frac R2,\qquad k=1-a^2,\\
+ \alpha=\sqrt{\frac{z-a^2}{k}},\qquad
+ \beta=\sqrt{\frac{h-a^2}{k}},\qquad
+ \sigma=\sqrt{1-\alpha^2}=\sqrt{\frac{1-z}{k}},\qquad
+ \xi_b=\frac{a\sigma}{\sqrt z}.
+\end{gathered}
+\tag{206.1}
+$$
+合法性给出 $a<h<z<1$，以及
+$0<\xi_b<\beta<\alpha<1$、$\xi_b<\sigma$。对 $0\le\xi\le\xi_b$ 定义
+$$
+\begin{gathered}
+ \delta(\xi)=\operatorname{artanh}\alpha-\operatorname{artanh}\xi,\qquad
+ C(\xi)=\cosh\delta(\xi),\quad S(\xi)=\sinh\delta(\xi),\\
+ W(\xi)=\frac{S(\xi)(C(\xi)+a)}{1+aC(\xi)},\qquad
+ \Phi(\xi)=\xi^2+\xi(1-\xi^2)W(\xi).
+\end{gathered}
+\tag{206.2}
+$$
+这些量只用于参数化同一个有限程序优化问题，不改变点态 SLD 信息的定义或精确开放延拓条件。
+
+**定理 206.2（全部超临界半径的唯一代数最优设计）。** 方程
+$$
+ \Phi(\xi_*)=\beta^2,\qquad 0<\xi_*<\xi_b
+\tag{206.3}
+$$
+恰有一个解。令 $r_*=\sqrt{1-\xi_*^2}$，并定义
+$$
+ s_*=\alpha\xi_*-a\sigma r_*,\qquad
+ A_*=\frac{a(1+\alpha\xi_*)-\sigma r_*}
+ {1+\alpha\xi_*-a\sigma r_*}.
+\tag{206.4}
+$$
+则 $(A_*,s_*)$ 是定义205.1的紧松弛问题的唯一最小元，原始开放延拓问题的精确下确界为
+$$
+ \boxed{\quad
+ \mathfrak M_2(a,t;R)=
+ \frac{(\alpha-\xi_*)^2}
+ {4\Delta(\beta^2-\xi_*^2)
+ (1-\alpha\xi_*+a\sigma r_*)^2}.
+ \quad}
+\tag{206.5}
+$$
+该最小元只在上端点接触物理边界。更精确地，置
+$$
+ \ell_*=a^2+k\xi_*^2;
+\tag{206.6}
+$$
+则它的物理区间在 $y=(1+u)/2$ 坐标中的两个根为 $\ell_*,z$，且
+$$
+ \ell_*<\frac{a^2}{z}<a,
+ \qquad
+ f_{A_*,s_*}(t+R)=0,
+ \qquad
+ f_{A_*,s_*}(t-R)>0,
+ \qquad s_*<0.
+\tag{206.7}
+$$
+唯一性指显式族中的参数对，不要求不同物理处理器的实现唯一。原问题仍不达到这个下确界；存在定义204.1的严格可行程序列，其名义成本收敛到（206.5）。
+
+证明。 先将所有处理器经定理204.2归约到显式族。为求下界，暂时仅保留名义点正性和上端点正性。置
+$$
+ v=A(1+s)-a,
+ \qquad
+ H_y(s,v)=\frac14f_{A,s}(2y-1).
+\tag{206.8}
+$$
+直接展开得到
+$$
+ H_y=(1-y)(y-a^2)-(1+a^2-y)s^2+2asv-yv^2.
+\tag{206.9}
+$$
+对每个 $a<y<1$，$H_y\ge0$ 是 $(s,v)$ 平面中的一个中心椭圆。目标函数变成
+$$
+ q_h(s,v)=\frac{g(s,v)}{4(1-s)^2H_h(s,v)},\qquad
+ g(s,v)=(1-s)^2-(a-v)^2.
+\tag{206.10}
+$$
+考虑放大后的集合 $H_h>0,H_z\ge0$。它确实有最小元，且没有通过名义秩退化逃逸的低成本序列。为此记
+$$
+ c_0=s+a^2-av,
+ \qquad H_y=g(y-a^2)-(y-c_0)^2.
+\tag{206.11}
+$$
+在紧交集 $H_h\ge0,H_z\ge0$ 上，$g$ 严格为正；否则 $h=c_0=z$，与 $h<z$ 矛盾。由 $H_h\ge0$ 的椭圆式还得 $|s|\le\sqrt h<1$。因而在该紧集上 $g$ 有一致正下界，而 $q_h$ 在 $H_h\downarrow0$ 时趋于正无穷。集合非空且有有限成本，例如 $s=v=0$。所以放大问题取得有限最小值。
+
+上述集合也没有引入非物理的内部参数：以 $A=(a+v)/(1+s)$ 回代，$H_h>0$ 由（205.19）迫使 $|A|<1$；对闭交集中的 $A=\pm1$，两个不同 $y$ 的正性会要求同一个非恒定一次式同时为零，不可能。坐标变换在此光滑可逆。由（205.12）—（205.14），若放大问题最小元满足 $H_z>0$，它只能是名义等号参数
+$$
+ s=0,\qquad A=2a-\frac ah.
+\tag{206.12}
+$$
+但 $R>R_0$ 时，这个参数不满足上端点正性。因此所有放大问题最小元均在 $H_z=0$ 上。
+
+完整参数化这条接触椭圆。定义
+$$
+ p=\frac{s-av}{k},\qquad w=\frac{v-as}{k}.
+\tag{206.13}
+$$
+式（206.9）在 $y=z$ 等价于
+$$
+ H_z=k^2\alpha^2\sigma^2
+ \left(1-\frac{p^2}{\alpha^2}-\frac{w^2}{\sigma^2}\right).
+\tag{206.14}
+$$
+故全部上端接触点均可写成
+$$
+ \begin{aligned}
+ s&=\alpha\xi+\tau a\sigma\sqrt{1-\xi^2},\\
+ v&=a\alpha\xi+\tau\sigma\sqrt{1-\xi^2},
+ \end{aligned}
+ \qquad -1\le\xi\le1,\quad \tau\in\{-1,1\}.
+\tag{206.15}
+$$
+代入给出两个精确恒等式
+$$
+ H_y=(z-y)(y-\ell(\xi)),\qquad
+ \ell(\xi)=a^2+k\xi^2,\qquad
+ g=k(\alpha-\xi)^2.
+\tag{206.16}
+$$
+名义正性因此恰为 $|\xi|<\beta$，接触边界上的成本为
+$$
+ q_{h,\tau}(\xi)=
+ \frac{(\alpha-\xi)^2}
+ {4\Delta(\beta^2-\xi^2)
+ (1-\alpha\xi-\tau a\sigma\sqrt{1-\xi^2})^2}.
+\tag{206.17}
+$$
+这里两个符号分支的 $1-s$ 均为正。固定 $\xi$，取 $\tau=-1$ 严格增大分母，因此严格减小成本。令
+$$
+ P(\xi)=1-\alpha\xi+a\sigma\sqrt{1-\xi^2},
+ \qquad q_h(\xi)=q_{h,-1}(\xi).
+\tag{206.18}
+$$
+对 $0<\xi<\beta$，交叉相乘可验证
+$$
+ \frac{\alpha-\xi}{P(\xi)}
+ <\frac{\alpha+\xi}{P(-\xi)};
+\tag{206.19}
+$$
+两侧交叉分子的差为
+$2\xi(\alpha^2-1-a\sigma\sqrt{1-\xi^2})<0$。故正 $\xi$ 严格优于负 $\xi$。此外
+$$
+ \left.\frac12\frac{d}{d\xi}\log q_h(\xi)\right|_{\xi=0}
+ =-\frac1\alpha+\frac{\alpha}{1+a\sigma}<0.
+\tag{206.20}
+$$
+于是所有最小元都属于 $\tau=-1,0<\xi<\beta$，这些选择来自成本比较而非预设对称性。
+
+下面在求驻点之前排除下端点接触。固定 $z>a$，置
+$$
+ K_z=\sqrt{\frac{(1-z)(z-a^2)}z},\qquad
+ h_c=\frac{a}{a+K_z}.
+\tag{206.21}
+$$
+有 $a<h_c<z$：分别平方 $K_z<1-a$ 和 $a(1-z)<zK_z$ 后，两者均归结为 $z>a$。名义等号参数（206.12）的上端点条件为
+$$
+ H_z=z\left[K_z^2-\frac{a^2(1-h)^2}{h^2}\right].
+\tag{206.22}
+$$
+因此本问题的超临界条件恰为 $h<h_c$。在 $\xi=\xi_b$，有
+$$
+ \sqrt{1-\xi_b^2}=\frac\alpha{\sqrt z},\qquad
+ s=0,\quad v=-K_z,\quad A=a-K_z=2a-\frac a{h_c},\quad
+ \ell(\xi_b)=\frac{a^2}{z}<a.
+\tag{206.23}
+$$
+这是名义点 $2h_c-1$ 的等号程序，并且该名义点处于其满秩区间内。
+
+对 $\xi_b\le\xi<\beta$，在同一个上端接触处理器上比较名义点 $h,h_c$。由（206.16），
+$$
+ \frac{q_h(\xi)}{q_{h_c}(\xi)}
+ =\frac{z-h_c}{z-h}\,
+ \frac{h_c-\ell(\xi)}{h-\ell(\xi)}.
+\tag{206.24}
+$$
+最后一个因子关于 $\ell$ 严格递增，因为其导数为
+$(h_c-h)/(h-\ell)^2>0$。另一方面，在名义点 $h_c$，测量信息下界及（206.23）给出
+$q_{h_c}(\xi)\ge q_{h_c}(\xi_b)$。故
+$$
+ q_h(\xi)>q_h(\xi_b)\qquad(\xi_b<\xi<\beta).
+\tag{206.25}
+$$
+在 $\xi_b$ 本身，名义等号使 $q_{h_c}'(\xi_b)=0$。微分（206.24）得
+$$
+ \frac{q_h'(\xi_b)}{q_h(\xi_b)}
+ =\frac{2k\xi_b(h_c-h)}
+ {(h_c-\ell(\xi_b))(h-\ell(\xi_b))}>0.
+\tag{206.26}
+$$
+向左移动即可改善。因此所有全局最小元都落在 $0<\xi<\xi_b$。在这一区间，$s=\alpha\xi-a\sigma\sqrt{1-\xi^2}<0$，且
+$\ell(\xi)<a^2/z<a$。原问题的下端点 $y_-=h-R/2>a$ 已严格位于物理区间内部；这个结论没有被用作选根的预设条件。
+
+最后证明剩余根的唯一性。由（206.2），
+$$
+ C=\frac{1-\alpha\xi}{\sigma\sqrt{1-\xi^2}},\qquad
+ S=\frac{\alpha-\xi}{\sigma\sqrt{1-\xi^2}},\qquad
+ q_h(\xi)=\frac{S^2}{4\Delta(\beta^2-\xi^2)(C+a)^2}.
+\tag{206.27}
+$$
+因此
+$$
+ \frac12\frac{d}{d\xi}\log q_h
+ =\frac{\xi}{\beta^2-\xi^2}-\frac1{(1-\xi^2)W}.
+\tag{206.28}
+$$
+其符号恰为 $\Phi(\xi)-\beta^2$ 的符号。下面给出 $\Phi'>0$ 的显式证书。记
+$$
+ \omega=\tanh\delta=\frac{\alpha-\xi}{1-\alpha\xi}.
+\tag{206.29}
+$$
+在 $0\le\xi\le\xi_b<\sigma$ 上，$\alpha^2+\xi^2<1$，所以
+$$
+ 1-3\xi\omega
+ =\frac{1-\alpha^2-\xi^2+(\alpha-2\xi)^2}{1-\alpha\xi}>0.
+\tag{206.30}
+$$
+定义
+$$
+\begin{aligned}
+ N_0&=\frac{(\xi+\omega)(1-3\xi\omega)}{1-\omega^2}>0,\\
+ N_2&=N_0+4\xi S^2>0,\\
+ N_1&=\frac{C^2+1}{C}N_0+
+ \frac{\xi S^2(C^2+3)}C>0.
+\end{aligned}
+\tag{206.31}
+$$
+利用 $\delta'=-1/(1-\xi^2)$ 微分并整理，得到
+$$
+ \Phi'(\xi)=\frac{N_0+aN_1+a^2N_2}{(1+aC)^2}>0.
+\tag{206.32}
+$$
+又 $\Phi(0)=0$，而在比较名义点 $h_c$，$\xi_b$ 为内部名义等号点；由（206.28）得
+$$
+ \Phi(\xi_b)=\frac{h_c-a^2}{k}>
+ \frac{h-a^2}{k}=\beta^2.
+\tag{206.33}
+$$
+严格单调性与介值定理给出唯一根 $\xi_*$；成本在它之前递减、之后递增。（206.25）及两个严格分支比较排除了其余所有全局最小元，于是放大问题的唯一最小元恰为（206.4）。
+
+仍须回到原始开放延拓问题。令
+$$
+ v_*=a\alpha\xi_* -\sigma r_*,\qquad
+ s_\varepsilon=(1-\varepsilon)s_*,\quad
+ v_\varepsilon=(1-\varepsilon)v_*,\quad
+ A_\varepsilon=\frac{a+v_\varepsilon}{1+s_\varepsilon},
+ \qquad 0<\varepsilon<1.
+\tag{206.34}
+$$
+式（206.9）为 $H_y=D_y-Q_y(s,v)$，其中
+$D_y=(1-y)(y-a^2)>0$，$Q_y$ 为正定二次式。故
+$$
+ H_z(s_\varepsilon,v_\varepsilon)
+ =D_z[1-(1-\varepsilon)^2]>0.
+\tag{206.35}
+$$
+下端点在极限参数处已严格为正，缩放后仍严格为正。两个严格椭圆条件保证 $|A_\varepsilon|,|s_\varepsilon|<1$；定理204.2的实际处理器因此给出包含所需闭区间的精确开放延拓，且对全部信号输入成立。名义点在极限处满足
+$H_h=\Delta k(\beta^2-\xi_*^2)>0$，所以满秩 SLD 成本连续收敛到（206.5）。
+
+放大问题的最小值是原下确界的下界，这列实际程序给出反向不等式，故两者相等。唯一放大最小元也满足原非严格双端点条件，所以它是紧松弛的唯一最小元。原问题的不达到性沿用定理205.2；这里没有把上端点纯态误计为允许开放延拓的最优程序。证毕。
+
+**定理 206.3（无剩余极小化的代数选择与严格资源曲线）。** 在定义206.1的条件下，令
+$$
+\begin{aligned}
+ P_3(\xi)&=\sigma^2(\beta^2-\xi^2)
+ -\xi(\alpha-\xi)(1-\alpha\xi),\\
+ P_4(\xi)&=(1-\alpha\xi)(\beta^2-\xi^2)
+ -\xi(\alpha-\xi)(1-\xi^2).
+\end{aligned}
+\tag{206.36}
+$$
+则 $\xi_*$ 也可唯一规定为
+$$
+\begin{gathered}
+ (1-\xi^2)P_3(\xi)^2-a^2\sigma^2P_4(\xi)^2=0,\\
+ 0<\xi<\xi_b,\qquad P_3(\xi)<0<P_4(\xi).
+\end{gathered}
+\tag{206.37}
+$$
+该多项式的次数为八；条件（206.37）完整排除平方消根引入的其他分支。代入 $\xi=\alpha\lambda$ 后，其系数为 $a,h,z$ 的有理函数。
+
+固定 $a,t$，成本 $R\mapsto\mathfrak M_2(a,t;R)$ 在全部合法超临界区间上实解析且导数严格为正。若记
+$$
+ R_{\max}=\min\{t-(2a-1),1-t\},\qquad
+ L=\sup_{0<R<R_{\max}}\mathfrak M_2(a,t;R),
+\tag{206.38}
+$$
+且 $R_0<R_{\max}$，则每个 $I_r(t)<C<L$ 对应唯一的
+$R_C\in(R_0,R_{\max})$，满足 $\mathfrak M_2(a,t;R_C)=C$。在原问题中，存在名义信息成本不超过 $C$ 的实际程序，当且仅当
+$$
+ 0<R<R_C.
+\tag{206.39}
+$$
+因而预算给出的最大续接半径是未达到的上确界；$C\mapsto R_C$ 在这个区间实解析。
+
+证明。 以 $r=\sqrt{1-\xi^2}$，将（206.3）中的双曲函数用（206.27）消去，得到未平方方程
+$$
+ rP_3(\xi)+a\sigma P_4(\xi)=0.
+\tag{206.40}
+$$
+在一个解上，记 $D=\sigma r+a(1-\alpha\xi)>0$；直接代入驻点关系得
+$$
+ P_4(\xi)=\frac{\xi(\alpha-\xi)^3r}{\sigma D}>0,
+ \qquad P_3(\xi)=-\frac{a\sigma}{r}P_4(\xi)<0.
+\tag{206.41}
+$$
+平方（206.40）给出八次方程。反过来，规定的严格符号恢复（206.40），再恢复（206.3）；定理206.2保证唯一性。展开可见
+$P_3=\sigma^2\beta^2-\alpha\xi+2\alpha^2\xi^2-\alpha\xi^3$，
+$P_4=\beta^2-\alpha(\beta^2+1)\xi+2\alpha\xi^3-\xi^4$；代入 $\xi=\alpha\lambda$ 后只出现 $\alpha^2,\beta^2,\sigma^2$，证明有理系数断言。
+
+各系数在合法超临界参数内解析，（206.32）给出非零根导数，所以隐函数定理使 $\xi_*$、$(A_*,s_*)$ 及其成本均实解析。为判成本导数的符号，使用（206.9）坐标下的放大问题。在 $H_z=0$ 上约束梯度不为零，因为它是正定椭圆的边界。其最小元的乘子满足
+$$
+ \nabla q_h=\lambda\nabla H_z,\qquad \lambda\ge0.
+\tag{206.42}
+$$
+若 $\lambda=0$，便得到被超临界条件排除的内部驻点（206.12），故 $\lambda>0$。固定最优参数对时，由（206.16）得
+$\partial_yH_y|_{y=z}=-(z-\ell_*)<0$。沿解析最优分支微分 $H_z=0$ 与目标函数，得到
+$$
+ \frac{d}{dR}\mathfrak M_2(a,t;R)
+ =\frac\lambda2(z-\ell_*)>0.
+\tag{206.43}
+$$
+这里 $q_h$ 自身不显含 $z$，而 $z=h+R/2$。因此每个紧超临界半径区间上，该资源曲线及其逆映射均为 Lipschitz。
+
+在临界点右侧，定理203.2的二次起步给出成本趋于 $I_r(t)$；亚临界成本由定理201.3恒等于 $I_r(t)$。严格单调、连续性与上确界定义给出每个 $C\in(I_r,L)$ 的唯一 $R_C$；其导数非零保证逆函数解析。若 $R<R_C$，下确界严格小于 $C$，故存在成本小于 $C$ 的实际程序。若 $R>R_C$，任何程序成本均大于 $C$；在 $R=R_C$，定理205.2排除实际达到下确界 $C$。三种情形恰得（206.39）。证毕。
+
+## 追加锚（本行以下为增补区）
