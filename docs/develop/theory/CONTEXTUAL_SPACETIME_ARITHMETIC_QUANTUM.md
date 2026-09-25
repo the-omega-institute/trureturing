@@ -40036,3 +40036,139 @@ $$
 确有 $1/2<T<1$，所以前三项之和大于二；又 $e^T>1+T>3/2$，故 $A<2/3$，最后一个正分式小于一。因此右端为正，小幅增加 $T$ 会增加 $f$。这一常数层面的改进与（180.13）的最优成本量级相容。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 181. 实环境标架、精确自适应信息量与最优查询尺度
+
+**定义 181.1（局部信息率与预算优化）。** 沿用第180节的重置终端查询、经典时长选择及分支预算合同。在固定的 $r,w$ 处对未知参数 $w$ 微分；每个候选控制协议在求导时保持固定。令 $I_m^{(N)}(r,w)$ 为 $m$ 次固定时长 $N$ 查询的全部允许自适应协议的最大信息量，令 $I_{B,\mathrm{var}}^*(r,w)$ 为总调用预算 $B$ 下、允许经典自适应时长的最终记录与量子输出之信息量上确界，并定义
+$$
+\mathscr I(r,w):=\sup_{N\ge1}
+\frac{u_N'(w)^2}{N[1-u_N(w)^2]}.
+\tag{181.1}
+$$
+这些量是局部 SLD 信息量准则；固定局部设计点上的优化不自动给出未知参数的有限样本最优判别常数。以下使用的环境扩张与交叉项消去方法属于既有通道估计工具：Demkowicz-Dobrzański、Maccone，*Using entanglement against noise in quantum metrology*，arXiv:1407.2934v3，式（9），给出交叉算符为零时的一般自适应上界。这里直接构造达到单次下界的环境标架，并将其用于当前配对族。
+
+**定理 181.2（所有固定时长的精确自适应加法性）。** 对全部充分近一的 $r$、全部 $w\in[0,\delta(r)]$ 和正整数 $m,N$，有
+$$
+I_m^{(N)}(r,w)
+=m\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.2}
+$$
+独立均衡 $02$ 输入及各次的固定对称、反对称基测量达到等号。特别地，第179节的二步接口满足精确式
+$$
+I_m^{(2)}(r,w)=m\frac{4J(r)^2}{1-u(w)^2},
+\qquad
+\sup_{w\in[0,\delta(r)]}
+\left|\frac{I_m^{(2)}(r,w)}{m(1-r)^3}-9\right|\longrightarrow0,
+\tag{181.3}
+$$
+且极限对所有正整数 $m$ 统一。该式收紧第179节的程序上界，不改变其有限辨识成本结论。
+
+证明。 固定 $N$，略写 $a=a_N$、$u=u_N(w)$、$h=(1+u)/2$、$\ell=(1-u)/2$。由（180.2）有 $0<a<h<1$。在实三维环境中取单位向量
+$$
+v_0=(\sqrt h,\sqrt\ell,0),\qquad
+v_2=(\sqrt h,-\sqrt\ell,0),\qquad
+v_1=\left(\frac a{\sqrt h},0,\sqrt{1-\frac{a^2}{h}}\right).
+\tag{181.4}
+$$
+其 Gram 矩阵恰为 $F(a,u)$，所以等距映射 $V_u|i\rangle=|i\rangle v_i$ 实现该 Schur 通道。各 $v_i$ 为实单位向量，故
+$$
+V_u^\dagger\partial_uV_u=0,
+\qquad
+(\partial_uV_u)^\dagger\partial_uV_u
+=\operatorname{diag}\left(
+\frac1{16h\ell},\frac{a^2}{16h^2(h-a^2)},\frac1{16h\ell}\right).
+\tag{181.5}
+$$
+其中中间项不超过端点项，等价于 $a^2\le h^2$。因此对 $w$ 求导后，记 $A_w=(\partial_wV_w)^\dagger\partial_wV_w$，有
+$$
+V_w^\dagger\partial_wV_w=0,
+\qquad
+4\lVert A_w\rVert=\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.6}
+$$
+
+说明它怎样控制已有参数信息的输入。设信号—参考态的当前切向量满足 $\dot\rho=(L\rho+\rho L)/2$，且 $I(\rho)=\operatorname{Tr}(\rho L^2)<\infty$。取任一纯化 $|\psi\rangle$，令 $|\xi\rangle=(L\otimes I)|\psi\rangle/2$，则
+$$
+\langle\psi|\xi\rangle=0,\qquad
+4\lVert\xi\rVert^2=I(\rho).
+\tag{181.7}
+$$
+局部归一化曲线 $\bigl(|\psi\rangle+s|\xi\rangle\bigr)/\sqrt{1+s^2\lVert\xi\rVert^2}$ 的约化态具有相同的当前态和一阶切向量。这里仅匹配切向量，不要求它在邻域中纯化原来的整条输入曲线，因此不需要把任意变秩输入的 SLD 值误等同于整条曲线的最小纯化速度。
+
+施加 $V_w$ 后，纯态切向量为 $\dot V_w|\psi\rangle+V_w|\xi\rangle$。由（181.6），交叉内积消失，纯态切向量与纯态本身仍正交。偏迹的信息量单调性遂给出
+$$
+I\bigl((\mathcal T_w^{(N)}\otimes\operatorname{Id})(\rho_w)\bigr)
+\le I(\rho_w)+4\operatorname{Tr}(\rho_wA_w)
+\le I(\rho_w)+\frac{u_N'(w)^2}{1-u_N(w)^2}.
+\tag{181.8}
+$$
+参考上的恒等因子在迹中省略；无限输入信息量时上界按扩展实数理解。该论证也覆盖秩亏的有限 SLD 切向量，因为约化态的 SLD 信息量只依赖当前态与一阶切向量。
+
+从不依赖未知参数的初态开始，每次查询间控制都不增加信息量，每次查询最多增加（181.8）的第二项。归纳得到（181.2）的上界。独立均衡输入达到单次最优信息量，其固定基测量产生独立 Bernoulli 样本，信息量可加，给出匹配下界。（181.3）再由第179节的一致单次极限得到。端点按通道的光滑局部延伸取单侧值。证毕。
+
+**定理 181.3（自适应预算的信息率）。** 第181.1式的上确界对每个允许的 $r,w$ 都由某个有限整数时长达到，并有
+$$
+I_{B,\mathrm{var}}^*(r,w)\le B\,\mathscr I(r,w),
+\qquad
+\lim_{B\to\infty}\frac{I_{B,\mathrm{var}}^*(r,w)}B=\mathscr I(r,w).
+\tag{181.9}
+$$
+因此经典反馈选择时长不能超过最佳固定时长的局部每调用信息率。此结论不把有限预算中不能整除的剩余调用算成已经使用。
+
+证明。 在当前选择的时长寄存器上，（181.6）的等距映射作分块受控作用，停止分支取恒等映射。交叉算符在每块都为零。对每条已有记录应用（181.8）并保留经典记录的信息量，得到一次查询的信息增量不超过当前时长 $N$ 的 $I_1^{(N)}(r,w)$ 的期望。对全部查询求和，
+$$
+I_{\rm out}(r,w)
+\le\mathbb E_w\sum_j I_1^{(N_j)}(r,w)
+\le\mathscr I(r,w)\,\mathbb E_w\sum_jN_j
+\le B\,\mathscr I(r,w).
+\tag{181.10}
+$$
+这里使用带经典记录的条件信息量分解；标准 Borel 结果空间以相应条件积分表示。也可把整个有限预算协议纯化，保留正交的记录环境：参数无关的仪器扩张保持切向量范数，每个受控 $V_N$ 的交叉项为零，其新增平方范数按当前记录概率加权，直接得到同一个界。停止后补恒等映射，使总槽数不超过 $B$。
+
+对固定 $r,w$，由（180.10）及 $|u_N|\le r^N$，
+$$
+\frac{I_1^{(N)}(r,w)}N
+\le\frac{4(N-1)^2r^{2N}}{x^2N(1-r^{2N})}\longrightarrow0
+\qquad(N\to\infty).
+\tag{181.11}
+$$
+而 $N=2$ 的信息量严格为正，所以最大值由有限 $N_*$ 达到。预算 $B$ 时使用 $\lfloor B/N_*\rfloor$ 次独立均衡查询，达到 $\lfloor B/N_*\rfloor I_1^{(N_*)}$；除以 $B$ 并令 $B\to\infty$，与上界合并证明（181.9）。证毕。
+
+**定理 181.4（全时长最优常数的变分表达）。** 令 $f(t)$ 为（180.21）的显式曲线，则
+$$
+F_{\max}:=\max_{t>0}f(t)
+\tag{181.12}
+$$
+存在、有限且严格为正，并有
+$$
+\sup_{w\in[0,\delta(r)]}
+\left|(1-r)\mathscr I(r,w)-F_{\max}\right|
+\longrightarrow0.
+\tag{181.13}
+$$
+任何最优整数时长 $N_*(r,w)$ 的归一化值 $(1-r)N_*(r,w)$ 都最终落在一个固定紧区间内；沿任意 $r\uparrow1$、允许的 $w=w(r)$ 及最优时长选择，其聚点均属于 $\operatorname*{arg\,max}_{t>0}f(t)$。反过来，任取该最大点集中的 $t_0$，按 $N(r)=\lfloor t_0/(1-r)\rfloor$ 选择查询时长，就在全部允许 $w$ 上统一达到极限信息率 $F_{\max}/(1-r)$。不要求最大点唯一。
+
+证明。 必须同时控制短时长、紧区间和长时长，不能仅对（180.21）的逐点极限取上确界。令 $s=\gamma N$，其中 $\gamma=-\log r$。翻转一个 Bernoulli 位至多使相位改变 $2N\alpha$，且改变前后的相位绝对值都不超过 $N\alpha$。用余弦导数界 $|\sin z|\le|z|$，得到另一条统一导数界
+$$
+|\partial_p Z_{N,p}|\le2(N-1)N^2\alpha^2\le2N^3\alpha^2.
+\tag{181.14}
+$$
+因为 $\alpha/\gamma$ 有界、$x\ge1/2$、$\varepsilon\le\gamma$，以及 $1-u_N^2\ge1-e^{-2s}$，对 $0<s\le1$ 可用（181.14）证明
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_0s^4.
+\tag{181.15}
+$$
+具体地，左侧不超过常数倍的 $\varepsilon N^5\alpha^4/s$，而 $\alpha\le C\gamma$ 将其界为常数倍的 $(\varepsilon/\gamma)s^4$。对 $s\ge1$，改用（180.10）的一阶粗界，得到
+$$
+\varepsilon\frac{I_1^{(N)}(r,w)}N\le C_\infty s e^{-2s}.
+\tag{181.16}
+$$
+两个常数都可与 $N,w,r$ 无关。这两条界分别在 $s\downarrow0$ 和 $s\to\infty$ 一致趋零。
+
+在任一固定 $0<b\le\varepsilon N\le B_0<\infty$ 的区间上，（180.17）的误差控制统一成立：$N=O(\varepsilon^{-1})$、$\delta=O(\varepsilon^3)$，所以导数误差为 $O(\varepsilon)$。结合三角和（178.17）及 $\alpha/\varepsilon\to\sqrt3$，可得（180.22）及（180.21）在这个区间和全部允许 $w$ 上的统一版本。分母有固定正下界 $1-r^{2N}$，故取平方与商不破坏统一收敛。
+
+显式 $f$ 连续，并由上述尾界满足 $f(t)\to0$，当 $t\downarrow0$ 或 $t\to\infty$；在 $T=\pi/(3\sqrt3)$ 处 $f(T)>0$。因此 $F_{\max}$ 存在且最大点集是 $(0,\infty)$ 内的非空紧集。先把两端的统一尾界压到任意给定误差之下，再在中间紧区间取统一极限，即得（181.13）。
+
+同样的尾界与 $f(T)>0$ 把所有离散最优时长限制在统一紧区间。若其归一化时长沿子列收敛到 $t$，紧区间上的统一极限及（181.13）强迫 $f(t)=F_{\max}$。最后，$\varepsilon\lfloor t_0/\varepsilon\rfloor\to t_0$，代入统一紧区间极限即证明反向可达性。由（180.23），$T$ 自身不是该最大点集的成员；这里仍不提供全局最大点的唯一性或闭式表达。证毕。
+
+## 追加锚（本行以下为增补区）
