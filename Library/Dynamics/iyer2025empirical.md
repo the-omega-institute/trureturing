@@ -811,3 +811,66 @@ Fourier 乘子、Gaussian 谱展开、局部极限、概率耦合、格点求和
 本章的 repo-derived 综合明确补上其与实际同一数据实现之间的误差及共同来源关系。
 结论固定原幅度、beta 和 λ=Q³ 序列，紧区间保持固定；
 不声明临界网格的实际定理、任意自适应频率、增长空间窗口或实际后验矩收敛。
+
+## 临界谱网格的离散协方差、共振与尺度分离
+
+归属：`repo-derived`。
+对应 [谱边界卷第 57 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+在原始两种实际实验中，exp(s_M)δ 趋于固定正数时，
+放大余项的协方差保留整数距离上的 Ci 级数，得到非平稳 Gaussian 过程。
+此结论继续使用同一完整标签向量及有限截距，并与旧噪声和移动二次坐标联合识别。
+增长核心上的定量替换沿用第 56 章；新的临界协方差与调和行和估计
+直接作用于采样核，不以连续谱协方差代替网格关系。
+同一临界过程族还有小网格的函数 OU 极限及精确共振的方差降阶。
+对同一实际数据同时取低于网格和临界网格两个尺度，
+交叉协方差的 O(√r(1+|log r|²)) 界使两个极限相互独立；
+这一联合断言以一个共同耦合证明，不由边缘极限拼接。
+
+de Jong，*A Central Limit Theorem for Generalized Quadratic Forms*，
+Probability Theory and Related Fields 75 (1987), 261–277，
+[DOI 10.1007/BF00354037](https://doi.org/10.1007/BF00354037)，
+Definition 2.1 和 Theorem 2.1，印刷第 263–264 页，定义独立输入上的 clean 二次型，
+要求逐输入条件期望为零、最大归一化行方差消失、归一化四阶矩趋于三。
+紧随定理的全一非对角矩阵例子说明：行方差小仍可留下一个大特征值及 chi-square 极限。
+本章临界矩阵的算子范数至多 O(√δ log Q)，明确排除这个障碍。
+该原文不处理实际观测行、固定基数后验、放大中心误差或临界 Ci 过程紧性。
+Gaussian 二次型的联合特征函数是经典步骤，其所需模型估计在正文给出。
+
+Peccati–Taqqu，*Stable convergence of multiple Wiener–Itô integrals*，
+[arXiv:math/0604530v1](https://arxiv.org/abs/math/0604530v1)，
+Definition IV 和 Theorem 7，PDF 第 7–8 页，给出稳定收敛定义及 Skorohod 积分判据。
+该判据使用恒等分解所诱导的适应 integrand、消失的早期投影、
+嵌套 sigma 域，以及范数平方趋于非负可测随机方差等条件。
+适应空间在 §2.2 定义；不能由一个边缘 Gaussian 极限自动取得这些假设。
+本章没有假设实际后验标签形成这种适应积分。
+共同矩阵特征函数、有限秩删除及旧对数核逼近直接给出所需联合独立性。
+mixing 表示与旧 sigma 域中有界测试的极限因子分解，
+不表示给定全部旧噪声后的条件分布收敛。
+
+Bai–Ginovyan–Taqqu，*Functional Limit Theorems for Toeplitz Quadratic Functionals
+of Continuous Time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/abs/1501.05574v2)，
+Theorems 2.1–2.2，PDF 第 2–3 页，研究一个平稳 Gaussian 输入的固定 Toeplitz 核，
+过程参数扩大观测区间。
+其基本条件有 f,g∈L1、fg∈L1∩L2 及所述方差极限；
+函数结论还用协方差 r∈Lp、核 a∈Lq，1/p+1/q≥3/2。
+Theorem 2.4，第 4 页，给出另一组正则变化及 Potter 条件下的非中心函数极限。
+本章的参数改变每对上的频率核，且观测环境异质、标签来自固定基数后验，
+所以这些结果是二次型函数极限的相关先例，不直接给出实际临界模型的结论。
+指定 v2 的 arXiv 页戳是 2015-04-29，PDF 首页另印 2018-06-27；引用版本以 v2 为准。
+
+前节 Nualart–Peccati 的固定混沌判据、Nourdin–Poly 的谱与累积量公式、
+Döbler–Kasprzak–Peccati 的变化核紧性工作、Imai 的异质输入近似
+及 Siripraparat–Neammanee 的方差局部近似，继续作为已知工具使用。
+每个有限临界参数的微小时间增量由 min(|t-u|,1/k) 求和控制，
+不是对非平方可和的余弦导数直接求和。
+Fourier–Plancherel、Bernoulli 多项式的正弦平方级数和 Ci 的分部积分渐近式均为经典事实。
+其组合在本章指定协方差族上给出非平稳性、相位依赖和精确共振的 z⁻³ 方差。
+小网格 OU 极限的 mixing 则来自每个固定 Gaussian 级数坐标的系数趋零，
+以及统一增量控制；不是将定理 57.2 的固定参数替换成另一个增长参数。
+
+在已检查的原文中未找到完整实际后验模型、离散 Ci 协方差及上述共同实现结论的直接陈述。
+这不排除未检查来源，也不认证全球原创性。
+新增内容限于所给模型的综合推导及误差关系。
+临界 Gaussian 过程族的大参数共振渐近不宣称实际数组在网格比例趋于无穷时也有同一极限；
+任意数据自适应频率、增长时间区间、其它幅度及实际后验矩收敛均未包含。
