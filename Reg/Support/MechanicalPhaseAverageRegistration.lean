@@ -1,0 +1,6 @@
+import LeanInformationAudit.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration
+
+open D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+
+register_information_template homogeneousPointwiseEqRealization
