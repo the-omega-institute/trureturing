@@ -7346,3 +7346,262 @@ $\operatorname{Pack}(\Gamma_\alpha,\delta)
 本节的 Euler 回路、整数循环格、字符独立性与共同 Stinespring 机制是所用的标准中间工具。新增推导给出第31节具体来源的可达荷容量、精确在线实现及有理／无理候选弧对照；这些是普通数学结果，未在 Lean 中形式化，也不作外部原创优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 相干长度把整体相位变成边界必须保留的关系
+
+固定终端的整体相位不改变目标密度矩阵；把不同长度保持为同一档案中的相干分量后，这些相位可以产生可见的相对关系。本节在第31—32节的完整边标签来源上证明这一改变的容量代价。新来源明确固定各长度间的相对相位；它不能仅由各固定长度通道的等价类唯一指定。
+
+本节采用单终端块编码合同。它没有把不同终端的独立协议自动拼成相干协议，也不提供该来源的在线生成、固定接收门或物理钟标定成本。其结论不改判第29—30节的六维固定接收器问题。
+
+**定义33.1（相干长度来源与完整联合恢复）。**
+
+固定有限 $m$ 态 primitive 行随机矩阵 $P$，其支持图有 $s$ 条边。每条支持边有独立相位，$\theta\in\mathbb T^s$。将第31节的完整边标签累计等距作固定张量因子重排，把活动记忆写在前方，记为
+$$
+T_{\theta,n}:M\longrightarrow M\otimes B^{\otimes n}.
+$$
+取整数 $N\ge1$、$1\le W\le N+1$，置
+$$
+\mathcal I_{N,W}=\{N,\ldots,N+W-1\},\qquad
+\mathcal A_{N,W}=\bigoplus_{n\in\mathcal I_{N,W}}B^{\otimes n}.
+$$
+令 $\iota_n$ 为长度层的等距嵌入，定义新的相干来源
+$$
+\mathcal T_{\theta;N,W}
+=\frac1{\sqrt W}\sum_{n\in\mathcal I_{N,W}}
+(I_M\otimes\iota_n)T_{\theta,n}.
+\tag{33.1}
+$$
+各长度层正交，所以 $\mathcal T_{\theta;N,W}^*\mathcal T_{\theta;N,W}=I_M$。式 （33.1） 是等距叠加，输出保留不同长度之间的相干项。长度标签属于待恢复档案 $\mathcal A_{N,W}$，不是免费经典旁信息。
+
+初始 $M$ 输入任意，允许与任意不可访问参考纠缠。编码 $\mathcal E:\mathcal L(\mathcal A_{N,W})\to\mathcal L(K)$ 和解码 $\mathcal D:\mathcal L(K)\to\mathcal L(\mathcal A_{N,W})$ 只作用于档案或接收寄存器，不访问参考、活动记忆。它们共同固定，不能依赖实际 $\theta$，但可依赖已知 $P,N,W,\epsilon$。记完整联合恢复半迹误差至多 $\epsilon$ 所需的最小 $\dim K$ 为 $k_{N,W}^{\epsilon,\mathrm{coh}}$。
+
+令 $D$ 为支持图关联矩阵、$A=[D;\mathbf1^T]$，并置
+$$
+r=s-m=\dim\ker_{\mathbb R}A.
+$$
+这里支持图来自行随机矩阵，非空；primitive 性保证所用的强连通与统一长度结论。
+
+**定理33.2（相干长度窗口的精确与近似容量）。** 设 $N_n=\sum_{i,j}|\mathcal C_n(i,j)|$，其中 $\mathcal C_n(i,j)$ 为长度 $n$、端点 $i,j$ 的可达完整边计数集合。则对全部 $N\ge1$、$1\le W\le N+1$，
+$$
+k_{N,W}^{0,\mathrm{coh}}
+=\sum_{n=N}^{N+W-1}N_n.
+\tag{33.2}
+$$
+对每个固定 $0<\epsilon<1$，有统一于全部 $1\le W\le N+1$ 的渐近界
+$$
+\boxed{
+k_{N,W}^{0,\mathrm{coh}}\asymp_P WN^r,
+\qquad
+k_{N,W}^{\epsilon,\mathrm{coh}}\asymp_{P,\epsilon} WN^{r/2}.
+}
+\tag{33.3}
+$$
+即存在只依赖所列固定参数的正上下常数和阈值 $N_0$，对全部 $N\ge N_0$ 及该范围内每个 $W$ 同时成立。
+
+**精确共同支撑与最小物理维数。**
+
+对可达计数 $c\in\mathbb Z_{\ge0}^s$，将同一长度、端点和计数的所有路径振幅合为
+$$
+b_{n,ij,c}
+=\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\c(\gamma)=c}}
+\sqrt{\prod_{e\in\gamma}P_e}\,|n,\gamma\rangle.
+\tag{33.4}
+$$
+每个向量非零，且不同 $(n,i,j,c)$ 的向量正交。独立边相位使其字符为 $e^{i\theta\cdot c}$。因为 $\mathbf1^Tc=n$，不同长度也不可能产生相同完整计数。
+
+已知 $\theta$ 时，档案 Schmidt 支撑由各端点向量
+$$
+\chi_{ij}(\theta)=\frac1{\sqrt W}
+\sum_{n\in\mathcal I_{N,W}}\sum_{c\in\mathcal C_n(i,j)}
+e^{i\theta\cdot c}b_{n,ij,c}
+\tag{33.5}
+$$
+张成。这里每个 $\chi_{ij}$ 本身包含跨长度相干。完整边标签与 $N\ge1$ 使不同端点扇区正交；对 $m$ 维 Bell 参考输入，这些非零向量正是档案侧的 Schmidt 支撑。
+
+不同整数计数给出不同环面字符，故 $\theta$ 遍历整个 $\mathbb T^s$ 时，（33.5） 在每个端点扇区张满全部 $b_{n,ij,c}$。共同支撑 $\mathcal W$ 的维数因而为 $\sum_nN_n$。
+
+还必须证明共同物理编码不能低于这个维数。若同一恢复通道 $\mathcal D\circ\mathcal E$ 精确恢复全部完整纯目标，固定其 Stinespring 等距 $U_L$，则在每个已知相位 Schmidt 支撑上有 $U_Lx=x\otimes e_\theta$。任选非零端点向量，连续性使邻近相位的相应向量具有非零交叠；等距内积保持遂给 $e_\theta=e_\phi$。连通环面使这些环境向量全相同。线性性于是给 $U_Lw=w\otimes e$ 于整个 $\mathcal W$，所以恢复通道在 $\mathcal L(\mathcal W)$ 上恒等。
+
+编码在这个 $(\dim\mathcal W)^2$ 维算子空间上必须单射，故 $\dim K\ge\dim\mathcal W$。反向对 $\mathcal W$ 作一个整体等距编码，并在正交补完成全域 CPTP 映射，即实现精确上界，证明 （33.2）。
+
+定理32.4给出的完整边计数增长律 $N_n\asymp_P n^r$ 对每个充分大 $n$ 成立。由于窗口内 $N\le n\le2N$，其求和给 （33.3） 的精确侧，常数与 $W$ 无关。
+
+**单个计数的统一概率上界。**
+
+记
+$$
+p_{n,i,j}(c)=\|b_{n,ij,c}\|^2.
+$$
+这是以状态 $i$ 启动、长度 $n$ 后到 $j$ 并具有计数 $c$ 的经典路径概率。对独立边相位的矩阵
+$M_\theta(i,j)=P_{ij}e^{i\theta_{ij}}$，有有限 Fourier 展开
+$$
+M_\theta^n(i,j)=\sum_c p_{n,i,j}(c)e^{i\theta\cdot c}.
+$$
+归一化 Haar 积分反演及引理31.3的全局有限步 Gaussian 界给
+$$
+\begin{aligned}
+p_{n,i,j}(c)
+&\le\int_{\mathbb T^s}|M_\theta^n(i,j)|\,d\theta\\
+&\le C\int_{\mathbb T^s}e^{-c_0n d_H([\theta],0)^2}\,d\theta
+\le C_0 n^{-r/2}.
+\end{aligned}
+\tag{33.6}
+$$
+最后一步将 Haar 测度推到维数 $r$ 的固定商环面；局部体积界控制 Gaussian 积分，远处由指数衰减控制。$r=0$ 时该积分为常数，仍是同一式。$C_0$ 统一于 $i,j,c,n$；取充分大 $n$ 已足够，也可增大常数覆盖全部 $n\ge1$。
+
+**保留长度相干的近似下界。**
+
+对 Bell 参考输入，完整纯目标可写为
+$$
+|\Psi_\theta\rangle=\sum_c e^{i\theta\cdot c}|\beta_c\rangle,
+\qquad
+|\beta_c\rangle=\frac1{\sqrt{mW}}
+\sum_{i,j}|i\rangle_J|j\rangle_M\otimes b_{n,ij,c},
+\quad n=\mathbf1^Tc\in\mathcal I_{N,W}.
+\tag{33.7}
+$$
+不存在的端点计数项取零。不同 $c$ 的 $\beta_c$ 正交；同一计数允许把多个端点扇区相干地合在同一个 $\beta_c$ 中，不能把这些相同字符重复当成不同特征值。
+
+对完整相位环面取 Haar 平均，得到
+$$
+\overline\rho=\int |\Psi_\theta\rangle\langle\Psi_\theta|\,d\theta
+=\sum_c|\beta_c\rangle\langle\beta_c|.
+$$
+由 （33.6）、$n\ge N$，
+$$
+\|\overline\rho\|
+=\max_c\frac1{mW}\sum_{i,j}p_{n,i,j}(c)
+\le\frac{C_1}{WN^{r/2}}.
+\tag{33.8}
+$$
+例如取 $C_1=mC_0$ 即可。
+
+设共同编码维数为 $D_K$，共同解码为 $\mathcal D$，令 $\tau=\mathcal D(I_K)$，则 $\operatorname{Tr}\tau=D_K$。每个编码后的联合密度矩阵不超过 $I_{JM}\otimes I_K$，所以恢复态不超过 $I_{JM}\otimes\tau$。半迹误差至多 $\epsilon$ 给每个纯目标的恢复重叠至少 $1-\epsilon$。取 Haar 平均并用 （33.8），
+$$
+1-\epsilon
+\le\operatorname{Tr}[\overline\rho(I_{JM}\otimes\tau)]
+\le\frac{C_1m^2D_K}{WN^{r/2}}.
+\tag{33.9}
+$$
+这证明 $D_K\ge(1-\epsilon)WN^{r/2}/(C_1m^2)$。这里从未测量长度；Haar 平均只用于对未知参数族作必要性证明。
+
+**一个整体成功算子的近似上界。**
+
+令 $\pi$ 为平稳分布，$\mu_e=\pi_iP_{ij}$ 为边 $e=(i,j)$ 的平稳频率。Markov 混合的二阶矩估计给某个只依赖 $P$ 的 $C_2>0$，使全部初始状态 $i$ 都满足
+$$
+\mathbb E_i\|c(X_0,\ldots,X_n)-n\mu\|^2\le C_2n.
+\tag{33.10}
+$$
+例如可对引理31.4的历史扰动估计的每个边坐标取常量实测试向量，再把 $s$ 个平方界相加，取 $C_2=sC_{\rm hist}$。该二阶矩界包含非平稳初始状态的均值偏移。
+
+取 $R=2\sqrt{C_2}/\epsilon$。在每个长度层只保留满足
+$$
+\|c-n\mu\|\le R\sqrt N
+\tag{33.11}
+$$
+的可达向量 $b_{n,ij,c}$，令 $\mathcal W_{\rm good}$ 为所有长度、端点和这些计数向量的**整体线性张成**，$P_{\rm good}$ 为其正交投影。由 （33.10）、$n\le2N$ 和 Markov 不等式，每个初始状态在每个长度层的漏出概率至多
+$2C_2/R^2=\epsilon^2/2$。对相干来源，各长度层正交，故总漏出概率是这些数的等权平均；没有为了计算该范数而实施长度测量。
+
+不同初始状态的档案位于不同首边标签扇区，$P_{\rm good}$ 保持这些扇区。因此误差输入算子没有交叉项，严格有
+$$
+\mathcal T_{\theta;N,W}^*
+[I_M\otimes(I-P_{\rm good})]
+\mathcal T_{\theta;N,W}
+\preceq\frac{\epsilon^2}{2}I_M.
+\tag{33.12}
+$$
+该界对全部相位相同，并可张量任意参考。
+
+对固定 $n,i,j$，所有可达计数满足
+$$
+Dc=e_j-e_i,\qquad\mathbf1^Tc=n.
+$$
+它们处于一个 $r$ 维仿射空间中，且相异整数计数的间距至少一。将半径 $R\sqrt N$ 的球与该仿射空间相交，再用半径 $1/3$ 的不交球比较，可得该层保留的计数个数至多
+$(3R\sqrt N+1)^r$；空交集贡献零，$r=0$ 时最多一个。于是
+$$
+\dim\mathcal W_{\rm good}
+\le m^2W(3R+1)^rN^{r/2}.
+\tag{33.13}
+$$
+
+取等距 $F:\mathcal W_{\rm good}\to K_{\rm good}$，并加一维旗标。用**一个**成功 Kraus 算子 $FP_{\rm good}$ 定义全域通道
+$$
+\mathcal E(X)=FP_{\rm good}XP_{\rm good}F^*
++\operatorname{Tr}[(I-P_{\rm good})X]|\perp\rangle\langle\perp|.
+\tag{33.14}
+$$
+将 $F$ 在所选子空间的正交补上以零延拓。对任意固定档案态 $\tau$，解码明确取为
+
+$$
+\mathcal D(Y)=F^*YF+\langle\perp|Y|\perp\rangle\tau.
+$$
+
+它在整个接收寄存器上完全正且保迹。特别地，若 $P_n$ 表示选中子空间在长度 $n$ 层的投影，（33.14） 的成功项包含全部
+$FP_nXP_{n'}F^*$，包括 $n\ne n'$；所以成功分支保留跨长度相干。
+
+对任意参考输入取纯化，令完整纯目标为 $|\Psi\rangle$、漏出质量为 $d\le\epsilon^2/2$。解码后的成功分支恰为
+$P_{\rm good}|\Psi\rangle\langle\Psi|P_{\rm good}$，其目标重叠为 $(1-d)^2$；失败项为正。因此完整联合半迹误差至多
+$$
+\sqrt{1-(1-d)^2}\le\sqrt{2d}\le\epsilon.
+$$
+额外纯化参考可再偏迹丢弃。编码维数至多 （33.13） 加一，证明 （33.3） 的近似侧上界。所有常数与 $W$ 无关。
+
+**跨长度相位及范围。**
+
+固定长度时，边相位的 scalar-plus-coboundary 方向
+$h_{ij}=\omega+\phi_i-\phi_j$ 沿路径只留下
+$e^{in\omega}e^{i\phi_i-i\phi_j}$。在 （33.1） 中，$e^{in\omega}$ 随长度层变化；当 $W\ge2$ 时，它一般改变档案不同长度分量之间的相对相位，不能再作为整个目标的一个共同标量删去。
+
+容量中的因子 $W$ 来自这个明确保留长度相干的合同：精确侧不同长度具有不同完整计数字符，近似侧平均态的特征值带 $1/W$，上界则整体编码全部选中长度扇区。$W=1$ 恢复固定长度结果；$W=N+1$ 给
+$$
+k_{N,N+1}^{0,\mathrm{coh}}\asymp_P N^{r+1},\qquad
+k_{N,N+1}^{\epsilon,\mathrm{coh}}\asymp_{P,\epsilon}N^{1+r/2}.
+$$
+这只证明新相干来源的单终端块编码容量；没有给出一套固定门、未知未来终端协议、长度测量协议或额外时钟实现成本的结论。本节复用第31—32节已注明来源的字符独立、Markov 混合和 Fourier 反演等标准工具；相干窗口容量由此处的完整联合恢复推导给出，不作外部原创优先权或 Lean 验证主张。
+
+
+**推论33.3（一个纯相位钟与去相干目标的容量差别）。** 取单状态单边来源 $P=[1]$，故 $m=s=1$、$r=0$。每个长度层只含一条路径，记为 $|n\rangle$。完整相干来源成为
+
+$$
+|c_\theta\rangle=\frac1{\sqrt W}
+\sum_{n=N}^{N+W-1}e^{in\theta}|n\rangle,
+\qquad\theta\in\mathbb T.
+\tag{33.15}
+$$
+
+对 $0\le\epsilon<1$，在相同的未知相位共同编解码合同下，
+
+$$
+\boxed{
+k_{N,W}^{0,\mathrm{coh}}=W,\qquad
+(1-\epsilon)W\le k_{N,W}^{\epsilon,\mathrm{coh}}\le W.
+}
+\tag{33.16}
+$$
+
+如果将来源替换为在长度分解上完全去相干后的族，则输出为
+
+$$
+\rho^{\mathrm{deph}}_\theta
+=\frac1W\sum_{n=N}^{N+W-1}|n\rangle\langle n|,
+\tag{33.17}
+$$
+
+与 $\theta$ 无关，其精确最小接收维数是一。
+
+证明。取 $\theta_j=2\pi j/W$、$j=0,\ldots,W-1$。有限等比和给
+$\langle c_{\theta_j}|c_{\theta_k}\rangle=\delta_{jk}$，故这 $W$ 个态构成 $W$ 维档案空间的正交基。
+
+设共同解码为 $\mathcal D$、接收维数为 $D$，置 $\tau=\mathcal D(I_D)$，则 $\operatorname{Tr}\tau=D$。每个编码密度矩阵不超过 $I_D$，恢复态因而不超过 $\tau$。误差不超过 $\epsilon$ 使每个目标投影的恢复概率至少为 $1-\epsilon$；对这组正交目标求和，得到
+
+$$
+W(1-\epsilon)
+\le\sum_{j=0}^{W-1}\langle c_{\theta_j}|\tau|c_{\theta_j}\rangle
+=\operatorname{Tr}\tau=D.
+$$
+
+整个档案空间的恒等编码给 $D=W$ 上界，$\epsilon=0$ 时两者相等。去相干后全族只有一份已知态，编码可以输出固定的一维态，解码重新准备（33.17），从而精确恢复。任何非空接收空间至少一维，故一维最优。证明完毕。
+
+这里去相干是更换来源及恢复目标；在原合同中测量长度会破坏需要恢复的相干项，不能据此获得一维方案。也没有把未知相位称为已校准物理时间。这个例子确定的是：同一组长度标签，是否保留它们之间的相位关系，会改变必要的边界容量。
+
+## 追加锚（本行以下为增补区）
