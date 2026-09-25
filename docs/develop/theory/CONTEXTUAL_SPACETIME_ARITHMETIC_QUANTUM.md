@@ -43679,3 +43679,238 @@ $$
 这里没有把闭松弛的最小值等同于严格开延拓问题的下确界，也没有求出超临界成本的精确函数。三行分别给出实际达到、只能逼近及由紧性保证的正差距，证明完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 202. 超临界续接成本的二次起步：等距转动与等号稳定性
+
+**定义 202.1（允许的临界点及转动参数）。** 固定定义201.1的 $a,t$，令 $b=b_+^*(a,t)$、$R_0=b-t$，并假设
+$$
+0<R_0<\min\{t-(2a-1),1-t\}.
+\tag{202.1}
+$$
+沿用第200节的 $A_0,\lambda_*$，另记
+$$
+\beta_*:=\sqrt{1-A_0^2},\qquad
+x_*(u)=\frac{2a-A_0(1+u)}{\beta_*}
+=\frac{\lambda_*(1-tu)}{\sqrt{1-t^2}},
+\qquad q_*(u)=1-u^2-x_*(u)^2,
+\tag{202.2}
+$$
+以及
+$$
+\gamma=\frac{2(a-A_0)}{\beta_*}>0,\qquad
+v_*=-\frac{2\gamma x_*(b)}{q_*'(b)}>0,
+\qquad
+\Lambda=\frac{2}{(1-t)(1+t)^2}
++\frac{t^2\gamma^2}{(1-t^2)q_*(t)}>0.
+\tag{202.3}
+$$
+这些量均针对固定的 $a,t$。正性由 $a-A_0=a(1-t)/(1+t)>0$、$x_*(b)>0$、$q_*(t)>0$ 以及上根的 $q_*'(b)<0$ 保证。
+
+**定理 202.2（转动处理器给出的显式二次上界）。** 在定义202.1的参数域内，
+$$
+\limsup_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\frac{\Lambda}{v_*^2}<\infty.
+\tag{202.4}
+$$
+其中充分小的正 $\delta$ 均保持半径合法。这个上界由固定二维程序输入与三维环境的实际 CPTP 处理器族给出。
+
+证明。 令环境标准基为 $e_0,e_1,e_2$，取充分小的实设计参数 $s$，并定义
+$$
+\begin{aligned}
+&W_0=(e_0,e_1),\\
+&W_2=\left(e_0,-(1-2s^2)e_1+2s\sqrt{1-s^2}\,e_2\right),\\
+&f_s=se_1+\sqrt{1-s^2}\,e_2,\qquad
+v=(A_0,\beta_*)^T,\quad v^\perp=(-\beta_*,A_0)^T,\\
+&W_1=e_0v^T+f_s(v^\perp)^T.
+\end{aligned}
+\tag{202.5}
+$$
+各 $W_i:\mathbb C^2\to\mathbb C^3$ 都为等距映射。用信号基控制它们，再对环境取偏迹，得到对全部联合输入定义的固定 CPTP 处理器 $\mathcal G_s$；每个 $s$ 的处理器不随运行参数 $u$ 变化。直接求重叠得到
+$$
+W_0^\dagger W_1=W_2^\dagger W_1
+=\begin{pmatrix}A_0&\beta_*\\-s\beta_*&sA_0\end{pmatrix},
+\qquad
+W_2^\dagger W_0=\operatorname{diag}(1,-1+2s^2).
+\tag{202.6}
+$$
+准备实仿射 Bloch 曲线
+$$
+r_s(u)=\bigl(x_s(u),0,z_s(u)\bigr),\qquad
+x_s(u)=\frac{x_*(u)+\gamma s}{1-s^2},\qquad
+z_s(u)=\frac{u-s^2}{1-s^2}.
+\tag{202.7}
+$$
+实际 Schur 系数取 $\operatorname{Tr}(\rho W_j^\dagger W_i)$。由于程序实对称，（202.6）的两个相邻系数都为
+$$
+A_0(h+s\ell)+\frac{\beta_*(1-s)x_s(u)}2=a,
+\qquad h=\frac{1+z_s(u)}2,\quad\ell=\frac{1-z_s(u)}2;
+\tag{202.8}
+$$
+另一个系数为 $s^2+(1-s^2)z_s(u)=u$。因此在程序物理的每个 $u\in J_a$ 上，对所有信号输入精确产生 $\mathcal T_u$。
+
+满秩条件的分子是
+$$
+\begin{aligned}
+D_s(u)
+&=(1-s^2)^2-[x_*(u)+\gamma s]^2-(u-s^2)^2\\
+&=q_*(u)-2\gamma x_*(u)s-[2(1-u)+\gamma^2]s^2.
+\end{aligned}
+\tag{202.9}
+$$
+$D_0$ 的上根 $b$ 是单根，故隐函数定理给出实解析的邻近上根 $b(s)$，满足
+$$
+b(0)=b,\qquad
+b'(0)=\frac{2\gamma x_*(b)}{q_*'(b)}=-v_*<0.
+\tag{202.10}
+$$
+所以负 $s$ 将上端点一阶向外推。名义点与下端点在临界时已有严格物理余量；第201.3节还给出 $b_-^*<2a-1<t-R_0$，故这些余量在小扰动下保持。
+
+计算名义成本时，全部状态处于名义点的满秩邻域。对任意实平面 Bloch 曲线 $(x,0,z)$，SLD 公式可改写为
+$$
+I_Q=\frac{(z')^2}{1-z^2}
++\frac{[(1-z^2)x'+zz'x]^2}
+{(1-z^2)(1-z^2-x^2)},
+\tag{202.11}
+$$
+其中撇号对运行参数 $u$ 求导。对（202.7），第一项为
+$$
+\frac1{(1-u)(1+u-2s^2)}.
+\tag{202.12}
+$$
+在 $u=t$，第二项的分子括号于 $s=0$ 为零，其对 $s$ 的一阶导数为 $t\gamma$；分母于零为 $(1-t^2)q_*(t)>0$。因此名义成本 $Q_s$ 满足
+$$
+Q_s-I_r(t)=\Lambda s^2+o(s^2).
+\tag{202.13}
+$$
+此处用了 $x_*'(t)=-t x_*(t)/(1-t^2)$，以及（202.12）相对 $I_r(t)$ 的二次系数 $2/[(1-t)(1+t)^2]$。
+
+对小的 $\delta>0$，利用（202.10）选择负 $s=s(\delta)$，使
+$$
+b(s)=b+\delta+\delta^2,
+\qquad s(\delta)=-\frac{\delta}{v_*}+O(\delta^2).
+\tag{202.14}
+$$
+上端点严格超过 $t+R_0+\delta$，下端点的固定余量仍在，故程序具有包含半径 $R_0+\delta$ 闭区间的合法开延拓。代入（202.13）即得（202.4）。这是一族确定的处理器与程序准备，没有参数依赖的后选择。证毕。
+
+**定理 202.3（严格二次下界与唯一正首项）。** 在定义202.1的参数域内，存在 $\kappa_{\mathrm m}(a,t)\in(0,\infty)$，使
+$$
+\boxed{
+\mathfrak M_2(a,t;R_0+\delta)
+=I_r(t)+\kappa_{\mathrm m}(a,t)\delta^2+o(\delta^2)
+}
+\qquad(\delta\downarrow0),
+\tag{202.15}
+$$
+并有 $\kappa_{\mathrm m}\le\Lambda/v_*^2$。成本及该首项系数在相应参数域上半代数；实代数 $a,t$ 给出实代数的 $\kappa_{\mathrm m}(a,t)$。本节不确定该系数的精确值。
+
+证明。 首先证明二次归一下确界严格为正。反设存在 $\delta_n\downarrow0$，使成本额外量为 $o(\delta_n^2)$。选择与下确界相差至多 $\delta_n^3$ 的实际程序，并用定理201.2作同域仿射替代，可得可行元 $(\mathcal G_n,b_n,v_n)$，名义成本 $Q_n$ 满足
+$$
+g_n:=Q_n-I_r(t)=o(\delta_n^2),\qquad g_n\ge0,
+\qquad R_n=R_0+\delta_n.
+\tag{202.16}
+$$
+由（201.18）、（201.19），这些元有界，名义状态一致满秩，且 $|v_n|$ 有固定上界。取收敛子列，极限属于半径 $R_0$ 的闭松弛，目标函数连续且等于 $I_r(t)$。一致名义满秩界使极限在 $t$ 附近仍是一个实际的满秩开域程序，故定理200.2适用；该局部结论与极限曲线均为仿射，因而确定其整个参数线。它属于参数 $\lambda\ge\lambda_*$ 的正规形。上端点正性与 $q_{\lambda_*}(b)=0$ 又迫使 $\lambda=\lambda_*$。因此，作一个固定程序坐标变换后，极限就是（202.2）的状态曲线及其投影读出。
+
+下面所有 $O(\cdot)$ 的常数只依赖这条子列的一个固定邻域及固定 $a,t$。记名义状态为 $\rho_n\succeq\mu I$，其中 $\mu>0$ 一致；$L_n$ 为其 SLD。完整二结果读出为 $M_{\pm,n}$，其概率固定为 $(1\pm t)/2$，得分为
+$$
+s_+=\frac1{1+t},\qquad s_-=-\frac1{1-t}.
+\tag{202.17}
+$$
+支持敏感的测量信息差给出精确恒等式
+$$
+g_n=\sum_{j=\pm}
+\left\|\sqrt{M_{j,n}}(L_n-s_jI)\sqrt{\rho_n}\right\|_{\mathrm{HS}}^2
+\ge\mu\sum_{j=\pm}\operatorname{Tr}\bigl(M_{j,n}(L_n-s_jI)^2\bigr).
+\tag{202.18}
+$$
+这是 Braunstein–Caves 测量界的平方余项，直接展开即可验证；本节两个概率始终正。支持条件的原始表述见 Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）。
+
+对每个 $n$，用一个不随运行参数变化的程序酉变换对角化 $H_n=M_{+,n}-M_{-,n}$，并按极限的两个本征值标号。谱间隙趋于二，可以选择这些坐标使极限仍为 $Z$。在此坐标中写
+$$
+M_{+,n}=\operatorname{diag}(1-e_{+,n},e_{-,n}),
+\qquad e_{\pm,n}\ge0,\quad e_{\pm,n}\to0.
+\tag{202.19}
+$$
+名义状态与其导数的收敛、统一满秩性保证 $L_n\to S:=\operatorname{diag}(s_+,s_-)$。若 $L_n$ 的两个对角元为 $\ell_+,\ell_-$、非对角元为 $z$，则（202.18）右侧除以 $\mu$ 后的迹和为
+$$
+\begin{aligned}
+&2|z|^2+(1-e_+)(\ell_+-s_+)^2+e_+(\ell_+-s_-)^2\\
+&\qquad +e_-(\ell_--s_+)^2+(1-e_-)(\ell_--s_-)^2.
+\end{aligned}
+\tag{202.20}
+$$
+各项非负，且两个得分有固定非零间隙。因此
+$$
+e_{\pm,n}=O(g_n),\qquad L_n-S=O(\sqrt{g_n}).
+\tag{202.21}
+$$
+令 $H_n=\alpha_n I+\beta_nZ$，则 $\alpha_n=O(g_n)$、$\beta_n=1-O(g_n)$。精确读出在整个仿射曲线上满足
+$$
+r_{z,n}(u)=\frac{u-\alpha_n}{\beta_n},
+\qquad r_{z,n}'=1+O(g_n).
+\tag{202.22}
+$$
+
+名义点的非对角元趋于 $\lambda_*\sqrt{1-t^2}/2>0$。用固定对角酉变换令它为正实数 $\zeta_n$，并设 $\lambda_n=2\zeta_n/\sqrt{1-t^2}\to\lambda_*$。SLD 方程及（202.21）给出
+$$
+\rho_{10,n}'(t)=-\frac{t}{1-t^2}\zeta_n+O(\sqrt{g_n}).
+\tag{202.23}
+$$
+程序本身仿射，所以在一切有界的参数位置，其 Bloch 向量都与参数 $\lambda_n$ 的第200节正规形相差 $O(\sqrt{g_n})$。这个比较也适用于所需的两个闭区间端点。
+
+还须约束 $\lambda_n$，不能把任意相近的正规形误当合法处理器。名义状态满秩且信号基态输出纯，使每个处理器具有受控等距表示 $W_{i,n}$。令 $A_n=W_{2,n}^\dagger W_{0,n}$，则 $\operatorname{Re}A_n=H_n$。于是
+$$
+\|W_{2,n}-W_{0,n}Z\|_{\mathrm{HS}}^2
+=4-2\operatorname{Re}\operatorname{Tr}(A_nZ)
+=4-4\beta_n=O(g_n).
+\tag{202.24}
+$$
+此式不要求等距扩张随 $n$ 收敛，也不固定其最小环境维数。
+
+记 $K_n=W_{0,n}^\dagger W_{1,n}$。精确的两个相邻 Schur 系数、（202.24）以及有界的状态导数，给出在 $t$ 的值与导数约束
+$$
+\begin{gathered}
+\operatorname{Tr}(\rho_nK_n)=a,\qquad
+\operatorname{Tr}(\rho_n ZK_n)=a+O(\sqrt{g_n}),\\
+\operatorname{Tr}(\rho_n'K_n)=0,\qquad
+\operatorname{Tr}(\rho_n' ZK_n)=O(\sqrt{g_n}).
+\end{gathered}
+\tag{202.25}
+$$
+第一式从实际 $01$ 系数取复共轭取得，另外一个实际系数为 $\operatorname{Tr}(\rho W_2^\dagger W_1)$。相加相减后，$K_n$ 的上下两行分别由两个二阶线性系统控制。在准确正规形处，这两个系统的行列式为 $-\zeta_n/[2(1-t)]$ 与 $-\zeta_n/[2(1+t)]$；它们一致远离零。结合（202.22）、（202.23），可得
+$$
+K_n=\begin{pmatrix}A_0&B_0/\lambda_n\\0&0\end{pmatrix}
++O(\sqrt{g_n}),\qquad
+B_0=2a\sqrt{\frac{1-t}{1+t}}.
+\tag{202.26}
+$$
+因 $K_n$ 为压缩算子，而 $\lambda_n\to\lambda_*>0$，遂有
+$$
+A_0^2+\frac{B_0^2}{\lambda_n^2}\le1+O(\sqrt{g_n}),
+\qquad \lambda_n\ge\lambda_*-O(\sqrt{g_n}).
+\tag{202.27}
+$$
+
+在上端点 $u_n=b+\delta_n$，实际程序为合法态。与正规形的 $O(\sqrt{g_n})$ 比较及（202.27）说明
+$$
+q_*(b+\delta_n)\ge-O(\sqrt{g_n}).
+\tag{202.28}
+$$
+但 $q_*'(b)<0$，所以对某个固定 $c>0$ 及充分大的 $n$，左边不超过 $-c\delta_n$。因此 $\delta_n=O(\sqrt{g_n})$，与（202.16）矛盾。证明了
+$$
+0<\liminf_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\limsup_{\delta\downarrow0}
+\frac{\mathfrak M_2(a,t;R_0+\delta)-I_r(t)}{\delta^2}
+\le\frac{\Lambda}{v_*^2}.
+\tag{202.29}
+$$
+
+最后把上下二次界提升为确定首项。定理201.2的有限优化用 Choi 正半定性、保迹方程、通道等式和严格端点不等式表示为有限半代数域，目标是正分母上的有理函数。其下确界通过“所有可行值不低于它，且任意正误差内存在可行值”的一阶实数公式定义。因此，按定理196.3证明中的同一量词消去步骤，$\mathfrak M_2$ 是半代数函数；此处并不要求取得下确界。所用标准实代数结果见 Saugata Basu，*Algorithms in Real Algebraic Geometry: A Survey*，arXiv:1409.1534v1，定理2.1、2.27。
+
+$R_0(a,t)$ 亦半代数，所以（202.29）中的归一比值为一维半代数函数。其上、下极限若不同，选居中的水平值，两个互斥的半代数子水平与超水平集都会在零累积，因而各自包含某个右开邻域，矛盾。故归一比值有唯一的严格正有限极限 $\kappa_{\mathrm m}$，即（202.15）。其极限关系也能用一阶实数公式定义，再次量词消去给出联合半代数性。固定实代数 $a,t$ 后，系数是一个由实代数系数符号条件定义的单点，故本身为实代数数。
+
+本结论针对每个固定的允许临界点，不主张靠近参数域边界的统一余项，也不把显式构造的上界系数认定为最优系数。证毕。
+
+## 追加锚（本行以下为增补区）
