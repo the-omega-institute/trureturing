@@ -37,7 +37,7 @@ def phaseAverageIntegral (input : PhaseAverageInput) : ENNReal :=
 def phaseAverageVolume (input : PhaseAverageInput) : ENNReal :=
   volume input.target
 
-abbrev PhaseAverageOutput := Option (PhaseAverageInput → ENNReal)
+abbrev PhaseAverageOutput := PhaseAverageInput → ENNReal
 
 /-- Two CUT roles compare the complete parameterized average and volume functions. -/
 def phaseAverageArena : ObjectDomainArena.{0, 0, 0, 0} where
@@ -46,10 +46,11 @@ def phaseAverageArena : ObjectDomainArena.{0, 0, 0, 0} where
     exact homogeneousPointwiseEqArena (Arena.ofFintype Unit) PhaseAverageOutput
   Domain := Set ℝ
 
-def phaseAverageRealization : PrimitiveRealization phaseAverageArena.signature := by
+def phaseAverageRealization :
+    PrimitiveRealization (homogeneousPointwiseEqSignature Unit PhaseAverageOutput) := by
   letI : DecidableEq PhaseAverageOutput := Classical.decEq _
   exact homogeneousPointwiseEqRealization
-    (fun _ : Unit => some phaseAverageIntegral)
-    (fun _ : Unit => some phaseAverageVolume)
+    (fun _ : Unit => phaseAverageIntegral)
+    (fun _ : Unit => phaseAverageVolume)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration

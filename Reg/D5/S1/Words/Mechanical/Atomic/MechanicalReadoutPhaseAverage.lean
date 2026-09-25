@@ -43,45 +43,56 @@ theorem phaseAverageBridge : LegacyPrimitiveRealization phaseAverageArena.toPrim
   constructor
   constructor
   · intro h
-    change ∀ _ : Unit, (some phaseAverageIntegral : PhaseAverageOutput) =
-      some phaseAverageVolume
+    change ∀ _ : Unit, phaseAverageIntegral = phaseAverageVolume
     intro _
-    congr 1
     funext input
     exact h input.ratio input.ratioPositive input.ratioBelowOne input.target
       input.targetMeasurable input.targetInUnit
   · intro h r hr0 hr1 A hA hAunit
     have hFunctions : phaseAverageIntegral = phaseAverageVolume := by
-      exact Option.some.inj (h ())
+      exact h ()
     exact congrFun hFunctions ⟨r, hr0, hr1, A, hA, hAunit⟩
 
-def phaseAverageBad : PrimitiveRealization phaseAverageArena.signature :=
+def phaseAverageBad :
+    PrimitiveRealization (homogeneousPointwiseEqSignature Unit PhaseAverageOutput) :=
   homogeneousPointwiseEqRealization
-    (fun _ : Unit => (none : PhaseAverageOutput))
-    (fun _ : Unit => some phaseAverageVolume)
+    (fun _ : Unit => (fun _ : PhaseAverageInput => (0 : ENNReal)))
+    (fun _ : Unit => (fun _ : PhaseAverageInput => (1 : ENNReal)))
+
+private def emptyInput : PhaseAverageInput where
+  ratio := 1 / 2
+  ratioPositive := by norm_num
+  ratioBelowOne := by norm_num
+  target := ∅
+  targetMeasurable := MeasurableSet.empty
+  targetInUnit := Set.empty_subset _
 
 theorem phaseAverageVariation : phaseAverageArena.Law phaseAverageRealization ∧
     ¬ phaseAverageArena.Law phaseAverageBad := by
   constructor
   · exact phaseAverageBridge.equivalence.mp geometric_atomic_phase_average
   · intro h
-    have hh := h ()
-    exact Option.noConfusion hh
+    have hh := congrFun (h ()) emptyInput
+    exact zero_ne_one hh
 
 theorem phaseAverageSensitivity : FiniteSlotSensitivity phaseAverageArena.toPrimitiveLawArena := by
   change FiniteSlotSensitivity
     (homogeneousPointwiseEqArena (Arena.ofFintype Unit) PhaseAverageOutput)
+  have hne : (fun _ : PhaseAverageInput => (0 : ENNReal)) ≠
+      (fun _ : PhaseAverageInput => (1 : ENNReal)) := by
+    intro h
+    exact zero_ne_one (congrFun h emptyInput)
   exact homogeneousPointwiseEq_sensitivity (Arena.ofFintype Unit)
-    (x := ()) (a := (none : PhaseAverageOutput))
-    (b := some phaseAverageVolume) (by simp)
+    (x := ()) (a := fun _ : PhaseAverageInput => (0 : ENNReal))
+    (b := fun _ : PhaseAverageInput => (1 : ENNReal)) hne
 
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_phase_average
   in phaseAverageArena
   readout via (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
     (Classical.decEq _)
-    (fun _ : Unit => some phaseAverageIntegral)
-    (fun _ : Unit => some phaseAverageVolume))
+    (fun _ : Unit => phaseAverageIntegral)
+    (fun _ : Unit => phaseAverageVolume))
   primitives phaseAverageRealization.toPrimitiveBundle
   realization phaseAverageBridge
   variation phaseAverageVariation sensitivity phaseAverageSensitivity
