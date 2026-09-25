@@ -938,3 +938,65 @@ Brownian bridge 的级数表示、Gaussian 谱极限、连续映射及二分方�
 相位相差 pi 给出相同边缘过程律，所以本章的 2pi 相位收敛只宣告为充分条件。
 未包含相位随机分布或必要性分类、独立的周期桥、数据自适应频率、增长参数区间、
 其它幅度、实际后验矩收敛或去掉频率上界后的结论。
+
+## 精确共振的反射 Brownian 律（第 59 章）
+
+`repo-derived`：第 59 章在同一实际后验模型中处理 eta=2m→∞、
+eta²delta→0 的全部精确共振范围，不加对数余量，也不要求 m 的奇偶子列。
+窗口 s+theta/eta³ 与放大 eta^(3/2)exp(z/2) 使低滞后余弦项留下 Gaussian 偏移，
+而 k 约为 eta² 的高滞后正弦项留下局部 Brownian 路径。
+两侧路径由同一条 Brownian motion 奇反射得到；偏移、该路径与移动二次坐标相互独立，
+并联合独立于整个旧空间 Gaussian 噪声。
+新的连接包括实际放大误差、精确中心、增长滞后卷积与使用总质量的 Schur 估计。
+旧弱极限中代入增长参数不能替代这些步骤。
+
+Foster–Habermann，*Brownian bridge expansions for Lévy area approximations and
+particular values of the Riemann zeta function*，
+[arXiv:2102.10095v2](https://arxiv.org/abs/2102.10095v2)，
+式 (1.1)–(1.2)，PDF 第 2 页，给出标准桥协方差 min(s,t)−st
+及 sine Karhunen–Loève 展开。
+本章用到的 Dirichlet Green 核级数与局部 Brownian 协方差归于这一经典结构。
+该版本 Theorem 1.1，第 3 页，研究截断桥展开的 sqrt(N) 或 sqrt(2N) 放大余项；
+它给出有限维 Gaussian 极限，并明确说明相应极限场没有连续路径实现。
+这里移动的是趋近共振点的自变量，并保留低滞后偏移；
+对实际数组的紧性须由精确 Ci 小增量另证，不能由那条余项定理推出。
+
+Bai–Ginovyan–Taqqu，*Functional Limit Theorems for Toeplitz Quadratic Functionals
+of Continuous time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/abs/1501.05574v2)，
+Theorems 2.1–2.2，PDF 第 2–3 页。
+其对象是在增长矩形 [0,Tt]² 上积分的固定 Toeplitz 核二次泛函，
+输入是具有谱密度 f 的中心平稳 Gaussian 过程。
+Theorem 2.1 要求 fg 同属 L¹、L²，且末端方差趋于指定常数；
+Theorem 2.2 再以 r∈L^p、a∈L^q、1/p+1/q≥3/2 等条件给出 C[0,1] 收敛。
+本章空间质量非平稳，时间参数改变全部格滞后系数，且同格方块被删去，
+所以不直接满足该文的固定核增长观察区间结构。
+该精确版本的 arXiv 标注为 2015-04-29，PDF 首页日期为 2018-06-27；二者分别保留。
+
+de Jong 1987 Theorem 2.1，第 263–264 页，仍是独立 clean 二次型的经典背景：
+最大行方差可忽略及标准化第四矩趋三是承重假设，不能由“配对很多”替代。
+本章用方差加权算子的范数直接控制特征值，且先由混合特征函数证明联合 Gaussian 性。
+Nourdin–Peccati–Reinert [arXiv:0904.1153v2](https://arxiv.org/abs/0904.1153v2)
+Theorem 7.1，PDF 第 26 页，要求独立标准化输入的一致三阶绝对矩、
+固定阶对称去对角核与小最大 influence；它是有限维替换工具，
+不能单独处理本章移动对角坐标、非线性截距及全路径的共同实现。
+共同逆分布耦合保留这些坐标在同一个标签向量上的关系。
+
+Döbler–Kasprzak–Peccati [arXiv:2104.01858v3](https://arxiv.org/abs/2104.01858v3)
+Theorem 1.4 与 Conditions 1.1–1.3，PDF 第 3 页，处理部分指标累积的退化 U-statistic，
+要求方差时钟、加强的 Lindeberg 条件及末端第四矩条件。
+本章参数改变的是振荡核，并有跨零点的负相关，不能只凭同属二次过程而套用。
+Ci 的 min(d/eta,eta/k) 增量界对任意小的 d 成立，提供本章自己的紧性依据。
+Nualart–Peccati 的固定阶混沌判据和谱特征函数均为经典工具；
+有限柱面删除再作 L¹ 逼近，明确处理与整个旧噪声的 mixing。
+Tudor [arXiv:2606.14812v1](https://arxiv.org/abs/2606.14812v1)
+Theorem 1，PDF 第 7 页，所允许的固定旧变量不能直接代替这里随规模移动的二次坐标。
+Siripraparat–Neammanee 的 Bernoulli 局部界继续只用于满足原假设的辅助独立和，
+不宣称实际相邻观测行独立。
+
+已检查的原始文献没有直接给出本章完整实际模型与共同实现的共振极限。
+有限检索不认证全球原创性；桥级数、Schur 方法、Gaussian 谱公式、
+Kolmogorov 紧性及有限柱面方法均不作为新发现。
+本章未包含失谐、eta²delta 不趋零、增长区间、其它幅度、数据自适应频率或实际矩收敛。
+精确有限截距的允许替换须满足 eta²delta^(−1/2) 倍截距误差趋零；
+只有相同弱极限不满足这个速率要求。
