@@ -509,7 +509,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       descriptor
       body }
     let actualType ← inferType actual
-    unless ← matchesPlan context type actualType do throwError "unclassified_form:dtr.signature_mismatch"
+    unless ← matchesPlan context type actualType do
+      logInfo m!"DTR_PROBE expectedType={← materialize type} actualType={actualType}"
+      throwError "unclassified_form:dtr.signature_mismatch"
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
