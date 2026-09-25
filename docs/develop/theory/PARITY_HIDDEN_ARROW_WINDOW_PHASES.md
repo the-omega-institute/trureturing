@@ -547,3 +547,323 @@ $`\sigma_j\to\sigma`$ 判断。内部逼近给出上述障碍；从外部逼近�
 故弱极限、移动律比较及紧性结论均一起转移。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 47. 密网格的中央平坦化与齐次后验噪声
+
+**定义 47.1（介于重开与有限网格之间的强度）。** 保持[后验阈值卷定义 39.1](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)
+的同一个固定振幅及 $`P_j,Q_j,\alpha`$，固定 $`\beta\in(1/2,1)`$，令
+
+```math
+\eta_j=\alpha-P_j/Q_j,\quad L_j=\log(1/\eta_j),\quad
+d=\frac{\phi(1-\beta)}\beta,\quad A=\frac{2\log10}{d},\qquad
+\lambda_j=\frac{2L_j+s_j\log Q_j}{d}+b_j\in\mathbb N,
+\quad 0\lt s_-\le s_j\le s_+\lt3,\quad \sup_j|b_j|\lt\infty.
+```
+
+式 (47.1)。
+
+各序列均为确定序列。用此强度重新计算 (39.3) 的全部参数，仍用同一实际观测与
+精确固定基数后验，只取最终合法的下标。记
+
+```math
+\chi_j=\eta_j\sqrt q,\qquad
+c_j=\frac{W(k_0,l_0)-\tau}{w},\qquad
+\sigma_j=\frac\Delta w,\qquad
+R_M=\sqrt{\frac q{\lambda\sigma_j}},\qquad
+c_0=\frac1{4\pi\sqrt{ab}}.
+```
+
+式 (47.2)。
+
+这里 $`\Delta`$ 为相邻直线计数点的精确补偿得分差，其最终为正将在下文证明。
+以原窗口坐标定义
+
+```math
+\mathcal F_M(u)=\frac1{R_M}
+ \sum_{\tau-w\lt W_i\le\tau+uw}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+Y_M=\mathcal F_M(1),\qquad
+\mathcal C_M(u)=\mathcal F_M(u)-\frac{u+1}{2}Y_M,
+\quad -1\le u\le1.
+```
+
+式 (47.3)。
+
+未知方向时全部坐标共用一次方向判决和相应工作权重。
+
+**定理 47.2（取整相位任意振荡下的齐次极限）。** 定义 47.1 的参数最终合法，且
+$`\chi_j\to\infty`$、$`\sigma_j\to0`$、$`c_j\to0`$、$`R_M\to\infty`$。
+对两种实际平稳实验、两种方向信息情形，沿完整序列对支持一致地有
+
+```math
+(Y_M,\mathcal F_M,\mathcal C_M)\Longrightarrow
+\left(W(2c_0),\ W(c_0(\cdot+1)),\
+ W(c_0(\cdot+1))-\frac{\cdot+1}{2}W(2c_0)\right)
+\quad\text{于 }\mathbb R\times D[-1,1]\times D[-1,1].
+```
+
+式 (47.4)。
+
+路径空间取 $`J_1`$ 拓扑，$`W`$ 是同一个标准 Brownian 运动。
+两个路径族均为 $`C`$-紧；极限桥与极限端点独立，并与
+$`\sqrt{2c_0}\,\mathcal B((u+1)/2)`$ 同律，其中 $`\mathcal B`$ 为标准 Brownian 桥。
+特别地 $`Y_M/\sqrt{2c_0}\Longrightarrow N(0,1)`$。
+在正确对齐的均匀固定基数先验空间中，整个三元组的精确后验条件律
+在有界 Lipschitz 距离下依数据概率趋于 (47.4) 的确定律。
+固定支持下所述的是无条件联合律，不另赋予固定标签条件随机性。
+
+还可把 (47.3) 中的归一化换为
+
+```math
+\widetilde R_M^2=\frac{\sqrt q}{h\eta_jQ_j\sqrt\lambda},\qquad
+\frac{\widetilde R_M}{R_M}\longrightarrow1.
+```
+
+式 (47.5)。
+
+若仍用第 45 章的 $`B_M^2=q/(Q\sqrt\lambda)`$，则同一原窗口和的
+$`B_M`$ 归一化过程在一致范数下依概率趋于零。
+结论不要求 $`s_j,b_j`$ 或任何取整相位收敛；各固定上下界可进入估计常数。
+不声称端点强度 $`s=0,3`$ 上的一致性或实际噪声矩收敛。
+
+证明。令 $`e_j=k_0-a\lambda\in(-1,0]`$、$`H=h+h_+`$，
+$`\zeta_j=\phi\lambda/(\beta\log2)-N\in[0,1)`$。
+正逼近尾与所有取整给出
+
+```math
+\eta_j=10^{-Q_j^5}(1+o(1)),\qquad
+\log q=d\lambda-\zeta_j\log2-e_jH+o(1),\qquad
+\frac{\chi_j}{Q_j^{s_j/2}}
+=\exp\left(\frac{db_j-\zeta_j\log2-e_jH}{2}+o(1)\right).
+```
+
+式 (47.6)。
+
+最后的因子有固定正上下界，不把它替换为 $`1`$。
+于是 $`\lambda\sim AQ^5`$、$`q\asymp M^{1-\beta}`$、
+$`\lambda/\log M\to\beta/\phi`$；
+$`q(\log M)^3/M\to0`$、$`\lambda q^2/M\to0`$。
+$`q,M`$ 的增长超过 $`Q,\lambda`$ 的任意固定幂。
+这些关系保证参数合法，并使内在临界偏移为零。
+
+由 $`2\phi/d=2\beta/(1-\beta)\gt2`$，
+$`\epsilon/\eta`$ 乘上 $`Q,\lambda,\chi`$ 的任意固定幂仍趋零。
+精确直线间距及中央补偿展开因而给出
+
+```math
+\Delta=Q\left(h\eta-\log(1-\epsilon)
+                   -\frac PQ\log(1+\epsilon)\right)\sim hQ\eta\gt0,
+\qquad
+|c_j|=O\left(\epsilon\sqrt{\lambda q}
+                 +\frac1{\sqrt{\lambda q}}\right)\longrightarrow0,
+```
+
+```math
+\sigma_j=\frac{hQ\chi_j}{\sqrt\lambda}(1+o(1))
+ \asymp Q_j^{(s_j-3)/2}\longrightarrow0,\qquad
+\lambda\sigma_j\asymp Q_j^{(7+s_j)/2}\longrightarrow\infty,
+\qquad R_M^2/q=(\lambda\sigma_j)^{-1}\longrightarrow0.
+```
+
+式 (47.7)。
+
+$`R_M\to\infty`$ 同时成立。$`s_->0`$ 保证 $`\chi_j\to\infty`$，
+$`s_+\lt3`$ 保证网格趋密，这两个严格不等式承担不同义务。
+$`\Delta\sim hQ\eta`$ 也立即给出 (47.5)。
+
+在一个固定充分大的公共截断 $`k+l\le C_1\lambda`$ 内，整数分解
+
+```math
+Z(k,l)-z_0=h\left(\eta(k-k_0)
+ +\frac{P(k-k_0)-Q(l-l_0)}Q\right)
+```
+
+式 (47.8)。
+
+使每个非直线点与中央得分相距至少 $`h/(2Q)`$。
+这里 $`Q\eta\lambda,Q\epsilon\lambda,Qw,Q/q`$ 均趋零，故补偿和窗口宽度
+不能跨过该间隙。实际单行尾界对全部行取并集，使公共截断事件的概率趋一。
+其上窗口恰好选择直线点 $`(k_0+tQ,l_0+tP)`$，位置精确为 $`c_j+t\sigma_j`$。
+记相应整数前缀为 $`\mathcal T_j(u)`$，则
+
+```math
+\mathcal T_j(u)=\{t\in\mathbb Z:-1\lt c_j+t\sigma_j\le u\},\qquad
+n_j(u)=|\mathcal T_j(u)|
+ =\left\lfloor\frac{u-c_j}{\sigma_j}\right\rfloor
+  -\left\lfloor\frac{-1-c_j}{\sigma_j}\right\rfloor,
+\qquad
+\sup_{-1\le u\le1}|\sigma_j n_j(u)-(u+1)|\le\sigma_j.
+```
+
+式 (47.9)。
+
+这是保留严格左端点和非严格右端点的精确计数；不需要任何小数部分收敛。
+令 $`\mathcal T_j=\mathcal T_j(1)`$，则
+$`|\mathcal T_j|\sim2/\sigma_j\to\infty`$，但所有选中标记同时满足
+
+```math
+\sup_{t\in\mathcal T_j}\frac{|t|Q}{\sqrt\lambda}
+ \le\frac{(1+|c_j|)Q}{\sigma_j\sqrt\lambda}
+ =O(\chi_j^{-1})\longrightarrow0.
+```
+
+式 (47.10)。
+
+全部这些计数最终非负并在公共截断内。选中组数增长，而整个标记集合缩到中央。
+二维 Stirling 展开因此在整个增长集合上一致给出
+
+```math
+f_t:=Q_r\{(N_+,N_-)=(k_0+tQ,l_0+tP)\}
+ =\frac{1+o(1)}{2\pi\lambda\sqrt{ab}}
+ =\frac{2c_0}{\lambda}(1+o(1)),\qquad t\in\mathcal T_j.
+```
+
+式 (47.11)。
+
+具体地，各坐标与 Poisson 均值的偏差为 $`O(\sqrt\lambda/\chi_j+1)`$。
+Stirling 对数展开的二次项为 $`O(\chi_j^{-2}+\lambda^{-1})=o(1)`$，
+余项 $`O(\lambda^{-1}+|v|/\lambda+|v|^3/\lambda^2)`$ 也一致趋零。
+这证明 (47.11) 的一致性，而非只对每个固定整数证明点态结论。
+
+令 $`N_t`$ 为实际计数组占据数，$`W_t`$ 为该组得分。
+精确换测度 $`dQ_r=e^W dQ_{-\epsilon}`$ 给出混合比较均值
+
+```math
+m_t=qf_t+(M-q)e^{-W_t}f_t
+ =qf_t\{1+(1-q/M)e^{\tau-W_t}\}
+ =\frac{4c_0q}{\lambda}(1+o(1))
+```
+
+式 (47.12)。
+
+并且最后等价关系在全部选中组上一致。
+对固定真实支持应用实际一行、两行点质量比较，记
+$`\varepsilon_{\rm row}=O((\log M)^3/M)`$，便有
+$`|\mathbb E N_t-m_t|\le C_2\varepsilon_{\rm row}m_t`$、
+$`\mathrm{Var}(N_t)\le C_2(m_t+\varepsilon_{\rm row}m_t^2)`$。
+这里点事件已在固定截断内，比较为相对误差，不需要追加行尾常数。
+对任意固定 $`\xi\gt0`$，Chebyshev 和有限并集于是给出
+
+```math
+\sup_{|S|=q}\mathbb P_S\left\{
+ \max_{t\in\mathcal T_j}|N_t/m_t-1|\gt\xi\right\}
+\le C_\xi\sigma_j^{-1}
+ \left(\frac\lambda q+\varepsilon_{\rm row}\right)\longrightarrow0.
+```
+
+式 (47.13)。
+
+$`\sigma_j^{-1}=O(Q^{(3-s_-)/2})`$ 只付出多项式因子。
+上述实际行比较的适用条件已经由 (47.6) 核对；没有假设实际行独立。
+全局 logistic 校准仍有 $`\theta_M=O_{\mathbb P}(q^{-1/2})`$ 和
+$`q^{-1}\sum_i p_i(1-p_i)\to1/2`$。
+它们由精确换测度、实际一行两行集中及临界 Poisson 中心极限定理得到；
+其所需 $`q\varepsilon_{\rm row}\to0`$ 在此成立。
+窗口内 $`|W_t-\tau|\le w\to0`$，故 $`p_t\to1/2`$ 一致。
+置 $`d_t=N_tp_t(1-p_t)`$，则
+
+```math
+\max_{t\in\mathcal T_j}
+ \left|\frac{N_t}{4c_0q/\lambda}-1\right|\longrightarrow0,
+\qquad
+\max_{t\in\mathcal T_j}
+ \left|\frac{d_t}{c_0q/\lambda}-1\right|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (47.14)。
+
+用同一数据环境下的方差时钟
+$`D_M(u)=R_M^{-2}\sum_{t\in\mathcal T_j(u)}d_t`$。
+(47.9)、(47.14) 和精确恒等式 $`(q/\lambda)/R_M^2=\sigma_j`$ 直接给出
+
+```math
+\begin{split}
+\sup_u|D_M(u)-c_0(u+1)|&\longrightarrow0,\\
+\sup_u\left||J(u)|/R_M^2-4c_0(u+1)\right|&\longrightarrow0,\\
+\max_{t\in\mathcal T_j}d_t/R_M^2
+ &=c_0\sigma_j(1+o_{\mathbb P}(1))\longrightarrow0
+\end{split}
+\quad\text{依概率}.
+```
+
+式 (47.15)。
+
+这里 $`J(u)`$ 是原窗口行前缀，$`J=J(1)`$。
+特别地 $`d_J/R_M^2\to2c_0`$、$`|J|/R_M^2\to8c_0`$，两者均为
+$`o_{\mathbb P}(q)`$。补集因此保留 $`q`$ 量级的辅助方差；
+以趋一概率有 $`|J|\le q/2`$ 和 $`M-|J|\gt q`$，所有补集条件计数合法。
+
+在一个好环境中取同一个校准 Bernoulli 乘积律。
+[波动卷 (35.11)](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md) 对完整窗口标签向量给出
+$`d_{\rm TV}(\mathsf P_J,\mathsf Q_J)\le C_3(d_J/q+q^{-1/2})\to0`$。
+精确中心另由该卷 (35.12) 的加权消去估计给出
+
+```math
+\sup_{E\subseteq J}\frac1{R_M}
+ \left|\sum_{i\in E}(\pi_i-p_i)\right|
+\le\frac{C_3\sqrt{d_J}}{R_M}
+ \left(\frac{d_J+\sqrt{d_J}}q+q^{-1/2}\right)
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (47.16)。
+
+该估计适用于新的较小尺度：$`\sqrt{d_J}/R_M=O_{\mathbb P}(1)`$，而
+$`d_J/q=O_{\mathbb P}((\lambda\sigma_j)^{-1})\to0`$。
+它同时控制所有前缀，不把总变差乘以标签数。
+
+固定满足这些极限的确定环境序列，按递增得分一次揭示一个完整计数组。
+辅助中心过程是平方可积鞅，其可预测二次变差为 $`D_M`$。
+独立中心 Bernoulli 和的四阶矩估计给出
+
+```math
+\sum_{t\in\mathcal T_j}\mathbb E_{\mathsf Q}
+  |\Delta_t\mathcal F_M^{\mathsf Q}|^4
+\le3\left(\max_t\frac{d_t}{R_M^2}\right)D_M(1)
+  +R_M^{-2}D_M(1)\longrightarrow0,
+\qquad
+\mathbb E_{\mathsf Q}\max_t|\Delta_t\mathcal F_M^{\mathsf Q}|^2
+\le\left(\sum_t\mathbb E_{\mathsf Q}
+ |\Delta_t\mathcal F_M^{\mathsf Q}|^4\right)^{1/2}\longrightarrow0.
+```
+
+式 (47.17)。
+
+这里控制的是整组跳跃，不是单标签系数。
+令时间为 $`t=u+1\in[0,2]`$，并在 $`t=2`$ 后接上独立、方差率为
+$`c_0`$ 的 Brownian 增量。延拓只用于应用
+[Whitt 定理 2.1(ii)](../../../Library/Dynamics/whitt2007martingale.md)。
+延拓鞅从零出发，可预测时钟在每个紧区间一致趋于 $`c_0t`$；
+最大时钟跳跃的期望和最大鞅跳跃平方的期望分别由 (47.15)、(47.17) 趋零。
+因此辅助过程趋于 $`W(c_0(u+1))`$。
+极限在截断端点连续，故从半直线限制回紧区间合法；原窗口恰在右端点的组
+同样受消失跳跃界控制，恰在左端点的组按定义排除。
+
+完整向量总变差只转移一次路径律；(47.16) 再转移全部精确中心。
+随机环境的任意子序列可继续提取使上述误差几乎处处趋零的子序列，
+确定环境结论于是证明精确后验条件律的有界 Lipschitz 收敛依数据概率成立。
+这里没有再提取取整相位子序列，因为 (47.15) 已在完整序列上给出同一线性时钟。
+距离有界，故取先验期望后得到无条件路径收敛，没有转移无界矩。
+
+端点评价及 $`f\mapsto(f(1),f,f-(u+1)f(1)/2)`$ 在连续极限处连续，
+从而得到 (47.4) 的同噪声联合极限。其桥协方差为
+
+```math
+c_0\left(\min(u,v)+1-\frac{(u+1)(v+1)}2\right),
+\qquad
+\mathrm{Cov}\left(W(c_0(u+1))-\frac{u+1}{2}W(2c_0),W(2c_0)\right)=0.
+```
+
+式 (47.18)。
+
+联合高斯性随后给出独立性。完整序列的极限连续，故两个路径族均为 $`C`$-紧。
+最后，$`\ell_j=\Delta\sqrt q/Q\sim h\chi_j\to\infty`$，且
+$`R_M^2/B_M^2=Q/(\sigma_j\sqrt\lambda)=1/\ell_j\to0`$。
+新归一化过程的一致范数为 $`O_{\mathbb P}(1)`$，便得到旧归一化下的一致消失。
+
+整个标签、窗口、中心与三元组对共同支持置换等变，无条件联合律因此等于
+任意固定支持下的联合律，实际估计具有支持一致性。
+所有坐标共用的正确方向事件补集概率为 $`O(q^{-1})`$；一次相等耦合
+同时转移弱极限与紧性，不要求方向判决独立于数据。这完成证明。∎
+
+## 追加锚（本行以下为增补区）
