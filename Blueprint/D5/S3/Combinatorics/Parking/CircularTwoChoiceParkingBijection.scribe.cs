@@ -47,7 +47,11 @@ internal sealed class CircularTwoChoiceParkingBijectionDocument
                     + "retain the orbit normalization, vacancy cut and uncut maps, and both proved inverse "
                     + "laws. This is the sole typed settlement of the paper's fixed-increment, "
                     + "fixed-vacancy problem.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "circular-two-choice-parking-fixed-fiber-bijection"),
+                    ResolutionKind.Proved)),
             Node("global-observable-equivalence", "The auxiliary global observable equivalence",
                 "globalParkingEquiv",
                 "For n with hypothesis 1 <= n, every literal actual preference is equivalent to a "
