@@ -9657,3 +9657,315 @@ $$
 证明完毕。该达到构造只保证指定初态 $|0\rangle_M$ 的前三终端，完整参考输入族的三终端最小容量四属于不同合同；也没有由（38.30）推出四步以后或所有终端的精确恢复。
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 六终端的八维固定接收器与指定核心延拓的精确容量
+
+本节固定已知非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+\tag{39.1}
+$$
+
+源的一步等距为 $|i\rangle_M\mapsto m_i\otimes|i\rangle_B$。接收器从独立纯态启动，每轮对接收器与最新发出位使用同一个全域 CPTP 通道；所有持久系统均计入接收器，活动记忆和任意外部参考不可访问。要求前六个终端各自精确恢复完整参考—活动记忆—原始档案联合态，终端解码器允许依终端而异。
+
+**定理 39.1（六终端的八维上界）。** 对每份满足（39.1）的已知来源，存在一个八维固定接收通道，精确服务上述六个终端。因此，结合第36节的五终端精确容量，
+
+$$
+\boxed{7\le d_{\mathrm{CPTP},6}(a,b)\le8.}
+\tag{39.2}
+$$
+
+以下给出完整构造。接收通道可以针对已知 $a,b$ 校准，但实际执行不依赖轮次控制。
+
+### 39.1 五维向量核心与三个新增方向
+
+取接收空间 $K$ 的八元正交单位基
+
+$$
+u,v,w,p,e,g,h,t,
+\tag{39.3}
+$$
+
+初始接收态为 $w$。环境 $E$ 二维，正交单位基为 $A,B$。沿用第23节的五维向量核心，令
+
+$$
+\begin{aligned}
+c&=\sqrt{|a|^4+|b|^2},&
+d&=\sqrt{c^2+|b|^2},\\
+z&=\frac{a^2u+bv}{c},&
+y&=\frac{-\overline b\,u+\overline a^{\,2}v}{c},\\
+q&=\frac{\overline b\,y+\overline a^{\,2}e}{c},&
+f&=\frac{-a^2y+be}{c},\\
+s&=\frac{-cv+be}{d},&
+r&=\frac{df-cs}{b}.
+\end{aligned}
+\tag{39.4}
+$$
+
+这些向量满足
+
+$$
+\begin{gathered}
+(z,y),\quad(q,f),\quad(p,q,s,r)
+\quad\text{分别是正交单位族},\\
+q,f\in\operatorname{span}\{y,e\},\qquad
+q,f\perp z,w,p,\qquad s\perp u,w,p,\\
+cs+br=df,\qquad
+\operatorname{span}\{p,q,s,r\}
+=\operatorname{span}\{u,v,p,e\}.
+\end{gathered}
+\tag{39.5}
+$$
+
+最后一个空间等式也可直接核对：由 $r=(df-cs)/b$ 可在左侧得到 $f$，由 $(q,f)$ 得到 $\operatorname{span}\{y,e\}$，由 $s=(-cv+be)/d$ 得到 $v$，最后由 $y$ 的非零 $u$ 系数得到 $u$。
+
+在新增平面 $\operatorname{span}\{g,h\}$ 中置
+
+$$
+\begin{aligned}
+\kappa&=\sqrt{|a|^4d^2+|b|^2c^2},\\
+x&=\frac{a^2dg+cbh}{\kappa},&
+y_4&=\frac{-c\overline b\,g+\overline a^{\,2}dh}{\kappa}.
+\end{aligned}
+\tag{39.6}
+$$
+
+直接取内积得 $\|x\|=\|y_4\|=1$、$\langle x,y_4\rangle=0$。再定义
+
+$$
+\lambda=\sqrt{\kappa^2+|b|^2d^2},\qquad
+z_6=\frac{\kappa t+bd\,y_4}{\lambda}.
+\tag{39.7}
+$$
+
+于是 $z_6$ 单位，且正交于 $x$ 及整个五维核心。$c,d,\kappa,\lambda$ 均严格正，且 $b\ne0$，所以所有分母均非零。
+
+### 39.2 同一个部分酉的十三行作用
+
+记输入 $v0=v\otimes|0\rangle$、$v1=v\otimes|1\rangle$；输出 $vA=v\otimes A$、$vB=v\otimes B$。规定
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+x0&tA&s1&hB\\
+g1&y_4A&z_6 0&pB\\
+&&t1&eB
+\end{array}
+\tag{39.8}
+$$
+
+左半表的零位输入族为 $(w,z,x)$，一位输入族为 $(w,u,g)$；右半表分别为 $(p,q,f,z_6)$ 和 $(p,s,t)$。四族各自正交归一。
+
+两半表的零位族彼此正交：原核心给 $w,z\perp p,q,f$，新增 $x$ 正交于核心，$z_6$ 正交于核心及 $x$。两半表的一位族也彼此正交：原核心给 $w,u\perp p,s$，新增 $g,t$ 正交于核心且相互正交。不同输入位之间自动正交，所以十三个输入构成正交单位族。
+
+环境 $A$ 块中的接收输出为 $(p,q,s,r,t,y_4)$，是六个正交单位向量；环境 $B$ 块为 $(u,v,w,g,h,p,e)$，是七个正交单位向量。两个环境正交，所以十三个输出也构成正交单位族。
+
+把两侧各自补成十六维空间的正交单位基，得到全域酉
+
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E.
+\tag{39.9}
+$$
+
+每轮固定使用同一个通道
+
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{39.10}
+$$
+
+环境逐轮丢弃，没有任何环境系统作为额外持久接收记忆保留。
+
+### 39.3 两个初始列的全部六轮轨迹
+
+以 $\Psi_n^i\in M\otimes K$ 表示初始活动记忆为 $|i\rangle$ 时，第 $n$ 轮之后的联合列；记 $m_jv=m_j\otimes v$，省略共同环境字。前两轮为
+
+$$
+\begin{array}{ll}
+\Psi_1^0=m_0p,&\Psi_1^1=m_1q,\\[2pt]
+\Psi_2^0=a\,m_0u+b\,m_1v,&\Psi_2^1=m_0w.
+\end{array}
+\tag{39.11}
+$$
+
+第三轮给
+
+$$
+\Psi_3^0=c\,m_0s+ab\,m_1r,\qquad
+\Psi_3^1=a\,m_0p+b\,m_1q.
+\tag{39.12}
+$$
+
+利用 $cs+br=df$，第四轮为
+
+$$
+\begin{aligned}
+\Psi_4^0&=ad\,m_0g+cb\,m_1h,\\
+\Psi_4^1&=m_0(a^2u+bw)+ab\,m_1v.
+\end{aligned}
+\tag{39.13}
+$$
+
+第五轮第一列的零位输入系数为 $a^2dg+cbh=\kappa x$，一位输入系数为 $abd\,g$，故
+
+$$
+\begin{aligned}
+\Psi_5^0&=\kappa m_0t+abd\,m_1y_4,\\
+\Psi_5^1&=a\,m_0(cs+bp)+b\,m_1(a^2r+bq).
+\end{aligned}
+\tag{39.14}
+$$
+
+第六轮第一列的两个输入系数为
+
+$$
+a\kappa t+abd\,y_4=a\lambda z_6,\qquad b\kappa t.
+\tag{39.15}
+$$
+
+第二列的两个输入系数为
+
+$$
+\begin{aligned}
+a^2(cs+bp)+b(a^2r+bq)
+&=a^2df+a^2bp+b^2q,\\
+ab(cs+bp)&=abc\,s+ab^2p.
+\end{aligned}
+\tag{39.16}
+$$
+
+表（39.8）于是给出最后一轮
+
+$$
+\begin{aligned}
+\Psi_6^0&=a\lambda\,m_0p+b\kappa\,m_1e,\\
+\Psi_6^1&=m_0(a^2dg+a^2bu+b^2w)
+          +m_1(abc\,h+ab^2v).
+\end{aligned}
+\tag{39.17}
+$$
+
+每一轮的两个初始列都具有同一个纯输出环境，六轮依次为 $A,B,A,B,A,B$。因此这些等式通过线性性保持任意初始叠加，并保持与任意不可访问参考的相干关联。
+
+### 39.4 只在接收端运行的完整解码
+
+固定终端 $n\le6$，记 $\eta_1\cdots\eta_n$ 为 $ABABAB$ 的前 $n$ 位。解码端准备这份已知纯环境字，从 $\eta_n$ 开始逆序施加 $V^*$，每次恢复一个发出位，最后恢复独立接收初态 $w$。将发出位排列回原有档案次序并丢弃 $w$，得到一个定义在整个接收空间上的 CPTP 解码器。
+
+早期接收门与其后的源发射分别作用于接收器—既有档案和活动记忆—新发出位，因此可以交换次序。全部接收门在终端等价于只作用于完整档案及初态 $w$ 的累计酉。上述逆运算正是该累计酉在实际输入像上的逆，始终只访问接收器、解码端准备的环境以及已恢复的档案位。
+
+于是对任意参考 $R$、任意初始联合态 $\rho_{RM}$，都有
+
+$$
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\bigl(\rho^{\mathrm{received}}_{RMK,n}\bigr)
+=\rho^{\mathrm{source}}_{RM B_1\cdots B_n}.
+\tag{39.18}
+$$
+
+这证明八维上界。六终端合同包含前五个终端要求，而第36节给 $d_{\mathrm{CPTP},5}(a,b)=7$，所以得到（39.2）。定理39.1证明完毕。
+
+### 39.5 固定第25节前四轮九行部分表的延拓下界
+
+以下另外限制实现类。固定第25节构造（25.39）的前四轮九行部分表
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&pA&p0&uB\\
+w1&qA&p1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+&&s1&hB
+\end{array}
+\tag{39.19}
+$$
+
+其中五维向量核心仍为（39.4），$g,h$ 是与核心正交的单位方向。只允许在尚未指定的输入上选择等距完成，要求前六轮的新环境为同一对正交单位向量构成的 $ABABAB$。
+
+**定理 39.2（指定九行核心的六终端最优容量）。** 在（39.19）及确定正交交替环境的附加限制下，六终端最小接收维数恰为八。
+
+证明：表（39.8）已给八维上界。反设七维完成存在，则 $K$ 的正交单位基为 $u,v,w,p,e,g,h$。第五轮第一来源列的两个新输入为 $x0$ 和 $g1$，其中 $x$ 由（39.6）定义。由于第五轮要求环境 $A$，而 $m_0,m_1$ 线性无关且两个系数均非零，必有
+
+$$
+V(x0)=j\otimes A,\qquad V(g1)=k\otimes A,
+\tag{39.20}
+$$
+
+其中 $j,k$ 正交归一。它们与已有环境 $A$ 输出 $p,q,s,r$ 正交，所以（39.5）给
+
+$$
+j,k\in\operatorname{span}\{w,g,h\}.
+\tag{39.21}
+$$
+
+这里保留了该三维正交补中全部第五轮自由。第五轮第一列必为
+
+$$
+\Psi_5^0=\kappa m_0j+abd\,m_1k.
+\tag{39.22}
+$$
+
+第六轮的一位输入系数为非零倍数 $b\kappa j$。该方向必须输出环境 $B$，所以固定等距使 $j1$ 正交于旧环境 $A$ 的一位输入 $w1,u1,g1$。结合（39.21）得到
+
+$$
+j=\zeta h,\qquad |\zeta|=1,\qquad
+k\in\operatorname{span}\{w,g\}.
+\tag{39.23}
+$$
+
+第六轮零位输入系数是 $a(\kappa j+bdk)$。它同样必须输出环境 $B$，故
+
+$$
+\kappa j+bdk\perp\operatorname{span}\{w,z,x\}.
+\tag{39.24}
+$$
+
+先与 $w$ 取内积，由 $bd\ne0$ 得 $k\perp w$。于是
+
+$$
+k=\xi g,\qquad |\xi|=1.
+\tag{39.25}
+$$
+
+再与 $x$ 取内积，得到
+
+$$
+\begin{aligned}
+0
+&=\langle x,\kappa\zeta h+bd\,\xi g\rangle\\
+&=c\overline b\,\zeta+
+\frac{b\overline a^{\,2}d^2}{\kappa}\,\xi.
+\end{aligned}
+\tag{39.26}
+$$
+
+因此取绝对值必须满足
+
+$$
+c\kappa=|a|^2d^2.
+\tag{39.27}
+$$
+
+但令 $X=|a|^2$、$Y=|b|^2>0$，由 $c^2=X^2+Y$、$d^2=X^2+2Y$、$\kappa^2=X^2d^2+Yc^2$，有
+
+$$
+\begin{aligned}
+c^2\kappa^2-X^2d^4
+&=c^2(X^2d^2+Yc^2)-X^2d^4\\
+&=Y(c^4-X^2d^2)\\
+&=Y^3>0,
+\end{aligned}
+\tag{39.28}
+$$
+
+与（39.27）矛盾。七维完成不可能；更低维数本来不能容纳（39.19）要求的七个正交单位核心方向。结合八维构造，受限最优值恰为八。证明完毕。
+
+定理39.2固定的是第25节的前四轮九行实现，不能将任意七维接收器归约到该表。一般七维候选可以改变早期实现或采用尚未排除的早期混合附加态，因此一般六终端问题在本节仍只有（39.2）：最优值为七或八。八维构造也没有给出一个统一服务任意多终端的八维固定通道。
+
+## 追加锚（本行以下为增补区）
