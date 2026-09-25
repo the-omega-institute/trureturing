@@ -40893,3 +40893,170 @@ $$
 所以该程序的上确界恰为（186.19），而不是仅有一个离散采样上界。结合（186.3）即得（186.20）。这些界没有确定 $R_*(a)$ 的精确值，也没有确定其下确界是否由某个有限程序达到。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 187. 一枚非交换程序消去固定经典设计的统一额外成本
+
+**定义 187.1（固定量子处理器与程序的信息量）。** 仍固定 $0<a<1$、$J_a=(2a-1,1)$。有限维量子程序由固定的 CPTP 映射
+$\mathcal G:\mathcal B(\mathbb C^3\otimes\mathcal H_P)\to\mathcal B(\mathbb C^3)$ 与一条 $C^1$ 密度矩阵曲线 $\rho_u$ 组成，要求对每个输入 $\omega$ 及全部 $u\in J_a$，
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega).
+\tag{187.1}
+$$
+程序与输入初始独立；每次使用提供一份新的程序态，不要求处理器保留程序。以程序态的 SLD 信息量作为输入信息成本，记为 $I_Q(\rho_u)$。若 $\rho_u=\sum_j\lambda_j|j\rangle\langle j|$ 是某一点的谱分解，则采用
+$$
+I_Q(\rho_u)=
+\sum_{j,k:\lambda_j+\lambda_k>0}
+\frac{2|\langle j|\rho_u'|k\rangle|^2}{\lambda_j+\lambda_k}.
+\tag{187.2}
+$$
+这是当前态与切向量确定的点态值。称整条程序曲线为交换的，若 $[\rho_u,\rho_v]=0$ 对全部 $u,v\in J_a$ 成立。定义量子程序的最优最坏相对成本
+$$
+R_Q^*(a)=\inf_{(\mathcal G,\rho)}\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)},
+$$
+下确界取遍满足（187.1）的所有有限维固定处理器及程序曲线。
+
+固定处理器与可变程序寄存器是既有的量子编程框架。Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Phys. Rev. A **66**, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II.B节式（2.12）处理混合程序，第III.B节的 $Y$ 处理器由数据基控制程序上的幺正操作。下面使用该结构，计算当前三能级通道族的确切信息成本，并与第186节的统一经典下界比较。
+
+**定理 187.2（固定量子比特程序的统一成本与交换障碍）。** 记 $d=1-a^2$，令 $X,Y,Z$ 为程序量子比特上的 Pauli 矩阵。定义
+$$
+\rho_u=\frac12\left[I+\frac{a(1-u)}{\sqrt d}X+uZ\right],
+\qquad
+U_0=I,\quad U_1=\sqrt d\,X+aZ,\quad U_2=Z,
+\tag{187.3}
+$$
+以及固定处理器
+$$
+W=\sum_{i=0}^2|i\rangle\langle i|\otimes U_i,
+\qquad
+\mathcal G(\Omega)=\operatorname{Tr}_P(W\Omega W^\dagger).
+\tag{187.4}
+$$
+则 $\rho_u$ 在 $J_a$ 内为满秩密度矩阵，$\mathcal G$ 精确实现（187.1），并在整个区间满足
+$$
+I_Q(\rho_u)=B(a,u)
+=\frac{1-a^2}{(1-u)(1+u-2a^2)}.
+\tag{187.5}
+$$
+该程序族在不同参数处不交换：
+$$
+[\rho_u,\rho_v]=\frac{ia(u-v)}{2\sqrt d}Y\ne0
+\qquad(u\ne v).
+\tag{187.6}
+$$
+与此相对，任何满足（187.1）的有限维交换程序，不论其固定处理器如何选择，都必须满足
+$$
+\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)}
+\ge1+\frac{a^2}{[1+4a+2(1+a)\log2]^2}>1.
+\tag{187.7}
+$$
+而所有有限维量子程序的精确极小极大值为
+$$
+R_Q^*(a)=1.
+$$
+因此（187.3）以一枚非交换量子比特程序达到最优最坏相对成本，而所有有限维交换程序都有统一的正额外成本。
+
+证明。 $\rho_u$ 的迹为一，且
+$$
+\det\rho_u=\frac{(1-u)(1+u-2a^2)}{4d}>0.
+\tag{187.8}
+$$
+因为 $2a-1>2a^2-1$，允许区间中的两个分子因子均为正，所以它确为满秩密度矩阵。$XZ+ZX=0$ 给出 $U_1^\dagger U_1=(d+a^2)I=I$；其他两个 $U_i$ 也幺正，故 $W$ 幺正并定义固定 CPTP 处理器。
+
+处理器作用于输入矩阵单位 $|i\rangle\langle j|$ 后，乘上相关系数
+$$
+C_{ij}(u)=\operatorname{Tr}(U_i\rho_uU_j^\dagger)
+=\operatorname{Tr}(\rho_u U_j^\dagger U_i).
+\tag{187.9}
+$$
+程序态的三个 Pauli 期望为
+$\langle X\rangle=a(1-u)/\sqrt d$、$\langle Y\rangle=0$、$\langle Z\rangle=u$。于是 $C_{ii}=1$，并且
+$$
+C_{01}=\sqrt d\,\langle X\rangle+a\langle Z\rangle=a,
+\qquad C_{02}=\langle Z\rangle=u,
+$$
+$$
+C_{12}=\operatorname{Tr}[\rho_u Z(\sqrt d\,X+aZ)]
+=a+i\sqrt d\,\langle Y\rangle=a.
+\tag{187.10}
+$$
+其余项由 Hermitian 性给出，所以 $C(u)=F(a,u)$。这逐矩阵单位证明（187.1），同时保证与任意外部参考系统张量恒等映射后仍实现同一通道。
+
+接着计算信息量。对满秩量子比特态 $\rho=(I+\mathbf r\cdot\boldsymbol\sigma)/2$，将 SLD 写成 $L=\alpha I+\boldsymbol\beta\cdot\boldsymbol\sigma$，方程 $\rho'=(\rho L+L\rho)/2$ 化为
+$\alpha+\mathbf r\cdot\boldsymbol\beta=0$、$\boldsymbol\beta+\alpha\mathbf r=\mathbf r'$。解出它们并取 $\operatorname{Tr}(\rho L^2)$，得到通常的 Bloch 表达式
+$$
+I_Q=|\mathbf r'|^2+
+\frac{(\mathbf r\cdot\mathbf r')^2}{1-|\mathbf r|^2}.
+\tag{187.11}
+$$
+在当前曲线中，记 $A=(1-u)(1+u-2a^2)$，则
+$$
+|\mathbf r'|^2=\frac1d,\qquad
+\mathbf r\cdot\mathbf r'=\frac{u-a^2}{d},\qquad
+1-|\mathbf r|^2=\frac Ad,
+\qquad A+(u-a^2)^2=d^2.
+\tag{187.12}
+$$
+代入（187.11）即得 $I_Q=1/d+(u-a^2)^2/(dA)=d/A$，证明（187.5）。此外，Pauli 乘法给出
+$[\rho_u,\rho_v]=(i/2)(\mathbf r_u\times\mathbf r_v)\cdot\boldsymbol\sigma$，其叉积只有 $Y$ 分量 $a(u-v)/\sqrt d$，即为（187.6）。
+
+最后设某个有限维程序族处处交换。有限维 Hermitian 交换族可同时对角化，故存在一个不随参数改变的正交基，使
+$$
+\rho_u=\sum_{j=1}^{m}p_j(u)|j\rangle\langle j|.
+\tag{187.13}
+$$
+各 $p_j$ 非负且为 $C^1$ 函数。固定处理器诱导出 $m$ 个固定 CPTP 组件
+$\mathcal R_j(\omega)=\mathcal G(\omega\otimes|j\rangle\langle j|)$，并满足
+$\sum_jp_j(u)\mathcal R_j=\mathcal T_u$。在这个固定基中，$\rho_u'$ 也对角；（187.2）因此恰为
+$$
+I_Q(\rho_u)=\sum_{j:p_j(u)>0}\frac{p_j'(u)^2}{p_j(u)}.
+\tag{187.14}
+$$
+内部零概率处导数为零，所以该等式也适用于支持变化。程序遂属于第186.1节的固定有限经典程序，应用定理186.2即得（187.7）。
+
+对任意精确量子程序，固定输入第181节的均衡端点探针后，整个输出是程序态经过一个与参数无关的 CPTP 映射。SLD 数据处理给出 $I_Q(\rho_u)\ge1/(1-u^2)$，从而
+$$
+\sup_{u\in J_a}\frac{I_Q(\rho_u)}{B(a,u)}
+\ge\sup_{u\in J_a}\frac{1+u-2a^2}{d(1+u)}=1.
+$$
+最后的上确界由 $u\uparrow1$ 的极限得到；每个区间内的比值都小于一。（187.5）达到这个普遍下界，因此 $R_Q^*(a)=1$。这里最优的是全区间最坏比值，并未把 $B$ 断言为任意内部参数点的最低量子成本。证毕。
+
+**定理 187.3（同一程序的非正交编码与三种信息量）。** 第187.2节的量子程序可由两种固定非正交纯态制备。令
+$$
+|\chi\rangle=a|0\rangle+\sqrt d\,|1\rangle,
+\qquad t(u)=\frac{u-2a^2+1}{2d},
+\tag{187.15}
+$$
+则 $a/(1+a)<t<1$，$|\langle0|\chi\rangle|^2=a^2$，并有
+$$
+\rho_u=t(u)|0\rangle\langle0|+[1-t(u)]|\chi\rangle\langle\chi|.
+\tag{187.16}
+$$
+如果同时保留指示这两种制备方式的正交经典标签，其 Fisher 信息量为 $B(a,u)/d$；仅保留量子程序时为 $B(a,u)$；当前通道的一次最大可读 SLD 信息量为 $1/(1-u^2)$。三者严格满足
+$$
+\frac{B(a,u)}d>B(a,u)>\frac1{1-u^2}.
+\tag{187.17}
+$$
+这里比较的是同一参数在三个不同接口中的信息量，不将保留程序中的信息量等同于其全部制备资源。
+
+证明。 （187.16）的右侧矩阵为
+$\left(\begin{smallmatrix}t+(1-t)a^2&(1-t)a\sqrt d\\(1-t)a\sqrt d&(1-t)d\end{smallmatrix}\right)$。
+代入 $1-t=(1-u)/(2d)$，即还原（187.3）。参数区间给出所述 $t$ 范围。经典制备标签的两个概率为 $t,1-t$，所以其信息量为
+$$
+I_{\rm label}=\frac{t'^2}{t(1-t)}
+=\frac1{(1-u)(1+u-2a^2)}
+=\frac Bd.
+\tag{187.18}
+$$
+也可将标签与相应纯态一同保留；由于条件纯态均与参数无关，所得分块态的信息量仍是这个值。丢弃正交标签后得到（187.16），其信息量由（187.5）给出。$0<d<1$ 证明第一项严格下降。
+
+同一处理器以纯程序 $|0\rangle$ 和 $|\chi\rangle$ 分别生成 $\mathcal T_1$ 与 $\mathcal T_{2a^2-1}$；故保留标签的版本正是第184.3节端点二符号模拟的一个实现。最后，第181节给出通道最大可读值，而第184.4节的精确比值为
+$$
+B(a,u)(1-u^2)
+=1+\frac{a^2(1-u)}{1+u-2a^2}>1,
+\tag{187.19}
+$$
+证明（187.17）。
+
+（187.5）给出达到最优最坏相对成本的固定量子处理器。这个极小极大结论并不声称其信息量在每个参数点都最小；对任意精确量子程序，SLD 数据处理及第181节的达到输入仅给出必要下界 $I_Q\ge1/(1-u^2)$。式（187.7）的更强障碍以整条程序族交换为条件，不能移除该条件后用于任意量子程序。证毕。
+
+## 追加锚（本行以下为增补区）
