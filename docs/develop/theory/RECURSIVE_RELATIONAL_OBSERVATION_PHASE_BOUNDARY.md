@@ -8532,3 +8532,406 @@ $\exp(-C D^2)$ 或 $\exp(-CD)$ 级的误差下界。
 本节使用与第20节相同的实代数正最小值定理及适用范围。[^phase_positive_polynomial_minimum] 新增参数化以额外的有限轨道状态坐标换取固定次数约束；零点排除和误差转换保持原有依据。
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 已知非退化来源的五终端固定接收容量恰为七
+
+本节继续固定第26节的已知来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\qquad |a|^2+|b|^2=1.
+$$
+
+接收器从独立纯态启动，每轮使用同一个全域 CPTP 通道；所有持久系统均计入接收器，活动记忆和任意外部参考不可访问。前五个终端各自要求精确恢复完整参考—活动记忆—原始档案联合态，终端解码器允许依终端而异。来源参数已知，接收通道可以针对这份来源校准。
+
+第29节已把六维候选归约到五个终端均为纯编码，第30节证明后三轮纯环境的张成恰为二维，第34节排除其中三条射线互异的情形。本节处理余下的全部两射线模式。
+
+**定理 36.1（五终端的一般精确容量）。** 在上述合同下，
+
+$$
+\boxed{d_{\mathrm{CPTP},5}(a,b)=7.}
+\tag{36.1}
+$$
+
+证明的七维上界直接复用第25节的显式构造；以下排除一般六维候选，不预设其早期环境正交或来自同一个二维空间。
+
+**共同资料。** 反设有六维接收空间 $K$ 和固定 Stinespring 等距 $V$。记 $V_i x=V(x\otimes|i\rangle)$，则 $V_0K\perp V_1K$。纯终端归约给单位环境向量 $\eta_1,\ldots,\eta_5$、正交单位向量 $p,q$ 及正交单位向量 $u,v,w$，满足
+
+$$
+\begin{aligned}
+V_0k&=p\otimes\eta_1,&V_1k&=q\otimes\eta_1,\\
+V_0p&=u\otimes\eta_2,&V_1p&=v\otimes\eta_2,&V_0q&=w\otimes\eta_2.
+\end{aligned}
+\tag{36.2}
+$$
+
+早期系数空间为
+
+$$
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\tag{36.3}
+$$
+
+对 $n=3,4,5$，已有二维空间 $H_n,G_n,Q_n$，满足
+
+$$
+\begin{aligned}
+V_0H_{n-1}&=G_n\otimes\eta_n,&
+V_1G_{n-1}&=Q_n\otimes\eta_n,\\
+G_n&\perp Q_n,&
+H_n&\subset G_n\oplus Q_n,
+\end{aligned}
+\tag{36.4}
+$$
+
+且 $H_n$ 到 $G_n,Q_n$ 的两个正交投影均为同构。这里的满投影来自实际来源的非零系数，不是对任意二维子空间的额外假设。
+
+第30、34节使后三轮射线只可能为 $AAB$、$ABA$ 或 $ABB$，其中不同字母表示不同射线。各段可以一致吸收环境射线相位；这不改变 $a,b$，也不增加轮次控制。下文的 $S,Q,F$ 等辅助符号均在各段局部使用。
+
+**两个线性代数事实。** 若 $U:S\to Q\otimes F$ 为满等距，对单位 $\xi\in F$ 定义
+
+$$
+W_\xi z=U^{-1}(z\otimes\xi),\qquad
+W_\xi^*W_\zeta=\langle\xi,\zeta\rangle I_Q.
+\tag{36.5}
+$$
+
+因此两个对应平面的主角余弦均为 $|\langle\xi,\zeta\rangle|$。固定等距保持子空间交叠矩阵的奇异值。
+
+另若 $H\subset G\oplus Q$ 到两个二维因子的投影均为同构，则 $H$ 是可逆映射 $T:G\to Q$ 的图。对 $z\perp Q$，置 $z_G=P_Gz$，有
+
+$$
+\|P_Hz\|^2
+=\langle z_G,(I+T^*T)^{-1}z_G\rangle
+<\|P_Gz\|^2\quad(z_G\ne0).
+\tag{36.6}
+$$
+
+严格性来自 $T$ 可逆。这一恒等式将用于同一个单位向量的两份投影读数；不会把不同过程的最优值拼在一起。
+
+### 36.1 AAB 尾环境不可能
+
+取 $A=\eta_3=\eta_4$、$B=\eta_5$，两射线不同。
+
+若 $A\perp B$，由 $V_1G_3=Q_4\otimes A$、$V_1G_4=Q_5\otimes B$ 得 $G_3\perp G_4$。同一环境 $A$ 下的跨位正交给
+
+$$
+Q_3,Q_4\perp G_3+G_4.
+$$
+
+维数迫使
+
+$$
+K=G_3\oplus G_4\oplus Q_4.
+\tag{36.7}
+$$
+
+$H_4\subset G_4\oplus Q_4$，故 $G_3\perp H_4$。又 $V_0H_3=G_4\otimes A$ 与 $V_0H_4=G_5\otimes B$ 正交，故 $H_3\perp H_4$。利用 $H_3$ 到 $Q_3$ 的满投影，得到 $Q_3\perp H_4$；再用 $Q_3\perp G_4$ 和 $H_4$ 到 $Q_4$ 的满投影，得到 $Q_3\perp Q_4$。于是 $Q_3$ 正交于(36.7)的全部三个因子，矛盾。
+
+现在设 $0<|\langle A,B\rangle|<1$。所有尾环境两两非正交，跨位正交给
+
+$$
+(G_3+G_4+G_5)\perp(Q_3+Q_4+Q_5).
+$$
+
+$V_1G_3$、$V_1G_4$ 的环境射线不同，所以 $G_3\cap G_4=0$。维数只能为四加二。因此存在
+
+$$
+S=G_3+G_4,\qquad Q=S^\perp,
+\qquad Q_3=Q_4=Q_5=Q,\qquad G_5\subset S.
+$$
+
+令 $F=\operatorname{span}\{A,B\}$，则 $U=V_1|_S:S\to Q\otimes F$ 为满等距。由 $V_1G_2=Q\otimes A=V_1G_3$ 得
+
+$$
+G_2=G_3=\operatorname{im}W_A,\qquad
+G_4=\operatorname{im}W_B.
+\tag{36.8}
+$$
+
+零位的四维像 $V_0(H_2+H_3)=S\otimes A$，与二维像 $V_0H_4=G_5\otimes B$ 作代数直和，饱和整个零位像：
+
+$$
+V_0K=(S\otimes A)\dotplus(G_5\otimes B)\subset S\otimes F.
+\tag{36.9}
+$$
+
+早期等式给 $\eta_1,\eta_2\in F$、$p\in S$，再由 $V_1p=v\otimes\eta_2\in Q\otimes F$ 得 $v\in Q$。
+
+若 $\eta_2$ 不平行 $A$，早期矩形 $G_2\otimes\eta_2\subset V_0K$ 的 $B$ 坐标迫使 $G_5=G_2$。于是 $H_2,H_4$ 的两个主角余弦均为 $r=|\langle A,B\rangle|>0$，而(36.8)使 $G_2,G_4$ 的主角余弦也是 $r$。单位 $w\in H_2\cap G_2$ 因而满足
+
+$$
+\|P_{H_4}w\|=r=\|P_{G_4}w\|,
+$$
+
+违反(36.6)，因为 $H_4$ 是 $G_4\to Q$ 的可逆图、$w\perp Q$。
+
+若 $\eta_2\parallel A$，则 $V_0H_1=V_0H_2$，故 $H_1=H_2$。由于 $p\in S$ 而 $H_2\cap S=\mathbb Cw$，有 $p\parallel w$，继而 $q\parallel a^2u+bv$。所以 $q_S=P_Sq\ne0$。
+
+令 $k_Q=P_Qk$。由实际初轮等式、$V_1S=Q\otimes F$ 和固定等距性，
+
+$$
+V_1k_Q=q_S\otimes\eta_1
+\in R:=(S\otimes F)\cap(V_0K)^\perp.
+$$
+
+(36.9)给
+
+$$
+R=(S\cap G_5^\perp)\otimes A^\perp,
+\tag{36.10}
+$$
+
+其中 $A^\perp$ 是二维 $F$ 中的环境线。因 $q_S\ne0$，必须 $k_Q\ne0$、$\eta_1\perp A$。于是 $V_0k=p\otimes\eta_1$ 正交于 $V_0(H_2+H_3)=S\otimes A$，故 $k\perp H_2+H_3$。但 $H_2,H_3\subset G_2\oplus Q$，它们的和四维，故 $H_2+H_3=G_2\oplus Q$。这给 $k_Q=0$，矛盾。AAB 的两个分支均被排除。
+
+### 36.2 非正交 ABA 尾环境不可能
+
+取 $\eta_3=\eta_5=A$、$\eta_4=B$，且 $0<|\langle A,B\rangle|<1$。$V_1G_3$、$V_1G_4$ 的环境射线不同，故 $G_3\cap G_4=0$。全部尾跨位正交再次迫使
+
+$$
+K=S\oplus Q,\quad S=G_3+G_4,\quad
+Q_3=Q_4=Q_5=Q,\quad G_5\subset S,
+$$
+
+其中维数为四加二。取 $F=\operatorname{span}\{A,B\}$、$U=V_1|_S:S\to Q\otimes F$。$V_1G_2=V_1G_4$ 使
+
+$$
+G_2=G_4=\operatorname{im}W_A,\qquad
+G_3=\operatorname{im}W_B.
+\tag{36.11}
+$$
+
+先证明 $\eta_2\in F$。若不成立，零位像包含独立环境方向上的
+
+$$
+((G_3+G_5)\otimes A)\dotplus(G_2\otimes B)
+\dotplus(G_2\otimes\eta_2).
+$$
+
+维数至多六使 $G_5=G_3$，且该和饱和 $V_0K$。其全部 receiver 因子属于 $S$，所以 $p\in S$。但 $V_1p=v\otimes\eta_2\in Q\otimes F$，矛盾。
+
+若 $\eta_2\parallel B$，早期 $v\otimes B$ 与 $G_3\otimes A$、$G_2\otimes B$ 跨位正交，使 $v\in Q$，继而 $V_1p\in Q\otimes B=V_1G_3$，故 $p\in G_3$。同时 $V_0H_1=G_2\otimes B=V_0H_3$，给 $p\in H_1=H_3$，违反 $H_3\cap G_3=0$。
+
+因此 $\eta_2$ 的 $A$ 坐标非零。早期矩形与 $G_2\otimes B$ 联合给 $G_2\otimes A$，再加 $G_3\otimes A$ 得六维饱和：
+
+$$
+V_0K=(S\otimes A)\dotplus(G_2\otimes B).
+\tag{36.12}
+$$
+
+所以 $\eta_1\in F$、$p\in S$、$v\in Q$，并有 $p=W_{\eta_2}v$。如(36.10)，实际初轮等式给
+
+$$
+V_1k_Q=q_S\otimes\eta_1
+\in(S\cap G_2^\perp)\otimes A^\perp,
+\qquad q\perp G_2.
+\tag{36.13}
+$$
+
+对 $V_0k=p\otimes\eta_1$ 的 receiver 因子作用 $U$，由(36.12)得到
+
+$$
+\eta_2\otimes\eta_1\in F\otimes A+A\otimes F.
+$$
+
+在两个 $F/\mathbb CA$ 因子上取商，得到二择一
+
+$$
+\eta_2\parallel A\quad\hbox{或}\quad\eta_1\parallel A.
+\tag{36.14}
+$$
+
+若 $\eta_2\parallel A$，取 $Q$ 的正交单位基 $r,s$ 使 $u=W_A r,w=W_A s$。令 $c_0=\sqrt{|a|^4+|b|^2}$。在 $H_1$ 的基 $p,q$ 与 $H_2$ 的基 $(a^2u+bv)/c_0,w$ 中，交叠矩阵为
+
+$$
+M=\begin{pmatrix}
+a^2\langle v,r\rangle/c_0&\langle v,s\rangle\\
+b\langle q,v\rangle/c_0&0
+\end{pmatrix}.
+\tag{36.15}
+$$
+
+(36.11)及固定 $V_0$ 使 $MM^*=t^2I$，其中 $t=|\langle A,B\rangle|\in(0,1)$。满秩与两行正交迫使 $\langle v,r\rangle=0$，从而 $|\langle v,s\rangle|=1$。第一行范数为一，与 $t<1$ 矛盾。
+
+若 $\eta_2$ 不平行 $A$，(36.14)迫使 $\eta_1\parallel A$。由(36.13)得 $k_Q=0$、$q_S=0$，即 $k\in S$、$q\in Q$，且 $k\in\operatorname{im}W_A=G_2$。记 $z=\langle\eta_2,A\rangle$。若 $z\ne0$，(36.15)第一行两项各乘 $z$，而固定 $V_0$ 要求 $MM^*=|z|^2t^2I$。同样的满秩与正交行论证使第一行范数为 $|z|$，仍与 $t<1$ 矛盾。因此 $\eta_2\perp A$，从而 $p\perp G_2$。
+
+现在 $V_0k=p\otimes\eta_1$ 正交于 $V_0H_3=G_2\otimes B$，故 $k\perp H_3$。但 $k\in G_2\subset Q^\perp$，$H_3$ 到 $G_3$ 的投影满射，所以 $k\perp G_3$；(36.11)的非零等角关系又使 $G_2$ 到 $G_3$ 的投影单射，只能 $k=0$，矛盾。
+
+### 36.3 正交 ABA 强制已被排除的完整交替环境
+
+取 $\eta_3=\eta_5=A\perp B=\eta_4$。置
+
+$$
+L=G_2+G_4,\quad l=\dim L,\qquad
+M=H_2+H_4,\quad m=\dim M.
+$$
+
+共同环境 $A$ 下的跨位正交给
+
+$$
+m+l\le6,
+\qquad G_3\perp L,\qquad H_3\perp M.
+\tag{36.16}
+$$
+
+若 $\eta_2\notin F=\operatorname{span}\{A,B\}$，零位像包含
+
+$$
+((G_3+G_5)\otimes A)\dotplus(G_4\otimes B)
+\dotplus(G_2\otimes\eta_2),
+$$
+
+维数为 $m+4\le6$。故 $m=2$、$G_5=G_3$，且零位像饱和，所有 receiver 因子属于 $G_3+L$。这迫使 $p\in G_3+L$，而 $V_1(G_3+L)\subset K\otimes F$ 与 $V_1p=v\otimes\eta_2$ 矛盾。因此 $\eta_2\in F$。
+
+若 $\langle\eta_2,A\rangle\ne0$，早期与第三轮的跨位正交给 $G_2\perp Q_3$、$v\perp G_3$。再用(36.16)，$H_2\perp G_3$、$H_2\perp H_3$；$H_3$ 到 $Q_3$ 满投影使 $H_2\perp Q_3$，从而 $v\perp Q_3$。于是三维 $C_2=G_2\oplus\mathbb Cv$ 正交于四维 $C_3=G_3\oplus Q_3$，矛盾。所以
+
+$$
+\eta_2\parallel B.
+\tag{36.17}
+$$
+
+由(36.17)，$V_1p$ 与 $V_1L$ 的环境正交，给 $p\perp L$。同 $B$ 跨位正交还给 $v,Q_4\perp L$。因此 $H_2+H_4$ 到 $L$ 的正交投影满射，$m\ge l$；结合(36.16)，只有 $l=2,3$。
+
+若 $l=3$，则 $m=3$，已有零位像
+
+$$
+((G_3+G_5)\otimes A)\dotplus(L\otimes B)
+$$
+
+维数六，饱和 $V_0K$。由 $V_0k=p\otimes\eta_1$ 得 $\eta_1\in F$；其 $B$ 系数若非零，就有 $p\in L$，与 $p\perp L$ 矛盾。因此 $\eta_1\parallel A$。
+
+若 $l=2$，则 $G_4=G_2$，同 $B$ 零位像使 $H_1=H_3$，特别地 $p\in H_3$。$m=2$ 会使 $H_2=H_4$，与 $0\ne w\in H_2\cap G_2=H_4\cap G_4=0$ 矛盾。$m=4$ 再次饱和上述零位像，同理迫使 $\eta_1\parallel A$。
+
+只剩 $m=3$。此时 $H_2,H_4$ 分别是同一 $G_2$ 上两个映射的图：
+
+$$
+T_2u=(b/a^2)v,\quad T_2w=0,\qquad
+T_4:G_2\longrightarrow Q_4\ \hbox{可逆}.
+$$
+
+图的维数公式给
+
+$$
+3=\dim(H_2+H_4)=2+\operatorname{rank}(T_4-T_2).
+$$
+
+若 $v\notin Q_4$，$(T_4-T_2)x=0$ 会使 $T_4x=T_2x\in Q_4\cap\mathbb Cv=0$，故 $x=0$，与差映射秩一矛盾。因此 $v\in Q_4$。于是 $V_1p=v\otimes B\in V_1G_3$，故 $p\in G_3$，与 $p\in H_3$、$H_3\cap G_3=0$ 矛盾。
+
+所有余下情形都给 $\eta_1\parallel A$，五轮环境必为 $A,B,A,B,A$。这满足第25节确定、正交、交替环境的合同；定理25.2已经证明该合同需要至少七维。因此正交 ABA 也不可能。
+
+### 36.4 非正交 ABB 尾环境不可能
+
+取 $\eta_3=A$、$\eta_4=\eta_5=B$，且 $0<|\langle A,B\rangle|<1$。令 $F=\operatorname{span}\{A,B\}$。置
+
+$$
+\begin{aligned}
+M&=H_3+H_4,&m&=\dim M,&L&=G_3+G_4,&l&=\dim L,\\
+R&=G_4+G_5,&W&=Q_4+Q_5,&S&=G_3+G_4+G_5,&T&=Q_3+Q_4+Q_5.
+\end{aligned}
+$$
+
+共同环境 $B$ 给 $\dim R=m$、$\dim W=l$、$R\perp W$，故 $m+l\le6$。全部尾环境非正交又给 $S\perp T$；$M$ 到 $S$ 的投影像恰为 $L$，所以 $m\ge l$。因此 $2\le l\le3$。
+
+若 $l=3$，则 $m=3$，维数使 $S=R=L$、$T=W$，各三维。$V_1S=W\otimes B$ 与 $V_1G_2=Q_3\otimes A$ 的环境不同，故 $G_2\cap S=0$。尾零位像 $(G_3\otimes A)\dotplus(S\otimes B)$ 五维，全部 receiver 因子在 $S$；早期 $G_2\otimes\eta_2$ 与其交为零，另加两维，矛盾。
+
+故 $l=2$，即 $G_3=G_4$、$Q_4=Q_5=:Q$。$m=2$ 会使 $H_3=H_4$，这与第26节式(26.20)的来源主角行列式严格变化矛盾：置 $x=|a|^2$、$y=|b|^2$、$t_2=x^2+y$、$t_3=1-yt_2$、$t_4=1-yt_3$，则
+
+$$
+\delta_3=\frac{x^3}{t_3},\qquad
+\delta_4=\frac{x^2t_2}{t_4},\qquad
+\delta_4-\delta_3=\frac{x^3y^2}{t_3t_4}>0.
+\tag{36.18}
+$$
+
+同一对 $H,G$ 的投影压缩不可能有两个不同的行列式。因此只剩 $m=3,4$，此时 $S=G_3+G_5=R$。
+
+若 $m=4$，$S^\perp$ 二维，故 $Q_3=Q_4=Q_5=Q=S^\perp$。尾零位像
+
+$$
+V_0K=(G_3\otimes A)\dotplus(S\otimes B)
+\tag{36.19}
+$$
+
+六维饱和，使早期 $G_2\subset S$。$V_1G_2=Q\otimes A$、$V_1G_3=Q\otimes B$ 给 $G_2\cap G_3=0$，故 $G_2+G_3=S$，$U=V_1|_S:S\to Q\otimes F$ 为满等距。$G_2,G_3$ 是 $A,B$ 对应的平面，两个主角余弦为 $r=|\langle A,B\rangle|>0$。
+
+另一方面，$V_0H_2=G_3\otimes A$、$V_0H_3=G_4\otimes B=G_3\otimes B$，使 $H_2,H_3$ 的两个主角余弦也为 $r$。单位 $w\in H_2\cap G_2$ 的投影应满足
+
+$$
+\|P_{H_3}w\|=r=\|P_{G_3}w\|,
+$$
+
+而 $H_3$ 是 $G_3\to Q$ 的可逆图、$w\perp Q$，违反(36.6)。
+
+若 $m=3$，尾零位像
+
+$$
+Z=(G_3\otimes A)\dotplus(S\otimes B)
+$$
+
+五维。早期矩形 $E_0=G_2\otimes\eta_2$ 二维，$E_0+Z\subset V_0K$ 使 $\dim(E_0\cap Z)\ge1$。又 $G_2\cap G_3=0$，而 $G_3\subset S$ 的维数为二、三，故 $\dim(G_2\cap S)\le1$。从交集中的非零 $x\otimes\eta_2$ 得
+
+$$
+\dim(G_2\cap S)=1,\qquad\eta_2\in F.
+$$
+
+若 $\eta_2$ 的 $A$ 系数非零，逐环境坐标比较 $Z$ 会给 $x\in G_3$，与 $x\in G_2\setminus\{0\}$ 矛盾。因此 $\eta_2\parallel B$。令 $S'=S+G_2$，维数四，早期和尾像联合饱和为
+
+$$
+V_0K=(G_3\otimes A)\dotplus(S'\otimes B).
+\tag{36.20}
+$$
+
+$G_2\otimes B$ 与 $Q_3\otimes A$、$Q\otimes B$ 跨位正交，使 $G_2\perp Q_3+Q$；原有 $S\perp Q_3+Q$，所以 $Q_3=Q=(S')^\perp$。于是 $G_2+G_3=S'$，$V_1|_{S'}$ 给相同的 $A,B$ 张量平面。再对单位 $w$ 使用与上一段完全相同的两个主角读数和(36.6)，得到矛盾。非正交 ABB 被排除。
+
+### 36.5 正交 ABB 尾环境不可能
+
+最后取 $\eta_3=A\perp B=\eta_4=\eta_5$。尾正交给
+
+$$
+G_2\perp G_3+G_4,\qquad H_2\perp H_3+H_4.
+\tag{36.21}
+$$
+
+先证明 $\eta_2\in F=\operatorname{span}\{A,B\}$。否则零位像包含
+
+$$
+(G_3\otimes A)\dotplus((G_4+G_5)\otimes B)
+\dotplus(G_2\otimes\eta_2).
+$$
+
+六维限制迫使 $G_4=G_5$，且此和饱和 $V_0K$。所有 receiver 因子属于 $G_2+G_3+G_4$，故 $p$ 属于此和；但 $V_1$ 在该和上只产生 $F$ 中环境，与 $V_1p=v\otimes\eta_2$ 矛盾。
+
+若 $\langle\eta_2,A\rangle\ne0$，跨位正交给 $G_2\perp Q_3$、$v\perp G_3$。结合(36.21)，$H_2\perp G_3$ 且 $H_2\perp H_3$；满 $Q_3$ 投影使 $H_2\perp Q_3$，继而 $v\perp Q_3$。又得到三维 $C_2$ 正交于四维 $C_3$ 的矛盾。因此
+
+$$
+\eta_2\parallel B.
+\tag{36.22}
+$$
+
+第二、第四、第五轮现在共用环境射线 $B$。其零位接收像包含 $R'\otimes B$、一位接收像包含 $W'\otimes B$，其中
+
+$$
+R'=G_2+G_4+G_5,\qquad
+W'=\mathbb Cv+Q_4+Q_5,\qquad R'\perp W'.
+$$
+
+由(36.21)，$G_2\perp G_4$，故 $\dim R'\ge4$。$W'$ 至少二维，所以六维限制使 $\dim W'=2$。固定 $V_1$ 在 $\operatorname{span}\{p\}+G_3+G_4$ 上的像恰为 $W'\otimes B$，等距性迫使
+
+$$
+G_3=G_4,\qquad p\in G_3.
+\tag{36.23}
+$$
+
+另一方面，$V_0H_1=G_2\otimes B$ 与 $V_0H_3=G_4\otimes B$ 正交，故 $H_1\perp H_3$。非零 $p\in H_1$ 因而正交于 $H_3$，但(36.23)使 $p\in G_3$，而 $H_3$ 到 $G_3$ 投影满射。这只能给 $p=0$，矛盾。
+
+### 36.6 完整容量结算及适用边界
+
+第29节排除六维候选的全部混合附加态分支，将其归约为五个纯终端。第30节把后三轮环境张成限制为恰二维，第34节排除三条互异射线。本节逐项排除剩余的 AAB、ABA、ABB，每个模式均包含正交与非正交两类，因而没有留下环境 Gram 参数分支。
+
+所以一般六维固定接收器不可能。第26节已排除五维及以下，第25节为每份已知非退化复振幅来源给出了七维固定 CPTP 构造。因此得到(36.1)。证明完毕。
+
+这个数值对应五个精确、参考完整终端及同一个固定接收通道；它不等同于单个终端的档案秩，也不覆盖未知来源共用通道、无限终端、近似恢复或额外持久资源。第23节的四终端精确值五与本节的五终端精确值七属于不同终端合同，没有改写旧结论。环境射线只是固定通道的 Stinespring 表示资料；证明没有向接收器免费提供轮次标记或外部控制。
+
+## 追加锚（本行以下为增补区）
