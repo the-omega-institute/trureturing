@@ -46751,3 +46751,258 @@ N=1+m+\#\{\lambda_-(h):2h-1\in S\}.
 同一条曲线的尖锐集合仍受（214.13）、（214.14）约束，但上述达到性选择了不同的完整准备曲线。尤其对两个负谱签名不同的指定点，本定理仍未把第213.27式的五维下界提升为单曲线的实际达到值。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 215. 混态单曲线的最小尖锐维数与精确容量
+
+**定义 215.1（允许秩变化的同时尖锐准备）。** 固定 $`0<a<1`$，沿用第211节的全输入精确目标族、点态 SLD 信息量和双侧下极限曲率。现允许实际准备 $`\rho_u`$ 为任意密度矩阵，不要求纯态，也不要求其秩局部恒定。令
+
+```math
+\mathcal E_*(\rho)=\{t\in J_a:I_Q(\rho_t)=I_r(t),\quad
+                              \kappa(\rho,t)=\kappa_*(a,t)\}.
+\tag{215.1}
+```
+
+对非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$，记 $`d_r^{\rm mix}(a,S)`$ 为一个固定处理器和一条完整准备曲线满足 $`S\subseteq\mathcal E_*(\rho)`$ 所需的最小联合支持维数，其中 $`r=1,\infty,\omega`$ 分别要求矩阵元素为 $`C^1`$、$`C^\infty`$、实解析。联合支持仍指全部实际准备态的支持张成空间。沿用第213.2式的 $`b(h),s(h),\lambda_\pm(h)`$ 与
+
+```math
+N(a,S)=1+m+\#\{\lambda_-((1+t_i)/2):1\le i\le m\}.
+\tag{215.2}
+```
+
+**定理 215.2（混态尖锐点强制原算子的谱签名）。** 对任意定义215.1的 $`C^1`$ 程序，在原联合支持空间 $`\mathcal H`$ 上固定第213.6式的 $`E,K`$。每个尖锐点 $`t`$ 都强制
+
+```math
+\{0,\lambda_+((1+t)/2),\lambda_-((1+t)/2)\}
+                       \subseteq\operatorname{spec}(K^\dagger).
+\tag{215.3}
+```
+
+因此任意非空有限尖锐点集 $`S`$ 满足
+
+```math
+\dim\mathcal H\ge N(a,S),\qquad
+\#\mathcal E_*(\rho)\le\dim\mathcal H-2
+       \quad\text{若 }\mathcal E_*(\rho)\ne\varnothing.
+\tag{215.4}
+```
+
+这里的谱属于原程序算子；证明所用的纯化空间不计入程序维数。
+
+证明。 第211.2节的有限忠实平均与固定对称化归约适用于混态曲线，得到同一对 $`E,K`$。取第213.7式的固定 Naimark 等距 $`J`$ 及 $`T`$，并记
+
+```math
+\sigma_u=J\rho_uJ^\dagger,\qquad
+\mathcal R=\operatorname{ran}J,\qquad
+\Pi=JJ^\dagger,\qquad M=(T+T^\dagger)/2.
+\tag{215.5}
+```
+
+它们满足 $`PT=T`$、$`\|T\|\le1`$、$`J^\dagger TJ=K`$ 及 $`\operatorname{ran}T^\dagger\subseteq\mathcal R`$。固定等距保留点态 SLD 信息。置 $`g(u)=I_Q(\rho_u)-I_r(u)`$ 与
+$`v(u)=\operatorname{Tr}[\sigma_u(M-aI)^2]`$。第211.7、211.11式给出
+
+```math
+e(u)^2\le g(u)v(u),\qquad
+ \frac{e(u)}{u-t}\longrightarrow\frac a{c_t},\qquad
+ v(t)\le V_*(a,t),\qquad c_t=(1-t)(1+t)^2.
+\tag{215.6}
+```
+
+$`v`$ 连续。取实现尖锐下极限的序列 $`u_n\to t`$，便有
+
+```math
+\frac{a^2}{c_t^2}\le\kappa_*(a,t)v(t)
+       \le\kappa_*(a,t)V_*(a,t)=\frac{a^2}{c_t^2}.
+\tag{215.7}
+```
+
+因此名义方差必须取等：$`v(t)=V_*`$。
+
+将固定扩大空间上的算子记为
+$`H_t=P/(1+t)-Q/(1-t)`$。校准等号给出 $`\sigma'_t=(H_t\sigma_t+\sigma_tH_t)/2`$。由于 $`\sigma_t`$ 和 $`\sigma'_t`$ 均支持在固定空间 $`\mathcal R`$ 中，左乘 $`I-\Pi`$ 得
+
+```math
+(I-\Pi)H_t\sigma_t=0,\qquad
+ H_t\operatorname{supp}\sigma_t\subseteq\mathcal R.
+\tag{215.8}
+```
+
+第二式只用到 $`\sigma_t`$ 在其支持上可逆，不要求邻近参数处具有相同的秩。
+
+现在只在 $`t`$ 这个单独位置选择静态纯化。若 $`\sigma_t=\sum_jp_j|x_j\rangle\langle x_j|`$，其中 $`p_j>0`$，取辅助正交基 $`\epsilon_j`$ 并置
+
+```math
+\varphi=\sum_j\sqrt{p_j}\,x_j\otimes\epsilon_j,
+ \qquad \widetilde T=T\otimes I,\quad
+ \widetilde P=P\otimes I,\quad\widetilde Q=Q\otimes I.
+\tag{215.9}
+```
+
+由（215.8），$`\varphi`$ 与 $`(H_t\otimes I)\varphi`$ 均在 $`\mathcal R\otimes\mathcal F`$ 内。$`H_t`$ 在 $`P,Q`$ 两个分量上的系数不同，故
+
+```math
+p=\widetilde P\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad q=\widetilde Q\varphi\in\mathcal R\otimes\mathcal F,
+ \qquad \|p\|^2=h,\quad\|q\|^2=\ell,
+ \quad h=(1+t)/2,\quad\ell=1-h.
+\tag{215.10}
+```
+
+对这份静态纯化应用第211.13—211.14式的正交分解。方差已经取等，三角不等式和两个范数界因而同时取等。令
+$`\alpha=\sqrt{1-a^2/h}>0`$、$`\gamma=\sqrt{1-a^2/h^2}>0`$，便有一个单位向量 $`\widetilde z`$，正交于 $`p,q`$，使
+
+```math
+\widetilde T\varphi=\frac ahp+\alpha\widetilde z,
+ \qquad
+\widetilde T^\dagger p=\frac{at}{h}p+2aq+
+                             \sqrt h\,\gamma\widetilde z,
+ \qquad \widetilde P\widetilde z=\widetilde z.
+\tag{215.11}
+```
+
+$`\operatorname{ran}\widetilde T^\dagger\subseteq\mathcal R\otimes\mathcal F`$，再结合（215.10）和第二式，得到 $`\widetilde z\in\mathcal R\otimes\mathcal F`$。所以三个正交方向都能通过 $`J^\dagger\otimes I`$ 回到 $`\mathcal H\otimes\mathcal F`$。记其归一化像为 $`e,z,f`$，并置 $`\psi=\sqrt h\,e+\sqrt\ell\,f`$、$`\widehat K=K^\dagger\otimes I`$。由 $`J`$ 的形式可得
+$`(E\otimes I)e=e`$、$`(E\otimes I)z=z`$、$`(E\otimes I)f=0`$。
+
+第一式的范数为一，压缩性给出 $`\widetilde T^\dagger\widetilde T\varphi=\varphi`$。将（215.11）及此等式施加 $`J^\dagger\otimes I`$，再用 $`KK^\dagger\le E`$，得到
+
+```math
+\begin{aligned}
+ \widehat K e&=\frac{at}{h}e+\gamma z+2a\sqrt{\ell/h}\,f,\\[0pt]
+ \widehat K z&=\frac{\psi-(a/\sqrt h)\widehat K e}{\alpha},
+ \qquad \widehat K f=0.
+\end{aligned}
+\tag{215.12}
+```
+
+因而 $`\operatorname{span}\{e,z,f\}`$ 是 $`K^\dagger\otimes I`$ 的三维不变子空间，限制的矩阵正是第213.4式，特征多项式为
+$`x(x^2-s(h)x-b(h))`$。有限维算子的不变子空间特征值属于整个算子的谱，而
+
+```math
+\operatorname{spec}(K^\dagger\otimes I_{\mathcal F})
+                         =\operatorname{spec}(K^\dagger).
+\tag{215.13}
+```
+
+所以得到原算子的（215.3）。辅助维数只增加特征值的重数，不增加不同特征值，也没有进入维数下界。这里没有选择可微纯化，更没有把秩变化的点态信息量替换为连续延拓。
+
+最后，第213.19式保证 $`\lambda_+`$ 严格递增；不同尖锐点贡献不同的正特征值，还必须保留零及全部不同的负特征值。对任意有限子集计数即得（215.4），并排除无限尖锐集合。证毕。
+
+**定理 215.3（一条解析混态曲线达到精确最小维数）。** 对每个定义215.1中的 $`a,S`$，有
+
+```math
+d_1^{\rm mix}(a,S)=d_\infty^{\rm mix}(a,S)
+                  =d_\omega^{\rm mix}(a,S)=N(a,S).
+\tag{215.14}
+```
+
+存在一个固定 $`N(a,S)`$ 维处理器和一条全区间实解析混态准备，其完整尖锐集合恰为 $`S`$。在每个 $`t_i`$，曲率的双侧普通极限存在且等于 $`\kappa_*(a,t_i)`$；不只具有相同下极限。还可要求准备态在 $`S`$ 上秩为一、在 $`J_a\setminus S`$ 上处处至少为二。
+
+证明。 采用定理213.4在同一个 $`N=N(a,S)`$ 维空间上构造的固定 $`P,T`$、处理器及分别准备的实解析纯态曲线 $`\rho_i(u)`$。它们对所有参数、所有信号输入实现同一目标通道。令
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+ g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+ \rho_u=\sum_i g_i(u)^2\rho_i(u).
+\tag{215.15}
+```
+
+$`\sum_iL_i=1`$ 保证分母在实轴上严格为正，所以权重和密度矩阵均实解析。$`\sum_i g_i^2=1`$ 保证 $`\rho_u`$ 是同一空间上的密度矩阵。处理器固定且线性，各分量实现的通道相同，故这一实际混态曲线全域、全输入精确。实际程序空间仍是 $`N`$ 维。
+
+必须计入依赖参数的混合权重所携带的信息。为估计而暂时保留正交标签，取
+
+```math
+\tau_u=\bigoplus_i g_i(u)^2\rho_i(u),\qquad
+ G_i(u)=I_Q(\rho_i(u))-I_r(u).
+\tag{215.16}
+```
+
+丢弃标签是固定 CPTP 映射。SLD 信息的单调性与正权直和公式给出
+
+```math
+0\le I_Q(\rho_u)-I_r(u)
+ \le\sum_i g_i(u)^2G_i(u)+4\sum_i g_i'(u)^2.
+\tag{215.17}
+```
+
+这是参数相关混合的经典扩展凸性上界，见 Alipour、Rezakhani，*Quantum Metrology: Extended Convexity of Quantum Fisher Information*，Phys. Rev. A **91**, 042104（2015），arXiv:1403.8033v2，式（4）。这里的标签仅用于上界，不属于实际程序寄存器。左侧非负来自精确程序的固定测量读出，不是混合凸性结论。
+
+还须核对权重为零时的点态含义。在所有权重非零处，经典权重项为
+$`\sum_i[(g_i^2)']^2/g_i^2=4\sum_i(g_i')^2`$。权重取零只可能在 $`S`$；三次零点保证此处对应的 $`g_i'=0`$，零块和零块导数都为零，对点态 SLD 不作贡献。保留的唯一权重为一且其导数也为零。因此（215.17）在这些点同样成立，没有通过取极限向点态 SLD 添加权重出生项。单点集合的权重恒为一，也满足该论证。
+
+在 $`t_i`$ 附近令 $`\delta=u-t_i`$，则
+
+```math
+\begin{gathered}
+ g_j=O(\delta^3),\quad g_j'=O(\delta^2)\quad(j\ne i),\\[0pt]
+ g_i=1+O(\delta^6),\quad g_i'=O(\delta^5),\\[0pt]
+ \rho_{t_i}=\rho_i(t_i),\qquad \rho'_{t_i}=\rho_i'(t_i).
+\end{gathered}
+\tag{215.18}
+```
+
+点态 SLD 信息只取决于态及其一阶导数，故 $`I_Q(\rho_{t_i})=I_r(t_i)`$。各 $`G_j`$ 在该内点邻域有界，定理211.3及固定等距保留给出
+
+```math
+\begin{aligned}
+ I_Q(\rho_u)-I_r(u)&\le G_i(u)+O(\delta^4),\\[0pt]
+ \limsup_{u\to t_i,\,u\ne t_i}
+ \frac{I_Q(\rho_u)-I_r(u)}{(u-t_i)^2}
+ &\le\kappa_*(a,t_i).
+\end{aligned}
+\tag{215.19}
+```
+
+实际混态曲线已具有校准，所以定理211.2提供反向下极限界。两者夹逼，得到普通双侧极限等于 $`\kappa_*`$。这覆盖名义点与邻近点的秩不同的情形，不使用混态信息关于参数的连续性。
+
+为了排除额外尖锐位置，使用共同处理器在完整 $`N`$ 维空间上的固定系数 $`E=P,K=T`$。定理215.2的证明只需这些固定算子关系与期望约束，所以也可直接在此空间应用；其正谱恰为已选的 $`m`$ 个 $`\lambda_+((1+t_i)/2)`$。任何额外尖锐位置都会强制一个新的正特征值，与严格单调性矛盾。因此
+
+```math
+\mathcal E_*(\rho)=S.
+\tag{215.20}
+```
+
+实际联合支持维数至多为 $`N`$，而定理215.2对这条实际曲线的联合支持又给出至少 $`N`$，所以它恰为 $`N`$。最后，解析曲线属于光滑和 $`C^1`$ 类，与统一下界一起给出（215.14）。
+
+最后加强实际混态的秩条件。在同一处理器的一块三维嵌入中，取定理211.4的仿射精确准备 $`B_u`$。其左端态是两个不同纯态的严格凸组合，故秩至少为二；在每个 $`u\in J_a`$，仿射组合中的左端权重严格为正，所以 $`\operatorname{rank}B_u\ge2`$，而（211.42）给出局部有界的 SLD 信息。令
+
+```math
+F(u)=\prod_i(u-t_i),\qquad
+ \eta(u)=\frac{F(u)^6}{1+F(u)^6},\qquad
+ \widetilde\rho_u=(1-\eta(u))\rho_u+\eta(u)B_u.
+\tag{215.21}
+```
+
+这仍是同一空间、同一处理器的解析精确准备。在 $`S`$ 上其态及一阶导数保持不变；在 $`S`$ 外，$`\eta>0`$ 与正性给出秩至少为二。对这个二项混合再次使用扩展凸性，额外权重成本在 $`u\notin S`$ 为
+
+```math
+\frac{\eta'(u)^2}{\eta(u)(1-\eta(u))}
+ =\frac{36F(u)^4F'(u)^2}{(1+F(u)^6)^2}
+ =O((u-t_i)^4)\qquad(u\to t_i).
+\tag{215.22}
+```
+
+又因 $`\eta=O((u-t_i)^6)`$，加入 $`B_u`$ 不改变最优二阶曲率；在零权重处其导数为零，仍按点态 SLD 计算。相同正谱排除论证给出 $`\mathcal E_*(\widetilde\rho)=S`$，同一个维数下界保证其实际联合支持也恰为 $`N`$。因此得到所要求的秩变化实现。
+
+特别地，两个不同指定点的最小混态维数在负谱签名不同的情形恰为五，在负谱签名相同的情形恰为四。这不判定纯态单曲线是否能达到同一维数。式（215.20）只指定完整尖锐集合；其余非尖锐的普通校准点没有在本证明中被排除。证毕。
+
+**定理 215.4（同一混态曲线的精确尖锐容量）。** 对整数 $`d\ge3`$，在程序预算维数不超过 $`d`$ 的全部定义215.1程序中，实解析曲线和 $`C^1`$ 曲线的最大尖锐点数相同，且为
+
+```math
+\max_{\dim\mathcal H\le d,\ \rho\ \mathrm{analytic}}
+             \#\mathcal E_*(\rho)
+ =\max_{\dim\mathcal H\le d,\ \rho\in C^1}
+             \#\mathcal E_*(\rho)
+ =\begin{cases}
+ \left\lfloor3(d-1)/4\right\rfloor,&0<a<1/2,\\[0pt]
+ \left\lfloor(d-1)/2\right\rfloor,&1/2\le a<1.
+ \end{cases}
+\tag{215.23}
+```
+
+这些最大值由一个固定处理器和一条实际准备曲线达到。程序预算至多二时，任何存在的精确准备曲线都没有尖锐点；本句不声称一维中存在全区间精确准备。
+
+证明。 定理215.2将混态尖锐集合的计数归约为同一个原算子的不同特征值。定理214.2说明，低参数区域每个负谱纤维至多含三个点，高参数区域至多含一个点。因此 $`m`$ 个尖锐点分别要求
+$`d\ge1+m+\lceil m/3\rceil`$ 或 $`d\ge1+2m`$，得到（215.23）的上界。至多二维的结论直接来自每个尖锐点强制三个不同特征值。
+
+达到性沿用定理214.4选择的实际位置集合：低参数区域取互不相同的负谱纤维及其三重原像，最后一组按所需点数截取；高参数区域取任意不同位置。这分别给出 $`N=1+m+\lceil m/3\rceil`$ 和 $`N=1+2m`$。取（215.23）对应的最大整数 $`m\ge1`$，则 $`N\le d`$。定理215.3在这一维数中给出一条实际解析混态曲线，其完整尖锐集合恰是所选集合，故两个上界均达到。证毕。
+
+## 追加锚（本行以下为增补区）

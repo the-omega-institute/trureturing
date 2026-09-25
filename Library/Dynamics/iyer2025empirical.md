@@ -360,3 +360,75 @@ moment convergence, a finite full critical Sobolev norm, a uniform
 second-order expansion over fixed macroscopic exponent intervals, or
 an unrestricted growing-frequency theorem. This comparison is bounded
 and does not certify global originality.
+
+## 增长谱尺度：对数二次型与独立 Gaussian 斜率
+
+[窗口相位卷第 51 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+在原 lambda=Q³ 序列中，把频率上限同时扩大到 exp(u/sqrt(delta))/h，
+其中 u 在固定正紧区间内变化。减去同一端点平方的主项及精确环境中心后，
+整条谱曲线趋于随机仿射函数。截距是同一空间 Gaussian 测度的对数二次 Wiener 积分，
+斜率是第 49 章的独立二次 Gaussian 坐标。以下文献覆盖经典工具及接近的先例，
+不把它们计作新的概率机制。
+
+Ivan Nourdin、Jan Rosiński，
+*Asymptotic independence of multiple Wiener–Itô integrals and the resulting limit laws*，
+Annals of Probability 42(2), 497–526 (2014)，
+[DOI:10.1214/12-AOP826](https://doi.org/10.1214/12-AOP826)，
+[arXiv:1112.5070v4](https://arxiv.org/pdf/1112.5070v4)，
+是混合 Gaussian／非 Gaussian 极限的重要直接先例。
+所引 v4 的 Theorem 3.4 对固定阶、多重 Wiener 积分的有限族，
+在二阶矩一致有界下，把分块渐近矩独立等价为跨块平方的协方差趋零，
+或全部非平凡跨块收缩趋零。这里的判据不是普通协方差趋零。
+Corollary 3.6 另要求各块边缘收敛及极限边缘的矩确定性，才推出联合独立极限。
+
+其 Theorem 4.7（PDF 第 22–23 页）更直接处理一块 Gaussian 极限和另一块可为非 Gaussian 的极限：
+两块均由固定阶 Wiener 积分构成，第一块的最小阶不小于第二块的最大阶；
+已有两块边缘极限、第二块边缘矩确定性及跨块普通协方差趋零时，
+可得联合独立极限。这些 Gaussian 底空间、阶数和矩确定性条件不可省略。
+在精确 Gaussian 参考数组中，对角平方涨落属于第二阶，
+非对角对数型属于第二阶，线性轮廓属于第一阶。
+对角型与非对角型的协方差精确为零；平方时钟、最大权消失及
+Hilbert–Schmidt 逼近可分别验证其边缘极限。
+对数极限的特征值平方可和，使中心化矩生成函数在零点邻域存在，故满足矩确定性。
+这给出了该混合机制的经典对应。
+
+实际约束后验标签并非 Wiener 积分。第 51 章先在一个辅助 Bernoulli 乘积律中，
+对有限区间和与二次坐标证明联合 Gaussian 极限，再经有控制的阶梯核逼近建立独立性。
+它没有凭不同阶的正交性推出独立性，也没有把 Gaussian 参考定理直接套到后验数组。
+例如 G 与 G²−1 不相关而依赖；这足以否定只比较普通协方差的捷径。
+
+Vlad Bally、Lucia Caramellino，
+*An Invariance Principle for Stochastic Series II. Non Gaussian Limits*，
+[arXiv:1607.03703v1](https://arxiv.org/pdf/1607.03703v1)，
+给出另一个接近的非 Gaussian 二次型先例。
+该版本 Theorem 1.4 对中心化、单位方差、独立输入及一致三阶绝对矩界，
+以低影响量控制三次可微测试函数下的替换误差；此平滑版本不要求连续密度下界。
+Theorem 1.1、1.5 的总变差结论则使用 (1.1) 的局部 Lebesgue 下界，
+以及各阶矩控制、低影响和最高阶不退化条件。
+有限 Bernoulli 组和是离散变量，不能直接满足这个 Lebesgue 下界。
+Proposition 3.5（PDF 第 15–17 页）把一个方差型估计量的极限表示为二重 Wiener 积分；
+其卷积核含对数奇点，证明明确拆开对角与非对角部分。
+这是与对数核极限密切相关的已有构造，其输入结构、控制测度、核与观测模型均与本章不同。
+第 51 章未使用未经核对的全局替换，也未主张自身获得总变差收敛到连续极限。
+
+前一节所列 Henze–Jiménez-Gamero 的 logarithmic energy U-statistic
+也是平方可积对数核与中心化 chi-square 级数的直接先例。
+其独立同分布双样本、固定样本比例及平方对数距离可积条件仍为实质前提；
+随机碰撞的原子对角不能径直赋予有限对数自能。
+第 51 章删除的是实际完整得分组之间的精确对角，
+各有限阶梯核先减去自己的有限对角均值，再作 L² 完备化；
+这不涉及不存在的对数核对角迹。
+该 2026 原文版本的规范化差异已在前节说明，本章不导入其中任何规范化公式。
+
+本章所增加的模型结论依赖四个具体桥梁：同一真实支持下的不同组两行占据数界；
+近对角线与远处相邻组的统一对数平方尾界；
+先消去发散端点项后可用的精确中心误差率；
+在整个固定正尺度区间上一致的有限 Fourier 尾估计。
+无权尾质量收敛乘以发散的 log²Q 不能替代第二个桥梁。
+同样，固定分辨率 Gaussian 曲线的再取极限会遗漏同时放大后仍存活的二次 Gaussian 涨落。
+环境中心 V_M 不能只凭其趋于 gamma 就替换：还需要额外的增长尺度乘中心误差趋零。
+
+经典 Fourier 级数、Wick 中心化、Hilbert–Schmidt 核逼近、Lyapunov 定理及 Gaussian 累积量
+均保留为已有工具；本章的新增内容是这些工具在实际算术得分组与精确后验中的共同实现和统一谱律。
+这里的文献对应是所列原文范围内的比较，不是全局原创性认证。
+结论不包含实际谱能量矩的收敛、旧场联合性、变化振幅、增长空间窗口或有效有限起始尺度。
