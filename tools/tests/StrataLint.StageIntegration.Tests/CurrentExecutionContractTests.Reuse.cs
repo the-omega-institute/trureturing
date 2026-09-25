@@ -8,7 +8,9 @@ namespace StrataLint.StageIntegration.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("tools/lean-inspector/tests/packages/reg.py", true)]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", false)]
+    [InlineData("tools/lean-inspector/tests/test_native_support.py", true)]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", true)]
     [InlineData("README.md", false)]
     [InlineData("tools/lean-inspector/tests/packages/README.md", false)]
     public void RegisteredNativeFixtureInputsInvalidateConsumedMaterialsOnly(string path, bool invalidates)
