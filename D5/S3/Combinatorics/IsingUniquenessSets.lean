@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: The smallest set of uniqueness for the Ising cone on the k-cube has k + 1 points. -/
+   digest: No set of uniqueness for the Ising cone on the k-cube has at most k points; for k ≥ 3 the smallest has k + 1. -/
 
 /-
 proof_shape: result: content
