@@ -8862,3 +8862,520 @@ $$
 完整 tester 与实现定理采用 [Chiribella–D’Ariano–Perinotti, arXiv:0904.4483v2](https://arxiv.org/abs/0904.4483v2)，定义 11、引理 8、定理 11–12，PDF 第 17–18 页。有限维半定规划强对偶条件可见 [Gutoski, arXiv:1008.4636v4](https://arxiv.org/abs/1008.4636v4)，附录 A 的 Fact 6；该文定理 4 给一般策略上界质量。式（55.5）的单向对偶及本反例的证明均已在上文展开，未以数值最优值作为证明前提。
 
 ## 追加锚（本行以下为增补区）
+
+## 56. 两轮量子因果修复的统一线性比例间隙
+
+### 56.1 合同与结论
+
+采用 $A\otimes B\otimes D$ 端口次序，$\dim A=\dim B=2$、$\dim D=3$，其中 $A$ 为晚输入、$B$ 为早输出、$D$ 为晚输出。因果归一化修复满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{56.1}
+$$
+
+吸收全转置后，全部 tester 归一化算符为 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$；事件遍历全部 $0\preceq E\preceq C\otimes I_D$。定义
+
+$$
+D(R,S)=\max_{C,E}|\operatorname{Tr}((R-S)E)|.
+\tag{56.2}
+$$
+
+记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,\quad z=|1,1,2\rangle,
+\qquad
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|,
+\qquad0<\varepsilon\le\frac14.
+\tag{56.3}
+$$
+
+这是等距通道的 Choi 算符，全部反馈总响应的范围为 $[1-\varepsilon,1+\varepsilon]$，因此归一化缺陷为 $\Delta(R_\varepsilon)=\varepsilon$。
+
+**定理 56.1（统一线性比例间隙）。** 对式（56.3）的整个族，
+
+$$
+\left(1+\frac1{10000}\right)\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S)
+\le\frac{2\varepsilon}{1+\varepsilon}.
+\tag{56.4}
+$$
+
+所以额外修复成本满足
+
+$$
+\frac{\varepsilon}{10000}
+<\min_S D(R_\varepsilon,S)-\varepsilon
+\le\frac{\varepsilon(1-\varepsilon)}{1+\varepsilon}
+<\varepsilon.
+\tag{56.5}
+$$
+
+因此该额外成本在 $\varepsilon\downarrow0$ 时为 $\Theta(\varepsilon)$。式（56.4）的比例常数不主张尖锐。 特别地，在 $\varepsilon=1/4$ 时，
+
+$$
+\min_{S\text{ 因果}}D(R_{1/4},S)>\frac{10001}{40000}.
+$$
+
+### 56.2 单向对偶与两个极端反馈
+
+对任意厄米 $X$，单向支持函数的准确对偶为
+
+$$
+h(X)=\max_{C,\,0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(XE)
+=\min\{\operatorname{Tr}n:
+N\succeq0,\ N\succeq X,\operatorname{Tr}_D N=I_A\otimes n\}.
+\tag{56.6}
+$$
+
+式（56.6）直接复用引理 55.1，最小值达到，并且
+
+$$
+D(R,S)=\max\{h(R-S),h(S-R)\}.
+$$
+
+两个方向使用独立上界，保留非归一化候选的完整事件响应。
+
+定义互补投影
+
+$$
+\begin{aligned}
+Q_+&=(|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|)\otimes I_D,\\
+Q_-&=(|0,1\rangle\langle0,1|+|1,0\rangle\langle1,0|)\otimes I_D.
+\end{aligned}
+\tag{56.7}
+$$
+
+它们都是合法反馈归一化算符，并满足
+
+$$
+\operatorname{Tr}(SQ_\pm)=1,
+\quad\operatorname{Tr}(R_\varepsilon Q_+)=1+\varepsilon,
+\quad\operatorname{Tr}(R_\varepsilon Q_-)=1-\varepsilon.
+\tag{56.8}
+$$
+
+下面证明：若某个 $\eta\ge0$ 允许
+
+$$
+D(R_\varepsilon,S)\le\varepsilon+\eta,
+\tag{56.9}
+$$
+
+则必须满足一个明确的不等式，再以 $\eta=\varepsilon/10000$ 反驳它。
+
+### 56.3 正方向压缩的精细概率界
+
+令
+
+$$
+\rho=Q_+SQ_+,\qquad
+q=\frac{x+\sqrt\varepsilon\,z}{\sqrt{1+\varepsilon}},
+\qquad P=Q_+-|q\rangle\langle q|,
+\qquad k=\operatorname{Tr}(P\rho).
+$$
+
+由式（56.8），$\rho\succeq0$、$\operatorname{Tr}\rho=1$。算符
+
+$$
+H_+=Q_+(R_\varepsilon-S)Q_+
+=(1+\varepsilon)|q\rangle\langle q|-\rho
+$$
+
+的迹为 $\varepsilon$。其正谱事件合法，式（56.9）给
+
+$$
+\operatorname{Tr}(H_+)_-
+=\operatorname{Tr}(H_+)_+-\varepsilon\le\eta.
+$$
+
+因为 $Pq=0$，
+
+$$
+k=-\operatorname{Tr}(PH_+)
+\le\operatorname{Tr}(H_+)_-\le\eta.
+\tag{56.10}
+$$
+
+令 $B_{00}=|0,0\rangle\langle0,0|\otimes I_D$，并记
+
+$$
+s=\sigma_{00}=\operatorname{Tr}(B_{00}\rho),
+\qquad t=\langle q|B_{00}|q\rangle=\frac1{1+\varepsilon}.
+$$
+
+$B_{00}$ 是包含于 $Q_+$ 的投影，因此
+
+$$
+\|PB_{00}q\|^2=t(1-t).
+$$
+
+按 $q\oplus q^\perp$ 对 $\rho$ 分块。其 $q$ 对角块为 $1-k$，正的补块迹为 $k$。正性矩阵元界给交叉项的绝对值不超过
+$\sqrt{(1-k)t(1-t)k}$，而补块对 $B_{00}$ 的响应不超过 $k$。因此
+
+$$
+\begin{aligned}
+s
+&\le(1-k)t+2\sqrt{(1-k)t(1-t)k}+k\\
+&\le t+(1-t)\eta+2\sqrt{t(1-t)\eta}\\
+&=t+\frac{\varepsilon\eta}{1+\varepsilon}
++\frac{2\sqrt{\varepsilon\eta}}{1+\varepsilon}.
+\end{aligned}
+\tag{56.11}
+$$
+
+交叉项界可直接写成
+$|\langle q|\rho PB_{00}|q\rangle|^2
+\le\langle q|\rho|q\rangle
+\langle PB_{00}q|\rho|PB_{00}q\rangle
+\le(1-k)t(1-t)k$；不需要对补块作交换性假设。
+
+另一个关键界保留了实际坐标 $x$。$B_{00}-|x\rangle\langle x|$ 是 $q$ 正交补内的投影，故
+
+$$
+0\le s-\langle x|S|x\rangle
+\le k\le\eta.
+\tag{56.12}
+$$
+
+因果偏迹仍给 $S_{xx},S_{yy}\le s$，因此 $|S_{xy}|\le s$。
+
+### 56.4 负向余量的局部界
+
+由式（56.6）、（56.9），取
+
+$$
+N\succeq0,\quad N\succeq S-R_\varepsilon,
+\quad\operatorname{Tr}_D N=I_A\otimes n,
+\quad\operatorname{Tr}n\le\varepsilon+\eta.
+$$
+
+令 $Y=N-S+R_\varepsilon\succeq0$。在 $Q_-$ 上，
+
+$$
+\operatorname{Tr}(YQ_-)=\operatorname{Tr}n-\varepsilon\le\eta.
+\tag{56.13}
+$$
+
+所以 $Y_{yy}\le\eta$。对 $A=1,B=0$ 的完整 $D$ 块取迹，得到
+
+$$
+n_{00}=s-(1-\varepsilon)
++\operatorname{Tr}(Y|_{A=1,B=0})
+\le s-1+\varepsilon+\eta.
+\tag{56.14}
+$$
+
+因为 $N_{xx}\le n_{00}$，式（56.12）、（56.14）给出局部取消
+
+$$
+\begin{aligned}
+Y_{xx}
+&=N_{xx}-S_{xx}+1\\
+&\le n_{00}-S_{xx}+1\\
+&\le(s-S_{xx})+\varepsilon+\eta
+\le\varepsilon+2\eta.
+\end{aligned}
+\tag{56.15}
+$$
+
+于是
+
+$$
+|Y_{xy}|\le\sqrt{(\varepsilon+2\eta)\eta},
+\qquad
+|N_{xy}|\le n_{00}\le s-1+\varepsilon+\eta.
+\tag{56.16}
+$$
+
+在恒等式 $R_{xy}=S_{xy}-N_{xy}+Y_{xy}$ 中使用式（56.11）、（56.16），得到
+
+$$
+\begin{aligned}
+\sqrt{1-\varepsilon}
+&\le2s-1+\varepsilon+\eta
++\sqrt{(\varepsilon+2\eta)\eta}\\
+&\le\frac{1+\varepsilon^2}{1+\varepsilon}
++\frac{4\sqrt{\varepsilon\eta}}{1+\varepsilon}
++\frac{2\varepsilon\eta}{1+\varepsilon}
++\eta+\sqrt{(\varepsilon+2\eta)\eta}.
+\end{aligned}
+$$
+
+故假设（56.9）要求
+
+$$
+g_\varepsilon:=\sqrt{1-\varepsilon}
+-\frac{1+\varepsilon^2}{1+\varepsilon}
+\le
+\frac{4\sqrt{\varepsilon\eta}}{1+\varepsilon}
++\frac{2\varepsilon\eta}{1+\varepsilon}
++\eta+\sqrt{(\varepsilon+2\eta)\eta}.
+\tag{56.17}
+$$
+
+### 56.5 统一的有理阈值
+
+平方差恒等式给
+
+$$
+\frac{g_\varepsilon}{\varepsilon}
+=
+\frac{1-3\varepsilon-\varepsilon^2-\varepsilon^3}
+{(1+\varepsilon)[(1+\varepsilon)\sqrt{1-\varepsilon}+1+\varepsilon^2]}.
+$$
+
+对 $0<\varepsilon\le1/4$，分子至少为 $11/64$，分母至多为
+$(5/4)(5/4+5/4)=25/8$，故
+
+$$
+\frac{g_\varepsilon}{\varepsilon}\ge\frac{11}{200}.
+\tag{56.18}
+$$
+
+在式（56.17）取 $\eta=\varepsilon/10000$，其右侧除以 $\varepsilon$ 后不超过
+
+$$
+\frac1{25}+\frac1{20000}+\frac1{10000}
++\frac1{100}\sqrt{1+\frac1{5000}}
+<\frac1{25}+\frac1{20000}+\frac1{10000}
++\frac{1001}{100000}
+=\frac{627}{12500}
+<\frac{11}{200}.
+\tag{56.19}
+$$
+
+第一个严格不等式使用
+$(1001/1000)^2>1+1/5000$。式（56.18）、（56.19）矛盾，因此不存在满足
+$D(R_\varepsilon,S)\le(1+1/10000)\varepsilon$ 的因果 $S$。
+
+因果集合有限维且紧，事件误差连续，最小值达到，从而式（56.4）的下界严格成立。
+
+最后，令
+
+$$
+T=R_\varepsilon
++\varepsilon|0,1,0\rangle\langle0,1,0|
++\varepsilon|1,0,0\rangle\langle1,0,0|.
+$$
+
+则 $T\succeq R_\varepsilon$ 且
+$\operatorname{Tr}_D T=I_A\otimes\operatorname{diag}(1,\varepsilon)$。
+$S=T/(1+\varepsilon)$ 是因果修复；由
+$R_\varepsilon-S\preceq\varepsilon S$ 及
+$S-R_\varepsilon\preceq(T-R_\varepsilon)/(1+\varepsilon)$，两个方向的事件误差分别不超过 $\varepsilon$ 与 $2\varepsilon/(1+\varepsilon)$，得式（56.4）的上界。$\square$
+
+这个线性比例间隙排除了本族的 $\varepsilon+O(\varepsilon^2)$ 修复上界。这里的结论只针对指定等距族和全部量子 tester 的同一合同，不把常数 $1+1/10000$ 宣称为任何全局最优常数。
+
+## 追加锚（本行以下为增补区）
+
+## 57. 固定早期边缘的纯化极值与末端处理
+
+### 57.1 固定合同
+
+本节把标准的 Schmidt 纯化与末端数据处理工具用于完整量子 tester 下的因果修复比较；纯化存在性和末端数据处理在此承担已有工具的角色。
+
+固定有限维非零端口 $A,B$，分别表示晚输入与早输出。令
+
+$$
+M\succeq0\quad\text{作用于 }A\otimes B,
+\qquad\operatorname{Tr}_B M=I_A.
+\tag{57.1}
+$$
+
+晚输出空间 $D$ 上的一个扩展是
+
+$$
+R\succeq0\quad\text{作用于 }A\otimes B\otimes D,
+\qquad\operatorname{Tr}_D R=M.
+\tag{57.2}
+$$
+
+因此 $\operatorname{Tr}_{BD}R=I_A$，它是一个全局静态通道的 Choi 算符。因果归一化修复集合为
+
+$$
+\mathcal S_D=
+\{S\succeq0:\operatorname{Tr}_D S=I_A\otimes\sigma,
+\ \sigma\succeq0,\operatorname{Tr}\sigma=1\}.
+\tag{57.3}
+$$
+
+采用吸收全转置后的 tester 配对，所有反馈归一化算符是 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$。事件遍历全部 $0\preceq F\preceq C\otimes I_D$，包括任意量子参考、记忆与最终测量。记
+
+$$
+\begin{aligned}
+D_D(R,S)&=\max_{C,F}|\operatorname{Tr}((R-S)F)|,\\
+\mathfrak r_D(R)&=\min_{S\in\mathcal S_D}D_D(R,S),\\
+\delta(M)&=\max_C|\operatorname{Tr}(MC)-1|.
+\end{aligned}
+\tag{57.4}
+$$
+
+因为 $\operatorname{Tr}(R(C\otimes I_D))=\operatorname{Tr}(MC)$，全部扩展具有相同的每个反馈总响应及相同的归一化缺陷 $\delta(M)$。所用集合有限维且紧，式（57.4）的极值达到。
+
+### 57.2 任意扩展是纯化的末端通道像
+
+令 $r=\operatorname{rank}M$，取 $E=\mathbb C^r$。对 $M$ 的正谱分解
+
+$$
+M=\sum_{j=1}^r\lambda_j|m_j\rangle\langle m_j|,
+\qquad\lambda_j>0,
+$$
+
+定义未归一化的最小纯化
+
+$$
+|\Omega\rangle=\sum_{j=1}^r\sqrt{\lambda_j}|m_j\rangle_{AB}|j\rangle_E,
+\qquad R^{\mathrm{pur}}=|\Omega\rangle\langle\Omega|.
+\tag{57.5}
+$$
+
+其范数平方为 $\operatorname{Tr}M=\dim A$，与未归一化 Choi 约定一致。
+
+**引理 57.1（扩展由末端 CPTP 通道产生）。** 对任意满足式（57.2）的 $R$，存在 CPTP 通道 $\Lambda:\mathcal L(E)\to\mathcal L(D)$，使
+
+$$
+R=(\operatorname{id}_{AB}\otimes\Lambda)(R^{\mathrm{pur}}).
+\tag{57.6}
+$$
+
+**证明。** 在 $D$ 后添加一个有限维辅助空间 $F$，取 $R$ 的纯化 $|\Psi\rangle_{ABDF}$。因为 $|\Psi\rangle$ 对 $DF$ 的偏迹也是 $M$，可写
+
+$$
+|\Psi\rangle=\sum_{j=1}^r\sqrt{\lambda_j}|m_j\rangle|f_j\rangle,
+\qquad\langle f_i|f_j\rangle=\delta_{ij}.
+$$
+
+具体可取 $|f_j\rangle=\lambda_j^{-1/2}(\langle m_j|\otimes I)|\Psi\rangle$，其正交性直接由偏迹等于 $M$ 得到。令等距 $W:E\to D\otimes F$ 满足 $W|j\rangle=|f_j\rangle$，并定义
+
+$$
+\Lambda(X)=\operatorname{Tr}_F(WXW^*).
+$$
+
+它完全正且保持迹，且 $(I_{AB}\otimes W)|\Omega\rangle=|\Psi\rangle$，所以式（57.6）成立。$\square$
+
+### 57.3 末端通道收缩完整事件误差
+
+**引理 57.2。** 任意 CPTP $\Lambda:E\to D$ 都将 $\mathcal S_E$ 映到 $\mathcal S_D$，且对所有厄米差和任意候选 $R_E,S_E$ 有
+
+$$
+D_D\bigl((\operatorname{id}_{AB}\otimes\Lambda)R_E,
+(\operatorname{id}_{AB}\otimes\Lambda)S_E\bigr)
+\le D_E(R_E,S_E).
+\tag{57.7}
+$$
+
+**证明。** 完全正性保持正算符，而保持迹给
+
+$$
+\operatorname{Tr}_D[(\operatorname{id}_{AB}\otimes\Lambda)S_E]
+=\operatorname{Tr}_E S_E.
+$$
+
+所以因果偏迹和归一化保持。
+
+对任意末端事件 $0\preceq F_D\preceq C\otimes I_D$，定义
+
+$$
+F_E=(\operatorname{id}_{AB}\otimes\Lambda^*)(F_D).
+$$
+
+$\Lambda^*$ 完全正且保持单位算符，即 $\Lambda^*(I_D)=I_E$，故
+
+$$
+0\preceq F_E\preceq C\otimes I_E.
+$$
+
+迹配对给
+
+$$
+\operatorname{Tr}\!\left(
+[(\operatorname{id}_{AB}\otimes\Lambda)(R_E-S_E)]F_D
+\right)
+=\operatorname{Tr}((R_E-S_E)F_E).
+$$
+
+对所有 $C,F_D$ 取最大得到式（57.7）。这一证明直接使用全部事件，不需要假设候选本身在所有反馈下归一化，也没有删除归一化迹项。$\square$
+
+**定理 57.3（固定边缘的纯化上界达到）。** 对式（57.2）的每个有限维扩展，
+
+$$
+\mathfrak r_D(R)\le\mathfrak r_E(R^{\mathrm{pur}}).
+\tag{57.8}
+$$
+
+因此，在允许任意有限晚输出空间时，固定早期边缘 $M$ 的最大最优修复误差由最小纯化达到；寻找最困难扩展可将晚输出维数限制为 $r=\operatorname{rank}M\le(\dim A)(\dim B)$。
+
+**证明。** 取引理 57.1 的 $\Lambda$。每个 $S_E\in\mathcal S_E$ 的像都在 $\mathcal S_D$，所以
+
+$$
+\begin{aligned}
+\mathfrak r_D(R)
+&\le\inf_{S_E\in\mathcal S_E}
+D_D\bigl((\operatorname{id}\otimes\Lambda)R^{\mathrm{pur}},
+(\operatorname{id}\otimes\Lambda)S_E\bigr)\\
+&\le\inf_{S_E\in\mathcal S_E}D_E(R^{\mathrm{pur}},S_E)
+=\mathfrak r_E(R^{\mathrm{pur}}).
+\end{aligned}
+$$
+
+$R^{\mathrm{pur}}$ 本身是一个允许的扩展，故上界达到。$\square$
+
+比较方向是：对末输出做通道后处理，只会使最优修复问题更容易或同样困难。它没有声称每个最优修复都能从某个纯化最优修复获得。
+
+### 57.4 固定末输出维数与同边缘的最容易扩展
+
+**推论 57.4（末端等距不改最优值）。** 若 $J:E\to D$ 为等距，则
+
+$$
+\mathfrak r_D((I_{AB}\otimes J)R_E(I_{AB}\otimes J^*))
+=\mathfrak r_E(R_E).
+\tag{57.9}
+$$
+
+**证明。** 等距嵌入是 CPTP 通道，给一个方向。固定 $E$ 上的密度算符 $\omega$，定义恢复通道
+
+$$
+\Gamma(X)=J^*XJ+
+\operatorname{Tr}((I_D-JJ^*)X)\,\omega.
+$$
+
+它完全正且保持迹，且 $\Gamma(JXJ^*)=X$。对它再次使用引理 57.2 及因果集合封闭，得到反向不等式。$\square$
+
+因此，对固定 $D$，若 $\dim D\ge r$，式（57.8）的上界仍由嵌入 $D$ 的最小纯化达到。若 $\dim D<r$，此处只保留上界，不能声称 $D$ 内存在这个纯化。
+
+同时，对任意非零 $D$ 和其密度算符 $\omega_D$，积扩展 $M\otimes\omega_D$ 满足
+
+$$
+\mathfrak r_D(M\otimes\omega_D)=\delta(M).
+\tag{57.10}
+$$
+
+证明使用定理 54.2 的最小接口尖锐修复结论（交换固定的张量因子次序）：存在 $\sigma$ 使 $D_{\mathbb C}(M,I_A\otimes\sigma)=\delta(M)$。追加固定态 $\omega_D$ 是末端 CPTP 通道，故引理 57.2 给式（57.10）的上界；整个事件 $F=C\otimes I_D$ 给相同的下界。于是固定 $M$ 时，归一化缺陷是所有扩展的最小可能最优修复成本，而纯化给允许足够末输出维数时的最大成本。
+
+### 57.5 与等距反例的对应
+
+对早期边缘
+
+$$
+M_\varepsilon=|0,0\rangle\langle0,0|
++(1-\varepsilon)|1,0\rangle\langle1,0|
++\varepsilon|1,1\rangle\langle1,1|,
+\qquad0<\varepsilon\le1/4,
+$$
+
+其秩为三。向量
+
+$$
+|0,0,0\rangle+\sqrt{1-\varepsilon}|1,0,1\rangle
++\sqrt\varepsilon|1,1,2\rangle
+$$
+
+就是式（57.5）的最小纯化。因此第 55 节的纯等距反例在固定 $M_\varepsilon$ 的全部有限末输出扩展中达到最大修复困难。末端基退相干保持同一 $M_\varepsilon$，且具有已证的最优修复误差 $\varepsilon$；这与式（57.8）的收缩方向一致。
+
+这里的“最大”只在固定 $M$、固定早期/晚输入端口和同一完整 tester 合同下比较扩展，不外推为只固定数值 $\delta$ 的所有边缘之间的最大值。
+
+## 追加锚（本行以下为增补区）
