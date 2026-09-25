@@ -185,8 +185,8 @@ theorem dyadic_upper_eventually_word_eq (alpha x : ℝ) (n : ℕ) :
   have hfloor1' : ⌊x + ((j : ℝ) + 1) * beta⌋ =
       ⌊x + ((j : ℝ) + 1) * alpha⌋ := by
     simpa only [Nat.cast_add, Nat.cast_one] using hfloor1
-  change decide (⌊x + ((j : ℝ) + 1) * beta⌋ - ⌊x + (j : ℝ) * beta⌋ = 1) =
-    decide (⌊x + ((j : ℝ) + 1) * alpha⌋ - ⌊x + (j : ℝ) * alpha⌋ = 1)
+  unfold lowerMechanicalWord lowerMechanicalLetter
+  simp only [Nat.cast_add, Nat.cast_one]
   rw [hfloor0, hfloor1']
 
 #print axioms dyadic_lower_boundary_mismatch
