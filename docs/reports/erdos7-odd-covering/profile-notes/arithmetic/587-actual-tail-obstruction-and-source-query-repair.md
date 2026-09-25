@@ -225,7 +225,7 @@ and [data](../../frontier/cover-geometry/automatic_tail_actual.json)
 retain the actual original residues and source. The exact actual-union
 and source calculations are separate from the
 general deductions AT4--AT7. The producer checks the finite149-original
-counterexample with complete coordinate/query tails. All59 named checks
+counterexample with complete coordinate/query tails. All63 named checks
 pass, including the full1620 actual valuation cells and the exact
 source-only margin identities. The ordinary
 proofs carry the all-family and all-height source-only implication.
@@ -234,3 +234,78 @@ No new Lean verification is claimed.
 Run with Python3 standard library only:
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/automatic_tail_actual.py
+
+## 7. High actual query cost requires a substantial mixed19 loss
+
+The remaining region R_Q(nu)>=R_crit has a further necessary
+condition from the existing one-row cap estimate. Let
+
+    S17=lambda_<19(1),  nu17=lambda_<19/S17,
+    d=Delta19/S17,  S=S17(1-d).
+
+The actual prefix before19 is precisely the original PA construction
+on the selected family supported on Q without19: originals involving19
+do not alter earlier kernels. The omitted19 calculation in
+[Report348](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md)
+NC9 and its exact data therefore give
+
+    R_Q_without19(nu17)<=B17
+       =2274605369898493/588022615198334
+       =3.868227702656116... .
+
+This concerns the stopped-prefix law. The earlier marginal after
+the final19 reweighting need not equal nu17.
+
+The current row has mass at most one and density at most9/5.
+For each nonunit label d0 without19, its final raw query mass is at
+most S17 q_d0(nu17). For each label19^e d0 with e>=1, including
+d0=1, it is at most (9/5)19^(-e)S17 q_d0(nu17). Summing all query
+heights and then normalizing ONCE gives
+
+    R_Q(nu)<=A/(1-d),
+    A=(11B17+1)/10
+      =25608681684081757/5880226151983340
+      =4.355050472921728... .                            (AT8)
+
+The unit appears only in the positive19-exponent sum. The same-source
+mass bound ensures d<1. Consequently
+
+    R_Q(nu)>=R_crit  implies
+    d>=d_min=1-A/R_crit
+      =42340905997086165193203264671190758157847
+         /429610513200413970577603014236563262811427
+      =0.09855649407102397... .                          (AT9)
+
+Thus at least this fraction of the actual incoming prefix mass must
+be lost in the final19 row. It cannot be supplied by pure19 constraints
+alone. Let s_pure be the Haar mass surviving all selected pure19-power
+classes. At most two classes at each numerical19^e give
+
+    s_pure>=1-2 sum_(e>=1)19^(-e)=8/9.
+
+For a prefix h, let v19(h) be the Haar mass of the actual incident
+mixed19 forbidden UNION inside that pure survivor. Every actual
+overlap is included once. Then g19=s_pure-v19, so
+
+    1-min(1,(9/5)g19)
+       =(9/5)[v19-(s_pure-5/9)]_+
+       <=(9/5)[v19-1/3]_+.
+
+AT9 therefore forces
+
+    E_nu17(v19-1/3)_+ >= (5/9)d_min
+      =211704529985430825966016323355953790789235
+         /3866494618803725735198427128129069365302843
+      =0.05475360781723554... .                          (AT10)
+
+This is a direct use of the old stopped-prefix and cap bounds, not
+a new source mechanism. It rules out the high-query region whenever
+the actual mixed19 union is everywhere at most1/3, but does not
+exclude the general mixed case.
+
+[Report588](588-query-prefix-incidence-strengthens-actual-source-debits.md)
+weights final-row loss by the maximizing query's earlier-only count
+(n19-2)_+. AT9 controls unweighted loss. The missing step is a useful
+joint bound relating where that loss occurs to those fixed query
+prefix events and the actual ternary damage. No independence or
+favorable correlation of these quantities has been established.

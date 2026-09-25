@@ -8,10 +8,11 @@
     "exact": "214267985/147806208"
   },
   "actual_incidence_patterns": 1620,
-  "check_count": 59,
+  "check_count": 63,
   "checks": [
     "source pin pa_complete_suffix_debits.json",
     "source pin height_three_clipping_envelope.json",
+    "source pin two_copy_pure_deficit.json",
     "same clipped gate",
     "45 distinct nonunit Q labels",
     "q=5 selected cylinders pairwise disjoint",
@@ -54,6 +55,9 @@
     "source-only joint margin R=1461204049288174906748586781/302451810663922521463738800 tau=12019840537595758779003/5715264751774801992890",
     "source-only nine-prime Haar coefficient",
     "pure selected sources lie below source-only gate",
+    "same stopped-prefix19 and complete one-row query constant",
+    "high-query final19 mass-loss necessary threshold",
+    "high-query actual mixed19 union tail threshold",
     "pure selected later caps remain inactive",
     "1620 actual incidence patterns",
     "q=5 incidence partition normalized",
@@ -448,6 +452,25 @@
     "99": "34683776/437265489375"
   },
   "full_query_proof": "The root2 cylinder survives all pure deletions. For every q^e, its mass1/(g_q q^e) attains the density upper bound; product factorization gives the complete norm product_q(1+1/(g_q(q-1)))-1, with the unit removed once.",
+  "high_query_terminal19_necessary": {
+    "actual_mixed_union_hinge_lower": {
+      "decimal": 0.05475360781723554,
+      "exact": "211704529985430825966016323355953790789235/3866494618803725735198427128129069365302843"
+    },
+    "incoming_mass_loss_lower": {
+      "decimal": 0.09855649407102397,
+      "exact": "42340905997086165193203264671190758157847/429610513200413970577603014236563262811427"
+    },
+    "one_row_raw_query_upper": {
+      "decimal": 4.355050472921728,
+      "exact": "25608681684081757/5880226151983340"
+    },
+    "scope": "Same actual PA prefix stopped before19; the final marginal may differ. Conditional on actual R_Q(nu)>=Rcrit. No query-prefix/loss correlation asserted.",
+    "stopped_prefix_query_upper": {
+      "decimal": 3.868227702656116,
+      "exact": "2274605369898493/588022615198334"
+    }
+  },
   "joint_zero_mass": {
     "decimal": 9.334449555795622e-15,
     "exact": "1/107130044896875"
@@ -1950,6 +1973,10 @@
     {
       "path": "height_three_clipping_envelope.json",
       "sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685"
+    },
+    {
+      "path": "two_copy_pure_deficit.json",
+      "sha256": "df11a1cdaac3b78997a83ec305a891020e112ba02a09cd347752d4fb86f7ee9d"
     }
   ],
   "statement": "One finite actual family satisfying the fixed pure3 and shallow two-phase hypotheses has E_nu(W-16/3)+>tau_star under its actual569 PA source. Thus the clipped tail condition is not automatic for this prescribed selector/source.",

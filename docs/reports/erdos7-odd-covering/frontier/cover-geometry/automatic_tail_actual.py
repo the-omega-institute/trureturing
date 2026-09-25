@@ -18,7 +18,8 @@ Q=(5,7,11,13,17,19)
 LABELS=(5, 7, 11, 13, 35, 25, 17, 19, 55, 65, 49, 85, 77, 95, 91, 175, 125, 119, 133, 245, 143, 121, 385, 275, 455, 187, 325, 169, 209, 221, 595, 247, 425, 665, 475, 343, 715, 605, 323, 289, 539, 875, 625, 361, 935)
 PINS={
 'pa_complete_suffix_debits.json':'b1b204f8728c64ed9265e91d78d3072a2e77f64f6efca57512f3e58f0bdf3ccc',
-'height_three_clipping_envelope.json':'276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685'}
+'height_three_clipping_envelope.json':'276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685',
+'two_copy_pure_deficit.json':'df11a1cdaac3b78997a83ec305a891020e112ba02a09cd347752d4fb86f7ee9d'}
 
 def ex(x):return {'exact':str(x),'decimal':float(x)}
 
@@ -113,6 +114,24 @@ def main():
     pure_source_cap = prod((F(q-2,q-3) for q in Q),start=F(1))-1
     need('pure selected sources lie below source-only gate',
          pure_source_cap == F(47063,28672) and pure_source_cap < Rcrit)
+    prefix_row=next(r for r in sources['two_copy_pure_deficit.json']['missing_original_prime_benchmarks']
+                    if r['missing_original_prime']==19)
+    B17=F(*prefix_row['five_query_upper'])
+    A19=B17+F(9,5)*F(1,18)*(1+B17)
+    dmin=1-A19/Rcrit
+    mixed19=F(5,9)*dmin
+    need('same stopped-prefix19 and complete one-row query constant',
+         B17==F(2274605369898493,588022615198334)
+         and A19==F(25608681684081757,5880226151983340))
+    need('high-query final19 mass-loss necessary threshold',
+         0<dmin<1 and dmin==F(42340905997086165193203264671190758157847,
+                             429610513200413970577603014236563262811427)
+         and A19/(1-dmin)==Rcrit)
+    need('high-query actual mixed19 union tail threshold',
+         1-2*F(1,18)==F(8,9)
+         and F(8,9)-F(5,9)==F(1,3)
+         and mixed19==F(211704529985430825966016323355953790789235,
+                        3866494618803725735198427128129069365302843))
     need('pure selected later caps remain inactive',
          all(F(q-1,q-3) < cap for q,cap in ((11,F(5,3)),(13,F(3,2)),(17,F(2)),(19,F(9,5)))))
     maxp=tuple(max(v[j] for v in vectors) for j in range(6))
@@ -166,6 +185,10 @@ def main():
          'max_cofactor_exponents':maxp,'actual_incidence_patterns':control_count,
          'ternary_resolution':729,'tau':ex(tau),'tau_star':ex(tau_star),'tail_excess':ex(tau-tau_star),
          'pure_selected_source_query_upper':ex(pure_source_cap),'source_only_Rcrit':ex(Rcrit),'source_only_query_margin':ex(Rcrit-actual_RQ),'source_only_Haar_lower':ex(haar_source),
+         'high_query_terminal19_necessary':{'stopped_prefix_query_upper':ex(B17),
+             'one_row_raw_query_upper':ex(A19),'incoming_mass_loss_lower':ex(dmin),
+             'actual_mixed_union_hinge_lower':ex(mixed19),
+             'scope':'Same actual PA prefix stopped before19; the final marginal may differ. Conditional on actual R_Q(nu)>=Rcrit. No query-prefix/loss correlation asserted.'},
          'mean_W':ex(meanW),'zero_A_mass':ex(zeroA),'zero_B_mass':ex(zeroC),'joint_zero_mass':ex(zeroBoth),
          'deleted_ternary_cell_histogram':{str(n):str(p) for n,p in sorted(hist.items())},
          'check_count':len(checks),'checks':checks}
