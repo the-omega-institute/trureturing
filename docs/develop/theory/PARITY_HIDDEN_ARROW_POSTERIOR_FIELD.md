@@ -721,3 +721,301 @@ $`d_{\mathcal J}=O_{\mathbb P}(q/\sqrt\lambda)=o_{\mathbb P}(q)`$，
 这分别转移固定支持联合律与工作方向版本，完成证明。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 近算术聚簇的高斯端点与路径不紧性
+
+**定义 39.1（一个固定非格点幅度与聚簇序列）。** 令
+
+```math
+A_1=1,\quad A_{j+1}=10^{5A_j},\quad
+Q_j=10^{A_j},\quad P_j=\sum_{h=1}^j10^{A_j-A_h},\quad
+\alpha=\sum_{h=1}^{\infty}10^{-A_h}.
+```
+
+式 (39.1)。
+
+固定一个满足 $`\log(1+r)/[-\log(1-r)]=\alpha`$ 的 $`r\in(0,1)`$，并记
+
+```math
+a=\frac{1+r}{2},\quad b=\frac{1-r}{2},\quad
+h=-\log(1-r),\quad \phi=a\log(1+r)+b\log(1-r),\quad
+D=b+a\alpha^2,\quad \kappa=\frac1a+\frac{\alpha^2}{b}.
+```
+
+式 (39.2)。
+
+固定 $`\beta\in(1/2,1)`$。以下省略序列下标 $`j`$，取
+
+```math
+\lambda=Q^3,\quad N=\left\lfloor\frac{\phi\lambda}{\beta\log2}\right\rfloor,
+\quad M=2^N,\quad
+k_0=\lfloor a\lambda\rfloor,\quad l_0=\lambda-k_0,\quad
+z_0=k_0\log(1+r)+l_0\log(1-r),
+\quad q=\lfloor M e^{-z_0}\rfloor,\quad
+\tau=\log(M/q),\quad \mathsf T=2M\lambda.
+```
+
+式 (39.3)。
+
+使用定义 27.1 的两个实际平稳实验、完整数据和优先级，以及均匀固定基数先验。
+补偿参数记为 $`\epsilon=rq/(M-q)`$，避免与 (39.2) 的 $`a`$ 混淆。
+正确对齐的一行得分、微观窗口和计数直线为
+
+```math
+W(k,l)=k\log\frac{1+r}{1-\epsilon}
+       +l\log\frac{1-r}{1+\epsilon},\qquad
+w=\sqrt{\lambda/q},\qquad J=\{i:\tau-w\lt W_i\le\tau+w\},
+\qquad
+\mathcal L=\{(k_0+tQ,l_0+tP):t\in\mathbb Z,\ k_0+tQ\ge0,\ l_0+tP\ge0\}.
+```
+
+式 (39.4)。
+
+$`\pi_i`$ 为精确后验包含概率，$`p_i`$ 为第 35 章的校准独立参数。
+定义新的噪声归一化和右连续过程
+
+```math
+B=\sqrt{\frac{q}{Q\sqrt\lambda}},\qquad
+\gamma=\frac1{2\sqrt{2\pi}\sqrt D},\qquad
+Y=\frac1B\sum_{i\in J}(\mathbf1_{\{i\in S\}}-\pi_i),\qquad
+F(u)=\frac1B\sum_{\tau-w\lt W_i\le\tau+uw}
+                 (\mathbf1_{\{i\in S\}}-\pi_i),\quad -1\le u\le1.
+```
+
+式 (39.5)。
+
+未知方向时，仍先作同一次方向判决，再在工作正向数据上计算得分与正向模型权重。
+
+**定理 39.2（聚簇改变尺度，端点极限不保证路径极限）。** 定义 39.1 的幅度存在且非格点，
+参数最终合法。两个实际实验均对支持一致地满足
+
+```math
+\mathbb P_S\{J=\{i:(N_{i,+},N_{i,-})\in\mathcal L\}\}\longrightarrow1,
+\qquad
+\frac{Q\sqrt\lambda}{q}|J|\longrightarrow
+\frac2{\sqrt{2\pi}\sqrt D},\qquad
+\frac1{B^2}\sum_{i\in J}p_i(1-p_i)\longrightarrow\gamma
+\quad\text{依概率}.
+```
+
+式 (39.6)。
+
+这些式子使用正确对齐数据。两种方向信息情形均有
+
+```math
+Y=F(1)\Longrightarrow N(0,\gamma),\qquad
+\mathbb P_S\left\{
+\left|\frac1{\sqrt{q/\lambda}}
+\sum_{i\in J}(\mathbf1_{\{i\in S\}}-\pi_i)\right|\le K\right\}
+\longrightarrow0\qquad(K\lt\infty).
+```
+
+式 (39.7)。
+
+然而，$`(F)_j`$ 在 $`D[-1,1]`$ 的 $`J_1`$ 拓扑下不紧。
+因此第 38 章的原子尺度及单跳路径结论不能只凭非格点条件推广到所有固定幅度。
+
+证明。$`P_j`$ 的十进制末位是一，故 $`\gcd(P_j,Q_j)=1`$。
+正的尾和满足
+
+```math
+0\lt\alpha-P_j/Q_j\lt e^{-Q_j^4}
+```
+
+式 (39.8)。
+
+此式对充分大的 $`j`$ 成立。若 $`\alpha=u/v`$ 为有理数，
+它与不同的 $`P_j/Q_j`$ 的距离至少为 $`1/(vQ_j)`$，矛盾。
+函数 $`r\mapsto\log(1+r)/[-\log(1-r)]`$ 连续，在零和一处的单侧极限分别为一和零，
+所以所需 $`r`$ 存在。其跳幅之比为无理数，且 $`\phi\gt0`$。
+由取整直接得到
+
+```math
+z_0=\lambda\phi+O(1),\qquad
+\log M=\lambda\phi/\beta+O(1),\qquad
+q=M^{1-\beta+o(1)},\qquad
+\tau=z_0+O(q^{-1}).
+```
+
+式 (39.9)。
+
+故 $`1\le q\lt M`$、$`\epsilon\lt1`$ 最终成立，样本量为整数，
+$`M`$ 属于允许的超立方体大小。该序列也满足第 27 章内在偏移为零的临界条件。
+
+先在固定截断 $`k+l\le C\lambda`$ 上分析窗口。
+令 $`Z(k,l)=k\log(1+r)+l\log(1-r)`$，则
+
+```math
+Z(k,l)-z_0
+=h\left[\frac{P(k-k_0)-Q(l-l_0)}Q
+      +(\alpha-P/Q)(k-k_0)\right].
+```
+
+式 (39.10)。
+
+分子为非零整数时，右端绝对值至少为 $`h/(2Q)`$，对充分大的 $`j`$ 一致成立。
+分子为零时，互素性恰好给出 $`(k,l)\in\mathcal L`$。
+后一情形的未补偿差至多为 $`C'\lambda e^{-Q^4}`$。
+截断内补偿差至多为 $`C''\epsilon\lambda`$，并且
+
+```math
+\frac{\lambda e^{-Q^4}}w\longrightarrow0,\qquad
+\frac{\epsilon\lambda}w
+=O\left(\frac{q^{3/2}\sqrt\lambda}{M}\right)\longrightarrow0,
+\qquad \frac1{qw}\longrightarrow0,
+\qquad Qw\longrightarrow0.
+```
+
+式 (39.11)。
+
+因此截断内的计数对落入窗口当且仅当属于 $`\mathcal L`$。
+实际一行尾界允许任取充分大的多项式指数，再增大固定 $`C`$；
+对全部 $`M`$ 行取并集，即得 (39.6) 的第一式。
+这一步不要求实际观测行独立。
+
+下面直接求比较 Poisson 律的直线概率，不向增长系数的线性组合套用固定格距定理。
+在信号比较律 $`Q_r`$ 下，两计数独立，均值为 $`a\lambda,b\lambda`$。
+令 $`x=tQ/\sqrt\lambda`$。对每个固定 $`R\lt\infty`$，Stirling 公式一致给出
+
+```math
+Q_r\{(N_+,N_-)=(k_0+tQ,l_0+tP)\}
+=\frac{1+o(1)}{2\pi\lambda\sqrt{ab}}
+ \exp(-\kappa x^2/2),\qquad |x|\le R.
+```
+
+式 (39.12)。
+
+取整造成的均值偏差有界，而 $`P/Q\to\alpha`$。
+网格步长 $`Q/\sqrt\lambda=Q^{-1/2}`$ 趋零，所以任意固定有限端点区间 $`E`$ 满足
+
+```math
+Q\sqrt\lambda\,
+Q_r\{(N_+,N_-)\in\mathcal L,\ tQ/\sqrt\lambda\in E\}
+\longrightarrow
+\frac1{2\pi\sqrt{ab}}\int_E e^{-\kappa x^2/2}\,dx.
+```
+
+式 (39.13)。
+
+开闭端点不改变此极限，因为单个点的归一化质量为 $`O(Q/\sqrt\lambda)=o(1)`$。
+
+为把 (39.13) 扩展到整条直线，先在
+$`|N_+-a\lambda|\le c\lambda`$ 上用 Poisson 点概率界
+$`C\lambda^{-1/2}\exp[-c'(N_+-a\lambda)^2/\lambda]`$，
+另一计数的最大点概率以 $`C\lambda^{-1/2}`$ 控制。
+直线尾和在乘以 $`Q\sqrt\lambda`$ 后，至多为高斯积分尾乘以固定常数及趋零误差。
+剩余区域由单个 Poisson 计数的指数尾界控制，归一化后仍趋零。
+先令 $`j\to\infty`$，再令 $`R\to\infty`$，得到
+
+```math
+Q_r\{(N_+,N_-)\in\mathcal L\}
+\sim\frac1{Q\sqrt{2\pi\lambda}\sqrt D}.
+```
+
+式 (39.14)。
+
+在公共截断的直线上，$`W=\tau+o(1)`$ 一致成立。
+精确换测度 $`dQ_r=e^W dQ_{-\epsilon}`$ 使背景的混合贡献
+$`(M-q)Q_{-\epsilon}(\mathcal L)`$ 渐近等于 $`qQ_r(\mathcal L)`$；
+截断外余项可取为任意多项式小量。
+实际一行、两行比较随后给出同一计数及每个固定 $`E`$ 子块的均值与方差界。
+其均值为 $`q/(Q\sqrt\lambda)`$ 的固定正比例，方差至多为
+均值乘以常数、$`\delta_M`$ 乘以均值平方，以及可任意提高指数的余项之和，
+其中 $`\delta_M=(\log M)^3/n\to0`$。
+所以这些实际占据数集中，证明 (39.6) 的基数结论。
+
+校准公式还给出 $`\max_{i\in J}|p_i-1/2|\to0`$ 依概率，空集时最大值置零。
+由此，整窗归一化方差趋于 $`\gamma`$，每个固定 $`E`$ 子块的归一化方差趋于
+
+```math
+\nu(E)=\frac1{4\pi\sqrt{ab}}\int_E e^{-\kappa x^2/2}\,dx,
+\qquad \nu(\mathbb R)=\gamma.
+```
+
+式 (39.15)。
+
+特别地，$`d_J:=\sum_{i\in J}p_i(1-p_i)\asymp B^2=o(q)`$ 依概率，
+补集仍保留 $`q`$ 量级方差。
+
+在同一校准乘积律下，任意有限个互不相交的固定 $`E`$ 子块满足联合有界数组中心极限定理，
+其极限协方差为以 $`\nu(E)`$ 为对角元的对角阵。
+整窗亦有方差 $`\gamma`$ 的极限。
+第 35 章的完整向量比较对同一个并集 $`J`$ 使总变差趋零；
+各子块 $`J_E`$ 的精确中心同时满足
+
+```math
+\frac1B\left|\sum_{i\in J_E}(\pi_i-p_i)\right|
+\le\frac{C\sqrt{d_{J_E}}}{B}
+  \left(\frac{d_J}{q}+\frac{\sqrt{d_J}}q+q^{-1/2}\right)
+\longrightarrow0\quad\text{依概率}.
+```
+
+式 (39.16)。
+
+整窗也取相同的中心界。因此在均匀支持先验下，联合条件律的有界 Lipschitz 距离
+依概率趋于对应的确定高斯律。取期望即可得到 $`Y\Longrightarrow N(0,\gamma)`$。
+又因为
+
+```math
+\frac{B}{\sqrt{q/\lambda}}=\frac{\lambda^{1/4}}{\sqrt Q}=Q^{1/4}\longrightarrow\infty,
+```
+
+式 (39.17)。
+
+归一化 $`Y`$ 的缩小区间概率可先用任意固定小区间控制，再由正态极限令该区间宽度趋零。
+这证明 (39.7) 的逃逸结论，不使用实际统计量的矩收敛。
+
+最后验证路径不紧性。直线上的相邻得分差为
+
+```math
+\Delta
+=Q\log\frac{1+r}{1-\epsilon}+P\log\frac{1-r}{1+\epsilon}
+=hQ(\alpha-P/Q)+\epsilon(Q-P)+O(\epsilon^2Q)\gt0
+```
+
+式 (39.18)。
+
+对充分大的 $`j`$，第一项为正，且 $`1-P/Q`$ 有固定正下界，故最后的不等式成立。
+固定任意 $`R\gt0`$，置 $`m=\lfloor R\sqrt\lambda/Q\rfloor`$，并定义确定时点
+
+```math
+u_- =\frac{W(k_0-mQ,l_0-mP)-\tau}{w},\quad
+u_0 =\frac{W(k_0,l_0)-\tau}{w},\quad
+u_+ =\frac{W(k_0+mQ,l_0+mP)-\tau}{w}.
+```
+
+式 (39.19)。
+
+三点严格递增且都趋于零，所用计数最终为非负。
+在公共截断事件上，两个相邻过程增量恰好对应直线上参数范围
+$`(-m,0]`$ 与 $`(0,m]`$ 的标签块。
+由 (39.13)–(39.16)，
+
+```math
+\bigl(F(u_0)-F(u_-),F(u_+)-F(u_0)\bigr)
+\Longrightarrow (Z_-,Z_+),\qquad
+Z_-,Z_+\text{ 独立},\qquad
+Z_\pm\sim N(0,\nu((0,R])).
+```
+
+式 (39.20)。
+
+该方差严格为正。
+取固定 $`\eta\gt0`$，两增量绝对值同时大于 $`2\eta`$ 的概率趋于严格正数。
+对任意固定小 $`\delta\gt0`$，上述三点最终位于区间内部，且跨度小于 $`\delta`$。
+任意内部段长度大于 $`\delta`$ 的分割，至多在这三点之间放一个分割点，
+故至少一对相邻时点属于同一个半开分割区间。
+若分割点恰为中间时点，则后两个时点属于同一段。
+于是经典 $`J_1`$ 分割振荡模量至少为两相邻增量绝对值的较小者。
+由 [Whitt 的经典紧性判据，定理 3.2](../../../Library/Dynamics/whitt2007martingale.md)，
+$`J_1`$ 紧性所必需的模量条件失败。
+这里使用两个完整计数块的增量，而不是把单标签小跳误当作整个同分组的小跳。
+
+上述条件计算均在均匀支持先验下。
+所有集合、精确中心及整个路径都对共同支持置换等变，所以其无条件分布等于任意固定支持下的分布。
+一行、两行界的支持一致性也保留了所述一致结论。
+未知方向的全部对象在同一个正确判决事件上与正确对齐版本逐项相等，
+补事件概率为 $`O(q^{-1})`$，故端点极限、逃逸及振荡下界一并转移。
+这既不把固定支持下的标签重新解释为随机后验标签，也不声称其他路径拓扑下的结论。∎
+
+## 追加锚（本行以下为增补区）
