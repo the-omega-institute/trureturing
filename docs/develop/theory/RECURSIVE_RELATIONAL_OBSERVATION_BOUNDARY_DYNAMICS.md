@@ -9379,3 +9379,451 @@ $$
 这里的“最大”只在固定 $M$、固定早期/晚输入端口和同一完整 tester 合同下比较扩展，不外推为只固定数值 $\delta$ 的所有边缘之间的最大值。
 
 ## 追加锚（本行以下为增补区）
+
+## 58. 两轮量子因果修复的显式上界与准确八分之九渐近比例
+
+### 58.1 接口与显式修复
+
+使用 $A\otimes B\otimes D$ 次序，$\dim A=\dim B=2$、$\dim D=3$，其中 $B$ 是早输出、$A$ 是晚输入、$D$ 是晚输出。因果归一化修复满足
+
+$$
+S\succeq0,\qquad \operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+$$
+
+完整 tester 的归一化算符为 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$；事件遍历全部 $0\preceq E\preceq C\otimes I_D$，全转置已吸收到配对约定。对任意厄米 $X$ 定义
+
+$$
+h(X)=\max_{C,E}\operatorname{Tr}(XE),\qquad
+N(X)=\max\{h(X),h(-X)\}.
+\tag{58.1}
+$$
+
+因果修复的完整事件误差是 $D(R,S)=N(R-S)$。
+
+记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,2\rangle,\quad h_0=|0,1,0\rangle,
+\qquad c=\sqrt{1-\varepsilon},\quad s=\sqrt\varepsilon,
+$$
+
+并取 $0<\varepsilon\le1/4$。候选与修复定义为
+
+$$
+\begin{aligned}
+R_\varepsilon&=|x+cy+sz\rangle\langle x+cy+sz|,\\
+S_\varepsilon&=|cx+cy+sz\rangle\langle cx+cy+sz|
++\varepsilon|h_0\rangle\langle h_0|.
+\end{aligned}
+\tag{58.2}
+$$
+
+三个向量 $x,y,z$ 的 $D$ 坐标不同，故
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(1-\varepsilon,\varepsilon).
+\tag{58.3}
+$$
+
+因此 $S_\varepsilon$ 是正且归一化的因果梳。候选 $R_\varepsilon$ 的归一化缺陷是 $\varepsilon$。
+
+**定理 58.1。** 对式（58.2）的显式修复，准确误差为
+
+$$
+D(R_\varepsilon,S_\varepsilon)
+=\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon,
+\qquad 0<\varepsilon\le\frac14.
+\tag{58.4}
+$$
+
+尤其
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{D(R_\varepsilon,S_\varepsilon)}{\varepsilon}=\frac98.
+\tag{58.5}
+$$
+
+式（58.4）给最优修复的上界；式（58.5）先计算这一份显式修复的极限；第 58.6 节另用匹配下界证明真正最优误差具有相同极限。
+
+### 58.2 联合相位平均与完整 tester
+
+定义
+
+$$
+\begin{aligned}
+U_A(\alpha)&=\operatorname{diag}(1,e^{i\alpha}),\\
+U_B(\beta)&=\operatorname{diag}(1,e^{i\beta}),\\
+U_D(\alpha,\beta)&=
+\operatorname{diag}(1,e^{-i\alpha},e^{-i(\alpha+\beta)}),\\
+U(\alpha,\beta)&=U_A(\alpha)\otimes U_B(\beta)\otimes U_D(\alpha,\beta).
+\end{aligned}
+\tag{58.6}
+$$
+
+$U$ 分别固定 $x,y,z$，将 $h_0$ 乘以 $e^{i\beta}$。因此 $R_\varepsilon,S_\varepsilon$ 及其厄米差均在该群下不变。
+
+**引理 58.2（联合平均允许取对角归一化算符）。** 对任意在式（58.6）下不变的厄米 $X$，计算 $h(X)$ 和 $h(-X)$ 时可限制 $C$ 为 $AB$ 指定基上的对角算符，但事件 $E$ 仍遍历完整的正区间，不要求对角。
+
+**证明。** 若 $E\preceq C\otimes I_D$，则
+
+$$
+UEU^*\preceq
+[(U_A\otimes U_B)C(U_A\otimes U_B)^*]\otimes I_D.
+$$
+
+$C$ 的偏迹条件在此变换下保持，且 $X$ 不变给
+$\operatorname{Tr}(XUEU^*)=\operatorname{Tr}(XE)$。
+对 $(\alpha,\beta)\in\{0,\pi\}^2$ 的四个变换同时平均 $(E,C)$，得到可行对 $(\bar E,\bar C)$ 和相同响应。$AB$ 四个基向量在这个四元群上具有不同字符，所以 $\bar C$ 对角。这个联合平均保留事件的合法性；不能只把 $C$ 对角化而保留未经变换的 $E$。反过来，对角 $C$ 是原可行集的子集，故最优值相同。$\square$
+
+同一平均也保持 CPTP 静态候选和因果修复集合：对因果 $S$，
+
+$$
+\operatorname{Tr}_D(USU^*)
+=I_A\otimes U_B\sigma U_B^*.
+$$
+
+平均保持正性及归一化；由事件误差的凸性和 $R_\varepsilon$ 不变性，平均一个修复不会增加其误差。故这种对称化也可用于最优修复问题，并非只适用于当前显式构造。
+
+每个对角反馈归一化算符可唯一写成
+
+$$
+C=\operatorname{diag}(q,1-r,1-q,r),
+\qquad 0\le q,r\le1,
+\tag{58.7}
+$$
+
+其中对角次序为 $00,01,10,11$。
+
+### 58.3 准确差算符与谱
+
+令
+
+$$
+k=\frac{c}{1+c},\qquad b=\frac{\sqrt\varepsilon}{1+c},
+\qquad X_\varepsilon=\frac{S_\varepsilon-R_\varepsilon}{\varepsilon}.
+$$
+
+直接展开式（58.2），使用 $1-c=\varepsilon/(1+c)$，得到
+
+$$
+X_\varepsilon
+=-|x\rangle\langle x|
+-k(|x\rangle\langle y|+|y\rangle\langle x|)
+-b(|x\rangle\langle z|+|z\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+\tag{58.8}
+$$
+
+对固定 $C$，完整正区间的支持函数是
+
+$$
+\max_{0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(X_\varepsilon E)
+=\operatorname{Tr}\left[
+\sqrt{C\otimes I_D}X_\varepsilon\sqrt{C\otimes I_D}
+\right]_+.
+\tag{58.9}
+$$
+
+式（58.9）在奇异 $C$ 时亦成立：在其支撑上写 $E=\sqrt{C\otimes I_D}F\sqrt{C\otimes I_D}$，$0\preceq F\preceq I$，再选正谱投影。
+
+对式（58.7），压缩算符在 $\operatorname{span}\{x,y,z\}$ 上的矩阵为
+
+$$
+\begin{pmatrix}
+-q&-k\sqrt{q(1-q)}&-b\sqrt{qr}\\
+-k\sqrt{q(1-q)}&0&0\\
+-b\sqrt{qr}&0&0
+\end{pmatrix}.
+$$
+
+其特征值是零与
+
+$$
+\lambda_\pm(q,r)=
+\frac{-q\pm\sqrt{q^2+4k^2q(1-q)+4b^2qr}}2.
+\tag{58.10}
+$$
+
+另外，$h_0$ 方向的特征值为 $1-r\ge0$。因此
+
+$$
+\begin{aligned}
+h(X_\varepsilon)&=\max_{q,r}\bigl[1-r+\lambda_+(q,r)\bigr],\\
+h(-X_\varepsilon)&=\max_{q,r}\bigl[-\lambda_-(q,r)\bigr].
+\end{aligned}
+\tag{58.11}
+$$
+
+### 58.4 两个方向的极值
+
+**引理 58.3。** 对全部 $0<\varepsilon<1$，
+
+$$
+h(X_\varepsilon)=1+\frac{k^2}{1+2k},
+\qquad
+h(-X_\varepsilon)=\frac{1+\sqrt{1+4b^2}}2.
+\tag{58.12}
+$$
+
+**证明。** 记
+$A(q)=q^2+4k^2q(1-q)\ge q^2$。对 $q>0$，
+
+$$
+\lambda_+(q,r)-\lambda_+(q,0)
+=\frac{2b^2qr}{\sqrt{A(q)+4b^2qr}+\sqrt{A(q)}}
+\le b^2r.
+$$
+
+当 $q=0$ 时此增量为零。因为
+$b^2=(1-c)/(1+c)<1$，式（58.11）的第一式在 $r=0$ 达到最大。
+
+设
+
+$$
+a=\frac{k^2}{1+2k},\qquad q_* =\frac{k}{1+2k}.
+$$
+
+恒等式
+
+$$
+(q+2a)^2-[q^2+4k^2q(1-q)]
+=4k^2(q-q_*)^2\ge0
+$$
+
+给 $\lambda_+(q,0)\le a$，且在 $q=q_*$ 达到等号，得第一式。
+
+第二式随 $r$ 不减，故可取 $r=1$。此时根号内为
+
+$$
+(1-4k^2)q^2+4(k^2+b^2)q.
+$$
+
+由于 $0<k<1/2$，该式随 $q\in[0,1]$ 不减，所以 $-\lambda_-$ 在 $q=1$ 最大，给第二式。$\square$
+
+当 $0<\varepsilon\le1/4$ 时，$c\ge\sqrt3/2>5/6$，故
+
+$$
+k>\frac5{11},\qquad b^2<\frac1{11}.
+$$
+
+函数 $k^2/(1+2k)$ 随 $k\ge0$ 递增，而
+$\sqrt{1+4b^2}\le1+2b^2$。所以
+
+$$
+h(X_\varepsilon)>1+\frac{25}{231}
+>1+\frac{21}{231}
+>h(-X_\varepsilon).
+$$
+
+结合式（58.1）、（58.12），得到定理 58.1 的准确表达式，因为
+
+$$
+\frac{k^2}{1+2k}=\frac{c^2}{(1+c)(1+3c)}.
+$$
+
+最后，$0<c<1$ 给
+
+$$
+8c^2<(1+c)(1+3c)
+\iff(5c+1)(c-1)<0,
+$$
+
+故式（58.4）的 $9/8$ 上界严格成立；令 $\varepsilon\downarrow0$、$c\to1$ 即得式（58.5）。$\square$
+
+### 58.5 显式构造的一阶极限
+
+式（58.8）给
+
+$$
+X_\varepsilon\longrightarrow
+H=-|x\rangle\langle x|
+-\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+$$
+
+同一完整 tester 计算给 $h(H)=9/8$、$h(-H)=1$。有限 $\varepsilon$ 的准确计算比只使用该极限更强：没有必要为式（58.4）添加 $O(\varepsilon^{3/2})$ 余项。
+
+与第 56 节的统一线性下界结合，当前先得到
+
+$$
+\left(1+\frac1{10000}\right)\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S)
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.13}
+$$
+
+因此，单用上述构造只能推出最优比例的上极限至多 $9/8$。下面给匹配的一阶下界。
+
+
+### 58.6 对全部因果修复的匹配渐近下界
+
+记
+
+$$
+e_\varepsilon=\min_{S\text{ 因果}}D(R_\varepsilon,S).
+\tag{58.14}
+$$
+
+因果集合有限维、闭且具有固定迹二，因此紧；完整 tester 事件集也紧，所以事件误差连续，最小值达到。
+
+**定理 58.4（最优修复的准确渐近比例）。** 对 $0<\varepsilon\le1/4$，
+
+$$
+\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
+\le e_\varepsilon
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.15}
+$$
+
+特别地，
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon}{\varepsilon}
+=\frac98,
+\qquad
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon-\varepsilon}{\varepsilon}
+=\frac18.
+\tag{58.16}
+$$
+
+**证明。** 取达到 $e_\varepsilon$ 的因果修复 $S$，并写
+
+$$
+p=\sigma_{11},\qquad S_{uv}=\langle u|S|v\rangle.
+$$
+
+先用两个事件测量 $x,z$ 间的实矩阵元。令
+
+$$
+C_+=|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|.
+$$
+
+它满足 $\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+E_\pm=\left|\frac{x\pm z}{\sqrt2}\right\rangle
+\left\langle\frac{x\pm z}{\sqrt2}\right|
+\preceq C_+\otimes I_D
+$$
+
+是合法事件。令 $J=S-R_\varepsilon$，两个事件各满足
+$|\operatorname{Tr}(JE_\pm)|\le e_\varepsilon$，相减的配对为 $2\operatorname{Re}J_{xz}$，故
+
+$$
+|\operatorname{Re}J_{xz}|\le e_\varepsilon,
+\qquad
+\operatorname{Re}S_{xz}\ge\sqrt\varepsilon-e_\varepsilon.
+\tag{58.17}
+$$
+
+因果偏迹给 $S_{xx}\le1$、$S_{zz}\le p$。$S\succeq0$ 的 $xz$ 主子式因此给
+
+$$
+p\ge S_{zz}\ge |S_{xz}|^2
+\ge (\sqrt\varepsilon-e_\varepsilon)_+^2.
+\tag{58.18}
+$$
+
+这里若式（58.17）的右端为负，最后一项按正部取零，未对负下界直接平方。定理 58.1 给 $e_\varepsilon\le9\varepsilon/8$；在 $\varepsilon\le1/4$ 时，
+$\sqrt\varepsilon-9\varepsilon/8>0$，于是
+
+$$
+p\ge\left(\sqrt\varepsilon-\frac98\varepsilon\right)^2
+=\varepsilon-\frac94\varepsilon^{3/2}
++\frac{81}{64}\varepsilon^2.
+\tag{58.19}
+$$
+
+再固定一个同时读取全部相关块的事件。记
+$B_{ab}=|a,b\rangle\langle a,b|\otimes I_D$，取
+
+$$
+\begin{aligned}
+C_*&=\operatorname{diag}(1/4,1,3/4,0),\\
+w&=\frac14x-\frac34y,\\
+E_*&=|w\rangle\langle w|
++\frac14(B_{00}-|x\rangle\langle x|)
++\frac34(B_{10}-|y\rangle\langle y|)
++B_{01}.
+\end{aligned}
+\tag{58.20}
+$$
+
+$C_*$ 满足 $\operatorname{Tr}_A C_*=I_B$。在 $xy$ 子空间，$w$ 是
+$\operatorname{diag}(1/2,\sqrt3/2)$ 作用于单位向量
+$(1/2,-\sqrt3/2)$ 所得，所以
+
+$$
+|w\rangle\langle w|
+\preceq\frac14|x\rangle\langle x|
++\frac34|y\rangle\langle y|.
+$$
+
+其他项支撑正交，故 $0\preceq E_*\preceq C_*\otimes I_D$。这个事件把 $00$、$10$ 块中 $x,y$ 以外的质量也计入，未把修复限制在 $\operatorname{span}\{x,y,z,h_0\}$。
+
+利用因果偏迹，$B_{00}$ 和 $B_{10}$ 的响应都为 $1-p$，$B_{01}$ 的响应为 $p$。因此准确计算得到
+
+$$
+\begin{aligned}
+\operatorname{Tr}(SE_*)
+&=1-\frac3{16}(S_{xx}+S_{yy})-\frac38\operatorname{Re}S_{xy},\\
+\operatorname{Tr}(R_\varepsilon E_*)
+&=\frac1{16}+\frac9{16}(1-\varepsilon)-\frac38c.
+\end{aligned}
+$$
+
+相减即
+
+$$
+\operatorname{Tr}((S-R_\varepsilon)E_*)
+=\frac3{16}\bigl[2+3\varepsilon+2c
+-S_{xx}-S_{yy}-2\operatorname{Re}S_{xy}\bigr].
+\tag{58.21}
+$$
+
+正性与因果偏迹给
+
+$$
+\operatorname{Re}S_{xy}\le\sqrt{S_{xx}S_{yy}}
+\le\frac{S_{xx}+S_{yy}}2,
+\qquad S_{xx},S_{yy}\le1-p.
+$$
+
+将其代入式（58.21），得到对任意因果修复均成立的事件下界
+
+$$
+\begin{aligned}
+D(R_\varepsilon,S)
+&\ge\operatorname{Tr}((S-R_\varepsilon)E_*)\\
+&\ge\frac34p+\frac9{16}\varepsilon+\frac38(c-1)\\
+&=\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\end{aligned}
+\tag{58.22}
+$$
+
+最后一个等号使用
+$c-1=-\varepsilon/2-\varepsilon^2/[2(1+c)^2]$。代入式（58.19），有
+
+$$
+e_\varepsilon
+\ge\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
++\left(\frac{243}{256}-\frac{3}{16(1+c)^2}\right)\varepsilon^2.
+$$
+
+括号为正，丢掉最后一项便得式（58.15）的下界。式（58.15）的上界来自定理 58.1，两边除以 $\varepsilon$ 并令 $\varepsilon\downarrow0$，得到式（58.16）。$\square$
+
+### 58.7 结论范围
+
+式（58.16）给整个完整量子 tester 合同下、对所有因果修复取最小后的渐近比例。上界使用一个显式合法修复；下界同时使用合法矩阵元事件和固定事件 $E_*$，且不限制未知修复的支撑或对称形态。
+
+这证明完整末输出相干造成的一阶额外成本在本族中恰为 $\varepsilon/8+o(\varepsilon)$。它没有给有限 $\varepsilon$ 的精确最优值，也没有证明其他边缘或其他两轮候选的统一最优常数为 $9/8$。
+
+## 追加锚（本行以下为增补区）
