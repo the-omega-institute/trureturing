@@ -247,9 +247,12 @@ theorem finite_word_stable_off_integer_hits (alpha x : ℝ) (n : ℕ)
   constructor
   · exact hfloors
   · intro j hj
+    have hfloor1' : ⌊x + ((j : ℝ) + 1) * beta⌋ =
+        ⌊x + ((j : ℝ) + 1) * alpha⌋ := by
+      simpa only [Nat.cast_add, Nat.cast_one] using hfloors (j + 1) (by omega)
     unfold lowerMechanicalWord lowerMechanicalLetter
     simp only [Nat.cast_add, Nat.cast_one]
-    rw [hfloors (j + 1) (by omega), hfloors j (by omega)]
+    rw [hfloors j (by omega), hfloor1']
 
 #print axioms dyadic_lower_boundary_mismatch
 #print axioms dyadic_upper_eventually_word_eq
