@@ -573,6 +573,158 @@ relative to the changed prefix measure. Each comparison uses an actual
 fixed family and its own PA law; no mass from different families is
 combined in a certificate.
 
+## One near-critical source can fail all three finite-head tests
+
+The finite-head certificates are not a universal alternative, even on
+one actual prefix strictly inside NC4's necessary hard region. Keep
+the exact70 old and200 first11 originals of Report558 Section6, and
+add the following18 row13 originals. No17 or19 original is present.
+
+| Full numerical modulus | Two full residues |
+|---|---|
+|13|0,1|
+|169|2,3|
+|2197|8,12|
+|65|4,44|
+|845|344,514|
+|325|294,269|
+|4225|1869,1194|
+|1625|519,1144|
+|21125|519,16394|
+
+This is288 distinct modulus-residue pairs at144 numerical labels,
+exactly two at each label. It is a legal finite two-copy family; no
+irredundancy or pairwise-distinct-modulus claim is made. Every residue
+is fixed jointly, and the actual prefix through11 is unchanged.
+
+For this prefix,
+
+\[
+x=1563/3125,\quad y=11205/16807,\quad
+\lambda_{11}(1)=19543635187/92276732625,
+\]
+
+\[
+H_{11}=\frac{9458012327}{55366039575000},\qquad
+(T-2)\alpha-\Phi
+=-\frac{75039987614613334196523}
+        {6774123938712274144000000}<0.
+\tag{JC1}
+\]
+
+Thus the example satisfies the joint NC4 necessary condition, including
+the original near-saturated pure5/7 combs. NC4 is not a sufficient
+condition for an actual hard family.
+
+Let `Q_W=E_W-P_W/3` and `eta_W=(26/3)D_W(x,y)` in FH4. Consider the
+proposed implication
+
+\[
+\text{NC4 and one common actual prefix}\quad\Longrightarrow\quad
+\min_{W\in\{W_{26},W_{54},W_{72}\}}
+       (Q_W-7H_{11}-\eta_W)\le0.
+\tag{JC0}
+\]
+
+This implication is false. To calculate all its terms on the same
+source, use the nested cylinders
+
+\[
+C_5=\{x_5=4\bmod5\},\quad
+C_{25}=\{x_5=19\bmod25\},\quad
+C_{125}=\{x_5=19\bmod125\}.
+\]
+
+Their actual prefix masses, obtained from the literal H5 old
+congruences and actual capped first11 kernel, are
+
+\[
+\mu_5=9070623361/92276732625,\quad
+\mu_{25}=15701435/738213861,\quad
+\mu_{125}=3244691/762617625.
+\]
+
+The simultaneous active root counts are
+
+| Actual prefix region | `r26` | `r54` | `r72` |
+|---|---:|---:|---:|
+|`C5` complement|6|4|4|
+|`C5` minus `C25`|10|8|8|
+|`C25` minus `C125`|13|12|12|
+|`C125`|13|12|13|
+
+Integrating the exact FH4 functions gives
+
+\[
+Q_{26}=4\mu_5+3\mu_{25},\qquad
+Q_{54}=2\mu_5+4\mu_{25}
+              -\tfrac53(\lambda_{11}(1)-\mu_5),\qquad
+Q_{72}=Q_{54}+\mu_{125}.
+\]
+
+Evaluating each head's own parameter-specific `eta_W`, not its corner
+value, produces strict reverse margins
+
+| Head | `Q_W-7H11-eta_W` |
+|---|---|
+|W26|`2239841558988584124453944117/4938750155272255161840000000`|
+|W54|`63295047281631052888207331/705535736467465023120000000`|
+|W72|`381776501843931159361131317/4938750155272255161840000000`|
+
+The smallest is `0.07730225053728906...>0`, refuting JC0. In particular,
+retaining the exact common source and the nesting `W54 subset W72`
+does not force one of these three sufficient tests to pass.
+
+### Actual deep unions still give an easy PA law
+
+The actual forbidden13 fractions in the four regions above are,
+respectively,
+
+\[
+366/2197,\quad730/2197,\quad1093/2197,\quad97/169.
+\]
+
+The first two produce no mass loss. The last two have loss fractions
+`541/2197` and `61/169`. Hence the actual row loss is only
+
+\[
+\Delta_{13}
+=\frac{541\mu_{25}+252\mu_{125}}{2197}
+=\frac{1160746659847}{202731981577125}.
+\tag{JC2}
+\]
+
+With no17/19 originals, the actual final mass is
+`13925539948664/67577327192375`. The existing complete-query numerator
+already gives
+
+\[
+R_Q\le2+\frac{\Phi}{\lambda_{\rm final}(1)}
+=\frac{3984126407618460290849887}
+       {1115779320809599838208000}
+=3.5707118184692765\ldots<T.
+\tag{JC3}
+\]
+
+Thus failure of the three finite-head tests does not imply a difficult
+actual final law. Projecting deep cylinders to occupied roots loses
+their depth and overlap, and can overestimate the forbidden fraction.
+This is a boundary of those sufficient certificates, not a refutation
+of them, of PA, or of Erdős #7.
+
+There is no conflict with Report567's17-projection theorem: this family
+uses old5 residues19 at cofactors25 and125, whereas that theorem
+prescribes14 at both. Removing those projection hypotheses requires
+another argument; neither the head conditions nor the necessary NC4
+region supplies it automatically.
+
+The [portable exact producer](../../frontier/cover-geometry/pa_three_head_compatibility_counterexample.py)
+reconstructs the literal source, all288 CRT pairs, the four actual
+prefix masses, each head's parameter-dependent FH4 terms and the
+actual13 unions. Its [rational data](../../frontier/cover-geometry/pa_three_head_compatibility_counterexample.json)
+retain the full inventory and all133 successful checks. All heights in
+the query numerator are retained by their full geometric moments.
+
 ## Reuse and scope
 
 The actual law, complete-query comparison and two-copy stage losses are
