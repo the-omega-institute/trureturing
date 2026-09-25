@@ -43,11 +43,19 @@ def slopeDisagreement (alpha beta : ℝ) (n : ℕ) : Set ℝ :=
 
 /-- Every irrational slope has a constructed local chamber in which the
 complete observation disagreement, its measure, and every signed letter
-change are exact. The geometric chamber is proved from irrationality. -/
+change are exact. Every common lower bound on the cut and endpoint gaps
+gives the stated quantitative lower bound on that same chamber radius. -/
 theorem local_slope_disagreement_law
     (alpha : ℝ) (halpha : Irrational alpha) (h0 : 0 < alpha) (h1 : alpha < 1)
     (n : ℕ) :
     ∃ radius : ℝ, 0 < radius ∧ alpha + radius < 1 ∧
+      (∀ lower : ℝ, lower ≤ 1 - alpha →
+        (∀ i : Fin n, lower ≤
+          1 - Int.fract (((i.val + 1 : ℕ) : ℝ) * alpha)) →
+        (∀ i j : Fin n, i ≠ j → lower ≤
+          |Int.fract (((i.val + 1 : ℕ) : ℝ) * alpha) -
+            Int.fract (((j.val + 1 : ℕ) : ℝ) * alpha)|) →
+        lower / (2 * ((n : ℝ) + 1)) ≤ radius) ∧
       ∀ delta : ℝ, 0 ≤ delta → delta ≤ radius →
       let c : Fin n → ℝ := fun i => 1 - Int.fract (((i.val + 1 : ℕ) : ℝ) * alpha)
       let swept : Fin n → Set ℝ := fun i =>
@@ -121,7 +129,26 @@ theorem local_slope_disagreement_law
   have hrlt : radius < g := by
     apply (div_lt_iff₀ hden).mpr
     nlinarith [mul_nonneg hg.le (Nat.cast_nonneg (α := ℝ) n)]
-  refine ⟨radius, hr, by linarith, ?_⟩
+  have hlower (lower : ℝ) (hla : lower ≤ 1 - alpha)
+      (hlc : ∀ i : Fin n, lower ≤
+        1 - Int.fract (((i.val + 1 : ℕ) : ℝ) * alpha))
+      (hlgap : ∀ i j : Fin n, i ≠ j → lower ≤
+        |Int.fract (((i.val + 1 : ℕ) : ℝ) * alpha) -
+          Int.fract (((j.val + 1 : ℕ) : ℝ) * alpha)|) :
+      lower / (2 * ((n : ℝ) + 1)) ≤ radius := by
+    have hlg : lower ≤ g := by
+      apply Finset.le_min'
+      intro z hz
+      rcases Finset.mem_insert.mp hz with rfl | hz
+      · exact hla
+      · rcases Finset.mem_union.mp hz with hz | hz
+        · obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp hz
+          exact hlc i
+        · obtain ⟨p, hp, rfl⟩ := Finset.mem_image.mp hz
+          have h := hlgap p.1 p.2 (Finset.mem_filter.mp hp).2
+          simpa only [c, sub_sub_sub_cancel_left, abs_sub_comm] using h
+    exact div_le_div_of_nonneg_right hlg hden.le
+  refine ⟨radius, hr, by linarith, hlower, ?_⟩
   intro delta hd hdr
   let beta := alpha + delta
   let swept : Fin n → Set ℝ := fun i =>

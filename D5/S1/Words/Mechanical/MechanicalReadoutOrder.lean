@@ -105,7 +105,7 @@ theorem local_order_iff_decreasing_weights
   classical
   constructor
   · rintro ⟨r, hr, _, hmono⟩
-    obtain ⟨s, hs, _, hlaw⟩ := local_slope_disagreement_law alpha halpha h0 h1 (m + 1)
+    obtain ⟨s, hs, _, _, hlaw⟩ := local_slope_disagreement_law alpha halpha h0 h1 (m + 1)
     let delta := min r s / 2
     have hd : 0 < delta := div_pos (lt_min hr hs) (by norm_num)
     have hdr : delta ≤ r := by dsimp [delta]; linarith [min_le_left r s, lt_min hr hs]

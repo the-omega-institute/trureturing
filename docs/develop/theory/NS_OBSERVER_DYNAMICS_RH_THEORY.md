@@ -2374,7 +2374,7 @@ D_k(x):=\lfloor x+k(\alpha+\delta)\rfloor-\lfloor x+k\alpha\rfloor
 \]
 相邻累计整数相减给 $s_j(\alpha+\delta,x)-s_j(\alpha,x)=D_{j+1}-D_j$。区间不交保证至多一个 $D_k$ 非零，故得到式 (22.3)。在区间并集之外所有 $D_k$ 为零；在每个区间内第 $k-1$ 位实际改变，故错误集恰为该并集。有限测度可加性及 $\sum_{k=1}^n k=n(n+1)/2$ 给出测度公式。
 
-`MechanicalSlopeSensitivity.local_slope_disagreement_law` 构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。半径仅为明确的充分半径，没有被宣称最大。
+`MechanicalSlopeSensitivity.local_slope_disagreement_law` 构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。声明同时保留定量接口：任何不超过 $1-\alpha$、全部 $c_k$ 及两两切点距离的共同下界 $g$，都给出同一个所构造半径的下界 $r_n\geq g/[2(n+1)]$。半径仅为明确的充分半径，没有被宣称最大。
 
 **推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
 \[
