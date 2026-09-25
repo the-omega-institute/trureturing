@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Zigzag/DecodedBalance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Fin]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin]
    utility: none
    digest: Literal balance of decoded zero-charge retirement paths. -/
 
