@@ -177,61 +177,6 @@ theorem geometric_atomic_apply_Iic
       (ENNReal.ofReal_tsum_of_nonneg hf0 hf).symm
     _ = ENNReal.ofReal (geometricReadout r alpha x) := by rw [hreal]
 
-private theorem atomicPoint_injective_level (x : ℝ) (n : ℕ) :
-    Function.Injective (fun i : Fin (n + 1) => atomicPoint x ⟨n, i⟩) := by
-  intro i j h
-  apply Fin.ext
-  have hn : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
-  dsimp [atomicPoint] at h
-  have hnum := (div_left_inj' hn).mp h
-  have hval : (i.val : ℝ) = j.val := by
-    push_cast at hnum
-    linarith
-  exact_mod_cast hval
-
-private theorem atomicPoint_integer_hit_iff
-    (x alpha : ℝ) (hx : x ∈ Set.Ico (0 : ℝ) 1)
-    (ha : alpha ∈ Set.Ioo (0 : ℝ) 1) (n : ℕ) :
-    (∃ i : Fin (n + 1), atomicPoint x ⟨n, i⟩ = alpha) ↔
-      ∃ z : ℤ, (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha := by
-  have hden : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
-  constructor
-  · rintro ⟨i, hi⟩
-    refine ⟨((i.val + 1 : ℕ) : ℤ), ?_⟩
-    dsimp [atomicPoint] at hi
-    have hmul := (div_eq_iff hden).mp hi
-    exact_mod_cast (show (((i.val + 1 : ℕ) : ℝ)) =
-      x + (((n + 1 : ℕ) : ℝ)) * alpha by linarith)
-  · rintro ⟨z, hz⟩
-    have hposR : (0 : ℝ) < z := by
-      rw [hz]
-      nlinarith [ha.1, hx.1, (show (0 : ℝ) < (n + 1 : ℕ) by positivity)]
-    have hltR : (z : ℝ) < (((n + 2 : ℕ) : ℝ)) := by
-      rw [hz]
-      have hmul : (((n + 1 : ℕ) : ℝ)) * alpha < (((n + 1 : ℕ) : ℝ)) := by
-        simpa using mul_lt_mul_of_pos_left ha.2
-          (show (0 : ℝ) < (n + 1 : ℕ) by positivity)
-      have hcast : (((n + 2 : ℕ) : ℝ)) = (((n + 1 : ℕ) : ℝ)) + 1 := by
-        push_cast
-        ring
-      rw [hcast]
-      have hxlt : x < 1 := hx.2
-      linarith [hmul, hxlt]
-    have hposZ : (0 : ℤ) < z := by exact_mod_cast hposR
-    have hltZ : z < ((n + 2 : ℕ) : ℤ) := by exact_mod_cast hltR
-    have hznat : ((z.toNat : ℕ) : ℤ) = z := Int.toNat_of_nonneg hposZ.le
-    have hnat0 : 0 < z.toNat := by omega
-    have hnatlt : z.toNat < n + 2 := by omega
-    let i : Fin (n + 1) := ⟨z.toNat - 1, by omega⟩
-    have hival : (((i.val + 1 : ℕ) : ℝ)) = (z : ℝ) := by
-      have hstep : i.val + 1 = z.toNat := by dsimp [i]; omega
-      rw [hstep]
-      exact_mod_cast hznat
-    refine ⟨i, ?_⟩
-    dsimp [atomicPoint]
-    rw [div_eq_iff hden, hival, hz]
-    ring
-
 /-- At an interior slope, the singleton mass is the sum over every integer
 hit time, with all coincident times retained. -/
 theorem geometric_atomic_singleton_hit
@@ -242,6 +187,59 @@ theorem geometric_atomic_singleton_hit
           (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
         ENNReal.ofReal ((1 - r) ^ 2 * r ^ n) else 0 := by
   classical
+  have atomicPoint_injective_level (x : ℝ) (n : ℕ) :
+      Function.Injective (fun i : Fin (n + 1) => atomicPoint x ⟨n, i⟩) := by
+    intro i j h
+    apply Fin.ext
+    have hn : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
+    dsimp [atomicPoint] at h
+    have hnum := (div_left_inj' hn).mp h
+    have hval : (i.val : ℝ) = j.val := by
+      push_cast at hnum
+      linarith
+    exact_mod_cast hval
+  have atomicPoint_integer_hit_iff
+      (x alpha : ℝ) (hx : x ∈ Set.Ico (0 : ℝ) 1)
+      (ha : alpha ∈ Set.Ioo (0 : ℝ) 1) (n : ℕ) :
+      (∃ i : Fin (n + 1), atomicPoint x ⟨n, i⟩ = alpha) ↔
+        ∃ z : ℤ, (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha := by
+    have hden : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
+    constructor
+    · rintro ⟨i, hi⟩
+      refine ⟨((i.val + 1 : ℕ) : ℤ), ?_⟩
+      dsimp [atomicPoint] at hi
+      have hmul := (div_eq_iff hden).mp hi
+      exact_mod_cast (show (((i.val + 1 : ℕ) : ℝ)) =
+        x + (((n + 1 : ℕ) : ℝ)) * alpha by linarith)
+    · rintro ⟨z, hz⟩
+      have hposR : (0 : ℝ) < z := by
+        rw [hz]
+        nlinarith [ha.1, hx.1, (show (0 : ℝ) < (n + 1 : ℕ) by positivity)]
+      have hltR : (z : ℝ) < (((n + 2 : ℕ) : ℝ)) := by
+        rw [hz]
+        have hmul : (((n + 1 : ℕ) : ℝ)) * alpha < (((n + 1 : ℕ) : ℝ)) := by
+          simpa using mul_lt_mul_of_pos_left ha.2
+            (show (0 : ℝ) < (n + 1 : ℕ) by positivity)
+        have hcast : (((n + 2 : ℕ) : ℝ)) = (((n + 1 : ℕ) : ℝ)) + 1 := by
+          push_cast
+          ring
+        rw [hcast]
+        have hxlt : x < 1 := hx.2
+        linarith [hmul, hxlt]
+      have hposZ : (0 : ℤ) < z := by exact_mod_cast hposR
+      have hltZ : z < ((n + 2 : ℕ) : ℤ) := by exact_mod_cast hltR
+      have hznat : ((z.toNat : ℕ) : ℤ) = z := Int.toNat_of_nonneg hposZ.le
+      have hnat0 : 0 < z.toNat := by omega
+      have hnatlt : z.toNat < n + 2 := by omega
+      let i : Fin (n + 1) := ⟨z.toNat - 1, by omega⟩
+      have hival : (((i.val + 1 : ℕ) : ℝ)) = (z : ℝ) := by
+        have hstep : i.val + 1 = z.toNat := by dsimp [i]; omega
+        rw [hstep]
+        exact_mod_cast hznat
+      refine ⟨i, ?_⟩
+      dsimp [atomicPoint]
+      rw [div_eq_iff hden, hival, hz]
+      ring
   have hterm (a : AtomicIndex) :
       (ENNReal.ofReal (atomicCoefficient r a) •
         Measure.dirac (atomicPoint x a)) {alpha} =
@@ -284,42 +282,41 @@ private def approximatingIndex (y : ℝ) (hy : y ∈ Set.Ico (0 : ℝ) 1)
     have hk : (0 : ℝ) < (((n + 1 : ℕ) : ℝ)) := by positivity
     simpa using mul_lt_mul_of_pos_right hy.2 hk⟩
 
-private theorem approximatingPoint_tendsto (x y : ℝ)
-    (hy : y ∈ Set.Ico (0 : ℝ) 1) :
-    Filter.Tendsto
-      (fun n : ℕ => atomicPoint x ⟨n, approximatingIndex y hy n⟩)
-      Filter.atTop (nhds y) := by
-  have hk : Filter.Tendsto (fun n : ℕ => (((n + 1 : ℕ) : ℝ)))
-      Filter.atTop Filter.atTop := by
-    apply Filter.tendsto_atTop.2
-    intro b
-    filter_upwards [(Filter.tendsto_atTop.1 tendsto_natCast_atTop_atTop b)] with n hn
-    exact hn.trans (by exact_mod_cast Nat.le_succ n)
-  have hfloor : Filter.Tendsto
-      (fun n : ℕ => (((⌊y * (((n + 1 : ℕ) : ℝ))⌋₊ : ℕ) : ℝ)) /
-        (((n + 1 : ℕ) : ℝ))) Filter.atTop (nhds y) :=
-    (tendsto_nat_floor_mul_div_atTop hy.1).comp hk
-  have hinv : Filter.Tendsto
-      (fun n : ℕ => (((n + 1 : ℕ) : ℝ))⁻¹) Filter.atTop (nhds (0 : ℝ)) :=
-    tendsto_inv_atTop_zero.comp hk
-  have hcorrection : Filter.Tendsto
-      (fun n : ℕ => (1 - x) * (((n + 1 : ℕ) : ℝ))⁻¹)
-      Filter.atTop (nhds (0 : ℝ)) := by
-    simpa using (tendsto_const_nhds.mul hinv)
-  convert hfloor.add hcorrection using 1
-  · ext n
-    simp only [atomicPoint, approximatingIndex]
-    have hden : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
-    field_simp
-    push_cast
-    ring
-  · simp
-
 /-- Every point of the closed unit interval is approached by positive-mass
 numbered threshold atoms; no point outside that interval has support mass. -/
 theorem geometric_atomic_support (r x : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
     (hx : x ∈ Set.Ico (0 : ℝ) 1) :
     (geometricAtomicMeasure r x).support = Set.Icc (0 : ℝ) 1 := by
+  have approximatingPoint_tendsto (x y : ℝ)
+      (hy : y ∈ Set.Ico (0 : ℝ) 1) :
+      Filter.Tendsto
+        (fun n : ℕ => atomicPoint x ⟨n, approximatingIndex y hy n⟩)
+        Filter.atTop (nhds y) := by
+    have hk : Filter.Tendsto (fun n : ℕ => (((n + 1 : ℕ) : ℝ)))
+        Filter.atTop Filter.atTop := by
+      apply Filter.tendsto_atTop.2
+      intro b
+      filter_upwards [(Filter.tendsto_atTop.1 tendsto_natCast_atTop_atTop b)] with n hn
+      exact hn.trans (by exact_mod_cast Nat.le_succ n)
+    have hfloor : Filter.Tendsto
+        (fun n : ℕ => (((⌊y * (((n + 1 : ℕ) : ℝ))⌋₊ : ℕ) : ℝ)) /
+          (((n + 1 : ℕ) : ℝ))) Filter.atTop (nhds y) :=
+      (tendsto_nat_floor_mul_div_atTop hy.1).comp hk
+    have hinv : Filter.Tendsto
+        (fun n : ℕ => (((n + 1 : ℕ) : ℝ))⁻¹) Filter.atTop (nhds (0 : ℝ)) :=
+      tendsto_inv_atTop_zero.comp hk
+    have hcorrection : Filter.Tendsto
+        (fun n : ℕ => (1 - x) * (((n + 1 : ℕ) : ℝ))⁻¹)
+        Filter.atTop (nhds (0 : ℝ)) := by
+      simpa using (tendsto_const_nhds.mul hinv)
+    convert hfloor.add hcorrection using 1
+    · ext n
+      simp only [atomicPoint, approximatingIndex]
+      have hden : (((n + 1 : ℕ) : ℝ)) ≠ 0 := by positivity
+      field_simp
+      push_cast
+      ring
+    · simp
   let μ := geometricAtomicMeasure r x
   have hpoint (a : AtomicIndex) : atomicPoint x a ∈ μ.support := by
     rw [Measure.support_eq_forall_isOpen]
