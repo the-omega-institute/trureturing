@@ -45223,3 +45223,209 @@ $$
 Hermite 插值与有理形状约束的背景可见 Gregory、Delbourgo，*Piecewise Rational Quadratic Interpolation to Monotonic Data*，IMA J. Numer. Anal. **2**（1982），123–130，第2节式（2.2）—（2.7）。该文的分段单调约束在相同函数值处要求零端点导数；本节所有指定节点具有相同值及正导数，其间必须出现回程。这里由（208.12）—（208.14）确定这些回程，并验证它们与固定量子处理器的物理约束及精确 Fisher 等号集合相容。
 
 ## 追加锚（本行以下为增补区）
+
+## 209. 仿射准备的维数无关信息缺口与三维严格改进
+
+**定义 209.1（维数受限的仿射程序成本）。** 固定 $0<a<1$、$l=2a-1$、$t\in J_a=(l,1)$ 及整数 $d\ge1$。令 $\mathfrak A_d(a,t)$ 为所有下列程序的名义点态 SLD 信息量下确界：程序的联合支持维数不超过 $d$，状态在物理参数 $u$ 中仿射，$\rho_u=M+uN$；一个不依赖 $u$ 的 CPTP 处理器对全部信号输入、全部 $u\in J_a$ 精确产生 $\mathcal T_u$。允许把较小支持嵌入 $\mathbb C^d$，不要求程序在填充后的整个空间满秩；空类的下确界为 $+\infty$。
+
+**定理 209.2（仿射准备具有维数无关的正额外成本）。** 任意有限维全区间精确仿射程序都满足
+$$
+ I_Q(\rho_t)\ge I_r(t)+
+ \frac{a^2}{4(1+t)^2}>I_r(t),
+ \qquad I_r(t)=\frac1{1-t^2}.
+\tag{209.1}
+$$
+此外 $\mathfrak A_1(a,t)=+\infty$；对于每个有限 $d\ge2$，定义209.1的下确界被实际程序达到，且
+$$
+ I_r(t)+\frac{a^2}{4(1+t)^2}
+ \le\mathfrak A_d(a,t)
+ \le B(a,t)=\frac{1-a^2}{(1-t)(1+t-2a^2)}.
+\tag{209.2}
+$$
+其中 $\mathfrak A_2=B$，$\mathfrak A_{d+1}\le\mathfrak A_d$。维数增加不能使仿射程序成本趋于 $I_r$；这里不宣称（209.1）的附加项是最优常数。
+
+证明。 先处理支持与秩。若 $x\in\ker\rho_t$，则 $\langle x,\rho_u x\rangle=(u-t)\langle x,Nx\rangle$ 在 $t$ 的两侧非负，故 $\langle x,Nx\rangle=0$。该二次型在整个区间为零；由 $\rho_u\succeq0$，有 $\rho_u x=0$。交换两个内部参数可知各内点的核相同。因此仿射程序在共同支持上满秩，导数在其正交补消失，内部 SLD 信息量有限。这一步不要求端点具有相同支持。
+
+先从处理器的全输入约束提取一个算子关系。限制到原程序的共同支持；其内部态满秩。对每个信号基态 $|i\rangle$，输出恒为纯态 $|i\rangle\langle i|$。把一个内部程序态分解为正权本征投影，输出在其正交补的非负概率之和为零，故 Stinespring 等距必在整个共同支持上具有受控形状
+$V=\sum_{i=0}^2|i\rangle\langle i|\otimes V_i$，其中 $V_i^\dagger V_i=I$。这个形状由精确性推出，不是额外架构限制。
+
+依照第204节，将处理器与同时交换信号输入、输出标号 $0,2$ 后的处理器平均。目标通道对此交换不变，程序曲线和成本也不变。平均后的算子 Gram 矩阵可写成
+$$
+ \mathsf G=\begin{pmatrix}
+ I&K&A\\K^\dagger&I&K^\dagger\\A&K&I
+ \end{pmatrix}\succeq0,\qquad A=A^\dagger,
+ \qquad \operatorname{Tr}(\rho_uA)=u,\quad
+ \operatorname{Tr}(\rho_uK)=a.
+\tag{209.3}
+$$
+这里可以取 $A=(V_0^\dagger V_2+V_2^\dagger V_0)/2$、$K=(V_0^\dagger V_1+V_2^\dagger V_1)/2$。在外侧的对称、反对称坐标中对（209.3）作 Schur 补，得到
+$$
+ -I\preceq A\preceq I,\qquad
+ KK^\dagger\preceq E_+:=\frac{I+A}{2},\qquad
+ E_-:=\frac{I-A}{2},\qquad K=\sqrt{E_+}\,C,
+ \quad \|C\|_\infty\le1.
+\tag{209.4}
+$$
+最后的分解可在 $E_+$ 的支持上取逆平方根直接构造；不等式保证 $K$ 的像包含于该支持，且 $CC^\dagger\preceq I$。
+
+使用固定等距嵌入 $Jx=\sqrt{E_+}x\oplus\sqrt{E_-}x$，记两个直和投影为 $P,Q$、第一块嵌入为 $\iota_+$。令
+$$
+ \sigma_u=J\rho_uJ^\dagger,\qquad
+ \widetilde K=\iota_+CJ^\dagger.
+ \quad
+ P\widetilde K=\widetilde K,\qquad
+ \|\widetilde K\|_\infty\le1,\qquad
+ \operatorname{Tr}(\sigma_u\widetilde K)=a.
+\tag{209.5}
+$$
+这是因为 $J^\dagger\widetilde KJ=\sqrt{E_+}C=K$。此外
+$\operatorname{Tr}(P\sigma_u)=(1+u)/2$、$\operatorname{Tr}(Q\sigma_u)=(1-u)/2$。
+嵌入曲线仍仿射，SLD 信息量在固定等距下保持。这里只在扩大空间使用这些算子关系，不要求扩大空间上的任意态产生预先指定的信号通道。
+
+在名义点记 $N_\sigma=\sigma'_t$，取一个满足 SLD 方程的自伴 $L_t$，并置
+$$
+ H_t=\frac{P}{1+t}-\frac{Q}{1-t},\qquad
+ R_t=N_\sigma-\frac12(H_t\sigma_t+\sigma_tH_t),\qquad
+ g=I_Q(\sigma_t)-I_r(t).
+\tag{209.6}
+$$
+概率与导数恒等式给出
+$\operatorname{Tr}(N_\sigma H_t)=\operatorname{Tr}(\sigma_tH_t^2)=I_r(t)$。
+因此第189节的得分残差恒等式在这里成为
+$$
+ g=\operatorname{Tr}[\sigma_t(L_t-H_t)^2],\qquad
+ R_t=\tfrac12[(L_t-H_t)\sigma_t+\sigma_t(L_t-H_t)],
+ \qquad \|R_t\|_1\le\sqrt g.
+\tag{209.7}
+$$
+最后一步由 Schatten Cauchy–Schwarz 与 $\operatorname{Tr}\sigma_t=1$ 得到；公式不要求嵌入态在整个扩大空间可逆，所以也覆盖秩亏程序。
+
+仿射曲线在 $u\uparrow1$ 有密度矩阵极限 $\sigma_1$。由于 $\operatorname{Tr}(\sigma_1Q)=0$，正性迫使 $Q\sigma_1=\sigma_1Q=0$。按照 $P\oplus Q$ 分块，写
+$$
+ \sigma_t=\begin{pmatrix}A_0&C_0\\C_0^\dagger&B_0\end{pmatrix}.
+\tag{209.8}
+$$
+整个曲线的仿射性给出
+$$
+ (N_\sigma)_{QQ}=-\frac{B_0}{1-t},\qquad
+ (N_\sigma)_{PQ}=-\frac{C_0}{1-t},\qquad
+ (R_t)_{QQ}=0,\qquad
+ (R_t)_{PQ}=-\frac{C_0}{1-t^2}.
+\tag{209.9}
+$$
+取实际密度矩阵
+$$
+ \tau=\frac{2Q\sigma_tQ}{1-t},\qquad Z_0=P-Q.
+\tag{209.10}
+$$
+其迹为一。用 $\sigma_{-1}=\sigma_t-(1+t)N_\sigma$ 表示仿射公式的代数延伸；此时不要求 $\sigma_{-1}$ 正定或半正定。由（209.9）以及
+$(R_t)_{PP}=(N_\sigma)_{PP}-A_0/(1+t)$，逐块得到
+$$
+ \sigma_{-1}-\tau
+ =-(1+t)\left(\frac32R_t-\frac12Z_0R_tZ_0\right).
+\tag{209.11}
+$$
+$Z_0$ 为酉自伴算子，故
+$$
+ \|\sigma_{-1}-\tau\|_1\le2(1+t)\sqrt g.
+\tag{209.12}
+$$
+
+恒等式 $\operatorname{Tr}(\sigma_u\widetilde K)=a$ 关于 $u$ 仿射，因而在代数延伸 $u=-1$ 处仍成立。另一方面，$\tau$ 支持于 $Q$，而 $P\widetilde K=\widetilde K$，所以 $\operatorname{Tr}(\tau\widetilde K)=0$。于是
+$$
+ a=\big|\operatorname{Tr}[(\sigma_{-1}-\tau)\widetilde K]\big|
+ \le\|\sigma_{-1}-\tau\|_1\le2(1+t)\sqrt g.
+\tag{209.13}
+$$
+这证明（209.1），其中迹范数没有除以二。全输入约束在这里通过（209.3）—（209.5）的常数通道系数参与估计，不能只用二元概率关系替代。
+
+下面固定维数上界 $d$。任何仿射程序都有密度矩阵端点 $\tau_l,\tau_1$，且
+$$
+ \rho_u=\frac{1-u}{1-l}\tau_l+
+         \frac{u-l}{1-l}\tau_1,
+ \qquad N=\frac{\tau_1-\tau_l}{1-l}.
+\tag{209.14}
+$$
+把所有程序填充到 $\mathbb C^d$，以两个端点态及处理器的 Choi 矩阵作为参数。密度矩阵集合与固定输入、输出维数的 CPTP Choi 集合都紧。要求处理器在两个端点对每个信号矩阵单位给出目标通道，是有限个连续等式，所以可行集闭且紧。端点约束由连续性从原程序得到；反向由（209.14）与目标通道的仿射性保证整个区间精确。
+
+名义点的 SLD 信息量具有变分式
+$$
+ I_Q(\rho_t,N)=
+ \sup_{H=H^\dagger}
+ \{2\operatorname{Tr}(NH)-\operatorname{Tr}(\rho_tH^2)\}.
+\tag{209.15}
+$$
+在共同支持上取 SLD $L$ 并完成平方，花括号等于
+$I_Q(\rho_t)-\operatorname{Tr}[\rho_t(H-L)^2]$，上确界在 $H=L$ 达到；核外部分不改变上确界。每个固定 $H$ 的表达式关于参数连续，故信息量为下半连续函数，紧可行集上的下确界被达到。这里允许极限的支持维数下降，不对满秩态开集使用紧性。
+
+第187节的全区间仿射二维程序达到 $B(a,t)$。填充程序并对额外块选任意固定通道可延拓处理器，所以 $d\ge2$ 时可行集非空且最小值有限。（209.1）给出下界；一维程序不能生成非恒定通道族；定理190.2给出 $\mathfrak A_2=B$；填充关系给出随维数不增。证毕。
+
+**定理 209.3（三维仿射程序严格优于二维最优值）。** 对 $a=t=1/2$，存在一个在整个 $J_a=(0,1)$ 满秩、对全部信号输入精确的三维仿射程序，满足
+$$
+ I_Q(\rho_{1/2})=
+ \frac{320811687543628211492}{214265320278484424375}
+ <\frac32=B(1/2,1/2).
+\tag{209.16}
+$$
+因此 $\mathfrak A_3(1/2,1/2)<\mathfrak A_2(1/2,1/2)$。本式给出严格改进，不断言该三维程序已经最优。
+
+证明。 取
+$$
+ K=\frac1{100}\begin{pmatrix}
+ 72&20&-64\\-55&37&-61\\0&0&0
+ \end{pmatrix},\qquad Z=\operatorname{diag}(1,1,-1),
+\tag{209.17}
+$$
+以及两个端点
+$$
+ R=\begin{pmatrix}
+ 41/100&19/100&-1/4\\
+ 19/100&9/100&-39/305\\
+ -1/4&-39/305&1/2
+ \end{pmatrix},\qquad
+ S=\begin{pmatrix}
+ 39/50&143/350&0\\
+ 143/350&11/50&0\\
+ 0&0&0
+ \end{pmatrix}.
+\tag{209.18}
+$$
+$R$ 的顺序主子式为 $41/100,1/1250,1303/5953600$；$S$ 的非零二阶块的顺序主子式为 $39/50,143/30625$。两矩阵的迹均为一，所以 $R\succ0$、$S\succeq0$，且
+$$
+ \rho_u=(1-u)R+uS\succ0\qquad(0<u<1).
+\tag{209.19}
+$$
+$I-KK^\dagger$ 的上二阶块顺序主子式为 $4/125,8459/6250000$，其余块为一，故 $K$ 是严格压缩算子。定义固定等距映射
+$$
+ W_0=\binom{I_3}{0},\qquad
+ W_2=\binom{Z}{0},\qquad
+ W_1=\binom{K}{\sqrt{I_3-K^\dagger K}}.
+\tag{209.20}
+$$
+受控等距 $V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i$ 后取环境偏迹，给出固定 CPTP 处理器。直接相乘有
+$$
+ ZK=K,\qquad
+ \operatorname{Tr}(RK)=\operatorname{Tr}(SK)=\tfrac12,
+ \qquad \operatorname{Tr}(RZ)=0,
+ \quad \operatorname{Tr}(SZ)=1.
+\tag{209.21}
+$$
+因此诱导 Schur 系数为 $C_{01}=C_{12}=1/2$、$C_{02}=u$、$C_{ii}=1$，并由自伴性确定其他项。这逐矩阵单位证明全部信号输入上的恒等式，精确域是整个 $(0,1)$。
+
+在名义点令 $\rho=(R+S)/2$、$N=S-R$。由于 $\rho\succ0$，实对称线性方程
+$$
+ \tfrac12(\rho L+L\rho)=N
+\tag{209.22}
+$$
+有唯一实对称解。将（209.18）代入这组六元线性方程并消元，得到
+$\operatorname{Tr}(NL)=\operatorname{Tr}(\rho L^2)$ 等于（209.16）的有理数。严格差为
+$$
+ \frac32-I_Q(\rho_{1/2})
+ =\frac{1172585748196850141}{428530640556968848750}>0.
+\tag{209.23}
+$$
+由此，二维下界 $B$ 不能作为所有仿射程序的通用下界；它与（209.1）的维数无关正差距相容。证毕。
+
+固定混合程序的线性框架与得分残差沿用第187—189节。混合态的 SLD 公式及量子比特、纯端点特化可参见 de Vicente 等，*Estimation of quantum finite mixtures*，arXiv:0910.1525v2，式（82）—（86）；纯端点混合的成本公式不适用于（209.18）的两个混合端点。这里的维数无关下界使用全区间仿射性与端点正性，三维改进使用显式处理器与上述矩阵。两者共同说明：增加维数可以降低仿射成本，但第207节的三维零额外成本还需要非仿射准备。
+
+## 追加锚（本行以下为增补区）
