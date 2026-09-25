@@ -3277,3 +3277,579 @@ $$
 前三步的容量收益不依赖丢弃来源信息：这三轮环境均与数据及参考独立，承担的是可丢弃的确定阶段输出。将这些输出都强制成同一纯空白且禁止额外丢弃环境，会回到第9节的另一份合同。
 
 ## 追加锚（本行以下为增补区）
+
+## 22. 任意校准候选集的尺度容量与稀疏增长律
+
+**定义 22.1（相位集合的分离数及终端任务）。** 沿用定义1.1的等权两态来源及其未知共同相位。相位圆记为 $`\mathbb T=\mathbb R/(2\pi\mathbb Z)`$，其测地距离为
+
+$$
+d_{\mathbb T}(\vartheta,\varphi)
+=\min_{j\in\mathbb Z}|\vartheta-\varphi+2\pi j|.
+\tag{22.1}
+$$
+
+对任意非空集合 $`\Theta\subseteq\mathbb T`$ 和 $`\delta>0`$，定义
+
+$$
+P(\Theta,\delta)
+=\max\bigl\{|A|:A\subseteq\Theta,\
+d_{\mathbb T}(\vartheta,\varphi)\ge\delta
+\text{ 对全部不同的 }\vartheta,\varphi\in A\bigr\}.
+\tag{22.2}
+$$
+
+圆周有限且距离分离，故上述集合的基数有有限整数上界；非空性保证最大值至少为一，并有一份有限集合取得该整数。这里不要求 $`\Theta`$ 闭、可测或具有正长度。
+
+将定义18.1的弧 $`I`$ 换为 $`\Theta`$，记完整参考、活动记忆及档案恢复的最小单终端接收维数为 $`k_n^{(\epsilon)}(\Theta)`$。编码和解码可以依赖 $`\Theta,n,\epsilon`$，不能依赖实际相位或来源输入；参考与活动记忆不可访问。本节不要求这些终端编码之间具有共同在线更新。
+
+置
+
+$$
+a_*:=\frac{\alpha^3}{6\pi^2},\qquad
+C_*:=1+2\sum_{r=1}^{\infty}e^{-a_*r^2}<\infty,
+\qquad
+J_\epsilon:=\left\lceil\frac1{\sqrt2\epsilon}\right\rceil,
+\quad \alpha=\frac{\sqrt5-1}{2}.
+\tag{22.3}
+$$
+
+**定理 22.2（任意候选集的统一尺度容量）。** 对任意非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$ 及 $`0<\epsilon<1`$，有
+
+$$
+\boxed{
+\max\left\{1,\frac{1-\epsilon}{4C_*}
+P(\Theta,n^{-1/2})\right\}
+\le k_n^{(\epsilon)}(\Theta)
+\le\min\left\{2n-1,\
+4J_\epsilon P(\Theta,n^{-1/2})\right\}.
+}
+\tag{22.4}
+$$
+
+特别地，固定 $`\epsilon`$ 后，
+
+$$
+k_n^{(\epsilon)}(\Theta)
+=\Theta_\epsilon\bigl(P(\Theta,n^{-1/2})\bigr),
+\tag{22.5}
+$$
+
+其中上下常数统一于候选集和终端编号，因而也允许候选集随 $`n`$ 改变。参数分辨率、可区分网与压缩记忆的联系已有文献先例；[^phase_metric_population] 本节针对上述关联来源及任意候选集合证明有限终端双边界。式（22.5）右侧的 $`\Theta_\epsilon(\cdot)`$ 表示双边阶估计，与候选集合符号相区别。
+
+证明。令 $`\delta=n^{-1/2}`$，取一份取得最大分离数的集合
+ $`A=\{\vartheta_1,\ldots,\vartheta_q\}`$，其中
+ $`q=P(\Theta,\delta)`$。
+
+**分离目标的共同解码下界。** 对相同 Bell 初始参考输入，记相位 $`\vartheta_j`$ 的纯联合目标为 $`|\Psi_{j,n}\rangle`$。式（19.4）及（5.17）给
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le\exp\left\{-\alpha^3
+\left\lfloor\frac{n-1}{3}\right\rfloor
+\sin^2\frac{d_{\mathbb T}(\vartheta_j,\vartheta_k)}2\right\}.
+\tag{22.6}
+$$
+
+对 $`0\le d\le\pi`$，有 $`\sin(d/2)\ge d/\pi`$；对 $`n\ge4`$，有 $`\lfloor(n-1)/3\rfloor\ge n/6`$。故
+
+$$
+|\langle\Psi_{j,n}|\Psi_{k,n}\rangle|
+\le e^{-a_*n d_{\mathbb T}(\vartheta_j,\vartheta_k)^2}.
+\tag{22.7}
+$$
+
+固定 $`j`$，从 $`\vartheta_j`$ 分别沿顺时针及逆时针方向排列距离不超过 $`\pi`$ 的其余点；若有对径点，只归入一侧。同一侧第 $`r`$ 个点的距离至少为 $`r\delta`$：首个距离至少为 $`\delta`$，相邻点之间的弧长不超过 $`\pi`$，因而等于它们的测地距离，也至少为 $`\delta`$。因此 Gram 矩阵 $`G_{jk}=\langle\Psi_{j,n}|\Psi_{k,n}\rangle`$ 的每个绝对行和满足
+
+$$
+\sum_k|G_{jk}|
+\le1+2\sum_{r=1}^{\infty}e^{-a_*n(r\delta)^2}
+=C_*.
+\tag{22.8}
+$$
+
+令 $`Q=q^{-1}\sum_j|\Psi_{j,n}\rangle\langle\Psi_{j,n}|`$。令 $`V`$ 为以这些目标向量为列的矩阵，则 $`VV^*`$ 与 Gram 矩阵 $`G=V^*V`$ 具有相同非零特征值。式（22.8）的最大绝对行和控制 Hermitian 矩阵 $`G`$ 的谱范数；以下 $`\|\cdot\|_\infty`$ 均表示算子谱范数。因此
+
+$$
+\|Q\|_\infty=\frac{\|G\|_\infty}{q}
+\le\frac{C_*}{q}.
+\tag{22.9}
+$$
+
+任取维数 $`D`$ 的合法编码及同一个解码器。不可访问系统 $`R=JM`$ 的维数为四。对编码所得各 $`KR`$ 态使用 $`0\preceq\tau_j\preceq I_{KR}`$，与（19.9）同样的正性及幺性计算给
+
+$$
+\frac1q\sum_j
+\operatorname{Tr}\bigl[
+|\Psi_{j,n}\rangle\langle\Psi_{j,n}|
+(\mathcal D\otimes\operatorname{id}_R)(\tau_j)
+\bigr]
+\le\frac{4DC_*}{q}.
+\tag{22.10}
+$$
+
+半迹误差不小于一减去目标重叠。因此任何同一解码器的最坏误差 $`e_n`$ 满足
+
+$$
+e_n\ge\max\{0,1-4DC_*/q\}.
+\tag{22.11}
+$$
+
+若要求 $`e_n\le\epsilon`$，即得（22.4）的下界。这里只对有限候选子集取平均，不需要在 $`\Theta`$ 上定义概率测度。
+
+**相位网覆盖与物理编码上界。** 最大分离集同时给一份 $`\delta`$ 网：若存在 $`\vartheta\in\Theta`$ 与全部 $`\vartheta_j`$ 的距离均至少为 $`\delta`$，将它加入就得到更大的分离集，矛盾。因此 $`\Theta`$ 被以这些点为中心、半径 $`\delta`$ 的弧覆盖。因 $`n\ge4`$，每条弧长 $`2\delta\le1<2\pi`$，可分别提升为实区间。
+
+把每条弧等分为 $`J_\epsilon`$ 段，取中点作为已知参考相位。至多得到 $`qJ_\epsilon`$ 个参考点，每个实际候选距某个参考点不超过
+
+$$
+h=\frac{\delta}{J_\epsilon}
+\le\frac{\sqrt2\epsilon}{\sqrt n}.
+\tag{22.12}
+$$
+
+参考点可以位于候选集之外；它们只用于定义一个已知子空间，并不声称实际来源具有这些相位。取所有参考相位的共同档案支撑之和，令其投影为 $`P_0`$、秩为 $`r`$。由定理3.2，各参考相位的支撑维数至多四，故
+
+$$
+r\le4qJ_\epsilon.
+\tag{22.13}
+$$
+
+在实际相位与对应参考相位之间，选取实现测地距离的实提升差。式（18.6）—（18.8）使用同一个标量相位控制整个来源输入空间，且 $`g_n^2\le n`$。因为参考输出全部落在 $`P_0`$ 内，实际输出在补空间的质量算子满足
+
+$$
+T_{\vartheta,n}^*[(I-P_0)\otimes I_M]T_{\vartheta,n}
+\preceq\frac{h^2g_n^2}{4}I_M
+\preceq\frac{\epsilon^2}{2}I_M.
+\tag{22.14}
+$$
+
+将（18.12）的投影编码及失败重置应用于 $`P_0`$，就得到维数 $`r`$ 的全域 CPTP 编码和解码。由（18.13）—（18.14），对任意参考纯化及任意实际候选，相同通道的联合恢复半迹误差至多 $`\epsilon`$。丢弃额外纯化参考后仍保持此界。网和通道不使用未知实际相位；只在误差证明中为每个候选选择一个临近参考点。结合（22.13）得到第二个上界；全圆精确编码另给 $`2n-1`$。证明完毕。
+
+**推论 22.3（可数零测度候选集的不同容量增长）。** 固定 $`0<\epsilon<1`$。对任意 $`\beta>0`$，令
+
+$$
+\Theta_\beta=\{0\}\cup\{j^{-\beta}:j\ge1\},
+\qquad
+\Theta_{\exp}=\{0\}\cup\{2^{-j}:j\ge0\},
+\tag{22.15}
+$$
+
+均视为相位圆上 $`[0,1]`$ 内的集合。它们都紧、可数、Haar 零测度，但单终端容量分别满足
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta_\beta)
+=\Theta_{\beta,\epsilon}\bigl(n^{1/[2(\beta+1)]}\bigr),
+\qquad
+k_n^{(\epsilon)}(\Theta_{\exp})
+=\Theta_\epsilon(\log n).
+}
+\tag{22.16}
+$$
+
+证明。先计算 $`\Theta_\beta`$ 的小尺度分离数。取
+ $`J=\lceil\delta^{-1/(\beta+1)}\rceil`$。前 $`J`$ 项至多贡献 $`J`$ 个分离点，剩余全部位于长度 $`J^{-\beta}`$ 的区间中；该区间至多容纳 $`1+J^{-\beta}/\delta`$ 个距离至少为 $`\delta`$ 的点。于是
+
+$$
+P(\Theta_\beta,\delta)
+\le J+1+\frac{J^{-\beta}}\delta
+=O_\beta(\delta^{-1/(\beta+1)}).
+\tag{22.17}
+$$
+
+反向，对充分小的 $`\delta`$ 取
+ $`J'=\lfloor(\beta/\delta)^{1/(\beta+1)}\rfloor-1`$。
+均值定理给
+
+$$
+j^{-\beta}-(j+1)^{-\beta}
+\ge\beta(j+1)^{-(\beta+1)}
+\ge\delta\qquad(1\le j\le J').
+\tag{22.18}
+$$
+
+故前 $`J'+1`$ 项组成分离集，得到匹配下界。这些点处于长度一的实区间内，实距离就是测地距离。
+
+对 $`\Theta_{\exp}`$，令 $`J=\lceil\log_2(1/\delta)\rceil`$。前 $`J`$ 项至多贡献 $`J`$ 点，其余全部处于长度 $`2^{-J}\le\delta`$ 的区间，至多再贡献两点。反向，令 $`L=\lfloor\log_2(1/\delta)\rfloor`$，前 $`L+1`$ 项的最小相邻差为 $`2^{-L}\ge\delta`$，给匹配下界。因此
+
+$$
+P(\Theta_\beta,\delta)
+=\Theta_\beta(\delta^{-1/(\beta+1)}),
+\qquad
+P(\Theta_{\exp},\delta)=\Theta(\log(1/\delta)).
+\tag{22.19}
+$$
+
+代入定理22.2的 $`\delta=n^{-1/2}`$ 即得。两组序列都只在零处聚集，故其连同零的集合紧；可数性给零测度。证明完毕。
+
+特别地，第19节的 $`\{0\}\cup\{1/j:j\ge1\}`$ 具有 $`n^{1/4}`$ 单终端容量阶；零测度不将其容量降为常数。几何收敛的候选序列则给对数阶，仍由定理19.2排除任意固定有限容量的全时域实现。这些区别全部发生在同一内部记忆通道及同一完整恢复任务下。
+
+**推论 22.4（校准集合的箱维数与容量指数）。** 对固定非空 $`\Theta\subseteq\mathbb T`$，以分离数定义下、上箱维数
+
+$$
+\underline s=\liminf_{\delta\downarrow0}
+\frac{\log P(\Theta,\delta)}{\log(1/\delta)},
+\qquad
+\overline s=\limsup_{\delta\downarrow0}
+\frac{\log P(\Theta,\delta)}{\log(1/\delta)}.
+\tag{22.20}
+$$
+
+则对每个固定 $`0<\epsilon<1`$，
+
+$$
+\boxed{
+\liminf_{n\to\infty}\frac{\log k_n^{(\epsilon)}(\Theta)}{\log n}
+=\frac{\underline s}{2},
+\qquad
+\limsup_{n\to\infty}\frac{\log k_n^{(\epsilon)}(\Theta)}{\log n}
+=\frac{\overline s}{2}.
+}
+\tag{22.21}
+$$
+
+证明。定理22.2给
+ $`\log k_n^{(\epsilon)}(\Theta)=\log P(\Theta,n^{-1/2})+O_\epsilon(1)`$。
+令 $`\delta_n=n^{-1/2}`$，则 $`\log(1/\delta_n)=\tfrac12\log n`$。若 $`\delta_{n+1}<\delta\le\delta_n`$，分离数的单调性给
+
+$$
+P(\Theta,\delta_n)\le P(\Theta,\delta)
+\le P(\Theta,\delta_{n+1}).
+\tag{22.22}
+$$
+
+两端的对数尺度之比趋于一；夹逼表明沿 $`\delta_n`$ 取极限下、上限与沿全部 $`\delta\downarrow0`$ 相同。再除以 $`\log n`$ 即得（22.21）。证明完毕。
+
+箱维数只记录幂次指数，并不替代（22.4）的完整尺度函数。例如有限集合与 $`\Theta_{\exp}`$ 均有零箱维数，但前者的终端容量有界，后者按对数发散。式（22.4）保留了这种区别；其上界仍是一族单终端编码，没有据此得到同一接收器的在线更新或同阶在线容量。
+
+[^phase_metric_population]: Yuxiang Yang, Ge Bai, Giulio Chiribella and Masahito Hayashi, *Compression for quantum population coding*, [arXiv:1701.03372v8, §II Theorem 1 and §VI equations (93)–(106)](https://arxiv.org/html/1701.03372v8), [doi:10.1109/TIT.2017.2788407](https://doi.org/10.1109/TIT.2017.2788407). 该文研究独立同分布的规则参数族，以可区分网证明渐近总记忆的参数维数主阶；其有限维量子态族部分具有满秩、非简并谱以及参数连续变化或固定等明确条件。本文不把该结论直接套于任意稀疏相位集合。式（22.4）使用本卷来源的有限长度重叠估计与保参考编码，处理固定误差、关联档案及任意非空候选集；上述文献作为参数网与压缩关系的先例。
+
+## 追加锚（本行以下为增补区）
+
+## 23. 四步精确固定 CPTP 容量的五至六维夹逼
+
+本节沿用第21节的已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，其中
+$`ab\ne0`$、$`|a|^2+|b|^2=1`$。接收合同仍为定义12.1：接收器独立纯初始化，逐轮使用同一个全域 CPTP 通道，新环境丢弃后不再复用，全部持久系统计入接收容量；每个终端均须仅凭接收器恢复任意参考、活动记忆和完整档案的联合态。
+
+**定理 23.1（四步容量界）。** 对上述任意已知非退化复振幅来源，
+
+$$
+\boxed{5\le d_{\mathrm{CPTP},4}(a,b)\le6.}
+\tag{23.1}
+$$
+
+因此，四维接收器无法同时服务前四个精确终端；六维已经足够。第9节同一纯空白固定酉合同在四步需要七维。式（23.1）尚未判定五维是否可达。
+
+**证明中的标准可逆编码事实。** 以下回顾精确纠错的 Kraus 正交分解，并给出所需的证明，以明确处理第一步接收态可能混合的情形。这是 Knill–Laflamme 精确纠错条件及其张量因子结构的应用，参见 [Knill–Laflamme, *Theory of Quantum Error-Correcting Codes*, Theorems 3.2、3.5，式（19）—（20）](https://arxiv.org/abs/quant-ph/9604034)，不作为本节新结论。设纯态
+$`|\Omega\rangle\in R\otimes S`$ 在 $`S`$ 上满 Schmidt 秩
+$`s=\dim S`$。设编码通道
+$`\mathcal E:\mathcal L(S)\to\mathcal L(K)`$ 有本地解码通道
+$`\mathcal D`$，满足
+
+$$
+(\operatorname{id}_R\otimes\mathcal D\mathcal E)
+(|\Omega\rangle\langle\Omega|)
+=|\Omega\rangle\langle\Omega|.
+\tag{23.2}
+$$
+
+则存在正数 $`p_1,\ldots,p_r`$ 和等距映射
+$`W_\alpha:S\to K`$，使
+
+$$
+\mathcal E(X)=\sum_{\alpha=1}^r p_\alpha
+W_\alpha XW_\alpha^\dagger,
+\qquad
+\sum_\alpha p_\alpha=1,
+\qquad
+W_\alpha^\dagger W_\beta=\delta_{\alpha\beta}I_S.
+\tag{23.3}
+$$
+
+特别地，$`sr\le\dim K`$。若 $`\dim K<2s`$，则 $`r=1`$，编码在此支撑上是单个等距映射，编码后的联合态为纯态。
+
+为验证这一标准事实，将（23.2）按 Schmidt 基展开。各 Schmidt 系数均非零，逐矩阵块比较即得
+$`\mathcal D\mathcal E=\operatorname{id}`$ 在
+$`\mathcal L(S)`$ 上成立。取编码 Kraus 算子 $`A_\alpha`$ 和解码 Kraus 算子 $`B_\beta`$。恒等通道的 Choi 矩阵秩为一，因此它的每个 Kraus 算子均为恒等嵌入的标量倍数，即
+$`B_\beta A_\alpha=\lambda_{\beta\alpha}I_S`$；若解码输出含更大的档案空间，这里的 $`I_S`$ 解释为该支撑的自然嵌入。由解码的保迹性，
+
+$$
+A_\alpha^\dagger A_\gamma
+=\sum_\beta (B_\beta A_\alpha)^\dagger
+(B_\beta A_\gamma)
+=c_{\alpha\gamma}I_S,
+\qquad
+c_{\alpha\gamma}=\sum_\beta
+\overline{\lambda_{\beta\alpha}}\lambda_{\beta\gamma}.
+\tag{23.4}
+$$
+
+对半正定矩阵 $`c`$ 作酉对角化，相应酉混合 Kraus 算子，再删去零算子，得到
+$`F_\alpha^\dagger F_\beta=p_\alpha\delta_{\alpha\beta}I_S`$，其中 $`p_\alpha>0`$。置
+$`W_\alpha=F_\alpha/\sqrt{p_\alpha}`$，便得（23.3）。各等距映射有两两正交的 $`s`$ 维像空间，因此 $`sr\le\dim K`$。
+
+**四维不可能性的证明。** 反设存在四维接收器服务全部
+$`n\le4`$。只需考虑 Bell 输入
+$`(|0\rangle_J|0\rangle_M+|1\rangle_J|1\rangle_M)/\sqrt2`$。
+未接收时，档案相对 $`JM`$ 的 Schmidt 秩在
+$`n=2,3,4`$ 分别为 $`3,4,4`$。前两项由（21.11）—（21.12）给出。第三项也可不另作档案枚举：三步的 $`JM`$ 边缘正定，而来源的活动记忆通道为
+
+$$
+\mathcal T(X)=\langle0|X|0\rangle|m_0\rangle\langle m_0|
++\langle1|X|1\rangle|m_1\rangle\langle m_1|.
+\tag{23.5}
+$$
+
+由于 $`m_0,m_1`$ 线性独立，$`\mathcal T(I)>0`$。若
+$`\rho_{JM}\ge\lambda I_{JM}`$ 且 $`\lambda>0`$，则
+$`(\operatorname{id}_J\otimes\mathcal T)(\rho_{JM})
+\ge\lambda I_J\otimes\mathcal T(I)>0`$。故第四步仍有 Schmidt 秩四。
+
+把前 $`n`$ 个接收门视为从完整档案到 $`K`$ 的累计编码通道是合法的：较早接收门与后续来源发射作用于不同系统，因而可交换。精确本地解码与上述标准事实遂表明：第二、三、四步的实际 $`JMK`$ 联合态均为纯态，接收器支撑秩分别为三、四、四。此处**没有**断言第一步为纯态；第一步可以具有秩二的可逆附加因子，以下论证允许这种情形。
+
+对 $`j=2,3`$，将纯联合态写为
+
+$$
+|\Psi_j\rangle=\frac1{\sqrt2}\sum_{i=0}^1
+|i\rangle_J\bigl(|0\rangle_Mu_j^i+|1\rangle_Mv_j^i\bigr),
+\quad
+H_j=\operatorname{span}\{u_j^0,u_j^1\},
+\quad
+G_j=\operatorname{span}\{v_j^0,v_j^1\}.
+\tag{23.6}
+$$
+
+这些向量由对应未接收档案向量经同一等距编码得到。由第二步展开，编码前的两组系数为
+
+$$
+\begin{array}{ll}
+\widetilde u_2^0=a^2|00\rangle+b|01\rangle,
+&\widetilde u_2^1=a|10\rangle,\\
+\widetilde v_2^0=ab|00\rangle,
+&\widetilde v_2^1=b|10\rangle;
+\end{array}
+\tag{23.7}
+$$
+
+这里波浪号表示等距编码前的档案坐标，即 $`u_j^i=W_j\widetilde u_j^i`$、$`v_j^i=W_j\widetilde v_j^i`$，其中 $`W_j`$ 是该终端的等距编码。同理，第三步的档案坐标为
+
+$$
+\begin{array}{ll}
+\widetilde u_3^0=a^3|000\rangle+ab|010\rangle+ab|001\rangle,
+&\widetilde u_3^1=a^2|100\rangle+b|101\rangle,\\
+\widetilde v_3^0=a^2b|000\rangle+b^2|010\rangle,
+&\widetilde v_3^1=ab|100\rangle.
+\end{array}
+\tag{23.8}
+$$
+
+非退化性及这些向量的计算基支撑给出
+
+$$
+\dim H_2=\dim G_2=\dim H_3=\dim G_3=2,
+\qquad
+\dim(H_2+G_2)=3,
+\qquad
+H_3+G_3=K.
+\tag{23.9}
+$$
+
+固定一次接收通道的任意 Stinespring 等距映射
+$`V:K\otimes\mathcal B\to K\otimes E`$。第三、四轮发射后、接收前，接收输入的支撑分别为
+
+$$
+L_3=(H_2\otimes|0\rangle)\oplus(G_2\otimes|1\rangle),
+\qquad
+L_4=(H_3\otimes|0\rangle)\oplus(G_3\otimes|1\rangle).
+\tag{23.10}
+$$
+
+二者均为四维：来源发射把（23.6）中的系数分别配到
+$`|i\rangle_Jm_0`$ 和 $`|i\rangle_Jm_1`$，这四个
+$`JM`$ 向量线性独立。第二、三、四步联合态均为纯态，故第三、四轮的新环境各为固定纯向量，且
+
+$$
+V|_{L_3}=U_3\otimes\eta_3,
+\qquad
+V|_{L_4}=U_4\otimes\eta_4,
+\tag{23.11}
+$$
+
+其中 $`U_3:L_3\to K`$、$`U_4:L_4\to K`$ 都是满射等距映射。确切地说，纯输入经等距映射后仍纯，而其 $`JMK`$ 边缘纯，故与新环境成乘积；比较满 Schmidt 支撑的系数即可得到（23.11）。这一步也不要求先前已丢弃的各环境分别为纯态。
+
+置 $`q=\langle\eta_3,\eta_4\rangle`$、$`\gamma=|q|`$。
+等距性给
+$`\langle x,y\rangle=q\langle U_3x,U_4y\rangle`$
+（$`x\in L_3,y\in L_4`$），因而
+
+$$
+P_{L_3}P_{L_4}P_{L_3}=\gamma^2P_{L_3}.
+\tag{23.12}
+$$
+
+若 $`\gamma=1`$，则 $`L_3=L_4`$；按输入位分块得到
+$`H_2=H_3`$、$`G_2=G_3`$，与（23.9）的三维和四维矛盾。
+
+若 $`\gamma=0`$，则 $`L_3\perp L_4`$，于是
+$`H_3=H_2^\perp`$、$`G_3=G_2^\perp`$。因此
+
+$$
+\dim(H_3\cap G_3)
+=\dim(H_2+G_2)^\perp=1,
+\tag{23.13}
+$$
+
+仍与 $`H_3+G_3=K`$ 矛盾。
+
+最后设 $`0<\gamma<1`$。定义第三轮两种输入位的接收像空间
+
+$$
+P=U_3(H_2\otimes|0\rangle),
+\qquad
+Q=U_3(G_2\otimes|1\rangle)=P^\perp,
+\tag{23.14}
+$$
+
+并用 $`P',Q'`$ 表示第四轮的对应像空间。四者均二维。不同输入位在接收前正交，且 $`q\ne0`$，故
+$`P\perp Q'`$、$`Q\perp P'`$。比较维数可得
+$`P'=P`$、$`Q'=Q`$。
+
+式（23.12）且 $`\gamma<1`$ 又给
+$`L_3\cap L_4=\{0\}`$，从而
+$`H_2\cap H_3=G_2\cap G_3=\{0\}`$。这些均为四维
+$`K`$ 中的二维空间，故
+$`H_2+H_3=G_2+G_3=K`$。利用线性性，令
+$`F=\operatorname{span}\{\eta_3,\eta_4\}`$，便得到固定接收门的**全域**约束
+
+$$
+V(K\otimes|0\rangle)\subset P\otimes F,
+\qquad
+V(K\otimes|1\rangle)\subset Q\otimes F.
+\tag{23.15}
+$$
+
+现在把（23.15）用回第二轮，允许第一轮联合态为任意混态。来源等距发射
+$`\mathsf S|0\rangle=m_0\otimes|0\rangle`$、
+$`\mathsf S|1\rangle=m_1\otimes|1\rangle`$ 满足
+
+$$
+(\langle1|_M\otimes I_{\mathcal B})\mathsf S
+=b|0\rangle_{\mathcal B}\langle0|_M.
+\tag{23.16}
+$$
+
+所以任何一轮中，新活动记忆的 $`|1\rangle\langle1|`$
+对角块只经过输入位零。由（23.15），接收并丢弃新环境后，这个对角块的接收器支撑必包含于 $`P`$。第二步实际联合态为（23.6）的纯态，偏迹参考后，该对角块为
+$`\frac12\sum_i|v_2^i\rangle\langle v_2^i|`$，故
+$`G_2\subset P`$。两者维数均为二，得到 $`G_2=P`$。同理第三步给 $`G_3=P`$。这与
+$`G_2\cap G_3=\{0\}`$ 矛盾。
+
+全部 $`\gamma`$ 情形都已排除，四维不可能。维数更小已由第三步 Schmidt 秩下界排除，因此得到（23.1）的下界。
+
+**六维全域固定门。** 取 $`K=\mathbb C^6`$ 的正交单位基
+$`u,v,w,t,r,s`$，接收初态为 $`w`$。沿用第21节的
+
+$$
+c=\sqrt{|a|^4+|b|^2},\qquad
+z=\frac{a^2u+bv}{c},\qquad
+y=\frac{-\overline b\,u+\overline a^{2}v}{c},
+\tag{23.17}
+$$
+
+并置
+
+$$
+d=\sqrt{c^2+|b|^2},\qquad
+h=\frac{cs+br}{d},\qquad
+h_\perp=\frac{-\overline b\,s+cr}{d}.
+\tag{23.18}
+$$
+
+$`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的正交单位基；
+$`h,h_\perp`$ 是 $`\operatorname{span}\{s,r\}`$ 的正交单位基。每轮使用一个新二态环境。以下十二条确定同一个全域酉
+$`V:K\otimes\mathcal B\to K\otimes E`$；张量积记号中的后一位分别是输入位和输出环境：
+
+$$
+\begin{aligned}
+V(w\otimes0)&=t\otimes0,
+&V(t\otimes0)&=u\otimes1,\\
+V(w\otimes1)&=y\otimes0,
+&V(t\otimes1)&=v\otimes1,\\
+V(z\otimes0)&=s\otimes0,
+&V(y\otimes0)&=w\otimes1,\\
+V(u\otimes1)&=r\otimes0,
+&V(h\otimes0)&=s\otimes1,\\
+V(h_\perp\otimes0)&=z\otimes0,
+&V(s\otimes1)&=t\otimes1,\\
+V(v\otimes1)&=w\otimes0,
+&V(r\otimes1)&=r\otimes1.
+\end{aligned}
+\tag{23.19}
+$$
+
+输入位零时的接收向量是 $`w,z,h_\perp,t,y,h`$，输入位一时是
+$`w,u,v,t,s,r`$；两组分别为 $`K`$ 的正交单位基。输出环境零时的接收向量是 $`t,y,s,r,z,w`$，环境一时是
+$`u,v,w,s,t,r`$；也分别为正交单位基。因此（23.19）确实定义酉，并给全域固定 CPTP 通道
+$`\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger)`$。
+
+**四步联合态与完整解码。** 对初始活动记忆基态 $`|i\rangle`$，记每次接收后的纯联合态为 $`\Psi_n^i\in M\otimes K`$。直接代入（23.19）得
+
+$$
+\begin{aligned}
+\Psi_1^0&=m_0\otimes t,
+&\Psi_1^1&=m_1\otimes y,\\
+\Psi_2^0&=a m_0\otimes u+b m_1\otimes v,
+&\Psi_2^1&=m_0\otimes w,\\
+\Psi_3^0&=c m_0\otimes s+ab m_1\otimes r,
+&\Psi_3^1&=a m_0\otimes t+b m_1\otimes y,\\
+\Psi_4^0&=ad m_0\otimes s+cb m_1\otimes t,
+&\Psi_4^1&=m_0\otimes(a^2u+bw)+ab m_1\otimes v.
+\end{aligned}
+\tag{23.20}
+$$
+
+每轮丢弃的环境分别为
+
+$$
+\eta_1=|0\rangle,\qquad
+\eta_2=|1\rangle,\qquad
+\eta_3=|0\rangle,\qquad
+\eta_4=|1\rangle,
+\tag{23.21}
+$$
+
+且对两个初始基态均相同。为核对新增第四步，两种发射后的接收输入为
+
+$$
+\begin{aligned}
+&a m_0\otimes(cs+br)\otimes|0\rangle
++cb m_1\otimes s\otimes|1\rangle
+=ad m_0\otimes h\otimes|0\rangle
++cb m_1\otimes s\otimes|1\rangle,\\
+&m_0\otimes(a^2t+by)\otimes|0\rangle
++ab m_1\otimes t\otimes|1\rangle.
+\end{aligned}
+\tag{23.22}
+$$
+
+（23.19）把这两行的全部分量都送到环境一，得到（23.20）第四行。前三步则只使用表中
+$`w0,w1,t0,t1,y0,z0,u1`$ 的映射，逐项给出（23.20）前三行及环境 $`0,1,0`$。因此线性性同时覆盖任意输入相干和任意参考纠缠；混合输入可取纯化。
+
+在终端 $`n\le4`$，解码器独立准备（23.21）的前 $`n`$ 个已知环境纯态，逆序施加同一个 $`V^\dagger`$，恢复各轮发出位，最后丢弃回到初态 $`w`$ 的接收寄存器。等价地，令 $`\mathsf V_n`$ 表示把同一个 $`V`$ 顺次作用于接收器及完整档案各位置的酉，置
+$`\boldsymbol\eta_n=\eta_1\otimes\cdots\otimes\eta_n`$，则
+
+$$
+\mathcal D_n(X)=\operatorname{Tr}_K\!\left[
+\mathsf V_n^\dagger
+\bigl(X\otimes|\boldsymbol\eta_n\rangle
+\langle\boldsymbol\eta_n|\bigr)
+\mathsf V_n\right].
+\tag{23.23}
+$$
+
+这是全域 CPTP 通道。较早接收门与后续来源发射可交换，故（23.20）—（23.21）保证（23.23）对全部
+$`J,\rho_{JM}`$ 精确恢复完整的 $`JM`$—档案联合态。运行中各轮环境立即丢弃，终端仅重新准备数据无关的已知纯态，不取回被丢弃的系统。所有持久控制均已包含在六维 $`K`$ 中，门不依赖步数更换。由此得到（23.1）的上界，定理得证。
+
+四步已知精确容量由本节收紧到 $`\{5,6\}`$。五维的全域固定 CPTP 实现或其不可能性仍未解决；本节既不把六维称为最优，也不把特定阶段构造的失败推广成五维下界。
+
+## 追加锚（本行以下为增补区）
