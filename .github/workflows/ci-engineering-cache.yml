@@ -110,7 +110,7 @@ jobs:
         if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
+        run: exit 1
       - if: steps.snapshot.outputs.engineering_ready == 'true'
         timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
