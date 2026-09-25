@@ -287,3 +287,8 @@ The result directs the arbitrary-star problem toward layout-dependent
 thinnings or improved actual-source estimates. It does not prove that
 every arbitrary-star layout has a positive witness: E12 covers the stated
 finite orbit, and unrestricted star layouts remain a separate obligation.
+
+[Report613](613-arbitrary-star-and-pair-phases-leave-a-retained-core-survivor.md)
+shows that, under the same fixed central source and15 mask, all35 star
+and120 pair phases can vary arbitrarily while the retained156-label core
+still leaves positive mass. This does not pay the full continuation gate.
