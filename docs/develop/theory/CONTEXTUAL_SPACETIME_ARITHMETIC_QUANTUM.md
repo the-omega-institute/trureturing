@@ -42771,3 +42771,186 @@ $\Gamma_P$ 已包含 $R>0$，且每个允许的 $a,t$ 都有任意小的允许�
 这确定了二次首项的存在与数域性质，没有给出 $\kappa$ 的数值、最小多项式或低成本计算方法，也不改变原优化中的下确界与最小值之别。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 197. 得分的二次残差与纯二维程序的显式半径代价
+
+**定义 197.1（三结果程序的得分矩）。** 固定 $0<a<1$、$2a-1<t<1$，取定理184.2以 $t$ 为设计点的三个固定通道及其仿射概率。记
+$$
+p_j=p_j(t)>0,\qquad v_j=p_j'(t),\qquad
+s_j=\frac{v_j}{p_j},\qquad M_k=\sum_jp_js_j^k,
+\qquad j\in\{+,-,c\}.
+\tag{197.1}
+$$
+于是 $M_1=0$、$M_2=B=B(a,t)>0$。定义得分平方相对于常数与得分的加权二次残差
+$$
+V=\sum_jp_j\left(s_j^2-B-\frac{M_3}{B}s_j\right)^2
+=M_4-B^2-\frac{M_3^2}{B}.
+\tag{197.2}
+$$
+这里常数向量与得分向量在 $p$ 加权内积下正交，其平方范数分别为一与 $B$，故（197.2）确为正交投影残差。仿射概率的导数始终对参数求取，三个通道及设计点保持固定。
+
+**定理 197.2（偏移圆弧的精确构造与显式首项上界）。** 定理196.3的二次首项满足
+$$
+0<\kappa(a,t)\le\frac V4
+=\frac{a^2(1-a^2)^2}{2(1-t)^2(1+t-2a^2)^3}
+=\frac{a^2B(a,t)^2}{2(1+t-2a^2)}.
+\tag{197.3}
+$$
+存在一族纯二维程序，分别在包含 $[t-R,t+R]$ 的开邻域内精确生成目标通道，其名义成本满足
+$$
+I_Q(\rho_t^{(R)})
+=B+\frac V4R^2+o(R^2)
+\qquad(R\downarrow0).
+\tag{197.4}
+$$
+每个程序使用一个固定的三结果秩一 POVM，随后执行定义197.1的相应固定通道。这里固定是指程序运行时不随未知参数变化；允许程序设计依赖 $a,t,R$。上界不主张该程序在所有处理器中最优。
+
+证明。 先保留任意固定实数偏移系数 $\alpha$。对充分小的 $\varepsilon$ 与 $z$ 在一的邻域，令
+$$
+A_j(\varepsilon,z)=p_j-\alpha\varepsilon\sqrt z\,\frac{v_j}{\sqrt B},
+\qquad
+q_j(\varepsilon,z)=
+\frac{2(1-\varepsilon)zv_j^2}
+{B\left[A_j(\varepsilon,z)+
+\sqrt{A_j(\varepsilon,z)^2-4\varepsilon(1-\varepsilon)zv_j^2/B}\right]}.
+\tag{197.5}
+$$
+所有 $v_j$ 非零。在 $(\varepsilon,z)=(0,1)$ 附近，根号与分母严格为正，故这些函数实解析，并有
+$$
+q_j(0,z)=\frac{zv_j^2}{Bp_j},\qquad
+\sum_jq_j(0,1)=1,\qquad
+\partial_z\sum_jq_j(0,1)=1.
+\tag{197.6}
+$$
+实解析隐函数定理遂给出 $z=z(\varepsilon)$，满足 $z(0)=1$、$z>0$ 及 $\sum_jq_j(\varepsilon,z(\varepsilon))=1$。下文的 $q_j$ 均沿此解析分支取值。式（197.5）是下列二次方程的小根在零点的解析延拓：
+$$
+\varepsilon q_j^2-
+\left(p_j-\alpha\varepsilon\sqrt z\,\frac{v_j}{\sqrt B}\right)q_j
++(1-\varepsilon)z\frac{v_j^2}{B}=0.
+\tag{197.7}
+$$
+令 $q_j^0=v_j^2/(Bp_j)$。在零点对该方程求导，再用 $\sum_jq_j'=0$，得到
+$$
+z'(0)=1-\sum_j\frac{(q_j^0)^2}{p_j}
+-\frac\alpha{\sqrt B}\sum_j\frac{v_jq_j^0}{p_j}
+=1-\frac{M_4}{B^2}-\alpha\frac{M_3}{B^{3/2}}.
+\tag{197.8}
+$$
+本构造只要求 $z>0$，不额外要求 $z\le1$。
+
+对充分小的正 $\varepsilon$，定义实对称效应
+$$
+N_j=
+\begin{pmatrix}
+\dfrac{p_j-\alpha\varepsilon\sqrt z\,v_j/\sqrt B-\varepsilon q_j}{1-\varepsilon}
+&\dfrac{\sqrt z\,v_j}{\sqrt B}\\[2mm]
+\dfrac{\sqrt z\,v_j}{\sqrt B}&q_j
+\end{pmatrix}.
+\tag{197.9}
+$$
+两个对角元严格为正，由（197.7）其行列式为零，故 $N_j$ 是正半定秩一矩阵。又因 $\sum_jv_j=0$、$\sum_jp_j=\sum_jq_j=1$，有 $\sum_jN_j=I_2$。因此测量 $\{N_j\}$ 并条件执行 $\mathcal R_j$ 定义一个固定 CPTP 处理器。
+
+令 $\delta=u-t$，在下式根号严格为正的开区间上定义纯程序 Bloch 曲线
+$$
+r_\varepsilon(\delta)=
+\left(
+\alpha\varepsilon+\sqrt{B/z}\,\delta,
+\sqrt{4\varepsilon(1-\varepsilon)-
+       (\alpha\varepsilon+\sqrt{B/z}\,\delta)^2},
+1-2\varepsilon
+\right),
+\qquad
+\rho_{t+\delta}=\frac{I+r_\varepsilon(\delta)\cdot\sigma}{2}.
+\tag{197.10}
+$$
+它为解析单位 Bloch 曲线。直接代入 Born 概率可见，式（197.9）的左上项与曲线横坐标中的偏移恰相消：
+$$
+\operatorname{Tr}(N_j\rho_{t+\delta})=p_j+\delta v_j.
+\tag{197.11}
+$$
+所以处理器在该开区间与 $J_a$ 的交集上，对所有信号输入精确生成 $\mathcal T_{t+\delta}$。
+
+在名义点，纯态 SLD 信息量为 Bloch 速度平方。由（197.10）有
+$$
+Q_\varepsilon:=I_Q(\rho_t)
+=\frac Bz\,
+\frac{4\varepsilon(1-\varepsilon)}
+     {4\varepsilon(1-\varepsilon)-\alpha^2\varepsilon^2}.
+\tag{197.12}
+$$
+结合（197.8），得到
+$$
+Q_\varepsilon-B
+=B\varepsilon\left[
+\frac{M_4}{B^2}-1+
+\alpha\frac{M_3}{B^{3/2}}+\frac{\alpha^2}{4}
+\right]+O(\varepsilon^2).
+\tag{197.13}
+$$
+
+精确区间随偏移而不再关于零对称，所以还须验证完整的闭区间覆盖。取固定常数
+$$
+C_\alpha=1+\frac{|\alpha|B^{3/2}}4,
+\qquad
+\varepsilon_R=\frac B4R^2+C_\alpha R^3.
+\tag{197.14}
+$$
+对固定的 $a,t,\alpha$，由 $z(\varepsilon_R)=1+O(R^2)$ 可得
+$$
+\begin{aligned}
+&4\varepsilon_R(1-\varepsilon_R)
+-\left(|\alpha|\varepsilon_R+
+       \sqrt{B/z(\varepsilon_R)}\,R\right)^2\\
+&\quad=
+\left(4C_\alpha-\frac{|\alpha|B^{3/2}}2\right)R^3+O(R^4)
+=\left(4+\frac{|\alpha|B^{3/2}}2\right)R^3+O(R^4)>0
+\end{aligned}
+\tag{197.15}
+$$
+只要 $R$ 充分小。左侧严格为正保证（197.10）的根号在整个 $[-R,R]$ 上严格为正，连续性再给出包含该闭区间的开域。取 $R<\min\{t-(2a-1),1-t\}$，亦可将开域限制在 $J_a$ 内。这个论证给出逐个固定参数的充分小半径结论，不给出所有允许半径的统一覆盖保证。
+
+因为 $\varepsilon_R/R^2\to B/4$，式（197.13）给出
+$$
+\lim_{R\downarrow0}\frac{Q_{\varepsilon_R}-B}{R^2}
+=\frac{B^2}{4}\left[
+\frac{M_4}{B^2}-1+
+\alpha\frac{M_3}{B^{3/2}}+\frac{\alpha^2}{4}
+\right].
+\tag{197.16}
+$$
+这个关于 $\alpha$ 的二次式在
+$$
+\alpha_*=-\frac{2M_3}{B^{3/2}}
+\tag{197.17}
+$$
+处取得最小值 $V/4$。于是（197.4）成立；将每个实际程序的成本与定义195.1的下确界比较，再用定理196.3的极限，即得 $\kappa\le V/4$。这只优化当前显式构造中的偏移系数，没有把它升级为对所有处理器的极小性结论。
+
+最后计算当前三结果程序的矩。记 $D=1+t-2a^2>0$、$\ell=(1-t)/2$、$q=D/2$、$d=1-a^2$、$c=a\ell/d$。由（184.9），三个得分分别为
+$$
+s_+=\frac{1-a}{2q},\qquad
+s_-=\frac{1+a}{2q},\qquad
+s_c=-\frac1{2\ell}.
+\tag{197.18}
+$$
+为计算残差，取三个向量 $1,s,s^2$ 的加权 Gram 矩阵。其行列式既可按第一行展开，也可由三点 Vandermonde 矩阵分解，得到
+$$
+BV=
+\det\begin{pmatrix}1&0&B\\0&B&M_3\\B&M_3&M_4\end{pmatrix}
+=p_+p_-p_c\prod_{i<j}(s_i-s_j)^2.
+\tag{197.19}
+$$
+这里 $p_+p_-p_c=q^2\ell/[4d(1-c^2)^2]$，三个得分差为 $a/q$、$d(1-c)/(2q\ell)$、$d(1+c)/(2q\ell)$。代入这些量与 $B=d/(4\ell q)$，并直接求取三阶矩，得到
+$$
+M_3=\frac{2d(a^2-t)}{(1-t)^2D^2},
+\qquad
+V=M_4-B^2-\frac{M_3^2}{B}
+=\frac{2a^2d^2}{(1-t)^2D^3}.
+\tag{197.20}
+$$
+因此（197.3）的两个显式表达相等。$V$ 的严格正性也可直接从（197.2）看出：两个正得分互不相同，第三个得分为负，若残差为零，则一个首项系数为一的二次多项式在这三个不同点都为零，矛盾。
+
+若限制 $\alpha=0$，同一计算给出构造系数 $(M_4-B^2)/4$；允许偏移后，将其降低 $M_3^2/(4B)$，当且仅当 $t\ne a^2$ 时为严格改进。该变化来自同一精确程序中对得分平方的线性部分的消去，其余残差承担（197.4）的二次成本。
+
+本证明沿用第193节的测量后条件执行通道构造与纯态 SLD 速度公式；经典程序信息成本的背景为 Matsumoto，*On metric of quantum channel spaces*，arXiv:1006.0300v1，第3.3节。实解析隐函数定理和加权正交投影仅作为标准工具用于上述具体 POVM 与半径构造，不以一般的一阶模拟代替这里的开邻域精确等式。证毕。
+
+## 追加锚（本行以下为增补区）
