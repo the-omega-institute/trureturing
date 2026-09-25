@@ -12,6 +12,77 @@ public sealed class PrOpenScriptTests
     private const string OldHeadSha = "1111111111111111111111111111111111111111";
 
     [Theory]
+    [InlineData("OPEN", false, false)]
+    [InlineData("OPEN", true, true)]
+    [InlineData("MERGED", false, true)]
+    [InlineData("MERGED", true, false)]
+    public void PrWatchNativeReusableSetUsesTheUniquePushAnchor(string state, bool cacheFirst, bool throughMake)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot(state, Check("engineering", "COMPLETED", "SUCCESS"))));
+        var run = NativeRunMetadata(201, 1, 42, explicitAssociation: state == "OPEN");
+        var references = run["referenced_workflows"]!.AsArray();
+        var cache = references[0]!.DeepClone();
+        cache["path"] = $"owner/repo/.github/workflows/ci-engineering-cache.yml@{OldHeadSha}";
+        references.Insert(cacheFirst ? 0 : 1, cache);
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = throughMake ? fixture.RunMakeWatch42() : fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"referenced_workflow\":{\"path\":\"owner/repo/.github/workflows/ci-push.yml@" + OldHeadSha,
+            Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("ci-engineering-cache.yml", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("duplicate-companion")]
+    [InlineData("missing-anchor")]
+    [InlineData("different-candidate")]
+    [InlineData("different-pr")]
+    [InlineData("foreign-repository")]
+    [InlineData("nested-path")]
+    [InlineData("non-workflow")]
+    [InlineData("symbolic-path")]
+    [InlineData("mismatched-path-sha")]
+    [InlineData("missing-sha")]
+    [InlineData("missing-ref")]
+    [InlineData("null-companion")]
+    public void PrWatchNativeReusableSetRejectsUnverifiableCompanions(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var run = NativeRunMetadata(201, 1, 42, explicitAssociation: true);
+        var references = run["referenced_workflows"]!.AsArray();
+        var cache = references[0]!.DeepClone();
+        cache["path"] = $"owner/repo/.github/workflows/ci-engineering-cache.yml@{OldHeadSha}";
+        references.Insert(0, cache);
+        switch (defect)
+        {
+            case "duplicate-companion": references.Add(cache.DeepClone()); break;
+            case "missing-anchor": references.RemoveAt(1); break;
+            case "different-candidate":
+                cache["sha"] = HeadSha;
+                cache["path"] = $"owner/repo/.github/workflows/ci-engineering-cache.yml@{HeadSha}";
+                break;
+            case "different-pr": cache["ref"] = "refs/pull/99/merge"; break;
+            case "foreign-repository": cache["path"] = $"other/repo/.github/workflows/ci-engineering-cache.yml@{OldHeadSha}"; break;
+            case "nested-path": cache["path"] = $"owner/repo/.github/workflows/../ci-engineering-cache.yml@{OldHeadSha}"; break;
+            case "non-workflow": cache["path"] = $"owner/repo/tools/cache.sh@{OldHeadSha}"; break;
+            case "symbolic-path": cache["path"] = "owner/repo/.github/workflows/ci-engineering-cache.yml@refs/pull/42/merge"; break;
+            case "mismatched-path-sha": cache["path"] = $"owner/repo/.github/workflows/ci-engineering-cache.yml@{HeadSha}"; break;
+            case "missing-sha": cache.AsObject().Remove("sha"); break;
+            case "missing-ref": cache.AsObject().Remove("ref"); break;
+            case "null-companion": references[0] = null; break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void PrWatchRetainedNativeRefIdentifiesMergedPrAndRetiresCancelledRun(bool explicitAssociation)
