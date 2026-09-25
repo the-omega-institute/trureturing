@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-mechanical-phase-calibration)
    anchors: []
    utility: none
-   digest: Disjoint swept cuts give the exact joint phase error and its optimal local calibration. -/
+   digest: Disjoint swept cuts give exact joint phase error and optimal calibration. -/
 
 import D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
 import Mathlib.Data.Fin.Rev
@@ -108,7 +108,9 @@ theorem joint_phase_calibration_law (alpha delta g : ℝ) (n : ℕ) (hn : 0 < n)
             omega
           have h := hgaps a b hab
           rw [ha, hb] at h
-          have heq : c i - c j = -(Int.fract ((i.val : ℝ) * alpha) - Int.fract ((j.val : ℝ) * alpha)) := by
+          have heq : c i - c j =
+              -(Int.fract ((i.val : ℝ) * alpha) -
+                Int.fract ((j.val : ℝ) * alpha)) := by
             simp only [c, if_neg hi, if_neg hj]
             ring
           rw [heq, abs_neg]
@@ -123,7 +125,8 @@ theorem joint_phase_calibration_law (alpha delta g : ℝ) (n : ℕ) (hn : 0 < n)
           constructor <;> linarith [hx.1, hx.2]
         · have hu1 : -u < 1 := by have h := hem k; simp [e, hk] at h; linarith [h.1]
           have hu' : u ≤ 0 := le_of_not_ge hu
-          simp only [c, if_pos hk, if_neg hu, e, hk, Nat.cast_zero, zero_mul, add_zero, zero_sub] at hx
+          simp only [c, if_pos hk, if_neg hu, e, hk, Nat.cast_zero,
+            zero_mul, add_zero, zero_sub] at hx
           rw [min_eq_right (neg_nonneg.mpr hu'), max_eq_left (neg_nonneg.mpr hu')] at hx
           constructor <;> linarith [hx.1, hx.2]
       · have hck := hc k hk

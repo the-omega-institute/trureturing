@@ -21,7 +21,6 @@ namespace D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 
 open Set Finset MeasureTheory
 open scoped BigOperators
-open Classical
 open D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
 
 /-- Averaging the actual numbered atomic measure over uniform phases gives
@@ -220,7 +219,7 @@ theorem geometric_atomic_phase_average (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
     have hdiff : A \ Set.Ioc (0 : ℝ) 1 ⊆ {(0 : ℝ)} := by
       intro y hy
       have hunit := hAunit hy.1
-      simp only [Set.mem_diff, Set.mem_Ioc, not_and] at hy
+      simp only [Set.mem_sdiff, Set.mem_Ioc, not_and] at hy
       simp only [Set.mem_singleton_iff]
       rcases lt_or_eq_of_le hunit.1 with hlt | heq
       · exact False.elim (hy.2 hlt hunit.2)
