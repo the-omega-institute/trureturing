@@ -107,7 +107,7 @@ parse_snapshot() {
     def native_anchor:
       select(native_run and .event == "pull_request") |
       .referenced_workflows | select(type == "array" and length > 0) |
-      select(all(.[]; type == "object" and (.sha | sha) and
+      select(all(.[]; type == "object" and (.sha | sha and length == 40) and
         (.path | type == "string") and (.ref | type == "string"))) |
       . as $references |
       [.[] | select(.path == ($repo + "/.github/workflows/ci-push.yml@" + .sha))] |
