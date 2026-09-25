@@ -10772,3 +10772,445 @@ $\kappa_\varepsilon\to3/4$，证明式（61.3）。$\square$
 上述结果只描述指定 $2\times2\times3$ 候选族在 $\varepsilon\downarrow0$ 时的最优修复误差及其边缘参数。它没有给有限 $\varepsilon$ 的闭式最优值，也没有给 $p_\varepsilon$ 的 $\varepsilon^2$ 系数。证明不依赖对全体候选的比例猜测或有限点数值外推。
 
 ## 追加锚（本行以下为增补区）
+
+## 62. 有限参数的准确修复判据、最优边缘唯一性与更高阶展开
+
+### 62.1. 接口与结论范围
+
+沿用 $2\times2\times3$ 接口、全部量子 tester 事件和纯等距候选
+
+$$
+R_\varepsilon=|x+c y+\sqrt\varepsilon z\rangle
+\langle x+c y+\sqrt\varepsilon z|,
+\quad c=\sqrt{1-\varepsilon},
+\quad x=|000\rangle,\ y=|101\rangle,\ z=|112\rangle.
+$$
+
+记最优因果修复误差为 $e_\varepsilon$。第 59 节的精确单参数约化给
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\tag{62.1}
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z\rangle
+\langle\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z|
++p|010\rangle\langle010|.
+$$
+
+这个约化针对全部归一化因果修复：每个最优修复的早输出边缘参数 $p=\sigma_{11}$ 均在上述区间内，且相同 $p$ 的 $S_p$ 不增加误差。事件误差包含归一化迹项。
+
+对 $0<\varepsilon\le1/16$，令
+
+$$
+\begin{aligned}
+d&=1-c,\qquad p_0=\frac{d(3-d)}2,
+\qquad p_* =\frac{\varepsilon}{1+\varepsilon},\\
+B(p)&=4(p-d)+d^2,\qquad b(p)^2=d^2(1-p),\\
+F_\varepsilon(p)&=p+\frac{b(p)^2}{B(p)},\\
+G_\varepsilon(p)&=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2,\\
+\gamma(p)&=c\sqrt p-\sqrt{\varepsilon(1-p)},\\
+L_\varepsilon(p)&=p(p-\varepsilon)
++(p+\varepsilon)\frac{b(p)^2}{B(p)}-\gamma(p)^2.
+\end{aligned}
+\tag{62.2}
+$$
+
+$F_\varepsilon$ 与 $L_\varepsilon$ 的使用范围为 $p\ge p_0$，等价于 $B(p)\ge\varepsilon>0$。
+
+**定理 62.1（可直接检验的有限参数判据）。** 对每个 $0<\varepsilon\le1/16$，有
+
+$$
+d<p_0<p_*<\varepsilon.
+\tag{62.3}
+$$
+
+方程
+
+$$
+F_\varepsilon(p)=G_\varepsilon(p)
+\tag{62.4}
+$$
+
+在 $(p_0,p_*)$ 内恰有一个解 $\bar p_\varepsilon$，并且
+
+$$
+e_\varepsilon\ge
+F_\varepsilon(\bar p_\varepsilon)
+=G_\varepsilon(\bar p_\varepsilon).
+\tag{62.5}
+$$
+
+若这个交点满足显式不等式
+
+$$
+L_\varepsilon(\bar p_\varepsilon)\ge0,
+\tag{62.6}
+$$
+
+则式（62.5）取等，$S_{\bar p_\varepsilon}$ 是最优因果修复，而且所有最优修复的早输出边缘参数均满足
+
+$$
+\sigma_{11}=\bar p_\varepsilon.
+\tag{62.7}
+$$
+
+**推论 62.2（充分小参数与解析展开）。** 存在 $\varepsilon_0>0$，使对全部 $0<\varepsilon<\varepsilon_0$，条件（62.6）严格成立。写唯一最优边缘参数为 $p_\varepsilon=\bar p_\varepsilon$，则存在实解析函数 $\kappa(\delta)$，在零附近满足 $\kappa(0)=3/4$，且
+
+$$
+p_\varepsilon=\varepsilon-\kappa(\sqrt\varepsilon)\varepsilon^{3/2}.
+\tag{62.8}
+$$
+
+特别地，
+
+$$
+\begin{aligned}
+p_\varepsilon
+&=\varepsilon-\frac34\varepsilon^{3/2}
++\frac{65}{64}\varepsilon^2+O(\varepsilon^{5/2}),\\
+e_\varepsilon
+&=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++\frac{255}{256}\varepsilon^2+O(\varepsilon^{5/2}).
+\end{aligned}
+\tag{62.9}
+$$
+
+唯一性指边缘参数，不宣称完整最优修复算符唯一。条件（62.6）可对单个有限参数直接检验；这里没有声称它对全部 $0<\varepsilon\le1/16$ 都成立。
+
+### 62.2. 两个方向的事件下界
+
+精确单参数约化中，反馈归一化算符为
+$C(q,t)=\operatorname{diag}(q,1-t,1-q,t)$；事件仍遍历整个正区间 $0\preceq E\preceq C\otimes I_D$。记 $\lambda(p;q,t)$ 为加权 $R_\varepsilon-S_p$ 主块的非负最大特征值，则
+
+$$
+\begin{aligned}
+h(R_\varepsilon-S_p)&=\max_{q,t}\lambda(p;q,t),\\
+h(S_p-R_\varepsilon)&=\max_{q,t}
+[\lambda(p;q,t)+\varepsilon(1-q-t)].
+\end{aligned}
+\tag{62.10}
+$$
+
+正向最大值准确地为 $G_\varepsilon(p)$，由 $q=t=1$ 达到。其证明只需非负矩阵比较：在 $p\in[d,\varepsilon]$ 上，主块的非对角元素及 $zz$ 对角均非负，增加 $t$ 不减最大特征值，所以可取 $t=1$。此时两加权向量的范数平方为 $1+\varepsilon q$ 与 $1$，内积为 $A+Hq$，其中
+
+$$
+A=c\sqrt{1-p}+\sqrt{\varepsilon p}\le1,
+\qquad H=d\sqrt{1-p},\qquad
+2H\le2d\sqrt c\le d(1+c)=\varepsilon.
+$$
+
+特征值根式的被开方多项式为
+
+$$
+4(1-A^2)+4(\varepsilon-2AH)q+(\varepsilon^2-4H^2)q^2.
+$$
+
+各系数非负，迹项 $\varepsilon q$ 也不减，故可取 $q=1$。此时特征值公式就是 $G_\varepsilon(p)$。
+
+**引理 62.3（$t=0$ 的准确负向最大值）。** 对 $p\in[d,\varepsilon]$，有
+
+$$
+J_\varepsilon(p):=
+\max_{0\le q\le1}
+[\lambda(p;q,0)+\varepsilon(1-q)]
+=
+\begin{cases}
+\varepsilon,&d\le p\le p_0,\\
+F_\varepsilon(p),&p_0\le p\le\varepsilon.
+\end{cases}
+\tag{62.11}
+$$
+
+后一段的达到点为
+
+$$
+q_* =\frac{B-\varepsilon}{2B},
+\qquad
+F_\varepsilon(p)\ge\varepsilon,
+\qquad F_\varepsilon'(p)=1-\frac{\varepsilon^2}{B^2}\ge0.
+\tag{62.12}
+$$
+
+**证明。** 当 $t=0$ 时，加权主块的迹是
+$T_0=p-\varepsilon+\varepsilon q$，秩二特征方程的常数项是 $-b^2q(1-q)$。因此负向值为
+
+$$
+\frac{p+\varepsilon-\varepsilon q+
+\sqrt{T_0^2+4b^2q(1-q)}}2.
+$$
+
+先设 $p\le p_0$。使用 $\varepsilon=2d-d^2$，有
+
+$$
+\varepsilon(\varepsilon-p)-b^2
+=2d(1-d)(p_0-p)\ge0.
+$$
+
+于是准确平方差满足
+
+$$
+\frac{(\varepsilon-p+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}
+=b^2q^2+[\varepsilon(\varepsilon-p)-b^2]q\ge0.
+\tag{62.13}
+$$
+
+$\varepsilon-p+\varepsilon q\ge0$，故可取平方根，给出负向值不超过 $\varepsilon$；$q=0$ 达到 $\varepsilon$。
+
+再设 $p\ge p_0$，等价于 $B\ge\varepsilon$。令 $u=b^2/B$、$\mu=p+u=F_\varepsilon(p)$。直接核得
+
+$$
+\varepsilon^2-4b^2=d^2B,
+\qquad
+u(\mu-\varepsilon)=b^2q_*^2.
+$$
+
+第二式左端的 $u>0$，所以 $\mu\ge\varepsilon$。准确平方差为
+
+$$
+\begin{aligned}
+&\frac{(2\mu-p-\varepsilon+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}\\
+&\qquad=b^2q^2+(\varepsilon u-b^2)q+u(\mu-\varepsilon)
+=b^2(q-q_*)^2.
+\end{aligned}
+\tag{62.14}
+$$
+
+根号上界的右侧满足
+$2\mu-p-\varepsilon+\varepsilon q\ge\varepsilon-p\ge0$，因此可以取平方根，得到值不超过 $\mu$，并在合法的 $q_*\in[0,1/2)$ 达到。$p=p_0$ 时 $B=\varepsilon$、$q_*=0$，上面的恒等式也给 $F_\varepsilon(p_0)=\varepsilon$，所以两段接合。
+
+求导给
+
+$$
+F'(p)=1-\frac{d^2[B+4(1-p)]}{B^2}
+=1-\frac{\varepsilon^2}{B^2},
+$$
+
+因为 $d^2[B+4(1-p)]=\varepsilon^2$。$\square$
+
+### 62.3. 一个控制全部 tester 的多项式证书
+
+令
+
+$$
+\beta=\sqrt p-\sqrt{\varepsilon(1-p)},
+\qquad
+\gamma=c\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+对任意 $q,t\in[0,1]$，主块的迹及秩二特征多项式常数项可写为
+
+$$
+\begin{aligned}
+T&=p-\varepsilon+\varepsilon q+(\varepsilon-p)t,\\
+Q&=b^2q(1-q)+\beta^2qt+\gamma^2(1-q)t,\\
+\lambda(p;q,t)&=\frac{T+\sqrt{T^2+4Q}}2.
+\end{aligned}
+\tag{62.15}
+$$
+
+**引理 62.4（全 tester 证书）。** 若 $p\in[p_0,\varepsilon]$ 且 $L_\varepsilon(p)\ge0$，则
+
+$$
+h(S_p-R_\varepsilon)=F_\varepsilon(p).
+\tag{62.16}
+$$
+
+**证明。** 记 $\mu=F_\varepsilon(p)$、$u=\mu-p=b^2/B>0$，并置
+
+$$
+k=\mu-\varepsilon+\varepsilon(q+t).
+$$
+
+引理 62.3 给 $k\ge0$，且 $k-T=u+pt>0$。直接展开，并使用
+
+$$
+\gamma^2-\beta^2=-\varepsilon p
++2d\sqrt{\varepsilon p(1-p)},
+$$
+
+得到准确分解
+
+$$
+\begin{aligned}
+k(k-T)-Q
+={}&b^2(q-q_*)^2\\
+&+t\left[L_\varepsilon(p)+2d\sqrt{\varepsilon p(1-p)}\,q\right]
++\varepsilon p t^2.
+\end{aligned}
+\tag{62.17}
+$$
+
+在声明条件下右侧非负。由于 $k\ge0$ 且 $k>T$，$k$ 位于二次函数 $z(z-T)-Q$ 的递增区域 $z\ge\max\{0,T\}$；式（62.17）因此给 $k\ge\lambda(p;q,t)$。这也处理 $k=0$ 的边界：此时 $T<0$，而非负乘积条件强制 $Q=0$，故 $\lambda=0$。
+
+于是所有 $q,t$ 都满足
+
+$$
+\lambda(p;q,t)+\varepsilon(1-q-t)\le\mu.
+$$
+
+$t=0,q=q_*$ 由引理 62.3 达到 $\mu$，证明式（62.16）。$\square$
+
+这个证书明确控制整个 tester 参数方形，不将 $t=0$ 最优先验化。
+
+### 62.4. 唯一交点与全局下界
+
+**定理 62.1 的证明。** 因为 $0<d\le\varepsilon\le1/16$，有
+
+$$
+p_0>d,\qquad
+\frac{p_*}{d}=\frac{2-d}{1+\varepsilon}
+\ge\frac{31}{17}>\frac32>\frac{p_0}{d},
+\qquad p_*<\varepsilon.
+$$
+
+因此式（62.3）成立。函数 $F_\varepsilon$ 在 $[p_0,\varepsilon]$ 上严格递增；其导数只在左端点为零。对 $p<p_*$，
+$\sqrt{\varepsilon(1-p)}-\sqrt p$ 为正且严格递减，所以 $G_\varepsilon$ 在 $[d,p_*]$ 上严格递减。并且
+
+$$
+F_\varepsilon(p_0)=\varepsilon<G_\varepsilon(p_0),
+\qquad
+G_\varepsilon(p_*)=\varepsilon<F_\varepsilon(p_*).
+\tag{62.18}
+$$
+
+介值定理与严格单调性给 $(p_0,p_*)$ 内的唯一交点 $\bar p_\varepsilon$。
+
+由第 62.2 节，对所有 $p\in[d,\varepsilon]$，均有
+
+$$
+N(R_\varepsilon-S_p)\ge
+\max\{G_\varepsilon(p),J_\varepsilon(p)\}.
+\tag{62.19}
+$$
+
+记交点值为 $m_\varepsilon$。若 $p<\bar p_\varepsilon$，则 $G_\varepsilon(p)>m_\varepsilon$；若 $p>\bar p_\varepsilon$，则 $p>p_0$，故 $J_\varepsilon(p)=F_\varepsilon(p)>m_\varepsilon$。在交点两者同等于 $m_\varepsilon$。因此式（62.19）右端在整个约化区间上的唯一最小点是 $\bar p_\varepsilon$，最小值是 $m_\varepsilon$。这与式（62.1）给出全局下界（62.5）。
+
+如果 $L_\varepsilon(\bar p_\varepsilon)\ge0$，引理 62.4 和正向准确公式给
+
+$$
+N(R_\varepsilon-S_{\bar p_\varepsilon})
+=\max\{F_\varepsilon(\bar p_\varepsilon),
+G_\varepsilon(\bar p_\varepsilon)\}=m_\varepsilon.
+\tag{62.20}
+$$
+
+所以达到全局下界。任意原始最优修复的参数 $p=\sigma_{11}$ 均在 $[d,\varepsilon]$，且替换为相同参数的 $S_p$ 不增加误差；式（62.19）的严格性迫使 $p=\bar p_\varepsilon$，证明式（62.7）。$\square$
+
+有限参数判据只需要准确约化、单调性与全 tester 证书，不依赖既有的最优参数渐近定位。
+
+### 62.5. 解析交点与小参数自动达界
+
+令 $\delta=\sqrt\varepsilon$、$p=\delta^2(1-\kappa\delta)$、$c=\sqrt{1-\delta^2}$，并定义缩放函数
+
+$$
+f(\delta,\kappa)=\frac{F_{\delta^2}(p)}{\delta^2},
+\qquad g(\delta,\kappa)=\frac{G_{\delta^2}(p)}{\delta^2}.
+$$
+
+其在 $\delta=0$ 处的解析延拓可直接写为
+
+$$
+\begin{aligned}
+f(\delta,\kappa)
+&=1-\kappa\delta+
+\frac{(1-p)/(1+c)^2}
+{4(1-\kappa\delta)-4/(1+c)+\delta^2/(1+c)^2},\\
+z(\delta,\kappa)
+&=\frac{\kappa-\delta+\kappa\delta^2}
+{\sqrt{1-p}+\sqrt{1-\kappa\delta}},\\
+g(\delta,\kappa)
+&=\frac{1+\sqrt{1+4z(\delta,\kappa)^2}}2.
+\end{aligned}
+\tag{62.21}
+$$
+
+在 $(\delta,\kappa)=(0,3/4)$ 附近，分母非零且根号内严格正，所以这些是实解析函数。并有
+
+$$
+f(0,\kappa)=\frac98,
+\qquad g(0,\kappa)=\frac{1+\sqrt{1+\kappa^2}}2,
+\qquad
+\partial_\kappa(f-g)(0,3/4)=-\frac3{10}\ne0.
+\tag{62.22}
+$$
+
+解析隐函数定理给唯一的实解析 $\kappa(\delta)$，满足 $f=g$、$\kappa(0)=3/4$。当 $\delta>0$ 充分小时，其对应参数在 $(p_0,p_*)$：下端关系来自 $p/\varepsilon\to1$ 与 $p_0/\varepsilon\to3/4$，上端关系来自
+
+$$
+p_*-p=\kappa(\delta)\delta^3-
+\frac{\delta^4}{1+\delta^2}>0.
+$$
+
+因此这个解析交点正是定理 62.1 中的 $\bar p_\varepsilon$。沿该交点，直接展开给
+
+$$
+\frac{B(p)}\varepsilon\longrightarrow2,
+\qquad
+\frac{L_\varepsilon(p)}{\varepsilon^2}
+\longrightarrow\frac{1-(3/4)^2}{4}=\frac7{64}>0.
+\tag{62.23}
+$$
+
+故对充分小的正 $\varepsilon$，有限参数判据（62.6）严格成立，解析交点就是所有最优修复的唯一边缘参数。这证明式（62.8），并且不需要预先假定最优参数的渐近位置。
+
+### 62.6. 更高阶系数
+
+直接展开式（62.21）得到
+
+$$
+f(\delta,\kappa)
+=\frac98-\frac34\kappa\delta
++\left(\frac{\kappa^2}{2}-\frac3{64}\right)\delta^2
++O(\delta^3).
+\tag{62.24}
+$$
+
+在 $\kappa=3/4$，另一函数的偏导为
+
+$$
+\partial_\delta g(0,3/4)=-\frac{33}{128},
+\qquad
+\partial_\kappa g(0,3/4)=\frac3{10}.
+$$
+
+因此对 $f(\delta,\kappa(\delta))=g(\delta,\kappa(\delta))$ 求导，得到
+
+$$
+-\frac9{16}
+=-\frac{33}{128}+\frac3{10}\kappa'(0),
+\qquad\kappa'(0)=-\frac{65}{64}.
+\tag{62.25}
+$$
+
+所以
+
+$$
+\kappa(\delta)=\frac34-\frac{65}{64}\delta+O(\delta^2).
+$$
+
+代入 $p=\delta^2-\kappa(\delta)\delta^3$ 给式（62.9）的第一式。再代入式（62.24），$\delta^2$ 系数为
+
+$$
+-\frac34\left(-\frac{65}{64}\right)
++\frac12\left(\frac34\right)^2-\frac3{64}
+=\frac{255}{256},
+$$
+
+乘以 $\delta^2=\varepsilon$ 得式（62.9）的第二式。$\square$
+
+### 62.7. 含义与边界
+
+条件（62.6）成立时，最优边缘由两个相反方向的合法续接事件达到同一误差来确定：正向在 $q=t=1$，负向在 $t=0,q=q_*$。这是具体相同接口上的平衡条件。
+
+式（62.4）在上述条件下给有限非零参数的准确修复误差，不只是渐近拟合；充分小参数自动满足条件，但这里没有给出一个对整个区间统一有效的显式阈值。条件（62.6）是充分条件；它未通过时，定理 62.1 仍给下界，不能据此断言交点修复必非最优。
+
+所得唯一性限定于早输出边缘的 $\sigma_{11}$；完整最优修复仍可有不同补块或其他等误差实现。结论不推广到其他候选族或其他末输出维数。
+
+## 追加锚（本行以下为增补区）
