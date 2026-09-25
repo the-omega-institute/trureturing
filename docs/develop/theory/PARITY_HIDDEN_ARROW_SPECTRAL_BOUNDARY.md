@@ -1390,3 +1390,366 @@ C\sqrt r\sum_{k\ge1}\frac{|\mathrm{Ci}(\omega r e^t k)|}{k}
 最后仍只对完整原后验向量作一次总变差比较，得到实际联合结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 58. 超临界谱网格的微观 Brownian bridge
+
+**定义 58.1（微观相位曲线）。** 保持定义 54.1 的原始模型、完整得分组、
+精确标签中心和有限截距，固定 $`U>0`$。取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad R_M=e^{s_M},\qquad
+\eta_M=R_M\delta\longrightarrow\infty,\qquad
+0\le s_M\sqrt\delta\le U/2,
+\qquad \omega\eta_M\bmod 2\pi\longrightarrow\phi
+```
+
+式 (58.1)。
+
+最后的收敛取圆周拓扑；$`\phi`$ 是给定的确定性子列相位，
+不假设这些相位的分布。这里 $`\eta_M`$ 表示谱网格，不是 Liouville 逼近误差。
+对固定紧区间 $`I=[\theta_0,\theta_1]`$，令
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M,\qquad
+u_M(\theta)=z_M(\theta)\sqrt\delta,
+\qquad
+\mathcal V_M(\theta)=\sqrt{\eta_M}\,e^{z_M(\theta)/2}
+ \{\mathcal Z_M(u_M(\theta))-\mathcal J_M-2u_M(\theta)T_M\}.
+```
+
+式 (58.2)。
+
+这些取值点最终都在 $`[0,U]`$ 内。
+在独立于旧联合对象 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上，
+先按均方定义
+
+```math
+S(a)=\sum_{k\ge1}\frac{\sin(ka)}k\xi_k,\qquad
+\mathcal V(\theta)=\frac{4\sqrt{g_0}}\omega S(\phi+\omega\theta),
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (58.3)。
+
+**定理 58.2（实际微观桥极限）。** 对 (58.1) 的每个序列，
+两种原始平稳实验都满足
+
+```math
+(\mathcal V_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal V|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0.
+```
+
+式 (58.4)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight。
+旧坐标保持定理 56.2 的共同实现；新过程独立于整个 $`(N_2,W_\rho)`$。
+可同时附加旧固定频率紧区间上的 Fourier 场
+$`F(v)=W_\rho(e^{-i\omega v\cdot})`$，以及旧负 Sobolev 空间中的测度与偶极子逼近。
+收敛具有均匀支持先验下依数据概率成立的条件有界 Lipschitz 版本，
+以及无条件固定支持一致版本；未知方向使用同一个判向事件。
+同时改变 $`V_M`$ 与 $`T_M`$ 的方差中心仍使 (58.2) 逐样本不变。
+
+$`S`$ 有连续、奇对称、$`2\pi`$ 周期的版本，其部分和在
+$`L^2(\Omega;C[0,2\pi])`$ 中收敛。对 $`0\le a,b\le\pi`$，
+
+```math
+\operatorname{Cov}(S(a),S(b))
+ =\frac\pi2\left(\min(a,b)-\frac{ab}\pi\right).
+```
+
+式 (58.5)。
+
+因此 $`S`$ 在 $`[0,\pi]`$ 上等于长度为 $`\pi`$ 的实 Brownian bridge
+乘以 $`\sqrt{\pi/2}`$；其余区间由同一条桥奇对称、周期延拓。
+不同周期和反射区间不引入独立桥。
+
+证明。全部比较保留同一个实际后验标签向量。
+本证明从有限谱恒等式开始，不把增长的 $`\eta_M`$ 代入定理 57.2 的弱极限。
+第 56 章的环境估计只涉及实际得分组，不依赖本章所选的谱频率，故仍适用。
+在共同计数截断事件上，$`x_j=j\delta`$，组数至多 $`CQ^2`$，
+$`|x_j|\le C\sqrt\lambda`$，且 $`\mathfrak L=c_hQ^3+O(1)`$，$`c_h>0`$。
+共同事件的补集用概率去除。
+
+先将有限 Fourier 误差保留到新的精度。
+对 $`0<\vartheta<1`$，有限和满足
+
+```math
+\begin{aligned}
+\sum_{k=1}^N\frac{\cos(k\vartheta)}k
+ &=-\log\vartheta+\mathrm{Ci}(N\vartheta)
+   +O\{N^{-1}+\vartheta[1+\log_+(N\vartheta)]\},\\
+\sum_{k\le N}\bigl((1+k^2)^{-1/2}-k^{-1}\bigr)\cos(k\vartheta)
+ &=D_{\rm w}+O\{\vartheta^2(1+|\log\vartheta|)+N^{-2}\}.
+\end{aligned}
+```
+
+式 (58.6)。
+
+第一式把 $`(\cos(\vartheta v)-1)/v`$ 的和与积分比较：
+在 $`v\le1/\vartheta`$ 上导数至多 $`C\vartheta^2`$，
+在其余区间至多 $`\vartheta/v+2/v^2`$，积分即给出所列误差。
+再加入调和和的常数与余项。
+第二式用权重差 $`O(k^{-3})`$，在 $`k=1/\vartheta`$ 分割即可。
+对 $`N(z)=\lfloor e^z/h\rfloor`$、$`0\le z\le U/\sqrt\delta`$，
+代入 $`\vartheta=\omega h|x_j-x_l|`$ 后，非对角核为
+$`2\mathfrak L+H(x_j,x_l)+2\mathrm{Ci}(\omega e^z|x_j-x_l|)`$，
+对角核为 $`2\mathfrak L+2z+b_*`$，一致误差至多
+
+```math
+\varepsilon_M=C\{h+h\sqrt\lambda(1+U/\sqrt\delta+\log\lambda)
+                 +h^2\lambda(1+\mathfrak L+\log\lambda)\}.
+```
+
+式 (58.7)。
+
+取整改变对数参数至多 $`Che^{-z}`$；
+$`d\mathrm{Ci}(v)/d\log v=\cos v`$，故同一界控制 Ci 的取整误差。
+共同空间平移消失于 Fourier 模平方。
+用 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$，
+(58.2) 中括号精确抵消 $`2\mathfrak L Y_M^2`$ 和 $`2z\mathcal Q_M`$。
+因为 $`(\sum|A_j|)^2\le CQ^2\mathcal Q_M`$、$`\mathcal Q_M=O_{\mathbb P}(1)`$，
+且
+
+```math
+\sup_{\theta\in I}\sqrt{\eta_M}e^{z_M(\theta)/2}Q^2\varepsilon_M
+ \le \exp\{-c_hQ^3+(U/2)Q^{1/4}+C_I\log Q\}\longrightarrow0,
+```
+
+式 (58.8)。
+
+原过程一致逼近连续的非对角二次型。这里的紧性由辅助标签矩、
+精确中心界和全向量 TV 对有界尾事件的比较得到，不要求实际后验矩收敛。
+
+对非零整数 $`k`$ 定义
+
+```math
+q_{\eta,k}(\theta)=\eta e^{\theta/(2\eta)}
+       \mathrm{Ci}(\omega\eta e^{\theta/\eta}|k|),\qquad
+b_M(\theta,k)=2\delta^{-1/2}q_{\eta_M,k}(\theta).
+```
+
+式 (58.9)。
+
+由 $`|\mathrm{Ci}(v)|\le C/v`$ 及直接微分，
+对 $`\eta\ge1`$、$`\theta\in I`$ 一致有
+
+```math
+|q_{\eta,k}(\theta)|\le C_I/|k|,\qquad
+\partial_\theta q_{\eta,k}(\theta)
+ =\tfrac12e^{\theta/(2\eta)}\mathrm{Ci}(\omega\eta e^{\theta/\eta}|k|)
+  +e^{\theta/(2\eta)}\cos(\omega\eta e^{\theta/\eta}|k|),
+\qquad |\partial_\theta q_{\eta,k}(\theta)|\le C_I.
+```
+
+式 (58.10)。
+
+增长的 $`\eta`$ 从核包络中消失。
+完整截断上 $`\sup_I\|b_M(\theta)\|_{\rm op}\le C_IQ^{9/4}`$。
+记 $`X_j`$ 为乘积标签的中心组和，$`A_j=X_j-e_j`$。
+由 (56.11) 得
+
+```math
+\sup_I|(X-e)^\top b_M(X-e)-X^\top b_MX|
+ \le C_IQ^{9/4}(2\|X\|_2\|e\|_2+\|e\|_2^2)
+ =O_{\mathbb P}(Q^{-1/4})+o_{\mathbb P}(1).
+```
+
+式 (58.11)。
+
+此处 $`\|e\|_2\le C\sqrt{V_M}\alpha_M`$，
+$`\alpha_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})`$。
+这是放大之后的中心界。
+
+继续使用第 56 章的增长核心 $`\mathcal C_Q`$。
+在其好环境上，尾向量条件平方范数期望至多 $`Q^{-60}`$。
+上述矩阵范数界使删除核心外所有组的路径误差一致趋零；
+它控制的是整个向量二次型之差，故不需要逐时并集。
+旧截距、二次坐标、前缀和与偶极子的对应矩阵或系数也只有多项式增长，
+同一尾估计同时适用。
+核心内 (56.8) 和 (56.16)–(56.17) 的共同逆分布耦合将
+$`X_j`$ 换成 $`G_j=\sqrt{v_j}\zeta_j`$，$`\zeta_j`$ 为独立标准正态。
+所有标准化组误差同时至多 $`q^{-1/8}`$ 的事件概率趋一。
+组数及矩阵范数均只有多项式增长，所以耦合误差在本章放大尺度下一致趋零。
+这是概率耦合，不是离散律与连续 Gaussian 律之间的 TV 比较。
+保留实际环境方差 $`v_j`$，无需再用粗矩阵界替换它。
+
+在核心外设 $`v_j=G_j=0`$。对固定正整数滞后定义
+
+```math
+\Lambda_{M,k}=\delta^{-1/2}\sum_jG_jG_{j+k},\qquad
+h_M(k)=\delta^{-1}\sum_jv_jv_{j+k}.
+```
+
+式 (58.12)。
+
+由核心上的 $`v_j/\delta\rho(j\delta)\to1`$ 和 Gaussian 尾，
+对每个固定 $`k`$，$`h_M(k)\to g_0`$；同时
+$`0\le h_M(k)\le C`$ 对所有整数一致成立，因
+$`\max v_j\le C\delta`$、$`\sum v_j\le C`$。
+$`\Lambda_{M,k}=\zeta^\top B_{M,k}\zeta`$，
+其中每个无序对的两个矩阵元均为
+$`\sqrt{v_jv_{j+k}}/(2\sqrt\delta)`$。因此
+
+```math
+\|B_{M,k}\|_{\rm op}\le C\sqrt\delta,\qquad
+2\operatorname{tr}(B_{M,k}B_{M,l})=1_{\{k=l\}}h_M(k).
+```
+
+式 (58.13)。
+
+每行至多有两个非零元，且不同正滞后没有共同无序对。
+旧对角坐标的矩阵为 $`D_M=\operatorname{diag}(v_j/\sqrt\delta)`$，
+其算子范数趋零、方差趋于 $`2g_0`$，与每个 $`B_{M,k}`$ 的内积精确为零。
+任意固定线性组合 $`B`$ 满足 $`\|B\|_{\rm op}\to0`$、
+$`\operatorname{tr}B^2=O(1)`$，Gaussian 特征函数给出
+
+```math
+\log\mathbb E e^{i(\zeta^\top B\zeta-\operatorname{tr}B)}
+ =-\operatorname{tr}B^2
+    +O(\|B\|_{\rm op}\operatorname{tr}B^2).
+```
+
+式 (58.14)。
+
+先得到联合 Gaussian 极限，再由交叉迹为零得独立性。
+加入任意范数有界的旧线性系数 $`\ell`$ 时，特征函数额外因子是
+$`\exp\{-\tfrac12\ell^\top(I-2iB)^{-1}\ell\}`$，
+其指数与 $`-\|\ell\|_2^2/2`$ 之差趋零。
+旧线性坐标的 Gram 矩阵由方差钟收敛确定；
+端点、偶极子和固定频率 Fourier 场用总质量及 $`x^2`$ 尾控制。
+把旧 $`H`$ 核按 (51.9)–(51.10) 的有限矩形块逼近，
+块平方和趋于相应确定方差，故同一个旧 $`I_2(H)`$ 也被保留。
+近对角对数平方界与远端 Gaussian 界使矩形逼近误差趋零。
+由可数稠密线性测试及单调类论证，这证明固定滞后向量的极限
+
+```math
+(\Lambda_{M,1},\ldots,\Lambda_{M,K},T_M^G)
+ \Longrightarrow(\sqrt{g_0}\xi_1,\ldots,\sqrt{g_0}\xi_K,N_2)
+```
+
+式 (58.15)。
+
+右侧全部坐标独立，且联合独立于整个旧 $`W_\rho`$。
+旧截距没有换成另一份二次噪声。
+
+现在证明无限滞后尾的路径界。
+令 $`\mathscr T_{M,K}(\theta)=4\sum_{k>K}q_{\eta_M,k}(\theta)\Lambda_{M,k}`$。
+这是有限的中心 Gaussian 二次型，(58.10)–(58.13) 给出
+
+```math
+\begin{aligned}
+\mathbb E_G|\mathscr T_{M,K}(\theta)|^2&\le C_I/K,\\
+\mathbb E_G|\mathscr T_{M,K}(\theta)-\mathscr T_{M,K}(\psi)|^2
+ &\le C_I\sum_{k>K}\min(|\theta-\psi|^2,k^{-2})
+ \le C_I\min(|\theta-\psi|,K^{-1}).
+\end{aligned}
+```
+
+式 (58.16)。
+
+求和在 $`k=|\theta-\psi|^{-1}`$ 分割，适用于任意微小增量。
+任意中心 Gaussian 二次型 $`Q`$ 满足
+$`\mathbb EQ^4\le15(\mathbb EQ^2)^2`$。
+将 $`I`$ 分成 $`O_I(K)`$ 个长度至多 $`1/K`$ 的区间，
+网格点最大值的平方期望至多
+$`(\sum_{\rm grid}\mathbb E_G|\mathscr T_{M,K}|^4)^{1/2}\le C_IK^{-1/2}`$。
+逐级二分，第 $`n`$ 层有 $`O_I(K2^n)`$ 个增量，
+最大增量的 $`L^4`$ 范数至多 $`C_IK^{-1/4}2^{-n/4}`$。
+Minkowski 不等式和连续性遂给出
+
+```math
+\mathbb E_G\sup_{\theta\in I}|\mathscr T_{M,K}(\theta)|^2
+ \le C_IK^{-1/2}.
+```
+
+式 (58.17)。
+
+它对组数及 $`\eta_M\ge1`$ 一致。
+全级数亦有第四增量矩至多 $`C_I|\theta-\psi|^2`$，故连续二次型路径为 C-tight。
+以上中心、核心删除和耦合误差界在删去任意滞后时仍成立，
+因为相应粗矩阵元界不变。
+于是 (58.17) 可通过一次全向量后验比较传给实际过程的有界尾事件。
+尤其有
+
+```math
+\limsup_M\sup_{|S|=q}\mathbb P_S\!\left(
+ \sup_{\theta\in I}\left|\mathcal V_M(\theta)
+ -4\sum_{k=1}^Kq_{\eta_M,k}(\theta)
+       \delta^{-1/2}\sum_jA_jA_{j+k}\right|>\varepsilon\right)
+ \le C_I\varepsilon^{-2}K^{-1/2}.
+```
+
+式 (58.18)。
+
+滞后和在共同计数截断事件上取原完整得分组，例外事件可任意定义。
+这不是把逐点二阶矩界当作上确界的期望界。
+
+最后识别相位极限。
+由 $`\mathrm{Ci}(z)=\sin z/z+O(z^{-2})`$，对每个固定 $`k`$，
+
+```math
+q_{\eta_M,k}(\theta)
+ =\frac{e^{-\theta/(2\eta_M)}}{\omega k}
+   \sin(\omega\eta_Me^{\theta/\eta_M}k)+O_I((\eta_Mk^2)^{-1})
+ \longrightarrow\frac{\sin(k(\phi+\omega\theta))}{\omega k}
+```
+
+式 (58.19)。
+
+收敛在 $`I`$ 上一致。
+只在固定滞后使用 Taylor 展开；不要求它对增长的全部滞后一致。
+(58.15) 给出有限滞后截断的联合极限，(58.17)–(58.18) 允许随后令 $`K\to\infty`$。
+极限 sine 级数的每个有限尾也满足同样的方差、第四矩及二分估计，故
+
+```math
+\mathbb E\sup_{a\in[0,2\pi]}
+ \left|\sum_{K<k\le L}\frac{\sin(ka)}k\xi_k\right|^2
+ \le CK^{-1/2},\qquad L>K.
+```
+
+式 (58.20)。
+
+这证明 $`L^2(\Omega;C)`$ 收敛及连续、奇对称、周期版本。
+令 $`D(a)=\sum_{k\ge1}\cos(ka)/k^2`$，其连续偶周期版本在
+$`|a|\le2\pi`$ 上为 $`\pi^2/6-\pi|a|/2+a^2/4`$。
+绝对收敛和积化和差给出
+
+```math
+\operatorname{Cov}(S(a),S(b))=\tfrac12[D(a-b)-D(a+b)],
+\qquad
+\operatorname{Cov}(\mathcal V(\theta),\mathcal V(\psi))
+ =\frac{8g_0}{\omega^2}
+  [D(\omega(\theta-\psi))-D(2\phi+\omega(\theta+\psi))].
+```
+
+式 (58.21)。
+
+这也证明 (58.5)。系数 $`4`$ 来自 Ci 核的 $`2`$ 与正滞后无序对的两次计数。
+协方差一般同时依赖时间差与时间和；在 $`\phi+\omega\theta\in\pi\mathbb Z`$ 时
+极限为零，允许这种孤立时刻的退化。
+
+上述所有 Gaussian 替换先在实际数据的好环境上进行。
+一次 (56.10) 仅用于整个路径及旧元组的有界测试和误差事件。
+环境界依数据概率成立；任意子列再取环境几乎处处收敛的子列，
+先固定 $`K`$，再由一致尾界令 $`K\to\infty`$，得到所述条件有界 Lipschitz 收敛。
+有限谱路径到连续二次型的距离由 (58.8) 一致控制，所以取整跳跃不妨碍 C-tight 性。
+旧轮廓由独立整组跳跃的方差钟和消失的四阶矩和保持紧性；
+旧 Fourier 场用 $`\sum_j(1+x_j^2)v_j`$ 的条件 $`H^1`$ 界。
+负 Sobolev 测度和偶极子的旧共同实现逼近由相同方差尾保留。
+支持置换等变性把先验结论传为每个固定支持的相同无条件律；
+共同判向事件补集概率一致趋零，故同样保留联合结论。
+这里没有用 TV 传递无界矩，也没有条件于已实现的旧标签噪声。
+
+式 (58.21) 说明相位限定有内容；相位相差 $`\pi`$ 给出相同 Gaussian 律，
+因此 (58.1) 的 $`2\pi`$ 相位收敛只是充分条件，不声称必要性。
+没有相位收敛时，圆周紧性提供子列，以上证明逐条识别其极限，
+但不据此宣称全部子列有同一个律。
+本定理不包含随机相位分布、增长的 $`\theta`$ 区间、其它幅度、实际后验矩收敛，
+也不去掉 (58.1) 的上方频率限制。
+Brownian bridge 的 sine 展开、Gaussian 二次型谱公式和二分连续性方法为经典工具；
+文献条件与本模型桥接的范围见 [Library 归因](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（本行以下为增补区）
