@@ -29,7 +29,7 @@ internal sealed class FixedSupportFisherGapDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "Assume 0<a<1, every support point lies in [−1,1], every weight is "
-                        + "DifferentiableOn on (2a−1,1), and the displayed normalization and two "
+                        + "differentiable on (2a−1,1), and the displayed normalization and two "
                         + "moment identities hold for the same curve at every parameter. If its "
                         + "actual positive-support Fisher sum is at most R(1−a²)/((1−u)(1+u−2a²)) "
                         + "pointwise, then R is at least 1+a² divided by "
@@ -48,17 +48,50 @@ internal sealed class FixedSupportFisherGapDocument : IScribeDocumentDefinition
                         + "all three weights are strictly positive there, so the filtered Fisher "
                         + "sum is the full three-term sum.")))))));
 
-    private static Formula ResultFormula() =>
-        Disp(Seq(
-            Forall, Sp, F.Id("iota"), Sp, F.Id("a"), Comma, Sp, F.Id("R"), Comma, Sp,
-            F.Id("x"), Comma, Sp, F.Id("p"), Sp, Colon, Sp,
-            Mathbb, Sp, F.Id("R"), Sp, Comma, Sp,
-            Open, D(0), Sp, Lt, Sp, F.Id("a"), Sp, Lt, Sp, D(1), Close,
-            Sp, Longrightarrow, Sp,
-            D(1), Sp, Plus, Sp,
-            Quotient(F.Id("a"), Grp(D(1), Plus, D(4), F.Id("a"), Plus, D(2),
-                Open, D(1), Plus, F.Id("a"), Close, Log, Sp, D(2))),
-            Sp, Le, Sp, F.Id("R")));
+    private static Formula ResultFormula()
+    {
+        var a = F.Id("a");
+        var r = F.Id("R");
+        var u = F.Id("u");
+        var j = F.Id("j");
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var interval = Seq(Open, D(2), a, Minus, D(1), Comma, D(1), Close);
+        var xj = Seq(F.Id("x"), Underscore, Grp(j));
+        var pj = Seq(F.Id("p"), Underscore, Grp(j));
+        var weight = Seq(pj, Open, u, Close);
+        var sum = Seq(Sum, Underscore, Grp(j, InMacro, Sp, Iota));
+        var squareA = Seq(a, Caret, Grp(D(2)));
+        var constant = Seq(D(1), Plus, D(4), a, Plus, D(2), Open, D(1), Plus, a,
+            Close, Log, Sp, D(2));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Iota, Sp, F.Text, Grp(F.Id("finite")), Comma, Sp,
+                Forall, Sp, a, Comma, r, InMacro, Sp, real, Comma, Sp,
+                Forall, Sp, F.Id("x"), Colon, Iota, To, real, Comma, Sp,
+                Forall, Sp, F.Id("p"), Colon, Iota, To, real, To, real, Comma),
+            Seq(F.Id("J"), Eq, interval, Comma, Sp,
+                D(0), Lt, a, Lt, D(1), Comma),
+            Seq(Forall, Sp, j, InMacro, Sp, Iota, Comma, Sp,
+                xj, InMacro, Sp, OpenBracket, Minus, D(1), Comma, D(1), CloseBracket,
+                Comma, Sp, pj, Sp, F.Text,
+                Grp(F.Id("differentiable"), Sp, F.Id("on")), Sp, F.Id("J"), Comma),
+            Seq(Forall, Sp, u, InMacro, Sp, F.Id("J"), Comma, Sp,
+                Forall, Sp, j, InMacro, Sp, Iota, Comma, Sp, D(0), Le, Sp, weight, Comma),
+            Seq(Forall, Sp, u, InMacro, Sp, F.Id("J"), Comma, Sp,
+                sum, weight, Eq, D(1), Comma, Sp,
+                sum, weight, xj, Eq, a, Comma, Sp,
+                sum, weight, xj, Caret, Grp(D(2)), Eq,
+                Quotient(Seq(D(1), Plus, u), D(2)), Comma),
+            Seq(Forall, Sp, u, InMacro, Sp, F.Id("J"), Comma, Sp,
+                Sum, Underscore, Grp(j, InMacro, Sp, Iota, Colon, D(0), Lt, weight),
+                Quotient(Seq(Open, pj, Apos, Open, u, Close, Close, Caret, Grp(D(2))), weight),
+                Le, Sp, Quotient(Seq(r, Open, D(1), Minus, squareA, Close),
+                    Seq(Open, D(1), Minus, u, Close, Open, D(1), Plus, u,
+                        Minus, D(2), squareA, Close))),
+            Seq(Longrightarrow, Sp, D(1), Plus,
+                Quotient(squareA, Seq(Open, constant, Close, Caret, Grp(D(2)))),
+                Le, Sp, r)
+        ]));
+    }
 
     private static Formula Quotient(Formula numerator, Formula denominator) =>
         Seq(Frac, Grp(numerator), Grp(denominator));

@@ -24,7 +24,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-namespace FixedSupportGap
+namespace D5.S3.Quantum.Information.FixedSupportFisherGap
 
 /-- A uniform Fisher bound for one finite probability curve on fixed support has a positive gap. -/
 theorem result {ι : Type*} [Fintype ι] (a R : ℝ) (x : ι → ℝ) (p : ι → ℝ → ℝ)
@@ -365,4 +365,4 @@ theorem result {ι : Type*} [Fintype ι] (a R : ℝ) (x : ι → ℝ) (p : ι �
   linarith only [hh]
 
 #print axioms result
-end FixedSupportGap
+end D5.S3.Quantum.Information.FixedSupportFisherGap
