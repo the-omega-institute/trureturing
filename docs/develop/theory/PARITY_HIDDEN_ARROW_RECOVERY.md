@@ -1744,11 +1744,11 @@ $`B_0=(M-q)/q`$。完整数据的均匀基数先验后验正比于
 $`\prod_{x\in S}w_x`$。
 这种有限乘积后验及 Hamming Bayes 判别的先例见
 [Butucea–Mammen–Ndaoud–Tsybakov](../../../Library/Dynamics/butucea2023selection.md)；
-下面的独立性仅属于辅助后验变量。对每个正的公共倾斜参数，置
+下面的独立性仅属于辅助后验变量。对每个正的公共倾斜参数，取相互独立的辅助变量，并置
 
 ```math
 p_x(t)=\frac{t w_x}{B_0+t w_x},\qquad
-I_x\ 	ext{相互独立},\quad I_x\sim\mathrm{Bernoulli}(p_x(t)).
+I_x\sim\mathrm{Bernoulli}(p_x(t)).
 ```
 
 式 (25.11)。
