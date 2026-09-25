@@ -4178,3 +4178,373 @@ $$
 本节证明的是可实施的单终端精度上界，没有给出相同精度依赖的下界，也没有建立不同终端之间的共同在线更新。来源的共同移心矩、档案侧导数支撑和全参考误差转换构成这里的具体推导；一般 Taylor 近似、阶乘估计及 Hoeffding 工具作为既有前置使用。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 25. 五终端的确定正交交替环境恰好需要七维
+
+本节仍取已知非退化来源
+$`m_0=a|0\rangle+b|1\rangle,\ m_1=|0\rangle`$，
+$`ab\ne0,\ |a|^2+|b|^2=1`$。固定接收通道取一份固定 Stinespring 等距映射
+$`V:K\otimes B\to K\otimes E`$，接收器独立纯初始化。
+**定义 25.1（确定正交交替环境合同）。** 在定义12.1的接收合同上额外要求：对全部初始输入及参考，在前五轮新环境依次为与全部其余系统独立的确定纯态
+$$
+\eta_0,\eta_1,\eta_0,\eta_1,\eta_0,
+\qquad \langle\eta_0,\eta_1\rangle=0.
+\tag{25.1}
+$$
+同一射线允许任意轮次的全局相位，均吸收进联合态向量的选择。
+
+**定理 25.2（五步正交交替环境的精确容量）。** 满足定义25.1的精确接收器所需最小维数恰为七。因而一般固定 CPTP 五终端容量满足
+
+$$
+5\le d_{\mathrm{CPTP},5}(a,b)\le7.
+\tag{25.1a}
+$$
+
+这里七维下界只适用于确定正交交替环境合同；一般 CPTP 的下界五来自定理23.1及终端集合的包含。下面不排除一般五终端五维或六维通道，也不要求一般通道具有非混合的早期累计环境。
+
+**证明：前三步的固定记号。**
+
+记 $`D=\dim K`$。若 $`D<6`$，可把 $`K`$ 等距嵌入六维空间，并将固定 Stinespring 等距映射在额外输入子空间上等距延拓；必要时扩大未使用的环境空间。初态和实际轨迹均保留，因此反证只需设 $`D=6`$。以下也直接保留 $`D\le6`$ 的维数计数。
+
+初态为单位向量 $`k`$。确定纯环境使每个初始基态的实际 $`MK`$ 态为纯向量，且同轮两列具有同一个环境向量。第一轮定义
+$$
+V(k0)=p\eta_0,\qquad V(k1)=q\eta_0,
+\tag{25.2}
+$$
+故 $`p,q`$ 正交归一，第一轮两列为 $`m_0p,m_1q`$。第二轮定义
+$$
+V(p0)=u\eta_1,\quad V(p1)=v\eta_1,\quad
+V(q0)=w\eta_1.
+\tag{25.3}
+$$
+由于 $`p0,p1,q0`$ 正交，$`u,v,w`$ 正交归一，第二轮两列为
+$$
+a m_0u+b m_1v,\qquad m_0w.
+\tag{25.4}
+$$
+上述逐向量映射由 $`m_0,m_1`$ 线性独立及非零系数逐项抽出，并不额外假设输入位可以任意独立制备。
+
+置
+$$
+c=\sqrt{|a|^4+|b|^2},\quad
+z=\frac{a^2u+bv}{c},\quad
+y_0=\frac{-\overline b\,u+\overline{a}^{2}v}{c},
+\tag{25.5}
+$$
+并记
+$$
+H=\operatorname{span}\{z,w\},\quad
+G=\operatorname{span}\{u,w\},\quad
+L=\operatorname{span}\{u,v,w\}=H+G.
+\tag{25.6}
+$$
+$`H,G`$ 均二维，$`H\cap G=\operatorname{span}\{w\}`$。第三轮定义
+$$
+V(z0)=s\eta_0,\quad V(u1)=r\eta_0,\quad
+V(w0)=t\eta_0,\quad V(w1)=j\eta_0.
+\tag{25.7}
+$$
+四个输入正交，故 $`s,r,t,j`$ 正交归一。第三轮两列为
+$$
+c m_0s+ab m_1r,\qquad a m_0t+b m_1j.
+\tag{25.8}
+$$
+记
+$$
+S=\operatorname{span}\{s,t\},\quad
+R=\operatorname{span}\{r,j\},\quad
+L_3=S\oplus R.
+\tag{25.9}
+$$
+四轮所需的零位和一位接收输入空间分别为
+$$
+H_3=\operatorname{span}\{cs+br,\ a^2t+bj\},\qquad G_3=S.
+\tag{25.10}
+$$
+（25.10）的零位首向量略去非零公因子 $`a`$，不改变支撑。
+
+**前四步强制初态与第二步一列平行。**
+
+所有环境为 $`\eta_0`$ 的已指定接收输入，其零位和一位接收向量合并为
+$$
+A_0=\operatorname{span}(k,H),\qquad B_0=\operatorname{span}(k,G).
+\tag{25.11}
+$$
+所有环境为 $`\eta_1`$ 的第二、四轮输入合并为
+$$
+A_1=\operatorname{span}(p,q,cs+br,a^2t+bj),\qquad
+B_1=\operatorname{span}(p,s,t).
+\tag{25.12}
+$$
+固定 $`V`$ 等距且两个环境正交，因此
+$$
+A_0\perp A_1,\qquad B_0\perp B_1.
+\tag{25.13}
+$$
+
+等距映射在环境零支撑上的接收像空间为
+$`\operatorname{span}(p,q,L_3)`$，故
+$$
+\dim\operatorname{span}(p,q,L_3)
+=\dim A_0+\dim B_0.
+\tag{25.14}
+$$
+另外，由（25.2）、（25.7）同为环境零以及不同输入位正交，
+$$
+p\perp R,\qquad q\perp S.
+\tag{25.15}
+$$
+
+分四种实际的子空间位置，不作坐标上的额外假定：
+
+1. 若 $`k\notin H`$ 且 $`k\notin G`$，则（25.14）右侧为六。
+   因为 $`\dim L_3=4`$，$`p,q`$ 在商空间 $`K/L_3`$ 中线性独立。
+   两个向量 $`cs+br,a^2t+bj`$ 在 $`L_3`$ 内线性独立，故
+   $`\dim A_1=4`$。但 $`\dim A_0=3`$，与（25.13）及 $`D\le6`$ 矛盾。
+
+2. 若 $`k\in G\setminus H`$，由 $`k1\in G\otimes1`$ 和（25.7）可得 $`q\in R`$。
+   此时（25.14）为五，故 $`p\notin L_3`$。两个向量
+   $`cs+br,a^2t+bj`$ 在 $`S`$ 上的投影分别为 $`cs,a^2t`$，线性独立；
+   因此加上非零的 $`q\in R`$ 后仍线性独立。
+   再加 $`p\notin L_3`$ 得 $`\dim A_1=4`$，而 $`\dim A_0=3`$，仍矛盾。
+
+3. 若 $`k\in H\setminus G`$，同理有 $`p\in S`$，且由（25.14）得 $`q\notin L_3`$。
+   这时 $`A_0=H`$、$`B_0=L`$，而 $`B_1=S`$，所以（25.13）给 $`S\perp L`$。
+   特别地 $`s,t\perp H`$。又因 $`cs+br,a^2t+bj\in A_1\perp H`$，
+   且 $`a,b\ne0`$，有 $`r,j\perp H`$，从而 $`L_3\subset H^\perp`$。
+   同时 $`q\in A_1\subset H^\perp`$ 且 $`q\notin L_3`$，于是
+   $`\dim H^\perp\ge5`$，即 $`D\ge7`$，矛盾。
+
+4. 唯一剩余是 $`k\in H\cap G=\operatorname{span}\{w\}`$。
+
+故 $`k\parallel w`$。两者都是单位向量，写 $`w=\zeta k`$，$`|\zeta|=1`$。
+可在整个环境 $`\eta_1`$ 方向上把 $`V`$ 的输出乘 $`\overline\zeta`$，
+即在 Stinespring 输出环境上施加固定相位酉。这不改变 CPTP 接收通道，也不改变（25.1）的环境射线。
+在这份等价 Stinespring 表示中，第二轮的三个输出向量整体乘 $`\overline\zeta`$，于是新的 $`w=k`$。
+此后重新按（25.5）—（25.8）定义 $`z,s,r,t,j`$ 即可。固定同一个 $`V`$ 的（25.2）、（25.7）随即给
+$$
+t=p,\qquad j=q.
+\tag{25.16}
+$$
+这正是所用相位规范，未改变来源的 $`a,b`$，也未给运行门增加轮次控制。
+
+**第五轮的二维夹角矛盾。**
+
+此后取 $`D=6`$、$`k=w`$。由第二轮与第三轮输入环境正交，
+$$
+p\perp z,w,u,\qquad q\perp z,w.
+\tag{25.17}
+$$
+因为 $`z,u`$ 张成 $`u,v`$ 平面，故 $`p\perp L`$。定义二维空间
+$$
+L_0=(L\oplus\operatorname{span}\{p\})^\perp.
+\tag{25.18}
+$$
+于是 $`q\in\operatorname{span}\{y_0\}\oplus L_0`$，且 $`q`$ 为单位向量。
+
+置
+$$
+d=\sqrt{c^2+|b|^2},\qquad f=\frac{cs+br}{d}.
+\tag{25.19}
+$$
+因 $`s,r,p,q`$ 正交归一，$`f`$ 是单位向量且 $`f\perp p,q`$。
+第四轮环境为一而第三轮零位输入空间为 $`H`$，给 $`f\perp z,w`$。
+故 $`q,f`$ 是三维空间
+$$
+T=\operatorname{span}\{y_0\}\oplus L_0
+\tag{25.20}
+$$
+中的一组正交单位向量。由第四轮一位输入与第三轮一位输入环境正交，还得到
+$`s\perp u,w`$。
+
+第四轮新出现的正交输入 $`f0,s1`$ 均与第二轮输入 $`p0,p1,q0`$ 正交。
+因此可写
+$$
+V(f0)=A\eta_1,\qquad V(s1)=B\eta_1,
+\tag{25.21}
+$$
+其中 $`A,B`$ 正交归一，且 $`A,B\perp u,v,w`$。第四轮两列为
+$$
+ad\,m_0A+cb\,m_1B,\qquad
+m_0(a^2u+bw)+ab\,m_1v.
+\tag{25.22}
+$$
+
+第五轮环境为零，必须与第二、四轮环境一的全部输入正交。
+（25.22）第一列的一位输入向量是非零倍数的 $`A`$，所以
+$$
+A\perp p,s.
+\tag{25.23}
+$$
+其零位输入向量为
+$$
+h_5=a^2d A+cb B,
+\tag{25.24}
+$$
+故
+$$
+h_5\perp p,q,f.
+\tag{25.25}
+$$
+由 $`A\perp p`$、$`cb\ne0`$ 及（25.25），有 $`B\perp p`$。结合
+$`A,B\perp L`$，可知 $`A,B`$ 是二维 $`L_0`$ 的正交单位基。
+
+令
+$$
+X=|a|^2,\qquad Y=|b|^2,\qquad
+\kappa^2=X^2d^2+Yc^2,
+\qquad \ell=h_5/\kappa.
+\tag{25.26}
+$$
+$`\ell`$ 是 $`L_0`$ 中的单位向量。由（25.25），$`q,f`$ 张成
+$`T\cap\ell^\perp`$。取 $`L_0\cap\ell^\perp`$ 的单位向量 $`e`$，则
+$$
+\operatorname{span}\{q,f\}=\operatorname{span}\{y_0,e\}.
+\tag{25.27}
+$$
+所以存在 $`\alpha,\beta\in\mathbb C`$、$`\theta\in\mathbb R`$，使
+$$
+q=\alpha y_0+\beta e,\qquad
+f=e^{i\theta}(-\overline\beta\,y_0+\overline\alpha\,e),
+\qquad |\alpha|^2+|\beta|^2=1.
+\tag{25.28}
+$$
+这里保留了伴随向量的全部相位 $`e^{i\theta}`$，没有假定复振幅为正实数。
+
+因为 $`s\perp p,q,w`$，可在正交基 $`z,f,\ell`$ 中写
+$$
+s=\sigma z+\frac{c}{d}f+\tau\ell.
+\tag{25.29}
+$$
+其中 $`f`$ 的系数是正实数 $`c/d`$，由（25.19）及 $`s\perp r`$ 得到。
+另一方面，由（25.5）、（25.28）有
+$$
+\langle u,z\rangle=\frac{a^2}{c},\qquad
+|\langle u,f\rangle|^2=\frac{Y|\beta|^2}{c^2}.
+\tag{25.30}
+$$
+利用 $`s\perp u`$ 和 $`\|s\|=1`$，令 $`T_\beta=|\beta|^2`$，得到
+$$
+|\sigma|^2=\frac{Yc^2T_\beta}{X^2d^2},
+\qquad
+|\tau|^2=\frac{Y}{d^2}
+\left(1-\frac{c^2T_\beta}{X^2}\right).
+\tag{25.31}
+$$
+特别地 $`T_\beta\le X^2/c^2<1`$，所以 $`\alpha\ne0`$。
+$`s`$ 在 $`L_0=\operatorname{span}\{e,\ell\}`$ 上的投影为
+$$
+s_{L_0}=\frac{c}{d}e^{i\theta}\overline\alpha\,e+\tau\ell,
+\qquad
+\|s_{L_0}\|^2=
+\frac{d^2-c^4T_\beta/X^2}{d^2}>0.
+\tag{25.32}
+$$
+由 $`A\in L_0`$、$`\|A\|=1`$、$`A\perp s`$，二维正交补的坐标给出
+$$
+|\langle\ell,A\rangle|^2
+=\frac{c^2(1-T_\beta)}{d^2-c^4T_\beta/X^2}.
+\tag{25.33}
+$$
+但（25.24）、（25.26）以及 $`A,B`$ 正交归一又给
+$$
+|\langle\ell,A\rangle|^2
+=\frac{X^2d^2}{X^2d^2+Yc^2}.
+\tag{25.34}
+$$
+比较（25.33）—（25.34），乘正分母，并用
+$`c^2=X^2+Y`$、$`d^2=X^2+2Y`$，得到
+$$
+\begin{aligned}
+0
+&=c^2(1-T_\beta)(X^2d^2+Yc^2)
+-X^2d^2(d^2-c^4T_\beta/X^2)\\
+&=Y^3+Y^2c^2T_\beta.
+\end{aligned}
+\tag{25.35}
+$$
+右侧严格为正，因为 $`Y>0`$、$`T_\beta\ge0`$。矛盾。等价地，这一合同会强制
+$`T_\beta=-Y/c^2<0`$。
+
+故六维及以下无法以确定、正交、交替的环境序列01010服务五个精确终端。
+
+**七维上界的构造。** 现在重新定义本段向量。取 $`K`$ 的正交单位基
+
+$$
+u,v,w,p,e,g,h,
+\qquad k_0=w,
+\qquad E=\mathbb C^2,
+\qquad \eta_0=|0\rangle,\quad\eta_1=|1\rangle.
+\tag{25.36}
+$$
+
+沿用正数 $`c=\sqrt{|a|^4+|b|^2}`$、$`d=\sqrt{c^2+|b|^2}`$，定义
+
+$$
+\begin{aligned}
+z&=\frac{a^2u+bv}{c},
+&y&=\frac{-\overline b\,u+\overline{a}^{2}v}{c},\\
+q&=\frac{\overline b\,y+\overline{a}^{2}e}{c},
+&f&=\frac{-a^2y+be}{c},\\
+s&=\frac{-cv+be}{d},
+&r&=\frac{df-cs}{b},\\
+\kappa&=\sqrt{|a|^4d^2+|b|^2c^2},
+&x&=\frac{a^2d\,g+cb\,h}{\kappa}.
+\end{aligned}
+\tag{25.37}
+$$
+
+这些分母均非零。前六个向量使用定理23.1的五维构造，其中原来的基向量 $`t`$ 在本段记为 $`p`$；$`g,h`$ 是新增的两个正交方向。直接核对该构造中已经证明的内积关系，有
+
+$$
+\begin{gathered}
+z,y\text{ 正交归一},\qquad q,f\text{ 正交归一},
+\qquad p,q,s,r\text{ 正交归一},\\
+q,f\in\operatorname{span}\{y,e\},\qquad
+s\perp u,w,p,\qquad
+cs+br=df.
+\end{gathered}
+\tag{25.38}
+$$
+
+特别地，$`q,f\perp z,w,p`$；$`g,h,x`$ 均垂直于原来的五维空间。定义以下十一行部分酉表；输入的第二指标是最新发出位，输出的第二指标是新环境：
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&p0&p0&u1\\
+w1&q0&p1&v1\\
+z0&s0&q0&w1\\
+u1&r0&f0&g1\\
+x0&g0&s1&h1\\
+g1&h0&&
+\end{array}
+\tag{25.39}
+$$
+
+左半表的输入是六个正交单位向量：零位上的 $`w,z,x`$ 互相正交，一位上的 $`w,u,g`$ 互相正交。右半表的输入是五个正交单位向量：零位上的 $`p,q,f`$ 互相正交，一位上的 $`p,s`$ 互相正交。两半表的零位子空间互相正交，由（25.38）和 $`x\perp\operatorname{span}\{u,v,w,p,e\}`$ 得到；一位子空间的交叉正交性则由 $`s,p\perp u,w,g`$ 得到。
+
+输出的环境零块为正交单位族 $`p,q,s,r,g,h`$，环境一块为正交单位族 $`u,v,w,g,h`$。所以全表两侧各为十一元正交单位族。将两侧各补成十四维空间的正交单位基，便得到全域酉
+$`U:K\otimes B\to K\otimes E`$。每轮接收使用同一个通道 $`\mathcal C(X)=\operatorname{Tr}_E UXU^*`$。
+
+前两轮两列分别为 $`m_0p,m_1q`$ 和（25.4）；第三轮两列为
+$`c m_0s+ab m_1r`$、$`a m_0p+b m_1q`$。由（25.39）及 $`cs+br=df`$，第四、五轮两列为
+
+$$
+\begin{aligned}
+\Psi_4^0&=ad\,m_0g+cb\,m_1h,\\
+\Psi_4^1&=m_0(a^2u+bw)+ab\,m_1v,\\
+\Psi_5^0&=\kappa m_0g+abd\,m_1h,\\
+\Psi_5^1&=a m_0(cs+bp)+b m_1(a^2r+bq).
+\end{aligned}
+\tag{25.40}
+$$
+
+例如第五轮第一列的零位输入为 $`a^2d\,g+cb\,h=\kappa x`$，一位输入为 $`abd\,g`$；第二列的零位输入为 $`a(cz+bw)`$，一位输入为 $`b(a^2u+bw)`$。表中六条环境零映射遂给出（25.40）。同一轮两列都具有相同的环境因子，因此任意相干初态及任意参考也依次产生与其余系统乘积的环境字01010。
+
+固定一个终端 $`n\le5`$，在解码端制备已知环境字的前 $`n`$ 位，逆序施加相应的 $`U^*`$，即可恢复各个发出位与初始接收态。整个逆运算只作用于接收器及解码端新制备的系统：早先的接收门与后续源发射作用于不同系统，故可将全部接收门视为完整档案上的累计酉；恢复不需要访问活动记忆或参考。最终丢弃复原的固定接收初态，即给出所需全域本地解码通道。这样七维确实服务全部五个终端。
+
+七维构造与下界合并，得到受限合同的精确值。它也属于定义12.1的一般接收类，从而给出（25.1a）的上界；其下界由四终端最小值五得到。一般五终端是否能进一步压到五维或六维，本定理不作判定。证明完毕。
+
+## 追加锚（本行以下为增补区）
