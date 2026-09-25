@@ -159,7 +159,7 @@ elab "observe_object_domain" : command => do
       if let .declaredUnresolved diagnostic := row.result then failure := failure ++ diagnostic
     for message in (← get).messages.toList do
       if message.severity == .error then failure := failure ++ (← message.data.toString)
-    let ok := match expected with
+    let ok : Bool := match expected with
       | none => validated && failure.isEmpty && row.any (·.escape.fromObject.any (·.name == ``Set))
       | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
     set saved
