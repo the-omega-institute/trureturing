@@ -2390,14 +2390,14 @@ $`cq\le d:=\sum_i p_i(1-p_i)\le q`$。
 
 先求阈值集合的辅助方差
 $`d_A^0=\sum_{i\in A_M}p_i^0(1-p_i^0)`$。
-令 $`Q_r,Q_{-\alpha_M}`$ 为信号与背景的 Poisson 行比较律，
+记背景补偿为 $`a_M=rq/(M-q)`$。令 $`Q_r,Q_{-a_M}`$ 为信号与背景的 Poisson 行比较律，
 $`p^0(w)=e^w/(B_0+e^w)`$。精确换测度关系
-$`dQ_r=e^W dQ_{-\alpha_M}`$ 给出
+$`dQ_r=e^W dQ_{-a_M}`$ 给出
 
 ```math
 \begin{aligned}
 &q\mathbb E_{Q_r}\bigl[p^0(W)(1-p^0(W))1_{A_M}(W)\bigr]\\[0pt]
-&\quad +(M-q)\mathbb E_{Q_{-\alpha_M}}
+&\quad +(M-q)\mathbb E_{Q_{-a_M}}
        \bigl[p^0(W)(1-p^0(W))1_{A_M}(W)\bigr]\\[0pt]
 &=q\mathbb E_{Q_r}\bigl[(1-p^0(W))1_{A_M}(W)\bigr].
 \end{aligned}
@@ -2413,7 +2413,7 @@ $`B_0e^{-W}=(1-p^0(W))/p^0(W)`$，故两项权重相加为 $`1-p^0(W)`$。
 测度 $`\sqrt\lambda Q_r(W-\tau\in dy)`$ 在固定有界区间上趋于
 $`d_*\,dy`$。这里使用
 [Stone 的固定宽度定理](../../../Library/Dynamics/stone1967local.md)，
-以及 $`|W-Z|\le C\alpha_M\log M=o(1)`$ 的计数截断补偿。
+以及 $`|W-Z|\le Ca_M\log M=o(1)`$ 的计数截断补偿。
 端点原子可先用任意固定宽度 $`\eta`$ 的区间包住，再取样本极限与
 $`\eta\downarrow0`$，其质量为 $`o(\lambda^{-1/2})`$。
 因 $`\log B_0-\tau=o(1)`$，权重局部一致趋于 $`(1+e^y)^{-1}`$。
