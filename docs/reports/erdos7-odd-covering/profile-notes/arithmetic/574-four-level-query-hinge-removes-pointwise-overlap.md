@@ -314,6 +314,8 @@ The exact producer passed36 named checks, including explicit corner0
 dominance at every endpoint, the complete affine-crossing search,
 valid debit signs and both continuous-envelope conclusions. No new Lean verification is claimed.
 
+[Report578](578-pure-prime-density-query-tradeoff-and-scalar-clip-boundary.md) keeps this same B and K envelope but optimizes over every pure source and every valid complete height cap for an actual two-class ternary family. Its exact best scalar certificate remains above566/49. This sharper source-only boundary does not exclude incidence-aware debits, different Q sources or other joint constructions.
+
 ## Reproducibility and verification status
 
 Program: [four_level_query_hinge_lift.py](../../frontier/cover-geometry/four_level_query_hinge_lift.py).

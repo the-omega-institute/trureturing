@@ -129,3 +129,100 @@ For a narrower subclass omitting{11,13,17}, the original Report570 schedule with
 Report561 covers arbitrary rooted supports but lacks these nonrooted high supports. Report563 permits all mixed supports on L under a root-prefix condition and excludes the E9 pairs involving5 or7; that condition is not assumed here. Report572 permits broad supports through a distinct shallow-selector/actual-fibre premise, which is not imposed or inferred here. The new class admits arbitrary root phases within its star/triangle supports and arbitrary phases/heights on all five added towers. The missing non3 pair{11,13}, other omitted pairs, and arbitrary rooted higher supports remain outside HG1.
 
 Evidence: [late_hypergraph_joint_source.py](../../frontier/cover-geometry/late_hypergraph_joint_source.py) and [exact data](../../frontier/cover-geometry/late_hypergraph_joint_source.json). Running python3 -I -S -B -O passes47 named exact checks, including reproduction of Report570's baseline, the exact new charges, low probability/mean checks, the same-law continuation algebra, the two fixed comparison schedules, the failed a-posteriori cap certificate, and literal numerical cofactor inventory uniqueness. The general theorem follows from the ordinary derivation above; finite arithmetic does not establish its arbitrary-family quantifiers. No new Lean verification is claimed.
+
+## 6. The missing11–13 tower exceeds the retained two-parameter estimate
+
+Outcome: the current normalized-source certificate does NOT pass after adding the complete non3 pair tower{11,13} to Report576, even after optimizing the13-row threshold and the complete-query hinge threshold while fixing all other row thresholds. This is a failure of that specified certificate family, not a lower bound on actual supported laws and not an impossibility result for the desired support extension.
+
+### Exact gap
+
+Keep Report576's supports, all five later-four high supports, and add every numerical11^a13^b label with a,b>=1. Every phase stays arbitrary and globally fixed. This adds K11 to the13-row auxiliary cofactor count:
+
+    M13=K3(1+K5+K7+K11)+K11.
+
+At the old schedule(0,1,3,4,5,7), every cap is unchanged. The17 and19 inventories, their charges, and the full query hinge remain unchanged; the13-row charge alone increases by
+
+    Delta b13=6290747/813541806=0.007732543003450765... .
+
+The new scalar survivor reserve and query certificate are
+
+    s0=7606326575176730270495070549024654199
+          /30008127460703012074790172076865625000,
+    B=110858473194725664986233638097168
+         /64795630020766937106234185390625,
+    5+B/s0=11.749740931393902... >566/49.
+
+The raw target gate is
+
+    321s0-49B
+      =-61130862008692144789840832309162232590105353
+          /24767698132439755831791956763118299065625000
+      =-2.468168890052215... .
+
+At fixed query numerator, a sufficient improvement in the survivor reserve would have to exceed
+
+    61130862008692144789840832309162232590105353
+      /7950431100513161622005218120960974000065625000
+      =0.007688999657483535... .
+
+Equivalently, at fixed reserve a query-hinge debit must exceed2.468168890052215/49. These are sufficient accounting requirements within this bound; the actual source can behave better than these upper estimates.
+
+### Complete continuous threshold comparison
+
+Fix the other row thresholds at t5=0,t7=1,t11=3,t17=5,t19=7. Vary t=t13 within the present comparison's admissible range
+
+    0<=t<=131/13,
+    C13=12/(11-t)<=13.
+
+The limiting equality C13=13 is a valid height distribution with zero mass at height0; allowing only strict inequality does not alter the conclusion. Keep all actual normalized kernels and all original phases in one source at each fixed t.
+
+This two-axis family can be settled without a real-parameter search. On each interval between successive integers, M13 is integer valued and its distribution is independent of t. Hence H13(t)=E(M13-t)_+ is affine in t. Its charge H13(t)/(11-t) is affine in y=1/(11-t).
+
+For the later17 and19 charges, each auxiliary K13 atom is affine in C13, while every other coordinate law is fixed. Their integrable hinge expectations are therefore affine in C13 and in y. The complete query hinge E(V-tau)_+ is likewise affine in C13 for fixed tau. All earlier row charges are independent of t. Thus for any fixed complete-query threshold tau, the target gate
+
+    G(t,tau)=[566-49(tau-1)]s0(t)-49E(V(t)-tau)_+
+
+is affine in y on each integer t interval. Since V is integer valued, it is affine in tau on each integer tau interval as well. It suffices to test the cell corners.
+
+The source reserves are positive and at most1 throughout: they are affine in y and have these properties at the endpoints. For tau<=1, V>=1 makes its query bound no better than tau=1. For tau>=13 the nonnegative hinge and566-49(tau-1)<=-22 make the target gate strictly negative. Therefore the useful corners are
+
+    t in{0,1,...,10,131/13}, tau in{1,2,...,12}.
+
+All144 exact corner gates are negative. Their largest is the original t13=4,tau=6 gate displayed above. The independent producer also checks an interior rational interpolation in every t interval for every such tau. The general interpolation argument, rather than those interior samples, proves the continuous conclusion.
+
+Consequently changing only the13 threshold, even with an optimally chosen complete-query hinge threshold, cannot rescue this specific fixed-other-row certificate. This does not rule out changing another row, changing source order, using clipped-height comparisons beyond C13=13, or proving a new joint debit.
+
+### One adjacent source reorder
+
+There is a specific alternative order worth checking because it moves the newly added pair to a different actual kernel: process13 immediately before11, using order3,5,7,13,11,17,19, while retaining every coordinate's old threshold and cap. Assign each original to its last coordinate in this order. Its numerical labels and actual phases remain unchanged, and the same normalized-kernel proof applies.
+
+The17 and19 inventories and complete query hinge remain exactly unchanged. The altered earlier charges are
+
+    b13=8071793/291721500,
+    b11=18799640579/183117753000.
+
+They give only R<=11.97757776311741... and raw gate-5.12497800038873..., so this one concrete reorder is weaker than the original order. No search of all coordinate orders or other thresholds is claimed.
+
+### Shared supports do not force positive overlap
+
+Presence of all five high supports does not force a positive intersection with the new11--13 forbidden event. An actual irredundant six-label family gives a direct check. On coordinates11,13,17,19 use these original root constraints:
+
+    pair11,13:          (0,0);
+    triple11,13,17:     (1,1,1);
+    triple11,13,19:     (1,2,1);
+    triple11,17,19:     (1,2,2);
+    triple13,17,19:     (1,2,1);
+    quadruple:         (2,2,2,2).
+
+Every numerical modulus is a distinct odd product of its listed primes. The pair event is disjoint from every high-support event, because each high event requires a nonzero11 or13 root. Completing each listed tuple with zero at its unlisted coordinate gives a private CRT point, so all six originals are essential. Over their literal common period46189 the pair has323 points and its intersection with the union of the five high events has zero points. This remains zero under every measure and every nonnegative hinge weighting.
+
+Thus no uniformly positive repeat-union credit between the new pair event and the higher events follows from these supports alone. A useful overlap/debit theorem would require additional actual phase or query incidence information, or a distinct joint source construction. This small example does not claim that the corresponding family has a bad query law; it only excludes the automatic overlap premise.
+
+### Evidence and boundary
+
+Program: [late_pair_threshold_obstruction.py](../../frontier/cover-geometry/late_pair_threshold_obstruction.py).
+Data: [late_pair_threshold_obstruction.json](../../frontier/cover-geometry/late_pair_threshold_obstruction.json).
+Command: python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/late_pair_threshold_obstruction.py.
+Result: exit0,476 explicit-exception exact checks, including all144 threshold corners, affine interpolation checks, exact baseline gap, the adjacent source reorder, literal CRT private points and the full-period zero overlap.
+
+The complete means retain every auxiliary height; only low-polynomial events are enumerated. The ordinary conditional comparison remains the supplier for arbitrary finite actual original heights and all query heights. No new universal comparison or actual-law lower bound has been proved. The unrestricted11--13 extension remains open, and no new Lean verification is claimed.

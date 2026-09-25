@@ -1,0 +1,1128 @@
+{
+  "scope": "Exact finite diagnostics for general ordinary proofs. No new Lean verification. The scalar result optimizes only complete tail caps, fixed B/K and one scalar clip.",
+  "comb": [
+    {
+      "p": 3,
+      "H": 1,
+      "surviving_cells": 2,
+      "D_min": "3/2",
+      "D_star": "3/2",
+      "A_star": "3/4",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "3/2",
+          "R": "3/4"
+        },
+        {
+          "lambda": "1/3",
+          "D": "3/2",
+          "R": "3/4"
+        },
+        {
+          "lambda": "1/2",
+          "D": "3/2",
+          "R": "3/4"
+        },
+        {
+          "lambda": "2/3",
+          "D": "3/2",
+          "R": "3/4"
+        },
+        {
+          "lambda": "1",
+          "D": "3/2",
+          "R": "3/4"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 2,
+      "surviving_cells": 5,
+      "D_min": "9/5",
+      "D_star": "9/4",
+      "A_star": "7/8",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "9/5",
+          "R": "9/10"
+        },
+        {
+          "lambda": "1/3",
+          "D": "39/20",
+          "R": "107/120"
+        },
+        {
+          "lambda": "1/2",
+          "D": "81/40",
+          "R": "71/80"
+        },
+        {
+          "lambda": "2/3",
+          "D": "21/10",
+          "R": "53/60"
+        },
+        {
+          "lambda": "1",
+          "D": "9/4",
+          "R": "7/8"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 3,
+      "surviving_cells": 14,
+      "D_min": "27/14",
+      "D_star": "27/8",
+      "A_star": "15/16",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "27/14",
+          "R": "27/28"
+        },
+        {
+          "lambda": "1/3",
+          "D": "135/56",
+          "R": "107/112"
+        },
+        {
+          "lambda": "1/2",
+          "D": "297/112",
+          "R": "213/224"
+        },
+        {
+          "lambda": "2/3",
+          "D": "81/28",
+          "R": "53/56"
+        },
+        {
+          "lambda": "1",
+          "D": "27/8",
+          "R": "15/16"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 4,
+      "surviving_cells": 41,
+      "D_min": "81/41",
+      "D_star": "81/16",
+      "A_star": "31/32",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "81/41",
+          "R": "81/82"
+        },
+        {
+          "lambda": "1/3",
+          "D": "1971/656",
+          "R": "3863/3936"
+        },
+        {
+          "lambda": "1/2",
+          "D": "4617/1312",
+          "R": "2567/2624"
+        },
+        {
+          "lambda": "2/3",
+          "D": "1323/328",
+          "R": "1919/1968"
+        },
+        {
+          "lambda": "1",
+          "D": "81/16",
+          "R": "31/32"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 5,
+      "surviving_cells": 122,
+      "D_min": "243/122",
+      "D_star": "243/32",
+      "A_star": "63/64",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "243/122",
+          "R": "243/244"
+        },
+        {
+          "lambda": "1/3",
+          "D": "7533/1952",
+          "R": "3873/3904"
+        },
+        {
+          "lambda": "1/2",
+          "D": "18711/3904",
+          "R": "7731/7808"
+        },
+        {
+          "lambda": "2/3",
+          "D": "5589/976",
+          "R": "1929/1952"
+        },
+        {
+          "lambda": "1",
+          "D": "243/32",
+          "R": "63/64"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 6,
+      "surviving_cells": 365,
+      "D_min": "729/365",
+      "D_star": "729/64",
+      "A_star": "127/128",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "729/365",
+          "R": "729/730"
+        },
+        {
+          "lambda": "1/3",
+          "D": "119799/23360",
+          "R": "139667/140160"
+        },
+        {
+          "lambda": "1/2",
+          "D": "312741/46720",
+          "R": "93011/93440"
+        },
+        {
+          "lambda": "2/3",
+          "D": "96471/11680",
+          "R": "69683/70080"
+        },
+        {
+          "lambda": "1",
+          "D": "729/64",
+          "R": "127/128"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 7,
+      "surviving_cells": 1094,
+      "D_min": "2187/1094",
+      "D_star": "2187/128",
+      "A_star": "255/256",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "2187/1094",
+          "R": "2187/2188"
+        },
+        {
+          "lambda": "1/3",
+          "D": "492075/70016",
+          "R": "139807/140032"
+        },
+        {
+          "lambda": "1/2",
+          "D": "1336257/140032",
+          "R": "279453/280064"
+        },
+        {
+          "lambda": "2/3",
+          "D": "422091/35008",
+          "R": "69823/70016"
+        },
+        {
+          "lambda": "1",
+          "D": "2187/128",
+          "R": "255/256"
+        }
+      ]
+    },
+    {
+      "p": 3,
+      "H": 8,
+      "surviving_cells": 3281,
+      "D_min": "6561/3281",
+      "D_star": "6561/256",
+      "A_star": "511/512",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "6561/3281",
+          "R": "6561/6562"
+        },
+        {
+          "lambda": "1/3",
+          "D": "8295291/839936",
+          "R": "5035823/5039616"
+        },
+        {
+          "lambda": "1/2",
+          "D": "23206257/1679872",
+          "R": "3356207/3359744"
+        },
+        {
+          "lambda": "2/3",
+          "D": "7455483/419968",
+          "R": "2516399/2519808"
+        },
+        {
+          "lambda": "1",
+          "D": "6561/256",
+          "R": "511/512"
+        }
+      ]
+    },
+    {
+      "p": 5,
+      "H": 1,
+      "surviving_cells": 4,
+      "D_min": "5/4",
+      "D_star": "5/4",
+      "A_star": "5/16",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "5/4",
+          "R": "5/16"
+        },
+        {
+          "lambda": "1/3",
+          "D": "5/4",
+          "R": "5/16"
+        },
+        {
+          "lambda": "1/2",
+          "D": "5/4",
+          "R": "5/16"
+        },
+        {
+          "lambda": "2/3",
+          "D": "5/4",
+          "R": "5/16"
+        },
+        {
+          "lambda": "1",
+          "D": "5/4",
+          "R": "5/16"
+        }
+      ]
+    },
+    {
+      "p": 5,
+      "H": 2,
+      "surviving_cells": 19,
+      "D_min": "25/19",
+      "D_star": "25/16",
+      "A_star": "21/64",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "25/19",
+          "R": "25/76"
+        },
+        {
+          "lambda": "1/3",
+          "D": "425/304",
+          "R": "1199/3648"
+        },
+        {
+          "lambda": "1/2",
+          "D": "875/608",
+          "R": "799/2432"
+        },
+        {
+          "lambda": "2/3",
+          "D": "225/152",
+          "R": "599/1824"
+        },
+        {
+          "lambda": "1",
+          "D": "25/16",
+          "R": "21/64"
+        }
+      ]
+    },
+    {
+      "p": 5,
+      "H": 3,
+      "surviving_cells": 94,
+      "D_min": "125/94",
+      "D_star": "125/64",
+      "A_star": "85/256",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "125/94",
+          "R": "125/376"
+        },
+        {
+          "lambda": "1/3",
+          "D": "4625/3008",
+          "R": "11995/36096"
+        },
+        {
+          "lambda": "1/2",
+          "D": "9875/6016",
+          "R": "7995/24064"
+        },
+        {
+          "lambda": "2/3",
+          "D": "2625/1504",
+          "R": "5995/18048"
+        },
+        {
+          "lambda": "1",
+          "D": "125/64",
+          "R": "85/256"
+        }
+      ]
+    },
+    {
+      "p": 5,
+      "H": 4,
+      "surviving_cells": 469,
+      "D_min": "625/469",
+      "D_star": "625/256",
+      "A_star": "341/1024",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "625/469",
+          "R": "625/1876"
+        },
+        {
+          "lambda": "1/3",
+          "D": "204375/120064",
+          "R": "479929/1440768"
+        },
+        {
+          "lambda": "1/2",
+          "D": "453125/240128",
+          "R": "319929/960512"
+        },
+        {
+          "lambda": "2/3",
+          "D": "124375/60032",
+          "R": "239929/720384"
+        },
+        {
+          "lambda": "1",
+          "D": "625/256",
+          "R": "341/1024"
+        }
+      ]
+    },
+    {
+      "p": 7,
+      "H": 1,
+      "surviving_cells": 6,
+      "D_min": "7/6",
+      "D_star": "7/6",
+      "A_star": "7/36",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "7/6",
+          "R": "7/36"
+        },
+        {
+          "lambda": "1/3",
+          "D": "7/6",
+          "R": "7/36"
+        },
+        {
+          "lambda": "1/2",
+          "D": "7/6",
+          "R": "7/36"
+        },
+        {
+          "lambda": "2/3",
+          "D": "7/6",
+          "R": "7/36"
+        },
+        {
+          "lambda": "1",
+          "D": "7/6",
+          "R": "7/36"
+        }
+      ]
+    },
+    {
+      "p": 7,
+      "H": 2,
+      "surviving_cells": 41,
+      "D_min": "49/41",
+      "D_star": "49/36",
+      "A_star": "43/216",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "49/41",
+          "R": "49/246"
+        },
+        {
+          "lambda": "1/3",
+          "D": "5537/4428",
+          "R": "5291/26568"
+        },
+        {
+          "lambda": "1/2",
+          "D": "3773/2952",
+          "R": "3527/17712"
+        },
+        {
+          "lambda": "2/3",
+          "D": "2891/2214",
+          "R": "2645/13284"
+        },
+        {
+          "lambda": "1",
+          "D": "49/36",
+          "R": "43/216"
+        }
+      ]
+    },
+    {
+      "p": 7,
+      "H": 3,
+      "surviving_cells": 286,
+      "D_min": "343/286",
+      "D_star": "343/216",
+      "A_star": "259/1296",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "343/286",
+          "R": "343/1716"
+        },
+        {
+          "lambda": "1/3",
+          "D": "123137/92664",
+          "R": "111125/555984"
+        },
+        {
+          "lambda": "1/2",
+          "D": "86093/61776",
+          "R": "74081/370656"
+        },
+        {
+          "lambda": "2/3",
+          "D": "67571/46332",
+          "R": "55559/277992"
+        },
+        {
+          "lambda": "1",
+          "D": "343/216",
+          "R": "259/1296"
+        }
+      ]
+    },
+    {
+      "p": 7,
+      "H": 4,
+      "surviving_cells": 2001,
+      "D_min": "2401/2001",
+      "D_star": "2401/1296",
+      "A_star": "1555/7776",
+      "mixtures": [
+        {
+          "lambda": "0",
+          "D": "2401/2001",
+          "R": "2401/12006"
+        },
+        {
+          "lambda": "1/3",
+          "D": "3675931/2593296",
+          "R": "3111649/15559776"
+        },
+        {
+          "lambda": "1/2",
+          "D": "2638699/1728864",
+          "R": "2074417/10373184"
+        },
+        {
+          "lambda": "2/3",
+          "D": "2120083/1296648",
+          "R": "1555801/7779888"
+        },
+        {
+          "lambda": "1",
+          "D": "2401/1296",
+          "R": "1555/7776"
+        }
+      ]
+    }
+  ],
+  "all_optional_height3_families": 1120,
+  "height2_cap_frontier": [
+    {
+      "m": "1/5",
+      "A": "9/10",
+      "theta": "1/30",
+      "density": "9/5"
+    },
+    {
+      "m": "5/24",
+      "A": "43/48",
+      "theta": "5/144",
+      "density": "15/8"
+    },
+    {
+      "m": "9/40",
+      "A": "71/80",
+      "theta": "3/80",
+      "density": "81/40"
+    },
+    {
+      "m": "6/25",
+      "A": "22/25",
+      "theta": "1/25",
+      "density": "54/25"
+    },
+    {
+      "m": "1/4",
+      "A": "7/8",
+      "theta": "1/24",
+      "density": "9/4"
+    }
+  ],
+  "hinge_input_sha256": "276d7e266a86ed8e5a1c9da2982b219725c2738bc4ad19da1243bf8575543685",
+  "B": "432040125182653876501/86355045355449035400",
+  "target": "566/49",
+  "source_derivative_guard": "52828828309709262307189429011668301174407/10282123892873170813251654926015586631375",
+  "clip_breakpoints": [
+    {
+      "t": 0,
+      "K": "442615450772831703/75750039785481610",
+      "kappa": "1",
+      "denominator": "609961914263872199/757500397854816100",
+      "R": "472945146666813945901/36597714855832331940"
+    },
+    {
+      "t": 1,
+      "K": "5859626532274100953/1439250755924150590",
+      "kappa": "29/30",
+      "denominator": "35878645389526266157/43177522677724517700",
+      "R": "6631458308706435259964/538179680842893992355"
+    },
+    {
+      "t": 2,
+      "K": "82612076583517835903/27345764362558861210",
+      "kappa": "14/15",
+      "denominator": "683069325568130277977/820372930876765836300",
+      "R": "99156413816643731220749/8196831906817563335724"
+    },
+    {
+      "t": 3,
+      "K": "12019840537595758779003/5715264751774801992890",
+      "kappa": "9/10",
+      "denominator": "47430769253441298343009/57152647517748019928900",
+      "R": "5661267838960687810116513/474307692534412983430090"
+    },
+    {
+      "t": 4,
+      "K": "3153873408694293198041495173/1847876545338084304747173470",
+      "kappa": "13/15",
+      "denominator": "14963638923365299575128338349/18478765453380843047471734700",
+      "R": "32392822756127870074477738748449/2693455006205753923523100902820"
+    },
+    {
+      "t": 5,
+      "K": "3928264072572472994045493289900351/2987304941341727158318851839204050",
+      "kappa": "5/6",
+      "denominator": "23584786486990235321308600896733633/29873049413417271583188518392040500",
+      "R": "2573499092754388439037709132617313517/212263078382912117891777408070602697"
+    },
+    {
+      "t": 6,
+      "K": "5110519119734667936145088487077404166693/4829321977747156250045630666034855290750",
+      "kappa": "4/5",
+      "denominator": "110793208346197082064950047497759122811307/144879659332414687501368919981045658722500",
+      "R": "5450497284812498426701947428325176311130345/443172833384788328259800189991036491245228"
+    },
+    {
+      "t": 7,
+      "K": "6258510165289233442029877862409645975916115839/7807154349055719001167517219171937585855811250",
+      "kappa": "23/30",
+      "denominator": "173306039862992303584823018178544918498767542911/234214630471671570035025516575158127575674337500",
+      "R": "12982675178648702201654839086816641599122692991875/1039836239177953821508938109071269510992605257466"
+    }
+  ],
+  "clip_best": {
+    "t": 3,
+    "K": "12019840537595758779003/5715264751774801992890",
+    "kappa": "9/10",
+    "denominator": "47430769253441298343009/57152647517748019928900",
+    "R": "5661267838960687810116513/474307692534412983430090"
+  },
+  "clip_gap": "8943970134595954074278197/23241076934186236188074410",
+  "clip_t_ge7_lower": "478671849674596355617/39723320863506556284",
+  "check_count": 456,
+  "checks": [
+    "comb p3 H1 partition",
+    "comb p3 H1 private original witnesses",
+    "comb p3 H1 normalized sources",
+    "comb p3 H1 Haar maxima",
+    "comb p3 H1 balanced maxima",
+    "comb p3 H1 endpoint response and density",
+    "comb p3 H1 exact mixture 0",
+    "comb p3 H1 exact mixture 1/3",
+    "comb p3 H1 exact mixture 1/2",
+    "comb p3 H1 exact mixture 2/3",
+    "comb p3 H1 exact mixture 1",
+    "comb p3 H2 partition",
+    "comb p3 H2 private original witnesses",
+    "comb p3 H2 normalized sources",
+    "comb p3 H2 Haar maxima",
+    "comb p3 H2 balanced maxima",
+    "comb p3 H2 endpoint response and density",
+    "comb p3 H2 exact mixture 0",
+    "comb p3 H2 exact mixture 1/3",
+    "comb p3 H2 exact mixture 1/2",
+    "comb p3 H2 exact mixture 2/3",
+    "comb p3 H2 exact mixture 1",
+    "comb p3 H3 partition",
+    "comb p3 H3 private original witnesses",
+    "comb p3 H3 normalized sources",
+    "comb p3 H3 Haar maxima",
+    "comb p3 H3 balanced maxima",
+    "comb p3 H3 endpoint response and density",
+    "comb p3 H3 exact mixture 0",
+    "comb p3 H3 exact mixture 1/3",
+    "comb p3 H3 exact mixture 1/2",
+    "comb p3 H3 exact mixture 2/3",
+    "comb p3 H3 exact mixture 1",
+    "comb p3 H4 partition",
+    "comb p3 H4 private original witnesses",
+    "comb p3 H4 normalized sources",
+    "comb p3 H4 Haar maxima",
+    "comb p3 H4 balanced maxima",
+    "comb p3 H4 endpoint response and density",
+    "comb p3 H4 exact mixture 0",
+    "comb p3 H4 exact mixture 1/3",
+    "comb p3 H4 exact mixture 1/2",
+    "comb p3 H4 exact mixture 2/3",
+    "comb p3 H4 exact mixture 1",
+    "comb p3 H5 partition",
+    "comb p3 H5 private original witnesses",
+    "comb p3 H5 normalized sources",
+    "comb p3 H5 Haar maxima",
+    "comb p3 H5 balanced maxima",
+    "comb p3 H5 endpoint response and density",
+    "comb p3 H5 exact mixture 0",
+    "comb p3 H5 exact mixture 1/3",
+    "comb p3 H5 exact mixture 1/2",
+    "comb p3 H5 exact mixture 2/3",
+    "comb p3 H5 exact mixture 1",
+    "comb p3 H6 partition",
+    "comb p3 H6 private original witnesses",
+    "comb p3 H6 normalized sources",
+    "comb p3 H6 Haar maxima",
+    "comb p3 H6 balanced maxima",
+    "comb p3 H6 endpoint response and density",
+    "comb p3 H6 exact mixture 0",
+    "comb p3 H6 exact mixture 1/3",
+    "comb p3 H6 exact mixture 1/2",
+    "comb p3 H6 exact mixture 2/3",
+    "comb p3 H6 exact mixture 1",
+    "comb p3 H7 partition",
+    "comb p3 H7 private original witnesses",
+    "comb p3 H7 normalized sources",
+    "comb p3 H7 Haar maxima",
+    "comb p3 H7 balanced maxima",
+    "comb p3 H7 endpoint response and density",
+    "comb p3 H7 exact mixture 0",
+    "comb p3 H7 exact mixture 1/3",
+    "comb p3 H7 exact mixture 1/2",
+    "comb p3 H7 exact mixture 2/3",
+    "comb p3 H7 exact mixture 1",
+    "comb p3 H8 partition",
+    "comb p3 H8 private original witnesses",
+    "comb p3 H8 normalized sources",
+    "comb p3 H8 Haar maxima",
+    "comb p3 H8 balanced maxima",
+    "comb p3 H8 endpoint response and density",
+    "comb p3 H8 exact mixture 0",
+    "comb p3 H8 exact mixture 1/3",
+    "comb p3 H8 exact mixture 1/2",
+    "comb p3 H8 exact mixture 2/3",
+    "comb p3 H8 exact mixture 1",
+    "comb p5 H1 partition",
+    "comb p5 H1 private original witnesses",
+    "comb p5 H1 normalized sources",
+    "comb p5 H1 Haar maxima",
+    "comb p5 H1 balanced maxima",
+    "comb p5 H1 endpoint response and density",
+    "comb p5 H1 exact mixture 0",
+    "comb p5 H1 exact mixture 1/3",
+    "comb p5 H1 exact mixture 1/2",
+    "comb p5 H1 exact mixture 2/3",
+    "comb p5 H1 exact mixture 1",
+    "comb p5 H2 partition",
+    "comb p5 H2 private original witnesses",
+    "comb p5 H2 normalized sources",
+    "comb p5 H2 Haar maxima",
+    "comb p5 H2 balanced maxima",
+    "comb p5 H2 endpoint response and density",
+    "comb p5 H2 exact mixture 0",
+    "comb p5 H2 exact mixture 1/3",
+    "comb p5 H2 exact mixture 1/2",
+    "comb p5 H2 exact mixture 2/3",
+    "comb p5 H2 exact mixture 1",
+    "comb p5 H3 partition",
+    "comb p5 H3 private original witnesses",
+    "comb p5 H3 normalized sources",
+    "comb p5 H3 Haar maxima",
+    "comb p5 H3 balanced maxima",
+    "comb p5 H3 endpoint response and density",
+    "comb p5 H3 exact mixture 0",
+    "comb p5 H3 exact mixture 1/3",
+    "comb p5 H3 exact mixture 1/2",
+    "comb p5 H3 exact mixture 2/3",
+    "comb p5 H3 exact mixture 1",
+    "comb p5 H4 partition",
+    "comb p5 H4 private original witnesses",
+    "comb p5 H4 normalized sources",
+    "comb p5 H4 Haar maxima",
+    "comb p5 H4 balanced maxima",
+    "comb p5 H4 endpoint response and density",
+    "comb p5 H4 exact mixture 0",
+    "comb p5 H4 exact mixture 1/3",
+    "comb p5 H4 exact mixture 1/2",
+    "comb p5 H4 exact mixture 2/3",
+    "comb p5 H4 exact mixture 1",
+    "comb p7 H1 partition",
+    "comb p7 H1 private original witnesses",
+    "comb p7 H1 normalized sources",
+    "comb p7 H1 Haar maxima",
+    "comb p7 H1 balanced maxima",
+    "comb p7 H1 endpoint response and density",
+    "comb p7 H1 exact mixture 0",
+    "comb p7 H1 exact mixture 1/3",
+    "comb p7 H1 exact mixture 1/2",
+    "comb p7 H1 exact mixture 2/3",
+    "comb p7 H1 exact mixture 1",
+    "comb p7 H2 partition",
+    "comb p7 H2 private original witnesses",
+    "comb p7 H2 normalized sources",
+    "comb p7 H2 Haar maxima",
+    "comb p7 H2 balanced maxima",
+    "comb p7 H2 endpoint response and density",
+    "comb p7 H2 exact mixture 0",
+    "comb p7 H2 exact mixture 1/3",
+    "comb p7 H2 exact mixture 1/2",
+    "comb p7 H2 exact mixture 2/3",
+    "comb p7 H2 exact mixture 1",
+    "comb p7 H3 partition",
+    "comb p7 H3 private original witnesses",
+    "comb p7 H3 normalized sources",
+    "comb p7 H3 Haar maxima",
+    "comb p7 H3 balanced maxima",
+    "comb p7 H3 endpoint response and density",
+    "comb p7 H3 exact mixture 0",
+    "comb p7 H3 exact mixture 1/3",
+    "comb p7 H3 exact mixture 1/2",
+    "comb p7 H3 exact mixture 2/3",
+    "comb p7 H3 exact mixture 1",
+    "comb p7 H4 partition",
+    "comb p7 H4 private original witnesses",
+    "comb p7 H4 normalized sources",
+    "comb p7 H4 Haar maxima",
+    "comb p7 H4 balanced maxima",
+    "comb p7 H4 endpoint response and density",
+    "comb p7 H4 exact mixture 0",
+    "comb p7 H4 exact mixture 1/3",
+    "comb p7 H4 exact mixture 1/2",
+    "comb p7 H4 exact mixture 2/3",
+    "comb p7 H4 exact mixture 1",
+    "dual coefficients p3 H1",
+    "dual coefficients p3 H2",
+    "dual coefficients p3 H3",
+    "dual coefficients p3 H4",
+    "dual coefficients p3 H5",
+    "dual coefficients p3 H6",
+    "dual coefficients p3 H7",
+    "dual coefficients p3 H8",
+    "dual coefficients p3 H9",
+    "dual coefficients p3 H10",
+    "dual coefficients p3 H11",
+    "dual coefficients p3 H12",
+    "dual coefficients p3 H13",
+    "dual coefficients p3 H14",
+    "dual coefficients p3 H15",
+    "dual coefficients p3 H16",
+    "dual coefficients p3 H17",
+    "dual coefficients p3 H18",
+    "dual coefficients p3 H19",
+    "dual coefficients p3 H20",
+    "dual coefficients p3 H21",
+    "dual coefficients p3 H22",
+    "dual coefficients p3 H23",
+    "dual coefficients p3 H24",
+    "dual coefficients p3 H25",
+    "dual coefficients p3 H26",
+    "dual coefficients p3 H27",
+    "dual coefficients p3 H28",
+    "dual coefficients p3 H29",
+    "dual coefficients p3 H30",
+    "dual coefficients p3 H31",
+    "dual coefficients p3 H32",
+    "dual coefficients p3 H33",
+    "dual coefficients p3 H34",
+    "dual coefficients p3 H35",
+    "dual coefficients p3 H36",
+    "dual coefficients p3 H37",
+    "dual coefficients p3 H38",
+    "dual coefficients p3 H39",
+    "dual coefficients p3 H40",
+    "dual coefficients p3 H41",
+    "dual coefficients p3 H42",
+    "dual coefficients p3 H43",
+    "dual coefficients p3 H44",
+    "dual coefficients p3 H45",
+    "dual coefficients p3 H46",
+    "dual coefficients p3 H47",
+    "dual coefficients p3 H48",
+    "dual coefficients p3 H49",
+    "dual coefficients p3 H50",
+    "dual coefficients p3 H51",
+    "dual coefficients p3 H52",
+    "dual coefficients p3 H53",
+    "dual coefficients p3 H54",
+    "dual coefficients p3 H55",
+    "dual coefficients p3 H56",
+    "dual coefficients p3 H57",
+    "dual coefficients p3 H58",
+    "dual coefficients p3 H59",
+    "dual coefficients p3 H60",
+    "dual coefficients p3 H61",
+    "dual coefficients p3 H62",
+    "dual coefficients p3 H63",
+    "dual coefficients p3 H64",
+    "dual coefficients p5 H1",
+    "dual coefficients p5 H2",
+    "dual coefficients p5 H3",
+    "dual coefficients p5 H4",
+    "dual coefficients p5 H5",
+    "dual coefficients p5 H6",
+    "dual coefficients p5 H7",
+    "dual coefficients p5 H8",
+    "dual coefficients p5 H9",
+    "dual coefficients p5 H10",
+    "dual coefficients p5 H11",
+    "dual coefficients p5 H12",
+    "dual coefficients p5 H13",
+    "dual coefficients p5 H14",
+    "dual coefficients p5 H15",
+    "dual coefficients p5 H16",
+    "dual coefficients p5 H17",
+    "dual coefficients p5 H18",
+    "dual coefficients p5 H19",
+    "dual coefficients p5 H20",
+    "dual coefficients p5 H21",
+    "dual coefficients p5 H22",
+    "dual coefficients p5 H23",
+    "dual coefficients p5 H24",
+    "dual coefficients p5 H25",
+    "dual coefficients p5 H26",
+    "dual coefficients p5 H27",
+    "dual coefficients p5 H28",
+    "dual coefficients p5 H29",
+    "dual coefficients p5 H30",
+    "dual coefficients p5 H31",
+    "dual coefficients p5 H32",
+    "dual coefficients p5 H33",
+    "dual coefficients p5 H34",
+    "dual coefficients p5 H35",
+    "dual coefficients p5 H36",
+    "dual coefficients p5 H37",
+    "dual coefficients p5 H38",
+    "dual coefficients p5 H39",
+    "dual coefficients p5 H40",
+    "dual coefficients p5 H41",
+    "dual coefficients p5 H42",
+    "dual coefficients p5 H43",
+    "dual coefficients p5 H44",
+    "dual coefficients p5 H45",
+    "dual coefficients p5 H46",
+    "dual coefficients p5 H47",
+    "dual coefficients p5 H48",
+    "dual coefficients p5 H49",
+    "dual coefficients p5 H50",
+    "dual coefficients p5 H51",
+    "dual coefficients p5 H52",
+    "dual coefficients p5 H53",
+    "dual coefficients p5 H54",
+    "dual coefficients p5 H55",
+    "dual coefficients p5 H56",
+    "dual coefficients p5 H57",
+    "dual coefficients p5 H58",
+    "dual coefficients p5 H59",
+    "dual coefficients p5 H60",
+    "dual coefficients p5 H61",
+    "dual coefficients p5 H62",
+    "dual coefficients p5 H63",
+    "dual coefficients p5 H64",
+    "dual coefficients p7 H1",
+    "dual coefficients p7 H2",
+    "dual coefficients p7 H3",
+    "dual coefficients p7 H4",
+    "dual coefficients p7 H5",
+    "dual coefficients p7 H6",
+    "dual coefficients p7 H7",
+    "dual coefficients p7 H8",
+    "dual coefficients p7 H9",
+    "dual coefficients p7 H10",
+    "dual coefficients p7 H11",
+    "dual coefficients p7 H12",
+    "dual coefficients p7 H13",
+    "dual coefficients p7 H14",
+    "dual coefficients p7 H15",
+    "dual coefficients p7 H16",
+    "dual coefficients p7 H17",
+    "dual coefficients p7 H18",
+    "dual coefficients p7 H19",
+    "dual coefficients p7 H20",
+    "dual coefficients p7 H21",
+    "dual coefficients p7 H22",
+    "dual coefficients p7 H23",
+    "dual coefficients p7 H24",
+    "dual coefficients p7 H25",
+    "dual coefficients p7 H26",
+    "dual coefficients p7 H27",
+    "dual coefficients p7 H28",
+    "dual coefficients p7 H29",
+    "dual coefficients p7 H30",
+    "dual coefficients p7 H31",
+    "dual coefficients p7 H32",
+    "dual coefficients p7 H33",
+    "dual coefficients p7 H34",
+    "dual coefficients p7 H35",
+    "dual coefficients p7 H36",
+    "dual coefficients p7 H37",
+    "dual coefficients p7 H38",
+    "dual coefficients p7 H39",
+    "dual coefficients p7 H40",
+    "dual coefficients p7 H41",
+    "dual coefficients p7 H42",
+    "dual coefficients p7 H43",
+    "dual coefficients p7 H44",
+    "dual coefficients p7 H45",
+    "dual coefficients p7 H46",
+    "dual coefficients p7 H47",
+    "dual coefficients p7 H48",
+    "dual coefficients p7 H49",
+    "dual coefficients p7 H50",
+    "dual coefficients p7 H51",
+    "dual coefficients p7 H52",
+    "dual coefficients p7 H53",
+    "dual coefficients p7 H54",
+    "dual coefficients p7 H55",
+    "dual coefficients p7 H56",
+    "dual coefficients p7 H57",
+    "dual coefficients p7 H58",
+    "dual coefficients p7 H59",
+    "dual coefficients p7 H60",
+    "dual coefficients p7 H61",
+    "dual coefficients p7 H62",
+    "dual coefficients p7 H63",
+    "dual coefficients p7 H64",
+    "dual coefficients p11 H1",
+    "dual coefficients p11 H2",
+    "dual coefficients p11 H3",
+    "dual coefficients p11 H4",
+    "dual coefficients p11 H5",
+    "dual coefficients p11 H6",
+    "dual coefficients p11 H7",
+    "dual coefficients p11 H8",
+    "dual coefficients p11 H9",
+    "dual coefficients p11 H10",
+    "dual coefficients p11 H11",
+    "dual coefficients p11 H12",
+    "dual coefficients p11 H13",
+    "dual coefficients p11 H14",
+    "dual coefficients p11 H15",
+    "dual coefficients p11 H16",
+    "dual coefficients p11 H17",
+    "dual coefficients p11 H18",
+    "dual coefficients p11 H19",
+    "dual coefficients p11 H20",
+    "dual coefficients p11 H21",
+    "dual coefficients p11 H22",
+    "dual coefficients p11 H23",
+    "dual coefficients p11 H24",
+    "dual coefficients p11 H25",
+    "dual coefficients p11 H26",
+    "dual coefficients p11 H27",
+    "dual coefficients p11 H28",
+    "dual coefficients p11 H29",
+    "dual coefficients p11 H30",
+    "dual coefficients p11 H31",
+    "dual coefficients p11 H32",
+    "dual coefficients p11 H33",
+    "dual coefficients p11 H34",
+    "dual coefficients p11 H35",
+    "dual coefficients p11 H36",
+    "dual coefficients p11 H37",
+    "dual coefficients p11 H38",
+    "dual coefficients p11 H39",
+    "dual coefficients p11 H40",
+    "dual coefficients p11 H41",
+    "dual coefficients p11 H42",
+    "dual coefficients p11 H43",
+    "dual coefficients p11 H44",
+    "dual coefficients p11 H45",
+    "dual coefficients p11 H46",
+    "dual coefficients p11 H47",
+    "dual coefficients p11 H48",
+    "dual coefficients p11 H49",
+    "dual coefficients p11 H50",
+    "dual coefficients p11 H51",
+    "dual coefficients p11 H52",
+    "dual coefficients p11 H53",
+    "dual coefficients p11 H54",
+    "dual coefficients p11 H55",
+    "dual coefficients p11 H56",
+    "dual coefficients p11 H57",
+    "dual coefficients p11 H58",
+    "dual coefficients p11 H59",
+    "dual coefficients p11 H60",
+    "dual coefficients p11 H61",
+    "dual coefficients p11 H62",
+    "dual coefficients p11 H63",
+    "dual coefficients p11 H64",
+    "all optional height3 families",
+    "height2 cap frontier 1/5",
+    "height2 cap frontier 5/24",
+    "height2 cap frontier 9/40",
+    "height2 cap frontier 6/25",
+    "height2 cap frontier 1/4",
+    "expected same-source B",
+    "expected continuation target",
+    "four complete corner input sequences",
+    "corner0 dominates every endpoint0 through7",
+    "positive monotone first three intervals",
+    "known exact threshold3 moment",
+    "source derivative positive for every0 through3 threshold",
+    "positive clip denominator at0",
+    "positive clip denominator at1",
+    "positive clip denominator at2",
+    "positive clip denominator at3",
+    "positive clip denominator at4",
+    "positive clip denominator at5",
+    "positive clip denominator at6",
+    "positive clip denominator at7",
+    "all remaining real thresholds excluded by nonnegative hinge",
+    "exact real optimum threshold3",
+    "scalar source repair still fails target"
+  ]
+}

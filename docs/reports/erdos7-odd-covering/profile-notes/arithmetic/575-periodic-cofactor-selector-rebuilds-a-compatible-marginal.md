@@ -167,6 +167,9 @@ certificate, is the reusable result.
 
 ## Boundaries and reuse search
 
+The [three-coordinate extension](577-three-coordinate-slices-admit-a-compatible-selector.md) replaces this interval by a bounded plane slice of an exponent simplex, with the same two-active-cofactor conclusion. It also gives an exact obstruction to extending that unchanged three-color property to four coordinate directions.
+
+
 The theorem still restricts tail projections to three globally coherent
 phases, a common D separating them, and a single two-coordinate exponent
 antichain. Arbitrary support-dependent phases need not match intervals
