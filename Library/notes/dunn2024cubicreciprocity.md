@@ -162,3 +162,365 @@ coordinate must still equal L_(3^j)-1, and the norm of u+v*omega must be
 a distinct prime. The fixed-form finiteness theorem does not supply a
 uniform bound as P varies. No complete Thue solver or solution list was
 executed or asserted in this continuation.
+
+## GIR. An actual golden rank tower and its exact initial-depth index
+
+This is an ordinary mathematical continuation for the SAME problem owner
+`Problems/wall-sun-sun-golden-unit-lift.md`. The arguments below are not
+assertions attributed to Dunn-Radziwill. The classical sources used for
+orders, Kummer extensions, elliptic torsion and heights are specified in
+GIR.7. No new parallel Problems entry or Lean declaration is introduced.
+
+### GIR.0 Fixed integers and the noncube input
+
+Retain x_j=L_(3^j), f_j=F_(3^j), B_j=x_j^2+3 for j>=1, and the ORIGINAL
+initial depths h_p. PCL7A and GCR0 in the owner give
+
+$$v_p(B_j)=h_p\ (p\mid B_j),\quad
+x_j^2+4=5f_j^2,\quad B_j\equiv1\pmod9,\quad
+v_2(x_j)=2,\quad v_2(f_j)=1.$$
+
+All prime factors of B_j exceed five and are one modulo 2*3^(j+1).
+Different B_j have disjoint prime supports. Each B_j is a noncube:
+GCR1 gives product_(p|B_j)(3/varpi_(j,p))_3^(h_p)=omega, whereas a cube
+would make every exponent divisible by three and the product one.
+Thus this noncube input already follows from the proved cubic balance;
+GIR does not need another perfect-power classification.
+
+Write uniquely
+
+$$B_j=d_j c_j^3,\qquad
+ d_j=\prod_{p\mid B_j}p^{e_p},\quad e_p=h_p\bmod3\in\{0,1,2\},$$
+
+$$R_j=\operatorname{rad}(d_j)
+=\prod_{p\mid B_j,\,3\nmid h_p}p.$$
+
+Here d_j is cubefree, c_j is positive, and R_j>1. These symbols are local
+to GIR; d_j is not a modified Fibonacci generator. Let theta_j be the
+positive real cube root of the ACTUAL integer B_j, and k_j=Q(theta_j).
+The polynomial T^3-B_j is irreducible over Q. The constructions of theta_j
+and the order below do not require factoring B_j; the formulas for R_j
+and the maximal-order index still encode arithmetic information.
+
+### GIR.1 A factorization-free order with precisely the WSS index support
+
+**Theorem GIR1.** Put a_j=(B_j-1)/9 and beta_j=(1+theta_j+theta_j^2)/3.
+Then
+
+$$\mathcal A_j=\mathbb Z\cdot1+\mathbb Z\cdot\theta_j
+                         +\mathbb Z\cdot\beta_j$$
+
+is an order in k_j. Its multiplication and discriminant are
+
+$$\theta_j^2=3\beta_j-\theta_j-1,\quad
+\theta_j\beta_j=\beta_j+3a_j,\quad
+\beta_j^2=\beta_j+a_j\theta_j+2a_j,$$
+
+$$\boxed{\operatorname{disc}(\mathcal A_j)=-3B_j^2,\qquad
+\Delta(k_j)=-3R_j^2,\qquad
+I_j:=[\mathcal O_{k_j}:\mathcal A_j]=B_j/R_j.}\tag{GIR1}$$
+
+In particular
+
+$$\boxed{p\mid B_j:\quad p\text{ is WSS}\ \Longleftrightarrow\ p\mid I_j,}
+\qquad
+\boxed{\operatorname{rad}(I_j)=\prod_{p\mid B_j,\ h_p\ge2}p.}\tag{GIR2}$$
+
+**Proof.** Reduce the products by theta_j^3=B_j to obtain the displayed
+integral multiplication table. Hence A_j is a rank-three ring lattice,
+so every element is integral, and it is an order. On the ordered basis
+(1,theta_j,beta_j), the trace Gram matrix is
+
+$$\begin{pmatrix}3&0&1\\0&0&B_j\\1&B_j&(2B_j+1)/3\end{pmatrix}.$$
+
+Its determinant is -3B_j^2. In particular the unavoidable index-three
+correction to Z[theta_j] has already been made before testing maximality.
+
+We compute the FIELD discriminant locally. The fields Q(cuberoot(B_j))
+and Q(cuberoot(d_j)) are equal. At p!=3 with e_p=1 or 2, a root has
+p-adic valuation e_p/3, so the local cubic is irreducible and totally
+ramified. It is tame, with discriminant exponent two. At p!=3 outside
+R_j, delete the cube factor; the resulting unit cubic has unit derivative
+at its roots and is etale, so it is unramified.
+
+At three the original B_j is a cube in Q_3. Indeed B_j=1+9a_j and
+
+$$(1+3z)^3=1+9(z+3z^2+3z^3).$$
+
+The equation z+3z^2+3z^3=a_j has derivative one modulo three and a solution
+modulo three, so Hensel lifting gives z in Z_3. Consequently
+k_j tensor Q_3 is Q_3 times Q_3(omega), whose discriminant exponent is
+one. The cubic field has one real embedding and one complex pair,
+fixing the negative sign. The local tame-different formula now gives
+Delta(k_j)=-3R_j^2. The order-index/discriminant relation proves GIR1.
+These are classical discriminant mechanisms, not a new general theorem
+about pure cubic fields.
+
+At a prime of B_j the index valuation is exactly
+
+$$v_p(I_j)=\begin{cases}h_p-1,&3\nmid h_p,\\h_p,&3\mid h_p.\end{cases}$$
+
+It is zero precisely when h_p=1. Since p>5, this is precisely the
+original non-WSS condition. No prime outside B_j divides I_j, proving
+GIR2. Thus A_j is maximal iff every factor of this actual block is
+non-WSS. A different integral generator for k_j is not being ruled out.
+
+**Specialization.** If B_j=P^2 Q^3 with distinct primes, then
+k_j=Q(cuberoot(P)), Delta(k_j)=-3P^2 and I_j=P Q^3. These formulas concern
+the SPECIFIED order A_j. They do not assert that such a block exists.
+Determining its maximal order is still an arithmetic task, so GIR2 is
+not advertised as a factorization-free fast WSS decision algorithm.
+
+### GIR.2 Two simultaneous, actual non-torsion twists at every layer
+
+**Theorem GIR2.** For EVERY j, without a WSS assumption, the cubefree
+twists
+
+$$E_j^-:Y^2=X^3-3d_j^2,\qquad E_j^+:Y^2=X^3+125d_j^2$$
+
+have the explicit rational integral points
+
+$$S_j^-=(d_j c_j,d_j x_j),\qquad
+S_j^+=(5d_j c_j,25d_j f_j).\tag{GIR3}$$
+
+Both points have infinite order. The twist classes for distinct j are
+distinct. The same point formulas with d_j replaced by B_j and c_j by
+one provide integral points without a factorization of B_j.
+
+**Proof.** Substitution uses B_j=d_j c_j^3, x_j^2=B_j-3 and
+5f_j^2=B_j+1. Both abscissae are odd; the ordinate valuations at two are
+two and one. The doubling formula on Y^2=X^3+b is
+
+$$X(2S)=\frac{9X(S)^4}{4Y(S)^2}-2X(S).$$
+
+Its two-valuations here are -6 and -4. The doubles are finite and
+nonintegral. By the classical Nagell-Lutz integrality theorem they cannot
+be torsion, and hence neither original point is torsion. The same argument
+applies to the raw B_j twists. Distinct cubefree d_j have disjoint,
+nonempty support, so their ratios are not rational cubes. For curves
+Y^2=X^3+b*d_j^2 this also prevents a rational isomorphism of the twists.
+This constructs points rather than assuming a positive rank.
+
+**Theorem GIR2a (the earlier descent conditions hold on the actual family).**
+Neither S_j^- nor S_j^+ is in the rational image of the degree-three
+isogeny from E_(-27b) to E_b for its respective b=-3d_j^2 or 125d_j^2.
+
+**Proof.** The usual map is
+
+$$\varphi_b(s,t)=\left(\frac{s^3-108b}{9s^2},
+                  \frac{t(s^3+216b)}{27s^3}\right),$$
+
+and t^2=s^3-27b implies the direct identity
+
+$$Y+\sqrt b=\left(\frac{t+9\sqrt b}{3s}\right)^3.\tag{GIR4}$$
+
+A finite rational image has s!=0. On the minus curve the relevant element
+is d_j(x_j+sqrt(-3)). At a prime p with e_p!=0, the two primes above p
+in E=Q(sqrt(-3)) have valuations h_p+e_p and e_p. This uses the coprime
+factorization (x_j+sqrt(-3))(x_j-sqrt(-3))=B_j and p>5. The valuations
+are 2e_p and e_p modulo three, both nonzero. It is not a cube.
+
+For the plus curve the element is
+
+$$25d_j f_j+5d_j\sqrt5=5\sqrt5 d_j(\sqrt5 f_j+1).$$
+
+The factors sqrt(5)f_j+1 and sqrt(5)f_j-1 multiply to B_j and differ by
+two. Each p|B_j splits in the ORIGINAL golden field. Conjugation exchanges
+these factors up to sign; one prime over p has valuation h_p in the first
+factor and the other zero. After the displayed prefactor their valuations
+are again h_p+e_p and e_p. This is also not a cube. Apply GIR4. An e_p!=0
+exists by GIR.0. No Selmer-group dimension or Tate-Shafarevich claim is
+included. In particular positive rank and this nonimage condition alone
+do not isolate the hypothetical depth pattern (2,3): they occur on every
+actual layer, including the checked depth-one layers.
+
+### GIR.3 The explicit common field, signature and exact discriminants
+
+For J>=1, using the positive real roots, define
+
+$$F_J=\mathbb Q(\theta_1,\ldots,\theta_J),\qquad
+N_J=F_J(\omega),\qquad R^{(J)}=\prod_{j=1}^J R_j.$$
+
+**Theorem GIR3.** One has
+
+$$\boxed{[F_J:\mathbb Q]=3^J,\quad [N_J:\mathbb Q]=2\cdot3^J,\quad
+\operatorname{Gal}(N_J/\mathbb Q)\simeq(\mathbb Z/3)^J\rtimes C_2.}\tag{GIR5}$$
+
+Complex conjugation acts by inversion on (Z/3)^J. The field F_J has
+signature (1,(3^J-1)/2). It is contained in the reals in the chosen
+embedding, but it is NOT totally real. The exact absolute discriminants are
+
+$$\boxed{|\Delta(F_J)|=3^{(3^J-1)/2}(R^{(J)})^{2\cdot3^{J-1}},}\tag{GIR6}$$
+
+$$\boxed{|\Delta(N_J)|=3^{3^J}(R^{(J)})^{4\cdot3^{J-1}},\qquad
+\operatorname{rd}(N_J)=\sqrt3\,(R^{(J)})^{2/3}.}\tag{GIR7}$$
+
+**Proof.** If product_j B_j^(a_j) is a cube in E, choose for each j a
+prime p|B_j with 3 not dividing h_p. Valuation at either E-prime over p
+gives three dividing a_j*h_p, hence three dividing a_j. The classes of
+B_1,...,B_J in E^times/E^(times 3) are therefore independent. Kummer theory
+proves degree 3^J over E. Positive cube roots are fixed by conjugation,
+which inverts omega; the stated semidirect action follows. Since F_J is
+real in its chosen embedding, F_J intersect E=Q, proving its degree and
+identifying it with the fixed field of this conjugation. An embedding is
+real only if every positive cube root maps to its unique real conjugate.
+Thus exactly one embedding is real, giving the signature.
+
+At a rational p in R^(J), precisely one radicand has valuation nonzero
+modulo three. Over the maximal unramified local extension, units have
+cube roots since p!=3. Consequently the inertia group in N_J has exact
+order three, acting as a nonzero translation in that one coordinate.
+No other rational prime apart from three ramifies. At three every B_j
+is already a cube in Q_3 by GIR1, so a completion of N_J is exactly
+Q_3(omega); its inertia has order two and residue degree one.
+
+All this ramification is tame. For a degree n extension the tame
+discriminant exponent equals sum f*(e-1), or equivalently n minus the
+number of inertia orbits on its embeddings. The 3^J embeddings of F_J
+are labelled by (Z/3)^J. A nonzero coordinate translation has 3^(J-1)
+orbits; inversion has one fixed point and (3^J-1)/2 two-cycles. These
+counts give GIR6. On the regular action for N_J, inertia orders three
+and two give exponents 4*3^(J-1) and 3^J respectively, proving GIR7.
+Taking the 2*3^J-th root gives the root discriminant. The signature fixes
+the signed discriminants if desired; GIR6-GIR7 report absolute values.
+No bounded-root-discriminant assertion is made as J increases.
+
+### GIR.4 Explicit independent points on TWO fixed elliptic curves
+
+Now fix the curves once and for all:
+
+$$\mathcal E^-:y^2=x^3-3,\qquad\mathcal E^+:y^2=x^3+125.$$
+
+**Theorem GIR4.** The ACTUAL points
+
+$$P_j^-=(\theta_j,x_j),\qquad
+P_j^+=(5\theta_j,25f_j)\quad(1\le j\le J)\tag{GIR8}$$
+
+belong to their respective fixed curves over F_J. For either sign these
+J points are Z-linearly independent, even modulo the points over Q.
+Over N_J, with iota(x,y)=(omega*x,y), the 2J points
+P_j^sign, iota(P_j^sign) are Z-linearly independent, even modulo the
+points over E. In particular
+
+$$\boxed{\operatorname{rank}\mathcal E^\pm(F_J)
+\ge\operatorname{rank}\mathcal E^\pm(\mathbb Q)+J,}\tag{GIR9}$$
+
+$$\boxed{\operatorname{rank}\mathcal E^\pm(N_J)
+\ge\operatorname{rank}\mathcal E^\pm(E)+2J.}\tag{GIR10}$$
+
+Both fixed curves consequently have infinite rank over the explicit
+union of the F_J. The cost is the displayed growing degree 3^J, not a
+fixed number field or a uniformly bounded-degree construction.
+
+**Proof.** Membership is exactly x_j^2=B_j-3 and
+625 f_j^2=125(B_j+1). Over k_j, divide the coordinates of the raw B_j
+version of GIR3 by theta_j^2 and theta_j^3=B_j. This is an isomorphism
+from the rational twist to the indicated fixed curve, so GIR2 proves
+that every P_j is non-torsion.
+
+Let sigma_j in Gal(N_J/E) multiply theta_j by omega and fix all other
+cube roots. Then sigma_j P_j=iota P_j and sigma_j P_i=P_i for i!=j.
+The three points P,iota P,iota^2 P lie on a horizontal line, so
+1+iota+iota^2=0 as endomorphisms, and
+
+$$(\iota-1)(\iota^2-1)=[3],\qquad
+(a+b\iota)(a+b\iota^2)=[a^2-ab+b^2].\tag{GIR11}$$
+
+Given sum a_i P_i equal to a rational point, apply sigma_j-1 and then
+iota^2-1. It follows that [3a_j]P_j=O. Non-torsion forces a_j=0 for
+all j. This proves the first independence, including modulo rational
+points and torsion after multiplying a putative relation by its order.
+
+For a relation sum_j(a_j+b_j iota)P_j equal to an E-rational point,
+apply sigma_j-1, then iota^2-1, then a_j+b_j iota^2. This yields
+[3(a_j^2-a_j*b_j+b_j^2)]P_j=O. Non-torsion and the positive integer norm
+force a_j=b_j=0. This proves the stronger independence and the rank bounds.
+Every point and every isolating automorphism is specified; no rank oracle,
+BSD assumption or independence heuristic is an input.
+
+### GIR.5 The constructed height lattice is explicitly orthogonal
+
+Use one fixed absolute normalization of the canonical height and put
+H_j^sign=hat(h)(P_j^sign)>0. This section concerns only the subgroup just
+constructed, with its induced height pairing.
+
+**Theorem GIR5.** Different layers are orthogonal, including all their
+CM rotations. For either fixed curve the Gram matrix on the 2J points
+in GIR4 is block diagonal with j-th block
+
+$$H_j\begin{pmatrix}1&-1/2\\-1/2&1\end{pmatrix},$$
+
+and hence its determinant is
+
+$$\boxed{(3/4)^J\prod_{j=1}^J H_j^2>0.}\tag{GIR12}$$
+
+The Gram matrix on the J real points is diagonal with entries H_j.
+
+**Proof.** Canonical height and its bilinear pairing are Galois invariant;
+iota preserves the height since its x-coordinate multiplier is a root
+of unity. If i!=j, sigma_j fixes the i-th point and cycles the three
+j-th points, so all three pairings are equal. Their sum is zero by
+1+iota+iota^2=0, proving orthogonality. For one layer,
+P+iota P=-iota^2 P has the same height H as P. Bilinearity gives
+H=2H+2<P,iota P>, hence the off-diagonal entry -H/2. Compute each
+2-by-2 determinant and multiply. This is the determinant of the generated
+sublattice, NOT a full Mordell-Weil regulator: neither saturation nor a
+basis of all rational points has been established. No numerical canonical
+height computation is claimed.
+
+### GIR.6 What has been constructed and what remains arithmetic
+
+GIR supplies positive witnesses, not only a condition on a hypothetical
+WSS prime: there are J independent points on each of TWO fixed curves
+over the same specified degree-3^J field, and their CM companions give
+2J over its normal closure. The construction retains the actual B_j,
+with exact discriminants and an order whose index detects precisely the
+original WSS factors in each block. The raw construction of the fields,
+points and order uses the recurrence without factoring B_j.
+
+The index/discriminant formulas still contain the true depths. They do
+not force I_j=1 or I_j>1 at a new layer. The positive-rank and nonimage
+properties hold for the entire actual family and therefore do not alone
+exclude the minimal all-WSS pattern. No new integer WSS witness, decided
+WSS prime family, uniform rational-rank result over Q, or new solved
+externally stated open problem is claimed. The two fixed curves, the
+explicit independent points, and the exact degree/discriminant/index
+statements are the mathematical outputs of this continuation.
+
+### GIR.7 Classical sources and prior-art boundary
+
+Maciej Ulas, *A note on higher twists of elliptic curves*, Glasgow
+Mathematical Journal 52 (2010), 371-381, DOI 10.1017/S0017089510000066:
+https://www.cambridge.org/core/journals/glasgow-mathematical-journal/article/note-on-higher-twists-of-elliptic-curves/611411025610A3311F8E614F0BF08AED .
+The publisher abstract already gives simultaneous positive cubic twists
+for any pair of rational j=0 elliptic curves over Q(u,v). Thus simultaneous
+twisting is prior art. Only that abstract's scope was used in this check;
+no unread numbered theorem or uniform specialization assertion is invoked.
+GIR proves its prescribed golden integer family, common tower, point
+independence and exact discriminants directly. Global priority of this
+specialization has not been established.
+
+Andrew V. Sutherland, MIT 18.785, Fall 2021, Lecture 12, Section 12.4,
+Theorem 12.27 and Proposition 12.28:
+https://math.mit.edu/classes/18.785/2021fa/LectureNotes12.pdf .
+These are the order-index/discriminant relation, tame different exponent
+e-1 and tower law. Their parsed statements were read. The requested page
+images failed to load, so no successful visual verification is asserted.
+The pure-cubic and tower specializations in GIR1/GIR3 are proved locally
+above, rather than attributed as new general discriminant formulae.
+
+Andrew V. Sutherland, MIT 18.782, Fall 2013, Lecture 24, Theorem 24.21:
+https://math.mit.edu/classes/18.782/2013fa/LectureNotes24.pdf .
+The parsed Nagell-Lutz integrality theorem was read; its page-image fetch
+also failed. Only integrality of rational torsion on the stated integral
+short Weierstrass model is used, after the actual double is computed.
+
+Milne's Kummer Theorem 5.30 and Remark 5.32, already located above, are
+used after proving independence of the actual block cube classes. The
+page image of printed page 76 was successfully inspected in this pass.
+The normalized canonical-height pairing used in GIR5 is also recorded
+in John Cremona's reviewed LMFDB entry:
+https://www.lmfdb.org/knowledge/show/ec.canonical_height .
+The Gram determinant is derived here; no regulator value is taken from
+a table or from a rank computation. These are ordinary proofs, with no
+Lean kernel certification, independent-model review or priority claim.
