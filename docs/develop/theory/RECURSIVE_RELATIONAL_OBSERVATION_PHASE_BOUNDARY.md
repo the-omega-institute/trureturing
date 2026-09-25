@@ -1,4 +1,4 @@
-# 递归关系观察：共同相位谱与精确接收边界
+# 递归关系观察：共同相位谱与接收边界
 
 ## 1. 同一相位来源与完整联合接收
 
@@ -272,3 +272,194 @@ c_t=F_{t+1}=1,2,3,5,\ldots.
 [^phase_bcz]: Robin Blume-Kohout, Sarah Croke and Michael Zwolak, *Ideal state discrimination with an O(1)-qubit quantum computer*, [arXiv:1201.6625](https://arxiv.org/abs/1201.6625), Section II。相干逐步接收复用其前缀支撑与等距延拓机制；此处的未知相位族及式（2.7）、（3.5）、（4.2）须由对应计算给出。
 
 ## 4.99 追加锚
+
+## 5. 正误差下的共同相位容量与荷涨落
+
+**定义 5.1（统一联合近似接收）。** 保留定义1.1—1.2的来源、权限及全部接收资源计数，固定等权 \(c_t=1\) 和全部候选相位 \(\Theta=\mathbb R/(2\pi\mathbb Z)\)。对 \(0<\epsilon<1\)，以 \(k_n^{(\epsilon)}\) 表示满足
+\[
+\sup_{\vartheta,J,\rho}
+\frac12\left\|
+(\operatorname{id}_J\otimes\mathcal D_n\mathcal E_n\otimes\operatorname{id}_M)
+\Omega_{\vartheta,n}(\rho)-\Omega_{\vartheta,n}(\rho)
+\right\|_1\le\epsilon
+\tag{5.1}
+\]
+的最小 \(\dim K\)。上确界取所有有限参考及其允许联合输入，编解码不依赖其中任何未知量。本节优化一个已指定终端的接收；没有要求近似编码同时实现逐位清空或无界前缀服务。
+
+记
+\[
+p=\alpha^2,\quad \mu=\frac p{1+p},\quad
+h_r=\frac{1-(-p)^r}{1+p},\quad
+V_n=\sum_{r=1}^{n-1}h_r^2,\quad
+b_n=n\mu+\left(\frac12-\mu\right)h_n.
+\tag{5.2}
+\]
+有 \(0<h_r\le1\) 及 \(V_n\le n-1\)。定义
+\[
+t_{n,\epsilon}=\sqrt{\frac{V_n}{2}\log\frac4{\epsilon^2}},\qquad
+\mathcal A_{n,\epsilon}
+=\left\{q\in\mathbb Z:
+|q-b_n|\le\frac{h_n}{2}+t_{n,\epsilon}\right\},\qquad
+r_{n,\epsilon}=\sum_{i,j}|\mathcal Q_n^{ij}\cap\mathcal A_{n,\epsilon}|.
+\tag{5.3}
+\]
+对数取自然底。\(r_{n,\epsilon}\) 计算实际保留的首末扇区与荷，不计算全部具有该荷的词数。
+
+**定理 5.2（保留总荷窗口的联合接收上界）。** 对 \(n\ge2\)，
+\[
+\boxed{k_n^{(\epsilon)}\le
+\min\{2n-1,r_{n,\epsilon}+1\}
+\le\min\{2n-1,8t_{n,\epsilon}+9\}.}
+\tag{5.4}
+\]
+达到第一项中的近似上界时，保留每个 \((i,j,q)\) 的完整相干向量 \(g_{ijq}\)，另用一维记录失败分支。这里没有把实际相干词测量成经典词档案。
+
+证明。对固定首位 \(i\)，在计算基中读取档案词时，其概率是 \(A(w)^2\)。由（1.1），后续位 \(X_t\) 是转移矩阵
+\[
+P=\begin{pmatrix}\alpha&p\\1&0\end{pmatrix}
+\tag{5.5}
+\]
+的二态 Markov 链，\(X_1=i\)。相位只改变振幅的相位，不改变这些概率。设 \(S_n=\sum_{t=1}^nX_t\)。条件期望递推给
+\[
+\mathbb E_iX_t=\mu+(i-\mu)(-p)^{t-1},\qquad
+\mathbb E_iS_n=n\mu+(i-\mu)h_n.
+\tag{5.6}
+\]
+所以两个初态均值与 \(b_n\) 的距离都是 \(h_n/2\)。
+
+逐位揭示 \(X_2,\ldots,X_n\)，取终值 \(S_n\) 的 Doob 鞅。在已知到第 \(t-1\) 位的同一历史下，若 \(X_t\) 的两个取值均可达，它们所给条件期望之差为
+\[
+1-p+p^2-\cdots+(-p)^{n-t}=h_{n-t+1}.
+\tag{5.7}
+\]
+若只有一个取值可达，差为零。因此第 \(t\) 个鞅增量的条件取值区间宽度至多 \(h_{n-t+1}\)。标准条件 Hoeffding 指数估计逐步相乘并优化指数参数，给出 Azuma—Hoeffding 双尾界[^phase_azuma]
+\[
+\Pr_i\{|S_n-\mathbb E_iS_n|\ge u\}
+\le2\exp(-2u^2/V_n).
+\tag{5.8}
+\]
+由（5.3）、（5.6）和（5.8），对两个 \(i\) 都有
+\[
+\Pr_i\{S_n\notin\mathcal A_{n,\epsilon}\}
+\le\delta:=\epsilon^2/2.
+\tag{5.9}
+\]
+
+令 \(P_{\mathcal A}\) 投影到所保留的 \(g_{ijq}\) 的线性包，其秩是 \(r_{n,\epsilon}\)。由于不同首位扇区正交，
+\[
+T_{\vartheta,n}^*[(I-P_{\mathcal A})\otimes I_M]T_{\vartheta,n}
+=\operatorname{diag}\bigl(
+\Pr_0\{S_n\notin\mathcal A_{n,\epsilon}\},
+\Pr_1\{S_n\notin\mathcal A_{n,\epsilon}\}\bigr)
+\preceq\delta I_M.
+\tag{5.10}
+\]
+这里相同首位内的不同末位及荷扇区也正交，且 \(\|m_j\|=1\)，故对角项正是所列概率。式（5.10）对任意初始相干、混合及外部参考同时控制失败质量，未把初始联合态替换为独立或对角来源。
+
+取保留子空间到 \(\mathbb C^{r_{n,\epsilon}}\) 的等距 \(F\)，另添正交旗标 \(|\bot\rangle\)，定义全域通道
+\[
+\mathcal E(X)=FP_{\mathcal A}XP_{\mathcal A}F^*
++\operatorname{Tr}[(I-P_{\mathcal A})X]|\bot\rangle\langle\bot|.
+\tag{5.11}
+\]
+解码在成功块使用逆等距，在失败块输出任意固定档案密度矩阵；成功、失败块之间的非对角项置零。这些映射完全正且保迹，旗标包含在 \(K\) 内。
+
+先把初始联合态纯化，并把纯化空间归入参考。对实际纯目标 \(|\psi\rangle\)，若失败质量为 \(d\le\delta\)，恢复态的成功项是
+\((P_{\mathcal A}\otimes I)|\psi\rangle\langle\psi|(P_{\mathcal A}\otimes I)\)，其与目标的重叠为 \((1-d)^2\)，失败项再贡献非负重叠。纯目标的迹距离—保真度不等式[^phase_fvg]因而给
+\[
+\frac12\|\rho_{\rm recovered}-|\psi\rangle\langle\psi|\|_1
+\le\sqrt{1-(1-d)^2}\le\sqrt{2\delta}=\epsilon.
+\tag{5.12}
+\]
+丢弃额外纯化参考不会增加迹距离，于是（5.1）成立。
+
+窗口半宽为 \(h_n/2+t_{n,\epsilon}\)，其中的整数个数至多 \(h_n+2t_{n,\epsilon}+1\le2t_{n,\epsilon}+2\)。四扇区加旗标遂给 \(r_{n,\epsilon}+1\le8t_{n,\epsilon}+9\)。也可直接用定理3.2的 \(2n-1\) 维精确编码，取两者较小得到（5.4）。证明完毕。
+
+**定理 5.3（任意物理编码的相位区分下界）。** 对 \(n\ge4\)，
+\[
+\boxed{k_n^{(\epsilon)}\ge
+\frac{1-\epsilon}{2\sqrt\pi}
+\sqrt{\alpha^3\left\lfloor\frac{n-1}{3}\right\rfloor}.}
+\tag{5.13}
+\]
+下界允许任意满足定义5.1的 CPTP 编解码，不限制为投影、荷窗口或相位协变通道。
+
+证明。只取合法 Bell 输入，其实际联合纯态为（2.9）。把不可访问的 \(JM\) 合记为四维 \(R\)。按总荷分组有
+\[
+|\Psi_\vartheta\rangle=\sum_qe^{iq\vartheta}|v_q\rangle,
+\qquad \langle v_q,v_{q'}\rangle=0\quad(q\ne q').
+\tag{5.14}
+\]
+对全圆相位取数学平均，得到
+\[
+\overline\Omega=\frac1{2\pi}\int_{-\pi}^{\pi}
+|\Psi_\vartheta\rangle\langle\Psi_\vartheta|\,d\vartheta
+=\sum_q|v_q\rangle\langle v_q|,
+\qquad
+\|\overline\Omega\|_\infty=\max_q\Pr\{S_n=q\}.
+\tag{5.15}
+\]
+右侧是（5.5）中初位均匀的链；这是实际 Bell 来源的荷分布，不是给接收器增加相位读数或准备权限。
+
+先估计此分布的最大点质量。置 \(z=e^{it}\)、\(A(t)=P\operatorname{diag}(1,z)\)，并用最大绝对行和范数。直接相乘得
+\[
+A(t)^2=
+\begin{pmatrix}
+\alpha^2(1+z)&\alpha^3z\\
+\alpha&\alpha^2z
+\end{pmatrix}.
+\tag{5.16}
+\]
+令 \(c=|\cos(t/2)|\)。两行绝对和分别为 \(1-2\alpha^2(1-c)\) 和一；再左乘 \(A(t)\)，逐行三角不等式给
+\[
+\|A(t)^3\|_\infty
+\le1-2\alpha^3(1-c)
+\le1-\alpha^3\sin^2(t/2),\qquad
+\|A(t)\|_\infty=1.
+\tag{5.17}
+\]
+取 \(m=\lfloor(n-1)/3\rfloor\ge1\)。荷的特征函数是
+\(\frac12(1,e^{it})A(t)^{n-1}(1,1)^{\mathsf T}\)，故其绝对值至多
+\(\exp[-m\alpha^3\sin^2(t/2)]\)。整数 Fourier 反演和 \(\sin(|t|/2)\ge|t|/\pi\) 对 \(|t|\le\pi\) 给
+\[
+\max_q\Pr\{S_n=q\}
+\le\frac1{2\pi}\int_{-\pi}^{\pi}
+ e^{-m\alpha^3\sin^2(t/2)}\,dt
+\le\frac{\sqrt\pi}{2\sqrt{m\alpha^3}}=:\beta_n.
+\tag{5.18}
+\]
+
+现取任何 \(k\) 维接收器，令其编码后的 \(KR\) 态为 \(\tau_\vartheta\)，恢复态为 \((\mathcal D\otimes\operatorname{id}_R)(\tau_\vartheta)\)。由 \(0\preceq\tau_\vartheta\preceq I_{KR}\)，以及解码对偶的正性，其目标重叠满足
+\[
+f_\vartheta
+\le\operatorname{Tr}\bigl[(\mathcal D^*\otimes\operatorname{id}_R)
+(|\Psi_\vartheta\rangle\langle\Psi_\vartheta|)\bigr].
+\tag{5.19}
+\]
+（5.1）对目标纯态投影这个效果给 \(f_\vartheta\ge1-\epsilon\)。积分（5.19），再用（5.15）、（5.18）及 \(\mathcal D^*(I)=I_K\)，得到
+\[
+1-\epsilon\le
+\operatorname{Tr}[(\mathcal D^*\otimes\operatorname{id}_R)(\overline\Omega)]
+\le\beta_n\operatorname{Tr}I_{KR}=4k\beta_n.
+\tag{5.20}
+\]
+代入 \(\beta_n\) 即得（5.13）。保留的四维参考已明确计入此下界估计，没有把它当成可访问的编码寄存器。证明完毕。
+
+**定理 5.4（同一来源的精确容量与正误差容量分离）。** 对定义5.1的同一来源及任意固定 \(0<\epsilon<1\)，存在只依赖 \(\epsilon\) 的正常数 \(a_\epsilon,b_\epsilon\)，使全部 \(n\ge4\) 满足
+\[
+\boxed{a_\epsilon\sqrt n\le k_n^{(\epsilon)}\le b_\epsilon\sqrt n,
+\qquad k_n^{(0)}=2n-1.}
+\tag{5.21}
+\]
+
+证明。上界由（5.4）及 \(V_n\le n-1\) 得到；下界由（5.13）及 \(\lfloor(n-1)/3\rfloor\ge n/6\) 对 \(n\ge4\) 成立得到；精确值是定理3.2。以 qubit 数 \(\lceil\log_2 k\rceil\) 计量时，前者为 \(\frac12\log_2n+O_\epsilon(1)\)，后者为 \(\log_2n+O(1)\)。未知量子时钟的频率投影与近似压缩已有先例；[^phase_clock] 此处由相关合法词的（5.6）—（5.10）和三步转移消去（5.16）—（5.18），在同一不可访问参考与活动记忆的联合合同中取得两侧界。
+
+因此，精确容量计算的是全部独立相位字符，固定正误差容量则可只保留承载主要概率质量的相干荷方向。式（5.21）不改变第2—4节的零误差结算，也不推出无限深度顺序接收的同一误差保证；窗口在各终端的截断误差尚未证明可在同一在线接收过程中无积累地拼接。证明完毕。
+
+[^phase_azuma]: Kazuoki Azuma, *Weighted sums of certain dependent random variables*, Tohoku Mathematical Journal **19** (1967), 357–367，[doi:10.2748/tmj/1178243286](https://doi.org/10.2748/tmj/1178243286)。式（5.8）使用条件取值区间宽度版本的标准鞅指数估计；本源的均值、区间宽度及量子联合失败算子由（5.6）、（5.7）、（5.10）给出。
+
+[^phase_fvg]: Christopher A. Fuchs and Jeroen van de Graaf, *Cryptographic Distinguishability Measures for Quantum-Mechanical States*, IEEE Transactions on Information Theory **45** (1999), 1216–1227，[doi:10.1109/18.761271](https://doi.org/10.1109/18.761271)，[arXiv:quant-ph/9712042](https://arxiv.org/abs/quant-ph/9712042)。式（5.12）使用其中的迹距离与保真度关系，并将目标取为联合纯态。
+
+[^phase_clock]: Yuxiang Yang, Giulio Chiribella and Masahito Hayashi, *Compression for Qubit Clocks*, [arXiv:2209.06519](https://arxiv.org/abs/2209.06519)。该文的频率投影用于独立同分布 qubit 时钟的渐近近似压缩；本节的来源为（1.1）的相关发射，误差合同为（5.1），上下界均按该来源重新计算。
+
+## 5.99 追加锚
