@@ -1471,3 +1471,273 @@ $`N(0,c_0)`$ 与 $`N(0,c_1(\vartheta))`$，两方差严格为正。
 所以过程极限、独立关系和外窗口不紧性一并转移。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 42. 收缩噪声的 Sobolev 极限与总变差发散
+
+**定义 42.1（同一聚簇的带符号测度）。** 采用定义 39.1 的固定幅度、固定
+$`\beta\in(1/2,1)`$ 及原序列 $`\lambda=Q^3`$，并保留第 40 章的同一数据、标签、
+精确后验、窗口 $`J`$、完整端点 $`Y_M`$ 和轮廓 $`L_M`$。
+置
+
+```math
+\delta_M=\frac Q{\sqrt\lambda}=Q^{-1/2},\qquad
+B_M=\sqrt{\frac q{Q\sqrt\lambda}},\qquad
+u_i=\frac{W_i-\tau}w,\qquad
+\mu_M=\frac1{B_M}\sum_{i\in J}
+       (\mathbf1_{\{i\in S\}}-\pi_i)\delta_{u_i}.
+```
+
+式 (42.1)。
+
+$`\delta_x`$ 表示位置 $`x`$ 的单位点质量。把 $`(-1,1]`$ 嵌入圆周
+$`\mathbb T_4=\mathbb R/(4\mathbb Z)`$，相同得分的标签先合成一个原子。
+因此 $`\mu_M(\mathbb T_4)=Y_M`$，其总变差范数是完整得分组的中心化标签和的绝对值之和。
+未知方向时，全部工作坐标共同使用第 40 章的一次方向判决。
+
+固定 $`s\gt1/2`$。实 Hilbert 空间 $`H^{-s}(\mathbb T_4)`$ 取满足共轭对称条件的
+加权平方可和 Fourier 序列，并采用如下范数约定：
+
+```math
+\widehat\nu(k)=\int_{\mathbb T_4}e^{-\pi iku/2}\,d\nu(u),\qquad
+\|\nu\|_{-s}^2=\sum_{k\in\mathbb Z}(1+k^2)^{-s}|\widehat\nu(k)|^2,
+\qquad \widehat\nu(-k)=\overline{\widehat\nu(k)}.
+```
+
+式 (42.2)。
+
+此约定不另含圆周长度因子。有限实带符号测度按其 Fourier 系数嵌入该空间。
+仍取 $`\rho(x)=c_0e^{-\kappa x^2/2}`$，其中
+$`c_0=1/(4\pi\sqrt{ab})`$，$`\kappa=1/a+\alpha^2/b`$，$`D=ab\kappa`$。
+
+**定理 42.2（同一高斯点质量与发散的组变差）。** 对两个实际实验及两种方向信息情形，
+以下结论均对固定支持一致成立：
+
+```math
+\|\mu_M-Y_M\delta_0\|_{-s}\longrightarrow0\quad\text{依概率},\qquad
+\sqrt{\delta_M}\,\|\mu_M\|_{\mathrm{TV}}
+\longrightarrow C_*:=\sqrt{\frac2\pi}\frac{(ab)^{1/4}}{\sqrt D}
+\quad\text{依概率}.
+```
+
+式 (42.3)。
+
+它们与定理 40.2 的完整端点、任意固定紧区间轮廓和桥，以及其中有限个原有场坐标联合成立。
+特别地，在第 40 章的同一个 Brownian 实现中，
+
+```math
+(Y_M,L_M(\cdot),\mu_M,\sqrt{\delta_M}\|\mu_M\|_{\mathrm{TV}})
+\Longrightarrow
+(\mathcal W(\gamma),\mathcal W(V(\cdot)),
+ \mathcal W(\gamma)\delta_0,C_*),\qquad
+\gamma=\frac1{2\sqrt{2\pi}\sqrt D}.
+```
+
+式 (42.4)。
+
+测度坐标使用 $`H^{-s}`$ 范数拓扑，轮廓使用固定紧区间上的 $`J_1`$ 拓扑。
+点质量的幅度就是完整端点，并非另取的独立正态变量。
+同时 $`\|\mu_M\|_{\mathrm{TV}}/Q^{1/4}\to C_*\gt0`$ 依概率。
+此处不宣称实际矩收敛；若 $`s\le1/2`$，非零点质量不属于 (42.2) 的空间，
+因而不能用同一空间表述 (42.4)。
+
+证明。取第 39 章的共同全行计数截断事件，其概率趋于一。
+该事件上，$`J`$ 恰为直线计数组，任意出现的组可写成
+$`(k_0+tQ,l_0+tP)`$，$`t\in\mathbb Z`$，并且
+
+```math
+x_{M,t}=t\delta_M,\qquad
+u_{M,t}=\frac{W_c+t\Delta-\tau}w,\qquad
+\max_{i\in J}|u_i|\le a_M\longrightarrow0.
+```
+
+式 (42.5)。
+
+这里 $`a_M`$ 可取确定量：截断上原始得分差为
+$`O(\lambda e^{-Q^4})`$，补偿差为 $`O(\epsilon\lambda)`$，取整差为 $`O(q^{-1})`$，
+它们除以 $`w`$ 全部趋零。$`\Delta\gt0`$ 保证不同计数组对应不同原子。
+截断外事件只用于概率误差，不据此转移无界统计量的期望。
+
+记 $`K_s=\sum_k(1+k^2)^{-s}\lt\infty`$。直接由 Fourier 系数得到
+
+```math
+\|\delta_u\|_{-s}^2=K_s,\qquad
+\omega_s(a):=\sup_{|u|\le a}\|\delta_u-\delta_0\|_{-s}^2
+=\sup_{|u|\le a}\sum_{k\in\mathbb Z}(1+k^2)^{-s}
+                  |e^{-\pi iku/2}-1|^2\longrightarrow0
+\quad(a\downarrow0).
+```
+
+式 (42.6)。
+
+最后一步对每个有限频率集用连续性，再用 $`4(1+k^2)^{-s}`$ 控制余项。
+这也证明点质量映射可测且范数连续；$`s\le1/2`$ 时同一 Fourier 和发散。
+
+给定数据，在校准乘积律 $`\mathsf Q_M`$ 下令标签为相互独立的
+$`\zeta_i\sim\mathrm{Bernoulli}(p_i)`$。
+独立中心化使 Hilbert 内积的交叉项消失，因此在 (42.5) 的事件上
+
+```math
+\mathbb E_{\mathsf Q_M}\left\|
+ \frac1{B_M}\sum_{i\in J}(\zeta_i-p_i)(\delta_{u_i}-\delta_0)
+ \right\|_{-s}^2
+\le\frac{d_J}{B_M^2}\omega_s(a_M)\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (42.7)。
+
+用到了 $`d_J/B_M^2\to\gamma`$。条件 Markov 不等式使相应条件概率趋零；
+概率的有界性允许取数据期望。这是辅助乘积律下的二阶矩计算。
+
+精确中心的转移同时控制所有系数。令
+$`e_M=(d_J+\sqrt{d_J})/q+q^{-1/2}=o_{\mathbb P}(1)`$。
+把 (35.12) 分别用于固定环境中 $`\pi_i-p_i`$ 为正和为负的子集，得到
+
+```math
+\sum_{i\in J}|\pi_i-p_i|\le2C\sqrt{d_J}\,e_M,\qquad
+\frac1{B_M}\sum_{i\in J}|\pi_i-p_i|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (42.8)。
+
+该不等式允许子集依赖数据，因为原界对固定环境的全部子集同时成立。
+由 (42.6)，(42.8) 控制测度中心和端点点质量中心的 Hilbert 位移。
+再将整窗标签向量一次性从 $`\mathsf Q_M`$ 转移到精确后验，
+总变差比较只用于 (42.7) 所控制的事件概率，即证明 (42.3) 的第一式。
+
+为证明第二式，需要逐组占据数而不仅是累计方差。
+令 $`C_{M,t}`$ 为第 $`t`$ 个直线计数组的实际行数，
+$`m_{M,t}=qQ_r(E_t)+(M-q)Q_{-\epsilon}(E_t)`$ 为其比较混合均值。
+对每个固定 $`R\gt0`$，一致 Stirling 展开与截断上的精确换测度给出
+
+```math
+\sup_{|x_{M,t}|\le R}
+ \left|\frac{m_{M,t}}{4(q/\lambda)\rho(x_{M,t})}-1\right|\to0.
+```
+
+式 (42.9)。
+
+该范围内全部计数最终合法。置 $`\eta_M=(\log M)^3/(2M)`$。
+实际一行、两行比较对这些随参数变化的确定事件仍一致成立，故对任意充分大的固定 $`D_0`$，
+
+```math
+|\mathbb E C_{M,t}-m_{M,t}|
+ \le C\eta_Mm_{M,t}+CM^{1-D_0},\qquad
+\mathrm{Var}(C_{M,t})
+ \le C\bigl(m_{M,t}+\eta_Mm_{M,t}^2+M^{2-D_0}\bigr).
+```
+
+式 (42.10)。
+
+紧区间组数为 $`O_R(\delta_M^{-1})`$，而最小均值至少为 $`c_Rq/\lambda`$。
+Chebyshev 不等式及并集界适用，因为
+$`\delta_M^{-1}(\lambda/q+\eta_M+M^{2-D_0}\lambda^2/q^2)\to0`$。
+因此逐组相对误差的最大值依概率趋零。
+同组概率 $`p_t`$ 相同，且校准给出整个 $`J`$ 上 $`p_t\to1/2`$ 一致成立。
+记 $`d_{M,t}=C_{M,t}p_t(1-p_t)`$，利用 $`B_M^2\delta_M=q/\lambda`$ 得
+
+```math
+\sup_{|x_{M,t}|\le R}
+ \left|\frac{d_{M,t}}{B_M^2\delta_M\rho(x_{M,t})}-1\right|
+ \longrightarrow0\quad\text{依概率}.
+```
+
+式 (42.11)。
+
+给定数据，令 $`S_{M,t}=\sum_{i\in J_t}(\zeta_i-p_i)`$。
+不同组在 $`\mathsf Q_M`$ 下独立，且紧区间内最小 $`d_{M,t}`$ 趋于无穷。
+归一化单标签增量至多为 $`d_{M,t}^{-1/2}`$，有界独立数组中心极限定理给出组和的正态极限。
+归一化组和的二阶矩恒为一，使其绝对值一致可积。
+若绝对一阶矩收敛在紧区间组中不一致，选取一列失败的组，
+上述两条界仍成立，从而得到矛盾。因此
+
+```math
+\sup_{|x_{M,t}|\le R}
+ \left|\frac{\mathbb E_{\mathsf Q_M}|S_{M,t}|}{\sqrt{d_{M,t}}}
+       -\sqrt{\frac2\pi}\right|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (42.12)。
+
+(42.11) 与网格 $`\delta_M`$ 的 Riemann 和遂给出
+
+```math
+\frac{\sqrt{\delta_M}}{B_M}
+ \sum_{|x_{M,t}|\le R}\mathbb E_{\mathsf Q_M}|S_{M,t}|
+\longrightarrow\sqrt{\frac2\pi}\int_{-R}^R\sqrt{\rho(x)}\,dx,
+\qquad
+\mathrm{Var}_{\mathsf Q_M}\left(
+ \frac{\sqrt{\delta_M}}{B_M}\sum_{|x_{M,t}|\le R}|S_{M,t}|
+\right)\le\frac{\delta_Md_J}{B_M^2}\to0
+```
+
+式 (42.13)。
+
+均为依概率结论。方差界使用组间独立性及
+$`\mathrm{Var}|S_{M,t}|\le\mathbb E S_{M,t}^2=d_{M,t}`$。
+
+以下尾部界保证可以令 $`R\to\infty`$。
+只计入固定线性计数截断中的确定直线组。
+当两计数均不小于各自信号均值的一半时，Poisson 点概率界及实际一行比较给出
+
+```math
+\mathbb E C_{M,t}\le C\frac q\lambda e^{-c x_{M,t}^2}+CM^{1-D_0}.
+```
+
+式 (42.14)。
+
+背景项通过截断直线上的 $`W=\tau+o(1)`$ 换测度，不能在未截断尾部直接使用此近似。
+由 $`\mathbb E_{\mathsf Q_M}|S_{M,t}|\le\sqrt{C_{M,t}}/2`$ 及 Jensen 不等式，
+(42.14) 的高斯项在所需归一化下至多贡献
+
+```math
+C\delta_M\sum_{|t\delta_M|\gt R}e^{-c(t\delta_M)^2/2}.
+```
+
+式 (42.15)。
+
+其先取样本上极限再令 $`R\to\infty`$ 为零。
+截断中总组数为 $`O(\lambda/Q)`$；(42.14) 的加性误差贡献至多为
+$`C(\lambda/Q)\sqrt{\delta_M}M^{(1-D_0)/2}/B_M=o(1)`$。
+若某个计数低于其均值一半，信号边缘尾界为 $`e^{-c\lambda}`$，
+换测度后的混合均值至多 $`Cqe^{-c\lambda}+CM^{1-D_0}`$。
+这些组的平方根和贡献至多为 $`C\lambda e^{-c\lambda/2}+o(1)`$，
+因为 $`\sqrt{\delta_M}\sqrt q/B_M=Q`$。
+截断外则使用全行事件的 $`o(1)`$ 概率误差。
+于是条件 Markov 不等式和上述数据期望界证明
+
+```math
+\lim_{R\to\infty}\limsup_M
+ \mathbb E\left[\frac{\sqrt{\delta_M}}{B_M}
+   \sum_{\substack{|x_{M,t}|\gt R\\\text{截断内}}}
+        \mathbb E_{\mathsf Q_M}|S_{M,t}|\right]=0.
+```
+
+式 (42.16)。
+
+这是平方根强度尾界，不能由累计方差收敛单独推出。
+与 (42.13) 合并，辅助组变差依概率收敛到
+$`\sqrt{2/\pi}\int_{\mathbb R}\sqrt{\rho(x)}\,dx`$。
+由高斯积分及 $`D=ab\kappa`$，
+
+```math
+\int_{\mathbb R}\sqrt{\rho(x)}\,dx
+=2\sqrt{\frac\pi\kappa}\sqrt{c_0}
+=\frac{(ab)^{1/4}}{\sqrt D}.
+```
+
+式 (42.17)。
+
+隔离事件上各组位置不同，故上述组绝对值之和恰是辅助带符号测度的总变差。
+一次整窗后验比较转移其收敛事件，(42.8) 则控制替换精确中心引起的总变差误差。
+再乘 $`\sqrt{\delta_M}`$ 仍趋零，证明 (42.3) 的第二式。
+
+两条依概率近似与第 40 章的完整联合极限用 Slutsky 定理结合，得到 (42.4) 及桥、原有场的扩展。
+所有条件乘积律和后验论证先在均匀支持先验空间进行。
+共同置换等变使整个无条件律等于每个固定支持的律；实际行界保持支持一致性。
+一次共同方向判决的正确事件同时保留测度、组变差和全部既有坐标，
+其补事件概率趋零，因此两种方向信息情形同样成立。∎
+
+## 追加锚（本行以下为增补区）
