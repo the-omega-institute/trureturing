@@ -47180,3 +47180,176 @@ T'=T_0\big|_{\operatorname{ran}R}\oplus(-I_{\mathcal U}),
 证明。 非临界下界 $`d\ge3r`$ 排除 $`r=d`$，并在 $`d\le5`$ 时强制 $`r=1`$。临界下界 $`d\ge r+1`$ 同样排除满秩；在 $`d=3`$ 时，混态只可能有 $`r=2`$。临界点存在的参数条件由定理214.2给出，定理216.3以三维达到该秩二情形。这里的存在是关于可选择的处理器，不声称每一个三维处理器都具有这样的校准。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 217. 多点指定秩的谱重数与共同程序维数
+
+**定义 217.1（尖锐集合上的秩轮廓）。** 固定 $`0<a<1`$、非空有限集合 $`S=\{t_1,\ldots,t_m\}\subset J_a`$ 及正整数 $`r_1,\ldots,r_m`$。令 $`D_\nu(a,S;\mathbf r)`$ 为第215节的一个固定全输入精确处理器及一条完整混态准备曲线满足
+
+```math
+S\subseteq\mathcal E_*(\rho),\qquad
+\operatorname{rank}\rho_{t_i}=r_i\quad(1\le i\le m)
+\tag{217.1}
+```
+
+所需的最小实际联合支持维数，其中 $`\nu=1,\infty,\omega`$ 分别要求 $`C^1`$、光滑、实解析。只指定这些态的秩，不指定其非零特征值。
+
+记 $`h_i=(1+t_i)/2`$。若 $`0<a<1/2`$ 且 $`t_c=2a+4a^2-1\in S`$，称该指标为临界指标 $`c`$，并令 $`\varepsilon=1`$；否则令 $`\varepsilon=0`$。设 $`I`$ 为删去可能的临界指标后的指标集，定义
+
+```math
+R_* =\max\bigl(\{r_i:i\in I\}\cup\{0\}\bigr),\qquad
+M_+=\sum_{i\in I}r_i,
+\qquad
+\Lambda_- =\{\lambda_-(h_i):i\in I\},
+\qquad
+M_- =\sum_{\lambda\in\Lambda_-}
+                 \max\{r_i:i\in I,\ \lambda_-(h_i)=\lambda\}.
+\tag{217.2}
+```
+
+空和取零。秩加权的谱维数定义为
+
+```math
+\mathcal N(a,S;\mathbf r)=
+\begin{cases}
+R_*+M_++M_-,&\varepsilon=0,\\[2pt]
+\max\{R_*,1\}+M_++M_-+\max\{r_c,2\},&\varepsilon=1.
+\end{cases}
+\tag{217.3}
+```
+
+**定理 217.2（原算子的几何重数下界）。** 任意定义217.1的程序都满足
+
+```math
+\dim\mathcal H\ge\mathcal N(a,S;\mathbf r).
+\tag{217.4}
+```
+
+其中 $`\mathcal H`$ 为该曲线的实际联合支持。对每个非临界指标 $`i`$，原空间算子 $`K^\dagger`$ 在 $`0,\lambda_+(h_i),\lambda_-(h_i)`$ 的几何重数均至少为 $`r_i`$。
+
+证明。 对所有位置使用同一个固定归约算子 $`K`$。定理216.2在每个非临界位置给出 $`r_i`$ 个相互正交的三维不变块；每块限制具有三个不同特征值 $`0,\lambda_+(h_i),\lambda_-(h_i)`$，因此这三个特征空间各至少有 $`r_i`$ 个线性无关向量。不同位置所得的块不要求相互正交。零特征空间的维数至少为 $`R_*`$；正签名严格单调，故各位置的正特征值互异，其特征空间维数之和至少为 $`M_+`$；共享同一负签名的位置只要求取各自重数的最大值，得到 $`M_-`$。不同特征值的特征空间线性直和，于是无临界指标时已经得到（217.4）。这里计数的是几何重数，不假设整个 $`K^\dagger`$ 可对角化。
+
+若存在临界指标，取第216.3式在该点的映射 $`A_j`$，令 $`\mathcal A(x_1,\ldots,x_{r_c})=\sum_jA_jx_j`$。第216.9式给出
+
+```math
+\mathcal A^\dagger\mathcal A=C\otimes R+D\otimes Z,
+\qquad K^\dagger\mathcal A=\mathcal A(I\otimes V),
+\qquad c_0=\operatorname{rank}C\ge1,\quad
+d_0=\operatorname{rank}D\ge1,\quad c_0+d_0\ge r_c.
+\tag{217.5}
+```
+
+此处 $`R,Z`$ 是临界三维模型的二维稳定投影和一维单位投影，$`V|_R`$ 的两个不同特征值为 $`0,2a`$，$`V|_Z=-1`$。对 $`V|_R`$ 的任一非零特征向量 $`y`$，映射 $`z\mapsto\mathcal A(z\otimes y)`$ 的 Gram 矩阵为 $`\|y\|^2C`$，故其像维数为 $`c_0`$，且由交织关系全部落在相应的 $`K^\dagger`$ 特征空间。对单位方向同理得到 $`d_0`$。因此 $`0,2a,-1`$ 的几何重数分别至少为 $`c_0,c_0,d_0`$。
+
+非临界正签名不会等于 $`2a`$，非临界负签名也不会等于 $`-1`$。综合所有不同特征空间，有
+
+```math
+\dim\mathcal H\ge
+\max\{R_*,c_0\}+M_++M_-+c_0+d_0
+\ge\max\{R_*,1\}+M_++M_-+\max\{r_c,2\}.
+\tag{217.6}
+```
+
+这正是临界分支的下界。所有向量均在原空间 $`\mathcal H`$ 中，纯化辅助空间没有计入预算。证毕。
+
+**定理 217.3（指定秩轮廓的完整达到性）。** 对所有定义217.1参数，
+
+```math
+D_1(a,S;\mathbf r)=D_\infty(a,S;\mathbf r)
+ =D_\omega(a,S;\mathbf r)=\mathcal N(a,S;\mathbf r).
+\tag{217.7}
+```
+
+达到曲线可以使完整尖锐集合恰为 $`S`$，并在各 $`t_i`$ 具有等于 $`\kappa_*(a,t_i)`$ 的双侧普通曲率极限。
+
+证明。 令 $`L=\max\{R_*,\varepsilon\}`$。由于 $`S`$ 非空，有 $`L\ge1`$。对每层 $`1\le k\le L`$，取不同实节点组成的集合
+
+```math
+\Lambda_k=\{0\}\cup
+ \bigcup_{\substack{i\in I\\r_i\ge k}}
+       \{\lambda_+(h_i),\lambda_-(h_i)\}
+ \cup
+ \begin{cases}
+ \{2a\},&\varepsilon=1,\ k=1,\\[0pt]
+ \varnothing,&\text{其余情形}.
+ \end{cases}
+\tag{217.8}
+```
+
+这些节点均在 $`(-1,1)`$ 内。对每层使用第213.21—213.22式的 Gram 构造：
+
+```math
+\langle x_{k,\lambda},x_{k,\mu}\rangle
+       =\frac1{1-\lambda\mu},\qquad
+V_kx_{k,\lambda}=\lambda x_{k,\lambda},\qquad
+V_k^\dagger V_k=I-|q_k\rangle\langle q_k|,
+\quad q_k=x_{k,0}.
+\tag{217.9}
+```
+
+这是定理213.4已具体给出的规定谱部分等距工具；其经典背景仍见 Garcia、Sherman，*Matrices Similar to Partial Isometries*，arXiv:1703.02960v2，引理2及定理1。不同层取正交直和。若有临界指标，另加维数 $`d_c=\max\{1,r_c-1\}`$ 的正交单位子空间 $`\mathcal U`$，并令 $`V|_{\mathcal U}=-I`$。若无临界指标则不加该空间。置
+
+```math
+V=\bigoplus_{k=1}^{L}V_k\ \oplus\ (-I_{\mathcal U}),
+\qquad T=V^\dagger,\qquad P=V^\dagger V.
+\tag{217.10}
+```
+
+不存在的末块省略。$`P`$ 是投影，且 $`TT^\dagger=P`$、$`PT=T`$，故第211.18式给出一个固定受控 CPTP 处理器。
+
+先数维数。每个非临界正签名出现在前 $`r_i`$ 层；每个负签名出现在以该纤维最大秩为层数的前若干层；每层都有一个零节点。若有临界指标，另有第一层的一个 $`2a`$ 节点以及 $`d_c`$ 个单位方向。因此
+
+```math
+\dim\mathcal H
+=L+M_++M_-+\varepsilon(1+d_c)
+=\mathcal N(a,S;\mathbf r),
+\tag{217.11}
+```
+
+其中无临界指标时把最后一项解释为零。
+
+对每个非临界指标 $`i`$，其三个规范特征值都出现在第 $`1,\ldots,r_i`$ 层。第213.24—213.25式的归一化特征向量 Gram 恒等式给出等距映射 $`U_{ik}`$，把第211节的规范三维模型嵌入各层，并满足
+
+```math
+U_{ik}^\dagger P U_{ik}=P_0,\qquad
+VU_{ik}=U_{ik}T_0(a,t_i)^\dagger,\qquad
+U_{ik}^\dagger T U_{ik}=T_0(a,t_i).
+\tag{217.12}
+```
+
+令 $`\rho_i^0(u)`$ 为相应的全域解析规范纯态曲线，选常值严格正权重 $`p_{ik}`$，使 $`\sum_{k=1}^{r_i}p_{ik}=1`$，并置
+
+```math
+\sigma_i(u)=\sum_{k=1}^{r_i}
+ p_{ik}U_{ik}\rho_i^0(u)U_{ik}^\dagger.
+\tag{217.13}
+```
+
+各像空间位于正交的层中，所以曲线秩为 $`r_i`$；常值正交块权重没有额外 Fisher 项，其点态 SLD 信息等于规范纯曲线的信息。各块都满足精确的 $`P,T`$ 期望约束，因此它在同一个处理器中全区间、全输入精确，并在 $`t_i`$ 保留最优曲率。
+
+若有临界指标，其二维稳定模型的谱为 $`\{0,2a\}`$、缺陷为 $`|f\rangle\langle f|`$。对这两个特征向量使用同一 Gram 恒等式，便把该稳定模型等距嵌入第一层的 $`\{0,2a\}`$ 不变子空间。若 $`r_c=1`$，将它与 $`\mathcal U`$ 中的一个单位方向一起嵌入，就得到完整规范纯曲线。若 $`r_c\ge2`$，在 $`\mathcal U`$ 上选满秩态，使用第216.14式的固定压缩与替代映射。该映射保留两个所需矩，给出名义秩恰为 $`r_c`$ 的解析曲线 $`\sigma_c`$；定理216.3的点态 SLD 单调性及上下界夹逼保留其最优普通曲率极限。此构造使用 $`d_c=r_c-1`$ 个单位方向。
+
+现在所有 $`\sigma_i`$ 都在同一个上述空间和处理器中。取 Lagrange 多项式及三次振幅
+
+```math
+L_i(u)=\prod_{j\ne i}\frac{u-t_j}{t_i-t_j},\qquad
+g_i(u)=\frac{L_i(u)^3}{\sqrt{\sum_jL_j(u)^6}},\qquad
+\rho_u=\sum_i g_i(u)^2\sigma_i(u).
+\tag{217.14}
+```
+
+分母在实轴恒正，因为 $`\sum_iL_i=1`$。因此 $`\rho`$ 在整个 $`J_a`$ 上实解析，并由矩约束的线性保持全输入精确性。各节点满足 $`\rho_{t_i}=\sigma_i(t_i)`$ 及 $`\rho'_{t_i}=\sigma_i'(t_i)`$，故全部指定秩及点态 SLD 校准都精确达到。
+
+参数相关混合的信息上界及零权重处理沿用定理215.3。每个分支的信息局部有界：非临界分支与规范纯曲线相同，临界分支由固定 CPTP 映射的数据处理界控制。在 $`t_i`$ 附近，其余权重为 $`O((u-t_i)^6)`$，振幅导数平方之和为 $`O((u-t_i)^4)`$，从而
+
+```math
+I_Q(\rho_u)-I_r(u)
+\le g_i(u)^2\bigl(I_Q(\sigma_i(u))-I_r(u)\bigr)
+       +O((u-t_i)^4).
+\tag{217.15}
+```
+
+结合通用曲率下界，得到每个指定点的双侧普通极限等于 $`\kappa_*`$。这使用实际准备态的信息上界，没有把一个未保留的标签当作实际信息量。
+
+构造中 $`K^\dagger=V`$ 的正谱恰为 $`\{\lambda_+(h_i):1\le i\le m\}`$。第215.2节的谱必要性与正签名严格单调性排除所有其他尖锐点，所以完整尖锐集合恰为 $`S`$。构造的实际联合支持若低于（217.11），便与定理217.2矛盾，故其实际维数也等于 $`\mathcal N`$。解析构造、正则性类别包含关系及统一下界共同证明（217.7）。证毕。
+
+## 追加锚（本行以下为增补区）
