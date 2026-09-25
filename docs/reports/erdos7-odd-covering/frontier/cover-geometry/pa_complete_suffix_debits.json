@@ -450,6 +450,63 @@
     "survivor_reserve": "53066757345018132083/8865784656492767634400",
     "haar_lower": "53066757345018132083/1553164904833455513600000"
   },
+  "weighted_projection": {
+    "scope": "For each nonunit Q cofactor, at most two projected phases through ternary exponent5; all deeper projected phases and all23/29 originals arbitrary. More generally, the same-law residual deletion bound must be below residual_limit.",
+    "seven_query_bound": "475217647860378394201/43177522677724517700",
+    "pure_extension_charge": "23328842267836265833549/24481655358269801535900",
+    "residual_limit": "1152813090433535702351/24438477835592077018200",
+    "extension_density": "88/81",
+    "phase_tails": [
+      {
+        "head_height": 1,
+        "residual_upper": "432040125182653876501/259065136066347106200",
+        "survivor_reserve": "-11880891615539043994273/7344496607480940460770",
+        "haar_lower": "-913914739656849538021/107526801103854612480000"
+      },
+      {
+        "head_height": 2,
+        "residual_upper": "432040125182653876501/777195408199041318600",
+        "survivor_reserve": "-27973009403197306432156/55083724556107053455775",
+        "haar_lower": "-6993252350799326608039/2620965776906456179200000"
+      },
+      {
+        "head_height": 3,
+        "residual_upper": "432040125182653876501/2331586224597123955800",
+        "survivor_reserve": "-45570700992492791543153/330502347336642320734650",
+        "haar_lower": "-4142790999317526503923/5718470785977722572800000"
+      },
+      {
+        "head_height": 4,
+        "residual_upper": "432040125182653876501/6994758673791371867400",
+        "survivor_reserve": "-7222373775393663789838/495753521004963481101975",
+        "haar_lower": "-277783606745910145763/3629029537255093171200000"
+      },
+      {
+        "head_height": 5,
+        "residual_upper": "432040125182653876501/20984276021374115602200",
+        "survivor_reserve": "15786622554865812862151/594904225205956177322370",
+        "haar_lower": "15786622554865812862151/113225721562358906941440000"
+      },
+      {
+        "head_height": 6,
+        "residual_upper": "432040125182653876501/62952828064122346806600",
+        "survivor_reserve": "25647620982119874284432/637397384149238761416825",
+        "haar_lower": "1602976311382492142777/7582079568907962518400000"
+      },
+      {
+        "head_height": 7,
+        "residual_upper": "432040125182653876501/188858484192367040419800",
+        "survivor_reserve": "1199467436675725766995927/26770690134268027979506650",
+        "haar_lower": "92266725898132751307379/391935190023550062489600000"
+      },
+      {
+        "head_height": 8,
+        "residual_upper": "432040125182653876501/566575452577101121259400",
+        "survivor_reserve": "1860334832726934174018782/40156035201402041969259975",
+        "haar_lower": "84560674214860644273581/347397100248146646297600000"
+      }
+    ]
+  },
   "checks": {
     "suffix_hinge_0": true,
     "suffix_hinge_1": true,
@@ -600,7 +657,27 @@
     "actual_penalty_19_16": true,
     "restricted_seven_query_target": true,
     "restricted_nine_positive_reserve": true,
-    "restricted_nine_haar_bound": true
+    "restricted_nine_haar_bound": true,
+    "positive_residual_budget": true,
+    "pure_extension_improves_free_extension": true,
+    "unit_mass_credit_1": true,
+    "phase_tail_sign_1": true,
+    "unit_mass_credit_2": true,
+    "phase_tail_sign_2": true,
+    "unit_mass_credit_3": true,
+    "phase_tail_sign_3": true,
+    "unit_mass_credit_4": true,
+    "phase_tail_sign_4": true,
+    "unit_mass_credit_5": true,
+    "phase_tail_sign_5": true,
+    "unit_mass_credit_6": true,
+    "phase_tail_sign_6": true,
+    "unit_mass_credit_7": true,
+    "phase_tail_sign_7": true,
+    "unit_mass_credit_8": true,
+    "phase_tail_sign_8": true,
+    "five_level_exact_haar": true,
+    "five_level_haar_bound": true
   },
-  "check_count": 150
+  "check_count": 170
 }

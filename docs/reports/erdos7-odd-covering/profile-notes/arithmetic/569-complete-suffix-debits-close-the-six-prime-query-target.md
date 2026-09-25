@@ -35,7 +35,9 @@ They do not transfer automatically through an arbitrary ternary
 prefix: different original powers of3 can create more than two
 projected phases at the same numerical cofactor. A restricted
 nine-prime consumer, with that multiplicity hypothesis explicit,
-is given below. Unrestricted Erdős #7 remains open.
+is given below. A weighted residual extension requires the two-phase
+condition only through ternary exponent5, allowing arbitrary deeper
+phases and arbitrary23/29 originals. Unrestricted Erdős #7 remains open.
 
 ## One actual law and its existing mass bounds
 
@@ -375,13 +377,129 @@ The projection restriction is not automatic for arbitrary ternary
 histories. No assertion about unrestricted first-nine-prime families,
 arbitrary larger prime supports or unrestricted Erdős #7 follows.
 
+## Weighted projection residuals allow arbitrary deeper phases
+
+The two-phase hypothesis can be replaced by a weighted condition on
+the actual original ternary cylinders. This is a further consumer of
+SD1 and Report463's pure-coordinate conditioning, not a new independent
+construction of the six-prime law.
+
+For each nonunit numerical `Q` cofactor `d`, choose a fixed set `A_d`
+of at most two projected residues. Apply SD1 to these classes to obtain
+one probability `nu_Q`. Let `nu3` be normalized Haar on the actual
+pure3 survivor, and set `rho=nu3 times nu_Q`. For every residue `r`
+modulo `d`, let `U_(d,r)` be the union of the actual ternary cylinders
+of those `P`-only originals `3^e d` whose `Q` projection is `r`.
+An exponent-zero cylinder is the whole ternary space. All these sets
+are fixed by the original family, before any query is chosen.
+
+Put `p_d=max_r nu_Q(r mod d)`. The selected phases have zero
+`nu_Q` mass. The remaining original union therefore has `rho` mass
+at most
+
+\[
+\begin{aligned}
+\delta_{\rm phase}
+ &=\sum_{d>1}\sum_{r\notin A_d}
+       \nu_3(U_{d,r})\nu_Q(r\bmod d)\\
+ &\le\sum_{d>1}p_d\rho_d
+ \le B_*\max_{d>1}\rho_d,
+ \qquad
+ \rho_d:=\sum_{r\notin A_d}\nu_3(U_{d,r}).
+\end{aligned}
+\tag{SD14}
+\]
+
+Only cofactors actually occurring in the original family enter these
+sums; an empty inventory has residual zero. For a fixed `d`, distinct
+residues have disjoint `Q` events, so its inner sum is its exact
+remaining forbidden mass. Across different `d` the displayed sum is
+an upper bound. Combining cylinders with the same projected residue
+retains their actual overlap. One may select the two largest values
+of `nu3(U_(d,r))` for each `d` to minimize `rho_d`; this uses only the
+original family and the already fixed pure3 law. SD1 then produces
+one `nu_Q` for the entire selected family. No law or original residue
+is reselected for individual queries.
+
+Let `delta<1` be any certified bound in SD14, and restrict `rho` to
+the actual `P`-only survivor, obtaining the unnormalized measure
+`sigma`. It has mass `s>=1-delta`, density at most `18/alpha_min`,
+and complete nonunit query sum at most `A=1+2B*`. Deletion only
+decreases this nonnegative sum; it is not divided by `s` yet.
+
+Independently condition23 and29 Haar on their actual pure-power
+survivors. The density factors are at most `22/21` and `28/27`,
+and their positive-exponent query sums are at most `1/21` and
+`1/27`. Original labels touching exactly one of these primes have
+total remaining charge at most `A/21+A/27`. Those touching both
+have charge at most `(A+s)/(21*27)`: the old unit cofactor carries
+mass `s`, not one. This is Report463's counting argument applied
+before normalization. Thus the same product submeasure retains
+mass at least
+
+\[
+M(\delta):=\frac{566(1-\delta)-49A}{567}.
+\tag{SD15}
+\]
+
+In particular `delta<1-49A/566` suffices for noncoverage, and the
+actual Haar survivor mass is at least
+
+\[
+M(\delta)\frac{\alpha_{\min}}{18}
+                  \frac{21}{22}\frac{27}{28},
+\qquad
+\alpha_{\min}=\frac{7575003978548161}{73724315753088000}.
+\tag{SD16}
+\]
+
+All original moduli touching23 or29 remain arbitrary. Retaining the
+unit's actual mass improves the simpler direct-union reserve by
+`delta/567`. Neither argument independently optimizes different
+queries or assumes independence within `sigma`.
+
+An explicit all-height class follows. Assume only that, for each
+nonunit `d`, the originals with ternary exponent `0<=e<=h` have at
+most two distinct `Q` projections. Choose those phases as `A_d`.
+At every later exponent there is at most one original with modulus
+`3^e d`; since `nu3` has density at most2,
+
+\[
+\rho_d\le2\sum_{e>h}3^{-e}=3^{-h},
+\qquad \delta\le B_*3^{-h}.
+\tag{SD17}
+\]
+
+For `h=5`, SD15--SD17 give the uniform actual Haar bound
+
+\[
+H(U)\ge
+\frac{15786622554865812862151}{113225721562358906941440000}
+>\frac1{8000}.
+\tag{SD18}
+\]
+
+Thus only exponents0 through5 need the two-phase restriction; every
+original at exponent6 or higher can have an arbitrary new projected
+residue. There is no bound on their finite heights or total projection
+multiplicity as the cofactors vary. Arbitrarily many distinct phases
+at one cofactor are permitted by taking that cofactor sufficiently
+large and using distinct later exponents. The `h=4` uniform scalar
+reserve is negative; this fails to certify that larger class and
+does not exhibit a covering. Actual weighted data in SD14 can still
+certify families outside the stated five-level class.
+
+The unrestricted problem requires control of arbitrary low-level
+projections as well. SD14 does not prove that its residual threshold
+always holds, and the new consumer does not close that missing bridge.
+
 ## Verification
 
 The [standard-library producer](../../frontier/cover-geometry/pa_complete_suffix_debits.py)
 and [exact data](../../frontier/cover-geometry/pa_complete_suffix_debits.json)
 reconstruct full moments, suffix hinges, cap slopes, prefix mass
 bounds, signed-penalty corrections, all four corners and the restricted
-nine-prime consumer. All150 checks pass with Python optimizations
+nine-prime consumers and the weighted residual threshold. All170 checks pass with Python optimizations
 enabled. Independent arithmetic reconstructs the four corners and
 both bounds without importing the producer. The finite-box and
 all-height arguments above supply the arbitrary-family proof; finite

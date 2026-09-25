@@ -19,7 +19,12 @@ two-copy families on at most six odd primes excluding3. The
 [direct capped construction](#a-direct-capped-law-improves-the-two-copy-query-and-density-bounds)
 has a [joint pure-anchor estimate](#retaining-the-actual-pure-anchor-masses)
 with query bound5.149795473527814... and density below88, both under one
-law. Its source comparison and verification limits are specified below.
+law. [Report569](../arithmetic/569-complete-suffix-debits-close-the-six-prime-query-target.md)
+strengthens the query bound to5.003067549838209... and closes the NC1
+target below. Its weighted projection consumer allows arbitrary deeper
+ternary phases once the first six exponent levels have at most two
+phases per cofactor. Arbitrary low-level ternary projections remain
+outside that consumer.
 
 ## 1. Replace one digit and retain the complete remaining coordinates
 
@@ -428,8 +433,8 @@ A cofactor lower certificate can use finitely many fixed query labels
 and phase weights, but it must hold throughout that family's complete
 actual V. A desired abstract support or one chosen law with large R
 does not meet the premise. The r>=6 example is excluded by(PA1).
-Finding an actual cofactor lower certificate with257/51<r<=B_pure,
-or a uniform bound ruling out that remaining interval, remains open.
+Report569's uniform bound now rules out every actual cofactor lower
+certificate with r>257/51 throughout this declared-carrier domain.
 Even a successful(TC6) counterexample
 would refute the intermediate query target, not settle Erdős#7.
 

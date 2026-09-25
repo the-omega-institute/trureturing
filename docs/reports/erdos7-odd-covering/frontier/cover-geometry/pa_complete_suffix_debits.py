@@ -137,6 +137,32 @@ def main():
     check('restricted_seven_query_target',seven_bound < F(565,51))
     check('restricted_nine_positive_reserve',reserve > 0)
     check('restricted_nine_haar_bound',haar_lower > F(1,30000))
+    # Reuse Report463's actual pure23/29 conditioning. After a residual
+    # P-only deletion of mass delta, retain both mass s and unnormalized
+    # query sum A: the unit old cofactor then costs s, not one.
+    extension_density = F(22,21)*F(28,27)
+    pure_extension_charge = (49*seven_bound+1)/567
+    residual_limit = 1-49*seven_bound/566
+    check('positive_residual_budget',residual_limit > 0)
+    check('pure_extension_improves_free_extension',pure_extension_charge < outside_charge)
+    phase_tails = []
+    for h in range(1,9):
+        delta = joint/3**h
+        live = (566*(1-delta)-49*seven_bound)/567
+        direct_live = 1-delta-pure_extension_charge
+        haar = live*min(row['alpha'] for row in corners)/(18*extension_density)
+        check('unit_mass_credit_'+str(h),live-direct_live == delta/567)
+        check('phase_tail_sign_'+str(h),(live > 0) == (h >= 5))
+        phase_tails.append(dict(head_height=h,residual_upper=delta,
+                               survivor_reserve=live,haar_lower=haar))
+    check('five_level_exact_haar',phase_tails[4]['haar_lower'] ==
+          F(15786622554865812862151,113225721562358906941440000))
+    check('five_level_haar_bound',phase_tails[4]['haar_lower'] > F(1,8000))
+    weighted_projection = dict(
+        scope='For each nonunit Q cofactor, at most two projected phases through ternary exponent5; all deeper projected phases and all23/29 originals arbitrary. More generally, the same-law residual deletion bound must be below residual_limit.',
+        seven_query_bound=seven_bound,pure_extension_charge=pure_extension_charge,
+        residual_limit=residual_limit,extension_density=extension_density,
+        phase_tails=phase_tails)
     result = dict(scope='Arbitrary finite two-copy family on Q={5,7,11,13,17,19}; one actual PA law, complete queries at every height. Restricted nine-prime consumer requires at most two distinct projected residues per nonunit Q cofactor after removing powers of3 from P-only originals. Not unrestricted Erdos7 or an arbitrary ternary-prefix transfer.',
                   suffixes=suffixes,coefficients=coefficients,corners=corners,
                   simple_bound=simple,joint_bound=joint,
@@ -144,6 +170,7 @@ def main():
                   target=F(257,51),strict_gap_to_target=F(257,51)-joint,
                   restricted_nine=dict(seven_query_bound=seven_bound,outside_charge=outside_charge,
                                        survivor_reserve=reserve,haar_lower=haar_lower),
+                  weighted_projection=weighted_projection,
                   checks=checks,check_count=len(checks))
     args.output.write_text(json.dumps(result,default=str,indent=2)+'\n')
     print('simple_bound',simple,float(simple))
