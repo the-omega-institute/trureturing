@@ -1438,7 +1438,7 @@ D5 拥有数学、舞台、模板与记录类型；Interface 拥有稳定 transp
 | `OccurrenceKey` | A5.4 五字段对象 `{root:Name,registration_module:Name,theorem:Name,object_arena:Name,catalog:Name}`，元组次序如上。 |
 | `SelectionKey` | `{registration_source_path:Path,theorem_filter:Name?}`；null 代表该选中 Reg owner 全部局部登记，非 null 是一次精确定理选择。 |
 | `TemplateKey` / `TemplateVersion` | `{definition_owner:Name,name_key:NameKey}` / `{enrollment_owner:Name,plan_identity:H}`；后者的 key 限于所属 TemplateKey。 |
-| `TemplateRef` / `Dependency` | `{name_key:NameKey,definition_owner:Name,enrollment_owner:Name}` / A5.4 `{name:Name,owner:Name,type_identity:H,body_identity:H}`。 |
+| `TemplateRef` / `Dependency` | `{name_key:NameKey,definition_owner:Name,enrollment_owner:Name}` / A5.4 `{name:Name,owner:Name,type_identity:H,body_identity:""或H}`。body_identity 原样保留证书字符串：Prop 常量或无 value 的常量为 `""`，有可执行 body 时为 `H`；不得补造摘要，非空而非 `H` 的值拒绝。 |
 
 | 对象 | 全部字段及类型 |
 | --- | --- |
@@ -1520,6 +1520,8 @@ provenance 复用 snapshot.content_digest、lean_report_digest、truth_root_sha2
 | --- | --- | --- |
 | 一个 theorem、两条有效 arena/catalog 路线 | 一个 Declaration、两个原 key 的 Occurrence；各自四槽/残余保留，不合并路线。 | E + G |
 | 一个模板、两个参数应用 | 一个 definition，按 plan 保留 checked version；两份内嵌应用与各自 identities 保留，无新实例 ID 或数学等价边。 | L + G |
+| 合法证书依赖为 Prop 常量或无可执行 body 的常量 | 接受 `body_identity=""` 并原样导出、读回；不生成替代摘要，其余 identity 检查保持。 | L + E + G |
+| 依赖 body_identity 非空但不是 64 位小写 hex | 选中证据按原读取范围 unavailable；graph wire strict reader 拒绝该值，不转为空串或补造摘要。 | E + G |
 | 同 definition 的不同 enrollment/plan | version 端点按完整 key 区分；checked plan/container 不能错配；跨 snapshot 禁 join。 | L + G |
 | theorem namespace 与 source path 不同 | 精确 compiler owner 决定镜像和声明；namespace 猜路径不能提供覆盖。 | E |
 | theorem 陈述漂移、raw/canonical hash 混用 | 拒绝跨域比较或陈旧证据关联，明确 unavailable/statement-mismatch；不改数学 truth state。 | L + E + G |
