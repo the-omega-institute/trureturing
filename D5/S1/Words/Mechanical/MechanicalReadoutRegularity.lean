@@ -7,6 +7,7 @@
    digest: Integer hits classify continuity and jumps of completed geometric readouts. -/
 
 import D5.S1.Words.Mechanical.MechanicalReadoutOrder
+import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
 /-!
 # Pointwise regularity of the completed mechanical readout
@@ -39,6 +40,7 @@ open Set Finset
 open scoped BigOperators
 open D5.S1.Words.Mechanical
 open D5.S1.Words.Mechanical.MechanicalReadoutOrder
+open D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
 /-- The completed readout is continuous in slope at a fixed phase exactly
 when no positive-time cumulative floor is at an integer. At an integer hit
@@ -146,60 +148,27 @@ theorem geometric_readout_continuity_and_jump
         x + (k : ℝ) * alpha ≠ (z : ℝ)) :
       ∃ radius : ℝ, 0 < radius ∧ ∀ beta : ℝ, |beta - alpha| < radius →
         |G beta - G alpha| ≤ r ^ N := by
-    let margin : Fin N → ℝ := fun i =>
-      let t := x + ((i.val + 1 : ℕ) : ℝ) * alpha
-      min (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t) / ((i.val + 1 : ℕ) : ℝ)
-    have hmpos (i : Fin N) : 0 < margin i := by
-      let t := x + ((i.val + 1 : ℕ) : ℝ) * alpha
-      have hne : t ≠ (⌊t⌋ : ℝ) := hreg (i.val + 1) (by omega) (by omega) ⌊t⌋
-      have hlo : (⌊t⌋ : ℝ) < t := lt_of_le_of_ne (Int.floor_le t) (Ne.symm hne)
-      have hhi : t < (⌊t⌋ : ℝ) + 1 := Int.lt_floor_add_one t
-      exact div_pos (lt_min (sub_pos.mpr hlo) (sub_pos.mpr hhi)) (by positivity)
-    let margins : Finset ℝ := insert alpha (insert (1 - alpha) (univ.image margin))
-    have hnonempty : margins.Nonempty := ⟨alpha, mem_insert_self _ _⟩
-    have hpos : ∀ t ∈ margins, 0 < t := by
-      intro t ht
-      rcases mem_insert.mp ht with rfl | ht
-      · exact ha.1
-      · rcases mem_insert.mp ht with rfl | ht
-        · exact sub_pos.mpr ha.2
-        · obtain ⟨i, _, rfl⟩ := mem_image.mp ht
-          exact hmpos i
-    let g := margins.min' hnonempty
-    have hg : 0 < g := hpos g (min'_mem margins hnonempty)
-    have hga : g ≤ alpha := min'_le margins _ (mem_insert_self _ _)
-    have hgb : g ≤ 1 - alpha := min'_le margins _
-      (mem_insert_of_mem (mem_insert_self _ _))
-    have hgm (i : Fin N) : g ≤ margin i := min'_le margins _
-      (mem_insert_of_mem (mem_insert_of_mem (mem_image.mpr ⟨i, mem_univ _, rfl⟩)))
-    refine ⟨g / 2, by positivity, ?_⟩
+    obtain ⟨radius₀, hradius₀, hstable⟩ :=
+      finite_word_stable_off_integer_hits alpha x N hreg
+    let radius := min radius₀ (min alpha (1 - alpha)) / 2
+    have hbound : 0 < min alpha (1 - alpha) := lt_min ha.1 (sub_pos.mpr ha.2)
+    have hradius : 0 < radius := div_pos (lt_min hradius₀ hbound) (by norm_num)
+    have hr0 : radius ≤ radius₀ := by
+      dsimp [radius]
+      linarith [min_le_left radius₀ (min alpha (1 - alpha))]
+    have hra : radius ≤ alpha := by
+      dsimp [radius]
+      linarith [min_le_right radius₀ (min alpha (1 - alpha)),
+        min_le_left alpha (1 - alpha)]
+    have hrb : radius ≤ 1 - alpha := by
+      dsimp [radius]
+      linarith [min_le_right radius₀ (min alpha (1 - alpha)),
+        min_le_right alpha (1 - alpha)]
+    refine ⟨radius, hradius, ?_⟩
     intro beta hbeta
-    have hsmall : |beta - alpha| < g := lt_trans hbeta (by linarith)
-    have habs := abs_lt.mp hsmall
+    have habs := abs_lt.mp hbeta
     have hb : beta ∈ Ico (0 : ℝ) 1 := ⟨by linarith, by linarith⟩
-    have hfloors (k : ℕ) (hk : k ≤ N) :
-        ⌊x + (k : ℝ) * beta⌋ = ⌊x + (k : ℝ) * alpha⌋ := by
-      by_cases hk0 : k = 0
-      · simp [hk0]
-      · let i : Fin N := ⟨k - 1, by omega⟩
-        have hi : i.val + 1 = k := by dsimp [i]; omega
-        have hmi := hsmall.trans_le (hgm i)
-        dsimp only [margin] at hmi
-        rw [hi] at hmi
-        let t := x + (k : ℝ) * alpha
-        have hkR : 0 < (k : ℝ) := by exact_mod_cast (show 0 < k by omega)
-        have hshift : |(k : ℝ) * (beta - alpha)| <
-            min (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t) := by
-          rw [abs_mul, abs_of_pos hkR, mul_comm]
-          exact (lt_div_iff₀ hkR).mp hmi
-        have hsl := (abs_lt.mp hshift).1
-        have hsr := (abs_lt.mp hshift).2
-        have heq : x + (k : ℝ) * beta = t + (k : ℝ) * (beta - alpha) := by
-          dsimp [t]
-          ring
-        apply Int.floor_eq_iff.mpr
-        constructor <;> linarith [min_le_left (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t),
-          min_le_right (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t)]
+    have hfloors := (hstable beta (hbeta.trans_le hr0)).1
     have hprefix : P beta N = P alpha N := by
       dsimp [P, weightedPrefix]
       apply sum_congr rfl

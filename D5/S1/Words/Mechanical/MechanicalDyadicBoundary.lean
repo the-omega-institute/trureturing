@@ -189,7 +189,70 @@ theorem dyadic_upper_eventually_word_eq (alpha x : ℝ) (n : ℕ) :
   simp only [Nat.cast_add, Nat.cast_one]
   rw [hfloor0, hfloor1']
 
+/-- Away from all positive-time integer hits in a fixed prefix, one slope
+radius preserves every actual mechanical bit in that prefix. -/
+theorem finite_word_stable_off_integer_hits (alpha x : ℝ) (n : ℕ)
+    (hreg : ∀ k : ℕ, 0 < k → k ≤ n → ∀ z : ℤ,
+      x + (k : ℝ) * alpha ≠ (z : ℝ)) :
+    ∃ radius : ℝ, 0 < radius ∧ ∀ beta : ℝ, |beta - alpha| < radius →
+      (∀ k ≤ n, ⌊x + (k : ℝ) * beta⌋ = ⌊x + (k : ℝ) * alpha⌋) ∧
+      (∀ j < n, lowerMechanicalWord beta x j = lowerMechanicalWord alpha x j) := by
+  let margin : Fin n → ℝ := fun i =>
+    let t := x + ((i.val + 1 : ℕ) : ℝ) * alpha
+    min (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t) / ((i.val + 1 : ℕ) : ℝ)
+  have hmpos (i : Fin n) : 0 < margin i := by
+    let t := x + ((i.val + 1 : ℕ) : ℝ) * alpha
+    have hne : t ≠ (⌊t⌋ : ℝ) := hreg (i.val + 1) (by omega) (by omega) ⌊t⌋
+    have hlo : (⌊t⌋ : ℝ) < t := lt_of_le_of_ne (Int.floor_le t) (Ne.symm hne)
+    have hhi : t < (⌊t⌋ : ℝ) + 1 := Int.lt_floor_add_one t
+    exact div_pos (lt_min (sub_pos.mpr hlo) (sub_pos.mpr hhi)) (by positivity)
+  let margins : Finset ℝ := insert 1 (Finset.univ.image margin)
+  have hnonempty : margins.Nonempty := ⟨1, mem_insert_self _ _⟩
+  have hpos : ∀ t ∈ margins, 0 < t := by
+    intro t ht
+    rcases mem_insert.mp ht with rfl | ht
+    · norm_num
+    · obtain ⟨i, _, rfl⟩ := mem_image.mp ht
+      exact hmpos i
+  let g := margins.min' hnonempty
+  have hg : 0 < g := hpos g (min'_mem margins hnonempty)
+  have hgm (i : Fin n) : g ≤ margin i :=
+    min'_le margins _ (mem_insert_of_mem (mem_image.mpr ⟨i, mem_univ _, rfl⟩))
+  refine ⟨g / 2, by positivity, ?_⟩
+  intro beta hbeta
+  have hsmall : |beta - alpha| < g := lt_trans hbeta (by linarith)
+  have hfloors (k : ℕ) (hk : k ≤ n) :
+      ⌊x + (k : ℝ) * beta⌋ = ⌊x + (k : ℝ) * alpha⌋ := by
+    by_cases hk0 : k = 0
+    · simp [hk0]
+    · let i : Fin n := ⟨k - 1, by omega⟩
+      have hi : i.val + 1 = k := by dsimp [i]; omega
+      have hmi := hsmall.trans_le (hgm i)
+      dsimp only [margin] at hmi
+      rw [hi] at hmi
+      let t := x + (k : ℝ) * alpha
+      have hkR : 0 < (k : ℝ) := by exact_mod_cast (show 0 < k by omega)
+      have hshift : |(k : ℝ) * (beta - alpha)| <
+          min (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t) := by
+        rw [abs_mul, abs_of_pos hkR, mul_comm]
+        exact (lt_div_iff₀ hkR).mp hmi
+      have hsl := (abs_lt.mp hshift).1
+      have hsr := (abs_lt.mp hshift).2
+      have heq : x + (k : ℝ) * beta = t + (k : ℝ) * (beta - alpha) := by
+        dsimp [t]
+        ring
+      apply Int.floor_eq_iff.mpr
+      constructor <;> linarith [min_le_left (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t),
+        min_le_right (t - (⌊t⌋ : ℝ)) ((⌊t⌋ : ℝ) + 1 - t)]
+  constructor
+  · exact hfloors
+  · intro j hj
+    unfold lowerMechanicalWord lowerMechanicalLetter
+    simp only [Nat.cast_add, Nat.cast_one]
+    rw [hfloors (j + 1) (by omega), hfloors j (by omega)]
+
 #print axioms dyadic_lower_boundary_mismatch
 #print axioms dyadic_upper_eventually_word_eq
+#print axioms finite_word_stable_off_integer_hits
 
 end D5.S1.Words.Mechanical.MechanicalDyadicBoundary
