@@ -27,7 +27,88 @@ import native
 
 from test_native_support import *
 
-class NativePackagingTests:
+class NativeReleaseSupport:
+    def release_fixture(self):
+        """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
+        self.reg_package()
+        for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
+            self.copy('tools/scripts/worktree/' + name)
+        self.copy('tools/scripts/workflow/ci_plan.py')
+        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
+            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
+                            lean_targets=['leanInspector/reportInspector', 'trureturing/Audit'])])))
+        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
+        self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
+            GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
+            GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',
+            RELEASE_FIXTURE=str(self.root / 'releases'), LEAN_REPORT=str(self.root / 'unexpected.json'),
+            STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / 'input-memo'),
+            STRATALINT_SUPERVISOR_ROOT=str(self.root / 'supervisor'))
+        self.write('bin/gh', '''#!/usr/bin/env python3
+import base64, hashlib, json, os, shutil, sys
+from pathlib import Path
+root = Path(os.environ['RELEASE_FIXTURE'])
+root.mkdir(exist_ok=True)
+a = sys.argv[1:]
+def metadata(directory):
+    return json.loads((directory / 'release.json').read_text())
+if a[:2] == ['release', 'list']:
+    print(json.dumps([dict(tagName=p.name, createdAt=str(p.stat().st_mtime_ns),
+        isDraft=metadata(p)['draft']) for p in root.iterdir()]))
+elif a[:2] == ['release', 'create']:
+    destination = root / a[2]
+    destination.mkdir()
+    assert a[a.index('--repo') + 1] == 'fixture/cache'
+    assert '--draft' in a
+    assert '--target' not in a, 'new snapshots use the default storage anchor'
+    (destination / 'release.json').write_text(json.dumps(dict(tag_name=a[2], draft=True,
+        target_commitish='main', published_at='fixture')))
+elif a[:2] == ['release', 'upload']:
+    for item in a[3:]:
+        if item.startswith('/') and Path(item).is_file(): shutil.copyfile(item, root / a[2] / Path(item).name)
+elif a[:2] == ['release', 'edit']:
+    record = metadata(root / a[2])
+    record['draft'] = False
+    (root / a[2] / 'release.json').write_text(json.dumps(record))
+elif a[:2] == ['release', 'download']:
+    destination = Path(a[a.index('--dir') + 1])
+    for index, word in enumerate(a):
+        if word == '--pattern':
+            matches = list((root / a[2]).glob(a[index + 1]))
+            if not matches: raise SystemExit(1)
+            for item in matches: shutil.copyfile(item, destination / item.name)
+elif a[0] == 'api' and '/releases/tags/' in a[1]:
+    directory = root / a[1].split('/')[-1]
+    if not directory.exists():
+        print(json.dumps(dict(message='Not Found', status='404')))
+        raise SystemExit(1)
+    record = metadata(directory)
+    record['assets'] = [dict(name=p.name, size=p.stat().st_size,
+        digest='sha256:' + hashlib.sha256(p.read_bytes()).hexdigest())
+        for p in directory.iterdir() if p.name != 'release.json']
+    print(json.dumps(record))
+elif a[0] == 'api' and '/actions/runs/' in a[1]:
+    print(json.dumps(dict(id=4242, event='schedule', head_branch='dev',
+        head_sha=os.environ['GITHUB_SHA'], path='.github/workflows/lean-cache-publish.yml',
+        status='completed', conclusion='success', repository=dict(full_name='fixture/cache'))))
+elif a[0] == 'api' and '/contents/lake-manifest.json?ref=' in a[1]:
+    content = (root.parent / 'lake-manifest.json').read_bytes()
+    print(json.dumps(dict(type='file', path='lake-manifest.json', encoding='base64',
+        content=base64.b64encode(content).decode(), size=len(content),
+        sha=hashlib.sha1(b'blob ' + str(len(content)).encode() + b'\\0' + content).hexdigest())))
+else:
+    raise SystemExit('unexpected transport call: ' + repr(a))
+''')
+        (self.root / 'bin/gh').chmod(0o755)
+
+    def release_run(self, verb, success=True):
+        result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            verb, '--repository', str(self.root)], cwd=self.root.parent, env=self.env)
+        self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+        return result
+
+
+class NativePackagingTests(NativeReleaseSupport):
     def test_native_workload_rejects_nonfixture_before_writes(self):
         config = (self.root / 'lakefile.toml').read_text()
         cases = {
@@ -76,6 +157,41 @@ class NativePackagingTests:
                 self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
                 self.assertIn('--fixture must be a synthetic native fixture package', result.stderr)
 
+    def test_snapshot_generation_preserves_mathlib_partition(self):
+        helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
+        def partition():
+            return subprocess.check_output([str(helper), 'partition', '--repository', str(self.root)],
+                cwd=self.root, env=self.env, text=True, timeout=120)
+        before = partition()
+        self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
+        self.assertEqual(before, partition())
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_cache_release_semantic_version'] = 2
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.assertEqual(before, partition())
+        manifest = json.loads((self.root / 'lake-manifest.json').read_text())
+        next(package for package in manifest['packages'] if package['name'] == 'mathlib')['rev'] = 'f' * 40
+        self.write('lake-manifest.json', json.dumps(manifest))
+        self.assertNotEqual(before, partition())
+
+    def test_release_partition_preserves_semantic_and_selection_changes(self):
+        self.release_fixture()
+        before = json.loads(self.release_run('address').stdout)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_cache_release_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.assertEqual(before, json.loads(self.release_run('address').stdout))
+        policy['report_modules']['exclude'] = ['D5/Alone.lean']
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.assertEqual(before, json.loads(self.release_run('address').stdout))
+        self.assertFalse((self.root / '.lake').exists(), 'addressing must preserve cold donor eligibility')
+        (self.root / 'tools/lean-inspector/materials.py').unlink()
+        failed = self.release_run('publish', success=False)
+        self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
+        self.assertFalse((self.root / 'releases').exists())
+
+
+class NativeCompilerConsumerTests:
     def test_mapped_image_matches_loaded_bytes(self):
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
@@ -190,6 +306,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertEqual(result.returncode, 0,
             '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
 
+
+class NativePackageConsumerTests(NativeReleaseSupport):
     def test_native_pack_unpack_reuses_complete_rows(self):
         self.build()
         expected = self.report()[1:]
@@ -211,6 +329,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertEqual(sum(json.loads(line)['count'] for line in (self.root / 'activity.jsonl').read_text().splitlines()
                              if json.loads(line)['kind'] == 'extract'), 0)
         self.publish()
+
     def test_native_clonefile_seed_reuses_rows_and_keeps_donor_private(self):
         self.reg_package()
         self.build_reg_report()
@@ -285,101 +404,6 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
             self.publish()
             self.assertEqual(donor_bytes, {p.relative_to(donor): publication.digest(p)
                 for p in (donor / '.lake').rglob('*') if p.is_file()})
-    def test_snapshot_generation_preserves_mathlib_partition(self):
-        helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
-        def partition():
-            return subprocess.check_output([str(helper), 'partition', '--repository', str(self.root)],
-                cwd=self.root, env=self.env, text=True, timeout=120)
-        before = partition()
-        self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
-        self.assertEqual(before, partition())
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] = 2
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(before, partition())
-        manifest = json.loads((self.root / 'lake-manifest.json').read_text())
-        next(package for package in manifest['packages'] if package['name'] == 'mathlib')['rev'] = 'f' * 40
-        self.write('lake-manifest.json', json.dumps(manifest))
-        self.assertNotEqual(before, partition())
-
-    def release_fixture(self):
-        """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
-        self.reg_package()
-        for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
-            self.copy('tools/scripts/worktree/' + name)
-        self.copy('tools/scripts/workflow/ci_plan.py')
-        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
-            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
-                            lean_targets=['leanInspector/reportInspector', 'trureturing/Audit'])])))
-        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
-        self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
-            GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
-            GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',
-            RELEASE_FIXTURE=str(self.root / 'releases'), LEAN_REPORT=str(self.root / 'unexpected.json'),
-            STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / 'input-memo'),
-            STRATALINT_SUPERVISOR_ROOT=str(self.root / 'supervisor'))
-        self.write('bin/gh', '''#!/usr/bin/env python3
-import base64, hashlib, json, os, shutil, sys
-from pathlib import Path
-root = Path(os.environ['RELEASE_FIXTURE'])
-root.mkdir(exist_ok=True)
-a = sys.argv[1:]
-def metadata(directory):
-    return json.loads((directory / 'release.json').read_text())
-if a[:2] == ['release', 'list']:
-    print(json.dumps([dict(tagName=p.name, createdAt=str(p.stat().st_mtime_ns),
-        isDraft=metadata(p)['draft']) for p in root.iterdir()]))
-elif a[:2] == ['release', 'create']:
-    destination = root / a[2]
-    destination.mkdir()
-    assert a[a.index('--repo') + 1] == 'fixture/cache'
-    assert '--draft' in a
-    assert '--target' not in a, 'new snapshots use the default storage anchor'
-    (destination / 'release.json').write_text(json.dumps(dict(tag_name=a[2], draft=True,
-        target_commitish='main', published_at='fixture')))
-elif a[:2] == ['release', 'upload']:
-    for item in a[3:]:
-        if item.startswith('/') and Path(item).is_file(): shutil.copyfile(item, root / a[2] / Path(item).name)
-elif a[:2] == ['release', 'edit']:
-    record = metadata(root / a[2])
-    record['draft'] = False
-    (root / a[2] / 'release.json').write_text(json.dumps(record))
-elif a[:2] == ['release', 'download']:
-    destination = Path(a[a.index('--dir') + 1])
-    for index, word in enumerate(a):
-        if word == '--pattern':
-            matches = list((root / a[2]).glob(a[index + 1]))
-            if not matches: raise SystemExit(1)
-            for item in matches: shutil.copyfile(item, destination / item.name)
-elif a[0] == 'api' and '/releases/tags/' in a[1]:
-    directory = root / a[1].split('/')[-1]
-    if not directory.exists():
-        print(json.dumps(dict(message='Not Found', status='404')))
-        raise SystemExit(1)
-    record = metadata(directory)
-    record['assets'] = [dict(name=p.name, size=p.stat().st_size,
-        digest='sha256:' + hashlib.sha256(p.read_bytes()).hexdigest())
-        for p in directory.iterdir() if p.name != 'release.json']
-    print(json.dumps(record))
-elif a[0] == 'api' and '/actions/runs/' in a[1]:
-    print(json.dumps(dict(id=4242, event='schedule', head_branch='dev',
-        head_sha=os.environ['GITHUB_SHA'], path='.github/workflows/lean-cache-publish.yml',
-        status='completed', conclusion='success', repository=dict(full_name='fixture/cache'))))
-elif a[0] == 'api' and '/contents/lake-manifest.json?ref=' in a[1]:
-    content = (root.parent / 'lake-manifest.json').read_bytes()
-    print(json.dumps(dict(type='file', path='lake-manifest.json', encoding='base64',
-        content=base64.b64encode(content).decode(), size=len(content),
-        sha=hashlib.sha1(b'blob ' + str(len(content)).encode() + b'\\0' + content).hexdigest())))
-else:
-    raise SystemExit('unexpected transport call: ' + repr(a))
-''')
-        (self.root / 'bin/gh').chmod(0o755)
-
-    def release_run(self, verb, success=True):
-        result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
-            verb, '--repository', str(self.root)], cwd=self.root.parent, env=self.env)
-        self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
-        return result
 
     def test_release_publisher_legacy_seed_current_pack_restore_and_unchanged(self):
         self.release_fixture()
@@ -464,19 +488,3 @@ else:
             unchanged_extracted_modules=0, unchanged_aggregates=0,
             required_default_failure_exit=failed.returncode, required_validation_failure_exit=rejected.returncode,
             partition=address['partition']))
-
-    def test_release_partition_preserves_semantic_and_selection_changes(self):
-        self.release_fixture()
-        before = json.loads(self.release_run('address').stdout)
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(before, json.loads(self.release_run('address').stdout))
-        policy['report_modules']['exclude'] = ['D5/Alone.lean']
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(before, json.loads(self.release_run('address').stdout))
-        self.assertFalse((self.root / '.lake').exists(), 'addressing must preserve cold donor eligibility')
-        (self.root / 'tools/lean-inspector/materials.py').unlink()
-        failed = self.release_run('publish', success=False)
-        self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
-        self.assertFalse((self.root / 'releases').exists())

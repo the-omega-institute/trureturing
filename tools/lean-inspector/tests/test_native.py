@@ -12,12 +12,12 @@ from test_native_packaging import *
 from test_native_reuse import *
 from test_native_interface import *
 from test_native_records import *
-from packages.reg import NativeRegTests
+from packages.reg import NativeRegTests, NativeRegConsumerTests, NativeRegSupport
 from Census.tests.relocation_fixture import NativeRelocationTests
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativeColdPublicationTests,
-                  NativeModuleFacetTests, NativePackagingTests, NativeReuseTests,
-                  NativeInterfaceTests, NativeRecordTests, NativeRegTests, unittest.TestCase):
+                  NativePackagingTests, NativeInterfaceTests, NativeRecordTests,
+                  NativeRegTests, unittest.TestCase):
     pass
 
 class NativeArtifactTests(NativeArtifactTestSupport, NativeArtifactConsumerTests, unittest.TestCase):
@@ -27,6 +27,25 @@ class NativePublicationTests(NativeDependencyTestSupport, NativePublicationConsu
     pass
 
 class NativeRecoveryTests(NativeDependencyTestSupport, NativeRecoveryConsumerTests, unittest.TestCase):
+    pass
+
+class NativeSemanticTests(NativeDependencyTestSupport, NativeSemanticConsumerTests, unittest.TestCase):
+    pass
+
+class NativeCompilerTests(NativeDependencyTestSupport, NativeCompilerOptionsTests,
+                          NativeCompilerConsumerTests, NativeModuleFacetTests, unittest.TestCase):
+    pass
+
+class NativePackageTests(NativeDependencyTestSupport, NativePackageConsumerTests,
+                         NativeRegSupport, unittest.TestCase):
+    pass
+
+class NativeRoutingTests(NativeDependencyTestSupport, NativeRegConsumerTests,
+                         NativeInterfaceConsumerTests, unittest.TestCase):
+    pass
+
+class NativeReportTests(NativeDependencyTestSupport, NativeReportConsumerTests,
+                        NativeRegSupport, unittest.TestCase):
     pass
 
 if __name__ == '__main__':
