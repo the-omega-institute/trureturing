@@ -370,3 +370,12 @@ the finite arithmetic checks do not replace those proofs or constitute
 Lean verification.
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/three_parent_forward_kernels.py
+
+## A different head source with the same network interface
+
+[Report617](617-all-central-star-phases-admit-root-one-continuation.md)
+constructs a stronger gate for a restricted head phase class admitting
+all central star and pair phases and the additional9q/25q slots. Its actual
+source satisfies the same density and query interfaces, so this report's
+network attaches there with extendible reference-head Haar mass greater
+than1/2100. The two head classes must not be identified.

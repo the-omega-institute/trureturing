@@ -358,3 +358,11 @@ and one fixed thinning matrix per primary pattern cover every secondary
 role assignment, with head Haar mass greater than1/6500. That extension
 does not include the additional ten squares or the160-label/branch
 corollary above; those costs are not paid by its stated gate.
+
+## All central activations in a restricted outside layout
+
+[Report617](617-all-central-star-phases-admit-root-one-continuation.md)
+replaces the prescribed central patterns by arbitrary central star and pair
+phases in an explicitly fixed outside-root layout. It constructs one actual
+source with a uniform complete continuation gate and attaches the Report616
+network. It does not preserve this report's arbitrary outside phases.
