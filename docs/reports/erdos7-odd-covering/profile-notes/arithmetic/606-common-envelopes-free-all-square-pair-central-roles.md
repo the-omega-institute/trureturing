@@ -266,3 +266,9 @@ The finite arithmetic checks the displayed constants and witnesses. The
 all-layout guarantee is PE3--PE9: a uniform strict box and monotonicity place
 every actual globally fixed role assignment between the same comparison
 grids, while preserving that family's one actual source throughout.
+
+[Report608](608-one-common-thinning-frees-every-central-pair-role.md)
+removes the four-pattern restriction: one common thinning witness and64
+exhaustive branch certificates admit arbitrary central roles at all120
+retained pair labels. The pure-source and star hypotheses remain fixed;
+the retained numerical inventory and permitted heights are unchanged.
