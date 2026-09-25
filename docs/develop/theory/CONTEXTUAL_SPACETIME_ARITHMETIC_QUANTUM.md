@@ -45429,3 +45429,183 @@ $$
 固定混合程序的线性框架与得分残差沿用第187—189节。混合态的 SLD 公式及量子比特、纯端点特化可参见 de Vicente 等，*Estimation of quantum finite mixtures*，arXiv:0910.1525v2，式（82）—（86）；纯端点混合的成本公式不适用于（209.18）的两个混合端点。这里的维数无关下界使用全区间仿射性与端点正性，三维改进使用显式处理器与上述矩阵。两者共同说明：增加维数可以降低仿射成本，但第207节的三维零额外成本还需要非仿射准备。
 
 ## 追加锚（本行以下为增补区）
+
+## 210. 一阶光滑量子程序的有限校准与 Lipschitz 端点聚集
+
+**定义 210.1（校准集合与光滑端点）。** 固定 $0<a<1$、$l=2a-1$，沿用第187节的有限维固定程序：同一个 CPTP 处理器以程序态 $\rho_u$ 对所有信号输入精确产生 $\mathcal T_u$，参数域为 $J_a=(l,1)$。令
+$$
+ \mathcal E(\rho)=\{u\in J_a:I_Q(\rho_u)=I_r(u)\},
+ \qquad I_r(u)=\frac1{1-u^2}.
+\tag{210.1}
+$$
+$I_Q$ 使用点态 SLD 约定，不在秩变化点改用其连续延拓。称程序具有一阶光滑端点，是指其矩阵元素具有包含闭区间 $[l,1]$ 的实开邻域上的 $C^1$ 延拓；只要求延拓在物理参数域内为密度矩阵。允许程序秩随参数变化。
+
+**定理 210.2（一阶光滑程序的孤立校准与局部二次下界）。** 设 $\rho_u$ 在 $J_a$ 上为 $C^1$ 曲线。按第188.3节对固定均衡 $02$ 读出作 Naimark 嵌入，记 $\sigma_u=J\rho_uJ^\dagger$、互补投影为 $P,Q$，并定义
+$$
+ h(u)=\frac{1+u}{2},\quad e(u)=\frac{1-u}{2},\quad
+ K_u=\sqrt{h(u)}P+\sqrt{e(u)}Q,\quad
+ H_u=\frac{P}{1+u}-\frac{Q}{1-u},
+ \qquad R_u=\sigma'_u-\frac12(H_u\sigma_u+\sigma_uH_u).
+\tag{210.2}
+$$
+令 $\Phi$ 为经第188.3节固定 CPTP 解码扩张后的处理器所诱导的线性映射：它把扩大空间上的程序矩阵送到相应的信号线性映射。则 $\mathcal B(u):=\Phi(R_u)$ 为 $C^1$ 函数，并且每个 $t\in\mathcal E(\rho)$ 都满足
+$$
+ R_t=0,\qquad \mathcal B(t)=0,\qquad \mathcal B'(t)\ne0.
+\tag{210.3}
+$$
+因此存在依赖该程序与 $t$ 的 $c,\delta>0$，使
+$$
+ I_Q(\rho_u)-I_r(u)\ge c|u-t|^2
+ \qquad(|u-t|<\delta).
+\tag{210.4}
+$$
+若曲线为 $C^2$，则另有 $R'_t\ne0$；若同时在 $t$ 的一个邻域秩恒定，则存在有限常数 $C$，使同一信息差值至多为 $C|u-t|^2$。不要求该恒秩支持子空间本身固定。
+
+证明。 固定嵌入及 CPTP 解码扩张使 $\Phi$ 对扩大空间上的所有程序矩阵都有定义；密度矩阵经 $\Phi$ 给出 CPTP 通道，且 $\Phi(\sigma_u)=\mathcal T_u$。后面构造的密度矩阵不必位于原嵌入像中。
+
+对任何内点，双侧正性给出 $\sigma'_u$ 在 $\ker\sigma_u$ 上的压缩为零，因此有限自伴 SLD $L_u$ 存在。第189节的平方残差恒等式给出
+$$
+ g(u):=I_Q(\rho_u)-I_r(u)
+ =\operatorname{Tr}[\sigma_u(L_u-H_u)^2],
+ \qquad \|R_u\|_1\le\sqrt{g(u)}.
+\tag{210.5}
+$$
+若 $g(u)=0$，则 $(L_u-H_u)\sqrt{\sigma_u}=0$，故 $R_u=0$。反过来，若 $R_u=0$，则 $H_u$ 本身满足 SLD 方程，而且
+$\operatorname{Tr}(\sigma_uH_u^2)=1/(1-u^2)$，故 $g(u)=0$。这证明等号与 $R_u=0$ 等价，没有对态、SLD 或信息量的可逆性和解析性作假设。
+
+记 $\mathcal M_u(X)=(H_uX+XH_u)/2$。目标通道仿射，全输入精确恒等式给出
+$$
+ \mathcal B(u)=\Phi(R_u)
+ =\mathcal T'-\Phi(\mathcal M_u(\sigma_u)).
+\tag{210.6}
+$$
+右侧只含 $C^1$ 函数 $\sigma_u$ 及光滑算子 $\mathcal M_u$，所以 $\mathcal B$ 为 $C^1$；这一步不要求 $R$ 可微。
+
+固定校准点 $t$，置正矩阵 $A=K_t^{-1}\sigma_tK_t^{-1}$，记
+$A_+=PAP$、$A_-=QAQ$、$D=PAQ$。读出概率为 $h,e$，所以 $A_+$ 和 $A_-$ 都有迹一。定义固定通道 $\mathcal R_\pm=\Phi(A_\pm)$ 及固定线性映射 $\mathcal S=\Phi(D+D^\dagger)$。冻结曲线 $\widehat\sigma_u=K_uAK_u$ 的通道为
+$$
+ \Psi_u=h(u)\mathcal R_++e(u)\mathcal R_-
+       +q(u)\mathcal S,
+ \qquad q(u)=\frac12\sqrt{1-u^2}.
+\tag{210.7}
+$$
+由于 $K'_u=H_uK_u/2$，冻结曲线满足 $\widehat\sigma'_u=\mathcal M_u(\widehat\sigma_u)$。在 $t$，$R_t=0$ 保证冻结曲线与实际曲线有相同的值及一阶导数。因此对（210.6）求导，只使用实际曲线的一阶导数便有
+$$
+ \mathcal B'(t)
+ =-\Phi(\mathcal M'_t(\sigma_t)+\mathcal M_t(\sigma'_t))
+ =-\Psi''_t=-q''(t)\mathcal S,
+ \qquad q''(t)=-\frac1{2(1-t^2)^{3/2}}\ne0.
+\tag{210.8}
+$$
+若 $\mathcal B'(t)=0$，则 $\mathcal S=0$。再匹配冻结曲线与目标通道的值、一阶导数，得到
+$$
+ \mathcal R_-=\mathcal T_t-(1+t)\mathcal T'=\mathcal T_{-1}.
+\tag{210.9}
+$$
+左侧是 CPTP 通道，右侧却不为正：第188.3节的 $n=(1,-2a,1)^{\mathsf T}$ 满足 $n^{\mathsf T}F(a,-1)n=-4a^2$。矛盾证明（210.3）。
+
+在有限维信号映射空间任选一个范数，取 $M>0$ 使 $\|\Phi(X)\|\le M\|X\|_1$ 对所有自伴 $X$ 成立。由 $\mathcal B(t)=0$、$\mathcal B'(t)\ne0$，在充分小的邻域有
+$\|\mathcal B(u)\|\ge\frac12\|\mathcal B'(t)\||u-t|$。结合（210.5）得到（210.4），例如可取 $c=\|\mathcal B'(t)\|^2/(4M^2)$。因此校准点孤立，即使残差本身只有连续性。
+
+若 $\rho$ 为 $C^2$，则 $R$ 为 $C^1$ 且 $\mathcal B'(t)=\Phi(R'_t)\ne0$，所以 $R'_t\ne0$。若秩还局部恒定，所有非零特征值在缩小的邻域具有统一正下界 $\lambda_*>0$。在 $\sigma_u$ 的本征基中，以 $\lambda_i$ 表示特征值，有
+$$
+ g(u)=2\sum_{\lambda_i+\lambda_j>0}
+       \frac{|(R_u)_{ij}|^2}{\lambda_i+\lambda_j}
+ \le\frac2{\lambda_*}\|R_u\|_2^2.
+\tag{210.10}
+$$
+这是把 $(R_u)_{ij}=(\lambda_i+\lambda_j)(L_u-H_u)_{ij}/2$ 代入平方残差后对有序指标对求和所得；核与核之间的项不贡献，支持与核之间的项仍保留。$R_t=0$ 与 $C^1$ 性给出所需二次上界。秩变化时这个统一分母下界不成立；第188.4节的程序在校准点外具有严格正的信息量极限差，不能把上界推广到所有秩变化点。证毕。
+
+**定理 210.3（光滑端点下的全部校准集合恰为有限集合）。** 每个具有定义210.1所述一阶光滑端点的有限维全区间精确程序，其 $\mathcal E(\rho)$ 都是有限集合。反过来，$J_a$ 的每个有限子集，包括空集，都可以成为一个三维程序的完整校准集合；实现程序在 $J_a$ 内满秩，其矩阵元素在 $[l,1]$ 附近有有理解析延拓。非空集合的最小程序维数为三。即使维数固定为三，各程序校准点数也不存在统一有限上界。
+
+证明。 若等号点无限，则在紧区间 $[l,1]$ 上有聚点。内点聚集由 $R$ 的连续性给出 $R_t=0$，而相应的 $\mathcal B$ 零点序列迫使 $\mathcal B(t)=\mathcal B'(t)=0$，与定理210.2矛盾。若聚点为 $l$，由于 $l>-1$，$K_l$ 仍可逆。连续性给出 $\sigma_l\succeq0$、读出概率恒等式及 $R_l=0$；处理器像仍具有（210.6）的 $C^1$ 表达，零点聚集给出 $\mathcal B'(l)=0$。定理210.2对冻结曲线及处理器像的导数论证可在 $l$ 应用，仍得到不为正的 $\mathcal T_{-1}$ 必须为 CPTP，矛盾。此处只对实际曲线使用物理侧的一阶导数极限，不要求延拓在 $u<l$ 时保持正性。
+
+在右端，令 $Z=P-Q$，消去 $H$ 的分母，定义
+$$
+ T(u)=(1-u^2)R_u
+      =(1-u^2)\sigma'_u+u\sigma_u
+       -\frac12(Z\sigma_u+\sigma_uZ).
+\tag{210.11}
+$$
+由 $\operatorname{Tr}(Q\sigma_1)=0$ 与正性，有 $Q\sigma_1=\sigma_1Q=0$，故 $T(1)=0$。一阶光滑性给出 $\sigma_u=\sigma_1+(u-1)\sigma'_1+o(|u-1|)$ 及 $\sigma'_u=\sigma'_1+o(1)$，所以即使 $\sigma''_1$ 不存在，$T$ 仍有左导数 $T'(1)=\sigma_1-\sigma'_1-(Z\sigma'_1+\sigma'_1Z)/2$。若等号点趋于一，则这个导数必须为零。按 $P,Q$ 分块计算，得到
+$$
+ P\sigma'_1P=\frac12\sigma_1,
+ \qquad P\sigma'_1Q=Q\sigma'_1P=0.
+\tag{210.12}
+$$
+从 $u<1$ 一侧的 $Q\sigma_uQ\succeq0$ 得 $Q\sigma'_1Q\preceq0$。而读出概率的导数为 $\operatorname{Tr}(Q\sigma'_1)=-1/2$，所以
+$$
+ \tau_-=-2Q\sigma'_1Q\succeq0,\qquad
+ \operatorname{Tr}\tau_-=1,\qquad
+ \sigma'_1=\frac12(\sigma_1-\tau_-).
+\tag{210.13}
+$$
+送入固定处理器得到
+$\Phi(\tau_-)=\mathcal T_1-2\mathcal T'_1=\mathcal T_{-1}$，再次与正性矛盾。因此两端也不能成为聚点，校准集合有限。
+
+对于非空有限集合 $S\subset J_a$，选 $\zeta\in(l,\min S)$，直接使用定理208.2的有理准备，便有 $\mathcal E(\rho)=S$。其处理器固定于所选种子；同一处理器可以服务 $(\zeta,1)$ 内的任意有限集合。对于空集，在第207节的种子加旗标构造中取恒定 $v(u)=v_c\in(b_-,l)$；整个闭区间上 $v_c<u$，准备保持物理性，内部满秩，且式（207.23）的正导数条件处处不成立。相应旗标权重 $w=(u-v_c)/(1-v_c)$ 与矩阵曲线均在端点附近解析。第190.2节的二维成本严格大于 $I_r$，排除非空集合的二维实现；三维实现给出反向达到。取任意大的有限 $|S|$，说明维数三本身不限制校准点数。证毕。
+
+**定理 210.4（仅有开区间解析性时可以有无穷多个校准点）。** 固定第207节的任意种子 $\zeta\in J_a$ 及其物理区间 $(b_-,b_+)$。选择
+$$
+ b_-<c<l<\zeta<d<b_+,
+ \qquad
+ g(y)=c+\frac{d-c}{1+C e^{-ky}},
+ \quad C=\frac{d-\zeta}{\zeta-c},
+ \quad k=\frac{(1-\zeta^2)(d-c)}{(\zeta-c)(d-\zeta)}.
+\tag{210.14}
+$$
+对充分大的实数 $\beta$，令
+$$
+ x=\operatorname{artanh}u,\qquad
+ \theta_\beta(x)=-\frac\pi2+\log(1+e^{x-\beta}),\qquad
+ r_\beta(x)=\theta'_\beta(x)=\frac{e^{x-\beta}}{1+e^{x-\beta}},
+ \qquad
+ v_\beta(u)=g\!\left(\frac{\sin\theta_\beta(x)}{r_\beta(x)}\right).
+\tag{210.15}
+$$
+使用同一个种子加旗标处理器，存在以此内部坐标准备的全区间精确三维程序，在 $J_a$ 内满秩且实解析，其完整校准集合恰为
+$$
+ \mathcal E(\rho)=
+ \left\{\tanh\!\left[\beta+
+ \log\!\left(e^{\pi/2+2\pi n}-1\right)\right]:n=0,1,2,\ldots\right\}.
+\tag{210.16}
+$$
+这些点递增趋于一。程序在左端具有解析延拓，在右端连续趋于旗标纯态；闭区间上的连续延拓为 Lipschitz 函数，但在右端没有 $C^1$ 延拓。
+
+证明。 函数 $g$ 严格递增，值域为 $(c,d)$，且 $g(0)=\zeta$、$g'(0)=1-\zeta^2$。所有组成函数在 $J_a$ 上解析，$r_\beta>0$，故 $v_\beta$ 解析并始终位于种子的物理区间内。
+
+当 $\beta\to+\infty$，在紧区间 $u\in[l,d]$ 上有 $r_\beta\to0$、$\theta_\beta\to-\pi/2$，且 $\sin\theta_\beta/r_\beta\to-\infty$ 一致成立。因此 $v_\beta\to c<l$ 一致成立。固定充分大的 $\beta$，使该区间上 $v_\beta<l$，并且 $\theta_\beta(\operatorname{artanh}d)<0$。对于 $u>d$，自动有 $v_\beta<d<u$；故整个 $J_a$ 上 $v_\beta<u$。取
+$$
+ w_\beta(u)=\frac{u-v_\beta(u)}{1-v_\beta(u)},\qquad
+ \rho_u=(1-w_\beta(u))\sigma_{v_\beta(u)}\oplus w_\beta(u).
+\tag{210.17}
+$$
+两块权重严格为正，种子态满秩；同一个固定处理器给出 $(1-w_\beta)\mathcal T_{v_\beta}+w_\beta\mathcal T_1=\mathcal T_u$。这证明全区间、全输入的精确性与三维满秩性。
+
+由 $g$ 的单射性，$v_\beta=\zeta$ 当且仅当 $\sin\theta_\beta=0$。在这些点，直接求导得到
+$$
+ \frac{dv_\beta}{dx}=(1-\zeta^2)\cos\theta_\beta,
+ \qquad
+ \frac{dv_\beta}{du}=\frac{1-\zeta^2}{1-u^2}\cos\theta_\beta.
+\tag{210.18}
+$$
+式（207.23）因而恰好选择 $\theta_\beta=2\pi n$。由于 $\theta_\beta$ 严格递增、在 $\operatorname{artanh}l$ 的值位于 $(-\pi/2,0)$，且趋于正无穷，允许的整数恰为 $n\ge0$。解出 $u$ 得（210.16）；第一点已在 $d$ 右侧。
+
+左端 $l\in(-1,1)$，且构造的分母在那里非零，所以左侧矩阵解析延拓存在。在右端，$v_\beta\in(c,d)$ 一致远离一，故活动量子比特块的迹为 $(1-u)/(1-v_\beta(u))\to0$，程序连续趋于旗标纯态。若右端存在左导数，该块迹除以 $1-u$ 应有极限。但沿（210.16）的序列，它恒为 $1/(1-\zeta)$；沿 $\theta_\beta=\pi/2+2\pi n$ 的序列，$r_\beta\to1$、$v_\beta\to g(1)>\zeta$，故该商趋于不同的数 $1/(1-g(1))$。右端导数不存在，因而不与定理210.3矛盾。
+
+还可直接验证整个闭区间上的 Lipschitz 性。令 $y=\sin\theta_\beta/r_\beta$，利用 $\partial_xr_\beta=r_\beta(1-r_\beta)$ 得
+$$
+ \partial_xy=\cos\theta_\beta-
+       \frac{1-r_\beta}{r_\beta}\sin\theta_\beta.
+$$
+对于固定的 $\beta$，在 $x\ge\operatorname{artanh}l$ 上有 $r_\beta\ge r_\beta(\operatorname{artanh}l)>0$，所以 $\partial_xy$ 及 $\partial_xv_\beta$ 有界。置 $A(v)=\sigma_v/(1-v)$，则 $A$ 及 $A'$ 在 $[c,d]$ 上有界，而且活动块的导数为
+$$
+ \frac{d}{du}[(1-u)A(v_\beta(u))]
+ =-A(v_\beta(u))+
+   \frac{A'(v_\beta(u))\,\partial_xv_\beta(u)}{1+u}.
+$$
+由于 $1+u\ge2a>0$，整条程序曲线的导数在开区间一致有界，其闭区间连续延拓因此为 Lipschitz 函数。本构造只实现（210.16）的具体无限集合，不声称实现任意预定无限集合。证毕。
+
+点态 SLD 与秩变化处的连续信息量必须区分，相关一般公式见 Šafránek，*Discontinuities of the quantum Fisher information and the Bures metric*，Phys. Rev. A **95**, 052320（2017），定理1式（13）；有限维 SLD 的逆算子及伪逆表达见 Šafránek，*Simple expression for the quantum Fisher information matrix*，arXiv:1801.00945v2，式（4）—（5）、（12）—（13）。这里以（210.5）的残差等价式处理秩变化，并以处理器像的可微性、目标通道的仿射性和 $\mathcal T_{-1}$ 的非正性排除校准点聚集；有限性不以信息量自身连续或解析为前提。上述文献的 $C^2$ 秩变化修正公式不作为本节 $C^1$ 有限性结论的前提。
+
+## 追加锚（本行以下为增补区）
