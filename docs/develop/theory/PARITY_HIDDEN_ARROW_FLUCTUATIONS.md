@@ -411,3 +411,325 @@ $`o(\sqrt{qw_M})`$，因为其幂尺度衰减快于这里的对数因子。
 由此得到 (27.23)。格点原子只进入 (27.25) 中较低阶的误差，故无需相位分离。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 输出预算的边界波动与格点时钟
+
+**定义 28.1（增加输出后的真实信号增益）。** 沿用定义 27.1 的实验、固定参数、
+有限内在偏移及方向处理。对固定实数 $`\kappa\ge1`$，令
+$`m_\kappa=\lfloor\kappa q\rfloor`$；下文取维数充分大，使其不超过正类状态数。
+令 $`T_\kappa`$ 是补偿得分最大的 $`m_\kappa`$ 个位置。
+所有预算使用同一份数据、同一个方向判决和同一组独立均匀同分优先级，因此这些集合嵌套。
+置
+
+```math
+M_\kappa=\frac{|S\setminus T_\kappa|}{q},\qquad
+D_\kappa=M_1-M_\kappa.
+```
+
+式 (28.1)。
+
+本章使用遗漏信号比例。输出大小不等于基数时，它不等于 Hamming 损失除以两倍基数。
+记相应固定输出大小的精确极小极大遗漏风险为
+
+```math
+H_{\mathcal E,\kappa}^{\xi}
+ =\inf_{\widehat T:\,|\widehat T|=m_\kappa}
+   \sup_{S,\,\varepsilon\in\Xi_\xi}
+    \mathbb E_{S,\varepsilon}^{\mathcal E}
+       \frac{|S\setminus\widehat T|}{q}.
+```
+
+式 (28.2)。
+
+已知方向时，$`\Xi_{\mathrm k}`$ 只含给定方向且规则可使用该方向；
+未知方向时，$`\Xi_{\mathrm o}=\{+,-\}`$。
+在 $`\kappa=1`$ 处，这与原来的恰好基数风险相同。
+已知方向的排序规则达到 (28.2)；未知方向仍使用定义 27.1 的组合规则。
+
+为描述边界概率，定义
+
+```math
+d(z)=\frac{\varphi(z)}{\sqrt v},\qquad
+b_\kappa(z)=\kappa-1+\Phi(z),\qquad
+x_\kappa(z)=\log\frac{d(z)}{b_\kappa(z)},\qquad
+\zeta_M=\tau_M-\tfrac12\log\lambda.
+```
+
+式 (28.3)。
+
+非格点振幅的时钟为
+
+```math
+\Theta(\kappa)
+ =d(z_*)\log\frac{\kappa-1+p_*}{p_*}.
+```
+
+式 (28.4)。
+
+对最大格距为 $`h`$ 的格点振幅，沿用支持恢复卷第 26 章的
+$`L_h=h/(e^h-1)`$、$`l_h=\log L_h`$ 及连续周期函数 $`G_h`$。
+对相位 $`\omega\in\mathbb R/h\mathbb Z`$，取任一实代表，置
+
+```math
+\begin{aligned}
+y_\kappa(\omega)
+ &=h\left\lceil\frac{\omega+x_\kappa(z_*)+l_h}{h}\right\rceil
+       -\omega-x_\kappa(z_*),\\[0pt]
+C_\kappa(\omega)
+ &=x_\kappa(z_*)+G_h(y_\kappa(\omega)),\\[0pt]
+\Theta_\omega(\kappa)
+ &=d(z_*)[C_1(\omega)-C_\kappa(\omega)].
+\end{aligned}
+```
+
+式 (28.5)。
+
+周期性使它们不依赖相位代表的选择，端点处按 $`G_h`$ 的连续延拓取值。
+
+**定理 28.2（有限预算族的第三尺度）。** 任取有限个固定预算
+$`1\le\kappa_1\le\cdots\le\kappa_m`$。
+非格点情形使用 (28.4)；格点情形沿任意满足
+$`\zeta_M\bmod h\to\omega`$ 的子序列使用 (28.5)。则
+
+```math
+\left(
+ \sqrt{q\sqrt\lambda}\left[
+  D_{\kappa_j}-(H_{\mathcal E,1}^{\xi}
+                    -H_{\mathcal E,\kappa_j}^{\xi})
+ \right]\right)_{j=1}^m
+ \quad\Longrightarrow\quad
+ \left(B(\Theta(\kappa_j))\right)_{j=1}^m.
+```
+
+式 (28.6)。
+
+右侧 $`B`$ 为标准 Brownian 运动；格点情形将 $`\Theta`$ 换为
+$`\Theta_\omega`$。两类时钟都连续、递增、凹，且在预算为一时为零。
+非格点时钟光滑；格点时钟对预算分段仿射，其相邻非零斜率的比为 $`e^{-h}`$。
+
+进一步，(28.6) 与定理 27.3 的两个坐标联合收敛，Brownian 向量与那两个正态变量
+相互独立。此处只断言任意有限预算族的联合极限，不断言预算连续变化时的过程紧性。
+结果对真实支持一致，适用于两个实际平稳实验及两种方向信息情形。
+所有中心仍为精确有限实验风险。
+
+证明。先设方向已知并对齐正向。均匀固定基数后验下，条件期望遗漏数为
+$`q-\sum_{i\in T}\pi_i`$。后验包含概率与补偿得分同序，故固定输出大小时由
+最大得分排序达到 Bayes 最优；置换等变性将其风险变成常数，因此也是极小极大风险。
+
+对每个预算，直接在补偿得分上选取确定阈值 $`u_{\kappa,M}`$ 和同分接受比例，
+构造随机阈值集 $`R_\kappa`$，使
+
+```math
+\mathbb E_S|R_\kappa|=m_\kappa.
+```
+
+式 (28.7)。
+
+有限得分支持和同分线性插值保证存在。可按同一得分与均匀优先级的字典序作单调选择，
+使各个 $`R_\kappa`$ 嵌套；在预算为一时选取第 27 章的同一个阈值规则。
+支持对称性保证阈值不依赖未知支持。
+支持恢复卷 (23.4)–(23.7) 的中央尾界给出
+
+```math
+u_{\kappa,M}=\zeta_M+O(1).
+```
+
+式 (28.8)。
+
+这是因为中央信号尾占 $`1-p_*+o(1)`$ 倍基数，预算与它之间保有正间隙，
+其余期望由量级为 $`e^{\tau_M-u}/\sqrt\lambda`$ 的背景尾提供。
+所有常数可同时用于这里有限多个预算。
+
+精确期望匹配及实际两行方差界给出
+$`\mathbb E_S||R_\kappa|-m_\kappa|=O(\sqrt q)`$。
+在 (28.8) 两侧选取足够远的固定端点，期望计数与预算相差基数的固定比例。
+Chebyshev 不等式以 $`O(q^{-1})`$ 的异常概率将样本排序边界夹在这两个端点内。
+再交上 (27.11) 的后验好事件，所有被更换位置的后验包含概率都至多为
+$`C/\sqrt\lambda`$。同一字典序下，排序集与阈值集嵌套。
+条件于数据和优先级，再作先验平均及支持对称化，得到
+
+```math
+\mathbb E_S\left|
+ |S\setminus T_\kappa|-|S\setminus R_\kappa|
+\right|
+ \le C\sqrt{q/\lambda}+C
+ =o\left(\sqrt{q/\sqrt\lambda}\right).
+```
+
+式 (28.9)。
+
+坏事件中被更换的真实信号数始终至多为基数，故其贡献为常数量级。
+这一步控制真实信号数，不以全部背景位置的集合差替代它。
+
+现在识别两个阈值之间的单行信号质量。在独立信号比较律及同分优先级下，令
+
+```math
+J_{i,\kappa}
+ =\mathbf1_{\{i\in R_\kappa\}}
+     -\mathbf1_{\{i\in R_1\}},\qquad
+ g_{\kappa,M}=\mathbb E_{Q_r}J_{i,\kappa}.
+```
+
+式 (28.10)。
+
+这些零一指标随预算嵌套。
+
+非格点情形，由局部极限定理、精确换测度和实际期望匹配，得
+
+```math
+b_\kappa(z_M)
+ =d(z_M)e^{\zeta_M-u_{\kappa,M}}+o(1),\qquad
+u_{\kappa,M}=\zeta_M+x_\kappa(z_M)+o(1).
+```
+
+式 (28.11)。
+
+这里使用支持恢复卷第 25 章的局部尾估计。
+补偿得分与非格点固定得分在对数计数截断上相差任意对数幂的小量。
+先以固定小宽度夹住差异，再用局部极限定理，最后令宽度趋零，可知端点原子及
+补偿差异均为 $`o(\lambda^{-1/2})`$。所以长度为常数量级的信号区间满足
+
+```math
+\sqrt\lambda\,g_{\kappa,M}
+ =d(z_M)\log\frac{b_\kappa(z_M)}{b_1(z_M)}+o(1)
+ \longrightarrow\Theta(\kappa).
+```
+
+式 (28.12)。
+
+仅用分布函数的 Berry–Esseen 误差不能识别这里的常数；本步骤确实使用局部极限定理。
+
+格点情形需保留边界相位。令 $`G_M`$ 为计数截断事件，两种比较律下的
+截断外概率均取为 $`O(M^{-D})`$，其中 $`D`$ 可任取充分大的固定值。截断上令
+$`\eta_M=\sup|W-Z|`$，它小于任意固定的负对数幂。
+当 $`2\eta_M\lt h`$ 时，确定的补偿阈值至多切开一个固定得分层
+$`b\in h\mathbb Z`$，更高层全选，更低层全不选。
+令 $`\alpha`$ 为该层内被接受部分与 $`G_M`$ 交集的信号质量，除以完整边界层的
+信号质量；接受事件包括独立同分随机数。无需假定补偿在该层内均匀选择：
+对任意可测子集 $`E\subseteq\{Z=b\}\cap G_M`$，精确换测度给出
+
+```math
+e^{-b-\eta_M}Q_r(E)\le Q_{-a}(E)\le e^{-b+\eta_M}Q_r(E).
+```
+
+式 (28.13)。
+
+这些界也适用于零质量或任意小质量的接受子集。
+截断外只使用加性界：信号质量为 $`O(M^{-D})=o(\lambda^{-1/2})`$，
+背景质量乘以 $`(M-q)/q`$ 后为 $`O(M^{1-D}/q)=o(1)`$。
+因此同一有效接受比例控制背景主项；不把截断外误差写成相对误差。
+格点局部极限定理、几何尾及实际期望匹配给出
+
+```math
+b_\kappa(z_M)
+ =d(z_M)e^{\zeta_M-b}(L_h+\alpha h)+o(1).
+```
+
+式 (28.14)。
+
+令 $`y=b-\zeta_M-x_\kappa(z_M)`$，则
+$`e^y=L_h+\alpha h+o(1)`$，故其代表落在
+$`[l_h,l_h+h]+o(1)`$ 内。
+支持恢复卷 (26.8) 的严格边界展开加上未接受的边界质量，给出单行遗漏概率
+
+```math
+p_{\kappa,M}
+ =\Phi(z_M)+\frac{\varphi(z_M)}{\sqrt\lambda}
+ \left[
+ A(z_M)+\frac{-\tfrac12\log\lambda+x_\kappa(z_M)
+                         +y+h/2-\alpha h}{\sqrt v}
+ \right]+o(\lambda^{-1/2}).
+```
+
+式 (28.15)。
+
+其中 $`A`$ 是第 25、26 章的共同第三累积量项，在预算相减时消去。
+代入 (28.14)，并使用 $`G_h(l_h)=G_h(l_h+h)`$，得到
+
+```math
+\begin{aligned}
+y_{\kappa,M}
+ &=h\left\lceil\frac{\zeta_M+x_\kappa(z_M)+l_h}{h}\right\rceil
+       -\zeta_M-x_\kappa(z_M),\\[0pt]
+C_{\kappa,M}&=x_\kappa(z_M)+G_h(y_{\kappa,M}),\\[0pt]
+\sqrt\lambda\,g_{\kappa,M}
+ &=d(z_M)(C_{1,M}-C_{\kappa,M})+o(1).
+\end{aligned}
+```
+
+式 (28.16)。
+
+端点匹配使边界层改变时的误差仍为小量，不要求相位远离切换点。
+这里计算的是同一补偿阈值规则的单行质量，没有把补偿排序和固定得分排序的
+随机损失当成等价。若 $`\zeta_M\bmod h\to\omega`$，(28.16) 的右侧趋于
+$`\Theta_\omega(\kappa)`$。
+
+固定 (28.16) 中由上取整选定的规范格点层 $`b`$ 时，系数满足
+
+```math
+C_{\kappa,M}
+ =b-\zeta_M+h/2+L_h
+   -\frac{e^{b-\zeta_M}}{d(z_M)}\,b_\kappa(z_M).
+```
+
+式 (28.17)。
+
+因此时钟在这一预算区间内的斜率是 $`e^{b-\zeta_M}\gt0`$。
+预算增加而边界下降一个格距时，斜率乘以 $`e^{-h}`$。
+端点连续性证明分段仿射时钟递增且凹；非格点时钟的同样性质由 (28.4) 直接求导得到。
+
+在独立信号比较律中，不同行的整个预算指标向量独立同分布。
+嵌套性给出
+
+```math
+\mathrm{Cov}(J_{i,\kappa},J_{i,\kappa'})
+ =g_{\min(\kappa,\kappa'),M}
+    -g_{\kappa,M}g_{\kappa',M}.
+```
+
+式 (28.18)。
+
+由 (28.12) 或 (28.16)，乘以 $`\sqrt\lambda`$ 后趋于
+$`\Theta(\min(\kappa,\kappa'))`$。
+各行在标准化总和中的贡献至多为固定倍数的
+$`\lambda^{1/4}/\sqrt q\to0`$，故多元 Lindeberg 定理给出 Brownian 有限维协方差。
+式 (27.6) 的过程总变差界转移联合分布；单行相对概率界单独控制总均值误差
+$`O(q\delta_M+M^{1-D})=o(\sqrt{q/\sqrt\lambda})`$。
+再用 (28.9) 的绝对均值误差，便可换回实际排序规则并换成其精确期望。
+
+增长局部计数的高斯经验过程极限有
+[Einmahl–Mason 定理 1.1](../../../Library/Dynamics/einmahl1997local.md)
+的经典先例；其中稀有局部质量趋零时，极限协方差为局部交集质量。
+同一经验分布的全局与局部极限可渐近独立，参见
+[Ferger–Vogel 定理 2.1](../../../Library/Dynamics/ferger2015empirical.md)
+的 Brownian 桥与双侧 Poisson 极限。这里的局部期望计数趋于无穷，
+所需高斯尺度及相位时钟由 (28.12)、(28.16) 确定。
+
+最后与前两尺度同时比较。在信号比较律中，令
+$`Y_i=\mathbf1_{\{i\notin R_1\}}`$，并沿用第 27 章较高阈值规则的对数区间指标
+$`J_i^{\mathrm{log}}`$。有 $`J_{i,\kappa}\le Y_i`$，
+而 $`J_{i,\kappa}J_i^{\mathrm{log}}=0`$。因此对应的单行协方差为
+
+```math
+\mathrm{Cov}(Y_i,J_{i,\kappa})
+ =(1-p_{1,M})g_{\kappa,M},\qquad
+\mathrm{Cov}(J_i^{\mathrm{log}},J_{i,\kappa})
+ =-g_M g_{\kappa,M}.
+```
+
+式 (28.19)。
+
+在各自的总和尺度下，前者为 $`O(\lambda^{-1/4})`$，后者为
+$`O(\sqrt{\log\lambda}/\sqrt\lambda)`$，均趋于零。
+联合三角阵中心极限定理遂给出三部分之间的独立性。
+这里对无约束规则仍只使用第 27 章自身所需的误差尺度，不将它的比较误差强行缩到
+本章更小的尺度；第三部分只涉及已经由 (28.9) 控制的排序规则。
+
+未知方向时，(27.21) 的判错概率为 $`O(q^{-1})`$，遗漏损失有界于一。
+组合规则相对已知方向规则的原始遗漏数绝对均值误差为 $`O(1)`$，小于
+$`\sqrt{q/\sqrt\lambda}`$。揭示方向与组合规则分别给出 (28.2) 的下、上界，
+故组合规则期望与相应精确未知方向风险相差 $`O(q^{-1})`$。
+这也小于所有三个归一化尺度所容许的中心误差。
+从而得到未知方向的联合结论；置换等变性保证支持一致性。∎
+
+## 追加锚（本行以下为增补区）
