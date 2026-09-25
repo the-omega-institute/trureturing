@@ -16,6 +16,7 @@ import time
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 INFO = re.compile(r"^(?:info(?:rmation)?:|\[info(?:rmation)?\]|debug:|trace:|ℹ|✔|✓|[\u2800-\u28ff]\s*\[)", re.I)
 BUILD_INFO = re.compile(r"^(?:Build succeeded\.|Passed\s|Passed!|Test run|Starting test execution|A total of|Results File:|Determining projects to restore|Restored .*\.[a-z]*proj\b|All projects are up-to-date for restore\.|.* -> .*\.(?:dll|exe)$)")
+TEST_INFO = re.compile(r"^(?:VSTest version |Test Run Successful\.|Total tests:|Passed:|Total time:|\[xUnit\.net [^\]]+\]\s+(?:xUnit\.net VSTest Adapter\b|Discover(?:ing|ed):|Starting:|Finished:))")
 ERROR = re.compile(r"(?:\b(?:error|fatal)(?:\s+[A-Z]+\d+)?\s*[:\[]|^(?:error|fatal)\b|::error\b|\[(?:ERROR|FAIL(?:ED)?)\]|^\s*Failed\s|^✖|^Traceback\b|^Unhandled exception|\b[A-Z_]+_(?:FAILED|FAILURE|EXHAUSTED|UNRESOLVED)\b)", re.I)
 WARNING = re.compile(r"(?:\bwarn(?:ing)?(?:\s+[A-Z]+\d+)?\s*[:\[]|^warn(?:ing)?\b|::warning\b|\[WARN(?:ING)?\]|^⚠)", re.I)
 PROGRESS = re.compile(r"\[\s*\d+\s*/\s*\d+\s*\]|\b\d+(?:\.\d+)?%")
@@ -141,7 +142,7 @@ class Presenter:
                 else:
                     self.failed_operation.discard(stream)
             self.structured(value, line, activity=activity)
-        elif INFO.match(plain) or BUILD_INFO.match(plain):
+        elif INFO.match(plain) or BUILD_INFO.match(plain) or TEST_INFO.match(plain):
             self.detail[stream] = False
             self.information(plain)
         elif ERROR.search(plain) or WARNING.search(plain):
