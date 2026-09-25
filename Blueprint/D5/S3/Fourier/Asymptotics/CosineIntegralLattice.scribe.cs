@@ -19,7 +19,7 @@ internal sealed class CosineIntegralLatticeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For positive x, the integral of sin(t)/t squared over (x,infinity) "
+                        "For positive x, the integral of sin(t) / t^2 over (x,infinity) "
                         + "is absolutely convergent. The displayed representation has the "
                         + "usual convention Ci(x) equal to the negative improper integral "
                         + "of cos(t)/t from x to infinity. Integration by parts gives the "
