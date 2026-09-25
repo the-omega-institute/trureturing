@@ -200,17 +200,30 @@ minimum-child conditions of private blocks consequently stay intact.
 
 For each fixed injection, a target original pulls back either to the
 empty set or to one cylinder with the same exponent vector and prime
-support. Distinct numerical moduli remain distinct. The head-only
-restriction and every declared branch interface are preserved; an
-empty pullback only removes a constraint. In particular the actual
-private V_q is unchanged, since no private coordinate is transported.
+support. Form a padded source family: retain each nonempty pullback
+exactly; replace each empty pullback by an arbitrary auxiliary source
+cylinder with that same transformed numerical label. Choose all auxiliary
+residues once for this injection. Distinct numerical moduli remain
+distinct, since exponent vectors on the distinct source primes do.
 
-Every extendible source head word maps to an extendible target head
-word: keep its avoiding private witness, and use the defining
-pullback relation for each original. Hence the inverse image of the
-target extension set contains the source extension set. The source
-extension set has Haar mass greater than1/65000 by SP9 for every
-fixed injection.
+This retains every original exponent/support vector, hence all ten
+head-prime occurrences and the exact declared Type I/II decomposition.
+The head-only inventory is preserved, and the base theorem permits
+the auxiliary phases. Private-only originals have nonempty unchanged
+pullbacks, so their actual V_q domains, block sizes, minimum-child
+conditions and all outside-prime thresholds are unchanged. Merely
+discarding empty pullbacks would not justify these occurrence and
+exact-decomposition hypotheses.
+
+Every head word extendible for the padded source family maps to an
+extendible target head word, keeping its same private witness. For a
+nonempty pullback this follows from exact cylinder avoidance; for an
+empty pullback no mapped point can lie in the target original. Thus
+
+    Ext(padded source) subset Phi^-1 Ext(target).
+
+SP9 applies to the padded family for every fixed injection, so the
+left side has source head Haar mass greater than1/65000.
 
 For each source head word, averaging its independently shifted
 digit images gives uniform target-head Haar. Averaging the preceding

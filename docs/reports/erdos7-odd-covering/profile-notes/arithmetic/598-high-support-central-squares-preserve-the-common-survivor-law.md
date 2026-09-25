@@ -130,3 +130,10 @@ uses this actual ten-prime survivor as a head for arbitrarily many
 external blocks. It adds a local eleven-child conditional-kernel bound;
 the permitted exterior includes blocks on at most twelve vertices at
 arbitrary depth, with the stated single-interface graph condition.
+
+[Report603](603-two-support-four-slices-reduce-the-core-gap-to223.md)
+simultaneously adds two complete support-four slices containing190
+labels. It keeps the800 additions above and reduces the remaining
+central inventory to223. Its190-label branch corollary uses outside
+primes at least67; the intermediate160-label theorem and its branch
+corollary from53 are also retained.
