@@ -109,22 +109,17 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                 Text(" and "),
                 Ref("D5/L/Quantum/faist2015gibbspreserving"),
                 Text(" distinguish Gibbs calibration, coherent covariance and thermal "
-                    + "implementation. Sections 56-58 of the computational-behavior theory "
-                    + "volume combine these conditions in one recovery map, deriving "
-                    + "a noncommuting spectral optimum and a finite-window error frontier. "
-                    + "The Lean declarations here establish the commutator interface, "
-                    + "not those paper-level optimization or channel-norm claims.")),
+                    + "implementation. The Lean declarations here establish the commutator "
+                    + "derivative and orbit-span identity, not a thermal recovery optimum "
+                    + "or channel-norm bound.")),
             Paragraph(
                 Text("Joint statistical interpretation: "),
                 Ref("D5/L/Quantum/nuradha2025multivariate"),
-                Text(" poses operational questions for multivariate fidelities; the "
-                    + "two-label dynamic refinement does not solve the unrestricted "
-                    + "multi-label problem. "),
+                Text(" poses operational questions for multivariate fidelities. "),
                 Ref("D5/L/Quantum/beny2015inference"),
-                Text(" motivates observation-based scale descriptions. Section 59 keeps "
-                    + "statistical information loss and dynamical intertwining error "
-                    + "as separate composable quantities; it does not identify their "
-                    + "bounds with physical heat or a complete renormalisation flow.")))));
+                Text(" motivates observation-based scale descriptions. The commutator "
+                    + "identity does not settle these statistical questions or "
+                    + "resource costs.")))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
