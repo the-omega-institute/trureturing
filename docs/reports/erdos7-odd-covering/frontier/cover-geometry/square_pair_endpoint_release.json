@@ -1,0 +1,3186 @@
+{
+  "schema": "secondary-pair-endpoint-release-v1",
+  "status": "PASS",
+  "scope": {
+    "head": "Exactly the Report626 literal head, arbitrary pure phases and free seven-star roots; its restricted mixed inventory remains.",
+    "release": "Any fixed subset S of the eighty listed secondary numerical labels may have arbitrary independently chosen first roots. The four primary labels and every unreleased secondary label at each edge share one endpoint pair.",
+    "source": "Keep each reference edge rectangle as an auxiliary deletion, then impose all actual released events on that same source. No actual original constraint is dropped.",
+    "quantifiers": "Every allowed finite original family with globally fixed residues and distinct numerical moduli; missing labels cost zero. The displayed B(S) sums every permitted label and is uniform in presence and phases.",
+    "large_owners": "Optional only-large-owner network: all owners >=2^115, fixed finite unions of smaller head or earlier owner parents, pure powers and assigned mixed inventories only; no small owners, private blocks or Type I blocks."
+  },
+  "dependencies": {
+    "unanchored_square_source_certificate.json": "b8c38f05cbcd65607e25bc138ecc5a20961cd5bb786b18ad41df5583986bb1a4",
+    "unanchored_square_source_certificate.py": "fdde856e6317ad315fce3f48f75be95ec41a9b59595e41454db9450045f1847b",
+    "unanchored_square_source_certificate.cpp": "61e9553d1fc15a87df6493be00f6c98c36b35612edc884e4347f433121e2ceb9",
+    "unanchored_square_source_certificate_conditional.cpp": "49ee101c7664b8e68eb78c02115ceef2c78102271d4a037800821585676d7ab4",
+    "arbitrary_pure_network_extensions.json": "ae50c6a2f6edc9bd30db3531882bf13c0b0b11f1760e7ebcd711e56f11c285fa",
+    "arbitrary_pure_network_extensions.py": "553f6b014d4ca30f6d5e31e60acf27e85eae8e6cd6a3fac1182f1785128744df",
+    "actual_pair_activation_certificate.json": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f"
+  },
+  "inherited_source_dependencies": {
+    "arbitrary_pure_source_certificate.py": "48c5266bcd91f681ee5b5f5b44130e6af2f4671a4a79b2877757279bbccb4eb7",
+    "matching_endpoint_certificate.py": "69153d040ad621ac0ffb671bbf218d1d527a323a3284e79db852fcba16016324",
+    "pure_source_template_pair_orbits.py": "3d2e86d09654f936a18d0e488fcb99abeb20114737df454bb396350fc960d1ca",
+    "actual_pair_activation_certificate.json": "2e9eac2581f6c0e09b75fa91252c251cb62463e96038e6bdb5ed99a48ede8a3f"
+  },
+  "constants": {
+    "gamma": "190452499219361/189995609279692800",
+    "alpha": "2673/110656",
+    "c": "1084133/201247200",
+    "g": "200163067/201247200",
+    "central_caps": {
+      "0,0": "14/15",
+      "1,0": "2/3",
+      "0,1": "4/15",
+      "1,1": "8/45"
+    },
+    "central_cap_sum": "92/45",
+    "E115": "19740202146111572828188083/495176015714152109959649689600"
+  },
+  "subset_criterion": {
+    "B": "Sum raw_deletion_cap over S (or only its present originals).",
+    "head": "gamma - g B(S) > 0 implies head Haar mass >= alpha (gamma - g B(S)).",
+    "only_large_owner_network": "gamma - g B(S) - E115 > 0 implies extendible head Haar mass > alpha (gamma - g B(S) - E115).",
+    "unit_term": "The coefficient g=1-c uses the complete squared query load INCLUDING UNIT. Mere moment monotonicity gives only cost delta."
+  },
+  "labels": [
+    {
+      "modulus": 539,
+      "exponents": [
+        0,
+        0,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/350",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "341/129600",
+      "gate_fee": "6205055077/2371057920000"
+    },
+    {
+      "modulus": 637,
+      "exponents": [
+        0,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/420",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/324000",
+      "gate_fee": "141915614503/65204092800000"
+    },
+    {
+      "modulus": 833,
+      "exponents": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/560",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/32400",
+      "gate_fee": "10608642551/6520409280000"
+    },
+    {
+      "modulus": 847,
+      "exponents": [
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/594",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "217/139968",
+      "gate_fee": "6205055077/4024024012800"
+    },
+    {
+      "modulus": 931,
+      "exponents": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/630",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/648000",
+      "gate_fee": "188353446047/130408185600000"
+    },
+    {
+      "modulus": 1183,
+      "exponents": [
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/858",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "4963/4633200",
+      "gate_fee": "10916585731/10246357440000"
+    },
+    {
+      "modulus": 1573,
+      "exponents": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1188",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "1477/1924560",
+      "gate_fee": "42234407137/55330330176000"
+    },
+    {
+      "modulus": 1617,
+      "exponents": [
+        1,
+        0,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/350",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "341/181440",
+      "gate_fee": "6205055077/3319481088000"
+    },
+    {
+      "modulus": 1859,
+      "exponents": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1430",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "1477/2316600",
+      "gate_fee": "3248800549/5123178720000"
+    },
+    {
+      "modulus": 1911,
+      "exponents": [
+        1,
+        0,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/420",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/453600",
+      "gate_fee": "141915614503/91285729920000"
+    },
+    {
+      "modulus": 2023,
+      "exponents": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1530",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "371/619650",
+      "gate_fee": "10608642551/17814689640000"
+    },
+    {
+      "modulus": 2057,
+      "exponents": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1584",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "49/85536",
+      "gate_fee": "1401141469/2459125785600"
+    },
+    {
+      "modulus": 2299,
+      "exponents": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1782",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "3913/7698240",
+      "gate_fee": "111891154453/221321320704000"
+    },
+    {
+      "modulus": 2499,
+      "exponents": [
+        1,
+        0,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/560",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/45360",
+      "gate_fee": "10608642551/9128572992000"
+    },
+    {
+      "modulus": 2527,
+      "exponents": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/1938",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "6587/13953600",
+      "gate_fee": "188353446047/401160418560000"
+    },
+    {
+      "modulus": 2541,
+      "exponents": [
+        1,
+        0,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/594",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "155/139968",
+      "gate_fee": "6205055077/5633633617920"
+    },
+    {
+      "modulus": 2695,
+      "exponents": [
+        0,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/350",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "341/453600",
+      "gate_fee": "6205055077/8298702720000"
+    },
+    {
+      "modulus": 2793,
+      "exponents": [
+        1,
+        0,
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/630",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/907200",
+      "gate_fee": "188353446047/182571459840000"
+    },
+    {
+      "modulus": 2873,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/2288",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "3661/9266400",
+      "gate_fee": "8052714157/20492714880000"
+    },
+    {
+      "modulus": 3179,
+      "exponents": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/2550",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "49/137700",
+      "gate_fee": "1401141469/3958819920000"
+    },
+    {
+      "modulus": 3185,
+      "exponents": [
+        0,
+        1,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/420",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/1134000",
+      "gate_fee": "141915614503/228214324800000"
+    },
+    {
+      "modulus": 3211,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/2574",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "203/579150",
+      "gate_fee": "446517611/1280794680000"
+    },
+    {
+      "modulus": 3549,
+      "exponents": [
+        1,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/858",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/926640",
+      "gate_fee": "10916585731/14344900416000"
+    },
+    {
+      "modulus": 3757,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/3060",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "3661/12393000",
+      "gate_fee": "104685284041/356293792800000"
+    },
+    {
+      "modulus": 3971,
+      "exponents": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/3230",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "3913/13953600",
+      "gate_fee": "111891154453/401160418560000"
+    },
+    {
+      "modulus": 4165,
+      "exponents": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/560",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/113400",
+      "gate_fee": "10608642551/22821432480000"
+    },
+    {
+      "modulus": 4235,
+      "exponents": [
+        0,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/594",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "31/69984",
+      "gate_fee": "6205055077/14084084044800"
+    },
+    {
+      "modulus": 4655,
+      "exponents": [
+        0,
+        1,
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/630",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/2268000",
+      "gate_fee": "188353446047/456428649600000"
+    },
+    {
+      "modulus": 4693,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/3876",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "203/872100",
+      "gate_fee": "5804728943/25072526160000"
+    },
+    {
+      "modulus": 4719,
+      "exponents": [
+        1,
+        0,
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1188",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/384912",
+      "gate_fee": "42234407137/77462462246400"
+    },
+    {
+      "modulus": 5491,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/4590",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "1211/6196500",
+      "gate_fee": "34628210591/178146896400000"
+    },
+    {
+      "modulus": 5577,
+      "exponents": [
+        1,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1430",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/463320",
+      "gate_fee": "3248800549/7172450208000"
+    },
+    {
+      "modulus": 5915,
+      "exponents": [
+        0,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/858",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/2316600",
+      "gate_fee": "10916585731/35862251040000"
+    },
+    {
+      "modulus": 6069,
+      "exponents": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1530",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/123930",
+      "gate_fee": "10608642551/24940565496000"
+    },
+    {
+      "modulus": 6137,
+      "exponents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        0
+      ],
+      "central_cap": "14/15",
+      "outside_cap": "1/5168",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "1211/6976800",
+      "gate_fee": "34628210591/200580209280000"
+    },
+    {
+      "modulus": 6171,
+      "exponents": [
+        1,
+        0,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1584",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "35/85536",
+      "gate_fee": "200163067/491825157120"
+    },
+    {
+      "modulus": 6897,
+      "exponents": [
+        1,
+        0,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1782",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/1539648",
+      "gate_fee": "111891154453/309849848985600"
+    },
+    {
+      "modulus": 7581,
+      "exponents": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/1938",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/2790720",
+      "gate_fee": "188353446047/561624585984000"
+    },
+    {
+      "modulus": 7865,
+      "exponents": [
+        0,
+        1,
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1188",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/962280",
+      "gate_fee": "42234407137/193656155616000"
+    },
+    {
+      "modulus": 8085,
+      "exponents": [
+        1,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/350",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "341/680400",
+      "gate_fee": "6205055077/12448054080000"
+    },
+    {
+      "modulus": 8619,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/2288",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/1853280",
+      "gate_fee": "8052714157/28689800832000"
+    },
+    {
+      "modulus": 9295,
+      "exponents": [
+        0,
+        1,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1430",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/1158300",
+      "gate_fee": "3248800549/17931125520000"
+    },
+    {
+      "modulus": 9537,
+      "exponents": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/2550",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "7/27540",
+      "gate_fee": "200163067/791763984000"
+    },
+    {
+      "modulus": 9555,
+      "exponents": [
+        1,
+        1,
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/420",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/1701000",
+      "gate_fee": "141915614503/342321487200000"
+    },
+    {
+      "modulus": 9633,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/2574",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "29/115830",
+      "gate_fee": "446517611/1793112552000"
+    },
+    {
+      "modulus": 10115,
+      "exponents": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1530",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/309825",
+      "gate_fee": "10608642551/62351413740000"
+    },
+    {
+      "modulus": 10285,
+      "exponents": [
+        0,
+        1,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1584",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "7/42768",
+      "gate_fee": "200163067/1229562892800"
+    },
+    {
+      "modulus": 11271,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/3060",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/2478600",
+      "gate_fee": "104685284041/498811309920000"
+    },
+    {
+      "modulus": 11495,
+      "exponents": [
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1782",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/3849120",
+      "gate_fee": "111891154453/774624622464000"
+    },
+    {
+      "modulus": 11913,
+      "exponents": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/3230",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/2790720",
+      "gate_fee": "111891154453/561624585984000"
+    },
+    {
+      "modulus": 12495,
+      "exponents": [
+        1,
+        1,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/560",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "53/170100",
+      "gate_fee": "10608642551/34232148720000"
+    },
+    {
+      "modulus": 12635,
+      "exponents": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/1938",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/6976800",
+      "gate_fee": "188353446047/1404061464960000"
+    },
+    {
+      "modulus": 12705,
+      "exponents": [
+        1,
+        1,
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/594",
+      "response_cap": "1705/1728",
+      "raw_deletion_cap": "31/104976",
+      "gate_fee": "6205055077/21126126067200"
+    },
+    {
+      "modulus": 13965,
+      "exponents": [
+        1,
+        1,
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/630",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/3402000",
+      "gate_fee": "188353446047/684642974400000"
+    },
+    {
+      "modulus": 14079,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/3876",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "29/174420",
+      "gate_fee": "5804728943/35101536624000"
+    },
+    {
+      "modulus": 14365,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/2288",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/4633200",
+      "gate_fee": "8052714157/71724502080000"
+    },
+    {
+      "modulus": 15895,
+      "exponents": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/2550",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "7/68850",
+      "gate_fee": "200163067/1979409960000"
+    },
+    {
+      "modulus": 16055,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/2574",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "29/289575",
+      "gate_fee": "446517611/4482781380000"
+    },
+    {
+      "modulus": 16473,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/4590",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/1239300",
+      "gate_fee": "34628210591/249405654960000"
+    },
+    {
+      "modulus": 17745,
+      "exponents": [
+        1,
+        1,
+        1,
+        0,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/858",
+      "response_cap": "709/720",
+      "raw_deletion_cap": "709/3474900",
+      "gate_fee": "10916585731/53793376560000"
+    },
+    {
+      "modulus": 18411,
+      "exponents": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        0
+      ],
+      "central_cap": "2/3",
+      "outside_cap": "1/5168",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/1395360",
+      "gate_fee": "34628210591/280812292992000"
+    },
+    {
+      "modulus": 18785,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/3060",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/6196500",
+      "gate_fee": "104685284041/1247028274800000"
+    },
+    {
+      "modulus": 19855,
+      "exponents": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/3230",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/6976800",
+      "gate_fee": "111891154453/1404061464960000"
+    },
+    {
+      "modulus": 23465,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/3876",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "29/436050",
+      "gate_fee": "5804728943/87753841560000"
+    },
+    {
+      "modulus": 23595,
+      "exponents": [
+        1,
+        1,
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1188",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/1443420",
+      "gate_fee": "42234407137/290484233424000"
+    },
+    {
+      "modulus": 27455,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/4590",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/3098250",
+      "gate_fee": "34628210591/623514137400000"
+    },
+    {
+      "modulus": 27885,
+      "exponents": [
+        1,
+        1,
+        0,
+        1,
+        2,
+        0,
+        0
+      ],
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1430",
+      "response_cap": "211/216",
+      "raw_deletion_cap": "211/1737450",
+      "gate_fee": "3248800549/26896688280000"
+    },
+    {
+      "modulus": 30345,
+      "exponents": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1530",
+      "response_cap": "53/54",
+      "raw_deletion_cap": "106/929475",
+      "gate_fee": "10608642551/93527120610000"
+    },
+    {
+      "modulus": 30685,
+      "exponents": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        0,
+        1
+      ],
+      "central_cap": "4/15",
+      "outside_cap": "1/5168",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/3488400",
+      "gate_fee": "34628210591/702030732480000"
+    },
+    {
+      "modulus": 30855,
+      "exponents": [
+        1,
+        1,
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1584",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "7/64152",
+      "gate_fee": "200163067/1844344339200"
+    },
+    {
+      "modulus": 34485,
+      "exponents": [
+        1,
+        1,
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1782",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/5773680",
+      "gate_fee": "111891154453/1161936933696000"
+    },
+    {
+      "modulus": 37905,
+      "exponents": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/1938",
+      "response_cap": "941/960",
+      "raw_deletion_cap": "941/10465200",
+      "gate_fee": "188353446047/2106092197440000"
+    },
+    {
+      "modulus": 43095,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/2288",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/6949800",
+      "gate_fee": "8052714157/107586753120000"
+    },
+    {
+      "modulus": 47685,
+      "exponents": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        2,
+        0
+      ],
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/2550",
+      "response_cap": "35/36",
+      "raw_deletion_cap": "7/103275",
+      "gate_fee": "200163067/2969114940000"
+    },
+    {
+      "modulus": 48165,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        2,
+        0,
+        1
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/2574",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "58/868725",
+      "gate_fee": "446517611/6724172070000"
+    },
+    {
+      "modulus": 56355,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/3060",
+      "response_cap": "523/540",
+      "raw_deletion_cap": "523/9294750",
+      "gate_fee": "104685284041/1870542412200000"
+    },
+    {
+      "modulus": 59565,
+      "exponents": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        2
+      ],
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/3230",
+      "response_cap": "559/576",
+      "raw_deletion_cap": "559/10465200",
+      "gate_fee": "111891154453/2106092197440000"
+    },
+    {
+      "modulus": 70395,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2
+      ],
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/3876",
+      "response_cap": "29/30",
+      "raw_deletion_cap": "29/654075",
+      "gate_fee": "5804728943/131630762340000"
+    },
+    {
+      "modulus": 82365,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/4590",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/4647375",
+      "gate_fee": "34628210591/935271206100000"
+    },
+    {
+      "modulus": 92055,
+      "exponents": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "central_exponents": [
+        1,
+        1
+      ],
+      "central_cap": "8/45",
+      "outside_cap": "1/5168",
+      "response_cap": "173/180",
+      "raw_deletion_cap": "173/5232600",
+      "gate_fee": "34628210591/1053046098720000"
+    }
+  ],
+  "per_edge": [
+    {
+      "edge": [
+        7,
+        11
+      ],
+      "response_cap": "1705/1728",
+      "moduli": [
+        539,
+        847,
+        1617,
+        2541,
+        2695,
+        4235,
+        8085,
+        12705
+      ],
+      "raw_deletion_cap": "42067/4592700",
+      "gate_fee": "8420259739489/924268015440000",
+      "remaining_gate_lower": "-16478972523245520675590453/2032486860315455001722880000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        13
+      ],
+      "response_cap": "709/720",
+      "moduli": [
+        637,
+        1183,
+        1911,
+        3185,
+        3549,
+        5915,
+        9555,
+        17745
+      ],
+      "raw_deletion_cap": "1157797/162162000",
+      "gate_fee": "17826784498723/2510357572800000",
+      "remaining_gate_lower": "-8416976008850261585718899/1380083670584568211046400000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        17
+      ],
+      "response_cap": "53/54",
+      "moduli": [
+        833,
+        2023,
+        2499,
+        4165,
+        6069,
+        10115,
+        12495,
+        30345
+      ],
+      "raw_deletion_cap": "254771/52050600",
+      "gate_fee": "4635976794787/952276137120000",
+      "remaining_gate_lower": "-4047753851103070093502437/1047038685617052576645120000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        19
+      ],
+      "response_cap": "941/960",
+      "moduli": [
+        931,
+        2527,
+        2793,
+        4655,
+        7581,
+        12635,
+        13965,
+        37905
+      ],
+      "raw_deletion_cap": "2315801/549423000",
+      "gate_fee": "463537830721667/110569840365600000",
+      "remaining_gate_lower": "-387800058658772688390241217/121572825163313326954905600000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        13
+      ],
+      "response_cap": "211/216",
+      "moduli": [
+        1573,
+        1859,
+        4719,
+        5577,
+        7865,
+        9295,
+        23595,
+        27885
+      ],
+      "raw_deletion_cap": "577507/187644600",
+      "gate_fee": "1270281014659/414977476320000",
+      "remaining_gate_lower": "-939318969049050279194359/456272560478979694264320000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        17
+      ],
+      "response_cap": "35/36",
+      "moduli": [
+        2057,
+        3179,
+        6171,
+        9537,
+        10285,
+        15895,
+        30855,
+        47685
+      ],
+      "raw_deletion_cap": "110929/54529200",
+      "gate_fee": "3171984122749/1567692688320000",
+      "remaining_gate_lower": "-879896022941971592898287/861848169793628311388160000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        19
+      ],
+      "response_cap": "559/576",
+      "moduli": [
+        2299,
+        3971,
+        6897,
+        11495,
+        11913,
+        19855,
+        34485,
+        59565
+      ],
+      "raw_deletion_cap": "16109821/9324493200",
+      "gate_fee": "460655882883001/268075449702720000",
+      "remaining_gate_lower": "-105517811809587542370107813/147376037034710441247375360000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        13,
+        17
+      ],
+      "response_cap": "523/540",
+      "moduli": [
+        2873,
+        3757,
+        8619,
+        11271,
+        14365,
+        18785,
+        43095,
+        56355
+      ],
+      "raw_deletion_cap": "16082773/10633194000",
+      "gate_fee": "35375573291701/23515390324800000",
+      "remaining_gate_lower": "-6489116735237899520346113/12927722546904424670822400000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        13,
+        19
+      ],
+      "response_cap": "29/30",
+      "moduli": [
+        3211,
+        4693,
+        9633,
+        14079,
+        16055,
+        23465,
+        48165,
+        70395
+      ],
+      "raw_deletion_cap": "28681/22447854",
+      "gate_fee": "441605917279/347505212577600",
+      "remaining_gate_lower": "-410184006661619931775393/1528344087767367538861670400",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        17,
+        19
+      ],
+      "response_cap": "173/180",
+      "moduli": [
+        5491,
+        6137,
+        16473,
+        18411,
+        27455,
+        30685,
+        82365,
+        92055
+      ],
+      "raw_deletion_cap": "1141973/1412802000",
+      "gate_fee": "32654402587313/40617492379200000",
+      "remaining_gate_lower": "4431452026623492378483431/22329702581016733522329600000",
+      "positive_sufficient_bound": true
+    }
+  ],
+  "per_orientation": [
+    {
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        539,
+        2695,
+        1617,
+        8085
+      ],
+      "gate_fee": "142716266771/24896108160000",
+      "remaining_gate_lower": "-32369702024554099791149/6843390102072239063040000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        11
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        847,
+        4235,
+        2541,
+        12705
+      ],
+      "gate_fee": "142716266771/42252252134400",
+      "remaining_gate_lower": "-27587408915851071544667/11614210630374028581273600",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        637,
+        3185,
+        1911,
+        9555
+      ],
+      "gate_fee": "3264059133569/684642974400000",
+      "remaining_gate_lower": "-1417143918576190231039147/376386455613973148467200000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        1183,
+        5915,
+        3549,
+        17745
+      ],
+      "gate_fee": "251081471813/107586753120000",
+      "remaining_gate_lower": "-157489648155975488225363/118292886050105846661120000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        833,
+        4165,
+        2499,
+        12495
+      ],
+      "gate_fee": "243998778673/68464297440000",
+      "remaining_gate_lower": "-192821180918587089987823/75277291122794629693440000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        2023,
+        10115,
+        6069,
+        30345
+      ],
+      "gate_fee": "243998778673/187054241220000",
+      "remaining_gate_lower": "-496932818867932142239409/1645346505969654049013760000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        931,
+        4655,
+        2793,
+        13965
+      ],
+      "gate_fee": "4332129259081/1369285948800000",
+      "remaining_gate_lower": "-813515056369451318791339/376386455613973148467200000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        7,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        2527,
+        12635,
+        7581,
+        37905
+      ],
+      "gate_fee": "4332129259081/4212184394880000",
+      "remaining_gate_lower": "-30185898263586446177689/1157836430126793590046720000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        1573,
+        7865,
+        4719,
+        23595
+      ],
+      "gate_fee": "971391364151/580968466848000",
+      "remaining_gate_lower": "-427738412048953162534541/638781584670571571970048000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        13
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        1859,
+        9295,
+        5577,
+        27885
+      ],
+      "gate_fee": "74722412627/53793376560000",
+      "remaining_gate_lower": "-45738973456195409002579/118292886050105846661120000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        2057,
+        10285,
+        6171,
+        30855
+      ],
+      "gate_fee": "4603750541/3688688678400",
+      "remaining_gate_lower": "-498184060664260965079/2027878046573243085619200",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        3179,
+        15895,
+        9537,
+        47685
+      ],
+      "gate_fee": "4603750541/5938229880000",
+      "remaining_gate_lower": "5931905846668421675761/26116611205867524587520000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        2299,
+        11495,
+        6897,
+        34485
+      ],
+      "gate_fee": "2573496552419/2323873867392000",
+      "remaining_gate_lower": "-67079657900272680373901/638781584670571571970048000",
+      "positive_sufficient_bound": false
+    },
+    {
+      "edge": [
+        11,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        3971,
+        19855,
+        11913,
+        59565
+      ],
+      "gate_fee": "2573496552419/4212184394880000",
+      "remaining_gate_lower": "453223379226925638683239/1157836430126793590046720000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        2873,
+        14365,
+        8619,
+        43095
+      ],
+      "gate_fee": "185212425611/215173506240000",
+      "remaining_gate_lower": "16755741837584042966957/118292886050105846661120000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        13,
+        17
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        3757,
+        18785,
+        11271,
+        56355
+      ],
+      "gate_fee": "2407761532943/3741084824400000",
+      "remaining_gate_lower": "2951792073459396662003339/8226732529848270245068800000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        3211,
+        16055,
+        9633,
+        48165
+      ],
+      "gate_fee": "10269905053/13448344140000",
+      "remaining_gate_lower": "28242309446098023235501/118292886050105846661120000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        13,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        4693,
+        23465,
+        14079,
+        70395
+      ],
+      "gate_fee": "133508765689/263261524680000",
+      "remaining_gate_lower": "573442963943152466070119/1157836430126793590046720000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        2,
+        1
+      ],
+      "moduli": [
+        5491,
+        27455,
+        16473,
+        82365
+      ],
+      "gate_fee": "796448843593/1870542412200000",
+      "remaining_gate_lower": "4743696620387577583896203/8226732529848270245068800000",
+      "positive_sufficient_bound": true
+    },
+    {
+      "edge": [
+        17,
+        19
+      ],
+      "outside_exponents": [
+        1,
+        2
+      ],
+      "moduli": [
+        6137,
+        30685,
+        18411,
+        92055
+      ],
+      "gate_fee": "796448843593/2106092197440000",
+      "remaining_gate_lower": "722768342853834209561191/1157836430126793590046720000",
+      "positive_sufficient_bound": true
+    }
+  ],
+  "eight_17_19": {
+    "edge": [
+      17,
+      19
+    ],
+    "response_cap": "173/180",
+    "moduli": [
+      5491,
+      6137,
+      16473,
+      18411,
+      27455,
+      30685,
+      82365,
+      92055
+    ],
+    "raw_deletion_cap": "1141973/1412802000",
+    "gate_fee": "32654402587313/40617492379200000",
+    "remaining_gate_lower": "4431452026623492378483431/22329702581016733522329600000",
+    "positive_sufficient_bound": true,
+    "head_lower": "4431452026623492378483431/924397893305270357144371200000",
+    "head_strict_lower": "1/210000",
+    "network_raw_lower": "249195283510062783186280372633672638809/1571313128486890060302786850533566054400000",
+    "extendible_head_lower": "35599326215723254740897196090524662687/9292674124624301561266911535067194982400000",
+    "extendible_head_strict_lower": "1/262000",
+    "full_network_density_strict_lower": "1/(262000 Q_off)"
+  },
+  "all_eighty": {
+    "raw_deletion_cap": "7242209939/202030686000",
+    "gate_fee": "111509457942163301/3127546913198400000",
+    "remaining_gate_lower": "-59579451030454752569570273413/1719387098738288481219379200000",
+    "positive_sufficient_bound": false,
+    "meaning": "Failure of this additive sufficient bound only; no covering counterexample or upper bound on actual survival."
+  },
+  "checks": {
+    "dependency_pin_unanchored_square_source_certificate.json": true,
+    "dependency_pin_unanchored_square_source_certificate.py": true,
+    "dependency_pin_unanchored_square_source_certificate.cpp": true,
+    "dependency_pin_unanchored_square_source_certificate_conditional.cpp": true,
+    "dependency_pin_arbitrary_pure_network_extensions.json": true,
+    "dependency_pin_arbitrary_pure_network_extensions.py": true,
+    "dependency_pin_actual_pair_activation_certificate.json": true,
+    "626_complete_twenty_sources": true,
+    "625_pass": true,
+    "626_producer_sha256": true,
+    "626_kernel_sha256": true,
+    "626_conditional_kernel_sha256": true,
+    "625_producer_pin": true,
+    "626_inherited_pin_arbitrary_pure_source_certificate.py": true,
+    "626_inherited_pin_matching_endpoint_certificate.py": true,
+    "626_inherited_pin_pure_source_template_pair_orbits.py": true,
+    "626_inherited_pin_actual_pair_activation_certificate.json": true,
+    "gamma": true,
+    "alpha": true,
+    "626_head_conversion": true,
+    "continuation_c": true,
+    "all_512_query_costs_retained": true,
+    "global_box_positive": true,
+    "live_mask_minimum": true,
+    "central_cap_sum": true,
+    "central_product_cap": true,
+    "three_vertex_hcap_positive_7_11": true,
+    "positive_box_derivative_7_11_13_17": true,
+    "positive_box_derivative_7_11_13_19": true,
+    "positive_box_derivative_7_11_17_19": true,
+    "all_eight_response_corners_7_11": true,
+    "literal_factorization_539": true,
+    "literal_factorization_2695": true,
+    "literal_factorization_1617": true,
+    "literal_factorization_8085": true,
+    "literal_factorization_847": true,
+    "literal_factorization_4235": true,
+    "literal_factorization_2541": true,
+    "literal_factorization_12705": true,
+    "eight_label_formula_7_11": true,
+    "three_vertex_hcap_positive_7_13": true,
+    "positive_box_derivative_7_13_11_17": true,
+    "positive_box_derivative_7_13_11_19": true,
+    "positive_box_derivative_7_13_17_19": true,
+    "all_eight_response_corners_7_13": true,
+    "literal_factorization_637": true,
+    "literal_factorization_3185": true,
+    "literal_factorization_1911": true,
+    "literal_factorization_9555": true,
+    "literal_factorization_1183": true,
+    "literal_factorization_5915": true,
+    "literal_factorization_3549": true,
+    "literal_factorization_17745": true,
+    "eight_label_formula_7_13": true,
+    "three_vertex_hcap_positive_7_17": true,
+    "positive_box_derivative_7_17_11_13": true,
+    "positive_box_derivative_7_17_11_19": true,
+    "positive_box_derivative_7_17_13_19": true,
+    "all_eight_response_corners_7_17": true,
+    "literal_factorization_833": true,
+    "literal_factorization_4165": true,
+    "literal_factorization_2499": true,
+    "literal_factorization_12495": true,
+    "literal_factorization_2023": true,
+    "literal_factorization_10115": true,
+    "literal_factorization_6069": true,
+    "literal_factorization_30345": true,
+    "eight_label_formula_7_17": true,
+    "three_vertex_hcap_positive_7_19": true,
+    "positive_box_derivative_7_19_11_13": true,
+    "positive_box_derivative_7_19_11_17": true,
+    "positive_box_derivative_7_19_13_17": true,
+    "all_eight_response_corners_7_19": true,
+    "literal_factorization_931": true,
+    "literal_factorization_4655": true,
+    "literal_factorization_2793": true,
+    "literal_factorization_13965": true,
+    "literal_factorization_2527": true,
+    "literal_factorization_12635": true,
+    "literal_factorization_7581": true,
+    "literal_factorization_37905": true,
+    "eight_label_formula_7_19": true,
+    "three_vertex_hcap_positive_11_13": true,
+    "positive_box_derivative_11_13_7_17": true,
+    "positive_box_derivative_11_13_7_19": true,
+    "positive_box_derivative_11_13_17_19": true,
+    "all_eight_response_corners_11_13": true,
+    "literal_factorization_1573": true,
+    "literal_factorization_7865": true,
+    "literal_factorization_4719": true,
+    "literal_factorization_23595": true,
+    "literal_factorization_1859": true,
+    "literal_factorization_9295": true,
+    "literal_factorization_5577": true,
+    "literal_factorization_27885": true,
+    "eight_label_formula_11_13": true,
+    "three_vertex_hcap_positive_11_17": true,
+    "positive_box_derivative_11_17_7_13": true,
+    "positive_box_derivative_11_17_7_19": true,
+    "positive_box_derivative_11_17_13_19": true,
+    "all_eight_response_corners_11_17": true,
+    "literal_factorization_2057": true,
+    "literal_factorization_10285": true,
+    "literal_factorization_6171": true,
+    "literal_factorization_30855": true,
+    "literal_factorization_3179": true,
+    "literal_factorization_15895": true,
+    "literal_factorization_9537": true,
+    "literal_factorization_47685": true,
+    "eight_label_formula_11_17": true,
+    "three_vertex_hcap_positive_11_19": true,
+    "positive_box_derivative_11_19_7_13": true,
+    "positive_box_derivative_11_19_7_17": true,
+    "positive_box_derivative_11_19_13_17": true,
+    "all_eight_response_corners_11_19": true,
+    "literal_factorization_2299": true,
+    "literal_factorization_11495": true,
+    "literal_factorization_6897": true,
+    "literal_factorization_34485": true,
+    "literal_factorization_3971": true,
+    "literal_factorization_19855": true,
+    "literal_factorization_11913": true,
+    "literal_factorization_59565": true,
+    "eight_label_formula_11_19": true,
+    "three_vertex_hcap_positive_13_17": true,
+    "positive_box_derivative_13_17_7_11": true,
+    "positive_box_derivative_13_17_7_19": true,
+    "positive_box_derivative_13_17_11_19": true,
+    "all_eight_response_corners_13_17": true,
+    "literal_factorization_2873": true,
+    "literal_factorization_14365": true,
+    "literal_factorization_8619": true,
+    "literal_factorization_43095": true,
+    "literal_factorization_3757": true,
+    "literal_factorization_18785": true,
+    "literal_factorization_11271": true,
+    "literal_factorization_56355": true,
+    "eight_label_formula_13_17": true,
+    "three_vertex_hcap_positive_13_19": true,
+    "positive_box_derivative_13_19_7_11": true,
+    "positive_box_derivative_13_19_7_17": true,
+    "positive_box_derivative_13_19_11_17": true,
+    "all_eight_response_corners_13_19": true,
+    "literal_factorization_3211": true,
+    "literal_factorization_16055": true,
+    "literal_factorization_9633": true,
+    "literal_factorization_48165": true,
+    "literal_factorization_4693": true,
+    "literal_factorization_23465": true,
+    "literal_factorization_14079": true,
+    "literal_factorization_70395": true,
+    "eight_label_formula_13_19": true,
+    "three_vertex_hcap_positive_17_19": true,
+    "positive_box_derivative_17_19_7_11": true,
+    "positive_box_derivative_17_19_7_13": true,
+    "positive_box_derivative_17_19_11_13": true,
+    "all_eight_response_corners_17_19": true,
+    "literal_factorization_5491": true,
+    "literal_factorization_27455": true,
+    "literal_factorization_16473": true,
+    "literal_factorization_82365": true,
+    "literal_factorization_6137": true,
+    "literal_factorization_30685": true,
+    "literal_factorization_18411": true,
+    "literal_factorization_92055": true,
+    "eight_label_formula_17_19": true,
+    "eighty_distinct_secondary_labels": true,
+    "forty_disjoint_primary_labels": true,
+    "ten_edges_twenty_orientations": true,
+    "edge_and_label_sums_agree": true,
+    "full_release_fee": true,
+    "full_release_additive_bound_insufficient": true,
+    "chosen_response_cap": true,
+    "chosen_raw_cap": true,
+    "chosen_fee": true,
+    "only_affordable_full_eight_label_edge": true,
+    "chosen_head_lower": true,
+    "only_large_owner_threshold": true,
+    "complete_tail_formula": true,
+    "ten_head_joint_caps_unchanged": true,
+    "head_caps_le_two": true,
+    "large_owner_cap": true,
+    "joint_release_tail_positive": true,
+    "joint_release_tail_head_lower": true
+  },
+  "check_count": 184,
+  "inherited_large_scans_rerun": false,
+  "new_lean_verification": false,
+  "producer_sha256": "76dbea221468418887df3378b80735ef9057b420bb9f44f4c1217f85524705fa"
+}
