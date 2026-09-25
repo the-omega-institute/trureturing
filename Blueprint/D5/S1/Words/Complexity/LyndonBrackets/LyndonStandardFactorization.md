@@ -8,7 +8,7 @@ The alphabet A is an arbitrary linearly ordered type throughout. Lyndon words, s
 
 **Definition 1.1 (The longest-Lyndon-suffix cut).**
 
-$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardCut}\left(w\right) = \operatorname{min}\left(\operatorname{setOf}\left(i, 0, <,  , i, i, <, \operatorname{length}\left(w\right), \operatorname{IsLyndon}\left(\operatorname{drop}\left(w, i\right)\right)\right)\right)$$
+$$\forall w,2\leq\operatorname{length}\left(w\right)\Rightarrow\operatorname{standardCut}\left(w\right) = \operatorname{min}\left(\operatorname{setOf}\left(i\in\mathbb{N}, 0< i\land i<\operatorname{length}\left(w\right)\land \operatorname{IsLyndon}\left(\operatorname{drop}\left(w, i\right)\right)\right)\right)$$
 
 *Formalization.* `D5/S1/Words/Complexity/LyndonBrackets/LyndonStandardFactorization.standardCut` (`✓ std3`).
 
