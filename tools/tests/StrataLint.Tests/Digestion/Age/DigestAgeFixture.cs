@@ -45,7 +45,7 @@ internal sealed record DigestAgeFixture(RawRepositorySnapshot Raw, ImmutableArra
         var files = new List<RawRepositoryEntry>
         {
             RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
-            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, TheoryAtomizerDataTests.Minimal),
+            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, AtomizerRulesFixture.Minimal),
         };
         var ids = ImmutableArray.CreateBuilder<string>();
         for (var index = 0; index < count; index++)

@@ -79,7 +79,7 @@ def project_registry(root):
             registered_file(root, value)
         paths = set()
         for row in data["projects"] + data["historical_projects"]:
-            if not isinstance(row, dict) or set(row) != PROJECT_FIELDS:
+            if not isinstance(row, dict) or set(row) - {"execution_path_inventory"} != PROJECT_FIELDS:
                 raise ValueError("invalid engineering project row fields")
             path = registered_path(row["path"])
             if not path.endswith(".csproj") or path in paths:
@@ -117,6 +117,16 @@ def project_registry(root):
                             raise ValueError(f"invalid registered reference: {path}: {value}")
                     else:
                         source_glob(value)
+            inventory = row.get("execution_path_inventory")
+            if role not in TEST_ROLES:
+                if inventory is not None:
+                    raise ValueError(f"unexpected registered execution_path_inventory: {path}")
+            elif inventory is not None:
+                if (not isinstance(inventory, list) or any(not isinstance(value, str) for value in inventory)
+                        or inventory != sorted(set(inventory))):
+                    raise ValueError(f"invalid registered execution_path_inventory: {path}")
+                for value in inventory:
+                    registered_glob(value)
             # Execution declarations are validated but never enter compile_projection.
             for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"):
                 values = row[field]

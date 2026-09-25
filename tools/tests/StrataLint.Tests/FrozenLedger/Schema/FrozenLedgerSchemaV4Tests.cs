@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Text.Json;
 using StrataLint.Engine;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 

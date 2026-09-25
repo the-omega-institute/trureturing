@@ -3,7 +3,7 @@ from test_native_support import *
 from test_reuse import EXECUTION
 
 
-class NativeReuseTests:
+class NativeReportConsumerTests:
     def test_impl_resource_rebuilds_production_reg_on_warm_report(self):
         # Use the actual Impl resource selection, package target declarations,
         # report entry and Lake compiler. Only the mathematical inputs are tiny.
