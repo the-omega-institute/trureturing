@@ -39508,3 +39508,146 @@ $$
 经典记忆通道与标准遗忘框架的来源仍为 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C及§V。当前两个处理器都只保留经典标签；区别在于系统去相位与标签翻转是否属于同一次联合事件。定理177.2的局部障碍要求（177.2）的先按标签施加通道再更新的分解，（177.19）不具有该分解。式（177.33）并不修复这项缺失的联合关系。由此，在当前近一参数合同下，维数二的精确最优不需要相干记忆；第176节的相干实现及其擦除相干后的读数差仍成立。这里没有对参数趋近一给出统一的正遗忘率，也不要求有限时间内严格重置。
 
 ## 追加锚（本行以下为增补区）
+
+## 178. 固定边缘下的联合配对、精确风险与二步辨识
+
+**定义 178.1（固定边缘的配对区间）。** 固定充分近一的 $r$，采用定义177.3及式（177.25）—（177.27）的 $\delta,x,\rho,\kappa,\beta,K_r,g_r$，其中 $\delta$ 必须是（177.27）给出的显式选择。记忆一次均匀初始化。对 $0\le w\le\delta$，定义同一个时间齐次联合处理器
+$$
+\begin{aligned}
+\Lambda_w(X)=\sum_s\Big(&[(x-w)\mathcal Q_s(X_{ss})+w\Delta(X_{ss})]
+\otimes|s\rangle\langle s|\\
+&+[w\mathcal Q_s(X_{ss})+(\delta-w)\Delta(X_{ss})]
+\otimes|-s\rangle\langle-s|\Big).
+\end{aligned}
+\tag{178.1}
+$$
+参数 $w$ 同时是“施加 $\mathcal Q_s$ 并翻转”与“完全去相位但保持标签”的概率。四个非负分支的总权重为一。$w=0$ 给出（177.19），$w=x\delta$ 给出独立组合（177.32）。记其同一系统终端通道为 $\mathcal P_{r,N}^{w}$，全视界风险为 $W_r(w)$，并令 $\mathcal M_r=\operatorname*{arg\,max}_NB_N(r)$。
+
+**定理 178.2（整个配对区间的精确风险与唯一最优点）。** 这一族处理器全都 CPTP，使用同一经典双态记忆，具有相同的两个单步边缘通道、相同的精确单步最优风险及相同的标准遗忘界（177.31）。令 $p=w/x$，则终端系数精确为
+$$
+01=12=\beta^N,\qquad
+02=r^N Z_{N,p}(\alpha).
+\tag{178.2}
+$$
+对整个 $0\le w\le\delta$，全参考风险满足
+$$
+W_r(w)=\max_{N\in\mathcal M_r}
+\frac{r^N}{2}
+\sqrt{\sin^2(N\alpha)+[Z_{N,w/x}(\alpha)-\cos(N\alpha)]^2}.
+\tag{178.3}
+$$
+因此 $w=0$ 是这一固定边缘配对区间内唯一达到 $H(r)$ 的点；任意 $w>0$ 都有 $W_r(w)>H(r)$。
+
+证明。 因为 $w\le\delta<x$，式（178.1）是非负 CP 分支之和，总权重为一。对系统输出或记忆输出分别偏迹，四个分支合并为固定的系统通道 $x\mathcal Q_s+\delta\Delta$ 及固定的记忆翻转率 $\delta$。这证明两个边缘通道在全部联合输入上不依赖 $w$，保迹分支也使新鲜输入接线中的参考算符块始终只受同一个经典翻转矩阵作用。故标准遗忘界及单步系统通道都与定理177.4相同。
+
+任何包含 $\Delta$ 的路径都不贡献终端非对角元。每个当前标签下施加 $\mathcal Q_s$ 的总概率为 $x$；条件于全部 $N$ 步都使用该通道，其符号链初始均匀，每步翻转率为 $w/x$。权重 $x^N$ 分别抵消 $\rho^N$ 与合并 $\kappa^N$，得到（178.2）。影响符号和的翻转有 $N-1$ 次，最后一次标签更新不改变最后一次 $\mathcal Q_s$ 的相位。
+
+对任何 $N\in\mathcal M_r$，已有 $N\ge2$、$N\alpha<\pi/2$。符号和的绝对值不超过 $N$，所以
+$$
+\cos(N\alpha)\le Z_{N,p}(\alpha)\le1.
+\tag{178.4}
+$$
+当 $p>0$ 时，$p\le\delta/x<1$，恰有一次翻转的路径具有正概率，故左侧严格。令 $z=Z_{N,p}(\alpha)>0$；实际相位弧上 $|e^{iN\phi}-z|$ 的最大值位于端点，等于 $\sqrt{\sin^2(N\alpha)+(z-\cos(N\alpha))^2}$。该值至少为 $\sin(N\alpha)$。又由（177.28）有 $d_N=r^N-\beta^N<B_N=H$，所以（174.19）的完整参考支配估计适用，端点的均衡 $02$ 输入达到它。故（178.3）右侧每一项都是对应视界的精确风险，且对 $w>0$ 严格大于 $H$。
+
+还须排除其他视界在整个配对区间内超过这些值。对任意 $N$，把有翻转与无翻转的条件符号路径分开，得到
+$$
+|Z_{N,p}(\alpha)-\cos(N\alpha)|
+\le2[1-(1-p)^{N-1}]\le2(N-1)p.
+\tag{178.5}
+$$
+于是三个非对角边的参考距离估计给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N}^{w})
+\le B_N+d_N+r^N(N-1)p.
+\tag{178.6}
+$$
+当 $N<K_r$、$N\notin\mathcal M_r$ 且 $N\ne1$ 时，由（177.27）—（177.28）及 $p\le\delta/x$、$x>r$，有
+$$
+d_N<\frac{g_r}{4},\qquad
+r^N(N-1)p<\frac{K_r\delta}{x}
+\le\frac{g_r r(1-r)}{12x}<\frac{g_r}{12}.
+\tag{178.7}
+$$
+故（178.6）严格小于 $B_N+g_r/3<H$。单步通道固定，其风险是 $\mathcal R_1<H$。当 $N\ge K_r$，由 $|Z_{N,p}|\le1$ 可将风险统一界为
+$$
+r^N-\beta^N+\frac{r^N+r^N|Z_{N,p}|}{2}
+\le2r^N\le2r^{K_r}<H.
+\tag{178.8}
+$$
+全部非最大视界在整个配对区间内都低于 $H$，而最大视界至少达到 $H$，遂得（178.3）及唯一最优断言。证毕。
+
+**定理 178.3（二步充分读数与风险二次项）。** 在定义178.1的固定族内，一个二步相干读数就能恢复 $w$：
+$$
+u_2(w):=(\mathcal P_{r,2}^{w})_{02}
+=r^2\cos(2\alpha)+\frac{2r^2\sin^2\alpha}{x}w.
+\tag{178.9}
+$$
+因此整个族的全部终端通道都由该读数与已知参数唯一决定。两个二步通道的全参考距离为
+$$
+d_{\rm ref}(\mathcal P_{r,2}^{w},\mathcal P_{r,2}^{0})=J(r)w,
+\qquad J(r)=\frac{r^2\sin^2\alpha}{x}>0.
+\tag{178.10}
+$$
+对固定 $r$，当 $w\downarrow0$，有
+$$
+W_r(w)-H(r)=C(r)w^2+O_r(w^3),
+\tag{178.11}
+$$
+其中
+$$
+C(r)=\max_{N\in\mathcal M_r}
+\frac{r^NL_N^2}{4x^2\sin(N\alpha)}>0,
+\qquad
+L_N=\sum_{j=1}^{N-1}
+[\cos((N-2j)\alpha)-\cos(N\alpha)].
+\tag{178.12}
+$$
+令 $\varepsilon=1-r$、$t_* =\pi/(3\sqrt3)$，则
+$$
+\varepsilon^2C(r)\longrightarrow
+C_*:=\frac{e^{-t_*}(1-t_*)^2}{8\sqrt3},
+\qquad
+\frac{J(r)}{\varepsilon^2}\longrightarrow3.
+\tag{178.13}
+$$
+这些式子特别给出有明确取序的极限
+$$
+\lim_{r\uparrow1}(1-r)^3
+\left[\lim_{w\downarrow0}
+\frac{\sqrt{W_r(w)-H(r)}}
+{d_{\rm ref}(\mathcal P_{r,2}^{w},\mathcal P_{r,2}^{0})}\right]
+=\frac{\sqrt{C_*}}3.
+\tag{178.14}
+$$
+
+证明。 两步的符号和只可能为 $\pm2$ 或零，故 $Z_{2,p}=(1-p)\cos(2\alpha)+p$，得到（178.9）。输入 $(|0\rangle+|2\rangle)/\sqrt2$ 后，测量 $|0\rangle\langle2|+|2\rangle\langle0|$ 的期望就是实系数 $u_2(w)$，因而这是可操作的读数。它对 $w$ 仿射且斜率非零；由（178.2）即可计算所有其他终端系数。这一充分性只针对当前固定的一参数族。
+
+两个二步通道的相邻系数均为 $\beta^2$，只在 $02$ 边相差（178.9）的增量。第161节的单边全参考距离因此为增量模长的一半，得到（178.10）。
+
+对任意固定 $N\in\mathcal M_r$，有限路径和给出
+$$
+Z_{N,p}(\alpha)-\cos(N\alpha)=L_Np+O_N(p^2).
+\tag{178.15}
+$$
+每个求和项严格为正，因为 $N\alpha<\pi/2$、$|N-2j|<N$，所以 $L_N>0$。对（178.3）中的平方根在零处展开，并使用 $p=w/x$，其对应视界的风险为
+$$
+H(r)+\frac{r^NL_N^2}{4x^2\sin(N\alpha)}w^2+O_r(w^3).
+\tag{178.16}
+$$
+最大点集只有一个或两个元素；对这些有限个式子取最大，余项仍为 $O_r(w^3)$，二次系数为各二次系数的最大值。这一步不要求最大函数在整个参数区间可微，得到（178.11）。
+
+为计算 $r\uparrow1$ 的极限，三角和给出
+$$
+L_N=\cot\alpha\sin(N\alpha)-N\cos(N\alpha).
+\tag{178.17}
+$$
+每个最大视界都满足 $\varepsilon N\to t_*$、$N\alpha\to\pi/3$、$r^N\to e^{-t_*}$。又有 $\alpha/\varepsilon\to\sqrt3$，故
+$$
+\varepsilon L_N\longrightarrow\frac{1-t_*}{2}.
+\tag{178.18}
+$$
+显式选择 $\delta\le\varepsilon/4$ 使 $x\to1$。把这些极限代入（178.12），一个最大点或两个最大点都给出同一个极限 $C_*$；代入（178.10）则得到 $J/\varepsilon^2\to3$。对每个固定 $r$，先由（178.10）—（178.11）求内层极限 $\sqrt{C(r)}/J(r)$，再取 $r\uparrow1$，即得（178.14）。证毕。
+
+式（178.1）的两个单步边缘在整个区间上恒定，因而不能辨识 $w$；二步读数则在这一族内将这些不同的联合实现逐一分开。式（178.14）比较的是规定次序下的局部风险与通道距离，不声称对所有 $r$ 存在统一的有限误差邻域，也不直接给出有限样本复杂度。所有记忆标签仍为经典；被保留和检测的是系统操作与记忆更新的联合配对关系。
+
+## 追加锚（本行以下为增补区）
