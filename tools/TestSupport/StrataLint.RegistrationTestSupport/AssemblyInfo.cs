@@ -21,3 +21,8 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.CliTestSupport")]
 
 [assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RuleTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.Rules.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Digestion.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.DigestionTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.DeclaredTemplateTestSupport")]
