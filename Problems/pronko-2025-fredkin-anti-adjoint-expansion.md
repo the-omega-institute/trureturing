@@ -17,7 +17,8 @@ Pronko fixes the one-site Pauli matrices in section 2.1, printed p. 3:
 > The basis in End(ℂ²) is provided by the Pauli matrices
 > `σ⁺ = [[0, 1], [0, 0]], σ⁻ = [[0, 0], [1, 0]], σᶻ = [[1, 0], [0, −1]]`.
 
-Equation (2.1), printed p. 3, normalizes the total spin operators:
+Section 2.1, printed p. 3, normalizes the total spin operators in an unnumbered
+display:
 
 > `S^± = Σ_{j=1}^N σ_j^±`, `S^z = ½ Σ_{j=1}^N σ_j^z`.
 
@@ -37,7 +38,7 @@ The paper gives `Σ^± = −¼ S^± + ⅛ {S^±, {S^∓, S^±}}` for `N = 3` and
 coefficients for `N ≤ 10` in Table 1, printed p. 8.
 
 Issue #9982 fixes the readings: (i) `Σ^±` is (3.1) literally; (ii) `S^±` has
-the (2.1) normalization; (iii) `(ãd S^± ãd S^∓)^{k−1} S^±` is the map
+the section 2.1 normalization; (iii) `(ãd S^± ãd S^∓)^{k−1} S^±` is the map
 `X ↦ {S^±, {S^∓, X}}` iterated `k − 1` times on `S^±`; (iv) one family of
 complex coefficients serves both signs; (v) every natural number `N`.
 

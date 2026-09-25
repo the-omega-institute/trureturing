@@ -60,8 +60,8 @@ that is an eigenvector of both `H` and `C`; non-cyclic means that its
 eigenvector hypothesis but establishes annihilation from the `C`-eigenvector
 hypothesis alone.
 
-Equation (2.1), printed p. 3, fixes the normalization of the total spin
-operators:
+Section 2.1, printed p. 3, fixes in an unnumbered display the normalization
+of the total spin operators:
 
 > S^± = Σ_{j=1}^N σ_j^±, S^z = ½ Σ_{j=1}^N σ_j^z.
 
@@ -82,4 +82,4 @@ printed index `k` corresponds to the formal index `k − 1`.
 
 - DOI: 10.1088/1751-8121/ae1644
 - URL: https://doi.org/10.1088/1751-8121/ae1644
-- Source locations: section 2.1, printed pp. 3-4; equation (2.1), printed p. 3; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7; Conjecture 2, printed p. 7; Table 1, printed p. 8.
+- Source locations: section 2.1, printed pp. 3-4; Theorem 2, equation (3.1), printed pp. 6-7; Conjecture 1, printed p. 7; Conjecture 2, printed p. 7; Table 1, printed p. 8.
