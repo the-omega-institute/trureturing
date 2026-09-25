@@ -46,3 +46,34 @@ e_k^2\ge e_{k-1}e_{k+1}.
 本来源不提供实际平稳对／路径数据的行计数近似、参数随维数变化的风险误差、
 确定阈值与极小极大规则的平方根尺度比较，或两个 Hamming 损失的联合中心极限。
 这些需要另外证明共同实现、边界选择、均值转移及方向判错率。
+
+## Conditional rank-interval concentration
+
+The functional budget comparison uses a stronger classical consequence of the
+same source. In the checked arXiv:0707.2340v2, the discussion on printed pages
+18–19 states closure of stable polynomials under differentiation and real
+specialization. Theorem 4.9 on printed page 24 proves that a strongly Rayleigh
+measure is conditionally negatively associated after external fields (CNA+).
+In particular it is negatively associated.
+
+For positive weights, the generating polynomial of a fixed-size product-weight
+law is an elementary symmetric polynomial after coordinate rescaling. It is
+obtained from the product of the linear factors t+w_i z_i by differentiation in
+t and evaluation at zero. Stability therefore verifies the theorem's hypothesis;
+this is not a claim that arbitrary fixed-cardinality laws are negatively associated.
+The resulting exponential-moment product bound for every fixed set yields
+Chernoff concentration. These are `literature-attested` auxiliary tools.
+
+In the actual budget-process proof, the data and tie priorities must first be
+conditioned on, making the candidate rank intervals and their maximum allowed
+length fixed. The union bound over those intervals controls the maximum hidden
+label count. Pairwise covariance alone would not justify that exponential bound,
+and an expected maximum cannot be replaced by a maximum of conditional means.
+The actual dependent-count supremum bound, score-band localization and uniform
+risk-center transfer are separate model-specific obligations.
+
+Theorem 29.2 of the parity fluctuation volume is `repo-derived`: the new
+content is the actual dependent-row uniform comparison and its posterior
+label transfer to an exactly centered budget process. Negative association,
+Chernoff bounds and empirical-bridge convergence retain their classical status;
+no general probability theorem or global originality claim is made.
