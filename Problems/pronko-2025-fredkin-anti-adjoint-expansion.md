@@ -99,7 +99,8 @@ leading coefficient rules this out for every `N`.
 
 ## Evidence
 
-The literal Kronecker matrices of (3.1) and (2.1) were built for `N = 1..8`.
+The literal Kronecker matrices of (3.1) and of the section 2.1 total spin
+operators were built for `N = 1..8`.
 The three-term recurrence holds exactly for every `r ≤ (N − 1)/2`,
 `S⁺ = Z_0`, `Σ⁺ = Σ_r Z_r`, `{S⁺, {S⁻, Σ⁺}} = N(N + 1) Σ⁺` and
 `Σ⁻ = (Σ⁺)ᵀ`. Solving the tridiagonal model exactly over the rationals
