@@ -463,3 +463,727 @@ f_\vartheta
 [^phase_clock]: Yuxiang Yang, Giulio Chiribella and Masahito Hayashi, *Compression for Qubit Clocks*, [arXiv:2209.06519](https://arxiv.org/abs/2209.06519)。该文的频率投影用于独立同分布 qubit 时钟的渐近近似压缩；本节的来源为（1.1）的相关发射，误差合同为（5.1），上下界均按该来源重新计算。
 
 ## 5.99 追加锚
+
+## 6. 共同存活事件下的全部前缀接收
+
+**定义 6.1（固定时域的同一被动接收器）。** 保留定义5.1的等权、全圆相位和全部初始联合来源，预先给定有限时域 $N\ge2$ 。接收器从固定纯态开始，每步只以一个已知 CPTP 映射作用于同一寄存器 $K$ 与最新发出位，之后把该位置成与其余系统独立的纯空白并丢弃；无持久辅助标签留在 $K$ 之外。源的活动记忆与参考均不可访问，也没有向源反馈。门可依赖 $N,\epsilon$ 和当前步数，不能依赖未知相位或输入。若在任一事先指定的 $n\le N$ 选择停止，均有解码器满足（5.1）。最小 $\dim K$ 记为 $k_{\le N}^{(\epsilon)}$ 。
+
+此合同只在所选终端解码，不要求解码后保留一份档案副本并原样继续，也不要求保持任意中途干预下的过程距离。计数、门控制、瞬时空白及丢弃环境的成本按定义1.2另计。允许的是固定相干基下的普通 CPTP 操作；未知 $\vartheta$ 不附加所有门必须相位协变的超选择限制。保持不可访问环境关联的局部压缩是既有任务；[^phase_tensor] 本节进一步要求同一逐步接收实现与共同误差预算。
+
+置
+
+$$
+s_{N,\epsilon}=\sqrt{\frac{N-1}{2}\log\frac4{\epsilon^2}},\qquad
+R_{N,\epsilon}=\frac{s_{N,\epsilon}+1}{1+p}.
+\tag{6.1}
+$$
+
+称合法词 $w\in\mathcal W_n$ 存活，若其每个前缀都满足
+
+$$
+\left|\sum_{t=1}^kw_t-k\mu\right|\le R_{N,\epsilon}
+\quad(1\le k\le n).
+\tag{6.2}
+$$
+
+令 $\mathcal W_n^{\rm s}$ 为存活词集；空词存活。对非空首末荷扇区定义
+
+$$
+g_{ijq}^{n,\rm s}
+=\sum_{\substack{w\in\mathcal W_n^{\rm s}\cap\mathcal W_n^{ij}\\
+\sum_tw_t=q}}A(w)|w\rangle,
+\qquad W_n^{\rm s}=\operatorname{span}\{g_{ijq}^{n,\rm s}\},
+\qquad W_0^{\rm s}=\mathbb C.
+\tag{6.3}
+$$
+
+空扇区不计入生成集， $d_n^{\rm s}=\dim W_n^{\rm s}$ 。这是保留全部过去未越界条件的子空间，不是各终端独立选择的荷窗口。
+
+**定理 6.2（单个接收器的平方根容量与共同误差）。** 对定义6.1的合同，
+
+$$
+\boxed{k_{\le N}^{(\epsilon)}
+\le\min\left\{2N-1,1+\max_{0\le n\le N}d_n^{\rm s}\right\}
+\le\min\{2N-1,8R_{N,\epsilon}+5\}.}
+\tag{6.4}
+$$
+
+同一个接收器在每个可选终端 $n\le N$ 的完整联合半迹距离均至多 $\epsilon$ ，误差预算不乘以 $N$ 。对每个固定 $0<\epsilon<1$ ，有
+
+$$
+k_{\le N}^{(\epsilon)}\asymp_\epsilon\sqrt N\qquad(N\ge4).
+\tag{6.5}
+$$
+
+证明。先在（5.5）的实际词链上固定任一初位，令
+
+$$
+Y_t=X_t-\mu,\qquad
+\eta_t=Y_t+pY_{t-1}\quad(t\ge2),\qquad
+M_k=\sum_{t=2}^k\eta_t,\quad M_1=0.
+\tag{6.6}
+$$
+
+由 $\mathbb E[Y_t\mid X_1,\ldots,X_{t-1}]=-pY_{t-1}$ ， $M_k$ 是鞅，每个增量的条件取值区间宽度至多一。直接求和得
+
+$$
+(1+p)(S_k-k\mu)=M_k+Y_1+pY_k,
+\qquad -p\le Y_1+pY_k\le1.
+\tag{6.7}
+$$
+
+条件 Hoeffding 估计使
+ $\exp[\lambda M_k-(k-1)\lambda^2/8]$
+为非负超鞅。若 $M_k$ 在 $k\le N$ 首次达到 $s>0$ ，该时刻超鞅至少为 $\exp[\lambda s-(N-1)\lambda^2/8]$ 。对首次到达时刻截停并取期望，得上尾概率至多 $\exp[-\lambda s+(N-1)\lambda^2/8]$ ；负尾同理。取 $\lambda=4s/(N-1)$ ，得到
+
+$$
+\Pr_i\left\{\max_{1\le k\le N}|M_k|\ge s\right\}
+\le2e^{-2s^2/(N-1)}.
+\tag{6.8}
+$$
+
+这是标准非负超鞅最大估计在本链上的应用。由（6.1）、（6.7），只要（6.2）曾经失败，必有 $|M_k|>s_{N,\epsilon}$ 。因此对两个初位同时有
+
+$$
+\Pr_i\{\text{时域内至少一次不存活}\}\le\epsilon^2/2.
+\tag{6.9}
+$$
+
+这里估计的是同一个实际路径事件，没有把各终端失败概率相加。
+
+现构造物理接收。每条存活历史的前缀仍存活。记 $a_{bj}=(m_b)_j$ ，把带外或空扇区向量视为零，则
+
+$$
+g_{ijq}^{n+1,\rm s}
+=\mathbf1_{\{|q-(n+1)\mu|\le R_{N,\epsilon}\}}
+\sum_{b=0}^1a_{bj}\,g_{ib,q-j}^{n,\rm s}\otimes|j\rangle
+\quad(n\ge1).
+\tag{6.10}
+$$
+
+故 $W_{n+1}^{\rm s}\subseteq W_n^{\rm s}\otimes B$ ， $n=0$ 也由一维空档案成立。等权相位在每个此类向量上仅给标量 $e^{iq\vartheta}$ ，所有 $W_n^{\rm s}$ 均不依赖实际相位。
+
+取
+ $K=K_{\rm g}\oplus\mathbb C|\bot\rangle$ ，其中
+ $\dim K_{\rm g}=\max_{n\le N}d_n^{\rm s}$ ，并选等距
+ $F_n:W_n^{\rm s}\to K_{\rm g}$ 。将 $`F_n^*`$ 在其编码像的正交补上置零，寄存器初态取 $F_0(1)$ 。令 $P_{n+1}^{\rm s}$ 是到 $W_{n+1}^{\rm s}$ 的投影。在 $K\otimes B$ 上定义成功算子
+
+$$
+A_n=F_{n+1}P_{n+1}^{\rm s}(F_n^*\otimes I_B),
+\qquad
+\mathcal C_n(X)=A_nXA_n^*
++\operatorname{Tr}[(I-A_n^*A_n)X]|\bot\rangle\langle\bot|.
+\tag{6.11}
+$$
+
+包含关系使 $A_n$ 是两个相同维数子空间之间的部分等距，故 $`A_n^*A_n`$ 是投影， $\mathcal C_n$ 为全域 CPTP 映射。把其输出张量 $|0\rangle\langle0|_B$ 就将已消费位置为独立纯空白。旧失败旗标满足 $`F_n^*|\bot\rangle=0`$ ，所以失败分支吸收。整个操作只需要当前 $K$ 与新位；被丢弃环境未作为隐含接收记忆保留。
+
+令 $Q_n^{\rm s}$ 是档案空间中选取全部存活计算基词的投影。原来源的存活部分满足
+
+$$
+(Q_n^{\rm s}\otimes I_M)T_{\vartheta,n}|i\rangle
+=\sum_{j,q}e^{iq\vartheta}g_{ijq}^{n,\rm s}\otimes m_j.
+\tag{6.12}
+$$
+
+据此归纳（6.11）：连续成功的未归一化联合分支恰为原来源经 $Q_n^{\rm s}$ 投影，再由 $F_n$ 编码的状态。其余分支落在 $|\bot\rangle$ ；没有将某次失败后重新进入带内的历史当作成功。尤其 $P_{n+1}^{\rm s}$ 在实际成功来源上所做的操作，与追加位后检查（6.2）一致，而非另一次不相关的状态估计。
+
+与（5.10）相同的首位正交性给
+
+$$
+T_{\vartheta,n}^*[(I-Q_n^{\rm s})\otimes I_M]T_{\vartheta,n}
+=\operatorname{diag}(\delta_{0,n},\delta_{1,n})
+\preceq(\epsilon^2/2)I_M,
+\tag{6.13}
+$$
+
+其中 $\delta_{i,n}$ 是截至第 $n$ 步曾越界的概率，由（6.9）统一控制。这覆盖全部相位、初始相干及有限参考。终端解码对好块用 $`F_n^*`$ ，对失败及未使用编码空间输出固定态。纯化后，成功项与目标的重叠至少为 $(1-\epsilon^2/2)^2$ ，其余项为正；（5.12）的证明给联合半迹距离至多 $\epsilon$ 。
+
+在任一时刻，存活荷只落在长度 $2R_{N,\epsilon}$ 的区间，四首末扇区故给 $d_n^{\rm s}\le4(2R_{N,\epsilon}+1)$ ； $n=0$ 的一维也满足此界。加一维失败旗标得（6.4）的第二项。也可使用定理3.1—3.2的 $2N-1$ 维精确接收器，得到较小值。
+
+最后，无反馈的接收操作与其后的源发射作用在不交系统上，可以交换次序。因此整个时域接收在终端等价于只作用于完整档案的一个 CPTP 编码，必须满足定理5.3在 $n=N$ 的下界。结合（6.1）、（6.4）得（6.5）。门序列依赖预定 $N$ ；这些量词没有给出一个与终端时域无关的无限门序列。证明完毕。
+
+[^phase_tensor]: Ge Bai, Yuxiang Yang and Giulio Chiribella, *Quantum Compression of Tensor Network States*, New Journal of Physics **22**, 043015 (2020)，[arXiv:1904.06772](https://arxiv.org/abs/1904.06772)。§II.A给出参数无关精确压缩；§V式（35）—（36）及命题4处理不可访问环境关联；附录B命题6处理未知共同变换。这些是第1—4节任务与支撑压缩的一般先例；本卷的字符秩及显式容量来自对应来源计算。第2节行列式还保证整个共同支撑代数被同一通道固定，这比单独得到最小维数更强；它不是一般局部压缩容量下界的必要方法。
+
+## 6.99 追加锚
+
+
+## 7. 固定接收门与必须计入的控制记忆
+
+**定义 7.1（同一固定门的精确空白接收）。** 本节把相位固定为已知零值，保持定义1.1的同一发射源、全部初始参考—记忆联合态及被动接收权限。预先给定整数 $`N\ge1`$，接收寄存器 $`K`$ 从独立纯态 $`|k_0\rangle`$ 开始。每一步在 $`K`$ 与最新发出的 $`B`$ 上施加同一个酉 $`U`$，随后 $`B`$ 必须精确成为与全部其余系统乘积的固定纯空白 $`|0\rangle`$。此要求对全部初态及每个 $`n\le N`$ 成立。所有持久量子记忆、钟和控制标签均计入 $`K`$；没有额外丢弃环境，没有按发射次数另选门，也不访问活动 $`M`$。允许在所选终端以依赖终端编号的解码器恢复档案。记最小 $`\dim K`$ 为 $`a_N`$。
+
+这里固定的是接收门，仍由源提供有序的新端口。本节不声称实现了没有外部供能或事件供给的连续时间自主机器。它比较的是相同来源与精确联合任务下，两种门控制合同的存储成本。每步纯空白允许反向运行接收酉，将空白依次恢复为原档案；因而上述合同确实保留全部联合态，而不只是源的边缘。
+
+**引理 7.2（有限酉期望不能非恒定地收敛）。** 若 $`V`$ 是有限维空间上的酉，$`\xi`$ 是向量，$`A`$ 是算子，且 $`\langle V^n\xi,AV^n\xi\rangle`$ 在 $`n\to\infty`$ 时收敛，则这个序列恒定。
+
+证明。酉的有限谱分解把该序列写成 $`\sum_{z\in Z}c_z z^n`$，其中 $`Z`$ 是有限个不同单位复数。设极限为 $`L`$，对任意 $`z\ne1`$，序列减去 $`L`$ 后乘 $`z^{-n}`$ 的 Cesàro 平均趋于零；有限几何和同时给该平均趋于 $`c_z`$。因此所有非一频率的系数为零，原序列只剩常数项。该论证是有限酉演化的标准谱机制。
+
+**定理 7.3（精确无限接收不存在有限固定门记忆）。** 不存在有限维 $`K`$ 与同一个 $`U`$，使定义7.1的空白要求对所有有限 $`n`$ 同时成立。
+
+证明。按固定因子置换，将发射加接收的一步写为等距
+
+$$
+A=\Sigma_{\rm out}(I_M\otimes U)\Sigma_{\rm in}(T\otimes I_K):M\otimes K\longrightarrow B\otimes M\otimes K,
+\qquad
+W=(\langle0|_B\otimes I)A,\quad
+Z=(\langle1|_B\otimes I)A.
+\tag{7.1}
+$$
+
+这里 $`\Sigma_{\rm in}`$ 把发射后的 $`B,M,K`$ 次序换为 $`M,K,B`$，$`\Sigma_{\rm out}`$ 再把接收后的 $`M,K,B`$ 换为 $`B,M,K`$。于是
+
+$$
+W^*W+Z^*Z=I_{M\otimes K}.
+\tag{7.2}
+$$
+
+置 $`L=M\otimes\mathbb C|k_0\rangle`$。每步精确纯空白给 $`ZW^jL=0`$。令 $`\mathcal R=\operatorname{span}_{j\ge0}W^jL`$；这是有限维、前向不变的子空间，$`Z`$ 在其上恒零。由（7.2），$`W`$ 在 $`\mathcal R`$ 上等距；有限维及前向不变性使其限制成为 $`\mathcal R`$ 上的酉。
+
+另一方面，接收酉只作用于已发出的位与 $`K`$，所以活动 $`M`$ 的边缘仍严格按原通道 $`E`$ 演化。取实际允许初态 $`|0\rangle\langle0|_M`$，定义
+
+$$
+q_n=\operatorname{Tr}\!\left[|1\rangle\langle1|\,E^n(|0\rangle\langle0|)\right],
+\qquad p=\alpha^2,\quad \mu=\frac{p}{1+p}.
+\tag{7.3}
+$$
+
+由 $`E(X)=X_{00}|m_0\rangle\langle m_0|+X_{11}|m_1\rangle\langle m_1|`$ 得
+
+$$
+q_0=0,\qquad q_{n+1}=p(1-q_n),\qquad
+q_n=\mu\bigl(1-(-p)^n\bigr).
+\tag{7.4}
+$$
+
+该序列收敛且不恒定。但在 $`\mathcal R`$ 上，它又是初向量 $`|0\rangle_M|k_0\rangle_K`$ 对可观测量 $`|1\rangle\langle1|_M\otimes I_K`$ 的有限酉期望，与引理7.2矛盾。证明完毕。
+
+**定理 7.4（有限时域的线性记忆代价）。** 令 $`d_N=\dim S_N`$，其中 $`S_N`$ 是已知相位的实际档案支撑，故 $`d_1=2,d_2=3,d_N=4`$（$`N\ge3`$）。则对 $`N\ge2`$，
+
+$$
+\boxed{
+\max\left\{d_N,\left\lceil\frac{N+2}{2}\right\rceil\right\}
+\le a_N\le4N-2.
+}
+\tag{7.5}
+$$
+
+特别地，$`a_N=\Theta(N)`$，而允许接收门按已知步数改变时，同一个四维寄存器足以覆盖全部有限终端。
+
+证明。先证新的下界。对任一定义7.1的装置使用（7.1），置
+
+$$
+\mathcal R_t=\operatorname{span}\{W^jL:0\le j\le t\},\qquad
+\dim L=2.
+\tag{7.6}
+$$
+
+前 $`N`$ 步纯空白给 $`Z\mathcal R_{N-1}=0`$，故 $`W`$ 在 $`\mathcal R_{N-1}`$ 上等距。若某个 $`0\le t\le N-1`$ 满足 $`\mathcal R_t=\mathcal R_{t+1}`$，则 $`W\mathcal R_t\subseteq\mathcal R_t`$，其限制因有限维而为酉，并且 $`Z\mathcal R_t=0`$。于是这个装置从 $`L`$ 开始的全部后续步骤自动仍为纯空白，违背定理7.3。这里未来空白由已保证步内的平台推出，没有把有限合同擅自延长。
+
+所以 $`\mathcal R_0\subsetneq\cdots\subsetneq\mathcal R_N`$，每次至少增加一维，从而
+
+$$
+2\dim K=\dim(M\otimes K)\ge\dim\mathcal R_N\ge N+2.
+\tag{7.7}
+$$
+
+另一项 $`a_N\ge d_N`$ 是既有参考完整档案恢复的切口下界：整个接收装置是作用于档案一侧的编码，反向门序列为解码，故可直接应用本卷已知相位容量结果。
+
+现证上界。取互相正交的时刻扇区
+
+$$
+K=\bigoplus_{n=0}^{N}K_n,\qquad
+\dim K_n=d_n,\qquad F_n:S_n\longrightarrow K_n\text{ 为等距同构}.
+\tag{7.8}
+$$
+
+初态取 $`F_0(1)`$。由于 $`S_{n+1}\subseteq S_n\otimes B`$，在 $`K\otimes B`$ 的子空间 $`(F_n\otimes I_B)S_{n+1}`$ 上规定
+
+$$
+U\bigl((F_n\otimes I_B)s\bigr)=F_{n+1}s\otimes|0\rangle,
+\qquad 0\le n<N.
+\tag{7.9}
+$$
+
+对不同 $`n`$，输入分别位于正交的 $`K_n\otimes B`$，输出分别位于正交的 $`K_{n+1}\otimes\mathbb C|0\rangle`$；每一块本身也等距。因此这些规定共同组成一个子空间等距，可以延拓为整个 $`K\otimes B`$ 上的同一个酉。归纳即得每个前缀的联合编码与纯空白，所有控制扇区已计入 $`K`$。最后
+
+$$
+\dim K=\sum_{n=0}^{N}d_n=1+2+3+4(N-2)=4N-2
+\tag{7.10}
+$$
+
+给出上界。证明完毕。
+
+本节将有限酉谱、可达子空间平台及原来源的严格收缩组合到同一个接收合同；有限封闭系统不能精确承载非平凡无限耗散的机制属于成熟原理，不在这里宣称原创。经典有限幂酉扩张已有线性维数及无限全幂障碍；[^phase_dilation] 其合同是算子幂的角压缩，本节则额外要求固定局部门接收、纯空白与全部来源联合态，不能直接把那一维数公式当作这里的 $`a_N`$。线性上下界没有确定 $`a_N`$ 的精确值。一般 CPTP 接收可以向新环境丢弃信息，近似纯空白允许每步误差；二者都破坏（7.2）中从实际空白得到精确等距的关键条件，需另行求界。上述维数不是物理面积、能量、计时精度或实际历时。
+
+[^phase_dilation]: Eli Levy and Orr Moshe Shalit, *Dilation theory in finite dimensions: the possible, the impossible and the unknown*, Rocky Mountain Journal of Mathematics **44**(1), 203–221 (2014)，[arXiv:1012.4514v2](https://arxiv.org/html/1012.4514v2)，[DOI:10.1216/rmj-2014-44-1-203](https://doi.org/10.1216/rmj-2014-44-1-203)。定理1.1后的全幂无限维说明、定理1.3及推论2.2分别给有限幂构造与最小维数；其角压缩合同与本节不同。
+
+四维已知相位预测边界与这里的线性固定门记忆并不矛盾。前者允许按步数供应不同接收门，后者把选择门所需的持久控制也纳入同一固定关系实现。把时间写进静态结构时，可以不外加一个演化参数；要由同一装置持续执行这些关系，控制信息仍须有明确归属。
+
+## 追加锚（本行以下为增补区）
+
+
+## 8. 精确固定门容量与共同初始化的分界
+
+本节保持定义7.1的全部资源与来源条件，把定理7.4的线性界收紧为精确值。随后单独改变初始化条件，检验哪些联合关系承担了这份容量。
+
+**约定 8.1（实际系数域与空白行块）。** 写 $`a=\sqrt\alpha`$、$`b=\alpha`$，故 $`a,b>0`$。接收寄存器初态记为单位向量 $`e`$。对两个初始记忆基态，记前 $`j`$ 步接收后的纯联合向量为
+
+$$
+\Psi_j^i=|0\rangle_M u_j^i+|1\rangle_M v_j^i,
+\qquad
+(u_0^0,v_0^0)=(e,0),\quad
+(u_0^1,v_0^1)=(0,e).
+\tag{8.1}
+$$
+
+这里 $`u_j^i,v_j^i\in K`$。定义实际系数子空间
+
+$$
+H_t=\operatorname{span}\{u_j^i:0\le j\le t,\ i=0,1\},\qquad
+G_t=\operatorname{span}\{v_j^i:0\le j\le t,\ i=0,1\}.
+\tag{8.2}
+$$
+
+它们由同一实际装置和全部已声明输入生成，允许彼此相交。对 $`K\otimes\mathcal B`$ 上的同一个接收酉 $`U`$，定义其空白与非空白行块
+
+$$
+A=(I_K\otimes\langle0|)U(I_K\otimes|0\rangle),\qquad
+B=(I_K\otimes\langle0|)U(I_K\otimes|1\rangle),
+\tag{8.3}
+$$
+
+以及将左侧 $`\langle0|`$ 换成 $`\langle1|`$ 所得的 $`Z_0,Z_1`$。本节把新发出位的二维空间记为 $`\mathcal B`$，以区别接收算子 $`B:K\to K`$。
+
+**引理 8.2（实际纯空白强制正交等距域）。** 若前 $`N`$ 步满足定义7.1，令 $`t=N-1`$，则 $`A|_{H_t}`$、$`B|_{G_t}`$ 分别等距，且
+
+$$
+A H_t\perp B G_t.
+\tag{8.4}
+$$
+
+实际轨道的系数更新为
+
+$$
+u_j^i=aAu_{j-1}^i+Bv_{j-1}^i,\qquad
+v_j^i=bAu_{j-1}^i\qquad(1\le j\le N).
+\tag{8.5}
+$$
+
+证明。对任一实际向量 $`|0\rangle u+|1\rangle v`$，发射给出 $`|0\rangle_B m_0\otimes u+|1\rangle_B m_1\otimes v`$。接收后非空白部分的系数是 $`m_0\otimes Z_0u+m_1\otimes Z_1v`$。两个记忆向量 $`m_0,m_1`$ 线性独立，所以实际纯空白要求分别强制 $`Z_0u=0`$、$`Z_1v=0`$。对所有来源基态与 $`j<N`$ 取线性张成，得到 $`Z_0H_t=0`$、$`Z_1G_t=0`$。
+
+于是 $`U(x\otimes|0\rangle)=Ax\otimes|0\rangle`$ 对 $`x\in H_t`$ 成立，另一块对 $`y\in G_t`$ 同理。酉性分别保持范数，并把原来正交的两个输入块送到正交输出块，给（8.4）。展开 $`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$ 得（8.5）。证明完毕。
+
+该推导没有把所有 $`M\otimes H_t`$ 当作可自由准备的来源。是记忆输出向量的线性独立性，把同一实际联合态上的空白要求分解成了两个系数域上的约束。
+
+**定理 8.3（精确最小固定门容量）。** 对定义7.1的同一已知相位来源、独立纯接收初态及全部参考完整输入，
+
+$$
+\boxed{a_1=2,\qquad a_N=2N-1\quad(N\ge2).}
+\tag{8.6}
+$$
+
+证明。先证下界。固定 $`t=N-1\ge1`$，将等距 $`A|_{H_t}:H_t\to K`$ 的伴随拉回到 $`H_t`$，定义
+
+$$
+J_t=(A|_{H_t})^*\,\iota_{H_t}:H_t\longrightarrow H_t,
+\tag{8.7}
+$$
+
+其中 $`\iota_{H_t}`$ 是到 $`K`$ 的包含映射。由（8.4）、（8.5），
+
+$$
+J_tu_j^i=a\,u_{j-1}^i\qquad(1\le j\le t).
+\tag{8.8}
+$$
+
+写 $`y_j=u_j^1`$、$`x_j=u_j^0`$。有 $`y_0=0`$、$`y_1=Be\ne0`$，因此
+
+$$
+J_ty_1=0,\qquad J_ty_j=ay_{j-1}\ (2\le j\le t),\qquad
+J_t^t x_t=a^t e\ne0.
+\tag{8.9}
+$$
+
+向量 $`y_1,\ldots,y_t`$ 线性独立：若有线性关系，对其中最高非零指标 $`r`$ 施加 $`J_t^{r-1}`$，只留下非零倍数的 $`y_1`$，矛盾。$`J_t^t`$ 又消灭这整条链，却不消灭 $`x_t`$，所以 $`x_t`$ 不在其张成内。因此
+
+$$
+\dim H_t\ge t+1.
+\tag{8.10}
+$$
+
+同样论证用于 $`t-1`$ 给 $`\dim H_{t-1}\ge t`$；$`t=1`$ 时直接用 $`H_0=\mathbb Ce`$。因 $`b\ne0`$，（8.5）还给 $`G_t\supseteq A H_{t-1}`$，从而 $`\dim G_t\ge t`$。两像正交且各自等距，故
+
+$$
+\dim K\ge\dim H_t+\dim G_t\ge2t+1=2N-1.
+\tag{8.11}
+$$
+
+$`N=1`$ 时两个实际域均为 $`\mathbb Ce`$，两个等距像必须正交，直接得到 $`\dim K\ge2`$。
+
+再构造达到者。对 $`N\ge2`$ 取固定空间 $`K=\mathbb C^{2N-1}`$，选正交单位向量 $`e,f`$。先在两个域 $`H_0=G_0=\mathbb Ce`$ 上规定部分映射 $`Ae=e`$、$`Be=f`$。保持两个部分映射各自等距且像正交，随后按以下有限递推延拓；构造中不要求它们在整个 $`K`$ 上等距。
+
+每一轮先用已经定义的映射和（8.5）计算下一对轨道。首步满足 $`\Psi_1^0=a\Psi_0^0+b\Psi_0^1`$；每轮延拓保持旧域上的作用，所以逐步归纳得到
+
+$$
+\Psi_j^0=a\Psi_{j-1}^0+b\Psi_{j-1}^1\qquad(j\ge1)
+\tag{8.12}
+$$
+
+在构造到的所有层成立。这一步不预设尚未构成的全域酉。于是，对 $`t\ge1`$，
+
+$$
+H_t=\operatorname{span}\{e,u_1^1,\ldots,u_t^1\},\qquad
+G_t=\operatorname{span}(e,A H_{t-1})=A H_{t-1},
+\tag{8.13}
+$$
+
+后一等式用了 $`Ae=e`$，并且 $`b\ne0`$。故 $`\dim H_t\le t+1`$、$`\dim G_t\le t`$。这些域先由已经算出的向量确定，再延拓部分映射，不存在用未来映射定义其自身当前域的循环。
+
+具体地，若两个旧域维数分别为 $`r_0,r_1`$，本轮新增正交方向数为 $`\Delta_0,\Delta_1`$，则在 $`t\le N-1`$ 时
+
+$$
+r_0+r_1+\Delta_0+\Delta_1\le2t+1\le2N-1.
+\tag{8.14}
+$$
+
+两旧像共同正交补的维数足以安放全部新增像，可将这些新增方向等距送入互相正交的新像。初始 $`t=0`$ 的两域合计维数是二，单独处理且也不超过 $`2N-1`$。域与像在 $`K`$ 内可以相交，不额外要求这种相交消失。
+
+延拓到 $`H_{N-1},G_{N-1}`$ 后，在 $`K\otimes\mathcal B`$ 的子空间上规定
+
+$$
+U(x\otimes|0\rangle+y\otimes|1\rangle)
+=(Ax+By)\otimes|0\rangle,
+\qquad x\in H_{N-1},\ y\in G_{N-1}.
+\tag{8.15}
+$$
+
+输入两块正交，输出由构造也正交，各块保持内积，因此这是子空间等距，可补为同一全域酉。最终这个固定 $`U`$ 完全重现构造时的全部轨道，并计算第 $`N`$ 步；无需再把部分映射扩到 $`H_N,G_N`$。对初始基态成立，经线性性即覆盖任意相干输入及参考。所有选择在运行前完成，运行中没有更换门。纯空白与可逆性保证终端联合恢复。$`N=1`$ 取两个 qubit 间的 SWAP 即达到二维。证明完毕。
+
+**推论 8.4（控制计费与共同初始化的精确分离）。** 从第三步起，已知相位的实际档案每个终端均有四维接收边界；要求一个固定门持续接收至 $`N`$，并将全部持久控制计入同一寄存器，则精确最小维数为 $`2N-1`$。其初期序列为 $`2,3,5,7,9,\ldots`$。若把独立纯初始化及全部输入的要求改为一份指定的共同平稳纯化，则二维接收器可用一个固定门永久返回纯空白。因此这三个容量对应不同的控制与来源条件。这是总接收维数，不是额外钟必须独立张量分解后的维数，也不是把发射步数解释为物理历时。
+
+证明。前两项分别由定理2.1及8.3给出。第三项使用 Godley–Guţă 的既有相干吸收构造（Lemma 4.1），在本来源上作如下特化；该成熟构造的适用条件与初始化要求见[文献说明](../../../Library/Dynamics/godley2023absorber.md)。令
+
+$$
+\rho_*=(1-\mu)|m_0\rangle\langle m_0|+\mu|m_1\rangle\langle m_1|,
+\qquad \mu=\frac{\alpha^2}{1+\alpha^2},
+\tag{8.16}
+$$
+
+并将 $`M,K`$ 初始共同准备为 $`\rho_*`$ 的一个固定纯化 $`|\Xi\rangle_{MK}`$。每轮发射前及该轮接收完成后，$`MK`$ 共同态均为这个 $`|\Xi\rangle`$。
+
+$`E(\rho_*)=\rho_*`$，且 $`\det\rho_*=\alpha^2\mu(1-\mu)>0`$，所以它是秩二密度矩阵。取谱分解 $`\rho_*=\sum_{j=0}^1\lambda_j|r_j\rangle\langle r_j|`$，其中 $`\lambda_j>0`$，并置 $`|\Xi\rangle=\sum_j\sqrt{\lambda_j}|r_j\rangle_M|j\rangle_K`$。
+
+发射后的纯态 $`(T\otimes I_K)|\Xi\rangle`$ 在活动 $`M`$ 上的边缘仍为 $`\rho_*`$，故可写为
+
+$$
+\Sigma_{\rm in}(T\otimes I_K)|\Xi\rangle
+=\sum_{j=0}^1\sqrt{\lambda_j}|r_j\rangle_M|\chi_j\rangle_{K\mathcal B},
+\qquad \langle\chi_i|\chi_j\rangle=\delta_{ij},
+\tag{8.17}
+$$
+
+这里 $`\Sigma_{\rm in}`$ 是（7.1）中把发射输出换至 $`M,K,\mathcal B`$ 次序的置换。规定 $`U|\chi_j\rangle=|j\rangle_K|0\rangle_{\mathcal B}`$，再作有限维酉延拓，即得到
+
+$$
+(I_M\otimes U)\Sigma_{\rm in}(T\otimes I_K)|\Xi\rangle
+=|\Xi\rangle_{MK}\otimes|0\rangle_{\mathcal B}
+\tag{8.18}
+$$
+
+在同一固定因子次序下成立。共同态每步被恢复，故同一个 $`U`$ 可永久重复。这个构造是相同边缘的纯化之间等距对应的直接应用。证明完毕。
+
+此处 $`MK`$ 已预先相关且来源被固定；若还附加参考 $`J`$，由于 $`MK`$ 共同态纯，初始联合态只能是它与 $`J`$ 的乘积。它不满足定义7.1的独立接收初态及任意 $`JM`$ 来源要求，因而不反驳定理7.3或8.3，也不能作为在原权限下免费取得的准备。
+
+这给出一个可检验的统一关系：相同的局部发射规则与相同的几何切口，并不单独决定实现成本。允许的来源联合态、控制是否在切口内计费，以及重新拼接时要保留哪些参考关系，共同决定最小边界。固定门将前缀关系的独立链转化为 $`2N-1`$ 维容量；预先供应特定共同平稳关系则能消去这里的独立初始化瞬态。两种结论对应的来源不同，不能用其中一个替代另一个。
+
+本节沿用第7节所引有限酉扩张背景；部分等距延拓、线性链独立性与共同平稳纯化的相干吸收均是成熟机制。新增结果是定理8.3在同一局部接收合同下的精确最小容量；推论8.4用既有吸收构造检验这一定理的初始化边界，不将该构造另报为新定理。没有从这些维数公式推出物理面积律、Lorentz 度量或 Born 规则；误差允许下的最小固定门容量仍须另证。
+
+## 追加锚（本行以下为增补区）
+
+
+## 9. 振幅退化处的精确容量跳变
+
+**定义 9.1（已知复振幅的同一固定门任务）。** 将定义7.1中的已知来源替换为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad a,b\in\mathbb C,\quad |a|^2+|b|^2=1,
+\qquad T_{a,b}|i\rangle=|i\rangle_{\mathcal B}\otimes m_i.
+\tag{9.1}
+$$
+
+振幅在运行前已知。保留独立纯接收初态、任意参考—记忆输入、同一个接收酉、每步精确纯空白、无额外丢弃环境及全部持久控制计入 $`K`$ 的条件。记覆盖每个终端 $`1\le n\le N`$ 的最小接收维数为 $`d_N(a,b)`$。发射等距对所有这些参数成立，包括两个记忆输出向量线性相关的 $`b=0`$ 情形。
+
+**定理 9.2（非零振幅与两类退化来源的完整容量）。** 定义9.1给出
+
+$$
+\boxed{
+d_1(a,b)=2,\qquad
+d_N(a,b)=
+\begin{cases}
+2N-1,&ab\ne0,\\
+N+1,&ab=0
+\end{cases}
+\quad(N\ge2).
+}
+\tag{9.2}
+$$
+
+因而对每个固定 $`N\ge3`$，从非零振幅来源趋近任一退化端点时，精确容量在端点下降 $`N-2`$。两个端点在给定初始记忆基态后，发射词不再分支，固定纯空白接收的容量仍随时域线性增长。
+
+证明。记接收初态为 $`e`$，继续使用（8.1）—（8.3）的系数空间和行块。本证明中的 $`B`$ 为接收行块，发出位的空间记为 $`\mathcal B`$。
+
+当 $`ab\ne0`$ 时，$`m_0,m_1`$ 线性独立，引理8.2的正交等距域及递推（8.5）仍成立。定理8.3的下界只用 $`a\ne0`$ 保证压缩伴随链不消失，以及 $`b\ne0`$ 保证 $`G_t\supseteq AH_{t-1}`$；不使用两振幅为正实数。其上界的部分等距延拓也只用这两个非零条件和归一化；（8.12）保留复系数 $`a,b`$，不需要取共轭。因此原证明给 $`2N-1`$。以下分别补足原证明不能直接代入的两个退化情形。
+
+先令 $`a=0`$，于是 $`|b|=1`$。两个记忆输出仍线性独立，引理8.2可用，而实际递推变成
+
+$$
+u_j^i=Bv_{j-1}^i,\qquad v_j^i=bAu_{j-1}^i.
+\tag{9.3}
+$$
+
+令 $`t=N-1`$。对 $`1\le r\le t`$，由全部初始系数及（9.3）得到精确的子空间等式
+
+$$
+H_r=\mathbb Ce+BG_{r-1},\qquad
+G_r=\mathbb Ce+AH_{r-1}.
+\tag{9.4}
+$$
+
+在这些域上，$`A,B`$ 各自等距，且两个像正交。非零向量 $`e`$ 不可能同时属于 $`BG_{r-1}`$ 和 $`AH_{r-1}`$，所以至少一项加上 $`\mathbb Ce`$ 时增加一维。写 $`h_r=\dim H_r`$、$`g_r=\dim G_r`$，就有
+
+$$
+h_r+g_r\ge h_{r-1}+g_{r-1}+1,
+\qquad h_0+g_0=2.
+\tag{9.5}
+$$
+
+故 $`h_t+g_t\ge t+2=N+1`$。最终两个等距像 $`AH_t,BG_t`$ 正交地位于同一个 $`K`$，给 $`\dim K\ge N+1`$。
+
+再令 $`b=0`$，于是 $`|a|=1`$。此时 $`m_0,m_1`$ 线性相关，不能援用引理8.2对一般联合系数分别消去非空白行块。改为直接检查实际来源：初始输入 $`|0\rangle_M`$ 与 $`|1\rangle_M`$ 分别要求 $`Z_0e=Z_1e=0`$；首次发射后活动记忆恒在 $`\mathbb C|0\rangle_M`$，以后每一步实际到达的接收向量只配新位 $`|0\rangle_{\mathcal B}`$。记两条来源的 $`M=0`$ 系数为 $`x_j=u_j^0,y_j=u_j^1`$；第二条来源在初始时刻的其余系数仍为 $`v_0^1=e`$。保留来源产生的复相位，则
+
+$$
+x_0=e,\quad y_0=0,\qquad
+x_j=aAx_{j-1}\ (j\ge1),\qquad
+y_1=Be,\quad y_j=aAy_{j-1}\ (j\ge2).
+\tag{9.6}
+$$
+
+因此在
+
+$$
+H_t=\operatorname{span}\{x_0,\ldots,x_t,y_1,\ldots,y_t\},
+\qquad G_t=\mathbb Ce
+\tag{9.7}
+$$
+
+上，实际空白要求仍给 $`Z_0H_t=0`$、$`Z_1G_t=0`$。由接收酉性，$`A|_{H_t}`$ 等距、$`Be`$ 为单位向量且 $`AH_t\perp\mathbb CBe`$。
+
+对 $`t\ge1`$ 令 $`J_t=(A|_{H_t})^*\iota_{H_t}`$。式（9.6）及上述正交性给
+
+$$
+J_ty_1=0,\qquad J_ty_j=ay_{j-1}\ (2\le j\le t),
+\qquad J_t^t x_t=a^te\ne0.
+\tag{9.8}
+$$
+
+与（8.9）的链独立性论证相同，$`y_1,\ldots,y_t`$ 线性独立，且 $`x_t`$ 不在其张成内。因此 $`\dim H_t\ge t+1`$。再计入与 $`AH_t`$ 正交的 $`\mathbb CBe`$，得到 $`\dim K\ge t+2=N+1`$。当 $`N=1`$ 时，两个实际首步输入分别给两个正交空白输出，直接得到二维下界；这也适用于其余全部参数。
+
+两个退化情形都有一个达到下界的同一固定门。取 $`K=\mathbb C^{N+1}`$，正交基 $`e_0,\ldots,e_N`$，初态 $`e=e_0`$，先规定
+
+$$
+U(e_0\otimes|0\rangle)=e_0\otimes|0\rangle,\qquad
+U(e_0\otimes|1\rangle)=e_1\otimes|0\rangle.
+\tag{9.9}
+$$
+
+若 $`b=0`$，再对 $`1\le j<N`$ 规定
+
+$$
+U(e_j\otimes|0\rangle)=e_{j+1}\otimes|0\rangle.
+\tag{9.10}
+$$
+
+若 $`a=0`$，则改为对同一指标范围规定
+
+$$
+U(e_j\otimes|\beta_j\rangle)=e_{j+1}\otimes|0\rangle,
+\qquad
+\beta_j=
+\begin{cases}0,&j\text{ 为奇数},\\1,&j\text{ 为偶数}.
+\end{cases}
+\tag{9.11}
+$$
+
+每一种规定中的输入基向量互异，输出恰为 $`e_0,\ldots,e_N`$ 各张量纯空白，也互异。因此可在剩余基向量之间任选双射，补成整个 $`K\otimes\mathcal B`$ 上的一个置换酉。
+
+当 $`b=0`$ 时，两条基态来源发射的位词分别是全零词与首位一、其余全零的词；（9.9）—（9.10）使第 $`n`$ 步后的寄存器基标签分别为 $`e_0,e_n`$。当 $`a=0`$ 时，两条位词分别为 $`0101\cdots`$ 与 $`1010\cdots`$；（9.9）、（9.11）使第 $`n`$ 步后的基标签分别为 $`e_{n-1},e_n`$。这些陈述只描述基标签，来源积累的 $`a,b`$ 相位仍保留在线性振幅中，没有被测量或删除。故所有 $`n\le N`$ 的输出均为纯空白，线性性覆盖任意输入相干及参考。逆序运行接收酉即恢复完整档案联合态，给所需上界。首步对一般参数使用 SWAP 达到二维。
+
+最后，$`ab\ne0`$ 的归一化参数可任意接近 $`a=0`$ 或 $`b=0`$，但其容量恒为 $`2N-1`$；端点值为 $`N+1`$，两者之差为 $`N-2`$。该跳变针对零误差、逐步纯空白和同一固定酉的合同；仅把终端恢复条件放宽而仍要求每步精确纯空白，不会降低这里的最小维数，因为反向酉已经给精确恢复。允许非空白泄漏或新丢弃环境时，实际域不再被上述论证强制为正交等距域，（9.2）不声称给出那些合同的容量。证明完毕。
+
+## 追加锚（本行以下为增补区）
+
+
+## 10. 允许丢弃新环境后的固定通道容量
+
+**定义 10.1（固定 CPTP 接收与全部终端的精确恢复）。** 对定义9.1的同一已知来源，接收寄存器 $`K`$ 从独立纯态 $`e`$ 开始，每步施加同一个全域 CPTP 映射
+
+$$
+\mathcal C:\mathcal L(K\otimes\mathcal B)\longrightarrow\mathcal L(K).
+\tag{10.1}
+$$
+
+实现（10.1）时允许每步引入并丢弃新的环境；所有持久接收记忆仍全部计入 $`K`$，不访问活动记忆 $`M`$ 或参考 $`J`$，不反馈来源，不按步数改变 $`\mathcal C`$。若保留已消费位作为输出端口，可以另外准备固定纯空白；它不承担任何档案信息。
+
+令 $`\sigma_n(\rho)`$ 为接收后的 $`JMK`$ 联合态，$`\Omega_n(\rho)`$ 为不作接收时同一来源的 $`JM\mathcal B^{\otimes n}`$ 联合态。要求对每个 $`n\ge1`$，存在仅作用于 $`K`$、可依赖终端编号的 CPTP 解码器 $`\mathcal D_n`$，使
+
+$$
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+=\Omega_n(\rho)
+\qquad\text{对全部有限参考 }J\text{ 及输入 }\rho.
+\tag{10.2}
+$$
+
+定义 $`d_{\mathrm{CPTP},\infty}(a,b)`$ 为满足这一合同的最小有限 $`\dim K`$；不存在有限实现时取值 $`\infty`$。这里一个 $`K,e,\mathcal C`$ 同时服务全部终端；每个有限终端另选一台机器是不同量词。
+
+**定理 10.2（固定 CPTP 接收器的无限时域分类）。** 在定义10.1的条件下，
+
+$$
+\boxed{
+d_{\mathrm{CPTP},\infty}(a,b)=
+\begin{cases}
+2,&a=0,\\
+3,&b=0,\\
+\infty,&ab\ne0.
+\end{cases}}
+\tag{10.3}
+$$
+
+非退化情形的不能性甚至只需要：从一个指定纯初态 $`|0\rangle_M`$ 出发，每个终端局部恢复全部档案与活动记忆的纯联合态。它不要求接收后的联合态为纯态，也不要求被丢弃环境保持空白。
+
+证明。先建立非退化情形的障碍。固定 $`p=|b|^2\in(0,1)`$，令
+
+$$
+R_0=|m_0\rangle\langle m_0|,\quad R_1=|0\rangle\langle0|,
+\quad F=R_0-R_1,\quad
+\rho_*={R_0+pR_1\over1+p},\quad D={p\over1+p}F.
+\tag{10.4}
+$$
+
+源边缘通道为 $`E(X)=X_{00}R_0+X_{11}R_1`$。直接计算给 $`E(\rho_*)=\rho_*`$、$`E(F)=-pF`$ 和 $`\operatorname{Tr}F^2=2p`$。因此从 $`|0\rangle_M`$ 出发，对 $`n\ge1`$ 有
+
+$$
+\rho_{M,n}=\rho_*+(-p)^{n-1}D,\qquad
+q_n:=\operatorname{Tr}\rho_{M,n}^2
+=q_*+2\operatorname{Tr}(\rho_*D)(-p)^{n-1}
++\operatorname{Tr}D^2\,p^{2n-2},
+\quad \operatorname{Tr}D^2={2p^3\over(1+p)^2}>0.
+\tag{10.5}
+$$
+
+这里 $`q_*:=\operatorname{Tr}\rho_*^2`$。此纯度序列的指数基底属于 $`\{1,-p,p^2\}`$，最低模基底为唯一的正实数 $`p^2`$，其系数严格正。
+
+假设存在有限接收器。将一次发射与固定接收合成 $`MK`$ 上的固定 CPTP 映射 $`\mathcal R`$，记上述初态的接收结果为
+
+$$
+\sigma_n=\mathcal R^n
+\bigl(|0\rangle\langle0|_M\otimes|e\rangle\langle e|_K\bigr).
+\tag{10.6}
+$$
+
+局部保迹接收不改变 $`M`$ 边缘，所以 $`\operatorname{Tr}_K\sigma_n=\rho_{M,n}`$。原始目标 $`\Omega_n=|\Psi_n\rangle\langle\Psi_n|_{M\mathcal B^{\otimes n}}`$ 是纯态。对（10.2）的解码器取 Kraus 算子，按环境基排列为 Stinespring 等距
+ $`V_n:K\to\mathcal B^{\otimes n}\otimes E_n`$。
+解码后的目标边缘纯，故整个延拓态必为
+
+$$
+(I_M\otimes V_n)\sigma_n(I_M\otimes V_n^*)
+=|\Psi_n\rangle\langle\Psi_n|\otimes\tau_n.
+\tag{10.7}
+$$
+
+这里纯边缘强制乘积可直接由正性看出：目标纯态正交补上的投影期望为零，整个态的支撑只能落在该一维子空间张量 $`E_n`$ 中。等距保持非零谱，而纯态的两侧边缘具有相同非零谱，因此（10.7）给
+
+$$
+\boxed{
+\operatorname{Tr}\sigma_{K,n}^2
+=q_n\operatorname{Tr}\sigma_n^2,
+\qquad \sigma_{K,n}=\operatorname{Tr}_M\sigma_n.
+}
+\tag{10.8}
+$$
+
+这个恒等式完整允许 $`\tau_n`$ 为随 $`n`$ 改变的混合态。
+
+在有限维矩阵空间上对 $`\mathcal R`$ 作 Jordan 分解。丢掉零特征值对应的有限幂零前缀后，其实际轨道可以写成
+
+$$
+\sigma_n=\sum_{\lambda\in\Lambda}\lambda^nP_\lambda(n),
+\qquad r=\min_{\lambda\in\Lambda}|\lambda|>0.
+\tag{10.9}
+$$
+
+$`\Lambda`$ 只收录该轨道实际出现的不同非零特征值，各 $`P_\lambda`$ 为非零矩阵多项式；不要求通道正规或可对角化。由于态的迹为一，$`\Lambda`$ 非空。
+
+不同非零基底的指数多项式在整数尾部线性独立。为见这一点，对一份假设的零线性组合，逐一施加差分算子 $`f(n)\mapsto f(n+1)-zf(n)`$，对每个待消去基底 $`z`$ 使用高于其多项式次数的幂。它消去该基底，对任一不同基底只乘非零的最高次系数。保留一个基底后不可能得到恒零的非零多项式，故原组合的每项均必须为零。
+
+利用 $`\sigma_n`$ Hermitian，以 Hilbert–Schmidt 内积展开其纯度：
+
+$$
+\operatorname{Tr}\sigma_n^2
+=\|\sigma_n\|_{\rm HS}^2
+=\sum_{\lambda,\mu\in\Lambda}
+(\overline\lambda\mu)^n
+\langle P_\lambda(n),P_\mu(n)\rangle_{\rm HS}.
+\tag{10.10}
+$$
+
+所有基底模至少为 $`r^2`$。正实基底 $`r^2`$ 的多项式系数恰为
+
+$$
+A_r(n)=\sum_{|\lambda|=r}\|P_\lambda(n)\|_{\rm HS}^2.
+\tag{10.11}
+$$
+
+因为 $`\overline\lambda\mu=r^2`$ 强制 $`|\lambda|=|\mu|=r`$ 且 $`\lambda=\mu`$，这里没有其他交叉项。该多项式最高次系数是若干非零矩阵系数的平方范数之和，严格正；所以这一最低模项确实存在。
+
+偏迹仅把（10.9）中的 $`P_\lambda`$ 替换为 $`\operatorname{Tr}_M P_\lambda`$，不引入新基底。因此（10.8）左边的指数多项式没有模小于 $`r^2`$ 的项。右边却必含正实基底 $`p^2r^2<r^2`$，系数为
+
+$$
+{\operatorname{Tr}D^2\over p^2}\,A_r(n)\ne0.
+\tag{10.12}
+$$
+
+源纯度的另外两种基底只可能产生模至少 $`r^2`$、$`pr^2`$ 的项，不能抵消（10.12）；源的 $`p^2`$ 项也只有乘上（10.11）才能产生这个正实基底。指数多项式唯一性遂与（10.8）矛盾。这证明 $`ab\ne0`$ 时的不能性，且没有限制终端解码器随 $`n`$ 变化。
+
+现在构造 $`a=0`$ 的二维接收器。取 $`K=\mathbb C^2`$，初态 $`|+\rangle`$，定义从 $`K\otimes\mathcal B`$ 到 $`K\otimes E`$ 的固定酉
+
+$$
+V|k\rangle_K|s\rangle_{\mathcal B}
+=|s\rangle_K|k\mathbin{\oplus}s\rangle_E,
+\qquad k,s\in\{0,1\},\qquad
+\mathcal C(X)=\operatorname{Tr}_E(VXV^*).
+\tag{10.13}
+$$
+
+首步满足 $`V(|+\rangle\otimes|s\rangle)=|s\rangle\otimes|+\rangle`$，故环境与数据独立，寄存器保存首位。此后来源逐位交替，接收输入仅支撑于 $`|0\rangle_K|1\rangle_{\mathcal B}`$ 与 $`|1\rangle_K|0\rangle_{\mathcal B}`$ 的张成。两者都使环境成为 $`|1\rangle_E`$，寄存器保存最新位；相干组合的相对相位不变。给定终端 $`n`$，最新位唯一确定整条交替词，故把两份正交寄存器基态等距送到对应词，就恢复全部参考—记忆—档案联合态。来源产生的 $`b`$ 相位始终留在实际振幅中。
+
+首步选最大纠缠输入时，档案与其余系统的 Schmidt 秩为二；一维 $`K`$ 的局部解码不能产生这种跨切口纠缠。因此二维达到最小值。
+
+最后令 $`b=0`$。取三维 $`K`$，正交基为 $`|e\rangle,|d_0\rangle,|d_1\rangle`$，初态 $`|e\rangle`$。定义固定通道的 Kraus 算子
+
+$$
+L_{\rm first}=\sum_{s=0}^1|d_s\rangle\langle e,s|,
+\qquad L_{\rm run}=\sum_{s=0}^1|d_s\rangle\langle d_s,0|,
+\qquad L_s=|e\rangle\langle d_s,1|\quad(s=0,1).
+\tag{10.14}
+$$
+
+四项 $`L^*L`$ 之和为输入空间恒等算子，因此定义全域 CPTP 通道。首步只有 $`L_{\rm first}`$ 起作用，存下首位的整个 qubit；以后活动记忆在 $`|0\rangle_M`$，来源恒发零，只有 $`L_{\rm run}`$ 起作用并保持数据。环境只记录确定的首次或后续阶段，取得不了来源位。终端解码把 $`|d_s\rangle`$ 送到 $`|s0\cdots0\rangle`$，在未使用的 $`|e\rangle`$ 上任意补为通道，即满足（10.2）。来源的单位模振幅 $`a`$ 所产生的相位保留，不要求 $`a=1`$。
+
+还须排除二维 $`K`$。若它存在，首步在实际输入域 $`S_0=\mathbb Ce\otimes\mathcal B`$ 上必须无损传输任意 qubit，因为 $`b=0`$ 时源把初始 qubit 完整发到首位，活动记忆已经复位。二维输入、二维输出且具有 CPTP 左逆的通道必为酉通道：对满 Schmidt 秩 Bell 输入使用（10.7），二维输出限制迫使噪声因子秩为一，于是编码的 Choi 态纯，编码是单个等距算子，等维时即酉。
+
+所以首步后任意 $`K`$ 态及其参考相干均是实际可达的。第二步的新位固定为零，（10.2）又要求同一个 $`\mathcal C`$ 在 $`S_1=K\otimes\mathbb C|0\rangle`$ 上无损传输任意 qubit，也必须为酉编码。固定一个 $`\mathcal C`$ 的 Stinespring 等距 $`W:K\otimes\mathcal B\to K\otimes E`$。在每个 $`S_i`$ 上，它的环境因子都是一个固定纯向量；这是相应限制通道为酉的结果。两域交于一维 $`\mathbb C(e\otimes|0\rangle)`$，同一个 $`W`$ 在这份非零交向量上的像强制两个环境向量共线。
+
+由线性性，$`W`$ 因而把三维 $`S_0+S_1`$ 等距送入同一个二维 $`K\otimes\mathbb C\eta`$，矛盾。因此二维不可能，三维构造最小。证明完毕。
+
+## 追加锚（本行以下为增补区）

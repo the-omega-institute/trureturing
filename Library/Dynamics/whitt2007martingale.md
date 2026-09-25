@@ -375,3 +375,140 @@ phase-attainment, all-amplitude, growing-window or efficiency claim.
 Conditional posterior arguments remain under the uniform support
 prior; fixed-support laws and the one common direction event transfer
 the whole process and its projections together.
+
+
+# Finite posterior meshes and compact-interval endpoints
+
+Chapter 46 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+uses the same fixed Liouville amplitude at an intensity larger than the
+reopening scale by three times log(Q) divided by the exponential growth
+rate of q. The exact compensated spacing in the original score-window
+coordinate now stays bounded above and away from zero. Only finitely
+many count-line groups can enter that window. All of them have the same
+limiting normalized variance, including groups currently outside the
+window that are retained in one enlarged posterior vector.
+
+The finite vector central limit theorem, conditional-Bernoulli
+representation, absolute Bernoulli local estimate and endpoint-fixing
+time changes are classical. The repository-derived content connects
+them to the recalculated actual pair/path model: uniform bounded-index
+point masses, actual mixed occupancy, calibration, a complementary
+variance reserve, one whole-vector comparison and simultaneous exact
+centers. A uniformly Lipschitz family of changing staircase maps gives
+a moving Gaussian-law approximation even when the path laws are not
+tight. This is not convergence to one fixed limiting process.
+
+The topology is explicitly the ordinary J1 topology on the closed
+interval from minus one to one. Interior jumps approaching either
+endpoint are obstructed, while a jump exactly at the right endpoint is
+permitted. The original score window excludes its exact left endpoint.
+The proof derives both endpoint restrictions directly from the
+endpoint-fixing time-change definition and the one-sided limits of a
+cadlag path. It does not use Whitt's half-line last-interval exception
+as a compact right-endpoint tightness theorem. Nor does it apply the
+Brownian martingale FCLT to the finite mesh: its group jumps have
+nonvanishing limiting variances.
+
+At a reciprocal-integer limiting spacing, the two possible endpoint
+contacts share the same center and spacing phases. Their inclusion and
+interior/exterior status must be checked together. A phase limit alone
+does not determine a unique staircase law. The theorem does not claim
+that every classified boundary pattern, or a nontight resonant pattern,
+is attained by the legal rounded intensities. A sufficiently large fixed
+positive intensity shift does give a proved legal regime containing only
+the central group; its rounding bound is explicit.
+
+A related primary predecessor is D. Ferger and D. Vogel,
+“Weak convergence of the empirical process and the rescaled empirical
+distribution function in the Skorokhod product space,”
+[arXiv:1506.04324v1](https://arxiv.org/pdf/1506.04324v1), Theorem 2.1
+and Condition C.1. Its fixed iid distribution, specified one-sided
+derivatives and local/global scaling yield an independent transformed
+Brownian bridge and two-sided Poisson process. Its convention permits
+an atom at the localization point, with the left limit used on the
+negative side. Those facts are relevant precedents for local process
+limits and endpoint conventions. The source works on the real-line
+Skorokhod space; restriction at a limiting jump does not automatically
+give closed-interval J1 convergence. It does not supply the changing
+actual score law, constrained posterior centers or finite-mesh criterion
+proved here.
+
+The stronger quantitative nonlattice assumptions discussed earlier in
+this note remain absent. The result uses explicit count-line point
+probabilities instead of a universal microscopic score density. This
+bounded source comparison is not a global originality certificate.
+The theorem fixes amplitude and beta, makes no actual-moment or finite
+onset claim, and does not assert another topology, arbitrary phase
+attainment, adaptive parameters, growing windows or efficiency.
+
+
+# Dense central meshes and homogeneous posterior noise
+
+Chapter 47 of [the window-phase volume](../../docs/develop/theory/PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)
+considers intensities between the reopening scale and the finite-mesh
+scale. The coefficient of log(Q) may vary arbitrarily inside a fixed
+compact subinterval of (0,3). The exact compensated window mesh tends
+to zero, while the number of selected count groups diverges. Every
+selected standardized count point simultaneously tends to the center
+of the two-Poisson profile. These are separate conditions: a dense
+window mesh alone would not imply a spatially constant variance clock.
+
+The `repo-derived` conclusion is full-sequence homogeneous Brownian
+noise for both actual pair/path experiments at the exact-mesh scale,
+with the same endpoint and its independent Gaussian bridge projection.
+All centers are the exact fixed-cardinality posterior centers. The
+proof establishes a uniform relative actual occupancy estimate over
+the growing selected integer set. Its union bound costs only a fixed
+power of Q. The exact floor-count identity then makes the normalized
+variance clock linear, with no convergent rounding-phase assumption.
+One full posterior-vector comparison and a separate simultaneous
+weighted center estimate transfer the grouped auxiliary functional
+limit at this smaller scale. The old whole-line normalization gives
+the zero process on the same window. The equivalent simpler
+normalization retains exact q; dropping its bounded oscillating factor
+is not a proved equivalence.
+
+Whitt's Theorem 2.1(ii) supplies the classical functional-limit step.
+The proof checks whole-group fourth moments, the expected maximum
+squared group jump and predictable bracket jumps. Independent
+Brownian continuation after the window endpoint permits literal use
+of the half-line theorem, followed by restriction at a continuous
+limiting endpoint. No martingale property is imposed on the exact
+conditioned posterior and no independence is imposed on actual rows.
+The Bernoulli local estimate and conditional representation cited above
+remain the classical tools for the posterior comparison.
+
+U. Einmahl and D. M. Mason, “Gaussian approximation of local empirical
+processes indexed by functions,” Probability Theory and Related Fields
+107 (1997), 283–311, [Theorem 1.1](https://link.springer.com/content/pdf/10.1007/s004400050086.pdf),
+provides a relevant general local-Gaussian mechanism. Its iid sample
+has a fixed law; the local mass and conditional local laws, envelope
+conditions and asymptotic equicontinuity satisfy its assumptions
+(A), (S) and (F). At vanishing local mass the limiting covariance is
+the local second-product integral. The general theorem does not
+require a density, so discrete observations alone do not exclude it.
+It does not establish the present changing actual-row comparison or
+the fixed-cardinality posterior center estimate. Those obligations
+remain necessary even when a general array theorem supplies the final
+Gaussian step.
+
+L. Pasquazzi, “Functional Central Limit Theorems for Conditional Poisson
+sampling Designs,” [arXiv:1905.01021v2](https://arxiv.org/pdf/1905.01021v2),
+Theorem 6, is a related conditional bounded-Lipschitz limit theorem.
+Its assumption A2* requires every canonical inclusion probability to
+have a fixed positive lower bound with high probability. The complete
+array here has minimum probability at most q/M, tending to zero.
+Restriction to the central window does not make its posterior label
+total fixed; the complement conditioning ratio must still be handled.
+This comparison concerns that theorem and does not dismiss the paper's
+other designs allowing smaller probabilities.
+
+The fixed Liouville increment law still has super-polynomially close
+Fourier resonances and fails the quantitative nonlattice hypotheses
+discussed earlier. The local homogeneous posterior noise therefore
+does not establish a generic microscopic score density. The bounded
+primary-source comparison is not a global originality certificate.
+Amplitude, beta, exponent compact and remainder bounds stay fixed;
+there is no claim at the exponent endpoints, of actual moment
+convergence, arbitrary phase attainment, useful finite onset, growing
+windows, old-field jointness, adaptation or efficiency.
