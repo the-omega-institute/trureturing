@@ -2529,7 +2529,7 @@ p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
 
 ### 22.8 证明覆盖与保留边界
 
-本节的核心证明链由五个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数、单位总质量及原子分布函数级数；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位单侧误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，第 22.11 节的原子测度、精确跳变与相位平均，以及第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
+本节的核心证明链由六个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数与单位总质量；`MechanicalReadoutAtomicMeasure` 构造概率测度，证明半线分布函数、内部斜率的单点质量及闭拓扑支撑；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位单侧误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，第 22.11 节的左极限跳变与相位平均，以及第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
 
 [22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
 
@@ -2632,7 +2632,7 @@ a_k=(1-r)^2r^{k-1},\qquad
 \nu_{r,x}=\sum_{k=1}^{\infty}a_k\sum_{j=1}^{k}\delta_{(j-x)/k}.
 \tag{22.20}
 \]
-则 $\nu_{r,x}$ 是支撑于 $(0,1]$ 的概率测度，且对 $0\leq\alpha\leq1$，
+则 $\nu_{r,x}$ 是集中于 $(0,1]$ 的概率测度，即 $\nu_{r,x}((0,1])=1$；当 $0<r<1$ 时其闭的拓扑支撑为 $[0,1]$。对 $0\leq\alpha\leq1$，
 \[
 \boxed{G_r(\alpha,x)=\nu_{r,x}((0,\alpha])
 =\sum_{k=1}^{\infty}a_k\lfloor x+k\alpha\rfloor.}
@@ -2651,7 +2651,7 @@ P_{r,N}(\alpha,x)
 =(1-r)r^{N-1}\lfloor x+N\alpha\rfloor
 +\sum_{k=1}^{N-1}a_k\lfloor x+k\alpha\rfloor.
 \]
-这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。`geometric_readout_floor_series_and_mass` 证明了本段的取整级数恒等式、$\sum ka_k=1$ 及逐阈值原子分布函数级数；概率测度构造、精确跳变和相位平均目前仍是普通证明，不冒充 Lean 测度声明。
+这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。`geometric_readout_floor_series_and_mass` 证明取整级数与总质量；`geometric_atomic_probability_and_carrier`、`geometric_atomic_apply_Iic`、`geometric_atomic_singleton_hit` 和 `geometric_atomic_support` 分别证明实际概率测度、分布函数、内部单点质量及闭拓扑支撑。左极限的识别和相位平均目前仍是普通证明。
 
 当 $x=0$、$\alpha=p/q\in(0,1)$ 且分数既约时，命中时间恰好是 $q,2q,\ldots$，所以
 \[
