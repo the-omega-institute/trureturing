@@ -16,6 +16,7 @@ public sealed class FileMapResourceParityTests
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
             Assert.Equal(path switch
             {
+                "tools/lean-inspector/README.md" => new[] { "test-worktree-contract" },
                 "docs/reports/a110037-0910/BoundaryProbe.lean" or "docs/reports/prime-slab-corner-order-0909.json" =>
                     new[] { "test-repository-filemap" },
                 _ => [],
