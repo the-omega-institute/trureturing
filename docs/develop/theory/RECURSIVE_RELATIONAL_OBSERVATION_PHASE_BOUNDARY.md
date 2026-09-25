@@ -3525,20 +3525,20 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 23. 四步精确固定 CPTP 容量的五至六维夹逼
+## 23. 四步精确固定 CPTP 的最小容量为五
 
 本节沿用第21节的已知非退化来源
 $`m_0=a|0\rangle+b|1\rangle`$、$`m_1=|0\rangle`$，其中
 $`ab\ne0`$、$`|a|^2+|b|^2=1`$。接收合同仍为定义12.1：接收器独立纯初始化，逐轮使用同一个全域 CPTP 通道，新环境丢弃后不再复用，全部持久系统计入接收容量；每个终端均须仅凭接收器恢复任意参考、活动记忆和完整档案的联合态。
 
-**定理 23.1（四步容量界）。** 对上述任意已知非退化复振幅来源，
+**定理 23.1（四步的精确最小固定 CPTP 容量）。** 对上述任意已知非退化复振幅来源，
 
 $$
-\boxed{5\le d_{\mathrm{CPTP},4}(a,b)\le6.}
+\boxed{d_{\mathrm{CPTP},4}(a,b)=5.}
 \tag{23.1}
 $$
 
-因此，四维接收器无法同时服务前四个精确终端；六维已经足够。第9节同一纯空白固定酉合同在四步需要七维。式（23.1）尚未判定五维是否可达。
+因此，四维接收器无法同时服务前四个精确终端，而五维已经足够。第9节同一纯空白固定酉合同在四步需要七维。以下给出一般 CPTP 合同的五维全域固定门，并证明它同时服务全部四个终端。
 
 **证明中的标准可逆编码事实。** 以下回顾精确纠错的 Kraus 正交分解，并给出所需的证明，以明确处理第一步接收态可能混合的情形。这是 Knill–Laflamme 精确纠错条件及其张量因子结构的应用，参见 [Knill–Laflamme, *Theory of Quantum Error-Correcting Codes*, Theorems 3.2、3.5，式（19）—（20）](https://arxiv.org/abs/quant-ph/9604034)，不作为本节新结论。设纯态
 $`|\Omega\rangle\in R\otimes S`$ 在 $`S`$ 上满 Schmidt 秩
@@ -3746,110 +3746,435 @@ $`G_2\cap G_3=\{0\}`$ 矛盾。
 
 全部 $`\gamma`$ 情形都已排除，四维不可能。维数更小已由第三步 Schmidt 秩下界排除，因此得到（23.1）的下界。
 
-**六维全域固定门。** 取 $`K=\mathbb C^6`$ 的正交单位基
-$`u,v,w,t,r,s`$，接收初态为 $`w`$。沿用第21节的
+**五维接收向量。** 取五维接收器的正交单位基
+$`u,v,w,t,e`$，接收初态为 $`w`$。定义正实数及两层正交旋转
 
 $$
 c=\sqrt{|a|^4+|b|^2},\qquad
+d=\sqrt{c^2+|b|^2},
+\qquad
 z=\frac{a^2u+bv}{c},\qquad
-y=\frac{-\overline b\,u+\overline a^{2}v}{c},
+y=\frac{-\overline b\,u+\overline{a}^{2}v}{c},
 \tag{23.17}
 $$
 
-并置
-
 $$
-d=\sqrt{c^2+|b|^2},\qquad
-h=\frac{cs+br}{d},\qquad
-h_\perp=\frac{-\overline b\,s+cr}{d}.
+q=\frac{\overline b\,y+\overline{a}^{2}e}{c},
+\qquad
+f=\frac{-a^2y+be}{c}.
 \tag{23.18}
 $$
 
-$`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的正交单位基；
-$`h,h_\perp`$ 是 $`\operatorname{span}\{s,r\}`$ 的正交单位基。每轮使用一个新二态环境。以下十二条确定同一个全域酉
-$`V:K\otimes\mathcal B\to K\otimes E`$；张量积记号中的后一位分别是输入位和输出环境：
+因此 $`z,y`$ 是 $`\operatorname{span}\{u,v\}`$ 的正交单位基，
+$`q,f`$ 是 $`\operatorname{span}\{y,e\}`$ 的正交单位基，
+$`z,q,f`$ 是 $`\operatorname{span}\{u,v,e\}`$ 的正交单位基。
+再定义
+
+$$
+s=\frac{-cv+be}{d},
+\qquad
+g=\frac{\overline b\,v+ce}{d},
+\qquad
+r=\frac{df-cs}{b}.
+\tag{23.19}
+$$
+
+$`s,g`$ 是 $`\operatorname{span}\{v,e\}`$ 的正交单位基，所以
+$`s\perp u`$。展开（23.17）—（23.18）给出关键恒等式
+
+$$
+s=\frac{-\overline b\,z+cf}{d}.
+\tag{23.20}
+$$
+
+其验证为
+
+$$
+-\overline b\,z+cf
+=-\frac{a^2\overline b}{c}u
+-\frac{|b|^2}{c}v-a^2y+be
+=-cv+be.
+\tag{23.21}
+$$
+
+由（23.20）有 $`\langle s,f\rangle=c/d`$，于是
+
+$$
+\langle s,r\rangle=0,
+\qquad
+\|r\|^2=\frac{d^2+c^2-2c^2}{|b|^2}=1,
+\qquad
+cs+br=df.
+\tag{23.22}
+$$
+
+所以 $`s,r`$ 是 $`\operatorname{span}\{z,f\}`$ 的正交单位基，
+$`q,s,r`$ 是 $`\operatorname{span}\{u,v,e\}`$ 的正交单位基。
+以上等式对一般复数 $`a,b`$ 成立；除以 $`b`$ 合法来自非退化假设。
+
+**同一个全域酉。** 每轮取新环境 $`E=\mathbb C^2`$。定义
+$`V:K\otimes\mathcal B\to K\otimes E`$ 如下，表中后一位为输入位或输出环境：
 
 $$
 \begin{aligned}
 V(w\otimes0)&=t\otimes0,
 &V(t\otimes0)&=u\otimes1,\\
-V(w\otimes1)&=y\otimes0,
+V(w\otimes1)&=q\otimes0,
 &V(t\otimes1)&=v\otimes1,\\
 V(z\otimes0)&=s\otimes0,
-&V(y\otimes0)&=w\otimes1,\\
+&V(q\otimes0)&=w\otimes1,\\
 V(u\otimes1)&=r\otimes0,
-&V(h\otimes0)&=s\otimes1,\\
-V(h_\perp\otimes0)&=z\otimes0,
-&V(s\otimes1)&=t\otimes1,\\
-V(v\otimes1)&=w\otimes0,
-&V(r\otimes1)&=r\otimes1.
+&V(f\otimes0)&=t\otimes1,\\
+V(g\otimes1)&=w\otimes0,
+&V(s\otimes1)&=e\otimes1.
 \end{aligned}
-\tag{23.19}
+\tag{23.23}
 $$
 
-输入位零时的接收向量是 $`w,z,h_\perp,t,y,h`$，输入位一时是
-$`w,u,v,t,s,r`$；两组分别为 $`K`$ 的正交单位基。输出环境零时的接收向量是 $`t,y,s,r,z,w`$，环境一时是
-$`u,v,w,s,t,r`$；也分别为正交单位基。因此（23.19）确实定义酉，并给全域固定 CPTP 通道
-$`\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger)`$。
+输入位零时的五个接收向量为 $`w,z,t,q,f`$，是正交单位基；输入位一时为 $`w,u,g,t,s`$，也是正交单位基。输出环境零时的接收向量为
+$`t,q,s,r,w`$，环境一时为 $`u,v,w,t,e`$，两组仍分别为正交单位基。因此（23.23）将一个十维正交单位基映到另一个，确定全域酉。运行中固定使用
 
-**四步联合态与完整解码。** 对初始活动记忆基态 $`|i\rangle`$，记每次接收后的纯联合态为 $`\Psi_n^i\in M\otimes K`$。直接代入（23.19）得
+$$
+\mathcal C(X)=\operatorname{Tr}_E(VXV^\dagger).
+\tag{23.24}
+$$
+
+**四步实际联合态。** 对初始活动记忆基态 $`|i\rangle`$，前三步及第四步接收后的联合向量为
 
 $$
 \begin{aligned}
 \Psi_1^0&=m_0\otimes t,
-&\Psi_1^1&=m_1\otimes y,\\
+&\Psi_1^1&=m_1\otimes q,\\
 \Psi_2^0&=a m_0\otimes u+b m_1\otimes v,
 &\Psi_2^1&=m_0\otimes w,\\
 \Psi_3^0&=c m_0\otimes s+ab m_1\otimes r,
-&\Psi_3^1&=a m_0\otimes t+b m_1\otimes y,\\
-\Psi_4^0&=ad m_0\otimes s+cb m_1\otimes t,
+&\Psi_3^1&=a m_0\otimes t+b m_1\otimes q,\\
+\Psi_4^0&=ad m_0\otimes t+cb m_1\otimes e,
 &\Psi_4^1&=m_0\otimes(a^2u+bw)+ab m_1\otimes v.
 \end{aligned}
-\tag{23.20}
+\tag{23.25}
 $$
 
-每轮丢弃的环境分别为
+两种初始基态在每一步输出相同的环境纯向量，环境序列为
 
 $$
 \eta_1=|0\rangle,\qquad
 \eta_2=|1\rangle,\qquad
 \eta_3=|0\rangle,\qquad
-\eta_4=|1\rangle,
-\tag{23.21}
+\eta_4=|1\rangle.
+\tag{23.26}
 $$
 
-且对两个初始基态均相同。为核对新增第四步，两种发射后的接收输入为
+首步使用 $`w0,w1`$ 两条映射。第二步的接收输入为
+$`a m_0\otimes t0+b m_1\otimes t1`$ 和
+$`m_0\otimes q0`$，故得到（23.25）第二行且环境为一。第三步的接收输入为
+
+$$
+c m_0\otimes z0+ab m_1\otimes u1,
+\qquad
+a m_0\otimes w0+b m_1\otimes w1,
+\tag{23.27}
+$$
+
+给（23.25）第三行且环境为零。第四步的接收输入为
 
 $$
 \begin{aligned}
-&a m_0\otimes(cs+br)\otimes|0\rangle
-+cb m_1\otimes s\otimes|1\rangle
-=ad m_0\otimes h\otimes|0\rangle
-+cb m_1\otimes s\otimes|1\rangle,\\
-&m_0\otimes(a^2t+by)\otimes|0\rangle
-+ab m_1\otimes t\otimes|1\rangle.
+&a m_0\otimes(cs+br)0+cb m_1\otimes s1
+=ad m_0\otimes f0+cb m_1\otimes s1,\\
+&m_0\otimes(a^2t+bq)0+ab m_1\otimes t1.
 \end{aligned}
-\tag{23.22}
+\tag{23.28}
 $$
 
-（23.19）把这两行的全部分量都送到环境一，得到（23.20）第四行。前三步则只使用表中
-$`w0,w1,t0,t1,y0,z0,u1`$ 的映射，逐项给出（23.20）前三行及环境 $`0,1,0`$。因此线性性同时覆盖任意输入相干和任意参考纠缠；混合输入可取纯化。
+由（23.23）均输出环境一，给（23.25）第四行。环境序列（23.26）对两个初始基态相同，故线性性覆盖任意输入相干和任意参考纠缠；混合输入可取纯化。
 
-在终端 $`n\le4`$，解码器独立准备（23.21）的前 $`n`$ 个已知环境纯态，逆序施加同一个 $`V^\dagger`$，恢复各轮发出位，最后丢弃回到初态 $`w`$ 的接收寄存器。等价地，令 $`\mathsf V_n`$ 表示把同一个 $`V`$ 顺次作用于接收器及完整档案各位置的酉，置
-$`\boldsymbol\eta_n=\eta_1\otimes\cdots\otimes\eta_n`$，则
+**终端解码。** 在每个 $`n\le4`$ 的指定终端，本地重新准备（23.26）的前 $`n`$ 个确定环境纯态，逆序使用同一个 $`V^\dagger`$，恢复全部发出位，最后丢弃回到初态 $`w`$ 的接收器。若 $`\mathsf V_n`$ 表示把固定 $`V`$ 逐位置作用于接收器与完整档案的酉，则解码通道为
 
 $$
-\mathcal D_n(X)=\operatorname{Tr}_K\!\left[
+\mathcal D_n(X)=\operatorname{Tr}_K\left[
 \mathsf V_n^\dagger
-\bigl(X\otimes|\boldsymbol\eta_n\rangle
-\langle\boldsymbol\eta_n|\bigr)
+\bigl(X\otimes|\eta_1\cdots\eta_n\rangle
+\langle\eta_1\cdots\eta_n|\bigr)
 \mathsf V_n\right].
-\tag{23.23}
+\tag{23.29}
 $$
 
-这是全域 CPTP 通道。较早接收门与后续来源发射可交换，故（23.20）—（23.21）保证（23.23）对全部
-$`J,\rho_{JM}`$ 精确恢复完整的 $`JM`$—档案联合态。运行中各轮环境立即丢弃，终端仅重新准备数据无关的已知纯态，不取回被丢弃的系统。所有持久控制均已包含在六维 $`K`$ 中，门不依赖步数更换。由此得到（23.1）的上界，定理得证。
+这是全域 CPTP 通道。较早接收门与后续来源发射作用于不同系统，可交换次序。因此（23.25）—（23.26）保证（23.29）对所有 $`J,\rho_{JM}`$ 恢复完整参考—活动记忆—档案联合态。运行时环境即时丢弃且不复用；终端新准备的纯态仅依赖终端步数和已知固定构造，不携带输入信息。全部持久系统即为五维 $`K`$，运行门不随步数更换。
 
-四步已知精确容量由本节收紧到 $`\{5,6\}`$。五维的全域固定 CPTP 实现或其不可能性仍未解决；本节既不把六维称为最优，也不把特定阶段构造的失败推广成五维下界。
+由此五维构造与已证四维不可能性，得到 $`d_{\mathrm{CPTP},4}(a,b)=5`$，定理得证。四步的固定 CPTP 接收容量比同一纯空白固定酉合同的七维小两维；这里的精确恢复仍覆盖全部输入、全部参考及完整档案。
+
+## 追加锚（本行以下为增补区）
+
+## 24. 局部相位导数支撑与恢复精度的阶乘上界
+
+本节仍取定义22.1的单终端、完整参考恢复合同。沿用（5.2）的 $`V_n,h_n,b_n`$ 及（18.1）的
+
+$$
+g_n^2=V_n+h_n^2\le n.
+\tag{24.1}
+$$
+
+以下构造使用标准指数函数的 Taylor 余项及条件 Hoeffding 估计。需要核对的是同一个移心相位能否覆盖全部来源输入，以及这些向量能否放入只在档案一侧作用的有限维支撑；不赋予接收器读取实际相位的权限。
+
+**定理 24.1（网半径、导数阶数与完整恢复误差）。** 给定非空 $`\Theta\subseteq\mathbb T`$、$`n\ge4`$、$`h>0`$ 及整数 $`k\ge1`$，存在一份维数至多
+
+$$
+4kP(\Theta,h)
+\tag{24.2}
+$$
+
+的全域 CPTP 编解码，对全部候选相位及全部参考完整输入，其联合半迹恢复误差至多
+
+$$
+\boxed{
+\min\left\{1,\;
+2\sqrt{\frac{(g_n^2h^2/2)^k}{k!}}\right\}
+\le
+\min\left\{1,\;
+2\sqrt{\frac{(nh^2/2)^k}{k!}}\right\}.
+}
+\tag{24.3}
+$$
+
+特别地，只要右侧的第二项不超过 $`\epsilon`$，就有
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4kP(\Theta,h)\}.
+}
+\tag{24.4}
+$$
+
+常数统一于 $`\Theta,n,h,k`$。本定理允许集合不可测、非闭，也允许 $`h>\pi`$；此时分离数为一。
+
+证明。先建立两个初始来源基态都适用的共同移心矩估计。令
+
+$$
+Y_i=S_n-\mathbb E_iS_n,
+\qquad
+X=S_n-b_n,
+\qquad
+c_i=\mathbb E_iS_n-b_n=(i-\tfrac12)h_n.
+\tag{24.5}
+$$
+
+（5.7）的条件取值区间宽度及 Hoeffding 指数估计给，对全部实数 $`t`$，
+
+$$
+\mathbb E_i e^{tY_i}\le e^{V_nt^2/8}.
+\tag{24.6}
+$$
+
+同时使用 $`t`$ 与 $`-t`$，并用 $`|c_i|=h_n/2`$ 及 $`\cosh u\le e^{u^2/2}`$，得到
+
+$$
+\begin{aligned}
+\mathbb E_i(e^{tX}+e^{-tX})
+&\le2e^{V_nt^2/8}\cosh(tc_i)\\
+&\le2e^{g_n^2t^2/8}.
+\end{aligned}
+\tag{24.7}
+$$
+
+这里没有声称 $`X`$ 在每个初态下均值为零。对 $`t>0`$，事件 $`|X|\ge u`$ 上有 $`e^{tX}+e^{-tX}\ge e^{tu}`$。优化 $`t`$ 给
+
+$$
+\Pr_i\{|S_n-b_n|\ge u\}
+\le2e^{-2u^2/g_n^2}.
+\tag{24.8}
+$$
+
+由尾积分公式，对每个整数 $`k\ge1`$，
+
+$$
+\begin{aligned}
+\mathbb E_i|S_n-b_n|^{2k}
+&=2k\int_0^\infty u^{2k-1}
+\Pr_i\{|S_n-b_n|\ge u\}\,du\\
+&\le2k!\left(\frac{g_n^2}{2}\right)^k.
+\end{aligned}
+\tag{24.9}
+$$
+
+**每个参考相位的导数支撑。** 在档案 $`H_n`$ 上定义自伴总荷算子
+
+$$
+\widehat Q_n|w\rangle
+=\left(\sum_{t=1}^nw_t\right)|w\rangle.
+\tag{24.10}
+$$
+
+它在整个计算基上定义；实际来源只占其中的合法词。对参考相位 $`\varphi`$，令 $`S_n(\varphi)`$ 为定理3.2中的四维档案支撑，定义
+
+$$
+S_{n,k}(\varphi)
+=\sum_{r=0}^{k-1}
+(\widehat Q_n-b_nI)^rS_n(\varphi).
+\tag{24.11}
+$$
+
+每个线性像的维数至多四，故 $`\dim S_{n,k}(\varphi)\le4k`$。这些子空间由已知来源、参考相位及终端编号确定。
+
+对实提升差 $`t=\vartheta-\varphi`$，共同相位的实际作用给
+
+$$
+T_{\vartheta,n}
+=(e^{it\widehat Q_n}\otimes I_M)T_{\varphi,n}.
+\tag{24.12}
+$$
+
+以同一个标量 $`e^{ib_nt}`$ 定义近似算子
+
+$$
+A_{\varphi,k}(t)
+=e^{ib_nt}\sum_{r=0}^{k-1}\frac{(it)^r}{r!}
+[(\widehat Q_n-b_nI)^r\otimes I_M]T_{\varphi,n}.
+\tag{24.13}
+$$
+
+它的档案分量全部落在 $`S_{n,k}(\varphi)`$ 内，不要求近似算子本身等距。对实数 $`x`$，积分形式的 Taylor 余项给
+
+$$
+\left|e^{ix}-\sum_{r=0}^{k-1}\frac{(ix)^r}{r!}\right|
+\le\frac{|x|^k}{k!}.
+\tag{24.14}
+$$
+
+这是沿实轴对 $`e^{ix}`$ 的估计，不额外产生 $`e^{|x|}`$ 因子。逐档案词展开并使用（24.9），对两个输入基向量都有
+
+$$
+\|(T_{\vartheta,n}-A_{\varphi,k}(t))|i\rangle\|^2
+\le\frac{|t|^{2k}}{(k!)^2}
+\mathbb E_i|S_n-b_n|^{2k}
+\le2\frac{(g_n^2t^2/2)^k}{k!}.
+\tag{24.15}
+$$
+
+两个误差列仍处于不同档案首位扇区，因而正交。于是同一个算子界成立：
+
+$$
+(T_{\vartheta,n}-A_{\varphi,k}(t))^*
+(T_{\vartheta,n}-A_{\varphi,k}(t))
+\preceq2\frac{(g_n^2t^2/2)^k}{k!}I_M.
+\tag{24.16}
+$$
+
+特别地，张量任意参考后仍保留该界；没有分别替换两个来源输入的相位。
+
+**合并参考点并进行物理压缩。** 取取得 $`q=P(\Theta,h)`$ 的最大分离集。与第22节相同，极大性保证每个实际候选都与某个中心的距离小于 $`h`$。若 $`h>\pi`$，只需任取一个中心，圆周上全部点与它的测地距离均小于 $`h`$。对每个候选与相应中心，取实现测地距离的实提升差 $`t`$。
+
+令 $`P_0`$ 投影到全部 $`q`$ 个中心的 $`S_{n,k}(\varphi)`$ 之和，记其秩为 $`r`$，则 $`r\le4kq`$。由（24.13）与（24.16），
+
+$$
+T_{\vartheta,n}^*[(I-P_0)\otimes I_M]T_{\vartheta,n}
+\preceq d_*I_M,
+\qquad
+d_*:=2\frac{(g_n^2h^2/2)^k}{k!}.
+\tag{24.17}
+$$
+
+对这个子空间使用（18.12）的投影编码与同一空间内的失败重置。任意纯化输入的实际失败质量 $`d`$ 满足 $`d\le\min\{1,d_*\}`$；恢复态的目标重叠至少为 $`(1-d)^2`$。因此（18.14）给统一半迹误差
+
+$$
+\sqrt{1-(1-d)^2}\le\sqrt{2d}
+\le2\sqrt{\frac{(g_n^2h^2/2)^k}{k!}}.
+\tag{24.18}
+$$
+
+半迹距离本身至多为一，故得到（24.3）。对混态丢弃额外纯化参考即可。网点及通道均预先固定，候选依赖的临近点选择仅用于误差证明。再与全圆精确编码比较，得到（24.4）。证明完毕。
+
+**推论 24.2（固定涨落网的阶乘精度界）。** 定义
+
+$$
+K_\epsilon
+=\min\{k\in\mathbb N:k\ge1,\;2^kk!\ge4/\epsilon^2\}.
+\tag{24.19}
+$$
+
+则
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4K_\epsilon P(\Theta,n^{-1/2})\}.
+}
+\tag{24.20}
+$$
+
+而且当 $`\epsilon\downarrow0`$ 时，
+
+$$
+K_\epsilon\sim
+\frac{2\log(1/\epsilon)}{\log\log(1/\epsilon)}.
+\tag{24.21}
+$$
+
+证明。在定理24.1中取 $`h=n^{-1/2}`$，误差上界为 $`2/\sqrt{2^kk!}`$。（24.19）保证其不超过 $`\epsilon`$。最后使用 $`\log(k!)=k\log k-k+O(\log k)`$，对（24.19）的最小整数条件取对数即得（24.21）。证明完毕。
+
+**推论 24.3（随精度扩大的局部相位网）。** 令
+
+$$
+L_\epsilon
+=\left\lceil\frac{\log(4/\epsilon^2)}{\log8}\right\rceil,
+\qquad
+H_{n,\epsilon}
+=\sqrt{\frac{L_\epsilon}{4en}}.
+\tag{24.22}
+$$
+
+则对全部 $`n\ge4`$、$`0<\epsilon<1`$，
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\le\min\{2n-1,\;4L_\epsilon
+P(\Theta,H_{n,\epsilon})\}.
+}
+\tag{24.23}
+$$
+
+证明。由 $`k!\ge(k/e)^k`$，在定理24.1中取 $`h=\sqrt{k/(4en)}`$ 后，其误差至多
+
+$$
+2\sqrt{\frac{(k/(8e))^k}{k!}}
+\le2\cdot8^{-k/2}.
+\tag{24.24}
+$$
+
+取 $`k=L_\epsilon`$ 即满足目标误差。若 $`H_{n,\epsilon}>\pi`$，定理24.1仍适用；同时保留 $`2n-1`$ 的精确容量上限。证明完毕。
+
+若某个候选集满足定量小尺度估计
+
+$$
+P(\Theta,h)\le C h^{-s}
+\quad(0<h\le h_0),\qquad 0\le s\le1,
+\tag{24.25}
+$$
+
+则在 $`H_{n,\epsilon}\le h_0`$ 的范围内，（24.23）进一步给
+
+$$
+k_n^{(\epsilon)}(\Theta)
+\le\min\left\{2n-1,\;
+4C(4e)^{s/2}n^{s/2}L_\epsilon^{1-s/2}\right\}.
+\tag{24.26}
+$$
+
+所以误差趋零时有 $`O(n^{s/2}[\log(1/\epsilon)]^{1-s/2})`$ 的联合上界；这里只在明确的小尺度条件内使用该式。仅知道箱维数为 $`s`$，不能自动替代（24.25）的常数统一估计。
+
+对弧长为 $`\ell`$ 的候选弧，总有 $`P(I,h)\le1+\ell/h`$，所以（24.23）给
+
+$$
+k_n^{(\epsilon)}(I)
+\le\min\left\{2n-1,\;
+4L_\epsilon+8\ell\sqrt{enL_\epsilon}\right\}.
+\tag{24.27}
+$$
+
+它保留了弧长与精度的共同作用；若是单一已知相位，仍可直接使用四维精确编码。全圆还可以结合第5节的总荷窗口上界，其他候选集也可以同时使用第22节的网格上界与（24.20），取其中最小者。
+
+本节证明的是可实施的单终端精度上界，没有给出相同精度依赖的下界，也没有建立不同终端之间的共同在线更新。来源的共同移心矩、档案侧导数支撑和全参考误差转换构成这里的具体推导；一般 Taylor 近似、阶乘估计及 Hoeffding 工具作为既有前置使用。
 
 ## 追加锚（本行以下为增补区）
