@@ -324,3 +324,123 @@ Exact result: [four_level_query_hinge_lift.json](../../frontier/cover-geometry/f
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/four_level_query_hinge_lift.py
 
 Exit0, 84 named exact checks. They retain the all-height first moments and threshold4 low atoms, suffix constants, all four corner certificates and slope signs, recovery of Report569's old SD2 value, interior bilinearity diagnostics, the strict query and Haar gates, and all26 actual phases and private witnesses. The general source comparison and averaged-load arguments above establish the arbitrary-family quantifiers; finite diagnostics do not replace them. No new Lean verification is claimed.
+
+## Absence of the numerical modulus3 permits a through-exponent2 selector
+
+The existing clipping proof has a stronger arithmetic specialization when
+the actual numerical modulus3 is absent. This reuses its same-source
+third hinge and [Report578](578-pure-prime-density-query-tradeoff-and-scalar-clip-boundary.md)'s general clipping constants; it is not a new generic lemma or new Lean result.
+
+### Scope and conclusion
+
+Let P={3,5,7,11,13,17,19}, Q=P without 3. Take any finite actual family of distinct odd nonunit P-smooth numerical moduli with one globally fixed residue per original. Assume:
+
+1. There is no original of numerical modulus 3. All pure originals 3^e for e>=2 may occur, at arbitrary finite heights and arbitrary fixed phases.
+2. At each nonunit Q-smooth cofactor d, the original projections for 3^e d at e=0,1,2 occupy at most two phases. Fix these selected phases and take ONE actual Report569 PA law nu.
+
+No restriction is imposed on later projected multiplicity, residual load, positive fibre survival, or maximum original height. Then there is one supported probability mu with
+
+    R_P(mu) <= (21 B+9)/(12-K3)
+             = 13038167015021694163818497/1131266729674037302713540
+             = 11.525281061503954... < 566/49,
+
+where B and K3 are the unchanged constants above and
+alpha_min=7575003978548161/73724315753088000 is the same
+[Report569](569-complete-suffix-debits-close-the-six-prime-query-target.md) density constant. The Q marginal is allowed to change after actual deletion/clipping; it is not claimed preserved.
+
+Arbitrary further distinct originals supported on P union {23,29} and touching 23 or 29, with all original heights retained, leave actual Haar survivor mass at least
+
+    1426785259442099308757287/111017121067685733201100800000
+      = 0.000012851938923656707... > 1/80000.
+
+No support prime outside those nine is included.
+
+### Same-source proof and complete query heights
+
+Let s3 be the Haar mass of the complete actual pure-3 survivor. Numerical uniqueness and absence of modulus 3 give
+
+    s3 >= 1-sum_(e>=2) 3^(-e) = 5/6.
+
+Let u be normalized Haar on precisely that survivor. Then u<=6 H3/5 and
+
+    R_3(u) <= (6/5)sum_(a>=1)3^(-a) = 3/5.
+
+For the complete original mask chi let c(x)=integral chi(t,x)du(t). Original projections at exponents 0,1,2 vanish on the fixed selected source. At each e>=3, let L_e be the count of actual residual projected originals. Each L_e is ONE partial one-phase Q layout, because each numerical pair (e,d) occurs at most once. Set
+
+    Y=sum_(e>=3)18*3^(-e) L_e.
+
+Its nonnegative height weights sum to one. Each layout uses fixed original phases under the SAME nu. Therefore Report574's all-layout third hinge gives
+
+    E(Y-3)_+ <= K3,
+    1-c <= (6/5)sum_(e>=3)3^(-e)L_e = Y/15.
+
+Choose kappa=4/5 and define exactly the existing clipped submeasure
+
+    eta(dt,dx)=chi(t,x)u(dt)nu(dx)/max(c(x),kappa).
+
+Its Q marginal is beta nu, beta=c/max(c,kappa). In particular 0<=beta<=1. The pointwise inequality
+
+    1-beta = (kappa-c)_+/kappa <= (Y-3)_+/12
+
+gives
+
+    s=eta(1) >= s_min=1-K3/12
+       =18854445494567288378559/22861059007099207971560 >0.
+
+The nonunit Q queries cost at most B since beta nu<=nu. For every positive ternary query exponent a and every Q-smooth d>=1,
+
+    q_(3^a d)(eta) <= (1/kappa) max_r u([r]_(3^a)) q_d(nu).
+
+The complete positive ternary sum, including d=1 once at each a, therefore costs at most (3/4)(1+B). Thus
+
+    R_P(eta) <= R_raw=(7B+3)/4
+        =3283346012344924241707/345420181421796141600.
+
+Normalize ONCE by s to obtain the claimed bound. All query sums may first be taken over finite inventories and then exhausted. No height cutoff or reselected source occurs.
+
+The raw density is
+
+    eta <= (6/5)(9/alpha_min)/(4/5) H_P
+         =27 H_P/(2 alpha_min).
+
+Report569 SD15--SD16, applied to this same raw law, leaves raw mass at least (566s-49R_P(eta))/567 after the actual 23/29 continuation. Its additional density factor is 616/567. Hence
+
+    H(full survivor) >= alpha_min(566s-49R_P(eta))/8316
+                     >= alpha_min(566s_min-49R_raw)/8316.
+
+This is the exact Haar bound displayed above.
+
+### An actual third-phase and zero-fibre control
+
+Use pure original 1 mod9 (and no modulus3). Use originals 0 mod5 and the CRT class t=0 mod3, x=1 mod5 at modulus15. List increasingly all 24 residues t_j mod27 satisfying t_j mod9!=1. For j=1,...,24 add one original at numerical modulus 27*5^j, with ternary phase t_j and Q phase 2 mod5^j. These are 27 distinct original numerical labels.
+
+At d=5 the projections through e=2 are {0,1}, while through e=3 they are {0,1,2}. Thus the earlier through-e3/e4 two-phase assumptions fail. At all other d the through-e2 selector is empty. The actual selected PA law is Haar in the other Q coordinates and uniform on first 5-roots {2,3,4}, with Haar higher digits. Its later PA rows have no selected deletions or active caps.
+
+Let N=sum_(j=1)^24 1_[2 mod5^j]. Under this law,
+
+    P(N>=j)=1/(3*5^(j-1)), j=1,...,24.
+
+The 24 ternary cells are disjoint and exhaust the actual pure-3 survivor, so
+
+    c=1-N/24,    Y=(2/3)N.
+
+On the positive-source event [2 mod5^24], c=0. The clipping formula remains well-defined and discards that fibre. The example is not claimed to be a newly proved noncovering family; its role is to certify actual third-phase and zero-fibre behavior within the new uniform slice.
+
+Private original witnesses exist: for each deep class j take ternary t_j and quinary coordinate 2+5^j (j<24), or 2 when j=24. Earlier deep ternary classes differ; later Q conditions fail. The three shallow/pure originals have witnesses (t,x5)=(1,3),(2,0),(0,1), respectively.
+
+
+The [exact producer](../../frontier/cover-geometry/no_mod3_through2.py) and
+[data](../../frontier/cover-geometry/no_mod3_through2.json) retain the
+source constants, the complete geometric tails, the query and Haar gates,
+and the actual27-original control including its private witnesses.
+All266 named checks pass, including all25 actual valuation atoms,
+every original CRT residue and all27 private witnesses.
+Finite controls do not replace the all-height proof above. Run:
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/no_mod3_through2.py
+
+This specialization imposes no maximum on original heights and no
+residual-load condition. It retains the through-exponent2 selected-phase
+hypothesis and the stated nine-prime support. Families containing an
+actual modulus3 original remain outside this specialization; no
+unrestricted Erdős #7 conclusion or external novelty is claimed.
