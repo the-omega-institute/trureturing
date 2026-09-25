@@ -5,12 +5,10 @@
    anchors: []
    utility: none
    digest: Literal power substitution realizes actual positive pairs at controlled degree. -/
-
 import D5.S1.Words.Complexity.PositivePairs.Span.FullFamilyBracketSpan
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
 
 open D5.S1.Words.Complexity.LyndonBrackets.LyndonBracketAlgebra
@@ -18,7 +16,6 @@ open D5.S1.Words.Complexity.PositivePairs.Coefficients.CutoffCoefficientAlgebra
 open D5.S1.Words.Complexity.PositivePairs.Coefficients.MagnusWordCoefficients
 open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairFiltration
 open D5.S1.Words.Complexity.PositivePairs.Coefficients.PositivePairLeadingCoefficients
-
 variable {A : Type*}
 
 /-- Replace each letter of a word by `m` consecutive literal copies. -/
@@ -400,5 +397,4 @@ theorem literalPowerSubstitution_actual_positivePair
     rw [if_pos hpattern] at hcoeff
     rw [hmap, coeffDifference, coeffDifference] at hcoeff
     exact hcoeff
-
 end D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
