@@ -93,6 +93,76 @@ These are density-based upper bounds, not optimum claims. The new marginal comes
 
 Every original has a private witness. For its cofactor d_(a,b,c) and Q color t in{0,1,2,3}, choose x_Q=t+d_(a,b,c) modulo K. Its valuations at5,7,11 truncated at12 are(a,b,c). Any same-color matching cofactor has exponents componentwise at most(a,b,c) with the same total12, hence equals that cofactor. Different colors are separated modulo13. Choose the required ternary residue by CRT. This witnesses only the chosen original, including when several depth4 originals share a ternary residue.
 
+## Six-coordinate selectors: finite bounds and the direct-lift limitation
+
+### Six-coordinate model
+
+For six fixed coordinates, let X_N={a in Z_{>=0}^6:sum a_i=N}. A box slice is S_N(U)={a in X_N:a_i<=U_i}. A three-color selector chooses one of three fixed global tail phases at each numerical cofactor. One mandatory shallow phase occupies the other selected slot. A slice missing color j models the potential active cofactors at a point whose reference residue is global phase j.
+
+A fixed nonunit reference divisor D may share primes with the six coordinates. For d_a=D product q_i^(a_i), the slice bounds are v_(q_i)(x-r_j)-v_(q_i)(D). Pairwise distinct global phases modulo D still ensure at most one possible j at a given x. Coprimality of D to all six primes is not required for this valuation statement.
+
+### A uniform bound must be at least four
+
+At N=1 the simplex consists of the six unit vectors. In ANY three-coloring, the least frequent color occurs at most twice. Set U_i=1 exactly at coordinates whose unit vector is not of that color and U_i=0 at the others. The resulting box slice has at least four points and misses that color.
+
+More generally d directions force a missing-color slice of at least d-floor(d/3) at N=1. In particular every d>=4 rules out the unchanged missing-color<=2 property. This quantifies over arbitrary colorings, including choices depending on N; it is not limited to linear colorings.
+
+This is a bound on a uniform-in-N selector certificate. It does not assert that every large-N coloring has the same lower bound, nor that any actual arithmetic survivor law has query norm exceeding a target.
+
+### A finite uniform bound exists
+
+Color a in X_N by grouping the residue of sum_(i=0)^5 i*a_i modulo7 into {0,1}, {2,3}, {4,5,6}. This gives one explicit three-coloring for every N.
+
+A unit transfer between any two different coordinates changes that residue by a nonzero value modulo7. Six consecutive points on such a root-direction line have six distinct residues and omit only one residue. Each color group has at least two residues; therefore all three colors occur on every such six-point line.
+
+Let T=sum U_i-N. If a nonempty box slice has N>=5, T>=5 and two bounds U_i,U_j>=5, it contains a six-point root-direction line. Indeed choose the sum s of these two coordinates in the nonempty integer interval
+
+    max(5,N-sum_(k!=i,j)U_k) <= s <= min(U_i+U_j-5,N).
+
+The other coordinates can realize N-s because their integer box realizes every sum between zero and their total upper bound. At this fixed other-coordinate assignment, the permitted interval for coordinate i has length at least5.
+
+Consequently a slice missing any color has either N<5, T<5, or at most one upper bound>=5. In the first two cases its cardinality is at most binomial(9,5)=126, using a or the deficits U-a. In the last case choose five coordinates with bounds<=4; their values determine the sixth coordinate, so the cardinality is at most5^5=3125.
+
+Thus this coloring has a uniform missing-color bound3125. This bounds the best possible uniform missing-color constant between4 and3125. Its sharp value is not determined here; the upper bound is a combinatorial result and is not claimed to pass the arithmetic continuation gate.
+
+### The retained incidence consumer cannot use the six-coordinate bound
+
+With the existing six-prime B and the complete pure-source caps R3<=1, u<=2 Haar, the h3 direct lift certificate, for 0<=M<27 so that the fibre-reserve denominator is positive, is
+
+    C(M)=B+(1+B)/(1-M/27),
+    B=432040125182653876501/86355045355449035400.
+
+It beats566/49 exactly when
+
+    M<62251906883410927926954/27706989537234114087851
+      =2.2467943260220866... .
+
+Only integer bounds M<=2 qualify. The six-coordinate lower bound M>=4 is already outside this range:
+
+    C(3)=11.756518543406196...,
+    C(4)=12.05014684747437... .
+
+For comparison, Report574 already handles the whole through-e4 two-phase class with no incidence bound and arbitrary later phases. A larger incidence bound at that depth does not enlarge that positive class.
+
+Even arbitrary reweighting of the pure source does not rescue this SAME M4,complete-tail-cap direct-lift envelope uniformly. Take the pure ternary comb with originals3^(e-1) modulo3^e for e=1,...,4. By [Report578](578-pure-prime-density-query-tradeoff-and-scalar-clip-boundary.md), every supported probability has A=R3>=31/32. There are41 surviving depth4 cells, hence M4(u)>=1/41. Descendants of a maximal depth4 cell give
+
+    theta=sum_(e>=4)M_e(u)>=(3/2)M4(u)>=3/82.
+
+The direct certificate retaining only incidence M=4 and these complete caps is
+
+    B+A(1+B)/(1-4theta),
+
+when its denominator is positive. It increases in A and theta. Even the relaxation that simultaneously substitutes their separate minima is at least
+
+    380921733986167047569097/32239216932700973216000
+      =11.815477242556392... >566/49.
+
+This makes a finite-input statement over ALL pure sources, rather than merely checking normalized Haar. It does not assume that the two lower minima are simultaneously attainable.
+
+The obstruction is still limited to that certificate. A phase-weighted selector can retain which tail phases actually carry the ternary mass; actual fibre unions can have substantial overlap; the actual Q query cost may be smaller than B; and a joint source can retain more than one scalar incidence bound. The finite geometric lower bound does not force these discarded quantities to attain their worst bounds simultaneously. No impossibility claim for such refinements or for actual noncoverage follows.
+
+The [exact diagnostics](../../frontier/cover-geometry/six_direction_selector_boundary.py) and [data](../../frontier/cover-geometry/six_direction_selector_boundary.json) check all729 colorings at N=1, all42 modular line progressions, and the rational gate inequalities in6 named checks. The general box argument and arbitrary-source bounds above supply the quantifiers beyond those finite checks.
+
 ## Verification
 
 Program: [three_coordinate_periodic_selector.py](../../frontier/cover-geometry/three_coordinate_periodic_selector.py).

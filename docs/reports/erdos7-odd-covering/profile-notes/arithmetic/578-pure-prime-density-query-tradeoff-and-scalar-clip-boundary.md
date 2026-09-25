@@ -281,6 +281,13 @@ changing the Q-source may improve the estimate. PT14 is a rigorous
 boundary of this source-only scalar envelope, not of all clipped laws
 and not of the through-height-three noncoverage class.
 
+[Report579](579-two-root-convex-clipping-has-an-exact-certificate-boundary.md)
+allows the two legal roots to have independent clipping thresholds and
+weights while keeping one actual joint law. It determines the exact
+minimum of that construction's complete two-hinge certificate. The two
+certificate minima concern different bounds and do not order the best
+actual query norms of the two constructions.
+
 ## Verification
 
 [pure_prime_density_query_tradeoff.py](../../frontier/cover-geometry/pure_prime_density_query_tradeoff.py) checks actual comb partitions,
