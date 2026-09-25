@@ -43342,3 +43342,340 @@ $$
 因此，第197节的三结果测量—制备构造已经在二次首项上达到任意固定处理器类的最优值。这不主张它在每个正半径处取得最小值，也不主张各处理器类的高阶项相同。全部推导保留开邻域精确性、固定程序维数与同一处理器内的联合矩阵正性；Gram 分解与 Schur 补只作为该具体优化的标准工具。固定处理器与程序输入的标准框架可参见 Hillery、Ziman、Bužek，*Implementation of quantum maps by programmable quantum processors*，Physical Review A 66, 042302（2002），DOI:10.1103/PhysRevA.66.042302，第II节。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 200. 二维最优程序的满秩刚性与最大精确续接区间
+
+**定义 200.1（二维名义最优程序与续接域）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$，令 $\mathcal T_u=\mathcal S_{F(a,u)}$、$I_r(u)=1/(1-u^2)$。本节的程序由一个固定 CPTP 处理器 $\mathcal G:M_6\to M_3$、一个包含 $t$ 的连通开区间 $U\subset J_a$ 和其上的 $C^1$ 二维密度矩阵曲线组成，满足
+$$
+\mathcal G(\omega\otimes\rho_u)=\mathcal T_u(\omega)
+\quad(u\in U),\qquad
+I_Q(\rho_t)=I_r(t).
+\tag{200.1}
+$$
+通道等式针对全部信号输入，不只针对一个选定探针；任何点都不预先规定程序秩。这里 $I_Q$ 取点态 SLD 值 $\operatorname{Tr}(\rho_tL^2)$，其中 $\rho_t'= (L\rho_t+\rho_tL)/2$；不将跨秩的度量极限代作该点值。记
+$$
+h_0=\frac{1+t}{2},\qquad
+A_0=\frac{at}{h_0},\qquad
+B_0=2a\sqrt{\frac{1-t}{1+t}},\qquad
+\lambda_*:=\frac{B_0}{\sqrt{1-A_0^2}}.
+\tag{200.2}
+$$
+由 $h_0>a$ 及 $A_0^2+B_0^2=a^2/h_0^2<1$，可知 $0<\lambda_*<1$。
+
+**定理 200.2（名义等号强制全区间仿射正规形）。** 每个定义200.1的程序，经过一个不依赖 $u$ 的程序酉坐标变换，都在整个 $U$ 上具有形式
+$$
+\rho_u=\frac12\left(I+x_\lambda(u)X+uZ\right),\qquad
+x_\lambda(u)=\frac{\lambda(1-tu)}{\sqrt{1-t^2}},
+\qquad \lambda_*\le\lambda<1.
+\tag{200.3}
+$$
+该程序在全部 $U$ 上满秩。反过来，对每个 $\lambda\in[\lambda_*,1)$，存在固定 CPTP 处理器使（200.3）在
+$$
+U_\lambda=J_a\cap\{u:q_\lambda(u)>0\},\qquad
+q_\lambda(u)=1-u^2-\frac{\lambda^2}{1-t^2}(1-tu)^2
+\tag{200.4}
+$$
+上满足定义200.1。每个原程序的精确开区间都包含于其对应的 $U_\lambda$。
+
+证明。 先取任意程序的 Stinespring 等距表示 $V$。对每个 $u\in U$，输入 $|i\rangle\langle i|\otimes\rho_u$ 的信号输出为纯态 $|i\rangle\langle i|$。分解 $\rho_u$ 在其支持上的正权本征投影，利用输出在 $|i\rangle$ 正交补上的概率为零及各分量非负，可知 $V$ 把 $|i\rangle\otimes\operatorname{supp}\rho_u$ 映入 $|i\rangle\otimes\mathcal E$。所有程序支持的线性包必须是整个二维空间；否则所有密度矩阵都为同一个一维投影，诱导通道恒定，与目标随 $u$ 变化矛盾。故由线性性，
+$$
+V=\sum_{i=0}^2|i\rangle\langle i|\otimes W_i,
+\qquad W_i^\dagger W_i=I_2.
+\tag{200.5}
+$$
+这是在整个联合输入空间上的恒等式，不只沿已给程序曲线成立。
+
+以均衡 $02$ 信号输入并读取 $|+\rangle,|-\rangle$，在程序空间得到 POVM
+$$
+M_\pm=\frac12(I\pm\operatorname{Re}A),\qquad
+A=W_2^\dagger W_0,
+\qquad p_\pm(u)=\frac{1\pm u}{2}.
+\tag{200.6}
+$$
+这项读出的经典信息量为 $I_r$，故它在 $t$ 饱和 SLD 测量信息界。设 $L$ 为 $\rho_t$ 的 SLD，$s_+=1/(1+t)$、$s_-=-1/(1-t)$。支持敏感的测量等号条件给出
+$$
+\sqrt{M_\pm}L\sqrt{\rho_t}
+=s_\pm\sqrt{M_\pm}\sqrt{\rho_t}.
+\tag{200.7}
+$$
+此标准条件来自逐效应 Hilbert–Schmidt Cauchy–Schwarz 等号；参见 Braunstein、Caves，*Statistical distance and the geometry of quantum states*，Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（27）。
+
+两个效应非零，而 $s_+\ne s_-$。若 $\rho_t$ 满秩，则可在（200.7）右消去 $\sqrt{\rho_t}$，两个效应分别支持于 $L$ 的两个不同一维本征空间。若 $\rho_t=|\psi\rangle\langle\psi|$ 为纯态，则该式变成 $\sqrt{M_\pm}L\psi=s_\pm\sqrt{M_\pm}\psi$。任一效应若可逆便推出 $L\psi=s_\pm\psi$，但 $\langle\psi,L\psi\rangle=\operatorname{Tr}\rho_t'=0$，与 $s_\pm\ne0$ 矛盾。所以此时两个效应也都为秩一。两种情形下，两个秩一正效应之和为单位算子，必为互补正交投影。
+
+纯态处的 SLD 使用是点态的：在以 $\psi$ 为第一基向量的坐标中，双侧 $C^1$ 正性使核上的对角导数为零，迹为零又使另一个对角导数为零；余下的非对角导数有 Hermitian SLD 解。因此上述论证没有从满秩公式跨秩取极限。选定投影测量的固定程序坐标后，
+$$
+M_\pm=\frac12(I\pm Z),\qquad
+\operatorname{Re}A=Z.
+\tag{200.8}
+$$
+压缩算子 $A$ 在 $Z$ 的两个本征向量上的实期望值已分别达到 $1,-1$，所以对应的范数与 Cauchy–Schwarz 界均饱和，得 $A=Z$。再由等距性得到 $W_2=W_0Z$。这两条恒等式属于固定处理器，因而适用于全部 $U$。
+
+令 $h(u)=(1+u)/2$、$\ell(u)=(1-u)/2$。由于（200.6）的测量已为 $Z$ 投影，程序可写为
+$$
+\rho_u=\begin{pmatrix}h(u)&\overline{z(u)}\\z(u)&\ell(u)\end{pmatrix}.
+\tag{200.9}
+$$
+记 $K=W_0^\dagger W_1=\left(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix}\right)$，则 $\|K\|\le1$。两个固定的实 Schur 系数分别给出 $\operatorname{Tr}(\rho_uK)=a$ 和 $\operatorname{Tr}(\rho_uZK)=a$；其中第一式可从实际 $01$ 系数取复共轭取得。相加相减，得到整个 $U$ 上的两个复数恒等式
+$$
+\alpha h(u)+\beta z(u)=a,\qquad
+\gamma\overline{z(u)}+\delta\ell(u)=0.
+\tag{200.10}
+$$
+若 $\beta=0$，第一式要求固定 $\alpha$ 与非恒定 $h$ 的乘积恒为非零常数 $a$，不可能。因此 $\beta\ne0$，并且 $z(u)=(a-\alpha h(u))/\beta$ 在整个 $U$ 上为仿射函数。
+
+式（200.9）及 $z$ 的仿射性使整个 Bloch 曲线成为非恒定仿射线，其 $Z$ 坐标的导数为一。这样的线不能在 $U$ 的内点接触单位球面：若 $|r(u_0)|=1$，对充分小的 $s>0$，两点平方范数的平均为 $1+s^2|r'|^2>1$，而两点都须为合法态。故程序在整个 $U$ 上满秩，名义点为纯态的情形已经排除。
+
+现在可在（200.7）消去 $\sqrt{\rho_t}$，得到唯一的 $L=\operatorname{diag}(1/(1+t),-1/(1-t))$。将它代入 SLD 方程 $\rho_t'=(L\rho_t+\rho_tL)/2$ 的 $10$ 元，得到
+$$
+z'(t)=-\frac{t}{1-t^2}z(t).
+\tag{200.11}
+$$
+仿射性于是强制
+$$
+z(u)=z(t)\frac{1-tu}{1-t^2}\qquad(u\in U).
+\tag{200.12}
+$$
+$z(t)$ 不能为零，否则 $z$ 恒为零，再与（200.10）第一式矛盾。以一个固定对角程序酉变换令 $z(t)>0$，并置 $\lambda=2z(t)/\sqrt{1-t^2}$。名义满秩性给出 $0<\lambda<1$，而（200.12）恰为（200.3）。
+
+将该表达代回（200.10），逐项比较仿射系数，得到
+$$
+K=\begin{pmatrix}A_0&B_0/\lambda\\0&0\end{pmatrix}.
+\tag{200.13}
+$$
+下行消失是因为 $1-tu$ 与 $1-u$ 线性无关：两者若成比例便要求 $t=1$，与 $t\in J_a$ 矛盾。因此压缩条件给出
+$$
+A_0^2+\frac{B_0^2}{\lambda^2}\le1,
+\qquad \lambda\ge\lambda_*.
+\tag{200.14}
+$$
+至此没有假定处理器的 Bloch 映射单射；程序的全区间仿射性由两个固定的通道系数直接推出。
+
+式（200.3）的正性等价于 $q_\lambda(u)\ge0$。这个严格凹二次式满足 $q_\lambda(t)=(1-\lambda^2)(1-t^2)>0$，所以有两个不同实根，并只在两根之间为正。一个由合法态组成且包含 $t$ 的开区间不能包含任一根，否则根外侧也须属于该开区间而使 $q_\lambda<0$。故 $q_\lambda>0$ 在全部 $U$ 成立，证明满秩性与域的包含关系。
+
+反向构造取（200.13）的压缩算子，使用
+$$
+W_0=\begin{pmatrix}I_2\\0\end{pmatrix},\qquad
+W_2=\begin{pmatrix}Z\\0\end{pmatrix},\qquad
+W_1=\begin{pmatrix}K\\\sqrt{I_2-K^\dagger K}\end{pmatrix}.
+\tag{200.15}
+$$
+即使 $\lambda=\lambda_*$ 时 $\|K\|=1$，根号仍正半定，三个 $W_i$ 仍为等距映射。以信号基控制它们，再取环境偏迹，便得到固定 CPTP 处理器。第191.2节的计算对这里的闭端点参数同样成立：$ZK=K$，而 $A_0h(u)+(B_0/\lambda)x_\lambda(u)/2=a$，故三个目标 Schur 系数分别为 $a,a,u$。由第191.2节的满秩信息公式，
+$$
+I_Q(\rho_u)-I_r(u)
+=\frac{\lambda^2(u-t)^2}
+{(1-t^2)(1-u^2)q_\lambda(u)}.
+\tag{200.16}
+$$
+它在 $t$ 为零；（200.4）上程序解析且满秩，完成反向构造。证毕。
+
+**定理 200.3（全部最优二维程序共享的最大续接域）。** 记
+$$
+b_\pm^*(a,t)=
+\frac{a^2t\pm\sqrt{(h_0^2-a^2)(h_0^2-a^2t^2)}}{h_0^2}.
+\tag{200.17}
+$$
+定义200.1中所有允许精确区间均包含于
+$$
+U_*(a,t)=(b_-^*,b_+^*)\cap J_a,
+\tag{200.18}
+$$
+且存在一个程序以整个 $U_*$ 为精确区间。因此 $U_*$ 是这个程序类按包含关系的最大续接域。它也可写为
+$$
+U_*(a,t)=\left\{u\in J_a:
+ h_0^2(1-u^2)>a^2(1+t^2-2tu)\right\}.
+\tag{200.19}
+$$
+有 $-1<b_-^*<t<b_+^*<1$。对任意满足 $[t-R,t+R]\subset J_a$ 的 $R>0$，存在定义200.1的程序在包含该闭区间的开域上精确，当且仅当
+$$
+R<R_*(a,t):=
+\frac{\sqrt{(h_0^2-a^2)(h_0^2-a^2t^2)}
+-|t|(h_0^2-a^2)}{h_0^2}.
+\tag{200.20}
+$$
+
+证明。 对固定 $u\in J_a$，式（200.4）随正参数 $\lambda$ 严格递减，因为 $|tu|<1$。故在 $\lambda\ge\lambda_*$ 的全部正规形中，$\lambda=\lambda_*$ 的正性区间包含其他全部正性区间。定理200.2的反向构造允许这个端点，遂同时给出普遍上界及其达到。
+
+将（200.2）化简得
+$$
+\frac{\lambda_*^2}{1-t^2}
+=\frac{a^2}{h_0^2-a^2t^2}.
+\tag{200.21}
+$$
+分母严格为正。于是
+$$
+(h_0^2-a^2t^2)q_{\lambda_*}(u)
+=h_0^2(1-u^2)-a^2(1+t^2-2tu).
+\tag{200.22}
+$$
+右边为严格凹二次式，解其两个根即得（200.17）—（200.19）。它在 $u=t$ 为正，而在 $u=\pm1$ 分别为 $-a^2(1\mp t)^2<0$，故两根严格位于 $-1,t,1$ 的相应间隙。
+
+一个包含闭区间 $[t-R,t+R]$ 的允许开域存在，等价于两个端点严格位于 $(b_-^*,b_+^*)$ 内；与 $J_a$ 的严格包含已由假设保证。因此条件为
+$$
+R<\min\{t-b_-^*,b_+^*-t\}.
+\tag{200.23}
+$$
+两根中点为 $a^2t/h_0^2$，半宽为（200.17）中的根号除以 $h_0^2$，将名义点到中点的距离减去便得（200.20）。等号 $R=R_*$ 不允许，因为至少一个端点落在物理区间的根上，无法再有包含它的合法开延拓。
+
+这里控制的是点态 SLD 名义等号的精确续接域；式（200.16）同时显示，在域内离开名义点便有正的信息额外成本。结论不要求一个程序在整个 $U_*$ 处处达到 $I_r$，也不从超过该半径时的不达到性推出严格为正的最优成本差距。定理200.2还排除了第191.4节单独保留的名义纯态、邻域变秩的等号情形；这里无需预设恒秩。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 201. 混态二维精确成本的半径阈值：达到、临界不达到与正差距
+
+**定义 201.1（允许混态的固定半径成本）。** 固定 $0<a<1$、$t\in J_a=(2a-1,1)$ 及
+$$
+0<R<\min\{t-(2a-1),1-t\}.
+\tag{201.1}
+$$
+令 $\mathfrak M_2(a,t;R)$ 为全部二维程序的名义点态 SLD 信息量下确界，其中程序允许为混态、允许秩变化，要求一个固定 CPTP 处理器在某个包含 $[t-R,t+R]$ 的连通开区间 $U\subset J_a$ 上，对全部信号输入精确产生 $\mathcal T_u$，程序密度矩阵曲线为 $C^1$。这里的点态信息量采用定义200.1的 SLD 约定。与纯程序成本的关系为
+$$
+I_r(t)\le\mathfrak M_2(a,t;R)\le\mathfrak P_2(a,t;R)<\infty.
+\tag{201.2}
+$$
+第一个不等式来自均衡 $02$ 读出的测量信息界，第二个来自程序类的包含关系；有限性由第184.3节的两个固定端点通道程序给出。
+
+**定理 201.2（全部混态程序的仿射替代与有限优化）。** 每个定义201.1的程序均可在同一处理器、同一完整 $U$ 上替换为一个解析满秩仿射程序 $\sigma_u$，在每个 $u\in U$ 都满足
+$$
+\mathcal G(\omega\otimes\sigma_u)=\mathcal T_u(\omega),\qquad
+I_Q(\sigma_u)\le I_Q(\rho_u).
+\tag{201.3}
+$$
+令 $\Phi_{\mathcal G}(b)$ 表示 Bloch 程序 $(I+b\cdot\sigma)/2$ 诱导的信号映射，$\mathcal L_{\mathcal G}$ 表示它对 $b$ 的实线性部分。令 $E_{02}=E_{20}=1$，其他 $E$ 元素为零。以 $\mathscr A_R$ 表示满足
+$$
+\begin{gathered}
+\mathcal G:M_6\to M_3\ \text{为 CPTP},\qquad b,v\in\mathbb R^3,\\
+\Phi_{\mathcal G}(b)=\mathcal T_t,\qquad
+\mathcal L_{\mathcal G}(v)=\mathcal S_E,\\
+|b-Rv|<1,\qquad |b+Rv|<1
+\end{gathered}
+\tag{201.4}
+$$
+的有限变量集合，则
+$$
+\mathfrak M_2(a,t;R)
+=\inf_{\mathscr A_R}\left[|v|^2+
+\frac{(b\cdot v)^2}{1-|b|^2}\right].
+\tag{201.5}
+$$
+这不宣称下确界在严格端点域内达到。
+
+证明。 对给定程序，令 $K=\ker\mathcal L_{\mathcal G}$，并正交分解其 Bloch 向量
+$$
+r(u)=x(u)+y(u),\qquad x(u)\in K^\perp,\quad y(u)\in K.
+\tag{201.6}
+$$
+目标通道仿射，而 $\mathcal L_{\mathcal G}|_{K^\perp}$ 单射，所以 $x(u)=b+(u-t)v$，其中 $v\ne0$。它的范数在 $U$ 上处处严格小于一：投影先给出 $|x|\le1$，若某内点达到一，非恒定仿射线两侧的平方范数平均便严格大于一，矛盾。因此 $\sigma_u=(I+x(u)\cdot\sigma)/2$ 是整个 $U$ 上的解析满秩曲线，且 $y$ 不可见保证它产生同一目标通道。
+
+信息量比较可直接处理秩边界。在原态满秩的一个点，记
+$$
+A=1-|x|^2>0,\qquad q=A-|y|^2>0,\qquad
+\alpha=x\cdot v,\qquad w=y'+\frac{\alpha}{A}y.
+\tag{201.7}
+$$
+代入二维满秩 SLD 公式并完成平方，得到精确恒等式
+$$
+I_Q(\rho_u)-I_Q(\sigma_u)
+=|w|^2+\frac{(y\cdot w)^2}{q}\ge0,
+\qquad I_Q(\sigma_u)=|v|^2+\frac{\alpha^2}{A}.
+\tag{201.8}
+$$
+若原态在该点为纯态，双侧 $C^1$ 正性给出 $r\cdot r'=0$，点态 SLD 公式给出 $I_Q(\rho_u)=|r'|^2$。此时 $|y|^2=A>0$，且 $y\cdot y'=-\alpha$，所以 Cauchy–Schwarz 给出
+$$
+I_Q(\rho_u)=|v|^2+|y'|^2
+\ge |v|^2+\frac{\alpha^2}{A}=I_Q(\sigma_u).
+\tag{201.9}
+$$
+这也覆盖原曲线只在孤立点为纯态的情形。若 $K=\{0\}$，原曲线本来就是上述满秩仿射曲线。这里构造的是另一种状态准备；未把 Bloch 正交投影宣称为 CPTP 操作。所用 SLD 与测量信息框架见 Braunstein、Caves，Physical Review Letters **72**, 3439–3443（1994），DOI:10.1103/PhysRevLett.72.3439，式（24）—（26）；秩边界使用点态表达，不从满秩分母公式取极限。
+
+仿射替代在两个闭区间端点仍满秩，所以每个原程序给出（201.4）的一个可行元，且（201.5）的目标值不超过原名义成本。反过来，对任意可行元，平方范数的凸性使 $|b+sv|<1$ 在 $|s|\le R$ 成立。两个端点均严格，故可取包含该闭区间的稍大开域并保持 $t+s\in J_a$。在此域准备 Bloch 向量 $b+sv$，两个通道线性约束给出对所有信号输入的精确 $\mathcal T_{t+s}$，其名义成本恰为（201.5）。两向比较完成证明。
+
+**定理 201.3（精确半径的三个成本区间）。** 以定理200.3的 $b_+^*(a,t)$ 定义
+$$
+R_0(a,t)=b_+^*(a,t)-t>0.
+\tag{201.10}
+$$
+对定义201.1的每个允许半径，成立
+$$
+\begin{array}{c|c|c}
+\text{半径条件}&\mathfrak M_2(a,t;R)&\text{名义下界的达到性}\\ \hline
+R<R_0&I_r(t)&\text{由一个实际程序达到}\\
+R=R_0&I_r(t)&\text{无实际程序达到}\\
+R>R_0&>I_r(t)&\text{与下界有严格正差距}
+\end{array}
+\tag{201.11}
+$$
+每一行均以该半径同时满足（201.1）为条件，不要求临界半径对所有 $a,t$ 都属于允许范围。最后一行的正差距依赖固定的 $a,t,R$，不在参数变化时主张统一下界。
+
+证明。 先把定理200.3的最大域在 $J_a$ 内化简。令 $\ell_a=2a-1$，并记
+$$
+P_*(u)=h_0^2(1-u^2)-a^2(1+t^2-2tu),\qquad h_0=\frac{1+t}{2}.
+\tag{201.12}
+$$
+直接计算给出
+$$
+P_*(\ell_a)=a(t-\ell_a)(1-\ell_at)>0.
+\tag{201.13}
+$$
+两个因子为正，因为 $\ell_a<t$ 且 $|\ell_at|<1$。因此 $b_-^*<\ell_a$，最大域是 $(\ell_a,b_+^*)$。当 $R<R_0$ 且（201.1）成立时，$\lambda=\lambda_*$ 的程序在包含所需闭区间的开域精确，且名义成本为 $I_r(t)$。由（201.2）便得第一行。当 $R=R_0$ 时，闭区间的上端点为 $b_+^*$；定理200.2、200.3排除任何名义等号程序具有所需开延拓，包括名义点发生秩变化的候选。
+
+临界点虽不达到，却可逼近。设 $\mathcal G_*$、$\sigma_z$ 为 $\lambda=\lambda_*$ 的程序，定义于 $(\ell_a,b_+^*)$。令 $\mathcal C_1(X)=\mathcal T_1(\operatorname{Tr}_P X)$ 为忽略程序并对信号施行 $\mathcal T_1$ 的 CPTP 处理器。对 $0<s<1$，取
+$$
+\mathcal G_s=(1-s)\mathcal G_*+s\mathcal C_1,
+\qquad z_s(u)=\frac{u-s}{1-s},\qquad
+\rho_u^{(s)}=\sigma_{z_s(u)}.
+\tag{201.14}
+$$
+$\mathcal T_z$ 关于 $z$ 仿射，故在 $z_s(u)\in(\ell_a,b_+^*)$ 时，对所有信号输入有
+$$
+\mathcal G_s(\omega\otimes\rho_u^{(s)})
+=(1-s)\mathcal T_{z_s(u)}(\omega)+s\mathcal T_1(\omega)
+=\mathcal T_u(\omega).
+\tag{201.15}
+$$
+该程序的精确开域为
+$$
+V_s=\bigl(s+(1-s)\ell_a,\ s+(1-s)b_+^*\bigr)\subset J_a.
+\tag{201.16}
+$$
+其上端点严格大于 $b_+^*=t+R_0$。临界半径允许时，$t-R_0>\ell_a$，所以充分小的 $s>0$ 又使下端点严格小于 $t-R_0$。于是 $V_s$ 包含整个临界闭区间。
+
+在名义点附近 $\sigma_z$ 满秩且解析，故其信息量 $\widehat I(z)$ 连续，且 $\widehat I(t)=I_r(t)$。参数变换的链式法则给出
+$$
+I_Q(\rho_t^{(s)})
+=\frac{\widehat I(z_s(t))}{(1-s)^2}
+\longrightarrow I_r(t)\qquad(s\downarrow0).
+\tag{201.17}
+$$
+每个 $s$ 使用一个固定处理器；混合权不随运行参数 $u$ 变化。结合普遍下界与临界不达到性，得到第二行。
+
+最后证明第三行的严格差距，而不仅是不达到。把（201.4）的两个严格端点条件放宽为 $|b\pm Rv|\le1$，得到闭集合 $\overline{\mathscr A}_R$。这里的横线仅指这个指定的闭松弛，不预先断言它等于 $\mathscr A_R$ 的拓扑闭包。端点平方范数取平均给出
+$$
+|b|^2+R^2|v|^2\le1.
+\tag{201.18}
+$$
+对每个闭松弛可行元，固定均衡 $02$ 信号输入，并在输出读取范数为一的可观测量 $X_{02}=|0\rangle\langle2|+|2\rangle\langle0|$。把这个可观测量经程序到输出的 CPTP 映射拉回，得到一个程序 Hermitian 压缩算子 $H=mI+w\cdot\sigma$，所以 $|w|\le1$。两个通道等式使相应期望沿 $b+sv$ 的导数为一，因此
+$$
+w\cdot v=1,\qquad |v|\ge1,
+\qquad |b|^2\le1-R^2.
+\tag{201.19}
+$$
+所以名义状态一致远离纯态边界，且目标函数分母 $1-|b|^2\ge R^2>0$。有限维 CPTP 映射集合的 Choi 表示紧，式（201.18）使 $b,v$ 有界；约束均闭，故 $\overline{\mathscr A}_R$ 为非空紧集，目标函数在其上连续。记它的最小值为 $m_R$，则
+$$
+\mathfrak M_2(a,t;R)\ge m_R\ge I_r(t).
+\tag{201.20}
+$$
+第二个不等式成立，因为任一闭松弛元在名义点附近仍给出满秩的精确仿射程序；无需在半径端点外延拓就能应用测量信息界。
+
+若 $m_R=I_r(t)$，其一个最小元在名义邻域达到等号，因而满足定理200.2的正规形，参数 $\lambda\ge\lambda_*$。该正规形与最小元的 Bloch 曲线都仿射；它们在邻域相等，故作为仿射函数处处相等。闭端点正性于是迫使
+$$
+t+R\le b_+(\lambda)\le b_+^*(a,t),
+\tag{201.21}
+$$
+其中第二个不等式来自 $q_\lambda\le q_{\lambda_*}$。这与 $R>R_0$ 矛盾。因此 $m_R>I_r(t)$，取 $\delta(a,t,R)=m_R-I_r(t)>0$ 即得
+$$
+\mathfrak M_2(a,t;R)\ge I_r(t)+\delta(a,t,R).
+\tag{201.22}
+$$
+这里没有把闭松弛的最小值等同于严格开延拓问题的下确界，也没有求出超临界成本的精确函数。三行分别给出实际达到、只能逼近及由紧性保证的正差距，证明完成。
+
+## 追加锚（本行以下为增补区）
