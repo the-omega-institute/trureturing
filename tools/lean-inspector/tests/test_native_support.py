@@ -329,7 +329,8 @@ defaultFacets = ["static"]
             # Diagnostics must not replace the command/cleanup result, including
             # when resource counters or the output stream are unavailable.
             try:
-                print('NATIVE_COMMAND_OBSERVATION ' + json.dumps(dict(
+                # unittest's verbose progress has no trailing newline.
+                print('\nNATIVE_COMMAND_OBSERVATION ' + json.dumps(dict(
                     suite=self.id() if isinstance(self, unittest.TestCase) else type(self).__name__,
                     sequence=sequence, executable=Path(args[0]).name,
                     operations=[arg for arg in args[1:] if arg in
@@ -627,7 +628,7 @@ class GuardedCommandTests(unittest.TestCase):
                 if not enabled:
                     self.assertEqual(output.getvalue(), '')
                     continue
-                observation = json.loads(output.getvalue().removeprefix('NATIVE_COMMAND_OBSERVATION '))
+                observation = json.loads(output.getvalue().removeprefix('\nNATIVE_COMMAND_OBSERVATION '))
                 self.assertEqual(observation['raw_exit'], status)
                 self.assertEqual(observation['outcome'], 'returned')
                 self.assertGreater(observation['process_scan_count'], 0)
@@ -642,7 +643,7 @@ class GuardedCommandTests(unittest.TestCase):
                 patch.object(sys, 'stderr', output):
             result = self.fixture.guarded_command([sys.executable, '-c', 'raise SystemExit(7)'])
         self.assertEqual(result.returncode, 7)
-        observation = json.loads(output.getvalue().removeprefix('NATIVE_COMMAND_OBSERVATION '))
+        observation = json.loads(output.getvalue().removeprefix('\nNATIVE_COMMAND_OBSERVATION '))
         self.assertIsNone(observation['elapsed_seconds'])
         self.assertIsNone(observation['reaped_children_cpu_seconds'])
         self.assertIsNone(observation['process_scan_seconds'])
