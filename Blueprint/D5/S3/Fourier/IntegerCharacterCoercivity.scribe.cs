@@ -56,7 +56,8 @@ internal sealed class IntegerCharacterCoercivityDocument : IScribeDocumentDefini
     private static Formula Arrow(Formula left, Formula right) =>
         Seq(left, Sp, Rightarrow, Sp, right);
     private static Formula SumOver(string index, Formula domain, Formula body) =>
-        Seq(Sum, Underscore, Grp(F.Id(index), InMacro, domain), Sp, body);
+        Seq(Sum, Underscore, Grp(F.Id(index), InMacro, Sp, domain), Sp, body);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
     private static Formula CoercivityFormula()
     {
@@ -71,12 +72,14 @@ internal sealed class IntegerCharacterCoercivityDocument : IScribeDocumentDefini
         Formula c = F.Id("c");
         Formula Phase(Formula vector) => SumOver("i", indices,
             Multiply(Call("lambda", F.Id("a"), F.Id("i")), Call("coord", vector, F.Id("i"))));
-        Formula zeros = new Formula.SetBuilder(
+        Formula zeros = Seq(Left, OpenBrace,
+            Relation(y, FormulaRelationOperator.MemberOf, space), Sp, Mid, Sp,
             All("a", iType, Some("k", integers,
                 Relation(Phase(y), FormulaRelationOperator.Equal,
-                    Multiply(Multiply(D(2), Call("pi")), F.Id("k"))))), y, space);
+                    Multiply(Multiply(D(2), Call("pi")), F.Id("k"))))), Right, CloseBrace);
         Formula defect = SumOver("a", iType,
-            new Formula.Binary(D(1), FormulaBinaryOperator.Subtract, Call("cos", Phase(x))));
+            Parenthesized(new Formula.Binary(
+                D(1), FormulaBinaryOperator.Subtract, Call("cos", Phase(x)))));
         Formula inequality = Relation(
             Multiply(c, new Formula.Power(Call("infDist", x, zeros), D(2))),
             FormulaRelationOperator.LessThanOrEqual, defect);
