@@ -2,10 +2,10 @@
 bibkey: mathlib433thermalrecovery
 authors: The Mathlib Community; Remy Degenne; Lorenzo Luccioli
 year: 2026
-title: Pinned measure KL, disintegration, and finite-dimensional linear algebra for predictive thermal recovery
+title: Pinned KL, spectral calculus, exponential remainders and Gaussian precision for predictive thermal recovery
 doi: null
 url: https://github.com/leanprover-community/mathlib4/tree/v4.33.0
-claim: The pinned library supplies genuine measure-level KL chain and data-processing theorems, constructed standard Borel conditional kernels, and injective-endomorphism surjectivity; these do not imply quantum recovery or short-window asymptotics.
+claim: Pinned measure KL and disintegration, concrete matrix spectral calculus, analytic exponential remainders and Gaussian moment identities support separate proof modules; none alone establishes the complete quantum recovery or short-window theorem.
 strata_touched:
   - D5/S3/Quantum/Thermal/ClassicalProductRecovery
   - D5/S3/Quantum/Thermal/ExactPartitionCounting
@@ -13,6 +13,10 @@ strata_touched:
   - D5/S3/Quantum/Algebra/WeylReconstruction
   - D5/S3/Observer/Linear/PredictiveEnergySplitting
   - D5/S3/Observer/Linear/OscillatorSensorJets
+  - D5/S3/Quantum/Divergence/SpectralKlein
+  - D5/S3/Quantum/Thermal/GibbsFreeEnergyStability
+  - D5/S3/Observer/Linear/GradedExponentialRemainder
+  - D5/S3/Observer/Linear/GaussianObservationPrecision
 license: citation-only
 triage: anchor
 ---
@@ -21,64 +25,102 @@ triage: anchor
 
 ## Exact source pin
 
-The PR's `lean-toolchain` is `leanprover/lean4:v4.33.0`; its Mathlib dependency
-is the `v4.33.0` tag. The APIs below were inspected at that tag, not inferred
-from the newer rolling documentation.
+The PR uses `leanprover/lean4:v4.33.0` and the Mathlib `v4.33.0` tag. The
+following APIs were read at that tag. Search results from the rolling branch
+were used for navigation only and were followed by pinned source reads.
 
-- `Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean`:
-  `InformationTheory.klDiv_compProd_eq_add` and `klDiv_compProd_left`.
-  KL has its actual absolute-continuity/integrability branch and values in
-  `ENNReal`. Replacing this with an arbitrary real-valued function would lose
-  the recovery equality's measure semantics.
-- `Mathlib/InformationTheory/KullbackLeibler/DataProcessing.lean`:
-  `InformationTheory.klDiv_map_le`. Data processing in both directions proves
-  measurable-equivalence invariance, including infinite KL values.
-- `Mathlib/Probability/Kernel/Disintegration/StandardBorel.lean` and `Basic.lean`:
-  `Measure.condKernel`, its Markov instance, and
-  `Measure.disintegrate`. The main arbitrary-joint recovery declarations
-  construct this kernel from the joint law; they do not require the caller
-  to provide a disintegration witness. The hidden space is standard Borel
-  and nonempty.
-- `Mathlib/LinearAlgebra/FiniteDimensional/Basic.lean`:
-  `LinearMap.surjective_of_injective`. Applied to the explicitly defined
-  square-matrix synthesis endomorphism, this closes the span gap in the
-  repository's finite Weyl trace-pairing result.
-- `Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean` and `PosDef.lean`:
-  actual nonsingular inverse identities and positive-definite congruences.
-  These provide the covariance inverses and the positive Gram matrix used
-  to rule out a radical of the visible Poisson form.
+## Measure recovery and the initial modules
 
-## Existing repository truth sources consumed
+`Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean` supplies
+`InformationTheory.klDiv_compProd_eq_add` and `klDiv_compProd_left`. KL has
+its actual absolute-continuity/integrability branch and ENNReal codomain.
+`DataProcessing.lean` supplies `klDiv_map_le`. Applying it in both directions
+proves measurable-equivalence invariance, including infinite values.
 
-`D5/S3/Quantum/Algebra/WeylDisplacementTrace.lean` provides the actual matrix
-pairing `displacement_trace_orthogonal`. It explicitly does not establish
-spanning. The new `WeylReconstruction` module uses that exact theorem and
-constructs the missing linear-algebra bridge, rather than replacing the
-finite Weyl matrices with an assumed complete abstract frame.
+`Mathlib/Probability/Kernel/Disintegration/StandardBorel.lean` and `Basic.lean`
+supply `Measure.condKernel`, its Markov instance and `Measure.disintegrate`.
+The arbitrary-joint recovery module constructs this kernel from the joint
+measure; it does not assume a disintegration witness. The hidden space is
+standard Borel and nonempty.
 
-`D5/S3/Quantum/Divergence/SupportAwareRelativeEntropy.lean` already exists on
-the target PR branch. It defines support inclusion and a `WithTop Real`
-quantum trace-log divergence. Its documentation explicitly leaves positivity,
-DPI, and Petz equality as further theorems. The older
-`QuantumRelativeEntropyDefectComposition` is only a real-valued telescoping
-identity. Neither file is evidence that the quantum recovery/Pinsker part of
-this PR has been completed.
+`Mathlib/LinearAlgebra/FiniteDimensional/Basic.lean` supplies
+`LinearMap.surjective_of_injective`. The actual square-matrix synthesis
+endomorphism promotes the repository finite Weyl trace pairing to spanning.
+The imported `WeylDisplacementTrace.displacement_trace_orthogonal` theorem
+explicitly did not already prove this spanning result.
 
-## Other constructed components
+`Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean` and `PosDef.lean`
+supply actual inverse identities and positive-definite congruences. They
+support the covariance lift, the positive Gram matrix ruling out a visible
+Poisson radical, and the constructed Gaussian observation precision.
 
-`ExactPartitionCounting` starts from CNF syntax and proves a rational counting
-recovery statement with explicit local Boolean projections. It does not take
-an already-known count or an already-proved small tail as its sole input.
-`HiddenExperimentRisk` constructs complete adaptive Kraus histories and uses
-nonnegative integrals for randomized estimation risk. `OscillatorSensorJets`
-computes actual `C B^k/k!` rows and polynomial moment determinants; it is not
-an assumed asymptotic-equivalence interface.
+`ExactPartitionCounting` begins with CNF syntax and builds Boolean clause
+penalties and the rational Gibbs partition. `HiddenExperimentRisk` constructs
+adaptive Kraus histories and uses nonnegative integration for randomized
+risk. `OscillatorSensorJets` computes actual derivative rows and polynomial
+moment determinants; these are not an assumed exponential asymptotic.
 
-## Scope and verification boundary
+## Spectral Klein and free-energy continuation, 2026-09-26
 
-The source candidates and their paired Scribes are described in
-`Evidence/PR8899/README.md`. At this delivery, they have not been elaborated by
-Lean or checked by its kernel, and the Scribes have not been compiled. Finite
-checks and source scans are independently reproducible, but do not replace
-those checks. This note is explanatory provenance, not a freeze declaration,
-proof of all fourteen paper results, or a new theory volume.
+Pinned `Mathlib/Analysis/Matrix/Spectrum.lean` constructs the eigenvalues,
+eigenvector unitary and `Matrix.IsHermitian.spectral_theorem`.
+`HermitianFunctionalCalculus.lean` identifies `cfc f A` with the actual
+spectral synthesis for every real function f on the finite spectrum.
+`Mathlib/Analysis/Matrix/PosDef.lean` supplies nonnegative/positive eigenvalues.
+
+`SpectralKlein` uses those actual spectral matrices, constructs their squared
+overlap weights and derives Klein from the scalar log tangent inequality.
+No packaged quantum relative-entropy inequality is assumed. The first matrix
+may be singular; the reference must be positive definite. This is a
+formalization of a classical finite-matrix inequality, not a novelty claim.
+
+`Mathlib/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Unique.lean`
+supplies `StarAlgHom.map_cfc`, including the continuity and selfadjointness
+hypotheses. The log restriction is continuous on the finite spectrum.
+`Mathlib/Analysis/CStarAlgebra/Spectrum.lean` supplies preservation of the
+C-star norm by a star algebra equivalence. The norm in the new raw matrix
+calculation is the Euclidean operator norm, not an entrywise norm.
+
+The repository `GibbsVariationalIdentity` already constructs the normalized
+matrix exponential and proves its positive definiteness and trace-log identity.
+`GibbsFreeEnergyStability` reuses that object and adds the actual nonnegativity
+and two-state variational comparison. The imported convention is exp(H);
+the physical free-energy argument explicitly substitutes -beta H.
+
+The existing `SupportAwareRelativeEntropy` defines reverse-nullspace support
+inclusion and extends the trace-log expression to WithTop Real. The old
+`QuantumRelativeEntropyDefectComposition` proves only a real telescoping
+identity. The new faithful-reference Klein theorem does not turn either file
+into a general singular-reference DPI, Petz equality or Pinsker proof.
+
+## Actual exponential remainder and Gaussian construction
+
+`Mathlib/Analysis/Normed/Algebra/Exponential.lean` supplies the actual
+exponential formal power series and its infinite radius.
+`Mathlib/Analysis/Analytic/Basic.lean`,
+`HasFPowerSeriesOnBall.uniform_geometric_approx'`, gives a uniform remainder
+on a smaller ball. `GradedExponentialRemainder` instantiates it and derives
+the first visible coefficient and uniform O(T) normalized error. It does not
+assume a Taylor remainder as a field in a certificate.
+
+`Mathlib/Probability/Distributions/Gaussian/Multivariate.lean` constructs
+`multivariateGaussian` by an actual affine pushforward of the standard
+Gaussian and proves `integral_id_multivariateGaussian` and
+`covariance_eval_multivariateGaussian`. The new observation module proves
+positive definiteness of beta I plus tau M-transpose M before using its inverse
+as a covariance. The candidate conditional distribution is a real Gaussian
+measure, but its equality to the observation conditional law is still open.
+
+Pinned `Mathlib/RingTheory/Polynomial/ShiftedLegendre.lean` was also read.
+It provides Rodrigues, degree and symmetry identities for the integer
+polynomials, but does not supply the L2 orthogonality/normalization theorem
+required by this PR. The new batch does not label that missing theorem proved.
+
+## Verification boundary
+
+Current coverage and actual finite diagnostics are in `docs/reports/pr8899`.
+Historical initial reports are preserved there. The four continuation sources
+and Scribes have not been elaborated/compiled in this environment. Numerical
+checks, source hashes and textual Scribe-anchor resolution do not establish
+kernel proof, admission, independent review, or closure of the fourteen
+original results. This note supplies provenance, not a new theory volume.
