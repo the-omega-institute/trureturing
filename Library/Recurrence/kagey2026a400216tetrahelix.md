@@ -26,6 +26,14 @@ one by asymptotically maximizing x and then y. The formal construction uses
 the displayed ordered vertices and face reflection. The asymptotic comparison
 of all 24 choices is not part of the formal theorem.
 
+## Verified locator
+
+url: https://oeis.org/A400216
+
+The related coordinate records are https://oeis.org/A400217 and
+https://oeis.org/A400218. Their conjectured generating-function lines and
+ordered initial vertices are the source scope checked on September 26, 2026.
+
 Direct exact rational iteration gives the next three vertices as
 (361/81,169/81,151/81), (1373/243,413/243,-163/243), and
 (3895/729,3145/729,265/729), matching the rest of the OEIS ten-vertex
