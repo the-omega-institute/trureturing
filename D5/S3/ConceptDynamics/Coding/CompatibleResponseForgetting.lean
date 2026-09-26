@@ -290,6 +290,204 @@ private noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Ty
   classical
   exact fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
 
+private theorem incoming_response_matrix_factor_base {p : ℕ} {M : CountMat p p}
+    {Q : Type} (L : IncomingLift M Q) (d : ℕ)
+    [Fintype (Quotient (L.response (d + 1)))] :
+    incomingResponseMatrix L d =
+      incomingResponseU L d * incomingResponseV L d := by
+  classical
+  ext F H
+  have hq : Quotient.mk (L.response (d + 1)) (Quotient.out H) =
+      incomingResponseProjection L d H := by
+    calc
+      Quotient.mk (L.response (d + 1)) (Quotient.out H) =
+          incomingResponseProjection L d
+            (Quotient.mk (L.response d) (Quotient.out H)) := rfl
+      _ = incomingResponseProjection L d H := by rw [Quotient.out_eq]
+  have hresponse : L.response (d + 1) (Quotient.out H)
+      (Quotient.out (incomingResponseProjection L d H)) := by
+    apply Quotient.exact
+    calc
+      Quotient.mk (L.response (d + 1)) (Quotient.out H) =
+          incomingResponseProjection L d H := hq
+      _ = Quotient.mk (L.response (d + 1))
+            (Quotient.out (incomingResponseProjection L d H)) :=
+              (Quotient.out_eq _).symm
+  change Nat.card (incomingResponseFiber L d F (Quotient.out H)) =
+    ∑ Z, incomingResponseU L d F Z * incomingResponseV L d Z H
+  simp only [incomingResponseU, incomingResponseV]
+  simpa using incoming_response_fiber_card_step L d F hresponse
+
+private theorem incoming_response_matrix_factor_step {p : ℕ} {M : CountMat p p}
+    {Q : Type} (L : IncomingLift M Q) (d : ℕ)
+    [Fintype (Quotient (L.response d))]
+    [Fintype (Quotient (L.response (d + 1)))] :
+    incomingResponseMatrix L (d + 1) =
+      incomingResponseV L d * incomingResponseU L d := by
+  classical
+  ext Z W
+  let v := Quotient.out W
+  have hprojection (q : Q) :
+      incomingResponseProjection L d (Quotient.mk (L.response d) q) =
+        Quotient.mk (L.response (d + 1)) q := rfl
+  letI : Fintype (incomingResponseFiber L (d + 1) Z v) := by
+    unfold incomingResponseFiber
+    infer_instance
+  letI (H : Quotient (L.response d)) :
+      Fintype (incomingResponseFiber L d H v) := by
+    unfold incomingResponseFiber
+    infer_instance
+  let e : incomingResponseFiber L (d + 1) Z v ≃
+      Σ H : Quotient (L.response d),
+        {a : incomingResponseFiber L d H v //
+          incomingResponseProjection L d H = Z} := {
+    toFun := fun x => by
+      let hv := Classical.choose x.property
+      have hZ := Classical.choose_spec x.property
+      let H := Quotient.mk (L.response d) (L.lift x.val ⟨v, hv⟩).val
+      refine ⟨H, ⟨⟨x.val, ⟨hv, rfl⟩⟩, ?_⟩⟩
+      simpa only [H, hprojection] using hZ
+    invFun := fun y => by
+      let H := y.1
+      let a := y.2.val.val
+      let hv := Classical.choose y.2.val.property
+      have hH := Classical.choose_spec y.2.val.property
+      have hZ := y.2.property
+      refine ⟨a, ⟨hv, ?_⟩⟩
+      calc
+        Quotient.mk (L.response (d + 1)) (L.lift a ⟨v, hv⟩).val =
+            incomingResponseProjection L d
+              (Quotient.mk (L.response d) (L.lift a ⟨v, hv⟩).val) :=
+                (hprojection _).symm
+        _ = incomingResponseProjection L d H := congrArg _ hH
+        _ = Z := hZ
+    left_inv := by
+      intro x
+      apply Subtype.ext
+      rfl
+    right_inv := by
+      rintro ⟨H, ⟨⟨a, ⟨hv, hH⟩⟩, hZ⟩⟩
+      let witness : ∃ hv : L.project v = a.target,
+          Quotient.mk (L.response (d + 1)) (L.lift a ⟨v, hv⟩).val = Z := by
+        refine ⟨hv, ?_⟩
+        calc
+          Quotient.mk (L.response (d + 1)) (L.lift a ⟨v, hv⟩).val =
+              incomingResponseProjection L d
+                (Quotient.mk (L.response d) (L.lift a ⟨v, hv⟩).val) :=
+                  (hprojection _).symm
+          _ = incomingResponseProjection L d H := congrArg _ hH
+          _ = Z := hZ
+      have hsub :
+          (⟨v, Classical.choose witness⟩ :
+            {q : Q // L.project q = a.target}) = ⟨v, hv⟩ :=
+        Subtype.ext rfl
+      have hfirst := (congrArg (fun q =>
+        Quotient.mk (L.response d) (L.lift a q).val) hsub).trans hH
+      generalize hK : Quotient.mk (L.response d)
+          (L.lift a ⟨v, Classical.choose witness⟩).val = K at hfirst ⊢
+      subst K
+      subst H
+      apply Sigma.ext rfl
+      exact heq_of_eq (Subtype.ext (Subtype.ext rfl)) }
+  change Nat.card (incomingResponseFiber L (d + 1) Z v) =
+    ∑ H, incomingResponseV L d Z H * incomingResponseU L d H W
+  calc
+    Nat.card (incomingResponseFiber L (d + 1) Z v) =
+        Fintype.card (incomingResponseFiber L (d + 1) Z v) :=
+          Nat.card_eq_fintype_card
+    _ = Fintype.card (Σ H : Quotient (L.response d),
+        {a : incomingResponseFiber L d H v //
+          incomingResponseProjection L d H = Z}) := Fintype.card_congr e
+    _ = ∑ H, (if incomingResponseProjection L d H = Z then
+          Nat.card (incomingResponseFiber L d H v) else 0) := by
+      rw [Fintype.card_sigma]
+      apply Finset.sum_congr rfl
+      intro H _
+      by_cases h : incomingResponseProjection L d H = Z
+      · simp [h, Nat.card_eq_fintype_card]
+      · simp [h]
+    _ = ∑ H, incomingResponseV L d Z H * incomingResponseU L d H W := by
+      simp only [incomingResponseV, incomingResponseU, v]
+      apply Finset.sum_congr rfl
+      intro H _
+      by_cases h : incomingResponseProjection L d H = Z <;> simp [h]
+
+/-- Once the response remembers only the base vertex, quotient adjacency
+    counts exactly the numbered base edges. -/
+private theorem incoming_response_matrix_at_forgetting {p : ℕ} {M : CountMat p p}
+    {Q : Type} (L : IncomingLift M Q) (d : ℕ)
+    (hd : L.response d = Setoid.ker L.project)
+    (representative : Fin p → Q)
+    (hsection : ∀ i, L.project (representative i) = i)
+    (i j : Fin p) :
+    incomingResponseMatrix L d
+      (Quotient.mk (L.response d) (representative i))
+      (Quotient.mk (L.response d) (representative j)) = M i j := by
+  classical
+  let F := Quotient.mk (L.response d) (representative i)
+  let H := Quotient.mk (L.response d) (representative j)
+  have hrel : L.response d (Quotient.out H) (representative j) :=
+    Quotient.exact (Quotient.out_eq H)
+  have hcard := incoming_response_fiber_card_step L d F
+    ((response_zero_and_step L).2 d hrel)
+  let E := {a : Edge M // a.source = i ∧ a.target = j}
+  let e : incomingResponseFiber L d F (representative j) ≃ E := {
+    toFun := fun x => by
+      let a := x.val
+      let hv := Classical.choose x.property
+      have hclass := Classical.choose_spec x.property
+      have hsource : a.source = i := by
+        have hq : L.response d (L.lift a ⟨representative j, hv⟩).val
+            (representative i) :=
+          Quotient.exact hclass
+        rw [hd] at hq
+        calc
+          a.source = L.project (L.lift a ⟨representative j, hv⟩).val :=
+            (L.lift a ⟨representative j, hv⟩).property.symm
+          _ = L.project (representative i) := hq
+          _ = i := hsection i
+      exact ⟨a, hsource, hv.symm.trans (hsection j)⟩
+    invFun := fun x => by
+      obtain ⟨a, hs, ht⟩ := x
+      have hv : L.project (representative j) = a.target :=
+        (hsection j).trans ht.symm
+      refine ⟨a, ⟨hv, Quotient.sound ?_⟩⟩
+      rw [hd]
+      calc
+        L.project (L.lift a ⟨representative j, hv⟩).val = a.source :=
+          (L.lift a ⟨representative j, hv⟩).property
+        _ = i := hs
+        _ = L.project (representative i) := (hsection i).symm
+    left_inv := by intro x; apply Subtype.ext; rfl
+    right_inv := by
+      rintro ⟨a, ⟨hs, ht⟩⟩
+      apply Subtype.ext
+      rfl }
+  let edgeEquiv : E ≃ Fin (M i j) := {
+    toFun := fun x => by
+      obtain ⟨⟨source, target, number⟩, hs, ht⟩ := x
+      change source = i at hs
+      change target = j at ht
+      cases hs
+      cases ht
+      exact number
+    invFun := fun number => ⟨⟨i, j, number⟩, rfl, rfl⟩
+    left_inv := by
+      rintro ⟨⟨source, target, number⟩, hs, ht⟩
+      change source = i at hs
+      change target = j at ht
+      cases hs
+      cases ht
+      rfl
+    right_inv := by intro number; rfl }
+  calc
+    incomingResponseMatrix L d F H =
+        Nat.card (incomingResponseFiber L d F (Quotient.out H)) := rfl
+    _ = Nat.card (incomingResponseFiber L d F (representative j)) := hcard
+    _ = Nat.card E := Nat.card_congr e
+    _ = Nat.card (Fin (M i j)) := Nat.card_congr edgeEquiv
+    _ = M i j := Nat.card_fin _
+
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
@@ -526,6 +724,88 @@ theorem square_graph_essential_and_projections
       exact Nat.ne_of_gt (Fintype.card_pos_iff.mpr hnonempty)
 
 #print axioms square_graph_essential_and_projections
+
+private def squareIncomingLift (c : CompatibleCertificate A B R S m) :
+    IncomingLift A (Edge R) where
+  project := Edge.source
+  onto := (square_graph_essential_and_projections c).2.2.1
+  lift := by
+    intro a r
+    exact c.incomingLift a r.val r.property.symm
+
+private def squareOutgoingLift (c : CompatibleCertificate A B R S m) :
+    IncomingLift B.transpose (Edge R) where
+  project := Edge.target
+  onto := (square_graph_essential_and_projections c).2.2.2.1
+  lift := by
+    intro b r
+    exact c.outgoingLift r.val ⟨b.target, b.source, b.number⟩ r.property
+
+private theorem squareIncomingLift_path (c : CompatibleCertificate A B R S m) :
+    ∀ {d : ℕ} {i j : Fin n} {z : Fin k}
+      (alpha : FinitePath A d i j) (r : Fin (R j z)),
+      (c.squareIncomingLift.liftPath alpha
+        ⟨(⟨j, z, r⟩ : Edge R), rfl⟩).val =
+      (let lifted := c.liftIncomingPath alpha r
+       (⟨i, lifted.1, lifted.2⟩ : Edge R)) := by
+  intro d i j z alpha
+  induction alpha with
+  | nil i =>
+      intro r
+      rfl
+  | @cons d i j t a tail ih =>
+      intro r
+      have htail : c.squareIncomingLift.liftPath tail
+          ⟨(⟨t, z, r⟩ : Edge R), rfl⟩ =
+          ⟨(let rest := c.liftIncomingPath tail r
+            (⟨j, rest.1, rest.2⟩ : Edge R)), rfl⟩ := by
+        apply Subtype.ext
+        exact ih r
+      simp only [IncomingLift.liftPath, liftIncomingPath]
+      rw [htail]
+      rfl
+
+private theorem squareIncomingLift_forgets_at_lag
+    (c : CompatibleCertificate A B R S m) :
+    c.squareIncomingLift.response m = Setoid.ker Edge.source := by
+  apply Setoid.ext
+  intro u v
+  constructor
+  · intro h
+    exact congrArg Prod.fst h
+  · intro h
+    rcases u with ⟨us, uz, ur⟩
+    rcases v with ⟨vs, vz, vr⟩
+    change us = vs at h
+    subst vs
+    change c.squareIncomingLift.responseReadout m
+        (⟨us, uz, ur⟩ : Edge R) =
+      c.squareIncomingLift.responseReadout m
+        (⟨us, vz, vr⟩ : Edge R)
+    unfold IncomingLift.responseReadout
+    apply Prod.ext
+    · rfl
+    · funext i j alpha
+      by_cases hj : us = j
+      · cases hj
+        have hsame :
+            (c.squareIncomingLift.liftPath alpha
+              ⟨(⟨us, uz, ur⟩ : Edge R), rfl⟩).val =
+            (c.squareIncomingLift.liftPath alpha
+              ⟨(⟨us, vz, vr⟩ : Edge R), rfl⟩).val := by
+          calc
+            _ = (let lifted := c.liftIncomingPath alpha ur
+              (⟨i, lifted.1, lifted.2⟩ : Edge R)) :=
+                c.squareIncomingLift_path alpha ur
+            _ = (let rs := (c.psiA i us).symm alpha
+              (⟨i, rs.1, rs.2.1⟩ : Edge R)) :=
+                (square_lifts_left_forgetting c).2.2 alpha ur
+            _ = (let lifted := c.liftIncomingPath alpha vr
+              (⟨i, lifted.1, lifted.2⟩ : Edge R)) :=
+                ((square_lifts_left_forgetting c).2.2 alpha vr).symm
+            _ = _ := (c.squareIncomingLift_path alpha vr).symm
+        simpa [squareIncomingLift] using congrArg some hsame
+      · simp [squareIncomingLift, hj]
 
 /-- A column counts the numbered A edges whose incoming square lift reaches
     its row edge. The proof reconstructs each square from that A edge and its
