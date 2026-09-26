@@ -62,7 +62,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/QubitChordFamily.arena`
 
 *Commentary.*
 
-The law preserves all a with 0 < a < 1, processors G, program curves rho, density hypotheses and exactness for both probes on (2a-1,1). It retains probe density, nonzero chord direction, all bounds on b, the coupled c/v kernel and projection clauses, two-probe affine exactness for every real u, the norm and positivity equivalences with [b,1], trace one, strict interior norm, pure endpoints, and endpoint-overlap bounds. The second conjunct retains differentiability at every interior u and the lower bound (1-a²)/((1-u)(1+u-2a²)) on spectralQFI of the same rho and its derivative.
+The law preserves all a with 0 < a < 1, processors G, program curves rho, density hypotheses and exactness for both probes on (2a-1,1). It retains probe density, nonzero chord direction, all bounds on b, the coupled c/v kernel and projection clauses, two-probe affine exactness for every real u, the norm and positivity equivalences with [b,1], trace one, strict interior norm, pure endpoints, and endpoint-overlap bounds. The second conjunct states that for every u in (2a-1,1), if rho is differentiable at u, the lower bound (1-a²)/((1-u)(1+u-2a²)) holds on spectralQFI of the same rho and its derivative.
 
 The preserved source is `D5/S3/Quantum/Information/ActualQubitChordObstruction.actual_two_probe_chord_and_qfi`. Its Reg mirror supplies the full-statement bridge, variation, sole-role sensitivity and actual observational dependence. Source reconstruction ties all three occurrences to the same observation and preserves the original chord-plus-QFI conjunction; it does not claim an independent QFI sensitivity result or exactness for arbitrary signals.
 
