@@ -89,10 +89,10 @@ with matched information and resources.
 flowchart TD
     accTitle: From inquiry to reusable knowledge and the next question
     accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
-    Q([Ask a precise question]) --> T[Compute and test hypotheses]
-    T --> P[Check a proof or refutation]
-    P --> R[[Keep a reusable result]]
-    R -.-> N{What remains open?}
+    Q(["Ask a precise<br/>question"]) --> T["Compute and<br/>test hypotheses"]
+    T --> P["Check a proof<br/>or refutation"]
+    P --> R[["Keep a reusable<br/>result"]]
+    R -.-> N{"What remains<br/>open?"}
     T -.-> N
     P -.-> N
     N -.-> Q
