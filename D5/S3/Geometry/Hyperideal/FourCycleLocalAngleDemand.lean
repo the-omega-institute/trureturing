@@ -425,7 +425,6 @@ theorem paired_angle_demand
     calc
       (k - 2) / (k + 2) = ((k - 2) / k) * (k / (k + 2)) := by
         field_simp
-        ring
       _ < ((Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 / k^2) *
           (k / (k + 2)) := mul_lt_mul_of_pos_right hratio_a hkp
       _ ≤ ((Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 / k^2) *
@@ -437,16 +436,18 @@ theorem paired_angle_demand
     have heq : t - F =
         (2 * (r - 1) * (o - 1) * Dr) / ((r + 1) * L * k^2) := by
       rw [htan_relation_eq]
-      dsimp [F, j]
-      dsimp [L, M, Dr]
+      dsimp [F]
+      field_simp [hL.ne', (by linarith : r + 1 ≠ 0), hk.ne']
+      dsimp [L, M, Dr, k, j]
       unfold rad
-      field_simp
       ring
     rw [heq]
     positivity
   have hjbound : j^2 < (k - 2)^2 := by
-    dsimp [j, k]
-    rcases le_total a b with hab | hba <;> nlinarith [ha, hb]
+    have hp : 0 < 4 * (a - 1) * (b - 1) := by positivity
+    calc
+      j^2 < j^2 + 4 * (a - 1) * (b - 1) := by linarith only [hp]
+      _ = (k - 2)^2 := by dsimp [j, k]; ring
   have hFmono :
       ((k + 1 - 1) * (2 * (k + 1 + 1) - j^2) /
         ((k + 1 + 1) * k^2)) ≤ F := by
