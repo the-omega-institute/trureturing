@@ -645,7 +645,8 @@ private partial def compileNode (e : Expr) (depth : Nat)
       | _ => false
     if !carrierAbbrev && (← isType e) && !(← isProp e) && (← independentSource name) then
       match info with
-      | .thmInfo _ | .axiomInfo _ => pure ()
+      | .thmInfo _ => pure ()
+      | .axiomInfo _ => pure ()
       | _ =>
         dependency info
         let mut plan := PlanNode.atom head
