@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.claim; result=D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.result; claim=D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.claim
-   digest: Refutes Song–Lin, arXiv:2608.10643v1, Conjecture 3.1: on the connected oriented circulant graph G(Z_30, {5, 6, 9, 20}) the continuous-time quantum walk has zero transfer between 0 and the even vertex 2. -/
+   digest: Refutes Song–Lin, arXiv:2608.10643v1, Conjecture 4.1: on the connected oriented circulant graph G(Z_30, {5, 6, 9, 20}) the continuous-time quantum walk has zero transfer between 0 and the even vertex 2. -/
 
 /-
 proof_shape: result: content
@@ -31,7 +31,7 @@ open Complex
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 
 /-!
-Song–Lin, *Zero transfer on mixed graphs*, arXiv:2608.10643v1, §3, Conjecture 3.1: for a
+Song–Lin, *Zero transfer on mixed graphs*, arXiv:2608.10643v1, §4, Conjecture 4.1: for a
 (connected) oriented circulant graph `G(ℤ_n, C)` with `n ≡ 2 (mod 4)`, if zero transfer occurs
 between a vertex `v` and `0`, then `v` is odd. The Hermitian adjacency matrix has entry `i` on
 arcs `a → b` (`b - a ∈ C`), `-i` on reversed arcs and `0` elsewhere; the transition matrix
@@ -60,7 +60,7 @@ def Oriented {n : ℕ} (C : Finset (ZMod n)) : Prop :=
 def Connected {n : ℕ} (C : Finset (ZMod n)) : Prop :=
   (SimpleGraph.fromRel fun a b : ZMod n => b - a ∈ C).Connected
 
-/-- Conjecture 3.1 of arXiv:2608.10643v1, with zero transfer between `v` and `0` read in both
+/-- Conjecture 4.1 of arXiv:2608.10643v1, with zero transfer between `v` and `0` read in both
 directions. -/
 def claim : Prop :=
   ∀ (n : ℕ) [NeZero n], n % 4 = 2 → ∀ C : Finset (ZMod n), Oriented C → Connected C →

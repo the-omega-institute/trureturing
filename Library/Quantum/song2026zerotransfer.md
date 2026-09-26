@@ -22,12 +22,12 @@ this is symmetric, and the paper speaks of zero transfer between `u` and `v`.
 It shows that zero transfer between distinct vertices is equivalent to the
 vanishing of `(H^k)_{u,v}` for every `k ≥ 1`.
 
-Section 3 treats the oriented circulant graphs `G(ℤ_n, C)`, with arcs
+Section 4 treats the oriented circulant graphs `G(ℤ_n, C)`, with arcs
 `a → b` for `b - a ∈ C`, `C ⊆ ℤ_n ∖ {0}` and `C ∩ -C = ∅`, all assumed
 connected. It proves that there is no zero transfer when `n` is prime, gives
 the order-21 example `C = {2, 10, 12, 15, 16, 17}` with zero transfer at
 distances 7 and 14, and, after an exhaustive search for `n ≤ 20`, states
-Conjecture 3.1:
+Conjecture 4.1:
 
 > Let Γ = G(ℤ_n, C) be an oriented circulant graph with n ≡ 2 (mod 4). If
 > zero transfer occurs between vertex v and 0, then v must be odd.
@@ -38,4 +38,4 @@ The remark after it records that a general algebraic proof remains open.
 
 - DOI: https://doi.org/10.48550/arXiv.2608.10643
 - URL: https://arxiv.org/abs/2608.10643v1
-- Version and location: arXiv:2608.10643v1 (2026-08-11, the only version), source file `zero_state_2026_5.21N.tex`: §1 for the Hermitian adjacency matrix, the transition matrix and the definition of zero transfer; §3 for oriented circulant graphs, the standing connectedness assumption and Conjecture 3.1 (the first `con` environment of §3, numbered within sections).
+- Version and location: arXiv:2608.10643v1 (2026-08-11, the only version), source file `zero_state_2026_5.21N.tex`: §2 (Definitions and Preliminaries) for the Hermitian adjacency matrix, the transition matrix and the definition of zero transfer; §4 (Zero transfer on oriented circulant graphs) for oriented circulant graphs, the standing connectedness assumption and Conjecture 4.1 (the first `con` environment of §4, numbered within sections).

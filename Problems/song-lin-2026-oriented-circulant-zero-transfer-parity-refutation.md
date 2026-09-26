@@ -18,7 +18,7 @@ mixed graph, where the Hermitian adjacency matrix `H` has entry `i` on an arc
 graph has zero transfer from `u` to `v` if `U(t)_{u,v} = 0` for every time
 `t ≥ 0`. For the oriented circulant graphs `G(ℤ_n, C)`, with arcs `a → b` for
 `b - a ∈ C`, `C ⊆ ℤ_n ∖ {0}`, `C ∩ -C = ∅`, and connectedness assumed
-throughout the section, they state Conjecture 3.1 of arXiv:2608.10643v1:
+throughout the section, they state Conjecture 4.1 of arXiv:2608.10643v1:
 
 > Let Γ = G(ℤ_n, C) be an oriented circulant graph with n ≡ 2 (mod 4). If
 > zero transfer occurs between vertex v and 0, then v must be odd.
