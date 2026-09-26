@@ -258,3 +258,148 @@ This is ordinary written research pending independent review. No new Lean,
 project CI, Scribe compilation/projection, admission or Freeze accompanies
 it. Full CFMP, arbitrary unframed or unprotected incidence, and torus-end
 completeness remain outside the established conclusions.
+
+## Intrinsic witnesses and degree-four closure: Sections 111-118
+
+This increment preserves the concurrent Sections 106-110 and appends to
+the same theory owner. Written proofs were published in source commit
+`a4b4024fc351995be22ad02270a7529953445aa2`, after the supplementary checker
+commit `814c8a296da5656ef1f3c5822f47561b56350d77`. The previous theory prefix
+is unchanged: GitHub compare reports 336 additions and zero deletions.
+No new Lean theorem or independent mathematical-review approval is claimed.
+
+### Intrinsic genuine-occurrence witnesses
+
+In the general paired frame of Section 101, transverse flat selection A,A
+forces a>b and a-b>=sqrt((r+1)(o+1)); the opposite selection forces b>a.
+These follow from the raw cosine identities, including their signs in the
+flat domain. They are not inferred by using genuine inverse-angle formulas
+outside their domains.
+
+If a special edge e has no genuine appearance, it has exactly two pi
+appearances. Every zero appearance must select the same larger transverse
+label. One such block consumes that label's entire 2pi budget, so at most
+one block supplies zeros; that block contains at most two e slots. Hence
+
+`d(e)<=4`.
+
+At degree at least six, e and both labels in its transported pair P(e)
+have genuine appearances without requiring any repeated-type seed.
+Section 112.1 therefore removes the all-H-genuine premise from the
+concurrent Section 106.1 length bound:
+
+`cosh(ell_e)<1+cosh(ell_Ae)+cosh(ell_Be)`.
+
+The angular budget calculation is explicitly reused from that existing
+bound. The new input is the automatic genuine-occurrence witness, not a
+second claim of discovery for the same capacity algebra.
+
+Given known genuine labels N, two copies of a fully named tetrahedron type
+are genuine if each possible opposite pi pair contains a label in N.
+Finite closure starts with S, its transverse pairs and old triple-copy
+blocks. Theorem 113.2 realizes the paired triangulation when the closure
+covers H and the remaining unprotected blocks have compatible axial H
+labels. It retains that last condition; arbitrary foreign axes are not
+silently included.
+
+The full 22-block example has degrees (6,6,6,6,29,52,27), a genus-16
+boundary link (14,132,88), and maximum initial normalized corner 313/702.
+Its named type multiplicities are ten singletons and six doubletons.
+There are no triple-copy types and no duplicated three-label diagonal
+seed types. The former protection cores are empty, while intrinsic
+witnesses and the two-copy rule suffice. Only B occurs in every block.
+The four special stars use {A,B} or {B,C}; repeated axial labels are real.
+
+### Coupling the two stars closes the degree-four two-reservoir case
+
+Theorem 116.2 assumes exactly two designated actual transverse labels A,B,
+every block framed as (R,A,B,O,A,B), and all other labels special with
+`d(e)>=4`. The actual orientable finite ideal manifold and genus-at-least-
+two boundary hypotheses remain. Special labels and blocks are unbounded
+in number; role balance, equality of A and B lengths, global symmetry and
+repeated-type seeds are not assumed.
+
+The strict initial angle structure is constructed directly at degree four.
+Actual link counting gives t>|E|>=3 and d(A),d(B)>=2t. For t>=5 the usual
+2pi/d assignment is strictly feasible. At t=4 the only potential equality
+would force the three degrees to be 4,8,8, contradicting total degree 24.
+Thus the Luo-Yang maximizer theorem is used with its actual premise;
+the minimum-six strict-angle theorem is not applied out of range.
+
+At degree four, an entirely flat special star would have one zero-block
+with two copies of the special axis. If its transverse selection is A,A,
+then a-b>=r+1 and A is saturated. A pi-block for that special edge forces
+its opposite o>1+a+b, so the opposite is another special label. All its
+appearances must also be flat because they contain saturated A; its own
+zero-block would demand a-b>=o+1. This is impossible. Section 115.1 thus
+provides genuine witnesses for every label in the two-reservoir class.
+
+A hypothetical flat axial pair satisfies (r-1)(o-1)>=(a+b)^2. Choose a
+special side r>=1+a+b. Its g>=3 genuine target angles sum to pi and its
+appearances lie in distinct blocks. Existing Section 96 positive remainders
+at an angle <=pi/3 imply lambda_r^2>1/3. The same flat product gives
+
+`lambda_o^2 >= K/(1+2(r-1)/(a+b)^2) > 1/7`,
+
+where K=(sqrt(a^2-1)+sqrt(b^2-1))^2/(a+b)^2. The denominator is below 7/3
+by the same genuine r witness. This is a bound transferred across the flat
+pair, not an assumed lower bound for the other side.
+
+Scalar convexity gives more than 3pi of distinct transverse-slot demand
+from the r star. If the other flat label is A or B, the true transverse
+budget is at most 3pi, a contradiction. If it is a different special,
+its response lower bound gives more than pi even after allowing two axial
+appearances per genuine block. The two genuine block sets are disjoint:
+a block containing both axes would reproduce the original flat length
+vector. Their disjoint demands therefore exceed 3pi+pi=4pi, contradicting
+the total A,B budget. This completes the restricted degree-four theorem.
+
+The old Section 100 g=3 local-star check remains valid. Its uncompleted
+opposite star was the missing global information. The present argument
+uses that other star and proves disjointness before adding their costs.
+It does not prove unrestricted minimum-four or full CFMP.
+
+The full 8-block example has degrees (4,4,4,20,16), one genus-four boundary
+link (10,48,32), and maximum initial normalized corner 29/40. Four extra
+A axes and no extra B axes give ell_A<ell_B by actual positive angular
+mass and the credited Section 95.5 angle-order identity. Degree inequality
+alone is not used to infer length order. Neither example's census or
+homeomorphism-type novelty is claimed. Metric lifting gives the respective
+cyclic-cover families with Euler characteristics -15n and -3n; their
+split labels need not satisfy the same named combinatorial certificate.
+
+### Formalization and executed-check interfaces
+
+The four-degree chain is raw cosine identities -> Section 111.2 all-flat
+count -> Section 115.1 nonsaturation -> Section 116.1 partner response ->
+Section 116.2 disjoint-star budget. It does not use the six-degree length
+bound in Section 112.1. The minimum-six chain uses Sections 111,112,113.
+These degree guards and the factor-of-two correction for repeated partner
+appearances are explicit interfaces for parallel formalization.
+
+The published standard-library checker is
+`docs/develop/theory/cfmp_intrinsic_protection_check.py`. Its executed bytes
+have Git blob `bd5f5be27f1fbfe3a66b24e498826dc43d7c9b2a`, matching the remote
+source. Both complete fixed tables were checked for every face slot,
+actual label class, ordered first return, independent link-vertex fan,
+named type, transported pair and exact rational initial angle. A bad
+face map preserving the omitted-vertex condition is correctly rejected.
+Analytic checks include 6000 raw identity samples, 1541 A-transverse and
+1412 B-transverse flat samples, 3000 genuine dominated inputs, 188 exact
+count cases and 3000 partner-transfer cases. The maximum relative raw
+identity discrepancy was 1.346171152143567e-15. Sampled lower margins
+are not promoted to universal constants or interval certificates.
+
+This increment inspected Luo-Yang printed pages 2 and 21 as images.
+Frigerio-Moraschini parsed text was read, but its page-6 image request
+failed; no successful image check of that page is claimed for this run.
+The preceding historical image records are preserved, not reassigned.
+Broad literature searches were insufficient for global novelty claims.
+Classical formulas, the positive-length dichotomy and the maximizer are
+credited inputs. No Zhao or Ge version-specific theorem is needed.
+
+All existing Lean, Scribe and formal-status files are unchanged by this
+increment. No project CI, Lean build, Scribe projection, admission or
+Freeze was executed. Written proofs remain pending independent review.
+General unpaired incidence, unrestricted foreign axial labels and torus-end
+completeness remain outside the established scope.
