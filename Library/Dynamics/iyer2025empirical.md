@@ -1650,7 +1650,7 @@ David Pollard，*Some thoughts on Le Cam's statistical decision theory*，
 
 José A. Adell、Alberto Lekuona、Yaming Yu，*Sharp Bounds on the Entropy of the Poisson Law and Related Quantities*，
 [arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，2010-01-17。
-原文第 4 页 Theorem 4、Corollary 1 及式 (7)，第 7 页相应证明，使用自然对数。
+原文第 3 页 Theorem 4、第 4 页 Corollary 1 及式 (7)，第 6 页相应证明，使用自然对数。
 对 n,m≥1、p∈(0,1)，其显式二项熵上下界在 p 的任意内部紧区间上统一给出
 H(Bin(n,p))=(1/2)log(2pi np(1-p))+1/2+O(1/n)。
 这直接涵盖本章所需较弱的统一 (1/2)log(1+n)+O(1) 界；n=0 单独处理。
@@ -1761,7 +1761,7 @@ Jonathan Hermon、Xiangying Huang、Francesco Pedrotti、Justin Salez，*Concent
 条件化密度的 $L^2$ 控制与中心化熵比较共同连接到同一后验计数向量。
 实际信息量方差另由密度加权的四阶矩估计传递，不从弱收敛推断矩收敛。
 
-Ioannis Kontoyiannis、Sergio Verdú，*Optimal lossless data compression: Non-asymptotics and asymptotics*，
+Ioannis Kontoyiannis、Sergio Verdú，*Lossless Data Compression at Finite Blocklengths*，
 [arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)。
 原文第 9 页 Theorem 2 及第 10 页 Theorem 3 对一般有限离散源给信息量与最优码长的上下比较；
 其小原子集合论证直接涵盖正文所用的覆盖不等式，正 slack 的余项为 $2^{-t}$。
