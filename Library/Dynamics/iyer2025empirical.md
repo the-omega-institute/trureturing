@@ -3511,3 +3511,55 @@ DOI 10.1214/aop/1176989136，是元数据检索所指的相关文献；
 不主张每个输出、无界对数余项期望、零噪声、临界 $Q^3$ 对数噪声或高效编码。
 有限文献核对未提供直接替代这组实际条件桥梁的原定理，
 不构成不存在性或全球原创性认证。
+
+## 原文对照：第 91 章的固定切点复现限制
+
+[理论卷第 91 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+分析第 81、83 章已经构造的原共同规模单元。
+逐层局部存在定理直接复用；本章新增的是精确 Gamma 修正的严格负号、
+有限固定切点环形窗口的空 limsup，以及首个上方交点规则的单侧相位与等均值限制。
+这些限制保持原合法分母、count floor、共同规模相位和实际 pair/path 均值桥。
+它们没有解决整个双根同步集合 $E_2$ 的空性或非空性。
+
+**切线方法的经典背景与分母边界。** Victor Beresnevich、Evgeniy Zorin，
+*Explicit bounds for rational points near planar curves and metric Diophantine approximation*，
+[arXiv:1002.2803v1](https://arxiv.org/abs/1002.2803v1)，
+[原 TeX](https://arxiv.org/e-print/1002.2803v1)。
+原 Theorems 1–2（源标签 t:01、t:02）在统一正曲率类的闭包内给局部下计数和覆盖；
+其第二定理证明使用 Minkowski 线性形式及整数平移，属于有理切线构造的成熟背景。
+所数互素三元组允许 $0<q\le X$，覆盖版为 $c_0X<q\le X$，
+误差是 $\delta/X$，不是固定 $q=X$ 的结论。
+原假设包括 $\delta X^2|J|\ge8C_1$、$X\delta\ge C_2$、$|J|\le1/2$，
+以及所列 $X\gg|J|^{-3}$ 或另一二次尺度条件。
+在本模型取 $X=N$、$\delta\asymp N^{-1/2}$，固定父区间在晚期可以满足尺寸要求，
+但 Minkowski 输出只保证一个区间内的分母。
+它未保证该分母整除原 $N$；改为最近的 $N$ 分母网格会产生 $N^{-1}$ 阶误差，
+超过本题的 $N^{-3/2}$ 归一化条带宽度。因此不承担固定原层的下命中前提。
+
+**固定分母的算法文献。** Nicolas Brisebarre、Guillaume Hanrot，
+*Integer points close to a transcendental curve: an algorithmic approach*，
+[arXiv:2606.04858v1](https://arxiv.org/abs/2606.04858v1)，
+[原 TeX](https://arxiv.org/e-print/2606.04858v1)。
+原 Problem probgen 固定正整数 $u,v,w$，对在复邻域解析的超越函数寻找
+
+$$
+\left|f(X/u)-Y/v\right|<1/w.
+$$
+
+这允许在问题定义中固定 $u=v=N$，与按分母求和的计数不同。
+但 Algorithm algo:2variables 的保证是成功时返回包含所有解的候选列表；
+列表可以为空，算法还保留短向量不足及消元 resultant 为零的失败分支。
+主定理 thm:cplx2D 是固定函数、固定区间下随输入分母与多项式度数变化的复杂度结论，
+原证明明确保留两个辅助多项式互素的启发式假设。
+它不给正解数，也不给指定原层上的无限嵌套分支。
+本章没有运行该算法，不把随 $Q$ 变化的隐式 Gamma 曲线代入固定函数的复杂度结论，
+亦未证明它满足另一个有限阶整函数定理的全局假设。
+
+**本章使用与不使用的结论。** 均值定理、积分曲率、最近剩余类取整、
+Stirling／Binet 展开和有限集合的 limsup 推理均是经典工具。
+模型内新联系是：原取整使 $A_Q'<0$，从而产生必须抵消的负 Gamma 修正；
+同一规模中的 $-3\ln Q$ 预因子又强迫复现指标位于切点左侧，
+与右侧首交点的取整规则共同给出 $\omega=O_d(Q^{-2})$。
+有理截距排除仅适用于该规则或等正均值子目标；
+没有构造原曲线上的有理斜率／有理截距点，也没有排除不等均值的全部同步可能。
+文献核对给出上述具体适用边界，不作为不存在性或全球原创性认证。
