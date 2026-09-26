@@ -147,9 +147,11 @@ theorem result : claim := by
       intro m
       rw [← ih m]
       unfold wordCount
-      rw [split L (fun l => l.count true = 0 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
+      rw [split L
+        (fun l => l.count true = 0 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
       have h1 : (Finset.univ.filter fun g : Fin L → Bool =>
-          (true :: List.ofFn g).count true = 0 ∧ ListInversions.inv ((true :: List.ofFn g).map fun x => (!x).toNat) = m).card = 0 := by
+          (true :: List.ofFn g).count true = 0 ∧
+            ListInversions.inv ((true :: List.ofFn g).map fun x => (!x).toNat) = m).card = 0 := by
         rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
         intro g _ h
         simp at h
@@ -168,7 +170,8 @@ theorem result : claim := by
       wordCount L u m + if u + 1 ≤ m then wordCount L (u + 1) (m - (u + 1)) else 0 := by
     intro L u m
     unfold wordCount
-    rw [split L (fun l => l.count true = u + 1 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
+    rw [split L
+      (fun l => l.count true = u + 1 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
     congr 1
     · congr 1
       apply Finset.filter_congr
