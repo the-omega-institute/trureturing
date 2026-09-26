@@ -7891,3 +7891,442 @@ $$
 共同半径 $u_t$ 必须随参数趋近 $R$；固定子临界球内仍有式（109.4）的统一连续性。后继参数族不被宣称为每个球内的精确最坏装置，首系数 $c$ 的精确值与全部子临界最优装置仍未确定。本批未添加可读取的内部 Kraus 标签，也未把单轮仪器的分类当成内部实现的唯一性。所有新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 111. 当前准平稳态的本征基给出一般仪器的泄漏正规形
+
+本批继续限定于定义 87.1 的原名义装置、完整二维活动记忆、两种记录和每轮重复同一实际仪器。第 104 节已经确定最坏均值按距离间隙的负二次幂发散，但只给首系数的上下界。以下把该首系数准确求出；第 105.2、110.2 条关于首系数未定的边界由本批补足，原有上下界仍成立。
+
+**定义 111.1（以真实准平稳态选择坐标）。** 对最近失效集合附近的任一不失效仪器 $\Gamma=(\mathcal N,\mathcal C)$，沿用定理 96.2 的实际准平稳态与主特征值：
+
+$$
+\mathcal N(\sigma)=(1-\epsilon)\sigma,
+\qquad \operatorname{Tr}\sigma=1,\qquad \epsilon>0.
+\tag{111.1}
+$$
+
+在充分小的共同邻域内，$\sigma$ 的最大本征值简单。令其谱分解为
+
+$$
+\sigma=(1-y)P+yP_\eta,
+\qquad P=|\psi\rangle\langle\psi|,
+\qquad P_\eta=I-P,
+\qquad 0\le y<\frac12.
+\tag{111.2}
+$$
+
+同时作输入输出的计算基对角酉共轭，可以令
+
+$$
+\psi=\sqrt a\,|0\rangle+\sqrt b\,|1\rangle,
+\qquad \eta=-\sqrt b\,|0\rangle+\sqrt a\,|1\rangle,
+\qquad b=1-a.
+$$
+
+该变换保持名义仪器和完整距离。趋近最近失效集合时，$a\to1/2$、$y\to0$，相位对齐后的未点击映射趋向 $X\mapsto P_+XP_+$。
+
+取任意有限 Kraus 表示，在这份当前本征基中写成
+
+$$
+A_j=\begin{pmatrix}c_j&b_j\\ f_j&a_j\end{pmatrix}.
+\tag{111.3}
+$$
+
+这里不要求 $f_j=0$。定义与该表示的选择无关的 Gram 量
+
+$$
+C=\sum_j|c_j|^2,\quad
+\beta=\sum_j|b_j|^2,\quad
+F=\sum_j|f_j|^2,\quad
+v=\sum_j|a_j|^2,
+$$
+
+$$
+g=\sum_j\overline{c_j}b_j,\qquad
+h=\sum_j\overline{c_j}f_j,\qquad
+\ell_\psi=1-C,
+\qquad E=I-\sum_jA_j^\dagger A_j=\mathcal C^*(I)\succeq0.
+\tag{111.4}
+$$
+
+以下 $o(1)$ 指不失效装置趋近整个最近失效紧集的共同极限，不仅指某条预选旋转路径。
+
+**引理 111.2（准平稳方程压低一项潜在的一阶相干）。** 在上述范围内，准确地有
+
+$$
+\begin{aligned}
+\epsilon&=\operatorname{Tr}(E\sigma),&
+y\operatorname{Tr}E&\le\epsilon,\\
+\ell_\psi&=\epsilon+\frac{y\beta}{1-y},&
+h&=-\frac y{1-y}\sum_j\overline{b_j}a_j,\\
+0\le F&\le\ell_\psi,&
+|g|&\le\sqrt{(\ell_\psi-F)(1-\beta-v)}+\sqrt{Fv}.
+\end{aligned}
+\tag{111.5}
+$$
+
+因此，趋近最近失效集合时，
+
+$$
+\boxed{
+\begin{gathered}
+y=O(\epsilon),\qquad
+\ell_\psi=\epsilon(1+o(1)),\qquad F=O(\epsilon),\\
+\beta,v\to0,\qquad
+|h|=O(\epsilon)\sqrt{\beta v},\qquad
+|g|\le(1+\sqrt v)\sqrt{\ell_\psi}.
+\end{gathered}}
+\tag{111.6}
+$$
+
+证明。对式（111.1）取迹，使用完整性得到第一条恒等式。又有 $\sigma\succeq yI$，故正算子 $E$ 给 $\epsilon\ge y\operatorname{Tr}E$。
+
+取式（111.1）的 $\psi$ 对角元与 $\eta,\psi$ 非对角元，分别得到
+
+$$
+(1-\epsilon)(1-y)=(1-y)C+y\beta,
+\qquad
+0=(1-y)\sum_j\overline{c_j}f_j
++y\sum_j\overline{b_j}a_j.
+$$
+
+整理得到 $\ell_\psi$ 与 $h$ 的两条恒等式。完整性还给
+
+$$
+E=
+\begin{pmatrix}
+\ell_\psi-F&-g-\sum_j\overline{f_j}a_j\\
+-\overline g-\sum_j\overline{a_j}f_j&1-\beta-v
+\end{pmatrix}\succeq0.
+$$
+
+其对角元非负，二阶行列式非负，再用 Cauchy–Schwarz，便有
+
+$$
+\left|g+\sum_j\overline{f_j}a_j\right|^2
+\le(\ell_\psi-F)(1-\beta-v),
+\qquad
+\left|\sum_j\overline{f_j}a_j\right|\le\sqrt{Fv}.
+$$
+
+这证明式（111.5）及 $|g|$ 的后一上界。
+
+定理 96.2 和推论 102.2 给共同边界极限 $\sigma\to P_*$、$\mathcal N\to P_*({\cdot})P_*$。例如
+
+$$
+\beta=\langle\psi|\mathcal N(P_\eta)|\psi\rangle,
+\quad
+v=\langle\eta|\mathcal N(P_\eta)|\eta\rangle,
+\quad
+C=\langle\psi|\mathcal N(P)|\psi\rangle,
+$$
+
+故 $\beta,v\to0$、$C\to1$，同时 $\operatorname{Tr}E\to1$。这些都是映射的矩阵元，不要求固定 Kraus 个数或选取连续的 Kraus 算子。因此 $y\le\epsilon/\operatorname{Tr}E=O(\epsilon)$，再代入已证恒等式得到 $\ell_\psi/\epsilon\to1$、$F=O(\epsilon)$ 及 $h$ 的界。紧性和这些矩阵元的连续性使估计在整个最近失效集合附近一致。$\square$
+
+这个坐标选择有实际作用：单靠完整性只能把某些相干项控制到 $\sqrt\epsilon$ 阶；当前准平稳方程使 $h$ 降至 $O(\epsilon)\sqrt{\beta v}$。它没有宣称每个 $f_j$ 单独消失，也没有把混合准平稳态换成纯态来证明。
+
+## 112. 同一个负谱检验给出距离下降与谱泄漏之间的锐系数
+
+**定义 112.1（在当前主本征态上放置参考检验）。** 在定义 111.1 的相位对齐坐标下，取第 101 节的实际输入 $\Omega_z$，固定
+
+$$
+z=z_0=\frac\phi2,\qquad \phi=\frac{1+\sqrt5}{2}.
+$$
+
+仍用该节同一投影仪器相对名义仪器的负谱投影 $E_N,E_C$、函数 $L(a,z)$ 及标量 $\chi,\nu,T,h_N,h_C$。写 $E_C=E_C^R\otimes P_0$，置
+
+$$
+\alpha_R=\sqrt{a(1-z)}|0_R\rangle+\sqrt z|1_R\rangle,
+\qquad \beta_R=-\sqrt{b(1-z)}|0_R\rangle,
+$$
+
+$$
+v_c=\alpha_R\otimes\psi,\quad
+v_b=\beta_R\otimes\psi,\quad
+v_f=\alpha_R\otimes\eta,\quad
+v_a=\beta_R\otimes\eta,
+\qquad
+H=E_C^R\otimes I-E_N.
+\tag{112.1}
+$$
+
+令 $H_{ij}=\langle v_i|H|v_j\rangle$。这些量在 $a=1/2$ 附近连续、有界且为实数，因为全部检验矩阵和向量在上述坐标中为实。
+
+**引理 112.2（剩余一阶方向的系数准确为 $\kappa$）。** 在 $a=1/2$ 的一个共同邻域内，有
+
+$$
+H_{ca}=H_{ba}=0,\qquad
+H_{bb}=b(1-z)(h_C-h_N)\ge0,\qquad
+H_{aa}=b(1-z)h_C>0,
+\tag{112.2}
+$$
+
+以及
+
+$$
+H_{cb}
+=-\sqrt{ab}(1-z)
+\left[h_C+\frac z\chi+\frac{T-\nu}{2\nu}\right].
+\tag{112.3}
+$$
+
+特别地，令 $\kappa=\sqrt\phi/4$，则
+
+$$
+\boxed{H_{cb}(1/2,z_0)=-\frac{\sqrt\phi}{8}=-\frac\kappa2.}
+\tag{112.4}
+$$
+
+证明。第 101.11 式给 $E_Nv_a=0$。而 $E_C^R\otimes I$ 的 $\psi,\eta$ 交叉矩阵元为零，故得到两个零系数；两个对角系数由定义直接得到。对充分接近 $1/2$ 的 $a$，第 101.4 式的条件成立，因此第 101.15 式保证 $h_C-h_N\ge0$，且连续性保证 $h_C>0$。
+
+点击块的二维负谱投影满足
+
+$$
+\langle0_R|E_C^R|1_R\rangle
+=\frac{\sqrt{az(1-z)}}\chi.
+$$
+
+于是
+
+$$
+\langle v_c|(E_C^R\otimes I)|v_b\rangle
+=-\sqrt{ab}(1-z)\left(h_C+\frac z\chi\right).
+$$
+
+对未点击检验，$v_c=u$，$v_b=-\sqrt{b(1-z)}|0_R\psi\rangle$。沿用第 101 节负本征值 $\lambda_-=(a-\nu)/2$ 及其投影，可得
+
+$$
+\langle u|E_N|v_b\rangle
+=-\frac{\sqrt{ab}(1-z)}{\lambda_-}
+\langle u|E_N|u\rangle
+=\frac{\sqrt{ab}(1-z)(T-\nu)}{2\nu}.
+$$
+
+两项相减便是式（112.3）。在平衡点，
+
+$$
+\chi=\frac{\sqrt\phi}{2},\qquad
+\nu=\frac{\phi^{3/2}}2,\qquad
+T=\frac{\phi^2}2,\qquad
+h_C=\frac{1-\phi^{-3/2}}2.
+$$
+
+代入后得到
+
+$$
+H_{cb}
+=-\frac{(2-\phi)(3\sqrt\phi-\phi^{-3/2})}{8}
+=-\frac{\sqrt\phi}{8},
+$$
+
+最后一步使用 $2-\phi=\phi^{-2}$ 与 $\phi^4=3\phi+2$。$\square$
+
+**定理 112.3（一般子临界方向的锐距离—泄漏上界）。** 对任意趋近最近失效集合的不失效仪器，有一致估计
+
+$$
+\boxed{
+R-\delta(\Gamma)
+\le\bigl(\kappa+o(1)\bigr)\sqrt{\epsilon_\Gamma}.
+}
+\tag{112.5}
+$$
+
+这里 $\delta$ 是保留参考输入、记录与量子后继的完整半钻石距离；该上界并不把允许仪器限制到单 Kraus、实数 Kraus、纯准平稳态或预先选定的旋转族。
+
+证明。先将实际点击后继重置为 $P_0$。该后处理固定名义仪器，保持未点击映射、$\sigma$ 与 $\epsilon$，并只能减小 $\delta$。对重置后的装置使用定义 112.1 的同一个参考输入和两个负谱检验。
+
+每个未点击 Kraus 算子的联合输出向量是
+
+$$
+c_jv_c+b_jv_b+f_jv_f+a_jv_a.
+$$
+
+若其联合未点击输出为 $Y$，则点击参考输出由完整性给成输入参考边缘减去 $\operatorname{Tr}_{\mathcal H}Y$，再张量 $P_0$。所以相对于投影仪器的联合未点击输出 $|v_c\rangle\langle v_c|$，整份负检验值的变化准确为
+
+$$
+\operatorname{Tr}\left[H\bigl(Y-|v_c\rangle\langle v_c|\bigr)\right].
+$$
+
+由于完整输出差的迹为零，这份负检验值不超过实际半迹范数。展开得到
+
+$$
+\begin{aligned}
+\delta(\Gamma)\ge L(a,z)
+&+(C-1)H_{cc}+\beta H_{bb}+F H_{ff}+vH_{aa}\\
+&+2\operatorname{Re}\left[
+H_{cb}g+H_{cf}h
++H_{ca}\sum_j\overline{c_j}a_j
++H_{bf}\sum_j\overline{b_j}f_j\right.\\
+&\hspace{39mm}\left.
++H_{ba}\sum_j\overline{b_j}a_j
++H_{fa}\sum_j\overline{f_j}a_j
+\right].
+\end{aligned}
+\tag{112.6}
+$$
+
+引理 112.2 使 $H_{ca},H_{ba}$ 两项恰为零，且 $\beta,v$ 对角项非负，可以在下界中舍去。其他系数一致有界。再由引理 111.2，
+
+$$
+|C-1|+F=O(\epsilon),\qquad
+|h|=O(\epsilon)\sqrt{\beta v},
+$$
+
+$$
+\left|\sum_j\overline{b_j}f_j\right|
+\le\sqrt{\beta F}=o(\sqrt\epsilon),
+\qquad
+\left|\sum_j\overline{f_j}a_j\right|
+\le\sqrt{Fv}=o(\sqrt\epsilon).
+$$
+
+因此全部可能降低检验值的剩余项中，只有 $H_{cb}g$ 还需保留到 $\sqrt\epsilon$ 阶，得到
+
+$$
+\begin{aligned}
+\delta(\Gamma)
+&\ge L(a,z_0)-2|H_{cb}(a,z_0)||g|-o(\sqrt\epsilon)\\
+&\ge L(a,z_0)
+-2|H_{cb}(a,z_0)|(1+\sqrt v)\sqrt{\ell_\psi}
+-o(\sqrt\epsilon).
+\end{aligned}
+\tag{112.7}
+$$
+
+这里不需要知道 $a-1/2$ 相对 $\epsilon$ 的速度。因为 $a\to1/2$，第 102.4 式在同一个邻域内直接给 $L(a,z_0)\ge R$；引理 112.2 与 $\ell_\psi/\epsilon\to1$ 给
+
+$$
+2|H_{cb}(a,z_0)|(1+\sqrt v)\sqrt{\ell_\psi/\epsilon}
+\longrightarrow\kappa.
+$$
+
+代入式（112.7）即得所需上界。上述估计由相位对齐后的映射矩阵元控制，未依赖 Kraus 表示的秩或选法。若一致性失败，可取一列反例，经最近失效紧集的收敛子列与相同相位对齐后，上述每一项仍给相同极限，矛盾。$\square$
+
+## 113. 最坏等待律的临界首系数准确为黄金比例的十六分之一
+
+**定理 113.1（最坏均值的精确主项）。** 在本批固定模型中，存在正整数 $m$，使
+
+$$
+\boxed{
+\mathscr K(R-h)
+=\frac{1+\sqrt5}{32}\,h^{-2}
+\bigl(1+O(h^{1/m})\bigr)
+\qquad(h\downarrow0).
+}
+\tag{113.1}
+$$
+
+因此第 104 节未定的首系数准确为
+
+$$
+\boxed{c=\kappa^2=\frac\phi{16}=\frac{1+\sqrt5}{32}.}
+\tag{113.2}
+$$
+
+证明。第 104.1 条已给幂指数二和下界
+
+$$
+\liminf_{h\downarrow0}h^2\mathscr K(R-h)\ge\kappa^2.
+$$
+
+对每个充分小的 $0<h<R$，选择实际最大化仪器 $\Gamma_h\in\mathfrak B_{R-h}$，使 $M(\Gamma_h)=\mathscr K(R-h)$。第 88—93 节保证最大值取得，且这些最大化仪器趋近最近失效集合。令 $\epsilon_h=1-r(\Gamma_h)$。校准约束与定理 112.3 给
+
+$$
+h\le R-\delta(\Gamma_h)
+\le(\kappa+o(1))\sqrt{\epsilon_h}.
+$$
+
+另一方面，第 93 节与推论 104.2 给一致的同装置关系
+
+$$
+\epsilon_h M(\Gamma_h)\longrightarrow1.
+$$
+
+于是
+
+$$
+h^2\mathscr K(R-h)
+=\frac{h^2}{\epsilon_h}
+\bigl[\epsilon_h M(\Gamma_h)\bigr]
+\le(\kappa+o(1))^2(1+o(1)).
+$$
+
+与下界匹配得到式（113.2）。第 104.1 条已有的实代数主项展开再给式（113.1）的分数次余项；这里未声称已经确定最小可能的 $m$ 或次主项系数。$\square$
+
+**推论 113.2（显式向内旋转在首阶达到全局最优）。** 对第 103 节的 $\widehat\Gamma_{-t}$，可以在充分小的 $h>0$ 下选择唯一小正角 $t(h)$，使
+
+$$
+\delta(\widehat\Gamma_{-t(h)})=R-h,
+\qquad t(h)=\frac h\kappa+O(h^2).
+$$
+
+它的实际最大均值满足
+
+$$
+\boxed{
+\frac{M(\widehat\Gamma_{-t(h)})}{\mathscr K(R-h)}\longrightarrow1.
+}
+\tag{113.3}
+$$
+
+证明。第 103 节给局部光滑距离及非零导数 $-\kappa$，反函数定理给所述 $t(h)$。该族的实际均值准确为 $1+\csc^2t$，所以
+
+$$
+M(\widehat\Gamma_{-t(h)})
+=\kappa^2h^{-2}(1+O(h)).
+$$
+
+与定理 113.1 相除得到结论。$\square$
+
+这里的“首阶最优”只指比例趋于一；它没有证明每个正 $h$ 上该旋转装置恰为全局最优，也没有分类全部达到相同首项的装置。
+
+**推论 113.3（最优实际事件时间的系数也随之确定）。** 对每个充分小的 $0<h<R$ 选择任一最优仪器与其最优初态，令其实际首次点击轮数为 $\mathsf N_h$。则
+
+$$
+\boxed{
+h^2\mathsf N_h\Rightarrow\kappa^2 Z,
+\qquad Z\sim\operatorname{Exp}(1).
+}
+\tag{113.4}
+$$
+
+对每个固定实数 $s>0$，有
+
+$$
+h^{2s}\mathbb E\mathsf N_h^s
+\longrightarrow\kappa^{2s}\Gamma_{\rm E}(s+1).
+\tag{113.5}
+$$
+
+对每个固定 $0<\tau<1$，其下分位数满足
+
+$$
+q_\tau(h)\sim
+\kappa^2[-\log(1-\tau)]\,h^{-2}.
+\tag{113.6}
+$$
+
+证明。定理 99.1 与推论 99.2 已对任意实际最优选择给出 $\mathsf N_h/\mathscr K(R-h)\Rightarrow\operatorname{Exp}(1)$、全部固定正阶矩及固定分位数收敛。定理 113.1 给缩放因子 $h^2\mathscr K(R-h)\to\kappa^2$，代入这些已证关系便得到三式。$\square$
+
+式（113.4）仍是离散等待的弱极限，不升级成与连续分布的总变差收敛。$h$ 是完整通道距离间隙，$\mathsf N_h$ 是实际调用轮数；本批没有另作物理钟标定。
+
+## 114. 锐系数来自准平稳约束与同一检验的共同作用
+
+**关系结论 114.1（AHH：决定主阶的坐标由当前过程自己选择）。** 失效边界的纯暗态只描述极限；临界附近实际装置可以有混合准平稳态和一般 Kraus 算子。直接把边界上的上三角形状套回这些实际装置，会遗漏 $f_j$。本批保留这些项，再用当前准平稳方程确定主本征基。为与第 113 节的距离间隙 $h$ 分开，将式（111.4）的相干量写成 $h_{\rm coh}=\sum_j\overline{c_j}f_j$，于是得到
+
+$$
+\boxed{
+\text{当前准平稳方程}
+\longrightarrow
+h_{\rm coh}=O(\epsilon)\sqrt{\beta v}
+\longrightarrow
+R-\delta\le(\kappa+o(1))\sqrt\epsilon.
+}
+$$
+
+同一参考检验使另两项精确消失、两项系数非负；剩下的唯一主阶下降系数与显式旋转族的 $\kappa$ 完全匹配。这使 $\epsilon M\to1$ 转化成全局首系数 $c=\kappa^2$，而不是仅给某个例子的二次等待。
+
+**来源与边界 114.2。** 本批是第 91—104 节基础上的纸面综合推导：使用该卷已经给出的完全正分支表示、后处理收缩、准平稳谱投影、参考负谱检验与实代数主项；新增推导由正文展示的二维正矩阵约束、矩阵元恒等式及一致余项承担。量子通道和半钻石距离的基础仍沿用已列 Watrous 来源，实代数展开仍沿用已列 Basu 与 Bierstone–Milman 来源。不主张文献原创性，不以数值搜索或独立审阅代替数学证明，也不宣称本批已经编译为 Lean。
+
+第 108 节的任意终端态构造仍成立；它没有要求达到第 113 节的最优首系数。本批仍未确定每个子临界半径上的全部最优仪器、最坏均值的完整闭式、次主项和最小分数次指数，也未把齐次二维结论推广到任意时变控制或无限维记忆。
+
+## 追加锚（本行以下为增补区）
