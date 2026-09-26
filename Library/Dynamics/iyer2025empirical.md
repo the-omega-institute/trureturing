@@ -4113,3 +4113,56 @@ Bonis 与 Serov–Zubkov 的有限 binomial 耦合输入仍按第 94–98 章的
 零噪声、端点最优性、增长紧区间或新的覆盖效率结论。
 
 ## 追加锚（第 100 章来源后续增补区）
+
+## 第 101 章的全输出信息方差平均与文献范围
+
+第 101 章在同一完整计数后验及精确 Gaussian 观测上，将第 100 章的
+固定紧区间剖面提升为 $\int|D_x-R_*|f_x\to0$，由此得到平均剩余常数
+$8/\sqrt3-25/6$。积分始终在给定数据的先验信道内；外层结论是实际
+pair/path 数据概率收敛，对固定支持一致，不包含无界原始数据期望。
+原严格区间 $\ln(1/\sigma_M)\to\infty$、
+$\limsup\ln(1/\sigma_M)/Q^3<c_q/2$ 全部保留。
+精确输出均值先保留，再由 $m_x=O_{\mathbb P}(Q^{-5/2})$ 支付；
+观测到的发散有限系数及分母中的有限噪声仍不可替换。
+
+全方差恒等式、条件正交投影、四阶矩截断和 Gaussian 指数倾斜均为经典工具。
+新增连接在于先中心化完整信息量，以选中密度的 $L^2$ 误差支付全局方差密度，
+在同一潜变量与输出上显式支付噪声残差的变化，联合消去相关外部能量之后
+才取消外部信息方差，最后用任意高的固定 Fourier 阶数及 Chernoff 尾界
+控制可积残余。紧区间收敛自身不许可积分，TV 自身不传递平方信息量。
+
+Herry–Malicet–Poly，*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，原文 §2.3
+Theorem 13 假设固定维各向同性向量的各坐标属于指定固定 Wiener chaos，
+并弱收敛到标准 Gaussian；对充分大指标给
+相对熵 $\le$ 一半相对 Fisher 信息 $\le C$ 乘四阶矩超额。
+中心参考 $T_0/\sqrt{\nu_0}$ 属于二阶 chaos、方差为一，
+$\max w_j\to0$ 给其正态极限，四阶矩超额为 $O(\delta)$，
+故此参考 Fisher 信息速率直接属于既有理论。
+它不识别乘 $A^2=O(\delta^{-1})$ 后的常数，也不自动把加入一阶测量噪声的
+变量判成同一固定 chaos，更不提供实际离散选中后验的全局结论。
+原文采用对数密度梯度的 score 定义，其分部积分显示式的符号问题仍按此前说明保留；
+本卷直接从 Gaussian 积分推导所需倾斜，不依赖该显示式的符号。
+
+Mansanarez–Poly–Swan，*Edgeworth expansion on Wiener chaos*，
+[arXiv:2510.14002v2](https://arxiv.org/abs/2510.14002v2)，
+原 Theorem 1.2 对固定 $\mathcal W_p$、$\mathbb EF^2=1$ 与任意固定正整数 $m$，
+给出至 $4m-1$ 次的带符号 Hermite 展开，TV 误差由
+$C_{p,m}\operatorname{Var}(\Gamma(F,F))^{(m+1)/2}$ 控制。
+任意高固定阶的中心参考展开不是新一般理论；带符号 TV 界仍不控制低密度区的
+对数导数。第 101 章通过相同系数数组的特征函数，另证四阶导数反演、
+中间区间的相对展开与外部输出尾界，并以固定矩积分多项式余项，
+避免额外施加 $\sigma_M^2(\ln Q)^C\to0$。
+
+Dytso–Cardone [arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)
+的 Theorems 1–2、Theorem 4／Proposition 3，及 Tudor–Yoshida
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1) 的
+Conditions [A1]–[A3]、Proposition 1／Theorem 1，分别提供已有的条件导数／累积量
+关系和带明确 Malliavin 正则性及速率条件的局部加权展开。
+前者的固定有限混合正则性成立，但其逆噪声导数不单独提供本区间的全局界；
+后者的假设不能自动移植到增长且未归一化的离散信息量。
+Bonis 及 Serov–Zubkov 的一般参数二项耦合／CDF 界仍按第 96、98 章核对的
+版本和紧参数范围使用，不从对称二项外推。
+
+这些来源的经典机制与本卷实际模型组合分开承担。
+本章不声称文献全域原创性、零噪声结论、端点最优性、形式核验或新实验等价。
