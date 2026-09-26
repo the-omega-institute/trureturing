@@ -107,8 +107,9 @@ standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 
 `theorem`; resolution `proved` for the conjecture with its printed index
 corrected, as fixed in #10122. The public theorem has `proof_shape: content`:
-the least action inequality and the discrete maximum principle are proved by
-induction along toppling sequences and are not instances of pinned lemmas.
+the least action inequality is proved by induction along toppling sequences,
+the discrete maximum principle by comparing the leftmost and the rightmost
+maximum of the defect `u − v`, and neither is an instance of pinned lemmas.
 `admission_basis: open-problem-resolution` under preregistration issue #10122.
 There is no atom and no digestion coverage edge. The result is a uniform
 theorem for every `n`, so `utility: none` applies.

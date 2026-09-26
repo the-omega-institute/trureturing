@@ -11,7 +11,8 @@ proof_shape: result: content
 escape_witness: form (2), the conclusion `result` itself, produced on its live path by the least
   action inequality `least_action` (every legal sequence topples each cell at most as often as the
   explicit target odometer u*) and the discrete maximum principle `odometer_eq` (a legal sequence
-  ending in a final state has exactly the odometer u*), both proved by induction along the sequence
+  ending in a final state has exactly the odometer u*); the first by induction along the sequence,
+  the second by comparing the leftmost and rightmost maximum of the defect u* - v
 admission_basis: open-problem-resolution (issue #10122)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
