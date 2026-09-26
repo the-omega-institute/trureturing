@@ -68567,3 +68567,533 @@ $$
 本文没有证明所有矩形矩阵对都具有这样的谱下界与边界绕数，也没有给出一般矩形最优距离公式。已经得到的是：有理显式例的真实 $d_2$，以及允许非平凡主输出线的可复用下界条件。未进行文献穷尽检索，不据本组合推导主张原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 227. 二维输入任意有限输出的精确记录压缩距离
+
+设输入为 $\mathbb C^2$，量子输出为 $\mathbb C^m$，$m\ge1$。本文证明：任意两标签、结果 Choi 秩 $(1,2)$ 的 CPTP 记录通道，到全部同接口总 Choi 秩至多二记录通道的完整半 diamond 距离，恰为最优旋转删除成本与删除整个结果0成本的较小者。
+
+核心连接有三项。第一，将两个 Kraus 在纯输入上的 Gram 矩阵写成 Bloch 仿射映射。第二，用闭球极小极大和极体包含证明两种谱极值怎样共同给出删除成本。第三，在需要主谱下界的分支上，通过连续投影运输保留相位协变，从而给任意单 Kraus 竞争者制造零概率事件。退化目标最后由保持 TP 的稠密逼近处理。
+
+所有结论均为纸面数学推导，未新增或编译 Lean 证明。Sion 极小极大、Bloch 坐标、圆周绕数与有限维凸体极性是成熟工具；本文不把这些工具作为新定理，也不主张已经完成文献穷尽核查。
+
+**定理 227.1（对象与精确距离）。**
+
+固定三个 $m\times2$ 矩阵 $K_0,A,B$，满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2,
+\qquad K_0\ne0,
+$$
+并假设 $A,B$ 线性独立。令
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\Gamma(X).
+\tag{227.GD.1}
+$$
+这是结果 Choi 秩恰为 $(1,2)$ 的 CPTP 记录通道。定义
+$$
+\delta=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+\qquad q_0=\|K_0^\dagger K_0\|_\infty.
+\tag{227.GD.2}
+$$
+设 $\mathfrak C_2$ 是同输入、同量子输出、同经典标签、总 Choi 秩至多二的全部 CPTP 记录通道，并置
+$$
+d_2(\mathcal R)=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+记录通道按指定标签块对角，所以它的总 Choi 秩等于两个分支 Choi 秩之和。竞争者可以任意改变两分支；没有把结果0固定或从完整距离中删除。
+
+**定理。** 对上述全部目标，
+$$
+\boxed{d_2(\mathcal R)=\min(\delta,q_0).}
+\tag{227.GD.3}
+$$
+右侧总由一个明确的删除与共同右 Gram 修复候选取得。最近性不要求竞争者的 Kraus 落在 $\operatorname{span}\{A,B\}$。
+
+**定义 227.2（Gram 矩阵的 Bloch 表示）。**
+
+从本定义到定理 227.7 的第 227.7.3 项先设 $m\ge2$；一维量子输出由第 227.7.4 项单独处理。采用 Pauli 矩阵
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+对单位输入 $v=(x,y)$，约定
+$$
+s(v)=\bigl(2\operatorname{Re}(\overline xy),
+2\operatorname{Im}(\overline xy),|x|^2-|y|^2\bigr),
+\qquad
+P_v=\frac{I+s(v)\cdot\sigma}{2}.
+\tag{227.GD.4}
+$$
+令 $W_v=[Av\ Bv]$，并定义 Kraus 系数空间中的 Gram 矩阵
+$$
+T(s(v))=W_v^\dagger W_v
+=\begin{pmatrix}
+\|Av\|^2&v^\dagger A^\dagger Bv\\
+v^\dagger B^\dagger Av&\|Bv\|^2
+\end{pmatrix}.
+$$
+它对输入密度矩阵线性，故唯一可写成
+$$
+\boxed{
+T(s)=(a+t\cdot s)I_2+(u+Ls)\cdot\sigma,
+}
+\tag{227.GD.5}
+$$
+其中 $a\in\mathbb R$、$t,u\in\mathbb R^3$、$L\in M_3(\mathbb R)$。这里 $T$ 是这一明确 Gram 约定；不把它未经转置便认作通常的环境通道，也不假设它保迹。
+
+对单位系数 $c=(c_0,c_1)$，记 $n=s(c)$。则
+$$
+\|(c_0A+c_1B)v\|^2
+=c^\dagger T(s)c
+=f(s,n),
+$$
+$$
+f(s,n)=a+t\cdot s+u\cdot n+n\cdot Ls.
+\tag{227.GD.6}
+$$
+记闭单位球为 $\mathbb B$，球面为 $S^2$。定义
+$$
+\lambda_\pm(s)=a+t\cdot s\pm\|u+Ls\|,
+$$
+$$
+\alpha=\min_{s\in S^2}\lambda_+(s),
+\qquad
+\beta=\max_{s\in S^2}\lambda_-(s).
+\tag{227.GD.7}
+$$
+$\lambda_\pm$ 是 $T(s)$ 的两个本征值，也给出 $\Gamma(P_v)$ 的两个可能非零本征值。因此 $\beta$ 是输入端口的第二大本征值尾量。
+
+由（227.GD.6），
+$$
+\delta
+=\min_{n\in S^2}\max_{s\in S^2}f(s,n)
+=\min_{n\in S^2}
+\left[a+u\cdot n+\|t+L^Tn\|\right].
+\tag{227.GD.8}
+$$
+一般弱极小极大已给 $\beta\le\delta$。下面确定何时还需要 $\alpha$。
+
+**定理 227.3（Bloch 椭球内部的完整谱公式）。**
+
+先假设
+$$
+\det L\ne0,
+\qquad s_0=-L^{-1}u,
+\qquad\|s_0\|<1.
+\tag{227.GD.9}
+$$
+于是 $u+Ls$ 在球面上从不为零。再置
+$$
+n_0=-L^{-T}t,
+\qquad c=a-n_0\cdot Ls_0.
+\tag{227.GD.10}
+$$
+双仿射配对可以精确重写为
+$$
+f(s,n)=c+(n-n_0)\cdot L(s-s_0).
+\tag{227.GD.11}
+$$
+
+**谱结论。** 在（227.GD.9）下，
+$$
+\boxed{\delta=\max(\alpha,\beta).}
+\tag{227.GD.12}
+$$
+更精确地，
+$$
+\begin{array}{c|c}
+\|n_0\|<1&\delta=\alpha>c>\beta\\
+\|n_0\|=1&\delta=\alpha=\beta=c\\
+\|n_0\|>1&\delta=\beta>c>\alpha.
+\end{array}
+\tag{227.GD.13}
+$$
+此处先证明纯实凸几何结论，不需要把任何球面误当作凸集。
+
+**227.3.1 两个中心都在球内：极体包含给出对称等式。**
+
+设 $\|n_0\|<1$，令
+$$
+K=\mathbb B-s_0,\qquad H=\mathbb B-n_0,\qquad C=LK.
+$$
+三者都是包含原点为内点的紧凸体。记支撑函数为
+$$
+h_C(y)=\max_{x\in C}x\cdot y,
+$$
+极体为
+$$
+C^\circ=\{y:x\cdot y\le1\ \text{对所有 }x\in C\}.
+$$
+由（227.GD.11）及线性函数在闭球上的极值可取于球面，
+$$
+\delta-c=\min_{y\in\partial H}h_C(y),
+\qquad
+\alpha-c=\min_{x\in\partial C}h_H(x).
+\tag{227.GD.14}
+$$
+下面直接说明两式右侧相等。对任意 $r\ge0$，
+$$
+h_C(y)\ge r\quad\text{对所有 }y\in\partial H
+\iff C\supseteq rH^\circ.
+\tag{227.GD.15}
+$$
+理由是 $h_{H^\circ}(y)=1$ 在 $\partial H$ 上成立；由正齐次性，边界上的比较等价于所有向量上的支撑函数比较，再由闭凸集的分离定理等价于包含。取极体并使用双极恒等式，
+$$
+C\supseteq rH^\circ
+\iff H\supseteq rC^\circ.
+\tag{227.GD.16}
+$$
+在 $r>0$ 时这是取极体后反向包含的直接重排，$r=0$ 时两边均成立。再次使用（227.GD.15），得到
+$$
+\min_{y\in\partial H}h_C(y)
+=\min_{x\in\partial C}h_H(x).
+$$
+所以 $\delta=\alpha$。
+
+此外，对 $x=s-s_0\in\partial K$，
+$$
+\lambda_+(s)-c=\|Lx\|-n_0\cdot Lx>0,
+$$
+$$
+\lambda_-(s)-c=-\|Lx\|-n_0\cdot Lx<0,
+$$
+因为 $Lx\ne0$ 且 $\|n_0\|<1$。紧性给 $\alpha>c>\beta$，证明（227.GD.13）的第一行。
+
+**227.3.2 系数中心在球面上：直接处理临界情形。**
+
+设 $\|n_0\|=1$。同样的两式及 Cauchy–Schwarz 给
+$$
+\lambda_+(s)\ge c,\qquad\lambda_-(s)\le c.
+$$
+由于 $0\in\operatorname{int}K$，沿 $Lx$ 的正、负 $n_0$ 射线分别能到达 $\partial(LK)$，所以两侧都能取等，得到 $\alpha=\beta=c$。
+
+另一方面，取球面系数 $n=n_0$，有
+$$
+a+u\cdot n_0+\|t+L^Tn_0\|=c.
+$$
+所以 $\delta\le c$。结合 $\beta\le\delta$，得到三者均为 $c$。这里没有把临界点排除或依赖数值极限。
+
+**227.3.3 系数中心在球外：闭球 Sion 与边界最优。**
+
+设 $\|n_0\|>1$。定义闭球上的
+$$
+g(n)=\max_{s\in\mathbb B}f(s,n)
+=a+u\cdot n+\|t+L^Tn\|,
+$$
+$$
+h(s)=\min_{n\in\mathbb B}f(s,n)
+=a+t\cdot s-\|u+Ls\|.
+$$
+$f$ 在两个闭球上连续，分别仿射；两个闭球都是凸紧集。因此 Sion 定理适用，给
+$$
+\min_{n\in\mathbb B}g(n)=\max_{s\in\mathbb B}h(s).
+\tag{227.GD.17}
+$$
+它只施用于闭球，尚未用于球面。
+
+$g$ 在闭球邻域内可微，因为 $t+L^Tn=L^T(n-n_0)\ne0$。若它在球内部取得最小值，则
+$$
+0=\nabla g(n)
+=u+L\frac{t+L^Tn}{\|t+L^Tn\|},
+$$
+强制一个单位向量等于 $s_0$，违反 $\|s_0\|<1$。故 $g$ 的最小值在球面，等于 $\delta$。
+
+若 $h$ 在内部点 $s\ne s_0$ 取得最大值，则可微性给
+$$
+t=L^T\frac{u+Ls}{\|u+Ls\|},
+$$
+与 $\|L^{-T}t\|=\|n_0\|>1$ 矛盾。$s_0$ 也不是局部最大点：选方向 $d$ 满足 $Ld=-n_0/\|n_0\|$，则小的 $\varepsilon>0$ 给
+$$
+h(s_0+\varepsilon d)-h(s_0)
+=\varepsilon(\|n_0\|-1)>0,
+$$
+且该点仍在球内。因此 $h$ 的最大值也在球面，等于 $\beta$。（227.GD.17）给 $\delta=\beta$。
+
+最后，沿 $Lx$ 的正 $n_0$ 射线取 $x\in\partial K$，得到 $\lambda_+(s)<c$；沿负射线则得到 $\lambda_-(s)>c$。所以 $\beta>c>\alpha$，完成第三行及整个谱公式。
+
+Sion 来源为 Maurice Sion, “On general minimax theorems”, *Pacific Journal of Mathematics* **8** (1958), 171–176，定理3.4，第174页。原文假设凸紧空间及相应半连续、拟凹凸条件；这里用的是连续双仿射的直接特例。[原论文 PDF，第5页](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf#page=5)。
+
+**定理 227.4（非零度数与任意竞争者的主谱下界）。**
+
+仍假设（227.GD.9）。令
+$$
+\nu(s)=\frac{u+Ls}{\|u+Ls\|},
+\qquad\epsilon=\operatorname{sign}\det L\in\{-1,1\}.
+$$
+该映射的度数为 $\epsilon$。下面给出带明确相位的构造，而不只使用“线丛次数相加”的口头解释。
+
+**227.4.1 无简并同伦及起点相位。**
+
+取实极分解 $L=OP$，其中 $O\in O(3)$、$P\succ0$。矩阵路径
+$$
+O((1-\tau)I+\tau P),\qquad0\le\tau\le1,
+$$
+均可逆，将 $O$ 连到 $L$。再沿 $\tau u+Ls$ 加入平移；其零点若存在，只能是 $s=\tau s_0$，不在单位球面上。两段路径归一化后给出 $Os$ 到 $\nu(s)$ 的连续球面同伦，因此度数为 $\det O=\epsilon$。
+
+若 $\epsilon=1$，选酉矩阵 $U$ 实现旋转 $O$，即
+$$
+U(s\cdot\sigma)U^\dagger=(Os)\cdot\sigma.
+$$
+起点主向量可取 $q_0(v)=Uv$，满足
+$$
+q_0(e^{i\theta}v)=e^{i\theta}q_0(v).
+$$
+若 $\epsilon=-1$，令 $R=\operatorname{diag}(1,-1,1)$。复共轭满足 $s(\overline v)=Rs(v)$，而 $OR\in SO(3)$。选择 $U$ 实现旋转 $OR$，取 $q_0(v)=U\overline v$。此时它仍是 $Os(v)$ 的主向量，并满足
+$$
+q_0(e^{i\theta}v)=e^{-i\theta}q_0(v).
+$$
+所以两种情形统一为相位次数 $\epsilon$。任意三维旋转可由 qubit unitary 共轭实现，这是标准 Pauli–旋转对应；也可由轴角式 $\exp(-i\vartheta\,\widehat n\cdot\sigma/2)$ 直接检验。
+
+**227.4.2 有限次投影运输保留相位协变。**
+
+令上述同伦的主投影为
+$$
+P_\tau(s)=\frac{I+\nu_\tau(s)\cdot\sigma}{2}.
+$$
+它在紧集 $[0,1]\times S^2$ 上连续。可选有限分割 $0=\tau_0<\cdots<\tau_N=1$，使相邻投影一致满足
+$$
+\sup_s\|P_{\tau_j}(s)-P_{\tau_{j-1}}(s)\|_\infty<1.
+$$
+从刚才的单位主向量开始，递归定义
+$$
+q_j(v)=
+\frac{P_{\tau_j}(s(v))q_{j-1}(v)}
+{\|P_{\tau_j}(s(v))q_{j-1}(v)\|}.
+\tag{227.GD.18}
+$$
+因为 $q_{j-1}$ 位于前一投影的像中，分母至少为
+$$
+1-\|P_{\tau_j}(s(v))-P_{\tau_{j-1}}(s(v))\|_\infty>0.
+$$
+所以每步均连续且合法。投影只依赖 $s(v)$，故相位协变逐步保留。最终得到 $T(s(v))$ 的连续单位主向量 $q(v)$，满足
+$$
+q(e^{i\theta}v)=e^{i\epsilon\theta}q(v).
+\tag{227.GD.19}
+$$
+这是球面 $S^3$ 上的向量，不把它未经核对便降到 $\mathbb {CP}^1$。
+
+**227.4.3 转成真实输出事件并与任意 Kraus 比较。**
+
+$T(s)$ 正半定且两个本征值不同，故 $\lambda_+(s)>0$。定义
+$$
+r(v)=\frac{W_vq(v)}{\sqrt{\lambda_+(s(v))}}.
+\tag{227.GD.20}
+$$
+则 $r(v)$ 连续、单位，且
+$$
+\Gamma(P_v)r(v)=\lambda_+(s(v))r(v),
+$$
+$$
+\boxed{
+ r(e^{i\theta}v)=e^{i(1+\epsilon)\theta}r(v).
+}
+\tag{227.GD.21}
+$$
+输入自身贡献相位一，Gram 主向量贡献相位 $\epsilon$；这一显式纤维映射固定了符号。$\epsilon=-1$ 给相位零，$\epsilon=1$ 给相位二。
+
+对任意 $m\times2$ 候选单 Kraus $C$，在闭圆盘取
+$$
+v(z)=\sqrt{1-|z|^2}f_0+zf_1,
+\qquad F(z)=\langle r(v(z)),Cv(z)\rangle.
+$$
+在 $|z|=1$ 上，
+$$
+F(z)=z^{-\epsilon}h,
+\qquad h=\langle r(f_1),Cf_1\rangle.
+\tag{227.GD.22}
+$$
+若 $h=0$，边界已有零点；否则假设圆盘无零会使 $F/|F|$ 将绕数 $-\epsilon\ne0$ 的边界映射延拓到圆盘，矛盾。因此存在 $v$ 使候选在事件 $P_{r(v)}$ 上概率为零，而目标结果1在同一事件上的概率为 $\lambda_+(s(v))\ge\alpha$。
+
+与完整标签效果 $|1\rangle\langle1|\otimes P_{r(v)}$ 配对，得到任意结果1秩至多一竞争者的完整半 diamond 下界 $\alpha$。圆周不可延拓性采用 Hatcher《Algebraic Topology》§1.1、第29页定理1.7与第32页定理1.9证明中的标准工具。[官方章节 PDF](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。
+
+另一方面，输入尾谱始终给下界 $\beta$：选使 $\lambda_-(s)=\beta$ 的输入，若 $Cv\ne0$，读取输出效果 $I-P_{Cv/\|Cv\|}$；目标概率至少为第二大本征值 $\beta$，候选为零。若 $Cv=0$，整个结果1即可见证该下界。因此（227.GD.12）给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\max(\alpha,\beta)=\delta
+\tag{227.GD.23}
+$$
+对任意结果1 Choi 秩至多一的竞争者成立。
+
+**定理 227.5（Bloch 椭球外部的尾谱等式）。**
+
+现在假设 $L$ 可逆且 $\|s_0\|>1$，即
+$$
+0\notin u+L\mathbb B.
+\tag{227.GD.24}
+$$
+归一化 Bloch 方向可以在整个闭球上定义，故球面度数为零。此时不需要主输出绕数下界，精确公式是
+$$
+\boxed{\delta=\beta.}
+\tag{227.GD.25}
+$$
+
+证明仍对两个闭球使用（227.GD.17）。首先，凸函数 $g(n)=a+u\cdot n+\|t+L^Tn\|$ 不可能在球内部取最小值。在可微点，内点最小要求 $0=u+Ls$，其中 $s$ 为某单位向量，违反（227.GD.24）；在不可微点 $t+L^Tn=0$，其凸次微分为 $u+L\mathbb B$，仍不含零。这也可直接由范数方向导数与分离定理得到。因此 $g$ 的最小值在球面，等于 $\delta$。
+
+$h(s)=a+t\cdot s-\|u+Ls\|$ 在闭球邻域可微。若最大点已经在边界，结论立即成立。若有内部最大点 $s_*$，置
+$$
+w=\frac{u+Ls_*}{\|u+Ls_*\|},
+$$
+其一阶条件为 $t=L^Tw$，且
+$$
+s_*=s_0+r_*L^{-1}w,\qquad r_*>0.
+$$
+沿同一射线
+$$
+s(r)=s_0+rL^{-1}w,\qquad r>0,
+$$
+有
+$$
+h(s(r))=a+t\cdot s_0+r(t\cdot L^{-1}w-1)
+=a+t\cdot s_0.
+$$
+包含内部点 $s_*$ 的射线与闭球交成一个紧区间；由于 $s_0$ 在球外，该区间的两个端点仍有 $r>0$，并位于球面。因此同一最大值也在球面取得，等于 $\beta$。结合闭球 Sion 得到（227.GD.25）。
+
+于是外部情形下，既有输入尾谱下界已经给任意结果1秩至多一候选的距离至少为 $\delta$。
+
+**推论 227.6（非退化目标的完整距离与达到构造）。**
+
+假设 $L$ 可逆且 $\|L^{-1}u\|\ne1$。前两种情况已经穷尽，均给结果1秩至多一竞争者的下界 $\delta$。若预算候选的结果1秩为二，则结果0必须为零，读取标签0给下界 $q_0$。故
+$$
+d_2(\mathcal R)\ge\min(\delta,q_0).
+\tag{227.GD.26}
+$$
+上界使用第 219 节的全缺失范数右 Gram 修复定理。先注意
+$$
+\delta
+\le\frac{\operatorname{Tr}(A^\dagger A+B^\dagger B)}2
+=1-\frac{\operatorname{Tr}K_0^\dagger K_0}{2}<1.
+\tag{227.GD.27}
+$$
+其中第一次比较可通过两个原 Kraus 的算子范数平方取较小者，再用范数不超过迹得到。
+
+取达到 $\delta$ 的单位系数，旋转出删除项 $D=c_0A+c_1B$，另一个保留 Kraus 记为 $C$。删除结果1的 $DXD^\dagger$，把 $K_0,C$ 共同右乘 $(I-D^\dagger D)^{-1/2}$，得到结果秩 $(1,1)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $\delta$。
+
+若 $q_0<\delta$，则 $q_0<1$，可以删除整个结果0，并把 $A,B$ 共同右乘 $(I-K_0^\dagger K_0)^{-1/2}$。这给结果秩 $(0,2)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $q_0$。
+
+以上修复定理适用于全部缺失效应范数严格小于一，保留全部结果标签与完整参考系统。结合（227.GD.26）即证明非退化目标的（227.GD.3）。
+
+**定理 227.7（保持 TP 的稠密逼近与全部维数）。**
+
+本节先设 $m\ge2$。不对简并主投影直接选取前述向量，而采用非退化目标逼近并对真实距离取极限。$m=1$ 在本节末单独证明。
+
+**227.7.1 可用非退化矩阵对在同一输出维数中稠密。**
+
+$a,t,u,L$ 的各坐标都是 $A,B$ 实虚矩阵元的实二次多项式。因而
+$$
+\mathcal P(A,B)=\det L\,
+\left(\|\operatorname{adj}(L)u\|^2-(\det L)^2\right)
+\tag{227.GD.28}
+$$
+为实多项式。$\mathcal P\ne0$ 恰保证 $L$ 可逆且 $\|L^{-1}u\|\ne1$。
+
+它不是恒零多项式。对二维输出取
+$$
+A=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad B=\begin{pmatrix}0&2\\3&0\end{pmatrix}.
+$$
+在（227.GD.4）、（227.GD.5）的固定约定下，直接有
+$$
+u=(0,0,-2),\qquad
+L=\operatorname{diag}(7/2,-1/2,-1/2),
+\qquad s_0=(0,0,-4).
+\tag{227.GD.29}
+$$
+所以 $\mathcal P\ne0$。当 $m>2$，在其余输出行补零保留同一例。非零实多项式的零集无内点，故满足所需非退化条件的矩阵对在每个 $m\ge2$ 的整个矩阵对空间中稠密。
+
+**227.7.2 在目标 TP 约束内构造逼近。**
+
+原目标满足 $G=A^\dagger A+B^\dagger B\preceq I$。先把 $A,B$ 共同乘以 $\sqrt{1-\varepsilon}$，则新的余量满足
+$$
+I-(1-\varepsilon)G\succeq\varepsilon I\succ0.
+$$
+在足够小的邻域内选一个非退化矩阵对 $(A_\varepsilon,B_\varepsilon)$，仍保持
+$$
+R_\varepsilon=I-A_\varepsilon^\dagger A_\varepsilon
+-B_\varepsilon^\dagger B_\varepsilon\succ0,
+$$
+并使其趋向 $(A,B)$。
+
+$K_0$ 的极分解部分等距总能扩成一个固定等距嵌入 $U:\mathbb C^2\to\mathbb C^m$，因为 $m\ge2$。所以
+$$
+K_0=U(K_0^\dagger K_0)^{1/2}.
+$$
+定义
+$$
+K_{0,\varepsilon}=UR_\varepsilon^{1/2}.
+\tag{227.GD.30}
+$$
+它非零，与 $A_\varepsilon,B_\varepsilon$ 共同满足 TP，并由正平方根的连续性趋向原 $K_0$。非退化条件也保证 $A_\varepsilon,B_\varepsilon$ 线性独立：若两者相关，则 Gram 的无迹像至多在一条直线上，$L$ 不可能可逆。得到的目标 $\mathcal R_\varepsilon$ 因而均为合法结果秩 $(1,2)$，并在完整 diamond 范数下趋向原目标。
+
+**227.7.3 同一候选集上的距离连续性。**
+
+所有目标使用同一个固定候选集 $\mathfrak C_2$。由三角不等式，
+$$
+|d_2(\mathcal R_\varepsilon)-d_2(\mathcal R)|
+\le\frac12\|\mathcal R_\varepsilon-\mathcal R\|_\diamond
+\longrightarrow0.
+\tag{227.GD.31}
+$$
+$q_{0,\varepsilon}\to q_0$ 是算子范数连续性。$\delta_\varepsilon\to\delta$ 则来自单位系数球面上的一致收敛及紧集取最小值的连续性。对非退化目标已有
+$$
+d_2(\mathcal R_\varepsilon)
+=\min(\delta_\varepsilon,q_{0,\varepsilon}).
+$$
+取极限便得到一般目标的（227.GD.3）。推论 227.6的显式修复上界对原目标本身仍有效，所以距离下确界确实取得。证明完毕。
+
+**227.7.4 一维量子输出直接处理。**
+
+当 $m=1$，$A,B$ 是线性独立的行向量。令
+$$
+E_1=A^\dagger A+B^\dagger B,
+\qquad V=\begin{pmatrix}A\\B\end{pmatrix}.
+$$
+$V$ 为可逆 $2\times2$ 矩阵。删除系数的 Rayleigh 最小值给
+$$
+\delta=\lambda_{\min}(VV^\dagger)
+=\lambda_{\min}(V^\dagger V)
+=\lambda_{\min}(E_1).
+$$
+任意结果1秩至多一的候选由一个行向量 $C$ 表示。取其输入核中的单位向量 $v$，则候选结果1概率为零，而目标概率为 $v^\dagger E_1v\ge\delta$。若候选结果1秩为二，则缺失结果0，标签下界为 $q_0$。推论 227.6的修复上界在这一输出维数仍适用。因此（227.GD.3）也对 $m=1$ 成立，不依赖高维输出的多项式稠密论证。
+
+**例 227.8（主谱下界与尾谱下界的互补）。**
+
+以下精确例说明为什么定理 227.3必须保留 $\beta$。取
+$$
+A=\begin{pmatrix}\sqrt6&0\\0&1\\0&0\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0&0\\2&0\\0&\sqrt3\end{pmatrix}.
+$$
+其 Gram Bloch 形式为
+$$
+T(s)=\left(\frac72+\frac32s_z\right)I+s\cdot\sigma.
+\tag{227.GD.32}
+$$
+这里 $L=I,u=0$，Bloch 度数为正一，而 $n_0=-(3/2)e_z$ 在球外。因此
+$$
+\alpha=3,\qquad\beta=4,\qquad\delta=4.
+\tag{227.GD.33}
+$$
+所以“非零度数推出 $\alpha=\delta$”为假。度数保证主谱零事件机制可用；达到删除成本还要比较它与尾谱机制。
+
+若需合法记录通道，将两个 Kraus 同乘 $1/4$，并取
+$$
+K_0=E\sqrt{I_2-\operatorname{diag}(10,4)/16}.
+$$
+其中 $E:\mathbb C^2\to\mathbb C^3$ 是等距嵌入 $E(x,y)=(x,y,0)$。此时 $q_0=3/4$，$\delta=1/4$，故真实距离为 $d_2=1/4$，而缩放后的 $\alpha$ 只有 $3/16$。
+
+**227.9 既有例子、来源与适用范围。**
+
+前一个平坦矩形例的 Gram Bloch 方向度数为负一，输出事件相位次数为零；有理矩形例的度数为正一，输出事件相位次数为二。它们正好对应（227.GD.21）的两个非零度分支。本文的投影运输证明不用假设主输出线总有全局连续单位向量。
+
+标准 Bloch 仿射坐标及 qubit unitary 与三维旋转的关系，可参见 Ruskai–Szarek–Werner, “An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$”, arXiv:quant-ph/0101003，§1.2，第4–6页，式（2）、（4）、（5）。该文也明确区分旋转与任意正交变换，并讨论椭球的符号取向。[原论文 PDF](https://arxiv.org/pdf/quant-ph/0101003)。本文只从中采用标准坐标与旋转背景；当前 Gram 不必保迹，谱极小极大、相位运输及完整距离结论由上文分别证明。
+
+本轮核对的原始来源包括该 Bloch 表示论文、Sion 原论文及 Hatcher 的圆周基本群章节；这些核对没有建立当前距离公式的文献首创性。结论的输入维数固定为二、结果1的实际 Choi 秩固定为二、结果0为单非零 Kraus。未将其扩展到一般输入维数、三个以上保留方向或任意结果预算。
+
+## 追加锚（本行以下为增补区）
