@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.SourceOperands
+import LeanInformationAudit.Registry.SourceFinite
 
 namespace LeanInformationAudit.SourceContract
 open Lean Meta TemplateAudit SourceScope
@@ -58,20 +59,31 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let info ← getConstInfo event.key.theoremName
     let scope ← resolve info selection
     trace[InformationRegistration.check] "source phase=resolve work={limit - (← get)}"
-    let arena ← atLevels event event.key.objectArena
+    let objectArena ← atLevels event event.key.objectArena
     let record ← atLevels event event.realizationName
+    if let some definition := scope.definition then safe definition.name
     safe event.key.theoremName
     safe event.realizationName
     safe event.key.objectArena
     let type ← inferType record
     unless type.isAppOfArity (family ++ `Registration) 2 &&
-        type.getAppArgs[0]!.equal arena && (← isDefEq type.getAppArgs[1]! info.type) do
+        (← isDefEq type.getAppArgs[1]! info.type) do
+      throwError "unclassified_form:source.record_statement"
+    let arena := type.getAppArgs[0]!
+    let some arenaName := arena.constName? | throwError "unclassified_form:source.arena_identity"
+    unless arena.equal (← atLevels event arenaName) do
+      throwError "unclassified_form:source.arena_identity"
+    safe arenaName
+    if input.finiteBridge.isNone && !arena.equal objectArena then
       throwError "unclassified_form:source.record_statement"
     let actual ← mkAppM (family ++ `Registration.actual) #[record]
     let signature ← mkAppM (family ++ `Arena.signature) #[arena]
     let law ← mkAppM (family ++ `Arena.Law) #[arena, actual]
-    reconstruct info.type law
+    reconstruct scope.expanded law
     validateFields scope signature actual
+    if let some bridge := input.finiteBridge then
+      safe bridge
+      SourceFinite.validate event arena signature actual bridge
     trace[InformationRegistration.check] "source phase=reconstruction_and_fields work={limit - (← get)}"
     checkWithKernel record
     let obligations := #[
@@ -96,6 +108,8 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let lawFunction ← mkAppM (family ++ `Arena.Law) #[arena]
     let (_, work) ← SourceOperands.check event.key.theoremName
       #[descriptor, rawActual] (← get) (some lawFunction)
+      (scope.definition.map (·.value))
+      (if input.finiteBridge.isSome then some objectArena else none)
     debit work
     trace[InformationRegistration.check] "source phase=operands work={limit - (← get)}"
     unless ← isDefEq descriptor rawActual do throwError "unclassified_form:source.descriptor_actual"
@@ -107,21 +121,58 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | .error reason => throwError reason
     let readouts ← scope.readouts.mapIdxM fun i readout => do
       let selected := selection.readouts[i]!
-      let closed := readout.context.foldr (fun b e =>
+      let closed := readout.rawContext.foldr (fun b e =>
         if let some v := b.value then Expr.letE b.name b.domain v e b.nondep
-        else Expr.forallE b.name b.domain e b.info) readout.observation
-      return Json.mkObj [
+        else Expr.forallE b.name b.domain e b.info) readout.rawObservation
+      let modes := if selected.functionOperand then [("function_operand", toJson true)]
+        else if let some path := selected.stateOperand then
+          [("state_operand", toJson path), ("boolean_predicate", toJson selected.booleanPredicate)]
+        else []
+      return Json.mkObj ([
         ("path", toJson selected.path), ("state_binder", toJson selected.stateBinder),
-        ("scope_size", toJson readout.context.size),
-        ("occurrence_identity", toJson (← fingerprint scope.levels closed))]
-    let sourceBinding := Json.mkObj [
+        ("scope_size", toJson readout.rawContext.size),
+        ("scope_paths", toJson (readout.rawContext.map (·.path))),
+        ("occurrence_identity", toJson (← fingerprint scope.levels closed))] ++ modes)
+    let definitionInput : Option DependencyIdentity ← match scope.definition with
+      | none => pure none
+      | some definition => do
+        let rawFingerprint := fun e => do
+          let .ok (identity, work) := compactRawIdentity scope.levels e (← get)
+            | throwError "incomplete_closure:E8.source_definition_fingerprint"
+          debit work
+          pure identity
+        let typeIdentity ← rawFingerprint definition.type
+        let bodyIdentity ← rawFingerprint definition.value
+        pure (some {
+          name := definition.name
+          owner := definition.owner
+          typeIdentity := typeIdentity
+          bodyIdentity := bodyIdentity })
+    let definitionEntry ← definitionInput.toList.mapM fun entry => do
+      let reference := mkConst entry.name (scope.levels.map Level.param)
+      let .ok (referenceIdentity, work) := compactRawIdentity scope.levels reference (← get)
+        | throwError "incomplete_closure:E8.source_definition_reference_fingerprint"
+      debit work
+      pure ("definition_entry", Json.mkObj [
+        ("reference_identity", toJson referenceIdentity),
+        ("path", toJson (scope.definition.map (·.path) |>.getD #[])),
+        ("owner", toJson entry.owner.toString),
+        ("name", toJson entry.name.toString),
+        ("type_identity", toJson entry.typeIdentity),
+        ("body_identity", toJson entry.bodyIdentity)])
+    let projection := input.finiteBridge.toList.map fun bridge =>
+      ("finite_projection", Json.mkObj [
+        ("family_arena", toJson arenaName.toString), ("bridge", toJson bridge.toString)])
+    let sourceBinding := Json.mkObj ([
       ("source_owner", toJson selection.owner.toString),
       ("source_name", toJson event.key.theoremName.toString),
       ("source_type_identity", toJson sourceTypeIdentity),
       ("telescope_size", toJson scope.telescope.size),
       ("level_count", toJson scope.levels.length),
       ("coordinates", toJson selection.coordinates),
-      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)]
+      ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
+      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++
+      definitionEntry ++ projection)
     let escape : EscapeRecordEvidence := {
       bridgeKind := "source-equivalence"
       fromObject := some {
@@ -130,8 +181,11 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
         objectIdentity := actualIdentity }
       continuation := some { kind := "open" } }
     trace[InformationRegistration.check] "source phase=identities work={limit - (← get)}"
-    let extractionInputs ← #[event.key.theoremName, event.realizationName,
-      event.key.objectArena].mapM inputIdentity
+    let roots := #[event.key.theoremName, event.realizationName, event.key.objectArena, arenaName] ++
+      input.finiteBridge.toArray
+    let mut extractionInputs ← roots.toList.eraseDups.toArray.mapM inputIdentity
+    if let some entry := definitionInput then
+      extractionInputs := extractionInputs.push entry
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
       descriptorIdentity, actualIdentity, argumentInputs := #[], extractionInputs,

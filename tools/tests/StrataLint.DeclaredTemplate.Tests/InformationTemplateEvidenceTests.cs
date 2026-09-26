@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.DeclaredTemplate.Tests;
@@ -75,10 +76,68 @@ public sealed class InformationTemplateEvidenceTests
         row["certificate"]!["source_binding"] = JsonSerializer.SerializeToNode(new {
             source_owner = "D5.S0.Carrier.Probe", source_name = Key.Theorem,
             source_type_identity = Hash("fixture statement A"), telescope_size = 13, level_count = 2,
-            coordinates = new[] { 0, 1, 11 }, registration_identity = Hash("fixture registration"),
-            readouts = new[] { new { path = Enumerable.Repeat("body", 13).Concat(new[] { "arg", "body" }).ToArray(),
-                state_binder = 16, scope_size = 17, occurrence_identity = Hash("fixture original projection") } } });
+            coordinates = new[] { 0, 1, 11 },
+            coordinate_paths = new[] { 0, 1, 11 }.Select(i => Enumerable.Repeat("body", i + 1).ToArray()).ToArray(), registration_identity = Hash("fixture registration"),
+            readouts = new[] { new { path = Enumerable.Repeat("body", 17).Concat(new[] { "arg" }).ToArray(),
+                state_binder = 16, scope_size = 17,
+                scope_paths = Enumerable.Range(1, 17).Select(i => Enumerable.Repeat("body", i).ToArray()).ToArray(),
+                occurrence_identity = Hash("fixture original projection") } } });
         return wire;
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void explicit_source_operands_preserve_strict_scope_shape(bool predicate)
+    {
+        var wire = SourceWire();
+        var binding = wire["records"]![0]!["certificate"]!["source_binding"]!;
+        binding["coordinates"] = new JsonArray();
+        binding["coordinate_paths"] = new JsonArray();
+        var readout = binding["readouts"]![0]!;
+        readout["scope_size"] = 0;
+        readout["scope_paths"] = new JsonArray();
+        readout["state_binder"] = 0;
+        if (predicate)
+        {
+            readout["state_operand"] = new JsonArray("fn", "arg");
+            readout["boolean_predicate"] = true;
+        }
+        else readout["function_operand"] = true;
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        Assert.True(Assert.Single(Read().Records).HasFourSlots);
+        readout["state_binder"] = 1;
+        Assert.Throws<FormatException>(() => Read());
+        readout["state_binder"] = 0;
+        if (predicate) readout["state_operand"] = new JsonArray("body");
+        else readout["function_operand"] = false;
+        Assert.Throws<FormatException>(() => Read());
+    }
+
+    [Fact]
+    public void finite_source_projection_requires_all_source_and_projection_dependencies()
+    {
+        var wire = SourceWire();
+        var certificate = wire["records"]![0]!["certificate"]!;
+        var family = ModuleA + ".familyArena";
+        var bridge = ModuleA + ".legacyBridge";
+        certificate["source_binding"]!["finite_projection"] = JsonSerializer.SerializeToNode(new {
+            family_arena = family, bridge });
+        certificate["extraction_inputs"] = JsonSerializer.SerializeToNode(new[] {
+                family, bridge, Key.Theorem, Realization, Key.ObjectArena }
+            .Select(name => new { name, owner = ModuleA, type_identity = Hash(name), body_identity = "" }));
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        Assert.Equal(5, Assert.Single(Read().Records).SourceProjectionOwners!.Count);
+        var arenaDependency = certificate["extraction_inputs"]![4]!.DeepClone();
+        certificate["extraction_inputs"]!.AsArray().RemoveAt(4);
+        Assert.Throws<FormatException>(() => Read());
+        certificate["extraction_inputs"]!.AsArray().Add(arenaDependency);
+        certificate["extraction_inputs"]!.AsArray().RemoveAt(1);
+        Assert.Throws<FormatException>(() => Read());
+        certificate["source_binding"]!["finite_projection"]!["bridge"] = Key.Theorem;
+        Assert.Throws<FormatException>(() => Read());
     }
 
     [Fact]
@@ -116,6 +175,8 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData("coordinates")]
     [InlineData("telescope_size")]
     [InlineData("level_count")]
+    [InlineData("coordinate_paths")]
+    [InlineData("scope_paths")]
     [InlineData("readouts")]
     [InlineData("state_binder")]
     [InlineData("path")]
@@ -133,7 +194,9 @@ public sealed class InformationTemplateEvidenceTests
             case "source_type_identity": source[field] = Hash("stale statement"); break;
             case "source_owner": source[field] = "Reg.WrongOwner"; break;
             case "coordinates": source[field] = JsonSerializer.SerializeToNode(new[] { 0, 11, 1 }); break;
-            case "telescope_size": source[field] = 11; break;
+            case "telescope_size": source[field] = 65; break;
+            case "coordinate_paths": source[field] = JsonSerializer.SerializeToNode(new[] { new[] { "arg", "body" } }); break;
+            case "scope_paths": source["readouts"]![0]![field] = new System.Text.Json.Nodes.JsonArray(); break;
             case "level_count": source[field] = 65; break;
             case "readouts": source[field] = new System.Text.Json.Nodes.JsonArray(); break;
             case "state_binder": source["readouts"]![0]![field] = 17; break;
@@ -144,6 +207,53 @@ public sealed class InformationTemplateEvidenceTests
         }
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire),
             PathA, Snapshot((PathA, TextA))));
+    }
+
+    [Theory]
+    [InlineData("valid")]
+    [InlineData("missing")]
+    [InlineData("owner")]
+    [InlineData("name")]
+    [InlineData("type_identity")]
+    [InlineData("body_identity")]
+    [InlineData("unknown")]
+    [InlineData("null")]
+    [InlineData("reference_identity")]
+    [InlineData("missing-path")]
+    [InlineData("wrong-path")]
+    [InlineData("deep-path")]
+    [InlineData("sibling-readout")]
+    public void explicit_definition_entry_is_strict_and_bound_to_extraction(string mutation)
+    {
+        var wire = SourceWire();
+        var certificate = wire["records"]![0]!["certificate"]!;
+        var source = certificate["source_binding"]!;
+        var entry = JsonSerializer.SerializeToNode(new {
+            owner = "D5.S0.Carrier.Probe", name = "D5.S0.Carrier.Probe.claim",
+            type_identity = Hash("Prop"), body_identity = Hash("original definition body") });
+        source["definition_entry"] = entry!.DeepClone();
+        source["definition_entry"]!["path"] = new JsonArray();
+        source["definition_entry"]!["reference_identity"] = source["source_type_identity"]!.DeepClone();
+        certificate["extraction_inputs"] = new System.Text.Json.Nodes.JsonArray(entry!.DeepClone());
+        switch (mutation)
+        {
+            case "missing": source.AsObject().Remove("definition_entry"); break;
+            case "owner": source["definition_entry"]![mutation] = "D5.Other"; break;
+            case "name": source["definition_entry"]![mutation] = "D5.S0.Carrier.Probe.otherClaim"; break;
+            case "type_identity": case "body_identity": case "reference_identity":
+                source["definition_entry"]![mutation] = Hash("stale definition"); break;
+            case "unknown": source["definition_entry"]!["normalize"] = true; break;
+            case "null": source["definition_entry"] = null; break;
+            case "missing-path": source["definition_entry"]!.AsObject().Remove("path"); break;
+            case "wrong-path": source["definition_entry"]!["path"] = new JsonArray("body"); break;
+            case "deep-path": source["definition_entry"]!["path"] = new JsonArray("arg", "arg"); break;
+            case "sibling-readout": source["definition_entry"]!["path"] = new JsonArray("arg"); break;
+        }
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        if (mutation == "valid")
+            Assert.Equal("D5.S0.Carrier.Probe.claim", Assert.Single(Read().Records).SourceDefinitionName);
+        else Assert.Throws<FormatException>(Read);
     }
 
     [Fact]
@@ -499,4 +609,46 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData("Fixture.")]
     public void noncanonical_lean_name_rejected(string name) =>
         Assert.Throws<FormatException>(() => InformationTemplateJson.Name(name));
+    [Theory]
+    [InlineData(false, "valid")]
+    [InlineData(true, "valid")]
+    [InlineData(true, "permuted-universes")]
+    [InlineData(true, "instantiated-universe")]
+    [InlineData(true, "metadata-wrapper")]
+    [InlineData(true, "missing-material")]
+    [InlineData(true, "wrong-polarity")]
+    public void named_reference_uses_raw_rigid_universes_and_structural_names(bool negated, string mutation)
+    {
+        // Synthetic statement-v1 materials exercise the bounded grammar beyond
+        // the native clients' zero universes: UTF-8, quoted dots and a num node.
+        const string nameKey = "ns(nn(ns(ns(ns(n0,2:D5),5:Probe),4:x.λ),7),5:claim)";
+        const string referenceHash = "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9";
+        const string negativeHash = "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91";
+        const string parameters = "ns(n0,1:u),ns(n0,1:v)";
+        var levels = mutation switch {
+            "permuted-universes" => "lp(ns(n0,1:v)),lp(ns(n0,1:u))",
+            "instantiated-universe" => "l0,lp(ns(n0,1:v))",
+            _ => "lp(ns(n0,1:u)),lp(ns(n0,1:v))",
+        };
+        var rawReference = "ec(" + nameKey + ",[" + levels + "])";
+        var rawType = negated && mutation != "wrong-polarity"
+            ? "ea(ec(ns(n0,3:Not),[])," + rawReference + ")" : rawReference;
+        if (mutation == "metadata-wrapper") rawType = "ed(" + rawType + ")";
+        var theorem = new LeanDeclaration("D5.Probe.result", "theorem",
+            mutation == "missing-material" ? "unavailable"
+                : "statement-v1(uparams=[" + parameters + "],type=" + rawType + ")", []);
+        var definition = new LeanDeclaration("D5.Probe.«x.λ».7.claim", "def",
+            "statement-v1(uparams=[ns(n0,1:a),ns(n0,1:b)],type=es(l0),value=fixture)", []) {
+            NameKey = nameKey };
+        var binding = JsonSerializer.SerializeToElement(new {
+            level_count = 2,
+            definition_entry = new { path = negated ? new[] { "arg" } : Array.Empty<string>(),
+                reference_identity = referenceHash },
+        });
+        void Check() => InformationTemplateDefinitionReference.Check(binding,
+            negated ? negativeHash : referenceHash, theorem, definition);
+        if (mutation == "valid") Check();
+        else Assert.Throws<FormatException>(Check);
+    }
+
 }

@@ -29,6 +29,7 @@ structure TemplateOccurrenceEvent where
 /-- Syntax input is retained for authoritative reassessment, never executed. -/
 structure EscapeRecordInput where
   sourceSelection : Option SourceSelection := none
+  finiteBridge : Option Name := none
   fromObject : Option Expr := none
   continuation : Option Expr := none
   openContinuation : Bool := false
