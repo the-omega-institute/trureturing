@@ -2910,3 +2910,78 @@ DOI 10.3390/math13020323，及预稿 DOI 10.20944/preprints202412.0740.v1，
 书目已定位，三个原始获取入口返回 HTTP 403；未核对其定理条件，不作为证明前置。
 本章不主张一般加权局部极限的新原则、全球原创性、形式验证，
 也不宣称去除首项后的后验熵常数修正、熵响应方差收敛或每个输出的统一结论。
+
+## 第 83 章：剩余类同步与 Liouville 多项式根排除
+
+[理论卷第 83 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+保留原固定幅度、原合法十进制分母、精确 Gamma 等系数曲线、完整得分组和共同规模取整。
+利用全部剩余类，把实际双根同步构造的对数均值界改进为
+$C(1+\sqrt{d\omega}+d^2/Q)$，其中 $\omega$ 是精确切线截距的单侧整数差。
+它同时给出长度为 $\ell$ 的区间中、$Q\ge C\ell^{-3/2}$ 时的
+$C(1+\ell^{-1/2})$ 逐层界。固定参数的无限同步仍需要一个统一有限界，
+或正文所列尚未证明的单侧相位复现条件；逐层构造不自动闭合此缺口。
+
+另一个结果在原合法序列上排除所有非零内部根 $\Pi(\vartheta)$，$\Pi\in\mathbb Q[X]$。
+低次多项式的过度格点对齐不能补偿实际均值中的 $3\ln Q$ 前因子；
+次数至少三时，$\Pi''(\vartheta)/2$ 在固定有理格之外留下分离相位。
+正文给出两个明确允许的无理正根参数，并分别算出趋零均值及相邻格点的指数分离。
+这是经典 Taylor、整除和 Liouville 超越论证在原模型上的组合；
+没有宣称新的通用多项式小数部分理论，也未将结论延伸到任意有理函数。
+
+D. R. Heath-Brown，*Small solutions of quadratic congruences*，1985，87–93，
+[原刊 DOI:10.1017/S0017089500006091](https://doi.org/10.1017/S0017089500006091)。
+原文引言及 Theorems 1–3 处理整数齐次二次型的非零小同余解；
+Theorem 1 限素数模数和至少四个变量，Theorem 2 在四变量下附加行列式的模素数条件。
+其四变量证明通过二维各向同性子空间和行列式为 $p^2$ 的整数子格工作。
+原文本层中有损坏的上标和卷号数字，这些不清晰数值不作为此处核验常数。
+原计数问题具有实系数曲率、移动的非齐次截距、固定原分母和两个受约束指标；
+新增自由齐次化变量或把十进制模数当素数，均不保持原问题。
+因此该结果不提供正文所缺的单侧相位命中。
+
+Cheuk Fung (Joshua) Lau，*Simultaneously Small Fractional Parts of Polynomials*，
+[arXiv:2407.01611v1](https://arxiv.org/abs/2407.01611v1)。
+原 TeX 主定理 `thm:MainTheorem` 对实多项式 $f_1,\ldots,f_k$ 要求全部 $f_i(0)=0$，
+在给定宽度乘积与搜索长度关系下寻找一个共同正整数 $n<x$。
+显示范围使用 $d(d-1)$，此处仅按 $d\ge2$ 比较，不从其正整数措辞外推到 $d=1$。
+原模型的精确切线带非零截距与单侧目标，减去常数会改变命中事件；
+Gamma 曲线也不是固定多项式，且其三阶误差在所需尺度上不能直接删去。
+全区间的某个 $n<x$ 不同时保证原稀疏合法分母和局部父区间。
+上述原假设因而不能消除第 83 章的 $\omega$。
+
+Kiseok Yeon，*Small fractional parts of polynomials and mean values of exponential sums*，
+[arXiv:2210.03085v1](https://arxiv.org/abs/2210.03085v1)。
+Theorem 1.1 在 $k\ge6$、$s\ge k(k+1)/2$ 下，对无常数项的加性单项式形式
+从自由整数向量盒中取得 $X^{-1+\epsilon}$ 小数部分界。
+Theorem 1.2 的正幂次数满足 $k_1\ge6$、$2\le t<k_1$，并要求
+$s>k_1^2+k_1+2\lceil\sigma(1-k_1)\rceil$；
+$\sigma$ 由原文 (1.4) 中缺失幂次确定。
+这些多个自由加性变量不是原精确系数图和整数剩余类约束已经拥有的自由度，
+不能通过增加变量直接取得原共同规模单元。
+
+N. G. Moshchevitin，*On small fractional parts of polynomials*，
+[arXiv:0711.1753v1](https://arxiv.org/abs/0711.1753v1)。
+Theorem 1 假设 $t_{n+1}/t_n=1+\gamma/n+O(n^{-1-\epsilon_1})$，$\gamma,\epsilon_1>0$，
+讨论可选择乘子 $\alpha$ 的回避集合
+$\liminf n\log n\,\|\alpha t_n\|>0$。
+原定理写维数严格大于 $\gamma/(\gamma+1)$，末尾证明只总结不小于该值；
+此处不使用其严格维数断言。原源文件按声明的 cp866 解码后仍有部分乱码注释，
+所用英文条件和 ASCII 数学不受此影响，注释内容不承重。
+原合法 $N_n$ 的超稀疏增长不满足该比值假设，固定非线性截距也不是可自由选择的乘子。
+
+Yuval Peres、Wilhelm Schlag，*Two Erdős problems on lacunary sequences: Chromatic number and Diophantine approximation*，
+[arXiv:0706.0223v1](https://arxiv.org/abs/0706.0223v1)。
+主定理对整数序列 $n_{j+1}/n_j\ge1+\epsilon$，$0<\epsilon<1/4$，
+给出一个乘子 $\theta\in(0,1)$，使
+$\inf_j\|\theta n_j\|>c\epsilon/|\log\epsilon|$。
+原 TeX `thm:dio` 在 $n_{j+M}>2n_j$、$M\ge4$、$240c_0\le1$ 时，
+给半径 $c_0/(M\log_2M)$ 的全部目标邻域之补交非空。
+原 $N_n$ 满足其稀疏增长条件，故该文确实给可选的回避乘子。
+它不判定指定乘子，也不保证由同一率曲线关联的两根共同返回。
+第 83 章的明确多项式根排除由原小数展开和对数前因子直接证明，未由一般稀疏性推断。
+
+另取得的 *Small solutions of quadratic congruences and small fractional parts of quadratic forms*
+扫描原件 [DOI:10.4064/aa-37-1-241-248](https://doi.org/10.4064/aa-37-1-241-248)
+未取得可读的定理正文，不作为证明前提。
+这些条件核对仅说明已查原文不能直接补齐当前固定分母的同步缺口；
+不构成没有更强结果或全局原创性的断言。
+$E_2$ 的存在性、锐利维数及指定双均值的共同实现仍未解决。
