@@ -973,3 +973,348 @@ python docs/reports/fusion-qca-cut-obstruction/fusion_tree_checks.py
 这些是有限代数检错。一般长度、最小误差、全体状态量词及有限维闭合由正文证明；尚无 Lean 编译、独立同行评审、硬件实验或本批 CI 通过声明。新增内容不改变 Jones–Lim 原问题或第 6 节反例稿的审定状态，不以有限模型确认替代一般 QCA 分类。
 
 ## 追加锚（本行以下为后续增补区，FT 批次结束）
+
+## 21. 三个窗口读数强制无穷阶动力学：谱分岔的判据
+
+本批日期为 2026-09-27，继续原 PR #10310，基点为 `e60f23885f6581f106659bd0825f1f204f2a55c2`。本批的主张是一个一般机制：真实融合乘法中只要保留第二个非零平方谱尺度，多层链的零净流方向就留下不能由任意有限深度电路消除的整格；有限值的 DHR 作用不能记录这个整格。随后以带标记的切口表恢复方向和层置换，在明确的生成子群上给出可组合的完整不变量。
+
+以下均为普通数学证明稿。有限维谱论、Perron–Frobenius 理论、子因子相对交换子及 DHR 的外部定理保留各自归属。没有新增 Lean 证明项、独立审定或全球优先权结论。研究从已存在的酉融合范畴出发，不由一张任意图假定其可范畴化。
+
+### 21.1 实际融合矩阵及单位向量
+
+**定义 21.1（本批共同数据）。** 取酉融合范畴 $\mathcal C$，有限简单对象集合 $S$，单位对象编号为 $0$。固定非零、自对偶、强张量生成对象 $X$。强生成指存在同一个 $p>0$，使全部简单对象均出现于 $X^{\otimes p}$。令
+
+$$
+N_{ab}=\dim\operatorname{Hom}(a,X\otimes b),\quad
+ d_a=\operatorname{FPdim}(a),\quad \delta=\operatorname{FPdim}(X),\quad
+\mathfrak d=\sum_{a\in S}d_a^2.
+\tag{SC.1}
+$$
+
+采用列向量，$e_0$ 是单位对象的标准基向量。所有 $d_a>0$，$d_0=1$。定义实际窗口维数
+
+$$
+D(n)=\dim_{\mathbb C}\operatorname{End}_{\mathcal C}(X^{\otimes n})
+\quad(n\ge0),\qquad
+\chi_X=D(1)D(3)-D(2)^2.
+\tag{SC.2}
+$$
+
+这里的 $D$ 是有限代数的普通复维数；$\delta$ 是量子维数，不将二者混用。
+
+**引理 21.2（对称、原始性与单位的谱忠实性）。** $N$ 是非负整对称矩阵，某个幂严格正，且 $Nd=\delta d$。更重要的是，对任意实系数多项式 $f$，
+
+$$
+f(N)e_0=0\quad\Longrightarrow\quad f(N)=0.
+\tag{SC.3}
+$$
+
+所以 $N$ 每一个非零谱投影作用于 $e_0$ 都非零；$N^2$ 也有同一性质。
+
+**证明。** 自对偶性与 Frobenius 互反给 $N_{ab}=N_{ba}$。对任意 $a,b$，取一个出现于 $a\otimes\bar b$ 的简单对象 $u$。互反给 $a\subset u\otimes b$；又 $u\subset X^{\otimes p}$，故 $(N^p)_{ab}>0$。融合维数的乘法性结合对称性给 $Nd=\delta d$。
+
+在实化融合环 $K_0(\mathcal C)\otimes\mathbb R$ 中，$N$ 是 $[X]$ 的左正则乘法矩阵，$e_0$ 对应乘法单位。因此 $f(N)$ 是 $f([X])$ 的左乘矩阵。若它在单位上为零，则 $f([X])=0$，所以对每个环元素的左乘都为零，得到式（SC.3）。实对称矩阵的每个谱投影都是 $N$ 的多项式：对互异特征值作有限 Lagrange 插值即可。非零投影若杀掉 $e_0$ 会与式（SC.3）矛盾。$N^2$ 的谱投影同样是 $N$ 的多项式。证毕。
+
+式（SC.3）不是声称 $e_0$ 张成整个矩阵空间的循环向量。重根特征空间可以高维；需要的是每个不同谱尺度都具有严格正的单位权重。这一步是把真实融合乘法与任意邻接图分开的关键。
+
+### 21.2 三个窗口足以判定全部尾部的严格性
+
+**定理 21.3（完整平方差恒等式与有限判据）。** 令 $\mu_1,\ldots,\mu_r$ 为 $N^2$ 的互异正特征值，$E_i$ 为其谱投影，$c_i=\|E_i e_0\|^2>0$。则对 $n\ge1$，
+
+$$
+D(n)=e_0^T N^{2n}e_0=\sum_{i=1}^r c_i\mu_i^n.
+\tag{SC.4}
+$$
+
+对任意整数 $n>k\ge1$，有精确公式
+
+$$
+\begin{aligned}
+\Delta_X(n,k)&:=D(n+k)D(n-k)-D(n)^2\\
+&=\sum_{i<j}c_ic_j(\mu_i\mu_j)^{n-k}(\mu_i^k-\mu_j^k)^2.
+\end{aligned}
+\tag{SC.5}
+$$
+
+因此以下三项等价：$\chi_X>0$；$\operatorname{rank}N\ge2$；对全部 $n>k\ge1$ 都有 $\Delta_X(n,k)>0$。若它们不成立，则 $\chi_X=0$ 且全部这些差值为零。
+
+**证明。** $X^{\otimes n}$ 的简单对象重数列是 $N^n e_0$。半单性给窗口维数等于重数平方和；$N$ 对称，故得式（SC.4）。零特征值在 $n\ge1$ 时贡献零，不能把它当作一个正尺度。将两个有限谱和相乘，消去同指标项，再把 $(i,j)$ 与 $(j,i)$ 合并，得到式（SC.5）。每个非零项严格正，故严格性恰当于存在两个不同正尺度。
+
+由原始性，Perron 根 $\delta$ 单重，任何其他特征值 $\lambda$ 满足 $|\lambda|<\delta$。若矩阵秩至少二，就存在另一个非零特征值，其平方不同于 $\delta^2$；引理 21.2 保证两个尺度权重都非零。秩一时只有一个正尺度。最后取 $n=2,k=1$，得到 $\Delta_X(2,1)=\chi_X$，全部等价成立。证毕。
+
+这项判据使用 $X,X^{\otimes2},X^{\otimes3}$ 的三个有限维数，却证明任意远尾部的严格差异。有限输入能够控制全部尾部，依靠的是固定融合乘法和谱分解，不是从有限实验外推。
+
+**命题 21.4（假设缺失时的反例）。** 对任意原始对称非负矩阵，不能把式（SC.2）中的正性与矩阵秩直接等同。
+
+**证明。** 矩阵
+
+$$
+A=\begin{pmatrix}2&2&2\\2&3&1\\2&1&3\end{pmatrix}
+$$
+
+已经逐项严格正，秩为二，特征值为 $6,2,0$。特征值 $2$ 的向量 $(0,1,-1)$ 与 $e_0$ 正交，所以单位读数看不见这个尺度。其 $e_0^T A^{2n}e_0$ 在 $n=1,2,3$ 分别为 $12,432,15552$，满足 $12\cdot15552=432^2$。它不满足引理 21.2 的融合乘法条件。另一方面，非原始矩阵 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ 秩二但所有 $D(n)=1$；其两个非零特征值平方相同。证毕。
+
+## 22. 唯一的谱盲情形恰是整数维正则对象
+
+**定理 22.1（零判据的精确对象分类）。** 在定义 21.1 的前提下，$\chi_X=0$ 当且仅当 $\mathcal C$ 是整融合范畴，即所有 $d_a\in\mathbb N_{>0}$，且存在整数 $q\ge1$ 使
+
+$$
+X\cong qR_{\mathcal C},\qquad
+R_{\mathcal C}:=\bigoplus_{a\in S}d_a a.
+\tag{SC.6}
+$$
+
+此时
+
+$$
+N=qdd^T,\quad \delta=q\mathfrak d,\quad
+D(n)=q^{2n}\mathfrak d^{2n-1}\quad(n\ge1).
+\tag{SC.7}
+$$
+
+**证明。** 若 $\chi_X=0$，定理 21.3 给 $N$ 秩一。正 Perron 向量及对称谱分解强制
+
+$$
+N=\frac{\delta}{\mathfrak d}dd^T.
+$$
+
+因 $d_0=1$，$q=N_{00}=\delta/\mathfrak d$ 是严格正整数。$X$ 的重数列为 $Ne_0=qd$，故每个 $d_a=N_{a0}/q$ 为有理数。融合维数是整矩阵的特征值，因而是代数整数；有理代数整数是整数。这给整性与式（SC.6），没有先假设正则对象存在。
+
+反向，在整融合范畴中，Frobenius 互反给
+
+$$
+\sum_u d_u\dim\operatorname{Hom}(a,u\otimes b)
+=\sum_u d_u\dim\operatorname{Hom}(u,a\otimes\bar b)
+=d_a d_b.
+$$
+
+所以 $N_{R_{\mathcal C}}=dd^T$，$N_X=qdd^T$，秩一。将其幂作用于 $e_0$，使用 $d^Td=\mathfrak d$ 得式（SC.7）。证毕。
+
+**推论 22.2（覆盖范围与阻塞稳定性）。** 若 $\mathcal C$ 非整，或 $X$ 是非单位的自对偶强生成简单对象，则 $\chi_X>0$。对任意阻塞长度 $b\ge1$ 和普通局部重数 $q\ge1$，$X^{\otimes b}$ 及 $qX$ 是否具有正判据与 $X$ 完全一致。
+
+**证明。** 非整情形由定理 22.1。简单非单位对象有 $N_{00}=0$，不能是该定理中的正则倍数。阻塞使矩阵变为 $N^b$；实对称谱分解保证秩不变，强生成仍成立。取 $qX$ 使矩阵变为 $qN$，秩不变，且 $\chi_{qX}=q^8\chi_X$。证毕。
+
+零判据只证明本批维数障碍消失，没有证明所有整范畴正则对象的反向平移都是 FDQC。有限群正则表示的已知完整性 [JSW26, Corollary 1.4] 恰处于该盲情形；这解释其特殊对象条件为何不能直接删除。
+
+## 23. 指数与任何有限标签都无法记录的整格
+
+### 23.1 任意层数的严格尾部障碍
+
+固定 $B=A(\mathcal C,X)$，半链记 $N_t$，并取 $A_m=B^{\otimes m}$，$m\ge2$，采用相同空间格点。总半链为 $M_t=\overline\otimes_{i=1}^m N_t$。各层的右平移记作 $T_i$，对 $\mathbf k\in\mathbb Z^m$ 置 $\alpha_{\mathbf k}=\prod_iT_i^{k_i}$。
+
+**定理 23.1（谱判据推出平移整格单射）。** 若 $\chi_X>0$，则
+
+$$
+\mathbb Z^m\longhookrightarrow\mathrm{QCA}(A_m)/\mathrm{FDQC}(A_m),
+\qquad\mathbf k\longmapsto[\alpha_{\mathbf k}]
+\tag{SC.8}
+$$
+
+是单射群同态，而且 $\operatorname{Ind}(\alpha_{\mathbf k})=\delta^{\sum_i k_i}$。
+
+**证明。** 独立平移交换，先得到群同态。平移指数为 $\delta$ [JL24, Proposition 4.1]；产品半链指数相乘，给公式。$\chi_X>0$ 蕴含非平凡原始整矩阵秩至少二，故 $\delta>1$：若 Perron 根为一而矩阵大小至少二，则其严格正整数幂的最小行和至少二，矛盾。因此 $\sum_i k_i\ne0$ 已被指数排除。
+
+设 $\sum_i k_i=0$ 但 $\mathbf k\ne0$。由 [JL24, Remark 3.10] 的实际相对交换子等式与空间张量积，对全部 $n>\max_i|k_i|$，标准切口和变换切口的相对交换子维数分别为
+
+$$
+D(n)^m,\qquad\prod_iD(n+k_i).
+\tag{SC.9}
+$$
+
+把式（SC.4）延拓为 $D(t)=\sum_jc_j\mu_j^t$，$t>0$，置 $w_j(t)=c_j\mu_j^t/D(t)$。直接微分有限和得到
+
+$$
+(\log D)''(t)=\sum_jw_j(t)(\log\mu_j)^2
+-\left(\sum_jw_j(t)\log\mu_j\right)^2>0.
+\tag{SC.10}
+$$
+
+严格性来自至少两个不同尺度及严格正权重。$n+k_i$ 的平均为 $n$，且不全相同，严格凸性给式（SC.9）第二项严格大于第一项。第 2 节切口局部化说明任何 FDQC 都强制这些维数对全部充分大 $n$ 相同，矛盾。对任意两个不同平移向量的差应用此结论，得到单射。证毕。
+
+允许电路在同一窗口内任意混合全部层，没有附加“逐门保持每层”的条件。约束始终是门属于指定融合窗口代数，宽度和深度不随系统长度增长。
+
+### 23.2 完整 DHR 平凡性无需逐个构造产品自然同构
+
+**定理 23.2（联合核至少包含 $m-1$ 个独立无穷阶方向）。** 仍设 $\chi_X>0$。存在正整数 $q$ 使
+
+$$
+q\{\mathbf k\in\mathbb Z^m:\textstyle\sum_i k_i=0\}
+\longhookrightarrow
+\frac{\ker\operatorname{Ind}\cap\ker\operatorname{DHR}}
+{\mathrm{FDQC}(A_m)}.
+\tag{SC.11}
+$$
+
+左边同构于 $\mathbb Z^{m-1}$。因而这类产品融合链上，原来的两个不变量不充分。
+
+**证明。** [J24] 将 $\operatorname{DHR}(A_m)$ 识别为融合范畴 $\mathcal Z(\mathcal C^{\boxtimes m})$。根据 [ENO10, Theorem 4.15]，一个编织融合范畴的编织张量自等价同构类群是有限群。这里的同构类保留全部张量结构，不是仅对简单对象的名字取置换。
+
+酉版本的同构类群也有限：若两个酉张量函子间有复线性张量自然同构 $\eta$，对每个分量作极分解。自然性保证 $\eta^\dagger\eta$ 是自然正自同构；两个函子的张量结构映射是酉元，所以在张量积上 $\eta^\dagger\eta$ 分解为两个分量的张量积。唯一正平方根也按张量积相容。因此酉部分 $\eta(\eta^\dagger\eta)^{-1/2}$ 是酉张量自然同构。编织的兼容随自然性保留，故遗忘酉性不会把不同酉同构类额外合并。
+
+记这个有限群为 $G$，取 $q=|G|$，或者取全部 $\operatorname{DHR}(T_i)$ 阶的公倍数。于是每个 $T_i^q$ 的完整 DHR 类平凡。对零和向量 $\mathbf k$，$\alpha_{q\mathbf k}$ 同时具有指数一与平凡 DHR，而定理 23.1 保证不同向量具有不同电路类，得到式（SC.11）。证毕。
+
+这条证明不依赖第 5 节的 DHR 外张量自然性引理，也不要求每次单步平移的 DHR 类本来就平凡。所得 $q$ 是存在性的有限群阶，未声称从融合矩阵本身已经算出它。只需要每个幂在同构类群中为单位；没有假设这些同构能组织成新的相容有限群范畴作用。
+
+**推论 23.3（有限标签无补全及新不变量的必要容量）。** 在上述模型上，指数再加任意有限族取值于有限群的拓扑不变量，都不可能完整分类 QCA/FDQC。若一个额外群同态 $J$ 与 $\operatorname{Ind},\operatorname{DHR}$ 联合完整，则它的目标群必须包含 $\mathbb Z^{m-1}$ 的同构子群；若目标是有限生成阿贝尔群，其秩至少为 $m-1$。
+
+**证明。** 对有限族目标群取直积，仍有限；像的共同有限幂杀掉全部标签。定理 23.1 中的零和整格乘以该幂后仍是同秩无穷群，且所有非零元均非 FDQC，所以联合不变量不单射。对 $J$，限制到式（SC.11）的整格；原两个不变量在其上恒定，联合完整性强制 $J$ 的限制单射。最后由有限生成阿贝尔群结构定理得秩下界。证毕。
+
+这为“还缺少什么”给出必要的数学形态：至少需要承载无穷阶、有独立方向的资料。它不排除连续值或其他无限群值不变量，也没有把任意有限精度实验等同于已取得该整数。
+
+## 24. 普通整数维例子与正则例外
+
+**命题 24.1（$S_3$ 标准表示的精确障碍）。** 取 $\mathcal C=\operatorname{Rep}(S_3)$，简单对象按 $1,\varepsilon,v$ 排列，$v$ 是二维标准表示。则
+
+$$
+N_v=\begin{pmatrix}0&0&1\\0&0&1\\1&1&1\end{pmatrix},\quad
+D(n)=\frac{4^n+2}{6}\quad(n\ge1),\quad \chi_v=2,
+\tag{SC.12}
+$$
+
+且对 $n>k\ge1$，
+
+$$
+\Delta_v(n,k)=\frac{4^{n-k}(4^k-1)^2}{18}>0.
+\tag{SC.13}
+$$
+
+**证明。** 融合规则 $\varepsilon^2=1$、$\varepsilon v=v$、$v^2=1+\varepsilon+v$ 给矩阵，$N_v^2$ 严格正，故满足全部前提。特征值为 $2,-1,0$，单位向量在前两个特征空间上的平方权重为 $1/6,1/3$，于是式（SC.4）给 $D(n)$。最初三个值为 $1,3,11$，故 $\chi=11-9=2$。将两个非零尺度 $4,1$ 代入式（SC.5）得式（SC.13）。证毕。
+
+此例的量子维数为整数二，仍有无穷阶零净流障碍。Fibonacci 的黄金比例不是该机制的必要条件；其 $D(1),D(2),D(3)=1,2,5$、$\chi=1$ 是同一定理的另一个实例。
+
+同一范畴的正则对象 $R=1+\varepsilon+2v$ 则有 $d=(1,1,2)^T$、$N_R=dd^T$、$D_R(n)=6^{2n-1}$ 和 $\chi_R=0$。因此相同的范畴与 DHR 背景，改变局部生成对象就能改变本批切口谱障碍。这保留了 [JSW26] 正则表示分类的精确适用范围。
+
+## 25. 给切口加方向标记，有限表恢复位移与置换
+
+### 25.1 任意 QCA 的带标记尾部读数
+
+固定上述 $m$ 个有标签的相同层，记
+
+$$
+P_{\mathbf t}=\overline\bigotimes_{i=1}^mN_{t_i},\qquad
+L_{n,\mathbf s}=\overline\bigotimes_{i=1}^mN_{-n+s_i}.
+$$
+
+对 QCA $\alpha$，定义对每个固定 $\mathbf s,\mathbf t$、充分大 $n$ 有意义的整数
+
+$$
+K_\alpha(n;\mathbf s,\mathbf t)
+=\dim_{\mathbb C}\bigl(L_{n,\mathbf s}'\cap\alpha(P_{\mathbf t})\bigr).
+\tag{SC.14}
+$$
+
+各 $P_{\mathbf t}$ 都夹在两个标准总半链之间，$\alpha(P_{\mathbf t})$ 也如此。充分大的 $n$ 使 $L_{n,\mathbf s}$ 包含于该像；相对交换子被一个有限标准窗口代数包含，故维数有限。
+
+**命题 25.1（左右电路保持带标记表的尾部）。** 若 $\beta=\gamma_L\alpha\gamma_R$，其中 $\gamma_L,\gamma_R$ 为 FDQC，则对每组固定 $\mathbf s,\mathbf t$，全部充分大 $n$ 有 $K_\beta(n;\mathbf s,\mathbf t)=K_\alpha(n;\mathbf s,\mathbf t)$。对任意有限探针集合，可取共同阈值。
+
+**证明。** 第 2 节引理对每个 $P_{\mathbf t}$ 给 $\gamma_R(P_{\mathbf t})=u_{\mathbf t}P_{\mathbf t}u_{\mathbf t}^\dagger$，其中酉元严格局部。QCA 把它送到仍严格局部的 $\alpha(u_{\mathbf t})$。再对 $\alpha(P_{\mathbf t})$ 和 $\gamma_L$ 用同一引理，合并为一个局部共轭。充分向左取 $-n+s_i$ 后，这个酉元与 $L_{n,\mathbf s}$ 对易，故共轭给两个相对交换子的同构。有限集合取阈值最大值即可。证毕。
+
+### 25.2 混合差分定位层，严格谱凸性恢复有符号位移
+
+对 $\sigma\in S_m$，令层置换 QCA $\Sigma_\sigma$ 把源层 $i$ 送到靶层 $\sigma(i)$，并定义 $(\sigma\mathbf t)_j=t_{\sigma^{-1}(j)}$。取
+
+$$
+\Phi_{\mathbf k,\sigma}=\alpha_{\mathbf k}\Sigma_\sigma.
+$$
+
+**定理 25.2（$(m+1)^2$ 个整数的精确恢复）。** 设 $\chi_X>0$。令 $\mathcal E=\{\mathbf0,e_1,\ldots,e_m\}$。对 $n+\min_i k_i\ge2$，表
+
+$$
+\{K_{\Phi_{\mathbf k,\sigma}}(n;\mathbf s,\mathbf t):
+\mathbf s,\mathbf t\in\mathcal E\}
+\tag{SC.15}
+$$
+
+唯一确定 $(\mathbf k,\sigma)$。这也唯一确定任意左右 FDQC 修饰后的尾部所对应的参数。
+
+**证明。** 实际相对交换子与产品包含给
+
+$$
+K(n;\mathbf s,\mathbf t)
+=\prod_{j=1}^mD(n+k_j+(\sigma\mathbf t)_j-s_j).
+\tag{SC.16}
+$$
+
+写 $B_0=K(n;\mathbf0,\mathbf0)$，并计算矩形的交叉差分
+
+$$
+C_{ji}=B_0K(n;e_j,e_i)-K(n;e_j,\mathbf0)K(n;\mathbf0,e_i).
+\tag{SC.17}
+$$
+
+若 $j\ne\sigma(i)$，两项中的两个变化作用于不同因子，其余因子相同，直接乘法消去给 $C_{ji}=0$。若 $j=\sigma(i)$，令 $u_j=n+k_j$ 和 $A_j=\prod_{\ell\ne j}D(n+k_\ell)>0$，则
+
+$$
+C_{ji}=A_j^2\bigl(D(u_j)^2-D(u_j-1)D(u_j+1)\bigr)<0.
+\tag{SC.18}
+$$
+
+严格性由定理 21.3，且 $u_j\ge2$。因此每列恰有一个负值，其位置就是 $\sigma(i)$；整个置换被恢复，即使不同层的位移相同也不会失效。
+
+随后
+
+$$
+\frac{K(n;\mathbf0,e_i)}{B_0}
+=\frac{D(n+k_{\sigma(i)}+1)}{D(n+k_{\sigma(i)})}.
+\tag{SC.19}
+$$
+
+由 $D(t+2)D(t)>D(t+1)^2$，正整数上的比值 $D(t+1)/D(t)$ 严格递增。因此每个比值唯一确定整数 $t=n+k_{\sigma(i)}$，减去已知 $n$ 得带符号位移。对承诺属于这些模板的精确数据，顺次枚举正整数并进行整数交叉相乘比较会在真实 $t$ 处停止。电路修饰由命题 25.1 消去。证毕。
+
+未标记的表只记录 $\prod_iD(n+k_i)$，会混淆层置换，并在两层零和例中混淆 $k$ 与 $-k$。式（SC.17）同时改变来源切口与目标切口，通过交叉项识别它们是否属于同一被运输层。这一步恢复了旧总维数差看不见的方向。
+
+例如 Fib、$m=2$、$n=4$、$\mathbf k=(1,-1)$、$\sigma$ 交换两层，按 $\mathbf0,e_1,e_2$ 排列行列，表为
+
+$$
+\begin{pmatrix}170&442&445\\65&169&170\\68&170&178\end{pmatrix}.
+\tag{SC.20}
+$$
+
+混合差分矩阵为 $\left(\begin{smallmatrix}0&-25\\-1156&0\end{smallmatrix}\right)$，先确定交换，再由两个比值恢复 $1,-1$。本表来自精确融合维数，不是实验噪声下已取得的测量数据。
+
+## 26. 一个明确子群的完整群值分类
+
+**定理 26.1（有限深度修饰的平移与层置换分类）。** 设 $\chi_X>0$，令 $\Gamma_m$ 是由 $\mathrm{FDQC}(A_m)$、独立平移 $T_i$ 和全部层置换 $\Sigma_\sigma$ 生成的 QCA 子群。则
+
+$$
+\Gamma_m/\mathrm{FDQC}(A_m)\cong\mathbb Z^m\rtimes S_m,
+\tag{SC.21}
+$$
+
+其中乘法为
+
+$$
+(\mathbf k,\sigma)(\boldsymbol\ell,\tau)
+=(\mathbf k+\sigma\boldsymbol\ell,\sigma\tau).
+\tag{SC.22}
+$$
+
+定理 25.2 的带标记尾部表给出该群值不变量的参数恢复。
+
+**证明。** FDQC 在 QCA 中为正规子群 [JL24, Definition 2.5 后]；共轭局部门仍局部，有界重叠可以有限着色。因此每个生成词都能将电路因子移到左侧，写成 $\gamma\Phi_{\mathbf k,\sigma}$。独立平移交换且 $\Sigma_\sigma\alpha_{\boldsymbol\ell}\Sigma_\sigma^{-1}=\alpha_{\sigma\boldsymbol\ell}$，所以式（SC.22）给一个满的商群同态。
+
+若两个正规形属于同一电路类，命题 25.1 使它们的带标记表在共同充分大 $n$ 相等。定理 25.2 恢复同一参数，故正规形唯一，满同态单射。反向，同一参数的两个正规形显然只差 FDQC，完成双向分类。证毕。
+
+这给出具体可组合的结构不变量，超出只检测“非电路”的单个障碍。它分类的范围明确限于 $\Gamma_m$；没有证明每个融合链 QCA 都属于这个子群，没有证明切口表对任意 QCA 完整，也没有给出任意输入 QCA 是否属于 $\Gamma_m$ 的决定算法。
+
+尾部阈值取决于电路修饰的实际支持预算。单凭 QCA 的传播半径没有在本批证明一个通用识别阈值。因此有限表恢复是“在已越过阈值且满足模板承诺时”的精确结论；相对交换子维数的取得、噪声稳定性和物理测量成本仍需独立研究。
+
+## 27. 来源、非平凡增量与形式化依赖
+
+本批新推导链为：真实融合环单位的谱忠实性，连接三窗口判据与矩阵秩；秩一的唯一例外强制整数维正则对象；第二平方谱尺度强制任意层数的无穷阶平移整格；有限完整 DHR 群只能杀掉其有限余数；带标记切口的混合差分恢复层对应和位移，给式（SC.21）的子群分类。普通矩的对数凸性、Perron–Frobenius、谱分解和有限群幂本身均为已知工具，本批不把单独重述这些工具计作原创成果。
+
+[ENO10] Pavel Etingof, Dmitri Nikshych and Victor Ostrik, *Fusion categories and homotopy theory*, Quantum Topology 1 (2010), 209–273. [arXiv:0909.3140v2](https://arxiv.org/pdf/0909.3140). 使用 §4.6 对完整编织自等价同构类群的定义及 Theorem 4.15，printed p.26（PDF 第 26 页）的有限性；该页已视觉核验。定理 23.2 使用这个群级结论，不借用同文高阶扩张障碍来假定相容作用。
+
+[JL24] 的 Example 2.3、Remark 3.10、Proposition 4.1、§6 和 [J24] 的 DHR 中心识别是本批一般无限链推导的明确外部输入。有限维陈述不替代这些输入的形式化。相对交换子原式及问题页已在本研究读取；没有将有限维数计算伪装成子因子定理的独立核验。
+
+[JSW26, Corollary 1.4] 仅在有限群正则表示条件下给原两不变量的完整性，本批的正则盲例与它一致。[Z23] 对强等价、稳定等价和附加对称不变量已有结果；不认领“需要比指数更细的信息”这一思想的优先权。本轮定向检索没有建立本批完整一般机制的全球优先权，也没有完成所有对称 QCA 文献的穷尽比较。
+
+仓内实际读取 `D5/S3/Analytic/SeriesInequalities/CountableWeightedHolderInterpolation.lean`，固定于 dev 搜索快照 `6cb2317a23559145bc4c9c2db4e01a84b57e02a8`。其 `countable_weighted_holder_interpolation` 可作为非严格对数凸性的可复用基础。它没有直接给式（SC.3）的融合单位忠实性、严格性分类、DHR 联合核或切口重建；本批没有编译该源，因此不冒领当前核验结果。
+
+未来形式化先保留有限环左正则作用、对称谱投影及单位向量的精确类型，再证明式（SC.3）–（SC.7）。一般长度部分由有限谱和的平方差恒等式及严格凸性承担。分类接口必须显式接入真实半链包含、正常自同构及严格局部门预算，然后才能使用式（SC.8）–（SC.22）；不能将“存在可实现局部共轭”作为目标定理的输入字段。有限群目标、商同态单射及半直积乘法是可分离的群论模块。
+
+配套执行文件为 [`cut_spectral_checks.py`](../../reports/fusion-qca-cut-obstruction/cut_spectral_checks.py) 与 [`cut_spectral_results.json`](../../reports/fusion-qca-cut-obstruction/cut_spectral_results.json)。程序使用 Python 标准库的整数和有理数，检查 Fib、Rep($\mathbb Z_2$)、Rep($S_3$) 中 69 个实际原始融合对象，精确偏移差、阻塞及谱和恒等式；在 Fib 和 Rep($S_3$) 共 3200 个参数实例中恢复全部带符号位移与层置换。两个假设缺失反例实际触发，正则对象的盲性和未标记表的方向歧义也被检查。
+
+这些运行只检错有限代数，不验证范畴实现、一般 DHR 有限阶、von Neumann 代数、FDQC 排除或全体 QCA 分类。没有新增 Lean/Scribe、CI 改动、独立评审或硬件实验。本批比第 6 节提供了更广的反例机制与一个更窄但完整的子群分类，仍以普通证明稿接受独立复核。
+
+## 追加锚（本行以下为后续增补区，SC 批次结束）
