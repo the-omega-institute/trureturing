@@ -79665,3 +79665,393 @@ Ando 定理承担的是固定边缘的精确可实现性；一般混合态的唯
 仓内已有结果在此通过明确的数据合同衔接；数值半径块正性复用所引标准定理。上述归约、纯态分析与实例不据此宣称文献原创性，样本取得预算与数值实现成本也未在本节结算。
 
 ## 追加锚（本行以下为增补区）
+
+## 259. Hermitian响应的固定边缘纤维：几何平均、精确直径与最坏重建误差
+
+固定参考边缘以后，来源的不确定性由一个带对角和约束的正半定填充集合承担。§258用数值半径给出了任意复响应矩阵的可实现性条件。本节在响应矩阵为Hermitian，或具有一个已知统一相位而可化为Hermitian的情形，进一步求出该集合的精确半迹直径、最优最坏重建误差和全部来源的唯一性判据。
+
+计算的核心是标准正算子几何平均。它控制可行填充的最大Hermitian非对角块；此处把这个算子序事实转成同一数据纤维的精确误差结论，不要求参考边缘与响应矩阵交换。
+
+### 259.1 固定数据与未知块的重新排列
+
+设参考空间 $E$ 为非零有限维复Hilbert空间，给定
+$$
+\rho\succeq0,\qquad \operatorname{Tr}\rho=1,\qquad K=K^\dagger.
+\tag{259.1}
+$$
+在§256的输入 $Y$ 基中，固定边缘和响应的全部来源为
+$$
+\mathfrak S(\rho,K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K/2&\rho-P\end{pmatrix}
+:\ \Omega\succeq0
+\right\}.
+\tag{259.2}
+$$
+对角和已保证每个成员迹一。引入Hermitian未知量
+$$
+H=2P-\rho,
+\qquad
+\Omega_H=\frac12
+\begin{pmatrix}\rho+H&K\\K&\rho-H\end{pmatrix}.
+\tag{259.3}
+$$
+令 $W=2^{-1/2}\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)$ 作用于这两个输入块，则
+$$
+(W\otimes I)\Omega_H(W^\dagger\otimes I)
+=\frac12\begin{pmatrix}A&H\\H&B\end{pmatrix},
+\qquad
+A=\rho+K,\quad B=\rho-K.
+\tag{259.4}
+$$
+因此
+$$
+\boxed{
+\mathfrak S(\rho,K)\ne\varnothing
+\iff A,B\succeq0
+\iff-\rho\preceq K\preceq\rho.
+}
+\tag{259.5}
+$$
+必要性来自块压缩；充分性由 $H=0$ 给出。以下均假设这一可实现性条件成立。
+
+记态间的半迹距离为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1.
+\tag{259.6}
+$$
+直接由（259.3）的对角块差可得
+$$
+\boxed{
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1.
+}
+\tag{259.7}
+$$
+这个因子将区分下文的纤维直径与重建半径。
+
+### 259.2 标准几何平均及其奇异延拓
+
+对严格正矩阵 $A,B$，正算子几何平均定义为
+$$
+A\#B
+=A^{1/2}\left(A^{-1/2}BA^{-1/2}\right)^{1/2}A^{1/2}.
+\tag{259.8}
+$$
+对一般 $A,B\succeq0$，采用从上方同时正则化的定义
+$$
+A\#B
+=\lim_{\varepsilon\downarrow0}
+(A+\varepsilon I)\#(B+\varepsilon I).
+\tag{259.9}
+$$
+这一均值属于标准Kubo–Ando理论。公式与正算子极限延拓可参见 D. T. Hoa、M. S. Moslehian、C. Conde、P. Zhang，*An extension of the Pólya–Szegö operator inequality*，[arXiv:1610.04162v1](https://arxiv.org/abs/1610.04162v1)，PDF第1—2页；该文第11页文献[9]列出 F. Kubo、T. Ando，*Means of positive linear operators*，Math. Ann. **246**（1980），205—224。以下直接证明本节所需的有限维块矩阵性质及极限存在性。
+
+**引理259.1（最大Hermitian填充）。** 对任意 $A,B\succeq0$，令 $G=A\#B$。则
+$$
+\begin{pmatrix}A&G\\G&B\end{pmatrix}\succeq0,
+\qquad
+\begin{pmatrix}A&-G\\-G&B\end{pmatrix}\succeq0,
+\tag{259.10}
+$$
+并且任意Hermitian矩阵 $H$ 若满足
+$$
+\begin{pmatrix}A&H\\H&B\end{pmatrix}\succeq0,
+\tag{259.11}
+$$
+就有
+$$
+\boxed{-G\preceq H\preceq G.}
+\tag{259.12}
+$$
+特别地，$G$ 是全部此类 $H$ 在Loewner序中的最大元。
+
+**证明。** 先设 $A,B$ 严格正。Schur补给出
+$$
+HA^{-1}H\preceq B.
+\tag{259.13}
+$$
+置
+$$
+X=A^{-1/2}HA^{-1/2},
+\qquad C=A^{-1/2}BA^{-1/2}.
+\tag{259.14}
+$$
+于是 $X=X^\dagger$ 且 $X^2\preceq C$。正平方根的算子单调性给
+$$
+|X|=(X^2)^{1/2}\preceq C^{1/2}.
+\tag{259.15}
+$$
+结合 $-|X|\preceq X\preceq|X|$，再作 $A^{1/2}$ 同余，即得（259.12）。另一方面，由（259.8）直接计算
+$$
+GA^{-1}G=B.
+\tag{259.16}
+$$
+因此 $H=G$ 与 $H=-G$ 都满足Schur补等式，（259.10）成立。
+
+一般情形记 $A_\varepsilon=A+\varepsilon I$、$B_\varepsilon=B+\varepsilon I$、$G_\varepsilon=A_\varepsilon\#B_\varepsilon$。若 $0<\varepsilon<\delta$，将 $G_\varepsilon$ 的正块矩阵两个对角块各增加 $(\delta-\varepsilon)I$，得到它也是 $(A_\delta,B_\delta)$ 的可行填充。严格正情形的最大元性质给
+$$
+0\preceq G_\varepsilon\preceq G_\delta.
+\tag{259.17}
+$$
+在 $G_\delta$ 的正块矩阵上使用向量 $(x,-x)$，还得到
+$$
+2G_\delta\preceq A+B+2\delta I.
+\tag{259.18}
+$$
+故 $G_\varepsilon$ 随 $\varepsilon\downarrow0$ 单调下降且有下界。在有限维中它以算子范数收敛，定义出（259.9）的 $G\succeq0$。
+
+原来的任意可行 $H$ 对每个 $(A_\varepsilon,B_\varepsilon)$ 仍可行，因此 $-G_\varepsilon\preceq H\preceq G_\varepsilon$；取极限得（259.12）。由正半定锥的闭性，$\bigl(\begin{smallmatrix}A_\varepsilon&\pm G_\varepsilon\\\pm G_\varepsilon&B_\varepsilon\end{smallmatrix}\bigr)$ 的极限亦正半定，得到（259.10）。$\square$
+
+这里使用的是指定的单调正则化极限，没有假设几何平均在奇异矩阵对上沿任意逼近路径都联合连续。
+
+还需保留另一条界限：（259.12）只是一般可行 $H$ 的必要条件，不能把它当成（259.11）的充要条件。例如
+$$
+A=\begin{pmatrix}4/5&0\\0&1/5\end{pmatrix},\quad
+B=\begin{pmatrix}1/5&0\\0&4/5\end{pmatrix},\quad
+G=\frac25I_2,\quad
+H=\frac25\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{259.19}
+$$
+虽然 $-G\preceq H\preceq G$，却有
+$$
+B-HA^{-1}H=\operatorname{diag}(-3/5,3/5)\not\succeq0.
+\tag{259.20}
+$$
+精确纤维仍由块正性定义；计算其直径不需要把整条算子序区间都误当作可行纤维。
+
+### 259.3 同一数据纤维的精确半迹直径
+
+**定理259.2（纤维直径）。** 在（259.1）、（259.5）下，令
+$$
+G=(\rho+K)\#(\rho-K).
+\tag{259.21}
+$$
+则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak S(\rho,K)}d(\Omega,\Xi)
+=\operatorname{Tr}G.
+}
+\tag{259.22}
+$$
+最大值由同一数据下的两个来源
+$$
+\boxed{
+\Omega_\pm
+=\frac12\begin{pmatrix}\rho\pm G&K\\K&\rho\mp G\end{pmatrix}
+}
+\tag{259.23}
+$$
+取得。
+
+**证明。** 引理259.1保证 $H=\pm G$ 可行，故（259.23）正半定且迹一，并保留相同边缘和响应。
+
+先证明一个迹范数界。若 $T=T^\dagger$ 且 $-G\preceq T\preceq G$，令 $P_+$、$P_-$ 分别为 $T$ 的正、负谱投影。则
+$$
+\begin{aligned}
+\|T\|_1
+&=\operatorname{Tr}(P_+T)-\operatorname{Tr}(P_-T)\\
+&\le\operatorname{Tr}(P_+G)+\operatorname{Tr}(P_-G)\\
+&\le\operatorname{Tr}G.
+\end{aligned}
+\tag{259.24}
+$$
+对任意两个可行填充，$T=(H_1-H_2)/2$ 满足这一序界。由（259.7）得到
+$$
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1
+\le\operatorname{Tr}G.
+\tag{259.25}
+$$
+取 $H_1=G,H_2=-G$，正性给 $\|2G\|_1=2\operatorname{Tr}G$，故上界达到。$\square$
+
+在同一数据纤维内，半迹距离也是所有终端效果检验的最大概率差：
+$$
+d(\Omega,\Xi)=
+\sup_{0\preceq F\preceq I}
+|\operatorname{Tr}[F(\Omega-\Xi)]|.
+\tag{259.26}
+$$
+因此（259.22）量化的是完整源态在某些后续检验中仍可具有的最大差别，而不是现有固定响应之间的差别；后者对整个纤维本来就相同。
+
+### 259.4 最优重建半径恰为直径的一半
+
+用现有精确数据选一个合法归一化重建态 $\widehat\Omega$。允许它在纤维外，定义最坏半迹重建误差
+$$
+\mathcal R(\rho,K)=
+\inf_{\widehat\Omega\succeq0,\ \operatorname{Tr}\widehat\Omega=1}
+\sup_{\Omega\in\mathfrak S(\rho,K)}
+d(\widehat\Omega,\Omega).
+\tag{259.27}
+$$
+
+**定理259.3（精确最坏重建误差）。** 有
+$$
+\boxed{
+\mathcal R(\rho,K)=\frac12\operatorname{Tr}G.
+}
+\tag{259.28}
+$$
+一个达到最小值的中心是本身属于纤维的中点源
+$$
+\boxed{
+\Omega_0=\frac12\begin{pmatrix}\rho&K\\K&\rho\end{pmatrix}
+=\frac{\Omega_++\Omega_-}{2}.
+}
+\tag{259.29}
+$$
+因此即使把允许的中心限制在数据纤维中，最优值也不变。
+
+**证明。** 任意可行 $H$ 满足 $-G\preceq H\preceq G$，所以（259.7）、（259.24）给
+$$
+d(\Omega_H,\Omega_0)
+=\frac12\|H\|_1
+\le\frac12\operatorname{Tr}G.
+\tag{259.30}
+$$
+$H=G$ 达到这一上界。另一方面，对任意合法中心 $\widehat\Omega$，三角不等式与定理259.2给
+$$
+\operatorname{Tr}G
+=d(\Omega_+,\Omega_-)
+\le d(\Omega_+,\widehat\Omega)+d(\widehat\Omega,\Omega_-).
+\tag{259.31}
+$$
+故中心到这两个可能来源的最大距离至少为 $\operatorname{Tr}G/2$。上下界相等。$\square$
+
+这一半径是指定精确数据合同下的确定性最坏误差。它没有把状态制备权限、有限样本误差或数据处理成本免费加入模型，也不要求最优中心唯一。
+
+### 259.5 白化公式与一般混合源的唯一性
+
+可实现性 $\rho\pm K\succeq0$ 先给支撑约束
+$$
+K=P_SKP_S,\qquad S=\operatorname{supp}\rho.
+\tag{259.32}
+$$
+理由是：对 $x\in\ker\rho$，两个非负二次型 $\langle x,(\rho\pm K)x\rangle$ 之和为零，故两个正矩阵均消去 $x$，从而 $Kx=0$；Hermitian性再给左支撑。
+
+在非零空间 $S$ 上定义
+$$
+Z=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2}.
+\tag{259.33}
+$$
+它满足 $Z=Z^\dagger$、$-I_S\preceq Z\preceq I_S$。
+
+几何平均对可逆同余有等式
+$$
+(TAT^\dagger)\#(TBT^\dagger)=T(A\#B)T^\dagger.
+\tag{259.34}
+$$
+这可直接从引理259.1证明：$H\mapsto THT^\dagger$ 给两个Hermitian填充集合之间保序的双射，故把唯一最大元送到唯一最大元。证明同时适用于奇异 $A,B$，只要求同余矩阵 $T$ 可逆。
+
+在 $S$ 上使用（259.34），由于 $I_S+Z$ 与 $I_S-Z$ 交换，逐本征值计算得到
+$$
+\boxed{
+G|_S=\rho_S^{1/2}(I_S-Z^2)^{1/2}\rho_S^{1/2},
+\qquad G|_{S^\perp}=0.
+}
+\tag{259.35}
+$$
+零支撑部分也可直接由块正性核条件确认。因此精确直径另有公式
+$$
+\boxed{
+\operatorname{diam}_d\mathfrak S(\rho,K)
+=\operatorname{Tr}_S\!\left[\rho_S(I_S-Z^2)^{1/2}\right].
+}
+\tag{259.36}
+$$
+这里没有要求 $\rho$ 与 $K$ 或 $Z$ 交换。
+
+**推论259.4（Hermitian响应的完整唯一性分类）。** 在可实现性条件下，以下条件等价：
+$$
+\boxed{
+\mathfrak S(\rho,K)\text{ 是单点}
+\iff G=0
+\iff Z^2=I_S.
+}
+\tag{259.37}
+$$
+单点存在时，它恰为（259.29）的 $\Omega_0$。
+
+**证明。** 若 $G=0$，引理259.1强制 $H=0$。若 $G\ne0$，（259.23）给两个不同成员。因此单点等价于 $G=0$。在 $S$ 上 $\rho_S^{1/2}$ 可逆，（259.35）给 $G=0$ 当且仅当 $(I_S-Z^2)^{1/2}=0$，也即 $Z^2=I_S$。$\square$
+
+这是本节Hermitian响应类对全部正半定竞争态的分类，不仅是纯态之间的分类。它还说明数值半径 $w(Z)=1$ 只要求至少一个本征值达到绝对值一，而唯一性要求全部本征值都取 $+1$ 或 $-1$。
+
+### 259.6 一个非交换、混合且可分的唯一来源
+
+在二维参考空间取Pauli矩阵 $X,Z_0$，令
+$$
+0<c<\frac12,\qquad
+\rho=\frac12I_2+cX,
+\qquad
+k=\sqrt{\frac14-c^2},\qquad K=kZ_0.
+\tag{259.38}
+$$
+$\rho$ 严格正且迹一，$K$ 为Hermitian；因 $c,k>0$，$\rho K\ne K\rho$。
+
+矩阵 $\rho\pm K=I_2/2+cX\pm kZ_0$ 的两个本征值是
+$$
+\frac12\pm\sqrt{c^2+k^2}=1,0.
+\tag{259.39}
+$$
+因此 $A=\rho+K$、$B=\rho-K$ 均是秩一密度矩阵，数据可实现。又有
+$$
+\rho^{-1}=\frac{\frac12I_2-cX}{\frac14-c^2},
+\qquad
+K\rho^{-1}K=\rho,
+\tag{259.40}
+$$
+其中使用 $Z_0XZ_0=-X$。于是白化矩阵满足 $Z^2=I_2$，从而 $G=0$，整个固定边缘纤维只有 $\Omega_0$。
+
+在（259.4）的输入基变换后，该唯一源为
+$$
+\frac12|0\rangle\langle0|\otimes A
++\frac12|1\rangle\langle1|\otimes B.
+\tag{259.41}
+$$
+它是两个产品纯态的凸组合，整体秩为二，故是混合可分态。唯一性由固定数据和正性约束给出，并不需要真源纯或纠缠。
+
+同时
+$$
+\|K\|_1=2k=\sqrt{1-4c^2}<1.
+\tag{259.42}
+$$
+按§257，只固定响应而放开参考边缘时，该纤维的半迹直径为 $2c>0$；固定这里的 $\rho$ 后直径恰为零。这把边缘数据消去的真实来源歧义直接量化出来。
+
+### 259.7 交换情形、相位扩展及范围
+
+若 $\rho$ 与 $K$ 交换，在共同本征基中写
+$$
+\rho=\operatorname{diag}(\rho_i),\qquad
+K=\operatorname{diag}(k_i),\qquad |k_i|\le\rho_i.
+\tag{259.43}
+$$
+则
+$$
+\boxed{
+\operatorname{Tr}G
+=\sum_i\sqrt{\rho_i^2-k_i^2}
+=\sum_{\rho_i>0}\rho_i\sqrt{1-(k_i/\rho_i)^2}.
+}
+\tag{259.44}
+$$
+$\rho_i=0$ 时 $k_i=0$，对应项为零。该标量求和式只是交换特例；非交换情形应使用（259.21）或（259.36）。
+
+固定边缘纤维包含于§257相同 $K$ 的自由边缘纤维，因此
+$$
+0\le\operatorname{Tr}G\le\sqrt{1-\|K\|_1^2}\le1.
+\tag{259.45}
+$$
+这一比较保持同一响应数据，没有把不同来源或不同边缘的独立最优值当成同时可达。
+
+若给定响应具有一个已知统一相位
+$$
+K=e^{i\theta}L,\qquad L=L^\dagger,
+\tag{259.46}
+$$
+以输入酉矩阵 $\operatorname{diag}(e^{-i\theta},1)$ 共轭来源块，即把 $K/2$ 变为 $L/2$，同时保持参考边缘和全部半迹距离。因此本节结果全部适用，只需以 $L$ 替换 $K$：可实现性为 $-\rho\preceq L\preceq\rho$，直径为 $\operatorname{Tr}[(\rho+L)\#(\rho-L)]$，最优半径是其一半。
+
+一般复矩阵未必能由一个标量相位化为Hermitian。对这样的 $K$，（259.4）的块重排、上述几何平均直径及 $Z^2=I$ 分类均不能直接使用；任意复响应的可实现性仍由§258的支撑与数值半径条件承担。本节也未把精确固定边缘的结论延伸为边缘有噪声时的统一恢复界。
+
+## 追加锚（本行以下为增补区）
