@@ -20372,3 +20372,477 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 76. 二次纤维保持的锐利缺陷维数界与最小秩反例
+
+第72节证明：二维接收因子上，四个二次纤维的保持与秩至多一的正余等距缺陷，会使每条纤维映射的秩至多一。本节区分这一二维结论与任意维数下的结论。一般条件能推出锐利的必要维数界 $q\le3d$，但不能推出每个纤维的秩至多 $d$；接收维数三、缺陷秩一就有明确反例。
+
+### 76.1 四条射线给出任意维数的加权块形
+
+设 $Q$ 是 $q$ 维复 Hilbert 空间，$q\ge1$，$F$ 二维，$A:F\to F$ 可逆，并令
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+考虑 $M:Q\otimes J\to Q\otimes F$，且四条不同射线的非零代表 $z_1,\ldots,z_4$ 满足
+$$
+M(Q\otimes(Az_i\otimes z_i))\subset Q\otimes z_i.
+$$
+
+**引理76.1（四点保持与二次坐标块形）。** 上述条件使所有射线的二次纤维都被保持。取 $A^*A$ 的正交单位特征基 $e_0,e_1$，特征值为 $\mu,\nu>0$，则在 $J$ 的正交单位基
+$$
+\frac{Ae_0\otimes e_0}{\sqrt\mu},\qquad
+\frac{Ae_0\otimes e_1+Ae_1\otimes e_0}{\sqrt{\mu+\nu}},\qquad
+\frac{Ae_1\otimes e_1}{\sqrt\nu}
+$$
+中，存在 $L_0,L_1\in\operatorname{End}(Q)$，使
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt{\mu+\nu}&0\\
+0&L_0/\sqrt{\mu+\nu}&L_1/\sqrt\nu
+\end{pmatrix},
+\tag{76.1}
+$$
+并且对 $z=z_0e_0+z_1e_1$，
+$$
+M(\xi\otimes Az\otimes z)=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{76.2}
+$$
+
+**证明。** 对每个 $\xi\in Q$，把 $M(\xi\otimes Az\otimes z)$ 的两个输出环境坐标写为
+$$
+Y_0(z)\xi=(B_{00}z_0^2+B_{01}z_0z_1+B_{02}z_1^2)\xi,
+$$
+$$
+Y_1(z)\xi=(B_{10}z_0^2+B_{11}z_0z_1+B_{12}z_1^2)\xi,
+$$
+其中 $B_{ij}\in\operatorname{End}(Q)$。输出在环境射线 $z$ 上的充要条件为
+$$
+z_1Y_0(z)-z_0Y_1(z)=0.
+$$
+左侧的每个矩阵系数都是三次齐次多项式。它在四条不同复射影射线上为零，故恒为零。这给所有射线的保持条件，并逐系数给
+$$
+B_{10}=B_{02}=0,\qquad
+B_{00}=B_{11}=:L_0,\qquad B_{01}=B_{12}=:L_1.
+$$
+因此两个输出坐标分别为 $z_0(z_0L_0+z_1L_1)$ 和 $z_1(z_0L_0+z_1L_1)$，得到（76.2）。
+
+由于 $Ae_0\perp Ae_1$，所列三个二次张量的范数分别为 $\sqrt\mu,\sqrt{\mu+\nu},\sqrt\nu$，且彼此正交。将未归一化的二次系数改写到这组正交单位基，便得到（76.1）。证明完毕。
+
+这一加权 Toeplitz 型块式来自二次张量的标准坐标比较，论证对任意有限 $q$ 成立；它本身并不包含第72节的二维秩结论。
+
+### 76.2 完整缺陷给出锐利必要维数界
+
+**定理76.2（缺陷维数界）。** 在引理76.1的合同下，若
+$$
+D=I-MM^*\succeq0,\qquad \operatorname{rank}D=d,
+$$
+则
+$$
+q\le3d.
+\tag{76.3}
+$$
+常数 $3$ 对该一般合同是锐利的。特别地，任何正维 $Q$ 都不允许零缺陷 $MM^*=I$。
+
+**证明。** 写 $D=HH^*$，其中 $H:\mathbb C^d\to Q\oplus Q$ 满列秩，并分成两个 $q\times d$ 块 $H_0,H_1$。$d=0$ 时取零维定义域，相同块方程仍成立。置
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu=\mu^2+\mu\nu+\nu^2>0,\qquad
+X=L_0L_0^*,\quad Y=L_1L_1^*.
+$$
+由（76.1），三个块方程为
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{76.4}
+$$
+解前两个线性方程，得到
+$$
+X=\frac{\mu s}{\Delta}
+\left(\mu I-sH_0H_0^*+\nu H_1H_1^*\right),
+$$
+$$
+Y=\frac{\nu s}{\Delta}
+\left(\nu I-sH_1H_1^*+\mu H_0H_0^*\right).
+\tag{76.5}
+$$
+因此对每个 $v\in\ker H_0^*$，
+$$
+\langle v,Xv\rangle
+=\frac{\mu s}{\Delta}
+\left(\mu\|v\|^2+\nu\|H_1^*v\|^2\right)
+\ge\frac{\mu^2s}{\Delta}\|v\|^2.
+$$
+该子空间的维数至少为 $q-d$，且 $X\succeq0$；$X$ 的核与它相交为零，故
+$$
+\operatorname{rank}L_0=\operatorname{rank}X\ge q-d.
+$$
+交换两个环境方向，同样有 $\operatorname{rank}L_1\ge q-d$。
+
+另一方面，（76.4）给 $\operatorname{rank}(L_1L_0^*)\le d$。将 $L_1$ 限制到 $\operatorname{im}L_0^*$，其核维数至多为 $\dim\ker L_1=q-\operatorname{rank}L_1$，所以
+$$
+\operatorname{rank}(L_1L_0^*)\ge
+\operatorname{rank}L_0+\operatorname{rank}L_1-q.
+$$
+于是
+$$
+d\ge\operatorname{rank}(L_1L_0^*)\ge q-2d,
+$$
+得到（76.3）。正维 $q$ 时不能有 $d=0$。下面的三维实例及其正交直接和达到 $q=3d$，从而证明常数的锐利性。证明完毕。
+
+这一结论约束的是整个接收因子维数与完整算子缺陷，不是某一条纤维的秩估计。
+
+### 76.3 三维接收因子的显式反例
+
+**定理76.3（纤维秩不受缺陷秩直接控制）。** 存在 $q=3$、$A=I$ 的映射 $M$，使它保留所有二次纤维，$I-MM^*$ 是秩一正交投影，但每条非零二次纤维上的映射秩都为二。因此“每条纤维秩不超过 $d$”在一般 $q$ 下为假。
+
+取 $Q=\mathbb C^3$，正交单位基记为 $u_0,u_1,u_2$；取 $F=\mathbb C^2$，正交单位基为 $e_0,e_1$。令 $A=I_F$，故
+$$
+J=\operatorname{Sym}^2F
+=\operatorname{span}\left\{
+e_0e_0,\frac{e_0e_1+e_1e_0}{\sqrt2},e_1e_1
+\right\}.
+$$
+这里张量积缩写为并列符号，所列为正交单位基。记 $c=\sqrt{2/3}$，定义 $Q$ 上两个算子，其输入和输出均使用同一基 $(u_0,u_1,u_2)$：
+$$
+L_0=
+\begin{pmatrix}
+1&0&0\\
+0&0&0\\
+0&c&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+1&0&0\\
+0&0&c
+\end{pmatrix}.
+\tag{76.6}
+$$
+按 $Q\otimes J$ 的三个二次基块与 $Q\otimes F$ 的两个环境块，令
+$$
+M=
+\begin{pmatrix}
+L_0&L_1/\sqrt2&0\\
+0&L_0/\sqrt2&L_1
+\end{pmatrix}.
+\tag{76.7}
+$$
+这是明确的 $6\times9$ 复线性矩阵。
+
+### 76.4 全部二次纤维被保留且秩二
+
+对任意 $z=z_0e_0+z_1e_1$ 及 $\xi\in Q$，二次张量的三个正交坐标为 $z_0^2,\sqrt2z_0z_1,z_1^2$，所以（76.7）直接给
+$$
+M(\xi\otimes z\otimes z)
+=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{76.8}
+$$
+因此全部射线的二次纤维都被保留，特别满足任意四条不同射线的要求。
+
+对应纤维算子为
+$$
+L(z)=
+\begin{pmatrix}
+z_0&0&0\\
+z_1&0&0\\
+0&cz_0&cz_1
+\end{pmatrix}.
+\tag{76.9}
+$$
+只要 $z\ne0$，第一列在 $\operatorname{span}(u_0,u_1)$ 中非零，后两列中至少一列是 $u_2$ 的非零倍数；它们线性独立。矩阵像又包含于这两个方向的和，所以
+$$
+\operatorname{rank}L(z)=2\qquad(z\ne0).
+\tag{76.10}
+$$
+
+### 76.5 完整缺陷是秩一正交投影
+
+令 $X=L_0L_0^*$、$Y=L_1L_1^*$。由（76.6），
+$$
+X=\operatorname{diag}(1,0,2/3),\qquad
+Y=\operatorname{diag}(0,1,2/3),\qquad
+L_1L_0^*=|u_1\rangle\langle u_0|.
+\tag{76.11}
+$$
+故
+$$
+MM^*=
+\begin{pmatrix}
+X+Y/2&|u_1\rangle\langle u_0|/2\\
+|u_0\rangle\langle u_1|/2&X/2+Y
+\end{pmatrix},
+$$
+$$
+I-MM^*=
+\frac12
+\begin{pmatrix}
+|u_1\rangle\langle u_1|&-|u_1\rangle\langle u_0|\\
+-|u_0\rangle\langle u_1|&|u_0\rangle\langle u_0|
+\end{pmatrix}
+=hh^*,
+\tag{76.12}
+$$
+其中
+$$
+h=\frac{u_1\otimes e_0-u_0\otimes e_1}{\sqrt2}
+$$
+为单位向量。因此 $I-MM^*$ 是秩一正交投影，$MM^*\preceq I$ 且 $d=1$。（76.10）却使每条非零纤维的秩为 $2>d$，完成定理76.3的反例。证明完毕。
+
+
+### 76.6 任意可逆 A 都有同样的锐例
+
+上述反例不依赖 $A$ 的两个奇异值相同。对任意可逆 $A$，取引理76.1中 $A^*A$ 的正交单位特征基及特征值 $\mu,\nu>0$，仍记
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+在三维接收基 $(u_0,u_1,u_2)$ 中定义
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu&0&0\\
+0&0&0\\
+0&\mu\sqrt{s/\Delta}&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu&0&0\\
+0&0&\nu\sqrt{s/\Delta}
+\end{pmatrix},
+\tag{76.13}
+$$
+再按（76.1）在实际 $Q\otimes J$ 的正交单位基中定义 $M$。
+
+此时
+$$
+X=\operatorname{diag}(\mu,0,\mu^2s/\Delta),\qquad
+Y=\operatorname{diag}(0,\nu,\nu^2s/\Delta),
+\qquad
+L_1L_0^*=\sqrt{\mu\nu}\,|u_1\rangle\langle u_0|.
+$$
+两个 $u_2$ 环境方向上的 $MM^*$ 对角元分别为
+$$
+\frac{\mu s+\nu^2}{\Delta}=1,\qquad
+\frac{\mu^2+\nu s}{\Delta}=1,
+$$
+且其交叉块为零。因此同样直接得到
+$$
+I-MM^*=hh^*,\qquad
+h=\frac{\sqrt\mu\,u_1\otimes e_0-\sqrt\nu\,u_0\otimes e_1}{\sqrt s},
+\qquad \|h\|=1.
+\tag{76.14}
+$$
+纤维算子 $L(z)$ 的第一列是 $\sqrt\mu\,z_0u_0+\sqrt\nu\,z_1u_1$，后两列分别是 $\mu\sqrt{s/\Delta}\,z_0u_2$ 与 $\nu\sqrt{s/\Delta}\,z_1u_2$。非零 $z$ 使第一列及后两列中至少一列非零，故每条非零纤维仍恰为秩二。引理76.1的实际坐标恒等式保证它保持的是 $Az\otimes z$ 纤维，而不是把一般 $A$ 偷换成单位算子。
+
+### 76.7 最小维数、二维边界与锐利直接和族
+
+该反例的接收维数 $q=3$ 最小，缺陷秩 $d=1$ 也是最小非零值。确实，定理76.2已经排除所有正维 $Q$ 的零缺陷。在 $q=1$ 时，每条纤维秩至多一，而 $d\ge1$，不能反驳所问秩界。在 $q=2$ 时，$d=1$ 的结论正是第72节已经证明的二维秩一缺陷引理；$d\ge2$ 时每条纤维秩至多二，秩界自动成立。因此三维是最早失败的接收维数。
+
+对（76.13）及其加权块形的 $L_0,L_1,M$ 取 $m$ 份正交直接和，仍使用同一个二维 $F$ 和任意已经固定的可逆 $A$，得到
+$$
+q=3m,\qquad d=m,\qquad
+\operatorname{rank}\!\left(M|_{Q\otimes(Az\otimes z)}\right)=2m
+\quad(z\ne0).
+\tag{76.15}
+$$
+每份的缺陷都是互相正交的秩一正投影，故完整缺陷秩相加为 $m$；每份的纤维像正交，故纤维秩相加为 $2m$。这些映射满足定理76.2的全部合同并使 $q=3d$，证明常数 $3$ 对每个正整数 $m$ 都能达到，不能减小。
+
+这一反例保留了 $A$ 可逆、完整正缺陷及四条不同射线保持的全部条件，甚至取 $A=I$ 并保持全部射线。它不改变第72节在 $\dim Q=2$ 下的正确结论。直接和族没有证明 $2d$ 是一般纤维秩上界；该不同命题在本节没有结算。这里给出的新具体构造与锐利维数估计都只属于所述线性代数合同，不能直接冒充整个接收器已经达到相应容量或排除所有七维接收器；一般接收容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
+
+## 77. 二次纤维缺陷界取等时的完整结构
+
+第76节给出任意接收维数的必要界 $q\le3d$ 及达到等号的构造。本节确定全部等号情形：允许接收因子的输入和输出分别选择酉坐标后，它们都是该三维构造的正交直接和。这里分类的是同一个二次纤维保持收缩，不把它自动升级成满足全部来源递推的量子接收器。
+
+### 77.1 等号合同与归一化块
+
+沿用第76节的有限维复 Hilbert 空间 $Q,F$，其中 $\dim Q=q$、$\dim F=2$，以及可逆 $A:F\to F$。置
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+设 $M:Q\otimes J\to Q\otimes F$ 是收缩，并在四条不同射线上保持二次纤维。第76节的三次多项式比较给出所有射线上的保持关系及加权块表示。选 $A^*A$ 的特征基，记正特征值为 $\mu,\nu$，置
+$$
+s=\mu+\nu,\qquad c=s^2-\mu\nu>0.
+$$
+在该节给出的正交基中，
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)
+=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{77.1}
+$$
+记 $D=I-MM^*\succeq0$、$d=\operatorname{rank}D$，并假设
+$$
+q=3d>0.
+\tag{77.2}
+$$
+“独立输入和输出酉坐标”意指用 $(U_{\rm out}\otimes I_F)M(U_{\rm in}^*\otimes I_J)$ 替换矩阵表示，其中两个 $Q$ 上的酉可以不同。这种变换保持收缩性、缺陷秩和全部纤维秩；它不声称固定通道的反复使用也允许每轮自由换坐标。
+
+### 77.2 最小缺陷必为正交投影
+
+**定理77.1（等号强制缺陷投影与三块分解）。** 在（77.1）—（77.2）下，$D$ 是秩 $d$ 的正交投影。两个系数满足
+$$
+\operatorname{rank}L_0=\operatorname{rank}L_1=2d.
+\tag{77.3}
+$$
+空间 $E_0=\ker L_0^*$ 与 $E_1=\ker L_1^*$ 正交且各为 $d$ 维。令 $E_c=(E_0\oplus E_1)^\perp$，则 $\dim E_c=d$，且
+$$
+\begin{aligned}
+L_0L_0^*&=\mu P_{E_1}+\frac{\mu^2s}{c}P_{E_c},\\
+L_1L_1^*&=\nu P_{E_0}+\frac{\nu^2s}{c}P_{E_c}.
+\end{aligned}
+\tag{77.4}
+$$
+
+**证明。** 取秩分解 $D=HH^*$，其中 $H:\mathbb C^d\to Q\otimes F$ 单射；按环境基写 $H=(H_0,H_1)$。置 $X=L_0L_0^*$、$Y=L_1L_1^*$。块方程是
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{77.5}
+$$
+第76节证明中的秩估计给出
+$$
+\operatorname{rank}L_i\ge q-\operatorname{rank}H_i\ge q-d=2d.
+$$
+另一方面，乘积秩不等式与（77.5）给
+$$
+\operatorname{rank}L_0+\operatorname{rank}L_1-q
+\le\operatorname{rank}(L_1L_0^*)\le d.
+$$
+因此两者秩均恰为 $2d$，乘积秩恰为 $d$，且 $H_0,H_1$ 都是秩 $d$ 的单射。特别地 $\dim E_0=\dim E_1=d$。
+
+取 $v\in E_0$。由 $L_0^*v=0$ 与第三个块方程，$H_0H_1^*v=0$；$H_0$ 单射使 $H_1^*v=0$。第二个对角方程于是给 $Yv=\nu v$，第一个再给
+$$
+H_0H_0^*v=\frac\mu s v.
+$$
+故 $E_0\subseteq\operatorname{ran}H_0$；两侧维数相同，所以
+$$
+\operatorname{ran}H_0=E_0,\qquad
+H_0H_0^*=\frac\mu s P_{E_0}.
+$$
+交换两个环境方向，得到
+$$
+\operatorname{ran}H_1=E_1,\qquad
+H_1H_1^*=\frac\nu s P_{E_1}.
+\tag{77.6}
+$$
+又 $H_1^*E_0=0$，所以 $E_0\perp E_1$。
+
+由（77.6），存在满等距 $J_i:\mathbb C^d\to E_i$，使
+$$
+H_0=\sqrt{\mu/s}\,J_0,\qquad
+H_1=\sqrt{\nu/s}\,J_1.
+$$
+于是 $H^*H=(\mu/s+\nu/s)I_d=I_d$，从而 $D^2=HH^*HH^*=D$，证明它是正交投影。
+
+最后联立（77.5）的两个对角方程，得到
+$$
+X=\frac{\mu s}{c}\bigl(\mu I-sH_0H_0^*+\nu H_1H_1^*\bigr),
+\qquad
+Y=\frac{\nu s}{c}\bigl(\nu I+\mu H_0H_0^*-sH_1H_1^*\bigr).
+$$
+代入（77.6），逐个正交子空间读取系数，即得（77.4）。证毕。
+
+### 77.3 全部等号算子的标准形
+
+**定理77.2（等号分类与全部纤维的准确秩）。** 在（77.1）—（77.2）下，可以分别给输入和输出 $Q$ 选取三个 $d$ 维正交坐标块，使
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu I_d&0&0\\
+0&0&0\\
+0&\mu\sqrt{s/c}\,I_d&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0\\
+\sqrt\nu I_d&0&0\\
+0&0&\nu\sqrt{s/c}\,I_d
+\end{pmatrix}.
+\tag{77.7}
+$$
+反过来，（77.7）及（77.1）定义的算子满足全部假设且 $q=3d$。因此对每个非零 $z\in F$，都有
+$$
+\boxed{\operatorname{rank}M|_{Q\otimes(Az\otimes z)}=2d.}
+\tag{77.8}
+$$
+
+**证明。** 使用定理77.1中的 $J_0,J_1$。选输出满等距
+$$
+A_o=J_1:\mathbb C^d\to E_1,\qquad
+B_o=-J_0:\mathbb C^d\to E_0,
+$$
+并选任意满等距 $C_o:\mathbb C^d\to E_c$。三者具有两两正交像。由（77.5），
+$$
+L_1L_0^*=\sqrt{\mu\nu}\,B_oA_o^*.
+\tag{77.9}
+$$
+令
+$$
+P=\frac1{\sqrt\mu}L_0^*A_o,
+\qquad
+\widetilde P=\frac1{\sqrt\nu}L_1^*B_o.
+$$
+（77.4）说明 $P,\widetilde P$ 均为等距；（77.9）说明 $P^*\widetilde P=I_d$。所以
+$$
+(P-\widetilde P)^*(P-\widetilde P)=0,
+\qquad P=\widetilde P.
+\tag{77.10}
+$$
+再置
+$$
+\beta=\mu\sqrt{s/c},\qquad \delta=\nu\sqrt{s/c},
+\qquad R=\beta^{-1}L_0^*C_o,
+\qquad S=\delta^{-1}L_1^*C_o.
+$$
+由（77.4），$R,S$ 也是等距。像的正交性直接来自
+$$
+\begin{aligned}
+P^*R&=(\sqrt\mu\beta)^{-1}A_o^*XC_o=0,\\
+P^*S&=(\sqrt\mu\delta)^{-1}A_o^*L_0L_1^*C_o=0,\\
+R^*S&=(\beta\delta)^{-1}C_o^*L_0L_1^*C_o=0.
+\end{aligned}
+$$
+每个像都是 $d$ 维，而 $q=3d$，故 $P,R,S$ 的像正交分解整个输入 $Q$。
+
+在输入坐标 $(P,R,S)$ 和输出坐标 $(A_o,B_o,C_o)$ 中，（77.4）、（77.9）、（77.10）分别给
+$$
+L_0P=\sqrt\mu A_o,\quad L_1P=\sqrt\nu B_o,
+\quad L_0R=\beta C_o,\quad L_1S=\delta C_o,
+\quad L_1R=L_0S=0.
+$$
+这就是（77.7）。反向代入加权块矩阵，则
+$$
+I-MM^*=\mathcal H\mathcal H^*,\qquad
+\mathcal H v=\frac{\sqrt\mu B_ov\otimes e_0-\sqrt\nu A_ov\otimes e_1}{\sqrt s}.
+\tag{77.11}
+$$
+由于 $\mathcal H$ 是等距，缺陷恰是秩 $d$ 的正交投影，且 $M$ 是收缩。式（77.1）直接验证所有二次纤维的保持。
+
+最后，对非零 $z$，标准形的铅笔为
+$$
+z_0L_0+z_1L_1=
+\begin{pmatrix}
+\sqrt\mu z_0I_d&0&0\\
+\sqrt\nu z_1I_d&0&0\\
+0&\beta z_0I_d&\delta z_1I_d
+\end{pmatrix}.
+$$
+第一输入块的像在前两个输出块中有维数 $d$；后两个输入块的像正好是第三输出块，也有维数 $d$。两像正交，故总秩恰为 $2d$。证毕。
+
+**推论77.3（最小缺陷的谱与边界）。** 在等号情形，$MM^*$ 的谱仅为 $0,1$，零特征值重数为 $d$，一特征值重数为 $5d$；$M$ 的秩为 $5d$。每条二次纤维仍有 $d$ 维输入核。
+
+**证明。** $\dim(Q\otimes F)=6d$，且 $I-MM^*$ 是秩 $d$ 正交投影，所以前两项成立。纤维输入维数为 $3d$，由（77.8）及秩零度定理，其核维数为 $d$。证毕。
+
+这一分类给出一个具体的边界容量关系：在此纤维保持合同内，将全局正缺陷压到允许的最小比例 $d/q=1/3$，会强制局部纤维保留恰好三分之二的线性方向。这个比例只属于上述算子合同；它既不是一般时空面积律，也未决定六轮实际接收器的最小容量。对未取等的 $q<3d$，本节没有给出一般纤维秩上界。
+
+## 追加锚（本行以下为增补区）
