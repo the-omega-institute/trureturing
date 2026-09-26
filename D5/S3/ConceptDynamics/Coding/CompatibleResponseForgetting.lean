@@ -284,10 +284,11 @@ private noncomputable def incomingResponseU {p : ℕ} {M : CountMat p p}
     Matrix (Quotient (L.response d)) (Quotient (L.response (d + 1))) ℕ :=
   fun F Z => Nat.card (incomingResponseFiber L d F (Quotient.out Z))
 
-private def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Type}
+private noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Type}
     (L : IncomingLift M Q) (d : ℕ) :
-    Matrix (Quotient (L.response (d + 1))) (Quotient (L.response d)) ℕ :=
-  fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
+    Matrix (Quotient (L.response (d + 1))) (Quotient (L.response d)) ℕ := by
+  classical
+  exact fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
