@@ -52,26 +52,12 @@ $$S \neq \{1,..., d\} \Rightarrow \operatorname{L}(a, S, T, w)= (\frac{1}{2^{\lv
 
 For every dimension d, every real profile a, every proper subset S of the coordinates, every horizon T and every record w, the record law equals (2^(-|S|))^(T+1). For |a| <= 1, when P_a is a Markov kernel, this says that the coordinates in S of the chain started from the uniform law form an independent sequence of uniform vectors on {-1, 1}^S. No condition on a is needed; the statement concerns only the proper coordinates.
 
-Fix a coordinate j outside S. Flipping the sign of coordinate j is an involution of every fiber that fixes the coordinates in S, and it negates the parity, so the parity sums to zero on each such fiber. A fiber has 2^(d - |S|) elements. Therefore the kernel mass P_a(x, fiber) equals 2^(-|S|) from every start x. Summing out the last state of the path and inducting on T gives the product formula, with base case the uniform mass of one fiber.
-
-**Theorem 1.5 (Two steps reach the uniform kernel).**
-
-$$d\geq 1, \sum_{y} \operatorname{b}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{b}(y)=0 \Rightarrow \sum_{y} P_{a}(x, y) P_{b}(y, z)= \frac{1}{2^{d}}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel_mul_eq_uniform` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Let d >= 1. If the second profile b satisfies sum b = 0 and sum chi b = 0, then for every first profile a and all vertices x, z the two-step weight equals 2^(-d). Taking b = a gives P_a^2 = Pi on the family of profiles with E a = 0 and E[chi a] = 0, and any two kernels of that family multiply to Pi.
-
-Expanding the product gives four sums over y. The parity sum vanishes by the fiber lemma applied to the empty coordinate set, which is proper because d >= 1, and the two remaining sums vanish by hypothesis, leaving 2^d / 4^d.
+On every fiber that fixes the coordinates of the proper set S the two parity classes have the same number of vertices, since the uniform laws of the two classes have equal proper marginals; hence the parity sums to zero on the fiber. A fiber has 2^(d - |S|) elements, so the kernel mass P_a(x, fiber) equals 2^(-|S|) from every start x. Summing out the last state of the path and inducting on T gives the product formula, with base case the uniform mass of one fiber.
 
 ## References
 
 - Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parity`
 - Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel`
-- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel_mul_eq_uniform`
 - Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw`
 - Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw_eq`
+- Dependency: [D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments](../../Analytic/ReflectedSpectrum/ParityConditionedMoments.md)
