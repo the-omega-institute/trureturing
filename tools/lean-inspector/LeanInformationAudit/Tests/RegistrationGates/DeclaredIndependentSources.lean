@@ -37,7 +37,7 @@ run_meta do
       (·.occurrence.key.theoremName == ``independentSource)
     | throwError "setup: missing independent source binding"
   let .declaredValidated certificate := record.result
-    | throwError "[FAIL] independent_composite_source_binding_validated result={repr record.result}"
+    | throwError "[FAIL] independent_standard_source_binding_validated"
   logInfo "[PASS] independent_standard_source_binding_validated"
   let some source := certificate.argumentInputs.find?
       (·.name == ``Int.natAbs)
