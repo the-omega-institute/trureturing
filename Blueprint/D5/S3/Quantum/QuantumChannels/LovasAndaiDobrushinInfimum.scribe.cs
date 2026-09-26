@@ -17,7 +17,7 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
             DefinitionNode("classicalFiber", "Qubit channels over a classical channel", FiberFormula(),
                 "In the parametrization of Lovas and Andai the Choi blocks Q_11 and Q_22 are the images of the projections onto the first and the second basis vector, with diagonals (a, 1 - a) and (f, 1 - f). The set collects the completely positive trace-preserving qubit maps with these diagonal entries."),
             DefinitionNode("dobrushin", "The trace-distance contraction coefficient", DobrushinFormula(),
-                "The supremum, over pairs of distinct qubit states, of the ratio between the trace norm Tr|Q(rho) - Q(sigma)| of the difference of the images and the trace norm Tr|rho - sigma| of the difference of the states."),
+                "The supremum, over all pairs of qubit states, of the ratio between the trace norm Tr|Q(rho) - Q(sigma)| of the difference of the images and the trace norm Tr|rho - sigma| of the difference of the states; a pair with rho = sigma contributes 0/0, which is 0 in Lean."),
             DefinitionNode("claim", "The Lovas-Andai conjecture", ClaimDefinitionFormula(),
                 "For all parameters a and f in the unit interval, |a - f| is the least value of the contraction coefficient over the qubit channels above the classical channel; in particular the infimum equals |a - f| and is attained."),
             TheoremNode("result", "The infimum is |a - f| and is attained", ClaimFormula(),
@@ -89,9 +89,8 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
         Formula ratio = new Formula.Fraction(
             Call("traceNorm", Subtract(Call("Q.mapState", rho), Call("Q.mapState", sigma))),
             Call("traceNorm", Subtract(rho, sigma)));
-        Formula distinct = new Formula.Relation(rho, FormulaRelationOperator.NotEqual, sigma);
         Formula ratios = Seq(OpenBrace, Member(x, Reals()), Sp, Mid, Sp,
-            Some("rho", States(), Some("sigma", States(), And(distinct, Equal(x, ratio)))), CloseBrace);
+            Some("rho", States(), Some("sigma", States(), Equal(x, ratio))), CloseBrace);
         return Disp(All("Q", Channels(), Equal(Call("dobrushin", q), Call("sSup", ratios))));
     }
 

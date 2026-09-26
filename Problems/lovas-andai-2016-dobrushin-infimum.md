@@ -32,8 +32,10 @@ channel is a completely positive trace-preserving map; `Q_C(a,f)` consists of
 the channels for which `Q(|0⟩⟨0|)` and `Q(|1⟩⟨1|)` have diagonals `(a, 1−a)`
 and `(f, 1−f)`; the source writes positivity of the Choi matrix as `Q > 0`, and
 complete positivity is read as a positive semidefinite Choi matrix; the
-supremum defining `η^Tr` runs over pairs of distinct states, where the ratio
-of trace norms is defined; `a, f ∈ [0,1]`.
+supremum defining `η^Tr` runs over all pairs of states, the ratio of trace
+norms `Tr|·|` being the ratio of trace distances (the factors `½` cancel), and a
+pair `ρ = σ` counts as `0/0 = 0`, which does not change the supremum;
+`a, f ∈ [0,1]`.
 
 ## Motivation
 

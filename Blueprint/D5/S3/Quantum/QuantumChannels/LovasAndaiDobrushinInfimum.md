@@ -18,7 +18,7 @@ In the parametrization of Lovas and Andai the Choi blocks Q_11 and Q_22 are the 
 
 **Definition 1.2 (The trace-distance contraction coefficient).**
 
-$$\forall Q \in \operatorname{QuantumChannel}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right),\; \operatorname{dobrushin}\left(Q\right) = \operatorname{sSup}\left(\{x \in \mathbb{R} \mid \exists rho \in \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\; \exists sigma \in \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\; (rho \ne sigma) \land (x = \frac{\operatorname{traceNorm}\left(\operatorname{Q.mapState}\left(rho\right) - \operatorname{Q.mapState}\left(sigma\right)\right)}{\operatorname{traceNorm}\left(rho - sigma\right)})\}\right)$$
+$$\forall Q \in \operatorname{QuantumChannel}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right)\right),\; \operatorname{dobrushin}\left(Q\right) = \operatorname{sSup}\left(\{x \in \mathbb{R} \mid \exists rho \in \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\; \exists sigma \in \operatorname{DensityState}\left(\operatorname{Fin}\left(2\right)\right),\; x = \frac{\operatorname{traceNorm}\left(\operatorname{Q.mapState}\left(rho\right) - \operatorname{Q.mapState}\left(sigma\right)\right)}{\operatorname{traceNorm}\left(rho - sigma\right)}\}\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/LovasAndaiDobrushinInfimum.dobrushin` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\forall Q \in \operatorname{QuantumChannel}\left(\operatorname{Fin}\left(2\rig
 
 *Commentary.*
 
-The supremum, over pairs of distinct qubit states, of the ratio between the trace norm Tr|Q(rho) - Q(sigma)| of the difference of the images and the trace norm Tr|rho - sigma| of the difference of the states.
+The supremum, over all pairs of qubit states, of the ratio between the trace norm Tr|Q(rho) - Q(sigma)| of the difference of the images and the trace norm Tr|rho - sigma| of the difference of the states; a pair with rho = sigma contributes 0/0, which is 0 in Lean.
 
 **Definition 1.3 (The Lovas-Andai conjecture).**
 

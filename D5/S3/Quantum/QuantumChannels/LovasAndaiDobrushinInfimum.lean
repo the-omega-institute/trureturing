@@ -39,10 +39,10 @@ def classicalFiber (a f : ℝ) : Set (QuantumChannel (Fin 2) (Fin 2)) :=
     act Q (Matrix.single 1 1 1) 0 0 = (f : ℂ) ∧ act Q (Matrix.single 1 1 1) 1 1 = 1 - (f : ℂ)}
 
 /-- The trace-distance contraction coefficient
-`η^Tr(Q) = sup {Tr|Q(ρ) - Q(σ)| / Tr|ρ - σ| : ρ, σ qubit states, ρ ≠ σ}`, with `Tr|A|` the trace
-norm. -/
+`η^Tr(Q) = sup {Tr|Q(ρ) - Q(σ)| / Tr|ρ - σ| : ρ, σ qubit states}`, with `Tr|A|` the trace
+norm; a pair `ρ = σ` contributes `0 / 0 = 0`. -/
 def dobrushin (Q : QuantumChannel (Fin 2) (Fin 2)) : ℝ :=
-  sSup {x | ∃ rho sigma : DensityState (Fin 2), rho ≠ sigma ∧
+  sSup {x | ∃ rho sigma : DensityState (Fin 2),
     x = traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
           CStarMatrix.ofMatrix.symm (Q.mapState sigma).1) /
         traceNorm (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)}
@@ -138,24 +138,19 @@ theorem result : claim := by
     unfold traceDistance at h
     linarith
   have bdd : ∀ Q : QuantumChannel (Fin 2) (Fin 2), BddAbove {x | ∃ rho sigma : DensityState (Fin 2),
-      rho ≠ sigma ∧ x = traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
+      x = traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
           CStarMatrix.ofMatrix.symm (Q.mapState sigma).1) /
         traceNorm (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)} := by
     intro Q
     refine ⟨1, ?_⟩
-    rintro x ⟨rho, sigma, -, rfl⟩
+    rintro x ⟨rho, sigma, rfl⟩
     exact div_le_one_of_le₀ (contract Q rho sigma) (traceNorm_nonneg _)
   obtain ⟨ρ0, hρ0⟩ := pure 0
   obtain ⟨σ0, hσ0⟩ := pure 1
   -- Every channel over the classical channel contracts `|0⟩⟨0|, |1⟩⟨1|` by at least `|a - f|`.
-  have hne : ρ0 ≠ σ0 := by
-    intro h
-    have h' := congrArg (fun r : DensityState (Fin 2) => CStarMatrix.ofMatrix.symm r.1 0 0) h
-    simp only [hρ0, hσ0] at h'
-    simp [Matrix.single] at h'
   have lb : ∀ Q ∈ classicalFiber a f, |a - f| ≤ dobrushin Q := by
     rintro Q ⟨hQa, hQa', hQf, hQf'⟩
-    refine le_csSup_of_le (bdd Q) ⟨ρ0, σ0, hne, rfl⟩ ?_
+    refine le_csSup_of_le (bdd Q) ⟨ρ0, σ0, rfl⟩ ?_
     rw [mapv, mapv, hρ0, hσ0]
     let D0 : Matrix (Fin 2) (Fin 2) ℂ := Matrix.single 0 0 1 - Matrix.single 1 1 1
     have hY2 : 2 ≤ traceNorm D0 := by
@@ -278,8 +273,8 @@ theorem result : claim := by
       linarith
     exact hX.trans (mul_le_mul_of_nonneg_left hY (abs_nonneg _))
   have ub : dobrushin Q0 ≤ |a - f| := by
-    refine csSup_le ⟨_, ρ0, σ0, hne, rfl⟩ ?_
-    rintro x ⟨rho, sigma, -, rfl⟩
+    refine csSup_le ⟨_, ρ0, σ0, rfl⟩ ?_
+    rintro x ⟨rho, sigma, rfl⟩
     have h := measurePrepare rho sigma
     unfold traceDistance at h
     exact div_le_of_le_mul₀ (traceNorm_nonneg _) (abs_nonneg _) (by linarith)
