@@ -4659,3 +4659,49 @@ $Ce^{-ce^{2\Delta}}+O(Q^{-400})$，不乘增长的 $Q$ 次幂。
 有限文献检索不认证全局原创。
 本章是原模型中的综合推导，未进入 Lean、消化或冻结链；
 全余量下的实际方差熵极限仍未解决。
+
+## 第 112 章：小球对数极限、凹性导数与移动经验谱
+
+[谱边界卷第 112 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把高阶 Rényi 输出响应延伸到 $\alpha\ge c\delta^{-1/4}$，得到原有限经验谱的修正
+$-C_{\mathrm{edge}}y/(\alpha^2\sqrt\delta)$，其中
+$C_{\mathrm{edge}}=\pi^2\rho_0/(\kappa\gamma^2)$。
+有限阶因子保持精确，原半指数噪声条件不变，噪声可以任意慢地趋零。
+
+Alexander Nazarov，*Log-Level Comparison Principle for Small Ball Probabilities*，
+[arXiv:0805.1773v1](https://arxiv.org/abs/0805.1773v1)，2008 年 5 月 13 日，九页原文。
+Proposition 1 比较固定正可和特征值序列，要求特征值比的无限乘积收敛。
+Section 2 Proposition 2 对固定无限序列定义
+$L(u)=-\tfrac12\sum\ln(1+2u\lambda_n)$，
+在 $(L'(u)+r)/\sqrt{L''(u)}\to0$ 下给小球概率的尖锐渐近式。
+原文将该式归属 Lifshits 1997 年 Theorem 2，并引 Sytaya 1974 年的 Gaussian Hilbert 空间方法；
+这两个更早原件在本轮未取得，归属来自已读 Nazarov 原文。
+
+本章数组有限、随机，随 $Q$ 和 $\alpha$ 同时改变；该命题不直接给它们的一致导数。
+因此正文明确证明有限 Laplace 和的内外尾、倾斜均值与方差，再由固定步长割线和对数凹性得到能量导数。
+这属于经典方法的原模型统一应用，不被称为新的通用小球原理。
+Theorem 1 另有计数函数积分增长条件，Remark 2 给正则变动的充分范围与移除条件后的失败边界。
+提取文本的计数函数不等号会对正可和无限序列给出无限计数，
+尚未判定是原 PDF 还是提取问题；本章不采用该歧义定义或对应计数函数定理。
+可读有限 Laplace 公式及正文独立的有限和承担推导。
+
+Alexander I. Nazarov、Ruslan S. Pusev，
+*Comparison Theorems for the Small Ball Probabilities of Gaussian Processes in Weighted L2-Norms*，
+[arXiv:1211.2344v1](https://arxiv.org/abs/1211.2344v1)，2012 年 11 月 10 日，十页原文。
+Section 2 Theorem 1／Corollary 1 与 Section 3 Theorem 2 处理固定自伴微分算子的 Gaussian Green 过程，
+要求系数正则性、规范边界条件、权重属于相应 $W_\infty^n$、远离零且规定的根次幂积分相等。
+Proposition 2 的积分 Brownian bridge 还保留 Proposition 1 的正则性与归一化假设。
+在 $m=0$、权重一时指数因子为 $e^{-1/(8\varepsilon^2)}$，
+与逆平方谱的经典常数一致；它不提供本章有限经验谱、非中心均值、移动阶数和原噪声的统一性。
+没有把实际数组冒认为一个固定 Green 算子的谱。
+
+第 110 章已核对的 Cordero-Erausquin
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)
+Theorem 1 标量情形及 Section 4 证明仍承担 Prékopa 边缘凹性。
+光滑正函数逼近凸球上图集指标后，支配收敛得到 CDF 对数凹；只用定性凹性，不引入维数常数。
+Baez 的有限 Gibbs／Rényi 恒等式继续承担精确代数部分，未被扩称为移动数组定理。
+
+Anderson–Darling 1952 原文入口返回 HTTP 200 的 1162 字节 HTML 阻断，未取得 PDF 或采用其定理。
+两份 Nazarov 原 PDF 的字体提取警告及未使用定义的歧义保留为来源边界；
+所用条件和公式均已核对。有限检索不认证全局原创。
+本章未进入 Lean、消化或冻结链，也不声称更慢任意增长阶数、无界输出或 Shannon 端点已统一解决。
