@@ -19354,3 +19354,352 @@ $$
 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 105 章后续增补区）
+
+## 106. 二次共振的积分宽度与双重对数噪声余量
+
+**定理 106.1（积分平滑后的完整信息方差）。** 保持第 101、102、104 章的
+原实际 pair/path 实验、固定参数、全部取整、完整计数后验、精确中心及同一测量残差。
+置
+
+$$
+\mathcal B=q/Q^{11/4}=B^2\sqrt\delta,\quad
+L_M=\ln(1/\sigma_M),\quad\Delta_M=\ln\mathcal B-L_M,
+\qquad\delta=Q^{-1/2}.
+$$
+
+若确定正噪声满足
+
+$$
+L_M\to\infty,\qquad e^{2\Delta_M}/\ln Q\to\infty,
+\tag{106.1}
+$$
+
+则仍有完整的原信道加权结论
+
+$$
+\int|D_x(y)-R_*(y)|f_x(y)\,dy\to0,
+\tag{106.2}
+$$
+
+$$
+\int V_{{\rm post},x}(y)f_x(y)\,dy-V_{{\rm prior},x}
++A^2/\Lambda-C_xm_x\to\frac8{\sqrt3}-\frac{25}{6}.
+\tag{106.3}
+$$
+
+这里精确保持 (104.5) 的 $D_x,R_*$、原 $m_x=\mathbb E_xY$ 及有限系数
+
+$$
+A=V_H/\sqrt\delta,\quad\nu_0=2\sum_Hw_j^2,\quad
+\kappa_3=8\sum_Hw_j^3,\quad\Lambda=\nu_0+\sigma_M^2,\quad
+C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2.
+\tag{106.4}
+$$
+
+核心 $H$ 仍是 (100.2) 的固定容许对数核心，$w_j=d_j/\mathcal B$。
+信息方差以 nats 的平方计。收敛在原实际数据概率下，对所有规定大小的确定支持一致，
+两种实验分别成立。积分始终使用同一先验定义的预测密度，不替换为已知支持的条件输出律。
+
+(106.1) 等价于 $\Delta_M-\tfrac12\ln\ln Q\to\infty$。
+例如 $\Delta_M=\ln\ln Q$ 满足它，却不满足任何固定正 $C$ 的
+$\Delta_M\ge CQ$。本定理扩大第 104 章的充分区间，未声称任意
+$\Delta_M\to\infty$ 均可用，也未声称这个新阈值必要。
+
+**证明：同一实际数组上的接口。** 沿用第 102 章校准乘积律 $\mathsf Q_x$、
+选中密度 $\mathsf P_x=\mathscr L_x\mathsf Q_x$、同一量化扩展和同一 $G$。
+已有完整选中比较为
+
+$$
+0\le\mathscr L_x\le C,\quad
+\varepsilon_x:=\|\mathscr L_x-1\|_{2,\mathsf Q}=O_{\mathbb P}(Q^{-5/2}),
+\quad \mathbb E_{\mathsf P}(\ln\mathscr L_x)^2\le C\varepsilon_x^2.
+\tag{106.5}
+$$
+
+固定核心外的实际方差尾满足 $V_O\le Q^{-200}$。
+其较小中心区间 $|j\delta|\le1$ 同时含至少 $c/\delta$ 个原坐标，满足
+
+$$
+c\delta\le v_j\le C\delta,\qquad
+c\mathcal D\le d_j\le C\mathcal D,
+\qquad\mathcal D:=\mathcal B\sqrt\delta.
+\tag{106.6}
+$$
+
+这是 (102.7) 后原中心剖面与共同占据事件的直接应用：原一、二行相对 PGF 系数，
+结合多项式个坐标的并集界给同时事件，path 行无需独立。
+该事件足以选择 $\lceil\ln Q\rceil+22$ 个坐标；未另加经验中心的算术假设。
+
+以 $s_{\mathsf Q}$ 表示乘积律的中心信息量，保持 (102.8) 的
+
+$$
+U=s_{\mathsf Q}+G^2/2,\quad
+U'=\tfrac12\sum_H(Z_j^2-1)+\sum_{H^c}s_j+G^2/2,
+\quad Y=T+\sigma G,\quad Y'=T'+\sigma G.
+$$
+
+其中 $T'$ 仅在同一耦合中将核心电荷替换为 Gaussian，外部计数、外部信息量及其相关性全部保留。
+记 $q_k(y)dy=\mathbb E_{\mathsf Q}[U^k;Y\in dy]$，$q'_k$ 相应定义，$k=0,1,2$。
+(102.9)、(102.11) 的噪声无关低频和矩界为
+
+$$
+|\widehat q_k(t)-\widehat q'_k(t)|
+\le CQ^2\eta_Q(1+|t|),\quad
+\eta_Q=Q^{C_*}e^{-c_qQ^3/36},
+$$
+
+$$
+\|U\|_4+\|U'\|_4\le CQ,\qquad
+\mathbb E Y^4+\mathbb E(Y')^4\le C.
+\tag{106.7}
+$$
+
+下面只更换高频积分估计，不改原参考信息方差。
+
+**任意实线性项的离散 Gaussian 包络。** 对 $K\sim\operatorname{Bin}(n,p)$、
+$p\in[1/4,3/4]$，令 $d=np(1-p)$、$m=np$，并在 $\mathbb Z$ 上定义归一化质量
+$g_{m,d}(k)\propto e^{-(k-m)^2/(2d)}$。
+经典一致 Stirling 估计在 $|k-m|\le d^{5/8}$ 内给对数相对误差 $O(d^{-1/8})$：
+立方余项为 $O(|k-m|^3/n^2)$，对数前因子余项更小。
+两侧尾质量均为 $O(e^{-cd^{1/4}})$，Poisson 求和给归一化常数
+$\sqrt{2\pi d}[1+O(e^{-2\pi^2d})]$，对任意实 $m$ 一致。因此
+
+$$
+\sum_{k\in\mathbb Z}|\Pr(K=k)-g_{m,d}(k)|\le Cd^{-1/8}.
+\tag{106.8}
+$$
+
+这只用于逐因子特征函数，误差没有直接乘逆噪声。
+
+写 $\theta=p_0/k+\tau$，$(p_0,k)=1$。经典有限二次 Fourier 分解为
+
+$$
+e^{2\pi i p_0\ell^2/k}=\sum_{h=0}^{k-1}c_he^{2\pi ih\ell/k},
+\qquad |c_h|\le\sqrt{2/k}.
+$$
+
+确实，分子 Gauss 和的模平方中令 $u=v-w$，内层求和只在 $k\mid2u$ 时非零，
+至多两个余数，每项模至多 $k$。这也覆盖偶分母。
+对每个 Gaussian 项 Poisson 求和并完成平方，再对间距 $1/k$ 的对偶网格求和，得到
+
+$$
+\left|\sum_\ell g_{m,d}(\ell)e^{2\pi i\theta\ell^2+ib\ell}\right|
+\le C\left[k^{-1/2}(1+d^2\tau^2)^{-1/4}
++k^{1/2}d^{-1/2}(1+d^2\tau^2)^{1/4}\right].
+\tag{106.9}
+$$
+
+所用网格界为
+$\sum_{\ell\in\mathbb Z}e^{-cd(\ell/k-\zeta)^2/(1+d^2\tau^2)}
+\le C[1+k\sqrt{1+d^2\tau^2}/\sqrt d]$，对全部实 $\zeta$ 一致。
+故 (106.9) 对 $m,b$ 任意取实数都一致；原 $(K-\mu)^2$ 的中心只给
+$b=-4\pi\theta\mu$，不要求 $\mu$ 有理。
+
+取 $J=\lfloor\sqrt{\mathcal D}\rfloor$。
+Dirichlet 抽屉逼近给每个 $\theta$ 一个既约 $p_0/k$，使
+$k\le J$、$|\tau|\le1/(kJ)$。
+对 (106.6) 的所有组，(106.9) 第二项至多 $C\mathcal D^{-1/4}$，于是
+
+$$
+|\mathbb E e^{2\pi i\theta(K-\mu)^2}|
+\le C_0[k^{-1/2}(1+\mathcal D^2\tau^2)^{-1/4}
++\mathcal D^{-1/8}].
+\tag{106.10}
+$$
+
+$C_0$ 固定，不依赖频率、经验中心或之后的因子个数。
+
+**积分有理峰的宽度。** 对 $n$ 个原中心坐标，使用同一个 $\theta$ 及同一个逼近。
+由 $(x+y)^n\le2^{n-1}(x^n+y^n)$，其模乘积由下列一周期函数主控：
+
+$$
+P_{\mathcal D,n}(\theta)=C_1^n\left[\mathcal D^{-n/8}
++\sum_{k\le J}\ \sum_{\substack{p_0\in\mathbb Z,\ (p_0,k)=1\\
+|\theta-p_0/k|\le1/(kJ)}}
+k^{-n/2}[1+\mathcal D^2(\theta-p_0/k)^2]^{-n/4}\right].
+\tag{106.11}
+$$
+
+原实中心的特征函数模未必周期；只有这个对实线性项一致的上包络周期。
+对所有整数 $n\ge8$，逐峰在整条实轴积分给
+
+$$
+\int_0^1P_{\mathcal D,n}(\theta)d\theta
+\le C_2^n(\mathcal D^{-1}+\mathcal D^{-n/8}).
+\tag{106.12}
+$$
+
+因为每峰积分至多 $C\mathcal D^{-1}k^{-n/2}$，每周期分子数至多 $Ck$，
+而 $\sum_{k\ge1}k^{1-n/2}$ 一致有界。所有固定常数均可吸收入 $C_2^n$。
+特别地，16 个未标记因子的每周期积分至多 $C/\mathcal D$。
+
+若 $0<h<a_0<1/8$、$\mathcal D h\ge1$，则还可分别估计原点峰和非零分子峰：
+
+$$
+\int_h^{a_0}P_{\mathcal D,n}(\theta)d\theta
+\le C_3^n\left[a_0\mathcal D^{-n/8}
++\mathcal D^{-1}\{(\mathcal D h)^{1-n/2}+a_0^{n/2-2}\}\right].
+\tag{106.13}
+$$
+
+原点峰只有 $p_0=0,k=1$，从 $h$ 起积分幂尾。
+任何触及 $[h,a_0]$ 的非零峰有正分子，且
+$p_0/k\le a_0+1/(kJ)$，故 $k\ge1/(2a_0)$。
+把相应整峰积分求和即得第二项；重叠只造成正的上界。
+负频率用反射处理。
+
+**最多两个信息矩标记。** 展开 $U^k$ 时每项至多标记两个计数坐标，
+总项数至多 $CQ^4$。各标记联合变换以对应绝对中心信息矩控制；
+只对未标记坐标用 (106.11)。同一 $G$ 的三个因子精确为
+
+$$
+e^{-\sigma^2t^2/2},\quad
+(1-\sigma^2t^2)e^{-\sigma^2t^2/2},\quad
+(3-6\sigma^2t^2+\sigma^4t^4)e^{-\sigma^2t^2/2}.
+$$
+
+因此
+
+$$
+|\widehat q_k(t)|\le CQ^4P_{\mathcal D,n}(t/(2\pi\mathcal B))
+[1+(\sigma t)^4]e^{-\sigma^2t^2/2},\qquad k\le2.
+\tag{106.14}
+$$
+
+这里没有把测量残差在后验下重新抽样或假定它仍独立。
+
+**三个频段的共同预算。** 令
+
+$$
+g_Q=\Delta_M-\tfrac12\ln\ln Q\to\infty,\quad
+r_Q=\min(g_Q,\sqrt{\ln Q}),\quad a_0=e^{-r_Q/2},
+\quad n_Q=\lceil\ln Q\rceil+20,
+$$
+
+$$
+T_Q=Q^2,\quad h_Q=T_Q/(2\pi\mathcal B),\quad
+\mathcal D h_Q=Q^{7/4}/(2\pi),\quad\mathcal B/\mathcal D=Q^{1/4}.
+\tag{106.15}
+$$
+
+原中心坐标的同时界供应 $n_Q+2$ 个坐标，删除任意两个标记后仍够。
+低频 $|t|\le T_Q$ 用 (106.7)，变换差积分指数小。
+中频 $T_Q<|t|\le2\pi\mathcal B a_0$ 用 (106.13)–(106.14)，积分至多
+
+$$
+CQ^4C_3^{n_Q}\left[\mathcal B a_0\mathcal D^{-n_Q/8}
++Q^{1/4}\{(Q^{7/4}/(2\pi))^{1-n_Q/2}+a_0^{n_Q/2-2}\}\right].
+\tag{106.16}
+$$
+
+三项对数分别不超过 $-cQ^3\ln Q$、
+$-\tfrac78(\ln Q)^2+O(\ln Q)$ 和
+$-\tfrac14r_Q\ln Q+O(\ln Q+r_Q)$，故均小于任意固定负幂。
+这显式支付了增长乘积的 $C_3^{n_Q}$。
+
+全部远频 $|t|>2\pi\mathcal B a_0$ 改用固定 16 个未标记因子。
+令 $s=2\pi\sigma\mathcal B=2\pi e^{\Delta_M}$，将 $\theta$ 轴逐单位区间分解。
+每段包络积分至多 $C/\mathcal D$，而 Gaussian 权重的段上确界之和至多
+$C e^{-cs^2a_0^2}$。首段从 $a_0$ 起，随后段的 Gaussian 和有一致常数界。
+故
+
+$$
+\int_{|t|>2\pi\mathcal B a_0}|\widehat q_k(t)|dt
+\le CQ^{17/4}e^{-c e^{2\Delta_M}a_0^2}.
+\tag{106.17}
+$$
+
+变量替换产生的 $\mathcal B$ 被每周期成本 $1/\mathcal D$ 抵消，只剩 $Q^{1/4}$。
+并且 $e^{2\Delta_M}a_0^2=(\ln Q)e^{2g_Q-r_Q}\ge(\ln Q)e^{g_Q}$，
+所以此界也小于任意固定负幂。
+它覆盖所有整数与有理共振及 $|t|>\mathcal B$，未要求 $Q^2/\sigma<\mathcal B$。
+
+混合数组的未标记核心 Gaussian 因子满足
+$|\mathbb E e^{itw_j(Z_j-e_j/\sqrt{v_j})^2}|
+\le(1+4t^2w_j^2)^{-1/4}\le C\delta^{-1/4}|t|^{-1/2}$。
+同取 $n_Q$ 个因子，$|t|>T_Q$ 上的矩变换积分至多
+
+$$
+CQ^4 C^{n_Q}\delta^{-n_Q/4}
+\frac{T_Q^{1-n_Q/2}}{n_Q/2-1},
+$$
+
+其对数为 $-\tfrac78(\ln Q)^2+O(\ln Q)$。外部因子保留相关性，只用模至多一。
+综上，对每个固定 $N$，
+
+$$
+\max_{k\le2}\int_{\mathbb R}|\widehat q_k-\widehat q'_k|dt
+\le C_NQ^{-N}.
+\tag{106.18}
+$$
+
+**从有限有符号密度到实际方差。** 每个有限正噪声下变换均可积，Fourier 反演给
+$q_k-q'_k$ 的同阶一致界。由 (106.7) 和 Cauchy–Schwarz，
+
+$$
+\int_{|y|>R}(|q_k|+|q'_k|)dy\le CQ^2R^{-2}.
+$$
+
+令 $R$ 为足够高的固定 $Q$ 次幂，再在 (106.18) 选择足够高的固定 $N$，得到
+对任意固定 $N$ 都有
+$\max_{k\le2}(\|q_k-q'_k\|_1+\|q_k-q'_k\|_\infty)\le C_NQ^{-N}$。
+
+条件方差密度是 $\mathcal V_U=q_2-q_1^2/q_0$。
+(102.19) 的凸截断不等式在所有输出上给
+
+$$
+\|\mathcal V_U-\mathcal V_{U'}\|_1
+\le\epsilon_2+2b\epsilon_1+b^2\epsilon_0
++(\mathbb E|U|^4+\mathbb E|U'|^4)/b^2,
+\quad\epsilon_k=\|q_k-q'_k\|_1.
+\tag{106.19}
+$$
+
+取 $b=Q^3$ 后误差趋零，包括任意小密度输出。
+先验方差先中心化再比较，量化耦合给
+$|V_{\mathsf Q}-V'_{\mathsf Q}|\le CQ\eta_Q$；
+$V_{\mathsf Q}=O(Q^2)$ 乘密度误差也趋零。
+$A^2/\Lambda=O(\delta^{-1})$、$C_x=O(\delta^{-1/2})$，
+利用直接二阶输出矩和上述任意幂 $L^1$ 界，有限系数项同样可传递。
+
+剩余回接严格使用第 101、102 章不含逆噪声的界。
+完整选中律及实际信息量的改变成本为 $C\varepsilon_xQ^2=o_{\mathbb P}(1)$。
+对外部计数及同一 $G$ 条件化，核心二维密度的能量导数范数至多 $C\delta^{-1/2}$，
+实际外部能量的一阶矩至多 $C\delta^{-1/2}(1+\varepsilon_x)V_O$，
+故联合变差成本为 $O(Q^{-199.5})$；外部信息量与能量的相关性在这一步保留。
+用 (101.9) 的联合变差截断，取截断值 $Q^{10}$、四阶范数 $O(Q)$，误差趋零。
+此后外部信息方差才与原先验中心项精确抵消。
+
+原非中心电荷及截距的联合变差成本至多
+$C\delta^{-1/2}\varepsilon_x=O_{\mathbb P}(Q^{-9/4})$。
+外部已抵消，剩余四阶范数为 $O(\sqrt{|H|})$；取截断值 $Q$，
+所得方差成本为 $O_{\mathbb P}(Q^{-1/4}[1+(\ln Q)^{3/4}])=o_{\mathbb P}(1)$。
+这些中心和截距误差都未除以 $\sigma$。
+同一 128 坐标联合平滑储备保持原假设；高频选择只是对同一数组的另一估计，不消耗坐标。
+
+因此，以 $g_x,D_0$ 记原中心 Gaussian 核心参考量，得到
+
+$$
+\|f_xD_x-g_xD_0\|_1\to0,\qquad
+\int(1+y^2)|f_x-g_x|dy\to0.
+\tag{106.20}
+$$
+
+第二式还用直接四阶输出矩，未从 TV 单独转移无界矩。
+(101.31) 的全局参考结论对所有趋零 $\sigma\in(0,1]$ 一致：
+其已证幂和、核心块、Fourier 导数和 Chernoff 尾界没有逆噪声条件。
+于是 $\int g_x|D_0-R_*|\to0$。
+三角不等式结合 $R_*$ 为固定二次式，给 (106.2)；
+$\mathbb E_{g_x}Y^2=\Lambda\to\nu$ 再给 (106.3)。证毕。
+
+**剩余的小余量问题。** 本证明在 $e^{2\Delta_M}/\ln Q$ 有界时没有支付
+(106.17) 中的多项式前因子。增长因子数控制大分母峰，但固定小分母峰的两个矩标记
+仍以绝对值处理。对真实经验中心证明额外算术衰减，或在
+$q_2-q_1^2/q_0-V_{\mathsf Q}q_0$ 中证明共同别名项抵消，均是尚缺的义务。
+$\Delta_M=\tfrac14\ln\ln Q$ 是未覆盖的合法序列，不是实际模型反例。
+整数中心的玩具数组也不能替代原数据概率下的反例。
+本章不给阈值必要性、零噪声、全局原始数据期望或其他后验泛函的自动推广。
+经典 theta、Gauss 和及有理峰积分的归属见
+[Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 106 章后续增补区）

@@ -4383,3 +4383,51 @@ Rényi、van Erven–Harremoës 与 Kadane 的归属沿用第 103 章：
 未取得的 Tierney–Kadane 原文未用作依据；相关访问失败不被当作文献反证。
 本文只保留模型内推导及适用边界，不声称输出平均条件 Rényi 熵、Shannon 阶或无穷阶已由此解决。
 纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 106 章：二次共振的积分成本
+
+[谱边界卷第 106 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把完整原计数信道的加权信息方差区间扩大到
+$\Delta_M-\tfrac12\ln\ln Q\to\infty$，其中
+$\Delta_M=\ln(q/Q^{11/4})-\ln(1/\sigma_M)$。
+它保留实际中心任意取实数、完整固定总数后验、相关 path 行及同一测量残差。
+任意 $\Delta_M\to\infty$ 的命题仍未解决；新条件只是一条充分条件。
+
+Francesco Cellarosi、Jens Marklof，
+*Quadratic Weyl Sums, Automorphic Functions, and Invariance Principles*，
+[arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)（2015-02-27），
+引言式 (1.3)–(1.4) 的 Jacobi theta 函数及精确函数方程，
+要求复二次参数有正虚部，允许复线性参数，直接包含本文 Gaussian 的 Poisson 变换。
+第 2.6 节的 $\mathcal S_\eta$ 包含 Schwartz Gaussian。
+第 3.7 节 Lemma 3.18 对全部平移变量给尖点包络，
+Lemma 3.19 沿 Lebesgue 横坐标积分有理尖点区域。
+这提供积分共振峰宽度的经典结构。
+本章另写有限分母 Dirichlet 分解，明确二项质量误差、增长因子常数 $C^n$ 和原模型尺度。
+未把该文随机 theta 不变原理套到实际后验，也未从一般绝对连续测度推出有界密度。
+
+Roger Baker，*L^p maximal estimates for quadratic Weyl sums*，
+[arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)（2021-03-09），
+主定理积分线性变量、对二次变量取极大，使用单位权的有限 Weyl 和；
+本章则积分二次频率、带耦合的任意线性移位与二项权，故未直接使用该主定理。
+其 Lemma 2 的有理主项分解保留误差
+$q(1+|\beta_1|N+|\beta_2|N^2)$，本章未把该误差丢弃。
+Lemma 3(i) 在相应互素条件下给完整 Gauss 和界，并归属 Estermann；
+本章的模平方计算记录可覆盖偶分母的显式 $\sqrt{2k}$ 界。
+这些二次数论计算不是新增的一般定理。
+
+Bonis、Serov–Zubkov 仍只供应第 102 章原固定矩阶、紧参数的低频比较，
+没有把耦合误差除以最终噪声。
+Heath-Brown 的经典二阶导数界保留第 104 章原范围；本章的新积分证明不再按
+“整个频段长度乘逐点最坏界”支付所有峰。
+Mitalauskas–Statulevičius 的独立整数格点条件未为真实经验中心建立，仍不直接应用。
+
+模型内的新连接是：对所有经验实中心共同主控的周期包络，每周期只付
+$O(\mathcal D^{-1})$，其中 $\mathcal D=(q/Q^{11/4})\sqrt\delta$；
+对数个原中心组控制中频非零有理峰，固定 16 个未标记因子与 Gaussian 权逐周期控制全部远频。
+最多两个信息矩标记及同一 $G^2,G^4$ 项全程保留，所得任意多项式精度通过凸截断
+进入条件均值平方，并复用无逆噪声的实际选中律回接。
+小分母峰的标记抵消尚未证明，不能据现有上界失败宣告原命题失败。
+
+有限原文检索不认证全局原创。结论是先验信道积分在实际数据概率下的判断，
+未声称无界原始数据期望、逐输出一致、零噪声或其他泛函已同步推广。
+纯理论正文未进入消化或 Lean 冻结链。
