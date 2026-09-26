@@ -9106,3 +9106,311 @@ $$
 不包含期望熵、无界矩转移、数值起效、有限精度或效率保证。
 
 ## 追加锚（76 章后）
+
+## 77. 实际输出密度与低噪声平均信息的常数项
+
+**定义 77.1（纤维内平均信息）。** 保持第 75 章的原实验、完整计数目标和精确标量
+$T=t_x(R)$；$Y=T+\sigma_MG$，其中 $G$ 是独立标准正态，
+$L_M=\ln(1/\sigma_M)\to\infty$ 且 $L_M=o(Q^3)$。
+$p_x(n\mid y)$、$f_x(y)$、$h_x=H_2(P_x)$ 均保持原定义。
+记 $w_n(y)=\varphi_{\sigma_M}(y-t_x(n))$，定义
+
+$$
+\begin{aligned}
+\mathsf h_M(x)&=-\int f_x(y)\ln f_x(y)\,dy,\\
+I_M(x)&=\sum_nP_x(n)\int w_n(y)\ln\frac{w_n(y)}{f_x(y)}\,dy,\\
+\overline H_M(x)&=\int H_2(p_x(\cdot\mid y))f_x(y)\,dy.
+\end{aligned}
+\tag{77.1}
+$$
+
+前两项使用自然单位，第三项使用 bits。这些都是指定均匀大小 $q$ 支持先验下的纤维量。
+它们可以作为数据函数在确定支持的原始数据律下求概率；定义本身不改为点质量先验。
+令原空间剖面与方差常数为
+
+$$
+\rho(t)=\frac{e^{-\kappa t^2/2}}{4\pi\sqrt{ab}},\qquad
+\kappa=a^{-1}+\alpha^2/b,\qquad
+ g_0=\int_{\mathbb R}\rho(t)^2dt
+ =\frac1{16\pi^2ab}\sqrt{\frac\pi\kappa},\qquad \nu=2g_0>0.
+\tag{77.2}
+$$
+
+$a=(1+r)/2$、$b=(1-r)/2$ 和 $\alpha$ 均为原固定参数。
+以 $\varphi_\nu$ 表示方差为 $\nu$ 的中心正态密度，区别于按标准差标记的测量核。
+
+**定理 77.2（真实噪声精度的密度控制）。** 对每个上述确定噪声序列，在两种实际实验中，
+
+$$
+\|f_{\mathscr X}\|_\infty=O_{\mathbb P}(1),\qquad
+\|f_{\mathscr X}-\varphi_\nu\|_1\longrightarrow0,\qquad
+\mathbb E_{P_{\mathscr X}}T^2=O_{\mathbb P}(1).
+\tag{77.3}
+$$
+
+收敛与紧性均一致于确定真实支持。例如第二式的量词是对每个 $\varepsilon>0$，
+$\sup_{S:|S|=q}\Pr_S^{\mathscr X}
+\{\|f_{\mathscr X}-\varphi_\nu\|_1>\varepsilon\}\to0$。
+不是对所有尚未指定收敛速度的噪声序列同时取上确界。
+
+证明。以下全部环境估计来自原一、二行比较，平稳路径中不假定观测行独立。
+沿用第 75 章的单个完整乘积计数律 $\mathsf Q_x$、
+密度 $L_x=dP_x/d\mathsf Q_x$、$a_x=\|L_x-1\|_2$、
+$v_j=C_jp_j(1-p_j)/B^2$、$V=\sum_jv_j$、
+$U_j=(R_j-C_jp_j)/B$ 和 $e_j=(\mu_j-C_jp_j)/B$。
+噪声对数 $L_M$ 与密度 $L_x$ 不混用。
+
+先把完整密度的上界保留到一阶精度。令 $d_A,d_C,d_J$ 分别为校准 Bernoulli
+总和、窗口补集和窗口内的方差，$m_J$ 为窗口总和均值。
+第 68 章的精确条件化式与方差型局部 Bernoulli 估计给
+
+$$
+L_x(k)=\sqrt{d_A/d_C}\,
+ e^{-(k-m_J)^2/(2d_C)}+O(q^{-1/2}),\qquad
+0\le L_x\le1+\eta_x,\quad
+\eta_x\le C(d_J/q+q^{-1/2})=O_{\mathbb P}(Q^{-5/2}).
+\tag{77.4}
+$$
+
+误差在所有整数 $k$ 上一致；分母是均值恰为整数 $q$ 的总和中心质量。
+这里 $d_A,d_C\asymp q$，$d_J=O_{\mathbb P}(B^2)$。
+这些关系与 $a_x=O_{\mathbb P}(Q^{-5/2})$ 在同一好事件成立。
+由密度恒等式与 Hilbert 空间 Cauchy–Schwarz，任意指标集 $D$ 满足
+
+$$
+ e_D=\mathbb E_{\mathsf Q_x}[(L_x-1)U_D],\qquad
+ \|e_D\|\le a_x\sqrt{V_D}.
+\tag{77.5}
+$$
+
+实际二阶矩可直接重新核对。精确展开为
+$T=\delta^{-1/2}\{\sum_j(U_j^2-v_j)-2e\cdot U+\|e\|^2\}$。
+乘积律下二项四阶矩给
+$\mathbb E(\sum_j(U_j^2-v_j))^2\le2\sum_jv_j^2+B^{-2}V$。
+利用 (77.4) 的非负密度上界，得到
+
+$$
+\mathbb E_{P_x}T^2\le\frac C\delta
+ \left[2\sum_jv_j^2+B^{-2}V+4a_x^2V^2+a_x^4V^2\right]
+ =O_{\mathbb P}(1).
+\tag{77.6}
+$$
+
+此处 $V=O_{\mathbb P}(1)$、$\sum_jv_j^2=O_{\mathbb P}(\delta)$、
+$B^{-2}/\delta=Q^3/q\to0$。这是实际纤维内的矩估计，不通过 TV 搬运无界函数。
+
+还需识别平方质量的常数。固定 $H<\infty$，原 Poisson 率与 Stirling 展开在
+$|j\delta|\le H$ 上给
+
+$$
+f_j=\frac{e^{-\kappa(j\delta)^2/2}}{2\pi\lambda\sqrt{ab}}(1+o(1)),\qquad
+\sup_{|j\delta|\le H}\left|\frac{v_j}{\delta\rho(j\delta)}-1\right|
+ \longrightarrow0.
+\tag{77.7}
+$$
+
+第二式使用实际占据均值 $m_j\sim2qf_j$、校准 $p_j\to1/2$，
+以及原一、二行方差界在这个固定核心内的一致相对集中。
+例如取相对容差 $Q^{-1}$，对 $O_H(\delta^{-1})$ 组取并的失败概率至多
+$C_HQ^2\delta^{-1}\{\exp[-c_q\lambda+O_H(1)+O(\ln Q)]+e_{row}\}\to0$。
+若 $a_j^{occ}=m_j/B^2$，原实际二阶占据界给
+$\mathbb E_Sv_j^2\le C[(a_j^{occ})^2+B^{-2}a_j^{occ}]$。
+率函数的 Gaussian 尾和非正规端点的指数界因而给
+
+$$
+\sup_S\mathbb E_S\left[\delta^{-1}
+ \sum_{|j\delta|>H}v_j^2\right]
+ \le Ce^{-cH^2}+CB^{-2}/\delta+Q^Ce^{-c\lambda}.
+\tag{77.8}
+$$
+
+这在确定截断计数线上先计算，只有移除原全行截断失败事件后才与完整窗口认同。
+紧核心的 Riemann 和、(77.8) 的 Markov 界及 $H\to\infty$ 证明
+$\delta^{-1}\sum_jv_j^2\to g_0$。
+累积方差钟的收敛本身不替代这个逐组平方质量计算。
+
+现在取第 75 章的移动核心
+$R_M^2=\sqrt{\lambda(L_M+\ln Q+1)}$，及其 $\mathcal C_M,\mathcal O_M$。
+保留 (75.12) 的全部精确非中心项和外部中心截距，令该参考量仍为 $T^{\rm G}$。
+在同一完整乘积向量与独立分位耦合上，设
+$D_M(x)=\mathbb E|T-T^{\rm G}|$。
+原实际一阶占据尾界及 (75.13) 给
+
+$$
+\begin{aligned}
+\sup_S\mathbb E_S V_{\mathcal O}&\le Ce^{-cR_M^2}+Q^Ce^{-c\lambda},\\
+D_M(x)&\le CQ^{1/4}
+ \{V_{\mathcal O}+(1+a_x)V e^{-c_q\lambda/24}\}.
+\end{aligned}
+\tag{77.9}
+$$
+
+第一式仍在确定计数线上使用。第二式的尾差精确为
+$\delta^{-1/2}\sum_{\mathcal O}(U_j^2-v_j-2e_jU_j)$；
+(77.5) 使其绝对均值至多 $C\delta^{-1/2}V_{\mathcal O}$。
+没有把尾部 $\|e_{\mathcal O}\|^2$ 删去后再付出噪声放大。
+相较于第 75 章，这里需要支付更强的 $\sigma_M^{-2}$。
+由于 $R_M^2/(L_M+\ln Q+1)\to\infty$，有
+
+$$
+\begin{aligned}
+ Q^{1/4}e^{2L_M}(e^{-cR_M^2}+Q^Ce^{-c\lambda})&\to0,\\
+ Q^{5/4}e^{2L_M-c_q\lambda/24}&\to0,\\
+ \sigma_M^{-2}D_M(\mathscr X)&\longrightarrow0.
+\end{aligned}
+\tag{77.10}
+$$
+
+最后一式使用实际尾部期望的 Markov 界及高概率事件 $V\le Q$。
+所有精确 $e_j$ 和随机 $v_j$ 先保留在参考量内；空间剖面近似误差不乘 $\sigma_M^{-2}$。
+
+参考密度需要强于弱极限的结论。令核心内 $w_j=v_j/\sqrt\delta$。
+移动核心的实际相对占据上界与 (77.7)–(77.8) 给
+$\max w_j\le C\sqrt\delta\to0$、$\sum w_j^2\to g_0$。
+参考量精确展开为
+
+$$
+T^{\rm G}=\sum_{\mathcal C}w_j(Z_j^2-1)
+ -2\delta^{-1/2}\sum_{\mathcal C}e_j\sqrt{v_j}Z_j
+ +\delta^{-1/2}\|e\|^2.
+\tag{77.11}
+$$
+
+最后一项是 $o_{\mathbb P}(1)$，线性项的条件方差至多
+$4\delta^{-1}(\max v_j)\|e\|^2=o_{\mathbb P}(1)$。
+它不必与二次项独立。对固定 $t$，中心二次项的对数特征函数为
+$-t^2\sum w_j^2+O_t((\max w_j)\sum w_j^2)\to-g_0t^2$。
+故参考极限的方差恰为 $2g_0$。
+
+(75.16) 的非中心特征函数估计保留了任意 $e_j$。
+中心小核心有 $n_0\asymp\delta^{-1}$ 个 $w_j\asymp\sqrt\delta$，因而完整特征函数满足
+$|\psi_x(t)|\le(1+c\delta t^2)^{-n_0/4}$。
+在 $|t|\le\delta^{-1/2}$ 上它由固定 Gaussian 函数控制；外部积分至多
+$C\delta^{-1/2}(1+c)^{-n_0/8}\int_1^\infty(1+cu^2)^{-1}du\to0$。
+所以特征函数的 $L^1$ 尾一致消失。
+固定 $t$ 极限与 Fourier 反演给无噪声参考密度 $g_x^0$ 满足
+$\|g_x^0-\varphi_\nu\|_\infty\to0$，且 $\|g_x^0\|_\infty\le C$。
+两密度积分均为一，对 $\min(g_x^0,\varphi_\nu)$ 用支配收敛得到
+$\|g_x^0-\varphi_\nu\|_1\to0$。
+这些论证先对任意满足上述参数极限的确定环境序列成立，
+再由各环境误差的一致概率界推出一致原数据概率版本。
+令 $g_x=g_x^0*\varphi_{\sigma_M}$，卷积收缩与 Gaussian 方差
+$\nu+\sigma_M^2\to\nu$ 给
+
+$$
+ \|g_x\|_\infty\le C,\qquad \|g_x-\varphi_\nu\|_1\to0.
+\tag{77.12}
+$$
+
+最后回到实际输出。乘积标量密度
+$f_x^{prod}(y)=\mathbb E_{\mathsf Q_x}\varphi_{\sigma_M}(y-T)$ 使用同一精确中心。
+(77.4) 直接给逐点正密度支配
+$f_x(y)\le(1+\eta_x)f_x^{prod}(y)$。
+Gaussian 核的导数范数为
+$\|\varphi_\sigma'\|_\infty=e^{-1/2}/(\sqrt{2\pi}\sigma^2)$、
+$\|\varphi_\sigma'\|_1=\sqrt{2/\pi}/\sigma$。
+对 (77.9) 的同一标量耦合应用平移界，再对完整后验向量使用一次核收缩，得
+
+$$
+\begin{aligned}
+\|f_x\|_\infty
+ &\le(1+\eta_x)\left[C+\frac{e^{-1/2}}{\sqrt{2\pi}}
+                  \sigma_M^{-2}D_M(x)\right],\\
+\|f_x-\varphi_\nu\|_1
+ &\le a_x+\sqrt{2/\pi}\,\sigma_M^{-1}D_M(x)
+               +\|g_x-\varphi_\nu\|_1.
+\end{aligned}
+\tag{77.13}
+$$
+
+(77.10)–(77.12) 证明所需两个密度结论。
+完整密度误差 $a_x$ 从未除以噪声；上确界控制依靠正密度支配及指数精度标量耦合。
+这里未声称实际密度在上确界范数收敛到 Gaussian。证毕。
+
+**定理 77.3（平均信息与平均输出后验熵）。** 在定义 77.1 的整个范围内，
+各有限纤维的积分均存在，并有精确恒等式
+
+$$
+ I_M(x)=L_M-\tfrac12\ln(2\pi e)+\mathsf h_M(x),\qquad
+ \overline H_M(x)=h_x-I_M(x)/\ln2.
+\tag{77.14}
+$$
+
+进而，在定理 77.2 的同一一致原数据概率意义下，
+
+$$
+\begin{aligned}
+\mathsf h_M(\mathscr X)&\longrightarrow\tfrac12\ln(2\pi e\nu),\\
+I_M(\mathscr X)&=L_M+\tfrac12\ln\nu+o_{\mathbb P}(1),\\
+\overline H_M(\mathscr X)&=h_{\mathscr X}
+ -\frac{L_M}{\ln2}-\frac{\ln\nu}{2\ln2}+o_{\mathbb P}(1).
+\end{aligned}
+\tag{77.15}
+$$
+
+证明。先明确所需经典熵连续性条件。若概率密度 $f$ 满足
+$\|f\|_\infty\le B\ge1$ 和 $\int y^2f(y)dy\le K$，则对 $R>0$，
+
+$$
+\int_{|y|>R}|f\ln f|\,dy
+ \le\frac{K\ln B}{R^2}+\frac{2e^{-R}}e+\frac KR.
+\tag{77.16}
+$$
+
+在 $f>1$ 上用 $f\ln f\le f\ln B$；在 $f\le1$ 上置
+$q_0(y)=e^{-|y|}$，由 $u\ln(1/u)\le1/e$ 得
+$f\ln(1/f)\le q_0/e+|y|f$，再积分即得该式。
+需要的是二阶矩有界给出的一阶矩尾控制，不要求二阶矩本身一致可积。
+
+对共同满足这些界的 $f,g$，置 $d=\|f-g\|_1$，
+$M_B=\sup_{[0,B]}|t\ln t|$，$\omega_B(u)$ 为 $t\ln t$ 在该区间的连续模。
+紧区间按 $|f-g|\le u$ 分开，补集长度至多 $d/u$，从而
+
+$$
+|\mathsf h(f)-\mathsf h(g)|
+ \le2\left[\frac{K\ln B}{R^2}+\frac{2e^{-R}}e+\frac KR\right]
+      +2R\omega_B(u)+2M_Bd/u.
+\tag{77.17}
+$$
+
+先取 $R$ 大，再取 $u$ 小，最后取 $d$ 小，给出该密度／矩类上的 $L^1$ 熵连续性。
+这是经典结果的本章所需一维证明。
+有限纤维中 $f_x\le1/(\sqrt{2\pi}\sigma_M)$、$\mathbb E_xY^2<\infty$，
+故 (77.16) 先保证每个纤维的 $\int|f_x\ln f_x|<\infty$。
+
+在渐近分析中，$\mathbb E_xY^2=\mathbb E_{P_x}T^2+\sigma_M^2=O_{\mathbb P}(1)$。
+给定任意外层失败容差，定理 77.2 允许选确定 $B,K$，
+使实际密度及 Gaussian 极限共同满足两界，除去的原数据概率不超过该容差。
+在余下事件使用 (77.17) 和 (77.3) 的 $L^1$ 收敛，最后令外层容差趋零，
+即得 (77.15) 第一式。弱收敛和密度有界本身不足以排除细密度振荡，
+而单独 $L^1$ 收敛不足以控制熵尾；本证明分别给出两部分。
+
+有限 Gaussian 通道上，实际同一实现满足
+$\ln w_R(Y)=L_M-\tfrac12\ln(2\pi)-G^2/2$。
+给定原始数据的 $G$ 仍为标准正态，积分得
+$\mathbb E_x\ln w_R(Y)=L_M-\tfrac12\ln(2\pi e)$。
+对每个正先验原子 $n$，$f_x\ge P_x(n)w_n$，
+而 $\ln^+f_x$ 有有限上界，所以各 $w_n|\ln f_x|$ 的积分有限。
+由有限求和可交换积分，信息密度的期望即给 (77.14) 第一式。
+有限字母 Bayes 恒等式
+$-\log_2p_x(n\mid y)=-\log_2P_x(n)-\ln(w_n(y)/f_x(y))/\ln2$
+再给第二式；输出后验熵本身介于零和有限 $\log_2|\mathcal F_x|$ 之间。
+代入已证微分熵极限即得全部展开。证毕。
+
+本章新增了第 75 章未承担的期望结论，凭据是新的实际密度支配、
+$\sigma^{-2}$ 精度耦合、平方质量极限和熵尾控制，未从概率信息密度结论直接取期望。
+当 $L_M=a_{noise}Q+o(Q)$ 时，(77.15) 给该精确噪声对数之上的常数修正；
+若只知道 $L_M=a_{noise}Q+o(Q)$，不能把其中的 $o(Q)$ 擅自降为 $o(1)$。
+本章精确熵中心 $h_x$ 不由其 $Q^5$ 主项或只有 $o_{\mathbb P}(Q)$ 精度的中心替代。
+
+原支持置换保持全部数据函数不变，未知方向仍只使用原共同判向相等事件，
+其失败概率 $O(q^{-1})$ 只进入概率结论。所有输出积分使用先验预测混合 $f_x$；
+它不等于固定支持给定数据后的单个 Gaussian 密度。
+本章没有全原始数据平均的信息／熵展开，也没有逐输出后验 Shannon 熵集中、
+期望对数覆盖、任意解码器不可能性或计算效率结论。
+$L_M\asymp Q^3$ 时当前半径及耦合预算不再给出上述推导；这不是该尺度的反例或必要阈值。
+零噪声、其他幅度、向量／适应性通道均未纳入。
+Gaussian 平移界、二次型密度、熵连续性与有限 Bayes 链式公式保留经典归属；
+新增连接是原实际后验在整个所述低噪声范围内满足这些定理的联合条件。
+
+## 追加锚（77 章后）
