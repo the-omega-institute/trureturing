@@ -111,10 +111,12 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
   -- An occurrence can name a separate finite object arena. The original arena
   -- retains the source domain for witness and object-domain escape checks.
   let bridgeType := (← getConstInfo entry.realizationName).type
-  let normalized ← Elab.Command.liftTermElabM do
-    RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)
+  let objectDomain ← Elab.Command.liftTermElabM do
+    let arena ← mkConstWithFreshMVarLevels entry.arenaName
+    let arenaType ← whnfR (← inferType arena)
+    pure (arenaType.isConstOf RegistrationGates.objectDomainArenaName)
   let arenaName := if bridgeType.isAppOfArity RegistrationGates.witnessBridgeName 3 ||
-      normalized.domain.isSome then
+      objectDomain then
       entry.arenaName else entry.canonicalObjectArenaName
   let event : TemplateOccurrenceEvent := {
     key := {
