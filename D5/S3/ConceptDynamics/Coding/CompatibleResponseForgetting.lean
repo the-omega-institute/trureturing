@@ -9,6 +9,7 @@
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
 import Mathlib.Data.Fintype.Sigma
+import Mathlib.SetTheory.Cardinal.NatCard
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -79,7 +80,9 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
              ((phi i u) ⟨j, a, s⟩).2.2⟩ = ⟨j, a, s⟩ := by
         simpa only [Sigma.eta, Prod.mk.eta] using
           (phi i u).symm_apply_apply ⟨j, a, s⟩
-      simp only [unsweep, hphi, htail]
+      rw [hphi]
+      rw [htail]
+      rfl
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
@@ -427,15 +430,16 @@ theorem square_column_lift_count (c : CompatibleCertificate A B R S m)
     rfl
   let toIncidence : fiber → incidence := fun p =>
     ⟨p.val.leftA, by
-    have hs' : p.val.initialR = s := e.injective p.property.1
-    have hr' : p.val.terminalR = r := e.injective p.property.2
-    have h : p.val.leftA.target = r.source := by
+    rcases p with ⟨sq, ⟨hs, hr⟩⟩
+    have hs' : sq.initialR = s := e.injective hs
+    have hr' : sq.terminalR = r := e.injective hr
+    have h : sq.leftA.target = r.source := by
       simpa [Square.leftA, Square.terminalR] using congrArg Edge.source hr'
     refine ⟨h, ?_⟩
     subst r
-    have hLift := congrArg Square.initialR (reconstruct p.val)
-    change (c.incomingLift p.val.leftA p.val.terminalR rfl).val =
-      p.val.initialR at hLift
+    have hLift := congrArg Square.initialR (reconstruct sq)
+    change (c.incomingLift sq.leftA sq.terminalR rfl).val =
+      sq.initialR at hLift
     exact hLift.trans hs'⟩
   have injective : Function.Injective toIncidence := by
     intro p q hpq
@@ -502,15 +506,16 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
       (⟨i, z, p⟩ : Σ i : Fin n, Σ z : Fin k, EdgePair A R i z)) hinput
   let toIncidence : fiber → incidence := fun p =>
     ⟨p.val.rightB, by
-    have hr' : p.val.initialR = r := e.injective p.property.1
-    have hs' : p.val.terminalR = s := e.injective p.property.2
-    have h : r.target = p.val.rightB.source := by
+    rcases p with ⟨sq, ⟨hr, hs⟩⟩
+    have hr' : sq.initialR = r := e.injective hr
+    have hs' : sq.terminalR = s := e.injective hs
+    have h : r.target = sq.rightB.source := by
       simpa [Square.initialR, Square.rightB] using (congrArg Edge.target hr').symm
     refine ⟨h, ?_⟩
     subst r
-    have hLift := congrArg Square.terminalR (reconstruct p.val)
-    change (c.outgoingLift p.val.initialR p.val.rightB rfl).val =
-      p.val.terminalR at hLift
+    have hLift := congrArg Square.terminalR (reconstruct sq)
+    change (c.outgoingLift sq.initialR sq.rightB rfl).val =
+      sq.terminalR at hLift
     exact hLift.trans hs'⟩
   have injective : Function.Injective toIncidence := by
     intro p q hpq
