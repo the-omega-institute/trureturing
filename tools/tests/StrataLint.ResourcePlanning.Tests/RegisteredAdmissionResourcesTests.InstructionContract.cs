@@ -9,8 +9,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj";
 
     [Theory]
-    [InlineData("skills/codex-formal-answer/SKILL.md", "push")]
-    [InlineData("skills/codex-formal-answer/SKILL.md", "pr")]
+    [InlineData("skills/formal-thinking-and-answer/SKILL.md", "push")]
+    [InlineData("skills/formal-thinking-and-answer/SKILL.md", "pr")]
     [InlineData("skills/codex-theory-ingest/SKILL.md", "push")]
     [InlineData("skills/codex-theory-ingest/SKILL.md", "pr")]
     [InlineData("CLAUDE.md", "push")]
