@@ -51104,3 +51104,335 @@ $$
 **注记 236.3（局部相位方向与完整入弧）。** 首项分开保留了两种几何资料：$\kappa$ 是实际虚切空间中的广义 Rayleigh 商，$L$ 是第一强制态通向临界接点所需的完整实弧长。只保留局部 Hessian 不能恢复 $L$；只保留两端的外在迹距离也不能替代临界纤维内的路径长度。$H_0$ 是二次项矩阵，完整 Hessian 是其相应限制的两倍；原参数关系 $u-u_1=2(p-p_0)$ 已计入两个常数。这里先固定 $s$ 再令 $\varepsilon\downarrow0$，未声称联合极限、共轭优化或物理时间中的能量定律。
 
 ## 追加锚（本行以下为增补区）
+
+## 237. 近纯实混态的变化代价与相位约束的额外成本
+
+**定义 237.1（固定任务的近纯实准备）。** 固定第236节的实际分界任务、共同四维处理器、共轭 $C$ 与内部窗口 $K$，沿用 $p_0,x_0,v_0,H_0,M,j,\gamma,L$。对实密度矩阵定义
+
+$$
+J(\rho)=\sqrt{2(1-\operatorname{Tr}\rho^2)}.
+\tag{237.1}
+$$
+
+令 $\mathcal B_s(\varepsilon)$ 为全区间解析实密度曲线的集合，要求同一处理器上的全输入精确性、完整尖锐集合 $\{u_1,u_3\}$、两节点最优普通双侧曲率，以及 $\sup_{J_a}J(\rho_u)\le\varepsilon$。不预先限制各点的秩。定义
+
+$$
+Q_s^{\rm mix}(\varepsilon)=
+\inf_{\rho\in\mathcal B_s(\varepsilon)}\sup_{u\in K}I_Q(\rho_u),
+\qquad
+E_s^{\rm mix}(\varepsilon)=
+\inf_{\rho\in\mathcal B_s(\varepsilon)}\int_KI_Q(\rho_u)\,du.
+\tag{237.2}
+$$
+
+这里 $I_Q$ 是点态 SLD 信息，包含秩变化处的原定义。再置
+
+$$
+\kappa_{\rm mix}=
+\max_{\beta\in\mathbb R^3\setminus\{0\}}
+\frac{-\beta^{\mathsf T}H_0\beta}
+{4\beta^{\mathsf T}M\beta}.
+\tag{237.3}
+$$
+
+它与第236节的 $\kappa$ 使用相同二次型和归一化，但不要求 $\beta\perp j$。
+
+**定理 237.2（近纯实混态的两个首项）。** 对上述充分小而固定的 $s>0$，有
+
+$$
+\lim_{\varepsilon\downarrow0}\varepsilon^4
+Q_s^{\rm mix}(\varepsilon)=
+\frac{L^2\gamma^2}{4\kappa_{\rm mix}^2},
+\qquad
+\lim_{\varepsilon\downarrow0}\varepsilon^2
+E_s^{\rm mix}(\varepsilon)=
+\frac{L^2\gamma}{2\kappa_{\rm mix}}.
+\tag{237.4}
+$$
+
+同一族解析准备可以同时达到两个首项，并且每点秩至多二、实际联合支持恰为四。还可保留任意预先指定的有限阶规范节点数据。对全部充分小的实际正 $s$，
+
+$$
+\kappa_{\rm mix}>\kappa>0.
+\tag{237.5}
+$$
+
+因此在（237.1）与第236节虚性所采用的归一化下，实混态的两个首项都严格小于纯复准备的对应首项。本结论约束整个区间上的近纯程度；第215节不附加这一约束的混态存在性与最小维数结论仍直接适用。
+
+证明。 先将任意实密度的近纯条件写成与临界分离面兼容的形式。在两个节点之间，令 $x=\sqrt{1-p}>0$。精确投影矩强制 $\rho_{qq}=x^2$。其 Schur 补给出唯一分解
+
+$$
+\rho=\alpha\alpha^{\mathsf T}+R,\qquad
+\alpha=xq+v,\quad Rq=0,\quad R\ge0.
+\tag{237.6}
+$$
+
+若 $t=\operatorname{Tr}R$，则 $\|\alpha\|^2=1-t$、$\|v\|^2=p-t$。由定义直接计算
+
+$$
+J(\rho)^2
+=4t-2t^2-4v^{\mathsf T}Rv-2\operatorname{Tr}R^2
+\ge4(1-p)t.
+\tag{237.7}
+$$
+
+最后一步使用 $v^{\mathsf T}Rv\le(p-t)t$ 和 $\operatorname{Tr}R^2\le t^2$。由于固定任务有 $1-h_3>0$，全域约束使整个节点区间上 $t=O_s(\varepsilon^2)$。
+
+第216.2式说明，两个非临界尖锐节点处若秩为 $r$，实际支持维数至少为 $3r$。这里 $h_1,h_3$ 均不同于 $a+2a^2$，故四维中的两节点必须为纯态。简单谱与第227节的等号唯一性再强制它们为原来的两份实规范态。这一步没有预设整条曲线为纯态。
+
+对（237.6）的 $v$ 使用第236节延伸过的原仿射分离面。两端异号，故有首次过零点 $p_\varepsilon>p_0$。由于 $R\to0$ 一致，紧性与实分隔性质说明该点一致趋向 $(p_0,v_0)$。写 $\delta=v-v_{\rm sad}(p_\varepsilon)$。精确实矩和驻点方程给出
+
+$$
+0=g(p_\varepsilon)
++\delta^{\mathsf T}H(p_\varepsilon)\delta
++\operatorname{Tr}\!\left(H(p_\varepsilon)R\right).
+\tag{237.8}
+$$
+
+这里 $\delta\perp n$，故中间项正定并控制 $\|\delta\|^2$。式（237.7）先给出
+
+$$
+p_\varepsilon-p_0=O(\varepsilon^2),
+\qquad \|\delta\|=O(\varepsilon).
+\tag{237.9}
+$$
+
+随后（237.7）的精确等式可改写为
+
+$$
+J(\rho)^2=4\operatorname{Tr}(MR)+O(\varepsilon^3).
+\tag{237.10}
+$$
+
+广义 Rayleigh 商的定义等价于矩阵不等式
+$-H_0\le4\kappa_{\rm mix}M$。因 $R\ge0$，式（237.8）遂给出
+
+$$
+p_\varepsilon-p_0
+\le\frac{\kappa_{\rm mix}}{\gamma}\varepsilon^2
++O(\varepsilon^3).
+\tag{237.11}
+$$
+
+它对任意秩的候选密度成立，不将若干分解的最佳方向当作同时可达。
+
+第一节点到首次过零点的密度路径长度仍至少为 $L-o(1)$。否则按迹弧长重参数化，由 Arzelà–Ascoli 和长度下半连续性，得到临界截面内一条从强制第一纯态到鞍点、长度小于 $L$ 的实纯态路径。极限纯性由（237.7）及 $R\to0$ 保证，违反第236.9式。
+
+对一般密度，有点态不等式
+
+$$
+\|\rho'_u\|_1^2\le I_Q(\rho_u).
+\tag{237.12}
+$$
+
+确实，若 $\rho'=(L_\rho\rho+\rho L_\rho)/2$，则对任意自伴 $A$、$\|A\|\le1$，带权 Cauchy–Schwarz 给出
+
+$$
+|\operatorname{Tr}(A\rho')|
+=|\operatorname{Re}\operatorname{Tr}(\rho A L_\rho)|
+\le\sqrt{\operatorname{Tr}(\rho A^2)}
+\sqrt{\operatorname{Tr}(\rho L_\rho^2)}
+\le\sqrt{I_Q}.
+$$
+
+取迹范数对偶上确界即得（237.12）。当 $\rho$ 不满秩时，内部参数处正性使核到核的导数块为零；SLD 在其支持相关块上照常定义，以上计算仍成立。若信息为无穷大，下界自动成立。
+
+令 $T_{\rm mix}=2\kappa_{\rm mix}/\gamma$。式（237.11）把原参数中的首次过零限制在 $T_{\rm mix}\varepsilon^2+O(\varepsilon^3)$ 内。长度估计、（237.12）及 Cauchy–Schwarz 给出（237.4）的两个下极限界。
+
+下面在同一四维空间内构造正的秩二准备。写
+
+$$
+\rho=\alpha\alpha^{\mathsf T}+\beta\beta^{\mathsf T},
+\quad
+\alpha=\sqrt{1-p}\,q+v,\quad \beta\perp q,
+\quad \|v\|^2+\|\beta\|^2=p.
+\tag{237.13}
+$$
+
+这种表达式直接保证正性与秩至多二。唯一剩余的精确矩为
+
+$$
+v^{\mathsf T}Qv+\beta^{\mathsf T}Q\beta
++\sqrt{1-p}\,k^{\mathsf T}v-a=0.
+\tag{237.14}
+$$
+
+不存在纯复向量必须满足的虚矩方程。在实鞍点附近消去范数约束后，共有五个实坐标；实球面两方向的二次型一正一负，三个混合方向的二次型为 $H(p)$，具有两个正方向和一个负方向。
+
+取混合负方向 $b_p$ 为（237.3）的实际截面版本的最大化方向，归一化为
+
+$$
+-b_p^{\mathsf T}H(p)b_p=1,\qquad
+4b_p^{\mathsf T}M_pb_p=\kappa_{\rm mix}(p)^{-1}.
+\tag{237.15}
+$$
+
+唯一负广义特征值保证它可局部解析选择。残差在 $\beta\mapsto-\beta$ 下不变。用第234节承重证明中的解析平方配方，保留这一对称性及原点处的指定线性方向，得到
+
+$$
+g+z_+^2-z_-^2+Z_1^2+Z_2^2-Z_-^2=0.
+\tag{237.16}
+$$
+
+在该图中使用半圆
+
+$$
+z_+=Z_1=Z_2=0,\qquad
+(z_-,Z_-)=\sqrt g\,(\cos\theta,\sin\theta),
+\quad0\le\theta\le\pi.
+\tag{237.17}
+$$
+
+逆坐标在 $Z_-$ 方向的混合列微分为 $b_p$；两端均为纯实态，且位于需要连接的两侧。式（237.13）给出精确纯度公式
+
+$$
+J(\rho)^2
+=4\bigl(\|\alpha\|^2\|\beta\|^2
+-(\alpha^{\mathsf T}\beta)^2\bigr).
+$$
+
+因此整段满足
+
+$$
+J(\rho)^2=
+\frac{g}{\kappa_{\rm mix}(p)}\sin^2\theta+O(g^{3/2}).
+\tag{237.18}
+$$
+
+两侧实弧仍取第236节的最短入弧及正则出弧，混合列在这些部分为零。
+
+为控制秩变化处的信息量，引入仅用于上界的归一化实纯化
+
+$$
+\Psi=\alpha\otimes e_0+\beta\otimes e_1.
+\tag{237.19}
+$$
+
+固定辅助偏迹得到实际 $\rho$，SLD 信息的单调性给出
+
+$$
+I_Q(\rho)\le I_Q(|\Psi\rangle\langle\Psi|)
+=4\|\Psi'\|^2.
+\tag{237.20}
+$$
+
+末式使用归一化实向量的 $\Psi^{\mathsf T}\Psi'=0$。在两侧纯实弧上，此上界恰为原密度的迹速度平方。辅助空间不计入实际程序支持。
+
+固定 $0<\eta<1$，将第236节的调度中的 $T_*$ 换为
+$(1-\eta)T_{\rm mix}$：先保留长度 $\varepsilon^{5/2}$ 的规范段，在长为 $(1-\eta)T_{\rm mix}\varepsilon^2$ 的主窗口内沿归一化弧长走完入弧，在下一段 $\varepsilon^{5/2}$ 内完成（237.17），然后沿实出弧离开。实弧的参数导数界不变；半圆纯化的长度为 $O(\varepsilon)$，固定角度时对 $p$ 的偏导数为 $O(\varepsilon^{-1})$。所以（237.20）在颈部的峰值为 $O(\varepsilon^{-3})$、积分为 $O(\varepsilon^{-1/2})$，均低于目标首项。出弧的积分仍为 $O(|\log\varepsilon|)$。
+
+式（237.18）保留严格的近纯余量。主入弧则同时给出
+
+$$
+\sup_K I_Q(\rho)
+\le\frac{L^2+o(1)}
+{(1-\eta)^2T_{\rm mix}^2\varepsilon^4},
+\qquad
+\int_K I_Q(\rho)\,du
+\le\frac{L^2+o(1)}
+{(1-\eta)T_{\rm mix}\varepsilon^2}.
+\tag{237.21}
+$$
+
+解析化必须作用于（237.19）的两个实向量列，不能仅以密度的 $C^1$ 接近推断 SLD 信息接近。对每个固定 $\varepsilon$，将 $(v,\beta)/\sqrt p$ 视为实单位球面上的曲线，按紧化坐标作多项式逼近及有限 Hermite 匹配，再归一化并沿（237.14）的球面梯度作解析标量修正。整座桥正则，规范尾部也正则，所以可任意精细地完成这一修正。于是既保持（237.13）的正性，又可把全域列误差任意压小，并使 $K$ 上纯化的一阶导数误差至多一。
+
+纯度量在这些归一化双列上是 $2\|\alpha\wedge\beta\|$，因而对列的统一误差有固定 Lipschitz 界。它与（237.18）的余量保证最终全域近纯约束。（237.20）及纯化导数误差则保留（237.21）的首项，包括混合列为零之处。
+
+节点处保持规范双列的任意指定有限阶数据。态及一阶导数因此保持原校准，纯化的二阶数据保持原最优普通曲率；维数无关的下曲率界和（237.20）的上界夹逼，得到实际混态的普通双侧最优曲率。第215节的混态谱必要性排除额外尖锐点，并迫使联合支持恰为四。两个实矩经处理器线性性保证全部复信号输入上的精确性。
+
+最后令 $\eta\downarrow0$，并作对角选择，得到（237.4）的两个上极限和同族达到。
+
+还需证明严格比较（237.5）。在广义 Rayleigh 商中，$H_0$ 的惯性为 $(2,1)$，$M>0$，故最大正值的方向唯一。限制到 $j^\perp$ 后，最大值相等当且仅当该唯一方向已经位于 $j^\perp$。
+
+令 $\alpha=a_*$，以下仅在这一计算中写
+$c=c_*$、$x=\sqrt{1-c}$、$\sigma=2c-1$、$b=2\alpha$、
+$\ell=\ell_*$、$B_-=1+\ell$，并置
+
+$$
+D=(b-\ell)+B_-(1-c)>0.
+\tag{237.22}
+$$
+
+沿实际分界 $a=a_{\rm c}(s)$，选择最大化向量 $b_s$，使其第三坐标恒为一。在 $s=0$，它是 $e_w$，而 $j_0=-\sigma x e_y$。由第233节的线性鞍点项及实际矩阵，得到
+
+$$
+\begin{aligned}
+(v_{{\rm sad},w})'(0)&=\frac{\sqrt c}{\sqrt2 B_-},&
+H_{yw}'(0)&=-\frac{\sigma}{\sqrt2},\\
+M_{yw}'(0)&=\frac{c}{\sqrt2 B_-},&
+j_w'(0)&=-\sqrt{2c}.
+\end{aligned}
+\tag{237.23}
+$$
+
+对广义特征方程 $-H_0b_s=4\kappa_{\rm mix}Mb_s$ 的 $y$ 行求导，使用 $4\kappa_{\rm mix}(0)=B_-$，可得
+
+$$
+b_{s,y}'(0)=-\frac{1-c}{\sqrt2 D}.
+$$
+
+因此
+
+$$
+\left.\frac{d}{ds}(j_s^{\mathsf T}b_s)\right|_{s=0}
+=-\sqrt{2c}+\frac{\sigma x(1-c)}{\sqrt2D}<0.
+\tag{237.24}
+$$
+
+严格号可直接验证：$b-\ell=\sigma x/(2\sqrt c)>0$，故第二项严格小于 $\sqrt{2c}(1-c)$。移动的 $a_{\rm c}(s)$ 没有遗漏一阶交叉项，因为在整个 $s=0$ 参数族上，矩阵均对角、最大化方向均为 $e_w$，而 $j$ 沿 $e_y$。
+
+所以对全部充分小正 $s$，最大化方向不属于 $j_s^\perp$，Rayleigh 商的唯一性给出 $\kappa_{\rm mix}>\kappa$。证毕。
+
+**注记 237.3（两种放松保留的不同约束）。** 实混态允许正的矩阵余项 $R$ 在全部实方向分配；纯复态的虚方向还须满足同一复矩的虚部方程，其一阶形式为 $j^\perp$。相同的实分离面与入弧长度因而给出相同幂阶，但不同的首项系数。
+
+两种预算的归一化还有精确联系。对任意纯态 $\rho=|\alpha+i\beta\rangle\langle\alpha+i\beta|$，其中 $\alpha,\beta$ 实，有
+
+$$
+\frac{\rho+C\rho C}{2}
+=\alpha\alpha^{\mathsf T}+\beta\beta^{\mathsf T},
+\qquad
+J\!\left(\frac{\rho+C\rho C}{2}\right)=I_R^C(\rho).
+\tag{237.25}
+$$
+
+第二式由两侧平方都等于
+$4(\|\alpha\|^2\|\beta\|^2-(\alpha^{\mathsf T}\beta)^2)$ 得到。对第236节的显式精确纯复准备，这个平均保留实矩并给出同预算的实混态；反向提升还要满足虚矩方程。一般转置平均不是 CPTP 映射，本证明的信息上界来自（237.19）的固定偏迹。式（237.25）不将混合与虚性当作同一个操作资源。
+
+**定理 237.4（方向约束成本的二阶首项）。** 沿实际分界族，令 $c,x,\sigma,D$ 取定理237.2最后一段的临界值。则
+
+$$
+\kappa_{\rm mix}(s)-\kappa(s)=C_*s^2+O(s^3),
+\qquad
+C_*=\frac D4
+\left(
+\frac{\sqrt{2c}}{\sigma x}
+-\frac{x^2}{\sqrt2D}
+\right)^2>0.
+\tag{237.26}
+$$
+
+证明。 将无限制与受限最大化向量都规范为 $w$ 分量等于一。两种简单广义特征值及其方向随 $s$ 解析变化。式（237.23）—（237.24）给出无限制方向的一阶 $y$ 分量为 $-x^2/(\sqrt2D)$；$z$ 分量的一阶导数为零，因为临界广义特征方程的 $z,w$ 混合项的一阶导数为零。
+
+受限方向满足 $j_s^{\mathsf T}b_s^E=0$，故其一阶 $y$ 分量被强制为
+
+$$
+(b_{s,y}^E)'(0)
+=-\frac{\sqrt{2c}}{\sigma x}.
+\tag{237.27}
+$$
+
+约束在这一阶不限制 $z$ 分量，而 Rayleigh 商在 $z$ 方向严格凹，所以最优的一阶 $z$ 分量仍为零。
+
+在 $s=0$，对方向 $e_w+y e_y+z e_z$，Rayleigh 商的二阶展开是
+
+$$
+\frac{-b^{\mathsf T}H_*b}{4b^{\mathsf T}M_*b}
+=\frac{1+\ell_*}{4}
+-\frac D4y^2-\frac12z^2
++O((|y|+|z|)^4).
+\tag{237.28}
+$$
+
+实际参数 $s$ 下，以无限制最优方向为中心的一阶变分为零；其 Hessian 与（237.28）的 Hessian 相差 $O(s)$。两个最优方向相差 $O(s)$，所以将这个 Hessian 换成临界值只产生 $O(s^3)$ 误差。代入两条方向的一阶差，就得到（237.26）。括号非零已由（237.24）的严格号证明，故 $C_*>0$。证毕。
+
+## 追加锚（本行以下为增补区）
