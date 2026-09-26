@@ -1,7 +1,7 @@
 import LeanInformationAudit.Syntax
 import D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration
-import Reg.Support.MechanicalPhaseAverageRegistration
+import Reg.Support.PointwiseEqualityRegistrations
 import Reg.Support.MechanicalDyadicRegistration
 
 run_cmd LeanInformationAudit.RootCatalogs.declare {

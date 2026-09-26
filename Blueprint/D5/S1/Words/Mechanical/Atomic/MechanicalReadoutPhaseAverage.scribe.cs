@@ -14,6 +14,6 @@ internal sealed class MechanicalReadoutPhaseAverageDocument : IScribeDocumentDef
                 H("Uniform phase average"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every measurable subset of [0,1], integrating the actual numbered atomic measure over phases in [0,1) gives its Lebesgue measure. Each level partitions (0,1] into equal cells under its threshold maps; the geometric mass identity then sums the cell contributions to one. The statement uses the half-open phase domain of the mechanical word and allows arbitrary measurable sets within the closed unit interval."))),
+                Blocks(Paragraph(Text("For every ratio 0 < r < 1 and every measurable subset of [0,1], integrating the actual numbered atomic measure over phases in [0,1) gives its Lebesgue measure. Each level partitions (0,1] into equal cells under its threshold maps; the geometric mass identity then sums the cell contributions to one. The statement uses the half-open phase domain of the mechanical word and allows arbitrary measurable sets within the closed unit interval."))),
                 DescribeRole.Theorem))));
 }

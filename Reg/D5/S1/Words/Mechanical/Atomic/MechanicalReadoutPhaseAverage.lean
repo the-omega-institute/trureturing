@@ -1,7 +1,7 @@
 import LeanInformationAudit.Syntax
 import D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration
-import Reg.Support.MechanicalPhaseAverageRegistration
+import Reg.Support.PointwiseEqualityRegistrations
 
 run_cmd LeanInformationAudit.RootCatalogs.declare {
   rootId := `Reg.D5.S1.Words.Mechanical.Atomic.MechanicalReadoutPhaseAverage
