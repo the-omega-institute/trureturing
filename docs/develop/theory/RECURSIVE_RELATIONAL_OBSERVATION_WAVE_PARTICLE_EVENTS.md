@@ -4869,3 +4869,383 @@ $$
 **定义 77.3（仍待确定的全量子最小距离）。** 定理 77.2 将全量子失效距离限制在闭区间 $[4/5,c_*]$，但未决定它是否等于显式仪器 $\Gamma_+$ 的距离 $c_*$。证明等号仍需要对全部同接口不终止 CP 仪器建立距离至少为 $c_*$ 的下界；推翻等号则需要一个距离严格小于 $c_*$ 的实际不终止仪器。单独优化 $\Gamma_+$ 的输入，或只给出若干候选的距离，均未履行这个全仪器量词。
 
 ## 追加锚（本行以下为增补区）
+
+## 78. 饱和一个暗态下界，还必须与相邻相干输入相容
+
+本批接续第 73—77 节，将同一二维、齐次、完整仪器的失效距离下界从 $4/5$ 加强为严格大于 $4/5$，并确定这个改进对等待成本的含义。第 71.2、73.2、76.2 条的既有结论仍成立；本批不改写旧字节，也不把第 73 节的显式候选宣布为全局最优。
+
+始终固定完整活动记忆 $\mathcal H=\mathbb C^2$、两个可读记录“未点击、点击”和同一个量子后继空间。实际仪器写为
+
+$$
+\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(\rho)
++|\mathrm c\rangle\langle\mathrm c|\otimes\mathcal C(\rho),
+$$
+
+其中两分支完全正，$\mathcal N+\mathcal C$ 保迹；每个装置在所有轮次重复自身同一仪器。名义仪器仍为
+
+$$
+Q_0=|0\rangle\langle1|,\qquad
+L_0=|0\rangle\langle0|,\qquad
+\Gamma_0=(\mathcal N_0,\mathcal C_0).
+$$
+
+距离始终是完整记录与量子后继都保留时的
+
+$$
+\delta(\Gamma)=\frac12\|\Gamma-\Gamma_0\|_\diamond.
+$$
+
+**引理 78.1（纯未点击固定态对相干方向的约束）。** 设 $\mathcal N(P)=P$，其中 $P=|\psi\rangle\langle\psi|$。选单位向量 $\eta\perp\psi$，置 $R=|\eta\rangle\langle\eta|$。则存在 $\lambda\in[0,1]$ 与 $d\in\mathbb C$，使
+
+$$
+\boxed{
+\mathcal C^*(I)=\lambda R,\qquad
+\mathcal N(|\psi\rangle\langle\eta|)
+=d|\psi\rangle\langle\eta|,\qquad
+|d|^2\le1-\lambda.
+} \tag{78.1}
+$$
+
+此外，若 $a=|\langle0|\psi\rangle|^2$，则
+
+$$
+\boxed{\lambda(1-a)\ge1-\delta(\Gamma).} \tag{78.2}
+$$
+
+证明。为两分支分别选有限 Kraus 族 $A_i,B_j$。由于
+
+$$
+\sum_i|A_i\psi\rangle\langle A_i\psi|=P,
+$$
+
+每个 $A_i\psi$ 都与 $\psi$ 共线。完整保迹及 $\operatorname{Tr}\mathcal N(P)=1$ 又使每个 $B_j\psi=0$。在正交基 $(\psi,\eta)$ 中可写
+
+$$
+A_i=
+\begin{pmatrix}
+ c_i&u_i\\0&v_i
+\end{pmatrix},\qquad
+\sum_i|c_i|^2=1.
+$$
+
+因为点击效果为正且湮灭 $\psi$，它具有形式 $\lambda R$。完整性矩阵等式的非对角项和第二个对角项分别给出
+
+$$
+\sum_i\overline{c_i}u_i=0,\qquad
+\sum_i(|u_i|^2+|v_i|^2)+\lambda=1.
+$$
+
+因此
+
+$$
+\begin{aligned}
+\mathcal N(|\psi\rangle\langle\eta|)
+&=\left(\sum_i c_i\overline{u_i}\right)P
+  +\left(\sum_i c_i\overline{v_i}\right)|\psi\rangle\langle\eta|\\
+&=d|\psi\rangle\langle\eta|,
+\end{aligned}
+$$
+
+且 Cauchy–Schwarz 不等式给
+
+$$
+|d|^2\le\sum_i|v_i|^2\le1-\lambda.
+$$
+
+这一步覆盖任意 Kraus 数，不把不可读 Kraus 指标当成额外记录。
+
+最后，对输入 $P_0=|0\rangle\langle0|$，名义点击概率为一。完整输出距离控制点击事件的概率差，所以实际点击概率至少为 $1-\delta(\Gamma)$；而该概率恰为 $\lambda\operatorname{Tr}(RP_0)=\lambda(1-a)$。得到式 (78.2)。$\square$
+
+**定理 78.2（距离 $4/5$ 的完整仪器不可能永久未点击）。** 任一同接口实际仪器若有正概率永不点击的初态，则
+
+$$
+\boxed{\delta(\Gamma)>\frac45.} \tag{78.3}
+$$
+
+这里先断言每个失效仪器的严格不等式；把它升级成失效集合的统一严格间隔，还需要第 79 节的紧性。
+
+证明。第 71.2 条已经证明失效必给 $\delta\ge4/5$，并产生一个未点击固定密度矩阵。假设存在失效仪器满足 $\delta=4/5$。固定态不可能满秩，否则同条证明给 $\delta=1$。因此它为纯态 $P=|\psi\rangle\langle\psi|$。
+
+同一输入的下界
+
+$$
+f(a)=\frac{a+\sqrt{a^2+4(1-a)^2}}2\ge\frac45
+$$
+
+只能在 $a=3/5$ 取等，故 $|\langle0|\psi\rangle|^2=3/5$。式 (78.2) 于是给
+
+$$
+\lambda\ge\frac12,\qquad |d|\le\frac1{\sqrt2}. \tag{78.4}
+$$
+
+为计算相干方向，可令
+
+$$
+\psi=\sqrt{\frac35}|0\rangle+\sqrt{\frac25}|1\rangle,
+\qquad
+\eta=-\sqrt{\frac25}|0\rangle+\sqrt{\frac35}|1\rangle,
+\qquad r=\frac{\sqrt6}{5}.
+$$
+
+这个相位选择不限制实际仪器类：对输入和量子输出同步作计算基对角酉变换，$\Gamma_0$ 不变，完整 diamond 距离不变，且任意相位的 $\psi$ 可变为上述形式。
+
+考察未点击输出差
+
+$$
+D=P-\frac25P_0.
+$$
+
+其本征值为 $4/5,-1/5$，所以其符号算子为
+
+$$
+S=\operatorname{sign}D=2D-\frac35I,
+\qquad \|S\|_\infty=1.
+$$
+
+在完整输出上选同一个 Hermitian 检验
+
+$$
+Z=|\varnothing\rangle\langle\varnothing|\otimes S
+  -|\mathrm c\rangle\langle\mathrm c|\otimes I,
+\qquad \|Z\|_\infty=1,
+$$
+
+并将它拉回输入端：
+
+$$
+M=\frac12(\Gamma^*-\Gamma_0^*)(Z).
+$$
+
+对每个输入密度矩阵 $\rho$，迹范数对偶性与完整校准给 $|\operatorname{Tr}(\rho M)|\le\delta$，故
+
+$$
+-\delta I\le M\le\delta I. \tag{78.5}
+$$
+
+在固定态 $P$ 上，两个记录块之差为 $D$ 与 $-(3/5)P_0$，所以
+
+$$
+\langle\psi|M|\psi\rangle
+=\frac12\left(\|D\|_1+\frac35\right)
+=\frac45=\delta.
+$$
+
+由于 $\delta I-M\ge0$，一个向量上的二次型为零便使该向量落入其核。因此
+
+$$
+\langle\eta|M|\psi\rangle=0. \tag{78.6}
+$$
+
+另一方面，置 $H=|\psi\rangle\langle\eta|+|\eta\rangle\langle\psi|$。引理 78.1 与 $B_j\psi=0$ 给
+
+$$
+\mathcal N(H)=d|\psi\rangle\langle\eta|
++\overline d|\eta\rangle\langle\psi|,
+\qquad \mathcal C(H)=0.
+$$
+
+名义分支满足
+
+$$
+\mathcal N_0(H)=2rP_0,\qquad
+\mathcal C_0(H)=-2rP_0.
+$$
+
+直接计算 $\langle0|S|0\rangle=-1/5$ 与 $\langle\eta|S|\psi\rangle=4r/5$，得到
+
+$$
+\begin{aligned}
+2\operatorname{Re}\langle\eta|M|\psi\rangle
+&=\operatorname{Tr}(MH)\\
+&=\frac12\left(
+\frac{8r}{5}\operatorname{Re}d+\frac{2r}{5}-2r
+\right)\\
+&=\frac{4r}{5}(\operatorname{Re}d-1).
+\end{aligned} \tag{78.7}
+$$
+
+式 (78.6) 迫使 $\operatorname{Re}d=1$，与式 (78.4) 矛盾。故等号不可能成立。$\square$
+
+这个证明的作用点是同一装置对不同输入的相容性。暗态本身使一个距离检验饱和；全输入校准于是迫使相邻相干方向的交叉项为零，而完全正性与点击概率给出不相容的约束。只优化单个固定态上的读数，遗漏了这一层关系。
+
+## 79. 从每个失效都严格更远，到一个共同的正间隔
+
+**引理 79.1（失效集合紧致，最短失效距离取得）。** 在上述固定有限输入、输出和记录接口内，全部完整仪器组成紧致集 $\mathfrak I$。其中
+
+$$
+\mathfrak F=
+\{\Gamma\in\mathfrak I:\exists\rho,\
+\lim_n\operatorname{Tr}\mathcal N_\Gamma^n(\rho)>0\}
+$$
+
+也是非空紧致集。因此存在实际失效仪器 $\Gamma_*$，使
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{fail}}
+=\min_{\Gamma\in\mathfrak F}\delta(\Gamma)
+=\delta(\Gamma_*).
+} \tag{79.1}
+$$
+
+证明。用各记录分支的 Choi 矩阵表示仪器，完全正性给正半定约束，完整保迹给固定的部分迹等式。各 Choi 矩阵的迹非负且其和为输入维数，因而这是有限维实向量空间中的闭有界集，故紧致。此处允许每个分支任意有限 Kraus 表示，不先固定 Kraus 数再取一个可能遗漏边界的参数集。
+
+第 71.2 条的 Cesàro 证明给
+
+$$
+\Gamma\in\mathfrak F
+\iff\exists\sigma\ge0,\quad
+\operatorname{Tr}\sigma=1,\quad
+\mathcal N_\Gamma(\sigma)=\sigma. \tag{79.2}
+$$
+
+反向显然：从该固定态出发始终未点击。仪器与密度矩阵的乘积空间紧致，式 (79.2) 的等式连续，所以符合条件的联合集合闭且紧致。向仪器坐标的投影仍紧致。恒等未点击、零点击仪器属于其中，故集合非空。有限维中的 diamond 范数连续，最小值因此取得。$\square$
+
+**定理 79.2（完整失效半径严格超过 $4/5$）。** 对第 78 节的同一个名义仪器，
+
+$$
+\boxed{
+\frac45<\mathfrak r_{\mathrm{fail}}
+\le\sqrt{\frac{11+5\sqrt5}{32}}.
+} \tag{79.3}
+$$
+
+证明。引理 79.1 使最小值由某个失效仪器取得；定理 78.2 排除该仪器的距离为 $4/5$。上界是第 73.2 条显式相干失效仪器的已算距离。$\square$
+
+本条证明了严格间隔存在，没有给出该间隔的显式数值，也没有证明右端就是最小值。不能从“每个成员都严格大于”直接跳到“下确界严格大于”；紧性与取得性正是这里新增且不可省的连接。
+
+## 80. 真正的失效半径，也是统一等待预算失效的位置
+
+**定义 80.1（完整校准球的最坏实际成本）。** 对 $0\le u\le1$，定义
+
+$$
+\mathfrak B_u=\{\Gamma\in\mathfrak I:\delta(\Gamma)\le u\},
+\qquad
+\mathscr K(u)=\sup_{\Gamma\in\mathfrak B_u}\sup_\rho
+\mathbb E_\rho^\Gamma\mathsf N.
+$$
+
+这里 $\mathsf N$ 是包括首次点击那一轮在内的实际调用数，永久未点击轨迹取 $+\infty$。每个装置重复自己同一仪器，$\sup_\Gamma$ 不允许在一次执行中逐轮更换装置。
+
+**定理 80.2（校准球内共同指数尾与有限成本的精确阈值）。** 对上述二维名义仪器，
+
+$$
+\boxed{\mathscr K(u)<\infty\iff u<\mathfrak r_{\mathrm{fail}}.} \tag{80.1}
+$$
+
+更具体地，对每个固定 $u<\mathfrak r_{\mathrm{fail}}$，存在共同整数 $m\ge1$，使球内每个仪器、每个初态以及所有 $n\ge0$ 同时满足
+
+$$
+\boxed{
+\Pr_\rho^\Gamma(\mathsf N>n)
+\le2^{-\lfloor n/m\rfloor},
+\qquad
+\mathbb E_\rho^\Gamma\mathsf N\le2m.
+} \tag{80.2}
+$$
+
+证明。校准球 $\mathfrak B_u$ 是紧致仪器集中的闭子集。因 $u<\mathfrak r_{\mathrm{fail}}$，其中每个仪器对全部初态最终点击。令
+
+$$
+\mathcal A_\Gamma=\mathcal N_\Gamma^*,\qquad
+f_n(\Gamma)=\|\mathcal A_\Gamma^n(I)\|_\infty.
+$$
+
+每个 $f_n$ 连续，$1=f_0\ge f_1\ge\cdots\ge0$。对固定装置，全状态终止及有限维性给 $f_n\to0$，与第 71.2 条末段相同。
+
+开集 $U_n=\{\Gamma\in\mathfrak B_u:f_n(\Gamma)<1/2\}$ 递增并覆盖整个球。紧性给有限子覆盖，取最大指标 $m\ge1$，便有所有装置同时满足
+
+$$
+\mathcal A_\Gamma^m(I)\le\frac12I.
+$$
+
+这是第 40.2 条已使用的单调紧性机制在全状态生存效果上的应用。对每个固定装置，正性与齐次重复给
+
+$$
+\mathcal A_\Gamma^{km}(I)\le2^{-k}I.
+$$
+
+其余时刻由生存效果单调性控制，得到式 (80.2) 的尾界；尾和按每 $m$ 项分组，给 $\mathbb E\mathsf N\le m\sum_{k\ge0}2^{-k}=2m$。这一步没有交换未经控制的上确界与无穷和。
+
+反之，若 $u\ge\mathfrak r_{\mathrm{fail}}$，引理 79.1 的最小失效仪器就在球内。从其未点击固定态出发，$\mathsf N=\infty$ 几乎必然，故 $\mathscr K(u)=\infty$。$\square$
+
+**推论 80.3（旧显式公式的极点并非真实成本极点）。** 存在 $\varepsilon>0$ 与有限 $C$，使
+
+$$
+\boxed{\mathscr K(4/5+\varepsilon)\le C<\infty.} \tag{80.3}
+$$
+
+特别地，包含端点的整个 $4/5$ 校准球有共同有限预算。
+
+证明。由定理 79.2，可取 $\varepsilon=(\mathfrak r_{\mathrm{fail}}-4/5)/2>0$；再应用定理 80.2。$\square$
+
+第 76.2 条的显式上界
+
+$$
+K_u=\frac{3-u}{(1-u)(4/5-u)}
+$$
+
+在 $u\uparrow4/5$ 发散，但实际最坏均值在一个更大的闭球上仍共同有界。因此这一发散属于该显式估计的局限。反过来，本条的紧性证明不给出可直接代入的 $\varepsilon,m,C$，不能替代第 76.2 条已经给出的数值预算。
+
+**定理 80.4（接近真实失效边界必有倒数级成本下界）。** 对每个 $0\le u<\mathfrak r_{\mathrm{fail}}$，
+
+$$
+\boxed{
+\mathscr K(u)\ge
+\frac{\mathfrak r_{\mathrm{fail}}}
+{\mathfrak r_{\mathrm{fail}}-u}.
+} \tag{80.4}
+$$
+
+因而 $\mathscr K(u)\to\infty$ 当 $u\uparrow\mathfrak r_{\mathrm{fail}}$。
+
+证明。取引理 79.1 的最小失效仪器 $\Gamma_*$ 及其未点击固定密度矩阵 $\sigma_*$。令
+
+$$
+t=\frac{u}{\mathfrak r_{\mathrm{fail}}}\in[0,1),
+\qquad
+\Gamma_t=t\Gamma_*+(1-t)\Gamma_0.
+$$
+
+这是同接口完整仪器，其分支逐一取相同凸组合；每一轮都重复这个固定映射。由范数齐次性，
+
+$$
+\frac12\|\Gamma_t-\Gamma_0\|_\diamond
+=t\mathfrak r_{\mathrm{fail}}=u.
+$$
+
+又 $\mathcal N_t(X)\ge t\mathcal N_*(X)$ 对每个 $X\ge0$ 成立。反复使用正性与 $\mathcal N_*(\sigma_*)=\sigma_*$，得到
+
+$$
+\mathcal N_t^n(\sigma_*)\ge t^n\sigma_*.
+$$
+
+因此这个合法装置和初态的生存概率至少为 $t^n$，尾和至少为 $\sum_{n\ge0}t^n=1/(1-t)$，即式 (80.4)。$\Gamma_t$ 距离严格小于失效半径，定理 80.2 同时保证其实际均值有限；证明给的是越来越大的有限成本，而没有把失效端点提前代入。$\square$
+
+凸组合在这里必须逐轮按同一无记忆随机机制实现，或直接作为同一个 CP 仪器使用。如果在执行开始时只抽一次装置并一直保留选择，就引入了额外持久记忆，给出不同过程；那种混合不属于本证明。
+
+## 81. 本批所得的关系与未解决边界
+
+**结论 81.1（单态饱和、全接口相容与真实成本边界）。** 同一个二维名义仪器现在具有
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{rec}}=0
+<\mathfrak r_{\mathrm{cert}}=\frac12
+<\frac45
+<\mathfrak r_{\mathrm{fail}}
+\le\sqrt{\frac{11+5\sqrt5}{32}}
+<\mathfrak r_{\mathrm{diag}}=1.
+}
+$$
+
+其中 $\mathfrak r_{\mathrm{cert}}$ 仍只指第 69 节指定的标量余量规则。真实最坏均值在每个严格小于 $\mathfrak r_{\mathrm{fail}}$ 的闭球上共同有限，在接近这一半径时至少按式 (80.4) 发散。
+
+本批的关键连接是：一个固定态上的最优读数还必须来自同一个对全部输入合法的仪器。该相容性排除了旧下界的等号；紧性再把排除单点升级成共同间隔，并把这个间隔传给整个装置族的等待预算。
+
+**来源与适用边界 81.2。** Kraus／Choi 表示、迹范数对偶与有限维范数连续性是标准工具，沿用第 7 节与第 73 节所引 Watrous《The Theory of Quantum Information》。其中定理 2.22、2.26 与推论 2.27 给完全正性、保迹及 Kraus／Choi／Stinespring 表征，[命题 2.28](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf#page=98)明确给有限维通道集的紧性与凸性；单调紧性复用第 40.2 条的 Dini 机制，未点击固定态提取复用第 71.2 条的 Cesàro 构造。本批新增纸面推导是它们在同一完整仪器约束下的结合、$4/5$ 等号的相干相容性排除，以及由最小失效仪器导出的实际成本下界。不主张文献原创性，不将既有工具重复命名为新理论。
+
+这里没有得到全量子失效半径的精确值，也没有给出严格间隔的显式正数、端点共同预算的数值或成本发散的匹配上界。结论限定于固定有限完整记忆和齐次重复，不推广到任意切换控制；第 70 节的共同后继证书仍承担那一类问题。全部新增为理论正文，未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
