@@ -4198,3 +4198,342 @@ $b\ne0$ 时该常数含一个与细增量共享的非 Gaussian 分量。
 这些是已识别极限的性质，不能改写为有限后验独立性或实际矩收敛。
 
 ## 追加锚（本行以下为增补区）
+
+## 66. 跨尺度共同噪声与只有两维的静态谱分量
+
+**定义 66.1（有限载波族及相对尺度块）。** 保留原固定幅度与 beta、两种实际实验、完整固定总量后验、精确中心及定义 54.1 的截距。对固定有限个确定性载波，沿同一合法样本序列令
+
+$$
+\eta_a\to\infty,\quad r_a=\eta_a^2\delta,\quad
+s_a=\log(\eta_a/\delta),\quad s_a\sqrt\delta\le U/2,
+\quad\omega\eta_a=\pi m_a+d_a,\quad d_a\in(-\pi/2,\pi/2].
+\tag{66.1}
+$$
+
+这里 $\omega=\pi/2$。先固定每个 $e_a=m_a\bmod2$，并使每个 $r_a$ 分别趋于零、某个 $\zeta_a\in(0,\infty)$ 或无穷。
+对全部亚临界载波，另要求每个 $\eta_a/\eta_b$ 在 $[0,\infty]$ 中有极限。
+有限正比值定义等价类；称其为尺度块 $\mathfrak b$。为每块选取 $L_{\mathfrak b}$，使
+
+$$
+\eta_a^2/L_{\mathfrak b}\to c_a\in(0,\infty),\qquad
+L_{\mathfrak b}\to\infty,\qquad L_{\mathfrak b}\delta\to0.
+\tag{66.2}
+$$
+
+不同块之间的尺度比趋于零或无穷。该条件是联合结论的假设，不能由每个 $r_a\to0$ 推出。
+有限载波族总能抽取满足这些条件的子列，但不因此具有全序列极限。
+各载波的 $\mathcal V_{a,M},\mathcal D_{a,M}$ 按 (65.2) 定义；超临界还保留 $\mathcal S_{a,M}=\sqrt{r_a}\mathcal D_{a,M}$。
+所有坐标使用同一个实际后验标签向量。
+
+定义两个与载波大小无关的实际统计量和两份符号场：
+
+$$
+\begin{aligned}
+O_{e,M}&=-\frac2{\omega^2\sqrt\delta}
+\sum_{j\ne l}\frac{(-1)^{e(j-l)}}{(j-l)^2}A_jA_l,
+\qquad e\in\{0,1\},\\
+F_{e,M}(v)&=\sum_j(-1)^{ej}A_je^{i\omega vx_j},
+\qquad Y_{e,M}=F_{e,M}(0).
+\end{aligned}
+\tag{66.3}
+$$
+
+在共同计数线隔离事件外将它们置零；该修改只发生在概率趋零的事件上。
+$F_{0,M}$ 是旧 Fourier 场，$Y_{0,M}$ 是旧端点。
+
+**定理 66.2（实际多尺度共同实现）。** 设 (66.1)–(66.2) 成立，且各分支满足相应有界失谐极限：
+
+$$
+\begin{array}{ll}
+r_a\to0:& a_a:=\lim\eta_a^2d_a/\omega\in\mathbb R,\\
+r_a\to\zeta_a\in(0,\infty):& b_a:=\lim d_a/\delta\in\mathbb R,\\
+r_a\to\infty:& u_a:=\lim\eta_ad_a/\sqrt\delta\in\mathbb R.
+\end{array}
+\tag{66.4}
+$$
+
+令 $W_0$ 为旧实 Gaussian 测度，控制测度为 $\rho(x)dx$；$W_1$ 为其一个独立实副本。
+写 $F_e(v)=W_e(e^{i\omega vx})$、$Y_e=W_e(1)$。
+存在共同中心 Gaussian 对 $(O_0,O_1)$，满足
+
+$$
+v_O=\operatorname{Var}O_0=\operatorname{Var}O_1=\frac{128g_0}{45},
+\qquad\operatorname{Cov}(O_0,O_1)=-\frac78v_O.
+\tag{66.5}
+$$
+
+对每个非空块—奇偶对 $(\mathfrak b,e)$，取一个标准 Brownian motion $B_{\mathfrak b,e}$，
+并记其奇延拓为 $B_{\mathfrak b,e}^{\rm odd}$。
+这些 Brownian motions、Gaussian 对 $(O_0,O_1)$、$N_2\sim N(0,2g_0)$ 和场对 $(W_0,W_1)$ 作为各块相互独立。
+在这一共同实现上，全部实际载波联合收敛为
+
+$$
+\begin{array}{ll}
+r_a\to0,\ a\in\mathfrak b:
+&\displaystyle \mathcal V_a(\theta)=O_{e_a}
++4\sqrt{g_0c_a}\,B_{\mathfrak b,e_a}^{\rm odd}((a_a+\theta)/c_a),\\[2mm]
+r_a\to\zeta_a:
+&\displaystyle \mathcal V_a(\theta)=O_{e_a}
++2\sqrt{\zeta_a}\int_0^{b_a/\omega+\theta/\zeta_a}
+(|F_{e_a}(v)|^2-\gamma)\,dv,\\[2mm]
+r_a\to\infty:
+&\displaystyle \left(\mathcal V_a(\theta),\mathcal S_a(\theta)\right)
+=\left(O_{e_a}+\frac{2u_a}{\omega}(Y_{e_a}^2-\gamma),
+2\theta(Y_{e_a}^2-\gamma)\right).
+\end{array}
+\tag{66.6}
+$$
+
+最后一行记号表示相应两个预极限坐标的联合极限。
+负端点积分按有向积分理解；每份奇延拓的正负两半使用同一个 Brownian motion。
+临界与超临界同奇偶载波始终使用同一个 $W_e$；不为每条载波另取独立场。
+
+收敛同时包括 $(O_{0,M},O_{1,M})$、两份符号 Fourier 场、$T_M$ 以及旧端点、profile、bridge、dipole、截距、固定分辨率曲线和既定固定指数 Sobolev 坐标。
+旧截距仍为 $b_\star\gamma+I_2(H;W_0)$。
+路径结论在固定紧区间为联合 C-tight 的紧 $J_1$ 收敛，Fourier 场在固定频率紧区间取 $C^1$ 拓扑。
+先验后验律在数据概率中按条件 BL 收敛；每个固定支持下为一致无条件收敛。
+未知方向使用一个共同相等事件。不声称实际无界矩收敛或有限标签独立。
+
+证明。单载波结论不能自行确定 (66.5) 或各场的共用关系；下面同时比较完整向量。
+第 65 章的最终尺度 Fourier 恒等式对有限载波取最大误差后仍成立，因为
+$\max_a\log\eta_a=O(Q^{1/4})$。有限权重和 floor 误差乘以
+$Q^2\max_a(\eta_a^2/\sqrt\delta+\eta_a^3)$ 后仍趋零。
+精确的 $\mathcal Q_M=V_M+\sqrt\delta T_M$ 和原 $J_M$ 在放大前取消大项。
+这保留了超临界细增量的预算，没有再放大旧的未量化误差。
+
+在共同截止域上，令 $K_{a,\theta}$ 为 (65.5) 的 Ci 核。
+精确共振时有
+
+$$
+K_{a,0}(k)=-\frac{2(-1)^{e_ak}}{\omega^2\sqrt\delta k^2}
++O\!\left(\frac1{\eta_a^2\sqrt\delta k^4}\right).
+\tag{66.7}
+$$
+
+静态主项原始矩阵范数为 $O(\delta^{-1/2})$。
+亚临界锚定核由精确 Ci 积分给出
+$|K_{a,\theta}(k)-K_{a,0}(k)|\le C_I\delta^{-1/2}\min(\eta_a^{-1},\eta_a/|k|)$，
+故行和至多 $C_I\delta^{-1/2}\eta_a(1+\log Q)\le C_IQ^{1/2}(1+\log Q)$。
+临界锚定核及超临界缩放锚定核的精确导数逐项有界，原始范数至多 $C_IQ^2$。
+
+有界失谐时，零点正弦项为
+
+$$
+\frac{2\eta_a}{\omega\sqrt\delta}\,
+\frac{(-1)^{e_ak}\sin(d_ak)}k.
+\tag{66.8}
+$$
+
+亚临界由 $\eta_a^2|d_a|\le C$ 得到同一行和界；临界和超临界分别由
+$d_a/\delta$ 与 $\eta_ad_a/\sqrt\delta$ 有界得到逐项有界。
+余弦项与三阶 Ci 余项仍有多项式原始范数。因此第 56 章 Hilbert 中心位移
+$O_P(Q^{-5/2}+q^{-1/2})$ 对全部坐标同时消失。
+亚临界中心误差至多 $O_P(Q^{-2}(1+\log Q))+o_P(1)$；
+临界与缩放超临界至多 $O_P(Q^{-1/2})+o_P(1)$。
+
+选一个共同核心 $|x_j|\le R_c=\sqrt{D_*\log Q}$，一次逆分布耦合得到同一组标准正态。
+未归一化 Bernoulli 方差下界 $d_j\ge q^{9/10}$ 提供 $q^{-1/8}$ 级核心向量误差；
+核心外条件平方范数至多 $Q^{-60}$，可吸收上述多项式原始范数。
+这些是同一数据好事件上的辅助比较，随后只转移有界测试和误差事件。
+
+为联合分析不同尺度，现将所有核心方差一并换成
+$m_j^\circ=\int_{(j-1/2)\delta}^{(j+1/2)\delta}\rho(x)dx$，继续使用同一组正态，记为 $G_j$。
+原局部 Stirling 展开和占用集中给出相对误差 $O_P(Q^{-1}(1+\log Q))$。
+它乘以亚临界核心范数、临界或缩放超临界核心范数、静态范数，分别给出
+
+$$
+O_P(Q^{-1/2}(1+\log Q)^2),\quad
+O_P(Q^{-1/2}(1+\log Q)^{3/2}),\quad
+O_P(Q^{-3/4}(1+\log Q)).
+\tag{66.9}
+$$
+
+旧对数核的对应误差为 $O_P(Q^{-1/2}(1+\log Q)^{5/2})$。
+对角量连同其方差中心一起替换。所有误差趋零，因而整个族已由一个确定质量 Gaussian 阵比较。
+此处使用的是定量质量替换，不是把第 65 章未量化的环境收敛乘以新增放大因子。
+
+置
+
+$$
+w_\delta(k)=\delta^{-1}\sum_{j,j+k\in\mathcal C_Q}m_j^\circ m_{j+k}^\circ,
+\qquad g(t)=\int\rho(x)\rho(x-t)dx=g_0e^{-\kappa t^2/4}.
+\tag{66.10}
+$$
+
+单元平均的 $L^2$ 逼近及 Gaussian 尾给出
+$0\le w_\delta(k)\le C$ 与
+$\sup_k|w_\delta(k)-g(k\delta)|\le C\delta+Ce^{-cR_c^2}$。
+因此两个静态参考二次型的协方差满足
+
+$$
+\operatorname{Cov}_G(O_{e,M},O_{f,M})
+=\frac{16}{\omega^4}\sum_{k\ge1}\frac{(-1)^{(e+f)k}w_\delta(k)}{k^4}
+\longrightarrow\frac{16g_0}{\omega^4}
+\sum_{k\ge1}\frac{(-1)^{(e+f)k}}{k^4}.
+\tag{66.11}
+$$
+
+因子 16 包括两个滞后方向和 Gaussian 二次型配对。
+普通四次 zeta 和交替和之比为 $-7/8$，得到 (66.5)。
+其标准正态矩阵算子范数均为 $O(\sqrt\delta)$。
+(66.7) 的余项参考方差为 $O(\eta_a^{-4})$；即使缓慢增大的 $\eta_a$ 使原始余项范数不趋零，这个方差仍趋零。
+有界失谐时，余弦差的方差由
+$C\sum_{k\ge1}(1-\cos(d_ak))^2/k^4\to0$ 控制，Ci 余项方差为 $O(\eta_a^{-2})$。
+所以静态低余弦部分始终是同一对 $O_e$；初始正弦部分仍须保留。
+
+亚临界正弦系数在 $2/\sqrt\delta$ 的单位下写为
+
+$$
+h_{a,\theta}(k)=\frac{\eta_a(-1)^{e_ak}}{\omega k}
+\sin\!\left(\frac{\omega(a_{a,M}+\theta)k}{\eta_a^2}\right),
+\qquad a_{a,M}=\eta_a^2d_a/\omega.
+\tag{66.12}
+$$
+
+固定有限维的精确 Ci 比较沿用 (65.7)、(65.14) 的估计；包络为
+$|h_{a,\theta}(k)|\le C_I\min(\eta_a^{-1},\eta_a/k)$。
+它与任一静态 $k^{-2}$ 核的加权内积为 $O_I(\eta_a^{-1})$。
+若 $q_{ab}=\eta_a/\eta_b\le1$，在 $\eta_a^2,\eta_b^2$ 两处分割可得
+
+$$
+\sum_{k\ge1}|h_{a,\theta}(k)h_{b,\psi}(k)|
+\le C_Iq_{ab}(1+|\log q_{ab}|).
+\tag{66.13}
+$$
+
+三个滞后区间的上界分别为 $Cq_{ab}$、$2Cq_{ab}\log(1/q_{ab})$ 和 $Cq_{ab}$。
+它在任何趋零的尺度比下消失，不要求额外对数分离。
+同块时先在 $k\le AL_{\mathfrak b}$ 用 $w_\delta(k)\to g_0$，其余乘积尾至多 $C/A$。
+然后使用第 64 章的周期余弦尖点恒等式：同奇偶得到
+
+$$
+16g_0\sqrt{c_ac_b}\,
+R_{\rm odd}\!\left((a_a+\theta)/c_a,(a_b+\psi)/c_b\right),
+\quad R_{\rm odd}(u,v)=\frac{|u+v|-|u-v|}2;
+\tag{66.14}
+$$
+
+异奇偶则在 $\pi$ 附近使用光滑二次段，协方差趋零。
+这决定 Brownian 块的全部交叉协方差。
+
+这些亚临界标准正态矩阵的算子范数至多
+$C_I\sqrt{r_a}(1+|\log r_a|)\to0$，由加权 Schur 界在
+$\eta_a^2$ 与 $\delta^{-1}$ 处分割得到；Gaussian 尾控制最后一段，界对行位置一致。
+精确 Ci 的任意小增量仍满足 (65.14)，故参考四阶增量至多 $C_I|\theta-\psi|^2$。
+这给出路径紧性，而不要求一个对所有滞后均成立的二次时间增量界。
+
+把两个静态二次型、所有亚临界有限时间坐标及对角量一起组成向量。
+对角算子范数为 $O(\sqrt\delta)$，与全部非对角矩阵的迹内积恰为零。
+任意固定线性组合的算子范数趋零、Hilbert–Schmidt 范数有界且方差收敛，特征函数展开为
+
+$$
+\log E\exp\!\left(it\sum_\nu\lambda_\nu(\xi_\nu^2-1)\right)
+=-t^2\sum_\nu\lambda_\nu^2
++O_t\!\left(\max_\nu|\lambda_\nu|\sum_\nu\lambda_\nu^2\right).
+\tag{66.15}
+$$
+
+因此整个小算子向量先有联合 Gaussian 极限，再由已算出的零交叉协方差得到块间独立。
+
+还需与保留的非 Gaussian 坐标联合。两份符号场在同一 Gaussian 阵上的 Hermitian 和 pseudo Gram 同时满足
+
+$$
+\begin{aligned}
+E F_e(v)\overline{F_f(w)}&=1_{e=f}\Gamma(\omega(v-w)),\\
+E F_e(v)F_f(w)&=1_{e=f}\Gamma(\omega(v+w)),\qquad
+\Gamma(t)=\gamma e^{-t^2/(2\kappa)}.
+\end{aligned}
+\tag{66.16}
+$$
+
+异奇偶的交替单元和对固定光滑测试为 $O(\delta)$，单元投影和等距再扩展到固定 $L^2$ 测试。
+四阶空间质量矩给出两场一致 $H^2$ 界及 $C^1$ 紧性。
+因此所有临界积分端点可置于一个共同固定频率紧区间，超临界平方使用相应共同端点。
+
+对每个固定有限个旧测试、两场 Fourier 测试和端点，将其共同实线性张成空间的投影记为 $P_M$。
+投影随奇偶方向移动、Gram 也可以奇异，但秩一致有界。对上述任意小算子 $K_M$，
+
+$$
+\|K_M-(1-P_M)K_M(1-P_M)\|_{\rm HS}
+\le2\sqrt{\operatorname{rank}P_M}\|K_M\|_{\rm op}\to0.
+\tag{66.17}
+$$
+
+删去部分的中心二次型在参考 $L^2$ 中消失；保留部分与全部投影线性坐标严格独立。
+先作这个有限维极限，再共同细分临界积分的矩形近似，证明小 Gaussian 块独立于整个临界和超临界非线性族。
+旧对数核 $H$ 也先作同一场上的有限张量近似，其对角条带误差为
+$O(\delta(1+|\log\delta|^2))$，空间尾由 Gaussian 质量控制。
+这一步保留旧截距，且没有把各个边缘收敛拼成联合收敛。
+仅用绝对交叉行和会产生未必消失的 $\sqrt r\log Q$；(66.17) 避免了这一额外条件。
+
+临界项的精确余弦导数给出同一场的积分，并保留有限平方扣除 $\sum_jG_j^2\to\gamma$。
+失谐初值由 (66.8) 给出积分的起始正弦部分，故完整上限为 (66.6) 所写。
+超临界初始正弦核趋于 $2u_a/\omega$ 乘以同一符号秩一核。
+细增量直接从最终缩放后的 Ci 导数估计，使用四阶空间矩得到 (65.22) 的误差
+$C_I(r_a^{-2}+\eta_a^{-6}+\delta/\eta_a^2)$。
+因此初值与细增量共享同一个 $Y_e^2-\gamma$，且整个有限载波族同时成立。
+
+旧 profile、bridge、dipole、固定分辨率曲线与 Sobolev 坐标沿相同耦合保留；
+Fourier 的 $C^1$ 紧性处理零频商的连续延拓，旧路径用方差时钟和质量尾。
+有限个路径因子各自 C-tight 给出乘积紧性，前面的共同有限维极限确定联合律。
+最后一次对完整选中标签向量使用后验 TV 界，只转移有界测试和事件。
+数据好事件子列、支持置换等变性和一个共同方向事件分别给出所述三种原实验量词，证明完毕。
+
+**推论 66.3（静态抵消、跨区间依赖与尺度条件的必要边界）。** 精确共振时，任意两条同奇偶载波无论属于哪种尺度，都有
+
+$$
+\mathcal V_{a,M}(0)-\mathcal V_{b,M}(0)\longrightarrow_P0.
+\tag{66.18}
+$$
+
+这是同一实现的抵消，不仅是两个边缘极限相同。
+设 $S=(O_0+O_1)/2$、$A=(O_0-O_1)/2$，则
+
+$$
+S\perp A,\qquad \operatorname{Var}S=\frac{8g_0}{45},
+\qquad\operatorname{Var}A=\frac{8g_0}{3},\qquad O_e=S+(-1)^eA.
+\tag{66.19}
+$$
+
+在有限核中，$S_M$ 只保留偶滞后，$A_M$ 只保留奇滞后；参考协方差恰为零，联合 Gaussian 极限使两部分独立。
+方差的 $1:15$ 分配来自偶滞后四次和占全部的 $1/16$。
+对任意固定实权重 $t_a$，载波组合的静态贡献为
+$\sum_at_aO_{e_a}$，其方差为
+
+$$
+\frac{8g_0}{45}\left(\sum_at_a\right)^2
++\frac{8g_0}{3}\left(\sum_a(-1)^{e_a}t_a\right)^2.
+\tag{66.20}
+$$
+
+它消失当且仅当两个奇偶类的权重和分别为零。
+这个判据仅取消低余弦静态分量；有失谐时，(66.6) 的初始 Brownian、能量或端点平方项还在。
+
+即使两条亚临界载波属于不同尺度块，其未锚定极限仍因共享 $O_e$ 而相关；
+锚定后才只留下独立的块噪声。
+相同奇偶的临界能量与超临界细增量还满足
+
+$$
+\operatorname{Cov}\!\left(
+2\sqrt\zeta\int_0^{\theta/\zeta}(|F_e(v)|^2-\gamma)dv,
+2\psi(Y_e^2-\gamma)\right)
+=8\psi\sqrt\zeta\int_0^{\theta/\zeta}\Gamma(\omega v)^2dv.
+\tag{66.21}
+$$
+
+当 $\theta,\psi>0$ 时严格为正；异奇偶则场导出的两项独立。
+这是已识别极限的协方差，不主张实际矩收敛。
+
+最后，取 $\eta_1=4n_M\asymp Q^{1/8}$，并交替令 $\eta_2=\eta_1$ 或 $2\eta_1$。
+二者始终精确共振、同为偶奇偶类且亚临界，各自边缘律相同。
+时间一处的动态交叉协方差在两子列分别为 $16g_0$ 与 $8g_0$，静态贡献均为 $v_O$。
+定理 66.2 给出的两个联合 Gaussian 子列律不同，故没有全序列联合极限。
+这说明相对尺度假设有实质作用；论证比较的是两个极限分布，而不是以实际方差振荡替代分布论证。
+
+所需尺度与奇偶安排均可由 $4\operatorname{round}((t_M-2e)/4)+2e$ 实现，
+分别取 $t_M=\sqrt{c_a}Q^{\xi_{\mathfrak b}}$、$\sqrt{\zeta_a}Q^{1/4}$ 或 $Q^\xi$，
+其中 $0<\xi_{\mathfrak b}<1/4<\xi$；不同亚临界块还可任意缓慢分离。
+三种失谐按第 65 章的小扰动加入，不改原样本算术。
+结论限于固定有限载波族、固定紧区间和所列子列；不外推为增长载波族、任意振荡尺度的全序列极限或全球原创性声明。
+
+## 追加锚（本行以下为增补区）
