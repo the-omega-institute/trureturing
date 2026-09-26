@@ -3581,3 +3581,467 @@ $$
 以上均为纯理论文本，未新增 Lean 实现、消化覆盖或冻结结果。仪器维数、完整记忆、来源重置、截止校准和独立尾预算各有明确用途，不能以同一份有限记录同时替代所有这些前提。全文不声称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 62. 尾预算把不可认证的均值变成具有精确指数的稳定任务
+
+第 58 节表明，完整活动记忆只有二维也不足以排除正误差下的无界均值；第 60 节说明，独立尾预算能够补足这项缺口。本批继续区分两种预算：只对实际初始来源成立的平均预算，以及对后继状态也统一成立的续接预算。它们给出的稳定性强度不同。本批保留既有正文和结论，所有新增结果仍是纯理论推导。
+
+**定义 62.1（固定来源的矩预算类）。** 本批固定
+
+$$
+0<\beta\le1,\qquad p=1+\beta,\qquad K\ge1,
+\qquad r=\frac{\beta}{1+\beta}=1-\frac1p.
+$$
+
+等待律 $P$ 属于 $\mathcal P_{p,K}$，是指其首次点击轮数 $\mathsf N\in\{1,2,\ldots\}\cup\{\infty\}$ 满足
+
+$$
+\mathbb E_P\mathsf N^p\le K.
+$$
+
+所以 $P(\mathsf N=\infty)=0$，且均值 $\mu_P\le K^{1/p}$。这里的预算只约束声明的初始来源，不自动约束换成其他初态或条件于某次未点击以后的状态。
+
+**定理 62.2（均值对完整等待律的 Hölder 模量）。** 若 $P,Q\in\mathcal P_{p,K}$，且
+
+$$
+\varepsilon=\operatorname{TV}(P,Q)
+=\frac12\sum_{n\ge1}|P(n)-Q(n)|,
+$$
+
+则
+
+$$
+\boxed{|\mu_P-\mu_Q|\le(K-1)^{1/p}\varepsilon^r.}
+$$
+
+证明。取两律共同部分 $c_n=\min\{P(n),Q(n)\}$，并置 $u_n=P(n)-c_n$、$v_n=Q(n)-c_n$。两剩余质量都为 $\varepsilon$。因为 $p>1$，对 $n\ge1$ 有
+
+$$
+(n-1)^p\le n^p-1.
+$$
+
+例如，函数 $(1+t)^p-t^p$ 在 $t\ge0$ 上不减且在零点取一。因而
+
+$$
+\sum_n(n-1)^pu_n\le K-1,
+\qquad
+\sum_n(n-1)^pv_n\le K-1.
+$$
+
+Hölder 不等式给
+
+$$
+A:=\sum_n(n-1)u_n\le(K-1)^{1/p}\varepsilon^{1-1/p},
+\qquad
+B:=\sum_n(n-1)v_n\le(K-1)^{1/p}\varepsilon^{1-1/p}.
+$$
+
+共同部分抵消，且 $\sum_nu_n=\sum_nv_n$，所以 $\mu_P-\mu_Q=A-B$。由 $A,B\ge0$ 得 $|A-B|\le\max\{A,B\}$，推出结论。$\varepsilon=0$ 时两律相同；$K=1$ 时两律都集中于一，结论也成立。$\square$
+
+**命题 62.3（二维完整仪器已能达到该指数）。** 固定 $K>1$，令
+
+$$
+c_p=\frac{K-1}{2^p}>0.
+$$
+
+对任意 $0<w<\min\{1,c_p\}$，取 $\gamma=(w/c_p)^{1/p}$。比较第 58.1 条的两个仪器
+
+$$
+\mathfrak I_{0,\gamma},\qquad\mathfrak I_{w,\gamma},
+$$
+
+共同初态仍为 $P_s$。两者从任意初态最终都点击，且从 $P_s$ 出发的等待律都属于 $\mathcal P_{p,K}$。两仪器的完整单轮半 diamond 距离及这两份等待律的总变差距离均为 $w$，均值差为
+
+$$
+\boxed{
+\mu_{w,\gamma}-\mu_{0,\gamma}
+=\frac{(K-1)^{1/p}}2w^r.
+}
+$$
+
+证明。两模型使用同一正 $\gamma<1$，所以最终点击结论由第 58.2 条成立。设 $\mathsf G$ 是成功概率为 $\gamma$、支撑从一开始的几何变量。从 $P_s$ 出发，第一轮未点击后总等待为 $1+\mathsf G$。几何级数及其一、二阶求导给
+
+$$
+\mathbb E(1+\mathsf G)^2
+=1+\frac1\gamma+\frac2{\gamma^2}
+\le\frac4{\gamma^2}.
+$$
+
+由于 $1<p\le2$，幂函数的凹性给
+
+$$
+\mathbb E(1+\mathsf G)^p
+\le\left[\mathbb E(1+\mathsf G)^2\right]^{p/2}
+\le\frac{2^p}{\gamma^p}.
+$$
+
+因此
+
+$$
+\mathbb E_{w,\gamma}\mathsf N^p
+=1-w+w\mathbb E(1+\mathsf G)^p
+\le1+\frac{2^pw}{\gamma^p}=K.
+$$
+
+另一个模型从 $P_s$ 第一轮必点击，其矩为一。相对于它，只有第一轮从 $s$ 出发的点击质量 $w$ 被移入慢尾，所以等待律的总变差为 $w$。
+
+对带参考的任意输入，两单轮输出之差在未点击块为 $w\rho_{ss}\otimes P_u$，在点击块为 $-w\rho_{ss}\otimes P_s$；两块正交，半迹范数为 $w\operatorname{Tr}\rho_{ss}\le w$，由输入 $P_s$ 达到。注意这里固定两模型相同的 $\gamma$，与第 58.2 条比较 $(0,0)$ 的距离公式有别。最后 $w/\gamma=c_p^{1/p}w^r$，即得均值差。$\square$
+
+令 $w\downarrow0$，任何以 $\varepsilon^s$、$s>r$ 为模量且常数只依赖 $p,K$ 的统一均值界都会被这个家族推翻。这里尖锐的是指数，未声称第 62.2 条的常数在二维仪器子类中最优；比较中的两个仪器都随 $w$ 变化。
+
+## 63. 校准误差实际累积的长度，是仍在运行的轮数
+
+第 35.2 条把每个调用槽的活动概率上界取成一，得到 $m\delta$。对固定来源保留这些活动概率，可以得到由真实平均调用数控制的界。
+
+**定理 63.1（按活动质量加权的停止历史界）。** 两完整仪器 $\mathfrak I,\mathfrak J$ 具有共同输入、记录和各分支输出空间，完整单轮半 diamond 距离为 $\delta$。它们使用同一首次点击停止协议和同一初态 $\rho$。记
+
+$$
+s_j^I=\operatorname{Tr}\mathcal N_I^j(\rho),\qquad
+c_m^I=\sum_{j=0}^{m-1}s_j^I
+=\mathbb E_I\min(\mathsf N,m),
+$$
+
+并对 $J$ 类似定义。则第 35 节保留完整有限停止记录和量子后继的两个输出满足
+
+$$
+\boxed{
+D\bigl(\Omega_m^I(\rho),\Omega_m^J(\rho)\bigr)
+\le\min\{1,\delta\min(c_m^I,c_m^J)\}.
+}
+$$
+
+给定初态可带任意有限参考系统；此时左侧在完整联合输出上取距离，右侧的生存概率由共同系统边缘态计算。
+
+证明。取混合过程：前 $j$ 轮使用 $I$，剩余轮次使用 $J$，$0\le j\le m$。相邻两个混合过程只在第 $j+1$ 轮不同，其共同前缀中的未点击块是 $\mathcal N_I^j(\rho)$，迹为 $s_j^I$。归一化该块，应用完整仪器距离定义，再用后续相同停止处理的迹距离收缩性，这一替换的代价至多 $s_j^I\delta$。零迹块的代价为零。
+
+对 $j=0,\ldots,m-1$ 求和得 $\delta c_m^I$。交换 $I,J$ 重做给 $\delta c_m^J$，再与距离不超过一合并。带参考时同一未归一化块的迹仍为 $s_j^I$，其余论证不变。$\square$
+
+**推论 63.2（固定来源的完整时间律与均值校准）。** 若两个来源下的均值 $\mu_I,\mu_J$ 都有限，则全部首次点击轮数律满足
+
+$$
+\boxed{
+\operatorname{TV}(P_I,P_J)
+\le\min\{1,\delta\min(\mu_I,\mu_J)\}.
+}
+$$
+
+若二者还都属于 $\mathcal P_{p,K}$，则
+
+$$
+\boxed{
+|\mu_I-\mu_J|
+\le(K-1)^{1/p}
+\left[\min\{1,K^{1/p}\delta\}\right]^r.
+}
+$$
+
+证明。丢弃有限停止输出中的量子后继和端口细分，只保留轮数及未解决标签，距离不增加。将大于 $m$ 的轮数统一编码为 $\infty$，所得删失律与原始律的总变差距离为 $s_m$，因有限均值而趋零。因此第 63.1 条在 $m\to\infty$ 时给第一个界。第二个界使用 $\mu_I,\mu_J\le K^{1/p}$ 及第 62.2 条。$\square$
+
+第 62.3 条中的完整仪器距离也等于 $w$，因此这里的 $\delta^r$ 指数在固定来源矩预算类中同样不能统一提高。这个结论对仪器的完整带记录校准成立，不是只比较点击效果或未点击映射的某个矩阵元。
+
+## 64. 保留截断调用轮数，可以取得尖锐的样本指数
+
+这一节使用真实调用计数作为记录。它与第 59 节仅取得截止点击频率的接口不同；因此允许改变估计器及其精度预算。所有样本均来自同一仪器、相同来源与完整记忆重置后的独立准备。
+
+**定理 64.1（截断计数的均值置信区间）。** 设真实等待律属于 $\mathcal P_{p,K}$。取整数 $\ell,m\ge1$，每次运行至首次点击或第 $m$ 轮，记录实际调用数
+
+$$
+Y_i=\min(\mathsf N_i,m),\qquad
+\widehat\mu_{m,\ell}=\frac1\ell\sum_{i=1}^{\ell}Y_i.
+$$
+
+对任意 $t>0$，以至少 $1-2e^{-t}$ 的概率有
+
+$$
+\boxed{
+|\widehat\mu_{m,\ell}-\mu|
+\le\frac K{m^\beta}
++\sqrt{\frac{2Km^{1-\beta}t}{\ell}}
++\frac{2mt}{3\ell}.
+}
+$$
+
+若 $t=\log(2/\alpha)$、$0<\alpha<1$、整数 $\ell\ge t$，并取
+
+$$
+x=\left(\frac{K\ell}{t}\right)^{1/p},\qquad
+m=\lceil x\rceil,
+$$
+
+则上述半径不超过
+
+$$
+\boxed{\frac{13}{3}K^{1/p}\left(\frac t\ell\right)^r.}
+$$
+
+所有实验的调用总数确定地不超过 $\ell m$；其期望则不超过 $\ell\mu\le\ell K^{1/p}$。
+
+证明。第 60.1 条给 $0\le\mu-\mathbb EY_i\le K/m^\beta$。逐点有
+
+$$
+Y_i^2\le\mathsf N_i^p m^{2-p},
+$$
+
+因为 $\mathsf N_i\le m$ 时可把 $\mathsf N_i^{2-p}$ 换成 $m^{2-p}$，反之可把 $m^p$ 换成 $\mathsf N_i^p$。故 $\operatorname{Var}Y_i\le Km^{1-\beta}$。又 $|Y_i-\mathbb EY_i|\le m$。有界变量的 Bernstein 不等式给
+
+$$
+\mathbb P\!\left(
+\left|\widehat\mu_{m,\ell}-\mathbb EY_i\right|
+>\sqrt{\frac{2Km^{1-\beta}t}{\ell}}+\frac{2mt}{3\ell}
+\right)\le2e^{-t}.
+$$
+
+所用常数也可直接由中心变量 $Z$ 的指数矩界核对：若 $|Z|\le m$、$\mathbb EZ=0$、$\mathbb EZ^2\le v$，则对 $0\le\lambda<3/m$，展开指数级数并用 $j!\ge2\cdot3^{j-2}$（$j\ge2$）得到
+
+$$
+\log\mathbb Ee^{\pm\lambda Z}
+\le\frac{\lambda^2v}{2(1-\lambda m/3)}.
+$$
+
+独立性、Chernoff 界及对两个符号取并集给以上 Bernstein 形式。加上截断偏差即得第一式。
+
+对参数选择，由 $K\ge1$、$\ell\ge t$ 得 $x\ge1$，所以 $x\le m\le2x$。三项分别至多
+
+$$
+K^{1/p}(t/\ell)^r,\qquad
+2^{1-\beta/2}K^{1/p}(t/\ell)^r,\qquad
+\frac43K^{1/p}(t/\ell)^r.
+$$
+
+因为 $2^{1-\beta/2}\le2$，三项之和不超过所列常数。调用总数为 $\sum_iY_i$，逐项用 $Y_i\le m$ 及 $Y_i\le\mathsf N_i$ 得两种成本界。$\square$
+
+这里给定的矩预算、调用计数可读性与来源重置都仍是前提。制备、计数器和物理秒数没有折算进调用成本；若需要确定的总运行预算，应使用 $\ell m$，不能把期望上界当作硬截止。
+
+**定理 64.2（固定完成记录数下的指数不能改善）。** 固定 $K>1$，令 $c_p=(K-1)/2^p$。对任何整数
+
+$$
+\ell\ge\max\{1,(2c_p)^{-1}\},
+$$
+
+以及任何从 $\ell$ 份独立完成等待记录和与参数无关的随机化产生的均值估计器 $\widehat\mu$，存在第 62.3 条类型的二维仪器与共同来源，使其等待律属于 $\mathcal P_{p,K}$，且
+
+$$
+\boxed{
+\mathbb P\!\left(
+|\widehat\mu-\mu|
+\ge\frac{(K-1)^{1/p}}4(2\ell)^{-r}
+\right)\ge\frac14.
+}
+$$
+
+证明。置 $w=1/(2\ell)$、$\gamma=(w/c_p)^{1/p}\le1$。在 $w=c_p$ 的端点，第 62.3 条的矩估计和仪器公式仍成立，只需允许 $\gamma=1$。比较 $\mathfrak I_{0,\gamma}$ 与 $\mathfrak I_{w,\gamma}$。两均值相差
+
+$$
+\Delta=\frac{(K-1)^{1/p}}2(2\ell)^{-r}.
+$$
+
+第一种记录律集中在一，因此两份 $\ell$ 重积律的总变差恰为 $1-(1-w)^\ell\le\ell w=1/2$。共同随机化不增加它。对两个模型作等先验检验，任何规则的平均错误概率至少为 $(1-w)^\ell/2\ge1/4$。
+
+把估计器的输出与两均值的中点比较，可制成一个检验；检验错误必包含在相应的 $|\widehat\mu-\mu|\ge\Delta/2$ 事件内。因此至少一个模型的该事件概率不小于 $1/4$。$\square$
+
+第 64.1 条的截断计数是完成记录的共同后处理，所以该下界也限制这种观测方式。固定 $1<p\le2$、$K>1$ 及失败概率 $0<\alpha<1/4$ 时，上下界给出相同的样本幂指数 $r$；这里未证明置信参数、常数或原始调用预算下的全局最优性，也不覆盖任意初态制备和相干控制查询。
+
+这个下界不需要某个真实模型具有幂律重尾。参与反例的每个正 $\gamma$ 模型都有几何尾；使估计变难的是模型类中没有统一的几何衰减尺度。不能把“每一份模型指数衰减”自动当作“整个类满足同一个轻尾合同”。
+
+## 65. 精确概率能互相换算，不表示有限记录同样充分
+
+**定理 65.1（同一两轮过程的两种记录实验）。** 在第 58.1 条仪器中固定 $\gamma=1$，未知参数为 $0\le w<1$，来源为 $P_s$。所以 $\mathsf N$ 只取一、二，概率分别为 $1-w,w$，均值为 $\mu=1+w$。
+
+加入第 50 节已标定的独立几何截止，$0<\eta\le1$、$q=1-\eta$，点击同轮优先。记 $C$ 为实际调用数，$F$ 为终端点击或截止标签。完整记录的三个可能结果为
+
+$$
+\boxed{
+\begin{array}{c|c}
+(C,F)&\text{概率}\\\hline
+(1,\mathrm{click})&1-w\\
+(1,\mathrm{abort})&w\eta\\
+(2,\mathrm{click})&wq
+\end{array}
+}
+$$
+
+完整记录确定变量
+
+$$
+R=\mathbf1_{\{F=\mathrm{abort}\ \text{或}\ C=2\}},
+\qquad R\sim\operatorname{Bernoulli}(w).
+$$
+
+反过来，由 $R$ 加一枚参数已知、与 $w$ 无关的截止硬币，可以生成上述完整记录律。因此在这个已知两点支撑族中，两种记录可经共同随机核互相模拟。
+
+只保留终端标签时，截止指示变量为
+
+$$
+A=\mathbf1_{\{F=\mathrm{abort}\}}
+\sim\operatorname{Bernoulli}(w\eta).
+$$
+
+证明。第一轮直接点击的概率为 $1-w$。否则已经进入 $u$，若此轮硬币截止则给 $(1,\mathrm{abort})$；若继续，第二轮必点击，给 $(2,\mathrm{click})$。于是完整记录恰好判断是否发生了第一轮未点击。若给定 $R=1$，按概率 $\eta,q$ 生成后两种记录；给定 $R=0$，输出第一种记录。这份模拟核不含未知的 $w$。丢弃 $C$ 就合并两种点击结果，给最后的 Bernoulli 律。$\square$
+
+**推论 65.2（相同均值目标的方差与区分能力）。** 对 $\ell$ 份独立实验，两种无偏估计器
+
+$$
+\widehat\mu_{\mathrm{full}}=1+\frac1\ell\sum_iR_i,
+\qquad
+\widehat\mu_{\mathrm{flag}}=1+\frac1{\eta\ell}\sum_iA_i
+$$
+
+分别具有方差
+
+$$
+\boxed{
+\operatorname{Var}\widehat\mu_{\mathrm{full}}
+=\frac{w(1-w)}\ell,
+\qquad
+\operatorname{Var}\widehat\mu_{\mathrm{flag}}
+=\frac{w(1-w\eta)}{\ell\eta}.
+}
+$$
+
+对假设 $w=0$ 与任意固定 $w>0$ 的等先验最优检验，完整记录和仅终端标签的错误概率分别为
+
+$$
+\boxed{
+P_{\mathrm{err}}^{\mathrm{full}}
+=\frac{(1-w)^\ell}{2},
+\qquad
+P_{\mathrm{err}}^{\mathrm{flag}}
+=\frac{(1-w\eta)^\ell}{2}.
+}
+$$
+
+证明。方差由独立 Bernoulli 和得到。基准 $w=0$ 的所有完整记录都为 $(1,\mathrm{click})$，另一模型在这同一记录词上的概率为 $(1-w)^\ell$；故积律总变差为 $1-(1-w)^\ell$。只看标签时，基准全为点击，另一模型全点击的概率为 $(1-w\eta)^\ell$。各自代入等先验最小错误率 $(1-\operatorname{TV})/2$。$\square$
+
+固定 $0<w<1$ 并令 $\eta\downarrow0$，两方差之比趋于无穷；固定 $\ell$ 时，终端标签的最优错误率趋于 $1/2$，完整记录的区分能力保持不变。两接口的运行协议及实际调用数完全相同，每份实验都至多两轮；差异在于是否保留 $C$，记录存储的费用并未计入调用成本。
+
+而在精确概率层面，$\mathbb EA=w\eta$ 仍唯一给出 $w$，因而给出均值。这里分开的正是精确识别与统计实验的充分性。上述无偏估计器和互相模拟结论依赖已知的两点支撑；不能不带这份先验就应用于一般未知等待律。若只允许更小的矩预算 $K$，还须限制 $1+w(2^p-1)\le K$；当 $K>1$ 时，总能选取满足它的足够小的正 $w$；$K=1$ 则只允许 $w=0$。
+
+## 66. 对全部后继状态的成本预算给出 Lipschitz 稳定性
+
+只控制初始来源的高阶矩，允许条件后继极慢。本节改用更强的充分条件：对全部初态的剩余平均等待给共同控制。它可以比实际允许来源需要的条件更强，不作为一般必要条件。
+
+**定义 66.1（全状态的等待成本势）。** 对有限维完整仪器的未点击伴随映射 $\mathcal A=\mathcal N^*$，假定
+
+$$
+T=\sum_{m\ge0}\mathcal A^m(I)
+$$
+
+在算子范数中收敛，记 $M=\|T\|_\infty$。则每个初态都最终点击，且由等待时间的尾和公式，其实际平均轮数为 $\operatorname{Tr}(\rho T)$。所以此处 $T$ 与前文的有限点击时间矩一致，$M$ 是所有初态的最大平均等待；没有把永不点击轨迹赋零后隐去其成本。
+
+**引理 66.2（正预解映射的范数就是最大等待）。** 在定义 66.1 的条件下，作用于 Hermitian 算子空间的映射
+
+$$
+\mathcal R=(\operatorname{id}-\mathcal A)^{-1}
+=\sum_{m\ge0}\mathcal A^m
+$$
+
+存在且正，并且
+
+$$
+\boxed{\|\mathcal R\|_{\infty\to\infty}=\|\mathcal R(I)\|_\infty=M.}
+$$
+
+这里使用 Hermitian 算子的算子范数，未假设 $\mathcal A$ 对 Hilbert–Schmidt 内积自伴。
+
+证明。任意正映射 $\mathcal B$ 在这个实赋范空间上满足 $\|\mathcal B\|_{\infty\to\infty}=\|\mathcal B(I)\|_\infty$：对 $-I\le H\le I$，正性给 $-\mathcal B(I)\le\mathcal B(H)\le\mathcal B(I)$，而 $H=I$ 达到下界。
+
+因此有限维下
+
+$$
+\sum_m\|\mathcal A^m\|_{\infty\to\infty}
+=\sum_m\|\mathcal A^m(I)\|_\infty
+\le\sum_m\operatorname{Tr}\mathcal A^m(I)
+=\operatorname{Tr}T<\infty.
+$$
+
+映射级数绝对收敛。与 $\operatorname{id}-\mathcal A$ 相乘，有限和望远镜抵消，余项 $\mathcal A^{m+1}$ 趋零，故它就是逆映射。正映射级数的极限仍正，且 $\mathcal R(I)=T$；再应用首段范数恒等式。$\square$
+
+**定理 66.3（完整仪器校准对全状态成本的乘积界）。** 两仪器具有第 63.1 条的共同接口，完整单轮半 diamond 距离为 $\delta$，并各自满足定义 66.1。则
+
+$$
+\boxed{
+\|T_I-T_J\|_\infty\le\delta M_I M_J.
+}
+$$
+
+证明。由 $(\operatorname{id}-\mathcal A_I)T_I=I$ 及对 $J$ 的同一等式，
+
+$$
+T_I-T_J
+=\mathcal R_I(\mathcal A_I-\mathcal A_J)(T_J).
+$$
+
+因为 $I\le T_J\le M_JI$，在完整带记录输出上取效果：未点击块为 $T_J/M_J$，所有点击块为零。它是合法的 $[0,I]$ 效果，所以对每个共同输入态 $\rho$，
+
+$$
+\left|\operatorname{Tr}\rho(\mathcal A_I-\mathcal A_J)(T_J)\right|
+\le M_J\delta.
+$$
+
+对全部输入态取上确界，得到 Hermitian 算子的范数界
+
+$$
+\|(\mathcal A_I-\mathcal A_J)(T_J)\|_\infty\le M_J\delta.
+$$
+
+再用引理 66.2。这里没有额外的因子二：所用的是完整输出上的一个效果，其概率差受半迹距离控制。该效果只用于证明界，不假设实验者已取得未知的 $T_J$。$\square$
+
+**命题 66.4（乘积形式可取等号）。** 一维仪器每轮以概率 $0<\gamma_i\le1$ 点击，否则继续，其未点击分支为 $(1-\gamma_i)\operatorname{id}$、点击分支为 $\gamma_i\operatorname{id}$。两个这样的模型满足
+
+$$
+\delta=|\gamma_I-\gamma_J|,\qquad
+M_i=T_i=\frac1{\gamma_i},\qquad
+\boxed{|T_I-T_J|=\delta M_I M_J.}
+$$
+
+证明。单轮带记录通道是两点概率律，半迹距离就是成功概率之差；等待为几何分布，均值为 $1/\gamma_i$。取两个倒数之差即可。$\square$
+
+**推论 66.5（把矩预算施加到所有初态的代价与收益）。** 若两仪器对每个初态都最终点击，且时间矩效果满足
+
+$$
+\mathsf M_{p,i}:=\sum_{n\ge1}n^pE_{n,i}\le KI,
+$$
+
+则它们满足定义 66.1，并有
+
+$$
+\boxed{M_i\le K^{1/p},\qquad
+\|T_I-T_J\|_\infty\le K^{2/p}\delta.}
+$$
+
+证明。对每个初态 $\rho$，最终点击假设使 $\operatorname{Tr}(\rho\mathsf M_{p,i})$ 是实际等待的 $p$ 阶矩。Jensen 不等式给 $\operatorname{Tr}(\rho T_i)\le K^{1/p}$。也可先对有限尾和应用标量平均等待上界，再取单调极限；有限维正算子递增且有界，故在范数中收敛。对全部状态取上确界得到 $M_i\le K^{1/p}$，再用定理 66.3。$\square$
+
+“对每个初态最终点击”不能从把永不点击赋零的矩效果上界单独推出：从不点击的仪器具有全部 $E_n=0$，这个矩效果为零，却有无穷实际等待。这里显式保留该条件，防止混用前文的两种时间矩约定。
+
+第 62.3 条的二维族没有违反这个 Lipschitz 界。从 $P_s$ 准备时，进入慢分支的权重足以压低初始矩；但从条件后继 $P_u$ 重新开始，平均等待为 $1/\gamma$，其 $p$ 阶矩至少为 $\gamma^{-p}$。所以这族不满足同一个全状态预算，$M_i$ 随 $\gamma\downarrow0$ 发散。初始来源预算与可续接状态预算因此不能互换。
+
+## 67. 关系边界还要保存任务精度与条件预算
+
+本批的“AHH”有两部分。第一，固定 $1<p\le2$ 和 $K>1$，同一二维活动空间、同一合法仪器族中，只约束指定初态的 $p$ 阶时间矩不超过 $K$，得到的均值稳定性指数是 $(p-1)/p$，而且不能统一提高；把平均成本预算扩展到所有后继初态以后，预解恒等式给出线性的校准界。边界预算的量词范围改变了可证明的稳定性。
+
+第二，精确概率之间存在代数换算，不代表对应的有限记录实验同样有用。第 65 节不改变实际运行，只丢弃调用数，就能令终端标签在小截止概率下几乎失去区分能力。这里不是多保存一个名字，而是保留了一份仍与未知参数相关的真实记录。
+
+由此，时间任务的充分边界可以更明确地记为
+
+$$
+\boxed{
+\begin{gathered}
+\bigl(\text{共同来源与合法续接},\ \text{实际保留的记录},\\
+\text{目标成本},\ \text{误差与置信水平},\ \text{预算覆盖的条件状态}\bigr).
+\end{gathered}
+}
+$$
+
+只给“维数有限”“全部精确概率可恢复”或“每个模型都有指数尾”，均不足以替代这些字段。第 62—66 节分别提供反例、有效模量、样本指数和更强条件下的成本界。
+
+**说明 67.1（成熟结果、对应关系与未覆盖范围）。** 第 62.2 条的通用插值步骤对应仓内 `CountableWeightedHolderInterpolation` 的 `countable_weighted_holder_interpolation`：对剩余质量 $u_n$，取 $f_n=(n-1)^pu_n$、$g_n=u_n$、权重 $1/p$ 与 $1-1/p$。两列的非负性和可和性分别由矩预算及有限剩余质量给出。本文另外使用共同部分分解和相等剩余质量消去常数成本；未新增或编译这份精确应用的 Lean 声明。
+
+第 63 节直接保留第 35.2 条逐轮替换证明中的实际活动质量；第 66 节使用正映射级数和预解恒等式。正映射表示它保持正算子锥，不表示其作为 Hilbert–Schmidt 空间上的线性算子是自伴的；因此这里没有把自伴正矩阵的谱下界定理直接套给一般 CP 演化。
+
+Charles M. Grinstead、J. Laurie Snell 的 [*Introduction to Probability*，第 11.2 节](https://math.dartmouth.edu/~prob/prob/prob.pdf) 定理 11.4 给吸收 Markov 链的基本矩阵 $N=(I-Q)^{-1}=\sum_{m\ge0}Q^m$，定理 11.5 给平均吸收时间 $t=Nc$，其中 $c$ 为全一列。在经典对角子类中，$Q$ 对应未点击的函数演化 $\mathcal A$，$c$ 对应 $I$，基本矩阵对应 $\mathcal R$，吸收时间向量对应 $T$。一般 CP 情况以正算子锥替代逐坐标非负性；带记录半 diamond 距离的乘积估计由第 66.3 条证明，不归为书中原定理。
+
+第 64 节所用的截断、Bernstein 集中和 $\ell^{-(p-1)/p}$ 均值估计指数属于成熟稳健统计工具。Sébastien Bubeck、Nicolò Cesa-Bianchi、Gábor Lugosi 的 [*Bandits with heavy tail*，arXiv:1209.1727](https://arxiv.org/abs/1209.1727)，第 2.1 节引理 1，在有限 $1+\varepsilon$ 原始矩条件下用截断经验均值得到相应置信指数。其变量可有正负值，截断阈值随样本指标变化，并使用阈值外置零的估计器；本文针对正整数等待，实际执行固定轮数截止并记录 $\min(\mathsf N,m)$，故估计器、物理取得方式和常数由第 64.1 条单独证明。原文的 bandit 遗憾下界不被当作本文固定记录数下界；第 64.2 条用实际二维仪器给出两点检验论证。
+
+本批没有把固定记录数的指数结论升级为任意量子查询或确定总调用预算下的最优性。也没有从有限数据认证矩预算、完整仪器距离、重置合同或所有后继状态的成本上界。全部结果是指定模型和权限下的纯理论推导，不宣称文献原创性、Lean 核验、消化覆盖或冻结。
+
+## 追加锚（本行以下为增补区）
