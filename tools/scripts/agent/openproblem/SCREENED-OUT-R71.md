@@ -432,3 +432,7 @@ arXiv:1401.0300v46(2026-09-01)仍未加星的问题,官网(kourovka-notebook.org
 
 nyxid 搜题三轮(OEIS 最新条目 / arXiv 结尾栏 / Kourovka + arXiv 2026-08~09)合格候选均为 **0**;
 本会话唯一落地的 A394431 来自按 `sort=created` 自扫最新 OEIS 条目。三轮的价值全在剔除收据。
+
+## R78(2026-09-26):MathDB 勘正——Mehiri–Nadji Conjecture 2
+
+MathDB <https://mathdb.com/p/370389> 的问题引用 Mehiri–Nadji, arXiv:2509.12756，并陈述对每个 `k >= 0`，`alpha_{2,2k+1} = (k+1)(3k+2)2^{k-1}`。页面显示唯一一条答复，标为 Shivam Patel 的 Proof，发布于 2026-08-20T10:49:01.911889Z；进度文字称完整证明的主张已发布，但仍未核验。这条有日期且匹配命题的公开证明主张命中 prior-publication gate，目标不再进入本线；此处不判定证明正确性。
