@@ -10,9 +10,10 @@
 proof_shape: result: content
 escape_witness: form (2), the public conclusion `result` itself: the irreducibility of the error
   model over every invariant subspace (`hirr`, from the matrix-unit expansion `hspan`), its
-  projective faithfulness (`hfaith`, from trace orthogonality `htr`), and the identification of
-  the orthogonal projection with the averaging matrix (`hPW`) giving the characterizations `hLchar`
-  and `hSchar` of L(W) and S(W)
+  projective faithfulness (`hfaith`, from trace orthogonality `htr`), and the reduction of L(W) and
+  S(W) to finite certificates (`hLchar`, `hPMP`, `hSchar`); the identification `hPW` of the
+  orthogonal projection with the averaging matrix specializes the pinned
+  `Submodule.starProjection_singleton` and is not itself an escape witness
 admission_basis: open-problem-resolution (issue #10156)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
