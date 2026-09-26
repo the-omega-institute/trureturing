@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Three explicit retained fields and same-source exact interfaces for a joined oracle.
+"""Explicit retained fields and same-source exact interfaces for a joined oracle.
 
 Sign uses the exact698 rational residual. The smooth field is defined by the
 supplied NPZ integer numerators; it was proposed by binary64 sigmoid evaluation
 and dyadic rounding. No error against the exact real sigmoid is certified.
+The single-field route accepts any explicit integer NPZ table with its stored
+positive denominator, without importing the sign/smooth proposal metadata.
 All source projections and original screen maxima are exact for the supplied
 fields on the original fixed actual109 source. No joined33 gate is evaluated.
 """
@@ -25,12 +27,19 @@ def ck(x,msg):
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
  parser.add_argument('--base',type=Path,required=True)
- parser.add_argument('--witness',type=Path,required=True)
- parser.add_argument('--sign-field',type=Path,required=True)
- parser.add_argument('--smooth-field',type=Path,required=True)
+ parser.add_argument('--witness',type=Path)
+ parser.add_argument('--sign-field',type=Path)
+ parser.add_argument('--smooth-field',type=Path)
+ parser.add_argument('--field',type=Path,help='Evaluate only this explicit NPZ or base64 NPZ, using its stored positive denominator')
+ parser.add_argument('--field-name',default='explicit_rational_field')
+ parser.add_argument('--field-definition',default='explicit supplied integer NPZ table divided by its stored denominator')
  parser.add_argument('--output-prefix',type=Path,required=True)
- args=parser.parse_args();BASE=args.base;WP=args.witness
+ args=parser.parse_args();BASE=args.base
+ ck(args.field is None or (args.sign_field is None and args.smooth_field is None and args.witness is None),'generic field cannot borrow sign/smooth metadata')
+ ck(args.field is not None or all(x is not None for x in (args.witness,args.sign_field,args.smooth_field)),'three-field route requires all declared inputs')
+ WP=args.witness if args.field is None else BASE/'clustered_full5_allfield_dual.json'
  started=time.perf_counter();w=json.loads(WP.read_text())
+ if args.field is not None:w['rows']=[];w['denominator']=1
  spec=importlib.util.spec_from_file_location('source692',BASE/'clustered_full5_allfield_verify.py');core=importlib.util.module_from_spec(spec);spec.loader.exec_module(core)
  class NewRows:
   def read_text(self):return json.dumps({'schema':'clustered109-full5-rational-dual-v1','source_sha256':w['source_sha256'],'denominator':w['denominator'],'rows':w['rows'],'expected':{}})
@@ -78,7 +87,7 @@ def main():
   for axis,row in enumerate(p['counts'][ci]):
    dims=[1]*5;dims[axis]=len(row);count*=np.array(row,dtype=np.int64).reshape(dims)
   count*=good;source_num[ci]=count;mask=count>0;active_count+=int(mask.sum())
-  if not np.any(mask):continue
+  if args.field is not None or not np.any(mask):continue
   sparse=np.zeros(p['token_shape'],dtype=object)
   for col,z in p['scatter'][ci].items():sparse.flat[col]=z
   debit=core.transform(sparse,p['matrices'])
@@ -90,20 +99,34 @@ def main():
   residual=core.G.numerator*p['debitDen']-core.G.denominator*debit+int(addback)-int(new)
   sign[ci][mask]=(residual[mask]>0).astype(np.uint32)
  ck(active_count==2125830 and int(source_num.sum())==int(F(305684996597,646498195200)*p['M0']),'complete common source')
- saved=[]
- for path,den in ((args.sign_field,1),(args.smooth_field,Qf)):
-  raw=path.read_bytes()
-  if path.suffix=='.b64':raw=base64.b64decode(raw,validate=True)
+ if args.field is not None:
+  raw=args.field.read_bytes()
+  if args.field.suffix=='.b64':raw=base64.b64decode(raw,validate=True)
   with np.load(io.BytesIO(raw),allow_pickle=False) as data:
-   arr=data['numerators'];stored_den=data['denominator'];stored_residues=data['central_residues']
-   ck(arr.shape==fullshape and arr.dtype.kind in 'iu','explicit integer field table')
-   ck(stored_den.shape==(1,) and int(stored_den[0])==den,'field denominator')
+   explicit_num=data['numerators'].copy();stored_den=data['denominator'];stored_residues=data['central_residues']
+   ck(explicit_num.shape==fullshape and explicit_num.dtype.kind in 'iu','explicit integer field table')
+   ck(stored_den.shape==(1,) and stored_den.dtype.kind in 'iu' and int(stored_den[0])>0,'stored positive integer field denominator')
+   explicit_den=int(stored_den[0])
    ck(np.array_equal(stored_residues,residues),'field coordinate order')
-   ck(np.all(arr>=0) and np.all(arr<=den),'retention in unit interval')
-   ck(np.all(arr[source_num==0]==0),'zero outside actual source')
-   saved.append(arr.copy())
- ck(np.array_equal(sign,saved[0]),'saved sign equals exact rational residual sign')
- sign,smooth=saved
+   ck(np.all(explicit_num>=0) and np.all(explicit_num<=explicit_den),'retention in unit interval')
+   ck(np.all(explicit_num[source_num==0]==0),'zero outside actual source')
+  jobs=[(args.field_name,explicit_num,explicit_den)]
+ else:
+  saved=[]
+  for path,den in ((args.sign_field,1),(args.smooth_field,Qf)):
+   raw=path.read_bytes()
+   if path.suffix=='.b64':raw=base64.b64decode(raw,validate=True)
+   with np.load(io.BytesIO(raw),allow_pickle=False) as data:
+    arr=data['numerators'];stored_den=data['denominator'];stored_residues=data['central_residues']
+    ck(arr.shape==fullshape and arr.dtype.kind in 'iu','explicit integer field table')
+    ck(stored_den.shape==(1,) and int(stored_den[0])==den,'field denominator')
+    ck(np.array_equal(stored_residues,residues),'field coordinate order')
+    ck(np.all(arr>=0) and np.all(arr<=den),'retention in unit interval')
+    ck(np.all(arr[source_num==0]==0),'zero outside actual source')
+    saved.append(arr.copy())
+  ck(np.array_equal(sign,saved[0]),'saved sign equals exact rational residual sign')
+  sign,smooth=saved
+  jobs=[('allone',(source_num>0).astype(np.uint32),1),('sign',sign,1),('smooth20',smooth,Qf)]
  # Exact forward query matrices are transposes of the pinned debit matrices.
  # The sole common outside denominator5 comes from the q19 free-root token.
  forward=[]
@@ -123,8 +146,8 @@ def main():
    ck(len(set(hist))==1,'literal uniform roots inside one pooled category')
    for a,b in combinations(roots,2):ck(not any(z%q==a and z%q==b for z in cat),'distinct roots of one prime have empty intersection')
  fields=[]
- for name,fnum,fden in [('allone',(source_num>0).astype(np.uint32),1),('sign',sign,1),('smooth20',smooth,Qf)]:
-  tic=time.perf_counter();field_path=None if name=='allone' else args.sign_field if name=='sign' else args.smooth_field
+ for name,fnum,fden in jobs:
+  tic=time.perf_counter();field_path=args.field if args.field is not None else None if name=='allone' else args.sign_field if name=='sign' else args.smooth_field
   mass=source_num.astype(object)*fnum.astype(object);den=p['M0']*fden
   central=np.array([int(mass[i].sum()) for i in range(80)],dtype=object)
   unary=[np.zeros(q,dtype=object) for q in prime]
@@ -182,7 +205,7 @@ def main():
    Wfull.append(W)
    if pick:ledger.append({'screen':j,'selected_W':str(pick),'original_W':str(W),'original_loss':str(loss),'original_C':str(fees_exact[j]),'remaining_C':str(remaining),'same_measure_screen':str(S[j]),'selected_linear_fee':str(pick*S[j])})
   selected_fee=sum(pick*S[j] for j,pick in selected.items())
-  payload={'schema':'clustered109-retained-joined-input-v1','scope':'One explicit rational retained field on the original fixed actual109 source. Exact same-source projections and original screens only; joined oracle not yet applied.','field':name,'field_definition':'unit retention on the actual source' if name=='allone' else 'exact sign of698 rational residual' if name=='sign' else 'explicit NPZ integer field divided by 2^20, originally proposed using binary64 sigmoid(tau=.0003) then rounding; no exact-real sigmoid approximation bound certified','field_denominator':fden,'tau':'.0003' if name=='smooth20' else None,'exact_real_sigmoid_error_bound':None,'field_file':field_path.name if field_path else None,'field_sha256':sha256(field_path.read_bytes()).hexdigest() if field_path else None,'dual_witness_sha256':sha256(WP.read_bytes()).hexdigest(),'source_sha256':p['pins'],'denominator':den,'source_mass':str(mass_exact),'central':{'points':points,'residues_mod225':residues,'weights':list(map(int,central))},'unary':{str(q):list(map(int,unary[i])) for i,q in enumerate(prime)},'pairs':{f'{prime[i]},{prime[j]}':[[int(z) for z in row] for row in table] for (i,j),table in pairs.items()},'same_prime_intersection_rule':'1_[a]_q*1_[b]_q=0 for a!=b and=1_[a]_q for a=b; never multiply separate pooled means','original_screen_values':list(map(str,S)),'original_screen_winners':winning,'original_coefficients':list(map(str,fees_exact)),'original_fee':str(original_fee),'old_gate':str(old_gate),'old_gate_decimal':float(old_gate),'selected_joined_screen_fee':str(selected_fee),'selected_joined_screen_fee_decimal':float(selected_fee),'selected_fee_ledger':ledger,'joined_gate':None,'exact_checks':CHECKS+core.CHECKS,'program_sha256':sha256(Path(__file__).read_bytes()).hexdigest(),'elapsed_seconds':time.perf_counter()-tic}
+  payload={'schema':'clustered109-retained-joined-input-v1','scope':'One explicit rational retained field on the original fixed actual109 source. Exact same-source projections and original screens only; joined oracle not yet applied.','field':name,'field_definition':args.field_definition if args.field is not None else 'unit retention on the actual source' if name=='allone' else 'exact sign of698 rational residual' if name=='sign' else 'explicit NPZ integer field divided by 2^20, originally proposed using binary64 sigmoid(tau=.0003) then rounding; no exact-real sigmoid approximation bound certified','field_denominator':fden,'tau':'.0003' if args.field is None and name=='smooth20' else None,'exact_real_sigmoid_error_bound':None,'field_file':field_path.name if field_path else None,'field_sha256':sha256(field_path.read_bytes()).hexdigest() if field_path else None,'dual_witness_sha256':None if args.field is not None else sha256(WP.read_bytes()).hexdigest(),'source_sha256':p['pins'],'denominator':den,'source_mass':str(mass_exact),'central':{'points':points,'residues_mod225':residues,'weights':list(map(int,central))},'unary':{str(q):list(map(int,unary[i])) for i,q in enumerate(prime)},'pairs':{f'{prime[i]},{prime[j]}':[[int(z) for z in row] for row in table] for (i,j),table in pairs.items()},'same_prime_intersection_rule':'1_[a]_q*1_[b]_q=0 for a!=b and=1_[a]_q for a=b; never multiply separate pooled means','original_screen_values':list(map(str,S)),'original_screen_winners':winning,'original_coefficients':list(map(str,fees_exact)),'original_fee':str(original_fee),'old_gate':str(old_gate),'old_gate_decimal':float(old_gate),'selected_joined_screen_fee':str(selected_fee),'selected_joined_screen_fee_decimal':float(selected_fee),'selected_fee_ledger':ledger,'joined_gate':None,'exact_checks':CHECKS+core.CHECKS,'program_sha256':sha256(Path(__file__).read_bytes()).hexdigest(),'elapsed_seconds':time.perf_counter()-tic}
   path=Path(str(args.output_prefix)+'_'+name+'_joined_input.json');path.write_text(json.dumps(payload,indent=2)+'\n')
   fields.append({'field':name,'input':str(path),'sha256':sha256(path.read_bytes()).hexdigest(),'old_gate':str(old_gate),'source_mass':str(mass_exact),'selected_fee':str(selected_fee),'seconds':time.perf_counter()-tic})
   print(json.dumps(fields[-1]),flush=True)

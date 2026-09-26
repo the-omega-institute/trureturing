@@ -168,7 +168,7 @@ def audit(path):
          'outside_pair_originals':len(contained_pairs),'pure_pair_originals':len(outside_pairs),
          'contained_nonpure_pair_originals':len(contained_pairs)-len(outside_pairs),
          'source_scope':'All109 original phases, actual central pure-survivor capacities and assigned leaf reference reconstructed; all relevant projections of ONE explicit retained tensor. The declared reference assigns the published leaf masses uniformly on each actual surviving leaf; no claim for arbitrary marginal inputs.',
-         'field_scope':'NPZ exact field bounds and byte/coordinate pins verified; sign definition and512 original screens read/audited but not rerun here.',
+         'field_scope':'NPZ exact field bounds and byte/coordinate pins verified; candidate construction and512 original screens are not verified by this independent source/projection check.',
          'seconds':time.perf_counter()-start}
 
 def main():
