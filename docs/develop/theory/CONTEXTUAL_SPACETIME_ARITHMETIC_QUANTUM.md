@@ -60302,3 +60302,220 @@ $$
 对固定正 $\varepsilon$，式（275.22）关于非实残差预算连续。若以相对预算 $R=\lambda\delta_\varepsilon$、$0\le\lambda\le1$ 趋向 $\varepsilon\downarrow0$，最小恢复误差趋向 $(1-\lambda)/4$；特别地，趋零的非实残差预算可以与零恢复误差相容，而恒取严格的 $R=0$ 会保留 $1/4$ 的正参数极限。这些是同一预算曲线的不同极限，不把几乎为实与严格为实交换使用。
 
 ## 追加锚（本行以下为增补区）
+
+## 276. 三轴半径的倒数三角条件与完整误差预算
+
+**定义 276.1（正半径三轴模型）。** 令 $0<a_i\le1$，$i=1,2,3$，并以 $\sigma_1=X,\sigma_2=Y,\sigma_3=Z$ 定义六态模型
+
+$$
+\mathcal R_a=\{(I_2\pm a_i\sigma_i)/2:i=1,2,3\}.
+\tag{276.1}
+$$
+
+记
+
+$$
+\alpha_i=\frac1{a_i},\qquad
+S=\alpha_1+\alpha_2+\alpha_3,\qquad
+\Delta=\frac1S,
+\qquad B=\max\left\{\Delta,\max_{i<j}\frac1{2(\alpha_i+\alpha_j)}\right\}.
+\tag{276.2}
+$$
+
+沿用第272、275节的共轭缺口 $\delta$、恢复误差 $e$、非实残差 $r$ 及完全实输出恢复误差 $e_{\mathbb R}$。对非负预算 $R$，令 $F_a(R)$ 为在所有有限输出维数、所有复线性 CPTP 编码、解码及共同输出基底上，满足 $r\le R$ 时的最小恢复误差；下述达到构造保证最小值存在。
+
+**定理 276.2（全部三轴半径的最优预算曲线）。** 定义276.1中有
+
+$$
+\delta(\mathcal R_a)=\Delta,
+\qquad e_{\mathbb R}(\mathcal R_a)=B,
+\qquad
+\boxed{F_a(R)=B\max\{1-R/\Delta,0\}.}
+\tag{276.3}
+$$
+
+精确恢复条件下的最小非实残差为 $\Delta$。对任意非负 $E,R$，同一编码与解码能满足 $e\le E,r\le R$ 的充要条件为
+
+$$
+E/B+R/\Delta\ge1.
+\tag{276.4}
+$$
+
+十维输出对全部这些预算已经充分，不宣称最小。完全实输出的最优编码可使用四个经典结果，精确恢复且非实残差最小时可使用六维输出并恢复所有量子比特输入。
+
+此外，
+
+$$
+\boxed{e_{\mathbb R}(\mathcal R_a)=\delta(\mathcal R_a)
+\quad\Longleftrightarrow\quad
+\alpha_k\le\alpha_i+\alpha_j
+\text{ 对每个 }\{i,j,k\}=\{1,2,3\}.}
+\tag{276.5}
+$$
+
+因此这两个误差相等，恰在三个半径的倒数满足非严格三角不等式时发生。
+
+证明。以下 Pauli 平均仅改变允许的通道，不改变输入六态的标签集合；酉不变性与凸性保证最大迹距离不增加。它消去 Bloch 平移和非对角系数，但不置换三个半径，故不要求半径相等。
+
+先计算共轭缺口。平均后的信道记为 Bloch 对角系数 $(\lambda_1,\lambda_2,\lambda_3)$，令
+
+$$
+(\mu_1,\mu_2,\mu_3)=(\lambda_1,-\lambda_2,\lambda_3).
+$$
+
+这将目标转置的符号吸收进系数。Pauli 信道的一个 Choi 非负条件为
+
+$$
+1-\lambda_1+\lambda_2-\lambda_3\ge0,
+\qquad\text{即 }\sum_i\mu_i\le1.
+\tag{276.6}
+$$
+
+若最大共轭误差为 $g$，每个方向上都有 $a_i|1-\mu_i|/2\le g$，从而 $\mu_i\ge1-2g\alpha_i$。求和并用式（276.6），得到 $3-2gS\le1$，所以 $g\ge\Delta$。
+
+取 $\mu_i=1-2\Delta\alpha_i$，对应的实际信道系数为 $(\mu_1,-\mu_2,\mu_3)$。其 $I,X,Y,Z$ 共轭混合概率分别为
+
+$$
+p_I=\Delta\alpha_2,\qquad
+p_X=\Delta\alpha_3,\qquad p_Y=0,\qquad
+p_Z=\Delta\alpha_1.
+\tag{276.7}
+$$
+
+这些概率非负且和为一，故定义 CPTP 信道；六个状态上的误差均为 $\Delta$。某些 $\mu_i$ 可以为负，这不影响实际信道的完全正性。由此证明 $\delta=\Delta$。
+
+三个半径严格正，模型实线性张成整个 Hermitian 矩阵空间。因此第275节证明中的 PPT 归约适用：任意完全实输出编码的恢复复合都是量子比特纠缠破坏通道；反之每个这种通道都可经有限经典寄存器因子分解。用 Pauli 平均把恢复通道化为对角系数 $(t_1,t_2,t_3)$，其纠缠破坏条件为 $\sum_i|t_i|\le1$。这个已知条件采用 Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，定理1、4及8；这里使用它优化所给六态上的误差，不新增该通道分类。
+
+将各 $t_i$ 替换为 $|t_i|$ 保持可行且不增加恢复误差，所以可取 $t_i\ge0$。一个误差预算 $b\ge0$ 在这个优化中可行，恰当且仅当
+
+$$
+\sum_i\max\{1-2b\alpha_i,0\}\le1.
+\tag{276.8}
+$$
+
+必要性由逐方向误差界与 $\sum_it_i\le1$ 得到；充分性取 $t_i=\max\{1-2b\alpha_i,0\}$。
+
+按大小记 $\alpha_1\le\alpha_2\le\alpha_3$，只用于分析这个对称标量式。令 $A=\alpha_1+\alpha_2$。若 $\alpha_3\le A$，则 $\Delta\le1/(2\alpha_3)$，三个数 $1-2\Delta\alpha_i$ 均非负且和为一，故 $b=\Delta$ 可行；小于 $\Delta$ 时未截断的和已经大于一，截断只会增加该和，因而不可行。若 $\alpha_3>A$，则取 $b=1/(2A)$ 时第三项为零，前两项之和为一；小于该值时前两项之和大于一，故不可行。因此
+
+$$
+e_{\mathbb R}
+=\begin{cases}
+\Delta,&\alpha_3\le\alpha_1+\alpha_2,\\
+\dfrac1{2(\alpha_1+\alpha_2)},&\alpha_3>\alpha_1+\alpha_2,
+\end{cases}
+\tag{276.9}
+$$
+
+这正是定义276.1中的 $B$，并且证明式（276.5），因为最大的倒数满足三角不等式即保证其余两条。
+
+为显式达到完全实输出最优值，取 $t_i=\max\{1-2B\alpha_i,0\}$；上面的分类表明 $\sum_it_i=1$。用四个向量
+
+$$
+\begin{aligned}
+n_1&=(\sqrt{t_1},\sqrt{t_2},\sqrt{t_3}),&
+n_2&=(\sqrt{t_1},-\sqrt{t_2},-\sqrt{t_3}),\\
+n_3&=(-\sqrt{t_1},\sqrt{t_2},-\sqrt{t_3}),&
+n_4&=(-\sqrt{t_1},-\sqrt{t_2},\sqrt{t_3})
+\end{aligned}
+\tag{276.10}
+$$
+
+定义效应 $F_k=(I_2+n_k\cdot\boldsymbol\sigma)/4$ 和制备态 $\tau_k=(I_2+n_k\cdot\boldsymbol\sigma)/2$。单位长度、零均值和第二矩 $\frac14\sum_kn_kn_k^{\mathsf T}=\operatorname{diag}(t_1,t_2,t_3)$ 保证这是一组 POVM，且测量—制备复合具有指定 Bloch 系数。因此四个实对角记录足以达到 $B$，包括某个最优系数为零的情形。
+
+精确恢复的最小非实残差用与命题275.4相同的可逆带标签结构达到。选 $U_i$ 把第 $i$ 个输入 Pauli 轴旋到输出的 $Y$ 轴，并把其他输入坐标轴旋到实坐标轴。令
+
+$$
+w_i=\Delta\alpha_i,
+\qquad
+\mathcal E_{\rm rev}(X)=\bigoplus_iw_iU_iXU_i^*,
+\qquad
+\mathcal D_{\rm rev}(Y)=\sum_iU_i^*Y_{ii}U_i.
+\tag{276.11}
+$$
+
+权重和为一，压缩迹相加，故两者都是全输入空间上的 CPTP 映射，且复合为恒等。对第 $i$ 个输入轴的状态，只有第 $i$ 个输出块有虚部，非实残差是 $w_ia_i=\Delta$。普遍下界 $e+r\ge\delta$ 在 $e=0$ 时给出反向界，因而最小值确为 $\Delta$。
+
+现在证明完整预算曲线的下界。对任意有限维编码和解码，沿定理275.5定义
+
+$$
+\mathcal N=\mathcal D\mathcal E,
+\qquad\mathcal C=\mathcal D\overline{\mathcal E},
+\qquad\overline{\mathcal E}=T_D\mathcal ET_2.
+$$
+
+两个复合均为量子比特 CPTP 映射，且每个模型态满足
+
+$$
+\frac12\|\mathcal N(\rho)-\mathcal C(T_2\rho)\|_1\le r.
+\tag{276.12}
+$$
+
+按照式（275.27）同时作 Pauli 平均，保持上述界和恢复误差上界。记所得 $\mathcal N$ 的 Bloch 系数为 $n_i$，所得 $\mathcal C$ 的系数经目标转置符号调整后为 $\mu_i$。逐轴误差与式（276.12）给出
+
+$$
+n_i\ge1-2e\alpha_i,
+\qquad |n_i-\mu_i|\le2r\alpha_i.
+\tag{276.13}
+$$
+
+由 $\mathcal C$ 的 Choi 条件（276.6），有
+
+$$
+\sum_in_i\le1+2rS.
+\tag{276.14}
+$$
+
+另一方面，$\mathcal N$ 的完全正性对每个不同指标 $i,j,k$ 给出 $1+n_k\ge|n_i+n_j|$，所以
+
+$$
+\sum_\ell n_\ell
+\ge2(n_i+n_j)-1
+\ge3-4e(\alpha_i+\alpha_j).
+\tag{276.15}
+$$
+
+合并（276.14）—（276.15），得到对每一对指标都成立的必要条件
+
+$$
+2e(\alpha_i+\alpha_j)+rS\ge1.
+\tag{276.16}
+$$
+
+这些推导允许各 $n_i$ 为负，也不要求平均后的通道对仍可分解为原编码、解码；它们只是每个原方案必然满足的通道正性限制。对式（276.13）的第一组不等式求和，再用式（276.14），还直接得到 $3-2eS\le1+2rS$，即 $e+r\ge\Delta$。将它与式（276.16）和 $e\ge0$ 合并，得到
+
+$$
+e\ge B\max\{1-r/\Delta,0\}.
+\tag{276.17}
+$$
+
+右端随 $r$ 不增，故 $r\le R$ 时也给出式（276.3）的下界。
+
+最后，将四维实输出最优编码与六维可逆编码作正交标签混合，权重为 $\theta$、$1-\theta$，并由对应的两个完整解码分支求和。与式（275.21）的逐态计算相同，这给出
+
+$$
+e=\theta B,\qquad r=(1-\theta)\Delta.
+$$
+
+取 $\theta=\max\{1-R/\Delta,0\}$ 即达到下界；十维输出包含全部分支，端点也保留解码的全空间保迹性。预算等价式（276.4）随即成立。证毕。
+
+**命题 276.3（三角缺量与退化边界）。** 若 $\alpha_1\le\alpha_2\le\alpha_3$ 且 $\alpha_3>\alpha_1+\alpha_2$，令 $A=\alpha_1+\alpha_2$，则
+
+$$
+e_{\mathbb R}(\mathcal R_a)-\delta(\mathcal R_a)
+=\frac{\alpha_3-A}{2A(A+\alpha_3)}.
+\tag{276.18}
+$$
+
+在允许某个半径等于零的扩展定义中，六态模型具有精确可恢复实编码，且共轭缺口为零。若另两个半径 $a,b>0$ 固定，第三半径从正值趋零，则
+
+$$
+\lim e_{\mathbb R}=\frac{ab}{2(a+b)}>0,
+\qquad\lim\delta=0,
+\tag{276.19}
+$$
+
+而退化模型本身的 $e_{\mathbb R}$ 为零。
+
+证明。式（276.18）由（276.9）与 $\Delta=1/(A+\alpha_3)$ 相减直接得到。某个半径为零时，全部非零 Bloch 向量位于同一个过原点平面；用固定量子比特酉旋转把这个平面送到 $XZ$ 平面，编码后的模型全部为实，逆酉解码精确恢复。由定理272.2，该模型的共轭缺口也为零。第三半径趋零意味着其倒数趋正无穷，故最终处在（276.9）的第二种情形；代入 $A=1/a+1/b$ 即得式（276.19）。这里的三角条件属于三个模型尺度的倒数参数，不把它解释为空间距离的物理三角关系。证毕。
+
+## 追加锚（本行以下为增补区）
