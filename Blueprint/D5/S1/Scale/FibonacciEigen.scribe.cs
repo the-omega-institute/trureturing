@@ -77,7 +77,17 @@ Blocks(
                             + "power-basis failure as a WSS witness. Local algebra "
                             + "generation and local index-form solvability are separated. "
                             + "Sources and full ordinary proofs remain in the companion; "
-                            + "the authored Lean statement and provenance are unchanged."))),
+                            + "the authored Lean statement and provenance are unchanged.")),
+                    Paragraph(
+                        Text("GTC computes the dyadic splitting and exact local generator "
+                            + "counts of the same golden field tower. It proves sharp "
+                            + "common-index recurrences, global attaining elements and "
+                            + "quadratic index-valuation growth. The full ordinary proofs "
+                            + "and classical finite-field generator source are recorded in "),
+                        Ref(LibraryNoteRef.Create("D5/L/first2017separablegenerators").Value),
+                        Text(". This tower-presentation obstruction is distinct from "
+                            + "the block normalization index detecting WSS; it adds no "
+                            + "WSS witness or conclusion to this Lean theorem."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
