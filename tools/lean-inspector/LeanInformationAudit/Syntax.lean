@@ -19,6 +19,7 @@ private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx 
   let type ← whnfR (← inferType value)
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
       type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena ||
+      type.isAppOf RegistrationGates.objectDomainArenaName ||
       type.isAppOf RegistrationGates.witnessArenaName then
     return mkAnnotation arenaConstructionMarker value
   return value
@@ -152,10 +153,11 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   let valid <- liftTermElabM do
     try
       let arenaExpr <- mkConstWithFreshMVarLevels arenaName
+      let lawArena := (← RegistrationGates.normalizeArena arenaExpr).law
       let realizationExpr <- mkConstWithFreshMVarLevels realizationName
       let expectedLaw <- mkAppM
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
-        #[arenaExpr, realizationExpr]
+        #[lawArena, realizationExpr]
       let statementExpr <- elabTerm statement (some (mkSort .zero))
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq statementExpr expectedLaw
@@ -173,7 +175,8 @@ private def addInlineLegacyRealization (theoremName arenaName realizationName : 
       let theoremInfo ← getConstInfo theoremName
       withLevelNames theoremInfo.levelParams do
         let statement := theoremInfo.type
-        let arena ← mkConstWithFreshMVarLevels arenaName
+        let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+        let arena := (← RegistrationGates.normalizeArena arenaExpr).law
         let signature ← mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature #[arena]
         let realizationType ← mkAppM
@@ -397,7 +400,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
-      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
+      let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+      let normalized ← RegistrationGates.normalizeArena arenaExpr
+      let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+      return (← isDefEq legacyArgs[0]! expectedBridgeArena) &&
         (← isDefEq legacyArgs[1]! theoremType)
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
@@ -538,7 +544,10 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
-    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
+    let arenaExpr ← mkConstWithFreshMVarLevels lawArenaName
+    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+    return (← isDefEq legacyArgs[0]! expectedBridgeArena) &&
       (← isDefEq legacyArgs[1]! theoremType)
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
