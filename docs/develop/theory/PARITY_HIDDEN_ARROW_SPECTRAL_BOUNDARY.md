@@ -35257,3 +35257,429 @@ The substantive new theorem is the actual joint-harmonic bound(138.37). Its key 
 The exact fifth-power target is proved in ordinary mathematics, followed by the full return(138.39–50). Chapter 136 and all older conclusions keep their original scopes and bytes. No stronger bandwidth, sharpness, necessity, zero-noise theorem, bad-environment expectation theorem, computational-efficiency guarantee, unrelated extension or global novelty certification is claimed.
 
 ## 追加锚（本行以下为增补区）
+
+## 139. 移动双阱内的局部高斯波动与输出中心位移
+
+第 137 章给出超临界介观窗口中的等权双阱。本章进一步在同一原始乘积计数后验中确定有限经验鞍点中心，证明井内波动与公平符号的联合极限。输出对主导作用量的修正虽可忽略，却在局部高斯尺度上留下有限位移；精确中心保留这项差别。
+
+### 139.1 原始乘积计数律与局部高斯结论
+
+**定理 139.1（移动双阱的局部高斯极限）。** Retain the exact objects of Chapter 137:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ L=\log(1/\sigma)\to\infty,\quad
+ \limsup L/Q^3<c_q/2,\qquad c_q=\phi(1-\beta)/\beta,
+$$
+$$
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+ \quad C_2=\delta^{-1}\sum_jv_j^2,
+$$
+$$
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+ \quad E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),
+ \quad T=(E-V)/\sqrt\delta.
+ \tag{139.1}
+$$
+The original legal amplitude, beta, all Q,M,q/group floors, full window, binomial multiplicities and calibrated mu,V,T remain fixed. Empty or zero-variance coordinates are deterministic. Q is the auxiliary PRODUCT count law with the original full-q calibration; it is not the original support-selection law P.
+
+For EACH deterministic eta=eta_Q>0 such that eta->0 and t=eta/sqrt(delta)->infinity, put
+$$
+ v=\eta^2/\delta=t^2,\quad a=(2V)^{-1}+\eta,
+ \quad h_y=V+\sqrt\delta y,
+ \quad \pi_y(n)\propto Q(n)
+           \exp\{aD(n)^2-(T(n)-y)^2/(2\sigma^2)\}.
+ \tag{139.2}
+$$
+Sigma is positive at every finite level and may tend to zero arbitrarily slowly subject to (139.1). Let r_*(Q,y) be the canonical finite real-saddle center defined in (139.8), let S=sign(D), with sign(0)=0, and
+$$
+ W=2\sqrt\eta\{D-Sr_*(Q,y)\},\qquad
+ m_Q=\sqrt{2V^4/C_2}.
+ \tag{139.3}
+$$
+For each fixed R<infinity, the center satisfies uniformly |y|<=R
+$$
+ r_*(Q,y)/[\sqrt{\eta/\delta}\,m_Q]\to1.
+ \tag{139.4}
+$$
+For each fixed continuous function F on {-1,0,1} times R, continuous in its real coordinate, with |F(s,w)|<=C(1+|w|^p) for some fixed finite p,
+$$
+ \sup_{|y|\le R}\left|
+ E_{\pi_y}F(S,W)-\frac12\sum_{s\in\{-1,1\}}
+               \int_{\mathbb R}F(s,w)\frac{e^{-w^2/2}}{\sqrt{2\pi}}\,dw
+                 \right|\to0.
+ \tag{139.5}
+$$
+In particular pi_y(D=0)->0 uniformly. All limits are in original actual-data probability, uniformly over deterministic size-q supports, separately for the original pair and path laws. Explicitly the supremum over those supports of the probability that a displayed same-fiber output supremum exceeds a fixed positive tolerance tends to zero. There is no added independence of actual path rows. All empirical coefficients remain those of the same realized data fiber.
+
+Every fixed polynomial moment and mixed sign moment follows from (139.5). There is no discrete-to-continuous total variation assertion, growing-moment uniformity, entropy derivative or full-q P claim. The center and derivatives below concern auxiliary exact Gaussian transforms of that same empirical array; neither the physical count D nor the physical output T is recalibrated after observation.
+
+### 139.2 同一实际数据类与既有接口
+
+We work first on each fixed tight-constant class of Chapters 133, 135 and 137. The simultaneous bounds are
+$$
+ n_g\le C\delta^{-4},\quad p_j\in[1/4,3/4],\quad
+ \sum C_j\le CB^2,\quad \log q=c_qQ^3+O(1),
+$$
+$$
+ c\le V,C_2\le C,\quad v_*\le C\delta,\quad
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \|e\|^2\le C\delta^{10},\quad (\sum|e_j|)^2\le C\delta^6.
+ \tag{139.6}
+$$
+A block of at least c/delta coordinates has variances in [c delta,C delta]. Their complements are exhausted support-uniformly in actual probability. All subsequent bounds hold on one common class and one common fiber, rather than separately selected environments.
+
+Fix the high block used in Chapter 137: H={j:C_j>=exp(zeta Q^3)}, with fixed admissible l,zeta satisfying eventually L<=lQ^3, l<c_q/2, zeta<c_q/2, 2zeta<c_q-l. The choice is fixed once, before the y supremum. Put V_H=sum_H v_j and s_k=sum_H v_j^k. Then V-V_H>=0 and V-V_H+|s_2-delta C_2|<=P(Q)exp(-bQ^3), b>0; the variance block belongs to H. The exact low tuples are kept in the count return, not deleted. Canonical below means the specified finite transform for this fixed high block and original full V,h_y,sigma. It contains no optimization over data environments or choice based on the desired limiting law.
+
+The applicable prior interfaces are (137.7) for the ordinary energy density, (137.20), (137.22), (137.23) for moderate logarithmic estimates and global weighted tails, (137.25)–(137.27) for relative actual-e versus centered Gaussian densities on compact rescaled-charge sets, and (137.30)–(137.34) for the exponentially accurate same-output cell lift and its fixed polynomial weights. Their scopes match alpha=1 and the present eta/noise range. They provide the outside-well and count payments below. None supplies the missing local derivatives, local normalization or prefactor-mode displacement; those are proved here.
+
+### 139.3 有限经验实鞍点中心
+
+Let C_H=diag(v_j)_{j in H}, w_H=(v_j)_{j in H}, d=w_H/V_H, and
+$$
+ A=C_H-w_Hw_H^T/V_H,\quad b_H=\|d\|^2=s_2/V_H^2,
+ \quad r_H=(2V_H)^{-1}-(2V)^{-1},\quad \gamma=\eta-r_H.
+ \tag{139.7}
+$$
+The symbol b_H is a scalar coefficient, not a binomial mass. It satisfies b_H~delta C_2/V^2; gamma/eta->1 and gamma>0 eventually. The latter uses the exponential bound on r_H and eta>=sqrt(delta) eventually. A has the retained block after rank-one interlacing, ||A||<=C delta and tr A^2=s_2+O(delta^2).
+
+For real z below the first positive covariance pole define EXACTLY
+$$
+ K_0(z)=-\tfrac12\log\det(I-2zA)+\tfrac12\delta\sigma^2z^2,
+ \qquad \Psi(z)=z\,d^T(I-2zA)^{-1}d.
+$$
+The canonical system and center are
+$$
+ \boxed{\ \Psi(z_*)=-\gamma,\qquad
+ R_*(y)=\frac{h_y-K_0'(z_*)}{\Psi'(z_*)},\qquad
+ r_*(Q,y)=\sqrt{R_*(y)}\ }.                         \tag{139.8}
+$$
+This is a one-dimensional REAL equation followed by an explicit positive square root. It is a definition by the finite empirical spectrum and noise, not by a limiting law or an assumed mode. The tilt z_* is independent of y; R_* depends affinely on physical y. All low groups still contribute to the original V in h_y and in gamma. The original e is retained in the actual posterior and paid by relative comparison in Section 139.7 and the count return in Section 139.8. Its omission in this centered analytic transform is not a change of physical mu.
+
+Here is existence and uniqueness. On |z|delta<=a_0, for sufficiently small fixed a_0, diagonalization gives
+$$
+ \Psi'(z)=d^T(I-2zA)^{-2}d\asymp\delta,
+ \quad |\Psi^{(k)}(z)|\le C_k\delta^k\ (k\ge1),
+$$
+$$
+ K_0''(z)\asymp\delta,\quad
+ |K_0^{(k)}(z)|\le C_k\delta^{k-1}\ (k\ge3).
+ \tag{139.9}
+$$
+For example Psi^(k)(z)=2^(k-1)k! d^TA^(k-1)(I-2zA)^(-k-1)d. The second noise derivative is delta sigma^2 and is included in K_0''. No noise inverse appears. Since Psi(0)=0 and Psi'>0, evaluation on a bracket [-C eta/delta,0] proves a unique negative root in (139.8), with
+$$
+ z_*=-\gamma/b_H+O(\eta^2/\delta),\qquad |z_*|\delta=O(\eta).
+ \tag{139.10}
+$$
+Strict positivity of Psi' throughout its real domain makes this root unique there as well.
+
+Set k_H=K_0''(0)=2tr A^2+delta sigma^2. Since K_0'(0)=tr A=V_H-s_2/V_H,
+$$
+ h_y-K_0'(z_*)=-k_Hz_*+\sqrt\delta y
+                   +V-V_H+s_2/V_H+O(\eta^2).
+ \tag{139.11}
+$$
+The first term is positive and comparable to eta, whereas sqrt(delta)y and delta are o(eta). Thus R_*(y)>0 uniformly on each fixed y compact eventually. Equations (139.9)--(139.11) imply
+$$
+ R_*(y)=\frac\eta\delta\,
+          \frac{V^4(2C_2+\sigma^2)}{C_2^2}
+          \{1+O(\eta+t^{-1}+\sqrt\delta)+o_{\exp}(1)\}.
+ \tag{139.12}
+$$
+Here o_exp denotes an exponentially small error times a fixed power of Q; eta^-1 is absorbed because eta>=sqrt(delta). Sigma is retained inside (139.12). Only after this calculation does sigma->0 give (139.4). No such expansion replaces the EXACT (139.8) in W. In particular its discarded relative terms can be much larger than1/t.
+
+The center is a measurable function of the finite array, since the strictly monotone root is continuous on the common class. For completeness it may be defined as1 off the event where the negative root and positive numerator exist; the probability of that exceptional event tends to zero uniformly. This extension is not used in the theorem's estimates.
+
+### 139.4 精确密度分解与前因子导数
+
+Let Y_j~N(0,v_j), j in H, before observation, with D_G=sum_HY_j. Conditional on D_G=r, the CENTERED energy sum_HY_j^2 plus N~N(0,delta sigma^2) has cumulant
+$$
+ K(z,R)=K_0(z)+R\Psi(z),\qquad R=r^2.
+ \tag{139.13}
+$$
+This follows from the exact conditional vector mean rd and covariance A. It is not a spherical model. Let f_r^0(h_y) denote this energy density, and define the unnormalized centered Gaussian charge density after the physical penalty, omitting an r-independent constant, by
+$$
+ g_y(r)=e^{\gamma r^2}f_r^0(h_y).
+ \tag{139.14}
+$$
+It is exactly even. For R in any fixed moderate interval 0<=R<=M^2 eta/delta, the unique real solution z(R) of K_z(z(R),R)=h_y satisfies |z(R)|delta<=C_M(eta+sqrt(delta)); this follows from Chapter 137's real-saddle argument or directly from (139.9) and the mean displacement O_M(eta+sqrt(delta)). Sigma>0 ensures global existence; only this small real branch is needed.
+
+Put
+$$
+ \mathcal W(R)=K_{zz}(z(R),R),\quad
+ H_y(R)=\gamma R+K(z(R),R)-z(R)h_y.
+ \tag{139.15}
+$$
+On this interval mathcal W~delta, K_{zzz}=O_M(delta^2), K_{zzzz}=O_M(delta^3), and the analogous vertical-line resolvent bounds hold. Implicit differentiation of the EXACT saddle equation gives
+$$
+ z_R=-\Psi'/\mathcal W=O(1),\quad
+ z_{RR}=-(K_{zzz}z_R^2+2\Psi''z_R)/\mathcal W=O(\delta),
+$$
+$$
+ H_R=\gamma+\Psi(z),\quad
+ H_{RR}=-\frac{\Psi'(z)^2}{\mathcal W}\asymp-\delta,
+ \qquad H_{RRR}=O_M(\delta^2).
+ \tag{139.16}
+$$
+All functions on the right are evaluated at the same saddle and same R. In particular H_R(R_*)=0 exactly, by (139.8), and H is strictly concave as a function of R throughout the moderate interval. This proves local uniqueness of the positive action stationary point without assuming a mode or differentiating an error term.
+
+We need the actual density prefactor, not just H. With omega=xi/sqrt(delta), define
+$$
+ L(R,\xi)=K(z(R)+i\omega,R)-K(z(R),R)-i\omega h_y,
+ \quad p_y(R)=\frac1{2\pi}\int_{\mathbb R}e^{L(R,\xi)}d\xi.
+ \tag{139.17}
+$$
+Then p_y(R) is sqrt(delta) times the tilted density at its EXACT mean. The exact density-change formula is
+$$
+ g_y(r)=\delta^{-1/2}e^{H_y(r^2)}p_y(r^2).
+ \tag{139.18}
+$$
+The real tilted covariance is A(I-2zA)^-1 and its mean is (I-2zA)^-1rd. It retains at least c/delta eigenvalues comparable to delta; the noncentral variance is O_M(delta eta). Thus
+$$
+ |e^{L(R,\xi)}|\le(1+c\delta\xi^2)^{-c'/\delta},
+ \quad c_M\le p_y(R)\le C_M.
+ \tag{139.19}
+$$
+The positive lower bound follows by the local Fourier limit at the mean, with variance mathcal W/delta bounded above and below: p_y(R)=(2pi mathcal W/delta)^(-1/2)+o_M(1). The fixed-frequency remainder is O_M(sqrt(delta)(1+|xi|^3)); the block envelope gives uniform integrability of every fixed xi power by splitting at |xi|=delta^-1/2. This also applies at R=0 and when the real saddle is slightly positive. No zero-free complex-order premise is needed; the Fourier integrand is the exact transform at a real tilt.
+
+We now prove actual PARAMETER derivatives of p. Hold h_y,delta,sigma,A,d fixed. Differentiating the integrand's exponent gives exactly
+$$
+ L_R=\Psi(z+i\omega)-\Psi(z)
+       +z_R\{K_z(z+i\omega,R)-K_z(z,R)\},
+$$
+$$
+ L_{RR}=2z_R\{\Psi'(z+i\omega)-\Psi'(z)\}
+       +z_R^2\{K_{zz}(z+i\omega,R)-K_{zz}(z,R)\}
+       +z_{RR}\{K_z(z+i\omega,R)-K_z(z,R)\}.
+ \tag{139.20}
+$$
+Each right side has zero constant AND zero linear term in omega. For the first, the linear coefficient is Psi'+z_R mathcal W=0. For the second it is 2z_R Psi''+z_R^2 K_{zzz}+z_{RR}mathcal W=0. Along the full vertical segment, the real part of z stays below the pole with |z|delta=o(1), so the spectral resolvents have norm at most a constant. Bounds (139.9) and the K derivative bounds therefore give, for every real xi,
+$$
+ |L_R|\le C_M\delta\xi^2,\qquad
+ |L_{RR}|\le C_M\delta^2\xi^2.
+ \tag{139.21}
+$$
+These are Taylor bounds along the exact vertical segment, not small-xi assertions. For example the second-order coefficient of L_R is bounded by Cdelta^2; that of L_RR by Cdelta^3, and omega^2=xi^2/delta.
+
+The exact derivatives of exp L are L_R exp L and (L_RR+L_R^2)exp L. Equations (139.19),(139.21) justify differentiation under the integral on a neighborhood of each R and yield
+$$
+ |p_R|\le C_M\delta,\quad |p_{RR}|\le C_M\delta^2,
+ \quad |(\log p)_R|\le C_M\delta,\quad
+ |(\log p)_{RR}|\le C_M\delta^2.
+ \tag{139.22}
+$$
+This supplies the missing derivative interface. The extensive determinant contribution has canceled through the saddle equation before estimating its derivative. A C0 approximation to p, or to Chapter 137's logarithm, would not imply (139.22).
+
+### 139.5 局部模态、曲率和密度比
+
+Write ell_y(r)=log g_y(r). In the R coordinate it equals H_y(R)+log p_y(R)-(1/2)log delta. By (139.16),(139.22), its second R derivative is at most -c delta throughout a fixed moderate interval containing R_*. Its first R derivative at R_* is O(delta). Taking two points R_*+/-C_0 with a sufficiently large constant C_0 makes the derivatives have opposite signs. Both points are positive eventually, since R_*~eta/delta->infinity. Hence a unique root R_mode in that interval exists, is a strict maximum, and
+$$
+ |R_{\rm mode}-R_*|\le C,
+ \quad \widehat r=\sqrt{R_{\rm mode}},\quad
+ 2\sqrt\eta\,|\widehat r-r_*|\le C\sqrt\delta\to0.
+ \tag{139.23}
+$$
+Strict concavity in R shows this is the unique positive local mode in any fixed small fractional neighborhood of r_* and therefore the corresponding exact centered-Gaussian local mode. Its negative partner follows from evenness. We use the explicit saddle center (139.8) in the theorem; (139.23) proves the prefactor shift is negligible rather than assuming it.
+
+Let mathcal W_*=K_0''(z_*)+R_*Psi''(z_*). The key curvature identity is
+$$
+ \frac{R_*\Psi'(z_*)^2}{\mathcal W_*}
+          =\eta\{1+O(\eta+t^{-1}+\sqrt\delta)+o_{\exp}(1)\}.
+ \tag{139.24}
+$$
+Indeed R_*Psi'^2/mathcal W_*=(h_y-K_0'(z_*))Psi'/mathcal W_*; (139.9)--(139.11) give h_y-K_0'(z_*)=-k_Hz_*+O(sqrt(delta)+delta+eta^2), Psi'=b_H(1+O(eta)), mathcal W_*=k_H(1+O(eta)), and -z_*b_H=gamma(1+O(eta)). Since sqrt(delta)/eta=1/t, the displayed error follows. Finite sigma is in k_H and cancels at this leading curvature calculation; it was not set to zero.
+
+In the r coordinate the action derivatives are
+$$
+ (H(r^2))'=2rH_R,\quad
+ (H(r^2))''=2H_R+4r^2H_{RR},\quad
+ (H(r^2))'''=12rH_{RR}+8r^3H_{RRR}.
+ \tag{139.25}
+$$
+At r_* the first is zero and the second is -4eta(1+o(1)) by (139.24). The third is O(sqrt(delta eta)) on a fixed small fractional neighborhood of r_*; (139.16) gives the bound O(delta r+delta^2 r^3). The log-prefactor has first r derivative O(delta r_*) and second derivative O(delta+delta^2 r_*^2)=O(delta)=o(eta). Thus the EXACT centered-density curvature at r_* is -4eta(1+o(1)), and ell'_y(r_*)=O(sqrt(delta eta)).
+
+Choose once a sufficiently small fixed epsilon_0>0. On |r/r_*-1|<=epsilon_0, H_RR differs from H_RR(R_*) by O(delta eta), by (139.16), while H_R=H_RR(R_*)(R-R_*)+O(delta^2(R-R_*)^2). The principal part of (139.25)'s second derivative is H_RR(R_*)(6R-2R_*). This is bounded above by -c eta on this band; the O(eta^2) action error and O(delta) prefactor error are smaller. Consequently
+$$
+ \ell_y''(r)\le-c\eta
+       \quad\hbox{for }|r/r_*-1|\le\varepsilon_0.
+ \tag{139.26}
+$$
+This is local concavity of the actual centered density, not a curvature bound inferred from a large-deviation rate.
+
+For each fixed finite M and |w|<=M, r=r_*+w/(2sqrt(eta)) is in the band eventually because 2sqrt(eta)r_*~2tm_Q->infinity. Taylor's formula applied to the EXACT action, (139.24),(139.25), and the Lipschitz estimate (139.22) for log p give
+$$
+ \sup_{|y|\le R,|w|\le M}
+ \left|\log\frac{g_y(r_*+w/(2\sqrt\eta))}{g_y(r_*)}
+                      +\frac{w^2}{2}\right|\to0.
+ \tag{139.27}
+$$
+The action's cubic remainder costs O_M(sqrt(delta)/eta)=O_M(1/t). The prefactor increment costs O_M(sqrt(delta)+delta/eta). An adequate local error bound is C_M(eta+t^-1+sqrt(delta)+delta/eta)+o_exp(1). Thus no eta^3/delta->0, t^2>>log Q or additional sigma rate is hidden in (139.27).
+
+Integrating (139.26) from r_*, with ell'_y(r_*)=O(sqrt(delta eta)), also gives a uniform moving-scale envelope throughout the band:
+$$
+ \frac{g_y(r_*+w/(2\sqrt\eta))}{g_y(r_*)}
+           \le C\exp(-c_1w^2),\qquad
+ |w|\le2\varepsilon_0\sqrt\eta\,r_*.
+ \tag{139.28}
+$$
+The harmless intermediate linear term is C sqrt(delta)|w| and is absorbed by a smaller quadratic coefficient. This supplies local tails strong enough for all fixed moments inside the well.
+
+### 139.6 移动尺度上的完整尾部
+
+Let u=sqrt(delta/eta)r and u_*=sqrt(delta/eta)r_*. On our common classes u_* stays bounded above and away from zero, and u_*-m_Q->0 uniformly in y. Write B_+={r>0:|r/r_*-1|<=epsilon_0}, B_-=-B_+. We need to control the complement on the W scale; concentration on the u scale alone does not do this.
+
+The centered version of (137.18) is
+$$
+ w_Q^0(u,y)=\frac{g_y(\sqrt{\eta/\delta}u)}
+                   {\sqrt{2\pi V_H}\,f^0(h_y)}.
+ \tag{139.29}
+$$
+Here f^0 is the unconditional high centered energy-plus-noise density with full original h_y. The factor is independent of u and cancels in every ratio used below. The proof of (137.20)–(137.23) permits e=0 with the same array and full h_y. Consequently, on every fixed compact u interval,
+$$
+ v^{-1}\log w_Q^0(u,y)=F_Q(u)+o(1),\quad
+ F_Q(u)=u^2-\frac{C_2}{4V^4}u^4,
+ \tag{139.30}
+$$
+uniformly, and outside a fixed large compact
+$$
+ w_Q^0(u,y)\le C\exp\left[v\left\{u^2-
+                      \frac{c u^4}{1+\eta u^2}\right\}\right].
+ \tag{139.31}
+$$
+For clarity, these inherited bounds retain the scaled saddle-density prefactor between two positive constants before any speed limit; they do not hide a power of Q. They include the finite Gaussian noise inside the real tilt. The maxima of F_Q are at +/-m_Q, with G_Q=V^4/C_2 uniformly positive. Since u_*-m_Q->0, (139.30) shows that on any fixed compact outside B_+ union B_-,
+$$
+ \frac{g_y(\sqrt{\eta/\delta}u)}{g_y(r_*)}
+       =\frac{w_Q^0(u,y)}{w_Q^0(u_*,y)}\le e^{-c_2v}
+ \tag{139.32}
+$$
+for all large Q, with c_2>0 depending on the fixed band and class. This uses the uniformly positive gap of the quartic away from its two maxima, not a rate-limit claim about local fluctuations.
+
+For any fixed power p, the far-u integral of (139.31), with weight1+|u|^p, is at most C exp(-Bv) for any prescribed B after enlarging the fixed cutoff. Indeed u^2/(1+eta u^2) is increasing; beyond that cutoff the braces in (139.31) are bounded by an arbitrarily large negative multiple of u^2, eventually. Dividing by w_Q^0(u_*,y)>=exp(vG_Q/2) only improves this tail. The same estimates hold for actual-e Gaussian densities, using Chapter 137's relative comparison on compact u and its global tail bound outside.
+
+Equation (139.27) gives the local normalization lower bound
+$$
+ \int_{\mathbb R}g_y(r)\,dr\ge c\,g_y(r_*)/\sqrt\eta.
+ \tag{139.33}
+$$
+The decisive scale payment is exact: dr=sqrt(eta/delta)du, so the ratio of the u Jacobian to the local normalization scale1/sqrt(eta) is t=eta/sqrt(delta). Also
+$$
+ W=2t\{u-\operatorname{sign}(u)u_*\},\qquad
+ |W|^p\le C_p t^p(1+|u|^p).
+ \tag{139.34}
+$$
+Combining (139.31)--(139.34), for each fixed p>=0 the normalized mass of the complement of B_+ union B_-, with weight1+|W|^p, is at most
+$$
+ C_p t^{p+1}e^{-c_3t^2}\longrightarrow0.
+ \tag{139.35}
+$$
+The constants may change after choosing a far cutoff. This tends to zero for EVERY arbitrarily slowly diverging t. Replacing the Jacobian ratio by a power of delta^-1 would invalidate this argument; we have not done so. No logQ term is divided by v.
+
+Inside each band, (139.28) supplies an integrable bound for every fixed polynomial in w. Its endpoints in the w coordinate tend to +/-infinity because sqrt(eta)r_* is comparable to t. Dominated convergence using (139.27),(139.28), followed by (139.35), now yields
+$$
+ \int_{r>0}g_y(r)\,dr
+     =\frac{g_y(r_*)}{2\sqrt\eta}\{\sqrt{2\pi}+o(1)\},
+ \quad
+ \int_{\mathbb R}g_y(r)\,dr
+     =\frac{g_y(r_*)}{\sqrt\eta}\{\sqrt{2\pi}+o(1)\}.
+ \tag{139.36}
+$$
+Both formulas, and their local versions with each fixed polynomial-growth continuous test, hold uniformly in y. Exact evenness gives equal masses for the centered Gaussian law. At the negative well write r=-r_*+w/(2sqrt(eta)); evenness replaces w by -w in (139.27), whose Gaussian limit is even. Thus this reference already has the fair-sign times standard-normal limit, including every fixed moment. Independence is the equality of the two conditional Gaussian limits, not just equality of two rate minima.
+
+### 139.7 实际非中心项与相对反射
+
+Let g_y^e(r)=exp(gamma r^2)f_r^e(h_y), where f_r^e uses the actual high-block center e_H in sum(Y_j-e_j)^2. This comparison is on the SAME charge r, h_y, covariance A and noise. Equations (137.25)–(137.27) give, for every fixed M,
+$$
+ \sup_{|u|\le M,|y|\le R}
+ \left|\frac{g_y^e(\sqrt{\eta/\delta}u)}
+                  {g_y(\sqrt{\eta/\delta}u)}-1\right|\to0.
+ \tag{139.37}
+$$
+The precision is relative o(1), stronger than a logarithmic error o(v). To check its applicability here, at the centered real saddle z(R), with R_z=(I-2zA)^-1, the exact cumulant difference is
+$$
+ \Delta K(z,r)=z\{-2r d^TR_z e_H+e_H^TR_z e_H\}.
+ \tag{139.38}
+$$
+Since ||d||=O(sqrt(delta)), ||e_H||=O(delta^5), |r|<=M sqrt(eta/delta) and |z|<=C_M(eta+sqrt(delta))/delta, its modulus is bounded by
+$$
+ C_M\frac{\eta+\sqrt\delta}{\delta}
+                       (\sqrt\eta\,\delta^5+\delta^{10})=o(1).
+ \tag{139.39}
+$$
+Under that same real tilt, the energy means differ by O_M(sqrt(eta)delta^5+delta^10)=o(sqrt(delta)), and the scaled variances differ by o(1). The common Fourier block proves a local density ratio tending to one at that vanishing standardized displacement. This is the precise relative argument behind (139.37), including the rare denominator; it never divides an additive untilted error by a tiny density.
+
+The two full bands lie in one fixed u compact. Multiplying their integrals, local test integrals and normalization by the ratio in (139.37) costs o(1), because their normalized W moments have just been bounded in Section 139.6. Outside these bands, the actual-e logarithmic gap and global envelope give (139.35) again. Their lower normalization follows from (139.37) on |w|<=1. Hence the actual-e Gaussian posterior obeys (139.5), with exactly the center (139.8). We do not need an e-derivative estimate or an assumed noncentral mode: an o(1) relative comparison on the whole moderate interval already proves that any physical shift at the local scale is negligible for this theorem.
+
+In particular (139.37) at r and -r proves asymptotic relative reflection on the two bands. Together with their local normalization it gives both sign probabilities1/2+o(1). This supplies the sign assertion at absolute probability order, which a two-minimum large-deviation principle could not supply.
+
+### 139.8 回到原始完整乘积计数
+
+This step uses the actual same-output, same-low-tuple interface of Chapter 137, not an unconditioned supercritical Gaussian exponential moment. Write mathcal E_Q=P(Q)exp(-bQ^3). On the central high cells, retaining every low tuple with its exact probability, (137.30) gives
+$$
+ |D-D_G|\le\mathcal E_Q,\qquad
+ |T-T_G|/\sigma\le\mathcal E_Q,
+ \quad T_G=(E_H-V)/\sqrt\delta,
+ \tag{139.40}
+$$
+and a multiplicative lifted-density error exp(O(mathcal E_Q)). The exact original full V,mu and likelihood appear here. Stirling remainders, binomial multiplicities, floors and low groups are included. The choice of l,zeta in Section 139.2 pays the positive exponent margins c_q/2-l and c_q-2zeta-l after division by sigma. No relation between eta and sigma is added.
+
+Let pi_y^{lift} denote the normalized law with charge D_G on the lifted central cells and the excluded mass kept separately, and pi_y^G the actual-e Gaussian tilted law. The weighted comparison (137.31)–(137.34) implies for each fixed p
+$$
+ \|\pi_y^{\rm lift}-\pi_y^G\|_{1+|U_G|^p}
+              \le e^{-b_pQ^3},\qquad U_G=\sqrt{\delta/\eta}D_G,
+ \tag{139.41}
+$$
+uniformly in y eventually. Its absolute unnormalized error is sigma P_p(Q)exp(-bQ^3+C_pv), whereas its normalizing Gaussian numerator is at least c sigma. Since v=o(Q^(1/2)), the error is exponentially small in Q^3 after normalization. Ordinary denominators have the same factor sigma. This is a relative rare-output estimate, not a crude tail divided by a rare event.
+
+The strict-exponent payment remains valid for the NEW observable W. On the lifted charge set, (139.34) gives
+$$
+ 1+|W_G|^p\le C_p(1+t^p)(1+|U_G|^p),
+ \quad W_G=2\sqrt\eta\{D_G-\operatorname{sign}(D_G)r_*\}.
+ \tag{139.42}
+$$
+Eventually eta<=1 and t<=delta^-1/2, so its additional factor is a fixed power of Q, absorbed by the exponential accuracy in (139.41). The norm in (139.41) takes a supremum over all measurable tests bounded by its weight; it therefore permits this Q-dependent rescaling and sign map. It is a norm between LIFTED measures, not a discrete-versus-continuous total variation assertion.
+
+For completeness the omitted extreme count cells receive a joint bound before normalization. Put d_noise=delta sigma^2. For every full count tuple,
+$$
+ D^2\le2n_gE+2(\sum_j e_j)^2,
+$$
+$$
+ e^{aD^2-(E-h_y)^2/(2d_{\rm noise})}
+ \le e^{2a(\sum e_j)^2+2an_gh_y+4a^2n_g^2d_{\rm noise}}
+                   e^{-(E-h_y)^2/(4d_{\rm noise})}.
+ \tag{139.43}
+$$
+The first exponent is O(Q^(7/2)); a stays bounded. The raw central-cell complement has binomial tail P(Q)exp(-cQ^4). Every fixed polynomial W weight costs at most exp(C_pQ^3) on the original finite count box; the center itself is only polynomial. Division by sigma costs L=O(Q^3). Hence the excluded weighted mass is at most exp(-c'Q^4). The Gaussian complement has the same payment with Gaussian raw moments and a reserved part of the likelihood. The central count/likelihood perturbation uses the joint charge/modal/likelihood insertion bound (137.28); its width-change derivative is the exact kernel derivative, retaining the explicit factor sigma. These are all estimates on the same tuple and observation, not products of separately realizable marginal estimates.
+
+If D and D_G have the same sign, (139.40) gives
+$$
+ |W-W_G|\le2\sqrt\eta\,\mathcal E_Q\to0.
+ \tag{139.44}
+$$
+A possible sign mismatch requires |D_G|<=mathcal E_Q. This region is outside the two fractional bands eventually. Equations (139.35),(139.41)--(139.43) show its probability and every fixed W-weighted mass tend to zero; a factor of order t^p for the possible sign jump is already included. The event D=0 receives the same bound. For each F in (139.5), truncate W,W_G to a fixed compact, apply uniform continuity there and (139.44), and then use a higher fixed moment to remove the truncation. Thus (139.5) holds for the original discrete full count law itself. No physical recentering of T,D or low-count environment has occurred.
+
+All arguments above are deterministic on the common classes of Section 139.2. Their complements have probability tending to zero uniformly over deterministic supports, separately for the original pair and path laws. Exhaust those tight classes to obtain exactly the actual-data probability statement in Section 139.1. There is no new row-independence assumption, faster eta divergence, faster noise decay, or unproved uniformity beyond those common classes.
+
+### 139.9 物理输出导致的局部中心位移
+
+The finite center gives a useful explicit correction beyond a leading well location. Since z_* is independent of y, (139.8) yields EXACTLY
+$$
+ R_*(y)-R_*(0)=\frac{\sqrt\delta y}{\Psi'(z_*)}.
+ \tag{139.45}
+$$
+Consequently, uniformly on each fixed output compact,
+$$
+ 2\sqrt\eta\{r_*(y)-r_*(0)\}
+       =\frac{2\sqrt{\eta\delta}\,y}
+                {\Psi'(z_*)[r_*(y)+r_*(0)]}
+       =\frac{y}{\sqrt{2C_2}}+o(1).
+ \tag{139.46}
+$$
+This follows from (139.9),(139.12) only after sigma->0; the EXACT center in the primary theorem always retains finite sigma. If one instead centers the local fluctuation at r_*(0), its conditional Gaussian mean at sign s is s y/sqrt(2C_2)+o(1), with the same finite empirical C_2. Thus ignoring the physical output creates an order-one local correction even though it does not change Chapter 137's speed-level action. Formula (139.46) is a corollary, not a replacement definition of the center.
+
+Similarly a leading center sqrt(eta/delta)m_Q alone is not justified by (139.12): relative eta and sigma^2 corrections can induce local shifts of orders t eta and t sigma^2, neither constrained to vanish here. We make no actual-model counterexample claim from these error budgets. The exact real system (139.8) and the proved mode displacement (139.23) remove this obligation without extra rates.
+
+The new bridge is (139.20)--(139.22), the differentiated exact prefactor with its saddle cancellations, together with (139.26)--(139.36), the moving-scale local tails and correct t Jacobian payment. The local Gaussian coefficient2 follows from the independently computed curvature (139.24), retaining the finite noise until it cancels. The final original-count passage checks that the stronger W weights and possible sign mismatch are paid by the already proved exponential interface. This is more than (137.A)–(137.C) and does not differentiate their asymptotic errors.
+
+The scope remains fixed tests and compact outputs, eta->0 with t->infinity, the original strict half-exponent noise condition, actual pair/path probability and support uniformity, and the auxiliary PRODUCT count law. We do not assert a full-q P theorem, Shannon or other entropy derivatives, exact finite-count symmetry, total variation to a continuous law, growing test degrees, all positive eta, a global phase diagram or formal-kernel verification. Classical conditional Gaussian, Fourier, saddlepoint and Laplace tools are not claimed as new.
+
+## 追加锚（本行以下为增补区）
