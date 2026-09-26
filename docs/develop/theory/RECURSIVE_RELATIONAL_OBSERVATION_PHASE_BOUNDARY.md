@@ -53641,3 +53641,791 @@ $d(w_0,t_\circ(w_1))<d(w_1,t_\circ(w_1))$。其最大分支误差因此恰等于
 所有实际操作只读取接收旗标并作用于 $R$；证明中的 Schmidt 坐标和移动检验不增加访问 $M$ 的权限。本节恢复固定目标纯化；第184节另行确定完整原输入标签恢复的最优二阶项，不能把这里的条件酉当作后者的最优解码器。
 
 ## 追加锚（本行以下为增补区）
+
+## 186. 满秩来源的完整恢复二阶定律与纯点退化
+
+第184节的二阶证书可以推广到任意固定满秩 qubit 来源。来源的不均匀性决定结果条件反馈的额外收益；满秩性则决定该扰动展开是否受到统一谱间隙保护。本节将旗标通道定义为独立模型，不把原模型中启动参数的生成机制自动推广。
+
+### 186.1 旗标通道与共同恢复任务
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$0\le\kappa<1$，
+$\rho=\operatorname{diag}(r,\ell)$，
+$r=(1+\kappa)/2$、$\ell=(1-\kappa)/2$、
+$\Delta=r\ell=(1-\kappa^2)/4$。
+令 $\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle$、
+$\psi=(I\otimes Y)\Xi$。对 $s\in\{-1,+1\}$ 定义
+
+$$
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+由于 $\Xi,\psi$ 正交，条件态在它们张成空间内的迹为一，行列式为
+$\beta w-(\beta^2+\gamma^2)w^2$。因此其合法范围包含
+$0\le w\le\beta/(\beta^2+\gamma^2)$。
+令 $w_0=\epsilon$、$w_1=R\epsilon$，
+$\omega_j=\frac12\sum_sP_s^Q\otimes\eta_s(w_j)$，
+$\mathcal N(X)=\sum_jX_{jj}\omega_j$，
+目标为 $\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。
+其中 $P_s^Q$ 是旗标的两个正交基投影。
+接收端只操作 $QR$，$M$ 不可访问。
+原输入、旗标、接收端量子记忆和输出标签均为 qubit；张量因子按系统标记排序。均匀旗标平均使两份 $\omega_j$ 的 $M$ 边缘都等于 $\rho$。
+记所有共同 CPTP 解码器的最优半 diamond 恢复误差为
+
+$$
+h_\kappa(\epsilon,R)
+=\min_{\mathcal D:QR\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+\frac12\left\|
+\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N
+\right\|_\diamond.
+\tag{186.1}
+$$
+
+令 $\delta=R-1$、$\Sigma=R+1$。同一 $\mathcal D$ 服务两个原输入，
+而 diamond 范数保留全部外部参考。
+
+### 186.2 全 CPTP 最优二阶式
+
+**定理186.1（满秩来源的最优二阶恢复误差）。** 对每个固定 $\kappa<1$，以及任意固定紧区间
+$0<R_{\min}\le R\le R_{\max}<\infty$，当 $\epsilon\downarrow0$ 时，
+
+$$
+h_\kappa(\epsilon,R)
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++Q_{\min}\epsilon^2+O(\epsilon^3),
+\tag{186.2}
+$$
+
+$$
+\boxed{
+Q_{\min}
+=\frac{3\beta^2\delta^2}{64}
+-\frac{\gamma^2(1+3\kappa^2)\delta^2}{16(1-\kappa^2)}
+-\frac{\kappa^2\gamma^2\Sigma^2}{16}.
+}
+\tag{186.3}
+$$
+
+余项对该 $R$ 区间一致；还可对 $0\le\kappa\le\kappa_{\max}<1$
+一致选取。这里不声明对 $\kappa\uparrow1$ 一致。
+
+### 186.3 结果条件反馈的匹配构造
+
+在 Schmidt 坐标令 $H=-X$，所以
+$i\operatorname{Tr}(\rho HY)=\kappa$。
+采用结果条件反馈
+
+$$
+K_{j,s}=e^{is u_jH}(p_jI+st_jY)^{1/2},
+\quad p_0=\frac12+r_1\epsilon,\quad p_1=1-p_0,
+\quad t_0=b\epsilon,\quad t_1=-b\epsilon.
+\tag{186.4}
+$$
+
+取
+
+$$
+r_1=-\frac{\beta\delta}{8},\qquad
+b
+=-\frac{\gamma\delta(1+\kappa^2)}{2(1-\kappa^2)},
+$$
+
+$$
+u_0=\kappa(b+\gamma)\epsilon,\qquad
+u_1=\kappa(-b+\gamma R)\epsilon.
+\tag{186.5}
+$$
+
+这些参数对固定 $\kappa<1$ 及充分小 $\epsilon$ 合法。
+对每个旗标，
+$\sum_jK_{j,s}^{\dagger}K_{j,s}=\sum_j(p_jI+st_jY)=I$，
+所以任意所选实反馈角度都保持共同保迹条件。
+原输入 $j$ 未被提供给解码器；实际运行按取得的输出结果选择相应 Kraus 分支。
+记这一构造的完整半 diamond 误差为 $e$，其正确输出块为
+$\sigma_{jj}=\frac12\sum_s(I\otimes K_{j,s})\eta_s(w_j)(I\otimes K_{j,s}^\dagger)$。
+
+为核对二阶系数，暂令 $u_j=v_j\epsilon$，
+$a_0=r_1,a_1=-r_1$、$b_0=b,b_1=-b$、
+$c_0=1,c_1=R$。均匀旗标平均后的正确块满足
+
+$$
+\sigma_{jj}=\frac12P_\Xi+
+\epsilon\left[a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)\right]
++O(\epsilon^2),
+$$
+
+$$
+\begin{aligned}
+f_j:=\langle\Xi|\sigma_{jj}|\Xi\rangle
+={}&\frac12+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[-\beta c_ja_j-\frac{b_j^2+v_j^2}{2}
++\kappa v_jb_j+\gamma c_jb_j+\kappa\gamma c_jv_j\right]
+\epsilon^2+O(\epsilon^3).
+\end{aligned}
+\tag{186.6}
+$$
+
+该式直接由
+$\operatorname{Tr}(\rho H)=\operatorname{Tr}(\rho Y)=0$、
+$i\operatorname{Tr}(\rho HY)=\kappa$ 展开有序乘积（186.4）得到。
+正确块的纯化正交耦合从 $O(\epsilon^2)$ 开始。
+对任意参考权重 $q$，第173节的匹配标签矩阵在两个目标方向上的压缩为
+
+$$
+M_q=
+\begin{pmatrix}
+q(1-f_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-f_1)
+\end{pmatrix}.
+$$
+
+其正交块半负定，耦合范数 $O(\epsilon^2)$，
+且 $\lambda_{\max}(M_q)\ge1-\max_jf_j\ge1/4$ 对全部 $q$ 一致成立。
+Rayleigh 商的分块界因此使实际最高根与压缩最高根相差
+$O(\epsilon^4)$。利用压缩矩阵的精确调和最大值，得到
+
+$$
+e=1-\frac{f_0f_1}{f_0+f_1}+O(\epsilon^4).
+\tag{186.7}
+$$
+
+代入（186.6），四变量二次系数为
+
+$$
+\frac{\beta^2\delta^2}{16}+\frac{\beta\delta r_1}{4}+r_1^2
++\frac{\gamma\delta b}{4}+\frac{b^2}{4}
++\frac{v_0^2+v_1^2}{8}
+-\frac\kappa4[b(v_0-v_1)+\gamma(v_0+Rv_1)].
+$$
+
+先对两个反馈变量优化，得到
+$v_0=\kappa(b+\gamma)$、$v_1=\kappa(-b+\gamma R)$；
+关于 $b$ 的部分化为
+
+$$
+\frac{1-\kappa^2}{4}b^2
++\frac{\gamma\delta(1+\kappa^2)}4b
+-\frac{\kappa^2\gamma^2(1+R^2)}8,
+$$
+
+其极小值与 $r_1$ 的独立优化给出上述 $Q_{\min}$。
+
+### 186.4 匹配的共同 Choi 对偶
+
+这里使用标准的线性恢复 SDP 方法，但保持本任务自己的操作族与误差度量。Fletcher–Shor–Win 将给定输入态的 entanglement fidelity 写成恢复 Choi 矩阵的线性目标，并以正性及部分迹约束优化；其原文第II、IV节的目标并非这里的完整半 diamond 误差。[^general_full_rank_fsw] Bény–Oreshkov 定理1给出 worst-case entanglement fidelity 与环境互补通道的恢复对偶，其度量和允许操作族也不直接替代这里不可访问 $M$ 的局部任务。[^general_full_rank_bo] 下文只将线性 Choi 收益作为下界证书，再用（186.7）把匹配构造连回完整参考误差。
+
+保持第184节输入优先的 Choi 约定，
+$g_0=\operatorname{vec}\rho$、$g_1=\operatorname{vec}(-Y\rho)$、
+$v=\operatorname{vec}I$。
+按第173节的输入 $Z$ 协变平均，可无损地把输出标签取成经典的；
+输入旗标本来就经典，所以任意共同局部解码器诱导每个旗标上的两个结果 CP 映射。
+同一个 instrument 的 Choi 约束是
+$J_{0,s},J_{1,s}\succeq0$、
+$\operatorname{Tr}_{\mathrm{out}}(J_{0,s}+J_{1,s})=I$。
+令 $A_{j,s}$ 为 $\eta_s(w_j)$ 的纯化收益矩阵。
+
+具体地，令 $\operatorname{vec}$ 按矩阵行排列，则
+
+$$
+A_{j,s}=(1-\beta c_j\epsilon)P_{g_0}
++\beta c_j\epsilon P_{g_1}
++s\gamma c_j\epsilon
+(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|),
+$$
+
+其中 $P_g$ 在这里表示未归一化外积 $|g\rangle\langle g|$。
+任意共同 instrument 的正确收益为
+$f_j=\frac12\sum_s\operatorname{Tr}(J_{j,s}A_{j,s})$。
+完整误差压缩给 $e\ge1-f_0f_1/(f_0+f_1)$，
+而对任意 $q\in[0,1]$，
+
+$$
+\frac{f_0f_1}{f_0+f_1}
+=\min_{x\in[0,1]}[x^2f_0+(1-x)^2f_1]
+\le q^2f_0+(1-q)^2f_1.
+$$
+
+当 $f_0=f_1=0$ 时，将上述比值定义为零。
+
+因此同一个 $\mathsf Y_s$ 同时压住
+$q^2A_{0,s}$ 与 $(1-q)^2A_{1,s}$ 的 Choi 对偶约束，
+就给所有共同 CPTP 解码器的下界。
+这没有将两个结果分成各自保迹的独立通道。
+
+选择
+
+$$
+x=-\frac{\beta\delta}{8},\qquad
+z=\delta\Sigma\left(-\frac{\beta^2}{16}
++\frac{\kappa^2\gamma^2}{8}\right),\qquad
+q=\frac12+x\epsilon+z\epsilon^2,
+$$
+
+对固定满秩参数及紧 $R$ 区间，$x,z$ 一致有界，故足够小的 $\epsilon$ 保证 $q\in(0,1)$。
+
+$$
+y=\frac{(1-2\Delta)\gamma\Sigma}{8}
+=\frac{(1+\kappa^2)\gamma\Sigma}{16},\qquad
+T=-Q_{\min}.
+$$
+
+取
+
+$$
+\mathsf Y_s^0
+=\left(\frac14-\frac{\beta\Sigma}{8}\epsilon+T\epsilon^2\right)\rho
+-s y\epsilon Y.
+\tag{186.8}
+$$
+
+两个 slack 的共同基点为
+$S_*=(\rho\otimes I-P_{g_0})/4$，谱为
+
+$$
+\left\{0,\frac{\Delta}{2},\frac r4,\frac\ell4\right\},
+\qquad \ker S_*=\operatorname{span}\{v\}.
+\tag{186.9}
+$$
+
+令 $d_j=\gamma c_j/4$、$c_0=1,c_1=R$。
+一阶非对角列的 Schur 代价为
+
+$$
+\begin{aligned}
+E_j
+&=4\left[\frac{(d_j\ell-y)^2}{r}
++\frac{(d_jr-y)^2}{\ell}\right]\\
+&=\frac4\Delta
+\left[(1-3\Delta)d_j^2-2(1-2\Delta)d_jy+y^2\right].
+\end{aligned}
+$$
+
+所选 $y=(1-2\Delta)(d_0+d_1)/2$ 最小化 $(E_0+E_1)/2$。
+直接计算得到
+
+$$
+\frac{E_0+E_1}{2}
+=\frac{\gamma^2(1+3\kappa^2)\delta^2}{16(1-\kappa^2)}
++\frac{\kappa^2\gamma^2\Sigma^2}{16},
+\qquad
+E_1-E_0=\frac{\kappa^2\gamma^2\delta\Sigma}{4}.
+\tag{186.10}
+$$
+
+因此
+
+$$
+T=x^2+z-\beta x+E_0
+=x^2-z+\beta Rx+E_1.
+\tag{186.11}
+$$
+
+令 $e=v/\sqrt2$，按 $\operatorname{span}\{e\}\oplus e^\perp$
+分块两个未补正 slack
+$S_{0,s}^0=\mathsf Y_s^0\otimes I-q^2A_{0,s}$、
+$S_{1,s}^0=\mathsf Y_s^0\otimes I-(1-q)^2A_{1,s}$。
+它们的核标量一阶为零，因为
+$x-\beta/4=-x-\beta R/4=-\beta\Sigma/8$。
+一阶非对角列是
+$s\operatorname{vec}[Y(d_j\rho-yI)]/\sqrt2$，
+而（186.11）使核标量二阶等于 $E_j/2$。
+所以两个 Schur 补的二阶均为
+$E_j\epsilon^2/2-E_j\epsilon^2/2=0$，仅余一致的 $O(\epsilon^3)$。
+
+基点正交谱间隙为 $\ell/4=(1-\kappa)/8>0$。
+在固定 $\kappa<1$、固定紧 $R$ 区间上，正交块保持一致正定，
+Schur 补不小于 $-C_0\epsilon^3$。加入 $C\epsilon^3I$
+使核标量增加 $C\epsilon^3$，不改变非对角列，并使正交块的逆减小。
+因此取 $C>C_0$，得到
+$\mathsf Y_s=\mathsf Y_s^0+C\epsilon^3I$
+同时满足
+
+$$
+\mathsf Y_s\otimes I\succeq q^2A_{0,s},\qquad
+\mathsf Y_s\otimes I\succeq(1-q)^2A_{1,s}.
+\tag{186.12}
+$$
+
+该共同 dual 于是给
+
+$$
+h_\kappa\ge1-\frac12\sum_s\operatorname{Tr}\mathsf Y_s
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++Q_{\min}\epsilon^2-2C\epsilon^3.
+$$
+
+这与构造上界匹配，证明定理186.1。
+若进一步限制 $0\le\kappa\le\kappa_{\max}<1$，
+谱间隙至少为 $(1-\kappa_{\max})/8$，所有构造系数及矩阵导数也一致有界。
+所以小参数范围与余项常数均可在这一满秩紧参数族上统一选择。
+
+### 186.5 最大混合点与纯点的不同边界
+
+在（186.4）的参数族中，若限制两个结果共用反馈酉，即 $v_0=v_1$，
+再最小化二次式，所得二阶系数为
+$(3\beta^2-4\gamma^2)\delta^2/64-\kappa^2\gamma^2\Sigma^2/16$。
+因此结果条件反馈的额外二阶收益为
+
+$$
+\frac{\kappa^2\gamma^2\delta^2}{4(1-\kappa^2)}\epsilon^2.
+\tag{186.13}
+$$
+
+在 $\kappa=0$ 时此收益为零，且上述二阶最优构造的反馈角度均为零。
+二阶最优式回到
+$3\beta^2\delta^2/64-\gamma^2\delta^2/16$；
+这只断言二阶反馈收益消失，不断言所有有限 $\epsilon$ 的全局最优 instrument 必须是 Lüders 形式。
+
+当 $\kappa\uparrow1$，基点正交谱间隙消失。
+若 $\gamma\delta\ne0$，测量最优斜率及部分二阶系数发散；即使这些项恰为零，余项也不能自动一致。
+同一通道公式也定义纯点 $\kappa=1$ 的模型。此时 $M$ 独立且固定为纯态，接收端可测量后重新制备目标 $R=0$。
+例如 $R>1$ 时，使用
+$E_0=\operatorname{diag}(1/2,0)$、$E_1=I-E_0$，得到
+
+$$
+A_0=\frac{1-\beta\epsilon}{2},\qquad
+A_1=\frac{1+\beta R\epsilon}{2},
+$$
+
+$$
+h_1(\epsilon,R)\le
+1-\frac{A_0A_1}{A_0+A_1}
+=\frac34-\frac{\beta(R-1)}8\epsilon+O(\epsilon^2).
+\tag{186.14}
+$$
+
+这已与全部固定 $\kappa<1$ 的正一阶系数相反。
+$R<1$ 可交换标签。若 $R=1$，入口完全不携带原输入信息；
+Bell 参考检验给误差至少 $3/4$，而在接收端制备
+$I_{Q_{\mathrm{out}}}/2\otimes P_0^{R_{\mathrm{out}}}$ 达到它，
+所以纯点误差恰为 $3/4$。
+
+模型与有限维最优误差值随 $\kappa$ 连续：所有空间固定，
+通道及目标随 $\kappa$ 连续，而 CPTP Choi 集紧；目标函数在该紧集上一致连续，取最小值保持连续。
+失去一致性的是
+$\epsilon\downarrow0$ 的渐近展开及相应归一化斜率的先后极限，
+不是最优误差值本身的不连续。
+
+本节没有求出所有有限 $\epsilon$ 的精确最优误差，也没有求纯点的最优一阶系数；纯点的合法明确构造已足以证明满秩展开不能一致延伸。所有二阶最优性均针对这里明确给出的旗标通道模型，不反推任意物理启动机制。
+
+[^general_full_rank_fsw]: Andrew S. Fletcher, Peter W. Shor, Moe Z. Win, “Optimum Quantum Error Recovery using Semidefinite Programming,” [arXiv:quant-ph/0606035v1](https://arxiv.org/abs/quant-ph/0606035v1), §§II–IV，式（7）、（15）、（20）。本文使用其标准 Choi 线性优化框架，完整参考误差另由正文的压缩界与谱估计处理。
+
+[^general_full_rank_bo]: Cédric Bény, Ognyan Oreshkov, “General conditions for approximate quantum error correction and near-optimal recovery channels,” [arXiv:0907.5391](https://arxiv.org/abs/0907.5391), Theorem 1。原定理的两侧最大值均按其允许的全部量子通道与 worst-case entanglement fidelity 定义。
+
+## 追加锚（本行以下为增补区）
+
+## 187. 纯来源端点的完整恢复与小扰动斜率反转
+
+满秩来源要求接收端同时保存与不可访问记忆的纯化关系。来源在秩一端点变为乘积态时，接收端可以在取得标签信息后重新制备目标纯态。下面精确计算这个端点的有限维优化，并确定其小扰动首项；误差值连续不意味着小扰动展开对来源谱隙一致。
+
+### 187.1 秩一来源的任务与二元态
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，令
+$w_0=\epsilon$、$w_1=R\epsilon$。只考虑使以下密度矩阵半正定的充分小正 $\epsilon$。取
+
+$$
+\Xi=|0\rangle_M|0\rangle_R,\qquad
+\psi=(I\otimes Y)\Xi=i|0\rangle_M|1\rangle_R.
+$$
+
+两个等权实际旗标 $s=\pm1$ 下，原输入 $j$ 的条件态是
+
+$$
+\eta_{j,s}=P_0^M\otimes\omega_s(w_j),
+\qquad
+\omega_s(w)=
+\begin{pmatrix}
+1-\beta w&-is\gamma w\\
+is\gamma w&\beta w
+\end{pmatrix}
+=P_0+w(-\beta Z+s\gamma Y).
+\tag{187.1}
+$$
+
+其迹为一，行列式为
+$\beta w-(\beta^2+\gamma^2)w^2$。故
+$0\le w\le\beta/(\beta^2+\gamma^2)$ 保证合法。
+整个输入通道先按原输入计算基去相干，按 $j$ 输出上述等权旗标态。恢复器只操作接收端旗标与 $R$，目标是恢复原输入 qubit 并输出固定 $P_\Xi$，保留原输入任意外部参考。记最优半 diamond 误差为
+$h_{\mathrm{pure}}(w_0,w_1)$。
+
+### 187.2 精确归约为同一二结果测量
+
+**定理187.1（纯来源上的精确标量优化）。** 令
+$\omega_j=\omega_+(w_j)$。有
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\max_{0\preceq E\preceq I}
+\frac{a_0(E)a_1(E)}{a_0(E)+a_1(E)},
+}
+\tag{187.2}
+$$
+
+其中
+
+$$
+a_0(E)=\operatorname{Tr}(E\omega_0),\qquad
+a_1(E)=\operatorname{Tr}((I-E)\omega_1).
+$$
+
+分母为零时比值取零。等价地，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\min_{q\in[0,1]}
+\frac{q^2+(1-q)^2+
+\|q^2\omega_0-(1-q)^2\omega_1\|_1}{2}.
+}
+\tag{187.3}
+$$
+
+**证明。** 目标 $MR$ 为乘积纯态。对任意恢复器，在输出端丢弃 $R$ 并制备 $|0\rangle_R$，保持目标不变，由通道距离的后处理收缩性不会增加误差。因此可以将 $R$ 的输出固定为目标纯态。
+
+对原输入的 $Z$ 对称性作第173节的输出平均，可将输出标签取为经典而不增加最优误差。每个旗标上的两结果 instrument 此时只需保留其效果 $E_s,I-E_s$，再准备对应标签及目标 $R$。所有原输入使用同一个效果族，结果不预先等于原输入。
+
+又因 $\omega_-(w)=Z\omega_+(w)Z$，任意两个旗标效果等价于对 $s=+$ 使用平均效果
+
+$$
+E=\frac12(E_++ZE_-Z),\qquad 0\preceq E\preceq I.
+$$
+
+反过来，每个这样的 $E$ 由 $E_+=E$、$E_-=ZEZ$ 实现。因此可取得的正确概率恰为上式的 $a_0,a_1$。正确输出块分别为 $a_jP_\Xi$；第173节保留全部参考的二维谱式给误差
+$1-a_0a_1/(a_0+a_1)$，证明（187.2）。
+
+对非负 $a_0,a_1$，
+
+$$
+\frac{a_0a_1}{a_0+a_1}
+=\min_{q\in[0,1]}[q^2a_0+(1-q)^2a_1].
+$$
+
+括号内关于 $E$ 仿射、关于 $q$ 凸且连续；效果集合与 $[0,1]$ 均紧凸。应用紧凸极小极大定理，可将对 $E$ 的最大化与对 $q$ 的最小化交换。对固定 $q$，写
+$A_q=q^2\omega_0-(1-q)^2\omega_1$，则
+
+$$
+\begin{aligned}
+\max_E[q^2a_0+(1-q)^2a_1]
+&=(1-q)^2+\max_{0\preceq E\preceq I}\operatorname{Tr}(EA_q)\\
+&=(1-q)^2+\operatorname{Tr}(A_q)_+\\
+&=\frac{q^2+(1-q)^2+\|A_q\|_1}{2}.
+\end{aligned}
+$$
+
+其中最大值由正谱投影取得。得到（187.3）。这里采用的极小极大步骤是 Sion 的标准定理，见 [《On general minimax theorems》](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf)；二元 Hermitian 检验的正谱公式只作为本模型推导的中间步骤。证毕。
+
+### 187.3 显式共同测量与最优首项
+
+置 $g=|\gamma|$，定义
+
+$$
+G(\beta,\gamma)=
+\begin{cases}
+\dfrac{\beta^2+\gamma^2}{2\beta},&g\le\beta,\\[4pt]
+g,&g\ge\beta.
+\end{cases}
+\tag{187.4}
+$$
+
+两式在 $g=\beta$ 相同。
+
+**定理187.2（纯来源的最优小扰动斜率）。** 对固定 $R>1$，
+
+$$
+\boxed{
+h_{\mathrm{pure}}(\epsilon,R\epsilon)
+=\frac34-\frac{R-1}{4}G(\beta,\gamma)\epsilon
++O(\epsilon^2).
+}
+\tag{187.5}
+$$
+
+余项可对 $R$ 的固定紧子区间统一选取。
+
+**证明。** 先构造上界。若 $g\le\beta$，对旗标 $s$ 取
+
+$$
+E_s=
+\begin{pmatrix}
+\frac12&\frac{is\gamma}{2\beta}\\
+-\frac{is\gamma}{2\beta}&\frac{\gamma^2}{2\beta^2}
+\end{pmatrix}.
+\tag{187.6}
+$$
+
+其行列式为零，迹为 $(1+\gamma^2/\beta^2)/2\le1$，故
+$0\preceq E_s\preceq I$。若 $g\ge\beta$，取
+
+$$
+E_s=\frac12(I-s\operatorname{sign}(\gamma)Y).
+\tag{187.7}
+$$
+
+此时 $g\ge\beta>0$，符号有定义，且 $E_s$ 为秩一投影。
+两种构造均满足
+
+$$
+\langle0|E_s|0\rangle=\frac12,
+\qquad
+\operatorname{Tr}[E_s(\beta Z-s\gamma Y)]=G(\beta,\gamma).
+$$
+
+于是测量后重新制备目标纯态的同一恢复器具有精确正确概率
+
+$$
+a_0=\frac12-G\epsilon,
+\qquad
+a_1=\frac12+GR\epsilon.
+\tag{187.8}
+$$
+
+它们自动由合法效果和合法输入态给出。代入（187.2）并展开，得到
+
+$$
+h_{\mathrm{pure}}\le
+1-\frac{(1/2-G\epsilon)(1/2+GR\epsilon)}
+{1+G(R-1)\epsilon}
+=\frac34-\frac{G(R-1)}4\epsilon+O(\epsilon^2).
+\tag{187.9}
+$$
+
+为给匹配下界，令 $\delta=R-1$，在（187.3）的最小化中选择
+$q=1/2+a\epsilon$，其中
+
+$$
+a=
+\begin{cases}
+-\dfrac{\delta(\beta^2+\gamma^2)}{8\beta},&g\le\beta,\\[4pt]
+-\dfrac{\delta\beta}{4},&g\ge\beta.
+\end{cases}
+\tag{187.10}
+$$
+
+充分小正 $\epsilon$ 时 $q\in[0,1]$。记
+$B=\delta\beta/4$、$C=\delta\gamma/4$。直接展开
+
+$$
+A_q=\epsilon M_a+O(\epsilon^2),
+\qquad
+M_a=
+\begin{pmatrix}
+2a+B&iC\\
+-iC&-B
+\end{pmatrix}.
+\tag{187.11}
+$$
+
+若 $g\le\beta$，所选 $a$ 使 $\det M_a=0$，且其非零根为
+$2a<0$，所以
+
+$$
+\|M_a\|_1=-2a
+=\frac{\delta(\beta^2+\gamma^2)}{4\beta}
+=\frac{\delta G}{2}.
+$$
+
+若 $g\ge\beta$，所选 $a=-B$，$M_a$ 的根为
+$-B\pm|C|$，故
+
+$$
+\|M_a\|_1=2|C|=\frac{\delta G}{2}.
+$$
+
+迹范数的三角不等式给
+$\|A_q\|_1=\epsilon\|M_a\|_1+O(\epsilon^2)$，即使其中一个根为零也成立。又有
+$q^2+(1-q)^2=1/2+O(\epsilon^2)$。
+因此（187.3）中的这个可行 $q$ 给
+
+$$
+h_{\mathrm{pure}}
+\ge1-\frac{q^2+(1-q)^2+\|A_q\|_1}{2}
+=\frac34-\frac{\delta G}{4}\epsilon+O(\epsilon^2).
+$$
+
+与（187.9）夹合，得到（187.5）。矩阵余项在固定有界 $R$ 上一致，迹范数 Lipschitz 估计保持这种一致性。证明没有要求最优 $q$ 的解析取支，也没有在简并根处使用不可用的简单谱扰动公式。证毕。
+
+### 187.4 来源秩极限与扰动极限不能交换
+
+考虑对应的满秩来源族
+
+$$
+\rho_\kappa=\operatorname{diag}\left(\frac{1+\kappa}{2},\frac{1-\kappa}{2}\right),
+\qquad 0\le\kappa<1,
+$$
+
+$$
+\Xi_\kappa=\sqrt{\frac{1+\kappa}{2}}|00\rangle
++\sqrt{\frac{1-\kappa}{2}}|11\rangle,
+\qquad \psi_\kappa=(I\otimes Y)\Xi_\kappa.
+$$
+
+将（187.1）的系数用于 $\Xi_\kappa,\psi_\kappa$，按第186节以 $R$ 表示比值，记相同完整恢复任务的最优误差为
+$h_\kappa(\epsilon,R)$。第186节的满秩展开给每个固定 $\kappa<1$
+
+$$
+\lim_{\epsilon\downarrow0}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+=\frac{\beta(R+1)}8>0.
+\tag{187.12}
+$$
+
+而秩一端点由定理187.2满足
+
+$$
+\lim_{\epsilon\downarrow0}
+\frac{h_1(\epsilon,R)-3/4}{\epsilon}
+=-\frac{R-1}{4}G(\beta,\gamma)<0.
+\tag{187.13}
+$$
+
+对每个固定合法 $\epsilon$，最优值仍然满足
+$h_\kappa(\epsilon,R)\to h_1(\epsilon,R)$。
+事实上，输入通道和目标通道都在有限维中随 $\kappa$ 连续；对任意同一恢复器，两组误差之差至多为输入通道之差与目标通道之差的半 diamond 范数之和。这个上界不依赖恢复器，故对恢复器取最小值后仍成立。
+
+于是两个归一化增量的迭代极限明确不同：
+
+$$
+\boxed{
+\begin{aligned}
+\lim_{\kappa\uparrow1}\lim_{\epsilon\downarrow0}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+&=\frac{\beta(R+1)}8,\\
+\lim_{\epsilon\downarrow0}\lim_{\kappa\uparrow1}
+\frac{h_\kappa(\epsilon,R)-3/4}{\epsilon}
+&=-\frac{R-1}{4}G(\beta,\gamma).
+\end{aligned}
+}
+\tag{187.14}
+$$
+
+差别来自任务可恢复结构的秩退化：每个满秩来源都要求保留不可访问记忆的纯化关系；秩一端点允许测量后局部重制备目标纯态。这里没有把误差值的连续性否定掉，失去一致性的是零扰动处的展开及其斜率。
+
+### 187.5 一个明确有限区间上的精确闭式最优值
+
+前述标量优化还能在一段明确的有限参数区间中完全求解。令
+
+$$
+\chi=\frac{\beta^2+\gamma^2}{\beta},\qquad
+\alpha_j=1-\chi w_j.
+\tag{187.15}
+$$
+
+**定理187.3（纯来源的闭式最优恢复）。** 设
+$0\le w_0<w_1<1/\chi$，并且
+
+$$
+\boxed{\alpha_1+\sqrt{\alpha_0\alpha_1}\ge\frac{\chi}{\beta}.}
+\tag{187.16}
+$$
+
+则
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+}
+\tag{187.17}
+$$
+
+这是一条精确有限参数等式。特别地，若 $|\gamma|<\beta$，则
+$\chi/\beta<2$，所以固定 $R>1$ 下全部充分小正 $w_0=\epsilon,w_1=R\epsilon$ 满足其条件。
+
+**证明。** 写 $k=\beta^2+\gamma^2$，对 $s=+$ 定义单位核方向的投影
+
+$$
+\Pi=\frac1k
+\begin{pmatrix}
+\beta^2&i\beta\gamma\\
+-i\beta\gamma&\gamma^2
+\end{pmatrix}.
+$$
+
+它是向量 $(\beta,-i\gamma)^{\mathsf T}/\sqrt k$ 的秩一投影，直接计算得
+
+$$
+\operatorname{Tr}(\Pi\omega_j)
+=\frac{\beta}{\chi}\alpha_j.
+$$
+
+取同一效果
+
+$$
+E=\lambda\Pi,\qquad
+\lambda=\frac{\chi}
+{\beta(\alpha_1+\sqrt{\alpha_0\alpha_1})}.
+\tag{187.18}
+$$
+
+（187.16）保证 $0<\lambda\le1$，所以 $E$ 合法；负旗标使用 $ZEZ$。记
+$\mu=1/(\alpha_1+\sqrt{\alpha_0\alpha_1})$，则正确概率为
+$a_0=\mu\alpha_0$、$a_1=1-\mu\alpha_1$，并有
+
+$$
+\frac{a_0a_1}{a_0+a_1}
+=\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+$$
+
+因此（187.2）给（187.17）的上界。
+
+对下界，在（187.3）中选择
+
+$$
+q_*=
+\frac{\sqrt{\alpha_1}}{\sqrt{\alpha_0}+\sqrt{\alpha_1}},
+\qquad
+z_*=
+\frac{q_*^2}{(1-q_*)^2}=\frac{\alpha_1}{\alpha_0}.
+$$
+
+由（187.1）直接相减，
+
+$$
+z_*\omega_0-\omega_1
+=-\frac{w_1-w_0}{\beta\alpha_0}
+\begin{pmatrix}
+\gamma^2&-i\beta\gamma\\
+i\beta\gamma&\beta^2
+\end{pmatrix}
+\preceq0.
+\tag{187.19}
+$$
+
+右侧是负的秩一矩阵，核恰为 $\Pi$ 的像。因此
+$q_*^2\omega_0-(1-q_*)^2\omega_1\preceq0$，其正谱部分为零。
+（187.3）在这个 $q_*$ 的标量值为
+
+$$
+(1-q_*)^2
+=\frac{\alpha_0}{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+$$
+
+因为最小化值不超过这个可行值，最优误差至少为（187.17）右侧，与构造上界相等。证毕。
+
+对第184—185节采用的具体常数，出现精确简化
+
+$$
+\boxed{
+\frac{\beta^2+\gamma^2}{\beta}=\frac18,
+\qquad \frac{\chi}{\beta}=\frac{2353}{2304}.
+}
+\tag{187.20}
+$$
+
+若 $0\le w_0<w_1<1/2$，则 $\alpha_j=1-w_j/8>15/16$，故
+$\alpha_1+\sqrt{\alpha_0\alpha_1}>15/8>2353/2304$。
+所以在对应的纯来源模型中，所有这些参数都满足
+
+$$
+\boxed{
+h_{\mathrm{pure}}(w_0,w_1)
+=1-\frac{1-w_0/8}
+{\bigl(\sqrt{1-w_0/8}+\sqrt{1-w_1/8}\bigr)^2}.
+}
+\tag{187.21}
+$$
+
+这也覆盖把实际启动数值 $w_0,w_1$ 代入纯来源模型的全部 $L\ge3$，但没有把原来的满秩来源替换掉：这是改变来源后的另一份明确任务。相应小扰动斜率为 $-(R-1)/64$，与（187.5）的 $G=1/16$ 一致。
+
+## 追加锚（本行以下为增补区）
