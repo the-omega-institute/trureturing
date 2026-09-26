@@ -252,3 +252,133 @@ Scribe compilation/projection receipt. There is no new Lean, admission,
 Freeze, CI or independent review certification. General unequal-length,
 non-role-balanced CFMP still requires constructing sufficiently many
 qualifying endpoint witnesses or a valid nonuniform averaging method.
+
+## Continuation on 2026-09-26: Sections 75–80
+
+The previous scope records remain historical descriptions of their own
+increments. The new continuation stays in the same theory file and research
+question. It supplies a written no-role-averaging realization theorem for
+three actual global edges with two singleton-per-tetrahedron labels. It does
+not claim unrestricted CFMP, independent peer review or new Lean certification.
+
+### Classical inputs and DNA motivation
+
+Frigerio–Moraschini, arXiv:1801.05326v3, Section 1.1 equations (1),(3),(4),
+is the source of the inverse cosine formula. Its printed page 6 was inspected
+again. Proposition 3.1's angle restrictions require a volume hypothesis;
+that hypothesis is not silently removed or imported into the new local
+estimates. Luo–Yang, arXiv:1404.5365v2, Theorems 1.4 and 6.3 supply the shared
+positive generalized length realization and true/flat classification. The
+new proof uses the existing strict-angle construction and flat Cauchy
+inequality, without any new typewise averaging.
+
+https://arxiv.org/html/1801.05326v3
+https://arxiv.org/pdf/1404.5365
+
+Goodman, Berry and Turberfield (2004), *The single-step synthesis of a DNA
+tetrahedron*, DOI 10.1039/B402293A, reports four designed oligonucleotides
+assembling into a tetrahedron with duplex edges. Goodman et al. (2005),
+*Rapid chiral assembly of rigid DNA building blocks for molecular
+nanofabrication*, DOI 10.1126/science.1120367, supplies further experimental
+context on chirality, rigidity and linking. The authors' PubMed abstracts
+were read. This motivates compatible paired data, not an assertion that
+ordinary DNA consists of rigid tetrahedra or proves a hyperbolic theorem.
+
+https://pubmed.ncbi.nlm.nih.gov/15179470/
+https://pubmed.ncbi.nlm.nih.gov/16339440/
+
+### New coupled local estimate and sharp unequal caps
+
+For genuine angles (theta,a,b,g,c,d), put u=a+b and v=c+d. The new bound is
+
+`cosh(ell12) < 1+2*sin(theta)^2/[(cos(theta)+cos(u))*(cos(theta)+cos(v))]`.
+
+The proof uses an exact half-angle expression, replaces cos(g) strictly by
+one, and bounds the two endpoint angle imbalances while preserving the SAME
+central theta. It works over the whole genuine domain, including theta>pi/2.
+
+For endpoint caps sigma1,sigma2<pi, let m=min(sigma1,sigma2),
+M=max(sigma1,sigma2). The sharp supremum is
+
+`1+2*(1-cos(m))/(cos(m)+cos(M-m))`.
+
+The genuine family `(m-2eps,eps,eps,eps,eps,M-m+eps)` attains this in the
+limit. Caps (pi/3,2pi/3) give the strict bound cosh(ell)<2. These are local
+sharpness statements, not assertions that a limit family globally glues.
+
+If the SUM of the two endpoint angle sums is at most pi, then cosh(ell)<3.
+This permits one endpoint sum to exceed pi/2, so it strictly enlarges the
+older coordinatewise condition. A logarithmic concavity calculation proves
+this consequence. Every genuine occurrence of a common edge with cosh
+length at least three therefore demands
+
+`2*target_angle + sum(four_adjacent_angles) > pi`.
+
+The individual-angle window also expands: the target and three adjacent
+angles can be at most pi/5, with the fourth at most 7pi/15. The resulting
+bound remains cosh(ell)<3; optimality of that separate window is not claimed.
+
+### No-role-averaging capacity and a realized three-edge class
+
+Let m_e count flat pi slots and g_e count genuine occurrences. Let mu_e(f)
+be the maximum number of adjacent e slots at an actual genuine f slot.
+The genuine-star demand gives the necessary condition for cosh(ell_e)>=3:
+
+`g_e < 2*(2-m_e)+sum_f mu_e(f)*(2-m_f)`.
+
+Actual multiplicities remain in the statement. They cannot generally be
+set to one. If e occurs at most once per tetrahedron, the other genuine
+angles are counted at most once, which makes the bound useful globally.
+
+The new realization theorem assumes exactly three actual global edges
+U,V,H, minimum degree six, the existing strict-boundary manifold hypotheses,
+and at most one U slot and at most one V slot in each tetrahedron. No role
+balance, fixed local templates, global automorphism or averaging is used.
+The true/flat dichotomy first gives at most two flats. Singleton incidence
+prevents U,V saturation; H appears in every genuine tetrahedron, so cannot
+saturate either. Thus at most one flat remains.
+
+At a selected singleton pi label e of this flat, at least five genuine
+occurrences would require more than 5pi if its cosh length were >=3.
+The actual total genuine angular mass gives at most 2pi+3pi=5pi.
+Hence that cosh length is <3. A flat U,V pair contradicts the existing
+product threshold. A flat e,H pair has at least three H zero slots and
+forces `(x_e-1)*(s-1)>=4*sqrt(s^3*z)>4*s^(3/2)`, whereas x_e<3 makes its
+left side smaller than 2s. Both cases are excluded.
+
+The actual eleven-tetrahedron example changes only the Section 68 face
+pair `(1,0;3,0;0132)` to `(1,0;3,0;0213)`. It has degrees (6,6,54), one
+genus-nine link, and a unique `(U,H,H,V,H,H)` local type. It therefore is
+not covered by the earlier sufficient condition that every actual label
+type repeat at least twice. The original mixed-pattern theorem cannot be
+applied by assigning H simultaneously to two disjoint colour classes.
+Connected cyclic covers have 11n tetrahedra and Euler characteristic -8n;
+their 3n global edges mean the cover argument uses metric lifting, not a
+false claim that every cover still satisfies the three-edge hypothesis.
+No new census/homeomorphism-type priority is asserted.
+
+### New preprint and verification boundary
+
+Huabin Ge, *Geometric ideal triangulations of hyperbolic 3-manifolds*,
+arXiv:2609.27635v1, posted 2026-09-23, claims existence of a geometric
+triangulation using compatible subdivisions. The primary text was read;
+its introduction explicitly distinguishes the CFMP prescribed-triangulation
+question. It is not treated as a proof of the same fixed minimum-six
+triangulation, nor is independent verification of the whole new preprint
+claimed. Its tetrahedral height quotient has dimension zero, illustrating
+why same-vertex subdivision flexibility stops at the smallest 3-simplex.
+This observation is background, not an input to the new realization proof.
+
+https://arxiv.org/html/2609.27635v1
+
+The extended checker preserves the earlier packet and analytic tests. New
+checks cover all three edge cycles and six link-vertex fans of the (6,6,54)
+packet; 3500 nonsymmetric genuine angle vectors and 21000 edge envelopes;
+10281 combined endpoint caps, including 2972 outside the old separate caps;
+1354 long-edge demands; four sharp-limit families; and 1000 enlarged-window
+cases. The half-angle identity's maximum relative floating-point error was
+about 5.46e-15. These computations supplement the continuous written proofs;
+they are not kernel proofs, independent review or CI/Scribe/Freeze receipts.
+The general multiple-occurrence capacity problem and unrestricted CFMP
+remain unresolved by this increment. Bounded source searches do not prove
+worldwide novelty of the new estimates or theorem.

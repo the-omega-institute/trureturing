@@ -303,7 +303,76 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "The local caps need no role balance, but this global realization "
                         + "theorem still does. Full CFMP, new Lean certification, Scribe "
                         + "compilation or projection, CI, Freeze and independent review "
-                        + "approval are not asserted.")))))));
+                        + "approval are not asserted.")))),
+            Describe.Remark(
+                DescribeId.Create("written-coupled-budget-singleton-realization"),
+                H("Written continuation: coupled endpoint budgets without role averaging"),
+                F.Disp(SingletonRealizationFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026mixedmatching")),
+                Blocks(
+                    Paragraph(Text("This is authored written mathematics, not a new Lean "
+                        + "declaration. StrictBoundaryTriangulations means actual finite "
+                        + "connected orientable face-paired ideal triangulations with every "
+                        + "vertex link a closed surface of genus at least two. "
+                        + "ThreeEdgesTwoSingletonLabels means the actual global edge set "
+                        + "is exactly three distinct labels U,V,H, with U and V each "
+                        + "occurring at most once in every tetrahedron. They may be absent. "
+                        + "MinimumDegreeSix counts all actual local occurrences. "
+                        + "GenuineRealization concerns the same prescribed triangulation. "
+                        + "No role balance, equal angles, local templates or automorphism "
+                        + "hypothesis is part of the displayed assertion.")),
+                    Paragraph(Text("For genuine angles (theta,a,b,g,c,d), put u=a+b,v=c+d. "
+                        + "The exact half-angle form of the classical inverse formula proves "
+                        + "cosh(ell12)<1+2sin(theta)^2/((cos(theta)+cos(u))*(cos(theta)+cos(v))). "
+                        + "Both endpoints retain the same theta. For caps sigma1,sigma2<pi, "
+                        + "m=min(sigma1,sigma2), M=max(sigma1,sigma2), the sharp supremum "
+                        + "is 1+2(1-cos(m))/(cos(m)+cos(M-m)). A genuine small-epsilon "
+                        + "family attains it in the limit. Frigerio-Moraschini supplies "
+                        + "the inverse formula, not this claimed research derivation.")),
+                    Paragraph(Text("Logarithmic concavity gives a particularly useful "
+                        + "consequence: the SUM of the two endpoint vertex-angle sums "
+                        + "at most pi implies cosh(ell)<3. One endpoint may exceed pi/2. "
+                        + "Every genuine occurrence of a common edge with cosh length "
+                        + "at least three therefore needs 2*target_angle plus its four "
+                        + "adjacent angles to exceed pi. Summing preserves actual "
+                        + "neighbour multiplicities; they are not generally one. The "
+                        + "separate individual-angle window allows the fourth neighbour "
+                        + "to reach 7pi/15 when target and three neighbours are at most pi/5.")),
+                    Paragraph(Text("The strict-angle construction and Luo-Yang Theorems "
+                        + "1.4 and 6.3 give common positive generalized lengths. With "
+                        + "three edges there are at most two flat blocks. Singleton "
+                        + "U,V cannot saturate, and H occurs in every genuine block, "
+                        + "so no label saturates and at most one flat remains. A selected "
+                        + "singleton pi label then has at least five genuine occurrences. "
+                        + "If its cosh length were at least three, they would demand "
+                        + "more than 5pi; all actual available angles give at most "
+                        + "2pi+3pi. Thus the selected singleton cosh length is below three. "
+                        + "Both possible types of pi pairs contradict the existing flat "
+                        + "Cauchy product bound, proving the displayed realization.")),
+                    Paragraph(Text("Changing just (1,0;3,0;0132) to (1,0;3,0;0213) in "
+                        + "the earlier eleven-block face table yields actual degrees "
+                        + "6,6,54 and one genus-nine vertex link. All three oriented "
+                        + "first-return cycles and six link fans are checked. The unique "
+                        + "(U,H,H,V,H,H) block prevents applying the earlier repeated-type "
+                        + "criterion. Cyclic covers use metric lifting; their 3n edges "
+                        + "do not satisfy the three-edge hypothesis when n>1.")),
+                    Paragraph(Text("DNA tetrahedron experiments motivate compatible paired "
+                        + "data; they are not geometric proof inputs. Ge's 2026-09-23 "
+                        + "preprint asserts existence of some geometric triangulation, "
+                        + "which is distinct from realizing this prescribed triangulation. "
+                        + "New numerical and finite checks supplement the written "
+                        + "arguments. Full CFMP, independent review, new Lean certification, "
+                        + "Scribe compilation/projection, CI and Freeze are not claimed.")))))));
+
+    private static Formula SingletonRealizationFormula()
+    {
+        var t=F.Id("T");
+        return All([("T",F.Id("StrictBoundaryTriangulations"))],
+            Imp(And(Call("MinimumDegreeSix",t),
+                    Call("ThreeEdgesTwoSingletonLabels",t)),
+                Call("GenuineRealization",t)));
+    }
 
     private static Formula EndpointCapFormula()
     {

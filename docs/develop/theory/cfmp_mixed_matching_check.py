@@ -393,7 +393,140 @@ def check_packet22():
             'link':{'V':V,'E':E,'F':F,'chi':-28,'genus':15},
             'max_normalized_corner':str(maximum)}
 
+# Sections 75--80: coupled endpoint budgets and singleton-label capacity.
+import random
+import collections
+
+def genuine(alpha):
+ return all(a>0 for a in alpha) and all(sum(alpha[j] for j,e in enumerate(EDGES) if i in e)<math.pi for i in range(4))
+
+def envelope(theta, sigma1,sigma2):
+ return 1+2*math.sin(theta)**2/((math.cos(theta)+math.cos(sigma1-theta))*(math.cos(theta)+math.cos(sigma2-theta)))
+
+def asym_cap(sigma1,sigma2):
+ m,M=sorted((sigma1,sigma2))
+ return 1+2*(1-math.cos(m))/(math.cos(m)+math.cos(M-m))
+
+def half_formula(alpha):
+ theta,a,b,g,c,d=alpha
+ p=math.tan(theta/2);q=math.tan((a+b)/2);r=math.tan((c+d)/2)
+ xi=math.tan((a-b)/2);eta=math.tan((d-c)/2)
+ num=(1+p*p)*(1+p*p*q*r*xi*eta)+p*p*math.sqrt((1+q*q)*(1+r*r)*(1+xi*xi)*(1+eta*eta))*math.cos(g)
+ den=math.sqrt((1-p*p*q*q)*(1-p*p*r*r)*(1-p*p*xi*xi)*(1-p*p*eta*eta))
+ return num/den
+
+def check_new_analytic():
+ rng=random.Random(947475)
+ checked=total_caps=long_edges=old_cap_missed=0
+ worst=0.
+ for _ in range(3500):
+  angles=[rng.uniform(.02,1.3) for j in EDGES]
+  max_corner=max(sum(angles[j] for j,e in enumerate(EDGES) if i in e) for i in range(4))
+  scale=rng.uniform(.35,.985)*math.pi/max_corner
+  angles=[a*scale for a in angles]
+  assert genuine(angles)
+  x=inverse_cosh_lengths(angles)
+  hf=half_formula(angles)
+  worst=max(worst,abs(hf-x[0])/x[0])
+  for j,(i,k) in enumerate(EDGES):
+   theta=angles[j]
+   si=sum(angles[n] for n,e in enumerate(EDGES) if i in e)
+   sk=sum(angles[n] for n,e in enumerate(EDGES) if k in e)
+   assert x[j]<envelope(theta,si,sk)*(1+1e-11)
+   assert x[j]<asym_cap(si,sk)*(1+1e-11)
+   checked+=1
+   if si+sk<=math.pi:
+    assert x[j]<3
+    total_caps+=1
+    old_cap_missed+=max(si,sk)>math.pi/2
+   if x[j]>=3:
+    assert si+sk>math.pi
+    long_edges+=1
+ assert worst<1e-10
+ sequences=[]
+ for s1,s2 in [(math.pi/3,2*math.pi/3),(math.pi/5,5*math.pi/6),(2*math.pi/3,5*math.pi/6),(math.pi/2,math.pi/2)]:
+  m,M=sorted((s1,s2));B=asym_cap(m,M);err=[]
+  for eps in (.005,.001,.0002):
+   alpha=[m-2*eps,eps,eps,eps,eps,M-m+eps]
+   assert genuine(alpha)
+   x=inverse_cosh_lengths(alpha)[0]
+   assert x<B
+   err.append(B-x)
+  assert err[2]<err[1]<err[0]
+  sequences.append({'caps_over_pi':[m/math.pi,M/math.pi],'limit':B,'errors':err})
+ assert abs(asym_cap(math.pi/3,2*math.pi/3)-2)<1e-12
+ # Larger angular window: target plus three neighbours <=pi/5;
+ # the remaining neighbour is allowed all the way to 7pi/15.
+ window=0
+ for _ in range(1000):
+  alpha=[rng.uniform(.015,math.pi/5) for j in EDGES]
+  alpha[4]=rng.uniform(.015,7*math.pi/15)
+  cap=math.pi-max(alpha[1]+alpha[5],alpha[2]+alpha[4])
+  alpha[3]=rng.uniform(.005,cap-.005)
+  assert genuine(alpha)
+  assert inverse_cosh_lengths(alpha)[0]<3
+  window+=1
+ assert abs(envelope(math.pi/5,3*math.pi/5,13*math.pi/15)-3)<1e-12
+ return {'independent_edge_envelopes':checked,'combined_caps':total_caps,
+         'combined_caps_outside_old_coordinate_caps':old_cap_missed,
+         'long_edge_demands':long_edges,'half_angle_relative_error':worst,
+         'sharp_asymmetric_sequences':sequences,'enlarged_window_cases':window}
+
+def check_singleton_packet():
+ rows=list(ROWS)
+ assert rows[12]==(1,0,3,0,'0132')
+ rows[12]=(1,0,3,0,'0213')
+ n=11;face={};edges=DSU(66);vertices=DSU(44);ends=DSU(132);dual=DSU(11);fans=collections.defaultdict(list)
+ for t,f,u,g,word in rows:
+  p=tuple(map(int,word));assert sorted(p)==list(range(4)) and p[f]==g
+  assert sum(p[i]>p[j] for i in range(4) for j in range(i+1,4))%2==1
+  assert (t,f)!=(u,g) and (t,f) not in face and (u,g) not in face
+  face[t,f]=(u,g,p);face[u,g]=(t,f,tuple(p.index(i) for i in range(4)));dual.union(t,u)
+  for a in range(4):
+   if a!=f:vertices.union(4*t+a,4*u+p[a])
+  for j,(a,b) in enumerate(EDGES):
+   if f in (a,b):continue
+   k=6*u+INDEX[tuple(sorted((p[a],p[b])))];j+=6*t;edges.union(j,k)
+   for side in (0,1):
+    x,y=2*j+side,2*k+(side^(p[a]>p[b]));ends.union(x,y);fans[x].append(y);fans[y].append(x)
+ assert len(face)==44 and len(dual.groups())==1 and len(vertices.groups())==1
+ groups=edges.groups();assert sorted(map(len,groups))==[6,6,54]
+ assert len(ends.groups())==6 and all(ends.find(2*j)!=ends.find(2*j+1) for j in range(66))
+ circles=[];angles={};labels={}
+ for group in groups:
+  if len(group)==6:assert len({j//6 for j in group})==6
+  lab='U' if 0 in group else ('V' if 3 in group else 'H')
+  t,j=divmod(group[0],6);a,b=EDGES[j];entry=min(v for v in range(4) if v not in(a,b))
+  start=(t,a,b,entry);state=start;seen=set();circle=[]
+  while state not in seen:
+   seen.add(state);t,a,b,entry=state;circle.append(6*t+INDEX[tuple(sorted((a,b)))])
+   out=next(v for v in range(4) if v not in(a,b,entry));u,g,p=face[t,out];state=(u,p[a],p[b],g)
+  assert state==start and sorted(circle)==group
+  for j in group:angles[j]=Fraction(2,len(group));labels[j]=lab
+  circles.append({'label':lab,'degree':len(group),'normal_circle':circle})
+ for gr in ends.groups():
+  assert all(len(fans[x])==2 for x in gr)
+  seen={gr[0]};todo=[gr[0]]
+  while todo:
+   for y in fans[todo.pop()]:
+    if y not in seen:seen.add(y);todo.append(y)
+  assert seen==set(gr)
+ maximum=Fraction(0)
+ for t in range(n):
+  assert sum(labels[6*t+j]=='U' for j in range(6))<=1
+  assert sum(labels[6*t+j]=='V' for j in range(6))<=1
+  for v in range(4):
+   total=sum(angles[6*t+j] for j,e in enumerate(EDGES) if v in e)
+   assert 0<total<1;maximum=max(maximum,total)
+ assert maximum==Fraction(11,27)
+ return {'tetrahedra':11,'face_pairs':22,'changed_row':rows[12],
+         'edges':circles,'link':{'V':6,'E':66,'F':44,'chi':-16,'genus':9},
+         'max_normalized_corner':str(maximum),
+         'theorem_hypotheses':'three actual edges; U,V each occur at most once per tetrahedron'}
+
 if __name__ == '__main__':
     print(json.dumps({'packet':check_packet(),'local_star':check_local_star(),
                       'packet22':check_packet22(),
-                      'analytic_continuation':check_analytic_continuation()},indent=2))
+                      'analytic_continuation':check_analytic_continuation(),
+                      'coupled_endpoint_continuation':check_new_analytic(),
+                      'singleton_packet':check_singleton_packet()},indent=2))
