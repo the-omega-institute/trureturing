@@ -167,14 +167,14 @@ Existing work offers several connected routes:
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
 
-These routes must distinguish a compatible completion from recovery of the
-original source. In the [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean),
-arrange nonempty sets of allowed local records on a finite tree. Each recorded
-variable must occur on a connected subtree, and neighbors must allow exactly
-the same assignments on their full overlap. Then any allowed local record
-extends to a record satisfying every local constraint. This establishes
-existence; uniqueness, identifying the original history and computational cost
-require further results.
+The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+gives one criterion for compatible completion. Arrange nonempty sets of allowed
+local records on a finite tree. Each recorded variable must occur on a connected
+subtree, and neighbors must allow exactly the same joint assignments on their
+full overlap. Every allowed local record then extends to a record on the union
+of the local variable sets, satisfying every local constraint. This establishes
+existence; uniqueness, original-history recovery and computational cost require
+further results.
 
 Here, holography names a research direction concerning wholes and observations.
 This guide establishes no physical holographic duality, area law or model of
