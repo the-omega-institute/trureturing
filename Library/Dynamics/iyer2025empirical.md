@@ -2432,12 +2432,12 @@ Beresnevich–Dickinson–Velani 的原文
 Jing-Jing Huang，*Rational points near planar curves and Diophantine approximation*，
 原版本 [arXiv:1403.7388v1](https://arxiv.org/abs/1403.7388v1)。
 正文原定义的曲率类要求固定紧区间上的 C² 函数与 0<c1≤|f″|≤c2。
-第一定理和第六定理（TeX 标签 t1、t6）另要求二阶导数 Lipschitz。
-第六定理计数的是所有 1≤q≤R 的和：
+第一定理和第三定理（TeX 标签 t1、t6）另要求二阶导数 Lipschitz。
+第三定理计数的是所有 1≤q≤R 的和：
 N_f(R,η)=Σ_(q≤R) #{a:a/q∈I, ||qf(a/q)||<η}，
 并在 0<η≤1/2、整数 R>1 下给
 |I|ηR²+O(η^(1/2)log(1/η)R^(3/2)+R^(1+ε))。
-原始互素版本带 1/ζ(3) 系数；第二定理对曲率类的一致闭包给较弱的 R^(4/3) 误差项。
+原始互素版本带 1/ζ(3) 系数；第四定理（TeX 标签 t2）对曲率类的一致闭包给较弱的 R^(4/3) 误差项。
 常数范围含区间、曲率界及所列 Lipschitz／ε 条件。
 
 本库曲线在局部满足这些光滑性要求，但所需分母固定为 Q_n²，不能换成所有 q≤R。
