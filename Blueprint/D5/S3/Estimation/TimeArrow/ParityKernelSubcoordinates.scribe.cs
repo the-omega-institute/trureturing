@@ -72,37 +72,12 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                             + "uniform law form an independent sequence of uniform vectors on {-1, 1}^S. No "
                             + "condition on a is needed; the statement concerns only the proper coordinates.")),
                     Paragraph(Text(
-                        "Fix a coordinate j outside S. Flipping the sign of coordinate j is an involution of "
-                            + "every fiber that fixes the coordinates in S, and it negates the parity, so the "
-                            + "parity sums to zero on each such fiber. A fiber has 2^(d - |S|) elements. "
-                            + "Therefore the kernel mass P_a(x, fiber) equals 2^(-|S|) from every start x. "
-                            + "Summing out the last state of the path and inducting on T gives the product "
-                            + "formula, with base case the uniform mass of one fiber."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("two-step-uniform"),
-                DeclarationHandle.Create(Module + "parityKernel_mul_eq_uniform"),
-                H("Two steps reach the uniform kernel"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("d"), Geq, Sp, D(1), Comma, Sp,
-                    Sum, Underscore, Grp(F.Id("y")), Sp, Call("b", F.Id("y")), Eq, D(0), Comma, Sp,
-                    Sum, Underscore, Grp(F.Id("y")), Sp, Call("chi", F.Id("y")), Sp, Call("b", F.Id("y")),
-                    Eq, D(0), Sp, Rightarrow, Sp,
-                    Sum, Underscore, Grp(F.Id("y")), Sp,
-                    Sub(F.Id("P"), F.Id("a")), Open, F.Id("x"), Comma, Sp, F.Id("y"), Close, Sp,
-                    Sub(F.Id("P"), F.Id("b")), Open, F.Id("y"), Comma, Sp, F.Id("z"), Close, Eq, Sp,
-                    Frac, Grp(D(1)), Grp(D(2), Caret, Grp(F.Id("d")))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Let d >= 1. If the second profile b satisfies sum b = 0 and sum chi b = 0, then for "
-                            + "every first profile a and all vertices x, z the two-step weight equals 2^(-d). "
-                            + "Taking b = a gives P_a^2 = Pi on the family of profiles with E a = 0 and "
-                            + "E[chi a] = 0, and any two kernels of that family multiply to Pi.")),
-                    Paragraph(Text(
-                        "Expanding the product gives four sums over y. The parity sum vanishes by the "
-                            + "fiber lemma applied to the empty coordinate set, which is proper because d >= 1, "
-                            + "and the two remaining sums vanish by hypothesis, leaving 2^d / 4^d."))),
+                        "On every fiber that fixes the coordinates of the proper set S the two parity classes "
+                            + "have the same number of vertices, since the uniform laws of the two classes have equal "
+                            + "proper marginals; hence the parity sums to zero on the fiber. A fiber has 2^(d - |S|) "
+                            + "elements, so the kernel mass P_a(x, fiber) equals 2^(-|S|) from every start x. Summing "
+                            + "out the last state of the path and inducting on T gives the product formula, with base "
+                            + "case the uniform mass of one fiber."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)

@@ -7,7 +7,7 @@ internal sealed class ParityKernelRegistrationTemplatesDocument : IScribeDocumen
     private const string Module = "D5/S3/ConceptDynamics/InformationEscape/ParityKernelRegistrationTemplates.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Dependent signatures type the coordinate-record law and the two-step transition value of parity kernels.",
+        "Dependent signatures type the coordinate-record law and the step-indexed path functionals of parity kernels.",
         H("ParityKernelRegistrationTemplates"),
         Blocks(
             Describe.Lean(
@@ -25,19 +25,6 @@ internal sealed class ParityKernelRegistrationTemplatesDocument : IScribeDocumen
                         + "that source-bound registration, not a theorem or a registration proof."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("two-step-kernel-signature"),
-                DeclarationHandle.Create(Module + "twoStepKernelSignature"),
-                H("Two-step kernel signature"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Parameters are a dimension d, two real profiles on the sign hypercube and a start "
-                        + "vertex. States are end vertices. The sole role is Unit with one real output; the "
-                        + "anchor type is Empty. The same registration module uses it with the entry of the "
-                        + "two-step kernel product as the actual readout. The definition is an operand for "
-                        + "that source-bound registration, not a theorem or a registration proof."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("profile-pair-step-signature"),
                 DeclarationHandle.Create(Module + "profilePairStepSignature"),
                 H("Profile-pair step signature"),
@@ -50,19 +37,5 @@ internal sealed class ParityKernelRegistrationTemplatesDocument : IScribeDocumen
                         + "the uniform-reference inner products of path likelihoods as actual readouts. The "
                         + "definition is an operand for those source-bound registrations, not a theorem or a "
                         + "registration proof."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("profile-charpoly-signature"),
-                DeclarationHandle.Create(Module + "profileCharpolySignature"),
-                H("Profile characteristic-polynomial signature"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The parameter is a dimension d; states are real profiles on the sign hypercube of "
-                        + "dimension d. The sole role is Unit with a real polynomial as output; the anchor type is "
-                        + "Empty. Reg/D5/S3/Estimation/TimeArrow/ParityKernelCharpoly uses it with the "
-                        + "characteristic polynomial of the parity kernel as the actual readout. The definition "
-                        + "is an operand for that source-bound registration, not a theorem or a registration "
-                        + "proof."))),
                 DescribeRole.Definition))));
 }

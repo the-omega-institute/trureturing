@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform-reference inner products of parity-kernel path likelihoods in both time directions. -/
+   digest: Uniform-reference inner products of parity-kernel path products, both directions. -/
 
 import D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 
@@ -163,6 +163,29 @@ likelihood of `P_{b}` have inner product one. -/
 theorem forward_backward_inner_product {d : ℕ} (hd : 1 ≤ d) (a b : (Fin d → ℤˣ) → ℝ)
     (hb : ∑ y, b y = 0) (hχb : ∑ y, parity y * b y = 0) (s : ℕ) :
     uniformPathMean s (fun x => forwardLikelihood a s x * backwardLikelihood b s x) = 1 := by
+  -- the parity sums to zero: the record law of the empty coordinate set at `T = 1`, `a = 1`
+  have hχ : ∑ y : Fin d → ℤˣ, parity y = 0 := by
+      have hS : (∅ : Finset (Fin d)) ≠ Finset.univ := by
+        intro h
+        have : (⟨0, hd⟩ : Fin d) ∈ (∅ : Finset (Fin d)) := h ▸ Finset.mem_univ _
+        simp at this
+      have h := subcoordinateLaw_eq (fun _ => 1) ∅ hS 1 (fun _ _ => 1)
+      unfold subcoordinateLaw at h
+      simp only [Finset.notMem_empty, IsEmpty.forall_iff, implies_true, if_true,
+        Finset.prod_const_one, mul_one, Finset.card_empty, pow_zero, div_one, one_pow,
+        Fin.prod_univ_one, Fin.castSucc_zero, Fin.succ_zero_eq_one] at h
+      rw [← (piFinTwoEquiv fun _ => Fin d → ℤˣ).symm.sum_comp, Fintype.sum_prod_type] at h
+      simp only [piFinTwoEquiv_symm_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one, parityKernel, one_mul] at h
+      have hn : (0 : ℝ) < 2 ^ d := by positivity
+      have hcard : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by simp [Fintype.card_units_int]
+      simp only [← Finset.mul_sum, ← Finset.sum_div, Finset.sum_add_distrib, Finset.sum_const,
+        Finset.card_univ, nsmul_eq_mul, mul_one, hcard] at h
+      field_simp at h
+      have hcons : ∀ x x1 : Fin d → ℤˣ, (Fin.cons x (Fin.cons x1 finZeroElim) : Fin 2 → Fin d → ℤˣ) 1 = x1 :=
+        fun _ _ => rfl
+      simp only [hcons, Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hcard, add_eq_left] at h
+      exact (mul_eq_zero.mp h).resolve_left hn.ne'
   have scale_mean : ∀ c : ℝ, (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) = c ^ s := by
     intro c
     have hne : (2 : ℝ) ^ d ≠ 0 := by positivity
@@ -172,13 +195,16 @@ theorem forward_backward_inner_product {d : ℕ} (hd : 1 ≤ d) (a b : (Fin d �
   have hrow : ∀ x, ∑ y, (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b y x) =
       2 ^ d * 1 := by
     intro x
-    have h := parityKernel_mul_eq_uniform hd a b hb hχb x x
-    have hfac : ∀ y, (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b y x) =
-        (2 ^ d * 2 ^ d : ℝ) * (parityKernel a x y * parityKernel b y x) := by
-      intro y; ring
-    simp_rw [hfac]
-    rw [← Finset.mul_sum, h]
-    field_simp
+    have hexp : ∀ y, (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b y x) =
+        1 + a x * parity y + parity x * b y + a x * parity x * (parity y * b y) := by
+      intro y
+      unfold parityKernel
+      field_simp
+      ring
+    simp_rw [hexp]
+    rw [Finset.sum_add_distrib, Finset.sum_add_distrib, Finset.sum_add_distrib, ← Finset.mul_sum,
+      ← Finset.mul_sum, ← Finset.mul_sum, hχ, hb, hχb, Finset.sum_const, Finset.card_univ]
+    simp [Fintype.card_units_int]
   unfold uniformPathMean forwardLikelihood backwardLikelihood
   simp_rw [← Finset.prod_mul_distrib]
   rw [sum_path_prod_of_row (fun x y => (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b y x))

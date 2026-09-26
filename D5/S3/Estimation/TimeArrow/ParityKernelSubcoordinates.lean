@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Parity kernels keep proper coordinate records i.i.d. uniform and mix in two steps. -/
+   digest: Parity kernels keep every proper coordinate record i.i.d. uniform. -/
 
+import D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.GroupWithZero.Units.Fintype
 import Mathlib.Data.Real.Basic
@@ -22,6 +23,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 
 open Finset
+open D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 
 /-- The parity character `χ(x) = x₁ ⋯ x_d` of a sign vector. -/
 def parity {d : ℕ} (x : Fin d → ℤˣ) : ℝ := (((∏ j, x j : ℤˣ) : ℤ) : ℝ)
@@ -38,55 +40,92 @@ noncomputable def subcoordinateLaw {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S 
     (1 / 2 ^ d : ℝ) * (∏ t : Fin T, parityKernel a (x t.castSucc) (x t.succ)) *
       ∏ t : Fin (T + 1), (if ∀ j ∈ S, x t j = w t j then (1 : ℝ) else 0)
 
-/-- On a fiber that fixes the coordinates in a proper subset `S`, the parity sums to zero: flipping
-a free coordinate is an involution of the fiber that negates the parity. -/
-private theorem sum_parity_fiber {d : ℕ} (S : Finset (Fin d)) (hS : S ≠ Finset.univ)
-    (w : Fin d → ℤˣ) :
-    ∑ y ∈ Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j), parity y = 0 := by
-  obtain ⟨j, hj⟩ : ∃ j, j ∉ S := by
-    by_contra h
-    exact hS (Finset.eq_univ_of_forall fun i => by_contra fun hi => h ⟨i, hi⟩)
-  set F := Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j)
-  let σ : (Fin d → ℤˣ) → (Fin d → ℤˣ) := fun y => Function.update y j (-y j)
-  have hσσ : ∀ y, σ (σ y) = y := by
-    intro y
-    funext i
-    by_cases hi : i = j
-    · subst hi; simp [σ]
-    · simp [σ, Function.update_of_ne hi]
-  have hmem : ∀ y ∈ F, σ y ∈ F := by
-    intro y hy
-    simp only [F, Finset.mem_filter, Finset.mem_univ, true_and] at hy ⊢
-    intro i hi
-    have hij : i ≠ j := fun h => hj (h ▸ hi)
-    simp [σ, Function.update_of_ne hij, hy i hi]
-  have hflip : ∀ y : Fin d → ℤˣ, parity (Function.update y j (-y j)) = -parity y := by
-    intro y
-    unfold parity
-    rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ j),
-      ← Finset.mul_prod_erase Finset.univ (fun i => y i) (Finset.mem_univ j)]
-    have hrest : ∏ i ∈ Finset.univ.erase j, Function.update y j (-y j) i =
-        ∏ i ∈ Finset.univ.erase j, y i := by
-      refine Finset.prod_congr rfl fun i hi => ?_
-      rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
-    rw [hrest, Function.update_self]
-    push_cast
-    ring
-  have hsum : ∑ y ∈ F, parity y = ∑ y ∈ F, parity (σ y) := by
-    refine Finset.sum_nbij' σ σ hmem hmem (fun y _ => hσσ y) (fun y _ => hσσ y) ?_
-    intro y _
-    rw [hσσ]
-  have hneg : ∑ y ∈ F, parity (σ y) = -∑ y ∈ F, parity y := by
-    rw [← Finset.sum_neg_distrib]
-    exact Finset.sum_congr rfl fun y _ => hflip y
-  linarith
-
 /-- **Proper coordinate projections are i.i.d. uniform.** For every parity kernel on the
 `d`-dimensional sign hypercube, started from the uniform law, and every proper subset `S` of the
 coordinates, the coordinates in `S` at times `0, …, T` are independent and uniform on `{±1}^S`. -/
 theorem subcoordinateLaw_eq {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finset (Fin d))
     (hS : S ≠ Finset.univ) (T : ℕ) (w : Fin (T + 1) → Fin d → ℤˣ) :
     subcoordinateLaw a S T w = (1 / 2 ^ S.card) ^ (T + 1) := by
+  -- on a fiber fixing the coordinates of the proper set `S` the parity sums to zero: this is the
+  -- frozen equality of the proper marginals of the two parity classes, read on sign vectors
+  have hfiber : ∀ w : Fin d → ℤˣ,
+      ∑ y ∈ Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j), parity y = 0 := by
+    intro w
+    classical
+    obtain ⟨k, rfl⟩ : ∃ k, d = k + 1 := by
+      rcases Nat.eq_zero_or_pos d with h | h
+      · subst h; exact absurd (Subsingleton.elim S univ) hS
+      · exact ⟨d - 1, by omega⟩
+    let toSign : Fin 2 → ℤˣ := fun b => if b = 0 then -1 else 1
+    let toBit : ℤˣ → Fin 2 := fun u => if u = 1 then 1 else 0
+    have hts : ∀ u, toSign (toBit u) = u := by
+      intro u
+      rcases Int.units_eq_one_or u with h | h <;> subst h <;> simp [toSign, toBit] <;> decide
+    have hst : ∀ b, toBit (toSign b) = b := by
+      intro b; fin_cases b <;> simp [toSign, toBit] <;> decide
+    let e : (Fin (k + 1) → Fin 2) ≃ (Fin (k + 1) → ℤˣ) :=
+      Equiv.piCongrRight fun _ => ⟨toSign, toBit, hst, hts⟩
+    have hsign : ∀ b : Fin 2, (((toSign b : ℤˣ) : ℤ) : ℝ) = ((paritySign b : ℤ) : ℝ) := by
+      intro b; fin_cases b <;> simp [toSign, paritySign]
+    have hpar : ∀ x : Fin (k + 1) → Fin 2, parity (e x) = ((∏ i, paritySign (x i) : ℤ) : ℝ) := by
+      intro x
+      simp only [parity, e, Equiv.piCongrRight_apply, Equiv.coe_fn_mk, Units.coe_prod, Int.cast_prod]
+      exact Finset.prod_congr rfl fun i _ => hsign (x i)
+    let yb : Fin (k + 1) → Fin 2 := fun j => toBit (w j)
+    have hagree : ∀ x : Fin (k + 1) → Fin 2,
+        (∀ j ∈ S, e x j = w j) ↔ (∀ j ∈ S, x j = yb j) := by
+      intro x
+      refine forall₂_congr fun j _ => ?_
+      constructor
+      · intro h; show x j = toBit (w j); rw [← h]; exact (hst (x j)).symm
+      · intro h; show toSign (x j) = w j; rw [h]; exact hts (w j)
+    have hmass := (parity_conditioned_probability_form k).2.2.2.2 S hS yb
+    unfold parityMarginalMass at hmass
+    -- pointwise: the full product is `2^k` times the difference of the two parity laws
+    have hpt : ∀ x : Fin (k + 1) → Fin 2,
+        ((∏ i, paritySign (x i) : ℤ) : ℚ) =
+          2 ^ k * (parityLaw (k + 1) 1 x - parityLaw (k + 1) (-1) x) := by
+      intro x
+      have hprod : (∏ i, paritySign (x i)) = 1 ∨ (∏ i, paritySign (x i)) = -1 := by
+        refine Finset.prod_induction _ (fun m : ℤ => m = 1 ∨ m = -1) ?_ (Or.inl rfl) ?_
+        · rintro m n (rfl | rfl) (rfl | rfl) <;> norm_num
+        · intro i _
+          unfold paritySign; split_ifs <;> simp
+      have hk : (2 : ℚ) ^ k ≠ 0 := by positivity
+      rcases hprod with h | h
+      · have h1 : x ∈ parityFiber (k + 1) 1 := by simp [parityFiber, h]
+        have h2 : x ∉ parityFiber (k + 1) (-1) := by simp [parityFiber, h]
+        simp only [parityLaw, if_pos h1, if_neg h2, h, Nat.add_sub_cancel]
+        field_simp
+        norm_num
+      · have h1 : x ∉ parityFiber (k + 1) 1 := by simp [parityFiber, h]
+        have h2 : x ∈ parityFiber (k + 1) (-1) := by simp [parityFiber, h]
+        simp only [parityLaw, if_neg h1, if_pos h2, h, Nat.add_sub_cancel]
+        field_simp
+        norm_num
+    rw [Finset.sum_filter, ← e.sum_comp]
+    have hQ : (∑ x : Fin (k + 1) → Fin 2,
+        (if ∀ j ∈ S, x j = yb j then ((∏ i, paritySign (x i) : ℤ) : ℚ) else 0)) = 0 := by
+      simp_rw [hpt, ← mul_ite_zero]
+      rw [← Finset.mul_sum]
+      have : (∑ x : Fin (k + 1) → Fin 2, if ∀ j ∈ S, x j = yb j then
+          parityLaw (k + 1) 1 x - parityLaw (k + 1) (-1) x else 0) = 0 := by
+        have hsplit : ∀ x : Fin (k + 1) → Fin 2, (if ∀ j ∈ S, x j = yb j then
+            parityLaw (k + 1) 1 x - parityLaw (k + 1) (-1) x else 0) =
+            (if ∀ j ∈ S, x j = yb j then parityLaw (k + 1) 1 x else 0) -
+              (if ∀ j ∈ S, x j = yb j then parityLaw (k + 1) (-1) x else 0) := by
+          intro x; split_ifs <;> simp
+        simp_rw [hsplit]
+        rw [Finset.sum_sub_distrib, ← hmass, sub_self]
+      rw [this, mul_zero]
+    have hR : (∑ x : Fin (k + 1) → Fin 2, (if ∀ j ∈ S, e x j = w j then parity (e x) else 0)) =
+        ((∑ x : Fin (k + 1) → Fin 2,
+          (if ∀ j ∈ S, x j = yb j then ((∏ i, paritySign (x i) : ℤ) : ℚ) else 0) : ℚ) : ℝ) := by
+      push_cast
+      refine Finset.sum_congr rfl fun x _ => ?_
+      rw [if_congr (hagree x) rfl rfl, hpar x]
+      split_ifs <;> simp
+    rw [hR, hQ, Rat.cast_zero]
   -- a fiber fixing the coordinates in `S` has `2 ^ (d - |S|)` elements
   have card_fiber : ∀ w : Fin d → ℤˣ,
       ((Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j)).card : ℝ) =
@@ -126,7 +165,7 @@ theorem subcoordinateLaw_eq {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finse
         1 / 2 ^ S.card := by
     intro x w
     unfold parityKernel
-    rw [← Finset.sum_div, Finset.sum_add_distrib, ← Finset.mul_sum, sum_parity_fiber S hS w,
+    rw [← Finset.sum_div, Finset.sum_add_distrib, ← Finset.mul_sum, hfiber w,
       Finset.sum_const, nsmul_eq_mul, mul_one, mul_zero, add_zero, card_fiber w]
     field_simp
   induction T with
@@ -175,31 +214,6 @@ theorem subcoordinateLaw_eq {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finse
     rw [this]
     ring
 
-/-- **Two steps reach the uniform law.** If the second profile `b` has `∑ b = 0` and
-`∑ χ b = 0`, then for every first profile `a` the product `P_a P_b` is the uniform kernel
-`Π(x, z) = 2^{-d}`; in particular `P² = Π` on the family with `E a = 0` and `E[χ a] = 0`. -/
-theorem parityKernel_mul_eq_uniform {d : ℕ} (hd : 1 ≤ d) (a b : (Fin d → ℤˣ) → ℝ)
-    (hb : ∑ y, b y = 0) (hχb : ∑ y, parity y * b y = 0) (x z : Fin d → ℤˣ) :
-    ∑ y, parityKernel a x y * parityKernel b y z = 1 / 2 ^ d := by
-  have hχ : ∑ y : Fin d → ℤˣ, parity y = 0 := by
-    have h := sum_parity_fiber (d := d) ∅ (by
-      intro h
-      have : (⟨0, hd⟩ : Fin d) ∈ (∅ : Finset (Fin d)) := h ▸ Finset.mem_univ _
-      simp at this) (fun _ => 1)
-    simpa using h
-  unfold parityKernel
-  have hexp : ∀ y, (1 + a x * parity y) / 2 ^ d * ((1 + b y * parity z) / 2 ^ d) =
-      (1 + a x * parity y + parity z * b y + a x * parity z * (parity y * b y)) / (2 ^ d) ^ 2 := by
-    intro y; field_simp; ring
-  simp_rw [hexp]
-  rw [← Finset.sum_div, Finset.sum_add_distrib, Finset.sum_add_distrib, Finset.sum_add_distrib,
-    ← Finset.mul_sum, ← Finset.mul_sum, ← Finset.mul_sum, hχ, hb, hχb]
-  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_fin,
-    Fintype.card_units_int, nsmul_eq_mul, mul_one, mul_zero, add_zero]
-  push_cast
-  field_simp
-
 #print axioms subcoordinateLaw_eq
-#print axioms parityKernel_mul_eq_uniform
 
 end D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates

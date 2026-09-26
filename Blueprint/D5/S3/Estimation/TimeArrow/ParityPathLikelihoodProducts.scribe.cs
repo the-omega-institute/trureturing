@@ -9,14 +9,15 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
     private const string Module = "D5/S3/Estimation/TimeArrow/ParityPathLikelihoodProducts.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Against the uniform product reference on hypercube paths, same-direction parity-kernel likelihoods "
-            + "have inner product (1 + E[a b])^s and opposite-direction likelihoods have inner product one.",
+        "Against the uniform product reference on hypercube paths, same-direction parity-kernel path products "
+            + "have inner product (1 + E[a b])^s and opposite-direction path products have inner product one; for "
+            + "profiles with |a| < 1 these products are the path likelihood ratios.",
         H("Inner Products of Parity-Kernel Path Likelihoods"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("forward-path-likelihood"),
                 DeclarationHandle.Create(Module + "forwardLikelihood"),
-                H("Forward path likelihood"),
+                H("Forward path product"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Sub(F.Id("L"), Seq(F.Id("a"), Comma, Plus)), Open, F.Id("x"), Close, Eq, Sp,
                     Prod, Underscore, Grp(F.Id("t"), Lt, F.Id("s")), Sp,
@@ -25,13 +26,14 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                     Sub(F.Id("x"), Seq(F.Id("t"), Plus, D(1))), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a path x_0, ..., x_s of sign vectors and a real profile a, the forward likelihood of the parity kernel "
-                        + "P_a against the uniform product reference is the product of 2^d P_a over the steps."))),
+                    "For a path x_0, ..., x_s of sign vectors and a real profile a, the forward product of the parity kernel "
+                        + "P_a is the product of 2^d P_a over the steps; for |a| < 1 it is the likelihood ratio of "
+                        + "the forward path law against the uniform product reference."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("backward-path-likelihood"),
                 DeclarationHandle.Create(Module + "backwardLikelihood"),
-                H("Backward path likelihood"),
+                H("Backward path product"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Sub(F.Id("L"), Seq(F.Id("a"), Comma, Minus)), Open, F.Id("x"), Close, Eq, Sp,
                     Prod, Underscore, Grp(F.Id("t"), Lt, F.Id("s")), Sp,
@@ -40,7 +42,7 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                     Sub(F.Id("x"), F.Id("t")), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The backward likelihood uses every step in reverse; it is the likelihood of the "
+                    "The backward product uses every step in reverse; for |a| < 1 it is the likelihood ratio of the "
                         + "time-reversed path law."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -62,13 +64,13 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
             Describe.Lean(
                 DescribeId.Create("forward-inner-product"),
                 DeclarationHandle.Create(Module + "forward_inner_product"),
-                H("Forward likelihoods: inner product"),
+                H("Forward products: inner product"),
                 StatementSource.FromAuthor(SameDirection(Plus)),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "If the profiles a and b both sum to zero over the hypercube, then for every number "
-                            + "of steps s the forward likelihoods of P_a and P_b have uniform-reference inner "
+                            + "of steps s the forward products of P_a and P_b have uniform-reference inner "
                             + "product (1 + E[a b])^s, where E is the uniform average.")),
                     Paragraph(Text(
                         "The step matrix M(x, y) = 2^d P_a(x, y) 2^d P_b(x, y) equals 1 + chi(y)(a(x) + b(x)) "
@@ -80,11 +82,11 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
             Describe.Lean(
                 DescribeId.Create("backward-inner-product"),
                 DeclarationHandle.Create(Module + "backward_inner_product"),
-                H("Backward likelihoods: inner product"),
+                H("Backward products: inner product"),
                 StatementSource.FromAuthor(SameDirection(Minus)),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Under the same hypotheses the backward likelihoods have the same inner product. Now the "
+                    "Under the same hypotheses the backward products have the same inner product. Now the "
                         + "reversed step matrix has constant row sums 2^d (1 + E[a b]), and the last state of "
                         + "the path is summed out at each induction step."))),
                 DescribeRole.Theorem),
@@ -104,14 +106,16 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                 Blocks(
                     Paragraph(Text(
                         "Let d >= 1. If the profile b sums to zero and chi b sums to zero, then for every "
-                            + "profile a and every s the forward likelihood of P_a and the backward likelihood of "
-                            + "P_b have inner product one. Since each likelihood has reference mean one, the "
-                            + "centered forward and backward likelihoods are orthogonal.")),
+                            + "profile a and every s the forward product of P_a and the backward product of "
+                            + "P_b have inner product one. Each product has reference mean one, so the "
+                            + "centered forward and backward products are orthogonal; for |a|, |b| < 1 these are the centered "
+                            + "likelihood ratios of the two time directions.")),
                     Paragraph(Text(
                         "The step matrix H(x, y) = 2^d P_a(x, y) 2^d P_b(y, x) has row sums "
-                            + "4^d (P_a P_b)(x, x) = 2^d, because the two-step product P_a P_b is the uniform "
-                            + "kernel for such b. Summing out the last state at each step gives 2^d (2^d)^s, "
-                            + "which the uniform normalization turns into one."))),
+                            + "4^d (P_a P_b)(x, x) = 2^d: expanding the product, the parity sum vanishes (it is the record "
+                            + "weight of the empty coordinate set) and the two remaining sums vanish by hypothesis. "
+                            + "Summing out the last state at each step gives 2^d (2^d)^s, which the uniform "
+                            + "normalization turns into one."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
