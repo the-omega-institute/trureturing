@@ -18995,3 +18995,362 @@ van der Corput、Abel 求和、Fourier 反演和凸截断的文献归属见
 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 104 章后续增补区）
+
+## 105. 精确噪声鞍点与逐输出 Rényi 熵的二阶响应
+
+**定义 105.1（全数组的有限鞍点）。** 保持第 103 章的原实验、固定幅度、
+$\beta\in(1/2,1)$、合法规模与全部取整，沿用其 $\rho,K,\gamma,t_\alpha$ 和
+精确 $C_j,p_j,\mu_j,v_j,e_j,V$。原计数后验仍由均匀大小 $q$ 支持先验定义，
+输出仍为 $Y=t_x(n)+\sigma_MG$，其中
+$t_x(n)=\delta^{-1/2}[\sum_j((n_j-\mu_j)/B)^2-V]$、$\delta=Q^{-1/2}$。
+所有熵均以自然对数计。令 $\nu=K''(0)=2\int\rho^2$。
+
+对正阶 $c$ 和方差参数 $u\ge0$，定义使用全部原组的函数
+
+$$
+\mathcal F_{c,u}(t)
+=-\frac\delta2\sum_j\ln(1-2tv_j/\delta)
++c t\sum_j\frac{e_j^2}{1-2tv_j/\delta}+\frac{cu t^2}{2},
+\qquad t<\frac\delta{2\max_jv_j}.
+\tag{105.1}
+$$
+
+全零数组的右端点取 $+\infty$。置 $u=\sigma_M^2>0$，用
+
+$$
+\mathcal F_{c,u}'(\tau_{c,x})=cV,\qquad
+s_{c,x}=\mathcal F_{c,u}''(\tau_{c,x})
+\tag{105.2}
+$$
+
+定义零输出处的精确鞍点及曲率。第二导数严格正；左端导数因噪声项趋负无穷，
+右端导数趋正无穷，因此有限数据中该鞍点唯一。
+这只是分析量的定义，不把小组计数替换成 Gaussian，也不改变原标量中心。
+
+**定理 105.2（常数阶的输出响应）。** 假设
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2.
+\tag{105.3}
+$$
+
+对每个固定 $\alpha>0$、$\alpha\ne1$ 及有限 $R$，有
+
+$$
+\sup_{|y|\le R}\left|
+H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+-\frac{\alpha\tau_{\alpha,x}}{\alpha-1}\frac{y}{\sqrt\delta}
+-\mathcal B(\alpha)y^2\right|\longrightarrow0,
+\tag{105.4}
+$$
+
+$$
+\mathcal B(\alpha)=
+\frac{\alpha^2/K''(t_\alpha)-\alpha/\nu}{2(\alpha-1)}.
+\tag{105.5}
+$$
+
+收敛在原实际数据概率下，对所有规定大小的确定支持一致，pair/path 分别成立。
+固定支持只规定数据采样律，仍评价同一个先验定义的后验。
+输出 $y$ 没有平均。特别地，
+
+$$
+\sqrt\delta\,[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)]
+\longrightarrow\frac{\alpha t_\alpha}{\alpha-1}y
+\tag{105.6}
+$$
+
+在同一输出紧区间和概率口径下一致成立。
+(105.4) 的放大线性项必须保留有限噪声与经验数据，不能仅由
+$\tau_{\alpha,x}\to t_\alpha$ 换成极限常数。
+
+**证明：共同数组界与截断回接。** 以下常数先在紧的正阶区间
+$A=[c_-,c_+]\subset(0,\infty)$ 和固定输出紧区间上一致选取。
+第 103 章实际占据数、校准与精确中心界给
+
+$$
+V\to\gamma,\quad \|e\|_2=O_{\mathbb P}(Q^{-5/2}+q^{-1/2}),
+\quad\max_jv_j/\delta\to\rho(0),\quad
+\delta\sum_jF(v_j/\delta)\to\int F(\rho(s))\,ds.
+\tag{105.7}
+$$
+
+末式适用于这里使用的紧的一致 Lipschitz 函数族，且 $F(0)=0$。
+固定空间核心含至少 $b_0/\delta$ 个权重在 $[b_1\delta,b_2\delta]$ 的组。
+由 $K'$ 严格递增且值域为 $(0,\infty)$，全部阶数的鞍点以高概率位于
+固定的内部紧区间，$\tau_{c,x}\to t_c$ 对 $c\in A$ 一致。
+这里 $t_c$ 表示阶数 $c$ 的解，不是矩母函数域的右端点。
+在该紧区间，$\mathcal F''$ 上下有正常数界，三、四阶导数有界。
+
+为使用第 103 章的实际取整比较，选 $l<c_q/2$ 使最终 $L_M\le lQ^3$，
+并选 $\epsilon>0$ 满足 $2\epsilon<c_q-l$。
+令 $H=\{j:C_j\ge e^{\epsilon Q^3}\}$，以 $F^H_{c,u}$ 表示 (105.1)
+只在两项和中保留 $H$ 的函数；其鞍点目标仍为完整 $cV$。
+因为 $0\le\mu_j,C_jp_j\le C_j$ 且组数至多 $CQ^2$，
+
+$$
+\sum_{H^c}v_j\le CQ^2e^{\epsilon Q^3}/B^2,\qquad
+\sum_{H^c}e_j^2\le CQ^2e^{2\epsilon Q^3}/B^2.
+$$
+
+共同分母余量遂给
+
+$$
+\|\mathcal F_{c,u}-F^H_{c,u}\|_{C^4}\le d_Q,
+\quad d_Q=\operatorname{poly}(Q)e^{-(c_q-2\epsilon)Q^3},
+\quad |\tau_{c,x}-\tau^H_{c,x}|\le Cd_Q.
+\tag{105.8}
+$$
+
+固定多项式阶由至多 $CQ^2$ 组和 $\delta$ 的固定幂产生。
+因此任何满足上述条件的固定截断，其放大线性中心都与全数组中心等价。
+这不把原观察向量删成 $H$。
+
+**绝对对数精度的倾斜密度。** 对全数组或上述高计数子数组，引入独立标准正态，令
+
+$$
+W_{c,u}=\sum_j(\sqrt{v_j}Z_j-\sqrt c\,e_j)^2+\sqrt{c\delta u}\,G,
+\qquad z_{c,y}=c(V+\sqrt\delta y).
+\tag{105.9}
+$$
+
+其缩放累积量函数 $F_{c,u}(t)=\delta\ln\mathbb E e^{tW_{c,u}/\delta}$
+恰为相应的 (105.1)。令 $t=t_{c,u}(y)$ 解 $F_{c,u}'(t)=z_{c,y}$，并记
+$I_{c,u}(z)=zt-F_{c,u}(t)$。
+按 $\exp[tW/\delta-F(t)/\delta]$ 倾斜后，
+$(W-F'(t))/\sqrt\delta$ 的特征函数 $\psi_t$ 满足
+
+$$
+|\psi_t(\xi)|\le(1+b\delta\xi^2)^{-b'/\delta}.
+\tag{105.10}
+$$
+
+这是固定核心的平方正态变换乘积；非中心项和附加 Gaussian 因子的模至多一。
+取固定小 $b_3>0$，在 $|\xi|\le b_3/\sqrt\delta$ 上，该函数及对应中心
+Gaussian 特征函数均由 $e^{-b_4\xi^2}$ 主控。
+共同分母余量中的复 Taylor 展开给一个连续解析对数
+
+$$
+A_t(\xi):=\ln\psi_t(\xi)
+=-\tfrac12F''(t)\xi^2+R_t(\xi),\qquad
+|R_t(\xi)|\le C\sqrt\delta|\xi|^3.
+$$
+
+写 $B_t=-F''(t)\xi^2/2$。两者实部均不超过 $-b_4\xi^2$，故
+
+$$
+|e^{A_t}-e^{B_t}|
+\le |A_t-B_t|\int_0^1e^{\operatorname{Re}[(1-s)B_t+sA_t]}\,ds
+\le C\sqrt\delta|\xi|^3e^{-b_4\xi^2}.
+\tag{105.11}
+$$
+
+此界不要求频段边缘的余项绝对值小。
+外频段令 $v=\sqrt\delta|\xi|$，利用 (105.10) 的固定正阈值后对数增长界，
+积分为 $e^{-b_5/\delta}$ 乘固定多项式。
+因此两特征函数的 $L^1$ 距离为 $O(\sqrt\delta)$。
+Fourier 反演给倾斜标准化密度在零点等于
+$[2\pi F''(t)]^{-1/2}+O(\sqrt\delta)$；首项有正下界，故也是相对误差。
+解除倾斜并乘 $dz_{c,y}/dy=c\sqrt\delta$，Gaussian 比较输出密度满足
+
+$$
+\ln g_{c,u}(y)
+=-I_{c,u}(z_{c,y})/\delta+\ln c
+-\tfrac12\ln[2\pi F_{c,u}''(t_{c,u}(y))]
++O_{\mathbb P}(\sqrt\delta).
+\tag{105.12}
+$$
+
+该误差是未缩放对数的误差。所有界对 $c,y$ 及 $u$ 的小邻域一致；
+先约束紧随机量再释放约束，得到所写实际数据概率口径。
+
+**噪声宽度的定量稳定性。** 同一目标 $z$ 下，精确函数差为
+$F_{c,u'}(t)-F_{c,u}(t)=c(u'-u)t^2/2$。
+曲率下界与鞍点有界给 $|t_{c,u'}-t_{c,u}|\le C|u'-u|$。
+在彼此的极值点计算两个 Legendre 上确界，得
+$|I_{c,u'}(z)-I_{c,u}(z)|\le C|u'-u|$。
+再用三阶导数界控制曲率前因子，(105.12) 给
+
+$$
+\sup_{c\in A,|y|\le R}|\ln g_{c,u'}(y)-\ln g_{c,u}(y)|
+\le C|u'-u|/\delta+C|u'-u|+O_{\mathbb P}(\sqrt\delta).
+\tag{105.13}
+$$
+
+第 103 章的整数盒取整及全部小组能量界给
+$\Delta_Q\le\operatorname{poly}(Q)[B^{-1}+B^{-2}e^{2\epsilon Q^3}]$。
+原核夹逼使用 $s=\sigma/\sqrt c$ 和 $h_c=\Delta_Q\sqrt c/\sigma$，
+两宽度为 $s/\sqrt{1\pm h_c}$。由 (105.3) 及上述严格指数余量，
+
+$$
+h_c\le\operatorname{poly}(Q)e^{-bQ^3},\qquad
+u'_{\pm}=u/(1\pm h_c),\qquad
+|u'_{\pm}-u|\le C\sigma^2h_c.
+\tag{105.14}
+$$
+
+故 $|u'_{\pm}-u|/\delta$ 指数趋零，即使原噪声下降极慢仍成立。
+只知道宽度之比趋一不足以支付 (105.12) 中的 $1/\delta$。
+
+**从同一实际计数律返回。** 对 $c\in A$，第 103 章的幂二项 Stirling 估计，
+在 $H$ 上的共同盒 $|n_j-C_jp_j|/\sqrt{d_j}\le Q^2$ 内，给计数 escort
+与取整正态数组的联合质量比
+$1+O(\operatorname{poly}(Q)e^{-\epsilon Q^3/4})$。
+两律盒外概率至多 $CQ^2e^{-bQ^4}$；常数对紧正阶区间一致。
+核夹逼及 (105.13)–(105.14) 因而控制盒内的绝对对数差。
+盒外平滑密度至多 $C\sigma^{-1}Q^2e^{-bQ^4}$，
+而 (105.12) 给比较密度下界 $e^{-C/\delta}$。
+前者除以后者仍指数趋零；未把多项式 TV 误差除以稀有密度。
+
+实际固定总数修正也保持定量精度。以 $\mathsf Q_x$ 记原校准乘积计数律，
+第 103 章的同一稀有输出重加权能量界给
+
+$$
+\sup_{c\in A,|y|\le R}
+\left|\ln\frac{f_{\mathsf P_{x,c},\sigma/\sqrt c}(y)}
+{f_{\mathsf Q_{x,c},\sigma/\sqrt c}(y)}\right|=O_{\mathbb P}(\delta).
+\tag{105.15}
+$$
+
+其一致性来自幂计数律曲率至少 $2c/C_j$，以及相应方差、均值偏移和
+重加权能量均值界在 $A$ 上的一致常数；仍是在实际稀有权重下使用 Jensen。
+结合 (105.8) 的鞍点、Legendre 和曲率稳定性，将高数组换为全数组只增加
+$Cd_Q/\delta+O_{\mathbb P}(\sqrt\delta)$。最终得到
+
+$$
+\sup_{c\in A,|y|\le R}
+|\ln f_{\mathsf P_{x,c},\sigma/\sqrt c}(y)-\ln g_{c,\sigma^2}(y)|
+=O_{\mathbb P}(\sqrt\delta).
+\tag{105.16}
+$$
+
+路径行或条件计数向量没有被宣布独立；它们的依赖由原实际输入界和 (105.15) 承担。
+
+**先展开有限 Legendre 函数。** 固定原 $u=\sigma^2$。
+精确恒等式 $I'=t$、$I''=1/F''(t)$、$I'''=-F'''(t)/F''(t)^3$ 给
+
+$$
+I(cV+c\sqrt\delta y)-I(cV)
+=c\tau_c\sqrt\delta y+\frac{c^2\delta y^2}{2s_c}
++O(\delta^{3/2}).
+$$
+
+前因子的对数差为 $O(\sqrt\delta)$。
+用 (105.12)、(105.16)，得到实际相对密度的未缩放展开
+
+$$
+\ell_c(y):=\ln\frac{f_{\mathsf P_{x,c},\sigma/\sqrt c}(y)}
+{f_{\mathsf P_{x,c},\sigma/\sqrt c}(0)}
+=-\frac{c\tau_c y}{\sqrt\delta}-\frac{c^2y^2}{2s_c}
++O_{\mathbb P}(\sqrt\delta).
+\tag{105.17}
+$$
+
+这是对有限函数先 Taylor，未对一个已经取极限的率函数误差再除以 $\delta$。
+阶数一处 $F_{1,u}'(0)=V+\|e\|^2$，故
+
+$$
+\tau_1=O_{\mathbb P}(Q^{-5}),\qquad s_1\to\nu,
+\qquad\sup_{|y|\le R}|\ell_1(y)+y^2/(2\nu)|\to0.
+\tag{105.18}
+$$
+
+第 103 章有限 escort 恒等式在 $y$ 与零处相减，精确给
+
+$$
+H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+=\frac{\ell_\alpha(y)-\alpha\ell_1(y)}{1-\alpha}
+=\frac{\alpha(\tau_\alpha-\tau_1)}{\alpha-1}\frac{y}{\sqrt\delta}
++\frac{\alpha^2/s_\alpha-\alpha/s_1}{2(\alpha-1)}y^2
++O_{\mathbb P}\!\left(\frac{\sqrt\delta}{|\alpha-1|}\right).
+\tag{105.19}
+$$
+
+固定阶下，(105.18) 消去普通鞍点的放大项，曲率极限给 (105.4)；
+再乘 $\sqrt\delta$ 得 (105.6)。全部输入对原支持一致且 pair/path 分别适用，证毕。
+
+**定理 105.3（趋一阶数的穿孔窗口）。** 设固定正紧区间 $A$ 的内部包含一，
+$\eta_Q\downarrow0$ 且 $\sqrt\delta/\eta_Q\to0$。
+则 (105.4) 还对 $\alpha\in A$、$|\alpha-1|\ge\eta_Q$ 一致成立，
+仍保留该阶数的精确有限噪声鞍点。
+
+证明不能只把曲率的一致收敛除以 $\alpha-1$。
+写 $F_{c,u}(t)=C_x(t)+cD_x(t)$，其中
+
+$$
+D_x(t)=t\sum_j\frac{e_j^2}{1-2tv_j/\delta}+\tfrac12ut^2.
+$$
+
+在共同紧域上 $C_x\to K$、$D_x\to0$ 于 $C^4$ 范数成立。
+对精确有限鞍点方程微分得
+
+$$
+\partial_c\tau_c=\frac{V-D_x'(\tau_c)}{s_c},\qquad
+\partial_cs_c=D_x''(\tau_c)+F_{c,u}'''(\tau_c)\partial_c\tau_c.
+\tag{105.20}
+$$
+
+因此 $N_x(c)=c^2/s_c-c/s_1$ 于 $C^1(A)$ 收敛到
+$N(c)=c^2/K''(t_c)-c/\nu$，且两者在一处严格等于零。
+恒等式
+
+$$
+\frac{N_x(c)}{c-1}=\int_0^1N_x'(1+s(c-1))\,ds
+\tag{105.21}
+$$
+
+给相应差商的一致收敛，无需经验环境的收敛速率。
+(105.19) 的余项除以 $\eta_Q$ 后趋零，
+普通鞍点遗漏项至多 $O_{\mathbb P}(Q^{-5}/(\eta_Q\sqrt\delta))\to0$，证毕。
+连续延拓的二次系数为
+
+$$
+\mathcal B(1)=\frac1{2\nu}-\frac{\gamma K'''(0)}{2\nu^3}.
+\tag{105.22}
+$$
+
+例如 $\eta_Q=\delta^{1/4}$ 可用。该窗口不含阶数一，也不含
+$|\alpha-1|=O(\sqrt\delta)$ 的全部序列。
+有限纤维上 Shannon 响应需要
+$H_1(\mathsf P_x^y)-H_1(\mathsf P_x^0)=\ell_1(y)-\partial_c\ell_c(y)|_{c=1}$。
+(105.16) 的一致函数值误差不控制其阶数导数；显式 Gaussian 累积量函数可微
+也不补出实际比较误差的导数界。本章不据此声称 Shannon 响应定理。
+
+**命题 105.4（删除有限噪声的实际反例）。** 固定 $\alpha\ne1$，以
+$\tau_\alpha(u)$ 记 (105.2) 在方差 $u$ 处的解。
+在共同内部紧域，隐函数微分和有界高阶导数给
+
+$$
+\frac{d\tau_\alpha(u)}{du}
+=-\frac{\alpha\tau_\alpha(u)}{F_{\alpha,u}''(\tau_\alpha(u))},
+\qquad
+\frac{\tau_\alpha(u)-\tau_\alpha(0)}u
+\longrightarrow-\frac{\alpha t_\alpha}{K''(t_\alpha)}.
+\tag{105.23}
+$$
+
+有限无噪声鞍点在这些概率趋一的事件上存在，右侧非零。
+取原模型允许的 $\sigma_M=\delta^{1/8}$，即 $u=\delta^{1/4}$；
+它满足 (105.3)，但 $u/\sqrt\delta=\delta^{-1/4}\to\infty$。
+若在 (105.4) 中把中心换为 $\tau_\alpha(0)$，所得残差对固定 $y\ne0$ 满足
+
+$$
+\delta^{1/4}\left[
+H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x^0)
+-\frac{\alpha\tau_\alpha(0)}{\alpha-1}\frac y{\sqrt\delta}
+-\mathcal B(\alpha)y^2\right]
+\longrightarrow-\frac{\alpha^2t_\alpha y}{(\alpha-1)K''(t_\alpha)}\ne0.
+\tag{105.24}
+$$
+
+这是原实际计数信道的结论，直接由 (105.4) 和 (105.23) 得到，非仅 Gaussian 代理的反例。
+它排除删除噪声项的简化，不否定保留精确中心的定理。
+
+本章不提供无穷阶端点、增长输出区间、期望熵、全局原始数据平均或噪声端点结论。
+指数倾斜、相对鞍点方法和 Legendre 演算是经典工具；新增连接是原完整计数模型中的
+绝对对数误差、噪声宽度支付、精确有限中心及穿孔阶数窗口。
+文献的适用条件与未接通的 Shannon 导数义务见
+[Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 105 章后续增补区）
