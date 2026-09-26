@@ -5,10 +5,11 @@ year: 2026
 title: Gaussian linear images, independence and Markov disintegration in Mathlib v4.33.0
 doi: null
 url: https://github.com/leanprover-community/mathlib4/tree/v4.33.0/Mathlib/Probability/Distributions/Gaussian
-claim: Pinned Gaussian covariance and independence theorems support an explicit conditional-law construction for arbitrary rectangular additive-noise observations.
+claim: Pinned Gaussian covariance and independence theorems support an explicit conditional-law construction and extended-valued Bayes risk for arbitrary rectangular additive-noise observations.
 strata_touched:
   - D5/S3/Observer/Linear/GaussianAffineDisintegration
   - D5/S3/Observer/Linear/GaussianObservationDisintegration
+  - D5/S3/Observer/Linear/GaussianPosteriorRisk
 license: citation-only
 triage: anchor
 ---
@@ -50,8 +51,26 @@ Cov(R)=Sigma. Gaussian independence then gives the actual product residual
 law, and an explicit affine Markov kernel disintegrates the observed joint law.
 The resulting kernel is identified pointwise with the earlier candidateLaw.
 
-These Gaussian conditioning statements are classical mathematics, with no
-new-priority claim. Their role is to close the source-level candidate-to-law
-bridge left open by PR8899. No new Lean source in this delivery has yet been
-elaborated or kernel-verified. Finite numerical and exact arithmetic checks
-are reported separately; they are not formal verification.
+## Extended-valued Bayes risk
+
+`Probability/Moments/Variance.lean` supplies `variance_eq_sub`,
+`variance_sub_const` and the square-integrability API used to derive each
+conditional coordinate moment. The Gaussian coordinate means and variances
+come from the actual constructed law, not from a supplied moment certificate.
+`EuclideanSpace.norm_sq_eq` identifies the coordinate loss with physical
+Euclidean squared energy. `Measure.lintegral_compProd` supplies Tonelli for
+the constructed posterior kernel. The conversion of the conditional real
+integral to `ENNReal` occurs only after proving conditional integrability
+and nonnegativity.
+
+The resulting risk identity holds for all measurable estimators, with no
+finite-risk assumption. A finite covariance baseline can be cancelled to
+prove the almost-everywhere uniqueness of the posterior mean. Orthogonal
+propagation is handled by an actual linear isometric equivalence and its
+inverse, yielding a correspondence of all competing estimators.
+
+These Gaussian conditioning and risk statements are classical mathematics,
+with no new-priority claim. Their role is to close source-level gaps left by
+PR8899. No new Lean source in this delivery has yet been elaborated or
+kernel-verified. Finite numerical and exact arithmetic checks are reported
+separately; they are not formal verification.
