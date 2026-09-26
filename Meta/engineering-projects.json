@@ -883,7 +883,6 @@
         ".github/scripts/harness-gate.sh",
         ".github/workflows/ci-pr.yml",
         ".github/workflows/ci-push.yml",
-        "CLAUDE.md",
         "Golden/Projection/statement-projection-expansion-v1.json",
         "Golden/Projection/statement-projection-pilot-v1.json",
         "Golden/gate-authority-roots.toml",
@@ -1546,7 +1545,9 @@
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
         "README.md",
+        "Reg/Catalogs/TemplateShadow.lean",
         "Trureturing.lean",
+        "agents/CONTEXT.md",
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
@@ -1561,6 +1562,11 @@
         "docs/reports/instruction-contract-renamed.md",
         "docs/reports/prime-slab-corner-order-0909.json",
         "docs/reports/worktree-contract-probe.md",
+        "docs/reports/worktree-guard-probe.c",
+        "docs/reports/worktree-guard-probe.cpp",
+        "docs/reports/worktree-guard-probe.h",
+        "docs/reports/worktree-guard-probe.mjs",
+        "docs/reports/worktree-guard-probe.py",
         "global.json",
         "lake-manifest.json",
         "lakefile.toml",
@@ -1568,6 +1574,7 @@
         "lean-toolchain",
         "skills/codex-theory-ingest/SKILL.md",
         "skills/formal-thinking-and-answer/SKILL.md",
+        "skills/theory-volume-template/SKILL.md",
         "tools/Makefile",
         "tools/StrataLint.BuildRuntime/Changed.cs",
         "tools/StrataLint.CiArtifacts/Changed.cs",
@@ -1649,6 +1656,7 @@
         "tools/scripts/agent/openproblem/erdos617.py",
         "tools/scripts/agent/openproblem/standing-check.py",
         "tools/scripts/agent/openproblem/templates/review-template.md",
+        "tools/scripts/agent/openproblem/worktree-guard-probe.py",
         "tools/scripts/agent/test_xi_quantization.py",
         "tools/scripts/agent/xi_quantization.py",
         "tools/scripts/ci-stage.sh",
@@ -1779,6 +1787,7 @@
         "tools/tests/StrataLint.WorkflowScript.Tests/packages.lock.json",
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
         "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeCacheStrategyTests.cs",
+        "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeGuardProbe.cs",
         "tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -3070,7 +3079,6 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "CLAUDE.md",
         "tools/scripts/pr.sh"
       ],
       "execution_excludes": [],
@@ -4125,7 +4133,18 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "**"
+        "**/*.lean",
+        ".github/scripts/**",
+        "Blueprint/**/*.scribe.cs",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "Makefile",
+        "docs/reports/**/*.c",
+        "docs/reports/**/*.cpp",
+        "docs/reports/**/*.h",
+        "docs/reports/**/*.mjs",
+        "docs/reports/**/*.py",
+        "tools/**"
       ],
       "execution_excludes": [],
       "execution_environment": [

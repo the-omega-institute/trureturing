@@ -58,8 +58,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ValuesKernelBytesSelectCoverBatchEvenWhenFixtureOverwritesThem(string mode)
     {
         var plan = Plan("Golden/values-kernels.toml", "", mode);
-        Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject, RepositoryFileMapProject }), Strings(plan["execution"]!["tests"]!));
-        Assert.Equal(new[] { "current", "delta", "filemap", "scribe", "test-cover-batch", "test-repository-filemap", "test-worktree-contract" },
+        Assert.Equal(OrderedConsumers(new[] { CoverBatchProject, RepositoryFileMapProject }), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "current", "delta", "filemap", "scribe", "test-cover-batch", "test-repository-filemap" },
             Strings(plan["declared_require"]!));
     }
 
@@ -75,7 +75,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var path in new[] { "D5/S3/Constants/Values.lean", "D5/X_Frontier/ValuesProducer.lean" })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithPathInventory(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }, change), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(WithPathInventory(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }, change), Strings(plan["execution"]!["tests"]!));
             Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-repository-filemap", "test-worktree-contract" }
                     .Concat(change is "D" or "R" ? new[] { "test-repository-topology" } : []).Order(StringComparer.Ordinal),
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
@@ -86,7 +86,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             {
                 var destination = Assert.Single(plan["paths"]!.AsArray(),
                     row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
-                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology", "test-worktree-contract" }, Strings(destination!["require"]!));
+                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology" }, Strings(destination!["require"]!));
             }
         }
     }
@@ -113,10 +113,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void UnrelatedMetadataAndReportsDoNotSelectCoverBatch(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
+            Assert.Equal(OrderedConsumers(path.StartsWith("D5/", StringComparison.Ordinal)
                     ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }
                     : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
-                        ? new[] { RepositoryDigestionProject, RepositoryFileMapProject, SourceAtomizerProject } : [RepositoryFileMapProject]),
+                        ? new[] { RepositoryDigestionProject, RepositoryFileMapProject } : [RepositoryFileMapProject]),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 }
