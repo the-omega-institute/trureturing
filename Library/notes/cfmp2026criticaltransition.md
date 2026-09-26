@@ -94,3 +94,575 @@ establish the co-volume minimum, or prove the cover family. The full CFMP
 conjecture and unrestricted minimum-eight case remain outside the restricted
 hypotheses. The independent-opposite-one obstruction is retained without
 alteration.
+
+## Volume averaging and explicit P4 lengths, theory Sections 36-40
+
+The continuation uses the same theory owner and keeps the earlier critical-star
+claims unchanged. These sections are ordinary written mathematics. They do not
+change the formal declarations or claim a new kernel-checked geometric theorem.
+
+### Exact primary-source obligations
+
+Luo-Yang, arXiv:1404.5365, Theorem 1.4 (printed page 2) and Theorem 6.3
+(printed page 21) are used for uniqueness of the maximum-volume hyperideal
+angle assignment and its realization by one positive global length vector.
+At that maximizer, each tetrahedron is genuine or has two opposite pi angles
+and four zero angles. Definition 6.1 fixes the strict versus closed vertex-angle
+conditions. Proposition 6.7 with all six edges supplies local strict concavity;
+continuity extends the non-strict concavity inequality to the compact closure.
+Theorem 36.2 is a consequence of these existing inputs and actual tetrahedron
+transitivity, not a new version of the Luo-Yang theorem.
+
+https://arxiv.org/pdf/1404.5365
+
+The PDF text was read and screenshots of printed pages 2, 21 and 22 were
+successfully inspected. Some nearby descriptive sentences in this PDF say
+convex where the needed statement is concave. The continuation uses the
+explicit concavity statement and proof of Proposition 6.7 and its Schlaefli
+sign, rather than treating those descriptive occurrences as a convexity input.
+The continuity and angle-domain statements are kept separate from that sign.
+
+The pure-P4 averaging proof establishes every global edge equation after
+averaging by using exact endpoint/middle incidence counts. Concavity alone
+does not establish that feasibility. Common colour lengths are derived from
+the interior reduced variational equations, not assumed for arbitrary inputs.
+
+### Independent algebraic realization
+
+Theory Section 38 substitutes y=x-1/2-1/(2x) into the original six-variable
+cosine and proves all four role cosines belong to (0,1) for
+x>(3+sqrt(17))/4. The geometric identification uses Luo-Yang Proposition 4.4,
+which concerns the whole positive length domain. No cube-only monotonicity
+result is applied beyond its hypotheses.
+
+The positive radical signs give
+cos(2 gamma+delta)=-1+(3x-1)/(2x(x-1)^2), with 0<2 gamma+delta<pi.
+Its strictly negative derivative proves existence and uniqueness of the
+specified scalar cubic root for each real d>6. At d=9 the factorization is
+(x+1)(x^2-3x+1)=0, giving cosh(l_L)=(3+sqrt(5))/2 and
+cosh(l_H)=(1+3sqrt(5))/4. These equations are derived here from the cited
+classical formula; no priority claim follows from bounded literature search.
+
+### Genuine incidence and remaining scope
+
+The cyclic face-pairing construction has return translations 2u-v and u+2v,
+with both three-step oriented endpoint maps equal to the identity. This proves
+its edge degrees and normal circles. Vertex classes and corner fans are
+computed from the same face maps, not inferred from Euler characteristic alone.
+The N=6,u=4,v=5 packet has degrees (6,6,6,9,9) and one genus-two boundary.
+The earlier N=2n,u=1,v=n+2 family now admits all n except 1 and 5 in the strict
+hyperideal setting, including five-component boundary cases when 5 divides n.
+The two exceptional parameters have torus links; no cusped-metric claim is made.
+
+Exact symbolic identities and eleven specified cyclic packets were checked
+as supplementary diagnostics. The written return-map argument proves the
+unbounded family. No new Lean/Scribe source, CI configuration, admission state,
+or frozen artifact is part of this continuation. The complete CFMP conjecture
+and the unrestricted minimum-six/seven/eight cases remain beyond its hypotheses.
+
+## Face transport, strict minimum-six angles, and the nonlinear boundary, Sections 41-44
+
+This continuation remains ordinary written mathematics in the existing theory
+owner. It changes no formal declaration, authored Scribe, admission record,
+CI configuration or frozen state.
+
+### Constructive angle/area compatibility
+
+For normalized angles a=alpha/pi, M sums actual edge fibres and Q sums the
+three angles at each tetrahedron corner. A face-corner transport changes
+source face edges by (-f/2,-f/2,+f/2) and their paired target occurrences by
+the opposite values. Thus M is unchanged and exactly two corner deficits
+change, by +f and -f. Repeated labels and self-pairings are retained.
+
+The link dual spanning trees prove that Q(ker M) is precisely the space of
+corner vectors with zero sum on every ideal vertex class. The remaining
+joint kernel has dimension 2|T|-|E|+b, with b the number of ideal vertices.
+This is a linear compatibility statement, separate from angle positivity.
+
+For any positive weak seed, positive total deficit on every boundary link
+is necessary and sufficient for arbitrarily small strictification at the
+same edge sums. The explicit tree-flow bound is
+norm_infinity(a_tau-a_0)<=3*tau*D_max. It provides a single simultaneous
+positivity bound rather than independently chosen local small parameters.
+For edge degree at least six, a_0=2/degree is a positive weak seed and the
+link deficit is exactly -2*Euler_characteristic. Hence every triangulation
+in the owner's genus-at-least-two boundary setting has a strict positive
+hyperideal angle structure, including corners with three degree-six edges.
+
+Related primary-source frameworks, checked in this continuation:
+
+Feng Luo and Stephan Tillmann, *Angle structures and normal surfaces*,
+Transactions of the American Mathematical Society 360 (2008), 2849-2866.
+https://arxiv.org/abs/math/0510537
+
+Huabin Ge, Longsong Jia and Faze Zhang, *Angle structures on pseudo
+3-manifolds*, arXiv:2502.11397v1 (2025).
+https://arxiv.org/abs/2502.11397
+https://arxiv.org/html/2502.11397v1
+Their angle/area/curvature and normal-surface criteria are relevant to this
+compatibility problem. This increment varies individual corner areas while
+preserving their total on each boundary component, so it does not silently
+identify that problem with a theorem requiring a fixed area function.
+The explicit face-transport proof is supplied in full. The bounded source
+comparison does not establish novelty or priority over all angle-structure
+literature.
+
+### What strictification proves, and what it does not
+
+Luo-Yang Theorem 1.4 and Theorem 6.3 are again read in the original PDF,
+including screenshots of printed pages 2 and 21; Proposition 6.7 on printed
+page 22 supplies the explicit concavity statement. The newly constructed
+strict seed discharges their angle-structure hypothesis for every minimum-six
+triangulation in the strict boundary setting. The resulting shared positive
+length is still generalized where a tetrahedron is flat.
+
+The tetrahedron-transitive realization theorem therefore now covers all
+minimum-six triangulations satisfying that genuine combinatorial symmetry,
+without an additional local reciprocal-degree inequality. For general
+triangulations the number of flat maximizing tetrahedra is at most |E|-1,
+and the number of genuine ones is at least |T|-|E|+1. Neither bound says the
+flat set is empty.
+
+Section 44 records a rational closed angle assignment on the actual
+six/nine-degree packet: exactly one flat tetrahedron and five strict ones,
+with every edge sum correct. Role averaging strictly increases its volume,
+so it is not a maximizing assignment and is not a CFMP counterexample.
+Conversely, applying deficit averaging to the genuine golden maximizer
+changes its nonconstant corner deficits and strictly decreases volume by
+uniqueness. Feasible transport cannot be advertised as volume-nondecreasing.
+The remaining general obligation is nonlinear exclusion of flat maximizers.
+
+### Executed supplementary checks
+
+The specified N=6,u=4,v=5 packet was checked with exact rational arithmetic:
+all 72 directed face-corner elementary transports preserve edge sums and
+have the stated corner image; the combined M/Q rank is 28 and the joint
+kernel dimension is eight. The rational one-flat table and its strict
+role average were checked entrywise. A positive weak seed with one saturated
+corner was strictified with tau=1/138, giving minimum angle 6617/38088 and
+minimum corner deficit 1/828 in normalized units. The general tree proof,
+not this finite computation, establishes the theorem. No full CFMP solution,
+nonlinear cusped completeness theorem or new kernel certification is claimed.
+
+## Nonlinear flat-pair bounds and two-edge realization, Sections 45-49
+
+This written continuation uses the same theory owner. It adds an authored
+Remark to the existing CriticalTransitionStar Scribe, without changing that
+Lean declaration, its statement, or any frozen content. The Remark is
+explicitly outside the kernel-certified scope of the existing theorem.
+
+### Primary convexity and geometry inputs
+
+Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
+3-manifolds*, arXiv:1404.5365v2.
+https://arxiv.org/abs/1404.5365
+https://arxiv.org/pdf/1404.5365
+
+Corollary 4.9 defines the extended angles. Proposition 4.10 and Corollary
+4.12, printed pages 18-19, give the C1 convex extended co-volume and its
+gradient equal to those angles. Proposition 4.4, printed page 16, and
+Lemma 4.6 give the whole-positive-length domain and the three possible
+flat angle patterns. These statements, including their domains, were
+checked in the parsed original PDF. The new screenshot attempts for
+printed pages 16 and 19 failed with a cache-miss error; no successful
+visual inspection of those pages is claimed in this increment.
+
+The convexity of a fixed-gradient fibre is an elementary consequence of
+the cited convex function: subtract the fixed angle vector's linear
+functional and use convexity of the minimizer set. The written proof then
+averages under the tetrahedral Klein four group. This is an average of
+actual lengths, not of cosh-lengths, and not a proposed global independent
+change of the tetrahedra. Its only purpose is to derive a necessary
+condition on the original shared length data.
+
+### New ordinary deductions and limitations
+
+If ij and kh carry the pi angles of a positive generalized tetrahedron,
+the theory derives
+
+cosh((l_ij+l_kh)/2) >= 1
+    + cosh((l_ik+l_jh)/2) + cosh((l_ih+l_jk)/2).
+
+The calculation retains the positive denominator
+X^2+Y^2+Z^2+2XYZ-1 and its exact factorization. Necessity is asserted for
+general lengths; equivalence is asserted only after opposite lengths
+are pairwise equal. No arbitrary local or global equal-length premise
+is inserted into the original problem.
+
+The complete box [m,M]^6, with 0<m<=M, consists entirely of genuine
+hyperideal tetrahedra iff cosh(M)<1+2cosh(m). Consequently the upper-only
+positive cosh cube (1,3]^6 is genuine and the constant three is optimal
+for that precise type of cube. This does not extend coordinate
+monotonicity: at (6/5,6/5,14/5,6/5,6/5,14/5) the established derivative
+numerator equals -1026/125. The point is genuine but that neighbour
+derivative is negative.
+
+Reading each opposite-pair multiset of actual global labels as one
+shared cosh-of-mean variable gives directed acyclic constraints on
+simultaneous flat candidates. A local convex-combination identity of
+the pair reading vectors also excludes the candidate by Jensen's
+inequality. Neither acyclicity nor the surviving scalar inequalities
+are advertised as sufficient for geometric realizability.
+
+For a triangulation with exactly two global edges A,B, with each label
+appearing at least twice in every tetrahedron, a mixed AB pi-pair is
+always excluded by those two local rules. A pure AA or BB pi-pair
+already saturates the entire corresponding edge angle sum, contradicting
+the existence of a genuine tetrahedron, since every tetrahedron contains
+both labels. The strict seed from Section 42 and the existing Luo-Yang
+maximizer theorem therefore establish realization when both edge
+degrees are at least six. Local 1/5 label distributions are excluded
+from the theorem's hypotheses; no full two-edge or full CFMP claim follows.
+
+### Concrete topology and a nonlinear infeasibility witness
+
+The complete three-tetrahedron packet in Section 48 has edge degrees
+(6,12), one genus-two boundary, two adjacent A occurrences in the first
+two tetrahedra and opposite A occurrences in the third. All six actual
+face pairings, the two edge fibres, and their normal circles are supplied.
+The same packet admits the rational one-flat angle table
+
+  [8,0,0,8,0,0; 2,2,1,1,1,1; 2,1,1,2,1,1] / 8.
+
+It satisfies every linear edge and corner condition, but its flat
+tetrahedron would require Z_AB >= 1+Z_AB+Z_BB. Thus no positive common
+generalized lengths produce that table. This is a stronger conclusion
+than merely finding another angle assignment of larger volume, and is
+not a counterexample to CFMP. The manifold itself is realized by the
+two-edge theorem. Its connected cyclic covers yield 3n-tetrahedron,
+six/twelve-degree examples with Euler characteristic -n.
+
+Roberto Frigerio, Bruno Martelli and Carlo Petronio, *Small hyperbolic
+3-manifolds with geodesic boundary*, arXiv:math/0211425 (2002), published
+in Experimental Mathematics 13 (2004).
+https://arxiv.org/abs/math/0211425
+
+The primary abstract states the classification of the relevant orientable
+hyperbolic manifolds admitting ideal triangulations with at most four
+tetrahedra. The present packet is an explicit witness for a proved
+criterion. Its census identity has not been determined, and it is not
+claimed to be a new homeomorphism type. Bounded source searches do not
+establish priority for the general sufficient criterion or mean bound.
+
+### Verification scope
+
+Exact supplementary checks cover the opposite-pair polynomial identity,
+the Klein group averaging map, the negative derivative numerator, all
+two-label local assignments with each label occurring at least twice,
+and the one specified packet's actual unoriented/oriented edge classes,
+normal circles, vertex classes, corner fans and link V/E/F. The rational
+one-flat table is checked in the same actual fibres. These checks do not
+replace the universal written proofs. The new Scribe Remark has no
+compilation or projection receipt in this runtime; no status is inferred
+for unchanged Lean declarations from this new authored text.
+
+## Exact flat remainder, complete two-edge case, and two-flat support, Sections 50-55
+
+This written increment preserves the previous theory and note. It connects
+previously conversation-only calculations to the live Sections 45-49 and
+adds a face-pairing obstruction for at most two flat tetrahedra. It does
+not identify a new formal declaration, claim a full CFMP solution, or change
+the certified scope of CriticalTransitionStar. Its Scribe addition is an
+independent authored research Remark.
+
+### Sources and separation of coordinates
+
+Luo-Yang arXiv:1404.5365v2, Proposition 4.4, Proposition 4.5 and Lemma 4.6
+supply the original whole-positive-length cosine/domain/flat-sector facts.
+Theorem 6.3 supplies a shared positive generalized length vector with the
+maximizing angles after the strict angle hypothesis has been discharged
+by the existing Section 42. The flat-count bound is the existing Section
+43.3. These geometric inputs are not derived from finitely many pairings.
+
+The current source reading again checked the parsed original theorem and
+domain statements. The screenshot of printed page 21 (PDF page index 20)
+was successfully inspected. The attempted screenshot of printed page 16
+failed; no successful visual inspection of that page is claimed here.
+https://arxiv.org/pdf/1404.5365
+
+The prior mean-length necessary bound uses cosh((l_e+l_f)/2). The new bound
+uses sqrt(cosh(l_e)*cosh(l_f)). They are different functions and neither
+proof replaces one by the other without justification. The new exact
+calculation uses cosh coordinates (r,a,b,o,c,d)>1, the actual radicands,
+and a Cauchy remainder J>=0. It proves
+
+phi_1<=-1 iff (r-1)(o-1)>=(sqrt(ac)+sqrt(bd))^2+J.
+
+J vanishes exactly when a=c and b=d. The derived product gap is only
+necessary; the genuine vector (25,50,50,25,2,2), whose target cosine is
+-253/254, shows why dropping J cannot give an equivalence. No cube-only
+neighbour monotonicity is extended beyond its established domain.
+
+Ke Feng, Huabin Ge and Bobo Hua, *Combinatorial Ricci flows and the
+hyperbolization of a class of compact 3-manifolds*, Geometry & Topology
+26 (2022), 1349-1384, DOI 10.2140/gt.2022.26.1349, Theorem 3.9, already
+proves that positive lengths at most arccosh(3) form genuine tetrahedra.
+The cube conclusion reobtained in Sections 45 and 50 is therefore credited
+as an existing result, not as a newly solved theorem or open conjecture.
+https://arxiv.org/abs/2009.03731
+
+The original CFMP and Frigerio-Martelli-Petronio small-manifold work remain
+the external problem and census anchors. The new four-tetrahedron (6,18)
+packet is a witness for the complete two-global-edge criterion. It is not
+claimed to be a new homeomorphism type. The relevant Fominykh-Shumakova
+arXiv:2105.05110 abstract concerns complexity/minimality of few-edge ideal
+triangulations; minimality is not used in place of geometric realization.
+No priority is inferred from this bounded literature comparison.
+
+### Exact consequences for shared global data
+
+All two-global-edge triangulations with minimum degree six in the strict
+boundary setting are realized, including local 1/5 label patterns. The
+proof first reduces to at most one flat tetrahedron. A remaining mixed-pi
+candidate must have five copies of a cosh-length A and one of B, forcing
+B>4A+5 by the exact remainder. Every other tetrahedron containing B must
+contain it at least twice. The sum of those B angles exceeds pi/4 times
+their occurrence count for each of the nine possible local B-edge graph
+types. This contradicts the global B angle sum. The estimate is proved on
+the whole continuous region A>1,B>4A+5, not by numerical sampling.
+
+Same actual global-label types also have identical geometric/flat state,
+without requiring any whole-triangulation automorphism. Multiplicity at
+least three excludes a flat type by pi-angle capacity. An exact logarithmic
+certificate additionally excludes certain acyclic pair-node candidate sets;
+it enforces that pair products come from the same underlying global lengths.
+The AB versus CC/DD and CD versus AA/BB example illustrates this dependency
+only. It is not asserted to be a face-paired manifold.
+
+### New face-pairing support obstruction
+
+With minimum degree six, at least one genuine tetrahedron, and at most two
+flat tetrahedra, every pi occurrence must have a different global edge
+label. If one label A were saturated by two pi angles, all its occurrences
+would be confined to the flat set. Among two nonempty proper A-edge graphs,
+total A degree at least six, positive face-count parity and an A-free exit
+face leave only single-edge/five-edge or star/star. The former isolates the
+five-edge tetrahedron in the dual graph. In the latter, the uniquely longest
+non-A edge in each star must be matched through an AAB face to the other
+star. Distinct selected labels give opposite strict length orders; equal
+labels have total degree two. Both alternatives contradict the hypotheses.
+
+Consequently a three-global-edge minimum-six triangulation has at most one
+flat maximizer tetrahedron, improving the previous at-most-two bound. If
+all its actual global-label types occur at least twice, it is realized.
+No separate new manifold outside all earlier sufficient classes is claimed
+for this last conditional corollary. An isolated flat using three global
+lengths and general larger flat sets are not excluded by these arguments.
+
+### Reproducibility and verification boundary
+
+Exact supplementary checks include the Cauchy identity and square remainder,
+all nine two-length graph types with polynomial coefficient certificates,
+the designated four- and eight-tetrahedron packets and rational angle table,
+the nine A-face signatures and the two surviving signature pairs, and the
+zero-vector logarithmic certificate. The spanning/face-return arguments and
+continuous inequalities are written in the theory, separate from these
+finite checks. The original two-edge calculations were rechecked rather
+than assumed correct from a previous conversation artifact.
+
+The existing Lean file and the Scribe Statement method remain unchanged.
+The new Remark has no compilation/projection receipt in this runtime, and
+no generated Blueprint Markdown, admission state, frozen record or CI
+configuration is modified. The deliverable is ordinary mathematics for
+independent review, not a new kernel-certified CFMP theorem.
+
+## Colour transport and CFMP, proposed written Sections 56-60
+
+The continuation distinguishes actual global edge labels, low/high geometry
+categories, local flat-state colours, and rainbow global edge colours. None
+of these identifications silently equates unrelated edge lengths.
+
+Primary sources read for the connection:
+
+- Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
+  3-manifolds*, arXiv:1404.5365v2. Proposition 4.1 is the classical local
+  angle-existence and uniqueness input for colour-regular assembly;
+  Proposition 4.4 identifies the whole positive length domain. Theorem 1.4
+  supplies the hyperideal true/flat maximizer context. Printed pages 2 and
+  14 were successfully screenshotted in this continuation.
+  https://arxiv.org/pdf/1404.5365
+- J. Hyam Rubinstein and Stephan Tillmann, *Even triangulations of
+  n-dimensional pseudo-manifolds*, arXiv:1406.1002, §§2.3, 2.5 and 3.
+  Their vertex-label transport, partition representations and normal
+  hypersurfaces provide the relevant established topology framework.
+  The parsed original text was inspected. No theorem about all-even
+  triangulations having trivial global monodromy is attributed to them.
+  https://arxiv.org/pdf/1406.1002
+- Michael Joswig, *Projectivities in Simplicial Complexes and Colorings of
+  Simple Polytopes*, arXiv:math/0102186. Abstract inspected for historical
+  projectivity/colouring context; no unseen detailed theorem is consumed.
+  https://arxiv.org/abs/math/0102186
+- Feng Luo and Stephan Tillmann, *Angle structures and normal surfaces*,
+  arXiv:math/0510537v2, §§4.1-4.3. The original parsed definitions of
+  signed combinatorial area and normal-surface matching were inspected.
+  The written quad calculation uses the negative-curvature geometric sign,
+  explicitly opposite to their signed area convention. It is not an assertion
+  that a topological normal disk already has a geometric realization.
+  https://arxiv.org/pdf/math/0510537
+- Marc Lackenby, *Taut ideal triangulations of 3-manifolds*, Geometry &
+  Topology 4 (2000), 369-395, arXiv:math/0003132. Abstract inspected as
+  the origin of the transverse-taut construction.
+  https://arxiv.org/abs/math/0003132
+- Anna Parlak, *The taut polynomial and the Alexander polynomial*,
+  Journal of Topology 16 (2023), 720-756, arXiv:2101.12162, §2.
+  The original parsed text and published HTML define transverse taut and
+  veering structures, distinguishing the combinatorial 0/pi assignment
+  from the added red/blue colouring. It is not used to infer hyperideal
+  geometric flatness or completeness.
+  https://arxiv.org/pdf/2101.12162
+  https://doi.org/10.1112/topo.12302
+- Tim Planken, *Colouring the 1-skeleton of d-dimensional triangulations*,
+  Innovations in Graph Theory 2 (2025), 275-299, DOI 10.5802/igt.13,
+  arXiv:2409.11762. The publisher's abstract provides the scope warning:
+  higher-dimensional triangulations do not have a universal four-colour
+  bound. No subdivision result is substituted for realizing the original
+  fixed triangulation in CFMP.
+  https://igt.centre-mersenne.org/articles/10.5802/igt.13/
+
+The general colour-regular realization theorem is a direct written assembly
+consequence of the classical local angle theorem, not a claimed new external
+conjecture solution. For degrees (6,6,8), the actual cosh-lengths are
+(2+3sqrt(2)/2, 2+3sqrt(2)/2, 2+sqrt(2)). The original six-variable cosines
+are proved exactly to be 1/2, 1/2, sqrt(2)/2. A fully specified 48-tetrahedron
+binary-tetrahedral-group face pairing has 32 degree-six edges, 12 degree-eight
+edges, and four genus-two boundary links. It is a witness for the hypotheses,
+with no identified census name and no new homeomorphism-type claim.
+
+The separate flat-state theorem counts disagreements of the selected pi-edge
+across actual paired faces. Each saturated edge requires at least two status
+transitions, and one mismatched face accounts for at most two such transitions.
+Thus the number of mismatched flat/flat face pairs is at least the number of
+saturated edges. This is an ordinary combinatorial proof. A mismatch does not
+mean that the two triangular faces have different intrinsic metrics; incident
+dihedral angles need not agree under isometric face gluing.
+
+Supplementary exact checks cover the three 2+2 cuts, the order-four kernel
+of S4 acting on them, all 679 binary loops of lengths 3..16 having two pi
+marks, all group products, face pairings, edge returns, vertex-link fans and
+counts of the one specified 48-tetrahedron packet, and the radical cosine
+identities. The general conclusions use the written arguments, not extrapolation
+from those finite checks. No kernel certification, independent review or
+priority over the colouring literature is claimed. Global rainbow colours
+require even degrees and therefore exclude the existing geometrically realized
+nine-degree P4 packet. General CFMP remains beyond these conditions.
+
+## Exposed pi edges and mismatch transport, written Sections 61-64
+
+This continuation adds ordinary written deductions to the same theory owner.
+It creates no Lean theorem or kernel claim. The main exposed-edge theorem
+assumes an actual shared positive generalized length vector with every global
+edge angle sum equal to 2pi and degree at least six. It places no upper bound
+on the number of flat tetrahedra and uses no rainbow colouring, P4 type or
+combinatorial automorphism group.
+
+### Precise existing inputs
+
+Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
+3-manifolds*, arXiv:1404.5365v2.
+https://arxiv.org/pdf/1404.5365
+
+Lemma 4.3, equations (4.3)-(4.4), defines the positive truncation side length
+at each original face corner from its three original positive edge lengths,
+and gives the corner-triangle raw cosine. These formulas apply in the entire
+positive-length orthant. Proposition 4.4, Proposition 4.5 and Lemma 4.6 supply
+the true/flat sector interpretation. Theorem 6.3 gives positive shared
+generalized lengths at the maximizing angle structure once a strict positive
+angle assignment is available. The latter existence input is the repository's
+written Section 42; the present logarithmic theorem does not itself reprove
+that strict-angle construction.
+
+The original PDF was read again and screenshots of printed pages 15 and 21
+were inspected successfully. The former contains the explicit truncation
+formulas; the latter contains Theorem 6.3. No inference of volume convexity
+or concavity is made from the surrounding inconsistent descriptive wording.
+The new local proof does not require a new volume-sign assertion.
+
+The immediate algebraic input is the exact Cauchy-remainder criterion already
+proved in Section 50.1 of this owner. It is kept as the single prior owner of
+that identity. Applying AM-GM and taking logs gives the new local budget:
+
+2 log r + 2 log o - log a - log b - log c - log d
+ >= log 16 + 2 log(r/(r-1)) + 2 log(o/(o-1)) > log 16.
+
+The sharp uniform coarse lower constant is 16: the flat boundary family
+r=o=1+2t, a=b=c=d=t has the ratio (2+1/t)^4 tending to 16. This is a local
+sharpness claim, not a constructed family of global zero-curvature metrics.
+
+### Global exposed-edge result
+
+For the full flat set F, let n_e count every flat occurrence of global label e
+and m_e count its pi occurrences. Shared lengths allow the exact global sum
+
+sum_e (3 m_e-n_e) log(cosh(l_e))
+ >= |F| log16 + 2 sum_e m_e log(cosh(l_e)/(cosh(l_e)-1)).
+
+Here m_e is 0,1 or2. If m_e=2, the edge is saturated and all its occurrences
+must be flat, so n_e=degree(e)>=6. Hence positive coefficients are possible
+only at m_e=1 and n_e in {1,2}. Every nonempty full flat set therefore has an
+exposed pi edge. At that edge at least four genuine occurrences supply a total
+angle of exactly pi, and at least one angle is at most pi/4. With one flat
+occurrence the stronger pi/5 bound applies. Counts refer to local occurrences,
+not distinct tetrahedra.
+
+The exposed cosh lengths satisfy product x_e^(3-n_e)>16^|F| and
+product x_e>4^|F|. The theorem locates a necessary genuine/flat interface and
+quantifies its length cost; it does not prove that the required small genuine
+angles or large exposed lengths are impossible.
+
+In the pi-selection multigraph, vertices are global edge labels and each flat
+tetrahedron contributes one graph edge between its pi labels. Degree is at
+most two, counting loops twice. If p is its path-component count then
+v_pi=|F|+p. Each connected component of the actual flat-only face adjacency
+requires at least one distinct path component. Consequently
+
+|F| <= v_pi - c_F <= |E| - c_F.
+
+The proof restricts the logarithmic budget to each face component, using the
+full flat normal circle of a saturated edge to justify the degree assumption
+there. An edge exposed relative to one component need not be exposed relative
+to the whole flat set. This distinction is retained. Cycle components of the
+pi graph are not asserted to be absent in general.
+
+### Actual face-corner growth and a local counterexample
+
+In a flat corner triangle the side opposite the pi angle is at least the sum
+of the other two positive sides. Crossing that longest side through a paired
+flat face with a different pi mark makes the same shared side a short side of
+the next corner triangle. Its next longest side strictly increases. A wholly
+mismatched closed corner walk is impossible. On a finite triangulation such
+a walk ends at a genuine block or at a compatible flat/flat face. Compatible
+termination cannot be removed from the conclusion.
+
+The alternative potential log x_jk-log x_ij-log x_ik is also preserved under
+face-corner pairing and increases along this walk. Its two local differences
+sum to the displayed logarithmic budget. This is an explicit geometric use of
+the earlier Section 51.4 logarithmic certificates, not an independent claim
+that this potential equals the truncation side length.
+
+The two local positive cosh vectors (2,2,2,20,2,2) and (2,2,2,2,20,2) in the
+standard order (12,13,14,34,24,23) share face123 with all three cosh lengths two,
+yet have different pi marks there. The selected small-edge raw cosine is -4/3,
+the opposite large-edge raw cosine is -10/9, and the other four raw cosines
+exceed one. Their common face corner lengths are arccosh(2), while a long
+corner side is arccosh(8)>2arccosh(2). These data disprove a purely local ban on
+all mismatches. They are not a complete CFMP triangulation, impose no global
+minimum degree or zero-curvature assertion, and are not a CFMP counterexample.
+
+### Verification and publication boundaries
+
+The supplementary script verifies the rational AM-GM/budget identities, the
+sharp limiting flat family, 288 relabelled corner-potential identities, both
+complete raw local cosine vectors, shared corner sides, 50 coefficient cases,
+and 122 labelled degree-at-most-two multigraphs with loops and parallel edges.
+These exact checks supplement the unrestricted written proofs; no universal
+manifold claim is inferred from the finite graph enumeration. No new global
+manifold example is claimed by this increment.
+
+The cumulative source candidate also retains the previously delivered
+colouring Sections 56-60, which were posted only as research discussion in
+PR9474 comment5832608332. The last source commit read in this continuation is
+e4f33f4b0a88b0cb95221810f9a3074b388bf504, ending at Section55. No new remote
+source or discussion write was performed in this continuation. The existing
+Scribe receives a separate authored research Remark, without a new Lean
+handle, change to its original Statement method, compilation/projection claim,
+admission/frozen update or full CFMP proof.
