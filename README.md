@@ -85,6 +85,29 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
+```mermaid
+flowchart TD
+    accTitle: From inquiry to reusable knowledge and the next question
+    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
+    Q([Ask a precise question]) --> T[Compute and test hypotheses]
+    T --> P[Check a proof or refutation]
+    P --> R[[Keep a reusable result]]
+    R -.-> N{What remains open?}
+    T -.-> N
+    P -.-> N
+    N -.-> Q
+    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
+    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
+    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
+    class Q,T foundation
+    class P,R proved
+    class N frontier
+```
+
+*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
+do not establish a theorem. Dashed paths return unresolved questions to
+another inquiry, including when no checked result was obtained.
+
 Golden integers, Fibonacci weights and Zeckendorf representations are one
 thread of the library; the examples below also explore conjecture refutation
 and limits of local observation.
@@ -227,29 +250,6 @@ dependencies in the [Lean source](D5/). The
 neither substitutes for a Lean proof. The C# harness checks repository rules,
 proof reports and frozen state. Independent review examines whether statements
 faithfully express the intended mathematics.
-
-```mermaid
-flowchart TD
-    accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
-    Q([Ask a precise question]) --> T[Compute and test hypotheses]
-    T --> P[Check a proof or refutation]
-    P --> R[[Keep a reusable result]]
-    R -.-> N{What remains open?}
-    T -.-> N
-    P -.-> N
-    N -.-> Q
-    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
-    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
-    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
-    class Q,T foundation
-    class P,R proved
-    class N frontier
-```
-
-*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
-do not establish a theorem. Dashed paths return unresolved questions to
-another inquiry, including when no checked result was obtained.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by
