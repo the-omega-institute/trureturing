@@ -4045,3 +4045,399 @@ Charles M. Grinstead、J. Laurie Snell 的 [*Introduction to Probability*，第 
 本批没有把固定记录数的指数结论升级为任意量子查询或确定总调用预算下的最优性。也没有从有限数据认证矩预算、完整仪器距离、重置合同或所有后继状态的成本上界。全部结果是指定模型和权限下的纯理论推导，不宣称文献原创性、Lean 核验、消化覆盖或冻结。
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 从完整仪器校准到可迁移的等待成本证书
+
+**定义 68.1（共同接口、实际等待与正漂移余量）。** 固定有限维完整活动空间 $\mathcal H$。名义仪器与实际仪器分别为
+
+$$
+\widehat\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\widehat{\mathcal N}(\rho)
++\sum_x|x\rangle\langle x|\otimes\widehat\Phi_x(\rho),
+\qquad
+\Gamma(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(\rho)
++\sum_x|x\rangle\langle x|\otimes\Phi_x(\rho).
+$$
+
+所有分支完全正，两完整映射保迹，输入、输出、记录标签与可再次作用的量子记忆一致。记
+
+$$
+\widehat{\mathcal A}=\widehat{\mathcal N}^{*},\qquad
+\mathcal A=\mathcal N^{*},\qquad
+\delta=\frac12\|\Gamma-\widehat\Gamma\|_\diamond.
+$$
+
+每调用一次完整仪器计一单位成本；第一次点击后停止，永不点击的轨迹成本为 $\infty$。实际等待轮数为 $\mathsf N\in\{1,2,\ldots,\infty\}$，部分成本势为
+
+$$
+T_m=\sum_{j=0}^{m-1}\mathcal A^j(I),\qquad T_0=0.
+$$
+
+给定一个非零正算子 $B$，置
+
+$$
+b=\|B\|_\infty,\qquad
+\varepsilon=\lambda_{\min}\bigl(B-\widehat{\mathcal A}(B)\bigr),\qquad
+c=\varepsilon-\delta b.
+$$
+
+本节的证书条件为 $c>0$。它涉及所有输入方向的算子序，不以指定来源上的平均不等式代替。
+
+附引：平均运行时间的算子表示是已有理论。Junyi Liu、Li Zhou、Gilles Barthe、Mingsheng Ying，[*Quantum Weakest Preconditions for Reasoning about Expected Runtimes of Quantum Programs (Extended Version)*，arXiv:1911.12557v3](https://arxiv.org/abs/1911.12557v3)，定义 3.1、定理 1—2 与推论 4.1 分别给成本语义、运行时间可观测量及有限维终止结论。其语法将初始化、酉操作和测量分别计费；本节只数原完整仪器的调用次数，不把两种成本数值直接等同。Christina Gehnen、Dominique Unruh、Joost-Pieter Katoen，[*Quantum Weakest Preconditions Revisited: Pre-expectations for Expected Runtime Analysis*，arXiv:2607.12532v1](https://arxiv.org/abs/2607.12532v1)，第 6 节说明计费规则可由 reward 插入位置指定；其命题 5.11、7.6 给 Park 归纳上界。下面证明中的正性与望远镜估计是这一成熟方法在当前成本约定下的有限维步骤；新增的组合对象是完整仪器校准误差与同一证书余量。
+
+**定理 68.2（校准损耗后的成本与加权尾界）。** 在定义 68.1 的证书条件下，实际成本势 $T=\lim_mT_m$ 在算子范数中存在。所有初态最终点击，而且
+
+$$
+\boxed{
+I\le T\le\frac Bc,\qquad
+\sup_\rho\mathbb E_\rho\mathsf N
+=\|T\|_\infty\le\frac bc.
+}
+$$
+
+进一步，令 $r=1-c/b\in[0,1)$。对任意初态 $\rho$、整数 $m\ge0$，有
+
+$$
+\boxed{
+\mathbb E_\rho[(\mathsf N-m)_+]
+\le\frac{\operatorname{Tr}(\rho B)}c\,r^m.
+}
+$$
+
+其中 $r^0=1$，包括 $r=0$ 的情形。该结论先建立实际成本有限，无须预先假定实际仪器最终点击。
+
+证明。在完整输出上取效果：未点击块为 $B/b$，所有点击块为零。它介于零与恒等之间。因此对任意输入态，两个完整输出在该效果上的概率差至多为 $\delta$，从而
+
+$$
+\|(\mathcal A-\widehat{\mathcal A})(B)\|_\infty\le\delta b,
+\qquad
+B-\mathcal A(B)\ge cI. \tag{68.1}
+$$
+
+正性给 $B\ge cI$，故 $0<c\le b$。将式 (68.1) 依次作用 $\mathcal A^j$ 并相加，得到
+
+$$
+cT_m\le B-\mathcal A^m(B)\le B.
+$$
+
+有限维递增正算子序列 $T_m$ 有界，故在范数中收敛到 $T\le B/c$。对每个初态，尾和公式与单调收敛给
+
+$$
+\mathbb E_\rho\mathsf N
+=\sum_{j\ge0}\operatorname{Tr}\bigl(\rho\mathcal A^j(I)\bigr)
+=\operatorname{Tr}(\rho T)<\infty.
+$$
+
+因此永不点击的概率为零。又因 $B\le bI$，有
+
+$$
+\mathcal A(B)\le B-cI\le(1-c/b)B=rB,
+\qquad \mathcal A^m(B)\le r^mB.
+$$
+
+对收敛级数移项，并使用 $T\le B/c$，
+
+$$
+\sum_{j=m}^\infty\mathcal A^j(I)
+=\mathcal A^m(T)
+\le\frac{\mathcal A^m(B)}c
+\le\frac{r^mB}c.
+$$
+
+与 $\rho$ 取迹即为加权尾界。全状态最大均值等于正算子 $T$ 的最大本征值。$\square$
+
+**推论 68.3（先认证有限性，再传递成本差）。** 若名义成本势 $\widehat T$ 存在，$\widehat M=\|\widehat T\|_\infty$，且 $\delta\widehat M<1$，则实际仪器满足
+
+$$
+\boxed{
+\|T\|_\infty\le\frac{\widehat M}{1-\delta\widehat M},\qquad
+\|T-\widehat T\|_\infty
+\le\frac{\delta\widehat M^2}{1-\delta\widehat M}.
+}
+$$
+
+证明。取 $B=\widehat T$。由其收敛级数，$\widehat T-\widehat{\mathcal A}(\widehat T)=I$，故 $\varepsilon=1$。定理 68.2 先给实际成本存在与第一式，此后两侧都满足定理 66.3 的假设。将第一式代入其乘积界即得第二式。$\square$
+
+## 69. 有限证书的逼近、最优标量余量与退化边界
+
+**定义 69.1（标量余量证书的校准半径）。** 对固定名义仪器，定义
+
+$$
+\mathfrak r_{\mathrm{cert}}
+=\sup\left\{
+\frac{\lambda_{\min}(B-\widehat{\mathcal A}B)}{\|B\|_\infty}:
+B\ge0,\ B\ne0,\ \lambda_{\min}(B-\widehat{\mathcal A}B)>0
+\right\},
+$$
+
+若集合为空则取零。每个集合元素认证严格小于它的完整仪器校准距离；它是这一类证书的半径，不定义为仪器实际失去终止性的最小距离。
+
+**定理 69.2（同一校准证书族的最优半径与有限逼近）。** 若名义成本势 $\widehat T$ 存在，则
+
+$$
+\boxed{\mathfrak r_{\mathrm{cert}}=\frac1{\widehat M}.}
+$$
+
+该上确界由 $B=\widehat T$ 达到。无需先精确取得 $\widehat T$，对整数 $m\ge1$ 定义有限算子
+
+$$
+B_m=\sum_{j=0}^{m-1}\widehat{\mathcal A}^j(I),\qquad
+b_m=\|B_m\|_\infty,\qquad
+\varepsilon_m=1-\|\widehat{\mathcal A}^m(I)\|_\infty
+$$
+
+也满足
+
+$$
+\boxed{
+\frac{\varepsilon_m}{b_m}\longrightarrow\frac1{\widehat M}.
+}
+$$
+
+因而给定任意 $\delta<1/\widehat M$，某个有限 $m$ 的证书已经具有正校准余量 $\varepsilon_m-\delta b_m>0$。
+
+证明。任一正余量 $\varepsilon$ 与正算子 $B$，在定理 68.2 中取 $\delta=0$，得到 $\widehat T\le B/\varepsilon$，所以 $\varepsilon/b\le1/\widehat M$。取 $B=\widehat T$ 达到等号。
+
+对有限和直接计算
+
+$$
+B_m-\widehat{\mathcal A}(B_m)
+=I-\widehat{\mathcal A}^m(I).
+$$
+
+右侧最小本征值就是 $\varepsilon_m$。收敛的正级数给 $B_m\to\widehat T$ 及 $\widehat{\mathcal A}^m(I)\to0$，故 $b_m\to\widehat M$、$\varepsilon_m\to1$。最后由严格距离不等式与实数极限得到有限 $m$。这不声称比值随 $m$ 单调。$\square$
+
+**命题 69.3（统一阈值和两个成本界均可达到）。** 任取 $\widehat M\ge1$，置 $\widehat\gamma=1/\widehat M$。取一维名义仪器每轮以概率 $\widehat\gamma$ 点击，并取实际仪器成功概率 $\gamma=\widehat\gamma-\delta$。对 $0\le\delta<1/\widehat M$，两仪器的完整半 diamond 距离正是 $\delta$，且
+
+$$
+M=\frac{\widehat M}{1-\delta\widehat M},\qquad
+|T-\widehat T|=\frac{\delta\widehat M^2}{1-\delta\widehat M}.
+$$
+
+在端点 $\delta=1/\widehat M$，实际仪器永不点击。因此在只知道 $\widehat M$ 与完整仪器距离的模型类中，严格条件 $\delta\widehat M<1$ 不能统一放宽为包含端点的条件。
+
+证明。一维完整输出是未点击、点击两点概率律，半 diamond 距离等于成功概率之差。正成功概率的等待均值为倒数；代入 $\gamma$ 给两条等式。成功概率为零时，每轮都未点击。$\square$
+
+上述命题的量词是跨仪器类的统一界，不断言每个固定名义仪器在自己的 $1/\widehat M$ 距离处都能产生不终止扰动。
+
+## 70. 真实记录驱动的自适应控制也需要可续接的证书
+
+**定义 70.1（带记录后继的校准证书族）。** 允许每次未终止操作产生有限个实际可读的继续标签 $z$。有限历史 $h$ 包括此前取得的继续标签与实际控制设置；点击标签终止本次协议。每个活动历史的合法控制集合有限且非空，当前控制记为 $a$，继续分支的名义和实际 CP 映射分别为
+
+$$
+\widehat{\mathcal N}_{h,a,z},\qquad
+\mathcal N_{h,a,z},
+$$
+
+作用于同一个有限维完整量子活动空间。继续后的历史记为 $h(a,z)$。每个 $(h,a)$ 的完整仪器还包括点击分支，且两侧完整映射均保迹。实际控制策略只能依赖已有历史；若随机选择控制，选择律是给定历史上的有限概率分布，实际选中的控制进入记录。未被读取的 Kraus 指标不能充当 $z$。
+
+假设存在对全部合法历史给出的正算子 $B_h$ 和常数 $b>0$、$\varepsilon>0$、$\delta\ge0$，使对每个合法 $(h,a)$ 同时成立
+
+$$
+0\le B_h\le bI,
+\qquad
+B_h-\sum_z\widehat{\mathcal N}_{h,a,z}^{*}\bigl(B_{h(a,z)}\bigr)
+\ge\varepsilon I,
+$$
+
+$$
+\frac12\|\Gamma_{h,a}-\widehat\Gamma_{h,a}\|_\diamond\le\delta,
+\qquad c:=\varepsilon-\delta b>0.
+$$
+
+这里的历史算子族是数学证书；其存在不额外授权对不可读环境或未知输入态的查询。
+
+**定理 70.2（共同后继余量控制全部合法自适应策略）。** 在定义 70.1 下，任意上述控制策略与任意初态 $\rho$ 都满足
+
+$$
+\boxed{
+\mathbb E_{\rho,\pi}\mathsf N
+\le\frac{\operatorname{Tr}(\rho B_{\emptyset})}{c},\qquad
+\mathbb E_{\rho,\pi}[(\mathsf N-m)_+]
+\le\frac{\operatorname{Tr}(\rho B_{\emptyset})}{c}
+\left(1-\frac cb\right)^m.
+}
+$$
+
+因此该策略最终点击的概率为一，且上界同时覆盖所有合法策略，不要求从头固定同一个控制。这里的共同证书条件不能只由每个固定控制各自的有限成本预算替代；下面附上已有反例在本节接口中的计算。
+
+证明。固定 $(h,a)$，在完整输出的继续标签 $z$ 上置效果 $B_{h(a,z)}/b$，点击块置零。正交经典记录使其为一个合法效果，校准距离遂给
+
+$$
+B_h-\sum_z\mathcal N_{h,a,z}^{*}\bigl(B_{h(a,z)}\bigr)\ge cI. \tag{70.1}
+$$
+
+若控制随机化，对控制概率加权后该不等式仍成立。对一个固定策略，记经过 $n$ 次调用仍活动的历史 $h$ 的未归一化态为 $\sigma_h$。定义
+
+$$
+s_n=\sum_{|h|=n}\operatorname{Tr}\sigma_h
+=\mathbb P(\mathsf N>n),\qquad
+V_n=\sum_{|h|=n}\operatorname{Tr}(\sigma_h B_h).
+$$
+
+由式 (70.1)，
+
+$$
+V_n-V_{n+1}\ge cs_n,\qquad
+cs_n\le V_n\le bs_n.
+$$
+
+第二式左侧使用 $B_h\ge cI$，由式 (70.1) 的继续项正性得到。于是
+
+$$
+V_{n+1}\le V_n-cs_n\le(1-c/b)V_n,
+\qquad V_0=\operatorname{Tr}(\rho B_{\emptyset}).
+$$
+
+对任意有限 $k>m$，望远镜相加给
+
+$$
+c\sum_{n=m}^{k-1}s_n\le V_m-V_k\le V_m.
+$$
+
+先令 $k\to\infty$，再使用 $V_m\le(1-c/b)^mV_0$，得到两条尾和界。均值有限排除正概率的无限活动轨迹。所有不等式在策略选择之前已经对全部合法 $(h,a)$ 成立，所以量词可以覆盖任意同权限策略。$\square$
+
+附引：证明中的正性、线性期望与漂移求和沿用第 68.1 条引用的运行时间上界方法。本条把同一误差余量作用于实际记录分支上的后继算子，并保留“对全部合法控制同时成立”的量词；单个控制的终止证明不能履行该量词。
+
+附引与反例计算：Shenggang Ying、Mingsheng Ying，[*Reachability Analysis of Quantum Markov Decision Processes*，arXiv:1406.6146v2](https://arxiv.org/abs/1406.6146v2)，定义 2.2 将调度器建立在实际操作与测量记录上；例 2.3 已给出两个分别流向吸收态、交替后却可避开吸收的通道。以下构造将其三维空间中的吸收态改记为终端点击标签、交换两个控制的命名，并以二维空间保留停止前活动状态；对应的是停止前转移和吸收概率，不把不同的点击后量子输出声明为相同通道。该反例属于已有构造在定理 70.2 量词核对中的应用，不另立新增命题。
+
+在 $\mathbb C^2$ 上取：
+
+$$
+Q_a=|1\rangle\langle0|,\quad L_a=|0\rangle\langle1|,
+\qquad
+Q_b=|0\rangle\langle1|,\quad L_b=|1\rangle\langle0|.
+$$
+
+每个控制都满足仪器完备关系。若始终使用 $a$ 或始终使用 $b$，任何初态至多两轮点击，两者全状态最大平均等待均为二；但从 $|0\rangle$ 出发，依次使用 $a,b,a,b,\ldots$ 时，永不点击的概率为一。
+
+证明。直接计算 $Q_a^\dagger Q_a+L_a^\dagger L_a=I$，$b$ 同理。又 $Q_a^2=Q_b^2=0$，所以两轮未点击概率为零。两固定仪器的成本势分别为
+
+$$
+T_a=I+|0\rangle\langle0|,\qquad
+T_b=I+|1\rangle\langle1|,
+$$
+
+均具有最大本征值二。而 $Q_a|0\rangle=|1\rangle$、$Q_b|1\rangle=|0\rangle$，每次对应点击振幅均为零。归纳得到全部轮次都未点击。$\square$
+
+对这两个控制，不存在 $B\ge0$ 与 $c>0$ 同时满足
+
+$$
+B-Q_a^\dagger BQ_a\ge cI,\qquad
+B-Q_b^\dagger BQ_b\ge cI.
+$$
+
+也不存在覆盖全部控制历史、具有统一有限上界与正余量的定义 70.1 型证书族，即使两仪器的校准误差为零。
+
+证明。记 $b_j=\langle j|B|j\rangle$。第一条不等式在 $|0\rangle$ 上给 $b_0-b_1\ge c$，第二条在 $|1\rangle$ 上给 $b_1-b_0\ge c$，相加矛盾。若有更一般的历史证书族，定理 70.2 会给交替策略有限均值，与上述交替轨迹矛盾。$\square$
+
+该例中的每次操作都合法，问题不在单次完备性，而在新的控制把后继送回另一控制的活动方向。固定控制预算分别成立，不能作为同一个自适应过程的共同预算。
+
+## 71. 正漂移证书的最优半径仍可小于实际终止半径
+
+**定义 71.1（固定接口中的不终止距离）。** 对名义完整仪器 $\widehat\Gamma$，固定其量子输入、活动输出和经典记录接口，定义
+
+$$
+\mathfrak r_{\mathrm{fail}}
+=\inf\left\{
+\frac12\|\Gamma-\widehat\Gamma\|_\diamond:
+\Gamma\text{ 是同接口完整仪器，且存在初态 }
+\rho\text{ 满足 }\lim_n\operatorname{Tr}\mathcal N^n(\rho)>0
+\right\}.
+$$
+
+本节仅比较有限维、每轮重复同一仪器的过程，不把增加隐藏活动维数或历史自适应控制计入同一扰动类。
+
+**定理 71.2（二维仪器的证书半径与失效距离严格分离）。** 对两个记录标签“未点击、点击”，在 $\mathbb C^2$ 上取名义 Kraus 算子
+
+$$
+\widehat Q=|0\rangle\langle1|,\qquad
+\widehat L=|0\rangle\langle0|.
+$$
+
+则
+
+$$
+\boxed{
+\widehat M=2,\qquad
+\mathfrak r_{\mathrm{cert}}=\frac12,
+\qquad
+\frac45\le\mathfrak r_{\mathrm{fail}}\le1.
+}
+$$
+
+特别地，任何同接口实际仪器只要与名义仪器的完整半 diamond 距离小于 $4/5$，就对全部初态具有有限平均等待。这里不声称 $4/5$ 就是精确失效距离，也不从这个断言给出整个开球的共同均值常数。
+
+证明。名义未点击映射为 $\widehat{\mathcal N}(\rho)=\rho_{11}|0\rangle\langle0|$，其平方为零，故
+
+$$
+\widehat T=I+|1\rangle\langle1|,
+\qquad \widehat M=2.
+$$
+
+定理 69.2 给证书半径 $1/2$。
+
+现在设实际仪器有一个正概率永不点击的初态 $\rho$。其未点击映射 $\mathcal N$ 是 CP 且迹不增。令
+
+$$
+\tau_k=\frac1k\sum_{j=0}^{k-1}\mathcal N^j(\rho).
+$$
+
+有限维下，从有界正算子列选取收敛子列。由于生存概率递减到某个 $s_\infty>0$，极限 $\tau$ 的迹为 $s_\infty$。而
+
+$$
+\mathcal N(\tau_k)-\tau_k
+=\frac{\mathcal N^k(\rho)-\rho}{k}\longrightarrow0,
+$$
+
+故归一化 $\sigma=\tau/s_\infty$ 满足 $\mathcal N(\sigma)=\sigma$。完整仪器保迹使点击分支在 $\sigma$ 上为零。
+
+若 $\sigma$ 满秩，实际点击效果 $E\ge0$ 满足 $\operatorname{Tr}(\sigma E)=0$，只能有 $E=0$。此时实际仪器对所有输入都不点击；名义仪器对输入 $|0\rangle\langle0|$ 必点击，所以两完整输出的半迹距离为一，$\delta\ge1$。
+
+若 $\sigma$ 秩一，写 $\sigma=|\psi\rangle\langle\psi|$ 并记
+
+$$
+a=|\langle0|\psi\rangle|^2\in[0,1],\qquad P_0=|0\rangle\langle0|.
+$$
+
+同一输入 $\sigma$ 在实际仪器上给全部位于未点击块的 $\sigma$，在名义仪器上给未点击块 $(1-a)P_0$ 与点击块 $aP_0$。所以
+
+$$
+\delta\ge\frac12\left(\|\sigma-(1-a)P_0\|_1+a\right)
+=\frac{a+\sqrt{a^2+4(1-a)^2}}2. \tag{71.1}
+$$
+
+末式可由差矩阵的迹 $a$、行列式 $-(1-a)^2$ 求得，包括 $a=1$ 的退化端点。又 $8/5-a>0$ 且
+
+$$
+a^2+4(1-a)^2-(8/5-a)^2
+=4(a-3/5)^2\ge0.
+$$
+
+故式 (71.1) 至少为 $4/5$。秩一、秩二穷尽二维密度矩阵，得到失效距离下界。取实际仪器恒不点击且保持输入态，可给距离至多一的失效例，故上界成立。
+
+最后，若 $\delta<4/5$，则每个初态最终点击。令 $S_n=\mathcal A^n(I)$。它是递减正算子列，所有态的期望趋零，有限维下因而 $\|S_n\|_\infty\to0$。选择有限 $m$ 使 $\|S_m\|_\infty=q<1$。正性给
+
+$$
+S_{km}\le q^kI,\qquad
+\sum_{n\ge0}S_n\le\frac m{1-q}I.
+$$
+
+因此实际成本势存在，每个初态的均值有限。这最后一步是有限维齐次过程的终止—有限均值关系，亦与第 68.1 条所引有限维运行时间文献一致。$\square$
+
+## 72. 成本边界的三个量词与证书失效的含义
+
+**定义 72.1（来源、续接与扰动的成本要求）。** 对同一个事件任务，分别考虑：指定初态的等待成本；全部允许后继初态和控制历史的等待成本；在完整仪器校准邻域内仍成立的成本认证。三者的对象均使用实际无限轨迹成本，不把永久未点击赋零。
+
+**定理 72.2（成本认证的三项不可替代性）。** 下列三个替代规则均不成立：
+
+1. 以指定来源的共同高阶矩预算替代全部后继态的共同平均成本预算。
+2. 以每个固定控制各自的有限成本预算替代全部合法自适应续接的共同预算。
+3. 以某一完整正漂移证书族已达到最优半径，判定该半径就是装置实际失去终止性的距离。
+
+证明。第一项由第 62.3 条的稀有慢分支族成立：固定 $1<p\le2$ 与 $K>1$，指定来源的 $p$ 阶矩统一不超过 $K$，而后继 $P_u$ 的平均等待 $1/\gamma$ 无界。第二项由定理 70.2 后附的已有反例计算成立：两个固定控制的最大均值均为二，交替控制的实际均值为无穷。第三项由定理 71.2 成立：同一个二维名义仪器的正漂移标量余量半径恰为 $1/2$，实际失效距离至少为 $4/5$。$\square$
+
+上述三个反例把成本边界的关系要求写成了严格不同的量词：从哪个来源出发、容许哪些记录后继、对什么扰动保持认证。定理 68.2 和 70.2 给出能实际履行后两类量词的共同余量条件；定理 71.2 同时表明，这种充分条件的最优性仍不等于物理失效阈值的精确性。
+
+## 追加锚（本行以下为增补区）
