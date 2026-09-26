@@ -4,8 +4,7 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: Golden residues embed as multiplication matrices.
-   The golden generator becomes the Fibonacci matrix. -/
+   digest: Golden multiplication matrices faithfully represent Fibonacci periods. -/
 
 import D5.S3.Arith.GoldenApparition
 import Mathlib.Data.Matrix.Reflection
