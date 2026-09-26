@@ -9,6 +9,10 @@ namespace StrataLint.Rules.Tests;
 public sealed class AnchorReferenceRuleTests
 {
     private const string Target = "Mathlib.Data.Nat.Fib.Zeckendorf";
+    private const string HelperPath = "D5/S0/Carrier/Helper.lean";
+    private const string IntermediatePath = "D5/S0/Carrier/Intermediate.lean";
+    private const string FurtherPath = "D5/S0/Carrier/Further.lean";
+    private const string UnrelatedPath = "D5/S0/Carrier/Unrelated.lean";
 
     [Fact]
     public void Sl017AddedModuleWithUnreachableAnchorIsReported()
@@ -48,6 +52,40 @@ public sealed class AnchorReferenceRuleTests
         var completed = ExecuteDelta("lean-toolchain");
 
         AssertAnchorFinding(completed);
+    }
+
+    [Fact]
+    public void Sl017ReportsUnchangedImporterWhenDirectDependencyRemovesAnchorImport()
+    {
+        var (baseline, candidate) = PairedImportContexts(false, HelperPath);
+
+        AssertPairedAnchorChecks(baseline, candidate, HelperPath, affected: true, reachableAfter: false);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl017ReportsUnchangedImporterWhenIntermediateDependencyRewritesFurtherImport(bool replace)
+    {
+        var (baseline, candidate) = PairedImportContexts(
+            true, IntermediatePath, replace ? ["D5.S0.Carrier.Unrelated"] : []);
+        var importer = RepoPath.CreateKnown(RuleFixture.RingPath);
+
+        Assert.Contains(RepoPath.CreateKnown(FurtherPath),
+            LeanImportClosure.RepositoryPaths(baseline.Lean.Report, importer));
+        Assert.DoesNotContain(RepoPath.CreateKnown(FurtherPath),
+            LeanImportClosure.RepositoryPaths(candidate.Lean.Report, importer));
+        Assert.Equal(replace, LeanImportClosure.RepositoryPaths(candidate.Lean.Report, importer)
+            .Contains(RepoPath.CreateKnown(UnrelatedPath)));
+        AssertPairedAnchorChecks(baseline, candidate, IntermediatePath, affected: true, reachableAfter: false);
+    }
+
+    [Fact]
+    public void Sl017PairedUnrelatedChangeLeavesReachableImporterUnselected()
+    {
+        var (baseline, candidate) = PairedImportContexts(true, UnrelatedPath);
+
+        AssertPairedAnchorChecks(baseline, candidate, UnrelatedPath, affected: false, reachableAfter: true);
     }
 
     [Fact]
@@ -214,20 +252,8 @@ public sealed class AnchorReferenceRuleTests
             diagnostic.Message);
     }
 
-    // Synthetic snapshots and policy: these applicability tests do not read repository data.
-    private static CompletedRuleSet ExecuteDelta(
-        string changedPath,
-        bool added = false,
-        bool directImport = false)
-    {
-        const string helper = "D5/S0/Carrier/Helper.lean";
-        const string unrelated = "D5/S0/Carrier/Unrelated.lean";
-        var ringImports = directImport ? new[] { Target } : new[] { "D5.S0.Carrier.Helper" };
-        var report = Report(
-            (RuleFixture.RingPath, ringImports),
-            (helper, []),
-            (unrelated, []));
-        var current = new Dictionary<string, string>(StringComparer.Ordinal)
+    private static Dictionary<string, string> SyntheticFiles(string[] ringImports) =>
+        new(StringComparer.Ordinal)
         {
             [RuleFixture.RingPath] = $"""
                 /- GID: D5/S0/Carrier/Ring
@@ -238,20 +264,121 @@ public sealed class AnchorReferenceRuleTests
                    digest: Anchor scope fixture. -/
                 import {ringImports[0]}
                 """ + "\n",
-            [helper] = "-- helper\n",
-            [unrelated] = "-- unrelated\n",
+            [HelperPath] = "-- helper\n",
+            [UnrelatedPath] = "-- unrelated\n",
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(),
             [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
             [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
             ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
         };
+
+    private static void PinImporter(Dictionary<string, string> files, LeanAxiomReport report)
+    {
+        var path = RepoPath.CreateKnown(RuleFixture.RingPath);
+        var statement = FrozenContentAddress.ComputeModuleStatementId(path, report.Files[path]);
+        files[FrozenStatePath.FromModulePath(path).Value] =
+            $"{{\"statement_id\":\"{statement.Value}\"}}\n";
+    }
+
+    // Synthetic rule-level evidence only: source imports and report imports share fixture data.
+    // These tests do not establish actual compiler/report correspondence.
+    private static (DeltaRuleContext Baseline, DeltaRuleContext Candidate) PairedImportContexts(
+        bool throughIntermediate,
+        string changedPath,
+        params string[] candidateImports)
+    {
+        (string Path, string[] Imports)[] modules =
+        [
+            (RuleFixture.RingPath, ["D5.S0.Carrier.Helper"]),
+            (HelperPath, throughIntermediate ? ["D5.S0.Carrier.Intermediate"] : [Target]),
+            (IntermediatePath, ["D5.S0.Carrier.Further"]),
+            (FurtherPath, [Target]),
+            (UnrelatedPath, []),
+        ];
+        var baselineReport = Report(modules);
+        var baseline = SyntheticFiles(modules[0].Imports);
+        foreach (var module in modules.Skip(1))
+        {
+            baseline[module.Path] = ImportSource(module.Imports);
+        }
+        PinImporter(baseline, baselineReport);
+
+        var candidate = new Dictionary<string, string>(baseline, StringComparer.Ordinal)
+        {
+            [changedPath] = ImportSource(candidateImports) + "-- candidate dependency\n",
+        };
+        var candidateReport = Report(modules.Select(module =>
+            (module.Path, module.Path == changedPath ? candidateImports : module.Imports)).ToArray());
+        Assert.Equal(new[] { changedPath }, baseline.Keys.Union(candidate.Keys)
+            .Where(path => !baseline.TryGetValue(path, out var before)
+                || !candidate.TryGetValue(path, out var after) || before != after)
+            .Order(StringComparer.Ordinal));
+        var changes = RawChangeSet.CreateWithKinds([(changedPath, RawChangeKind.Modified)]);
+
+        // Evaluate each snapshot against the other: both runs have the exact same byte delta.
+        // The baseline run checks restored reachability; no fabricated importer edit selects it.
+        return (SyntheticContext(baseline, candidate, baselineReport, changes),
+            SyntheticContext(candidate, baseline, candidateReport, changes));
+    }
+
+    private static string ImportSource(IEnumerable<string> imports) =>
+        string.Concat(imports.Select(import => $"import {import}\n")) + "-- dependency fixture\n";
+
+    private static void AssertPairedAnchorChecks(
+        DeltaRuleContext baseline,
+        DeltaRuleContext candidate,
+        string changedPath,
+        bool affected,
+        bool reachableAfter)
+    {
+        var importer = RepoPath.CreateKnown(RuleFixture.RingPath);
+        Assert.Equal(baseline.Current.Files[importer].RawBytes.ToArray(),
+            candidate.Current.Files[importer].RawBytes.ToArray());
+        foreach (var context in new[] { baseline, candidate })
+        {
+            var change = Assert.Single(context.Changes.Entries);
+            Assert.Equal(changedPath, change.Path.Value);
+            Assert.Equal(RawChangeKind.Modified, change.Kind);
+            Assert.Equal(affected, RepositoryRules.IsLeanClosureFactAffected(context, importer));
+            Assert.Equal(affected, LeanImportClosure.RepositoryPaths(context.Lean.Report, importer)
+                .Contains(RepoPath.CreateKnown(changedPath)));
+        }
+
+        Assert.True(LeanImportClosure.ImportsExternalModule(
+            baseline.Lean.Report, LeanImportClosure.ModuleName(importer), Target));
+        Assert.Equal(reachableAfter, LeanImportClosure.ImportsExternalModule(
+            candidate.Lean.Report, LeanImportClosure.ModuleName(importer), Target));
+        var before = ExecuteContext(baseline);
+        var after = ExecuteContext(candidate);
+        Assert.Contains(RuleId.CreateKnown(17), before.ExecutedRules);
+        Assert.Contains(RuleId.CreateKnown(17), after.ExecutedRules);
+        Assert.Empty(AnchorDiagnostics(before));
+        if (reachableAfter)
+        {
+            Assert.Empty(AnchorDiagnostics(after));
+        }
+        else
+        {
+            AssertAnchorFinding(after);
+        }
+    }
+
+    // Synthetic snapshots and policy: these applicability tests do not read repository data.
+    private static CompletedRuleSet ExecuteDelta(
+        string changedPath,
+        bool added = false,
+        bool directImport = false)
+    {
+        var ringImports = directImport ? new[] { Target } : new[] { "D5.S0.Carrier.Helper" };
+        var report = Report(
+            (RuleFixture.RingPath, ringImports),
+            (HelperPath, []),
+            (UnrelatedPath, []));
+        var current = SyntheticFiles(ringImports);
         if (!added)
         {
-            var path = RepoPath.CreateKnown(RuleFixture.RingPath);
-            var statement = FrozenContentAddress.ComputeModuleStatementId(path, report.Files[path]);
-            current[FrozenStatePath.FromModulePath(path).Value] =
-                $"{{\"statement_id\":\"{statement.Value}\"}}\n";
+            PinImporter(current, report);
         }
 
         var baseline = new Dictionary<string, string>(current, StringComparer.Ordinal);
@@ -264,11 +391,20 @@ public sealed class AnchorReferenceRuleTests
             current[changedPath] += "-- changed\n";
         }
 
+        var changes = RawChangeSet.CreateWithKinds(
+            [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
+        return ExecuteContext(SyntheticContext(current, baseline, report, changes));
+    }
+
+    private static DeltaRuleContext SyntheticContext(
+        IReadOnlyDictionary<string, string> current,
+        IReadOnlyDictionary<string, string> baseline,
+        LeanAxiomReport report,
+        RawChangeSet changes)
+    {
         var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
             Encoding.UTF8.GetBytes(TestFileMap.Canonical),
             Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
-        var changes = RawChangeSet.CreateWithKinds(
-            [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
         var context = DeltaRuleContext.Create(
             SyntheticSnapshot(current),
             SyntheticSnapshot(baseline),
@@ -277,6 +413,11 @@ public sealed class AnchorReferenceRuleTests
             changes,
             MetaClear.Create());
         Assert.False(context.RuleImplementationChanged);
+        return context;
+    }
+
+    private static CompletedRuleSet ExecuteContext(DeltaRuleContext context)
+    {
         var outcome = RuleCatalog.Default.Execute(context);
         Assert.True(outcome is RuleExecutionOutcome.Completed,
             outcome is RuleExecutionOutcome.InfrastructureFailure failure ? failure.Message : "execution failed");
