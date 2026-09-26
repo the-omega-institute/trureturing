@@ -59120,3 +59120,192 @@ $$
 因此，负型的最小熵增不是编码损失信息的度量：式（270.3）仍使每个输入都能完全恢复。它衡量的是在完全正可恢复操作下取得共同实表示所需的额外混合度。正型允许零熵增，负型必须至少增加 $\log2$，而无反酉型在任意有限维输出中均不可行。该结论依赖精确恢复、单一固定实基底和标量共同交换子；它不包括近似恢复、仅保持部分统计量、非完全正编码或热力学功成本。
 
 ## 追加锚（本行以下为增补区）
+
+## 271. 共轭状态块的概率平衡与可恢复实编码
+
+第270节的标量共同交换子假设排除了可独立读取的经典块。本节允许两个这样的块，并考察一个具体拼接：第一块承载一个状态族，第二块承载其复共轭。两块各自都没有共同反酉对称，整体却可以在概率恰好平衡时具有共同实表示。精确恢复要求使这种平衡成为任何有限维编码都无法绕开的条件。
+
+**定义 271.1（加权共轭双块）。** 设 $\mathcal R=\{\rho_s:s\in S\}$ 是 $\mathbb C^d$ 上的非空密度矩阵族，满足共同复线性交换子为 $\mathbb CI_d$，且没有共同反酉对称。固定一组基底以定义逐项复共轭。对固定 $p\in(0,1)$，定义
+
+$$
+\Omega_p(s)=p\rho_s\oplus(1-p)\overline{\rho_s}
+\quad\text{作用于 }\mathbb C^d\oplus\mathbb C^d.
+\tag{271.1}
+$$
+
+所谓可恢复实编码，是固定的完全正保迹复线性映射 $\mathcal E:M_{2d}\to M_D$ 和 $\mathcal D:M_D\to M_{2d}$，使 $\mathcal D\mathcal E(\Omega_p(s))=\Omega_p(s)$ 对每个 $s$ 成立，并使全部 $\mathcal E(\Omega_p(s))$ 在同一个固定正交基底中取实。
+
+**定理 271.2（平衡判据与完整熵区间）。** 定义271.1中存在某个有限输出维数上的可恢复实编码，当且仅当 $p=1/2$。平衡时，固定输出维数 $D$ 的可行条件为 $D\ge2d$；全部可达熵增为
+
+$$
+0\le h\le\log\lfloor D/(2d)\rfloor.
+\tag{271.2}
+$$
+
+这里每个编码的 $h=S(\mathcal E(\Omega_{1/2}(s)))-S(\Omega_{1/2}(s))$ 与 $s$ 无关。更强地，同一熵增适用于任意输入块对角密度矩阵。定理不要求恢复两个输入块之间的相干，也不将该熵恒等式扩展到一般含非零非对角块的输入。
+
+所用的加权共轭直和族已有文献先例：van Luijk、Wilming，*Sufficiency and Petz recovery for positive maps*，[arXiv:2604.08380v2](https://arxiv.org/pdf/2604.08380v2)，例4.11及第32页续证，研究同一族在正保迹映射下的充分 Jordan 代数，并由定理5.1描述正映射互换。那些允许转置的正映射不保证完全正。本定理要求编码与恢复均完全正，所断言的是该要求下的平衡条件、辅助谱配对和精确维数—熵区间；不将共轭直和构造或正映射充分代数作为新增内容。
+
+证明。首先，原族及其共轭族的共同支撑均为整个 $\mathbb C^d$，由标量交换子和迹归一化可得。故 $\Omega_p$ 的共同支撑为整个双块空间。
+
+令 $\Phi=\mathcal D\mathcal E$。对 $\Omega_p$ 使用 Koashi–Imoto 不扰动结构，来源及操作形式见第270节所引 [arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)，定义1式（90）—（92）及定理3式（103）。这里两个直和块、各自一维的冗余因子，已经满足其极大结构判据：每块内部的共同交换投影只有零与单位；两个块之间若存在酉矩阵 $V$ 及正常数 $c$，满足
+
+$$
+p\rho_s=c(1-p)V\overline{\rho_s}V^*
+\quad\text{对全部 }s,
+\tag{271.3}
+$$
+
+取迹后得 $p=c(1-p)$，继而 $VK$ 为原族的共同反酉对称，与假设矛盾。
+
+不扰动结构因而要求 $\Phi$ 的初始化 Stinespring 等距映射形如
+
+$$
+|\psi\rangle_L\longmapsto|\psi\rangle_L\otimes|e_L\rangle,
+\qquad
+|\psi\rangle_R\longmapsto|\psi\rangle_R\otimes|e_R\rangle.
+\tag{271.4}
+$$
+
+两个环境向量不必相同。因此 $\Phi$ 固定每个块对角算子，却可以改变两个块之间的相干；特别地，它在每个输入块上都是恒等信道。
+
+分别限制 $\mathcal E$ 到两个输入块。为核对限制后的恢复仍由保迹信道实现，令 $\iota_a:\mathbb C^d\to\mathbb C^d\oplus\mathbb C^d$ 为块 $a$ 的包含映射，$\Pi_a=\iota_a\iota_a^*$，并固定一个 $d$ 维密度矩阵 $\omega_a$。对受限编码 $\mathcal E_a(X)=\mathcal E(\iota_aX\iota_a^*)$，取
+
+$$
+\mathcal D_a(Y)
+=\iota_a^*\mathcal D(Y)\iota_a
++\operatorname{Tr}[(I-\Pi_a)\mathcal D(Y)]\,\omega_a.
+$$
+
+两项均完全正，迹之和为 $\operatorname{Tr}Y$；由于 $\Phi$ 固定全部块对角算子，$\mathcal D_a\mathcal E_a(X)=X$。单独压缩原解码一般不保迹，上式的制备项补足了它。现在可以分别使用既有可恢复信道正规形，得到
+
+$$
+\mathcal E_L(X)=V_L(X\otimes\tau_L)V_L^*,
+\qquad
+\mathcal E_R(X)=V_R(X\otimes\tau_R)V_R^*.
+\tag{271.5}
+$$
+
+该正规形仍为第39.1、270节使用的 Nayak–Sen / Knill–Laflamme 结构。将两个辅助空间分别限制到其支撑，记秩为 $r_L,r_R$，则 $V_a$ 为等距映射，$\tau_a$ 在对应辅助空间上严格为正。
+
+两个等距映射的像必须正交，而非预先假设编码保持块标签。取分别支撑在左、右输入块上的最大混合态 $\omega_L,\omega_R$。解码精确恢复它们，迹距离的信道收缩性给出
+
+$$
+2=\|\omega_L-\omega_R\|_1
+\le\|\mathcal E(\omega_L)-\mathcal E(\omega_R)\|_1
+\le2.
+\tag{271.6}
+$$
+
+两个密度矩阵的迹范数距离等于二，当且仅当支撑正交；而式（271.5）使这两个输出的支撑恰为 $\mathcal S_L=\operatorname{im}V_L$ 与 $\mathcal S_R=\operatorname{im}V_R$。因此它们正交，并且 $d(r_L+r_R)\le D$。对模型状态，编码在这些占用子空间上等距等同于
+
+$$
+p\rho_s\otimes\tau_L
+\ \oplus
+(1-p)\overline{\rho_s}\otimes\tau_R.
+\tag{271.7}
+$$
+
+共同实输出给出共同共轭。该共轭保持全部输出支撑的共同张成 $\mathcal S_L\oplus\mathcal S_R$，故可以限制并拉回到式（271.7）的乘积直和空间；记所得共轭为 $J=ZK$。
+
+先证明 $J$ 不可能在同一个经典块内有非零分量。在辅助特征基中，$Z$ 的左到左系统块 $B$ 必须满足
+
+$$
+\lambda\rho_s B=\mu B\overline{\rho_s},
+\qquad\lambda,\mu>0.
+\tag{271.8}
+$$
+
+取伴随并比较乘积，使 $B^*B$ 与全部 $\overline{\rho_s}$ 对易。非零 $B$ 因而为正标量乘酉矩阵；归一化后取迹得 $\lambda=\mu$，继而产生原族的共同反酉对称，矛盾。右到右块同理为零，因为共轭族也没有共同反酉对称。于是 $J$ 只能交换整个左右占用子空间。
+
+记左右投影为 $P_L,P_R$。对式（271.7）的状态 $\widehat\Omega_p(s)$，有
+
+$$
+JP_LJ^{-1}=P_R,
+\qquad
+J\widehat\Omega_p(s)J^{-1}=\widehat\Omega_p(s).
+$$
+
+反酉共轭使迹取复共轭，而以下概率为实数，故
+
+$$
+p=\operatorname{Tr}(P_L\widehat\Omega_p(s))
+=\operatorname{Tr}(P_R\widehat\Omega_p(s))=1-p.
+\tag{271.9}
+$$
+
+因此 $p=1/2$ 必要。任意辅助混合度和额外零维数都不能改变这一质量平衡。
+
+在平衡情形进一步比较跨块分量。若辅助特征值为 $\lambda$ 和 $\mu$，行指标位于左块、列指标位于右块的交织方程变成
+
+$$
+\lambda\rho_s B=\mu B\rho_s.
+\tag{271.10}
+$$
+
+同样的伴随与标量交换子论证使非零 $B$ 为比例酉矩阵，取迹得 $\lambda=\mu$，随后 $B$ 本身为标量。由于 $Z$ 是交换两个占用空间的酉矩阵，每个正特征值的左右辅助重数必须相同。故
+
+$$
+\operatorname{spec}\tau_L=\operatorname{spec}\tau_R,
+\qquad r_L=r_R=r,
+\qquad2dr\le D.
+\tag{271.11}
+$$
+
+反之，若两辅助谱相同，选取各自特征基后可令 $\tau_L=\tau_R=\tau$。交换两块并逐项复共轭便是保持式（271.7）的共同共轭。因此这也是对每个可恢复编码占用正规形的充分谱条件。
+
+对任意块对角输入 $q\sigma_L\oplus(1-q)\sigma_R$，输入熵为 $H(q)+qS(\sigma_L)+(1-q)S(\sigma_R)$。正交输出块的熵公式和辅助谱相同给出
+
+$$
+S\!\left(\mathcal E(q\sigma_L\oplus(1-q)\sigma_R)\right)
+-S(q\sigma_L\oplus(1-q)\sigma_R)
+=S(\tau).
+\tag{271.12}
+$$
+
+端点 $q=0,1$ 按零质量项为零解释。于是 $h=S(\tau)$，且 $0\le h\le\log r\le\log\lfloor D/(2d)\rfloor$。
+
+最后给出全部可行值的构造。平衡模型本身已经有共轭 $J(v,w)=(\overline w,\overline v)$。令
+
+$$
+Q=\frac1{\sqrt2}
+\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}.
+$$
+
+直接相乘得
+
+$$
+Q\Omega_{1/2}(s)Q^*
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho_s&-\operatorname{Im}\rho_s\\
+\operatorname{Im}\rho_s&\operatorname{Re}\rho_s
+\end{pmatrix}.
+\tag{271.13}
+$$
+
+这是对给定双块输入的一次酉变换。附加任意对角辅助态 $\tau$，再将整体嵌入 $D$ 维输出并补零，仍得到实矩阵族。若 $m=\lfloor D/(2d)\rfloor$，在 $m$ 维辅助空间中从纯态连续插值到最大混合态，辅助熵取遍 $[0,\log m]$。上述构造的编码可以恢复全部双块输入，包括块间相干：撤销等距映射、偏迹，并在未占用输出补一个固定制备项，正如式（270.15）。因此区间中每点均可达；$D=2d$、纯辅助态给出最小维数和零熵增。证毕。
+
+**命题 271.3（四维平衡实例及恢复范围的边界）。** 对定义271.1中的任意平衡模型，存在可恢复实编码，其块对角熵增为零，却没有全空间左逆，并且某个含块间相干的纯输入的熵增为 $\log2$。此外，取 $\rho_A=(I_2+A/2)/2$，其中 $A=X,Y,Z$。则式（271.1）的三态族在 $p=1/2$ 时有四维实表示；任意 $p\in(0,1)\setminus\{1/2\}$ 都没有任何有限维可恢复实编码。同时，对每个 $s$ 有
+
+$$
+\frac12\|\Omega_p(s)-\Omega_{1/2}(s)\|_1
+=|p-1/2|.
+\tag{271.14}
+$$
+
+证明。先证明恢复范围的限定。定理中的块对角限定确实不可省略。记输入块退相干为 $\Delta(X)=\Pi_LX\Pi_L+\Pi_RX\Pi_R$，在平衡点取
+
+$$
+\mathcal E(X)=Q\Delta(X)Q^*,
+\qquad
+\mathcal D(Y)=\Delta(Q^*YQ).
+$$
+
+这两者都是信道，且 $\mathcal D\mathcal E=\Delta$；所以模型和所有块对角输入均被精确恢复，模型输出仍取实，块对角熵增为零。但对单位向量 $v,w$ 所构成的纯态 $|\psi\rangle=(|v\rangle_L+|w\rangle_R)/\sqrt2$，编码先删去块间相干，输出为两个正交纯态的等权混合，熵增为 $\log2$。该编码没有全空间左逆。这说明定理的必要结论与达到端点时可选用的全空间可逆构造具有不同适用范围。
+
+再考察所示三态。三态原族具有标量交换子，且不存在共同反酉对称，已由命题270.3的 Pauli 乘积论证给出。于是定理271.2适用。两模型之差为 $(p-1/2)\rho_s\oplus-(p-1/2)\overline{\rho_s}$；两块的迹范数各为 $|p-1/2|$，得到所示等式。证毕。
+
+式（271.14）说明，这里的可行性结论使用精确相等与精确恢复；它没有给出近似恢复的误差下界。式（271.13）的物理操作以已经给定的共轭双块状态为输入，也没有声称可以用完全正信道从任意未知 $\rho$ 制备 $(\rho\oplus\overline\rho)/2$。本节所判断的是两个实际准备块的联合组织及其概率权重。
+
+## 追加锚（本行以下为增补区）
