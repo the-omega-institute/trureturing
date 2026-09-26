@@ -3292,3 +3292,70 @@ Corollary 10(a)，原标签 cor:densitysumofchaos:remainder，
 临界噪声相变、更高条件矩或解码算法。
 对条件 varentropy、指数族导数、二次型 score 与密度正则化的定向原文核对，
 未找到直接涵盖该完整实际后验陈述的原定理；这只是已检索范围内的结论，不证明全球原创性。
+
+## 原文对照：两根边缘通用与第 88 章的非同步族
+
+[理论卷第 88 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把原精确 Gamma 相位的区间下计数延伸到负内根，并将两种符号共同放入
+第 80 章的可数要求质量构造。所得固定参数集在每根分别实现所有正均值，
+局部 $2/3$ 维 Hausdorff 测度无穷；删去第 86 章维数至多 $38/87$ 的同步集后，
+此临界测度仍无穷。这是 repo-derived 的原模型连接，
+不解决同步集合的非空性或空性，也不把分别可达改成同时可达。
+
+**所用成熟方法。** Weyl 的指数和判据、二阶导数检验、固定 Fourier 下逼近、
+Baire 定理和质量分布原理保留第 78、80 章的归属。
+精确 Gamma 求导在负根仍成立，原因是两个计数坐标在内根紧弧上严格为正；
+不是通过正根符号重命名跳过可行域边界。
+V. Beresnevich、S. Velani，
+*A Mass Transference Principle and the Duffin–Schaeffer conjecture for Hausdorff measures*，
+[arXiv:math/0412141v1](https://arxiv.org/abs/math/0412141v1)，
+[原 TeX](https://arxiv.org/e-print/math/0412141v1)，
+原标签 thm3 及证明的 P0—P5 提供多子层、三倍区间分离、
+临界内容累积和任意小质量分布常数的经典机制。
+原定理要求放大球 limsup 的全 Lebesgue 测度及规范比值单调性；
+单一 limsup 的结论不自动具有本章所需的可数交集性质。
+本章复用第 80 章已经给出的任意尺度证明，并逐项验证带符号的输入，
+保留下一要求的密度常数；没有复制一份新的通用质量传递定理。
+Durand 的 large-intersection 结果所需严格规范或严格指数余量仍保持原范围，
+不据类归属单独宣告临界等号处测度无穷。
+
+**近期格点计数与共同原层的缺口。** Jonathan Hickman、Rajula Srivastava、
+James Wright，*Counting rational points near manifolds: a refined estimate, a conjecture and a variant*，
+[arXiv:2512.23204v1](https://arxiv.org/abs/2512.23204v1)，
+[原 TeX](https://arxiv.org/e-print/2512.23204v1)。
+其开头计数对整数分母 $1\le q\le Q$ 求和；
+曲率条件 CC 要求图映射 Hessian 的每个非零线性组合行列式非零。
+原标签 thm: refined count 在允许的维数／余维组合上改进上计数指数，
+包括所显示的 $e(n,R)\ge(n+2)R/(n+2R)$。
+这不是指定一个原分母的下命中定理，复数／Gaussian 有理变体也改变了算术对象。
+因此不用于本章同步存在性；原文所陈猜想不作为已证输入。
+复实 Hessian 说明段把实定义域为 $2m$ 的 Hessian 写成 $m$ 阶，
+该未用段落不承担这里任何前提；本章不裁定其复数变体。
+
+Damaris Schindler、Rajula Srivastava、Niclas Technau，
+*Rational Points Near Manifolds, Homogeneous Dynamics, and Oscillatory Integrals*，
+[arXiv:2310.03867v1](https://arxiv.org/abs/2310.03867v1)，
+[原 TeX](https://arxiv.org/e-print/2310.03867v1)。
+原标签 def counting func 的平滑计数含 $\omega(q/X)$，
+其中固定光滑 $\omega$ 支撑在 $[1/2,1]$，空间权重固定，
+逼近权重为支撑在 $(-1,1)$ 的偶函数。
+原下界定理 thm main lower bounds 要求
+$0<\eta\le1/8$、$l$ 非退化、至少 $\lceil(n+1)/\eta\rceil$ 阶导数及
+$X^{-3/(2n-1)+a_n\eta}<\delta<1/2$，
+$a_n=(2n+12)/(2n-1)$。
+其主项 $c_{\mathbf t}\delta^mX^{d+1}$ 和相对误差幂
+$X^{-\eta/[d(2l-1)(n+1)]}$ 是整个分母块的结论。
+平面曲率对应 $n=2,d=m=1,l=2$，足够小 $\eta$ 时包含
+$\delta\asymp X^{-1/2}$；但不能由此断言指定 $q=X$ 有命中。
+把 $\omega$ 改成宽 $X^{-1}$ 的可变峰会使导数随 $X$ 增长，
+原固定权重常数没有提供所需的一致性；移动 Gamma 曲线也有额外一致性义务。
+这说明该引用尚不能补上共同原层下界，不是原曲线无命中的证明。
+
+**结论范围。** 负根桥、带符号的精确原 floor 单元和共同要求日程，
+是相对于已有正根通用集的增量；临界质量机制继续由第 80 章承担。
+第 86 章薄壳偏差的误差阶大于正面积主项，仍只用作上界，
+不能据此推出同层命中或无命中。
+所有参数集结论保持同一个原固定参数和合法层序列；
+两种实验可共享确定均值的子序列，不表示数据被耦合成同一次观测。
+文献核对覆盖上述原定理的权重、曲率和分母量词；
+未找到能直接补上指定原层同步下界的已检索原文，不证明这种定理不存在或本章全球原创。
