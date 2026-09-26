@@ -10,9 +10,8 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "On the sign hypercube, every parity kernel started from the uniform law makes each proper set of "
-            + "coordinates an i.i.d. uniform record, and two steps with a balanced second profile reach the "
-            + "uniform kernel.",
-        H("Proper Coordinate Records and Two-Step Mixing of Parity Kernels"),
+            + "coordinates an i.i.d. uniform record.",
+        H("Proper Coordinate Records of Parity Kernels"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("hypercube-parity"),

@@ -1,8 +1,8 @@
-# Proper Coordinate Records and Two-Step Mixing of Parity Kernels
+# Proper Coordinate Records of Parity Kernels
 
 ## Abstract
 
-On the sign hypercube, every parity kernel started from the uniform law makes each proper set of coordinates an i.i.d. uniform record, and two steps with a balanced second profile reach the uniform kernel.
+On the sign hypercube, every parity kernel started from the uniform law makes each proper set of coordinates an i.i.d. uniform record.
 
 **Definition 1.1 (Parity character).**
 
