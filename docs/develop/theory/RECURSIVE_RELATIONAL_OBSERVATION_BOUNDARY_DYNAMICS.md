@@ -13776,3 +13776,1101 @@ $$
 式（70.20）是系数的准确变分描述，已证明其达到最小值；本节未求出 $\gamma_r$ 的显式值、最优 $r$ 或不依赖 $r$ 的统一正比例间隙。
 
 ## 追加锚（本行以下为增补区）
+
+## 71. 移动压缩系数的连续性、两个端点与内部最大值
+
+### 71.1 系数函数及结论
+
+第 70 节对每个固定 $r>0$ 定义了同一混合量子比特族沿
+
+$$
+a_\varepsilon=1-r\varepsilon
+$$
+
+移动时的准确极限系数
+
+$$
+\gamma_r=\lim_{\varepsilon\downarrow0}\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+=\min_{K\in\mathcal T}N(H_r-K),
+\qquad1<\gamma_r\le\frac98.
+\tag{71.1}
+$$
+
+这里 $\mathcal T$ 是第 70 节的同一个闭因果切锥，与 $r$ 无关；$N$ 是完整 tester 事件范数。将式（71.1）的变分式延伸到 $r=0$，仍记所得值为 $\gamma_0$。
+
+**定理 71.1。** 该函数满足
+
+$$
+\gamma_0=1,
+\qquad
+|\gamma_r-\gamma_s|
+\le2|r-s|+4|\sqrt r-\sqrt s|
+\quad(r,s\ge0).
+\tag{71.2}
+$$
+
+因而它在 $[0,\infty)$ 连续，在每个远离零的紧参数区间上 Lipschitz 连续。两个端点均满足
+
+$$
+\lim_{r\downarrow0}\gamma_r=1,
+\qquad\lim_{r\uparrow\infty}\gamma_r=1.
+\tag{71.3}
+$$
+
+更明确地，若 $r\ge8$，令
+
+$$
+u_r=\frac{r-\sqrt{r^2-4r}}2
+=\frac{2}{1+\sqrt{1-4/r}},
+\tag{71.4}
+$$
+
+则
+
+$$
+1<\gamma_r\le
+\min\left\{\frac98,\ 1+3(u_r-1)\right\}.
+\tag{71.5}
+$$
+
+因此存在某个有限正数 $r_*$，使
+
+$$
+\gamma_{r_*}=\max_{r>0}\gamma_r\in(1,9/8].
+\tag{71.6}
+$$
+
+本结论不指定最大值、最大点或其唯一性。
+
+### 71.2 同一个切锥上的参数分解
+
+沿用
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad w=x+y.
+$$
+
+将第 70 节的一阶方向准确分解为
+
+$$
+H_r=H_0+rJ_1+\sqrt r\,J_{1/2},
+\tag{71.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+H_0&=-\frac12\bigl(|y\rangle\langle w|+|w\rangle\langle y|\bigr)
++|z'\rangle\langle z'|,\\
+J_1&=-\frac12\bigl(|x\rangle\langle w|+|w\rangle\langle x|\bigr)
++|x'\rangle\langle x'|,\\
+J_{1/2}&=|z\rangle\langle w|+|w\rangle\langle z|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{aligned}
+\tag{71.8}
+$$
+
+固定任意完整 tester $C,E$，即 $C\succeq0$、$\operatorname{Tr}_A C=I_B$、$0\preceq E\preceq C\otimes I_D$。$C$ 的标准基对角元均位于 $[0,1]$，故对上列任一标准基向量 $v$，
+
+$$
+0\le\langle v|E|v\rangle\le1.
+$$
+
+更具体地，$x,y$ 的末输出坐标不同，而它们的 $AB$ 坐标为 $00,10$，所以
+
+$$
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\tag{71.9}
+$$
+
+对正算子 $E$ 使用 Cauchy–Schwarz，不要求 $E$ 在任何基下对角。式（71.9）及上述标准基对角界给
+
+$$
+|\langle w|E|x\rangle|\le1,
+\qquad|\langle w|E|z\rangle|\le1,
+\qquad|\langle z'|E|x'\rangle|\le1.
+$$
+
+因此
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(J_1E)|
+&=\bigl|-\operatorname{Re}\langle w|E|x\rangle
++\langle x'|E|x'\rangle\bigr|\le2,\\
+|\operatorname{Tr}(J_{1/2}E)|
+&=\bigl|2\operatorname{Re}\langle w|E|z\rangle
+-2\operatorname{Re}\langle z'|E|x'\rangle\bigr|\le4.
+\end{aligned}
+$$
+
+取全部 tester 的最大值得到
+
+$$
+N(J_1)\le2,\qquad N(J_{1/2})\le4.
+\tag{71.10}
+$$
+
+任意固定集合的范数距离函数是 $1$-Lipschitz 的。由于所有参数共用同一个 $\mathcal T$，式（71.7）、（71.10）遂给
+
+$$
+\begin{aligned}
+|\gamma_r-\gamma_s|
+&\le N(H_r-H_s)\\
+&\le2|r-s|+4|\sqrt r-\sqrt s|.
+\end{aligned}
+\tag{71.11}
+$$
+
+这证明连续性模量。若 $r,s\ge d>0$，则 $|\sqrt r-\sqrt s|\le|r-s|/(2\sqrt d)$，因此可取局部 Lipschitz 常数 $2+2/\sqrt d$。
+
+### 71.3 零端点的准确修复
+
+把原混合族连续延伸至 $a=1$。对 $0<\varepsilon<1$，置 $c=\sqrt{1-\varepsilon}$、$d=1-c$，并令 $h=|010\rangle$。此时候选为
+
+$$
+R_{1,\varepsilon}=|x+cy\rangle\langle x+cy|
++\varepsilon|z'\rangle\langle z'|.
+$$
+
+定义显式因果修复
+
+$$
+S_\varepsilon=c|w\rangle\langle w|
++d\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr).
+\tag{71.12}
+$$
+
+它正，且
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(c,d).
+$$
+
+因为 $c+d=1$，这是归一化因果修复。准确差算符为
+
+$$
+R_{1,\varepsilon}-S_\varepsilon
+=d\bigl(|x\rangle\langle x|-|h\rangle\langle h|\bigr)
++cd\bigl(|z'\rangle\langle z'|-|y\rangle\langle y|\bigr).
+\tag{71.13}
+$$
+
+对任意完整事件 $E$，正项响应至多 $d+cd=\varepsilon$，负项绝对响应同样至多 $d+cd=\varepsilon$；这只使用各标准基事件对角元位于 $[0,1]$。所以 $N(R_{1,\varepsilon}-S_\varepsilon)\le\varepsilon$。原早边缘总事件又给下界 $\varepsilon$，故
+
+$$
+e(R_{1,\varepsilon})=\varepsilon
+\qquad(0<\varepsilon<1).
+\tag{71.14}
+$$
+
+为了直接核对变分式的零端点，式（71.12）的一阶方向为
+
+$$
+K_0=-\frac12|w\rangle\langle w|
++\frac12\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr)
+\in\mathcal T.
+$$
+
+它的因果偏迹为 $I_A\otimes\operatorname{diag}(-1/2,1/2)$，在 $w^\perp$ 上的压缩正；也可直接由式（71.12）的可行割线极限确认其切锥成员身份。此时
+
+$$
+H_0-K_0=
+\frac12\bigl(|x\rangle\langle x|+|z'\rangle\langle z'|
+-|y\rangle\langle y|-|h\rangle\langle h|\bigr).
+\tag{71.15}
+$$
+
+同样的对角事件界给 $N(H_0-K_0)\le1$。而对任意 $K\in\mathcal T$，第 70 节的 $C_+$ 总事件仍给 $\operatorname{Tr}((H_0-K)\Pi_+)=1$。因此 $\gamma_0=1$。
+
+将 $s=0$ 代入式（71.11），得到显式估计
+
+$$
+1<\gamma_r\le1+2r+4\sqrt r\quad(r>0),
+\tag{71.16}
+$$
+
+以及 $r\downarrow0$ 时的极限 $1$。
+
+### 71.4 无穷端点由同一显式修复控制
+
+固定 $r\ge8$，沿 $a_\varepsilon=1-r\varepsilon$ 取充分小的正 $\varepsilon$。第 66 节所需条件
+
+$$
+\varepsilon\le\frac{1-a_\varepsilon}{8}
+$$
+
+此时等价于 $r\ge8$，所以同一显式二阶修复对每个这样的参数点合法。
+
+将该修复的小根写成 $p_\varepsilon=\varepsilon u_{r,\varepsilon}$。原二次方程变成
+
+$$
+u_{r,\varepsilon}^2-r(1+\varepsilon)u_{r,\varepsilon}+r=0,
+$$
+
+其小根为
+
+$$
+u_{r,\varepsilon}
+=\frac{r(1+\varepsilon)
+-\sqrt{r^2(1+\varepsilon)^2-4r}}2
+\longrightarrow u_r.
+\tag{71.17}
+$$
+
+第 66 节的准确事件上界除以 $\varepsilon$ 后为
+
+$$
+\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\le1+(u_{r,\varepsilon}-1)
+\left[
+2+\frac{2(\sqrt{1-r\varepsilon}+\sqrt r\,\varepsilon)}
+{\sqrt{1-\varepsilon}+\sqrt{1-p_\varepsilon}}
+\right].
+\tag{71.18}
+$$
+
+固定 $r$ 后，方括号趋于 $3$。由第 70 节已证的真实极限可得
+
+$$
+\gamma_r\le1+3(u_r-1).
+\tag{71.19}
+$$
+
+结合 $\gamma_r\le9/8$，得到式（71.5）。式（71.4）显示 $u_r\to1$；因此 $1\le\gamma_r\le1+3(u_r-1)$ 迫使 $r\uparrow\infty$ 时 $\gamma_r\to1$。
+
+显式上界本身还满足
+
+$$
+3(u_r-1)=\frac3r+O(r^{-2})\qquad(r\uparrow\infty).
+\tag{71.20}
+$$
+
+这只是上界的渐近式，不能将 $3/r$ 识别为实际 $\gamma_r-1$ 的首项。
+
+### 71.5 最大值在内部达到及范围
+
+选择一个正参数，例如 $r=1$。第 70 节给 $\gamma_1>1$。取
+
+$$
+\rho=\frac{1+\gamma_1}{2}\in(1,\gamma_1).
+$$
+
+由两个端点极限，存在 $0<d<1<R<\infty$，使 $r\in[0,d)$ 或 $r>R$ 时均有 $\gamma_r<\rho$。连续函数 $\gamma_r$ 在紧区间 $[d,R]$ 达到最大值，且该值至少为 $\gamma_1>\rho$，因此也是整个 $r>0$ 上的最大值。这证明式（71.6）。$\square$
+
+两个端点结果是在已经定义的系数函数 $\gamma_r$ 上取极限；本节没有交换 $r$ 与 $\varepsilon$ 的极限，也没有证明任意共同变化路径上的一致展开。它们证明不存在对所有 $r>0$ 通用的严格正比例间隙。内部最大值的准确大小、位置和唯一性仍未由这些界确定。
+
+## 追加锚（本行以下为增补区）
+
+## 72. 移动压缩系数与三维纯候选之间的统一严格间隙
+
+### 72.1 固定合同与结论
+
+沿用第70、71节的三个量子比特、完整 tester 范数 $N$、闭因果切锥 $\mathcal T$ 及系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r\ge0.
+\tag{72.1}
+$$
+
+切锥和范数不随 $r$ 改变。第71节已证明 $\gamma_0=1$、$\gamma_r>1$ 对每个 $r>0$ 成立、两个端点均趋于一，且全局最大值在有限正参数处取得。
+
+**定理72.1（系数的统一严格上界）。** 存在与 $r$ 无关的 $\eta>0$，使
+
+$$
+1<\gamma_r\le\frac98-\eta
+\qquad(r>0).
+\tag{72.2}
+$$
+
+特别地，同一混合量子比特族的移动压缩系数的最大值严格小于三维纯候选的系数 $9/8$。本节不确定 $\eta$ 的显式值，也不将该系数界升级为任意 $r,\varepsilon$ 共同变化时的一致有限参数展开。
+
+### 72.2 一个保持全部因果约束的切向扰动
+
+继续记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,
+\qquad w=x+y.
+$$
+
+对固定 $r>0$，取 $0\le\delta<1$，令
+
+$$
+p=1-\delta,\qquad g=\sqrt{rp}.
+$$
+
+定义实厄米方向
+
+$$
+\begin{aligned}
+K_{r,\delta}={}&-(r+p)|x\rangle\langle x|-p|y\rangle\langle y|
+-\left(\frac r2+p\right)(|x\rangle\langle y|+|y\rangle\langle x|)\\
+&+g(|w\rangle\langle z|+|z\rangle\langle w|)\\
+&+r|x'\rangle\langle x'|-g(|x'\rangle\langle z'|+|z'\rangle\langle x'|)
++p|z'\rangle\langle z'|+p|h\rangle\langle h|.
+\end{aligned}
+\tag{72.3}
+$$
+
+它的因果偏迹为
+
+$$
+\operatorname{Tr}_D K_{r,\delta}=I_A\otimes\operatorname{diag}(-p,p).
+\tag{72.4}
+$$
+
+其中跨输入的两个偏迹项 $K_{xz}=g$ 与 $K_{x'z'}=-g$ 相消，其他非对角项在末端偏迹中消失。在 $w^\perp$ 上压缩时，$x-y$ 方向的二次型和它与 $z$ 的配对均为零；$z$ 的对角也为零。其余非零压缩正是
+
+$$
+\begin{pmatrix}r&-g\\-g&p\end{pmatrix}
+\quad\text{在 }\operatorname{span}(x',z')\text{ 上},
+\qquad p|h\rangle\langle h|.
+\tag{72.5}
+$$
+
+因为 $rp=g^2$ 且 $r,p\ge0$，它们均正。由第70节切锥的准确刻画，
+
+$$
+K_{r,\delta}\in\mathcal T.
+\tag{72.6}
+$$
+
+记 $Y_{r,\delta}=H_r-K_{r,\delta}$。在 $\delta=0$ 时，所有 $r$ 依赖恰好相消：
+
+$$
+Y_{r,0}=Y_*:=|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\tag{72.7}
+$$
+
+固定 $r$ 后，$\sqrt{1-\delta}=1-\delta/2+O(\delta^2)$ 给
+
+$$
+Y_{r,\delta}=Y_*+\delta Z_r+O_r(\delta^2),
+\tag{72.8}
+$$
+
+其中
+
+$$
+\begin{aligned}
+Z_r={}&-|w\rangle\langle w|+|h\rangle\langle h|+|z'\rangle\langle z'|\\
+&+\frac{\sqrt r}{2}\bigl(
+|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|
+\bigr).
+\end{aligned}
+\tag{72.9}
+$$
+
+下面证明，这个可行扰动使完整事件范数从 $9/8$ 严格下降。
+
+### 72.3 基准误差的全部最优事件
+
+合法 tester 仍为
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+考虑两个独立角参数的局部酉算符
+
+$$
+U_{\phi,\psi}
+=\operatorname{diag}(1,e^{i\phi})_A
+\otimes\operatorname{diag}(1,e^{i\psi})_B
+\otimes\operatorname{diag}(1,e^{-i\phi})_D.
+\tag{72.10}
+$$
+
+它固定 $x,y$，将 $h$ 乘以相位，所以保持 $Y_*$。同时，局部共轭把合法 tester 送到合法 tester。对两个角分别均匀平均，可把任意 $C$ 变成保持原对角的对角矩阵，而 $\operatorname{Tr}(Y_*E)$ 不变。故对 $Y_*$ 的正、负响应最大值都可在
+
+$$
+C=\operatorname{diag}(q,t,1-q,1-t),\qquad0\le q,t\le1
+\tag{72.11}
+$$
+
+中求取。
+
+令 $L=C^{1/2}\otimes I_D$。加权算符 $LY_*L$ 在 $x,y$ 上的主块为
+
+$$
+\begin{pmatrix}
+q&\frac12\sqrt{q(1-q)}\\
+\frac12\sqrt{q(1-q)}&0
+\end{pmatrix},
+\tag{72.12}
+$$
+
+其本征值为 $(q+\sqrt q)/2$ 与 $(q-\sqrt q)/2$；另有 $h$ 上的本征值 $-t$，其余全零。任意合法事件可写为 $E=LFL$，其中 $0\preceq F\preceq I$，在 $L$ 的核上如何延伸 $F$ 不影响结果。因此正响应最多为
+
+$$
+\frac{q+\sqrt q}{2}\le1,
+$$
+
+负响应绝对值最多为
+
+$$
+t+\frac{\sqrt q-q}{2}\le\frac98.
+\tag{72.13}
+$$
+
+后一等号只能在 $t=1,q=1/4$ 时成立，也确由负本征投影达到。于是 $N(Y_*)=9/8$，每个绝对值最优事件均满足
+
+$$
+\operatorname{Tr}(Y_*E)=-\frac98.
+\tag{72.14}
+$$
+
+这里还能控制未平均的全部最优 tester。将任一最优 $(C,E)$ 按（72.10）平均，原对角不变，平均后仍达到（72.14），所以原 $C$ 必满足
+
+$$
+C_{00,00}=\frac14,\quad C_{01,01}=1,
+\quad C_{10,10}=\frac34,\quad C_{11,11}=0.
+\tag{72.15}
+$$
+
+正性使 $C$ 的 $11$ 行列全零。由于 $0\preceq E\preceq C\otimes I_D$，$E$ 的 $z,z'$ 行列也全零。因此（72.9）中所有含 $z$ 或 $z'$ 的项对这个事件的配对为零，得到
+
+$$
+\operatorname{Tr}(Z_rE)
+=-\langle w|E|w\rangle+\langle h|E|h\rangle.
+\tag{72.16}
+$$
+
+右侧被（72.10）的平均保持。只需在平均后的对角 tester 中计算它。此时（72.12）的负本征单位向量为
+
+$$
+v_-=-\frac12x+\frac{\sqrt3}{2}y.
+$$
+
+达到最负响应要求 $F$ 在 $v_-$ 和 $h$ 上恒等、在正本征方向上为零。其核空间上的自由部分不影响 $w,h$ 的读数。所以
+
+$$
+\begin{aligned}
+\langle w|E|w\rangle
+&=|\langle v_-|Lw\rangle|^2
+=\left|-\frac14+\frac34\right|^2=\frac14,\\
+\langle h|E|h\rangle&=1.
+\end{aligned}
+\tag{72.17}
+$$
+
+这些值也适用于未平均的原事件。结合（72.16），对 $Y_*$ 的每个最优 tester 都有
+
+$$
+-\operatorname{Tr}(Z_rE)=-\frac34.
+\tag{72.18}
+$$
+
+这一步保留了全部最优事件，未以一个方便的对角事件代替完整范数。
+
+### 72.4 紧致最大化的单侧变化
+
+合法 $(C,E)$ 构成紧集：$C$ 正且迹二，$E$ 正且迹至多四，所有约束闭。把符号 $\varsigma\in\{-1,1\}$ 一起加入，便有
+
+$$
+N(Y)=\max_{C,E,\varsigma}\varsigma\operatorname{Tr}(YE).
+$$
+
+式（72.8）的余项与所有合法事件配对时仍为 $O_r(\delta^2)$，因为 $\|E\|_\infty\le2$。对任意 $\delta_n\downarrow0$，取最大化事件和符号。紧性给收敛子列；由 $Y_{r,\delta_n}\to Y_*$，其极限必是 $Y_*$ 的最大化点。式（72.13）、（72.14）使极限符号为负，式（72.18）使相应的一阶配对为 $-3/4$。
+
+更明确地，将最大化点记为 $(C_n,E_n,\varsigma_n)$，则
+
+$$
+\frac{N(Y_{r,\delta_n})-N(Y_*)}{\delta_n}
+\le\varsigma_n\operatorname{Tr}(Z_rE_n)+O_r(\delta_n).
+\tag{72.19}
+$$
+
+这是因为同一个点在 $Y_*$ 上的响应至多 $N(Y_*)$。取达到上极限的子列后，用（72.18）得到上极限至多 $-3/4$。反向，固定任意一个 $Y_*$ 的最优负事件，将它用于 $Y_{r,\delta}$，便由（72.8）、（72.18）得到下极限至少 $-3/4$。因此
+
+$$
+N(Y_{r,\delta})=\frac98-\frac34\delta+o_r(\delta)
+\qquad(\delta\downarrow0).
+\tag{72.20}
+$$
+
+对每个固定有限 $r>0$，充分小正 $\delta$ 遂满足 $N(Y_{r,\delta})<9/8$。由（72.1）、（72.6），
+
+$$
+\gamma_r\le N(Y_{r,\delta})<\frac98.
+\tag{72.21}
+$$
+
+这里的允许扰动大小可以依赖 $r$，尚未声称同一 $\delta$ 对全部参数有效。
+
+### 72.5 从逐点严格性到系数的统一间隙
+
+第71节证明存在有限正 $r_*$，使 $\gamma_{r_*}=\max_{r>0}\gamma_r$。式（72.21）在这个实际最大点也成立，所以
+
+$$
+\eta:=\frac98-\gamma_{r_*}>0.
+\tag{72.22}
+$$
+
+所有参数均满足 $\gamma_r\le\gamma_{r_*}=9/8-\eta$。再用第70节的逐点下界 $\gamma_r>1$，即得定理。证明完毕。
+
+这个统一间隙属于先固定移动尺度参数 $r$、再令缺陷趋零得到的系数族。其结论强于逐参数末端处理收缩给出的 $\gamma_r\le9/8$；但没有比较任意量子比特过程与任意三维过程，也未确定该混合族的最优系数或所有双参数路径的误差尺度。
+
+## 追加锚（本行以下为增补区）
+
+## 73. 移动压缩系数的显式统一间隙
+
+### 73.1 定量结论与同一切向修复
+
+沿用第 70—72 节完整 tester 范数、闭因果切锥及准确极限系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r>0.
+$$
+
+**定理 73.1。** 对每个 $r>0$，都有显式估计
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.1}
+$$
+
+结合大参数的修复上界，可以进一步取一个与 $r$ 无关的明确常数：
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{394240}
+\qquad(r>0).
+\tag{73.2}
+$$
+
+这些常数是可行修复给出的保守界，不是最优间隙。
+
+证明仍使用第 72 节的显式切向修复 $K_{r,\delta}$。取
+
+$$
+0<\delta\le\frac14,\qquad p=1-\delta,
+\qquad g=\sqrt{rp},
+\qquad \rho=\sqrt r-g=\sqrt r\,(1-\sqrt{1-\delta}).
+\tag{73.3}
+$$
+
+第 72 节已直接验证 $K_{r,\delta}\in\mathcal T$。记
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,\\
+w=x+y,\\
+J=|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{gathered}
+$$
+
+其差算符具有准确分解
+
+$$
+\begin{aligned}
+Y_{r,\delta}:=H_r-K_{r,\delta}
+={}&Y_* -\delta|w\rangle\langle w|
++\delta|h\rangle\langle h|+\delta|z'\rangle\langle z'|
++\rho J,\\
+Y_*={}&|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\end{aligned}
+\tag{73.4}
+$$
+
+以下直接估计所有 tester 对式（73.4）的正负响应，不需要知道其最优事件。
+
+### 73.2 任意 tester 的末支撑质量
+
+固定任意完整 tester
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+记
+
+$$
+s=C_{11,11}\in[0,1],\qquad q=C_{00,00}\in[0,1].
+$$
+
+偏迹归一化给 $C_{01,01}=1-s$、$C_{10,10}=1-q$。由 $E\preceq C\otimes I_D$，
+
+$$
+\begin{gathered}
+\langle z|E|z\rangle,\ \langle z'|E|z'\rangle\le s,
+\qquad\langle x'|E|x'\rangle\le q\le1,\\
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\end{gathered}
+\tag{73.5}
+$$
+
+最后一个等式使用 $x,y$ 的末输出坐标不同。正算子 $E$ 的 Cauchy–Schwarz 不等式于是给
+
+$$
+|\operatorname{Tr}(JE)|
+\le2|\langle z|E|w\rangle|+2|\langle z'|E|x'\rangle|
+\le4\sqrt s.
+\tag{73.6}
+$$
+
+这是对同一个任意 tester 的约束；没有将它与另一个 tester 的最优事件拼接。
+
+### 73.3 中心块负响应的准确最大值
+
+定义不含末支撑相干项的中心算符
+
+$$
+Z_\delta=Y_*-\delta|w\rangle\langle w|+\delta|h\rangle\langle h|.
+\tag{73.7}
+$$
+
+它被第 72 节的两个角局部相位群保持。将任意给定 $(C,E)$ 按该群平均，不改变 $-\operatorname{Tr}(Z_\delta E)$，也不改变原对角参数 $q,s$；平均后的反馈矩阵为
+
+$$
+\overline C=\operatorname{diag}(q,1-s,1-q,s).
+$$
+
+因此对于中心项可以在这个对角反馈下求上界，同时保留原 tester 在式（73.6）中的同一个 $s$。
+
+加权 $Z_\delta$ 在 $x,y$ 上的主块为
+
+$$
+B_{q,\delta}=
+\begin{pmatrix}
+(1-\delta)q&(1/2-\delta)\sqrt{q(1-q)}\\
+(1/2-\delta)\sqrt{q(1-q)}&-\delta(1-q)
+\end{pmatrix}.
+\tag{73.8}
+$$
+
+其迹为 $q-\delta$，行列式为 $-q(1-q)/4$。唯一可能的负本征值绝对值为
+
+$$
+n_\delta(q)=
+\frac{\sqrt{\delta^2+(1-2\delta)q}-q+\delta}{2}.
+\tag{73.9}
+$$
+
+其余非零部分只有 $h$ 上的负本征值 $-p(1-s)$。故任意原 tester 满足
+
+$$
+-\operatorname{Tr}(Z_\delta E)
+\le p(1-s)+n_\delta(q).
+\tag{73.10}
+$$
+
+在 $0<\delta\le1/4$ 上，式（73.9）是 $q\in[0,1]$ 的凹函数，最大点为
+
+$$
+q_\delta=\frac{1-4\delta}{4(1-2\delta)}\in[0,1].
+$$
+
+可直接求导确认；在 $\delta=1/4$ 时最大点位于 $q=0$。代入得到
+
+$$
+F_\delta:=p+\max_{0\le q\le1}n_\delta(q)
+=\frac98-\frac34\delta+
+\frac{\delta^2}{2(1-2\delta)}.
+\tag{73.11}
+$$
+
+因此中心负响应具有保留末支撑质量罚项的界
+
+$$
+-\operatorname{Tr}(Z_\delta E)\le F_\delta-p s.
+\tag{73.12}
+$$
+
+### 73.4 完整负响应与正响应
+
+式（73.4）等于 $Z_\delta+\delta|z'\rangle\langle z'|+\rho J$。因为 $E\succeq0$，在负响应上可以舍去非正贡献 $-\delta\langle z'|E|z'\rangle$。式（73.6）、（73.12）于是给
+
+$$
+\begin{aligned}
+-\operatorname{Tr}(Y_{r,\delta}E)
+&\le F_\delta-p s+4\rho\sqrt s\\
+&\le F_\delta+\frac{4\rho^2}{p}.
+\end{aligned}
+\tag{73.13}
+$$
+
+最后一步是完成平方：$-p s+4\rho\sqrt s=-p(\sqrt s-2\rho/p)^2+4\rho^2/p$。
+
+由
+
+$$
+\rho=\frac{\sqrt r\,\delta}{1+\sqrt p},
+\qquad1+\sqrt p\ge2\sqrt p,
+$$
+
+以及 $p\ge3/4$，有
+
+$$
+\frac{4\rho^2}{p}
+\le\frac{r\delta^2}{p^2}
+\le\frac{16}{9}r\delta^2\le2r\delta^2.
+$$
+
+式（73.11）中 $\delta^2/[2(1-2\delta)]\le\delta^2$。取全部 tester 最大值，得到
+
+$$
+\max_{C,E}-\operatorname{Tr}(Y_{r,\delta}E)
+\le\frac98-\frac34\delta+(1+2r)\delta^2.
+\tag{73.14}
+$$
+
+正响应也须控制。第 72 节已准确计算 $\max_{C,E}\operatorname{Tr}(Y_*E)=1$。式（73.4）中的 $-\delta|w\rangle\langle w|$ 对正响应不增益，而两个新增对角元满足
+
+$$
+\langle h|E|h\rangle+\langle z'|E|z'\rangle
+\le C_{01,01}+C_{11,11}=1.
+$$
+
+再用式（73.6）及 $s\le1$，便有
+
+$$
+\begin{aligned}
+\max_{C,E}\operatorname{Tr}(Y_{r,\delta}E)
+&\le1+\delta+4\rho\\
+&\le1+\delta(1+4\sqrt r).
+\end{aligned}
+\tag{73.15}
+$$
+
+最后一步只用 $\rho\le\sqrt r\,\delta$。正负响应界分别对全部合法事件成立，故可以共同用于 $N$。
+
+### 73.5 明确选择扰动参数
+
+现在对每个固定 $r>0$ 选择
+
+$$
+\delta_r=\frac{1}{32(1+2r)}\le\frac1{32}<\frac14.
+\tag{73.16}
+$$
+
+式（73.14）给
+
+$$
+\max_{C,E}-\operatorname{Tr}(Y_{r,\delta_r}E)
+\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.17}
+$$
+
+对正响应，恒等式
+
+$$
+2(1+2r)-(1+4\sqrt r)=(2\sqrt r-1)^2\ge0
+$$
+
+使式（73.15）成为
+
+$$
+\max_{C,E}\operatorname{Tr}(Y_{r,\delta_r}E)
+\le1+\frac{1+4\sqrt r}{32(1+2r)}\le\frac{17}{16}.
+\tag{73.18}
+$$
+
+而式（73.17）的右侧对所有 $r\ge0$ 至少为
+
+$$
+\frac98-\frac{23}{1024}=\frac{1129}{1024}
+>\frac{17}{16}.
+$$
+
+因此正负响应合并给
+
+$$
+N(H_r-K_{r,\delta_r})
+\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.19}
+$$
+
+由切锥变分式及已证 $\gamma_r>1$，得到式（73.1）。这里参数和常数均显式，不以未计算的小量余项决定可行范围。
+
+### 73.6 与大参数上界组合
+
+第 71 节对 $r\ge8$ 给
+
+$$
+\gamma_r\le1+3(u_r-1),
+\qquad u_r=\frac{r-\sqrt{r^2-4r}}2.
+$$
+
+小根满足 $u_r^2=r(u_r-1)$ 且 $1<u_r\le2$，所以
+
+$$
+\gamma_r\le1+\frac{12}{r}\qquad(r\ge8).
+\tag{73.20}
+$$
+
+当 $r\ge192$ 时，式（73.20）给 $\gamma_r\le17/16$。当 $0<r\le192$ 时，式（73.1）给
+
+$$
+\gamma_r\le\frac98-\frac{23}{1024\cdot385}
+=\frac98-\frac{23}{394240}.
+$$
+
+后一个上界大于 $17/16$，所以同一式对全部 $r>0$ 成立，证明式（73.2）。$\square$
+
+显式常数没有确定真实最大系数或最大点；其意义是给第 72 节的统一严格间隙提供一个可以直接代入的下界。全部估计仍属于先固定 $r$、再令原缺陷趋零得到的系数函数，未据此交换双参数极限。
+
+## 追加锚（本行以下为增补区）
+
+## 74. 全压缩参数的一致尺度轮廓与最坏参数的集中
+
+### 74.1 两个同时变化的参数
+
+考虑第64节同一混合族 $R_{a,\varepsilon}$，其中 $0<a<1$、$0<\varepsilon<1$。完整事件最优修复误差仍为 $e(R_{a,\varepsilon})$，归一化缺陷为 $\varepsilon$。定义尺度比
+
+$$
+r=\frac{1-a}{\varepsilon}.
+\tag{74.1}
+$$
+
+第70、71节的函数 $\gamma_r=\operatorname{dist}_N(H_r,\mathcal T)$ 在 $r\ge0$ 连续，$\gamma_0=1$，且在 $r\to\infty$ 时趋于一。置
+
+$$
+\Gamma=\max_{r>0}\gamma_r,\qquad
+\mathcal A=\{r>0:\gamma_r=\Gamma\}.
+\tag{74.2}
+$$
+
+前述结果保证 $\mathcal A$ 为非空紧集，包含于 $(0,\infty)$，并且 $1<\Gamma<9/8$。
+
+**定理74.1（一致尺度轮廓）。** 在整个开压缩参数区间上，有
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}
+\left|
+\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|=0.
+\tag{74.3}
+$$
+
+因此，对任意随 $\varepsilon\downarrow0$ 变化的合法参数 $a_\varepsilon$，如果
+
+$$
+\frac{1-a_\varepsilon}{\varepsilon}\longrightarrow r\in[0,\infty),
+$$
+
+则 $e(R_{a_\varepsilon,\varepsilon})/\varepsilon\to\gamma_r$；如果该比值趋于无穷，则误差比趋于一。
+
+整个候选族的最坏比例也具有准确极限：
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+=\Gamma.
+\tag{74.4}
+$$
+
+若 $a_\varepsilon$ 渐近达到同一族的最坏比例，即
+
+$$
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\longrightarrow0,
+\tag{74.5}
+$$
+
+则必有
+
+$$
+\operatorname{dist}\left(
+\frac{1-a_\varepsilon}{\varepsilon},\mathcal A
+\right)\longrightarrow0.
+\tag{74.6}
+$$
+
+特别地，这些参数满足 $1-a_\varepsilon=\Theta(\varepsilon)$。这并未断言最优尺度唯一。
+
+### 74.2 有界尺度上的一致一阶展开
+
+记 $R_0=|x+y\rangle\langle x+y|$，并沿用第70节的紧凸因果修复集合 $\mathcal C$、缩放集合
+
+$$
+\mathcal D_\varepsilon=\frac{\mathcal C-R_0}{\varepsilon},
+\qquad
+\mathcal T=\overline{\bigcup_{t>0}\mathcal D_t}.
+\tag{74.7}
+$$
+
+若 $r\ge0$ 且 $r\varepsilon<1$，把 $a=1-r\varepsilon$ 代入候选，得到
+
+$$
+\begin{aligned}
+R_{1-r\varepsilon,\varepsilon}
+={}&|\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z\rangle
+\langle\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z|\\
+&+\varepsilon|\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\rangle
+\langle\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'|.
+\end{aligned}
+\tag{74.8}
+$$
+
+在 $r=0$ 时使用第71节已经定义的端点 $a=1$。对任意固定 $R<\infty$，存在常数 $C_R<\infty$，使充分小正 $\varepsilon$ 满足
+
+$$
+\sup_{0\le r\le R}
+N\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}-H_r
+\right)\le C_R\varepsilon.
+\tag{74.9}
+$$
+
+为核对一致性，可将（74.8）逐矩阵元展开。只需对 $\sqrt{1-r\varepsilon}$ 和 $\sqrt{1-\varepsilon}$ 沿 $\varepsilon$ 作二阶 Taylor 估计。在紧集
+
+$$
+0\le r\le R,\qquad
+0\le\varepsilon\le\frac1{2(1+R)}
+$$
+
+上，两个根号的被开方数均至少为 $1/2$，各矩阵元关于 $\varepsilon$ 的二阶导数连续且一致有界。因 $\sqrt r$ 在此紧参数集上连续有界，第二行外积同样满足这一性质。一阶项恰为第70节的 $H_r$，于是余项的迹范数一致为 $O_R(\varepsilon^2)$。再用 $N(X)\le2\|X\|_1$ 即得（74.9）。这里没有要求关于 $r$ 在零点可微。
+
+### 74.3 切锥距离的紧参数一致收敛
+
+定义
+
+$$
+d_\varepsilon(H)=\operatorname{dist}_N(H,\mathcal D_\varepsilon),
+\qquad d_0(H)=\operatorname{dist}_N(H,\mathcal T).
+$$
+
+第70节已证明 $\mathcal D_\varepsilon$ 随 $\varepsilon\downarrow0$ 扩大，且对每个固定 $H$，
+
+$$
+d_\varepsilon(H)\downarrow d_0(H).
+\tag{74.10}
+$$
+
+所有这些距离函数都具有同一个 $1$-Lipschitz 界。$r\mapsto H_r$ 连续，故 $\{H_r:0\le r\le R\}$ 紧。这使（74.10）在该参数集上一致。
+
+具体地，给定 $\xi>0$，取有限个 $r_1,\ldots,r_k$，使每个 $H_r$ 都与某个 $H_{r_j}$ 的 $N$ 距离小于 $\xi$。对有限多个中心同时应用（74.10），充分小的 $\varepsilon$ 满足
+
+$$
+d_\varepsilon(H_{r_j})-d_0(H_{r_j})<\xi
+\quad\text{对所有 }j.
+$$
+
+因为 $\mathcal D_\varepsilon\subset\mathcal T$，结合两个距离函数的 Lipschitz 性，有
+
+$$
+0\le d_\varepsilon(H_r)-d_0(H_r)<3\xi
+\quad(0\le r\le R).
+\tag{74.11}
+$$
+
+另一方面，范数正齐次性给准确等式
+
+$$
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}
+=d_\varepsilon\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}
+\right).
+\tag{74.12}
+$$
+
+结合（74.9）、（74.11）和 $d_0(H_r)=\gamma_r$，得到
+
+$$
+\sup_{0\le r\le R}
+\left|
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}-\gamma_r
+\right|\longrightarrow0.
+\tag{74.13}
+$$
+
+这一步证明有界尺度中的共同变化结论，不依赖先后交换两个未验证的极限。
+
+### 74.4 无界尺度由显式修复统一控制
+
+现在考虑任意 $0<a<1$，置 $s=1-a$。若 $r=s/\varepsilon\ge8$，则 $\varepsilon\le s/8$，第66节的显式修复适用。其小根满足
+
+$$
+\varepsilon<p\le2\varepsilon,\qquad
+p-\varepsilon=\frac{a\varepsilon p}{s-p}
+\le\frac{8a}{3s}\varepsilon^2.
+\tag{74.14}
+$$
+
+最后一式使用 $s-p\ge3s/4$。准确事件上界中的另一因子满足
+
+$$
+2+\frac{2(\sqrt a+\sqrt{\varepsilon s})}
+{\sqrt{1-\varepsilon}+\sqrt{1-p}}<6.
+$$
+
+确实，$\varepsilon\le s/8\le1/8$、$p\le1/4$，故分母大于一，而分子括号中的两项和小于二。总事件的下界与这个修复上界合并，给出对所有这些参数同时成立的估计
+
+$$
+1\le\frac{e(R_{a,\varepsilon})}{\varepsilon}
+\le1+\frac{16a}{r}\le1+\frac{16}{r}.
+\tag{74.15}
+$$
+
+这里直接使用第66节修复，不需要第69节匹配下界所用的附加条件 $\varepsilon\le\sqrt a/16$。
+
+第71节给同一尺度范围内
+
+$$
+1\le\gamma_r\le1+3(u_r-1)\le1+\frac{12}{r},
+\tag{74.16}
+$$
+
+其中
+
+$$
+u_r-1=\frac{4/r}{(1+\sqrt{1-4/r})^2}\le\frac4r.
+$$
+
+因此，两个量同在 $[1,1+16/r]$ 中，遂有
+
+$$
+\left|\frac{e(R_{a,\varepsilon})}{\varepsilon}-\gamma_r\right|
+\le\frac{16}{r}
+\qquad(r\ge8).
+\tag{74.17}
+$$
+
+给定误差容限，先取足够大的有限 $R\ge8$，使 $16/R$ 小于该容限；再对 $0\le r\le R$ 使用（74.13）。所有合法参数的尺度比均属于 $(0,1/\varepsilon)$，已被这两个区域覆盖。故得到（74.3）。各条共同变化路径的结论再由 $\gamma$ 的连续性与无穷端点极限推出。
+
+### 74.5 最坏误差与实际参数尺度
+
+记
+
+$$
+F_\varepsilon=\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}.
+$$
+
+（74.3）给 $\limsup F_\varepsilon\le\Gamma$。反向，取任意 $r_*\in\mathcal A$，令 $a_\varepsilon=1-r_*\varepsilon$。充分小正 $\varepsilon$ 时它属于 $(0,1)$，且第70节给对应比例趋于 $\gamma_{r_*}=\Gamma$。故 $\liminf F_\varepsilon\ge\Gamma$，证明（74.4）。
+
+最后，假设（74.5），记 $r_\varepsilon=(1-a_\varepsilon)/\varepsilon$。由（74.3）、（74.4），
+
+$$
+\gamma_{r_\varepsilon}\longrightarrow\Gamma>1.
+\tag{74.18}
+$$
+
+由于 $\gamma_r$ 在零与无穷两个端点均趋于一，存在 $0<d<R<\infty$，使这些渐近最坏参数最终全部满足 $r_\varepsilon\in[d,R]$。如果到 $\mathcal A$ 的距离不趋零，可取一个距离统一有正下界的子列，再在此紧区间取收敛子列 $r_{\varepsilon_j}\to r_\infty$。（74.18）和连续性给 $\gamma_{r_\infty}=\Gamma$，所以 $r_\infty\in\mathcal A$，与距离下界矛盾。得到（74.6），也得到 $d\varepsilon\le1-a_\varepsilon\le R\varepsilon$。证明完毕。
+
+一致尺度轮廓同时描述固定参数下的比值极限、临界移动参数的一阶比例间隙及两端退化行为；固定参数的二阶超额仍由第69节的更精细估计承担。它只针对本候选族与完整 tester 合同；没有把 $\Gamma$ 识别为所有有限量子过程的通用常数。
+
+## 追加锚（本行以下为增补区）
