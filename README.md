@@ -2,7 +2,7 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision · 愿景](docs/VISION.md) · [Start your journey](#start-your-journey) ·
+[Vision](docs/VISION.md) · [Start your journey](#start-your-journey) ·
 [Truth and computation](#truth-and-computation) · [Spacetime](#toward-holographic-spacetime) ·
 [Information escape](#information-escape) ·
 [Examples](#three-places-to-look) · [First run](#first-run) ·
@@ -24,7 +24,7 @@ what an observer can recover.
 
 The project brings together philosophical inquiry, theory, experiments and
 Lean 4 formalization. Its ambition is broad; each proof establishes its exact
-statement under its declared assumptions. The [Chinese vision and research
+statement under its declared assumptions. The [vision and research
 guide](docs/VISION.md) connects these ideas to existing work and the research
 program through 2027.
 

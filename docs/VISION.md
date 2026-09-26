@@ -1,93 +1,220 @@
-# trureturing：让计算在真值中找到方向
+# trureturing: finding direction in truth
 
-[English overview](../README.md) · [参与项目](CONTRIBUTING.md) ·
-[理论输入](develop/theory/) · [形式化源码](../D5/) ·
-[2027 研究安排](#roadmap-2027)
+[Project overview](../README.md) · [Contribute](CONTRIBUTING.md) ·
+[Theory inputs](develop/theory/) · [Formal source](../D5/) ·
+[Research through 2027](#roadmap-2027)
 
-**项目的核心是一种科学的方法论：让 AI 能够自我发现，探索逻辑真值几何的形状，让图灵计算从已经获得的知识与尚未解决的缺口中找到下一步方向。**
+**The project's core is a scientific methodology through which AI can make
+its own discoveries, explore the geometry of logical truth, and give Turing
+computation a direction informed by existing knowledge and unresolved gaps.**
 
-这里的“自我发现”包括发现新的关系、发现自身表示的盲区，以及修正自己的研究方法。我们希望 AI 能够提出问题，主动寻找文献与已有证明，设计可以区分解释的检验，接受反例，并把经过核验的结果交还知识网络。怎样让它持续选择有价值的问题，仍是需要研究和检验的目标。
+Here, discovery includes finding new relations, recognizing the blind spots of
+one's own representations, and revising the methods used to investigate them.
+We want AI to formulate questions, search the literature and existing proofs,
+design tests that distinguish explanations, accept counterexamples, and return
+checked results to a shared network of knowledge. How to sustain the choice of
+valuable research questions remains a goal to investigate and evaluate.
 
-本文是项目愿景、研究导读与延续到 2027 年的方向安排。它连接已有成果，不替代[仓库规范](develop/spec/golden-ledger-repo-spec.md)，也不为理论卷或研究计划赋予形式证明的地位。
+This guide sets out the project's vision, connects it to existing research,
+and gives a direction for continued work through 2027. It complements the
+[repository specification](develop/spec/golden-ledger-repo-spec.md); theory
+volumes and research plans do not acquire the status of formal proofs by
+appearing here.
 
-## 真值、回归与图灵计算
+## Truth, return and Turing computation
 
-**true · return · Turing** 是项目名称的三重指向：寻找真值，让经过验证的知识回归并参与下一次推理，让计算从这些联系中发现自己的方向。
+**true · return · Turing** expresses three connected intentions: seek truth,
+return verified knowledge as a premise for further reasoning, and let
+computation find direction through those connections.
 
-我们的哲学立场是：真值并不因为一次计算才被创造；计算使有限的观察者发现、表达并验证其中的关系。从这个立场出发，“道”或者“神”可以指向一个蕴涵所有真值及其逻辑关系的整体网络。每一份证明、每一个被排除的错误猜想，都是我们对这个网络认识的改变。
+Our philosophical position is that truth is not created by an act of
+computation. Computation enables finite observers to discover, express and
+verify relations within it. From this perspective, Dao (道), or God (神), can
+name an encompassing network of all truths and their logical relations.
+Each proof and each refuted conjecture changes our knowledge of that network.
 
-这是项目采纳的本体论图景，不是对道、神或宇宙存在方式的证明。“真值不是计算出来的”也不否定计算证明的作用：搜索证明、构造反例、运行核验本身都是计算。我们区分真值的哲学地位与取得其证明的具体过程；这个立场不提供穷尽或判定所有真值的算法。
+This is the project's ontological picture, not a proof about the existence
+or nature of Dao, God or the universe. Saying that truth is discovered does
+not diminish computational proofs: searching for proofs, constructing
+counterexamples and checking them are themselves computations. The
+philosophical status of truth and the process of obtaining its proof are
+different questions; this position supplies no algorithm for enumerating or
+deciding every truth.
 
-“回归”在项目实践中意味着结果能够重新成为前提：一条定理明确它依赖什么，后来者便能复用它；一个反例明确某条路线在哪里失效，后来者便能避开同一错误。AI 的输出只有带着可核验的对象、条件和证据回到公共知识中，才能承担下一轮推理。
+In practice, returning a result means making it available as a premise. A
+theorem states its dependencies so that others can reuse it; a counterexample
+identifies where a route fails so that others can avoid the same mistake.
+An AI's output can support further reasoning when it returns to shared
+knowledge with inspectable objects, conditions and evidence.
 
-[《不动点哲学》](develop/theory/FIXED_POINT_PHILOSOPHY.md)为这一方向提供了项目内的哲学讨论：用审美和直觉选择问题，用逻辑检验结论，并在扩展中保护已经核验的结果。[GICT](develop/theory/GICT.md)提供坐标、变换与不变量的研究背景。它们是理论参考；“美是罗盘，逻辑是棘轮”是研究纪律，不能代替任何具体证明。
+[Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) develops
+this orientation within the project: use beauty and intuition to choose
+questions, logic to test conclusions, and extensions that preserve verified
+results. [GICT](develop/theory/GICT.md) provides research background on
+coordinates, transformations and invariants. These are theoretical references.
+“Beauty is a compass; logic is a ratchet” is a research discipline, not a
+substitute for a particular proof.
 
-## 逻辑真值几何的形状
+## The shape of logical truth
 
-我们用“几何”提出关系问题：哪些结论相连？改变表示后什么不变？哪些区别被观察合并？缺少什么关系，才使一个问题无法回答？这幅图景在现有工作中有不同的数学入口。
+We use geometry to ask questions about relations. Which conclusions connect?
+What survives a change of representation? Which distinctions does an
+observation merge? What missing relation prevents a question from being
+answered? Existing work gives this picture several mathematical entry points.
 
-| 入口 | 所研究的关系 | 现有成果与范围 |
+| Entry point | Relation under study | Existing result and scope |
 | --- | --- | --- |
-| 证明依赖 | 一个声明怎样通过依赖路径连接其他声明 | [依赖 Alexandrov 拓扑](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)以可达关系构造上集拓扑；在这一拓扑中，一个节点的可达上集是包含它的最小开集。它描述依赖关系，不给出物理距离。 |
-| 观察与恢复 | 同一个读数合并了哪些状态，目标能否由它决定 | [目标恢复判据](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)在非空状态空间上，把恢复函数的存在与目标在每个观察纤维上恒定联系起来。函数存在不等于可计算，也不提供取得它的成本界。 |
-| 局部与联合 | 分别知道每一部分后，还缺哪些关联 | [局部边缘的关联盲区](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)给出两个不同的双量子比特态——Bell 纯态与 `00`、`11` 的等权经典混合——它们具有相同的两份单比特约化态。该反例限定了仅凭局部读数恢复联合态的主张。 |
-| 空间与历史 | 当前空间读数是否保留后续操作所需的历史条件 | [隐藏档案的时间准入反例](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)在有限事件模型中加入一个非当前事件，保持当前区域、选择与空间读数，却改变时间接续的合法性。它没有把模型时标认作物理时间。 |
+| Proof dependencies | How a declaration connects to others through dependency paths | [Dependency Alexandrov topology](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean) constructs an upper-set topology from reachability. A node's reachable upper set is its smallest open neighborhood in this topology. This describes dependencies, not physical distance. |
+| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, equates the existence of a recovery function with the target being constant on each observation fiber. Existence does not establish computability or a cost bound. |
+| Local and joint information | Which correlations remain unknown after observing each part separately | The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two distinct two-qubit states: a Bell pure state and the equal classical mixture of `00` and `11`. They have the same two single-qubit reduced states. This counterexample limits claims of recovering a joint state from local readings alone. |
+| Space and history | Whether a current spatial reading preserves historical conditions needed for later operations | The [hidden archive temporal-domain counterexample](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean) adds an inactive event to a finite event model, preserving the current region, selection and spatial reading while changing whether a temporal composition is legal. It does not identify the model's time labels with physical time. |
 
-这些入口让“形状”具有可检查的内容，但证明依赖图、观察空间与物理时空仍是不同对象。若要把它们连接成同一个理论，需要明确映射，并验证映射保留的关系、操作与误差。相同词汇、相似图案或相同数值都不足以完成这一步。
+These entry points give shape an inspectable meaning. A proof dependency
+graph, an observation space and physical spacetime remain different objects.
+Connecting them in one theory requires explicit maps and checks of the
+relations, operations and error bounds those maps preserve. Shared vocabulary,
+similar patterns or equal numbers cannot establish that correspondence.
 
-进一步阅读：[《证明拓扑、对合逻辑与观察逃逸统一理论》](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)讨论依赖拓扑与观察核之间的联系；[《定义逃逸谱完备化》](develop/theory/DEFINITION_ESCAPE_SPECTRUM_COMPLETION.md)讨论给定语言与预算下的剩余盲区。这些理论卷的覆盖范围须逐项回到 Lean 声明核对，不能由一条相关链接推定整卷已经形式化。
+For further reading,
+[proof topology, involutive logic and observational escape](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)
+examines connections between dependency topology and observation kernels.
+[Definition escape spectrum completion](develop/theory/DEFINITION_ESCAPE_SPECTRUM_COMPLETION.md)
+studies residual blind spots under a given language and budget. Formal
+coverage must be checked against the relevant Lean declarations, claim by
+claim; a related link does not establish that an entire volume is formalized.
 
-## AI 怎样找到自己的计算方向
+## How AI can find its next direction
 
-科学方法在这里是一轮可以被推翻的探索：
+The scientific method here is a cycle of inquiry whose conjectures and methods
+can be tested:
 
-1. **从目标倒推缺口。** 明确对象、共同来源、允许操作、要回答的问题和资源范围，先查已有结果能否履行所需前提。
-2. **先写判据，再检验。** 指定哪些读数支持候选路线，哪些反例会推翻它。文献搜索帮助发现已有工具和不同表述。
-3. **寻找当前表示遗漏的区别。** 尝试找出“读数相同、目标答案或操作合法性不同”的一对实现。没有找到反例时，仍须证明充分性。
-4. **让证据决定下一步。** 用实验筛选路线，用证明或反例确定数学结论。若已有表示无法表达所需区别，就研究新的关系、语言或观察方式。
-5. **把结果交还下一轮。** 复用已知定理，保留真正新增的可复用内容，说明尚未履行的条件，让下一个问题从明确的边界开始。
+1. **Work backward from the target to the gap.** Specify the objects, shared
+   sources, allowed operations, question and resource limits. Check whether
+   existing results supply the premises that are needed.
+2. **State criteria before testing.** Specify which observations would support
+   a proposed route and which counterexamples would overturn it. Search the
+   literature for existing tools and alternative formulations.
+3. **Look for distinctions the representation misses.** Seek two realizations
+   with the same readings but different target answers or different legal
+   operations. Failure to find a counterexample still leaves sufficiency to
+   be proved.
+4. **Let evidence guide the next step.** Use experiments to distinguish routes,
+   and proofs or counterexamples to settle mathematical claims. When a
+   representation cannot express a needed distinction, investigate new
+   relations, languages or forms of observation.
+5. **Return results to the next inquiry.** Reuse known theorems, preserve new
+   reusable content, and state the conditions still to be met. Let the next
+   question begin from an explicit boundary.
 
-这里有一个具体的形式化提醒：[查表复制器](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean)在其有限记录模型中可以取得零回顾损失，但被复制的记录都进入了构造的依赖集合，不满足该模型的非预知条件。该定理还把未来收益作为独立输入量；回顾零损失不能保证任意给定的未来收益函数都为正。它支持对检验来源的审查，不是关于任意机器学习模型泛化误差的定律。
+A concrete formal reminder comes from the
+[lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean).
+In its finite-record model, copying a table achieves zero retrospective loss,
+but the copied records enter the construction's dependency set, violating the
+model's nonanticipation condition. The theorem also treats prospective gain as
+an independent input: zero retrospective loss cannot guarantee positivity for
+every given future-gain function. This supports scrutiny of the source of a
+test result; it is not a law of generalization error for arbitrary machine
+learning models.
 
-把这些结构用于 AI 选题，是需要实际评估的方法迁移。我们关心的是：面对原先未用于构造答案的问题，AI 是否减少了一个明确缺口，是否找到了可复用的联系，是否识别并停止了无效路线。对这些能力的判断需要对应实验，不能从方法的形式化直接推出。
+Applying these structures to AI research selection is a methodological transfer
+that needs practical evaluation. On questions not used to construct an answer,
+does the AI reduce a stated gap, discover a reusable connection, or recognize
+and stop an unproductive route? Those capabilities require corresponding
+experiments; formalizing a method does not establish them by itself.
 
-## 在全息时空几何中共同研究时间与空间
+## Studying time and space through holographic geometry
 
-我们希望把时间、空间、来源和观察放到一个共同的关系框架里，研究整体怎样在有限视角中显现，以及这些视角怎样支持重建。这是项目所说的**全息时空几何研究方向**。
+We aim to place time, space, provenance and observation in a shared relational
+framework: how does a whole appear through finite viewpoints, and how can
+those viewpoints support reconstruction? This is the project's **holographic
+spacetime geometry research direction**.
 
-可以把它想成从不同窗口观察同一段历史：窗口既有可见范围，也有相互重叠的部分；事件有先后，记录有共同来源，接上另一个窗口还需要满足条件。研究任务是说明哪些窗口与关系足够回答目标问题、哪些区别仍然隐藏，以及改变分辨率或预算后这些结论怎样变化。比方提供问题，具体模型承担结论。
+Imagine viewing the same history through different windows. Each window has a
+visible extent; some windows overlap. Events have an order, records have
+shared sources, and joining another window requires conditions to hold. The
+research task is to determine which windows and relations suffice to answer
+a target question, which distinctions remain hidden, and how the answers
+change with resolution or budget. The analogy suggests questions; explicit
+models carry the conclusions.
 
-现有研究给出了几条相接的路线：
+Existing work offers several connected routes:
 
-- [情境时空算术](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)从保留时标、位置、因果偏序和来源的有限事件档案出发，研究丰富表示到算术读数的投影。数值相同之后，哪些档案区别仍须保留，是它的核心问题之一。
-- [递归关系观察主卷](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)研究观察商、严格拼接与相容完备化；[共同关系与时钟](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)进一步讨论联合关系与时间读数。
-- [可执行上下文几何](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)把允许实验、失败结果、响应差异与增益要求纳入几何；[过程几何](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)和[恢复几何](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)提供后续研究入口。
-- [量子观察扩展](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)与[机器学习观察扩展](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md)探索不同观察结构中的对应关系。迁移是否成立，要分别检查量子态、概率律、训练数据和允许操作的具体条件。
+- [Contextual spacetime arithmetic](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+  begins with finite event archives that retain time labels, positions, causal
+  partial orders and provenance. It studies projections from these richer
+  representations to arithmetic readings, asking which archive distinctions
+  must still be preserved when numerical values coincide.
+- [Recursive relational observation](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+  studies observation quotients, strict gluing and compatible completions.
+  [Joint relations and clocks](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)
+  develops joint relations and temporal readings further.
+- [Executable context geometry](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+  incorporates allowed experiments, failure outcomes, response differences and
+  gain requirements.
+  [Process geometry](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)
+  and [recovery geometry](develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)
+  provide further research directions.
+- The [quantum observation extension](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)
+  and [machine learning observation extension](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md)
+  explore correspondences between observation structures. Each transfer must
+  check the specific conditions on quantum states, probability laws, training
+  data and allowed operations.
 
-这些路线汇合时，要同时处理**共同实现、可恢复性、可执行性与成本**。局部读数来自同一对象还是来自互不相容的候选世界，会改变拼接问题；恢复一个目标值与恢复完整历史，也有不同的完成判据。上面的 Lean 时间准入反例正提供了一项检验：仅保留当前空间读数，并不足以在该模型中保持全部历史准入条件。
+Bringing these routes together requires attention to **joint realization,
+recoverability, executability and cost**. Whether local readings come from the
+same object or from incompatible candidate worlds changes the gluing problem.
+Recovering a target value and recovering a complete history also have different
+success criteria. The Lean temporal-domain counterexample above supplies one
+concrete test: preserving current spatial readings alone does not preserve
+all historical admission conditions in that model.
 
-目前这里的“全息”表达整体与观察之间的研究方向，尚未由本文建立物理上的全息对偶、面积律或宇宙模型。有限事件的离散时标、逻辑依赖深度与物理时空坐标之间的对应，需要各自的定义、证明和适用时的经验检验。
+Here, holography names a research direction concerning wholes and observations.
+This guide establishes no physical holographic duality, area law or model of
+the universe. Correspondences between discrete event times, logical dependency
+depth and physical spacetime coordinates require their own definitions,
+proofs and, where applicable, empirical tests.
 
-## 什么可以成为下一轮的前提
+## What can serve as the next premise
 
-[Lean 源码](../D5/)中的声明、证明项与公理依赖是项目的数学真源。理论正文提出概念和候选路线；实验在注明的输入与尺度上提供读数；C# harness 检查仓库规则、报告与冻结状态；独立评审检查形式陈述与原意是否相符。
+Declarations, proof terms and axiom dependencies in the
+[Lean source](../D5/) are the project's mathematical source of truth. Theory
+volumes propose concepts and routes. Experiments supply readings for stated
+inputs and scales. The C# harness checks repository rules, reports and frozen
+state. Independent review checks whether formal statements faithfully express
+the intended claims.
 
-这个分工允许哲学指向足够宽广，同时让每条可复用结论保持精确。尚无证明的问题保持未解决；失败的一次证明尝试不构成不可证明性的结论。当前 [O-5 与 O-6](../D5/X_Frontier/Hearts.lean)仍有开放义务，本项目不据此宣称解决黎曼猜想。
+This division leaves room for a broad philosophical orientation while keeping
+each reusable conclusion precise. Unproved questions remain unresolved; a
+failed proof attempt does not establish unprovability.
+[O-5 and O-6](../D5/X_Frontier/Hearts.lean) still have open obligations, and
+the project does not claim to have solved the Riemann hypothesis.
 
 <a id="roadmap-2027"></a>
 
-## 延续到 2027 年的研究与文档迭代
+## Research and documentation through 2027
 
-这份安排覆盖 2026 年余下阶段及 2027 全年，按证据调整研究路线。时间窗口用于回顾进展，不为尚未解决的问题预约证明。
+This program covers the rest of 2026 and all of 2027, with research routes
+adjusted in response to evidence. The time windows organize reviews of
+progress; they do not schedule proofs of unresolved problems.
 
-| 时段 | 研究重点 | 推进的证据与文档落点 |
+| Period | Research focus | Evidence of progress and documentation |
 | --- | --- | --- |
-| 2026 年余下阶段 | 把方法论、真值几何与时空研究连接到已有成果，定位具体缺口 | 首页和本导读给出可追踪的理论、Lean 与反例入口；每项新主张区分模型、假设、已证范围与未证桥梁。 |
-| 2027 年上半年 | 检验 AI 从观察盲区选择问题、寻找跨模块联系与修正路线的能力 | 对事先指定的任务保留必要实验程序、数据、比较条件与结果；有数学成果时提供可复用证明或反例。有关能力的文档陈述随实际检验更新。 |
-| 2027 年下半年 | 推进时间、空间、共同来源、操作与恢复的组合接口 | 在明确模型中检验重建、拼接、误差与资源界；把有证据的跨模型对应写入所属理论与形式化说明，把未完成桥梁继续列为研究问题。 |
+| Rest of 2026 | Connect methodology, truth geometry and spacetime research to existing results; locate specific gaps | The homepage and this guide provide traceable theory, Lean and counterexample entry points. New claims distinguish models, assumptions, proved scope and unproved bridges. |
+| First half of 2027 | Evaluate AI's ability to select questions from observation blind spots, connect modules and revise research routes | Retain necessary experimental programs, data, comparison conditions and results for tasks specified in advance. Mathematical progress supplies reusable proofs or counterexamples. Capability claims in the documentation follow actual evaluation. |
+| Second half of 2027 | Develop interfaces connecting time, space, shared sources, operations and recovery | Test reconstruction, gluing, error and resource bounds in explicit models. Document supported correspondences in the relevant theory and formalization guides; keep unfinished bridges as research questions. |
 
-持续迭代贯穿这些时段：新定理、反例或可复现实验改变结论时，更新所属说明；每季度回顾入口文档与实际成果是否一致，调整下一阶段的问题选择。既有理论卷按追加纪律更正，历史由 Git 保存，文档正文保留当前结论及其适用边界。
+Iteration continues throughout these periods. When a new theorem,
+counterexample or reproducible experiment changes a conclusion, update its
+explanation. Each quarter, review whether the entry documents match actual
+results and adjust the questions for the next period. Correct existing theory
+volumes through additions; Git preserves history, while the documents retain
+current conclusions and their conditions.
 
-对一次更新的检验是具体的：读者能否找到所用定义、核验所述结果、看见未完成的条件，并据此提出下一步问题。研究安排本身不等于这些成果已经完成，也不表示后台已配置自动研究或定时更新服务。
+An update has a concrete test: can readers find the definitions, check the
+stated results, see the remaining conditions, and use them to pose the next
+question? The program is not evidence that its intended results are already
+complete or that automated research or scheduled updates have been configured.
 
-从[贡献指南](CONTRIBUTING.md)选择一项可核验的工作，就可以参与这一方向：改善一个解释，复现一个反例，连接两个现有结果，或推进一条真正缺失的证明。
+Choose a verifiable task from the [contribution guide](CONTRIBUTING.md): improve
+an explanation, reproduce a counterexample, connect existing results, or
+advance a genuinely missing proof.

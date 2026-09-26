@@ -8,8 +8,7 @@ proofs, clearer explanations or useful tools. The
 subjects to this purpose and the research program through 2027.
 
 You do not need to write a new proof to make a useful contribution. Public-facing
-documentation defaults to English; the [Chinese vision guide](VISION.md)
-provides a companion entrance to the project's ideas.
+documentation defaults to English.
 
 [Project entrance](../README.md) ·
 [Use Claude Code or Codex](#use-claude-code-or-codex) ·
