@@ -56604,3 +56604,605 @@ $s(\ell_\epsilon)=s(h_c\epsilon)+O(\epsilon^2\log(1/\epsilon))$。
 在这些路径上，来源边缘态的秩一直是二，而熵趋于零。决定一阶恢复方向的是熵相对于 $\epsilon\log_2(1/\epsilon)$ 的尺度，不能只用“纠缠非零”或“熵正在变小”替代。这个结论依赖本节固定的二维来源族、噪声模型和共同接收端任务；没有证明任意量子网络的边界能力都由一个熵值决定。
 
 ## 追加锚（本行以下为增补区）
+
+## 196. 全来源区间的统一二阶余项
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$。保持第192节的共同接收端 CPTP 任务、不可访问系统 $M$ 和全部外部参考，记最优半 diamond 恢复误差为 $\mathscr E(\ell,\epsilon)$。来源边缘态为 $\operatorname{diag}(1-\ell,\ell)$，$0\le\ell\le1/2$；过渡函数 $\Phi_h$ 由第189节的非负圆盘域优化定义。
+
+**定理196.1（全来源区间的统一二阶余项）。** 存在只依赖 $\beta,\gamma,R$ 的正常数 $C,\epsilon_0$，使全部
+$0<\epsilon\le\epsilon_0$、$0\le\ell\le1/2$ 满足
+
+$$
+\boxed{
+\left|\mathscr E(\ell,\epsilon)-\frac34
+-\epsilon\Phi_{\ell/\epsilon}\right|
+\le C\epsilon^2.
+}
+\tag{196.1}
+$$
+
+此处 $\epsilon_0$ 同时保证两个入口条件态合法。结论的常数与来源权重及相对比例均无关。证明在有界比例上使用第191节；在大比例上重新控制构造性上界和全部共同 CPTP 下界，不扩张旧展开的余项范围。
+
+### 196.1 大比例处的变分极小点
+
+写 $h=\ell/\epsilon$、$g=|\gamma|$，
+$\delta=R-1$、$\Sigma=R+1$、$\Phi_\infty=\beta\Sigma/8$。
+对第189节的唯一极小点 $(m_h,n_h)$，置
+
+$$
+B_h=1-4m_h^2,\qquad k_h=1-2m_h,\qquad
+d_h=\frac{4-2m_h}{3}=1+\frac{k_h}{3}.
+$$
+
+过渡目标可写成
+
+$$
+\Phi_h-\Phi_\infty
+=hS(m_h)-\frac{\beta R}{4}B_h
++\frac{\delta}{2}(\beta n_h^2-g n_h),
+$$
+
+其中 $S(m)= (1-2m)(7-2m)/12\ge(1-4m^2)/4$。
+因 $\Phi_h\le\Phi_\infty$ 且 $n_h\le\sqrt{B_h}/2$，当
+$h>\beta R$ 时，
+
+$$
+\sqrt{B_h}\le\frac{g\delta}{h-\beta R}.
+$$
+
+因此对充分大且固定的 $H$，全部 $h\ge H$ 上一致有
+
+$$
+n_h=O(h^{-1}),\quad B_h=O(h^{-2}),\quad
+k_h=O(h^{-2}),\quad d_h-1=O(h^{-2}).
+\tag{196.2}
+$$
+
+$g=0$ 时这些量在 $h\ge H$ 全部为零。
+
+定义凸二次函数
+
+$$
+F_{h,d}(m,n)=
+-\frac{\beta\delta}{8}
++h\left(-\frac34+2d-\frac{3d^2}{4}\right)
++\beta Rm^2-hdm
++\frac{\delta}{2}(\beta n^2-gn).
+$$
+
+第189节目标 $F_h$ 满足精确平方恒等式
+
+$$
+F_h(m,n)-F_{h,d}(m,n)
+=\frac{3h}{4}\left[d-\frac{4-2m}{3}\right]^2.
+$$
+
+在 $(m_h,n_h)$ 取 $d=d_h$ 时，两个函数取值及梯度相同。
+凸函数的一阶极小条件因而给
+
+$$
+\min_{\substack{m,n\ge0\\m^2+n^2\le1/4}}F_{h,d_h}(m,n)
+=\Phi_h.
+\tag{196.3}
+$$
+
+### 196.2 可行族上界中的二次消失
+
+对188族令 $k=1-2m$。在 $\epsilon=0,q=1/2$，正确偶块对两个结果相同，完整匹配矩阵的正根等于
+
+$$
+\lambda_s=
+\lambda_{\max}\left[
+P_\Xi-\frac14
+\begin{pmatrix}\sqrt{1-\ell}\\(1-k)\sqrt\ell\end{pmatrix}
+\begin{pmatrix}\sqrt{1-\ell}&(1-k)\sqrt\ell\end{pmatrix}
+\right].
+$$
+
+它满足
+
+$$
+\lambda_s^2-
+\left[\frac34+\ell\left(\frac k2-\frac{k^2}{4}\right)\right]\lambda_s
+-\frac{(1-\ell)\ell k^2}{4}=0.
+\tag{196.4}
+$$
+
+令 $x=3/4+\ell(k/2+k^2/12)$，代入左边的残差严格为
+
+$$
+\frac{\ell^2k^2(k+3)^2}{36}.
+\tag{196.5}
+$$
+
+更明确地，残差除以
+$\lambda_s+\ell k^2/3$ 就是 $x-\lambda_s$。
+对 $0\le k\le1$，在 $\Xi$ 上的 Rayleigh 商给
+$\lambda_s\ge3/4$，所以此分母有统一正下界。因此
+
+$$
+\lambda_s=\frac34+\ell\left(\frac k2+\frac{k^2}{12}\right)
++O(\ell^2k^2).
+$$
+
+来源余项因而确实带有 $k^2$。
+
+记等权参考处含噪声的简单正根为
+$\Lambda(\ell,\epsilon,k,n)$。在此取 $n\ge0$，实际 Kraus 使用
+$n_{\mathrm{phys}}=\sigma n$，其中 $\sigma\gamma=g$、
+$\sigma\in\{-1,1\}$；$\gamma=0$ 时取 $\sigma=1$。
+在 $(k,n)=(0,0)$，其一阶噪声系数严格为
+$\beta\Sigma/8$，与 $\ell$ 无关。在 $\ell=0$，其一阶系数由188节精确偶块直接读出：
+
+$$
+A_0(k,n)=
+\frac{\beta\Sigma}{8}
+-\frac\beta4(B_0+RB_1)-\frac{g\delta}{2}n,
+$$
+
+其中 $B_0=2n^2$、$B_1=2k-k^2-2n^2$。
+
+对全部 $\ell\in[0,1/2]$ 及足够小的固定 $(k,n)$ 邻域，正根间隙统一。特征多项式关于 $\ell,\epsilon,k,n$ 解析：矩阵中的 $\sqrt\ell$ 经块符号共轭只能以偶次进入特征多项式，$1-\ell$ 远离零。隐函数定理因此给出包含 $\ell=0$ 的一致有界混合导数。由于
+$\partial_\epsilon\Lambda(\ell,0,0,0)$ 对 $\ell$ 恒定，积分混合导数得到
+
+$$
+\partial_\epsilon\Lambda(\ell,0,k,n)
+=A_0(k,n)+O\bigl(\ell(|k|+|n|)\bigr).
+$$
+
+从而
+
+$$
+\Lambda(\ell,\epsilon,k,n)
+=\frac34+\ell\left(\frac k2+\frac{k^2}{12}\right)
++\epsilon A_0(k,n)
++O\!\left(\ell^2k^2+\epsilon\ell(|k|+|n|)+\epsilon^2\right).
+\tag{196.6}
+$$
+
+全部参考的最大化只再增加 $O(\epsilon^2)$。理由如下：
+无噪声的两个正确偶块相同，故谱函数关于 $q=1/2$ 对称。
+在 $(k,n)=(0,0)$，谱函数与 $\ell$ 无关，严格为
+$1/4+\sqrt{1/16+3q(1-q)/4}$。
+其唯一最大点为 $1/2$，二阶导数为 $-3/2$；
+该点一个固定邻域以外的参考权重与最高值有统一间隙。小 $k,n$ 的统一连续性保留该间隙和邻域内的严格负曲率。噪声使该点的一阶导数变化 $O(\epsilon)$，所以最大点移动 $O(\epsilon)$、最大值增加 $O(\epsilon^2)$。相关谱间隙和导数界均对 $\ell\in[0,1/2]$ 一致。
+
+代入 $(k_h,n_h)$，上面的三项余量均为 $O(\epsilon^2)$：
+
+$$
+\ell^2k_h^2=O(\epsilon^2/h^2),\qquad
+\epsilon\ell(|k_h|+n_h)=O(\epsilon^2).
+$$
+
+主项正好是 $3/4+\epsilon\Phi_h$，故大 $h$ 区间有
+
+$$
+\mathscr E(\ell,\epsilon)
+\le\frac34+\epsilon\Phi_h+C_*\epsilon^2.
+\tag{196.7}
+$$
+
+### 196.3 任意最优共同 instrument 的定量约束
+
+对任意最优解作194节的无损对称化。
+其正旗标 Kraus 写为 $\begin{psmallmatrix}a&b\\c&e\end{psmallmatrix}$。
+下面所有和同时对结果及 Kraus 求和，置
+
+$$
+B=\sum|b|^2,\quad C=\sum|c|^2,\quad H_0=\sum|a-e|^2,
+\qquad a_\Delta=A_0-A_1,\quad A_j=\sum_\alpha|a_{j,\alpha}|^2.
+$$
+
+194节给出的统一估计包括
+
+$$
+C=O(\epsilon^2/\ell),\qquad
+H_0=O(\epsilon^2/\ell^2),\qquad
+\sum_j\|\Gamma_j-\tfrac12\operatorname{id}\|_\diamond
+=O(\epsilon/\ell).
+\tag{196.8}
+$$
+
+所有常数与 $\ell$、$h\ge H$ 无关。
+
+### 196.4 倾斜检验的精确来源分解
+
+取第196.1节的 $d=d_h\in[1,4/3]$，并定义单位向量
+
+$$
+\zeta_d=\sqrt{1-d^2\ell}|00\rangle+d\sqrt\ell|11\rangle,
+$$
+
+它在整个 $\ell\le1/2$ 区间合法。记
+
+$$
+s=\sqrt{(1-\ell)(1-d^2\ell)},\quad z=d\ell,\quad
+G=(s+z)^2=|\langle\zeta_d,\Xi\rangle|^2.
+$$
+
+各 Kraus 的目标与伙伴振幅分别是
+$sa+ze$ 与 $i(sb-zc)$。
+共同 TP 给精确恒等式
+
+$$
+G-\frac14\sum|sa+ze|^2
+=\frac34G+\frac14\left[
+z(s+z)B+s(s+z)C+szH_0\right].
+\tag{196.9}
+$$
+
+令 $\theta=d-1$。在
+$0\le\ell\le1/2$、$1\le d\le4/3$ 上一致有
+
+$$
+G=1-\ell\theta^2+O(\ell^2\theta^2),\quad
+z(s+z)=d\ell+O(\ell^2\theta^2),\quad
+sz=d\ell+O(\ell^2).
+$$
+
+例如
+
+$$
+1-G
+=\ell\theta^2
+\frac{(d+1)^2}
+{(d\sqrt{1-\ell}+\sqrt{1-d^2\ell})^2},
+$$
+
+直接给第一个带 $\theta^2$ 的余项。再用第196.3节估计及
+$\theta=O(h^{-2})$，全部来源余项
+$O(\ell C+\ell^2H_0+\ell^2\theta^2)$ 均为 $O(\epsilon^2)$。
+逐项而言，
+
+$$
+\ell C=O(\epsilon^2),\qquad
+\ell^2H_0=O(\epsilon^2),\qquad
+\ell^2\theta^2=O(\epsilon^2/h^2).
+$$
+
+若 $M=\operatorname{Re}\sum a\overline e$，则
+$B+H_0=2-C-2M$，故来源部分可写成
+
+$$
+\frac34+\frac C4+
+\ell\left[-\frac34+2d-\frac{3d^2}{4}-\frac d2M\right]
++O(\epsilon^2).
+\tag{196.10}
+$$
+
+### 196.5 噪声与标签平方的统一控制
+
+设 $f_j^\zeta=\langle\zeta_d|\sigma_{jj}|\zeta_d\rangle$。
+对参考权重作与194节相同的压缩，有
+
+$$
+\mathscr E\ge
+G-\frac{f_0^\zeta+f_1^\zeta}{4}
++\frac{(f_0^\zeta-f_1^\zeta)^2}
+{4(f_0^\zeta+f_1^\zeta)}.
+\tag{196.11}
+$$
+
+分母为零时按第194节取零分子商为零。
+倾斜来源收益与 $A_j$ 的差是系数 $O(\ell)$ 的 Choi 线性泛函；
+在 $\Gamma_j=\operatorname{id}/2$ 处，两个结果的无噪声差严格相消。
+具体地，无噪声差为
+$(s^2-1)A_j+2sz\operatorname{Re}M_j+z^2D_j$，
+其中 $M_j=\sum a\overline e$、$D_j=\sum|e|^2$。
+由于 $s^2-1,sz=O(\ell)$、$z^2=O(\ell^2)$，
+第196.3节的操作距离及有界噪声项给
+
+$$
+f_0^\zeta-f_1^\zeta
+=a_\Delta+O\!\left(
+\ell\sum_j\|\Gamma_j-\tfrac12\operatorname{id}\|_\diamond+\epsilon
+\right)
+=a_\Delta+O(\epsilon).
+$$
+
+由于 $f_0^\zeta+f_1^\zeta\le2$，末项至少为
+$a_\Delta^2/16-O(\epsilon^2)$。
+
+倾斜噪声系数精确为
+
+$$
+\begin{aligned}
+L_j^\zeta=c_j^{\mathrm{in}}\Big[
+&\beta\sum_\alpha\bigl(|sb-zc|^2-|sa+ze|^2\bigr)\\
+&+2\gamma\operatorname{Im}
+\sum_\alpha(sa+ze)(s\overline b-z\overline c)\Big].
+\end{aligned}
+$$
+
+它对 Choi 矩阵线性。与 $\ell=0$ 版本相比，
+系数变化只涉及 $s^2-1,sz,z^2$，故系数差为
+$O(\ell)$；在 $\Gamma_j=\operatorname{id}/2$ 处，两版本之差只有
+$O(1-G)=O(\ell\theta^2)$。再次使用第196.3节估计，其对误差的贡献差不超过
+
+$$
+C_*\epsilon\bigl[\ell(\epsilon/\ell)+\ell\theta^2\bigr]
+=O(\epsilon^2).
+$$
+
+这里两项分别为 $O(\epsilon^2)$ 与 $O(\epsilon^2/h^3)$。
+因此噪声主项可以使用
+$L_j=c_j^{\rm in}[\beta(B_j-A_j)+2\gamma\operatorname{Im}N_j]$，
+其中 $N_j=\sum a\overline b$。
+
+置 $P=\sum c\overline e$、$\nu=(N_0-N_1)/2$。
+共同 TP 和 Cauchy–Schwarz 给
+
+$$
+N_0+N_1=-P,\quad |P|\le\sqrt C,\quad
+4|\nu|^2\le(1-C)B\le B,
+$$
+
+$$
+M\le\sqrt{(1-C)(1-B)}\le\sqrt{1-B},
+\qquad
+B_0\ge2|\nu|^2-\sqrt C-|a_\Delta|.
+\tag{196.12}
+$$
+
+最后一式来自
+$N_0=\nu-P/2$、$|\nu|\le1/2$ 及
+$|N_0|^2\le A_0B_0\le B_0/2+|a_\Delta|/2$。
+这些约束不假设一个结果只有一个 Kraus。
+
+令 $m=\sqrt{1-B}/2$、$n=|\nu|$，则
+$m,n\ge0$、$m^2+n^2\le1/4$。代入以上界，得到
+
+$$
+\mathscr E\ge
+\frac34+\epsilon F_{h,d_h}(m,n)
++\frac C8+\frac{a_\Delta^2}{16}
+-C_1\epsilon(\sqrt C+|a_\Delta|)
+-C_2\epsilon^2.
+\tag{196.13}
+$$
+
+这里减小了足够小 $\epsilon$ 时 $C$ 的正系数，
+以吸收噪声中的 $O(\epsilon C)$。
+两次完成平方吸收 $\epsilon\sqrt C$ 和
+$\epsilon|a_\Delta|$，再用第196.1节的凸支撑恒等式，得到
+
+$$
+\mathscr E\ge\frac34+\epsilon\Phi_h-C_3\epsilon^2.
+\tag{196.14}
+$$
+
+这证明了大 $h$ 区间的全部共同 CPTP 下界。来源项使用真实 Choi 矩的
+$M\le\sqrt{1-B}$，没有作会被 $h$ 放大的纯面投影；
+两个非精确预算项只出现在噪声系数中，因此各自带有 $\epsilon$。
+
+### 196.6 全区间合并
+
+先固定足够大的 $H$，使第196.2节的统一谱邻域和194节的假设成立。
+当 $h\ge H$，第196.2—196.5节给双侧 $C\epsilon^2$ 界。
+当 $0\le h\le H$，直接使用191节的已固定紧参数统一二阶界；
+其常数只依赖这个固定 $H$。两区间合并即为开头的全来源区间结论。
+
+这个统一界由三个具体误差控制共同给出。来源余项由正根多项式的
+$\ell^2k^2$ 因子和共同 TP 下的
+$\ell C+\ell^2H_0$ 缺陷控制；噪声误差由
+$\epsilon\ell\|\Gamma-\operatorname{id}/2\|$ 控制；偏离纯来源最优面的剩余项则由实际参考压缩中的标签平方吸收。
+
+## 追加锚（本行以下为增补区）
+
+## 197. 两种尺度之间的相干恢复收益
+
+第196节的统一二阶余项允许从同一个过渡函数读出来源趋纯、但来源权重仍大于噪声时的次阶响应。以下仍使用第186节独立定义的二维来源族、共同接收端操作与完整参考误差。
+
+### 197.1 过渡函数的远端展开
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+
+$$
+g=|\gamma|,\quad \delta=R-1,\quad\Sigma=R+1,\quad
+a=\frac{g\delta}{4},\quad
+\Phi_\infty=\frac{\beta\Sigma}{8}.
+$$
+
+**定理197.1（远端响应及其极小点）。** 令 $(x_h,y_h)$ 为第190节圆盘问题的唯一极小点。当 $h\to\infty$ 时，
+
+$$
+\boxed{
+x_h=\frac{g\delta}{2h}
++\frac{\beta\Sigma g\delta}{4h^2}+O(h^{-3}),
+\qquad
+y_h=1-\frac{g^2\delta^2}{8h^2}+O(h^{-3}),
+}
+\tag{197.1}
+$$
+
+$$
+\boxed{
+\Phi_h
+=\Phi_\infty
+-\frac{g^2\delta^2}{16h}
+-\frac{\beta\Sigma g^2\delta^2}{32h^2}
++O(h^{-3}).
+}
+\tag{197.2}
+$$
+
+当 $g=0$ 时，$h\ge\beta R$ 已有 $x_h=0,y_h=1,\Phi_h=\Phi_\infty$，所以这两式仍成立。
+
+**证明。** 先设 $g>0$。写
+
+$$
+\Phi_h=A(x_h,y_h)+hM(y_h),\qquad
+M(y)=\frac{(1-y)(7-y)}{12}.
+$$
+
+可行点 $(0,1)$ 给 $\Phi_h\le\Phi_\infty$，而
+$M(y)\ge(1-y^2)/4$。设 $B=1-y_h^2$，利用 $x_h\le\sqrt B$，得到
+
+$$
+\frac{h-\beta R}{4}B
+\le a x_h\le a\sqrt B.
+$$
+
+因此 $h>\beta R$ 时，$\sqrt B\le4a/(h-\beta R)$，特别地 $x_h=O(h^{-1})$、$y_h\to1$。
+
+同一区间内，无约束极小点的第二坐标 $4h/(h+3\beta R)>1$，故圆盘约束必须取等号。且 $g>0$ 时 $x_h>0$：沿圆周从 $(0,1)$ 增加 $x$，目标的一阶增量为 $-a x$。所以可写 $y_h=\sqrt{1-x_h^2}$，并对圆周目标求导。
+
+在这条圆周上，目标相对远端值为
+
+$$
+-a x-\frac{\beta\Sigma}{8}x^2
++hM\bigl(\sqrt{1-x^2}\bigr).
+\tag{197.3}
+$$
+
+驻点方程为
+
+$$
+0=-a-\frac{\beta\Sigma}{4}x_h
++h\frac{x_h(4-y_h)}{6y_h}.
+\tag{197.4}
+$$
+
+置 $t=1/h$。该方程除以 $h$ 后，在 $(x,t)=(0,0)$ 附近是解析方程，关于 $x$ 的导数为 $1/2$。隐函数定理给唯一解析解；上述 $x_h\to0$ 保证实际极小点最终就在此解支上。展开
+
+$$
+\frac{x(4-\sqrt{1-x^2})}{6\sqrt{1-x^2}}
+=\frac x2+\frac{x^3}{3}+O(x^5)
+$$
+
+并逐次比较 $t,t^2$ 的系数，得
+
+$$
+x_h=2at+\beta\Sigma a t^2+O(t^3).
+$$
+
+再由 $y_h=\sqrt{1-x_h^2}$ 得（197.1）。另一方面，
+
+$$
+M\bigl(\sqrt{1-x^2}\bigr)
+=\frac{x^2}{4}+\frac{x^4}{12}+O(x^6).
+$$
+
+将 $x_h=2at+\beta\Sigma a t^2+O(t^3)$ 代入（197.3），有
+
+$$
+\Phi_h-\Phi_\infty
+=-a^2t-\frac{\beta\Sigma a^2}{2}t^2+O(t^3),
+$$
+
+即（197.2）。$g=0$ 的结论由第190节的精确平台直接得到。证毕。
+
+### 197.2 来源趋纯但仍主导噪声的路径
+
+**定理197.2（两种尺度之间的统一展开）。** 存在固定 $H,C,\epsilon_0>0$，使
+$0<\epsilon\le\epsilon_0$、$H\epsilon\le\ell\le1/2$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr E(\ell,\epsilon)
+={}&\frac34+\Phi_\infty\epsilon
+-\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell}
+-\frac{\beta\Sigma g^2\delta^2}{32}\frac{\epsilon^3}{\ell^2}\\
+&+O\left(\epsilon^2+\frac{\epsilon^4}{\ell^3}\right).
+\end{aligned}
+}
+\tag{197.5}
+$$
+
+这里 $O$ 常数与 $\ell,\epsilon$ 无关。
+
+特别地，任意满足
+
+$$
+\ell_\epsilon\to0,\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0
+$$
+
+的路径均有
+
+$$
+\boxed{
+\frac{\ell_\epsilon}{\epsilon^2}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
+\right]
+\longrightarrow-\frac{g^2\delta^2}{16}.
+}
+\tag{197.6}
+$$
+
+**证明。** 第196节给完整区间上的
+
+$$
+\mathscr E(\ell,\epsilon)
+=\frac34+\epsilon\Phi_{\ell/\epsilon}+O(\epsilon^2).
+$$
+
+取足够大且固定的 $H$，使（197.2）的余项在 $h\ge H$ 由同一常数控制。令 $h=\ell/\epsilon$ 并乘以 $\epsilon$，即得（197.5）。
+
+沿所述路径，（197.5）的第二个修正相对 $\epsilon^2/\ell$ 的比值为 $O(\epsilon/\ell)$，两个余项的比值分别为 $O(\ell)$ 与 $O((\epsilon/\ell)^2)$。它们均趋零，证明（197.6）。证毕。
+
+当 $\gamma\ne0$ 时，式（197.6）给严格负的次阶系数：保持同一个来源与操作权限，最优恢复在正的一阶基线之下还有阶数为 $\epsilon^2/\ell$ 的改善。但这仍是小于 $\epsilon$ 的修正，故不能把最优误差改成低于 $3/4$；后者的一阶差仍为正。
+
+### 197.3 第三个尺度何时可被分辨
+
+**定理197.3（下一项的可分辨区间）。** 若进一步满足
+
+$$
+\frac{\ell_\epsilon^2}{\epsilon}\to0,
+\qquad
+\frac{\epsilon}{\ell_\epsilon}\to0,
+$$
+
+则
+
+$$
+\boxed{
+\begin{aligned}
+\frac{\ell_\epsilon^2}{\epsilon^3}
+\left[
+\mathscr E(\ell_\epsilon,\epsilon)
+-\frac34-\Phi_\infty\epsilon
++\frac{g^2\delta^2}{16}\frac{\epsilon^2}{\ell_\epsilon}
+\right]
+\longrightarrow
+-\frac{\beta\Sigma g^2\delta^2}{32}.
+\end{aligned}
+}
+\tag{197.7}
+$$
+
+**证明。** 在（197.5）中减去已写出的前两阶与首个修正，再除以 $\epsilon^3/\ell^2$。余项被
+$O(\ell^2/\epsilon+\epsilon/\ell)$ 控制，按假设趋零。证毕。
+
+例如 $\ell_\epsilon=c\epsilon^\alpha$、$c>0$、$1/2<\alpha<1$ 时，两个修正分别为
+
+$$
+-\frac{g^2\delta^2}{16c}\epsilon^{2-\alpha},\qquad
+-\frac{\beta\Sigma g^2\delta^2}{32c^2}\epsilon^{3-2\alpha}.
+$$
+
+当 $\gamma\ne0$ 时，这两个非零修正的绝对值都比统一的 $O(\epsilon^2)$ 不确定量更大，因此这两个系数均被（197.5）分辨；$\gamma=0$ 时两个系数均为零，仍由相同极限确定。若固定正 $\ell$，则首个修正本身只有 $O(\epsilon^2)$；第196节不能在该路径上决定完整二阶系数。
+
+### 197.4 与固定满秩定律的共同系数
+
+第186节对固定 $\ell>0$ 得到的二阶系数记为 $Q_{\min}(1-2\ell)$。其显式式子满足
+
+$$
+\lim_{\ell\downarrow0}\ell Q_{\min}(1-2\ell)
+=-\frac{\gamma^2\delta^2}{16}.
+\tag{197.8}
+$$
+
+确实，$1-(1-2\ell)^2=4\ell(1-\ell)$，所以（186.3）中唯一乘以 $\ell$ 后不消失的项为
+
+$$
+-\frac{\gamma^2\delta^2[1+3(1-2\ell)^2]}{64(1-\ell)}
+\longrightarrow-\frac{\gamma^2\delta^2}{16}.
+$$
+
+式（197.8）只核对固定来源系数的极限；变化来源的联合极限（197.6）来自第196节的一致余项，两者不能相互替代。它们共有的系数把固定满秩区间与来源趋纯区间接起来，而不同尺度上哪些后续项仍可分辨，由同一余项界决定。
+
+## 追加锚（本行以下为增补区）
