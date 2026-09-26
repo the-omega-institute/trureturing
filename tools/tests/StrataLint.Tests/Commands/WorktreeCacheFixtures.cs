@@ -155,12 +155,12 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return Failure("simulated concurrent worktree");
         }
 
-        if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && FailCopy)
+        if (fileName == "cp" && arguments.FirstOrDefault() == "-pR" && FailCopy)
         {
             return Failure("ordinary copy unavailable");
         }
 
-        if (fileName == "cp" && arguments.FirstOrDefault() == "-R" && ThrowCopy)
+        if (fileName == "cp" && arguments.FirstOrDefault() == "-pR" && ThrowCopy)
         {
             throw new IOException("ordinary copy threw");
         }
