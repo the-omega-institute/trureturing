@@ -71,13 +71,13 @@ def endpointDefect (ρ : X → Region) (x : ℕ → X) (T : ℕ) (U : Region) : 
 end Counts
 
 /-- The log ratio assigned to a directed region transition. -/
-def regionWeight (A B C : ℝ) : Region → Region → ℝ
-  | Region.peak, Region.bulk => A
-  | Region.bulk, Region.peak => -A
-  | Region.bulk, Region.opposite => B
-  | Region.opposite, Region.bulk => -B
-  | Region.opposite, Region.peak => C
-  | Region.peak, Region.opposite => -C
+def regionWeight (a b c : ℝ) : Region → Region → ℝ
+  | Region.peak, Region.bulk => a
+  | Region.bulk, Region.peak => -a
+  | Region.bulk, Region.opposite => b
+  | Region.opposite, Region.bulk => -b
+  | Region.opposite, Region.peak => c
+  | Region.peak, Region.opposite => -c
   | _, _ => 0
 
 /-- Potential for the three-region cycle. -/

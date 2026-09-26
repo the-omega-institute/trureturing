@@ -90,7 +90,7 @@ internal sealed class SinglePeakPathCurrentDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(WeightFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The weight w assigns A to H -> B, B to B -> Z and C to Z -> H, the negatives to the "
+                    "The weight w with parameters a, b, c assigns a to H -> B, b to B -> Z and c to Z -> H, the negatives to the "
                         + "reversed transitions, and 0 to every transition inside one region."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -111,13 +111,13 @@ internal sealed class SinglePeakPathCurrentDocument : IScribeDocumentDefinition
                             + "H to B, 1 + q from B to Z and 1/(1 - r) from Z to H, because chi(x) chi(y) is 1 "
                             + "inside a sign class and -1 across classes. The uniform initial masses cancel, the "
                             + "logarithm of the product of ratios is the sum of region weights w(Y_t, Y_(t+1)) "
-                            + "with A, B = B_0 and C as above.")),
+                            + "with a = A, b = B_0 and c = C.")),
                     Paragraph(Text(
                         "That sum is reduced to one current as follows. Each weight equals a potential "
-                            + "difference plus the affinity A + B + C times the signed indicator of the edge "
-                            + "between Z and H, with potential 0 on H, A on B and A + B on Z. Summing along the "
+                            + "difference plus the affinity a + b + c times the signed indicator of the edge "
+                            + "between Z and H, with potential 0 on H, a on B and a + b on Z. Summing along the "
                             + "path telescopes the potentials, and the three endpoint defects add to zero, which "
-                            + "turns the potential difference into A Delta_H - B Delta_Z. Consequently the "
+                            + "turns the potential difference into a Delta_H - b Delta_Z. Consequently the "
                             + "triple (J, Y_0, Y_T) with J = N_ZH - N_HZ determines the likelihood ratio of "
                             + "the two time directions."))),
                 DescribeRole.Theorem))));
@@ -145,19 +145,20 @@ internal sealed class SinglePeakPathCurrentDocument : IScribeDocumentDefinition
     {
         Formula x = F.Id("x"), z = F.Id("z");
         return Disp(Seq(
-            F.Id("H"), Eq, Sp, OpenBrace, z, CloseBrace, Comma, Qquad,
+            F.Id("H"), Eq, Sp, OpenBrace, z, CloseBrace, Comma, Qquad, Sp,
             F.Id("B"), Eq, Sp, OpenBrace, x, Colon, Sp, Call("chi", x), Eq, D(1), Comma, Sp, x, Sp, Neq, Sp, z,
-            CloseBrace, Comma, Qquad,
-            F.Id("Z"), Eq, Sp, OpenBrace, x, Colon, Sp, Call("chi", x), Sp, Neq, Sp, D(1), CloseBrace));
+            CloseBrace, Comma, Qquad, Sp,
+            F.Id("Z"), Eq, Sp, OpenBrace, x, Colon, Sp, x, Sp, Neq, Sp, z, Comma, Sp, Call("chi", x), Sp, Neq, Sp,
+            D(1), CloseBrace));
     }
 
     private static Formula ProfileFormula()
     {
         Formula x = F.Id("x");
         return Disp(Seq(
-            Call("b", x), Eq, Sp, F.Id("r"), Sp, Text, Grp(F.Id("on")), Sp, F.Id("H"), Comma, Qquad,
-            Call("b", x), Eq, Minus, F.Id("q"), Sp, Text, Grp(F.Id("on")), Sp, F.Id("B"), Comma, Qquad,
-            Call("b", x), Eq, D(0), Sp, Text, Grp(F.Id("on")), Sp, F.Id("Z")));
+            Call("b", x), Eq, Sp, F.Id("r"), Sp, F.Text, Grp(F.Id("on")), Sp, F.Id("H"), Comma, Qquad, Sp,
+            Call("b", x), Eq, Minus, F.Id("q"), Sp, F.Text, Grp(F.Id("on")), Sp, F.Id("B"), Comma, Qquad, Sp,
+            Call("b", x), Eq, D(0), Sp, F.Text, Grp(F.Id("on")), Sp, F.Id("Z")));
     }
 
     private static Formula KernelFormula()
@@ -217,10 +218,10 @@ internal sealed class SinglePeakPathCurrentDocument : IScribeDocumentDefinition
     private static Formula WeightFormula()
     {
         return Disp(Seq(
-            Call("w", F.Id("H"), F.Id("B")), Eq, F.Id("A"), Comma, Quad,
-            Call("w", F.Id("B"), F.Id("Z")), Eq, F.Id("B"), Comma, Quad,
-            Call("w", F.Id("Z"), F.Id("H")), Eq, F.Id("C"), Comma, Quad,
-            Call("w", F.Id("V"), F.Id("U")), Eq, Minus, Call("w", F.Id("U"), F.Id("V")), Comma, Quad,
+            Call("w", F.Id("H"), F.Id("B")), Eq, F.Id("a"), Comma, Quad, Sp,
+            Call("w", F.Id("B"), F.Id("Z")), Eq, F.Id("b"), Comma, Quad, Sp,
+            Call("w", F.Id("Z"), F.Id("H")), Eq, F.Id("c"), Comma, Quad, Sp,
+            Call("w", F.Id("V"), F.Id("U")), Eq, Minus, Call("w", F.Id("U"), F.Id("V")), Comma, Quad, Sp,
             Call("w", F.Id("U"), F.Id("U")), Eq, D(0)));
     }
 
