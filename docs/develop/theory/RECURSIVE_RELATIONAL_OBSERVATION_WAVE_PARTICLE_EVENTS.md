@@ -6628,3 +6628,332 @@ $$
 本批使用的 Kraus 表示、有限矩阵特征多项式、广义特征空间、简单根隐函数定理及连续求逆均为成熟工具。量子表示沿用第 81 节的 Watrous 来源；统一预解机制与《相位边界》卷第 162.6 节相接。式（91.2）—（91.7）、（93.4）—（93.6）和（95.4）—（95.7）给出当前完整仪器任务所需的具体矩阵连接。所有结论仍要求同一有限活动记忆与齐次重复；它们不提供任意切换协议的谱判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 96. 临界谱投影同时给出生存尾和真实准平稳态
+
+**定义 96.1（同一装置的慢尺度与首次点击律）。** 继续固定定义 87.1 的完整二维仪器、名义装置与齐次重复合同。本批使用第 91—95 节的最近失效集合 $\mathfrak F_R$、未点击伴随 $\mathcal A_\Gamma$、主特征值 $r_\Gamma=r(\Gamma)$ 及其秩一谱投影 $\Pi_\Gamma$。对附近不失效的装置，令
+
+$$
+\epsilon_\Gamma=1-r_\Gamma>0,\qquad
+s_{\Gamma,\rho}(n)=\Pr_\rho^\Gamma(\mathsf N>n)
+=\operatorname{Tr}[\rho\mathcal A_\Gamma^n(I)].
+\tag{96.1}
+$$
+
+$\mathsf N\in\{1,2,\ldots\}$ 包括首次点击那一轮。$\epsilon_\Gamma$ 是当前实际装置的谱泄漏量，与定义 94.1 对整个校准球优化后的 $\varepsilon(u)$ 分开。以下的分布极限缩放调用次数，不改变内部钟标定。
+
+**定理 96.2（统一幂余项与正谱权重）。** 可以缩小定理 93.1 的共同邻域，使存在与装置、初态和轮数无关的 $C<\infty$、$0<q<1$，且其中 $r_\Gamma>q$，对所有 $n\ge0$ 有
+
+$$
+\left\|\mathcal A_\Gamma^n-r_\Gamma^n\Pi_\Gamma\right\|_{\infty\to\infty}
+\le Cq^n.
+\tag{96.2}
+$$
+
+存在连续的密度矩阵 $\sigma_\Gamma$ 和正算子 $G_\Gamma=\Pi_\Gamma(I)$，满足
+
+$$
+\begin{aligned}
+\mathcal N_\Gamma(\sigma_\Gamma)&=r_\Gamma\sigma_\Gamma,&
+\mathcal A_\Gamma(G_\Gamma)&=r_\Gamma G_\Gamma,\\
+\operatorname{Tr}(G_\Gamma\sigma_\Gamma)&=1,&
+\Pi_\Gamma^*(X)&=\operatorname{Tr}(G_\Gamma X)\sigma_\Gamma.
+\end{aligned}
+\tag{96.3}
+$$
+
+这里 $\Pi_\Gamma^*$ 是迹配对下的状态侧伴随。特别地，令 $a_{\Gamma,\rho}=\operatorname{Tr}(\rho G_\Gamma)\ge0$，则
+
+$$
+\begin{aligned}
+\bigl|s_{\Gamma,\rho}(n)-a_{\Gamma,\rho}r_\Gamma^n\bigr|&\le Cq^n,\\
+\left\|\mathcal N_\Gamma^n(\rho)
+-a_{\Gamma,\rho}r_\Gamma^n\sigma_\Gamma\right\|_1&\le Cq^n.
+\end{aligned}
+\tag{96.4}
+$$
+
+若 $\Gamma\to\Gamma_*\in\mathfrak F_R$，则 $G_\Gamma\to F_*$、$\sigma_\Gamma\to P_*$。对不失效的固定 $\Gamma$，从实际初态 $\sigma_\Gamma$ 出发，条件于未点击的后继始终是 $\sigma_\Gamma$，且 $\mathsf N$ 准确服从成功参数 $\epsilon_\Gamma$ 的几何分布。
+
+证明。第 93 节给紧致闭邻域上的连续投影，以及其余特征值的统一模长上界 $b<1$。缩小邻域并取 $b<q<\inf_\Gamma r_\Gamma$。置
+
+$$
+\mathcal B_\Gamma=\mathcal A_\Gamma(\operatorname{id}-\Pi_\Gamma).
+$$
+
+其谱由三个稳定特征值与零组成，故每个 $\mathcal B_\Gamma/q$ 的谱半径严格小于一。有限 Jordan 展开保证它的幂趋零。对每个装置选一个整数 $m_i\ge1$，使相应幂的范数小于 $1/2$；由连续性，此不等式在该装置的一个邻域内仍成立。紧性允许有限覆盖。取这些 $m_i$ 的共同倍数 $m$，则每个装置至少落入其中一个邻域，从而
+
+$$
+\left\|(\mathcal B_\Gamma/q)^m\right\|
+\le(1/2)^{m/m_i}\le1/2.
+$$
+
+前 $m$ 次幂在紧集上共同有界，按长度 $m$ 分块得到所有幂的统一有界性。利用对易及互补性，准确地有
+
+$$
+\mathcal A_\Gamma^n-r_\Gamma^n\Pi_\Gamma
+=\mathcal B_\Gamma^n(\operatorname{id}-\Pi_\Gamma)
+\qquad(n\ge0).
+$$
+
+将 $\operatorname{id}-\Pi_\Gamma$ 的共同范数界吸收进 $C$，得到式（96.2），包括 $n=0$。这一步处理非正规矩阵与稳定 Jordan 块，没有把谱半径本身当成算子范数。
+
+由于 $r_\Gamma>q$，式（96.2）给 $r_\Gamma^{-n}\mathcal A_\Gamma^n\to\Pi_\Gamma$。每一项完全正，有限维完全正锥闭合，因此 $\Pi_\Gamma$ 及其伴随也完全正。置
+
+$$
+\sigma_\Gamma=
+\frac{\Pi_\Gamma^*(I)}{\operatorname{Tr}[\Pi_\Gamma^*(I)]}.
+$$
+
+分母为正：在边界它等于 $\operatorname{Tr}F_*=1+q_*\ge1$，连续性及紧性保证缩小后的邻域内仍不为零。投影秩一使每个 $\Pi_\Gamma^*(X)$ 都是 $\sigma_\Gamma$ 的标量倍；取迹确定该标量恰为 $\operatorname{Tr}(G_\Gamma X)$。投影恒等式再给 $\operatorname{Tr}(G_\Gamma\sigma_\Gamma)=1$，主特征方程给式（96.3）。
+
+对式（96.2）取迹对偶得到状态侧 $1\to1$ 范数界，再作用于密度矩阵并取迹，得到式（96.4）。第 93.6 式给边界投影，因而两份连续极限分别为 $F_*$ 与 $P_*$。最后，$\mathcal N_\Gamma^n(\sigma_\Gamma)=r_\Gamma^n\sigma_\Gamma$ 同时给条件后继不变与几何等待律。$\square$
+
+$G_\Gamma$ 在子临界处只保证为正算子，未断言 $G_\Gamma\preceq I$；相应的 $a_{\Gamma,\rho}$ 也未必小于一。因此式（96.4）是带有统一余项的谱分解，不能在有限参数处直接当成两个概率分布的凸混合。边界极限 $F_*\preceq I$ 才保证下一节混合权重的概率意义。
+
+## 97. 一般初态给零点质量与指数尾的共同极限
+
+**定理 97.1（首次点击的缩放分布及全部固定正阶矩）。** 设不失效的 $\Gamma_j\to\Gamma_*\in\mathfrak F_R$，初态 $\rho_j\to\rho_*$。记
+
+$$
+\epsilon_j=1-r(\Gamma_j),\qquad
+\alpha=\operatorname{Tr}(\rho_*F_*)\in[0,1],\qquad
+X_j=\epsilon_j\mathsf N_j.
+$$
+
+其中 $\mathsf N_j$ 是从同一对 $(\Gamma_j,\rho_j)$ 实际产生的首次点击轮数。则
+
+$$
+\boxed{
+X_j\ \Rightarrow\ (1-\alpha)\delta_0+\alpha\operatorname{Exp}(1).
+}
+\tag{97.1}
+$$
+
+$\Rightarrow$ 表示弱收敛，$\delta_0$ 表示零点单位质量。对每个固定 $t>0$，准确的尾极限是
+
+$$
+\lim_j\Pr(X_j>t)=\alpha e^{-t}.
+\tag{97.2}
+$$
+
+对每个固定实数 $a>0$，还有
+
+$$
+\boxed{
+\lim_j\epsilon_j^a\mathbb E\mathsf N_j^a
+=\alpha\int_0^\infty a t^{a-1}e^{-t}\,dt
+=\alpha\,\Gamma_{\rm E}(a+1).
+}
+\tag{97.3}
+$$
+
+$\Gamma_{\rm E}$ 是 Euler Gamma 函数，与仪器符号不同。特别地，整数 $k\ge1$ 的极限为 $\alpha k!$，且
+
+$$
+\epsilon_j^2\operatorname{Var}(\mathsf N_j)
+\longrightarrow2\alpha-\alpha^2.
+\tag{97.4}
+$$
+
+证明。令 $a_j=\operatorname{Tr}(\rho_jG_{\Gamma_j})\to\alpha$。因为 $\mathsf N_j$ 取整数值，
+
+$$
+\Pr(X_j>t)
+=s_{\Gamma_j,\rho_j}\!\left(\left\lfloor t/\epsilon_j\right\rfloor\right).
+$$
+
+对固定 $t>0$，$\epsilon_j\to0$，式（96.4）的余项趋零，而
+
+$$
+(1-\epsilon_j)^{\lfloor t/\epsilon_j\rfloor}\longrightarrow e^{-t}.
+$$
+
+得到式（97.2）。极限分布在每个正点连续，在负点分布函数为零；当 $\alpha<1$ 时零点是允许的跳跃点。因此这些尾极限准确给式（97.1）。当 $\alpha=1$ 时零点也是连续点，原分布在零点的质量始终为零。
+
+矩收敛不能只由弱收敛推出。这里使用同一幂估计提供共同可积包络。$a_j$ 共同有界，取固定 $0<\epsilon_0<1$，使充分大的 $j$ 有 $\epsilon_j\le\epsilon_0$。对全部 $t\ge0$，
+
+$$
+\begin{aligned}
+(1-\epsilon_j)^{\lfloor t/\epsilon_j\rfloor}&\le e^{\epsilon_0}e^{-t},\\
+q^{\lfloor t/\epsilon_j\rfloor}&\le q^{-1}
+\exp\!\left(-\frac{|\log q|}{\epsilon_0}t\right).
+\end{aligned}
+\tag{97.5}
+$$
+
+因此 $\Pr(X_j>t)$ 有与 $j$ 无关的指数包络。任意 $a>0$ 都有非负随机变量的尾积分恒等式
+
+$$
+\mathbb E X_j^a
+=\int_0^\infty a t^{a-1}\Pr(X_j>t)\,dt.
+$$
+
+式（97.5）乘 $a t^{a-1}$ 后在零点附近及无穷远均可积。支配收敛给式（97.3）。使用 $a=1,2$ 后相减即得方差公式。$\square$
+
+极限中的 $\alpha$ 正是从 $\rho_*$ 出发在边界装置 $\Gamma_*$ 上永久未点击的概率。子临界装置仍然最终点击；边界会永久保留的那部分质量，在临界逼近时成为越来越长的指数等待。其余质量的等待在 $1/\epsilon_j$ 尺度下压到零点，零点质量并不表示真实装置在第零轮已经点击。
+
+**命题 97.2（缩放、无限等待与总变差的边界）。** 在定理 97.1 的合同中，若 $\alpha<1$，不能把式（97.2）延伸为 $t=0$ 时同一尾公式；若 $\alpha=1$，$X_j$ 的分布与连续 $\operatorname{Exp}(1)$ 的总变差距离对每个 $j$ 都恰为一。与此同时，$\alpha=1$ 时分布函数仍然一致收敛到指数分布函数。
+
+证明。$X_j>0$ 几乎处处，所以 $\Pr(X_j>0)=1$，而候选右侧在零点为 $\alpha$。在 $\alpha=1$ 时，每个 $X_j$ 都支撑于可数格点集 $\{\epsilon_j,2\epsilon_j,\ldots\}$；连续指数律赋该集合零质量，所以按事件概率差的上确界定义，总变差距离为一。
+
+分布函数一致收敛则由弱收敛到连续分布和单调性得到：先截去指数尾，再把剩余紧区间分为足够细的有限网格；网格点上的收敛与相邻点之间的单调夹逼共同控制上确界。$\square$
+
+式（97.3）只断言每个预先固定的阶数，未声称同时控制随 $j$ 增大的矩阶数。若 $\alpha=0$，所有这些缩放矩趋零，也不能反推未缩放均值保持有界。
+
+## 98. 连续未点击记录在短过渡期后选出准平稳后继
+
+**定理 98.1（对数轮数的条件筛选与离散几何近似）。** 沿用定理 97.1，另假定 $\alpha>0$。固定 $L>0$，对充分大的 $j$ 定义
+
+$$
+b_j=\left\lceil L\log(1/\epsilon_j)\right\rceil,
+\qquad
+\widehat\rho_j=
+\frac{\mathcal N_{\Gamma_j}^{b_j}(\rho_j)}
+{s_{\Gamma_j,\rho_j}(b_j)}.
+\tag{98.1}
+$$
+
+这些条件态均在正概率事件上定义，并满足
+
+$$
+\boxed{
+\epsilon_j b_j\to0,\qquad
+s_{\Gamma_j,\rho_j}(b_j)\to\alpha,\qquad
+\|\widehat\rho_j-\sigma_{\Gamma_j}\|_1
+=O\!\left(\epsilon_j^{L|\log q|}\right).
+}
+\tag{98.2}
+$$
+
+从而 $\widehat\rho_j\to P_*$。条件于前 $b_j$ 轮未点击，剩余调用数满足更强的离散分布比较：
+
+$$
+\boxed{
+\operatorname{TV}\!\left(
+\mathcal L(\mathsf N_j-b_j\mid\mathsf N_j>b_j),
+\operatorname{Geom}(\epsilon_j)
+\right)
+=O\!\left(\epsilon_j^{L|\log q|}\right).
+}
+\tag{98.3}
+$$
+
+几何分布在 $1,2,\ldots$ 上取值。其参数始终是当前同一装置的 $\epsilon_j$，没有提前把装置替换成失效端点。
+
+证明。$b_j\to\infty$ 且 $\epsilon_jb_j\to0$，因此 $r_j^{b_j}\to1$。式（96.4）给
+
+$$
+\mathcal N_{\Gamma_j}^{b_j}(\rho_j)
+=a_jr_j^{b_j}\sigma_{\Gamma_j}+R_j,
+\qquad \|R_j\|_1\le Cq^{b_j}
+\le C\epsilon_j^{L|\log q|}.
+$$
+
+取迹后，分母趋于 $\alpha>0$，故充分大时有统一正下界。归一化相减给
+
+$$
+\widehat\rho_j-\sigma_{\Gamma_j}
+=\frac{R_j-\operatorname{Tr}(R_j)\sigma_{\Gamma_j}}
+{s_{\Gamma_j,\rho_j}(b_j)},
+$$
+
+从而得到式（98.2）的迹范数界。再用 $\sigma_{\Gamma_j}\to P_*$。
+
+对每个固定 $j$，装置在所有初态上终止，全部首次点击轮数效果构成总和为 $I$ 的可数 POVM。任意轮数集合 $A$ 对应一个 $0\preceq E_A\preceq I$ 的效果，故两初态产生的完整剩余等待律总变差至多是初态半迹距离：
+
+$$
+\operatorname{TV}(\mathcal L_\tau\mathsf N,\mathcal L_\sigma\mathsf N)
+\le\frac12\|\tau-\sigma\|_1.
+\tag{98.4}
+$$
+
+完整活动记忆与齐次重复保证，在前 $b_j$ 轮未点击后，真实剩余协议恰是从 $\widehat\rho_j$ 重新开始同一仪器。用 $\sigma_{\Gamma_j}$ 作比较时，第 96 节给准确几何律。代入式（98.4）即得式（98.3）。$\square$
+
+**推论 98.2（条件点击率与谱泄漏的一阶一致）。** 若定理 98.1 中再取 $L|\log q|>1$，则
+
+$$
+\frac{\Pr(\mathsf N_j=b_j+1\mid\mathsf N_j>b_j)}{\epsilon_j}
+\longrightarrow1.
+\tag{98.5}
+$$
+
+证明。式（98.3）控制剩余轮数等于一这一事件的概率差为 $O(\epsilon_j^{L|\log q|})=o(\epsilon_j)$；几何律的该概率恰为 $\epsilon_j$。$\square$
+
+本节的条件筛选依赖 $\alpha>0$，以及实际取得的一串未点击记录。它没有把丢失的记录免费补回，也没有规定初态必须已经是准平稳态。$b_j$ 随临界逼近发散，但相对于主要等待尺度 $1/\epsilon_j$ 为低阶。迹范数收敛到 $P_*$ 的速度还包含 $\sigma_{\Gamma_j}\to P_*$ 的装置收敛速度；式（98.2）只量化向当前准平稳态的靠近。
+
+## 99. 最坏初态的整个等待律由自身均值归一化为指数律
+
+**定理 99.1（任意最优选择的共同极限律）。** 设 $u_j<R$、$u_j\to R$，每次选择任意一对满足式（92.1）的实际最优仪器与初态。令 $K_j=\mathscr K(u_j)$。即使这些装置不收敛到唯一的最近失效仪器，仍有
+
+$$
+\boxed{
+\frac{\mathsf N_j}{K_j}\Rightarrow\operatorname{Exp}(1),
+\qquad
+\frac{\mathbb E\mathsf N_j^a}{K_j^a}
+\longrightarrow\Gamma_{\rm E}(a+1)
+\quad\text{对每个固定 }a>0.
+}
+\tag{99.1}
+$$
+
+特别地，
+
+$$
+\frac{\operatorname{Var}(\mathsf N_j)}{K_j^2}\to1,
+\qquad
+\frac{\sqrt{\operatorname{Var}(\mathsf N_j)}}{\mathbb E\mathsf N_j}\to1.
+\tag{99.2}
+$$
+
+证明。任取一个子列。仪器空间紧性允许再取 $\Gamma_j\to\Gamma_*$；定理 92.1 迫使 $\Gamma_*\in\mathfrak F_R$ 且 $\rho_j\to P_*$。因此定理 97.1 的权重为 $\alpha=\operatorname{Tr}(P_*F_*)=1$。
+
+同一装置满足 $M(\Gamma_j)=K_j$，而定理 93.1 给 $\epsilon_jK_j\to1$。于是
+
+$$
+\frac{\mathsf N_j}{K_j}
+=\frac{\epsilon_j\mathsf N_j}{\epsilon_jK_j}.
+$$
+
+定理 97.1 的分布及矩结论在这个子列上给出式（99.1）。所有子列都有进一步子列趋于同一分布及同一矩值，所以原列也有这些极限。式（99.2）使用一、二阶矩，且本来就有 $\mathbb E\mathsf N_j=K_j$。$\square$
+
+**推论 99.2（固定分位数具有同一临界幂）。** 对固定 $0<\tau<1$，令 $Q_{\tau,j}$ 为实际最优等待律的最小 $\tau$ 分位轮数，即最小的整数 $n$ 使 $\Pr(\mathsf N_j\le n)\ge\tau$。则
+
+$$
+\frac{Q_{\tau,j}}{K_j}\longrightarrow-\log(1-\tau).
+\tag{99.3}
+$$
+
+若写 $h_j=R-u_j\to0^+$，并使用定理 89.1 的实际参数 $c,p$，则
+
+$$
+Q_{\tau,j}\sim[-\log(1-\tau)]c\,h_j^{-p}.
+\tag{99.4}
+$$
+
+证明。指数分布函数连续且在正半轴严格递增。在其 $\tau$ 分位点左右各取一个固定小间隔，两端分布函数分别严格小于和大于 $\tau$。式（99.1）使实际缩放分位点最终夹在两端之间；间隔趋零得到式（99.3）。再代入 $K_j\sim c h_j^{-p}$。$\square$
+
+这里的分位结论不覆盖随 $j$ 趋于一的置信水平。均值发散也没有使等待集中成一个确定轮数：相对标准差趋于一。不同最优装置可以具有不同的暗态与矩阵结构，但在自身均值尺度上呈现同一个指数等待形状。
+
+## 100. 暗态权重决定长等待的质量，谱泄漏决定它的尺度
+
+**关系结论 100.1（未点击后继、等待质量与等待形状）。** 第 96—99 节给出三个由同一个实际仪器连接的对象：
+
+$$
+\boxed{
+\alpha=\operatorname{Tr}(\rho_*F_*)
+\quad\text{决定慢等待部分的极限质量};\qquad
+\epsilon_\Gamma^{-1}
+\quad\text{决定慢等待的调用尺度};\qquad
+\sigma_\Gamma
+\quad\text{决定未点击后的准平稳关系}.
+}
+$$
+
+本批的“AHH”在于：在第 98 节 $\alpha>0$ 的条件下，一段不断积累的未点击记录，也能把后继态筛选到接近暗态，同时把余下事件时间变成接近几何分布的等待。第 98 节用同一装置、同一条件事件与迹距离收缩把这两件事连接起来。临界最优初态具有全部慢质量，因而得到纯指数缩放律；一般初态还保留压到零点的早期点击质量。它们无需先知道失效半径的精确值或临界幂的精确指数。
+
+**来源与适用边界 100.2。** 有限矩阵谱投影、Jordan 展开、紧性、尾积分和支配收敛是本批使用的成熟工具；量子仪器及迹距离收缩仍沿用前文核对的 Watrous 来源。经典吸收 Markov 链中的准平稳分布研究可见 J. N. Darroch、E. Seneta，[*On Quasi-Stationary Distributions in Absorbing Discrete-Time Finite Markov Chains*](https://doi.org/10.2307/3211876)，1965。该文献是概念背景；本批不把经典非负矩阵的额外假设直接施加到未必不可约的量子映射，而由式（96.2）—（96.4）独立建立所需的正投影与统一幂估计。
+
+本批连接的是前述最近失效结构与真实首次点击律，属于成熟工具下的纸面推导，不主张文献原创性。结论保留完整有限活动记忆、当前指定名义仪器及每次执行中重复同一仪器的条件；不推出任意切换协议的指数律，不把离散律与连续律的弱收敛称作总变差收敛，不由等待形状倒推出 $R=c_*$ 或 $p=2$。未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
