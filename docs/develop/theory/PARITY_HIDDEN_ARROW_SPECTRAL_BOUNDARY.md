@@ -7038,3 +7038,298 @@ $\nu\mathbb E_{\mathsf Q_{x,\nu}}D^2/q
 随规模增长的阶数或噪声解码风险。证毕。
 
 ## 追加锚（70 章后）
+
+## 71. 直接标量噪声下的信息谱与列表恢复
+
+**定义 71.1（带噪输出与有限列表）。** 保留第 68–69 章的原实验、完整窗口、
+均匀大小 $q$ 支持先验和精确中心。给定原始数据 $x$，记完整组计数后验为
+$\mathsf P_x$，正支撑为有限集 $\mathcal F_x$，并写
+
+```math
+\imath_x(n)=-\log_2\mathsf P_x(n),\qquad
+h_x=\mathbb E_x\imath_x(R),\qquad
+v_*=\frac{\ell}{2(\log2)^2}.
+```
+
+式 (71.1)。
+
+$h_x$ 是定理 68.8 的精确纤维熵。令 $t_x(n)$ 为定义 54.1 的原 $T_M$ 在计数元组 $n$ 上的值，
+仍使用全固定基数后验均值及原校准方差中心。观察
+
+```math
+Y=T_M+\sigma_M G,\qquad G\sim N(0,1),\qquad
+\sigma_M>0\text{ 为确定序列},\qquad
+\log^+(1/\sigma_M)=o(Q),
+```
+
+式 (71.2)。
+
+$G$ 独立于原始数据和完整标签。给定 $x$，以下概率包含 $R$ 与 $G$ 的同一联合律。
+其输出密度和输出后验为
+
+```math
+w_n(y)=\varphi_{\sigma_M}(y-t_x(n)),\qquad
+f_x(y)=\sum_{n\in\mathcal F_x}\mathsf P_x(n)w_n(y)>0,\qquad
+\mathsf P_x^y(n)=\frac{\mathsf P_x(n)w_n(y)}{f_x(y)}.
+```
+
+式 (71.3)。
+
+对整数 $K\ge0$，定义
+
+```math
+\Psi_x(K)=\sup_{\mathcal L:\,|\mathcal L_x(y)|\le K}
+ \mathbb P_x\{R\in\mathcal L_x(Y)\},\qquad
+C_x^0(K)=\max_{A\subseteq\mathcal F_x,\ |A|\le K}\mathsf P_x(A).
+```
+
+式 (71.4)。
+
+列表可随 $x,y$ 改变，其大小预算对所有输出相同。
+允许列表使用独立于原始数据、标签及 $G$ 的辅助随机性，大小约束对每次随机化都成立；
+成功率同时对该随机性平均。确定列表是其中的特例。
+称随机列表置换不变，是指保持奇偶类的站点置换作用于数据和计数目标时，
+其输出列表的条件分布按同一作用变换，即策略核等变。
+$\Psi_x$ 是对噪声输出平均的最优成功率；$C_x^0$ 是不使用新增输出的最优成功率。
+$K=0$ 时两者为零，$K\ge|\mathcal F_x|$ 时为一。
+这里没有假定标量映射 $t_x$ 单射，亦不需要第 68 章的超越性论证。
+
+**定理 71.2（信息谱稳定与列表大小的次阶极限）。** 在 (71.2) 下，两种原实际实验分别满足
+
+```math
+\sup_z\left|\mathbb P_x\left\{
+ \frac{-\log_2\mathsf P_x^Y(R)-h_x}{Q}\le z\right\}
+ -\Phi\left(\frac z{\sqrt{v_*}}\right)\right|
+ \longrightarrow0
+```
+
+式 (71.5)。
+
+收敛在原始数据概率下成立，且一致于所有大小 $q$ 的确定支持；
+该表述始终评价同一均匀先验定义的联合纤维律，未将其换成点质量先验。
+对每个固定 $z\in\mathbb R$，令 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+C_x^0(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}),\qquad
+\Psi_x(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.6)。
+
+对固定 $0<\varepsilon<1$，令
+
+```math
+K_{\varepsilon,M}^{\rm noisy}(x)
+ =\min\{K\in\{0,\ldots,|\mathcal F_x|\}:\Psi_x(K)\ge1-\varepsilon\}.
+```
+
+式 (71.7)。
+
+在同一概率意义下，
+
+```math
+\log_2K_{\varepsilon,M}^{\rm noisy}(x)
+ =h_x+Q\sqrt{v_*}\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (71.8)。
+
+这是输出平均的共同列表预算。(71.5) 也在联合纤维律中积分了 $Y$，
+不声称每个输出后验各自具有同一正态信息谱。
+固定参数与精确中心均保留，不将 $h_x$ 换成其 $Q^5$ 主项。
+
+**证明。** 所需实际模型输入是定理 68.8 的原信息谱及定理 69.6 的实际矩界
+
+```math
+\sup_z\left|\mathsf P_x\{(\imath_x-h_x)/Q\le z\}
+ -\Phi(z/\sqrt{v_*})\right|\longrightarrow0,\qquad
+m_{2,x}:=\mathbb E_xT_M^2=O_{\mathbb P}(1).
+```
+
+式 (71.9)。
+
+第二式并不来自弱收敛。为明确它与当前标量的对应，沿用 69.6 的单一校准乘积律，
+置 $U_j=(R_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$、$v_j=C_jp_j(1-p_j)/B^2$，
+$V=\sum_jv_j$、$L=d\mathsf P_x/d\mathsf Q_x$、$a_x=\|L-1\|_2$。
+其实际行数估计与精确密度计算给出
+
+```math
+V=O_{\mathbb P}(1),\qquad \sum_jv_j^2=O_{\mathbb P}(\delta),\qquad
+0\le L\le C,\qquad a_x=O_{\mathbb P}(Q^{-5/2}),\qquad
+\|e\|\le a_x\sqrt V,
+```
+
+```math
+T_M=\delta^{-1/2}\left\{\sum_j(U_j^2-v_j)-2e\cdot U+\|e\|^2\right\},
+```
+
+```math
+m_{2,x}\le\frac C\delta
+ \left\{2\sum_jv_j^2+B^{-2}V+4a_x^2V^2+a_x^4V^2\right\}
+ =O_{\mathbb P}(1).
+```
+
+式 (71.10)。
+
+其中 $B^{-2}/\delta=Q^3/q\to0$。这是对同一完整计数向量的非负平方使用密度支配，
+保留了 $\|e\|^2$ 截距；并未将 TV 接近当作矩传递。
+坏环境只进入外层数据概率，未乘以一个无界统计量。
+
+固定一个有限纤维。每个 $w_n$ 严格正且连续，故按
+$\mathsf P_x(n)w_n(y)$ 降序、以按得分排列的计数元组字典序破同分，
+取前 $K\wedge|\mathcal F_x|$ 个，得到 Borel 可测的最优列表。
+它逐点最大化有限和，因此积分后恰取得 (71.4) 的上确界；随机列表也不能超过它。
+每个 $M$ 的原始数据字母表有限，所以校准根、后验中心、预算和此选择器对 $x$ 都可测。
+同理，(71.7) 的有限最小值可测且存在。
+
+首先用信息密度连接 (71.9) 与新增输出。
+自然对数单位下的纤维互信息由定理 69.6 的经典 Gaussian 通道界控制：
+
+```math
+I_x(R;Y)=I_x(T_M;T_M+\sigma_M G)
+ \le\frac12\log\left(1+\frac{m_{2,x}}{\sigma_M^2}\right)
+ =o_{\mathbb P}(Q).
+```
+
+式 (71.11)。
+
+末式也适用于噪声增大：上界至多为
+$\tfrac12\log(1+m_{2,x})+\log^+(1/\sigma_M)$。
+全部熵积分在有限 Gaussian 混合上有定义。
+令 $i_x(n,y)=\log(w_n(y)/f_x(y))$。严格正性给精确恒等式
+
+```math
+\mathbb E_xe^{-i_x(R,Y)}
+ =\sum_n\mathsf P_x(n)\int w_n(y)\frac{f_x(y)}{w_n(y)}\,dy=1.
+```
+
+式 (71.12)。
+
+所以 $\mathbb P_x(i_x<-t)\le e^{-t}$，积分尾界得 $\mathbb E_x(i_x)_-\le1$，进而
+
+```math
+\mathbb E_x|i_x|=I_x+2\mathbb E_x(i_x)_-\le I_x+2,
+\qquad
+\mathbb P_x\{|i_x|>bQ\}\le\frac{I_x+2}{bQ}=o_{\mathbb P}(1)
+\quad(b>0).
+```
+
+式 (71.13)。
+
+这是把平均信息变成谱扰动控制所需的一步。
+仅凭一个熵数不能确定原谱；此处已另有 (71.9) 的实际条件 CLT。
+Bayes 公式又给
+
+```math
+-\log_2\mathsf P_x^Y(R)=\imath_x(R)-\frac{i_x(R,Y)}{\log2}.
+```
+
+式 (71.14)。
+
+对任意固定 $b>0$，(71.13) 及阈值两侧移动 $b/\log2$ 将 (71.5) 的误差界为
+原 Kolmogorov 误差、一个 $o_{\mathbb P}(1)$ 和正态分布在此宽度内的最大质量之和。
+先取规模极限，再令 $b\downarrow0$，即证 (71.5)。
+不需要 $T_M$ 与原信息谱独立，亦未声称信息密度对每个输出都小。
+
+对任意有限律 $p$，记其 $K$ 个最大原子的质量为 $C_p(K)$，
+其惊奇量 $-\log_2p$ 的分布函数为 $F_p$。
+直接数原子可得对任意 $K\ge1,b>0$
+
+```math
+F_p(\log_2K-b)\le C_p(K)
+ \le F_p(\log_2K+b)+2^{-b}.
+```
+
+式 (71.15)。
+
+左侧集合中每个原子的质量至少为 $2^b/K$，所以它至多有 $K$ 个元素；
+右侧则将最优 $K$ 集合中质量小于 $2^{-b}/K$ 的部分单独估计。
+这是经典一次信息谱计数界。
+对每个输出的有限后验 $\mathsf P_x^y$ 使用此式，再对 $y$ 积分，得到
+
+```math
+\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K-b\}
+ \le\Psi_x(K)
+ \le\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K+b\}+2^{-b}.
+```
+
+式 (71.16)。
+
+因为 $h_x/Q^5\to\mathscr H>0$，对固定 $z$，以概率趋一有
+$K_x(z)\ge1$ 且 $\log_2K_x(z)=h_x+Qz+o(1)$。
+取 $b=\sqrt Q$，由 (71.5)、(71.16) 得 (71.6) 第二式；
+用原律版本的 (71.9)、(71.15) 得第一式。
+
+再置 $z_\varepsilon=\sqrt{v_*}\Phi^{-1}(1-\varepsilon)$。
+对任意固定 $a>0$，正态值在 $z_\varepsilon-a,z_\varepsilon+a$ 处严格夹住 $1-\varepsilon$。
+(71.6) 与 $\Psi_x$ 对 $K$ 的单调性使 (71.7) 以概率趋一夹在
+$\lfloor2^{h_x+Q(z_\varepsilon-a)}\rfloor$ 与
+$\lfloor2^{h_x+Q(z_\varepsilon+a)}\rfloor$ 之间。
+取对数再令 $a\downarrow0$ 即得 (71.8)，无需改变误差水平或假定数据收敛速率。
+
+还有一条直接保留原信息谱的有限上界。
+对任意半径 $R_0>0$、松弛 $t>0$，按
+$|T_M|>R_0$、$\imath_x\le\log_2K+t$ 和剩余原子分拆任意列表的成功事件，得到
+
+```math
+C_x^0(K)\le\Psi_x(K)
+ \le\mathsf P_x\{\imath_x\le\log_2K+t\}
+ +\frac{m_{2,x}}{R_0^2}
+ +2^{-t}\left(1+\frac{2R_0}{\sqrt{2\pi}\sigma_M}\right).
+```
+
+式 (71.17)。
+
+剩余原子各至多为 $2^{-t}/K$，而列表最多有 $K$ 个；
+其通道密度积分由区间 Gaussian 包络
+$\int\sup_{|u|\le R_0}\varphi_\sigma(y-u)\,dy
+=1+2R_0/(\sqrt{2\pi}\sigma)$ 控制。
+区间内取峰值、外面取最近端点，两侧尾积分相加为一，证明该公式。
+取 $R_0=Q^a$、固定 $a>0$，再取
+$t=\log_2(1+2Q^a/(\sqrt{2\pi}\sigma_M))+\sqrt Q=o(Q)$，
+(71.17) 也给出相同的成功率上界。
+这里截断的是上界证明中的输入集合，没有剪裁实际观测或更换 $T_M$。
+整个确定标量范围的对数为 $O(Q^3)$，不能代替这一步所需的 $o(Q)$ 通道代价。
+
+最后说明固定支持下的风险范围。
+保持奇偶类的站点置换把支持 $S$ 的原对／路径实验映到支持 $\pi S$，
+并保持按得分排列的计数坐标、完整先验后验、校准根、精确中心及 $t_x$。
+预算 $K_x(z)$ 置换不变；字典序仅用于给出一个可测最优列表，
+不要求这个确定的破平局规则本身等变。
+记有限置换群为 $\mathcal G_M$，取与一切观测、标签及 $G$ 独立的均匀群元 $U$。
+将上述确定最优列表记为 $\mathcal L^*$，定义
+$\widetilde{\mathcal L}_x(y;U)=U^{-1}\mathcal L^*_{Ux}(y)$，
+其中群对列表的作用来自它对计数目标的双射。
+后验质量和通道密度在该双射下保持，所以每个 $U$ 给出的拉回列表
+仍逐纤维取得最优值，且每次大小不超过 $K_x(z)$。
+对任意 $\pi\in\mathcal G_M$，以均匀群元 $U\pi$ 换元可得
+$\widetilde{\mathcal L}_{\pi x}(y;U)$ 与
+$\pi\widetilde{\mathcal L}_x(y;U)$ 同分布。
+这就在允许标量碰撞时给出等变最优策略核。
+使用同一 $G$，群在大小 $q$ 支持上传递，故任意这种策略核的积分成功率对支持相同。
+平均此恒等值等于其先验 Bayes 成功率；对称化最优策略逐纤维取得上界，因而
+
+```math
+\sup_{\substack{\mathcal L\ {\rm 置换不变的随机策略核}\\
+ |\mathcal L_x(y;U)|\le K_x(z)}}
+ \Pr_{S,G,U}\{R(S,\mathscr X)\in\mathcal L_{\mathscr X}(Y;U)\}
+ =\mathbb E_{\rm prior\ data}\Psi_{\mathscr X}(K_{\mathscr X}(z))
+ \longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.18)。
+
+成功率有界，故数据概率收敛足以给这里的期望收敛。
+这里 $S$ 固定，概率对原实验、Gaussian 噪声及独立策略随机性平均；
+式中的 $U$ 对一般策略表示其辅助随机性，对上述最优构造则是均匀群元。
+这不提供熵或对数列表大小的期望展开。
+不限制策略的逐支持结论会被写死该支持的单元素列表推翻；(71.18) 的策略类不能删除。
+反向实验先作原整体反转；未知方向使用已有共同判向事件并耦合同一噪声，
+使全部数据函数及成功事件同时一致，误差由该事件的失败概率控制。
+
+结论包含如 $\sigma_M=e^{-\sqrt Q}$ 的噪声，未分类
+$\log(1/\sigma_M)\sim cQ$ 或更小噪声。
+(71.17) 在那个尺度留下的代价只是上界余量，不是可达增益或锐利相变。
+不涉及逐输出保证、变化的 $\varepsilon$、特定符号风险、有限精度效率或实验等价。证毕。
+
+## 追加锚（71 章后）
