@@ -62760,3 +62760,304 @@ $\gamma\to0$、$\gamma\to\beta$ 或 $R\to1$ 时常数统一。
 “Choi 秩一”指最小 Kraus 数一，不指可逆主 Kraus 矩阵秩一。
 
 ## 追加锚（本行以下为增补区）
+
+## 212. 操作容量切换的二次代价与连续响应
+
+固定第211节的模型参数 $\beta>0$、$0<\gamma<\beta$、$R>1$，
+仍对同一个共同 CPTP 接收器和全部外部参考计算误差，来源为 $\ell=h\epsilon$。
+把第211节的切换曲线简记为 $b(\epsilon)=h_b(\epsilon)$，
+并记完整最优值为 $E(\epsilon,h)=\mathscr E(h\epsilon,\epsilon)$。
+以下均可再缩小第211节的固定接触邻域及正噪声范围。
+
+第211节把精确优化化成解析函数 $q(\epsilon,h,t)$，其中
+$q_{tt}>0$、$q_{th}>0$，而额外 Choi 权重满足 $t\ge0$。
+记全部辅助坐标消去后的解析 Choi 候选为 $\Gamma(\epsilon,h,t)$，并置
+
+$$
+\begin{gathered}
+q_t(\epsilon,h,\widehat t(\epsilon,h))=0,\qquad
+\widehat t(\epsilon,b(\epsilon))=0,\\
+\Gamma_A(\epsilon,h)=\Gamma(\epsilon,h,0),\qquad
+\Gamma_I(\epsilon,h)=\Gamma(\epsilon,h,\widehat t(\epsilon,h)).
+\end{gathered}
+\tag{212.1}
+$$
+
+两支对应的解析值为 $E_A=3/4+\epsilon q(\epsilon,h,0)$ 和
+$E_I=3/4+\epsilon q(\epsilon,h,\widehat t)$。
+左侧 $h<b(\epsilon)$ 的物理最优器是 $\Gamma_I$；
+线上及右侧是 $\Gamma_A$。
+本节进一步确定少保留一个操作方向的完整误差代价，以及这次容量变化的可见正则性。
+
+### 212.1 对每个结果限制一个 Kraus 方向
+
+定义紧集
+
+$$
+\mathcal K_{11}=
+\left\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\rm out}(J_0+J_1)=I,\quad
+\operatorname{rank}J_j\le1\right\},
+\tag{212.2}
+$$
+
+并令 $E_{11}(\epsilon,h)$ 为同一完整参考误差在此集合上的最小值。
+这里限制的是无损对称化后的正旗标两结果 instrument。
+不把这个限制等同于原未对称化设备的任意硬件预算。
+
+**定理212.1（全部双秩一操作的精确最优值）。**
+在充分小固定接触邻域和充分小正噪声下，
+
+$$
+\boxed{E_{11}(\epsilon,h)=E_A(\epsilon,h).}
+\tag{212.3}
+$$
+
+在 $\mathcal K_{11}$ 中，唯一最优 Choi 对为 $\Gamma_A$。
+这一结论也覆盖 $h<b(\epsilon)$，此时该受限最优器不是全 CPTP 最优器。
+
+**证明。**
+秩约束使 $\mathcal K_{11}$ 非凸，需要单独证明全局定位。
+由第198节，零噪声完整误差满足
+
+$$
+\lambda=1-\frac{A_0A_1}{A_0+A_1}\ge\frac34,
+\qquad
+\mathcal F=\{A_0=A_1=1/2,\ C_0=C_1=0\}
+\tag{212.4}
+$$
+
+是它的精确最优面；分母为零时误差为一。
+在 $\mathcal K_{11}\cap\mathcal F$ 上，固定两主 Kraus 的正规范
+$a_j=1/\sqrt2$，则
+
+$$
+c_j=0,\qquad b_1=-b_0,\qquad
+2|b_0|^2+|d_0|^2+|d_1|^2=1.
+\tag{212.5}
+$$
+
+这给出该紧集的完整五维实球面表示。
+在 $h=h_b$，第206节的平方恒等式限制到此球面后为
+
+$$
+\begin{aligned}
+L_{h_b}-\Phi_{h_b}
+={}&\frac{\beta(R-1)}4|b_0-i\sqrt2n_b|^2\\
+&+\left(\frac{\beta R}4+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right).
+\end{aligned}
+\tag{212.6}
+$$
+
+因此球面上只有一个极小点，其局部球面 Hessian 正定。
+紧性保证当 $h\to h_b$ 时，所有球面全局极小点都进入该点的任意固定小邻域；
+否则取极小点聚点会得到 $h_b$ 处另一个极小点。
+正 Hessian 和隐函数定理随后给唯一解析极小分支。
+它就是第211节允许带符号 $\rho$ 的圆周驻点分支。
+再缩小并固定一个闭 $h$ 区间，上述定位和 Hessian 正性均一致成立。
+
+现在令 $\epsilon_n\downarrow0$、$h_n$ 位于该闭区间，
+并取任意 $\mathcal K_{11}$ 最优器 $\Gamma_n$。
+合法候选 $\Gamma_A$ 给出 $e(\Gamma_n)\le3/4+O(\epsilon_n)$。
+紧性和目标连续性先使全部聚点落在 $\mathcal K_{11}\cap\mathcal F$。
+在该面的固定邻域，第207节给一致冻结展开
+
+$$
+e(\Gamma_n)=\lambda(\Gamma_n)
++\epsilon_n L_{h_n}(\Gamma_n)+O(\epsilon_n^2).
+\tag{212.7}
+$$
+
+与 $\Gamma_A$ 的值比较，使用 $\lambda\ge3/4$，
+可知任意聚点的 $L_h$ 值不大于上段唯一球面极小值。
+所以所有聚点恰是对应的解析球面极小点。
+这证明真实受限最优器一致进入第211节在 $t=0$ 的完整主 Kraus 图。
+
+此处 $A_j$ 接近 $1/2$，所以两份 Choi 秩都恰为一，
+每个最优器都是该光滑 TP 流形上的驻点。
+快坐标隐函数定理与除以 $\epsilon$ 后的慢坐标隐函数定理
+唯一确定该图内的驻点为 $\Gamma_A$。
+故它是整个 $\mathcal K_{11}$ 的唯一最优器，得到（212.3）。证毕。
+
+### 212.2 缺少操作方向的精确代价
+
+记 $[x]_+=\max\{x,0\}$。
+
+**定理212.2（容量限制的正部平方代价）。**
+存在联合实解析且严格正的函数 $C(\epsilon,h)$，使
+
+$$
+\boxed{
+E_{11}(\epsilon,h)-E(\epsilon,h)
+=\epsilon C(\epsilon,h)[b(\epsilon)-h]_+^2.
+}
+\tag{212.8}
+$$
+
+因此在固定小邻域存在常数 $0<c_-\le c_+<\infty$，使该代价介于
+$c_-\epsilon[b(\epsilon)-h]_+^2$ 与
+$c_+\epsilon[b(\epsilon)-h]_+^2$ 之间。
+
+**证明。**
+解析根满足 $\widehat t_h=-q_{th}/q_{tt}<0$。
+沿其解析零集整除，得到严格正解析函数 $a$，使
+
+$$
+\widehat t(\epsilon,h)=a(\epsilon,h)[b(\epsilon)-h],\qquad
+a(\epsilon,b(\epsilon))=
+\frac{q_{th}(\epsilon,b(\epsilon),0)}{q_{tt}(\epsilon,b(\epsilon),0)}.
+\tag{212.9}
+$$
+
+也可对 $\widehat t_h$ 沿 $h$ 积分直接构造 $a$。
+由于 $q_t(\epsilon,h,\widehat t)=0$，两次基本积分精确给
+
+$$
+q(\epsilon,h,0)-q(\epsilon,h,\widehat t)
+=\widehat t^2\int_0^1 r\,
+q_{tt}(\epsilon,h,r\widehat t)\,dr.
+\tag{212.10}
+$$
+
+这个恒等式对正负小 $\widehat t$ 都成立。
+置
+
+$$
+C(\epsilon,h)=a(\epsilon,h)^2
+\int_0^1 r\,q_{tt}(\epsilon,h,r\widehat t)\,dr>0.
+\tag{212.11}
+$$
+
+积分保留局部实解析性。
+左侧物理区的最优值是 $E_I$，右侧是 $E_A=E_{11}$，
+所以（212.10）恰给（212.8）。
+缩小至紧邻域，正连续函数 $C$ 有正下界和有限上界，得到两侧估计。证毕。
+
+**推论212.3（值的一阶光滑与二阶跳跃）。**
+在正噪声接触邻域内，完整最优值 $E$ 对 $(\epsilon,h)$ 为 $C^1$，
+其梯度局部 Lipschitz；但在切换线上不具有连续的 $h$ 二阶导数。
+准确地，左右单侧二阶导数满足
+
+$$
+\boxed{
+E_{hh}\big|_{\rm 右}-E_{hh}\big|_{\rm 左}
+=\epsilon\frac{q_{th}^2}{q_{tt}}
+=2\epsilon C(\epsilon,b(\epsilon))>0,
+}
+\tag{212.12}
+$$
+
+其中 $q$ 的导数在 $(\epsilon,b(\epsilon),0)$ 取值。
+
+**证明。**
+$E_A$、$C$、$b$ 均解析，而 $[x]_+^2$ 是 $C^1$ 且一阶导数局部 Lipschitz，
+故（212.8）给前半结论。
+在曲线上对两解析值分支分别求导，隐式极小消去给
+$\partial_h^2E_I=\epsilon(q_{hh}-q_{ht}^2/q_{tt})$，
+而 $\partial_h^2E_A=\epsilon q_{hh}$。
+相减即得（212.12）。证毕。
+
+第211节的接触导数还给
+
+$$
+a(0,h_b)=8m_bm_b',\qquad
+C(0,h_b)=\frac{2(m_bm_b')^2}{D_b}.
+\tag{212.13}
+$$
+
+### 212.3 最优操作本身的折角与新方向的权重
+
+在切换线上记
+$k=k_1(\epsilon,b(\epsilon),0)$、$w=w(\epsilon,b(\epsilon),0)$，并令
+
+$$
+P=I-\frac{kk^\dagger}{\|k\|^2},\qquad
+a_c=a(\epsilon,b(\epsilon)).
+\tag{212.14}
+$$
+
+因为 $k_a>0$、$w_a=0$、$w_b=1$，有 $Pw\ne0$。
+
+**定理212.4（Choi 导数折角与小特征值的线性启用）。**
+唯一最优 Choi 对跨曲线连续并局部 Lipschitz，但在曲线上关于 $h$ 不可微。
+结果1的导数差具有不随主向量规范消失的投影：
+
+$$
+\boxed{
+P\left[(J_1)_h\big|_{\rm 左}-(J_1)_h\big|_{\rm 右}\right]P
+=-a_cPww^\dagger P\ne0.
+}
+\tag{212.15}
+$$
+
+若 $\lambda_2$ 为最优 $J_1$ 的第二大特征值，则对固定小正 $\epsilon$，
+
+$$
+\boxed{
+\lambda_2
+=c_\lambda(\epsilon)[b(\epsilon)-h]_+
++O([b(\epsilon)-h]_+^2),\qquad
+c_\lambda(\epsilon)=a_c\|Pw\|^2>0.
+}
+\tag{212.16}
+$$
+
+余项可在固定小 $\epsilon$ 区间一致选取。
+
+**证明。**
+两条解析 Choi 分支在线上相合，因此拼接后局部 Lipschitz。
+链式法则给
+$\Gamma_{I,h}-\Gamma_{A,h}=\Gamma_t\widehat t_h=-a_c\Gamma_t$。
+在 $t=0$ 对 $J_1=k_1k_1^\dagger+tww^\dagger$ 求 $t$ 导数，
+左右乘 $P$ 后，主向量移动产生的项全部消失，只剩 $Pww^\dagger P$。
+这证明（212.15），也证明整体最优器不可微。
+
+对第二特征值，在 $\operatorname{span}\{k_1,w\}$ 中使用随参数解析变化的
+正交基。该二维矩阵的迹与行列式分别为
+
+$$
+\|k_1\|^2+t\|w\|^2,\qquad
+t\|k_1\|^2\left\|P_{k_1^\perp}w\right\|^2.
+\tag{212.17}
+$$
+
+在 $t=0$，大特征值是严格正的简单根 $\|k_1\|^2$。
+小根因而解析，且展开为
+$t\|P_{k_1^\perp}w\|^2+O(t^2)$；其余两个 Choi 特征值恒为零。
+代入（212.9），再在曲线上取系数，即得（212.16）。
+所有候选及谱因子在共同解析邻域有界，故可统一控制余项。证毕。
+
+令 $s=\sqrt{1-(\gamma/\beta)^2}$。
+零噪声接触分支有 $\|k\|^2=1$、$\|Pw\|^2=(1+s^2)/2$，
+而 $m_b'=(4-s)^2/(24\beta R)$，所以
+
+$$
+c_\lambda(0)=\frac{s(4-s)^2(1+s^2)}{12\beta R}>0.
+\tag{212.18}
+$$
+
+按 Choi 谱取正交 Kraus 表示，新增 Kraus 向量的范数为 $\sqrt{\lambda_2}$，
+因此以 $\sqrt{b(\epsilon)-h}$ 阶启用；通道本身仍以一阶距离连续。
+Kraus 表示可以改变，这里的不变量是 Choi 秩和 Choi 特征值。
+
+### 212.4 最小接口维数与可见误差不是同一个读数
+
+若把结果标签保留为正交经典输出，正旗标记录通道的 Choi 矩阵是
+$J_0\oplus J_1$。
+其最小 Kraus 数在左侧为三，线上及右侧为二：
+任何 $k$ 个 Kraus 给出的 Choi 矩阵秩至多为 $k$，
+而谱分解又用恰好等于秩的 Kraus 数实现它。
+
+这个离散变化不迫使响应值跳跃。
+在纯初始环境的 Stinespring 表示中，固定使用三维环境，
+让其中一个方向的权重连续降到零，就能连续表示两侧操作；
+按（212.2）限制每个结果至多一个 Kraus 方向时，
+（212.8）给出实际完整参考误差的精确二次代价。
+因此，在这个指定恢复任务中，最小精确接口容量、最优操作的光滑性和
+可见误差的光滑性是三个不同、但可以精确联系的量。
+
+本节没有把 Kraus 数解释为物理空间面积或钟表历时，
+也不扩展到未对称化操作的唯一性或第211节排除的参数退化端点。
+
+## 追加锚（本行以下为增补区）
