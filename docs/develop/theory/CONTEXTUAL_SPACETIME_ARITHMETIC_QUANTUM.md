@@ -53931,3 +53931,495 @@ $$
 本节没有确定 $\eta_s\asymp\sqrt{se_s}$ 的过渡区、其他分配尺度或固定任务极小元。若只保留单个合成预算而不分别限制两项资源，全实构造已给出第246节较小的系数，（248.4）便不能套用。
 
 ## 追加锚（本行以下为增补区）
+
+## 249. 有限虚性过渡区的峰值与累计代价分离
+
+**定义 249.1（分别受限的有限过渡尺度）。** 沿用第243—248节的实际任务、共同处理器及两个分别成立的全域预算。记 $d=\sqrt{D_*}$、$h=r_0/d=b/\sigma>0$，并设
+
+$$
+\delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,\qquad
+0<e_s=o(s),\qquad
+\gamma_s=\frac{\eta_s^2}{4dse_s}\longrightarrow\gamma\in(0,\infty).
+\tag{249.1}
+$$
+
+此时自动有 $\eta_s=o(s)$。在第244节的实际尾窗上，定义两个归一化代价
+
+$$
+\mathcal P_s=e_s^2\sup_{T_s}I_Q,\qquad
+\mathcal E_s=\frac{e_s}{s}\int_{T_s}I_Q\,du.
+\tag{249.2}
+$$
+
+设
+
+$$
+\begin{aligned}
+A(z)&=\frac{\pi^2}{4}+(h-z)^2,\\
+g(z)&=1+\frac{z^2-\sqrt{z^4+4}}2,\\
+D_\gamma(z)&=1-\gamma g(z),\\
+\mathcal Z_\gamma&=\{z\in[0,h]:D_\gamma(z)>0\}.
+\end{aligned}
+\tag{249.3}
+$$
+
+这里 $g(0)=0$，$g$ 在正半轴严格递增。记
+
+$$
+P_\gamma=\min_{z\in\mathcal Z_\gamma}\frac{A(z)}{D_\gamma(z)^2},
+\qquad
+E_\gamma=2d\min_{z\in\mathcal Z_\gamma}\frac{A(z)}{D_\gamma(z)}.
+\tag{249.4}
+$$
+
+**定理 249.2（两个最优代价及其不能共同收敛达到的性质）。** 任意满足（249.1）及第244.9式任一低内部代价条件的允许准备族，均有
+
+$$
+\liminf_{s\downarrow0}\mathcal P_s\ge P_\gamma,\qquad
+\liminf_{s\downarrow0}\mathcal E_s\ge E_\gamma.
+\tag{249.5}
+$$
+
+下界允许任意点态秩。两项最小值分别由全域实解析、每点秩至多二的允许准备族达到为极限；每族均保持 $K_s$ 上两个代价一致有界、全输入精确性、实际联合支持四、完整尖锐集合、普通最优双侧曲率及任意预先指定的有限阶实规范节点数据。
+
+但不存在一个满足（249.1）及第244.9式任一低内部代价条件的允许准备族，使 $\mathcal P_s\to P_\gamma$ 与 $\mathcal E_s\to E_\gamma$ 同时成立。更精确地，置
+
+$$
+G_\gamma=
+\min_{z\in\mathcal Z_\gamma}
+\left(\frac{A(z)}{D_\gamma(z)^2}
++\frac{A(z)}{D_\gamma(z)}\right)
+-P_\gamma-\frac{E_\gamma}{2d}.
+\tag{249.6}
+$$
+
+则 $G_\gamma>0$，且
+
+$$
+\liminf_{s\downarrow0}
+\left(\mathcal P_s+\frac{\mathcal E_s}{2d}\right)
+\ge P_\gamma+\frac{E_\gamma}{2d}+G_\gamma.
+\tag{249.7}
+$$
+
+这不排除两个分别取的下极限同时最小：沿不同子列交替采用两类最优准备，确实可以得到这种情况。不能共同达到的断言针对两个完整极限。
+
+证明。 先推导任意秩的过零约束。设 $v_s=\sqrt{se_s}$、$\epsilon_s=e_s/s$，于是 $v_s=s\sqrt{\epsilon_s}=o(s)$。令 $p_\times$ 为首次远端分隔面过零位置，记
+
+$$
+t_s=\frac{p_\times-p_{\delta_s}}{\Delta_s}\in[0,1],
+\qquad
+\Delta_s=h_3(s)-p_{\delta_s},\qquad
+\frac{\Delta_s}{se_s}\longrightarrow d.
+\tag{249.8}
+$$
+
+低内部代价条件与第243—244节保证该过零确实位于尾窗。分别证明两个下界时，只须考察相应归一化代价有界的子列；若证明（249.7），只须考察其左边和式有界的子列。Cauchy–Schwarz 使每一种情况下过零后的 Fisher 长度均为 $O(s)$。由迹速度界，实部路径距实际第三节点投影为 $O(s)$。
+
+写 $\rho=S+iK$，在过零点将 $S$ 的非核块分解为
+
+$$
+S=\begin{pmatrix}x^2&\beta^{\mathsf T}\\ \beta&W\end{pmatrix},
+\quad
+W=\mu\phi\phi^{\mathsf T}+E,\quad
+E\ge0,\quad E\phi=0,\quad
+\mu=p-\operatorname{Tr}E,\quad x^2=1-p.
+\tag{249.9}
+$$
+
+第248.6—248.10式的精确谱余量论证在本尺度仍成立，给出
+
+$$
+\operatorname{Tr}E=O(v_s^2),\qquad
+\|\beta\|=O(sv_s),\qquad
+\phi=v_*+O(s).
+\tag{249.10}
+$$
+
+这里 $v_*$ 为第三节点实际带符号极限方向。这个论证先从实部预算推出 $\lambda_1(S)=p-O(\delta_s^2-F_s^2)$，再用正性与分隔面条件得到 $\|\beta\|^2\le Cs^2\operatorname{Tr}E$，最后以
+$\lambda_1(S)\le p-\operatorname{Tr}E+Cs^2\operatorname{Tr}E$
+闭合；故余量始终为 $O(se_s)$，不会另生一个压过极小 $e_s$ 的独立 $s$ 次幂误差。
+
+在实分解 $q\oplus\phi\oplus\{q,\phi\}^{\perp}$ 中记
+$\kappa=K_{q\phi}$、$\ell=K_{\phi,\phi^\perp}$、$m=K_{q,\phi^\perp}$。正性及虚性预算给出
+
+$$
+\kappa=O(v_s),\quad \ell=O(v_s),\quad
+m=O(sv_s),\quad K_{\phi^\perp,\phi^\perp}=O(v_s^2).
+\tag{249.11}
+$$
+
+其中 $2|\kappa|\le I_R^C(\rho)\le\eta_s=O(v_s)$；其他块由正性控制。消去主方向 $\phi$ 的 Schur 补进一步给出联合估计
+
+$$
+\operatorname{Tr}E\ge
+\frac{\|\ell\|^2}{\mu}
++\frac{
+\|\beta_\perp+\kappa\ell/\mu\|^2+
+\|m-\beta_\phi\ell/\mu\|^2}
+{x^2-(\beta_\phi^2+\kappa^2)/\mu}
+\ge \|\ell\|^2+\frac{\|m\|^2}{x^2}+o(v_s^2).
+\tag{249.12}
+$$
+
+分母为 $x^2(1+o(1))$，因为 $\kappa^2/x^2=O(\epsilon_s)$。虚部的领先项是以 $\phi$ 为中心的反对称星形块，其迹范数为 $2\sqrt{\kappa^2+\|\ell\|^2}$，其余块为 $o(v_s)$。同时，直接展开纯度并保留精确的 $f(p)^2=4p(1-p)$，有
+
+$$
+\begin{aligned}
+[I_R^C(\rho)]^2
+ &=4(\kappa^2+\|\ell\|^2)+o(v_s^2),\\
+J(\rho)^2
+ &=f(p)^2+
+4\bigl(\operatorname{Tr}E-\kappa^2-\|\ell\|^2\bigr)
++o(v_s^2).
+\end{aligned}
+\tag{249.13}
+$$
+
+例如纯度展开中被舍去的项为 $O(s^2v_s^2+v_s^4)$，均含实际的小噪声。
+
+令 $Y$ 为 $e_y$ 在 $\phi^\perp$ 上投影的单位化，写
+
+$$
+\phi_y=sR,\qquad z=\frac{R-r_0}{d},\qquad
+k=\frac{\kappa}{v_s},\qquad l=\frac{\ell_Y}{v_s}.
+\tag{249.14}
+$$
+
+有界剩余长度保证 $R,z$ 有界。实际处理器满足
+
+$$
+\begin{aligned}
+k_s^{\mathsf T}\phi&=\sigma sd\,z+O(s^2),\\
+k_s^{\mathsf T}Y&=\sigma+O(s),\\
+\phi^{\mathsf T}(B_s^{\mathsf T}-B_s)Y
+&=-\sigma ds+O(s^2).
+\end{aligned}
+\tag{249.15}
+$$
+
+完整虚矩因此给出
+$m_Y/(sv_s)=d(l-kz)+o(1)$。代入（249.12）—（249.13），分别使用两项预算，得到
+
+$$
+\begin{aligned}
+k^2+l^2&\le d\gamma_s+o(1),\\
+J(\rho)^2&\ge
+f(p)^2+4se_s\bigl((l-kz)^2-k^2\bigr)+o(se_s).
+\end{aligned}
+\tag{249.16}
+$$
+
+其他横向虚部在正性所需的 $\operatorname{Tr}E$ 中至少支付自己的平方，抵消纯度式中的相应负项，并继续占用虚性预算，所以不能改善这个下界。式（249.15）的系数误差始终乘以 $v_s$ 或 $sv_s$。
+
+先作精确差再取极限：
+
+$$
+\delta_s^2-f(p_\times)^2
+=4(p_\times-p_{\delta_s})(p_\times+p_{\delta_s}-1),
+\qquad
+\frac{\delta_s^2-f(p_\times)^2}{4dse_s}=t_s+o(1).
+\tag{249.17}
+$$
+
+由于 $\zeta_s^2=\delta_s^2-\eta_s^2$，混合预算要求
+$(l-kz)^2-k^2\le d(t_s-\gamma_s)+o(1)$。左边二次型的矩阵为
+
+$$
+M(z)=\begin{pmatrix}z^2-1&-z\\-z&1\end{pmatrix},
+\qquad
+\lambda_-(z)=\frac{z^2-\sqrt{z^4+4}}2=g(z)-1<0.
+\tag{249.18}
+$$
+
+在预算圆盘上最小化该二次型，遂得
+
+$$
+t_s\ge\gamma_s g(z)+o(1).
+\tag{249.19}
+$$
+
+接着将此过零约束与同一路径的剩余长度结合。按第248.16—248.19式，先作正定实部扰动，再用实 Sylvester 方程获得同一个水平因子。其 $q$ 行至少走过半径 $sd(1+o(1))$ 上的直角距离；其 $y$ 行沿终端辅助方向从 $sR+o(s)$ 变到 $2sr_0+o(s)$。两条不同物理行的积分 Minkowski 不等式给出
+
+$$
+\mathcal L_s\ge
+2sd\sqrt{\frac{\pi^2}{4}+(h-z)^2}+o(s).
+\tag{249.20}
+$$
+
+剩余时段为 $2\Delta_s(1-t_s)$，故
+
+$$
+\mathcal P_s\ge\frac{A(z)+o(1)}{(1-t_s)^2},
+\qquad
+\mathcal E_s\ge2d\frac{A(z)+o(1)}{1-t_s}.
+\tag{249.21}
+$$
+
+有界代价使 $1-t_s$ 有正下界。任意实 $z$ 投影到 $[0,h]$，均使 $A(z)$ 与偶函数 $g(z)$ 不增；所以过零方向无需事先限于该区间。结合（249.19）后沿收敛子列取极限，即得（249.5）及（249.7）的非严格部分。这是对同一实际准备的联合限制。
+
+下面证明可达性，而不将点态过零可行性当成全域可续接性。固定 $z\in\mathcal Z_\gamma$，令 $R=r_0+dz$。在实基 $(q,\phi,Y)$ 中固定 $\phi_y=sR$，并引入实控制 $a,\kappa,\ell,m,w$。设
+
+$$
+\mu=p-w,\qquad
+Q_0^2=x^2-\frac{a^2+\kappa^2}{\mu},
+\qquad
+A=(\alpha,\beta),
+\tag{249.22}
+$$
+
+其中两列为
+
+$$
+\alpha=
+\begin{pmatrix}
+(a+i\kappa)/\sqrt\mu\\ \sqrt\mu\\ -i\ell/\sqrt\mu
+\end{pmatrix},
+\qquad
+\beta=
+\begin{pmatrix}
+Q_0\\0\\
+[\kappa\ell/\mu-i(m-a\ell/\mu)]/Q_0
+\end{pmatrix}.
+\tag{249.23}
+$$
+
+直接相乘得到
+$\rho_{q\phi}=a+i\kappa$、$\rho_{\phi Y}=i\ell$、$\rho_{qY}=im$。对角元及完整复矩恰由以下方程控制：
+
+$$
+\begin{aligned}
+w&=\frac{\ell^2}{\mu}
++\frac{(\kappa\ell/\mu)^2+(m-a\ell/\mu)^2}{Q_0^2},\\
+m&=-\frac{\kappa k_s^{\mathsf T}\phi+
+\ell\phi^{\mathsf T}(B_s^{\mathsf T}-B_s)Y}
+{k_s^{\mathsf T}Y},\\
+\mu\phi^{\mathsf T}Q_s\phi+
+wY^{\mathsf T}Q_sY+a k_s^{\mathsf T}\phi&=a_s,
+\qquad Q_s=(B_s+B_s^{\mathsf T})/2,\\
+\|\phi\|^2&=1.
+\end{aligned}
+\tag{249.24}
+$$
+
+因此 $\rho=AA^\dagger$ 精确正、迹为一、秩至多二，两个矩均精确。其实部的核—非核相干为 $a\phi$，所以所需分隔面在 $a=0$ 精确穿过。
+
+为说明解和误差在任意极小 $e_s$ 下仍可控，使用缩放
+
+$$
+a=v_sa_0,\quad \kappa=v_sk,\quad \ell=v_sl,\quad
+m=sv_sm_0,\quad w=v_s^2w_0.
+\tag{249.25}
+$$
+
+在有界控制及有界尾窗坐标上，$Q_0^2/s^2$ 趋于 $d^2>0$。消去 $m_0$ 后，对 $\phi_z,\phi_w,w_0$ 的三条方程在极限化为
+
+$$
+\phi_z^2+\phi_w^2=1,\qquad
+\phi_z^2-\phi_w^2=\alpha,\qquad
+w_0=l^2+(l-kz)^2.
+\tag{249.26}
+$$
+
+取实际第三节点的 $\phi_z>0,\phi_w<0$。其 Jacobian 为对角块可逆的下三角矩阵：前两行对 $w_0$ 的导数为零，二维范数—矩 Jacobian 非零，末行对 $w_0$ 的导数为一。缩放后的隐函数定理遂给出实际解及有界控制导数，并有
+$w_0=l^2+(l-kz)^2+O(s+\sqrt{\epsilon_s})$。
+这个步骤将可能的 $1/s$ 因子先吸收进坐标；误差不会在最后再除以一个任意小的 $se_s$。
+
+在该精确图上，两项资源满足
+
+$$
+\begin{aligned}
+[I_R^C]^2&=4(\kappa^2+\ell^2+m^2),\\
+J^2&=f(p)^2+4pw-4w^2
+-4(a^2+\kappa^2+\ell^2+m^2)\\
+&=f(p)^2+
+4se_s\bigl((l-kz)^2-k^2-a_0^2\bigr)+o(se_s).
+\end{aligned}
+\tag{249.27}
+$$
+
+第一式使用实三维反对称矩阵的两个非零奇异值相等。所有余项连同所需控制导数均在缩放后趋零。
+
+取 $M(z)$ 的负特征值单位特征向量 $v_-(z)$。选择
+$\omega_s\downarrow0$、$s+\sqrt{\epsilon_s}=o(\omega_s)$，令
+
+$$
+(k,l)=(1-\omega_s)\sqrt{d\gamma_s}\,v_-(z),\quad
+q_s=(l-kz)^2-k^2,\quad
+t_{{\rm req},s}=\gamma_s+\frac{q_s}{d},\quad
+t_{c,s}=t_{{\rm req},s}+2\omega_s.
+\tag{249.28}
+$$
+
+则 $t_{c,s}\to\gamma g(z)<1$，虚性预算和过零处混合预算均保有阶为 $\omega_sse_s$ 的平方余量。
+
+先在尾窗之前建立可行入口。保持 $K_s$ 上的第一规范支，用第246节的实际实圆连接进入 $\phi_y=sR$、核—非核实相干为负的实矩图；其极限方向位于同一实圆分支，范数—矩 Jacobian 仍可逆。实混合段满足 $J^2=f(p)^2-4a^2$。在可行下界
+$a^2\ge(f(p)^2-\zeta_s^2)/4$
+与纯态上界 $a^2\le f(p)^2/4$ 之间选有严格余量的光滑曲线，从纯实支接到 $a=-Lv_s$，其中固定 $L$ 足够大。秩一接点的互补因子坐标取平坦值。
+
+在严格位于 $p_{\delta_s}$ 左边、距离为 $O(\Delta_s)$ 的窗口内保持这个负相干，开启 $\kappa,\ell$，并由（249.24）精确跟随其余坐标。项 $-4L^2se_s$ 给整个有界控制路径提供混合预算余量，收缩系数 $1-\omega_s$ 保证虚性预算余量。再在尾窗之前平滑接入下述入口值。这些操作均在 $T_s$ 和 $K_s$ 之外；其矩及资源仍逐点满足原任务，只是不将这段的 Fisher 代价计入（249.2）。
+
+在尾窗内直到首次过零，保持 $k,l,R$，使用平滑平方根包络
+
+$$
+a_0(t)=-\sqrt d\,F_{\omega_s}(t_{c,s}-t).
+\tag{249.29}
+$$
+
+这里 $F_\omega(w)>0$ 对 $w>0$ 成立，在 $w=0$ 平坦为零，且可选为
+
+$$
+F_\omega(w)^2\ge\max(w-\omega,0),\qquad
+F_\omega(w)=\sqrt w\quad(w\ge2\omega),\qquad
+|F_\omega'(w)|\le C/\sqrt\omega.
+\tag{249.30}
+$$
+
+例如令 $F_\omega(w)=\sqrt w\,\chi(w/\omega)$，其中光滑 $\chi$ 在零点平坦为零、对每个 $r>0$ 严格为正，并在 $r\ge1$ 恒为一，即得到这些性质。此时
+
+$$
+d(t_{{\rm req},s}-t)-a_0(t)^2\le-d\omega_s.
+\tag{249.31}
+$$
+
+故缩放误差被严格余量吸收。平方根包络在剩余预算缺口降为零之前保留足够的实相干；任意线性减小相干不具备这个保证。显式因子的导数满足
+$\|\partial_tA\|_F\le C(v_s/\sqrt{\omega_s}+e_s)$，
+因此这一等待段的归一化峰值与积分均趋零。
+
+过零后在占比 $\beta_s=\epsilon_s^{1/4}$ 的尾窗内，先将 $a$ 提至 $+Lv_s$，再用同一个从一平坦降到零的因子关闭 $\kappa,\ell$。前一步的 $-4a^2$ 增加预算余量，后一步只需取 $L^2>d\sup_{s<s_0}\gamma_s+1$ 并留固定余量，便由（249.27）覆盖关闭虚部的混合成本。实际因子仅改变 $O(v_s)$；其归一化峰值及积分分别为 $O(\epsilon_s/\beta_s^2)$ 与 $O(\epsilon_s/\beta_s)$，均趋零。控制皆取平坦端点。
+
+关闭虚部后，（249.24）精确给出 $m=w=0$。在上述 $O(\beta_s\Delta_s)$ 清理宽度中再留一个实缓冲段。设其左端为 $p_e$，用两端平坦的切换 $\chi$ 取
+
+$$
+a(p)=Lv_s\left(1-\chi(p)+\chi(p)\frac{f(p)}{f(p_e)}\right).
+\tag{249.31a}
+$$
+
+这使左端的常数 $a$ 光滑接到右端的常数角
+$\cos\theta=2Lv_s/f(p_e)$，并在同一实图中解矩方程。因 $f'/f=O(s^{-2})$，该缓冲相对于 $Lv_s$ 的修正为 $O(v_s\beta_s\epsilon_s)$，保留严格资源余量，归一化信息代价仍趋零。其后因子成为
+
+$$
+A=\phi(\sqrt p,0)+q(x\cos\theta,x\sin\theta),
+\qquad \theta=\frac{\pi}{2}-o(1).
+\tag{249.32}
+$$
+
+在余下尾窗内，用同一近似线性进度 $\chi$ 将 $\theta$ 降至零，并取
+$y(p)=(1-\chi(p))sR+\chi(p)(v_{3,s}(p))_y$，
+使右端平坦部分精确等于实际第三规范支。以实际范数—矩图解其余两个坐标。该图满足
+$\partial_y\phi=e_y+O(s)$、
+$\partial_\theta\phi=O(s^2)$、
+$\partial_p\phi|_{y,\theta}=O(1)$。
+资源为 $J=f(p)\sin\theta$；两因子继续下降，保持清理段留下的严格余量。
+
+直接对（249.32）求导，使用 $u=2p-1$，有
+
+$$
+4\|A'_u\|_F^2
+=\frac1{4p(1-p)}
++(1-p)\theta_p^2+p\|\phi_p\|^2.
+\tag{249.33}
+$$
+
+其中角项与实际 SLD 角项 $p(1-p)\theta_p^2$ 只差相对 $O(s^2)$。因此这个具体因子的信息上界已足够达到领先常数，不需要假定任意跨秩路径存在光滑的最小净化。主运动的领先平方长度为 $4s^2d^2A(z)$，可用时段为
+$2\Delta_s(1-\gamma g(z)+o(1))$。
+取趋于常速的进度并留趋零比例的平坦端部，遂得
+
+$$
+\limsup\mathcal P_s\le\frac{A(z)}{D_\gamma(z)^2},\qquad
+\limsup\mathcal E_s\le2d\frac{A(z)}{D_\gamma(z)}.
+\tag{249.34}
+$$
+
+还须把这个光滑背景完成为全域解析准备。所需的完整矩正则性可在实际处理器上精确证明。第223节的缺陷向量关系给出
+
+$$
+B_sB_s^\dagger+k_sk_s^\dagger=I_3,\qquad
+B_s^\dagger e_j=\lambda_je_j,\qquad
+k_s^\dagger e_j=1,
+\tag{249.35}
+$$
+
+其中 $\lambda_j$ 为三个互异非零实稳定特征值，$e_j$ 构成一组基。于是 $\lambda_jB_se_j=e_j-k_s$。置
+$H_\theta=(e^{-i\theta}B_s+e^{i\theta}B_s^\dagger)/2$，有精确恒等式
+
+$$
+\bigl(I-2\lambda_je^{i\theta}H_\theta+
+\lambda_j^2e^{2i\theta}I\bigr)e_j=k_s.
+\tag{249.36}
+$$
+
+若 $H_\theta v=\lambda v$ 且 $k_s^\dagger v=0$，与该式配对后得到
+$[1-2\lambda z+z^2]v^\dagger e_j=0$，其中 $z=\lambda_je^{i\theta}$。因为 $\|H_\theta\|\le1$，该二次多项式的根都在单位圆上，而 $|z|<1$，所以 $v^\dagger e_j=0$ 对所有 $j$ 成立，故 $v=0$。因此 $H_\theta$ 的每个特征空间都一维，且不与 $k_s$ 正交。
+
+对于完整 Hermitian 矩阵束
+
+$$
+G_{\theta,\nu}=\operatorname{Re}_{H}(e^{-i\theta}T_s)-\nu P,
+\qquad \operatorname{Re}_{H}X=(X+X^\dagger)/2,
+\tag{249.37}
+$$
+
+不存在与 $q$ 正交的特征向量：其非核部分否则给出 $H_\theta$ 中与 $k_s$ 正交的特征向量。任何重特征空间都能取一个与 $q$ 正交的向量，所以 $G_{\theta,\nu}$ 对全部实 $\theta,\nu$ 具有单重谱。
+
+现在固定 $p\in(0,1)$。若完整矩的两个实微分在
+$\|A_q\|^2=1-p$、$\|A_{q^\perp}\|_F^2=p$
+上不独立，实 Lagrange 乘子给出非零 Hermitian 组合 $H$ 和两个实数 $\lambda,\mu$，使
+$(H-\lambda qq^\dagger-\mu P)A=0$。
+缩放 $H$ 后，$A$ 的所有列都属于（249.37）的同一特征空间，故 $\operatorname{rank}A\le1$。因此在每个秩至少二的因子上，两个矩微分都独立，不需要假定小特征值有统一正下界。
+
+背景的纯实连接和规范段由第243、248节的直接实、虚切向量论证覆盖；紧化右端 $x=0$ 的非零虚矩微分使用第248.29a式，实矩微分使用实际谱间隔。故归一化因子坐标
+
+$$
+A_q=x\xi,\qquad A_{q^\perp}=\sqrt p\,W,\qquad
+\|\xi\|=\|W\|_F=1
+\tag{249.38}
+$$
+
+在闭紧化区间光滑，且两个矩微分处处独立。因子在右端已接回规范纯支，所以 $A_q/x$ 在该端可消去，不造成坐标奇性。这里对每个固定任务的最小奇异值为正，允许其随 $s,e_s,\eta_s$ 退化。
+
+按第248.29b式进行高阶多项式逼近、Hermite 匹配、两个球面的归一化及两个实解析参数的矩修正。梯度 Gram 矩阵一致正定，解析隐函数的局部解由唯一性拼合。每个固定任务的两个资源均有严格全域余量，故可把逼近精度选到同时保持两项预算，并在完整节点区间达到
+
+$$
+\sqrt{I_Q(\rho_{\rm final})}
+\le2\|(A_{\rm final})'_u\|_F
+\le2\|(A_{\rm bg})'_u\|_F+1.
+\tag{249.39}
+$$
+
+这使用净化信息上界，不要求最终 SLD 在秩下降处连续。平方及积分后，（249.34）的两项归一化附加误差均趋零；$K_s$ 上的两个有界代价保持。纯规范段的辅助方向为常数，因子信息恰为纯态信息；保留至少四阶及所有指定的更高阶节点数据，再结合普适下曲率界，即保留普通最优双侧曲率。实际节点及谱必要性同时保留完整尖锐集合和联合支持四。
+
+另外可令 $C^0$ 误差足够小，使最终路径的首次分隔面过零仍在 $t_{c,s}$ 的一个趋零邻域内，过零方向仍趋于同一 $R$。原背景在该邻域以外的紧集上分隔面符号严格；邻域以内的实际图则给出方向控制。对最终路径使用（249.21），便使（249.34）两项均成为等式极限。故对每个固定 $z\in\mathcal Z_\gamma$，存在同一解析族满足
+
+$$
+\mathcal P_s\longrightarrow\frac{A(z)}{D_\gamma(z)^2},
+\qquad
+\mathcal E_s\longrightarrow2d\frac{A(z)}{D_\gamma(z)}.
+\tag{249.40}
+$$
+
+全过程的容差与逼近次数均在固定任务之后选取，不要求统一解析半径或以 $s$ 的某个幂为精度下限。
+
+最后证明两类极小点不同。令 $F_j(z)=A(z)/D_\gamma(z)^j$，$j=1,2$。在 $z=0$ 有 $F_j'(0)=-2h<0$；若 $h$ 可行，则 $F_j'(h)>0$；若可行域在 $h$ 之前终止，则接近其边界时 $F_j\to\infty$。因此每一个极小点都在 $0<z<h$ 且 $D_\gamma(z)>0$ 的内部，最小值实际取得。
+
+峰值极小点与累计极小点分别必须满足
+
+$$
+\begin{aligned}
+(h-z)D_\gamma(z)&=\gamma g'(z)A(z)
+&&\text{（峰值）},\\
+2(h-z)D_\gamma(z)&=\gamma g'(z)A(z)
+&&\text{（累计）}.
+\end{aligned}
+\tag{249.41}
+$$
+
+由于内部 $g'(z)>0$、$h-z>0$，两个方程不可能在同一点成立。无需证明各自极小点唯一：适当紧子水平集上的连续性和无共同极小点，已经给出（249.6）的严格正间隙。分别取两类极小点代入（249.40），即证明各自可达性；（249.7）排除两个最优值共同作为完整极限。证毕。
+
+**注记 249.3（距离与可用时段共同组成代价）。** 参数 $z$ 增大时，终端方向恢复距离 $d(h-z)$ 减少，但（249.19）要求更晚过零，剩余时段比例变为 $D_\gamma(z)$。峰值代价除以这个比例的平方，累计代价只除以一次。两种评价因此选择不同的关系路径。第246、248节在各自的尺度中给出两项代价共同最优的准备族；本节有限过渡尺度保留了这个不能同时优化的内部选择。
+
+这里的 $u$ 仍是原任务参数，$I_Q$ 积分是本节定义的累计 Fisher 代价；本节未把它识别为实验室时间上的能耗。结论依赖两个分别限制的全域预算及既定低内部代价条件，不能只保留一个合成预算后照搬。
+
+缺陷一收缩的数值域背景可参见 Gau、Wu，*Numerical ranges and compressions of $S_n$-matrices*，Operators and Matrices **7**(2), 465–476（2013），DOI:10.7153/oam-07-28，尤其其定义及定理2.2。按该文约定，实际 $B_s^\dagger,T_s^\dagger$ 分别属于 $S_3,S_4$；上面的带 $\nu P$ 矩阵束与因子正则性由（249.35）—（249.38）直接证明。SLD、净化、Schur 补及解析逼近均为既有工具；本节的新组合结论是实际任务的过零约束、可达代价公式及两个目标的严格分离，不主张这些工具的原创性或已经取得 Lean 认证。
+
+## 追加锚（本行以下为增补区）
