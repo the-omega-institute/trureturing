@@ -39374,3 +39374,977 @@ $$
 本节的吸收器原理沿用第11节所核对的 Godley–Guţă 平稳纯化构造；二维平方根公式由上面的矩阵恒等式直接证明。新增的是在实际启动混合曲线上保持扰动方向后的端点估计及全时域误差证书，不作原创优先权或 Lean 验证声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 148. 七维六终端的七阶端点误差上界
+
+第144节把七维六终端最优误差写成 $f(x)$，其中 $x=|a|^2$，并证明
+$f(x)=c_1(1-x)^{q_1}(1+o(1))$，$x\uparrow1$，但未确定指数。本节在同一个固定 CPTP、独立纯初始化、前六终端全部参考恢复的合同下构造显式七维装置，得到
+
+$$
+\boxed{
+f(1-p)\le
+\frac{p^7}{\kappa^2\bigl(c\kappa+(1-p)d^2\bigr)^2}
+=\frac14p^7(1+o(1)),
+\qquad p=|b|^2\downarrow0.
+}
+\tag{148.1}
+$$
+
+这里 $c,d,\kappa$ 将在下文明确给出。因此 $q_1\ge7$；这并不确定 $q_1=7$。构造复用第39节的七维前四轮核心，对第五、第六轮的固定表作不同延拓，并直接计算全部输入和参考上的第六轮误差。
+
+### 148.1 参数与七维向量核心
+
+先取已知正实振幅
+
+$$
+0<p<1,\qquad a=\sqrt{1-p},\qquad b=\sqrt p,\qquad x=a^2=1-p.
+\tag{148.2}
+$$
+
+第144节的固定相位协变随后将同一误差界运输到任意已知复振幅。$p$ 始终表示来源概率 $|b|^2$，不是接收向量或第六轮的环境泄漏概率。
+
+取七维接收空间 $K$ 的正交单位基
+
+$$
+u,v,w,P,e,g,h.
+$$
+
+初态为与来源及参考独立的纯态 $w$。取二维新环境 $E$，正交单位基为 $A,B$。定义
+
+$$
+\begin{aligned}
+c&=\sqrt{a^4+b^2},&
+d&=\sqrt{c^2+b^2},\\
+z&=\frac{a^2u+bv}{c},&
+y_0&=\frac{-bu+a^2v}{c},\\
+q&=\frac{b y_0+a^2e}{c},&
+f&=\frac{-a^2y_0+be}{c},\\
+s&=\frac{-cv+be}{d},&
+r&=\frac{df-cs}{b}.
+\end{aligned}
+\tag{148.3}
+$$
+
+这些是第39节的实振幅核心；其中原接收基向量改记为 $P$，以区别参数 $p$。定义给出
+
+$$
+(z,y_0),\qquad(q,f),\qquad(P,q,s,r)
+\quad\text{各自为正交单位族},
+$$
+
+$$
+q,f\perp z,w,P,\qquad s\perp u,w,P,\qquad cs+br=df,
+$$
+
+$$
+\operatorname{span}\{P,q,s,r\}
+=\operatorname{span}\{u,v,P,e\}.
+\tag{148.4}
+$$
+
+在 $\operatorname{span}\{g,h\}$ 中置
+
+$$
+\begin{aligned}
+\kappa&=\sqrt{a^4d^2+b^2c^2},&
+\lambda&=\sqrt{\kappa^2+b^2d^2},\\
+\xi_4&=\frac{a^2dg+cbh}{\kappa},&
+\zeta_4&=\frac{-cbg+a^2dh}{\kappa}.
+\end{aligned}
+\tag{148.5}
+$$
+
+于是 $(\xi_4,\zeta_4)$ 正交归一。再置
+
+$$
+\omega=\frac{bv+ce}{d},
+\tag{148.6}
+$$
+
+它是 $\operatorname{span}\{v,e\}$ 中正交于 $s$ 的单位向量。全部分母在（148.2）下严格为正。
+
+### 148.2 同一个全域固定通道
+
+记 $v0=v\otimes|0\rangle$、$v1=v\otimes|1\rangle$，
+$vA=v\otimes A$、$vB=v\otimes B$。在整个 $K\otimes\mathbb C^2$ 上定义下表所确定的线性映射：
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{输入}&\text{输出}&\text{输入}&\text{输出}\\ \hline
+w0&PA&P0&uB\\
+w1&qA&P1&vB\\
+z0&sA&q0&wB\\
+u1&rA&f0&gB\\
+\xi_4 0&hA&s1&hB\\
+g1&-gA&h1&eB\\
+\omega1&wA&\zeta_4 0&PB
+\end{array}
+\tag{148.7}
+$$
+
+除 $\omega1\mapsto wA$ 外，其余十三行给出实际所需部分表；这一行完成全域。
+
+**引理148.1（全域酉与固定 CPTP 实现）。** 表（148.7）定义酉映射
+
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E.
+$$
+
+因而
+
+$$
+\mathcal C(Y)=\operatorname{Tr}_E(VYV^*)
+\tag{148.8}
+$$
+
+是每轮可重复使用的同一个全域 CPTP 通道。
+
+**证明。** 零位输入接收因子为
+$(w,z,P,q,f,\xi_4,\zeta_4)$。前五个是五维核心的正交单位基，后两个是与核心正交的新增平面基。它们构成 $K$ 的正交单位基。
+
+一位输入接收因子为 $(w,u,P,s,g,h,\omega)$。其中 $s,\omega$ 是
+$\operatorname{span}\{v,e\}$ 的正交单位基，其余五个基方向与该平面正交。因此它们也构成 $K$ 的正交单位基。不同输入位自动正交，故表中十四个输入为全域正交单位基。
+
+环境 $A$ 的接收输出为 $(P,q,s,r,h,-g,w)$，由（148.4）构成 $K$ 的正交单位基。环境 $B$ 的接收输出为 $(u,v,w,g,h,e,P)$，同样是正交单位基。两个环境正交，所以十四个输出也构成全域正交单位基。线性映射 $V$ 因而酉。证毕。
+
+每轮使用新的环境并立即丢弃。唯一持久系统是七维 $K$；表中没有随轮次更换的门或外置持久计数器。
+
+### 148.3 前五个完整参考终端精确
+
+记 $m_jv=m_j\otimes v$，并以 $\Psi_n^i$ 表示来源初始活动态为 $|i\rangle$ 时，第 $n$ 轮接收后的 $MK$ 列。对前五轮，表（148.7）给
+
+$$
+\begin{array}{ll}
+\Psi_1^0=m_0P,&
+\Psi_1^1=m_1q,\\[2pt]
+\Psi_2^0=a\,m_0u+b\,m_1v,&
+\Psi_2^1=m_0w,\\[2pt]
+\Psi_3^0=c\,m_0s+ab\,m_1r,&
+\Psi_3^1=a\,m_0P+b\,m_1q,\\[2pt]
+\Psi_4^0=ad\,m_0g+cb\,m_1h,&
+\Psi_4^1=m_0(a^2u+bw)+ab\,m_1v,\\[2pt]
+\Psi_5^0=\kappa m_0h-abd\,m_1g,&
+\Psi_5^1=a\,m_0(cs+bP)+b\,m_1(a^2r+bq).
+\end{array}
+\tag{148.9}
+$$
+
+两列在每轮具有相同的新环境，依次为 $A,B,A,B,A$。例如第四轮第一列的下一步零位输入为
+$a^2dg+cbh=\kappa\xi_4$，一位输入为 $abd\,g$；表中
+$\xi_4 0\mapsto hA$、$g1\mapsto-gA$ 正好给出第五轮第一列。其余列由同一表和 $cs+br=df$ 得到。
+
+环境不仅对两份基态相同；由线性性，对任意输入叠加及任意参考，前五轮每次丢弃的环境均为该轮相同的独立纯态。因此前五终端可以精确解码：在终端 $n\le5$ 准备已知环境字 $ABABA$ 的前 $n$ 位，逆序使用同一个 $V^*$，恢复全部发出位及独立接收初态 $w$，最后丢弃 $w$。
+
+这一逆序操作只访问接收器与解码端准备的环境。较早接收操作与较晚来源发射作用于不同系统，可以交换；所以它确为完整档案累计接收的逆。它定义全域 CPTP 解码器 $\mathcal D_n$，可依赖已知 $p$ 和终端 $n$，不依赖未知来源输入或不可访问参考。
+
+### 148.4 第六轮的两个实际环境分支
+
+第五轮第一列在下一次发射时的零位系数为
+$a(\kappa h-bdg)$，一位系数为 $b\kappa h$。定义实数
+
+$$
+\begin{aligned}
+\mu&=\langle\xi_4,\kappa h-bdg\rangle
+=\frac{b(c\kappa-a^2d^2)}{\kappa},\\
+\nu&=\langle\zeta_4,\kappa h-bdg\rangle
+=d\left(a^2+\frac{cb^2}{\kappa}\right)>0.
+\end{aligned}
+\tag{148.10}
+$$
+
+因为 $\xi_4,\zeta_4$ 正交归一，
+
+$$
+\kappa h-bdg=\mu\xi_4+\nu\zeta_4,\qquad
+\mu^2+\nu^2=\lambda^2.
+\tag{148.11}
+$$
+
+令
+
+$$
+G=a^2dg+a^2bu+b^2w,\qquad
+H=abc\,h+ab^2v.
+\tag{148.12}
+$$
+
+第六轮的完整实际 Stinespring 列是
+
+$$
+|0\rangle\longmapsto
+a\mu\,m_0h\otimes A
++\bigl(a\nu\,m_0P+b\kappa\,m_1e\bigr)\otimes B,
+$$
+
+$$
+|1\rangle\longmapsto
+(m_0G+m_1H)\otimes B.
+\tag{148.13}
+$$
+
+第二式使用同一来源列的两个输入系数
+
+$$
+a^2df+a^2bP+b^2q,\qquad
+abc\,s+ab^2P,
+$$
+
+再分别读取表中的零、一位作用。两列使用同一环境基 $A,B$，没有按未知初始输入另选环境标签。
+
+因此，对从初始活动空间到当前 $M\otimes K$ 的两个算子
+
+$$
+\begin{array}{ll}
+L_A|0\rangle=a\mu\,m_0h,&L_A|1\rangle=0,\\
+L_B|0\rangle=a\nu\,m_0P+b\kappa\,m_1e,&
+L_B|1\rangle=m_0G+m_1H,
+\end{array}
+\tag{148.14}
+$$
+
+任意初始参考—活动态 $\rho_{RM}$ 的实际第六终端均为
+
+$$
+\sigma_6(\rho)=
+(I_R\otimes L_A)\rho(I_R\otimes L_A)^*
++(I_R\otimes L_B)\rho(I_R\otimes L_B)^*.
+\tag{148.15}
+$$
+
+这同时保留初始逻辑的非对角块：例如
+$|0\rangle\langle1|$ 的像为
+$L_B|0\rangle\langle1|L_B^*$，并非仅比较两份基态的概率。由实际全域酉实现，
+$L_A^*L_A+L_B^*L_B=I$，故 $\|L_B\|_{\mathrm{op}}\le1$。
+
+### 148.5 一个只依赖已知来源的第六终端解码器
+
+定义理想比较等距 $U_6:M\to M\otimes K$：
+
+$$
+\begin{aligned}
+U_6|0\rangle&=a\lambda\,m_0P+b\kappa\,m_1e,\\
+U_6|1\rangle&=m_0G+m_1H.
+\end{aligned}
+\tag{148.16}
+$$
+
+它不是另一份被执行的接收通道；下面证明它是实际第六终端完整档案的可逆编码，供同一个解码器比较。
+
+四个实际档案列 $\chi_{00}^6,\chi_{01}^6,\chi_{10}^6,\chi_{11}^6$ 两两正交，其平方范数依次为
+
+$$
+t_5,\qquad p\,t_4,\qquad t_4,\qquad p\,t_3,
+\qquad t_j=1-p\,t_{j-1},\quad t_0=1.
+$$
+
+当前参数满足
+
+$$
+t_3=a^2d^2,\qquad t_4=\kappa^2,\qquad t_5=a^2\lambda^2.
+\tag{148.17}
+$$
+
+接收向量
+
+$$
+a\lambda P,\qquad b\kappa e,\qquad G,\qquad H
+$$
+
+也两两正交。它们的平方范数分别为上述四个数：特别地，
+
+$$
+\|G\|^2=a^4d^2+a^4b^2+b^4=\kappa^2,\qquad
+\|H\|^2=a^2b^2(c^2+b^2)=a^2b^2d^2.
+$$
+
+所以规定
+
+$$
+\begin{aligned}
+W_6\chi_{00}^6&=a\lambda P,&
+W_6\chi_{01}^6&=b\kappa e,\\
+W_6\chi_{10}^6&=G,&
+W_6\chi_{11}^6&=H
+\end{aligned}
+\tag{148.18}
+$$
+
+给出 $W_6:S_6\to K$ 的等距。实际来源列展开于是证明，$U_6$ 恰为先实际发射六轮、再在档案端使用 $W_6$ 的编码。
+
+令 $\iota_6:S_6\hookrightarrow B^{\otimes6}$ 为档案嵌入，任选固定档案密度矩阵 $\zeta$，定义
+
+$$
+\begin{aligned}
+\mathcal D_6(Y)
+={}&\iota_6W_6^*YW_6\iota_6^*\\
+&+\operatorname{Tr}[(I_K-W_6W_6^*)Y]\,\zeta .
+\end{aligned}
+\tag{148.19}
+$$
+
+这是全域 CPTP 通道，并对任意输入与参考满足
+
+$$
+(\operatorname{id}_{RM}\otimes\mathcal D_6)
+\bigl[(I_R\otimes U_6)\rho(I_R\otimes U_6)^*\bigr]
+=\Omega_6(\rho).
+\tag{148.20}
+$$
+
+$W_6$ 和解码器只使用已知 $p$、来源档案列及声明的接收基，没有使用未知输入或参考读数。
+
+### 148.6 全参考半迹误差的有限参数上界
+
+**定理148.2（七维六终端显式误差界）。** 对每个 $0<p<1$，上述同一固定接收通道和六个解码器满足
+
+$$
+\begin{aligned}
+\mathcal E_{7,6}(a,b;\mathfrak A)
+&\le
+\mu^2\left(\frac{a}{\lambda+\nu}+\frac{a^2}{2}\right)\\
+&\le\mu^2
+=\frac{p^7}{\kappa^2(c\kappa+a^2d^2)^2}.
+\end{aligned}
+\tag{148.21}
+$$
+
+因此（148.1）成立。特别地，对于 $0<p\le1/2$，
+
+$$
+\boxed{\varepsilon_{7,6}(\sqrt{1-p},\sqrt p)\le2p^7.}
+\tag{148.22}
+$$
+
+**证明。** 前五终端误差为零。第六轮比较（148.14）与（148.16）：
+
+$$
+\|L_B-U_6\|_{\mathrm{op}}=a(\lambda-\nu),\qquad
+\|L_A\|_{\mathrm{op}}^2=a^2\mu^2.
+\tag{148.23}
+$$
+
+由于 $\nu>0$ 及（148.11），有
+$\lambda-\nu=\mu^2/(\lambda+\nu)$。对任意参考和任意输入密度矩阵 $\rho$，利用
+$\|L_B\|_{\mathrm{op}}\le1$、$\|U_6\|_{\mathrm{op}}=1$，
+
+$$
+\begin{aligned}
+&\frac12\left\|
+(I_R\otimes L_B)\rho(I_R\otimes L_B)^*
+-(I_R\otimes U_6)\rho(I_R\otimes U_6)^*
+\right\|_1\\
+&\hspace{35mm}\le a(\lambda-\nu).
+\end{aligned}
+\tag{148.24}
+$$
+
+确切地，在两项之间加减
+$(I_R\otimes U_6)\rho(I_R\otimes L_B)^*$，
+再用 $\|X\rho Y\|_1\le\|X\|_{\mathrm{op}}\|Y\|_{\mathrm{op}}\operatorname{Tr}\rho$ 即得。另一个分支为正，其迹至多 $a^2\mu^2$。结合（148.15），得到
+
+$$
+\frac12\|\sigma_6(\rho)
+-(I_R\otimes U_6)\rho(I_R\otimes U_6)^*\|_1
+\le a(\lambda-\nu)+\frac{a^2\mu^2}{2}.
+\tag{148.25}
+$$
+
+对两态应用同一个 $\mathcal D_6$，半迹距离收缩，并由（148.20）得到所需全参考恢复误差。这一估计在参考维数和输入态上统一，故可直接取第140节定义中的上确界。
+
+现在计算 $\mu$。由（148.3）、（148.5），
+
+$$
+\begin{aligned}
+c^2\kappa^2-a^4d^4
+&=b^2(c^4-a^4d^2)\\
+&=b^6=p^3>0.
+\end{aligned}
+\tag{148.26}
+$$
+
+因此 $c\kappa-a^2d^2>0$，有理化（148.10）给
+
+$$
+\boxed{
+\mu^2
+=\frac{b^2p^6}{\kappa^2(c\kappa+a^2d^2)^2}
+=\frac{p^7}{\kappa^2(c\kappa+a^2d^2)^2}.
+}
+\tag{148.27}
+$$
+
+此外，直接展开参数得
+
+$$
+c^2=x+p^2,\qquad d^2=1+p^2,\qquad
+\kappa^2=x+p^2c^2,\qquad
+\lambda^2=1+p^2+p^4.
+\tag{148.28}
+$$
+
+所以 $\lambda\ge1$，而
+$\nu=d(x+cp/\kappa)\ge x$。由 $1+x\ge2\sqrt x=2a$，
+
+$$
+\frac{a}{\lambda+\nu}+\frac{a^2}{2}
+\le\frac{a}{1+x}+\frac x2
+\le\frac{1+x}{2}\le1.
+$$
+
+这证明（148.21）。又 $c^2,\kappa^2\ge x$、$d^2\ge1$，故
+
+$$
+\kappa^2(c\kappa+xd^2)^2\ge4x^3.
+$$
+
+当 $p\le1/2$ 时 $x\ge1/2$，分母至少 $1/2$，得到（148.22）。证毕。
+
+此处环境泄漏振幅是 $a\mu$，泄漏概率至多 $a^2\mu^2$。七阶上界并非把振幅与概率直接互换：还同时证明保留的 $B$ 分支与理想比较等距只相差
+$a(\lambda-\nu)=a\mu^2/(\lambda+\nu)$，所以保留分支的全部参考相干项也具有相同的平方阶误差。若缺少（148.23）—（148.25），单独的泄漏概率不够推出这个恢复界。
+
+### 148.7 对端点有理指数的含义
+
+第144节的已知相位协变保证，同一校准构造可运输到全部已知复振幅；其最优误差只依赖 $p=|b|^2$。当 $p\downarrow0$ 时，
+$a,c,d,\kappa,\lambda,\nu\to1$，故（148.21）的显式上界以及（148.27）均除以 $p^7$ 后趋于 $1/4$。
+
+结合第144节已证的
+
+$$
+f(1-p)=c_1p^{q_1}(1+o(1)),\qquad c_1>0,
+$$
+
+得到
+
+$$
+\boxed{
+q_1\ge7,\qquad
+q_1=7\ \Longrightarrow\ c_1\le\frac14.
+}
+\tag{148.29}
+$$
+
+这排除该端点的 $q_1=1$，但未证明七阶最优，也未给出匹配的误差下界。构造允许第六轮出现混合环境分支；第139节排除非退化七维零误差装置，第140节的紧性与最小值取得进一步保证每个非退化来源的七维最优误差严格为正。它没有改变六终端零误差容量八的结论，亦未把几何投影距离、某份输入的误差或更长时域的界替代当前全参考六终端合同。
+
+## 追加锚（本行以下为增补区）
+
+## 149. Bell 档案谱与逻辑通道误差的条件数
+
+第141节用一份忠实联合纯态把精确恢复提升为整个逻辑支撑上的矩阵等式。本节保留该态的 Schmidt 权重，给出近似版本：完整 Bell 参考恢复误差可以控制逻辑通道的 diamond 距离，代价由实际档案的最小非零本征值决定。对第三至第六终端，该权重在 $b\to0$ 时均为 $|b|^4/2$ 的主阶。
+
+### 149.1 同一实际来源的 Bell 档案谱
+
+固定已知非退化来源
+
+$$
+T|0\rangle=m_0\otimes|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M\otimes|1\rangle_B,\qquad
+m_0=a|0\rangle+b|1\rangle,
+$$
+
+其中 $ab\ne0$、$|a|^2+|b|^2=1$。置
+
+$$
+p=|b|^2\in(0,1),\qquad
+R_0=|m_0\rangle\langle m_0|,\qquad R_1=|0\rangle\langle0|.
+$$
+
+初始参考 $J$ 与活动记忆 $M$ 取归一化 Bell 态。第 $n$ 轮未接收的完整纯目标写为
+
+$$
+|\Omega_n\rangle
+=\frac1{\sqrt2}\sum_{i=0}^1
+|i\rangle_J|\psi_{i,n}\rangle_{MH_n},\qquad H_n=B^{\otimes n}.
+\tag{149.1}
+$$
+
+令 $\rho_{H_n}=\operatorname{Tr}_{JM}|\Omega_n\rangle\langle\Omega_n|$，并取第141节的实际档案支撑 $S_n=\operatorname{supp}\rho_{H_n}$。对 $n\ge3$，$\dim S_n=4$。本节的最小权重始终指
+
+$$
+\lambda_n=\lambda_{\min}(\rho_{H_n}|_{S_n})>0,
+\tag{149.2}
+$$
+
+不包含完整 $H_n$ 中未到达方向上的零本征值。
+
+沿用第11节的真实活动记忆边缘，写
+
+$$
+\rho_{i,n}=(1-w_{i,n})R_0+w_{i,n}R_1,\qquad v_p=\frac p{1+p},
+$$
+
+其中
+
+$$
+w_{0,n}=v_p-\frac p{1+p}(-p)^{n-1},\qquad
+w_{1,n}=v_p+\frac1{1+p}(-p)^{n-1}.
+\tag{149.3}
+$$
+
+**定理149.1（Bell 档案的四个权重及端点主阶）。** 对每个 $n\ge3$，$\rho_{H_n}|_{S_n}$ 的四个本征值为
+
+$$
+\boxed{
+\frac{1\pm\sqrt{1-4p w_{i,n}(1-w_{i,n})}}4,
+\qquad i=0,1.
+}
+\tag{149.4}
+$$
+
+特别地，在 $0<p\le1/2$ 上，定义最小混合参数
+
+$$
+u_3=u_4=p(1-p),\qquad
+u_5=u_6=p(1-p)(1+p^2).
+\tag{149.5}
+$$
+
+则对 $n=3,4,5,6$，
+
+$$
+\boxed{
+\lambda_n
+=\frac{1-\sqrt{1-4p u_n(1-u_n)}}4
+=\frac{p u_n(1-u_n)}{1+\sqrt{1-4p u_n(1-u_n)}}.
+}
+\tag{149.6}
+$$
+
+这些终端满足
+
+$$
+\lambda_3=\lambda_4\le\lambda_5=\lambda_6,
+\qquad
+\lambda_n\sim\frac12p^2=\frac12|b|^4
+\quad(p\downarrow0),
+\tag{149.7}
+$$
+
+并有共同显式下界
+
+$$
+\lambda_n\ge\frac12p^2(1-p)(1-p+p^2)
+\ge\frac3{16}p^2
+\qquad(3\le n\le6,\ 0<p\le1/2).
+\tag{149.8}
+$$
+
+**证明。** 两份档案的首发位分别为 $i=0,1$，因此偏迹掉完整档案后，参考的交叉块消失：
+
+$$
+\rho_{JM,n}
+=\frac12\sum_{i=0}^1|i\rangle\langle i|_J\otimes\rho_{i,n}.
+$$
+
+完整目标纯，故 $\rho_{H_n}$ 的非零谱恰为
+$\tfrac12\operatorname{spec}(\rho_{0,n})$ 与
+$\tfrac12\operatorname{spec}(\rho_{1,n})$ 的并，包含重数。又
+
+$$
+\det((1-w)R_0+wR_1)=pw(1-w),
+$$
+
+而每份 $\rho_{i,n}$ 的迹为一。二阶特征值公式给（149.4）。因子 $1/2$ 来自归一化 Bell 输入。
+
+第147节引理147.1给 $w_{0,n},w_{1,n}\in[p(1-p),p]$。当 $p\le1/2$ 时，$w(1-w)$ 在该区间递增，故最小本征值由较小的 $w_{i,n}$ 给出。将（149.3）分别代入 $n=3,4,5,6$，最小参数正是（149.5），得到（149.6）。这里 $u_n$ 不表示第148节的来源列范数递推 $t_n$。
+
+又 $u_5=u_6\ge u_3=u_4$，故最小权重按（149.7）排列；$u_n/p\to1$ 和（149.6）的有理化表达式给 $\lambda_n/p^2\to1/2$。最后
+
+$$
+\lambda_3=\frac{1-\sqrt{1-4p^2(1-p)(1-p+p^2)}}4
+\ge\frac12p^2(1-p)(1-p+p^2).
+$$
+
+在 $p\le1/2$ 上，$1-p\ge1/2$、$1-p+p^2\ge3/4$，得到（149.8）。证毕。
+
+其中 $\lambda_3=\lambda_4$ 恰为第40节（40.4）最小记忆权重的一半。第三至第六终端具有相同的端点阶；终端数增加没有在这些忠实权重上逐轮增加退化阶数。
+
+### 149.2 一份忠实纯态对完整通道差的控制
+
+下述结论允许输入和输出空间不同。diamond 范数采用不除以二的完整范数；对两通道另记半距离
+
+$$
+d_\diamond(\mathcal A,\mathcal B)
+:=\frac12\|\mathcal A-\mathcal B\|_\diamond.
+$$
+
+**定理149.2（忠实纯态的定量通道桥）。** 设归一化纯态
+
+$$
+|\Psi\rangle_{RS}
+=\sum_{j=1}^{\dim S}\sqrt{\gamma_j}|r_j\rangle_R|s_j\rangle_S,
+\qquad \gamma:=\min_j\gamma_j>0
+\tag{149.9}
+$$
+
+在 $S$ 上满 Schmidt 秩。对任意线性映射
+$\Delta:\mathcal L(S)\to\mathcal L(Y)$，有
+
+$$
+\boxed{
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1
+\le\|\Delta\|_\diamond
+\le\frac1\gamma
+\left\|(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)\right\|_1.
+}
+\tag{149.10}
+$$
+
+特别地，若 $\Delta=\mathcal A-\mathcal B$ 为两通道之差，且这份测试态的半迹误差为 $e$，则
+
+$$
+\boxed{
+e\le d_\diamond(\mathcal A,\mathcal B)
+\le\min\{1,e/\gamma\}.
+}
+\tag{149.11}
+$$
+
+**证明。** 记
+$Z=(\operatorname{id}_R\otimes\Delta)(|\Psi\rangle\langle\Psi|)$。
+对任意辅助空间 $A$ 及单位向量 $\phi,\chi\in A\otimes S$，存在参考侧线性映射 $F,G:R\to A$，使
+
+$$
+|\phi\rangle=(F\otimes I_S)|\Psi\rangle,\qquad
+|\chi\rangle=(G\otimes I_S)|\Psi\rangle,
+\qquad
+\|F\|_{\rm op},\|G\|_{\rm op}\le\gamma^{-1/2}.
+\tag{149.12}
+$$
+
+确切地，把 $\phi$ 在 $S$ 的 Schmidt 基中写成系数矩阵 $C$，有
+$F=C\operatorname{diag}(\gamma_j^{-1/2})$，并在参考支撑外取零。由 $\|C\|_{\rm HS}=1$ 得所报算子范数界；$G$ 同理。
+
+于是
+
+$$
+(\operatorname{id}_A\otimes\Delta)(|\phi\rangle\langle\chi|)
+=(F\otimes I_Y)Z(G^*\otimes I_Y),
+$$
+
+迹范数至多 $\|Z\|_1/\gamma$。对任意输入算子作奇异值分解，逐项应用此界并求和，得到完整诱导迹范数界。对辅助空间取上确界，即为（149.10）的右侧。左侧以 $|\Psi\rangle\langle\Psi|$ 代入 diamond 范数定义即得。两通道的半 diamond 距离至多一，故（149.11）成立。证毕。
+
+该证明没有额外付出 $\dim S$ 因子。对一般两通道，系数 $1/\gamma$ 可以达到：取最小权重对应的输入基向量 $s_r$，令 $\mathcal A$ 测量该基，仅在结果 $r$ 输出经典态 $|1\rangle$，其余结果输出 $|0\rangle$；令 $\mathcal B$ 恒输出 $|0\rangle$。则测试态误差为 $e=\gamma$，而 $d_\diamond=1$。这个例子证明通用两通道界的锐性，不证明在“另一通道固定为恒等嵌入”的恢复子类内该系数最优。
+
+### 149.3 实际累计接收器上的逻辑误差
+
+令 $\iota_n:S_n\hookrightarrow H_n$ 为实际档案嵌入。固定在线接收器从独立初态出发，对一整份 $n$ 位档案按原顺序实施相同接收通道，诱导全域累计通道
+
+$$
+\mathcal E_n:\mathcal L(H_n)\longrightarrow\mathcal L(K).
+$$
+
+较早接收与较晚来源发射作用于不同系统，可以交换次序。因此，实际来源上的接收态正是先形成完整档案，再在档案端作用 $\mathcal E_n$ 的结果；这里的累计通道由实际固定装置决定。
+
+对给定终端解码器 $\mathcal D_n$，定义
+
+$$
+\mathcal L_n
+=\mathcal D_n\mathcal E_n\operatorname{Ad}_{\iota_n},
+\qquad
+\mathcal I_n=\operatorname{Ad}_{\iota_n},
+\qquad
+\operatorname{Ad}_{\iota_n}(X)=\iota_nX\iota_n^*.
+\tag{149.13}
+$$
+
+两者均从 $S_n$ 输出到完整 $H_n$，所以允许近似解码输出含有 $S_n$ 外的分量。记同一装置在完整 Bell 输入上的半迹恢复误差为 $e_n$。
+
+**推论149.3（第三至第六终端的逻辑通道条件数）。** 对 $3\le n\le6$ 和 $0<p\le1/2$，
+
+$$
+\boxed{
+\frac12\|\mathcal L_n-\mathcal I_n\|_\diamond
+\le\min\{1,e_n/\lambda_n\}
+\le\min\left\{1,\frac{16e_n}{3p^2}\right\}.
+}
+\tag{149.14}
+$$
+
+**证明。** 对逻辑纯态
+$(I_{JM}\otimes\iota_n^*)|\Omega_n\rangle$ 应用定理149.2，取参考系统 $R=JM$、$\gamma=\lambda_n$、$\Delta=\mathcal L_n-\mathcal I_n$。其测试态误差恰为实际完整 Bell 恢复误差 $e_n$。再用（149.8）即得。证毕。
+
+由（149.7），该界中的端点条件数满足
+
+$$
+\lambda_n^{-1}\sim2p^{-2}.
+\tag{149.15}
+$$
+
+因此半 diamond 距离的上界为 $(2+o(1))e_n/p^2$；若使用不除以二的完整 diamond 范数，上界相应为 $(4+o(1))e_n/p^2$。逻辑输入空间是四维 $S_n$，忠实测试的不可访问参考是完整 $JM$，其中活动记忆不能被迹掉。参考侧的线性过滤仅用于数学推导，不给接收器增加制备任意逻辑输入或操作活动记忆的权限。
+
+### 149.4 第148节装置的逻辑通道上界
+
+取第148节的同一七维装置及其六个终端解码器。以下 $\mu,c,d,\kappa$ 使用该节的参数定义，$\lambda_6$ 仍指（149.2）的实际 Bell 档案最小权重。第148节给前五个完整参考终端精确，并且第六终端对全部来源输入及参考满足
+
+$$
+e_6\le\mu^2
+=\frac{p^7}{\kappa^2(c\kappa+(1-p)d^2)^2},
+\qquad
+\mu^2\sim\frac14p^7.
+\tag{149.16}
+$$
+
+这里 $e_6$ 是该统一上界所涵盖的实际 Bell 误差。
+
+**推论149.4（具体七维装置的六终端逻辑精度）。** 第148节装置诱导的逻辑通道满足
+
+$$
+\mathcal L_n=\mathcal I_n\qquad(1\le n\le5),
+$$
+
+而在第六终端，
+
+$$
+\boxed{
+\frac12\|\mathcal L_6-\mathcal I_6\|_\diamond
+\le\min\{1,\mu^2/\lambda_6\},
+\qquad
+\limsup_{p\downarrow0}
+\frac{\tfrac12\|\mathcal L_6-\mathcal I_6\|_\diamond}{p^5}
+\le\frac12.
+}
+\tag{149.17}
+$$
+
+在 $0<p\le1/2$ 上，有完全显式的粗界
+
+$$
+\boxed{
+\frac12\|\mathcal L_6-\mathcal I_6\|_\diamond
+\le\min\left\{1,\frac{32}{3}p^5\right\}.
+}
+\tag{149.18}
+$$
+
+**证明。** 前五个终端的 Bell 误差为零，且每个实际支撑上的最小 Schmidt 权重严格正，所以定理149.2分别给 $\mathcal L_n=\mathcal I_n$；该定理也适用于前两终端的二维、三维支撑。第六终端直接对其完整 Bell 态应用定理149.2，再代入（149.16），得到对全部 $0<p<1$ 成立的第一界。再由
+$\mu^2/p^7\to1/4$ 和 $\lambda_6/p^2\to1/2$，得到（149.17）的上极限。最后，第148节给 $\mu^2\le2p^7$，结合（149.8）得到（149.18）。证毕。
+
+这些是同一具体七维六终端装置在实际逻辑支撑上的通道上界，没有给出最优逻辑误差、匹配下界或七阶物理恢复误差的最优性。已知复振幅的相位运输由第144、148节的协变关系承担；本节的谱和条件数只依赖 $p$。
+
+### 149.5 向量误差与通道误差的不同因子
+
+对定理149.2中的忠实纯态及线性算子 $B:S\to Y$，有
+
+$$
+\|(I_R\otimes B)\Psi\|^2
+=\operatorname{Tr}(\rho_S B^*B)
+\ge\gamma\|B\|_{\rm op}^2.
+\tag{149.19}
+$$
+
+所以，若已经控制共同纯化上的向量误差为 $r$，算子范数误差至多 $r/\sqrt\gamma$。这是第40节（40.14）使用的提升；本来源相应的因子为
+$\lambda_n^{-1/2}\sim\sqrt2/p$。
+
+定理149.2控制的是密度算子的迹误差，其参考过滤在左右两侧各作用一次，因此付出 $1/\gamma$。不能把向量误差中的 $1/\sqrt\gamma$ 直接用于输入为半迹误差 $e_n$ 的结论；若另经纯化或 Stinespring 连续性先取误差平方根，须保留该步的 $\sqrt{e_n}$。
+
+本节因此提供稳健比较所需的一项条件数：$e_n=o(p^2)$ 足以使第三至第六终端的逻辑通道距离趋于零。若要把精确容量障碍变成定量误差下界，还须稳健控制同一固定门、不同实际前缀接口及近似可逆结构之间的联合约束。忠实态到通道的提升本身不建立这份不可行性，也不作 Lean kernel 核验声明。
+
+## 追加锚（本行以下为增补区）
+
+## 150. 固定容量下有限前缀最优值的共同实现极限
+
+第148节给出了只要求前六终端时的精细误差上界，第146—147节则给出了同一装置对所有终端的上界。本节明确两种优化之间的关系：固定接收维数和同一已知来源后，全部有限前缀最优误差的单调极限，恰为一台共同固定接收器的全时域最优误差。关键条件是装置参数空间紧、任务约束闭，并且每个有限任务已经同时包含此前全部终端。
+
+这是一项共同实现结论，不将某台六终端装置直接延长为无限终端装置，也不给出达到指定精度所需的有限检查期限。
+
+### 150.1 分开固定装置与终端解码
+
+固定同一份已知来源等距 $T:M\to M\otimes B$，其中 $M,B$ 有限维。指定有限接收维数 $D\ge1$，令 $K=\mathbb C^D$。一个持续运行的装置参数为
+
+$$
+c=(\omega_K,\mathcal C),\qquad
+\omega_K\ \text{为纯密度矩阵},\qquad
+\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)\ \text{为 CPTP}.
+\tag{150.1}
+$$
+
+初态 $\omega_K$ 与来源输入及参考独立；每轮重复同一个 $\mathcal C$。所有持久控制已经包括在 $K$ 内，允许每轮丢弃新的环境。
+
+记这些参数构成的空间为 $\mathcal X_D$。纯密度矩阵集合在有限维中闭且有界；通道 Choi 矩阵集合由半正定性和固定偏迹给出，也是闭且有界。因此 $\mathcal X_D$ 紧。
+
+对终端 $n$，记全部 CPTP 解码器
+$\mathcal D:\mathcal L(K)\to\mathcal L(H_n)$ 的紧空间为 $\mathcal Y_n$，其中 $H_n=B^{\otimes n}$。目标仍为恢复完整有序档案与不可访问活动记忆及参考的联合态。定义
+
+$$
+h_n(c,\mathcal D)
+=\sup_{J,\rho_{JM}}
+D_{\mathrm{tr}}\!\left(
+(\operatorname{id}_{JM}\otimes\mathcal D)\sigma_n^c(\rho),
+\Omega_n(\rho)
+\right),\qquad
+D_{\mathrm{tr}}(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{150.2}
+$$
+
+对于固定 $n$，它是两个从初始 $M$ 出发的通道之间的半 diamond 距离。因此参考 $J$ 只需取 $\dim J=\dim M$；无须让参考维数随档案增长。有限轮通道复合连续，密度矩阵输入集紧，故 $h_n$ 在 $\mathcal X_D\times\mathcal Y_n$ 上连续，且取值于 $[0,1]$。
+
+定义同一持续装置在各终端允许分别选择解码器后的误差
+
+$$
+e_n(c)=\min_{\mathcal D\in\mathcal Y_n}h_n(c,\mathcal D),
+\qquad
+g_N(c)=\max_{1\le n\le N}e_n(c).
+\tag{150.3}
+$$
+
+最小值由紧性取得。对固定 $n$，$h_n$ 在紧参数积上连续，故关于 $c$ 的变化在全部 $\mathcal D$ 上一致；从而
+
+$$
+|e_n(c)-e_n(c')|
+\le\sup_{\mathcal D\in\mathcal Y_n}
+|h_n(c,\mathcal D)-h_n(c',\mathcal D)|,
+$$
+
+说明 $e_n$ 连续。于是每个 $g_N$ 连续，且 $g_N\le g_{N+1}$。
+
+有限前缀最优值为
+
+$$
+\varepsilon_{D,N}
+=\min_{c\in\mathcal X_D}g_N(c).
+\tag{150.4}
+$$
+
+因为各终端解码器可以独立选择，并且每个 $e_n(c)$ 均能取得，这与同时优化一台固定装置和前 $N$ 个解码器的原合同相同。它不等于对每个终端分别另换接收装置。
+
+定义全时域最优值
+
+$$
+\varepsilon_{D,\infty}
+=\inf_{c,\;(\mathcal D_n)_{n\ge1}}
+\sup_{n\ge1}h_n(c,\mathcal D_n).
+\tag{150.5}
+$$
+
+这里始终只有一个持续装置 $c$；只有读取终端的解码器可以依赖 $n$。
+
+### 150.2 紧性把有限共同可行性变成无限共同可行性
+
+**定理150.1（固定容量的前缀极限定理）。** 在（150.1）—（150.5）的合同下，
+
+$$
+\boxed{
+\varepsilon_{D,\infty}
+=\min_{c\in\mathcal X_D}\sup_{n\ge1}e_n(c)
+=\sup_{N\ge1}\varepsilon_{D,N}
+=\lim_{N\to\infty}\varepsilon_{D,N}.
+}
+\tag{150.6}
+$$
+
+存在同一个 $c_*\in\mathcal X_D$ 和一族终端解码器，同时达到全时域最优值。
+
+**证明。** 对固定 $c$，任意解码器族都有
+$h_n(c,\mathcal D_n)\ge e_n(c)$。反过来，对每个 $n$ 选择取得（150.3）最小值的解码器，即使所有这些等号同时成立。因此
+
+$$
+\inf_{(\mathcal D_n)}\sup_n h_n(c,\mathcal D_n)
+=\sup_n e_n(c).
+\tag{150.7}
+$$
+
+这一步只使用终端解码可分别选择的既有权限。
+
+有限最优值随 $N$ 非降且不超过一，故其极限
+
+$$
+\ell=\sup_N\varepsilon_{D,N}\in[0,1]
+$$
+
+存在。对每个 $N$，置
+
+$$
+F_N=\{c\in\mathcal X_D:g_N(c)\le\ell\}.
+\tag{150.8}
+$$
+
+由于 $g_N$ 连续，$F_N$ 是闭集；由于最小值取得且
+$\varepsilon_{D,N}\le\ell$，它非空。又 $g_N\le g_{N+1}$，所以
+$F_{N+1}\subseteq F_N$。紧性给出
+
+$$
+\bigcap_{N\ge1}F_N\ne\varnothing.
+$$
+
+取 $c_*$ 属于该交集。对每个 $n$，有 $e_n(c_*)\le\ell$，所以
+$\sup_n e_n(c_*)\le\ell$。
+
+另一方面，对任意 $c$ 和任意 $N$，
+
+$$
+\sup_n e_n(c)\ge g_N(c)\ge\varepsilon_{D,N}.
+$$
+
+对 $N$ 取上确界，得到 $\sup_n e_n(c)\ge\ell$。因此 $c_*$ 达到该下界。再按（150.7）逐终端选取解码器，便得到（150.6）及共同达到性。证毕。
+
+**推论150.2（同一误差阈值下的共同实现）。** 对任意 $\epsilon\in[0,1]$，下列两项等价：
+
+1. 存在一个 $D$ 维固定接收器及其终端解码器，全部终端误差均不超过 $\epsilon$；
+2. 对每个有限 $N$，存在一个 $D$ 维固定接收器及前 $N$ 个解码器，同时使这 $N$ 个终端的误差不超过 $\epsilon$。
+
+第二项中的装置允许依赖 $N$，第一项中的装置不依赖 $N$。
+
+**证明。** 第一项限制到任意前缀即得第二项。反向，第二项给全部
+$\varepsilon_{D,N}\le\epsilon$，由定理150.1及达到性得到第一项。证毕。
+
+若 $\epsilon<\varepsilon_{D,\infty}$，则必有某个有限 $N$ 满足
+$\varepsilon_{D,N}>\epsilon$。这是有限失败见证的存在性，没有从紧性得到该 $N$ 的数值、有效界或搜索停止算法。
+
+### 150.3 适用于本卷来源的结论与参数边界
+
+回到 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$ 的已知来源。对每个非退化 $a,b$ 和固定有限 $D$，第12节的有限期限障碍与紧性给
+
+$$
+\boxed{
+0<\varepsilon_{D,8D^2}
+\le\varepsilon_{D,\infty}\le1.
+}
+\tag{150.9}
+$$
+
+其中左端是针对同一固定装置的前缀任务；没有只比较指定最后一个终端。
+
+对于七维，第146节另给
+
+$$
+0<\varepsilon_{7,\infty}(a,b)
+\le\min\{1,2\sqrt2\,|b|^2\}
+\qquad(ab\ne0).
+\tag{150.10}
+$$
+
+对每个 $T\ge3$，第147节则给
+
+$$
+\varepsilon_{4T-2,\infty}(a,b)
+\le\min\{1,2\delta_T(|b|^2)\},
+\qquad
+2\delta_T(p)\sim p^{T-1}\quad(p\downarrow0).
+\tag{150.11}
+$$
+
+这些都是同一已知来源、全部终端、全部参考下的可达上界。第148节只给
+$\varepsilon_{7,6}=O(|b|^{14})$；定理150.1不把这一条有限期限上界提升为（150.10）中的全时域上界。要这样提升，需要同一个上界对每个有限前缀都成立。
+
+还可以严格保留全时域最优值关于来源参数的一个正则性结论。对每个固定有限 $N$，第140节的通道扰动论证使 $\varepsilon_{D,N}(a,b)$ 连续。由（150.6），
+
+$$
+\varepsilon_{D,\infty}(a,b)
+=\sup_N\varepsilon_{D,N}(a,b)
+\tag{150.12}
+$$
+
+是下半连续函数：对任何实数 $r$，其严格上水平集
+$\{\varepsilon_{D,\infty}>r\}$ 是连续有限前缀函数对应开集的并。
+
+本节没有证明它在所有非退化参数处连续，也没有证明它半代数，或有与有限期限相同的端点幂主项。有限期限的连续性常数随 $N$ 增长；（150.12）本身不能补上全时域一致估计。对于 $D=7$ 的 $b=0$ 端，第10节的精确退化装置和（150.10）的夹逼另行给出连续趋零，但这是实际全时域构造带来的额外结论。
+
+### 150.4 共同来源条件的作用
+
+定理150.1使用的是同一个紧装置空间。若允许资源随前缀增大，结论就没有相同含义。例如以整数 $L\ge1$ 为装置参数，规定该装置只保存前 $L$ 个记录，每个有限前缀都有某个装置精确保存，却没有其中任何一个装置保存全部前缀。这里参数空间不紧，也没有统一容量约束，不能使用（150.8）的非空交结论。
+
+即使装置空间紧，若有限测试只要求第 $N$ 个终端、没有同时包含此前全部终端，对应可行集也未必嵌套。还需核对任意有限组约束有共同解，不能以各项分别可行代替。
+
+因此，在本合同内，“每个有限前缀都有共同实现”能够升级为“一台装置实现全部前缀”，其依据是固定资源、闭约束及紧性共同成立。这个紧性论证是经典方法；本节把它落实到实际固定 CPTP 接收合同，并分清有限期限的数值上界与全时域共同实现之间仍须证明的量词。
+
+## 追加锚（本行以下为增补区）
