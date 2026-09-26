@@ -151,6 +151,7 @@ open Lean Meta
 
 private structure CompileState where
   remaining : Nat := 524288
+  debugName : Name := .anonymous
   identityState : Option RegistrationGates.WalkState := none
   dependencies : Array DependencyIdentity := #[]
   rules : Array String := #[]
@@ -164,7 +165,8 @@ private abbrev CompileM := StateT CompileState MetaM
 
 private def charge (work : Nat := 1) : CompileM Unit := do
   Core.checkMaxHeartbeats "template construction"
-  unless work ≤ (← get).remaining do throwError "incomplete_closure:E8.work"
+  unless work ≤ (← get).remaining do
+    throwError "incomplete_closure:E8.work:{(← get).debugName}:{work}:{(← get).remaining}"
   modify fun s => { s with remaining := s.remaining - work }
 
 /-- Pure construction shares the caller's remaining quota. The transformer
@@ -554,6 +556,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
       rule "E3.application"
       return plan
     let .const name levels := head | throwError "unclassified_form:E3.application_head"
+    modify fun state => { state with debugName := name }
     let info ← getConstInfo name
     -- Standard Nat order notation is the existing Nat.lt proposition grammar.
     -- No user order dictionary or data-position operation is admitted here.
@@ -680,6 +683,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
         for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
         rule "E2.independent_carrier"
         return plan
+    if name == `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.massReadout then
+      let independent ← independentSource name
+      let carrier ← hasIndependentInputCarrier info.type
+      throwError "debug:massReadout:args={args.size}:independent={independent}:carrier={carrier}"
     if args.isEmpty && (← independentSource name) && (← hasIndependentInputCarrier info.type) then
       if let .defnInfo defn := info then
         if defn.safety == .safe && defn.all.length == 1 &&
