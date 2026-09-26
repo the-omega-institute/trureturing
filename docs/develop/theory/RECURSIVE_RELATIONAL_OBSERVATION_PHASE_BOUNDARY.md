@@ -69565,3 +69565,366 @@ $$
 本节扩展前节的相位充分条件；原有偶数相位结论及重置—等距预算平台保持成立。没有重算该平台，也没有将 qubit 的一般两 Kraus 距离公式推广到任意输入维数。
 
 ## 追加锚（本行以下为增补区）
+
+## 230. 高秩事件丛的容量障碍、精确预算阶梯与投影稳定性
+
+秩一事件的相对线丛判据可以扩展到秩 $r$ 的事件接口。关键对象是从输入重言线丛到事件像丛的映射丛，其复秩为 $r$。$k$ 个候选 Kraus 映射产生该丛的 $k$ 份截面；相应顶陈类非零时，它们必须有共同零点。
+
+在统一正事件概率的前提下，这给出目标分支至少需要 $\lceil d/r\rceil$ 个 Kraus 方向的下界。常值事件及输入分块通道达到该阈值；在同一输出接口中还可得到完整半 diamond 距离的精确预算阶梯。以下为纸面数学推导，未新增或编译 Lean 证明。
+
+### 230.1 同一实际接口上的事件与容量
+
+固定整数
+$$
+d\ge2,\qquad 1\le r<d,\qquad m\ge r.
+\tag{230.HR.1}
+$$
+令 $H\to\mathbb {CP}^{d-1}$ 为输入重言线丛，即
+$$
+H_{[v]}=\mathbb Cv\subset\mathbb C^d,
+\qquad h=c_1(H^*).
+\tag{230.HR.2}
+$$
+对单位输入 $v$，记 $P_v=|v\rangle\langle v|$。
+
+给定连续的秩 $r$ 正交事件投影族
+$$
+P:\mathbb {CP}^{d-1}\longrightarrow\operatorname{End}(\mathbb C^m),
+\qquad P(x)^2=P(x)=P(x)^\dagger.
+\tag{230.HR.3}
+$$
+其像定义复秩 $r$ 的向量子丛 $L$：在任意 $x_0$ 选 $\operatorname{im}P(x_0)$ 的一组基，并在邻域内用 $P(x)$ 投影这些固定向量。线性独立性在足够小邻域内保持，给出局部帧。这里不要求存在全局帧。
+
+定义
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+\tag{230.HR.4}
+$$
+由于 $1\le r<d$，上同调群 $H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)$ 由 $h^r$ 自由生成，故存在唯一整数 $\nu$ 满足
+$$
+c_r(E)=\nu h^r.
+\tag{230.HR.5}
+$$
+本节的拓扑假设为 $\nu\ne0$。
+
+目标为有限标签集 $B$ 上的 CPTP 记录通道
+$$
+\mathcal R(X)=\sum_{b\in B}|b\rangle\langle b|\otimes\Gamma_b(X),
+\tag{230.HR.6}
+$$
+其中 $\Gamma_b:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^m)$ 完全正，$\sum_b\Gamma_b$ 保迹。固定一个标签 $b_*$，记 $\Gamma=\Gamma_{b_*}$。假设存在 $\alpha\in[0,1]$，使
+$$
+\boxed{\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位 }v\in\mathbb C^d.}
+\tag{230.HR.7}
+$$
+比较对象 $\mathcal S$ 是具有相同输入、量子输出及标签接口的任意 CPTP 记录通道；其同名分支记为 $\Lambda$。分支 Kraus 容量取
+$$
+k=\operatorname{rank}J_\Lambda,
+\tag{230.HR.8}
+$$
+也就是最小 Kraus 数量。零分支的容量为零。所有距离均取完整通道的
+$$
+d_\diamond(\mathcal R,\mathcal S)
+=\tfrac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{230.HR.9}
+$$
+其中包括全部记录标签，并允许外部参考。单标签通道是这个定义的特例。
+
+### 230.2 顶陈类迫使候选事件振幅共同为零
+
+**定理 230.1（秩 $r$ 事件的共同零点）。** 在（230.HR.1）—（230.HR.5）及 $\nu\ne0$ 下，给定任意 $k\ge1$ 个复线性映射
+$$
+C_j:\mathbb C^d\to\mathbb C^m\quad(1\le j\le k).
+$$
+若 $rk<d$，则存在单位输入 $v$，使
+$$
+\boxed{P([v])C_jv=0\qquad(1\le j\le k).}
+\tag{230.HR.10}
+$$
+这些映射不必构成保迹通道。
+
+**证明。** 每个 $C_j$ 定义一份连续截面
+$$
+s_j(x)=P(x)C_j|_{H_x}\in\operatorname{Hom}(H_x,L_x).
+\tag{230.HR.11}
+$$
+该定义作用于整条输入线，不依赖所选单位代表的相位。全部截面组成
+$$
+s=(s_1,\ldots,s_k)\in\Gamma(E^{\oplus k}),
+\qquad\operatorname{rank}_{\mathbb C}(E^{\oplus k})=rk.
+\tag{230.HR.12}
+$$
+Whitney 直和公式及 $c_i(E)=0$ 对 $i>r$ 成立，给
+$$
+\boxed{c_{rk}(E^{\oplus k})=c_r(E)^k=\nu^k h^{rk}.}
+\tag{230.HR.13}
+$$
+第一等式来自总陈类乘积中的最高可能次数：每个因子的次数至多为 $r$，要得到总次数 $rk$，必须从每个因子取 $c_r(E)$。无需把 $L$ 分裂成线丛。
+
+标准整数上同调环为
+$$
+H^*(\mathbb {CP}^{d-1};\mathbb Z)
+=\mathbb Z[h]/(h^d).
+\tag{230.HR.14}
+$$
+因为 $rk<d$ 且 $\nu\ne0$，式（230.HR.13）是一个非零上同调类。
+
+若 $s$ 没有零点，将其按诱导的 Hermitian 度量归一化，便得到一个平凡复线子丛。其 Hermitian 正交补 $E'$ 为复秩 $rk-1$ 的向量丛，因此
+$$
+E^{\oplus k}\cong\underline{\mathbb C}\oplus E',
+\qquad c_{rk}(E^{\oplus k})=c_{rk}(E')=0,
+$$
+与（230.HR.13）矛盾。故 $s$ 在某个 $[v]$ 为零。任选该输入线的单位代表，即得（230.HR.10）。$\square$
+
+这里唯一使用的分裂，是假定无零点截面后推出的“平凡线子丛及其正交补”。它不预设事件丛或候选映射丛存在全局线丛分解。
+
+### 230.3 完整距离下界与目标分支的最小容量
+
+**定理 230.2（完整半 diamond 下界）。** 保持第一节的所有假设。任意同接口 CPTP 记录竞争者 $\mathcal S$，只要其同名分支容量 $k$ 满足 $rk<d$，就有
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)\ge\alpha.}
+\tag{230.HR.15}
+$$
+
+**证明。** 若 $k\ge1$，取最小 Kraus 表示
+$$
+\Lambda(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+由定理 230.1，存在单位输入 $v$ 使全部 $P([v])C_jv=0$。于是
+$$
+\operatorname{Tr}\bigl[P([v])\Lambda(P_v)\bigr]
+=\sum_{j=1}^k\|P([v])C_jv\|^2=0.
+\tag{230.HR.16}
+$$
+若 $k=0$，则 $\Lambda=0$，任意单位输入都满足（230.HR.16）；这一情形不需要陈类假设。
+
+在完整输出上使用效果
+$$
+F_v=|b_*\rangle\langle b_*|\otimes P([v]),
+\qquad 0\preceq F_v\preceq I.
+\tag{230.HR.17}
+$$
+目标事件概率至少为 $\alpha$，候选概率为零。因为 $\mathcal R(P_v)$ 与 $\mathcal S(P_v)$ 都是迹一正矩阵，差矩阵 $\Delta_v$ 自伴且迹零。其正负部的迹均为 $\tfrac12\|\Delta_v\|_1$，故
+$$
+\alpha\le|\operatorname{Tr}(F_v\Delta_v)|
+\le\tfrac12\|\Delta_v\|_1
+\le d_\diamond(\mathcal R,\mathcal S).
+\tag{230.HR.18}
+$$
+最后一步允许取无外部参考的输入作为完整 diamond 范数的一个见证。$\square$
+
+完整输出的保迹条件承担了（230.HR.18）中的 $1/2$ 因子。不能将目标与候选的非保迹分支单独替换成两份归一化态而沿用同一论证。事件投影可随所选见证输入变化；距离下界只需为每个竞争者找到一个输入及对应检验，并不要求有一项检验同时区分全部输入。
+
+**推论 230.3（目标容量）。** 若 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge
+\left\lceil\frac d r\right\rceil.}
+\tag{230.HR.19}
+$$
+证明：若目标自身的分支秩 $k$ 满足 $rk<d$，在定理 230.2中取 $\mathcal S=\mathcal R$，即得 $0\ge\alpha>0$，矛盾。因此 $rk\ge d$，给出整数下界。$\square$
+
+完整记录通道的 Choi 矩阵在标签方向上是分支 Choi 矩阵的正交直和，其秩为各分支秩之和。因此（230.HR.19）也给完整通道 Kraus 容量的下界，但它首先约束的是指定分支。
+
+### 230.4 达到阈值的实际 CPTP 通道
+
+以下构造适用于任意整数 $d\ge1$、$r\ge1$、$m\ge r$，不受 $r<d$ 限制。令
+$$
+t=\left\lceil\frac d r\right\rceil,
+\qquad d=(t-1)r+s,\qquad 1\le s\le r.
+\tag{230.HR.20}
+$$
+将输入的一组正交基分成 $t$ 个非空块：
+$$
+\{f_{j,i}:1\le j<t,\ 1\le i\le r\}
+\ \cup\ \{f_{t,i}:1\le i\le s\}.
+\tag{230.HR.21}
+$$
+在输出中选正交向量 $e_1,\ldots,e_r$，令 $P_0$ 为它们张成空间的正交投影。置 $n_j=r$ 对 $j<t$，$n_t=s$，并定义
+$$
+K_j=\sum_{i=1}^{n_j}|e_i\rangle\langle f_{j,i}|,
+\qquad
+\mathcal T(X)=\sum_{j=1}^t K_jXK_j^\dagger.
+\tag{230.HR.22}
+$$
+各输入块互相正交且完整覆盖输入，所以
+$$
+\sum_{j=1}^tK_j^\dagger K_j
+=\sum_{j=1}^t\sum_{i=1}^{n_j}|f_{j,i}\rangle\langle f_{j,i}|
+=I_d.
+\tag{230.HR.23}
+$$
+因此 $\mathcal T$ 是实际 CPTP 通道，且 $P_0K_j=K_j$ 给
+$$
+\operatorname{Tr}\bigl[P_0\mathcal T(P_v)\bigr]=1
+\quad\text{对全部单位 }v.
+\tag{230.HR.24}
+$$
+
+这组 Kraus 不仅数量为 $t$，而且线性独立：
+$$
+\operatorname{Tr}(K_j^\dagger K_\ell)
+=\begin{cases}n_j,&j=\ell,\\0,&j\ne\ell.\end{cases}
+\tag{230.HR.25}
+$$
+所有 $n_j$ 均正，故它们是非零的 Hilbert–Schmidt 正交族。由
+$$
+J_{\mathcal T}=\sum_{j=1}^t
+|K_j\rangle\!\rangle\langle\!\langle K_j|,
+\tag{230.HR.26}
+$$
+Choi 矩阵的像等于这些独立向量的张成，因而
+$$
+\boxed{\operatorname{rank}J_{\mathcal T}=t.}
+\tag{230.HR.27}
+$$
+这也证明不存在更短 Kraus 表示：含 $u$ 个 Kraus 的表示使 Choi 秩至多为 $u$。
+
+同一通道有显式等距扩张。用所选基 $e_1,\ldots,e_r$ 将 $\operatorname{im}P_0$ 识别为 $\mathbb C^r$；令 $g_1,\ldots,g_t$ 是 $\mathbb C^t$ 的正交基，定义
+$$
+V:\mathbb C^d\longrightarrow\mathbb C^r\otimes\mathbb C^t,
+\qquad Vf_{j,i}=e_i\otimes g_j.
+\tag{230.HR.28}
+$$
+不同 $(j,i)$ 的像互相正交，因此 $V^\dagger V=I_d$。令 $\iota:\mathbb C^r\hookrightarrow\mathbb C^m$ 为上述输出嵌入，并置 $W=(\iota\otimes I_t)V$，则
+$$
+\boxed{\mathcal T(X)=\operatorname{Tr}_{\mathbb C^t}(WXW^\dagger).}
+\tag{230.HR.29}
+$$
+
+对常值事件 $P([v])=P_0$，像丛 $L$ 为平凡秩 $r$ 丛，故
+$$
+E\cong(H^*)^{\oplus r},\qquad
+c(E)=(1+h)^r,\qquad c_r(E)=h^r.
+\tag{230.HR.30}
+$$
+在 $r<d$ 时，$\nu=1$、$\alpha=1$，目标容量恰好达到（230.HR.19）。因此 $\lceil d/r\rceil$ 这一普适下界不能提高。这是整个允许事件族中的可达实例，不断言每一个非平凡事件丛都能在相同阈值实现统一正概率。
+
+### 230.5 候选集非空的精确完整距离阶梯
+
+在第四节构造中进一步固定
+$$
+m\ge\max(d,r).
+\tag{230.HR.31}
+$$
+所有比较通道均取同一输入 $\mathbb C^d$、同一输出 $\mathbb C^m$ 及单标签接口。对每个整数 $R\ge1$，定义
+$$
+D_R=\inf\left\{
+\tfrac12\|\mathcal T-\mathcal S\|_\diamond:
+\mathcal S\text{ CPTP},\ \operatorname{rank}J_{\mathcal S}\le R
+\right\}.
+\tag{230.HR.32}
+$$
+候选集对每个 $R\ge1$ 都非空：由 $m\ge d$，存在等距 $U:\mathbb C^d\to\mathbb C^m$，通道 $X\mapsto UXU^\dagger$ 的 Choi 秩为一。
+
+**定理 230.4（精确预算阶梯）。** 对（230.HR.22）的目标，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<t,\\
+0,&R\ge t,
+\end{cases}
+\qquad t=\left\lceil\frac d r\right\rceil.
+}
+\tag{230.HR.33}
+$$
+
+**证明。** 若 $1\le R<t$，则 $rR<d$，并且该情形必有 $r<d$。任何候选的容量 $k\le R$ 满足 $rk<d$。由常值事件的 $\nu=1$、目标概率恒一及定理 230.2，每个候选的完整半 diamond 距离至少为一。任意两份 CPTP 通道的 diamond 距离至多为二，所以其完整半距离也至多为一。候选集非空，故 $D_R=1$，且每一个候选都达到该值。
+
+若 $R\ge t$，目标本身属于候选集，故 $D_R=0$。$\square$
+
+常值事件下还可直接看出低预算的分离机制：线性映射
+$$
+v\longmapsto(P_0C_1v,\ldots,P_0C_kv)
+\in(\mathbb C^r)^{\oplus k}
+$$
+的目标维数为 $rk<d$，故有非零核。该输入上，候选输出完全落在 $P_0$ 的正交补中，目标输出完全落在 $P_0$ 中，两者被事件 $P_0$ 完美区分。这是一般事件丛共同零点机制的常值特例。
+
+将输出扩大到 $m\ge d$ 对此实例有实际作用：若只取 $m=r<d$，任何 CPTP 通道都至少需要 $\lceil d/r\rceil$ 个 Kraus，因为每个 $C_j^\dagger C_j$ 秩至多为 $r$ 而其和必须为 $I_d$，低预算候选集将为空。（230.HR.31）明确排除了这种空集原因。
+
+式（230.HR.32）仅对 $R\ge1$ 定义。$R=0$ 时不存在 CPTP 候选，不能把空集下确界报成通道距离一。若 $r\ge d$，则 $t=1$；第一段预算区间为空，全部 $R\ge1$ 都有 $D_R=0$。
+
+### 230.6 投影扰动保留同一容量证书
+
+保持第一节的 $1\le r<d$、$\nu\ne0$ 及目标分支 $\Gamma$。设另有同一基空间、同一输出中的连续秩 $r$ 正交投影族 $Q$，并有
+$$
+\varepsilon=\sup_x\|P(x)-Q(x)\|_{\rm op}<1.
+\tag{230.HR.34}
+$$
+记 $L_P=\operatorname{im}P$、$L_Q=\operatorname{im}Q$。逐纤维映射
+$$
+A_x=Q(x)|_{L_{P,x}}:L_{P,x}\longrightarrow L_{Q,x}
+\tag{230.HR.35}
+$$
+是束同构。事实上，对 $\xi\in L_{P,x}$，
+$$
+\|Q(x)\xi\|
+\ge\|\xi\|-\|(Q(x)-P(x))\xi\|
+\ge(1-\varepsilon)\|\xi\|.
+\tag{230.HR.36}
+$$
+因此 $A_x$ 单射；两边维数同为 $r$，故满射。在任意局部帧中它是连续的可逆方阵，矩阵求逆连续，故各纤维逆连续拼合，得到全局束同构。于是
+$$
+c_r(H^*\otimes L_Q)
+=c_r(H^*\otimes L_P)=\nu h^r.
+\tag{230.HR.37}
+$$
+这里没有选择全局事件基，也没有假定 $P$ 与 $Q$ 交换。
+
+概率稳定性取决于同一目标分支。定义
+$$
+\mu=\sup_{\|v\|=1}\operatorname{Tr}\Gamma(P_v)
+=\|\Gamma^*(I_m)\|_{\rm op}\le1.
+\tag{230.HR.38}
+$$
+最后的不等式来自 $\Gamma$ 是一份 instrument 的分支。对正矩阵 $\Gamma(P_v)$，算子序界 $-\varepsilon I\preceq P([v])-Q([v])\preceq\varepsilon I$ 给
+$$
+\left|\operatorname{Tr}\bigl[(P([v])-Q([v]))\Gamma(P_v)\bigr]\right|
+\le\varepsilon\operatorname{Tr}\Gamma(P_v)
+\le\varepsilon\mu.
+\tag{230.HR.39}
+$$
+所以新事件具有统一下界
+$$
+\operatorname{Tr}\bigl[Q([v])\Gamma(P_v)\bigr]
+\ge\max\{0,\alpha-\varepsilon\mu\}.
+\tag{230.HR.40}
+$$
+对 $Q$ 应用定理 230.2，任何 $rk<d$ 的同名分支候选均满足
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)
+\ge\max\{0,\alpha-\varepsilon\mu\}.}
+\tag{230.HR.41}
+$$
+若只使用 $\mu\le1$，可取更简洁的下界 $\max\{0,\alpha-\varepsilon\}$。$\varepsilon<1$ 保留丛同构类型；$\varepsilon\mu<\alpha$ 则进一步保证扰动后的证书仍给严格正距离及（230.HR.19）的容量下界。这是两个不同条件。
+
+式（230.HR.41）说明用受扰事件族仍能证明的下界；若原来的 $P$ 及其概率下界（230.HR.7）仍然可用，原来的更强下界 $\alpha$ 当然仍成立。
+
+### 230.7 必要的边界与标准来源
+
+**$r\ge d$。** 此时 $h^r=0$，$H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)=0$，所以形式等式 $c_r(E)=\nu h^r$ 不确定唯一整数 $\nu$；即使写下非零 $\nu$，也不能推出非零陈类。不存在正整数 $k$ 使 $rk<d$。统一正事件概率只直接保证分支非零，即 Kraus 秩至少为 $1=\lceil d/r\rceil$。第四、五节的实际构造覆盖这个范围，但主拓扑定理没有给额外下界。
+
+**$\nu=0$。** 顶陈类证明不提供共同零点；这不判定一般竞争者是否能逼近。确有不能沿用正距离结论的实际例子：取输出 $\mathbb C^d\oplus\mathbb C^{r-1}$、等距 $Uv=(v,0)$，事件像为
+$$
+L_{[v]}=\mathbb C(v,0)\oplus(0,\mathbb C^{r-1}).
+\tag{230.HR.42}
+$$
+它是连续秩 $r$ 子丛，满足
+$$
+L\cong H\oplus\underline{\mathbb C}^{r-1},
+\qquad H^*\otimes L
+\cong\underline{\mathbb C}\oplus(H^*)^{\oplus(r-1)}.
+\tag{230.HR.43}
+$$
+因此 $c_r(H^*\otimes L)=0$。实际秩一通道 $X\mapsto UXU^\dagger$ 的事件概率恒一；目标与竞争者取同一通道时距离为零。当 $r<d$ 时，不能删除 $\nu\ne0$ 后仍要求（230.HR.19）。
+
+**$k=0$、$\alpha=0$ 与 $r=0$。** 零竞争分支的事件概率直接为零，无需拓扑。若 $\alpha=0$，距离下界退化为零，不能据此排除零目标分支。秩零事件恒为零，无法满足严格正的统一事件概率，本稿从定义中排除 $r=0$。
+
+**$rk\ge d$。** 此时 $h^{rk}=0$，本次顶陈类障碍不再给共同零点；这不等于证明对任意事件丛均可实现。第四节给出的常值事件实例已表明，不能普遍提高所有事件族共用的容量阈值。
+
+所用拓扑事实均为标准结果：Hatcher《Algebraic Topology》第3章定理3.19，第220页，给射影空间整数上同调环，[官方章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，给陈类的同构不变性、Whitney 公式、秩消失及线丛归一化，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)。本稿使用这些事实，显式完成 Kraus 截面、共同事件零点与完整通道距离之间的接口证明，不据此宣称文献原创性。
+
+仓内 `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.lean` 的 `universal_replacement_capacity_growth` 处理固定输出边缘下的精确 no-hiding 容量，不能直接替代这里的事件丛及低 Kraus 近似问题。`RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md` 定理12.4已经使用相距小于一的投影构造极分解对齐；本稿第六节只需其背后的投影限制同构，并明确给出连续束及同一分支事件概率的桥梁。已检索的 D5 与钉版 Mathlib 未定位到本稿完整事件丛容量接口；这不是证明其在第三方文献中不存在。
+
+## 追加锚（本行以下为增补区）
