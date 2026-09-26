@@ -38,7 +38,8 @@ conjecture that this is always an integer".
 -/
 
 /-- The eight knight moves; `move 0 = (1, 2)`. -/
-def move : Fin 8 → ℤ × ℤ := ![(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)]
+def move : Fin 8 → ℤ × ℤ :=
+  ![(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)]
 
 /-- The position after the first `j` steps of the step sequence `w`. -/
 def position {n : ℕ} (w : Fin n → Fin 8) (j : ℕ) : ℤ × ℤ :=
@@ -132,7 +133,8 @@ theorem result : claim := by
   unfold expectedRange
   have hs := split k
   have hq : (∑ w : Fin (k + 1) → Fin 8, ((visited w).card : ℚ)) =
-      8 * ∑ v : Fin k → Fin 8, ((visited (Fin.cons (0 : Fin 8) v : Fin (k + 1) → Fin 8)).card : ℚ) := by
+      8 * ∑ v : Fin k → Fin 8,
+        ((visited (Fin.cons (0 : Fin 8) v : Fin (k + 1) → Fin 8)).card : ℚ) := by
     exact_mod_cast hs
   rw [hq, show 3 * (k + 1) - 3 = 3 * k by omega]
   rw [Int.cast_sum]

@@ -15,7 +15,7 @@ internal sealed class KnightWalkRangeIntegralityDocument : IScribeDocumentDefini
         H("The normalized expected range of a knight's random walk is an integer"),
         Blocks(
             Node("move", "The eight knight moves", MoveFormula(),
-                "The eight moves of a knight on the square lattice, listed counterclockwise from (1, 2); the walk chooses one of them uniformly at each step.",
+                "The eight moves of a knight on the square lattice, listed clockwise from (1, 2); the walk chooses one of them uniformly at each step.",
                 "move", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("position", "The position after j steps", PositionFormula(),
                 "The sum of the first j moves of a step sequence w of length n, starting from the origin.",

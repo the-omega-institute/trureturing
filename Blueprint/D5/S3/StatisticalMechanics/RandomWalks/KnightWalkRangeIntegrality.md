@@ -14,7 +14,7 @@ $$\operatorname{move} = [(1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (
 
 *Commentary.*
 
-The eight moves of a knight on the square lattice, listed counterclockwise from (1, 2); the walk chooses one of them uniformly at each step.
+The eight moves of a knight on the square lattice, listed clockwise from (1, 2); the walk chooses one of them uniformly at each step.
 
 **Definition 1.2 (The position after j steps).**
 
