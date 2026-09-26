@@ -76472,3 +76472,360 @@ $$
 结果限定于已知源态、独立复本、无额外共享纠缠或催化剂、有限轮本地操作，以及明确的精确成功或无条件重叠目标。它不提供一般混合态蒸馏的通式，也不把源态产额、形成纠缠均值、原始记录量或物理时间视为同一指标。标准 Schmidt 秩重叠界与类型界只作工具；本节不据这些组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 250. 量子旗标的典范谱重建、完整态恢复与条件数
+
+§248的正常形给出已知饱和探针的 Bell 解码。本节进一步证明：在该受限态类中，量子旗标由两份完整边界响应矩阵唯一确定；连同参考边缘，这些数据还能恢复整个联合态。随后给出有响应谱隙时的定量旗标恢复界，以及固定维数下不能省去谱隙条件的反例。
+
+输入数据是完整矩阵及已知模型合同，所属饱和态类作为前提，不由一个标量响应自动判定。
+
+### 250.1　实际支撑与完整矩阵读数
+
+固定§248的已标定参数 $A\ge B>0$，令
+$$
+b_0^2=B,\qquad b_0\ne0,\qquad \ell^2=A+B.
+\tag{250.1}
+$$
+在已知输入基中，两条效应差方向为
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X,
+\tag{250.2}
+$$
+其中 $X,Y,Z$ 为标准 Pauli 矩阵。$X,Z$ 在此基中为实，$Y^{\mathsf T}=-Y$。允许 $b_0<0$，不重标原设置或结果。
+
+取满足§248响应饱和条件的有限维联合态 $\Omega$，其形成纠缠为 $0<\theta<1$。给定三份实际矩阵数据
+$$
+\rho_E=\operatorname{Tr}_H\Omega,
+\qquad
+R_a=\operatorname{Tr}_H[(A_a\otimes I)\Omega],
+\qquad
+R_b=\operatorname{Tr}_H[(A_b\otimes I)\Omega].
+\tag{250.3}
+$$
+这些矩阵可以作为相应参考响应块的层析数据，但不等于一次实验所得的单个数值。本节的取得合同要求所声明的矩阵读数确实可用。
+
+先把参考限制到已知实际支撑
+$$
+E=\operatorname{supp}\rho_E.
+\tag{250.4}
+$$
+下文 $I_E$ 均指该占用支撑上的恒等算子。原环境中的未占用方向可在最后补零，不能把它们误作产品旗标空间。
+
+由§248正常形，量子块与产品符号块上的读数为
+$$
+\begin{aligned}
+\rho_E\big|_{\mathrm{ent}}
+&=\frac\theta2V(I_2\otimes\sigma_M)V^\dagger,\\
+R_w\big|_{\mathrm{ent}}
+&=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_M)V^\dagger,
+\qquad w=a,b,\\
+\rho_E\big|_s&=q_s\tau_s,
+\qquad
+R_w\big|_s=q_s s_w\sqrt A\,\tau_s.
+\end{aligned}
+\tag{250.5}
+$$
+这里仅保留正权重块，并把 $M$、各产品参考空间限制到相应密度矩阵的支撑。因此 $\sigma_M,\tau_s$ 在各自空间内严格正，且所有响应系数非零。$R_a,R_b$ 在整个实际支撑 $E$ 上均可逆。
+
+### 250.2　谱符号与交换子唯一恢复量子旗标
+
+令
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\tag{250.6}
+$$
+其中符号函数在正谱上取一、负谱上取负一。若回到原环境，核上统一取零。它们是唯一的谱函数，不是在未占用方向任意延拓的范数见证。
+
+由（250.5），在量子块上
+$$
+H_w\big|_{\mathrm{ent}}
+=V\left(\frac{A_w^{\mathsf T}}\ell\otimes I_M\right)V^\dagger,
+\tag{250.7}
+$$
+在产品符号块上则为 $s_wI$。定义
+$$
+C=[H_a,H_b],\qquad
+\gamma=\frac{4\sqrt{AB}}{A+B}\in(0,2].
+\tag{250.8}
+$$
+因 $A_a,A_b$ 为实矩阵，量子块中的交换子为
+$$
+C\big|_{\mathrm{ent}}
+=-\frac{4i\sqrt A\,b_0}{A+B}
+V(Y\otimes I_M)V^\dagger
+=-i\,\operatorname{sgn}(b_0)\gamma
+V(Y\otimes I_M)V^\dagger.
+\tag{250.9}
+$$
+产品块上两符号算子交换，故 $C=0$。于是
+$$
+\boxed{
+Q_{\mathrm{ent}}=-\frac{C^2}{\gamma^2}
+}
+\tag{250.10}
+$$
+恰为量子旗标的正交投影，而且
+$$
+\operatorname{ran}C=\operatorname{ran}Q_{\mathrm{ent}}=E_{\mathrm{ent}},
+\qquad
+\theta=\operatorname{Tr}(Q_{\mathrm{ent}}\rho_E).
+\tag{250.11}
+$$
+未占用方向上的两个谱符号都为零，所以把（250.10）补回原环境仍给零，不改变该投影。
+
+因此量子旗标不依赖选择哪份最优形成纠缠系综；它是实际边界响应的典范谱结构。
+
+### 250.3　三份边界矩阵恢复全部联合态
+
+记 $Q=Q_{\mathrm{ent}}$、$P_{\mathrm{prod}}=I_E-Q$。量子块上由（250.6）构造§248的 $Z_E,X_E$ 及任意相应酉同构
+$$
+V:\mathbb C^2\otimes M\longrightarrow E_{\mathrm{ent}}.
+\tag{250.12}
+$$
+在产品块中 $H_a,H_b$ 是交换的 Hermitian 对合。对符号对 $s=(s_a,s_b)$，定义
+$$
+Q_s=\frac14P_{\mathrm{prod}}
+(I_E+s_aH_a)(I_E+s_bH_b).
+\tag{250.13}
+$$
+这些是两两正交的共同本征投影。若 $A>B$，只有同号对可能非零；若 $A=B$，允许全部四对。记允许集合为 $\Sigma$，则
+$$
+\sum_{s\in\Sigma}Q_s=P_{\mathrm{prod}},
+\qquad
+Q_s\rho_EQ_s=q_s\tau_s.
+\tag{250.14}
+$$
+在原环境中书写时，$P_{\mathrm{prod}}$ 必须取占用投影减去 $Q$；不能用整个环境恒等算子减去 $Q$，否则未占用方向上的零符号会产生错误分块。
+
+对应的唯一产品输入方向为
+$$
+r_s=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{250.15}
+$$
+令未归一化重数矩阵为
+$$
+\omega_M=\operatorname{Tr}_{\mathbb C^2}
+[V^\dagger Q\rho_EQV]=\theta\sigma_M.
+\tag{250.16}
+$$
+Bell 边缘的 $I_2/2$ 在偏迹中迹为一，所以此式包含完整的 $\theta$ 权重。
+
+**定理250.1（饱和态类中的完整重建）。** 原联合态恰为
+$$
+\boxed{
+\Omega=(I_H\otimes V)(P_{\Phi^+}\otimes\omega_M)(I_H\otimes V^\dagger)
++\sum_{s\in\Sigma}P_{r_s}\otimes Q_s\rho_EQ_s.
+}
+\tag{250.17}
+$$
+量子项与各产品项按对应参考支撑嵌入。因此，在固定通道的饱和态类上，映射 $\Omega\mapsto(\rho_E,R_a,R_b)$ 是单射。
+
+**证明。** 把§248正常形代入三份偏迹，得到（250.5）、（250.14）及（250.16）；将这些已恢复块重新嵌入，正好得到原正常形，证明（250.17）。
+
+不同合格解码坐标不会改变结果。若 $V_1,V_2$ 均把同一 $Z_E,X_E$ 化为 $Z\otimes I,X\otimes I$，则 $V_1^\dagger V_2$ 同时交织这两条 Pauli 作用，必为 $I_2\otimes U_M$。这可直接由 $Z$ 迫使块对角、$X$ 迫使两对角块相同看出。重数矩阵相应作 $U_M$ 酉共轭，嵌回（250.17）后相互抵消。各 $Q_s$ 本来就是典范谱投影，所以重建与重数基选择无关。$\square$
+
+还可直接显示被恢复的第三个 Pauli 关联。置
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0}.
+\tag{250.18}
+$$
+在量子块中 $Y^{\mathsf T}=-Y$，产品最优方向又都在 $u,v$ 平面内，所以正常形逐块给
+$$
+\boxed{
+R_Y=\operatorname{Tr}_H[(Y\otimes I_E)\Omega]
+=-\frac{i(A+B)}{4\sqrt A\,b_0}\,C\rho_E.
+}
+\tag{250.19}
+$$
+具体地，量子块的 $R_Y$ 为 $-\theta V(Y\otimes\sigma_M)V^\dagger/2$，而 $C\rho_E=-2i\theta\sqrt A\,b_0V(Y\otimes\sigma_M)V^\dagger/(A+B)$；产品块的两者均为零。量子块上 $C$ 与 $\rho_E$ 交换，故（250.19）右侧确为 Hermitian。这给不需选择重数坐标的等价恢复式
+$$
+\boxed{
+\Omega=\frac12\left(
+I_2\otimes\rho_E+X\otimes R_X+Y\otimes R_Y+Z\otimes R_Z
+\right).
+}
+\tag{250.20}
+$$
+式（250.19）保留 $b_0$ 的符号，不能在此擅自以 $\sqrt B$ 代替它。
+
+该充分性依赖饱和态类。对一般两比特态，取
+$$
+\Omega_\pm=\frac{I_4}{4}\pm tY\otimes Z,
+\qquad 0<t<\frac14.
+\tag{250.21}
+$$
+它们的本征值为 $1/4\pm t$，各重复两次，因而是不同的合法密度矩阵。两者都有 $\rho_E=I_2/2$，而 $R_a=R_b=0$，因为 $A_a,A_b$ 都与 $Y$ 在迹配对下正交。它们的三份读数相同，却不是同一联合态；其响应为零，也不属于本节的饱和类。
+
+### 250.4　响应谱隙下的定量旗标恢复
+
+以下对象仍是真正饱和态，变化只在矩阵读数取得有误差。实际支撑 $E$ 已知，$A,B,b_0$ 校准视为精确。假设
+$$
+\min\{s_{\min}(R_a),s_{\min}(R_b)\}\ge\mu>0,
+\tag{250.22}
+$$
+且 Hermitian 估计矩阵满足
+$$
+\|\widetilde R_w-R_w\|\le\eta<\mu,
+\qquad w=a,b.
+\tag{250.23}
+$$
+这里全部误差与谱隙都用算子范数及最小奇异值计量。扰动后的矩阵在 $E$ 上也可逆，其最小奇异值至少为 $\mu-\eta$。
+
+在证明内使用标准矩阵符号函数的预解式表示。对可逆 Hermitian 矩阵 $T$，逐谱积分得
+$$
+\operatorname{sign}T
+=\frac1\pi\int_0^\infty
+\left[(T-itI)^{-1}+(T+itI)^{-1}\right]\,dt.
+\tag{250.24}
+$$
+括号内的和可积；正负谱均允许。若 $T$ 的谱隙至少 $\mu$，$\widetilde T$ 与它相距至多 $\eta<\mu$，预解式恒等式给
+$$
+\begin{aligned}
+\|\operatorname{sign}\widetilde T-\operatorname{sign}T\|
+&\le\frac{2\eta}{\pi}\int_0^\infty
+\frac{dt}{\sqrt{(\mu^2+t^2)((\mu-\eta)^2+t^2)}}\\
+&\le\frac{2\eta}{\pi}\int_0^\infty
+\frac{dt}{(\mu-\eta)^2+t^2}
+=\frac\eta{\mu-\eta}.
+\end{aligned}
+\tag{250.25}
+$$
+差积分的范数绝对可积，所以在此使用积分三角不等式合法。
+
+置
+$$
+\widetilde H_w=\operatorname{sign}\widetilde R_w,
+\qquad
+d=\frac\eta{\mu-\eta},
+\qquad
+\widetilde C=[\widetilde H_a,\widetilde H_b].
+\tag{250.26}
+$$
+两个精确和估计符号算子的范数都至多一。交换子差拆成两个项，得到
+$$
+\|\widetilde C-C\|\le4d,
+\qquad
+\|C\|=\gamma,
+\qquad
+\|\widetilde C\|\le\gamma+4d.
+\tag{250.27}
+$$
+定义
+$$
+\widetilde Q=-\frac{\widetilde C^2}{\gamma^2}.
+\tag{250.28}
+$$
+$\widetilde C$ 为反 Hermitian，因此 $\widetilde Q\succeq0$，但它不必是投影。平方差恒等式给
+$$
+\boxed{
+\|\widetilde Q-Q\|
+\le\frac{8d}{\gamma}+\frac{16d^2}{\gamma^2}
+=:\epsilon_Q.
+}
+\tag{250.29}
+$$
+
+若 $\epsilon_Q<1/2$，谱扰动把 $\widetilde Q$ 的本征值限制在距零或一至多 $\epsilon_Q$ 的区域。故阈值投影
+$$
+\widetilde P=\mathbf1_{[1/2,\infty)}(\widetilde Q)
+\tag{250.30}
+$$
+具有与 $Q$ 相同的秩，且阈值处没有本征值。对 $2Q-I$ 和 $2\widetilde Q-I$ 再应用（250.25），其精确谱隙为一、扰动至多 $2\epsilon_Q<1$，得到
+$$
+\boxed{
+\|\widetilde P-Q\|
+\le\frac{\epsilon_Q}{1-2\epsilon_Q}.
+}
+\tag{250.31}
+$$
+若参考边缘 $\rho_E$ 本身精确，则恢复的旗标权重满足
+$$
+\boxed{
+|\operatorname{Tr}(\widetilde P\rho_E)-\theta|
+\le\frac{\epsilon_Q}{1-2\epsilon_Q}.
+}
+\tag{250.32}
+$$
+这里只量化旗标投影与其权重的恢复；没有据此给出 Bell 解码误差或完整联合态重建误差。支撑识别、参考边缘误差以及校准误差也没有被纳入（250.22）—（250.32）的合同。
+
+### 250.5　固定七维参考中的罕见扇区交换
+
+谱隙条件不能仅凭固定 $\theta$ 或固定非平行轴而省去。固定任意 $0<\theta<1$ 与当前 $A,B,b_0$，参考空间分为
+$$
+E=E_0\oplus L\oplus E_p\oplus L',
+\qquad
+\dim E_0=2,\quad\dim L=2,\quad\dim E_p=1,\quad\dim L'=2.
+\tag{250.33}
+$$
+总维数为七。在每个二维平面 $T=E_0,L,L'$ 上，按同一输入基选择标准 Bell 向量 $\Phi_T$；令 $e_p$ 为 $E_p$ 中的单位向量，并记 $P_+=|u,+\rangle\langle u,+|$。
+
+对
+$$
+0<h<\min\{\theta,1-\theta\},
+\tag{250.34}
+$$
+定义两份实际源态
+$$
+\begin{aligned}
+\Omega_h={}&(\theta-h)P_{\Phi_{E_0}}+hP_{\Phi_L}
+ +(1-\theta-h)P_+\otimes P_{e_p}
+ +hP_+\otimes\frac{I_{L'}}2,\\
+\Omega'_h={}&(\theta-h)P_{\Phi_{E_0}}+hP_{\Phi_{L'}}
+ +(1-\theta-h)P_+\otimes P_{e_p}
+ +hP_+\otimes\frac{I_L}2.
+\end{aligned}
+\tag{250.35}
+$$
+各项嵌入其标明的正交参考扇区，权重非负且总和为一。这两态都符合§248正常形，故都有
+$$
+E_F=\theta,\qquad g=U+\delta\theta.
+\tag{250.36}
+$$
+它们的参考边缘完全相同：在 $E_0$ 上为 $(\theta-h)I_{E_0}/2$，在 $E_p$ 上为 $(1-\theta-h)P_{e_p}$，在 $L,L'$ 上各为 $hI_2/2$。因此实际参考支撑始终是同一个七维空间。
+
+两份量子旗标却分别为
+$$
+Q_h=P_{E_0}+P_L,
+\qquad Q'_h=P_{E_0}+P_{L'},
+\qquad
+\boxed{\|Q_h-Q'_h\|=1.}
+\tag{250.37}
+$$
+对每个 $w=a,b$，两份响应之差只出现在 $L,L'$ 上，其矩阵分别为
+$$
+\frac h2(A_w^{\mathsf T}-\sqrt A I_2),
+\qquad
+-\frac h2(A_w^{\mathsf T}-\sqrt A I_2).
+\tag{250.38}
+$$
+由于 $A_w$ 的本征值是 $\pm\ell$，有精确读数差
+$$
+\boxed{
+\|R_w(\Omega_h)-R_w(\Omega'_h)\|
+=\frac h2(\ell+\sqrt A)\longrightarrow0,
+\qquad w=a,b.
+}
+\tag{250.39}
+$$
+罕见产品平面上的响应最小奇异值为 $h\sqrt A/2$，所以两态的共同最小响应谱隙至多为该值，随 $h$ 趋于零。
+
+因此，在固定维数七、固定 $\theta$ 和固定轴参数的饱和态类上，即使每对比较还具有完全相同的参考边缘，也不存在不包含谱隙等条件、仅随两份响应算子范数误差趋零而趋零的统一旗标算子范数误差界。这里定位的是罕见方向上的子空间恢复：两份联合态本身满足 $\|\Omega_h-\Omega'_h\|_1\le4h\to0$，并没有保持有限迹距离分离；两份量子旗标的权重也同为 $\theta$。
+
+### 250.6　表示充分性与取得条件的共同合同
+
+在固定饱和态类中，$\rho_E,R_a,R_b$ 是足以恢复完整联合态的边界读数；对一般态，（250.21）已经给出相同读数、不同联合态的实际反例。充分性来自该类已证明的相干与旗标约束，不能脱离所属类前提。
+
+精确重建与稳定取得是两个相关但不同的要求。式（250.10）给唯一旗标，式（250.17）或（250.20）给完整态；式（250.22）—（250.32）另外要求已知实际支撑和响应谱隙，才给误差控制。七维反例保留同一占用支撑与非平行轴，说明罕见扇区本身仍会使统一算子范数恢复失稳。
+
+本节没有把任意近饱和态纳入结论，也没有建立稳健 Bell 解码或无设备信任的自检验。标准谱符号、预解式与谱扰动工具在证明内直接复用；不据该组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
