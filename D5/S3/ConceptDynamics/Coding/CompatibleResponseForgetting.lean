@@ -1107,6 +1107,98 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
 #print axioms square_column_lift_count
 #print axioms square_row_lift_count
 
+private theorem square_first_column_invariance
+    (c : CompatibleCertificate A B R S m) {r v : Edge R}
+    (h : c.squareIncomingLift.response 1 r v) (s : Edge R) :
+    c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+        ((Fintype.equivFin (Edge R)) r) =
+      c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+        ((Fintype.equivFin (Edge R)) v) := by
+  classical
+  have hp : r.source = v.source := congrArg Prod.fst h
+  have hstep {x y : Edge R} (hxy : c.squareIncomingLift.response 1 x y)
+      (a : Edge A) (hx : a.target = x.source) (hy : a.target = y.source) :
+      (c.incomingLift a x hx).val = (c.incomingLift a y hy).val := by
+    have hzero := incoming_response_step c.squareIncomingLift 0 hxy a
+      hx.symm hy.symm
+    rw [(response_zero_and_step c.squareIncomingLift).1] at hzero
+    exact hzero
+  have hpred (a : Edge A) :
+      (∃ ha : a.target = r.source, (c.incomingLift a r ha).val = s) ↔
+      (∃ hb : a.target = v.source, (c.incomingLift a v hb).val = s) := by
+    constructor
+    · rintro ⟨ha, hs⟩
+      let hb : a.target = v.source := ha.trans hp
+      exact ⟨hb, (hstep h a ha hb).symm.trans hs⟩
+    · rintro ⟨hb, hs⟩
+      let ha : a.target = r.source := hb.trans hp.symm
+      exact ⟨ha,
+        (hstep ((c.squareIncomingLift.response 1).iseqv.symm h)
+          a hb ha).symm.trans hs⟩
+  let leftFiber := {a : Edge A //
+    ∃ ha : a.target = r.source, (c.incomingLift a r ha).val = s}
+  let rightFiber := {a : Edge A //
+    ∃ hb : a.target = v.source, (c.incomingLift a v hb).val = s}
+  let e : leftFiber ≃ rightFiber := {
+    toFun := fun x => ⟨x.val, (hpred x.val).mp x.property⟩
+    invFun := fun x => ⟨x.val, (hpred x.val).mpr x.property⟩
+    left_inv := by intro x; apply Subtype.ext; rfl
+    right_inv := by intro x; apply Subtype.ext; rfl }
+  calc
+    c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+        ((Fintype.equivFin (Edge R)) r) = Nat.card leftFiber :=
+          c.square_column_lift_count r s
+    _ = Nat.card rightFiber := Nat.card_congr e
+    _ = c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+          ((Fintype.equivFin (Edge R)) v) :=
+            (c.square_column_lift_count v s).symm
+
+private theorem square_first_row_invariance
+    (c : CompatibleCertificate A B R S m) {r v : Edge R}
+    (h : c.squareOutgoingLift.response 1 r v) (s : Edge R) :
+    c.squareMatrix ((Fintype.equivFin (Edge R)) r)
+        ((Fintype.equivFin (Edge R)) s) =
+      c.squareMatrix ((Fintype.equivFin (Edge R)) v)
+        ((Fintype.equivFin (Edge R)) s) := by
+  classical
+  have hp : r.target = v.target := congrArg Prod.fst h
+  have hstep {x y : Edge R} (hxy : c.squareOutgoingLift.response 1 x y)
+      (b : Edge B) (hx : x.target = b.source) (hy : y.target = b.source) :
+      (c.outgoingLift x b hx).val = (c.outgoingLift y b hy).val := by
+    have hzero := incoming_response_step c.squareOutgoingLift 0 hxy
+      (⟨b.target, b.source, b.number⟩ : Edge B.transpose) hx hy
+    rw [(response_zero_and_step c.squareOutgoingLift).1] at hzero
+    exact hzero
+  have hpred (b : Edge B) :
+      (∃ hr : r.target = b.source, (c.outgoingLift r b hr).val = s) ↔
+      (∃ hv : v.target = b.source, (c.outgoingLift v b hv).val = s) := by
+    constructor
+    · rintro ⟨hr, hs⟩
+      let hv : v.target = b.source := hp.symm.trans hr
+      exact ⟨hv, (hstep h b hr hv).symm.trans hs⟩
+    · rintro ⟨hv, hs⟩
+      let hr : r.target = b.source := hp.trans hv
+      exact ⟨hr,
+        (hstep ((c.squareOutgoingLift.response 1).iseqv.symm h)
+          b hv hr).symm.trans hs⟩
+  let leftFiber := {b : Edge B //
+    ∃ hr : r.target = b.source, (c.outgoingLift r b hr).val = s}
+  let rightFiber := {b : Edge B //
+    ∃ hv : v.target = b.source, (c.outgoingLift v b hv).val = s}
+  let e : leftFiber ≃ rightFiber := {
+    toFun := fun x => ⟨x.val, (hpred x.val).mp x.property⟩
+    invFun := fun x => ⟨x.val, (hpred x.val).mpr x.property⟩
+    left_inv := by intro x; apply Subtype.ext; rfl
+    right_inv := by intro x; apply Subtype.ext; rfl }
+  calc
+    c.squareMatrix ((Fintype.equivFin (Edge R)) r)
+        ((Fintype.equivFin (Edge R)) s) = Nat.card leftFiber :=
+          c.square_row_lift_count r s
+    _ = Nat.card rightFiber := Nat.card_congr e
+    _ = c.squareMatrix ((Fintype.equivFin (Edge R)) v)
+          ((Fintype.equivFin (Edge R)) s) :=
+            (c.square_row_lift_count v s).symm
+
 end CompatibleCertificate
 
 end D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
