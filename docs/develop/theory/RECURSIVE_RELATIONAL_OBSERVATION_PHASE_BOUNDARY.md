@@ -67931,3 +67931,316 @@ $$
 这两份具体通道的精确 $d_2$，以及一般三维输出下最近通道是否仍能由某种旋转删除或整标签删除取得，并未由证书间隙决定。更一般的候选相关输入与事件、同时使用两标签的效果以及辅助参考，仍须在同一实际通道上分别检验；这里没有推出任一种扩展必需或足够。
 
 ## 追加锚（本行以下为增补区）
+
+## 225. 连续输出事件的拓扑下界与三维记录通道的精确距离
+
+承接第 224 节，本文处理固定输入 $\mathbb C^2$、量子输出 $\mathbb C^3$、两个经典结果标签的记录通道。结论是：已知两端口标量证书有严格缺口的显式矩形例，其到全部同接口总 Choi 秩至多二记录通道的完整半 diamond 距离在 $0<\kappa<1/2$ 时仍恰为 $\kappa$；进一步，在全部合法参数 $0<\kappa\le2/3$ 上，它恰为 $\min(\kappa,1-\kappa)$。竞争者允许任意 Kraus 算子，不限于目标 Kraus 的线性张成，也不限于删除后右 Gram 修复。
+
+新增证明桥是一个沿全部纯输入共同定义的连续输出事件向量。它结合标准圆盘边界绕数不可延拓事实，强迫任意单 Kraus 竞争者在某个输入上漏掉该事件。本文为纸面数学，未新增或编译 Lean 证明。
+
+**定理 225.1（全局连续事件的通道距离下界）。**
+
+令 $\mathcal R,\mathcal S$ 为输入 $\mathbb C^2$、同一量子输出 $\mathbb C^m$ 及同一经典结果寄存器上的 CPTP 记录通道。固定一个结果标签 $q$。设 $\mathcal R$ 的该结果分支为完全正映射 $\Gamma$，而 $\mathcal S$ 的同名分支 Choi 秩至多一，即
+$$
+\mathcal S_q(X)=CXC^\dagger
+\tag{225.CT.1}
+$$
+对某个线性算子 $C:\mathbb C^2\to\mathbb C^m$ 成立；零分支取 $C=0$。
+
+假设存在连续映射
+$$
+r:\mathbb {CP}^1\longrightarrow
+\{u\in\mathbb C^m:\|u\|=1\}
+\tag{225.CT.2}
+$$
+以及 $\alpha\ge0$，使对每个单位输入 $v$，都有
+$$
+\langle r([v]),\Gamma(P_v)r([v])\rangle\ge\alpha,
+\qquad P_v=|v\rangle\langle v|.
+\tag{225.CT.3}
+$$
+这里要求全局连续的单位向量；只给连续的秩一投影不足以代替（225.CT.2）。
+
+**结论。** 任意满足（225.CT.1）的竞争者都满足
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{225.CT.4}
+$$
+该下界由一个无参考纯输入和同名结果块中的秩一输出事件见证。
+
+证明。只需证明存在单位 $v$ 使
+$$
+\langle r([v]),Cv\rangle=0.
+\tag{225.CT.5}
+$$
+取输入正交基 $f_0,f_1$。在闭单位圆盘 $\overline{\mathbb D}$ 上，定义
+$$
+v(z)=\sqrt{1-|z|^2}\,f_0+zf_1,
+\qquad
+F(z)=\langle r([v(z)]),Cv(z)\rangle.
+\tag{225.CT.6}
+$$
+两者均连续。圆盘边界 $|z|=1$ 上有 $[v(z)]=[f_1]$，所以
+$$
+F(z)=zh,
+\qquad
+h=\langle r([f_1]),Cf_1\rangle.
+\tag{225.CT.7}
+$$
+若 $h=0$，边界上已经存在零点。若 $h\ne0$ 且 $F$ 在整个闭圆盘上无零，则
+$$
+R(z)=\frac{|h|}{h}\frac{F(z)}{|F(z)|}
+$$
+是从闭圆盘到单位圆周的连续映射，并且在 $|z|=1$ 上满足 $R(z)=z$。它因此是一份从闭圆盘到边界圆周的缩回，与标准无缩回结论矛盾。这一标准工具直接采用 Hatcher《Algebraic Topology》第1章 §1.1、第32页、定理1.9证明中使用的“$D^2$ 不存在到 $S^1$ 的缩回”；该处由 $\pi_1(S^1)\ne0$ 证明，不作为本文的新定理。[官方章节 PDF，第12页](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=12)。因此 $F$ 必有零点，证明（225.CT.5）。
+
+对该输入 $P_v$，取完整输出上的效果
+$$
+E=|q\rangle\langle q|\otimes P_{r([v])}.
+\tag{225.CT.8}
+$$
+由（225.CT.3）、（225.CT.5），目标在此事件上的概率至少为 $\alpha$，竞争者的概率为零。由于两份完整输出都是迹为一的状态，它们之差迹为零，故该概率差不超过输出差的迹范数的一半，也不超过完整半 diamond 距离。这证明（225.CT.4）。其他结果分支始终包含在两份通道内，没有把分支迹范数误当作完整通道距离。证毕。
+
+相位条件在本证明中承担实质义务。例如对单 Kraus 等距通道 $X\mapsto UXU^\dagger$，取 $Uv$ 作为输出向量会随输入相位改变，不能下降为（225.CT.2）的映射。不能仅因输出投影 $P_{Uv}$ 连续，便使用本结论。
+
+**引理 225.2（显式矩形例的全局单位主输出向量）。**
+
+固定输入基 $f_0,f_1$ 和输出基 $e_0,e_1,e_2$，令
+$$
+M=e_0f_0^\dagger,
+\qquad
+N=\frac{e_1f_0^\dagger+e_0f_1^\dagger+e_2f_1^\dagger}{\sqrt2},
+$$
+$$
+\Gamma(X)=MXM^\dagger+NXN^\dagger.
+\tag{225.CT.9}
+$$
+对单位输入 $v=xf_0+yf_1$，置
+$$
+\boxed{
+ r([v])=
+ \frac{e_0+x\overline y\,e_1+|y|^2e_2}{\sqrt{1+|y|^2}}.
+}
+\tag{225.CT.10}
+$$
+它在单位球面上连续，并且在 $(x,y)\mapsto(e^{i\theta}x,e^{i\theta}y)$ 下不变。因此确实下降为 $\mathbb {CP}^1$ 上的连续向量映射。
+
+令 $p=|x|^2$、$q=|y|^2$，有 $p+q=1$。首先
+$$
+\|r([v])\|^2
+=\frac{1+pq+q^2}{1+q}=1.
+\tag{225.CT.11}
+$$
+其次，记
+$$
+a=Mv=xe_0,
+\qquad
+b=Nv=\frac{ye_0+xe_1+ye_2}{\sqrt2}.
+$$
+直接计算得到
+$$
+a^\dagger r([v])=\frac{\overline x}{\sqrt{1+q}},
+\qquad
+b^\dagger r([v])=\frac{\sqrt2\,\overline y}{\sqrt{1+q}}.
+\tag{225.CT.12}
+$$
+故
+$$
+\Gamma(P_v)r([v])
+=a\,a^\dagger r([v])+b\,b^\dagger r([v])
+=\frac{(p+q)e_0+x\overline y\,e_1+qe_2}{\sqrt{1+q}}
+=r([v]).
+\tag{225.CT.13}
+$$
+于是对所有单位输入，
+$$
+\boxed{
+\langle r([v]),\Gamma(P_v)r([v])\rangle=1.
+}
+\tag{225.CT.14}
+$$
+该例每个纯输入输出的其余本征值为 $|x|^2/2,0$，所以（225.CT.10）也是处处简单的主输出本征向量；距离证明只需要（225.CT.11）至（225.CT.14），不需要先证明完整谱公式。
+
+**定理 225.3（原参数区间内的精确最近通道）。**
+
+取 $0<\kappa<1/2$，令
+$$
+K_0=
+\begin{pmatrix}
+\sqrt{1-3\kappa/2}&0\\
+0&\sqrt{1-\kappa}\\
+0&0
+\end{pmatrix},
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa\Gamma(X).
+\tag{225.CT.15}
+$$
+因为
+$$
+M^\dagger M+N^\dagger N=\operatorname{diag}(3/2,1),
+$$
+所以 $\mathcal R$ 为 CPTP，结果 Choi 秩恰为 $(1,2)$。
+
+令 $d_2$ 为它到全部同接口、保持两个经典标签、总 Choi 秩至多二的 CPTP 记录通道的完整半 diamond 距离下确界：
+$$
+d_2=
+\inf_{\substack{\mathcal S\ \mathrm{CPTP\ record}\\
+\operatorname{rank}J_{\mathcal S}\le2}}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{225.CT.16}
+$$
+此处“记录通道”指输出在指定经典标签上块对角，因此
+$$
+\operatorname{rank}J_{\mathcal S}
+=\operatorname{rank}J_{\mathcal S_0}
++\operatorname{rank}J_{\mathcal S_1}.
+\tag{225.CT.17}
+$$
+候选的结果0分支可以改变；只要求完整通道 CP、TP、同接口以及标签预算，没有把结果0分支从距离中删除。
+
+**精确结论。**
+$$
+\boxed{d_2=\kappa.}
+\tag{225.CT.18}
+$$
+证明下界。若竞争者的结果1分支秩至多一，则（225.CT.10）、（225.CT.14）应用于缩放分支 $\kappa\Gamma$，由（225.CT.4）得到距离至少为 $\kappa$。这一步覆盖任意 $3\times2$ Kraus $C_1$，不要求 $C_1\in\operatorname{span}\{M,N\}$，也不限制它和结果0分支之间如何共同满足 TP。
+
+若竞争者的结果1分支秩为二，则（225.CT.17）迫使它的结果0分支为零。在输入 $P_{f_1}$ 下，目标的结果0概率为
+$$
+\langle f_1,K_0^\dagger K_0f_1\rangle=1-\kappa>\kappa,
+$$
+竞争者为零，故完整半 diamond 距离至少为 $1-\kappa>\kappa$。两类穷尽总 Choi 秩至多二的候选，得到 $d_2\ge\kappa$。
+
+证明上界。删除结果1的 $\sqrt\kappa M$，保留 $K_0,\sqrt\kappa N$，取
+$$
+H=(I_2-\kappa M^\dagger M)^{-1/2}
+=\operatorname{diag}((1-\kappa)^{-1/2},1).
+$$
+定义
+$$
+\mathcal S(X)=
+|0\rangle\langle0|\otimes K_0HXHK_0^\dagger
++
+|1\rangle\langle1|\otimes\kappa NHXHN^\dagger.
+\tag{225.CT.19}
+$$
+每个结果分支恰有一个非零 Kraus，而
+$$
+H(K_0^\dagger K_0+\kappa N^\dagger N)H
+=H(I_2-\kappa M^\dagger M)H=I_2,
+$$
+所以这是合法结果秩 $(1,1)$ 的 CPTP 记录通道。
+
+使用第 219 节已证明的全缺失范数右 Gram 修复定理：若从 CPTP 通道删除完全正项 $L$，且 $\delta=\|L^*(I)\|_\infty<1$，则对保留项共同右乘 $(I-L^*(I))^{-1/2}$ 得到的 CPTP 修复通道满足完整半 diamond 误差不超过 $\delta$。这里
+$$
+L(X)=|1\rangle\langle1|\otimes\kappa MXM^\dagger,
+\qquad
+\delta=\kappa,
+$$
+故（225.CT.19）的完整半 diamond 误差至多为 $\kappa$。结合下界即得（225.CT.18），且下确界由显式候选取得。定理 224.5 的全部旋转规范修复结论进一步表明，每个旋转删除加共同右修复候选都同样达到这一全局最优值。证毕。
+
+**推论 225.4（固定端口证书的严格不足）。**
+
+在定理 225.3的原参数区间 $0<\kappa<1/2$，同一目标分支已有精确读数
+$$
+\gamma_{\mathrm{out}}
+=\kappa\frac{2+\sqrt2}{4},
+\qquad
+\gamma_{\mathrm{in,tail}}=\frac\kappa2,
+\qquad
+\delta_{\mathrm{rot}}=\kappa.
+\tag{225.CT.20}
+$$
+因此
+$$
+\boxed{
+\max(\gamma_{\mathrm{out}},\gamma_{\mathrm{in,tail}})
+<d_2=\delta_{\mathrm{rot}}=\kappa.
+}
+\tag{225.CT.21}
+$$
+两个标量端口优化不足以给出上述精确下界；（225.CT.10）这族输出事件的全局连续关系提供了额外证明桥。新下界允许见证输入依赖候选；固定的连续事件族本身只由目标给定。对每个候选，圆盘绕数迫使至少一个事件被它漏掉，继而由同一目标事件族的统一概率下界给出距离。
+
+该结论计算了这一显式 $2\to3$ 例的真实距离，没有证明所有矩形两 Kraus 记录通道都满足 $d_2=\min(\delta_{\mathrm{rot}},q_0)$，也没有证明每个目标都有满足（225.CT.2）的连续单位输出向量。所用绕数事实属于标准拓扑；本稿只主张上述具体组合推导，不据此主张文献原创性。
+
+**定理 225.5（完整合法参数区间与最优结果秩）。**
+
+现在明确扩大（225.CT.15）的参数范围为
+$$
+0<\kappa\le\frac23.
+\tag{225.CT.22}
+$$
+此时 $K_0^\dagger K_0=\operatorname{diag}(1-3\kappa/2,1-\kappa)$ 仍为正半定，而且 $1-\kappa\ge1/3>0$，故 $K_0\ne0$。端点 $\kappa=2/3$ 时 $K_0$ 作为矩阵秩为一，但其单 Kraus 通道的 Choi 秩仍为一。$M,N$ 在全区间始终线性独立，目标的结果 Choi 秩仍恰为 $(1,2)$。
+
+**扩展结论。** 在（225.CT.22）上，
+$$
+\boxed{
+ d_2=\min(\kappa,1-\kappa).
+}
+\tag{225.CT.23}
+$$
+当 $0<\kappa<1/2$ 时，任何最近候选的结果 Choi 秩都必须是 $(1,1)$；当 $1/2<\kappa\le2/3$ 时，任何最近候选都必须是 $(0,2)$。在 $\kappa=1/2$，这两种结果秩均有显式候选取得最小值 $1/2$。
+
+证明。定理 225.3的两类下界不再比较大小，直接得到
+$$
+d_2\ge\min(\kappa,1-\kappa).
+$$
+单 Kraus 删除候选（225.CT.19）在整个新范围仍合法，因为 $\kappa<1$，且误差恰为 $\kappa$：其上界来自共同右修复，其下界来自结果1秩至多一的拓扑结论。
+
+另一个候选删除整个结果0。保留分支 $\kappa\Gamma$ 的输入 Gram 为
+$$
+G_1=\kappa\operatorname{diag}(3/2,1)\succ0.
+$$
+取
+$$
+H_0=G_1^{-1/2}
+=\operatorname{diag}(\sqrt{2/(3\kappa)},\kappa^{-1/2}),
+$$
+并定义
+$$
+\mathcal S^{(0,2)}(X)=
+|1\rangle\langle1|\otimes
+\kappa\bigl(MH_0XH_0M^\dagger+NH_0XH_0N^\dagger\bigr).
+\tag{225.CT.24}
+$$
+$H_0G_1H_0=I_2$ 保证 TP，且共同右乘可逆 $H_0$ 保持两个 Kraus 的线性独立性，故其结果 Choi 秩恰为 $(0,2)$。此删除的缺失效应范数为
+$$
+q_0=\|K_0^\dagger K_0\|_\infty=1-\kappa<1.
+$$
+全缺失范数右 Gram 修复定理给（225.CT.24）的完整半 diamond 误差至多为 $1-\kappa$；输入 $f_1$ 上的结果0概率差又给下界 $1-\kappa$。所以其误差恰等于 $1-\kappa$。两个显式候选共同给出（225.CT.23）的上界，因而最小值确实取得。
+
+最后证明最优候选的秩限制。当 $\kappa<1/2$，缺失结果0会有误差至少 $1-\kappa>\kappa$。缺失结果1时，输入 $f_0$ 上目标的结果1概率为
+$$
+\kappa\langle f_0,(M^\dagger M+N^\dagger N)f_0\rangle
+=\frac{3\kappa}{2}>\kappa,
+$$
+而候选为零，也不可能最近。因此最近候选两个标签都非零，总秩至多二强制结果秩恰为 $(1,1)$。
+
+当 $\kappa>1/2$，任何结果1秩至多一候选的误差至少 $\kappa>1-\kappa$，不能最近。结果1因此秩为二，预算随即强制结果0为零，得到 $(0,2)$。$\kappa=1/2$ 时，（225.CT.19）和（225.CT.24）的误差都为 $1/2$，证明两类显式最优候选的存在。证毕。
+
+原区间内（225.CT.21）的严格证书缺口结论保持原范围；扩展区间的全体候选距离按（225.CT.23）结算，不能把结果1秩受限下界直接用于结果秩 $(0,2)$ 的候选。
+
+**推论 225.6（标量夹界恢复尖锐性的参数阈值）。** 令 $g=(2+\sqrt2)/4$。在定理 225.5 的全合法区间，第 224 节的旧标量下界为
+$$
+L_{\mathrm{port}}(\kappa)=\min(g\kappa,1-\kappa).
+$$
+因此
+$$
+L_{\mathrm{port}}(\kappa)=d_2
+\quad\Longleftrightarrow\quad
+\kappa\ge\frac1{1+g}=\frac4{6+\sqrt2}.
+\tag{225.CT.25}
+$$
+
+**证明。** 当 $0<\kappa\le1/2$ 时，$g\kappa<\kappa=d_2$。当 $\kappa>1/2$ 时，$d_2=1-\kappa$，所以旧下界等于它当且仅当 $g\kappa\ge1-\kappa$，解得所述阈值。证毕。
+
+拓扑下界始终约束结果1秩至多一的候选。全体预算候选还包括结果秩 $(0,2)$ 的分支，因此固定端口夹界在上述后段区间已经尖锐，不能把原参数区间的严格不足推广到全部合法参数。本节没有确定定理 224.3 中有理数例的全局最近距离。
+
+这一结果把边界容量不足解释得更具体：目标在每个输入上都提供一个概率不低于 $\kappa$ 的输出方向，而这些方向能以相位不变的方式连续拼成同一事件族。任意单 Kraus 竞争者都无法在全部输入上避开与该族正交的位置。这里起作用的是跨输入的共同关系及标准拓扑约束，最终代价仍须结合完整记录接口的结果秩预算计算。
+
+## 追加锚（本行以下为增补区）
