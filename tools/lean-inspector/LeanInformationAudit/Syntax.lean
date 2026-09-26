@@ -753,3 +753,45 @@ private def elabSourceRegistration : CommandElab := fun stx => registrationTrans
       registrationModuleName := root, localRegistrationNames := false }
 
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command
+
+@[command_elab registerInformationFiniteSourceTheoremCmd]
+private def elabFiniteSourceRegistration : CommandElab := fun stx => registrationTransaction do
+  let `(command| register_information_theorem $theoremId:ident in $arenaId:ident
+      readout via ($descriptorSyntax:term) realizes $recordId:ident
+      finite via $bridgeId:ident variation $variationId:ident sensitivity $sensitivityId:ident
+      escape from source ($selectionSyntax:term) escape continues ($continuation:informationEscapeContinuation)) := stx
+    | throwUnsupportedSyntax
+  unless continuation.raw.getKind == ``escapeOpenContinuation do
+    throwError "unclassified_form:source.residual_requires_open"
+  let theoremName ← resolveTheorem theoremId
+  let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
+  let recordName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo recordId
+  let bridgeName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo bridgeId
+  let selection ← liftTermElabM do
+    let value ← Term.elabTermEnsuringType selectionSyntax (mkConst ``SourceSelection)
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    if value.hasMVar then throwError "unclassified_form:source.selection_open"
+    unsafe evalExpr SourceSelection (mkConst ``SourceSelection) value
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor descriptorSyntax
+  let bridgeType := (← getConstInfo bridgeName).type
+  unless bridgeType.isAppOfArity
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 do
+    throwError "unclassified_form:source.finite_bridge"
+  let actualSyntax ← liftTermElabM <| PrettyPrinter.delab bridgeType.getAppArgs[2]!
+  let bridgeSyntax ← `(informationRealization| $bridgeId:ident)
+  TemplateBinding.withDeclaration {
+    theoremName, arena := arenaName, descriptor, diagnostic
+    sourceRecord := some recordName
+    escapeInput := {
+      sourceSelection := some selection
+      finiteBridge := some bridgeName
+      openContinuation := true } } do
+    elabCommand (← `(command| register_information_theorem $theoremId in $arenaId
+      primitives ($actualSyntax).toPrimitiveBundle realization $bridgeSyntax
+      variation $variationId sensitivity $sensitivityId))
+
+end LeanInformationAudit
