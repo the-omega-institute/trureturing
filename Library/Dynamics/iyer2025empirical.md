@@ -4217,3 +4217,71 @@ Serov–Zubkov 的 [arXiv:1207.3838v2](https://arxiv.org/abs/1207.3838v2)
 结论仍是给定原始数据后的先验信道积分，在实际确定支持数据律下作一致概率判断，
 分别覆盖 pair/path。它不提供无界原始数据平均、任意输出一致近似、
 零噪声定理或其他后验泛函的自动推广；纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 103 章：固定阶逐输出 Rényi 熵与稀有能量倾斜
+
+[谱边界卷第 103 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+研究完整计数后验在原 noisy scalar 后的逐输出 Rényi 熵。
+对每个固定 $\alpha>0,\alpha\ne1$，在
+$L_M\to\infty$、$\limsup L_M/Q^3<c_q/2$ 下，
+$\delta[H_\alpha(\mathsf P_x^y)-H_\alpha(\mathsf P_x)+L_M]$
+在固定输出紧区间上一致趋于 $J_\alpha/(\alpha-1)$。
+这是两种原实际实验各自的、对确定支持一致的数据概率结论。
+它不是平均条件熵或标签微观态熵，也不含变化阶数或噪声端点。
+
+Alfréd Rényi，*On Measures of Entropy and Information*，
+Fourth Berkeley Symposium, vol. 1, pp. 547–561 (1961)，
+[原始 PDF](https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf)。
+原定义 (1.21) 对 $\alpha>0,\alpha\ne1$ 给有限分布的阶数熵，
+(1.22) 给趋近 Shannon 熵的极限；正文把底二对数换成自然对数。
+这一有限定义与 Gaussian 核的幂恒等式只给精确 escort 公式，
+不提供本章的稀有输出局部密度。
+
+Tim van Erven、Peter Harremoës，*Rényi Divergence and Kullback–Leibler Divergence*，
+[arXiv:1206.2459v1](https://arxiv.org/abs/1206.2459v1)，2012 年 6 月 12 日版本。
+原式 (26) 定义正有限归一化下的 $q^{1-\alpha}p^\alpha$ 倾斜律，
+Theorem 27 给变分恒等式与极小者；$\alpha>1$ 时极小者结论另要求其所述可积性。
+本章有限正概率计数盒上取均匀 $q$，满足这些 escort 识别条件。
+计数二项系数本身亦取幂，不是先倾斜独立 Bernoulli 标签再聚合。
+所取原文为明确的 v1；请求 v4 返回 404，没有据此宣称已读后续版本。
+
+Joseph B. Kadane，*Sums of Possibly Associated Bernoulli Variables:
+The Conway–Maxwell–Binomial Distribution*，
+[arXiv:1404.1856v1](https://arxiv.org/abs/1404.1856v1)。
+原 Section 2 式 (1) 与 Section 3 指数族形式识别单组计数 escort：
+其 $m=C_j,\nu=\alpha$，成功参数换为
+$\operatorname{logistic}(\alpha\operatorname{logit}p_j)$。
+该分布识别本身不提供随规模变化的整个乘积在指数小噪声下的相对误差；
+正文另由带余项 Stirling、原子包络及整个低计数能量范围证明所需估计。
+
+Ronald W. Butler、Marc S. Paolella，*Uniform saddlepoint approximations for ratios
+of quadratic forms*，Bernoulli 14(1), 140–154 (2008)，
+[arXiv:0803.2132v1](https://arxiv.org/abs/0803.2132v1)。
+原 Section 1 在支持端点渐近中固定维数，类 $C_R$ 要求相应最大特征值趋零。
+Lemma 5 的式 (8) 给精确非中心平方矩母函数、式 (9) 给收敛带；
+式 (10)、(13) 描述鞍点与密度近似。
+这些是本文 Gaussian 变换与方法的经典背景，但其固定维数比值定理
+不是本章增长三角数组、离散计数 escort 或固定总数修正的定理。
+正文对自身数组直接证明最大权重控制、共同正倾斜域及可积 Fourier 尾界。
+原 PDF 可读，TeX 来源请求返回 403，未将后者记为成功访问。
+
+Arratia–Goldstein–Langholz 的
+[arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+Condition 2.1、Theorem 2.1 要求独立 Bernoulli 总方差至少为变量数的固定比例，
+并取有界中心偏移。本模型补集有 $M$ 阶个变量、方差为 $q=o(M)$ 阶，
+不能直接代入该定理。正文复用第 70 章已核对的方差参数补集倾斜证明，
+再单独证明窄 Gaussian 权重下的能量条件均值界。
+
+Daniels 的 *Saddlepoint Approximations in Statistics*，
+[DOI:10.1214/aoms/1177728652](https://doi.org/10.1214/aoms/1177728652)，
+以及 Chaganty–Sethuraman 的 *Strong Large Deviation and Local Limit Theorems*，
+[DOI:10.1214/aop/1176989136](https://doi.org/10.1214/aop/1176989136)，
+本次仅取得元数据，原 PDF 路径返回挑战 HTML；没有导入未核对的定理。
+初次用于寻找 Daniels 的另一 DOI 对应不同题名，已由元数据排除，不作引用依据。
+
+本章与第 70 章的全局计数 Rényi 熵、第 71 章输出平均的信息谱结论区别明确。
+新增模型连接包括：在同一稀有输出加权下支付选中律修正，
+以实际一、二行矩控制最大权重，保留精确中心的非中心倾斜，
+以及在原噪声精度上把相对局部密度返回完整计数后验。
+成熟 escort、鞍点和 Fourier 工具不称为原创；有限来源检索不构成全局新颖性认证。
+正文仅为纯理论与归属说明，未进入消化或 Lean 冻结链。
