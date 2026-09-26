@@ -1,0 +1,85 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier.Asymptotics;
+
+internal sealed class FiniteRankProjectionErrorDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite-dimensional compression gives a square-summable error with a dimension bound.",
+        H("Finite-Rank Projection Error"),
+        Blocks(Describe.Lean(
+            DescribeId.Create("finite-rank-projection-error"),
+            DeclarationHandle.Create("D5/S3/Fourier/Asymptotics/FiniteRankProjectionError.result"),
+            H("A dimension bound in every Hilbert basis"),
+            StatementSource.FromAuthor(TheoremFormula()),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(
+                    "Let k be the real or complex scalar field, E a complete inner product "
+                    + "space over k, I any index type, and b a Hilbert basis of E indexed by I. "
+                    + "Let T be any bounded k-linear endomorphism and K a finite-dimensional "
+                    + "subspace of E. Write m for the dimension of K, P for the orthogonal "
+                    + "projection onto K viewed as an endomorphism, Q=Id-P, and D=T-QTQ. "
+                    + "The squared norms of D on the basis are summable, and their sum has "
+                    + "square root at most 2 sqrt(m) times the operator norm of T.")),
+                Paragraph(Text(
+                    "Choose an orthonormal basis e of K with m elements. For any bounded "
+                    + "endomorphism A, finite-dimensional Parseval expresses the square "
+                    + "norm of PA(b(i)) as the sum over j of the squared absolute values "
+                    + "of the inner products of b(i) with the adjoint image A*(e(j)). "
+                    + "Bessel's inequality makes each coefficient family summable and "
+                    + "bounds its sum by the square norm of A*(e(j)). Interchanging the "
+                    + "finite sum with the convergent sum over I therefore bounds the "
+                    + "total by m times the square of the operator norm of A.")),
+                Paragraph(Text(
+                    "Apply this estimate to A=T and A=Id. The latter gives a bound of m "
+                    + "for the sum of the squared norms of P(b(i)); the norm of Id is at "
+                    + "most one even on the zero space. The identity D=PT+QTP and the "
+                    + "contractivity of Q bound each squared error by twice the sum of "
+                    + "the corresponding squared PT term and the squared P term multiplied "
+                    + "by the square of the norm of T. This summable majorant has total "
+                    + "at most 4m times the square of the norm of T. Taking square roots "
+                    + "gives the assertion.")),
+                Paragraph(Text(
+                    "No self-adjointness or Hilbert-Schmidt assumption on T is needed. "
+                    + "The index type can be infinite or empty, and m can be zero. "
+                    + "When K is zero the error is zero; the proof uses no division by m "
+                    + "and no nonzero-dimension hypothesis."))),
+            DescribeRole.Theorem))));
+
+    private static Formula Square(Formula x) => new Formula.Power(x, F.D(2));
+    private static Formula Root(Formula x) => F.Seq(F.Sqrt, F.Grp(x));
+    private static Formula Lambda(Formula variable, Formula domain, Formula body) =>
+        F.Seq(F.Open, variable, F.Colon, domain, F.Sp, F.Mapsto, F.Sp, body, F.Close);
+
+    private static Formula TheoremFormula()
+    {
+        Formula k = F.Id("k"), e = F.Id("E"), index = F.Id("I"), b = F.Id("b"),
+            t = F.Id("T"), space = F.Id("K"), i = F.Id("i"), m = F.Id("m"),
+            p = F.Id("P"), q = F.Id("Q"), d = F.Id("D");
+        Formula term = Square(new Formula.Norm(Call("D", Call("b", i))));
+        Formula total = F.Seq(F.Sum, F.Underscore, F.Grp(i, F.InMacro, F.Sp, index), term);
+        Formula bound = new Formula.Relation(Root(total), FormulaRelationOperator.LessThanOrEqual,
+            Multiply(Multiply(F.D(2), Root(m)), new Formula.Norm(t)));
+        Formula conclusion = new Formula.Logic(Call("Summable", Lambda(i, index, term)),
+            FormulaLogicOperator.And, bound);
+        Formula definitions = F.Seq(
+            Equal(m, Call("dim", k, space)), F.Comma, F.Sp,
+            Equal(p, Call("proj", space)), F.Comma, F.Sp,
+            Equal(q, Subtract(F.Id("Id"), p)), F.Comma, F.Sp,
+            Equal(d, Subtract(t, F.Seq(q, F.Circ, F.Sp, t, F.Circ, F.Sp, q))));
+        Formula scalars = new Formula.SetLiteral([
+            F.Seq(F.Mathbb, F.Grp(F.Id("R"))), F.Seq(F.Mathbb, F.Grp(F.Id("C")))]);
+        return F.Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
+            [new Formula.BoundVariable(FormulaIdentifier.Create("k"), scalars),
+             new Formula.BoundVariable(FormulaIdentifier.Create("E"), Call("Hilbert", k)),
+             new Formula.BoundVariable(FormulaIdentifier.Create("I"), F.Id("Type")),
+             new Formula.BoundVariable(FormulaIdentifier.Create("b"), Call("HilbertBasis", index, k, e)),
+             new Formula.BoundVariable(FormulaIdentifier.Create("T"), Call("BoundedLinear", k, e, e)),
+             new Formula.BoundVariable(FormulaIdentifier.Create("K"), Call("FiniteSubspace", k, e))],
+            new Formula.Aligned([
+                F.Seq(F.Text, F.Grp(F.Id("let")), F.Sp, definitions, F.Semi),
+                conclusion])));
+    }
+}
