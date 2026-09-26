@@ -3415,6 +3415,2525 @@ $$
 [4]: https://arxiv.org/abs/1205.0710?utm_source=chatgpt.com "Heavy fields, reduced speeds of sound and decoupling during inflation"
 [5]: https://arxiv.org/abs/hep-th/9807099?utm_source=chatgpt.com "Towards a Relativistic KMS Condition"
 [6]: https://arxiv.org/abs/1403.7377?utm_source=chatgpt.com "The Confrontation between General Relativity and Experiment"
+
+---
+
+<a id="string-observer-integration"></a>
+
+# 弦论微观实现、规范相容约化与观察者有效几何
+
+## 第21至30节接口增订 ST：共同传播结构的微观来源与可恢复范围
+
+**日期：2026-09-17。** 本增订接续本卷第21至30节，保留原有章节与编号。定位是将弦论及全息研究的既有结果接入本项目的观察、记忆、响应和几何接口。弦论可以提供具体微观实现；项目的接口理论负责刻画某类实验能恢复哪些结构、约化需要保留什么，以及何处出现可证明的失配。
+
+**证明状态。** ST2、ST3.1至ST3.3、ST5.1至ST5.3、ST6.1至ST6.3给出普通数学证明；ST4.2是引用恢复定理后的有限维推论；ST7重述并勘界有限标量谱结果。本段综合结论尚未由 Lean 声明整体覆盖，有限核对不替代证明。本文不主张全球新颖性，不把抽象矩阵实例声明为实际弦真空，不宣称已经求出现实宇宙的量子引力理论。
+
+以下 Lean 真源只承担其已声明的数学范围：
+
+- `D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean`：有界算子和显式逆见证下的分层消去结合律。
+- `D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.lean`：固定量子通道下，全体未来统计相同与状态差对 Heisenberg 生成空间的迹配对为零的等价。
+- `D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.lean`：黄金更新对二次式的一步反等距与双步等距。
+- `D5/S3/Observer/GoldenCoding/GoldenBusemannCoordinate.lean`：黄金零坐标与双步快速度增量。
+
+这些锚点没有自动提供弦 BRST/BV 结构、世界面量子化、连续场积分或全息对偶证明。外部文献结果与本文推论分开标记。
+
+### ST0．四种操作与三个不同的尺度
+
+固定微观模型后，应区别下列操作。
+
+**观察限制**把态限制到可访问代数，或经实际量子通道生成记录。完整系统的作用量与耦合保持不变。
+
+**精确消元**把未显式保留的场积分掉，同时转移相互作用、源、初态与量子行列式。对所覆盖的实验，它应保持完整生成泛函。
+
+**近似截断**舍去若干导数阶、圈阶或有效顶点。它需要明确误差窗口；一般不保持上一项的精确相等。
+
+**改变耦合**例如将质量矩阵的跨块项置零，会改变物理模型。ST7的相对曲率系数属于这种有明确定义的模型比较。
+
+世界面的重整化尺度、时空有效理论的匹配尺度和观察者的物理时间也应分别记录。世界面 beta 函数的零点是量子一致性条件，不能仅凭“固定点”这一名称与任意动力系统的不动点等同。
+
+## ST1．弦论提供什么输入，观察者模型又增加什么问题？
+
+### ST1.1 外部输入：一致背景与有效作用量
+
+在适当的弦模型、规范及微扰范围内，世界面 Weyl 一致性约束背景场。例如最低阶的度量条件具有形式
+
+$$
+\bar\beta^G_{\mu\nu}
+=\alpha'\left(R_{\mu\nu}+2\nabla_\mu\nabla_\nu\Phi
+-\frac14 H_{\mu\rho\sigma}H_\nu{}^{\rho\sigma}\right)
++O(\alpha'^2)=0.
+$$
+
+还要满足反对称张量、dilaton及相应模型的其他条件。世界面圈阶与时空弦耦合的 genus 展开是不同展开；高导数修正的首个非零阶依弦模型而异。[ST-Tong7]
+
+一个标准的两导数 NS-NS 背景作用量写成
+
+$$
+S_{\mathrm{NSNS}}
+=\frac1{2\kappa_D^2}\int d^Dx\sqrt{-G_s}\,e^{-2\Phi}
+\left[R_s+4(\nabla\Phi)^2-\frac1{12}H^2+\cdots\right].
+$$
+
+省略项不被视为已经消失。实际应用需要固定弦模型、允许背景、紧化、其他场和一致截断。这个已知背景结构可以约束本卷所用的传播矩阵及曲率耦合，不能任意替所有模型选定同一组参数。[ST-Tong7] [ST-SenZwiebach]
+
+### ST1.2 进入本卷的研究窗口
+
+取单位 $c=\hbar=1$ 讨论尺度，令 $M_s=1/\sqrt{\alpha'}$。使用局域低能近似时，应检查实验能标相对实际被积分模式的质量隙、曲率相对弦尺度以及适用的圈展开参数。例如
+
+$$
+\alpha' E^2\ll1,\qquad
+\alpha'\|\mathrm{Riemann}\|\ll1,\qquad
+E^2/M_{\mathrm{gap}}^2\ll1
+$$
+
+和所选微扰方案的弱耦合条件。
+
+不存在质量隙的模、未稳定的模量及实验能够激发的绕数/动量模，不能以“隐藏”为由直接删除。精确非局域有效理论允许更一般的消元；有限局域导数展开需要额外控制。非 Wilsonian 的树级同伦转移也已有研究，不能把“有效”一词限定为一个统一能标截断。[ST-Arvanitakis]
+
+本卷的新增问题是：给定这种受一致性约束的微观实现，一个明确的源、记录和钟尺协议能够识别什么？不同协议何时仍能共同通过同一几何描述？
+
+## ST2．带源和几何变分的精确 Schur 约化
+
+本节先在有限维实对称矩阵上完成全部证明。连续算子和规范场版本还须处理定义域、边界、量子测度及正规化。
+
+### 定理 ST2.1：保留任意线性观察接口的响应
+
+设
+
+$$
+D=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix}>0,
+\qquad S=A-BC^{-1}B^{\mathsf T},
+$$
+
+以及完整源读数矩阵 $J=(J_V,J_H)$。定义
+
+$$
+J_{\mathrm{eff}}=J_V-J_HC^{-1}B^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{
+JD^{-1}J^{\mathsf T}
+=J_{\mathrm{eff}}S^{-1}J_{\mathrm{eff}}^{\mathsf T}
++J_HC^{-1}J_H^{\mathsf T}.
+}
+\tag{ST2.1}
+$$
+
+**证明。** 对隐藏变量完成平方，或直接验证块逆：
+
+$$
+D^{-1}=
+\begin{pmatrix}
+S^{-1}&-S^{-1}BC^{-1}\\
+-C^{-1}B^{\mathsf T}S^{-1}&
+C^{-1}+C^{-1}B^{\mathsf T}S^{-1}BC^{-1}
+\end{pmatrix}.
+$$
+
+左右乘 $J,J^{\mathsf T}$，按平方项合并即得。$C>0$ 且 $S>0$ 由正定性和完成平方保证。∎
+
+**含义。** 原实验若耦合到隐藏模，约化时需要转移源接口并保留最后的纯隐藏源项。该项在频域模型中可以依赖频率，不能统一当作局域常数。仅保留 $S$ 通常不能复现原实验。
+
+### 定理 ST2.2：消元与几何方向变分的相容性
+
+令上述矩阵光滑依赖实参数 $u$。它可表示固定坐标与固定测度约定下的一条几何扰动方向。定义
+
+$$
+L=\begin{pmatrix}I\\-C^{-1}B^{\mathsf T}\end{pmatrix}.
+$$
+
+则
+
+$$
+\boxed{\frac{dS}{du}=L^{\mathsf T}\frac{dD}{du}L.}
+\tag{ST2.2}
+$$
+
+**证明。** 有
+
+$$
+DL=\begin{pmatrix}S\\0\end{pmatrix},
+\qquad S=L^{\mathsf T}DL.
+$$
+
+求导时，$dL/du$ 的可见块为零，所以
+$(dL/du)^{\mathsf T}DL$ 与其转置均为零。剩余项正是式(ST2.2)。∎
+
+定义有限高斯真空项
+
+$$
+W(D)=\frac{\hbar}{2}\log\det D.
+$$
+
+由于 $\det D=\det C\det S$，得到
+
+$$
+\boxed{
+\frac{dW}{du}
+=\frac{\hbar}{2}\operatorname{tr}
+\left(C^{-1}\frac{dC}{du}
++S^{-1}L^{\mathsf T}\frac{dD}{du}L\right).
+}
+\tag{ST2.3}
+$$
+
+这证明：在这些假设下，同时保留有效算子与隐藏行列式后，先消元再计算几何响应，与对完整高斯积分计算该响应一致。
+
+### 推论 ST2.3：移动探针的响应也要一起求导
+
+若 $J$ 依赖 $u$，设 $\chi=JD^{-1}J^{\mathsf T}$，则
+
+$$
+\frac{d\chi}{du}
+=\dot J D^{-1}J^{\mathsf T}
++JD^{-1}\dot J^{\mathsf T}
+-JD^{-1}\dot D D^{-1}J^{\mathsf T}.
+\tag{ST2.4}
+$$
+
+这是乘法法则及逆矩阵求导。改变钟尺、源归一化或探针轨迹时，前两项不能无条件略去。
+
+分层消元的算子结合律已有仓内 Lean 锚点。式(ST2.1)至(ST2.4)增加了源与变分的实际义务。连续场论中，各块行列式必须来自同一受控积分与反项处方；独立定义的若干 zeta 行列式不自动满足同一乘法公式。一般时变背景下的延迟影响作用量，也不能直接用欧氏真空行列式替代。
+
+## ST3．规范结构给 CUT 增加了实质条件
+
+### 定理 ST3.1：线性规范恒等式在正确消元下下降
+
+这一命题不要求完整矩阵正定。设实对称矩阵 $K$、可逆隐藏块 $C$ 以及规范生成矩阵 $R$ 满足
+
+$$
+K=\begin{pmatrix}A&B\\B^{\mathsf T}&C\end{pmatrix},
+\quad R=\begin{pmatrix}R_V\\R_H\end{pmatrix},
+\quad KR=0.
+$$
+
+则
+
+$$
+R_H=-C^{-1}B^{\mathsf T}R_V,
+\qquad
+\boxed{(A-BC^{-1}B^{\mathsf T})R_V=0.}
+\tag{ST3.1}
+$$
+
+若完整线性读数还满足 $JR=0$，则 ST2 中的转移读数满足
+
+$$
+\boxed{J_{\mathrm{eff}}R_V=0.}
+\tag{ST3.2}
+$$
+
+**证明。** $KR=0$ 的第二块给出 $R_H$；代回第一块得到(ST3.1)。再代入
+$J_VR_V+J_HR_H=0$ 得到(ST3.2)。∎
+
+这里只验证线性规范约束的下降。完整含规范零模的 $K$ 不被直接求逆；物理传播子需要适当规范固定或商空间构造。
+
+### 定理 ST3.2：朴素投影的幂零缺陷
+
+设分次空间上 $Q$ 的次数为 $+1$，$Q^2=0$；$P^2=P$ 且 $P$ 保持次数。则
+
+$$
+\boxed{(PQP)^2=-PQ(I-P)QP.}
+\tag{ST3.3}
+$$
+
+**证明。** 在 $PQ^2P=0$ 中插入 $I=P+(I-P)$ 即得。∎
+
+右边量化经过已删除部分再回到保留部分的贡献。如果它非零，压缩 $PQP$ 已经失去幂零性。若 $P$ 与 $Q$ 交换，右边为零，这是一个充分条件。
+
+### 例 ST3.3：保持分次也不足以保证规范闭合
+
+取次数为 $0,1,1,2$ 的基 $e_0,e_1,e_2,e_3$，定义
+
+$$
+Qe_0=e_1+e_2,\quad Qe_1=e_3,\quad Qe_2=-e_3,\quad Qe_3=0.
+$$
+
+则 $Q^2=0$。令 $P$ 保留 $e_0,e_1,e_3$，删除 $e_2$。这仍是保持次数的投影，但
+
+$$
+(PQP)^2e_0=e_3\ne0.
+$$
+
+因此，仅给变量标注“可见/隐藏”，不足以保证一个 BRST 型复形能够下降。物理态还需要在相应的 $\ker Q/\operatorname{im}Q$ 及适当内积上构造；链复形的线性恒等式不自动提供密度态正性。
+
+### ST3.4 外部输入：弦场论中的规范相容积分
+
+Sen 的超弦 Wilsonian 构造给出继承量子 BV 主方程的有效作用量。一个固定的形式约定为
+
+$$
+\frac12(S,S)-i\hbar\Delta_{\mathrm{BV}}S=0.
+$$
+
+其适用前提包括相应弦场空间、规范、顶点与积分处方。[ST-Sen]
+
+树级同伦转移则将相互作用与规范恒等式一起转移到保留场上。Arvanitakis等给出一般场论构造；Singh对异质与II型超弦给出 twisted $L_\infty$ 表述。后者所讨论的同伦转移是经典/树级结果，不在本增订中被提升为其已经证明的任意圈阶定理。[ST-Arvanitakis] [ST-Singh]
+
+这给本项目一个具体升级方向：将一般 CUT 限制为满足所需收缩、边界及规范条件的接口，并转移有效顶点和实际观察量。所转移的代数需要与本卷的因果响应和量子测量接口进一步匹配。
+
+## ST4．从观察者完成接入全息恢复
+
+### ST4.1 三类“相对熵”应保持各自对象类型
+
+本卷可以同时研究：真实量子态的相对熵、ST7中辅助质量矩阵的相对熵、以及全息码子空间中的体内/边界相对熵。它们共享数学工具，比较的对象与物理含义不同。
+
+JLMS在其全息条件和所述引力展开阶数下讨论体内与边界相对熵及模流。本文将其作为一种具体恢复实现的外部接口，不假定任意观察者窗口都已具有 AdS/CFT 对偶。[ST-JLMS]
+
+### 命题 ST4.2：恢复误差控制全部约定的未来记录
+
+固定有限维密度态 $\rho,\sigma$，其中 $\sigma$ 忠实；固定量子通道 $\mathcal N$，在有效支撑上定义
+
+$$
+\varepsilon_\rho
+=D(\rho\|\sigma)-D(\mathcal N\rho\|\mathcal N\sigma).
+$$
+
+引用普适恢复定理：存在仅依赖 $\sigma,\mathcal N$ 的恢复通道 $\mathcal R$，在 $\operatorname{supp}\mathcal N\sigma$ 上采用该定理的恢复映射，并在正交补上作保迹扩展，使
+
+$$
+\varepsilon_\rho\ge-2\log F(\rho,\mathcal R\mathcal N\rho),
+\quad F(\rho,\omega)=\|\sqrt\rho\sqrt\omega\|_1.
+$$
+
+这里 $F$ 为未平方保真度，自然对数用于相对熵。[ST-Recovery]
+
+令 $\Lambda$ 为任意一个双方共用的后续 CPTP 实验过程，它可以包括有限次自适应测量及完整经典记录。对最终效果 $0\le E\le I$，有
+
+$$
+\boxed{
+\left|\operatorname{tr}E\Lambda(\rho)
+-\operatorname{tr}E\Lambda(\mathcal R\mathcal N\rho)\right|
+\le\sqrt{1-e^{-\varepsilon_\rho}}
+\le\sqrt{\varepsilon_\rho}.
+}
+\tag{ST4.1}
+$$
+
+整个经典记录分布的总变差距离满足同一界。
+
+**证明。** 引用的恢复界给出 $F\ge e^{-\varepsilon_\rho/2}$。迹距离与保真度不等式给出
+
+$$
+\tfrac12\|\rho-\mathcal R\mathcal N\rho\|_1
+\le\sqrt{1-F^2}\le\sqrt{1-e^{-\varepsilon_\rho}}.
+$$
+
+随后用 CPTP 的迹距离收缩性及效果统计界。最后用 $1-e^{-x}\le x$。∎
+
+这是对一次初始恢复后整套共同实验的界，没有在每一步重复恢复。稀有结果条件化后的归一化概率需要另加成功概率下界；本命题控制的是未后选择的联合记录。它也不是自动的 diamond 范数界。
+
+初始态必须包含能够影响这套未来实验的自由度。若只恢复一个纠缠楔代数，而未来 Heisenberg 观测量离开该可恢复代数，就不能直接应用(ST4.1)。这与仓内 `FutureStatisticsEquivalence` 的“先固定未来观测闭包”要求衔接。
+
+## ST5．对偶要求连同观察协议一起运输
+
+### 定理 ST5.1：完整线性响应的对偶协变
+
+设两个正定有限高斯实现通过正交映射 $U$ 相关：
+
+$$
+\widetilde D=UDU^{\mathsf T},
+\qquad \widetilde J=JU^{\mathsf T}.
+$$
+
+则
+
+$$
+\boxed{
+\widetilde J\widetilde D^{-1}\widetilde J^{\mathsf T}
+=JD^{-1}J^{\mathsf T}.
+}
+\tag{ST5.1}
+$$
+
+**证明。** $\widetilde D^{-1}=UD^{-1}U^{\mathsf T}$，代入后用 $U^{\mathsf T}U=I$。∎
+
+如果 $P$ 是保留场投影，使用 $\widetilde P=UPU^{\mathsf T}$ 可以对应保留空间与隐藏空间。ST2的完整带源消元因此保持相同响应，即使两个坐标表示中的保留标签不同。
+
+对一般实际对偶，需要运输态、所有允许仪器和协议，或给出相应代数同构；这个矩阵命题只验证其有限高斯部分。若对偶混合可见与隐藏变量，却仍强制沿用旧标签的截断与源，会比较不同实验。由此产生的差异不能据以宣称对偶失效。
+
+### ST5.2 圆紧化的动量与绕数例子
+
+取圆半径 $R>0$，弦参数 $\alpha'>0$。质量平方中的圆部分为
+
+$$
+\frac{n^2}{R^2}+\frac{w^2R^2}{\alpha'^2}.
+$$
+
+变换
+
+$$
+\widetilde R=\frac{\alpha'}R,\qquad (n,w)\mapsto(w,n)
+$$
+
+保持这部分谱。实际弦对偶还运输振子、物理态约束、简并度及必要的理论类型。圆对偶还要求
+
+$$
+\widetilde g_s=g_s\frac{\sqrt{\alpha'}}R,
+\qquad
+\widetilde\Phi=\Phi-\log\frac R{\sqrt{\alpha'}}.
+$$
+
+由此直接验证 $\widetilde R/\widetilde g_s^2=R/g_s^2$，这与对应低维引力作用量的归一化相容。相关圆紧化条件见[ST-Tong8]。这组公式没有把世界面模变换与目标空间 T 对偶视为同一个操作。
+
+### 定理 ST5.3：只能恢复对偶轨道上的不变量
+
+设完整观测数据 $\mathscr D(R)$ 使用相应运输后的实验满足
+
+$$
+\mathscr D(R)=\mathscr D(\alpha'/R).
+$$
+
+则由数据唯一恢复的任何标量 $\Theta$ 必须满足
+
+$$
+\Theta(R)=\Theta(\alpha'/R).
+$$
+
+特别地，任意输出裸半径实数的估计器 $\widehat R$，至少满足
+
+$$
+\boxed{
+\max\left\{\left|\widehat R(\mathscr D)-R\right|,
+\left|\widehat R(\mathscr D)-\alpha'/R\right|\right\}
+\ge\frac12\left|R-\frac{\alpha'}R\right|.
+}
+\tag{ST5.2}
+$$
+
+**证明。** 相同输入数据必须有同一输出。用三角不等式
+$|R-\alpha'/R|\le|R-\widehat R|+|\widehat R-\alpha'/R|$。∎
+
+可恢复的候选量包括
+
+$$
+\left|\log\frac R{\sqrt{\alpha'}}\right|,
+\qquad
+\frac R{\sqrt{\alpha'}}+\frac{\sqrt{\alpha'}}R.
+$$
+
+因此本卷第30节的共同几何重建，在接入这种微观实现后，需要将“唯一”写成相对于规定规范和对偶关系的唯一。选择 $R\ge\sqrt{\alpha'}$ 可以选定代表元，但它是一项约定，不增加观测信息。
+
+## ST6．黄金双更新进入弦世界面模群，钟尺进入物理读数
+
+### 定理 ST6.1：同一个黄金矩阵给出两个不同归一化的参数
+
+设
+
+$$
+F=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+A=F^2=\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\quad \varphi=(1+\sqrt5)/2.
+$$
+
+有 $A\in SL_2(\mathbb Z)$。它的特征值是 $\varphi^2,\varphi^{-2}$；仓内零坐标上的洛伦兹快速度增量是
+
+$$
+\eta_\varphi=2\log\varphi.
+$$
+
+环面世界面的复模 $\tau\in\mathbb H$ 在该模群元素下变换为
+
+$$
+\tau\mapsto\frac{2\tau+1}{\tau+1}.
+$$
+
+其固定点满足 $\tau^2-\tau-1=0$，所以是实轴上的 $\varphi$ 与 $\varphi'=-1/\varphi$，均不在 $\mathbb H$ 内。
+
+用上半平面的标准双曲度量 $ds=|d\tau|/\operatorname{Im}\tau$，$A$ 的平移长度为
+
+$$
+\boxed{\ell(A)=4\log\varphi=2\eta_\varphi.}
+\tag{ST6.1}
+$$
+
+**证明。** 行列式、特征值和固定点由二阶多项式计算。令
+
+$$
+w=\frac{\tau-\varphi}{\tau-\varphi'}.
+$$
+
+它是保持上半平面的实 Möbius 变换，且
+$w(A\tau)=\varphi^{-4}w(\tau)$。连接两个固定点的测地线被送到虚轴；沿该轴的距离为
+$|\log(\varphi^{-4})|=4\log\varphi$。∎
+
+世界面环面基圈的模变换是标准弦微扰积分中的结构。[ST-Tong6] 本命题将仓内实际黄金矩阵放入这个群作用，给出可复核的表示接口。一个模群元素没有独自选定物理真空或物理时间；两个边界固定点也不构成位于物理模空间内部的固定点。
+
+### 推论 ST6.2：常用的双曲模长度下界
+
+对任意双曲 $A'\in SL_2(\mathbb Z)$，$|\operatorname{tr}A'|$ 是至少为3的整数。其伸缩因子（特征值模）$\lambda>1$ 满足
+$\lambda+\lambda^{-1}=|\operatorname{tr}A'|$。因此
+
+$$
+\ell(A')=2\log\lambda\ge4\log\varphi,
+$$
+
+黄金双更新达到该界。这里固定了曲率为 $-1$ 的双曲度量规范；它是模群几何的经典极值，不能直接用来推导宇宙的最短时间或长度。
+
+### 命题 ST6.3：弦框架与 Einstein 框架中的钟相位相容
+
+在 $D>2$、允许该场重定义的区域，写
+
+$$
+G_E=\Omega^2G_s,
+\qquad\Omega=e^{-2\Phi/(D-2)}.
+$$
+
+同一路径的固有时满足 $d\tau_E=\Omega\,d\tau_s$。对同一个两能级绝热探针，若完整钟作用量按该重定义运输，则其局部能隙满足
+$\Delta E_E=\Omega^{-1}\Delta E_s$，因此
+
+$$
+\boxed{
+\int\frac{\Delta E_E\,d\tau_E}{\hbar}
+=\int\frac{\Delta E_s\,d\tau_s}{\hbar}.
+}
+\tag{ST6.2}
+$$
+
+**证明。** 第一式由度量重标定，第二式由同一相位作用量的场重定义。代入后 $\Omega$ 抵消。若背景变化过快，须保留探针跃迁、导数耦合和非绝热项；仅替换一个瞬时能隙不足以给出完整演化。∎
+
+弦框架与 Einstein 框架的背景场重定义见[ST-Tong7]。这说明本卷的钟尺标定必须与完整物质作用量一同指定，不能只比较两个坐标表示中的度量分量。
+
+## ST7．保留相对曲率结果，同时实行弦有效理论匹配
+
+此前研究笔记对四维、有限个实标量场、共同曲率耦合 $\xi$、常数正定质量平方矩阵 $\mathsf M$ 及固定分块 $\mathcal P$ 给出
+
+$$
+\mathsf M_0=\mathcal P\mathsf M>0,
+\qquad t=\operatorname{tr}\mathsf M,
+\quad \rho_{\mathsf M}=\mathsf M/t.
+$$
+
+假定所选欧氏问题适用且算子正定，无边界或已单独处理边界项；曲率和背景变化相对最轻质量尺度足够小。所提取的是固定处方下的局域低导数项，不假定任意时变洛伦兹背景都允许 Wick 旋转。
+
+同一热核处方下，比较打开与关闭跨块耦合的模型，局域欧氏曲率项
+$\Gamma_{E,R}=-\kappa\int\sqrt g\,R$ 的高斯物质圈系数差为
+
+$$
+\Delta\kappa
+=\frac{\hbar}{32\pi^2}\left(\frac16-\xi\right)
+\left[\operatorname{tr}(\mathsf M\log\mathsf M)
+-\operatorname{tr}(\mathsf M_0\log\mathsf M_0)\right].
+\tag{ST7.1}
+$$
+
+对数使用同一质量平方参考尺度，它因迹相同而抵消。
+
+**核对。** 标量热核中线性曲率系数是 $(1/6-\xi)R$。[ST-HeatKernel] 对两谱作相同 proper-time 积分，维数与迹相等使 $s^{-2}$ 曲率积分在 $s=0$ 有限。谱严格正定保证另一端收敛。两次分部积分给出括号中的差。由于 $\log\mathsf M_0$ 块对角，
+
+$$
+\operatorname{tr}(\mathsf M\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M_0\log\mathsf M_0),
+$$
+
+从而
+
+$$
+\boxed{
+\Delta\kappa
+=\frac{\hbar}{32\pi^2}\left(\frac16-\xi\right)
+ tD(\rho_{\mathsf M}\|\mathcal P\rho_{\mathsf M}).
+}
+\tag{ST7.2}
+$$
+
+该相对熵编码质量谱及指定分块，实际量子场态另行给定。整个有效作用量差也不因此全部紫外有限。
+
+### ST7.1 接入弦论时的三个匹配条件
+
+**先识别实际子扇区。** 需要从选定弦紧化及其有效顶点中确定场分量、动能归一化、质量矩阵、曲率耦合和源。无法把任意正定矩阵直接认作一个已经构造出的弦真空。
+
+**完整计入规范与统计。** 完整弦谱含不同自旋、费米子和规范约束，相关迹、行列式、热核系数与物理态投影各有结构。有限正定标量式(ST7.2)不能无条件求和成为整个无限弦谱的正熵公式。
+
+**避免重复计数。** 若某组重场已经贡献到匹配后的引力 Wilson 系数，再把同一组场的行列式加一次会改变理论。应在统一的重整化方案与框架中写
+
+$$
+\kappa_{\mathrm{IR}}
+=\kappa_{\mathrm{match}}(\mu)+\delta\kappa_{\mathrm{remaining}}(\mu),
+$$
+
+并检验达到所计算阶数的匹配尺度独立性；只有尚未计入的阈值或圈贡献才能增加。[ST-Sen] [ST-HeatKernel]
+
+由弦论匹配可以约束本卷中原先自由的某些参数。它是否唯一确定现实的 $\xi$、模量或绝对 Newton 常数，取决于具体模型和独立数据，不能由通用桥式先行宣告。
+
+## ST8．可执行的闭合顺序与验收对象
+
+本增订的目标可以写成一张需要真正实现的相容关系：
+
+$$
+\begin{array}{ccc}
+\text{固定弦模型、背景和完整源}
+&\longrightarrow&\text{规范相容有效理论}\\
+\downarrow\ \text{物理观察协议}&&\downarrow\ \text{转移后的相同协议}\\
+\text{完整联合记录分布}
+&=&\text{有效理论的联合记录分布}.
+\end{array}
+$$
+
+精确等号要求保留全部必要项。采用截断后，右侧改为带已证明误差预算的近似。BV一致性、实际量子态正性、因果性和未来可恢复性是不同义务，任何一个不能自动替另一个作证。
+
+第一步先在仓内现有真实载体上闭合带源 Schur 约化、方向变分及线性规范恒等式，并用ST3.3作为应被拒绝的截断实例。
+
+第二步选择一个规范相容的弦有效子问题，明确保留场分量、消元传播子、顶点阶数、源/探针和边界条件。树级同伦转移与量子 BV 积分分别使用相应文献的假设，不将两种精度混记。
+
+第三步在圆紧化中运输状态与协议，检查动量/绕数交换、dilaton归一化、截断窗口及完整响应相容。验收目标是具体量的相等和误差界，而非只出现 $R\leftrightarrow\alpha'/R$ 的符号。
+
+第四步在明确有限码空间中构造 $\mathcal N,\mathcal R$ 及未来实验闭包，验证ST4.2。全息解释要另外给出实际编码、区域代数与适用的引力展开。
+
+第五步在同一源、框架与反项方案中计算几何方向响应，检查ST2.3及匹配尺度依赖。最终引力动力学还需要背景变分方程、应力能守恒、状态条件和约束闭合。
+
+**尚未承担的结论。** 本增订没有完成弦理论的 Lean 实现、连续因果场论的全部函数空间证明、真实紧化的模量选择、无限弦谱的阈值计算、非微扰AdS/CFT或现实宇宙的引力参数预测。上述普通证明给出的是可以复用且可以被反例约束的接口。
+
+## ST9．文献与本增订的声明边界
+
+外部理论归其原作者。本节列出主要读取位置；正文的有限矩阵证明和操作推论在本增订中给出，不据有限检索声称首次发现。
+
+[ST-Tong6]: https://davidtong.org/pdfs/teaching/string-theory/string6.pdf "David Tong, String Theory, Chapter 6: String Interactions; Section 6.4.1 on torus moduli and modular transformations."
+[ST-Tong7]: https://davidtong.org/pdfs/teaching/string-theory/string7.pdf "David Tong, String Theory, Chapter 7, Sections 7.2–7.3: background beta functions, low-energy action, string and Einstein frames."
+[ST-Tong8]: https://davidtong.org/pdfs/teaching/string-theory/string8.pdf "David Tong, String Theory, Chapter 8, Sections 8.2–8.3: momentum, winding, T-duality and dilaton shift."
+[ST-Sen]: https://arxiv.org/abs/1609.00459 "Ashoke Sen, Wilsonian Effective Action of Superstring Theory, JHEP 01 (2017) 108, DOI 10.1007/JHEP01(2017)108. Sections 2–4."
+[ST-SenZwiebach]: https://arxiv.org/abs/2405.19421 "Ashoke Sen and Barton Zwiebach, String Field Theory: A Review (2024), DOI 10.1007/978-981-99-7681-2_62."
+[ST-Arvanitakis]: https://arxiv.org/abs/2007.07942 "Alex S. Arvanitakis, Olaf Hohm, Chris Hull and Victor Lekeu, Homotopy Transfer and Effective Field Theory I: Tree-level, Fortschritte der Physik 70 (2022) 2200003, DOI 10.1002/prop.202200003. Sections 2–3 and 6."
+[ST-Singh]: https://arxiv.org/abs/2405.08063 "Ranveer Kumar Singh, Algebraic structures in closed superstring field theory, homotopy transfer, and effective actions, Phys. Rev. D 110 (2024) 126007, DOI 10.1103/PhysRevD.110.126007. Sections 3–4 and the tree-level boundary in Section 1."
+[ST-JLMS]: https://arxiv.org/abs/1512.06431 "Daniel L. Jafferis, Aitor Lewkowycz, Juan Maldacena and S. Josephine Suh, Relative entropy equals bulk relative entropy, JHEP 06 (2016) 004, DOI 10.1007/JHEP06(2016)004. Leading-order and nearby-state assumptions retained."
+[ST-Recovery]: https://arxiv.org/abs/1509.07127 "Marius Junge, Renato Renner, David Sutter, Mark M. Wilde and Andreas Winter, Universal Recovery Maps and Approximate Sufficiency of Quantum Relative Entropy, Annales Henri Poincare 19 (2018) 2955–2978, DOI 10.1007/s00023-018-0716-0."
+[ST-HeatKernel]: https://arxiv.org/abs/hep-th/0306138 "D. V. Vassilevich, Heat kernel expansion: user's manual, Physics Reports 388 (2003) 279–360, DOI 10.1016/j.physrep.2003.09.002."
+
+---
+
+
+---
+
+<a id="string-observer-born-geometry"></a>
+
+# 谱约化的 Born 归一化、实验闭合与参数几何
+
+## 接续 ST0–ST9 的理论增订 ST10–ST18
+
+**范围与证明状态。** 本增订给出有限维复 Hilbert 空间上的证明、反例和误差界，承接 ST2 的带源 Schur 约化、ST3 的规范相容性和 ST5 的对偶运输。所有新命题均为普通数学证明，尚未生成或编译 Lean 真源。谱约化、Schrieffer–Wolff 变换、几何相位、子丛几何和无跃迁驱动各有既有文献；本文不主张这些一般机制首次发现。[ST10-Feshbach][ST10-SW][ST10-Subbundle][ST10-Driving]
+
+以下正内积和 Born 规则是明确前提。接入弦场论时，必须先构造适当的物理态空间及其正内积，或者给出确切满足以下假设的子模型。含不定内积的整个 ghost/BRST 空间不能直接代入。BV 主方程、物理态正性、空间因果性与实验闭合是不同义务。有限矩阵证明不会自行建立弦真空、连续场论或 Einstein 方程。
+
+固定 $\hbar>0$。未特别标注时，$\|\cdot\|$ 为算子范数，$\|\cdot\|_F$ 为 Frobenius 范数。这里的可见/隐藏分解是正交**直和** $\mathcal H=V\oplus W$，不是张量积分解上的偏迹。前者描述保留哪些态分量，后者描述子系统约化，二者不能混用。
+
+## ST10．能量依赖消元同时决定物理范数
+
+### 假设 ST10.1
+
+设 $V,W$ 为非零有限维复 Hilbert 空间，
+
+$$
+H=\begin{pmatrix}A&B\\B^\dagger&C\end{pmatrix}=H^\dagger.
+$$
+
+取实数 $E\notin\operatorname{spec}C$，定义
+
+$$
+R_E=(C-EI)^{-1},\quad X_E=-R_EB^\dagger,\quad
+L_E=\begin{pmatrix}I\\X_E\end{pmatrix},
+$$
+
+$$
+S(E)=A-EI-BR_EB^\dagger.
+$$
+
+本节固定 $H$ 求能量导数。$E$ 可以位于完整 $H$ 的谱中，唯一排除的是隐藏块的谱。
+
+### 定理 ST10.2：重建、范数与能量导数恒等式
+
+有
+
+$$
+(H-EI)L_E=\begin{pmatrix}S(E)\\0\end{pmatrix},
+\qquad
+\ker S(E)\xrightarrow{\ L_E\ }\ker(H-EI)
+\text{ 为线性同构},
+\tag{ST10.1}
+$$
+
+以及
+
+$$
+\boxed{
+G(E):=L_E^\dagger L_E
+=I+B(C-EI)^{-2}B^\dagger
+=-\partial_E S(E)>0.
+}
+\tag{ST10.2}
+$$
+
+**证明。** 块乘法给出(ST10.1)第一式。任一完整本征向量 $(v,w)$ 的第二块方程强制 $w=X_Ev$；若 $v=0$ 则 $w=0$。因此重建双向成立。又因 $R_E=R_E^\dagger$，有 $L_E^\dagger L_E=I+BR_E^2B^\dagger$。对 $(C-EI)R_E=I$ 求导，得 $\partial_E R_E=R_E^2$，代入 $S$ 得到最后一式。对 $v\ne0$，$v^\dagger Gv=\|v\|^2+\|X_Ev\|^2>0$。∎
+
+### 推论 ST10.3：Born 读数及可见谱权重
+
+对任意效果 $0\le O\le I_{\mathcal H}$ 和非零 $v\in V$，重建态的概率为
+
+$$
+\boxed{
+p_O(v)=\frac{v^\dagger L_E^\dagger O L_Ev}{v^\dagger G(E)v}.
+}
+\tag{ST10.3}
+$$
+
+令 $\delta=\operatorname{dist}(E,\operatorname{spec}C)>0$。则
+
+$$
+I\le G(E)\le\left(1+\frac{\|B\|^2}{\delta^2}\right)I,
+\qquad
+\frac1{1+\|B\|^2/\delta^2}\le
+Z(v):=\frac{\|v\|^2}{v^\dagger G(E)v}\le1.
+\tag{ST10.4}
+$$
+
+**证明。** 将 $L_Ev$ 归一化并应用原空间的 Born 规则即可。有限维谱定理给出 $\|R_E\|=1/\delta$，再用 $\|R_EB^\dagger v\|\le\|B\|\|v\|/\delta$。∎
+
+$Z$ 是完整纯态在原可见直和分量上的权重。保留非线性本征方程 $S(E)v=0$，却继续用 $v^\dagger v$ 代替完整范数，一般会改变概率。本定理没有从能谱独自推导 Born 公理；它推导的是给定 Born 公理在消元后的精确形式。不同能量上的 $G(E)$ 也不能直接拼成一个对任意叠加态有效的单一动力学，ST12处理这一问题。
+
+## ST11．同一范数决定极点留数与能级几何响应
+
+### 定理 ST11.1：简单极点留数
+
+设 $E$ 为 $H$ 的简单本征值且 $E\notin\operatorname{spec}C$。取非零 $v\in\ker S(E)$，记 $P_V:\mathcal H\to V$ 为坐标投影。则
+
+$$
+\boxed{
+\operatorname*{Res}_{z=E}
+P_V(zI-H)^{-1}P_V^\dagger
+=\frac{vv^\dagger}{v^\dagger G(E)v}.
+}
+\tag{ST11.1}
+$$
+
+**证明。** 归一化的完整本征向量为 $\psi=L_Ev/\sqrt{v^\dagger Gv}$。谱分解中 $(zI-H)^{-1}$ 的该留数为 $\psi\psi^\dagger$，左右投影即可。注意这里使用 $zI-H$；使用 $H-zI$ 时留数符号相反。∎
+
+### 定理 ST11.2：参数化 Hellmann–Feynman 公式的下降
+
+设 $H(u)$ 为 $C^1$ Hermitian 矩阵族，$E(u)$ 是简单本征值分支，且在所论区域始终不属于 $C(u)$ 的谱。令 $v(u)\ne0$ 满足 $S(E(u),u)v(u)=0$。则
+
+$$
+\boxed{
+\frac{dE}{du}
+=\frac{v^\dagger(\partial_u S)v}{v^\dagger Gv}
+=\frac{(L_Ev)^\dagger(\partial_u H)(L_Ev)}{\|L_Ev\|^2}.
+}
+\tag{ST11.2}
+$$
+
+其中 $\partial_u S$ 在固定 $E$ 下取偏导。
+
+**证明。** 在 $S v=0$ 上微分，左乘 $v^\dagger$，含 $dv/du$ 的项消失：
+
+$$
+v^\dagger(\partial_u S)v+\frac{dE}{du}v^\dagger(\partial_E S)v=0.
+$$
+
+用(ST10.2)得第一个等号。固定 $E$ 时，$S=L_E^\dagger(H-EI)L_E$，且 $\partial_uL_E$ 的上块为零。由 $(H-EI)L_E=(S,0)^{\mathsf T}$，求导中的两个 $\partial_uL_E$ 项消失，得到
+
+$$
+\partial_u S=L_E^\dagger(\partial_u H)L_E.
+$$
+
+这给出第二个等号。∎
+
+若 $u$ 是已经定义好的度量、曲率或钟耦合扰动，式(ST11.2)给出相应能级响应。仍须从实际模型定义 $H(u)$；不能仅通过将 $u$ 命名为“几何”就得到引力场方程。$\partial_uH$ 的实验与能动量解释也需由原作用量确定。
+
+### 例 ST11.3：省略范数会改变隐藏能量响应
+
+取
+
+$$
+H=\begin{pmatrix}0&b\\b&c\end{pmatrix},\quad b,c>0,
+\qquad E_-=\frac{c-\sqrt{c^2+4b^2}}2,
+\quad r=\frac b{c-E_-}.
+$$
+
+则 $L_{E_-}(1)=(1,-r)^{\mathsf T}$，
+
+$$
+Z=\frac1{1+r^2},\qquad
+\frac{\partial E_-}{\partial c}=\frac{r^2}{1+r^2}=1-Z.
+\tag{ST11.3}
+$$
+
+在 $b=c=\Delta>0$ 时，$r=\varphi^{-1}$，隐藏权重为
+
+$$
+1-Z=\frac12\left(1-\frac1{\sqrt5}\right).
+$$
+
+省略分母会得到错误的 $\varphi^{-2}$。黄金数在这里来自一个明确二阶特征方程；参数关系 $b=c$ 是模型选择，不是所有量子系统必须遵守的规律。
+
+## ST12．由不变图子空间构造真正的有效量子理论
+
+### 假设 ST12.1
+
+给定 $X:V\to W$，满足矩阵 Riccati 方程
+
+$$
+B^\dagger+CX=X(A+BX).
+\tag{ST12.1}
+$$
+
+定义
+
+$$
+L=\begin{pmatrix}I\\X\end{pmatrix},\quad
+G=I+X^\dagger X,\quad K=A+BX,\quad
+U=LG^{-1/2},\quad\Pi=UU^\dagger.
+$$
+
+这等价于 $\operatorname{Ran}L$ 为 $H$ 的不变图子空间。一个预选谱子空间能用这样的 $X$ 表示，当且仅当其到 $V$ 的投影为同构；这是一项横截性条件。本文不假设任意截断都满足它，也不把任意不变子空间自动称为低能子空间。其与严格 Schrieffer–Wolff/子空间旋转构造的关系见[ST10-SW]。
+
+### 定理 ST12.2：等距重建与自伴有效 Hamiltonian
+
+有
+
+$$
+HL=LK,\quad GK=K^\dagger G,\quad U^\dagger U=I,
+$$
+
+$$
+\boxed{
+h:=U^\dagger HU=G^{1/2}KG^{-1/2}=h^\dagger,
+\qquad HU=Uh.
+}
+\tag{ST12.2}
+$$
+
+从而对全部实数 $t$，
+
+$$
+\boxed{e^{-itH/\hbar}U=Ue^{-ith/\hbar}.}
+\tag{ST12.3}
+$$
+
+**证明。** Riccati 方程给出块等式 $HL=LK$。$L^\dagger HL$ 为 Hermitian，故 $GK=K^\dagger G$。正定平方根给出 $U^\dagger U=I$。共轭 $K$ 得到 $h$ 并验证交织式；将交织式逐次相乘，再代入矩阵指数的绝对收敛幂级数，得到(ST12.3)。∎
+
+### 推论 ST12.3：实际效果与全部叠加态一同转移
+
+映射 $\rho\mapsto U\rho U^\dagger$ 为 CPTP 编码，$O\mapsto U^\dagger OU$ 为幺完全正的效果拉回。对任意密度态 $\rho$、效果 $O$ 和实数 $t$，完整编码态与有效态给出相同的该时刻读数。
+
+**证明。** 两个映射均有单 Kraus 表示，$U^\dagger U=I$ 给出保迹/保单位性。迹的循环性与(ST12.3)给出统计相等。∎
+
+这保证初始编码后、一次最终读数的相等；中途仪器会不会把态推出编码子空间，仍需下一节的独立条件。
+
+## ST13．能谱闭合不能替代连续实验闭合
+
+### 定理 ST13.1：仪器压缩的精确漏出算子
+
+取有限 Kraus 仪器 $\{K_{a\ell}\}$，满足
+
+$$
+\sum_{a,\ell}K_{a\ell}^\dagger K_{a\ell}=I_{\mathcal H}.
+$$
+
+令 $k_{a\ell}=U^\dagger K_{a\ell}U$。则
+
+$$
+\boxed{
+\sum_{a,\ell}k_{a\ell}^\dagger k_{a\ell}=I_V-\Lambda,
+\quad
+\Lambda=\sum_{a,\ell}U^\dagger K_{a\ell}^\dagger(I-\Pi)K_{a\ell}U\ge0.
+}
+\tag{ST13.1}
+$$
+
+以下条件等价：$\Lambda=0$；全部 $K_{a\ell}\operatorname{Ran}U\subseteq\operatorname{Ran}U$；压缩 Kraus 家族组成归一仪器。
+
+**证明。** 在每个 $U^\dagger K^\dagger KU$ 中插入 $I=\Pi+(I-\Pi)$，得到恒等式。且
+
+$$
+v^\dagger\Lambda v=
+\sum_{a,\ell}\|(I-\Pi)K_{a\ell}Uv\|^2.
+$$
+
+它对所有 $v$ 为零，当且仅当每个漏出算子都为零。归一性等价由(ST13.1)立即得到。∎
+
+一次结果 $a$ 的正确压缩效果始终是
+
+$$
+F_a=U^\dagger\left(\sum_\ell K_{a\ell}^\dagger K_{a\ell}\right)U
+=\sum_\ell k_{a\ell}^\dagger k_{a\ell}+\Lambda_a.
+$$
+
+因此单步概率可保持，而丢掉 $\Lambda_a$ 后的状态更新未必合法。单独加一个“漏出”经典标签可以补上总概率，但该标签一般不能决定漏出态的全部未来实验。
+
+### 定理 ST13.2：有限自适应记录的精确转移
+
+采用 ST12 的固定编码 $U$。假设每一种允许控制 Hamiltonian 均保留 $\operatorname{Ran}U$，且每一个允许仪器满足 ST13.1 的零漏出条件。则对任意初始密度态、任意有限轮按以往结果选取操作的协议，压缩模型与完整编码模型的所有联合记录概率及每条未归一化分支态完全相容。
+
+**证明。** 对每个允许 Kraus 算子，零漏出给出 $KU=Uk$；对每段演化用(ST12.3)。任一固定历史的算子词因而满足 $W_{\mathbf a}U=Uw_{\mathbf a}$。对不可见 Kraus 标签求和后，各分支仍满足
+
+$$
+\mathcal I_{\mathbf a}(U\rho U^\dagger)
+=U\,\mathfrak i_{\mathbf a}(\rho)U^\dagger.
+$$
+
+取迹得到联合概率相等。自适应协议在固定历史上确定一个这样的词，故逐历史成立；零概率历史不被删除。∎
+
+### 反例 ST13.3：质量隙再大也不保证任意实验闭合
+
+取 $H=\operatorname{diag}(0,\Delta)$，$\Delta>0$，$U(1)=|0\rangle$。这是精确不变子空间，原跨块耦合为零。允许一次 Pauli $X$ 操作，则 $U^\dagger XU=0$，$\Lambda=1$。完整实验将 $|0\rangle$ 送到 $|1\rangle$，压缩操作却消灭了全部范数。
+
+所以，允许仪器的实验语言是有效理论的一部分。仅检查质量隙或有效能谱，不能认证任意测量历史。
+
+## ST14．由 Riccati 残差控制全部最终记录
+
+### 定理 ST14.1：非精确图子空间的动力学误差
+
+不再假设 Riccati 方程。仍由任意 $X$ 构造 $L,G,U,\Pi$，并令 $h=U^\dagger HU$。定义
+
+$$
+\mathcal R_X=B^\dagger+CX-X(A+BX),\quad
+D=HU-Uh.
+$$
+
+则
+
+$$
+\boxed{
+D=(I-\Pi)\begin{pmatrix}0\\\mathcal R_X\end{pmatrix}G^{-1/2},
+\qquad r:=\|D\|\le\|\mathcal R_X\|.
+}
+\tag{ST14.1}
+$$
+
+并且
+
+$$
+\boxed{
+\|e^{-itH/\hbar}U-Ue^{-ith/\hbar}\|
+\le\min\{2,|t|r/\hbar\}.
+}
+\tag{ST14.2}
+$$
+
+**证明。** 有 $HL=L(A+BX)+(0,\mathcal R_X)^{\mathsf T}$。左乘 $I-\Pi$ 后第一项为零，得到(ST14.1)。$G\ge I$ 给出范数界。对 $e^{-i(t-s)H/\hbar}Ue^{-ish/\hbar}$ 求导并积分：
+
+$$
+e^{-itH/\hbar}U-Ue^{-ith/\hbar}
+=-\frac{i}{\hbar}\int_0^t
+ e^{-i(t-s)H/\hbar}D e^{-ish/\hbar}\,ds.
+$$
+
+两侧演化均酉，故积分范数至多 $|t|r/\hbar$；两个等距映射之差另有上界2。∎
+
+### 推论 ST14.2：Born 记录的统一误差预算
+
+从同一输入态出发，比较以上两种编码演化，再实施任意共同的 CPTP 实验并保留全部结果。允许初始态与一个不参与演化的有限参考系统纠缠。最终联合记录分布满足
+
+$$
+\boxed{\operatorname{TV}(p,q)\le\min\{1,|t|r/\hbar\}.}
+\tag{ST14.3}
+$$
+
+**证明。** 对纯化输入，两种输出向量之差范数不超过(ST14.2)中的 $|t|r/\hbar$，其纯态迹距离不超过向量差范数。对混态用纯化及偏迹收缩性。随后共同 CPTP 实验保持迹距离收缩，最终经典化得到总变差界。∎
+
+多个演化段之间若采用 ST13 的精确子空间保持仪器，可用逐段替换和通道收缩性将上界相加。第 $j$ 段由既往记录 $a$ 决定时，一个安全预算为
+
+$$
+\min\left\{1,\sum_j\sup_a\frac{|t_j(a)|r_j(a)}{\hbar}\right\}.
+$$
+
+这个界控制完整未后选择的记录；稀有事件条件化需另外给出成功概率下界。存在仪器漏出时，$\mathcal R_X$ 并未计入它，不能继续沿用仅含 $r$ 的预算。
+
+## ST15．移动的保留空间产生连接、曲率和跃迁代价
+
+### 假设 ST15.1
+
+在一个参数开集内，$X=X(\lambda)$ 为 $C^2$ 矩阵族，$U=LG^{-1/2}$。先固定一个物理上已标定的环境 Hilbert 基，使用普通导数。定义
+
+$$
+\mathcal A_i=iU^\dagger\partial_iU,\quad
+N_i=(I-\Pi)\partial_iU,\quad
+\mathcal Q_{ij}=N_i^\dagger N_j.
+$$
+
+$\mathcal A_i$ 为 Hermitian；参数 $\lambda$ 可以是耦合、动量或已标定背景参数，不能默认就是物理时空坐标。
+
+### 定理 ST15.2：隐藏图的量子几何张量
+
+有
+
+$$
+\boxed{
+\mathcal Q_{ij}
+=G^{-1/2}(\partial_iX)^\dagger
+(I_W+XX^\dagger)^{-1}(\partial_jX)G^{-1/2}.
+}
+\tag{ST15.1}
+$$
+
+相应连接曲率为
+
+$$
+\boxed{
+\mathcal F_{ij}:=\partial_i\mathcal A_j-\partial_j\mathcal A_i
+-i[\mathcal A_i,\mathcal A_j]
+=i(\mathcal Q_{ij}-\mathcal Q_{ji}).
+}
+\tag{ST15.2}
+$$
+
+**证明。** $\partial_iU=(\partial_iL)G^{-1/2}+L\partial_iG^{-1/2}$。投影到法向时第二项为零。对下块嵌入 $E_W:w\mapsto(0,w)$，块计算与 Woodbury 恒等式给出
+
+$$
+E_W^\dagger(I-\Pi)E_W
+=I-X(I+X^\dagger X)^{-1}X^\dagger
+=(I+XX^\dagger)^{-1}.
+$$
+
+这证明(ST15.1)。再令 $K_i=U^\dagger\partial_iU=-i\mathcal A_i$。展开 $\partial_iK_j-\partial_jK_i+[K_i,K_j]$，用 $\partial_iU=UK_i+N_i$ 消掉切向项，剩余 $\mathcal Q_{ij}-\mathcal Q_{ji}$，乘以 $i$ 即得(ST15.2)。∎
+
+对任意参数系数与内部向量族，$\sum_{ij}v_i^\dagger\mathcal Q_{ij}v_j=\|\sum_jN_jv_j\|^2\ge0$。因此 $g_{ij}^{\mathrm{par}}=\operatorname{Re}\operatorname{tr}\mathcal Q_{ij}$ 半正定。它是参数可辨识几何；其号型一般不是洛伦兹号型，不能将它直接等同于本卷第29节的时空度量。该子丛机制的广义几何背景见[ST10-Subbundle]。
+
+### 定理 ST15.3：不变谱子空间的间隙控制
+
+再假设 $H(\lambda)U(\lambda)=U(\lambda)h(\lambda)$。令保留与正交补中完整 Hamiltonian 的谱距离为 $\Delta>0$，它与 ST10 的隐藏块距离 $\delta$ 是不同对象。则
+
+$$
+\boxed{
+\|N_i\|_F\le
+\frac{\|(I-\Pi)(\partial_iH)U\|_F}{\Delta}.
+}
+\tag{ST15.3}
+$$
+
+因而
+
+$$
+\|\mathcal F_{ij}\|
+\le\frac{2}{\Delta^2}
+\|(I-\Pi)(\partial_iH)U\|_F
+\|(I-\Pi)(\partial_jH)U\|_F.
+\tag{ST15.4}
+$$
+
+**证明。** 微分交织式并投影到补空间，得到 Sylvester 方程
+
+$$
+H_\perp N_i-N_i h=-(I-\Pi)(\partial_iH)U.
+$$
+
+分别选择 $H_\perp,h$ 的正交本征基，每个矩阵元被相应能量差除，绝对值分母至少为 $\Delta$。对平方求和即得 Frobenius 界；再用(ST15.2)及 $\|N\|\le\|N\|_F$。没有把任意交错谱下的该 Frobenius 论证误当成同常数的算子范数逆 Sylvester 定理。∎
+
+### 定理 ST15.4：移动编码的生成元与确切控制项
+
+沿光滑时间路径，编码内方程的 Hermitian 生成元是
+
+$$
+\boxed{h_{\mathrm{mov}}=U^\dagger HU-i\hbar U^\dagger\dot U
+=h-\hbar\mathcal A_t.}
+\tag{ST15.5}
+$$
+
+相对于完整 Schrödinger 方程，它的法向残差为
+
+$$
+D_t=(I-\Pi)HU-i\hbar N_t.
+$$
+
+对应传播子的等距交织误差至多 $\hbar^{-1}\int\|D_t\|dt$。
+
+**证明。** 将 $\psi=Uv$ 代入 $i\hbar\dot\psi=H\psi$ 并左乘 $U^\dagger$ 得到(ST15.5)。剩余法向部分为 $D_t$。对两个时变酉传播子采用与 ST14 相同的微分积分恒等式。∎
+
+即使 $HU=Uh$ 逐时刻成立，$N_t$ 仍可能非零。此时上述粗界是 $\int\|N_t\|dt$，减慢沿同一路径的运动并不会自动缩小这个路径长度界；更锐的绝热定理还需能隙、光滑性和振荡抵消分析。
+
+若允许加入实际控制 Hamiltonian
+
+$$
+\boxed{H_{\mathrm{cd}}=i\hbar[\dot\Pi,\Pi],}
+\tag{ST15.6}
+$$
+
+则对逐时刻不变子空间有 $(I-\Pi)H_{\mathrm{cd}}U=i\hbar N_t$，所以法向残差严格为零。且 $U^\dagger H_{\mathrm{cd}}U=0$，$\|H_{\mathrm{cd}}\|=\hbar\|N_t\|$。
+
+**证明。** 由 $\Pi^2=\Pi$ 得 $\Pi\dot\Pi\Pi=0$，且微分 $\Pi U=U$ 给出 $\dot\Pi U=N_t$。因此(ST15.6)作用在 $U$ 上为 $i\hbar N_t$。$\dot\Pi$ 对子空间/补空间只有非对角块，块范数即给出最后的等式。该控制有实际作用强度和实现条件，不能被当作免费的观察者坐标选择；一般无跃迁驱动机制见[ST10-Driving]。∎
+
+## ST16．相同定态响应可以隐藏不同的闭路相位
+
+### 定理 ST16.1：一个完全可算的不可识别性见证
+
+取 $c>a$、$b>0$，在固定环境基中令
+
+$$
+H(\theta)=
+\begin{pmatrix}a&be^{-i\theta}\\be^{i\theta}&c\end{pmatrix},
+\qquad
+E_-=\frac{a+c-\sqrt{(c-a)^2+4b^2}}2,
+\qquad r=\frac b{c-E_-}.
+$$
+
+对应归一化基态可取
+
+$$
+U(\theta)=\frac{(1,-re^{i\theta})^{\mathsf T}}{\sqrt{1+r^2}},
+\quad Z=\frac1{1+r^2},\quad p=1-Z.
+$$
+
+只从第一分量驱动并读取，其全部冻结参数响应为
+
+$$
+\boxed{
+\chi_{00}(z;\theta)
+=\frac{z-c}{(z-a)(z-c)-b^2},
+}
+\tag{ST16.1}
+$$
+
+与 $\theta$ 无关，但完整绕行 $0\le\theta\le2\pi$ 的几何相位为
+
+$$
+\boxed{\gamma=-2\pi p=-2\pi(1-Z)\pmod{2\pi}.}
+\tag{ST16.2}
+$$
+
+**证明。** 直接块逆得到(ST16.1)。该本征向量光滑且周期闭合，$iU^\dagger\partial_\theta U=-p$；积分即得(ST16.2)。这里的几何相位在适当绝热实现中可读取，也可借 ST15.6 的显式控制实现精确的无泄漏运输。控制须计入完整实验。∎
+
+对照实验固定 $H(0)$ 不变，而只让一个无物理作用的标签绕行，得到相同的全部冻结响应，却得到零几何相位。因为 $0<p<1/2$，两个相位在模 $2\pi$ 后仍不同。因此，冻结响应数据不能唯一决定这类时序实验。
+
+在 $a=0,c=b=\Delta>0$ 的例子中，$r=\varphi^{-1}$，
+
+$$
+\gamma=-\pi\left(1-\frac1{\sqrt5}\right).
+$$
+
+此值直接连接 ST11 的隐藏权重与闭路相位。它是该具体二态模型的精确结果，不是一个由黄金算术唯一决定的普适引力常数。
+
+### ST16.2：主动改变耦合与被动换基的区别
+
+虽然 $H(\theta)=W(\theta)H(0)W(\theta)^\dagger$，其中 $W=\operatorname{diag}(1,e^{i\theta})$，但对时变态坐标 $\psi'=W\psi$，被动变换后的生成元包含
+
+$$
+H'=WHW^\dagger+i\hbar\dot W W^\dagger.
+$$
+
+直接令真实实验的 Hamiltonian 等于 $H(\theta)$ 没有自动包含这个惯性项，因而是不同的驱动。运输全部探针与连接后，纯粹换基不会改变物理结果。本反例没有否定对偶；它说明 ST5 中逐参数的响应相等，不足以代替整条实验路径的运输相等。
+
+这一实验层区分与 Oh–Murakami 2026年预印本关于有效 Hamiltonian 还需配套物理位置/电流接口的讨论相邻；本节证明仅依赖上述二态矩阵，不将该预印本的所有结论作为前提。[ST10-Embedding]
+
+## ST17．已有背景曲率与子空间选择曲率的协变组合
+
+### 假设 ST17.1
+
+在参数域的环境 Hermitian 向量丛上，给定连接
+
+$$
+\nabla_i=\partial_i-i\Gamma_i,\qquad \Gamma_i=\Gamma_i^\dagger,
+\qquad
+F^{\mathrm{full}}_{ij}=\partial_i\Gamma_j-\partial_j\Gamma_i-i[\Gamma_i,\Gamma_j].
+$$
+
+对局部等距框 $U$，定义
+
+$$
+\mathcal A_i=iU^\dagger\nabla_iU
+=U^\dagger\Gamma_iU+iU^\dagger\partial_iU,
+\qquad N_i=(I-\Pi)\nabla_iU.
+$$
+
+### 定理 ST17.2：有效曲率的协变分解
+
+有
+
+$$
+\boxed{
+\mathcal F_{ij}
+=U^\dagger F^{\mathrm{full}}_{ij}U
++i\left(N_i^\dagger N_j-N_j^\dagger N_i\right).
+}
+\tag{ST17.1}
+$$
+
+**证明。** 写 $K_i=U^\dagger\nabla_iU=-i\mathcal A_i$，则 $\nabla_iU=UK_i+N_i$。相容连接保持内积，微分 $K$ 并反对称化得
+
+$$
+\partial_iK_j-\partial_jK_i+[K_i,K_j]
+=U^\dagger[\nabla_i,\nabla_j]U
++N_i^\dagger N_j-N_j^\dagger N_i.
+$$
+
+使用 $[\nabla_i,\nabla_j]=-iF^{\mathrm{full}}_{ij}$，乘以 $i$ 即得。∎
+
+在内部框变换 $U\mapsto UV(\lambda)$，$V$ 酉时，
+
+$$
+\mathcal A_i\mapsto V^\dagger\mathcal A_iV+iV^\dagger\partial_iV,
+\qquad\mathcal F_{ij}\mapsto V^\dagger\mathcal F_{ij}V.
+$$
+
+所以适当闭路 holonomy 的共轭类是框不变量。若连环境基也改变，必须一同运输 $\Gamma$。这正是 ST16 被动变换必须保留惯性项的协变表达。
+
+若 $\Gamma=\Gamma_V\oplus\Gamma_W$ 保持原分块，ST15.1 中的 $\partial_iX$ 可替换成
+
+$$
+D_iX=\partial_iX-i\Gamma_{W,i}X+iX\Gamma_{V,i},
+$$
+
+得到 $N_i^\dagger N_j$ 的同样图坐标公式。证明只需在法向投影前写出 $\nabla_iL-L(-i\Gamma_{V,i})=(0,D_iX)^{\mathsf T}$。
+
+该式是向量子丛几何中的经典结构；Oancea–Mieling–Palumbo 已在2026年论文中系统研究了含环境曲率的量子几何张量，并讨论曲时空 Dirac 场的应用。[ST10-Subbundle] 本文增加的是与前述 Schur/Born 范数、实际仪器闭合和可计算二态见证的同一套记号与证明接口，不将(ST17.1)的普遍形式据为新发现。
+
+**几何类型边界。** $F^{\mathrm{full}}$ 是已指定量子态运输连接的曲率。只有在另有明确构造时，它才可来自某个时空自旋连接或其他物理几何。$\mathcal F$ 的第二项来自保留子空间的变化。二者都不能单靠同名“曲率”与 Einstein 张量认同。环境本来有曲率时，将有效曲率全部归于隐藏模式，也会漏掉第一项。
+
+## ST18．谱、实验与几何的共同约化命题
+
+### 定理 ST18.1：协议保持的有限维约化
+
+在正 Hilbert 空间中固定 Hermitian Hamiltonian、一个横截的不变子空间及其图坐标 $X$，并规定允许控制与仪器族。若所有允许操作保留该子空间，则由
+
+$$
+U=(I,X)^{\mathsf T}(I+X^\dagger X)^{-1/2}
+$$
+
+构造的有效理论具有以下同时成立的性质：完整态范数与效果读数由 ST10–ST12 的等距编码保持；所有有限自适应联合记录由 ST13 保持；在光滑参数变化及给定环境连接下，诱导连接和曲率由 ST15–ST17 确定。近似图子空间的演化误差可用 ST14 的残差控制，仪器漏出仍需单独控制。
+
+**证明。** 静态部分由 ST12.2 与 ST12.3；词级实验部分由 ST13.2；几何部分由定义等距编码后直接应用 ST15.2、ST17.2。ST14明确量化离开精确不变性时的误差。能量依赖的单根图与固定整个子空间的图不互相替代，故只在各自假设覆盖处使用 ST10与ST11。∎
+
+**接入弦论的条件性推论。** 若一个指定弦模型的规范相容有效构造，进一步提供以上正态空间、Hamiltonian、保留子空间、实际仪器及连接，则本命题可用于认证该模型中相应实验的约化。Sen 的量子 BV 积分和弦场论的树级同伦转移提供规范结构方面的外部输入，仍须逐项识别这些正 Hilbert 空间对象；不能用 BV 方程自动替代仪器零漏出，也不能把有限维误差界无条件用于无限弦塔。[ST-Sen][ST10-HomotopyII]
+
+由此形成三个有不同反例的条件：ST3控制规范恒等式，ST13控制干预后继续预测的能力，ST17控制对整条参数路径的相容运输。ST13.3和ST16.1分别证明，只有精确能谱或全部冻结响应时，后两项仍可能失败。
+
+**书目与归属。** 以下为本增订新增主要来源；日期状态核对至2026-09-17。本文有限矩阵证明自含，数值核验仅作错误探测，不替代普遍证明；未对全部既有文献或仓库逐定理穷尽查重。
+
+[ST10-Feshbach]: https://arxiv.org/abs/2105.02058 "Genevieve Dusson, Israel Sigal, Benjamin Stamm, The Feshbach-Schur map and perturbation theory (2021). Discrete self-adjoint spectra and explicit estimates."
+[ST10-SW]: https://arxiv.org/abs/1105.0675 "Sergey Bravyi, David DiVincenzo, Daniel Loss, Schrieffer-Wolff transformation for quantum many-body systems, Annals of Physics 326 (2011) 2793–2826, DOI 10.1016/j.aop.2011.06.004."
+[ST10-Subbundle]: https://arxiv.org/abs/2503.17163 "Marius A. Oancea, Thomas B. Mieling, Giandomenico Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026), DOI 10.22331/q-2026-01-14-1965. The general framework and extra ambient-curvature contribution belong to these authors."
+[ST10-Driving]: https://doi.org/10.1088/1751-8113/42/36/365303 "M. V. Berry, Transitionless quantum driving, Journal of Physics A: Mathematical and Theoretical 42 (2009) 365303."
+[ST10-Embedding]: https://arxiv.org/html/2607.21882v1 "Chang-geun Oh and Shuichi Murakami, Orbital Embedding and the Physical Definition of Quantum Geometry, arXiv:2607.21882v1, 24 July 2026. Preprint, used for the neighboring operational question, not as a premise for the two-state proof."
+[ST10-HomotopyII]: https://arxiv.org/abs/2106.08343 "Alex S. Arvanitakis, Olaf Hohm, Chris Hull, Victor Lekeu, Homotopy Transfer and Effective Field Theory II: Strings and Double Field Theory, Fortschritte der Physik 70 (2022) 2200004, DOI 10.1002/prop.202200004. Tree-level scope retained."
+
+---
+
+---
+
+<a id="string-observer-leakage-global-geometry"></a>
+
+# 非零漏出、投影代数与全局观察者几何
+
+## 接续 ST0–ST18 的理论增订 ST19–ST26
+
+**数学范围。** 除显式的向量丛命题外，本文工作在有限维、正定内积的复 Hilbert 空间上。连续场、无界算子、弦 ghost 空间、量子 BV 积分与 Einstein 动力学须另行给出实现。ST19–ST26 的综合结论目前由普通数学证明承担，尚无逐条对应的 Lean 闭合。ST19–ST21把已有ST13的零漏出判据推广为可量化的仪器近似；ST22–ST26把已有ST15–ST17的局部图几何推广到带全局障碍的图册。普遍的温和测量界、子丛曲率公式和量子度量拓扑界各有既有来源，文中明确归属，不作全球首次发现声明。
+
+## ST19．保持单步结果概率的量子仪器补全
+
+### 定义 ST19.1：输入与输出编码、仪器漏出
+
+设 $U:V\to\mathcal H$、$W:V'\to\mathcal H'$ 为等距映射，$V,V'$ 非零。允许输入与输出编码不同，记 $P'=WW^\dagger$。完整有限仪器为
+
+$$
+\mathcal I_a(\omega)=\sum_\ell K_{a\ell}\omega K_{a\ell}^\dagger,
+\qquad \sum_{a,\ell}K_{a\ell}^\dagger K_{a\ell}=I_{\mathcal H}.
+$$
+
+定义压缩算子与漏出算子
+
+$$
+k_{a\ell}=W^\dagger K_{a\ell}U,\qquad
+R_{a\ell}=(I-P')K_{a\ell}U,
+$$
+
+$$
+\Lambda_a=\sum_\ell R_{a\ell}^\dagger R_{a\ell},\qquad
+\Lambda=\sum_a\Lambda_a,\qquad \lambda=\|\Lambda\|.
+\tag{ST19.1}
+$$
+
+块分解立即给出 $0\le\Lambda\le I_V$，所以 $0\le\lambda\le1$。该量是在给定输入编码上的最坏单步漏出概率；它没有预设真实多轮状态始终留在编码内。
+
+### 定理 ST19.2：按结果复位的 CPTP 补全
+
+为每个结果选择一个固定密度矩阵 $\tau_a$ 于 $V'$，令
+
+$$
+\boxed{
+\widehat{\mathcal I}_a(\rho)
+=\sum_\ell k_{a\ell}\rho k_{a\ell}^\dagger
++\operatorname{tr}(\Lambda_a\rho)\tau_a.
+}
+\tag{ST19.2}
+$$
+
+则这是一个归一量子仪器，且对所有输入态逐结果满足
+
+$$
+\operatorname{tr}\widehat{\mathcal I}_a(\rho)
+=\operatorname{tr}\mathcal I_a(U\rho U^\dagger).
+\tag{ST19.3}
+$$
+
+**证明。** $\rho\mapsto\operatorname{tr}(\Lambda_a\rho)\tau_a$ 完全正：若 $\Lambda_a=\sum_j s_j|v_j\rangle\langle v_j|$、$\tau_a=\sum_i t_i|w_i\rangle\langle w_i|$，其 Kraus 家族为 $\sqrt{s_jt_i}|w_i\rangle\langle v_j|$。又有
+
+$$
+\sum_\ell k_{a\ell}^\dagger k_{a\ell}+\Lambda_a
+=U^\dagger\Bigl(\sum_\ell K_{a\ell}^\dagger K_{a\ell}\Bigr)U.
+$$
+
+取迹得到(ST19.3)，再对 $a$ 求和得到保迹性。∎
+
+补全是一个明确的近似模型：漏出的后态被替换为指定复位态。它只承诺精确保留单步结果效果；没有承诺完整未来。数学上的 CPTP 构造也不说明物理复位或控制资源免费。
+
+## ST20．带参考系统的尖锐单步误差界
+
+记 $\mathcal E_U(\rho)=U\rho U^\dagger$。用一个正交经典寄存器保留结果，定义通道
+
+$$
+\mathfrak I\mathcal E_U(\rho)
+=\sum_a|a\rangle\langle a|\otimes\mathcal I_a(U\rho U^\dagger),
+$$
+
+$$
+\mathcal E_W\widehat{\mathfrak I}(\rho)
+=\sum_a|a\rangle\langle a|\otimes
+W\widehat{\mathcal I}_a(\rho)W^\dagger.
+$$
+
+### 定理 ST20.1：仪器补全的钻石距离界
+
+定义
+
+$$
+\boxed{b(q)=\frac{q+\sqrt{q(4-3q)}}2,\qquad0\le q\le1.}
+\tag{ST20.1}
+$$
+
+对任意参考系统 $R$ 及输入密度态 $\rho_{VR}$，令
+$q=\operatorname{tr}[(\Lambda\otimes I_R)\rho_{VR}]$。则
+
+$$
+\frac12\left\|[(\mathfrak I\mathcal E_U-\mathcal E_W\widehat{\mathfrak I})
+\otimes\mathrm{id}_R](\rho_{VR})\right\|_1
+\le b(q)\le b(\lambda).
+\tag{ST20.2}
+$$
+
+因而
+
+$$
+\boxed{
+\frac12\|\mathfrak I\mathcal E_U-\mathcal E_W\widehat{\mathfrak I}\|_\diamond
+\le b(\lambda)\le \sqrt\lambda+\lambda/2.
+}
+\tag{ST20.3}
+$$
+
+标量函数 $b$ 与 Regula–Lami–Datta 的加强温和测量引理中广义迹距离的尖锐函数一致；该函数的普遍改进归于其2026年论文。以下给出投影特例的自含证明，再把它接到保持结果的仪器补全。[ST19-RLD]
+
+**证明。** 先纯化输入，并对带结果仪器作保留 Kraus 标签的 Stinespring 等距扩张。其输出为单位向量 $|\Psi\rangle$。在输出系统上投影到 $P'$，并在参考和环境上张量恒等，记投影后的向量为 $|v\rangle$，被删去向量为 $|w\rangle$。于是
+
+$$
+\langle v,w\rangle=0,\quad\|v\|^2=1-q,\quad\|w\|^2=q.
+$$
+
+在 $v,w$ 张成的至多二维空间中，算子
+$|\Psi\rangle\langle\Psi|-|v\rangle\langle v|$ 的迹为 $q$，行列式为 $-q(1-q)$，所以
+
+$$
+\bigl\||\Psi\rangle\langle\Psi|-|v\rangle\langle v|\bigr\|_1
+=\sqrt{q(4-3q)}.
+$$
+
+偏迹及经典化保持迹范数收缩。补全中额外加入的复位项是一个迹为 $q$ 的正算子，即使输入与参考纠缠也成立。因此三角不等式给出 $b(q)$。端点直接连续延拓；在 $0<q<1$ 上
+
+$$
+b''(q)=-\frac{2}{[q(4-3q)]^{3/2}}<0,\qquad b'(1)=0,
+$$
+
+故 $b$ 单调递增，且 $q\le\lambda$。这个论证对所有参考系统成立，给出通道差的钻石范数界。最后 $\sqrt{q(4-3q)}\le2\sqrt q$。∎
+
+### 例 ST20.2：此复位补全家族的界可达到
+
+取完整空间的正交基 $|0\rangle,|1\rangle,|e\rangle$，输入和输出编码均保留前两维。完整操作为酉矩阵：
+
+$$
+K_q|0\rangle=\sqrt{1-q}|0\rangle+\sqrt q|e\rangle,
+\quad K_q|e\rangle=-\sqrt q|0\rangle+\sqrt{1-q}|e\rangle,
+\quad K_q|1\rangle=|1\rangle.
+$$
+
+选择复位态 $|1\rangle\langle1|$。此时 $\lambda=q$。输入 $|0\rangle$ 时，补全输出为
+$(1-q)|0\rangle\langle0|+q|1\rangle\langle1|$，与真实输出的迹距离恰为 $b(q)$。二维块的范数贡献为 $\sqrt{q(4-3q)}$，独立的复位块贡献为 $q$。这证明(ST20.3)作为所述补全家族的统一界是尖锐的；它没有声称这种复位在所有可选模拟方法中最优。
+
+只保留一维编码时，真实输出 $\sqrt{1-q}|0\rangle+\sqrt q|e\rangle$ 与任何归一编码输出的迹距离为 $\sqrt q$。因此无法对所有模型以固定常数把最坏误差改成 $O(q)$。
+
+## ST21．非零漏出的多时刻误差与相干反例
+
+### 定理 ST21.1：有限自适应记录的误差累加
+
+固定有限轮协议。第 $j$ 步的仪器、输入/输出编码和复位态可依赖既往经典记录 $h$，并满足 ST19。设相应漏出上界为 $\lambda_j(h)$。从同一初始编码态出发，比较真实协议与逐步补全的有效协议，并实施相同的最终实验。则全部联合记录分布满足
+
+$$
+\boxed{
+\operatorname{TV}(p_{\rm full},p_{\rm eff})
+\le\min\left\{1,\sum_{j=1}^N\sup_h b(\lambda_j(h))\right\}.
+}
+\tag{ST21.1}
+$$
+
+该界允许初态带参考系统，并保留所有分支，不做后选择。
+
+**证明。** 按顺序构造混合协议：前 $j$ 步使用补全后重新编码的操作，后续步骤仍使用真实操作。相邻混合协议在第 $j$ 步之前共享编码内输入，故可用(ST20.3)。之后双方共用真实 CPTP 过程，误差不会增加。对分支控制通道取 $\sup_h$，再对各次替换用三角不等式，最后读出经典记录。证明没有假设真实协议在每一步自动留在编码中。∎
+
+若各段演化另有 ST14 的等距交织误差 $\varepsilon_j(h)$，可在同一替换证明中使用
+
+$$
+\min\left\{1,\sum_j\sup_h[b(\lambda_j(h))+\varepsilon_j(h)]\right\}.
+\tag{ST21.2}
+$$
+
+### 反例 ST21.2：未监测的相干漏出不能用概率并集界控制
+
+在 $\mathbb C^2$ 中只保留 $|0\rangle$，重复真实酉旋转
+
+$$
+R_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix}.
+$$
+
+每一步在编码输入上的漏出参数为 $\lambda=\sin^2\theta$。一维归一补全只能留在 $|0\rangle$。取 $\theta=\pi/(2N)$，真实演化满足
+
+$$
+R_\theta^N|0\rangle=|1\rangle,
+\qquad
+N\lambda=N\sin^2\frac{\pi}{2N}\longrightarrow0.
+$$
+
+最终测量 $|1\rangle\langle1|$ 的概率差却等于1。相反，$N b(\lambda)$ 的小角主项趋于 $\pi/2$，与(ST21.1)的截断上界相容。若每一步真的测量是否漏出，实验本身会改变；本反例中没有偷偷加入该测量。
+
+### 命题 ST21.3：输入输出换框不改变预算
+
+在同一个物理编码像内取 $U'=Ug_{\rm in}$、$W'=Wg_{\rm out}$，其中 $g$ 酉。则
+
+$$
+k'_{a\ell}=g_{\rm out}^\dagger k_{a\ell}g_{\rm in},\quad
+\Lambda'_a=g_{\rm in}^\dagger\Lambda_a g_{\rm in}.
+$$
+
+若同时运输 $\tau'_a=g_{\rm out}^\dagger\tau_a g_{\rm out}$，补全通道也协变，$\lambda$ 和全部误差界保持不变。证明由代入定义和酉范数不变性。改变物理编码像属于另一个问题，不在此换框命题内。
+
+## ST22．压缩后的非交换性由相同的法向块控制
+
+### 定理 ST22.1：投影乘法与交换子缺陷
+
+固定等距编码 $U$，$P=UU^\dagger$。对完整空间上的 Hermitian 算子 $A,B$，令
+
+$$
+a=U^\dagger AU,\quad b=U^\dagger BU,\quad
+L_A=(I-P)AU,\quad L_B=(I-P)BU.
+$$
+
+有
+
+$$
+U^\dagger ABU-ab=L_A^\dagger L_B,
+$$
+
+$$
+\boxed{[a,b]=U^\dagger[A,B]U-L_A^\dagger L_B+L_B^\dagger L_A,}
+\tag{ST22.1}
+$$
+
+以及
+
+$$
+\|[a,b]-U^\dagger[A,B]U\|\le2\|L_A\|\|L_B\|.
+\tag{ST22.2}
+$$
+
+**证明。** 在 $AB$ 中插入 $I=P+(I-P)$，利用自伴性得到第一式，交换 $A,B$ 后相减，最后用次乘性。∎
+
+同时，对短时控制 $e^{-itA/\hbar}$，有
+
+$$
+U^\dagger e^{itA/\hbar}(I-P)e^{-itA/\hbar}U
+=\frac{t^2}{\hbar^2}L_A^\dagger L_A+O(t^3).
+\tag{ST22.3}
+$$
+
+该式由有限矩阵指数展开得到。于是压缩代数的缺陷与操作把态带出编码的倾向由同一批矩阵元控制。这里的 $A$ 只有在确实作为控制 Hamiltonian 时才具有该动力学解释。
+
+### 例 ST22.2：可交换完整观测量的压缩可以不交换
+
+取 $A=\operatorname{diag}(1,0,0)$、$B=\operatorname{diag}(0,1,0)$，并以
+
+$$
+u_1=(1,1,0)^{\mathsf T}/\sqrt2,\quad
+u_2=(1,-1,2)^{\mathsf T}/\sqrt6
+$$
+
+为 $U$ 的两列。则 $[A,B]=0$，但
+
+$$
+[a,b]=\frac1{3\sqrt3}\begin{pmatrix}0&-1\\1&0\end{pmatrix}\ne0.
+$$
+
+这是一项压缩代数结论；完整构造已经使用量子 Hilbert 空间，不能据此声称从经典概率独自推出量子力学。有限维交换子迹为零，也不能成为非零常数乘恒等的精确 Heisenberg 关系。
+
+Palumbo 在2026年发表的延展对象量子 Hall 模型中，研究了假定各向同性、有隙内部扇区上的投影代数。其普适性依赖具体扇区与平滑化条件。[ST19-GMP] 上述有限恒等式提供一个可用于检查相邻约化问题的接口，并未重新证明该文的连续 GMP 代数、gerbe 或完整弦模型。
+
+## ST23．非零 Chern 数阻止单一全局图编码
+
+### 假设 ST23.1
+
+令 $\Sigma$ 为紧致、无边界、定向光滑曲面，$P(x)$ 是固定平凡丛 $\Sigma\times\mathbb C^n$ 上的光滑秩 $r$ 正交投影，$1\le r<n$。记 $E_x=\operatorname{Ran}P(x)$。本文采用物理连接规范
+
+$$
+\mathcal A=iU^\dagger dU,\qquad
+\mathcal F=d\mathcal A-i\mathcal A\wedge\mathcal A,\qquad
+C_1(E)=\frac1{2\pi}\int_\Sigma\operatorname{tr}\mathcal F.
+$$
+
+标准第一 Chern 数的整数性作为向量丛背景使用；下述障碍证明实际只需要这个积分非零。度量拓扑界的既有讨论见[ST19-MO]。
+
+### 定理 ST23.2：单一固定可见空间的障碍
+
+若 $C_1(E)\ne0$，则对每个固定秩 $r$ 投影 $P_0$，存在 $x\in\Sigma$ 与单位向量 $v\in E_x$，使 $P_0v=0$。特别地，
+
+$$
+\boxed{\max_{x\in\Sigma}\|(I-P_0)P(x)\|=1.}
+\tag{ST23.1}
+$$
+
+**证明。** 若 $P_0:E_x\to\operatorname{Ran}P_0$ 处处单射，则因秩相同而处处可逆。局部矩阵求逆说明其逆光滑，把固定目标基拉回就得到 $E$ 的全局框，正交化后得到全局等距 $U$。此时 $\operatorname{tr}\mathcal F=d\operatorname{tr}\mathcal A$，因为交换子迹为零。由 Stokes 定理积分为零，矛盾。存在被完全消去的单位向量时范数至少为1，而正交投影范数至多为1。∎
+
+在横截的图坐标区域，$U=(I,X)^{\mathsf T}(I+X^\dagger X)^{-1/2}$，所以
+
+$$
+\lambda_{\min}(U^\dagger P_0U)=\frac1{1+\|X\|^2}.
+\tag{ST23.2}
+$$
+
+因此全局障碍可表现为图坐标发散。它不要求完整 Hamiltonian 的物理能隙闭合。这里 $\|(I-P_0)P(x)\|^2$ 是不同子空间间的丢失量，应与 ST19 的一次实际仪器漏出参数分别命名。
+
+### 定理 ST23.3：有限图册与一致的局部模型
+
+每个 $x_\alpha\in\Sigma$ 处选择 $E_{x_\alpha}$ 的等距基 $W_\alpha$。在
+$W_\alpha^\dagger P(x)W_\alpha>0$ 的邻域内定义
+
+$$
+U_\alpha(x)=P(x)W_\alpha
+[W_\alpha^\dagger P(x)W_\alpha]^{-1/2}.
+\tag{ST23.3}
+$$
+
+这些是光滑局部等距框，紧致性给出有限子覆盖。在交叠区，
+
+$$
+g_{\alpha\beta}=U_\alpha^\dagger U_\beta,\quad
+U_\beta=U_\alpha g_{\alpha\beta},\quad
+g_{\alpha\beta}g_{\beta\gamma}=g_{\alpha\gamma}.
+$$
+
+**证明。** 基点处括号内为恒等矩阵，正定性在邻域中保持；直接计算 $U_\alpha^\dagger U_\alpha=I$，其像为 $E_x$。交叠区用 $U_\alpha U_\alpha^\dagger=P$ 验证三式。∎
+
+局部态、Hamiltonian、仪器和连接必须使用同一过渡函数。ST21.3保证仪器预算不依赖局部框。沿路径切换图册时，精确的过渡函数是坐标运输，不是额外物理投影；实际重新测量并丢弃结果则是另一种有扰动的操作。
+
+## ST24．全局拓扑约束法向混合与控制强度
+
+### 假设 ST24.1
+
+现在允许环境本身是带相容 Hermitian 连接的向量丛；内积仍正定。参数曲面带一个固定 Riemann 度量，取局部定向正交切向框 $e_1,e_2$。沿用 ST17 的定义
+
+$$
+N_a=(I-P)\nabla_{e_a}U,\qquad
+\mathcal F_{12}=U^\dagger F^{\rm full}_{12}U
++i(N_1^\dagger N_2-N_2^\dagger N_1).
+$$
+
+该曲率分解来自相容连接的子丛几何，一般形式明确归于已有几何及2026年的系统研究。[ST19-OMP] 定义
+
+$$
+\mathscr E_N=\int_\Sigma(\|N_1\|_F^2+\|N_2\|_F^2)\,dA,
+\quad
+\mathscr B=\int_\Sigma\operatorname{tr}(U^\dagger F^{\rm full}_{12}U)\,dA.
+$$
+
+二者在局部酉换框下不变，故为全局量。参数度量在比较中固定，并不预先识别为物理时空度量。
+
+### 定理 ST24.2：带环境曲率扣除的拓扑界
+
+有
+
+$$
+\boxed{\mathscr E_N\ge|2\pi C_1(E)-\mathscr B|.}
+\tag{ST24.1}
+$$
+
+**证明。** 逐点使用 Frobenius Cauchy–Schwarz 与 $2ab\le a^2+b^2$：
+
+$$
+\left|\operatorname{tr}i(N_1^\dagger N_2-N_2^\dagger N_1)\right|
+\le2\|N_1\|_F\|N_2\|_F
+\le\|N_1\|_F^2+\|N_2\|_F^2.
+$$
+
+由曲率分解积分并使用三角不等式。∎
+
+环境平直时，$\mathscr B=0$，得到 $\mathscr E_N\ge2\pi|C_1|$。这一平直形式与已有量子度量拓扑界相容。[ST19-MO] 非平直环境中若漏掉 $\mathscr B$，结论一般错误，ST25给出等式见证。
+
+### 推论 ST24.3：无跃迁生成元的面积积分界
+
+定义每个单位参数方向上的法向控制生成元
+
+$$
+H_{{\rm cd},a}=i\hbar[\nabla_{e_a}P,P].
+$$
+
+则
+
+$$
+\sum_a\|H_{{\rm cd},a}\|_F^2
+=2\hbar^2\sum_a\|N_a\|_F^2,
+$$
+
+从而
+
+$$
+\boxed{
+\mathscr C_2:=\int_\Sigma\sum_a\|H_{{\rm cd},a}\|_F^2dA
+\ge2\hbar^2|2\pi C_1(E)-\mathscr B|.
+}
+\tag{ST24.2}
+$$
+
+**证明。** 对 $E\oplus E^\perp$ 分块，$\nabla P$ 只有互为伴随的非对角块 $N_a,N_a^\dagger$。交换子改变一个块的符号，故 Frobenius 范数平方为 $2\hbar^2\|N_a\|_F^2$。再用(ST24.1)。∎
+
+它是给定参数度量下、两个单位方向的生成元平方强度积分。它不是任意单条路径的热力学功下界，也没有推导最短物理时间。真正沿路径运动时，控制还乘以参数速度并受到可实现性限制。无跃迁驱动的一般机制见[ST19-Berry]。
+
+## ST25．恒定物理能隙下的完整二图册例子
+
+### 定理 ST25.1：单图发散、Chern 数与拓扑界同时可算
+
+取单位球面参数 $\boldsymbol n=(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$，
+
+$$
+H(\boldsymbol n)=\Delta\,\boldsymbol n\cdot\boldsymbol\sigma,\qquad
+\Delta>0,\qquad P=(I+\boldsymbol n\cdot\boldsymbol\sigma)/2.
+$$
+
+这是正能级 $+\Delta$ 的投影，完整能隙恒为 $2\Delta$。北、南局部框分别为
+
+$$
+U_N=\begin{pmatrix}\cos(\theta/2)\\e^{i\phi}\sin(\theta/2)\end{pmatrix},
+\qquad
+U_S=e^{-i\phi}U_N.
+$$
+
+它们分别在去掉南极、去掉北极的区域光滑。北图相对于 $|0\rangle$ 的图坐标为
+
+$$
+X_N=e^{i\phi}\tan(\theta/2),\quad
+G_N=\sec^2(\theta/2),\quad Z_N=\cos^2(\theta/2).
+$$
+
+所以南极处 $Z_N=0$、$X_N$ 发散，同时完整物理能隙不变。局部连接、曲率为
+
+$$
+\mathcal A_N=-\sin^2(\theta/2)d\phi,\quad
+\mathcal A_S=\cos^2(\theta/2)d\phi,
+$$
+
+$$
+\mathcal F=-\tfrac12\sin\theta\,d\theta\wedge d\phi,
+\qquad C_1=-1.
+$$
+
+**证明。** Pauli 恒等式 $(\boldsymbol n\cdot\boldsymbol\sigma)^2=I$ 给出能谱。直接乘法验证 $PU=U$、$U^\dagger U=1$。微分两个框得到连接；过渡函数 $e^{-i\phi}$ 恰好给出 $\mathcal A_S=\mathcal A_N+d\phi$。积分曲率得到 $-2\pi$，图坐标由上下分量相除得到。∎
+
+平直环境下，参数量子度量为
+
+$$
+g_{\theta\theta}=\frac14,\qquad g_{\phi\phi}=\frac14\sin^2\theta,
+\qquad g_{\theta\phi}=0.
+$$
+
+采用单位球面的标准参数度量，得到
+
+$$
+\boxed{\mathscr E_N=2\pi,\qquad\mathscr C_2=4\pi\hbar^2.}
+\tag{ST25.1}
+$$
+
+它达到ST24的平直界。
+
+### 定理 ST25.2：同一投影的曲率可以由环境运输承担
+
+在同一个平凡秩二环境丛上，指定全局光滑连接
+
+$$
+\Gamma_\kappa=\kappa(\boldsymbol n\times d\boldsymbol n)\cdot\boldsymbol\sigma,
+\quad\nabla=d-i\Gamma_\kappa,\quad\kappa\in\mathbb R.
+$$
+
+上述 $P$ 与能谱均不变。则
+
+$$
+N^{(\kappa)}=(1+2\kappa)N^{(0)},\quad
+F^{\rm full}_{\theta\phi}
+=2\kappa(1+\kappa)\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma,
+$$
+
+$$
+\mathscr E_N=2\pi(1+2\kappa)^2,\quad
+\mathscr B=8\pi\kappa(1+\kappa),\quad C_1=-1.
+\tag{ST25.2}
+$$
+
+因此对全部 $\kappa$，ST24.1 都取等号。特别地，$\kappa=-1/2$ 时
+
+$$
+\boxed{N=0,\quad\mathscr E_N=0,\quad C_1=-1,\quad\mathscr B=-2\pi.}
+\tag{ST25.3}
+$$
+
+**证明。** 用 $[\boldsymbol a\cdot\boldsymbol\sigma,\boldsymbol b\cdot\boldsymbol\sigma]=2i(\boldsymbol a\times\boldsymbol b)\cdot\boldsymbol\sigma$ 和 $\boldsymbol n\cdot d\boldsymbol n=0$，得到 $\nabla P=(1+2\kappa)dP$，故法向项具有该缩放。连接外微分贡献 $2\kappa\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$，交换子贡献 $2\kappa^2\sin\theta\,\boldsymbol n\cdot\boldsymbol\sigma$。又 $U^\dagger\Gamma_\kappa U=0$，有效连接仍等于前式，因此Chern数不变。逐项积分即可。∎
+
+这说明同一个有效 Berry 曲率与同一能谱，不能单独识别几何来自环境运输还是保留空间的法向变化。改变 $\Gamma_\kappa$ 是改变物理上所指定的比较/运输规则；若它只是某个表示变换，其他动力学与探针项必须一起运输。本命题没有把这种参数连接直接认作引力时空。
+
+## ST26．跨图册、带漏出的有效理论命题
+
+### 定理 ST26.1：全局协议的图册相容近似
+
+设一个有限维正态空间模型提供光滑等秩物理子空间丛、其局部等距编码和相容过渡函数，并指定完整有限实验协议。每次操作依ST19转移并补全；每段近似演化有ST14意义的误差预算。若局部态、仪器、复位态和运输连接在交叠区同时按过渡函数变换，则有效协议在不同图册计算中的全部联合记录相同，而且与完整协议的记录差满足(ST21.2)。非零第一Chern数与该全局有效理论相容，但排除ST23意义下的单一固定秩图坐标。
+
+**证明。** 局部补全与误差预算由ST19–ST21给出。ST21.3及ST23的过渡函数余循环律保证任一有限操作词在换框时只在首尾留下互相抵消的酉坐标变化，最终迹与记录不变；时变段还须使用ST15的连接生成元。各步与真实过程比较时使用ST21的混合协议证明。最后由ST23.2得到单图障碍。∎
+
+### 条件性推论 ST26.2：弦模型和相对论量子模型的应用边界
+
+若某个给定的弦有效构造、曲时空场论或投影物态，已给出上述正内积物理态空间、实验语言和运输结构，则可用本命题审计它在允许协议下的约化。规范相容有效作用量可以由适当的BV/同伦转移结构提供，但仍不能替代非零漏出和全局过渡函数的检验。[ST19-Sen]
+
+本文把三个对象分开：完整微观规范的一致性、实际记录的操作误差、量子态丛的参数曲率。时空因果性、Lorentz协变和引力反作用仍需原物理模型另行满足。有限空间上的钻石范数界没有无条件覆盖无限弦塔；处理无界生成元或连续场时，需要能量约束与定义域证明。这里的拓扑障碍与成本界也不独自决定时空维数、Newton常数或Einstein方程。
+
+## ST19–ST26 参考文献与归属
+
+[ST19-RLD]: https://arxiv.org/html/2501.12447v5 "Bartosz Regula, Ludovico Lami, Nilanjana Datta, Tight relations and equivalences between smooth relative entropies, IEEE Transactions on Information Theory 72(5), 3051–3073 (2026), DOI 10.1109/TIT.2026.3661711. Lemma 6 and Appendix C, especially the generalized trace-distance expression in Eq. (175)."
+[ST19-OMP]: https://arxiv.org/abs/2503.17163 "Marius A. Oancea, Thomas B. Mieling, Giandomenico Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026), DOI 10.22331/q-2026-01-14-1965. Sections 3.2–3.3, equations (3.13), (3.34)–(3.35). The original paper allows a more general Hermitian pseudo-metric; this supplement restricts to a positive metric where norm inequalities apply."
+[ST19-MO]: https://arxiv.org/abs/2103.11583 "Bruno Mera and Tomoki Ozawa, Kähler geometry and Chern insulators: Relations between topology and the quantum metric, Physical Review B 104, 045104 (2021), DOI 10.1103/PhysRevB.104.045104. Existing quantum-volume and Chern-number geometry; not a novelty claim for the flat-background bound."
+[ST19-GMP]: https://doi.org/10.1103/d76r-nzwm "Giandomenico Palumbo, Noncommutative Geometry and GMP-type algebra for three-dimensional quantum Hall fluids of extended objects, Physical Review D 114, 046021 (24 August 2026). Published abstract retains the assumed isotropic gapped internal sector and suitably smeared collective operators. The inspected arXiv:2602.15664v1 uses the earlier title Generalized GMP Algebra for Three-Dimensional Quantum Hall Fluids of Extended Objects; it is not treated as an identical revision of the published text."
+[ST19-Berry]: https://doi.org/10.1088/1751-8113/42/36/365303 "M. V. Berry, Transitionless quantum driving, Journal of Physics A 42, 365303 (2009). Classical source for the counterdiabatic mechanism; here only the explicitly stated finite-dimensional projector identity is used."
+[ST19-Sen]: https://arxiv.org/abs/1609.00459 "Ashoke Sen, Wilsonian Effective Action of Superstring Theory, JHEP 01 (2017) 108, DOI 10.1007/JHEP01(2017)108. External BV-consistency input, not a proof of the additional instrument hypotheses."
+
+---
+
+---
+
+<a id="string-observer-recovery-record-holonomy"></a>
+
+# 可恢复漏出、带记录的几何运输与全局通道
+
+## 接续 ST0–ST26 的增订 ST27–ST33
+
+**范围。** 本增订固定有限维、正定内积的复 Hilbert 空间和确定的实验权限。ST27–ST31给出矩阵与通道证明；ST32给出一个球面子丛和全局 CPTP 编码的显式构造。所有通道等式允许张量任意不参与控制的有限参考系统。概率不依赖未知逻辑输入，除非明确写出相反情况。钻石距离一律采用一半钻石范数的约定，不做后选择。
+
+**来源与证明状态。** 正交 syndrome 恢复和 Knill–Laflamme 条件是既有纠错理论；读取环境标签后纠正随机酉噪声也有既有文献。本增订把它们接到ST19的漏出、ST15的路径连接和ST23的全局图障碍上，并推导有损经典记录下的精确误差公式。没有全球新颖性主张。`OrthogonalSyndromeDecoding` 与 `TwoSyndromePhaseDefect` 的公开矩阵声明已在固定 Lean 工具链上构建；钻石范数最优性、CPTP 扩展及 Chern 数并未因此形式化。
+
+仓内 `FiniteKrausInstrumentBornMarginal` 提供真实 Kraus/Born 边缘公式；`FutureStatisticsEquivalence` 给出未来算子系统的不可区分性判据。它们没有自动证明本增订的恢复与全局通道结论。
+
+## ST27．离开一个固定编码空间，不等于逻辑信息已经不可恢复
+
+### 定义 ST27.1：正交错误副本
+
+设逻辑空间为 $V=\mathbb C^d$，物理输出为 $\mathcal H=\mathbb C^n$，$d\ge1$。取有限非空索引集 $J$ 和矩阵 $S_j:V\to\mathcal H$，满足
+
+$$
+S_j^\dagger S_k=\delta_{jk}I_V.
+\tag{ST27.1}
+$$
+
+令 $P=\sum_jS_jS_j^\dagger$。直接相乘得 $P=P^\dagger=P^2$。因此$n\ge d|J|$；这些索引是逻辑信息的正交副本标签，也称错误综合征（syndrome）。它们不是逻辑输入的复制：一次实际状态只占据一个联合编码，并未产生独立的未知态副本。
+
+对任意 syndrome 密度矩阵 $\sigma$，定义
+
+$$
+\mathcal N_\sigma(\rho)
+=\sum_{j,k}\sigma_{jk}S_j\rho S_k^\dagger.
+\tag{ST27.2}
+$$
+
+对固定复位密度态 $\tau$，定义完整恢复
+
+$$
+\mathcal D(X)
+=\sum_jS_j^\dagger X S_j+
+\operatorname{tr}[(I-P)X]\tau.
+\tag{ST27.3}
+$$
+
+### 定理 ST27.2：相干 syndrome 的精确恢复
+
+$\mathcal N_\sigma$ 与 $\mathcal D$ 均为 CPTP，而且
+
+$$
+\boxed{\mathcal D\mathcal N_\sigma=\mathrm{id}_V.}
+\tag{ST27.4}
+$$
+
+恢复不要求读取 $\sigma$，也不要求它在指定标签基下对角。
+
+**证明。** 定义等距$J_0:V\otimes\mathbb C^{|J|}\to\mathcal H$为$J_0(v\otimes|j\rangle)=S_jv$。式(ST27.1)保证等距性，故$\mathcal N_\sigma(\rho)=J_0(\rho\otimes\sigma)J_0^\dagger$完全正且保迹。
+
+恢复第一项由Kraus矩阵$S_j^\dagger$构造。第二项是正效果$I-P$后制备$\tau$的映射，故也完全正。两部分的迹相加为$\operatorname{tr}X$。
+
+对任意$\sigma,\rho$矩阵（此处甚至不需正性），
+
+$$
+\sum_iS_i^\dagger\mathcal N_\sigma(\rho)S_i
+=\sum_{i,j,k}\sigma_{jk}\delta_{ij}\delta_{ki}\rho
+=\operatorname{tr}(\sigma)\rho.
+$$
+
+$\mathcal N_\sigma$的输出支持在$P$内，故复位项为零。密度态的迹为一，得到结论。`OrthogonalSyndromeDecoding.lean` 承载对应的矩阵恢复恒等式。∎
+
+### 例 ST27.3：漏出参数为一但恢复误差为零
+
+取$\mathcal H=V\otimes\mathbb C^2$，旧编码$S_0v=v\otimes|0\rangle$，噪声实际把它送到$S_1v=v\otimes|1\rangle$。相对于旧投影$P_0=S_0S_0^\dagger$，ST19意义的漏出为$\lambda=1$。然而丢弃第二因子就精确恢复$\rho$。
+
+所以ST20对“压回旧空间并复位”的误差上界，没有声称是所有恢复方法的最优下界。能否恢复，取决于被允许访问的输出系统和 syndrome 信息。如果这些自由度实际不可访问，则不能使用这里的恢复器。[ST27-KL][ST27-EA]
+
+## ST28．保留结果记录的恢复条件
+
+### 命题 ST28.1：带公开结果的 Knill–Laflamme 条件
+
+设原输入已经限制到逻辑空间，仪器分支为
+
+$$
+\mathcal I_a(\rho)=\sum_\ell E_{a\ell}\rho E_{a\ell}^\dagger,
+\qquad \sum_{a,\ell}E_{a\ell}^\dagger E_{a\ell}=I.
+$$
+
+允许恢复器读取结果$a$。固定常数$p_a\ge0$、$\sum_ap_a=1$。存在逐结果CPTP恢复$\mathcal R_a$满足
+
+$$
+\mathcal R_a\mathcal I_a(\rho)=p_a\rho\quad\forall\rho
+\tag{ST28.1}
+$$
+
+当且仅当对每个$a$存在半正定标量矩阵$c^{(a)}$，使
+
+$$
+\boxed{E_{a\ell}^\dagger E_{ak}=c^{(a)}_{\ell k}I,\qquad
+\operatorname{tr}c^{(a)}=p_a.}
+\tag{ST28.2}
+$$
+
+公开标签$a$之间不需交叉条件。如果$a$被删除、恢复器只能看到无标签通道，标准条件必须检查所有$(a,\ell),(b,k)$交叉项。这是对经典纠错条件的带记录应用。[ST27-KL]
+
+**证明。** 充分性：对$c^{(a)}$酉对角化，同时作Kraus基变换，得到$F_{aj}^\dagger F_{ak}=d_{aj}\delta_{jk}I$。$d_{aj}>0$时令$S_{aj}=F_{aj}/\sqrt{d_{aj}}$，零权重算子本身为零。ST27的解码对$\sum_jd_{aj}S_{aj}\rho S_{aj}^\dagger$给出$p_a\rho$，并可在补空间CPTP扩展。$p_a=0$时该分支恒为零。
+
+必要性：写恢复Kraus为$R_{at}$。复合通道$p_a\mathrm{id}$的Choi矩阵秩至多一，故每个$R_{at}E_{a\ell}=z_{at\ell}I$（零分支也成立）。利用恢复保迹，
+
+$$
+E_{a\ell}^\dagger E_{ak}
+=\sum_tE_{a\ell}^\dagger R_{at}^\dagger R_{at}E_{ak}
+=\left(\sum_t\overline{z_{at\ell}}z_{atk}\right)I.
+$$
+
+括号构成Gram矩阵，故半正定；分支迹给出$p_a$。∎
+
+这里的$p_a$不依赖未知逻辑态。如果某公开结果携带未知态的信息，同时要求每个结果后都恢复完整未知态，需要单独满足无信息无扰动条件，不能由“已知结果”自动获得。
+
+## ST29．恢复器需要保存路径上的逻辑作用
+
+### 定理 ST29.1：不同 syndrome 的已知运输可以精确补偿
+
+令$V_j$是逻辑酉矩阵，可以表示指定闭路的holonomy，或包含动力学相位的已知完整逻辑演化。取
+
+$$
+\widetilde S_j=S_jV_j.
+$$
+
+则$\widetilde S_j^\dagger\widetilde S_k=\delta_{jk}I$。采用$\widetilde S_j$构造的ST27解码精确恢复全部逻辑态。
+
+但如果噪声syndrome已去相干、概率为$p_j$，且使用未补偿运输的旧解码$S_j^\dagger$，则得到
+
+$$
+\boxed{\Phi(\rho)=\sum_jp_jV_j\rho V_j^\dagger.}
+\tag{ST29.1}
+$$
+
+**证明。** 先计算正交性，再代入ST27。对于对角$\sigma$，旧解码消去不同标签之间的块，仅保留上述各个逻辑作用。∎
+
+### 命题 ST29.2：无标签混合何时仍为一个酉演化？
+
+若$p_j>0$的分支均作用在相同有限逻辑空间，则$\Phi=\operatorname{Ad}_V$当且仅当每个受支持分支满足$V_j=e^{i\alpha_j}V$。
+
+**证明。** 若相差相位，共轭通道相同。反向利用Choi矩阵：$\Phi$的Choi矩阵是$\sum_jp_j|V_j\rangle\!\rangle\langle\!\langle V_j|$，酉通道的Choi矩阵秩一。正权重排除非共线向量，故$V_j=c_jV$；酉性给出$|c_j|=1$。∎
+
+这说明瞬时可纠正性和整条路径的恢复是不同问题。连接变化产生的syndrome相关逻辑作用必须保留或补偿。Lanka、Garcia-Nila、Brun在2026年3月的预印本中利用连续测量记录识别瞬时syndrome并途中调整holonomic路径，提供了直接相邻的物理实现方向。本文没有复现该文的连续测量动力学或容错阈值。[ST27-Steering]
+
+## ST30．syndrome记录不完整时的精确最优误差
+
+### 假设 ST30.1：相位型路径与有损经典记录
+
+逻辑空间为一个量子比特。分支$j$以输入无关概率$p_j$出现，并实施
+
+$$
+V_j=\operatorname{diag}(z_j,1),\qquad |z_j|=1.
+$$
+
+记录器只输出$r$，其条件概率为$T(r|j)$，$\sum_rT(r|j)=1$。一切额外syndrome量子自由度此时已被删除。可访问通道为
+
+$$
+\mathcal M_T(\rho)=\sum_r|r\rangle\langle r|\otimes
+\sum_jp_jT(r|j)V_j\rho V_j^\dagger.
+\tag{ST30.1}
+$$
+
+定义
+
+$$
+q_r=\sum_jp_jT(r|j),\qquad
+c_r=\sum_jp_jT(r|j)z_j,\qquad
+s_T=\sum_r|c_r|\le1.
+\tag{ST30.2}
+$$
+
+允许任意作用在“记录+量子比特”上的确定性CPTP恢复，最终输出一个量子比特；目标是恢复恒等通道，不要求输出原记录。不知道$T,p,z$时的估计成本另行处理。
+
+### 定理 ST30.2：带粗记录的最优恢复公式
+
+有
+
+$$
+\boxed{
+\inf_{\mathcal R\ {\mathrm{CPTP}}}
+\frac12\|\mathcal R\mathcal M_T-\mathrm{id}\|_\diamond
+=\frac{1-s_T}{2}
+=\frac12\left(1-\sum_r\left|\sum_jp_jT(r|j)z_j\right|\right).
+}
+\tag{ST30.3}
+$$
+
+**证明：可达到的上界。** $c_r\ne0$时，根据记录施加$W_r=\operatorname{diag}(\overline c_r/|c_r|,1)$；$c_r=0$时任选相位。分支的对角元原来乘$q_r$，非对角元乘$c_r$，补偿后非对角元乘$|c_r|$。删除$r$得到
+
+$$
+\mathcal D_{s_T}(\rho)=
+\begin{pmatrix}\rho_{00}&s_T\rho_{01}\\s_T\rho_{10}&\rho_{11}\end{pmatrix}
+=(1-e)\rho+eZ\rho Z,
+\quad e=(1-s_T)/2.
+$$
+
+三角不等式和通道钻石范数为一给出半钻石距离至多$e$。输入$|+\rangle$时$Z|+\rangle=|-\rangle$，两态正交，迹距离为$e$，所以这个上界本身精确。
+
+**证明：任意恢复的下界。** 对输入$\rho_\pm=|\pm\rangle\langle\pm|$，$\mathcal M_T(\rho_+)-\mathcal M_T(\rho_-)$的第$r$块为
+
+$$
+\begin{pmatrix}0&c_r\\\overline c_r&0\end{pmatrix},
+$$
+
+迹距离因此恰为$s_T$。若某恢复与恒等通道的半钻石距离为$e'$，则每个$\rho_\pm$的恢复误差至多$e'$。迹距离三角不等式及CPTP收缩性给出
+
+$$
+1=D(\rho_+,\rho_-)\le2e'+s_T.
+$$
+
+故$e'\ge(1-s_T)/2$。上下界相等，得到结论。∎
+
+这个证明与允许的参考系统相容：下界只需无参考的两态见证，上界是通道钻石范数界。环境辅助纠错和相位阻尼恢复有既有研究；本节给出此规定记录模型下的显式优化与证明，不以有限检索宣称首次得到相同公式。[ST27-EA][ST27-BO]
+
+### 推论 ST30.3：精确恢复的最小确定性记录
+
+$e_*=0$当且仅当对于每个$q_r>0$的记录，所有$p_jT(r|j)>0$的$z_j$都相同。证明为复数三角不等式的取等条件。
+
+若记录是确定性函数$r=f(j)$，精确恢复至少需要与正概率分支中不同$z_j$的数量一样多的记录值，按相同$z_j$分类即可达到。这是规定分支模型和权限下的记录数下界，不是普适量子存储维数定理。
+
+### 推论 ST30.4：记录粗化只能降低可恢复性
+
+记录再经过随机粗化$Q(s|r)$时，$c'_s=\sum_rQ(s|r)c_r$。故
+
+$$
+\sum_s|c'_s|\le\sum_r|c_r|,
+\qquad e_*'\ge e_*.
+\tag{ST30.4}
+$$
+
+同样的底层演化，仅改变可访问记录，就可能改变最优恢复误差。
+
+### 例 ST30.5：一个记录比特可以决定能否完全恢复
+
+取$p_0=p_1=1/2$、$z_0=1,z_1=-1$。保留完整$j$时$s_T=1$、$e_*=0$；完全忘记$j$时$c=0$、$e_*=1/2$。每个分支自身都是可逆酉演化，损失来自恢复前删除了区分这两个分支的信息。
+
+一般两分支取$z_0=u,z_1=v$、概率$1-p,p$，则
+
+$$
+\boxed{1-| (1-p)u+pv |^2=p(1-p)|u-v|^2.}
+\tag{ST30.5}
+$$
+
+这条精确代数式及$0<p<1$时的单位可见度判据由 `TwoSyndromePhaseDefect.lean` 承载；(ST30.3) 的完整优化仍未形式化。
+
+## ST31．有限记录分辨率与后续实验预算
+
+### 定理 ST31.1：相位分箱给出二次精度界
+
+将单位圆分为$K\ge2$个等宽相位箱，每箱只保存箱号。对箱中心相位$\vartheta_r$，每个所属相位距它不超过$\delta=\pi/K\le\pi/2$，所以
+
+$$
+\operatorname{Re}(e^{-i\vartheta_r}c_r)\ge q_r\cos\delta.
+$$
+
+从而
+
+$$
+\boxed{e_*\le\frac{1-\cos(\pi/K)}2\le\frac{\pi^2}{4K^2}.}
+\tag{ST31.1}
+$$
+
+**证明。** 对箱内各分支按正权重求和，利用$|c_r|$大于实部；再对$r$求和并用$1-\cos x\le x^2/2$。∎
+
+这是一个由明确分箱构造实现的统一上界；它没有声称该分箱对所有分布最优。它允许非均匀分支概率和空箱。相位谱、分箱权限及校准成本仍是明确输入。
+
+### 命题 ST31.2：带误差的syndrome解码与记录损失可合并
+
+设实际一段过程$\widetilde{\mathcal M}$在同一输入/输出载体上，与ST30模型相距
+
+$$
+\frac12\|\widetilde{\mathcal M}-\mathcal M_T\|_\diamond\le\epsilon.
+$$
+
+采用ST30的恢复，得到
+
+$$
+\frac12\|\mathcal R\widetilde{\mathcal M}-\mathrm{id}\|_\diamond
+\le\epsilon+e_*.
+\tag{ST31.2}
+$$
+
+证明是通道后复合的收缩性与三角不等式。有限轮经典自适应实验可逐段替换，安全总预算为
+
+$$
+\min\{1,\sum_j\sup_h(\epsilon_j(h)+e_{*,j}(h))\}.
+$$
+
+这需要每段模型、恢复和历史条件均明确，并且有效起点确实是对应逻辑编码。不能在丢失全部syndrome后继续把未获知的$j$用作控制输入。
+
+## ST32．全局向量框的拓扑障碍，不排除全局CPTP编码
+
+ST23排除了非零第一Chern数子丛的单一全局等距框。本节给出一个严格的能力区别：全局通道可以存在，即使全局纯态向量框不存在。
+
+### 定理 ST32.1：恒定能隙下的全局可恢复通道
+
+取参数$\boldsymbol n\in S^2$和秩一投影
+
+$$
+p(\boldsymbol n)=\tfrac12(I+\boldsymbol n\cdot\boldsymbol\sigma),
+\qquad
+P(\boldsymbol n)=p(\boldsymbol n)\otimes I_2.
+$$
+
+物理Hamiltonian取$H(\boldsymbol n)=\Delta(\boldsymbol n\cdot\boldsymbol\sigma)\otimes I_2$，$\Delta>0$。正能级子空间$E$秩二、物理能隙恒为$2\Delta$，按ST25的连接与定向规范其第一Chern数是$-2$。因此不存在全局连续等距$U:S^2\to\operatorname{Mat}_{4\times2}(\mathbb C)$以像$E_{\boldsymbol n}$作为编码。
+
+然而，下列通道全局光滑且精确可恢复：
+
+$$
+\boxed{\mathcal E_{\boldsymbol n}(\rho)=p(\boldsymbol n)\otimes\rho,
+\qquad\mathcal D=\operatorname{Tr}_{\rm first},
+\qquad\mathcal D\mathcal E_{\boldsymbol n}=\mathrm{id}.}
+\tag{ST32.1}
+$$
+
+**证明。** 局部纯态框为ST25的$u_N,u_S$。对$E$取$U_N=u_N\otimes I_2$、$U_S=u_S\otimes I_2$，连接为原线丛连接乘$I_2$，曲率迹为原来的两倍，故$C_1=-2$。ST23证明全局等距框不存在。
+
+另一方面，$p$是全局光滑矩阵。编码有全局光滑Kraus家族
+
+$$
+K_a(\boldsymbol n)v=(p(\boldsymbol n)|a\rangle)\otimes v,\qquad a=0,1.
+$$
+
+它们满足$\sum_aK_a^\dagger K_a=\operatorname{tr}(p^2)I=I$，且$\sum_aK_a\rho K_a^\dagger=p^2\otimes\rho=p\otimes\rho$。偏迹是CPTP且$\operatorname{tr}p=1$，所以复合为恒等。∎
+
+该例没有构造全局单Kraus纯态框。局部的Kraus族可以在参数空间混合，编码通道本身却是全局光滑的。每点制备$p(\boldsymbol n)$需要物理装置及该参数的访问权；定理没有宣称参数未知时可免费制备。
+
+### 命题 ST32.2：一个标量线丛扭转可对受限逻辑实验不可见
+
+对任意线丛$L$，$\operatorname{End}(L\otimes\mathbb C^d)$有规范的全局矩阵代数描述，因为局部框过渡$e^{i\alpha}I_d$的共轭作用为恒等。乘在全部逻辑分量上的同一相位，不改变密度态或普通CPTP过程。
+
+若实验进一步允许两条参数路径的相干叠加，并保留可比较的路径参考，相对标量holonomy可以重新成为可测量量。这时实验语言已经扩大，不能沿用前一个受限可观测等价。ST32并不否定Berry相位或ST23的向量框障碍；它精确区分了向量表示、密度通道和含路径参考的实验。
+
+## ST33．与相对论、弦有效理论及形式化源的连接
+
+本增订得到三个不同的判据：离开旧编码子空间的几何漏出；在给定访问权限下能否恢复未知逻辑态；把整个参数路径连同记录与参考保留下来时能否恢复逻辑演化。三者不相互自动等同。
+
+Lanka等2026年预印本使“记录syndrome并调整几何路径”成为直接的物理研究入口。[ST27-Steering] Lacambra等2026年4月预印本用量子参考系讨论Abelian格点规范理论中的Gauss-law codes和vacuum codes，提供“规范约束与可纠错逻辑子系统”相邻而具体的输入；本卷尚未将其所有模型形式化。[ST27-Gauss]
+
+接入弦场论时，应先指定物理正内积空间、允许操作和有效模型，之后才适用这些恢复定理。BV一致性保留规范恒等式，不能替代syndrome可访问性。这里的参数曲率仍没有被同一化为时空Einstein曲率，也没有导出Newton常数。
+
+**形式化覆盖。**
+
+`D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.lean`：公开5个声明，证明真实矩阵和构造的syndrome编码/解码恒等式，以及逐syndrome酉运输后的恢复。它对任意矩阵成立，物理CP延拓仍由ST27普通证明承担。
+
+`D5/S3/Quantum/Recovery/TwoSyndromePhaseDefect.lean`：公开3个声明，证明两相位可见度缺陷、非零权重时单位可见度与相位相等的等价，以及相反相位例子。
+
+对应的 Scribe 与 Blueprint 阅读稿逐项列出声明和边界。数学最优性、参考系统上的通道范数、全局丛与 Chern 数只在正文中证明，不能据局部 Lean 覆盖把整章称为 kernel-verified。
+
+## ST27–ST33 参考文献
+
+[ST27-KL]: https://doi.org/10.1103/PhysRevA.55.900 "E. Knill and R. Laflamme, Theory of Quantum Error-Correcting Codes; Phys. Rev. A 55, 900 (1997), DOI 10.1103/PhysRevA.55.900. Classical correction conditions and syndrome factorization."
+[ST27-BO]: https://arxiv.org/abs/0907.5391 "C. Beny and O. Oreshkov, General Conditions for Approximate Quantum Error Correction and Near-Optimal Recovery Channels, Phys. Rev. Lett. 104, 120501 (2010). Complementary-channel optimization is background, not a substitute for the direct proof in ST30."
+[ST27-EA]: https://arxiv.org/abs/1110.4806 "B. Trendelkamp-Schroer, J. Helm and W. T. Strunz, Environment-Assisted Error Correction of Single-Qubit Phase Damping, Phys. Rev. A 84, 062314 (2011). Prior phase-damping/environment-assisted correction mechanism and mixed-environment caveats."
+[ST27-Steering]: https://arxiv.org/html/2603.02552v1 "A. Lanka, J. Garcia-Nila and T. A. Brun, Steering paths mid-flight for fault-tolerance in measurement-based holonomic gates, arXiv:2603.02552v1 (3 March 2026), especially III.1–III.4. Preprint status retained."
+[ST27-Gauss]: https://arxiv.org/abs/2604.06087 "J. P. Lacambra, A. Chatwin-Davies, M. Honda and P. A. Hoehn, Gauss law codes and vacuum codes from lattice gauge theories, arXiv:2604.06087 (April 2026). Abstract-level scope checked; not an input to the finite matrix proofs."
+[ST27-Subbundle]: https://arxiv.org/abs/2503.17163 "M. A. Oancea, T. B. Mieling and G. Palumbo, Quantum geometric tensors from sub-bundle geometry, Quantum 10, 1965 (2026). General ambient/sub-bundle geometry belongs to the cited work."
+
+---
+
+---
+
+<a id="observer-constructive-recovery-closure"></a>
+
+# 恢复器、逻辑代数与全局运输的显式构造
+
+## 定义 ST34.1：有限构造域及其原始数据
+
+取非零有限维复 Hilbert 空间 $L=\mathbb C^d$、$H=\mathbb C^n$，内积为正定。矩阵伴随记为 $\dagger$，矩阵单位为 $e_{ij}=|i\rangle\langle j|$。量子通道以有限 Kraus 矩阵作为原始数据：
+
+$$
+\mathcal N(X)=\sum_{a=1}^m E_aXE_a^\dagger,
+\qquad \sum_a E_a^\dagger E_a=I_d.
+\tag{ST34.1}
+$$
+
+密度态满足 $\rho\ge0$、$\operatorname{tr}\rho=1$，效果满足 $0\le F\le I$，实验概率为 $\operatorname{tr}(F\rho)$。这些是本节采用的有限量子理论定义，不由以下恢复定理重新推出。有限经典记录用块对角矩阵表示；所有通道允许张量一个任意有限、未受操作的参考系统。公开仪器的每个结果对应一组 Kraus 矩阵，不把后选择作为默认操作。
+
+对半正定矩阵 $Q$，定义 $P_Q$ 为其正本征空间投影，定义 $Q^{[-1/2]}$ 在本征值 $q>0$ 上取 $q^{-1/2}$、在零本征空间取零。该谱函数与对角化所选基无关。固定逻辑单位向量 $|0\rangle$，只用于恢复映射在原通道不可到达的补空间上的保迹扩展。
+
+## 定理 ST34.2：由任意 Kraus 数据直接构造一个归一恢复候选
+
+由(ST34.1)计算
+
+$$
+Q=\mathcal N(I_d)=\sum_aE_aE_a^\dagger,\qquad
+P=P_Q,\qquad W=Q^{[-1/2]}.
+$$
+
+令
+
+$$
+R_a=E_a^\dagger W,
+\qquad R_{\perp b}=|0\rangle\langle b|(I-P),\quad b=1,\ldots,n.
+\tag{ST34.2}
+$$
+
+则这些矩阵定义一个从 $M_n$ 到 $M_d$ 的 CPTP 映射：
+
+$$
+\boxed{
+\mathcal R_{\mathcal N}(X)
+=\mathcal N^*(WXW)+\operatorname{tr}[(I-P)X]|0\rangle\langle0|.
+}
+\tag{ST34.3}
+$$
+
+此处不预先假设 $\mathcal N$ 可逆。该构造在任意有限通道上存在，但只有满足下一定理的通道被它精确反演。它是在均匀逻辑参考态下的 transpose/Petz 型恢复，相关一般构造与近似恢复背景见[ST34-BK]。
+
+**证明。** 有限谱分解给出 $WQW=P$，于是
+
+$$
+\sum_aR_a^\dagger R_a=P,
+\qquad
+\sum_bR_{\perp b}^\dagger R_{\perp b}=(I-P)^2=I-P.
+$$
+
+所有分量均由显式 Kraus 矩阵给出，完全正性和保迹性随之成立。若 $v\in\ker Q$，则 $0=v^\dagger Qv=\sum_a\|E_a^\dagger v\|^2$，所以 $PE_a=E_a$，原通道输出确实支持在 $P$ 内。公式(ST34.3)用的仅是通道、其 Hilbert–Schmidt 伴随及 $Q$，因此对 Kraus 表示的酉混合不变。∎
+
+## 定理 ST35.1：可检验的恢复充要条件与反演构造
+
+由原始矩阵定义
+
+$$
+c_{ab}=\frac1d\operatorname{tr}(E_a^\dagger E_b),
+\qquad D_{ab}=E_a^\dagger E_b-c_{ab}I_d.
+\tag{ST35.1}
+$$
+
+下列三个条件等价：
+
+$$
+\boxed{
+\exists\mathcal R\ \mathrm{CPTP}:\mathcal R\mathcal N=\mathrm{id}
+\quad\Longleftrightarrow\quad
+D_{ab}=0\quad\forall a,b
+\quad\Longleftrightarrow\quad
+\mathcal R_{\mathcal N}\mathcal N=\mathrm{id}.
+}
+\tag{ST35.2}
+$$
+
+这里等号均指全部逻辑矩阵，因而同时保留未知输入与参考系统的纠缠。充要条件属于 Knill–Laflamme 纠错理论；可逆通道的附加态正规形属于 Nayak–Sen 的既有定理。[ST27-KL][ST34-NS] 以下证明同时给出本节需要的每个构造。
+
+**证明：必要性。** 设恢复 Kraus 为 $A_t$。复合通道的 Choi 矩阵为 $|I_d\rangle\!\rangle\langle\!\langle I_d|$，是秩一正矩阵。因此各向量 $|A_tE_a\rangle\!\rangle$ 必须与 $|I_d\rangle\!\rangle$ 共线，记 $A_tE_a=z_{ta}I_d$。由恢复保迹得
+
+$$
+E_a^\dagger E_b
+=\sum_tE_a^\dagger A_t^\dagger A_tE_b
+=\Bigl(\sum_t\overline{z_{ta}}z_{tb}\Bigr)I_d.
+$$
+
+取迹确定该标量正是$c_{ab}$，故$D_{ab}=0$。
+
+**证明：充分性及实际求解。** $c$ 是 Kraus 矩阵的归一 Hilbert–Schmidt Gram 矩阵，故半正定且$\operatorname{tr}c=1$。取有限酉对角化 $V^\dagger cV=\operatorname{diag}(\lambda_j)$，令$F_j=\sum_aV_{aj}E_a$。则
+
+$$
+F_j^\dagger F_k=\lambda_j\delta_{jk}I_d.
+$$
+
+$\lambda_j=0$时$F_j=0$。正权重时令$S_j=F_j/\sqrt{\lambda_j}$，得到$S_j^\dagger S_k=\delta_{jk}I_d$。因此
+
+$$
+Q=\sum_{\lambda_j>0}\lambda_jS_jS_j^\dagger,
+\qquad WF_j=S_j.
+$$
+
+对同一 Kraus 混合，候选恢复的支持部分变为$\sum_jS_j^\dagger X S_j$，故
+
+$$
+\mathcal R_{\mathcal N}\mathcal N(\rho)
+=\sum_{j,k}\lambda_kS_j^\dagger S_k\rho S_k^\dagger S_j
+=\sum_k\lambda_k\rho=\rho.
+$$
+
+补空间项在原通道输出上为零。最后一个条件显然给出第一个。∎
+
+## 推论 ST35.2：公开结果的恢复器逐项构造，包括零概率结果
+
+设公开仪器为$\mathcal I_a(X)=\sum_\ell E_{a\ell}XE_{a\ell}^\dagger$。若
+
+$$
+E_{a\ell}^\dagger E_{ak}=c^{(a)}_{\ell k}I_d,
+\qquad p_a=\operatorname{tr}c^{(a)},
+$$
+
+则对每个$a$直接以$Q_a=\mathcal I_a(I)$构造(ST34.2)的恢复 Kraus，得到归一$\mathcal R_a$且
+
+$$
+\boxed{\mathcal R_a\mathcal I_a=p_a\mathrm{id}.}
+\tag{ST35.3}
+$$
+
+**证明。** 充分性证明无需先将分支除以$p_a$；相同计算给出$\sum_j\lambda_j=p_a$。$p_a=0$时全部分支 Kraus 为零，$Q_a=W_a=P_a=0$，只保留显式复位通道。它与零分支的复合确实为零。公开标签间无需交叉条件；删除标签后则必须对合并后的全部 Kraus 检查(ST35.1)。∎
+
+## 定理 ST36.1：从可逆通道提取全体逻辑观测代数
+
+设(ST35.2)成立。对任意逻辑矩阵$A$定义
+
+$$
+\boxed{\pi(A)=W\mathcal N(A)W.}
+\tag{ST36.1}
+$$
+
+则
+
+$$
+\pi(I)=P,\quad \pi(A)^\dagger=\pi(A^\dagger),\quad
+\pi(A)\pi(B)=\pi(AB),\quad
+[Q,\pi(A)]=0,\quad \mathcal N(A)=Q\pi(A).
+\tag{ST36.2}
+$$
+
+**证明。** 采用ST35证明中实际构造的$S_j$，有$\pi(A)=\sum_jS_jAS_j^\dagger$。逐项乘法和正交性给出前三式。$Q=\sum_j\lambda_jS_jS_j^\dagger$使后两式成立。这些等式在原通道表示下由(ST36.1)唯一确定，不依赖辅助对角化的选择。∎
+
+## 定理 ST36.2：无需选择综合征基的全局解码 Kraus
+
+令$F_{ij}=\pi(e_{ij})$，定义$d\times n$矩阵
+
+$$
+T_b=\sum_{i=1}^d|i\rangle\langle b|F_{1i},\quad b=1,\ldots,n.
+\tag{ST36.3}
+$$
+
+则
+
+$$
+\sum_bT_b^\dagger T_b=P,
+\qquad
+\Bigl[\sum_bT_bXT_b^\dagger\Bigr]_{ij}
+=\operatorname{tr}(F_{ji}X).
+\tag{ST36.4}
+$$
+
+加入$|0\rangle\langle b|(I-P)$即得完整CPTP解码$\mathcal D_\pi$。它等于(ST34.3)的恢复器。
+
+**证明。** 矩阵单位关系$F_{ij}F_{kl}=\delta_{jk}F_{il}$给出
+
+$$
+\sum_bT_b^\dagger T_b=\sum_iF_{i1}F_{1i}=\sum_iF_{ii}=P.
+$$
+
+第$(i,j)$元为$\sum_b\langle b|F_{1i}XF_{j1}|b\rangle=\operatorname{tr}(F_{ji}X)$。另一方面，$\mathcal N^*(WXW)$的第$(i,j)$元也是$\operatorname{tr}(W\mathcal N(e_{ji})WX)$。两者及其补空间项相同。∎
+
+## 定理 ST37.1：参数族的光滑恢复与确定的综合征丛
+
+令$B$为紧致光滑参数流形。设$x\mapsto\mathcal N_x:M_d\to M_n$是光滑通道族，每一点满足(ST35.2)，且$Q_x=\mathcal N_x(I)$的秩恒为$kd$。则$P_x,W_x,\pi_x$及$\mathcal D_{\pi_x}$均全局光滑。
+
+记$E_x=\operatorname{Ran}P_x$，定义
+
+$$
+F_x=\operatorname{Ran}\pi_x(e_{11}).
+$$
+
+它是秩$k$光滑子丛。映射
+
+$$
+\boxed{
+\Theta_x:F_x\otimes\mathbb C^d\longrightarrow E_x,
+\qquad v\otimes|i\rangle\longmapsto\pi_x(e_{i1})v
+}
+\tag{ST37.1}
+$$
+
+是全局光滑的酉丛同构。令$\sigma_x=Q_x|_{F_x}$，则$\sigma_x>0$、$\operatorname{tr}_{F_x}\sigma_x=1$，并有
+
+$$
+\boxed{
+\mathcal N_x(\rho)=\Theta_x(\sigma_x\otimes\rho)\Theta_x^\dagger.
+}
+\tag{ST37.2}
+$$
+
+**证明。** 恒秩与紧致性使$Q_x$的正谱与零之间有共同正距离。在包围正谱且避开零的适当复平面围道上，
+
+$$
+P_x=\frac1{2\pi i}\oint(zI-Q_x)^{-1}dz,\quad
+W_x=\frac1{2\pi i}\oint z^{-1/2}(zI-Q_x)^{-1}dz.
+$$
+
+矩阵逆与围道微分给出光滑性；局部围道可拼接，因为定义的是相同谱函数。无需选择全局本征向量。$\pi_x$和ST36的解码随后光滑。矩阵单位给出
+
+$$
+\langle F_{i1}v,F_{j1}w\rangle=\delta_{ij}\langle v,w\rangle,
+\quad\sum_iF_{i1}F_{1i}=P.
+$$
+
+所以$\Theta$等距且满。$Q$与全部$F_{ij}$交换，故$\Theta^\dagger Q\Theta=\sigma\otimes I_d$。由于$\operatorname{tr}Q=d$，有$\operatorname{tr}\sigma=1$。最后用$\mathcal N(\rho)=Q\pi(\rho)$。∎
+
+恒秩是一项足以保障该统一光滑公式的条件；它不是所有光滑恢复族存在的必要条件。秩改变时，不允许无证明地微分伪逆。
+
+## 定理 ST37.2：不选全局向量框也能构造光滑实验扩张
+
+在ST37.1条件下，采用未归一化Choi矩阵
+
+$$
+J_x=\sum_{ij}e_{ij}\otimes\mathcal N_x(e_{ij}).
+$$
+
+令$A_\mu(x)$为$J_x^{1/2}$第$\mu$列的逆向量化，使用$\operatorname{vec}A=\sum_i|i\rangle\otimes A|i\rangle$约定。则
+
+$$
+\mathcal N_x(\rho)=\sum_{\mu=1}^{dn}A_\mu(x)\rho A_\mu(x)^\dagger,
+\quad\sum_\mu A_\mu^\dagger A_\mu=I_d.
+$$
+
+相应$V_xv=\sum_\mu A_\mu(x)v\otimes|\mu\rangle$是显式光滑Stinespring等距映射。
+
+**证明。** Choi平方根乘其伴随恢复$J_x$，矩阵元展开给出通道和保迹恒等式。由ST35的正交错误分解，$\operatorname{rank}J_x=k$恒定，故与ST37.1相同的正谱论证给出$J_x^{1/2}$光滑。∎
+
+这是一组可冗余的全局Kraus矩阵；其存在不产生原秩$kd$子丛的一组全局向量基。环境维数$dn$与访问/复位操作在构造中明列。
+
+## 定理 ST38.1：全局可恢复逻辑维数的整除障碍
+
+在闭定向曲面$\Sigma$上，若一个固定全局逻辑空间$\mathbb C^d$具有ST37的光滑精确可恢复编码，物理支持丛为$E$，则
+
+$$
+\boxed{\operatorname{rank}E=kd,\qquad c_1(E)=d\,c_1(F).}
+\tag{ST38.1}
+$$
+
+所以$d$必须同时整除$\operatorname{rank}E$和第一Chern数。
+
+**证明。** 秩由(ST37.1)。取$F$的局部酉框及过渡函数$g_{\alpha\beta}$；通过$\Theta$，$E$的过渡函数为$g_{\alpha\beta}\otimes I_d$，其行列式为$(\det g_{\alpha\beta})^d$。因此行列式线丛的第一Chern类乘以$d$。∎
+
+这个必要条件针对一个全局已识别的逻辑矩阵代数及指定物理支持；它没有声称仅凭这两个整数就足以分类任意参数流形上的全部编码。
+
+## 定理 ST38.2：处处有隙、处处可编码，却没有全局可恢复的二态寄存器
+
+沿用ST25规范，$p(\boldsymbol n)=(I+\boldsymbol n\cdot\boldsymbol\sigma)/2$在$S^2$上是$C_1=-1$的秩一投影。令
+
+$$
+P_{\rm bad}(\boldsymbol n)=p(\boldsymbol n)\oplus1\in M_3,
+\qquad H_{\rm bad}=\Delta(2P_{\rm bad}-I_3),\quad\Delta>0.
+$$
+
+其支持秩为二、第一Chern数为$-1$，Hamiltonian能隙恒为$2\Delta$。每个点可选一个秩二等距编码，但不存在以该支持为像、来自同一个逻辑量子比特的全局光滑可恢复通道族。
+
+**证明。** 直和一条平凡线不改变$C_1$，投影Hamiltonian直接给出能谱。若有全局通道，则ST38.1要求$2\mid-1$，矛盾。逐点有限Hilbert空间当然同构于$\mathbb C^2$，故局部存在与全局不可能并不冲突。∎
+
+作为严格对照，ST32的$P_{\rm good}=p\otimes I_2$也为秩二、能隙$2\Delta$，但$C_1=-2$；$\mathcal E(\rho)=p\otimes\rho$与偏迹确实实现全局恢复。非零Chern数排除向量框，与(ST38.1)排除全局逻辑通道，是不同强度的障碍。
+
+## 定理 ST39.1：只由逻辑矩阵单位构造运输生成元
+
+沿有限时间区间，设$F_{ij}(t)=\pi_t(e_{ij})$为$C^1$矩阵族，满足
+
+$$
+F_{ij}F_{kl}=\delta_{jk}F_{il},\quad F_{ij}^\dagger=F_{ji},\quad
+P=\sum_iF_{ii}.
+$$
+
+定义
+
+$$
+Z=\frac1d\sum_{ij}\dot F_{ij}F_{ji},
+\qquad\boxed{K=Z-P\dot P.}
+\tag{ST39.1}
+$$
+
+则
+
+$$
+\boxed{K^\dagger=-K,\qquad [K,F_{ij}]=\dot F_{ij},\qquad[K,P]=\dot P.}
+\tag{ST39.2}
+$$
+
+$d=1$时，$K=[\dot P,P]$，恢复通常的投影平行运输生成元。一般$d$时，式(ST39.1)同时固定内部逻辑代数的运输，不只固定支持投影。
+
+**证明。** 微分$\sum_{ij}F_{ij}F_{ji}=dP$得$Z+Z^\dagger=\dot P$。又微分$P^2=P$得$P\dot P+\dot PP=\dot P$，故$K+K^\dagger=0$。
+
+对固定$k,l$，矩阵单位和它的导数给出
+
+$$
+ZF_{kl}=\frac1d\sum_j\dot F_{kj}F_{jl},
+\quad
+F_{kl}Z=\frac1d\sum_j\dot F_{kj}F_{jl}-\dot F_{kl}P.
+$$
+
+因此$[Z,F_{kl}]=\dot F_{kl}P$。由$P\dot PP=0$及$PF_{kl}=F_{kl}P=F_{kl}$，有$[P\dot P,F_{kl}]=-F_{kl}\dot P$。微分$F_{kl}P=F_{kl}$后得到$[K,F_{kl}]=\dot F_{kl}$。求和得投影式。∎
+
+定义全局酉运输$G(t)$为下述显式收敛级数：
+
+$$
+G(t)=I+\sum_{m\ge1}\int_{0\le t_m\le\cdots\le t_1\le t}
+K(t_1)\cdots K(t_m)\,dt_m\cdots dt_1.
+\tag{ST39.3}
+$$
+
+若$\|K\|\le M$，第$m$项范数至多$(Mt)^m/m!$，所以一致收敛，可积分求导得$\dot G=KG$、$G(0)=I$。$\partial_t(G^\dagger G)=0$给出酉性；微分$G^\dagger F_{ij}G$得
+
+$$
+\boxed{F_{ij}(t)=G(t)F_{ij}(0)G(t)^\dagger.}
+\tag{ST39.4}
+$$
+
+唯一性由同一积分方程的迭代余项界或Gronwall不等式得到。这里已经实际构造运输，不另外假设存在一条正确的holonomy。
+
+## 定理 ST40.1：同时实现任意规定逻辑动力学与移动编码的物理Hamiltonian
+
+在ST37及ST39的一条时间路径上，给定连续逻辑Hermitian矩阵$h_L(t)$、常数$\hbar>0$和$\Delta>0$。定义
+
+$$
+\boxed{
+H_{\rm phys}(t)=i\hbar K(t)+\pi_t(h_L(t))+\Delta(I-P_t).
+}
+\tag{ST40.1}
+$$
+
+逻辑酉$V_L$由$i\hbar\dot V_L=h_LV_L$的同类Dyson级数构造。令
+
+$$
+V(t)=G(t)\left[\pi_0(V_L(t))+e^{-i\Delta t/\hbar}(I-P_0)\right].
+\tag{ST40.2}
+$$
+
+则$V$酉，满足$i\hbar\dot V=H_{\rm phys}V$、$V(0)=I$，且
+
+$$
+\boxed{\mathcal D_{\pi_t}\circ\operatorname{Ad}_{V(t)}\circ\mathcal N_0
+=\operatorname{Ad}_{V_L(t)}.}
+\tag{ST40.3}
+$$
+
+**证明。** $K$反Hermitian，故$H_{\rm phys}$Hermitian。方括号在$P_0$和其补空间上分别酉，因此整体酉。求导并用(ST39.4)验证Schrödinger方程。令$\widetilde Q_t=GQ_0G^\dagger$，它与$\pi_t(M_d)$交换，并有$\operatorname{tr}(F_{11}(t)\widetilde Q_t)=1$。于是输出为
+
+$$
+\widetilde Q_t\,\pi_t(V_L\rho V_L^\dagger).
+$$
+
+应用(ST36.4)，或者使用$\Theta_t$下的偏迹，即得到(ST40.3)。实际运输后的综合征态无需恰好等于预先参数化的$\sigma_t$，只需它仍在综合征因子且迹一。∎
+
+这是主动控制的明确数学实现；原系统若不提供$H_{\rm phys}$，不能把它视为自然出现。所增加的几何项满足可直接读出的上界
+
+$$
+\|i\hbar K\|\le\hbar\left(\frac1d\sum_{ij}\|\dot F_{ij}\|+\|\dot P\|\right).
+$$
+
+它不包含真实设备的控制带宽、能耗或局域可实现性。无跃迁驱动的普遍思想归于既有工作。[ST19-Berry]
+
+若一条闭路上$\pi_T=\pi_0$且$h_L=0$，则$G(T)$与全部逻辑矩阵单位交换。在$E_0\cong F_0\otimes\mathbb C^d$中，闭路作用具有$V_F\otimes I_d$的形式：综合征可以发生非平凡运输，逻辑通道仍为恒等。这个结论使用了整个逻辑代数的运输，不能只由$P_T=P_0$推出。
+
+## 定理 ST40.2：规定的全部有限逻辑实验都有显式物理实现
+
+给定任一逻辑仪器$\{L_{a\ell}\}$、$\sum_{a\ell}L_{a\ell}^\dagger L_{a\ell}=I_d$，在参数$t$处构造物理Kraus
+
+$$
+\widetilde L_{a\ell}=\pi_t(L_{a\ell}),\qquad
+\widetilde L_\perp=I-P_t.
+\tag{ST40.4}
+$$
+
+最后一项附加一个单独的失败结果。从支持$P_t$内的编码态出发，该结果概率为零，其余分支的逻辑统计与原仪器完全相同。用(ST40.1)连接不同参数时刻，则任意有限次按已有经典记录选择操作的逻辑协议，都有相应的完整物理协议；所有联合记录及最终解码的未归一化分支态相等。
+
+**证明。** $\sum\widetilde L^\dagger\widetilde L=P_t$，补项给$I-P_t$，故物理仪器归一。以$\widetilde Q\pi_t(\rho)$为支持态、$\widetilde Q$在交换子代数内且综合征迹一时，每一分支成为
+
+$$
+\widetilde Q\,\pi_t\left(\sum_\ell L_{a\ell}\rho L_{a\ell}^\dagger\right).
+$$
+
+ST36的解码读取括号内矩阵。运输按ST40.1保留这一形式。对有限协议长度归纳即可；固定一条经典历史后各控制都已确定，因此证明覆盖自适应选择。张量参考系统时矩阵恒等式不变。∎
+
+本命题构造所规定实验的实现，未声称原物理模型中任意额外操作都会保持逻辑。增加新的操作，需要重新检验对应通道。
+
+## 定理 ST41.1：一般酉错误下，公开记录必须区分射影酉作用
+
+给定输入无关$p_j\ge0$、$\sum_jp_j=1$，逻辑酉$V_j$及经典记录核$T(r|j)$。可访问仪器为
+
+$$
+\mathcal M_r(\rho)=\sum_jp_jT(r|j)V_j\rho V_j^\dagger.
+$$
+
+存在依赖公开$r$的确定性恢复，使每个结果后的逻辑通道为$q_r\mathrm{id}$，当且仅当每个$r$内所有正权重分支的$V_j$只相差整体相位。
+
+**证明。** 对分支Kraus$E_{rj}=\sqrt{p_jT(r|j)}V_j$应用(ST35.2)的逐结果版本。交叉乘积是非零标量乘$V_j^\dagger V_k$，它为恒等倍数当且仅当两酉相差单位相位。充分性时选择一个受支持$V_j$的逆作分支恢复。∎
+
+对于确定性记录，最少结果数是正概率分支中不同共轭通道$\operatorname{Ad}_{V_j}$的数量。一般维数下本命题只解决零误差条件；非零最优钻石误差没有被ST30的量子比特相位公式自动覆盖。
+
+## 定理 ST41.2：普通通道数据无法唯一补出相干控制的相位
+
+不存在仅依赖酉共轭通道$\operatorname{Ad}_V$的规则，能对每个酉代表$V$都返回受控酉$C_V=|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes V$的共轭通道。
+
+**证明。** $\operatorname{Ad}_I=\operatorname{Ad}_{-I}$，但$C_I=I$，$C_{-I}=Z\otimes I$。在控制输入$|+\rangle$上，输出分别为$|+\rangle$和$|-\rangle$，正交可分。相同输入数据不可能唯一决定两个不同输出通道。∎
+
+该简单相位障碍与已有未知操作受控化禁限定理相容。[ST34-Control] 它并不禁止已知物理实现的相干控制：提供带相位的Stinespring实现、参考路径和控制器后，就已增加了必要数据。ST40的闭合针对明确的经典自适应仪器语言；把两条路径相干叠加时，应把路径参考及其相位实现一起加入原始数据，不能从已被删除的信息中补出它。
+
+## 定理 ST42.1：有限观察者理论的构造性闭合
+
+给定ST34中的通道数据，以及需要参数变化时ST37的光滑恒秩通道族，执行以下有限谱运算与显式积分构造：
+
+1. 计算全部$D_{ab}$。它们全零时，ST34给出归一恢复器，ST35证明其正确性；某项非零时，ST35给出不存在任何精确CPTP逆的数学见证。
+2. 从$Q,W$计算$\pi$与$F_{ij}$，ST36给出逻辑观测量及无需综合征基的解码Kraus。
+3. 在参数族中用谱函数构造全局恢复，并用$F=\operatorname{Ran}F_{11}$及$\Theta$构造全局因子化。ST38提供不允许的逻辑维数/支持拓扑组合的明确排除条件。
+4. 沿规定参数路径由(ST39.1)计算$K$、由收敛级数计算$G$，再用(ST40.1)与(ST40.4)实现规定的逻辑演化和仪器。
+
+这些等式以精确矩阵数据表述；数值容差不会证明等式精确成立，本文不提供一般实数oracle的有限判等程序。
+
+由这些实际构造得到的全部有限联合记录、逻辑恢复和路径运输，在同一正Hilbert空间模型中相容。闭合不以“存在一个正确恢复器”“存在一个正确全局框”“存在一个正确控制”为额外输入。
+
+**证明。** 第1项的存在与拒绝均由ST35的等价关系，而非未经验证的求解器状态。第2项的乘法、伴随和保迹关系由ST36。第3项通过谱围道和矩阵单位构造，不调用未指定的全局本征向量选择。第4项通过收敛级数和显式Kraus给出存在与归一性，联合记录由ST40.2的归纳证明。∎
+
+## 定理 ST42.2：上述闭合不能唯一选择时空引力动力学
+
+ST34–ST42的有限通道前提不唯一决定Lorentz时空维数、局域传播算子、曲率耦合或Einstein反作用方程。
+
+**证明。** 同一有限量子通道及同一参数路径可被张量加入一个完全解耦的、具有任意有限能谱的量子系统，而不改变指定实验的任何矩阵。更具体地，在平直背景的标量有效场子模型中，$D_g=-\nabla^2I+\xi R_gI+\mathsf M$于$R_g=0$不含$\xi$；不同$\xi$具有相同该背景响应，却具有ST7中不同的线性曲率贡献。故当前数据至少对$\xi$不可识别，更不能唯一决定完整几何动力学。∎
+
+因此，本节完成的是已明确原始数据之有限理论的演绎闭合。相对论与弦微观实现需要提供各自的物理态空间、局域性、约束和背景/反作用作用量；这些不是本节已经构造的有限矩阵对象。将它们纳入同一物理理论时，必须给出实际相容实现，不能以有限模型的闭合代替自然界的理论选择。
+
+## ST34–ST42 文献
+
+[ST34-BK]: https://arxiv.org/abs/quant-ph/0004088 "H. Barnum and E. Knill, Reversing quantum dynamics with near-optimal quantum and classical fidelity, J. Math. Phys. 43, 2097–2106 (2002), DOI 10.1063/1.1459754. Prior transpose-channel construction; the general approximate-fidelity theorem is not reproved here."
+[ST34-NS]: https://arxiv.org/abs/quant-ph/0605041 "Ashwin Nayak and Pranab Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States, Quantum Information and Computation 7(1&2), 103–110 (2007), DOI 10.26421/QIC7.1-2-6. Theorem 2.1 and its proof give the classical reversible-channel normal form."
+[ST34-Control]: https://arxiv.org/abs/1309.7976 "Mateus Araújo, Adrien Feix, Fabio Costa and Časlav Brukner, Quantum circuits cannot control unknown operations, New J. Phys. 16, 093026 (2014), DOI 10.1088/1367-2630/16/9/093026. General no-control result; ST41.2 gives its elementary phase obstruction."
+
+---
 # 钟记录、径向俘获与视界红移
 
 ## ——量子观察者—关系时空理论第三十一至第四十节增订
