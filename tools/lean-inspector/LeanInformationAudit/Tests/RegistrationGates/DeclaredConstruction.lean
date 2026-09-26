@@ -86,7 +86,7 @@ run_meta do
     (withCumulativeBudget (pure true)) (fun _ => pure false)
   let heartbeatDiagnostic ← tryCatchRuntimeEx
     (do
-      throwMaxHeartbeat `DeclaredConstruction `maxHeartbeats 1
+      Core.throwMaxHeartbeat `DeclaredConstruction `maxHeartbeats 1
       pure "unexpected success")
     exceptionDiagnostic
   let ordinaryDiagnostic ← tryCatchRuntimeEx
