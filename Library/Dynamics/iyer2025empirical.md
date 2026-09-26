@@ -5034,3 +5034,52 @@ $$
 固定总数修正 $\ell$ 满足 $|\ell|\le C\delta^5(1+\mathcal D^2)$、$\ell\le C\delta^5$。其对数配分函数二阶导数精确等于两个条件方差之差；先中心化，再应用上述联合矩界，得到 $O(\delta^5M_Q)=O(\delta)$。这一步提供原始选择修正的二阶精度，未中心化的 $\delta^5m_Q^2$ 界则不能趋零。
 
 有限配分函数累积量恒等式、Gaussian 平方变换、Stirling 估计、Fourier 反演与协方差恒等式均属经典；本章贡献是这些方法在原始计数和固定总数模型中精度足够的组合验证。结论保留完整经验鞍点导数、非中心项与有限噪声，不覆盖零噪声、半指数等号、无界物理输出或更高阶累积量。固定间隙周期项消失仍未解决。
+
+## 第 120 章：共享后验参数、实际条件交换与算术反集中的边界
+
+第 120 章有两个部分结果：完整周期泛函的实际中心可在所需算术精度下换成 $C_j\operatorname{logistic}(\operatorname{logit}p_*+jh_Q)$，其中 $p_*$ 是同一个精确固定总数后验包含概率；原始 pair/path 观测给出精确条件交换律及其最大片概率界。原固定间隙目标 $\mathfrak J_x\to0$ 仍未证明。
+
+### Boistard–Lopuhaä–Ruiz-Gazen 的二点展开
+
+*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，arXiv:[1207.5654v1](https://arxiv.org/abs/1207.5654v1)，版本及原始条件同第 118 章归因。Theorem 1(ii) 在固定 $k=2$、总 Bernoulli 方差 $\mathcal D_x\to\infty$ 时给出
+
+$$
+\pi_{ab}=p_*^2\left[1-\frac{(1-p_*)^2}{\mathcal D_x}
++O(\mathcal D_x^{-2})\right].
+$$
+
+这里 $p_*$ 是两个等分数锚点的实际包含概率。共同校准的条件 Bernoulli 表示保持原全部行与总数约束，且 $\mathcal D_x\asymp q$。结合 $\tau_*-p_*(1-p_*)=-\operatorname{Cov}(X_a,X_b)$，该经典展开直接提供 $O(q^{-1})$ 的 susceptibility 修正；不把它当作新增的一般拒绝抽样定理。均匀性来自相同数组的固定删除展开，不把后续相关性应用中的 $N/d$ 有界条件加进原问题；旧版本一阶累积量表述的边界仍保留，只使用二阶以上累积量控制。
+
+### Schofield–Bonner：约束保持与非负纤维连通不同
+
+Schofield 与 Bonner，*Connecting the Latent Multinomial*，arXiv:[1504.04566v1](https://arxiv.org/abs/1504.04566v1)。原文定义 $\mathcal F_y=\{x\in\mathbb Z_{\ge0}^d:Ax=y\}$，说明一个整数核的格基可能在逐步移动时要求经过负坐标，因此不保证连接非负纤维。Markov 基须在所有相关纤维内连接任意两点，且每个中间点仍非负。
+
+其特殊存在定理要求配置矩阵只含 0、1，并包含单位矩阵的全部列；这些条件没有被假定适用于本章 $(Q,P)$ 计数交换。正文从原模型直接导出 $n$ 的可行集是连续整数区间，邻步 $(Q,P,-Q,-P)$ 连接整个指定纤维，并给出
+
+$$
+\Pr(n\mid\mathcal F)\propto
+\binom K{k^\circ+nQ}\binom L{l^\circ+nP}.
+$$
+
+因此引用用于区分“保约束”与“有正确条件分布的连通移动”，不向原模型导入未经验证的 Markov 基或计算效率结论。
+
+### Barbour–Braunsteins–Ross：占位局部极限定理的额外条件
+
+Barbour、Braunsteins 与 Ross，*Local limit theorems for occupancy models*，arXiv:[1908.00251v2](https://arxiv.org/abs/1908.00251v2)。原始版本的通用定理先要求整数值 $W,W'$ 组成近似 Stein 耦合 $(W,W',G,R)$。令 $D=W'-W$、$\sigma^2=\operatorname{Var}W$，还须控制
+
+$$
+\Upsilon=\mathbb E\bigl[|GD(D-1)|S_2(\mathcal L(W\mid\mathcal F_2))\bigr],
+\qquad T=|\mathbb E(GD\mid\mathcal F_1)-\mathbb E GD|.
+$$
+
+定理要求 $\max\{\Upsilon+1,\|R\|_2,\sigma^{-1}\|T\|_2\}\le c_1$；局部距离还需 $q_0=\lceil\log\sigma\rceil$ 阶矩 $\sigma^{-1}\|T\|_{q_0}\le c_2$ 及 $c_1+ec_2<\sigma/2$。此处 $\sigma$ 是该定理中目标的标准差，不是正文测量噪声。相应结论为平移 Poisson 近似；不能直接转成非线性共享中心的模 1 反集中。
+
+本章没有验证上述条件用于完整周期商，故不应用该局部极限定理来证明原算术目标。其实际一维交换坐标由明确阶乘比给出对数凹率 $c/Q$，再以真实正则纤维上的归一化得到 $O(Q^{-1/2})$ 的最大片概率与 Gaussian 尾。原始源包是单个 gzip 压缩 TeX，须按该格式读取；此前一般 tar 读取失败不构成原文不可得。
+
+### 原始概率律与保留的缺口
+
+第 17 章精确转移核的每个奇偶类上补偿系数总和为零。固定整段奇偶记录后，路径各时刻的标签条件独立，两个符号的行计数阵列分别为 multinomial；行计数内部仍因固定总数而依赖。pair 的同类分解同样成立，但两实验的符号槽数分布不同，未据此宣布实验等价。
+
+对两个真实同类行，固定池掩码、外部标签和线性不变量后得到上述精确条件交换律。真实类的选择只服务于固定支持下的证明，不是观察者已知隐藏支持的算法。共享锚点概率沿同一纤维是 $L_u^\circ e^{nh_Q}+L_v^\circ e^{-nh_Q}$ 的分式线性函数；其系数、全总数归一化、变化的直方图都被明确保留。分母正不蕴含导数分子有定量下界，单个固定行对也不以高概率落在选定计数线上。
+
+因此新结果是实际模型中的共同参数与合法条件概率接口；没有证明完整周期商的坏参数数目为 $o(\sqrt Q)$，也没有以人工相位先验、多个独立边缘最优值或标量局部极限替代该联合义务。普通理论文本，不作形式核验、全局原创或固定间隙已闭合声明。

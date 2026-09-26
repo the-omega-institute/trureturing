@@ -25820,3 +25820,314 @@ Kolassa–Li 的 *Multivariate saddlepoint approximations in tail probability an
 所有结论都针对给定实际数据后、同一完整计数后验中的信息方差，单位为 nats 平方；不是跨数据环境的方差、输出平均、微观标签熵或另选先验。本章允许任意缓慢的正噪声趋零，但不覆盖有限层级的零噪声、半指数边界等号、非紧物理输出或三阶及更高阶信息累积量。第 117 章及更早结论保持原范围；原始固定间隙周期项的消失问题仍未解决。此处不作经全局文献核查的原创声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 120. 一个共享后验参数与实际原始计数的条件交换律
+
+第 118 章把完整周期泛函的中心精度问题归约到两个共享后验数。本章用经典二点拒绝抽样展开进一步归约到一个精确共享包含概率，并从原始路径和独立 pair 的有限概率律导出可合法重采样的计数纤维。交换坐标有显式概率权重和反集中界；它与共享参数、直方图的共同变化也有精确公式。
+
+这打开了从真实数据概率研究算术共振的接口，但不证明固定间隙周期泛函消失。以下为普通数学文本，保留原模型与全部有限系数，不宣称 Lean 形式化或消化状态。
+
+### 120.1 原固定间隙与两个部分结论
+
+The original fixed-gap target remains **OPEN**. This chapter proves two partial results for the original model, without an independent-phase premise:
+
+1. The actual center vector in Chapter 116's complete period functional can be replaced, with vanishing arithmetic-precision error for every original beta in(1/2,1), by C_j logistic(logit(p_*)+j h_Q). Here p_* is ONE exact shared full-q posterior inclusion probability.
+2. Both actual experiments admit an exact conditional raw-data exchange law. Given the appropriate parity/outside sigma-field, a legal two-row (Q,P) count-trade coordinate has a binomial-product distribution. On regular fibers its maximal atom is at most C/sqrt(Q) and it has uniform Gaussian tails. Those fibers occur with probability tending to one for a fixed pair of true same-class rows. The SAME shared posterior scalar along the fiber is an explicit fractional-linear function of L_u e^{n h_Q}+L_v e^{-n h_Q}.
+
+The second statement is a law of actual observed data under a fixed true support, not a formal intervention on posterior likelihoods. It supplies conditional probabilities for genuine original paths and pairs. It does not prove that the reduced dual energies diverge or that the nonlinear period quotient cancels. In particular, a small maximal atom for the raw trade coordinate does not imply a small-ball estimate for a nearly flat or recurrent rational function of that coordinate.
+
+Keep every original floor, fixed r,beta, full count tuple, exact mu_j, calibrated V, finite intercept and SAME scalar/noise realization:
+$$
+ \delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+ \mathcal B=q/Q^{11/4},\quad
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \quad Y=T+\sigma G.                                  \tag{120.1}
+$$
+For each fixed real D the noise satisfies
+$$
+ \Delta_Q=\ln\mathcal B-\ln(1/\sigma)\to D,\qquad
+ \sigma\mathcal B\to e^D>0.                            \tag{120.2}
+$$
+No observation is redrawn. Retain exactly
+$$
+ \Lambda=\nu_0+\sigma^2,\quad
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_Hw_j^2,\quad
+ \kappa_3=8\sum_Hw_j^3,\quad
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+$$
+$$
+ D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,\qquad
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu.
+                                                               \tag{120.3}
+$$
+Vprior is the EXACT original prior varentropy, nu=2g_0, and m_x=E_xY remains exact wherever the affine term is integrated. These definitions and constants are reused from Chapter 116, not rederived.
+
+Chapter 116's phase theorem gives
+$$
+ \int f_x|D_x-R_*|=\mathfrak J_x+o_P(1),\qquad
+ \mathfrak J_x=(2\pi)^{-1}\int_0^{2\pi}
+                 |M_2-M_1^2/M_0|\,d\theta.            \tag{120.4}
+$$
+The prior-defined functions are evaluated in actual fixed-support-uniform raw-data probability, separately for pair and path. The finite-D positivity, quotient calculus, residual-noise marks and normalized tails are already proved there. Chapter 118 supplies their stability under center perturbation. We use these exact results; the Delta tending to infinity theorem and every earlier result remain unchanged.
+
+### 120.2 Direct classical k=2 input, with the actual common calibration
+
+The original full-M-row label posterior is the rejective law proportional to product L_i over subsets of size q, where L_i=e^{W_i}. Its exact conditional-Bernoulli representation uses
+$$
+ \wp_i=\operatorname{logistic}(W_i-\ln B_0+\theta_M),
+ \quad B_0=(M-q)/q,\quad \sum_i\wp_i=q,\quad
+ \mathcal D_x=\sum_i\wp_i(1-\wp_i)\asymp q.             \tag{120.5}
+$$
+Conditioning that auxiliary independent Bernoulli family on total q gives the EXACT selected posterior. This does not declare the observed rows independent. The lower variance bound and simultaneous count-profile bounds are inherited Chapter 68 good-environment statements, with their original actual support-uniform pair/path scope.
+
+Choose two distinct group0 anchor rows a,b. Their equal likelihood makes their inclusion probability p_* common. Put pi_ab=P_x(X_a=X_b=1), tau_*=P_x(X_a=1,X_b=0)=p_*-pi_ab. Exactly
+$$
+ \tau_*-p_*(1-p_*)=-\operatorname{Cov}_x(X_a,X_b).
+                                                               \tag{120.6}
+$$
+Boistard–Lopuhaä–Ruiz-Gazen1207.5654v1 Theorem1(ii), k=2, gives
+$$
+ \pi_{ab}=p_*^2\left[1-\frac{(1-p_*)^2}{\mathcal D_x}
+                         +O(\mathcal D_x^{-2})\right],
+$$
+$$
+ \tau_*-p_*(1-p_*)=
+ \frac{p_*^2(1-p_*)^2}{\mathcal D_x}
+                       +O(\mathcal D_x^{-2})=O(q^{-1}). \tag{120.7}
+$$
+The leading covariance sign is negative. These formulas use the SAME all-row calibration and denominator as Chapter 118. The original theorem's remainder is uniform in the two row indices. Its proof via Lemma1/deletion uses bounded Bernoulli cumulants of order at least2 and a fixed number of deletions, so the bound is uniform over the calibrated arrays on the original good events. No bounded M/mathcal D_x hypothesis from the paper's later correlation application is imported. This is a direct application of a mature theorem, not new rejective-sampling algebra.
+
+### 120.3 One shared scalar at the required modular precision
+
+The exact identity (118.22), with t_j=e^{j h_Q}-1, is
+$$
+ \pi_i=p_*+\tau_*t_j-u_i t_j^2,\quad
+ 0\le u_i=P_x(X_a=X_b=1,X_i=0)\le1,\quad i\in J_j,
+                                                               \tag{120.8}
+$$
+away from the anchors; for group0 it holds directly because t_j=0. Here the exact deterministic score step is
+$$
+ h_Q=Q\ln\frac{1+r}{1-\epsilon_M}
+       +P\ln\frac{1-r}{1+\epsilon_M},\qquad
+ \epsilon_M=rq/(M-q).                                  \tag{120.9}
+$$
+Both the Liouville term and the leading positive compensator(Q-P)epsilon_M remain. We never replace h_Q by zero.
+
+For g_p(s)=logistic(logit(p)+s), uniformly for p in(0,1) and |s|<=1,
+g_p(s)=p+p(1-p)s+O(s^2); also e^s-1=s+O(s^2). Apply these facts and(120.7) to(120.8). With mu_j=C_j pi_i, define
+$$
+ \mu_j^{\rm one}=C_j\,g_{p_*}(j h_Q).
+$$
+Then, uniformly over ALL occupied original groups,
+$$
+ |\mu_j-\mu_j^{\rm one}|
+       \le C C_j\{|j h_Q|/q+j^2h_Q^2\}.              \tag{120.10}
+$$
+The exact full-q p_* remains shared, not calibrated independently in each group or treated as a phase prior.
+
+Use the original calibrated group d_j=C_jp_j(1-p_j), the distance
+rho^2=sum_j d_j|mu_j-mu_j^one|^2, and the inherited bounds
+N_x<=CQ^2, max C_j<=Cq/Q^3, |j|<=CQ^2. Since sum d_j C_j^2<=Cq^3Q^-7,
+$$
+ \rho(\mu,\mu^{\rm one})
+ \le C\{|h_Q|q^{1/2}Q^{-3/2}+h_Q^2q^{3/2}Q^{1/2}\}.
+                                                               \tag{120.11}
+$$
+Chapter 68's original floors and decimal tail give
+$$
+ |h_Q|\le CQ(q/M+e^{-cQ^5}),\quad
+ \log q=c_qQ^3+O(1),\quad q/M=e^{-\phi Q^3+O(1)},
+ \quad c_q=\phi(1-\beta)/\beta<\phi.
+$$
+Thus(120.11) is bounded by
+$$
+ Cq^{1/2}Q^{-1/2}(q/M+e^{-cQ^5})
+ +CQ^{5/2}q^{3/2}\{(q/M)^2+e^{-2cQ^5}\}=o(1).         \tag{120.12}
+$$
+The two occupancy-exponential rates are c_q/2-phi and3c_q/2-2phi, both less than -phi/2. This proves the reduction for every ORIGINAL beta>1/2, with no smaller parameter or noise interval.
+
+Keep all other finite empirical quantities fixed when evaluating Chapter 116's coefficient series at a different center argument v, and call that functional mathfrak J(v). Chapter 118 proves
+$$
+ |\mathfrak J(\mu^{\rm one})-\mathfrak J(\mu)|
+                   \le C_D\rho(\mu,\mu^{\rm one}).
+$$
+Consequently
+$$
+ \boxed{\int f_x|D_x-R_*|
+           =\mathfrak J(\mu^{\rm one})+o_P(1).}       \tag{120.13}
+$$
+This is still an equivalent arithmetic problem, not a vanishing theorem. At fixed physical output the exact phase translation is required:
+$$
+ \psi=\pi\sum_j[2(\mu_j-m_j)\Delta_j+\Delta_j^2],
+ \quad\Delta_j=\mu_j^{\rm one}-\mu_j,\quad m_j=C_jp_j.
+$$
+The replacement correction is K^{one}(pi mathcal B y+psi), not K^{one}(pi mathcal B y). Its global difference from the original coefficient correction is at most C_D rho, so its f_x-integral costs only mass1. All residual eta_ell=pi ell sigma mathcal B and h2/h4 marks, outside surprise marks, exact A,Lambda,C_x,Vprior,m_x and the same G stay fixed. No new tails or inverse-noise estimate is being inferred from TV.
+
+### 120.4 Exact parity conditioning in the ACTUAL raw experiments
+
+We next address the distributional gap, not by treating p_* as independent but by a lawful disintegration of the original observations. The aligned original kernel17.2 is
+$$
+ P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+ b_S(x)=r\,1_S(x)-\epsilon_M1_{C_+\setminus S}(x),
+ \quad b_S=0\text{ on }C_-.
+                                                               \tag{120.14}
+$$
+For each parity class the sum of b_S is zero. Fix the actual support S throughout. The aligned reverse experiment is obtained by the original time reversal, not a different sampling model.
+
+For a stationary path x_0,...,x_T its probability is
+$$
+ (2M)^{-(T+1)}\prod_{t=0}^{T-1}[1+b_S(x_t)s_{t+1}],
+ \qquad s_t=\chi(x_t).
+$$
+Fix the COMPLETE parity record s_0,...,s_T. The product has one factor depending on each x_t and the fixed next parity; the last x_T has no such factor. Summing x_t over its class gives M for every t because the class sums of b_S vanish. Therefore the parity record has probability2^{-(T+1)}, and, given it, the state labels are independent with
+$$
+ P_S(X_t=i\mid s_0,\ldots,s_T)
+   =1_{\{\chi(i)=s_t\}}\frac{1+b_S(i)s_{t+1}}M
+ \quad(t<T),
+$$
+$$
+ P_S(X_T=i\mid s_0,\ldots,s_T)
+                 =1_{\{\chi(i)=s_T\}}/M.             \tag{120.15}
+$$
+This is independence of labels at different TIME POSITIONS after conditioning, not independence of row counts. It follows directly from the actual path density, so no row-PGF approximation or independent-path surrogate enters.
+
+For stationary independent pairs(A_t,B_t), fix both parities for every pair. Their parity pairs are independent uniform pairs; conditional departure labels have the same probabilities(120.15), conditional arrival labels are uniform within their classes, and all labels belonging to different pair slots are independent. The original raw row counts depend on departure labels and arrival parities only.
+
+Let N_+ count positive-departure slots followed by parity+, and N_- positive-departure slots followed by parity-. In either experiment, conditional on its full parity record,
+$$
+ (k_i)_{i\in C_+}\sim
+ \operatorname{Mult}\left(N_+;\ ((1+b_S(i))/M)_i\right),
+$$
+$$
+ (l_i)_{i\in C_+}\sim
+ \operatorname{Mult}\left(N_-;\ ((1-b_S(i))/M)_i\right),
+                                                               \tag{120.16}
+$$
+and these TWO arrays are conditionally independent. Within each array the totals are fixed and rows are dependent. This is an exact finite law for all rows simultaneously.
+
+There is no assertion that pair/path experiments are equivalent: their N_+,N_- distributions differ. For the path these are adjacent-pattern counts in independent fair parity bits; splitting even and odd departure times gives bounded-degree dependence and variance O(T). For pairs the parity indicators are independent. In both cases N_+/T,N_-/T tend to1/4, uniformly in S. No new expectation over a prior on S is introduced.
+
+### 120.5 A genuine conditional count-trade law
+
+Choose two distinct row labels u,v with the SAME true b_S value; they may be fixed signal rows for each given S. Such an S-dependent choice is for mathematical disintegration under a fixed true law, not an implementable rule for an observer unaware of S.
+
+Condition on the parity record; on the membership masks recording which departure slots carry a label in U={u,v}; and on every label at every remaining slot, including the path's final label. Call this sigma-field F_0. Within each U-slot the conditional label is independently uniform on{u,v}, since its two original probabilities are equal. Let K,L be the respective numbers of U-slots in the two sign classes. Then exactly
+$$
+ k_u\mid F_0\sim\operatorname{Bin}(K,1/2),\qquad
+ l_u\mid F_0\sim\operatorname{Bin}(L,1/2),
+                                                               \tag{120.17}
+$$
+independently, with k_v=K-k_u,l_v=L-l_u.
+
+For a path, changing an internal label within C_+ leaves the parity seen by the preceding transition unchanged. All outside departure-row counts remain unchanged. Each reassignment yields a genuine path with positive original probability. Its correct conditional probability follows from(120.15), not merely a likelihood ratio. For pairs the same conclusion follows from the independent slot representation.
+
+Further condition on the integer I=P k_u-Q l_u, and put F=F_0 vee sigma(I). Since gcd(P,Q)=1, every feasible allocation is
+$$
+ k_u=k^\circ+nQ,\quad l_u=l^\circ+nP,\quad
+ k_v=K-k^\circ-nQ,\quad l_v=L-l^\circ-nP,
+ \qquad n\in\mathcal N,                               \tag{120.18}
+$$
+where mathcal N is a consecutive interval of integers determined by nonnegativity. The exact conditional probabilities are
+$$
+ \boxed{P_S(n\mid F)=\frac{w_n}{\sum_{m\in\mathcal N}w_m},
+ \quad w_n={K\choose k^\circ+nQ}{L\choose l^\circ+nP}.} \tag{120.19}
+$$
+Both actual experiments have this SAME conditional formula, although F has a different unconditional law. Any choice of feasible representative(k^\circ,l^\circ) only shifts n. The neighboring trade changes the four counts by(Q,P,-Q,-P); it connects the entire specified one-dimensional fiber because mathcal N is an interval. This is a proof of connectivity for THIS fiber, not an assumption that a general lattice basis is a Markov basis.
+
+### 120.6 Quantitative small-ball and tail bound on the actual trade coordinate
+
+Here is a uniform bound with explicit checkable regularity. Suppose
+$$
+ cQ^3\le K,L\le CQ^3,\qquad
+ k_{n_0},K-k_{n_0},l_{n_0},L-l_{n_0}\ge cQ^3,         \tag{120.20}
+$$
+where n_0 is a mode of w_n, and retain the original P/Q in[1/10,1/8]. Constants depend only on c,C and this fixed interval. Then
+$$
+ \max_nP_S(n\mid F)\le C_1Q^{-1/2},
+$$
+$$
+ P_S(|n-n_0|>u\sqrt Q\mid F)\le C_1 e^{-c_1u^2}
+ \quad(u\ge1).                                       \tag{120.21}
+$$
+
+Proof. For an interior step the exact ratio is
+$$
+ R_n=w_{n+1}/w_n
+ =\prod_{a=1}^{Q}\frac{K-k_n-a+1}{k_n+a}
+  \prod_{b=1}^{P}\frac{L-l_n-b+1}{l_n+b}.             \tag{120.22}
+$$
+Each log factor is decreasing in its count argument. Its derivative is
+-1/(K-k-a+1)-1/(k+a), whose magnitude is at least4/(K+1); the analogous L term has the same property. Integrating over a Q-step and a P-step gives, wherever both adjacent ratios exist,
+$$
+ \log R_n-\log R_{n-1}
+ \le-4Q^2/(K+1)-4P^2/(L+1)\le-c_2/Q.                \tag{120.23}
+$$
+At support endpoints the corresponding one-sided ratio is zero or infinite; the one-sided tail conclusion is unchanged. Thus the sequence is strictly log-concave and has at most two neighboring modes.
+
+In a window |n-n_0|<=c_3 sqrt Q, (120.20) keeps all factorial arguments between positive fixed multiples of Q^3. The reverse bound
+|log R_n-log R_{n-1}|<=C_2/Q also follows from the same derivatives. At a mode log R_{n_0}<=0<=log R_{n_0-1}; their difference bound implies both are O(1/Q). Summation shows w_n/w_{n_0}>=c_4 for c_5 sqrt Q neighboring n. Consequently the normalizer is at least c_6 sqrt Q w_{n_0}. Summing(120.23) away from the mode gives
+w_n/w_{n_0}<=exp[-c_7(|n-n_0|-1)^2/Q].
+Dividing by the lower normalizer proves the atom bound and, by a Gaussian integral comparison, the tail bound. This is an elementary factorial-ratio proof; no local CLT is used to transfer a nonlinear unbounded moment.
+
+These regular fibers are not merely synthetic arrays. Choose u,v as two fixed true signal rows (or two fixed background rows). By(120.16), conditional on parity, K and L are binomial pool counts with means asymptotic to fixed positive multiples of lambda=Q^3; N_+/T,N_-/T->1/4 and T=2Mlambda. For signal rows the means are2a lambda and2b lambda with a=(1+r)/2,b=(1-r)/2>0. Elementary binomial concentration gives K,L in[cQ^3,CQ^3] with actual probability tending to one, uniformly in S, for both experiments. Given F_0, (120.17) puts each allocation within Q^2 of its half-total with probability at least1-C exp(-cQ).
+
+For the orbit through such an allocation, a mode lies between the two locations where k_n and l_n cross their half-totals, up to an endpoint step: below both crossings the binomial products increase, and above both they decrease. Both crossing locations differ from the observed n by O(Q), since the count deviations are at most Q^2 and P,Q are comparable. Hence at the mode every allocation is half its total plus O(Q^2), so(120.20) holds eventually. The regularity event is F-measurable. It therefore has actual probability tending to one. No independence of actual row histories was assumed in this argument.
+
+For any subset B of feasible n, these results also give the concrete conditional bound
+$$
+ P_S(n\in B\mid F)\le
+ \frac{C_1}{\sqrt Q}\#\{n\in B:|n-n_0|\le u\sqrt Q\}
+       +C_1 e^{-c_1u^2}.                             \tag{120.24}
+$$
+This becomes an arithmetic small-ball estimate only after a nontrivial bound on the bad-parameter count. The estimate is for an actual conditional data law, not an independent phase prior.
+
+### 120.7 The shared scalar and histogram co-vary along that SAME fiber
+
+The count-trade law does not authorize freezing the posterior scalar. Track it exactly instead. Every outside score is F_0-measurable and fixed. Along(120.18),
+$$
+ L_u(n)=L_u^\circ e^{nh_Q},\quad
+ L_v(n)=L_v^\circ e^{-nh_Q},\quad
+ B_{uv}:=L_u(n)L_v(n)=L_u^\circ L_v^\circ,\quad
+ z_n=L_u^\circ e^{nh_Q}+L_v^\circ e^{-nh_Q}.           \tag{120.25}
+$$
+Let E_s be the elementary symmetric polynomial of order s of all likelihoods excluding u,v, with E_0=1 and E_s=0 for negative orders. The EXACT full-q normalizer is
+$$
+ Z(n)=E_q+z_nE_{q-1}+B_{uv}E_{q-2}.                  \tag{120.26}
+$$
+Take an outside group0 anchor c, whose existence on the original good event follows from C_0 tending to infinity after removal of two rows. Its choice depends only on the fixed outside assignments. Let F_s be the elementary symmetric polynomial of all likelihoods excluding u,v,c. Then its exact inclusion probability is
+$$
+ \boxed{p_*(n)=
+ \frac{L_0[F_{q-1}+z_nF_{q-2}+B_{uv}F_{q-3}]}
+ {E_q+z_nE_{q-1}+B_{uv}E_{q-2}}.}                   \tag{120.27}
+$$
+No full-q normalizer has been approximated. This scalar is fractional-linear in z_n, not an independent random variable.
+
+For example write numerator=a+bz and denominator=c+dz. Its exact derivative is (bc-ad)/(c+dz)^2. Positivity of c+dz for actual z guarantees a defined ratio but supplies no positive lower bound on |bc-ad|. Moreover z_n can have a turning point and z_{n+1}-z_n can be of second order in h_Q near symmetry. We do not assert that an actual typical determinant vanishes, nor infer a uniform lower bound from formal nonconstancy.
+
+All observed group counts also vary: rows u,v leave and enter their exact (k,l) cells while every other row count is fixed. If their invariant lines are the selected score line, their contributions to C_j move to j+n and j'-n. If they are on other parallel lines, their raw likelihood changes still affects the common normalizer but they need not contribute to any original selected group. The weights p_j,d_j and the finite coefficients used to evaluate a hypothetical raw outcome are recomputed as the original definitions prescribe; they are not fixed arbitrarily across raw outcomes.
+
+The mode/interior probability statement in Section 120.6 concerns a fixed same-class pair, and does NOT say that this pair lies on the selected line with high probability. Conditioning on the selected-line invariant retains(120.19) and its regular-fiber bounds when(120.20) holds, but its unconditional frequency for that pair is a separate issue. Nor may one choose rows by their observed scores and reuse(120.19) without including that selection event in the sigma-field. These distinctions prevent a false high-probability selected-reservoir claim.
+
+For an original-data functional F_data, including mathfrak J_x or its scalar reduction, define F_data(n) from the complete original raw outcome along this fiber. Then(120.19),(120.24) rigorously bound P_S(F_data in A|F) by the corresponding bad-n count with the FULL co-varying maps. The original measurement G can be held fixed on the same enlarged space because it was independent of raw data; no new observation is drawn. This is a usable exact distributional/parameter bridge. It is not a proof that the needed bad-n count is o(sqrt Q).
+
+### 120.8 Remaining obligation and finite boundary
+
+The scalar reduction120.13 is proved without a new center premise. The parity/multinomial disintegration, connected count-trade law, conditional atom/tail bound and fractional-linear parameter map are likewise proved for the actual model, with the stated regular-fiber scope and actual probability of that scope.
+
+The full fixed-gap target still requires a quantitative arithmetic conclusion for the SAME coupled scalar and histogram, or cancellation of the complete quotient. Neither follows from the trade-coordinate atom bound alone. Multiple n can produce nearly identical reduced centers, the determinant in(120.27) has no established scale lower bound, and an orbit can miss the selected line. A count bound for the original quotient's bad values, possibly using several jointly conditioned pools, remains unproved. No such multiple-pool independence or iteration is claimed here.
+
+The exact formulas identify what a new raw-data argument must retain: parity record, outside assignments, pool invariant, full elementary-symmetric coefficients and the changed histogram. They replace the earlier merely formal likelihood intervention by lawful conditional probabilities, but do not turn qualitative rational independence into a modular rate. The sufficient dual-energy criterion in Chapter 116 is not treated as necessary; nonlinear quotient cancellation remains an allowed route. No actual-model counterexample is known or asserted, and no artificial center array is offered in its place.
+
+All output-tail and selected-law returns for120.13 are inherited from Chapters 116 and 118 at their exact scope; no global expectation over bad raw-data environments, unbounded-output theorem, experiment equivalence, computational-efficiency, entropy/covering/E2 or threshold-sharpness claim is made. The original fixed-gap vanishing statement remains unresolved.
+
+### 120.9 来源与可迁移边界
+
+Boistard–Lopuhaä–Ruiz-Gazen，*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，arXiv:1207.5654v1，Theorem 1(ii) 的 $k=2$ 结论直接给出 (120.7)。这里的独立 Bernoulli 族仅用于原固定总数后验的精确条件表示；不把实际观测行声明为独立。采用的是发散总方差与固定删除数下的包含概率展开，不引入其后续相关性应用中的额外比例条件。
+
+Schofield–Bonner，*Connecting the Latent Multinomial*，arXiv:1504.04566v1，区分保持线性约束的格基与连接整个非负整数纤维的 Markov 基。其特殊定理假设配置矩阵只含 0、1，并包含单位矩阵的所有列；本章不声称增长的 $(Q,P)$ 约束满足它。式 (120.18) 直接证明此处一维可行集是整数区间，(120.19) 则从实际概率律推导其权重，不依赖一般 Markov 基定理或 MCMC 有效性。
+
+Barbour–Braunsteins–Ross，*Local limit theorems for occupancy models*，arXiv:1908.00251v2，给出依赖近似 Stein 耦合、条件二阶光滑量和矩控制的平移 Poisson 局部极限定理。该定理还要求随标准差增长阶数的矩界；这些条件没有针对本章非线性共享参数商被验证。因此本章只把它作为方法与边界的参照，实际交换坐标的界由 (120.22)–(120.23) 的阶乘比直接证明。原始来源和具体假设见 Library 对应条目。
+
+条件 multinomial/binomial 分解、初等对称多项式、拒绝抽样展开与对数凹序列均为成熟数学。本章给出它们在同一实际 pair/path 观测模型中的定量连接，不作全局文献原创声明。尤其是，交换坐标的最大片概率趋零，不自动使近乎平坦或回返的共享参数函数远离共振；(120.27) 的行列式尺度和完整商的坏参数计数仍是待证义务。
+
+## 追加锚（本行以下为增补区）
