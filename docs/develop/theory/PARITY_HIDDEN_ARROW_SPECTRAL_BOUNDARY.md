@@ -14690,3 +14690,452 @@ $E_2$ 非空或为空仍为 OPEN。
 实际均值尺度和原熵残差的对应。本文未声称形式核验或全球原创性。
 
 ## 追加锚（93 章后）
+
+## 94. 指数分辨率下紧输出区间的一致覆盖
+
+**定义 94.1（紧输出区间与精确条件中心）。** 沿用定义 92.1 的原实验、
+完整组计数后验 $P_x$、精确标量 $T$ 及同一个 $Y=T+\sigma_MG$，仍要求
+
+$$
+L_M=\ln(1/\sigma_M)\longrightarrow\infty,
+\qquad \limsup_M L_M/Q^3<c_q/2.
+\tag{94.1}
+$$
+
+所有信息量均用自然对数。保持 $J_y=-\ln P_x(R\mid y)$、
+$H_x(y)=\mathbb E_x[J_y\mid y]$、最小覆盖大小 $N_\varepsilon(x,y)$，
+以及 $v=\ell_*/2>0$、$z=\Phi^{-1}(1-\varepsilon)$。
+这里 $\varepsilon\in(0,1)$ 与输出半径 $K<\infty$ 固定，$K\ge0$。
+对固定真实支持取数据概率时，这些仍是同一均匀支持先验定义的纤维函数。
+
+**定理 94.2（紧区间上一致的三阶覆盖与局部信息谱）。** 在 (94.1) 下，
+
+$$
+\sup_{|y|\le K}\left|
+\ln N_\varepsilon(x,y)-H_x(y)-Q\sqrt v\,z+\ln Q
+-\frac{z^2-1}{3}-\ln\varphi(z)+\frac12\ln v
+\right|\longrightarrow0
+\tag{94.2}
+$$
+
+一致地在原固定支持的实际数据概率下成立，pair/path 两种实验分别成立。
+更强地，可以取与输出无关的 $k_x=vQ^2+o(Q)$，使
+
+$$
+Q\sup_{|y|\le K}\sup_{t\in\mathbb R}
+\left|\Pr_x\{J_y-H_x(y)\le t\mid y\}-F_{k_x}(t)\right|
+\longrightarrow0,
+\tag{94.3}
+$$
+
+其中 $F_k$ 是 $\operatorname{Gamma}(k,1)-k$ 的 CDF。
+原输出混合密度还满足
+
+$$
+\|f_x-\varphi_\nu\|_\infty\longrightarrow0,
+\qquad
+\inf_{|y|\le K}f_x(y)\ge\frac12\min_{|y|\le K}\varphi_\nu(y)>0
+\tag{94.4}
+$$
+
+于概率趋一的事件上成立；$\nu=2\int\rho^2$ 取原空间轮廓的值，
+$\varphi_\nu$ 表示方差为 $\nu$ 的中心正态密度。
+式 (94.2) 的精确量词是：对每个固定 $K,\varepsilon,\eta>0$，
+其左侧超过 $\eta$ 的数据概率对全部规定大小的真实支持取上确界后趋零。
+这不要求给定固定支持后的实际输出密度等于先验混合密度 $f_x$。
+
+证明。采用第 92 章的同一量化空间和精确中心。
+本证明需要逐输出的带权密度控制，以下直接建立这种控制。
+
+**共同良好环境与分块平滑。** 保持 $U_j,v_j,e_j,V_D,L_x,a_x$ 的原定义。
+将 (92.6) 的固定常数 $D$ 增大，令 $H_M^2=D\ln Q$，
+$\mathcal H=\{j:|j\delta|\le H_M\}$、$O=\mathcal H^c$、
+$m_H=|\mathcal H|=O(\sqrt{Q\ln Q})=o(Q)$。
+实际行估计、校准和 (92.11) 允许在失败概率一致趋零的环境上同时取
+
+$$
+\begin{gathered}
+V\le C,\quad a_x\le CQ^{-5/2},\quad
+\|e_A\|\le a_x\sqrt{V_A},\quad d_A,d_C\asymp q,\quad V_O\le Q^{-200},\\
+\min_{j\in\mathcal H}d_j\ge e^{c_qQ^3}Q^{-C_D},\qquad
+\frac{v_j}{\delta\rho(j\delta)}\longrightarrow1
+\quad\text{在每个固定空间紧区间上一致},\qquad
+\delta^{-1}\sum_jv_j^2\longrightarrow\nu/2.
+\end{gathered}
+\tag{94.5}
+$$
+
+此处下标 $A$ 在 $e_A,V_A$ 中可指任意组集；$d_A$ 仍指全部 Bernoulli 总和方差。
+例如取 $D>1000/c_{\rm tail}$ 后，以 (92.11) 及 Markov 不等式取得尾界。
+$V\to\int\rho$，故 $V\le C$ 可用固定足够大的 $C$。
+显式界 $a_x\le C(d_J/q+q^{-1/2})$ 与 $d_J=B^2V$ 再给确定的
+$CQ^{-5/2}$ 上界，未将任意紧随机乘子当作固定常数。
+以下先对满足这些条件的确定环境证明估计，再恢复实际数据概率。
+
+将核心按整数指标的模三剩余类分成三个部分 $\mathcal H_l$。
+每一部分在固定正长度空间区间内都有至少 $c/\delta$ 个坐标。
+对其正态能量块，置 $w_j=v_j/\sqrt\delta$、$c_j=e_j/\sqrt{v_j}$。
+一维非中心平方的特征函数模不大于中心平方的模，故每个块满足
+
+$$
+\left|\mathbb E\exp\left(it\sum_{j\in\mathcal H_l}
+w_j(Z_j-c_j)^2\right)\right|
+\le(1+c\delta t^2)^{-c'/\delta}.
+\tag{94.6}
+$$
+
+截距不影响此式。右侧及其乘每个固定 $|t|^r$ 的积分一致有界，且积分尾部
+一致趋零：在 $|t|\le\delta^{-1/2}$ 用 $e^{-c''t^2}$，在其外换元
+$s=\sqrt\delta t$，得到随 $1/\delta$ 指数衰减的界。
+因此每个块的能量密度上确界至多固定 $C$。
+删除固定数目的坐标或添加独立变量仍保留此界。
+
+保持 (92.8) 的 $T^{\rm mix}$，记
+
+$$
+W=\sum_jU_j,\quad s=-\ln\mathsf Q_x(R)-\widetilde h,
+\quad B_s=S_B+s_b,\quad r_s=s-B_s.
+\tag{94.7}
+$$
+
+对每个固定 $p\ge2$，Bernoulli 中心矩展开及二项中心信息矩给
+$\|W\|_p\le C_p$、$\|s\|_p+\|B_s\|_p\le C_pQ$。
+具体地，$BW$ 是方差 $B^2V$ 的独立 Bernoulli 中心和，
+其 $2m$ 阶矩至多 $C_m((B^2V)^m+B^2V)$；
+每组中心信息量的固定阶矩一致有界，独立和中消去单次指标后给 $C_mQ^{2m}$。
+这些独立性只在校准乘积空间中使用。
+
+若权重 $F_l$ 仅依赖三个核心部分及其外部这四部分之一，
+条件于它和所有其它变量，保留另一个独立核心块平滑输出，便有
+
+$$
+\sup_y\mathbb E\bigl[|F_l|^p\varphi_{s_0}(y-T^{\rm mix})\bigr]
+\le C\mathbb E|F_l|^p,\qquad s_0>0.
+\tag{94.8}
+$$
+
+以四部分分解和 $|\sum_lF_l|^p\le4^{p-1}\sum_l|F_l|^p$ 得
+
+$$
+\begin{aligned}
+\sup_y\mathbb E[(1+|W|^p)\varphi_{s_0}(y-T^{\rm mix})]&\le C_p,\\
+\sup_y\mathbb E[(|s|^p+|B_s|^p)\varphi_{s_0}(y-T^{\rm mix})]&\le C_pQ^p.
+\end{aligned}
+\tag{94.9}
+$$
+
+固定阶残差多项式可用 $|u|^b\varphi(u)\le C_b\varphi_2(u)$ 插入；
+权重乘积由带权测度下的 Hölder 不等式控制。
+对各组量化／Stirling 误差分别应用 (94.8)，再用带权 Minkowski 不等式及
+(92.12) 的逐组误差和，得到
+
+$$
+\sup_y\mathbb E[|r_s|\varphi_{s_0}(y-T^{\rm mix})]\le CQ^{-98},
+\qquad
+\sup_y\mathbb E[r_s^2\varphi_{s_0}(y-T^{\rm mix})]\le CQ^{-196}.
+\tag{94.10}
+$$
+
+每个误差即使属于核心，也可由另一个核心块平滑。
+式 (94.8)–(94.10) 对删除外部能量后的 $T_H^{\rm G}$ 同样成立；
+特别地，核心中心信息量 $S_H=\frac12\sum_{\mathcal H}(Z_j^2-1)$ 满足
+$\sup_y\mathbb E[S_H^2\varphi_{s_0}(y-T_H^{\rm G})]\le Cm_H$。
+
+**局部核替换支付完整半指数范围。** Bonis 的有限定理给 (92.4) 的每个固定阶。
+取 $2m$ 阶后用 Hölder 及三角不等式，即将 (92.9) 加强为
+
+$$
+\|\Delta T\|_m\le C_mQ^{C_D}e^{-c_qQ^3/2},
+\qquad
+\|\Delta T/\sigma_M\|_m\le C_mQ^{C_D}e^{-\eta_0Q^3},
+\quad \Delta T=T-T^{\rm mix},
+\tag{94.11}
+$$
+
+其中固定 $\eta_0>0$ 来自 (94.1)，而 $m$ 可以依赖这个间隙，但不随 $M$ 增长。
+取 $h_Q=Q^{-100}$，将空间分为
+$E_{\rm bad}=\{|\Delta T|>h_Q\sigma_M\}$ 及其补集。
+对任意所需固定 $A$，足够大的固定 $m$ 使
+
+$$
+\sigma_M^{-1}Q^C\Pr(E_{\rm bad})^{1/2}=o(Q^{-A}).
+\tag{94.12}
+$$
+
+事实上概率至多 $C_mQ^{m(C_D+100)}e^{-m\eta_0Q^3}$，
+而 $\sigma_M^{-1}\le e^{(c_q/2-\eta_0)Q^3}$。
+所需额外固定次幂 $|\Delta T/\sigma_M|$ 亦由更高固定矩及 Hölder 支付。
+普通二阶范数至多多项式的中心权重可同时插入。
+
+对 $|d|\le h\sigma$、$h\le1/2$，正态核的微分给
+
+$$
+|\varphi_\sigma(t-d)-\varphi_\sigma(t)|
+\le Ch\varphi_{2\sigma}(t),\qquad
+\varphi_\sigma(t-d)\le C\varphi_{2\sigma}(t).
+\tag{94.13}
+$$
+
+对固定整数 $b\ge0$，将核换成 $(t/\sigma)^b\varphi_\sigma(t)$
+也有同式的差界，必要时再固定倍数放宽正态方差。
+另有
+$|(t-d)^2-t^2|\varphi_\sigma(t-d)/\sigma^2\le Ch\varphi_{2\sigma}(t)$。
+这些式子由中值定理及多项式乘宽正态包络的一致界直接成立。
+坏事件上使用核及残差多项式核的上确界 $C_b/\sigma$，由 (94.12) 支付。
+与 (94.9) 结合，逐输出地得到
+
+$$
+\begin{aligned}
+\sup_y\mathbb E|\varphi_\sigma(y-T)-\varphi_\sigma(y-T^{\rm mix})|
+&\le Ch_Q+o(Q^{-90}),\\
+\sup_y\mathbb E|s|\,|\varphi_\sigma(y-T)-\varphi_\sigma(y-T^{\rm mix})|
+&\le CQh_Q+o(Q^{-90}).
+\end{aligned}
+\tag{94.14}
+$$
+
+$W^2,B_s$、所需乘积及至多四阶残差多项式亦满足对应估计。
+小位移以噪声为单位测量，宽核由正态核心的有界能量密度积分；
+坏事件的 $\sigma^{-1}$ 由高固定矩吸收。
+由此没有使用在当前范围未获保证的 $\mathbb E|\Delta T|/\sigma^2$ 界。
+
+**实际后验的逐输出带权比较。** 原完整向量选中密度的方差型局部估计为
+
+$$
+L_x(k)=\sqrt{d_A/d_C}\,e^{-(k-m_J)^2/(2d_C)}+O(q^{-1/2})
+\tag{94.15}
+$$
+
+对全部整数总计数 $k$ 一致成立。它的分母是整数校准均值处的中心概率，
+故绝对局部误差在相除后为所示 $O(q^{-1/2})$。
+用 $1-e^{-u}\le u$、$k-m_J=BW$、$B^2/q=Q^{-5/2}$，得到全局界
+
+$$
+|L_x-1|\le C[Q^{-5/2}(V+W^2)+q^{-1/2}],\qquad 0<L_x\le C.
+\tag{94.16}
+$$
+
+于是 (94.9)、(94.14) 给
+
+$$
+\begin{aligned}
+\sup_y\mathbb E[|L_x-1|\varphi_\sigma(y-T)]&\le CQ^{-5/2},\\
+\sup_y\mathbb E[|L_x-1||s|\varphi_\sigma(y-T)]&\le CQ^{-3/2},\\
+\sup_y\mathbb E[L_x(|\ln L_x|+|\ln L_x|^2)\varphi_\sigma(y-T)]&\le CQ^{-5/2}.
+\end{aligned}
+\tag{94.17}
+$$
+
+末式使用 $t|\ln t|+t(\ln t)^2\le C'|t-1|$ 于 $0\le t\le C$。
+所需残差多项式亦可插入。这里未将无界信息量通过 TV 传递。
+
+使用 (92.16)–(92.17) 的共同潜变量／输出律 $\mu_A,\mu_m$，
+以及各自正确的残差 $g_A,g_m$ 和可观测量 $K_A,\bar K$。
+在固定输出 $y$ 的未归一化测度上，(94.10)、(94.14)、(94.17) 依次给
+
+$$
+\begin{gathered}
+\sup_y\|\mu_A(\bar K\in\cdot,dy)/dy-\mu_m(\bar K\in\cdot,dy)/dy\|_{\rm TV}
+\le e_1=O(Q^{-5/2}),\\
+\sup_y\int|K_A-\bar K|\,d\mu_A(\cdot,y)/dy
+\le\epsilon_1=O(Q^{-5/2}),\\
+\sup_y|A_A(y)-A_m(y)|\le w_1=O(Q^{-3/2}).
+\end{gathered}
+\tag{94.18}
+$$
+
+$A_A,A_m$ 为这两个可观测量各自的一阶矩输出密度；此处 TV 取绝对质量范数。
+第一式经同一个 $\bar K$ 映射；第二式分别支付 $-\ln L_x$、$r_s$ 和残差平方差。
+第三式对中心信息量换律付 $CQ^{-5/2}Q$、平移付 $CQh_Q$，
+对残差平方使用残差多项式核，信息近似再付 $CQ^{-98}$。
+因而不存在一个未中心化的 $Q^5$ 因子。
+
+**联合密度的切片导数移除相关外部能量。** 需要加强 (92.13) 的范数。
+设 $(S_H,T_H^{\rm G})$ 的联合密度为 $p_H(s,t)$，则
+
+$$
+\sup_t\int|\partial_t p_H(s,t)|ds\le C\delta^{-1/2},
+\qquad
+\sup_t\int |s|\,|\partial_t p_H(s,t)|ds
+\le C\delta^{-1/2}(1+\sqrt{m_H}).
+\tag{94.19}
+$$
+
+以下给出所需二维非退化性及切片论证。保留 64 对不交核心坐标，
+每对一端空间位置趋零、另一端趋一。
+$b_j=v_j/\delta$ 的两个范围正且分离，$|c_j|=|e_j|/\sqrt{v_j}=O(Q^{-9/4})$。
+该固定块上令
+$F_1=\frac12\sum(Z_j^2-1)$、$F_2=\sum b_j((Z_j-c_j)^2-1)$。
+梯度 Gram 矩阵 $\Gamma$ 的 Cauchy–Binet 公式给
+
+$$
+\det\Gamma\ge4\sum_{64\text{ 对 }(i,j)}P_{ij}^2,
+\qquad
+P_{ij}=(b_j-b_i)Z_iZ_j+b_ic_iZ_j-b_jc_jZ_i.
+\tag{94.20}
+$$
+
+条件于 $Z_j$，$Z_i$ 的系数是方差有正下界的仿射正态。
+其绝对值不超过 $a$ 的概率至多 $Ca$；在补集上
+$\Pr(|P_{ij}|\le u\mid Z_j)\le Cu/a$。取 $a=\sqrt u$，
+由 64 对独立性得到
+$\Pr(\det\Gamma\le t)\le Ct^{16}$，$0<t<1$。
+因此低于 16 阶的逆矩一致有界。
+
+令 $u=\sum_b(\Gamma^{-1})_{2b}\nabla F_b$，则
+$u\cdot\nabla F_1=0$、$u\cdot\nabla F_2=1$。
+正态散度 $D_u=Z\cdot u-\operatorname{div}u$ 的分母至多为
+$(\det\Gamma)^2$，分子为固定维多项式。
+Hölder 与上述逆矩给 $\mathbb E[(1+|F_1|)|D_u|]\le C$。
+先在行列式远离零处局部化、再以更高逆矩移除截断，正态分部积分给
+$(F_1,\sqrt\delta F_2)$ 的密度 $p_A$ 满足
+
+$$
+\iint(1+|s|)|\partial_t p_A(s,t)|dsdt\le C\delta^{-1/2}.
+\tag{94.21}
+$$
+
+几乎处处秩为二通过局部变量变换保证绝对连续性；分部积分给密度导数的散度表示。
+这是经典密度演算在所列逆矩已核对后的应用。
+余下核心的能量边缘密度上界为 $C$，且
+$\sup_t\int|s|p_B(s,t)ds\le C\sqrt{m_H}$：
+再分两个独立宏观块，以一个块的能量平滑另一个块的中心信息量即可。
+在 $p_H=p_A*p_B$ 中用 Fubini 及 $|s_A+s_B|\le|s_A|+|s_B|$，即得 (94.19)。
+余下独立块的可积 Fourier 导数给连续版本；再保留一个这样的卷积块，
+上述切片界可在每个实数 $t$ 处成立。
+
+保持 (92.10) 的真实外部能量差 $E_O=T^{\rm mix}-T_H^{\rm G}$。
+二项四阶矩及中心和独立性给
+
+$$
+\|E_O\|_2\le C\delta^{-1/2}[(1+a_x)V_O+B^{-1}\sqrt{V_O}],
+\qquad \mathbb E|E_O|\le C\delta^{-1/2}(1+a_x)V_O.
+\tag{94.22}
+$$
+
+例如平方和的方差至多 $2\sum_Ov_j^2+V_O/B^2$，
+线性部分的二阶范数至多 $2\sqrt{\max_Ov_j}\|e_O\|\le2a_xV_O$。
+条件于全部外部计数、量化变量和同一个 $G$，
+令 $K_0=S_B+s_b+G^2/2$、$Y_m=T^{\rm mix}+\sigma G$、$Y_H=T_H^{\rm G}+\sigma G$。
+两对 $(K_0,Y_m),(K_0,Y_H)$ 仅将 $p_H$ 的第二坐标平移 $E_O$，
+第一坐标同时保留外部信息量和 $G^2/2$。
+因此其逐输出未归一化测度的 TV 及一阶矩密度差分别至多
+
+$$
+\begin{aligned}
+e_2&\le C\delta^{-1}(1+a_x)V_O,\\
+w_2&\le C\delta^{-1/2}[(1+\sqrt{m_H})\mathbb E|E_O|+Q\|E_O\|_2]\\
+&\le CQ\delta^{-1}[(1+a_x)V_O+B^{-1}\sqrt{V_O}].
+\end{aligned}
+\tag{94.23}
+$$
+
+第二式对外部信息量用其 $CQ$ 二阶范数，对 $G^2$ 用独立的固定均值。
+由 (94.5)，两误差均为 $o(Q^{-90})$。
+这一联合平移保留了外部信息量与外部实际能量的相关，且不收取逆噪声因子。
+
+**正密度、精确中心与条件 CDF。** $T_H^{\rm G}$ 的均值是
+$\delta^{-1/2}\|e\|^2=o(1)$。
+其中心二次部分的方差 $2\sum_{\mathcal H}w_j^2\to\nu$，最大系数趋零：
+固定空间紧区间由轮廓控制，区间之外由平方质量尾界控制。
+线性部分二阶范数趋零，故独立正态平方的累积量界给 $T_H^{\rm G}\Rightarrow N(0,\nu)$。
+式 (94.6) 的统一可积 Fourier 包络将其加强为输出密度
+$\|f_H-\varphi_\nu\|_\infty\to0$，加同一个消失正态噪声仍成立。
+这也落在 Herry–Malicet–Poly 的有限 Wiener chaos 密度超收敛定理范围内：
+最高二阶投影归一化后趋标准正态，低阶余项在 $L^2$ 中趋零。
+这里的显式 Fourier 证明同时提供了前述独立块估计。
+
+合成 (94.18)、(94.23)，令 $e=e_1+e_2=O(Q^{-5/2})$、
+$w=w_1+w_2=O(Q^{-3/2})$。质量比较给
+$\sup_y|f_x(y)-f_H(y)|\le e$，从而证明 (94.4)。
+在固定紧区间两个密度均至少为确定的 $c_K>0$。
+设 $A_H$ 是最终 $K_0$ 的一阶矩密度；带权比较给
+$\sup_y|A_A-A_H|\le w$。
+最终参考的条件二阶矩至多 $C_KQ^2$，故归一化均值满足
+
+$$
+\sup_{|y|\le K}|m_A(y)-m_H(y)|\le C_K(w+Qe)=O(Q^{-3/2}).
+\tag{94.24}
+$$
+
+此式直接由
+$m_A-m_H=(A_A-A_H)/f_x+m_H(f_H-f_x)/f_x$ 推出。
+这里 $m_H(y)$ 表示均值函数，核心坐标数仍记 $m_H$；两者以是否带自变量区分。
+Bayes 恒等式精确给
+$J_y-H_x(y)=K_A-m_A(y)$，其中噪声对数和输出密度在中心化时完全相消。
+
+现在，且仅在最终参考处，
+$A_k=\frac12\sum_{\mathcal B_x\setminus\mathcal H}(Z_j^2-1)$
+独立于 $(Y_H,S_H,s_b,G)$；其形状
+$k=(N_x-m_H)/2=vQ^2+o(Q)$。
+因此 $K_0\mid Y_H=y$ 的密度至多 $C/Q$。
+由 (94.18) 的可观测量位移界、合成测度 TV、此密度界及 (94.24)，对每个 $t_0>0$，
+
+$$
+\sup_{|y|\le K}d_K\bigl(
+\mathcal L(K_A-m_A(y)\mid y),\mathcal L(K_0-m_H(y)\mid Y_H=y)\bigr)
+\le C_K[e+\epsilon_1/t_0+t_0/Q+w/Q].
+\tag{94.25}
+$$
+
+具体地，大于 $t_0$ 的位移由 Markov 支付 $C_K\epsilon_1/t_0$；
+余下阈值移动付 $Ct_0/Q$，归一化及移动精确均值再付 $C_K(e+w/Q)$。
+先在联合可观测量上合成比较，再于有正下界的输出密度上归一化。
+
+最终 $K_0-m_H(y)=A_k+B_y$，$B_y$ 条件中心化且与 $A_k$ 独立。
+分块带权矩给 $\mathbb E[B_y^2\mid y]\le C_K(m_H+1)$；
+$s_b$ 有界二阶矩，$G^4$ 用核心密度上界积分后除以 $c_K$。
+这里不声称给定输出后 $G$ 仍为独立标准正态。
+Gamma 密度满足 $\|p_k'\|_\infty\le C/Q^2$，
+Taylor 展开中一次项由条件中心化消失，因此
+
+$$
+d_x(K):=\sup_{|y|\le K}d_K(\mathcal L(J_y-H_x(y)\mid y),F_k)
+\le C_K[e+\epsilon_1/t_0+t_0/Q+w/Q+(m_H+1)/Q^2].
+\tag{94.26}
+$$
+
+取 $t_0=Q^{-1/2}$，得到 $Qd_x(K)\to0$。
+所有环境估计来自对固定支持一致的实际行概率界；取良好环境子列或直接删除其坏事件，
+即恢复定理所述实际数据概率，证明 (94.3)。
+
+**计数边界与并列。** Gamma 的 Stirling 展开给固定误差分位数
+$t_k=Q\sqrt v\,z+(z^2-1)/3+o(1)$。
+由于 $\sqrt k=Q\sqrt v+o(1)$、该处密度至少为 $c/Q$，
+(94.3) 将实际分位数 $t_y$ 一致夹在 $t_k\pm o(1)$ 之间。
+精确计数恒等式为
+
+$$
+C_y(t)=\#\{n:J_y(n)-H_x(y)\le t\}
+=e^{H_x(y)+t}\mathbb E[e^{J_y-H_x(y)-t}
+\mathbf1_{\{J_y-H_x(y)\le t\}}\mid y].
+\tag{94.27}
+$$
+
+括号中的核总变差为二，故其期望与 Gamma 参考之差至多 $2d_x(K)=o(1/Q)$。
+在 $t=t_y$ 处，参考积分为
+$\int_0^\infty e^{-u}p_k(t_y-u)du
+=\varphi(z)/(Q\sqrt v)+o(1/Q)$，一致于紧输出区间。
+实际中心信息分布的任何原子质量至多 $2d_x(K)$，故截止处全部并列计数
+至多 $e^{H_x(y)+t_y}2d_x(K)=o(C_y(t_y))$。
+最优覆盖包含截止前的所有点与所需的截止并列点；取整误差亦包含在这个精确界中。
+取对数便得 (94.2)，不需实际信息量的非格点性或单射性。
+
+每个有限 $M$ 的原数据空间有限，故上述输出上确界作为数据函数可测。
+逐输出后验概率为正且连续，覆盖大小由有限子集质量测试的最小值定义；
+按概率排序并以计数组词典序处理并列给可测选择。
+证明覆盖紧区间每个实输出，包括孤立并列点，未用几乎处处结论代替上确界。证毕。
+
+**注记 94.3（条件化范围）。** 常数可依赖固定 $K$ 的正密度下界；
+本章未给全实线或增长区间的一致式、误差水平趋端点、零噪声或阈值锐性。
+精确条件熵仍保留在覆盖公式中，不能自动代入未在当前噪声范围证明的熵响应、
+条件方差或无界期望展开。
+若将余项在实际固定支持输出处评价且要求 $|Y|\le K$，
+其失败事件包含于 (94.2) 的坏数据事件，因而相同概率界直接适用；
+这不将已知支持下的单正态输出律识别为先验混合律，也不约束任意硬编码支持的解码器。
+未知方向仍经原共同一致事件、同一标量和同一测量 $G$ 处理。
+
+经典的高阶量化、正态密度演算和局部源计数承担各自原有结论。
+本章新增的是原固定总数后验在指数测量分辨率下的逐输出带权桥梁及紧区间一致覆盖。
+
+## 追加锚（本行以下为增补区）
