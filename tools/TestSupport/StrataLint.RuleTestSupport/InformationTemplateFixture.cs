@@ -9,7 +9,7 @@ internal static class InformationTemplateFixture
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_cache_release_semantic_version":9,
+            {"schema_version":1,"report_cache_release_semantic_version":10,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true},{"pattern":"Reg/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},

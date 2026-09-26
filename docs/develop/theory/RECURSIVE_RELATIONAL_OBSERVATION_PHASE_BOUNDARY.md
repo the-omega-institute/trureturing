@@ -40348,3 +40348,631 @@ $\{\varepsilon_{D,\infty}>r\}$ 是连续有限前缀函数对应开集的并。
 因此，在本合同内，“每个有限前缀都有共同实现”能够升级为“一台装置实现全部前缀”，其依据是固定资源、闭约束及紧性共同成立。这个紧性论证是经典方法；本节把它落实到实际固定 CPTP 接收合同，并分清有限期限的数值上界与全时域共同实现之间仍须证明的量词。
 
 ## 追加锚（本行以下为增补区）
+
+## 151. 交替端点的固定七维通道解码障碍
+
+第148节的七维装置在 $b\to0$ 端给出七阶概率误差上界，但在另一端 $a\to0$，其现有误差证书只有 $O(|a|)$。本节证明：固定该节的实际物理接收通道后，即使重新优化全部本地终端解码器，一阶误差也不能消除，且最优首项系数恰为 $\sqrt3-\sqrt2$。这是指定接收通道的障碍，不是一般七维最优误差的下界。
+
+### 151.1 固定物理通道，只优化终端解码
+
+先取正实振幅，置
+
+$$
+0<p<1,\qquad x=1-p,\qquad a=\sqrt x,\qquad b=\sqrt p.
+\tag{151.1}
+$$
+
+来源仍为
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B.
+\tag{151.2}
+$$
+
+固定第148节的七维接收空间 $K$、独立纯初态 $w$，以及表（148.7）确定的全域酉 $V_p:K\otimes B\to K\otimes E$。每轮重复使用的实际接收通道为
+
+$$
+\mathcal C_p(Y)=\operatorname{Tr}_E(V_pYV_p^*).
+\tag{151.3}
+$$
+
+接收器只访问 $K$ 与最新发出位，所有持久控制都在七维 $K$ 内；环境逐轮新取并立即丢弃。以下不改变 $w,V_p$ 或任何早期接收步骤。
+
+对初始参考—活动态 $\rho_{RM}$，记 $\sigma_{n,p}(\rho)$ 为运行这一固定装置后实际保留的 $RMK$ 态，$\Omega_{n,p}(\rho)$ 为来源直接发射所得的完整 $RM B^{\otimes n}$ 态。定义
+
+$$
+\begin{aligned}
+e_{148}(p)
+=
+\inf_{\mathcal D_1,\ldots,\mathcal D_6}
+\max_{1\le n\le6}\sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_{n,p}(\rho)-\Omega_{n,p}(\rho)
+\right\|_1 .
+\end{aligned}
+\tag{151.4}
+$$
+
+每个 $\mathcal D_n:\mathcal L(K)\to\mathcal L(B^{\otimes n})$ 可以是任意全域 CPTP 通道，可依赖已知来源和终端编号，但不依赖未知输入或不可访问参考。上确界保留全部初始密度矩阵与全部有限维参考。本节没有把输入限制为经典混合，也没有把第六终端误差替代前六终端最大误差。
+
+**定理151.1（固定装置的最优解码首项）。** 有
+
+$$
+\boxed{
+\lim_{p\uparrow1}\frac{e_{148}(p)}{\sqrt{1-p}}
+=\sqrt3-\sqrt2.
+}
+\tag{151.5}
+$$
+
+该结论也适用于第144节相位协变所运输的已知复振幅装置族；分母相应为 $|a|$。
+
+### 151.2 活动记忆非对角块的恢复下界
+
+**引理151.2（非对角块与本地通道）。** 设 $Z$ 为 $\mathbb C^2\otimes H$ 上的厄米算子，$Z_{10}$ 为活动二维系统的 $(1,0)$ 块。则
+
+$$
+\frac12\|Z\|_1\ge\|Z_{10}\|_1.
+\tag{151.6}
+$$
+
+对任意 CPTP 映射 $\mathcal D$ 和任意算子 $X$，不要求 $X$ 厄米，有
+
+$$
+\|\mathcal D(X)\|_1\le\|X\|_1.
+\tag{151.7}
+$$
+
+**证明。** 令 $J=\operatorname{diag}(1,-1)\otimes I_H$。算子 $(Z-JZJ)/2$ 只保留两个非对角块，其迹范数等于 $2\|Z_{10}\|_1$；另一方面，迹范数的酉不变性与三角不等式给
+$\|(Z-JZJ)/2\|_1\le\|Z\|_1$，得到（151.6）。
+
+对任意厄米算子 $H=H_+-H_-$，正映射的保迹性给
+$\|\mathcal D(H)\|_1\le\operatorname{Tr}H_++\operatorname{Tr}H_-=\|H\|_1$。
+现在把 $\operatorname{id}_2\otimes\mathcal D$ 作用于厄米扩张
+
+$$
+\begin{pmatrix}0&X\\X^*&0\end{pmatrix}.
+$$
+
+完全正性保证该扩张通道仍为正且保迹。输入与输出的迹范数分别为 $2\|X\|_1$ 和 $2\|\mathcal D(X)\|_1$，因此得到（151.7）。证毕。
+
+特别地，若理想目标态 $\Omega$ 的活动记忆 $(1,0)$ 块为 $Y$，实际接收态 $\sigma$ 的对应块为 $X$，则任意只作用于接收器的解码通道满足
+
+$$
+\begin{aligned}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)(\sigma)-\Omega
+\|_1
+&\ge\|\mathcal D(X)-Y\|_1\\
+&\ge\|Y\|_1-\|X\|_1.
+\end{aligned}
+\tag{151.8}
+$$
+
+这条下界不要求解码器为等距映射，也不要求它精确恢复任何指定基态。
+
+### 151.3 第六终端的有限参数双侧界
+
+沿用第148节参数，并明确写成 $p,x$ 的函数：
+
+$$
+\begin{aligned}
+c&=\sqrt{x^2+p},&
+d&=\sqrt{c^2+p},\\
+\kappa&=\sqrt{x^2d^2+pc^2},&
+\lambda&=\sqrt{\kappa^2+pd^2},\\
+\mu&=\frac{\sqrt p(c\kappa-xd^2)}{\kappa},&
+\nu&=d\left(x+\frac{cp}{\kappa}\right).
+\end{aligned}
+\tag{151.9}
+$$
+
+这些数在 $0<p<1$ 时为正，并满足
+
+$$
+\mu^2+\nu^2=\lambda^2.
+\tag{151.10}
+$$
+
+**命题151.3（固定接收器的有限参数夹逼）。** 记 $[t]_+=\max(t,0)$。则
+
+$$
+\boxed{
+\begin{aligned}
+e_{148}(p)\ge\sqrt{xp}\bigl[
+&\lambda\sqrt{x^2\lambda^2+p\kappa^2}\\
+&-\nu\sqrt{x^2\nu^2+p\kappa^2}
+-x\mu^2
+\bigr]_+ ,
+\end{aligned}
+}
+\tag{151.11}
+$$
+
+且
+
+$$
+\boxed{
+e_{148}(p)\le
+\mu^2\left(
+\frac{\sqrt x}{\lambda+\nu}+\frac{x}{2}
+\right).
+}
+\tag{151.12}
+$$
+
+**证明。** 下界只需取合同中允许的输入 $|0\rangle\langle0|$，参考取一维。记
+$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$。
+第148节的第六轮实际 Stinespring 分支为
+
+$$
+L_A|0\rangle=a\mu\,m_0h,\qquad
+L_B|0\rangle=a\nu\,m_0P+b\kappa\,m_1e.
+\tag{151.13}
+$$
+
+其中 $P,e,h$ 是三个正交单位接收向量，$A,B$ 是同一物理环境的两个正交分支。因而
+
+$$
+\sigma_{6,p}(|0\rangle\langle0|)
+=L_A|0\rangle\langle0|L_A^*
++L_B|0\rangle\langle0|L_B^*.
+\tag{151.14}
+$$
+
+该态的活动记忆 $(1,0)$ 块是
+
+$$
+X
+=ab\left[
+a^2\mu^2|h\rangle\langle h|
++\nu|P\rangle
+\bigl(a^2\nu\langle P|+b\kappa\langle e|\bigr)
+\right].
+\tag{151.15}
+$$
+
+方括号内两项的定义域与值域分别正交，所以两个奇异值贡献直接相加，得到
+
+$$
+\|X\|_1
+=ab\left[
+a^2\mu^2+
+\nu\sqrt{a^4\nu^2+b^2\kappa^2}
+\right].
+\tag{151.16}
+$$
+
+另一方面，第148节的档案等距 $W_6:S_6\to K$ 把同一实际来源的完整理想目标编码为
+
+$$
+U_6|0\rangle
+=a\lambda\,m_0P+b\kappa\,m_1e.
+\tag{151.17}
+$$
+
+这里 $W_6$ 是完整档案支撑上的本地等距，而不是对实际接收态另作假设。它保持活动记忆每个块的迹范数。若 $Y$ 是原始完整档案目标的 $(1,0)$ 块，则由（151.17）
+
+$$
+W_6YW_6^*
+=ab\lambda|P\rangle
+\bigl(a^2\lambda\langle P|+b\kappa\langle e|\bigr),
+$$
+
+$$
+\|Y\|_1
+=ab\lambda\sqrt{a^4\lambda^2+b^2\kappa^2}.
+\tag{151.18}
+$$
+
+把（151.16）、（151.18）代入（151.8），可对每个任意选择的 $\mathcal D_6$ 得到相同下界。由于第六终端和输入 $|0\rangle\langle0|$ 均属于（151.4）的最大值及上确界范围，该下界仍可经过全部解码器的下确界。再代入 $a^2=x,b^2=p$ 并使用误差非负性，即得（151.11）。
+
+上界直接使用第148节已经构造的一组六个合法解码器：前五终端精确，第六终端对全部初始输入及参考满足
+
+$$
+\mu^2\left(
+\frac{a}{\lambda+\nu}+\frac{a^2}{2}
+\right).
+$$
+
+固定同一个物理接收器后，对解码器取下确界只能降低该值，故得（151.12）。上界沿用完整参考恢复证明，没有由单一输入下界反推全输入上界。证毕。
+
+### 151.4 端点系数及已知复相位
+
+当 $p\uparrow1$、$x\downarrow0$ 时，由（151.9）有
+
+$$
+c,\kappa,\mu\longrightarrow1,\qquad
+d,\nu\longrightarrow\sqrt2,\qquad
+\lambda\longrightarrow\sqrt3.
+\tag{151.19}
+$$
+
+式（151.11）的右侧除以 $\sqrt x$ 后趋于 $\sqrt3-\sqrt2$；此极限严格为正，故正部操作在充分靠近端点时不改变表达式。式（151.12）的右侧除以 $\sqrt x$ 后趋于
+
+$$
+\frac1{\sqrt3+\sqrt2}=\sqrt3-\sqrt2.
+\tag{151.20}
+$$
+
+双侧夹逼即证明定理151.1的正实振幅结论。
+
+现在设已知复振幅为
+
+$$
+a=Ae^{i\alpha},\qquad b=Be^{i\beta},\qquad A,B>0.
+$$
+
+定义固定相位门
+
+$$
+U=\operatorname{diag}(1,e^{i(\alpha-\beta)})\quad\text{作用于 }M,
+$$
+
+$$
+E=\operatorname{diag}(e^{-i\alpha},e^{i(\alpha-\beta)})
+\quad\text{作用于发出位 }B.
+$$
+
+第144节的来源恒等式为
+
+$$
+T_{A,B}=(U\otimes E)T_{a,b}U^*.
+\tag{151.21}
+$$
+
+相位运输后的实际固定接收器定义为
+
+$$
+\mathcal C_{a,b}
+=\mathcal C_{B^2}\circ
+\operatorname{Ad}_{I_K\otimes E},
+\qquad \operatorname{Ad}_W(Y)=WYW^*,
+\tag{151.22}
+$$
+
+初态仍为 $w$。因此每轮仅在最新输入位前增加同一个已知相位门，不接触活动记忆或参考，也不增加持久维数。
+
+对正实来源的一组任意解码器 $\mathcal D_n$，取
+
+$$
+\mathcal D_n^{a,b}
+=\operatorname{Ad}_{(E^*)^{\otimes n}}\circ\mathcal D_n.
+\tag{151.23}
+$$
+
+由（151.21）逐轮相消，复来源输入 $\rho_{RM}$ 上的恢复误差，等于正实来源输入
+$(I_R\otimes U)\rho_{RM}(I_R\otimes U^*)$ 上的恢复误差；两边只差活动记忆与档案上的终端酉共轭。这里的 $U$ 用于数学上的变量替换，没有授权接收器实际操作 $M$。输入态的该变量替换是双射，且（151.23）对全部 CPTP 解码器也是双射，所以重新优化解码后的误差恰好相等。
+
+因此（151.11）—（151.12）对运输后的已知复振幅装置仍成立，且
+
+$$
+\boxed{
+e_{148}^{\mathrm{transport}}(a,b)
+=[\sqrt3-\sqrt2+o(1)]\,|a|,
+\qquad |a|\downarrow0.
+}
+\tag{151.24}
+$$
+
+这处理的是每份已知来源各自校准的固定装置，没有要求一台未知参数通道同时服务整个来源族。
+
+### 151.5 对一般七维误差的边界
+
+本装置第六轮的最大泄漏分支概率为 $a^2\mu^2=O(|a|^2)$，由本节采用的输入 $|0\rangle$ 取得；一般输入的该分支概率为 $a^2\mu^2p_0$，其中 $p_0=\operatorname{Tr}[(I_R\otimes|0\rangle\langle0|)\rho_{RM}]$ 是初始记忆取零的概率。保留分支在活动记忆与档案之间的非对角幅度少于完整目标所需幅度。式（151.11）证明，这个不可由本地 CPTP 解码增大的幅度差确实造成一阶半迹误差。因此，该端点的一阶项不是第148节解码证书的松弛。
+
+一般七维最优误差仍对物理接收通道也取下确界，所以只有
+
+$$
+f(x)\le e_{148}(1-x).
+\tag{151.25}
+$$
+
+本节对右侧的下界不能变成左侧的下界，因而没有证明第144节的 $q_0=1/2$，也没有给出 $q_0$ 的上限。若要证明 $f(x)=o(\sqrt x)$，必须构造另一份共同固定接收通道，并同时控制全部前六终端与完整参考相干；若要排除此改进，则须对任意七维通道建立相应定量障碍。非退化来源上的精确不可能性与端点幂主项本身均不承担这个缺失的定量桥梁。
+
+## 追加锚（本行以下为增补区）
+
+## 152. 首位档案判别给出的固定通道七阶下界
+
+第151节在 $a\to0$ 端确定了第148节物理通道的最优解码首项。本节转向 $b\to0$ 端，证明同一通道的七阶误差证书也有匹配下界。下界只需读取解码档案的第一位，并比较两个允许的真实初始输入；它不要求访问活动记忆或参考。
+
+这里仍使用第151节的 $e_{148}(p)$：固定第148节的七维接收空间、纯初态和每轮 CPTP 通道，只重新优化六个终端解码器。物理通道也参与优化的 $f(1-p)$ 是另一个量，本节不为它建立匹配下界。
+
+### 152.1 两份真实接收边缘及重叠权重
+
+先取
+
+$$
+0<p<1,\qquad a=\sqrt{1-p},\qquad b=\sqrt p,
+$$
+
+并沿用第148节的 $c,d,\kappa,\lambda,\mu,\nu,G,H$ 及接收基
+$u,v,w,P,e,g,h$。其中 $P$ 是接收向量，$p$ 是来源概率。令
+
+$$
+\ell_p=a^2\mu^2,\qquad
+\alpha_p=\frac{c^2}{d^2},\qquad
+\beta_p=\frac{p}{d^2},\qquad
+\alpha_p+\beta_p=1.
+\tag{152.1}
+$$
+
+在第六终端，对来源初态 $|i\rangle$ 产生的实际联合态取活动记忆偏迹，记所得接收边缘为 $\varrho_i$。由第148节的两个实际环境分支，
+
+$$
+\varrho_0=A_p+\ell_p|h\rangle\langle h|,
+\qquad A_p\succeq0,\qquad
+\operatorname{Tr}A_p=1-\ell_p.
+\tag{152.2}
+$$
+
+这里
+
+$$
+A_p=\operatorname{Tr}_M
+|a\nu\,m_0P+b\kappa\,m_1e\rangle
+\langle a\nu\,m_0P+b\kappa\,m_1e|.
+$$
+
+该分解来自实际被丢弃的正交环境分支；没有假定解码器能识别分支。
+
+初态 $|1\rangle$ 的环境为纯 $B$，其实际接收边缘为
+
+$$
+\varrho_1
+=|G\rangle\langle G|+|H\rangle\langle H|
++a\bigl(|G\rangle\langle H|+|H\rangle\langle G|\bigr).
+\tag{152.3}
+$$
+
+向量 $G,H$ 正交且非零，满足
+
+$$
+\|G\|^2=\kappa^2,\qquad
+\|H\|^2=a^2pd^2,\qquad
+\kappa^2+a^2pd^2=1.
+\tag{152.4}
+$$
+
+所以 $\varrho_1$ 在
+$S=\operatorname{span}\{G,H\}$ 上正定。用 $\Pi_S$ 表示该空间的正交投影，记其最小本征值为
+
+$$
+\boxed{
+s_p=\frac{1-\sqrt{1-4a^2p^2d^2\kappa^2}}2>0.
+}
+\tag{152.5}
+$$
+
+**引理152.1（真实边缘中的可混淆方向）。** 有
+
+$$
+\varrho_1\succeq s_p\Pi_S,\qquad
+\|\Pi_Sh\|^2=\alpha_p,\qquad
+\|(I-\Pi_S)h\|^2=\beta_p.
+\tag{152.6}
+$$
+
+并且在 $p\downarrow0$ 时，
+
+$$
+s_p\sim p^2,\qquad
+\ell_p\sim\frac14p^7,\qquad
+\alpha_p\to1,\qquad \beta_p\to0.
+\tag{152.7}
+$$
+
+**证明。** 在正交单位基
+$\widehat G=G/\|G\|$、$\widehat H=H/\|H\|$ 中，（152.3）的矩阵为
+
+$$
+\begin{pmatrix}
+\kappa^2&a\kappa\|H\|\\
+a\kappa\|H\|&\|H\|^2
+\end{pmatrix}.
+$$
+
+它的迹为一，行列式为
+
+$$
+(1-a^2)\kappa^2\|H\|^2
+=a^2p^2d^2\kappa^2>0.
+$$
+
+故最小本征值为（152.5），第一条半正定不等式成立。
+
+由 $G=a^2dg+a^2bu+b^2w$，有 $h\perp G$；由
+$H=abc\,h+ab^2v$，有
+
+$$
+|\langle\widehat H,h\rangle|^2
+=\frac{a^2pc^2}{a^2pd^2}
+=\frac{c^2}{d^2}=\alpha_p.
+$$
+
+又 $d^2=c^2+p$，得到余下投影平方为 $\beta_p$。
+
+最后，当 $p\downarrow0$ 时，$a,c,d,\kappa\to1$。将（152.5）有理化，
+
+$$
+s_p=
+\frac{2a^2p^2d^2\kappa^2}
+{1+\sqrt{1-4a^2p^2d^2\kappa^2}}
+\sim p^2.
+$$
+
+第148节给 $\mu^2\sim p^7/4$，其余极限由定义得到。证毕。
+
+### 152.2 任意解码器都必须通过首位测试
+
+任取第六终端的全域 CPTP 解码器
+$\mathcal D:\mathcal L(K)\to\mathcal L(B^{\otimes6})$。在输出档案上测量第一位是否为零，其效果算子为
+
+$$
+Q_0=|0\rangle\langle0|_{B_1}\otimes I_{B_2\cdots B_6}.
+$$
+
+将它拉回接收器，得到
+
+$$
+F=\mathcal D^*(Q_0),\qquad 0\preceq F\preceq I_K.
+\tag{152.8}
+$$
+
+两份真实输入的理想档案第一位分别确定为零、一，故这个测试必须区分 $\varrho_0,\varrho_1$。令 $e$ 为该解码器在第六终端对全部来源输入及参考的最坏半迹误差，则
+
+$$
+1-\operatorname{Tr}(F\varrho_0)\le e,\qquad
+\operatorname{Tr}(F\varrho_1)\le e.
+\tag{152.9}
+$$
+
+这些必要条件只取了合同中允许的两个纯初态，参考可取一维；上界合同仍然包含全部参考输入。
+
+**引理152.2（重叠误判的定量约束）。** 任意这样的解码器均满足
+
+$$
+\boxed{
+e\ge\ell_p
+\left[
+1-\left(\sqrt{\frac{\alpha_p e}{s_p}}+\sqrt{\beta_p}\right)^2
+\right].
+}
+\tag{152.10}
+$$
+
+右侧可以为负，但其等价二次不等式总会给出下节的严格正根界。
+
+**证明。** 由（152.2）及 $F\preceq I$，
+
+$$
+1-\operatorname{Tr}(F\varrho_0)
+\ge\ell_p(1-\langle h,Fh\rangle).
+\tag{152.11}
+$$
+
+又由（152.6）、$F\succeq0$ 和（152.9），
+
+$$
+s_p\operatorname{Tr}(F\Pi_S)
+\le\operatorname{Tr}(F\varrho_1)\le e.
+\tag{152.12}
+$$
+
+写 $h=h_S+h_\perp$ 为相对于 $S$ 的正交分解。
+因为 $h_S/\sqrt{\alpha_p}$ 是 $S$ 中单位向量，
+
+$$
+\|\sqrt Fh_S\|^2
+\le\alpha_p\operatorname{Tr}(F\Pi_S)
+\le\frac{\alpha_pe}{s_p}.
+$$
+
+同时 $F\preceq I$ 给
+$\|\sqrt Fh_\perp\|^2\le\|h_\perp\|^2=\beta_p$。于是
+
+$$
+\langle h,Fh\rangle
+=\|\sqrt F(h_S+h_\perp)\|^2
+\le\left(\sqrt{\frac{\alpha_pe}{s_p}}+\sqrt{\beta_p}\right)^2.
+\tag{152.13}
+$$
+
+结合（152.9）、（152.11）即得结论。证明保留了 $F$ 在 $S$ 与其正交补之间的全部交叉项；没有假定解码效果与 $\Pi_S$ 对易。证毕。
+
+### 152.3 显式下界及匹配七阶首项
+
+**定理152.3（固定物理通道的七阶解码最优性）。** 对全部 $0<p<1$，
+
+$$
+\boxed{
+e_{148}(p)\ge
+\frac{\ell_p\alpha_p}
+{\left(
+\sqrt{1+\ell_p/s_p}
++\sqrt{\ell_p\beta_p/s_p}
+\right)^2}.
+}
+\tag{152.14}
+$$
+
+因此，与第148节上界结合，
+
+$$
+\boxed{
+\lim_{p\downarrow0}\frac{e_{148}(p)}{p^7}=\frac14.
+}
+\tag{152.15}
+$$
+
+**证明。** 在（152.10）中置 $t=\sqrt e\ge0$，利用
+$1-\beta_p=\alpha_p$，得到
+
+$$
+\left(1+\frac{\ell_p\alpha_p}{s_p}\right)t^2
++2\ell_p\sqrt{\frac{\alpha_p\beta_p}{s_p}}\,t
+-\ell_p\alpha_p\ge0.
+\tag{152.16}
+$$
+
+二次项系数正，常数项负，因此 $t$ 必不小于唯一正根。将正根写出并有理化，得到
+
+$$
+t\ge
+\frac{\sqrt{\ell_p\alpha_p}}
+{\sqrt{1+\ell_p/s_p}+\sqrt{\ell_p\beta_p/s_p}}.
+\tag{152.17}
+$$
+
+其中有理化使用
+
+$$
+\left(1+\frac{\ell_p}{s_p}\right)
+-\frac{\ell_p\beta_p}{s_p}
+=1+\frac{\ell_p\alpha_p}{s_p}.
+$$
+
+平方即得（152.14）对每个第六终端解码器成立。第六终端误差不超过其前六终端最大误差，故对任意六个解码器，该最大误差也满足同一下界。再对这些解码器取下确界，得到所陈述的 $e_{148}(p)$ 下界。
+
+由引理152.1，
+
+$$
+\frac{\ell_p}{s_p}\sim\frac14p^5\longrightarrow0,\qquad
+\frac{\ell_p\beta_p}{s_p}\longrightarrow0.
+$$
+
+因此（152.14）右侧除以 $p^7$ 后趋于 $1/4$。第148节提供合法六个解码器，其全参考误差证书除以 $p^7$ 后也趋于 $1/4$。下确界不超过这份证书，双侧夹逼给（152.15）。证毕。
+
+第151节的已知复相位运输是固定物理通道及全部解码器的误差保持双射。因此对该运输后的装置族，同样有
+
+$$
+e_{148}^{\mathrm{transport}}(a,b)
+=\left[\frac14+o(1)\right]|b|^{14}
+\qquad(|b|\downarrow0).
+\tag{152.18}
+$$
+
+### 152.4 两端点的不同机制
+
+第151节与本节一起确定了这一份显式固定通道族在两个端点的最优解码首项：
+
+$$
+e_{148}(p)\sim\frac14p^7\quad(p\downarrow0),
+\qquad
+e_{148}(p)\sim(\sqrt3-\sqrt2)\sqrt{1-p}\quad(p\uparrow1).
+\tag{152.19}
+$$
+
+两端的见证不同。在 $p\downarrow0$ 端，来自初态零的稀少环境分支进入了另一个真实初态必需的接收方向；解码器若把该方向判成零，就会误判初态一。正权重 $s_p$ 与两个支撑的重叠控制这项取舍。在 $p\uparrow1$ 端，第151节直接检出本地解码不能补回的活动记忆—档案非对角幅度差。
+
+本节使用的首位测量是合法终端检验，严格下界已对全部 CPTP 解码器成立，因而七阶首项不是所选解码器的估计松弛。但它仍不排除另一台七维物理接收器取得更小误差。对全体装置优化的 $f(1-p)$，仍只有
+
+$$
+f(1-p)\le e_{148}(p);
+$$
+
+这条方向不允许把（152.14）当成 $f$ 的下界。所以第144节的全局端点指数仍只确定 $q_1\ge7$，尚未证明 $q_1=7$。这里的两端点匹配只针对已明确固定的物理通道族，也不将六终端结论扩展到更长时域。
+
+## 追加锚（本行以下为增补区）
