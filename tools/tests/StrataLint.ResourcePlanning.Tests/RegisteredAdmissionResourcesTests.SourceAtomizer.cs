@@ -45,11 +45,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void AtomizerConfigurationRetainsEngineeringAndExplicitConsumers()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-repository-filemap", "test-rules", "test-source-atomizer", "test-truth-release", "test-worktree-contract" },
+            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-repository-filemap", "test-rules", "test-source-atomizer", "test-truth-release" },
                 Strings(Plan("Meta/Digestion/atomizers.toml", "", mode)["declared_require"]!));
     }
 
     [Theory]
+    [InlineData("push", "A")]
+    [InlineData("pr", "A")]
     [InlineData("push", "M")]
     [InlineData("pr", "M")]
     [InlineData("push", "D")]
@@ -71,8 +73,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan(path, "", mode, change);
             var readsBackfill = path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
             Assert.Equal(WithPathInventory(new[] { SourceAtomizerProject }.Concat(readsBackfill ? new[] { RepositoryDigestionProject, RepositoryFileMapProject } : []), change), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal((readsBackfill ? new[] { "test-repository-digestion", "test-repository-filemap", "test-source-atomizer", "test-worktree-contract" } : new[] { "test-source-atomizer", "test-worktree-contract" })
-                    .Concat(change is "D" or "R" ? new[] { "test-repository-filemap", "test-repository-topology" } : [])
+            Assert.Equal((readsBackfill ? new[] { "test-repository-digestion", "test-repository-filemap", "test-source-atomizer" } : new[] { "test-source-atomizer" })
+                    .Concat(change is "A" or "D" or "R" ? new[] { "test-repository-filemap", "test-repository-topology" } : [])
                     .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal),
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -82,7 +84,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             {
                 var destination = Assert.Single(plan["paths"]!.AsArray(),
                     row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
-                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology", "test-worktree-contract" }, Strings(destination!["require"]!));
+                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology" }, Strings(destination!["require"]!));
             }
         }
     }

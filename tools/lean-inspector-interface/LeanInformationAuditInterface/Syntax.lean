@@ -124,4 +124,11 @@ syntax (name := informationTheoremOccurrenceReadoutCmd)
   (&" escape " &"from " "(" term ")")?
   (&" escape " &"continues " "(" informationEscapeContinuation ")")? ": " term " := " term : command
 
+/-- Source selections and obligations use the same enrollment and record pipeline. -/
+syntax (name := registerInformationSourceTheoremCmd)
+  register_information_theoremKeyword ident &" in " ident
+  &"readout " &"via " "(" term ")" &" realizes " ident
+  &" escape " &"from " &"source " "(" term ")"
+  &" escape " &"continues " "(" informationEscapeContinuation ")" : command
+
 end LeanInformationAudit

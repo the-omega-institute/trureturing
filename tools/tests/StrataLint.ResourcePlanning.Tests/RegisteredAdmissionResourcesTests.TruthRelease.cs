@@ -44,13 +44,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var inputs = new[]
         {
             (Path: "D5/S3/Midline/GoldenSpectralMarker.lean",
-                Projects: new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, TruthReleaseProject }),
+                Projects: new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, TruthReleaseProject, WorktreeContractProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
                 Projects: new[] { TruthReleaseProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
-                Projects: new[] { RepositoryContractProject,
+                Projects: new[] {
                     "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
-                    RepositoryTopologyProject, TruthReleaseProject }),
+                    RepositoryTopologyProject, TruthReleaseProject, WorktreeContractProject }),
             (Path: "Golden/Projection/statement-projection-pilot-v1.json",
                 Projects: new[] { "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
                     "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj", TruthReleaseProject }),
@@ -70,7 +70,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             {
                 var destination = Assert.Single(plan["paths"]!.AsArray(),
                     row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
-                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology", "test-worktree-contract" }, Strings(destination!["require"]!));
+                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology" }, Strings(destination!["require"]!));
             }
         }
     }
@@ -87,11 +87,11 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode);
             var consumers = path.EndsWith(".lean", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }
+                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }
                 : path.EndsWith(".scribe.cs", StringComparison.Ordinal)
-                    ? new[] { RepositoryContractProject, RepositoryFileMapProject, RepositoryTopologyProject }
+                    ? new[] { RepositoryFileMapProject, RepositoryTopologyProject, WorktreeContractProject }
                     : [];
-            Assert.Equal(WithWorktreeContract(consumers), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(OrderedConsumers(consumers), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-cover-batch", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-truth-release", Strings(plan["resources"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));

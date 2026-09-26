@@ -113,7 +113,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV6
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV7
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -738,7 +738,35 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
   let some owner := ownerOf env name | throwError "incomplete_closure:E7.owner"
   if name.toString.utf8ByteSize > 1024 then throwError "incomplete_closure:E8.name_bytes"
   let limit := min 524288 (informationTemplate.work.get (← getOptions))
+  let sourceBound := info.type.getForallBody.isAppOf
+    `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization
+  if sourceBound then
+    let axioms ← collectAxioms name
+    unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+      throwError "forbidden_dependency:E6.source_template_axioms"
+    if (Compiler.getImplementedBy? env name).isSome || (getExternAttrData? env name).isSome then
+      throwError "forbidden_dependency:E6.source_template_external"
+    unless constructors.isEmpty do throwError "unclassified_form:E1.source_constructors"
+    forallTelescope info.type fun xs result => do
+      unless xs.size == 3 do throwError "unclassified_form:E1.source_template_telescope"
+      let signature := xs[0]!
+      unless (← inferType signature).isConstOf
+          `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature do
+        throwError "unclassified_form:E1.source_signature"
+      let expected ← mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.mk (xs.extract 1 3)
+      unless (← isDefEq (mkAppN (mkConst name (info.levelParams.map Level.param)) xs) expected) &&
+          (← isDefEq (← inferType expected) result) do
+        throwError "unclassified_form:E1.source_template_constructor"
   let action : CompileM (Array Slot × PlanNode × PlanNode) := do
+    if sourceBound then
+      dependency (.defnInfo info)
+      let mut slots := #[]
+      let mut type := info.type
+      while let .forallE _ domain body bi := type do
+        slots := slots.push { kind := .interface, binderInfo := bi, type := domain }
+        type := body
+      return (slots, .atom info.type, .atom info.value)
     dependency (.defnInfo info)
     for ast in constructors do checkConstructorType ast
     let erasedType ← eraseInput info.type
@@ -759,7 +787,7 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
   let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
-    levelParams := info.levelParams, slots, constructorTypes := constructors,
+    levelParams := info.levelParams, slots, sourceBound, constructorTypes := constructors,
     typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,
     plan, typePlan, rules := state.rules,
     chargedWork := limit - state.remaining + typeBytes + bodyBytes, serializedBytes := 0 }

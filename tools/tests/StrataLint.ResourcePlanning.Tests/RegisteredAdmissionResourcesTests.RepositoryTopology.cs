@@ -8,7 +8,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj";
 
     private static IEnumerable<string> WithPathInventory(IEnumerable<string> consumers, string change) =>
-        WithWorktreeContract(consumers.Concat(change is "A" or "D" or "R"
+        OrderedConsumers(consumers.Concat(change is "A" or "D" or "R"
             ? new[] { RepositoryFileMapProject, RepositoryTopologyProject } : []));
 
     [Theory]
@@ -21,7 +21,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RepositoryPathChangesRunBothCompleteInventoryConsumers(string mode, string change)
     {
         var plan = Plan("docs/reports/repository-inventory-probe.md", "", mode, change);
-        Assert.Equal(WithWorktreeContract(new[] { RepositoryFileMapProject, RepositoryTopologyProject }),
+        Assert.Equal(OrderedConsumers(new[] { RepositoryFileMapProject, RepositoryTopologyProject }),
             Strings(plan["execution"]!["tests"]!));
     }
 
