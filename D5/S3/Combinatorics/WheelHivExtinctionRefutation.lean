@@ -262,13 +262,17 @@ theorem result : ¬ claim := by
       (∀ v : Fin 18, ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧
         (s.getD v.val (0, 0)).2.testBit j = true)) →
       decode (stepM^[t] s) j = (step (wheelAdj 18) 4)^[t] (decode s j) := by
-    intro j hj t
-    induction t with
-    | zero => intro s _; rfl
-    | succ t ih =>
-      intro s hd
-      obtain ⟨h1, h2⟩ := step_decode s j hj hd
-      rw [Function.iterate_succ_apply, ih _ h2, h1, Function.iterate_succ_apply]
+    intro j hj t s hd
+    let good : Set (List (ℕ × ℕ)) := {s | ∀ v : Fin 18,
+      ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧ (s.getD v.val (0, 0)).2.testBit j = true)}
+    have hmaps : Set.MapsTo stepM good good := fun s hs => (step_decode s j hj hs).2
+    have hsemi : Function.Semiconj (fun s : good => decode s.val j)
+        (hmaps.restrict stepM good good) (step (wheelAdj 18) 4) :=
+      fun s => (step_decode s.val j hj s.property).1
+    have h := hsemi.iterate_right t ⟨s, hd⟩
+    simp only at h
+    rw [Set.MapsTo.coe_iterate_restrict] at h
+    exact h
   have clear25 : allClear (stepM^[25] initM) = true := by
     decide +kernel
   have extinct : ∀ (f₀ : Fin 18 → Fin 2),
