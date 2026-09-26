@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Numbered finite path lifts define a response kernel; depth zero remembers the state and deeper responses only forget information.
--/
+   digest: Numbered finite path lifts define a response kernel; depth zero remembers the state and deeper responses only forget information. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 import Mathlib.Data.Fintype.Quotient

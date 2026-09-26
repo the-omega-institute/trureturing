@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Equal first-level row and column classes construct an explicit quotient diamond.
--/
+   digest: Equal first-level row and column classes construct an explicit quotient diamond. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
