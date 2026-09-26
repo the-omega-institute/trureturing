@@ -3,30 +3,13 @@ import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-open Lean Elab Command LeanInformationAudit
-
-run_cmd do
-  let root := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
-  let owner := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary
-  let source := (← getEnv)
-  let rows : Array SnapshotOccurrence := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.lowerArena,
-      theoremName := owner ++ `dyadic_lower_boundary_mismatch,
-      statementIdentity := theoremStatementIdentity source (owner ++ `dyadic_lower_boundary_mismatch),
-      registrationModuleName := root },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
-      theoremName := owner ++ `dyadic_upper_eventually_word_eq,
-      statementIdentity := theoremStatementIdentity source (owner ++ `dyadic_upper_eventually_word_eq),
-      registrationModuleName := root },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena,
-      theoremName := owner ++ `finite_word_stable_off_integer_hits,
-      statementIdentity := theoremStatementIdentity source (owner ++ `finite_word_stable_off_integer_hits),
-      registrationModuleName := root }]
-  RootCatalogs.declare {
-    rootId := root
-    expected := rows
-    source := rows
-    companionPrefix := some root }
+-- The independent statement-identity snapshot is pending remote Lean evidence.
+-- Empty rows preserve companion ownership without certifying a source catalog.
+run_cmd LeanInformationAudit.RootCatalogs.declare {
+  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
+  expected := #[]
+  source := #[]
+  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
