@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Governance;
 
@@ -15,7 +17,7 @@ internal sealed class CoordinateMutationReachabilityDocument : IScribeDocumentDe
                     "D5/S3/ConceptDynamics/Governance/CoordinateMutationReachability."
                         + "coordinate_reachable_iff_finite_difference"),
                 H("Exact connected components of coordinate mutations"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -46,4 +48,35 @@ internal sealed class CoordinateMutationReachabilityDocument : IScribeDocumentDe
                             + "one changed output' into 'exactly one': detecting every genuine "
                             + "input change additionally requires injectivity of the local output."))),
                 DescribeRole.Theorem))));
+
+    private static Formula TheoremFormula()
+    {
+        Formula keys = F.Id("I");
+        Formula values = F.Id("A");
+        Formula fixedKeys = F.Id("K");
+        Formula x = F.Id("x");
+        Formula y = F.Id("y");
+        Formula i = F.Id("i");
+        Formula type = Seq(Operatorname, Grp(F.Id("Type")));
+        Formula xi = Seq(x, Open, i, Close);
+        Formula yi = Seq(y, Open, i, Close);
+        Formula states = Seq(Prod, Underscore, Grp(i, Sp, InMacro, Sp, keys), Sp,
+            values, Open, i, Close);
+        Formula difference = Seq(OpenBrace, i, Colon, keys, Sp, Mid, Sp,
+            xi, Sp, Neq, Sp, yi, CloseBrace);
+
+        return Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, keys, Colon, type, Comma, Sp,
+            values, Colon, new Formula.TypeArrow(keys, type), Comma, Sp,
+            fixedKeys, Colon, Call("Set", keys), Comma,
+            RowBreak, Grp(),
+            Forall, Sp, x, Comma, y, Colon, states, Comma,
+            RowBreak, Grp(),
+            Call("ReflTransGen", Call("CoordinateStep", fixedKeys), x, y),
+            Sp, Leftrightarrow, Sp,
+            Open, Forall, Sp, i, Sp, InMacro, Sp, fixedKeys, Comma, Sp,
+            xi, Eq, yi, Close, Sp, Land, Sp, Call("Finite", difference),
+            End, Grp(F.Id("gathered"))));
+    }
 }
