@@ -70,7 +70,9 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
         dsimp at h
         rw [hs] at h
         exact h
-      simp only [sweep, hs, unsweep, Equiv.symm_apply_apply, htail]
+      simp only [sweep]
+      rw [hs]
+      simp only [unsweep, Equiv.symm_apply_apply, htail]
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
@@ -122,21 +124,21 @@ def Square.leftA {c : CompatibleCertificate A B R S m} (sq : Square c) : Edge A 
 def Square.rightB {c : CompatibleCertificate A B R S m} (sq : Square c) : Edge B :=
   ⟨sq.output.1, sq.z, sq.output.2.2⟩
 
-private def edgeCoordinates : Edge R ≃
-    Σ i : Fin n, Σ z : Fin k, Fin (R i z) where
+private def edgeCoordinates {p q : ℕ} (M : CountMat p q) : Edge M ≃
+    Σ i : Fin p, Σ z : Fin q, Fin (M i z) where
   toFun r := ⟨r.source, r.target, r.number⟩
   invFun p := ⟨p.1, p.2.1, p.2.2⟩
   left_inv := by intro r; cases r; rfl
   right_inv := by intro p; rcases p with ⟨i, z, number⟩; rfl
 
-noncomputable instance : Fintype (Edge R) := by
+noncomputable instance {p q : ℕ} (M : CountMat p q) : Fintype (Edge M) := by
   classical
-  letI : (i : Fin n) → Fintype (Σ z : Fin k, Fin (R i z)) :=
+  letI : (i : Fin p) → Fintype (Σ z : Fin q, Fin (M i z)) :=
     fun _ => Sigma.instFintype
-  letI : Fintype (Σ i : Fin n, Σ z : Fin k, Fin (R i z)) :=
+  letI : Fintype (Σ i : Fin p, Σ z : Fin q, Fin (M i z)) :=
     Sigma.instFintype
-  exact Fintype.ofEquiv (Σ i : Fin n, Σ z : Fin k, Fin (R i z))
-    (edgeCoordinates (R := R)).symm
+  exact Fintype.ofEquiv (Σ i : Fin p, Σ z : Fin q, Fin (M i z))
+    (edgeCoordinates M).symm
 
 private def squareCoordinates (c : CompatibleCertificate A B R S m) :
     Square c ≃ Σ i : Fin n, Σ z : Fin k, EdgePair A R i z where
@@ -275,9 +277,14 @@ theorem square_lifts_left_forgetting (c : CompatibleCertificate A B R S m) :
             dsimp at h
             rw [hs] at h
             exact h
-          simp [liftIncomingPath, sweep, hs, hlift, incomingSquare]
+          simp only [liftIncomingPath, sweep]
+          rw [hlift, hs]
+          rfl
     intro i j z alpha r
-    simpa only [hbridge alpha r, c.compatible alpha r]
+    have h := hbridge alpha r
+    rw [c.compatible alpha r] at h
+    exact congrArg (fun p : Σ t : Fin k, Fin (R i t) =>
+      (⟨i, p.1, p.2⟩ : Edge R)) h
 
 #print axioms square_lifts_left_forgetting
 
@@ -426,7 +433,7 @@ theorem square_column_lift_count (c : CompatibleCertificate A B R S m)
     intro p q hpq
     apply Subtype.ext
     have ha := congrArg Subtype.val hpq
-    change p.val.leftA = q.val.leftA at ha
+    dsimp only [toIncidence] at ha
     have hrp : p.val.terminalR = r := e.injective p.property.2
     have hrq : q.val.terminalR = r := e.injective q.property.2
     have hr : p.val.terminalR = q.val.terminalR := hrp.trans hrq.symm
@@ -474,7 +481,7 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
       c.outgoingSquare sq.initialR sq.rightB rfl = sq := by
     apply (squareCoordinates c).injective
     rcases sq with ⟨i, z, input, ⟨t, edge, b⟩, commutes⟩
-    change (c.phi i z).symm ⟨t, edge, b⟩ = input
+    dsimp only [squareCoordinates, outgoingSquare, Square.initialR, Square.rightB]
     rw [← commutes]
     exact (c.phi i z).symm_apply_apply input
   let toIncidence : fiber → incidence := fun p => by
@@ -492,7 +499,7 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
     intro p q hpq
     apply Subtype.ext
     have hb := congrArg Subtype.val hpq
-    change p.val.rightB = q.val.rightB at hb
+    dsimp only [toIncidence] at hb
     have hrp : p.val.initialR = r := e.injective p.property.1
     have hrq : q.val.initialR = r := e.injective q.property.1
     have hr : p.val.initialR = q.val.initialR := hrp.trans hrq.symm
