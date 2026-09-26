@@ -156,3 +156,105 @@ No project CI, Lean build, Scribe projection, admission, Freeze or
 independent mathematical-review approval accompanies this publication.
 The original Scribe Statement and all Lean/formal-status sources remain
 unchanged.
+
+## Triangle-seed continuation: Sections 106-110
+
+The same theory file now proves a strict extension of Theorem 102.1.
+The new certificate permits an axial H label outside the block's own
+transverse pair, when a genuine opposite-pair triple supplies the relevant
+shared-length inequality. All original strict-boundary, actual-manifold,
+minimum-six and paired-frame hypotheses remain attached.
+
+### All-special-edge bound and genuine seeds
+
+Assume each h in H has a genuine occurrence. Section 106.1 proves for
+EVERY special edge e, with transported pair {A_e,B_e},
+
+`x_e < 1+x_Ae+x_Be`, where `x_e=cosh(ell_e)`.
+
+It covers both m_e=0 and m_e=1 flat pi occurrences. A hypothetical dominant
+special length cannot repeat axially in a genuine block, because the exact
+paired flat threshold would fail. Its disjoint genuine transverse slots
+then require more than `2*(d(e)+m_e-4)*pi >= 4pi` by existing Section 96.1,
+while the two actual transverse labels have total budget 4pi. The m_e=0,
+d(e)=6 boundary case remains a strict contradiction.
+
+The stronger conclusion localizes EVERY residual flat: it has a foreign
+axial H label h with `x_h >= 1+x_A+x_B`. If the other axis is special the
+inequality is strict. This cannot coexist with a genuine opposite-pair
+block `(h,A,B,h,A,B)`, which forces the opposite strict inequality.
+
+Two distinct copies of one named three-label opposite-pair type are
+genuine by the existing saturation argument: if flat, each would contribute
+two pi to the same actual label. Each genuine triple {i,j,k} gives
+`x_i<1+x_j+x_k` and its two cyclic versions. These statements concern
+cosh coordinates; they are not ordinary edge-length triangle inequalities.
+The saturation rule and cosine factor are credited existing inputs.
+
+### Exact larger realization certificate
+
+Let Z retain its three-copy definition. Let D consist of blocks in at least
+two copies of a three-distinct-label opposite-pair type, and put K=Z union D.
+Let Q be the triples realized by three-label opposite-pair blocks in K.
+Every H label must occur in K. For each block outside K, an axial H label
+must either belong to its own transverse pair or form a triple in Q with
+that pair. These are finite combinatorial conditions on actual names.
+
+Theorem 108.1 proves geometric realization of the same prescribed
+triangulation, with no role balance or cross-block angle averaging.
+Theorem 106.1 bounds special axes; seed triples bound foreign H axes;
+axes already in the pair satisfy the bound by positivity. The two axial
+bounds contradict the exact flat product threshold. Transverse flats
+would saturate an H label already witnessed in K.
+
+Every old Theorem 102.1 certificate satisfies the new certificate because
+Z is contained in K. In the particularly simple case H={A,B,C}, two
+opposite-pair ABC blocks suffice; no additional axial-membership condition
+is then needed on the other paired blocks. Neither the paired-frame nor
+the seed-coverage assumptions have been removed in general.
+
+### Fixed example strictly outside the old certificate class
+
+The full fourteen-tetrahedron, twenty-eight-face-pair table in Section 109
+has actual degrees U,V,A,B,C equal to 6,6,22,33,17. Its one boundary link
+has (V,E,F)=(10,84,56), Euler characteristic -18 and genus ten.
+Mixed-parity face maps are checked against an explicit tetrahedron-sign
+assignment; all ten link-vertex fans and ordered first returns are checked.
+The exact maximum normalized initial corner sum is 287/561.
+
+Named type multiplicities are 1,1,2,5,5. Blocks 0,1 are the two ABC seeds;
+blocks 2 and 8 are unprotected foreign-axis blocks, with transverse pairs
+{A,B} and {B,C} respectively. The same seed triple resolves both. Every
+possible old paired frame forces A,B,C into H, but either seed block has
+only two copies and has a foreign H axis in every frame. Thus no old
+Theorem 102.1 certificate exists, even after changing H and the frames.
+Only B occurs in every block, excluding the literal two-common-edge
+hypothesis of Theorem 97.1 as well. This does not claim failure of every
+other possible proof or a new census/homeomorphism type.
+
+Connected cyclic covers lift the established metric to 14n tetrahedra,
+5n actual edges and manifold Euler characteristic -9n. The same-name seed
+condition is not asserted to survive label splitting under a cover.
+
+### Sources and validation boundary
+
+The primary geometric inputs remain Frigerio-Moraschini arXiv:1801.05326,
+Section 1.1 formulas (1)-(5), and Luo-Yang arXiv:1404.5365, Theorem 6.3.
+Printed pages 6 and 21 respectively were successfully inspected as PDF
+images for this continuation. The proof does not use Zhao or Ge
+version-dependent claims. Keyword search was insufficient to establish
+worldwide priority, which is not claimed.
+
+The supplementary standard-library `cfmp_triangle_seed_check.py` checks
+the fixed actual topology, seed and protection predicates, pair transport,
+exact rational initial angles, all old H/frame alternatives and rejection
+of a deliberately broken face map. It also checks 1000 exact rational seed
+factor identities, 2500 dominated genuine paired-length samples (1853
+obtuse targets) and 188 integer resource cases. The sampled minimum excess
+0.2396092815 radians is not a uniform theorem bound. Finite/floating checks
+supplement the continuous and unbounded written proofs.
+
+This is ordinary written research pending independent review. No new Lean,
+project CI, Scribe compilation/projection, admission or Freeze accompanies
+it. Full CFMP, arbitrary unframed or unprotected incidence, and torus-end
+completeness remain outside the established conclusions.
