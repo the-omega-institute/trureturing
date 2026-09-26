@@ -1,28 +1,51 @@
 # trureturing
 
-**A library for discovering truth.**
+**A scientific method for AI to discover truth and find its next question.**
 
-[Start your journey](#start-your-journey) · [Information escape](#information-escape) ·
-[Examples](#three-places-to-look) · [First run](#first-run) ·
+[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
+[Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
+[Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
+[First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
-trureturing pursues truth by turning questions into knowledge others can check
-and build on. The name reflects the project's intent: **true · return · Turing**
-— truth, return, and Turing computation.
+trureturing develops a scientific method for AI to turn gaps in knowledge into
+questions, test conjectures, expose limits in its representations, and return
+checked results to a reusable library. We want those results to guide the next
+investigation; autonomous research selection remains a goal to evaluate.
 
-**If machine learning is a black box of logic, trureturing is a white box.**
-Our guiding conviction is that **all logic can be formalized**. Pursuing it
-means making definitions and assumptions explicit, with proof steps and
-dependencies open to inspection.
+The name expresses **true · return · Turing**. Truth guides the search;
+verified knowledge returns as a premise for the next inquiry; computation
+explores the connections. We call the structure we seek the **geometry of
+logical truth**: dependencies, invariants, distinctions and the boundaries of
+what an observer can recover.
 
-Explore [information escape](#information-escape): what a result reveals,
-and what remains beyond its observations.
+The project combines philosophical inquiry, theory, experiments and Lean 4
+formalization. Each proof establishes its exact statement under declared
+assumptions. The [vision and research guide](docs/VISION.md) connects this work
+to open directions.
 
-Logic reaches beyond mathematics into philosophical and conceptual inquiry.
-What do we mean by a concept? Which assumptions carry an argument? What follows
-from them, and what would count as a counterexample? These questions belong
-here too; a formal result answers only the precise statement it proves.
+## Truth and computation
+
+Our philosophical starting point is that **truth is discovered, not created
+by the act of computing it**. In this view, **Dao (道), or God (神), names an
+encompassing network of truths and their logical relations**, within which a
+finite observer discovers connections. This is the project's metaphysical
+orientation, not a theorem about the existence of God or the physical universe.
+
+Computation constructs examples and counterexamples, searches for proofs and
+checks them. A verified proof extends what the library can justify and reuse.
+Neither this philosophical conviction nor a growing proof library establishes
+that one program can enumerate or decide every truth.
+
+The repository makes part of this geometry precise. Its
+[dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+uses reachability in a dependency graph to define open sets. Its
+[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+says that, on a nonempty state space, a target admits a recovery function from
+an observation exactly when that target is constant on each observation
+fiber. Here a fiber is the set of states giving the same observation; the
+existence of a recovery function alone gives no algorithm or cost bound.
 
 ## Start your journey
 
@@ -49,24 +72,128 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Ask a precise question. Use computation and tests to distinguish hypotheses.
-Look for a proof, a counterexample, or the information still missing. Keep the
-checked result with its assumptions, and make the unanswered question explicit.
-People and AI can contribute; what others can reuse is the checked artifact.
+Choose questions whose answers could supply missing premises, expose overlooked
+distinctions or connect existing results. Search existing proofs and literature;
+state what would support or overturn a route, then design tests that distinguish
+alternatives. Keep reusable results with their assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof becomes a premise for further work. A refutation closes off a mistaken
-route. A limit on what observations reveal tells us what to ask or measure next.
-The purpose is to let understanding accumulate without losing its foundations:
-each inquiry starts with what the last one actually established.
+A proof supplies a premise; a counterexample refutes a claim within its stated
+scope. An observation limit can suggest what to measure next. When progress
+stalls, check whether the representation misses a needed distinction.
+Evaluate this proposed method on withheld questions, against a stated baseline
+with matched information and resources.
 
-Today, the library contains Lean 4 proofs, research inputs, experiments and
-tools for checking and recording results. Golden integers, Fibonacci weights
-and Zeckendorf representations are one research thread; the examples below
-also reach into conjecture refutation and the limits of local observations.
-The ambition is to make more of this discovery process automatic. Choosing
-the next fruitful question remains an open part of that ambition.
+```mermaid
+flowchart TD
+    accTitle: From inquiry to reusable knowledge and the next question
+    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
+    Q(["Ask a precise<br/>question"]) --> T["Compute and<br/>test hypotheses"]
+    T --> P["Check a proof<br/>or refutation"]
+    P --> R[["Keep a reusable<br/>result"]]
+    R -.-> N{"What remains<br/>open?"}
+    T -.-> N
+    P -.-> N
+    N -.-> Q
+    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
+    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
+    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
+    class Q,T foundation
+    class P,R proved
+    class N frontier
+```
+
+*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
+do not establish a theorem. Dashed paths return unresolved questions to
+another inquiry, including when no checked result was obtained.
+
+Golden integers, Fibonacci weights and Zeckendorf representations are one
+thread of the library; the examples below also explore conjecture refutation
+and limits of local observation.
+
+## Three places to look
+
+**01 · Refute a conjecture.**
+For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
+Greathouse's conjectured formula for OEIS A175406 was
+`a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
+`777451915729368`, while the actual value is one less.
+The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
+establishes `result : ¬ claim` using certified bounds on logarithms.
+This refutes the literal universal formula; neither minimality of the witness
+nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
+[Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
+
+**02 · Find what observations cannot tell you.**
+Can knowing each part of a quantum system determine the whole? The
+[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
+constructs two distinct two-qubit states: a pure Bell state and the equal
+classical mixture of `00` and `11`. Both have exactly the same reduced state
+on each qubit. Even these complete local descriptions cannot identify the
+joint state.
+
+For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
+proves that the correlation sector in the Hermitian tensor model is orthogonal
+to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This identifies
+precisely which directions the local description omits.
+[Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
+
+**03 · Build a result that holds beyond the examples.**
+Write a natural number as its unique sum of nonadjacent Fibonacci weights
+`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
+golden ratio, and call the resulting real value β(n). How far does this
+coordinate fail to preserve addition?
+
+$$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
+
+[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
+all natural inputs. Its proof combines an integer certificate with bounds on
+the conjugate coordinate. The discrepancy is also the signed count of the two
+lowest repeated-carry rules during digit normalization: a reusable connection
+between an arithmetic algorithm and an exact bound, however large the inputs.
+[Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
+[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
+
+## Toward holographic spacetime
+
+We study **holographic spacetime geometry** as a question about time, space and
+observation: when do partial records support reconstruction and action?
+
+Theory inputs study
+[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+retaining time, position, causal order and provenance;
+[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+composition, shared sources and targets; and
+[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+defined through allowed experiments and responses. Their prose does not certify
+formal coverage.
+
+A [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+leaves the current spatial readout unchanged when an inactive event is added,
+while making a specified temporal composition illegal.
+
+A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+applies to nonempty local record sets on a finite tree: each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Then any allowed local record extends
+to a record on the union of the local variable sets, satisfying every local
+constraint.
+
+This establishes a compatible completion; uniqueness, original-history recovery
+and computational cost require further results. Reconstruction with stated
+resolution and error bounds, and links to physical spacetime or holographic
+duality, remain research questions.
+
+## A continuing research program
+
+The [research directions](docs/VISION.md#research-directions) ask:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
+
+The guide states what would advance each question.
 
 ## Information escape
 
@@ -113,81 +240,16 @@ its proposed system is not a claim of completed implementation.
 Bring your own question to the [journey route](#start-your-journey), and use
 these four questions to follow what becomes distinguishable and what stays open.
 
-## Three places to look
-
-**01 · Refute a conjecture.**
-For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
-Greathouse's conjectured formula for OEIS A175406 was
-`a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
-`777451915729368`, while the actual value is one less.
-The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
-establishes `result : ¬ claim` using certified bounds on logarithms.
-This refutes the literal universal formula; neither minimality of the witness
-nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
-[Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
-
-**02 · Find what observations cannot tell you.**
-Can knowing each part of a quantum system determine the whole? The
-[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
-constructs two distinct two-qubit states: a pure Bell state and the equal
-classical mixture of `00` and `11`. Both have exactly the same reduced state
-on each qubit. Even these complete local descriptions cannot identify the
-joint state.
-
-For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
-proves that the correlation sector in the Hermitian tensor model is orthogonal
-to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This identifies
-precisely which directions the local description omits.
-[Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
-
-**03 · Build a result that holds beyond the examples.**
-Write a natural number as its unique sum of nonadjacent Fibonacci weights
-`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
-golden ratio, and call the resulting real value β(n). How far does this
-coordinate fail to preserve addition?
-
-$$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
-
-[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
-all natural inputs. Its proof combines an integer certificate with bounds on
-the conjugate coordinate. The discrepancy is also the signed count of the two
-lowest repeated-carry rules during digit normalization: a reusable connection
-between an arithmetic algorithm and an exact bound, however large the inputs.
-[Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
-[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
-
 ## What is proved, and what is open
 
-[D5/](D5/) contains the formal development. [Theory prose](docs/develop/theory/)
-supplies research input, and [experiments](Evidence/) supply observations within
-their declared scope. Neither prose nor numerical agreement establishes a
-Lean theorem. The C# harness checks repository rules, proof reports and frozen
-state; independent review examines whether statements faithfully express the
-intended mathematics. Admitted proofs are recorded in the
-[frozen ledger](Golden/Frozen/state/), with precise Lean statements and their
-assumptions and axiom dependencies as the formal basis for reuse.
-
-```mermaid
-flowchart TD
-    accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, compute and test hypotheses, check a proof or refutation, and keep a reusable result. A dashed arrow leads to the next open question.
-    Q([Ask a precise question]) --> T[Compute and test hypotheses]
-    T --> P[Check a proof or refutation]
-    P --> R[[Keep a reusable result]]
-    R -.-> N{What remains open?}
-    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
-    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
-    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
-    class Q,T foundation
-    class P,R proved
-    class N frontier
-```
-
-*A schematic of inquiry, not runtime behavior or dependency data.* In words:
-question → computation and tests → checked proof or refutation → reusable
-result → next open question. A question can remain unresolved at any stage;
-tests alone do not establish a theorem. The dashed arrow and diamond mark the
-open frontier, so color is not needed to read the distinction.
+Mathematical reuse rests on the statements, checked proof terms and axiom
+dependencies in the [Lean source](D5/). The
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[Theory prose](docs/develop/theory/) supplies research input, and
+[experiments](Evidence/) supply observations within their declared scope;
+neither substitutes for a Lean proof. The C# harness checks repository rules,
+proof reports and frozen state. Independent review examines whether statements
+faithfully express the intended mathematics.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by

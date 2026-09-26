@@ -5699,10 +5699,18 @@ IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至�
 readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specific certificate／statement
 identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查取 readout 定义的传递
 常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源。
+实现展开的保护边界按声明所属模块及 import 依赖分类：`D5`、`LeanInformationAudit`、当前模块与
+传递导入受保护模块的模块均受保护；缺少 import 元数据也不能取得外部叶节点资格。
+受保护的可执行定义沿类型与 value 走查；外部常量的可执行 value 不展开，但每个 occurrence 仍在原词法
+上下文推断实际类型，并按允许规则递归检查类型参数、type family、显式类型别名与实例化的 constructor
+field types。外部叶节点资格不免除这些检查，也不等于只比较常量名称与未经实例化的声明类型。
 闭包在 `Prop` 类型的子项处停止（证明无关性：readout 只能观察一个证明的存在及其类型，不能观察其实现），
 判官在该处按该子项的类型判定——其类型是上述身份之一或含该 statement identity 时按本码失败——不进入证明实现；
 判官只按允许表识别形式，识别不出的形式（含无法解析的项头、未经审计的抽象 carrier、以计算得到的 statement 拼写）
-一律按本码失败，不得默认放行，每次放行须归到一条具体允许规则。
+一律按本码失败，不得默认放行，每次放行须归到一条具体允许规则，不以定义等价证明「未触及」。
+在 data position，非受保护且未登记为 instance、结果项头属于 `decisionFamily` 的常量须按名称命中 `listedProducers`，
+否则记录 `class=unlisted_decision_producer`；instance 的类型仍须通过允许的 class 及其参数、字段检查。
+名称命中不代替上述类型检查；允许规则的扩展仍属判官层变更，不从未知形式推断准入。
 `reason` 取三值之一：`forbidden_dependency`（直接到达上述身份）、`unclassified_form`（允许表之外的形式，由作者改写 readout 或经判官层变更扩展允许表，不要求判官证明完备）、`incomplete_closure`（闭包无法完整取得，含走查预算耗尽）；多因同时成立时按 `incomplete_closure` > `forbidden_dependency` > `unclassified_form` 取一。本码适用于 finite 与 structural 两条注册路径。
 优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
 定义完成；由判官层的 provenance 走查在登记展开时执行。
@@ -8390,8 +8398,23 @@ IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot
 sensitivity 见证缺失或未通过 kernel 检查时，`primitive` 取首个无有效见证的 readout index 或 anchor，
 `slot_support` 取已通过 kernel 检查的见证所覆盖的 primitive 集合（checked support），不是语义 exact support；
 判官不枚举 realization 补全语义支持，两个字段不得为 `null`。
-IE-C050 的 `reason` 取 `forbidden_dependency`／`incomplete_closure`／`unclassified_form`；判官只放行其允许表认得的 readout 形式（数据层常量、类型不触及定理模块与 arena 命名空间的证明常量、显式列举的实例产生器、由这些构成的表达式），认不出的形式以 `unclassified_form` 失败并点名首个未识别常量或形式，不以定义等价证明「未触及」；`provenance_closure` 是 readout
-定义的传递常量闭包，按 canonical sort 输出，闭包不完整时为 `null`。
+IE-C050 的走查边界、允许规则与 `reason` 优先序见本码定义；上表的六个空格分隔 token 依次为
+`IE-C050`、`ClosedTruthReadout`、`key=…`、`readout=…`、`reason=…`、`provenance=…`。
+`provenanceErrorCurrent` 发射的 `provenance_closure` 按选定 reason 编码：
+
+- `incomplete_closure`：`null`，不输出部分走查数组。
+- `forbidden_dependency`：已走查常量名称的去重、canonical sort 的 compact JSON string array。
+- `unclassified_form`：有未识别证据时为 compact JSON object，键按 canonical sort 为 `class, first, namespace, site, walked`；
+  无该证据的 fallback 为 `null`。
+
+object 的 `class`、`first`、`namespace`、`site` 均为 JSON string。`class` 是首条保留的未识别证据的分类（如 `unlisted_decision_producer`、
+`unclassified_argument_type`、`unresolved_statement_identity`）；`first` 是该证据记录的常量名或形式标记，
+`site` 是该证据记录的走查位置（可为当前定义、readout 地址、statement 所属 theorem 或上下文标记）。
+`namespace` 是该证据的分类标签：模块分类使用 `protected:D5`／`protected:judge`／`protected:current`／
+`external:Classical`／`external:other`；无法建立 occurrence 或 binder context 时使用 `unclassified`。
+`walked` 与 forbidden payload 使用同一已访问名称集合，去重并 canonical sort；它记录拒绝时的走查结果，
+不承诺已展开所有可达定义。上述字段由 `ReadoutProvenance.lean` 的 `unclassifiedJson` 与
+`provenanceErrorCurrent` 发射；本段不替代 declared-template 诊断的独立 message 契约。
 
 所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
 也使用 canonical compact JSON，不退化为不确定的人类散文。reserved IE-C045--IE-C047 只有在

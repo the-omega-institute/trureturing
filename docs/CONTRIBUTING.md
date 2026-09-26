@@ -1,9 +1,11 @@
 # Contributing
 
-trureturing is a truth-discovery library. Help turn a precise question into a
-result that others can check and reuse: through examples, counterexamples,
-proofs, clearer explanations or useful tools. The current mathematical subjects
-offer concrete places to start.
+trureturing develops a scientific method for AI to discover truth and use
+checked results to guide further inquiry. Help turn a precise question into
+a result that others can check and reuse: through examples, counterexamples,
+proofs, clearer explanations or useful tools. The
+[vision and research guide](VISION.md) connects the current mathematical
+subjects to this purpose and the open research directions.
 
 You do not need to write a new proof to make a useful contribution. Public-facing
 documentation defaults to English.
@@ -73,7 +75,7 @@ need a mathematical skill. A contribution request you can paste:
 
 1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
    and read the linked rules before editing.
-2. Follow [Your first change](#your-first-change) to create an isolated worktree;
+2. Follow [Your first change](#your-first-change) to create or reuse a worktree;
    open that directory as the agent's workspace for the contribution.
 3. [Edit the owning source](#edit-the-owning-source), run
    [focused validation](#check-your-change), and arrange independent review of
@@ -85,6 +87,13 @@ need a mathematical skill. A contribution request you can paste:
 
 ## Choose a starting point
 
+- **Connect a question to a research direction.** Use the
+  [research directions](VISION.md#research-directions) to identify an observation, missing relation
+  or reusable lemma that could advance an existing line. State what would
+  support or refute the proposed step, search the library first, and explain
+  what the result would enable next. New evidence should also update the
+  relevant explanation; preserve the distinction between a philosophical
+  commitment, a model, an experiment and a checked theorem.
 - **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
   from explanation to Lean statement. Clarify terminology, fix a link or improve
   a translation while preserving the result's assumptions and scope.
@@ -115,37 +124,47 @@ Make and Bash, with these tools on `PATH`:
   [lakefile.toml](../lakefile.toml), with resolved dependencies in
   [lake-manifest.json](../lake-manifest.json).
 - [.NET SDK](https://dotnet.microsoft.com/en-us/download),
-  selected by [global.json](../global.json) with roll-forward disabled. The
+  selected by [global.json](../global.json) using its declared roll-forward
+  policy. The
   repository's Lean wrapper also uses .NET.
 - **Python** available as `python3` for the CI/preflight scripts, which require
   the standard-library `tomllib` module.
 
-The shell examples below use macOS/Linux conventions. The installed SDK must
-match [global.json](../global.json); a runtime alone is insufficient.
+The shell examples below use macOS/Linux conventions. Install the SDK version
+specified in [global.json](../global.json), even when its roll-forward policy
+allows a newer installed SDK: integration fixtures also exercise exact version
+selection. A runtime alone is insufficient.
 Check `dotnet --version`, `lean --version` and
 `python3 --version` from the checkout. Dependency downloads need network access;
 individual experiments may have additional prerequisites.
 
 ## Your first change
 
-Fork [the repository](https://github.com/the-omega-institute/trureturing/fork)
-on GitHub. In the following example, replace `YOUR-USERNAME` with your account.
-Keep the initial checkout for tracking `dev`; make edits in an isolated
-worktree created by the repository command:
+Fork [the repository](https://github.com/the-omega-institute/trureturing/fork).
+Clone only if needed, replacing `YOUR-USERNAME`:
 
 ```sh
 git clone https://github.com/YOUR-USERNAME/trureturing.git
 cd trureturing
+```
+
+From your `dev` checkout, run `git worktree list --porcelain`; reuse this
+session's worktree if listed. Otherwise replace `SESSION-ID` with your actual
+session ID and run the following, adding `upstream` only if absent:
+
+```sh
 git remote add upstream https://github.com/the-omega-institute/trureturing.git
 git fetch upstream dev
-make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-first-docs
-cd ../trureturing-first-docs
+make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-SESSION-ID
+cd ../trureturing-SESSION-ID
 ```
 
 This creates `lane/governance/first-docs` and restores locked .NET dependencies.
-Use a fresh task name for each change. The command's other current kinds are
-`math` and `theory`; its branch kind does not replace file-level admission rules.
-For a maintainer checkout, `BASE=origin/dev` selects the project remote instead.
+For later tasks, commit existing work, confirm a clean tree and switch to a
+validated branch in the same session worktree, following
+[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+Other branch kinds are `math` and `theory`; file-level checks still apply.
+Maintainers use `BASE=origin/dev`.
 
 The worktree starts without a Lean cache. Its first `make lean` prepares a
 private cache, using a compatible local donor when available or downloading
@@ -173,10 +192,11 @@ the routing and delivery contracts. Generated Markdown, reports, frozen pins
 and digestion state have designated writers; do not repair them by hand.
 New files must fit the existing [FILEMAP](../Meta/FILEMAP.toml) and routing rules.
 
-Keep each PR focused and keep **content changes separate from changes to the
-rules that judge them**. The current FILEMAP classifies `README.md` as content
-and `docs/CONTRIBUTING.md` as judge-plane, so changes to these two files belong
-in separate PRs. This classification is about admission, not the file extension.
+Keep each PR focused. [Current policy](../CLAUDE.md#75-base-判官永久禁令与-sl-030-边界)
+permits a coherent PR to include both content and its checking rules. FILEMAP
+still selects each path's required checks; mixed scope waives none. Different
+classifications for `README.md` and this guide do not themselves require
+separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
 search this repository, pinned Mathlib and admissible upstream libraries before
@@ -217,9 +237,8 @@ known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
 interval. Warnings and errors appear immediately with their details; complete
 command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
 JSON and check evidence keep their complete contents.
-Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
-before any work. For delta validation, resolve the intended baseline commit and
-select the complete baseline-to-worktree scope:
+Bare `make preflight` lists modes and exits 2. For delta validation, select an
+explicit baseline:
 
 ```sh
 base_sha="$(git rev-parse upstream/dev^{commit})"
@@ -263,20 +282,20 @@ Push the branch to your fork with `git push -u origin lane/governance/first-docs
 (substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
 `main` is the release branch.
 
-Describe the concrete problem, resulting behavior or explanation, source
-evidence and verification. At the top, include the provenance required by
-[AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露): skills used (or none),
-who produced and reviewed the work, and the actual review method and scope.
-Disclose AI assistance when used. Keep the PR to useful results and necessary
-diagnostics; do not paste process transcripts.
+Describe the problem, resulting behavior or explanation, source evidence and
+verification. At the top, include [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露)
+provenance: skills used (or none), producers and reviewers, and the actual
+review method and scope. For agent work, include the host session ID and
+resume command. Disclose AI assistance. Keep useful results and necessary
+diagnostics; omit process transcripts.
 
 Arrange independent review. The repository's documented merge checks are
 `push / engineering`, `push / current` and `delta`; inspect the actual check
 results on your PR and address failures. GitHub branch-protection configuration
 is an external setting, not a guarantee supplied by this guide. An open PR or
 green local check is not a merged contribution: completion is **MERGED** into
-`dev`. Clean up an isolated worktree only after confirming the merge and a
-clean working tree.
+`dev`. Reuse the session worktree for subsequent tasks; cleanup follows
+[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
 
 The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
 [licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)

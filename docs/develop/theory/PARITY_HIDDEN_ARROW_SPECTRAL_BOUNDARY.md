@@ -7038,3 +7038,1767 @@ $\nu\mathbb E_{\mathsf Q_{x,\nu}}D^2/q
 随规模增长的阶数或噪声解码风险。证毕。
 
 ## 追加锚（70 章后）
+
+## 71. 直接标量噪声下的信息谱与列表恢复
+
+**定义 71.1（带噪输出与有限列表）。** 保留第 68–69 章的原实验、完整窗口、
+均匀大小 $q$ 支持先验和精确中心。给定原始数据 $x$，记完整组计数后验为
+$\mathsf P_x$，正支撑为有限集 $\mathcal F_x$，并写
+
+```math
+\imath_x(n)=-\log_2\mathsf P_x(n),\qquad
+h_x=\mathbb E_x\imath_x(R),\qquad
+v_*=\frac{\ell}{2(\log2)^2}.
+```
+
+式 (71.1)。
+
+$h_x$ 是定理 68.8 的精确纤维熵。令 $t_x(n)$ 为定义 54.1 的原 $T_M$ 在计数元组 $n$ 上的值，
+仍使用全固定基数后验均值及原校准方差中心。观察
+
+```math
+Y=T_M+\sigma_M G,\qquad G\sim N(0,1),\qquad
+\sigma_M>0\text{ 为确定序列},\qquad
+\log^+(1/\sigma_M)=o(Q),
+```
+
+式 (71.2)。
+
+$G$ 独立于原始数据和完整标签。给定 $x$，以下概率包含 $R$ 与 $G$ 的同一联合律。
+其输出密度和输出后验为
+
+```math
+w_n(y)=\varphi_{\sigma_M}(y-t_x(n)),\qquad
+f_x(y)=\sum_{n\in\mathcal F_x}\mathsf P_x(n)w_n(y)>0,\qquad
+\mathsf P_x^y(n)=\frac{\mathsf P_x(n)w_n(y)}{f_x(y)}.
+```
+
+式 (71.3)。
+
+对整数 $K\ge0$，定义
+
+```math
+\Psi_x(K)=\sup_{\mathcal L:\,|\mathcal L_x(y)|\le K}
+ \mathbb P_x\{R\in\mathcal L_x(Y)\},\qquad
+C_x^0(K)=\max_{A\subseteq\mathcal F_x,\ |A|\le K}\mathsf P_x(A).
+```
+
+式 (71.4)。
+
+列表可随 $x,y$ 改变，其大小预算对所有输出相同。
+允许列表使用独立于原始数据、标签及 $G$ 的辅助随机性，大小约束对每次随机化都成立；
+成功率同时对该随机性平均。确定列表是其中的特例。
+称随机列表置换不变，是指保持奇偶类的站点置换作用于数据和计数目标时，
+其输出列表的条件分布按同一作用变换，即策略核等变。
+$\Psi_x$ 是对噪声输出平均的最优成功率；$C_x^0$ 是不使用新增输出的最优成功率。
+$K=0$ 时两者为零，$K\ge|\mathcal F_x|$ 时为一。
+这里没有假定标量映射 $t_x$ 单射，亦不需要第 68 章的超越性论证。
+
+**定理 71.2（信息谱稳定与列表大小的次阶极限）。** 在 (71.2) 下，两种原实际实验分别满足
+
+```math
+\sup_z\left|\mathbb P_x\left\{
+ \frac{-\log_2\mathsf P_x^Y(R)-h_x}{Q}\le z\right\}
+ -\Phi\left(\frac z{\sqrt{v_*}}\right)\right|
+ \longrightarrow0
+```
+
+式 (71.5)。
+
+收敛在原始数据概率下成立，且一致于所有大小 $q$ 的确定支持；
+该表述始终评价同一均匀先验定义的联合纤维律，未将其换成点质量先验。
+对每个固定 $z\in\mathbb R$，令 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+C_x^0(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}),\qquad
+\Psi_x(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.6)。
+
+对固定 $0<\varepsilon<1$，令
+
+```math
+K_{\varepsilon,M}^{\rm noisy}(x)
+ =\min\{K\in\{0,\ldots,|\mathcal F_x|\}:\Psi_x(K)\ge1-\varepsilon\}.
+```
+
+式 (71.7)。
+
+在同一概率意义下，
+
+```math
+\log_2K_{\varepsilon,M}^{\rm noisy}(x)
+ =h_x+Q\sqrt{v_*}\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (71.8)。
+
+这是输出平均的共同列表预算。(71.5) 也在联合纤维律中积分了 $Y$，
+不声称每个输出后验各自具有同一正态信息谱。
+固定参数与精确中心均保留，不将 $h_x$ 换成其 $Q^5$ 主项。
+
+**证明。** 所需实际模型输入是定理 68.8 的原信息谱及定理 69.6 的实际矩界
+
+```math
+\sup_z\left|\mathsf P_x\{(\imath_x-h_x)/Q\le z\}
+ -\Phi(z/\sqrt{v_*})\right|\longrightarrow0,\qquad
+m_{2,x}:=\mathbb E_xT_M^2=O_{\mathbb P}(1).
+```
+
+式 (71.9)。
+
+第二式并不来自弱收敛。为明确它与当前标量的对应，沿用 69.6 的单一校准乘积律，
+置 $U_j=(R_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$、$v_j=C_jp_j(1-p_j)/B^2$，
+$V=\sum_jv_j$、$L=d\mathsf P_x/d\mathsf Q_x$、$a_x=\|L-1\|_2$。
+其实际行数估计与精确密度计算给出
+
+```math
+V=O_{\mathbb P}(1),\qquad \sum_jv_j^2=O_{\mathbb P}(\delta),\qquad
+0\le L\le C,\qquad a_x=O_{\mathbb P}(Q^{-5/2}),\qquad
+\|e\|\le a_x\sqrt V,
+```
+
+```math
+T_M=\delta^{-1/2}\left\{\sum_j(U_j^2-v_j)-2e\cdot U+\|e\|^2\right\},
+```
+
+```math
+m_{2,x}\le\frac C\delta
+ \left\{2\sum_jv_j^2+B^{-2}V+4a_x^2V^2+a_x^4V^2\right\}
+ =O_{\mathbb P}(1).
+```
+
+式 (71.10)。
+
+其中 $B^{-2}/\delta=Q^3/q\to0$。这是对同一完整计数向量的非负平方使用密度支配，
+保留了 $\|e\|^2$ 截距；并未将 TV 接近当作矩传递。
+坏环境只进入外层数据概率，未乘以一个无界统计量。
+
+固定一个有限纤维。每个 $w_n$ 严格正且连续，故按
+$\mathsf P_x(n)w_n(y)$ 降序、以按得分排列的计数元组字典序破同分，
+取前 $K\wedge|\mathcal F_x|$ 个，得到 Borel 可测的最优列表。
+它逐点最大化有限和，因此积分后恰取得 (71.4) 的上确界；随机列表也不能超过它。
+每个 $M$ 的原始数据字母表有限，所以校准根、后验中心、预算和此选择器对 $x$ 都可测。
+同理，(71.7) 的有限最小值可测且存在。
+
+首先用信息密度连接 (71.9) 与新增输出。
+自然对数单位下的纤维互信息由定理 69.6 的经典 Gaussian 通道界控制：
+
+```math
+I_x(R;Y)=I_x(T_M;T_M+\sigma_M G)
+ \le\frac12\log\left(1+\frac{m_{2,x}}{\sigma_M^2}\right)
+ =o_{\mathbb P}(Q).
+```
+
+式 (71.11)。
+
+末式也适用于噪声增大：上界至多为
+$\tfrac12\log(1+m_{2,x})+\log^+(1/\sigma_M)$。
+全部熵积分在有限 Gaussian 混合上有定义。
+令 $i_x(n,y)=\log(w_n(y)/f_x(y))$。严格正性给精确恒等式
+
+```math
+\mathbb E_xe^{-i_x(R,Y)}
+ =\sum_n\mathsf P_x(n)\int w_n(y)\frac{f_x(y)}{w_n(y)}\,dy=1.
+```
+
+式 (71.12)。
+
+所以 $\mathbb P_x(i_x<-t)\le e^{-t}$，积分尾界得 $\mathbb E_x(i_x)_-\le1$，进而
+
+```math
+\mathbb E_x|i_x|=I_x+2\mathbb E_x(i_x)_-\le I_x+2,
+\qquad
+\mathbb P_x\{|i_x|>bQ\}\le\frac{I_x+2}{bQ}=o_{\mathbb P}(1)
+\quad(b>0).
+```
+
+式 (71.13)。
+
+这是把平均信息变成谱扰动控制所需的一步。
+仅凭一个熵数不能确定原谱；此处已另有 (71.9) 的实际条件 CLT。
+Bayes 公式又给
+
+```math
+-\log_2\mathsf P_x^Y(R)=\imath_x(R)-\frac{i_x(R,Y)}{\log2}.
+```
+
+式 (71.14)。
+
+对任意固定 $b>0$，(71.13) 及阈值两侧移动 $b/\log2$ 将 (71.5) 的误差界为
+原 Kolmogorov 误差、一个 $o_{\mathbb P}(1)$ 和正态分布在此宽度内的最大质量之和。
+先取规模极限，再令 $b\downarrow0$，即证 (71.5)。
+不需要 $T_M$ 与原信息谱独立，亦未声称信息密度对每个输出都小。
+
+对任意有限律 $p$，记其 $K$ 个最大原子的质量为 $C_p(K)$，
+其惊奇量 $-\log_2p$ 的分布函数为 $F_p$。
+直接数原子可得对任意 $K\ge1,b>0$
+
+```math
+F_p(\log_2K-b)\le C_p(K)
+ \le F_p(\log_2K+b)+2^{-b}.
+```
+
+式 (71.15)。
+
+左侧集合中每个原子的质量至少为 $2^b/K$，所以它至多有 $K$ 个元素；
+右侧则将最优 $K$ 集合中质量小于 $2^{-b}/K$ 的部分单独估计。
+这是经典一次信息谱计数界。
+对每个输出的有限后验 $\mathsf P_x^y$ 使用此式，再对 $y$ 积分，得到
+
+```math
+\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K-b\}
+ \le\Psi_x(K)
+ \le\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K+b\}+2^{-b}.
+```
+
+式 (71.16)。
+
+因为 $h_x/Q^5\to\mathscr H>0$，对固定 $z$，以概率趋一有
+$K_x(z)\ge1$ 且 $\log_2K_x(z)=h_x+Qz+o(1)$。
+取 $b=\sqrt Q$，由 (71.5)、(71.16) 得 (71.6) 第二式；
+用原律版本的 (71.9)、(71.15) 得第一式。
+
+再置 $z_\varepsilon=\sqrt{v_*}\Phi^{-1}(1-\varepsilon)$。
+对任意固定 $a>0$，正态值在 $z_\varepsilon-a,z_\varepsilon+a$ 处严格夹住 $1-\varepsilon$。
+(71.6) 与 $\Psi_x$ 对 $K$ 的单调性使 (71.7) 以概率趋一夹在
+$\lfloor2^{h_x+Q(z_\varepsilon-a)}\rfloor$ 与
+$\lfloor2^{h_x+Q(z_\varepsilon+a)}\rfloor$ 之间。
+取对数再令 $a\downarrow0$ 即得 (71.8)，无需改变误差水平或假定数据收敛速率。
+
+还有一条直接保留原信息谱的有限上界。
+对任意半径 $R_0>0$、松弛 $t>0$，按
+$|T_M|>R_0$、$\imath_x\le\log_2K+t$ 和剩余原子分拆任意列表的成功事件，得到
+
+```math
+C_x^0(K)\le\Psi_x(K)
+ \le\mathsf P_x\{\imath_x\le\log_2K+t\}
+ +\frac{m_{2,x}}{R_0^2}
+ +2^{-t}\left(1+\frac{2R_0}{\sqrt{2\pi}\sigma_M}\right).
+```
+
+式 (71.17)。
+
+剩余原子各至多为 $2^{-t}/K$，而列表最多有 $K$ 个；
+其通道密度积分由区间 Gaussian 包络
+$\int\sup_{|u|\le R_0}\varphi_\sigma(y-u)\,dy
+=1+2R_0/(\sqrt{2\pi}\sigma)$ 控制。
+区间内取峰值、外面取最近端点，两侧尾积分相加为一，证明该公式。
+取 $R_0=Q^a$、固定 $a>0$，再取
+$t=\log_2(1+2Q^a/(\sqrt{2\pi}\sigma_M))+\sqrt Q=o(Q)$，
+(71.17) 也给出相同的成功率上界。
+这里截断的是上界证明中的输入集合，没有剪裁实际观测或更换 $T_M$。
+整个确定标量范围的对数为 $O(Q^3)$，不能代替这一步所需的 $o(Q)$ 通道代价。
+
+最后说明固定支持下的风险范围。
+保持奇偶类的站点置换把支持 $S$ 的原对／路径实验映到支持 $\pi S$，
+并保持按得分排列的计数坐标、完整先验后验、校准根、精确中心及 $t_x$。
+预算 $K_x(z)$ 置换不变；字典序仅用于给出一个可测最优列表，
+不要求这个确定的破平局规则本身等变。
+记有限置换群为 $\mathcal G_M$，取与一切观测、标签及 $G$ 独立的均匀群元 $U$。
+将上述确定最优列表记为 $\mathcal L^*$，定义
+$\widetilde{\mathcal L}_x(y;U)=U^{-1}\mathcal L^*_{Ux}(y)$，
+其中群对列表的作用来自它对计数目标的双射。
+后验质量和通道密度在该双射下保持，所以每个 $U$ 给出的拉回列表
+仍逐纤维取得最优值，且每次大小不超过 $K_x(z)$。
+对任意 $\pi\in\mathcal G_M$，以均匀群元 $U\pi$ 换元可得
+$\widetilde{\mathcal L}_{\pi x}(y;U)$ 与
+$\pi\widetilde{\mathcal L}_x(y;U)$ 同分布。
+这就在允许标量碰撞时给出等变最优策略核。
+使用同一 $G$，群在大小 $q$ 支持上传递，故任意这种策略核的积分成功率对支持相同。
+平均此恒等值等于其先验 Bayes 成功率；对称化最优策略逐纤维取得上界，因而
+
+```math
+\sup_{\substack{\mathcal L\ {\rm 置换不变的随机策略核}\\
+ |\mathcal L_x(y;U)|\le K_x(z)}}
+ \Pr_{S,G,U}\{R(S,\mathscr X)\in\mathcal L_{\mathscr X}(Y;U)\}
+ =\mathbb E_{\rm prior\ data}\Psi_{\mathscr X}(K_{\mathscr X}(z))
+ \longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.18)。
+
+成功率有界，故数据概率收敛足以给这里的期望收敛。
+这里 $S$ 固定，概率对原实验、Gaussian 噪声及独立策略随机性平均；
+式中的 $U$ 对一般策略表示其辅助随机性，对上述最优构造则是均匀群元。
+这不提供熵或对数列表大小的期望展开。
+不限制策略的逐支持结论会被写死该支持的单元素列表推翻；(71.18) 的策略类不能删除。
+反向实验先作原整体反转；未知方向使用已有共同判向事件并耦合同一噪声，
+使全部数据函数及成功事件同时一致，误差由该事件的失败概率控制。
+
+结论包含如 $\sigma_M=e^{-\sqrt Q}$ 的噪声，未分类
+$\log(1/\sigma_M)\sim cQ$ 或更小噪声。
+(71.17) 在那个尺度留下的代价只是上界余量，不是可达增益或锐利相变。
+不涉及逐输出保证、变化的 $\varepsilon$、特定符号风险、有限精度效率或实验等价。证毕。
+
+## 追加锚（71 章后）
+
+## 72. 熵的确定中心与格点边缘的剩余随机性
+
+**定义 72.1（实际平均占据数中心）。** 保持第 68 章的原幅度、固定
+$\beta\in(1/2,1)$、合法规模和完整窗口。以 $\mathcal E$ 区分原平稳对与连续路径实验。
+对每个规模，枚举所有非负整数对 $k+l\le2M\lambda$ 在原窗口内产生的得分，
+得到有限确定集合 $\mathcal G_M$。每个得分只保留一份，允许相同得分来自不同计数对。
+令 $C_g$ 为该完整得分组的实际行数，定义
+
+```math
+\bar c_g^{\mathcal E}=\mathbb E_S^{\mathcal E}C_g,\qquad
+b_{ent}(n)=H(\operatorname{Bin}(n,1/2)),\quad b_{ent}(0)=0,
+\qquad d_M^{\mathcal E}=\sum_{g\in\mathcal G_M}
+ b_{ent}(\lfloor\bar c_g^{\mathcal E}\rfloor).
+```
+
+式 (72.1)。
+
+熵以 bits 计。保持奇偶类的站点置换把任意大小 $q$ 支持映到另一个支持，
+共轭原核并保持均匀平稳初始律，也保持完整得分组的行数。
+所以 $\bar c_g^{\mathcal E}$ 精确地不依赖支持的选择。
+它是原始数据行数的期望，不是原后验标签中心 $\mu_j$；后者未改动。
+两种实验的精确中心暂不识别为相同。
+反向实验在交换每对的两个端点或整体反转路径后，恰有同一正确定向的定义。
+
+**定理 72.2（确定熵中心与至多两个过渡组）。** 记 $h_M(x)$ 为原完整组计数的精确后验 Shannon 熵。
+对每个固定合法 $\beta$，两种实际实验分别有
+
+```math
+h_M(\mathscr X)-d_M^{\mathcal E}=O_{\mathbb P}(1)=o_{\mathbb P}(Q).
+```
+
+式 (72.2)。
+
+收敛与紧性在先验数据律下成立，也一致于所有大小 $q$ 确定支持的抽样律，
+后者评价同一均匀先验定义的熵函数。
+取足够大的固定行数截断 $k+l\le C_0\lambda$，其窗口计数线索引仍记为 $K_M$。
+将该线的完整得分组均值写成 $\bar c_j^{\mathcal E}$，令
+
+```math
+\mathcal B_M^{\mathcal E}
+ =\{j\in K_M:Q^{-8}\le\bar c_j^{\mathcal E}\le Q^8\}.
+```
+
+式 (72.3)。
+
+则最终 $|\mathcal B_M^{\mathcal E}|\le2$，而且
+
+```math
+h_M-d_M^{\mathcal E}
+ =\sum_{j\in\mathcal B_M^{\mathcal E}}
+ \{b_{ent}(C_j)-b_{ent}(\lfloor\bar c_j^{\mathcal E}\rfloor)\}
+ +o_{\mathbb P}(1).
+```
+
+式 (72.4)。
+
+阈值 $Q^{\pm8}$ 和截断只用于证明，不更改原观察窗口。
+
+**证明。** 先处理完整得分组与截断计数线的关系。
+原行 PGF 在两个标记均为 2 时给
+$\mathbb E2^{k_i+l_i}\le2e^\lambda$。
+固定 $C_0$ 足够大，可使超出截断的总行数 $T_{\rm tail}$ 满足
+
+```math
+\mathbb E T_{\rm tail}\le CM^{-10}=:\rho_M,\qquad
+\Pr(T_{\rm tail}>0)\le\rho_M.
+```
+
+式 (72.5)。
+
+截断内的所有所选计数恰为 $(k_j,l_j)=(k_0+jQ,l_0+jP)$，
+不同 $j$ 有严格不同的补偿得分，且 $|K_M|=O(Q^2)$。
+令 $\widehat C_j$ 只计精确计数对 $(k_j,l_j)$，均值为 $\nu_j^{\mathcal E}$。
+远处计数对即使与该得分相撞，也仅来自 (72.5)，所以
+
+```math
+0\le\bar c_j^{\mathcal E}-\nu_j^{\mathcal E},\qquad
+\sum_{j\in K_M}(\bar c_j^{\mathcal E}-\nu_j^{\mathcal E})\le\rho_M.
+```
+
+式 (72.6)。
+
+截断得分以外的每组均值均小于 $\rho_M<1$，在 (72.1) 中贡献精确为零。
+在 $T_{\rm tail}=0$ 上，所有 $C_j=\widehat C_j$ 同时成立。
+
+沿用第 68 章的信号与背景 Poisson 点概率
+
+```math
+f_j=e^{-\lambda}\frac{(a\lambda)^{k_j}(b\lambda)^{l_j}}{k_j!l_j!},\qquad
+f_j^0=e^{-\lambda}\frac{((1-\epsilon)\lambda/2)^{k_j}
+ ((1+\epsilon)\lambda/2)^{l_j}}{k_j!l_j!},\qquad
+m_j=qf_j+(M-q)f_j^0.
+```
+
+式 (72.7)。
+
+这里 $a=(1+r)/2,b=(1-r)/2$，$b_{ent}$ 与模型参数 $b$ 区分。
+原实际一、二行比较给，以 $\varepsilon_M=C\lambda^3/M$ 记其统一相对误差，
+
+```math
+|\nu_j^{\mathcal E}-m_j|\le\varepsilon_Mm_j,\qquad
+\operatorname{Var}(\widehat C_j)\le C(m_j+\varepsilon_Mm_j^2).
+```
+
+式 (72.8)。
+
+未把实际路径行数换成独立 Poisson 行。
+(70.4)、(70.5) 的全线行数与近半校准，以及 (68.45) 的熵比较，给
+
+```math
+N_J=O_{\mathbb P}(qQ^{-5/2}),\qquad
+\eta_x:=\max_{j:C_j>0}|p_j-1/2|=O_{\mathbb P}(q^{-1/2}),
+```
+
+```math
+h_M-\sum_jH(\operatorname{Bin}(C_j,p_j))=O_{\mathbb P}(Q^{-3/2}).
+```
+
+式 (72.9)。
+
+近半率用原计数线得分误差与全局校准根，不能只用宽度较大的得分窗口。
+熵比较先将乘积惊奇量中心化，再使用精确密度的 $L^2$ 范数，未由 TV 传递无界熵。
+
+暂用自然对数，记 $g(n,p)=H_{\rm nats}(\operatorname{Bin}(n,p))$。
+第 68 章的全部原子下界与 Bernoulli 四阶矩给
+$\sup_{n\in\mathbb Z_{\ge0},\ p\in[1/4,3/4]}\operatorname{Var}[-\log f_{n,p}(R)]\le C$。
+对有限熵和求导，以二项得分函数作协方差，再用 Cauchy–Schwarz，得到
+
+```math
+|\partial_p g(n,p)|
+ =\left|\operatorname{Cov}\left(-\log f_{n,p}(R),
+ \frac{R-np}{p(1-p)}\right)\right|\le C\sqrt n.
+```
+
+式 (72.10)。
+
+因此全部参数替换的误差至多
+$C\eta_x\sum_j\sqrt{C_j}\le C\eta_x\sqrt{|K_M|N_J}
+=O_{\mathbb P}(Q^{-1/4})=o_{\mathbb P}(1)$。
+与 (72.5)、(72.9) 合并得
+
+```math
+h_M=\sum_{j\in K_M}b_{ent}(\widehat C_j)+o_{\mathbb P}(1).
+```
+
+式 (72.11)。
+
+再看过渡组的几何。第 68 章的 $I$ 在内部严格凸，以零为唯一极小点，
+$I(u)=c_q>0$ 的内部根至多两个且导数非零。
+若左端点恰为根，其右导数趋于负无穷；在一侧邻域仍可取固定负导数上界。
+故对每个固定 $\beta$ 和足够小的 $v>0$，集合 $|I-c_q|\le v$
+由至多两个长度不超过 $Cv$ 的区间组成，包含端点情形。
+由全部整数的 Stirling 界与 (72.7)，
+
+```math
+\sup_{j\in K_M}|\log m_j-\lambda(c_q-I(\bar u_j))|\le C\log Q,
+\qquad u_j=j/Q^2,
+```
+
+式 (72.12)。
+
+$\bar u_j$ 只将越过合法左端点 $O(\lambda^{-1})$ 的可行格点投回该端点。
+对 (72.3) 中的组，(72.6)、(72.8) 给 $m_j/\bar c_j^{\mathcal E}\to1$，
+故 $|I(\bar u_j)-c_q|\le C\log Q/Q^3$。
+这两个可能区间的长度及端点修正均为 $o(Q^{-2})$，小于原格距，
+所以各至多含一个原格点。这证明 (72.3) 的基数界。
+同样，按 $m_j$ 定义的过渡集也至多有两个元素。
+
+最后需要比每组有界误差更精确的熵增量。置 $g(n)=(\log2)b_{ent}(n)$。
+令 $S\sim\operatorname{Bin}(n,1/2)$ 与独立公平位 $B$ 相加，$K=S+B$。
+由交换性，$\Pr(B=1\mid K)=K/(n+1)$；链式法则和二元 KL 的卡方上界给
+
+```math
+0<g(n+1)-g(n)=I(B;K)
+ =\mathbb E D(\operatorname{Bern}(K/(n+1))\Vert\operatorname{Bern}(1/2))
+ \le4\operatorname{Var}(K/(n+1))=\frac1{n+1}.
+```
+
+式 (72.13)。
+
+于是对整数 $c,N\ge0$，
+$|g(c)-g(N)|\le|c-N|/(\min(c,N)+1)$，
+且 $g(N)\le C\log(N+1)$、$g(N)\le N\log2$。
+以 $\mu=\bar c_j^{\mathcal E}\ge2$ 记一组均值，
+在 $\widehat C_j\ge\mu/2$ 上用上述增量界，在补事件上用熵的对数上界和 (72.8) 的 Chebyshev 界，得
+
+```math
+\mathbb E|g(\widehat C_j)-g(\lfloor\mu\rfloor)|
+ \le C\left\{\mu^{-1/2}+\sqrt{\varepsilon_M}
+ +\frac{1+\rho_M}\mu
+ +(\mu^{-1}+\varepsilon_M)\log(\mu+1)\right\}.
+```
+
+式 (72.14)。
+
+(72.6) 控制均值偏移；此处期望取实际点计数，未由高概率一致推出矩界。
+$0\le\mu\le2$ 时期望误差统一有界，$\mu<1$ 时确定项为零且期望至多 $\mu\log2$。
+
+在 $\mu<Q^{-8}$ 的全部组上，期望误差和至多 $CQ^{-6}$。
+在 $\mu>Q^8$ 上将 (72.14) 求和，使用 $\mu\le M$、$|K_M|=O(Q^2)$，所得上界为
+
+```math
+C\{Q^{-2}+Q^{-6}\log Q+Q^2\sqrt{\varepsilon_M}
+ +Q^2\varepsilon_M\lambda+\rho_MQ^{-6}\}=o(1).
+```
+
+式 (72.15)。
+
+只剩至多两个过渡组，每组期望绝对误差统一有界。
+由 (72.11) 得 (72.2)，保留这些组即得 (72.4)。
+这里界住的是截断点计数的熵误差期望，不能据此宣称完整后验熵在坏数据上也一致可积。证毕。
+
+**定理 72.3（显式中心与 Poisson 剩余项）。** 令 $m_j$ 精确取 (72.7)，并定义
+
+```math
+\widetilde d_M=
+ \frac1{2\log2}\sum_{j\in K_M:m_j>Q^8}\log(\pi e m_j/2)
+ +\sum_{j\in K_M:Q^{-8}\le m_j\le Q^8}
+ b_{ent}(\lfloor m_j\rfloor).
+```
+
+式 (72.16)。
+
+则 $d_M^{\mathcal E}-\widetilde d_M=O(1)$，故
+$h_M-\widetilde d_M=O_{\mathbb P}(1)=o_{\mathbb P}(Q)$。
+该显式中心同时适用于两种实验，完整保留 $k_0,l_0,P,Q,M,q,\epsilon$ 的原值及阶乘。
+
+更精细地，任意子序列都能继续抽取，使至多两个过渡组的均值各趋于 $[0,\infty]$ 中一点。
+保留其中正有限极限 $\theta_1,\ldots,\theta_t$，并继续抽取使相应
+$\lfloor\bar c_j^{\mathcal E}\rfloor=k_v$ 固定，则
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\
+ \sum_{v=1}^t\{b_{ent}(P_{\theta_v})-b_{ent}(k_v)\},\qquad
+P_{\theta_v}\text{ 相互独立},\quad P_{\theta_v}\sim\operatorname{Pois}(\theta_v),
+\quad 0\le t\le2.
+```
+
+式 (72.17)。
+
+若 $\theta_v$ 非整数，则 $k_v=\lfloor\theta_v\rfloor$；若它是正整数，
+$k_v$ 可以是该整数或小一的整数，不能省去这一侧向取整信息。
+特别地，$h_M-d_M^{\mathcal E}=o_{\mathbb P}(1)$ 当且仅当过渡组均值没有趋于正有限值的子序列。
+原幅度不变时，存在一个固定合法 $\beta$ 及合法规模子序列，使
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\ b_{ent}(P_\theta),
+\qquad \theta\in[1/4,1/2],
+```
+
+式 (72.18)。
+
+该非退化结论分别对两种实际实验成立，排除了对所有合法参数统一声称 $o_{\mathbb P}(1)$。
+
+**证明。** 先比较确定中心。
+$m_j>Q^8$ 时，(72.6)、(72.8)、(72.13) 给逐组误差
+$C(\varepsilon_M+(1+\rho_M)/m_j)$，总和趋零。
+$m_j<Q^{-8}$ 时两种均值的下取整最终均为零。
+中间至多两组满足 $|\bar c_j^{\mathcal E}-m_j|\le\varepsilon_MQ^8+\rho_M\to0$，
+其下取整最多差一，每组成本至多一 bit。因此
+
+```math
+\left|d_M^{\mathcal E}-\sum_{j\in K_M}b_{ent}(\lfloor m_j\rfloor)\right|
+ \le2+o(1).
+```
+
+式 (72.19)。
+
+经典公平二项熵展开
+$b_{ent}(n)=\log(\pi e n/2)/(2\log2)+O(n^{-1})$
+在高占据组上总共只损失 $O(Q^{-6})$，证明 (72.16) 的精度。
+有限均值处的整数跨越使 (72.19) 不能自动加强为 $o(1)$。
+充分大固定截断之外 $m_j<1$，不改变最终确定求和。
+未将每项 $\log m_j$ 换成误差为 $O(\log Q)$ 的粗率函数，避免在 $Q^2$ 项上累加丢失所需精度。
+
+为证明实际 Poisson 极限，将原标记行 PGF 推到任意固定数目 $h$ 的不同候选行。
+置 $u_i=(z_{i,+}+z_{i,-})/2-1$、$v_i=(z_{i,+}-z_{i,-})/2$，
+未标记行取零，并令 $A=\mathbb E(u+b_Sv)$、$B_1=\mathbb E(v+b_Su)$，
+其中平均在全部 $2M$ 个状态上取。原平稳路径的精确 PGF 仍为
+
+```math
+e_1^{\mathsf T}\begin{pmatrix}1+A&B_1\\A&B_1\end{pmatrix}^{2M\lambda}e_1;
+```
+
+式 (72.20)。
+
+独立对的版本为 $(1+A)^{2M\lambda}$。
+在固定标记多圆盘上，主特征值为 $1+A+O_h(M^{-2})$，其系数 $1+O_h(M^{-1})$，
+另一项可忽略。Cauchy 系数半径取 $\max(k,1)$ 除以对应 Poisson 均值，
+相对系数成本为 $O_h(\lambda^h)$，所以截断内每个指定计数事件满足
+
+```math
+\Pr(\text{指定 }h\text{ 行计数})
+ =\Pr_{\rm Pois}(\text{同一计数})
+ \{1+O_h(\lambda^{h+1}/M)\}.
+```
+
+式 (72.21)。
+
+对均值趋于 $\theta_v\in(0,\infty)$ 的有限个不同移动格点，
+$m_j\to\theta_v$，信号和背景贡献各趋于 $\theta_v/2$，最大单行点概率为 $O(1/q)$。
+展开其任意固定混合下降阶乘矩，(72.21) 控制不同实际行的概率；
+去除重复行指派只产生 $o(1)$，于是
+
+```math
+\mathbb E\prod_{v=1}^t(\widehat C_{j_v})_{r_v}
+ \longrightarrow\prod_{v=1}^t\theta_v^{r_v}
+\quad\text{对每个固定非负整数向量 }(r_1,\ldots,r_t).
+```
+
+式 (72.22)。
+
+所有更高固定阶矩亦有界，提供子序列极限传矩所需的一致可积；
+独立 Poisson 向量的矩母函数在零附近有限，唯一确定其律。
+故这些实际计数联合趋于相互独立的 Poisson 变量，(72.5) 再移回完整得分组。
+原始路径行之间的依赖一直保留在 (72.20) 中。
+
+过渡均值趋零时，由 $\mathbb E b_{ent}(\widehat C_j)\le\bar c_j^{\mathcal E}$ 去掉该项；
+趋无穷时由 (72.14) 去掉其中心化误差。
+剩余项用计数的离散弱极限和 (72.4)，得到 (72.17)，无需原熵期望收敛。
+$b_{ent}$ 严格递增，每个正均值 Poisson 项都非退化，其独立和亦非退化。
+对至多两个过渡均值作扩充实轴的子序列紧性论证，即得所述 $o_{\mathbb P}(1)$ 充要条件。
+
+最后构造 (72.18)。取任意正长度紧区间 $J_0\subset(1/2,\beta_*)$，
+其中 $\beta_*$ 为第 68 章的端点阈值。此时正率区域接触左端点，只有一个正侧根。
+在对应的正 $u$ 紧区间上，令
+$F(u)=\phi/(\phi+I(u))$；它严格递减且导数非零。
+$f_j,z_0$ 只依赖合法 $Q,j$ 和原幅度，不依赖 $\beta$。定义
+
+```math
+\chi_{Q,j}=2e^{-z_0}f_j,\qquad
+L_{Q,j}=\left\lceil\log_2\frac{1/4}{\chi_{Q,j}}\right\rceil,
+\qquad 1/4\le2^{L_{Q,j}}\chi_{Q,j}<1/2.
+```
+
+式 (72.23)。
+
+使原 $M$ 精确等于 $2^{L_{Q,j}}$ 的参数区间为
+
+```math
+\mathcal J_{Q,j}=
+ \left(\frac{\phi\lambda}{(L_{Q,j}+1)\log2},
+       \frac{\phi\lambda}{L_{Q,j}\log2}\right].
+```
+
+式 (72.24)。
+
+其宽度与 $\lambda^{-1}$ 同阶，且由紧内部 Stirling 展开，
+$L_{Q,j}\log2=\lambda(\phi+I(j/Q^2))+O(\log Q)$，
+所以该区间距 $F(j/Q^2)$ 为 $O(\log Q/Q^3)$。
+给定 $J_0$ 内任意开子区间，先选内部目标参数，再将其 $F^{-1}$ 值乘 $Q^2$ 取最近整数。
+误差 $O(Q^{-2})$ 趋零，故足够大的合法 $Q$ 使整个 (72.24) 落入该子区间。
+
+逐次选原合法序列中更大的 $Q_h$，以及内含于上一步区间和某个
+$\mathcal J_{Q_h,j_h}$ 内部的非空闭区间，令其长度趋零。
+嵌套紧区间给一个固定 $\beta_\infty\in J_0$。
+在选定规模上，原 $M=2^{L_{Q_h,j_h}}$；$q,\epsilon$ 均仍按原定义取得。
+统一于此紧参数区间，
+
+```math
+m_{j_h}=(2+o(1))qf_{j_h}
+ =(1+o(1))2^{L_{Q_h,j_h}}\chi_{Q_h,j_h}.
+```
+
+式 (72.25)。
+
+继续抽取使右侧确定主值趋于 $\theta\in[1/4,1/2]$。
+(72.6)、(72.8) 使两种实验的该组实际均值都趋于 $\theta$，其下取整最终为零。
+因为这里只存在一个根邻域，该组是唯一的多项式过渡组。
+(72.17) 遂给 (72.18)，且 Poisson 在零、一处的正质量证明非退化。
+构造只选择了一次固定 $\beta$，没有让参数随规模移动，也没有声称任意预先指定 $\beta$ 都有此子序列。
+
+所有结论均为数据概率或分布结论。未知方向仍由原共同判向事件传递，
+不引入方向先验；不推出 $h_M-\mathbb E h_M$、期望熵或坏数据上的一致可积。
+在第 68、71 章已证的 $Q$ 尺度结论中，可以用 (72.16) 的确定中心替换 $h_M$，
+因为差为 $o_{\mathbb P}(Q)$；不能因此省去阶乘、原取整和可能的端点修正。证毕。
+
+## 追加锚（72 章后）
+
+## 73. 典型噪声输出的条件信息谱
+
+**定义 73.1（逐输出的条件分布距离）。** 保持第 68、69、71 章的原实际模型，
+记一个完整原始数据纤维为 $x$，完整组计数律为 $P_x$，其精确熵为 $h_x$。
+令 $R$ 为同一组计数向量，$T=t_x(R)$ 为定义 54.1 的精确标量，
+并观测 $Y=T+\sigma_MG$，其中 $\sigma_M>0$ 确定，$G$ 独立标准正态且不另行揭示。
+沿用 $v=\ell/(2(\log2)^2)>0$，置 $\Phi_v(z)=\Phi(z/\sqrt v)$、
+
+```math
+Z_x(R)=\frac{-\log_2P_x(R)-h_x}{Q},\qquad
+p_x(n\mid y)=\frac{P_x(n)\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},
+```
+
+```math
+f_x(y)=\sum_nP_x(n)\varphi_{\sigma_M}(y-t_x(n)),\qquad
+J_x(n,y)=-\log_2p_x(n\mid y).
+```
+
+式 (73.1)。
+
+严格正的有限 Gaussian 混合使这些条件权重对每个实数 $y$ 都有定义。
+定义两个有界距离
+
+```math
+D_M^A(x,y)=\sup_{z\in\mathbb Q}
+ |P_x(Z_x\le z\mid y)-\Phi_v(z)|,
+```
+
+```math
+D_M^B(x,y)=\sup_{z\in\mathbb Q}
+ \left|P_x\left(\frac{J_x(R,y)-h_x}{Q}\le z\,\middle|\,y\right)
+       -\Phi_v(z)\right|,
+\qquad \overline D_M^a(x)=\int D_M^a(x,y)f_x(y)\,dy\quad(a=A,B).
+```
+
+式 (73.2)。
+
+有理阈值上确界可测，并由 CDF 右连续性与正态 CDF 连续性等于实阈值上确界。
+$A$ 度量原惊奇量在给定输出后的分布，$B$ 度量输出后验自身的惊奇量；二者不混同。
+内层条件律和 $f_x$ 均由均匀大小 $q$ 先验定义。
+
+**定理 73.2（空间分离与典型输出定理）。** 对每个固定合法原幅度与
+$\beta\in(1/2,1)$，两种实际实验分别满足：
+
+```math
+\log^+(1/\sigma_M)=o(Q^3)
+\quad\Longrightarrow\quad
+\overline D_M^A(\mathscr X)\longrightarrow0,
+```
+
+```math
+\log^+(1/\sigma_M)=o(Q)
+\quad\Longrightarrow\quad
+\overline D_M^B(\mathscr X)\longrightarrow0.
+```
+
+式 (73.3)。
+
+两条收敛均为原始数据概率收敛，既在先验数据律下成立，也一致于所有大小 $q$ 的确定支持，
+后者仍评价同一先验定义的数据函数。
+对每个固定 $t>0$，相应的条件输出坏集概率满足
+
+```math
+P_{Y\mid x}\{D_M^a(x,Y)>t\}\le\overline D_M^a(x)/t.
+```
+
+式 (73.4)。
+
+故这是典型输出的条件 CDF 结论。第二条未扩展到第一条的全部噪声范围。
+
+**证明。** 先固定共同好数据事件，保留完整窗口、校准根及精确后验中心。
+以 $\mathsf Q_x=\prod_j\operatorname{Bin}(C_j,p_j)$ 记原单个校准乘积计数律，
+$L_x=dP_x/d\mathsf Q_x$，$a_x=\|L_x-1\|_2$。
+第 68 章的实际比较及信息谱证明给
+
+```math
+0\le L_x\le C,\qquad a_x=O_{\mathbb P}(Q^{-5/2}),\qquad
+|h_x-\widetilde h_x|\le C(Qa_x+a_x^2),\qquad
+\mathbb E_{P_x}(\log L_x)^2\le Ca_x^2.
+```
+
+式 (73.5)。
+
+这里 $\widetilde h_x$ 是乘积计数熵，以 bits 计，常数吸收单位转换。
+密度仍为补集 Bernoulli 和在所需整数处的概率除以全体和在 $q$ 处的概率；
+未按组重新抽取实际标签。
+第 68 章还给 $p_j\in[1/4,3/4]$ 上统一的二项惊奇量方差界与乘积惊奇量的 $Q$ 尺度 CLT。
+由原一、二行 PGF 得到的全部窗口行数与第 69 章矩界同样适用，
+这些前提不要求实际路径行独立。
+
+写 $h_M^{noise}=\log^+(1/\sigma_M)$，$\lambda=Q^3$，取确定半径
+
+```math
+H_M=h_M^{noise}+\log Q+1,\qquad R_M^2=\sqrt{\lambda H_M}.
+```
+
+式 (73.6)。
+
+在第一条噪声条件下，$R_M\to\infty$、$R_M^2=o(\lambda)$，且
+$R_M^2/H_M\to\infty$。
+只为估计取足够大固定原行数截断 $k+l\le C_0\lambda$，其计数线索引为 $K_M$。
+在该线内分为
+
+```math
+\mathcal C_M=\{j:|j\delta|\le R_M\},\qquad
+\mathcal O_M=K_M\setminus\mathcal C_M,
+\qquad n_M^{core}=|\mathcal C_M|\le1+2R_M/\delta=o(Q^2).
+```
+
+式 (73.7)。
+
+截断事件的坏概率一致趋零，所有目标仍是原完整窗口。
+下述行数期望先在全部原始数据上对确定计数对取得，再在共同截断事件上识别为完整得分组。
+
+令 $m_j$ 为 (72.7) 的原 Poisson 混合平均占据数，
+$v_j=C_jp_j(1-p_j)/B^2$、$V_{\mathcal O}=\sum_{\mathcal O_M}v_j$。
+若两个计数均不少于对应 Poisson 均值的一半，固定截断上的率函数 Hessian 有正下界，
+保留有界原取整后，Stirling 前因子与严格凸性给
+
+```math
+\frac{m_j}{B^2}\le C\delta e^{-c(j\delta)^2}.
+```
+
+式 (73.8)。
+
+这在整个上述区域统一成立，不限于固定空间区间或固定对数半径。
+其余点至少有一个 Poisson 计数低于均值的一半，故
+$m_j/B^2\le Q^Ce^{-c\lambda}$，无需在零计数端点使用 Gaussian 前因子。
+原实际一行比较、$p_j(1-p_j)\le1/4$ 以及 Gaussian 格点尾和给
+
+```math
+\sup_S\mathbb E_S V_{\mathcal O}
+ \le Ce^{-cR_M^2}+Q^Ce^{-c\lambda}.
+```
+
+式 (73.9)。
+
+例如尾和用
+$\delta\sum_{|j\delta|>R}e^{-c(j\delta)^2}
+\le e^{-cR^2/2}\delta\sum_je^{-c(j\delta)^2/2}$ 即得。
+原行数依赖仍保留在实际期望中。
+
+在同一乘积计数向量上置
+
+```math
+U_j=(R_j-C_jp_j)/B,\qquad e_j=(\mu_j-C_jp_j)/B,
+\qquad \mathbb E_{\mathsf Q_x}U_j=0,\quad
+\mathbb E_{\mathsf Q_x}U_j^2=v_j.
+```
+
+式 (73.10)。
+
+精确后验中心给 $e=\mathbb E_{\mathsf Q_x}[(L_x-1)U]$，故
+$\|e_{\mathcal O}\|_2\le a_x\sqrt{V_{\mathcal O}}$。
+定义仅在证明中使用的核心标量
+
+```math
+T^{core}=\delta^{-1/2}
+ \left\{\sum_{j\in\mathcal C_M}(U_j-e_j)^2
+         -V_{\mathcal C}+\|e_{\mathcal O}\|_2^2\right\}.
+```
+
+式 (73.11)。
+
+每个中心与方差在给定原始数据后都是确定量；
+因此它只随机依赖核心的乘积后验计数。
+尾部确定项完整保留，不能因其趋零就在任意小噪声比较中删去。
+由原标量的精确展开直接相减，
+
+```math
+T-T^{core}=\delta^{-1/2}
+ \sum_{j\in\mathcal O_M}(U_j^2-v_j-2e_jU_j),\qquad
+\mathbb E_{\mathsf Q_x}|T-T^{core}|
+ \le C\delta^{-1/2}V_{\mathcal O}.
+```
+
+式 (73.12)。
+
+后一界用 $\mathbb E|U_j^2-v_j|\le2v_j$ 及
+$\mathbb E|e_{\mathcal O}\cdot U_{\mathcal O}|
+\le\|e_{\mathcal O}\|\sqrt{V_{\mathcal O}}$，
+共同好事件上 $L_x\le C$ 已保证 $a_x$ 有界。
+
+同方差 Gaussian 平移的 TV 距离至多
+$\min(1,|t-t'|/(\sqrt{2\pi}\sigma_M))$。
+把整个计数向量保留在联合律中，比较同一乘积向量的原通道与核心通道，得到
+
+```math
+\tau_M(x):=d_{TV}\bigl(\mathsf Q_x(dn)\varphi_{\sigma_M}(y-t_x(n))dy,
+ \mathsf Q_x(dn)\varphi_{\sigma_M}(y-t_x^{core}(n))dy\bigr)
+ \le\min\left(1,\frac{C\delta^{-1/2}V_{\mathcal O}}{\sigma_M}\right).
+```
+
+式 (73.13)。
+
+对好事件上的右侧取实际原始数据期望，(73.9) 给上界
+
+```math
+CQ^{1/4}e^{h_M^{noise}}
+ \{e^{-cR_M^2}+Q^Ce^{-c\lambda}\}\longrightarrow0.
+```
+
+式 (73.14)。
+
+因此已在真实 $1/\sigma_M$ 精度支付尾部代价。
+再对同一原通道使用一次完整后验向量比较，联合律满足
+
+```math
+\epsilon_M(x):=d_{TV}(P_x^{R,Y},\mathsf Q_x^{R,Y^{core}})
+ \le a_x/2+\tau_M(x)=o_{\mathbb P}(1).
+```
+
+式 (73.15)。
+
+坏数据事件只付其外层概率，未以 TV 传递无界矩。
+
+以自然对数写各乘积二项惊奇量 $S_j$ 及其均值 $H_j$，置
+
+```math
+Z^{out}=\frac{\sum_{j\in\mathcal O_M}(S_j-H_j)}{Q\log2},\qquad
+Z^{core}=\frac{\sum_{j\in\mathcal C_M}(S_j-H_j)}{Q\log2}.
+```
+
+式 (73.16)。
+
+在 $\mathsf Q_x^{R,Y^{core}}$ 下，$Z^{out}$ 与 $Y^{core}$ 精确独立。
+二项 varentropy 的统一界给
+$\mathbb E_{\mathsf Q_x}(Z^{core})^2\le Cn_M^{core}/Q^2=o(1)$。
+故乘积全惊奇量的 CLT 及阈值夹逼给
+
+```math
+\kappa_M(x):=\sup_z|\mathsf Q_x(Z^{out}\le z)-\Phi_v(z)|
+ \longrightarrow0
+```
+
+式 (73.17)。
+
+这删除的是独立和中方差可忽略的一部分，没有把增长半径代入固定半径的极限定理。
+原惊奇量的精确密度恒等式为
+
+```math
+Z_x=Z^{out}+Z^{core}
+ -\frac{\log L_x+(\log2)(h_x-\widetilde h_x)}{Q\log2}.
+```
+
+式 (73.18)。
+
+用 $L_x\le C$ 直接控制非负平方，再用 (73.5)，得
+
+```math
+\mathbb E_{P_x}|Z_x-Z^{out}|^2
+ \le C\{n_M^{core}/Q^2+a_x^2\}.
+```
+
+式 (73.19)。
+
+此矩界来自密度与精确中心，未由 (73.15) 推出。
+
+现在用一个有限核事实。若 $(X_0,Y)$ 的联合律与 $\nu\otimes\eta$ 的 TV 距离至多 $e$，
+则边缘收缩与三角不等式给该联合律距 $\nu\otimes P_Y$ 至多 $2e$。
+对有限输入逐原子积分绝对差，恰有
+
+```math
+\int d_{TV}(P_{X_0\mid y},\nu)P_Y(dy)\le2e.
+```
+
+式 (73.20)。
+
+无需对输出密度设逐点下界。将 (73.15) 推前到 $(Z^{out},Y)$，
+结合 (73.17) 得其条件 CDF 距离的输出平均至多 $2\epsilon_M+\kappa_M$。
+再以 (73.19) 作同一实现上的小位移夹逼。对任意固定 $b>0$，
+
+```math
+\overline D_M^A(x)\le2\epsilon_M(x)+\kappa_M(x)+\omega_v(b)
+ +\frac{C}{b^2}\{n_M^{core}/Q^2+a_x^2\},\qquad
+\omega_v(b)=\sup_z|\Phi_v(z+b)-\Phi_v(z)|.
+```
+
+式 (73.21)。
+
+先令规模趋无穷，再令 $b\downarrow0$，即得 (73.3) 第一条。
+所用 TV 始终比较有限输入与平滑输出的联合律、或两个离散核；
+没有声称离散惊奇量与连续正态在 TV 中趋近。
+
+对第二条，第 71 章的原通道信息密度记为 $i_x(R,Y)$，以自然对数计。
+实际矩界与严格正通道恒等式给
+
+```math
+I_x(R;Y)\le\tfrac12\log(1+m_{2,M}(x)/\sigma_M^2)=o_{\mathbb P}(Q),
+\qquad \mathbb E_x|i_x|\le I_x+2,
+```
+
+```math
+\frac{J_x(R,Y)-h_x}{Q}=Z_x-\frac{i_x(R,Y)}{Q\log2}.
+```
+
+式 (73.22)。
+
+其中 $m_{2,M}(x)=\mathbb E_{P_x}T^2=O_{\mathbb P}(1)$；
+绝对信息界来自 $\mathbb E_xe^{-i_x}=1$ 和负尾积分，不假定 $T$ 与惊奇量独立。
+逐输出使用同一小位移夹逼后积分，
+
+```math
+\overline D_M^B(x)\le\overline D_M^A(x)+\omega_v(b)
+ +\frac{I_x+2}{bQ\log2}.
+```
+
+式 (73.23)。
+
+先取规模极限再取 $b\downarrow0$ 即得第二条。
+第一条较宽范围只控制原惊奇量的条件律，不保证 $i_x/Q$ 可忽略，故不推出第二条。
+所有输入界一致于固定支持，逐数据纤维的确定推导保留该一致性。证毕。
+
+**定理 73.3（逐输出列表曲线与最小覆盖大小）。** 在
+$\log^+(1/\sigma_M)=o(Q)$ 下，记 $C_{x,y}(K)$ 为输出后验最大的 $K$ 个原子的总质量。
+对每个固定实数 $z$，取 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+\int|C_{x,y}(K_x(z))-\Phi_v(z)|f_x(y)\,dy\longrightarrow0
+```
+
+式 (73.24)。
+
+对固定 $\varepsilon\in(0,1)$，令 $N_{\varepsilon,M}(x,y)$ 为覆盖输出后验质量
+$1-\varepsilon$ 所需的最少原子数，$z_\varepsilon=\sqrt v\Phi^{-1}(1-\varepsilon)$。
+每个固定 $e>0$ 都满足
+
+```math
+\int\mathbf1\left\{
+ \left|\frac{\log_2N_{\varepsilon,M}(x,y)-h_x}{Q}-z_\varepsilon\right|>e
+ \right\}f_x(y)\,dy\longrightarrow0.
+```
+
+式 (73.25)。
+
+收敛具有定理 73.2 的两种原始数据概率意义。
+此外，$D_M^A,D_M^B$、(73.24) 的被积绝对差及 (73.25) 的指示函数，
+在各自噪声范围内都趋零于实际确定支持的联合数据／输出概率，且一致于支持。
+该联合输出由真实支持的计数生成，结论所评价的条件权重仍为原均匀先验的权重。
+
+**证明。** 按输出后验原子质量降序排列，平局按得分排序后的计数元组字典序决定，
+得到可测且达到最优值的列表。原始数据字母表在每个规模有限，
+各联合原子权重连续依赖 $y$，故有限比较与确定平局规则给 Borel 选择器。
+累计质量首次达到 $1-\varepsilon$ 的整数同样可测且有限。
+
+任意有限质量函数 $p$ 的最大 $K$ 原子质量与惊奇量 CDF $F^p$ 满足
+
+```math
+F^p(\log_2K-b)\le C^p(K)
+ \le F^p(\log_2K+b)+2^{-b}\qquad(K\ge1,b>0).
+```
+
+式 (73.26)。
+
+这是第 71 章已证的有限计数界，现在逐输出使用，随后才积分。
+$h_x/Q^5\to\mathscr H>0$ 保证好数据上 $K_x(z)\ge1$，
+$\log_2K_x(z)=h_x+Qz+o(1)$。取 $b=\sqrt Q$，正态密度有界给
+
+```math
+|C_{x,y}(K_x(z))-\Phi_v(z)|
+ \le D_M^B(x,y)+CQ^{-1/2}+o(Q^{-1})+2^{-\sqrt Q}.
+```
+
+式 (73.27)。
+
+好事件外左侧有界，故 (73.24) 成立。
+对逆问题，$\Phi_v(z_\varepsilon-e/2)$ 与 $\Phi_v(z_\varepsilon+e/2)$
+分别严格小于、大于 $1-\varepsilon$，差距有固定正下界。
+在 $D_M^B$ 小于该差距一半时，(73.27) 使最小覆盖数夹在对应两个预算之间。
+单调性、可达性和对数取整误差给 (73.25)，坏输出概率由 (73.4) 控制。
+此处预算可以在看到 $y$ 后选择；第 71 章的共同输出预算是在看到 $y$ 前选择，两者并非同一定义。
+
+最后证明实际输出的范围。保持奇偶类的站点置换 $\pi$ 将支持 $S$ 映到 $\pi S$，
+共轭原核并保持原始观测似然。按得分排序后，组大小、精确后验、校准、中心、熵及
+$t_x(n)$ 都在对应下相同，而且 $R(\pi S,\pi x)=R(S,x)$。
+使用同一个 $G$ 则输出 $Y$ 相同。因此对任意有界置换不变函数 $g_M(x,y)$，
+
+```math
+\mathbb E_{S,G}g_M(\mathscr X,t_{\mathscr X}(R(S,\mathscr X))+\sigma_MG)
+ =\mathbb E_{\rm prior}g_M(\mathscr X,Y),
+```
+
+式 (73.28)。
+
+右侧先验混合与任意固定支持左侧相等，来自群对大小 $q$ 支持的传递性。
+将已证有界距离／指示函数先在先验下平均，再用此恒等式，得到实际确定支持的联合概率结论。
+这不宣称给定 $x$ 的先验混合密度 $f_x$ 等于固定真实支持下的单个 Gaussian 输出密度，
+也不把先验后验解释成点质量支持先验。
+这里用于实际成功率的规范策略取第 71 章 (71.18) 构造的随机对称化最优策略核。
+其辅助均匀群元独立于数据、标签和测量噪声，策略核等变，故对该辅助随机性平均的
+Bayes 风险有相应固定支持解释。字典序选择器只用于取得可测最优值，本身无需等变；
+标量最优质量 $C_{x,y}(K)$ 与最小覆盖数 $N_{\varepsilon,M}(x,y)$ 不依赖破平局方式。
+不受限规则可以写死支持，不能借本定理宣称所有此类规则的固定支持不可能性。
+未知方向只用原共同判向事件及同一个 $G$ 传递所有有界结论，不引入方向先验。
+
+第 72 章给 $h_x-\widetilde d_M=o_{\mathbb P}(Q)$，
+故本章所有 $Q$ 尺度中心可改为 (72.16) 的同一个确定中心。
+这是两个已经量化的误差的组合，不将 $Q^5$ 主项单独当作该中心。证毕。
+
+**注记 73.4（小信息与条件极限的区别）。** 独立 Bernoulli$(p)$ 源在固定
+$p\ne1/2$ 时，其标准化惊奇量有普通 CLT。
+若只揭示该中心化惊奇量是否为正的一位，信息代价至多 $\log2$，
+但在阈值零，其给定输出的 CDF 为零或一，与正态 CDF 的差均为 $1/2$。
+因此原 CLT 加小平均信息可以支持第 71 章的联合边缘结论，
+却不能独自证明本章的典型输出条件 CDF 结论；(73.15) 的联合比较补上了这一步。
+这个例子检验的是通用推理，不反驳本章的原 Gaussian 通道。
+
+本章给充分噪声条件，未证明 $Q^3$ 或 $Q$ 是必要／锐利阈值。
+当 $\log(1/\sigma_M)$ 与 $Q^3$ 同阶时，当前核心可占 $Q^2$ 组，
+可忽略方差删除法失去其前提；方法在此停止不等于命题反例。
+没有每个输出保证、变化误差水平、期望对数覆盖展开、效率或零噪声结论。
+
+## 追加锚（73 章后）
+
+## 74. 熵集中例外集的零测度、稠密类别与局部维数
+
+**定义 74.1（固定参数的集中例外）。** 保持第 72 章的实际均值中心
+$d_M^{\mathcal E}$，其中 $\mathcal E$ 为原平稳对或连续路径实验。
+每个 $\beta\in(1/2,1)$ 都使用原固定幅度、原合法规模、全部取整、补偿和完整窗口。
+定义
+
+$$
+E_{\mathcal E}=\{\beta:h_M(\mathscr X)-d_M^{\mathcal E}
+\text{ 不依数据概率收敛于零}\}.
+\tag{74.1}
+$$
+
+概率可以取任意大小 $q$ 的确定支持的实际抽样律；被评价的后验熵仍由均匀支持先验定义。
+原支持置换使这个熵函数的分布精确地不依赖支持，所以也等价于先验数据律与支持上一致的概率表述。
+本章的 Lebesgue 测度、类别与 Hausdorff 维数均取在参数区间上，不给 $\beta$ 新增先验。
+
+记原 Liouville 斜率为 $\vartheta$，有限逼近为 $P/Q$。
+合法序列满足
+
+$$
+Q_{n+1}=10^{Q_n^5},\qquad \lambda=Q^3,\qquad
+L_0(\beta)=\left\lfloor\frac{\phi Q^3}{\beta\log2}\right\rfloor,
+\quad M=2^{L_0(\beta)},\quad q=\lfloor Me^{-z_0}\rfloor.
+\tag{74.2}
+$$
+
+这里 $\phi,z_0,k_0,l_0$ 均为原定义。对固定紧区间
+$J\Subset(1/2,1)$，取一个统一足够大的证明截断 $k+l\le C_0\lambda$。
+其窗口计数线为 $(k_j,l_j)=(k_0+jQ,l_0+jP)$，索引集 $K_Q$ 与 $\beta$ 无关，且 $|K_Q|=O_J(Q^2)$。
+截断不改变观测或完整得分组。
+
+**引理 74.2（原 floor 区间与两种实际实验的共同判据）。** 令
+$f_j,f_j^0,m_j=qf_j+(M-q)f_j^0$ 精确取 (72.7)，并设
+
+$$
+\chi_{Q,j}=2e^{-z_0}f_j.
+\tag{74.3}
+$$
+
+$\chi_{Q,j}$ 只依赖原幅度、$Q,j$，不依赖 $\beta$。
+统一于每个固定 $J$ 与全部 $j\in K_Q$，有
+
+$$
+m_j(\beta)=2^{L_0(\beta)}\chi_{Q,j}(1+o_J(1)).
+\tag{74.4}
+$$
+
+若相应实际完整得分组均值 $\bar c_j^{\mathcal E}$ 位于 $[Q^{-8},Q^8]$，
+则 $\bar c_j^{\mathcal E}/m_j\to1$ 亦统一成立。
+两种例外集相同，记为 $E$，且局部有精确的 Borel 表述
+
+$$
+E\cap J=J\cap\bigcup_{v=2}^{\infty}\limsup_{n\to\infty}
+\bigcup_{j\in K_{Q_n}}
+\{\beta:1/v\le m_{Q_n,j}(\beta)\le v\}.
+\tag{74.5}
+$$
+
+证明。在紧参数区间上，原规模满足
+$\log q=\phi(1-\beta)Q^3/\beta+O(1)$，故 $q$ 统一指数增长。
+原一、二行 PGF 比较、尾界与计数线隔离中的常数可统一选择：
+$\log M/Q^3$ 有正的有限上下界，幅度固定，而 $C_0$ 固定后所有标记提取半径有统一界。
+因此 (72.5)、(72.6)、(72.8) 在这里分别给
+
+$$
+\rho_M\le C_JM^{-10},\qquad
+|\bar c_j^{\mathcal E}-m_j|
+\le\varepsilon_Mm_j+\rho_M,\qquad
+\varepsilon_M\le C_J\lambda^3/M.
+\tag{74.6}
+$$
+
+该式包括完整组的远处同分计数，未假定得分映射在截断外单射。
+
+截断线上 $f_j/f_j^0=e^{W_j}$，而
+$W_j-z_0=O_J(\epsilon\lambda+\lambda(\vartheta-P/Q))=o_J(1)$。
+又 $q/(Me^{-z_0})=1+O_J(q^{-1})$，所以
+
+$$
+\frac{m_j}{Me^{-z_0}f_j}
+=\frac{q}{Me^{-z_0}}+(1-q/M)e^{z_0-W_j}=2+o_J(1).
+\tag{74.7}
+$$
+
+这是相对误差比较，即使 $f_j$ 很小仍成立；补偿与 $q$ 的取整未删去。
+由 (74.6) 得所述多项式区间上的实际均值比较。
+
+定理 72.3 给出的充要条件是：存在原合法规模子序列及移动组，使实际均值趋于正有限值。
+若平稳对中出现这样的组，(74.6) 使 $m_j$ 与路径中的实际均值有同一极限；反向论证相同。
+因此 $E_{\rm pair}=E_{\rm path}$。
+这个共同判据与紧正区间的子序列紧性恰给 (74.5)。
+不要求两种精确中心相差 $o(1)$：接近正整数的两种均值仍可有不同下取整。
+
+对固定 $Q$，全部实际参数及抽样律在原区间
+
+$$
+\mathcal J_{Q,L}
+=\left(\frac{\phi Q^3}{(L+1)\log2},
+        \frac{\phi Q^3}{L\log2}\right],\qquad L\ge1,
+\tag{74.8}
+$$
+
+上保持不变，$q$ 与补偿也随之固定。左端点的 floor 为 $L+1$，右端点为 $L$。
+在与 $J$ 相交的区间上，$L\asymp_JQ^3$，且
+$|\mathcal J_{Q,L}|\asymp_JQ^{-3}$。
+故 (74.5) 的每个有限层事件是有限个半开区间的并。
+紧区间的可数穷尽证明 $E$ 是 Borel 集。证毕。
+
+**定理 74.3（参数几乎处处集中与维数上界）。** 例外集 $E$ 的 Lebesgue 测度为零，
+且 $\dim_HE\le2/3$。
+更强地，对几乎处处的固定 $\beta$，两种实际实验的 (72.3) 过渡组集合最终都为空，因此
+
+$$
+\sup_{S:|S|=q}\Pr_S^{\mathcal E}
+\{|h_M-d_M^{\mathcal E}|>\varepsilon\}\longrightarrow0
+\quad(\varepsilon>0).
+\tag{74.9}
+$$
+
+证明。若一个实际均值在 $[Q^{-8},Q^8]$ 中，(74.4)、(74.6) 迫使
+
+$$
+-8\log Q-C_J\le L_0(\beta)\log2+\log\chi_{Q,j}
+\le8\log Q+C_J.
+\tag{74.10}
+$$
+
+对每个 $j$ 只有 $O_J(\log Q)$ 个连续整数 $L$ 可以满足此式。
+共有 $O_J(Q^2)$ 个索引，每个原 floor 区间宽 $O_J(Q^{-3})$，
+所以两种实验的过渡事件都有一个参数空间中的共同覆盖 $A_Q(J)$，满足
+
+$$
+|A_Q(J)|\le C_J\frac{\log Q}{Q}.
+\tag{74.11}
+$$
+
+由原序列的增长率，$\sum_n\log Q_n/Q_n<\infty$。
+在参数 Lebesgue 测度上用第一 Borel–Cantelli 引理，得到过渡事件几乎处处仅发生有限次。
+(72.4) 遂给 (74.9)，再可数穷尽紧区间。
+这里没有对分段常值均值求导，也没有要求不同规模的数据独立。
+
+为估计维数，固定 (74.5) 中的整数 $v$。
+把 (74.10) 的两端换成依赖 $v$ 的常数后，每个 $j$ 仅需 $O_{J,v}(1)$ 个 floor 区间。
+其第 $n$ 层由 $O_{J,v}(Q_n^2)$ 个长度 $O_J(Q_n^{-3})$ 的区间覆盖。
+对每个 $s>2/3$，
+
+$$
+\sum_nQ_n^{2-3s}<\infty.
+\tag{74.12}
+$$
+
+从任意足够晚的层开始覆盖 limsup，其最大直径及总 $s$ 内容均趋零。
+因此该 limsup 的 $s$ 维 Hausdorff 测度为零；对 $v$ 与紧区间取可数并即得上界。证毕。
+
+**引理 74.4（整个参数区间的实际正根网格）。** 令 $I$ 为第 68 章的原行率函数，
+$c(\beta)=\phi(1-\beta)/\beta$，并在正 $u$ 轴上设
+
+$$
+F(u)=\frac{\phi}{\phi+I(u)},\qquad
+L_{Q,j}=\left\lceil\log_2\frac{1/4}{\chi_{Q,j}}\right\rceil.
+\tag{74.13}
+$$
+
+对每个紧参数区间，可选择覆盖其正根的 $j$，使原区间
+$\mathcal J_{Q,j}:=\mathcal J_{Q,L_{Q,j}}$ 满足
+
+$$
+\frac14\le2^{L_{Q,j}}\chi_{Q,j}<\frac12,\qquad
+\bar c_j^{\mathcal E}
+=2^{L_{Q,j}}\chi_{Q,j}(1+o_J(1))
+\quad\text{在整个 }\mathcal J_{Q,j}\text{ 上}.
+\tag{74.14}
+$$
+
+设其中点为 $x_{Q,j}$，则
+
+$$
+x_{Q,j}=F(j/Q^2)+O_J(\log Q/Q^3),\qquad
+|\mathcal J_{Q,j}|\asymp_JQ^{-3},\qquad
+|x_{Q,j+1}-x_{Q,j}|\asymp_JQ^{-2}.
+\tag{74.15}
+$$
+
+在稍大的紧邻域中取网格后，对内部任意区间 $A$，中点数至多
+$C_J(1+|A|Q^2)$；当 $|A|Q^2$ 足够大时，完全包含于 $A$ 的目标区间数至少 $c_J|A|Q^2$。
+
+证明。每个 $0<c<\phi$ 都有唯一正根；在紧参数区间的逆像上，
+$F$ 光滑、严格递减，且导数绝对值有正的有限上下界。
+该性质在跨越 $\beta_*$ 时不变，因这里只用正根。
+取整定义直接给 (74.14) 的第一个不等式，(74.4)、(74.6) 给第二式。
+紧内部 Stirling 展开给
+
+$$
+L_{Q,j}\log2=z_0-\log f_j+O(1)
+=Q^3\{\phi+I(j/Q^2)\}+O_J(\log Q).
+\tag{74.16}
+$$
+
+所以中点位置满足 (74.15)。相邻 $F$ 值之差为 $Q^{-2}$ 阶，
+而两点位置误差之和为 $o(Q^{-2})$，故实际中点随 $j$ 递减，间隔上下界均成立。
+由最大间隔求下计数界、最小间隔求上计数界；完全包含的区间只需删去端点旁固定多个。
+这不借助等分布假设。
+正根在 $0<c\le\phi$ 的范围有界，因此一个固定截断可包含全部正根及余量。
+每层保留落在 $(1/2,1)$ 内的相应区间，就得到全区间上的同一列有限网格。证毕。
+
+**定理 74.5（零测度例外集的稠密类别与局部维数）。** 对每个非空开区间
+$J_0\subset(1/2,1)$，
+
+$$
+\dim_H(E\cap J_0)=\frac23.
+\tag{74.17}
+$$
+
+此外，$E$ 包含全参数区间中的稠密 $G_\delta$ 集，所以是余贫集；
+其补集同时具有全 Lebesgue 测度与第一纲类别。
+
+证明。令 $U_n$ 为第 $Q_n$ 层所有正根目标区间的开放中三分之一的并。
+每个非空开区间在所有充分大的层都包含一个完整目标区间，故
+
+$$
+G=\bigcap_{N\ge1}\bigcup_{n\ge N}U_n
+\tag{74.18}
+$$
+
+是稠密 $G_\delta$。
+若 $\beta\in G$，固定其紧邻域，在无穷多次命中中继续抽取，
+使 (74.14) 的两种实际均值同时趋于某个 $\theta\in[1/4,1/2]$。
+引理 74.2 的实际判据给 $G\subset E$。
+即使负根组也留下正有限均值，定理 72.3 的两个 Poisson 极限相互独立；
+其熵函数的非退化性不能相互抵消。
+因此这一类别结论覆盖 $\beta_*$ 两侧，不限于单根区间。
+
+下面给出包括所有中间尺度的维数下界。
+取非退化闭区间 $K\subset J_0$，在稍大紧邻域中固定引理 74.4 的常数。
+选择足够小的 $\kappa_0>0$，使以目标中点为中心、长度
+
+$$
+\ell_n=\kappa_0Q_n^{-3}
+\tag{74.19}
+$$
+
+的闭区间都严格包含在各自的开放中三分之一中。
+从充分晚的一层开始，每层保留完全内含于上一层父区间的所有这些闭区间。
+中心间距与 $\Delta_n=Q_n^{-2}$ 同阶，而每个父区间的子区间数满足
+
+$$
+c\ell_{n-1}Q_n^2\le N_n(\text{父区间})
+\le C\ell_{n-1}Q_n^2.
+\tag{74.20}
+$$
+
+原超稀疏规模保证 $\ell_{n-1}Q_n^2\to\infty$，吸收固定端点损失。
+首层以 $|K|$ 替换 $\ell_{n-1}$。嵌套交集 $\mathcal C$ 是非空紧集，且
+$\mathcal C\subset G\cap J_0$。
+
+把每个父区间的质量等分给子区间，得到支撑于 $\mathcal C$ 的概率测度 $\nu$。
+记最大层质量为 $M_n$，$t_n=\log Q_n$，则
+
+$$
+\log M_n\le-2t_n+\sum_{i<n}t_i+O(n)+O_K(1),\qquad
+\frac{\sum_{i<n}t_i+n}{t_n}\longrightarrow0.
+\tag{74.21}
+$$
+
+故对每个 $0<s<2/3$，$M_n\le C_{K,s}\ell_n^s$。
+仅这个柱集质量估计还不够；需控制任意短区间 $A$。
+设其长度为 $r$，选择 $\ell_n\le r<\ell_{n-1}$。
+若 $r<\Delta_n$，最小间距使 $A$ 只交固定多个第 $n$ 层区间，故
+$\nu(A)\le CM_n\le C_{K,s}r^s$。
+若 $r\ge\Delta_n$，因上一层中心间距远大于 $\ell_{n-1}$，
+$A$ 至多交两个父区间，每个内至多交 $CrQ_n^2$ 个子区间。
+因此
+
+$$
+\nu(A)\le C\frac{rM_{n-1}}{\ell_{n-1}}
+\le C_{K,s}r\ell_{n-1}^{s-1}\le C_{K,s}r^s.
+\tag{74.22}
+$$
+
+最后一步用 $s<1$ 与 $r\le\ell_{n-1}$。
+这个质量界覆盖子区间宽度与中心间距之间的所有尺度。
+任意充分细区间覆盖满足 $1\le\sum_i\nu(A_i)\le C_{K,s}\sum_i|A_i|^s$，
+故 $\dim_H\mathcal C\ge s$。令 $s\uparrow2/3$，结合定理 74.3 即得 (74.17)。
+由于 $E\supset G$，其补集包含于贫集 $G^c$，类别结论也成立。证毕。
+
+**命题 74.6（临界左端点不产生正有限均值障碍）。** 在指定参数
+$\beta=\beta_*$，负侧端点组不能沿子序列具有正有限实际均值。
+该指定参数是否属于 $E$，仍由其正根算术判据决定，本章不作判定。
+
+证明。设负端点为 $u_-=-b/\vartheta$，并置
+$x_-=a-b/\vartheta>0$、$d_0=k_0-a\lambda\in(-1,0]$。
+若端点组有正有限均值，则 (72.12) 的单侧率带迫使其未缩放第二计数
+$L=l_j$ 满足 $0\le L=O(\log Q)$。
+原计数线及 $\lambda|\vartheta-P/Q|=o(1)$ 给
+
+$$
+k_j=x_-\lambda+L/\vartheta+(1+1/\vartheta)d_0+o(1).
+\tag{74.23}
+$$
+
+仅对正的一侧用 Stirling，另一侧保留精确 $L!$。
+由 $\log q=I(u_-)\lambda+O(1)$，主率取消，得到
+
+$$
+\log m_j=(L-\tfrac12)\log\lambda-\log(L!)+O(L+1).
+\tag{74.24}
+$$
+
+正计数展开余项为 $O((L+1)^2/\lambda)$；原 floor、补偿与背景因子已包含在误差内。
+$L=0$ 时此式趋负无穷；$1\le L=O(\log Q)$ 时，
+$\log(L!)\le L\log L$ 与 $\log L=o(\log\lambda)$ 使它统一趋正无穷。
+两者均与正有限均值矛盾。(74.6) 移回实际完整组，证毕。
+
+这里的“几乎处处”先固定参数，再取实际数据概率极限；
+不意味着对全部参数一致的收敛速度，也不意味着把参数随机化后的新实验。
+例外集的相同性不识别两种实验的精确 floor 中心。
+所有统计结论仍经原共同方向相等事件移到未知方向版本。
+不推出期望熵、$h_M-\mathbb Eh_M$、无界矩、有限精度恢复或计算效率结论。
+Borel–Cantelli、Baire、质量分布与维数理论是经典工具；
+本章新增推导在于把它们接到原实际模型的完整均值、原 floor 网格和共同例外判据上。
+
+## 追加锚（74 章后）
+
+## 75. 低噪声的实际信息增益与平移后的条件信息谱
+
+**定义 75.1（噪声对数与精确中心）。** 保持第 73 章的两种实际实验、原固定幅度、
+固定 $\beta\in(1/2,1)$、完整窗口和均匀大小 $q$ 支持先验。
+给定完整原始数据 $x$，以 $P_x$ 表示原完整组计数律，以 $h_x$ 表示其精确熵，单位为 bits。
+本章仍只观测定义 54.1 的精确标量加独立 Gaussian 噪声：
+
+$$
+T=t_x(R)=\frac{\sum_j((R_j-\mu_j)/B)^2-V}{\sqrt\delta},\qquad
+Y=T+\sigma_MG,
+\quad \mu_j=\mathbb E_{P_x}R_j,
+\quad V=B^{-2}\sum_jC_jp_j(1-p_j).
+\tag{75.1}
+$$
+
+这里 $B^2=q/Q^{5/2}$、$\delta=Q^{-1/2}$、$\lambda=Q^3$，
+$p_j$ 为原单个校准乘积律的参数；$V$ 不替换成实际平方和的后验期望。
+$G$ 独立于原数据与全部标签，且不单独揭示。
+取确定正噪声满足
+
+$$
+L_M:=\ln(1/\sigma_M)\longrightarrow\infty,
+\qquad L_M=o(Q^3),
+\qquad c_M(x)=h_x-\frac{L_M}{\ln2}.
+\tag{75.2}
+$$
+
+以 $\ln$ 表示自然对数。沿用 (73.1) 的严格正密度 $f_x$、输出后验 $p_x(n\mid y)$、
+输出后惊奇量 $J_x(n,y)$，并定义自然单位的信息密度
+
+$$
+i_x(n,y)=\ln\frac{\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},\qquad
+b_{M,\varepsilon}(x)=P_x^{R,Y}\{|i_x(R,Y)-L_M|>\varepsilon Q\}.
+\tag{75.3}
+$$
+
+$v>0$ 与 $\Phi_v(z)=\Phi(z/\sqrt v)$ 仍取第 73 章的完整窗口信息谱方差。
+噪声对数 $L_M$ 与决定 $v$ 的正率区间长度是不同量。
+
+**定理 75.2（实际信息密度的低噪声增益）。** 在 (75.2) 的整个范围内，
+对每个 $\varepsilon,t>0$，两种实际实验分别满足
+
+$$
+\sup_{S:|S|=q}\Pr_S^{\mathscr X}
+ \{b_{M,\varepsilon}(\mathscr X)>t\}\longrightarrow0.
+\tag{75.4}
+$$
+
+内层概率使用给定 $x$ 的原先验纤维和测量噪声，外层可以是任意确定支持的实际数据律。
+若 $b_{M,\varepsilon}(x,y)$ 是同一事件给定 $Y=y$ 后的概率，则
+
+$$
+\int b_{M,\varepsilon}(x,y)f_x(y)\,dy=b_{M,\varepsilon}(x),\qquad
+P_{Y\mid x}\{b_{M,\varepsilon}(x,Y)>t\}
+ \le b_{M,\varepsilon}(x)/t.
+\tag{75.5}
+$$
+
+所以信息密度误差也在典型输出的条件概率意义下为 $o(Q)$。
+这不声称信息密度期望的展开。
+
+证明。第 73 章的实际比较给单个完整乘积计数律
+$\mathsf Q_x=\prod_j\operatorname{Bin}(C_j,p_j)$ 及
+
+$$
+0\le L_x:=\frac{dP_x}{d\mathsf Q_x}\le C,
+\quad a_x:=\|L_x-1\|_2=O_{\mathbb P}(Q^{-5/2}),
+\quad V=O_{\mathbb P}(1),
+\quad m_{2,M}(x):=\mathbb E_{P_x}T^2=O_{\mathbb P}(1).
+\tag{75.6}
+$$
+
+$L_x$ 是选定计数律的密度，不是 (75.2) 的噪声对数。
+最后的实际矩界由第 69、71 章对精确密度和中心的直接计算得到，未由 TV 或弱收敛传递。
+以下每个好数据事件的概率都一致于确定支持；原一、二行比较分别适用于平稳对与连续路径。
+
+第一步是在真实噪声精度建立共同计数向量的比较。
+取第 73 章的确定核心
+
+$$
+R_M^2=\sqrt{\lambda(L_M+\ln Q+1)},\qquad
+\mathcal C_M=\{j\in K_M:|j\delta|\le R_M\},
+\quad \mathcal O_M=K_M\setminus\mathcal C_M.
+\tag{75.7}
+$$
+
+$K_M$ 是同一固定原行截断内的计数线；它只用于估计，目标仍为全部完整得分组。
+$R_M^2=o(\lambda)$ 且 $|\mathcal C_M|=o(Q^2)$。
+这里需要新增一个在整个移动核心上的下占据界。
+设 $c_q=\phi(1-\beta)/\beta>0$，原规模给 $\ln q=c_q\lambda+O(1)$。
+核心内 $j/Q^2=o(1)$，故两个 Poisson 计数都最终不少于对应均值的一半。
+原率函数在其最小点邻域的 Hessian 有有限上界，线性项为零；保留有界取整，Stirling 给
+
+$$
+c\lambda^{-1}e^{-C(j\delta)^2}
+ \le f_j\le C\lambda^{-1}e^{-c(j\delta)^2},\qquad
+\min_{j\in\mathcal C_M}m_j
+ \ge c(q/\lambda)e^{-CR_M^2}
+ =\exp\{c_q\lambda-O(R_M^2+\ln Q)\}.
+\tag{75.8}
+$$
+
+$m_j$ 精确取 (72.7) 的混合占据均值，其信号／背景比例在核心统一有正的有限上下界。
+这是由原率函数取得的移动半径估计，不把固定对数核心的极限外推到此处。
+原一、二行 PGF 比较给
+
+$$
+\Pr_S\{|C_j/m_j-1|>1/2\}
+ \le C(m_j^{-1}+e_{\rm row}).
+\tag{75.9}
+$$
+
+对至多 $CQ^2$ 组取并，坏概率由
+$CQ^2\{\exp[-c_q\lambda+O(R_M^2+\ln Q)]+e_{\rm row}\}$ 控制并趋零。
+交原校准好事件后，$p_j\in[1/4,3/4]$，未归一化二项方差与中心小核心分别满足
+
+$$
+d_{\min}:=\min_{j\in\mathcal C_M}C_jp_j(1-p_j)
+ \ge e^{c_q\lambda/2},
+\qquad
+c\delta\le v_j:=\frac{C_jp_j(1-p_j)}{B^2}\le C\delta
+\quad(|j\delta|\le1).
+\tag{75.10}
+$$
+
+后一个核心有 $n_0\asymp\delta^{-1}$ 组。小 $v_j$ 与指数大的原二项方差不能混同。
+
+使用第 67 章的有限单调耦合估计：对 $d=np(1-p)\ge1$，
+标准化二项变量 $X$ 与标准正态 $Z$ 可耦合使
+
+$$
+\mathbb E(X-Z)^2\le Cd^{-1/6}.
+\tag{75.11}
+$$
+
+该粗速率也可由原方差型局部 Bernoulli 界直接核对：局部质量误差 $C/d$ 在
+$[-A,A]$ 内求和，加方差尾界，给 Kolmogorov 误差
+$C(A/\sqrt d+A^{-2}+d^{-1/2})$；取 $A=d^{1/6}$ 得 $\eta\le Cd^{-1/3}$。
+二项标准化四阶矩至多 $4$。
+单调耦合的层饼恒等式给
+$\mathbb E|X-Z|=\int|F_X-\Phi|\le2T\eta+CT^{-3}$；
+取 $T=\eta^{-1/4}$，再用 $L^1$ 与 $L^4$ 插值得 (75.11)。
+这没有离散变量与连续变量的 TV 收敛主张。
+
+在给定同一个好数据纤维后，核心各组独立进行这些耦合，保持外部乘积计数独立。
+置 $U_j=(R_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$、
+$G_j=\sqrt{v_j}Z_j$。完整二项侧计数向量仍记为 $R$，并始终附在通道上。
+精确中心给 $\|e\|\le a_x\sqrt V$。
+定义 Gaussian 参考标量
+
+$$
+T^{\rm G}=\delta^{-1/2}
+ \left\{\sum_{j\in\mathcal C_M}(G_j-e_j)^2
+             -V_{\mathcal C}+\|e_{\mathcal O}\|^2\right\}.
+\tag{75.12}
+$$
+
+其全部非中心项和尾部确定截距均保留，与 (73.11) 完全同形。
+平方范数差的 Cauchy–Schwarz 界及 (75.11) 给
+
+$$
+\mathbb E\|U_{\mathcal C}-G_{\mathcal C}\|^2
+ \le Cd_{\min}^{-1/6}V_{\mathcal C},\qquad
+\mathbb E|T^{core}-T^{\rm G}|
+ \le C\delta^{-1/2}(1+a_x)Vd_{\min}^{-1/12}
+ \le CQ^{1/4}Ve^{-c_q\lambda/24}.
+\tag{75.13}
+$$
+
+Gaussian 平移核的 TV 距离至多标量位移除以 $\sqrt{2\pi}\sigma_M$。
+在 $V\le Q$ 的高概率事件上，保留 $R$ 的核心通道比较误差至多
+
+$$
+\upsilon_M(x)\le CQ^{5/4}\exp\{L_M-c_q\lambda/24\}\longrightarrow0.
+\tag{75.14}
+$$
+
+这里正是 $L_M=o(\lambda)$ 支付了最终噪声精度。
+第 73 章已用 (73.12)–(73.14) 在相同精度支付了尾部误差 $\tau_M=o_{\mathbb P}(1)$。
+因此，对保留完整二项计数和输出 $T^{\rm G}+\sigma_MG_0$ 的参考联合律 $\mathsf R_x$，
+
+$$
+d_{TV}(P_x^{R,Y},\mathsf R_x^{R,Y})
+ \le a_x/2+\tau_M(x)+\upsilon_M(x)=:\Delta_M(x)=o_{\mathbb P}(1).
+\tag{75.15}
+$$
+
+$G_0$ 是额外独立的测量正态。第一项由同一完整后验向量的核收缩得到，
+不除以 $\sigma_M$；只有已定量控制的标量位移付出该因子。
+参考输出可以与其所附二项计数相关，这不改变其 Gaussian 核心的边缘分布。
+
+第二步只对参考输出建立有界密度。
+除去一个确定平移，(75.12) 为
+$\sum_{\mathcal C_M}w_j(Z_j-c_j)^2$，其中
+$w_j=v_j/\sqrt\delta>0$、$c_j=e_j/\sqrt{v_j}$。
+非中心正态平方的特征函数满足
+
+$$
+\left|\mathbb E e^{itw(Z-c)^2}\right|
+ =(1+4t^2w^2)^{-1/4}
+ \exp\left\{-\frac{2t^2w^2c^2}{1+4t^2w^2}\right\}
+ \le(1+4t^2w^2)^{-1/4}.
+\tag{75.16}
+$$
+
+仅取 (75.10) 的 $n_0\asymp\delta^{-1}$ 个中心组，其 $w_j\asymp\sqrt\delta$，
+便有 $|\psi_x(t)|\le(1+c\delta t^2)^{-n_0/4}$。
+在 $|t|\le\delta^{-1/2}$ 上以 $e^{-c't^2}$ 控制；其余部分换元
+$u=\sqrt\delta|t|$，再以
+$C\delta^{-1/2}(1+c)^{-n_0/8}\int_1^\infty(1+cu^2)^{-1}du$ 控制。
+故 $\|\psi_x\|_1\le C$，Fourier 反演给参考标量的密度上界 $C$。
+独立测量噪声的卷积保持该上界，记参考输出密度为 $g_x$。
+这也是经典 Gaussian 二次型密度定理的直接适用步骤；任意精确非中心项均允许。
+
+(75.15) 的边缘收缩给 $d_{TV}(f_xdy,g_xdy)\le\Delta_M(x)$。
+对任意固定 $b>0$，实际高密度集合 $H_b(x)=\{y:f_x(y)>e^{bQ}\}$ 的长度至多 $e^{-bQ}$，所以
+
+$$
+P_{Y\mid x}\{f_x(Y)>e^{bQ}\}\le\Delta_M(x)+Ce^{-bQ}.
+\tag{75.17}
+$$
+
+集合由实际密度定义也合法，因为 TV 控制每个可测集合。
+没有由此推出实际密度的逐点上界或密度差的上确界估计。
+另一方面，在 $|y|\le Q^d$ 上对 $\{f_x<e^{-bQ}\}$ 直接积分，
+再用实际二阶矩控制补集。对任意固定 $d>0$，由
+$\mathbb E_xY^2=m_{2,M}(x)+\sigma_M^2$ 得
+
+$$
+P_{Y\mid x}\{|\ln f_x(Y)|>bQ\}
+ \le\Delta_M(x)+(C+2Q^d)e^{-bQ}
+       +\frac{m_{2,M}(x)+1}{Q^{2d}}=o_{\mathbb P}(1).
+\tag{75.18}
+$$
+
+$\sigma_M\le1$ 最终成立。这里截断的是概率估计，实际观测没有被裁剪。
+
+最后，原通道在同一实际纤维实现上的精确恒等式为
+
+$$
+i_x(R,Y)=L_M-\tfrac12\ln(2\pi)-\tfrac12G^2-\ln f_x(Y).
+\tag{75.19}
+$$
+
+测量 $G$ 在给定原始数据后仍为标准正态。结合 (75.18) 与其二阶矩，
+对足够大规模得到
+
+$$
+b_{M,\varepsilon}(x)
+ \le\Delta_M(x)+(C+2Q^d)e^{-\varepsilon Q/3}
+       +\frac{m_{2,M}(x)+1}{Q^{2d}}+\frac{3}{2\varepsilon Q}.
+\tag{75.20}
+$$
+
+好事件外只计其概率，故 (75.4) 成立。(75.5) 是条件概率的积分与 Markov 界。
+给定输出后的残差 $(y-t_x(R))/\sigma_M$ 未被假定为条件标准正态。证毕。
+
+**定理 75.3（平移后的典型输出信息谱）。** 定义
+
+$$
+D_M^{\rm shift}(x,y)=\sup_{z\in\mathbb Q}
+ \left|P_x\left(\frac{J_x(R,y)-c_M(x)}Q\le z\,\middle|\,y\right)
+             -\Phi_v(z)\right|.
+\tag{75.21}
+$$
+
+在 (75.2) 下，$\int D_M^{\rm shift}(x,y)f_x(y)dy\to0$，
+收敛为原数据概率收敛并一致于确定支持；因而也成立于典型先验预测输出。
+
+证明。令 $Z_x=(-\log_2P_x(R)-h_x)/Q$。有限 Bayes 恒等式给
+
+$$
+\frac{J_x(R,Y)-c_M(x)}Q
+ =Z_x-\frac{i_x(R,Y)-L_M}{Q\ln2}.
+\tag{75.22}
+$$
+
+对每个固定 $b>0$，在给定输出的同一实现上夹逼阈值，然后积分，得
+
+$$
+\int D_M^{\rm shift}(x,y)f_x(y)dy
+ \le\overline D_M^A(x)+\omega_v(b)+b_{M,b\ln2}(x).
+\tag{75.23}
+$$
+
+第 73 章第一条条件 CDF 定理适用于整个 $L_M=o(Q^3)$ 范围，
+故首项趋零；定理 75.2 给末项趋零。
+先取规模极限再令 $b\downarrow0$ 即得结论。
+这里使用原惊奇量给定输出的分布结论，不能只用其边缘 CLT。证毕。
+
+**定理 75.4（可达列表曲线与临界噪声收益）。** 记 $C_{x,y}(K)$ 为输出后验最大
+$K$ 个原子的总质量，$N_{\varepsilon,M}(x,y)$ 为覆盖质量 $1-\varepsilon$ 的最小原子数。
+对固定 $z\in\mathbb R$、$\varepsilon\in(0,1)$ 和 $e>0$，有
+
+$$
+\int\left|C_{x,y}\!\left(\left\lfloor2^{c_M(x)+Qz}\right\rfloor\right)
+                -\Phi_v(z)\right|f_x(y)dy\longrightarrow0,
+\tag{75.24}
+$$
+
+$$
+\int\mathbf1\left\{
+ \left|\frac{\log_2N_{\varepsilon,M}(x,y)-c_M(x)}Q
+          -\sqrt v\Phi^{-1}(1-\varepsilon)\right|>e\right\}f_x(y)dy
+ \longrightarrow0.
+\tag{75.25}
+$$
+
+两式具有定理 75.3 的原数据概率量词。按质量降序、以固定计数元组顺序打破平局，
+给出可测且达到这些后验最优值的列表。
+特别地，若 $L_M=a_{noise}Q+o(Q)$，固定 $a_{noise}>0$，则旧预算的曲线平移为
+
+$$
+\int\left|C_{x,y}(\lfloor2^{h_x+Qz}\rfloor)
+ -\Phi\left(\frac{z+a_{noise}/\ln2}{\sqrt v}\right)\right|f_x(y)dy\to0,
+\tag{75.26}
+$$
+
+最小覆盖大小等价地满足
+$\log_2N_{\varepsilon,M}
+=h_x+Q[\sqrt v\Phi^{-1}(1-\varepsilon)-a_{noise}/\ln2]+o_{\mathbb P}(Q)$，
+误差按 (75.25) 解释。因此 $Q$ 尺度上的对数基数收益精确为 $a_{noise}/\ln2$。
+若 $L_M/Q\to\infty$ 但仍为 $o(Q^3)$，同一旧预算的成功质量趋于一。
+
+证明。逐输出使用 (73.26) 的有限信息阈值界，取松弛量 $\sqrt Q$。
+原 $h_x/Q^5\to\mathscr H>0$ 与 $L_M=o(Q^3)$ 保证预算最终为正，且其对数取整误差为 $o(1)$。
+因此 (75.24) 的绝对差至多
+$D_M^{\rm shift}+CQ^{-1/2}+o(Q^{-1})+2^{-\sqrt Q}$。
+在 $\sqrt v\Phi^{-1}(1-\varepsilon)$ 两侧各取固定小距离，
+正态 CDF 的严格单调性和两侧列表误差把最小覆盖数夹在相应两个整数预算之间，得到 (75.25)。
+有限后验排序达到最优；随机化不增加任何给定基数的最大质量。
+
+旧预算在新中心下的标准化阈值为 $z+L_M/(Q\ln2)$。
+(75.21) 是所有阈值上的一致距离，故允许这个移动阈值，得到 (75.26) 及趋正无穷时的结论。
+其可达性是后验列表意义的可达性，不附计算效率主张。证毕。
+
+所有有界信息误差事件、条件 CDF 距离、列表质量误差与覆盖失败指示函数均对原支持置换不变。
+按 (73.28)，先在均匀先验下积分，再用传递置换对称，便得到实际确定支持的联合数据／输出概率结论，
+且一致于支持；对信息事件同时保留真实计数 $R(S,\mathscr X)$。
+这里不把先验预测混合 $f_x$ 等同于固定真实支持给定 $x$ 后的单个 Gaussian 密度。
+规范列表的实际积分成功率具有同一极限；不对能写死支持的不受限解码器宣称不可能性。
+未知方向仍只用原共同判向相等事件及同一个测量 $G$。
+
+第 72 章的 $h_x-\widetilde d_M=o_{\mathbb P}(Q)$ 允许将本章中心统一改为
+$\widetilde d_M-L_M/\ln2$；不能只用 $Q^5$ 主项替代该精度的中心。
+本章未推出平均互信息或输出后验 Shannon 熵的展开，也未推出期望对数覆盖、每个输出保证、
+实际密度上确界、零噪声或 $L_M\asymp Q^3$ 的锐利阈值。
+新增连接在于移动核心的实际下占据率、保留精确非中心项的指数精度通道比较，
+以及将参考密度界转为实际对数密度事件；经典耦合、二次型密度与列表阈值原理各保留其归属。
+
+## 追加锚（75 章后）
