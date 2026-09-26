@@ -302,6 +302,7 @@ private def independentSource (name : Name) : CompileM Bool := do
     if seen.contains owner then continue
     seen := seen.insert owner
     let some idx := env.getModuleIdx? owner | return false
+    if idx.toNat < targetIdx.toNat then continue
     let some data := env.header.moduleData[idx.toNat]? | return false
     pending := pending ++ data.imports.map (·.module)
   modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner true }
