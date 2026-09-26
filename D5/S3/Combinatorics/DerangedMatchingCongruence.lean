@@ -92,13 +92,6 @@ theorem result : claim := by
       ring
     rw [hneg]
     ring
-  -- `(2k + 1)!! = (2k + 1) (2k - 1)!!`
-  have df_step : ∀ k, (2 * k + 1)‼ = (2 * k + 1) * (2 * k - 1)‼ := by
-    intro k
-    cases k with
-    | zero => rfl
-    | succ k =>
-      rw [two_succ, show 2 * (k + 1) + 1 = (2 * k + 1) + 2 by ring, Nat.doubleFactorial_add_two]
   -- the second relation: `d (n + 1) = c (n + 1) - 2 (n + 1) d n`
   have d_succ : ∀ n, d (n + 1) = c (n + 1) - 2 * (n + 1) * d n := by
     intro n
@@ -123,7 +116,7 @@ theorem result : claim := by
           unfold d
           apply Finset.sum_congr rfl
           intro k _
-          rw [df_step k]
+          rw [Nat.doubleFactorial_add_one (2 * k)]
           push_cast
           ring
       _ = c (n + 1) + 2 * (-((n : ℤ) + 1) * d n) := by
