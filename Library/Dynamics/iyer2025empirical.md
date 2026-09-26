@@ -3211,3 +3211,84 @@ Gamma 修正 $Q^{-1}R_Q$ 与目标条带同阶，须纳入壳宽。
 最后每对候选只覆盖有共同整数 $L$ 的原 $M=2^L$ 单元，单元宽度 $O(Q^{-3})$
 把逐层指数传到同一个固定参数的 limsup 上界。
 这些实际模型与几何之间的对应是本章新增推导；原有单根结论和所有开放的双根存在问题保持其范围。
+
+## 原文对照：条件信息方差损失与第 87 章的平方权重桥
+
+[理论卷第 87 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在同一个实际带噪能量观测下，得到输出积分意义的首个后验信息方差损失。
+自然单位的损失为 $-\sqrt{\pi/\kappa}\,Q^{1/2}$，低于原 $Q^2$ 阶方差；
+条件为 $\ln(1/\sigma_M)\to\infty$ 且 $o(Q^3)$。
+这是一条 repo-derived 的实际模型推导，非一般侧信息单调性。
+有限原数据纤维内的后验方差，区别于把输出也平均后的信息量联合方差。
+
+**条件微分与指数族的成熟输入。** Alex Dytso、Martina Cardone，
+*A General Derivative Identity for the Conditional Expectation with Focus on the Exponential Family*，
+[arXiv:2105.05106v2](https://arxiv.org/abs/2105.05106v2)，2021-08-30；
+[原 PDF](https://arxiv.org/pdf/2105.05106v2)，
+[DOI:10.1109/ITW48936.2021.9611503](https://doi.org/10.1109/ITW48936.2021.9611503)。
+原 Theorem 1（PDF 第 2—3 页）要求 $U\leftrightarrow X\leftrightarrow Y$、
+所列条件可积性与输出变量的绝对连续性，给条件均值导数与通道 score 的条件协方差恒等式。
+Theorem 2 的 A1—A5 在开输出域、解析充分统计量的连续指数族上给相应特例；
+Proposition 3 连接条件高阶累积量。
+本章每个有限纤维的输入字母表有限、Gaussian 通道密度处处正，满足所需有限正则条件。
+其 Gaussian 特例为
+$d\mathbb E[U\mid Y=y]/dy=\operatorname{Cov}(T,U\mid y)/\sigma^2$；
+该恒等式本身不控制指数小噪声下一致的平方信息量误差。
+本章两次潜在 Gaussian 方差倾斜也是经典指数族微分，明确计算了对应缩放映射，
+不把一般微分恒等式列为新发现。
+
+该版本原式 (19) 在一般充分统计量 $T(Y)$ 的记号下，将对数配分函数的一阶、
+二阶导数写为 $\mathbb EY$、$\operatorname{Var}Y$；
+一般情形正确对象为 $\mathbb E[T(Y)]$、$\operatorname{Cov}(T(Y))$。
+原显示式不作为本章前提；本章所用 Gaussian 方差倾斜直接从归一化密度求导。
+
+**varentropy 的适用对象。** Erdal Arıkan，
+*Varentropy Decreases Under the Polar Transform*，
+IEEE Transactions on Information Theory 62(6), 2016, 3390–3400，
+[DOI:10.1109/TIT.2016.2555841](https://doi.org/10.1109/TIT.2016.2555841)。
+原文首页的 Theorem 1、1′ 处理两个独立二元数据元素经 XOR 与保留第二位构成的极化变换：
+输出 varentropy 之和不大于输入之和，并有原文所列的零方差等号条件。
+该处 varentropy 为条件 surprise 的联合方差，不是固定输出后的纤维方差。
+它不直接覆盖计数输入的一次带噪能量观测，也不推出任意侧信息都降低纤维内方差。
+均匀两点先验配两个不同 Gaussian 均值即可使原先零方差变为几乎处处正的后验纤维方差；
+这说明本章负损失需要模型关系，不反驳 Arıkan 原定理。
+
+**密度分部积分与导数收敛。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)，2013-08-29；
+[原 PDF](https://arxiv.org/pdf/1302.6962v2)。
+Theorem 3.1（PDF 第 10 页）要求
+$F\in\mathbb D^{2,s}$、$\mathbb E|F|^{2p}<\infty$、
+$\mathbb E\|DF\|^{-2r}<\infty$，其中 $p,r,s>1$、
+$1/p+1/r+1/s=1$。
+其 $DF/\|DF\|^2$ 的 Gaussian divergence 与密度表示直接覆盖本章的通用机制。
+本章具体计算有限维 divergence，并用增长的非中心卡方子块验证统一负矩；
+不把未核对非退化条件的固定 chaos 结果直接施于实际离散后验。
+
+Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)，
+[原 PDF](https://arxiv.org/pdf/2303.02628v3)、
+[原 TeX](https://arxiv.org/e-print/2303.02628v3)。
+Corollary 10(a)，原标签 cor:densitysumofchaos:remainder，
+在有界阶 Wiener chaos 之和、最高阶以外的余项趋于零及标准正态分布极限下，
+给所述 Sobolev 范数中的密度收敛。
+本章参考二次型除以 $\sqrt\nu$ 后满足这些条件，所以一般导数超收敛已有直接先例。
+本章的分块 Fourier 证明保留了多项式加权所需的有限常数和整线导数尾界；
+原推论本身不提供实际选择律的平方权重比较或条件均值平方的转移。
+原 TeX 在定义 score 为 $\nabla\log f$ 后，
+标签 eq:score-ipp 的分部积分显示式印为正号；
+依该定义应为负号。本章 (87.19) 使用直接推导的负号，不依赖该印刷显示式。
+
+**新增推导与边界。** Stirling 界、量化耦合、Gaussian 卷积、
+指数族倾斜、卡方负矩、条件 Jensen 与全方差恒等式均保留经典归属。
+本章新增的是原总数条件化下的平方信息权重比较、
+平方根密度加权条件均值的 $L^2$ 比较、二阶带符号密度的整线控制，
+以及同一个测量噪声的混合核协方差估计。
+这些步骤消去两个输出二次项，得到实际完整后验的 $Q^{1/2}$ 阶损失；
+仅有第 82、84 章的一阶 $L^1$ 回归不足以平方条件均值。
+保留 $\gamma^2/(\nu+\sigma_M^2)$ 不表示余项为 $o(\sigma_M^2)$。
+结论不含逐输出有限规模单调性、原数据上的无界期望收敛、
+临界噪声相变、更高条件矩或解码算法。
+对条件 varentropy、指数族导数、二次型 score 与密度正则化的定向原文核对，
+未找到直接涵盖该完整实际后验陈述的原定理；这只是已检索范围内的结论，不证明全球原创性。
