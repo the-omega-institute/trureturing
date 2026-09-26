@@ -7333,3 +7333,382 @@ $\log(1/\sigma_M)\sim cQ$ 或更小噪声。
 不涉及逐输出保证、变化的 $\varepsilon$、特定符号风险、有限精度效率或实验等价。证毕。
 
 ## 追加锚（71 章后）
+
+## 72. 熵的确定中心与格点边缘的剩余随机性
+
+**定义 72.1（实际平均占据数中心）。** 保持第 68 章的原幅度、固定
+$\beta\in(1/2,1)$、合法规模和完整窗口。以 $\mathcal E$ 区分原平稳对与连续路径实验。
+对每个规模，枚举所有非负整数对 $k+l\le2M\lambda$ 在原窗口内产生的得分，
+得到有限确定集合 $\mathcal G_M$。每个得分只保留一份，允许相同得分来自不同计数对。
+令 $C_g$ 为该完整得分组的实际行数，定义
+
+```math
+\bar c_g^{\mathcal E}=\mathbb E_S^{\mathcal E}C_g,\qquad
+b_{ent}(n)=H(\operatorname{Bin}(n,1/2)),\quad b_{ent}(0)=0,
+\qquad d_M^{\mathcal E}=\sum_{g\in\mathcal G_M}
+ b_{ent}(\lfloor\bar c_g^{\mathcal E}\rfloor).
+```
+
+式 (72.1)。
+
+熵以 bits 计。保持奇偶类的站点置换把任意大小 $q$ 支持映到另一个支持，
+共轭原核并保持均匀平稳初始律，也保持完整得分组的行数。
+所以 $\bar c_g^{\mathcal E}$ 精确地不依赖支持的选择。
+它是原始数据行数的期望，不是原后验标签中心 $\mu_j$；后者未改动。
+两种实验的精确中心暂不识别为相同。
+反向实验在交换每对的两个端点或整体反转路径后，恰有同一正确定向的定义。
+
+**定理 72.2（确定熵中心与至多两个过渡组）。** 记 $h_M(x)$ 为原完整组计数的精确后验 Shannon 熵。
+对每个固定合法 $\beta$，两种实际实验分别有
+
+```math
+h_M(\mathscr X)-d_M^{\mathcal E}=O_{\mathbb P}(1)=o_{\mathbb P}(Q).
+```
+
+式 (72.2)。
+
+收敛与紧性在先验数据律下成立，也一致于所有大小 $q$ 确定支持的抽样律，
+后者评价同一均匀先验定义的熵函数。
+取足够大的固定行数截断 $k+l\le C_0\lambda$，其窗口计数线索引仍记为 $K_M$。
+将该线的完整得分组均值写成 $\bar c_j^{\mathcal E}$，令
+
+```math
+\mathcal B_M^{\mathcal E}
+ =\{j\in K_M:Q^{-8}\le\bar c_j^{\mathcal E}\le Q^8\}.
+```
+
+式 (72.3)。
+
+则最终 $|\mathcal B_M^{\mathcal E}|\le2$，而且
+
+```math
+h_M-d_M^{\mathcal E}
+ =\sum_{j\in\mathcal B_M^{\mathcal E}}
+ \{b_{ent}(C_j)-b_{ent}(\lfloor\bar c_j^{\mathcal E}\rfloor)\}
+ +o_{\mathbb P}(1).
+```
+
+式 (72.4)。
+
+阈值 $Q^{\pm8}$ 和截断只用于证明，不更改原观察窗口。
+
+**证明。** 先处理完整得分组与截断计数线的关系。
+原行 PGF 在两个标记均为 2 时给
+$\mathbb E2^{k_i+l_i}\le2e^\lambda$。
+固定 $C_0$ 足够大，可使超出截断的总行数 $T_{\rm tail}$ 满足
+
+```math
+\mathbb E T_{\rm tail}\le CM^{-10}=:\rho_M,\qquad
+\Pr(T_{\rm tail}>0)\le\rho_M.
+```
+
+式 (72.5)。
+
+截断内的所有所选计数恰为 $(k_j,l_j)=(k_0+jQ,l_0+jP)$，
+不同 $j$ 有严格不同的补偿得分，且 $|K_M|=O(Q^2)$。
+令 $\widehat C_j$ 只计精确计数对 $(k_j,l_j)$，均值为 $\nu_j^{\mathcal E}$。
+远处计数对即使与该得分相撞，也仅来自 (72.5)，所以
+
+```math
+0\le\bar c_j^{\mathcal E}-\nu_j^{\mathcal E},\qquad
+\sum_{j\in K_M}(\bar c_j^{\mathcal E}-\nu_j^{\mathcal E})\le\rho_M.
+```
+
+式 (72.6)。
+
+截断得分以外的每组均值均小于 $\rho_M<1$，在 (72.1) 中贡献精确为零。
+在 $T_{\rm tail}=0$ 上，所有 $C_j=\widehat C_j$ 同时成立。
+
+沿用第 68 章的信号与背景 Poisson 点概率
+
+```math
+f_j=e^{-\lambda}\frac{(a\lambda)^{k_j}(b\lambda)^{l_j}}{k_j!l_j!},\qquad
+f_j^0=e^{-\lambda}\frac{((1-\epsilon)\lambda/2)^{k_j}
+ ((1+\epsilon)\lambda/2)^{l_j}}{k_j!l_j!},\qquad
+m_j=qf_j+(M-q)f_j^0.
+```
+
+式 (72.7)。
+
+这里 $a=(1+r)/2,b=(1-r)/2$，$b_{ent}$ 与模型参数 $b$ 区分。
+原实际一、二行比较给，以 $\varepsilon_M=C\lambda^3/M$ 记其统一相对误差，
+
+```math
+|\nu_j^{\mathcal E}-m_j|\le\varepsilon_Mm_j,\qquad
+\operatorname{Var}(\widehat C_j)\le C(m_j+\varepsilon_Mm_j^2).
+```
+
+式 (72.8)。
+
+未把实际路径行数换成独立 Poisson 行。
+(70.4)、(70.5) 的全线行数与近半校准，以及 (68.45) 的熵比较，给
+
+```math
+N_J=O_{\mathbb P}(qQ^{-5/2}),\qquad
+\eta_x:=\max_{j:C_j>0}|p_j-1/2|=O_{\mathbb P}(q^{-1/2}),
+```
+
+```math
+h_M-\sum_jH(\operatorname{Bin}(C_j,p_j))=O_{\mathbb P}(Q^{-3/2}).
+```
+
+式 (72.9)。
+
+近半率用原计数线得分误差与全局校准根，不能只用宽度较大的得分窗口。
+熵比较先将乘积惊奇量中心化，再使用精确密度的 $L^2$ 范数，未由 TV 传递无界熵。
+
+暂用自然对数，记 $g(n,p)=H_{\rm nats}(\operatorname{Bin}(n,p))$。
+第 68 章的全部原子下界与 Bernoulli 四阶矩给
+$\sup_{n\in\mathbb Z_{\ge0},\ p\in[1/4,3/4]}\operatorname{Var}[-\log f_{n,p}(R)]\le C$。
+对有限熵和求导，以二项得分函数作协方差，再用 Cauchy–Schwarz，得到
+
+```math
+|\partial_p g(n,p)|
+ =\left|\operatorname{Cov}\left(-\log f_{n,p}(R),
+ \frac{R-np}{p(1-p)}\right)\right|\le C\sqrt n.
+```
+
+式 (72.10)。
+
+因此全部参数替换的误差至多
+$C\eta_x\sum_j\sqrt{C_j}\le C\eta_x\sqrt{|K_M|N_J}
+=O_{\mathbb P}(Q^{-1/4})=o_{\mathbb P}(1)$。
+与 (72.5)、(72.9) 合并得
+
+```math
+h_M=\sum_{j\in K_M}b_{ent}(\widehat C_j)+o_{\mathbb P}(1).
+```
+
+式 (72.11)。
+
+再看过渡组的几何。第 68 章的 $I$ 在内部严格凸，以零为唯一极小点，
+$I(u)=c_q>0$ 的内部根至多两个且导数非零。
+若左端点恰为根，其右导数趋于负无穷；在一侧邻域仍可取固定负导数上界。
+故对每个固定 $\beta$ 和足够小的 $v>0$，集合 $|I-c_q|\le v$
+由至多两个长度不超过 $Cv$ 的区间组成，包含端点情形。
+由全部整数的 Stirling 界与 (72.7)，
+
+```math
+\sup_{j\in K_M}|\log m_j-\lambda(c_q-I(\bar u_j))|\le C\log Q,
+\qquad u_j=j/Q^2,
+```
+
+式 (72.12)。
+
+$\bar u_j$ 只将越过合法左端点 $O(\lambda^{-1})$ 的可行格点投回该端点。
+对 (72.3) 中的组，(72.6)、(72.8) 给 $m_j/\bar c_j^{\mathcal E}\to1$，
+故 $|I(\bar u_j)-c_q|\le C\log Q/Q^3$。
+这两个可能区间的长度及端点修正均为 $o(Q^{-2})$，小于原格距，
+所以各至多含一个原格点。这证明 (72.3) 的基数界。
+同样，按 $m_j$ 定义的过渡集也至多有两个元素。
+
+最后需要比每组有界误差更精确的熵增量。置 $g(n)=(\log2)b_{ent}(n)$。
+令 $S\sim\operatorname{Bin}(n,1/2)$ 与独立公平位 $B$ 相加，$K=S+B$。
+由交换性，$\Pr(B=1\mid K)=K/(n+1)$；链式法则和二元 KL 的卡方上界给
+
+```math
+0<g(n+1)-g(n)=I(B;K)
+ =\mathbb E D(\operatorname{Bern}(K/(n+1))\Vert\operatorname{Bern}(1/2))
+ \le4\operatorname{Var}(K/(n+1))=\frac1{n+1}.
+```
+
+式 (72.13)。
+
+于是对整数 $c,N\ge0$，
+$|g(c)-g(N)|\le|c-N|/(\min(c,N)+1)$，
+且 $g(N)\le C\log(N+1)$、$g(N)\le N\log2$。
+以 $\mu=\bar c_j^{\mathcal E}\ge2$ 记一组均值，
+在 $\widehat C_j\ge\mu/2$ 上用上述增量界，在补事件上用熵的对数上界和 (72.8) 的 Chebyshev 界，得
+
+```math
+\mathbb E|g(\widehat C_j)-g(\lfloor\mu\rfloor)|
+ \le C\left\{\mu^{-1/2}+\sqrt{\varepsilon_M}
+ +\frac{1+\rho_M}\mu
+ +(\mu^{-1}+\varepsilon_M)\log(\mu+1)\right\}.
+```
+
+式 (72.14)。
+
+(72.6) 控制均值偏移；此处期望取实际点计数，未由高概率一致推出矩界。
+$0\le\mu\le2$ 时期望误差统一有界，$\mu<1$ 时确定项为零且期望至多 $\mu\log2$。
+
+在 $\mu<Q^{-8}$ 的全部组上，期望误差和至多 $CQ^{-6}$。
+在 $\mu>Q^8$ 上将 (72.14) 求和，使用 $\mu\le M$、$|K_M|=O(Q^2)$，所得上界为
+
+```math
+C\{Q^{-2}+Q^{-6}\log Q+Q^2\sqrt{\varepsilon_M}
+ +Q^2\varepsilon_M\lambda+\rho_MQ^{-6}\}=o(1).
+```
+
+式 (72.15)。
+
+只剩至多两个过渡组，每组期望绝对误差统一有界。
+由 (72.11) 得 (72.2)，保留这些组即得 (72.4)。
+这里界住的是截断点计数的熵误差期望，不能据此宣称完整后验熵在坏数据上也一致可积。证毕。
+
+**定理 72.3（显式中心与 Poisson 剩余项）。** 令 $m_j$ 精确取 (72.7)，并定义
+
+```math
+\widetilde d_M=
+ \frac1{2\log2}\sum_{j\in K_M:m_j>Q^8}\log(\pi e m_j/2)
+ +\sum_{j\in K_M:Q^{-8}\le m_j\le Q^8}
+ b_{ent}(\lfloor m_j\rfloor).
+```
+
+式 (72.16)。
+
+则 $d_M^{\mathcal E}-\widetilde d_M=O(1)$，故
+$h_M-\widetilde d_M=O_{\mathbb P}(1)=o_{\mathbb P}(Q)$。
+该显式中心同时适用于两种实验，完整保留 $k_0,l_0,P,Q,M,q,\epsilon$ 的原值及阶乘。
+
+更精细地，任意子序列都能继续抽取，使至多两个过渡组的均值各趋于 $[0,\infty]$ 中一点。
+保留其中正有限极限 $\theta_1,\ldots,\theta_t$，并继续抽取使相应
+$\lfloor\bar c_j^{\mathcal E}\rfloor=k_v$ 固定，则
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\
+ \sum_{v=1}^t\{b_{ent}(P_{\theta_v})-b_{ent}(k_v)\},\qquad
+P_{\theta_v}\text{ 相互独立},\quad P_{\theta_v}\sim\operatorname{Pois}(\theta_v),
+\quad 0\le t\le2.
+```
+
+式 (72.17)。
+
+若 $\theta_v$ 非整数，则 $k_v=\lfloor\theta_v\rfloor$；若它是正整数，
+$k_v$ 可以是该整数或小一的整数，不能省去这一侧向取整信息。
+特别地，$h_M-d_M^{\mathcal E}=o_{\mathbb P}(1)$ 当且仅当过渡组均值没有趋于正有限值的子序列。
+原幅度不变时，存在一个固定合法 $\beta$ 及合法规模子序列，使
+
+```math
+h_M-d_M^{\mathcal E}\ \Longrightarrow\ b_{ent}(P_\theta),
+\qquad \theta\in[1/4,1/2],
+```
+
+式 (72.18)。
+
+该非退化结论分别对两种实际实验成立，排除了对所有合法参数统一声称 $o_{\mathbb P}(1)$。
+
+**证明。** 先比较确定中心。
+$m_j>Q^8$ 时，(72.6)、(72.8)、(72.13) 给逐组误差
+$C(\varepsilon_M+(1+\rho_M)/m_j)$，总和趋零。
+$m_j<Q^{-8}$ 时两种均值的下取整最终均为零。
+中间至多两组满足 $|\bar c_j^{\mathcal E}-m_j|\le\varepsilon_MQ^8+\rho_M\to0$，
+其下取整最多差一，每组成本至多一 bit。因此
+
+```math
+\left|d_M^{\mathcal E}-\sum_{j\in K_M}b_{ent}(\lfloor m_j\rfloor)\right|
+ \le2+o(1).
+```
+
+式 (72.19)。
+
+经典公平二项熵展开
+$b_{ent}(n)=\log(\pi e n/2)/(2\log2)+O(n^{-1})$
+在高占据组上总共只损失 $O(Q^{-6})$，证明 (72.16) 的精度。
+有限均值处的整数跨越使 (72.19) 不能自动加强为 $o(1)$。
+充分大固定截断之外 $m_j<1$，不改变最终确定求和。
+未将每项 $\log m_j$ 换成误差为 $O(\log Q)$ 的粗率函数，避免在 $Q^2$ 项上累加丢失所需精度。
+
+为证明实际 Poisson 极限，将原标记行 PGF 推到任意固定数目 $h$ 的不同候选行。
+置 $u_i=(z_{i,+}+z_{i,-})/2-1$、$v_i=(z_{i,+}-z_{i,-})/2$，
+未标记行取零，并令 $A=\mathbb E(u+b_Sv)$、$B_1=\mathbb E(v+b_Su)$，
+其中平均在全部 $2M$ 个状态上取。原平稳路径的精确 PGF 仍为
+
+```math
+e_1^{\mathsf T}\begin{pmatrix}1+A&B_1\\A&B_1\end{pmatrix}^{2M\lambda}e_1;
+```
+
+式 (72.20)。
+
+独立对的版本为 $(1+A)^{2M\lambda}$。
+在固定标记多圆盘上，主特征值为 $1+A+O_h(M^{-2})$，其系数 $1+O_h(M^{-1})$，
+另一项可忽略。Cauchy 系数半径取 $\max(k,1)$ 除以对应 Poisson 均值，
+相对系数成本为 $O_h(\lambda^h)$，所以截断内每个指定计数事件满足
+
+```math
+\Pr(\text{指定 }h\text{ 行计数})
+ =\Pr_{\rm Pois}(\text{同一计数})
+ \{1+O_h(\lambda^{h+1}/M)\}.
+```
+
+式 (72.21)。
+
+对均值趋于 $\theta_v\in(0,\infty)$ 的有限个不同移动格点，
+$m_j\to\theta_v$，信号和背景贡献各趋于 $\theta_v/2$，最大单行点概率为 $O(1/q)$。
+展开其任意固定混合下降阶乘矩，(72.21) 控制不同实际行的概率；
+去除重复行指派只产生 $o(1)$，于是
+
+```math
+\mathbb E\prod_{v=1}^t(\widehat C_{j_v})_{r_v}
+ \longrightarrow\prod_{v=1}^t\theta_v^{r_v}
+\quad\text{对每个固定非负整数向量 }(r_1,\ldots,r_t).
+```
+
+式 (72.22)。
+
+所有更高固定阶矩亦有界，提供子序列极限传矩所需的一致可积；
+独立 Poisson 向量的矩母函数在零附近有限，唯一确定其律。
+故这些实际计数联合趋于相互独立的 Poisson 变量，(72.5) 再移回完整得分组。
+原始路径行之间的依赖一直保留在 (72.20) 中。
+
+过渡均值趋零时，由 $\mathbb E b_{ent}(\widehat C_j)\le\bar c_j^{\mathcal E}$ 去掉该项；
+趋无穷时由 (72.14) 去掉其中心化误差。
+剩余项用计数的离散弱极限和 (72.4)，得到 (72.17)，无需原熵期望收敛。
+$b_{ent}$ 严格递增，每个正均值 Poisson 项都非退化，其独立和亦非退化。
+对至多两个过渡均值作扩充实轴的子序列紧性论证，即得所述 $o_{\mathbb P}(1)$ 充要条件。
+
+最后构造 (72.18)。取任意正长度紧区间 $J_0\subset(1/2,\beta_*)$，
+其中 $\beta_*$ 为第 68 章的端点阈值。此时正率区域接触左端点，只有一个正侧根。
+在对应的正 $u$ 紧区间上，令
+$F(u)=\phi/(\phi+I(u))$；它严格递减且导数非零。
+$f_j,z_0$ 只依赖合法 $Q,j$ 和原幅度，不依赖 $\beta$。定义
+
+```math
+\chi_{Q,j}=2e^{-z_0}f_j,\qquad
+L_{Q,j}=\left\lceil\log_2\frac{1/4}{\chi_{Q,j}}\right\rceil,
+\qquad 1/4\le2^{L_{Q,j}}\chi_{Q,j}<1/2.
+```
+
+式 (72.23)。
+
+使原 $M$ 精确等于 $2^{L_{Q,j}}$ 的参数区间为
+
+```math
+\mathcal J_{Q,j}=
+ \left(\frac{\phi\lambda}{(L_{Q,j}+1)\log2},
+       \frac{\phi\lambda}{L_{Q,j}\log2}\right].
+```
+
+式 (72.24)。
+
+其宽度与 $\lambda^{-1}$ 同阶，且由紧内部 Stirling 展开，
+$L_{Q,j}\log2=\lambda(\phi+I(j/Q^2))+O(\log Q)$，
+所以该区间距 $F(j/Q^2)$ 为 $O(\log Q/Q^3)$。
+给定 $J_0$ 内任意开子区间，先选内部目标参数，再将其 $F^{-1}$ 值乘 $Q^2$ 取最近整数。
+误差 $O(Q^{-2})$ 趋零，故足够大的合法 $Q$ 使整个 (72.24) 落入该子区间。
+
+逐次选原合法序列中更大的 $Q_h$，以及内含于上一步区间和某个
+$\mathcal J_{Q_h,j_h}$ 内部的非空闭区间，令其长度趋零。
+嵌套紧区间给一个固定 $\beta_\infty\in J_0$。
+在选定规模上，原 $M=2^{L_{Q_h,j_h}}$；$q,\epsilon$ 均仍按原定义取得。
+统一于此紧参数区间，
+
+```math
+m_{j_h}=(2+o(1))qf_{j_h}
+ =(1+o(1))2^{L_{Q_h,j_h}}\chi_{Q_h,j_h}.
+```
+
+式 (72.25)。
+
+继续抽取使右侧确定主值趋于 $\theta\in[1/4,1/2]$。
+(72.6)、(72.8) 使两种实验的该组实际均值都趋于 $\theta$，其下取整最终为零。
+因为这里只存在一个根邻域，该组是唯一的多项式过渡组。
+(72.17) 遂给 (72.18)，且 Poisson 在零、一处的正质量证明非退化。
+构造只选择了一次固定 $\beta$，没有让参数随规模移动，也没有声称任意预先指定 $\beta$ 都有此子序列。
+
+所有结论均为数据概率或分布结论。未知方向仍由原共同判向事件传递，
+不引入方向先验；不推出 $h_M-\mathbb E h_M$、期望熵或坏数据上的一致可积。
+在第 68、71 章已证的 $Q$ 尺度结论中，可以用 (72.16) 的确定中心替换 $h_M$，
+因为差为 $o_{\mathbb P}(Q)$；不能因此省去阶乘、原取整和可能的端点修正。证毕。
+
+## 追加锚（72 章后）
