@@ -56933,3 +56933,1389 @@ $$
 每条逼近曲线中的状态两两对易，并与给定的 $C$ 对易，因此这里没有量子独有优势主张。问题定义要求正性和同一个矩阵上界在整个实轴上成立，不能把（261.3）无条件搬到有限区间、任意随参数变化的上界，或原处理器的矩、分项预算、尖锐节点约束类中。高斯解析化及标量正性背景沿用第258—260节；固定矩阵的各向异性达到由本节构造承担，不要求原处理器约束下的达到。
 
 ## 追加锚（本行以下为增补区）
+
+## 262. 固定正谱隙下的失秩连续性与非交换尺度优势
+
+第261节的极值跳变允许准备曲线随上界矩阵变化，且没有统一的态谱下界。本节固定这个缺失的条件。在二维上界 $C_\eta=\operatorname{diag}(1,\eta)$ 趋于秩一时，所有保持固定正谱隙的允许曲线，其信息都趋于零；但一般量子曲线和两两对易曲线的最优衰减阶不同。
+
+**定理 262.1（接近秩一时的定量刚性）。** 设 $C\succeq0$，记
+
+$$
+\Lambda=\|C\|_{\rm op},\qquad
+\delta=\operatorname{Tr}C-\Lambda,
+\qquad 0<\delta\le\Lambda.
+\tag{262.1}
+$$
+
+若 $\rho$ 是全实轴上的 $C^2$ 密度曲线，处处满足 $\rho''\preceq C$，则
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.2}
+$$
+
+若名义点还满足 $\rho(0)\succeq\alpha I$，其中 $\alpha>0$，则
+
+$$
+I_Q(\rho_0)\le
+\frac5\alpha\Lambda^{2/3}\delta^{1/3}.
+\tag{262.3}
+$$
+
+证明。 取 $C$ 的一个最大特征方向投影 $P$，令 $Q=I-P$，写成
+
+$$
+C=\Lambda P+C_Q,\qquad
+W=\Lambda Q-C_Q\succeq0,
+\qquad f(t)=\operatorname{Tr}(W\rho(t)).
+\tag{262.4}
+$$
+
+置 $\tau=\operatorname{Tr}C$ 以及
+
+$$
+\beta=\operatorname{Tr}(WC)
+=\Lambda\delta-\operatorname{Tr}(C_Q^2),
+\qquad K=\tau^2-\operatorname{Tr}(C^2).
+\tag{262.5}
+$$
+
+有 $0\le f\le\Lambda$、$0\le\beta\le\Lambda\delta$，并且 $f''\le\beta$。对非负标量函数使用全实轴正性界，得到
+
+$$
+|f'|\le\sqrt{2\beta\Lambda}.
+\tag{262.6}
+$$
+
+此处允许 $\beta=0$，那时 $f$ 为常值。令 $H=\rho''$、$D=C-H$。由 $D\succeq0$、$\operatorname{Tr}H=0$，有 $\operatorname{Tr}D=\tau$，从而 $\operatorname{Tr}(D^2)\le\tau^2$。展开并使用 $C+W=\Lambda I$，得到
+
+$$
+\|H(t)\|_{\rm HS}^2
+\le K+2\operatorname{Tr}(CH(t))
+=K-2f''(t).
+\tag{262.7}
+$$
+
+因此，对任意 $h>0$，
+
+$$
+\int_{-h}^h\|\rho''(t)\|_{\rm HS}^2\,dt
+\le2hK+4\sqrt{2\beta\Lambda}.
+\tag{262.8}
+$$
+
+以下直接给出所需的一维插值步骤。两个密度矩阵的 Hilbert–Schmidt 距离至多为 $\sqrt2$，故对称差商满足
+
+$$
+\left\|\frac{\rho(h)-\rho(-h)}{2h}\right\|_{\rm HS}
+\le\frac1{\sqrt2h}.
+\tag{262.9}
+$$
+
+一阶导数与此差商的差可以写成 $\rho''$ 对一个带符号三角核的积分；该核的平方积分为 $h/6$。Cauchy–Schwarz 和（262.8）于是给出
+
+$$
+\|\rho'(0)\|_{\rm HS}
+\le\frac1{\sqrt2h}
++\sqrt{\frac{Kh^2}{3}
++\frac{2h}{3}\sqrt{2\beta\Lambda}}.
+\tag{262.10}
+$$
+
+具体地，这个核在 $[-h,0]$ 上为 $(h+t)/(2h)$，在 $[0,h]$ 上为 $-(h-t)/(2h)$。又因为
+
+$$
+K=2\Lambda\delta+\delta^2-\operatorname{Tr}(C_Q^2)
+\le3\Lambda\delta,
+\tag{262.11}
+$$
+
+取 $h=(\Lambda^2\delta)^{-1/6}$，使用 $\delta\le\Lambda$，可得
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le
+\left(\frac1{\sqrt2}+\sqrt{1+\frac{2\sqrt2}{3}}\right)^2
+\Lambda^{2/3}\delta^{1/3}
+<5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.12}
+$$
+
+最后，在 $\rho(0)$ 的特征基中，所有特征值至少为 $\alpha$。标准 SLD 公式给出
+
+$$
+I_Q(\rho_0)
+=\sum_{i,j}\frac{2|\rho'_{ij}(0)|^2}{\lambda_i+\lambda_j}
+\le\frac1\alpha\|\rho'(0)\|_{\rm HS}^2.
+\tag{262.13}
+$$
+
+结合（262.12）即得结论。证毕。
+
+该信息上界只需要名义点的谱下界；全实轴上的统一谱下界是一个更强的充分条件。若 $\delta=0$，第260节的秩一刚性直接给出零信息。对于有界的 $\Lambda$ 和固定正 $\alpha$，因此恢复了靠近秩一上界的信息连续性。这里没有声称数字 $5$ 最优。
+
+**定义 262.2（保持正谱隙的二维比较类）。** 对 $0<\eta\le1$，令
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{262.14}
+$$
+
+记 $\mathcal A_\eta$ 为全实轴上满足
+
+$$
+\rho\in C^2,\qquad
+\operatorname{Tr}\rho=1,\qquad
+\rho(t)\succeq I/4,\qquad
+\rho''(t)\preceq C_\eta
+\tag{262.15}
+$$
+
+的密度曲线集合；$\mathcal A_\eta^{\rm com}$ 再要求 $[\rho(t),\rho(s)]=0$ 对所有实数 $s,t$ 成立。后者不要求状态与 $C_\eta$ 对易。分别定义两类的名义信息上确界为 $F_\eta$ 和 $F_\eta^{\rm com}$。
+
+**定理 262.3（非交换曲线的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k>0$ 和 $\eta_0>0$，使得
+
+$$
+k\eta^{1/3}\le F_\eta\le20\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{262.16}
+$$
+
+即使只允许逐矩阵元可延拓成整函数的曲线，下界仍成立。
+
+证明。 上界是定理262.1在 $\Lambda=1$、$\delta=\eta$、$\alpha=1/4$ 上的直接应用。为构造下界，固定实值 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$、$\|F\|_\infty\le1$，并置
+
+$$
+J=\int_{\mathbb R}F''(u)^2\,du>0,\quad
+A=\frac1{16},\quad
+v=\frac{\sqrt\eta}{8},\quad
+T=\left(\frac{2A^2J}{v}\right)^{1/3},\quad
+x(t)=AF(t/T).
+\tag{262.17}
+$$
+
+定义有界分段连续函数
+
+$$
+g(t)=
+\begin{cases}
+2x''(t)^2,&-T\le t\le T,\\
+-\eta/2,&T<t<T+2v/\eta,\\
+0,&\text{其余情形},
+\end{cases}
+\tag{262.18}
+$$
+
+并以 $y''=g$、$y(-\infty)=1/2$、$y'(-\infty)=0$ 定义 $y$。第一段加速度的积分为
+
+$$
+\int_{-T}^T2x''(t)^2\,dt
+=\frac{2A^2J}{T^3}=v,
+\tag{262.19}
+$$
+
+第二段的积分为 $-v$。故 $y'$ 从零增加到 $v$，再下降到零，全程非负。总增量满足
+
+$$
+0\le y(t)-\frac12
+\le2Tv+\frac{v^2}{\eta}
+=O(\eta^{1/3})+\frac1{64}.
+\tag{262.20}
+$$
+
+对所有充分小的 $\eta$，有 $1/2\le y\le5/8$。定义中间密度曲线
+
+$$
+\rho^{(0)}(t)=
+\begin{pmatrix}y(t)&x(t)\\x(t)&1-y(t)\end{pmatrix}.
+\tag{262.21}
+$$
+
+它的最小特征值至少为
+
+$$
+\frac12-\sqrt{(1/8)^2+(1/16)^2}>\frac14.
+\tag{262.22}
+$$
+
+现核对同一个指定上界。第一段中 $g=2x''{}^2$，并因 $T\to\infty$ 而有 $g\le1/2$。于是
+
+$$
+C_\eta-(\rho^{(0)})''
+=\begin{pmatrix}1-g&-x''\\-x''&\eta+g\end{pmatrix}
+\succeq0,
+\tag{262.23}
+$$
+
+因为其对角元非负，行列式至少为 $(1/2)g-x''{}^2=0$。第二段中 $x''=0$、$g=-\eta/2$，两个对角元也为正。其余位置二阶导数为零。这条曲线为 $C^{1,1}$，弱二阶导数有界，故这些比较几乎处处有效，没有额外点质量。
+
+在名义点，$x(0)=0$、$x'(0)=A/T$。测量 $\sigma_x$ 的两个概率为 $1/2\pm x$，因此其经典信息恰为
+
+$$
+4A^2/T^2
+=\frac{4A^2}{(16A^2J)^{2/3}}\eta^{1/3}.
+\tag{262.24}
+$$
+
+对整条曲线作宽度 $\epsilon$ 的高斯卷积。凸平均同时保留 $\rho\succeq I/4$、迹一和精确的上界 $C_\eta$；有界矩阵元的卷积延拓成整函数。对每个已经固定的 $\eta$，中心的一阶数据在 $\epsilon\downarrow0$ 时收敛。因此可选择 $\epsilon$，使同一个 $\sigma_x$ 测量的信息至少保留（262.24）的一半。SLD 信息不小于这份测量信息，故可取
+
+$$
+k=\frac{2A^2}{(16A^2J)^{2/3}}>0.
+\tag{262.25}
+$$
+
+这证明下界及解析性版本。平滑宽度允许依赖 $\eta$，谱下界和矩阵上界则不因此放宽。证毕。
+
+**定理 262.4（所有两两对易二维曲线的平方根阶）。** 对定义262.2中的整个对易类，有
+
+$$
+\sqrt\eta\le F_\eta^{\rm com}
+\le\frac83\sqrt\eta.
+\tag{262.26}
+$$
+
+下界也由整函数曲线实现。
+
+证明。 非常值的两两对易二维密度族有一个共同特征基，因此可以写成
+
+$$
+\rho(t)=I/2+z(t)N,\qquad
+N=\boldsymbol n\cdot\boldsymbol\sigma,\quad
+\|\boldsymbol n\|=1,\quad |z(t)|\le b=1/4.
+\tag{262.27}
+$$
+
+这里允许这个基相对于 $C_\eta$ 任意旋转。上界条件的行列式给出
+
+$$
+\eta+(1-\eta)n_z z''-(z'')^2\ge0.
+\tag{262.28}
+$$
+
+因此存在 $a,d>0$，使 $-a\le z''\le d$、$ad=\eta$。分别对非负函数 $z+b$ 和 $b-z$ 使用全实轴标量正性界，得到
+
+$$
+z'^2\le\min\{2d(z+b),\,2a(b-z)\}
+\le\frac{4adb}{a+d}
+\le2b\sqrt\eta.
+\tag{262.29}
+$$
+
+中间的不等式取两条仿射函数交点处的最大值。由于特征值为 $1/2\pm z$，
+
+$$
+I_Q=\frac{z'^2}{1/4-z^2}
+\le\frac{2b\sqrt\eta}{1/4-b^2}
+=\frac83\sqrt\eta.
+\tag{262.30}
+$$
+
+常值族的信息为零，也满足该界。反向取
+
+$$
+\rho(t)=I/2+A_0\sin(\omega t)\sigma_x,
+\qquad A_0=1/4,\quad
+\omega^2=\sqrt\eta/A_0.
+\tag{262.31}
+$$
+
+其状态两两对易，处处至少为 $I/4$，矩阵元为整函数，二阶非对角元的绝对值至多为 $\sqrt\eta$。因此 $C_\eta-\rho''$ 的对角元为 $1,\eta$，行列式非负，满足相同矩阵上界。中心信息为 $4A_0\sqrt\eta=\sqrt\eta$，证明下界。证毕。
+
+合并两条定理可知，在完全相同的上界和谱下界条件下，
+
+$$
+F_\eta=\Theta(\eta^{1/3}),\qquad
+F_\eta^{\rm com}=\Theta(\eta^{1/2}),\qquad
+\frac{F_\eta}{F_\eta^{\rm com}}=\Theta(\eta^{-1/6}).
+\tag{262.32}
+$$
+
+因而充分小的 $\eta$ 时，定理262.3中的逼近曲线必不两两对易。这个区别已与“仅要求状态和上界在同一基中对角化”的更小比较类分开：定理262.4允许全部固定特征基方向。
+
+定理262.1所用标量正性估计沿用第257—261节的 Glaeser–Malgrange 背景，SLD 公式沿用同处的标准来源；插值结构的经典背景为 L. Nirenberg，*On elliptic partial differential equations*，Annali della Scuola Normale Superiore di Pisa，第三辑第13卷（1959），115—162页，[公开原文](https://www.numdam.org/item/ASNSP_1959_3_13_2_115_0.pdf)，Lecture II，第124—126页，式（2.2）—（2.3）。其中的一维参数 $j=1,m=2,p=q=\infty,r=2$ 给出经典指数 $2/3$；本节不把插值方法本身作为新增结果。这里使用的有限窗口估计及其常数由（262.9）—（262.12）直接证明，不额外假设全实轴二阶导数平方可积。正性与矩阵上界均要求在全实轴成立。定理262.1的信息上界仅需名义点的固定正谱下界；定义262.2及两类上确界的比较则共同要求全实轴上的统一下界 $\rho(t)\succeq I/4$。下界构造保持这一全域条件。它们不加入原处理器的矩、分项预算、校准节点或规定有限阶数据，所以（262.32）是本节所定义曲线类中的非交换优势，不能自动提升为原受限任务的最优优势。
+
+## 追加锚（本行以下为增补区）
+
+## 263. 正谱隙下对易极值的精确公式与方向转换
+
+第262节比较了固定正谱隙下的一般曲线与对易曲线。本节将对易侧的阶估计推进为精确上确界，并允许谱下界变化。对易状态的共同特征基可以相对于给定的矩阵上界旋转；这个方向自由度必须保留。
+
+**定义 263.1（二维对易极值及其参数）。** 固定 $0<\alpha<1/2$、$0<\eta\le1$。记 $F_{\rm com}(\alpha,\eta)$ 为全实轴上所有 $C^2$ 密度曲线的名义 SLD 信息上确界，其中
+
+$$
+\rho(t)\succeq\alpha I,\qquad
+\rho''(t)\preceq\operatorname{diag}(1,\eta),\qquad
+[\rho(s),\rho(t)]=0
+\quad(s,t\in\mathbb R).
+\tag{263.1}
+$$
+
+置
+
+$$
+b=\frac12-\alpha,
+\qquad q=\frac{1-\eta}{1+\eta},
+\qquad
+z_*=
+\min\left\{\sqrt{(2b^2-1/4)_+},\ bq\right\}.
+\tag{263.2}
+$$
+
+**定理 263.2（全部共同特征基方向上的精确极值）。** 有
+
+$$
+\boxed{
+F_{\rm com}(\alpha,\eta)
+=\frac{2\sqrt\eta\sqrt{b^2-z_*^2}}{1/4-z_*^2}.
+}
+\tag{263.3}
+$$
+
+即使只允许逐矩阵元可延拓成整函数的曲线，上确界仍相同。
+
+证明。 非常值的对易二维族可以写成
+
+$$
+\rho(t)=I/2+z(t)N,
+\qquad N=\boldsymbol n\cdot\boldsymbol\sigma,
+\qquad\|\boldsymbol n\|=1,
+\qquad |z(t)|\le b.
+\tag{263.4}
+$$
+
+固定 $N$ 后，由矩阵上界的行列式可知
+
+$$
+-a\le z''\le d,\qquad
+a,d>0,\qquad ad=\eta,\qquad
+d-a=(1-\eta)n_z.
+\tag{263.5}
+$$
+
+反之，满足这些关系的加速度给出同一个矩阵上界：差矩阵的迹为 $1+\eta>0$，行列式非负，故为半正定。允许方向的全部范围等价于
+
+$$
+\eta\le a\le1,\qquad d=\eta/a.
+\tag{263.6}
+$$
+
+名义点记 $z=z(0)$、$v=z'(0)$。由非负函数 $z(t)+b$ 和 $b-z(t)$ 的标量正性估计，
+
+$$
+v^2\le\min\{2d(z+b),\,2a(b-z)\}.
+\tag{263.7}
+$$
+
+同时反转 $N$ 与 $z(t)$ 不改变状态，所以求上确界时可设 $z\ge0$。对固定 $0\le z<b$，第一项随 $a$ 递减，第二项随 $a$ 递增。无约束的平衡值为
+
+$$
+a_z=\sqrt\eta\sqrt{\frac{b+z}{b-z}},\qquad
+d_z=\sqrt\eta\sqrt{\frac{b-z}{b+z}}.
+\tag{263.8}
+$$
+
+其中 $a_z\ge\sqrt\eta\ge\eta$，而 $a_z\le1$ 当且仅当 $z\le bq$。因此，在所有方向上优化（263.7）得到
+
+$$
+v^2\le
+\begin{cases}
+2\sqrt\eta\sqrt{b^2-z^2},&0\le z\le bq,\\
+2(b-z),&bq<z\le b.
+\end{cases}
+\tag{263.9}
+$$
+
+在 $z=b$ 时导数为零，也包含于第二式。信息为 $I_Q=v^2/(1/4-z^2)$。第二段对应的比值严格递减，因为
+
+$$
+\frac{d}{dz}\frac{b-z}{1/4-z^2}
+=-\frac{(z-b)^2+1/4-b^2}{(1/4-z^2)^2}<0.
+\tag{263.10}
+$$
+
+故只需在 $0\le z\le bq$ 上最大化
+
+$$
+R(z)=\frac{2\sqrt\eta\sqrt{b^2-z^2}}{1/4-z^2}.
+\tag{263.11}
+$$
+
+对 $w=z^2$ 求对数导数，其符号由
+
+$$
+-\frac1{2(b^2-w)}+\frac1{1/4-w}
+=\frac{2b^2-1/4-w}{2(b^2-w)(1/4-w)}
+\tag{263.12}
+$$
+
+决定。最大值正好位于（263.2）的 $z_*$，证明上界。
+
+为证明可任意逼近，选取（263.8）在 $z_*$ 上的 $a,d$。若 $\eta<1$，取一个 Pauli 方向满足
+
+$$
+n_z=\frac{d-a}{1-\eta};
+\tag{263.13}
+$$
+
+由 $z_*\le bq$，其绝对值至多为一。若 $\eta=1$，则 $z_*=0$、$a=d=1$，直接取 $N=\sigma_x$。令
+
+$$
+v_*^2=2d(z_*+b)=2a(b-z_*).
+\tag{263.14}
+$$
+
+构造一个在 $[-b,b]$ 之间周期运动的标量函数。上升段从 $z=-b$、$z'=0$ 开始，以加速度 $d$ 到达 $z_*$，此时速度为 $v_*$；继而以加速度 $-a$ 到达 $z=b$ 并停止。下降段从 $b$ 以加速度 $-a$ 到达 $z_*$，再以加速度 $d$ 回到 $-b$ 并停止。各段一阶数据相接，周期为
+
+$$
+\mathcal T=2v_*\left(\frac1a+\frac1d\right).
+\tag{263.15}
+$$
+
+所得 $z^{(0)}$ 为全实轴上的 $C^{1,1}$ 周期函数，值域包含于 $[-b,b]$，弱二阶导数只取 $d$ 和 $-a$。因此
+
+$$
+\rho^{(0)}=I/2+z^{(0)}N
+\tag{263.16}
+$$
+
+保持谱下界 $\alpha I$，并几乎处处满足指定矩阵上界。令名义点位于上升段的加速度切换处，则其中心信息等于
+
+$$
+\frac{v_*^2}{1/4-z_*^2}=R(z_*).
+\tag{263.17}
+$$
+
+用高斯核卷积整条周期曲线。凸平均保留谱下界、迹一和矩阵上界；所有状态仍在同一 Pauli 方向上，所以保持两两对易。有界函数的高斯卷积给出整函数矩阵元。对固定 $\alpha,\eta$，中心状态与一阶导数收敛，而特征值始终至少为 $\alpha$，故信息趋于（263.17）。这证明精确上确界及整函数版本。证毕。
+
+这里是上确界的达到序列；没有要求一条光滑曲线精确取得（263.3）。方向（263.13）可以不同于 $C_\eta$ 的特征方向，把对易比较类限制为与上界矩阵共同对角化会丢失这一自由度。
+
+**推论 263.3（谱下界阈值和两个极限）。** 令
+
+$$
+\alpha_c=\frac{1-1/\sqrt2}{2}.
+\tag{263.18}
+$$
+
+若 $\alpha_c\le\alpha<1/2$，则对所有 $0<\eta\le1$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=8(1/2-\alpha)\sqrt\eta.
+\tag{263.19}
+$$
+
+尤其在第262节的谱下界 $\alpha=1/4$ 下，
+
+$$
+F_{\rm com}(1/4,\eta)=2\sqrt\eta.
+\tag{263.20}
+$$
+
+若 $0<\alpha<\alpha_c$，则对所有充分小的正 $\eta$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=\frac{\sqrt\eta}{\sqrt{\alpha(1-\alpha)}}.
+\tag{263.21}
+$$
+
+对于每个固定 $0<\eta\le1$，另外有
+
+$$
+\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)
+=2(1+\eta).
+\tag{263.22}
+$$
+
+证明。 第一种情形中 $2b^2\le1/4$，故 $z_*=0$，代入（263.3）得到（263.19）。第二种情形中 $\sqrt{2b^2-1/4}<b$，而 $bq\to b$，所以充分小的 $\eta$ 时 $z_*^2=2b^2-1/4$。使用 $1/4-b^2=\alpha(1-\alpha)$ 即得（263.21）。对于固定 $0<\eta<1$，当 $\alpha\downarrow0$，有 $b\to1/2$ 且 $z_*=bq$ 最终成立。代入（263.3）并使用 $1-q^2=4\eta/(1+\eta)^2$，得到（263.22）；当 $\eta=1$ 时，$q=z_*=0$，由（263.3）直接得到对所有 $0<\alpha<1/2$ 均成立的 $F_{\rm com}(\alpha,1)=8b$，故 $\alpha\downarrow0$ 时极限为 $4$。证毕。
+
+式（263.22）恢复了第261节同一满秩上界的无限制对易上确界，但任意固定正 $\alpha$ 下的信息在 $\eta\downarrow0$ 时仍趋于零。因此两个依次取极限的次序不同：
+
+$$
+\lim_{\eta\downarrow0}\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)=2,
+\qquad
+\lim_{\alpha\downarrow0}\lim_{\eta\downarrow0}F_{\rm com}(\alpha,\eta)=0.
+\tag{263.23}
+$$
+
+这两个读数把第261节的跳变具体定位到未固定的谱下界。它们不改变第262节在固定谱下界上的非交换阶优势，也没有给出一般非交换类的精确最优系数。全部构造仍属于本节定义的全实轴密度曲线类；原处理器的附加约束没有在此实现。
+
+## 追加锚（本行以下为增补区）
+
+## 264. 固定全部特征值的解析曲线仍有非交换阶优势
+
+第262节的一般曲线允许特征值和特征方向共同改变。本节固定两个特征值，只允许特征方向变化。在同一个全实轴矩阵二阶上界下，这个更小的类仍然达到三分之一次幂的信息阶。
+
+**定义 264.1（固定谱的允许类）。** 对 $0<\eta\le1$，记
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{264.1}
+$$
+
+令 $\mathcal U_\eta$ 为全实轴上的 $C^2$ 二维密度曲线，满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta
+\quad(t\in\mathbb R).
+\tag{264.2}
+$$
+
+记名义点信息的上确界为 $F_\eta^{\rm iso}$。其中要求矩阵元可延拓成整函数的子类，其上确界记为 $F_\eta^{\rm iso,ent}$。
+
+**定理 264.2（固定谱下的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k_{r}>0$ 和 $\eta_0>0$，使
+
+$$
+k_{r}\eta^{1/3}
+\le F_\eta^{\rm iso,ent}
+\le F_\eta^{\rm iso}
+\le C_*\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{264.3}
+$$
+
+其中 $C_*=4(1/4+\sqrt{2/3})^2<5$，不要求该常数最优。
+
+证明。 先直接证明上界。写任意允许曲线为 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$，其中 $|\boldsymbol u|=b=1/4$。因 $\boldsymbol u\cdot\boldsymbol u'=0$，矩阵 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程，从而
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{264.4}
+$$
+
+记 $z=u_z$。矩阵上界的对角元及行列式给出
+
+$$
+-\eta\le z''\le1,\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z''.
+\tag{264.5}
+$$
+
+对全实轴上的非负函数 $b-z$ 使用标量正性界，得到 $z'^2\le2\eta(b-z)\le4b\eta=\eta$。因此
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt\eta.
+\tag{264.6}
+$$
+
+两端的向量差长至多为 $2b$。应用第262节明确给出的三角核差商恒等式，其核的平方积分为 $h/6$，得到
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+\sqrt{\frac{\eta h^2}{3}+\frac{\sqrt\eta\,h}{3}}.
+\tag{264.7}
+$$
+
+取 $h=\eta^{-1/6}$ 并使用 $0<\eta\le1$，可知
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac23}\right)^2\eta^{1/3}
+=C_*\eta^{1/3}.
+\tag{264.8}
+$$
+
+以下构造下界，并在解析化时保持特征值精确不变。
+
+置 $b=1/4$。固定实值函数 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$，记
+
+$$
+M_1=\|F'\|_\infty,\qquad
+M_2=\|F''\|_\infty,\qquad
+K_0=b(M_2+M_1^2)>0,
+\qquad k=16K_0^2+1.
+\tag{264.9}
+$$
+
+另取 $G\in C_c^\infty((-2,2))$，满足 $0\le G\le1$ 且 $G=1$ 于 $[-1,1]$，以及非零 $B\in C_c^\infty((0,1))$，满足 $0\le B\le1$。记
+
+$$
+J_G=\int G>0,\qquad m_B=\int B>0.
+\tag{264.10}
+$$
+
+固定充分小的 $r>0$，使 $4r^2/m_B\le b/16$。对每个正 $\eta$ 定义
+
+$$
+v=r\sqrt\eta,
+\qquad T=\left(\frac{kJ_G}{v}\right)^{1/3},
+\qquad L=\frac{4v}{\eta m_B},
+\qquad\phi(t)=F(t/T).
+\tag{264.11}
+$$
+
+令
+
+$$
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{264.12}
+$$
+
+正、负两项分别支撑于 $[-2T,2T]$ 与 $[3T,3T+L]$，积分分别为 $v$ 与 $-v$。所以 $z'$ 从零增加到 $v$，再下降到零，全程非负。由此
+
+$$
+0\le z(t)\le5Tv+vL
+=5Tv+\frac{4r^2}{m_B}.
+\tag{264.13}
+$$
+
+由于 $Tv=O(\eta^{1/3})$，对所有充分小的 $\eta$，有
+
+$$
+0\le z\le b/2,\qquad
+0\le z'\le v,\qquad
+-\eta/4\le g=z''\le k/T^4\le1/4.
+\tag{264.14}
+$$
+
+函数 $z$ 光滑，并在左右两个尾部各为常值。定义
+
+$$
+a(z)=\sqrt{b^2-z^2},\qquad
+w(t)=a(z(t))e^{-i\phi(t)},\qquad
+\rho^{(0)}(t)=
+\begin{pmatrix}
+1/2+z(t)&w(t)\\
+\overline{w(t)}&1/2-z(t)
+\end{pmatrix}.
+\tag{264.15}
+$$
+
+因 $|w|^2+z^2=b^2$，两个特征值始终精确等于 $1/2\pm b$，即 $3/4,1/4$。
+
+现证明矩阵上界还有一个对全参数有效的正余量。在 $0\le z\le b/2$ 上，
+
+$$
+|a'(z)|\le A_1=1/\sqrt3,
+\qquad
+|a''(z)|\le A_2=\frac8{3\sqrt3\,b}.
+\tag{264.16}
+$$
+
+两次求导并使用三角不等式，得到
+
+$$
+|w''|\le
+A_2v^2+A_1|g|+2A_1v|\phi'|
++b\bigl(|\phi''|+|\phi'|^2\bigr).
+\tag{264.17}
+$$
+
+在相位变化的支撑 $|t|<T$ 内，$g=k/T^4$，而 $v=kJ_G/T^3$，故
+
+$$
+|w''|
+\le\frac{K_0}{T^2}
++\frac{A_1k+2A_1kJ_GM_1}{T^4}
++\frac{A_2k^2J_G^2}{T^6}.
+\tag{264.18}
+$$
+
+对充分大的 $T$，右侧至多为 $2K_0/T^2$。由 $k\ge16K_0^2$，
+
+$$
+|w''|^2\le\frac g4\le\frac{\eta+g}{4}.
+\tag{264.19}
+$$
+
+在相位支撑外，$\phi$ 及其导数为零，所以（264.17）简化为
+
+$$
+|w''|\le A_2r^2\eta+A_1|g|.
+\tag{264.20}
+$$
+
+当 $g\ge0$ 时，其平方至多为 $2A_2^2r^4\eta^2+2A_1^2g^2$。因为 $\eta\to0$ 且 $\sup g\to0$，该式对充分小的 $\eta$ 至多为 $(\eta+g)/4$。当 $g<0$ 时，$|g|\le\eta/4$，故平方至多为 $(A_2r^2+A_1/4)^2\eta^2$，也最终小于 $(\eta+g)/4$，因为 $\eta+g\ge3\eta/4$。于是（264.19）在整个实轴成立。
+
+从而
+
+$$
+D(t)=C_\eta-(\rho^{(0)})''(t)
+=\begin{pmatrix}
+1-g&-w''\\
+-\overline{w''}&\eta+g
+\end{pmatrix}
+\tag{264.21}
+$$
+
+满足 $1-g\ge3/4$、$\eta+g\ge3\eta/4$，并且
+
+$$
+\det D\ge\frac12(\eta+g)\ge\frac{3\eta}{8},
+\qquad\operatorname{Tr}D=1+\eta\le2.
+\tag{264.22}
+$$
+
+两个特征值为正，最大特征值至多为迹。因此
+
+$$
+C_\eta-(\rho^{(0)})''(t)
+\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{264.23}
+$$
+
+下面计算信息。令 $\chi(t)=\arcsin(z(t)/b)$，则 $0\le\chi\le\pi/6$，并写
+
+$$
+\rho^{(0)}=I/2+\boldsymbol u\cdot\boldsymbol\sigma,
+\qquad
+\boldsymbol u=b(\cos\chi\cos\phi,\cos\chi\sin\phi,\sin\chi).
+\tag{264.24}
+$$
+
+因为 $\boldsymbol u\cdot\boldsymbol u'=0$，Pauli 乘法关系直接表明 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程。因此
+
+$$
+I_Q(\rho^{(0)}_t)
+=4|\boldsymbol u'(t)|^2
+=4b^2\bigl(\chi'(t)^2+\cos^2\chi(t)\,\phi'(t)^2\bigr).
+\tag{264.25}
+$$
+
+在中心 $\phi'(0)=1/T$ 且 $\cos^2\chi(0)\ge3/4$，所以
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac r{kJ_G}\right)^{2/3}\eta^{1/3}.
+\tag{264.26}
+$$
+
+为得到整函数矩阵元，此处平滑两个实角函数，随后重建密度矩阵。对每个固定 $\eta$，$\chi,\phi$ 及其前两阶导数均有界且一致连续；导数在有限区间之外为零。令 $g_\epsilon$ 为归一化高斯核，置
+
+$$
+\chi_\epsilon=g_\epsilon*\chi,
+\qquad\phi_\epsilon=g_\epsilon*\phi,
+\qquad
+\boldsymbol u_\epsilon
+=b(\cos\chi_\epsilon\cos\phi_\epsilon,
+\cos\chi_\epsilon\sin\phi_\epsilon,
+\sin\chi_\epsilon),
+\tag{264.27}
+$$
+
+并取 $\rho_\epsilon=I/2+\boldsymbol u_\epsilon\cdot\boldsymbol\sigma$。两个角函数延拓成整函数，三角函数的复合仍为整函数，因此矩阵元也是整函数。对实参数，角函数为实数，$|\boldsymbol u_\epsilon|=b$ 精确成立，故特征值和谱下界完全保留。
+
+高斯逼近在这两个角函数的 $C^2$ 范数中一致收敛。链式法则与实轴上有界的三角函数导数于是给出 $\rho_\epsilon\to\rho^{(0)}$ 的全实轴一致 $C^2$ 收敛。为每个固定 $\eta$ 选择充分小的 $\epsilon$，可同时保证
+
+$$
+\sup_t\|\rho_\epsilon''(t)-(\rho^{(0)})''(t)\|_{\rm op}
+\le\frac{3\eta}{32}
+\tag{264.28}
+$$
+
+及中心信息至少保留（264.26）的一半。这里信息的一致谱下界固定为 $1/4$，也可直接用（264.25）的角函数形式判断一阶数据的连续性。由（264.23），
+
+$$
+C_\eta-\rho_\epsilon''(t)\succeq\frac{3\eta}{32}I,
+\qquad
+I_Q((\rho_\epsilon)_0)
+\ge k_{r}\eta^{1/3},
+\quad
+k_{r}=\frac{3b^2}{2}\left(\frac r{kJ_G}\right)^{2/3}>0.
+\tag{264.29}
+$$
+
+这证明了整函数子类中的下界。所有轮廓函数与常数先固定，再取充分小 $\eta$，最后按该 $\eta$ 选取平滑宽度；矩阵上界和精确特征值没有放宽。证毕。
+
+上述解析化没有把密度矩阵作凸平均；密度的凸平均一般不能保持特征值。它先逼近角函数，再利用三角恒等式保留固定谱，并以（264.23）的严格矩阵余量吸收二阶近似误差。
+
+**推论 264.3（固定谱变化与更大的对易比较类）。** 对上述构造的每条实参数曲线，可以写成
+
+$$
+\rho(t)=U(t)\operatorname{diag}(3/4,1/4)U(t)^*,
+\quad
+U(t)=e^{-i\phi(t)\sigma_z/2}
+e^{-i(\pi/2-\chi(t))\sigma_y/2},
+\tag{264.30}
+$$
+
+解析化后使用 $\chi_\epsilon,\phi_\epsilon$ 得到相同结论。因而所有只依赖特征值的量沿曲线恒定，但与第263节允许特征值变化的全部对易曲线相比，仍有
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_{\rm com}(1/4,\eta)}
+=\Theta(\eta^{-1/6}).
+\tag{264.31}
+$$
+
+证明。 Pauli 旋转公式给出（264.30）。固定谱立即使所有谱函数恒定。再结合（264.3）与 $F_{\rm com}(1/4,\eta)=2\sqrt\eta$ 得到（264.31）。证毕。
+
+作为更小的特殊情形，连续且两两对易的固定谱二维密度族必为常值：其共同特征基固定，而两个离散特征值不能沿连续参数互换。因此（264.31）使用的是第263节更大的对易比较类，其阶差不依赖于把比较对象预先限制成常值。
+
+这里的酉表示描述准备曲线的数学结构，未施加哈密顿量、物理能量、带宽或原处理器的矩与分项预算约束。固定谱没有消去关系响应：本节的信息变化全部来自特征方向的组合，而精确矩阵二阶条件仍由（264.23）、（264.28）共同保证。
+
+## 追加锚（本行以下为增补区）
+
+## 265. 固定实基底的平面限制与不可消去的方向变化
+
+第264节在固定全部特征值时保留了非交换阶优势。非交换性本身还不能解释这项优势：同一个 Bloch 大圆上的状态通常已经不对易，但它们仍能在一个固定基底中同时写成实矩阵。本节允许这个固定基底任意选择，比较平面轨迹与一般固定谱轨迹。
+
+**定义 265.1（可在固定基底中取实的曲线类）。** 对 $0<\eta\le1$，在定义264.1的允许类中，进一步要求存在一个不依赖实参数 $t$ 的酉矩阵 $V$，使
+
+$$
+V\rho(t)V^*\in M_2(\mathbb R)
+\quad(t\in\mathbb R).
+\tag{265.1}
+$$
+
+$V$ 可以依赖整条曲线和 $\eta$。记这一类的名义 SLD 信息上确界为 $F_\eta^{\rm real}$，其中矩阵元可延拓成整函数的子类对应 $F_\eta^{\rm real,ent}$。曲线仍在原基底中满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta)
+\quad(t\in\mathbb R).
+\tag{265.2}
+$$
+
+这里没有要求 $V$ 同时对角化 $C_\eta$。
+
+**定理 265.2（全部固定实基底上的二分之一次幂阶）。** 对 $0<\eta\le1$，
+
+$$
+\boxed{
+\sqrt\eta
+\le F_\eta^{\rm real,ent}
+\le F_\eta^{\rm real}
+\le\min\{1,256\sqrt\eta\}.
+}
+\tag{265.3}
+$$
+
+证明。 置 $b=1/4$，写 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$。固定谱条件等价于 $|\boldsymbol u|=b$，而第264节的直接 SLD 计算给出
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{265.4}
+$$
+
+先处理 $\rho(t)$ 本身在 $C_\eta$ 的特征基中为实矩阵的情形。此时 $\boldsymbol u=(x,0,z)$ 在半径 $b$ 的圆上。实轴单连通，故有全域 $C^2$ 角函数使
+
+$$
+x=b\sin\theta,\qquad z=-b\cos\theta.
+\tag{265.5}
+$$
+
+也可从任一点选择初始角，再积分 $\theta'=(xz'-zx')/b^2$ 得到此提升。先给出适用于全部固定谱曲线的一个点态估计。由 $\rho''\preceq C_\eta\preceq I$，且 $\rho''=\boldsymbol u''\cdot\boldsymbol\sigma$，可知 $|\boldsymbol u''|\le1$。对 $|\boldsymbol u|^2=b^2$ 两次求导，得到 $|\boldsymbol u'|^2=-\boldsymbol u\cdot\boldsymbol u''\le b$，故 $I_Q\le4b=1$。特别地，下面可以使用较宽松的全域速度界：
+
+$$
+4b^2\theta'^2=I_Q\le1\le4,
+\qquad |\theta'|\le4.
+\tag{265.6}
+$$
+
+上界矩阵差的对角元及行列式同时给出
+
+$$
+z''\ge-\eta,\qquad
+b^2(\theta'^4+\theta''^2)
+\le\eta+(1-\eta)b(\cos\theta\,\theta'^2+\sin\theta\,\theta'').
+\tag{265.7}
+$$
+
+非负函数 $b-z$ 的二阶导数至多为 $\eta$，所以标量正性界给出
+
+$$
+z'^2\le2\eta(b-z)\le4b\eta=\eta.
+\tag{265.8}
+$$
+
+另一方面，从（265.7）丢去左侧非负的 $\theta'^4$，并用 $|\sin\theta|\le|\theta|$，得到
+
+$$
+|\theta''|^2
+\le16\eta+4\theta'^2+4|\theta|\,|\theta''|.
+\tag{265.9}
+$$
+
+解这个关于 $|\theta''|$ 的二次不等式，并使用平方根的次可加性，可得方便的估计
+
+$$
+|\theta''|
+\le4\bigl(|\theta|+|\theta'|+\sqrt\eta\bigr).
+\tag{265.10}
+$$
+
+改变角函数的整数周数，使 $\theta(0)\in[-\pi,\pi]$。若 $|\theta(0)|\ge1/4$，在 $\sin\theta(0)\ne0$ 时，把（265.8）的第一式除以 $b^2\sin^2\theta(0)$，得到
+
+$$
+\theta'(0)^2
+\le\frac{2\eta}{b(1-\cos\theta(0))}.
+\tag{265.11}
+$$
+
+若 $\theta(0)=\pm\pi$，则 $z''(0)=-b\theta'(0)^2\ge-\eta$，仍给出同一个界。由 $1-\cos(1/4)\ge1/48$，
+
+$$
+I_Q(\rho_0)\le96\eta\le96\sqrt\eta.
+\tag{265.12}
+$$
+
+余下只需处理 $|\theta(0)|<1/4$。令 $h=1/32$。式（265.6）保证
+
+$$
+|\theta(t)|\le3/8\qquad(|t|\le h).
+\tag{265.13}
+$$
+
+必要时反转实参数，使 $\theta'(0)=v\ge0$；二阶矩阵上界不因此改变。若 $v\le\sqrt\eta$，则信息至多为 $\eta/4$。若 $|\theta(0)|\ge hv$，使用 $|\sin\theta(0)|\ge|\theta(0)|/2$，由（265.8）得到
+
+$$
+\sqrt\eta\ge |z'(0)|\ge\frac{bhv^2}{2},
+\qquad
+I_Q(\rho_0)\le\frac{8b}{h}\sqrt\eta=64\sqrt\eta.
+\tag{265.14}
+$$
+
+最后考虑 $v>\sqrt\eta$ 且 $|\theta(0)|<hv$。置
+
+$$
+J(t)=|\theta(t)|+|\theta'(t)|+\sqrt\eta.
+\tag{265.15}
+$$
+
+由（265.10），几乎处处有 $|J'|\le5J$。对正、负两个参数方向分别积分，
+
+$$
+J(t)\le e^{5|t|}J(0)
+<e^{5h}(2+h)v<3v
+\quad(|t|\le h).
+\tag{265.16}
+$$
+
+最后一个常数估计可直接用 $e^{5/32}\le32/27$，于是乘积至多为 $65/27<3$。因此 $|\theta''|\le12v$，并且
+
+$$
+\theta'(t)\ge v-12vh\ge v/2
+\quad(|t|\le h).
+\tag{265.17}
+$$
+
+若 $\theta(0)\ge0$，取 $t_*=h$；否则取 $t_*=-h$。式（265.17）给出 $|\theta(t_*)|\ge hv/2$，再由（265.13），
+
+$$
+\sqrt\eta
+\ge |z'(t_*)|
+=b|\sin\theta(t_*)|\,|\theta'(t_*)|
+\ge\frac{bhv^2}{8}.
+\tag{265.18}
+$$
+
+所以
+
+$$
+I_Q(\rho_0)=4b^2v^2
+\le\frac{32b}{h}\sqrt\eta
+=256\sqrt\eta.
+\tag{265.19}
+$$
+
+这证明了在上界特征基中取实的情形。
+
+现在处理任意固定基底。式（265.1）等价于整条向量曲线 $\boldsymbol u(t)$ 包含于某个过原点的固定二维平面 $P$：实矩阵的 Pauli 向量在 $xz$ 平面内，固定酉共轭则对应一个固定旋转。写
+
+$$
+C_\eta=c_0I+\boldsymbol c\cdot\boldsymbol\sigma,
+\qquad
+c_0=\frac{1+\eta}{2},
+\qquad
+\boldsymbol c=(0,0,(1-\eta)/2).
+\tag{265.20}
+$$
+
+令 $\boldsymbol c_P$ 为 $\boldsymbol c$ 到 $P$ 的正交投影，定义辅助正定矩阵
+
+$$
+\widehat C
+=\sqrt{\eta+|\boldsymbol c_P|^2}\,I
++\boldsymbol c_P\cdot\boldsymbol\sigma.
+\tag{265.21}
+$$
+
+对于任意 $\boldsymbol k\in P$ 及 $H=\boldsymbol k\cdot\boldsymbol\sigma$，有
+
+$$
+\det(C_\eta-H)
+=\eta+2\boldsymbol c_P\cdot\boldsymbol k-|\boldsymbol k|^2
+=\det(\widehat C-H).
+\tag{265.22}
+$$
+
+两个 Hermitian 差矩阵的迹均严格为正。在二维中，非负行列式和正迹等价于半正定，因此
+
+$$
+C_\eta-H\succeq0
+\quad\Longleftrightarrow\quad
+\widehat C-H\succeq0
+\qquad(\boldsymbol k\in P).
+\tag{265.23}
+$$
+
+这是一条在指定平面内的约束等价，没有把原矩阵上界直接投影后当成新上界。
+
+将 $P$ 旋转到 $xz$ 平面后，所有状态和 $\widehat C$ 都是实矩阵。再以实正交矩阵对角化 $\widehat C$，仍保持所有状态为实矩阵。其两个特征值满足
+
+$$
+\lambda_+\ge\lambda_->0,
+\qquad\lambda_+\lambda_-=\det\widehat C=\eta.
+\tag{265.24}
+$$
+
+以该固定基变换后的曲线记为 $\rho_1$，并令
+
+$$
+\widetilde\rho(s)=\rho_1(s/\sqrt{\lambda_+}),
+\qquad r=\lambda_-/\lambda_+\in(0,1].
+\tag{265.25}
+$$
+
+此曲线保持精确谱，且在同一实基底中满足 $\widetilde\rho''\preceq\operatorname{diag}(1,r)$。信息在这次参数变换下除以 $\lambda_+$，因此已证的（265.19）给出
+
+$$
+I_Q(\rho_0)
+\le256\lambda_+\sqrt r
+=256\sqrt\eta.
+\tag{265.26}
+$$
+
+该界与平面的方向无关，故覆盖定义265.1中允许的全部固定基底。
+
+最后给出整函数下界。取
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad
+\omega^2=\frac{\sqrt\eta}{b},
+\qquad
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma.
+\tag{265.27}
+$$
+
+其特征值精确固定，矩阵元为整函数。由 $\boldsymbol u''=-\omega^2\boldsymbol u$，
+
+$$
+\det(C_\eta-\rho'')=\eta-b^2\omega^4=0,
+\qquad
+\operatorname{Tr}(C_\eta-\rho'')=1+\eta>0.
+\tag{265.28}
+$$
+
+所以原矩阵上界在全实轴成立。整条曲线在 $xy$ 平面内，经过一个固定酉旋转即能同时取实，属于所需比较类。其信息为
+
+$$
+I_Q=4b^2\omega^2=4b\sqrt\eta=\sqrt\eta.
+\tag{265.29}
+$$
+
+由此得到（265.3）的全部不等式。证毕。
+
+**推论 265.3（一般固定谱曲线与全部平面曲线的阶差）。** 当 $\eta\downarrow0$，
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_\eta^{\rm real,ent}}
+=\Theta(\eta^{-1/6}).
+\tag{265.30}
+$$
+
+证明。 第264节给出分子的上下界为正固定常数乘 $\eta^{1/3}$；（265.3）给出分母的上下界为正固定常数乘 $\eta^{1/2}$。上下界分别组合即得结论。证毕。
+
+同一 $256\sqrt\eta$ 上界还覆盖任意固定仿射平面内的轨迹，虽然这种轨迹未必能在固定基底中同时取实。确实，写 $\boldsymbol u=\boldsymbol p+\boldsymbol v$，其中 $\boldsymbol v(t)\in P$、$\boldsymbol p\perp P$ 为常向量，则 $|\boldsymbol v|=R=\sqrt{b^2-|\boldsymbol p|^2}$。$R=0$ 时曲线恒定；否则令 $\widehat{\boldsymbol u}=(b/R)\boldsymbol v$。对应密度保持所需固定谱，轨迹在过原点的平面中，矩阵上界为 $(b/R)C_\eta$。通过参数缩放，（265.26）对正数 $a$ 倍上界给出 $I_Q\le256a\sqrt\eta$；取 $a=b/R$，再按一阶向量长度换回原曲线，得到
+
+$$
+I_Q(\rho_0)
+\le256\frac Rb\sqrt\eta
+\le256\sqrt\eta.
+\tag{265.31}
+$$
+
+因此，第264节中取得相应下界的曲线，在充分小的 $\eta$ 下不能通过任何固定二维基变换使整条曲线同时取实，也不能包含于任何固定仿射平面。这比两两不对易更严格：式（265.27）的大圆曲线已经通常不对易，但其信息仍只有二分之一次幂阶。相反，仅有非平面性也不保证任意一条曲线达到三分之一次幂阶；这里比较的是明确约束下的类上确界。
+
+固定基底中同时取实的统计模型已有反酉对称的表述。Jisho Miyazaki 与 Keiji Matsumoto，*Imaginarity-free quantum multiparameter estimation*，Quantum 6（2022），665，[原文 arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，第3.1节定义1及附录A.2分别讨论参数无关的反酉对称与过原点的 Bloch 平面模型。本节沿用这项既有几何对应；上述证明处理额外固定矩阵二阶约束下的信息阶，并另外覆盖不经过原点的仿射平面。
+
+本节沿用第261—264节的 SLD、Pauli 表示和标量正性背景。比较始终固定二维表示、精确谱和原矩阵二阶约束；没有排除更高维实表示，也没有限制随参数变化的基底。它不把固定基底下的复数分量单独当作资源，更不声称排除了所有实量子描述。所得区别是：在这个准备曲线问题中，任何固定平面都限制了可取得的信息阶，而一般固定谱方向变化可以超过这一限制。哈密顿量、物理能量、带宽与原处理器附加约束仍不在本节的实现范围内。
+
+## 追加锚（本行以下为增补区）
+
+## 266. 精确固定谱下的布居摆幅与信息阶过渡
+
+第265节区分了固定平面轨迹与一般固定谱轨迹。本节给出另一个有数值尺度的限制：沿矩阵上界的特征方向，允许对角布居总共改变多少。两个特征值依然完全不变；改变的是状态相对于给定上界方向的布居。
+
+**定义 266.1（带布居摆幅限制的允许类）。** 固定 $b=1/4$。对 $0<\eta\le1$、$0\le\Delta\le b/2$，考虑全实轴上的 $C^2$ 二维密度曲线
+
+$$
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma,
+\qquad |\boldsymbol u(t)|=b,
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta).
+\tag{266.1}
+$$
+
+记 $z(t)=u_z(t)$，并要求
+
+$$
+\operatorname{osc}_{\mathbb R}z
+:=\sup_{t\in\mathbb R}z(t)-\inf_{t\in\mathbb R}z(t)
+\le\Delta.
+\tag{266.2}
+$$
+
+记这一类的名义 SLD 信息上确界为 $F(\eta,\Delta)$，整函数矩阵元子类对应 $F_{\rm ent}(\eta,\Delta)$。式（266.2）也正是对角元 $\rho_{11}=1/2+z$ 的摆幅上界；它与固定特征值条件是不同约束。
+
+**定理 266.2（统一二参数信息阶）。** 存在固定常数 $c>0$、$\eta_0>0$，使对所有 $0<\eta<\eta_0$ 和 $0\le\Delta\le b/2$，
+
+$$
+\boxed{
+c\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr)
+\le F_{\rm ent}(\eta,\Delta)
+\le F(\eta,\Delta)
+\le6\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr).
+}
+\tag{266.3}
+$$
+
+此外，对所有 $0<\eta\le1$，零摆幅端点精确满足
+
+$$
+F_{\rm ent}(\eta,0)=F(\eta,0)=\sqrt\eta.
+\tag{266.4}
+$$
+
+证明。 先证明上界。沿用第264节的 SLD 与行列式计算，
+
+$$
+I_Q=4|\boldsymbol u'|^2,
+\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z'',
+\qquad z''\ge-\eta.
+\tag{266.5}
+$$
+
+令 $z_{\max}=\sup_{\mathbb R}z$；不要求此上确界取到。非负函数 $z_{\max}-z$ 的二阶导数至多为 $\eta$，所以
+
+$$
+z'^2\le2\eta(z_{\max}-z)\le2\eta\Delta.
+\tag{266.6}
+$$
+
+对（266.5）在 $[-h,h]$ 上积分，
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt{2\eta\Delta}.
+\tag{266.7}
+$$
+
+端点弦长至多为 $2b$。第262节的三角核恒等式及其平方积分 $h/6$ 因而给出
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+
+\sqrt{\frac{\eta h^2}{3}
++\frac{h\sqrt{2\eta\Delta}}{3}}.
+\tag{266.8}
+$$
+
+置
+
+$$
+S=\Delta+\sqrt\eta,\qquad h=(\eta S)^{-1/6}.
+\tag{266.9}
+$$
+
+由于 $S\ge\sqrt\eta$ 且 $S\ge\Delta$，
+
+$$
+\eta h^2\le(\eta S)^{1/3},
+\qquad
+h\sqrt{2\eta\Delta}\le\sqrt2\,(\eta S)^{1/3}.
+\tag{266.10}
+$$
+
+代入可得
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac{1+\sqrt2}{3}}\right)^2(\eta S)^{1/3}
+<6\bigl((\eta\Delta)^{1/3}+\sqrt\eta\bigr).
+\tag{266.11}
+$$
+
+这里的上界对全部 $0<\eta\le1$ 有效，只使用有限窗口积分。
+
+当 $\Delta=0$ 时，$z$ 恒定。令 $\boldsymbol w=(u_x,u_y)$，则 $|\boldsymbol w|=R=\sqrt{b^2-z^2}$ 也恒定。若 $R=0$，曲线恒定；否则（266.5）给出 $|\boldsymbol w''|\le\sqrt\eta$，故
+
+$$
+|\boldsymbol w'|^2=-\boldsymbol w\cdot\boldsymbol w''
+\le R\sqrt\eta\le b\sqrt\eta.
+\tag{266.12}
+$$
+
+于是 $I_Q\le4b\sqrt\eta=\sqrt\eta$。第265节的赤道匀速旋转
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad \omega^2=\sqrt\eta/b
+\tag{266.13}
+$$
+
+具有整函数矩阵元、零布居摆幅，且信息精确等于 $\sqrt\eta$。这同时证明（266.4），并为任意允许 $\Delta$ 给出同一个下界。
+
+下面在较大摆幅区间建立第二项的统一下界。保留第264节的固定光滑函数 $F,G,B$ 及常数 $k,J_G,m_B,K_0,A_1,A_2$，并记 $D_0=kJ_G$。选取固定 $\gamma>0$，使
+
+$$
+\frac{4\gamma^2}{m_B}\le\frac14.
+\tag{266.14}
+$$
+
+再固定 $K\ge1$，使
+
+$$
+5D_0^{1/3}\gamma^{2/3}K^{-2/3}\le\frac14.
+\tag{266.15}
+$$
+
+对 $\Delta>0$，令
+
+$$
+r=\gamma\sqrt\Delta,\qquad
+v=\gamma\sqrt{\eta\Delta},\qquad
+T=(D_0/v)^{1/3},\qquad
+L=\frac{4v}{\eta m_B}.
+\tag{266.16}
+$$
+
+使用同一个相位及正、负加速度构造：
+
+$$
+\phi(t)=F(t/T),
+\qquad
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{266.17}
+$$
+
+两个脉冲的积分依次为 $v$、$-v$，所以 $z$ 从零单调增加到一个常值，并且
+
+$$
+0\le z(t)\le5Tv+vL
+=5D_0^{1/3}\gamma^{2/3}(\eta\Delta)^{1/3}
++\frac{4\gamma^2}{m_B}\Delta.
+\tag{266.18}
+$$
+
+若 $\Delta\ge K\sqrt\eta$，则（266.14）—（266.15）给出
+
+$$
+0\le z(t)\le\Delta/2\le b/4.
+\tag{266.19}
+$$
+
+因此摆幅约束保留了固定比例的余量。
+
+取 $w=\sqrt{b^2-z^2}e^{-i\phi}$，再按（264.15）组成密度矩阵 $\rho^{(0)}$，其两个特征值精确为 $3/4,1/4$。现在须使第264节的矩阵余量估计对这两个参数统一成立，而不是逐个固定 $\Delta$ 后才选择阈值。首先
+
+$$
+r\le r_{\max}:=\gamma\sqrt{b/2},
+\qquad
+T\ge\left(\frac{D_0}{\gamma\sqrt{\eta b/2}}\right)^{1/3}.
+\tag{266.20}
+$$
+
+因此 $T\to\infty$ 对全部 $0<\Delta\le b/2$ 统一成立。相位支撑内的（264.18）只含固定的 $D_0$ 与轮廓常数；相位支撑外的（264.20）可统一用 $r_{\max}$ 代替 $r$。特别地，可一次选择 $\eta_0>0$，使所有这些参数对均有 $g\le1/4$，相位支撑内满足 $|w''|\le2K_0/T^2$，支撑外满足
+
+$$
+|w''|^2\le(\eta+g)/4.
+\tag{266.21}
+$$
+
+具体地，支撑外 $g\ge0$ 时使用
+$|w''|^2\le2A_2^2r_{\max}^4\eta^2+2A_1^2g^2$，而 $\sup g=k/T^4$ 一致趋零；$g<0$ 时使用
+$|w''|^2\le(A_2r_{\max}^2+A_1/4)^2\eta^2$ 及 $\eta+g\ge3\eta/4$。这些条件均由同一个充分小的 $\eta_0$ 保证。（266.19）已独立确保所用幅度导数界的适用范围。于是第264节的行列式和迹计算逐式给出
+
+$$
+C_\eta-(\rho^{(0)})''(t)\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{266.22}
+$$
+
+中心相位导数为 $1/T$。同处的 SLD 计算给出
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac{\gamma}{D_0}\right)^{2/3}
+(\eta\Delta)^{1/3}.
+\tag{266.23}
+$$
+
+为得到整函数矩阵元，仍先以高斯核平滑实角函数 $\chi=\arcsin(z/b)$ 和 $\phi$，再以三角函数重建密度。对于每一个固定参数对 $(\eta,\Delta)$，全实轴 $C^2$ 逼近及（266.22）使我们可选取充分小的平滑宽度，同时保留原矩阵上界与至少一半的中心信息。特征值由重建恒等式精确保留。
+
+摆幅约束也在这一步精确保留：由（266.19），
+
+$$
+0\le\chi(t)\le\arcsin\!\left(\frac{\Delta}{2b}\right).
+\tag{266.24}
+$$
+
+高斯正平均保持这个区间，且正弦函数在该区间单调，故重建后的 $z_\epsilon=b\sin\chi_\epsilon$ 仍包含于 $[0,\Delta/2]$。因此，在 $\Delta\ge K\sqrt\eta$ 时，
+
+$$
+F_{\rm ent}(\eta,\Delta)\ge
+\kappa(\eta\Delta)^{1/3},
+\qquad
+\kappa=\frac{3b^2}{2}
+\left(\frac{\gamma}{D_0}\right)^{2/3}>0.
+\tag{266.25}
+$$
+
+所有轮廓、$\gamma,K,\kappa,\eta_0$ 均独立于参数对；只有最后的平滑宽度允许依赖它。
+
+当 $\Delta<K\sqrt\eta$ 时，
+$\sqrt\eta+(\eta\Delta)^{1/3}\le(1+K^{1/3})\sqrt\eta$，赤道曲线已给出所需下界。在互补区间，取赤道下界与（266.25）的较大者，至少是目标和式的 $\min\{1,\kappa\}/2$ 倍。因此可取
+
+$$
+c=\min\left\{
+\frac1{1+K^{1/3}},
+\frac{\min\{1,\kappa\}}2
+\right\}>0.
+\tag{266.26}
+$$
+
+这完成统一下界及定理的证明。证毕。
+
+**推论 266.3（趋近平面与保持阶优势的尺度）。** 对固定 $\beta>0$，令 $\Delta=\eta^\beta$；当 $\eta$ 充分小时，它属于允许范围。则
+
+$$
+F_{\rm ent}(\eta,\eta^\beta)
+\asymp F(\eta,\eta^\beta)
+\asymp
+\eta^{\min\{1/2,(1+\beta)/3\}}.
+\tag{266.27}
+$$
+
+特别地，当 $0<\beta<1/2$，与第265节全部固定实基底类的比较满足
+
+$$
+\frac{F_{\rm ent}(\eta,\eta^\beta)}
+{F_\eta^{\rm real,ent}}
+=\Theta\!\left(\eta^{(2\beta-1)/6}\right)
+\longrightarrow\infty.
+\tag{266.28}
+$$
+
+证明。 直接比较（266.3）中的两个幂次，并使用（265.3）的分母上下界。证毕。
+
+更具体地，在 $0<\beta<1/2$ 时，构造（266.17）及其解析化的整条 $\boldsymbol u$ 轨迹都距赤道平面至多 $\eta^\beta/2$，但其信息下界相对于任意固定平面轨迹的统一上界仍有发散的比例。因此，几何上任意接近平面，并不在这个退化参数族中保证信息阶接近固定平面的极值；矩阵上界本身也随 $\eta$ 退化，比较对象的信息同时趋零。摆幅进入 $\Delta\lesssim\sqrt\eta$ 区间以后，两项才共同回到二分之一次幂阶。
+
+曲线上的导数插值已有黎曼流形版本。Igor Parasyuk，*Landau–Kolmogorov type inequalities for curves on Riemannian manifolds*，Mathematical Inequalities & Applications 22（2019），433—443页，[原文](https://files.ele-math.com/articles/mia-22-31.pdf)，定理1—2，在正 Hessian 或球面小球条件下以协变加速度控制速度。这些是相关的既有背景；本节控制的是密度矩阵在线性空间中的二阶导数，其法向分量也参与 Loewner 约束，不能直接换成球面的协变加速度。式（266.3）的二参数估计由（266.5）—（266.26）证明，没有把流形上的插值思想本身作为新增结果。
+
+本节的摆幅沿给定矩阵上界的特征方向测量，没有给出相对于任意平面的统一厚度定理。全部特征值始终固定；摆幅控制的是对角布居及方向变化，不是谱的变化。SLD、标量正性和有限窗口插值沿用前节的既有背景，二参数常数与全域构造由上述估计给出。这里未求出正摆幅下的精确最优系数，也未施加哈密顿量、物理能量、带宽或原处理器约束。
+
+## 追加锚（本行以下为增补区）

@@ -52038,3 +52038,863 @@ $$
 其中 $\delta\ge0$，菱形范数通过对参考系统张量恒等映射后取诱导迹范数定义。求在该输入无关、容许参考纠缠的误差合同下可达的 $t$ 与 $\delta$ 关系；$\delta=0$ 返回本批的精确恢复问题，$\delta>0$ 的最优界不由秩一 Choi 的精确论证自动推出。
 
 ## 追加锚（本行以下为增补区）
+
+## 395. 单份记录的近似恢复合同与成功 Choi 检验
+
+本节至第 398 节承接问题 394.2：保持完整纯量子记录、有限记录测量、经典结果及系统酉反馈的接口，研究允许误差时的总成功概率。目标仍是恢复单份系统的全部未知输入，包括它与任意参考系统的纠缠；系统在记录测量后仍可用于反馈。以下给出必要误差界与可实现的成功率下界，不把二者之间的区间视为已求出的最优边界。
+
+**定义 395.1（输入无关的成功与未折半误差）。** 沿用定义 389.1–389.2 的 $S=\mathbb C^d$、$d\ge1$、相关矩阵 $C\succeq0$、$C_{ii}=1$、有限 POVM $\{D_y\}$、酉反馈 $U_y$ 和成功集合 $Y_{\mathrm s}$。令
+
+$$
+\mathcal T_{\mathrm s}(X)
+ =\sum_{y\in Y_{\mathrm s}}U_y(C_y\circ X)U_y^\dagger,
+\qquad C_y=RD_y^{\mathsf T}R^\dagger.
+$$
+
+将精确恢复要求改为
+
+$$
+\mathcal T_{\mathrm s}^{*}(I_S)=tI_S,
+\qquad 0<t\le1,
+\qquad
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond\le t\delta,
+\qquad 0\le\delta\le2,
+$$
+
+其中 $\mathcal T_{\mathrm s}^{*}$ 是迹配对下的伴随。第一式等价于对每个密度矩阵 $\rho$ 都有 $\operatorname{Tr}\mathcal T_{\mathrm s}(\rho)=t$，故接受后的映射
+
+$$
+\widehat{\mathcal T}_{\mathrm s}=\mathcal T_{\mathrm s}/t
+$$
+
+是完全正、保迹的线性通道。这里的 diamond 范数不乘 $1/2$；明确地，对线性映射 $\Phi$，
+
+$$
+\|\Phi\|_\diamond
+ =\sup_{k\ge1}\ \sup_{X\ne0}
+ \frac{\|(\operatorname{id}_{\mathbb C^k}\otimes\Phi)(X)\|_1}{\|X\|_1},
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}.
+$$
+
+于是合同等价于 $\|\widehat{\mathcal T}_{\mathrm s}-\operatorname{id}_S\|_\diamond\le\delta$。特别地，对任意有限参考空间 $A$ 和任意联合密度矩阵 $\rho_{AS}$，成功概率为 $t$，且
+
+$$
+\left\|(\operatorname{id}_A\otimes\widehat{\mathcal T}_{\mathrm s})(\rho_{AS})
+       -\rho_{AS}\right\|_1\le\delta.
+$$
+
+参考系统不被操作；成功后的经典标签可用于选择 $U_y$，最终比较的是对所有成功标签求和后的系统通道。这里不要求各成功标签分别具有输入无关的概率，也不将反馈扩大为任意系统通道。$\delta=0$ 恢复定义 389.2 的精确合同。$t=0$ 时没有接受后的归一化通道。
+
+**命题 395.2（保留反馈的有限细分与必要保真度界）。** 对定义 395.1 的任意协议，可以将成功分支有限细分为向量 $v_j\in\mathbb C^d$，并对每个细分项保留原结果的同一个酉算子 $U_j$，使
+
+$$
+\begin{aligned}
+\mathcal T_{\mathrm s}(X)
+ &=\sum_j U_jD(v_j)XD(v_j)^\dagger U_j^\dagger,
+ &D(v)&=\operatorname{diag}(v_1,\ldots,v_d),\\
+M&=\sum_jv_jv_j^\dagger\preceq C,
+ &\operatorname{diag}M&=t\mathbf1,\qquad
+ \operatorname{Tr}M=\sum_j\|v_j\|_2^2=dt.
+\end{aligned}
+$$
+
+本节使用归一化最大纠缠向量和投影
+
+$$
+|\omega_d\rangle=\frac1{\sqrt d}\sum_{i=1}^d|i\rangle\otimes|i\rangle,
+\qquad \Pi_d=|\omega_d\rangle\langle\omega_d|.
+$$
+
+它与定理 390.2 中未归一化的 $|\Omega\rangle$ 满足 $|\omega_d\rangle=|\Omega\rangle/\sqrt d$，不可混用两种 Choi 迹约定。令
+
+$$
+\begin{aligned}
+J_{\mathrm s}&=(\operatorname{id}_S\otimes\mathcal T_{\mathrm s})(\Pi_d),
+ &\operatorname{Tr}J_{\mathrm s}&=t,\\
+f_{\mathrm{actual}}&=\langle\omega_d|J_{\mathrm s}|\omega_d\rangle
+ =\frac1{d^2}\sum_j|\operatorname{Tr}(U_jD(v_j))|^2,
+ &f_\star&=\frac1{d^2}\sum_j\|v_j\|_1^2,
+\end{aligned}
+$$
+
+其中向量的 $\|v\|_1=\sum_i|v_i|$。则
+
+$$
+0\le f_{\mathrm{actual}}\le f_\star\le t,
+\qquad
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond
+ \ge2(t-f_{\mathrm{actual}}),
+$$
+
+从而任何满足误差合同的协议都必须满足
+
+$$
+f_\star\ge f_{\mathrm{actual}}\ge t(1-\delta/2).
+$$
+
+证明。由第 390 节的分支对应，$C_y\succeq0$ 且 $\sum_yC_y=C$。分别对每个成功 $C_y$ 作有限谱分解
+$C_y=\sum_kv_{yk}v_{yk}^\dagger$，将 $(y,k)$ 简记为 $j$，置 $U_j=U_y$。恒等式
+$(vv^\dagger)\circ X=D(v)XD(v)^\dagger$
+说明细分没有改变 $\mathcal T_{\mathrm s}$。若将这些标签实现为更细 POVM，第 390 节的正矩阵分解实现仍适用；使用原 $U_y$ 就还原同一个成功映射。因此证明既未假定原分支秩一，也未在细分时替换实际反馈。
+
+由 $\sum_jv_jv_j^\dagger=\sum_{y\in Y_{\mathrm s}}C_y$ 得 $M\preceq C$。又
+
+$$
+\mathcal T_{\mathrm s}^{*}(I_S)
+ =\sum_jD(v_j)^\dagger U_j^\dagger U_jD(v_j)
+ =\operatorname{diag}\left(\sum_j|(v_j)_i|^2\right)_{i=1}^d.
+$$
+
+与 $tI_S$ 比较便得到 $\operatorname{diag}M=t\mathbf1$，取迹即得总能量 $dt$。归一化 Choi 矩阵的迹因此是 $t$；恒等式
+$\langle\omega_d|(I\otimes K)|\omega_d\rangle=\operatorname{Tr}K/d$
+给出 $f_{\mathrm{actual}}$ 的公式。对每个酉矩阵，$|(U_j)_{ii}|\le1$，故
+
+$$
+|\operatorname{Tr}(U_jD(v_j))|
+ \le\sum_i|(v_j)_i|=\|v_j\|_1,
+\qquad \|v_j\|_1^2\le d\|v_j\|_2^2.
+$$
+
+求和并除以 $d^2$，得到 $f_{\mathrm{actual}}\le f_\star\le t$。这里使用的是已知的固定 Kraus 分解恢复保真度成分：Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Proposition 8（PDF 第 11–12 页，式 (15)–(21)）给出以 $d^{-2}\sum_j(\operatorname{Tr}|K_j|)^2$ 控制最优纠缠保真度的结果。本文所需的对角 Kraus、酉反馈情形已由上面的逐项估计直接证明；$f_\star$ 在这里是给定细分的上界，并不宣称原协议在 diamond 范数下最优。
+
+最后，以 $\Pi_d$ 作为 diamond 范数的一个合法输入，有
+
+$$
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond
+ \ge\|J_{\mathrm s}-t\Pi_d\|_1.
+$$
+
+对 Hermitian 矩阵 $H=J_{\mathrm s}-t\Pi_d$，二结果检验 $\{\Pi_d,I-\Pi_d\}$ 给出的两个有符号读数为 $f_{\mathrm{actual}}-t$ 和 $t-f_{\mathrm{actual}}$。谱分解给出 $|\operatorname{Tr}(FH)|\le\operatorname{Tr}(F|H|)$（$0\preceq F\preceq I$），对这两个效果相加便得
+
+$$
+\|H\|_1\ge|f_{\mathrm{actual}}-t|+|t-f_{\mathrm{actual}}|
+ =2(t-f_{\mathrm{actual}}).
+$$
+
+结合误差合同并除以正数 $t$ 即得结论。证毕。
+
+该二结果计算给出必要下界。即使这个检验读数很小，也不能据此认定任意参考输入的误差都小；以下推导始终只沿上述必要性方向使用它。
+
+## 396. 支撑与相位环面的正距离不能靠稀有成功消除
+
+**定义 396.1（相位支撑间隙）。** 对相关矩阵 $C$，令 $H_C=\operatorname{ran}C$，$P_C$ 为到 $H_C$ 的正交投影，$Q_C=I-P_C$。以定义 390.1 的相位向量集合 $\mathbb T^d$ 定义
+
+$$
+\mu(C)=\min_{z\in\mathbb T^d}\|Q_Cz\|_2^2.
+$$
+
+这里 $H_C$ 是成功 Kraus 向量所在的线性支撑，不是另行选择的待恢复编码子空间；恢复任务仍覆盖整个 $\mathbb C^d$。
+
+**定理 396.2（所有正成功率共用的支撑误差下界）。** 上述最小值取得，$0\le\mu(C)\le d$，且
+
+$$
+\mu(C)>0
+\quad\Longleftrightarrow\quad
+H_C\cap\mathbb T^d=\varnothing
+\quad\Longleftrightarrow\quad
+\eta(C)=0.
+$$
+
+每个定义 395.1 的正成功协议满足
+
+$$
+f_{\mathrm{actual}}\le f_\star
+ \le\left(1-\frac{\mu(C)}d\right)t,
+\qquad
+\delta\ge\frac{2\mu(C)}d.
+$$
+
+因此，存在一个对所有正成功率协议都成立的严格正误差下界，当且仅当 $\eta(C)=0$。这里没有断言 $2\mu(C)/d$ 就是可达到的最小 diamond 误差。
+
+证明。$\mathbb T^d$ 是有限个单位圆的乘积，因而紧致；$z\mapsto\|Q_Cz\|_2^2$ 连续，故取得最小值。正交投影不增加范数，而 $\|z\|_2^2=d$，给出 $0\le\mu(C)\le d$。最小值为零恰好意味着某个相位向量满足 $Q_Cz=0$，也就是它属于 $H_C$。与定理 391.1 的支撑判据结合，得到所述等价。
+
+命题 395.2 的每个细分项满足 $0\preceq v_jv_j^\dagger\preceq M\preceq C$。若 $x\in\ker C$，则
+
+$$
+0\le|v_j^\dagger x|^2\le x^\dagger Cx=0,
+$$
+
+故 $v_j\perp\ker C$，即 $v_j\in H_C$。对任意 $v\in H_C$，逐坐标选择与 $v_i$ 同相的 $z_i$（$v_i=0$ 时任取单位相位），并用三角不等式，得到
+
+$$
+\|v\|_1=\max_{z\in\mathbb T^d}|z^\dagger v|
+ =\max_{z\in\mathbb T^d}|(P_Cz)^\dagger v|
+ \le\sqrt{d-\mu(C)}\,\|v\|_2.
+$$
+
+最后一步使用 $\|P_Cz\|_2^2=d-\|Q_Cz\|_2^2\le d-\mu(C)$ 与 Cauchy–Schwarz。对所有 $v_j$ 平方求和，除以 $d^2$，再代入 $\sum_j\|v_j\|_2^2=dt$，便有
+$f_\star\le(1-\mu(C)/d)t$。命题 395.2 给出
+$t\delta\ge2(t-f_{\mathrm{actual}})\ge2t\mu(C)/d$；因 $t>0$，得到与 $t$ 无关的误差下界。
+
+若 $\eta(C)>0$，定理 391.1 从支撑内的相位向量构造一个正成功概率的精确协议，其归一化误差为零，排除了对所有正成功协议统一成立的任何严格正下界。反方向已由 $\mu(C)>0$ 证明。证毕。
+
+秩亏本身不是障碍。例如 $d\ge2$ 时，$C=\mathbf1\mathbf1^\dagger$ 的秩为 $1$，但 $\mathbf1\in H_C\cap\mathbb T^d$，且 $C\in\mathcal P_d$，由定理 390.2 得 $\eta(C)=1$。关键是支撑与相位环面的相对位置；把成功概率压低并不能让被 $C$ 支配的向量离开该支撑。
+
+## 397. 辅助效果给出的成功率与误差必要关系
+
+本节把零支撑质量的障碍推广到少量非零质量的情形。下文的效果 $E$ 是作用在坐标空间 $\mathbb C^d$ 上的数学算子；它不指第 389 节的记录空间，也不增加对系统或记录施加测量的权限。辅助标签空间同样只用于证明不等式。
+
+**定理 397.1（效果界及其显式反演）。** 给定 $0\preceq E\preceq I_d$，定义
+
+$$
+a=\min_{z\in\mathbb T^d}\frac{z^\dagger Ez}{d},
+\qquad 0\le a\le1,
+\qquad
+G_a(q)=\left(\sqrt{(1-a)(1-q)}+\sqrt{aq}\right)^2
+\quad(0\le q\le a).
+$$
+
+对定义 395.1 的任意协议及命题 395.2 的任意上述细分，令
+
+$$
+x=\frac{\operatorname{Tr}(EC)}{dt},
+\qquad q=\min\{a,x\}.
+$$
+
+则有必要条件
+
+$$
+\frac{f_{\mathrm{actual}}}{t}\le\frac{f_\star}{t}\le G_a(q),
+\qquad
+\boxed{\ \delta\ge2\bigl(1-G_a(q)\bigr).\ }
+$$
+
+若进一步 $0\le\delta<2a$，则
+
+$$
+r_a(\delta)=
+ \left[\sqrt{a(1-\delta/2)}-\sqrt{(1-a)\delta/2}\right]^2>0,
+\qquad
+\boxed{\ t\le\frac{\operatorname{Tr}(EC)}{d\,r_a(\delta)}.\ }
+$$
+
+证明。相位集合紧致保证 $a$ 的最小值取得；$0\preceq E\preceq I_d$ 与 $\|z\|_2^2=d$ 给出 $a\in[0,1]$。令 $\ell_j=\|v_j\|_1$，取逐坐标匹配相位的 $z_j\in\mathbb T^d$，使 $z_j^\dagger v_j=\ell_j$。置
+
+$$
+N=\sum_j\ell_j^2=d^2f_\star,
+\qquad c_j=\frac{\ell_j}{\sqrt N}.
+$$
+
+因为 $\|v_j\|_1\ge\|v_j\|_2$ 且 $\sum_j\|v_j\|_2^2=dt>0$，所以 $N\ge dt>0$，以上归一化合法。以正交标签 $|j\rangle$ 定义两个辅助单位向量
+
+$$
+|V\rangle=\frac1{\sqrt{dt}}\sum_j|j\rangle\otimes v_j,
+\qquad
+|Z\rangle=\frac1{\sqrt d}\sum_j c_j|j\rangle\otimes z_j.
+$$
+
+标签正交、$\sum_jc_j^2=1$ 及 $\|z_j\|_2^2=d$ 给出 $\|V\|_2=\|Z\|_2=1$，并且
+
+$$
+\langle Z|V\rangle
+ =\frac{\sum_jc_j\ell_j}{d\sqrt t}
+ =\frac{\sqrt N}{d\sqrt t}
+ =\sqrt{f_\star/t}.
+$$
+
+令 $\widetilde E=I_{\mathrm{label}}\otimes E$，记
+
+$$
+\alpha=\langle Z|\widetilde E|Z\rangle
+ =\sum_jc_j^2\frac{z_j^\dagger Ez_j}{d}\ge a,
+\qquad
+b=\langle V|\widetilde E|V\rangle
+ =\frac{\operatorname{Tr}(EM)}{dt}\le x.
+$$
+
+其中 $\alpha,b\in[0,1]$；$x\ge0$，但 $x$ 不必小于 $1$，这正是定义 $q$ 时需要截断的原因。迹不等式来自
+$\operatorname{Tr}(E(C-M))=\operatorname{Tr}(E^{1/2}(C-M)E^{1/2})\ge0$。
+
+用 $\widetilde E+(I-\widetilde E)=I$ 分裂内积，再分别应用 Cauchy–Schwarz，得到
+
+$$
+\begin{aligned}
+\sqrt{f_\star/t}
+ &=|\langle Z|V\rangle|\\
+ &\le\left|\langle\widetilde E^{1/2}Z|
+                  \widetilde E^{1/2}V\rangle\right|
+    +\left|\langle(I-\widetilde E)^{1/2}Z|
+                  (I-\widetilde E)^{1/2}V\rangle\right|\\
+ &\le\sqrt{\alpha b}+\sqrt{(1-\alpha)(1-b)}.
+\end{aligned}
+$$
+
+所需的二元概率单调性可直接由角度看出。对 $u\in[0,1]$ 写 $\theta_u=\arcsin\sqrt u\in[0,\pi/2]$，则
+
+$$
+\sqrt{uv}+\sqrt{(1-u)(1-v)}=\cos(\theta_u-\theta_v).
+$$
+
+若 $b<a$ 且 $\alpha\ge a$，则
+$0\le\theta_a-\theta_b\le\theta_\alpha-\theta_b\le\pi/2$，所以右端在 $\alpha=a$ 时最大。并且在 $0\le b\le a$ 内，$G_a(b)=\cos^2(\theta_a-\theta_b)$ 随 $b$ 单调增加。若 $x<a$，有 $b\le x<a$，故上面的内积界不超过 $\sqrt{G_a(x)}$。若 $x\ge a$，则 $q=a$、$G_a(q)=1$，而单位向量内积至多为 $1$，同样得到界；特别地，$b\ge a$ 必属于这一情形。于是
+$f_\star/t\le G_a(q)$，再用命题 395.2 得到 $\delta\ge2(1-G_a(q))$。
+
+为明确反演的方向，置 $h=\delta/2$、$A=\arcsin\sqrt a$、$B=\arcsin\sqrt q$。有 $0\le B\le A\le\pi/2$，而误差必要条件意味着
+
+$$
+\cos^2(A-B)\ge1-h,
+\qquad
+\sin^2(A-B)\le h.
+$$
+
+当 $0\le h<a$ 时，$H=\arcsin\sqrt h<A$。由于正弦在 $[0,\pi/2]$ 单调增加，上式等价于 $A-B\le H$，也就是 $B\ge A-H>0$。因此
+
+$$
+q\ge\sin^2(A-H)
+ =\left[\sqrt{a(1-h)}-\sqrt{(1-a)h}\right]^2
+ =r_a(\delta)>0.
+$$
+
+反向代入也给出相同的标量等价；没有在平方时遗失符号，因为 $A-H>0$。最后 $x\ge q\ge r_a(\delta)$，乘以 $dt$ 并除以正数 $d\,r_a(\delta)$ 就得到成功率上界。证毕。
+
+端点由同一域约定处理：$a=0$ 时 $q=0$、$G_0(0)=1$，第一条界只是 $\delta\ge0$，而 $0\le\delta<2a$ 是空域；$a=1$ 时 $G_1(q)=q$，在 $0\le\delta<2$ 上 $r_1(\delta)=1-\delta/2>0$。对 $a>0$，$\delta=0$ 给出 $r_a(0)=a$ 与 $t\le\operatorname{Tr}(EC)/(da)$。若 $\operatorname{Tr}(EC)=0$，第一条界直接给出 $\delta\ge2a$，无需在禁止的域内除以零。
+
+取 $E=Q_C$ 时，$a=\mu(C)/d$ 且 $\operatorname{Tr}(Q_CC)=0$，因而第 396 节的支撑下界也包含于本效果界。那里保留的几何证明进一步显示了全体分支为何共同受支撑限制。这里的辅助向量及效果只比较同一组实际分支的数据，既不提供新增操作，也不将必要条件提升为 diamond 误差的充分条件。
+
+## 398. 四路径扰动族在固定正误差下的线性成功尺度
+
+**定义 398.1（近似恢复成功率的上确界）。** 对相关矩阵 $C$ 及 $0\le\delta\le2$，在定义 395.1 的有限协议范围内定义
+
+$$
+\eta_\delta(C)
+ =\sup\left(\{0\}\ \cup
+ \left\{t\in(0,1]:
+ \begin{array}{l}
+ \text{存在协议满足 }\mathcal T_{\mathrm s}^{*}(I_S)=tI_S,\\
+ \|\mathcal T_{\mathrm s}-t\operatorname{id}_S\|_\diamond\le t\delta
+ \end{array}\right\}\right).
+$$
+
+加入 $0$ 使没有任何正成功协议时上确界仍为零，不表示对零成功映射作条件归一化。此处只定义上确界，不主张近似最优协议取得该值。$\delta=0$ 时由定理 390.2 有 $\eta_0(C)=\eta(C)$；精确情形的取得性不被默默推广到正误差情形。
+
+**定理 398.2（固定误差下的双边线性界）。** 使用定义 392.1 的 $B,W,C_0,\nu$ 和定理 393.1 的
+$C_\varepsilon=(1-\varepsilon)C_0+\varepsilon I_4$，$0\le\varepsilon\le1$。令
+
+$$
+L=\|W\|_{\mathrm{op}}=2+\frac1{\sqrt2},
+\qquad \bar\delta=\frac{\nu}{2L},
+\qquad \nu=3-2\sqrt2>0.
+$$
+
+对每个固定的 $0\le\delta<\bar\delta$，定义
+
+$$
+K_\delta=
+\frac{4}{\left[\sqrt{\nu(1-\delta/2)}
+             -\sqrt{(4L-\nu)\delta/2}\right]^2}.
+$$
+
+该常数有限且为正，并且对整个 $0\le\varepsilon\le1$，
+
+$$
+\boxed{\qquad
+\varepsilon\le\eta_\delta(C_\varepsilon)
+ \le\min\{1,K_\delta\varepsilon\}.
+\qquad}
+$$
+
+因而在每个这样的固定误差容限下，
+
+$$
+\eta_\delta(C_\varepsilon)=\Theta(\varepsilon)
+\qquad(\varepsilon\downarrow0).
+$$
+
+对端点 $C_0$，任何正成功率协议的误差至少为 $\bar\delta$，同时仍适用第 396 节的 $2\mu(C_0)/4$ 下界。对每个 $\varepsilon>0$，则已有成功概率恰为 $\varepsilon$ 的完美恢复协议。这里的线性阶没有指定锐系数，$\bar\delta$ 也不被断言为锐阈值。
+
+证明。按定义 392.1 的 $B$ 逐项相乘，得到
+
+$$
+BB^\dagger=
+\begin{pmatrix}
+2&(1-i)/2\\
+(1+i)/2&2
+\end{pmatrix}.
+$$
+
+其特征多项式是 $(2-\lambda)^2-1/2$，故本征值为 $2\pm1/\sqrt2$。$B^\dagger B$ 与 $BB^\dagger$ 的非零本征值相同：例如 $BB^\dagger u=\lambda u$ 且 $\lambda>0$ 时，$B^\dagger u\ne0$ 并满足 $B^\dagger B(B^\dagger u)=\lambda B^\dagger u$；反向用 $B$ 同理。因此 $W\succeq0$ 的算子范数确为所示 $L$。
+
+取定理 397.1 的效果 $E=W/L$，则 $0\preceq E\preceq I_4$。定理 392.2 给出相位最小值 $\nu$、$WC_0=0$ 与 $\operatorname{Tr}W=4$，因而
+
+$$
+a=\frac{\nu}{4L},
+\qquad
+\operatorname{Tr}(EC_\varepsilon)=\frac{4\varepsilon}{L},
+\qquad 2a=\bar\delta.
+$$
+
+在 $0\le\delta<\bar\delta$ 上，
+
+$$
+r_a(\delta)
+ =\frac1{4L}
+ \left[\sqrt{\nu(1-\delta/2)}
+       -\sqrt{(4L-\nu)\delta/2}\right]^2.
+$$
+
+方括号严格为正，因为比较两个非负平方项后，该条件恰为
+$\nu>2L\delta$。定理 397.1 因此对每个可行 $t>0$ 给出
+
+$$
+t\le\frac{4\varepsilon/L}{4r_a(\delta)}
+ =K_\delta\varepsilon.
+$$
+
+结合 $t\le1$ 并对可行集合（包括加入的 $0$）取上确界，就得到上界。$\varepsilon=0$ 时 $\operatorname{Tr}(EC_0)=0$，定理 397.1 的未反演形式直接给出任意正成功协议必须满足 $\delta\ge2a=\bar\delta$；因此在当前误差区间内 $\eta_\delta(C_0)=0$。
+
+下界由第 393 节的同一个有限 Fourier 构造给出：其四个成功矩阵之和是
+
+$$
+\frac\varepsilon4\sum_{k=0}^3z^{(k)}z^{(k)\dagger}
+ =\varepsilon I_4\preceq C_\varepsilon,
+$$
+
+剩余 $(1-\varepsilon)C_0$ 作为失败分支。对 $\varepsilon>0$，四个成功结果分别作相位酉反馈后，总成功映射为
+$\mathcal T_{\mathrm s,\varepsilon}=\varepsilon\operatorname{id}_S$，误差为零，故也满足任意上述正误差容限。$\varepsilon=0$ 的下界由定义中加入的零给出。这证明双边界及 $\Theta(\varepsilon)$，其中比较常数可取 $1$ 与固定的 $K_\delta$。证毕。
+
+$\delta=0$ 时 $K_0=4/\nu$，上述结论回到定理 393.1 已有的精确成功界。这里的增量是在每个固定的 $0<\delta<\bar\delta$ 下仍有双边线性阶；没有将 $\delta$ 随 $\varepsilon$ 趋近阈值的情形纳入同一个统一常数，也没有由上界反推其可达到。
+
+对上述 Fourier 协议族，$\varepsilon>0$ 时接受后的通道恒为恒等通道，而未归一化成功映射在 diamond 范数中趋于零：
+
+$$
+\frac{\mathcal T_{\mathrm s,\varepsilon}}{\varepsilon}
+ =\operatorname{id}_S,
+\qquad
+\|\mathcal T_{\mathrm s,\varepsilon}\|_\diamond=\varepsilon
+ \longrightarrow0.
+$$
+
+前式来自 $\mathcal T_{\mathrm s,\varepsilon}=\varepsilon\operatorname{id}_S$。对任何参考维数，恒等映射保持迹范数，故 $\|\operatorname{id}_S\|_\diamond=1$；范数齐次性给出后式。$\varepsilon=0$ 的成功映射是零映射，除以成功概率的条件化操作无定义。
+
+因此，正 $\varepsilon$ 上的完美条件恢复与 $C_0$ 的正误差下界相容：前者使用概率趋零的成功事件，没有在端点给出一个正概率精确协议。未归一化成功映射本身连续趋于零，此处没有主张它发生不连续。定义 393.2 中随 $\varepsilon$ 改变的纯记录耦合及其完整访问前提仍然有效，不能将这一族解释为对同一不可访问记录免费增加逆转权限。
+
+来源的适用范围也保持分明。Gregoratti–Werner 的上述 Proposition 8 提供固定 Kraus 分解的保真度成分；从该成分到本节的后选择 diamond 必要界，使用的是命题 395.2、定理 396.2 和定理 397.1 中写出的直接推导。Buscemi–Chiribella–D’Ariano，[*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，Theorem 2（PDF 第 2 页）给出极端 Schur 通道的秩界及低维 random-unitary 结论；环境反馈讨论和四维秩二例子的式 (9) 位于 PDF 第 3 页。它们支持所用框架及例子的来源，不替代这里的成功率—误差证明。上述组合推导不据此主张文献原创性。
+
+**问题 398.3（共同支撑、效果质量与尚未求出的前沿）。** 第 396–398 节表达的关系是：所有成功分支同时受同一个 $C$ 的正半定支配，近似恒等恢复又要求其相位匹配的总权重足够大；效果 $E$ 则把这个要求与同一 $C$ 所提供的质量 $\operatorname{Tr}(EC)$ 联系起来。若相位方向与支撑有正距离，缩小成功率不能改变该距离；当扰动提供少量效果质量时，在所证明的固定精度区间内，成功率也只能处于相同的线性尺度。起作用的是共同支撑、允许的反馈与精度合同之间的关系，单独的秩或某一个分支的保真度不能替代这些联合条件。
+
+仍待求解的是同一单份、完整记录、有限测量与酉反馈接口中的可达关系
+
+$$
+\mathcal R(C)=\{(t,\delta):\text{存在定义 395.1 的协议实现该合同}\},
+$$
+
+特别是：固定 $\delta$ 时 $\eta_\delta(C_\varepsilon)/\varepsilon$ 的极限是否存在及其锐值；$C_0$ 上对所有 $t>0$ 协议取误差下确界的确切值与取得性；线性成功尺度所允许的最大误差范围；以及效果必要界中哪些点能由实际协议达到。单个效果产生的 $K_\delta$、$\bar\delta$ 和支撑投影下界均未解决这些锐问题。问题 394.2 中整个 $[0,1]$ 上的精确 $\eta(C_\varepsilon)$、锐渐近以及确定精确恢复集合 $\{\varepsilon:\eta(C_\varepsilon)=1\}$ 也继续保留。
+
+## 追加锚（本行以下为增补区）
+## 399. 整体未知输入的张量扩张保留支撑误差下界
+
+**定义 399.1（张量输入与归一化误差合同）。** 固定定义 389.1 的 $d$ 维系统、归一化纯记录 $r_i$ 及相关矩阵 $C$，令 $n\ge1$ 为整数。对整个输入空间 $S^{\otimes n}$ 使用乘积基 $|\mathbf i\rangle=|i_1,\ldots,i_n\rangle$，记录耦合为
+
+$$
+J^{\otimes n}|\mathbf i\rangle
+ =|\mathbf i\rangle\otimes
+   |r_{i_1}\rangle\otimes\cdots\otimes|r_{i_n}\rangle,
+\qquad
+C^{\otimes n}_{\mathbf i,\mathbf j}
+ =\prod_{a=1}^n C_{i_a j_a}.
+$$
+
+这里输入是任意 $d^n$ 维未知态，允许不同系统因子之间以及与任意有限维参考系统之间存在纠缠；“张量”限定耦合的形式，不限定输入态为乘积态。允许测量全部联合记录的任意有限 POVM，再按结果对整个 $S^{\otimes n}$ 施加任意联合酉反馈。对所接受结果的总映射 $\mathcal T_{\mathrm s}$，要求
+
+$$
+\mathcal T_{\mathrm s}^{*}(I)=tI,\qquad
+0<t\le1,\qquad
+\|\mathcal T_{\mathrm s}-t\operatorname{id}_{S^{\otimes n}}\|_\diamond
+ \le t\delta.
+$$
+
+$\delta$ 使用第 395 节未除以 $2$ 的 diamond 范数约定。成功概率 $t$ 对全部输入相同，误差要求包括保留外部参考系统。这个任务没有选择编码子空间，也没有把恢复目标缩减为部分输入。
+
+**定理 399.2（相位支撑间隙的张量下界）。** 对线性子空间 $H\subseteq\mathbb C^d$，令 $P_H$ 为其正交投影，定义
+
+$$
+\mu(H)=\min_{z\in\mathbb T^d}\|(I-P_H)z\|_2^2.
+$$
+
+对每个整数 $n\ge1$，有
+
+$$
+\boxed{\quad \mu(H^{\otimes n})\ge d^{n-1}\mu(H).\quad}
+$$
+
+特别地，取 $H=\operatorname{ran}C$，则定义 399.1 的每个协议均满足
+
+$$
+\boxed{\quad \delta\ge\frac{2\mu(C)}d.\quad}
+$$
+
+这里 $\mu(C)=\mu(\operatorname{ran}C)$ 沿用定义 396.1。若 $\eta(C)=0$，右侧严格为正，且对所有 $n\ge1$ 及所有输入无关的 $t>0$ 同时成立。
+
+证明。正交投影满足 $P_{H^{\otimes n}}=P_H^{\otimes n}$。当 $n\ge2$ 时，
+
+$$
+I-P_H^{\otimes n}-(I-P_H)\otimes I_{d^{n-1}}
+ =P_H\otimes(I_{d^{n-1}}-P_H^{\otimes(n-1)})\succeq0;
+$$
+
+$n=1$ 时两者相等。任取 $z\in\mathbb T^{d^n}$，以其后 $n-1$ 个指标 $\alpha\in\{1,\ldots,d\}^{n-1}$ 将坐标分成 $d$ 维切片 $z^{(\alpha)}$。每个切片都属于 $\mathbb T^d$，故
+
+$$
+\begin{aligned}
+\|(I-P_H^{\otimes n})z\|_2^2
+ &=z^\dagger(I-P_H^{\otimes n})z\\
+ &\ge z^\dagger((I-P_H)\otimes I_{d^{n-1}})z\\
+ &=\sum_\alpha\|(I-P_H)z^{(\alpha)}\|_2^2
+ \ge d^{n-1}\mu(H).
+\end{aligned}
+$$
+
+$n=1$ 时后方指标只有一个空元组，同一求和仍成立。相位集合紧致保证最小值取得；对 $z$ 取最小值即得第一式。
+
+$C\succeq0$ 的谱分解表明，$C^{\otimes n}$ 的正本征空间正是 $H^{\otimes n}$，所以 $\operatorname{ran}(C^{\otimes n})=H^{\otimes n}$。将定理 396.2 应用于维数 $d^n$ 的相关矩阵 $C^{\otimes n}$，得到
+
+$$
+\delta\ge\frac{2\mu(C^{\otimes n})}{d^n}
+ \ge\frac{2d^{n-1}\mu(C)}{d^n}
+ =\frac{2\mu(C)}d.
+$$
+
+最后，$\eta(C)=0$ 时 $\mu(C)>0$ 由定理 396.2 给出。证毕。
+
+这里的切片论证与 Kraus 支撑方法相关。Yu–Duan–Xu，[*Bounds on the distance between a unital quantum channel and the convex hull of unitary channels, with applications to the asymptotic quantum Birkhoff conjecture*, arXiv:1201.1172v1](https://arxiv.org/abs/1201.1172v1)，Lemma 2（PDF 第 7–8 页）以 Kraus 算子空间不含酉算子给出到混合酉通道集合的正距离；Theorem 2 与 Corollary 1（PDF 第 8 页）利用 Schur 张量因子的块结构保留该距离下界。该文比较的是通道与混合酉集合；本定理比较经记录测量和反馈后的成功映射与 $t\operatorname{id}$，其误差结论由上面的切片估计及定理 396.2 推出。这是已有支撑方法的应用，不将两种距离目标视为同一个优化问题，也不主张上述常数是锐误差下界。
+
+## 400. 同一系统的重复记录产生 Hadamard 幂
+
+**定义 400.1（保持系统基的重复记录接口）。** 对任意正整数 $n$，在同一个 $S=\mathbb C^d$ 中给定任意未知输入，保持定义 389.1 的系统基不变，依次使 $n$ 个初始纯空白记录与该基受控耦合，得到
+
+$$
+J_n|i\rangle=|i\rangle\otimes|r_i\rangle^{\otimes n},
+\qquad
+E_n=\operatorname{span}\{r_i^{\otimes n}:1\le i\le d\}.
+$$
+
+直到最后的联合 POVM，所有 $n$ 份记录均保持量子可访问。测量可作用在完整 $E_n$ 上，结果只控制系统酉反馈；输入与任意外部参考系统的纠缠也须恢复。$E_n$ 是全部联合记录态的张成空间，不能通过遗漏一份实际存在的记录来定义。若实际记录空间大于 $E_n$，效果可在其正交补上补全。
+
+每一步的制备以正交的系统基为控制：对固定空白 $|b\rangle$，指定 $|i\rangle|b\rangle\mapsto|i\rangle|r_i\rangle$ 后补成酉映射。该权限并非对任意未知记录态执行 $|r\rangle\mapsto|r\rangle|r\rangle$ 的克隆权限。$n$ 是记录次数；定义没有指定秒数、耦合速率、存储寿命或实施成本。
+
+**命题 400.2（约化通道与有限相位分解的测量实现）。** 记逐项幂为
+
+$$
+(C^{\circ n})_{ij}=(C_{ij})^n,\qquad
+\Phi_C(X)=C\circ X.
+$$
+
+则 $J_n$ 是等距映射，且
+
+$$
+\operatorname{Tr}_{E_n}(J_nXJ_n^\dagger)
+ =C^{\circ n}\circ X=\Phi_C^n(X),
+$$
+
+其中 $\Phi_C^n$ 表示同一 $d$ 维矩阵空间上的 $n$ 次通道复合。若存在有限分解
+
+$$
+C^{\circ n}=\sum_{a=1}^m p_a z_a z_a^\dagger,
+\qquad p_a\ge0,\qquad \sum_{a=1}^m p_a=1,
+\qquad z_a\in\mathbb T^d,
+$$
+
+则存在定义 400.1 的有限 POVM 和反馈，使每个校正分支为 $p_a\operatorname{id}_S$，全部结果的总校正映射为 $\operatorname{id}_S$。这一结论适用于任意有限参考空间 $A$ 与任意联合输入 $\rho_{AS}$，分支输出为 $p_a\rho_{AS}$。
+
+证明。不同 $i$ 的系统因子正交，而每个 $r_i^{\otimes n}$ 归一化，故 $J_n^\dagger J_n=I_S$。在矩阵单位 $|i\rangle\langle j|$ 上，记录偏迹给出
+
+$$
+\langle r_j^{\otimes n}|r_i^{\otimes n}\rangle
+ =\langle r_j|r_i\rangle^n=(C_{ij})^n.
+$$
+
+连续 $n$ 次逐项乘以 $C$ 得到相同系数，故约化通道恰为 $\Phi_C^n$。这与定义 399.1 中作用在 $d^n$ 维输入上的 $\Phi_C^{\otimes n}$ 有不同的输入空间。
+
+为明确实现，沿用定理 390.2 的 ket 行坐标约定，在 $E_n$ 的一组正交基中写 $R_n$ 的第 $i$ 行为 $r_i^{\otimes n}$ 的坐标。$R_n$ 满列秩，$R_nR_n^\dagger=C^{\circ n}$。令
+
+$$
+\begin{aligned}
+R_n^+&=(R_n^\dagger R_n)^{-1}R_n^\dagger,\\
+D_a&=\left[R_n^+(p_a z_a z_a^\dagger)(R_n^+)^\dagger\right]^{\mathsf T},\\
+U_a&=\operatorname{diag}\bigl(\overline{(z_a)_1},\ldots,
+                              \overline{(z_a)_d}\bigr).
+\end{aligned}
+$$
+
+这里 $\mathsf T$ 是普通转置。因 $p_a z_a z_a^\dagger\preceq C^{\circ n}$，其值域包含于 $\operatorname{ran}R_n$；定理 390.2 的实现等式给出
+
+$$
+D_a\succeq0,\qquad \sum_aD_a=I_{E_n},\qquad
+R_nD_a^{\mathsf T}R_n^\dagger=p_a z_a z_a^\dagger.
+$$
+
+相应系统分支是 $(p_a z_a z_a^\dagger)\circ X$。逐项乘以 $U_a$ 及其伴随，得到 $\mathcal T_a(X)=p_aX$。对参考空间张量恒等映射后仍是同一等式，求和即得确定精确恢复。若记录空间还有正交补，可在该补空间取任意总和为恒等算子的正效果族，与 $D_a$ 作直和；所有实际记录态均位于 $E_n$，故分支不变。证毕。
+
+此实现是 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1（PDF 第 4 页）的纯环境测量实现及 Proposition 2（PDF 第 4–5 页）的校正条件在当前行坐标中的应用。这里完整访问的是联合记录张成空间，包括所需的相干测量；若已有记录泄漏到不可访问的环境，上述 POVM 权限就不再是给定权限，不能从本命题推出该记录也被擦除。
+
+## 401. 有限成对相位混合与共线商的充分次数
+
+**命题 401.1（小非对角总量的有限相位分解）。** 设 $d\ge1$，$H\in\mathbb C^{d\times d}$ 为 Hermitian 矩阵，$H_{ii}=1$。若
+
+$$
+s(H)=\sum_{1\le i<j\le d}|H_{ij}|\le1,
+$$
+
+则 $H\in\mathcal P_d$。这里不必预先假设 $H\succeq0$，以下有限相位分解同时证明其正半定性。
+
+证明。$d=1$ 时 $H=(1)$ 本身是相位秩一矩阵。以下设 $d\ge2$。对每个 $i<j$ 及实数 $\phi$，构造对角元全为 $1$、仅有非零非对角元
+
+$$
+A^{(ij,\phi)}_{ij}=e^{i\phi},\qquad
+A^{(ij,\phi)}_{ji}=e^{-i\phi}
+$$
+
+的矩阵。取 $z_i=1$、$z_j=e^{-i\phi}$，其余 $d-2$ 个坐标独立遍取 $\{-1,1\}$，以相同权重 $2^{-(d-2)}$ 对 $zz^\dagger$ 求和。第 $(i,j)$ 项为 $z_i\overline{z_j}=e^{i\phi}$；涉及一个其余坐标的交叉项因符号均值为零而消失，涉及两个不同其余坐标的项因独立性而消失，对角元恒为 $1$。这正给出 $A^{(ij,\phi)}\in\mathcal P_d$。$d=2$ 时没有其余坐标，符号集合含一个空选择，所得就是一项权重为 $1$ 的相位矩阵。
+
+同样，对全部 $2^d$ 个符号向量 $\varepsilon\in\{-1,1\}^d$ 作均匀混合，有
+
+$$
+I_d=2^{-d}\sum_{\varepsilon\in\{-1,1\}^d}
+       \varepsilon\varepsilon^\dagger\in\mathcal P_d.
+$$
+
+对 $H_{ij}\ne0$ 选择 $\phi_{ij}$ 使 $H_{ij}=|H_{ij}|e^{i\phi_{ij}}$。直接比较每个对角元和非对角元，得到
+
+$$
+\boxed{\quad
+H=(1-s(H))I_d+
+ \sum_{\substack{i<j\\H_{ij}\ne0}}
+       |H_{ij}|A^{(ij,\phi_{ij})}.
+\quad}
+$$
+
+外层权重均非负且总和为 $1$；展开各项内部的有限混合仍是有限相位混合。零系数不需要指定辐角；$s(H)=0$ 时只有 $I_d$，$s(H)=1$ 时其系数为零，均无例外。证毕。
+
+**命题 401.2（相位凸包对 Schur 乘积封闭）。** 若 $A,B\in\mathcal P_d$，则 $A\circ B\in\mathcal P_d$。
+
+证明。取两个有限相位分解
+
+$$
+A=\sum_a p_a z_a z_a^\dagger,\qquad
+B=\sum_b q_b w_b w_b^\dagger,
+\qquad \sum_a p_a=\sum_bq_b=1.
+$$
+
+令 $z_a\circ w_b$ 表示坐标逐项相乘。每个这样的向量仍属于 $\mathbb T^d$，且
+
+$$
+A\circ B=\sum_{a,b}p_aq_b
+ (z_a\circ w_b)(z_a\circ w_b)^\dagger.
+$$
+
+这是有限和，权重非负且总和为 $(\sum_ap_a)(\sum_bq_b)=1$。证毕。
+
+**定理 401.3（完整重复记录的共线商证书）。** 设 $C$ 为任意 $d$ 维复相关矩阵，采用定义 389.1 的归一化纯记录表示。在指标集上定义
+
+$$
+i\sim j\quad\Longleftrightarrow\quad |C_{ij}|=1.
+$$
+
+这是等价关系。设其共有 $k$ 类，每类选代表 $q_a$，令 $a(i)$ 为 $i$ 所属类。存在单位相位 $u_i$，使
+
+$$
+r_i=u_i r_{q_{a(i)}},\qquad
+\widetilde C_{ab}=C_{q_aq_b},\qquad
+C_{ij}=u_i\overline{u_j}\widetilde C_{a(i)a(j)}.
+$$
+
+若 $k=1$，则对所有整数 $n\ge1$，定义 400.1 的接口都有确定精确恢复。若 $k\ge2$，置
+
+$$
+r=\max_{a<b}|\widetilde C_{ab}|<1.
+$$
+
+对每个满足下式的整数 $n\ge1$，同样存在有限 POVM 的确定精确恢复：
+
+$$
+\sum_{a<b}|\widetilde C_{ab}|^n\le1.
+$$
+
+特别地，$r=0$ 时所有 $n\ge1$ 均满足；$0<r<1$ 时，充分条件为
+
+$$
+\frac{k(k-1)}2\,r^n\le1.
+$$
+
+故对每个固定 $C$，存在有限整数 $N\ge1$，使全部 $n\ge N$ 满足 $\eta(C^{\circ n})=1$。此处 $N$ 可依赖于 $C$。
+
+一般的最终相位混合性质已有先例：Bhat–Devendra，[*On Regions of Mixed Unitarity for Semigroups of Unital Quantum Channels*, arXiv:2512.23598v3](https://arxiv.org/abs/2512.23598v3)，Theorem 6.10（PDF 第 28 页）已对每个相关矩阵断言所有充分大的 Hadamard 幂均为 rank-one correlation matrices 的凸组合，即属于这里的 $\mathcal P_d$。其 Theorem 3.9（PDF 第 11–12 页）是 unital 通道的复合幂最终混合酉结论；没有将其表述为张量幂结论。下述证明给出这一已知性质在完整记录接口中的初等充分证书与有限测量构造，不主张最终恢复性质的原创性。
+
+证明。归一化向量的 Cauchy–Schwarz 等号条件给出
+$|\langle r_j|r_i\rangle|=1$ 当且仅当两向量共线；共线且归一化又等价于相差一个单位相位。因此 $\sim$ 自反、对称且传递，代表元与 $u_i$ 满足所示公式。$\widetilde C$ 是代表记录的相关矩阵；不同代表不共线，故不同类间的模严格小于 $1$。类数有限，所以 $k\ge2$ 时所定义最大值 $r$ 也严格小于 $1$。
+
+对任意 $n\ge1$，逐项取幂得到
+
+$$
+(C_{ij})^n
+ =u_i^n\overline{u_j^n}
+   (\widetilde C_{a(i)a(j)})^n.
+$$
+
+若 $k=1$，令 $z_i=u_i^n$，直接有 $C^{\circ n}=zz^\dagger$，可用命题 400.2。若 $k\ge2$ 且所示非对角总量不超过 $1$，命题 401.1 给出有限分解
+
+$$
+\widetilde C^{\circ n}
+ =\sum_{b=1}^m p_b w_b w_b^\dagger,
+\qquad w_b\in\mathbb T^k,\quad
+p_b\ge0,\quad\sum_bp_b=1.
+$$
+
+对每个 $b$ 定义提升相位向量
+
+$$
+(z_b)_i=u_i^n(w_b)_{a(i)}.
+$$
+
+每个分量模为 $1$，而对每个 $i,j$ 有
+
+$$
+\sum_b p_b(z_b)_i\overline{(z_b)_j}
+ =u_i^n\overline{u_j^n}
+   (\widetilde C_{a(i)a(j)})^n
+ =(C_{ij})^n.
+$$
+
+于是 $C^{\circ n}=\sum_bp_bz_bz_b^\dagger\in\mathcal P_d$，命题 400.2 将其实现为全部分支概率之和为 $1$ 的恢复。
+
+$r=0$ 时商矩阵是 $I_k$，其所有正整数幂仍是 $I_k$，上面的有限分解与提升立即适用。对 $0<r<1$，有
+
+$$
+\sum_{a<b}|\widetilde C_{ab}|^n
+ \le\frac{k(k-1)}2r^n\longrightarrow0.
+$$
+
+例如可取
+
+$$
+N=\max\left\{1,
+ \left\lceil\frac{\log(k(k-1)/2)}{-\log r}\right\rceil\right\}.
+$$
+
+分母为正；$k=2$ 时分子为零，由外层最大值给出 $N=1$。对所有 $n\ge N$，上述充分不等式均成立，证明完毕。
+
+该证书保留同一共线类内部的单位模重叠，并仅压低不同类之间的模；直接要求原矩阵每个非对角元的模都小于 $1$ 会遗漏这些类。定理未将充分次数认作最小次数，也未给出维数一致的普遍次数阈值。它产生有限个测量结果，但没有对实现这些联合效果所需的物理资源作估计。
+
+## 402. 四路径例子的二次幂恢复与两种指数
+
+**命题 402.1（二次 Hadamard 幂的四相位恒等式）。** 对定义 392.1 的 $R_0$ 与 $C_0=R_0R_0^\dagger$，取以下四个列向量：
+
+$$
+z_1=\begin{pmatrix}1\\i\\1\\1\end{pmatrix},\qquad
+z_2=\begin{pmatrix}1\\i\\i\\-i\end{pmatrix},\qquad
+z_3=\begin{pmatrix}1\\-i\\1\\i\end{pmatrix},\qquad
+z_4=\begin{pmatrix}1\\-i\\-i\\1\end{pmatrix}.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac14\sum_{a=1}^4z_az_a^\dagger
+ =\begin{pmatrix}
+ 1&0&1/2&1/2\\
+ 0&1&1/2&-1/2\\
+ 1/2&1/2&1&-i/2\\
+ 1/2&-1/2&i/2&1
+ \end{pmatrix}
+ =C_0^{\circ2}.
+\quad}
+$$
+
+因此，在同一四维系统的两份完整可访问记录上，存在四个结果的有限 POVM，校正后的四个映射各为 $\operatorname{id}_S/4$，总映射为 $\operatorname{id}_S$，从而 $\eta(C_0^{\circ2})=1$。
+
+证明。按 $R_0$ 的行约定，$C_0$ 的六个严格上三角元依次为
+
+$$
+(C_{0,12},C_{0,13},C_{0,14},C_{0,23},C_{0,24},C_{0,34})
+ =\left(0,\frac1{\sqrt2},\frac1{\sqrt2},
+          \frac1{\sqrt2},-\frac i{\sqrt2},\frac{1-i}2\right).
+$$
+
+故它们的平方依次为 $(0,1/2,1/2,1/2,-1/2,-i/2)$。另一方面，令 $M=\frac14\sum_{a=1}^4z_az_a^\dagger$，逐项有
+
+$$
+\begin{aligned}
+M_{12}&=\tfrac14(-i-i+i+i)=0,\\
+M_{13}&=\tfrac14(1-i+1+i)=\tfrac12,\\
+M_{14}&=\tfrac14(1+i-i+1)=\tfrac12,\\
+M_{23}&=\tfrac14(i+1-i+1)=\tfrac12,\\
+M_{24}&=\tfrac14(i-1-1-i)=-\tfrac12,\\
+M_{34}&=\tfrac14(1-1-i-i)=-\tfrac i2.
+\end{aligned}
+$$
+
+四个对角元均为 $\frac14(1+1+1+1)=1$，下三角元由 Hermitian 共轭确定，故全部矩阵元相符。四个 $z_a$ 都是相位向量，权重均为 $1/4$。将它们代入命题 400.2 的 $n=2$、$R_2$ 与效果公式，取 $U_a=\operatorname{diag}(\overline{z_a})$，得到
+
+$$
+\mathcal T_a=\tfrac14\operatorname{id}_S\quad(1\le a\le4),
+\qquad
+\sum_{a=1}^4\mathcal T_a=\operatorname{id}_S.
+$$
+
+每个结果对所有输入的概率都是 $1/4$；确定性来自接受全部四个经各自反馈校正的结果，不是某个指定结果以概率 $1$ 出现。证毕。
+
+**命题 402.2（首次成功指数与充分的以后全部成功界）。** 定义 400.1 的重复记录接口中，令
+
+$$
+\begin{aligned}
+n_{\mathrm{first}}(C)
+ &=\min\{n\in\mathbb Z_{\ge1}:\eta(C^{\circ n})=1\},\\
+N_{\mathrm{all}}(C)
+ &=\min\{N\in\mathbb Z_{\ge1}:\ \forall n\ge N,
+                         \ \eta(C^{\circ n})=1\}.
+\end{aligned}
+$$
+
+定理 401.3 保证这两个集合均非空。对 $C_0$，有
+
+$$
+\eta(C_0)=0,\qquad
+\eta(C_0^{\circ2})=1,\qquad
+n_{\mathrm{first}}(C_0)=2,
+$$
+
+并且
+
+$$
+\eta(C_0^{\circ4})=1,\qquad
+\eta(C_0^{\circ n})=1\quad(n\ge5),\qquad
+2\le N_{\mathrm{all}}(C_0)\le4.
+$$
+
+这些结论不确定 $\eta(C_0^{\circ3})$，因而也不确定 $N_{\mathrm{all}}(C_0)$ 的确切值。
+
+证明。定理 392.2 已给出 $\eta(C_0)=0$，命题 402.1 给出二次幂的确定恢复；正整数中只有 $1$ 小于 $2$，故首次成功指数恰为 $2$。
+
+由命题 401.2，$C_0^{\circ4}=C_0^{\circ2}\circ C_0^{\circ2}\in\mathcal P_4$。其有限分解可直接写成
+
+$$
+C_0^{\circ4}
+ =\frac1{16}\sum_{a,b=1}^4
+ (z_a\circ z_b)(z_a\circ z_b)^\dagger,
+$$
+
+再由命题 400.2 实现恢复。对于更高次数，$C_0$ 的六个无序非对角对中，一个为零，另五个的模都是 $1/\sqrt2$，故
+
+$$
+\sum_{i<j}|(C_0^{\circ n})_{ij}|
+ =5\,2^{-n/2}.
+$$
+
+$n=5$ 时 $5\,2^{-5/2}\le1$，因为两侧为正且平方比较等价于 $25\le32$；此表达式随 $n$ 增加而减小。因此所有 $n\ge5$ 均满足命题 401.1 的充分条件。结合 $n=4$ 的乘积构造，得到全部 $n\ge4$ 的确定恢复和 $N_{\mathrm{all}}(C_0)\le4$；$n=1$ 的失败给出下界 $2$。
+
+在 $n=4$ 时，成对总量证书的左端是 $5/4>1$，但 Schur 乘积构造已经给出恢复。这也直接说明该总量条件只充分而非必要。上述两种构造没有给出 $n=3$ 的判定；一个充分条件未满足不能推出恢复不可能。首次成功只要求某一个幂成功，以后全部成功则量化全部后续幂，二者不能由名称或一次成功合并。证毕。
+
+**命题 402.3（同一记录例子的两种操作结论）。** 对任意整数 $n\ge1$，在定义 399.1 的整个 $4^n$ 维未知输入恢复任务中，以 $C_0^{\otimes n}$ 为相关矩阵的每个输入无关正成功协议，都有
+
+$$
+\delta\ge\frac{\mu(C_0)}2>0.
+$$
+
+在定义 400.1 的同一四维系统重复记录任务中，两份记录已经具有命题 402.1 的确定精确恢复。
+
+证明。$\eta(C_0)=0$ 与定理 396.2 给出 $\mu(C_0)>0$；定理 399.2 取 $d=4$ 即得第一式。第二项由命题 402.1 给出。前者的输入基索引是任意元组 $(i_1,\ldots,i_n)$，后者只保留同一个 $i$ 并生成 $r_i^{\otimes n}$；其输入维数、记录之间受同一索引控制的关系以及对应的相关矩阵均不同。因此这两个结论没有作用在同一恢复任务上。证毕。
+
+第一项只涉及整个输入空间及所定义的测量—酉反馈权限，不推出编码子空间、蒸馏或恢复速率的不可能性，也没有求出可达到的锐张量误差。第二项要求所有记录保持联合量子可访问；受限记录访问、相干控制的实际成本及记录次数到物理时间的换算，需要另行给定模型。$C_0^{\circ3}$ 的恢复量、一般充分次数的锐性以及上述受限接口中的可达界，不由这些构造判定；这些未决范围不包含对其文献状态的断言。
+
+## 追加锚（本行以下为增补区）
