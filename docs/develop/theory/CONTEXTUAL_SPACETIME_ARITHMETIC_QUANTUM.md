@@ -60893,3 +60893,213 @@ $$
 取倒数并对有限个 $i$ 取最小，得到 $\Delta<\Lambda<\eta$。定理276.2给出任意输出维数的下界 $R_D\ge\Delta$，以及六维达到构造；同样的实补零使其适用于全部 $D\ge6$。这证明式（278.3）。代入等半径得到式（278.4）。本结论只给出四、五维最优值的区间，不把两个带标签酉分支的上界声明为这两个维数的最优值。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 279. 任意维等距编码的支撑代价与六维必要性
+
+**定义 279.1（占用支撑的共轭缺口）。** 沿用定义276.1的正半径六态模型，记 $\alpha_i=1/a_i$、$\Delta=(\sum_i\alpha_i)^{-1}$、$\eta=(\sum_i\alpha_i^2)^{-1/2}$。对任意有限 $D\ge2$ 的等距编码 $\mathcal E(X)=VXV^*$，令 $\Pi=VV^*$，并在计算非实残差的固定输出基底中定义
+
+$$
+\kappa(V)=2-\operatorname{Tr}(\Pi\bar\Pi).
+\tag{279.1}
+$$
+
+两个投影的秩均为二，故 $\kappa(V)=\|\Pi-\bar\Pi\|_F^2/2\ge0$，且它为零恰当且仅当占用支撑对共轭不变。
+
+**定理 279.2（纯辅助编码不能借增加维数降低最优残差）。** 对任意上述等距编码，其六态最坏非实残差 $r$ 满足
+
+$$
+r^2\ge\eta^2+\frac{1+\eta^2}{4}\kappa(V).
+\tag{279.2}
+$$
+
+因此，允许任意有限输出维数的全部等距编码，其最小残差仍为 $\eta$。达到该值必有共轭不变的占用支撑；支撑不变本身不保证输入轴方向已达到最优。在可逆信道正规形中，这说明只使用秩一辅助态时，增加未占用维数不能改进二维最优值。
+
+证明。令 $S=V^*\bar V$。这是复对称的二阶矩阵，且
+
+$$
+\|S\|_F^2=\operatorname{Tr}(\Pi\bar\Pi)=2-\kappa(V).
+\tag{279.3}
+$$
+
+对输入状态 $\rho$，置 $H=V\rho V^*-\bar V\bar\rho V^{\mathsf T}$。它 Hermitian 且迹为零。其正负特征值各自的绝对值之和均为 $\|H\|_1/2$，故平方和至多为这两个和的平方之和，得到
+
+$$
+\left(\frac12\|H\|_1\right)^2
+\ge\frac12\operatorname{Tr}(H^2)
+=\operatorname{Tr}(\rho^2)-\operatorname{Tr}(\rho S\bar\rho S^*).
+\tag{279.4}
+$$
+
+这里的最后等式只用等距性；没有把 Hilbert–Schmidt 范数当成迹范数的等值替代。
+
+令 $Q=\|S\|_F^2$。分别将 $\rho_{i,+}$ 和 $\rho_{i,-}$ 代入式（279.4）后取平均，线性项抵消，于是
+
+$$
+r^2\ge\frac{2-Q}{4}
++\frac{a_i^2}{4}
+\left[2-\operatorname{Tr}(\sigma_i S\bar\sigma_i S^*)\right].
+\tag{279.5}
+$$
+
+对称性使 $S$ 属于复线性空间 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。Pauli 乘法直接给出
+
+$$
+\sum_{i=1}^3\sigma_i S\bar\sigma_i=S,
+\tag{279.6}
+$$
+
+从而三个迹项之和为 $Q$。将式（279.5）除以 $a_i^2$ 再求和，得
+
+$$
+r^2\sum_i\alpha_i^2
+\ge\frac{(2-Q)\sum_i\alpha_i^2+6-Q}{4}
+=1+\frac{2-Q}{4}\left(1+\sum_i\alpha_i^2\right).
+$$
+
+这就是式（279.2）。第278节的二维酉编码使输出虚轴读取单位方向 $u_i=\eta\alpha_i$，逐态残差均为 $\eta$。将它作实坐标补零即可在任意 $D\ge2$ 达到；未占用补空间上的解码补为固定态制备，仍在完整输出代数上 CPTP。证毕。
+
+**定理 279.3（全局精确恢复残差的最小维数恰为六）。** 对所有三个严格正的半径，有
+
+$$
+\Delta<R_5(a)\le R_4(a)\le\Lambda,
+\qquad
+R_D(a)=\Delta\quad(D\ge6),
+\tag{279.7}
+$$
+
+其中 $\Lambda$ 取式（278.1）。因此，达到全维数最优精确恢复残差的最小输出维数恰为六。本节不求出四、五维的精确最优值或它们与全局下界之间的差值。
+
+证明。先提取达到全局下界时强制出现的通道。假设某个精确恢复方案具有残差 $r=\Delta$，定义
+
+$$
+\bar{\mathcal E}(X)=\overline{\mathcal E(\bar X)},
+\qquad
+\mathcal C=\mathcal D\bar{\mathcal E}.
+\tag{279.8}
+$$
+
+共轭 Kraus 表示保证 $\bar{\mathcal E}$ 和 $\mathcal C$ 都是复线性 CPTP。精确恢复及解码的迹距离收缩性给出
+
+$$
+d_{\rm tr}\bigl(\rho,\mathcal C(\rho^{\mathsf T})\bigr)
+\le d_{\rm tr}\bigl(\mathcal E(\rho),\overline{\mathcal E(\rho)}\bigr)
+\le\Delta
+\tag{279.9}
+$$
+
+对全部模型态成立。
+
+将 $\mathcal C\mathsf T$ 的 Bloch 仿射作用写成 $v\mapsto b+Mv$，其中 $\mathsf T$ 是输入转置。对 $\mathcal C$ 的归一化 Choi 态取反对称 Bell 向量期望，完全正性给出 $(1-\operatorname{Tr}M)/4\ge0$。这是与第276节相同的 Pauli Choi 约束，对未平均的通道也成立：平移和非对角项在该期望中不贡献。
+
+式（279.9）在第 $i$ 轴的两个符号上迫使
+
+$$
+M_{ii}\ge1-2\Delta\alpha_i=:t_i.
+$$
+
+三个下界之和为一，因此 $\operatorname{Tr}M\le1$ 迫使每个对角等号。将同一对误差平方后平均，得到
+
+$$
+\|b\|^2+a_i^2\|(M-I)e_i\|^2\le4\Delta^2.
+$$
+
+其中对角项已经等于 $4\Delta^2$，所以 $b=0$，所有非对角项也为零。故 $\mathcal C$ 是唯一的 Pauli 通道，其系数为 $(t_1,-t_2,t_3)$，四个 Pauli 概率为
+
+$$
+(p_I,p_X,p_Y,p_Z)
+=(\Delta\alpha_2,\Delta\alpha_3,0,\Delta\alpha_1).
+\tag{279.10}
+$$
+
+三个非零概率均严格正，因而这个必要通道的 Choi 秩恰为三。此论证不要求三个 $t_i$ 都非负，也不以倒数三角条件为前提。
+
+现在令输出维数为四。由 Nayak–Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[arXiv:quant-ph/0605041v4](https://arxiv.org/pdf/quant-ph/0605041v4)，定理2.1的已有可逆信道正规形，精确恢复编码的辅助态秩至多为二。若其秩为一，则编码是等距映射，定理279.2给出 $r\ge\eta>\Delta$，与假设矛盾。
+
+若辅助态秩为二，其占用维数为四，编码可写成
+
+$$
+\mathcal E(X)=U(X\otimes\tau)U^*,
+\qquad
+\tau=\operatorname{diag}(q_0,q_1),\quad q_0,q_1>0,
+\quad q_0+q_1=1,
+\tag{279.11}
+$$
+
+其中 $U$ 为四阶酉矩阵。对这样占满输出空间的编码，任意 CPTP 左逆都必须为
+
+$$
+\mathcal D(Y)=\operatorname{Tr}_{\rm anc}(U^*YU).
+\tag{279.12}
+$$
+
+为核对这里没有额外解码自由度，令 $B_\ell$ 为解码 Kraus 算子。复合恒等通道的 Choi 秩为一，故每个 $B_\ell U(I\otimes|\beta\rangle)$ 都为恒等矩阵的标量倍数，记为 $b_{\ell\beta}I$；因 $q_\beta>0$，两个 $\beta$ 都受此约束。解码保迹迫使 $\sum_\ell\bar b_{\ell\alpha}b_{\ell\beta}=\delta_{\alpha\beta}$。对任意分块矩阵代入，便得到式（279.12），包括跨块项归零。
+
+在式（279.8）中代入以上编码、解码，令 $W=U^*\bar U$，得到
+
+$$
+\mathcal C(X)=\operatorname{Tr}_{\rm anc}\bigl(W(X\otimes\tau)W^*\bigr).
+\tag{279.13}
+$$
+
+这里 $W$ 是两个量子比特上的酉矩阵。令
+
+$$
+W_{\alpha\beta}=(I\otimes\langle\alpha|)W(I\otimes|\beta\rangle).
+$$
+
+式（279.13）的 Kraus 算子是 $\sqrt{q_\beta}W_{\alpha\beta}$。因为两个权重都正，Choi 秩等于四个块 $W_{\alpha\beta}$ 的复线性张成维数。这个维数又恰是 $W$ 跨输入量子比特与辅助量子比特的算符 Schmidt 秩：它是系数展开 $W=\sum_{\alpha,\beta}W_{\alpha\beta}\otimes|\alpha\rangle\langle\beta|$ 的矩阵秩。
+
+这种混合环境障碍已有成熟先例：Terhal 等，*Simulating quantum operations with mixed environments*，[arXiv:quant-ph/9806095v2](https://arxiv.org/abs/quant-ph/9806095v2)，式（13）及其后的证明，给出一族两 Pauli 通道不能由混合量子比特环境实现。本节不把混合环境障碍本身作为新结论。对这里全部正半径所需的一般秩限制，直接使用 Nielsen 等，*Quantum dynamics as a physical resource*，[arXiv:quant-ph/0208077v3](https://arxiv.org/abs/quant-ph/0208077v3)，第 IV 节命题3、式（4.1）—（4.3）：两个量子比特的酉算符 Schmidt 秩只能为一、二或四，不能为三。这是既有分类结果，不在本节重新声称为新定理。于是式（279.13）的 Choi 秩不可能为三，与式（279.10）矛盾。四维方案不能达到 $r=\Delta$。
+
+还需排除五维输出。秩一辅助态仍由定理279.2排除。秩二时，编码占用一个四维子空间 $P$，其正交补 $Q=I-P$ 为一维。令 $V:\mathbb C^2\otimes\mathbb C^2\to\mathbb C^5$ 为占用空间的等距映射。再次选辅助态本征基，使 $\tau=\operatorname{diag}(q_0,q_1)$、$q_0,q_1>0$，并写 $\mathcal E(X)=V(X\otimes\tau)V^*$。与上面的 Kraus 推导相同，任意 CPTP 左逆在完整输出上的形式必为
+
+$$
+\mathcal D(Y)=\operatorname{Tr}_{\rm anc}(V^*YV)
++\operatorname{Tr}(QY)\omega,
+\tag{279.14}
+$$
+
+其中 $\omega$ 为某个量子比特状态。跨 $P,Q$ 的项归零也由保迹直接得出：若 $q$ 张成补空间，写 $v_\ell=B_\ell q$，则保迹的交叉块条件为 $\sum_\ell\bar b_{\ell\beta}v_\ell=0$；将其代入 Kraus 和，所有跨块解码项均消失。
+
+写 $\omega=(I+c\cdot\boldsymbol\sigma)/2$，$|c|\le1$。至少存在一个轴 $i$ 满足 $|c_i|<1$。对该轴定义 Hermitian 收缩算子
+
+$$
+F=\mathcal D^*(\sigma_i)
+=V(\sigma_i\otimes I_2)V^*+c_i Q.
+\tag{279.15}
+$$
+
+若整个方案达到 $r=\Delta$，已经证明的必要通道式（279.10）给出
+
+$$
+H_\pm=\mathcal E(\rho_{i,\pm})-
+\overline{\mathcal E(\rho_{i,\pm})},
+\qquad
+\mathcal D(H_\pm)=\pm\Delta\sigma_i.
+$$
+
+另一方面，残差预算给出 $\|H_\pm\|_1\le2\Delta$。于是
+
+$$
+\operatorname{Tr}[(\pm F)H_\pm]
+=2\Delta\le\|H_\pm\|_1\le2\Delta.
+\tag{279.16}
+$$
+
+对 Hermitian $H$ 与 $-I\le G\le I$，等号 $\operatorname{Tr}(GH)=\|H\|_1$ 迫使 $H$ 的正部分支撑于 $G$ 的 $+1$ 特征空间，负部分支撑于 $-1$ 特征空间。这由两个非负项 $\operatorname{Tr}[(I-G)H_+]$ 和 $\operatorname{Tr}[(I+G)H_-]$ 之和为零直接得到。式（279.15）在补空间上的特征值满足 $|c_i|<1$，故式（279.16）迫使 $H_\pm Q=QH_\pm=0$。
+
+编码本身支撑于 $P$，所以
+
+$$
+Q\,\overline{\mathcal E(\rho_{i,\pm})}\,Q=0.
+$$
+
+将正负两个状态相加，得到 $Q\,\overline{\mathcal E(I)}\,Q=0$。辅助态满秩使 $\mathcal E(I)$ 在 $P$ 上正定，其共轭的支撑正是 $\bar P$。正性因而迫使 $Q\bar P=0$，即 $\bar P\subseteq P$。两个空间同为四维，故 $\bar P=P$。这个论证同时覆盖纯轴态 $a_i=1$，因为只要求两个符号的和在输入上满秩。
+
+因此，假如五维方案达到全局下界，它的占用四维支撑反而必须对共轭不变。此时 $W=V^*\bar V$ 在四维占用坐标上为酉矩阵，且式（279.13）重新成立，补空间制备项不再贡献。再次应用算符 Schmidt 秩限制，与必要通道的 Choi 秩三矛盾。五维也不能达到 $\Delta$。
+
+最后说明不可达到确实给出严格的最优值差，而非只有非达到的下确界。固定有限 $D$ 时，编码与解码的 CPTP 集在 Choi 表示中均紧，精确恢复条件闭；共同输出基底的选择可吸收入编码及逆向解码，也可显式纳入紧群 $U(D)$。六态最坏残差连续，可行集非空。因此每个 $R_D(a)$ 都取得最小值。对 $D=4,5$，不可能达到 $\Delta$ 就意味着 $R_D(a)>\Delta$。第278节四维上界、实坐标补零给出的维数单调性及六维达到构造共同给出式（279.7）。二维和三维已由定理278.2排除，一维不能精确恢复两个不同状态，所以最小输出维数恰为六。证毕。
+
+这两个结论区分了输出空间的维数与可逆编码实际使用的结构：任意大的纯等距编码仍受同一个门槛约束；四维混合辅助编码可以改进该门槛，却受必要通道的秩三条件与两量子比特酉结构之间的不相容限制。五维多出的一个坐标也不能消除此限制，因为残差收缩的等号迫使它不参与共轭后的占用支撑。
+
+## 追加锚（本行以下为增补区）
