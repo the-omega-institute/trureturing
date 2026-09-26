@@ -59707,3 +59707,1399 @@ $$
 加权共轭直和是第271节所引 van Luijk–Wilming 例4.11的既有模型形式，近似转置与四面体测量亦使用第272节注明的标准构造。本定理的定量陈述将它们接到同一有限六态模型上：配对质量 $2\min(p,q)$ 可以精确恢复，剩余质量 $|p-q|$ 的最优完全实恢复误差恰为它乘以 $a/3$。误差指标只针对所列六态，不包含参考系统，也不宣称任意模型的共轭缺口都等于最优实编码误差。
 
 ## 追加锚（本行以下为增补区）
+
+## 274. 最小充分分块的实编码维数与熵函数
+
+**定义 274.1（加权充分块与共轭配对）。** 设 $\{\rho_s:s\in S\}$ 是有限维复 Hilbert 空间上的非空密度矩阵族。将输入空间限制到所有状态支撑的共同张成，并采用 Koashi–Imoto 的极大分解
+
+$$
+\mathcal H=\bigoplus_{j\in J}\mathcal H_j\otimes\mathcal K_j,
+\qquad
+\rho_s=\bigoplus_{j\in J}p_j(s)\rho_j(s)\otimes\omega_j.
+\tag{274.1}
+$$
+
+这里 $J$ 有限，$d_j=\dim\mathcal H_j$，$\omega_j$ 是与 $s$ 无关的辅助密度矩阵，并已限制到其正支撑。令
+
+$$
+A_j(s)=p_j(s)\rho_j(s).
+$$
+
+当 $p_j(s)=0$ 时直接令 $A_j(s)=0$，不赋予任意所选 $\rho_j(s)$ 额外条件。极大性具体要求：每个加权族 $\{A_j(s):s\in S\}$ 的共同复线性交换子是标量；不同块之间不存在酉矩阵 $U$ 和正常数 $c$，使 $A_j(s)=cUA_k(s)U^*$ 对全部 $s$ 成立。这是 Koashi–Imoto 定义1式（90）—（92）的有限维表述。
+
+固定每个 $\mathcal H_j$ 的基底。若 $d_j=d_k$ 且存在酉矩阵 $U$，满足
+
+$$
+A_j(s)=U\overline{A_k(s)}U^*
+\quad\text{对全部 }s,
+\tag{274.2}
+$$
+
+称 $j,k$ 可以共轭配对，允许 $j=k$。自配对块按共同反酉的平方为 $+I$ 或 $-I$ 分成 $J_+$、$J_-$。非自配对的无序对记为 $\mathcal P$。下述定理同时保证这些配对没有歧义。熵采用自然对数。
+
+**定理 274.2（完整资源区域与最小熵函数）。** 定义274.1中，每个块至多有一个共轭配对对象；配对关系在有定义处为对合。存在某个有限输出维数上的精确可恢复实 CPTP 编码，当且仅当每个块都有配对对象。
+
+全部块均可配对时，最小输出维数为
+
+$$
+D_{\min}
+=\sum_{j\in J_+}d_j
++\sum_{j\in J_-}2d_j
++\sum_{\{j,k\}\in\mathcal P}2d_j.
+\tag{274.3}
+$$
+
+对任意固定 $D\ge D_{\min}$，全部可达的模型熵变化函数恰为
+
+$$
+h(s)=S(\mathcal E(\rho_s))-S(\rho_s)
+=\sum_jp_j(s)\bigl(H_j-S(\omega_j)\bigr),
+\tag{274.4}
+$$
+
+其中实数 $H_j$ 按如下有限整数容量约束取值：
+
+* 对 $j\in J_+$，选择整数 $r_j\ge1$，并取 $0\le H_j\le\log r_j$。
+* 对 $j\in J_-$，选择整数 $m_j\ge1$，令 $r_j=2m_j$，并取 $\log2\le H_j\le\log(2m_j)$。
+* 对 $\{j,k\}\in\mathcal P$，选择整数 $r_j=r_k\ge1$，并取 $H_j=H_k\in[0,\log r_j]$。
+
+这些容量共同满足
+
+$$
+\sum_jd_jr_j\le D.
+\tag{274.5}
+$$
+
+容量允许大于实际辅助秩，因而上述区间包括秩下降的端点。若 $D<D_{\min}$，可行集为空。所有最小输出维数编码在模型上具有同一熵变化函数
+
+$$
+h_{\min}(s)
+=\log2\sum_{j\in J_-}p_j(s)
+-\sum_jp_j(s)S(\omega_j).
+\tag{274.6}
+$$
+
+它也逐点不大于任何有限维可恢复实编码的熵变化，且由同一个编码同时达到。
+
+证明。Koashi–Imoto 的极大分解、不扰动映射形式及唯一性使用 [arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)，定义1、引理6—7及定理3。加权共轭分量、实型及四元数型矩阵块也属于已有表示结构；参见 Yamagata，*Quantum Sufficiency for Self-Adjoint Statistical Models via Likelihood-Type Operators on Real $*$-Subalgebras and Real Jordan Algebras*，[arXiv:2604.23292v4](https://arxiv.org/pdf/2604.23292v4)，定理27。该文第2节及例9区分实线性完全正与复线性完全正。这里始终要求复线性 CPTP 编码和解码；以下推导所需的是该要求下的配对质量、辅助谱和输出容量约束，不以实线性充分映射代替物理信道。
+
+先消去固定冗余。令 $\kappa$ 压缩到各输入块后对 $\mathcal K_j$ 偏迹，令 $\beta$ 在各核心块附加 $\omega_j$；二者都是 CPTP 映射，且
+
+$$
+\sigma_s:=\kappa(\rho_s)=\bigoplus_jA_j(s),
+\qquad
+\beta(\sigma_s)=\rho_s.
+\tag{274.7}
+$$
+
+核心族 $\sigma_s$ 的同一组块仍满足极大性条件，冗余因子现在全部一维。若 $\mathcal D\mathcal E$ 恢复原模型，则核心信道
+
+$$
+\Phi=\kappa\mathcal D\mathcal E\beta
+$$
+
+固定每个 $\sigma_s$。不扰动定理因而使 $\Phi$ 固定整个核心块对角代数，不要求固定不同块之间的相干。
+
+把 $\mathcal E\beta$ 限制到核心块 $j$。如第271节，在 $\kappa\mathcal D$ 的对应压缩之后，用正交补的迹乘固定制备态补足，得到该受限编码的全输出 CPTP 左逆。Nayak–Sen 的可恢复信道正规形于是给出
+
+$$
+\mathcal E\beta(X_j)=V_j(X_j\otimes\tau_j)V_j^*.
+\tag{274.8}
+$$
+
+这里 $V_j$ 是等距映射，$\tau_j$ 已限制到其正支撑。不同核心块上的最大混合态可被共同解码精确恢复，故其输出迹范数距离等于二，证明所有 $\operatorname{im}V_j$ 两两正交。于是
+
+$$
+\sum_jd_j\operatorname{rank}\tau_j\le D,
+\qquad
+\mathcal E(\rho_s)\simeq\bigoplus_jA_j(s)\otimes\tau_j
+\tag{274.9}
+$$
+
+在共同占用输出空间上成立。各加权不可约族具有全共同支撑；故所有模型输出的支撑共同张成的正是式（274.9）的占用空间。
+
+若模型输出有共同实基底，其共轭保持这个占用空间。拉回后记为 $C=ZK$，其中 $K$ 在系统基底和辅助特征基中逐项共轭。设 $Z$ 的行属于块 $j$ 的辅助特征值 $\lambda>0$，列属于块 $k$ 的辅助特征值 $\mu>0$，对应系统矩阵为 $B:\mathcal H_k\to\mathcal H_j$。固定全部模型的条件给出
+
+$$
+\lambda A_j(s)B=\mu B\overline{A_k(s)}.
+\tag{274.10}
+$$
+
+取伴随并比较乘积，得到 $B^*B$ 与全部 $\overline{A_k(s)}$ 对易，$BB^*$ 与全部 $A_j(s)$ 对易。因此非零 $B$ 使两者分别为严格正的标量单位阵。这强制 $d_j=d_k$，并使 $B$ 是正标量乘一个酉矩阵。于是每个非零分量都要求两个加权族在复共轭后至多相差一个正常数和酉变换。
+
+对于给定 $j$，这样的 $k$ 至多一个。若有两个不同对象，把两个共轭等价组合，便得到两个不同核心块之间的正常数倍酉等价，违反极大性。同理，共轭对应的平方只能回到原块。由于 $Z$ 酉，每个占用块必有非零对应，且所有分量只能落在该唯一对应块上。故 $C$ 将整个 $j$ 占用空间交换到整个 $k$ 占用空间。
+
+对模型取这两个占用投影的迹，反酉保持实概率，得到
+
+$$
+p_j(s)=p_k(s)\quad\text{对全部 }s.
+\tag{274.11}
+$$
+
+在式（274.10）中写 $B=cU$，其中 $c>0$、$U$ 酉；约去 $c$ 并右乘 $U^*$，得到 $\lambda A_j(s)=\mu U\overline{A_k(s)}U^*$。对此式取迹，有 $\lambda p_j(s)=\mu p_k(s)$。再使用式（274.11）及某个非零 $p_j(s)$，给出 $\lambda=\mu$。因此正常数比例必须消失，两个加权族满足精确关系（274.2）。这证明未配对块不可能通过改变辅助混合度或增加输出维数来补救，也证明定义中的配对唯一性与对合性。
+
+对于自配对块，共同反酉的平方由标量交换子强制为 $+I$ 或 $-I$，且符号不依赖所选共同反酉。其标准分类及乘积共轭条件采用第267—268节的结果：正型允许任意辅助谱；负型要求每个正辅助特征值的重数为偶数，等价于
+
+$$
+\tau_j\simeq(I_2/2)\otimes\eta_j
+\quad(j\in J_-).
+\tag{274.12}
+$$
+
+这些结论同样适用于加权族 $A_j(s)$：任意非零权重可约去，零权重方程不施加条件，而不可约性和全共同支撑保持不变。
+
+对于非自配对 $\{j,k\}$，选用式（274.2）的酉识别后，跨块方程化为同一加权族的交织方程。标量交换子及取迹使不同辅助特征值间的分量为零，相同特征值上的系统分量为标量。酉性于是强制两个辅助态的正谱按重数完全相同。反过来，配对权重相同且辅助谱相同时，交换两块并共轭就给出共同共轭；正型块直接使用其共轭，负型块使用系统和辅助斜共轭的乘积。把这些共轭直和，再在空余输出空间任取一个共轭，得到固定整个输出模型的共轭。因此这些谱条件也充分。
+
+每个正型块至少占用 $d_j$ 维，每个负型块至少占用 $2d_j$ 维，每个非自配对对至少占用 $2d_j$ 维。它们两两正交，得到（274.3）的下界。分别取正型纯辅助态、负型最大混合量子比特辅助态、非自配对对的两个相同纯辅助态，便同时达到全部下界。
+
+对熵，式（274.1）、（274.9）的正交块公式直接给出
+
+$$
+\begin{aligned}
+S(\rho_s)&=H(p(s))+\sum_jp_j(s)[S(\rho_j(s))+S(\omega_j)],\\
+S(\mathcal E(\rho_s))&=H(p(s))+\sum_jp_j(s)[S(\rho_j(s))+S(\tau_j)].
+\end{aligned}
+\tag{274.13}
+$$
+
+零权重项按零解释。相减后取 $H_j=S(\tau_j)$，得到（274.4）。正型辅助熵在 $[0,\log r_j]$；式（274.12）使负型辅助熵在 $[\log2,\log(2m_j)]$；非自配对对的辅助谱相同，因而熵相同。结合正交占用维数，得到所列全部必要条件。
+
+为证明每组许可参数均可达到，正型辅助态在纯态与对应容量的最大混合态之间连续插值；负型取 $I_2/2\otimes\eta_j$ 并对 $\eta_j$ 作同样插值；每个非自配对对选两个相同的插值谱。各配对轨道独立选择辅助态，实际秩不超过容量，所以总占用维数不超过 $D$。
+
+编码先执行 $\kappa$，随后对每个核心块附加所选辅助态，嵌入两两正交输出空间，再在共同共轭的实基中表达。完整解码先撤销这个固定基变换，压缩到各占用空间并对辅助系统偏迹；把未占用正交补的迹制备成一个固定核心态，最后执行 $\beta$。所有步骤完全正，压缩迹与补空间迹之和使整体保迹。对全部核心块对角输入的 $\beta$ 像，这个解码与编码的复合为恒等；特别地恢复原模型。由此得到所有熵函数的同时达到，而非分别在不同模型状态上取不可共同实现的最优值。
+
+最后，各 $H_j$ 的逐块下界分别为 $0$、$\log2$ 和配对的 $0$。它们由达到最小输出维数的同一选择实现；所有权重非负，故（274.6）既是任何可行编码的逐点下界，也是同时达到的最小熵函数。最小维数下没有增加任何辅助秩的余量，因此所有最小维数编码都取这些辅助熵，证明其唯一的模型熵变化函数。证毕。
+
+**命题 274.3（最小维数下的非恒定熵变化）。** 令 $\{\xi_i\}$ 为第267节四维、标量共同交换子、负反酉型的 Clifford 密度矩阵族。令 $\zeta_u=(I_2+u\cdot\boldsymbol\sigma/2)/2$，其中 $u$ 取六个单位坐标轴向量。让 $(i,u,t)$ 取 Clifford 指标、六轴指标与整个区间 $(0,1)$ 的笛卡尔积，取八维模型
+
+$$
+R_{i,u,t}
+=t\xi_i
+\ \oplus\ \frac{1-t}{2}\zeta_u
+\ \oplus\ \frac{1-t}{2}\overline{\zeta_u}.
+\tag{274.14}
+$$
+
+其最小可恢复实输出维数为十二。所有达到此维数的可行编码均满足
+
+$$
+S(\mathcal E(R_{i,u,t}))-S(R_{i,u,t})=t\log2.
+\tag{274.15}
+$$
+
+证明。四维 Clifford 块不可约且负型；六轴量子比特族不可约且没有共同反酉。两个量子比特块构成唯一的非自配对对，其相等权重为 $(1-t)/2$。四维块与二维块不能酉等价，两个二维加权块若酉等价则产生六轴族的共同反酉，矛盾。因此所示三个块满足极大性条件，固定冗余全部一维。定理274.2给出 $D_{\min}=2\cdot4+2\cdot2=12$；式（274.6）中唯一负型块权重为 $t$，且所有 $S(\omega_j)=0$，得到（274.15）。证毕。
+
+式（274.4）讨论模型本身的状态熵；固定冗余可以被丢弃后重新制备，所以熵变化允许为负。它不是不可恢复的信息损失或热功耗。熵公式可同样应用于 $\beta$ 所制备的任意核心块对角输入，但不约束任意改变原冗余因子或添加核心块间相干的输入。式（274.14）亦说明，常数熵增是特定结构的性质，不能由精确模型恢复独自推出。
+
+**命题 274.4（固定维数下不可同时达到的最大熵函数）。** 令 $\xi_i$ 为命题274.3中的负型四维族，令 $v\in\{\pm e_x,\pm e_z\}$，并记 $\chi_v=(I_2+v\cdot\boldsymbol\sigma/2)/2$。取六维状态族
+
+$$
+T_{v,i,t}=(1-t)\chi_v\oplus t\xi_i,
+\qquad (v,i,t)\in\{\pm e_x,\pm e_z\}\times\{1,2,3,4\}\times(0,1).
+\tag{274.16}
+$$
+
+对这个完整模型，最小可恢复实输出维数为十。固定输出维数为十八时，全部可达熵变化函数恰为下列两族之并，且均不依赖 $v,i$：
+
+$$
+\begin{aligned}
+\mathcal F_A&=\{h(t)=(1-t)H+t\log2:0\le H\le\log5\},\\
+\mathcal F_B&=\{h(t)=tH:\log2\le H\le\log4\}.
+\end{aligned}
+\tag{274.17}
+$$
+
+按对每个 $0<t<1$ 的逐点大小比较，恰有两个极大可达函数：
+
+$$
+h_A(t)=(1-t)\log5+t\log2,
+\qquad h_B(t)=t\log4.
+\tag{274.18}
+$$
+
+二者互不支配；逐点上包络 $\max\{h_A,h_B\}$ 在 $t_*=\log5/\log10$ 处换支，不是任何一个固定十八维编码的熵变化函数。
+
+证明。$\chi_v$ 全部为实，且共同交换子因包含 $X,Z$ 方向而为标量，所以构成一个正型二维块。$\xi_i$ 构成负型四维块，两个不同维数的块不能酉等价。所示分解满足极大性，且固定冗余一维。定理274.2给出 $D_{\min}=2+2\cdot4=10$。
+
+设正型辅助容量为 $r$，负型容量为 $2m$。十八维预算为
+
+$$
+2r+8m\le18,\qquad r,m\in\mathbb N_{\ge1}.
+\tag{274.19}
+$$
+
+因此只能有 $m=1,r\le5$，或 $m=2,r=1$。前一种取正型辅助熵 $H\in[0,\log5]$、负型辅助熵固定为 $\log2$；后一种正型辅助熵为零、负型辅助熵取 $H\in[\log2,\log4]$。定理274.2同时给出必要性与整个模型上的达到，得到（274.17）。
+
+每个族内的最大参数都逐点支配同族所有其他参数，故极大函数只可能是式（274.18）两者。其差为
+
+$$
+h_A(t)-h_B(t)=\log5-t\log10,
+\tag{274.20}
+$$
+
+在 $(0,1)$ 内恰改变一次符号，故两者互不支配，也都不能被另一个可达函数支配。所有可达函数关于 $t$ 为仿射函数，上包络在内部具有两个不同斜率，故不属于可达函数集。若只将两个块各自可达到的最大辅助熵 $\log5$、$\log4$ 同时填入一个编码，则分别至少需要辅助秩五和四，占用维数至少为 $2\cdot5+4\cdot4=26>18$。这亦直接显示逐块分别取得的最大值不满足共同预算。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 275. 六态实编码的恢复误差、共轭缺口与预算边界
+
+**定义 275.1（层析完备模型与实输出恢复误差）。** 对非空有限量子比特模型 $\mathcal R=\{\rho_j\}\subset M_2$，沿用定义272.1的共轭缺口 $\delta(\mathcal R)$。令
+
+$$
+e_{\mathbb R}(\mathcal R)
+=\inf_{D,\mathcal E,\mathcal D}
+\max_j\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1,
+\tag{275.1}
+$$
+
+其中 $D$ 遍历正整数，$\mathcal E:M_2\to M_D$、$\mathcal D:M_D\to M_2$ 是复线性 CPTP 映射，且所有 $\mathcal E(\rho_j)$ 在某个共同输出基底中为实矩阵。若模型的实线性张成为整个 Hermitian 矩阵空间，称它层析完备。令 $\mathrm{EB}_2$ 为量子比特上的纠缠破坏 CPTP 映射集合；等价地，其元素可以写成有限 POVM 测量后再制备状态的形式。
+
+**定理 275.3（各向异性六态的严格缺口与不连续点）。** 对 $0\le\varepsilon\le1$，定义
+
+$$
+\mathcal R_\varepsilon
+=\left\{\frac{I_2\pm X}{2},\frac{I_2\pm Z}{2},\frac{I_2\pm\varepsilon Y}{2}\right\}.
+\tag{275.6}
+$$
+
+则
+
+$$
+\delta(\mathcal R_\varepsilon)=\frac{\varepsilon}{1+2\varepsilon},
+\tag{275.7}
+$$
+
+且
+
+$$
+e_{\mathbb R}(\mathcal R_\varepsilon)
+=\begin{cases}
+0,&\varepsilon=0,\\
+\frac14,&0<\varepsilon\le\frac12,\\
+\frac{\varepsilon}{1+2\varepsilon},&\frac12\le\varepsilon\le1.
+\end{cases}
+\tag{275.8}
+$$
+
+正参数时，至多四个经典输出符号足以达到式（275.8）；$0<\varepsilon\le1/2$ 时三个符号足够。特别地，$0<\varepsilon<1/2$ 时 $\delta(\mathcal R_\varepsilon)<e_{\mathbb R}(\mathcal R_\varepsilon)$，而
+
+$$
+\lim_{\varepsilon\downarrow0}\delta(\mathcal R_\varepsilon)=0,
+\qquad
+\lim_{\varepsilon\downarrow0}e_{\mathbb R}(\mathcal R_\varepsilon)=\frac14
+>e_{\mathbb R}(\mathcal R_0).
+\tag{275.9}
+$$
+
+证明。先以标准 Choi、PPT 与纠缠破坏判据给出所需的归约。对每个定义275.1中的层析完备模型，有
+
+$$
+e_{\mathbb R}(\mathcal R)
+=\min_{\mathcal N\in\mathrm{EB}_2}
+\max_j\frac12\|\mathcal N(\rho_j)-\rho_j\|_1.
+\tag{275.2}
+$$
+
+式（275.1）的下确界达到，且可使用至多十六个经典输出符号达到。
+
+取任意允许编码及使模型输出为实的基底，并将其固定为输出坐标。层析完备性与实线性给出：对每个 Hermitian 输入 $H$，$\mathcal E(H)$ 为实 Hermitian 矩阵，因而为对称矩阵。再将任意复矩阵写成两个 Hermitian 矩阵的复线性组合，得到
+
+$$
+T_{\rm out}\mathcal E=\mathcal E
+\tag{275.3}
+$$
+
+在整个输入代数上的恒等式。这里 $T$ 为复线性的矩阵转置，并非逐项复共轭映射。
+
+采用输入因子在前的未归一化 Choi 矩阵
+
+$$
+J_{\mathcal E}
+=\sum_{a,b=0}^1|a\rangle\langle b|\otimes\mathcal E(|a\rangle\langle b|).
+$$
+
+完全正性与式（275.3）给出 $J_{\mathcal E}\succeq0$ 及 $J_{\mathcal E}^{T_{\rm out}}=J_{\mathcal E}$。因此
+
+$$
+J_{\mathcal E}^{T_{\rm in}}
+=(J_{\mathcal E}^{T_{\rm out}})^{\mathsf T}
+=J_{\mathcal E}^{\mathsf T}\succeq0.
+\tag{275.4}
+$$
+
+这正是 $\mathcal E T_{\rm in}$ 的完全正性。于是恢复复合 $\mathcal N=\mathcal D\mathcal E$ 同时满足 $\mathcal N$ 与 $\mathcal NT_{\rm in}$ 完全正，其归一化 Choi 态作用于 $\mathbb C^2\otimes\mathbb C^2$，矩阵大小为 $4\times4$，满足 PPT 条件，因而可分。
+
+这里使用的成熟结果是 Horodecki、Horodecki、Horodecki，*Separability of mixed states: necessary and sufficient conditions*，[arXiv:quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2)，定理3及其后的第一因子转置注记；以及 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，[arXiv:quant-ph/0302031v2](https://arxiv.org/pdf/quant-ph/0302031v2)，定理4的可分 Choi 与测量—制备刻画。由后者，$\mathcal N\in\mathrm{EB}_2$。这一步只断言恢复复合是纠缠破坏通道，未把任意输出维数的编码本身判为纠缠破坏。
+
+反之，任意量子比特纠缠破坏通道都可写为
+
+$$
+\mathcal N(X)=\sum_{k=1}^m\operatorname{Tr}(F_kX)\tau_k,
+\qquad F_k\succeq0,\quad\sum_kF_k=I_2.
+\tag{275.5}
+$$
+
+取编码 $\mathcal E(X)=\operatorname{diag}(\operatorname{Tr}F_1X,\ldots,\operatorname{Tr}F_mX)$，解码 $\mathcal D(Y)=\sum_kY_{kk}\tau_k$，两者均在全矩阵代数上 CPTP，编码对全部状态产生实对角矩阵，复合正是 $\mathcal N$。故式（275.2）两侧相等。
+
+归一化 Choi 态所在的两量子比特迹一 Hermitian 矩阵仿射空间的实维数为十五。可分态是纯乘积态的凸包，有限维 Carathéodory 定理给出至多十六项的分解
+
+$$
+J_{\mathcal N}/2=\sum_{k=1}^m w_k\alpha_k\otimes\tau_k,
+\qquad m\le16.
+$$
+
+取 $F_k=2w_k\alpha_k^{\mathsf T}$，Choi 偏迹约束保证 $\sum_kF_k=I_2$，从而式（275.5）只需十六项。可分 Choi 态集合紧，保迹条件闭，有限模型的最大迹距离连续，所以右侧取得最小值，其经典因子分解也使左侧达到。十六只是充分符号数，不宣称最小。此归约只使用上述已注明的成熟判据和经典寄存器因子分解。
+
+现在计算所列六态的精确误差。模型在 Pauli 共轭和交换 $X,Z$、反转 $Y$ 的 Hadamard 共轭下保持不变。在任一恢复通道上同时平均输入和输出的这些酉作用，最大迹距离不增加，纠缠破坏性保持。Pauli 平均消去 Bloch 平移与非对角系数，Hadamard 平均使 $X,Z$ 两个系数相等，所以可以限制到 Bloch 作用
+
+$$
+(x,y,z)\longmapsto(tx,sy,tz).
+\tag{275.10}
+$$
+
+对于共轭误差，也可作相应平均：输入用 $U$、输出用 $\overline U$。所用 Pauli 和 Hadamard 矩阵的逐项共轭与自身至多相差整体相位，所以其共轭作用相同，仍得到式（275.10）。这些平均只用于相应的通道优化，不假设一般编码的输出预先对角。
+
+先计算共轭缺口。式（275.10）的通道完全正恰要求其 Pauli 混合权重
+
+$$
+\frac{1+2t+s}{4},\quad\frac{1-s}{4},\quad
+\frac{1-2t+s}{4},\quad\frac{1-s}{4}
+\tag{275.11}
+$$
+
+非负，分别对应 $I,X,Y,Z$ 共轭。这也可由 Choi 矩阵在 Bell 基中的四个特征值得到。因此 $-1\le s\le1$、$2|t|\le1+s$，特别有 $t\le1$。共轭保持 $X,Z$ 而反转 $Y$，所以模型上的目标误差为
+
+$$
+\max\left\{\frac{|1-t|}{2},\frac{\varepsilon|1+s|}{2}\right\}
+\ge\max\left\{\frac{1-t}{2},\varepsilon t\right\}
+\ge\frac{\varepsilon}{1+2\varepsilon}.
+\tag{275.12}
+$$
+
+最后一个下界可由两条仿射函数的交点取得：$t\le1/(1+2\varepsilon)$ 时第一项给出下界，反之第二项给出。取
+
+$$
+t=\frac1{1+2\varepsilon},\qquad
+s=2t-1=\frac{1-2\varepsilon}{1+2\varepsilon},
+\tag{275.13}
+$$
+
+式（275.11）的权重成为 $t,(1-t)/2,0,(1-t)/2$，均非负且和为一，两种误差同时等于式（275.7）。这也覆盖 $\varepsilon=0$ 的恒等通道。
+
+当 $\varepsilon>0$ 时，模型包含全部三个 Pauli 方向，故层析完备，上面的 PPT 归约把实输出恢复优化化为纠缠破坏通道优化。在式（275.10）中，输入转置把系数 $s$ 变为 $-s$。将两组完全正条件合并，得到
+
+$$
+2|t|+|s|\le1.
+\tag{275.14}
+$$
+
+借助 $2\times2$ PPT 可分性，这也是本 Pauli 对角通道纠缠破坏的充要条件；这里仅将既有 Choi 判据代入当前参数。该量子比特判据及八面体结构的专门论述见 Mary Beth Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，定理1、4及8；本节不将这一通道分类作为新增结论。恢复目标保持三个输入方向，故误差为
+
+$$
+\max\left\{\frac{|1-t|}{2},\frac{\varepsilon|1-s|}{2}\right\}.
+\tag{275.15}
+$$
+
+把 $t,s$ 换为 $|t|,|s|$ 保持可行且不增加误差，因此可取 $t,s\ge0$。由 $2t+s\le1$，有 $t\le1/2$，故第一项至少为 $1/4$；又有 $1-s\ge2t$，式（275.12）的同一交点估计给出下界 $\varepsilon/(1+2\varepsilon)$。因此最优值至少为这两个下界的最大值。
+
+若 $0<\varepsilon\le1/2$，取 $t=1/2,s=0$，误差为 $1/4$。若 $1/2\le\varepsilon\le1$，取
+
+$$
+t=\frac1{1+2\varepsilon},\qquad
+s=\frac{2\varepsilon-1}{1+2\varepsilon},
+\tag{275.16}
+$$
+
+有 $2t+s=1$，且两项误差均为 $\varepsilon/(1+2\varepsilon)$。为用四个经典符号达到，令
+
+$$
+\begin{aligned}
+n_1&=(\sqrt t,\sqrt s,\sqrt t),&n_2&=(\sqrt t,-\sqrt s,-\sqrt t),\\
+n_3&=(-\sqrt t,\sqrt s,-\sqrt t),&n_4&=(-\sqrt t,-\sqrt s,\sqrt t).
+\end{aligned}
+$$
+
+因 $2t+s=1$，四个向量均为单位向量，并有 $\sum_kn_k=0$ 及 $\frac14\sum_kn_kn_k^{\mathsf T}=\operatorname{diag}(t,s,t)$。取 POVM $F_k=(I_2+n_k\cdot\boldsymbol\sigma)/4$，并在结果 $k$ 后制备 $(I_2+n_k\cdot\boldsymbol\sigma)/2$。这些效应非负且和为 $I_2$，第二矩恒等式使恢复 Bloch 作用正好为式（275.10）。这种测量—制备计算与第272节的四面体第二矩计算相同；这里使用的是所给各向异性向量，并不要求它们形成等角 SIC。
+
+若 $0<\varepsilon\le1/2$，最优系数为 $t=1/2,s=0$，还可取三个平面向量 $n_\ell=(\cos(2\pi\ell/3),0,\sin(2\pi\ell/3))$，$\ell=0,1,2$。它们满足 $\sum_\ell n_\ell=0$、$\frac13\sum_\ell n_\ell n_\ell^{\mathsf T}=\operatorname{diag}(1/2,0,1/2)$。用效应 $(I_2+n_\ell\cdot\boldsymbol\sigma)/3$ 和同方向纯态制备，即以三个经典输出符号实现相同最优恢复。所有经典编码和解码都采用式（275.5）之后的全矩阵代数构造，因而是完整 CPTP 映射。
+
+当 $\varepsilon=0$ 时，整个模型只含实的 $X,Z$ 方向及最大混合态；恒等编码和解码已经产生实模型并精确恢复，故 $e_{\mathbb R}=0$。此时层析完备性失效，不能沿用正参数时的纠缠破坏限制。其余比较和极限由两个显式公式直接得到，证毕。
+
+式（275.9）的不连续来自完全实输出的精确约束和模型张成空间的变化。若允许非实残差，恒等编码对每个 $\varepsilon$ 都有定义272.1中的 $e=0,r=\varepsilon$，因此这不是对近似实输出恢复成本的不连续性断言。式（275.7）与（275.8）只比较所列有限状态的迹距离，不包含参考系统；它们给出第272节通用下界的严格例子，不改变该下界或第273节特定模型的等式。
+
+**命题 275.4（精确恢复下的最小非实残差）。** 对式（275.6）的模型，在所有有限维编码与解码、所有共同输出基底中，要求模型精确恢复时，最小非实残差为
+
+$$
+\min_{\mathcal D\mathcal E(\rho)=\rho\ (\rho\in\mathcal R_\varepsilon)}r(\mathcal E)
+=\frac{\varepsilon}{1+2\varepsilon}.
+\tag{275.17}
+$$
+
+六维输出足够，且达到构造恢复全部量子比特输入。对于 $\varepsilon>0$ 和每个 $0\le\theta\le1$，还存在同一模型上的编码、解码达到
+
+$$
+e=\theta e_{\mathbb R}(\mathcal R_\varepsilon),
+\qquad
+r=(1-\theta)\delta(\mathcal R_\varepsilon).
+\tag{275.18}
+$$
+
+式（275.18）给出一条可达线段；下述定理将进一步证明它是最优预算边界。
+
+证明。下界由定理272.2的 $e+r\ge\delta$ 在 $e=0$ 时直接取得。为达到，分别选固定量子比特酉矩阵 $U_x,U_y,U_z$，使第 $b$ 个输入 Pauli 轴在 $U_b$ 共轭下成为输出 $Y$ 轴，其余两个输入坐标轴成为实的 $X,Z$ 轴，允许改变符号。可取 $U_y=I_2$；这样的其余酉矩阵由正交坐标旋转实现。令
+
+$$
+w_x=w_z=\frac{\varepsilon}{1+2\varepsilon},
+\qquad w_y=\frac1{1+2\varepsilon},
+\qquad
+\mathcal E_{\rm rev}(X)=\bigoplus_{b=x,y,z}w_bU_bXU_b^*.
+\tag{275.19}
+$$
+
+三个权重非负且和为一，故这是 CPTP 编码。对任意六维输出 $Y$，定义
+
+$$
+\mathcal D_{\rm rev}(Y)=\sum_{b=x,y,z}U_b^*Y_{bb}U_b.
+\tag{275.20}
+$$
+
+压缩、酉共轭与求和保证完全正，三个对角块迹之和为整个矩阵迹，故解码保迹，并有 $\mathcal D_{\rm rev}\mathcal E_{\rm rev}=\operatorname{id}_{M_2}$。
+
+对第 $b$ 个轴、半径 $a_b$ 的模型状态，只有对应输出块具有虚部。直接计算单个量子比特状态与其共轭的迹距离，得到非实残差 $w_ba_b$。这里 $a_x=a_z=1,a_y=\varepsilon$，三个乘积均为 $\varepsilon/(1+2\varepsilon)$。当 $\varepsilon=0$ 时两个零权重块仍保留在解码定义中，编码仅使用实模型所在的 $y$ 分支，公式照样成立。因此达到式（275.17）。
+
+最后，取定理275.3的实输出最优编码 $\mathcal E_0$ 及解码 $\mathcal D_0$，与上述可逆编码作带正交标签的混合：
+
+$$
+\mathcal E_\theta(X)
+=\theta\mathcal E_0(X)\oplus(1-\theta)\mathcal E_{\rm rev}(X),
+\qquad
+\mathcal D_\theta(Y)
+=\mathcal D_0(Y_{00})+\mathcal D_{\rm rev}(Y_{11}).
+\tag{275.21}
+$$
+
+编码和解码都在全部输入上 CPTP。复合等于 $\theta\mathcal D_0\mathcal E_0+(1-\theta)\operatorname{id}$，所以每个状态的恢复误差恰为原误差乘 $\theta$，最大值亦如此。输出直和的第一块完全实，第二块的非实残差乘 $1-\theta$，由迹范数的直和可加性得到式（275.18）。证毕。
+
+**定理 275.5（非实残差预算下的完整最优恢复曲线）。** 固定 $0<\varepsilon\le1$，记
+
+$$
+\delta_\varepsilon=\frac{\varepsilon}{1+2\varepsilon},
+\qquad b_\varepsilon=\max\left\{\frac14,\delta_\varepsilon\right\}.
+$$
+
+对 $R\ge0$，令 $F_\varepsilon(R)$ 为模型 $\mathcal R_\varepsilon$ 上、任意有限输出维数、任意编码、解码及共同输出基底中满足 $r(\mathcal E)\le R$ 时的最小最坏恢复误差。则这个最小值存在，且
+
+$$
+\boxed{F_\varepsilon(R)
+=b_\varepsilon\max\left\{1-\frac R{\delta_\varepsilon},0\right\}.}
+\tag{275.22}
+$$
+
+对非负预算 $E,R$，存在同一个编码、解码满足 $e\le E$、$r\le R$ 的充要条件是
+
+$$
+\frac E{b_\varepsilon}+\frac R{\delta_\varepsilon}\ge1.
+\tag{275.23}
+$$
+
+输出维数十对全部预算已经充分；$0<\varepsilon\le1/2$ 时九维已经充分。这些维数不宣称最小。
+
+证明。先证明额外的维数无关下界
+
+$$
+4e+\frac r{\delta_\varepsilon}\ge1.
+\tag{275.24}
+$$
+
+取任意编码、解码和定义 $r$ 时使用的输出基底。令 $T_2,T_D$ 为相应输入、输出转置，定义
+
+$$
+\overline{\mathcal E}=T_D\mathcal ET_2,
+\qquad \mathcal N=\mathcal D\mathcal E,
+\qquad \mathcal C=\mathcal D\overline{\mathcal E}.
+\tag{275.25}
+$$
+
+共轭 Kraus 算子给出 $\overline{\mathcal E}$ 的 CPTP 性；所以 $\mathcal N,\mathcal C$ 都是量子比特通道。由于 $T_2^2=\operatorname{id}$，对每个模型状态都有
+
+$$
+\begin{aligned}
+\frac12\|\mathcal N(\rho)-\mathcal C(T_2\rho)\|_1
+&=\frac12\|\mathcal D(\mathcal E\rho-T_D\mathcal E\rho)\|_1\\
+&\le\frac12\|\mathcal E\rho-T_D\mathcal E\rho\|_1
+\le r.
+\end{aligned}
+\tag{275.26}
+$$
+
+输入是 Hermitian 态，故其输出的转置等于逐项共轭，最后一项正是非实残差的逐态界。第一步收缩作用于 Hermitian 矩阵差，不把 $T_D$ 本身当作完全正映射。
+
+同时平均通道对 $(\mathcal N,\mathcal C)$。对于保持模型的 Pauli 与 Hadamard 群元素 $U$，将二者分别变成
+
+$$
+\operatorname{Ad}_{U^*}\mathcal N\operatorname{Ad}_U,
+\qquad
+\operatorname{Ad}_{U^*}\mathcal C\operatorname{Ad}_{\overline U}.
+\tag{275.27}
+$$
+
+恒等式 $T_2\operatorname{Ad}_U=\operatorname{Ad}_{\overline U}T_2$ 保证式（275.26）在模型标签重排后保持同一界；恢复误差也不增加。平均后两个映射仍是 CPTP。所用群中每个 $U$ 与 $\overline U$ 至多相差整体相位，故第275.3节的同一对角化给出 Bloch 系数
+
+$$
+\mathcal N:(t,s,t),\qquad
+\mathcal C:(u,v,u).
+\tag{275.28}
+$$
+
+这里不需要平均后的通道对仍来自原编码和解码；只把它们作为原方案必然给出的满足上述界的 CPTP 通道对。
+
+模型的 $X,Z$ 方向为纯态，恢复误差界给出
+
+$$
+t\ge1-2e.
+\tag{275.29}
+$$
+
+式（275.26）在 $X,Z$ 方向给出 $|t-u|/2\le r$，在半径 $\varepsilon$ 的 $Y$ 方向给出 $\varepsilon|s+v|/2\le r$。因此
+
+$$
+u\ge t-2r,
+\qquad v\le-s+\frac{2r}{\varepsilon}.
+\tag{275.30}
+$$
+
+两个通道的完全正约束分别蕴含 $s\ge2|t|-1\ge2t-1$ 和 $2u\le2|u|\le1+v$。将它们与式（275.29）—（275.30）组合，得到
+
+$$
+3-8e\le4t-1\le2t+s
+\le1+\left(4+\frac2\varepsilon\right)r
+=1+\frac{2r}{\delta_\varepsilon}.
+\tag{275.31}
+$$
+
+整理即得式（275.24）。此推导只用最终的两个量子比特通道，没有输出维数或编码基底的限制。
+
+再与定理272.2的 $e+r\ge\delta_\varepsilon$ 以及 $e\ge0$ 合并，可得
+
+$$
+e\ge\max\left\{
+0,\ \delta_\varepsilon-r,\ \frac14\left(1-\frac r{\delta_\varepsilon}\right)
+\right\}
+=b_\varepsilon\max\left\{1-\frac r{\delta_\varepsilon},0\right\}.
+\tag{275.32}
+$$
+
+若 $r\le\delta_\varepsilon$，两条非零仿射界共享因子 $1-r/\delta_\varepsilon$，较大系数是 $b_\varepsilon$；若 $r\ge\delta_\varepsilon$，两者均非正。右端关于 $r$ 单调不增，故 $r\le R$ 进一步给出式（275.22）的下界。
+
+取命题275.4的混合编码，并令
+
+$$
+\theta=\max\left\{1-\frac R{\delta_\varepsilon},0\right\}.
+$$
+
+由定理275.3，$e_{\mathbb R}=b_\varepsilon$；式（275.18）于是给出 $e=\theta b_\varepsilon$、$r=(1-\theta)\delta_\varepsilon\le R$，精确达到下界。当 $R\ge\delta_\varepsilon$ 时直接使用可逆编码，恢复误差为零。两种方案的直和输出维数至多为 $4+6=10$；小参数区间的实输出方案只需三维，故九维足够。式（275.23）就是 $E\ge F_\varepsilon(R)$ 的等价预算形式。证毕。
+
+对固定正 $\varepsilon$，式（275.22）关于非实残差预算连续。若以相对预算 $R=\lambda\delta_\varepsilon$、$0\le\lambda\le1$ 趋向 $\varepsilon\downarrow0$，最小恢复误差趋向 $(1-\lambda)/4$；特别地，趋零的非实残差预算可以与零恢复误差相容，而恒取严格的 $R=0$ 会保留 $1/4$ 的正参数极限。这些是同一预算曲线的不同极限，不把几乎为实与严格为实交换使用。
+
+## 追加锚（本行以下为增补区）
+
+## 276. 三轴半径的倒数三角条件与完整误差预算
+
+**定义 276.1（正半径三轴模型）。** 令 $0<a_i\le1$，$i=1,2,3$，并以 $\sigma_1=X,\sigma_2=Y,\sigma_3=Z$ 定义六态模型
+
+$$
+\mathcal R_a=\{(I_2\pm a_i\sigma_i)/2:i=1,2,3\}.
+\tag{276.1}
+$$
+
+记
+
+$$
+\alpha_i=\frac1{a_i},\qquad
+S=\alpha_1+\alpha_2+\alpha_3,\qquad
+\Delta=\frac1S,
+\qquad B=\max\left\{\Delta,\max_{i<j}\frac1{2(\alpha_i+\alpha_j)}\right\}.
+\tag{276.2}
+$$
+
+沿用第272、275节的共轭缺口 $\delta$、恢复误差 $e$、非实残差 $r$ 及完全实输出恢复误差 $e_{\mathbb R}$。对非负预算 $R$，令 $F_a(R)$ 为在所有有限输出维数、所有复线性 CPTP 编码、解码及共同输出基底上，满足 $r\le R$ 时的最小恢复误差；下述达到构造保证最小值存在。
+
+**定理 276.2（全部三轴半径的最优预算曲线）。** 定义276.1中有
+
+$$
+\delta(\mathcal R_a)=\Delta,
+\qquad e_{\mathbb R}(\mathcal R_a)=B,
+\qquad
+\boxed{F_a(R)=B\max\{1-R/\Delta,0\}.}
+\tag{276.3}
+$$
+
+精确恢复条件下的最小非实残差为 $\Delta$。对任意非负 $E,R$，同一编码与解码能满足 $e\le E,r\le R$ 的充要条件为
+
+$$
+E/B+R/\Delta\ge1.
+\tag{276.4}
+$$
+
+十维输出对全部这些预算已经充分，不宣称最小。完全实输出的最优编码可使用四个经典结果，精确恢复且非实残差最小时可使用六维输出并恢复所有量子比特输入。
+
+此外，
+
+$$
+\boxed{e_{\mathbb R}(\mathcal R_a)=\delta(\mathcal R_a)
+\quad\Longleftrightarrow\quad
+\alpha_k\le\alpha_i+\alpha_j
+\text{ 对每个 }\{i,j,k\}=\{1,2,3\}.}
+\tag{276.5}
+$$
+
+因此这两个误差相等，恰在三个半径的倒数满足非严格三角不等式时发生。
+
+证明。以下 Pauli 平均仅改变允许的通道，不改变输入六态的标签集合；酉不变性与凸性保证最大迹距离不增加。它消去 Bloch 平移和非对角系数，但不置换三个半径，故不要求半径相等。
+
+先计算共轭缺口。平均后的信道记为 Bloch 对角系数 $(\lambda_1,\lambda_2,\lambda_3)$，令
+
+$$
+(\mu_1,\mu_2,\mu_3)=(\lambda_1,-\lambda_2,\lambda_3).
+$$
+
+这将目标转置的符号吸收进系数。Pauli 信道的一个 Choi 非负条件为
+
+$$
+1-\lambda_1+\lambda_2-\lambda_3\ge0,
+\qquad\text{即 }\sum_i\mu_i\le1.
+\tag{276.6}
+$$
+
+若最大共轭误差为 $g$，每个方向上都有 $a_i|1-\mu_i|/2\le g$，从而 $\mu_i\ge1-2g\alpha_i$。求和并用式（276.6），得到 $3-2gS\le1$，所以 $g\ge\Delta$。
+
+取 $\mu_i=1-2\Delta\alpha_i$，对应的实际信道系数为 $(\mu_1,-\mu_2,\mu_3)$。其 $I,X,Y,Z$ 共轭混合概率分别为
+
+$$
+p_I=\Delta\alpha_2,\qquad
+p_X=\Delta\alpha_3,\qquad p_Y=0,\qquad
+p_Z=\Delta\alpha_1.
+\tag{276.7}
+$$
+
+这些概率非负且和为一，故定义 CPTP 信道；六个状态上的误差均为 $\Delta$。某些 $\mu_i$ 可以为负，这不影响实际信道的完全正性。由此证明 $\delta=\Delta$。
+
+三个半径严格正，模型实线性张成整个 Hermitian 矩阵空间。因此第275节证明中的 PPT 归约适用：任意完全实输出编码的恢复复合都是量子比特纠缠破坏通道；反之每个这种通道都可经有限经典寄存器因子分解。用 Pauli 平均把恢复通道化为对角系数 $(t_1,t_2,t_3)$，其纠缠破坏条件为 $\sum_i|t_i|\le1$。这个已知条件采用 Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，定理1、4及8；这里使用它优化所给六态上的误差，不新增该通道分类。
+
+将各 $t_i$ 替换为 $|t_i|$ 保持可行且不增加恢复误差，所以可取 $t_i\ge0$。一个误差预算 $b\ge0$ 在这个优化中可行，恰当且仅当
+
+$$
+\sum_i\max\{1-2b\alpha_i,0\}\le1.
+\tag{276.8}
+$$
+
+必要性由逐方向误差界与 $\sum_it_i\le1$ 得到；充分性取 $t_i=\max\{1-2b\alpha_i,0\}$。
+
+按大小记 $\alpha_1\le\alpha_2\le\alpha_3$，只用于分析这个对称标量式。令 $A=\alpha_1+\alpha_2$。若 $\alpha_3\le A$，则 $\Delta\le1/(2\alpha_3)$，三个数 $1-2\Delta\alpha_i$ 均非负且和为一，故 $b=\Delta$ 可行；小于 $\Delta$ 时未截断的和已经大于一，截断只会增加该和，因而不可行。若 $\alpha_3>A$，则取 $b=1/(2A)$ 时第三项为零，前两项之和为一；小于该值时前两项之和大于一，故不可行。因此
+
+$$
+e_{\mathbb R}
+=\begin{cases}
+\Delta,&\alpha_3\le\alpha_1+\alpha_2,\\
+\dfrac1{2(\alpha_1+\alpha_2)},&\alpha_3>\alpha_1+\alpha_2,
+\end{cases}
+\tag{276.9}
+$$
+
+这正是定义276.1中的 $B$，并且证明式（276.5），因为最大的倒数满足三角不等式即保证其余两条。
+
+为显式达到完全实输出最优值，取 $t_i=\max\{1-2B\alpha_i,0\}$；上面的分类表明 $\sum_it_i=1$。用四个向量
+
+$$
+\begin{aligned}
+n_1&=(\sqrt{t_1},\sqrt{t_2},\sqrt{t_3}),&
+n_2&=(\sqrt{t_1},-\sqrt{t_2},-\sqrt{t_3}),\\
+n_3&=(-\sqrt{t_1},\sqrt{t_2},-\sqrt{t_3}),&
+n_4&=(-\sqrt{t_1},-\sqrt{t_2},\sqrt{t_3})
+\end{aligned}
+\tag{276.10}
+$$
+
+定义效应 $F_k=(I_2+n_k\cdot\boldsymbol\sigma)/4$ 和制备态 $\tau_k=(I_2+n_k\cdot\boldsymbol\sigma)/2$。单位长度、零均值和第二矩 $\frac14\sum_kn_kn_k^{\mathsf T}=\operatorname{diag}(t_1,t_2,t_3)$ 保证这是一组 POVM，且测量—制备复合具有指定 Bloch 系数。因此四个实对角记录足以达到 $B$，包括某个最优系数为零的情形。
+
+精确恢复的最小非实残差用与命题275.4相同的可逆带标签结构达到。选 $U_i$ 把第 $i$ 个输入 Pauli 轴旋到输出的 $Y$ 轴，并把其他输入坐标轴旋到实坐标轴。令
+
+$$
+w_i=\Delta\alpha_i,
+\qquad
+\mathcal E_{\rm rev}(X)=\bigoplus_iw_iU_iXU_i^*,
+\qquad
+\mathcal D_{\rm rev}(Y)=\sum_iU_i^*Y_{ii}U_i.
+\tag{276.11}
+$$
+
+权重和为一，压缩迹相加，故两者都是全输入空间上的 CPTP 映射，且复合为恒等。对第 $i$ 个输入轴的状态，只有第 $i$ 个输出块有虚部，非实残差是 $w_ia_i=\Delta$。普遍下界 $e+r\ge\delta$ 在 $e=0$ 时给出反向界，因而最小值确为 $\Delta$。
+
+现在证明完整预算曲线的下界。对任意有限维编码和解码，沿定理275.5定义
+
+$$
+\mathcal N=\mathcal D\mathcal E,
+\qquad\mathcal C=\mathcal D\overline{\mathcal E},
+\qquad\overline{\mathcal E}=T_D\mathcal ET_2.
+$$
+
+两个复合均为量子比特 CPTP 映射，且每个模型态满足
+
+$$
+\frac12\|\mathcal N(\rho)-\mathcal C(T_2\rho)\|_1\le r.
+\tag{276.12}
+$$
+
+按照式（275.27）同时作 Pauli 平均，保持上述界和恢复误差上界。记所得 $\mathcal N$ 的 Bloch 系数为 $n_i$，所得 $\mathcal C$ 的系数经目标转置符号调整后为 $\mu_i$。逐轴误差与式（276.12）给出
+
+$$
+n_i\ge1-2e\alpha_i,
+\qquad |n_i-\mu_i|\le2r\alpha_i.
+\tag{276.13}
+$$
+
+由 $\mathcal C$ 的 Choi 条件（276.6），有
+
+$$
+\sum_in_i\le1+2rS.
+\tag{276.14}
+$$
+
+另一方面，$\mathcal N$ 的完全正性对每个不同指标 $i,j,k$ 给出 $1+n_k\ge|n_i+n_j|$，所以
+
+$$
+\sum_\ell n_\ell
+\ge2(n_i+n_j)-1
+\ge3-4e(\alpha_i+\alpha_j).
+\tag{276.15}
+$$
+
+合并（276.14）—（276.15），得到对每一对指标都成立的必要条件
+
+$$
+2e(\alpha_i+\alpha_j)+rS\ge1.
+\tag{276.16}
+$$
+
+这些推导允许各 $n_i$ 为负，也不要求平均后的通道对仍可分解为原编码、解码；它们只是每个原方案必然满足的通道正性限制。对式（276.13）的第一组不等式求和，再用式（276.14），还直接得到 $3-2eS\le1+2rS$，即 $e+r\ge\Delta$。将它与式（276.16）和 $e\ge0$ 合并，得到
+
+$$
+e\ge B\max\{1-r/\Delta,0\}.
+\tag{276.17}
+$$
+
+右端随 $r$ 不增，故 $r\le R$ 时也给出式（276.3）的下界。
+
+最后，将四维实输出最优编码与六维可逆编码作正交标签混合，权重为 $\theta$、$1-\theta$，并由对应的两个完整解码分支求和。与式（275.21）的逐态计算相同，这给出
+
+$$
+e=\theta B,\qquad r=(1-\theta)\Delta.
+$$
+
+取 $\theta=\max\{1-R/\Delta,0\}$ 即达到下界；十维输出包含全部分支，端点也保留解码的全空间保迹性。预算等价式（276.4）随即成立。证毕。
+
+**命题 276.3（三角缺量与退化边界）。** 若 $\alpha_1\le\alpha_2\le\alpha_3$ 且 $\alpha_3>\alpha_1+\alpha_2$，令 $A=\alpha_1+\alpha_2$，则
+
+$$
+e_{\mathbb R}(\mathcal R_a)-\delta(\mathcal R_a)
+=\frac{\alpha_3-A}{2A(A+\alpha_3)}.
+\tag{276.18}
+$$
+
+在允许某个半径等于零的扩展定义中，六态模型具有精确可恢复实编码，且共轭缺口为零。若另两个半径 $a,b>0$ 固定，第三半径从正值趋零，则
+
+$$
+\lim e_{\mathbb R}=\frac{ab}{2(a+b)}>0,
+\qquad\lim\delta=0,
+\tag{276.19}
+$$
+
+而退化模型本身的 $e_{\mathbb R}$ 为零。
+
+证明。式（276.18）由（276.9）与 $\Delta=1/(A+\alpha_3)$ 相减直接得到。某个半径为零时，全部非零 Bloch 向量位于同一个过原点平面；用固定量子比特酉旋转把这个平面送到 $XZ$ 平面，编码后的模型全部为实，逆酉解码精确恢复。由定理272.2，该模型的共轭缺口也为零。第三半径趋零意味着其倒数趋正无穷，故最终处在（276.9）的第二种情形；代入 $A=1/a+1/b$ 即得式（276.19）。这里的三角条件属于三个模型尺度的倒数参数，不把它解释为空间距离的物理三角关系。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 277. 实量子记录的最小维数与三维压缩
+
+**定义 277.1（达到实输出最优误差的最小维数）。** 对定义276.1的正半径六态模型，令 $D_*(a)$ 为存在复线性 CPTP 编码 $\mathcal E:M_2\to M_D$、解码 $\mathcal D:M_D\to M_2$，使全部编码模型态在同一个基底中为实，且恢复误差达到 $B$ 的最小正整数 $D$。这里 $B$ 与 $\Delta$ 取式（276.2）。输出可以是互不对易的实密度矩阵，不要求是一个可完全区分的经典寄存器。
+
+**定理 277.2（倒数三角条件决定最小实输出维数）。** 对三个严格正的半径，有
+
+$$
+D_*(a)=
+\begin{cases}
+3,&\alpha_k<\alpha_i+\alpha_j\quad\text{对所有不同 }i,j,k,\\
+2,&\text{至少一条上述严格不等式不成立}.
+\end{cases}
+\tag{277.1}
+$$
+
+在第一种情形中，最优编码可以先作四结果 POVM，再制备四个不正交的实三维纯态。其解码由到两个量子比特对称子空间的等距嵌入和一个偏迹给出。若在这个严格三角区域把输出限定为对角经典记录，则最少需要四个符号。在第二种情形中，二维实量子输出已足够。
+
+因此，定理276.2的全部误差预算边界可以分别在九维和八维输出中达到；这一预算构造的维数不宣称最小。
+
+证明。先证明严格三角区域内最优恢复通道的唯一性。此时 $B=\Delta$，令
+
+$$
+t_i=1-2\Delta\alpha_i>0,\qquad\sum_it_i=1.
+\tag{277.2}
+$$
+
+任意完全实输出编码的恢复复合 $\mathcal N=\mathcal D\mathcal E$，由第275节证明中的标准 PPT 归约，是量子比特纠缠破坏通道。写其仿射 Bloch 作用为 $v\mapsto c+Tv$。采用 Horodecki、Shor、Ruskai，*Entanglement Breaking Channels*，[arXiv:quant-ph/0302031v2](https://arxiv.org/pdf/quant-ph/0302031v2)，定理4的测量—制备表示，把 POVM 效应和制备态分别写成 $w_k(I+s_k\cdot\boldsymbol\sigma)$ 和 $(I+r_k\cdot\boldsymbol\sigma)/2$，其中 $|s_k|,|r_k|\le1$、$\sum_kw_k=1$。于是
+
+$$
+T=\sum_kw_kr_ks_k^{\mathsf T},
+\qquad\operatorname{Tr}T\le1.
+\tag{277.3}
+$$
+
+这只是既有纠缠破坏表示的直接估计，不作为新的通道分类。
+
+对每个轴的正负两个模型态，误差上界 $\Delta$ 意味着
+
+$$
+\|c\pm a_i(Te_i-e_i)\|_2\le2\Delta.
+$$
+
+由这两个不等式得 $T_{ii}\ge1-2\Delta\alpha_i=t_i$。三个对角下界之和已经为一，与式（277.3）结合，迫使每个 $T_{ii}=t_i$。将同一对不等式平方后取平均，得到
+
+$$
+\|c\|_2^2+a_i^2\|Te_i-e_i\|_2^2\le4\Delta^2.
+\tag{277.4}
+$$
+
+其中第 $i$ 个对角坐标单独已经贡献 $a_i^2(t_i-1)^2=4\Delta^2$，所以 $c=0$，每列的全部非对角坐标也为零。因此最优恢复通道必须是
+
+$$
+\mathcal N:\ v\longmapsto\operatorname{diag}(t_1,t_2,t_3)v.
+\tag{277.5}
+$$
+
+这证明实际最优通道的唯一性，并非只确定它的 Pauli 平均。
+
+若输出维数为二，层析完备性保证编码在整个 Hermitian 输入空间上的像都属于输出基底中的实对称矩阵空间。这个实向量空间维数为三，故恢复复合在 Hermitian 空间上的秩至多为三。然而式（277.5）在 $I,X,Y,Z$ 上的特征值为 $1,t_1,t_2,t_3$，全部非零，秩为四，矛盾。因此严格三角情形必须有 $D\ge3$。若编码输出限定在 $m$ 个经典符号的对角代数内，其 Hermitian 像空间维数至多为 $m$，同一秩四结论迫使 $m\ge4$；第276节的四结果构造达到这个经典下界。
+
+下面给出三维达到构造。取式（276.10）的四个单位 Bloch 向量 $n_k$，并选单位量子比特向量 $\psi_k$ 使
+
+$$
+P_k=|\psi_k\rangle\langle\psi_k|
+=(I+n_k\cdot\boldsymbol\sigma)/2.
+$$
+
+令 $\zeta_k=\psi_k\otimes\psi_k$，它们都位于三维复空间 $\operatorname{Sym}^2(\mathbb C^2)$。任取互异的 $i,j,k$，由 Pauli 乘法得到标准三阶 Bargmann 公式
+
+$$
+\operatorname{Tr}(P_iP_jP_k)
+=\frac{1+n_i\cdot n_j+n_j\cdot n_k+n_k\cdot n_i
++i\,n_i\cdot(n_j\times n_k)}4.
+\tag{277.6}
+$$
+
+四个 $n_k$ 之和为零、长度均为一，所以任意三个的两两内积之和为 $-1$。又因三个 $t_i$ 严格正，标量三重积非零。因此式（277.6）为非零纯虚数。张量平方使三阶内积乘积成为这个数的平方，故对 $\zeta_i,\zeta_j,\zeta_k$ 的相应循环乘积为严格负实数。
+
+所有两两内积也非零：$|\langle\psi_i,\psi_j\rangle|^2$ 等于某个正的 $t_\ell$。分别改变 $\zeta_2,\zeta_3,\zeta_4$ 的整体相位，使它们与 $\zeta_1$ 的内积为正实数。每个含指标 $1$ 的三阶循环乘积为负实数，遂迫使其余两两内积全为负实数。得到的四个向量 $\zeta'_k$ 具有实 Gram 矩阵
+
+$$
+G=\begin{pmatrix}
+1&t_1&t_2&t_3\\
+t_1&1&-t_3&-t_2\\
+t_2&-t_3&1&-t_1\\
+t_3&-t_2&-t_1&1
+\end{pmatrix}.
+\tag{277.7}
+$$
+
+令 $h_i=\sqrt{(1-t_i)/2}$，显式取
+
+$$
+\begin{aligned}
+v_1&=(h_1,h_2,h_3),&v_2&=(-h_1,h_2,h_3),\\
+v_3&=(h_1,-h_2,h_3),&v_4&=(h_1,h_2,-h_3).
+\end{aligned}
+$$
+
+因 $\sum_ih_i^2=1$，这些都是实三维单位向量，直接内积得到式（277.7）。以它们为列的实矩阵，其三个坐标行两两正交，行范数平方为 $4h_i^2=2(1-t_i)$。所以 $G$ 的特征值为 $0,2(1-t_1),2(1-t_2),2(1-t_3)$，秩恰为三。相同 Gram 矩阵给出复线性等距映射
+
+$$
+W:\mathbb C^3\longrightarrow\operatorname{Sym}^2(\mathbb C^2)
+\subset\mathbb C^2\otimes\mathbb C^2,
+\qquad Wv_k=\zeta'_k.
+\tag{277.8}
+$$
+
+具体地，相同 Gram 矩阵保证规定 $v_k\mapsto\zeta'_k$ 的线性映射良定且保持内积。循环量与共同实坐标的这种联系沿用第229节所用的成熟 Gram 方法；见 Chaturvedi 等，*Null Phase Curves and Manifolds in Geometric Phase Theory*，[arXiv:1302.0206v1](https://arxiv.org/abs/1302.0206v1)，式（2.10）、（3.6）及（4.11）—（4.13）。本构造允许负的循环量，不要求文献中更强的正循环 null-phase 条件。
+
+以 $F_k=(I+n_k\cdot\boldsymbol\sigma)/4=P_k/2$ 定义
+
+$$
+\mathcal E(X)=\sum_{k=1}^4\operatorname{Tr}(F_kX)|v_k\rangle\langle v_k|,
+\qquad
+\mathcal D(Y)=\operatorname{Tr}_2(WYW^*).
+\tag{277.9}
+$$
+
+四个 $F_k$ 是 POVM，故编码是 CPTP，且对所有状态都产生实矩阵。等距嵌入与偏迹使解码在整个 $M_3$ 上 CPTP。由式（277.8），解码把第 $k$ 个实三维记录态送到 $P_k$，因为张量平方的偏迹恰为 $P_k$，整体相位不影响密度矩阵。因此复合正是第276节达到最优值的测量—制备通道，Bloch 系数为 $t_i$。它达到 $B$，证明严格三角情形 $D_*=3$。式（277.7）的非零非单位内积说明这些实记录态不正交，不能把它们当作四个可完全区分的经典标签。
+
+若至少一条严格三角不等式不成立，按大小排列倒数，使 $\alpha_3\ge\alpha_1+\alpha_2$。第276节的最优系数为
+
+$$
+t_1=\frac{\alpha_2}{\alpha_1+\alpha_2},\qquad
+t_2=\frac{\alpha_1}{\alpha_1+\alpha_2},\qquad t_3=0.
+\tag{277.10}
+$$
+
+这里两个非零系数严格正且和为一，对应 CPTP 纠缠破坏通道 $\mathcal N$。其全部状态输出都位于某个过原点的 Bloch 平面。取酉矩阵 $U$ 将这个平面旋到实的 $XZ$ 平面，令 $\mathcal E=\operatorname{Ad}_U\mathcal N$、$\mathcal D=\operatorname{Ad}_{U^*}$，便以二维实输出达到同一个恢复通道。等号边界也包含在这个构造中。
+
+一维输出只能产生固定恢复态。正负两个半径为 $a_i$ 的轴态之间迹距离为 $a_i$，三角不等式给出固定恢复态最坏误差至少 $\max_i a_i/2$，而最大混合态达到此值。另一方面，式（276.2）给出 $B\le\max_i a_i/3<\max_i a_i/2$，所以一维输出在所有正半径模型上都不够。由此完成式（277.1）。
+
+最后，将本节的三维或二维实最优编码，与第276节六维可逆编码作正交直和混合，仍逐态达到 $e=\theta B,r=(1-\theta)\Delta$，输出维数分别为九或八。两个解码分支均在完整空间上保迹，故也覆盖端点。证毕。
+
+**定理 277.3（等半径六态的二维完整预算曲线）。** 对 $a_1=a_2=a_3=a$、$0<a\le1$，令 $F_{a,2}(R)$ 为固定输出维数二、允许任意复线性 CPTP 编码、解码及共同输出基底、满足非实残差 $r\le R$ 时的最小恢复误差。则
+
+$$
+\boxed{F_{a,2}(R)=\frac{a}{2\sqrt2}
+\max\{1-\sqrt3R/a,0\}.}
+\tag{277.11}
+$$
+
+对任意非负预算 $E,R$，存在同一个二维方案满足 $e\le E,r\le R$，恰当且仅当
+
+$$
+\frac{2\sqrt2}{a}E+\frac{\sqrt3}{a}R\ge1.
+\tag{277.12}
+$$
+
+特别地，二维记忆精确恢复时的最小非实残差为 $a/\sqrt3$。在固定输出维数 $D$ 的全部严格实模型输出编码中，最小恢复误差为
+
+$$
+e_{\mathbb R,D}=
+\begin{cases}
+a/2,&D=1,\\
+a/(2\sqrt2),&D=2,\\
+a/3,&D\ge3.
+\end{cases}
+\tag{277.13}
+$$
+
+证明。先证明任意二维方案的下界。固定计算非实残差时使用的输出基底，将编码写成 Bloch 仿射作用 $v\mapsto c+Av$，解码的线性部分记为 $L$。恢复复合的作用写成 $v\mapsto d+Tv$，其中 $T=LA$。输出态与其共轭的迹距离等于其 $Y$ 坐标绝对值，因此对六个模型态，
+
+$$
+r=|c_y|+a\max_i|A_{yi}|.
+\tag{277.14}
+$$
+
+量子比特通道的迹距离收缩性给出 $\|L\|_{\rm op}\le1$。由最小奇异值的变分定义和式（277.14），得到
+
+$$
+s_{min}(T)\le\|L\|_{\rm op}s_{min}(A)
+\le s_{min}(A)\le\|e_y^{\mathsf T}A\|_2
+\le\sqrt3r/a.
+\tag{277.15}
+$$
+
+这里最后两步只限制实际编码的一行，不对编码或解码作会改变共同因子分解的平均。
+
+还需要恢复复合的完全正约束。对任意量子比特通道 $\mathcal N$，记自旋反转为 $\mathcal S(X)=Y X^{\mathsf T}Y$。虽然 $\mathcal S$ 本身不完全正，但双侧复合 $\mathcal S\mathcal N\mathcal S$ 完全正：它由 $T\mathcal NT$ 的共轭 Kraus 表示及两次酉共轭组成。两者均保迹。在 Bloch 坐标中，这个复合把平移 $d$ 变成 $-d$、保持线性部分 $T$，所以
+
+$$
+\mathcal N_0=(\mathcal N+\mathcal S\mathcal N\mathcal S)/2
+\tag{277.16}
+$$
+
+是线性部分仍为 $T$ 的幺元 CPTP 通道。此步骤只提取实际恢复矩阵必然满足的完全正条件，不改变式（277.15）的来源。
+
+设 $s_1\ge s_2\ge s_3\ge0$ 为 $T$ 的奇异值。幺元量子比特通道的酉规范形式可取对角系数 $(s_1,s_2,\epsilon s_3)$，其中 $\epsilon\in\{1,-1\}$ 吸收行列式符号，零奇异值时任选适当符号。标准 Pauli Choi 条件给出
+
+$$
+s_1+s_2\le1+\epsilon s_3\le1+s_3,
+\qquad 0\le s_i\le1.
+\tag{277.17}
+$$
+
+这里使用的是 Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，式（3）的 Bloch 酉规范形式，以及第2节式（5）和第4节的完全正条件；不把它当作新结论，也不要求当前非实输出方案的恢复通道纠缠破坏。
+
+由 $\operatorname{Tr}T\le s_1+s_2+s_3$ 和式（277.17），有
+
+$$
+\begin{aligned}
+\|I-T\|_F^2
+&\ge\sum_{i=1}^3(1-s_i)^2\\
+&\ge\frac12(2-s_1-s_2)^2+(1-s_3)^2\\
+&\ge\frac32(1-s_3)^2.
+\end{aligned}
+\tag{277.18}
+$$
+
+最坏迹距离控制六个模型态的平均平方 Bloch 误差，故
+
+$$
+4e^2\ge\|d\|_2^2+\frac{a^2}{3}\|I-T\|_F^2
+\ge\frac{a^2}{2}(1-s_3)^2.
+$$
+
+若 $r\le a/\sqrt3$，用式（277.15）得到 $e\ge a(1-\sqrt3r/a)/(2\sqrt2)$；若 $r\ge a/\sqrt3$，使用 $e\ge0$。右侧关于 $r$ 不增，因而得到预算 $r\le R$ 所需的下界。
+
+为达到，取 $n=(1,1,1)/\sqrt3$、$0\le q\le1$，并定义幺元恢复通道的 Bloch 矩阵
+
+$$
+T_q=\frac{1+q}{2}(I-nn^{\mathsf T})+qnn^{\mathsf T}.
+\tag{277.19}
+$$
+
+它的酉规范对角系数为 $((1+q)/2,(1+q)/2,q)$，四个 Pauli 混合概率为 $(1+q)/2,(1-q)/4,(1-q)/4,0$，均非负且和为一，故定义 CPTP 通道 $\mathcal N_q$。取酉矩阵 $U$ 将方向 $n$ 旋到输出 $Y$ 轴，令 $\mathcal E=\operatorname{Ad}_U\mathcal N_q$、$\mathcal D=\operatorname{Ad}_{U^*}$。恢复复合正是 $\mathcal N_q$，编码的输出虚坐标为 $q\,n\cdot v$，所以 $r=aq/\sqrt3$。
+
+另一方面，$I-T_q=(1-q)(I+nn^{\mathsf T})/2$，每个轴上都有 $\|(I+nn^{\mathsf T})e_i\|_2^2=1+3n_i^2=2$，因此全部六态的迹距离恢复误差均为 $a(1-q)/(2\sqrt2)$。取 $q=\min\{\sqrt3R/a,1\}$ 即达到式（277.11）；这也证明最小值存在、式（277.12）及精确恢复的残差门槛。
+
+令 $R=0$ 得到式（277.13）的二维值。一维值由定理277.2证明中的固定态估计给出；$D\ge3$ 的下界为定理276.2的 $a/3$，且本节三维构造达到它。更大输出维数可等距补零嵌入，并在未使用子空间上将解码补为任一固定态制备，以保持全空间 CPTP。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 278. 精确恢复的三维支撑障碍与四维改进
+
+**定义 278.1（固定输出维数的精确恢复残差）。** 对定义276.1的正半径六态模型，令 $R_D(a)$ 为所有输出维数为 $D$、在模型上精确恢复的复线性 CPTP 编码、解码及共同输出基底中，非实残差 $r$ 的下确界。对 $D\ge2$，等距编码与补全解码保证可行集非空。记
+
+$$
+\eta=\left(\sum_i\alpha_i^2\right)^{-1/2},
+\qquad
+\Lambda=\min_i\frac1{\alpha_i+\sqrt{\sum_{j\ne i}\alpha_j^2}},
+\qquad\alpha_i=1/a_i.
+\tag{278.1}
+$$
+
+**定理 278.2（二维与三维精确恢复的共同残差门槛）。** 对所有 $0<a_i\le1$，有
+
+$$
+R_2(a)=R_3(a)=\eta,
+\tag{278.2}
+$$
+
+且两个下确界均达到。若三维方案达到该值，则在计算残差的共同输出基底中，其编码的二维占用支撑必对逐项共轭不变。
+
+此外，取 $\Delta=(\sum_i\alpha_i)^{-1}$，有
+
+$$
+\Delta\le R_D(a)\le\Lambda<\eta\quad(D=4,5),
+\qquad R_D(a)=\Delta\quad(D\ge6),
+\tag{278.3}
+$$
+
+并且 $\Delta<\Lambda$。因此达到全维数最优精确恢复残差的最小输出维数属于 $\{4,5,6\}$。在等半径情形 $a_i=a$，这些量为
+
+$$
+\Delta=a/3,\qquad
+\Lambda=a(\sqrt2-1),\qquad
+\eta=a/\sqrt3.
+\tag{278.4}
+$$
+
+证明。模型张成整个 Hermitian 量子比特空间，所以在六态上精确恢复，已使 $\mathcal D\mathcal E=\operatorname{id}_{M_2}$ 在整个复矩阵代数上成立。使用 Nayak–Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[arXiv:quant-ph/0605041v4](https://arxiv.org/pdf/quant-ph/0605041v4)，定理2.1的可恢复信道正规形，编码在占用空间上可写成
+
+$$
+\mathcal E(X)=V(X\otimes\tau)V^*,
+\qquad 2\operatorname{rank}\tau\le D.
+\tag{278.5}
+$$
+
+这是已有正规形在当前完整恢复任务中的应用。对 $D=2,3$，辅助态只能秩一，故编码是等距映射 $\mathcal E(X)=VXV^*$。二维情况可在一个实的额外坐标上补零，归入三维等距编码；这种补零保持非实残差。
+
+固定计算残差的三维输出基底，记逐项共轭为 $K$，并令 $P=\operatorname{im}V$。两个复二维子空间 $P,KP\subset\mathbb C^3$ 的交至少复一维，且这个交在 $K$ 下不变，因此其中有一个实单位向量。取它作输入某个正交基的第一个像，再作实正交输出基变换，使第一个编码列为 $e_1$。
+
+第二列位于 $\operatorname{span}_{\mathbb C}\{e_2,e_3\}$。改变其整体相位，可以使其复双线性自内积为非负实数；当该自内积为零时任取相位。于是其实部、虚部正交，且实部范数不小于虚部范数。再对这两个实坐标作正交变换，得到
+
+$$
+V|0\rangle=e_1,
+\qquad
+V|1\rangle=c e_2+i s e_3,
+\qquad c^2+s^2=1,\quad c\ge s\ge0.
+\tag{278.6}
+$$
+
+所有输出变换均为实正交变换，故保持与 $K$ 共轭的迹距离。输入基变换将原来的三个 Pauli 轴送到三个正交单位 Bloch 向量 $n_1,n_2,n_3$，各自半径仍为 $a_i$；不把不同半径互换。
+
+对新输入基底中 Bloch 向量为 $v=(x,y,z)$ 的状态，编码矩阵的三个上三角非实分量给出
+
+$$
+\mathcal E(\rho_v)-\overline{\mathcal E(\rho_v)}
+=
+\begin{pmatrix}
+0&-icy&-isx\\
+icy&0&-ics(1-z)\\
+isx&ics(1-z)&0
+\end{pmatrix}.
+\tag{278.7}
+$$
+
+其特征值为零及一对相反实数，非负者为 $\sqrt{c^2y^2+s^2x^2+c^2s^2(1-z)^2}$。所以逐态的半迹范数残差满足
+
+$$
+r_v^2=c^2y^2+s^2x^2+c^2s^2(1-z)^2.
+\tag{278.8}
+$$
+
+设六态最坏残差为 $R$。将 $v=\pm a_i n_i$ 的两个平方残差取平均，得到
+
+$$
+R^2\ge
+ a_i^2\bigl(c^2n_{iy}^2+s^2n_{ix}^2+c^2s^2n_{iz}^2\bigr)+c^2s^2.
+\tag{278.9}
+$$
+
+分别除以 $a_i^2$，对三个轴求和。因 $n_i$ 是一组正交单位基，三个坐标的平方和各为一，于是
+
+$$
+R^2\sum_i\alpha_i^2
+\ge1+c^2s^2\left(1+\sum_i\alpha_i^2\right).
+\tag{278.10}
+$$
+
+因此 $R\ge\eta$。若达到等号，则 $cs=0$；结合 $c\ge s\ge0$，必有 $s=0$，式（278.6）的二维占用平面遂为实平面。撤销实正交变换仍保持其共轭不变性，证明所述必要条件。
+
+为达到，选输入 Bloch 单位向量
+
+$$
+u=(\eta\alpha_1,\eta\alpha_2,\eta\alpha_3).
+$$
+
+其长度为一。用量子比特酉矩阵将方向 $u$ 旋到输出虚轴 $Y$，并用逆酉作为解码。第 $i$ 个模型方向的非实残差恰为 $a_i|u_i|=\eta$，所有输入都被精确恢复。因此二维方案达到下界。实坐标补零嵌入到三维，并把未使用正交补上的解码补为固定态制备，即得到完整 CPTP 三维方案，证明式（278.2）。
+
+接着构造四维改进。任取轴指标 $i$，记
+
+$$
+\beta_i=\sqrt{\sum_{j\ne i}\alpha_j^2},
+\qquad w=\frac{\alpha_i}{\alpha_i+\beta_i}.
+\tag{278.11}
+$$
+
+选择两个输入单位方向 $u=e_i$ 及 $v$，其中 $v_i=0$、$v_j=\alpha_j/\beta_i$（$j\ne i$）。分别选量子比特酉矩阵 $U,V$，使它们成为相应输出的虚轴方向，即输出 $Y$ 坐标分别读取输入的 $u\cdot x$ 与 $v\cdot x$。定义两个量子比特输出块的编码和解码
+
+$$
+\mathcal E(X)=wUXU^*\oplus(1-w)VXV^*,
+\qquad
+\mathcal D(Y)=U^*Y_{11}U+V^*Y_{22}V.
+\tag{278.12}
+$$
+
+编码和解码均在全矩阵代数上 CPTP，复合为恒等。在第 $i$ 轴，只有第一块产生非实残差，值为 $wa_i=1/(\alpha_i+\beta_i)$；在任意其他轴 $j$，只有第二块产生非实残差，值为 $(1-w)a_j\alpha_j/\beta_i=1/(\alpha_i+\beta_i)$。因此每个模型态都具有相同残差，得到 $R_4(a)\le\Lambda$。实坐标补零和补全解码给出 $R_5(a)\le\Lambda$。
+
+由于全部倒数严格正，逐个 $i$ 有
+
+$$
+\sqrt{\sum_j\alpha_j^2}
+<\alpha_i+\sqrt{\sum_{j\ne i}\alpha_j^2}
+<\sum_j\alpha_j.
+$$
+
+取倒数并对有限个 $i$ 取最小，得到 $\Delta<\Lambda<\eta$。定理276.2给出任意输出维数的下界 $R_D\ge\Delta$，以及六维达到构造；同样的实补零使其适用于全部 $D\ge6$。这证明式（278.3）。代入等半径得到式（278.4）。本结论只给出四、五维最优值的区间，不把两个带标签酉分支的上界声明为这两个维数的最优值。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 279. 任意维等距编码的支撑代价与六维必要性
+
+**定义 279.1（占用支撑的共轭缺口）。** 沿用定义276.1的正半径六态模型，记 $\alpha_i=1/a_i$、$\Delta=(\sum_i\alpha_i)^{-1}$、$\eta=(\sum_i\alpha_i^2)^{-1/2}$。对任意有限 $D\ge2$ 的等距编码 $\mathcal E(X)=VXV^*$，令 $\Pi=VV^*$，并在计算非实残差的固定输出基底中定义
+
+$$
+\kappa(V)=2-\operatorname{Tr}(\Pi\bar\Pi).
+\tag{279.1}
+$$
+
+两个投影的秩均为二，故 $\kappa(V)=\|\Pi-\bar\Pi\|_F^2/2\ge0$，且它为零恰当且仅当占用支撑对共轭不变。
+
+**定理 279.2（纯辅助编码不能借增加维数降低最优残差）。** 对任意上述等距编码，其六态最坏非实残差 $r$ 满足
+
+$$
+r^2\ge\eta^2+\frac{1+\eta^2}{4}\kappa(V).
+\tag{279.2}
+$$
+
+因此，允许任意有限输出维数的全部等距编码，其最小残差仍为 $\eta$。达到该值必有共轭不变的占用支撑；支撑不变本身不保证输入轴方向已达到最优。在可逆信道正规形中，这说明只使用秩一辅助态时，增加未占用维数不能改进二维最优值。
+
+证明。令 $S=V^*\bar V$。这是复对称的二阶矩阵，且
+
+$$
+\|S\|_F^2=\operatorname{Tr}(\Pi\bar\Pi)=2-\kappa(V).
+\tag{279.3}
+$$
+
+对输入状态 $\rho$，置 $H=V\rho V^*-\bar V\bar\rho V^{\mathsf T}$。它 Hermitian 且迹为零。其正负特征值各自的绝对值之和均为 $\|H\|_1/2$，故平方和至多为这两个和的平方之和，得到
+
+$$
+\left(\frac12\|H\|_1\right)^2
+\ge\frac12\operatorname{Tr}(H^2)
+=\operatorname{Tr}(\rho^2)-\operatorname{Tr}(\rho S\bar\rho S^*).
+\tag{279.4}
+$$
+
+这里的最后等式只用等距性；没有把 Hilbert–Schmidt 范数当成迹范数的等值替代。
+
+令 $Q=\|S\|_F^2$。分别将 $\rho_{i,+}$ 和 $\rho_{i,-}$ 代入式（279.4）后取平均，线性项抵消，于是
+
+$$
+r^2\ge\frac{2-Q}{4}
++\frac{a_i^2}{4}
+\left[2-\operatorname{Tr}(\sigma_i S\bar\sigma_i S^*)\right].
+\tag{279.5}
+$$
+
+对称性使 $S$ 属于复线性空间 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。Pauli 乘法直接给出
+
+$$
+\sum_{i=1}^3\sigma_i S\bar\sigma_i=S,
+\tag{279.6}
+$$
+
+从而三个迹项之和为 $Q$。将式（279.5）除以 $a_i^2$ 再求和，得
+
+$$
+r^2\sum_i\alpha_i^2
+\ge\frac{(2-Q)\sum_i\alpha_i^2+6-Q}{4}
+=1+\frac{2-Q}{4}\left(1+\sum_i\alpha_i^2\right).
+$$
+
+这就是式（279.2）。第278节的二维酉编码使输出虚轴读取单位方向 $u_i=\eta\alpha_i$，逐态残差均为 $\eta$。将它作实坐标补零即可在任意 $D\ge2$ 达到；未占用补空间上的解码补为固定态制备，仍在完整输出代数上 CPTP。证毕。
+
+**定理 279.3（全局精确恢复残差的最小维数恰为六）。** 对所有三个严格正的半径，有
+
+$$
+\Delta<R_5(a)\le R_4(a)\le\Lambda,
+\qquad
+R_D(a)=\Delta\quad(D\ge6),
+\tag{279.7}
+$$
+
+其中 $\Lambda$ 取式（278.1）。因此，达到全维数最优精确恢复残差的最小输出维数恰为六。本节不求出四、五维的精确最优值或它们与全局下界之间的差值。
+
+证明。先提取达到全局下界时强制出现的通道。假设某个精确恢复方案具有残差 $r=\Delta$，定义
+
+$$
+\bar{\mathcal E}(X)=\overline{\mathcal E(\bar X)},
+\qquad
+\mathcal C=\mathcal D\bar{\mathcal E}.
+\tag{279.8}
+$$
+
+共轭 Kraus 表示保证 $\bar{\mathcal E}$ 和 $\mathcal C$ 都是复线性 CPTP。精确恢复及解码的迹距离收缩性给出
+
+$$
+d_{\rm tr}\bigl(\rho,\mathcal C(\rho^{\mathsf T})\bigr)
+\le d_{\rm tr}\bigl(\mathcal E(\rho),\overline{\mathcal E(\rho)}\bigr)
+\le\Delta
+\tag{279.9}
+$$
+
+对全部模型态成立。
+
+将 $\mathcal C\mathsf T$ 的 Bloch 仿射作用写成 $v\mapsto b+Mv$，其中 $\mathsf T$ 是输入转置。对 $\mathcal C$ 的归一化 Choi 态取反对称 Bell 向量期望，完全正性给出 $(1-\operatorname{Tr}M)/4\ge0$。这是与第276节相同的 Pauli Choi 约束，对未平均的通道也成立：平移和非对角项在该期望中不贡献。
+
+式（279.9）在第 $i$ 轴的两个符号上迫使
+
+$$
+M_{ii}\ge1-2\Delta\alpha_i=:t_i.
+$$
+
+三个下界之和为一，因此 $\operatorname{Tr}M\le1$ 迫使每个对角等号。将同一对误差平方后平均，得到
+
+$$
+\|b\|^2+a_i^2\|(M-I)e_i\|^2\le4\Delta^2.
+$$
+
+其中对角项已经等于 $4\Delta^2$，所以 $b=0$，所有非对角项也为零。故 $\mathcal C$ 是唯一的 Pauli 通道，其系数为 $(t_1,-t_2,t_3)$，四个 Pauli 概率为
+
+$$
+(p_I,p_X,p_Y,p_Z)
+=(\Delta\alpha_2,\Delta\alpha_3,0,\Delta\alpha_1).
+\tag{279.10}
+$$
+
+三个非零概率均严格正，因而这个必要通道的 Choi 秩恰为三。此论证不要求三个 $t_i$ 都非负，也不以倒数三角条件为前提。
+
+现在令输出维数为四。由 Nayak–Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[arXiv:quant-ph/0605041v4](https://arxiv.org/pdf/quant-ph/0605041v4)，定理2.1的已有可逆信道正规形，精确恢复编码的辅助态秩至多为二。若其秩为一，则编码是等距映射，定理279.2给出 $r\ge\eta>\Delta$，与假设矛盾。
+
+若辅助态秩为二，其占用维数为四，编码可写成
+
+$$
+\mathcal E(X)=U(X\otimes\tau)U^*,
+\qquad
+\tau=\operatorname{diag}(q_0,q_1),\quad q_0,q_1>0,
+\quad q_0+q_1=1,
+\tag{279.11}
+$$
+
+其中 $U$ 为四阶酉矩阵。对这样占满输出空间的编码，任意 CPTP 左逆都必须为
+
+$$
+\mathcal D(Y)=\operatorname{Tr}_{\rm anc}(U^*YU).
+\tag{279.12}
+$$
+
+为核对这里没有额外解码自由度，令 $B_\ell$ 为解码 Kraus 算子。复合恒等通道的 Choi 秩为一，故每个 $B_\ell U(I\otimes|\beta\rangle)$ 都为恒等矩阵的标量倍数，记为 $b_{\ell\beta}I$；因 $q_\beta>0$，两个 $\beta$ 都受此约束。解码保迹迫使 $\sum_\ell\bar b_{\ell\alpha}b_{\ell\beta}=\delta_{\alpha\beta}$。对任意分块矩阵代入，便得到式（279.12），包括跨块项归零。
+
+在式（279.8）中代入以上编码、解码，令 $W=U^*\bar U$，得到
+
+$$
+\mathcal C(X)=\operatorname{Tr}_{\rm anc}\bigl(W(X\otimes\tau)W^*\bigr).
+\tag{279.13}
+$$
+
+这里 $W$ 是两个量子比特上的酉矩阵。令
+
+$$
+W_{\alpha\beta}=(I\otimes\langle\alpha|)W(I\otimes|\beta\rangle).
+$$
+
+式（279.13）的 Kraus 算子是 $\sqrt{q_\beta}W_{\alpha\beta}$。因为两个权重都正，Choi 秩等于四个块 $W_{\alpha\beta}$ 的复线性张成维数。这个维数又恰是 $W$ 跨输入量子比特与辅助量子比特的算符 Schmidt 秩：它是系数展开 $W=\sum_{\alpha,\beta}W_{\alpha\beta}\otimes|\alpha\rangle\langle\beta|$ 的矩阵秩。
+
+这种混合环境障碍已有成熟先例：Terhal 等，*Simulating quantum operations with mixed environments*，[arXiv:quant-ph/9806095v2](https://arxiv.org/abs/quant-ph/9806095v2)，式（13）及其后的证明，给出一族两 Pauli 通道不能由混合量子比特环境实现。本节不把混合环境障碍本身作为新结论。对这里全部正半径所需的一般秩限制，直接使用 Nielsen 等，*Quantum dynamics as a physical resource*，[arXiv:quant-ph/0208077v3](https://arxiv.org/abs/quant-ph/0208077v3)，第 IV 节命题3、式（4.1）—（4.3）：两个量子比特的酉算符 Schmidt 秩只能为一、二或四，不能为三。这是既有分类结果，不在本节重新声称为新定理。于是式（279.13）的 Choi 秩不可能为三，与式（279.10）矛盾。四维方案不能达到 $r=\Delta$。
+
+还需排除五维输出。秩一辅助态仍由定理279.2排除。秩二时，编码占用一个四维子空间 $P$，其正交补 $Q=I-P$ 为一维。令 $V:\mathbb C^2\otimes\mathbb C^2\to\mathbb C^5$ 为占用空间的等距映射。再次选辅助态本征基，使 $\tau=\operatorname{diag}(q_0,q_1)$、$q_0,q_1>0$，并写 $\mathcal E(X)=V(X\otimes\tau)V^*$。与上面的 Kraus 推导相同，任意 CPTP 左逆在完整输出上的形式必为
+
+$$
+\mathcal D(Y)=\operatorname{Tr}_{\rm anc}(V^*YV)
++\operatorname{Tr}(QY)\omega,
+\tag{279.14}
+$$
+
+其中 $\omega$ 为某个量子比特状态。跨 $P,Q$ 的项归零也由保迹直接得出：若 $q$ 张成补空间，写 $v_\ell=B_\ell q$，则保迹的交叉块条件为 $\sum_\ell\bar b_{\ell\beta}v_\ell=0$；将其代入 Kraus 和，所有跨块解码项均消失。
+
+写 $\omega=(I+c\cdot\boldsymbol\sigma)/2$，$|c|\le1$。至少存在一个轴 $i$ 满足 $|c_i|<1$。对该轴定义 Hermitian 收缩算子
+
+$$
+F=\mathcal D^*(\sigma_i)
+=V(\sigma_i\otimes I_2)V^*+c_i Q.
+\tag{279.15}
+$$
+
+若整个方案达到 $r=\Delta$，已经证明的必要通道式（279.10）给出
+
+$$
+H_\pm=\mathcal E(\rho_{i,\pm})-
+\overline{\mathcal E(\rho_{i,\pm})},
+\qquad
+\mathcal D(H_\pm)=\pm\Delta\sigma_i.
+$$
+
+另一方面，残差预算给出 $\|H_\pm\|_1\le2\Delta$。于是
+
+$$
+\operatorname{Tr}[(\pm F)H_\pm]
+=2\Delta\le\|H_\pm\|_1\le2\Delta.
+\tag{279.16}
+$$
+
+对 Hermitian $H$ 与 $-I\le G\le I$，等号 $\operatorname{Tr}(GH)=\|H\|_1$ 迫使 $H$ 的正部分支撑于 $G$ 的 $+1$ 特征空间，负部分支撑于 $-1$ 特征空间。这由两个非负项 $\operatorname{Tr}[(I-G)H_+]$ 和 $\operatorname{Tr}[(I+G)H_-]$ 之和为零直接得到。式（279.15）在补空间上的特征值满足 $|c_i|<1$，故式（279.16）迫使 $H_\pm Q=QH_\pm=0$。
+
+编码本身支撑于 $P$，所以
+
+$$
+Q\,\overline{\mathcal E(\rho_{i,\pm})}\,Q=0.
+$$
+
+将正负两个状态相加，得到 $Q\,\overline{\mathcal E(I)}\,Q=0$。辅助态满秩使 $\mathcal E(I)$ 在 $P$ 上正定，其共轭的支撑正是 $\bar P$。正性因而迫使 $Q\bar P=0$，即 $\bar P\subseteq P$。两个空间同为四维，故 $\bar P=P$。这个论证同时覆盖纯轴态 $a_i=1$，因为只要求两个符号的和在输入上满秩。
+
+因此，假如五维方案达到全局下界，它的占用四维支撑反而必须对共轭不变。此时 $W=V^*\bar V$ 在四维占用坐标上为酉矩阵，且式（279.13）重新成立，补空间制备项不再贡献。再次应用算符 Schmidt 秩限制，与必要通道的 Choi 秩三矛盾。五维也不能达到 $\Delta$。
+
+最后说明不可达到确实给出严格的最优值差，而非只有非达到的下确界。固定有限 $D$ 时，编码与解码的 CPTP 集在 Choi 表示中均紧，精确恢复条件闭；共同输出基底的选择可吸收入编码及逆向解码，也可显式纳入紧群 $U(D)$。六态最坏残差连续，可行集非空。因此每个 $R_D(a)$ 都取得最小值。对 $D=4,5$，不可能达到 $\Delta$ 就意味着 $R_D(a)>\Delta$。第278节四维上界、实坐标补零给出的维数单调性及六维达到构造共同给出式（279.7）。二维和三维已由定理278.2排除，一维不能精确恢复两个不同状态，所以最小输出维数恰为六。证毕。
+
+这两个结论区分了输出空间的维数与可逆编码实际使用的结构：任意大的纯等距编码仍受同一个门槛约束；四维混合辅助编码可以改进该门槛，却受必要通道的秩三条件与两量子比特酉结构之间的不相容限制。五维多出的一个坐标也不能消除此限制，因为残差收缩的等号迫使它不参与共轭后的占用支撑。
+
+## 追加锚（本行以下为增补区）
