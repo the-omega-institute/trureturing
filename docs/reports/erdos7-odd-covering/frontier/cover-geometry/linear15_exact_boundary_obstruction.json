@@ -1,0 +1,5910 @@
+{
+  "schema": "linear15-fixed-gate-obstruction-v1",
+  "status": "PASS",
+  "conclusion_kind": "fixed-sufficient-criterion-obstruction",
+  "scope": "Obstruction to the fixed complete512 factor-erasure gate and fixed647 prepaid upper budget, for the specified root-balanced outside product source, supported cap-bounded central product laws and cellwise central thinning. It is not a lower bound on actual continuation loss or an upper bound on actual survivor mass.",
+  "actual_survivor": {
+    "local_residues": {
+      "3": 0,
+      "5": 6,
+      "7": 6,
+      "11": 6,
+      "13": 6,
+      "17": 6,
+      "19": 6,
+      "23": 1,
+      "29": 1,
+      "31": 1
+    },
+    "resolving_prime_powers": {
+      "3": 531441,
+      "5": 244140625,
+      "7": 13841287201,
+      "11": 3138428376721,
+      "13": 23298085122481,
+      "17": 582622237229761,
+      "19": 2213314919066161,
+      "23": 23,
+      "29": 29,
+      "31": 31
+    },
+    "lcm": 3501239618773418992743959799069612601737897164210078527079942212649221369188720703125,
+    "residue": 627462114699348736169269543492815716904586908723980128688031673378514491361572265631
+  },
+  "actual_fixture_covering": false,
+  "unrestricted_erdos7_resolved": false,
+  "producer_sha256": "4160c7ec650dbdb8d9c7a5db72da3a318bfac2f8d5d4c6df57d08efce4910be1",
+  "new_lean_verification": false,
+  "source_sha256": "1e48eef19d525c7071498d15b4ba25445c7b431f01633d081156fb39c40d772e",
+  "dual_sha256": "718782274441fdfe7be9fc10b12efc81ea4d81df03ca8dc99b01ca1433581783",
+  "fixture_originals": 183,
+  "fixture": [
+    {
+      "modulus": 3,
+      "label": "pure3",
+      "residue": 2,
+      "components": [
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "modulus": 5,
+      "label": "pure5",
+      "residue": 4,
+      "components": [
+        [
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "modulus": 7,
+      "label": "pure7",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 9,
+      "label": "pure9",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ]
+      ]
+    },
+    {
+      "modulus": 11,
+      "label": "pure11",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 13,
+      "label": "pure13",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 15,
+      "label": "15",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ]
+      ]
+    },
+    {
+      "modulus": 17,
+      "label": "pure17",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 19,
+      "label": "pure19",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 21,
+      "label": "3q:7",
+      "residue": 15,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 23,
+      "label": "pure23",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          23
+        ]
+      ]
+    },
+    {
+      "modulus": 25,
+      "label": "pure25",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ]
+      ]
+    },
+    {
+      "modulus": 27,
+      "label": "pure27",
+      "residue": 13,
+      "components": [
+        [
+          13,
+          27
+        ]
+      ]
+    },
+    {
+      "modulus": 29,
+      "label": "pure29",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          29
+        ]
+      ]
+    },
+    {
+      "modulus": 31,
+      "label": "pure31",
+      "residue": 0,
+      "components": [
+        [
+          0,
+          31
+        ]
+      ]
+    },
+    {
+      "modulus": 33,
+      "label": "3q:11",
+      "residue": 12,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 35,
+      "label": "5q:7",
+      "residue": 15,
+      "components": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 39,
+      "label": "3q:13",
+      "residue": 27,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 49,
+      "label": "pure49",
+      "residue": 11,
+      "components": [
+        [
+          11,
+          49
+        ]
+      ]
+    },
+    {
+      "modulus": 51,
+      "label": "3q:17",
+      "residue": 18,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 55,
+      "label": "5q:11",
+      "residue": 45,
+      "components": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 57,
+      "label": "3q:19",
+      "residue": 39,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 63,
+      "label": "9q:7",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 65,
+      "label": "5q:13",
+      "residue": 40,
+      "components": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 77,
+      "label": "qs:0,1",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 81,
+      "label": "pure81",
+      "residue": 31,
+      "components": [
+        [
+          31,
+          81
+        ]
+      ]
+    },
+    {
+      "modulus": 85,
+      "label": "5q:17",
+      "residue": 35,
+      "components": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 91,
+      "label": "qs:0,2",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 95,
+      "label": "5q:19",
+      "residue": 20,
+      "components": [
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 99,
+      "label": "9q:11",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 105,
+      "label": "15q:7",
+      "residue": 15,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 117,
+      "label": "9q:13",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 119,
+      "label": "qs:0,3",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 121,
+      "label": "pure121",
+      "residue": 19,
+      "components": [
+        [
+          19,
+          121
+        ]
+      ]
+    },
+    {
+      "modulus": 125,
+      "label": "pure125",
+      "residue": 31,
+      "components": [
+        [
+          31,
+          125
+        ]
+      ]
+    },
+    {
+      "modulus": 133,
+      "label": "qs:0,4",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          7
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 143,
+      "label": "qs:1,2",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 147,
+      "label": "3q2:7",
+      "residue": 103,
+      "components": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          49
+        ]
+      ]
+    },
+    {
+      "modulus": 153,
+      "label": "9q:17",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 165,
+      "label": "15q:11",
+      "residue": 45,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 169,
+      "label": "pure169",
+      "residue": 21,
+      "components": [
+        [
+          21,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 171,
+      "label": "9q:19",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          9
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 175,
+      "label": "25q:7",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 187,
+      "label": "qs:1,3",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 195,
+      "label": "15q:13",
+      "residue": 105,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 209,
+      "label": "qs:1,4",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          11
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 221,
+      "label": "qs:2,3",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          13
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 243,
+      "label": "pure243",
+      "residue": 85,
+      "components": [
+        [
+          85,
+          243
+        ]
+      ]
+    },
+    {
+      "modulus": 245,
+      "label": "5q2:7",
+      "residue": 202,
+      "components": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          49
+        ]
+      ]
+    },
+    {
+      "modulus": 247,
+      "label": "qs:2,4",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          13
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 255,
+      "label": "15q:17",
+      "residue": 120,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 275,
+      "label": "25q:11",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 285,
+      "label": "15q:19",
+      "residue": 210,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 289,
+      "label": "pure289",
+      "residue": 25,
+      "components": [
+        [
+          25,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 315,
+      "label": "45q:7",
+      "residue": 261,
+      "components": [
+        [
+          0,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 323,
+      "label": "qs:3,4",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          17
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 325,
+      "label": "25q:13",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 343,
+      "label": "pure343",
+      "residue": 53,
+      "components": [
+        [
+          53,
+          343
+        ]
+      ]
+    },
+    {
+      "modulus": 361,
+      "label": "pure361",
+      "residue": 27,
+      "components": [
+        [
+          27,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 363,
+      "label": "3q2:11",
+      "residue": 247,
+      "components": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          121
+        ]
+      ]
+    },
+    {
+      "modulus": 425,
+      "label": "25q:17",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 441,
+      "label": "9q2:7",
+      "residue": 61,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          12,
+          49
+        ]
+      ]
+    },
+    {
+      "modulus": 475,
+      "label": "25q:19",
+      "residue": 1,
+      "components": [
+        [
+          1,
+          25
+        ],
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 495,
+      "label": "45q:11",
+      "residue": 156,
+      "components": [
+        [
+          3,
+          9
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 507,
+      "label": "3q2:13",
+      "residue": 343,
+      "components": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 525,
+      "label": "75q:7",
+      "residue": 381,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          6,
+          25
+        ],
+        [
+          3,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 539,
+      "label": "q2s:0,1",
+      "residue": 117,
+      "components": [
+        [
+          19,
+          49
+        ],
+        [
+          7,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 585,
+      "label": "45q:13",
+      "residue": 132,
+      "components": [
+        [
+          6,
+          9
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 605,
+      "label": "5q2:11",
+      "residue": 127,
+      "components": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          121
+        ]
+      ]
+    },
+    {
+      "modulus": 625,
+      "label": "pure625",
+      "residue": 131,
+      "components": [
+        [
+          131,
+          625
+        ]
+      ]
+    },
+    {
+      "modulus": 637,
+      "label": "q2s:0,2",
+      "residue": 124,
+      "components": [
+        [
+          26,
+          49
+        ],
+        [
+          7,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 693,
+      "label": "9qs:0,1",
+      "residue": 211,
+      "components": [
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 729,
+      "label": "pure729",
+      "residue": 247,
+      "components": [
+        [
+          247,
+          729
+        ]
+      ]
+    },
+    {
+      "modulus": 765,
+      "label": "45q:17",
+      "residue": 342,
+      "components": [
+        [
+          0,
+          9
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 819,
+      "label": "9qs:0,2",
+      "residue": 106,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 825,
+      "label": "75q:11",
+      "residue": 366,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          16,
+          25
+        ],
+        [
+          3,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 833,
+      "label": "q2s:0,3",
+      "residue": 670,
+      "components": [
+        [
+          33,
+          49
+        ],
+        [
+          7,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 845,
+      "label": "5q2:13",
+      "residue": 682,
+      "components": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 847,
+      "label": "qs2:0,1",
+      "residue": 733,
+      "components": [
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          121
+        ]
+      ]
+    },
+    {
+      "modulus": 855,
+      "label": "45q:19",
+      "residue": 363,
+      "components": [
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 867,
+      "label": "3q2:17",
+      "residue": 583,
+      "components": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 931,
+      "label": "q2s:0,4",
+      "residue": 824,
+      "components": [
+        [
+          40,
+          49
+        ],
+        [
+          7,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 975,
+      "label": "75q:13",
+      "residue": 627,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          2,
+          25
+        ],
+        [
+          3,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 1071,
+      "label": "9qs:0,3",
+      "residue": 205,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          17
+        ],
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 1083,
+      "label": "3q2:19",
+      "residue": 727,
+      "components": [
+        [
+          1,
+          3
+        ],
+        [
+          5,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 1089,
+      "label": "9q2:11",
+      "residue": 16,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          16,
+          121
+        ]
+      ]
+    },
+    {
+      "modulus": 1183,
+      "label": "qs2:0,2",
+      "residue": 852,
+      "components": [
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 1197,
+      "label": "9qs:0,4",
+      "residue": 58,
+      "components": [
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          2,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 1275,
+      "label": "75q:17",
+      "residue": 462,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          12,
+          25
+        ],
+        [
+          3,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 1287,
+      "label": "9qs:1,2",
+      "residue": 67,
+      "components": [
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          2,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 1331,
+      "label": "pure1331",
+      "residue": 129,
+      "components": [
+        [
+          129,
+          1331
+        ]
+      ]
+    },
+    {
+      "modulus": 1425,
+      "label": "75q:19",
+      "residue": 972,
+      "components": [
+        [
+          0,
+          3
+        ],
+        [
+          22,
+          25
+        ],
+        [
+          3,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 1445,
+      "label": "5q2:17",
+      "residue": 1162,
+      "components": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 1521,
+      "label": "9q2:13",
+      "residue": 187,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          18,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 1573,
+      "label": "q2s:1,2",
+      "residue": 865,
+      "components": [
+        [
+          18,
+          121
+        ],
+        [
+          7,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 1575,
+      "label": "225q:7",
+      "residue": 711,
+      "components": [
+        [
+          0,
+          9
+        ],
+        [
+          11,
+          25
+        ],
+        [
+          4,
+          7
+        ]
+      ]
+    },
+    {
+      "modulus": 1683,
+      "label": "9qs:1,3",
+      "residue": 529,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          2,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 1805,
+      "label": "5q2:19",
+      "residue": 367,
+      "components": [
+        [
+          2,
+          5
+        ],
+        [
+          6,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 1859,
+      "label": "qs2:1,2",
+      "residue": 865,
+      "components": [
+        [
+          7,
+          11
+        ],
+        [
+          20,
+          169
+        ]
+      ]
+    },
+    {
+      "modulus": 1881,
+      "label": "9qs:1,4",
+      "residue": 970,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          19
+        ],
+        [
+          2,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 1989,
+      "label": "9qs:2,3",
+      "residue": 274,
+      "components": [
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          2,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 2023,
+      "label": "qs2:0,3",
+      "residue": 1741,
+      "components": [
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 2057,
+      "label": "q2s:1,3",
+      "residue": 755,
+      "components": [
+        [
+          29,
+          121
+        ],
+        [
+          7,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 2187,
+      "label": "pure2187",
+      "residue": 733,
+      "components": [
+        [
+          733,
+          2187
+        ]
+      ]
+    },
+    {
+      "modulus": 2197,
+      "label": "pure2197",
+      "residue": 177,
+      "components": [
+        [
+          177,
+          2197
+        ]
+      ]
+    },
+    {
+      "modulus": 2223,
+      "label": "9qs:2,4",
+      "residue": 781,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          2,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 2299,
+      "label": "q2s:1,4",
+      "residue": 2097,
+      "components": [
+        [
+          40,
+          121
+        ],
+        [
+          7,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 2401,
+      "label": "pure2401",
+      "residue": 347,
+      "components": [
+        [
+          347,
+          2401
+        ]
+      ]
+    },
+    {
+      "modulus": 2475,
+      "label": "225q:11",
+      "residue": 246,
+      "components": [
+        [
+          3,
+          9
+        ],
+        [
+          21,
+          25
+        ],
+        [
+          4,
+          11
+        ]
+      ]
+    },
+    {
+      "modulus": 2527,
+      "label": "qs2:0,4",
+      "residue": 1090,
+      "components": [
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 2601,
+      "label": "9q2:17",
+      "residue": 889,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          22,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 2873,
+      "label": "q2s:2,3",
+      "residue": 1554,
+      "components": [
+        [
+          33,
+          169
+        ],
+        [
+          7,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 2907,
+      "label": "9qs:3,4",
+      "residue": 2092,
+      "components": [
+        [
+          4,
+          9
+        ],
+        [
+          1,
+          17
+        ],
+        [
+          2,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 2925,
+      "label": "225q:13",
+      "residue": 1707,
+      "components": [
+        [
+          6,
+          9
+        ],
+        [
+          7,
+          25
+        ],
+        [
+          4,
+          13
+        ]
+      ]
+    },
+    {
+      "modulus": 3125,
+      "label": "pure3125",
+      "residue": 631,
+      "components": [
+        [
+          631,
+          3125
+        ]
+      ]
+    },
+    {
+      "modulus": 3179,
+      "label": "qs2:1,3",
+      "residue": 2625,
+      "components": [
+        [
+          7,
+          11
+        ],
+        [
+          24,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 3211,
+      "label": "q2s:2,4",
+      "residue": 1736,
+      "components": [
+        [
+          46,
+          169
+        ],
+        [
+          7,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 3249,
+      "label": "9q2:19",
+      "residue": 385,
+      "components": [
+        [
+          7,
+          9
+        ],
+        [
+          24,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 3757,
+      "label": "qs2:2,3",
+      "residue": 1775,
+      "components": [
+        [
+          7,
+          13
+        ],
+        [
+          41,
+          289
+        ]
+      ]
+    },
+    {
+      "modulus": 3825,
+      "label": "225q:17",
+      "residue": 2367,
+      "components": [
+        [
+          0,
+          9
+        ],
+        [
+          17,
+          25
+        ],
+        [
+          4,
+          17
+        ]
+      ]
+    },
+    {
+      "modulus": 3971,
+      "label": "qs2:1,4",
+      "residue": 1470,
+      "components": [
+        [
+          7,
+          11
+        ],
+        [
+          26,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 4275,
+      "label": "225q:19",
+      "residue": 1353,
+      "components": [
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          25
+        ],
+        [
+          4,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 4693,
+      "label": "qs2:2,4",
+      "residue": 1489,
+      "components": [
+        [
+          7,
+          13
+        ],
+        [
+          45,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 4913,
+      "label": "pure4913",
+      "residue": 297,
+      "components": [
+        [
+          297,
+          4913
+        ]
+      ]
+    },
+    {
+      "modulus": 5491,
+      "label": "q2s:3,4",
+      "residue": 3237,
+      "components": [
+        [
+          58,
+          289
+        ],
+        [
+          7,
+          19
+        ]
+      ]
+    },
+    {
+      "modulus": 6137,
+      "label": "qs2:3,4",
+      "residue": 2591,
+      "components": [
+        [
+          7,
+          17
+        ],
+        [
+          64,
+          361
+        ]
+      ]
+    },
+    {
+      "modulus": 6561,
+      "label": "pure6561",
+      "residue": 2191,
+      "components": [
+        [
+          2191,
+          6561
+        ]
+      ]
+    },
+    {
+      "modulus": 6859,
+      "label": "pure6859",
+      "residue": 369,
+      "components": [
+        [
+          369,
+          6859
+        ]
+      ]
+    },
+    {
+      "modulus": 14641,
+      "label": "pure14641",
+      "residue": 1339,
+      "components": [
+        [
+          1339,
+          14641
+        ]
+      ]
+    },
+    {
+      "modulus": 15625,
+      "label": "pure15625",
+      "residue": 3131,
+      "components": [
+        [
+          3131,
+          15625
+        ]
+      ]
+    },
+    {
+      "modulus": 16807,
+      "label": "pure16807",
+      "residue": 2405,
+      "components": [
+        [
+          2405,
+          16807
+        ]
+      ]
+    },
+    {
+      "modulus": 19683,
+      "label": "pure19683",
+      "residue": 6565,
+      "components": [
+        [
+          6565,
+          19683
+        ]
+      ]
+    },
+    {
+      "modulus": 28561,
+      "label": "pure28561",
+      "residue": 2205,
+      "components": [
+        [
+          2205,
+          28561
+        ]
+      ]
+    },
+    {
+      "modulus": 59049,
+      "label": "pure59049",
+      "residue": 19687,
+      "components": [
+        [
+          19687,
+          59049
+        ]
+      ]
+    },
+    {
+      "modulus": 78125,
+      "label": "pure78125",
+      "residue": 15631,
+      "components": [
+        [
+          15631,
+          78125
+        ]
+      ]
+    },
+    {
+      "modulus": 83521,
+      "label": "pure83521",
+      "residue": 4921,
+      "components": [
+        [
+          4921,
+          83521
+        ]
+      ]
+    },
+    {
+      "modulus": 117649,
+      "label": "pure117649",
+      "residue": 16811,
+      "components": [
+        [
+          16811,
+          117649
+        ]
+      ]
+    },
+    {
+      "modulus": 130321,
+      "label": "pure130321",
+      "residue": 6867,
+      "components": [
+        [
+          6867,
+          130321
+        ]
+      ]
+    },
+    {
+      "modulus": 161051,
+      "label": "pure161051",
+      "residue": 14649,
+      "components": [
+        [
+          14649,
+          161051
+        ]
+      ]
+    },
+    {
+      "modulus": 177147,
+      "label": "pure177147",
+      "residue": 59053,
+      "components": [
+        [
+          59053,
+          177147
+        ]
+      ]
+    },
+    {
+      "modulus": 371293,
+      "label": "pure371293",
+      "residue": 28569,
+      "components": [
+        [
+          28569,
+          371293
+        ]
+      ]
+    },
+    {
+      "modulus": 390625,
+      "label": "pure390625",
+      "residue": 78131,
+      "components": [
+        [
+          78131,
+          390625
+        ]
+      ]
+    },
+    {
+      "modulus": 531441,
+      "label": "pure531441",
+      "residue": 177151,
+      "components": [
+        [
+          177151,
+          531441
+        ]
+      ]
+    },
+    {
+      "modulus": 823543,
+      "label": "pure823543",
+      "residue": 117653,
+      "components": [
+        [
+          117653,
+          823543
+        ]
+      ]
+    },
+    {
+      "modulus": 1419857,
+      "label": "pure1419857",
+      "residue": 83529,
+      "components": [
+        [
+          83529,
+          1419857
+        ]
+      ]
+    },
+    {
+      "modulus": 1771561,
+      "label": "pure1771561",
+      "residue": 161059,
+      "components": [
+        [
+          161059,
+          1771561
+        ]
+      ]
+    },
+    {
+      "modulus": 1953125,
+      "label": "pure1953125",
+      "residue": 390631,
+      "components": [
+        [
+          390631,
+          1953125
+        ]
+      ]
+    },
+    {
+      "modulus": 2476099,
+      "label": "pure2476099",
+      "residue": 130329,
+      "components": [
+        [
+          130329,
+          2476099
+        ]
+      ]
+    },
+    {
+      "modulus": 4826809,
+      "label": "pure4826809",
+      "residue": 371301,
+      "components": [
+        [
+          371301,
+          4826809
+        ]
+      ]
+    },
+    {
+      "modulus": 5764801,
+      "label": "pure5764801",
+      "residue": 823547,
+      "components": [
+        [
+          823547,
+          5764801
+        ]
+      ]
+    },
+    {
+      "modulus": 9765625,
+      "label": "pure9765625",
+      "residue": 1953131,
+      "components": [
+        [
+          1953131,
+          9765625
+        ]
+      ]
+    },
+    {
+      "modulus": 19487171,
+      "label": "pure19487171",
+      "residue": 1771569,
+      "components": [
+        [
+          1771569,
+          19487171
+        ]
+      ]
+    },
+    {
+      "modulus": 24137569,
+      "label": "pure24137569",
+      "residue": 1419865,
+      "components": [
+        [
+          1419865,
+          24137569
+        ]
+      ]
+    },
+    {
+      "modulus": 40353607,
+      "label": "pure40353607",
+      "residue": 5764805,
+      "components": [
+        [
+          5764805,
+          40353607
+        ]
+      ]
+    },
+    {
+      "modulus": 47045881,
+      "label": "pure47045881",
+      "residue": 2476107,
+      "components": [
+        [
+          2476107,
+          47045881
+        ]
+      ]
+    },
+    {
+      "modulus": 48828125,
+      "label": "pure48828125",
+      "residue": 9765631,
+      "components": [
+        [
+          9765631,
+          48828125
+        ]
+      ]
+    },
+    {
+      "modulus": 62748517,
+      "label": "pure62748517",
+      "residue": 4826817,
+      "components": [
+        [
+          4826817,
+          62748517
+        ]
+      ]
+    },
+    {
+      "modulus": 214358881,
+      "label": "pure214358881",
+      "residue": 19487179,
+      "components": [
+        [
+          19487179,
+          214358881
+        ]
+      ]
+    },
+    {
+      "modulus": 244140625,
+      "label": "pure244140625",
+      "residue": 48828131,
+      "components": [
+        [
+          48828131,
+          244140625
+        ]
+      ]
+    },
+    {
+      "modulus": 282475249,
+      "label": "pure282475249",
+      "residue": 40353611,
+      "components": [
+        [
+          40353611,
+          282475249
+        ]
+      ]
+    },
+    {
+      "modulus": 410338673,
+      "label": "pure410338673",
+      "residue": 24137577,
+      "components": [
+        [
+          24137577,
+          410338673
+        ]
+      ]
+    },
+    {
+      "modulus": 815730721,
+      "label": "pure815730721",
+      "residue": 62748525,
+      "components": [
+        [
+          62748525,
+          815730721
+        ]
+      ]
+    },
+    {
+      "modulus": 893871739,
+      "label": "pure893871739",
+      "residue": 47045889,
+      "components": [
+        [
+          47045889,
+          893871739
+        ]
+      ]
+    },
+    {
+      "modulus": 1977326743,
+      "label": "pure1977326743",
+      "residue": 282475253,
+      "components": [
+        [
+          282475253,
+          1977326743
+        ]
+      ]
+    },
+    {
+      "modulus": 2357947691,
+      "label": "pure2357947691",
+      "residue": 214358889,
+      "components": [
+        [
+          214358889,
+          2357947691
+        ]
+      ]
+    },
+    {
+      "modulus": 6975757441,
+      "label": "pure6975757441",
+      "residue": 410338681,
+      "components": [
+        [
+          410338681,
+          6975757441
+        ]
+      ]
+    },
+    {
+      "modulus": 10604499373,
+      "label": "pure10604499373",
+      "residue": 815730729,
+      "components": [
+        [
+          815730729,
+          10604499373
+        ]
+      ]
+    },
+    {
+      "modulus": 13841287201,
+      "label": "pure13841287201",
+      "residue": 1977326747,
+      "components": [
+        [
+          1977326747,
+          13841287201
+        ]
+      ]
+    },
+    {
+      "modulus": 16983563041,
+      "label": "pure16983563041",
+      "residue": 893871747,
+      "components": [
+        [
+          893871747,
+          16983563041
+        ]
+      ]
+    },
+    {
+      "modulus": 25937424601,
+      "label": "pure25937424601",
+      "residue": 2357947699,
+      "components": [
+        [
+          2357947699,
+          25937424601
+        ]
+      ]
+    },
+    {
+      "modulus": 118587876497,
+      "label": "pure118587876497",
+      "residue": 6975757449,
+      "components": [
+        [
+          6975757449,
+          118587876497
+        ]
+      ]
+    },
+    {
+      "modulus": 137858491849,
+      "label": "pure137858491849",
+      "residue": 10604499381,
+      "components": [
+        [
+          10604499381,
+          137858491849
+        ]
+      ]
+    },
+    {
+      "modulus": 285311670611,
+      "label": "pure285311670611",
+      "residue": 25937424609,
+      "components": [
+        [
+          25937424609,
+          285311670611
+        ]
+      ]
+    },
+    {
+      "modulus": 322687697779,
+      "label": "pure322687697779",
+      "residue": 16983563049,
+      "components": [
+        [
+          16983563049,
+          322687697779
+        ]
+      ]
+    },
+    {
+      "modulus": 1792160394037,
+      "label": "pure1792160394037",
+      "residue": 137858491857,
+      "components": [
+        [
+          137858491857,
+          1792160394037
+        ]
+      ]
+    },
+    {
+      "modulus": 2015993900449,
+      "label": "pure2015993900449",
+      "residue": 118587876505,
+      "components": [
+        [
+          118587876505,
+          2015993900449
+        ]
+      ]
+    },
+    {
+      "modulus": 3138428376721,
+      "label": "pure3138428376721",
+      "residue": 285311670619,
+      "components": [
+        [
+          285311670619,
+          3138428376721
+        ]
+      ]
+    },
+    {
+      "modulus": 6131066257801,
+      "label": "pure6131066257801",
+      "residue": 322687697787,
+      "components": [
+        [
+          322687697787,
+          6131066257801
+        ]
+      ]
+    },
+    {
+      "modulus": 23298085122481,
+      "label": "pure23298085122481",
+      "residue": 1792160394045,
+      "components": [
+        [
+          1792160394045,
+          23298085122481
+        ]
+      ]
+    },
+    {
+      "modulus": 34271896307633,
+      "label": "pure34271896307633",
+      "residue": 2015993900457,
+      "components": [
+        [
+          2015993900457,
+          34271896307633
+        ]
+      ]
+    },
+    {
+      "modulus": 116490258898219,
+      "label": "pure116490258898219",
+      "residue": 6131066257809,
+      "components": [
+        [
+          6131066257809,
+          116490258898219
+        ]
+      ]
+    },
+    {
+      "modulus": 582622237229761,
+      "label": "pure582622237229761",
+      "residue": 34271896307641,
+      "components": [
+        [
+          34271896307641,
+          582622237229761
+        ]
+      ]
+    },
+    {
+      "modulus": 2213314919066161,
+      "label": "pure2213314919066161",
+      "residue": 116490258898227,
+      "components": [
+        [
+          116490258898227,
+          2213314919066161
+        ]
+      ]
+    }
+  ],
+  "corner": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "roles": [
+    [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        0,
+        7
+      ]
+    ],
+    [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ],
+    [
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        10
+      ],
+      [
+        2,
+        11
+      ]
+    ],
+    [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        12
+      ],
+      [
+        0,
+        13
+      ]
+    ],
+    [
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        14
+      ],
+      [
+        1,
+        15
+      ]
+    ]
+  ],
+  "pure_tail_height": 12,
+  "positive_central_cells": 80,
+  "minimum_actual_conditional_survivor": "378217789/1064194560",
+  "complete512_coefficients": [
+    "0",
+    "66132113/18112248000",
+    "24935059/12937320000",
+    "363338977979/156897348300000",
+    "248266457/159387782400",
+    "180562821017/100414302912000",
+    "729063851/931487040000",
+    "15408791615797/6455205187200000",
+    "434737333/386394624000",
+    "5120558965919/4138286423040000",
+    "5806721884837/10838369203200000",
+    "27328340665793/15648982272000000",
+    "195446620507/472947019776000",
+    "39277496663173/27542208798720000",
+    "108263472003977/137711043993600000",
+    "2637960717477797/12393993959424000000",
+    "109497433/110846957760",
+    "110864455451/103659225342750",
+    "482120518051/1042515637732800",
+    "6912129323213/4489301789280000",
+    "2974938070733/8340125101862400",
+    "49672484450669/39505855745664000",
+    "27384080992157/39505855745664000",
+    "666507074721737/3555527017109760000",
+    "4935126973807/20218485095424000",
+    "88102547974681/95771771504640000",
+    "48575077345033/95771771504640000",
+    "1178329734402853/8619459435417600000",
+    "349117056601249/842791589240832000",
+    "8445940570438237/75851243031674880000",
+    "4607279981032717/75851243031674880000",
+    "152542080020616217/6826611872850739200000",
+    "1084133/67082400",
+    "110514643/7043652000",
+    "1690203491/249043410000",
+    "70696190293/2716837200000",
+    "1594633/303595776",
+    "101614698821/4781633472000",
+    "280166579977/23908167360000",
+    "6761747121397/2151735062400000",
+    "23772908519/6568708608000",
+    "180244212769/11591838720000",
+    "1491021760639/173877580800000",
+    "11955817120193/5216327424000000",
+    "714455791081/102008180736000",
+    "17141062757509/9180736266240000",
+    "4252125256507/4173061939200000",
+    "1531139022194597/4131331319808000000",
+    "125031197/39888109800",
+    "227955218189/16627043664000",
+    "125717142893/16627043664000",
+    "274632663703/136039448160000",
+    "903608565281/146317984243200",
+    "21656060288813/13168618581888000",
+    "11819400902237/13168618581888000",
+    "386342833103177/1185175672369920000",
+    "1603069472269/354710264832000",
+    "38295571686937/31923923834880000",
+    "20904534962953/31923923834880000",
+    "680259971525413/2873153145139200000",
+    "149889151450273/280930529746944000",
+    "4859838277720669/25283747677224960000",
+    "2615000929522957/25283747677224960000",
+    "116681057093440537/2275537290950246400000",
+    "1084133/40249440",
+    "465574883/9056124000",
+    "1170964/56600775",
+    "46676622253/1630102320000",
+    "2442310687/159387782400",
+    "335132604217/14344900416000",
+    "184088307817/14344900416000",
+    "5032338222517/1291041037440000",
+    "3774991201/386394624000",
+    "84824370419/4967930880000",
+    "326201436373/34775516160000",
+    "8881312411073/3129796454400000",
+    "2342477071757/306024542208000",
+    "5778989080171/2503837163520000",
+    "34475358985097/27542208798720000",
+    "1309774683137957/2478798791884800000",
+    "1134725857/138558697200",
+    "107237012671/7125875856000",
+    "82481920421/9976226198400",
+    "2242725296237/897860357856000",
+    "2961574817413/438953952729600",
+    "80263877282209/39505855745664000",
+    "8706464884253/7901171149132800",
+    "66061996955893/142221080684390400",
+    "5248293123137/1064130794496000",
+    "20238697449563/13681681643520000",
+    "15370426486537/19154354300928000",
+    "1366225926941/4056216204902400",
+    "50019804736399/76617417203712000",
+    "20713089095885777/75851243031674880000",
+    "443309023844201/3034049721266995200",
+    "9955350228000491/124120215870013440000",
+    "1084133/1609977600",
+    "2732617369/724489920000",
+    "4526897579/2173469760000",
+    "34666838233/65204092800000",
+    "10849159501/6375511296000",
+    "22605650843/52163274240000",
+    "136049171737/573796016640000",
+    "4167633773077/51641641497600000",
+    "57762805147/46367354880000",
+    "40004123407/126456422400000",
+    "722395583359/4173061939200000",
+    "7344060056513/125191858176000000",
+    "1727576129933/12240981688320000",
+    "52500662929049/1101688351948800000",
+    "28326349566857/1101688351948800000",
+    "1199092513609637/99151951675392000000",
+    "24355047061/22169391552000",
+    "32711799269/117367367040000",
+    "12172861837/79809809587200",
+    "1853608293989/35914414314240000",
+    "198485528447/1596196191744000",
+    "66255665201281/1580234229826560000",
+    "7149996875261/316046845965312000",
+    "1616543104907/152108107683840000",
+    "351342364003/3869566525440000",
+    "116767394003069/3830870860185600000",
+    "741374838137/45069068943360000",
+    "48258094787471/6268697771212800000",
+    "450603899524901/33711663569633280000",
+    "18920037949526993/3034049721266995200000",
+    "2017317214070029/606809944253399040000",
+    "105922750215287833/54612894982805913600000",
+    "1084133/67082400",
+    "110514643/7043652000",
+    "1690203491/249043410000",
+    "70696190293/2716837200000",
+    "1594633/303595776",
+    "101614698821/4781633472000",
+    "280166579977/23908167360000",
+    "6761747121397/2151735062400000",
+    "23772908519/6568708608000",
+    "180244212769/11591838720000",
+    "1491021760639/173877580800000",
+    "11955817120193/5216327424000000",
+    "714455791081/102008180736000",
+    "17141062757509/9180736266240000",
+    "4252125256507/4173061939200000",
+    "1531139022194597/4131331319808000000",
+    "125031197/39888109800",
+    "227955218189/16627043664000",
+    "125717142893/16627043664000",
+    "274632663703/136039448160000",
+    "903608565281/146317984243200",
+    "21656060288813/13168618581888000",
+    "11819400902237/13168618581888000",
+    "386342833103177/1185175672369920000",
+    "1603069472269/354710264832000",
+    "38295571686937/31923923834880000",
+    "20904534962953/31923923834880000",
+    "680259971525413/2873153145139200000",
+    "149889151450273/280930529746944000",
+    "4859838277720669/25283747677224960000",
+    "2615000929522957/25283747677224960000",
+    "116681057093440537/2275537290950246400000",
+    "1084133/22360800",
+    "28468529/431244000",
+    "642931013/22640310000",
+    "30663576893/905612400000",
+    "229025101/10625852160",
+    "251244203/9107873280",
+    "120036126377/7969389120000",
+    "3879398956597/717245020800000",
+    "5513940533/386394624000",
+    "15552144493/772789248000",
+    "1910978024317/173877580800000",
+    "6831642604993/1738775808000000",
+    "5536760543/618231398400",
+    "1394607350803/437177917440000",
+    "26276679760777/15301227110400000",
+    "105654405190927/125191858176000000",
+    "1483433/122185800",
+    "8931777343/503849808000",
+    "53658438773/5542347888000",
+    "1723902626573/498811309920000",
+    "384785895617/48772661414400",
+    "1759607462123/627077075328000",
+    "6631174205597/4389539527296000",
+    "292954752563657/395058557456640000",
+    "680718059533/118236754944000",
+    "21693246257689/10641307944960000",
+    "11681020835593/10641307944960000",
+    "514236717232933/957717715046400000",
+    "83479849733281/93643509915648000",
+    "523495835259259/1203987984629760000",
+    "177355264759367/766174172037120000",
+    "104727382784381977/758512430316748800000",
+    "15458933/14374800",
+    "33176477/377338500",
+    "361899653/9056124000",
+    "22657054213/543367440000",
+    "182406491/5903251200",
+    "162191714329/4781633472000",
+    "88010035657/4781633472000",
+    "3302929323637/430347012480000",
+    "8122364531/386394624000",
+    "286320122021/11591838720000",
+    "466186857599/34775516160000",
+    "5806807701953/1043265484800000",
+    "1112675188109/102008180736000",
+    "41432445976217/9180736266240000",
+    "22177340148617/9180736266240000",
+    "1088410344081317/826266263961600000",
+    "1668962513/92372464800",
+    "361542086449/16627043664000",
+    "39246697949/3325408732800",
+    "86146546573/17605105056000",
+    "1405106808421/146317984243200",
+    "52247453120353/13168618581888000",
+    "5593528866269/2633723716377600",
+    "274277136455753/237035134473984000",
+    "354462697847/50672894976000",
+    "91863905859197/31923923834880000",
+    "9836318010121/6384784766976000",
+    "481032066374437/574630629027840000",
+    "350989946949413/280930529746944000",
+    "141545345480729/208956592373760000",
+    "1818089308919053/5056749535444992000",
+    "20467329584514053/91021491638009856000",
+    "449112119/24149664000",
+    "161616119/34499520000",
+    "5574170057/2173469760000",
+    "18653792873/21734697600000",
+    "4443941357/2125170432000",
+    "133368232681/191265338880000",
+    "71996990297/191265338880000",
+    "3014694507157/17213880499200000",
+    "70804925137/46367354880000",
+    "33582625267/66239078400000",
+    "1142351847037/4173061939200000",
+    "5294390250433/41730619392000000",
+    "907708207501/4080327229440000",
+    "37743040325273/367229450649600000",
+    "20127670342537/367229450649600000",
+    "1051516287571877/33050650558464000000",
+    "9943306237/7389797184000",
+    "42384178963/95011678080000",
+    "1884754561/7824491136000",
+    "53391424973/478858857523200",
+    "1145695473589/5852719369728000",
+    "4325277190307/47885885752320000",
+    "1014941239321/21069789731020800",
+    "264938328401801/9481405378959360000",
+    "2020063178561/14188410593280000",
+    "98657311859/1507623321600000",
+    "1782793319477/51078278135808000",
+    "464429740945189/22985225161113600000",
+    "317785296090917/11237221189877760000",
+    "972311946336193/59491171005235200000",
+    "1751680007202061/202269981417799680000",
+    "101141280491664409/18204298327601971200000",
+    "1084133/40249440",
+    "728778289/31696434000",
+    "70672087/6641157600",
+    "1228413013/101881395000",
+    "1333715239/159387782400",
+    "136971167887/14344900416000",
+    "9313063717/2049271488000",
+    "5032338222517/1291041037440000",
+    "12851325947/2189569536000",
+    "233477072333/34775516160000",
+    "10002302183/3161410560000",
+    "8881312411073/3129796454400000",
+    "108169368731/43717791744000",
+    "5778989080171/2503837163520000",
+    "34475358985097/27542208798720000",
+    "1309774683137957/2478798791884800000",
+    "26906374139/5265230493600",
+    "72821212483/12470282748000",
+    "68392529423/24940565496000",
+    "2242725296237/897860357856000",
+    "940328166847/438953952729600",
+    "80263877282209/39505855745664000",
+    "8706464884253/7901171149132800",
+    "66061996955893/142221080684390400",
+    "224757030431/152018684928000",
+    "20238697449563/13681681643520000",
+    "15370426486537/19154354300928000",
+    "1366225926941/4056216204902400",
+    "50019804736399/76617417203712000",
+    "20713089095885777/75851243031674880000",
+    "443309023844201/3034049721266995200",
+    "9955350228000491/124120215870013440000",
+    "15458933/14374800",
+    "33176477/377338500",
+    "361899653/9056124000",
+    "22657054213/543367440000",
+    "182406491/5903251200",
+    "162191714329/4781633472000",
+    "88010035657/4781633472000",
+    "3302929323637/430347012480000",
+    "8122364531/386394624000",
+    "286320122021/11591838720000",
+    "466186857599/34775516160000",
+    "5806807701953/1043265484800000",
+    "1112675188109/102008180736000",
+    "41432445976217/9180736266240000",
+    "22177340148617/9180736266240000",
+    "1088410344081317/826266263961600000",
+    "1668962513/92372464800",
+    "361542086449/16627043664000",
+    "39246697949/3325408732800",
+    "86146546573/17605105056000",
+    "1405106808421/146317984243200",
+    "52247453120353/13168618581888000",
+    "5593528866269/2633723716377600",
+    "274277136455753/237035134473984000",
+    "354462697847/50672894976000",
+    "91863905859197/31923923834880000",
+    "9836318010121/6384784766976000",
+    "481032066374437/574630629027840000",
+    "350989946949413/280930529746944000",
+    "141545345480729/208956592373760000",
+    "1818089308919053/5056749535444992000",
+    "20467329584514053/91021491638009856000",
+    "9469433/8385300",
+    "1126896013/9056124000",
+    "89407511/1509354000",
+    "3570628121/65204092800",
+    "1058234261/22769683200",
+    "638017681757/14344900416000",
+    "2751775249/114759203328",
+    "2957047543861/258208207488000",
+    "21992483/681472000",
+    "1124150139193/34775516160000",
+    "2694099017/154557849600",
+    "5191906760129/625959290880000",
+    "4333574056897/306024542208000",
+    "185025795975421/27542208798720000",
+    "1792521489211/500767432704000",
+    "1044137476269989/495759758376960000",
+    "1936080841/69279348600",
+    "1418593429997/49881130992000",
+    "152998267273/9976226198400",
+    "594929314019/81623668896000",
+    "5469066033113/438953952729600",
+    "13718873025877/2323873867392000",
+    "24854708313361/7901171149132800",
+    "1315352833955053/711105403421952000",
+    "567008246261/62595929088000",
+    "409512553008241/95771771504640000",
+    "43647481574189/19154354300928000",
+    "2305546379296697/1723891887083520000",
+    "1555721829596089/842791589240832000",
+    "82048831723123477/75851243031674880000",
+    "511293572605489/892367565078528000",
+    "504511035027416189/1365322374570147840000",
+    "481636109/24149664000",
+    "4055259629/724489920000",
+    "1324288507/434693952000",
+    "15451183801/13040818560000",
+    "2259212663/910787328000",
+    "551547236813/573796016640000",
+    "5380595819/10432654848000",
+    "2784106653973/10328328299520000",
+    "83847045127/46367354880000",
+    "970424903737/1391020646400000",
+    "28405602013/75873853440000",
+    "4884456289217/25038371635200000",
+    "531239016439/1748711669760000",
+    "173957579022589/1101688351948800000",
+    "18487934497673/220337670389760000",
+    "40880041694573/793215613403136000",
+    "35304790361/22169391552000",
+    "1224034928873/1995245239680000",
+    "131380656037/399049047936000",
+    "6155105451961/35914414314240000",
+    "39418756543/147547547136000",
+    "219212629358981/1580234229826560000",
+    "23298240304369/316046845965312000",
+    "1287336409793197/28444216136878080000",
+    "8255613067333/42565231779840000",
+    "384609064864369/3830870860185600000",
+    "40880427335981/766174172037120000",
+    "2255739403008953/68955675483340800000",
+    "208015411002943/4815951938519040000",
+    "80255780576764693/3034049721266995200000",
+    "8492762829142337/606809944253399040000",
+    "500924932734698621/54612894982805913600000",
+    "1084133/226403100",
+    "413199211/16301023200",
+    "5702258327/407525580000",
+    "66331230461/18338651100000",
+    "9316973/815051160",
+    "47570670731/16138012968000",
+    "130044279727/80690064840000",
+    "369049610627/660191439600000",
+    "9447653/1129075200",
+    "84165940609/39122455680000",
+    "230123164213/195612278400000",
+    "650173046563/1600464096000000",
+    "330142702441/344277609984000",
+    "10223427161989/30984984898560000",
+    "27557723389577/154924924492800000",
+    "1185257242418597/13943243204352000000",
+    "2629022441/356293792800",
+    "212712309973/112232544732000",
+    "116324215561/112232544732000",
+    "451242167177/1262616128235000",
+    "417212312471/493823196820800",
+    "758878102249/2614358100816000",
+    "632312579467/4040371610352000",
+    "298791507597377/3999967894248480000",
+    "6204748091/10060060032000",
+    "22730891597017/107743242942720000",
+    "1114317315323/9794840267520000",
+    "524613170626213/9696891864844800000",
+    "87630431090593/948140537895936000",
+    "3739181311246429/85332648410634240000",
+    "117200807407421/5019567553566720000",
+    "105474487428698137/7679938356957081600000",
+    "226182259/1811224800",
+    "865017653/27168372000",
+    "7098621631/407525580000",
+    "36306770411/6112883700000",
+    "424377829/29885209200",
+    "42897619/8891467200",
+    "69995359627/26896688280000",
+    "2978665155097/2420701945200000",
+    "4506821071/434693952000",
+    "831538759/237105792000",
+    "370108585439/195612278400000",
+    "5230338068993/5868368352000000",
+    "35283493397/22951840665600",
+    "7456372923781/10328328299520000",
+    "19871461616777/51641641497600000",
+    "1046904530508197/4647747734784000000",
+    "446726557/48903069600",
+    "115433059411/37410848244000",
+    "62280187471/37410848244000",
+    "659286207949/841744085490000",
+    "20241255577/14964339297600",
+    "9398874718001/14814695904624000",
+    "294697256641/871452700272000",
+    "2179925433017/11019195300960000",
+    "35680294823/36277186176000",
+    "16505019561049/35914414314240000",
+    "8798672670793/35914414314240000",
+    "42032222751503/293845208025600000",
+    "62726942946721/316046845965312000",
+    "3290918524656733/28444216136878080000",
+    "1743378844487437/28444216136878080000",
+    "100991859562801177/2559979452319027200000",
+    "81176129/603741600",
+    "446301409/11643588000",
+    "188777443/9056124000",
+    "30301878401/3667730220000",
+    "190174993/11206953450",
+    "108147686239/16138012968000",
+    "57985575607/16138012968000",
+    "2762489042737/1452421167120000",
+    "597366193/48299328000",
+    "27177407123/5588922240000",
+    "34006267111/13040818560000",
+    "4846024980353/3521021011200000",
+    "728362099469/344277609984000",
+    "34514810380697/30984984898560000",
+    "18334209262217/30984984898560000",
+    "1019233988126117/2788648640870400000",
+    "27162951727/2494056549600",
+    "68555149499/16033220676000",
+    "51471381853/22446508946400",
+    "152661645667/126261612823500",
+    "918710555611/493823196820800",
+    "43492320569773/44444087713872000",
+    "4620736360649/8888817542774400",
+    "256766871354593/799993578849696000",
+    "1616534435489/1197147143808000",
+    "10899889395611/15391891848960000",
+    "8106909111241/21548648588544000",
+    "449902706194597/1939378372968960000",
+    "288731226589733/948140537895936000",
+    "16006329836693969/85332648410634240000",
+    "1693571868199693/17066529682126848000",
+    "20019066797924357/307197534278283264000",
+    "265211047/108673488000",
+    "1261810331/1630102320000",
+    "2048087813/4890306960000",
+    "6824858099/36677302200000",
+    "2442310687/7172450208000",
+    "97338880621/645520518720000",
+    "51980683597/645520518720000",
+    "2654400986557/58096846684800000",
+    "12926278139/52163274240000",
+    "171026195429/1564898227200000",
+    "274030313279/4694694681600000",
+    "4653868436033/140840840448000000",
+    "651499481741/13771104399360000",
+    "3011934841963/112672672358400000",
+    "17565583084937/1239399395942400000",
+    "1005398716935077/111545945634816000000",
+    "10879274459/49881130992000",
+    "107811605303/1122325447320000",
+    "11516744761/224465089464000",
+    "234530708011/8080743220704000",
+    "821431305049/19752927872832000",
+    "41741294059657/1777763508554880000",
+    "177047114381/14222108068439040",
+    "253264818334361/31999743153987840000",
+    "1443593545601/47885885752320000",
+    "73186289751293/4309729717708800000",
+    "1552205466293/172389188708352000",
+    "443676834158629/77575134918758400000",
+    "25116316592527/3447783774167040000",
+    "15782198443399121/3413305936425369600000",
+    "1668668380055821/682661187285073920000",
+    "9058824654821099/5585409714150604800000"
+  ],
+  "induced_responses": [
+    [
+      "378217789/1064194560",
+      "378217789/1064194560",
+      "545443883/1289312640",
+      "169025903/354731520",
+      "2296455371/4788875520",
+      "4426837243/8380532160",
+      "32861464357/67044257280",
+      "32861464357/67044257280",
+      "16658187041/33522128640",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "545443883/1289312640",
+      "2736618499/5157250560",
+      "1828706491/3943779840",
+      "1828706491/3943779840",
+      "2154277709/4190266080",
+      "4218659059/7449361920",
+      "4426837243/8380532160",
+      "4218659059/7449361920",
+      "8929597109/16761064320",
+      "3925745699/7449361920",
+      "4188654551/7449361920",
+      "4188654551/7449361920",
+      "4188654551/7449361920",
+      "4188654551/7449361920",
+      "169025903/354731520",
+      "635937629/1064194560",
+      "2736618499/5157250560",
+      "635937629/1064194560",
+      "4424136451/9577751040",
+      "4424136451/9577751040",
+      "2296455371/4788875520",
+      "2154277709/4190266080",
+      "16213058597/33522128640",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "635937629/1064194560",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "5994862403/11174042880",
+      "5994862403/11174042880",
+      "5994862403/11174042880",
+      "5994862403/11174042880",
+      "5994862403/11174042880",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "9498704911/16761064320",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "3094445873/6094932480",
+      "3094445873/6094932480",
+      "3094445873/6094932480",
+      "3094445873/6094932480",
+      "3094445873/6094932480",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840",
+      "307654741/573027840"
+    ],
+    [
+      "1610749/2217072",
+      "1610749/2217072",
+      "79263281/122791680",
+      "1610749/2217072",
+      "7377067/12279168",
+      "3692299/5581440",
+      "980066827/1596291840",
+      "980066827/1596291840",
+      "496780997/798145920",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "79263281/122791680",
+      "79263281/122791680",
+      "450553013/798145920",
+      "450553013/798145920",
+      "102798193/159629184",
+      "1131928201/1596291840",
+      "3692299/5581440",
+      "1131928201/1596291840",
+      "532502621/798145920",
+      "511516133/798145920",
+      "1091385773/1596291840",
+      "1091385773/1596291840",
+      "1091385773/1596291840",
+      "1091385773/1596291840",
+      "1610749/2217072",
+      "1610749/2217072",
+      "79263281/122791680",
+      "1610749/2217072",
+      "924035659/1596291840",
+      "924035659/1596291840",
+      "7377067/12279168",
+      "102798193/159629184",
+      "483600313/798145920",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1610749/2217072",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "1131928201/1596291840",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "7982991/11824384",
+      "7982991/11824384",
+      "7982991/11824384",
+      "7982991/11824384",
+      "7982991/11824384",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160",
+      "46024361/66512160"
+    ],
+    [
+      "13523219/33860736",
+      "13523219/33860736",
+      "325710341/609493248",
+      "325710341/609493248",
+      "165451679/304746624",
+      "182223473/304746624",
+      "4175295/7524608",
+      "4175295/7524608",
+      "24490775/43535232",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "325710341/609493248",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "177368713/304746624",
+      "55813571/87070464",
+      "182223473/304746624",
+      "55813571/87070464",
+      "183782797/304746624",
+      "59974673/101582208",
+      "383925389/609493248",
+      "383925389/609493248",
+      "383925389/609493248",
+      "383925389/609493248",
+      "325710341/609493248",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "318779855/609493248",
+      "318779855/609493248",
+      "165451679/304746624",
+      "177368713/304746624",
+      "166867717/304746624",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "102000685/152373312",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "373922839/609493248",
+      "373922839/609493248",
+      "373922839/609493248",
+      "373922839/609493248",
+      "373922839/609493248",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "16285681/25395552",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "357519007/609493248",
+      "357519007/609493248",
+      "357519007/609493248",
+      "357519007/609493248",
+      "357519007/609493248",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208",
+      "62347127/101582208"
+    ],
+    [
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "9823445/14511744",
+      "112657/151164",
+      "3346097/4837248",
+      "3346097/4837248",
+      "10176197/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11249/15504",
+      "297227/372096",
+      "112657/151164",
+      "297227/372096",
+      "454463/604656",
+      "3457163/4837248",
+      "11063773/14511744",
+      "11063773/14511744",
+      "11063773/14511744",
+      "11063773/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "12775/19584",
+      "12775/19584",
+      "9823445/14511744",
+      "11249/15504",
+      "9907061/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "11756057/14511744",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "297227/372096",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "11267747/14511744",
+      "11267747/14511744",
+      "11267747/14511744",
+      "11267747/14511744",
+      "11267747/14511744",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248",
+      "3809695/4837248"
+    ],
+    [
+      "1313534/3357585",
+      "1313534/3357585",
+      "33311339/71628480",
+      "225075161/429770880",
+      "25110175/42977088",
+      "25110175/42977088",
+      "33287443/61395840",
+      "33287443/61395840",
+      "23623273/42977088",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "33311339/71628480",
+      "13182707/22619520",
+      "6841403/13430340",
+      "6841403/13430340",
+      "269191399/429770880",
+      "269191399/429770880",
+      "25110175/42977088",
+      "269191399/429770880",
+      "126625817/214885440",
+      "1554535/2686068",
+      "446003/722304",
+      "446003/722304",
+      "446003/722304",
+      "446003/722304",
+      "225075161/429770880",
+      "1044511/1591744",
+      "13182707/22619520",
+      "1044511/1591744",
+      "269191399/429770880",
+      "269191399/429770880",
+      "25110175/42977088",
+      "269191399/429770880",
+      "126625817/214885440",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "1044511/1591744",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "51364325/85954176",
+      "51364325/85954176",
+      "51364325/85954176",
+      "51364325/85954176",
+      "51364325/85954176",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "4987547/7958720",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "613451/1077120",
+      "613451/1077120",
+      "613451/1077120",
+      "613451/1077120",
+      "613451/1077120",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160",
+      "3778771/6320160"
+    ],
+    [
+      "43501/54720",
+      "43501/54720",
+      "657187/930240",
+      "43501/54720",
+      "621659/852720",
+      "621659/852720",
+      "2307983/3410880",
+      "2307983/3410880",
+      "779903/1136960",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "657187/930240",
+      "657187/930240",
+      "63873/103360",
+      "63873/103360",
+      "242299/310080",
+      "242299/310080",
+      "621659/852720",
+      "242299/310080",
+      "940429/1279080",
+      "7176403/10232640",
+      "1531109/2046528",
+      "1531109/2046528",
+      "1531109/2046528",
+      "1531109/2046528",
+      "43501/54720",
+      "43501/54720",
+      "657187/930240",
+      "43501/54720",
+      "242299/310080",
+      "242299/310080",
+      "621659/852720",
+      "242299/310080",
+      "940429/1279080",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "43501/54720",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "242299/310080",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "81287/107712",
+      "81287/107712",
+      "81287/107712",
+      "81287/107712",
+      "81287/107712",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392",
+      "174631/227392"
+    ],
+    [
+      "190583/434112",
+      "190583/434112",
+      "2291557/3907008",
+      "2291557/3907008",
+      "11317/17136",
+      "11317/17136",
+      "266065/434112",
+      "266065/434112",
+      "127769/205632",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2291557/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "921989/1302336",
+      "921989/1302336",
+      "11317/17136",
+      "921989/1302336",
+      "7745/11628",
+      "843197/1302336",
+      "2698729/3907008",
+      "2698729/3907008",
+      "2698729/3907008",
+      "2698729/3907008",
+      "2291557/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "921989/1302336",
+      "921989/1302336",
+      "11317/17136",
+      "921989/1302336",
+      "7745/11628",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "2867867/3907008",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "1332929/1953504",
+      "1332929/1953504",
+      "1332929/1953504",
+      "1332929/1953504",
+      "1332929/1953504",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "32935/46512",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "855653/1302336",
+      "855653/1302336",
+      "855653/1302336",
+      "855653/1302336",
+      "855653/1302336",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008",
+      "2666429/3907008"
+    ],
+    [
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "4487/5472",
+      "4487/5472",
+      "4165/5472",
+      "4165/5472",
+      "2243/2907",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "1603/1824",
+      "1603/1824",
+      "4487/5472",
+      "1603/1824",
+      "76927/93024",
+      "2270/2907",
+      "77485/93024",
+      "77485/93024",
+      "77485/93024",
+      "77485/93024",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "1603/1824",
+      "1603/1824",
+      "4487/5472",
+      "1603/1824",
+      "76927/93024",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "41165/46512",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "1603/1824",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "80605/93024",
+      "80605/93024",
+      "80605/93024",
+      "80605/93024",
+      "80605/93024",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512",
+      "40589/46512"
+    ],
+    [
+      "7835761/20540520",
+      "7835761/20540520",
+      "11182541/24648624",
+      "125936441/246486240",
+      "13635695/24648624",
+      "150190211/246486240",
+      "150190211/246486240",
+      "150190211/246486240",
+      "70647481/123243120",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "11182541/24648624",
+      "140178553/246486240",
+      "4375477/8803080",
+      "4375477/8803080",
+      "13635695/24648624",
+      "150190211/246486240",
+      "150190211/246486240",
+      "150190211/246486240",
+      "70647481/123243120",
+      "11600513/20540520",
+      "148524953/246486240",
+      "148524953/246486240",
+      "148524953/246486240",
+      "148524953/246486240",
+      "125936441/246486240",
+      "15784375/24648624",
+      "140178553/246486240",
+      "15784375/24648624",
+      "122523689/246486240",
+      "122523689/246486240",
+      "13635695/24648624",
+      "13635695/24648624",
+      "64140253/123243120",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "15784375/24648624",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "214805/370656",
+      "214805/370656",
+      "214805/370656",
+      "214805/370656",
+      "214805/370656",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "3578087/5868720",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "3877571/7042464",
+      "3877571/7042464",
+      "3877571/7042464",
+      "3877571/7042464",
+      "3877571/7042464",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540",
+      "313451/540540"
+    ],
+    [
+      "4558187/5868720",
+      "4558187/5868720",
+      "311573/451440",
+      "4558187/5868720",
+      "22537/32604",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "87553/122265",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "311573/451440",
+      "311573/451440",
+      "3542711/5868720",
+      "3542711/5868720",
+      "22537/32604",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "87553/122265",
+      "20621/30096",
+      "4289641/5868720",
+      "4289641/5868720",
+      "4289641/5868720",
+      "4289641/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "311573/451440",
+      "4558187/5868720",
+      "135067/217360",
+      "135067/217360",
+      "22537/32604",
+      "22537/32604",
+      "3816899/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "4558187/5868720",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "496279/652080",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "857305/1173744",
+      "857305/1173744",
+      "857305/1173744",
+      "857305/1173744",
+      "857305/1173744",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240",
+      "1458653/1956240"
+    ],
+    [
+      "35545/82992",
+      "35545/82992",
+      "427607/746928",
+      "427607/746928",
+      "350501/560196",
+      "1544003/2240784",
+      "1544003/2240784",
+      "1544003/2240784",
+      "181579/280098",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "427607/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "350501/560196",
+      "1544003/2240784",
+      "1544003/2240784",
+      "1544003/2240784",
+      "181579/280098",
+      "472153/746928",
+      "503731/746928",
+      "503731/746928",
+      "503731/746928",
+      "503731/746928",
+      "427607/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "1260005/2240784",
+      "1260005/2240784",
+      "350501/560196",
+      "350501/560196",
+      "6979/11856",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "535309/746928",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "57059/86184",
+      "57059/86184",
+      "57059/86184",
+      "57059/86184",
+      "57059/86184",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "96529/140049",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "1424051/2240784",
+      "1424051/2240784",
+      "1424051/2240784",
+      "1424051/2240784",
+      "1424051/2240784",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112",
+      "211999/320112"
+    ],
+    [
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "41507/53352",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "42995/53352",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "41507/53352",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "42995/53352",
+      "10181/13338",
+      "43441/53352",
+      "43441/53352",
+      "43441/53352",
+      "43441/53352",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "37321/53352",
+      "37321/53352",
+      "41507/53352",
+      "41507/53352",
+      "4882/6669",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "7693/8892",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "5077/5928",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "14923/17784",
+      "14923/17784",
+      "14923/17784",
+      "14923/17784",
+      "14923/17784",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676",
+      "22615/26676"
+    ],
+    [
+      "44203/105336",
+      "44203/105336",
+      "14062/28215",
+      "886681/1580040",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "5959/9405",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "14062/28215",
+      "140891/225720",
+      "862157/1580040",
+      "862157/1580040",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "5959/9405",
+      "46633/75240",
+      "208961/316008",
+      "208961/316008",
+      "208961/316008",
+      "208961/316008",
+      "886681/1580040",
+      "1110317/1580040",
+      "140891/225720",
+      "1110317/1580040",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "39411/58520",
+      "5959/9405",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "1110317/1580040",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "3640/5643",
+      "3640/5643",
+      "3640/5643",
+      "3640/5643",
+      "3640/5643",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "16129/23940",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "325067/526680",
+      "325067/526680",
+      "325067/526680",
+      "325067/526680",
+      "325067/526680",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008",
+      "203923/316008"
+    ],
+    [
+      "7987/9405",
+      "7987/9405",
+      "631/836",
+      "7987/9405",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "5933/7524",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "631/836",
+      "631/836",
+      "12421/18810",
+      "12421/18810",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "5933/7524",
+      "14093/18810",
+      "30067/37620",
+      "30067/37620",
+      "30067/37620",
+      "30067/37620",
+      "7987/9405",
+      "7987/9405",
+      "631/836",
+      "7987/9405",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "5933/7524",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "7987/9405",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "3503/4180",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "30691/37620",
+      "30691/37620",
+      "30691/37620",
+      "30691/37620",
+      "30691/37620",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855",
+      "707/855"
+    ],
+    [
+      "3379/7182",
+      "3379/7182",
+      "9019/14364",
+      "9019/14364",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "10277/14364",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "9019/14364",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "10277/14364",
+      "4975/7182",
+      "10615/14364",
+      "10615/14364",
+      "10615/14364",
+      "10615/14364",
+      "9019/14364",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "3641/4788",
+      "10277/14364",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "940/1197",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "3523/4788",
+      "3523/4788",
+      "3523/4788",
+      "3523/4788",
+      "3523/4788",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "2731/3591",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "10217/14364",
+      "10217/14364",
+      "10217/14364",
+      "10217/14364",
+      "10217/14364",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026",
+      "755/1026"
+    ],
+    [
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "101/114",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "101/114",
+      "5/6",
+      "8/9",
+      "8/9",
+      "8/9",
+      "8/9",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "101/114",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "17/18",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "161/171",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "160/171",
+      "160/171",
+      "160/171",
+      "160/171",
+      "160/171",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114",
+      "107/114"
+    ],
+    [
+      "674273/1782144",
+      "674273/1782144",
+      "4901053/10890880",
+      "99352901/196035840",
+      "50132279/98017920",
+      "55219049/98017920",
+      "102479191/196035840",
+      "102479191/196035840",
+      "55219049/98017920",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "4901053/10890880",
+      "110596253/196035840",
+      "48328367/98017920",
+      "48328367/98017920",
+      "10749085/19603584",
+      "23679401/39207168",
+      "55219049/98017920",
+      "23679401/39207168",
+      "23679401/39207168",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "99352901/196035840",
+      "3459327/5445440",
+      "110596253/196035840",
+      "3459327/5445440",
+      "19316939/39207168",
+      "19316939/39207168",
+      "50132279/98017920",
+      "10749085/19603584",
+      "10749085/19603584",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "3459327/5445440",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "112513663/196035840",
+      "112513663/196035840",
+      "112513663/196035840",
+      "112513663/196035840",
+      "112513663/196035840",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "617033/1021020",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "647323/1188096",
+      "647323/1188096",
+      "647323/1188096",
+      "647323/1188096",
+      "647323/1188096",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920",
+      "56293009/98017920"
+    ],
+    [
+      "3597553/4667520",
+      "3597553/4667520",
+      "3196757/4667520",
+      "3597553/4667520",
+      "994831/1555840",
+      "3423/4862",
+      "1016633/1555840",
+      "1016633/1555840",
+      "3423/4862",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3196757/4667520",
+      "3196757/4667520",
+      "931987/1555840",
+      "931987/1555840",
+      "399877/583440",
+      "1174087/1555840",
+      "3423/4862",
+      "1174087/1555840",
+      "1174087/1555840",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3196757/4667520",
+      "3597553/4667520",
+      "169163/274560",
+      "169163/274560",
+      "994831/1555840",
+      "399877/583440",
+      "399877/583440",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "3597553/4667520",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "1174087/1555840",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "61357/84864",
+      "61357/84864",
+      "61357/84864",
+      "61357/84864",
+      "61357/84864",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520",
+      "67607/91520"
+    ],
+    [
+      "84125/198016",
+      "84125/198016",
+      "1012177/1782144",
+      "1012177/1782144",
+      "1031129/1782144",
+      "3943/6188",
+      "351277/594048",
+      "351277/594048",
+      "3943/6188",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1012177/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "46057/74256",
+      "405779/594048",
+      "3943/6188",
+      "405779/594048",
+      "405779/594048",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1012177/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "331133/594048",
+      "331133/594048",
+      "1031129/1782144",
+      "46057/74256",
+      "46057/74256",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "1267229/1782144",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "146087/222768",
+      "146087/222768",
+      "146087/222768",
+      "146087/222768",
+      "146087/222768",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "202955/297024",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "124545/198016",
+      "124545/198016",
+      "124545/198016",
+      "124545/198016",
+      "124545/198016",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144",
+      "1169087/1782144"
+    ],
+    [
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "1909/2652",
+      "33625/42432",
+      "31211/42432",
+      "31211/42432",
+      "33625/42432",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "32737/42432",
+      "12013/14144",
+      "33625/42432",
+      "12013/14144",
+      "12013/14144",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "29435/42432",
+      "29435/42432",
+      "1909/2652",
+      "32737/42432",
+      "32737/42432",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "9109/10608",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "12013/14144",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "35251/42432",
+      "35251/42432",
+      "35251/42432",
+      "35251/42432",
+      "35251/42432",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608",
+      "8911/10608"
+    ],
+    [
+      "523063/1256640",
+      "523063/1256640",
+      "28241/57120",
+      "63599/114240",
+      "13043/20944",
+      "13043/20944",
+      "48415/83776",
+      "48415/83776",
+      "13043/20944",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "28241/57120",
+      "778193/1256640",
+      "226757/418880",
+      "226757/418880",
+      "55929/83776",
+      "55929/83776",
+      "13043/20944",
+      "55929/83776",
+      "55929/83776",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "63599/114240",
+      "175223/251328",
+      "778193/1256640",
+      "175223/251328",
+      "55929/83776",
+      "55929/83776",
+      "13043/20944",
+      "55929/83776",
+      "55929/83776",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "175223/251328",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "401437/628320",
+      "401437/628320",
+      "401437/628320",
+      "401437/628320",
+      "401437/628320",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "209821/314160",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "153515/251328",
+      "153515/251328",
+      "153515/251328",
+      "153515/251328",
+      "153515/251328",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640",
+      "803221/1256640"
+    ],
+    [
+      "12609/14960",
+      "12609/14960",
+      "22413/29920",
+      "12609/14960",
+      "2109/2720",
+      "2109/2720",
+      "21533/29920",
+      "21533/29920",
+      "2109/2720",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "22413/29920",
+      "22413/29920",
+      "2451/3740",
+      "2451/3740",
+      "4973/5984",
+      "4973/5984",
+      "2109/2720",
+      "4973/5984",
+      "4973/5984",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "22413/29920",
+      "12609/14960",
+      "4973/5984",
+      "4973/5984",
+      "2109/2720",
+      "4973/5984",
+      "4973/5984",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "12609/14960",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "4973/5984",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "4833/5984",
+      "4833/5984",
+      "4833/5984",
+      "4833/5984",
+      "4833/5984",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880",
+      "721/880"
+    ],
+    [
+      "1333/2856",
+      "1333/2856",
+      "7117/11424",
+      "7117/11424",
+      "8035/11424",
+      "8035/11424",
+      "7457/11424",
+      "7457/11424",
+      "8035/11424",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "7117/11424",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "2871/3808",
+      "2871/3808",
+      "8035/11424",
+      "2871/3808",
+      "2871/3808",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "7117/11424",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "2871/3808",
+      "2871/3808",
+      "8035/11424",
+      "2871/3808",
+      "2871/3808",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4451/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "8327/11424",
+      "8327/11424",
+      "8327/11424",
+      "8327/11424",
+      "8327/11424",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "4307/5712",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "383/544",
+      "383/544",
+      "383/544",
+      "383/544",
+      "383/544",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476",
+      "347/476"
+    ],
+    [
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "237/272",
+      "237/272",
+      "55/68",
+      "55/68",
+      "237/272",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "127/136",
+      "127/136",
+      "237/272",
+      "127/136",
+      "127/136",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "127/136",
+      "127/136",
+      "237/272",
+      "127/136",
+      "127/136",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "15/16",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "127/136",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "63/68",
+      "63/68",
+      "63/68",
+      "63/68",
+      "63/68",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272",
+      "253/272"
+    ],
+    [
+      "97529/240240",
+      "97529/240240",
+      "4967/10296",
+      "78305/144144",
+      "35423/60060",
+      "4729/7280",
+      "4729/7280",
+      "4729/7280",
+      "4729/7280",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "4967/10296",
+      "4787/7920",
+      "380771/720720",
+      "380771/720720",
+      "35423/60060",
+      "4729/7280",
+      "4729/7280",
+      "4729/7280",
+      "4729/7280",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "78305/144144",
+      "490463/720720",
+      "4787/7920",
+      "490463/720720",
+      "127327/240240",
+      "127327/240240",
+      "35423/60060",
+      "35423/60060",
+      "35423/60060",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "490463/720720",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "223331/360360",
+      "223331/360360",
+      "223331/360360",
+      "223331/360360",
+      "223331/360360",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "19517/30030",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "6757/11440",
+      "6757/11440",
+      "6757/11440",
+      "6757/11440",
+      "6757/11440",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520",
+      "40627/65520"
+    ],
+    [
+      "7067/8580",
+      "7067/8580",
+      "4187/5720",
+      "7067/8580",
+      "12619/17160",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "4187/5720",
+      "4187/5720",
+      "2747/4290",
+      "2747/4290",
+      "12619/17160",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "4187/5720",
+      "7067/8580",
+      "2269/3432",
+      "2269/3432",
+      "12619/17160",
+      "12619/17160",
+      "12619/17160",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "7067/8580",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "421/520",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "13417/17160",
+      "13417/17160",
+      "13417/17160",
+      "13417/17160",
+      "13417/17160",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580",
+      "6827/8580"
+    ],
+    [
+      "373/819",
+      "373/819",
+      "3985/6552",
+      "3985/6552",
+      "4367/6552",
+      "229/312",
+      "229/312",
+      "229/312",
+      "229/312",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "3985/6552",
+      "277/364",
+      "277/364",
+      "277/364",
+      "4367/6552",
+      "229/312",
+      "229/312",
+      "229/312",
+      "229/312",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "3985/6552",
+      "277/364",
+      "277/364",
+      "277/364",
+      "3925/6552",
+      "3925/6552",
+      "4367/6552",
+      "4367/6552",
+      "4367/6552",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "277/364",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "515/728",
+      "515/728",
+      "515/728",
+      "515/728",
+      "515/728",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "185/252",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "4463/6552",
+      "4463/6552",
+      "4463/6552",
+      "4463/6552",
+      "4463/6552",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638",
+      "1159/1638"
+    ],
+    [
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "43/52",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "43/52",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "29/39",
+      "29/39",
+      "43/52",
+      "43/52",
+      "43/52",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "11/12",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "71/78",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "35/39",
+      "35/39",
+      "35/39",
+      "35/39",
+      "35/39",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52",
+      "47/52"
+    ],
+    [
+      "1031/2310",
+      "1031/2310",
+      "2447/4620",
+      "551/924",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "2447/4620",
+      "1021/1540",
+      "1339/2310",
+      "1339/2310",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "551/924",
+      "862/1155",
+      "1021/1540",
+      "862/1155",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "221/308",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "862/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "91/132",
+      "91/132",
+      "91/132",
+      "91/132",
+      "91/132",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "829/1155",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "1019/1540",
+      "1019/1540",
+      "1019/1540",
+      "1019/1540",
+      "1019/1540",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770",
+      "531/770"
+    ],
+    [
+      "9/10",
+      "9/10",
+      "4/5",
+      "9/10",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "4/5",
+      "4/5",
+      "7/10",
+      "7/10",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "4/5",
+      "9/10",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "9/10",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "49/55",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "48/55",
+      "48/55",
+      "48/55",
+      "48/55",
+      "48/55",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110",
+      "97/110"
+    ],
+    [
+      "1/2",
+      "1/2",
+      "2/3",
+      "2/3",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "2/3",
+      "5/6",
+      "5/6",
+      "5/6",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "2/3",
+      "5/6",
+      "5/6",
+      "5/6",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "5/6",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "17/21",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "16/21",
+      "16/21",
+      "16/21",
+      "16/21",
+      "16/21",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14",
+      "11/14"
+    ],
+    [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ]
+  ],
+  "dual_linear_coefficients": [
+    "28590838896734303752542961/341274762863652364110392291072409600000000",
+    "949967647476971881814809/63989018036934818270698554576076800000000",
+    "13619732371847136033517/253924674749741342344041883238400000000",
+    "1381371836342942293866209/5817183457903165297336232234188800000000",
+    "334699308928055087860544287/1023824288590957092331176873217228800000000",
+    "89102364288507983569950601/255956072147739273082794218304307200000000",
+    "29656055074898500938634387/315022858027986797640362114836070400000000",
+    "498501220568881856074409033/2047648577181914184662353746434457600000000",
+    "99952636184168787510054701/511912144295478546165588436608614400000000",
+    "545757889622990544683325379/63989018036934818270698554576076800000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "828430718413700421661720451/73130306327925506595084062372659200000000",
+    "1754926127452340575957093/1659826677397349260800000000",
+    "8185691655134120130870331/255956072147739273082794218304307200000000",
+    "29446791542544634361867799841596243689/170637381431826182055196145536204800000000",
+    "45148872132256073740205584443227541019/63989018036934818270698554576076800000000",
+    "536896072865789270480270657/511912144295478546165588436608614400000000",
+    "2788674148035821202925699/1607259479734626518573276096102400000000",
+    "189303396712424282313926293/215541955492833072069721446993100800000000",
+    "3855175151681844359784782501/2047648577181914184662353746434457600000000",
+    "490845599034096616648516637/511912144295478546165588436608614400000000",
+    "114654164504408132762806129/63989018036934818270698554576076800000000",
+    "58640381316456019163893877/31994509018467409135349277288038400000000",
+    "58640381316456019163893877/31994509018467409135349277288038400000000",
+    "58640381316456019163893877/31994509018467409135349277288038400000000",
+    "283600978182920249781730589/39377857253498349705045264354508800000000",
+    "2900760567695771410963/60595661019824638513919085772800000000",
+    "968126244518864897233916957/511912144295478546165588436608614400000000",
+    "3693598776469525280118456488158490833/3554945446496378792816586365337600000000",
+    "22780551743520049468126909/63989018036934818270698554576076800000000",
+    "36271008535515998570133589/102382428859095709233117687321722880000000",
+    "5842348658580670061300639/29252122531170202638033624949063680000000",
+    "423283380041786051604504893/2047648577181914184662353746434457600000000",
+    "7660543743442875582745111/20894373236550144741452589249331200000000",
+    "63837272085408830850537907/255956072147739273082794218304307200000000",
+    "545757889622990544683325379/63989018036934818270698554576076800000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "988299936065049432764011/175794005595974775468952073011200000000",
+    "828430718413700421661720451/73130306327925506595084062372659200000000",
+    "38101761073337923725103477/31994509018467409135349277288038400000000",
+    "38101761073337923725103477/31994509018467409135349277288038400000000",
+    "38101761073337923725103477/31994509018467409135349277288038400000000",
+    "38101761073337923725103477/31994509018467409135349277288038400000000",
+    "38101761073337923725103477/31994509018467409135349277288038400000000",
+    "3535262597694081111330103/10664836339489136378449759096012800000000",
+    "457289978330266403972627/120280109091982741110335628902400000000",
+    "1010196902616840756773959/296245453874698232734715530444800000000",
+    "7515140546090948566341083/4922232156687293713130658044313600000000",
+    "37597906743971251604269171/39377857253498349705045264354508800000000",
+    "827793934815667785360539/894951301215871584205574189875200000000",
+    "488536215842972876160601/518129700703925654013753478348800000000",
+    "9139292870876701699406419/9844464313374587426261316088627200000000",
+    "9013792138188404146949179/9844464313374587426261316088627200000000",
+    "23557398440878639657381813/7998627254616852283837319322009600000000",
+    "23557398440878639657381813/7998627254616852283837319322009600000000",
+    "23557398440878639657381813/7998627254616852283837319322009600000000",
+    "23557398440878639657381813/7998627254616852283837319322009600000000",
+    "23557398440878639657381813/7998627254616852283837319322009600000000",
+    "81386034330553794410651/19810841497503039712290574172160000000",
+    "81386034330553794410651/19810841497503039712290574172160000000",
+    "81386034330553794410651/19810841497503039712290574172160000000",
+    "81386034330553794410651/19810841497503039712290574172160000000",
+    "81386034330553794410651/19810841497503039712290574172160000000",
+    "2007435635223704690442377/2007498605080308024178778182778880000000",
+    "84041503348003528174127989/102382428859095709233117687321722880000000",
+    "2717250873317524885014555678373721777/11375825428788412137013076369080320000000",
+    "1028288160302500464722279/1828257658198137664877101559316480000000",
+    "11832986570726985814548127/30112479076204620362681672741683200000000",
+    "8115420529060306356422747/23268733831612661189344928936755200000000",
+    "53976190265446664157706549/146260612655851013190168124745318400000000",
+    "349394235668831451078159793/1023824288590957092331176873217228800000000",
+    "84698884135673400986287717/255956072147739273082794218304307200000000",
+    "3653287982373148827249299/3199450901846740913534927728803840000000",
+    "3653287982373148827249299/3199450901846740913534927728803840000000",
+    "3653287982373148827249299/3199450901846740913534927728803840000000",
+    "3653287982373148827249299/3199450901846740913534927728803840000000",
+    "3653287982373148827249299/3199450901846740913534927728803840000000"
+  ],
+  "exact_corner_gate_upper": "17134665801754517687631115782058572677/5332418169744568189224879548006400000000",
+  "exact_corner_gate_upper_decimal": 0.0032133012183804964,
+  "central_capacity_perturbation": "153345527428066815295058448477357721/5301081425857720483827000000000000000000",
+  "central_capacity_perturbation_decimal": 2.8927215997866954e-05,
+  "uniform_gate_upper": "89726950898036861449857794975313198259550643909773/27674469185031475225096281365938176000000000000000000",
+  "uniform_gate_upper_decimal": 0.0032422284343783634,
+  "simple_gate_upper": "1/300",
+  "r4_network_budget": "62373342034363386140052609741/7737125245533626718119526400000",
+  "r4_network_budget_decimal": 0.00806156551108816,
+  "checks": {
+    "pinned648 coefficient input": 1,
+    "pinned dyadic selector dual": 1,
+    "fixed full15 central layout": 1,
+    "fixed corner": 1,
+    "complete nonnegative512 coefficients": 1,
+    "distinct original numerical moduli": 183,
+    "fixed original CRT component": 309,
+    "Hamilton edge partition": 10,
+    "all ten retained pair edges": 1,
+    "complete finite fixture size": 1,
+    "component has one declared prime base": 309,
+    "component is a prime power": 309,
+    "actual survivor CRT component": 10,
+    "actual survivor avoids every original": 183,
+    "eighty actual positive central cells": 1,
+    "root forced by actual3q": 210,
+    "unique root-forcing9qs edge": 190,
+    "root-forcing pair of incompatible other endpoints": 190,
+    "exact weak leaf capacity": 2,
+    "corner law is actually realizable": 2,
+    "higher pure deletions disjoint in weak leaf": 90,
+    "deep-cap root separated from partial-event roots": 5,
+    "exact almost-sharp deep cap": 5,
+    "outside pure deletions disjoint": 275,
+    "actual coordinate counts nonnegative": 400,
+    "pair special first root": 1600,
+    "pair special avoids every unary prefix": 1600,
+    "all32 exact factors match actual category enumeration": 2560,
+    "induced actual response between zero and one": 2560,
+    "positive exact dual denominator": 1,
+    "dyadic convex selector row": 512,
+    "valid actual central selector": 563,
+    "strict exact corner obstruction": 1,
+    "uniform central-capacity obstruction": 1,
+    "strict short-network comparison": 1
+  },
+  "check_count": 12089
+}
