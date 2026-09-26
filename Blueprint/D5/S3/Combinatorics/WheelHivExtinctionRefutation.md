@@ -42,7 +42,7 @@ An infected vertex (1) dies (2). A healthy vertex (0) becomes infected when at l
 
 **Definition 1.4 (The extinction set).**
 
-$$R \in \operatorname{extinctionSet}\left(n, adj\right) \Leftrightarrow (0 < R \land \left(\forall f0 \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \exists t \in \mathbb{N},\; \left(\operatorname{step}\left(adj, R\right)^{t}\right)\left(\operatorname{castSucc}\left(f0\right)\right) = 0\right))$$
+$$R \in \operatorname{extinctionSet}\left(n, adj\right) \Leftrightarrow (0 < R \land \left(\forall f0 \in \operatorname{Fin}\left(n\right) \to \operatorname{Fin}\left(2\right),\; \exists t \in \mathbb{N},\; \left(\operatorname{step}\left(adj, R\right)^{t}\right)\left(\operatorname{castSucc} \circ f0\right) = 0\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/WheelHivExtinctionRefutation.extinctionSet` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$R \in \operatorname{extinctionSet}\left(n, adj\right) \Leftrightarrow (0 < R \
 
 *Commentary.*
 
-The positive R such that every admissible initial state f0, a map from the vertices to {0, 1} read as a state through castSucc, reaches the all-healthy state 0 after some number t of steps.
+The positive R such that every admissible initial state f0, a map from the vertices to {0, 1} read as the state castSucc composed with f0, reaches the all-healthy state 0 after some number t of steps.
 
 **Definition 1.5 (Conjecture 1).**
 

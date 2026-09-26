@@ -25,7 +25,7 @@ internal sealed class WheelHivExtinctionRefutationDocument : IScribeDocumentDefi
                 "An infected vertex (1) dies (2). A healthy vertex (0) becomes infected when at least one neighbour is infected and stays healthy otherwise. A dead vertex (2) is replaced by an infected one when at least R neighbours are infected and by a healthy one otherwise.",
                 "step", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ext", "The extinction set", ExtinctionFormula(),
-                "The positive R such that every admissible initial state f0, a map from the vertices to {0, 1} read as a state through castSucc, reaches the all-healthy state 0 after some number t of steps.",
+                "The positive R such that every admissible initial state f0, a map from the vertices to {0, 1} read as the state castSucc composed with f0, reaches the all-healthy state 0 after some number t of steps.",
                 "extinctionSet", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Conjecture 1", ClaimFormula(),
                 "Conjecture 1 of the source: the extinction set of W_n is {3} together with all R >= n - 1 for even n >= 12, and {4} together with all R >= n - 1 for odd n >= 17.",
@@ -114,7 +114,7 @@ internal sealed class WheelHivExtinctionRefutationDocument : IScribeDocumentDefi
         Formula n = F.Id("n"), adj = F.Id("adj"), r = F.Id("R"), t = F.Id("t");
         Formula initial = new Formula.TypeArrow(Call("Fin", n), Call("Fin", D(2)));
         Formula body = And(Less(D(0), r), All("f0", initial, Ex("t", Naturals(),
-            Equal(new Formula.Apply(new Formula.Power(Call("step", adj, r), t), [Call("castSucc", F.Id("f0"))]), D(0)))));
+            Equal(new Formula.Apply(new Formula.Power(Call("step", adj, r), t), [Seq(Named("castSucc"), Sp, Circ, Sp, F.Id("f0"))]), D(0)))));
         return Disp(Iff(Seq(r, Sp, InMacro, Sp, Call("extinctionSet", n, adj)), body));
     }
 

@@ -70,24 +70,31 @@ An independent bit-sliced simulation in Python finds all `262144` initial
 states of `W_18` extinct at `t = 25` with `R = 4`, and `51` of them still alive
 at `t = 24`. As positive controls, the same simulation keeps initial states
 alive after `200` steps for `W_16` with `R = 4` (the paper's table has
-`4 ∉ 𝓔(W_16)`), `W_18` with `R = 5` and `W_12` with `R = 4`. Within 400 steps
-it gives `𝓔(W_n) ∩ [1, n]` equal to `{3, 11, 12}`, `{12, 13}`, `{3, 13, 14}`,
-`{14, 15}`, `{3, 15, 16}`, `{4, 16, 17}`, `{3, 4, 17, 18}`, `{4, 18, 19}`,
-`{3, 4, 19, 20}` for `n = 12, …, 20`, agreeing with the paper's table up to
-`n = 17` and disagreeing from `n = 18` on.
+`4 ∉ 𝓔(W_16)`), `W_18` with `R = 5` and `W_12` with `R = 4`. The values
+`R ≤ n` for which every initial state reaches the all-healthy state within
+400 steps are `{3, 11, 12}`, `{12, 13}`, `{3, 13, 14}`, `{14, 15}`,
+`{3, 15, 16}`, `{4, 16, 17}`, `{3, 4, 17, 18}`, `{4, 18, 19}`, `{3, 4, 19, 20}`
+for `n = 12, …, 20`. Each listed value belongs to `𝓔(W_n)`; a value not
+listed only failed to clear every initial state within 400 steps, which is
+not a proof that it lies outside `𝓔(W_n)`. The listed values match the
+paper's table up to `n = 17`; at `n = 18` and `n = 20` the value `4` is listed
+while the table omits it.
 
 The canonical source is
 `D5/S3/Combinatorics/WheelHivExtinctionRefutation.lean`. Its public
 declarations are `wheelAdj` with its decidability instance, `infectedCount`,
 `step`, `extinctionSet`, `claim`, and `result`; the bit-sliced simulation uses
-private non-proposition definitions. The frozen module state has statement
+private non-proposition definitions, and the code of an initial state is the
+frozen `bitsValue` of `D5/S0/Computability/PhysicalDivider/WordArithmetic`.
+The frozen module state has statement
 identity
-`sha256:a5a2a92196f20b334d5ff434817a09c678de470894b0c91944d5382fc498ac92`.
+`sha256:4f5ffa843b76a0999d2198fbf0811c92441da8b91d0d52bcc8985ad27fb42f23`.
 The result declaration has statement identity
 `sha256:5addb16fd800bbb6df4449cbc2daca34dee660cdad13ca20d32ed9a5379a0cf8`.
 The Freeze event is
-`sha256:13dfd2c76cd46b842fcff1ad575465dbb22356770a43db57aa794351de9391d9`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:9e4f763864d91cfa311f1b00452ab53342cebe973898e73c9c343814d6f7d6a7`
+and its project-level frozen prerequisite is
+`D5/S0/Computability/PhysicalDivider/WordArithmetic`. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

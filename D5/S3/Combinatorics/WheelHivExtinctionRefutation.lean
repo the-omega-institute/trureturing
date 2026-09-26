@@ -16,21 +16,24 @@ escape_witness: form (2), the public conclusion `result` itself: a bit-sliced si
   bit (`step_decode`, through `count_nb`), so the masks after t steps decode to the t-th state of
   every initial state (`iter_decode`); the kernel evaluates the masks after 25 steps to zero
   (`clear25`), hence every admissible initial state dies out by time 25 (`extinct`, with the code
-  `enc` of the initial state)
+  `bitsValue` of the initial state)
 admission_basis: open-problem-resolution (issue #10263)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies: D5/S0/Computability/PhysicalDivider/WordArithmetic: `bitsValue`
+  (statement_id sha256:0af0922a52ff96d028cb9f4bec5193f78a5e7bd5682a53e4e7d741355640fe55),
+  `bitsValue_fixedBits` (sha256:17079846beefc5a86338e787baba95b7d10d646add645d512f59fd75d81488d3) and
+  `fixedBits_bitsValue` (sha256:a7e5115d9e62ba2f7af0aa652d5e4b129d6eb5a886fc3e0a12002ba1e57c4607)
 -/
 
+import D5.S0.Computability.PhysicalDivider.WordArithmetic
 import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Nat.Bitwise
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.WheelHivExtinctionRefutation
+
+open Lax51Proofs.RamToTM (bitsValue bitsValue_fixedBits fixedBits_bitsValue)
 
 /-!
 Espinosa-García, Figueroa, Fresán-Figueroa, Maldonado, Sánchez-Solís, *Extinction thresholds in a
@@ -89,11 +92,6 @@ private def ge (all : ℕ) : ℕ → List ℕ → ℕ
   | 0, _ => all
   | _ + 1, [] => 0
   | k + 1, x :: xs => ge all (k + 1) xs ||| (x &&& ge all k xs)
-
-/-- Binary code of a finite sequence of bits, least significant first. -/
-private def enc : List Bool → ℕ
-  | [] => 0
-  | b :: bs => Nat.bit b (enc bs)
 
 private def all18 : ℕ := 2 ^ 2 ^ 18 - 1
 
@@ -186,22 +184,21 @@ theorem result : ¬ claim := by
         · simp [hx]; omega
         · simp [hx]
 
-  have testBit_enc : ∀ (bs : List Bool) (i : ℕ), (enc bs).testBit i = bs.getD i false := by
+  have testBit_bits : ∀ (bs : List Bool) (i : ℕ), (bitsValue bs).testBit i = bs.getD i false := by
     intro bs
     induction bs with
-    | nil => intro i; simp [enc]
+    | nil => intro i; simp [bitsValue]
     | cons b bs ih =>
       intro i
       cases i with
-      | zero => simp [enc]
-      | succ i => simp [enc, Nat.testBit_bit_succ, ih]
-  have enc_lt : ∀ bs : List Bool, enc bs < 2 ^ bs.length := by
+      | zero => simp [bitsValue]
+      | succ i => simp [bitsValue, Nat.testBit_bit_succ, ih]
+  have bits_lt : ∀ bs : List Bool, bitsValue bs < 2 ^ bs.length := by
     intro bs
-    induction bs with
-    | nil => simp [enc]
-    | cons b bs ih =>
-      simp only [enc, List.length_cons, pow_succ]
-      cases b <;> simp [Nat.bit] <;> omega
+    have h := bitsValue_fixedBits bs.length (bitsValue bs)
+    rw [fixedBits_bitsValue] at h
+    rw [h]
+    exact Nat.mod_lt _ (by positivity)
   have card_eq_length : ∀ (p : Fin 18 → Prop) [DecidablePred p], (Finset.univ.filter p).card = ((List.finRange 18).filter fun u => decide (p u)).length := by
     intro p _
     rw [Fin.univ_def]
@@ -257,17 +254,17 @@ theorem result : ¬ claim := by
     intro f₀
     let bs : List Bool := (List.finRange 18).map fun v => decide (f₀ v = 1)
     have hlen : bs.length = 18 := by simp [bs]
-    have hj : enc bs < 2 ^ 18 := hlen ▸ enc_lt bs
-    have hbit : ∀ v : Fin 18, (enc bs).testBit v.val = decide (f₀ v = 1) := by
+    have hj : bitsValue bs < 2 ^ 18 := hlen ▸ bits_lt bs
+    have hbit : ∀ v : Fin 18, (bitsValue bs).testBit v.val = decide (f₀ v = 1) := by
       intro v
-      rw [testBit_enc]
+      rw [testBit_bits]
       simp [bs, List.getD_eq_getElem?_getD, v.isLt]
     have hinit : ∀ v : Fin 18, initM.getD v.val (0, 0) = (coord v.val, 0) := by
       intro v; simp [initM, List.getD_eq_getElem?_getD, v.isLt]
-    have hd0 : ∀ v : Fin 18, ¬ ((initM.getD v.val (0, 0)).1.testBit (enc bs) = true ∧
-        (initM.getD v.val (0, 0)).2.testBit (enc bs) = true) := by
+    have hd0 : ∀ v : Fin 18, ¬ ((initM.getD v.val (0, 0)).1.testBit (bitsValue bs) = true ∧
+        (initM.getD v.val (0, 0)).2.testBit (bitsValue bs) = true) := by
       intro v; rw [hinit]; simp
-    have hdec : decode initM (enc bs) = fun v => (f₀ v).castSucc := by
+    have hdec : decode initM (bitsValue bs) = fun v => (f₀ v).castSucc := by
       funext v
       simp only [decode, hinit, testBit_coord v.val v.isLt _ hj, hbit, Nat.zero_testBit]
       generalize f₀ v = a
@@ -279,7 +276,7 @@ theorem result : ¬ claim := by
       | zero => intro s h; exact h
       | succ t ih => intro s _; exact ih _ (hstep_len s)
     have hlen25 : (iterM 25 initM).length = 18 := hiter_len 25 initM (by simp [initM])
-    have hall := iter_decode (enc bs) hj 25 initM hd0
+    have hall := iter_decode (bitsValue bs) hj 25 initM hd0
     rw [hdec] at hall
     rw [← hall]
     funext v
