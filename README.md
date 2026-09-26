@@ -126,16 +126,11 @@ holographic duality, remains outside the established results presented here.
 
 ## A continuing research program
 
-The program follows three connected directions: scientific
-methods for AI to choose and test questions; the geometry of proof dependencies
-and observation limits; and spacetime models that retain the relations needed
-for reconstruction and lawful composition.
-
-The [research directions](docs/VISION.md#research-directions) state what evidence
-would count as progress. New proofs, counterexamples and reproducible
-experiments should sharpen the questions and improve the explanations.
-Each revision should make the same compact entrance more useful: clearer
-connections, stronger evidence and more precise boundaries.
+The [research directions](docs/VISION.md#research-directions) pair each open
+question with evidence that would advance it. Let new proofs, counterexamples
+and reproducible experiments sharpen those questions. Keep this entrance
+compact by replacing weaker explanations and preserving the assumptions
+needed to reuse each result.
 
 ## Information escape
 
