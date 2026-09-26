@@ -55416,3 +55416,716 @@ $-18121/153600<0$、$7811/79872>0$。定理190.2保证唯一零点位于两者�
 这里借用了原问题的 $\beta,\gamma$ 数值，但来源按本节随 $\epsilon$ 联动，$R$ 固定为四。它是第186节独立模型的一条参数路径，不声称原来的有限启动机制自动实现该来源，也不声称（190.10）是任意物理系统的统一阈值。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 191. 联动极限的统一二阶余项与有限噪声分界带
+
+第189节用紧性证明一阶极限，第190节据此确定唯一的斜率零点。本节进一步量化任意共同 instrument 偏离纯点最优集合的代价。保留这些非负缺陷以后，可以把全 CPTP 最优值的余项加强到有界联动尺度上的 $O(\epsilon^2)$，而不要求最优解码器随参数光滑。
+
+### 191.1 统一任务与主张
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$ 和有限 $H>0$。对 $0\le h\le H$，采用第188节来源
+$\ell=h\epsilon$、$r=1-h\epsilon$、输入参数 $w_0=\epsilon,w_1=R\epsilon$ 及相同局部权限。记最优完整半 diamond 误差为 $E_\epsilon(h)$，第189节的圆盘极限为 $\Phi_h$。
+
+**定理191.1（全 CPTP 最优值的统一余项）。** 存在 $C,\epsilon_0>0$，仅依赖上述固定参数，使全部 $0<\epsilon<\epsilon_0$ 与 $h\in[0,H]$ 满足
+
+$$
+\boxed{
+\left|E_\epsilon(h)-\frac34-\epsilon\Phi_h\right|
+\le C\epsilon^2.
+}
+\tag{191.1}
+$$
+
+这加强第189节的已述余项，不改变其过渡函数。统一性只覆盖有界 $h$；不能据此把 $h\to\infty$ 的任意路径代入。
+
+### 191.2 当前 Choi 变量及非负缺陷
+
+沿用（189.5）—（189.10）的旗标对称化与 Choi 记号。置
+
+$$
+\mathfrak c=C_0+C_1,\qquad
+s=F_0+F_1,\qquad d=F_0-F_1,
+\qquad F_j=A_j+\epsilon L_j.
+\tag{191.2}
+$$
+
+这里 $d$ 是两个正确主概率之差，不是 Kraus 矩阵元素。我们只需分析满足
+$e\le3/4+K\epsilon$ 的 instrument，$K$ 为某个统一常数：第188节可行上界保证最优解都属于这一类。
+
+第189.4节的推导在 $h\in[0,H]$ 上所有常数可统一选取，给
+
+$$
+\mathfrak c=O(\epsilon),\quad d=O(\sqrt\epsilon),\quad
+A_j=\frac12+O(\sqrt\epsilon),\quad s=1+O(\epsilon).
+\tag{191.3}
+$$
+
+具体地，$|L_j|$ 由固定参数和紧 Choi 集统一控制；主压缩下界是
+
+$$
+\lambda=r\left(1-\frac{F_0F_1}{s}\right),\qquad
+\lambda-\frac34
+=-\frac{3h\epsilon}{4}
+-\frac{r\epsilon(L_0+L_1)}4
++r\left(\frac{\mathfrak c}4+\frac{d^2}{4s}\right).
+\tag{191.4}
+$$
+
+近优上界与 $r\ge1-H\epsilon$ 比较，分别控制最后两项即可得到（191.3）。以下缩小统一的 $\epsilon_0$，使 $r\ge1/2$、$1/2\le s\le2$、$A_j\ge1/4$。
+
+定义偏离量
+
+$$
+t=\sqrt{\mathfrak c}+|d|+\epsilon.
+$$
+
+由保迹及当前变量关系，
+
+$$
+\left|A_j-\frac12\right|\le C(\mathfrak c+|d|+\epsilon),
+\qquad |N_0+N_1|=|P_0+P_1|\le\sqrt{\mathfrak c}.
+\tag{191.5}
+$$
+
+第二式使用
+$|P_0+P_1|\le\sum_j\sqrt{C_jD_j}
+\le\sqrt{(C_0+C_1)(D_0+D_1)}$
+及 $D_0+D_1\le1$。
+
+### 191.3 Rayleigh 修正的定量形式
+
+在（189.10）取 $q=F_1/s$，上块最高单位向量为 $u_q$，最高根为（191.4）的 $\lambda$。其满足 $\lambda=3/4+O(\epsilon)$；同时
+$|q-1/2|=|d|/(2s)$。记非对角大块为 $B$。由（189.9）及有界 $h$，
+
+$$
+T_j=M_j+O(\epsilon),\qquad
+\frac{\|B^\dagger u_q\|^2}{\lambda}
+=\epsilon\frac{2h}{3}\sum_{j=0}^1
+\left|1-\frac{M_j}{2}\right|^2
++O\bigl(\epsilon|d|+\epsilon^2\bigr).
+\tag{191.6}
+$$
+
+所有余项均对当前 instrument 一致：左式除去 $r\ell=h\epsilon(1-h\epsilon)$ 后，是在 $q$、$T_j$、$\lambda$ 的固定紧邻域中的光滑有界函数；$q-1/2=O(|d|)$、$T_j-M_j=O(\epsilon)$、$\lambda-3/4=O(\epsilon)$ 分别给出所写误差。$h=0$ 时两侧的来源项都为零，仍满足相同界。
+
+（189.14）的 Rayleigh 商余项为 $O(\ell^2)=O(\epsilon^2)$。将（191.4）—（191.6）合并，并利用（191.5）展开 $L_0+L_1$，得到
+
+$$
+e\ge\frac34+\epsilon\mathcal G_h
++\frac{\mathfrak c}{8}+\frac{d^2}{16}
+-C\epsilon t-C\epsilon^2,
+\tag{191.7}
+$$
+
+其中当前 Choi 矩的函数为
+
+$$
+\begin{aligned}
+\mathcal G_h={}&\frac{7h}{12}+\frac{\beta(R+1)}8
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma(R-1)}2\operatorname{Im}N_0\\
+&-\frac{2h}{3}\operatorname{Re}(M_0+M_1)
++\frac h6(|M_0|^2+|M_1|^2).
+\end{aligned}
+\tag{191.8}
+$$
+
+这里仍然使用当前 instrument 的矩，尚未取 Choi 极限。式（191.7）保留了泄漏和正确概率不平衡两项代价。
+
+### 191.4 近可行圆盘及缺陷的平方吸收
+
+置
+
+$$
+n=|N_0|,\qquad
+m=\sqrt{\frac{|M_0|^2+|M_1|^2}{2}}.
+$$
+
+Choi 正性给
+$B_j\ge|N_j|^2/A_j$、$D_j\ge|M_j|^2/A_j$。
+结合 $A_j\ge1/4$、（191.5）与全部矩的一致有界性，得到
+
+$$
+B_0\ge2n^2-Ct,\qquad
+B_1\ge2n^2-Ct,\qquad
+D_0+D_1\ge4m^2-Ct.
+\tag{191.9}
+$$
+
+因为 $B_0+B_1+D_0+D_1=1$，有
+
+$$
+m^2+n^2\le\frac14+Ct,
+\qquad
+B_0+RB_1\le R-4Rm^2-2(R-1)n^2+Ct.
+\tag{191.10}
+$$
+
+此外
+$\operatorname{Re}(M_0+M_1)\le2m$、
+$\gamma\operatorname{Im}N_0\ge-|\gamma|n$。
+因此（191.8）至少为第189节圆盘二次式在 $(m,n)$ 的值减去 $Ct$。
+
+若 $(m,n)$ 在半径 $1/2$ 的非负圆盘外，就作径向投影；（191.10）保证投影距离不超过 $Ct$。该二次式在当前统一有界区域上对 $(m,n)$ 一致 Lipschitz，故无论点是否在圆盘内都有
+
+$$
+\mathcal G_h\ge\Phi_h-Ct.
+\tag{191.11}
+$$
+
+代回（191.7），吸收 $t$ 中的 $\epsilon$ 项：
+
+$$
+\boxed{
+e\ge\frac34+\epsilon\Phi_h
++\frac{\mathfrak c}{8}+\frac{d^2}{16}
+-C\epsilon\bigl(\sqrt{\mathfrak c}+|d|\bigr)-C\epsilon^2.
+}
+\tag{191.12}
+$$
+
+令 $u=\sqrt{\mathfrak c}$、$v=|d|$。完成平方给
+
+$$
+\frac{u^2}{8}-C\epsilon u\ge-2C^2\epsilon^2,
+\qquad
+\frac{v^2}{16}-C\epsilon v\ge-4C^2\epsilon^2.
+$$
+
+所以所有当前近优 instrument 的误差都至少为
+$3/4+\epsilon\Phi_h-C'\epsilon^2$。
+
+反向，第188节的谱展开对 $h\in[0,H]$ 以及整个闭圆盘一致成立：正确块在 $\sqrt\epsilon$ 中有共同解析邻域，基点最高根及其 $q$ 极大点有统一间隙，矩系数在该紧参数集有界。即使 $h=0$，出现的 $\sqrt h$ 也只作为有界连续系数，不破坏该统一展开。对每个 $h$ 取圆盘极小点，就有
+$E_\epsilon(h)\le3/4+\epsilon\Phi_h+C''\epsilon^2$。
+两界证明定理191.1。证毕。
+
+### 191.5 任意二阶近优恢复器的强制速率
+
+**推论191.2（占据列泄漏与标签偏置）。** 在上述统一参数域中，任取满足
+
+$$
+e\le E_\epsilon(h)+K_0\epsilon^2
+$$
+
+的共同恢复器，先作第189节无损对称化后，其 Choi 矩满足
+
+$$
+\boxed{
+C_0+C_1=O(\epsilon^2),\qquad
+F_0-F_1=O(\epsilon),\qquad
+A_j=\frac12+O(\epsilon),
+}
+\tag{191.13}
+$$
+
+其中常数可依赖 $K_0$，但对 $h$ 及该恢复器统一。
+
+**证明。** 将定理191.1的上界与（191.12）比较，得到
+$u^2/8+v^2/16\le C\epsilon(u+v)+C'\epsilon^2$。
+再完成平方或用 Young 不等式，得 $u+v=O(\epsilon)$，于是前两式成立。（191.5）给第三式。证毕。
+
+这只限制主要占据输入列的泄漏与输出标签偏置；它没有删除在另一输入列上仍具有有限幅度的额外跳跃 Kraus 算子。
+
+### 191.6 变化的参数路径与有限噪声分界带
+
+**推论191.3（有界联动路径的稳定性）。** 若 $h_\epsilon\in[0,H]$ 且 $h_\epsilon\to h$，则
+
+$$
+E_\epsilon(h_\epsilon)
+=\frac34+\epsilon\Phi_{h_\epsilon}+O(\epsilon^2),
+\qquad
+\frac{E_\epsilon(h_\epsilon)-3/4}{\epsilon}\longrightarrow\Phi_h.
+\tag{191.14}
+$$
+
+**证明。** 第一式是定理191.1的一致性，第二式再用第190节的连续性。证毕。
+
+**推论191.4（零点附近的宽度界）。** 令 $h_c>0$ 为第190节的唯一一阶零点，取 $H>h_c$。存在常数 $K,\eta>0$，使充分小正 $\epsilon$ 时，在 $|h-h_c|<\eta$ 内有
+
+$$
+h<h_c-K\epsilon\Longrightarrow E_\epsilon(h)<\frac34,
+\qquad
+h>h_c+K\epsilon\Longrightarrow E_\epsilon(h)>\frac34.
+\tag{191.15}
+$$
+
+每个这样的 $\epsilon$ 至少存在一个 $h$ 满足 $E_\epsilon(h)=3/4$；该邻域内的全部等值点都落在 $|h-h_c|\le K\epsilon$。
+
+**证明。** 第190节给 $\Phi'_{h_c}>0$：若 $\gamma=0$，零点严格位于正平台之前；若 $\gamma\ne0$，每个有限点的导数都正。导数连续，故缩小 $\eta$ 后存在 $a>0$，使零点两侧均有
+$|\Phi_h|\ge a|h-h_c|$，且符号与 $h-h_c$ 相同。取 $K>C/a$，用（191.1）便得（191.15）。
+
+固定 $\epsilon$ 后，入口和目标对 $h$ 连续，共同解码器的紧集不变，故最优 diamond 误差连续。两侧严格异号与介值定理给等值点；（191.15）把邻域内全部等值点限制在所述带内。证毕。
+
+本节没有证明有限 $\epsilon$ 的等值点唯一，也没有确定在 $h=h_c$ 处的二阶符号。得到的是一个由统一误差界保证的有限宽度结论：在本任务中，“关联权重与噪声的比例决定恢复方向”不仅有固定比例的极限含义，还能控制比例随噪声变化时的可见分界。
+
+## 追加锚（本行以下为增补区）
+
+
+## 192. 来源权重大于噪声时的共同恢复刚性
+
+第189节处理来源小权重与噪声同阶的过渡。本节独立处理更大的来源权重，不交换第189节的两个极限，也不借用它的余项。结论允许来源保持满秩，或沿任意速率趋纯。
+
+### 192.1 任意路径的一阶定律
+
+保持第186节独立旗标模型与完整原输入恢复任务。固定
+$\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+$\delta=R-1$、$\Sigma=R+1$。令
+
+$$
+0<\ell_\epsilon\le\frac12,\qquad
+r_\epsilon=1-\ell_\epsilon,\qquad
+\kappa_\epsilon=1-2\ell_\epsilon,\qquad
+\frac{\epsilon}{\ell_\epsilon}\longrightarrow0.
+\tag{192.1}
+$$
+
+来源及其正交伙伴为
+
+$$
+|\Xi_\epsilon\rangle
+=\sqrt{r_\epsilon}|00\rangle+\sqrt{\ell_\epsilon}|11\rangle,
+\qquad
+|\psi_\epsilon\rangle=(I\otimes Y)|\Xi_\epsilon\rangle.
+$$
+
+仍取 $w_0=\epsilon$、$w_1=R\epsilon$，以及
+
+$$
+\eta_s(w)
+=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+输入旗标态为
+$\omega_j=\frac12\sum_{s=\pm1}P_s^Q\otimes\eta_s(w_j)$，
+通道为
+$\mathcal N(X)=\sum_jX_{jj}\omega_j$，
+目标为
+$\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi$。
+解码器只作用于 $QR$，系统 $M$ 始终不可访问；
+误差仍是对全部外部参考取最坏值的半 diamond 范数。
+记所有共同 CPTP 解码器的最优误差为
+$H_\epsilon=h_{\kappa_\epsilon}(\epsilon,R)$。
+
+则
+
+$$
+\boxed{
+H_\epsilon
+=\frac34+\frac{\beta\Sigma}{8}\epsilon+o(\epsilon).
+}
+\tag{192.2}
+$$
+
+这里不要求 $\ell_\epsilon$ 收敛，更不要求
+$\ell_\epsilon\to0$ 或 $\ell_\epsilon^2=o(\epsilon)$。
+
+还有一项操作层的刚性。对任意满足
+$e_\epsilon\le3/4+C\epsilon$ 的解码器族，先作第189节不增加误差的输出标签与旗标对称化。由此得到的每个旗标上的共同二结果 instrument 满足
+
+$$
+\boxed{
+\Gamma_{j,s}^{(\epsilon)}
+\longrightarrow \frac12\operatorname{id},
+\qquad j=0,1,\quad s=\pm1,
+}
+\tag{192.3}
+$$
+
+收敛可取 Choi 范数或 diamond 范数；本节空间维数固定，两者给出相同收敛概念。此式的逐旗标平衡以该对称化为前提。未经对称化时，旗标本身可以用于随机分配输出标签，不能要求每个旗标的标签概率分别为 $1/2$。
+
+### 192.2 一个独立于来源权重的完整参考上界
+
+忽略旗标，保持量子接口，并独立均匀输出标签：
+$\Gamma_{0,s}=\Gamma_{1,s}=\frac12\operatorname{id}$。
+正确输出块为
+
+$$
+\sigma_{jj}
+=\frac12\bigl[(1-\beta w_j)P_\Xi+\beta w_jP_\psi\bigr].
+$$
+
+因为 $\Xi,\psi$ 正交，第173节的完整参考分块把其误差精确化为
+
+$$
+e_{\mathrm{keep}}
+=\max_{0\le q\le1}
+\lambda_{\max}
+\left(P_{u_q}-\operatorname{diag}(qf_0,(1-q)f_1)\right),
+\quad
+u_q=(\sqrt q,\sqrt{1-q})^{\mathsf T},
+$$
+
+其中 $f_j=(1-\beta w_j)/2$。伙伴方向及错误标签块均半负定。
+这个约化保留了全部参考，并非只计算 Bell 输入。
+
+一般地，置 $S=f_0+f_1$、$K=S-f_0f_1$、
+$\lambda_*=K/S$，则
+
+$$
+\det\left[
+\lambda_*I-P_{u_q}+\operatorname{diag}(qf_0,(1-q)f_1)
+\right]
+=K\left(q-\frac{f_1}{S}\right)^2.
+$$
+
+两个对角元非负，因为
+$\lambda_*-(1-f_j)=f_j^2/S$。
+故最高根不超过 $\lambda_*$；在 $q=f_1/S$ 取等号。
+于是严格有
+
+$$
+\boxed{
+e_{\mathrm{keep}}
+=\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac{\beta^2\delta^2\epsilon^2}
+{16(1-\beta\Sigma\epsilon/2)}.
+}
+\tag{192.4}
+$$
+
+此式完全独立于 $\ell$，同时给出（192.2）的上界和
+$H_\epsilon\le3/4+C\epsilon$ 的统一估计。
+
+### 192.3 纯来源恢复损失的非负分解
+
+按第189节对称化以后，
+$\Gamma_{j,-}=\operatorname{Ad}_Z\circ\Gamma_{j,+}\circ\operatorname{Ad}_Z$。
+只需在正旗标上写任意 Kraus 表示
+
+$$
+K_{j,\alpha}=
+\begin{pmatrix}a_{j,\alpha}&b_{j,\alpha}\\
+c_{j,\alpha}&d_{j,\alpha}\end{pmatrix}.
+$$
+
+共同保迹条件为
+$\sum_{j,\alpha}K_{j,\alpha}^\dagger K_{j,\alpha}=I$，
+而非每个结果分别保迹。以下暂略 $\epsilon$ 下标，定义
+
+$$
+U_j=\sum_\alpha|ra+\ell d|^2,\qquad
+V_j=\sum_\alpha|rb-\ell c|^2,
+$$
+
+$$
+W_j=\sum_\alpha
+\operatorname{Im}\bigl[(ra+\ell d)(r\overline b-\ell\overline c)\bigr].
+$$
+
+这些量分别来自精确振幅
+
+$$
+\langle\Xi|(I\otimes K)|\Xi\rangle=ra+\ell d,\qquad
+\langle\Xi|(I\otimes K)|\psi\rangle=i(rb-\ell c).
+$$
+
+因此正确目标收益严格为
+
+$$
+f_j=\langle\Xi|\sigma_{jj}|\Xi\rangle
+=U_j+\epsilon c_j^{\mathrm{in}}
+[\beta(V_j-U_j)+2\gamma W_j],
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+\tag{192.5}
+$$
+
+置
+
+$$
+D_0=1-U_0-U_1,\qquad
+L=\sum_jc_j^{\mathrm{in}}[\beta(V_j-U_j)+2\gamma W_j].
+$$
+
+共同 TP 给出本节的关键恒等式：
+
+$$
+\boxed{
+D_0
+=r\sum_{j,\alpha}|c|^2
++\ell\sum_{j,\alpha}|b|^2
++r\ell\sum_{j,\alpha}|a-d|^2
+\ge0.
+}
+\tag{192.6}
+$$
+
+证明只需逐 Kraus 展开，然后使用
+$\sum(|a|^2+|c|^2)=\sum(|b|^2+|d|^2)=1$ 及 $r+\ell=1$。
+它区分了三种损失：占据列的跳跃、稀有列的跳跃，以及两列之间的相干失配。
+
+取原输入与外部参考的 Bell 态，再用其理想输出的纯态投影检验。实际输出在该投影上的概率是 $(f_0+f_1)/4$，故完整误差满足
+
+$$
+\boxed{
+e_\epsilon
+\ge1-\frac{f_0+f_1}{4}
+=\frac34+\frac{D_0}{4}-\frac{\epsilon L}{4}.
+}
+\tag{192.7}
+$$
+
+这只是一个合法下界证书，没有把 Bell 检验当作任意解码器的完整误差。
+因为 $0\le U_j,V_j\le1$ 且 $|W_j|\le\sqrt{U_jV_j}\le1$，
+有与 $\ell$、instrument 均无关的界
+$|L|\le\Sigma(\beta+2|\gamma|)$。
+若 $e_\epsilon\le3/4+C\epsilon$，则（192.7）强制
+$D_0=O(\epsilon)$。由 $r\ge1/2$ 及（192.6），进一步得到统一估计
+
+$$
+\boxed{
+\sum|c|^2=O(\epsilon),\qquad
+\sum|b|^2=O(\epsilon/\ell),\qquad
+\sum|a-d|^2=O(\epsilon/\ell).
+}
+\tag{192.8}
+$$
+
+这些量都是 Choi 矩阵的线性泛函，不依赖 Kraus 表示。
+
+### 192.4 共同操作的极限与标签平衡
+
+任取趋零参数子列。共同 instrument 的 Choi 集紧，
+$\ell\in[0,1/2]$ 也紧，因此可以再取子列，使 Choi 矩阵及
+$\ell$ 同时收敛。设来源极限为 $\ell_*\in[0,1/2]$。
+
+由（192.1）、（192.8），极限中
+$\sum|b|^2=\sum|c|^2=\sum|a-d|^2=0$。
+正性遂迫使每个结果 Choi 矩阵支撑于
+$\operatorname{span}\{\operatorname{vec}I\}$：在任意极限 Kraus 表示中，
+每个 Kraus 都是标量乘 $I$。所以
+
+$$
+\Gamma_j^*=p_j\operatorname{id},\qquad
+p_j\ge0,\qquad p_0+p_1=1.
+$$
+
+这一步在 $\ell_*=0$ 仍成立；稀有列的约束来自比值
+$\epsilon/\ell\to0$，没有在极限后丢弃它。
+
+来源向量关于 $\ell$ 连续到端点，通道与完整 diamond 误差关于有限维矩阵也连续。极限任务的输入不再携带原标签信息，正确输出块为
+$p_jP_{\Xi_*}$。将上一节的二维最高根计算用于
+$f_0=p_0$、$f_1=p_1$，其完整误差为
+
+$$
+1-p_0p_1
+=\frac34+\left(p_0-\frac12\right)^2.
+$$
+
+近优上界使这个极限不超过 $3/4$，故
+$p_0=p_1=1/2$。任何收敛子列都得到相同 Choi 极限，因此整个对称化解码器族满足（192.3）。
+
+### 192.5 匹配的一阶下界
+
+最优解存在于紧 CPTP 集中，并可作上述不增误差的对称化。
+由（192.4），它满足（192.8），所以（192.3）适用。
+在 $\Gamma_j=\frac12\operatorname{id}$ 处，对每个
+$\ell\in[0,1/2]$ 都有
+
+$$
+U_j=\frac12,\qquad V_j=W_j=0,\qquad
+L=-\frac{\beta\Sigma}{2}.
+$$
+
+$L$ 在来源参数与 Choi 矩阵的紧域上连续，因此沿任意允许路径，
+$L\to-\beta\Sigma/2$。在（192.7）中保留非负缺陷的符号，只舍去
+$D_0\ge0$，得到
+
+$$
+\liminf_{\epsilon\downarrow0}
+\frac{H_\epsilon-3/4}{\epsilon}
+\ge-\frac14\lim_{\epsilon\downarrow0}L
+=\frac{\beta\Sigma}{8}.
+$$
+
+与（192.4）给出的上极限一致，证明（192.2）。
+
+关键不是将固定满秩展开延伸到零谱隙，而是保留带权恢复损失：
+当来源权重相对噪声仍然更大时，任何 $O(\epsilon)$ 误差余量都不足以允许稀有列上的有限跳跃或相干失配。共同 TP 与完整参考任务于是同时保住两列，并迫使输出标签平衡。这个结论量化了同一恢复任务中关系权重与可恢复性的联系；它没有增加对 $M$ 的操作权限。
+
+## 追加锚（本行以下为增补区）
+
+
+## 193. 来源退化点的方向边界与全尺度统一响应
+
+同一份纯来源可以从不同的关系权重与噪声比例逼近；第191—192节已经分别控制有限比例和发散比例。本节把这些结果连接成一份对全部来源权重一致的响应，并给出一个具体的静态边界坐标：保留趋近方向以后，归一化恢复误差有连续极限。
+
+### 193.1 统一的二参数任务
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$。来源小权重取
+$0\le\ell\le1/2$，来源态、旗标通道及完整参考任务均为第192节的定义，输入噪声为 $w_0=\epsilon,w_1=R\epsilon$。记全部共同接收端 CPTP 恢复器的最优误差为
+
+$$
+\mathscr E(\ell,\epsilon)
+=h_{1-2\ell}(\epsilon,R).
+$$
+
+取充分小正 $\epsilon$，使输入态对全部来源权重合法。
+第189—190节的过渡函数记为 $\Phi_h$，并定义
+
+$$
+\Phi_\infty=\frac{\beta(R+1)}8,
+\qquad
+\Psi(z)=
+\begin{cases}
+\Phi_{z/(1-z)},&0\le z<1,\\
+\Phi_\infty,&z=1.
+\end{cases}
+\tag{193.1}
+$$
+
+第190节的连续性和远端极限保证 $\Psi$ 在整个闭区间 $[0,1]$ 连续。
+
+### 193.2 对全部来源权重一致的一阶公式
+
+**定理193.1（全尺度统一首项）。** 有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\sup_{0\le\ell\le1/2}
+\left|
+\frac{\mathscr E(\ell,\epsilon)-3/4}{\epsilon}
+-\Phi_{\ell/\epsilon}
+\right|=0.
+}
+\tag{193.2}
+$$
+
+等价地，设
+
+$$
+z=\frac{\ell}{\ell+\epsilon},
+$$
+
+则
+
+$$
+\mathscr E(\ell,\epsilon)
+=\frac34+\epsilon\Psi(z)+o(\epsilon),
+\tag{193.3}
+$$
+
+其中余项对 $\ell\in[0,1/2]$ 一致。
+
+**证明。** 若（193.2）不成立，存在 $a>0$、$\epsilon_n\downarrow0$ 与
+$\ell_n\in[0,1/2]$，使绝对差始终至少为 $a$。令
+$h_n=\ell_n/\epsilon_n$。
+
+若这列比例有有界子列，就在该子列上取共同上界 $H$。第191节的一致估计直接给
+
+$$
+\left|
+\frac{\mathscr E(\ell_n,\epsilon_n)-3/4}{\epsilon_n}
+-\Phi_{h_n}\right|\le C_H\epsilon_n\longrightarrow0,
+$$
+
+矛盾。
+
+若没有有界子列，则 $h_n\to\infty$，故最终 $\ell_n>0$ 且
+$\epsilon_n/\ell_n\to0$。第192节给归一化误差趋于 $\Phi_\infty$；
+第190节又给 $\Phi_{h_n}\to\Phi_\infty$，绝对差仍趋零，矛盾。
+两种情况穷尽全部比例序列，故结论成立。证毕。
+
+这里的一致余项只有 $o(\epsilon)$。第191节的 $O(\epsilon^2)$ 仅在 $\ell/\epsilon$ 有界时统一，本节没有把它扩张到整个 $\ell$ 区间。
+
+### 193.3 三种幂次路径及非收敛路径
+
+**推论193.2（相对尺度分类）。** 取 $a>0$、$\alpha>0$，令
+$\ell_\epsilon=a\epsilon^\alpha$。充分小参数处来源边缘态都满秩，并有
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\frac{\mathscr E(a\epsilon^\alpha,\epsilon)-3/4}{\epsilon}
+=
+\begin{cases}
+\Phi_0,&\alpha>1,\\
+\Phi_a,&\alpha=1,\\
+\Phi_\infty,&0<\alpha<1.
+\end{cases}
+}
+\tag{193.4}
+$$
+
+其中 $\Phi_0<0$、$\Phi_\infty>0$，而 $\Phi_a$ 在第190节的唯一 $a=h_c$ 处过零。
+
+**证明。** 比例 $\ell_\epsilon/\epsilon=a\epsilon^{\alpha-1}$ 分别趋于零、恒等于 $a$、趋于无穷。将这三种情形代入（193.2）和过渡函数的连续性即可。证毕。
+
+特别地，路径 $\ell=\epsilon^2$ 与 $\ell=\sqrt\epsilon$ 都趋向同一个纯来源，且每个正参数处的来源边缘态 $\operatorname{diag}(1-\ell,\ell)$ 都为秩二，但归一化恢复误差的极限一负一正。差异由同一模型中的相对权重产生，不需要改变端口数或增加操作权限。
+
+**推论193.3（振荡比例也由同一响应控制）。** 对任意
+$\epsilon_n\downarrow0$、$\ell_n\in[0,1/2]$，令
+$z_n=\ell_n/(\ell_n+\epsilon_n)$。归一化误差序列的所有聚点恰为
+
+$$
+\boxed{
+\{\Psi(z):z\text{ 是 }(z_n)\text{ 的聚点}\}.
+}
+\tag{193.5}
+$$
+
+**证明。** （193.2）表明两列数
+$(\mathscr E(\ell_n,\epsilon_n)-3/4)/\epsilon_n$ 与 $\Psi(z_n)$ 之差趋零。
+$[0,1]$ 紧且 $\Psi$ 连续；任取一列的收敛子列，再抽取 $z_n$ 收敛子列，就得到正向包含。反向沿实现任意 $z$ 聚点的子列应用连续性即得。证毕。
+
+因此，当比例没有极限时，无需任意选取一个“有效满秩”或“有效纯态”结论；实际的一阶响应仍由同一个边界函数逐点控制。
+
+### 193.4 把退化点展开为方向边界
+
+取固定 $\rho_0>0$ 足够小，使 $\rho_0\le1/2$ 且
+$R\rho_0<\beta/(\beta^2+\gamma^2)$。作坐标变换
+
+$$
+\rho=\ell+\epsilon,\qquad
+z=\frac{\ell}{\ell+\epsilon},
+\qquad
+\ell=\rho z,\quad\epsilon=\rho(1-z).
+\tag{193.6}
+$$
+
+在 $0<\rho\le\rho_0$、$0\le z<1$，定义归一化响应
+
+$$
+\mathcal R(\rho,z)
+=\frac{\mathscr E(\rho z,\rho(1-z))-3/4}{\rho(1-z)}.
+$$
+
+**定理193.4（方向边界上的连续恢复响应）。** 规定
+
+$$
+\mathcal R(0,z)=\Psi(z)\quad(0\le z\le1),
+\qquad
+\mathcal R(\rho,1)=\Phi_\infty\quad(0\le\rho\le\rho_0),
+\tag{193.7}
+$$
+
+便得到定义在闭矩形 $[0,\rho_0]\times[0,1]$ 上的连续函数。其边界 $\rho=0$ 保存了趋向同一退化点的不同相对方向。
+
+**证明。** 在 $\rho>0,z<1$，来源与入口通道连续，允许的解码器紧集固定，故最优误差连续；分母严格正，所以 $\mathcal R$ 连续。
+
+令 $\omega(\epsilon)$ 为（193.2）的上确界，则
+$\omega(\epsilon)\to0$，且
+
+$$
+|\mathcal R(\rho,z)-\Psi(z)|
+\le\omega(\rho(1-z)).
+\tag{193.8}
+$$
+
+当 $\rho\to0$ 时，$0<\rho(1-z)\le\rho$；（193.8）对全部 $z<1$ 一致趋零。再用 $\Psi$ 连续，以及 $z=1$ 处两项定义一致，得到整个 $\rho=0$ 边的连续性。
+
+在 $\rho>0$ 固定的 $z=1$ 边附近，$\rho(1-z)\to0$，所以（193.8）右侧仍趋零；同时 $\Psi(z)\to\Phi_\infty$，得到该边的连续性。其余边由通常连续性给出。证毕。
+
+若把 $\rho=0$ 的整条方向边再次压回一个点，就无法给归一化响应指定唯一连续极限，因为
+$\Psi(0)=\Phi_0<0<\Phi_\infty=\Psi(1)$。这并不是原始误差不连续：未归一化的
+$\mathscr E$ 沿所有这些路径都趋于 $3/4$。被单点表示遗漏的是首阶响应对关系尺度的依赖。
+
+### 193.5 对关系边界的含义
+
+这提供了一种具体、可恢复的几何补充：端口维数、来源边缘态的秩和纯态极限可以全部相同，而任务仍需区分不同的相对尺度；把比例 $z$ 留在边界上，就能同时保存全部路径的一阶恢复响应。
+
+该坐标由已有来源权重和噪声参数计算，没有生成新的实验记录。它的作用是使此前被“同一个退化点”合并的参数路径重新可区分。这里的几何是本模型的参数与响应几何，没有把 $\rho$ 或 $z$ 宣称为物理时间、空间面积或普适时空坐标。
+
+## 追加锚（本行以下为增补区）
