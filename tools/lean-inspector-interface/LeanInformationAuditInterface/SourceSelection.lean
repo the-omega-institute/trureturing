@@ -9,7 +9,8 @@ structure SourceReadoutSelection where
   stateBinder : Nat
   deriving BEq, Inhabited, Repr
 
-/-- Increasing source telescope ordinals with dependency-closed domains.
+/-- Increasing lexical binder ordinals, shared by raw ancestor path across readouts.
+Domains are dependency closed after deterministic expansion of source local lets.
 Each readout selects an actual observation in its original lexical scope. -/
 structure SourceSelection where
   owner : Lean.Name
@@ -18,6 +19,8 @@ structure SourceSelection where
   deriving BEq, Inhabited, Repr
 
 structure SourceBinder where
+  /-- Raw path through the binder body. Distinguishes equal-shaped sibling scopes. -/
+  path : Array String := #[]
   name : Lean.Name
   info : Lean.BinderInfo
   domain : Lean.Expr
