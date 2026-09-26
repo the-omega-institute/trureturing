@@ -58489,3 +58489,422 @@ $\Phi'_{h_c}>0$，所以 $k_c>0$。
 它不把熵大小替代为所有观察任务共用的边界容量。
 
 ## 追加锚（本行以下为增补区）
+
+## 202. 二阶近最优恢复器的强制结构与操作限制代价
+
+第200节给出内点区间中的完整共同 CPTP 二阶系数。
+本节保留其下界中的全部非负平方，确定达到该系数必须满足的局部操作关系，
+并计算禁止占据输入翻转或要求真实结果均衡时的最优损失。
+
+### 202.1 同一任务与二阶近优类
+
+固定第200节的 $\beta>0$、$\gamma>0$、$R>1$ 及正紧区间 $I$，
+保持严格内点条件
+
+$$
+n=\frac{\gamma}{2\beta},\qquad
+m(h)=\frac{2h}{h+3\beta R},\qquad
+m(h)^2+n^2<\frac14\quad(h\in I).
+\tag{202.1}
+$$
+
+沿用 $\delta=R-1$、$t=\gamma R$、
+$a_{\mathrm{eff}}(h)$、$Q_0(h)$ 和
+$Q(h)=Q_0(h)-a_{\mathrm{eff}}(h)^2/4-t^2m(h)^2$。
+令
+
+$$
+E_\epsilon(h)=\mathscr E(h\epsilon,\epsilon)
+$$
+
+为相同完整参考任务的最优值。
+以下 $\Gamma$ 表示第189节无损旗标对称化后的共同 instrument，
+$e_\epsilon(h,\Gamma)$ 为其完整误差。
+其正旗标 Kraus 矩、Choi 矩和共同 TP 仍采用第200节的记号。
+置
+
+$$
+\begin{gathered}
+C=C_0+C_1,\qquad D=D_0+D_1,\qquad
+P=P_0+P_1,\qquad
+x=\frac{A_0-A_1}{2\epsilon},\\
+U=\sum_{\alpha\text{ 属于结果 }0}|b-i2na|^2,\qquad
+V=\sum_{j,\alpha}|d-2ma|^2.
+\end{gathered}
+\tag{202.2}
+$$
+
+对固定 $K\ge0$，定义
+
+$$
+\mathcal N_{\epsilon,K}(h)=
+\{\Gamma:0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)
+\le K\epsilon^2\}.
+\tag{202.3}
+$$
+
+这没有把原恢复任务限制成一个可行子族。
+任意原始近优恢复器均可先作第189节的对称化，误差不增且仍近优。
+本节对操作矩的结构结论指这些对称化代表；
+不把代表上的矩公式直接套到未对称化解码器的单个旗标上。
+
+### 202.2 完整误差差额的五项平方分解
+
+**定理202.1（二阶近优类的一致差额公式）。**
+对每个固定有限 $K$，全部 $h\in I$ 及
+$\Gamma\in\mathcal N_{\epsilon,K}(h)$ 一致满足
+
+$$
+\boxed{
+\begin{aligned}
+\frac{e_\epsilon(h,\Gamma)-E_\epsilon(h)}{\epsilon^2}
+={}&\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2
++\frac14\sum_{j,\alpha}
+\left|\frac c\epsilon+itd\right|^2\\
+&+\frac{\beta\delta}{4\epsilon}U
++\frac{\beta R}{4\epsilon}V
++\frac{h}{6\epsilon}\sum_j|M_j-m|^2
++o_{I,K}(1).
+\end{aligned}}
+\tag{202.4}
+$$
+
+余项的一致性指：对上述整个近优类取余项绝对值的上确界，
+该上确界在 $\epsilon\downarrow0$ 时趋于零。
+五个非负项及其和均不依赖 Kraus 表示。
+
+**证明。** 第191节推论191.2本来就适用于固定 $K$ 的二阶近优类，
+因此在此类上一致有
+
+$$
+C=O_{I,K}(\epsilon^2),\qquad
+A_j-\frac12=O_{I,K}(\epsilon),\qquad x=O_{I,K}(1).
+\tag{202.5}
+$$
+
+第200节证明一阶 Choi 极小点唯一时，
+只使用了一阶最优值匹配和非负的基点缺陷。
+当前误差与最优值仅差 $O(\epsilon^2)$，故同一聚点证明给
+
+$$
+\sup_{\substack{h\in I\\\Gamma\in\mathcal N_{\epsilon,K}(h)}}
+\|\Gamma-\Gamma^*(h)\|\longrightarrow0,
+\qquad D=4m(h)^2+o_{I,K}(1).
+\tag{202.6}
+$$
+
+具体地，任取趋零参数和该类中的 Choi 收敛子列；
+（202.5）把聚点放到纯来源最优面。
+冻结解析展开与第200节的最优值展开使该聚点的一阶系数不大于
+$\Phi_h$，而第200节的精确 Gram 平方恒等式强制其为
+$\Gamma^*(h)$。若（202.6）不一致，紧性立即给出违反此结论的子列。
+这里没有假定稀少输入列的收敛速率。
+
+因此（200.22）的推导对当前整个近优类成立：
+占据列 Taylor 偏差由（202.5）控制，
+二阶冻结系数由（202.6）连续收敛到 $Q_0(h)$。
+再应用（200.23）的两个精确平方恒等式，
+减去第200节
+$E_\epsilon(h)=3/4+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2)$。
+剩余非平方项为
+$t^2(m(h)^2-D/4)=o_{I,K}(1)$，
+即得（202.4）。证毕。
+
+### 202.3 达到完整二阶系数所强制的操作矩
+
+**推论202.2（二阶渐近最优恢复器的刚性）。**
+若一族对称化 instrument 在 $h\in I$ 上一致满足
+
+$$
+e_\epsilon(h,\Gamma_\epsilon(h))-E_\epsilon(h)
+=o_I(\epsilon^2),
+\tag{202.7}
+$$
+
+则一致有
+
+$$
+\boxed{
+\begin{gathered}
+\frac{A_0-A_1}{\epsilon}+a_{\mathrm{eff}}(h)\longrightarrow0,\\
+\frac{C}{\epsilon^2}-4t^2m(h)^2\longrightarrow0,\qquad
+\frac{P}{\epsilon}+4it\,m(h)^2\longrightarrow0.
+\end{gathered}}
+\tag{202.8}
+$$
+
+同时
+
+$$
+U=o_I(\epsilon),\qquad V=o_I(\epsilon),\qquad
+\sum_j|M_j-m(h)|^2=o_I(\epsilon),\qquad
+\sum_{j,\alpha}\left|\frac c\epsilon+itd\right|^2=o_I(1).
+\tag{202.9}
+$$
+
+对任意变化的 $h_\epsilon\in I$，相应逐序列结论也成立，
+各比较目标均在当前 $h_\epsilon$ 处取值；
+不要求 $h_\epsilon$ 自身收敛。
+
+**证明。** （202.7）保证充分小参数处属于某个固定 $K$ 的近优类。
+由（202.4），五项非负平方的和趋于零，故每项均趋于零。
+由于 $I$ 远离零，其各正系数具有统一正下界；
+这给（202.9）以及（202.8）的第一式。
+
+记
+
+$$
+W_\epsilon=\sum_{j,\alpha}
+\left|\frac c\epsilon+itd\right|^2.
+$$
+
+Cauchy–Schwarz 给
+
+$$
+\left|\frac P\epsilon+itD\right|
+\le\sqrt{DW_\epsilon}\longrightarrow0.
+\tag{202.10}
+$$
+
+由（202.6），$D\to4m(h)^2$，所以得到 $P$ 的极限。
+另外，三角不等式给
+
+$$
+\left|\frac{\sqrt C}{\epsilon}-t\sqrt D\right|
+\le\sqrt{W_\epsilon}\longrightarrow0.
+\tag{202.11}
+$$
+
+两侧由（202.5）一致有界，平方后即得 $C$ 的极限。证毕。
+
+因此完整二阶最优性要求具体的标签偏置及相位相关的占据列反馈。
+式（202.8）中的 $C$ 是给定占据输入 $|0\rangle$ 时，
+接收端输出进入 $|1\rangle$ 的总概率；$P$ 是同一操作的 Choi 交叉矩。
+这些量的约束属于同一实际 instrument，
+不是把分别可达的最佳值拼成一个未实现的共同最优值。
+
+### 202.4 两种实际操作限制及一个不同的联合概率条件
+
+令 $P_0=|0\rangle\langle0|$，
+$\Lambda_s=\Gamma_{0,s}+\Gamma_{1,s}$ 为实际旗标 $s$ 下、
+忽略结果标签的接收端通道。
+以下条件要求对每个实际旗标成立：
+
+1. **占据输入精确保留：**
+$\Lambda_s(P_0)=P_0$。
+它等价于 $C_{0,s}+C_{1,s}=0$，也等价于每个 Kraus 的 $c=0$。
+
+2. **真实结果均衡：**
+$\operatorname{Tr}\Gamma_{0,s}(P_0)
+=\operatorname{Tr}\Gamma_{1,s}(P_0)=1/2$。
+在 Choi 矩中即
+$A_{0,s}+C_{0,s}=A_{1,s}+C_{1,s}=1/2$。
+
+另考虑一个不同的可操作条件：
+**占据输出的联合结果均衡**
+$\operatorname{Tr}[P_0\Gamma_{0,s}(P_0)]
+=\operatorname{Tr}[P_0\Gamma_{1,s}(P_0)]$，
+即 $A_{0,s}=A_{1,s}$。
+它比较的是“结果为 $j$ 且量子输出仍在占据方向”的联合概率。
+
+对原始全 CPTP 解码器，先在输出标签的各对角块定义
+$\Gamma_{j,s}$。输出标签去相干保持这些对角 CP 映射及其和
+$\Lambda_s$，所以三类限制均保持。
+旗标对称化使用
+$\Gamma'_{j,s}=\operatorname{Ad}_Z\circ\Gamma_{j,-s}\circ
+\operatorname{Ad}_Z$，且
+
+$$
+\Gamma'_{j,s}(P_0)=Z\Gamma_{j,-s}(P_0)Z,\qquad ZP_0Z=P_0.
+$$
+
+因此总迹、与 $P_0$ 的配对以及
+$\Lambda_s(P_0)=P_0$ 分别保持；逐旗标施加限制保证交换旗标后仍合法。
+三类条件都是共同 Choi 紧集上的闭仿射条件，
+再平均原映射与变换映射仍保持它们。
+第189节保证这些步骤不增完整误差；
+实际操作仍不访问 $M$，全部外部参考保持不变。
+因此受限最优值存在，且可在各自的对称化可行集中取得。
+分别记这些完整参考最优值为
+$E_\epsilon^{\mathrm{fix}}(h)$、
+$E_\epsilon^{\mathrm{bal}}(h)$、
+$E_\epsilon^{\mathrm{joint}}(h)$。
+
+真实结果均衡与联合结果均衡不是同一个有限参数可行集。
+例如以下两组矩均由共同 CP instrument 实现：
+
+$$
+\begin{array}{c|cccc}
+&A_0&A_1&C_0&C_1\\ \hline
+\text{真实均衡而非联合均衡}&0&1/2&1/2&0\\
+\text{联合均衡而非真实均衡}&1/4&1/4&1/2&0
+\end{array}
+\tag{202.12}
+$$
+
+一个明确实现为
+
+$$
+\Gamma_j(X)
+=X_{00}(A_jP_0+C_j|1\rangle\langle1|)
++\mathbf1_{\{j=1\}}X_{11}P_0.
+\tag{202.13}
+$$
+
+这些是测量后准备的 CP 映射，其和由表中
+$\sum_j(A_j+C_j)=1$ 保迹；
+可在两个旗标上使用同一 instrument。
+此例只区分限制的操作含义，不被用作近优候选。
+
+### 202.5 同时满足公共 TP 的可调匹配族
+
+为给受限问题提供匹配上界，取有界实函数 $\xi(h),\theta(h)$，
+并将第200节的构造写成
+
+$$
+\begin{gathered}
+a_j=\sqrt{\frac{1/2+(-1)^j\epsilon\xi}
+{1+4m^2\theta^2\epsilon^2}},\qquad
+A_\Sigma=a_0^2+a_1^2,\qquad
+d_j=2ma_j,\qquad c_j=-i\theta\epsilon d_j,\\
+b_0=i2na_0,\qquad
+b_1=-i\frac{2na_0^2+4m^2\theta\epsilon A_\Sigma}{a_1},\\
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},\qquad
+J=i\sqrt{1-|b_0|^2-|b_1|^2-d_0^2-d_1^2}\,
+|0\rangle\langle1|.
+\end{gathered}
+\tag{202.14}
+$$
+
+额外 $J$ 属于结果1，负旗标按 $Z$ 共轭定义。
+严格内点裕量保证平方根对有界 $\xi,\theta$ 及全部 $h\in I$
+在充分小 $\epsilon$ 处为正。
+第一列归一化、两列正交和额外 $J$ 补足第二列
+仍严格给公共 TP；这里调节 $\theta$ 时同时调节 $b_1$，
+没有独立更改两个结果的合法性。
+
+该构造精确满足
+
+$$
+\begin{gathered}
+U=V=0,\qquad
+D=\frac{4m^2}{1+4m^2\theta^2\epsilon^2},\qquad
+x=\frac{\xi}{1+4m^2\theta^2\epsilon^2},\\
+\sum_{j,\alpha}\left|\frac c\epsilon+itd\right|^2
+=(t-\theta)^2D,\qquad
+M_j-m=O_I(\epsilon).
+\end{gathered}
+\tag{202.15}
+$$
+
+其 Choi 对以 $O_I(\epsilon)$ 接近 $\Gamma^*(h)$，
+并直接满足（202.5）的速率。
+因此可对它使用第200节冻结解析展开与（200.22），得到完整参考误差
+
+$$
+\boxed{
+e_\epsilon^{\xi,\theta}(h)
+=\frac34+\epsilon\Phi_h+
+\epsilon^2\left[
+Q(h)+\left(\xi+\frac{a_{\mathrm{eff}}}{2}\right)^2
++m(h)^2(t-\theta)^2
+\right]+o_I(\epsilon^2).
+}
+\tag{202.16}
+$$
+
+这里先由实际构造验证速率并计算误差，
+没有预先假定它属于待证明的受限近优类。
+谱展开仍优化全部参考权重。
+
+### 202.6 受限完整最优值的精确二阶代价
+
+**定理202.3（操作限制的二阶损失）。** 在上述固定内点区间上一致有
+
+$$
+\boxed{
+E_\epsilon^{\mathrm{fix}}(h)
+=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+t^2m(h)^2]+o_I(\epsilon^2),
+}
+\tag{202.17}
+$$
+
+$$
+\boxed{
+\begin{aligned}
+E_\epsilon^{\mathrm{bal}}(h)
+&=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+a_{\mathrm{eff}}(h)^2/4]+o_I(\epsilon^2),\\
+E_\epsilon^{\mathrm{joint}}(h)
+&=\frac34+\epsilon\Phi_h+
+\epsilon^2[Q(h)+a_{\mathrm{eff}}(h)^2/4]+o_I(\epsilon^2).
+\end{aligned}}
+\tag{202.18}
+$$
+
+**证明。** 对占据输入精确保留，取（202.14）的
+$\theta=0$、$\xi=-a_{\mathrm{eff}}/2$。
+此时每个 $c=0$，构造严格满足限制；
+（202.16）给（202.17）的上界。
+
+对两种均衡条件，都取 $\xi=0$、$\theta=t$。
+此时 $A_0=A_1$，且对每个 $j$ 严格有
+
+$$
+A_j+C_j=A_j(1+4m^2t^2\epsilon^2)=\frac12.
+\tag{202.19}
+$$
+
+所以同一构造同时满足两个不同限制，
+（202.16）给（202.18）的两个上界。
+
+这些上界与第200节完整最优值相差至多 $K\epsilon^2$，
+其中 $K$ 对 $h\in I$ 可统一选择。
+受限最优值不小于无条件最优值，
+故每个受限最优器均属于相应的
+$\mathcal N_{\epsilon,K}(h)$。
+这合法地引入了（202.5）、（202.6）及差额公式（202.4），
+不是先对受限最优器假定近优速率。
+
+在精确保留限制下，$C=0$ 强制全部 $c=0$；
+（202.4）的第二个平方因此为 $t^2D/4$，
+而（202.6）给 $D=4m(h)^2+o_I(1)$。
+其余平方非负，得到差额至少为
+$t^2m(h)^2+o_I(1)$，与上界匹配。
+受限最优器不能通过改选稀少列避开这一项：
+一阶唯一 Choi 极小点已强制了 $D$ 的统一极限。
+
+在联合均衡限制下，$x=0$，所以第一个平方恰为
+$a_{\mathrm{eff}}^2/4$。
+在真实结果均衡限制下，
+
+$$
+A_0-A_1=C_1-C_0=O_I(\epsilon^2),
+\qquad x=O_I(\epsilon),
+\tag{202.20}
+$$
+
+因而第一个平方为
+$a_{\mathrm{eff}}^2/4+o_I(1)$。
+再次丢弃其余非负平方，分别得到（202.18）的下界。
+上下界匹配，证明定理。证毕。
+
+**推论202.4（同时施加两项实际限制）。**
+若同时要求占据输入精确保留与真实结果均衡，
+则其最优二阶系数为 $Q_0(h)$。
+
+**证明。** 此时 $C=0$ 且 $A_0=A_1=1/2$，
+（202.4）中的前两项分别给
+$a_{\mathrm{eff}}^2/4$ 和 $t^2m^2+o_I(1)$。
+取（202.14）的 $\xi=\theta=0$ 同时达到这两个代价，
+而 $Q+a_{\mathrm{eff}}^2/4+t^2m^2=Q_0$。证毕。
+
+这些二阶损失发生在同一来源、同一接收端权限和同一完整参考任务中。
+差别只在允许的恢复操作。
+其中 $t^2m(h)^2>0$ 在当前正紧内点区间上成立；
+均衡损失为 $a_{\mathrm{eff}}(h)^2/4$，仅在该偏置系数非零处严格为正。
+两种均衡条件在有限噪声下的可行集不同，
+具有相同二阶代价并不使它们成为同一种操作限制。
+
+## 追加锚（本行以下为增补区）
