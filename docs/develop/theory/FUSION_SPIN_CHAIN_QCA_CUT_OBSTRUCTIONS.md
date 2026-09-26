@@ -535,3 +535,441 @@ python docs/reports/fusion-qca-cut-obstruction/verify.py
 本次实际以 Python 任意精度整数运行 7302 个参数案例：150 个窗口维数公式、5730 个正负偏移恒等式、972 个多层零和平移严格不等式、450 个有限维普通辅助链缩放等式，全部通过。多层检查包含 486 个不同非零零和向量，每个用两个窗口检验。结果只是有限算术检错；任意 $n$ 的证明在正文。程序不验证 von Neumann 代数、DHR 自然同构或 FDQC 排除引理。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 从“遗传树”到有限融合空间：对象与实际嵌入
+
+本批日期为 2026-09-27，接续原 PR #10310。研究时读取 dev `4ee641fd06f6475715eef02ecf4e817e401a3012`，修改基点为本 PR 的 `a9a5771cc061b8a4d806036dba9a5e4ddc6fac6d`。以下“树”均指有序融合树或带标签路径；不假设生物遗传过程与量子动力学等价。全部新增结论给出普通数学证明，尚未 Lean 核验；原第 6 节反例的独立审定状态不因本批有限矩阵推导而升级。
+
+### 12.1 类型、合法路径与密度矩阵
+
+**定义 12.1（融合类型与路径）。** 令 $L=\{\mathbf1,\tau\}$，允许输出集合为
+
+$$
+\mathsf N(\mathbf1,a)=\mathsf N(a,\mathbf1)=\{a\},\qquad
+\mathsf N(\tau,\tau)=\{\mathbf1,\tau\}.
+\tag{FT.1}
+$$
+
+对 $n\in\mathbb N$、$c\in L$，定义有限集合
+
+$$
+\mathsf P_n(c)=\{x:\{0,\ldots,n\}\to L:
+ x_0=\mathbf1,\ x_n=c,\ x_{j+1}\in\mathsf N(x_j,\tau)\ (0\le j<n)\}.
+\tag{FT.2}
+$$
+
+$\tau$ 是每片叶的类型，$x_j$ 是前 $j$ 片叶的总类型。$n=0$ 时只有终点为 $\mathbf1$ 的空路径。编码 $\mathbf1\mapsto0,\tau\mapsto1$ 后，合法路径具有固定起点、固定终点且相邻位置不出现 $00$；这是路径集合的双射，不携带振幅、结合结构或空间操作权限。
+
+令 $H_n^c=\mathbb C^{\mathsf P_n(c)}$，内积为有限求和，标准基记 $|p\rangle$。令 $H_n=\bigoplus_c H_n^c$，并取保持终点类型的块对角代数
+
+$$
+\mathfrak A_n=\bigoplus_{c:\mathsf P_n(c)\ne\varnothing}\operatorname{End}_{\mathbb C}(H_n^c)
+\subset\operatorname{End}_{\mathbb C}(H_n).
+\tag{FT.3}
+$$
+
+$n=0$ 时 $\mathfrak A_0=\mathbb C$。这个有限模型与既定 Fib 范畴的 $\operatorname{End}(\tau^{\otimes n})$ 通过选定的正交融合基对应；该对应使用 [TTWL09] 的完整 $F$ 数据，不能仅由相同维数推出。
+
+状态用块密度矩阵 $\rho=(\rho_c)_c$ 表示：每块 Hermitian、半正定，且 $\sum_c\operatorname{Tr}\rho_c=1$。可观测量是 $O=O^\dagger\in\mathfrak A_n$，期望为 $\sum_c\operatorname{Tr}(\rho_cO_c)$。这里使用普通矩阵迹表示状态；第 12.3 节的特定迹态另行指定。
+
+在固定总类型 $c$ 中，$\rho(p,q)$ 同时保留两条路径的关系，满足 $\rho(q,p)=\overline{\rho(p,q)}$。只保留 $\rho(p,p)$ 会删除相干性。实际酉门 $U$ 的更新是有限双重求和
+
+$$
+\rho'(p,q)=\sum_{r,s}U(p,r)\rho(r,s)\overline{U(q,s)}.
+\tag{FT.4}
+$$
+
+因此，完整的线性状态载体是同一终点类型下的“路径对”，不是单条已实现历史。跨不同总类型的相干在所选代数中不被观测，本卷不额外引入能混合这些类型的外部装置。
+
+### 12.2 矩阵单位上的右扩展
+
+令 $E^c_{pq}=|p\rangle\langle q|$。对 $d\in\mathsf N(c,\tau)$，以 $p d$ 表示在路径末尾补 $d$。
+
+**命题 12.2（实际后代嵌入）。** 下式唯一线性延拓为保单位、单射、保持伴随的代数同态：
+
+$$
+j_n(E^c_{pq})=\sum_{d\in\mathsf N(c,\tau)}E^d_{p d,q d}.
+\tag{FT.5}
+$$
+
+多次扩展等于对全部合法后缀求和，并且不依赖把后缀分成几批。
+
+**证明。** 矩阵单位乘法为 $E^c_{pq}E^{c'}_{rs}=\delta_{c,c'}\delta_{q,r}E^c_{ps}$。扩展后，非零乘积必须具有相同末尾类型和相同完整中间路径，所以恰为同一乘法的扩展；伴随把 $p,q$ 互换。目标每条路径有唯一前缀，故源单位的像是目标单位。每个源类型至少有一个后继，固定一个后继即可从像恢复每个系数，故单射。两段后缀的连接与一次后缀枚举之间有保持初末点的双射，给复合相容性。证毕。
+
+第 4.1 节的递推现在有一个显式集合来源：$\mathsf P_{n+1}(\mathbf1)\cong\mathsf P_n(\tau)$，$\mathsf P_{n+1}(\tau)\cong\mathsf P_n(\mathbf1)\sqcup\mathsf P_n(\tau)$。有限 $n$ 的全空间不能当作 $n$ 个独立两维粒子的张量积。
+
+### 12.3 迹权重随扩展相容
+
+记 $d_{\mathbf1}=1,d_\tau=\varphi$，其中 $\varphi>0$ 且 $\varphi^2=\varphi+1$。
+
+**命题 12.3（相容的有限迹态）。**
+
+$$
+t_n(A)=\varphi^{-n}\sum_c d_c\operatorname{Tr}(A_c)
+\tag{FT.6}
+$$
+
+是 $\mathfrak A_n$ 上的忠实归一化迹态，并且 $t_{n+1}j_n=t_n$。
+
+**证明。** 融合表给 $\sum_{d\in\mathsf N(c,\tau)}d_d=\varphi d_c$。对矩阵单位代入式（FT.5），直接得到相容性。$t_0(1)=1$，配合保单位扩展归纳得到归一化。各块系数严格正，普通矩阵迹的正性、忠实性和循环性分别给三项性质。证毕。
+
+这是进入无限代数网之前的有限接口；本命题不单独证明极限迹的唯一性、半链因子性或 DHR 识别。
+
+## 13. 树形重组的全部有限相容条件
+
+### 13.1 有序树、标签与 $F$ 系数
+
+**定义 13.1（带类型的有序二叉树）。** 树由有类型的叶和有序连接 $T=(T_L,T_R)$ 递归生成。给定叶类型序列和根类型 $c$，内部节点标记必须满足“父类型属于两子类型的 $\mathsf N$”。标签集合递归为
+
+$$
+\mathsf{Lab}((T_L,T_R),c)
+=\coprod_{a,b:\ c\in\mathsf N(a,b)}
+\mathsf{Lab}(T_L,a)\times\mathsf{Lab}(T_R,b).
+\tag{FT.7}
+$$
+
+叶的标签集合在叶类型等于根类型时为单点，否则为空。取 $\mathbb C^{\mathsf{Lab}(T,c)}$ 得树基空间。式（FT.7）明确了节点胶合的直和、张量与边界类型。
+
+令 $r=\varphi^{-1}$、$s=\sqrt r>0$，则 $r^2+r=1$、$s^2=r$。$F^{abc}_z(e,h)$ 表示把左括号 $((ab)_e c)_z$ 变为右括号 $(a(bc)_h)_z$ 的系数。若任一所列融合不合法，系数定义为零。其余所有一维块为 $1$，唯一二维块为
+
+$$
+F^{\tau\tau\tau}_{\tau}=
+\begin{pmatrix}r&s\\s&-r\end{pmatrix},
+\qquad e,h\text{ 按 }(\mathbf1,\tau)\text{ 排序}.
+\tag{FT.8}
+$$
+
+这是 [TTWL09, PDF Eq. (2.4)] 的固定规范数据，不作为新发现。每个非空块都是酉矩阵：唯一二维检查化为 $r^2+s^2=1$ 和交叉项 $rs-rs=0$。
+
+**命题 13.2（完整有限五边形恒等式）。** 对任意 $a,b,c,d,z\in L$，任意合法左路径 $(e,f)$ 和右路径 $(h,g)$，都有
+
+$$
+\sum_{j\in L}
+ F^{abc}_{f}(e,j)F^{ajd}_{z}(f,g)F^{bcd}_{g}(j,h)
+ =F^{ecd}_{z}(f,h)F^{abh}_{z}(e,g).
+\tag{FT.9}
+$$
+
+**证明。** 外部五个类型只有 $32$ 种。按两端标签空间的维数，完整划分为：$5$ 个零维情形；$21$ 个一维情形，两边均为 $1$；$5$ 个二维情形；$1$ 个三维情形。二维中的四个情形为四片叶恰有一片 $\mathbf1$、根为 $\tau$，删除单位叶后两路都给式（FT.8）；剩下一个为四片叶全 $\tau$、根为 $\mathbf1$，两路都为 $I_2$，使用 $F^2=I_2$。
+
+最后一个情形四片叶及根全为 $\tau$。两端均按 $(\mathbf1,\tau),(\tau,\mathbf1),(\tau,\tau)$ 排序，逐项代入式（FT.8），两边同为
+
+$$
+\begin{pmatrix}
+0&r&s\\
+r&r&-rs\\
+s&-rs&r^2
+\end{pmatrix}.
+\tag{FT.10}
+$$
+
+简化只使用 $s^2=r$、$r^2=1-r$。以上穷尽全部合法源、靶标签，包括空情形，故证明式（FT.9）。证毕。
+
+相互分离子树上的 $F$ 作用由张量乘法交换。将这些方块及五边形提升为任意重括号路径的一致性，使用 [EGNO15, §§2.8–2.9] 的结合相容定理。将该定理实例化成具体的库中范畴仍是后续形式化任务，不能把 Python 有限检查称作已经构造了完整无限范畴。
+
+只有同一棵树的维数和每个 $F$ 的酉性仍不足以保证五边形：保持其余标量块而把二维块改成 $\operatorname{diag}(1,-1)$，五边形要求中的 $F_{00}=F_{01}F_{10}$ 变为 $1=0$。这给“同树、同维、局部可逆”不足以保证共同结合结构的明确反例。
+
+### 13.2 换基与主动门的类型区别
+
+**命题 13.3（坐标运输保持预测）。** 若 $W:H_T^c\to H_{T'}^c$ 为上述酉换基，令 $\rho'=W\rho W^\dagger$、$O'=WOW^\dagger$，则 $\operatorname{Tr}(\rho'O')=\operatorname{Tr}(\rho O)$。
+
+**证明。** 将 $W^\dagger W=I$ 代入乘积，再对有限矩阵迹使用循环性。证毕。
+
+这个操作同时改写状态和读数。主动门则在固定读数下改变状态。数值上同为式（FT.8）不能混同两个类型。例如 $\mathfrak A_3\cong\mathbb C\oplus M_2(\mathbb C)$ 中的 $\widehat F=1\oplus F$ 可以被另行指定为理想三位置局部门；这项指定是实际电路操作，和被动重括号有不同的物理解释。编织还需要满足六边形的 $R$ 数据，本批不由 $F$ 单独推出编织或通用量子计算。
+
+## 14. 局部相互作用的任意长度矩阵构造
+
+### 14.1 可复用的带权路径引理
+
+**定理 14.1（路径投影子的 Temperley–Lieb 关系）。** 设有限标签集 $L$ 有对称的零一邻接关系 $a\sim b$，允许自环；给定 $\delta>0$ 和严格正权重 $d_a$，满足
+
+$$
+\sum_{b:\ a\sim b}d_b=\delta d_a.
+\tag{FT.11}
+$$
+
+固定长度 $n$ 与两个端点，在合法路径 $x_0\sim x_1\sim\cdots\sim x_n$ 的正交基上，对 $1\le i<n$ 定义 $P_i$：除 $x_i$ 外的坐标必须相同；若 $x_{i-1}\ne x_{i+1}$，系数为零；若共同值为 $a$，则
+
+$$
+\langle\ldots,b',\ldots|P_i|\ldots,b,\ldots\rangle
+=\frac{\sqrt{d_{b'}d_b}}{\delta d_a}.
+\tag{FT.12}
+$$
+
+则
+
+$$
+P_i^\dagger=P_i,\quad P_i^2=P_i,\quad
+P_iP_{i+1}P_i=\delta^{-2}P_i,\quad
+[P_i,P_j]=0\quad(|i-j|\ge2).
+\tag{FT.13}
+$$
+
+**证明。** 固定除第 $i$ 位外的坐标。非零块为 $vv^T/(\delta d_a)$，$v_b=\sqrt{d_b}$；式（FT.11）给 $v^Tv=\delta d_a$，故为正交投影。空路径空间上所有式子均为空矩阵恒等式。
+
+对相邻三乘积，只有输入局部段 $(a,b,a,d)$ 可能非零。右边第一个 $P_i$ 把 $b$ 改成中间值 $t$；随后 $P_{i+1}$ 非零强制 $t=d$；最后一个 $P_i$ 非零又强制第 $i+1$ 位回到 $a$。所以求和只剩唯一项，其输入 $b$、输出 $b'$ 的系数是
+
+$$
+\frac{\sqrt{d_bd_d}}{\delta d_a}
+\frac{d_a}{\delta d_d}
+\frac{\sqrt{d_dd_{b'}}}{\delta d_a}
+=\delta^{-2}\frac{\sqrt{d_bd_{b'}}}{\delta d_a}.
+$$
+
+对称邻接确保强制出的中间路径合法。其他输入两边均为零。这给相邻关系；反向关系同样计算。距离至少二的两次操作改变不同坐标，也不改变对方系数依赖的邻居标签，故逐项交换。证毕。
+
+因此 $e_i=\delta P_i$ 满足 $e_i^2=\delta e_i$、$e_ie_{i+1}e_i=e_i$。这是已知带权路径表示的直接证明，[FK07、TTWL09] 使用其 RSOS/Temperley–Lieb 形式；不认领该表示的原创性。
+
+### 14.2 Fibonacci 局部真空通道的完整块
+
+取邻接关系 $b\in\mathsf N(a,\tau)$，$d=(1,\varphi)$，$\delta=\varphi$。式（FT.11）由 $\varphi^2=1+\varphi$ 得到。在第 12 节的路径中，固定 $(x_{i-1},x_{i+1})$ 后，$P_i$ 的全部情形为
+
+$$
+\begin{array}{c|c}
+(x_{i-1},x_{i+1})&P_i\text{ 在允许的 }x_i\text{ 上的块}\\\hline
+(\mathbf1,\mathbf1)&(1)\\
+(\mathbf1,\tau)\text{ 或 }(\tau,\mathbf1)&(0)\\
+(\tau,\tau)&\begin{pmatrix}r^2&rs\\rs&r\end{pmatrix}.
+\end{array}
+\tag{FT.14}
+$$
+
+对最后一块，$P_i=F\operatorname{diag}(1,0)F^\dagger$；其余块由唯一通道或禁止通道得到。因此它就是先重括号使第 $i,i+1$ 两片叶相邻融合、投影到总类型 $\mathbf1$、再返回原基的操作，[TTWL09, §3.1] 给同一物理相互作用。该投影在真实网中属于位置 $[i,i+1]$ 的窗口代数。路径坐标 $x_i$ 是前缀总类型，不能把“改变一个 $x_i$”误当作物理上独立的一位量子比特操作。
+
+在右扩展下，原有 $P_i$ 的系数不依赖新加的末尾标签；式（FT.5）于是将它精确送入更大窗口的同一个 $P_i$。左侧扩展及其他括号形式使用第 13 节的相容运输，不任意重选矩阵。
+
+## 15. 从局部能量到门、可观测量与严格传播
+
+**命题 15.1（投影脉冲的完整代数律）。** 对任意有限维正交投影 $P$ 和 $z\in\mathbb C$、$|z|=1$，定义
+
+$$
+U_P(z)=I+(z-1)P.
+\tag{FT.15}
+$$
+
+则 $U_P(z)^\dagger=U_P(\overline z)$、$U_P(z)U_P(w)=U_P(zw)$，故 $U_P(z)$ 酉。对固定读数 $O$，相应 Heisenberg 更新为
+
+$$
+U_P(z)^\dagger O U_P(z)
+=O+(z-1)OP+(\overline z-1)PO+|z-1|^2POP.
+\tag{FT.16}
+$$
+
+**证明。** 展开两个因子并使用 $P^2=P$；一次项系数为 $(z-1)+(w-1)+(z-1)(w-1)=zw-1$。取 $w=\overline z$ 得酉性。三因子直接展开得最后一式。证毕。
+
+取物理 Hamiltonian $H=-JP$、$J\in\mathbb R$、$\hbar>0$，$z=e^{iJt/\hbar}$，幂级数给 $e^{-itH/\hbar}=U_P(z)$。可先形式化式（FT.15）这个有限多项式引理，再连接矩阵指数；不必把矩阵指数计算当作基础定义。这里是给定相互作用的理想模型，不代表任何装置已实现任意门。
+
+**命题 15.2（两层局部门产生严格 QCA）。** 在无限 Fibonacci 链上，先对所有不交的奇数键 $[2j-1,2j]$ 施加任意 $U_{P_{2j-1}}(z_j)$，再对不交的偶数键施加同类门。这定义一个两层 FDQC，其演化及逆的传播半径均至多二。
+
+**证明。** 每一层内不交窗口代数对易。对有限支撑可观测量，只有有限多个门有作用，其支撑最多向两侧扩大一格；两层后最多扩大二格。对同一可观测量在更大窗口计算给相同答案，因此定义在局部代数并上的保范数星同构，延拓到 C*-闭包。逆使用逆序两层和共轭相位，具有同一预算。证毕。
+
+本命题给出了实际可观测量变换的构造。有限时间的整个非交换 Hamiltonian $-\sum_iJ_iP_i$ 的精确连续演化不被本命题认作这两层电路；把它们比较还需要单独的逼近及误差分析。
+
+## 16. 何时可以只保留“分支概率”？
+
+### 16.1 一个必要且充分的有限矩阵判据
+
+**定理 16.1（概率独立演化判据）。** 设 $H=\mathbb C^m$、$m\ge1$，固定基及酉矩阵 $U$。记 $\pi(\rho)=(\rho_{jj})_j$。以下等价：
+
+一、存在列随机矩阵 $K$，对所有密度矩阵 $\rho$ 都有 $\pi(U\rho U^\dagger)=K\pi(\rho)$。
+
+二、$U$ 每行每列恰有一个非零元，该元模为一，即 $U$ 是置换矩阵与对角相位矩阵的乘积。
+
+三、$U$ 通过共轭保持该基的对角代数。
+
+**证明。** 取 $\rho=|j\rangle\langle j|$，条件一强制 $K_{aj}=|U_{aj}|^2$。对 $j\ne k$，取 $(|j\rangle\pm|k\rangle)/\sqrt2$ 两个纯态，它们具有相同 $\pi$，故输出第 $a$ 个概率相同，得到 $\operatorname{Re}(U_{aj}\overline{U_{ak}})=0$。再取 $(|j\rangle\pm i|k\rangle)/\sqrt2$ 得虚部为零。因此同一行两个不同位置不能同时非零。酉性使每行范数一，且不同的行不能占据相同列，于是条件二成立。条件二直接给条件一及三。条件三把对角代数的秩一极小投影置换，故每个 $U|j\rangle$ 是某个基向量的相位倍数，给条件二。证毕。
+
+这属于对角代数正规化子的标准性质；本卷给出完整证明及融合链实例，不将它登记为新的普遍量子定理。量词“所有密度矩阵”不能弱化后保留这个结论：如果只允许对角初态，一次操作总能写成 $|U_{aj}|^2$ 的随机转移；后续无测量演化未必继续满足这一公式。
+
+定义 $\mathsf S(U)_{aj}=|U_{aj}|^2$。对式（FT.8），$F^2=I$，但
+
+$$
+\mathsf S(F)=\begin{pmatrix}r^2&r\\r&r^2\end{pmatrix},
+\qquad [\mathsf S(F)^2]_{01}=2r^3>0.
+\tag{FT.17}
+$$
+
+所以“先丢掉相位，再把每步看成随机分支”不保持实际操作的复合与逆。若每步确实插入去相干测量，这个随机模型可以描述另一套已改变的实验；该实验权限须明示。
+
+### 16.2 三任意子的尖锐预测损失
+
+固定 $H_3^\tau\cong\mathbb C^2$，并设
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+Q=FPF^\dagger=\begin{pmatrix}r^2&b\\b&r\end{pmatrix},\quad
+b=rs=\varphi^{-3/2}>0.
+\tag{FT.18}
+$$
+
+$P,Q$ 分别测量第一对和第二对任意子的真空融合通道。取
+
+$$
+\rho=\begin{pmatrix}p&x+iy\\x-iy&1-p\end{pmatrix},\qquad
+0\le p\le1,\quad x^2+y^2\le p(1-p).
+\tag{FT.19}
+$$
+
+后一个不等式与两阶 Hermitian 矩阵的半正定性等价。
+
+**定理 16.2（仅知分支概率的最优最坏误差）。** 只给定 $p=\operatorname{Tr}(P\rho)$ 时，预测第二对读数的精确范围是
+
+$$
+\operatorname{Tr}(Q\rho)\in
+\left[r+(r^2-r)p-2b\sqrt{p(1-p)},\ 
+      r+(r^2-r)p+2b\sqrt{p(1-p)}\right].
+\tag{FT.20}
+$$
+
+在这个固定 $p$ 的状态类上，任意预测值的最坏绝对误差至少为 $2b\sqrt{p(1-p)}$，区间中点达到该下界。$p=1/2$ 时该最优误差是 $b=\varphi^{-3/2}$。
+
+**证明。** 直接取迹得到 $r+(r^2-r)p+2bx$。式（FT.19）给 $|x|\le\sqrt{p(1-p)}$，两个端点均由 $y=0$、等号成立的纯态实现。任何实数到区间两端至少有一边距离不小于半区间宽；中点到全部允许值的距离不超过该半宽。证毕。
+
+同一常数还满足 $\|[P,Q]\|=b$，因为 $[P,Q]=\left(\begin{smallmatrix}0&b\\-b&0\end{smallmatrix}\right)$，其伴随乘积是 $b^2I$。因此本模型给出一个精确联系：局部读数的不相容程度，等于平衡分支状态中丢掉相干后不可消除的最坏预测误差。该等式仅针对上述模型和误差任务。
+
+**推论 16.3（单次指定脉冲的转移限度）。** 从 $|0\rangle$ 出发，只施加一个 $U_Q(e^{i\theta})$，测得第二个路径基态的概率为
+
+$$
+4\varphi^{-3}\sin^2(\theta/2)\le4\varphi^{-3}<1.
+\tag{FT.21}
+$$
+
+**证明。** 转移振幅为 $(e^{i\theta}-1)b$；平方模即得。最后严格不等式等价于 $(r^2-r)^2=1-4r^3>0$。证毕。
+
+这是单个已指定相互作用脉冲的限制，不是所有多门电路的可达性上界。
+
+## 17. 最小预测状态与可执行的三读数恢复
+
+### 17.1 有限可观测空间的严格完成
+
+**定理 17.1（受控观察的最小线性完成）。** 在 $\mathbb C^m$ 上固定有限族 Hermitian 控制 Hamiltonian $H_a$ 和读数 $E_b$。允许任意有限控制词，每段时长非负，在末尾读出期望；不同词以同一初态的独立制备比较。定义实线性映射 $\mathcal D_a(O)=i[H_a,O]$，以及
+
+$$
+W_0=\operatorname{span}_{\mathbb R}\{I,E_b\},\qquad
+W_{k+1}=W_k+\sum_a\mathcal D_a(W_k).
+\tag{FT.22}
+$$
+
+则某个 $k\le m^2-\dim W_0$ 使 $W_k=W_{k+1}=:W$；此后稳定。两个密度矩阵对全部上述实验不可区分，当且仅当
+
+$$
+\operatorname{Tr}((\rho-\sigma)O)=0\quad\text{对全部 }O\in W.
+\tag{FT.23}
+$$
+
+在任意实线性期望坐标摘要中，若其相等保证全部实验预测相等，则在迹一状态的仿射空间上至少需要 $\dim W-1$ 个独立实坐标；$W$ 的一组去常数基坐标达到这个下界。
+
+**证明。** $\operatorname{Herm}(m)$ 的实维数为 $m^2$。每次严格增长至少增加一维，若某步相等便对全部 $\mathcal D_a$ 不变，故不会再增长，得到界。由递推，$W$ 是包含初始读数并在全部这些映射下不变的最小空间。
+
+若式（FT.23）成立，每段 Heisenberg 演化为 $e^{t\mathcal D_a}$，其级数保持有限维闭子空间 $W$，因而任意有限复合也保持它，给相同末尾读数。反向，对任意控制词的各段时长在零点逐次取右导数，得到所有迭代交换子读数相同。有限矩阵指数解析，右导数与通常导数相同；这些交换子张成 $W$，给式（FT.23）。本证明不把负时间偷偷加入合法控制集。
+
+最后令 $V=\operatorname{Herm}_0(m)$。任何 $D\in V$ 在充分小 $\epsilon>0$ 下使 $I/m\pm\epsilon D$ 都为密度矩阵。因此摘要在线性方向上的核必须包含于 $W$ 在 $V$ 上的消去子。该消去子的余维为 $\dim W-1$，因为 $I\in W$ 且迹配对非退化。秩零度公式给下界；取 $W$ 基底的期望则达到。证毕。
+
+这是 [DA03, §2, Theorem 1] 的有限受控可观测空间机制，本卷采用显式非负时长与归一化状态的版本。它与原统一预测主卷的 $OA=KO$ 在密度矩阵和交换子生成元上形成具体接口。下界限于线性期望摘要，不能声称排除了任意病态集合编码。
+
+对式（FT.18），即使初始只读 $P$，控制采用 $-P,-Q$，也有
+
+$$
+W_0=\operatorname{span}\{I,P\},\quad
+ i[Q,P]=\begin{pmatrix}0&-ib\\ib&0\end{pmatrix},\quad
+ i[P,i[Q,P]]=\begin{pmatrix}0&b\\b&0\end{pmatrix}.
+\tag{FT.24}
+$$
+
+四个矩阵实线性独立，故 $W_2=\operatorname{Herm}(2)$。因此需要三个独立的归一化状态实坐标，分别可以取 $p,x,y$；只有 $p$ 不能形成相同任务下的自治预测状态。
+
+### 17.2 三种具体设置与恢复误差
+
+以下更明确地允许测量两对相邻任意子的真空通道 $P,Q$，并允许第一对的相位脉冲。此权限与上一节“只读 $P$”的最小完成论证分开声明。
+
+**定理 17.2（三设置精确恢复与尖锐噪声界）。** 对式（FT.19）的任意状态，取 $V=U_P(i)=\operatorname{diag}(i,1)$，定义独立制备实验的三个期望
+
+$$
+m_0=\operatorname{Tr}(P\rho),\quad
+m_1=\operatorname{Tr}(Q\rho),\quad
+m_2=\operatorname{Tr}(QV\rho V^\dagger).
+$$
+
+写 $h=r^2-r$，则
+
+$$
+p=m_0,\quad
+x=\frac{m_1-r-hm_0}{2b},\quad
+y=\frac{r+hm_0-m_2}{2b}.
+\tag{FT.25}
+$$
+
+若三个实测期望各自误差绝对值不超过 $\epsilon$，按这个线性公式重建 $\widehat\rho$，则
+
+$$
+\frac12\|\widehat\rho-\rho\|_1
+\le\sqrt{1+2\varphi}\,\epsilon.
+\tag{FT.26}
+$$
+
+对原始线性重建，该常数不能减小。
+
+**证明。** 第一个式子直接；第二个来自第 16.2 节取迹。$V$ 将 $x+iy$ 变为 $-y+ix$，所以 $m_2=r+hp-2by$，解线性方程即得式（FT.25），分母 $b>0$。
+
+令读数误差为 $\eta_j$。则 $\delta p=\eta_0$，$\delta x=(\eta_1-h\eta_0)/(2b)$，$\delta y=(h\eta_0-\eta_2)/(2b)$。因 $h=1-2r<0$ 且 $(1+|h|)/(2b)=1/s=\sqrt\varphi$，有 $|\delta p|\le\epsilon$，$|\delta x|,|\delta y|\le\sqrt\varphi\epsilon$。迹零两阶 Hermitian 差矩阵的特征值为 $\pm\sqrt{\delta p^2+\delta x^2+\delta y^2}$，给式（FT.26）。取 $\eta_0=\eta_1=\eta_2=\epsilon$，上述三个界同时达到。对真实态 $I/2$ 及足够小的 $\epsilon$，读数仍在 $[0,1]$ 且重建态仍半正定，因此尖锐性也可在物理状态附近达到。证毕。
+
+一般有噪线性重建未必半正定。将 $(\widehat p-1/2,\widehat x,\widehat y)$ 欧氏投影到半径 $1/2$ 的闭球可强制半正定；球投影到真实球内点的距离不增加，故式（FT.26）仍成立。此处三个数是期望，不是三次单样本结果；实际统计精度需要重复制备、测量及独立的误差预算，本批未报告硬件实验。
+
+## 18. 从局部谱系返回切口分类：哪些区别已经保留？
+
+### 18.1 中心给出“画图交换”不能直接当作量子门的有限证据
+
+**命题 18.1（整窗口层交换通常为外自同构）。** 对 $n\ge2$，$\mathfrak A_n$ 有两个非零总类型块。记它们的中心单位为 $z_{\mathbf1},z_\tau$。在 $\mathfrak A_n\otimes\mathfrak A_n$ 上，因子交换 $\mathsf{Flip}(a\otimes b)=b\otimes a$ 不能由这个同一窗口代数内的酉元共轭实现。
+
+**证明。** $z_{\mathbf1}\otimes z_\tau$ 与 $z_\tau\otimes z_{\mathbf1}$ 是不同的非零正交中心投影；交换把前者送到后者。任何代数内酉共轭都逐点固定中心，矛盾。证毕。
+
+允许的两层混合门可以改变固定总类型对内的融合重数空间，仍须保持整个窗口的中心。这个命题只排除同窗口的直接交换门，不能单独排除借助更宽窗口和更多层的所有实现。后一问题仍须第 2 节的统一切口局部化及第 6 节的无限尾部障碍。
+
+### 18.2 两条相互独立的结构要求
+
+第 16–17 节说明：预测局部相互作用后的读数，需要保留路径对的相干数据；这属于状态与观察任务。第 6 节的 $D(n+k)D(n-k)-D(n)^2$ 则比较实际半链嵌入的相对交换子代数，属于动力学的局部实现类型。两者不被识别成同一个不变量。
+
+式（FT.5）使“后代”具有真实代数嵌入，第 13 节给括号重组的相容性，第 14–15 节给物理局部门及统一传播预算，第 16–17 节给足以预测这些门的状态表示。这个链条为后续形式化第 3 节切口作用提供有限基础；它没有重新验证原反例的完整 DHR 产品相容性，也没有证明新增切口作用的完备性。
+
+## 19. 后续形式化的陈述与依赖顺序
+
+以下为待实施的数学接口，均不是已经编译的 Lean 模块名或已通过的核验证据。每一步都保留原量词和退化情形，不把目标结论作为结构字段输入。
+
+| 次序与候选接口 | 完整输入类型及约束 | 要保留的结论与主要证明 |
+| --- | --- | --- |
+| FTpath | 二元素有限类型；$n\in\mathbb N$；终点 $c$；合法性谓词 | 构造有限路径与后缀双射；包含 $n=0$、空终点扇区；递推证明计数 |
+| FTmatrixEmbedding | 按非空终点分块的有限复矩阵；矩阵单位 | 式（FT.5）的乘法、伴随、单位、单射和复合；由系数逐项证明 |
+| FTassociator | $r,s\in\mathbb R$，$r>0,s>0,r^2+r=1,s^2=r$；所有类型与合法标签 | 明确定义全表 $F$；酉性、32 种边界的五边形；有限分类及多项式恒等式 |
+| FTweightedProjector | 有限对称零一图、正权重、$\delta>0$、式（FT.11）；固定端点；$1\le i<n$ | 定理 14.1 对任意 $n$ 的投影、相邻 TL 和远距交换；唯一中间项计算 |
+| FTpulse | 有限复内积空间；$P=P^\dagger=P^2$；$|z|=|w|=1$ | 多项式门律、Heisenberg 公式；另接矩阵指数和物理 $\hbar>0$ |
+| FTclassicalShadow | $m\ge1$；酉矩阵；全体半正定迹一密度矩阵 | 定理 16.1 的双向判据；四个相位测试态和对角极小投影 |
+| FTpredictionRisk | 两阶 Hermitian 状态、正系数 $b$、固定 $p\in[0,1]$ | 精确输出区间、极值态、最小最坏误差；含 $p=0,1$ |
+| FTobservableCompletion | 有限 Hermitian 控制族与读数族；所有有限非负时长词 | 子空间递推终止、实验等价、迹一仿射维数下界；有限维与矩阵指数导数 |
+| FTtomography | 已知 $r,s,b$；同一初态的三独立制备设置；逐读数误差上界 | 完整反演、半正定条件、迹距离界和达到性；二阶特征值 |
+| FTnetAdapter | 已给 Fib 范畴及两侧窗口嵌入；统一有界门层 | 将上述具体矩阵接到真实无限网；归纳极限和正常延拓另证 |
+
+符号运算可以使用 $s^4+s^2-1=0$ 的精确多项式约化；正性、平方根的指定实嵌入和所有分母非零仍须证明。一般 $n$ 的陈述由路径归纳与局部系数证明承担，不能从 $n\le9$ 的矩阵核对外推。
+
+目前没有新增 Lean/Scribe 文件。新形式化实施应先建立这些可复用对象与引理，再提供原具体融合链的实例映射。仅把已知公式改名、只交伪代码、或以假设“存在相容实现”换取目标结论，均不构成本卷的完成。
+
+## 20. 本批来源、实际检查与未决边界
+
+[TTWL09] Simon Trebst, Matthias Troyer, Zhenghan Wang and Andreas W. W. Ludwig, *A short introduction to Fibonacci anyon models*, Progress of Theoretical Physics Supplement 176, 384–407 (2008); arXiv v1 submitted 2009. [arXiv:0902.3275v1](https://arxiv.org/html/0902.3275v1). 使用 §§2.3–2.5、§3.1；PDF 第 7、10 页的 $F$ 系数和坐标/编织区别已视觉核对。路径模型、$F$ 表和黄金链相互作用属于已有文献；本批按明确边界重新给出有限推导。
+
+[FK07] Adrian Feiguin, Simon Trebst, Andreas W. W. Ludwig, Matthias Troyer, Alexei Kitaev, Zhenghan Wang and Michael H. Freedman, *Interacting anyons in topological quantum liquids: The golden chain*, Physical Review Letters 98, 160409 (2007). [arXiv:cond-mat/0612341](https://arxiv.org/abs/cond-mat/0612341). 使用相邻真空通道相互作用与 RSOS/TL 表示的来源归属；本轮读取摘要及 TTWL09 中的展开，不以此声称重新验证其临界理论结论。
+
+[DA03] Domenico D'Alessandro, *On Quantum State Observability and Measurement*, Journal of Physics A: Mathematical and General 36, 9721–9735 (2003). [arXiv:quant-ph/0307127](https://arxiv.org/pdf/quant-ph/0307127). 已读取 §2 的可观测空间、终止算法及 Theorem 1 的证明。定理 17.1 明确复用该机制；本批不认领一般量子可观测性理论的原创性。
+
+配套新程序为 [`fusion_tree_checks.py`](../../reports/fusion-qca-cut-obstruction/fusion_tree_checks.py)，实际输出为 [`fusion_tree_results.json`](../../reports/fusion-qca-cut-obstruction/fusion_tree_results.json)。运行命令：
+
+```bash
+python docs/reports/fusion-qca-cut-obstruction/fusion_tree_checks.py
+```
+
+实际执行使用 Python 标准库的有理数和商环 $\mathbb Q[s]/(s^4+s^2-1)$，不使用浮点近似判等。完成 32 个五边形外部类型情形的全部 50 个合法系数等式、15 个 $F$ 酉性系数；任意长度公式的有限诊断覆盖 $n\le15$ 的路径计数，以及 $2\le n\le9$ 两总类型扇区的 72 个投影关系、112 个相邻 TL 关系、112 个远距交换关系。另检查 10857 个实际右扩展系数和 199 个矩阵单位乘积。
+
+门与预测部分实际检查 12 个复相位门的酉性、72 个门复合、6 个转移概率、29 个合法密度矩阵的三设置恢复、尖锐误差系数及两个相干方向。故意错误的酉 $F$ 表确实被五边形检查拒绝。计数中边界实例与其中的系数检查互有包含，不把它们相加当作独立理论结果数。旧 `verify.py/results.json` 保留不动，旧批检查没有在本批冒领为重新运行。
+
+这些是有限代数检错。一般长度、最小误差、全体状态量词及有限维闭合由正文证明；尚无 Lean 编译、独立同行评审、硬件实验或本批 CI 通过声明。新增内容不改变 Jones–Lim 原问题或第 6 节反例稿的审定状态，不以有限模型确认替代一般 QCA 分类。
+
+## 追加锚（本行以下为后续增补区，FT 批次结束）
