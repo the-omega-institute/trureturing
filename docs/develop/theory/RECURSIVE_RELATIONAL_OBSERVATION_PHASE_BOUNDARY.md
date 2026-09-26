@@ -50070,3 +50070,671 @@ $i$ 在每个有限 $L$ 上都是精确最小点。
 本节始终保留第171节的真实原输入依赖、同一个接收端 instrument，以及第173节的完整参考最坏输入。严格下界来自 Bell 差矩阵的最大本征值，严格上界来自一份实际可实施的共同解码器；没有把线性重叠收益直接认作 diamond 误差，也不作新增 Lean 核验或原创性声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 177. 全相位分离的显式有限阈值与三十四维实例
+
+第175、176节证明了足够长启动时的全相位分离，但没有给出有限阈值。本节把等号集附近的稳定性改写为统一定量不等式：对每个合法有限启动长度 $L\ge3$，真实完整参考恢复误差在全部相位上都严格大于 $3/4$。因此十维实例 $L=3$ 与固定三十四维实例 $L=9$ 均满足真实经验分布与常值比较分布的支持下端严格分离。
+
+证明直接覆盖全部相位与全部共同 instrument，不使用相位网格或数值 SDP。所得有限长度界不是第176节精确一阶系数的替代；它承担的是显式阈值与严格正间隔。
+
+### 177.1 参数的统一有限界
+
+沿用第174、175节，记
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+t_0=z/3,\qquad t_1=-2z/3,
+$$
+
+$$
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+\mathfrak b(t)=\frac43-t+4\sqrt{d(t)},
+\qquad
+w(t)=\frac{9t^2}{\mathfrak b(t)}.
+\tag{177.1}
+$$
+
+置
+
+$$
+\epsilon=w_0=w(t_0),\qquad
+R=w_1/w_0=\frac{4\mathfrak b(t_0)}{\mathfrak b(t_1)},
+\qquad
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353}.
+\tag{177.2}
+$$
+
+对全部有限 $L\ge3$，有 $0<|t_j|\le1/6$。在这个区间上，
+
+$$
+\frac5{72}\le d(t)\le\frac18.
+$$
+
+所以
+
+$$
+\boxed{
+\frac{13}{6}<\mathfrak b(t)<3,\qquad
+\frac{z^2}{3}<\epsilon<\frac{6z^2}{13},\qquad
+\frac{26}{9}<R<\frac{72}{13}<6.
+}
+\tag{177.3}
+$$
+
+第一式使用
+$4/3-t\in[7/6,3/2]$、
+$\sqrt{d(t)}>1/4$ 与
+$4\sqrt{d(t)}\le\sqrt2<3/2$；
+其余两式由（177.1）—（177.2）直接得到。
+特别地，以下证明可以统一使用 $1\le R\le6$。
+
+### 177.2 当前相位的收益损失控制到好相位的距离
+
+固定任意一个合法共同 instrument $\mathcal D_0,\mathcal D_1$ 和任意相位
+$\varphi$。使用第175节的精确分解
+
+$$
+F(\mathcal D,\varphi,L):=f_0+f_1
+=F_0(\mathcal D,\varphi)
++\epsilon G(\mathcal D,\varphi,R).
+\tag{177.4}
+$$
+
+记
+
+$$
+\ell=1-F_0(\mathcal D,\varphi)\in[0,1].
+$$
+
+选取最近的好相位
+$\varphi_*\equiv\pi/4\pmod{\pi/2}$，将相位代表选成
+$\delta=\varphi-\varphi_*\in[-\pi/4,\pi/4]$。
+第163、175节的基点纯化重叠界给
+
+$$
+F_0(\mathcal D,\varphi)
+\le1-\frac29(1-|\sin2\varphi|)
+=1-\frac49\sin^2\delta.
+$$
+
+因此
+
+$$
+|\sin\delta|\le\frac32\sqrt\ell.
+\tag{177.5}
+$$
+
+令 $v_\varphi=U_\varphi|0\rangle$，允许选择无关的整体相位。
+同一个 instrument 定义一个逻辑效果 $0\preceq B_\mathcal D\preceq I$，
+使
+
+$$
+F_0(\mathcal D,\varphi)
+=\langle v_\varphi|B_\mathcal D|v_\varphi\rangle.
+\tag{177.6}
+$$
+
+具体地，先把目标投影 $P_\Xi$ 经
+$\operatorname{id}_M\otimes(\mathcal D_0+\mathcal D_1)$
+的对偶拉回，再经编码 $\mathfrak E^*$ 拉回即可得到
+$B_\mathcal D$；这些通道的对偶均保持效果范围。
+
+定义同一个 instrument 在好相位的损失
+$\ell_*=1-F_0(\mathcal D,\varphi_*)$。因 $\cos(\pi/8)>12/13$，有
+
+$$
+\|v_\varphi-v_{\varphi_*}\|
+=\frac{|\sin\delta|}{\cos(\delta/2)}
+\le\frac{13}{12}|\sin\delta|
+\le\frac{13}{8}\sqrt\ell.
+$$
+
+由（177.6）和三角不等式，
+
+$$
+\begin{aligned}
+\sqrt{\ell_*}
+&=\|(I-B_\mathcal D)^{1/2}v_{\varphi_*}\|\\
+&\le\|(I-B_\mathcal D)^{1/2}v_\varphi\|
++\|v_\varphi-v_{\varphi_*}\|
+\le\frac{21}{8}\sqrt\ell.
+\end{aligned}
+$$
+
+故
+
+$$
+\boxed{\ell_*\le\frac{441}{64}\ell\le7\ell.}
+\tag{177.7}
+$$
+
+其中 $\cos(\pi/8)>12/13$ 可由
+$\cos^2(\pi/8)=(2+\sqrt2)/4$ 及
+$2\cdot169^2>238^2$ 直接核对。
+好相位在这里是数学比较点，没有为接收装置增加新的运行控制，也没有为两个原输入更换两份解码器。
+
+### 177.3 好相位处的定量 Kraus 方差控制
+
+在 $\varphi_*=\pi/4$ 的接收端解掩码与旗标坐标中，基点是
+$I_Q/2\otimes P_\Xi$。另一类好相位通过第175节的接收端局部
+$J=-iY$ 协变变换化为同一计算。
+
+固定旗标 $\nu=0,1$，写 instrument 的 Kraus 为
+$K_{j,\nu,\alpha}:R\to R_{\mathrm{out}}$。它们满足
+
+$$
+\sum_{j,\alpha}
+K_{j,\nu,\alpha}^\dagger K_{j,\nu,\alpha}=I
+\quad\text{对每个 }\nu.
+\tag{177.8}
+$$
+
+对每个 Kraus，令
+
+$$
+a=\operatorname{Tr}(\rho K),\qquad
+E=K-aI,\qquad
+\|E\|_\rho^2=\operatorname{Tr}(\rho E^\dagger E).
+$$
+
+于是 $\operatorname{Tr}(\rho E)=0$。第175节的方差恒等式在非等号情形给
+
+$$
+\frac12\sum_{\nu,j,\alpha}|a_{j,\nu,\alpha}|^2=1-\ell_*,
+\qquad
+\frac12\sum_{\nu,j,\alpha}\|E_{j,\nu,\alpha}\|_\rho^2=\ell_*.
+\tag{177.9}
+$$
+
+还需要控制正交纯化 $\psi=(I\otimes Y)\Xi$ 的恢复振幅。记
+
+$$
+b=\langle\Xi|(I\otimes K)|\psi\rangle
+=\operatorname{Tr}(\rho KY).
+$$
+
+由于 $\operatorname{Tr}(\rho Y)=0$，将 $K$ 换成 $E$ 不改变 $b$。
+在加权内积
+$\langle C,E\rangle_\rho=\operatorname{Tr}(\rho C^\dagger E)$
+中，取 $C=\rho Y\rho^{-1}$，就有 $b=\langle C,E\rangle_\rho$。
+又
+
+$$
+\begin{aligned}
+\|C\|_\rho^2
+&=\operatorname{Tr}(\rho^{-1}Y\rho^2Y)\\
+&=\operatorname{Tr}\bigl(\rho^{-1}(I-\rho)^2\bigr)
+=\frac1{\det\rho}-3=6.
+\end{aligned}
+$$
+
+故加权 Cauchy–Schwarz 给
+
+$$
+\boxed{|b|^2\le6\|E\|_\rho^2.}
+\tag{177.10}
+$$
+
+令原输入权重为 $r_0=1,r_1=R$，并定义
+
+$$
+S=\frac12\sum_{\nu,j,\alpha}r_j|a_{j,\nu,\alpha}|^2,
+\qquad
+T=\frac12\sum_{\nu,j,\alpha}r_j|b_{j,\nu,\alpha}|^2.
+$$
+
+由（177.9）—（177.10），
+
+$$
+1-\ell_*\le S\le R,\qquad
+T\le6R\ell_*.
+\tag{177.11}
+$$
+
+第174节条件态的扰动方向是
+$-\beta P_\Xi+\beta P_\psi$ 加上系数为
+$\pm\gamma$ 的两个交叉项。因此
+
+$$
+\begin{aligned}
+G(\mathcal D,\varphi_*,R)
+&\le-\beta S+\beta T+2\gamma\sqrt{ST}\\
+&\le-\beta+\beta(1+6R)\ell_*
++2\gamma R\sqrt{6\ell_*}.
+\end{aligned}
+\tag{177.12}
+$$
+
+交叉项的界同时对旗标符号、结果标签和全部 Kraus 使用加权
+Cauchy–Schwarz；（177.8）始终是共同的保迹预算。
+
+### 177.4 相位变化的共同效果界
+
+为控制 $G$ 从 $\varphi_*$ 到 $\varphi$ 的变化，定义实际空间上的效果
+
+$$
+H_j=(\operatorname{id}_M\otimes\mathcal D_j)^*(P_\Xi).
+$$
+
+因为 $\mathcal D_0+\mathcal D_1$ 保迹，
+
+$$
+H_j\succeq0,\qquad H_0+H_1\preceq I.
+$$
+
+所以对 $1\le R\le6$，
+
+$$
+0\preceq H_0+RH_1\preceq RI\preceq6I.
+\tag{177.13}
+$$
+
+第175节的扰动算子为
+
+$$
+A=\gamma X-\beta Z,\qquad
+\|A\|_1=\frac{12}{\sqrt{2353}},
+\qquad
+\dot\xi^\varphi=\mathfrak E(U_\varphi A U_\varphi^\dagger).
+$$
+
+两份扰动之差为迹零 Hermitian 算子。对
+$0\preceq H\preceq RI$，先将 $H$ 中心化为 $H-(R/2)I$，得到
+$|\operatorname{Tr}(HT)|\le(R/2)\|T\|_1$。
+再用编码收缩迹范数，以及实 $XZ$ 平面上的旋转恒等式
+
+$$
+\|U_\varphi A U_\varphi^\dagger-
+U_{\varphi_*}A U_{\varphi_*}^\dagger\|_1
+=2|\sin\delta|\,\|A\|_1,
+$$
+
+便得
+
+$$
+\begin{aligned}
+|G(\mathcal D,\varphi,R)-G(\mathcal D,\varphi_*,R)|
+&\le R|\sin\delta|\,\|A\|_1\\
+&\le\frac{18R}{\sqrt{2353}}\sqrt\ell.
+\end{aligned}
+\tag{177.14}
+$$
+
+这里（177.13）中的效果是同一个 instrument 的加权和。它没有把各个原输入的收益分别按独立保迹通道估计。
+
+### 177.5 全相位、全解码器的有限参数证书
+
+把（177.7）、（177.12）、（177.14）合并，得到
+
+$$
+G(\mathcal D,\varphi,R)
+\le-\beta+7\beta(1+6R)\ell+
+\left(2\gamma R\sqrt{42}+\frac{18R}{\sqrt{2353}}\right)\sqrt\ell.
+$$
+
+明确的有理常数估计给
+
+$$
+\begin{aligned}
+259\beta&<32,&
+12\gamma\sqrt{42}+\frac{108}{\sqrt{2353}}&<4,\\
+175\beta&<22,&
+8\gamma\sqrt{42}+\frac{72}{\sqrt{2353}}&<\frac52.
+\end{aligned}
+$$
+
+这些式子可用 $\sqrt{42}<13/2$、
+$\sqrt{2353}>48$ 和分数比较核对。因此
+
+$$
+\boxed{
+\begin{aligned}
+G(\mathcal D,\varphi,R)&\le-\beta+32\ell+4\sqrt\ell
+&&\text{若 }1\le R\le6,\\
+G(\mathcal D,\varphi,R)&\le-\beta+22\ell+\frac52\sqrt\ell
+&&\text{若 }1\le R\le4.
+\end{aligned}
+}
+\tag{177.15}
+$$
+
+分别取 $(a,c)=(32,4)$ 或 $(22,5/2)$。
+将相应的（177.15）代入（177.4），若 $a\epsilon<1$，则
+
+$$
+\begin{aligned}
+F(\mathcal D,\varphi,L)
+&\le1-\beta\epsilon
+-(1-a\epsilon)\ell+c\epsilon\sqrt\ell\\
+&\le1-\beta\epsilon+
+\frac{c^2\epsilon^2}{4(1-a\epsilon)}.
+\end{aligned}
+\tag{177.16}
+$$
+
+最后一步对非负变量 $\sqrt\ell$ 完全平方。右侧不含相位或解码器参数。
+第174节的 Bell 目标投影检验给误差至少为
+$1-F/4$。故
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{\beta\epsilon}{4}
+-\frac{c^2\epsilon^2}{16(1-a\epsilon)}
+\quad
+\text{对全部相位，若 }a\epsilon<1.
+}
+\tag{177.17}
+$$
+
+这是有限参数不等式，没有使用渐近余项。
+
+### 177.6 显式阈值与三十四维支持下端严格分离
+
+**定理177.1（全部合法有限启动的全相位严格分离）。**
+对全部整数 $L\ge3$ 和全部相位，
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{19511}{2560064}\,w_0
+>\frac34.
+}
+\tag{177.18}
+$$
+
+对全部 $L\ge4$，还有较强的简式
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{\beta-3/80}{4}w_0
+\ge\frac34+\frac{\beta w_0}{8}
+>\frac34+\frac{12}{2353}\,4^{-(L-1)}.
+}
+\tag{177.19}
+$$
+
+**证明。** 当 $L\ge4$ 时，$z^2\le1/64$，故（177.3）给
+$\epsilon<3/416<1/32$。取 $(a,c)=(32,4)$。
+函数 $4\epsilon/(1-32\epsilon)$ 在该区间递增，所以
+
+$$
+\frac{4\epsilon}{1-32\epsilon}
+\le\frac3{80}<\frac{\beta}{2}.
+$$
+
+代入（177.17）得到（177.19）的前两个下界。
+最后一个严格下界使用 $w_0>z^2/3$。
+
+还需单独处理 $L=3$。此时
+
+$$
+\epsilon=\frac54-\frac{\sqrt6}{2}<\frac1{39},
+\qquad t_0=\frac1{12},\qquad t_1=-\frac16.
+$$
+
+其中根式界等价于 $\sqrt6>191/78$，
+由 $6\cdot78^2=36504>36481=191^2$ 得到。
+分母在 $[-1/6,1/6]$ 严格递减，因为
+
+$$
+\mathfrak b'(t)
+=-1+\frac{2(-1/6-t)}{\sqrt{d(t)}}\le-1.
+$$
+
+所以 $t_0>t_1$ 给
+$R=4\mathfrak b(t_0)/\mathfrak b(t_1)<4$。
+取 $(a,c)=(22,5/2)$；此时
+$a\epsilon<22/39<1$，且
+
+$$
+\frac{c^2\epsilon}{4(1-a\epsilon)}
+=\frac{25\epsilon}{16(1-22\epsilon)}
+\le\frac{25}{272}<\beta.
+$$
+
+代入（177.17），再用
+
+$$
+\frac14\left(\beta-\frac{25}{272}\right)
+=\frac{19511}{2560064}>0,
+$$
+
+得到 $L=3$ 的（177.18）。
+因为 $3/80<25/272$，这个较弱系数也适用于所有
+$L\ge4$，从而（177.18）对全部 $L\ge3$ 成立。证毕。
+
+特别地，固定三十四维实例 $L=9$ 有精确根式
+
+$$
+w_0=\frac{341-6\sqrt{3230}}{256}
+=\frac1{256(341+6\sqrt{3230})}>0,
+$$
+
+其中 $341^2-36\cdot3230=1$。代入（177.19）得到
+
+$$
+\boxed{
+\min_{\zeta\in\mathbb T}h_9(\zeta)
+\ge\frac34+
+\frac{15981}{192757760(341+6\sqrt{3230})}
+>\frac34+\frac{3}{38551552}
+>\frac34.
+}
+\tag{177.20}
+$$
+
+第170节将实际运行及每个有限等差子序列的共同经验律识别为
+$\nu_9=(h_9)_\#m_{\mathbb T}$。因此其支持下端满足同一严格下界。
+常值比较分布的支持下端为 $3/4$，在该端点的每个右侧邻域均有正质量。由此
+
+$$
+\boxed{\nu_9\ne\nu_{1/9}^{\mathrm{comparison}}.}
+\tag{177.21}
+$$
+
+同样的支持下端严格分离对全部合法有限 $L\ge3$ 成立。由于第170节的实际误差与相位曲线之差趋零，（177.20）还给出三十四维实例实际误差序列的下极限严格高于 $3/4$；这里比较的是该序列的长期下限，不声称每个早期终端都已达到此界。
+
+本证书给出了全部合法有限启动的全相位严格间隔，但没有计算有限 $L$ 的精确最小值或整条曲线。结论均来自共同 instrument 的方差、相位效果和有理常数估计；三十四维实例的承重界以精确根式和有理数给出，不依赖有限网格、数值拟合或未定向舍入的小数。
+
+## 追加锚（本行以下为增补区）
+
+## 178. 同一接收边界上的两种任务给出不可比较的过程
+
+前面已经证明：有限启动保留可读的原输入经典关联，同时提高完整来源恢复的最优误差。本节把这两个事实放进同一个操作次序中。结论不是把一个误差数当作全部信息量，而是给出同一来源、同一接口维数、同一接收权限下，两条无法由局部后处理互相模拟的通道。
+
+### 178.1 固定相位、共同记忆边缘与局部后处理次序
+
+固定任意整数 $L\ge3$，取第174节的相位 $\varphi=\pi/4$。写
+
+$$
+V=U_{\pi/4},\qquad
+\tau_j=\Theta_L(P_j),\qquad
+\omega_j=\mathfrak E(V\tau_jV^*),\qquad
+\omega_*=\mathfrak E(P_+).
+$$
+
+定义同输入、同输出空间的两条通道
+
+$$
+\mathcal N_L(X)=X_{00}\omega_0+X_{11}\omega_1,
+\qquad
+\mathcal S(X)=\operatorname{Tr}(X)\omega_*.
+\tag{178.1}
+$$
+
+其输出为 $M\otimes K$，$K=Q\otimes R$ 是接收端；两条通道在 $M$ 上的边缘始终为同一个 $\rho_*$。
+
+称 $\mathcal P$ 在接收端可模拟 $\mathcal Q$，若存在 CPTP 映射
+$\Lambda:K\to K$，使
+
+$$
+\mathcal Q=(\operatorname{id}_M\otimes\Lambda)\mathcal P.
+\tag{178.2}
+$$
+
+这里没有允许操作不可访问的 $M$，也没有允许重新查询原输入。
+
+### 178.2 经典标签与完整档案恢复给出相反的任务排序
+
+对两个等先验原始输入 $P_0,P_1$，只读取 $K$ 的最佳二元判别成功率为
+
+$$
+p_{\mathrm{bit}}(\mathcal P)
+=\frac12\left(1+D\bigl(\operatorname{Tr}_M\mathcal P(P_0),
+\operatorname{Tr}_M\mathcal P(P_1)\bigr)\right).
+$$
+
+第172节给 $d_L=D(\tau_0,\tau_1)>0$，在当前相位有
+
+$$
+\boxed{
+p_{\mathrm{bit}}(\mathcal N_L)
+=\frac12+\frac{d_L}{2}\sqrt{\frac{1329}{2353}}
+>\frac12
+=p_{\mathrm{bit}}(\mathcal S).
+}
+\tag{178.3}
+$$
+
+其中 $1329=(5/9)48^2+7^2$，直接来自第172节的局部距离公式。
+
+另一方面，对原输入及全部参考的来源恢复，令
+
+$$
+e(\mathcal P)=
+\min_{\mathcal D:K\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\mathcal D)\mathcal P,
+\mathcal V_*\bigr),
+\qquad
+\mathcal V_*(X)=X\otimes P_\Xi.
+$$
+
+第165、174节分别给
+
+$$
+\boxed{
+e(\mathcal S)=\frac34,
+\qquad
+e(\mathcal N_L)=h_L(i)>\frac34.
+}
+\tag{178.4}
+$$
+
+这些任务排序都在相同的接收端权限下成立。第一项要求区分一个经典输入标签；第二项同时要求恢复输入与参考的关系，以及记忆与档案之间的目标纯化关系。
+
+### 178.3 两条通道在局部模拟次序中不可比较
+
+**定理178.1（同一接收接口上的局部不可比较）。** 对每个有限整数
+$L\ge3$，既不存在将 $\mathcal S$ 局部后处理为 $\mathcal N_L$ 的通道，也不存在将 $\mathcal N_L$ 局部后处理为 $\mathcal S$ 的通道。
+
+**证明。** $\mathcal S$ 的输出与原输入无关，任何后处理仍是常值。第171节及编码的联合左逆保证 $\omega_0\ne\omega_1$，所以它不能变成 $\mathcal N_L$。这个方向即使允许处理整个 $MK$ 也仍不可能。
+
+若存在接收端 $\Lambda$ 使
+$(\operatorname{id}_M\otimes\Lambda)\mathcal N_L=\mathcal S$，则把
+$\mathcal S$ 的最优解码器接在 $\Lambda$ 后面，就是
+$\mathcal N_L$ 的合法接收端解码器。因此
+$e(\mathcal N_L)\le e(\mathcal S)$，与（178.4）矛盾。证毕。
+
+若改为允许联合处理 $MK$，则把全部输出重置为 $\omega_*$ 就可以从
+$\mathcal N_L$ 得到 $\mathcal S$。这里的差异完全由已声明的操作权限承担：同一个联合状态可以重置，不表示其不可访问部分可以由接收端重置。
+
+### 178.4 近似模拟的一个方向具有精确误差
+
+对同输出接口的两条通道，定义接收端近似模拟误差
+
+$$
+\delta_K(\mathcal P\to\mathcal Q)
+=\min_{\Lambda:K\to K\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\Lambda)\mathcal P,
+\mathcal Q\bigr).
+\tag{178.5}
+$$
+
+解码通道集紧，故最小值取得。
+
+**定理178.2（常值边界模拟真实入口的精确代价）。** 有
+
+$$
+\boxed{\delta_K(\mathcal S\to\mathcal N_L)=\frac{d_L}{2}.}
+\tag{178.6}
+$$
+
+**证明。** 任何 $\mathcal S$ 的局部后处理仍是某份常值通道
+$\mathcal C_\Sigma(X)=\operatorname{Tr}(X)\Sigma$。对原输入 $P_j$ 分别测试，三角不等式给
+
+$$
+\max_jD(\Sigma,\omega_j)
+\ge\frac12D(\omega_0,\omega_1)=\frac{d_L}{2}.
+$$
+
+最后一个等号来自逻辑旋转和有 CPTP 左逆的编码保持迹距离。
+
+反向取中点 $\tau_{\mathrm{mid}}=(\tau_0+\tau_1)/2$。
+第174节的接收端解掩码把 $\omega_*$ 变成均匀旗标与 $P_\Xi$ 的乘积。
+接收端丢弃旧旗标，在 $Q$ 上制备 $V\tau_{\mathrm{mid}}V^*$，然后施加编码所需的随机 $Z_Q,Y_R$ 掩码，即得到
+
+$$
+\omega_{\mathrm{mid}}
+=\mathfrak E(V\tau_{\mathrm{mid}}V^*)
+=\frac{\omega_0+\omega_1}{2}.
+$$
+
+整个操作只访问 $QR$，保持原来的 $M$ 与 $R$ 纯化关系。
+由二元测量—制备通道的完整参考距离公式，
+
+$$
+d_\diamond(\mathcal C_{\omega_{\mathrm{mid}}},\mathcal N_L)
+=\max_jD(\omega_{\mathrm{mid}},\omega_j)=\frac{d_L}{2}.
+$$
+
+这达到下界。证毕。
+
+### 178.5 反向模拟的任务证书与合法构造
+
+**命题178.3（真实入口局部模拟比较边界的严格代价）。** 有
+
+$$
+\boxed{
+0<h_L(i)-\frac34
+\le\delta_K(\mathcal N_L\to\mathcal S)
+\le\beta w_1,
+\qquad\beta=\frac{288}{2353}.
+}
+\tag{178.7}
+$$
+
+**证明。** 对任意接收端后处理 $\Lambda$，将 $\mathcal S$ 的最优来源解码器接在其后。三角不等式及通道收缩给
+
+$$
+e(\mathcal N_L)
+\le d_\diamond\bigl((\operatorname{id}_M\otimes\Lambda)\mathcal N_L,
+\mathcal S\bigr)+e(\mathcal S).
+$$
+
+取 $\Lambda$ 的最小值并用（178.4），得到严格正的下界。
+
+对上界，先执行第174节的局部解掩码并丢弃旗标。原输入 $j$ 的剩余 $MR$ 状态为
+
+$$
+(1-\beta w_j)P_\Xi+\beta w_jP_\psi.
+$$
+
+再在 $Q$ 上制备 $P_+$，施加随机 $Z_Q,Y_R$ 掩码。$P_\Xi$ 分量产生目标 $\omega_*$；$P_\psi$ 分量产生
+
+$$
+\omega_{\mathrm{swap}}
+=\frac12(P_+\otimes P_\psi+P_-\otimes P_\Xi).
+$$
+
+它与 $\omega_*=\frac12(P_+\otimes P_\Xi+P_-\otimes P_\psi)$ 的支撑正交，因此二者迹距离为一。该共同后处理在输入 $j$ 上的距离为 $\beta w_j$。两条比较通道都先测原输入计算基，故完整半 diamond 距离是两个分支距离的最大值，即
+$\beta w_1$，其中 $w_1>w_0$ 已由第171节证明。证毕。
+
+这两份近似模拟代价都是完整通道量，保留任意原输入参考；它们不是只比较某份固定态的相似度。
+
+本节将边界的任务依赖性落实为两份具体操作任务和一个受权限约束的模拟次序。相同的记忆边缘、相同的接口维数，以及某个经典任务上的严格优势，都没有抹去另一个任务所要求的关系。局部不可比较性与联合可丢弃性可同时成立。
+
+## 追加锚（本行以下为增补区）
