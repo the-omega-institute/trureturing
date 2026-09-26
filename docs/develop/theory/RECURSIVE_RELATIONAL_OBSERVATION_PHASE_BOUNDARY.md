@@ -67474,3 +67474,460 @@ $$
 第 221 节局部 reset 族由输出端口证书达到最优删除值。其简单谱及隐函数定理仍承担解析最优分支、局部驻点唯一性和四阶系数；全局距离公式并不提供这些解析精细结论。定理 223.4 的适用范围也仍限定为两个 qubit 端口、结果秩 $(1,2)$、两个经典标签和总秩二预算。左右 Gram 都为二阶、简单最优反证中的实三变量核、以及两标签预算对候选的穷尽分类分别承担证明步骤；增加端口维数、Kraus 数量、标签数量或改变预算，需要另外验证这些步骤。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 224. 三维输出的严格证书间隙与矩形 Kraus 边界
+
+**定义 224.1（矩形接口的非零尾谱检验）。** 给定 $A,B:\mathbb C^2\to\mathbb C^3$，置
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\delta_{\rm rot}
+=\min_{|c_0|^2+|c_1|^2=1}\|c_0A+c_1B\|_\infty^2.
+\tag{224.RK.1}
+$$
+输出事件仍取单位 $r\in\mathbb C^3$：
+$$
+\gamma_{\rm out}
+=\max_{\|r\|=1}\lambda_{\min}(\Gamma^*(P_r)).
+\tag{224.RK.2}
+$$
+输入事件取单位 $v\in\mathbb C^2$，并定义
+$$
+\boxed{
+\gamma_{\rm in,tail}
+=\max_{\|v\|=1}\lambda_2(\Gamma(P_v)),
+}
+\tag{224.RK.3}
+$$
+其中 $\lambda_1\ge\lambda_2\ge\lambda_3$ 按降序排列。因为 $\Gamma(P_v)$ 的秩至多二，$\lambda_3=0$，所以 $\lambda_2$ 才是去掉一个输出纯方向后的最小遗漏量。没有把恒零的三维最小本征值当作反例。
+
+固定 $r$ 时，$A^\dagger r,B^\dagger r$ 形成一个 $2\times2$ 矩阵；固定 $v$ 时，$Av,Bv$ 形成一个 $3\times2$ 矩阵。后者的右 Gram 矩阵恰有两个本征值 $\lambda_1,\lambda_2$。因此
+$$
+\gamma_{\rm out}
+=\max_r\min_c\|(c_0A+c_1B)^\dagger r\|^2,
+$$
+$$
+\gamma_{\rm in,tail}
+=\max_v\min_c\|(c_0A+c_1B)v\|^2,
+$$
+并且始终有
+$$
+\boxed{\max(\gamma_{\rm out},\gamma_{\rm in,tail})\le\delta_{\rm rot}.}
+\tag{224.RK.4}
+$$
+以下在非零尾谱的定义下检验第 223 节反向不等式的维数边界。
+
+**定理 224.2（三个精确优化值与合法共同来源）。** 在输出基 $e_0,e_1,e_2$ 与输入基 $f_0,f_1$ 中，取
+$$
+M=e_0f_0^\dagger
+=\begin{pmatrix}1&0\\0&0\\0&0\end{pmatrix},
+$$
+$$
+N=\frac1{\sqrt2}
+(e_1f_0^\dagger+e_0f_1^\dagger+e_2f_1^\dagger)
+=\frac1{\sqrt2}
+\begin{pmatrix}0&1\\1&0\\0&1\end{pmatrix}.
+\tag{224.RK.5}
+$$
+令此处 $\Gamma(X)=MXM^\dagger+NXN^\dagger$。
+
+由这两个矩阵定义的三个优化满足
+
+$$
+\boxed{
+\delta_{\rm rot}=1,\qquad
+\gamma_{\rm out}=\frac{2+\sqrt2}{4},\qquad
+\gamma_{\rm in,tail}=\frac12.
+}
+$$
+
+因此两端口证书与删除成本之间有严格差距 $(2-\sqrt2)/4$。该差距可以保持两个 Kraus 矩阵都满输入秩，并可通过任意 $0<\kappa<1/2$ 的共同缩放补成严格记录秩 $(1,2)$ 的 CPTP 通道，使 $q_0>\delta_{\rm rot}$。
+
+**证明。** 先计算删除成本。 对任意 $|u|^2+|w|^2=1$，矩阵 $uM+wN$ 的输入 Gram 为
+$$
+\begin{pmatrix}
+1-|w|^2/2&\overline u w/\sqrt2\\
+u\overline w/\sqrt2&|w|^2
+\end{pmatrix}.
+$$
+它的迹为 $1+|w|^2/2$，行列式为 $|w|^2/2$，故本征值正好是
+$$
+1,\qquad |w|^2/2.
+$$
+于是
+$$
+\boxed{\delta_{\rm rot}=1.}
+\tag{224.RK.6}
+$$
+每个旋转方向都达到这个值，而且每个组合的最大奇异值都简单，输入 Gram 的谱隙至少为 $1/2$。
+
+再计算输入端口尾量。 写 $v=xf_0+yf_1$，$|x|^2+|y|^2=1$。两列 $Mv,Nv$ 的右 Gram 迹为
+$$
+1+|x|^2/2,
+$$
+行列式为 $|x|^2/2$。所以 $\Gamma(P_v)$ 的三个本征值为
+$$
+1,\qquad |x|^2/2,\qquad0.
+$$
+故
+$$
+\boxed{\gamma_{\rm in,tail}=1/2,}
+\tag{224.RK.7}
+$$
+由 $v=f_0$ 达到。
+
+最后计算输出端口。 写 $r=xe_0+ye_1+ze_2$，则
+$$
+\Gamma^*(P_r)=
+\begin{pmatrix}
+|x|^2+|y|^2/2&y\overline{(x+z)}/2\\
+\overline y(x+z)/2&|x+z|^2/2
+\end{pmatrix}.
+\tag{224.RK.8}
+$$
+置
+$$
+g=\frac{1+1/\sqrt2}{2}=\frac{2+\sqrt2}{4}.
+$$
+由二维输入矩阵的最小本征值不超过平均值，
+$$
+\lambda_{\min}(\Gamma^*(P_r))
+\le\frac12\operatorname{Tr}(\Gamma^*(P_r))
+=\frac12\langle r,\Gamma(I_2)r\rangle
+\le\frac12\lambda_{\max}(\Gamma(I_2)).
+$$
+而
+$$
+\Gamma(I_2)=\frac12
+\begin{pmatrix}3&0&1\\0&1&0\\1&0&1\end{pmatrix},
+\qquad
+\lambda_{\max}(\Gamma(I_2))=1+1/\sqrt2.
+\tag{224.RK.9}
+$$
+所以所有输出方向的最小本征值至多为 $g$。
+
+取
+$$
+r_*=\cos(\pi/8)e_0+\sin(\pi/8)e_2.
+$$
+此时（224.RK.8）的非对角元为零、两个对角元均为 $g$，即
+$$
+\Gamma^*(P_{r_*})=gI_2.
+$$
+于是
+$$
+\boxed{
+\gamma_{\rm out}=\frac{2+\sqrt2}{4}.
+}
+\tag{224.RK.10}
+$$
+结合三式，得到精确严格缺口
+$$
+\boxed{
+\delta_{\rm rot}
+-\max(\gamma_{\rm out},\gamma_{\rm in,tail})
+=\frac{2-\sqrt2}{4}>0.
+}
+\tag{224.RK.11}
+$$
+
+虽然（224.RK.5）的 $M$ 秩一，这并非只能使用秩一 Kraus 的例子。对它们作等权酉旋转，两个新 Kraus 的系数均有 $|w|^2=1/2$，各自输入 Gram 本征值为 $1,1/4$，所以两者都满输入秩，而 $\Gamma$ 和三个优化值完全不变。
+
+任取
+$$
+0<\kappa<1/2.
+$$
+令结果1的 Kraus 为
+$$
+A=\sqrt\kappa\,M,\qquad B=\sqrt\kappa\,N.
+$$
+由于
+$$
+M^\dagger M+N^\dagger N
+=\operatorname{diag}(3/2,1),
+$$
+可取结果0的单 Kraus
+$$
+K_0=
+\begin{pmatrix}
+\sqrt{1-3\kappa/2}&0\\
+0&\sqrt{1-\kappa}\\
+0&0
+\end{pmatrix}.
+\tag{224.RK.12}
+$$
+这严格满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2.
+$$
+两个结果的 Choi 秩为 $(1,2)$；$A,B$ HS 正交且两个正 Choi 权重为 $\kappa,3\kappa/2$。
+
+对完整记录通道，
+$$
+\delta_{\rm rot}=\kappa,\qquad
+\gamma_{\rm out}=\kappa\frac{2+\sqrt2}{4},\qquad
+\gamma_{\rm in,tail}=\frac\kappa2,
+$$
+$$
+q_0=\|K_0^\dagger K_0\|_\infty=1-\kappa>\kappa.
+\tag{224.RK.13}
+$$
+因此严格缺口位于合法共同 TP 通道内，且 $q_0$ 大于删除成本，缺失结果零的竞争者有更大的标签事件下界，不能解释这两个证书值与删除成本之间的差距。证毕。
+
+**定理 224.3（满输入秩与唯一最优系数射线下的严格间隙）。** 下列矩阵的最优删除值为一，最优系数射线唯一；两端口优化均严格小于一。两矩阵均满输入秩，且可以补成保持该严格差距的合法 CPTP 记录通道：
+$$
+M=
+\begin{pmatrix}
+1&0\\
+0&19/20\\
+0&0
+\end{pmatrix},
+\qquad
+N=
+\begin{pmatrix}
+0&1/10\\
+2/5&0\\
+4/5&2
+\end{pmatrix}.
+\tag{224.RK.14}
+$$
+**证明。** 两者均为满输入秩。记
+$$
+a=1/10,\quad b=2/5,\quad d=4/5,\quad
+t=19/20,\quad e=2.
+$$
+对 $z=\rho e^{i\theta}$、$\rho>0$，置
+$$
+D(z)=(1+|z|^2)I_2-(M+zN)^\dagger(M+zN).
+$$
+直接计算给
+$$
+D_{00}=(1-b^2-d^2)\rho^2=\rho^2/5.
+$$
+令
+$$
+K=(1-b^2-d^2)(1-t^2)=39/2000,
+$$
+$$
+Q=(1-b^2-d^2)(1-a^2-e^2)-d^2e^2=-1581/500.
+$$
+则
+$$
+\frac{\det D(z)}{\rho^2}
+=
+K-(a+bt)^2\cos^2\theta-(a-bt)^2\sin^2\theta
+-2\rho de(a+bt)\cos\theta+Q\rho^2.
+\tag{224.RK.15}
+$$
+其中
+$$
+a+bt=12/25,\qquad a-bt=-7/25.
+$$
+完成 $\rho$ 的平方，得到全有理数恒等式
+$$
+\boxed{
+\frac{\det D(z)}{\rho^2}
+=
+\frac{39}{2000}
+-\frac{14448}{329375}\cos^2\theta
+-\frac{49}{625}\sin^2\theta
+-\frac{1581}{500}
+\left(\rho+\frac{128}{527}\cos\theta\right)^2.
+}
+\tag{224.RK.16}
+$$
+两个角向系数均严格大于 $K$；较小者与 $K$ 的差为
+$$
+\frac{14448}{329375}-\frac{39}{2000}
+=\frac{128403}{5270000}>0.
+$$
+因而对每个 $z\ne0$，
+$$
+\frac{\det D(z)}{\rho^2}
+\le-\frac{128403}{5270000}<0.
+$$
+$D$ 有负本征值，故
+$$
+\frac{\|M+zN\|_\infty^2}{1+|z|^2}>1.
+$$
+纯 $N$ 方向也严格大于一，因为其第二列范数平方为 $401/100>1$。而 $\|M\|_\infty^2=1$。因此
+$$
+\boxed{\delta_{\rm rot}=1,}
+\tag{224.RK.17}
+$$
+唯一最优系数为 $M$ 的方向。
+
+其主左右奇异方向分别为 $e_0,f_0$，但
+$$
+\|N^\dagger e_0\|^2=1/100<1,\qquad
+\|Nf_0\|^2=4/5<1.
+\tag{224.RK.18}
+$$
+若 $\gamma_{\rm out}=1$，紧性给达到输出 $r$。由弱极小极大的等号链，$r$ 必须是最优 $M$ 的主左奇异方向；在 $r=e_0$ 上，两系数 Gram 的小根却只有 $1/100$，矛盾。同理，若 $\gamma_{\rm in,tail}=1$，达到输入必须为 $f_0$，而相应小根为 $4/5$，矛盾。因此
+$$
+\boxed{\max(\gamma_{\rm out},\gamma_{\rm in,tail})<1=\delta_{\rm rot}.}
+\tag{224.RK.19}
+$$
+这个证明没有声称 $1/100$ 或 $4/5$ 是两个优化的全局值；它们仅在唯一可能的等号方向上排除等号。
+
+（224.RK.14）的共同输入 Gram 为
+$$
+G=M^\dagger M+N^\dagger N
+=
+\begin{pmatrix}
+9/5&8/5\\
+8/5&393/80
+\end{pmatrix},
+\qquad
+\operatorname{Tr}G=537/80<8.
+$$
+令 $E:\mathbb C^2\to\mathbb C^3$ 为前两个坐标的等距嵌入，取
+$$
+A=M/\sqrt8,\qquad B=N/\sqrt8,\qquad
+K_0=E(I_2-G/8)^{1/2}.
+\tag{224.RK.20}
+$$
+因为 $G\succeq0$ 且 $\|G\|_\infty\le\operatorname{Tr}G<8$，根号严格正定，共同 TP 成立，结果秩仍为 $(1,2)$。三个 $3\times2$ Kraus 都满输入秩。原 $M,N$ 还满足 $\operatorname{Tr}(M^\dagger N)=0$，且 HS 范数平方分别为 $761/400$ 与 $481/100$，故缩放后的结果一 Choi 两正根互异。
+
+此时
+$$
+\delta_{\rm rot}=1/8,\qquad
+\max(\gamma_{\rm out},\gamma_{\rm in,tail})<1/8.
+$$
+而
+$$
+q_0=1-\lambda_{\min}(G)/8
+\ge1-\frac{9/5}{8}
+=\frac{31}{40}>\frac18.
+\tag{224.RK.21}
+$$
+同样排除了缺标签分支干扰。矩阵对的三个极值连续，故此严格证书差距还保持于该合法通道的充分小扰动；它不只发生在平坦最优族上。这里的扰动限制在共同 TP 的实际通道族内：因 $I_2-G/8$ 严格正定，小幅改变 $M,N$ 后仍可用同一平方根构造 $K_0$。证毕。
+
+**定理 224.4（矩形记录通道的完整预算夹界）。** 考虑任意 qubit 输入、三维量子输出、两标签、结果秩 $(1,2)$ 的 CPTP 通道。候选总 Choi 秩至多二。
+
+令 $d_2$ 为到同输入、同三维量子输出、同两个经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失。令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+\min\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\}
+\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+$$
+
+对定理 224.2 的共同 TP 族，特别有
+
+$$
+\kappa\frac{2+\sqrt2}{4}\le d_2\le\kappa.
+$$
+
+**证明。** 若候选结果1 Choi 秩至多一，记其 Kraus 为 $C$。输出端口下界与二维输出时相同：选达到 $\gamma_{\rm out}$ 的 $r$，再选与向量 $C^\dagger r$ 正交的单位输入 $v$，即满足
+$$
+\langle C^\dagger r,v\rangle=0
+$$
+的单位输入，目标事件概率至少为 $\gamma_{\rm out}$、候选为零。这里使用的是向量 $C^\dagger r$ 的正交补；若该向量为零，任取单位 $v$。
+
+输入端口取达到 $\gamma_{\rm in,tail}$ 的 $v$，令 $w=Cv$。若 $w\ne0$，用输出效果 $I_3-P_{w/\|w\|}$，候选概率为零，而目标概率至少为
+$$
+\operatorname{Tr}\Gamma(P_v)-\lambda_1(\Gamma(P_v))
+=\lambda_2(\Gamma(P_v)).
+$$
+若 $w=0$，整个结果1都可作为零概率事件，下界仍成立。实际上也可以取一个纯输出投影：当 $\lambda_2>0$，$\operatorname{supp}\Gamma(P_v)$ 是二维子空间，它与 $w^\perp$ 至少一维；该交集内单位 $r$ 的目标概率至少为 $\lambda_2$。所以修正后的尾量不是借助三维零谱制造出来的量，也不需要外部参考。
+
+若候选结果1 Choi 秩为二，结果0必缺失，标签0测试给下界 $q_0$。因此
+$$
+d_2\ge
+\min\left\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\right\}.
+\tag{224.RK.22}
+$$
+另一方面，输入维数仍为二、$K_0\ne0$，谱迹界继续给 $\delta_{\rm rot}<1$。第 219 节的全 $0\le\delta<1$ 右 Gram 修复可用于最优旋转删除；当 $q_0<\delta_{\rm rot}$，则 $q_0<1$，也可删除整个结果0并修复。故
+$$
+\boxed{
+\min\left\{\max(\gamma_{\rm out},\gamma_{\rm in,tail}),q_0\right\}
+\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+\tag{224.RK.23}
+$$
+
+对（224.RK.12）的精确族，该区间成为
+$$
+\boxed{
+\kappa\frac{2+\sqrt2}{4}\le d_2\le\kappa.
+}
+\tag{224.RK.24}
+$$
+此上下界完成所述夹界证明。该夹界本身没有确定区间内的真实距离；下条另结算规范旋转修复类的实际误差。证毕。
+
+
+**定理 224.5（规范旋转删除候选的实际误差）。** 对定理 224.2 的共同 TP 通道，任取未缩放矩阵 $(M,N)$ 的一份酉旋转 $(D,C)$，其中 $D$ 为删除方向、$C$ 为保留方向。令
+
+$$
+H=(I_2-\kappa D^\dagger D)^{-1/2},
+$$
+
+并定义规范修复候选
+
+$$
+\mathcal S_{D,C}(X)
+=P_0^Q\otimes K_0HXHK_0^\dagger
++P_1^Q\otimes\kappa CHXHC^\dagger.
+$$
+
+则对每份这样的旋转，均有
+
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S_{D,C}\|_\diamond=\kappa.}
+$$
+
+另对定理 224.3 的有理数通道，删去唯一最优方向 $M/\sqrt8$ 并按同一规则修复的候选，其实际完整半 diamond 误差恰为 $1/8$。这些结论不对任意预算候选的最小误差作断言。
+
+**证明。** 先处理定理 224.2 的全部旋转。已证任意归一化组合的最大奇异值平方恒为一，且输入 Gram 的大根简单。因此 $D$ 有单位主右奇异向量 $v$，满足
+
+$$
+D^\dagger Dv=v,\qquad r=Dv,\qquad\|r\|=1.
+$$
+
+对任意复数 $z$，$(D+zC)/\sqrt{1+|z|^2}$ 仍是原两个 Kraus 的归一化组合，故
+
+$$
+\frac{\|D+zC\|_\infty^2}{1+|z|^2}=1.
+$$
+
+在 $z=0$ 沿两个实方向求导，简单主奇异值的微分公式给出
+
+$$
+\operatorname{Re}\langle Dv,Cv\rangle=0,
+\qquad
+\operatorname{Im}\langle Dv,Cv\rangle=0.
+$$
+
+所以 $Cv\perp r$。又因
+
+$$
+Hv=(1-\kappa)^{-1/2}v,
+$$
+
+修复后结果一的输出向量 $\sqrt\kappa CHv$ 仍与 $r$ 正交。固定输入 $P_v$，对合法事件 $P_1^Q\otimes P_r$，候选概率为零，而目标概率为
+
+$$
+\kappa|\langle r,Dv\rangle|^2
++\kappa|\langle r,Cv\rangle|^2=\kappa.
+$$
+
+因此该候选的完整半 diamond 误差至少为 $\kappa$。物理删除效应为 $\kappa D^\dagger D$，其范数恰为 $\kappa<1$，第 219 节修复界给反向不等式，得到等号。输入与事件都可随旋转候选变化；没有要求一份固定输入或固定事件同时区分全部候选。
+
+对有理数通道，$M^\dagger Mf_0=f_0$，且
+
+$$
+Mf_0=e_0,\qquad
+Nf_0=\frac25e_1+\frac45e_2\perp e_0.
+$$
+
+修复矩阵 $(I_2-M^\dagger M/8)^{-1/2}$ 保持 $f_0$ 的方向。因此输入 $P_{f_0}$ 与事件 $P_1^Q\otimes P_{e_0}$ 在目标通道的概率为 $1/8$、在该修复候选的概率为零。与删除范数 $1/8$ 的完整上界匹配，即得第二项。证毕。
+
+
+第 223 节的简单谱证明将互补矩阵写成二阶矩阵，并由两侧权重不足构造下降方向。定理 224.2 的第三输出行保住所有归一化旋转的最大奇异值一，同时两种端口证书仍不足；定理 224.3 还使最优系数射线唯一。因此输出三维已足以使该完备性失败，不需要用恒零最小根、秩一 Kraus 表示、重主奇异值或平坦最优族来解释。
+
+这两份具体通道的精确 $d_2$，以及一般三维输出下最近通道是否仍能由某种旋转删除或整标签删除取得，并未由证书间隙决定。更一般的候选相关输入与事件、同时使用两标签的效果以及辅助参考，仍须在同一实际通道上分别检验；这里没有推出任一种扩展必需或足够。
+
+## 追加锚（本行以下为增补区）
