@@ -122,11 +122,12 @@ loss does not ensure positivity for every such function. This motivates
 scrutiny of test provenance, without establishing a general law of machine
 learning performance.
 
-Applying these structures to AI research selection is a methodological transfer
-that needs practical evaluation. On questions not used to construct an answer,
-does the AI reduce a stated gap, discover a reusable connection, or recognize
-and stop an unproductive route? Those capabilities require corresponding
-experiments; formalizing a method does not establish them by itself.
+Evaluate AI research selection on questions withheld from method design.
+Compare with a stated baseline under matched information and resource budgets.
+Set success and stopping criteria beforehand; assess gap reduction, reusable
+connections and justified route changes. Report unsuccessful and unresolved
+cases. These experiments evaluate the methodological transfer; formalizing
+the structures alone does not establish these capabilities.
 
 ## Studying time and space through holographic geometry
 
@@ -202,7 +203,7 @@ Three questions guide the next work:
 
 | Direction | Question to advance | Evidence of progress |
 | --- | --- | --- |
-| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments on tasks specified in advance, with comparison conditions and reproducible results; reusable proofs or counterexamples where mathematical claims are made. |
+| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments with tasks and comparisons specified in advance, reproducible results, and reusable proofs or counterexamples for mathematical claims. |
 | Geometry of logical truth | Which maps connect proof dependencies, observation distinctions and recovery while preserving the relations needed by a target? | Explicit definitions and maps, proofs of the required preservation properties, and counterexamples locating missing conditions. |
 | Relational spacetime | Which shared sources and historical relations support reconstruction and legal composition at a given resolution and cost? | Reconstruction, gluing, error and resource bounds in stated models; supported correspondences and clearly identified open bridges to physics. |
 
