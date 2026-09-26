@@ -982,3 +982,2144 @@ $$
 证明。定理 22.3 的同一个高概率事件给出 $D(\widehat\rho,\rho)\le\zeta p_*<p_*$。在这一事件上，定理 25.2 对每个分支同时成立，得到所述结论，无需再对分支数作并集界。预算是所选恢复方法的充分上界，不声称样本复杂度最优。分支可表示有限历史，但未校准仪器、模型误差或缺失环境记忆不由该统计界控制。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 把最终点击条件写入一套新的仪器
+
+**约定 26.1（来源、支撑与输出类型）。** 沿用第 18—19 节的固定有限维仪器：未点击分支为 $\mathcal N$，点击分支为 $\mathcal C_x$，$\mathcal A=\mathcal N^*$，$B_x=\mathcal C_x^*(I)$。置
+
+$$
+F=\lim_{n\to\infty}\mathcal A^n(I),\qquad
+R=I-F\ne0,\qquad
+\mathcal D=\ker R,\qquad P=P_{\mathcal D^\perp},
+\qquad\mathcal H_P=P\mathcal H.
+$$
+
+记 $G=R^{1/2}$；$G^{-1}$ 始终指 $\mathcal H_P$ 上的逆，嵌入原空间时在 $\mathcal D$ 上补零。符号 $I_P$ 表示 $\mathcal H_P$ 的恒等。对 $r_\rho=\operatorname{Tr}(\rho R)>0$ 定义
+
+$$
+\mathcal S_R(X)=GXG,\qquad
+\tau_R(\rho)=\frac{\mathcal S_R(\rho)}{r_\rho}.
+$$
+
+新未点击分支的输入、输出都是 $\mathcal H_P$，新点击分支的输入为 $\mathcal H_P$、输出仍为原来的 $\mathcal H$。将不同结果放入正交标志直和，就得到通常意义下具有共同输出空间的仪器。这里保留点击后的量子系统，不只保存点击概率。
+
+**引理 26.2（暗空间使支撑限制与实际分支相容）。** 对任意 Kraus 表示 $\mathcal N(X)=\sum_\alpha Q_\alpha XQ_\alpha^\dagger$、$\mathcal C_x(X)=\sum_\beta L_{x\beta}XL_{x\beta}^\dagger$，有
+
+$$
+R=\mathcal A(R)+\sum_xB_x,
+\qquad P Q_\alpha(I-P)=0,
+\qquad L_{x\beta}(I-P)=0.
+$$
+
+若 $H=PHP$，则 $\mathcal A(H)=P\mathcal A(H)P$；对任意终端 Hermitian 测试 $Z$，$\mathcal C_x^*(Z)$ 也支撑在 $\mathcal H_P$。
+
+证明。由 $\mathcal A(F)=F$ 与 $\mathcal A(I)+\sum_xB_x=I$ 得到第一式。定理 18.5 说明每个 $Q_\alpha$ 保持 $\mathcal D$，每个 $L_{x\beta}$ 在 $\mathcal D$ 上为零，得到其余两个式子。由 $PQ_\alpha=PQ_\alpha P$ 与 $H=PHP$，有 $\mathcal A(H)=\sum_\alpha(PQ_\alpha P)^\dagger H(PQ_\alpha P)$，故其两侧均支撑于 $P$；这一步不要求 $H$ 自伴。点击拉回的结论由 $L_{x\beta}=L_{x\beta}P$ 同样得到。$\square$
+
+**定理 26.3（最终点击条件的量子 Doob 表示）。** 对 $X\in\mathcal L(\mathcal H_P)$ 定义
+
+$$
+\widetilde{\mathcal N}(X)
+=G\mathcal N(G^{-1}XG^{-1})G,
+\qquad
+\widetilde{\mathcal C}_x(X)
+=\mathcal C_x(G^{-1}XG^{-1}).
+$$
+
+这些分支完全正，且满足仪器完备性
+
+$$
+\widetilde{\mathcal N}^{*}(I_P)
++\sum_x\widetilde{\mathcal C}_x^{*}(I)=I_P.
+$$
+
+对原空间全部算子，有
+
+$$
+\widetilde{\mathcal N}\mathcal S_R=\mathcal S_R\mathcal N,
+\qquad
+\widetilde{\mathcal C}_x\mathcal S_R=\mathcal C_x.
+$$
+
+因而对每个 $n\ge1$ 和 $r_\rho>0$，
+
+$$
+\boxed{
+\widetilde{\mathcal C}_x\widetilde{\mathcal N}^{\,n-1}
+\bigl(\tau_R(\rho)\bigr)
+=\frac{\mathcal C_x\mathcal N^{n-1}(\rho)}{r_\rho}.
+}
+$$
+
+所以新过程复现原过程在最终点击条件下的首次点击时间、端口及各非零分支的归一化终端量子态。
+
+证明。新 Kraus 算子分别是 $GQ_\alpha G^{-1}$ 和 $L_{x\beta}G^{-1}$，完全正性直接成立。拉回恒等后相加，得到
+
+$$
+G^{-1}\left(\mathcal A(R)+\sum_xB_x\right)G^{-1}
+=G^{-1}RG^{-1}=I_P.
+$$
+
+引理 26.2 给出 $GQ_\alpha P=GQ_\alpha$ 与 $L_{x\beta}P=L_{x\beta}$，故
+
+$$
+G\mathcal N(PXP)G=G\mathcal N(X)G,
+\qquad \mathcal C_x(PXP)=\mathcal C_x(X).
+$$
+
+再用 $G^{-1}G=GG^{-1}=P$，即得两个交织恒等式。逐次代入并除以 $r_\rho$ 得到方框公式。其右端迹是原分支概率除以最终点击概率；终端分支再归一化时该公共因子抵消。$\square$
+
+**定理 26.4（条件尾项变为普通生存效果）。** 新过程从任意 $\mathcal H_P$ 上的初态出发最终点击概率为一，且
+
+$$
+\widetilde S_n
+=(\widetilde{\mathcal N}^{*})^n(I_P)
+=G^{-1}\mathcal A^n(R)G^{-1}\longrightarrow0.
+$$
+
+对定理 19.2 的 $M,q,T$，有
+
+$$
+\widetilde S_n\le q^{\lfloor n/M\rfloor}I_P,
+\qquad
+\widetilde T:=\sum_{n\ge0}\widetilde S_n=G^{-1}TG^{-1},
+\qquad
+\operatorname{Tr}\bigl(\tau_R(\rho)\widetilde T\bigr)
+=\frac{\operatorname{Tr}(\rho T)}{r_\rho}.
+$$
+
+证明。新未点击拉回为
+
+$$
+\widetilde{\mathcal N}^{*}(H)=G^{-1}\mathcal A(GHG)G^{-1}.
+$$
+
+从 $GI_PG=R$ 开始迭代；引理 26.2 保证中间算子都在 $P$ 支撑上，故相邻的 $G,G^{-1}$ 可消去，得到生存效果公式。定理 19.2 的剩余尾项趋零且被 $q^{\lfloor n/M\rfloor}R$ 控制，共轭后得到前两项。范数收敛允许逐项共轭求和。$T=PTP$，迹的循环性给出最后一式。$\square$
+
+**说明 26.5（既有工具与本处适用范围）。** 通过正算子平方根改变量子轨迹动力学是既有量子 Doob 变换机制。Carollo、Garrahan、Lesanovsky 与 Pérez-Espigares 的 [arXiv:1711.10951v2](https://arxiv.org/abs/1711.10951v2)，特别是式 (6)—(11)，处理计数偏置的开放系统动力学，包含长时及有限时间构造；Esteve 等的 [arXiv:2508.04622v1](https://arxiv.org/abs/2508.04622v1) 讨论输运优化与受限控制。本节直接证明离散首次吸收条件下、允许 $R$ 奇异时的支撑版本，不将上述文献的条件或结论逐字移植。仪器的数学存在性也不证明当前装置拥有实施这些新分支所需的控制。
+
+## 27. 条件坐标中的动态充分边界
+
+**定义 27.1（按最终点击权重归一的边界）。** 设 $\mathcal W\subseteq\operatorname{Herm}(\mathcal H)$ 为实线性空间，其中每个元素都支撑在 $P$ 上，且 $R\in\mathcal W$。令
+
+$$
+\Theta_R(H)=G^{-1}HG^{-1},\qquad
+\widetilde{\mathcal W}=\Theta_R(\mathcal W),
+\qquad
+b_{\mathcal W}(\rho)
+=\left(\frac{\operatorname{Tr}(\rho H)}{r_\rho}\right)_{H\in\mathcal W}.
+$$
+
+有限基即可给出这份边界的全部坐标。它描述已条件于最终点击的任务；若还要恢复原过程的无条件点击权重，须另保留 $r_\rho$。
+
+**定理 27.2（条件边界的拉回闭合被精确运输）。** 对任意 $H\in\mathcal W$ 及 $r_\rho>0$，
+
+$$
+\operatorname{Tr}\bigl[\tau_R(\rho)\Theta_R(H)\bigr]
+=\frac{\operatorname{Tr}(\rho H)}{r_\rho},
+\qquad
+\widetilde{\mathcal N}^{*}\Theta_R(H)=\Theta_R\mathcal A(H).
+$$
+
+因此
+
+$$
+\mathcal A(\mathcal W)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal N}^{*}(\widetilde{\mathcal W})
+\subseteq\widetilde{\mathcal W}.
+$$
+
+指定点击后测试族 $\mathcal Z_x$ 时，还有
+
+$$
+\mathcal C_x^*(\mathcal Z_x)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal C}_x^*(\mathcal Z_x)
+\subseteq\widetilde{\mathcal W}.
+$$
+
+若这些包含关系成立，且每个 $\mathcal Z_x$ 包含终端恒等，则 $b_{\mathcal W}$ 对新过程的首次点击、未点击条件续接及所指定终端测试动态充分。这里的闭合指全部 $\mathcal H_P$ 状态上的同一线性表示；不据此断言受限可达来源必须具有全空间闭合。
+
+证明。第一式用 $H=PHP$ 与迹循环性。第二式由定理 26.4 的拉回公式和 $G\Theta_R(H)G=H$ 得到。$\Theta_R$ 是 $P$ 支撑 Hermitian 空间到 $\operatorname{Herm}(\mathcal H_P)$ 的线性双射，故推出第一个等价。新点击拉回满足
+
+$$
+\widetilde{\mathcal C}_x^*(Z)=\Theta_R\bigl(\mathcal C_x^*(Z)\bigr),
+$$
+
+得到第二个等价。$\Theta_R(R)=I_P$，所以新边界含恒等；对结果概率与每个后继坐标反复拉回，得到第 20 节的动态充分性。正概率后继才归一化，零概率路径不要求条件态。该证明同时说明：$\tau_R(\rho)$ 要配合变换后的仪器与测试使用，不能把原系统上任意中间测量的算子保持原样后仍声称相同条件实验。$\square$
+
+**命题 27.3（条件过程仍不能确定原来的点击权重）。** 若 $\mathcal D\ne\{0\}$，取任意暗态 $\omega_D$ 及 $\mathcal H_P$ 上的状态 $\sigma$。对 $0<t\le1$ 令 $\rho_t=(1-t)\omega_D+t\sigma$，则
+
+$$
+\tau_R(\rho_t)=\tau_R(\sigma),
+\qquad r_{\rho_t}=t\operatorname{Tr}(\sigma R).
+$$
+
+全部条件首次事件及终端态相同，而无条件最终点击概率可以不同。
+
+证明。$G\omega_DG=0$，故分子和分母同时乘 $t$。定理 26.3 随即给出条件过程相同；最后的概率公式随 $t$ 严格改变。$\square$
+
+## 28. 条件状态的精确制备成本
+
+**定义 28.1（单份未知输入的成功分支合同）。** 本节来源类是 $\mathcal H_P$ 上的全部密度矩阵。实验者知道 $R$，但不知本次输入 $\rho$；每次只取得一份输入，不允许先取得其经典完整描述或额外副本。允许任意固定完全正迹不增成功操作 $\mathcal E$，要求对全部来源都满足
+
+$$
+p_{\mathcal E}(\rho):=\operatorname{Tr}\mathcal E(\rho)>0,
+\qquad
+\frac{\mathcal E(\rho)}{p_{\mathcal E}(\rho)}=\tau_R(\rho).
+$$
+
+辅助系统及未读结果可包含在 CP 操作实现中，成功时交出的量子系统为 $\mathcal H_P$。这是一份统一量子操作的合同，不是每个已知输入可另选制备程序。
+
+**定理 28.2（精确成功操作的刚性）。** 定义 28.1 下，存在与输入无关的常数 $c>0$，使
+
+$$
+\boxed{\mathcal E(X)=cGXG.}
+$$
+
+反之，该映射满足所需条件态；它迹不增当且仅当 $cR\le I_P$。
+
+证明。写 $\mathcal E(X)=\sum_jK_jXK_j^\dagger$。对每个非零向量 $\psi\in\mathcal H_P$，输出在归一化后为 $G\psi$ 对应的纯态。正半定秩一和的每个向量 $K_j\psi$ 因而都平行于 $G\psi$，包括零向量的情形。于是 $G^{-1}K_j$ 保持每一条向量射线。在线性空间维数至少二时，取基向量及每对基向量之和，得到全部比例系数相同，因此 $G^{-1}K_j=a_jI_P$；一维时这一结论直接成立。令 $c=\sum_j|a_j|^2$，即得方框式；处处正的成功概率迫使 $c>0$。其效果为 $cR$，所以迹不增条件正是 $cR\le I_P$。$\square$
+
+**定理 28.3（最优最坏成功率）。** 令 $r_{\min},r_{\max}>0$ 为 $R|_{\mathcal H_P}$ 的最小、最大本征值。则
+
+$$
+\boxed{
+p_{\mathrm{opt}}
+:=\sup_{\mathcal E}\inf_{\rho\text{ 支撑于 }P}
+p_{\mathcal E}(\rho)
+=\frac{r_{\min}}{r_{\max}}.
+}
+$$
+
+上确界由成功 Kraus 算子 $G/\sqrt{r_{\max}}$ 达到，可补失败 Kraus 算子 $\sqrt{I_P-R/r_{\max}}$。确定性精确制备对全部来源成立，当且仅当 $R|_{\mathcal H_P}$ 是正标量乘恒等。
+
+证明。定理 28.2 给出 $c\le1/r_{\max}$，而输入取最小本征态时成功率为 $cr_{\min}$；这既给出上界，又被所述 Kraus 对达到。确定性要求 $cR=I_P$，等价于正标量形式。反向此时 $\tau_R(\rho)=\rho$，恒等通道即可。$\square$
+
+**命题 28.4（条件模拟与原始事件权重的两种合同）。** 原始过滤分支 $\mathcal S_R$ 是合法迹不增操作。对任意原空间初态 $\rho$，先执行该分支，成功后运行第 26 节的新过程，所得有限首次点击分支的未归一化终端态恰为
+
+$$
+\widetilde{\mathcal C}_x\widetilde{\mathcal N}^{\,n-1}
+\mathcal S_R(\rho)
+=\mathcal C_x\mathcal N^{n-1}(\rho).
+$$
+
+成功概率为 $r_\rho$；失败可以标记为无事件，其概率为 $1-r_\rho$。若改用最优过滤 $\mathcal S_R/r_{\max}$，每个有限事件权重同时乘 $1/r_{\max}$，条件分布与条件终端态保持相同。
+
+证明。$R\le I$ 保证原过滤合法；与失败标志分支 $X\mapsto\operatorname{Tr}[(I-R)X]$ 合成保迹操作。交织恒等式证明终端公式，最优过滤仅乘常数。该模拟在新协议中可以即时宣告失败；它没有复现原协议中无穷长的未点击记录，也没有识别同一份原始样本在未执行实验中的个体未来。$\square$
+
+## 29. 制备成功率与条件敏感度的精确对应
+
+**定义 29.1（整个来源类上的条件数）。** 假设 $\dim\mathcal H_P\ge2$，记
+
+$$
+\kappa_R=\frac{r_{\max}}{r_{\min}},\qquad
+L_R=\sup_{\rho\ne\sigma\text{ 支撑于 }P}
+\frac{D(\tau_R(\rho),\tau_R(\sigma))}{D(\rho,\sigma)},
+\qquad D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+
+两态可以为混态，且共享同一个已知 $R$。$L_R$ 是归一化状态变换的灵敏度，不是对未知仪器误差的界。
+
+**定理 29.2（条件化的锐迹距离常数）。** 定义 29.1 下，
+
+$$
+\boxed{L_R=\kappa_R.}
+$$
+
+并且全部来源满足双向界
+
+$$
+\kappa_R^{-1}D(\rho,\sigma)
+\le D(\tau_R(\rho),\tau_R(\sigma))
+\le\kappa_RD(\rho,\sigma).
+$$
+
+证明。对迹不增过滤 $\mathcal E(X)=GXG/r_{\max}$，每个来源的成功概率至少为 $r_{\min}/r_{\max}$。由定理 25.2 的概率加权收缩界得到上界。若 $r_{\min}<r_{\max}$，取相应正交本征态 $P_-,P_+$，置 $\rho=P_-$、$\sigma_\varepsilon=(1-\varepsilon)P_-+\varepsilon P_+$，其中 $0<\varepsilon<1$。则
+
+$$
+D(\rho,\sigma_\varepsilon)=\varepsilon,
+\qquad
+\frac{D(\tau_R(\rho),\tau_R(\sigma_\varepsilon))}
+{D(\rho,\sigma_\varepsilon)}
+=\frac{\kappa_R}{1+(\kappa_R-1)\varepsilon}
+\longrightarrow\kappa_R.
+$$
+
+故上界最优。若两本征值相等，$\tau_R$ 是恒等映射，来源类中存在不同两态，所以 $L_R=1=\kappa_R$。逆变换为
+
+$$
+\tau_R^{-1}(\omega)
+=\frac{G^{-1}\omega G^{-1}}{\operatorname{Tr}(\omega R^{-1})}.
+$$
+
+它对应正算子 $R^{-1}$ 的归一化过滤，谱比仍是 $\kappa_R$；用合法缩放 $r_{\min}R^{-1}\le I_P$ 重复上界论证，得到下界。$\square$
+
+**推论 29.3（制备成本与误差放大是同一谱比的两面）。** 在第 28 节的全部来源、单输入、统一 CP 操作合同及 $\dim\mathcal H_P\ge2$ 下，
+
+$$
+\boxed{
+p_{\mathrm{opt}}=\kappa_R^{-1},\qquad
+L_R=\kappa_R,\qquad
+p_{\mathrm{opt}}L_R=1.
+}
+$$
+
+证明。定理 28.3 与定理 29.2 使用同一个 $R$、同一个来源类与同一个半迹距离，直接组合即得。$\square$
+
+这给出本批“AHH”的精确内容：最终点击条件造成的最大误差放大，与精确制备该条件态时最优的最坏成功率，由同一组谱端点控制。该关系不把代数改写当作免费实验，也不把一般量子后选择都归入这份特定合同。
+
+**命题 29.4（稀有程度与条件敏感度可以分离）。** 对正数 $a$，只要 $aR\le I$，便有
+
+$$
+\tau_{aR}=\tau_R,\qquad
+\kappa_{aR}=\kappa_R,
+\qquad p_{\mathrm{opt}}(aR)=p_{\mathrm{opt}}(R),
+$$
+
+而原始过滤成功概率满足 $\operatorname{Tr}(\rho aR)=a\operatorname{Tr}(\rho R)$。
+
+证明。归一化分子、分母同时乘 $a$；最小和最大正本征值也同时乘 $a$，所以比值不变。最后一式由迹的线性性。此命题首先是效果过滤的结论：把 $R$ 缩放后若仍要求它来自某套首次点击仪器，还须另给该仪器；第 30.3 条提供一族实际实现。$\square$
+
+**命题 29.5（一维来源不能套用乘积恒等式）。** 若 $\dim\mathcal H_P=1$，则该来源类只有一个状态，最优精确制备成功率为一，且任意两来源的输出距离都为零；将最小非负 Lipschitz 常数定义为零时，$L_R=0$。
+
+证明。一维密度矩阵只有 $I_P$，归一化过滤保持它，恒等操作成功率为一。所有距离比较都发生在同一状态之间，常数零满足要求。这也是定义 29.1 排除一维的原因。$\square$
+
+## 30. 接近暗空间时的失稳与一个共同实现
+
+**定理 30.1（扩大来源类会同时失去两个统一保证）。** 假设 $\mathcal D\ne\{0\}$ 且 $\dim\mathcal H_P\ge2$。将来源扩大为原空间全部满足 $r_\rho>0$ 的密度矩阵，则 $\tau_R$ 没有有限的统一迹距离 Lipschitz 常数。任何在这个来源类上精确实现 $\tau_R$、处处具有正成功率的固定 CP 迹不增操作，其成功概率的下确界均为零。
+
+证明。取暗空间单位向量 $d$，以及 $R|_{\mathcal H_P}$ 的两个正交本征向量 $u,v$。对 $0<\varepsilon<1$，令
+
+$$
+\rho_\varepsilon=(1-\varepsilon)|d\rangle\langle d|+\varepsilon|u\rangle\langle u|,
+\quad
+\sigma_\varepsilon=(1-\varepsilon)|d\rangle\langle d|+\varepsilon|v\rangle\langle v|.
+$$
+
+输入距离为 $\varepsilon$，输出分别为两个正交本征态，距离为一，故没有有限统一常数。再令 $\mathcal E$ 为所述成功操作。对第一族，正算子
+
+$$
+(1-\varepsilon)\mathcal E(|d\rangle\langle d|)
++\varepsilon\mathcal E(|u\rangle\langle u|)
+$$
+
+必须支撑于 $\mathbb Cu$，所以 $\mathcal E(|d\rangle\langle d|)$ 支撑于该直线。对第二族同理得到支撑于 $\mathbb Cv$，从而它为零。于是 $p_{\mathcal E}(\rho_\varepsilon)=\varepsilon p_{\mathcal E}(|u\rangle\langle u|)\le\varepsilon$，下确界为零。这里只分别证明无有限常数和无正统一成功率，不将 $0\cdot\infty$ 写成恒等式。$\square$
+
+**命题 30.2（远离零事件权重的来源保留有界控制）。** 对任意来源子集 $\mathfrak S$，若有 $a>0$ 使 $r_\rho\ge a$ 对全部 $\rho\in\mathfrak S$ 成立，则过滤 $\mathcal S_R/r_{\max}$ 在该来源集上的成功率至少为 $a/r_{\max}$，并且
+
+$$
+D(\tau_R(\rho),\tau_R(\sigma))
+\le\frac{r_{\max}}aD(\rho,\sigma)
+\qquad(\rho,\sigma\in\mathfrak S).
+$$
+
+证明。该过滤在原空间上仍然合法，因为 $R/r_{\max}\le I$。成功率公式和定理 25.2 给出两式。这是来源约束下的充分界，不声称对每个受限来源类都达到最优。$\square$
+
+**命题 30.3（同一吸收仪器中的条件变换与谱比成本）。** 取正交基 $d,u,v$ 与 $0<r_1\le r_2\le1$，设置一个点击端口和以下 Kraus 算子：
+
+$$
+Q_0=|d\rangle\langle d|,
+\quad Q_1=\sqrt{1-r_1}|d\rangle\langle u|,
+\quad Q_2=\sqrt{1-r_2}|d\rangle\langle v|,
+\quad L=\sqrt{r_1}|u\rangle\langle u|+\sqrt{r_2}|v\rangle\langle v|.
+$$
+
+则最终点击效果为
+
+$$
+R=r_1|u\rangle\langle u|+r_2|v\rangle\langle v|,
+$$
+
+条件 Doob 过程在 $\operatorname{span}\{u,v\}$ 上必定第一轮点击，并保持输入的条件态；其过滤的最优最坏成功率为 $r_1/r_2$，锐条件敏感度为 $r_2/r_1$。原过程从 $u$ 或 $v$ 出发仍分别只有 $r_1,r_2$ 的最终点击概率。永久生存效果 $F=I-R$ 非投影，当且仅当 $r_1<1$。
+
+证明。直接相加得到 $\sum_{j=0}^2Q_j^\dagger Q_j+L^\dagger L=I$。任何一次未点击都进入暗态 $d$，故只有第一轮可能点击，$R=L^\dagger L$。在 $P$ 上 $G=L$，新点击 Kraus 算子 $LG^{-1}=I_P$，全部新未点击 Kraus 算子 $GQ_jG^{-1}$ 为零。成本和敏感度由第 28—29 节得到，输入本征态的点击概率由 $R$ 的对角元给出。$F$ 的本征值为 $1,1-r_1,1-r_2$；在给定参数范围内，它们全属于 $\{0,1\}$ 当且仅当 $r_1=r_2=1$，得到非投影判据。若同时把 $r_1,r_2$ 乘任意 $0<a\le1$ 并相应重建上述 Kraus 算子，条件变换和谱比不变，而原来的两点击概率均乘 $a$。$\square$
+
+**说明 30.4（关系解释与证据边界）。** 本批把第 19 节的最终事件效果与等待算子、第 20 节的动态拉回闭合、第 25 节的后选择误差连接到同一支撑变换；第 28—30 节另行写明制备任务及其极端来源。Kraus 操作、后选择和迹范数的基础沿用第 0 节所引 Watrous 教材，Doob 机制的来源见第 26.5 条。这里是有限维模型中的自包含数学推导，不主张文献原创性，也不是 Lean 编译结果。已知变换后的条件分布、能够制备条件初态、能够实施新仪器，以及原实验实际出现点击，是四个不同的要求；各自的概率、权限与来源条件都不能由另外一项代替。
+
+**说明 30.5（后选择距离的相关文献）。** Gavorová 的 *Notes on distinguishability of postselected computations*，[arXiv:2011.08487v2](https://arxiv.org/abs/2011.08487v2)，从归一化 CP 映射的非线性出发研究后选择计算之间的距离，并给出相应转换引理。本批第 29 节固定同一个过滤，比较不同输入状态，另附第 28 节的精确单输入制备合同；这与比较两个后选择过程的距离有不同的量词。第 25 节的加权界在本卷直接证明，不能仅由“量子通道收缩距离”省略归一化分母后推出。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 有限截止条件与逐轮变化的支撑
+
+**定义 31.1（截止前点击效果）。** 固定第 18 节的同一重复仪器，沿用 $\mathcal N,\mathcal C_x,\mathcal A,F,R$，假设 $R\ne0$。令
+
+$$
+B=\sum_x\mathcal C_x^*(I),\qquad
+H_m=I-\mathcal A^m(I),\qquad H_0=0,
+\qquad h_m(\rho)=\operatorname{Tr}(\rho H_m).
+$$
+
+$H_m$ 表示前 $m$ 轮之内已经首次点击，$R$ 表示最终点击；两者不是第 19 节的剩余尾项 $R_m=\mathcal A^m(R)$。记 $P_m$ 为 $H_m$ 的支撑投影，$G_m=H_m^{1/2}$；逆算子只在支撑上取逆，其余方向补零。$P_0=G_0=0$。条件来源要求 $h_m(\rho)>0$，并定义
+
+$$
+\tau_m(\rho)=\frac{G_m\rho G_m}{h_m(\rho)},
+\qquad \mathcal S_m(X)=G_mXG_m.
+$$
+
+截止轮数在本协议开始前给定。若在读到中途结果后改变截止规则，必须按新规则重新计算其成功效果；本节不把两套条件事件自动等同。
+
+**引理 31.2（截止递推、有限支撑与尚未收敛的权重）。** 对 $m\ge1$ 有
+
+$$
+H_m=B+\mathcal A(H_{m-1}),\qquad
+0\le H_m\le H_{m+1}\le R,\qquad
+R-H_m=\mathcal A^m(R).
+$$
+
+若 $d=\dim\mathcal H$，则 $P_m=P=\operatorname{supp}R$ 对全部 $m\ge d$ 成立。对任意 Kraus 表示，
+
+$$
+G_{m-1}Q_\alpha(I-P_m)=0,
+\qquad L_{x\beta}(I-P_m)=0.
+$$
+
+证明。由 $B=I-\mathcal A(I)$ 得到递推，前 $m$ 轮点击效果的非负和给出单调性。$\mathcal A^m(F)=F$，故 $R-H_m=\mathcal A^m(I)-F=\mathcal A^m(R)$。定理 18.5 给出 $\ker H_m=\mathcal D$ 对 $m\ge d$ 成立，从而支撑相等。若 $u\in\ker H_m$，递推式的二次型为
+
+$$
+0=\langle u,H_mu\rangle
+=\sum_{x,\beta}\|L_{x\beta}u\|^2
++\sum_\alpha\|G_{m-1}Q_\alpha u\|^2.
+$$
+
+每项非负，所以每项为零。支撑的有限稳定只确定哪些方向能在截止前触发事件；它不推出 $H_m=R$，因为剩余尾项仍可非零。$\square$
+
+**定理 31.3（有限截止的量子 Doob 仪器）。** 剩余 $m\ge1$ 轮时，对支撑于 $P_m$ 的输入定义
+
+$$
+\mathcal N^{[m]}(X)
+=G_{m-1}\mathcal N(G_m^{-1}XG_m^{-1})G_{m-1},
+\qquad
+\mathcal C_x^{[m]}(X)
+=\mathcal C_x(G_m^{-1}XG_m^{-1}).
+$$
+
+未点击输出位于 $P_{m-1}\mathcal H$，点击输出位于原空间 $\mathcal H$；用结果标志直和可统一输出类型。这些完全正分支满足
+
+$$
+(\mathcal N^{[m]})^*(I_{P_{m-1}})
++\sum_x(\mathcal C_x^{[m]})^*(I)=I_{P_m}.
+$$
+
+对原空间全部算子，有
+
+$$
+\mathcal N^{[m]}\mathcal S_m=\mathcal S_{m-1}\mathcal N,
+\qquad
+\mathcal C_x^{[m]}\mathcal S_m=\mathcal C_x.
+$$
+
+这里 $I_{P_0}$ 是零空间上的零算子。最后一轮的未点击分支恒为零。
+
+证明。新 Kraus 算子是 $G_{m-1}Q_\alpha G_m^{-1}$ 与 $L_{x\beta}G_m^{-1}$。其效果之和为
+
+$$
+G_m^{-1}\bigl(\mathcal A(H_{m-1})+B\bigr)G_m^{-1}
+=G_m^{-1}H_mG_m^{-1}=I_{P_m}.
+$$
+
+引理 31.2 使 $G_{m-1}Q_\alpha P_m=G_{m-1}Q_\alpha$、$L_{x\beta}P_m=L_{x\beta}$。将 $G_m^{-1}G_m=P_m$ 代入即可逐 Kraus 验证交织式，不要求 $P_m$ 对原未点击算子不变。当 $m=1$，左侧未点击 Kraus 的 $G_0$ 为零。$\square$
+
+**定理 31.4（倒计时过程精确保留截止条件下的终端分支）。** 初始截止为 $m$，未点击时将剩余轮数减一。对 $1\le n\le m$ 及 $h_m(\rho)>0$，有
+
+$$
+\boxed{
+\mathcal C_x^{[m-n+1]}
+\mathcal N^{[m-n+2]}\cdots\mathcal N^{[m]}
+\bigl(\tau_m(\rho)\bigr)
+=\frac{\mathcal C_x\mathcal N^{n-1}(\rho)}{h_m(\rho)}.
+}
+$$
+
+$n=1$ 时中间乘积为空。该新过程至迟第 $m$ 轮点击，保留原过程条件于 $\mathsf N\le m$ 的时间、端口及各非零分支的终端态。
+
+证明。对定理 31.3 的未点击交织式逐次代入，使 $\mathcal S_m$ 依次变成 $\mathcal S_{m-1},\ldots,\mathcal S_{m-n+1}$，再使用点击交织式，得到方框公式。所有 $n\le m,x$ 的右端迹之和为 $h_m(\rho)/h_m(\rho)=1$；最后一轮未点击分支也直接为零。归一化某个非零终端分支时，公共分母抵消。这个等价要求同时改变初态与逐轮仪器；它不把原仪器加上一只倒计时钟就自动变成条件仪器。$\square$
+
+**说明 31.5（时空调和变换的既有来源）。** Ticozzi 与 Pavon 的 *On time-reversal and space-time harmonic processes for Markovian quantum channels*，[arXiv:0811.0929v2](https://arxiv.org/abs/0811.0929v2)，第 6 节式 (29) 及其后的乘性变换讨论说明：时空调和正算子可产生新的保恒等量子操作，其伴随为保迹通道；该处乘性构造明确采用各时刻满秩的简化条件。第 26.5 条所引 Carollo 等还给出连续时间的有限时域量子 Doob 构造。本节使用这一成熟机制，并直接证明首次点击问题中随剩余期限变化的支撑、零末端及终端分支恒等式；没有把满秩假设默默用于奇异截止效果。
+
+## 32. 用有限截止逼近最终点击的条件任务
+
+**定义 32.1（保留早期终端态的有限记录输出）。** 固定 $m\ge1$，令
+
+$$
+T_{n,x}(\rho)=\mathcal C_x\mathcal N^{n-1}(\rho),\qquad
+r=\operatorname{Tr}(\rho R),\qquad h=h_m(\rho)>0,
+\qquad t_m(\rho)=\frac{r-h}{r}.
+$$
+
+在有限直和空间 $\bigl(\bigoplus_{n\le m,x}\mathcal H\bigr)\oplus\mathbb C$ 上定义
+
+$$
+\Omega_{\infty\to m}(\rho)
+=\left(\bigoplus_{n\le m,x}\frac{T_{n,x}(\rho)}r\right)\oplus t_m(\rho),
+\qquad
+\Omega_m(\rho)
+=\left(\bigoplus_{n\le m,x}\frac{T_{n,x}(\rho)}h\right)\oplus0.
+$$
+
+第一态在最终点击条件下保留所有早期记录及其终端量子态，将更晚的点击压入一个正交标志；第二态条件于截止前点击。晚点击标志是条件输出的数学归类，不是在第 $m$ 轮已经认证某个未点击样本今后必会点击。
+
+**定理 32.2（完整早期记录的截断误差恰为条件尾重）。** 两态均归一化，且
+
+$$
+\boxed{
+D\bigl(\Omega_{\infty\to m}(\rho),\Omega_m(\rho)\bigr)
+=t_m(\rho)
+=\frac{\operatorname{Tr}[\rho\mathcal A^m(R)]}{r}.
+}
+$$
+
+因此对这份共同输出上的每个效果，概率差至多为 $t_m(\rho)$；读取晚点击标志达到该界。
+
+证明。全部早期块的迹之和为 $h$，两个直和的总迹均为一。由于 $h\le r$，每个早期差块 $T_{n,x}(1/r-1/h)$ 都半负定，其迹范数相加为 $1-h/r=t_m$；晚标志差块为正数 $t_m$。直和的迹范数相加，除以二得第一式。引理 31.2 给出第二式。效果概率差的界由迹距离变分公式得到，晚标志的效果给出等号。$\square$
+
+**推论 32.3（任意共同终端读出的统一误差）。** 对每个事件 $(n,x)$ 指定一个保迹完全正终端读出 $\Lambda_{n,x}$，输出到同一个有限维空间 $\mathcal K$。定义
+
+$$
+\Xi_\infty(\rho)=\frac1r\sum_{n\ge1,x}\Lambda_{n,x}(T_{n,x}(\rho)),
+\qquad
+\Xi_m(\rho)=\frac1h\sum_{n\le m,x}\Lambda_{n,x}(T_{n,x}(\rho)).
+$$
+
+则级数在迹范数中收敛，并且 $D(\Xi_\infty(\rho),\Xi_m(\rho))\le t_m(\rho)$。
+
+证明。级数每项为正，其迹之和为 $r$，故在有限维中迹范数绝对收敛。若 $t_m>0$，把尾和按其迹归一化为态 $\Xi_{>m}$，得到
+
+$$
+\Xi_\infty=(1-t_m)\Xi_m+t_m\Xi_{>m}.
+$$
+
+两态距离不超过一，所以结论成立；尾迹为零时两态相同。这允许终端操作读取时间、端口并处理终端系统，前提是两种比较使用同一组 $\Lambda_{n,x}$。$\square$
+
+**定理 32.4（相对尾界消去稀有事件的小分母）。** 取第 19.2 条的 $M\ge1$、$0<q<1$，记 $\varepsilon_m=q^{\lfloor m/M\rfloor}$。若 $m\ge M$，则对每个 $r_\rho>0$ 的原空间来源都有
+
+$$
+(1-\varepsilon_m)R\le H_m\le R,
+\qquad h_m(\rho)>0,
+\qquad t_m(\rho)\le\varepsilon_m.
+$$
+
+给定 $0<\eta<1$，选择
+
+$$
+m=M\left\lceil\frac{\log(1/\eta)}{\log(1/q)}\right\rceil
+$$
+
+足以同时使定理 32.2 和推论 32.3 的误差不超过 $\eta$，不要求各来源的最终点击概率具有共同正下界。
+
+证明。引理 31.2 与 $\mathcal A^m(R)\le\varepsilon_mR$ 给出算子夹逼；与 $\rho$ 取迹，分子和分母具有同一 $r_\rho$ 因子，故相除后只剩 $\varepsilon_m$。所选整数使 $q^{\lfloor m/M\rfloor}\le\eta$。这不违反第 25 节的稀有事件放大：那里比较任意两个邻近输入或近似分支，这里比较同一已知过程、同一初态上的嵌套成功事件，并拥有相对于 $R$ 的统一算子尾界。有限样本或未标定仪器不自动供应 $R,M,q$。$\square$
+
+## 33. 更长截止并不保证更便宜的条件态制备
+
+**定义 33.1（每个截止的同一来源合同）。** 当 $P_m=P$ 且 $\dim P\mathcal H\ge2$ 时，来源固定为该支撑上的全部态。记
+
+$$
+\kappa_m=\frac{\lambda_{\max}(H_m|_P)}{\lambda_{\min}(H_m|_P)},
+\qquad p_m^{\mathrm{opt}}=\kappa_m^{-1},\qquad L_m=\kappa_m.
+$$
+
+这两个操作量由第 28—29 节的证明用于正效果 $H_m$ 得到，分别对应单份未知输入的统一精确 CP 过滤，以及固定过滤的锐迹距离常数。它们与原过程实际在截止前点击的概率 $h_m(\rho)$ 分开记号。
+
+**定理 33.2（截止制备成本的相对收敛界）。** 若 $0<\varepsilon<1$ 且 $(1-\varepsilon)R\le H_m\le R$，则 $P_m=P$，并有
+
+$$
+(1-\varepsilon)\kappa_R\le\kappa_m\le\frac{\kappa_R}{1-\varepsilon},
+\qquad
+\frac{1-\varepsilon}{\kappa_R}\le p_m^{\mathrm{opt}}
+\le\frac1{(1-\varepsilon)\kappa_R}.
+$$
+
+因此在有限维固定仪器模型中，$L_m\to\kappa_R$ 且 $p_m^{\mathrm{opt}}\to\kappa_R^{-1}$。这些界不声称随 $m$ 单调。
+
+证明。算子夹逼给出相同的核，且最小、最大本征值分别满足
+
+$$
+(1-\varepsilon)\lambda_{\min}(R|_P)
+\le\lambda_{\min}(H_m|_P)\le\lambda_{\min}(R|_P),
+$$
+
+$$
+(1-\varepsilon)\lambda_{\max}(R|_P)
+\le\lambda_{\max}(H_m|_P)\le\lambda_{\max}(R|_P).
+$$
+
+分别用分子下界与分母上界、分子上界与分母下界得到谱比界，再取倒数。令 $\varepsilon=\varepsilon_m\to0$ 并应用定理 32.4，得到极限。$\square$
+
+**命题 33.3（点击机会增加而统一制备成功率严格下降）。** 取正交基 $d,u,v$，记相应秩一投影为 $P_d,P_u,P_v$。定义
+
+$$
+Q_0=P_d+\frac1{\sqrt2}P_v,
+\qquad Q_1=\sqrt{\frac35}|d\rangle\langle u|,
+\qquad Q_2=\sqrt{\frac1{10}}|d\rangle\langle v|,
+\qquad L=\sqrt{\frac25}(P_u+P_v).
+$$
+
+以 $Q_0,Q_1,Q_2$ 为同一未点击结果的 Kraus 算子，以 $L$ 为唯一点击分支。则
+
+$$
+H_m=\frac25P_u+\frac45(1-2^{-m})P_v,
+\qquad R=\frac25P_u+\frac45P_v,
+\qquad P_m=P=P_u+P_v\quad(m\ge1).
+$$
+
+每个原始来源的截止前点击概率随 $m$ 不下降，但在固定的全部支撑态来源类上，
+
+$$
+\boxed{
+p_m^{\mathrm{opt}}=\frac1{2(1-2^{-m})}\downarrow\frac12,
+\qquad L_m=2(1-2^{-m})\uparrow2.
+}
+$$
+
+尤其 $m=1$ 时条件态可由恒等通道确定性制备，而最终点击条件态的最优最坏制备成功率为二分之一。
+
+证明。各效果相加为 $P_d+(3/5+2/5)P_u+(1/2+1/10+2/5)P_v=I$，所以仪器合法。点击总效果为 $B=(2/5)(P_u+P_v)$。对 $aP_u+bP_v$，未点击拉回为 $(b/2)P_v$，于是截止递推给出 $u$ 坐标恒为 $2/5$，$v$ 坐标为几何和 $(2/5)\sum_{j=0}^{m-1}2^{-j}$。这证明效果公式及其单调性。对全部 $m\ge1$，最小本征值为 $2/5$，最大值为 $(4/5)(1-2^{-m})$，得到方框式。第一截止的效果为 $(2/5)I_P$，归一化过滤是恒等；最终效果的谱比为二，应用第 28.3 条。未读 Kraus 指标不被当作观察者记录，结论对带相干项的输入同样成立。$\square$
+
+这给出本批的“AHH”：增加可取得事件的时间预算，会增加累计点击机会，却可能扩大不同输入的成功权重差异，使统一的条件态制备更困难、对输入误差更敏感。成本由截止效果的谱比决定，不能仅由事件总概率的单调性推断。
+
+## 34. 截止何时只改变权重而不改变条件初态形状
+
+**定理 34.1（同支撑下的截止无畸变判据）。** 固定某个 $m\ge1$，假设 $P_m=P$。下列条件等价：
+
+- 对全部支撑于 $P$ 的状态，$\tau_m(\rho)=\tau_R(\rho)$。
+- 存在 $0<c_m\le1$，使 $H_m=c_mR$。
+- 对全部 $r_\rho>0$ 的原空间来源，$\mathbb P_\rho(\mathsf N\le m\mid\mathsf N<\infty)$ 为同一个常数 $c_m$。
+
+证明。第二项使归一化分子和分母同时乘 $c_m$，推出第一项。反过来，对每个非零 $\psi\in P\mathcal H$，第一项给出 $G_m\psi$ 与 $G\psi$ 平行。因此 $G^{-1}G_m$ 保持每条射线，按第 28.2 条的线性论证为标量 $aI_P$，即 $G_m=aG$。两算子均正定，故 $a>0$，得到 $H_m=a^2R$；$H_m\le R$ 给出 $c_m=a^2\le1$。第二项与第三项的正向由概率比 $h_m(\rho)/r_\rho$ 得到；若第三项成立，所有支撑态都满足 $\operatorname{Tr}[\rho(H_m-c_mR)]=0$，纯态二次型分离 Hermitian 算子，故第二项成立。两效果在 $P^\perp$ 上都为零，等式因此属于原空间。$\square$
+
+**定理 34.2（全部截止的来源独立性等价于几何等待律）。** 在同一固定重复仪器、$R\ne0$ 及全部 $r_\rho>0$ 来源类下，以下条件等价：
+
+- 最终点击条件下的首次点击轮数分布不依赖初态。
+- 存在 $0\le q<1$，使 $\mathcal A(R)=qR$。
+- 存在 $0\le q<1$，使对每个 $m\ge1$ 都有 $H_m=(1-q^m)R$，且
+
+$$
+\mathbb P_\rho(\mathsf N=n\mid\mathsf N<\infty)
+=(1-q)q^{n-1}\qquad(n\ge1).
+$$
+
+在这些条件下，每个有限截止都具有 $P_m=P$ 和 $\tau_m=\tau_R$。几何参数 $q$ 控制等待速度；条件态过滤的谱比仍由 $R|_P$ 控制。这里相等的是过滤后的初态；第 31 节的逐轮仪器仍带剩余截止标签，终端统计也不能据此直接等同。
+
+证明。若条件等待分布来源独立，第一轮条件点击概率是常数 $c$，所以对全部支撑态 $\operatorname{Tr}(\rho B)=c\operatorname{Tr}(\rho R)$。$B$ 与 $R$ 都支撑于 $P$，效果分离给出 $B=cR$。$B\ne0$，否则所有有限点击效果 $\mathcal A^{n-1}(B)$ 都为零，与 $R\ne0$ 矛盾；故 $c>0$。又 $B\le R$，所以 $c\le1$。由 $R=B+\mathcal A(R)$ 得到第二项，取 $q=1-c$。第二项给出 $\mathcal A^m(R)=q^mR$，引理 31.2 得到 $H_m$ 公式；相邻截止概率相减得到几何律，显然不依赖初态。$q=0$ 时该律在第一轮集中，按整数幂约定 $q^0=1$。支撑与条件态结论由正比例关系得到。$\square$
+
+**命题 34.3（单个来源的确定等待不能代替全来源判据）。** 存在固定二维仪器，使某个已知初态必在第二轮点击，但 $\mathcal A(R)$ 不是 $R$ 的标量倍数。
+
+证明。取正交基 $u,v$，令 $Q=|u\rangle\langle v|$、$L=|u\rangle\langle u|$。其效果之和为 $P_v+P_u=I$，而 $Q^2=0$，所以 $R=I$。输入 $P_v$ 时第一轮未点击且后继为 $P_u$，第二轮必点击；输入 $P_u$ 则第一轮必点击。$\mathcal A(R)=Q^\dagger Q=P_v$ 不是标量恒等。因此受限到一个初态的等待律，不能支持第 34.2 条的全来源结论。$\square$
+
+**说明 34.4（本批所连接的边界）。** 第 31 节把截止事件作为倒计时仪器的完整条件，包含随阶段变化的支撑和终端后继；第 32 节把条件输出误差交给同一过程的相对尾界；第 33 节区分点击机会与精确条件态制备；第 34 节给出截止不改条件态形状的比例效果判据及其几何等待特例。所用时空调和与量子 Doob 工具见第 31.5 条，谱过滤与迹距离工具见第 28—30 节。这里不主张文献原创性，没有新增 Lean，也未验证未知装置的识别、控制可得性或有限样本对这些精确效果的认证。
+
+## 追加锚（本行以下为增补区）
+
+## 35. 仪器校准误差怎样进入有限事件历史
+
+第 31—34 节固定同一已知仪器，研究截止与最终点击条件之间的关系。本批允许仪器本身发生偏差：第 35 节控制有限历史，第 36—37 节给出无限等待的不连续及其有限查询障碍，第 38 节用共同尾界恢复长期输出的稳定性，第 39 节再区分稳定预测与精确暗空间识别。不改判前文；所有推导仍是有限维标准量子仪器模型中的纯理论文本。
+
+[《递归关系观察：共同相位谱与接收边界》](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_BOUNDARY.md)第 161—162 节已经用通道望远镜展开与统一余项，区分有限窗口连续和长期响应稳定。本批复用这两个方法，目标换为首次点击的完整停止输出，并把误差进一步连接到永久不可见方向的识别。
+
+**定义 35.1（带记录和后继的单轮校准距离）。** 固定共同的系统空间 $\mathcal H$、有限点击集合 $X$、各点击后继空间及钟标签含义。每个模型的 $\mathcal H$ 都包含重复运行所需的全部活动记忆；比较对象是每轮使用同一通道的模型，不是只匹配单轮边缘的未知带记忆装置。仪器的完整输出通道为
+
+$$
+\mathfrak I(Y)=\mathcal N(Y)\oplus\bigoplus_{x\in X}\mathcal C_x(Y).
+$$
+
+不同直和块表示正交经典记录，块内保留量子后继。对共同输入输出空间上的两通道定义
+
+$$
+\delta(\Phi,\Psi)=
+\sup_{\mathcal K,\,\rho\in\mathcal S(\mathcal K\otimes\mathcal H)}
+D\bigl((\operatorname{id}_{\mathcal K}\otimes\Phi)(\rho),
+(\operatorname{id}_{\mathcal K}\otimes\Psi)(\rho)\bigr),
+\qquad D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+上确界允许任意有限参考空间；对通道差，这就是半 diamond 距离。下文令 $\delta=\delta(\mathfrak I,\mathfrak J)$。距离约束是校准合同的前提，本批不把有限样本自动升级为这个精确上界。
+
+对整数 $m\ge1$，保留首次点击标签及其后继的停止通道为
+
+$$
+\Omega_m^{\mathfrak I}(Y)=\mathcal N^m(Y)
+\oplus\bigoplus_{n=1}^m\bigoplus_x
+\mathcal C_x\mathcal N^{n-1}(Y).
+$$
+
+第一块的含义是截至第 $m$ 轮尚未点击；各 $(n,x)$ 块相互正交。完整性恒等式使它为 CPTP 通道。
+
+**定理 35.2（有限停止历史的校准界）。** 两模型使用相同停止协议时，
+
+$$
+\boxed{
+\delta(\Omega_m^{\mathfrak I},\Omega_m^{\mathfrak J})
+\le \min\{1,m\delta\},
+\qquad
+\|H_m^{\mathfrak I}-H_m^{\mathfrak J}\|_\infty
+\le \min\{1,m\delta\}.
+}
+$$
+
+证明。把 $m$ 轮电路中的仪器逐轮替换。相邻两份混合电路仅有一次调用不同，该次调用之前的联合态相同。已点击块原样传递；未点击块为迹至多一的正算子。将其归一化并使用定义 35.1，该轮产生的半迹距离至多为该块迹乘 $\delta$，因而至多 $\delta$。其后相同的记录控制和停止续接均为 CPTP，不能增加距离。三角不等式给 $m\delta$；两归一化态的距离至多一。论证包含任意外部参考。
+
+在输出上使用共同效果“已点击”，得到每个初态的截止概率差不超过同一界。取全部纯态二次型的绝对值上确界，即得 Hermitian 效果差的算子范数界。$\square$
+
+**推论 35.3（仪器误差与稀有截止条件）。** 对共同初态 $\rho$，记两停止输出为 $\omega_I,\omega_J$，截止点击概率为 $h_I,h_J$。若两概率均正，按“截止前已点击”选择并归一化的完整记录后继满足
+
+$$
+\boxed{
+\max\{h_I,h_J\}\,
+D(\omega_{I\mid\mathrm{click}},\omega_{J\mid\mathrm{click}})
+\le\min\{1,m\delta\}.
+}
+$$
+
+若已知 $h_I\ge h_*>m\delta$，则 $h_J>0$，条件距离至多 $m\delta/h_*$。若初态也不同，右侧可改为 $\min\{1,D(\rho,\sigma)+m\delta\}$，相应正概率条件使用这个总误差。
+
+证明。对两份停止输出应用同一个选择分支，再用第 25.2 条。不同初态时先用同一停止通道的收缩性比较输入，再替换仪器。$\square$
+
+这说明第 32 节“同一过程的相对尾界不需点击概率下界”有明确范围：一般仪器误差进入归一化时，仍可能被稀有条件放大。
+
+## 36. 任意小的单轮误差，可以改变最终是否点击
+
+**命题 36.1（精确暗态与缓慢泄漏的共同实现）。** 在正交基 $b,d$ 上，记 $P_b,P_d$ 为对应投影。对 $0\le\gamma\le1$，取
+
+$$
+Q_\gamma=\sqrt{1-\gamma}\,P_d,
+\qquad L_b=P_b,
+\qquad L_{d,\gamma}=\sqrt\gamma\,P_d.
+$$
+
+分别作为一个未点击分支和两个点击分支的 Kraus 算子。即使 $\gamma=0$，仍保留零概率的点击标签 $d$。则
+
+$$
+\mathfrak I_\gamma=(1-\gamma)\mathfrak I_0+\gamma\mathfrak I_1,
+\qquad \delta(\mathfrak I_\gamma,\mathfrak I_0)=\gamma,
+$$
+
+并且对每个 $m\ge1$，
+
+$$
+\boxed{
+H_{m,\gamma}=P_b+[1-(1-\gamma)^m]P_d,
+\qquad
+\delta(\Omega_{m,\gamma},\Omega_{m,0})=1-(1-\gamma)^m.
+}
+$$
+
+而最终点击效果为
+
+$$
+\boxed{R_0=P_b,\qquad R_\gamma=I\quad(\gamma>0).}
+$$
+
+证明。三个效果相加为 $P_b+(1-\gamma)P_d+\gamma P_d=I$，仪器合法。其三个输出块为 $(1-\gamma)P_dYP_d$、$P_bYP_b$ 和 $\gamma P_dYP_d$，直接给出凸分解。对任意参考联合态，两通道差只在未点击块和点击 $d$ 块中分别出现负、正的 $\gamma$ 倍压缩态，半迹范数为 $\gamma\operatorname{Tr}[(I_{\mathcal K}\otimes P_d)\rho]$。上确界为 $\gamma$，由输入 $P_d$ 达到。
+
+未点击 $m$ 轮的效果为 $(1-\gamma)^mP_d$，所以得到 $H_{m,\gamma}$。两停止输出之差同样只有一份负的生存块和若干正的首次点击 $d$ 块，总正迹为 $[1-(1-\gamma)^m]\operatorname{Tr}[(I_{\mathcal K}\otimes P_d)\rho]$。取上确界得到停止距离。最后令 $m\to\infty$，分别处理 $\gamma=0$ 与 $\gamma>0$。$\square$
+
+**推论 36.2（无限等待与零误差极限不能交换）。** 记暗基态输入的截止点击概率为 $h_m(\gamma)=1-(1-\gamma)^m$。则
+
+$$
+\lim_{\gamma\downarrow0}\lim_{m\to\infty}h_m(\gamma)=1,
+\qquad
+\lim_{m\to\infty}\lim_{\gamma\downarrow0}h_m(\gamma)=0.
+$$
+
+每个固定正 $\gamma$ 的平均首次点击轮数为 $1/\gamma$，且 $\|R_\gamma-R_0\|_\infty=1$。
+
+证明。对正 $\gamma$，$d$ 输入的首次点击概率为 $\gamma(1-\gamma)^{n-1}$，给出几何等待与期望；固定 $m$ 时 $h_m(\gamma)\to0$。最终效果差为 $P_d$。$\square$
+
+对任意 $0<\gamma_0\le1$，这一族没有共同趋零的等待尾界：每个有限 $m$ 都有
+
+$$
+\sup_{0<\gamma\le\gamma_0}
+\|\mathcal A_\gamma^m(R_\gamma)\|_\infty
+=\sup_{0<\gamma\le\gamma_0}(1-\gamma)^m=1.
+$$
+
+因此，“每台已知有限维装置分别具有收敛尾界”不能代替“对所有校准相容装置具有同一个尾界”。这里的差别已由同一二维模型实现，无需无穷维状态空间。
+
+## 37. 允许自适应量子探针，有限查询仍不能统一认证精确黑暗
+
+**定义 37.1（有限调用的校准实验）。** 在两个已知候选通道 $\mathfrak I_0$ 与 $\mathfrak I_\gamma$ 之间作等先验二元判别，固定 $0<\gamma<1$。实验至多调用候选通道 $m\ge1$ 次，可使用任意有限辅助系统、已知初态、保留的经典记录、量子记忆及结果依赖的已知 CPTP 控制，最后输出一个判别结果。两候选下使用同一策略，每次调用都是对应的同一 CPTP 通道。
+
+这里的接口是带经典结果的通道本身；不提供其环境纯化、不可访问的随机混合标签、通道逆或某个特定酉实现的相干受控调用。提前停止的实验可补齐无关调用并丢弃输出，转成恰好 $m$ 个调用槽。
+
+**定理 37.2（任意自适应策略的精确最优错误率）。** 在定义 37.1 的合同下，最小平均错误率为
+
+$$
+\boxed{
+P_{\mathrm{err}}^{\mathrm{opt}}(m,\gamma)
+=\frac12(1-\gamma)^m.
+}
+$$
+
+证明。把第 36.1 条的通道凸分解代入实验的每个调用槽。包括测量记录的整个确定性策略对每个槽线性，故最终两假设下的状态满足
+
+$$
+\sigma_\gamma=(1-\gamma)^m\sigma_0+
+[1-(1-\gamma)^m]\tau
+$$
+
+，其中 $\tau$ 为某个密度矩阵：它是至少一个槽使用 $\mathfrak I_1$ 的全部合法混合电路输出的归一化凸组合。因而
+
+$$
+D(\sigma_\gamma,\sigma_0)
+\le1-(1-\gamma)^m.
+$$
+
+等先验 Holevo–Helstrom 判别式给错误率至少 $(1-\gamma)^m/2$。
+
+达到方式是每次准备 $P_d$ 并保留结果；也可在未点击时继续同一 $d$ 态。若有任何点击 $d$，判为正 $\gamma$；若全部未点击，判为零。零模型绝不误判，正模型仅以概率 $(1-\gamma)^m$ 被误判，故等先验错误率恰为方框值。$\square$
+
+**推论 37.3（分辨微弱泄漏的查询量）。** 对目标平均错误率 $0<e<1/2$，必要且充分的调用次数满足
+
+$$
+\boxed{
+m\ge
+\left\lceil
+\frac{\log(1/(2e))}{-\log(1-\gamma)}
+\right\rceil.
+}
+$$
+
+证明。将第 37.2 条的不等式 $(1-\gamma)^m/2\le e$ 取对数，注意 $\log(1-\gamma)<0$。$\square$
+
+于是没有一个有限 $m$ 能对所有任意小的正 $\gamma$，把“精确暗态”与“最终必点击”以某个共同小于 $1/2$ 的平均错误率区分。这是给定访问接口下的统计障碍；若模型事先给出已知的正泄漏下界，公式本身就提供有限资源方案。该结论也不把一次“没看见”当作精确暗态证明。
+
+## 38. 共同尾界把有限校准连接到长期输出
+
+**定义 38.1（最终输出与有限删失输出）。** 对每个首次点击标签 $(n,x)$，固定一个将其后继送到共同有限空间 $\mathcal K$ 的 CPTP 读出 $\Lambda_{n,x}$；两模型使用相同的这族读出。沿用 $S_m=\mathcal A^m(I)$、$F=\lim_m S_m$ 和 $R=I-F$，置
+
+$$
+\begin{aligned}
+\Phi_\infty^{\mathfrak I}(Y)
+&=\left[\sum_{n\ge1,x}
+\Lambda_{n,x}\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}(FY),\\
+\Phi_m^{\mathfrak I}(Y)
+&=\left[\sum_{1\le n\le m,x}
+\Lambda_{n,x}\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}(S_mY).
+\end{aligned}
+$$
+
+第一块汇集点击后读出，第二块为正交的一维旗标。无穷式的旗标表示永不点击；有限式中同一输出位置表示截至第 $m$ 轮未解决。有限式不宣称已经认证永不点击。若要保留无限多个原始时间标签，需另换无限记录接口，本定义没有给有限维接收器免费增加这种能力。
+
+**定理 38.2（含任意参考的精确删失误差）。** 两个公式均定义 CPTP 通道，且
+
+$$
+\boxed{
+\delta(\Phi_\infty^{\mathfrak I},\Phi_m^{\mathfrak I})
+=\|\mathcal A^m(R)\|_\infty.
+}
+$$
+
+证明。点击部分的有限和完全正，在未归一化 Choi 约定下，其 Choi 算子递增且迹等于 $\operatorname{Tr}H_m\le\dim\mathcal H$，所以在有限维空间收敛到正 Choi 算子，给出完全正极限。有限和的效果为 $H_m$，极限效果为 $R$；补上 $S_m$ 或 $F=I-R$ 的旗标后均保迹。
+
+对任意参考联合态 $\rho$，无穷输出减有限输出具有两个正交块：点击块为正的迟到输出 $T_\rho$，旗标块为负的参考算子 $-V_\rho$。后者来自正泛函 $Y\mapsto\operatorname{Tr}[(S_m-F)Y]$，所以 $V_\rho\ge0$。两块的迹均为
+
+$$
+t_\rho=\operatorname{Tr}[(I_{\mathrm{ref}}\otimes\mathcal A^m(R))\rho].
+$$
+
+因此半迹范数恰为 $t_\rho$。其上确界为正算子 $\mathcal A^m(R)$ 的最大本征值，并由无参考的最大本征态达到。$\square$
+
+**定理 38.3（两个校准相近模型的长期误差）。** 对任意 $m\ge1$，有
+
+$$
+\boxed{
+\delta(\Phi_\infty^{\mathfrak I},\Phi_\infty^{\mathfrak J})
+\le\min\left\{1,
+ m\delta+
+ \|\mathcal A_I^m(R_I)\|_\infty+
+ \|\mathcal A_J^m(R_J)\|_\infty\right\}.
+}
+$$
+
+最终点击效果差 $\|R_I-R_J\|_\infty$ 也满足同一个上界。
+
+证明。有限删失输出是第 35 节停止输出的共同 CPTP 后处理：对点击标签使用 $\Lambda_{n,x}$，把未点击后继压为旗标。故有限输出距离至多 $m\delta$。在两端分别加入第 38.2 条的删失距离，三角不等式给第一项；两通道距离至多一。最后检验是否处于点击块，取全部输入态，即得效果差界。$\square$
+
+**推论 38.4（共同模型类的连续性模量）。** 若一族校准候选模型具有共同的 $b_m\downarrow0$，满足
+
+$$
+\|\mathcal A_{\mathfrak I}^m(R_{\mathfrak I})\|_\infty\le b_m
+\quad\text{对全部候选 }\mathfrak I,
+$$
+
+则上述两种长期误差均不超过
+
+$$
+\omega(\delta)=\min\{1,\inf_{m\ge1}(m\delta+2b_m)\},
+\qquad \lim_{\delta\downarrow0}\omega(\delta)=0.
+$$
+
+若共同尾界具体为 $b_m=q^{\lfloor m/M\rfloor}$，其中 $M\ge1$ 为整数、$0<q<1$，则对 $0<M\delta<1$，令
+
+$$
+k=\left\lceil\frac{\log(1/(M\delta))}{\log(1/q)}\right\rceil,
+\qquad m=Mk,
+$$
+
+可取显式上界
+
+$$
+\boxed{\min\{1,M\delta(k+2)\}.}
+$$
+
+证明。先固定一个使 $2b_m$ 任意小的 $m$，再令 $\delta\downarrow0$，得到模量收敛。几何情形中 $q^k\le M\delta$，代入第 38.3 条即可；$\delta=0$ 时由任意 $m$ 的界及 $b_m\to0$ 得零误差。$\square$
+
+共同尾界是一组足够条件，不是所有模型族稳定性的必要条件。它必须覆盖全部仍被校准资料允许的装置；第 19 节对单个固定模型取得的常数，不能未经证明就充当这一族的共同常数。先取有限前缀、再用共同余项控制极限的思路，与相位边界卷第 162 节相同；这里的余项是可明确识别的迟到点击效果。
+
+## 39. 长期概率稳定，仍不等于精确暗空间稳定
+
+**命题 39.1（零等待尾项仍允许暗空间突变）。** 取正交基 $d,u,v$。对 $0\le\varepsilon\le1$，用同一个未点击结果的两个 Kraus 算子及两个点击分支
+
+$$
+Q_0=P_d,
+\qquad Q_1=\sqrt{1-\varepsilon}|d\rangle\langle u|,
+\qquad L_u=\sqrt\varepsilon P_u,
+\qquad L_v=P_v.
+$$
+
+则全部点击只能发生在第一轮，且
+
+$$
+\boxed{
+R_\varepsilon=\varepsilon P_u+P_v,
+\qquad \mathcal A_\varepsilon^m(R_\varepsilon)=0\quad(m\ge1).
+}
+$$
+
+相对于零参数，完整单轮距离与最终输出距离均为 $\varepsilon$；最终输出此处使用恒等终端读出。然而
+
+$$
+\mathcal D_0=\operatorname{span}\{d,u\},
+\qquad \mathcal D_\varepsilon=\operatorname{span}\{d\}\quad(\varepsilon>0),
+\qquad
+\|P_{\mathcal D_\varepsilon}-P_{\mathcal D_0}\|_\infty=1\quad(\varepsilon>0).
+$$
+
+证明。效果之和为 $P_d+(1-\varepsilon)P_u+\varepsilon P_u+P_v=I$。每次未点击后的量子态都支撑于 $d$，此后不会点击。因此 $R_\varepsilon$ 就是首轮点击效果，所有迟到尾项为零。对任意参考输入，两仪器差为未点击块减少 $\varepsilon$ 倍的 $u$ 压缩态经 $|d\rangle\langle u|$ 运输的结果，以及点击 $u$ 块增加同迹的正算子，距离为 $\varepsilon$ 乘输入的 $u$ 权重。上确界由 $P_u$ 达到。最终输出中，这两块分别是未点击旗标和点击态，同样得到距离 $\varepsilon$。核空间由 $R_\varepsilon$ 的对角式直接读出。$\square$
+
+这个例子没有隐藏很长的等待：从 $u$ 输入，微弱点击失败后会永久进入 $d$。其区别是某个方向的最终点击概率从精确零变成任意小的正数。因此，共同等待尾界控制的是长期输出的近似误差，不能独自控制精确核的维数。
+
+**引理 39.2（共同正谱隙控制支撑投影）。** 设 $R,S$ 为同一有限维空间上的正效果，$P=\operatorname{supp}R$、$Q=\operatorname{supp}S$。若已知同一个 $g>0$ 满足
+
+$$
+R\ge gP,\qquad S\ge gQ,
+$$
+
+则
+
+$$
+\boxed{
+\|P-Q\|_\infty\le
+\min\left\{1,\frac{\|R-S\|_\infty}{g}\right\}.
+}
+$$
+
+当 $\|R-S\|_\infty<g$ 时，两支撑具有相同维数。允许其中一个效果为零；上述假设在零支撑上按通常方式理解。
+
+证明。记 $a=\|R-S\|_\infty$。对 $z\in\ker R$，有 $Sz=(S-R)z$，所以 $\|Sz\|\le a\|z\|$。$S$ 在 $Q$ 上的本征值至少为 $g$，从而 $\|Sz\|\ge g\|Qz\|$，得到 $\|Q(I-P)\|\le a/g$。交换两个效果得 $\|(I-Q)P\|\le a/g$。投影恒等式
+
+$$
+(P-Q)^2=P(I-Q)P+(I-P)Q(I-P)
+$$
+
+在 $P\oplus(I-P)$ 上分块，故
+
+$$
+\|P-Q\|=\max\{\|(I-Q)P\|,\|Q(I-P)\|\}.
+$$
+
+这证明所需界；投影差的范数至多一。若其范数小于一，$Q$ 在 $P$ 的像上没有非零核，$P$ 在 $Q$ 的像上也没有非零核，有限维单射比较给出秩相等。$\square$
+
+**推论 39.3（校准到暗方向的两层充分条件）。** 若两候选仪器同时满足第 38.4 条的共同尾界，且其最终点击效果都具有第 39.2 条的共同正谱隙 $g$，则
+
+$$
+\boxed{
+\|P_{\mathcal D_I}-P_{\mathcal D_J}\|_\infty
+\le\min\{1,\omega(\delta)/g\}.
+}
+$$
+
+若 $\omega(\delta)<g$，两候选具有相同暗空间维数。
+
+证明。第 38.4 条控制最终点击效果的差，第 39.2 条控制其支撑投影；暗投影为支撑投影的补，范数差相同。$\square$
+
+本批的“AHH”是两个不同的极限门槛：共同迟到尾界保证有限观察一致逼近长期事件，共同正谱隙进一步保证近似效果支持稳定的精确可见／不可见分类。第 36 节的正参数模型具有恒等最终效果，却缺少跨参数的共同等待尾界；第 39.1 条具有零等待尾项，却缺少共同正谱隙。两种关系不能彼此替代。以测量精度定义“近似暗方向”又是另一项任务，不能悄悄替换这里的精确核。
+
+**说明 39.4（文献、接口与结论范围）。** 标准工具与本批的连接范围如下。
+
+- John Watrous，[*The Theory of Quantum Information*，第 3 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)：第 3.4 定理给出 Holevo–Helstrom 二态判别；第 3.3 节讨论带辅助系统的通道距离与判别。第 35 节和第 37 节使用这些成熟工具，逐轮替换论证也复用仓内相位边界卷第 161.1 条的方法。
+- Gus Gutoski、John Watrous，[*Toward a General Theory of Quantum Games*](https://arxiv.org/abs/quant-ph/0611234v2)：给出保留量子记忆的多轮策略及其正算子表示。第 37 节的访问合同属于此类多轮量子交互；精确错误率由本文具体通道凸分解直接证明，不把一般策略表示冒称为该例的现成闭式。
+- Ruoyu Yin、Qingyuan Wang、Eli Barkai，[*Instability in the quantum restart problem*](https://arxiv.org/abs/2301.06100v2)：研究重复监测量子游走的重启优化不稳定。其目标是最优重启时间及平均击中时间，不直接提供第 36 节的最终点击效果不连续定理。
+- 第 38 节使用有限前缀加共同尾项的稳定性方法；第 39.2 条是自包含的有限维谱投影扰动估计。本批在首次事件接口上连接这些工具及两个显式反例，不主张文献原创性。
+
+所有距离结论均依赖声明的共同记录、量子后继、参考系统和重复调用合同。本批没有取得实验校准置信区间，没有认证某个实际装置的共同尾界或谱隙，也没有新增 Lean、消化覆盖或冻结结果。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 紧致装置族上的长期连续性与共同尾界恰好等价
+
+第 38—39 节给出了共同尾界及正谱隙的充分保证。本批增加装置族的紧性，确定何时这些保证能够反向刻画连续性；随后用同一个三能级仪器，区分长期输出、条件等待和一阶矩的稳定性。全部结论仍限于声明的有限维仪器合同，不改判前文。
+
+**定义 40.1（连续的紧致仪器族）。** 固定非空紧度量空间 $\Theta$、有限维活动空间 $\mathcal H$、有限点击标签集及各后继空间。对每个 $\theta\in\Theta$，给定完整带记录通道 $\mathfrak I_\theta$，且 $\theta\mapsto\mathfrak I_\theta$ 在第 35.1 条的半 diamond 距离下连续。每个模型包含重复运行所需的全部活动记忆，并在全部轮次重复自身同一仪器。
+
+对各参数沿用
+
+$$
+\mathcal A_\theta=\mathcal N_\theta^*,\qquad
+R_\theta=I-F_\theta,\qquad
+H_{m,\theta}=I-\mathcal A_\theta^m(I),\qquad
+R_{m,\theta}=R_\theta-H_{m,\theta}=\mathcal A_\theta^m(R_\theta).
+$$
+
+固定第 38.1 条的同一族事件依赖 CPTP 读出，送到共同有限空间，并保留与点击输出正交的未解决／永不点击旗标。所得通道记为 $\Phi_{m,\theta}$、$\Phi_{\infty,\theta}$。仪器族的紧性与连续性属于已给定的模型合同，不从有限样本自动推出。
+
+**引理 40.2（单调连续余项的有限覆盖判据）。** 设紧空间 $\Theta$ 上的连续实函数 $f_m\ge0$ 随 $m$ 递减，并逐点趋零。则 $\sup_\theta f_m(\theta)\to0$。
+
+证明。给定 $\eta>0$，开集 $U_m=\{\theta:f_m(\theta)<\eta/2\}$ 递增，并覆盖 $\Theta$。紧性给有限子覆盖，取其最大指标 $M$，便有 $U_M=\Theta$。因此所有 $m\ge M$ 都满足 $\sup_\theta f_m(\theta)\le\eta/2<\eta$。$\square$
+
+这是 Dini 定理所需的单调紧性机制；[《递归关系观察：可执行上下文几何》](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第 45.5 节已在共同来源检验中使用相关有限网方法。这里将其接到迟到点击效果。
+
+**定理 40.3（长期事件的四个等价接口）。** 在定义 40.1 下，以下条件等价：
+
+- $\theta\mapsto R_\theta$ 在算子范数下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\|R_{m,\theta}\|_\infty=0$。
+- $\theta\mapsto\Phi_{\infty,\theta}$ 在半 diamond 距离下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\delta(\Phi_{\infty,\theta},\Phi_{m,\theta})=0$。
+
+证明。每个固定 $m$ 的 $H_{m,\theta}$ 与 $\Phi_{m,\theta}$ 都连续：第 35.2 条控制停止通道，效果选择和共同读出保持连续性。
+
+假设第一项。$f_m(\theta)=\|R_\theta-H_{m,\theta}\|_\infty$ 连续，正算子余项递减且逐点趋零；正算子的算子范数保持此单调性。引理 40.2 推出第二项。反过来，第二项使 $R_\theta$ 为连续函数 $H_{m,\theta}$ 的一致极限，故连续。
+
+第 38.2 条的精确恒等式使第二与第四项等价。第四项使最终通道为连续有限通道的一致极限，推出第三项。最后，对最终通道使用“在点击块”这一共同效果，得到
+
+$$
+\|R_\theta-R_\eta\|_\infty
+\le\delta(\Phi_{\infty,\theta},\Phi_{\infty,\eta}),
+$$
+
+故第三项推出第一项。$\square$
+
+这里的正交旗标承担了反向推论：若把点击与永不点击全都压成同一个固定输出，所得常值通道当然连续，却不再包含最终点击效果。
+
+**命题 40.4（紧性与已知速率是两项不同条件）。** 去掉装置族的紧性，连续的最终点击效果不必具有共同趋零尾界。
+
+证明。取第 36.1 条仪器，限制 $\gamma\in(0,1]$。这是连续但非紧的参数族，$R_\gamma=I$ 恒定；对每个固定 $m$，迟到尾范数的上确界仍为一。$\square$
+
+定理 40.3 的有限覆盖证明也没有输出可计算的截止。若要得到数值期限，仍需有效的参数覆盖、可核对的尾估计或其他定量结构。紧集、连续函数与存在量本身，不是已经取得的实验停止证书。
+
+## 41. 连续事件效果上的暗空间稳定与统一条件等待
+
+**定理 41.1（紧族上的支撑、秩与正谱隙）。** 在定义 40.1 下，额外假设 $R_\theta$ 连续，置 $P_\theta=\operatorname{supp}R_\theta$。以下条件等价：
+
+- $\theta\mapsto P_\theta$ 在算子范数下连续。
+- $\theta\mapsto\operatorname{rank}R_\theta$ 局部常值。
+- 存在同一个 $g>0$，使全部参数满足 $R_\theta\ge gP_\theta$。
+
+允许零效果；不要求不同连通分支具有相同秩。
+
+证明。若投影连续，对每个 $\theta_0$，存在邻域使 $\|P_\theta-P_{\theta_0}\|<1$。第 39.2 条证明中的投影单射论证给出两秩相等，故秩局部常值。
+
+若秩局部常值，固定 $\theta_0$。秩为零时，在一个邻域内全部效果为零，该邻域可取任意正谱隙常数。秩为 $r>0$ 时，令 $a>0$ 为 $R_{\theta_0}$ 的最小正本征值。取秩恒为 $r$ 且 $\|R_\theta-R_{\theta_0}\|<a/2$ 的邻域。Hermitian 本征值的极小极大原理给每个按序本征值的变化不超过算子范数差；因此该邻域内的 $r$ 个正本征值均至少为 $a/2$。这些邻域覆盖紧空间，选有限子覆盖，再取其正下界的最小值，得到共同 $g>0$。
+
+最后，共同谱隙和第 39.2 条给
+
+$$
+\|P_\theta-P_\eta\|_\infty
+\le\frac{\|R_\theta-R_\eta\|_\infty}{g},
+$$
+
+由效果连续性得到投影连续。$\square$
+
+若 $\Theta$ 连通，局部常秩进一步给全族同秩；在两个离散参数分别取零效果与一个秩一投影，则可有不同秩而仍满足本定理。效果连续性也不可省略：第 36 节的闭参数区间具有共同正谱隙一，但最终效果本身在零参数不连续。
+
+“局部常秩”不能仅以“每个连通分支上常秩”替代。将第 39.1 条仪器限制到紧参数集 $\{0\}\cup\{1/n:n\ge1\}$，每个连通分支都是单点，但零参数的任何邻域仍含两种秩；局部常值在此失败。
+
+**定理 41.2（共同谱隙把绝对尾界升级为条件几何尾界）。** 在定理 41.1 的等价条件成立时，存在同一个整数 $M\ge1$，使对全部参数及 $m\ge0$，
+
+$$
+\boxed{
+0\le R_{m,\theta}\le2^{-\lfloor m/M\rfloor}R_\theta.
+}
+$$
+
+从而，对所有 $\operatorname{Tr}(\rho R_\theta)>0$ 的参数—来源对，
+
+$$
+\mathbb P_{\theta,\rho}(\mathsf N>m\mid\mathsf N<\infty)
+\le2^{-\lfloor m/M\rfloor},
+\qquad
+\mathbb E_{\theta,\rho}[\mathsf N\mid\mathsf N<\infty]\le2M.
+$$
+
+证明。定理 40.3 给共同趋零的绝对尾界，选 $M$ 使 $\|R_{M,\theta}\|\le g/2$ 对全部参数成立。由于 $0\le R_{M,\theta}\le R_\theta$，其支撑包含于 $P_\theta$，故
+
+$$
+R_{M,\theta}\le(g/2)P_\theta\le R_\theta/2.
+$$
+
+对每个参数重复应用正映射 $\mathcal A_\theta$，得到 $R_{kM,\theta}\le2^{-k}R_\theta$；块内再用 $\mathcal A_\theta^j(R_\theta)\le R_\theta$，推出全部 $m$。与初态取迹并除以正的最终点击概率给条件尾界，按长度 $M$ 分块求尾和得 $2M$。零效果参数没有需定义的正概率条件来源。$\square$
+
+本定理提供充分结构，不把“共同条件等待界”反称为“暗空间秩必稳定”。第 39.1 条的仪器全部点击只在第一轮，条件等待具有共同界一，暗空间维数仍在零参数变化。
+
+## 42. 同一个紧致三能级族：概率连续，稀有条件等待失控
+
+**定义 42.1（弱点击与缓慢退出的共同仪器）。** 在正交基 $d,u,v$ 上，对 $0\le\varepsilon\le1$ 定义
+
+$$
+Q_{0,\varepsilon}=P_d+\sqrt{1-\varepsilon}\,P_u,
+\qquad
+Q_{1,\varepsilon}=\sqrt{\varepsilon(1-\varepsilon)}|d\rangle\langle u|,
+\qquad
+L_{u,\varepsilon}=\varepsilon P_u,
+\qquad L_v=P_v.
+$$
+
+前两个 Kraus 算子属于同一个未点击结果，后两个分别产生点击记录 $u,v$。这里点击 $u$ 的效果是 $\varepsilon^2P_u$，振幅与概率不能混用。
+
+**命题 42.2（所有效应来自同一完整仪器）。** 上述仪器合法，且完整带记录通道随 $\varepsilon\in[0,1]$ 连续。它满足
+
+$$
+\boxed{
+R_\varepsilon=\varepsilon P_u+P_v,
+\qquad
+H_{m,\varepsilon}=\varepsilon[1-(1-\varepsilon)^m]P_u+P_v,
+\qquad
+R_{m,\varepsilon}=\varepsilon(1-\varepsilon)^mP_u\quad(m\ge1).
+}
+$$
+
+证明。四个效果在 $u$ 方向之和为
+
+$$
+(1-\varepsilon)+\varepsilon(1-\varepsilon)+\varepsilon^2=1,
+$$
+
+在 $d,v$ 方向分别为一，所以完整性成立。Kraus 算子是同一有限维空间上的连续矩阵族，故对应通道连续。总点击效果是 $B_\varepsilon=\varepsilon^2P_u+P_v$，并且对对角效果有
+
+$$
+\mathcal A_\varepsilon(aP_u+bP_v)=(1-\varepsilon)aP_u.
+$$
+
+于是第一轮的 $v$ 点击效果为 $P_v$，$u$ 的第 $n$ 轮首次点击效果为 $\varepsilon^2(1-\varepsilon)^{n-1}P_u$。有限几何和与其极限给出方框式；$\varepsilon=0$ 时 $u$ 点击始终为零，单独代入得到同一效果公式。$\square$
+
+**定理 42.3（共同绝对尾的精确多项式包络）。** 对每个 $m\ge1$，定义 42.1 的仪器族满足
+
+$$
+\boxed{
+\sup_{0\le\varepsilon\le1}\|R_{m,\varepsilon}\|_\infty
+=\frac{m^m}{(m+1)^{m+1}}
+\sim\frac1{\mathrm e\,m}.
+}
+$$
+
+因此最终输出在这个紧族上连续，有限删失输出一致逼近最终输出；却不存在常数 $C<\infty$、整数 $M\ge1$ 和 $0<q<1$，使全部参数及 $m\ge1$ 同时满足 $\|R_{m,\varepsilon}\|\le Cq^{\lfloor m/M\rfloor}$。
+
+证明。对 $f_m(\varepsilon)=\varepsilon(1-\varepsilon)^m$ 求导，内部导数为
+
+$$
+f_m'(\varepsilon)=(1-\varepsilon)^{m-1}[1-(m+1)\varepsilon].
+$$
+
+端点值为零，唯一内部最大点为 $\varepsilon=1/(m+1)$，代入即得精确式。其乘以 $m$ 后趋于 $\mathrm e^{-1}$。效果 $R_\varepsilon$ 连续，定理 40.3 给出通道结论。若存在所述共同几何界，取 $m=kM$，则左侧渐近于 $1/(\mathrm e kM)$，右侧为 $Cq^k$；指数衰减不可能支配这一正的多项式尾。$\square$
+
+**定理 42.4（小事件权重与长条件等待能够同时出现）。** 对 $\varepsilon>0$ 和共同初态 $P_u$，有
+
+$$
+\mathbb P_\varepsilon(\mathsf N=n)
+=\varepsilon^2(1-\varepsilon)^{n-1},
+\qquad
+\mathbb P_\varepsilon(\mathsf N<\infty)=\varepsilon,
+$$
+
+$$
+\boxed{
+\mathbb P_\varepsilon(\mathsf N>m\mid\mathsf N<\infty)
+=(1-\varepsilon)^m,
+\qquad
+\mathbb E_\varepsilon[\mathsf N\mid\mathsf N<\infty]=\frac1\varepsilon.
+}
+$$
+
+所以不存在统一趋零的条件等待尾界，即使第 42.3 条的绝对尾项已经一致趋零。
+
+证明。首次点击效果在命题 42.2 的证明中已算出；在 $P_u$ 上取迹，再除以最终点击概率 $\varepsilon$，得到成功参数 $\varepsilon$ 的几何律。对每个固定 $m$，$\sup_{0<\varepsilon\le1}(1-\varepsilon)^m=1$。在 $\varepsilon=0$ 处最终点击概率为零，条件等待没有定义，不能人为补一个值参与连续性断言。$\square$
+
+**命题 42.5（等待算子有统一界，却在端点跳变）。** 第 19 节的等待算子在该族上为
+
+$$
+\boxed{
+T_\varepsilon=\sum_{m\ge0}R_{m,\varepsilon}
+=P_u+P_v\quad(\varepsilon>0),
+\qquad T_0=P_v.
+}
+$$
+
+尤其 $0\le T_\varepsilon\le I$ 对全部参数成立，但 $T_\varepsilon$ 在零参数不连续。
+
+证明。$m=0$ 的项为 $R_\varepsilon=\varepsilon P_u+P_v$。对正 $\varepsilon$，$u$ 方向的全部尾和为 $\varepsilon\sum_{m\ge0}(1-\varepsilon)^m=1$；零参数时该方向每一项都为零。$\square$
+
+对 $P_u$ 来源，有限点击的一阶矩是 $\sum_n n\mathbb P(\mathsf N=n)=1$，而在零参数为零。它等于“点击概率 $\varepsilon$”乘“点击条件下平均轮数 $1/\varepsilon$”。同一个实际模型中，事件质量趋零与等待长度发散相互抵消；概率收敛因此不能单独交换一阶矩的极限。
+
+## 43. 长期时间成本的稳定性由加权尾项刻画
+
+**定义 43.1（只统计有限点击的时间矩）。** 令
+
+$$
+E_{n,\theta}=\sum_x E_{n,x,\theta}
+=\mathcal A_\theta^{n-1}(B_\theta),
+\qquad
+M_{m,\theta}=\sum_{n=1}^m nE_{n,\theta}.
+$$
+
+本节以探测轮数为时间单位；实际历时的矩还需钟标定及相应加权尾合同。本节将记录函数 $Y$ 定义为：有限轮次点击时取 $Y=\mathsf N$，永不点击时取 $Y=0$。其期望为
+
+$$
+\mathbb E_{\theta,\rho}Y
+=\operatorname{Tr}(\rho T_\theta),
+\qquad
+T_\theta=\sum_{n\ge1}nE_{n,\theta}
+=\sum_{k\ge0}R_{k,\theta}.
+$$
+
+每个单独有限维模型的 $T_\theta$ 有限，由第 19.2 条保证；共同有界性尚未假设。这个量是有限点击子概率律的一阶矩。永不点击分支的零值属于统计约定；有限截止只能读到尚未点击。若把永不点击的等待值定义为 $+\infty$，只要该事件有正概率，相应扩展期望就是无穷，不能与这里的 $T_\theta$ 混用。
+
+置加权迟到效果
+
+$$
+Z_{m,\theta}=T_\theta-M_{m,\theta}
+=\sum_{n>m}nE_{n,\theta}\ge0.
+$$
+
+**引理 43.2（概率尾与时间矩尾的精确连接）。** 对任意单个模型及 $m\ge0$，有
+
+$$
+\boxed{
+Z_m=mR_m+\mathcal A^m(T),
+\qquad
+R_m\le\frac{T}{m+1}.
+}
+$$
+
+证明。对全部正算子和逐项使用 $n=\sum_{k=0}^{n-1}1$，有
+
+$$
+\sum_{n\ge1}nE_n
+=\sum_{k\ge0}\sum_{n>k}E_n
+=\sum_{k\ge0}R_k=T.
+$$
+
+第 19 节的有限性保证这些正算子和在范数中收敛。再将 $n>m$ 写成 $n=m+(n-m)$，得到
+
+$$
+Z_m=m\sum_{n>m}E_n+\sum_{k\ge m}R_k
+=mR_m+\mathcal A^m(T).
+$$
+
+最后，由 $T\ge\sum_{n>m}nE_n\ge(m+1)\sum_{n>m}E_n$ 得第二式。$\square$
+
+**定理 43.3（紧族的一阶矩连续性等价于共同加权尾收敛）。** 在定义 40.1 下，不预先假设 $R_\theta$ 连续。以下条件等价：
+
+- $\theta\mapsto T_\theta$ 在算子范数下连续。
+- $\displaystyle\lim_{m\to\infty}\sup_{\theta\in\Theta}\|Z_{m,\theta}\|_\infty=0$。
+- 全部参数和全部初态的有限点击时间记录满足
+
+$$
+\lim_{m\to\infty}
+\sup_{\theta,\rho}
+\mathbb E_{\theta,\rho}[Y\,\mathbf1_{\{Y>m\}}]=0.
+$$
+
+证明。每个 $M_{m,\theta}$ 是有限次仪器复合效果的有限和，所以连续。若 $T_\theta$ 连续，$\|T_\theta-M_{m,\theta}\|$ 是连续、递减且逐点趋零的非负函数；引理 40.2 得第二项。反过来，第二项使 $T_\theta$ 为连续 $M_{m,\theta}$ 的一致极限。
+
+对每个参数和初态，加权尾期望为 $\operatorname{Tr}(\rho Z_{m,\theta})$。正算子对全部初态的迹上确界恰为其范数，因此第二项与第三项完全相同。$\square$
+
+第三项就是这些非负时间记录分布的一致可积尾条件。这里无需假设不同装置的记录已经在同一个物理实验中耦合；每个期望取自各自声明的概率律，统一性是对这些概率律共同取上确界。
+
+**推论 43.4（一阶矩连续比事件概率连续更强）。** 在定义 40.1 下，若 $T_\theta$ 连续，则 $R_\theta$ 及第 40 节的最终输出连续。反向一般不成立；即使全部 $T_\theta$ 共同有界也不成立。
+
+证明。紧性给 $C=\sup_\theta\|T_\theta\|<\infty$。引理 43.2 得共同绝对尾界 $\|R_{m,\theta}\|\le C/(m+1)$，应用定理 40.3。第 42 节同时具有连续 $R_\varepsilon$、$T_\varepsilon\le I$ 与不连续的 $T_\varepsilon$，给出反向反例。$\square$
+
+第 42 节的加权尾项还能直接算出：对 $m\ge1$，
+
+$$
+Z_{m,\varepsilon}=(1+m\varepsilon)(1-\varepsilon)^mP_u\quad(\varepsilon>0),
+\qquad Z_{m,0}=0,
+\qquad \sup_{0\le\varepsilon\le1}\|Z_{m,\varepsilon}\|=1.
+$$
+
+第一式由引理 43.2 代入 $T_\varepsilon=P_u+P_v$ 得到。$Z_{m,\varepsilon}\le T_\varepsilon\le I$ 给上界一；固定 $m$ 后令正 $\varepsilon\downarrow0$，达到上确界一。因此每个截止都遗漏了某些相容参数的近乎全部有限点击时间矩。
+
+**定理 43.5（完整仪器校准到时间矩的有限—尾分解）。** 对两模型 $\mathfrak I,\mathfrak J$，令 $\delta=\delta(\mathfrak I,\mathfrak J)$。则对每个 $m\ge1$，
+
+$$
+\boxed{
+\|T_I-T_J\|_\infty
+\le m\min\{1,m\delta\}+\|Z_{m,I}\|_\infty+\|Z_{m,J}\|_\infty.
+}
+$$
+
+若模型类具有共同的 $\|Z_{m,\theta}\|\le c_m\to0$，便有连续性模量
+
+$$
+\|T_I-T_J\|_\infty
+\le\inf_{m\ge1}(m^2\delta+2c_m),
+$$
+
+右侧随 $\delta\downarrow0$ 趋零。
+
+证明。在第 35 节停止输出上使用同一个记录函数：点击于 $n\le m$ 时取值 $n$，尚未点击时取零。其对应观察算子 $W_m$ 满足 $0\le W_m\le mI$。对任意两归一化输出 $\omega,\sigma$，效果 $W_m/m$ 给
+
+$$
+|\operatorname{Tr}[W_m(\omega-\sigma)]|\le mD(\omega,\sigma).
+$$
+
+第 35.2 条因而给 $\|M_{m,I}-M_{m,J}\|\le m\min\{1,m\delta\}$。分别加入两侧正尾 $Z_m$，三角不等式得到方框式。共同尾情形先选 $m$ 使 $2c_m$ 足够小，再令 $\delta$ 足够小。$\square$
+
+**推论 43.6（统一条件几何尾也控制时间矩尾）。** 若全部模型共有 $R_{m,\theta}\le q^{\lfloor m/M\rfloor}R_\theta$，其中整数 $M\ge1$、$0<q<1$，置 $C=M/(1-q)$。则
+
+$$
+\boxed{
+0\le Z_{m,\theta}\le
+(m+C)q^{\lfloor m/M\rfloor}R_\theta.
+}
+$$
+
+在定义 40.1 的紧族上，$T_\theta$ 因而连续。定理 41.2 是 $q=1/2$ 的一个共同实现条件。
+
+证明。按长度 $M$ 分块求和得 $T_\theta\le CR_\theta$。正映射保持此序关系，所以 $\mathcal A_\theta^m(T_\theta)\le C R_{m,\theta}$。代入引理 43.2，并用 $R_\theta\le I$，得到共同趋零加权尾，应用定理 43.3。$\square$
+
+## 44. 稀有而漫长的记录揭示了哪些稳定性层次
+
+本批的“AHH”来自第 42 节同一个装置族和共同初态 $P_u$：点击总概率是 $\varepsilon$，在最终点击条件下，首次点击轮数的均值是 $1/\varepsilon$，有限点击时间矩在每个正参数却恒为一。把参数取到零以后，这个时间矩变成零。小概率没有消除时间成本，而是把它留在越来越稀有、越来越漫长的记录中。
+
+几个任务因而具有不同的边界要求：
+
+- 在连续紧致仪器族上，最终事件效果及带旗标终端通道的连续性，由共同绝对尾项趋零精确刻画。
+- 已有连续最终效果时，暗投影连续性由局部常秩精确刻画；紧性把它升级成共同正谱隙。
+- 条件等待还涉及对最终点击概率归一化。共同正谱隙配合绝对尾界足以得到共同相对几何尾，但第 42 节说明仅有绝对尾收敛不够。
+- 有限点击时间矩的连续性，由共同加权尾项趋零精确刻画；单独的一阶矩共同有界不能代替它。
+
+这四项分别保留概率、方向、条件分布和时间权重。它们不是给同一份读数换四个名称；第 42 节的显式公式使其中的区别可逐项核对。
+
+**说明 44.1（成熟工具与本批连接）。** 引理 40.2 使用标准 Dini 机制。仓内上下文几何卷第 45.5 节已有紧性与单调收敛的相关应用；项目钉版 Mathlib 的 [Dini 源文件](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/UniformSpace/Dini.lean)提供一般的连续单调函数一致收敛定理。本批只将其作为既有数学工具的来源，没有编译本批命题的 Lean 应用。
+
+J. R. Norris 的 [*Probability and Measure*，第 6.2 节](https://www.statslab.cam.ac.uk/~james/Lectures/pm.pdf) 的引理 6.2.2 给出一致可积的尾判据，前文给出 $L^1$ 有界但不一致可积的例子，定理 6.2.3 连接一致可积与 $L^1$ 收敛。第 43 节在首次事件效果上给出完整算子推导；没有把不同参数下的随机变量未经耦合就直接套入同一概率空间上的收敛定理。
+
+相关首次探测文献也区分了总探测概率、长时间尾和时间矩。Felix Thiel、David A. Kessler 的 [*Non-Hermitian and Zeno limit of quantum systems under rapid measurements*](https://arxiv.org/abs/2005.00464v1)比较重复投影监测与非 Hermitian 吸收模型的 Zeno 极限，并研究探测概率和时间矩；Qingyuan Wang、Ruoyu Yin、Eli Barkai 的 [*Temporal Interference from Topological Transitions in Monitored Quantum Dynamics*](https://arxiv.org/abs/2607.27045v1)研究投影监测返回中暗态转变附近的慢衰减与时间干涉。它们采用特定的酉传播与投影监测合同；第 42 节则允许同一未点击结果含多个 Kraus 分支，并把失败质量送入永久暗态。因此本文的显式公式由本例推导承担，不直接借用这些文献中的返回均值量子化或渐近式。
+
+本批把上述成熟工具、有限维谱扰动和本卷第 19、35、38—39 节连接到同一仪器族及校准任务，不主张文献原创性。共同尾速率、正谱隙和有效参数覆盖的存在与实际取得仍有区别；正文没有认证未知实验装置，也没有新增 Lean、消化覆盖或冻结结果。
+
+## 追加锚（本行以下为增补区）
+
+## 45. 来源支撑与正尾项：一个满秩探针能够控制什么
+
+第 40—44 节要求跨装置统一控制所有初态。本批先把允许的初态支撑写进任务，再研究只含酉传播和投影探测的返回过程。一个量子比特就能实现：最终点击概率始终为一，完整等待律在总变差中连续，平均返回轮数却从二跳为一。这个现象与上一批的低点击概率例子不同，不能全部归因于最终事件变得稀有。
+
+**定义 45.1（允许来源的初始支撑）。** 保留第 40.1 条的非空紧参数空间 $\Theta$、连续完整仪器族 $\mathfrak I_\theta$ 及共同有限终端读出。另给非空允许初态集合 $\Gamma\subseteq\mathcal S(\mathcal H)$，置
+
+$$
+W=\operatorname{span}\{\operatorname{supp}\rho:\rho\in\Gamma\},
+\qquad P_W\text{ 为 }W\text{ 的正交投影},
+\qquad r=\dim W\ge1.
+$$
+
+这里 $W$ 只限定初始准备，后续演化可以离开 $W$；不在每一轮额外插入 $P_W$ 投影。对通道 $\Phi$，记 $\Phi|_W$ 为先将 $\mathcal L(W)$ 自然嵌入 $\mathcal L(\mathcal H)$、再作用 $\Phi$ 的通道。其半 diamond 距离仍允许初态与任意有限参考系统纠缠。这是把通道的数学输入域扩到全部支撑于 $W$ 的状态；若某个相干叠加不属于 $\Gamma$，这个定义并不赋予实际制备它的权限。
+
+**引理 45.2（有限来源覆盖产生忠实正测试）。** 可从 $\Gamma$ 中选出 $k\le r$ 个状态及正权重，满足
+
+$$
+\bar\rho=\sum_{i=1}^k w_i\rho_i,
+\qquad w_i>0,\quad\sum_iw_i=1,
+\qquad\operatorname{supp}\bar\rho=W.
+$$
+
+令 $\lambda>0$ 为 $\bar\rho|_W$ 的最小本征值。对每个正算子 $A\ge0$，有
+
+$$
+\boxed{
+\operatorname{Tr}(\bar\rho A)
+\le\|P_WAP_W\|_\infty
+\le\frac{\operatorname{Tr}(\bar\rho A)}\lambda.
+}
+$$
+
+证明。从任意允许态的非零支撑开始；若已取支撑的张成还不等于 $W$，就再取一个支撑不包含在当前张成中的允许态。每次维数至少增加一，至多 $r$ 次得到 $W$。任取全正权重；若 $v\in W$ 对 $\bar\rho$ 的二次型为零，则每个非负加项都为零，故 $v$ 与所有已取支撑正交，只能为零。所以 $\bar\rho|_W$ 正定。
+
+记 $A_W=P_WAP_W|_W\ge0$。由 $\operatorname{Tr}\bar\rho=1$ 得左界。又 $\bar\rho|_W\ge\lambda I_W$，故
+
+$$
+\operatorname{Tr}(\bar\rho A)
+\ge\lambda\operatorname{Tr}(A_W)
+\ge\lambda\|A_W\|_\infty,
+$$
+
+得到右界。$\square$
+
+$\bar\rho$ 在此也可以只表示 $k$ 个允许来源读数的固定加权和。若要实际随机准备这份混合态，还须允许相应经典随机化；线性推导本身不增加准备权限。
+
+**定理 45.3（忠实标量响应与完整来源支撑上的稳定性）。** 固定引理 45.2 的测试态 $\bar\rho$。下列条件等价：
+
+- 标量 $a(\theta)=\operatorname{Tr}(\bar\rho R_\theta)$ 连续。
+- $\theta\mapsto P_WR_\theta P_W$ 在算子范数下连续。
+- $\displaystyle\sup_{\theta\in\Theta}\|P_WR_{m,\theta}P_W\|_\infty\longrightarrow0$。
+- $\theta\mapsto\Phi_{\infty,\theta}|_W$ 在半 diamond 距离下连续。
+
+此外，对每个参数及截止都有精确式及探针界
+
+$$
+\boxed{
+\delta(\Phi_{\infty,\theta}|_W,\Phi_{m,\theta}|_W)
+=\|P_WR_{m,\theta}P_W\|_\infty
+\le\frac{\operatorname{Tr}(\bar\rho R_{m,\theta})}{\lambda}.
+}
+$$
+
+证明。若第一项成立，标量余项
+
+$$
+f_m(\theta)=\operatorname{Tr}(\bar\rho R_\theta)
+-\operatorname{Tr}(\bar\rho H_{m,\theta})
+=\operatorname{Tr}(\bar\rho R_{m,\theta})
+$$
+
+连续、非负、递减且逐点趋零。第 40.2 条给共同趋零，再用引理 45.2 的正算子界得到第三项。第三项使压缩效果为连续有限效果 $P_WH_{m,\theta}P_W$ 的一致极限，推出第二项。第二项当然推出第一项。
+
+第 38.2 条证明可在初态嵌入后直接使用：带参考的删失输出差仍是等迹的正、负正交块，最大迟到概率正是初始空间 $W$ 上压缩效果的最大本征值。这给出方框中的等式，无需 $W$ 对后续动力学不变。第三项于是使最终限制通道为连续有限限制通道的一致极限，推出第四项。第四项经第 38 节固定的正交点击／永不点击旗标检验给第二项；同一族终端读出保留该旗标，所以效果差受限制通道距离控制。若删去旗标，一个恒定输出通道可以抹掉最终点击效果的区别，这个反向推论便无此依据。最后的上界由引理 45.2 得到。$\square$
+
+因此，若固定有限来源的最终点击响应均随参数连续，它们的支撑覆盖所产生的忠实加权测试也连续，便足以保证整个 $W$ 初态类的长期输出稳定；这包括这些初态所允许的相干叠加及外部参考。这里用的是正尾项的控制，不是由几个概率读数恢复全部矩阵元。常数 $\lambda$ 取决于所选来源和权重；支撑覆盖本身不给跨来源族统一的正下界。
+
+**定理 45.4（同一忠实测试对时间矩的判据）。** 在相同合同下，下列三项等价：
+
+$$
+\theta\longmapsto\operatorname{Tr}(\bar\rho T_\theta)\text{ 连续};
+\qquad
+\theta\longmapsto P_WT_\theta P_W\text{ 连续};
+\qquad
+\sup_\theta\|P_WZ_{m,\theta}P_W\|\longrightarrow0.
+$$
+
+这里 $T,Z_m$ 仍按第 43 节统计有限点击的轮数矩。
+
+证明。首项使 $\operatorname{Tr}(\bar\rho Z_{m,\theta})$ 成为连续、递减、逐点趋零的非负函数，因为每个有限矩 $M_{m,\theta}$ 连续。Dini 机制与引理 45.2 推出第三项；第三项使压缩 $T$ 为连续压缩 $M_m$ 的一致极限，推出第二项；第二项取固定迹即得首项。$\square$
+
+**命题 45.5（忠实稳定性测试不等于效果重建）。** 一个满秩初态的最终点击概率，不能一般确定完整最终点击效果。
+
+证明。在量子比特上取 $R_+=|+\rangle\langle+|$ 与 $R_-=|-\rangle\langle-|$，其中 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。两者可分别由点击 Kraus 算子 $L_\pm=R_\pm$ 和未点击算子 $Q_\pm=I-R_\pm$ 实现；未点击后进入该装置的暗子空间，故最终点击效果就是 $R_\pm$。满秩来源 $\bar\rho=I/2$ 对两者都给概率 $1/2$，但输入 $R_+$ 时两概率分别为一与零。甚至分别测试 $P_0,P_1$ 的全部首次点击概率，也不能区分这两份效果。$\square$
+
+引理 45.2 不能套到一般 Hermitian 差 $R_+-R_-$：其忠实迹为零而算子非零。第 45.3 条是在连续有限前缀和正的单调余项之间搭桥，所得是模型族的稳定性判据；它没有把同一个初态变成信息完备层析，更没有把单次点击变成完整边界恢复。
+
+## 46. 只用酉传播和投影监测，也能出现稳定点击与均值突变
+
+本节使用 Grünbaum、Velázquez、A. H. Werner、R. F. Werner 的离散酉返回理论中已有的二态旋转例子，改写为本卷仪器记号；第 49.1 条给出原始出处及精确对应。新增连接在于来源支撑、统一尾项和固定记录抽样任务，不把返回均值的整数跳变作为本卷的新发现。
+
+**定义 46.1（量子比特的首次返回）。** 取 $\mathcal H=\operatorname{span}\{|0\rangle,|1\rangle\}$，参数 $0\le\gamma\le1$，令
+
+$$
+U_\gamma=
+\begin{pmatrix}
+\sqrt{1-\gamma}&-i\sqrt\gamma\\
+-i\sqrt\gamma&\sqrt{1-\gamma}
+\end{pmatrix},
+\qquad
+Q_\gamma=P_1U_\gamma,
+\qquad
+L_\gamma=P_0U_\gamma.
+$$
+
+每轮先执行 $U_\gamma$，再检测是否处于 $|0\rangle$；点击即停止，未点击则继续。共同初态为 $P_0$。这是一轮酉演化后接理想投影的仪器，参数也可写成 $\gamma=\sin^2\theta$、$0\le\theta\le\pi/2$。时间仍按轮数计。
+
+**定理 46.2（同一初态的精确返回律）。** 仪器完整且随参数连续。对正 $\gamma$，从 $P_0$ 出发的首次返回轮数满足
+
+$$
+\boxed{
+p_\gamma(1)=1-\gamma,
+\qquad p_\gamma(n)=\gamma^2(1-\gamma)^{n-2}\quad(n\ge2).
+}
+$$
+
+在 $\gamma=0$ 处，$p_0(1)=1$，其余概率为零。从共同初态 $P_0$ 出发，所有参数均以概率一最终点击，点击后系统态均为 $P_0$。
+
+证明。直接核对 $U_\gamma^\dagger U_\gamma=I$，所以 $Q_\gamma^\dagger Q_\gamma+L_\gamma^\dagger L_\gamma=I$；共同矩阵条目连续给完整通道连续。第一轮点击振幅为 $\sqrt{1-\gamma}|0\rangle$。对 $n\ge2$，有
+
+$$
+Q_\gamma^{n-1}|0\rangle
+=-i\sqrt\gamma(\sqrt{1-\gamma})^{n-2}|1\rangle,
+\qquad
+L_\gamma Q_\gamma^{n-1}|0\rangle
+=-\gamma(\sqrt{1-\gamma})^{n-2}|0\rangle.
+$$
+
+取模平方即得概率。对正 $\gamma$ 求和，后续概率总和为 $\gamma$，与第一轮的 $1-\gamma$ 相加为一。零参数时第一轮已经必点击。所有非零点击分支均沿 $|0\rangle$。当 $\gamma=1$，公式按非负整数幂约定读为第二轮必点击。$\square$
+
+**定理 46.3（完整等待律接近，而平均轮数不接近）。** 将等待律视为 $\{1,2,\ldots\}$ 上的经典概率分布，则
+
+$$
+\boxed{
+\operatorname{TV}(p_\gamma,p_0)=\gamma.
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathbb E_\gamma\mathsf N=2\quad(\gamma>0),
+\qquad \mathbb E_0\mathsf N=1.
+}
+$$
+
+对正 $\gamma$ 还有
+
+$$
+\mathbb E_\gamma\mathsf N^2=2+\frac2\gamma,
+\qquad
+\operatorname{Var}_\gamma(\mathsf N)=\frac2\gamma-2.
+$$
+
+证明。第一轮概率比零模型少 $\gamma$，其余轮次的总概率为 $\gamma$，所以总变差为 $\gamma$。记 $q=1-\gamma$，对 $\gamma>0$ 使用
+
+$$
+\sum_{j\ge0}q^j=\frac1\gamma,
+\quad\sum_{j\ge0}jq^j=\frac q{\gamma^2},
+\quad\sum_{j\ge0}j^2q^j=\frac{q(1+q)}{\gamma^3}.
+$$
+
+将 $n=j+2$ 代入第二轮以后的概率和，得到
+
+$$
+\mathbb E\mathsf N=q+\gamma^2\sum_{j\ge0}(j+2)q^j=2,
+\qquad
+\mathbb E\mathsf N^2=q+\gamma^2\sum_{j\ge0}(j+2)^2q^j=2+2/\gamma.
+$$
+
+减去均值平方得到方差；零参数为常数轮数一。$\square$
+
+**命题 46.4（全来源不连续与指定来源稳定并存）。** 这一仪器族的最终点击效果为
+
+$$
+R_\gamma=I\quad(\gamma>0),\qquad R_0=P_0.
+$$
+
+所以完整效果在零参数不连续，但允许来源类 $\Gamma=\{P_0\}$ 的最终点击概率恒为一，采用恒等终端读出并合并时间标签时，最终输出也恒为同一个点击态。
+
+证明。对正 $\gamma$，$Q_\gamma$ 的像位于 $|1\rangle$，且 $Q_\gamma|1\rangle=\sqrt{1-\gamma}|1\rangle$，因此对任意输入向量 $Q_\gamma^m\psi\to0$；所有初态最终点击。零参数下 $Q_0=P_1$，初态的 $|1\rangle$ 部分永久不点击，故效果为 $P_0$。指定初态结论由第 46.2 条给出。$\square$
+
+本例的初始允许支撑 $W=\operatorname{span}\{|0\rangle\}$ 不是正参数下的未点击不变空间：第一次未点击后状态为 $P_1$。第 45 节只限制初态，所以仍适用。它保证的是 $W$ 数学输入域上的稳定性，不能扩成未被允许来源覆盖的全空间稳定性，也不增加实际准备权限。
+
+## 47. 稀有的迟到分支可以携带一个完整单位的平均时间
+
+**定理 47.1（完整等待律一致可截断）。** 对第 46 节的共同初态，记 $s_m(\gamma)=\Pr_\gamma(\mathsf N>m)$。对 $m\ge1$，
+
+$$
+s_m(\gamma)=\gamma(1-\gamma)^{m-1}.
+$$
+
+其中 $s_m(0)=0$，整数零次幂取一。其精确统一尾界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}s_1(\gamma)=1,
+\qquad
+\sup_{0\le\gamma\le1}s_m(\gamma)
+=\frac{(m-1)^{m-1}}{m^m}\sim\frac1{em}\quad(m\ge2).
+}
+$$
+
+映射 $\gamma\mapsto p_\gamma$ 在整个 $[0,1]$ 上按总变差连续。
+
+证明。对 $n>m$ 的几何级数求和得到尾公式。若 $m\ge2$，函数 $\gamma(1-\gamma)^{m-1}$ 的内部导数与 $1-m\gamma$ 同号，两端为零，故最大值在 $\gamma=1/m$ 取得。渐近式来自 $(1-1/m)^{m-1}\to e^{-1}$。$m=1$ 时尾概率就是 $\gamma$。
+
+把 $n>m$ 的所有记录替换为共同删失符号 $\partial$，得到有限字母表上的分布 $p_\gamma^{(m)}$；将它与原分布都放在 $\mathbb N_{\ge1}\cup\{\partial\}$ 上。每个有限分布依赖参数连续，且
+
+$$
+\operatorname{TV}(p_\gamma,p_\gamma^{(m)})=s_m(\gamma)
+$$
+
+一致趋零。三角不等式便给完整等待律的总变差连续性。$\square$
+
+这里只给无穷记录律的数学表示和有限删失近似，不宣称有限装置能够存下无界的原始轮数标签。
+
+**定理 47.2（概率尾收敛，但加权尾不收敛）。** 定义
+
+$$
+z_m(\gamma)=\mathbb E_\gamma[\mathsf N\,\mathbf1_{\{\mathsf N>m\}}].
+$$
+
+对 $m\ge1$、$\gamma>0$，
+
+$$
+\boxed{
+z_m(\gamma)=(1+m\gamma)(1-\gamma)^{m-1},
+\qquad z_m(0)=0.
+}
+$$
+
+对 $m\ge2$，其精确上确界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}z_m(\gamma)
+=\left(1+\frac1m\right)
+ \left(1-\frac1{m^2}\right)^{m-1}
+\longrightarrow1.
+}
+$$
+
+因此这些等待时间的均值虽共同不超过二，分布族却不一致可积。
+
+证明。对正参数，逐项计数给
+
+$$
+\mathbb E[\mathsf N\mathbf1_{\{\mathsf N>m\}}]
+= m s_m+\sum_{k=m}^{\infty}s_k
+=(1+m\gamma)(1-\gamma)^{m-1}.
+$$
+
+零参数下所有等待时间都为一，所以 $m\ge1$ 时尾矩为零。对 $m\ge2$，正参数表达式的导数为
+
+$$
+(1-\gamma)^{m-2}(1-m^2\gamma),
+$$
+
+最大值在 $\gamma=1/m^2$ 取得。代入即得上确界；第二因子的对数为 $(m-1)\log(1-1/m^2)\to0$，故极限为一。$m=1$ 时，正参数下 $z_1(\gamma)=1+\gamma$，零参数下仍为零，最大值为二。按非负随机变量族的一致可积尾判据，统一加权尾不趋零，正是所需反例。$\square$
+
+**命题 47.3（进入迟到分支的概率与其条件等待相抵）。** 对正 $\gamma$，第一轮未点击的概率为 $\gamma$；条件于该结果，状态变成 $P_1$，剩余轮数 $\mathsf N-1$ 具有参数 $\gamma$ 的几何分布。因此
+
+$$
+\boxed{
+\mathbb E_\gamma\mathsf N
+=1+\Pr_\gamma(\mathsf N>1)
+  \mathbb E_\gamma[\mathsf N-1\mid\mathsf N>1]
+=1+\gamma\frac1\gamma=2.
+}
+$$
+
+证明。第一轮未点击后态由 $Q_\gamma|0\rangle=-i\sqrt\gamma|1\rangle$ 给出。从 $P_1$ 出发，每轮点击概率为 $\gamma$，未点击又回到 $P_1$；故剩余轮数的分布为 $\gamma(1-\gamma)^{j-1}$、$j\ge1$，均值为 $1/\gamma$。条件全期望得到方框式。$\square$
+
+在零参数处，这个迟到条件事件概率为零，不能继续定义其归一化后继并把 $0\cdot\infty$ 当计算规则。零模型的均值直接由第一轮必点击给出。这里的单位时间贡献由同一过程的稀有后继承担，未点击分支的条件化是实质步骤。
+
+**推论 47.4（固定截止的实际运行成本不能统一逼近完整均值）。** 截止于第 $m\ge1$ 轮的运行成本为 $\min\{\mathsf N,m\}$，其均值满足
+
+$$
+\boxed{
+\mathbb E_\gamma\min\{\mathsf N,m\}
+=2-(1-\gamma)^{m-1}\quad(0\le\gamma\le1).
+}
+$$
+
+该函数对参数连续，但对任意固定 $m$，
+
+$$
+\sup_{0\le\gamma\le1}
+\left(\mathbb E_\gamma\mathsf N
+-\mathbb E_\gamma\min\{\mathsf N,m\}\right)=1.
+$$
+
+证明。整数等待时间的截断期望是 $\sum_{k=0}^{m-1}s_k$，其中 $s_0=1$。代入第 47.1 条求和；零参数下式值也为一。对正参数，完整均值与截断均值的差为 $(1-\gamma)^{m-1}$，上确界为一；零参数下差为零。$\square$
+
+这个运行成本与第 43 节的 $\mathbb E[\mathsf N\mathbf1_{\{\mathsf N\le m\}}]$ 不同：后者把未结束轨迹记为零，前者把已经执行的 $m$ 轮如实计入。两种都不应与只报告完成样本的条件均值混写。
+
+## 48. 有限条完整返回记录，仍不能统一认证平均返回时间
+
+**定义 48.1（固定来源的独立完成记录）。** 未知参数或者为零，或者为某个指定正数 $\gamma$，两假设先验相等。每次都按第 46 节从 $P_0$ 重新准备，运行到点击，独立重复 $k\ge1$ 次，只读取完整轮数 $(\mathsf N_1,\ldots,\mathsf N_k)$。不增加其他初态、控制或中途量子读出。这是固定协议的数据任务。
+
+所有参数下单条记录都以概率一完成，$k$ 条记录也如此；但正 $0<\gamma<1$ 时完成所需总仪器调用次数没有确定的有限上界。两个端点的总成本则是确定的：零参数为 $k$ 轮，$\gamma=1$ 为 $2k$ 轮。
+
+**定理 48.2（两种返回模型的精确抽样区分界）。** 在定义 48.1 下，
+
+$$
+\boxed{
+\operatorname{TV}(p_0^{\otimes k},p_\gamma^{\otimes k})
+=1-(1-\gamma)^k,
+\qquad
+P_{\mathrm{err}}^{\mathrm{opt}}=\frac{(1-\gamma)^k}{2}.
+}
+$$
+
+最优规则是：只要有一条记录超过一轮，就判断正参数；全部为一则判断零参数。
+
+证明。零模型集中在唯一数据词 $(1,\ldots,1)$；正模型赋该词概率 $(1-\gamma)^k$。一个点质量与任意概率律的总变差等于一减该点概率，给出第一式。
+
+在其余数据词上只可能是正模型。在共同数据词上，两假设的未归一化后验权重分别为 $1/2$ 和 $(1-\gamma)^k/2$，选择零模型使错误最小。所得错误正好为后者。随机化不能降低这个逐词最小错误。$\square$
+
+**推论 48.3（均值估计的非统一性）。** 记 $\mu_\eta=\mathbb E_\eta\mathsf N$。对任意可能随机化的估计量 $\widehat\mu$，有
+
+$$
+\boxed{
+\frac12\Pr_0(|\widehat\mu-1|\ge1/2)
++\frac12\Pr_\gamma(|\widehat\mu-2|\ge1/2)
+\ge\frac{(1-\gamma)^k}{2}.
+}
+$$
+
+因此不存在固定有限 $k$，使这个来源协议上的均值估计对全部 $\eta\in[0,1]$ 都以小于 $1/2$ 的共同失败概率保证误差严格小于 $1/2$。
+
+证明。把估计值与阈值 $3/2$ 比较，得到两假设分类器。若估计误差严格小于 $1/2$，分类必正确；故分类错误率不超过对应估计失败率。第 48.2 条给出下界。若共同失败概率可取 $\alpha<1/2$，令正 $\gamma\downarrow0$，右侧趋于 $1/2$，产生矛盾。$\square$
+
+误差门槛必须保留“严格小于”：若只要求误差至多 $1/2$，常数估计量 $3/2$ 已对全部参数成功。
+
+这不排除对固定已知分离量 $\gamma>0$ 取足够多样本，也不排除增加探测权限。它刻画的是零参数与任意接近零的正参数不能由固定数量的完成记录统一区分。按仪器调用计，$k$ 条记录的平均成本分别为 $k$ 和 $2k$；平均成本有界没有提供确定截止，也没有消除上述推断障碍。第 37 节的任意自适应查询结论属于另一仪器与访问合同，不能移植成此处的无条件下界。
+
+## 49. 从返回量子化到关系边界：本批得到的连接与来源
+
+本批的“AHH”是：造成不稳定平均时间的稀有性，可以藏在迟到的子历史中。第 46 节对共同来源的最终点击概率始终为一，完整等待律按总变差连续；但概率 $\gamma$ 的第一轮未点击分支，携带条件均值 $1/\gamma$ 的剩余等待。它们在每个正参数下贡献整整一个平均轮数，而零参数下这个条件事件已经不存在。
+
+因此“边界保存全部事件概率”和“边界稳定控制无界时间成本”具有不同的精度要求。第 47 节分别算出趋零的概率尾与不趋零的加权尾，第 48 节再把这种区别变成一个固定来源、固定样本数的区分障碍。这些都是同一装置、同一初态、同一记录规则中的关系，没有将不同模型的最优量拼接为一个实现。
+
+第 45 节给出另一条有用的连接：对正的迟到效果，一个在允许初始支撑上忠实的测试态可以控制该支撑上的最坏误差。这个测试能桥接稳定性，却不能重建任意效果；关键是正性与连续有限前缀，不能只凭“满秩”把单个期望值当作全部相干信息。
+
+**说明 49.1（既有量子返回结果及精确模型对应）。** F. A. Grünbaum、L. Velázquez、A. H. Werner、R. F. Werner 的 [*Recurrence for discrete time unitary evolutions*，arXiv:1202.3903v3](https://arxiv.org/abs/1202.3903v3)，发表于 *Communications in Mathematical Physics* 320（2013），研究每次酉演化后投影测试是否返回初始纯态的协议。原文定理 2 在每轮酉演化后投影监测初态、且最终返回概率为一的常返对 $(U,\phi)$ 上表明：平均返回时间有限，当且仅当初态谱测度只含有限个非零权重的不同点质量，并且均值等于这些点的个数。常返前提不能省略；它使这里的平均返回时间与本卷的有限点击时间矩相等。
+
+原文第 4.2 节例 2 已给二态旋转的平均返回时间：非退化旋转时为二，退化时为一；第 5 节讨论均值跳变附近的返回方差。第 46 节与这个例子的对应可直接写出。令
+
+$$
+V=\operatorname{diag}(1,-i),
+\qquad
+O_\theta=
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix}.
+$$
+
+则在 $0\le\theta\le\pi/2$、$\gamma=\sin^2\theta$ 下，
+
+$$
+U_\gamma=VO_\theta V^\dagger,
+\qquad VP_0V^\dagger=P_0,
+\qquad VP_1V^\dagger=P_1.
+$$
+
+所以整个准备、酉步骤和两投影都由同一个基变换对应，首次返回记录律相同。本卷的直接级数计算与这一成熟结果一致，不主张首次发现二态均值跳变。
+
+在本例中，循环空间 $\operatorname{span}\{U_\gamma^n|0\rangle:n\ge0\}$ 的维数为：零参数下一，正参数下二。后者因为 $U_\gamma|0\rangle$ 有非零 $|1\rangle$ 分量。因此这里的均值也等于这个维数。一般有限维酉返回中，该维数等于初态所覆盖的不同谱点数；此解释依赖返回初态的投影合同，不自动推广到本卷允许的任意 CP 仪器。
+
+**说明 49.2（工具、证据与适用边界）。** 第 45 节复用第 40 节的 Dini 机制、正算子的忠实迹控制，以及第 38 节含任意参考的删失通道恒等式。第 47 节的一致可积概念采用第 44.1 条所引 Norris 第 6.2 节的尾判据；第 48 节是对两点抽样实验逐词计算的标准检验界。它们在此连接到同一返回仪器，不以改换记号或综合表述声称文献原创性。
+
+本批只给纯理论定义、推导、反例与来源对应。有限来源的支撑覆盖是已给定模型条件，不能从有限次实验无误认证；完成记录数也不等于确定的仪器调用预算。时间均以轮数计，物理秒数需要额外钟标定。本文没有新增 Lean 证明、消化覆盖或冻结结果。
+
+## 追加锚（本行以下为增补区）
+
+## 50. 随机截止把等待过程变成一份可操作的生成函数
+
+第 45—49 节说明：完整等待律连续，不足以保证无界时间均值连续。本批增加一个实际控制接口——每次未点击后，以固定概率结束本轮实验。它使平均运行成本有限，并把事件时间律变成一族有理响应。以下保持已声明的有限维完整记忆与固定仪器，不改判既有条目。
+
+**定义 50.1（独立几何截止）。** 设每轮原始仪器由未点击 CP 分支 $\mathcal N$ 与点击分支 $\mathcal C_x$ 组成，各分支允许不同的后继空间，并满足 $\operatorname{Tr}\mathcal N(Y)+\sum_x\operatorname{Tr}\mathcal C_x(Y)=\operatorname{Tr}Y$。沿用
+
+$$
+\mathcal A=\mathcal N^*,\qquad
+B=\sum_x\mathcal C_x^*(I)=I-\mathcal A(I),\qquad
+E_n=\mathcal A^{n-1}(B).
+$$
+
+本批对各端口选固定的 CPTP 终端读出 $\Lambda_x$，不依赖点击轮数；共同有限输出空间为 $\mathcal K$，并保留与点击输出正交的截止旗标 $|\partial\rangle$。这是第 38 节允许接口的一种特殊情形。
+
+给定 $0<\eta\le1$，置 $q=1-\eta$。每次至少执行一轮原始仪器；点击则结束，未点击后才抛独立硬币，以概率 $\eta$ 截止，以概率 $q$ 继续。等价地，可预先独立抽取
+
+$$
+\Pr(\mathsf M=m)=\eta q^{m-1},\qquad m=1,2,\ldots,
+$$
+
+运行到首次点击或第 $\mathsf M$ 轮；同轮点击优先于截止。若原始过程永不点击，记原始轮数为 $\mathsf N=\infty$，实际调用次数仍为 $\min\{\mathsf N,\mathsf M\}$。
+
+硬币独立性、其概率标定及重新使用同一仪器，都是操作合同。这里没有在未点击后重新准备初态，因而不是重启协议。每轮相同的硬币规则无需先存储一个无界整数；本批也不要求保留全部原始时间标签。成本只计原仪器调用次数，不含初态制备、硬币生成、终端读出或秒数；期望成本的上界也不等于确定的最大轮数。
+
+**定理 50.2（截止后的完整仪器与终端通道）。** 一轮扩展仪器可写成
+
+$$
+\text{继续}:q\mathcal N,\qquad
+\text{点击 }x:\Lambda_x\mathcal C_x,\qquad
+\text{截止}:Y\longmapsto\eta\operatorname{Tr}[\mathcal N(Y)]|\partial\rangle\langle\partial|.
+$$
+
+它是完整 CP 仪器，且以概率一终止。最终通道为
+
+$$
+\boxed{
+\Psi_\eta(Y)=
+\left[\sum_{n\ge1,x}q^{n-1}
+ \Lambda_x\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}[(I-G_\eta)Y],
+\qquad
+G_\eta=\sum_{n\ge1}q^{n-1}E_n.
+}
+$$
+
+其中 $0\le G_\eta\le I$ 是截止前实际点击的效果。
+
+证明。三类分支均 CP；其迹之和为
+
+$$
+q\operatorname{Tr}\mathcal N(Y)
++\sum_x\operatorname{Tr}\mathcal C_x(Y)
++\eta\operatorname{Tr}\mathcal N(Y)=\operatorname{Tr}Y.
+$$
+
+连续 $m$ 轮仍未终止的概率为 $q^m\operatorname{Tr}\mathcal N^m(\rho)\le q^m$，故终止概率为一。首次点击在第 $n$ 轮须先经历 $n-1$ 次未点击且硬币均允许继续，因而分支权重为 $q^{n-1}$。这些分支的迹给 $G_\eta$；其余质量进入正交旗标，得到保迹终端通道。$\square$
+
+这里的 $\partial$ 只表示本次被截止，没有认证原始仪器永不点击。它与第 38 节的未解决旗标使用相同输出位置，便于比较；含义仍由实际运行协议决定。
+
+**定理 50.3（点击响应与运行成本的预解式）。** 定义实际调用次数的期望效果 $\mathsf C_\eta$，即
+
+$$
+\mathbb E_\rho\min\{\mathsf N,\mathsf M\}
+=\operatorname{Tr}(\rho\mathsf C_\eta).
+$$
+
+则
+
+$$
+\boxed{
+G_\eta=(\operatorname{id}-q\mathcal A)^{-1}(B),\qquad
+\mathsf C_\eta=(\operatorname{id}-q\mathcal A)^{-1}(I)
+=\sum_{m\ge0}q^mS_m,
+}
+$$
+
+并有
+
+$$
+\boxed{
+I\le\mathsf C_\eta\le\frac I\eta,\qquad
+I=qG_\eta+\eta\mathsf C_\eta.
+}
+$$
+
+因此只要硬币合同已知，截止前点击概率 $a_\eta=\operatorname{Tr}(\rho G_\eta)$ 就确定平均调用成本
+
+$$
+\boxed{c_\eta=\frac{1-q a_\eta}{\eta}.}
+$$
+
+证明。$\mathcal A$ 正且次保单位；在 Hermitian 算子的算子范数下是收缩，因为 $-I\le H\le I$ 推出 $-I\le\mathcal A(H)\le I$。故 $q<1$ 时 Neumann 级数收敛，给出两份逆算子表达。
+
+实际调用次数严格超过 $m$ 的概率为 $q^m\operatorname{Tr}(\rho S_m)$。对 $m\ge0$ 求和得到成本式。由 $S_0=I$、$0\le S_m\le I$ 得两侧界。
+
+最后
+
+$$
+(\operatorname{id}-q\mathcal A)(I)=\eta I+qB.
+$$
+
+作用逆算子即得恒等式，取迹得到标量成本。$\eta=1$ 时 $q=0$，本协议只运行一轮，所有式子仍成立。$\square$
+
+## 51. 永久未点击与有限点击时间矩，是同一成本的两部分
+
+**定理 51.1（截止成本的极点与有限部分）。** 对每一个固定模型，沿用 $F=\lim_mS_m$、$R_m=S_m-F$、$T=\sum_{m\ge0}R_m$。则
+
+$$
+\boxed{
+\mathsf C_\eta
+=\frac F\eta+\sum_{m\ge0}q^mR_m,
+\qquad
+\lim_{\eta\downarrow0}\eta\mathsf C_\eta=F,
+\qquad
+\lim_{\eta\downarrow0}
+\left(\mathsf C_\eta-\frac F\eta\right)=T.
+}
+$$
+
+极限均为算子范数极限。第一项 $F/\eta$ 来自原始过程永久未点击的质量；第二项趋向本卷把永不点击记为零的有限点击时间矩。
+
+证明。将 $S_m=F+R_m$ 代入第 50.3 条，常数项求几何级数即得分解。第 19、43 节对每个固定有限模型给出正级数 $T=\sum_mR_m$ 的收敛。有限维下
+
+$$
+\sum_m\|R_m\|_\infty
+\le\sum_m\operatorname{Tr}R_m=\operatorname{Tr}T<\infty.
+$$
+
+对这个可和上界作有限前缀与尾项分解，$q\uparrow1$ 时得到 $\sum_mq^mR_m\to T$。此外该正和不超过 $T$，所以乘以 $\eta$ 后趋零，给第一个极限。$\square$
+
+对固定初态，若 $\operatorname{Tr}(\rho F)>0$，实际截止成本按 $\operatorname{Tr}(\rho F)/\eta$ 发散；若该权重为零，成本趋向有限点击均值。这与把原始无穷等待赋值为无穷的扩展期望相容，也说明不能把有限点击时间矩误当作所有实际轨迹的完整成本。
+
+**定理 51.2（几何截止的精确输出偏差）。** 将第 38 节最终通道 $\Phi_\infty$ 特殊化为同一族 $\Lambda_x$ 读出，采用共同旗标，则
+
+$$
+\boxed{
+\delta(\Phi_\infty,\Psi_\eta)=\|R-G_\eta\|_\infty,
+\qquad
+0\le R-G_\eta\le\eta(T-R).
+}
+$$
+
+这里 $\delta$ 是含任意有限参考系统的半 diamond 距离。
+
+证明。点击块中，无穷输出减去截止输出，恰是把第 $n$ 轮首次点击分支乘以 $1-q^{n-1}\ge0$ 后求和；它是 CP 映射，效果为
+
+$$
+R-G_\eta=\sum_{n\ge1}(1-q^{n-1})E_n.
+$$
+
+旗标块差为相反号，带参考时仍为等迹的正、负正交块。第 38.2 条的同一证明给出精确半 diamond 范数。由
+
+$$
+1-(1-\eta)^{n-1}\le\eta(n-1)
+$$
+
+及 $\sum_n(n-1)E_n=T-R$，得到算子序界。$\square$
+
+这条偏差界按同一个模型的 $T-R$ 计量。单个模型的有限性不提供跨模型的统一常数，也不自动说明减去极点以后，有限部分对装置校准连续。
+
+## 52. 截止提高稳定性，同时引入可量化的偏差
+
+**定理 52.1（完整仪器校准对随机截止输出的控制）。** 比较两个具有相同端口、相同终端读出和相同截止概率的原始仪器，记其带记录通道的半 diamond 距离为 $\delta_0$。则
+
+$$
+\boxed{
+\delta(\Psi_\eta^I,\Psi_\eta^J)
+\le\min\{1,\delta_0/\eta\},
+}
+$$
+
+以及
+
+$$
+\boxed{
+\|\mathsf C_\eta^I-\mathsf C_\eta^J\|_\infty
+\le\frac q\eta\min\{1,\delta_0/\eta\}.
+}
+$$
+
+证明。以同一独立截止 $\mathsf M$ 对第 38 节有限删失通道混合，得
+
+$$
+\Psi_\eta=\sum_{m\ge1}\eta q^{m-1}\Phi_m.
+$$
+
+这是归一化几何权重的通道混合，级数在通道范数中收敛。第 35、38 节给 $\delta(\Phi_m^I,\Phi_m^J)\le m\delta_0$；凸性与 $\mathbb E\mathsf M=1/\eta$ 给第一界，再与距离不超过一合并。
+
+共同点击旗标检验给 $\|G_\eta^I-G_\eta^J\|_\infty\le\delta(\Psi_\eta^I,\Psi_\eta^J)$。第 50.3 条的恒等式直接给
+
+$$
+\mathsf C_\eta^I-\mathsf C_\eta^J
+=-\frac q\eta(G_\eta^I-G_\eta^J),
+$$
+
+推出第二界。$\square$
+
+**命题 52.2（两种截止敏感度的阶数均可达到）。** 即使只有一维活动空间，固定 $0<\eta<1$ 时，输出对校准误差的一阶系数 $1/\eta$ 与成本的一阶系数 $q/\eta^2$ 都不能在整个模型类上统一降低。
+
+证明。比较每轮从不点击的仪器与每轮以概率 $0<\varepsilon\le1$ 点击的仪器。其未点击分支分别为恒等与 $(1-\varepsilon)\operatorname{id}$，点击分支分别为零与 $\varepsilon\operatorname{id}$；完整带记录通道距离为 $\varepsilon$。使用共同标量点击输出，则
+
+$$
+G_\eta^0=0,\qquad
+G_\eta^\varepsilon=\frac{\varepsilon}{\eta+q\varepsilon},
+\qquad
+\mathsf C_\eta^0=\frac1\eta,\qquad
+\mathsf C_\eta^\varepsilon=\frac1{\eta+q\varepsilon}.
+$$
+
+所以
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{\delta(\Psi_\eta^0,\Psi_\eta^\varepsilon)}{\varepsilon}
+=\frac1\eta,
+\qquad
+\lim_{\varepsilon\downarrow0}
+\frac{|\mathsf C_\eta^0-\mathsf C_\eta^\varepsilon|}{\varepsilon}
+=\frac q{\eta^2}.
+$$
+
+$\square$
+
+**推论 52.3（已知成本尾预算下的偏差—校准分解）。** 若两个模型另满足
+
+$$
+\|T_I-R_I\|_\infty\le K_I,\qquad
+\|T_J-R_J\|_\infty\le K_J,
+$$
+
+则对每个 $0<\eta\le1$，
+
+$$
+\boxed{
+\delta(\Phi_\infty^I,\Phi_\infty^J)
+\le\min\{1,\delta_0/\eta+\eta(K_I+K_J)\}.
+}
+$$
+
+证明。在两个最终输出之间分别插入其截止输出，使用第 51.2、52.1 条与三角不等式。$\square$
+
+减小截止概率会降低每个固定模型的截止偏差，同时放大校准误差的系数。这里的 $K_I,K_J$ 必须来自已知模型或独立证书；不能由一批有限截止记录自动获得。公式给出在这份已知预算下选择 $\eta$ 的依据，不提供未知尾项的无条件认证。
+
+## 53. 有限维先验可以把整条事件时间律压进有限个精确截止读数
+
+这一节的读数是精确概率，不是有限实验样本。保持同一固定仪器在全部轮次重复，并把会影响后续的全部活动记忆计入维数上界。
+
+**定理 53.1（截止响应的有理次数界）。** 固定状态 $\rho$，把 $q=1-\eta$ 作为参数，定义
+
+$$
+a(q)=\operatorname{Tr}\!\left[\rho(\operatorname{id}-q\mathcal A)^{-1}(B)\right]
+=\sum_{n\ge1}q^{n-1}\operatorname{Tr}(\rho E_n),\qquad0\le q<1.
+$$
+
+若 $\dim\mathcal H\le d$、$D=d^2$，则存在实多项式 $P,Q$，满足
+
+$$
+\boxed{
+a(q)=\frac{P(q)}{Q(q)},\qquad
+\deg P\le D-1,\quad\deg Q\le D,\quad
+Q(q)\ne0\ (0\le q<1),\quad Q(0)=1.
+}
+$$
+
+零多项式 $P$ 也允许。对每个端口单独的截止点击概率，同样成立。
+
+证明。在 Hermitian 算子的实向量空间上选基，$\mathcal A$ 由一个阶数 $D_0=(\dim\mathcal H)^2\le D$ 的实矩阵 $A$ 表示。取 $Q(q)=\det(I-qA)$。第 50.3 条保证 $0\le q<1$ 时可逆，且 $Q(0)=1$。由伴随矩阵公式，$\operatorname{adj}(I-qA)$ 的各项次数不超过 $D_0-1$；与固定输入 $B$、输出泛函 $X\mapsto\operatorname{Tr}(\rho X)$ 配对，得到次数不超过 $D-1$ 的分子。端口版本只需换成 $B_x=\mathcal C_x^*(I)$。$\square$
+
+这里的 $d^2$ 来自密度算子的线性动力学空间，不是把概率生成函数等同于纯态振幅生成函数。若另有已知且已证明的较小线性实现维数，可对该维数应用同一论证；仅凭某些样本显示低秩还不构成这份先验。
+
+**定理 53.2（有限精确响应对完整事件律的充分性）。** 给定维数上界 $d$。两份符合上述合同的模型，各使用自己固定的初态。若它们在 $2d^2$ 个不同的 $q_i\in[0,1)$ 上具有相同 $a(q_i)$，则它们的全部首次点击轮数概率、永不点击概率和有限点击时间矩都相同。
+
+如果两模型有共同输入空间，且在这些点的整个效果 $G_{1-q_i}$ 相同，则它们对每个共同初态都具有相同的上述时间统计。若每个截止设置还分别给出各端口的精确点击概率，逐端口应用可恢复时间—端口联合分布；只有总点击概率不提供这份端口分解。
+
+证明。写两响应为 $P_1/Q_1$ 与 $P_2/Q_2$。多项式
+
+$$
+P_1Q_2-P_2Q_1
+$$
+
+次数不超过 $2d^2-1$，却在 $2d^2$ 个不同点为零，故恒为零。因此两有理函数在 $[0,1)$ 上相同。其在零点邻域的幂级数系数唯一，给出每个首次点击概率相同。总有限点击概率及其补数随之相同；逐项加权求和得到有限点击时间矩相同。
+
+效果版本对任意固定初态取迹即可；端口版本对每个 $B_x$ 重复上述推导。$\square$
+
+该结果给出一个充分的读数数量，不主张最少。它唯一确定指定来源的时间律，不唯一确定内部仪器、隐藏记忆或未知初态。相同时间律可以有不同内部实现；若要保留点击后的量子态，则还须保留相应的量子输出接口。
+
+**命题 53.3（没有维数上界时，有限截止读数甚至不能确定均值）。** 任给有限个不同的 $q_1,\ldots,q_r\in[0,1)$，$r\ge1$，存在两个有限支撑、最终必点击的等待律，使全部这些截止点击概率相同，但平均等待不同。它们可由同一维数、同一固定初态的有限 CP 仪器分别实现。
+
+证明。令
+
+$$
+h(z)=(z-1)\prod_{i=1}^r(z-q_i)
+=\sum_{n=1}^{r+2}\Delta_n z^{n-1}.
+$$
+
+则 $\sum_n\Delta_n=h(1)=0$，而
+
+$$
+\sum_{n=1}^{r+2}n\Delta_n
+=h'(1)+h(1)=\prod_{i=1}^r(1-q_i)>0.
+$$
+
+取足够小的 $a>0$，使
+
+$$
+p_n^\pm=\frac1{r+2}\pm a\Delta_n>0
+\qquad(1\le n\le r+2).
+$$
+
+它们都归一化。两概率生成函数之差为 $2ah(z)$，在每个 $q_i$ 为零，而两个均值之差为 $2ah'(1)>0$。
+
+为实现任意一份这样的 $p$，取基 $|0\rangle,\ldots,|r+1\rangle$，共同初态为 $|r+1\rangle$。单个点击标签的 Kraus 算子为
+
+$$
+\sqrt{p_1}|0\rangle\langle r+1|,\qquad |0\rangle\langle0|;
+$$
+
+单个未点击标签的 Kraus 算子为
+
+$$
+\sqrt{p_n}|n-2\rangle\langle r+1|\quad(2\le n\le r+2),
+\qquad
+|k-1\rangle\langle k|\quad(1\le k\le r).
+$$
+
+这些算子的伴随平方之和为 $I$。第一轮点击的概率为 $p_1$；否则以概率 $p_n$ 进入倒计时态 $|n-2\rangle$，再经 $n-2$ 次未点击移位和一次点击，总计第 $n$ 轮首次点击。所有轮次使用同一仪器，且两模型使用相同初态。$\square$
+
+这个实现的活动空间随有限读数数量增长；它没有违反第 53.2 条的已知维数上界。它说明维数证书必须覆盖实际可回流的记忆，不能只数外部可见端口，再把隐藏的倒计时装置排除在模型之外。
+
+## 54. 精确可恢复与稳定可恢复，在同一个量子比特上分开
+
+**定理 54.1（量子比特返回的随机截止响应）。** 对第 46 节的仪器和共同初态 $P_0$，有
+
+$$
+\boxed{
+a_\eta(\gamma)=1-\frac{\gamma\eta}{\eta+q\gamma},\qquad
+c_\eta(\gamma)=1+\frac{q\gamma}{\eta+q\gamma},
+\qquad q=1-\eta.
+}
+$$
+
+其中 $0\le\gamma\le1$、$0<\eta\le1$。特别地，
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}(1-a_\eta(\gamma))=\eta,
+\qquad
+\sup_{0\le\gamma\le1}|\mathbb E_\gamma\mathsf N-c_\eta(\gamma)|=1.
+}
+$$
+
+证明。将第 46.2 条的等待律代入生成函数：
+
+$$
+a_\eta(\gamma)
+=1-\gamma+\frac{q\gamma^2}{1-q(1-\gamma)}
+=1-\frac{\gamma\eta}{\eta+q\gamma}.
+$$
+
+零参数时也直接成立。成本式由第 50.3 条，或对 $q^m s_m$ 求和得到。
+
+函数 $\gamma\eta/(\eta+q\gamma)$ 随 $\gamma$ 单调增加，在 $\gamma=1$ 取得最大值 $\eta$。对正 $\gamma$，原始均值为二，故
+
+$$
+2-c_\eta(\gamma)=\frac{\eta}{\eta+q\gamma};
+$$
+
+固定 $\eta$ 后令正 $\gamma\downarrow0$，上确界为一。零参数时原始均值和截止成本都为一，差为零。$\square$
+
+这份来源上，截止前点击概率一致趋向一；实际成本却不能一致逼近原始均值。所有原始模型都最终必点击，所以这种非一致性完全不需要永久未点击质量。
+
+**命题 54.2（双参数极限具有连续的过渡层）。** 令 $\eta\downarrow0$，同时 $\gamma/\eta\to u\in[0,\infty]$。则
+
+$$
+\boxed{
+a_\eta(\gamma)\longrightarrow1,\qquad
+c_\eta(\gamma)\longrightarrow1+\frac{u}{1+u},
+}
+$$
+
+其中 $u=\infty$ 时分式解释为一。
+
+证明。点击概率结论由第 54.1 条的共同上界 $1-a_\eta\le\eta$。另有
+
+$$
+c_\eta-1=\frac{q(\gamma/\eta)}{1+q(\gamma/\eta)},
+$$
+
+而 $q\to1$，逐种 $u$ 取极限即得。$\square$
+
+因此先让模型退化与先移除截止并不交换；中间的任何有限比值都产生一个介于一与二之间的成本极限。它是探测变化与截止长度的相对尺度，不是物理秒本身出现分数化。
+
+**命题 54.3（有限精确识别不保证均值的稳健恢复）。** 固定任意有限个截止概率 $\eta_i>0$。当 $\gamma\downarrow0$ 时，响应向量
+
+$$
+\bigl(a_{\eta_1}(\gamma),\ldots,a_{\eta_r}(\gamma)\bigr)
+\longrightarrow(1,\ldots,1),
+$$
+
+而原始均值从正参数的二变为零参数的一。因此从这些精确响应向量到原始均值的正确恢复映射，在零模型的响应处不连续。即使在已知的这一参数族内，一个截止概率就已能精确区分零参数与正参数，这种不连续性仍成立。
+
+证明。第 54.1 条给 $0\le1-a_{\eta_i}(\gamma)\le\gamma$，所以向量收敛。对每个固定 $\eta_i>0$，$a_{\eta_i}(0)=1$，而全部正参数都有 $a_{\eta_i}(\gamma)<1$，因此精确区分成立。均值的两个取值使任何正确恢复映射都在极限点不连续。$\square$
+
+第 53.2 条的有限精确充分性与本命题没有矛盾：前者依靠无误的实数概率和已知有限维模型类，后者检验恢复映射对概率误差的稳定性。第 48 节已经给出固定数量完整返回记录的统计下界；本节没有把它擅自升级为任意相干输入、任意自适应控制或任意随机运行预算下的下界。
+
+## 55. 时间边界的充分性还需要给出精度与成本
+
+本批的“AHH”是：一份有限输出接口，可以通过改变一个已标定的截止概率，把整条无穷时间律编码进有理响应；在已知有限记忆上界时，有限个精确响应甚至足以唯一确定整条时间律。但对这些响应施加任意小误差以后，平均时间仍可能无法稳定恢复。信息是否足够、恢复是否连续、实验能否达到所需精度，是三件不同的事。
+
+随机截止还有一个直接物理含义：对每个固定模型，它把实际调用成本分成 $F/\eta$ 与趋向 $T$ 的有限部分。永久未点击权重决定前者，有限点击轨迹决定后者。故同一个操作族既能解释“永远等不到”的成本，也能展示“必然等到但均值不稳定”的限制。
+
+**说明 55.1（标准工具与本批证据范围）。** 本批使用 Neumann 级数、有限矩阵伴随公式、概率生成函数及多项式零点计数。仓内折扣可观测性 Lyapunov 方程与有限序列的 Hankel 实现源码已有相关线性结构；本批将这些工具连接到实际截止仪器、事件记录和运行成本，没有新增或编译这些推导的 Lean 应用。
+
+Mohammed Dahleh、Munther A. Dahleh、George Verghese 的 MIT 讲义 [*Lectures on Dynamic Systems and Control*，第 25.3 节](https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/resources/mit6_241js11_chap25/) 给出线性状态空间的有理传递函数 $H(z)=C(zI-A)^{-1}B+D$，式（25.11）—（25.12）连接其系数与 $CA^{n-1}B$。[第 10 章](https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/resources/mit6_241js11_chap10/) 式（10.20）—（10.21）给出相应的离散时间变换和预解式展开。
+
+第 53 节的精确对应是：$A$ 表示未点击伴随映射，$B$ 表示点击效果，$C$ 是固定初态的迹泛函，直通项 $D=0$；对 $q>0$，$a(q)=q^{-1}H(q^{-1})$。本文只沿原 CP 仪器到线性表示的方向使用这份对应；任意有理函数的线性实现并不自动具有 CP 性、完整仪器归一化或可实现的量子记忆。最小线性实现维数也不能未经证明就当成最小物理记忆维数。
+
+第 49.1 条所引 Grünbaum 等人的原文以酉返回振幅及其 Schur 函数描述返回过程；这里的 $G_\eta$ 是概率效果的生成函数，作用空间为 Hermitian 算子的线性空间，不能把二者的次数与量子化结论直接互换。第 53 节的有理次数界由本文的伴随矩阵证明承担。
+
+本批未声称取得未知装置的维数证书、截止概率校准、精确实数概率或统一尾预算。几何截止只中止当前实验；若要重启并重新准备初态，需要额外的制备与记忆重置合同。全部结论是纯理论文本，不宣称文献原创性、Lean 核验、消化覆盖或冻结。
+
+## 追加锚（本行以下为增补区）
