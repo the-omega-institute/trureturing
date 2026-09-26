@@ -1,5 +1,6 @@
 import LeanInformationAudit.Syntax
 import InformationSourceFixture
+import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 
 namespace LeanInformationAudit.Tests.DeclaredArguments
 open Lean Meta Elab Command
@@ -90,6 +91,17 @@ run_meta do
   check "independent_dictionary_alias_readout_rejected"
     (mkConst ``InformationSourceFixture.dictionaryReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.dictionaryReadout")
+  check "class_only_readout_rejected"
+    (mkConst ``InformationSourceFixture.classOnlyReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.classOnlyReadout")
+  check "explicit_class_only_readout_rejected"
+    (mkConst ``InformationSourceFixture.explicitClassOnlyReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.explicitClassOnlyReadout")
+  check "aliased_class_only_readout_rejected"
+    (mkConst ``InformationSourceFixture.aliasedClassOnlyReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.aliasedClassOnlyReadout")
+  check "class_and_infinite_readout_accepted"
+    (mkConst ``InformationSourceFixture.classAndInfiniteReadout) none
   check "independent_output_only_readout_rejected" (mkConst ``InformationSourceFixture.outputOnlyReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.outputOnlyReadout")
   check "local_unapplied_readout_rejected" (mkConst ``localChoiceReadout)
@@ -101,12 +113,20 @@ run_meta do
   let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
   check "classical_equality_dictionary_data_rejected" equalityDictionary
     (some "unclassified_form:E2.dictionary_position:Classical.decEq")
+  let dictionarySlot ← RegistrationGates.templateArgumentsCurrent ``target
+    #[equalityDictionary] 524288 #[] #[true]
+  let dictionarySlotAccepted := match dictionarySlot with
+    | .ok _ => true
+    | .error _ => false
+  (if dictionarySlotAccepted then logInfo else logError)
+    m!"[{if dictionarySlotAccepted then "PASS" else "FAIL"}] classical_equality_dictionary_slot_accepted result={repr dictionarySlot}"
   let boolDictionary <- mkAppM ``Classical.decEq #[mkConst ``Bool]
   check "classical_equality_application_data_rejected"
     (mkApp2 boolDictionary (mkConst ``Bool.true) (mkConst ``Bool.false))
     (some "unclassified_form:E2.dictionary_position:Classical.decEq")
   check "constructive_equality_dictionary_data_accepted" (mkConst ``instDecidableEqBool) none
-  let signature := mkApp3 (mkConst ``RegistrationTemplates.cutSignature)
+  let signature := mkApp3 (mkConst
+    ``D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutSignature)
     (mkConst ``Int) infiniteOutput equalityDictionary
   let resultType <- mkAppM ``PrimitiveRealization #[signature]
   let saved <- getEnv

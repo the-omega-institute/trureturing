@@ -103,7 +103,7 @@ elab "observe_escape_records" : command => do
           | _ => false
         pure <| originOk && residualOk && hashesOk &&
           wire.getObjValAs? String "bridge_kind" == .ok kind
-    let ok := match expected with
+    let ok : Bool := match expected with
       | none => validated && failure.isEmpty && metadataOk
       | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
     set saved

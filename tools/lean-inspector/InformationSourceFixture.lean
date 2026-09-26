@@ -9,6 +9,7 @@ abbrev BoolAlias := Bool
 abbrev IntAlias := Int
 abbrev CompositeAlias := Option Int
 abbrev DictionaryAlias := DecidableEq Int
+abbrev ClassAlias := Inhabited Bool
 abbrev ErasedAlias (_ : Type) := Bool
 
 def nameReadout (_ : NameAlias) : Bool := true
@@ -19,6 +20,10 @@ def aliasReadout (_ : IntAlias) : Bool := true
 def compositeReadout (_ : Option Int) : Bool := true
 def aliasedCompositeReadout (_ : CompositeAlias) : Bool := true
 def dictionaryReadout (_ : DictionaryAlias) : Bool := true
+def classOnlyReadout [Inhabited Bool] : Bool := true
+def explicitClassOnlyReadout (_ : Inhabited Bool) : Bool := true
+def aliasedClassOnlyReadout (_ : ClassAlias) : Bool := true
+def classAndInfiniteReadout [Inhabited Bool] (_ : Int) : Bool := true
 def outputOnlyReadout (_ : Bool) : Int := 0
 
 run_meta do

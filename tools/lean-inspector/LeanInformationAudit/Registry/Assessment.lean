@@ -114,7 +114,7 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
     let (dependencies, typeWork) ← checkExtractionType theoremName info.type
       (← get).remaining (← get).constructorTypes
     debit typeWork
-    let indices := indexPositions info.type
+    let indices := typePositions info.type
     debit indices.size
     let (argumentNames, argumentWork) ← match ←
         RegistrationGates.templateArgumentsCurrent theoremName arguments (← get).remaining
@@ -290,7 +290,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
               (projection.universeArgs.isNone || projection.universeArgs == some universeArgs) then
             -- Audit the entire literal receiver before selecting a field. An
             -- unused anchor or signature parameter is still an extraction input.
-            let indices := indexPositions info.type
+            let indices := typePositions info.type
             debit (indices.size + projection.parameters.size)
             let (names, work) ← match ← RegistrationGates.templateArgumentsCurrent
                 context.theoremName (fields ++ projection.parameters) (← get).remaining
@@ -475,7 +475,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
   let arguments := descriptor.getAppArgs
   let budget := initialBudget - eraseWork
   let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget plan.constructorTypes
-      (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
+      (plan.slots.map fun slot => slot.type.isConstOf ``Nat || slot.kind == .dictionary) with
     | .ok result => pure result
     | .error reason => throwError reason
   let compare : CompareM TemplateBindingCertificate := do
