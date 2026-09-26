@@ -57752,3 +57752,292 @@ $$
 这里的酉表示描述准备曲线的数学结构，未施加哈密顿量、物理能量、带宽或原处理器的矩与分项预算约束。固定谱没有消去关系响应：本节的信息变化全部来自特征方向的组合，而精确矩阵二阶条件仍由（264.23）、（264.28）共同保证。
 
 ## 追加锚（本行以下为增补区）
+
+## 265. 固定实基底的平面限制与不可消去的方向变化
+
+第264节在固定全部特征值时保留了非交换阶优势。非交换性本身还不能解释这项优势：同一个 Bloch 大圆上的状态通常已经不对易，但它们仍能在一个固定基底中同时写成实矩阵。本节允许这个固定基底任意选择，比较平面轨迹与一般固定谱轨迹。
+
+**定义 265.1（可在固定基底中取实的曲线类）。** 对 $0<\eta\le1$，在定义264.1的允许类中，进一步要求存在一个不依赖实参数 $t$ 的酉矩阵 $V$，使
+
+$$
+V\rho(t)V^*\in M_2(\mathbb R)
+\quad(t\in\mathbb R).
+\tag{265.1}
+$$
+
+$V$ 可以依赖整条曲线和 $\eta$。记这一类的名义 SLD 信息上确界为 $F_\eta^{\rm real}$，其中矩阵元可延拓成整函数的子类对应 $F_\eta^{\rm real,ent}$。曲线仍在原基底中满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta)
+\quad(t\in\mathbb R).
+\tag{265.2}
+$$
+
+这里没有要求 $V$ 同时对角化 $C_\eta$。
+
+**定理 265.2（全部固定实基底上的二分之一次幂阶）。** 对 $0<\eta\le1$，
+
+$$
+\boxed{
+\sqrt\eta
+\le F_\eta^{\rm real,ent}
+\le F_\eta^{\rm real}
+\le\min\{1,256\sqrt\eta\}.
+}
+\tag{265.3}
+$$
+
+证明。 置 $b=1/4$，写 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$。固定谱条件等价于 $|\boldsymbol u|=b$，而第264节的直接 SLD 计算给出
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{265.4}
+$$
+
+先处理 $\rho(t)$ 本身在 $C_\eta$ 的特征基中为实矩阵的情形。此时 $\boldsymbol u=(x,0,z)$ 在半径 $b$ 的圆上。实轴单连通，故有全域 $C^2$ 角函数使
+
+$$
+x=b\sin\theta,\qquad z=-b\cos\theta.
+\tag{265.5}
+$$
+
+也可从任一点选择初始角，再积分 $\theta'=(xz'-zx')/b^2$ 得到此提升。先给出适用于全部固定谱曲线的一个点态估计。由 $\rho''\preceq C_\eta\preceq I$，且 $\rho''=\boldsymbol u''\cdot\boldsymbol\sigma$，可知 $|\boldsymbol u''|\le1$。对 $|\boldsymbol u|^2=b^2$ 两次求导，得到 $|\boldsymbol u'|^2=-\boldsymbol u\cdot\boldsymbol u''\le b$，故 $I_Q\le4b=1$。特别地，下面可以使用较宽松的全域速度界：
+
+$$
+4b^2\theta'^2=I_Q\le1\le4,
+\qquad |\theta'|\le4.
+\tag{265.6}
+$$
+
+上界矩阵差的对角元及行列式同时给出
+
+$$
+z''\ge-\eta,\qquad
+b^2(\theta'^4+\theta''^2)
+\le\eta+(1-\eta)b(\cos\theta\,\theta'^2+\sin\theta\,\theta'').
+\tag{265.7}
+$$
+
+非负函数 $b-z$ 的二阶导数至多为 $\eta$，所以标量正性界给出
+
+$$
+z'^2\le2\eta(b-z)\le4b\eta=\eta.
+\tag{265.8}
+$$
+
+另一方面，从（265.7）丢去左侧非负的 $\theta'^4$，并用 $|\sin\theta|\le|\theta|$，得到
+
+$$
+|\theta''|^2
+\le16\eta+4\theta'^2+4|\theta|\,|\theta''|.
+\tag{265.9}
+$$
+
+解这个关于 $|\theta''|$ 的二次不等式，并使用平方根的次可加性，可得方便的估计
+
+$$
+|\theta''|
+\le4\bigl(|\theta|+|\theta'|+\sqrt\eta\bigr).
+\tag{265.10}
+$$
+
+改变角函数的整数周数，使 $\theta(0)\in[-\pi,\pi]$。若 $|\theta(0)|\ge1/4$，在 $\sin\theta(0)\ne0$ 时，把（265.8）的第一式除以 $b^2\sin^2\theta(0)$，得到
+
+$$
+\theta'(0)^2
+\le\frac{2\eta}{b(1-\cos\theta(0))}.
+\tag{265.11}
+$$
+
+若 $\theta(0)=\pm\pi$，则 $z''(0)=-b\theta'(0)^2\ge-\eta$，仍给出同一个界。由 $1-\cos(1/4)\ge1/48$，
+
+$$
+I_Q(\rho_0)\le96\eta\le96\sqrt\eta.
+\tag{265.12}
+$$
+
+余下只需处理 $|\theta(0)|<1/4$。令 $h=1/32$。式（265.6）保证
+
+$$
+|\theta(t)|\le3/8\qquad(|t|\le h).
+\tag{265.13}
+$$
+
+必要时反转实参数，使 $\theta'(0)=v\ge0$；二阶矩阵上界不因此改变。若 $v\le\sqrt\eta$，则信息至多为 $\eta/4$。若 $|\theta(0)|\ge hv$，使用 $|\sin\theta(0)|\ge|\theta(0)|/2$，由（265.8）得到
+
+$$
+\sqrt\eta\ge |z'(0)|\ge\frac{bhv^2}{2},
+\qquad
+I_Q(\rho_0)\le\frac{8b}{h}\sqrt\eta=64\sqrt\eta.
+\tag{265.14}
+$$
+
+最后考虑 $v>\sqrt\eta$ 且 $|\theta(0)|<hv$。置
+
+$$
+J(t)=|\theta(t)|+|\theta'(t)|+\sqrt\eta.
+\tag{265.15}
+$$
+
+由（265.10），几乎处处有 $|J'|\le5J$。对正、负两个参数方向分别积分，
+
+$$
+J(t)\le e^{5|t|}J(0)
+<e^{5h}(2+h)v<3v
+\quad(|t|\le h).
+\tag{265.16}
+$$
+
+最后一个常数估计可直接用 $e^{5/32}\le32/27$，于是乘积至多为 $65/27<3$。因此 $|\theta''|\le12v$，并且
+
+$$
+\theta'(t)\ge v-12vh\ge v/2
+\quad(|t|\le h).
+\tag{265.17}
+$$
+
+若 $\theta(0)\ge0$，取 $t_*=h$；否则取 $t_*=-h$。式（265.17）给出 $|\theta(t_*)|\ge hv/2$，再由（265.13），
+
+$$
+\sqrt\eta
+\ge |z'(t_*)|
+=b|\sin\theta(t_*)|\,|\theta'(t_*)|
+\ge\frac{bhv^2}{8}.
+\tag{265.18}
+$$
+
+所以
+
+$$
+I_Q(\rho_0)=4b^2v^2
+\le\frac{32b}{h}\sqrt\eta
+=256\sqrt\eta.
+\tag{265.19}
+$$
+
+这证明了在上界特征基中取实的情形。
+
+现在处理任意固定基底。式（265.1）等价于整条向量曲线 $\boldsymbol u(t)$ 包含于某个过原点的固定二维平面 $P$：实矩阵的 Pauli 向量在 $xz$ 平面内，固定酉共轭则对应一个固定旋转。写
+
+$$
+C_\eta=c_0I+\boldsymbol c\cdot\boldsymbol\sigma,
+\qquad
+c_0=\frac{1+\eta}{2},
+\qquad
+\boldsymbol c=(0,0,(1-\eta)/2).
+\tag{265.20}
+$$
+
+令 $\boldsymbol c_P$ 为 $\boldsymbol c$ 到 $P$ 的正交投影，定义辅助正定矩阵
+
+$$
+\widehat C
+=\sqrt{\eta+|\boldsymbol c_P|^2}\,I
++\boldsymbol c_P\cdot\boldsymbol\sigma.
+\tag{265.21}
+$$
+
+对于任意 $\boldsymbol k\in P$ 及 $H=\boldsymbol k\cdot\boldsymbol\sigma$，有
+
+$$
+\det(C_\eta-H)
+=\eta+2\boldsymbol c_P\cdot\boldsymbol k-|\boldsymbol k|^2
+=\det(\widehat C-H).
+\tag{265.22}
+$$
+
+两个 Hermitian 差矩阵的迹均严格为正。在二维中，非负行列式和正迹等价于半正定，因此
+
+$$
+C_\eta-H\succeq0
+\quad\Longleftrightarrow\quad
+\widehat C-H\succeq0
+\qquad(\boldsymbol k\in P).
+\tag{265.23}
+$$
+
+这是一条在指定平面内的约束等价，没有把原矩阵上界直接投影后当成新上界。
+
+将 $P$ 旋转到 $xz$ 平面后，所有状态和 $\widehat C$ 都是实矩阵。再以实正交矩阵对角化 $\widehat C$，仍保持所有状态为实矩阵。其两个特征值满足
+
+$$
+\lambda_+\ge\lambda_->0,
+\qquad\lambda_+\lambda_-=\det\widehat C=\eta.
+\tag{265.24}
+$$
+
+以该固定基变换后的曲线记为 $\rho_1$，并令
+
+$$
+\widetilde\rho(s)=\rho_1(s/\sqrt{\lambda_+}),
+\qquad r=\lambda_-/\lambda_+\in(0,1].
+\tag{265.25}
+$$
+
+此曲线保持精确谱，且在同一实基底中满足 $\widetilde\rho''\preceq\operatorname{diag}(1,r)$。信息在这次参数变换下除以 $\lambda_+$，因此已证的（265.19）给出
+
+$$
+I_Q(\rho_0)
+\le256\lambda_+\sqrt r
+=256\sqrt\eta.
+\tag{265.26}
+$$
+
+该界与平面的方向无关，故覆盖定义265.1中允许的全部固定基底。
+
+最后给出整函数下界。取
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad
+\omega^2=\frac{\sqrt\eta}{b},
+\qquad
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma.
+\tag{265.27}
+$$
+
+其特征值精确固定，矩阵元为整函数。由 $\boldsymbol u''=-\omega^2\boldsymbol u$，
+
+$$
+\det(C_\eta-\rho'')=\eta-b^2\omega^4=0,
+\qquad
+\operatorname{Tr}(C_\eta-\rho'')=1+\eta>0.
+\tag{265.28}
+$$
+
+所以原矩阵上界在全实轴成立。整条曲线在 $xy$ 平面内，经过一个固定酉旋转即能同时取实，属于所需比较类。其信息为
+
+$$
+I_Q=4b^2\omega^2=4b\sqrt\eta=\sqrt\eta.
+\tag{265.29}
+$$
+
+由此得到（265.3）的全部不等式。证毕。
+
+**推论 265.3（一般固定谱曲线与全部平面曲线的阶差）。** 当 $\eta\downarrow0$，
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_\eta^{\rm real,ent}}
+=\Theta(\eta^{-1/6}).
+\tag{265.30}
+$$
+
+证明。 第264节给出分子的上下界为正固定常数乘 $\eta^{1/3}$；（265.3）给出分母的上下界为正固定常数乘 $\eta^{1/2}$。上下界分别组合即得结论。证毕。
+
+同一 $256\sqrt\eta$ 上界还覆盖任意固定仿射平面内的轨迹，虽然这种轨迹未必能在固定基底中同时取实。确实，写 $\boldsymbol u=\boldsymbol p+\boldsymbol v$，其中 $\boldsymbol v(t)\in P$、$\boldsymbol p\perp P$ 为常向量，则 $|\boldsymbol v|=R=\sqrt{b^2-|\boldsymbol p|^2}$。$R=0$ 时曲线恒定；否则令 $\widehat{\boldsymbol u}=(b/R)\boldsymbol v$。对应密度保持所需固定谱，轨迹在过原点的平面中，矩阵上界为 $(b/R)C_\eta$。通过参数缩放，（265.26）对正数 $a$ 倍上界给出 $I_Q\le256a\sqrt\eta$；取 $a=b/R$，再按一阶向量长度换回原曲线，得到
+
+$$
+I_Q(\rho_0)
+\le256\frac Rb\sqrt\eta
+\le256\sqrt\eta.
+\tag{265.31}
+$$
+
+因此，第264节中取得相应下界的曲线，在充分小的 $\eta$ 下不能通过任何固定二维基变换使整条曲线同时取实，也不能包含于任何固定仿射平面。这比两两不对易更严格：式（265.27）的大圆曲线已经通常不对易，但其信息仍只有二分之一次幂阶。相反，仅有非平面性也不保证任意一条曲线达到三分之一次幂阶；这里比较的是明确约束下的类上确界。
+
+固定基底中同时取实的统计模型已有反酉对称的表述。Jisho Miyazaki 与 Keiji Matsumoto，*Imaginarity-free quantum multiparameter estimation*，Quantum 6（2022），665，[原文 arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，第3.1节定义1及附录A.2分别讨论参数无关的反酉对称与过原点的 Bloch 平面模型。本节沿用这项既有几何对应；上述证明处理额外固定矩阵二阶约束下的信息阶，并另外覆盖不经过原点的仿射平面。
+
+本节沿用第261—264节的 SLD、Pauli 表示和标量正性背景。比较始终固定二维表示、精确谱和原矩阵二阶约束；没有排除更高维实表示，也没有限制随参数变化的基底。它不把固定基底下的复数分量单独当作资源，更不声称排除了所有实量子描述。所得区别是：在这个准备曲线问题中，任何固定平面都限制了可取得的信息阶，而一般固定谱方向变化可以超过这一限制。哈密顿量、物理能量、带宽与原处理器附加约束仍不在本节的实现范围内。
+
+## 追加锚（本行以下为增补区）
