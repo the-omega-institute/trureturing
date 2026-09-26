@@ -45358,7 +45358,7 @@ $$
 \mathcal K_q=
 \left\{
 \bar\sigma=\frac{\sigma_++\sigma_-}{2}:
-\sigma_\pm\succeq0,\ 
+\sigma_\pm\succeq0,
 \operatorname{Tr}_{R_{\mathrm{out}}}\sigma_\pm=\rho_\pm
 \right\}.
 \tag{165.6}
