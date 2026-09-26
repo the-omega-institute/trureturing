@@ -83,7 +83,6 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
       simp only [unsweep]
       rw [hphi]
       rw [htail]
-      rfl
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
