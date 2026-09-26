@@ -67,7 +67,17 @@ Blocks(
                             + "cone homology. Complex torus links are separate comparison "
                             + "models, not mixed-characteristic analytic identifications. "
                             + "These are ordinary proofs; no new WSS prime or additional "
-                            + "Lean conclusion is asserted."))),
+                            + "Lean conclusion is asserted.")),
+                    Paragraph(
+                        Text("GMI derives the exact generator-index form of the same "
+                            + "order and proves that every golden layer is nonmonogenic. "
+                            + "It classifies all pure-three-power generator indices and "
+                            + "proves a localization obstruction at the actual third block. "
+                            + "The regular maximal block nineteen refutes using this "
+                            + "power-basis failure as a WSS witness. Local algebra "
+                            + "generation and local index-form solvability are separated. "
+                            + "Sources and full ordinary proofs remain in the companion; "
+                            + "the authored Lean statement and provenance are unchanged."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
