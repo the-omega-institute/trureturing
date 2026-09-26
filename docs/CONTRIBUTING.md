@@ -75,7 +75,7 @@ need a mathematical skill. A contribution request you can paste:
 
 1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
    and read the linked rules before editing.
-2. Follow [Your first change](#your-first-change) to create an isolated worktree;
+2. Follow [Your first change](#your-first-change) to create or reuse a worktree;
    open that directory as the agent's workspace for the contribution.
 3. [Edit the owning source](#edit-the-owning-source), run
    [focused validation](#check-your-change), and arrange independent review of
@@ -140,15 +140,19 @@ individual experiments may have additional prerequisites.
 
 ## Your first change
 
-Fork [the repository](https://github.com/the-omega-institute/trureturing/fork)
-on GitHub and keep the initial checkout on `dev`. First check
-`git worktree list --porcelain` and reuse this session's worktree if present.
-Otherwise, replace `YOUR-USERNAME` and `SESSION-ID` below with your account and
-actual session ID:
+Fork [the repository](https://github.com/the-omega-institute/trureturing/fork).
+Clone only if needed, replacing `YOUR-USERNAME`:
 
 ```sh
 git clone https://github.com/YOUR-USERNAME/trureturing.git
 cd trureturing
+```
+
+From your `dev` checkout, run `git worktree list --porcelain`; reuse this
+session's worktree if listed. Otherwise replace `SESSION-ID` with your actual
+session ID and run the following, adding `upstream` only if absent:
+
+```sh
 git remote add upstream https://github.com/the-omega-institute/trureturing.git
 git fetch upstream dev
 make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-SESSION-ID
