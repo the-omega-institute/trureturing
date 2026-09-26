@@ -27,22 +27,15 @@ run_meta do
     let owned := inventory.filter (·.key.registrationModule == owner)
     unless owned.size == 1 do throwError "historical occurrence lost or duplicated: {owner}"
   for event in inventory do
-    let context := event.key.theoremName ==
-      `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points
-    if context then
-      let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-        | throwError "missing context declaration"
-      let record ← TemplateBinding.assess event (some claim)
-      let .declaredValidated _ := record.result
-        | throwError "context binding failed: {(← TemplateBinding.recordJson record).compress}"
-      unless record.escape.fromObject.isSome &&
-          record.escape.continuation.any (·.kind == "open") do
-        throwError "context occurrence lacks escape evidence"
-    else
-      let record ← TemplateBinding.assess event none
-      unless record.result matches .undeclared do
-        throwError "unresolved causal occurrence was silently replaced"
-  logInfo "[PASS] six distinct historical occurrences: two validated contexts, four unchanged causal gaps"
+    let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
+      | throwError "missing original declaration"
+    let record ← TemplateBinding.assess event (some claim)
+    let .declaredValidated _ := record.result
+      | throwError "original binding failed: {(← TemplateBinding.recordJson record).compress}"
+    unless record.escape.fromObject.isSome &&
+        record.escape.continuation.any (·.kind == "open") do
+      throwError "original occurrence lacks escape evidence"
+  logInfo "[PASS] six distinct historical occurrences: two contexts and four causal bindings validated"
 
 run_cmd do
   for root in #[`Reg.Catalogs.InformationRoot, `Reg.Catalogs.TemplateShadow,

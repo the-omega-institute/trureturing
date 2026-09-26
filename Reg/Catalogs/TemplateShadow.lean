@@ -34,7 +34,7 @@ run_meta do
     (``D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena),
     (``D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena),
+      ``Reg.Support.LegacyCausalCoordinates.icObjectArena),
     (``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
       ``D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena),
     (``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
@@ -61,7 +61,7 @@ run_meta do
 end
 
 #print axioms D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyCausalCoordinates.icObjectArena/Reg.Support.LegacyCausalCoordinates.icObjectArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena».__lowers_escape

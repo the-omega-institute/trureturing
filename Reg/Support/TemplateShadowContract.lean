@@ -36,7 +36,7 @@ def occurrences : Array SnapshotOccurrence :=
                      theoremName := `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
                      statementIdentity := "sha256:778398ffe72817b135e29453ae9a3b796de14383670686abbf230840cb7ee515",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena,
+  { objectArenaName := `Reg.Support.LegacyCausalCoordinates.icObjectArena,
                      theoremName := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
                      statementIdentity := "sha256:fd8c5bad3c9b38d167e59ff3889f6897c82fdd7070d8feaae13528062ac13140",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.TemplateShadow },
@@ -62,6 +62,6 @@ def contract : RootCatalogContract := {
 
 -- Seal reference after the faithful finite arena transports.
 def expectedSealDigest : String :=
-  "5e709d80870dc02db612730e4b6434a3ece16ae326be768c1fb00d9fba90515f"
+  "b8d155246eb0910129f7c7fb60697bbf592233abbbd1aba0ff7dfc30c6d50393"
 
 end Reg.Support.TemplateShadowContract

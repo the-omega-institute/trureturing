@@ -27,14 +27,14 @@ run_cmd do
   let sourceCausal := SharedInformationRootContract.causalOccurrences
   unless sourceCausal.size == 2 && sourceCausal.all (fun row =>
       row.objectArenaName ==
-        `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena &&
+        `Reg.Support.LegacyCausalCoordinates.objectArena &&
       expected.any (sameOccurrence row) && !frozen.any (sameOccurrence row)) do
     throwError "ROOT-B-snapshot-split: production causal source inventory changed"
   let causal := actual.filter fun row => sourceCausal.any fun source =>
     row.registrationModuleName == source.registrationModuleName &&
     row.theoremName == source.theoremName && row.objectArenaName == source.objectArenaName
   let causalArena :=
-    `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena
+    `Reg.Support.LegacyCausalCoordinates.objectArena
   unless causal.size == 2 && causal.all (fun row =>
       row.catalogId == `«causal-unified-transitions» && row.objectArenaName == causalArena) do
     throwError "ROOT-B-designated-seal: causal contributor/catalog identity mismatch"

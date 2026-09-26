@@ -9,8 +9,20 @@ namespace StrataLint.DeclaredTemplate.Tests;
 public sealed class LegacyContextCausalEvidenceTests
 {
     private static readonly string[] Registrations = [
+        "Reg/D5/S3/ConceptDynamics/Aggregation/AgendaPower/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Aggregation/AgendaPower/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentScope/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentScope/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/ExperimentDesign/StaticExactExperimentDesign/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/ExperimentDesign/StaticExactExperimentDesign/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction/TemplateShadow.lean",
         "Reg/D5/S3/ConceptDynamics/Interpretation/InterpretationFixedPoint/InformationRoot.lean",
         "Reg/D5/S3/ConceptDynamics/Interpretation/InterpretationFixedPoint/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation/TemplateShadow.lean",
         "Reg/D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation/InformationRoot.lean",
         "Reg/D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation/TemplateShadow.lean",
         "Reg/D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation/UnifiedCausalRegistration.lean",
@@ -20,9 +32,9 @@ public sealed class LegacyContextCausalEvidenceTests
     // The opt-in data are current native :report zips, including actual type material.
     // The runner must report a skip as unverified, never as acceptance.
     [SkippableFact]
-    public void historical_contexts_pass_native_materials_and_import_join_with_causal_gaps()
+    public void eighteen_original_occurrences_pass_native_materials_source_join_and_reject_missing_or_changed_evidence()
     {
-        var directory = Environment.GetEnvironmentVariable("LEGACY_CONTEXT_CAUSAL_ARTIFACTS");
+        var directory = Environment.GetEnvironmentVariable("LEGACY_CAUSAL_FINAL_ARTIFACTS");
         Skip.If(string.IsNullOrEmpty(directory), "Focused native artifacts were not supplied.");
         var root = TestRepositoryLayout.FindRoot();
         var files = new Dictionary<string, LeanFileReport>();
@@ -84,21 +96,37 @@ public sealed class LegacyContextCausalEvidenceTests
             RawRepositorySnapshot.Create(sources.Values))).Snapshot;
         var selected = Registrations.Select(RepoPath.CreateKnown).ToArray();
         var evidence = InformationTemplateEvidence.Collect(joined, LeanAxiomReport.Create(files), selected);
-        Assert.Equal(6, evidence.Inventory.Count);
-        Assert.Equal(2, evidence.Occurrences.Values.Count(occurrence => occurrence.HasFourSlots));
+        Assert.Equal(18, evidence.Inventory.Count);
+        Assert.Equal(18, evidence.Occurrences.Values.Count(occurrence => occurrence.HasFourSlots));
         foreach (var path in Registrations)
         {
             var wire = JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())!;
+            Assert.Equal(14, wire["compatibility_version"]!.GetValue<int>());
             var record = Assert.Single(wire["records"]!.AsArray(),
                 row => row!["registration_source_path"]!.GetValue<string>() == path)!;
-            if (!path.Contains("InterpretationFixedPoint", StringComparison.Ordinal))
-            {
-                Assert.Equal("undeclared", record["state"]!.GetValue<string>());
-                Assert.Null(record["certificate"]);
-                continue;
-            }
             Assert.Equal("declared_validated", record["state"]!.GetValue<string>());
-            foreach (var mutation in new[] { "missing-certificate", "retargeted-certificate", "missing-unit" })
+            var theoremName = record["key"]!["theorem"]!.GetValue<string>();
+            var sourcePath = path[4..path.LastIndexOf('/')] + ".lean";
+            var source = RepoPath.CreateKnown(sourcePath);
+            var names = ImmutableHashSet.Create(theoremName);
+            var sourceSelection = InformationTemplateTheoremSelection.Collect(joined,
+                LeanAxiomReport.Create(files), source, RepoPath.CreateKnown(path), names);
+            Assert.Single(sourceSelection.Occurrences);
+            var missingSourceFiles = files.Where(pair => pair.Key != sourcePath)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            Assert.Throws<FormatException>(() => InformationTemplateTheoremSelection.Collect(joined,
+                LeanAxiomReport.Create(missingSourceFiles), source, RepoPath.CreateKnown(path), names));
+            var realizationName = record["realization_name"]!.GetValue<string>();
+            Assert.Contains(files[path].Declarations, declaration => declaration.Name == realizationName);
+            var missingRealization = new Dictionary<string, LeanFileReport>(files) {
+                [path] = files[path] with {
+                    Declarations = files[path].Declarations.Where(declaration => declaration.Name != realizationName)
+                        .ToImmutableArray()
+                }
+            };
+            Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(joined,
+                LeanAxiomReport.Create(missingRealization), selected));
+            foreach (var mutation in new[] { "missing-certificate", "retargeted-certificate", "missing-unit", "missing-realization", "wrong-occurrence" })
             {
                 var changed = wire.DeepClone();
                 var changedRecord = changed["records"]!.AsArray().Single(row =>
@@ -110,6 +138,8 @@ public sealed class LegacyContextCausalEvidenceTests
                         changedRecord["certificate"]!["key"]!["object_arena"] = "Reg.Invalid.changedLaw";
                         break;
                     case "missing-unit": changedRecord["unit_name"] = "Reg.Invalid.missingUnit"; break;
+                    case "missing-realization": changedRecord["realization_name"] = "Reg.Invalid.missingRealization"; break;
+                    case "wrong-occurrence": changedRecord["key"]!["theorem"] = "D5.Invalid.original"; break;
                 }
                 var corrupted = new Dictionary<string, LeanFileReport>(files) {
                     [path] = files[path] with { InformationTemplates = JsonSerializer.SerializeToElement(changed) }

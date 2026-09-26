@@ -24,6 +24,10 @@ def currentOccurrence (row : SnapshotOccurrence) : SnapshotOccurrence :=
       `Reg.Support.LegacyGluing.arena
     else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena then
       `Reg.Support.LegacyContextReplacement.objectArena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena then
+      `Reg.Support.LegacyCausalCoordinates.icObjectArena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena then
+      `Reg.Support.LegacyCausalCoordinates.objectArena
     else row.objectArenaName }
 
 def contract : RootCatalogContract := {
@@ -35,6 +39,6 @@ def contract : RootCatalogContract := {
 
 -- Seal reference after the faithful finite arena transports.
 def expectedSealDigest : String :=
-  "8db3b830b9de6b17c35d317868e6640ca91e92c1be627cd0fe4aff0d053df4af"
+  "10d7a7bee7c78e925a53ac2b379d2d3fc00545193cf0ab22dd1a76159bd58e30"
 
 end Reg.Support.InformationRootContract

@@ -37,7 +37,7 @@ example : D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectru
 example : Reg.Support.LegacyContextReplacement.objectArena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 56 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 240 := by
+example : Reg.Support.LegacyCausalCoordinates.icObjectArena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyCausalCoordinates.icObjectArena/Reg.Support.LegacyCausalCoordinates.icObjectArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 240 := by
   decide
 
 example : D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena».__information_catalog.uniqueCaptureCount
@@ -102,25 +102,8 @@ run_meta do
         entry.occurrence.key.theoremName == row.theoremName &&
         entry.occurrence.key.registrationModule == row.registrationModuleName
       | throwError "missing production binding row"
-    if row.theoremName ==
-        ``D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective ||
-        row.theoremName ==
-        ``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention ||
-        row.theoremName ==
-        ``D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause ||
-        row.theoremName ==
-        ``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary ||
-        row.theoremName ==
-        ``D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application ||
-        row.theoremName == ``D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points ||
-        row.theoremName == ``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power ||
-        row.theoremName == ``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification ||
-        row.theoremName == ``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design ||
-        row.theoremName == ``D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state then
-      unless observed.result matches .declaredValidated _ do
-        throwError "completed production binding regressed"
-    else
-      unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 10 validated and 1 undeclared statuses"
+    unless observed.result matches .declaredValidated _ do
+      throwError "completed production binding regressed"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 11 validated and 0 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline

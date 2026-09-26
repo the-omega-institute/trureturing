@@ -24,17 +24,17 @@ def slot4 : Slot := ⟨(Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))), by 
 def slot5 : Slot := ⟨(Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))), by decide⟩
 def slot6 : Slot := ⟨(Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))), by decide⟩
 
-def signature (X Y : Type) [DecidableEq Y] : PrimitiveSignature X where
+def signature (X Y : Type) [outputEq : DecidableEq Y] : PrimitiveSignature X where
   Index := Slot
-  indexFintype := inferInstance
-  indexDecidableEq := inferInstance
+  indexFintype := Fin.fintype 8
+  indexDecidableEq := instDecidableEqFin 8
   Output := fun _ => Y
-  outputDecidableEq := fun _ => inferInstance
+  outputDecidableEq := fun _ => outputEq
   axis := fun _ => .cut
   readoutAxisNotAnchor := by simp
   AnchorIndex := Fin 0
-  anchorFintype := inferInstance
-  anchorDecidableEq := inferInstance
+  anchorFintype := Fin.fintype 0
+  anchorDecidableEq := instDecidableEqFin 0
 
 def vectorRealization {X Y : Type} [DecidableEq Y]
     (s0 s1 s2 s3 s4 s5 s6 : Slot)
