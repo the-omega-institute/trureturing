@@ -78954,3 +78954,334 @@ $$
 本节将标准核范数表示、正性约束与投影扰动连接为一组自包含结论，不据此宣称外部文献原创性。取得完整矩阵的样本预算以及数值实现成本仍须按所用观察协议另行给出。
 
 ## 追加锚（本行以下为增补区）
+
+## 257. 固定响应纤维的精确直径与共同相干下界
+
+§256将两份完整响应合成为复矩阵 $K$，并证明合法数据恰满足 $\|K\|_1\le1$。球内数据具有多个合法填充。本节进一步求出同一数据能够容纳的最大源差异：其半迹距离直径精确等于 $\sqrt{1-\|K\|_1^2}$。
+
+上界来自一个更强的共同相干约束：两份正半定矩阵只要具有相同非对角块 $C$，它们未平方的根保真度就至少为 $2\|C\|_1$。该结论允许非交换对角块、奇异矩阵与任意有限参考维数。
+
+### 257.1 固定数据纤维与距离
+
+沿用§256的明确 $Y$ 输入基，在 $H\otimes E\simeq E\oplus E$ 上定义
+$$
+\mathfrak F(K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}
+\succeq0:
+\operatorname{Tr}P+\operatorname{Tr}Q=1
+\right\}.
+\tag{257.1}
+$$
+参考空间 $E$ 有限维且非零；$K$ 是两份完整算子响应按§256合成的矩阵。设
+$$
+k=\|K\|_1\in[0,1].
+\tag{257.2}
+$$
+由§256，$\mathfrak F(K)$ 非空。它没有额外固定参考边缘或第三条 Pauli 关联。
+
+两态的半迹距离及正半定算子的根保真度分别记为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1,
+\qquad
+\mathsf F(X,Y)=\|\sqrt X\sqrt Y\|_1.
+\tag{257.3}
+$$
+这里 $\mathsf F$ 未平方；当两参数均归一化时，其取值在 $[0,1]$，未归一化时不预设这一上界。
+
+### 257.2 根保真度的 Gram 恒等式与单调性
+
+后续证明需要两个有限维事实，这里给出所需形式。
+
+首先，对任意可以是非方阵的线性映射 $G,H$，只要其输出空间相同，就有
+$$
+\boxed{
+\mathsf F(GG^\dagger,HH^\dagger)=\|G^\dagger H\|_1.
+}
+\tag{257.4}
+$$
+为证明它，记 $X=GG^\dagger$、$Y=HH^\dagger$，用极分解写
+$$
+G=\sqrt X\,U,\qquad H=\sqrt Y\,V,
+\tag{257.5}
+$$
+其中 $U,V$ 为部分等距，$UU^\dagger=P_X$、$VV^\dagger=P_Y$ 是 $X,Y$ 的支撑投影。置 $A_0=\sqrt X\sqrt Y$，则 $P_XA_0P_Y=A_0$，并有
+$$
+G^\dagger H=U^\dagger A_0V,
+\qquad
+A_0=U(G^\dagger H)V^\dagger.
+\tag{257.6}
+$$
+$U,V$ 及其伴随均为收缩。迹范数的理想性质分别给两方向不等式，故两边迹范数相同，得到（257.4）。这个证明也覆盖秩亏与零矩阵。
+
+其次，根保真度在每个正半定参数上对 Loewner 偏序单调：
+$$
+X\succeq X_0\succeq0,\quad Y\succeq Y_0\succeq0
+\quad\Longrightarrow\quad
+\mathsf F(X,Y)\ge\mathsf F(X_0,Y_0).
+\tag{257.7}
+$$
+事实上，
+$$
+\mathsf F(X,Y)=
+\operatorname{Tr}\sqrt{\sqrt Y\,X\sqrt Y}.
+\tag{257.8}
+$$
+当 $X\succeq X_0$ 时，根号内矩阵按相同偏序排列；特征值最小最大原理使各有序特征值单调，因而其平方根之和也单调。根保真度又对两个参数对称，所以可依次降低两个参数，得到（257.7）。
+
+### 257.3 相同非对角块强制根保真度下界
+
+**引理257.1（共同非对角块的根保真度界）。** 设
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}\succeq0,
+\qquad
+Y=\begin{pmatrix}R&C\\C^\dagger&S\end{pmatrix}\succeq0.
+\tag{257.9}
+$$
+不要求归一化，则
+$$
+\boxed{\mathsf F(X,Y)\ge2\|C\|_1.}
+\tag{257.10}
+$$
+
+**证明。** 先设 $P,R$ 严格正。Schur 补给
+$$
+Q\succeq C^\dagger P^{-1}C,
+\qquad
+S\succeq C^\dagger R^{-1}C.
+\tag{257.11}
+$$
+因此可取保留同一非对角块的较小正半定矩阵
+$$
+X_0=
+\begin{pmatrix}P&C\\C^\dagger&C^\dagger P^{-1}C\end{pmatrix}
+\preceq X,
+\qquad
+Y_0=
+\begin{pmatrix}R&C\\C^\dagger&C^\dagger R^{-1}C\end{pmatrix}
+\preceq Y.
+\tag{257.12}
+$$
+由（257.7），只需证明 $\mathsf F(X_0,Y_0)\ge2\|C\|_1$。
+
+令
+$$
+A=P^{1/2},\qquad B=C^\dagger P^{-1/2},
+\qquad
+D=R^{1/2},\qquad E_1=C^\dagger R^{-1/2}.
+\tag{257.13}
+$$
+则
+$$
+X_0=\begin{pmatrix}A\\B\end{pmatrix}
+\begin{pmatrix}A^\dagger&B^\dagger\end{pmatrix},
+\qquad
+Y_0=\begin{pmatrix}D\\E_1\end{pmatrix}
+\begin{pmatrix}D^\dagger&E_1^\dagger\end{pmatrix},
+\qquad
+AB^\dagger=DE_1^\dagger=C.
+\tag{257.14}
+$$
+$A,D$ 可逆。置 $T=A^{-1}D$，由共同非对角块关系得到
+$$
+D=AT,\qquad E_1=BT^{-\dagger},
+\tag{257.15}
+$$
+其中 $T^{-\dagger}=(T^{-1})^\dagger$。再令
+$$
+\alpha=A^\dagger A,\qquad \beta=B^\dagger B.
+\tag{257.16}
+$$
+Gram 恒等式（257.4）给
+$$
+\mathsf F(X_0,Y_0)
+=\|A^\dagger D+B^\dagger E_1\|_1
+=\|\alpha T+\beta T^{-\dagger}\|_1.
+\tag{257.17}
+$$
+
+对可逆 $T$ 作极分解 $T=UH$，其中 $U$ 酉、$H$ 严格正。于是 $T^{-\dagger}=UH^{-1}$。置 $\alpha'=U^\dagger\alpha U$、$\beta'=U^\dagger\beta U$。由酉不变性以及核范数不小于迹的绝对值，
+$$
+\begin{aligned}
+\|\alpha T+\beta T^{-\dagger}\|_1
+&=\|\alpha'H+\beta'H^{-1}\|_1\\
+&\ge\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1}).
+\end{aligned}
+\tag{257.18}
+$$
+右侧两项均为非负实数。Schatten Hölder 不等式进一步给
+$$
+\begin{aligned}
+\mathsf F(\alpha',\beta')
+&=\|\sqrt{\alpha'}\sqrt{\beta'}\|_1\\
+&=\|(\sqrt{\alpha'}H^{1/2})(H^{-1/2}\sqrt{\beta'})\|_1\\
+&\le
+\sqrt{\operatorname{Tr}(\alpha'H)\,
+\operatorname{Tr}(\beta'H^{-1})}.
+\end{aligned}
+\tag{257.19}
+$$
+再用标量算术—几何平均不等式，得到
+$$
+\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1})
+\ge2\mathsf F(\alpha',\beta')
+=2\mathsf F(\alpha,\beta).
+\tag{257.20}
+$$
+最后，对因子 $A^\dagger,B^\dagger$ 应用（257.4），
+$$
+\mathsf F(\alpha,\beta)=\|AB^\dagger\|_1=\|C\|_1.
+\tag{257.21}
+$$
+（257.17）—（257.21）证明严格正对角块情形。
+
+一般情形下，对任意 $\varepsilon>0$ 用 $X+\varepsilon I$、$Y+\varepsilon I$ 替代 $X,Y$。它们的两个上对角块严格正，非对角块仍为 $C$，故已证结论给
+$$
+\mathsf F(X+\varepsilon I,Y+\varepsilon I)\ge2\|C\|_1.
+\tag{257.22}
+$$
+有限维正平方根及迹范数连续。令 $\varepsilon\downarrow0$，得到（257.10）。$C$ 无需可逆，亦允许为零。$\square$
+
+### 257.4 从根保真度到纤维直径上界
+
+对归一化态，标准纯化距离关系为
+$$
+d(\Omega,\Xi)\le\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.23}
+$$
+可直接用矩阵向量化证明所需形式：取 $\sqrt\Omega$ 与 $\sqrt\Xi V$ 的向量化，$V$ 为辅助空间酉算子。这两个单位向量分别纯化 $\Omega,\Xi$，其内积为 $\operatorname{Tr}(\sqrt\Omega\sqrt\Xi V)$。由极分解可选 $V$ 使内积绝对值等于 $\mathsf F(\Omega,\Xi)$。两纯态之差支撑于至多二维空间，两个可能非零的本征值为
+$$
+\pm\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.24}
+$$
+因此其半迹距离恰为（257.23）右侧。对辅助空间取偏迹不会增加 Hermitian 差矩阵的迹范数，遂得到（257.23）。
+
+现在任取 $\Omega,\Xi\in\mathfrak F(K)$。它们具有共同非对角块 $C=K/2$。引理257.1给
+$$
+\mathsf F(\Omega,\Xi)\ge k.
+\tag{257.25}
+$$
+结合（257.23），
+$$
+\boxed{
+d(\Omega,\Xi)\le\sqrt{1-k^2}.
+}
+\tag{257.26}
+$$
+该上界没有假定两态的对角块彼此交换、具有共同参考边缘或具有相同秩。
+
+### 257.5 对任意矩阵数据达到上界
+
+设 $0<k<1$。记
+$$
+D_L=\sqrt{KK^\dagger},\qquad D_R=\sqrt{K^\dagger K},
+\qquad
+a=\frac{1+\sqrt{1-k^2}}k>1.
+\tag{257.27}
+$$
+则
+$$
+a+a^{-1}=\frac2k,\qquad
+a-a^{-1}=\frac{2\sqrt{1-k^2}}k.
+\tag{257.28}
+$$
+定义两份联合态
+$$
+\boxed{
+\Omega_+=\frac12
+\begin{pmatrix}aD_L&K\\K^\dagger&a^{-1}D_R\end{pmatrix},
+\qquad
+\Omega_-=\frac12
+\begin{pmatrix}a^{-1}D_L&K\\K^\dagger&aD_R\end{pmatrix}.
+}
+\tag{257.29}
+$$
+
+为验证正性，取 $K=WD_R$ 的任意酉极分解延拓。于是
+$$
+\Omega_+
+=\frac12
+\begin{pmatrix}\sqrt a\,W\\a^{-1/2}I_E\end{pmatrix}
+D_R
+\begin{pmatrix}\sqrt a\,W^\dagger&a^{-1/2}I_E\end{pmatrix}
+\succeq0;
+\tag{257.30}
+$$
+对 $\Omega_-$ 交换 $a$ 与 $a^{-1}$ 即可。这个分解允许 $K$ 奇异。两态的迹均为
+$$
+\frac12(a+a^{-1})k=1,
+\tag{257.31}
+$$
+且非对角块均为 $K/2$，故属于 $\mathfrak F(K)$。
+
+它们的差恰为块对角矩阵：
+$$
+\Omega_+-\Omega_-
+=\frac{a-a^{-1}}2
+\begin{pmatrix}D_L&0\\0&-D_R\end{pmatrix}.
+\tag{257.32}
+$$
+由于 $\operatorname{Tr}D_L=\operatorname{Tr}D_R=k$，
+$$
+\boxed{
+d(\Omega_+,\Omega_-)
+=\frac k2(a-a^{-1})
+=\sqrt{1-k^2}.
+}
+\tag{257.33}
+$$
+此外，取（257.30）对应的两个 Gram 因子 $G_+,G_-$，可直接算得
+$$
+G_+^\dagger G_-=D_R.
+\tag{257.34}
+$$
+由（257.4），这对态也达到根保真度下界：
+$$
+\mathsf F(\Omega_+,\Omega_-)=k.
+\tag{257.35}
+$$
+
+当 $k=0$ 时，$K=0$。任选参考密度矩阵 $\tau$，取 $\operatorname{diag}(\tau,0)$ 与 $\operatorname{diag}(0,\tau)$，两态正交，半迹距离为一、根保真度为零。当 $k=1$ 时，§256已证明纤维是单点 $\Gamma(K)$，其直径为零；同态根保真度为一。
+
+### 257.6 纤维直径的精确公式
+
+**定理257.2（固定完整响应的精确不确定直径）。** 对任意有限非零参考空间及任意合法数据矩阵 $K$，令 $k=\|K\|_1\le1$，则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak F(K)}
+\frac12\|\Omega-\Xi\|_1
+=\sqrt{1-k^2}.
+}
+\tag{257.36}
+$$
+同一纤维的最小根保真度也精确为
+$$
+\boxed{
+\min_{\Omega,\Xi\in\mathfrak F(K)}
+\mathsf F(\Omega,\Xi)=k.
+}
+\tag{257.37}
+$$
+
+**证明。** 全体填充的上界与根保真度下界分别由（257.26）、（257.25）成立。对 $0<k<1$，（257.29）同时达到二者；$k=0,1$ 由上述端点构造成立。$\square$
+
+若数据距离核范数球面的径向缺额为 $h=1-k$，则
+$$
+\operatorname{diam}_{d}\mathfrak F(K)
+=\sqrt{2h-h^2}.
+\tag{257.38}
+$$
+因此即使完整响应已精确取得，球内仍保留这一直径的源差异；当 $h\downarrow0$ 时，其最坏歧义以平方根尺度收缩。球面 $h=0$ 才完全塌缩为一个联合态。
+
+该精确值只由 $\|K\|_1$ 决定，不受参考维数、奇异向量或非零奇异值分布影响。达到态仍使用这些矩阵结构，通过（257.29）实现；这里并没有把不同 $K$ 的来源纤维视为同一个实际来源集合。
+
+### 257.7 同一数据下的歧义与不同数据间的稳定性
+
+本节保持 $K$ 完全相同，求的是其全部合法填充之间的最大差异。§256的噪声恢复界比较球面理想数据与附近数据，回答的是另一项定量问题。二者共同说明：数据充分性既有“纤维是否为单点”的精确判据，也有“仍有多解时最多相差多少”的精确尺度。
+
+证明使用标准根保真度、极分解、Schur 补、Schatten Hölder 不等式及纯化的迹距离关系；所需非方阵 Gram 恒等式、正半定参数单调性和共同非对角块下界均已在正文给出。本节不据这些有限维工具的组合宣称外部文献原创性。
+
+这里没有额外固定参考边缘、形成纠缠或原始档案。若任务再指定这些数据，允许填充集合会变成 $\mathfrak F(K)$ 的子集，其精确直径须按新增合同重新求取。本节的距离始终是同一已声明联合空间中的量子态半迹距离。
+
+## 追加锚（本行以下为增补区）
