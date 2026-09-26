@@ -74829,3 +74829,369 @@ $$
 Bloch 谱、纯化、通道 diamond 区分刻画、有限维 Choi 秩及无偏二元联合可测准则均为已有工具。这里集中得到的是当前实际设置记录噪声族的精确方向曲线、资源反解、实现秩变化及两种阈值的关系；不据这一组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 245. 可读取旗标混合的精确形成纠缠成本
+
+§244求得了同一双轴记录通道对的纯联合探针资源曲线。本节保持通道及其记录噪声合同不变，允许探针是混合态，并以形成纠缠的凸屋定义衡量输入—参考纠缠。参考中的制备旗标由检验者实际保留并读取。
+
+这个改变带来一条可精确求出的不同资源曲线：全部混合探针的最小形成纠缠成本，是纯产品端点与最大纠缠端点之间的直线，并由三维参考中的两项正交旗标混合取得。这里的成本仅指所定义的形成纠缠数值，不将它等同于单次制备所需的 Bell 对数量或一般 LOCC 操作成本。
+
+### 245.1 同一实际通道与两种探针类
+
+固定§244的量子比特输入及四个报告标签。原 Bloch 轴满足 $n\cdot m=c\in[0,1]$，设置标签独立翻转概率为已标定的 $p\in[0,1]$。所有量子输出重置为同一固定纯态 $P$；原设置的额外副本和翻转种子均不在取得接口中。
+
+两条有效轴、候选效应与目标为
+$$
+\begin{aligned}
+a_p&=(1-p)n+pm,& b_p&=pn+(1-p)m,\\
+E^{(p)}_{0,s}&=\frac{I_2+s\,a_p\cdot\sigma}{4},&
+E^{(p)}_{1,s}&=\frac{I_2+s\,b_p\cdot\sigma}{4},
+\qquad s\in\{+1,-1\},\\
+\mathcal S_p(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\operatorname{Tr}(E^{(p)}_{a,s}X)P,\\
+\mathcal R(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\frac14\operatorname{Tr}(X)P.
+\end{aligned}
+\tag{245.1}
+$$
+沿用标量
+$$
+A=\frac{1+c}{2},\qquad
+B=(1-2p)^2\frac{1-c}{2},\qquad
+D=\frac12\sqrt{A+B},\qquad
+U=\frac12\sqrt A,\qquad
+\delta=D-U.
+\tag{245.2}
+$$
+§244已经证明 $D$ 为完整半 diamond 距离，$U$ 为无参考输入的最大半迹距离。纯联合探针的输入边缘 Bloch 长度为 $t\in[0,1]$ 时，其最大实际半迹距离及纠缠熵分别是
+$$
+F(t)=\frac12\sqrt{A+B-Bt^2},
+\qquad
+e(t)=H_2\left(\frac{1+t}{2}\right).
+\tag{245.3}
+$$
+这里 $H_2$ 为以二为底的二元熵。最大值由共同轴
+$$
+u=\frac{n+m}{\sqrt{2(1+c)}}
+\tag{245.4}
+$$
+上的边缘及其纯化取得。该分母在本节范围内始终非零，$c=1$ 时 $u=n=m$。
+
+现在对任意有限维参考 $E$ 和任意密度矩阵 $\Omega\in\mathcal D(\mathbb C^2\otimes E)$，定义
+$$
+g(\Omega)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E](\Omega)\right\|_1.
+\tag{245.5}
+$$
+输入—参考形成纠缠定义为
+$$
+\boxed{
+E_F(\Omega)=
+\inf_{\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|}
+\sum_j\lambda_j
+S\!\left(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|\right),
+}
+\tag{245.6}
+$$
+其中 $\lambda_j\ge0$、$\sum_j\lambda_j=1$，$|\psi_j\rangle$ 为归一化向量，熵单位为比特。有限维情形可在有限纯态系综上取该下确界；下文不需要预设某个最优分解已经存在。
+
+因为输入是量子比特，$0\le E_F(\Omega)\le1$。混合态的单侧边缘熵 $S(\operatorname{Tr}_E\Omega)$ 没有被代入（245.6）；两者是不同量。纯态时形成纠缠则等于（245.3）的 $e(t)$。
+
+对指定缺额 $\epsilon\ge0$，求
+$$
+C_{\mathrm{mix}}(\epsilon)=
+\inf\left\{
+E_F(\Omega):
+\begin{array}{l}
+E\text{ 为有限维参考},\ \Omega\in\mathcal D(\mathbb C^2\otimes E),\\
+g(\Omega)\ge D-\epsilon
+\end{array}
+\right\}.
+\tag{245.7}
+$$
+参考维数可以自由选择，但其实际保留的信息均计入同一联合探针。本节没有把原标签噪声的隐藏种子作为新参考提供。
+
+### 245.2 纯态最优曲线相对于纠缠熵严格凸
+
+若 $B=0$，则 $D=U$，产品探针已经取得完整距离，故所有缺额的最小资源都为零。以下先处理 $B>0$。置
+$$
+\kappa=\frac{B}{A+B}.
+\tag{245.8}
+$$
+由 $B\le(1-c)/2\le A$，有
+$$
+0<\kappa\le\frac12,
+\qquad F(t)=D\sqrt{1-\kappa t^2}.
+\tag{245.9}
+$$
+函数 $e(t)$ 在 $[0,1]$ 上连续严格递减，从一降到零，因此有反函数 $t(e)$。记
+$$
+G(e)=F(t(e)),\qquad 0\le e\le1.
+\tag{245.10}
+$$
+
+**定理 245.1（当前通道族的严格凸弦界）。** $B>0$ 时，$G$ 严格凸，端点为 $G(0)=U$、$G(1)=D$。因此
+$$
+\boxed{
+F(t)\le U+\delta\,e(t),\qquad 0\le t\le1,
+}
+\tag{245.11}
+$$
+且 $0<t<1$ 时不等式严格。
+
+**证明。** 在 $0<t<1$ 上，令 $\operatorname{atanh}t=\frac12\ln((1+t)/(1-t))$。直接微分得
+$$
+e'(t)=-\frac{\operatorname{atanh}t}{\ln2}<0,
+\qquad
+F'(t)=-\frac{D\kappa t}{\sqrt{1-\kappa t^2}}.
+\tag{245.12}
+$$
+所以
+$$
+\frac{dG}{de}
+=D\kappa\ln2\,h(t),
+\qquad
+h(t)=\frac{t}{\sqrt{1-\kappa t^2}\operatorname{atanh}t}>0.
+\tag{245.13}
+$$
+其对数导数为
+$$
+\frac{h'(t)}{h(t)}
+=\frac{1}{t(1-\kappa t^2)}
+-\frac{1}{(1-t^2)\operatorname{atanh}t}.
+\tag{245.14}
+$$
+两处分母严格为正。因而 $h'(t)<0$ 等价于
+$$
+Q(t):=t(1-\kappa t^2)-(1-t^2)\operatorname{atanh}t>0.
+\tag{245.15}
+$$
+连续延拓给 $Q(0)=0$，并且
+$$
+\begin{aligned}
+Q'(t)&=2t\operatorname{atanh}t-3\kappa t^2\\
+&\ge(2-3\kappa)t^2>0,
+\qquad 0<t<1,
+\end{aligned}
+\tag{245.16}
+$$
+其中使用 $\operatorname{atanh}t\ge t$ 和 $\kappa\le1/2$。故 $Q(t)>0$、$h'(t)<0$。
+
+由于 $e'(t)<0$，式（245.13）的斜率 $dG/de$ 随 $e$ 严格增加，即 $G''(e)>0$ 对 $0<e<1$ 成立。连续延拓到端点后，$G$ 在整个 $[0,1]$ 上严格凸。它位于连接 $(0,U)$ 与 $(1,D)$ 的弦之下，内部严格低于该弦，得到（245.11）。$\square$
+
+本定理使用了当前族的 $\kappa\le1/2$ 与明确方向最优式，没有假定任意通道的纯态资源曲线都具有此凸性。
+
+### 245.3 覆盖全部混合态和参考维数的下界
+
+**定理 245.2（形成纠缠的普遍响应上界）。** 对任意有限维参考和任意联合混合探针，
+$$
+\boxed{
+g(\Omega)\le U+\delta E_F(\Omega).
+}
+\tag{245.17}
+$$
+
+**证明。** 先设 $B>0$。任取一个纯态分解
+$$
+\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|.
+$$
+令 $e_j$ 为该纯态的输入—参考纠缠熵。对每一纯分量，§244的完整方向优化及定理245.1给
+$$
+g(|\psi_j\rangle\langle\psi_j|)
+\le G(e_j)\le U+\delta e_j.
+\tag{245.18}
+$$
+通道线性与迹范数凸性于是给
+$$
+\begin{aligned}
+g(\Omega)
+&\le\sum_j\lambda_j
+ g(|\psi_j\rangle\langle\psi_j|)\\
+&\le U+\delta\sum_j\lambda_j e_j.
+\end{aligned}
+\tag{245.19}
+$$
+这个不等式对每个分解都成立，左侧不依赖分解。因 $\delta>0$，对右侧所有平均熵取下确界正好得到（245.17）。该步骤不需要选出达到下确界的分解。
+
+若 $B=0$，则 $D=U$，完整 diamond 上界本身给 $g(\Omega)\le U$，而 $\delta=0$，故同式成立。$\square$
+
+当 $\delta>0$ 且 $g(\Omega)\ge D-\epsilon$，立刻得到
+$$
+\boxed{
+E_F(\Omega)\ge
+\max\left\{0,1-\frac\epsilon\delta\right\}.
+}
+\tag{245.20}
+$$
+这是对全部有限参考维数和全部混合态的下界；没有先假定最优态带旗标、只有两项分解，或单侧熵已经等于形成纠缠。
+
+### 245.4 三维参考中的共同达到构造
+
+取参考 $E=\mathbb C^3$，正交基为 $|0\rangle,|1\rangle,|2\rangle$。令 $|u,+\rangle,|u,-\rangle$ 为（245.4）共同轴的输入本征基，定义
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle.
+\tag{245.21}
+$$
+对混合权重 $\theta\in[0,1]$，置
+$$
+\boxed{
+\Omega_\theta=
+\theta|\Phi\rangle\langle\Phi|
++(1-\theta)|\eta\rangle\langle\eta|.
+}
+\tag{245.22}
+$$
+两个分量的参考支撑分别为 $\operatorname{span}\{|0\rangle,|1\rangle\}$ 与 $\operatorname{span}\{|2\rangle\}$。它们正交，形成检验者可实际读取的块旗标。
+
+**命题 245.3（实际区分值与形成纠缠同时取等）。** 上述同一探针满足
+$$
+\boxed{
+g(\Omega_\theta)=\theta D+(1-\theta)U,
+\qquad E_F(\Omega_\theta)=\theta.
+}
+\tag{245.23}
+$$
+
+**证明。** $|\Phi\rangle$ 的输入边缘为 $I_2/2$，由§244取得完整值 $D$。$|\eta\rangle$ 是共同轴上的产品纯态，取得无参考最优值 $U$。两个通道都只作用于输入并保持参考不变，因此两分量的输出差仍支撑在正交参考块上。块对角矩阵的迹范数相加，故
+$$
+g(\Omega_\theta)
+=\theta g(|\Phi\rangle\langle\Phi|)
+ +(1-\theta)g(|\eta\rangle\langle\eta|)
+=\theta D+(1-\theta)U.
+\tag{245.24}
+$$
+这是所有运行的无条件联合输出距离，不是对某个旗标分支后选择再归一化。
+
+现证明形成纠缠等式。给出的两项纯态分解分别具有纠缠熵一和零，故 $E_F(\Omega_\theta)\le\theta$。反向，先设 $0<\theta<1$，此时 $\Omega_\theta$ 的支撑为二维空间
+$$
+\operatorname{span}\{|\Phi\rangle,|\eta\rangle\}.
+\tag{245.25}
+$$
+任意纯态分解中具有正权重的向量都必须属于这个支撑：对支撑正交补投影取期望，所得各项均非负且总和为零，故各项逐个为零。
+
+因此每个归一化分量在忽略整体相位后可写为
+$$
+|\chi\rangle=\sqrt x\,|\Phi\rangle+
+ e^{i\varphi}\sqrt{1-x}\,|\eta\rangle,
+\qquad x\in[0,1].
+\tag{245.26}
+$$
+两份参考支撑正交，输入偏迹没有交叉项，因而
+$$
+\operatorname{Tr}_E|\chi\rangle\langle\chi|
+=\frac x2I_2+(1-x)|u,+\rangle\langle u,+|.
+\tag{245.27}
+$$
+其两个本征值为 $1-x/2$ 和 $x/2$。二元熵在 $[0,1/2]$ 上的凹性及端点 $H_2(0)=0$、$H_2(1/2)=1$ 给
+$$
+S(\operatorname{Tr}_E|\chi\rangle\langle\chi|)
+=H_2(x/2)\ge x.
+\tag{245.28}
+$$
+对任意分解 $\Omega_\theta=\sum_j\lambda_j|\chi_j\rangle\langle\chi_j|$，设其系数为 $x_j$。向 $|\Phi\rangle$ 投影，得到
+$$
+\sum_j\lambda_jx_j
+=\langle\Phi|\Omega_\theta|\Phi\rangle=\theta.
+\tag{245.29}
+$$
+所以该分解的平均纠缠熵至少是 $\theta$。对所有分解取下确界，得到 $E_F(\Omega_\theta)\ge\theta$，与上界合并即所需等式。
+
+$\theta=0$ 时为产品纯态，$\theta=1$ 时为最大纠缠纯态，端点直接成立。$\square$
+
+这个构造也明确展示单侧熵与形成纠缠的差别：
+$$
+S(\operatorname{Tr}_E\Omega_\theta)=H_2(\theta/2)>\theta
+=E_F(\Omega_\theta),\qquad 0<\theta<1.
+\tag{245.30}
+$$
+严格不等式来自二元熵的严格凹性；它不影响（245.23）的精确形成纠缠值。
+
+### 245.5 全局最小混合态成本及纯态成本的严格分离
+
+**定理 245.4（全混合探针类上的精确最小成本）。** 对所有 $\epsilon\ge0$，
+$$
+\boxed{
+C_{\mathrm{mix}}(\epsilon)=
+\begin{cases}
+\max\{0,1-\epsilon/\delta\},&\delta>0,\\
+0,&\delta=0.
+\end{cases}
+}
+\tag{245.31}
+$$
+下确界在每个参数点都实际达到；参考维数三已经足够。
+
+**证明。** $\delta>0$ 时，下界是（245.20）。取
+$$
+\theta_\epsilon=\max\left\{0,1-\frac\epsilon\delta\right\}.
+\tag{245.32}
+$$
+若 $0\le\epsilon\le\delta$，则命题245.3给
+$$
+g(\Omega_{\theta_\epsilon})
+=U+\delta\theta_\epsilon=D-\epsilon,
+\qquad
+E_F(\Omega_{\theta_\epsilon})=\theta_\epsilon.
+\tag{245.33}
+$$
+若 $\epsilon\ge\delta$，产品态 $\Omega_0$ 的响应 $U$ 已满足所需下界，成本为零。若 $\delta=0$，产品态本来就达到 $D=U$，故所有容差的最小成本都为零。$\square$
+
+同一论证也把资源预算写成直接形式：对 $z\in[0,1]$，在所有有限参考及满足 $E_F(\Omega)\le z$ 的探针中，
+$$
+\max g(\Omega)=U+\delta z,
+\tag{245.34}
+$$
+由 $\Omega_z$ 取得。这里的普遍响应上界覆盖全部混合态，达到构造才使用正交旗标。
+
+现在比较同一通道对上的纯探针最小纠缠 $E_{\mathrm{pure}}(\epsilon)$。当 $\delta>0$、$0<\epsilon<\delta$ 时，§244的精确纯态反解满足
+$$
+0<E_{\mathrm{pure}}(\epsilon)<1,
+\qquad
+G(E_{\mathrm{pure}}(\epsilon))=D-\epsilon.
+\tag{245.35}
+$$
+定理245.1的内部严格弦界给
+$$
+D-\epsilon
+<U+\delta E_{\mathrm{pure}}(\epsilon),
+$$
+所以
+$$
+\boxed{
+E_{\mathrm{pure}}(\epsilon)
+>1-\frac\epsilon\delta
+=C_{\mathrm{mix}}(\epsilon),
+\qquad 0<\epsilon<\delta.
+}
+\tag{245.36}
+$$
+所有内部容差点都有严格差别。$\epsilon=0$ 时两种成本都为一；$\epsilon\ge\delta$ 时都为零。$\delta=0$ 时全程都为零。
+
+例如取 $c=0$、$p=0$，则
+$$
+D=\frac12,\qquad U=\frac{\sqrt2}{4},
+\qquad \delta=\frac12-\frac{\sqrt2}{4}>0.
+\tag{245.37}
+$$
+在 $\epsilon=\delta/2$ 处，$\Omega_{1/2}$ 实际达到要求，且
+$$
+C_{\mathrm{mix}}(\delta/2)=\frac12
+<E_{\mathrm{pure}}(\delta/2).
+\tag{245.38}
+$$
+这不是更改原纯态结论，而是在相同响应目标下扩大允许探针类并使用同一个形成纠缠定义作比较。
+
+### 245.6 来源、旗标与成本语义
+
+形成纠缠采用 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Exercise 6.3，式（6.437）—（6.438），印刷第385页、PDF第393页的标准凸屋定义。相邻 Exercise 6.4 已明确讨论：破坏纠缠的通道仍可从纠缠探针获得区分优势。本节不将这一成熟存在现象当作新发现，也不据当前精确曲线与达到构造宣称文献原创性。
+
+式（245.31）是所声明的形成纠缠数值优化。虽然（245.22）具有以权重 $\theta$ 选择最大纠缠分支的具体系综，它没有把任意实数 $\theta$ 解释成单次确定性制备中消耗的 Bell 对数，也没有证明一般的操作纠缠成本等于未经正则化的 $E_F$。
+
+旗标存放在参考的正交子空间中，属于检验者预先制备并实际保存的数据。它与原设置翻转的未知种子不同；本节没有恢复已被§244观察接口排除的原设置副本。若把这个制备旗标丢弃，输出差未必仍是正交块，不能继续沿用（245.24）的可加等式。
+
+全局最优允许任意有限参考维数；达到构造只使用三维参考。本节没有证明三维是必要的，也没有宣称相同成本可在固定二维参考下取得。纯探针的熵曲线、混合探针的形成纠缠曲线、参考维数限制和实际记录可取得性，分别保留其已声明的量词范围。
+
+## 追加锚（本行以下为增补区）
