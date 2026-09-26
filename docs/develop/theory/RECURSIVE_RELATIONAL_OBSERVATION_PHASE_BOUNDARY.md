@@ -69097,3 +69097,204 @@ $$
 本轮核对的原始来源包括该 Bloch 表示论文、Sion 原论文及 Hatcher 的圆周基本群章节；这些核对没有建立当前距离公式的文献首创性。结论的输入维数固定为二、结果1的实际 Choi 秩固定为二、结果0为单非零 Kraus。未将其扩展到一般输入维数、三个以上保留方向或任意结果预算。
 
 ## 追加锚（本行以下为增补区）
+
+## 228. 高维输入的相位事件障碍与精确秩预算平台
+
+固定输入维数 $d\ge2$。本节给出两项结论：具有偶数相位协变的连续输出事件族，可迫使任意少于 $d$ 个 Kraus 的竞争分支漏掉一个统一正概率事件；一个等距分支与纯重置分支组成的记录通道，则实现从预算 $1$ 到 $d-1$ 完全不改善的精确容量平台。
+
+这里不将 qubit 输入的两 Kraus 距离公式推广到一般输入维数。Borsuk–Ulam 是标准工具，仓内已有对跖商的连续坐标障碍；本节将它应用于候选分支的全部复振幅，再连接完整通道距离。所有新增组合推导均为纸面数学，未作 Lean 核验。
+
+### 228.1 偶数相位事件与分支 Kraus 容量
+
+设 $\mathcal R$ 为输入 $\mathbb C^d$、有限维量子输出 $\mathbb C^m$ 及一个固定有限经典结果寄存器上的 CPTP 记录通道。固定结果 $q$ 的完全正分支 $\Gamma$。
+
+假设存在连续单位向量映射
+$$
+r:S^{2d-1}\longrightarrow S^{2m-1},
+$$
+一个偶整数 $n\in2\mathbb Z$，以及统一常数 $\alpha\ge0$，使
+$$
+r(e^{i\theta}v)=e^{in\theta}r(v)
+\quad\text{对所有单位 }v\text{ 及实数 }\theta,
+\tag{228.HC.1}
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对所有单位 }v.
+\tag{228.HC.2}
+$$
+$P_v=|v\rangle\langle v|$。目标是完整 CPTP 通道中的一个已指定分支，因此（228.HC.2）描述同一事件族的真实分支概率，不是另行归一化后的条件概率。
+
+**定理 228.1（连续事件给出分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若其结果 $q$ 的 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{228.HC.3}
+$$
+下界由一个无参考纯输入及同名结果块中的秩一输出事件见证。
+
+证明。先设 $k\ge1$，取该竞争分支的最小 Kraus 表示
+$$
+\mathcal S_q(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+定义连续映射
+$$
+F:S^{2d-1}\to\mathbb C^k\cong\mathbb R^{2k},
+\qquad
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+\tag{228.HC.4}
+$$
+由 $n$ 偶及（228.HC.1），$r(-v)=r(v)$，故
+$$
+F(-v)=-F(v).
+$$
+因为 $k<d$，可在输入的底层实空间 $\mathbb R^{2d}$ 中取一个实 $(2k+1)$ 维线性子空间。其单位球是 $S^{2k}$。限制 $F$ 到这个球面，得到连续奇映射
+$$
+F|_{S^{2k}}:S^{2k}\to\mathbb R^{2k}.
+$$
+标准 Borsuk–Ulam 定理给某个 $v$ 满足 $F(v)=F(-v)$。奇性随即给 $F(v)=0$。
+
+对这个输入，竞争者在完整输出效果
+$$
+E_v=|q\rangle\langle q|\otimes P_{r(v)}
+$$
+上的概率为
+$$
+\operatorname{Tr}(E_v\mathcal S(P_v))
+=\sum_{j=1}^k|\langle r(v),C_jv\rangle|^2=0,
+$$
+而目标概率至少为 $\alpha$。两份完整输出都是迹为一的状态，事件概率差不超过其输出差的迹范数的一半，再不超过完整半 diamond 距离，证明（228.HC.3）。若 $k=0$，竞争分支本来为零，任取单位输入即得同一下界，不需要引入负维球面或空坐标的拓扑约定。证毕。
+
+这里 Borsuk–Ulam 采用 Hatcher《Algebraic Topology》推论2B.7，第176页的形式：每个连续 $g:S^N\to\mathbb R^N$ 都有 $g(x)=g(-x)$。[官方第二章 PDF，第80页](https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf#page=80)。定理施用于实球面和实维数 $2k$；没有把复维数直接当作实维数。
+
+证明实际只使用 $r(-v)=r(v)$；（228.HC.1）的偶数相位是保证这一条件的一种明确结构。它不是结论成立的必要条件。
+
+### 228.2 目标本身的容量下界与相位条件的范围
+
+**推论 228.2（目标分支所需的 Kraus 数量）。** 若（228.HC.1）、（228.HC.2）成立且 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{228.HC.5}
+$$
+证明。若目标分支本身能用 $k<d$ 个 Kraus 表示，将这些 Kraus 代入（228.HC.4），得到某个输入的目标事件概率为零，与（228.HC.2）矛盾。等价地，可在第一节取竞争者 $\mathcal S=\mathcal R$，从零距离得到矛盾。证毕。
+
+不能完全删除相位限制。取 $m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$，令目标为单 Kraus 通道
+$$
+\Gamma(X)=UXU^\dagger,
+\qquad r(v)=Uv.
+$$
+此时 $r$ 的相位次数是一，目标事件概率恒为一，而目标本身已是一个 Kraus 的精确竞争者，距离为零。因此“任意相位次数都给（228.HC.3）”为假。这个反例只排除无条件删除相位假设，不证明偶数是所有可行下界的必要条件。
+
+第 227 节的两种 qubit 主事件构造的相位次数分别为零与二。在 $d=2,k=1$ 时，它们都落在本节的同一零点机制中。高维结论控制的是指定事件族与分支 Kraus 数量；它没有仅由 $d,k$ 计算一般通道的最近距离。
+
+### 228.3 可达到的完整秩预算阶跃例
+
+固定 $d\ge2$、$m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$、单位输出向量 $r_0$，以及 $0<\kappa<1$。定义两个同接口的 CPTP 记录通道
+$$
+\mathcal T_0(X)=|0\rangle\langle0|\otimes UXU^\dagger,
+$$
+$$
+\mathcal T_1(X)=|1\rangle\langle1|\otimes\operatorname{Tr}(X)P_{r_0},
+$$
+并置
+$$
+\boxed{
+\mathcal R_\kappa=(1-\kappa)\mathcal T_0+\kappa\mathcal T_1.
+}
+\tag{228.HC.6}
+$$
+结果0的单 Kraus 为 $\sqrt{1-\kappa}\,U$。对输入正交基 $f_1,\ldots,f_d$，结果1可取 Kraus
+$$
+A_i=\sqrt\kappa\,|r_0\rangle\langle f_i|,
+\qquad1\le i\le d.
+\tag{228.HC.7}
+$$
+这些 Kraus 线性独立，且
+$$
+\sum_iA_i^\dagger A_i=\kappa I_d.
+$$
+共同 TP 与目标结果秩 $(1,d)$ 随即成立。等价地，结果1 Choi 矩阵为
+$$
+J_1=\kappa I_d\otimes P_{r_0},
+$$
+秩恰为 $d$。经典标签正交，故目标总 Choi 秩恰为 $d+1$。
+
+对整数预算 $R\ge1$，记
+$$
+d_R(\mathcal R_\kappa)=
+\inf_{\substack{\mathcal S\text{ 为同接口 CPTP 记录通道}\\
+\operatorname{rank}J_{\mathcal S}\le R}}
+\frac12\|\mathcal R_\kappa-\mathcal S\|_\diamond.
+$$
+竞争者允许任意量子输出方向和任意 Kraus，只保持相同输出空间、相同两个经典标签及总 Choi 秩预算。
+
+**定理 228.3（重置与等距记录通道的精确预算曲线）。**
+$$
+\boxed{
+d_R(\mathcal R_\kappa)=
+\begin{cases}
+\kappa,&1\le R<d,\\
+\min(\kappa,1-\kappa),&R=d,\\
+0,&R\ge d+1.
+\end{cases}
+}
+\tag{228.HC.8}
+$$
+每个预算上的下确界都有显式合法通道取得。
+
+**228.3.1 少于 $d$ 个结果1方向的统一下界。**
+
+若候选结果1秩为 $k<d$，写其 Kraus 为 $C_1,\ldots,C_k$。目标在常值事件族 $r(v)=r_0$ 上的概率恒为 $\kappa$，相位次数为零，所以第一节已经给距离至少为 $\kappa$。
+
+在本例中也可直接用线性代数：定义振幅映射
+$$
+L_C:\mathbb C^d\to\mathbb C^k,
+\qquad
+L_C(v)=\bigl(r_0^\dagger C_1v,\ldots,r_0^\dagger C_kv\bigr).
+$$
+其秩至多为 $k<d$，所以输入核维数至少为 $d-k>0$。选核中的单位 $v$，目标在效果 $|1\rangle\langle1|\otimes P_{r_0}$ 上概率为 $\kappa$，候选为零，给同一下界。
+
+这里取的是振幅行 $r_0^\dagger C_j$ 的共同核，不是完整算子 $C_j$ 的共同核。候选可以把该输入送到其他输出方向；这不改变指定事件上的零概率。
+
+**228.3.2 总预算的穷尽分类。**
+
+当 $1\le R<d$，每个候选的结果1秩都小于 $d$，所以上一小节给 $d_R\ge\kappa$。
+
+当 $R=d$，如果结果1秩小于 $d$，仍有下界 $\kappa$。否则它的秩必须恰为 $d$，总秩预算与标签块的秩可加性强制结果0为零。此时对任意输入，只读取结果标签0即可得到概率差 $1-\kappa$。两类候选穷尽，因此
+$$
+d_d\ge\min(\kappa,1-\kappa).
+$$
+
+**228.3.3 显式候选与完整参考上界。**
+
+$\mathcal T_0$ 的总 Choi 秩为一，适用于每个 $R\ge1$。$\mathcal T_1$ 的总 Choi 秩为 $d$，适用于每个 $R\ge d$。
+
+两个通道具有互斥经典标签，所以
+$$
+\|\mathcal T_1-\mathcal T_0\|_\diamond=2.
+\tag{228.HC.9}
+$$
+上界来自两个 CPTP 通道的 diamond 范数均为一及三角不等式；下界对任意密度输入即可达到，因为两份输出位于正交标签块。该论证保留完整参考系统，未将无参考上界冒作 diamond 上界。
+
+由（228.HC.6），精确得到
+$$
+\frac12\|\mathcal R_\kappa-\mathcal T_0\|_\diamond=\kappa,
+\qquad
+\frac12\|\mathcal R_\kappa-\mathcal T_1\|_\diamond=1-\kappa.
+\tag{228.HC.10}
+$$
+这给前两个预算区间的匹配上界。$R\ge d+1$ 时，目标本身已是预算内候选，距离为零。结合所有下界，证明（228.HC.8）。
+
+### 228.4 平台的精确含义及已有结果的关系
+
+固定输入维数 $d$ 和同一个实际目标。从总秩预算 $1$ 增到 $d-1$，最优误差始终为 $\kappa$。$d$ 可任意大，因此平台可以包含任意多个连续整数预算。它不是某一候选构造没有改进，而是对全部同接口预算候选的精确最优值。
+
+在预算 $d$ 处，纯重置通道开始合法。当 $\kappa>1/2$，最优值严格下降为 $1-\kappa$；当 $\kappa\le1/2$，预算 $d$ 的最优值仍为 $\kappa$。预算达到 $d+1$ 后目标本身可用，误差归零。这里给出了每个预算的可达值，没有宣称全部最近候选的秩分配或 Kraus 表示唯一。
+
+仓内《RECURSIVE_RELATIONAL_OBSERVATION》第15.6节已有基于 Borsuk–Ulam 的连续辅助坐标维数障碍，本节直接使用该标准拓扑机制。现有 Lean 声明 `D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth` 处理精确通用重置膨胀，给出输入维数乘输出态秩不超过保留环境维数的容量约束；本节的对象则是完整记录通道在全部总 Choi 秩预算下的近似距离。边界卷第221节的局部 qubit reset 族也不替代这里的任意 $d,R$ 分段公式。
+
+上述来源关系不把本节纸面推导标为已经编译的 Lean 结果。没有对一般高维量子通道主张同样的阶跃曲线，也没有将偶数相位假设称为所有容量下界的必要条件。
+
+## 追加锚（本行以下为增补区）
