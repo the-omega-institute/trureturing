@@ -452,13 +452,20 @@ theorem paired_angle_demand
       ((k + 1 - 1) * (2 * (k + 1 + 1) - j^2) /
         ((k + 1 + 1) * k^2)) ≤ F := by
     have hxy : 0 < (r + 1) * (k + 2) - j^2 := by
-      nlinarith [hjbound, hdom]
+      have hdom_k : k + 1 ≤ r := by dsimp [k]; linarith only [hdom]
+      have hsq : j^2 < (k + 2)^2 := by
+        have heq : (k + 2)^2 = (k - 2)^2 + 8 * k := by ring
+        linarith only [hjbound, heq, hk]
+      have hmul : (k + 2)^2 ≤ (r + 1) * (k + 2) := by
+        have h := mul_le_mul_of_nonneg_right hdom_k hk2.le
+        nlinarith only [h]
+      linarith only [hsq, hmul]
     have heq : F - ((k + 1 - 1) * (2 * (k + 1 + 1) - j^2) /
         ((k + 1 + 1) * k^2)) =
         (2 * (r - k - 1) * ((r + 1) * (k + 2) - j^2)) /
           ((r + 1) * (k + 2) * k^2) := by
       dsimp [F]
-      field_simp
+      field_simp [(by linarith : r + 1 ≠ 0), hk.ne', hk2.ne']
       ring
     rw [← sub_nonneg]
     rw [heq]
