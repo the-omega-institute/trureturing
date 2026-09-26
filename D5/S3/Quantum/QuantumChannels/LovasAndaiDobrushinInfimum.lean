@@ -33,15 +33,19 @@ open scoped ComplexOrder MatrixOrder
 
 /-- `Q_C(a,f)`: the qubit channels over the classical channel with parameters `a, f` in the
 parametrization (eq:matQ) of Lovas–Andai: the Choi blocks `Q₁₁ = Q(|0⟩⟨0|)` and
-`Q₂₂ = Q(|1⟩⟨1|)` have `(0,0)` entries `a` and `f`. -/
+`Q₂₂ = Q(|1⟩⟨1|)` have diagonals `(a, 1 - a)` and `(f, 1 - f)`. -/
 def classicalFiber (a f : ℝ) : Set (QuantumChannel (Fin 2) (Fin 2)) :=
-  {Q | act Q (Matrix.single 0 0 1) 0 0 = (a : ℂ) ∧ act Q (Matrix.single 1 1 1) 0 0 = (f : ℂ)}
+  {Q | act Q (Matrix.single 0 0 1) 0 0 = (a : ℂ) ∧ act Q (Matrix.single 0 0 1) 1 1 = 1 - (a : ℂ) ∧
+    act Q (Matrix.single 1 1 1) 0 0 = (f : ℂ) ∧ act Q (Matrix.single 1 1 1) 1 1 = 1 - (f : ℂ)}
 
 /-- The trace-distance contraction coefficient
-`η^Tr(Q) = sup {Tr|Q(ρ) - Q(σ)| / Tr|ρ - σ| : ρ, σ qubit states}`. -/
+`η^Tr(Q) = sup {Tr|Q(ρ) - Q(σ)| / Tr|ρ - σ| : ρ, σ qubit states, ρ ≠ σ}`, with `Tr|A|` the trace
+norm. -/
 def dobrushin (Q : QuantumChannel (Fin 2) (Fin 2)) : ℝ :=
-  sSup {x | ∃ rho sigma : DensityState (Fin 2),
-    x = traceDistance (Q.mapState rho) (Q.mapState sigma) / traceDistance rho sigma}
+  sSup {x | ∃ rho sigma : DensityState (Fin 2), rho ≠ sigma ∧
+    x = traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
+          CStarMatrix.ofMatrix.symm (Q.mapState sigma).1) /
+        traceNorm (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)}
 
 /-- Lovas–Andai (arXiv:1607.01215), Conjecture: `inf {η(Q) : Q ∈ Q_C(a,f)} = |a - f|`;
 the infimum is attained. -/
@@ -111,12 +115,7 @@ theorem result : claim := by
       map_nonneg CStarMatrix.ofMatrixStarAlgEquiv h0, ?_⟩, rfl⟩
     show Matrix.trace (Matrix.single i i (1 : ℂ)) = 1
     fin_cases i <;> simp [Matrix.trace_fin_two, Matrix.single]
-  -- Trace preservation on the diagonal, and the matrix of an output state.
-  have tp : ∀ (Q : QuantumChannel (Fin 2) (Fin 2)) (X : Matrix (Fin 2) (Fin 2) ℂ),
-      act Q X 0 0 + act Q X 1 1 = X 0 0 + X 1 1 := by
-    intro Q X
-    rw [← Matrix.trace_fin_two, ← Matrix.trace_fin_two]
-    exact Q.trace_preserving (CStarMatrix.ofMatrix X)
+  -- The matrix of an output state.
   have mapv : ∀ (Q : QuantumChannel (Fin 2) (Fin 2)) (rho : DensityState (Fin 2)),
       CStarMatrix.ofMatrix.symm (Q.mapState rho).1 = act Q (CStarMatrix.ofMatrix.symm rho.1) :=
     fun _ _ => rfl
@@ -130,22 +129,36 @@ theorem result : claim := by
     have hP : (CStarMatrix.ofMatrix.symm rho.1).PosSemidef :=
       Matrix.nonneg_iff_posSemidef.mp (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm rho.2.1)
     exact Complex.conj_eq_iff_im.mp (hP.isHermitian.apply 0 0)
+  have contract : ∀ (Q : QuantumChannel (Fin 2) (Fin 2)) (rho sigma : DensityState (Fin 2)),
+      traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
+          CStarMatrix.ofMatrix.symm (Q.mapState sigma).1) ≤
+        traceNorm (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1) := by
+    intro Q rho sigma
+    have h := traceDistance_contract Q rho sigma
+    unfold traceDistance at h
+    linarith
   have bdd : ∀ Q : QuantumChannel (Fin 2) (Fin 2), BddAbove {x | ∃ rho sigma : DensityState (Fin 2),
-      x = traceDistance (Q.mapState rho) (Q.mapState sigma) / traceDistance rho sigma} := by
+      rho ≠ sigma ∧ x = traceNorm (CStarMatrix.ofMatrix.symm (Q.mapState rho).1 -
+          CStarMatrix.ofMatrix.symm (Q.mapState sigma).1) /
+        traceNorm (CStarMatrix.ofMatrix.symm rho.1 - CStarMatrix.ofMatrix.symm sigma.1)} := by
     intro Q
     refine ⟨1, ?_⟩
-    rintro x ⟨rho, sigma, rfl⟩
-    exact div_le_one_of_le₀ (traceDistance_contract Q rho sigma) (traceDistance_nonneg _ _)
+    rintro x ⟨rho, sigma, -, rfl⟩
+    exact div_le_one_of_le₀ (contract Q rho sigma) (traceNorm_nonneg _)
   obtain ⟨ρ0, hρ0⟩ := pure 0
   obtain ⟨σ0, hσ0⟩ := pure 1
   -- Every channel over the classical channel contracts `|0⟩⟨0|, |1⟩⟨1|` by at least `|a - f|`.
+  have hne : ρ0 ≠ σ0 := by
+    intro h
+    have h' := congrArg (fun r : DensityState (Fin 2) => CStarMatrix.ofMatrix.symm r.1 0 0) h
+    simp only [hρ0, hσ0] at h'
+    simp [Matrix.single] at h'
   have lb : ∀ Q ∈ classicalFiber a f, |a - f| ≤ dobrushin Q := by
-    rintro Q ⟨hQa, hQf⟩
-    refine le_csSup_of_le (bdd Q) ⟨ρ0, σ0, rfl⟩ ?_
-    have hY : 1 ≤ traceDistance ρ0 σ0 := by
-      unfold traceDistance
-      rw [hρ0, hσ0]
-      let D0 : Matrix (Fin 2) (Fin 2) ℂ := Matrix.single 0 0 1 - Matrix.single 1 1 1
+    rintro Q ⟨hQa, hQa', hQf, hQf'⟩
+    refine le_csSup_of_le (bdd Q) ⟨ρ0, σ0, hne, rfl⟩ ?_
+    rw [mapv, mapv, hρ0, hσ0]
+    let D0 : Matrix (Fin 2) (Fin 2) ℂ := Matrix.single 0 0 1 - Matrix.single 1 1 1
+    have hY2 : 2 ≤ traceNorm D0 := by
       have h := lower D0
       have e : (D0 0 0 - D0 1 1).re = 2 := by
         simp [D0, Matrix.single]
@@ -153,26 +166,23 @@ theorem result : claim := by
       rw [e] at h
       norm_num at h
       linarith
-    have hX : |a - f| ≤ traceDistance (Q.mapState ρ0) (Q.mapState σ0) := by
-      unfold traceDistance
-      rw [mapv, mapv, hρ0, hσ0]
-      have t0 : act Q (Matrix.single 0 0 1) 0 0 + act Q (Matrix.single 0 0 1) 1 1 = 1 := by
-        rw [tp]
-        simp
-      have t1 : act Q (Matrix.single 1 1 1) 0 0 + act Q (Matrix.single 1 1 1) 1 1 = 1 := by
-        rw [tp]
-        simp
-      have h := lower (act Q (Matrix.single 0 0 1) - act Q (Matrix.single 1 1 1))
-      have e : (act Q (Matrix.single 0 0 1) - act Q (Matrix.single 1 1 1)) 0 0 -
-          (act Q (Matrix.single 0 0 1) - act Q (Matrix.single 1 1 1)) 1 1 =
-            ((2 * (a - f) : ℝ) : ℂ) := by
-        simp only [Matrix.sub_apply]
+    have hYle : traceNorm D0 ≤ 2 := by
+      have h := traceDistance_le_one ρ0 σ0
+      unfold traceDistance at h
+      rw [hρ0, hσ0] at h
+      linarith
+    let A0 : Matrix (Fin 2) (Fin 2) ℂ := act Q (Matrix.single 0 0 1) - act Q (Matrix.single 1 1 1)
+    have hX : 2 * |a - f| ≤ traceNorm A0 := by
+      have h := lower A0
+      have e : A0 0 0 - A0 1 1 = ((2 * (a - f) : ℝ) : ℂ) := by
+        simp only [A0, Matrix.sub_apply, hQa, hQa', hQf, hQf']
         push_cast
-        linear_combination 2 * hQa - 2 * hQf - t0 + t1
+        ring
       rw [e, Complex.ofReal_re, abs_mul, abs_two] at h
       linarith
-    exact hX.trans (le_div_self ((abs_nonneg _).trans hX) (by linarith)
-      (traceDistance_le_one ρ0 σ0))
+    have hX0 : 0 ≤ traceNorm A0 := traceNorm_nonneg _
+    calc |a - f| ≤ traceNorm A0 / 2 := by linarith
+      _ ≤ traceNorm A0 / traceNorm D0 := div_le_div_of_nonneg_left hX0 (by linarith) hYle
   -- The measure-and-prepare channel `X ↦ Σ_{i,j} w_j(i) X_jj |i⟩⟨i|`.
   obtain ⟨w, hw⟩ : ∃ w : Fin 2 → Fin 2 → ℝ, w = ![![a, 1 - a], ![f, 1 - f]] := ⟨_, rfl⟩
   have hw0 : ∀ j i, 0 ≤ w j i := by
@@ -211,11 +221,17 @@ theorem result : claim := by
         Matrix.conjTranspose_apply]
     · linear_combination X 0 0 * hsq 0 0 + X 1 1 * hsq 1 0
     · linear_combination X 0 0 * hsq 0 1 + X 1 1 * hsq 1 1
+  have hwa' : w 0 1 = 1 - a := by subst hw; simp
+  have hwf' : w 1 1 = 1 - f := by subst hw; simp
   have hQ0fib : Q0 ∈ classicalFiber a f := by
-    refine ⟨?_, ?_⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
     · rw [(hQ0 _).1, hwa]
       simp [Matrix.single]
+    · rw [(hQ0 _).2.1, hwa']
+      simp [Matrix.single]
     · rw [(hQ0 _).1, hwf]
+      simp [Matrix.single]
+    · rw [(hQ0 _).2.1, hwf']
       simp [Matrix.single]
   -- The measure-and-prepare channel contracts every pair of states by at most `|a - f|`.
   have measurePrepare : ∀ rho sigma : DensityState (Fin 2),
@@ -262,9 +278,11 @@ theorem result : claim := by
       linarith
     exact hX.trans (mul_le_mul_of_nonneg_left hY (abs_nonneg _))
   have ub : dobrushin Q0 ≤ |a - f| := by
-    refine csSup_le ⟨_, ρ0, σ0, rfl⟩ ?_
-    rintro x ⟨rho, sigma, rfl⟩
-    exact div_le_of_le_mul₀ (traceDistance_nonneg _ _) (abs_nonneg _) (measurePrepare rho sigma)
+    refine csSup_le ⟨_, ρ0, σ0, hne, rfl⟩ ?_
+    rintro x ⟨rho, sigma, -, rfl⟩
+    have h := measurePrepare rho sigma
+    unfold traceDistance at h
+    exact div_le_of_le_mul₀ (traceNorm_nonneg _) (abs_nonneg _) (by linarith)
   exact ⟨⟨Q0, hQ0fib, le_antisymm ub (lb Q0 hQ0fib)⟩, fun y ⟨Q, hQ, hy⟩ => hy ▸ lb Q hQ⟩
 
 #print axioms result

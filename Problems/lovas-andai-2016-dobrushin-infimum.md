@@ -28,12 +28,12 @@ on the distribution of `η^Tr` over classical channels states
 > trace-distance contraction coefficient of the underlying classical channel.
 
 Issue #10033 fixes the readings: `M_2` is the set of qubit states and a qubit
-channel is a completely positive trace-preserving map; `Q_C(a,f)` is fixed by
-the upper-left entries `a` and `f` of `Q(|0⟩⟨0|)` and `Q(|1⟩⟨1|)`, trace
-preservation giving the other diagonal entries; the source writes positivity
-of the Choi matrix as `Q > 0`, and complete positivity is read as a positive
-semidefinite Choi matrix; in the ratio a pair of equal states contributes the
-value zero; `a, f ∈ [0,1]`.
+channel is a completely positive trace-preserving map; `Q_C(a,f)` consists of
+the channels for which `Q(|0⟩⟨0|)` and `Q(|1⟩⟨1|)` have diagonals `(a, 1−a)`
+and `(f, 1−f)`; the source writes positivity of the Choi matrix as `Q > 0`, and
+complete positivity is read as a positive semidefinite Choi matrix; the
+supremum defining `η^Tr` runs over pairs of distinct states, where the ratio
+of trace norms is defined; `a, f ∈ [0,1]`.
 
 ## Motivation
 

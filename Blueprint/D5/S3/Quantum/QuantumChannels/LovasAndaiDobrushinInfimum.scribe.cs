@@ -15,16 +15,14 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
         H("The least trace-distance contraction coefficient over a classical channel"),
         Blocks(
             DefinitionNode("classicalFiber", "Qubit channels over a classical channel", FiberFormula(),
-                "In the parametrization of Lovas and Andai the Choi blocks Q_11 and Q_22 are the images of the projections onto the first and the second basis vector; their upper-left entries are a and f, and trace preservation fixes the other diagonal entries to 1 - a and 1 - f. The set collects the completely positive trace-preserving qubit maps with these entries."),
+                "In the parametrization of Lovas and Andai the Choi blocks Q_11 and Q_22 are the images of the projections onto the first and the second basis vector, with diagonals (a, 1 - a) and (f, 1 - f). The set collects the completely positive trace-preserving qubit maps with these diagonal entries."),
             DefinitionNode("dobrushin", "The trace-distance contraction coefficient", DobrushinFormula(),
-                "The supremum over pairs of qubit states of the ratio between the trace distance of the images and the trace distance of the states; the factor one half of the trace distance cancels in the ratio, and a pair of equal states contributes the value zero."),
+                "The supremum, over pairs of distinct qubit states, of the ratio between the trace norm Tr|Q(rho) - Q(sigma)| of the difference of the images and the trace norm Tr|rho - sigma| of the difference of the states."),
             DefinitionNode("claim", "The Lovas-Andai conjecture", ClaimDefinitionFormula(),
                 "For all parameters a and f in the unit interval, |a - f| is the least value of the contraction coefficient over the qubit channels above the classical channel; in particular the infimum equals |a - f| and is attained."),
             TheoremNode("result", "The infimum is |a - f| and is attained", ClaimFormula(),
-                "Lower bound: for a channel Q over the classical channel, the images of the two basis projections differ by a matrix whose upper-left entry is a - f and, by trace preservation, whose lower-right entry is f - a. Testing the variational formula for the trace norm with the unitary diag(s, -s), where s is the sign of a - f, bounds that trace norm below by 2|a - f|, while the two projections are at trace distance one; so the ratio for this pair, and hence the coefficient, is at least |a - f|. Attainment: the measure-and-prepare channel with Kraus operators sqrt(p_j(i)) |i><j|, where p_0 = (a, 1 - a) and p_1 = (f, 1 - f), lies over the classical channel. It sends the difference of two states rho and sigma to the diagonal matrix with entries (a - f)t and (f - a)t, where t = rho_00 - sigma_00. Every unitary has diagonal entries of modulus at most one, so the variational formula bounds the trace norm of the image by 2|a - f||t|, while the same test unitary as before bounds the trace norm of rho - sigma below by 2|t|. Hence every ratio is at most |a - f|.",
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("lovas-andai-2016-dobrushin-infimum"),
-                    ResolutionKind.Proved))),
+                "Lower bound: for a channel Q over the classical channel, the images of the two basis projections differ by a matrix whose upper-left entry is a - f and, by trace preservation, whose lower-right entry is f - a. Testing the variational formula for the trace norm with the unitary diag(s, -s), where s is the sign of a - f, bounds that trace norm below by 2|a - f|, while the trace norm of the difference of the two projections is 2; so the ratio for this pair, and hence the coefficient, is at least |a - f|. Attainment: the measure-and-prepare channel with Kraus operators sqrt(p_j(i)) |i><j|, where p_0 = (a, 1 - a) and p_1 = (f, 1 - f), lies over the classical channel. It sends the difference of two states rho and sigma to the diagonal matrix with entries (a - f)t and (f - a)t, where t = rho_00 - sigma_00. Every unitary has diagonal entries of modulus at most one, so the variational formula bounds the trace norm of the image by 2|a - f||t|, while the same test unitary as before bounds the trace norm of rho - sigma below by 2|t|. Hence every ratio is at most |a - f|.",
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("lovas-andai-2016-dobrushin-infimum"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock DefinitionNode(string name, string title, Formula formula, string prose) =>
@@ -34,7 +32,7 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
             DescribeRole.Definition);
 
     private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose,
-        OpenProblemResolutionClaim resolution) =>
+        OpenProblemResolutionClaim? resolution) =>
         Describe.Lean(DescribeId.Create("lovas-andai-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
@@ -72,13 +70,15 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
     private static Formula Channels() => Call("QuantumChannel", Qubit(), Qubit());
     private static Formula States() => Call("DensityState", Qubit());
     private static Formula Projection(byte i) => Call("Matrix.single", D(i), D(i), D(1));
-    private static Formula Entry(Formula matrix) => new Formula.Apply(matrix, [D(0), D(0)]);
+    private static Formula Entry(Formula matrix, byte i) => new Formula.Apply(matrix, [D(i), D(i)]);
 
     private static Formula FiberFormula()
     {
         Formula a = F.Id("a"), f = F.Id("f"), q = F.Id("Q");
-        Formula condition = And(Equal(Entry(Parenthesized(Call("act", q, Projection(0)))), a),
-            Equal(Entry(Parenthesized(Call("act", q, Projection(1)))), f));
+        Formula first = Parenthesized(Call("act", q, Projection(0)));
+        Formula second = Parenthesized(Call("act", q, Projection(1)));
+        Formula condition = And(And(Equal(Entry(first, 0), a), Equal(Entry(first, 1), Subtract(D(1), a))),
+            And(Equal(Entry(second, 0), f), Equal(Entry(second, 1), Subtract(D(1), f))));
         Formula fiber = Seq(OpenBrace, Member(q, Channels()), Sp, Mid, Sp, condition, CloseBrace);
         return Disp(All("a", Reals(), All("f", Reals(), Equal(Call("classicalFiber", a, f), fiber))));
     }
@@ -87,10 +87,11 @@ internal sealed class LovasAndaiDobrushinInfimumDocument : IScribeDocumentDefini
     {
         Formula q = F.Id("Q"), x = F.Id("x"), rho = F.Id("rho"), sigma = F.Id("sigma");
         Formula ratio = new Formula.Fraction(
-            Call("traceDistance", Call("Q.mapState", rho), Call("Q.mapState", sigma)),
-            Call("traceDistance", rho, sigma));
+            Call("traceNorm", Subtract(Call("Q.mapState", rho), Call("Q.mapState", sigma))),
+            Call("traceNorm", Subtract(rho, sigma)));
+        Formula distinct = new Formula.Relation(rho, FormulaRelationOperator.NotEqual, sigma);
         Formula ratios = Seq(OpenBrace, Member(x, Reals()), Sp, Mid, Sp,
-            Some("rho", States(), Some("sigma", States(), Equal(x, ratio))), CloseBrace);
+            Some("rho", States(), Some("sigma", States(), And(distinct, Equal(x, ratio)))), CloseBrace);
         return Disp(All("Q", Channels(), Equal(Call("dobrushin", q), Call("sSup", ratios))));
     }
 
