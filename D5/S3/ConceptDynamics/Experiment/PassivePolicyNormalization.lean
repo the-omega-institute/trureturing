@@ -35,6 +35,39 @@ def execute (read : (q : Q) → W → Y q) (policy : Hist Y → Sum Q L) :
     | .inl q => (execute read policy n (h ++ [⟨q, read q x⟩]) x).map
         (fun p => (⟨q, read q x⟩ :: p.1, p.2))
 
+/-- A completed execution records true responses and replays unchanged on any source
+matching those responses, at the same fuel and initial history. -/
+theorem execute_trace_transfer (read : (q : Q) → W → Y q)
+    (policy : Hist Y → Sum Q L) :
+    ∀ n h x t l, execute read policy n h x = some (t,l) →
+    (∀ a ∈ t, read a.1 x = a.2) ∧
+    ∀ y, (∀ a ∈ t, read a.1 y = a.2) → execute read policy n h y = some (t,l) := by
+  intro n
+  induction n with
+  | zero => simp [execute]
+  | succ n ih =>
+    intro h x t l hr
+    cases hp : policy h with
+    | inr a =>
+      simp only [execute,hp,Option.some.injEq,Prod.mk.injEq] at hr
+      rcases hr with ⟨rfl,rfl⟩
+      exact ⟨by simp,fun y _ => by simp [execute,hp]⟩
+    | inl q =>
+      simp only [execute,hp] at hr
+      obtain ⟨⟨s,a⟩,hs,he⟩ := Option.map_eq_some_iff.mp hr
+      simp only [Prod.mk.injEq] at he
+      rcases he with ⟨rfl,rfl⟩
+      obtain ⟨hc,ht⟩ := ih _ _ _ _ hs
+      refine ⟨?_,?_⟩
+      · simpa using hc
+      · intro y hy
+        have hyq : read q y = read q x := hy _ (List.mem_cons_self ..)
+        have hys : ∀ a ∈ s, read a.1 y = a.2 := fun a ha => hy a (List.mem_cons_of_mem _ ha)
+        rw [execute,hp]
+        dsimp only
+        rw [hyq,ht y hys]
+        rfl
+
 /-- Candidates producing a specified response to a fixed passive query. -/
 noncomputable def fiber (read : (q : Q) → W → Y q) (C : Finset W) (q : Q) (y : Y q) :
     Finset W := by classical exact C.filter (fun x => read q x = y)
@@ -795,38 +828,10 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       (runs : ∀ x ∈ C, ∃ n, execute read policy n [] x = some (tr x,lab x)) :
       ∀ x ∈ C, candidates read C (tr x) = leaf C tr x := by
     classical
-    have transfer : ∀ n h x t l, execute read policy n h x = some (t,l) →
-        (∀ a ∈ t, read a.1 x = a.2) ∧
-        ∀ y, (∀ a ∈ t, read a.1 y = a.2) → execute read policy n h y = some (t,l) := by
-      intro n
-      induction n with
-      | zero => simp [execute]
-      | succ n ih =>
-        intro h x t l hr
-        cases hp : policy h with
-        | inr a =>
-          simp only [execute,hp,Option.some.injEq,Prod.mk.injEq] at hr
-          rcases hr with ⟨rfl,rfl⟩
-          exact ⟨by simp,fun y _ => by simp [execute,hp]⟩
-        | inl q =>
-          simp only [execute,hp] at hr
-          obtain ⟨⟨s,a⟩,hs,he⟩ := Option.map_eq_some_iff.mp hr
-          simp only [Prod.mk.injEq] at he
-          rcases he with ⟨rfl,rfl⟩
-          obtain ⟨hc,ht⟩ := ih _ _ _ _ hs
-          refine ⟨?_,?_⟩
-          · simpa using hc
-          · intro y hy
-            have hyq : read q y = read q x := hy _ (List.mem_cons_self ..)
-            have hys : ∀ a ∈ s, read a.1 y = a.2 := fun a ha => hy a (List.mem_cons_of_mem _ ha)
-            rw [execute,hp]
-            dsimp only
-            rw [hyq,ht y hys]
-            rfl
     have mono := execute_mono read policy
     intro x hx
     obtain ⟨n,hn⟩ := runs x hx
-    obtain ⟨hc,ht⟩ := transfer _ _ _ _ _ hn
+    obtain ⟨hc,ht⟩ := execute_trace_transfer read policy _ _ _ _ _ hn
     ext y
     simp only [candidates,leaf,Finset.mem_filter]
     constructor
@@ -838,7 +843,7 @@ theorem result {Z : Type*} [MetricSpace Z] [Finite Q]
       exact ⟨hy,congrArg Prod.fst he⟩
     · rintro ⟨hy,he⟩
       obtain ⟨m,hm⟩ := runs y hy
-      have hc' := (transfer _ _ _ _ _ hm).1
+      have hc' := (execute_trace_transfer read policy _ _ _ _ _ hm).1
       exact ⟨hy,he ▸ hc'⟩
 
   have source_value_clauses

@@ -144,7 +144,8 @@ class NativeReportConsumerTests:
         workspace = ['-d', str((self.root / 'Reg').resolve())]
         def builds():
             return [args for line in calls.read_text().splitlines()
-                    if (args := json.loads(line))[:3] == [*workspace, 'build']]
+                    if ((args := json.loads(line))[:3] == [*workspace, 'build']
+                        or args[:4] == ['--quiet', *workspace, 'build'])]
         def clear_calls():
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
@@ -158,7 +159,7 @@ class NativeReportConsumerTests:
         publication.member(output, '.reuse.json').unlink()
         clear_calls()
         report_only = self.inspect(phase='report-only-miss-with-unselected-invalid-program')
-        self.assertEqual(builds(), [[*workspace, 'build', ':report']])
+        self.assertEqual(builds(), [['--quiet', *workspace, 'build', ':report']])
         self.assertIn('phase=report status=completed', report_only.stderr)
         self.assertEqual(expected, output.read_bytes())
         self.write('Audit.lean', 'def audit : Nat := 1\n')
@@ -212,7 +213,7 @@ class NativeReportConsumerTests:
                     self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
                 clear_calls()
                 recovered = self.inspect(phase=damage)
-                self.assertEqual(builds(), [[*workspace, 'build', ':report']])
+                self.assertEqual(builds(), [['--quiet', *workspace, 'build', ':report']])
                 self.assertIn('phase=ensure status=started', recovered.stderr)
                 self.assertIn('phase=report status=completed', recovered.stderr,
                               '[FAIL] invalid_seed_must_reenter_native_producer')
@@ -244,7 +245,7 @@ class NativeReportConsumerTests:
         publication.member(seed, '.reuse.json').unlink()
         clear_calls()
         recovered = self.inspect(phase='programs-and-report-miss')
-        self.assertEqual(builds(), [[*workspace, 'build', ':report', *targets]])
+        self.assertEqual(builds(), [['--quiet', *workspace, 'build', ':report', *targets]])
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
         policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])

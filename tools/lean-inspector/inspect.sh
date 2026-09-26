@@ -168,7 +168,8 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+# Suppress replayed informational logs; warnings, errors and exit status remain.
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" --quiet "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
