@@ -124,15 +124,8 @@ theorem result : ¬ claim := by
     | zero => simpa [rep] using hb
     | succ k ih =>
       simp only [rep]
-      have h1 : rep b w k <<< (w * 2 ^ k) < 2 ^ (w * 2 ^ (k + 1)) := by
-        rw [Nat.shiftLeft_eq, pow_succ, show w * (2 ^ k * 2) = w * 2 ^ k + w * 2 ^ k by ring,
-          pow_add]
-        exact Nat.mul_lt_mul_of_pos_right ih (by positivity)
-      have h0 : rep b w k < 2 ^ (w * 2 ^ (k + 1)) :=
-        lt_of_lt_of_le ih (Nat.pow_le_pow_right (by norm_num) (by
-          rw [pow_succ]
-          nlinarith [Nat.zero_le w, pow_pos (show 0 < 2 by norm_num) k]))
-      exact Nat.or_lt_two_pow h0 h1
+      rw [Nat.lor_comm, pow_succ, show w * (2 ^ k * 2) = w * 2 ^ k + w * 2 ^ k by ring]
+      exact Nat.append_lt ih ih
   have testBit_rep : ∀ (b w : ℕ) (hb : b < 2 ^ w), ∀ k j, j < w * 2 ^ k →
       (rep b w k).testBit j = b.testBit (j % w) := by
     intro b w hb k
@@ -159,9 +152,8 @@ theorem result : ¬ claim := by
     intro v hv j hj
     unfold coord
     have hb : (2 ^ 2 ^ v - 1) <<< 2 ^ v < 2 ^ 2 ^ (v + 1) := by
-      rw [Nat.shiftLeft_eq, pow_succ, pow_mul, sq]
-      have h1 : 2 ^ 2 ^ v - 1 < 2 ^ 2 ^ v := Nat.sub_lt (by positivity) (by norm_num)
-      exact Nat.mul_lt_mul_of_pos_right h1 (by positivity)
+      rw [pow_succ, mul_two]
+      exact Nat.shiftLeft_lt (Nat.sub_lt (by positivity) (by norm_num))
     rw [testBit_rep _ _ hb _ _ (by
       rw [← pow_add, show v + 1 + (17 - v) = 18 by omega]; exact hj)]
     rw [Nat.testBit_shiftLeft, Nat.testBit_two_pow_sub_one]
