@@ -39,19 +39,19 @@ internal sealed class SinglePeakRareEdgeWaitingMeanDocument : IScribeDocumentDef
     private static Formula MainFormula()
     {
         Formula t = F.Id("T"), u = F.Id("u"), p = F.Id("p"), r = F.Id("r");
-        Formula numerator = Seq(D(1), Minus, p, u, Minus, p, r, u, Caret, Grp(D(2)));
+        Formula numerator = Seq(D(1), Minus, p, Sp, u, Minus, p, Sp, r, Sp, u, Caret, Grp(D(2)));
         Formula denominator = Seq(
-            D(1), Minus, u, Plus, p, Open, D(1), Minus, r, Close, u, Caret, Grp(D(2)),
-            Plus, p, r, u, Caret, Grp(D(3)));
+            D(1), Minus, u, Plus, p, Open, D(1), Minus, r, Close, Sp, u, Caret, Grp(D(2)),
+            Plus, p, Sp, r, Sp, u, Caret, Grp(D(3)));
         return Disp(Seq(
-            p, Eq, Frac, Grp(D(1)), Grp(D(2), Vert, F.Id("X"), Vert), Sp, Rightarrow, Sp,
-            Forall, Sp, t, Comma, Sp, D(0), Le, Survival(t), Comma, Quad,
-            Survival(Seq(t, Plus, D(1))), Le, Survival(t), Comma, Quad,
-            Lim, Underscore, Grp(t, To, Infty), Sp, Survival(t), Eq, D(0), Comma, Quad,
-            Sum, Underscore, Grp(t, Geq, D(0)), Sp, Survival(t), Eq,
-              D(2), Vert, F.Id("X"), Vert, Minus, D(1), Minus, r, Comma, Quad,
-            D(0), Le, u, Le, D(1), Sp, Rightarrow, Sp,
-            Sum, Underscore, Grp(t, Geq, D(0)), Sp, Survival(t), u, Caret, Grp(t), Eq,
+            p, Eq, Frac, Grp(D(1)), Grp(D(2), Lvert, Sp, F.Id("X"), Sp, Rvert), Sp, Rightarrow, Sp,
+            Forall, Sp, t, Comma, Sp, D(0), Le, Sp, Survival(t), Comma, Quad, Sp,
+            Survival(Seq(t, Plus, D(1))), Le, Sp, Survival(t), Comma, Quad, Sp,
+            Lim, Sp, Underscore, Grp(t, To, Sp, Infty), Sp, Survival(t), Eq, D(0), Comma, Quad, Sp,
+            Sum, Underscore, Grp(t, Geq, Sp, D(0)), Sp, Survival(t), Eq,
+              D(2), Lvert, Sp, F.Id("X"), Sp, Rvert, Sp, Minus, D(1), Minus, r, Comma, Quad, Sp,
+            D(0), Le, Sp, u, Le, Sp, D(1), Sp, Rightarrow, Sp,
+            Sum, Underscore, Grp(t, Geq, Sp, D(0)), Sp, Survival(t), Sp, u, Caret, Grp(t), Eq,
               Frac, Grp(numerator), Grp(denominator)));
     }
 }

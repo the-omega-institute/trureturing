@@ -34,7 +34,7 @@ internal sealed class SinglePeakRareEdgeSurvivalDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "Assume the sign function takes only the values 1 and -1, the peak has sign 1, "
                             + "the state space has 2M elements with M positive signs, M is at least 2, "
-                            + "and q = r/(M-1). Put N = |X|, p = 1/(2N), and epsilon = 1-r.")),
+                            + "and q = r/(M-1). Put N = |X|, p = 1/(2N), and epsilon = 1-r, written as varepsilon in the display.")),
                     Paragraph(Text(
                         "The mass starts at one. One forbidden edge is possible after one step and two "
                             + "placements are possible after two steps, giving s_1 = 1-p and s_2 = 1-2p. "
@@ -71,26 +71,26 @@ internal sealed class SinglePeakRareEdgeSurvivalDocument : IScribeDocumentDefini
         return Disp(Seq(
             Survival(horizon), Eq, Sp,
             Sum, Underscore, Grp(x, Colon, Sp, Call("path", horizon)), Sp,
-            Frac, Grp(D(1)), Grp(Vert, F.Id("X"), Vert), Sp,
+            Frac, Grp(D(1)), Grp(Lvert, Sp, F.Id("X"), Sp, Rvert), Sp,
             Prod, Underscore, Grp(t, Lt, horizon), Sp,
             Call("P", Sub(x, t), Sub(x, Seq(t, Plus, D(1)))), Sp,
-            Mathbf, Grp(D(1)), Underscore,
+            Mathbf, Sp, Grp(D(1)), Underscore,
             Grp(Forall, Sp, t, Lt, horizon, Comma, Sp, Neg, Sp, Open, edge, Close)));
     }
 
     private static Formula RecurrenceFormula()
     {
-        Formula t = F.Id("T"), p = F.Id("p"), epsilon = F.Id("epsilon"), r = F.Id("r");
+        Formula t = F.Id("T"), p = F.Id("p"), epsilon = Varepsilon, r = F.Id("r");
         return Disp(Seq(
-            p, Eq, Frac, Grp(D(1)), Grp(D(2), Vert, F.Id("X"), Vert), Comma, Quad,
-            epsilon, Eq, D(1), Minus, r, Sp, Rightarrow, Sp,
-            Survival(D(0)), Eq, D(1), Comma, Quad,
-            Survival(D(1)), Eq, D(1), Minus, p, Comma, Quad,
-            Survival(D(2)), Eq, D(1), Minus, D(2), p, Comma, Quad,
-            Forall, Sp, t, Geq, D(0), Comma, Sp,
+            p, Eq, Frac, Grp(D(1)), Grp(D(2), Lvert, Sp, F.Id("X"), Sp, Rvert), Comma, Quad, Sp,
+            epsilon, Sp, Eq, D(1), Minus, r, Sp, Rightarrow, Sp,
+            Survival(D(0)), Eq, D(1), Comma, Quad, Sp,
+            Survival(D(1)), Eq, D(1), Minus, p, Comma, Quad, Sp,
+            Survival(D(2)), Eq, D(1), Minus, D(2), p, Comma, Quad, Sp,
+            Forall, Sp, t, Geq, Sp, D(0), Comma, Sp,
             Survival(Seq(t, Plus, D(3))), Eq,
             Survival(Seq(t, Plus, D(2))), Minus,
-            p, epsilon, Survival(Seq(t, Plus, D(1))), Minus,
-            p, r, Survival(t)));
+            p, Sp, epsilon, Sp, Survival(Seq(t, Plus, D(1))), Minus,
+            p, Sp, r, Sp, Survival(t)));
     }
 }
