@@ -63,8 +63,8 @@ Let `v(i)` count the topplings of `(i, 0)`. A toppling of `(i, 0)` removes 4
 grains and returns 2 through the two self-neighbours, so every cell other than
 `c[0,0]` holds `4 − 2v(i) + v(i − 1) + v(i + 1)` grains, and `c[0,0]` is never
 toppled. Put `u(x) = (x(n − x) + [n even]·min(x, n − x))/2` for
-`0 ≤ x ≤ n`. Its final configuration is 3 at every cell, except 2 at `x = n/2`
-when `n` is even.
+`0 ≤ x ≤ n`. Its final configuration is 3 at every cell other than `c[0,0]`
+(`1 ≤ x < n`), except 2 at `x = n/2` when `n` is even.
 
 1. Least action: along a legal sequence `v ≤ u`, since a cell with
    `v(x) = u(x)` holds at most 3 grains. Hence every legal sequence has at most
