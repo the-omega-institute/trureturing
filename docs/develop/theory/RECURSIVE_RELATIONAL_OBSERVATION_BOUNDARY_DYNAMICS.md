@@ -11336,3 +11336,302 @@ $$
 所得唯一性限定于早输出边缘的 $\sigma_{11}$；完整最优修复仍可有不同补块或其他等误差实现。结论不推广到其他候选族或其他末输出维数。
 
 ## 追加锚（本行以下为增补区）
+
+## 63. 秩至多二的量子比特早边缘：全部扩张均可同系数修复
+
+### 63.1 合同与结论
+
+固定晚输入 $A=\mathbb C^2$、早输出 $B=\mathbb C^2$，晚输出 $D$ 可以是任意非零有限维空间，张量次序为 $A\otimes B\otimes D$。早边缘与它的扩张满足
+
+$$
+M\succeq0,\quad\operatorname{Tr}_B M=I_A,
+\qquad
+R\succeq0,\quad\operatorname{Tr}_D R=M.
+\tag{63.1}
+$$
+
+因果修复与全部量子 tester 合同为
+
+$$
+\begin{aligned}
+\mathcal S_D&=\{S\succeq0:\operatorname{Tr}_D S=I_A\otimes\sigma,
+\quad\sigma\succeq0,\ \operatorname{Tr}\sigma=1\},\\
+C&\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\end{aligned}
+\tag{63.2}
+$$
+
+采用吸收全转置的配对约定，记
+
+$$
+\begin{aligned}
+N_D(X)&=\max_{C,E}|\operatorname{Tr}(XE)|,\\
+e_D(R)&=\min_{S\in\mathcal S_D}N_D(R-S),\\
+\Delta(M)&=\max_C|\operatorname{Tr}(MC)-1|.
+\end{aligned}
+\tag{63.3}
+$$
+
+事件量词包含任意有限量子参考、记忆和最终测量。即使候选在部分反馈下没有归一化，式（63.3）仍是事件响应误差；这里没有把它当作两个归一化分布的总变差距离。
+
+**定理 63.1（低秩早边缘的全部扩张）。** 若 $\operatorname{rank}M\le2$，则对每个有限维 $D$ 和每个满足式（63.1）的扩张，均有
+
+$$
+e_D(R)=\Delta(M).
+\tag{63.4}
+$$
+
+**推论 63.2（纯三量子比特候选无严格间隙）。** 若 $A,B,D$ 均为量子比特且 $R$ 是纯的静态通道 Choi 算符，则 $e_D(R)=\Delta(M)$。因此在这个 $2\times2\times2$ 接口上，任何严格间隙 $e_D(R)>\Delta(M)$ 必须同时满足
+
+$$
+\operatorname{rank}R\ge2,
+\qquad\operatorname{rank}(\operatorname{Tr}_D R)\ge3.
+\tag{63.5}
+$$
+
+式（63.5）是必要条件，没有声称存在满足它的严格反例，也没有解决所有混合 $D=2$ 候选。
+
+### 63.2 两角标准族及其显式因果修复
+
+先在三个量子比特上取
+
+$$
+x=|000\rangle,\quad h=|011\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,
+$$
+
+以及非负参数
+
+$$
+a^2+b^2=c^2+d^2=1,
+\qquad a\ge c,\qquad d\ge b.
+\tag{63.6}
+$$
+
+等价地可写 $a=\cos\alpha,b=\sin\alpha,c=\cos\beta,d=\sin\beta$，其中 $0\le\alpha\le\beta\le\pi/2$。定义
+
+$$
+r_0=ax+cy,\qquad r_1=bh+dz,
+\qquad r=r_0+r_1,\qquad R=|r\rangle\langle r|,
+\qquad t=a^2-c^2=d^2-b^2\ge0.
+\tag{63.7}
+$$
+
+向量 $r$ 是等距
+
+$$
+V|0\rangle=a|00\rangle+b|11\rangle,
+\qquad
+V|1\rangle=c|01\rangle+d|10\rangle
+$$
+
+的 Choi 向量，所以 $\operatorname{Tr}_{BD}R=I_A$。
+
+**引理 63.3（完整 tester 下的两角准确修复）。** 对每个满足式（63.6）的参数组，有
+
+$$
+e_D(R)=\Delta(M)=t+2ad=(a+d)^2-1.
+\tag{63.8}
+$$
+
+一个显式最优修复由任意
+
+$$
+p\in[ac,1-bd]
+\tag{63.9}
+$$
+
+给出：在正交分解 $\operatorname{span}\{x,y\}\oplus\operatorname{span}\{h,z\}$ 上令
+
+$$
+S_p=
+\begin{pmatrix}p&ac\\ac&p\end{pmatrix}_{x,y}
+\oplus
+\begin{pmatrix}1-p&bd\\bd&1-p\end{pmatrix}_{h,z},
+\tag{63.10}
+$$
+
+在其正交补上取零。
+
+**证明。** 先检查参数区间与正性。Cauchy–Schwarz 给
+
+$$
+ac+bd\le\sqrt{a^2+b^2}\sqrt{c^2+d^2}=1,
+$$
+
+故式（63.9）非空。由 $a\ge c,d\ge b$，
+
+$$
+c^2\le ac\le p\le1-bd\le1-b^2=a^2.
+\tag{63.11}
+$$
+
+两个二阶块的特征值分别是 $p\pm ac$ 和 $1-p\pm bd$，均非负。每个块的交叉项具有不同的 $D$ 坐标，偏迹后消失，因此
+
+$$
+\operatorname{Tr}_D S_p
+=I_A\otimes\operatorname{diag}(p,1-p).
+$$
+
+所以 $S_p$ 是归一化因果修复。
+
+令
+
+$$
+R_{\mathrm{diag}}=|r_0\rangle\langle r_0|
++|r_1\rangle\langle r_1|,
+\qquad
+X=R-R_{\mathrm{diag}}=|r_0\rangle\langle r_1|
++|r_1\rangle\langle r_0|.
+\tag{63.12}
+$$
+
+修复保留了每个早输出分支内部的交叉项。因此
+
+$$
+R_{\mathrm{diag}}-S_p
+=(a^2-p)(|x\rangle\langle x|-|h\rangle\langle h|)
++(p-c^2)(|z\rangle\langle z|-|y\rangle\langle y|).
+\tag{63.13}
+$$
+
+两系数非负、和为 $t$。对任意完整 tester，$\operatorname{Tr}_A C=I_B$ 使每个标准基对角元均位于 $[0,1]$。由 $0\preceq E\preceq C\otimes I_D$，式（63.13）的正、负两个部分与 $E$ 的配对各自至多 $t$，所以
+
+$$
+|\operatorname{Tr}[(R_{\mathrm{diag}}-S_p)E]|\le t.
+\tag{63.14}
+$$
+
+对跨分支项，不限制 $C$ 或 $E$ 的非对角元。正算子 $E$ 的 Cauchy–Schwarz 不等式给
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(XE)|
+&\le2|\langle r_1|E|r_0\rangle|\\
+&\le2\sqrt{\langle r_0|E|r_0\rangle
+\langle r_1|E|r_1\rangle}\\
+&\le2\sqrt{\langle r_0|C\otimes I_D|r_0\rangle
+\langle r_1|C\otimes I_D|r_1\rangle}.
+\end{aligned}
+$$
+
+向量 $x,y$ 具有不同的 $D$ 坐标，$h,z$ 也如此。记 $C$ 对角元按 $AB$ 标记，则
+
+$$
+\begin{aligned}
+\langle r_0|C\otimes I_D|r_0\rangle
+&=a^2C_{00,00}+c^2C_{10,10}\le a^2,\\
+\langle r_1|C\otimes I_D|r_1\rangle
+&=b^2C_{01,01}+d^2C_{11,11}\le d^2,
+\end{aligned}
+\tag{63.15}
+$$
+
+因为每行右侧所用的两个 $C$ 对角元和为 $1$。于是
+
+$$
+|\operatorname{Tr}(XE)|\le2ad.
+\tag{63.16}
+$$
+
+式（63.14）、（63.16）在同一个任意 $C,E$ 上同时成立，直接相加得到
+
+$$
+N_D(R-S_p)\le t+2ad.
+\tag{63.17}
+$$
+
+下界由一个合法的完整总事件达到。令
+
+$$
+|\chi\rangle=|00\rangle+|11\rangle,
+\qquad C_+=|\chi\rangle\langle\chi|,
+\qquad E_+=C_+\otimes I_D.
+\tag{63.18}
+$$
+
+$\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+\operatorname{Tr}(RE_+)=(a+d)^2.
+$$
+
+每个归一化因果修复的同一总响应均为 $1$，因此
+
+$$
+t+2ad=(a+d)^2-1\le\Delta(M)\le e_D(R)
+\le N_D(R-S_p)\le t+2ad.
+$$
+
+全部不等式均取等，证明式（63.8）。这个推导也直接算出了 $\Delta$，无需先求另一个反馈端点。$\square$
+
+### 63.3 为什么标准族覆盖全部低秩量子比特边缘
+
+采用已发表的量子比特通道标准形。Ruskai、Szarek、Werner 的《An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$》，[arXiv:quant-ph/0101003v2](https://arxiv.org/abs/quant-ph/0101003v2)，定理 12（PDF 第 18 页）证明以下条件等价：量子比特通道的 Choi 秩至多二；存在至多两个 Kraus 算符；经输入、输出酉基变换后可化成其式（17）。该文第 1.4 节式（18）（PDF 第 10 页）给出一个对角和一个反对角的 Kraus 表示。本文只使用这些标准形事实，不把它们作为新分类结论。
+
+在通常的 $K\rho K^*$ 约定下，必要时将该文 $A^*\rho A$ 约定中的 Kraus 算符取伴随，可以写成
+
+$$
+K_0=\begin{pmatrix}a&0\\0&d\end{pmatrix},
+\qquad
+K_1=\begin{pmatrix}0&c\\b&0\end{pmatrix},
+\qquad a^2+b^2=c^2+d^2=1,
+\tag{63.19}
+$$
+
+其中四个系数可取非负。具体而言，对角、反对角表示先给四个可能带相位的系数；把它们写入纯化向量的 $000,011,101,110$ 四个位置后，整体相位和 $A,B,D$ 三个局部对角相位可以分别消去四个相位。例如四个相位依次为 $\phi_a,\phi_b,\phi_c,\phi_d$ 时，取整体相位 $-\phi_a$，以及三个局部相位
+
+$$
+\theta_A=\frac{\phi_a+\phi_b-\phi_c-\phi_d}{2},\qquad
+\theta_B=\frac{\phi_a-\phi_b+\phi_c-\phi_d}{2},\qquad
+\theta_D=\frac{\phi_a-\phi_b-\phi_c+\phi_d}{2}.
+$$
+
+这些相位消去全部四项的相位；零系数的相位可以任意指定，不添条件。故无需假设通道本来是实的。
+
+这些 Kraus 算符给出 $M$ 的一个至多二维纯化，其向量正是式（63.7）的 $r$。若 $a<c$，同时交换 $A$ 和 $D$ 的两个基向量，会把 $(a,b,c,d)$ 变为 $(c,d,a,b)$。这样总能达到式（63.6）的次序 $a\ge c,d\ge b$。秩一边界可以给第二个 Kraus 算符补零，仍包含于同一结论；例如 $a=d=1,b=c=0$ 时 $\Delta=3$，不应把它排除为小缺陷区间之外的例外。
+
+输入、早输出和晚输出上的局部酉变换都保持因果集合及完整 tester 集合，因而保持 $e_D$ 与 $\Delta$。例如把 $X$ 共轭为 $(U_A\otimes U_B\otimes U_D)X(U_A\otimes U_B\otimes U_D)^*$ 时，对 tester 作相同共轭即可保持配对及两项偏迹归一化；Choi 输入基变换所出现的共轭酉仍属于同一个允许的局部酉集合。
+
+因此每个秩至多二的量子比特早边缘，都存在一个末输出为量子比特的纯扩张，其修复误差由引理 63.3 准确等于 $\Delta(M)$。同一 $M$ 的任意其他纯化，仅在纯化支撑上相差等距；这也保持最优误差。
+
+### 63.4 从纯化到所有混合扩张
+
+**定理 63.1 的证明。** 对给定 $M$，取第 63.3 节的纯扩张 $R^{\mathrm{pur}}$。第 57 节的固定边缘扩张定理给：对任意满足式（63.1）的 $R$，存在作用在末输出的 CPTP 通道 $\Lambda$，使
+
+$$
+R=(\operatorname{id}_{AB}\otimes\Lambda)(R^{\mathrm{pur}}).
+\tag{63.20}
+$$
+
+若使用带有多余零 Kraus 方向的二维纯化，可在其实际支撑上构造该通道，再任意以固定态补全正交方向，从而仍得到定义在整个二维输入空间上的 CPTP 通道。
+
+完整事件误差在末端 CPTP 处理下收缩，而 $\Delta(M)$ 由固定早边缘决定。因此
+
+$$
+\Delta(M)\le e_D(R)
+\le e_2(R^{\mathrm{pur}})=\Delta(M).
+\tag{63.21}
+$$
+
+这证明式（63.4）。一个达到最优值的修复可以直接取第 63.2 节显式修复经相应局部酉还原后，再施加同一个 $\Lambda$ 的像。$\square$
+
+**推论 63.2 的证明。** 若 $R=|r\rangle\langle r|$ 且 $\dim D=2$，则
+
+$$
+\operatorname{rank}(\operatorname{Tr}_D|r\rangle\langle r|)
+\le\dim D=2.
+$$
+
+定理 63.1 给同系数等式。因此严格间隙排除了纯 $R$，也排除了任何秩至多二的早边缘，得到式（63.5）。$\square$
+
+### 63.5 范围与剩余问题
+
+该结论对 $A=B=2$、$\operatorname{rank}M\le2$ 的全部扩张成立，末输出维数不必等于二。其新量词是固定早边缘的全部纯、混合扩张；末输出通道不能在这一类边缘上制造严格修复间隙。
+
+对同样的量子比特早、晚端口，已有三维末输出的纯反例早边缘秩恰三。因此就纯静态候选而言，末输出维数三已经足以产生严格间隙，而维数至多二不可能产生；这没有把同样的最小维数结论推广到混合候选。
+
+末输出为量子比特、$\operatorname{rank}M\in\{3,4\}$ 的混合候选仍未由本定理结算。第 60 节的秩二压缩族有秩三早边缘，所以它不属于定理 63.1 的假设范围；其局部参数等式及当前结果均不能替代一般混合量子比特问题的证明或反例。
+
+## 追加锚（本行以下为增补区）
