@@ -141,31 +141,33 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 
 ## Toward holographic spacetime
 
-We aim to study time and space together in a **holographic spacetime geometry**:
-how a whole relational structure is represented through observations, and
-under which conditions those observations support reconstruction and action.
-This is a research program, with explicit models and open bridges to physics.
+We study **holographic spacetime geometry** as a question about time, space and
+observation: when do partial records support reconstruction and action?
 
-[Contextual spacetime arithmetic](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
-keeps finite event archives with time, position, causal order and provenance,
-then studies what survives a numerical projection.
-[Recursive relational observation](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
-asks when observations preserve composition, shared sources and the target
-of a question. The
-[context geometry volume](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
-develops distances using allowed experiments and their responses. These
-volumes are theory inputs; their prose does not certify formal coverage.
+Theory inputs study
+[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+retaining time, position, causal order and provenance;
+[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+composition, shared sources and targets; and
+[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+defined through allowed experiments and responses. Their prose does not certify
+formal coverage.
 
-A concrete [Lean counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-shows why the distinction matters: in its finite archive model, adding an
-inactive event can leave the current spatial readout unchanged while making
-a specified temporal composition illegal. What a snapshot preserves and what
-a history permits must therefore be checked separately in this model.
+A [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+leaves the current spatial readout unchanged when an inactive event is added,
+while making a specified temporal composition illegal.
 
-The holographic direction asks which additional relations make reconstruction
-possible, at what resolution, and with what error and resource bounds.
-Identifying these models with physical spacetime, or deriving a physical
-holographic duality, remains outside the established results presented here.
+A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+applies to nonempty local record sets on a finite tree: each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Then any allowed local record extends
+to a record on the union of the local variable sets, satisfying every local
+constraint.
+
+This establishes a compatible completion; uniqueness, original-history recovery
+and computational cost require further results. Reconstruction with stated
+resolution and error bounds, and links to physical spacetime or holographic
+duality, remain research questions.
 
 ## A continuing research program
 
