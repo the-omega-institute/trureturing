@@ -2,9 +2,9 @@ import Reg.Support.LegacyRelations.Preemption
 import Reg.Support.LegacyRelations.Completion
 import Reg.Support.LegacyRelations.System
 
-/- These are counterexamples to the current source-selector interface, not claims
-that faithful registration is impossible. Every probe uses the complete original
-ConstantInfo.type and the full-law, lawful, sensitive Reg family. -/
+/- Implicit abstraction and Boolean reification still reject. The positive
+production registrations use explicit checked selectors; these probes preserve
+the boundaries against silently inferring either operation. -/
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.LegacyRelationsSourceBoundary
 

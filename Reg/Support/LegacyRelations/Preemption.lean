@@ -15,7 +15,11 @@ abbrev signature : Signature where
   Role := PreemptionReadout
   finiteRole := inferInstance
   nonemptyRole := ⟨.cutEnd⟩
-  Output i _ := preemptionSignature.Output i
+  Output i _ := match i with
+    | .cutEnd => Bool
+    | .cutCause => Option Mechanism
+    | .admitAThenB => Bool
+    | .admitBThenA => Bool
   Anchor := PreemptionAnchor
   finiteAnchor := inferInstance
 
@@ -41,11 +45,20 @@ theorem from_to_legacy (r : Realization signature) : fromLegacy (toLegacy r) = r
   | mk readout anchor =>
     congr 1 <;> funext i p <;> cases p <;> rfl
 
-def arena : Arena := ⟨signature, fun r => endStateOmitsPreemptingCauseArena.Law (toLegacy r)⟩
+def arena : Arena := ⟨signature, fun r =>
+  r.readout .admitAThenB () (r.anchor .aThenB ()) = true ∧
+    r.readout .admitBThenA () (r.anchor .bThenA ()) = true ∧
+    r.readout .cutEnd () (r.anchor .aThenB ()) = r.readout .cutEnd () (r.anchor .bThenA ()) ∧
+    r.readout .cutCause () (r.anchor .aThenB ()) ≠ r.readout .cutCause () (r.anchor .bThenA ()) ∧
+    ¬ ∃ recover : Bool → Option Mechanism, r.readout .cutCause () = recover ∘ r.readout .cutEnd ()⟩
 
 def actual : Realization signature :=
-  realize signature (fun i _ => endStateOmitsPreemptingCauseRealization.readout i)
-    (fun i _ => endStateOmitsPreemptingCauseRealization.anchor i)
+  realize signature (fun i _ => match i with
+    | .cutEnd => endState
+    | .cutCause => activeCause
+    | .admitAThenB => fun trace => decide (IsOrderedPreemption trace .shooterA .shooterB)
+    | .admitBThenA => fun trace => decide (IsOrderedPreemption trace .shooterB .shooterA))
+    (fun i _ => match i with | .aThenB => aThenB | .bThenA => bThenA)
 
 theorem full_law_transport (r : Realization signature) :
     arena.Law r ↔ endStateOmitsPreemptingCauseArena.Law (toLegacy r) := Iff.rfl
@@ -155,6 +168,40 @@ def registration : Registration arena EndStateOmitsPreemptingCauseStatement wher
   variation := variation
   sensitivity := sensitivity
   dependence := dependence
+
+def selection : LeanInformationAudit.SourceSelection :=
+  {
+    owner := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
+    coordinates := #[]
+    readouts := #[
+      {path := #["arg", "arg", "fn", "arg", "fn", "arg", "fn"], functionOperand := true},
+      {path := #["arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn"], functionOperand := true},
+      {path := #["fn", "arg"], stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true},
+      {path := #["arg", "fn", "arg"], stateOperand := some #["fn", "fn", "arg"], booleanPredicate := true}] }
+
+/-- The same complete-family witnesses supply the legacy finite catalog gates. -/
+theorem finite_variation : LeanInformationAudit.FiniteLawVariation endStateOmitsPreemptingCauseArena := by
+  obtain ⟨bad, rejected⟩ := variation.2
+  exact ⟨toLegacy actual, toLegacy bad, variation.1, rejected⟩
+
+theorem finite_sensitivity : LeanInformationAudit.FiniteSlotSensitivity endStateOmitsPreemptingCauseArena := by
+  constructor
+  · intro i
+    obtain ⟨bad, fixed, anchors, rejected⟩ := sensitivity.1 i
+    refine ⟨toLegacy actual, toLegacy bad, ?_, ?_, ?_⟩
+    · intro j h
+      exact congrFun (fixed j h) ()
+    · intro j
+      exact congrFun (congrFun anchors j) ()
+    · exact ⟨fun _ => rejected, fun _ => variation.1⟩
+  · intro i
+    obtain ⟨bad, fixed, anchors, rejected⟩ := sensitivity.2 i
+    refine ⟨toLegacy actual, toLegacy bad, ?_, ?_, ?_⟩
+    · intro j
+      exact congrFun (congrFun fixed j) ()
+    · intro j h
+      exact congrFun (anchors j h) ()
+    · exact ⟨fun _ => rejected, fun _ => variation.1⟩
 
 #print axioms registration
 end Reg.Support.LegacyRelations.Preemption

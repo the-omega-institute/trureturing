@@ -86,5 +86,38 @@ def registration : Registration arena SystemStatement where
   sensitivity := sensitivity
   dependence := dependence
 
+def selection : LeanInformationAudit.SourceSelection :=
+  {
+    owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit
+    definition := some {
+      owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit
+      name := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement }
+    coordinates := #[]
+    readouts := #[{path := #["fn", "arg", "body", "arg"], stateBinder := 0}] }
+
+/-- The same complete-family witnesses supply the legacy finite catalog gates. -/
+theorem finite_variation : LeanInformationAudit.FiniteLawVariation _root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena := by
+  obtain ⟨bad, rejected⟩ := variation.2
+  exact ⟨toLegacy actual, toLegacy bad, variation.1, rejected⟩
+
+theorem finite_sensitivity : LeanInformationAudit.FiniteSlotSensitivity _root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena := by
+  constructor
+  · intro i
+    obtain ⟨bad, fixed, anchors, rejected⟩ := sensitivity.1 i
+    refine ⟨toLegacy actual, toLegacy bad, ?_, ?_, ?_⟩
+    · intro j h
+      exact congrFun (fixed j h) ()
+    · intro j
+      exact congrFun (congrFun anchors j) ()
+    · exact ⟨fun _ => rejected, fun _ => variation.1⟩
+  · intro i
+    obtain ⟨bad, fixed, anchors, rejected⟩ := sensitivity.2 i
+    refine ⟨toLegacy actual, toLegacy bad, ?_, ?_, ?_⟩
+    · intro j
+      exact congrFun (congrFun fixed j) ()
+    · intro j h
+      exact congrFun (anchors j h) ()
+    · exact ⟨fun _ => rejected, fun _ => variation.1⟩
+
 #print axioms registration
 end Reg.Support.LegacyRelations.System
