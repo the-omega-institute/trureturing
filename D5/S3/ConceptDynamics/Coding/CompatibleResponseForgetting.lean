@@ -392,6 +392,139 @@ theorem square_graph_essential_and_projections
 
 #print axioms square_graph_essential_and_projections
 
+/-- A column counts the numbered A edges whose incoming square lift reaches
+    its row edge. The proof reconstructs each square from that A edge and its
+    terminal R edge, so parallel edges are not collapsed. -/
+theorem square_column_lift_count (c : CompatibleCertificate A B R S m)
+    (r s : Edge R) :
+    c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+        ((Fintype.equivFin (Edge R)) r) =
+      Fintype.card {a : Edge A //
+        ∃ h : a.target = r.source, (c.incomingLift a r h).val = s} := by
+  classical
+  let e := Fintype.equivFin (Edge R)
+  let fiber := {sq : Square c // e sq.initialR = e s ∧ e sq.terminalR = e r}
+  let incidence := {a : Edge A //
+    ∃ h : a.target = r.source, (c.incomingLift a r h).val = s}
+  have reconstruct (sq : Square c) :
+      c.incomingSquare sq.leftA sq.terminalR rfl = sq := by
+    apply (squareCoordinates c).injective
+    rcases sq with ⟨i, z, ⟨j, a, edge⟩, output, commutes⟩
+    rfl
+  let toIncidence : fiber → incidence := fun p => by
+    rcases p with ⟨sq, ⟨hs, hr⟩⟩
+    have hs' : sq.initialR = s := e.injective hs
+    have hr' : sq.terminalR = r := e.injective hr
+    have h : sq.leftA.target = r.source := by
+      simpa [Square.leftA, Square.terminalR] using congrArg Edge.source hr'
+    refine ⟨sq.leftA, ⟨h, ?_⟩⟩
+    subst r
+    have hLift := congrArg Square.initialR (reconstruct sq)
+    change (c.incomingLift sq.leftA sq.terminalR rfl).val = sq.initialR at hLift
+    exact hLift.trans hs'
+  have injective : Function.Injective toIncidence := by
+    intro p q hpq
+    apply Subtype.ext
+    have ha := congrArg Subtype.val hpq
+    change p.val.leftA = q.val.leftA at ha
+    have hrp : p.val.terminalR = r := e.injective p.property.2
+    have hrq : q.val.terminalR = r := e.injective q.property.2
+    have hr : p.val.terminalR = q.val.terminalR := hrp.trans hrq.symm
+    calc
+      p.val = c.incomingSquare p.val.leftA p.val.terminalR rfl :=
+        (reconstruct p.val).symm
+      _ = c.incomingSquare q.val.leftA q.val.terminalR rfl := by rw [ha, hr]
+      _ = q.val := reconstruct q.val
+  have surjective : Function.Surjective toIncidence := by
+    rintro ⟨a, ⟨h, hlift⟩⟩
+    let sq := c.incomingSquare a r h
+    have hstart : sq.initialR = s := by
+      change (c.incomingLift a r h).val = s at hlift
+      exact hlift
+    have hterminal : sq.terminalR = r :=
+      (square_lifts_left_forgetting c).1 a r h
+    have hleft : sq.leftA = a := by
+      rcases a with ⟨i, j, number⟩
+      rcases r with ⟨j', z, edge⟩
+      cases h
+      rfl
+    refine ⟨⟨sq, congrArg e hstart, congrArg e hterminal⟩, ?_⟩
+    apply Subtype.ext
+    exact hleft
+  have hcard : Fintype.card fiber = Fintype.card incidence :=
+    Fintype.card_congr (Equiv.ofBijective toIncidence ⟨injective, surjective⟩)
+  have hnumber := Fintype.card_congr (c.squareFiberEquiv (e s) (e r))
+  simpa only [Fintype.card_fin] using hnumber.trans hcard
+
+/-- A row counts the numbered B edges whose outgoing square lift reaches
+    its column edge. The inverse phi square is reconstructed from its B edge
+    and initial R edge. -/
+theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
+    (r s : Edge R) :
+    c.squareMatrix ((Fintype.equivFin (Edge R)) r)
+        ((Fintype.equivFin (Edge R)) s) =
+      Fintype.card {b : Edge B //
+        ∃ h : r.target = b.source, (c.outgoingLift r b h).val = s} := by
+  classical
+  let e := Fintype.equivFin (Edge R)
+  let fiber := {sq : Square c // e sq.initialR = e r ∧ e sq.terminalR = e s}
+  let incidence := {b : Edge B //
+    ∃ h : r.target = b.source, (c.outgoingLift r b h).val = s}
+  have reconstruct (sq : Square c) :
+      c.outgoingSquare sq.initialR sq.rightB rfl = sq := by
+    apply (squareCoordinates c).injective
+    rcases sq with ⟨i, z, input, ⟨t, edge, b⟩, commutes⟩
+    change (c.phi i z).symm ⟨t, edge, b⟩ = input
+    rw [← commutes]
+    exact (c.phi i z).symm_apply_apply input
+  let toIncidence : fiber → incidence := fun p => by
+    rcases p with ⟨sq, ⟨hr, hs⟩⟩
+    have hr' : sq.initialR = r := e.injective hr
+    have hs' : sq.terminalR = s := e.injective hs
+    have h : r.target = sq.rightB.source := by
+      simpa [Square.initialR, Square.rightB] using (congrArg Edge.target hr').symm
+    refine ⟨sq.rightB, ⟨h, ?_⟩⟩
+    subst r
+    have hLift := congrArg Square.terminalR (reconstruct sq)
+    change (c.outgoingLift sq.initialR sq.rightB rfl).val = sq.terminalR at hLift
+    exact hLift.trans hs'
+  have injective : Function.Injective toIncidence := by
+    intro p q hpq
+    apply Subtype.ext
+    have hb := congrArg Subtype.val hpq
+    change p.val.rightB = q.val.rightB at hb
+    have hrp : p.val.initialR = r := e.injective p.property.1
+    have hrq : q.val.initialR = r := e.injective q.property.1
+    have hr : p.val.initialR = q.val.initialR := hrp.trans hrq.symm
+    calc
+      p.val = c.outgoingSquare p.val.initialR p.val.rightB rfl :=
+        (reconstruct p.val).symm
+      _ = c.outgoingSquare q.val.initialR q.val.rightB rfl := by rw [hr, hb]
+      _ = q.val := reconstruct q.val
+  have surjective : Function.Surjective toIncidence := by
+    rintro ⟨b, ⟨h, hlift⟩⟩
+    let sq := c.outgoingSquare r b h
+    have hstart : sq.initialR = r :=
+      (square_lifts_left_forgetting c).2.1 r b h
+    have hterminal : sq.terminalR = s := by
+      change (c.outgoingLift r b h).val = s at hlift
+      exact hlift
+    have hright : sq.rightB = b := by
+      rcases r with ⟨i, t, edge⟩
+      rcases b with ⟨t', z, number⟩
+      cases h
+      rfl
+    refine ⟨⟨sq, congrArg e hstart, congrArg e hterminal⟩, ?_⟩
+    apply Subtype.ext
+    exact hright
+  have hcard : Fintype.card fiber = Fintype.card incidence :=
+    Fintype.card_congr (Equiv.ofBijective toIncidence ⟨injective, surjective⟩)
+  have hnumber := Fintype.card_congr (c.squareFiberEquiv (e r) (e s))
+  simpa only [Fintype.card_fin] using hnumber.trans hcard
+
+#print axioms square_column_lift_count
+#print axioms square_row_lift_count
+
 end CompatibleCertificate
 
 end D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting

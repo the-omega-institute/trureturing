@@ -34,5 +34,23 @@ internal sealed class CompatibleResponseForgettingDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The matrix entries count actual phi squares by their numbered R endpoints, with a finite equivalence between each entry number and its square fiber. Essential A and B edges supply incoming and outgoing squares at every R state. The psiA and psiB path bijections supply R edges above every A and B vertex, so both endpoint projections are surjective."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("compatible-square-column-lift-count"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.square_column_lift_count"),
+                H("Square columns count incoming lifts"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("At each pair of numbered R edges, the square-matrix entry equals the number of A edges entering the terminal R edge whose unique incoming square lift reaches the initial R edge. The proof identifies each matrix edge number with its actual square, reconstructs that square from its A edge and terminal R edge, and establishes a bijection with the lift fiber. Parallel edge identities are retained."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("compatible-square-row-lift-count"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.square_row_lift_count"),
+                H("Square rows count outgoing lifts"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Dually, each square-matrix entry equals the number of B edges leaving the initial R edge whose unique outgoing square lift reaches the terminal R edge. Reconstructing the inverse phi square from the B edge and initial R edge makes the equality a numbered-edge fiber bijection, not just an unnumbered support relation."))),
                 DescribeRole.Theorem))));
 }
