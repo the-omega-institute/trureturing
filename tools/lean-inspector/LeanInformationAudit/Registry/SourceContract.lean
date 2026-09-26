@@ -113,6 +113,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       return Json.mkObj [
         ("path", toJson selected.path), ("state_binder", toJson selected.stateBinder),
         ("scope_size", toJson readout.context.size),
+        ("scope_paths", toJson (readout.context.map (·.path))),
         ("occurrence_identity", toJson (← fingerprint scope.levels closed))]
     let sourceBinding := Json.mkObj [
       ("source_owner", toJson selection.owner.toString),
@@ -121,6 +122,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       ("telescope_size", toJson scope.telescope.size),
       ("level_count", toJson scope.levels.length),
       ("coordinates", toJson selection.coordinates),
+      ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
       ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)]
     let escape : EscapeRecordEvidence := {
       bridgeKind := "source-equivalence"
