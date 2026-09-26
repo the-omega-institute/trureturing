@@ -544,7 +544,10 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
-    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
+    let arenaExpr ← mkConstWithFreshMVarLevels lawArenaName
+    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+    return (← isDefEq legacyArgs[0]! expectedBridgeArena) &&
       (← isDefEq legacyArgs[1]! theoremType)
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
