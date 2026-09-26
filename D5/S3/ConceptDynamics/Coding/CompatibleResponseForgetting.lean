@@ -267,6 +267,28 @@ theorem incoming_response_fiber_card_step {p : ℕ} {M : CountMat p p} {Q : Type
 
 #print axioms incoming_response_fiber_card_step
 
+/-- The depth-d quotient adjacency counts the actual numbered base edges
+    whose lift reaches each source response class. -/
+noncomputable def incomingResponseMatrix {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ) :
+    Matrix (Quotient (L.response d)) (Quotient (L.response d)) ℕ :=
+  fun F H => Nat.card (incomingResponseFiber L d F (Quotient.out H))
+
+private def incomingResponseProjection {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ) :
+    Quotient (L.response d) → Quotient (L.response (d + 1)) :=
+  Setoid.map_of_le ((response_zero_and_step L).2 d)
+
+private noncomputable def incomingResponseU {p : ℕ} {M : CountMat p p}
+    {Q : Type} (L : IncomingLift M Q) (d : ℕ) :
+    Matrix (Quotient (L.response d)) (Quotient (L.response (d + 1))) ℕ :=
+  fun F Z => Nat.card (incomingResponseFiber L d F (Quotient.out Z))
+
+private def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ) :
+    Matrix (Quotient (L.response (d + 1))) (Quotient (L.response d)) ℕ :=
+  fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
+
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
