@@ -31,8 +31,14 @@ run_meta do
         !certificate.evidenceRef.isEmpty do throwError "missing four-slot evidence"
     unless (← TemplateBinding.assess event none).result matches .undeclared do
       throwError "missing descriptor accepted"
+    let missingRealization ← try
+        discard <| TemplateBinding.assess
+          { event with realizationName := `Reg.Invalid.missingRealization } (some claim)
+        pure "accepted"
+      catch error => error.toMessageData.toString
+    unless missingRealization == "Unknown constant `Reg.Invalid.missingRealization`" do
+      throwError "unexpected missing realization result: {missingRealization}"
     for changed in #[
-        { event with realizationName := `Reg.Invalid.missingRealization },
         { event with key := { event.key with theoremName := ``True.intro } },
         { event with key := { event.key with objectArena := `Reg.Invalid.changedLaw } }] do
       if (← TemplateBinding.assess changed (some claim)).result matches .declaredValidated _ then
