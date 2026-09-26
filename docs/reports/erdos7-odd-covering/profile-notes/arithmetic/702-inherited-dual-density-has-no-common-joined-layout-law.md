@@ -176,6 +176,40 @@ value from a different retained field or source be used to pay it. Therefore
 the conclusion does not transfer698's gate obstruction to699, invalidate698
 for its own criterion, or settle whether699 admits a paying field.
 
+## The separating retention does not pay the full gate
+
+For the explicit admissible retention f sigma=t tau above, keeping ALL512
+screens and all original losses gives
+
+    K33(t tau)=6166301/1944000,
+    G33(t tau)=-2364541350521439962962651
+                /22219458019105374720000000
+              =-0.10641759796698425... .                  (JD4)
+
+The change from the old independent-screen gate is genuinely positive,
+763033403927/312979645440000, but the complete result is negative. Thus the
+same explicit field separates the proposed dual density and fails the primal
+target; these are distinct conclusions.
+
+The all-height screen calculation has a product form. For outside support T,
+the maximal normalized factor is product_(q in T)(q-1)/(q-2). The first-root
+query attains it; every deeper query in a full supported root has factor1.
+For the central modes, evaluate the same actual pure-survivor selectors on
+the finite weighted central law. Modes0,1,2 give respectively the whole
+coordinate, root indicator and second-level indicator. Mode3 has multiplier
+9/2 on a strong ternary leaf and729/82 on its weak leaf4 mod9; the quinary
+values are15 and9375/469 on the weak leaf2 mod25. These are the unchanged
+complete-screen reductions of689/690, not a truncation at the largest
+displayed exponent. Maximizing each of the16 central modes and multiplying
+by the outside factor gives every one of the512 screens in(JD4).
+
+An independent calculation supplies the explicit category field with
+denominator36 to the existing retained-field engine. All512 screens and512
+original coefficients agree exactly with the product calculation. The
+engine passes10,722 checks over all2,125,830 positive source categories;
+the general joined separator passes3,205 checks and returns the same(JD4).
+The verifier below includes the complete gate value and all512 screen values.
+
 ## Verification and reproduction
 
 The witness fixes the34 small integer weights and outside root sets; the
@@ -184,8 +218,8 @@ values. Candidate optimization is absent from the verifier. The
 standard-library verifier reconstructs the actual pure survivors,
 verifies all109 originals, evaluates the existing698 fractions and computes
 the full15-condition maximum(JD3). It independently checks an attaining full
-layout from its121 literal atoms. The final run passes12,047 checks, including
-the complete567,000 central baselines; it imports neither an optimizer nor
+layout from its121 literal atoms. The final run passes12,682 checks, including
+the complete567,000 central baselines and the complete gate computation; it imports neither an optimizer nor
 the existing separator.
 
 A separate run constructs all21 pair tables and the central fine marginal

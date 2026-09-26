@@ -10,7 +10,7 @@ imported separator. Standard library only; no optimizer is imported.
 from pathlib import Path
 from fractions import Fraction as F
 from itertools import product,combinations
-from math import prod
+from math import prod,lcm
 from hashlib import sha256
 import argparse,json
 P=(3,5,7,11,13,17,19);Q=P[2:];CENTRAL=(3,5,9,15,25,45,75,225)
@@ -163,11 +163,52 @@ def main():
  literal=sum(coef*probability(req) for coef,req in factors)
  ck(literal==best,'one literal full33 layout attains complete upper')
  gap=R-best;ck(gap>0,'strict nonnegative-measure separation')
+ # Evaluate this particular admissible scaled retention against the COMPLETE
+ #699 gate. All exterior roots are uniform on2..q-1; the root response factor
+ #(q-1)/(q-2) dominates every deeper response factor1. Central mode3 uses the
+ #unchanged actual pure-survivor all-height reduction, including weak leaves.
+ def central_factor(p,e,r,x):
+  if e==0:return F(1)
+  if e<3:return F(int(x%(p**e)==r))
+  if x%(p*p)!=r:return F(0)
+  if p==3:return F(729,82) if r==4 else F(9,2)
+  return F(9375,469) if r==2 else F(15)
+ central_screen=[]
+ for e3,e5 in product(range(4),repeat=2):
+  aa=(0,) if e3==0 else range(3) if e3==1 else range(9)
+  bb=(0,) if e5==0 else range(5) if e5==1 else range(25)
+  central_screen.append(max(sum(scale*F(w,Z)*central_factor(3,e3,ra,x)*central_factor(5,e5,rb,x) for x,w in cells) for ra,rb in product(aa,bb)))
+ screens=[central_screen[mode]*prod(F(q-1,q-2) for i,q in enumerate(Q) if T>>i&1) for mode,T in product(range(16),range(32))]
+ c=F(1084133,201247200);g=1-c
+ fees=list(map(F,data['remaining33_global_root_exclusion_certificate.json']['combined512_coefficients']))
+ for i,q in enumerate(Q):
+  if q>7:fees[256+(1<<i)]+=g/F(q*(q-2))
+ selected=[F(0)]*512
+ for coefficient,requirements in factors:
+  d=lcm(*(modulus for modulus,phase in requirements));n=d;exponents=[]
+  for p in P:
+   exponent=0
+   while n%p==0:n//=p;exponent+=1
+   exponents.append(exponent)
+  ck(n==1 and max(exponents[2:])<=1,'selected fee has declared prime support')
+  T=sum((1<<i)*e for i,e in enumerate(exponents[2:]));j=32*(4*exponents[0]+exponents[1])+T
+  selected[j]+=coefficient*prod(F(1,q-1) for i,q in enumerate(Q) if T>>i&1)
+ remaining=[fee-c*pick for fee,pick in zip(fees,selected)]
+ for fee in remaining:ck(fee>=0,'full nonnegative remaining fee')
+ old_gate=g*scale-sum(fee*S for fee,S in zip(fees,screens))
+ scaled_K=scale*best;selected_fee=sum(pick*S for pick,S in zip(selected,screens))
+ improvement=c*(selected_fee-scaled_K)
+ full_gate=g*scale-sum(fee*S for fee,S in zip(remaining,screens))-c*scaled_K
+ ck(old_gate+improvement==full_gate,'full original-loss and all-height gate recombination')
+ ck(full_gate<0,'this separating retention is not a paying field')
  result={'status':'PASS','checks':CHECKS,'source_sha256':PINS,'program_sha256':sha256(Path(__file__).read_bytes()).hexdigest(),'witness_sha256':sha256(a.witness.read_bytes()).hexdigest(),
  'scope':'No probability distribution over arbitrary independent full33-label layouts can have expected charge H>=the specified698 desired density R on every positive actual-source category. This excludes that fixed-row dual lift, not every joined33 dual and not the primal gate.',
  'central_positive_points':len(cells),'central_weight_total':Z,'normalized_R_expectation':str(R),'normalized_K33':str(best),'strict_gap':str(gap),'strict_gap_decimal':float(gap),'retention_scale':str(scale),'retention_gap':str(scale*gap),
  'central_h698_expectation':str(h),'exterior_R_expectation':str(R-h),'conditional_C_numerators':[C[5*i:5*i+5] for i in range(3)],'conditional_C_denominator':Z,'central_supported_residue_counts':domains,'enumerated_five_free_label_baselines':enumerated,'conditional_joined_values':list(map(str,values)),
  'attaining_layout':{str(d):r for d,r in sorted(joined.items())},'root_marginals':{str(p):{str(r):str(v) for r,v in z.items()} for p,z in pm.items()},'central_retention_rates':[[x,str(f)] for x,f in zip(xs,rates)],'selected_rows':rows,'selected_groups':len(groups),'group_R':{str(j):str(v) for j,v in sorted(groups.items())}}
+ result['complete_gate']={'scope':'Only this explicit admissible scaled separator retention; all512 screens, original losses and fullmode8 additions retained. No field optimization or all-field conclusion.',
+  'mass':str(scale),'K33':str(scaled_K),'old_gate':str(old_gate),'selected_screen_fee':str(selected_fee),'joined_improvement':str(improvement),'full_joined_gate':str(full_gate),'full_joined_gate_decimal':float(full_gate),
+  'central_maxima':list(map(str,central_screen)),'screens':list(map(str,screens))}
  if a.joined_input:
   outside_size=prod(q-2 for q in Q);common_den=Z*outside_size
   node_mass={p:[sum(w for x,w in cells if x%p==r) for r in range(p)] for p in (3,5)}
@@ -189,5 +230,5 @@ def main():
    'central':{'points':[[x%9,x%25] for x in xs],'weights':[w*outside_size for w in weights],'residues_mod225':xs},'unary':unary,'pairs':pairs}
   a.joined_input.write_text(json.dumps(common,indent=2)+'\n')
  a.output.write_text(json.dumps(result,indent=2)+'\n')
- print(json.dumps({k:v for k,v in result.items() if k not in ('source_sha256','attaining_layout','conditional_joined_values','root_marginals','central_retention_rates','group_R')},indent=2))
+ print(json.dumps({k:v for k,v in result.items() if k not in ('source_sha256','attaining_layout','conditional_joined_values','root_marginals','central_retention_rates','group_R','complete_gate')},indent=2))
 if __name__=='__main__':main()
