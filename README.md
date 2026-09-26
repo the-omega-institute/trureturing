@@ -224,14 +224,14 @@ these four questions to follow what becomes distinguishable and what stays open.
 
 ## What is proved, and what is open
 
-[D5/](D5/) contains the formal development. [Theory prose](docs/develop/theory/)
-supplies research input, and [experiments](Evidence/) supply observations within
-their declared scope. Neither prose nor numerical agreement establishes a
-Lean theorem. The C# harness checks repository rules, proof reports and frozen
-state; independent review examines whether statements faithfully express the
-intended mathematics. Admitted proofs are recorded in the
-[frozen ledger](Golden/Frozen/state/), with precise Lean statements and their
-assumptions and axiom dependencies as the formal basis for reuse.
+Mathematical reuse rests on the statements, checked proof terms and axiom
+dependencies in the [Lean source](D5/). The
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[Theory prose](docs/develop/theory/) supplies research input, and
+[experiments](Evidence/) supply observations within their declared scope;
+neither substitutes for a Lean proof. The C# harness checks repository rules,
+proof reports and frozen state. Independent review examines whether statements
+faithfully express the intended mathematics.
 
 ```mermaid
 flowchart TD
