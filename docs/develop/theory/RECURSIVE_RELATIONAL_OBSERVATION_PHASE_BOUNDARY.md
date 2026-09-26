@@ -80055,3 +80055,352 @@ $$
 一般复矩阵未必能由一个标量相位化为Hermitian。对这样的 $K$，（259.4）的块重排、上述几何平均直径及 $Z^2=I$ 分类均不能直接使用；任意复响应的可实现性仍由§258的支撑与数值半径条件承担。本节也未把精确固定边缘的结论延伸为边缘有噪声时的统一恢复界。
 
 ## 追加锚（本行以下为增补区）
+
+## 260. 精确共同边缘下纯纠缠源的线性稳定性
+
+§256对任意球面源给出平方根全态误差界。§258进一步证明，加入精确参考边缘后，每个纯纠缠源都能在全部合法态中唯一确定。本节给出后一结论的定量版本：边缘保持完全相同时，纯纠缠源的恢复误差可由响应误差线性控制。
+
+常数依赖该边缘在其支撑上的条件数。纯产品源的例子说明，不能将结论推广到全部纯源；一族趋近产品源的纯纠缠态则说明，不能为全部参考边缘选取同一个线性常数。
+
+### 260.1 来源、竞争态与误差合同
+
+固定§256的同一输入与参考接口，以及可信已标定的两条非平行输入方向。由完整响应定义
+$$
+K_\Omega=
+\frac{\mathcal R_a(\Omega)+\mathcal R_b(\Omega)}{2\sqrt A}
+-i\,\frac{\mathcal R_a(\Omega)-\mathcal R_b(\Omega)}{2b_0},
+\qquad A\ge B>0,\quad b_0^2=B.
+\tag{260.1}
+$$
+在明确的 $Y$ 输入基中，$K_\Omega$ 是联合矩阵非对角块的两倍。
+
+理想源为纯纠缠态
+$$
+\Omega_\psi=|\psi\rangle\langle\psi|,
+\qquad
+\rho=\operatorname{Tr}_H\Omega_\psi,
+\qquad
+S=\operatorname{supp}\rho.
+\tag{260.2}
+$$
+qubit 输入使 $\dim S=2$。记 $\rho_S=\rho|_S$，并定义
+$$
+\lambda_{\min}=\lambda_{\min}(\rho_S)>0,\qquad
+\lambda_{\max}=\lambda_{\max}(\rho_S),\qquad
+\kappa(\rho)=\frac{\lambda_{\max}}{\lambda_{\min}}.
+\tag{260.3}
+$$
+环境中的零本征值不计入此条件数。
+
+竞争态 $\Xi$ 是同一联合空间上的任意归一化正半定态，唯一额外限制是
+$$
+\operatorname{Tr}_H\Xi=\rho.
+\tag{260.4}
+$$
+它不必纯、不必纠缠，也不必响应饱和。误差为
+$$
+\delta=\|K_\Xi-K_{\Omega_\psi}\|_1,
+\tag{260.5}
+$$
+其中核范数以及以下联合态迹范数均未除以二。
+
+### 260.2 所有竞争态共用的二阶白化坐标
+
+先排除竞争态的参考核外支撑。对 $x\in S^\perp$，
+$$
+\sum_{\sigma\in\{+,-\}}
+\langle y_\sigma,x|\Xi|y_\sigma,x\rangle
+=\langle x,\rho x\rangle=0.
+\tag{260.6}
+$$
+各项非负，故各为零；正半定矩阵将零二次型向量送到零。因此
+$$
+\Xi=(I_H\otimes P_S)\Xi(I_H\otimes P_S).
+\tag{260.7}
+$$
+同样结论适用于理想源。核外的质量及其相干均已排除，所以以下限制到 $S$ 不会漏掉合法竞争态。
+
+在 $Y$ 基中写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\rho=uu^\dagger+vv^\dagger.
+\tag{260.8}
+$$
+纠缠意味着 $u,v$ 线性无关。令
+$$
+a=\rho_S^{-1/2}u,\qquad b=\rho_S^{-1/2}v.
+\tag{260.9}
+$$
+因为 $aa^\dagger+bb^\dagger=I_S$，二阶方阵的两列 $a,b$ 构成正交归一基。取酉同构 $V:\mathbb C^2\to S$，使 $Ve_0=a$、$Ve_1=b$。
+
+对两态作相同可逆同余：先限制到 $H\otimes S$，再在参考端乘以 $V^\dagger\rho_S^{-1/2}$。理想矩阵变成
+$$
+T_0=
+\begin{pmatrix}E_{00}&E_{01}\\E_{10}&E_{11}\end{pmatrix},
+\tag{260.10}
+$$
+其中 $E_{ij}=|e_i\rangle\langle e_j|$。由于竞争态边缘精确等于 $\rho$，它变成
+$$
+T=
+\begin{pmatrix}
+F&E_{01}+\mathcal E\\
+E_{10}+\mathcal E^\dagger&I_2-F
+\end{pmatrix}\succeq0,
+\tag{260.11}
+$$
+其中 $0\preceq F\preceq I_2$，且
+$$
+\mathcal E=
+\frac12V^\dagger\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}V.
+\tag{260.12}
+$$
+这些白化矩阵的迹为二，不是原来的归一化物理态；证明只使用同余保持正性。也没有要求 $\rho_S$ 在 $a,b$ 基中对角化。
+
+### 260.3 正性把隐藏对角误差线性锁定
+
+**引理260.1（固定对角和的局部块估计）。** 对（260.11）的任意正半定矩阵，
+$$
+\boxed{
+\|F-E_{00}\|_1\le6\|\mathcal E\|,
+\qquad
+\|T-T_0\|_1\le14\|\mathcal E\|_1.
+}
+\tag{260.13}
+$$
+这里 $\|\mathcal E\|$ 为算子范数；不要求误差足够小。
+
+**证明。** 写
+$$
+F=\begin{pmatrix}1-x&c\\\overline c&y\end{pmatrix},
+\qquad x,y\ge0,
+\qquad
+\epsilon=\|\mathcal E\|,
+\qquad
+e_{ij}=\langle e_i,\mathcal E e_j\rangle.
+\tag{260.14}
+$$
+$x,y\ge0$ 分别来自 $I_2-F$ 与 $F$ 的正性。用 $e_{+,j}$、$e_{-,j}$ 表示上、下半空间中的标准基，取
+$$
+\zeta=\frac{e_{+,0}-e_{-,1}}{\sqrt2},
+\qquad
+t=\langle\zeta,T\zeta\rangle.
+\tag{260.15}
+$$
+理想块在这个方向上为零。直接计算得
+$$
+t=-\frac{x+y}{2}-\operatorname{Re}e_{01}\ge0,
+$$
+$$
+x+y+2t=-2\operatorname{Re}e_{01}\le2\epsilon.
+\tag{260.16}
+$$
+
+对任意正半定矩阵，Cauchy–Schwarz 不等式可由其正平方根给出：
+$$
+|\langle z,Tw\rangle|^2
+\le\langle z,Tz\rangle\langle w,Tw\rangle.
+\tag{260.17}
+$$
+令 $z=e_{+,1}$、$w=\zeta$。此时
+$$
+\langle e_{+,1},T\zeta\rangle
+=\frac{\overline c-e_{11}}{\sqrt2},
+\qquad
+\langle e_{+,1},Te_{+,1}\rangle=y,
+\tag{260.18}
+$$
+所以
+$$
+|\overline c-e_{11}|\le\sqrt{2yt}.
+\tag{260.19}
+$$
+由 $y+2t\le2\epsilon$ 及标量算术—几何平均不等式，
+$$
+2yt\le\frac{(y+2t)^2}{4}\le\epsilon^2.
+\tag{260.20}
+$$
+再用 $|e_{11}|\le\epsilon$，得到 $|c|\le2\epsilon$。对角和与非对角块分开取迹范数，
+$$
+\|F-E_{00}\|_1
+\le x+y+2|c|
+\le6\epsilon.
+\tag{260.21}
+$$
+
+记 $D=F-E_{00}$。则
+$$
+T-T_0=
+\begin{pmatrix}D&0\\0&-D\end{pmatrix}
++\begin{pmatrix}0&\mathcal E\\\mathcal E^\dagger&0\end{pmatrix}.
+\tag{260.22}
+$$
+右侧两个矩阵的迹范数分别为 $2\|D\|_1$ 与 $2\|\mathcal E\|_1$。因此
+$$
+\|T-T_0\|_1
+\le12\epsilon+2\|\mathcal E\|_1
+\le14\|\mathcal E\|_1.
+\tag{260.23}
+$$
+证明没有使用对角块交换性，也允许 $T$ 奇异。$\square$
+
+### 260.4 撤销同余后的全态 Lipschitz 界
+
+**定理260.2（精确共同边缘下的线性稳定性）。** 在（260.1）—（260.5）的合同下，
+$$
+\boxed{
+\|\Xi-\Omega_\psi\|_1
+\le\min\{2,\ 7\kappa(\rho)\,\delta\}.
+}
+\tag{260.24}
+$$
+该界适用于全部具有同一参考边缘的合法竞争态，不要求源响应饱和。
+
+**证明。** 令 $C_\rho=\rho_S^{1/2}V$。撤销参考同余时，两个矩阵之差变成
+$$
+(I_H\otimes C_\rho)(T-T_0)(I_H\otimes C_\rho^\dagger).
+\tag{260.25}
+$$
+回到原输入基的酉共轭不改变迹范数。由 Schatten 范数的理想性质及引理260.1，
+$$
+\|\Xi-\Omega_\psi\|_1
+\le\lambda_{\max}\|T-T_0\|_1
+\le14\lambda_{\max}\|\mathcal E\|_1.
+\tag{260.26}
+$$
+另一方面，（260.12）给
+$$
+\|\mathcal E\|_1
+\le\frac{1}{2\lambda_{\min}}\,
+\|K_\Xi-K_{\Omega_\psi}\|_1.
+\tag{260.27}
+$$
+两式合并得到 $7\kappa(\rho)\delta$。两个原始态归一化还给独立上界二，取较小者即得结论。$\square$
+
+若希望保留边缘方向上的精细权重，证明实际还给
+$$
+\|\Xi-\Omega_\psi\|_1
+\le
+7\lambda_{\max}
+\left\|
+\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}
+\right\|_1.
+\tag{260.28}
+$$
+常数七只是上述显式估计的结果，不宣称最优。
+
+对原始响应误差
+$$
+\varepsilon_R=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_\psi)\|_1
++\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_\psi)\|_1,
+\tag{260.29}
+$$
+§256的坐标估计给
+$$
+\delta\le
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon_R.
+\tag{260.30}
+$$
+因此在同一个精确边缘合同下，也得到对两份实际响应误差的线性全态界。这里仅在范数估计中取 $|b_0|=\sqrt B$，不改变恢复坐标中的符号。
+
+### 260.5 纯产品源仍有平方根障碍
+
+精确边缘本身不足以对全部纯源给线性结论。固定单位参考向量 $e$，取
+$$
+\Omega_0=P_{0_H}\otimes P_e,
+\qquad
+\Xi_z=P_{\psi_z}\otimes P_e,
+$$
+$$
+|\psi_z\rangle=\sqrt{1-z^2}|0\rangle+iz|1\rangle,
+\qquad 0<z<1.
+\tag{260.31}
+$$
+两态始终具有完全相同的参考边缘 $P_e$，且均为纯态。理想源的输入 $Y$ 平均值为零，因此按§256或§258，它确实由这里的数据唯一确定。
+
+但该族满足
+$$
+R_X(\Xi_z)=R_X(\Omega_0)=0,
+\qquad
+R_Z(\Xi_z)-R_Z(\Omega_0)=-2z^2P_e.
+\tag{260.32}
+$$
+于是
+$$
+\delta_z=2z^2,\qquad
+\|\Xi_z-\Omega_0\|_1=2z=\sqrt{2\delta_z}.
+\tag{260.33}
+$$
+固定这一理想源与边缘后令 $z\to0$，误差比值为 $1/z$，无有限 Lipschitz 常数。因而定理260.2的纯纠缠条件不能仅以“纯源且已知边缘”替换。
+
+### 260.6 弱纠缠极限不允许跨边缘统一常数
+
+即使始终限定理想源为纯纠缠态，线性常数也不能对所有参考边缘统一有界。固定 $E=\mathbb C^2$，令
+$$
+0<p\le\frac12,\qquad q=1-p,
+$$
+$$
+|\psi_p\rangle
+=\sqrt p\,|y_+\rangle|0\rangle_E
++\sqrt q\,|y_-\rangle|1\rangle_E,
+\qquad
+\rho_p=pE_{00}+qE_{11}.
+\tag{260.34}
+$$
+以下令 $p\downarrow0$。每个 $p>0$ 的源都纯且纠缠，其参考条件数为 $\kappa(\rho_p)=q/p$。取合法竞争态
+$$
+\Xi_p=P_{y_+}\otimes\rho_p.
+\tag{260.35}
+$$
+它是具有同一个 $\rho_p$ 的混合产品态，属于定理的竞争范围。两份数据为
+$$
+K_{\Omega_{\psi_p}}=2\sqrt{pq}\,E_{01},
+\qquad K_{\Xi_p}=0,
+\qquad
+\delta_p=2\sqrt{pq}\longrightarrow0.
+\tag{260.36}
+$$
+
+为直接核验态距离，在有序基
+$(y_+0,y_+1,y_-0,y_-1)$ 中，
+$$
+\Xi_p-\Omega_{\psi_p}=
+\begin{pmatrix}
+0&0&0&-\sqrt{pq}\\
+0&q&0&0\\
+0&0&0&0\\
+-\sqrt{pq}&0&0&-q
+\end{pmatrix}.
+\tag{260.37}
+$$
+其非零本征值是 $q$ 及
+$$
+\frac{-q\pm\sqrt{q^2+4pq}}2.
+\tag{260.38}
+$$
+后两个本征值异号，因此
+$$
+\boxed{
+\|\Xi_p-\Omega_{\psi_p}\|_1
+=q+\sqrt{q^2+4pq}\longrightarrow2.
+}
+\tag{260.39}
+$$
+相应半迹距离趋于一。若存在对所有这些边缘都相同的有限常数 $C$，使全态误差不超过 $C\delta_p$，其右侧会趋于零，与（260.39）矛盾。
+
+这里每个比较对的边缘都精确相同；只有在改变 $p$ 时边缘才改变。这个反例证明某种边缘依赖不可省略，不证明定理260.2中条件数的一次方依赖或常数七最优。
+
+### 260.7 线性界的边界
+
+本节加强的是一个明确的额外合同：理想源纯且纠缠，所有竞争态的参考边缘精确等于它的边缘。证明用该等式把白化后的两个对角块之和固定为 $I_2$，再用正性迫使未直接读取的块只发生线性变化。§256允许边缘改变，其平方根尺度与本节不冲突。
+
+本节没有给出含噪参考边缘的同型界，也没有把近似边缘直接代入精确同余。若实际估计只有 $\|\widehat\rho-\rho\|_1$ 的误差保证，支撑变化、白化误差与合法共同填充都需要另行控制。线性稳定性本身也不提供有限样本的误差保证或候选态搜索算法。
+
+所用工具是正半定矩阵的 Cauchy–Schwarz 不等式、支撑性质、可逆同余与 Schatten 范数理想性质，具体块估计已直接证明。这里不宣称最优常数、文献原创性、数值实现成本。
+
+## 追加锚（本行以下为增补区）
