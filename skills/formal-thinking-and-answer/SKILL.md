@@ -1,17 +1,17 @@
 ---
-name: codex-formal-answer
-description: Use when answering mathematical, conceptual, philosophical, or metaphysical questions through repository-first scientific reasoning, a clause-complete formal bridge, compiled exact Lean applications, admissible reusable library growth, and an ordinary conversational answer; the formal work stays internal and is shown only when the user asks for it.
+name: formal-thinking-and-answer
+description: Default thinking and answering workflow in this repository, especially for mathematical, conceptual, philosophical, or metaphysical questions. Use repository-first scientific reasoning, a clause-complete formal bridge, compiled exact Lean applications, and admissible reusable library growth to produce an ordinary conversational answer; the formal work stays internal and is shown only when the user asks for it.
 ---
 
-# Codex Formal Answer Workflow
+# Formal Thinking and Answer Workflow
 
 ## Install
 
-This repository copy is the single source of truth for `skills/codex-formal-answer/`; any installed copy is a projection of it.
+This repository copy is the single source of truth for `skills/formal-thinking-and-answer/`; any installed copy is a projection of it.
 
 ## Scope and authority
 
-This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
+This file packages repository obligations for the default thinking and answering workflow; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
 
 This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record; the user sees only that answer unless they ask for the record (see the conversation contract). The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
 
@@ -39,6 +39,8 @@ The three clauses are one theorem chain in the self anchors below: the answer's 
 ## Escape-audit delivery (CLAUDE.md §3.9; SPEC A5.5/A5.6)
 
 Attempt faithful registration in the same delivery for each retained newly authored public `theorem` or `lemma` in a D5 source module selected by the existing delta/first-pin scope, including D5 content templates. Prefer a lawful existing template; otherwise add a meaningful parameterized content template with shared enrollment. Registration completion requires at least one `declared_validated` four-slot registration in the source owner's `Reg/D5/<mirrored source path>.lean`, compiled Lean proof terms and current binding evidence. Validate the actual realization bridge, lawful enrolled-template application and required variation/sensitivity proofs. `escape continues` is an `EscapeResidualWitness`, `EscapeResidualEmpty`, or literal `open`; the latter records only an unknown residual, proves neither undecidability nor inexhaustibility, and cannot replace missing evidence. With the other evidence valid, an open residual is a complete registration. CI success or an Observe warning alone is not registration completion.
+
+For dependent or infinite source domains, the existing enrollment pipeline also accepts `DependentFamily.realize` via `Reg.Support.DependentFamily`. Use the source owner's Reg mirror with `realizes auditRecord escape from source (SourceSelection) escape continues (open)`; supply the complete original telescope, scoped observations, exact source reconstruction, equivalence bridge, actual-positive law, whole-family intervention/sensitivity and actual observational dependence (spec A5.3). Finite roles do not imply finite states, parameters or outputs, and degenerate fibers remain in scope. An available interface does not establish an uncompiled client's registration.
 
 If a concrete obstacle in template expressiveness, interfaces, or registration proof/evidence production or processing prevents completion, open or reuse a relevant issue identifying the original theorem and source, actual failure and missing evidence or obligation. Link it in delivery, explicitly state that the escape audit is unfinished, and continue mathematical development and delivery without waiting for registration repair. This §3.9 exception takes precedence over §5.4/5.5: no exhaustive encodings, repeated retries, immediate hotfix/repair lane or separate waiver is required. The issue is neither proof nor `declared_validated` nor a new machine status. Do not force a wrong template, weaken the original theorem, add bind-only wrappers or drop Lean/kernel, `sorry`, axiom, freeze or other required checks. Do not backfill historical theorems or introduce a debt ledger. The four Observe statuses, delta scope and judge ownership stay unchanged.
 
