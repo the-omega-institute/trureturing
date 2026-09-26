@@ -3423,3 +3423,91 @@ Definition 6.4、Theorems 6.9–6.10 及印刷页 63 的端点说明保留上述
 参数集测度不作为统计先验；每根各自的子序列仍不等于共同原层。
 文献直接覆盖的是通用测度工具，原模型的对象与条件由正文连接；
 上述有限文献核对不构成全球原创性认证。
+
+## 原文对照：第 90 章的条件信息谱与第三阶覆盖
+
+[理论卷第 90 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+研究同一个原完整计数后验在一个带噪能量输出之后的最小固定误差覆盖。
+在 $\ln(1/\sigma_M)\to\infty$ 且为 $o(Q^3)$ 的范围，
+以输出处精确条件熵为中心，给出 $Q$ 阶分位数、$-\ln Q$ 项及常数项。
+新增桥梁是输出积分的 $o(1/Q)$ 条件信息谱比较；
+原模型内的二维正态正则化使能量尾部比较不再支付逆噪声因子。
+第三阶源编码、Edgeworth 和 Cornish–Fisher 项本身是经典方法，
+不作为新的一般编码定律。
+
+**常数阶编码的直接先例与印刷边界。** Masahito Hayashi，
+*Semi-Finite Length Analysis for Information Theoretic Tasks*，
+[arXiv:1811.00262v2](https://arxiv.org/abs/1811.00262v2)，
+[原 TeX](https://arxiv.org/e-print/1811.00262v2)，
+所核对原稿为 2018 年 11 月 10 日的 29 页版本，源文件为 draft10.tex。
+PDF 第 3–4 页定义信息方差、三阶常数和格跨度修正
+$v(d)=\ln(d/(1-e^{-d}))$，$v(0)=0$；
+第 V 节、式 (51) 给 iid 固定长度源编码的常数精度展开，
+第 VII 节说明强大偏差和 Edgeworth 方法。
+这些是通用计算机制的直接先例，iid 假设不自动涵盖本章随数据和噪声变化的条件后验。
+
+原式 (50) 将正确解码集合的质量约束写成 $P_X(\Omega)\le\varepsilon$，
+按字面取空集即使最小基数为零；相应覆盖约束应为至少 $1-\varepsilon$。
+其与随机化检验量的等同还需区分整数点选择。
+第 90 章使用有限计数恒等式与部分并列组界，不调用该显示式。
+原 Proposition 10（标签 L1）仅声明 $p$ 是概率分布，便写连续 Edgeworth 余项
+$O(n^{-1})$；此无格点限制的字面版本不适用于 Bernoulli 格点源，
+因为中心跳跃为 $n^{-1/2}$ 阶，与任意连续 CDF 的距离至少为跳跃的一半。
+正文只对实际使用的平滑 Gamma 家族验证展开与尾余项。
+原文 $\kappa(P\|Q)$ 定义中 $-\log(P/Q)$ 的中心化符号也与所称偏度不符，
+本章的第三累积量和分位数符号直接计算。
+上述三点均在原 TeX 核对，不归咎于 PDF 字体提取，也不否定其成熟方法。
+
+**有限块长的第三阶界。** Shuqing Chen、Michelle Effros、Victoria Kostina，
+*Lossless Source Coding in the Point-to-Point, Multiple Access, and Random Access Scenarios*，
+[arXiv:1902.03366v4](https://arxiv.org/abs/1902.03366v4)，
+[DOI:10.1109/TIT.2020.3005155](https://doi.org/10.1109/TIT.2020.3005155)。
+2020 年 10 月 10 日的 35 页原稿第 3 页 Theorem 1 重述
+Kontoyiannis–Verdú 的有限无记忆源界，在正信息方差及有限三阶绝对信息矩下，
+对数码本大小的前三项为 $nH+\sqrt{nV}\,z-\frac12\log n$，上下界相差 $O(1)$。
+第 4 页 Remark 1 说明固定 $\varepsilon\in(0,1)$ 及可数源字母表的扩展。
+该结论不提供本章变动条件后验的精确常数；$Q^2$ 个有效信息项对应 $-\ln Q$，
+并非新发现一般的 $-\frac12\log n$ 项。
+
+Ioannis Kontoyiannis、Sergio Verdú，
+*Lossless Data Compression at Finite Blocklengths*，
+[arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)。
+核对的 v1 PDF 第 9–10 页、Section II 的 Theorems 2–3 给一般离散源的
+排序／阈值界，第 7 页式 (34) 讨论 Strassen 的非格点精化式。
+第 23 页明确指出作者未能验证所引近似在 CDF 积分中的一个步骤，
+其 Theorems 16–17 给另行证明的有限无记忆界。
+第 90 章的积分核 $e^{u-t}\mathbf1_{u\le t}$ 有界且总变差为二，
+已证 CDF 误差为 $o(1/Q)$；这使计数积分的误差同样为 $o(1/Q)$，
+不是把指数加权计数直接按 TV 转移。
+
+**侧信息与条件精度。** Lampros Gavalakis、Ioannis Kontoyiannis，
+*Sharp Second-Order Pointwise Asymptotics for Lossless Compression with Side Information*，
+[arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)。
+PDF 第 4 页 Definition 2.1 和 Theorem 2.3 逐侧信息串排序条件概率，
+并在大于 $\log n$ 的归一化下比较码长和信息量；
+第 6 页 Assumption (M) 对平稳有限字母源及侧信息施加所列 Markov／混合条件，
+第 8 页 Theorem 2.10 是以平均条件熵为中心的联合概率 CLT。
+这些条件、中心和精度均不推出本章以 $H_x(y)$ 为中心的
+输出积分条件局部极限；排序原理仍直接归属经典编码理论。
+
+**密度导数工具。** Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+[arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)。
+2013 年 8 月 29 日原稿 Theorem 3.1（PDF 第 10 页）在所列 Gaussian Sobolev
+正则性、正矩与逆导数矩条件下，以 $DF/\|DF\|^2$ 的散度表示并控制密度；
+Proposition 3.6（第 14 页）在更高正则性和逆矩下控制高阶密度导数。
+第 90 章用二维梯度 Gram 矩阵并显式核对逆矩，实现对应的有限维机制。
+原标量定理本身不替代二维非退化性验证，更不直接验证实际离散后验。
+
+Chaganty–Sethuraman，*Strong Large Deviation and Local Limit Theorems*，
+DOI 10.1214/aop/1176989136，是元数据检索所指的相关文献；
+所查原文下载端点返回 HTML 拒绝页，未取得可核对原定理，
+故该文没有承担正文任何前提。
+
+**结论范围。** 经典工具与本章实际模型桥梁分开归属：
+完整向量条件化、全域有界过渡组、最终噪声尺度耦合、
+二维核心正则化和精确中心化共同给出所需条件精度。
+结论仅对固定内部误差水平成立，保留原实际 pair/path 和固定支持量词；
+不主张每个输出、无界对数余项期望、零噪声、临界 $Q^3$ 对数噪声或高效编码。
+有限文献核对未提供直接替代这组实际条件桥梁的原定理，
+不构成不存在性或全球原创性认证。
