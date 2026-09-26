@@ -75538,3 +75538,937 @@ $$
 形成纠缠始终按凸屋指标计量，不把它识别为单次确定性 Bell 对制备数量。通道、噪声校准和原记录可取得性均承接§244；新增旗标是合法探针的制备信息，不是原设置翻转种子。标准 Wootters 结果只在其两比特范围内直接复用，本节不据这些组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 247. 最省形成纠缠的取等态强制正交旗标与精确参考熵
+
+§245给出自由有限参考下的最小形成纠缠，§246确定内部容差下达到这个最小值恰需三维总参考支撑。本节进一步证明：可读取旗标不是某个方便构造独有的附加假设，而是当前通道族精确取等所强制的结构。
+
+具体地，每份有限最优形成纠缠分解中的最大纠缠分量与产品分量，必在参考端具有正交支撑。这个结构给出全体最优探针的参考边缘熵下界，并由三维旗标态精确达到。
+
+### 247.1 固定通道与本节优化对象
+
+固定§244的量子比特四标签通道，所有量子输出重置为同一纯态 $P$。设置标签翻转概率 $p$ 已标定，原设置副本和翻转种子不在取得接口中。采用主范围
+$$
+0\le c<1,\qquad p\in[0,1]\setminus\left\{\frac12\right\},
+\qquad
+A=\frac{1+c}{2},\quad K=\frac{1-c}{2},\quad
+\beta=1-2p,\quad B=\beta^2K.
+\tag{247.1}
+$$
+因此 $A\ge B>0$。令 $u,v$ 为§244的两条正交单位轴，则实际效应向量为
+$$
+a=\sqrt A\,u+\beta\sqrt K\,v,
+\qquad
+b=\sqrt A\,u-\beta\sqrt K\,v.
+\tag{247.2}
+$$
+它们满足
+$$
+\|a\|=\|b\|=\ell:=\sqrt{A+B},
+\qquad
+\|a\times b\|=2\sqrt{AB}>0.
+\tag{247.3}
+$$
+候选与均匀目标在四个报告标签上的效应差为 $\pm a\cdot\sigma/4$ 和 $\pm b\cdot\sigma/4$。
+
+完整距离、无参考最优值及优势为
+$$
+D=\frac\ell2,\qquad U=\frac{\sqrt A}{2},\qquad
+\delta=D-U>0.
+\tag{247.4}
+$$
+对任意有限维参考 $E$ 及联合态 $\Omega$，仍以 $g(\Omega)$ 表示实际联合输出的半迹距离，以 $E_F(\Omega)$ 表示输入—参考形成纠缠。§245已经证明
+$$
+g(\Omega)\le U+\delta E_F(\Omega).
+\tag{247.5}
+$$
+
+固定 $0<\theta<1$，考察全部有限参考上的态
+$$
+\mathcal C_\theta=
+\{\Omega:E_F(\Omega)=\theta,\quad
+ g(\Omega)\ge U+\delta\theta\}.
+\tag{247.6}
+$$
+由（247.5），这些态必恰好达到 $g(\Omega)=U+\delta\theta$。它们是当前响应阈值下全局最省形成纠缠的探针，本节求其参考边缘
+$$
+\Omega_E=\operatorname{Tr}_H\Omega
+\tag{247.7}
+$$
+的最小 von Neumann 熵。全部可读取制备旗标均计入 $E$。
+
+### 247.2 最优凸屋系综与端点分量的强制性
+
+有限维形成纠缠的最优纯态系综确实存在。标准结果可见 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Exercise 6.3(a)，印刷第385页、PDF第393页。这里所需的存在性也可由紧性直接说明：归一化纯向量形成紧集，映射
+$$
+|\psi\rangle\longmapsto
+\left(|\psi\rangle\langle\psi|,
+S(\operatorname{Tr}_E|\psi\rangle\langle\psi|)\right)
+\tag{247.8}
+$$
+连续，故其像紧。有限维实向量空间中，该像的凸包仍紧，并由 Carathéodory 定理用有限凸组合表示。固定第一坐标为 $\Omega$ 的非空紧纤维上，第二坐标取得最小值，正是 $E_F(\Omega)$。这只用作已有凸屋定义的存在工具。
+
+现在任取 $\Omega\in\mathcal C_\theta$，并任取一个达到形成纠缠的有限纯态分解
+$$
+\Omega=\sum_j\lambda_j|\psi_j\rangle\langle\psi_j|,
+\qquad \lambda_j>0,\quad\sum_j\lambda_j=1.
+\tag{247.9}
+$$
+记各纯分量的纠缠熵为 $e_j$，则 $\sum_j\lambda_je_j=\theta$。§244的纯探针最优响应 $G(e)$ 与§245的严格弦界给
+$$
+\begin{aligned}
+U+\delta\theta=g(\Omega)
+&\le\sum_j\lambda_jg(|\psi_j\rangle\langle\psi_j|)\\
+&\le\sum_j\lambda_jG(e_j)\\
+&\le U+\delta\sum_j\lambda_je_j
+=U+\delta\theta.
+\end{aligned}
+\tag{247.10}
+$$
+两端相同，每个不等式都取等。严格弦界在 $0<e<1$ 时严格，因此每个正权重分量都必须满足
+$$
+e_j\in\{0,1\}.
+\tag{247.11}
+$$
+而且每个分量分别达到其纯态最优值。
+
+令 $J_1$ 和 $J_0$ 分别为 $e_j=1$ 和 $e_j=0$ 的指标集。输入是量子比特，故 $J_1$ 中每个分量的输入边缘为 $I_2/2$，是输入与某个二维参考平面之间的最大纠缠纯态，并取得 $D$；$J_0$ 中每个分量是产品纯态，并取得 $U$。权重满足
+$$
+\sum_{j\in J_1}\lambda_j=\theta,
+\qquad
+\sum_{j\in J_0}\lambda_j=1-\theta.
+\tag{247.12}
+$$
+内部 $\theta$ 下两组均非空。此时还没有假定两类分量的参考支撑相互正交。
+
+### 247.3 全部分量共享两个迹范数见证
+
+对实向量 $w$，定义参考上的 Hermitian 算子
+$$
+R_w(\Omega)=\operatorname{Tr}_H[(w\cdot\sigma\otimes I_E)\Omega].
+\tag{247.13}
+$$
+偏迹对被迹掉的输入因子具有循环性，故该算子确为 Hermitian。四标签正交及共同纯输出给
+$$
+g(\Omega)=\frac14\left(
+\|R_a(\Omega)\|_1+\|R_b(\Omega)\|_1
+\right).
+\tag{247.14}
+$$
+式（247.10）第一步的取等，配合两个分别非负的迹范数凸性缺口，强制对 $w=a,b$ 各自成立
+$$
+\|R_w(\Omega)\|_1
+=\sum_j\lambda_j
+\|R_w(|\psi_j\rangle\langle\psi_j|)\|_1.
+\tag{247.15}
+$$
+
+分别为 $R_a(\Omega)$、$R_b(\Omega)$ 选择 Hermitian 收缩 $H_a,H_b$，满足
+$$
+\|H_w\|\le1,
+\qquad
+\operatorname{Tr}(H_wR_w(\Omega))=\|R_w(\Omega)\|_1.
+\tag{247.16}
+$$
+例如取相应算子的谱符号，并在核上取零。对每个 Hermitian 算子 $X$ 都有 $\operatorname{Tr}(H_wX)\le\|X\|_1$。将（247.15）代入（247.16），得到各正权重分量的非负缺口之和为零，因此逐项成立
+$$
+\operatorname{Tr}\left[H_wR_w(|\psi_j\rangle\langle\psi_j|)\right]
+=\|R_w(|\psi_j\rangle\langle\psi_j|)\|_1,
+\quad w=a,b.
+\tag{247.17}
+$$
+所以同一对 $H_a,H_b$ 同时见证全部纯分量的范数取等。
+
+下面使用一个直接的取等事实。若 $H$ 为 Hermitian 收缩、$X$ 为 Hermitian，且 $\operatorname{Tr}(HX)=\|X\|_1$，则对 $X$ 的每个非零本征值 $\lambda$ 及对应单位本征向量 $x$，
+$$
+Hx=\operatorname{sgn}(\lambda)x.
+\tag{247.18}
+$$
+因为在 $X$ 的本征基中，每项 $|\lambda|-\lambda\langle x,Hx\rangle$ 非负，取等强制期望达到 $+1$ 或 $-1$；$I-H$ 或 $I+H$ 的正性继而强制相应向量属于其核。这还排除了 $H$ 作用后离开该本征子空间的分量。
+
+### 247.4 两条非平行响应强制参考支撑正交
+
+先看 $j\in J_1$ 的最大纠缠分量。固定一个输入正交基，存在等距映射 $W_j:\mathbb C^2\to E$，使
+$$
+|\psi_j\rangle=\frac1{\sqrt2}
+\sum_{i=0}^1|i\rangle\otimes W_j|i\rangle.
+\tag{247.19}
+$$
+令 $L_j=\operatorname{ran}W_j$。直接偏迹得
+$$
+R_w(|\psi_j\rangle\langle\psi_j|)
+=\frac12W_j(w\cdot\sigma)^{\mathsf T}W_j^\dagger,
+\qquad w=a,b.
+\tag{247.20}
+$$
+在 $L_j$ 上，其两个本征值为 $\pm\ell/2$，均非零。由（247.17）—（247.18），
+$$
+\boxed{
+H_wW_j=W_j\frac{(w\cdot\sigma)^{\mathsf T}}\ell,
+\qquad w=a,b.
+}
+\tag{247.21}
+$$
+所以 $L_j$ 对两者都不变。$H_a,H_b$ 为 Hermitian，故 $L_j$ 同时是约化子空间；其正交投影 $P_{L_j}$ 与两者交换。
+
+再看 $k\in J_0$ 的产品分量，写为
+$$
+|\psi_k\rangle=|\varphi_k\rangle\otimes|z_k\rangle,
+\tag{247.22}
+$$
+其中两向量均归一化，$r_k\in\mathbb R^3$ 为输入态 $|\varphi_k\rangle$ 对应的单位 Bloch 向量。其参考响应为
+$$
+R_w(|\psi_k\rangle\langle\psi_k|)
+=(r_k\cdot w)|z_k\rangle\langle z_k|.
+\tag{247.23}
+$$
+该分量取得 $U$，故
+$$
+|r_k\cdot a|+|r_k\cdot b|=2\sqrt A.
+\tag{247.24}
+$$
+置 $x=r_k\cdot a$、$y=r_k\cdot b$。由
+$$
+aa^{\mathsf T}+bb^{\mathsf T}
+=2A\,uu^{\mathsf T}+2B\,vv^{\mathsf T},\qquad A\ge B,
+$$
+得
+$$
+(|x|+|y|)^2\le2(x^2+y^2)\le4A.
+\tag{247.25}
+$$
+式（247.24）达到最右端，故两步均取等，强制
+$$
+|r_k\cdot a|=|r_k\cdot b|=\sqrt A>0.
+\tag{247.26}
+$$
+这个推论覆盖 $A=B$ 时的方向简并，没有要求产品态的最优方向唯一。由（247.17），
+$$
+H_a z_k=s_a z_k,
+\qquad H_b z_k=s_b z_k,
+\qquad s_a,s_b\in\{+1,-1\}.
+\tag{247.27}
+$$
+
+现在任取 $j\in J_1$、$k\in J_0$。若 $P_{L_j}z_k\ne0$，由约化性及（247.27），它将同时是 $H_a,H_b$ 在 $L_j$ 上的本征向量。通过 $W_j^\dagger$ 拉回，便得到 $(a\cdot\sigma)^{\mathsf T}$ 与 $(b\cdot\sigma)^{\mathsf T}$ 的非零共同本征向量。
+
+但 Pauli 交换子满足
+$$
+[(a\cdot\sigma)^{\mathsf T},(b\cdot\sigma)^{\mathsf T}]
+=-2i\,[(a\times b)\cdot\sigma]^{\mathsf T}.
+\tag{247.28}
+$$
+由于 $\|a\times b\|=2\sqrt{AB}>0$，且 $[(a\times b)\cdot\sigma]^2=\|a\times b\|^2I_2$，此交换子可逆。共同本征向量却必在交换子的核中，矛盾。因此
+$$
+\boxed{
+P_{L_j}z_k=0\quad\text{对所有 }j\in J_1,\ k\in J_0.
+}
+\tag{247.29}
+$$
+
+**定理 247.1（最优取等强制正交参考旗标）。** 对任意 $\Omega\in\mathcal C_\theta$，它的每个有限最优纯态分解都只含取得 $D$ 的最大纠缠分量与取得 $U$ 的产品分量，两类总权重为 $\theta$ 与 $1-\theta$，且两类分量的参考支撑相互正交。
+
+具体地，对所选最优分解令
+$$
+E_{\mathrm{ent}}=\sum_{j\in J_1}L_j,
+\qquad
+E_{\mathrm{prod}}=\operatorname{span}\{z_k:k\in J_0\}.
+\tag{247.30}
+$$
+则 $E_{\mathrm{ent}}\perp E_{\mathrm{prod}}$，整个联合态具有真正的参考正交分块
+$$
+\boxed{
+\Omega=\theta\Omega_{\mathrm{ent}}
+\oplus(1-\theta)\Omega_{\mathrm{prod}}.
+}
+\tag{247.31}
+$$
+这里两项均归一化，分别是上述最大纠缠纯分量与产品纯分量的混合，位于 $H\otimes E_{\mathrm{ent}}$、$H\otimes E_{\mathrm{prod}}$。
+
+**证明。** 端点分量与权重由（247.10）—（247.12）给出。全部参考支撑的正交性由（247.29）给出；按两组分量求和，即为（247.31）。有限最优分解原本任意，故结论对每个这样的分解成立。$\square$
+
+在参考上投影读取这两个子空间，不改变未条件化的联合态，并以概率 $\theta$、$1-\theta$ 报告所属块。因此可读取旗标由响应取等条件推出，没有把分解的抽象标签预先当作免费经典记录。
+
+### 247.5 全体最优态的精确最小参考边缘熵
+
+记（247.31）中两份归一化参考边缘为
+$$
+\rho_{\mathrm{ent}}=\operatorname{Tr}_H\Omega_{\mathrm{ent}},
+\qquad
+\rho_{\mathrm{prod}}=\operatorname{Tr}_H\Omega_{\mathrm{prod}}.
+\tag{247.32}
+$$
+每个最大纠缠纯分量的参考边缘为 $P_{L_j}/2$，因此
+$$
+\rho_{\mathrm{ent}}
+=\sum_{j\in J_1}\frac{\lambda_j}{\theta}\frac{P_{L_j}}2,
+\qquad
+0\preceq\rho_{\mathrm{ent}}\preceq\frac12I_{E_{\mathrm{ent}}}.
+\tag{247.33}
+$$
+每个非零本征值 $\mu$ 都满足 $\mu\le1/2$，所以
+$$
+S(\rho_{\mathrm{ent}})
+=\sum_\mu\mu\log_2\frac1\mu
+\ge\sum_\mu\mu=1.
+\tag{247.34}
+$$
+另一块为密度矩阵，$S(\rho_{\mathrm{prod}})\ge0$。
+
+真正的参考正交分块给出精确熵式
+$$
+\begin{aligned}
+S(\Omega_E)
+&=H_2(\theta)+\theta S(\rho_{\mathrm{ent}})
+ +(1-\theta)S(\rho_{\mathrm{prod}})\\
+&\ge H_2(\theta)+\theta.
+\end{aligned}
+\tag{247.35}
+$$
+第一项来自两块权重，后两项来自各块内部谱。
+
+**定理 247.2（精确最小参考熵）。** 对 $0<\theta<1$，
+$$
+\boxed{
+\min_{\Omega\in\mathcal C_\theta}S(\Omega_E)
+=H_2(\theta)+\theta.
+}
+\tag{247.36}
+$$
+最小值在总参考支撑恰为三维的实际态上取得。在 $\mathcal C_\theta$ 内，达到这个熵最小值的参考边缘谱必为
+$$
+\boxed{
+\left(\frac\theta2,\frac\theta2,1-\theta\right)
+}
+\tag{247.37}
+$$
+并只可能另外添加零本征值。
+
+**证明。** 下界已经由（247.35）覆盖全部有限参考及全部精确最优态。反向，取§245的三维旗标构造
+$$
+\Xi_\theta=\theta|\Phi\rangle\langle\Phi|
+ +(1-\theta)|\eta\rangle\langle\eta|,
+\tag{247.38}
+$$
+其中
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle,
+\tag{247.39}
+$$
+参考基 $|0\rangle,|1\rangle,|2\rangle$ 正交。已有结果给
+$$
+E_F(\Xi_\theta)=\theta,
+\qquad
+ g(\Xi_\theta)=U+\delta\theta,
+\qquad
+\operatorname{spec}_{>0}((\Xi_\theta)_E)
+=\left(\frac\theta2,\frac\theta2,1-\theta\right).
+\tag{247.40}
+$$
+所以该态属于 $\mathcal C_\theta$，并且实际达到（247.36）。
+
+若任意 $\Omega\in\mathcal C_\theta$ 达到熵下界，因 $\theta,1-\theta>0$，（247.35）强制 $S(\rho_{\mathrm{ent}})=1$ 与 $S(\rho_{\mathrm{prod}})=0$。式（247.34）取等又要求每个正本征值都等于 $1/2$，故前一块恰有两个正本征值；后一块是纯态。结合正交性，即得到（247.37）。$\square$
+
+该证明同时显示每个 $\mathcal C_\theta$ 中的态都至少需要三维参考支撑：最大纠缠块至少占二维，非空产品块至少占一维，且二者正交。三维构造给达到性，与§246的精确维数结论相接。
+
+例如 $\theta=2/3$ 时，最小参考熵为
+$$
+H_2(2/3)+2/3=\log_2 3.
+\tag{247.41}
+$$
+此时每份参考熵最小态的参考边缘均在其三维支撑上均匀；一般响应取等态仍可使用更多参考熵。
+
+若把端点也纳入同一最优化，$\theta=0$ 时产品态给最小参考熵零；$\theta=1$ 时最优系综全部由最大纠缠分量组成，（247.33）—（247.34）的混合边缘上界仍给最小熵一，由单个最大纠缠纯态取得。因此最小值公式 $H_2(\theta)+\theta$ 连续覆盖 $\theta\in[0,1]$。
+
+### 247.6 内部容差下的资源关系与范围
+
+对内部容差 $0<\epsilon<\delta$，自由参考最小形成纠缠为 $\theta=1-\epsilon/\delta$。因此，在所有既达到 $g(\Omega)\ge D-\epsilon$、又保持全局最小形成纠缠的探针中，最小参考边缘熵恰为
+$$
+\boxed{
+H_2\left(1-\frac\epsilon\delta\right)
++1-\frac\epsilon\delta.
+}
+\tag{247.42}
+$$
+这里同时优化的是“先达到最小形成纠缠，再在该取等类中最小化参考熵”。只要求达到响应阈值而不要求形成纠缠最省，是另一个允许集合；§246已给二维纯态和混合态的精确曲线。
+
+一个明确对照取 $\theta=1/2$，即 $\epsilon=\delta/2$。全局最省形成纠缠的探针具有 $E_F=1/2$，但其最小参考边缘熵为 $H_2(1/2)+1/2=3/2$。同一响应目标的最优纯探针依§244—§245满足
+$$
+\frac12<E_{\mathrm{pure}}(\delta/2)<1,
+\qquad
+S((\Omega_{\mathrm{pure}})_E)=E_{\mathrm{pure}}(\delta/2)
+<\frac32.
+\tag{247.43}
+$$
+因此，把形成纠缠降到全局最小值，在这个已实现的比较中确实伴随更大的必要总参考边缘熵。
+
+$H_2(\theta)$ 是不可避免的正交块权重熵，$\theta$ 则来自最大纠缠块归一化边缘熵至少为一。两项均由真实共同参考上的谱计算产生。把旗标挪到另一个可读取经典寄存器，会扩大总可访问参考，不能将该寄存器排除后仍沿用本节的总参考计量。
+
+$S(\Omega_E)$ 是混合探针的参考边缘熵，不是其纠缠；$E_F$ 也没有被解释为单次确定性 Bell 对制备数量。式（247.36）不自动给出单次存储所需的物理比特数，或包含校准、控制与装置的总制备成本。
+
+本节依赖精确形成纠缠最优和精确响应取等，不提供“接近最优”时的稳健熵界。结论限定于当前固定双轴记录通道及单次比较，保留 $A=B$ 的方向简并，但要求 $B>0$ 使两条响应轴非平行；不据该组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 248. 响应饱和态的共同 Bell 解码与精确单次成功概率
+
+§247证明，最省形成纠缠的响应取等态必须在参考端保留正交的最大纠缠块与产品块。本节把该结构推进为具体本地解码：最大纠缠块中的所有纯分量共享同一个可解码 Bell 因子，剩余混合性完全留在额外参考因子中。
+
+由此，每份取等探针都能以概率 $\theta$ 抽取一个带成功标记的精确 Bell 对；形成纠缠的平均 LOCC 单调性又证明任何允许的有限轮协议都不能超过这个概率。抽取的输入是尚未送入记录通道的联合探针本身，两方实际持有它的输入与参考部分。
+
+### 248.1 固定取等态与已有共同见证
+
+固定§244—§247的双轴记录通道。所有量子重置输出为同一纯态，设置翻转概率已标定，原设置副本与翻转种子不在可取得接口中。采用
+$$
+0<B\le A,\qquad
+b_0=\beta\sqrt K\ne0,\qquad b_0^2=B,\qquad
+\ell=\sqrt{A+B},
+\tag{248.1}
+$$
+以及
+$$
+D=\frac\ell2,\qquad U=\frac{\sqrt A}{2},\qquad
+\delta=D-U>0.
+\tag{248.2}
+$$
+输入选共同轴 $u$ 的本征基，并选相位使正交轴 $v$ 对应 $X=\sigma_x$；令 $Z=\sigma_z$。两条效应差方向因此写成实矩阵
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{248.3}
+$$
+这里 $A_a,A_b$ 是输入算子；标量 $A$ 与其区分。所用 Pauli 矩阵 $X,Z$ 均等于自身转置。
+
+取任意有限参考及任意联合态 $\Omega$，满足
+$$
+E_F(\Omega)=\theta,\qquad
+ g(\Omega)=U+\delta\theta,
+\qquad 0<\theta<1.
+\tag{248.4}
+$$
+$g$ 仍为该探针用于原固定通道比较时的联合输出半迹距离。由§247，每个有限最优形成纠缠分解都只有两类纯分量：权重总和为 $\theta$ 的最大纠缠分量，以及权重总和为 $1-\theta$ 的最优产品分量。参考分解为真正正交的
+$$
+E_{\mathrm{ent}}\perp E_{\mathrm{prod}},
+\qquad
+\Omega=\theta\Omega_{\mathrm{ent}}
+\oplus(1-\theta)\Omega_{\mathrm{prod}}.
+\tag{248.5}
+$$
+两块均归一化，零权重的未使用参考子空间可以忽略。
+
+同一对 Hermitian 收缩 $H_a,H_b$ 见证各响应块的迹范数取等。对每个最大纠缠分量，存在等距 $W_j:\mathbb C^2\to E_{\mathrm{ent}}$，使
+$$
+|\psi_j\rangle=\frac1{\sqrt2}
+\sum_{i=0}^1|i\rangle\otimes W_j|i\rangle,
+\qquad
+H_aW_j=W_j\frac{A_a}{\ell},\quad
+H_bW_j=W_j\frac{A_b}{\ell}.
+\tag{248.6}
+$$
+$E_{\mathrm{ent}}$ 由这些 $W_j$ 的像张成，并且对 $H_a,H_b$ 同时约化。这些是§247已证明的共同取等合同。
+
+### 248.2 显式构造共同参考解码
+
+在 $E_{\mathrm{ent}}$ 上定义
+$$
+Z_E=\frac{\ell}{2\sqrt A}(H_a+H_b),
+\qquad
+X_E=\frac{\ell}{2b_0}(H_a-H_b).
+\tag{248.7}
+$$
+此处只取两个见证在该约化子空间上的限制。它们为 Hermitian，且（248.6）给
+$$
+Z_EW_j=W_jZ,
+\qquad
+X_EW_j=W_jX.
+\tag{248.8}
+$$
+每个像平面上均有 Pauli 关系；这些像平面张成整个 $E_{\mathrm{ent}}$，所以
+$$
+\boxed{
+Z_E^2=X_E^2=I_{E_{\mathrm{ent}}},
+\qquad Z_EX_E+X_EZ_E=0.
+}
+\tag{248.9}
+$$
+这一步无需假定不同最大纠缠分量的参考平面两两正交：共同算子已经在它们的重叠处保持相容。
+
+令
+$$
+M=\ker(Z_E-I).
+\tag{248.10}
+$$
+$X_E$ 是酉的 Hermitian 对合，反对易性使它把 $M$ 等距双射到 $\ker(Z_E+I)$。两个本征子空间正交且覆盖 $E_{\mathrm{ent}}$。因此以下映射是酉同构：
+$$
+\begin{aligned}
+V:\mathbb C^2\otimes M&\longrightarrow E_{\mathrm{ent}},\\
+V(|0\rangle\otimes z)&=z,\\
+V(|1\rangle\otimes z)&=X_Ez.
+\end{aligned}
+\tag{248.11}
+$$
+直接计算得
+$$
+V^\dagger Z_EV=Z\otimes I_M,
+\qquad
+V^\dagger X_EV=X\otimes I_M.
+\tag{248.12}
+$$
+
+对每个 $j$，置 $W'_j=V^\dagger W_j$。它同时满足
+$$
+(Z\otimes I_M)W'_j=W'_jZ,
+\qquad
+(X\otimes I_M)W'_j=W'_jX.
+\tag{248.13}
+$$
+第一式给 $W'_j|0\rangle=|0\rangle\otimes z_j$、$W'_j|1\rangle=|1\rangle\otimes z'_j$；第二式强制 $z'_j=z_j$。等距性保证 $\|z_j\|=1$，故
+$$
+W'_j|i\rangle=|i\rangle\otimes z_j,
+\qquad i=0,1.
+\tag{248.14}
+$$
+
+**定理 248.1（全部最大纠缠分量的共同 Bell 解码）。** 存在同一个参考本地酉同构 $V^\dagger$，使归一化最大纠缠块满足
+$$
+\boxed{
+(I_H\otimes V^\dagger)\Omega_{\mathrm{ent}}(I_H\otimes V)
+=P_{\Phi^+}\otimes\sigma_M,
+}
+\tag{248.15}
+$$
+其中
+$$
+|\Phi^+\rangle_{H,Q}=\frac{|00\rangle+|11\rangle}{\sqrt2},
+\qquad
+\sigma_M=\sum_{j\in J_1}\frac{\lambda_j}{\theta}
+|z_j\rangle\langle z_j|
+\tag{248.16}
+$$
+为 $M$ 上的密度矩阵，$Q=\mathbb C^2$ 是解码出的参考量子比特。
+
+**证明。** 将（248.14）代入（248.6），每份最大纠缠分量都被送到同一个 $|\Phi^+\rangle_{H,Q}\otimes z_j$。按原权重混合即得（248.15）。$\square$
+
+因此各分量之间的混合性只留在 $M$ 中。共同响应见证锁定了同一输入—参考对应，并提供对整块有效的一个解码器。
+
+### 248.3 全部响应饱和态的正交正常形
+
+产品部分也可细分为由响应见证确定的正交经典块。§247已证明，每个最优产品分量 $|\varphi\rangle\otimes|z\rangle$ 都满足
+$$
+H_a z=s_a z,\qquad H_b z=s_b z,
+\qquad s_a,s_b\in\{+1,-1\},
+\tag{248.17}
+$$
+且输入的单位 Bloch 向量 $r$ 满足
+$$
+r\cdot a=s_a\sqrt A,
+\qquad r\cdot b=s_b\sqrt A.
+\tag{248.18}
+$$
+在正交轴 $u,v$ 上，这等价于
+$$
+r\cdot u=\frac{s_a+s_b}{2},
+\qquad
+r\cdot v=\frac{\sqrt A}{2b_0}(s_a-s_b).
+\tag{248.19}
+$$
+若两符号相同，单位长度强制 $r=s_a u$。若两符号相反，则 $|r\cdot v|=\sqrt{A/B}$；因 $A\ge B$，这只在 $A=B$ 时可能，并且强制 $r=s_a\operatorname{sgn}(b_0)v$。
+
+所以允许的符号集合及唯一输入方向为
+$$
+\Sigma=
+\begin{cases}
+\{(+,+),(-,-)\},&A>B,\\
+\{(+,+),(+,-),(-,+),(-,-)\},&A=B,
+\end{cases}
+\tag{248.20}
+$$
+$$
+r_{s_a,s_b}=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{248.21}
+$$
+这里保留 $b_0$ 的符号，因此也覆盖 $p>1/2$ 的固定标签合同。
+
+不同符号对至少在 $H_a,H_b$ 中的一个本征值上不同；Hermitian 算子不同本征值的向量正交。因此各符号对的产品参考向量分别张成相互正交的子空间 $E_s$，又都与 $E_{\mathrm{ent}}$ 正交。同一符号对的输入态唯一，故其联合块为固定纯输入与参考密度矩阵的乘积。
+
+**定理 248.2（饱和态的完整正常形）。** 在当前通道下，满足（248.4）的态，恰好是在参考本地等距换坐标后可写为
+$$
+\boxed{
+\theta P_{\Phi^+}\otimes\sigma_M
+\quad\oplus\quad
+\bigoplus_{s\in\Sigma}q_s P_{r_s}\otimes\tau_s,
+\qquad
+q_s\ge0,\quad\sum_s q_s=1-\theta.
+}
+\tag{248.22}
+$$
+$\sigma_M$ 与各正权重块中的 $\tau_s$ 为归一化密度矩阵；参考的 $Q\otimes M$ 与各 $E_s$ 两两正交。$P_{r_s}$ 表示（248.21）对应的纯量子比特态，零权重块可以省略。
+
+**证明。** 必要性由定理248.1的共同 Bell 因子化，以及（248.17）—（248.21）的产品方向与参考正交性得到。
+
+反向，任给（248.22）的态。Bell 因子配任意独立 $\sigma_M$ 的响应为 $D$，每个指定产品输入配任意 $\tau_s$ 的响应为 $U$。参考块正交，且局部参考等距变换保持距离，所以
+$$
+g(\Omega)=\theta D+\sum_s q_sU=U+\delta\theta.
+\tag{248.23}
+$$
+将 $\sigma_M$ 与各 $\tau_s$ 作纯态分解，所得联合纯分量的纠缠分别为一和零，给 $E_F(\Omega)\le\theta$。§245的普遍上界 $g(\Omega)\le U+\delta E_F(\Omega)$ 与 $\delta>0$ 再给 $E_F(\Omega)\ge\theta$。两者合并得到 $E_F(\Omega)=\theta$，故（248.4）成立。$\square$
+
+这里并未只列出一个达到族，而是由共同见证给出必要结构，再由实际通道响应证明充分性。$A=B$ 时的四种最优产品方向也完整保留。
+
+### 248.4 单份探针上的带成功标记 Bell 抽取
+
+把尚未输入记录通道的 $\Omega$ 作为抽取协议的输入，两方分别持有 $H$ 与整个 $E$。允许本地量子操作、无预共享纠缠的本地辅助态、经典通信及有限轮 LOCC。协议有双方可取得的成功标记；成功时，指定的两个输出量子比特处于确切 Bell 态，失败时输出任意态。若成功分支还保留其他寄存器，允许最后本地丢弃这些寄存器。
+
+这个操作框架采用 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§6.1.2，印刷第324—325页、PDF第332—333页对 LOCC 的定义。形成纠缠及最优有限系综沿用同书 Exercise 6.3，印刷第385页、PDF第393页。
+
+先说明本节所用的标准平均单调性。对一个纯联合态，把单方 instrument 细化到每个结果只有一个 Kraus 算子，所得非零概率分支仍是纯态。未操作方的平均边缘保持不变，熵凹性给
+$$
+\sum_y p_y e(\psi_y)\le e(\psi).
+\tag{248.24}
+$$
+对混合态，取达到 $E_F$ 的纯系综 $\Omega=\sum_j\lambda_jP_{\psi_j}$。记第 $j$ 个纯分量在结果 $y$ 的概率为 $p_{y|j}$，对应纯态为 $\psi_{j,y}$。每份条件输出态的凸屋上界与（248.24）给
+$$
+\begin{aligned}
+\sum_y p_y E_F(\Omega_y)
+&\le\sum_j\lambda_j\sum_y p_{y|j}e(\psi_{j,y})\\
+&\le\sum_j\lambda_je(\psi_j)
+=E_F(\Omega).
+\end{aligned}
+\tag{248.25}
+$$
+零概率分支直接略去。若 instrument 的报告结果合并若干细分结果，$E_F$ 的凸性使平均值只会进一步降低；该凸性本身由拼接纯系综得到。逐条件分支迭代（248.25），就得到任意有限轮 LOCC 的平均形成纠缠单调性。加入本地无纠缠辅助态或丢弃本地寄存器也属于这些允许操作。
+
+**定理 248.3（精确 Bell 抽取的最优成功概率）。** 对每份满足（248.4）的态，以上允许协议中，从单份 $\Omega$ 抽取一个带成功标记的确切 Bell 对的最大成功概率为
+$$
+\boxed{p_{\mathrm{Bell}}^{\max}(\Omega)=\theta.}
+\tag{248.26}
+$$
+
+**证明。** 可达性只需参考端本地操作。先读取§247已经证明存在的 $E_{\mathrm{ent}}/E_{\mathrm{prod}}$ 正交旗标。量子块以概率 $\theta$ 出现；在该块上实施（248.11）的 $V^\dagger$，得到（248.15）的 $P_{\Phi^+}\otimes\sigma_M$，然后丢弃 $M$。参考方宣布成功，此时两方的指定量子比特精确处于 $\Phi^+$。产品块宣布失败。这给 $p_{\mathrm{Bell}}\ge\theta$。
+
+反向，任取允许的有限轮 LOCC 抽取协议。将成功分支上的其余本地寄存器丢弃，并按成功记录作必要的局部 Bell 坐标校正。每个成功条件态的形成纠缠为一，失败条件态的形成纠缠非负。由（248.25）的有限轮迭代，
+$$
+p_{\mathrm{Bell}}
+\le\sum_y p_yE_F(\Omega_y)
+\le E_F(\Omega)=\theta.
+\tag{248.27}
+$$
+与实际构造合并得到精确最优值。$\square$
+
+端点中，$\theta=1$ 的 Bell 因子块可确定性抽取一对；$\theta=0$ 的产品混合块没有正概率的精确 Bell 抽取。主定理的内部参数则对应一次有成功或失败记录的概率协议。
+
+### 248.5 同一正常形连接的资源与取得边界
+
+在这些精确响应饱和态上，$\theta$ 同时是形成纠缠值、强制量子旗标的权重，以及最优带标记 Bell 抽取概率。这三个角色由正常形和允许操作的证明连接，不是定义上直接相等。§247的最小总参考边缘熵仍为 $H_2(\theta)+\theta$；Bell 因子之外的参考寄存器与经典块都属于总可访问参考。
+
+$V$ 与旗标投影允许依赖已声明的探针、已知输入—参考划分及其范数见证。定理给出了这些数据下的本地解码存在性与构造，没有声称仅凭一个标量响应就能恢复未知态的坐标，或得到适用于所有未知探针的同一个解码器。协议使用完整本地量子操作；无设备信任的自检验、求解坐标的算法成本及噪声稳健性不在结论内。
+
+Bell 抽取作用于原联合探针 $\Omega$，需要两方仍实际持有 $H$ 与 $E$。它没有从记录通道的重置输出反演被测输入。形成纠缠也没有被识别为单次确定性消耗的分数个 Bell 对；（248.26）计量的是确切成功分支的概率。
+
+范围固定为当前通道、已标定参数、精确响应饱和及有限轮单份协议。近似饱和、无限轮 LOCC 和多次使用不由本节结论自动覆盖。标准平均形成纠缠单调性只作工具，本节不据这些组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 249. 独立复本的精确 Bell 产额与最优重叠指数
+
+§248把每份精确响应饱和探针解码为一个可读取的 Bell 分支和若干产品分支。本节固定同一个源态，独立制备它的有限复本，求两个不同操作目标的全局最优值：带成功标记地精确输出指定数量的 Bell 对，以及每次都输出固定维数状态时的最大 Bell 目标重叠。
+
+两项最优值由真实旗标产额的二项分布精确给出，上界覆盖不预先读取旗标的全部允许协议。进一步可从有限公式直接证明重叠的大偏差指数及其分段。这里处理的是通道使用前的联合探针资源。
+
+### 249.1 同一源态的独立复本与真实旗标模式
+
+固定§248的一份已知饱和态 $\Omega$，其形成纠缠为
+$$
+E_F(\Omega)=\theta,\qquad 0<\theta<1.
+\tag{249.1}
+$$
+两方分别持有输入与整个参考。由已有正常形，在参考本地等距坐标中，它具有正交分块
+$$
+\Omega=\theta\Gamma_1\oplus(1-\theta)\Gamma_0,
+\qquad
+\Gamma_1=P_{\Phi_2}\otimes\sigma_M,
+\tag{249.2}
+$$
+其中 $\Gamma_0$ 是带可读取产品方向标签的可分态，$\sigma_M$ 完全位于参考方。参考方可读取两块旗标；在 $\Gamma_1$ 上丢弃 $M$，就得到一个确切 Bell 对。这里记
+$$
+|\Phi_m\rangle=\frac1{\sqrt m}\sum_{i=1}^m|i\rangle|i\rangle,
+\qquad P_{\Phi_m}=|\Phi_m\rangle\langle\Phi_m|.
+\tag{249.3}
+$$
+$k$ 个标准 Bell 对按已知局部基重排等于 $\Phi_{2^k}$。
+
+现在源严格为同一态的独立复本
+$$
+\Omega^{\otimes n},\qquad n\ge1.
+\tag{249.4}
+$$
+对模式 $z=(z_1,\ldots,z_n)\in\{0,1\}^n$，置 $|z|=\sum_i z_i$。初态本来就是正交模式的混合，模式概率与归一化条件态分别为
+$$
+\pi_z=\theta^{|z|}(1-\theta)^{n-|z|},
+\qquad
+\Gamma_z=\bigotimes_{i=1}^n\Gamma_{z_i}.
+\tag{249.5}
+$$
+所以读取旗标后的 Bell 数量
+$$
+\boxed{K\sim\operatorname{Binomial}(n,\theta).}
+\tag{249.6}
+$$
+每个 $|z|=j$ 的模式可以实际解码出 $j$ 个独立 Bell 对；其余寄存器为本地态或可分产品部分，可丢弃。
+
+允许两方在各自全部 $n$ 份系统上作联合本地操作、加入本地辅助态、交换经典消息并执行有限轮 LOCC。不提供额外共享纠缠或纠缠催化剂。协议可根据已知源态选择解码器；上界不要求它先测旗标。
+
+### 249.2 逐模式有效的 Schmidt 秩约束
+
+一个混合态若可写成 Schmidt 秩至多 $r$ 的归一化纯态的凸组合，就称其 Schmidt number 至多 $r$。对 $|z|=j$ 的模式，$\Gamma_z$ 有这样的分解，且
+$$
+\operatorname{SN}(\Gamma_z)\le2^j.
+\tag{249.7}
+$$
+因为其 Bell 部分具有 Schmidt 秩 $2^j$，其余局部混合态和可分部分都可以分解为不增加该秩的产品纯态。
+
+沿任意有限轮 LOCC 的一条细化结果路径，Kraus 算子是两方局部算子的张量积。纯态的 Schmidt 秩在局部线性映射下不增加；合并结果或丢弃局部寄存器只形成这类低秩纯态的混合。因此（249.7）也约束每个模式经过协议后任意非零概率条件输出。
+
+还需要一个标准 Bell 重叠界：对 $\mathbb C^m\otimes\mathbb C^m$ 上 Schmidt number 至多 $r$ 的归一化态 $\rho$，
+$$
+\langle\Phi_m|\rho|\Phi_m\rangle\le\min\left\{1,\frac rm\right\}.
+\tag{249.8}
+$$
+可核对的标准出处是 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Example 6.16，印刷第324页、PDF第332页，式（6.84）。本节在实际推导中直接使用该界。
+
+其所需计算很短：若纯态的系数矩阵为 $T$，则 $\|T\|_{\mathrm{HS}}=1$、$\operatorname{rank}T\le r$，而
+$$
+|\langle\Phi_m|\psi\rangle|
+=\frac{|\operatorname{Tr}T|}{\sqrt m}
+\le\frac{\|T\|_*}{\sqrt m}
+\le\sqrt{\frac rm}.
+\tag{249.9}
+$$
+最后一步是对非零奇异值使用 Cauchy–Schwarz。纯态重叠还至多为一；再对纯态分解取平均就得到（249.8）。这里的 $\|T\|_*$ 是矩阵核范数。
+
+### 249.3 精确输出 $k$ 个 Bell 对的最优成功概率
+
+对整数 $k\ge1$，协议具有双方可读取的成功标记，条件成功输出恰为 $P_{\Phi_{2^k}}$；其余本地输出可先丢弃。记最优成功概率为 $P_{\mathrm{exact}}(n,k)$。
+
+**定理 249.1（精确 Bell 产额尾部）。**
+$$
+\boxed{
+P_{\mathrm{exact}}(n,k)
+=\Pr_\theta[K\ge k]
+=\sum_{j=k}^{n}\binom nj\theta^j(1-\theta)^{n-j}.
+}
+\tag{249.10}
+$$
+当 $k>n$，空和为零；$k=0$ 时约定空 Bell 目标恒成功，概率为一。
+
+**证明。** 先证明覆盖全部允许协议的上界。将各成功记录所需的局部坐标校正纳入协议，并丢弃其他寄存器，成功过程是某个迹不增完全正映射 $\Lambda_{\mathrm{succ}}$。若总体成功概率为 $p$，则
+$$
+\Lambda_{\mathrm{succ}}(\Omega^{\otimes n})
+=pP_{\Phi_{2^k}}
+=\sum_z\pi_z\Lambda_{\mathrm{succ}}(\Gamma_z).
+\tag{249.11}
+$$
+右侧每项都正半定。左侧仅支撑在一条纯态射线上，所以每个右侧项也只能支撑在该射线上：对其正交补投影取期望，非负项之和为零，正性继而排除所有正交补及交叉支撑。
+
+若 $|z|=j<k$ 且该模式有非零成功概率，它的归一化成功输出便必须是 $P_{\Phi_{2^k}}$。但（249.7）给输出 Schmidt number 至多 $2^j$，与该纯目标的 Schmidt 秩 $2^k$ 矛盾；也可直接用（249.8）排除重叠一。因此所有低于 $k$ 的模式都必须零贡献。其余模式的成功概率至多一，故
+$$
+p\le\sum_{z:|z|\ge k}\pi_z=\Pr_\theta[K\ge k].
+\tag{249.12}
+$$
+这个推理只用输入的真实混合模式及输出线性，没有假定协议先读取旗标。
+
+达到性读取全部旗标并解码：当 $K\ge k$，两方保留 $k$ 对并丢弃其余 Bell 对，宣布成功；当 $K<k$，宣布失败。于是上界实际取得。$\square$
+
+### 249.4 每次都输出固定目标维数的最优重叠
+
+现在不后选择。协议始终输出两方各 $2^k$ 维的归一化态，定义
+$$
+F_{n,k}:=\max_{\Lambda\text{ 为允许的 LOCC}}
+\langle\Phi_{2^k}|\Lambda(\Omega^{\otimes n})|\Phi_{2^k}\rangle,
+\qquad k\ge0.
+\tag{249.13}
+$$
+这里优化的是与纯 Bell 目标的重叠平方，不是其平方根。
+
+**定理 249.2（无条件 Bell 重叠的精确有限式）。**
+$$
+\boxed{
+F_{n,k}=\mathbb E_\theta\left[\min\{1,2^{K-k}\}\right].
+}
+\tag{249.14}
+$$
+等价地，
+$$
+F_{n,k}=\Pr_\theta[K\ge k]
++2^{-k}\sum_{j=0}^{\min(n,k-1)}\binom nj(2\theta)^j(1-\theta)^{n-j}.
+\tag{249.15}
+$$
+空和按零解释，因此 $F_{n,0}=1$。
+
+**证明。** 对任意允许的无条件协议，初态模式混合的输出仍按 $\pi_z$ 线性相加。每个 $|z|=j$ 的模式输出受（249.7）约束，故由（249.8），
+$$
+\begin{aligned}
+\langle\Phi_{2^k}|\Lambda(\Omega^{\otimes n})|\Phi_{2^k}\rangle
+&\le\sum_z\pi_z\min\{1,2^{|z|-k}\}\\
+&=\mathbb E_\theta[\min\{1,2^{K-k}\}].
+\end{aligned}
+\tag{249.16}
+$$
+该上界再次覆盖不先测旗标的协议。
+
+反向，读取旗标并解码。$K=j\ge k$ 时保留 $k$ 个 Bell 对，重叠为一。$j<k$ 时保留全部 $j$ 对，并由双方本地制备 $k-j$ 份 $|00\rangle$ 产品对。与 $k$ Bell 目标的重叠平方恰为
+$$
+1\times\left(\frac12\right)^{k-j}=2^{j-k}.
+\tag{249.17}
+$$
+所有分支均输出指定维数的态，不作成功条件化。各模式分别达到（249.16）的上界，故期望公式精确成立。$\square$
+
+引入倾斜参数
+$$
+\theta'=\frac{2\theta}{1+\theta},\qquad \theta<\theta'<1.
+\tag{249.18}
+$$
+因为
+$$
+(2\theta)^j(1-\theta)^{n-j}
+=(1+\theta)^n(\theta')^j(1-\theta')^{n-j},
+$$
+有限公式还可以精确写为
+$$
+\boxed{
+F_{n,k}=\Pr_\theta[K\ge k]
++2^{-k}(1+\theta)^n\Pr_{\theta'}[K<k].
+}
+\tag{249.19}
+$$
+这里两项分别使用各自参数的二项分布。特别地，当 $k\ge n$，每个模式都有 $K\le k$，所以
+$$
+F_{n,k}=2^{-k}(1+\theta)^n.
+\tag{249.20}
+$$
+$k>n$ 时精确 Bell 成功概率为零，但无条件目标重叠仍由（249.20）给出。
+
+### 249.5 最优重叠的精确大偏差指数
+
+固定 Bell 输出率 $R\ge0$，令
+$$
+k_n=\lceil nR\rceil.
+\tag{249.21}
+$$
+以下指数使用自然对数。定义二元相对熵
+$$
+D_{\mathrm B}(x\|\theta)
+=x\ln\frac{x}{\theta}
++(1-x)\ln\frac{1-x}{1-\theta},
+\qquad 0\le x\le1,
+\tag{249.22}
+$$
+端点按连续延拓解释。
+
+**定理 249.3（重叠指数的变分式与分段式）。**
+$$
+\boxed{
+\lim_{n\to\infty}-\frac1n\ln F_{n,k_n}
+=I_\theta(R)
+:=\min_{0\le x\le1}
+\left[D_{\mathrm B}(x\|\theta)+(R-x)_+\ln2\right].
+}
+\tag{249.23}
+$$
+其精确分段为
+$$
+\boxed{
+I_\theta(R)=
+\begin{cases}
+0,&0\le R\le\theta,\\
+D_{\mathrm B}(R\|\theta),&\theta<R\le\theta',\\
+R\ln2-\ln(1+\theta),&R\ge\theta'.
+\end{cases}
+}
+\tag{249.24}
+$$
+两处接点连续，线性分支也适用于 $R>1$。
+
+**证明。** 对整数 $0\le j\le n$，置 $x=j/n$。二项分布的类型界为
+$$
+\frac1{n+1}e^{-nD_{\mathrm B}(x\|\theta)}
+\le\Pr_\theta[K=j]
+\le e^{-nD_{\mathrm B}(x\|\theta)}.
+\tag{249.25}
+$$
+这里可直接核对所需界。参数取 $x=j/n$ 且 $0<j<n$ 时，二项概率在 $j$ 右侧的相邻比为 $j/(j+1)<1$，在左侧的比为 $(n-j+1)/(n-j)>1$；相邻比随指标递减，所以 $j$ 是众数。它的概率因而介于 $1/(n+1)$ 与一之间。$j=0,n$ 时相应分布退化，众数概率为一。将参数 $x$ 换回 $\theta$，恰好乘以 $e^{-nD_{\mathrm B}(x\|\theta)}$，得到（249.25）。
+
+记 $r_n=k_n/n$，并令
+$$
+m_n=\min_{x\in\{0,1/n,\ldots,1\}}
+\left[D_{\mathrm B}(x\|\theta)+(r_n-x)_+\ln2\right].
+\tag{249.26}
+$$
+由有限期望式（249.14），每一项再乘以 $e^{-n(r_n-x)_+\ln2}$。保留最小指数的一项给下界，全部 $n+1$ 项求和给上界：
+$$
+\frac{e^{-nm_n}}{n+1}\le F_{n,k_n}\le(n+1)e^{-nm_n}.
+\tag{249.27}
+$$
+因此
+$$
+\left|-\frac1n\ln F_{n,k_n}-m_n\right|
+\le\frac{\ln(n+1)}n\longrightarrow0.
+\tag{249.28}
+$$
+$r_n\to R$，正部惩罚对 $r_n$ 的变化一致 Lipschitz；相对熵在 $[0,1]$ 上连续，网格又趋于稠密。所以 $m_n$ 收敛到（249.23）的连续最小值，证明变分式。
+
+为求分段，先观察 $R\le\theta$ 时取 $x=\theta$ 就得到零，且所有项非负。再设 $R>\theta$。在内部 $0<x<1$，
+$$
+\frac{\partial}{\partial x}D_{\mathrm B}(x\|\theta)
+=\ln\frac{x(1-\theta)}{\theta(1-x)}.
+\tag{249.29}
+$$
+减去 $x\ln2$ 后，唯一驻点为 $x=\theta'$；该函数严格凸，驻点即其全局最小点。
+
+当 $\theta<R\le\theta'$，$x\ge R$ 区间内相对熵在 $R$ 处最小；$x\le R$ 区间内 $D_{\mathrm B}(x\|\theta)-x\ln2$ 递减，也在 $R$ 处最小。故最优点为 $x=R$，值为 $D_{\mathrm B}(R\|\theta)$。
+
+当 $R\ge\theta'$，在惩罚区间内取 $x=\theta'$ 已达到最小值。恒等式
+$$
+D_{\mathrm B}(x\|\theta)-x\ln2
+=D_{\mathrm B}(x\|\theta')-\ln(1+\theta)
+\tag{249.30}
+$$
+给出该值为 $R\ln2-\ln(1+\theta)$。若 $R\le1$，无惩罚区间 $x\ge R$ 的最小值为 $D_{\mathrm B}(R\|\theta)$；将其写成 $R\ln2+[D_{\mathrm B}(R\|\theta)-R\ln2]$，方括号内不小于该严格凸函数在 $\theta'$ 处的值，所以不会得到更低结果。若 $R>1$，整个 $[0,1]$ 都属于惩罚区间，同一结论仍成立。
+
+在 $R=\theta$ 处相对熵为零，在 $R=\theta'$ 处由（249.30）两式相等，故分段连续。$\square$
+
+### 249.6 低于均值的实际成功与临界边界
+
+指数为零本身不说明成功概率趋于一。对严格低于均值的输出率 $R<\theta$，可以另外直接检验：$K<\lceil nR\rceil$ 蕴含 $K/n<R$，而
+$$
+\mathbb E(K/n)=\theta,\qquad
+\operatorname{Var}(K/n)=\frac{\theta(1-\theta)}n.
+$$
+因此 Chebyshev 不等式给
+$$
+1-P_{\mathrm{exact}}(n,k_n)
+\le\frac{\theta(1-\theta)}{n(\theta-R)^2}
+\longrightarrow0.
+\tag{249.31}
+$$
+所以 $R<\theta$ 时精确带标记成功概率趋于一，无条件最佳重叠也趋于一。
+
+若 $R>\theta$，式（249.24）的指数严格为正，故连无条件最佳重叠 $F_{n,k_n}$ 都趋于零，精确成功概率也不超过它。临界 $R=\theta$ 在本节只得到指数零，不据此宣称精确成功概率趋于一。所有渐近结论都建立在逐个有限 $n$ 已经完成的协议全局优化上。
+
+### 249.7 共同来源、记录与操作范围
+
+独立复本指同一份已声明源态的实际张量积 $\Omega^{\otimes n}$。真实旗标模式及其独立分布来自这份共同实现，没有把若干分别可达的最优值拼作同一源。每份源态允许有额外参考因子和产品方向标签，§248的本地解码已将它们统一纳入。
+
+本节处理输入资源的 Bell 抽取与输出重叠，不是在计算 $n$ 次原记录通道的 diamond 距离。协议允许的经典通信和本地存储属于 LOCC 操作合同；这没有改写§247对初始总参考边缘熵的计量，也不能据此将初态中可读取的旗标当成零维旁路。
+
+结果限定于已知源态、独立复本、无额外共享纠缠或催化剂、有限轮本地操作，以及明确的精确成功或无条件重叠目标。它不提供一般混合态蒸馏的通式，也不把源态产额、形成纠缠均值、原始记录量或物理时间视为同一指标。标准 Schmidt 秩重叠界与类型界只作工具；本节不据这些组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
