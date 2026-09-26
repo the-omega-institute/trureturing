@@ -52,9 +52,7 @@ existence of a recovery function alone gives no algorithm or cost bound.
 Bring a question that matters to you. In an installed **Claude Code or Codex**
 with a local workspace and Git, paste this one sentence:
 
-```text
-Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
-```
+> Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
 
 The [agent and skills guide](docs/CONTRIBUTING.md#use-claude-code-or-codex)
 explains how to begin with either client and turn an exploration into a
@@ -123,10 +121,10 @@ precisely which directions the local description omits.
 [Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
 
 **03 · Build a result that holds beyond the examples.**
-Write a natural number as its unique sum of nonadjacent Fibonacci weights
-`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
-golden ratio, and call the resulting real value β(n). How far does this
-coordinate fail to preserve addition?
+Write a natural number n as its unique sum of nonadjacent Fibonacci weights
+`F₂ = 1, F₃ = 2, F₄ = 3, …`. Replace each weight Fᵢ by φⁱ, where φ is the
+golden ratio, to obtain β(n). How far does this coordinate fail to preserve
+addition?
 
 $$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
 
