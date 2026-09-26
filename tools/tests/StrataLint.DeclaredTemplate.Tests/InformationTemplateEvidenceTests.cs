@@ -85,6 +85,61 @@ public sealed class InformationTemplateEvidenceTests
         return wire;
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void explicit_source_operands_preserve_strict_scope_shape(bool predicate)
+    {
+        var wire = SourceWire();
+        var binding = wire["records"]![0]!["certificate"]!["source_binding"]!;
+        binding["coordinates"] = new JsonArray();
+        binding["coordinate_paths"] = new JsonArray();
+        var readout = binding["readouts"]![0]!;
+        readout["scope_size"] = 0;
+        readout["scope_paths"] = new JsonArray();
+        readout["state_binder"] = 0;
+        if (predicate)
+        {
+            readout["state_operand"] = new JsonArray("fn", "arg");
+            readout["boolean_predicate"] = true;
+        }
+        else readout["function_operand"] = true;
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        Assert.True(Assert.Single(Read().Records).HasFourSlots);
+        readout["state_binder"] = 1;
+        Assert.Throws<FormatException>(() => Read());
+        readout["state_binder"] = 0;
+        if (predicate) readout["state_operand"] = new JsonArray("body");
+        else readout["function_operand"] = false;
+        Assert.Throws<FormatException>(() => Read());
+    }
+
+    [Fact]
+    public void finite_source_projection_requires_all_source_and_projection_dependencies()
+    {
+        var wire = SourceWire();
+        var certificate = wire["records"]![0]!["certificate"]!;
+        var family = ModuleA + ".familyArena";
+        var bridge = ModuleA + ".legacyBridge";
+        certificate["source_binding"]!["finite_projection"] = JsonSerializer.SerializeToNode(new {
+            family_arena = family, bridge });
+        certificate["extraction_inputs"] = JsonSerializer.SerializeToNode(new[] {
+                family, bridge, Key.Theorem, Realization, Key.ObjectArena }
+            .Select(name => new { name, owner = ModuleA, type_identity = Hash(name), body_identity = "" }));
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        Assert.Equal(5, Assert.Single(Read().Records).SourceProjectionOwners!.Count);
+        var arenaDependency = certificate["extraction_inputs"]![4]!.DeepClone();
+        certificate["extraction_inputs"]!.AsArray().RemoveAt(4);
+        Assert.Throws<FormatException>(() => Read());
+        certificate["extraction_inputs"]!.AsArray().Add(arenaDependency);
+        certificate["extraction_inputs"]!.AsArray().RemoveAt(1);
+        Assert.Throws<FormatException>(() => Read());
+        certificate["source_binding"]!["finite_projection"]!["bridge"] = Key.Theorem;
+        Assert.Throws<FormatException>(() => Read());
+    }
+
     [Fact]
     public void source_bound_complete_telescope_wire_accepted()
     {

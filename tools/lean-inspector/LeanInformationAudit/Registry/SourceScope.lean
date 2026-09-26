@@ -106,6 +106,15 @@ def atPath (source : Expr) (path : Array String) : M (Array SourceBinder × Expr
       | _, _ => throwError "unclassified_form:source.absent_occurrence"
   return (context, e)
 
+/-- Replace one explicit raw occurrence, without entering definitions or binders. -/
+partial def replaceAt (e : Expr) (path : List String) (value : Expr) : M Expr := do
+  debit
+  match path, e with
+  | [], _ => return value
+  | "fn" :: rest, .app f a => return .app (← replaceAt f rest value) a
+  | "arg" :: rest, .app f a => return .app f (← replaceAt a rest value)
+  | _, _ => throwError "unclassified_form:source.state_operand_path"
+
 partial def inContext (context : Array SourceBinder) (k : Array Expr → M α)
     (i : Nat := 0) (locals : Array Expr := #[]) : M α := do
   debit
@@ -123,6 +132,8 @@ structure ReadoutScope where
   state : Expr
   output : Expr
   projected : Expr
+  rawContext : Array SourceBinder := #[]
+  rawObservation : Expr := default
 
 structure DefinitionEntry where
   path : Array String
@@ -235,6 +246,54 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     coordinates := coordinates.push { b with domain }
     previous := some i
   let readouts ← (selection.readouts.zip occurrences).mapM fun (selected, context, observation) => do
+    if selected.functionOperand || selected.stateOperand.isSome then
+      unless selected.stateBinder == 0 && !(selected.functionOperand && selected.stateOperand.isSome) &&
+          !(selected.functionOperand && selected.booleanPredicate) do
+        throwError "unclassified_form:source.operand_mode"
+      let (state, body) ← inContext context fun locals => do
+        let term := observation.instantiateRev locals
+        if selected.functionOperand then
+          let .forallE _ domain output .default := (← inferType term)
+            | throwError "unclassified_form:source.function_operand"
+          unless !output.hasLooseBVars && !(← isProp domain) && !(← isType term) do
+            throwError "unclassified_form:source.function_operand"
+          let typeArgument ← withLocalDeclD `state domain fun state => isType state
+          if typeArgument then throwError "unclassified_form:source.function_operand"
+          return (domain.abstract locals, mkApp (observation.liftLooseBVars 0 1) (.bvar 0))
+        else
+          let path := selected.stateOperand.get!
+          unless !path.isEmpty && path.size ≤ 256 do
+            throwError "unclassified_form:source.state_operand_path"
+          let (inside, operand) ← atPath observation path
+          unless inside.isEmpty do throwError "unclassified_form:source.state_operand_scope"
+          let operand := operand.instantiateRev locals
+          unless !(← isProof operand) && !(← isType operand) do
+            throwError "unclassified_form:source.state_operand_data"
+          let state ← inferType operand
+          let body ← replaceAt (observation.liftLooseBVars 0 1) path.toList (.bvar 0)
+          return (state.abstract locals, body)
+      let extended := context.push {name := `state, info := .default, domain := state}
+      let body ← if selected.booleanPredicate then
+          inContext extended fun locals => do
+            let term := body.instantiateRev locals
+            unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
+            return (← mkDecide term).abstract locals
+        else pure body
+      let output ← inContext extended fun locals => do
+        let term := body.instantiateRev locals
+        unless !(← isProof term) && !(← isType term) do
+          throwError "unclassified_form:source.observation_data"
+        return (← inferType term).abstract locals
+      let state ← transport context slots state
+      let output ← transport extended slots output
+      let projected ← transport extended (slots.push context.size) body
+      return {
+        context := extended
+        observation := body
+        state, output, projected
+        rawContext := context
+        rawObservation := observation : ReadoutScope }
+    if selected.booleanPredicate then throwError "unclassified_form:source.operand_mode"
     unless selected.stateBinder < context.size && slots.all (· < selected.stateBinder) do
       throwError "unclassified_form:source.state_binder"
     let stateBinder := context[selected.stateBinder]!
@@ -247,10 +306,18 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     let output ← transport context slots output
     let state ← transport (context.extract 0 selected.stateBinder) slots stateBinder.domain
     let projected ← transport context (slots.push selected.stateBinder) observation
-    return { context, observation, state, output, projected : ReadoutScope }
+    return { context, observation, state, output, projected, rawContext := context, rawObservation := observation : ReadoutScope }
+  let mut reconstructedSource := source
+  for (selected, context, observation) in selection.readouts.zip occurrences do
+    if selected.booleanPredicate then
+      let reified ← inContext context fun locals => do
+        let term := observation.instantiateRev locals
+        unless ← isProp term do throwError "unclassified_form:source.boolean_predicate"
+        return (← mkEq (← mkDecide term) (mkConst ``Bool.true)).abstract locals
+      reconstructedSource ← replaceAt reconstructedSource selected.path.toList reified
   return {
     source := info.type
-    expanded := source
+    expanded := reconstructedSource
     definition := definition
     levels := info.levelParams
     selection := selection

@@ -90,6 +90,7 @@ internal static class InformationTemplateEvidence
             string? reference = null;
             string? sourceOwner = null;
             string? sourceDefinitionName = null;
+            ImmutableDictionary<string, string>? projectionOwners = null;
             if (state == InformationTemplateBindingState.DeclaredValidated)
             {
                 var fields = new[] { "key", "evidence_ref", "plan_identity", "descriptor_identity",
@@ -109,7 +110,7 @@ internal static class InformationTemplateEvidence
                 {
                     (sourceOwner, sourceDefinitionName) = CheckSourceBinding(
                         certificate.GetProperty("source_binding"), key, statement);
-                    CheckDefinitionDependency(certificate, key, realization, sourceDefinitionName);
+                    projectionOwners = CheckDefinitionDependency(certificate, key, realization, sourceDefinitionName);
                     if (escapeFrom is null || escapeFrom.Name != key.Theorem
                         || escapeFrom.TypeIdentity != statement
                         || escapeFrom.ObjectIdentity != HashField(certificate, "actual_identity")
@@ -133,7 +134,7 @@ internal static class InformationTemplateEvidence
                     throw new FormatException("DTR-Evidence: binding owner/diagnostic is missing or wrong");
             }
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
-                escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName));
+                escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName, projectionOwners));
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered);
     }
@@ -143,8 +144,17 @@ internal static class InformationTemplateEvidence
     {
         string[] fields = ["source_owner", "source_name", "source_type_identity",
             "telescope_size", "level_count", "coordinates", "coordinate_paths", "readouts", "registration_identity"];
-        InformationTemplateJson.Fields(value, value.TryGetProperty("definition_entry", out _)
-            ? [.. fields, "definition_entry"] : fields);
+        InformationTemplateJson.Fields(value, [.. fields,
+            .. value.TryGetProperty("definition_entry", out _) ? new[] { "definition_entry" } : [],
+            .. value.TryGetProperty("finite_projection", out _) ? new[] { "finite_projection" } : []]);
+        if (value.TryGetProperty("finite_projection", out var projection))
+        {
+            InformationTemplateJson.Fields(projection, "family_arena", "bridge");
+            var family = InformationTemplateJson.Name(InformationTemplateJson.String(projection, "family_arena"));
+            var bridge = InformationTemplateJson.Name(InformationTemplateJson.String(projection, "bridge"));
+            if (family == key.ObjectArena || family == bridge || bridge == key.Theorem)
+                throw new FormatException("DTR-Evidence: invalid finite source projection");
+        }
         var owner = InformationTemplateJson.Name(InformationTemplateJson.String(value, "source_owner"));
         if (!owner.StartsWith("D5.", StringComparison.Ordinal)
             || InformationTemplateJson.String(value, "source_name") != key.Theorem
@@ -189,10 +199,22 @@ internal static class InformationTemplateEvidence
         var paths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var readout in readouts)
         {
-            InformationTemplateJson.Fields(readout, "path", "state_binder", "scope_size", "scope_paths", "occurrence_identity");
+            var function = readout.TryGetProperty("function_operand", out var functionValue);
+            var operand = readout.TryGetProperty("state_operand", out var operandValue);
+            string[] readoutFields = ["path", "state_binder", "scope_size", "scope_paths", "occurrence_identity"];
+            InformationTemplateJson.Fields(readout, function ? [.. readoutFields, "function_operand"] : operand
+                ? [.. readoutFields, "state_operand", "boolean_predicate"] : readoutFields);
+            if (function && functionValue.ValueKind != JsonValueKind.True)
+                throw new FormatException("DTR-Evidence: invalid function operand mode");
+            if (operand)
+            {
+                if (Path(operandValue).Any(step => step is not ("fn" or "arg"))
+                    || readout.GetProperty("boolean_predicate").ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                    throw new FormatException("DTR-Evidence: invalid state operand abstraction");
+            }
             var scope = Bounded(readout.GetProperty("scope_size"), 256);
             var binder = Bounded(readout.GetProperty("state_binder"), 255);
-            if (binder >= scope || binder <= previous)
+            if (function || operand ? binder != 0 || previous >= scope : binder >= scope || binder <= previous)
                 throw new FormatException("DTR-Evidence: source state scope");
             HashField(readout, "occurrence_identity");
             var path = Path(readout.GetProperty("path"));
@@ -242,22 +264,48 @@ internal static class InformationTemplateEvidence
         return (owner, definitionName);
     }
 
-    private static void CheckDefinitionDependency(JsonElement certificate, InformationOccurrenceKey key,
+    private static ImmutableDictionary<string, string>? CheckDefinitionDependency(JsonElement certificate, InformationOccurrenceKey key,
         string realization, string? definitionName)
     {
+        var binding = certificate.GetProperty("source_binding");
+        var projectionOwners = ImmutableDictionary.CreateBuilder<string, string>();
+        if (binding.TryGetProperty("finite_projection", out var projection))
+        {
+            foreach (var field in new[] { "family_arena", "bridge" })
+            {
+                var name = InformationTemplateJson.String(projection, field);
+                var matches = Array(certificate, "extraction_inputs")
+                    .Where(input => InformationTemplateJson.String(input, "name") == name).ToArray();
+                if (matches.Length != 1 || name == realization || name == key.ObjectArena || name == key.Theorem)
+                    throw new FormatException("DTR-Evidence: missing finite projection dependency");
+                projectionOwners.Add(name, InformationTemplateJson.String(matches[0], "owner"));
+            }
+            // The finite arena now contributes source provenance. Require its
+            // exact dependency, as well as the original source and realization.
+            foreach (var name in new[] { key.Theorem, realization, key.ObjectArena })
+            {
+                var matches = Array(certificate, "extraction_inputs")
+                    .Where(input => InformationTemplateJson.String(input, "name") == name).ToArray();
+                if (matches.Length != 1)
+                    throw new FormatException("DTR-Evidence: missing finite source dependency");
+                projectionOwners.Add(name, InformationTemplateJson.String(matches[0], "owner"));
+            }
+        }
         var extra = Array(certificate, "extraction_inputs").Where(input =>
             InformationTemplateJson.String(input, "name") is var name
-                && name != key.Theorem && name != realization && name != key.ObjectArena).ToArray();
+                && name != key.Theorem && name != realization && name != key.ObjectArena
+                && !projectionOwners.ContainsKey(name)).ToArray();
         if (definitionName is null)
         {
             if (extra.Length != 0) throw new FormatException("DTR-Evidence: missing source definition entry");
-            return;
+            return projectionOwners.Count == 0 ? null : projectionOwners.ToImmutable();
         }
         var definition = certificate.GetProperty("source_binding").GetProperty("definition_entry");
         if (extra.Length != 1 || new[] { "name", "owner", "type_identity", "body_identity" }
                 .Any(field => InformationTemplateJson.String(extra[0], field)
                     != InformationTemplateJson.String(definition, field)))
             throw new FormatException("DTR-Evidence: source definition dependency differs from entry");
+        return projectionOwners.Count == 0 ? null : projectionOwners.ToImmutable();
     }
 
     private static InformationEscapeFrom? ReadEscapeFrom(JsonElement value)
@@ -358,6 +406,15 @@ internal static class InformationTemplateEvidence
                         throw new FormatException("DTR-Evidence: source definition owner is missing or ambiguous");
                 }
             }
+            if (original.SourceProjectionOwners is { } projectionOwners)
+                foreach (var (name, owner) in projectionOwners)
+                {
+                    var matches = realizationOwners.Where(path => report.Files[path].Declarations
+                        .Any(declaration => declaration.Name == name)).ToArray();
+                    if (matches.Length != 1 || ModuleForSource(matches[0].Value) != owner
+                        || report.Files[matches[0]].Declarations.Count(declaration => declaration.Name == name) != 1)
+                        throw new FormatException("DTR-Evidence: finite projection owner missing or ambiguous");
+                }
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory declaration claim");
             var selected = declared.SingleOrDefault() ?? original;

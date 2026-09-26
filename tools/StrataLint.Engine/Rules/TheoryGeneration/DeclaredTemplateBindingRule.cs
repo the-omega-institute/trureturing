@@ -27,7 +27,8 @@ internal sealed record InformationTemplateOccurrence(
     InformationEscapeContinuation? EscapeContinues = null,
     string BridgeKind = "legacy",
     string? SourceOwner = null,
-    string? SourceDefinitionName = null)
+    string? SourceDefinitionName = null,
+    ImmutableDictionary<string, string>? SourceProjectionOwners = null)
 {
     internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
         && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;
