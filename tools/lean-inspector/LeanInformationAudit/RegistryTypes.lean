@@ -261,7 +261,7 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 9
+  compatibilityVersion : Nat := 10
   compiler : String
   toolchain : String
   name : Name
@@ -269,6 +269,7 @@ structure TemplatePlanData where
   enrollmentOwner : Name
   levelParams : List Name
   slots : Array Slot
+  sourceBound : Bool := false
   constructorTypes : Array Name := #[]
   typeIdentity : String
   bodyIdentity : String
@@ -512,8 +513,8 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v6"
-  for version in #[1, 1, 1, 9] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v7"
+  for version in #[1, 1, 1, 10] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
   let templateName ← name
@@ -538,6 +539,7 @@ private def payload : M TemplatePlanData := do
     unless bodyIdentity.isEmpty || (bodyIdentity.utf8ByteSize == 64 &&
         bodyIdentity.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f'))) do fail
     return { name := n, owner, typeIdentity, bodyIdentity : DependencyIdentity }
+  let sourceBound ← boolean
   let constructorTypes ← sequence 4096 name
   let rules ← sequence 4096 token
   let work ← token false
@@ -548,7 +550,7 @@ private def payload : M TemplatePlanData := do
   return {
     compiler, toolchain, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
-    dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
+    dependencies, sourceBound, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 
 /-- Pure decoding cannot confer enrollment authority. The private persistent
 extension checks frame identity and actual imported ownership around this call. -/

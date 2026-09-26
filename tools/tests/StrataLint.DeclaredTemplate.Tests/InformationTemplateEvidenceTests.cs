@@ -65,6 +65,96 @@ public sealed class InformationTemplateEvidenceTests
             } },
         });
 
+    private static System.Text.Json.Nodes.JsonObject SourceWire()
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire(declared: true))!.AsObject();
+        var row = wire["records"]![0]!;
+        row["bridge_kind"] = "source-equivalence";
+        row["escape_from"] = JsonSerializer.SerializeToNode(new {
+            name = Key.Theorem, type_identity = Hash("fixture statement A"), object_identity = Hash("fixture actual") });
+        row["certificate"]!["source_binding"] = JsonSerializer.SerializeToNode(new {
+            source_owner = "D5.S0.Carrier.Probe", source_name = Key.Theorem,
+            source_type_identity = Hash("fixture statement A"), telescope_size = 13, level_count = 2,
+            coordinates = new[] { 0, 1, 11 }, registration_identity = Hash("fixture registration"),
+            readouts = new[] { new { path = Enumerable.Repeat("body", 13).Concat(new[] { "arg", "body" }).ToArray(),
+                state_binder = 16, scope_size = 17, occurrence_identity = Hash("fixture original projection") } } });
+        return wire;
+    }
+
+    [Fact]
+    public void source_bound_complete_telescope_wire_accepted()
+    {
+        var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(SourceWire()),
+            PathA, Snapshot((PathA, TextA)));
+        var row = Assert.Single(evidence.Records);
+        Assert.True(row.HasFourSlots);
+        Assert.Equal("D5.S0.Carrier.Probe", row.SourceOwner);
+    }
+
+    [Theory]
+    [InlineData(false, false, true)]
+    [InlineData(true, false, false)]
+    [InlineData(false, true, false)]
+    public void source_theorem_owner_is_joined_through_actual_imports(bool wrongOwner, bool absentImport, bool accepted)
+    {
+        const string sourcePath = "D5/S0/Carrier/Probe.lean";
+        var snapshot = Snapshot((PathA, TextA), (sourcePath, "-- source fixture\n"));
+        var wire = SourceWire();
+        if (wrongOwner) wire["records"]![0]!["certificate"]!["source_binding"]!["source_owner"] = "D5.Other";
+        var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
+        var module = Module(evidence) with { Imports = absentImport ? [] : ["D5.S0.Carrier.Probe"] };
+        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> {
+            [PathA] = module, [sourcePath] = new([], [new(Key.Theorem, "theorem", "source fixture statement", [])]) });
+        if (accepted) Assert.Single(Collect(snapshot, report).Inventory);
+        else Assert.Throws<FormatException>(() => Collect(snapshot, report));
+    }
+
+    [Theory]
+    [InlineData("source_name")]
+    [InlineData("source_type_identity")]
+    [InlineData("source_owner")]
+    [InlineData("coordinates")]
+    [InlineData("telescope_size")]
+    [InlineData("level_count")]
+    [InlineData("readouts")]
+    [InlineData("state_binder")]
+    [InlineData("path")]
+    [InlineData("registration_identity")]
+    [InlineData("missing")]
+    [InlineData("residual")]
+    public void source_bound_corrupt_scope_is_rejected(string field)
+    {
+        var wire = SourceWire();
+        var row = wire["records"]![0]!;
+        var source = row["certificate"]!["source_binding"]!;
+        switch (field)
+        {
+            case "source_name": source[field] = "D5.other"; break;
+            case "source_type_identity": source[field] = Hash("stale statement"); break;
+            case "source_owner": source[field] = "Reg.WrongOwner"; break;
+            case "coordinates": source[field] = JsonSerializer.SerializeToNode(new[] { 0, 11, 1 }); break;
+            case "telescope_size": source[field] = 11; break;
+            case "level_count": source[field] = 65; break;
+            case "readouts": source[field] = new System.Text.Json.Nodes.JsonArray(); break;
+            case "state_binder": source["readouts"]![0]![field] = 17; break;
+            case "path": source["readouts"]![0]![field] = JsonSerializer.SerializeToNode(new[] { "normalize" }); break;
+            case "registration_identity": source[field] = "missing"; break;
+            case "missing": row["certificate"]!.AsObject().Remove("source_binding"); break;
+            case "residual": row["escape_continues"] = null; break;
+        }
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire),
+            PathA, Snapshot((PathA, TextA))));
+    }
+
+    [Fact]
+    public void source_binding_cannot_be_attached_to_a_legacy_certificate()
+    {
+        var wire = SourceWire();
+        wire["records"]![0]!["bridge_kind"] = "legacy";
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire),
+            PathA, Snapshot((PathA, TextA))));
+    }
+
     private static LeanFileReport Module(InformationTemplateModuleEvidence evidence, bool foreignClaim = false) =>
         new(foreignClaim ? [ModuleA] : [], foreignClaim ? [] :
             [new(Unit, "def", "fixture unit", []), new(Realization, "def", "fixture realization", [])])

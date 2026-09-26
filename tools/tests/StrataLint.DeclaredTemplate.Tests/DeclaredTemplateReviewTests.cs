@@ -30,7 +30,7 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void manifest_only_bump_accepts_nine()
+    public void manifest_only_bump_accepts_current_version()
     {
         var files = Files();
         var error = Record.Exception(() =>
@@ -38,7 +38,7 @@ public sealed class DeclaredTemplateReviewTests
             var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
             Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
         });
-        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_nine: " + error?.Message);
+        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_current_version: " + error?.Message);
     }
 
     private static Exception? ReadChangedManifest(string? manifest, int compatibility)
@@ -88,12 +88,12 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void current_manifest_rejects_immediate_predecessor_eight()
+    public void current_manifest_rejects_immediate_predecessor_nine()
     {
         var manifest = InformationTemplateFixture.PolicyFiles()["lean-report-inputs.json"];
-        var error = ReadChangedManifest(manifest, 8);
+        var error = ReadChangedManifest(manifest, 9);
         Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
-            "[FAIL] current_manifest_rejects_immediate_predecessor_eight: " + error?.Message);
+            "[FAIL] current_manifest_rejects_immediate_predecessor_nine: " + error?.Message);
     }
 
     [Theory]
