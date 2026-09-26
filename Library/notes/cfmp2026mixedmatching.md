@@ -382,3 +382,129 @@ they are not kernel proofs, independent review or CI/Scribe/Freeze receipts.
 The general multiple-occurrence capacity problem and unrestricted CFMP
 remain unresolved by this increment. Bounded source searches do not prove
 worldwide novelty of the new estimates or theorem.
+
+## Continuation on 2026-09-26: Sections 81–87
+
+Baseline `478f655d82e0aaff36f8a1f770544b2a36dd6f29` and its Sections 75–80
+are retained. The current increment reuses their stronger coupled endpoint
+bound and angular capacity, rather than duplicating the older separate-end
+estimate in the preceding PR research comment. All results below are written
+proofs pending independent review, with no new formal certification.
+
+### Strict exposed-edge budget and a necessary small-area corner
+
+For the entire nonempty flat set F, let f=|F|, m_e count pi slots and n_e
+count all flat slots at an actual global edge. Set x_e=cosh(ell_e)>1 and
+X={e:m_e=1, n_e in {1,2}}. The original Section 50 flat Cauchy inequality
+and Section 61 occurrence budget now give the strict shifted product
+
+`product_(e in X) ((x_e-1)^2 / x_e^(n_e-1)) > 16^f`.
+
+The strictness comes from a positive omitted-edge remainder, proved using
+sum m_e=2f and sum n_e=6f. A component-relative count is not substituted
+for the entire-flat-set count. Some exposed edge must therefore have x_e>3.
+This uses no role balance, colouring or length equality.
+
+Combining the shared-length bound with a genuine target angle at most pi/g_e
+forces one actual genuine endpoint sum above
+
+`Phi_3(pi/g_e)`, where `Phi_B(t)=t+acos(sin(t)/sqrt((B-1)/2)-cos(t))`.
+
+Here g_e>=4, so the sum exceeds 3pi/4 and its genuine truncated triangle
+has area less than pi/4 in curvature -1. With one flat occurrence g_e>=5,
+and the threshold exceeds 138.781389 degrees. This is a necessary
+configuration, not yet a universal contradiction. The initial angle
+assignment's caps cannot be transferred to the maximizer without proof.
+The explicit surviving local six-star has r=4,t=5, one flat opposite
+value 103/3, and five genuine opposite values (147-53sqrt(5))/12. Its
+large corner sum is about 169.646598 degrees. Exterior faces and other
+edge equations remain uncompleted, so it is not a CFMP counterexample.
+
+### Length-weighted capacity
+
+For B>=3, set Theta_B=acos((3-B)/(B+1)) and c_B=pi/Theta_B.
+A genuine target edge with cosh length at least B must satisfy
+
+`c_B*theta + a+b+c+d > pi`.
+
+The proof uses the existing coupled bound and the concavity of
+`acos(2/(B-1)-(1+2/(B-1))*cos(theta))` on its explicit domain.
+Summing over genuine occurrences yields
+
+`g_e < c_B*(2-m_e)+sum_f mu_e(f)*(2-m_f)`.
+
+Multiplicity mu is retained. For B=3 this recovers the previous condition;
+for B=7 the target coefficient becomes 3/2. An improved real bound need
+not change every integer candidate's rounded capacity.
+
+### Bounded-multiplicity realization and an actual new packet
+
+The new theorem requires exactly three global labels U,V,H, minimum degree
+six and the original genus-at-least-two boundary hypotheses. For some
+r in {1,2,3}, each tetrahedron has at most one U slot, at most r V slots,
+and at least three H slots. The sufficient degree threshold is
+
+`d(V)>=5r+1`.
+
+The r=1 case recovers the previous two-singleton theorem. For r=2, the H
+quota is automatic and d(V)>=11 suffices. For r=3, the H quota remains an
+explicit additional hypothesis, and the threshold is 16. No optimality of
+these thresholds is asserted.
+
+The proof first leaves at most two flats, then excludes all saturated
+labels and leaves at most one. At a selected non-H pi label with local
+multiplicity r_e, the genuine target-angle mass is pi and other genuine
+mass is 3pi. Longness would require
+
+`g_e*pi < 2*pi+(r_e-1)*pi+3*r_e*pi=(4*r_e+1)*pi`.
+
+The degree and flat-multiplicity bounds give the reverse inequality. The
+selected non-H cosh length is below three. The flat U,V pair then violates
+the product threshold; a flat e,H pair has at least two H zero slots and
+requires `(x_e-1)*(s-1)>4s`, incompatible with x_e<3. Thus every flat is
+excluded without averaging.
+
+Section 86 supplies all 22 face pairings of an actual eleven-tetrahedron
+packet of degrees (6,12,48), with one genus-nine vertex link. V occurs
+twice in four tetrahedra, including adjacent pairs; the previous two
+singleton condition does not apply. There are six vertex-relabelled local
+types, with the all-H type appearing only once. No census or worldwide
+homeomorphism-type novelty is claimed. The metric lifts to connected cyclic
+covers with 11n tetrahedra, 3n edges and Euler characteristic -8n; the
+three-edge theorem is not falsely reapplied to their larger edge sets.
+
+### Primary inputs and executed checks
+
+Frigerio–Moraschini arXiv:1801.05326v3, printed page 6, and Luo–Yang
+arXiv:1404.5365v2, printed pages 21–22, were inspected as page images in
+this increment. They supply the inverse formula, positive-angle domain,
+maximizer and common-length inputs. The existing Sections 76–77 are
+credited repository inputs. These checks do not establish exhaustive
+literature coverage or mathematical priority. The other source-reading
+records above retain their original historical attribution.
+
+The independent standard-library script is
+`docs/develop/theory/cfmp_exposed_corner_check.py`.
+The exact executed script blob is
+`de2f65c74fc2a324cfb86ef2fb5e3cc29bfeb5c5`.
+It performs 24000 edge comparisons on 4000 nonsymmetric genuine vectors,
+including 854 obtuse targets, 10119 cases with a cap above pi/2, and 1520
+length-weighted demand checks. The independent angle round-trip error is
+at most 1.724714121520421e-13. It also checks 1000 abstract occurrence
+identities, three sharp sequences, four threshold sequences, 999
+complementary-cap identities and the explicit surviving local star.
+
+The packet checks verify all face slots, odd permutations, connectedness,
+actual edge classes, ordered endpoint first returns and six independent
+link-vertex fans of sizes (6,6,12,12,48,48). Link counts are (6,66,44),
+and the exact maximum normalized initial corner sum is 13/24. The 528
+flat candidates after the proved f<=2 reduction are exhausted: 512 fail
+saturation consistency and 16 satisfy the capacity exclusion. These
+finite checks support the fixed example; the continuous estimates and
+unbounded realization theorem depend on the written proofs.
+
+The earlier checker and Scribe document, Lean sources and formal-status
+files are unchanged by this increment. No new CI, Lean build, Scribe
+projection, Freeze or independent-review approval is claimed. Larger flat
+supports, general repeated-label incidence, unrestricted CFMP and torus-end
+completeness remain outside the proved scope.
