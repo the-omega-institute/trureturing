@@ -329,7 +329,7 @@ def main():
             'scope':'finite regression tests, not a universal proof or Lean certificate',
             'sentinel':'ALL_SFT_PROFILE_AND_PATH_CLOSURE_CHECKS_PASSED'}
     report['script_sha256']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-    (HERE/'verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+    (HERE/'verification-summary.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(report,ensure_ascii=False,indent=2))
 
 if __name__=='__main__':main()

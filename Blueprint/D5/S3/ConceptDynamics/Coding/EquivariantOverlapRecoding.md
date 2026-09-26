@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The boundary transfer supplies an equivariant conjugacy of the two skew-product dynamics.
+The boundary transfer induces a homeomorphism of the associated skew-product path spaces.
 
 **Definition 1.1 (Construct the skew-product homeomorphism).**
 

@@ -39,10 +39,9 @@ internal sealed class CountedGroupOverlapDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "join_split"), H("Recover the original labelled edge"),
                 StatementSource.FromAuthor(Disp(All(Equal(
                     Call("join", U, V, Call("first", Call("split", U, V, F.Id("a"))),
-                        Call("second", Call("split", U, V, F.Id("a"))),
-                        Call("splitBoundary", U, V, F.Id("a"))), F.Id("a")),
+                        Call("second", Call("split", U, V, F.Id("a")))), F.Id("a")),
                     B("a", Call("Edge", UV))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The inverse total-label fiber equivalence recovers the original outside endpoints, total label and parallel-edge number."))),
+                Blocks(Paragraph(Text("The split half-edges have matching middle endpoints; their equality proof is implicit in the displayed join. The inverse total-label fiber equivalence recovers the original outside endpoints, total label and parallel-edge number."))),
                 DescribeRole.Theorem))));
 }

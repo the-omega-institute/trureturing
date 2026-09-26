@@ -18,7 +18,7 @@ The product edge number is the lexicographic rank of its middle vertex and both 
 
 **Theorem 1.2 (Recover the original matrix edge).**
 
-$$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, n\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{splitBoundary}\left(U, V, a\right)\right) = a$$
+$$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), V \in \operatorname{CountMat}\left(m, n\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right)\right) = a$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedMatrixOverlap.join_split` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), 
 
 *Commentary.*
 
-The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions.
+The two split half-edges have matching middle endpoints; their equality proof is implicit in the displayed join. The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions.
 
 ## References
 

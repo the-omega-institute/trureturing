@@ -1787,6 +1787,11 @@ private theorem square_exchange_chain_one
   rw [hprodA, hprodB]
   exact ⟨ExchangeChain.cons P' D' (ExchangeChain.nil _)⟩
 
+end CompatibleCertificate
+
+variable {n k m : ℕ} {A : CountMat n n} {B : CountMat k k}
+  {R : CountMat n k} {S : CountMat k n}
+
 /-- A compatible numbered certificate produces a strong-shift-equivalence
     chain with a linear length bound from its positive lag. -/
 theorem compatible_exchange_chain_bound
@@ -1794,14 +1799,75 @@ theorem compatible_exchange_chain_bound
     Nonempty (ExchangeChain ℕ A B (2 * m - 1)) := by
   by_cases h : m = 1
   · subst m
-    simpa using c.square_exchange_chain_one
+    simpa using CompatibleCertificate.square_exchange_chain_one c
   · have hm : 2 ≤ m := by
       have hpos := c.positiveLag
       omega
-    exact c.square_exchange_chain_ge_two hm
+    exact CompatibleCertificate.square_exchange_chain_ge_two c hm
+
+private abbrev unitCountMatrix : CountMat 1 1 := fun _ _ => 1
+
+/-- A one-state numbered certificate realizes the lag-one exchange. -/
+example : Nonempty (ExchangeChain ℕ unitCountMatrix unitCountMatrix 1) := by
+  classical
+  let M := unitCountMatrix
+  have pairUnique (i j : Fin 1) (x y : EdgePair M M i j) : x = y := by
+    rcases x with ⟨u, a, b⟩
+    rcases y with ⟨v, c, d⟩
+    have huv : u = v := Subsingleton.elim _ _
+    subst v
+    have hac : a = c := Subsingleton.elim _ _
+    have hbd : b = d := Subsingleton.elim _ _
+    subst c
+    subst d
+    rfl
+  have pathUnique (i j : Fin 1) (x y : FinitePath M 1 i j) : x = y := by
+    cases x with
+    | cons a tail =>
+        cases tail with
+        | nil _ =>
+            cases y with
+            | cons b rest =>
+                cases rest with
+                | nil _ =>
+                    have hab : a = b := Subsingleton.elim _ _
+                    subst b
+                    rfl
+  have pathOne (i j : Fin 1) : FinitePath M 1 i j := by
+    have h : i = j := Subsingleton.elim _ _
+    subst j
+    exact .cons 0 (.nil i)
+  have pairOne (i j : Fin 1) : EdgePair M M i j := ⟨0, 0, 0⟩
+  let psi (i j : Fin 1) : EdgePair M M i j ≃ FinitePath M 1 i j :=
+    Equiv.ofBijective (fun _ => pathOne i j) ⟨
+      by intro x y _; exact pairUnique i j x y,
+      by intro y; exact ⟨pairOne i j, pathUnique i j _ y⟩⟩
+  have outputUnique (i z : Fin 1)
+      (x y : Σ t : Fin 1, Fin (M i t) × FinitePath M 1 t z) : x = y := by
+    rcases x with ⟨t, a, p⟩
+    rcases y with ⟨u, b, q⟩
+    have htu : t = u := Subsingleton.elim _ _
+    subst u
+    have hab : a = b := Subsingleton.elim _ _
+    subst b
+    have hpq : p = q := pathUnique t z p q
+    subst q
+    rfl
+  let c : CompatibleCertificate M M M M 1 := {
+    positiveLag := by omega
+    essentialA := ⟨by intro i; exact ⟨0, by simp [M, unitCountMatrix]⟩,
+      by intro j; exact ⟨0, by simp [M, unitCountMatrix]⟩⟩
+    essentialB := ⟨by intro i; exact ⟨0, by simp [M, unitCountMatrix]⟩,
+      by intro j; exact ⟨0, by simp [M, unitCountMatrix]⟩⟩
+    phi := fun _ _ => Equiv.refl _
+    psiA := psi
+    psiB := psi
+    compatible := by
+      intro i j z alpha r
+      exact outputUnique i z _ _
+  }
+  exact compatible_exchange_chain_bound c
 
 #print axioms compatible_exchange_chain_bound
-
-end CompatibleCertificate
 
 end D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting

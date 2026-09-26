@@ -16,19 +16,6 @@ $$\forall U \in Type, V \in Type, I \in Type, J \in Type, d \in \operatorname{Bo
 
 The preceding and current half-edges give an explicit inverse in both directions. Coordinate evaluation proves continuity on the legal-path subspaces.
 
-**Theorem 1.2 (The present edge alone is insufficient).**
-
-$$\neg \left(\exists f \in \operatorname{Prod}\left(Bool, Unit\right) \to \operatorname{Prod}\left(Unit, Bool\right),\; \forall x \in \operatorname{LeftPath}\left(binaryBoundary\right),\; f\left(\operatorname{value}\left(x\right)\left(0\right)\right) = \operatorname{value}\left(\operatorname{forward}\left(binaryBoundary, x\right)\right)\left(0\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/BipartiteOverlapConjugacy.no_present_only_recoder` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-In the one-vertex example with a binary first half-edge, two histories agree at zero and differ at one. Recoding distinguishes them at zero, so no function of the present input edge alone implements this code.
-
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/BipartiteOverlapConjugacy.no_present_only_recoder`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/BipartiteOverlapConjugacy.pathHomeomorph`

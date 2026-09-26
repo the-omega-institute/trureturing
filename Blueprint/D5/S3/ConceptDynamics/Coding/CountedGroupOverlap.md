@@ -18,7 +18,7 @@ The total-label fiber equivalence retains the middle vertex, both labels and bot
 
 **Theorem 1.2 (Recover the original labelled edge).**
 
-$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{splitBoundary}\left(U, V, a\right)\right) = a$$
+$$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \operatorname{Fintype}\left(H\right), n \in Nat, m \in Nat, U \in \operatorname{GroupMat}\left(H, n, m\right), V \in \operatorname{GroupMat}\left(H, m, n\right), a \in \operatorname{Edge}\left(\operatorname{product}\left(U, V\right)\right),\; \operatorname{join}\left(U, V, \operatorname{first}\left(\operatorname{split}\left(U, V, a\right)\right), \operatorname{second}\left(\operatorname{split}\left(U, V, a\right)\right)\right) = a$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedGroupOverlap.join_split` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\forall H \in Type, group \in \operatorname{Group}\left(H\right), finite \in \
 
 *Commentary.*
 
-The inverse total-label fiber equivalence recovers the original outside endpoints, total label and parallel-edge number.
+The split half-edges have matching middle endpoints; their equality proof is implicit in the displayed join. The inverse total-label fiber equivalence recovers the original outside endpoints, total label and parallel-edge number.
 
 ## References
 

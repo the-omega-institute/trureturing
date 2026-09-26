@@ -36,9 +36,8 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "join_split"), H("Recover the original matrix edge"),
                 StatementSource.FromAuthor(Disp(All(Equal(
                     Call("join", U, V, Call("first", Call("split", U, V, F.Id("a"))),
-                        Call("second", Call("split", U, V, F.Id("a"))),
-                        Call("splitBoundary", U, V, F.Id("a"))), F.Id("a")),
+                        Call("second", Call("split", U, V, F.Id("a")))), F.Id("a")),
                     B("a", Call("Edge", UV))))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
+                Blocks(Paragraph(Text("The two split half-edges have matching middle endpoints; their equality proof is implicit in the displayed join. The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
                 DescribeRole.Theorem))));
 }

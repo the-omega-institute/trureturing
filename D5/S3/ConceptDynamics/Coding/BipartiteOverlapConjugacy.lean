@@ -93,31 +93,6 @@ def pathHomeomorph (d : Boundary U V I J) : LeftPath d ≃ₜ RightPath d where
 
 end Topology
 
-/-- The one-vertex bipartite graph with a binary U alphabet. -/
-def binaryBoundary : Boundary Bool Unit Unit Unit :=
-  ⟨fun _ => (), fun _ => (), fun _ => (), fun _ => ()⟩
-
-def zeroPath : LeftPath binaryBoundary :=
-  ⟨fun _ => (false, ()), fun _ => ⟨rfl, rfl⟩⟩
-
-def nextBitPath : LeftPath binaryBoundary :=
-  ⟨fun i => (if i = 1 then true else false, ()), fun _ => ⟨rfl, rfl⟩⟩
-
-/-- A decoder of the present edge alone cannot implement this overlap code. -/
-theorem no_present_only_recoder :
-    ¬∃ f : Bool × Unit → Unit × Bool,
-      ∀ x : LeftPath binaryBoundary, f (x.val 0) = (forward binaryBoundary x).val 0 := by
-  rintro ⟨f, hf⟩
-  have hsame : zeroPath.val 0 = nextBitPath.val 0 := by decide
-  have hdifferent : (forward binaryBoundary zeroPath).val 0 ≠
-      (forward binaryBoundary nextBitPath).val 0 := by decide
-  apply hdifferent
-  calc
-    (forward binaryBoundary zeroPath).val 0 = f (zeroPath.val 0) := (hf zeroPath).symm
-    _ = f (nextBitPath.val 0) := congrArg f hsame
-    _ = (forward binaryBoundary nextBitPath).val 0 := hf nextBitPath
-
 #print axioms pathHomeomorph
-#print axioms no_present_only_recoder
 
 end D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy

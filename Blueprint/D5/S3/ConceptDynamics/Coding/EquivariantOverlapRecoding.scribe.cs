@@ -17,7 +17,7 @@ internal sealed class EquivariantOverlapRecodingDocument : IScribeDocumentDefini
     private static Formula L => Call("Prod", Call("LeftPath", F.Id("d")), F.Id("H"));
     private static Formula R => Call("Prod", Call("RightPath", F.Id("d")), F.Id("H"));
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The boundary transfer supplies an equivariant conjugacy of the two skew-product dynamics.",
+        "The boundary transfer induces a homeomorphism of the associated skew-product path spaces.",
         H("Equivariant overlap recoding"), Blocks(
             Describe.Lean(DescribeId.Create("skew-overlap-homeomorphism"),
                 DeclarationHandle.Create(Prefix + "skewHomeomorph"),
