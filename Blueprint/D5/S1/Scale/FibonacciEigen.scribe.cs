@@ -57,7 +57,17 @@ Blocks(
                             + "original WSS prime support in each block. These ordinary "
                             + "proofs use separately credited classical inputs; no rank "
                             + "oracle, WSS existence result or additional Lean conclusion "
-                            + "is asserted by this context link."))),
+                            + "is asserted by this context link.")),
+                    Paragraph(
+                        Text("GNT in the same companion computes the exact local "
+                            + "normalization modules, conductor and intrinsic point-blowup "
+                            + "chain of that order. Its arithmetic differential module "
+                            + "is identified with the earlier Fibonacci mapping-torus "
+                            + "torsion, and its marked three-torus cover has explicit "
+                            + "cone homology. Complex torus links are separate comparison "
+                            + "models, not mixed-characteristic analytic identifications. "
+                            + "These are ordinary proofs; no new WSS prime or additional "
+                            + "Lean conclusion is asserted."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
