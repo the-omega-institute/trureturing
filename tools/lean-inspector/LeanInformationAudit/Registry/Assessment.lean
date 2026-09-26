@@ -574,7 +574,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         let certificate ← validate event descriptor claim.owner escape claim.escapeInput
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
-        let message ← error.toMessageData.toString
+        let message ← exceptionDiagnostic error
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         let provenance ← diagnosticProvenance event claim reason
@@ -686,7 +686,7 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
       retainAssessment record claim certificate
     catch error =>
       let diagnostic := diagnosticMessage event.key
-        ("incomplete_closure:dtr.cache_inputs:" ++ (← error.toMessageData.toString)) Json.null
+        ("incomplete_closure:dtr.cache_inputs:" ++ (← exceptionDiagnostic error)) Json.null
       return { record with result := .declaredUnresolved diagnostic }
   return record
 
