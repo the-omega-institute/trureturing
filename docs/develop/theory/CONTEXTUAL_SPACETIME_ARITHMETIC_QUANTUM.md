@@ -59309,3 +59309,246 @@ $$
 式（271.14）说明，这里的可行性结论使用精确相等与精确恢复；它没有给出近似恢复的误差下界。式（271.13）的物理操作以已经给定的共轭双块状态为输入，也没有声称可以用完全正信道从任意未知 $\rho$ 制备 $(\rho\oplus\overline\rho)/2$。本节所判断的是两个实际准备块的联合组织及其概率权重。
 
 ## 追加锚（本行以下为增补区）
+
+## 272. 共轭信道判据与六态实编码的精确恢复误差
+
+前两节使用状态族的分块结构判断实表示。本节直接以允许的信道表述同一问题：是否可以在给定状态族上实现复共轭。这个判据不要求标量共同交换子，并把任意输出维数上的实编码问题归约为输入维数内的一个信道问题。其近似版本给出与输出维数无关的恢复误差下界。
+
+**定义 272.1（有限模型的共轭缺口）。** 固定输入基底，设 $\mathcal R=\{\rho_1,\ldots,\rho_n\}$ 是 $M_d(\mathbb C)$ 中的非空有限密度矩阵族，定义
+
+$$
+\delta(\mathcal R)
+=\min_{\mathcal C\ \mathrm{CPTP}}
+\max_{1\le j\le n}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1,
+\qquad\mathcal C:M_d\to M_d.
+\tag{272.1}
+$$
+
+对任意有限维编码 $\mathcal E:M_d\to M_D$、解码 $\mathcal D:M_D\to M_d$ 及固定输出基底，定义
+
+$$
+e(\mathcal D,\mathcal E)
+=\max_j\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1,
+\qquad
+r(\mathcal E)
+=\max_j\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1.
+\tag{272.2}
+$$
+
+全部映射均要求复线性、完全正且保迹；两处复共轭分别取所固定的输入和输出基底。$r=0$ 恰表示整个输出模型在该基底中取实。
+
+**定理 272.2（信道归约与误差传递）。** 定义272.1中的最小值达到。存在某个有限输出维数上的精确可恢复实编码，当且仅当 $\delta(\mathcal R)=0$。可行时，输出维数 $2d$ 已经充分。
+
+对任意有限 $D$ 和任意编码、解码，都有
+
+$$
+\boxed{e(\mathcal D,\mathcal E)+r(\mathcal E)
+\ge\delta(\mathcal R).}
+\tag{272.3}
+$$
+
+因此，若精确可恢复实编码不可行，任何维数上的完全实输出都具有严格正的统一恢复误差下界 $\delta(\mathcal R)$。
+
+证明。对一个信道 $\mathcal A$ 定义其共轭信道
+
+$$
+\overline{\mathcal A}(X)
+=\overline{\mathcal A(\overline X)}.
+\tag{272.4}
+$$
+
+右端外层横线作用于输出矩阵，内层横线作用于输入矩阵。若 $A_k$ 是 $\mathcal A$ 的 Kraus 算子，则 $\overline{A_k}$ 是式（272.4）的 Kraus 算子；所以它仍为复线性 CPTP 映射。这里没有把单独的复共轭当成物理信道。
+
+给定任意 $\mathcal E,\mathcal D$，取输入维数内的信道 $\mathcal C=\overline{\mathcal D}\mathcal E$。对每个模型状态，
+
+$$
+\begin{aligned}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1
+&\le\frac12\|\overline{\mathcal D}(\mathcal E(\rho_j))
+-\overline{\mathcal D}(\overline{\mathcal E(\rho_j)})\|_1\\
+&\quad+\frac12\|\overline{\mathcal D\mathcal E(\rho_j)}
+-\overline{\rho_j}\|_1\\
+&\le\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1
++\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1.
+\end{aligned}
+\tag{272.5}
+$$
+
+第二步使用信道对密度矩阵迹距离的收缩性及复共轭保持迹范数。对 $j$ 取最大值，再在输入维数内的信道上取最小值，即得（272.3）。特别地，精确恢复且完全实输出给出 $\mathcal C(\rho_j)=\overline{\rho_j}$。
+
+反过来，若一个 CPTP 映射 $\mathcal C$ 在整个模型上实现复共轭，则
+
+$$
+\overline{\mathcal C}(\overline{\rho_j})=\rho_j.
+\tag{272.6}
+$$
+
+定义到 $2d$ 维空间的信道
+
+$$
+\mathcal F(X)=\frac12\bigl(X\oplus\mathcal C(X)\bigr),
+\qquad
+\mathcal E(X)=Q\mathcal F(X)Q^*,
+\qquad
+Q=\frac1{\sqrt2}\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}.
+\tag{272.7}
+$$
+
+两个对角块均由完全正映射取得，迹之和经二分之一归一化后为 $\operatorname{Tr}X$，而 $Q$ 酉。因此这是对全部输入定义的 CPTP 编码。在模型上，式（271.13）的直接乘法给出
+
+$$
+\mathcal E(\rho_j)
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho_j&-\operatorname{Im}\rho_j\\
+\operatorname{Im}\rho_j&\operatorname{Re}\rho_j
+\end{pmatrix},
+\tag{272.8}
+$$
+
+故所有输出均为实矩阵。令 $Y'=Q^*YQ$，按两个 $d$ 维块记其压缩为 $Y'_{LL},Y'_{RR}$，取
+
+$$
+\mathcal D(Y)=Y'_{LL}+\overline{\mathcal C}(Y'_{RR}).
+\tag{272.9}
+$$
+
+这是两个完全正压缩及信道的和，且输出迹为两个对角块的迹之和，等于 $\operatorname{Tr}Y$。由（272.6），
+
+$$
+\mathcal D\mathcal E(\rho_j)
+=\tfrac12\bigl(\rho_j+\overline{\mathcal C}\mathcal C(\rho_j)\bigr)
+=\rho_j.
+\tag{272.10}
+$$
+
+上述共轭直和构造具有正映射层面的文献先例。van Luijk、Wilming，*Sufficiency and Petz recovery for positive maps*，[arXiv:2604.08380v2](https://arxiv.org/pdf/2604.08380v2)，例4.11及第32页续证，以正映射研究加权共轭直和；定理5.1描述正保迹互换。其第32页显示的是 Heisenberg 图景的保单位元的正映射（unital positive maps）。取迹对偶后，相应状态图景映射为
+
+$$
+\mathcal F_p^+(X)=pX\oplus(1-p)X^{\mathsf T},
+\qquad
+\mathcal G^+(Y)=Y_{LL}+Y_{RR}^{\mathsf T}.
+$$
+
+这两个映射正且保迹，并有 $\mathcal G^+\mathcal F_p^+=\mathrm{id}$。当 $d\ge2$、$0<p<1$ 时，两者均不完全正：否则压缩转置分支或限制输入到该分支会使转置本身完全正。故在 $p=1/2$ 时，上述先例结合 $Q$ 已给出普遍的正映射可恢复实表示。本证明要求全部操作完全正，式（272.7）以模型上可实现的 $\mathcal C$ 替换转置分支，式（272.9）以其共轭信道恢复；这正是这里需要判定的额外条件。既有正映射互换并未消去该完全正约束。
+
+最后，固定有限维输入与输出的 CPTP 信道集可由 Choi 矩阵 $J\succeq0$、$\operatorname{Tr}_{\rm out}J=I_d$ 表示。它闭且有界，因为 $\operatorname{Tr}J=d$，故为紧集。式（272.1）的有限个连续函数之最大值连续，最小值达到。因此 $\delta=0$ 等价于某个信道精确实现模型共轭，结合上述构造得到所述等价。不可行时最小值严格为正，而（272.3）对全部有限 $D$ 都成立。证毕。
+
+这个归约还给出有限维半正定规划。使用输出指标在前的未归一化 Choi 矩阵，记
+
+$$
+X_j(J)=\operatorname{Tr}_{\rm in}
+\left[J(I_d\otimes\rho_j^{\mathsf T})\right]
+-\overline{\rho_j}.
+$$
+
+最小化实数 $t$，约束为
+
+$$
+J\succeq0,\quad\operatorname{Tr}_{\rm out}J=I_d,
+\qquad
+Y_j\succeq X_j(J),\quad Y_j\succeq-X_j(J),
+\quad\operatorname{Tr}Y_j\le2t\quad(1\le j\le n).
+\tag{272.11}
+$$
+
+其中 $Y_j$ Hermitian。这是迹范数的标准半正定表示：对 Hermitian $X$，满足 $Y\succeq\pm X$ 的最小迹为 $\|X\|_1$，可取 $Y=|X|$；反向下界由 $X$ 的正、负谱投影分别压缩两条不等式得到。因此该规划的值正是 $\delta(\mathcal R)$。它消除了对任意输出维数的搜索，不宣称有限精度下的零值判定算法。
+
+**定理 272.3（六个 Pauli 状态的最优实编码误差）。** 对 $0<a\le1$，令
+
+$$
+\mathcal R_a=
+\left\{\frac{I_2\pm aX}{2},
+\frac{I_2\pm aY}{2},
+\frac{I_2\pm aZ}{2}\right\}.
+\tag{272.12}
+$$
+
+则
+
+$$
+\delta(\mathcal R_a)=\frac a3.
+\tag{272.13}
+$$
+
+在所有有限输出维数、所有在同一基底中产生完全实模型的 CPTP 编码及所有 CPTP 解码上，最小最坏恢复误差亦为 $a/3$，并由一个四维经典输出编码达到。对允许非实残差的编码，仍有 $e+r\ge a/3$。
+
+证明。以 Bloch 向量表示量子比特，逐项复共轭对应反射矩阵
+
+$$
+S=\operatorname{diag}(1,-1,1).
+$$
+
+将任意候选 $\mathcal C$ 在保持六个坐标轴方向的二十四个立方体旋转 $g$ 上平均。输入旋转 $g$ 由酉矩阵实现；输出旋转 $Sg^{-1}S$ 也是正旋转，故同样由酉矩阵实现。取相应的前后酉共轭后再平均，仍为 CPTP 信道。每项都仅排列六个输入并相应旋转共轭目标，最大迹距离不增加。
+
+若原 Bloch 仿射映射为 $u\mapsto Mu+b$，平均后的映射为
+
+$$
+u\longmapsto
+S\left(\frac1{24}\sum_g g^{-1}(SM)g\right)u
++\frac1{24}\sum_g Sg^{-1}Sb
+=tSu,
+\qquad t=\frac13\operatorname{Tr}(SM).
+\tag{272.14}
+$$
+
+这些有限平均恒等式可直接由群中的坐标轴半周旋转和坐标置换验证：前者消去向量平均及矩阵非对角项，后者使三个对角项相等。因而只须考虑
+
+$$
+\mathcal C_t(A)=tA^{\mathsf T}+(1-t)\operatorname{Tr}(A)I_2/2.
+\tag{272.15}
+$$
+
+其未归一化 Choi 矩阵为 $tF+(1-t)I_4/2$，其中 $F$ 是两量子比特交换算子。在三维对称空间和一维反对称空间上，特征值分别为 $(1+t)/2$ 和 $(1-3t)/2$。因此完全正的精确范围为
+
+$$
+-1\le t\le1/3.
+\tag{272.16}
+$$
+
+两个量子比特状态的迹距离为其 Bloch 向量欧氏距离的一半，所以式（272.12）每个状态的共轭误差均为 $a|1-t|/2$。它在合法区间上的最小值为 $a/3$，由 $t=1/3$ 达到。有限平均没有增加误差，故这同时给出所有 CPTP 候选中的下界及达到，证明（272.13）。
+
+这里使用的近似转置通道是既有结果。Buscemi、D’Ariano、Perinotti、Sacchi，*Optimal realization of the transposition maps*，[arXiv:quant-ph/0304175v1](https://arxiv.org/pdf/quant-ph/0304175v1)，第2节式（15）给出一般维数的 $\mathcal C(\rho)=(I+\rho^{\mathsf T})/(d+1)$，其原文优化指标为纯态转置保真度。本证明的有限旋转平均与 Choi 特征值计算将该标准通道接到这里的六态、迹距离目标，不把不同优化指标的结论直接互换。
+
+现在对完全实编码应用（272.3），得到 $e\ge a/3$。为达到这个下界，取正四面体的四个单位向量
+
+$$
+n_1=(1,1,1)/\sqrt3,\quad
+n_2=(1,-1,-1)/\sqrt3,\quad
+n_3=(-1,1,-1)/\sqrt3,\quad
+n_4=(-1,-1,1)/\sqrt3.
+$$
+
+它们满足 $\sum_k n_k=0$、$\sum_k n_kn_k^{\mathsf T}=4I_3/3$。令 $\boldsymbol\sigma=(X,Y,Z)$，定义 POVM 效应和制备态
+
+$$
+F_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{4},
+\qquad
+P_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{2}.
+\tag{272.17}
+$$
+
+由 $|n_k|=1$ 得 $F_k\succeq0$、$P_k$ 为纯态；向量和为零使 $\sum_kF_k=I_2$。取
+
+$$
+\mathcal E(\rho)=\sum_{k=1}^4\operatorname{Tr}(F_k\rho)|k\rangle\langle k|,
+\qquad
+\mathcal D(Y)=\sum_{k=1}^4\langle k|Y|k\rangle P_k.
+\tag{272.18}
+$$
+
+它们分别是测量和按记录制备的 CPTP 映射，编码的每个输出均为实对角矩阵。对任意 Bloch 向量 $u$，输出记录概率为 $(1+n_k\cdot u)/4$，所以解码后的 Bloch 向量为
+
+$$
+\sum_k\frac{1+n_k\cdot u}{4}n_k=\frac u3.
+\tag{272.19}
+$$
+
+故六个模型状态的恢复误差均为 $\tfrac12|au-au/3|=a/3$，其中 $u$ 为对应单位轴向量。这达到对所有实输出量子编码的下界，完成证明。证毕。
+
+式（272.17）是标准量子比特四面体 SIC POVM 的归一化。近似转置的量子设计与测量—制备实现见 Kalev、Bae，*Optimal approximate transpose map via quantum designs and its applications to entanglement detection*，[arXiv:1303.3096v2](https://arxiv.org/pdf/1303.3096v2)，式（1）—（2）及 SIC 实现式（6）。这里的解码制备 $P_k$ 本身，得到式（272.19）的收缩；若按该文制备共轭态，则得到近似转置。四面体设计与近似转置通道均为所用的既有构造，本节的最优实编码误差由（272.3）与上述达到共同确定。
+
+四维输出只给出达到该误差的一种实现；本节没有证明达到时的最小输出维数。这里的误差衡量不含参考系统的六个指定状态；没有将其改称 diamond 距离或任意纠缠输入的误差。下界允许任意有限维量子输出，最优实现恰可选为经典记录；这项结论不将所有实矩阵族判为经典模型。
+
+## 追加锚（本行以下为增补区）
