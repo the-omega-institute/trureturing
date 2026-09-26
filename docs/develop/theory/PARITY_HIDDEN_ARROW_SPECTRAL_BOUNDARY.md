@@ -33222,3 +33222,547 @@ The same-label, same-history disintegration supplies all three projected variabl
 The theorem covers precisely (134.1), with all finite coefficients and the integrated $C_xm_x$ retained. A sharper bandwidth, a necessary arithmetic condition, a sharp threshold, zero noise, an unbounded expectation over raw environments, computational efficiency and global originality remain outside its claims.
 
 ## 追加锚（本行以下为增补区）
+
+## 135. 临界熵阶窗口中的三阶输出响应
+
+第 133 章给出临界四次分布。本章在原始乘积计数律上证明熵阶 $\alpha=1+s\sqrt\delta$ 的三阶一致响应：同一物理能量的幂变换将四次分布参数移为 $\kappa-s/(2V)$。证明先消去共同归一化因子，再控制真实导数的联合矩和全局密度尾部；有限噪声始终保留，允许它任意缓慢趋零。
+
+### 135.1 同一物理临界能量的熵阶窗口
+
+Keep the exact original fixed admissible amplitude r, beta in (1/2,1), all Q,M,q/group floors, full window, calibrated centers and stationary pair/path experiments. With the notation of Chapter 133,
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ L=\log(1/\sigma)\to\infty,\quad
+ \limsup L/Q^3<c_q/2,\qquad c_q=\phi(1-\beta)/\beta.
+\tag{135.1}
+$$
+
+At every finite level sigma>0. Let
+
+$$
+ Q(n)=\prod_j b_j(n_j),\quad b_j=\operatorname{Bin}(C_j,p_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,
+$$
+
+$$
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,\quad
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,
+$$
+
+$$
+ a=(2V)^{-1}-\kappa\sqrt\delta,\quad \alpha=1+s\sqrt\delta,
+ \quad \lambda_y=(T-y)^2/(2\sigma^2),
+$$
+
+$$
+ Z_{\alpha,Q}(\kappa,y)=
+ \frac{\sum_n Q(n)^\alpha e^{-\alpha\lambda_y(n)+\alpha aD(n)^2}}
+      {\sum_n Q(n)^\alpha e^{-\alpha\lambda_y(n)}}.
+\tag{135.2}
+$$
+
+All sums are over the full original product count box, with every binomial multiplicity. Empty coordinates are deterministic. The original full-q calibration mu,V,T is kept even though the auxiliary prior here is the calibrated PRODUCT count law Q. No identification with original full-q P is made. The physical penalty a is held fixed when differentiating s; alpha multiplies BOTH likelihood and aD^2. The empirical array, mu,V,C2, sigma, kappa, y and all floors are fixed under this derivative.
+
+For fixed finite S,K,R, put
+
+$$
+ \|f\|_{3;S,K,R}=\max_{0\le k\le3}
+       \sup_{|s|\le S,|\kappa|\le K,|y|\le R}|\partial_s^k f|,
+$$
+
+$$
+ I_Q(\theta,y)=\int_{\mathbb R}
+ \exp\left[\left(\frac{y}{2V^2}-\theta\right)z^2
+                  -\frac{C_2}{4V^4}z^4\right]dz.
+\tag{135.3}
+$$
+
+For large Q, alpha>0 on every fixed s compact.
+
+**定理 135.1（原始乘积计数律的临界熵阶响应）。** The normalization conclusion is
+
+$$
+ \left\|\delta^{1/4}Z_{1+s\sqrt\delta,Q}(\kappa,y)
+    -(2\pi V)^{-1/2}I_Q\left(\kappa-\frac{s}{2V},y\right)
+ \right\|_{3;S,K,R}\longrightarrow0.
+\tag{135.4}
+$$
+
+The corresponding output-ratio conclusion is
+
+$$
+ \left\| -\log\frac{Z_{1+s\sqrt\delta,Q}(\kappa,y)}
+                         {Z_{1+s\sqrt\delta,Q}(\kappa,0)}
+      +\log\frac{I_Q(\kappa-s/(2V),y)}{I_Q(\kappa-s/(2V),0)}
+ \right\|_{3;S,K,R}\longrightarrow0.
+\tag{135.5}
+$$
+
+Convergence is in original actual-data probability, uniformly over deterministic size-q supports, separately for the original pair and path laws. Explicitly, for each positive tolerance the supremum over such supports of the probability that the displayed SAME-fiber norm exceeds that tolerance tends to zero. The exact finite V,C2 remain inside the expressions. There is no environmental-rate substitution, alpha interval away from1, growing compact, additional noise rate, or unscaled-alpha-derivative assertion.
+
+### 135.2 同一实现上的确定性估计
+
+We use Chapter 133's simultaneous actual-data classes, not a separately chosen environment at each order. On each fixed tight-constant class,
+
+$$
+ m\le C\delta^{-4},\quad p_j\in[1/4,3/4],\quad
+ \sum C_j\le CB^2,\quad \log q=c_qQ^3+O(1),
+$$
+
+$$
+ c\le V,C_2\le C,\quad \max_jv_j\le C\delta,\quad
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \|e\|^2\le C\delta^{10},\quad (\sum|e_j|)^2\le C\delta^6.
+\tag{135.6}
+$$
+
+A block of at least c/delta coordinates has variances between c delta and C delta. These bounds hold support-uniformly on the retained classes, whose complements are exhausted in probability. No independence of actual path rows is added.
+
+Choose l,zeta>0 with eventually L<=lQ^3, l<c_q/2, zeta<c_q/2 and 2zeta<c_q-l. Let H={j:C_j>=exp(zeta Q^3)}, V_H=sum_H v_j, s_r=sum_H v_j^r. Then
+
+$$
+ 0\le V-V_H\le P(Q)e^{-(c_q-\zeta)Q^3},\quad
+ s_2/\delta-C_2=O(P(Q)e^{-bQ^3}),\quad b>0.
+\tag{135.7}
+$$
+
+The block belongs to H. All omitted e-energy terms and the low-tuple charge/scalar errors below have exponential bounds. P(Q) denotes a fixed polynomial, allowed to change finitely many times. The exact full V,C2,T are never replaced by their high versions in the theorem. The proof is uniform on a slightly larger fixed s compact, so endpoint derivatives of the requested compact are ordinary derivatives.
+
+### 135.3 精确高斯重标度与局部密度导数
+
+Normalize the high Gaussian escort as Y_j~N(0,v_j/alpha), independently before observation, and let X_j=Y_j-e_j. Put D_G=sum_H Y_j, E_H=sum_H X_j^2. The energy noise is N_alpha~N(0,delta sigma^2/alpha), independent before conditioning. The same output is
+
+$$
+ F_\alpha=E_H+N_\alpha=h_y:=V+\sqrt\delta y.
+\tag{135.8}
+$$
+
+Conditional on D_G=u, write v=(v_j)_{H}, C=diag(v_j), and
+
+$$
+ m_u=vu/V_H-e_H,\qquad A=C-vv^T/V_H.
+\tag{135.9}
+$$
+
+Then X_H=m_u+R_0/sqrt(alpha), where R_0~N(0,A). This is the exact conditional Gaussian formula. Rank-one interlacing leaves a block of at least c/delta-1 eigenvalues of A comparable to delta; ||A||<=C delta and tr(A^2)=s2+O(delta^2). No top-mode gap or spherical symmetry is used.
+
+The useful real-parameter representation is
+
+$$
+ \alpha F_\alpha\mid D_G=u
+ \stackrel d= \|R_0+\sqrt\alpha\,m_u\|^2
+                +\widetilde N_\alpha,
+ \qquad\widetilde N_\alpha\sim N(0,\alpha\delta\sigma^2).
+\tag{135.10}
+$$
+
+Its cumulant, for real t below the positive covariance pole, is
+
+$$
+ K_{\alpha,u}(t)=-\tfrac12\log\det(I-2tA)
+       +\alpha t\,m_u^T(I-2tA)^{-1}m_u
+       +\tfrac12\alpha\delta\sigma^2t^2.
+\tag{135.11}
+$$
+
+The determinant in(135.11) is INDEPENDENT of alpha. This exact rescaling eliminates the apparent extensive Gaussian escort differentiation before any asymptotic estimate. The observation point is alpha h_y, so every remaining alpha dependence in the exponent of its inverse transform is linear. No complex alpha or unproved zero-free neighborhood is invoked.
+
+Let f_{alpha,u}(h) be the density of F_alpha conditional on D_G=u, and f_alpha(h) the unconditional density. Define the centered, scaled density q_{alpha,u} of alpha F_alpha with mean tr A+alpha||m_u||^2 removed and scale sqrt(delta), and let
+
+$$
+ w_{\alpha,u}=(\alpha h_y-\operatorname{tr}A-\alpha\|m_u\|^2)/\sqrt\delta.
+$$
+
+The exact centered characteristic function, t=xi/sqrt(delta), is
+
+$$
+ \psi_{\alpha,u}(\xi)=
+ \prod_i e^{-it\lambda_i}(1-2it\lambda_i)^{-1/2}
+ \exp\left[-2\alpha t^2\sum_i\frac{\lambda_i m_i^2}{1-2it\lambda_i}\right]
+ e^{-\alpha\sigma^2\xi^2/2},
+ \qquad \sqrt\delta f_{\alpha,u}(h_y)=\alpha q_{\alpha,u}(w_{\alpha,u}).
+\tag{135.12}
+$$
+
+The exponential includes all noncentral coordinates. Zero eigenvalues give only a subtracted deterministic mean. For u=delta^-1/4 z on fixed compact z,
+
+$$
+ \|m_u\|^2=\sqrt\delta(C_2/V^2)z^2+o(\sqrt\delta),\quad
+ w_{\alpha,u}=y+sV-(C_2/V^2)z^2+o(1),
+$$
+
+$$
+ \partial_sw_{\alpha,u}=h_y-\|m_u\|^2=V+o(1),\quad
+ \partial_s^2w_{\alpha,u}=\partial_s^3w_{\alpha,u}=0.
+\tag{135.13}
+$$
+
+These are joint bounds on the same array. For example |v^Te_H|<=sqrt(s2)||e_H||=O(delta^(11/2)); the full/high variance difference in(135.7) is exponential. Thus the exact centers cause no missing order-one derivative term.
+
+Here is why the local limit can actually be differentiated. The logarithm of(135.12) is affine in alpha. Its s derivative is
+
+$$
+ B_u(\xi)=\sqrt\delta\left[-2t^2
+        m_u^TA(I-2itA)^{-1}m_u-\sigma^2\xi^2/2\right].
+\tag{135.14}
+$$
+
+At compact z, |B_u(xi)|<=C sqrt(delta)(||m_u||^2+sigma^2)xi^2, since ||A||<=C delta and the resolvent has norm<=1. Higher s derivatives of psi are exactly B_u^k psi. The block yields, uniformly in real u and alpha in[1/2,2],
+
+$$
+ |\psi_{\alpha,u}(\xi)|\le(1+c\delta\xi^2)^{-c'/\delta}.
+\tag{135.15}
+$$
+
+Every fixed polynomial in xi is uniformly integrable against this envelope: below delta^-1/2 use a Gaussian bound; above it use the large power after the substitution sqrt(delta)xi. On compact xi,z, the central log expansion uses tr(A^3)=O(delta^2), and the noncentral quadratic variance is4alpha m_u^TAm_u=o(delta). The noise variance in the scaled energy is alpha sigma^2; replacing it by sigma^2 here costs O(sqrt(delta) sigma^2), together with its first three s derivatives. Hence for d_Q=2C2+sigma^2, Fourier inversion, including the xi factors from spatial derivatives and(135.14), proves
+
+$$
+ \sqrt\delta f_{\alpha,\delta^{-1/4}z}(h_y)
+   =\varphi_{d_Q}\bigl(y+sV-(C_2/V^2)z^2\bigr)+o_{C_s^3}(1).
+\tag{135.16}
+$$
+
+Here phi_d(w)=(2pi d)^-1/2 exp(-w^2/(2d)). The error is uniform on compact s,z,y and0<=sigma<=1, on the deterministic class. Equation(135.16) follows from bounds for the ACTUAL derivatives of the integrand and the affine location, not from differentiating a C0 approximation.
+
+Apply the identical calculation to the unconditional covariance C, mean -e_H in(135.10). Its location is (alpha h_y-V_H-alpha||e_H||^2)/sqrt(delta)=y+sV+o_C3(1). Therefore
+
+$$
+ \sqrt\delta f_\alpha(h_y)=\varphi_{d_Q}(y+sV)+o_{C_s^3}(1),
+ \qquad \sqrt\delta f_\alpha(h_y)\ge c_{S,R}>0.
+\tag{135.17}
+$$
+
+The comparator phi uses the CURRENT finite C2. No convergence rate of the environment to a continuum profile is needed.
+
+Charge has exact Gaussian law N(0,V_H/alpha). Cancelling its quadratic exponent against the deliberate alpha a u^2 and making z=delta^1/4 u gives the scaled critically weighted density
+
+$$
+ q^G_Q(s,\kappa,y;z)=\frac{\sqrt\alpha}{\sqrt{2\pi V_H}}
+ e^{-\alpha\kappa z^2-\alpha r_Qz^2}
+ \frac{f_{\alpha,\delta^{-1/4}z}(h_y)}{f_\alpha(h_y)},
+ \quad r_Q=\frac{1/(2V_H)-1/(2V)}{\sqrt\delta}\ge0.
+\tag{135.18}
+$$
+
+The total mass of this density is delta^1/4 Z_{alpha,G}; r_Q is exponentially small divided by sqrt(delta). On compact z, (135.16)--(135.18) converge in C3_s to the FINITE-NOISE profile
+
+$$
+ q_Q^{\sigma}(s,\kappa,y;z)=\frac1{\sqrt{2\pi V}}
+ \exp\left[-\kappa z^2+
+ \frac{C_2(y+sV)}{V^2(2C_2+\sigma^2)}z^2
+ -\frac{C_2^2}{2V^4(2C_2+\sigma^2)}z^4\right].
+\tag{135.19}
+$$
+
+This independently checks the sign and factor of the proposed order shift. It is not yet a global or original-count result.
+
+### 135.4 全局密度导数控制
+
+For |z| above a fixed sufficiently large Z_{S,R}, u=delta^-1/4 z, set
+
+$$
+ d_u=\operatorname{tr}A+\alpha\|m_u\|^2-\alpha h_y.
+$$
+
+The geometry in(135.6),(135.7),(135.9) and bounded s implies
+
+$$
+ c\delta u^2\le d_u\le C\delta u^2,\qquad
+ \|m_u\|^2\le C\delta u^2+C\delta^{10}.
+\tag{135.20}
+$$
+
+The new displacement (alpha-1)V is O(sqrt(delta)), and is absorbed by the choice of Z_{S,R}, just as the compact physical y displacement is. These are global bounds in u, not moderate-u expansions.
+
+For every lambda>=0 the centered log Laplace transform of the variable in(135.10) obeys
+
+$$
+ K_{\alpha,u}(-\lambda)+\lambda(\operatorname{tr}A+\alpha\|m_u\|^2)
+ \le C\lambda^2\delta(1+\delta u^2).
+\tag{135.21}
+$$
+
+This follows eigenvalue by eigenvalue from lambda lambda_i-(1/2)log(1+2lambda lambda_i)<=lambda^2 lambda_i^2 and the noncentral term2alpha lambda^2 lambda_i m_i^2/(1+2lambda lambda_i), plus the EXACT alpha delta sigma^2 lambda^2/2. Take lambda=theta d_u/[delta(1+delta u^2)] with small fixed theta. Then
+
+$$
+ \lambda\le C/\delta,\quad
+ \sqrt\delta\lambda\le C z^2/(1+\sqrt\delta z^2),\quad
+ K_{\alpha,u}(-\lambda)+\lambda\alpha h_y
+       \le-c z^4/(1+\sqrt\delta z^2).
+\tag{135.22}
+$$
+
+Under this negative energy tilt the covariance is A_lambda=A(I+2lambda A)^-1; its block remains comparable to delta. The mean becomes sqrt(alpha)(I+2lambda A)^-1 m_u. The tilted noise mean is -alpha delta sigma^2 lambda, with variance alpha delta sigma^2 unchanged.
+
+For the derivatives, hold lambda fixed at its selected value while differentiating at the evaluation s. The inverse density identity is valid on a neighborhood with that same real lambda. With t=-lambda+i xi/sqrt(delta), put
+
+$$
+ J_u(t)=\sqrt\delta\left[t\{m_u^T(I-2tA)^{-1}m_u-h_y\}
+                                 +\delta\sigma^2t^2/2\right].
+\tag{135.23}
+$$
+
+The inverse integrand is alpha exp(K_{alpha,u}(t)-t alpha h_y)/(2pi sqrt(delta)). Its kth s derivative, k<=3, is EXACTLY that exponential times
+
+$$
+ \alpha J_u(t)^k+k\sqrt\delta J_u(t)^{k-1},
+\tag{135.24}
+$$
+
+where the second term is absent at k=0. Since Re t<=0, the resolvent has norm<=1. Equations(135.20),(135.22) imply
+
+$$
+ |J_u(t)|\le C(1+|z|^4)(1+|\xi|^2).
+\tag{135.25}
+$$
+
+For example sqrt(delta)lambda(1+delta u^2)<=Cz^2, the imaginary part costs C|xi|(1+sqrt(delta)z^2), and delta^(3/2)sigma^2|t|^2 is bounded by C(z^4+xi^2). There is no inverse sigma cost.
+
+After extracting exp(K(-lambda)+lambda alpha h_y), the remaining transform is the characteristic function of the tilted conditional energy. Its modulus has the block bound(135.15), with constants changed but independent of u. Integrating(135.24),(135.25) proves the density derivative bound
+
+$$
+ \sqrt\delta\,|\partial_s^k f_{\alpha,\delta^{-1/4}z}(h_y)|
+ \le C(1+|z|^{N_k})
+       \exp[-c z^4/(1+\sqrt\delta z^2)],\qquad k\le3.
+\tag{135.26}
+$$
+
+Inside fixed z compacts use lambda=0 and(135.12)--(135.15). This is a differentiated DENSITY estimate, not a tail probability divided by a tiny observation interval. Dividing by(135.17) and differentiating that quotient is valid because its first three scaled derivatives are bounded and its scaled value is bounded below.
+
+The charge factors in(135.18), including the helpful sign r_Q>=0, now give
+
+$$
+ |\partial_s^k q^G_Q(s,\kappa,y;z)|
+ \le C(1+|z|^N)
+ \exp\left[K' z^2-c z^4/(1+\sqrt\delta z^2)\right]
+\tag{135.27}
+$$
+
+outside a fixed compact, uniformly for k<=3; inside it the bound is constant. Choose delta small and split at z^2=delta^-1/2. The negative term is at least c z^4/2 below that split and c z^2/(2sqrt(delta)) above it. It absorbs K'z^2 and every fixed polynomial, giving a common integrable Gaussian tail after increasing the fixed compact. Thus no derivative mass escapes the moderate-charge scale, including at negative kappa or either sign of s.
+
+Local differentiated convergence and(135.27) imply, for every fixed p>=0,
+
+$$
+ \max_{k\le3}\sup_{|s|\le S,|\kappa|\le K,|y|\le R}
+ \int(1+|z|^p)|\partial_s^k(q^G_Q-q_Q^\sigma)|dz\to0.
+\tag{135.28}
+$$
+
+The proof first truncates with the common tail and then uses(135.16) on the compact. Each derivative of(135.19) is its own quartic density times a fixed power of C2 z^2/[V(2C2+sigma^2)]. Its coefficients and their derivative factors differ from their sigma=0 values by O(sigma^2), so weighted L1 differences through order3 are O(sigma^2) on the fixed classes. At sigma=0, (135.19) equals
+
+$$
+ (2\pi V)^{-1/2}
+ \exp\left[\left(\frac{y}{2V^2}-\kappa+\frac{s}{2V}\right)z^2
+                         -\frac{C_2}{4V^4}z^4\right].
+\tag{135.29}
+$$
+
+We have proved(135.4) for the normalized Gaussian escort, with full finite V,C2 and no additional rate for sigma. The next two sections establish the actual differentiated count interface; the Gaussian calculation alone is not yet the original-count theorem.
+
+### 135.5 临界权重下的联合分数矩
+
+The count comparison needs absolute estimates for score insertions at the critical weight, not a fixed-margin bound from Chapter 131. Define the high Gaussian modal potential and likelihood potential
+
+$$
+ S_G=\tfrac12\sum_H Y_j^2/v_j,\qquad
+ \Lambda_y=(E_H-h_y)^2/(2\delta\sigma^2).
+$$
+
+For every FIXED nonnegative integers r,t and every fixed p>=0, the following SAME-output bound holds, uniformly on the parameter compacts:
+
+$$
+ E^G_{\alpha,y}\!\left[e^{\alpha aD_G^2}
+          (1+S_G)^r(1+\Lambda_y)^t|D_G|^p\right]
+ \le C_{r,t,p}\,\delta^{-1/4-4r-p/4}.
+\tag{135.30}
+$$
+
+Here E^G_{alpha,y} conditions the original Gaussian reference (135.8) on F_alpha=h_y. Constants may depend on fixed r,t,p and the deterministic class, but not on sigma>0. This bound also holds at the exponentially close noise widths used below. The power of delta is deliberately coarse for modal scores; its polynomial size is what the exponential count error requires.
+
+Proof of(135.30). Condition first on the SAME D_G=u. Use (135.10) and the negative real tilt in(135.22), or lambda=0 on bounded z. The random vector in its energy is Y_0=sqrt(alpha)Y, with prior covariance C and charge sqrt(alpha)u. Equivalently tilt the independent coordinates by exp(-lambda||Y_0-sqrt(alpha)e_H||^2) before conditioning that charge. Their variances and means are
+
+$$
+ w_j=\frac{v_j}{1+2\lambda v_j},\quad
+ l_j=\frac{2\lambda v_j\sqrt\alpha e_j}{1+2\lambda v_j},\quad
+ c_\lambda=\sum_Hw_j\asymp V_H.
+$$
+
+The conditional mean of Y_0 is l+w(sqrt(alpha)u-sum l)/c_lambda and the covariance is diag(w)-ww^T/c_lambda. Since lambda v_* is bounded, in the original standardized coordinates C^-1/2 this covariance has norm<=1 and its mean has squared norm at most C(1+u^2). Indeed sum e_j^2/v_j<=C m delta^10, sum|l_j|<=C sum|e_j|, and sum w_j^2/v_j<=sum v_j. Thus there is no loss from small positive v_j. This covariance is the same A_lambda as the conditional-then-tilted construction, and interlacing still pays its Fourier block.
+
+For the Fourier inversion after that tilt, let omega=xi/sqrt(delta). The complex Gaussian covariance is
+
+$$
+ A_\lambda^{1/2}(I-2i\omega A_\lambda)^{-1}A_\lambda^{1/2}.
+$$
+
+Its C-standardized operator norm is at most1, because A_lambda<=C and the middle resolvent has norm<=1. Let h_lambda be the tilted mean of Y_0-sqrt(alpha)e_H. Its standardized norm is at most C(1+|u|), and ||h_lambda||<=C sqrt(delta)(1+|u|). The Fourier mean of Y_0 is sqrt(alpha)e_H+(I-2i omega A_lambda)^-1 h_lambda. From the resolvent identity and
+
+$$
+ \|C^{-1/2}A_\lambda^{1/2}\|\le1,\qquad
+ \|A_\lambda^{1/2}h_\lambda\|\le C\delta(1+|u|),
+$$
+
+its standardized norm is bounded by C(1+|xi|)(1+|u|). Finite Gaussian pairing therefore bounds insertion of (1+S_G)^r in the normalized Fourier transform by C_r(m+1+u^2)^r(1+|xi|)^(2r), up to a harmless increase of this fixed xi power. The bound concerns the single transformed conditional vector; it is not a product of independently optimized energy and modal marginals.
+
+For the likelihood score, on the exact observation in(135.10), E_H-h_y=-widetilde N_alpha/alpha. The normalized noise widetilde N_alpha/(sqrt(delta)sigma) has, after the real and Fourier tilts, variance alpha and mean
+
+$$
+ \alpha\sqrt\delta\sigma(-\lambda+i\xi/\sqrt\delta).
+$$
+
+Its modulus is bounded by C(z^2+|xi|), using(135.22) and sigma<=1. Its fixed moments consequently have only polynomial z,xi cost, with NO inverse sigma. Gaussian pairing for the vector and noise, followed by the common energy Fourier inversion, bounds the inserted density by
+
+$$
+ \frac C{\sqrt\delta}(m+1+u^2)^r P_{r,t}(z)
+           e^{-c z^4/(1+\sqrt\delta z^2)}
+\tag{135.31}
+$$
+
+outside the compact; the untilted bound works inside. Noise and vector are independent before the Fourier energy constraint, and are integrated in that SAME constraint. The determinant envelope absorbs the xi polynomials. Multiplying by the exact charge density and critical insertion, dividing by f_alpha(h_y), and using(135.18),(135.27) proves(135.30): u=delta^-1/4 z, m<=C delta^-4, and every fixed z moment is integrable against the common tail. This also proves existence and differentiability of all the fixed inserted Gaussian integrals used below. It is stronger than an undifferentiated critical-law approximation.
+
+We also need a simple uniform count-escort bound extending to alpha slightly BELOW1. For a binomial mass b with C trials and p in[1/4,3/4], uniformly beta in[1/2,2],
+
+$$
+ \sum_n b(n)^\beta\asymp(C+1)^{(1-\beta)/2}.
+\tag{135.32}
+$$
+
+To prove it, a central block of c sqrt(C+1) atoms has masses at least c/sqrt(C+1), by uniform Stirling estimates (small C are covered by constants). For the upper bound, Stirling in the interior and binomial relative-entropy convexity give b(n)<=C_0(C+1)^-1/2 exp[-c_0(n-Cp)^2/(C+1)]. Outside a fixed interior fraction of the count box, the entropy cost is at least cC; any endpoint prefactor is absorbed by reducing c_0. Summing this Gaussian envelope after the positive power beta proves(135.32).
+
+Let S_b(n)=-log[b(n)/max b]. It is nonnegative. For alpha in[3/4,5/4], choose a fixed small theta>0 with alpha-theta>=1/2. Since max b is comparable to(C+1)^-1/2, (135.32) gives
+
+$$
+ E_{b^\alpha/\sum b^\alpha}e^{\theta S_b}
+    =(\max b)^\theta\frac{\sum b^{\alpha-\theta}}{\sum b^\alpha}
+    \le C_\theta.
+\tag{135.33}
+$$
+
+Thus each fixed score moment and cumulant is bounded uniformly in the group size. For the exact low-product escort, fixed moments of its summed modal surprise S_L are at most C_k(1+m)^k. Its first three s derivatives have the usual centered-score/cumulant formulas and polynomial moment bounds, since partial_s=sqrt(delta) partial_alpha. These are classical finite exponential-family identities with justified uniform moments. All mode constants cancel from the centered scores. No count group is omitted in(135.32),(135.33).
+
+### 135.6 原始计数导数比较与稀有输出分母
+
+We give the relative estimate needed to transfer(135.4). On the central high-count cells of Chapter 133, standardized displacements are at most Q^2. Lift each high atom into its physical cell of width1/B in the centered Y_j coordinate. Keep ALL low tuples with their exact powered binomial laws. Let h=|H| and define the explicit common high factor
+
+$$
+ C_H(\alpha)=B^{h(1-\alpha)}\alpha^{-h/2}
+                 \prod_{j\in H}(2\pi v_j)^{(1-\alpha)/2},
+ \quad Z_L(\alpha)=\prod_{j\notin H}\sum_n b_j(n)^\alpha.
+\tag{135.34}
+$$
+
+Divide BOTH original numerator and denominator in(135.2) by C_H(alpha) Z_L(alpha) BEFORE taking derivatives. This is exact algebra, so these possibly extensive factors disappear from their ratio. They are not approximated separately at insufficient precision. On each central cell, the resulting lifted measure has exact density
+
+$$
+ \phi_{C/\alpha}(Y)\,\pi_{\alpha,L}(n_L)\,
+                      e^{\alpha\mathfrak r(n_H,Y)},\qquad |\mathfrak r|\le\mathcal E_Q,
+ \quad\mathcal E_Q=P(Q)e^{-bQ^3},\quad b>0,
+\tag{135.35}
+$$
+
+where pi_{alpha,L} is the exact normalized low escort and mathfrak r is independent of alpha. Formula(135.35) follows directly by writing b_j(n)=(2pi B^2 v_j)^-1/2 exp[-Y_j^2/(2v_j)+r_j] on its cell and multiplying; the one-coordinate log remainder is P(Q)C_j^-1/2. Summation over h<=CQ^2 proves the exponential bound. Hence every s derivative through3 of e^(alpha mathfrak r)-1 also has that exponential smallness. This includes the full binomial multiplicities.
+
+The central-cell original charge and scalar satisfy, uniformly over every low tuple,
+
+$$
+ |D-D_G|\le m/(2B)+me^{\zeta Q^3}/B\le\mathcal E_Q,
+$$
+
+$$
+ |T-T_G|\le P(Q)[B^{-1}+B^{-2}e^{2\zeta Q^3}]=:\Delta_Q,
+ \quad \Delta_Q/\sigma\le\mathcal E_Q,
+ \quad T_G=(E_H-V)/\sqrt\delta.
+\tag{135.36}
+$$
+
+Both exponential margins are the ORIGINAL ones: c_q/2-l>0 and c_q-2zeta-l>0; zeta<c_q/2 pays the low charge. Also |D_G|<=C Q^3 on these central cells, so |alpha a(D^2-D_G^2)| is exponentially small times a polynomial, uniformly with its first three s derivatives. No slack below criticality is required for this cellwise bound.
+
+For differentiation, use exact integrands, not an ordered inequality. In the reduced Gaussian reference the logarithmic s derivative of the high density is sqrt(delta)[h/(2alpha)-S_G]; higher logarithmic derivatives are constants bounded by fixed powers of h. The low density derivatives are centered S_L and its exact escort cumulants from(135.33). The kernel contributes sqrt(delta)[-Lambda_y+aD_G^2], with vanishing higher logarithmic derivatives. Thus all derivatives of order<=3 are finite polynomials in these SAME-law quantities and h. The corresponding count formulas replace S_G by S_G-mathfrak r, D_G by D and Lambda_y by lambda_y, keeping the same low law and common normalizers. This is the exact derivative comparison after cancelling(135.34).
+
+Write u_0=(T_G-y)/sigma and b_0=(T-T_G)/sigma, so |b_0|<=mathcal E_Q. Then
+
+$$
+ \lambda_y-\Lambda_y=b_0u_0+b_0^2/2.
+\tag{135.37}
+$$
+
+The mean-value formula for the exponential and the finite derivative polynomials bounds each central differentiated error by mathcal E_Q times a fixed polynomial in h,S_G,S_L,|D_G|,|u_0|, multiplied by the Gaussian critical kernel and exp(C mathcal E_Q|u_0|+C mathcal E_Q). Young's inequality absorbs this LAST factor into a relative width change sigma_+=sigma/sqrt(1-C mathcal E_Q), after enlarging C. This width change is used only to bound the absolute error of already differentiated integrands. We do NOT differentiate that inequality. Since alpha stays in[3/4,5/4], one width reserve works throughout the window.
+
+The joint bound(135.30) applies at sigma_+, with the SAME alpha a, full V, covariance and observation h_y. Low score moments from(135.33) can be summed after the pointwise uniform low-tuple bound: the resulting Gaussian comparison kernel is independent of the low tuple, so this factorization occurs inside the explicit reference product integral, not across unrelated actual conditional laws. Since sigma_+/sigma=1+O(mathcal E_Q), the ordinary Gaussian likelihood normalizer
+
+$$
+ A_G(\alpha,y)=\sqrt{2\pi\delta}\,\sigma\alpha^{-1/2} f_\alpha(h_y)
+\tag{135.38}
+$$
+
+and its widened version are comparable to sigma. Consequently the central error, with any of the three derivatives, is at most sigma P(Q)e^-bQ^3. The power delta^-1/4 from the critical insertion and all score costs in(135.30) are polynomial and have been included in P(Q). Neither sigma^-1 nor a rare output density is discarded in this calculation.
+
+For completeness, the excluded cells also admit all these derivatives in the actual count law. Equation(135.32)'s Gaussian envelope gives the normalized high binomial-escort tail at standardized Q^2 at most P(Q)e^-cQ^4, uniformly alpha in[3/4,5/4]. This proves the below-one case directly; the above-one domination used in Chapter 131 is not assumed below1. The ratio of the exact product high escort normalizer to C_H(alpha) is bounded by exp(Cm), by(135.32); its fixed derivatives cost only powers of m and log(C_j+1) after mode constants are removed, or the coarser finite-box exponential bound below.
+
+On EVERY original full count tuple, with d=delta sigma^2,
+
+$$
+ D^2\le2mE+2(\sum e_j)^2,
+$$
+
+$$
+ e^{\alpha aD^2-\alpha(E-h_y)^2/(2d)}
+ \le\exp\{2\alpha a(\sum e_j)^2+2\alpha am h_y
+                             +4\alpha a^2m^2d\}
+                      e^{-\alpha(E-h_y)^2/(4d)}.
+\tag{135.39}
+$$
+
+This is Chapter 131's global tuple inequality, valid for any bounded a>=0. At our compact kappa, a>=0 and bounded eventually. The prefactor logarithm is O(Q^(7/2)). Every fixed derivative polynomial in count modal surprise, D and likelihood surprise costs at most exp[C_k(Q^3+L)] on the finite count box; log B=O(Q^3), sum C_j<=CB^2. Gauge derivatives from(135.34) and exp(Cm) are smaller costs. Thus the reduced bad-cell derivative integrals, divided by sigma, are bounded by
+
+$$
+ \exp[-cQ^4+C Q^{7/2}+C_k(Q^3+L)]\le e^{-c'Q^4}.
+\tag{135.40}
+$$
+
+The Gaussian excluded cells obey the same conclusion. Use(135.39) with high variables, reserve an additional fixed likelihood fraction to absorb likelihood-score powers, and apply Cauchy--Schwarz to fixed raw Gaussian modal/charge moments times the high-coordinate tail. This only changes c in -cQ^4. Width changes do not affect the argument. These estimates retain insertion and SAME likelihood jointly, including extreme finite count charges; no bounded-insertion assumption is made.
+
+Denote the reduced count numerator and denominator after division by(135.34) by N_Q,A_Q, and the normalized high Gaussian counterparts by N_G,A_G. Combining(135.35)--(135.40) gives the explicit new relative interface
+
+$$
+ \max_{k\le3}\sup_{s,\kappa,y}
+ \sigma^{-1}\left(|\partial_s^k(N_Q-N_G)|
+                         +|\partial_s^k(A_Q-A_G)|\right)
+ \le P(Q)e^{-bQ^3}.
+\tag{135.41}
+$$
+
+All output suprema here are the fixed compacts in(135.3). The constants may be enlarged finitely many times and b may be decreased while remaining positive. This is a C3 bound on genuine differentiated original sums, not a claim inferred from ordered kernels.
+
+By(135.17),(135.38), A_G/sigma is bounded below and has bounded first three s derivatives. Also delta^1/4 N_G/sigma has bounded first three derivatives by(135.28). Therefore(135.41) and the ordinary quotient rule imply
+
+$$
+ \left\|\delta^{1/4}(Z_{\alpha,Q}-Z_{\alpha,G})\right\|_{3;S,K,R}
+                         \le P(Q)e^{-bQ^3}\to0.
+\tag{135.42}
+$$
+
+All low groups, count multiplicities and exact full-q calibration survived this calculation. No selection law P is substituted. Combining(135.42) with(135.28),(135.29) proves(135.4) on each simultaneous good-event class; their support-uniform probability exhaustion proves the original actual pair/path theorem. It also proves the denominator is positive uniformly at the scale used, without relying on an independently optimized environment.
+
+### 135.7 输出响应及其前三阶导数
+
+On the fixed classes and parameter compacts, the quartic integral in(135.3), with theta=kappa-s/(2V), and its value at y=0 are bounded above and bounded away from zero. All their first three s derivatives are bounded by quartic moment domination. Equation(135.4) thus passes through the C3 logarithm map on a positive interval. The common delta^-1/4 and(2pi V)^-1/2 cancel in the output ratio. This proves(135.5), with the sign MINUS log(I_y/I_0).
+
+The resulting derivatives have a useful exact finite-fiber interpretation. Let g_{s,kappa,y} be the normalized density proportional to (135.29), and let cum_k^{g}(z^2) denote its kth cumulant (mean for k=1). Differentiation of this quartic exponential family, justified by its common tails, gives for k=1,2,3
+
+$$
+ \partial_s^k\left[-\log\frac{I_Q(\kappa-s/(2V),y)}
+                                  {I_Q(\kappa-s/(2V),0)}\right]
+ =-\frac{\operatorname{cum}_k^{g_{s,\kappa,y}}(z^2)
+             -\operatorname{cum}_k^{g_{s,\kappa,0}}(z^2)}{(2V)^k}.
+\tag{135.43}
+$$
+
+The corresponding actual derivatives of the negative log Z-ratio differ by o_P(1), uniformly on the same compacts. Equivalently, at alpha=1+s sqrt(delta), these are the limits of delta^(k/2) times the kth alpha derivative at fixed physical a,mu,V,sigma and count array. No unscaled-alpha-derivative convergence or automatic information-cumulant theorem is asserted. The identity(135.43) is a classical exponential-family identity; the content here is the proved original-count C3 approximation that permits its use.
+
+At s=0, the undifferentiated statement is exactly the undifferentiated result of Chapter 133. The finite-noise profile(135.19) shows why noise must be kept before taking its limit: for nonzero sigma its order slope is C2/[V(2C2+sigma^2)], not1/(2V). Its C3 error tends to zero with sigma^2 without a comparison to delta. Negative kappa and both signs of s remain within fixed compacts; there is no growing-window, pole-threshold or phase-diagram claim.
+
+## 追加锚（本行以下为增补区）
