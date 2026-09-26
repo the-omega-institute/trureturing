@@ -89,32 +89,20 @@ local instance : DecidableEq supportArena.State := supportArena.toArena.stateDec
 private def massSample : MassInput where
   ratio := 0
   phase := 0
-  ratioNonnegative := le_refl 0
-  ratioBelowOne := by norm_num
-  phaseInUnit := by norm_num
 
 private def distributionSample : DistributionInput where
   ratio := 0
   threshold := 0
   phase := 0
-  ratioNonnegative := le_refl 0
-  ratioBelowOne := by norm_num
-  thresholdInUnit := by norm_num
-  phaseInUnit := by norm_num
 
 private def hitSample : HitInput where
   ratio := 0
   phase := 0
   threshold := 1 / 2
-  phaseInUnit := by norm_num
-  thresholdInterior := by norm_num
 
 private def supportSample : SupportInput where
   ratio := 1 / 2
   phase := 0
-  ratioPositive := by norm_num
-  ratioBelowOne := by norm_num
-  phaseInUnit := by norm_num
 
 theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
     (∀ (r x : ℝ), 0 ≤ r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
@@ -129,12 +117,22 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
   constructor
   · intro h _
     funext input
-    obtain ⟨hprob, hcarrier⟩ := h input.ratio input.phase
-      input.ratioNonnegative input.ratioBelowOne input.phaseInUnit
-    exact Prod.ext (isProbabilityMeasure_iff.mp hprob) hcarrier
+    change MechanicalReadoutSources.massReadout input =
+      MechanicalReadoutSources.massTarget input
+    by_cases hc : 0 ≤ input.ratio ∧ input.ratio < 1 ∧
+        input.phase ∈ Ico (0 : ℝ) 1
+    · simp only [MechanicalReadoutSources.massTarget, if_pos hc]
+      change (geometricAtomicMeasure input.ratio input.phase Set.univ,
+        geometricAtomicMeasure input.ratio input.phase (Ioc (0 : ℝ) 1)) = (1, 1)
+      obtain ⟨hprob, hcarrier⟩ := h input.ratio input.phase hc.1 hc.2.1 hc.2.2
+      exact Prod.ext (isProbabilityMeasure_iff.mp hprob) hcarrier
+    · simp [MechanicalReadoutSources.massTarget, hc]
   · intro h r x hr0 hr1 hx
     have hv := congrFun (h ())
-      (MechanicalReadoutSources.MassInput.mk r x hr0 hr1 hx)
+      (MechanicalReadoutSources.MassInput.mk r x)
+    have hc : 0 ≤ r ∧ r < 1 ∧ x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, hx⟩
+    simp only [massReadout, massTarget, MechanicalReadoutSources.massTarget,
+      if_pos hc] at hv
     change (geometricAtomicMeasure r x Set.univ,
       geometricAtomicMeasure r x (Ioc (0 : ℝ) 1)) = (1, 1) at hv
     constructor
@@ -180,11 +178,20 @@ theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrim
   constructor
   · intro h _
     funext input
-    exact h input.ratio input.threshold input.phase input.ratioNonnegative
-      input.ratioBelowOne input.thresholdInUnit input.phaseInUnit
+    change MechanicalReadoutSources.distributionReadout input =
+      MechanicalReadoutSources.distributionTarget input
+    by_cases hc : 0 ≤ input.ratio ∧ input.ratio < 1 ∧
+        input.threshold ∈ Icc (0 : ℝ) 1 ∧ input.phase ∈ Ico (0 : ℝ) 1
+    · simp only [MechanicalReadoutSources.distributionTarget, if_pos hc]
+      exact h input.ratio input.threshold input.phase hc.1 hc.2.1 hc.2.2.1 hc.2.2.2
+    · simp [MechanicalReadoutSources.distributionTarget, hc]
   · intro h r alpha x hr0 hr1 ha hx
-    exact congrFun (h ())
-      (MechanicalReadoutSources.DistributionInput.mk r alpha x hr0 hr1 ha hx)
+    have hv := congrFun (h ())
+      (MechanicalReadoutSources.DistributionInput.mk r alpha x)
+    have hc : 0 ≤ r ∧ r < 1 ∧ alpha ∈ Icc (0 : ℝ) 1 ∧
+        x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, ha, hx⟩
+    simpa only [distributionReadout, distributionTarget,
+      MechanicalReadoutSources.distributionTarget, if_pos hc] using hv
 
 private def distributionZero : DistributionOutput := fun _ => 0
 private def distributionOne : DistributionOutput := fun _ => 1
@@ -225,10 +232,18 @@ theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
   constructor
   · intro h _
     funext input
-    exact h input.ratio input.phase input.threshold input.phaseInUnit
-      input.thresholdInterior
+    change MechanicalReadoutSources.hitReadout input =
+      MechanicalReadoutSources.hitTarget input
+    by_cases hc : input.phase ∈ Ico (0 : ℝ) 1 ∧
+        input.threshold ∈ Ioo (0 : ℝ) 1
+    · simp only [MechanicalReadoutSources.hitTarget, if_pos hc]
+      exact h input.ratio input.phase input.threshold hc.1 hc.2
+    · simp [MechanicalReadoutSources.hitTarget, hc]
   · intro h r x alpha hx ha
-    exact congrFun (h ()) (MechanicalReadoutSources.HitInput.mk r x alpha hx ha)
+    have hv := congrFun (h ()) (MechanicalReadoutSources.HitInput.mk r x alpha)
+    have hc : x ∈ Ico (0 : ℝ) 1 ∧ alpha ∈ Ioo (0 : ℝ) 1 := ⟨hx, ha⟩
+    simpa only [hitReadout, hitTarget, MechanicalReadoutSources.hitTarget,
+      if_pos hc] using hv
 
 private def hitZero : HitOutput := fun _ => 0
 private def hitOne : HitOutput := fun _ => 1
@@ -263,10 +278,18 @@ theorem supportBridge : LegacyPrimitiveRealization supportArena.toPrimitiveLawAr
   constructor
   · intro h _
     funext input
-    exact h input.ratio input.phase input.ratioPositive input.ratioBelowOne
-      input.phaseInUnit
+    change MechanicalReadoutSources.supportReadout input =
+      MechanicalReadoutSources.supportTarget input
+    by_cases hc : 0 < input.ratio ∧ input.ratio < 1 ∧
+        input.phase ∈ Ico (0 : ℝ) 1
+    · simp only [MechanicalReadoutSources.supportTarget, if_pos hc]
+      exact h input.ratio input.phase hc.1 hc.2.1 hc.2.2
+    · simp [MechanicalReadoutSources.supportTarget, hc]
   · intro h r x hr0 hr1 hx
-    exact congrFun (h ()) (MechanicalReadoutSources.SupportInput.mk r x hr0 hr1 hx)
+    have hv := congrFun (h ()) (MechanicalReadoutSources.SupportInput.mk r x)
+    have hc : 0 < r ∧ r < 1 ∧ x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, hx⟩
+    simpa only [supportReadout, supportTarget,
+      MechanicalReadoutSources.supportTarget, if_pos hc] using hv
 
 private def supportEmpty : SupportOutput := fun _ => ∅
 private def supportFull : SupportOutput := fun _ => Set.univ

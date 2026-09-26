@@ -81,15 +81,16 @@ def geometricAtomicMeasure (r x : ℝ) : Measure ℝ :=
 structure MassInput where
   ratio : ℝ
   phase : ℝ
-  ratioNonnegative : 0 ≤ ratio
-  ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def massReadout (input : MassInput) : ENNReal × ENNReal :=
   (geometricAtomicMeasure input.ratio input.phase Set.univ,
     geometricAtomicMeasure input.ratio input.phase (Set.Ioc (0 : ℝ) 1))
 
-def massTarget (_ : MassInput) : ENNReal × ENNReal := (1, 1)
+def massTarget (input : MassInput) : ENNReal × ENNReal :=
+  by
+    classical
+    exact if 0 ≤ input.ratio ∧ input.ratio < 1 ∧
+        input.phase ∈ Set.Ico (0 : ℝ) 1 then (1, 1) else massReadout input
 
 abbrev MassOutput := MassInput → ENNReal × ENNReal
 
@@ -97,16 +98,17 @@ structure DistributionInput where
   ratio : ℝ
   threshold : ℝ
   phase : ℝ
-  ratioNonnegative : 0 ≤ ratio
-  ratioBelowOne : ratio < 1
-  thresholdInUnit : threshold ∈ Set.Icc (0 : ℝ) 1
-  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def distributionReadout (input : DistributionInput) : ENNReal :=
   geometricAtomicMeasure input.ratio input.phase (Set.Iic input.threshold)
 
 def distributionTarget (input : DistributionInput) : ENNReal :=
-  ENNReal.ofReal (completedReadout input.ratio input.threshold input.phase)
+  by
+    classical
+    exact if 0 ≤ input.ratio ∧ input.ratio < 1 ∧
+        input.threshold ∈ Set.Icc (0 : ℝ) 1 ∧ input.phase ∈ Set.Ico (0 : ℝ) 1 then
+      ENNReal.ofReal (completedReadout input.ratio input.threshold input.phase)
+    else distributionReadout input
 
 abbrev DistributionOutput := DistributionInput → ENNReal
 
@@ -114,8 +116,6 @@ structure HitInput where
   ratio : ℝ
   phase : ℝ
   threshold : ℝ
-  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
-  thresholdInterior : threshold ∈ Set.Ioo (0 : ℝ) 1
 
 def hitReadout (input : HitInput) : ENNReal :=
   geometricAtomicMeasure input.ratio input.phase {input.threshold}
@@ -123,23 +123,28 @@ def hitReadout (input : HitInput) : ENNReal :=
 def hitTarget (input : HitInput) : ENNReal :=
   by
     classical
-    exact ∑' n : ℕ, if ∃ z : ℤ,
-        (z : ℝ) = input.phase + (((n + 1 : ℕ) : ℝ)) * input.threshold then
-      ENNReal.ofReal ((1 - input.ratio) ^ 2 * input.ratio ^ n) else 0
+    exact if input.phase ∈ Set.Ico (0 : ℝ) 1 ∧
+        input.threshold ∈ Set.Ioo (0 : ℝ) 1 then
+      ∑' n : ℕ, if ∃ z : ℤ,
+          (z : ℝ) = input.phase + (((n + 1 : ℕ) : ℝ)) * input.threshold then
+        ENNReal.ofReal ((1 - input.ratio) ^ 2 * input.ratio ^ n) else 0
+    else hitReadout input
 
 abbrev HitOutput := HitInput → ENNReal
 
 structure SupportInput where
   ratio : ℝ
   phase : ℝ
-  ratioPositive : 0 < ratio
-  ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def supportReadout (input : SupportInput) : Set ℝ :=
   (geometricAtomicMeasure input.ratio input.phase).support
 
-def supportTarget (_ : SupportInput) : Set ℝ := Set.Icc (0 : ℝ) 1
+def supportTarget (input : SupportInput) : Set ℝ :=
+  by
+    classical
+    exact if 0 < input.ratio ∧ input.ratio < 1 ∧
+        input.phase ∈ Set.Ico (0 : ℝ) 1 then
+      Set.Icc (0 : ℝ) 1 else supportReadout input
 
 abbrev SupportOutput := SupportInput → Set ℝ
 abbrev JumpOutput := ℝ → ℝ → ℝ → ℝ
