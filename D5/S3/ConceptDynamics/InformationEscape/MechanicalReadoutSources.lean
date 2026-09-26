@@ -9,6 +9,7 @@
 import D5.S1.Words.Mechanical.MechanicalBalance
 import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.MeasureTheory.Measure.Support
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.MeasureTheory.Integral.Lebesgue.Basic
 
 set_option autoImplicit false
@@ -17,7 +18,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
-open Set Finset MeasureTheory
+open Set MeasureTheory
 open scoped BigOperators
 open D5.S1.Words.Mechanical
 
@@ -29,16 +30,16 @@ abbrev SeriesOutput :=
   (ℝ → ℝ → ℝ → ℝ) × (ℝ → ℝ) × (ℝ → ℝ → ℝ → ℝ)
 
 def slopeReadout (alpha beta : ℝ) (n : ℕ) : Set ℝ :=
-  {x | x ∈ Ico 0 1 ∧ ∃ k : Fin n,
+  {x | x ∈ Set.Ico 0 1 ∧ ∃ k : Fin n,
     lowerMechanicalWord beta x k.val ≠ lowerMechanicalWord alpha x k.val}
 
 def phaseReadout (alpha delta : ℝ) (n : ℕ) (u : ℝ) : ENNReal :=
-  volume {x : ℝ | x ∈ Ico 0 1 ∧ ∃ k : Fin n,
+  volume {x : ℝ | x ∈ Set.Ico 0 1 ∧ ∃ k : Fin n,
     lowerMechanicalWord (alpha + delta) (x + u) k.val ≠
       lowerMechanicalWord alpha x k.val}
 
 def actualPrefix (weights : ℕ → ℝ) (alpha x : ℝ) (n : ℕ) : ℝ :=
-  ∑ j ∈ range n, weights j * (lowerMechanicalLetter alpha x j : ℝ)
+  ∑ j ∈ Finset.range n, weights j * (lowerMechanicalLetter alpha x j : ℝ)
 
 def completedReadout (r alpha x : ℝ) : ℝ :=
   ∑' k : ℕ, ((1 - r) * r ^ k) * (lowerMechanicalLetter alpha x k : ℝ)
@@ -58,7 +59,7 @@ def coefficientMassReadout (r : ℝ) : ℝ :=
 
 def thresholdSeriesReadout (r alpha x : ℝ) : ℝ :=
   ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
-    (∑ i ∈ range (j + 1),
+    (∑ i ∈ Finset.range (j + 1),
       if (((i + 1 : ℕ) : ℝ) - x) / ((j + 1 : ℕ) : ℝ) ≤ alpha then
         (1 : ℝ) else 0)
 
@@ -82,11 +83,11 @@ structure MassInput where
   phase : ℝ
   ratioNonnegative : 0 ≤ ratio
   ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def massReadout (input : MassInput) : ENNReal × ENNReal :=
   (geometricAtomicMeasure input.ratio input.phase Set.univ,
-    geometricAtomicMeasure input.ratio input.phase (Ioc (0 : ℝ) 1))
+    geometricAtomicMeasure input.ratio input.phase (Set.Ioc (0 : ℝ) 1))
 
 def massTarget (_ : MassInput) : ENNReal × ENNReal := (1, 1)
 
@@ -98,11 +99,11 @@ structure DistributionInput where
   phase : ℝ
   ratioNonnegative : 0 ≤ ratio
   ratioBelowOne : ratio < 1
-  thresholdInUnit : threshold ∈ Icc (0 : ℝ) 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+  thresholdInUnit : threshold ∈ Set.Icc (0 : ℝ) 1
+  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def distributionReadout (input : DistributionInput) : ENNReal :=
-  geometricAtomicMeasure input.ratio input.phase (Iic input.threshold)
+  geometricAtomicMeasure input.ratio input.phase (Set.Iic input.threshold)
 
 def distributionTarget (input : DistributionInput) : ENNReal :=
   ENNReal.ofReal (completedReadout input.ratio input.threshold input.phase)
@@ -113,8 +114,8 @@ structure HitInput where
   ratio : ℝ
   phase : ℝ
   threshold : ℝ
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
-  thresholdInterior : threshold ∈ Ioo (0 : ℝ) 1
+  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
+  thresholdInterior : threshold ∈ Set.Ioo (0 : ℝ) 1
 
 def hitReadout (input : HitInput) : ENNReal :=
   geometricAtomicMeasure input.ratio input.phase {input.threshold}
@@ -133,12 +134,12 @@ structure SupportInput where
   phase : ℝ
   ratioPositive : 0 < ratio
   ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+  phaseInUnit : phase ∈ Set.Ico (0 : ℝ) 1
 
 def supportReadout (input : SupportInput) : Set ℝ :=
   (geometricAtomicMeasure input.ratio input.phase).support
 
-def supportTarget (_ : SupportInput) : Set ℝ := Icc (0 : ℝ) 1
+def supportTarget (_ : SupportInput) : Set ℝ := Set.Icc (0 : ℝ) 1
 
 abbrev SupportOutput := SupportInput → Set ℝ
 abbrev JumpOutput := ℝ → ℝ → ℝ → ℝ
