@@ -5550,3 +5550,17 @@ Hannah Cairo、Ruixiang Zhang，*Power loss for the Mizohata–Takeuchi Conjectu
 原始 signed count 比较、精确实参数归一化标记模态和尾部控制分别沿用第 111、124、132、134 章。Poisson 求和及实指数族二阶恒等式属于经典工具；本章重新支付 $\rho^{-1}=O(Q^4)$ 下的所有逆噪声因子，并保持第 101 章 (101.19)、(101.8)、(101.22)–(101.23)、(101.31) 的参考律映射。外围能量先在共同实现中平移，之后才消去外围惊奇量方差，未由普通全变差或弱极限直接转移无界矩。
 
 非线性统计浓度论文 [arXiv:0708.4272v1](https://arxiv.org/abs/0708.4272v1) 的原 source 路径返回 HTTP 403，未采用其定理。加权 Ehrhart 多项式和附加 Riemann Hypothesis 的素点计数亦不提供本章所需的投影二项薄带概率。本章不主张检索穷尽性、全局原创性、最优噪声边界或零噪声结论；平台近似仅筛选候选层，精确曲率与完整物理后验始终保留。
+
+## 追加：超临界介观窗口中的等权双阱
+
+对应理论卷第 137 章。在第 133、135 章的同一完整乘积计数律上，令 $a=(2V)^{-1}+\eta_Q$，其中 $\eta_Q\downarrow0$、$t_Q=\eta_Q/\sqrt\delta\to\infty$，速度为 $v_Q=t_Q^2$。正文证明 $v_Q^{-1}\log(\delta^{1/4}Z_Q)\to V^4/C_2$、重标度电荷的等权双阱极限及所有固定多项式增长连续测试的收敛，并给出保留经验系数的 Laplace 原理。原始 pair/path 数据概率、确定真实支持一致性、固定输出紧集和原严格半指数噪声余量均保留；辅助乘积计数律不与完整固定总数选择律等同。
+
+Van Hao Can、Viet-Hung Pham，*A Cramér type moderate deviation theorem for the critical Curie-Weiss model*，[arXiv:1709.04267v2](https://arxiv.org/abs/1709.04267v2)。原 PDF 200950 字节，SHA256 `650b110a482de2b217ed967a7cdcb0eed4c2ae7809a4d8ac6e49d3ed2ceae548`，12 页，版本日期 2017-10-30。定理 1.4 和推论 1.5 针对 Rademacher Curie–Weiss 模型的固定临界参数 $\beta=1,h=0$、$W_n=S_n/n^{3/4}$ 与 $0\le x\le n^{1/12}$，给出四次极限尾部的显式修正。其直接 Laplace 方法保留二项 Stirling 因子及实际配分函数，区别中央计数和远尾。固定临界条件与误差范围不能替代本章任意缓慢离开临界窗口的异质计数组和指定含噪能量输出。原抽取中定理 1.4 的 $F$ 尾积分与相邻分布函数记法有冲突，末尾比率表也有未采用的表述；这些公式不作本章前提，不据此静默修复原文。
+
+Francesca Collet、Richard C. Kraaij，*Dynamical moderate deviations for the Curie-Weiss model*，[arXiv:1607.05182v2](https://arxiv.org/abs/1607.05182v2)。原 PDF 344721 字节，SHA256 `8e5bc67452b3bbc69c826f3170999a1fbd7650cec0a395b60140e4db1af4f769`，26 页；arXiv 标记 2017-01-13，标题页另印 2018-09-10，二者均保留。定理 2.7 要求 $\kappa\ge0$、$b_n\to\infty$、$b_n^4/n\to0$，温度参数为 $1+\kappa b_n^{-2}$，并假定初态已满足速度 $nb_n^{-4}$ 的大偏差原理；结论是重标度磁化路径的作用量，Lagrangian 为 $|\dot x-2(\kappa x-x^3/3)|^2/8$。第 3.3 节通过非线性生成元的紧集收敛，配合包含函数与 Hamilton–Jacobi 比较原则证明该结论。附录假设 A.14 与定理 A.17 还要求适定鞅问题、可测解律、扩展生成元收敛、初态大偏差及比较原则。该动力学模型和初态假设不提供本章静态指定能量输出下的相对密度、归一化因子或等权结论；也不由其固定临界窗口的定理 2.8 推出增长窗口结果。未把外部 Feng–Kurtz 文献当作已经独立核对的本章定理来源。
+
+Marius Costeniuc、Richard S. Ellis、Hugo Touchette，*Complete Analysis of Phase Transitions and Ensemble Equivalence for the Curie-Weiss-Potts Model*，[arXiv:cond-mat/0410744v1](https://arxiv.org/abs/cond-mat/0410744v1)。原 PDF 314816 字节，SHA256 `5d9a3083b55b17a97d5a149bf482b6f812b910b080c6b710b78a4b88a3622009`，25 页，版本日期 2004-10-28。模型固定字母数 $q\ge3$、均匀独立先验及能量 $-\|L_n\|^2/2$；微正则条件是能量区间，取热力学极限及区间宽度趋零。定理 5.1 以微正则熵的严格支撑线、非严格支撑线和无支撑线，区别平衡宏观态上的完全、部分和不等价；引理 6.1 与定理 6.2 将其用于该 Potts 模型。它没有给出本章三角数组在极窄带噪输出下的相对密度，更不能仅据能量条件化便替换为另一个正则系综。原抽取在第 6 节区间端点出现 $u_0$ 与 $-u_0/2$ 的不一致写法，相关数值端点不采用；此前一般系综定理及第三、四节全部证明不作为已完成的独立核对范围。
+
+高斯电荷条件化、二次型行列式、实指数倾斜、Fourier 反演、Stirling 展开、有限维 Laplace 方法和 Landau 双阱机制均为成熟方法。本章具体证明的连接是：移动实鞍点处有界的尺度化密度因子、整条电荷轴上的速度尾界、趋于一的相对反射比较，以及成本 $P(Q)e^{Cv_Q}$ 的同一输出计数回接。前者使任意缓慢发散的 $v_Q$ 不误吞 $O(\log Q)$；反射比较决定两个井的权重，不能仅由速率函数有两个零点推出。原始计数回接的指数精度先吸收多项式成本，再取自由能极限。
+
+三份原 PDF 的抽取分别保留 78501、163547、91490 字节警告及原字形缺陷；不将成功读取等同于无瑕抽取。正文允许 $\eta_Q^3/\delta$、$\sigma^2v_Q$ 等修正绝对发散，只在速度尺度上证明其可忽略。不主张通用的未缩放前因子、有限级精确对称、阱内 Gaussian 波动、增长测试族、全局相图或全局原创性。

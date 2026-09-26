@@ -34355,3 +34355,363 @@ For clarity, the changed inverse-noise payments are collected here. Every consta
 该结论保留第 134 章的三次尺度结果，不主张必要条件、最优噪声阈值、零噪声极限、原始数据环境上的期望收敛或双根同步性质。文献中的随机旋转和可扰动曲面不提供本模型的实际经验中心结论；经典凸位置计数的来源与适用边界见对应 Library 增补。这是普通数学推导，未作 Lean 形式核验。
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 超临界介观窗口中的等权双阱
+
+在第 133、135 章的完整乘积计数律上，将临界二次权重增加 $\eta_Q\downarrow0$，但允许 $\eta_Q/\sqrt\delta\to\infty$ 任意缓慢。本章保留精确经验系数和原输出，证明自由能、等权双阱的所有固定多项式矩，以及经验速率函数的 Laplace 原理。自由能尺度上的误差与决定两阱相对权重的误差分别控制；不把增长参数代入固定紧窗口定理。
+
+### 137.1 原始乘积计数律上的陈述
+
+Retain the original fixed legal amplitude $r$ and $\beta\in(1/2,1)$, legal Q sequence, all M,q/group floors, full window, stationary pair/path experiments, and calibrated centers. Use the notation of Chapter 135:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ L=\log(1/\sigma)\to\infty,\quad
+ \limsup L/Q^3<c_q/2,\quad c_q=\phi(1-\beta)/\beta.
+ \tag{137.1}
+$$
+Here sigma is strictly positive at every finite level. Write, on the SAME actual data fiber,
+$$
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,
+$$
+$$
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+ \quad E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),
+ \quad T=(E-V)/\sqrt\delta.
+ \tag{137.2}
+$$
+Every binomial multiplicity and every low or empty group is retained; deterministic groups are interpreted directly. In particular D is centered at the binomial means, while E uses the original calibrated mu. We keep the original full-q calibration in the product comparison; Q here is the auxiliary PRODUCT count law, not the original full-q support law P.
+
+For any deterministic sequence eta=eta_Q>0 with eta->0 and t=eta/sqrt(delta)->infinity, put
+$$
+ v=\eta^2/\delta=t^2,\quad a=(2V)^{-1}+\eta,
+ \quad U=\sqrt{\delta/\eta}\,D,\quad h_y=V+\sqrt\delta y,
+$$
+$$
+ A_Q(y)=\sum_nQ(n)e^{-(T(n)-y)^2/(2\sigma^2)},\qquad
+ N_Q(y)=\sum_nQ(n)e^{aD(n)^2-(T(n)-y)^2/(2\sigma^2)},
+ \quad Z_Q(\eta,y)=N_Q(y)/A_Q(y).
+ \tag{137.3}
+$$
+The normalized numerator defines pi_{Q,eta,y}. Subscripts on v_j distinguish the coordinate variances from the scalar speed v. Define the exact finite empirical quantities
+$$
+ \beta_Q=\frac{C_2}{4V^4},\quad G_Q=\frac{V^4}{C_2},
+ \quad m_Q=\sqrt{2V^4/C_2},\quad
+ J_Q(u)=\beta_Q(u^2-m_Q^2)^2.
+ \tag{137.4}
+$$
+**定理 137.1（超临界自由能、等权双阱与经验 Laplace 原理）。** For every fixed R<infinity, the conclusions are
+$$
+ \sup_{|y|\le R}\left|v^{-1}\log(\delta^{1/4}Z_Q(\eta,y))-G_Q\right|
+       \longrightarrow0;
+ \tag{137.A}
+$$
+for each fixed continuous phi with |phi(u)|<=C(1+|u|^p), for some fixed finite p,
+$$
+ \sup_{|y|\le R}\left|E_{\pi_{Q,\eta,y}}\phi(U)
+          -\tfrac12\{\phi(m_Q)+\phi(-m_Q)\}\right|\longrightarrow0;
+ \tag{137.B}
+$$
+and for each fixed bounded continuous phi,
+$$
+ \sup_{|y|\le R}\left|v^{-1}\log E_{\pi_{Q,\eta,y}}e^{v\phi(U)}
+                  -\sup_{u\in\mathbb R}\{\phi(u)-J_Q(u)\}\right|
+       \longrightarrow0.
+ \tag{137.C}
+$$
+All convergence is in original raw-data probability, uniformly over deterministic size-q supports, separately for the original pair and path laws. More explicitly, for any positive tolerance, the supremum over those supports of the probability that the displayed SAME-fiber output supremum exceeds the tolerance tends to zero. No supremum over all eta sequences at each finite Q is asserted: the statements hold for EACH permitted deterministic sequence, with estimates below depending only on its current eta,t and the common deterministic class. There is no independence assumption on actual path rows beyond the already established good-event results. Every empirical coefficient in (137.4) is retained exactly.
+
+These claims imply convergence in every fixed Wasserstein-p metric, p>=1, to the empirical two-point law, by the weak and higher-moment bounds below. Neither discrete-to-continuous total variation, growing moments/tests, entropy-order derivatives, identification with P, nor a phase diagram outside this window is claimed.
+
+### 137.2 同一实际数据类
+
+On each fixed tight-constant simultaneous class from Chapters 133 and 135,
+$$
+ n_g\le C\delta^{-4},\quad p_j\in[1/4,3/4],\quad
+ \sum C_j\le CB^2,\quad \log q=c_qQ^3+O(1),
+$$
+$$
+ c\le V,C_2\le C,\quad v_*\le C\delta,\quad
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \|e\|^2\le C\delta^{10},\quad (\sum|e_j|)^2\le C\delta^6.
+ \tag{137.5}
+$$
+There are at least c/delta coordinates with v_j between c delta and C delta. Here n_g denotes the number of groups, to avoid confusing it with the well location m_Q. The complements of these classes are exhausted support-uniformly in actual probability. Every subsequent estimate is deterministic and uniform within one such class; this is the common realization on which the proof is combined.
+
+Choose constants l,zeta>0 with eventually L<=lQ^3, l<c_q/2, zeta<c_q/2, and 2zeta<c_q-l. Let H={j:C_j>=exp(zeta Q^3)}, V_H=sum_H v_j, s_r=sum_H v_j^r. The inherited unweighted cell geometry gives
+$$
+ V-V_H\ge0,\quad V-V_H+|s_2-\delta C_2|
+       \le P(Q)e^{-bQ^3},\qquad b>0.
+ \tag{137.6}
+$$
+P is a fixed polynomial, allowed to change finitely many times. The block in (137.5) lies in H. Low tuples will be kept with their exact probabilities; (137.6) is not a replacement of the full scalar V in the observation. The critical compact-parameter conclusions of Chapters 133 and 135 are not applied at kappa=-t. We reuse their proved unweighted geometry, exact conditional transform, global density mechanism and full-tuple tail inequality, checking the new integrations explicitly.
+
+### 137.3 精确电荷条件化与中等偏离鞍点
+
+Let Y_j~N(0,v_j), j in H, independently before observation. Define D_G=sum_H Y_j, E_H=sum_H(Y_j-e_j)^2, and F=E_H+N with N~N(0,delta sigma^2), independent before conditioning. The same output is F=h_y. Its unconditional density f(h_y) satisfies
+$$
+ c_R\le\sqrt\delta f(h_y)\le C_R,
+ \quad A_G(y)=\sqrt{2\pi\delta}\,\sigma f(h_y)\asymp\sigma.
+ \tag{137.7}
+$$
+This is the unpenalized local estimate from (135.17) and (135.38) at alpha=1; its proof uses the spectral block and is uniform for0<=sigma<=1. It retains full h_y and the noncentral e. Thus it is applicable before any new critical insertion and is not a denominator obtained by assuming the desired theorem.
+
+Let C=diag(v_j)_{H}, w=(v_j)_{H}, and
+$$
+ A=C-ww^T/V_H,\quad m_r=wr/V_H-e_H.
+ \tag{137.8}
+$$
+Conditional on D_G=r, E_H has law ||R+m_r||^2 with R~N(0,A). Interlacing retains at least c/delta-1 eigenvalues of A comparable to delta; ||A||<=C delta and tr A^2=s_2+O(delta^2). This is anisotropic conditioning, not a spherical law. The exact cumulant of F conditional on r is
+$$
+ K_r(z)=-\tfrac12\log\det(I-2zA)
+          +z m_r^T(I-2zA)^{-1}m_r
+          +\tfrac12\delta\sigma^2 z^2.
+ \tag{137.9}
+$$
+Zero covariance directions contribute their deterministic squared means. Real z is below the first positive pole. Since sigma>0, K'_r(z) tends to minus infinity as z tends to minus infinity; it tends to plus infinity at the positive pole. K''_r>0. Consequently there is a unique REAL saddle z_r with K'_r(z_r)=h_y; no sign is imposed at small r.
+
+Fix M<infinity and set r=sqrt(eta/delta)u, |u|<=M. Put d_r=K'_r(0)-h_y and d_sigma=2C_2+sigma^2. Exact covariance algebra and (137.5),(137.6) give, uniformly in this region,
+$$
+ \|m_r\|^2=\eta\frac{C_2}{V^2}u^2
+       +O(\sqrt\eta\,\delta^5+\delta^{10}+P(Q)e^{-bQ^3}),
+$$
+$$
+ d_r=\eta\frac{C_2}{V^2}u^2-\sqrt\delta y
+                  +O(\delta+\sqrt\eta\,\delta^5+P(Q)e^{-bQ^3}),
+ \quad K''_r(0)=\delta\{d_\sigma+O_M(\eta+\delta)}.
+ \tag{137.10}
+$$
+For example |w^Te_H|<=sqrt(s_2)||e_H||=O(delta^(11/2)); multiplying by r produces O(sqrt(eta)delta^5). Also tr A=V_H-s_2/V_H, and m_r^TAm_r<=C delta||m_r||^2. These observations pay the noncentral and removed-charge terms in (137.10).
+
+Whenever |z|delta<=a_0 for a fixed sufficiently small a_0, differentiating the exact resolvent in (137.9) gives
+$$
+ c\delta\le K''_r(z)\le C_M\delta,
+ \qquad |K'''_r(z)|\le C_M\delta^2.
+ \tag{137.11}
+$$
+For (137.11), the central third derivative is bounded by C tr A^3=O(delta^2); the noncentral third derivative by C||A||^2||m_r||^2=O_M(delta^2 eta); the noise has zero third derivative. The second derivative noise contribution delta sigma^2 is kept. Monotonicity and (137.11), first on a bracket of radius C_M(eta+sqrt(delta))/delta, prove
+$$
+ |z_r|\delta\le C_M(\eta+\sqrt\delta),\quad
+ z_r=-d_r/K''_r(0)+O_M((\eta+\sqrt\delta)^2/\delta).
+ \tag{137.12}
+$$
+The bracket is eventually inside the domain in (137.11). Taylor expansion there, with its remainder retained, gives
+$$
+ K_r(z_r)-z_rh_y
+   =-\frac{d_r^2}{2K''_r(0)}
+        +O_M((\eta+\sqrt\delta)^3/\delta).
+ \tag{137.13}
+$$
+The last error can diverge absolutely. Divided by v=eta^2/delta it tends to zero because eta->0 and t->infinity. We have not discarded it at absolute order one.
+
+We next pay the local density prefactor at the exact saddle. Under the real tilt z_r, R+m_r has covariance A_r=A(I-2z_rA)^-1 and mean (I-2z_rA)^-1m_r; the noise has shifted mean delta sigma^2 z_r and unchanged variance delta sigma^2. Equations (137.11),(137.12) imply that A_r retains the variance block, ||A_r||<=C delta, and the noncentral variance is O_M(delta eta). For the centered tilted variable divided by sqrt(delta), its characteristic function is the product of the exact quadratic-Gaussian factors and exp(-sigma^2 xi^2/2). Its modulus is bounded by
+$$
+ (1+c\delta\xi^2)^{-c'/\delta}.
+ \tag{137.14}
+$$
+On bounded xi, its logarithm is -K''_r(z_r)xi^2/(2delta)+O_M(sqrt(delta)(1+|xi|^3)) in the usual fixed-frequency expansion. The noncentral terms obey the same estimate from ||m_r||^2=O_M(eta) and the resolvent bounds. The envelope (137.14) has uniformly integrable tails, even with any fixed xi power: split at |xi|=delta^-1/2, use a Gaussian bound below, and substitute sqrt(delta)xi above. Fourier inversion at the EXACT tilted mean therefore proves
+$$
+ \sqrt\delta f^{(z_r)}_r(h_y)
+   =(2\pi K''_r(z_r)/\delta)^{-1/2}+o_M(1),
+ \qquad c_M\le\sqrt\delta f^{(z_r)}_r(h_y)\le C_M.
+ \tag{137.15}
+$$
+The density-change identity is f_r(h_y)=exp(K_r(z_r)-z_rh_y)f^{(z_r)}_r(h_y). The logarithm of the scaled prefactor in (137.15) is O_M(1), not O(log Q). This distinction is essential for the all-sequence target.
+
+Combining (137.7),(137.10)--(137.15), define the finite-noise coefficient
+$$
+ \beta_{Q,\sigma}=\frac{C_2^2}{2V^4(2C_2+\sigma^2)}.
+ \tag{137.16}
+$$
+Then
+$$
+ \sup_{|u|\le M,|y|\le R}
+ \left|v^{-1}\log\frac{f_{\sqrt{\eta/\delta}u}(h_y)}{f(h_y)}
+                           +\beta_{Q,\sigma}u^4\right|\longrightarrow0.
+ \tag{137.17}
+$$
+An adequate deterministic error bound is C_{M,R}(eta+t^-1+v^-1+sqrt(delta))+o_M(1)/v plus an exponentially small term times a fixed power of delta^-1. To check the main terms, the cross product of eta u^2 and sqrt(delta)y in d_r^2 divided by eta^2 is O_M(t^-1), the y-square term is O(v^-1), the covariance correction is O_M(eta+delta), and (137.13) divided by v is O(eta+sqrt(delta)/v). Since eta>=sqrt(delta) eventually, every factor eta^-1 appearing with (137.6) is paid by a power of delta^-1. Finally beta_{Q,sigma}=beta_Q+O(sigma^2), uniformly on the class. Finite noise has been retained through (137.17), before using sigma->0; no comparison of sigma with eta or delta was required.
+
+### 137.4 精确尺度因子与全局尾部
+
+The Gaussian charge has variance V_H. Let
+$$
+ r_H=(2V_H)^{-1}-(2V)^{-1}\ge0,
+$$
+$$
+ w_Q(u,y)=\frac1{\sqrt{2\pi V_H}}
+   \exp\{v u^2-r_H(\eta/\delta)u^2\}
+   \frac{f_{\sqrt{\eta/\delta}u}(h_y)}{f(h_y)}.
+ \tag{137.18}
+$$
+The Gaussian analogue of $\delta^{1/4}Z$ is exactly
+$$
+ \delta^{1/4} Z_G(\eta,y)=\sqrt t\int_{\mathbb R}w_Q(u,y)\,du.
+ \tag{137.19}
+$$
+This follows by cancelling exp[-r^2/(2V_H)] against exp[a r^2], followed by r=sqrt(eta/delta)u. The normalization has not been replaced by an unspecified polynomial. Because r_H is exponentially small and eta>=sqrt(delta), its exponent divided by v is uniformly negligible on compact u. Thus (137.17),(137.18) imply
+$$
+ \sup_{|u|\le M,|y|\le R}
+ \left|v^{-1}\log w_Q(u,y)-F_Q(u)\right|\to0,
+ \quad F_Q(u)=u^2-\beta_Q u^4=G_Q-J_Q(u).
+ \tag{137.20}
+$$
+This is a relative logarithmic density estimate, not an additive rare-density approximation.
+
+Local estimates do not exclude larger charges. The exact negative-energy tilt from Chapters 133 and 135, which depends on r but not on the insertion a, gives for |z| above a fixed Z_R,
+$$
+ \sqrt\delta f_{\delta^{-1/4}z}(h_y)
+ \le C\exp[-c z^4/(1+\sqrt\delta z^2)].
+ \tag{137.21}
+$$
+For completeness, put d=tr A+||m_r||^2-h_y. At these charges c delta r^2<=d<=C delta r^2. The centered log Laplace transform at -lambda is at most C lambda^2 delta(1+delta r^2), eigenvalue by eigenvalue in (137.9). Select lambda=theta d/[delta(1+delta r^2)] with small fixed theta. Then lambda delta<=C and the exponent is at most -c delta r^4/(1+delta r^2). The tilted covariance still has its block, and its density is at most C/sqrt(delta) by (137.14), uniformly in all means. This proves (137.21) as a DENSITY bound; a tail probability divided by a narrow interval would not suffice. The noise term delta sigma^2 lambda^2/2 is included throughout.
+
+Substitute z=sqrt(t)u in (137.21). For |u|>=M, eventually its domain condition holds, and (137.7),(137.18), with the helpful sign of r_H, yield
+$$
+ w_Q(u,y)\le C\exp\left[v\left\{u^2-
+                    \frac{c u^4}{1+\eta u^2}\right\}\right].
+ \tag{137.22}
+$$
+Given any B_0>0, choose a fixed large M so that c M^2/2>=B_0+1. Since eta->0, eventually eta M^2<=1. The function x/(1+eta x) is increasing, so for every |u|>=M the braces in (137.22) are at most -B_0 u^2. Hence for every fixed p>=0,
+$$
+ \int_{|u|\ge M}(1+|u|^p)w_Q(u,y)\,du
+       \le C_{p,B_0,M}e^{-B_0 M^2v/2}
+ \tag{137.23}
+$$
+for all sufficiently large Q, uniformly in y. One can retain a factor v^-1/2, but it is unnecessary. The remaining Gaussian integral bounds the displayed integral with constants independent of delta. Increasing M makes the negative speed exponent arbitrarily large. This proves exponential tightness and all fixed polynomial tail payments on the SAME noisy conditional fiber, including charges far beyond the moderate region.
+
+### 137.5 任意缓慢速度下的 Laplace 原理
+
+Equations (137.20),(137.23) imply the following finite-coefficient Laplace statement for each bounded continuous phi:
+$$
+ \sup_{|y|\le R}\left|v^{-1}\log\int e^{v\phi(u)}w_Q(u,y)\,du
+                 -\sup_u\{\phi(u)+F_Q(u)\}\right|\to0.
+ \tag{137.24}
+$$
+Here is the uniform elementary proof. The coefficients beta_Q lie in a fixed compact subinterval of (0,infinity). A single large compact contains all maximizers of phi+F_Q and makes (137.23), even after adding ||phi||_infinity, negligible. On that compact, (137.20) bounds the density between exp[v(F_Q-rho_Q)] and exp[v(F_Q+rho_Q)], with rho_Q->0. The integral upper bound costs the logarithm of the fixed compact length. For the lower bound, choose a point attaining the maximum there; uniform continuity of phi and the common derivative bound for F_Q provide a fixed interval of positive length on which the value is within any prescribed positive tolerance of that maximum. The interval length is independent of Q and y. Its logarithm divided by v tends to zero. First let Q grow and then let the tolerance decrease. There is no polynomial-in-Q prefactor to be discarded in this argument.
+
+With phi=0 the maximum is G_Q and the two maximizers are exactly +/-m_Q. By (137.19), the extra contribution to the normalized log partition is log(sqrt(t))/v, which tends to zero for EVERY t->infinity. This proves A for the Gaussian reference. An assertion of the sharper absolute prefactor t^-1/2 is not needed and is not made; higher energy terms may change the logarithm by O(v eta). Keeping the exact Jacobian in (137.19) is enough to avoid a false logQ payment.
+
+Subtracting (137.24) with phi=0 proves C for the Gaussian tilted probability. The elementary compact upper bound also gives concentration in any fixed neighborhood of {+m_Q,-m_Q}: away from those neighborhoods, J_Q has a uniformly positive lower bound. Equation (137.23), divided by a lower bound obtained near either maximizer, proves uniform integrability of every fixed power. These facts identify the possible limiting support and moments, but do not yet determine the two masses.
+
+### 137.6 等权双阱与相对反射估计
+
+We now prove the stronger fact missing from a speed-level argument. Let f^0_r be the conditional energy density with e_H replaced by zero, keeping A, V_H, h_y, full V and sigma unchanged. This is only an intermediate analytic comparison, not a recalibration of the count law. It satisfies f^0_r=f^0_{-r} exactly. For every fixed M,
+$$
+ \sup_{|u|\le M,|y|\le R}
+       \left|\frac{f_{\sqrt{\eta/\delta}u}(h_y)}
+                       {f^0_{\sqrt{\eta/\delta}u}(h_y)}-1\right|\to0.
+ \tag{137.25}
+$$
+This is relative error tending to zero, not merely log error o(v).
+
+To prove it, use the REAL saddle z^0_r for the centered conditional energy. It obeys (137.12). The determinant and noise terms of its cumulant and (137.9) are identical. With R_z=(I-2zA)^-1, their exponent difference is exactly
+$$
+ \Delta K_r(z)=z\{-2(r/V_H)w^TR_z e_H+e_H^TR_z e_H\}.
+ \tag{137.26}
+$$
+Since ||R_{z^0_r}||<=C, ||w||=O(sqrt(delta)), ||e_H||=O(delta^5), and |r|<=M sqrt(eta/delta),
+$$
+ |\Delta K_r(z^0_r)|
+   \le C_M\frac{\eta+\sqrt\delta}{\delta}
+                    (\sqrt\eta\,\delta^5+\delta^{10})=o(1).
+ \tag{137.27}
+$$
+Under this SAME tilt, the conditional covariance is identical for e=0 and the actual e. The two tilted means of the energy differ by O_M(sqrt(eta)delta^5+delta^10); this follows by differentiating (137.26), since |z^0_r|delta=o(1). Divided by sqrt(delta), the difference tends to zero. Their scaled energy variances differ by o(1), and the common block envelope (137.14) yields the local Fourier limit uniformly also at this o(sqrt(delta)) displacement from the mean. Both scaled tilted densities converge to the same positive Gaussian value. Combining their ratio with exp(Delta K_r(z^0_r)) proves (137.25). This proves its absolute relative nature without dividing a C0 error by the exponentially small untilted density.
+
+By (137.18), all charge and insertion factors are even, and the ordinary denominator cancels in a comparison at opposite u. Thus w_Q(u,y)/w_Q(-u,y)->1 uniformly on each fixed u compact. Concentration near the two uniformly separated, bounded locations +/-m_Q, followed by (137.23), gives equal normalized masses1/2+o(1). Continuous tests are handled by uniform continuity on a compact and higher moments outside it. This proves B for the Gaussian reference, including odd moments and every fixed continuous polynomial-growth test. The error in (137.27) also explains why the original tiny noncentral centers cannot secretly choose one well at this scale.
+
+### 137.7 增长电荷下的共同条件矩
+
+The remaining task is to transfer these statements through the original unbounded count insertion. We cannot infer this fromChapter 135's compact-kappa conclusion. We first prove the estimate needed to extend its SAME-output interface.
+
+Let S_G=(1/2)sum_H Y_j^2/v_j and Lambda_y=(E_H-h_y)^2/(2delta sigma^2). For every fixed nonnegative integers r_0,k_0 and every fixed p>=0,
+$$
+ E^G_y\left[e^{aD_G^2}(1+S_G)^{r_0}
+                    (1+\Lambda_y)^{k_0}(1+|U_G|^p)\right]
+       \le P_{r_0,k_0,p}(Q)e^{C_{r_0,k_0,p}v},
+ \quad U_G=\sqrt{\delta/\eta}D_G.
+ \tag{137.28}
+$$
+The same bound holds when sigma is replaced by any width in [sigma/2,2sigma]. Constants do not contain inverse sigma. Only a fixed polynomial in Q is claimed in this interface; its logarithm will be absorbed by exp(-bQ^3), never divided by the slow speed.
+
+Here are the joint-law details. Condition on the same charge r=delta^-1/4 z and use the real negative energy tilt in (137.21), or zero tilt on bounded z. The covariance in the original standardized coordinates has norm at most a constant and the squared standardized mean is at most C(1+r^2). This follows either from (137.8) or from first tilting independent coordinates to variances v_j/(1+2lambda v_j) and then conditioning their sum. The Fourier resolvent at imaginary frequency xi/sqrt(delta) has norm at most one relative to that real tilted covariance. Its standardized mean norm costs at most C(1+|xi|)(1+|r|). Finite Gaussian pairings therefore bound an S_G^{r_0} insertion in the normalized transform by C(n_g+1+r^2)^{r_0} times a fixed polynomial in xi.
+
+On the exact energy observation E_H-h_y=-N. The normalized noise N/(sqrt(delta)sigma), after the same real and Fourier tilts, has variance1 and mean sqrt(delta)sigma(-lambda+i xi/sqrt(delta)). Its modulus is bounded by C(z^2+|xi|), because sqrt(delta)lambda<=C z^2/(1+sqrt(delta)z^2) and sigma<=1. Thus every fixed likelihood-score insertion has only polynomial z,xi cost, with no inverse noise width. These factors are integrated in the SAME joint energy Fourier integral. The block (137.14) absorbs all fixed xi polynomials. Consequently the inserted conditional density is bounded by a polynomial in Q,z times
+$$
+ \delta^{-1/2}\exp[-c z^4/(1+\sqrt\delta z^2)].
+ \tag{137.29}
+$$
+After multiplying the exact charge density and insertion and dividing by (137.7), the remaining z exponent is at most t z^2-c z^4/(1+sqrt(delta)z^2). For z^2<=delta^-1/2 it is at most t z^2-(c/2)z^4, whose maximum is C t^2=Cv and whose polynomially weighted integral is at most a polynomial in t times exp(Cv). For z^2>=delta^-1/2 it is at most [t-c/(2sqrt(delta))]z^2; since t sqrt(delta)=eta->0, this is at most -c z^2/(4sqrt(delta)) eventually. Here t<=delta^-1/2 eventually, n_g<=Cdelta^-4, and |U_G|=|z|/sqrt(t)<=|z| eventually. All Jacobians and fixed powers are therefore bounded by a fixed polynomial in Q. This proves (137.28), including its uniformity under the stated small width changes. It is an estimate for the single conditioned law, not a multiplication of unrelated modal, charge and noise marginals.
+
+### 137.8 原始计数的相对比较与全部尾部
+
+Take the original central high-count cells |n_j-C_jp_j|/sqrt(C_jp_j(1-p_j))<=Q^2. Lift each high atom into its centered Y_j physical cell of width1/B, and keep every low tuple with its exact product binomial law. The Stirling and cell geometry of Chapters 131, 133 and 135, with the choices after (137.5), gives
+$$
+ \text{lifted high density}=\phi_C(Y)\exp\{r_Q(n_H,Y)\},
+ \quad |r_Q|\le\mathcal E_Q=P(Q)e^{-bQ^3},
+$$
+$$
+ |D-D_G|\le\mathcal E_Q,\qquad
+ |T-T_G|/\sigma\le\mathcal E_Q,\quad
+ T_G=(E_H-V)/\sqrt\delta,
+ \qquad |D_G|\le CQ^3.
+ \tag{137.30}
+$$
+These are uniform over ALL low tuples. The one-coordinate log-Stirling remainder is a polynomial in Q times C_j^-1/2 and the cell-density variation has the same order. Summing at most CQ^2 terms pays the first bound. Low charge is at most n_g exp(zeta Q^3)/B, and low energy/scalar costs are bounded by P(Q)[B^-1+B^-2 exp(2zeta Q^3)]. After division by sigma their exponent margins are c_q/2-l and c_q-2zeta-l, both strictly positive. The original full V and calibrated mu were not adjusted. This pays all multiplicities, floors and low groups at the same strict half-exponent margin.
+
+The new a is eventually in a fixed bounded positive interval. Thus |a(D^2-D_G^2)|<=P(Q)mathcal E_Q on these cells even in the supercritical window. With b_0=(T-T_G)/sigma and u_0=(T_G-y)/sigma, the likelihood exponent difference is exactly b_0u_0+b_0^2/2. The mean-value bound for the two positive kernels is therefore mathcal E_Q times a fixed polynomial in Q,|u_0|,|D_G|, times the Gaussian weighted kernel and exp(C mathcal E_Q|u_0|+C mathcal E_Q). Young's inequality absorbs the last factor into a width sigma_+=sigma/sqrt(1-C mathcal E_Q). Equation (137.28) at that width pays the integral, including fixed U weights, and (137.7) contributes its explicit factor sigma.
+
+Small changes of width themselves can also be paid quantitatively: the exact derivative of the likelihood kernel with respect to log sigma is 2Lambda_y times that kernel. Integrate this identity over the interval of log widths and apply (137.28) there. This bounds the width-change error by sigma mathcal E_Q P(Q)exp(Cv). This is not differentiation of an asymptotic inequality and introduces no extra condition on sigma. Consequently the absolute difference of the central lifted weighted measures, tested against any measurable f with |f(U_G)|<=1+|U_G|^p, is at most
+$$
+ \sigma P_p(Q)\exp[-bQ^3+C_pv].
+ \tag{137.31}
+$$
+The low probabilities sum to one after the pointwise uniform comparison, inside this one product integral. They were not independently reoptimized.
+
+The excluded full count cells require a genuinely joint bound, since exp(aD^2) is unbounded. Put d=delta sigma^2 and n_g=#groups. For EVERY actual count tuple,
+$$
+ D^2\le2n_g E+2(\sum e_j)^2,
+$$
+$$
+ e^{aD^2-(E-h_y)^2/(2d)}
+ \le\exp\{2a(\sum e_j)^2+2an_g h_y+4a^2n_g^2d\}
+                  e^{-(E-h_y)^2/(4d)}.
+ \tag{137.32}
+$$
+This follows by maximizing the remaining quadratic expression in E; it is the full-tuple inequality of Chapter 131 checked here for the bounded new a. Its prefactor logarithm is O(Q^(7/2)). The raw binomial high-cell tail is P(Q)exp(-cQ^4), by Hoeffding and the uniform p interval. On the finite count box every fixed |U|^p costs at most exp(C_pQ^3), since sum C_j<=CB^2 and log B=O(Q^3). Since eventually eta>=sqrt(delta), the rescaling does not add an exponential cost. After division by sigma the tail is at most
+$$
+ \exp[-cQ^4+C Q^{7/2}+C_p(Q^3+L)]\le e^{-c'Q^4}.
+ \tag{137.33}
+$$
+The Gaussian excluded cells obey the same bound: apply (137.32) to the high vector, use Cauchy--Schwarz for its fixed raw polynomial moments and its exp(-cQ^4) coordinate tail, and reserve part of the likelihood if a likelihood score is present. This only changes c. Thus extreme count charges do not escape the comparison; an unconditioned supercritical Gaussian exponential moment is neither assumed finite nor used.
+
+Let nu_Q be the unnormalized count numerator pushed to U; let nu_Q^lift use U_G on its central lifted cells, with the negligible excluded part treated separately. Let nu_G be the Gaussian numerator measure. Combining (137.31)--(137.33), for every fixed p,
+$$
+ \|\nu_Q^{\rm lift}-\nu_G\|_{1+|u|^p}
+       \le\sigma P_p(Q)e^{-bQ^3+C_pv},
+ \qquad |A_Q-A_G|\le\sigma P(Q)e^{-bQ^3}.
+ \tag{137.34}
+$$
+The weighted norm is the supremum of absolute integrals over all measurable f bounded by the displayed weight. It concerns CELL-LIFTED measures; no false discrete-versus-continuous total variation claim is made. The omitted original discrete weighted mass satisfies (137.33).
+
+By (137.19),(137.20), or simply integrating a fixed interval where F_Q is positive, N_G>=c sigma for all large Q uniformly in y. Equation (137.7) gives A_G>=c sigma. Since v=eta^2/delta=o(delta^-1)=o(Q^(1/2)), every right side in (137.34), after the relevant normalization, is at most exp(-b'Q^3) for some b'>0. This proves both N_Q/N_G=1+O(exp(-b'Q^3)) and A_Q/A_G=1+O(exp(-b'Q^3)), and the normalized lifted tilted laws differ by exp(-b'Q^3) in every fixed polynomially weighted norm. No polynomial factor is divided by v in this step; it is absorbed by the exponential accuracy before any logarithmic limit.
+
+On central cells the original U and U_G differ by at most sqrt(delta/eta)mathcal E_Q, which is exponentially small. Combining this deterministic bound with (137.33),(137.34) proves B for each fixed continuous polynomial-growth test: truncate to a compact, use uniform continuity there, and use the higher weighted moments outside. It transfers the Gaussian equal masses as well; nonsymmetric binomial corrections are exponentially small relative to the complete tilted numerator. No exact finite-level reflection symmetry of the binomial lattice is claimed.
+
+For C, write K_phi=||phi||_infinity. The error in (137.34) for exp[v phi(U_G)] is at most exp(vK_phi-b'Q^3), while its normalized expectation is at least exp(-vK_phi). Their relative error tends to zero exponentially in Q^3. To replace U_G by the original U, first truncate to a large compact. On it uniform continuity gives |phi(U)-phi(U_G)|<=omega_phi(sqrt(delta/eta)mathcal E_Q)->0; the two exponential tests differ by factors exp[+/-v omega_phi]. After taking log and dividing by v this costs omega_phi, not v omega_phi. Outside the compact, (137.23),(137.33),(137.34) make the normalized exponential integral negligible even after multiplication by exp(vK_phi). Choose its negative speed exponent larger than 2K_phi before truncating. This proves the required replacement for arbitrary fixed bounded continuous phi, which need not be uniformly continuous on the whole line.
+
+For A, (137.34) gives log Z_Q-log Z_G=O(exp(-b'Q^3)); the exact delta^(1/4) prefactor from (137.19) is preserved. Its contribution was already paid without logQ loss. This proves (137.A), (137.B) and (137.C) for the original full product COUNT law, on each deterministic class and for every allowed eta sequence. Exhausting the inherited classes establishes the stated actual-data probability quantifiers, separately for pair and path and uniformly over deterministic supports.
+
+### 137.9 适用边界
+
+The new work is the growing-charge real saddle with a bounded scaled density prefactor (137.10)--(137.17), the global speed-tail combination (137.22)--(137.24), the absolute relative center/reflection comparison (137.25)--(137.27), and the exp(Cv)-cost same-output count interface (137.28)--(137.34). These are the missing interfaces between fixed critical windows and the requested mesoscopic regime. None is obtained by plugging an unbounded parameter intoChapters 133 and 135's compact theorem.
+
+The free-energy maximum is checked directly: F_Q(u)=u^2-beta_Q u^4 has maxima at u^2=1/(2beta_Q)=2V^4/C2 and maximum1/(4beta_Q)=V^4/C2. Completing the square yields exactly J_Q in (137.4). There is no sign reversal in C, since it is the numerator Laplace supremum minus the unperturbed maximum. Output y contributes at relative order1/t and vanishes on the speed scale; it does not have to vanish at absolute logarithmic order. Finite noise changes the quartic coefficient by O(sigma^2), also only a relative speed correction. Higher energy terms of size v eta and these noise terms are explicitly allowed to diverge absolutely.
+
+Equal weights do not follow from a large-deviation rate with two zeroes. They follow from (137.25), an o(1) relative comparison at opposite charges, plus concentration and the original-count relative transfer. The weak and moment statements concern the SAME original fiber as the partition and Laplace statements. No independent choice of center, environment, direction, phase, low tuple or residual noise occurs.
+
+Remaining boundaries are explicit: eta must tend to zero, t must tend to infinity, sigma must satisfy (137.1), outputs and tests are fixed as specified, polynomial degree is fixed, and the support scope is exactly the inherited actual pair/path one. No full-q P theorem, finite-Q exact symmetry, universal unscaled prefactor, growing test family, unscaled entropy derivative, global phase transition or stronger noise-free profile at absolute logarithmic order follows from this chapter.
+
+## 追加锚（本行以下为增补区）
