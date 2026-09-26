@@ -23,39 +23,40 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
         Formula bell = Rho;
         Formula classical = SigmaLower;
         Formula classicalSquared = new Formula.Power(classical, two);
-        Formula statement = Disp(Seq(
+        // Escaped spaces preserve row breaks through Markdown parsing.
+        Formula statement = Disp(Seq(Nl,
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, m, Comma, Sp, n, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
-            Comma, RowBreak, Grp(),
+            Comma, RowBreak, Esc, Grp(),
             m, Sp, Geq, Sp, D(1), Sp, Land, Sp,
             n, Sp, Geq, Sp, D(1), Sp, Land, Sp,
-            m, n, Sp, Gt, Sp, D(1), Sp, Rightarrow, RowBreak, Grp(),
+            m, n, Sp, Gt, Sp, D(1), Sp, Rightarrow, RowBreak, Esc, Grp(),
             local, Sp, Plus, Sp, correlation, Sp, Eq, Sp, traceZero,
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             Apply("dim", local), Sp, Eq, Sp,
             Open, firstRank, Close, Sp, Plus, Sp, Open, secondRank, Close,
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             Apply("dim", correlation), Sp, Eq, Sp, correlationRank,
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             Frac, Grp(Apply("dim", correlation)), Grp(Apply("dim", traceZero)),
             Sp, Eq, Sp, Frac, Grp(correlationRank), Grp(totalRank),
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             local, Sp, Perp, Sp, correlation,
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             bell, Sp, Geq, Sp, D(0), Sp, Land, Sp,
             Apply("Tr", bell), Sp, Eq, Sp, D(1), Sp, Land, Sp,
             Apply("rank", bell), Sp, Eq, Sp, D(1),
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             classical, Sp, Geq, Sp, D(0), Sp, Land, Sp,
             Apply("Tr", classical), Sp, Eq, Sp, D(1), Sp, Land, Sp,
             classicalSquared, Sp, Neq, Sp, classical,
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             PartialTrace("B", bell), Sp, Eq, Sp, PartialTrace("B", classical),
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             PartialTrace("A", bell), Sp, Eq, Sp, PartialTrace("A", classical),
-            Sp, Land, RowBreak, Grp(),
+            Sp, Land, RowBreak, Esc, Grp(),
             bell, Sp, Neq, Sp, classical, Dot,
-            End, Grp(F.Id("gathered"))));
+            End, Grp(F.Id("gathered")), Nl));
 
         return DocumentDefinition.Create(ScribeNode.Create(
             "Complete local marginals leave every cross-factor correlation direction unread.",
@@ -73,10 +74,7 @@ internal sealed class LocalMarginalCorrelationBlindSpotDocument : IScribeDocumen
                     Text(" is the canonical two-qubit Bell density for 00 and 11, and "),
                     Math(In(classical)), Text(" their equal diagonal mixture. Here "),
                     Math(In(Seq(Geq, Sp, D(0)))), Text(" means positive semidefinite; "),
-                    Math(In(new Formula.Subscript(Seq(Mathrm, Grp(F.Id("Tr"))), F.Id("A")))),
-                    Text(" and "),
-                    Math(In(new Formula.Subscript(Seq(Mathrm, Grp(F.Id("Tr"))), F.Id("B")))),
-                    Text(" trace out the indicated factors.")),
+                    Text("partial-trace subscripts name the factor traced out.")),
                 Describe.Lean(
                     DescribeId.Create("local-marginal-correlation-blind-spot"),
                     DeclarationHandle.Create(
