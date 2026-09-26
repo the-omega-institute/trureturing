@@ -343,10 +343,9 @@ theorem paired_angle_demand
       rw [hcos_theta] at hdouble
       linarith only [hdouble]
     have hsin_sq : 2 * Real.sin (theta / 2)^2 = 1 - ct := by
-      nlinarith only [htrig, hcos_sq]
-    rw [Real.tan_eq_sin_div_cos]
+      linarith only [htrig, hcos_sq]
+    rw [Real.tan_eq_sin_div_cos, div_pow, ← hcos_sq, ← hsin_sq]
     field_simp [hhalf_cos.ne']
-    nlinarith only [hsin_sq, hcos_sq]
   have htan_relation : t * ((r + 1) * L) = (r - 1) * M := by
     calc
       t * ((r + 1) * L) = t * (Dr * (1 + ct)) := by rw [hplus]
