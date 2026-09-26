@@ -481,8 +481,8 @@ theorem paired_angle_demand
     rw [heq]
     positivity
   by_cases htheta : Real.pi / 2 ≤ theta
-  · dsimp [theta, beta, delta] at *
-    linarith [hbeta_pos, hdelta_pos]
+  · change 2 * theta + beta + delta > Real.pi
+    linarith only [htheta, hbeta_pos, hdelta_pos]
   · have htheta_lt_half : theta < Real.pi / 2 := lt_of_not_ge htheta
     have htheta_cos_pos : 0 < Real.cos theta :=
       Real.cos_pos_of_mem_Ioo ⟨by linarith [Real.pi_pos], htheta_lt_half⟩
@@ -520,6 +520,7 @@ theorem paired_angle_demand
       rw [Real.cos_pi_div_two_sub] at hcosle
       linarith
     dsimp [eta] at htarget
-    linarith
+    change 2 * theta + beta + delta > Real.pi
+    linarith only [htarget]
 
 end D5.S3.Geometry.Hyperideal.FourCycleLocalAngleDemand
