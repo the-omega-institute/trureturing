@@ -360,7 +360,8 @@ private partial def containsIndependentCarrier (type : Expr) (depth : Nat := 0) 
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   let type ← sourceCarrierShape type depth
   let head := type.getAppFn.constName?.getD .anonymous
-  if dictionaryTypes.contains head || propTypes.contains head || interfaceTypes.contains head then
+  if dictionaryTypes.contains head || propTypes.contains head || interfaceTypes.contains head ||
+      Lean.isClass (← getEnv) head then
     return false
   if #[`Prod, `Sum, `Option, `Subtype].contains head then
     -- Subtype's predicate is an obligation, not an input carrier.
@@ -929,12 +930,13 @@ def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Exce
   if answer matches .error _ then setEnv saved
   return answer
 
-/-- Numeric literals are indices only at explicit Nat telescope positions. -/
-def indexPositions (type : Expr) : Array Bool := Id.run do
+/-- Nat indices and enrolled dictionaries are checked in their declared type positions. -/
+def typePositions (type : Expr) : Array Bool := Id.run do
   let mut current := type
   let mut positions := #[]
   while let .forallE _ domain body _ := current do
-    positions := positions.push (domain.isConstOf ``Nat)
+    positions := positions.push (domain.isConstOf ``Nat ||
+      dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous))
     current := body
   return positions
 
