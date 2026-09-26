@@ -474,10 +474,123 @@ theorem geometric_readout_left_jump_exact
   dsimp [f] at hmassReal ⊢
   linarith [hvalue]
 
+/-- A reduced rational slope at zero phase has an atom exactly at positive
+multiples of its denominator, so its left jump is one geometric progression. -/
+theorem geometric_rational_left_jump_closed_form
+    (r : ℝ) (p q : ℕ) (hr0 : 0 < r) (hr1 : r < 1)
+    (hp : 0 < p) (hpq : p < q) (hcop : Nat.Coprime p q) :
+    ∃ L : ℝ,
+      Filter.Tendsto (fun beta : ℝ => geometricReadout r beta 0)
+        (𝓝[<] ((p : ℝ) / q)) (𝓝 L) ∧
+      geometricReadout r ((p : ℝ) / q) 0 - L =
+        (1 - r) ^ 2 * r ^ (q - 1) / (1 - r ^ q) := by
+  have hq : 0 < q := by omega
+  have hqR : (0 : ℝ) < q := by exact_mod_cast hq
+  have hpR : (0 : ℝ) < p := by exact_mod_cast hp
+  have hpqR : (p : ℝ) < q := by exact_mod_cast hpq
+  have ha : (p : ℝ) / q ∈ Ioo (0 : ℝ) 1 :=
+    ⟨div_pos hpR hqR, (div_lt_one hqR).2 hpqR⟩
+  obtain ⟨L, hlim, _, hjump⟩ :=
+    geometric_readout_left_jump_exact r 0 ((p : ℝ) / q) hr0 hr1
+      (by norm_num : (0 : ℝ) ∈ Set.Ico 0 1) ha
+  have hhit (n : ℕ) :
+      (∃ z : ℤ, (z : ℝ) =
+        (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * ((p : ℝ) / q)) ↔
+        q ∣ n + 1 := by
+    constructor
+    · rintro ⟨z, hz⟩
+      have heqR : (z : ℝ) * q = (((n + 1) * p : ℕ) : ℝ) := by
+        rw [hz]
+        field_simp
+        push_cast
+        ring
+      have heqZ : z * (q : ℤ) = (((n + 1) * p : ℕ) : ℤ) := by
+        exact_mod_cast heqR
+      have hdivZ : (q : ℤ) ∣ (((n + 1) * p : ℕ) : ℤ) := by
+        refine ⟨z, ?_⟩
+        simpa [mul_comm] using heqZ.symm
+      have hdiv : q ∣ (n + 1) * p := by exact_mod_cast hdivZ
+      exact (hcop.symm.dvd_mul_right).mp hdiv
+    · rintro ⟨m, hm⟩
+      refine ⟨((m * p : ℕ) : ℤ), ?_⟩
+      have hmR : ((n + 1 : ℕ) : ℝ) = (q : ℝ) * m := by
+        exact_mod_cast hm
+      have hmR' : (n : ℝ) + 1 = (q : ℝ) * m := by
+        simpa only [Nat.cast_add, Nat.cast_one] using hmR
+      simp only [Nat.cast_mul, Nat.cast_add, Nat.cast_one, zero_add]
+      rw [hmR']
+      push_cast
+      field_simp
+  let c : ℝ := (1 - r) ^ 2
+  let f : ℕ → ℝ := fun n => if q ∣ n + 1 then c * r ^ n else 0
+  have hf0 (n : ℕ) : 0 ≤ f n := by
+    dsimp [f, c]
+    split_ifs <;> positivity
+  have hfBound (n : ℕ) : f n ≤ c * r ^ n := by
+    dsimp [f]
+    split_ifs
+    · exact le_rfl
+    · exact mul_nonneg (sq_nonneg _) (pow_nonneg hr0.le _)
+  have hgeom : Summable (fun n : ℕ => c * r ^ n) := by
+    simpa [c] using (summable_geometric_of_lt_one hr0.le hr1).mul_left c
+  have hf : Summable f := Summable.of_nonneg_of_le hf0 hfBound hgeom
+  have hprefix : (∑ n ∈ Finset.range q, f n) = c * r ^ (q - 1) := by
+    rw [Finset.sum_eq_single (q - 1)]
+    · have hstep : q - 1 + 1 = q := by omega
+      simp [f, hstep]
+    · intro n hn hneq
+      have hnq : n + 1 < q := by
+        have hnlt : n < q := Finset.mem_range.mp hn
+        omega
+      have hnodiv : ¬q ∣ n + 1 := by
+        intro hdvd
+        have hle := Nat.le_of_dvd (by omega : 0 < n + 1) hdvd
+        omega
+      simp [f, hnodiv]
+    · intro hnot
+      exact (hnot (Finset.mem_range.mpr (by omega))).elim
+  have hshift (n : ℕ) : f (n + q) = r ^ q * f n := by
+    have hstep : n + q + 1 = (n + 1) + q := by omega
+    by_cases hdiv : q ∣ n + 1
+    · have hdiv' : q ∣ n + q + 1 := by
+        rw [hstep]
+        exact Nat.dvd_add_self_right.mpr hdiv
+      simp [f, hdiv, hdiv', pow_add]
+      ring
+    · have hdiv' : ¬q ∣ n + q + 1 := by
+        rw [hstep]
+        simpa using hdiv
+      simp [f, hdiv, hdiv']
+  have hsum : (∑' n : ℕ, f n) = c * r ^ (q - 1) + r ^ q * (∑' n : ℕ, f n) := by
+    have hdecomp := hf.sum_add_tsum_nat_add q
+    rw [hprefix] at hdecomp
+    simp_rw [hshift] at hdecomp
+    simpa [tsum_mul_left] using hdecomp.symm
+  have hpow : r ^ q < 1 := pow_lt_one₀ hr0.le hr1 hq.ne'
+  have hden : 1 - r ^ q ≠ 0 := by linarith
+  have hclosed : (∑' n : ℕ, f n) = c * r ^ (q - 1) / (1 - r ^ q) := by
+    apply (eq_div_iff hden).2
+    nlinarith [hsum]
+  refine ⟨L, hlim, ?_⟩
+  rw [hjump]
+  have hseries :
+      (∑' n : ℕ, if ∃ z : ℤ,
+          (z : ℝ) = (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * ((p : ℝ) / q) then
+        c * r ^ n else 0) = ∑' n : ℕ, f n := by
+    apply tsum_congr
+    intro n
+    simp only [hhit n]
+    rfl
+  change (∑' n : ℕ, if ∃ z : ℤ,
+      (z : ℝ) = (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * ((p : ℝ) / q) then
+    c * r ^ n else 0) = c * r ^ (q - 1) / (1 - r ^ q)
+  exact hseries.trans hclosed
+
 #print axioms geometric_atomic_probability_and_carrier
 #print axioms geometric_atomic_apply_Iic
 #print axioms geometric_atomic_singleton_hit
 #print axioms geometric_atomic_support
 #print axioms geometric_readout_left_jump_exact
+#print axioms geometric_rational_left_jump_closed_form
 
 end D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure

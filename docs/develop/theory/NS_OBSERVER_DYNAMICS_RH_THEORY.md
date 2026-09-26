@@ -2653,7 +2653,7 @@ P_{r,N}(\alpha,x)
 =(1-r)r^{N-1}\lfloor x+N\alpha\rfloor
 +\sum_{k=1}^{N-1}a_k\lfloor x+k\alpha\rfloor.
 \]
-这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。`geometric_readout_floor_series_and_mass` 证明取整级数与总质量；`geometric_atomic_probability_and_carrier`、`geometric_atomic_apply_Iic`、`geometric_atomic_singleton_hit` 和 `geometric_atomic_support` 分别证明实际概率测度、分布函数、内部单点质量及闭拓扑支撑。`geometric_atomic_phase_average` 证明式 (22.24) 的任意可测集相位平均；左极限识别仍按前述测度连续性和单点质量作普通证明。
+这里 $\lfloor x\rfloor=0$。在所给参数范围内 $0\leq\lfloor x+N\alpha\rfloor\leq N$，终端项趋于零。又有 $\sum_{k\geq1}ka_k=1$，所以余下级数绝对且一致收敛。对每个 $k$，$\lfloor x+k\alpha\rfloor$ 精确计数满足 $(j-x)/k\leq\alpha$ 的 $j\in\{1,\ldots,k\}$。代入即得式 (22.21)，而 $\sum ka_k=1$ 给测度归一化。概率测度从下连续性给左极限，减去后只余单点质量，从而得到式 (22.22)。右连续性同样由分布函数得到。`geometric_readout_floor_series_and_mass` 证明取整级数与总质量；`geometric_atomic_probability_and_carrier`、`geometric_atomic_apply_Iic`、`geometric_atomic_singleton_hit` 和 `geometric_atomic_support` 分别证明实际概率测度、分布函数、内部单点质量及闭拓扑支撑。`geometric_readout_left_jump_exact` 给出实数左极限及其单点质量差，`geometric_atomic_phase_average` 证明式 (22.24) 的任意可测集相位平均。
 
 当 $x=0$、$\alpha=p/q\in(0,1)$ 且分数既约时，命中时间恰好是 $q,2q,\ldots$，所以
 \[
@@ -2661,6 +2661,7 @@ P_{r,N}(\alpha,x)
 =\frac{(1-r)^2r^{q-1}}{1-r^q}.}
 \tag{22.23}
 \]
+`geometric_rational_left_jump_closed_form` 在实数左极限的意义下证明此式。它先由分数既约性识别所有命中时间，再由权重级数的 $q$ 步尾递推求出闭式。
 当固定相位 $x$ 无理时，有理斜率不会命中整数；如果某个无理斜率命中一次，则不能再命中第二次，否则相减会强制斜率有理。因此这一情形的跳变若存在，就恰为单个 $a_k$。这说明连续性不能只按斜率的有理性分类，固定相位也参与判定。
 
 **推论：平均原子测度成为长度测度。** 对 $[0,1]$ 中任意 Borel 集 $A$，

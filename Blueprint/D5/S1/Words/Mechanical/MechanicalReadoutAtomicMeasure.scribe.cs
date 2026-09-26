@@ -43,6 +43,14 @@ internal sealed class MechanicalReadoutAtomicMeasureDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("As a slope approaches an interior value from below, the measures of its closed threshold half-lines converge to the measure of the open half-line at that value. The completed readout therefore has a real left limit equal to that open-half-line mass. Its value at the slope exceeds the limit by exactly the singleton mass, hence by the real sum of the weights at every integer-hit time. Coincident hits are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("mechanical-atomic-rational-jump"),
+                DeclarationHandle.Create(Prefix + "geometric_rational_left_jump_closed_form"),
+                H("Reduced rational jump"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At zero phase and a reduced interior slope p/q, positive integer hits occur exactly at multiples of q. Splitting the actual hit-weight series after its first q terms gives a q-step tail recurrence. Its first block contains only the weight at time q, and solving the recurrence yields the left jump (1-r)^2 r^(q-1)/(1-r^q). The left limit is the real limit supplied by the atomic distribution function."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("mechanical-atomic-closed-support"),
                 DeclarationHandle.Create(Prefix + "geometric_atomic_support"),
                 H("Closed support"),

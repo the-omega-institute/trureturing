@@ -40,7 +40,31 @@ Lean statement: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric
 
 At an interior slope, a time k contributes one threshold atom precisely when x+k times the slope is an integer. There is at most one such threshold at each fixed time, while hits at different times all contribute. The singleton mass is the sum of their geometric weights. The interior condition excludes the zero-slope endpoint, where an integer hit can correspond to the omitted index j=0.
 
-**Theorem 1.4 (Closed support).**
+**Theorem 1.4 (Exact left jump).**
+
+Lean statement: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+As a slope approaches an interior value from below, the measures of its closed threshold half-lines converge to the measure of the open half-line at that value. The completed readout therefore has a real left limit equal to that open-half-line mass. Its value at the slope exceeds the limit by exactly the singleton mass, hence by the real sum of the weights at every integer-hit time. Coincident hits are retained.
+
+**Theorem 1.5 (Reduced rational jump).**
+
+Lean statement: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At zero phase and a reduced interior slope p/q, positive integer hits occur exactly at multiples of q. Splitting the actual hit-weight series after its first q terms gives a q-step tail recurrence. Its first block contains only the weight at time q, and solving the recurrence yields the left jump (1-r)^2 r^(q-1)/(1-r^q). The left limit is the real limit supplied by the atomic distribution function.
+
+**Theorem 1.6 (Closed support).**
 
 Lean statement: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_atomic_support`
 
@@ -58,4 +82,6 @@ When the ratio is strictly between zero and one, every numbered threshold has po
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit`
 - Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_atomic_support`
+- Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form`
+- Truth anchor: `D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact`
 - Dependency: [D5/S1/Words/Mechanical/MechanicalReadoutAtomicSeries](MechanicalReadoutAtomicSeries.md)
