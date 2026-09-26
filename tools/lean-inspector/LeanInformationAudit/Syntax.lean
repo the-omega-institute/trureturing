@@ -126,11 +126,10 @@ private def elabExpectedOccurrenceWithIdentity : CommandElab := fun stx =>
   addExpectedOccurrence ⟨stx[1]⟩ ⟨stx[4]⟩
     (TSyntax.getString ⟨stx[7]⟩) (TSyntax.getString ⟨stx[10]⟩)
 
-private def checkRealizationBundle (theoremName arenaName : Name)
+private def checkRealizationBundle (theoremName : Name) (arenaExpr : Expr)
     (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do
   let valid <- liftTermElabM do
     try
-      let arenaExpr <- mkConstWithFreshMVarLevels arenaName
       let typedRealizationType <- instantiateMVars (← whnfR (← inferType typedRealization))
       unless typedRealizationType.getAppFn.constName? ==
           some `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization do
@@ -139,7 +138,7 @@ private def checkRealizationBundle (theoremName arenaName : Name)
       unless realizationArgs.size == 2 do
         return false
       let compiledBundle <- compilePrimitiveBundle arenaExpr typedRealization
-      let suppliedBundle <- elabTerm primitiveTerm none
+      let suppliedBundle <- elabTerm primitiveTerm (some (← inferType compiledBundle))
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq suppliedBundle compiledBundle
     catch _ =>
@@ -232,32 +231,52 @@ private def resolveLegacyRealization (theoremName arenaName generatedName : Name
     return (generatedName, true)
   throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
-/-- Package an inline bridge with the imported theorem without re-elaborating
-either declaration through syntax. -/
-private def addInlineLegacyUnit (theoremName realizationName unitName : Name) :
+/-- Package a legacy bridge with its source theorem at one shared universe instance. -/
+private def alignedLegacyConstants (theoremName realizationName : Name) :
+    MetaM (Expr × Expr) := do
+  let theoremInfo ← getConstInfo theoremName
+  let realizationInfo ← getConstInfo realizationName
+  if realizationInfo.type.isAppOf
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+      theoremInfo.levelParams.length == realizationInfo.levelParams.length then
+    let levels := theoremInfo.levelParams.map Level.param
+    return (mkConst realizationName levels, mkConst theoremName levels)
+  return (← mkConstWithFreshMVarLevels realizationName,
+    ← mkConstWithFreshMVarLevels theoremName)
+
+private def addLegacyUnit (theoremName realizationName unitName : Name) :
     CommandElabM Unit := do
   liftTermElabM do
-    let realizationInfo ← getConstInfo realizationName
-    let theoremInfo ← getConstInfo theoremName
-    let realization := Lean.mkConst realizationName
-      (realizationInfo.levelParams.map Level.param)
-    let theoremExpr := Lean.mkConst theoremName
-      (theoremInfo.levelParams.map Level.param)
+    let (realization, theoremExpr) ← alignedLegacyConstants theoremName realizationName
+    let realizationType ← whnfR (← inferType realization)
+    unless realizationType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+        (← isDefEq realizationType.getAppArgs[1]! (← inferType theoremExpr)) do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let unit ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
       #[realization, theoremExpr]
-    discard <| inferType unit
+    let unitType ← inferType unit
     let unit ← levelMVarToParam (← instantiateMVars unit)
-    let unitType ← levelMVarToParam (← instantiateMVars (← inferType unit))
+    let unitType ← levelMVarToParam (← instantiateMVars unitType)
     let levelParams :=
       (collectLevelParams (collectLevelParams {} unitType) unit).params.toList
-    addAndCompile <| .defnDecl {
+    let declaration := Declaration.defnDecl {
       name := unitName
       levelParams := levelParams
       type := unitType
       value := unit
       hints := .abbrev
       safety := .safe }
+    let env ← getEnv
+    let computationalInputs :=
+      realizationType.getAppArgs[0]!.getUsedConstants ++
+        realizationType.getAppArgs[2]!.getUsedConstants
+    if computationalInputs.any (isNoncomputable env ·) then
+      addDecl declaration
+      modifyEnv (addNoncomputable · unitName)
+    else
+      addAndCompile declaration
 
 /-- Transaction boundary shared by registration and exception-injection controls. -/
 def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := do
@@ -382,13 +401,15 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     let theoremType ← if isInline then
       pure (← getConstInfo theoremName).type
     else do
-      let theoremExpr ← liftTermElabM <| mkConstWithFreshMVarLevels theoremName
-      liftTermElabM do instantiateMVars (← whnfR (← inferType theoremExpr))
+      let (_, theoremExpr) ← liftTermElabM <|
+        alignedLegacyConstants theoremName realizationName
+      liftTermElabM do whnfR (← inferType theoremExpr)
     let realizationType ← if isInline then
       pure realizationInfo.type
     else do
-      let realizationExpr ← liftTermElabM <| mkConstWithFreshMVarLevels realizationName
-      liftTermElabM do instantiateMVars (← whnfR (← inferType realizationExpr))
+      let (realizationExpr, _) ← liftTermElabM <|
+        alignedLegacyConstants theoremName realizationName
+      liftTermElabM do whnfR (← inferType realizationExpr)
     let legacyArgs := realizationType.getAppArgs
     unless (realizationType.getAppFn.constName? ==
         (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
@@ -397,11 +418,15 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
-      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
-        (← isDefEq legacyArgs[1]! theoremType)
+      let arenaValid ← if legacyArgs[0]!.getAppFn.constName? == some arenaName then
+        pure true
+      else
+        isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)
+      let theoremValid ← isDefEq legacyArgs[1]! theoremType
+      return arenaValid && theoremValid
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
-    checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
+    checkRealizationBundle theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
     let variationName ← optionalWitnessName stx[8]
     let sensitivityName ← optionalWitnessName stx[9]
     if realizationType.isAppOf RegistrationGates.witnessBridgeName then
@@ -414,7 +439,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         (stx[8].getNumArgs == 0 || stx[9].getNumArgs == 0) then
       throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
     if isInline then
-      addInlineLegacyUnit theoremName realizationName unitName
+      addLegacyUnit theoremName realizationName unitName
+    else if realizationType.isAppOf
+        `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+      addLegacyUnit theoremName realizationName unitName
     else
       let realizationId : TSyntax `ident := ⟨realizationSyntax.raw[0]⟩
       let unitId := absoluteIdentFrom theoremId (privateToUserName unitName)
@@ -522,14 +550,15 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let theoremType ← if isInline then
     pure (← getConstInfo theoremName).type
   else do
-    let theoremExpr ← liftTermElabM <| mkConstWithFreshMVarLevels theoremName
-    liftTermElabM do instantiateMVars (← whnfR (← inferType theoremExpr))
+    let (_, theoremExpr) ← liftTermElabM <|
+      alignedLegacyConstants theoremName suppliedRealizationName
+    liftTermElabM do whnfR (← inferType theoremExpr)
   let realizationType ← if isInline then
     pure suppliedRealizationInfo.type
   else do
-    let realizationExpr ← liftTermElabM <|
-      mkConstWithFreshMVarLevels suppliedRealizationName
-    liftTermElabM do instantiateMVars (← whnfR (← inferType realizationExpr))
+    let (realizationExpr, _) ← liftTermElabM <|
+      alignedLegacyConstants theoremName suppliedRealizationName
+    liftTermElabM do whnfR (← inferType realizationExpr)
   let legacyArgs := realizationType.getAppArgs
   unless (realizationType.getAppFn.constName? ==
       (some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization) ||
@@ -538,11 +567,14 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
-    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
-      (← isDefEq legacyArgs[1]! theoremType)
+    let arenaValid ← if legacyArgs[0]!.getAppFn.constName? == some lawArenaName then
+      pure true
+    else
+      isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)
+    return arenaValid && (← isDefEq legacyArgs[1]! theoremType)
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
+  checkRealizationBundle theoremName legacyArgs[0]! legacyArgs[2]! primitiveTerm
   let variationName ← optionalWitnessName stx[12]
   let sensitivityName ← optionalWitnessName stx[13]
   if realizationType.isAppOf RegistrationGates.witnessBridgeName then
@@ -566,7 +598,10 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       (stx[12].getNumArgs == 0 || stx[13].getNumArgs == 0) then
     throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity"
   if isInline then
-    addInlineLegacyUnit theoremName realizationName unitName
+    addLegacyUnit theoremName realizationName unitName
+  else if realizationType.isAppOf
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+    addLegacyUnit theoremName realizationName unitName
   else
     let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
     let witnessUnitId := absoluteIdentFrom theoremId (RegistrationGates.witnessBridgeName.str "toTheoremUnit")

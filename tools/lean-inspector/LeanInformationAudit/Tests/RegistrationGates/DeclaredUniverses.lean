@@ -65,4 +65,93 @@ run_meta do
   observe event ``short declared.value "positional_universe_arity_rejected"
     (some "dtr.extraction_universes")
 
+noncomputable def polymorphicArena.{u} : PrimitiveLawArena.{u, 0, 0} where
+  toArena := {
+    State := PUnit.{u + 1}
+    stateFintype := inferInstance
+    stateDecidableEq := Classical.decEq _ }
+  signature := {
+    Index := Unit, indexFintype := inferInstance, indexDecidableEq := inferInstance
+    Output := fun _ => Bool, outputDecidableEq := fun _ => inferInstance
+    axis := fun _ => .cut, readoutAxisNotAnchor := by simp
+    AnchorIndex := Fin 0, anchorFintype := inferInstance, anchorDecidableEq := inferInstance }
+  Law realization := ∀ state, realization.readout () state = false
+
+noncomputable def polymorphicReadout.{u} :
+    PrimitiveRealization polymorphicArena.{u}.signature :=
+  ⟨fun _ _ => false, Fin.elim0⟩
+
+noncomputable instance : DecidableEq polymorphicArena.{u}.State :=
+  polymorphicArena.{u}.toArena.stateDecidableEq
+
+theorem namedStatement.{u} : polymorphicArena.{u}.Law polymorphicReadout.{u} :=
+  by intro _; rfl
+theorem namedBridge.{u} : LegacyPrimitiveRealization polymorphicArena.{u}
+    (polymorphicArena.{u}.Law polymorphicReadout.{u}) polymorphicReadout.{u} :=
+  ⟨Iff.rfl⟩
+
+theorem inlineStatement.{u} : polymorphicArena.{u}.Law polymorphicReadout.{u} :=
+  by intro _; rfl
+register_information_theorem inlineStatement in polymorphicArena
+  primitives polymorphicReadout.toPrimitiveBundle
+  realization inline (polymorphicReadout) := by exact namedBridge
+
+register_information_theorem namedStatement in polymorphicArena
+  primitives polymorphicReadout.toPrimitiveBundle realization namedBridge
+
+noncomputable abbrev polymorphicObjectArena.{u} : Arena.{u} := polymorphicArena.{u}.toArena
+
+theorem inlineOccurrenceStatement.{u} :
+    polymorphicArena.{u}.Law polymorphicReadout.{u} := by intro _; rfl
+register_information_theorem inlineOccurrenceStatement in polymorphicArena
+  object_arena polymorphicObjectArena catalog polymorphicInline
+  primitives polymorphicReadout.toPrimitiveBundle
+  realization inline (polymorphicReadout) := by exact namedBridge
+
+theorem namedOccurrenceStatement.{u} :
+    polymorphicArena.{u}.Law polymorphicReadout.{u} := by intro _; rfl
+register_information_theorem namedOccurrenceStatement in polymorphicArena
+  object_arena polymorphicObjectArena catalog polymorphicNamed
+  primitives polymorphicReadout.toPrimitiveBundle realization namedBridge
+
+def finiteReadout : PrimitiveRealization DeclaredBindings.arena.signature :=
+  cutRealization (fun x : Bool => x)
+
+noncomputable def statementOnlyDepth : Nat := Classical.choice ⟨0⟩
+
+theorem finiteLaw : DeclaredBindings.arena.Law finiteReadout := by
+  intro x
+  exact (Bool.not_not x).symm
+
+theorem finiteStatement :
+    DeclaredBindings.arena.Law finiteReadout ∧ statementOnlyDepth = statementOnlyDepth :=
+  ⟨finiteLaw, rfl⟩
+theorem finiteBridge : LegacyPrimitiveRealization DeclaredBindings.arena
+    (DeclaredBindings.arena.Law finiteReadout ∧ statementOnlyDepth = statementOnlyDepth)
+    finiteReadout :=
+  ⟨fun h => h.1, fun h => ⟨h, rfl⟩⟩
+
+register_information_theorem finiteStatement in DeclaredBindings.arena
+  primitives finiteReadout.toPrimitiveBundle realization finiteBridge
+
+run_meta do
+  let env ← getEnv
+  for (theoremName, expectedNoncomputable) in [
+      (``namedStatement, true), (``inlineStatement, true),
+      (``namedOccurrenceStatement, true), (``inlineOccurrenceStatement, true),
+      (``finiteStatement, false)] do
+    let some entry := InformationRegistry.find? env theoremName
+      | throwError "polymorphic registration missing: {theoremName}"
+    let .defnInfo unit ← getConstInfo entry.unitName
+      | throwError "polymorphic theorem unit missing: {theoremName}"
+    unless unit.levelParams == (if expectedNoncomputable then [`u] else []) do
+      throwError "polymorphic theorem unit lost its universe: {theoremName}"
+    unless isNoncomputable env entry.unitName == expectedNoncomputable do
+      throwError "theorem unit has the wrong computability: {theoremName}"
+    checkWithKernel (mkConst entry.unitName (unit.levelParams.map Level.param))
+    let axioms ← collectAxioms entry.unitName
+    unless axioms.all (fun ax => ax == ``propext || ax == ``Classical.choice ||
+        ax == ``Quot.sound) do
+      throwError "polymorphic theorem unit has nonstandard axioms: {theoremName}: {axioms}"
+
 end LeanInformationAudit.Tests.DeclaredUniverses
