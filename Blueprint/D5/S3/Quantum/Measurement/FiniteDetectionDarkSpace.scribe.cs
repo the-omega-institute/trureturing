@@ -84,7 +84,7 @@ internal sealed class FiniteDetectionDarkSpaceDocument : IScribeDocumentDefiniti
             Call("mulVec", eventOperator, psi), Sp, Eq, Sp, D(0));
         Formula defect = Seq(
             identity, Minus,
-            Multiply(Power(Adjoint(q), d), Power(q, d)));
+            Multiply(Power(Grp(Adjoint(q)), d), Power(q, d)));
         Formula finiteKernel = Seq(
             Call("mulVec", defect, psi), Sp, Eq, Sp, D(0));
 
