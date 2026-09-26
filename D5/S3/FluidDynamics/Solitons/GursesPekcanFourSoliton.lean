@@ -7,10 +7,10 @@
    digest: The Hirota form D_x(D_x^3 + a1 D_t + a2 D_y)^(2k+1) satisfies the four-soliton condition identically only for k = 0. -/
 
 /-
-proof_shape: result: content
-escape_witness: form (2) — at the wave numbers (1, 3, 4, 5) the four-soliton condition equals
-  48 · 1360488960000^m · F(m), and F(m) < 0 for every odd m ≥ 3 (the local sign estimate
-  `negF` inside `result`)
+proof_shape: result: bind-only (the α-elimination is an additive map, the k = 0 identity and the
+  witness evaluation are normalization, and the sign estimate follows from pinned `pow_le_pow_left₀`,
+  `Odd.neg_pow` and arithmetic)
+escape_witness: null
 admission_basis: open-problem-resolution (issue #10059)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/

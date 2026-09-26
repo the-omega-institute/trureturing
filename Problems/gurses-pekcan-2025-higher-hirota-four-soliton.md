@@ -97,7 +97,7 @@ relation, including points with `α₁ = 0`; for `m = 3` it equals the source's
 printed `k = 1` expression at `k = (1,3,4,5)`, `(2,−3,5,7)` and `(1,2,6,−9)`;
 the condition as printed is `−380849837506560000` at `m = 1`,
 `k = (1,3,4,5)`, `α = (1,0)`, while the corrected one is `0`; `F(m) < 0` for
-every odd `m ≤ 401`. The Lean proof has only the standard axiom closure
+every odd `m` with `3 ≤ m ≤ 401` (`F(1) = 0`). The Lean proof has only the standard axiom closure
 `propext`, `Classical.choice`, and `Quot.sound`. These finite checks support
 the reading but do not establish the universal theorem.
 
