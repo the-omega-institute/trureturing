@@ -112,15 +112,18 @@ public sealed class LegacyContextCausalEvidenceTests
             var sourceSelection = InformationTemplateTheoremSelection.Collect(joined,
                 LeanAxiomReport.Create(files), source, RepoPath.CreateKnown(path), names);
             Assert.Single(sourceSelection.Occurrences);
+            SourceFamilyEvidenceTests.AssertFrozenOriginal(root, sourcePath, files[sourcePath]);
             var missingSourceFiles = files.Where(pair => pair.Key != sourcePath)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
             Assert.Throws<FormatException>(() => InformationTemplateTheoremSelection.Collect(joined,
                 LeanAxiomReport.Create(missingSourceFiles), source, RepoPath.CreateKnown(path), names));
             var realizationName = record["realization_name"]!.GetValue<string>();
-            Assert.Contains(files[path].Declarations, declaration => declaration.Name == realizationName);
+            var realizationOwner = Assert.Single(LeanImportClosure.RepositoryPaths(
+                LeanAxiomReport.Create(files), RepoPath.CreateKnown(path)).Where(owner =>
+                files[owner.Value].Declarations.Any(declaration => declaration.Name == realizationName))).Value;
             var missingRealization = new Dictionary<string, LeanFileReport>(files) {
-                [path] = files[path] with {
-                    Declarations = files[path].Declarations.Where(declaration => declaration.Name != realizationName)
+                [realizationOwner] = files[realizationOwner] with {
+                    Declarations = files[realizationOwner].Declarations.Where(declaration => declaration.Name != realizationName)
                         .ToImmutableArray()
                 }
             };
