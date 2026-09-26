@@ -54251,3 +54251,309 @@ $$
 此命题排除的是指定相位方向及固定反馈下的单一乘积 bra 分支，未排除其他相位方向的正局部恢复，也未给出所有局部协议或所有有限轮局部操作与经典通信协议的障碍。所展示的 $1/6$ 与 $1/16$ 都是取得的分支概率，不作最优性比较。本例 $n=2<k-\varrho+1=3$，也低于定理 409.2 第二项的充分界；它不构成这些界尖锐或必要的断言。存在某个可恢复的局部相位方向，与能否实现一个预先指定的全局相位方向，是两个不同的要求。
 
 ## 追加锚（本行以下为增补区）
+
+## 410. 记录射线亏量控制逐次数的正局部恢复
+
+**定理 410.1（亏量充分界与亏量二的最坏情形）。** 沿用定义 409.1 的完整局部投影接口。对任意给定的已知单位纯记录族 $r_1,\ldots,r_d\in H=\mathbb C^q$，以 $s_1,\ldots,s_k$ 表示不同射线的单位代表，将该定义中的类别映射记为 $\kappa$，并记
+
+$$
+r_i=u_i s_{\kappa(i)},\qquad |u_i|=1,\qquad
+\kappa:\{1,\ldots,d\}\twoheadrightarrow\{1,\ldots,k\},
+\qquad E=\operatorname{span}_{\mathbb C}\{s_j\}_{j=1}^k,
+\qquad h=\dim_{\mathbb C}E,\qquad c=k-h.
+$$
+
+这里 $h$ 是实际单份记录跨度，$c$ 是射线数相对于该跨度的亏量。对每一个实际整数次数
+
+$$
+n\ge\max(1,c),
+$$
+
+都存在原始 $H$ 因子上的单位测量 ket $|a_1\rangle,\ldots,|a_n\rangle$ 及校准的终端对角酉反馈 $U$，使全部 $n$ 位持有者各作一次完整的投影／补投影测量、只接受全第一结果时，接受映射满足
+
+$$
+\mathcal T(B)=pB\quad\text{对全部 }B\in\mathcal L(S),\qquad
+0<p\le1.
+$$
+
+同一协议对每个有限维未操作参考 $A$ 和每个 $B_{AS}\in\mathcal L(A\otimes S)$ 都满足
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(B_{AS})=pB_{AS}.
+$$
+
+投影、反馈与 $p$ 可以依赖给定记录族和实际 $n$，不依赖未知系统输入或其与参考的联合态。制备仍为同一个系统上的 $J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n}$，每个原始记录因子均被测量，失败结果也保留在完整 instrument 中；其余访问与操作权限仍按定义 409.1。若 $k=1$，每个 $n\ge1$ 均可取 $p=1$。
+
+作为同一定理的第二项，对每个 $h\ge2$，存在 $k=h+2$ 条不同单位记录射线、跨度恰为 $h$ 的族，在此接口下没有正成功的一记录接受分支，而两记录已有这样的分支。因此 $2$ 是亏量 $c=2$ 时对所有记录族统一保证存在性的最坏情形阈值；这不表示每个亏量二的族都需要两份记录。
+
+证明。先在代表射线上构造 $n$ 个非零复线性泛函，使其乘积评价具有同一个正模长，再完成原始空间上的测量。复线性评价空间、坐标线性式与坐标秩记为
+
+$$
+\begin{aligned}
+L&=\{(\lambda(s_1),\ldots,\lambda(s_k)):\lambda\in H^\vee\}
+       \subseteq\mathbb C^k,\qquad \ell_j(v)=v_j,\\
+r(B)&=\dim_{\mathbb C}\operatorname{span}\{s_j:j\in B\}
+       \quad(B\subseteq[k]),\qquad [k]=\{1,\ldots,k\}.
+\end{aligned}
+$$
+
+定理 409.2 的对偶分离论证在这里给出 $\dim L=h$：评价的核消去全部 $E$，而每个 $E$ 上的泛函均可延拓到 $H$。每个 $\ell_j$ 非零，且两个不同坐标式不成比例，否则对全部泛函评价会迫使两个代表共线。因此坐标拟阵无环且简单，$r(\{j\})=1$，秩一的非空块只能是单点。以下不要求记录族一般位置。
+
+令 $G=(\mathbb C^\times)^k$、$X=L\cap G$。有限个非零坐标线性式之积非零，故 $X$ 是 $L$ 中非空稠密主开集。这里的代数环面 $G$ 与单位相位环面 $\mathbb T^k=(S^1)^k$ 有别，不假设 $X\cap\mathbb T^k$ 非空。
+
+先设 $c\ge2$，从二因子乘积的闭包维数分析记录的关系。以 $v\circ w$ 表示逐坐标乘积，令
+
+$$
+Y=\overline{\{v\circ w:v,w\in L\}}^{\mathrm{Zar}}
+       \subseteq\mathbb C^k,\qquad s=\dim Y.
+$$
+
+$s$ 是像闭包的代数簇维数，并非这些乘积向量的线性张成维数。Bernstein，[*Generic symmetry-forced infinitesimal rigidity: translations and rotations*, arXiv:2003.10529v4](https://arxiv.org/abs/2003.10529v4)，Theorem 3.1，以及 Antolini–Dewar–Tanigawa，[*Dilworth truncations and Hadamard products of linear spaces*, arXiv:2508.04798v1](https://arxiv.org/abs/2508.04798v1)，Theorems 1.1、2.7 的式 (3)–(4)，给出所需的二因子代数拟阵与秩公式。此处代入 $L_1=L_2=L$、$r_1=r_2=r$；两个因子各自的参数独立变化，不把乘法映射限制为 $v\mapsto v\circ v$。
+
+具体地，诱导拟阵的独立集 $I\subseteq[k]$ 满足
+
+$$
+|J|\le2r(J)-1\qquad\text{对每个非空 }J\subseteq I.
+$$
+
+不对空集施加该不等式；$2r-1$ 是诱导秩的集合函数，本身不是所得拟阵的秩函数。上述式 (4) 中允许留下 $F_0\subseteq[k]$，其代价为 $|F_0|$，并把其余元素分成非空块。因为每个单点的代价为 $2r(\{j\})-1=1$，可将 $F_0$ 的每个元素换成一个单点块；反过来取 $F_0=\varnothing$ 即包含全部非空块分拆。因此全地集的秩，也就是 $s$，为
+
+$$
+s=\min_{\mathcal P}\sum_{B\in\mathcal P}(2r(B)-1),
+$$
+
+其中 $\mathcal P$ 遍历 $[k]$ 的非空块分拆。非空约定取上述 Theorem 2.7 式 (3) 的明确形式；它避免将 Bernstein Definition 2.6 中未显写的这一限定误用于空集。
+
+对任一分拆，记 $R=\sum_{B\in\mathcal P}r(B)$、$m=|\mathcal P|$。各块共同张成 $E$，故 $R\ge h$，而各块非空无环，故 $m\le R$。其代价为
+
+$$
+2R-m\ge R\ge h.
+$$
+
+若代价为 $h$，则 $R=m=h$，所有块秩一；简单性迫使它们全为单点，因而 $k=h$，与 $c\ge2$ 矛盾。所以 $s\ge h+1$。若 $s=h+1$，取达到最小值的分拆，写 $R=h+a$、$a\ge0$，则
+
+$$
+m=h+2a-1\le R=h+a,\qquad a\le1.
+$$
+
+$a=1$ 会给出 $m=R=h+1$，全部块又是秩一单点，从而 $k=h+1$，仍与 $c\ge2$ 矛盾。故 $a=0$、$R=h$、$m=h-1$。于是
+
+$$
+\sum_{B\in\mathcal P}(r(B)-1)=R-m=1,
+$$
+
+恰有一个秩二块，其余 $h-2$ 个块均为单点。秩二块含 $k-(h-2)=c+2$ 条不同射线。各块跨度之和为 $E$，维数之和又等于 $\dim E=h$，故从各块跨度的外直和到 $E$ 的求和映射既满射又等维，核为零。重新排列代表后，得到
+
+$$
+E=P\oplus\mathbb C s_{c+3}\oplus\cdots\oplus\mathbb C s_k,
+\qquad
+P=\operatorname{span}\{s_1,\ldots,s_{c+2}\},\qquad \dim P=2.
+$$
+
+因此 $c\ge2$ 时，或者 $s\ge h+2$，或者全部记录具有上述平面加独立补空间的形式。后者是代数直和，可以不正交；它只约束记录关系，不授予物理压缩权限。这里的关键联系是：二因子增长只达到 $h+1$ 时，记录恰被迫落入可由二维恢复处理的互补结构。
+
+在 $s\ge h+2$ 的情形，先选实际的最大秩二因子点。Antolini–Dewar–Tanigawa Definition 3.1 后的 Jacobian 表示及 Proposition 3.2，在复数域上将多项式像闭包的维数识别为一般点处的微分秩。应用于 $L\times L\to\mathbb C^k$ 的逐坐标乘法，其最大秩为 $s$；秩达到 $s$ 的非空开集与不可约空间 $L^2$ 中的稠密开集 $X^2$ 相交。因此存在实际复数点 $(v_1,v_2)\in X^2$，满足
+
+$$
+\operatorname{rank}(dF_2)_{(v_1,v_2)}=s,
+\qquad F_2(v_1,v_2)=v_1\circ v_2.
+$$
+
+即使 $L_1=L_2$，该选择仍在两个独立参数空间中作出；一般性只选择因子元组，不限制给定记录族。沿用定理 409.2 的对数切空间记法和已经给出的微分恒等式，
+
+$$
+\begin{aligned}
+W(v)&=\operatorname{diag}(v)^{-1}L\quad(v\in X),\\
+\operatorname{ran}(dF_t)_{(v_1,\ldots,v_t)}
+ &=\operatorname{diag}(F_t(v_1,\ldots,v_t))
+       \bigl(W(v_1)+\cdots+W(v_t)\bigr),\\
+\operatorname{span}_{v\in X}W(v)&=\mathbb C^k.
+\end{aligned}
+$$
+
+最后一个等式适用，因为 $h\ge2$ 且坐标线性式非零、两两不成比例，正是定理 409.2 清分母并在单个坐标超平面上分离各项的条件。二因子点的可逆对角因子给出 $\dim(W(v_1)+W(v_2))=s$。只要当前和还不是 $\mathbb C^k$，共同张成等式就提供一个不包含在当前和内的 $W(v)$；每次加入至少增维一。至多再加入 $k-s$ 个因子，便有某个 $m$ 满足
+
+$$
+W(v_1)+\cdots+W(v_m)=\mathbb C^k,
+\qquad m\le2+k-s\le k-h=c.
+$$
+
+现在固定所要处理的实际 $n\ge c$。用任意 $X$ 中的点补足至 $n$ 个切向元组参数，上述和保持满维。正则映射
+
+$$
+F_n:X^n\longrightarrow G,\qquad
+F_n(v_1,\ldots,v_n)_j=\prod_{a=1}^n(v_a)_j
+$$
+
+因而在某个实际点具有满秩微分。由定理 409.2 的复逆函数论证，它的实际像含非空欧氏开集，故 $F_n$ 支配 $G$。补足的是微分元组，此时没有把一个较短的成功物理分支延长。
+
+为从此处得到实际相位乘积，应用定理 409.2 证明中的像与纤维论证。仍令 $g=\prod_j\ell_j$，则 $X=D(g)$ 的坐标环为 $\mathbb C[L][g^{-1}]$，$X^n$ 与 $G=\operatorname{Spec}\mathbb C[z_1^{\pm1},\ldots,z_k^{\pm1}]$ 均为仿射有限型复概形。源坐标环在目标坐标环上有限生成，而目标坐标环 Noetherian，故该环同态有限表示；仿射态射拟紧，所以 $F_n$ 拟紧且局部有限表示。Chevalley 定理（Stacks Project，[Tag 054K](https://stacks.math.columbia.edu/tag/054K)）给出可构造概形像；其支配性与 $G$ 的不可约性使像包含非空 Zariski 开集 $O$（[Tag 005K](https://stacks.math.columbia.edu/tag/005K)）。
+
+对任意 $z\in O(\mathbb C)$，纤维 $F_n^{-1}(z)$ 是非空仿射有限型复概形。其坐标环为非零有限型复代数，取极大理想后，Hilbert 零点定理（[Tag 00FV](https://stacks.math.columbia.edu/tag/00FV)）给出有限扩张剩余域；由于 $\mathbb C$ 代数闭，此域就是 $\mathbb C$，从而纤维确有实际复数点。因此 $O(\mathbb C)$ 包含于实际复数点像，而不仅包含于像的闭包。定理 409.2 的有限 Laurent 和／Fourier 系数论证给出 $\mathbb T^k$ 在 $G$ 中 Zariski 稠密，于是可取
+
+$$
+z\in O(\mathbb C)\cap\mathbb T^k,\qquad
+w_1,\ldots,w_n\in X,\qquad
+F_n(w_1,\ldots,w_n)=z.
+$$
+
+这里的 $w_1,\ldots,w_n$ 是对当前 $n$ 重新从实际纤维取得的因子，不要求等于前面用于微分满秩的元组。按 $L$ 的定义选取原始 $H$ 上的泛函 $\lambda_a$，使 $\lambda_a(s_j)=(w_a)_j$，便有
+
+$$
+\prod_{a=1}^n\lambda_a(s_j)=z_j,
+\qquad |z_j|=1.
+$$
+
+每个泛函均非零。此情形得到的原始乘积共同模长为 $\gamma=1$。整个推导只使用二因子拟阵公式；补足更多因子使用的是子空间增维与实际像论证，没有使用一般多因子秩公式。
+
+再处理代数直和的例外情形。对每个实际 $n\ge c=(c+2)-2$，将 $P$ 取正交坐标识别为 $\mathbb C^2$，对其中 $c+2$ 个单位代表应用定理 408.2。其构造提供 $n$ 个非零平面复线性泛函 $\mu_1,\ldots,\mu_n$，使
+
+$$
+\prod_{a=1}^n\mu_a(s_j)=\gamma z_j
+\quad(1\le j\le c+2),\qquad
+\gamma>0,\qquad |z_j|=1.
+$$
+
+可直接取该二维协议的单位 bra，$\gamma$ 就是其共同乘积模长；相位全部放入 $z_j$。现在将这 $n$ 个泛函中的每一个都延拓到上述代数直和 $E$，在每个补空间的单位代表上规定
+
+$$
+\widetilde\mu_1(s_j)=\gamma,\qquad
+\widetilde\mu_a(s_j)=1\quad(2\le a\le n),
+\qquad c+3\le j\le k,
+\qquad \widetilde\mu_a|_P=\mu_a.
+$$
+
+直和性保证这些指定值与平面限制同时唯一确定 $E$ 上的线性泛函。若 $h=2$，补空间为空，指定值的条件为空。各补代表上的乘积正是 $\gamma$；置其 $z_j=1$，全部 $k$ 个代表便共享同一个正模长。将每个 $\widetilde\mu_a$ 再延拓到原始 $H$，例如取 $\lambda_a=\widetilde\mu_a\circ P_E$，其中 $P_E:H\to E$ 是数学上的正交投影。所有 $\lambda_a$ 非零，且保持指定评价。该延拓并非协议里实施的投影；$E$ 内的各直和分量不必正交。测量的归一化必须等到这全部 $n$ 次延拓之后，用各泛函在原始 $H$ 上的范数完成。
+
+余下 $c=0,1$ 的情形直接复用引理 408.1 的归一化支撑结论。在 $E$ 的一组正交基中，将单位 ket $s_j$ 的坐标作为矩阵 $R$ 的第 $j$ 行。沿用定义 389.1 的行坐标约定，
+
+$$
+L=\operatorname{ran}R=\operatorname{ran}(RR^\dagger),\qquad
+(RR^\dagger)_{jj}=1,\qquad
+\operatorname{rank}(RR^\dagger)=h=k-c\ge k-1.
+$$
+
+于是存在 $\zeta\in\operatorname{ran}R\cap\mathbb T^k$。写 $\zeta=Rb$，取 $E$ 上的复线性式 $\lambda_0(x)=\sum_\mu b_\mu x_\mu$ 并延拓到 $H$，便有 $\lambda_0(s_j)=\zeta_j$。这里表示 ket 的系数须取 $\overline{b_\mu}$；$R$ 的行没有改成 bra 坐标。令 $N_0=\|\lambda_0\|_H>0$，则 $\lambda_0/N_0$ 是同一个单位 bra，所有代表的重叠模长均为 $1/N_0$。对每个实际 $n\ge1$，在全部因子上重复使用这个相同 bra：在未归一化记法中令所有 $\lambda_a=\lambda_0$，即有
+
+$$
+\prod_{a=1}^n\lambda_a(s_j)=\zeta_j^n,
+\qquad \gamma=1,\qquad z_j=\zeta_j^n\in S^1.
+$$
+
+这给出逐次数的具体构造，不依赖成功概率的单调性。若 $k=1$，进一步直接取 $\lambda_0=\langle s_1|$，所有范数均为一、$\zeta_1=1$；此选择在下述物理完成中给出 $p=1$。
+
+将三种情形共同完成为原始因子上的物理协议。我们已经对给定的 $n$ 取得非零 $\lambda_1,\ldots,\lambda_n\in H^\vee$、$\gamma>0$ 与 $z\in\mathbb T^k$，满足
+
+$$
+\prod_{a=1}^n\lambda_a(s_j)=\gamma z_j\qquad(1\le j\le k).
+$$
+
+在原始 $H$ 的正交基 $\{|e_\mu\rangle\}_{\mu=1}^q$ 中写
+
+$$
+\begin{aligned}
+\lambda_a\left(\sum_\mu x_\mu|e_\mu\rangle\right)
+ &=\sum_\mu\beta_{a\mu}x_\mu,\\
+N_a=\|\lambda_a\|_H
+ &=\left(\sum_\mu|\beta_{a\mu}|^2\right)^{1/2}>0,\qquad
+|a_a\rangle=\frac1{N_a}\sum_\mu\overline{\beta_{a\mu}}|e_\mu\rangle.
+\end{aligned}
+$$
+
+因此 $|a_a\rangle$ 归一化，且其 bra 为 $\lambda_a/N_a$。共轭只在从复线性泛函系数转为表示 ket 时出现。对任一单位代表，
+
+$$
+\gamma=\prod_{a=1}^n|\lambda_a(s_j)|
+       \le\prod_{a=1}^nN_a,
+\qquad
+\alpha:=\frac{\gamma}{\prod_{a=1}^nN_a}\in(0,1].
+$$
+
+代数延拓可能增大这些范数，但只把全部代表的乘积幅度缩放同一个正因子。对原始系统标签，重复射线的校准相位必须逐份累积，故
+
+$$
+t_i=\prod_{a=1}^n\langle a_a|r_i\rangle
+    =\alpha u_i^n z_{\kappa(i)}.
+$$
+
+每位持有者在自己的原始 $H$ 上使用
+
+$$
+Q_{a,0}=|a_a\rangle\langle a_a|,\qquad
+Q_{a,1}=I_H-Q_{a,0},\qquad
+Q_\varepsilon=\bigotimes_{a=1}^nQ_{a,\varepsilon_a}
+\quad(\varepsilon\in\{0,1\}^n).
+$$
+
+全部 $2^n$ 个结果，包括所有失败结果，满足
+
+$$
+\sum_{\varepsilon\in\{0,1\}^n}Q_\varepsilon
+  =\bigotimes_{a=1}^n(Q_{a,0}+Q_{a,1})=I_{H^{\otimes n}},
+\qquad Q_\varepsilon^\dagger Q_\varepsilon=Q_\varepsilon.
+$$
+
+所以对应的投影 instrument 完全正且总和保迹。接受全第一结果时的输出记录固定为 $|a_1\rangle\otimes\cdots\otimes|a_n\rangle$，因为
+
+$$
+(I_S\otimes Q_{(0,\ldots,0)})J_n|i\rangle
+=t_i|i\rangle\otimes|a_1\rangle\otimes\cdots\otimes|a_n\rangle.
+$$
+
+迹掉此记录得到 $K=\operatorname{diag}(t_1,\ldots,t_d)$。取终端反馈
+
+$$
+\begin{aligned}
+K&=\operatorname{diag}\bigl(\alpha u_i^n z_{\kappa(i)}\bigr)_{i=1}^d,\\
+U&=\operatorname{diag}\bigl(\overline{u_i^n z_{\kappa(i)}}\bigr)_{i=1}^d,
+\qquad UK=\alpha I_S.
+\end{aligned}
+$$
+
+$U$ 是已知对角酉算子，记录测量期间没有操作系统。因此对每个矩阵 $B$ 及每个有限参考上的矩阵 $B_{AS}$，
+
+$$
+\begin{aligned}
+\mathcal T(B)&=UKBK^\dagger U^\dagger=\alpha^2B,\\
+(\operatorname{id}_A\otimes\mathcal T)(B_{AS})
+ &=(I_A\otimes UK)B_{AS}(I_A\otimes UK)^\dagger
+   =\alpha^2B_{AS}.
+\end{aligned}
+$$
+
+令 $p=\alpha^2\in(0,1]$ 即得第一项。对任意未知归一化联合态取迹，成功概率为同一个 $p$，接受后归一化恢复整个联合态，包含全部系统相干与参考纠缠。设置只使用已知记录及 $n$，不读取未知输入。$k=1$ 的上述选择给出 $t_i=u_i^n$、$UK=I_S$；即便 $q=1$，零补投影仍是合法的失败效果。
+
+最后证明亏量二的最坏情形。对任意 $h\ge2$，在 $H=\mathbb C^h$ 中取正交单位基 $e_1,\ldots,e_h$，用以下 $k=h+2$ 个单位向量分别作为系统 $S=\mathbb C^{h+2}$ 的记录：
+
+$$
+e_1,\quad e_2,\quad
+\frac{e_1+e_2}{\sqrt2},\quad
+\frac{e_1+i e_2}{\sqrt2},\quad
+e_3,\ldots,e_h.
+$$
+
+这些射线不同，且张成 $H$。前四个正是定义 392.1 的 Buscemi–Chiribella–D’Ariano 四记录，来源为 [*Inverting Quantum Decoherence by Classical Feedback from the Environment*, quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，式 (9)，并沿用该定义说明的 ket 行坐标与通道对偶约定；其余向量是独立补空间中的单位代表。
+
+若有正成功的一记录分支，令相应 bra 在 $e_1,e_2$ 上的值为 $a,b$。反馈为酉且要求对全部系统矩阵恢复，特别是在每个基投影上成功概率相同且为正，所以存在 $\delta>0$ 使
+
+$$
+|a|=|b|=
+\left|\frac{a+b}{\sqrt2}\right|=
+\left|\frac{a+ib}{\sqrt2}\right|=\delta.
+$$
+
+后两个模长平方分别给出
+
+$$
+\delta^2=\delta^2+\operatorname{Re}(a\overline b),
+\qquad
+\delta^2=\delta^2+\operatorname{Im}(a\overline b).
+$$
+
+因此 $a\overline b=0$，与 $|a\overline b|=\delta^2>0$ 矛盾。这个矛盾也适用于任意未归一化非零 bra 的平面限制；添加补空间分量不能消除它。另一方面该族的 $c=2$，第一项保证每个实际 $n\ge2$ 都有正成功局部分支，特别是两份记录足够。第二项得证。
+
+平面记录加独立补空间的几何安排已有 Chefles，[*Unambiguous Discrimination Between Linearly Dependent States With Multiple Copies*, quant-ph/0105016v3](https://arxiv.org/abs/quant-ph/0105016v3)，§II 在式 (2.3) 后检验最坏情形时的先例。该文研究给定未知纯态的多个副本能否线性独立并作无歧义判别，其式 (2.3) 在态数、复制数、单份跨度取 $k,n,h$ 时为 $n\ge k-h+1$。这里保留这个几何出处，但所处理的是由同一个未知系统产生的受控记录、逐原始因子的完整局部测量和相干恢复；判别副本的结果不能替代上述乘积泛函、归一化及 $UK=\alpha I_S$ 的物理合成。证毕。
+
+本定理对每个给定记录族给出充分次数；除 $c=2$ 的上述最坏情形结论外，不给出一般亏量的最小次数或下界，也不要求一个指定的相位向量可达。成功概率依赖实际构造；本定理不提供统一正下界、最优概率或一般确定性恢复结论。所用支配性不提供有效寻找因子、精度、鲁棒性或实施成本保证；混合记录、不可访问记录以及超出定义 409.1 的操作接口不在其量词内。
+
+## 追加锚（本行以下为增补区）
