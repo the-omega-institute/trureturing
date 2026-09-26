@@ -1176,7 +1176,7 @@ $$
 
 ## 59. 概念动力学：知道一个侧面与知道怎样行动
 
-**定义 59.1（目标相对的充分性）。** [《形式概念动力学》第 7、9、10 节](FORMAL_CONCEPT_DYNAMICS.md)把概念精化、命题为真与对目标忠实分开。将其接到本卷，先给状态集合 $X$、读数 $q:X\to O$ 与所问目标 $h:X\to Y$。记 $q_{\mathrm{eff}}:X\to q(X)$ 为映到实际像的同一读数，即 $q_{\mathrm{eff}}(x)=q(x)$，但陪域限定为 $q(X)$。若存在 $\bar h:q(X)\to Y$，使
+**定义 59.1（目标相对的充分性）。** [《形式概念动力学》第 7、9、10 节](FORMAL_CONCEPT_DYNAMICS.md)把概念精化、命题为真与对目标忠实分开。将其接到本卷，先给状态集合 $X$、读数 $q:X\to O$ 与所问目标 $h:X\to Y$。记 $\iota:q(X)\hookrightarrow O$ 为包含映射，$q_{\mathrm{eff}}:X\to q(X)$ 为陪域限制到实际像的规范映射，所以 $q=\iota\circ q_{\mathrm{eff}}$。若存在 $\bar h:q(X)\to Y$，使
 
 $$
 h=\bar h\circ q_{\mathrm{eff}},
@@ -1237,9 +1237,7 @@ $$
 \widehat X&=\{B:\mathcal P(X)\mid B\in\mathcal B_q\},\\
 \widehat A(\widehat B)&=\{a:A\mid a\in A(|\widehat B|)\},\\
 \widehat R(\widehat B,\widehat a)
-&=\left\{\widehat C:\widehat X\ \middle|\
-\exists o\in q(R(|\widehat B|,|\widehat a|)),\
-|\widehat C|=(|\widehat B|)_{|\widehat a|,o}\right\},\\
+&=\left\{\widehat C:\widehat X\ \middle| \exists o\in q(R(|\widehat B|,|\widehat a|)),\quad |\widehat C|=(|\widehat B|)_{|\widehat a|,o}\right\},\\
 \widehat K&=\{\widehat B:\widehat X\mid |\widehat B|\subseteq K\}.
 \end{aligned}
 $$
