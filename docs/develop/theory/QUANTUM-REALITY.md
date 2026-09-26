@@ -56735,3 +56735,381 @@ $$
 故这组夹界不识别内部局部最优值。最后，区间外由定理 413.1 排除同一两记录接口的所有正成功联合协议，第 415 节给出其联合值为零；三个受限类别均包含于联合类，空接受集合又达到零，所以它们的值也全为零。完整空间中未占据的反对称线通过乘积向量的行列式关系限制可分成功权重，而单向树的条件测量与全部失败叶子给出可实际达到的局部下界。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 417. 五射线两份原始记录的单向恢复最大成功率
+
+操作约定。固定已知的有限实数 $r>0$，取系统 $S=\mathbb C^5$ 及正交基 $\{|i\rangle\}_{i=1}^5$。两份原始记录及其制备为
+
+$$
+\begin{aligned}
+\omega&=e^{2\pi i/3},&
+s_1&=|0\rangle,&s_2&=|1\rangle,&
+s_{3+j}&=\frac{|0\rangle+r\omega^j|1\rangle}{\sqrt{1+r^2}}\quad(j=0,1,2),\\
+R_A&=\mathbb C^2,&R_B&=\mathbb C^2,&R_2&=R_A\otimes R_B,&
+q_i&=s_i\otimes s_i,\\
+J&:S\longrightarrow S\otimes R_2,&
+J|i\rangle&=|i\rangle\otimes q_i&&&(1\le i\le5).
+\end{aligned}
+$$
+
+这里 $J$ 就是第 416 节的 $J_2$。Alice 持有 $R_A$，Bob 持有 $R_B$；制备后的完整原始空间始终为 $R_2$。记
+
+$$
+\begin{aligned}
+e_0&=|00\rangle,&e_1&=\frac{|01\rangle+|10\rangle}{\sqrt2},&e_2&=|11\rangle,\\
+W_2&=\operatorname{span}\{e_0,e_1,e_2\},&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},&R_2&=W_2\oplus\mathbb C e_-.
+\end{aligned}
+$$
+
+$W_2$ 只用于描述准备向量的数学张成空间，不授予将原始两因子物理压缩到 $W_2$ 的操作，也不省略任何原始记录。
+
+Alice 先作一次有限完全正仪器，报告实际标签 $a\in\mathsf A$；Bob 收到 $a$ 后，作一次有限完全正仪器，报告实际标签 $b\in\mathsf B_a$，随即结束记录操作。各标签集有限非空，输出空间 $O_{A,a}$、$O_{B,ab}$ 有限维且非零。允许的局部映射及有限隐藏 Kraus 表示为
+
+$$
+\begin{aligned}
+\mathcal A_a&:\mathcal L(R_A)\longrightarrow\mathcal L(O_{A,a}),&
+\mathcal A_a(Z)&=\sum_\mu A_{a\mu}ZA_{a\mu}^\dagger,&
+A_{a\mu}&:R_A\longrightarrow O_{A,a},\\
+\mathcal B_{b\mid a}&:\mathcal L(R_B)\longrightarrow\mathcal L(O_{B,ab}),&
+\mathcal B_{b\mid a}(Z)&=\sum_\nu B_{b\mid a,\nu}ZB_{b\mid a,\nu}^\dagger,&
+B_{b\mid a,\nu}&:R_B\longrightarrow O_{B,ab}.
+\end{aligned}
+$$
+
+全部实际结果满足完整的迹保持条件
+
+$$
+\sum_{a\in\mathsf A}\operatorname{Tr}\mathcal A_a(Z_A)=\operatorname{Tr}Z_A,
+\qquad
+\sum_{b\in\mathsf B_a}\operatorname{Tr}\mathcal B_{b\mid a}(Z_B)=\operatorname{Tr}Z_B
+\quad\text{对每个 }a,
+$$
+
+其中等式分别对全部 $Z_A\in\mathcal L(R_A)$、$Z_B\in\mathcal L(R_B)$ 成立。局部有限辅助态与未知输入及其参考独立，初始两方辅助态为乘积态；将其准备、局部处理及丢弃吸收进上述映射。Bob 只能依赖实际 $a$，不能依赖隐藏指标 $\mu$；没有共享纠缠、量子通信或 Bob 结果控制的再次 Alice 记录操作。
+
+令 $\mathsf Y=\{(a,b):a\in\mathsf A, b\in\mathsf B_a\}$，则实际记录分支和迹掉全部输出记录后的系统分支为
+
+$$
+\begin{aligned}
+\mathcal I_{ab}&=\mathcal A_a\otimes\mathcal B_{b\mid a},\\
+\mathcal M_{ab}(X)&=\operatorname{Tr}_{O_{A,a}\otimes O_{B,ab}}
+ \left[(\operatorname{id}_S\otimes\mathcal I_{ab})(JXJ^\dagger)\right]
+ \qquad(X\in\mathcal L(S)).
+\end{aligned}
+$$
+
+固定接受集合 $\mathsf Y_{\mathrm s}\subseteq\mathsf Y$，全部失败标签仍在完整仪器内。每个实际 $(a,b)$ 的两个标签都传至终端系统反馈端，控制一个预先指定、作用于整个 $S$ 的酉算子 $U_{ab}$；同一实际标签下的全部隐藏指标共用该算子。在此之前不操作系统。仪器、接受集合及反馈可依赖已知的 $r$，不得依赖未知输入。精确恢复要求同一个协议及同一个输入无关的 $p\in[0,1]$ 满足
+
+$$
+\begin{aligned}
+\mathcal T&:=\sum_{(a,b)\in\mathsf Y_{\mathrm s}}
+                  \operatorname{Ad}_{U_{ab}}\circ\mathcal M_{ab}
+                  =p\operatorname{id}_S,\\
+\operatorname{Ad}_{U_{ab}}(X)&=U_{ab}XU_{ab}^\dagger,\\
+(\operatorname{id}_F\otimes\mathcal T)(X_{FS})&=pX_{FS}
+ \qquad\text{对每个有限维未操作参考 }F
+ \text{ 及全部 }X_{FS}\in\mathcal L(F\otimes S).
+\end{aligned}
+$$
+
+第一行是在全部系统矩阵上的等式，与第三行由矩阵张量基展开相互等价；对密度矩阵取迹，$p$ 就是接受概率。空接受集合允许 $p=0$。每个协议的结果数和空间维数均有限，不要求所有候选协议共用一个有限上界。记这些 $p$ 的上确界为 $\eta_{\to}(r)$。
+
+上述单向次序沿用 Chitambar 等，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2–2.3 的局部仪器、条件复合及粗粒化区分。它是第 416 节有限局部操作与经典通信类别的子类，该有限类别允许双方交替操作；展开每棵有限树的局部 Kraus 算子又给出可分操作。仍以 $\eta_{\mathrm{fin}}(r)$、$\eta_{\mathrm{SEP}}(r)$ 表示第 416 节在同一原始分割和同一恢复等式下的两类上确界。
+
+**定理 417.1（单向精确恢复的可达到最大值）。** 对每个 $r>0$，上述单向恢复上确界均取得。令
+
+$$
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,
+$$
+
+则其最大值为
+
+$$
+\boxed{\displaystyle
+\eta_{\to}(r)=L(r):=
+\begin{cases}
+\dfrac{2}{3(1+\kappa(r))},&\dfrac12\le r^2\le2,\\[4pt]
+0,&r^2<\dfrac12\text{ 或 }r^2>2.
+\end{cases}}
+$$
+
+特别地，$L(1/\sqrt2)=L(\sqrt2)=1/3$，且
+
+$$
+L(1)=\frac{2}{3+2\sqrt2}.
+$$
+
+在闭区间内，最大值由第 416 节包含六个成功叶子和六个失败叶子的完整单向树取得；每个成功叶子的校正映射均为 $h\operatorname{id}_S/3$，其中
+
+$$
+h=\frac1{3(1+\kappa(r))}.
+$$
+
+在严格内部 $1/2<r^2<2$，单向最大值与有限可分最大值之间有严格差距
+
+$$
+\boxed{\displaystyle
+\eta_{\mathrm{SEP}}(r)-\eta_{\to}(r)
+ =\frac{1-\kappa(r)}{3\kappa(r)(1+\kappa(r))}>0.}
+$$
+
+这确定了第 416 节夹界中的单向值。对允许双方交替操作的一般有限局部协议，仍保留
+
+$$
+L(r)\le\eta_{\mathrm{fin}}(r)\le\frac1{3\kappa(r)}
+\qquad\left(\frac12\le r^2\le2\right);
+$$
+
+本定理不确定该有限交替类别在严格内部的最优值。
+
+证明。对单位向量 $u$ 写 $P_u=|u\rangle\langle u|$，并记 $P_i=P_{s_i}$。先验证源投影的实线性张成。取 Pauli 矩阵
+
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+两极给出 $P_1+P_2=I_2$、$P_1-P_2=\sigma_z$。对三个纬线定义 Hermitian 矩阵
+
+$$
+Q_j=(1+r^2)P_{3+j}-P_1-r^2P_2
+ =r\begin{pmatrix}0&\omega^{-j}\\\omega^j&0\end{pmatrix}.
+$$
+
+于是
+
+$$
+Q_0=r\sigma_x,\qquad
+Q_1=r\left(-\frac12\sigma_x+\frac{\sqrt3}{2}\sigma_y\right),\qquad
+\operatorname{span}_{\mathbb R}\{P_i:1\le i\le5\}
+ =\operatorname{Herm}(\mathbb C^2),
+$$
+
+其中使用 $r>0$。这里的信息完备性是算子张成意义，参见 D’Ariano–Perinotti–Sacchi，[quant-ph/0310013v2](https://arxiv.org/abs/quant-ph/0310013v2)，§2、式 (4) 的算子展开准则。五个 $P_i$ 是源态投影，其迹之和为五，并非归一化的正算子值测度；上述张成也不表示协议实际进行了态层析。
+
+由此得到正平坦乘积伙伴的唯一性。固定单位 $x$，假设单位 $y,z$ 及正数 $c,d$ 满足
+
+$$
+|\langle x|s_i\rangle|^2|\langle y|s_i\rangle|^2=c,
+\qquad
+|\langle x|s_i\rangle|^2|\langle z|s_i\rangle|^2=d
+\quad(1\le i\le5).
+$$
+
+正水平保证所有 $|\langle x|s_i\rangle|^2$ 非零，因此
+
+$$
+\operatorname{Tr}\left[P_i\left(\frac{P_y}{c}-\frac{P_z}{d}\right)\right]=0
+\quad(1\le i\le5).
+$$
+
+括号内为 Hermitian 矩阵，与其张成空间的全部元素迹正交，故为零；例如与自身取迹就给出本征值平方和为零。再取迹得 $1/c=1/d$，所以 $c=d$ 且 $P_y=P_z$。交换两因子得到相反方向的同一结论。这是在正水平伙伴存在时的唯一性，不断言每个单位 $x$ 都有这样的伙伴。
+
+现在取任意满足恢复等式的单向协议，不预设其实际局部效果秩一，也不预设实际反馈为对角酉。由迹对偶定义
+
+$$
+\begin{aligned}
+E_a&=\mathcal A_a^*(I_{O_{A,a}})=\sum_\mu A_{a\mu}^\dagger A_{a\mu},\\
+F_{b\mid a}&=\mathcal B_{b\mid a}^*(I_{O_{B,ab}})
+                   =\sum_\nu B_{b\mid a,\nu}^\dagger B_{b\mid a,\nu},\\
+E_a&\succeq0,\qquad \sum_aE_a=I_2,\qquad
+F_{b\mid a}\succeq0,\qquad \sum_{b\in\mathsf B_a}F_{b\mid a}=I_2.
+\end{aligned}
+$$
+
+实际 $(a,b)$ 的记录 Kraus 算子为 $A_{a\mu}\otimes B_{b\mid a,\nu}$，故其效果恰为
+
+$$
+\mathcal I_{ab}^*(I_{O_{A,a}\otimes O_{B,ab}})
+ =\sum_{\mu,\nu}A_{a\mu}^\dagger A_{a\mu}\otimes
+                  B_{b\mid a,\nu}^\dagger B_{b\mid a,\nu}
+ =E_a\otimes F_{b\mid a}.
+$$
+
+这使用实际 $a$ 下的条件 Bob 映射；将隐藏 $\mu$ 当作另一个可通信结果会改变协议。对系统矩阵单位 $D_{ij}=|i\rangle\langle j|$，输出迹给出
+
+$$
+\mathcal M_{ab}(D_{ij})
+ =\langle q_j|E_a\otimes F_{b\mid a}|q_i\rangle D_{ij}.
+$$
+
+分别对两个正效果作谱分解，只列正本征值及对应单位本征向量：
+
+$$
+\begin{aligned}
+E_a&=\sum_s\lambda_{as}P_{x_{as}},&
+F_{b\mid a}&=\sum_t\mu_{abt}P_{y_{abt}},\\
+v_{abst}&=\sqrt{\lambda_{as}\mu_{abt}}\,x_{as}\otimes y_{abt},&
+E_a\otimes F_{b\mid a}&=\sum_{s,t}|v_{abst}\rangle\langle v_{abst}|,\\
+K_{abst}&=\operatorname{diag}\bigl(\langle v_{abst}|q_1\rangle,\ldots,
+                                      \langle v_{abst}|q_5\rangle\bigr),&
+\mathcal M_{ab}(X)&=\sum_{s,t}K_{abst}XK_{abst}^\dagger.
+\end{aligned}
+$$
+
+零效果对应空和。谱指标只是数学分析用的细分，不成为实际标签；全部 $K_{abst}$ 仍须使用同一个原有 $U_{ab}$。这里沿用 Gregoratti–Werner，[quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2 的环境测量与终端酉校正框架；对于当前接受和及固定实际反馈，所需结论由第 411、416 节的正 Choi 支撑论证直接得到如下形式。
+
+令 $|\Omega\rangle=\sum_{i=1}^5|i\rangle\otimes|i\rangle$，$|K\rangle\!\rangle=(I_S\otimes K)|\Omega\rangle$。全矩阵恢复等式意味着
+
+$$
+\sum_{(a,b)\in\mathsf Y_{\mathrm s},s,t}
+ |U_{ab}K_{abst}\rangle\!\rangle\langle\!\langle U_{ab}K_{abst}|
+ =p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+在任何与 $|I_S\rangle\!\rangle$ 正交的向量上取二次型，左侧每项非负且总和为零，故每个向量均在该一维支撑中。因此
+
+$$
+U_{ab}K_{abst}=c_{abst}I_S,\qquad
+p=\sum_{(a,b)\in\mathsf Y_{\mathrm s},s,t}|c_{abst}|^2.
+$$
+
+两侧使用同一个未归一化向量 $|I_S\rangle\!\rangle$，系数比较没有额外的维数五因子。由于 $U_{ab}$ 酉，全部接受谱项满足
+
+$$
+|\langle v_{abst}|q_i\rangle|^2=|c_{abst}|^2
+\quad(1\le i\le5).
+$$
+
+还须排除非零乘积项具有零水平的可能。$q_1=e_0$、$q_2=e_2$，而 $q_3$ 的 $e_1$ 系数为 $\sqrt2r/(1+r^2)\ne0$，故五个 $q_i$ 张成 $W_2$。若某个 $c_{abst}=0$，则 $K_{abst}=0$，于是该 $v_{abst}$ 与 $W_2$ 正交，只能是 $\delta e_-$。但非零 $\delta e_-$ 的系数矩阵
+
+$$
+\begin{pmatrix}0&\delta/\sqrt2\\-\delta/\sqrt2&0\end{pmatrix}
+$$
+
+行列式为 $\delta^2/2\ne0$，秩为二，不可能是非零乘积向量。因此每个非零接受谱项的共同水平都严格为正。接受实际分支若有非零乘积效果，就有正的标量贡献；零局部效果则给零分支，无须也不得将其归一化。
+
+对这样一个非零接受分支，固定 $F_{b\mid a}$ 的一个正本征值对应的 $y_{abt}$。$E_a$ 的每个正本征向量 $x_{as}$ 都与它组成正平坦单位乘积，水平为 $|c_{abst}|^2/(\lambda_{as}\mu_{abt})$。已证的相反方向伙伴唯一性迫使这些 $x_{as}$ 全属同一射线；谱分解中不同本征向量正交，故 $E_a$ 秩为一。再固定这个 Alice 射线，伙伴唯一性同样迫使 $F_{b\mid a}$ 秩为一。这是原实际效果的秩一性，不是把谱细分当作实际仪器的假设。特别地，秩二的 Alice 效果不可能有正成功后继。
+
+接着取 $1/2\le r^2\le2$，并简记 $\kappa=\kappa(r)$。第 416 节给出每个平坦单位乘积向量在完整 $R_2$ 中的统一水平；归一化的衔接如下。任取这样的 $v$，写
+
+$$
+v=\alpha b+\delta e_-,\qquad
+\alpha=\|P_{W_2}v\|>0,\qquad
+b=\frac{P_{W_2}v}{\alpha}\in W_2,\qquad \|b\|=1.
+$$
+
+定理 413.1 的对称见证水平与定理 416.1 的乘积行列式关系分别给出
+
+$$
+|\langle b|q_i\rangle|^2=\frac13,\qquad
+|\delta|^2=\kappa|\alpha|^2.
+$$
+
+由完整空间中的单位范数，
+
+$$
+1=|\alpha|^2+|\delta|^2=(1+\kappa)|\alpha|^2,\qquad
+|\langle v|q_i\rangle|^2=\frac{|\alpha|^2}{3}
+ =\frac1{3(1+\kappa)}=h.
+$$
+
+所以 $1/3$ 是单位对称见证的水平，$h$ 是单位乘积见证的水平；带权实际叶子的概率还须乘以其效果系数，最后才对接受叶子求和。
+
+记 $\mathsf A_+$ 为至少有一个正成功后继的 Alice 标签集。对 $a\in\mathsf A_+$，前面的秩一结论给出
+
+$$
+E_a=\alpha_aP_{x_a},\qquad \alpha_a>0,\qquad \|x_a\|=1.
+$$
+
+令 $\mathsf B_a^+$ 为该 $a$ 下效果非零的接受 Bob 标签集。各成功 Bob 效果均秩一；固定同一个 $x_a$，伙伴唯一性又使它们具有同一个单位伙伴射线 $y_a$，即
+
+$$
+F_{b\mid a}=\beta_{ab}P_{y_a},\qquad
+\beta_{ab}>0\quad(b\in\mathsf B_a^+).
+$$
+
+此处不同 $b$ 可以有不同的原定反馈，唯一性只使用各自的正平坦条件。Bob 的全部实际结果完备，未接受项仍为非负，故
+
+$$
+\left(\sum_{b\in\mathsf B_a^+}\beta_{ab}\right)P_{y_a}
+ \preceq I_2,\qquad
+\sum_{b\in\mathsf B_a^+}\beta_{ab}\le1,
+$$
+
+其中最后一步在 $y_a$ 上取二次型。另一方面，包括所有不活跃结果在内的 Alice 完备性给出
+
+$$
+\sum_{a\in\mathsf A_+}\alpha_a
+ =\sum_{a\in\mathsf A_+}\operatorname{Tr}E_a
+ \le\operatorname{Tr}\left(\sum_aE_a\right)=2.
+$$
+
+每个非零接受效果现在为 $\alpha_a\beta_{ab}P_{x_a\otimes y_a}$，故正 Choi 系数及单位乘积水平给出该叶子的校正映射
+
+$$
+\operatorname{Ad}_{U_{ab}}\circ\mathcal M_{ab}
+ =\alpha_a\beta_{ab}h\operatorname{id}_S.
+$$
+
+把所有正接受叶子相加，零分支不贡献权重，得到
+
+$$
+p=h\sum_{a\in\mathsf A_+}\alpha_a
+                   \sum_{b\in\mathsf B_a^+}\beta_{ab}
+ \le h\sum_{a\in\mathsf A_+}\alpha_a
+ \le2h=\frac{2}{3(1+\kappa)}.
+$$
+
+$p=0$ 时同一上界直接成立。整个估计保留了两方全部失败效果，且只在实际 $a$ 固定后使用 Bob 的完备性。
+
+为取得等号，直接使用定理 416.1 已给出的完整十二叶子单向树。沿用其中的单位向量 $x_j,y_j$、$v_{j,\pm}$ 及终端校正 $U_j$，$j=0,1,2$；所需衔接等式为
+
+$$
+v_{j,+}=x_j\otimes y_j,\qquad v_{j,-}=y_j\otimes x_j,\qquad
+\sum_{j=0}^2(P_{x_j}+P_{y_j})=3I_2.
+$$
+
+该树的六个 Alice 实际标签为 $a=(j,\epsilon)$；将原构造中 Bob 的标签 $0,1$ 分别记为成功 $\mathrm s$ 与失败 $\mathrm f$。原构造的局部效果满足
+
+$$
+\begin{aligned}
+E_{(j,+)}&=\frac13P_{x_j},&E_{(j,-)}&=\frac13P_{y_j},\\
+F_{\mathrm s\mid(j,+)}&=P_{y_j},&F_{\mathrm s\mid(j,-)}&=P_{x_j},\\
+F_{\mathrm f\mid a}&=I_2-F_{\mathrm s\mid a},&
+\sum_aE_a&=I_2.
+\end{aligned}
+$$
+
+沿用原构造的完全正映射及局部输出重置，六个失败叶子、其全部补效果与失败反馈 $I_S$ 均保留，因而
+
+$$
+\sum_aE_a\otimes(F_{\mathrm s\mid a}+F_{\mathrm f\mid a})=I_{R_2},\qquad
+E_{(j,\epsilon)}\otimes F_{\mathrm s\mid(j,\epsilon)}
+ =\frac13P_{v_{j,\epsilon}}.
+$$
+
+每个成功叶子沿用的同一个实际终端校正满足
+
+$$
+U_jK^{\to}_{j,\epsilon,\mathrm s}
+ =\frac{I_S}{3\sqrt{1+\kappa}}=\sqrt{\frac h3}\,I_S,\qquad
+\operatorname{Ad}_{U_j}\circ\mathcal M_{j,\epsilon,\mathrm s}
+ =\frac h3\operatorname{id}_S.
+$$
+
+因此六个接受叶子共给出 $p=6h/3=2h$，达到上界。对任意有限维未操作参考 $F$ 及全部 $X_{FS}$，同一分支等式还直接给出
+
+$$
+(I_F\otimes U_jK^{\to}_{j,\epsilon,\mathrm s})X_{FS}
+ (I_F\otimes U_jK^{\to}_{j,\epsilon,\mathrm s})^\dagger
+ =\frac h3X_{FS},
+$$
+
+故全部矩阵与参考要求同时满足，概率标量没有改变。
+
+若 $r^2<1/2$ 或 $r^2>2$，任一上述单向正成功协议都经上述支撑论证产生非零平坦对称见证，与定理 413.1 的两记录阈值矛盾。空接受集合达到零，得到区间外的最大值。闭区间两个端点有 $\kappa=1$，所以 $L=1/3$；$r=1$ 时 $\kappa=2\sqrt2/3$，代入得到 $L(1)=2/(3+2\sqrt2)$。
+
+最后，定理 416.1 在相同原始两因子及恢复条件下已经给出可达到的有限可分最大值 $\eta_{\mathrm{SEP}}=1/(3\kappa)$。对 $1/2<r^2<2$，有 $\kappa<1$，于是
+
+$$
+\eta_{\mathrm{SEP}}-L
+ =\frac1{3\kappa}-\frac{2}{3(1+\kappa)}
+ =\frac{1-\kappa}{3\kappa(1+\kappa)}>0.
+$$
+
+单向类包含于有限交替局部类，后者包含于有限可分类，因此一般有限交替协议仍满足所述夹界。单向上界中在固定 Alice 结果后终止于 Bob 的结构，不是一般交替树的假设；这份严格差距只比较单向最大值与可分最大值，并不决定两界之间的一般有限交替最优值。证毕。
+
+## 追加锚（本行以下为增补区）
