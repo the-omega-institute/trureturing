@@ -15474,3 +15474,218 @@ $$
 这里可以准确连接静态表示与继续研究的接口：完整 tester 修复合同先由局部相位对称约为固定大小的矩阵关系，再由有限多项式合同约束最坏误差及其参数。静态编码保留了可验证的优化条件；它本身不提供一次低成本的最优值计算。
 
 ## 追加锚（本行以下为增补区）
+
+## 77. 统一缩放轮廓的幂次误差界与最坏尺度的稳定性
+
+### 77.1 有限代数结构给趋零量一个幂次上界
+
+第 74 节证明了全压缩参数的统一极限，第 76 节把准确系数及其最大参数集写成有限实多项式关系。本节将两者连接：在同一个有限量子模型内，统一误差不只是趋零，还必然具有某个正幂次的上界。这里证明幂次存在，不计算最优指数或常数。
+
+**引理 77.1（一元半代数趋零量的幂次界）。** 设 $f:(0,t_0)\to[0,\infty)$ 的图为半代数集，且 $f(t)\to0$ 当 $t\downarrow0$。则存在整数 $m\ge1$、常数 $C>0$ 和 $t_1>0$，使
+
+$$
+f(t)\le Ct^{1/m}\qquad(0<t<t_1).
+\tag{77.1}
+$$
+
+证明。对函数图取一个由有限个非零实多项式的符号条件组成的无量词定义，恒零多项式可先从定义中删去。在每个图点 $(t,f(t))$，至少一个定义多项式为零。否则全部多项式的符号在该点的某个二维开邻域内不变，定义会把整个邻域都包含进函数图，与每个 $t$ 只有一个函数值矛盾。
+
+令 $P(t,y)$ 为这些非零多项式的乘积，便有非零多项式满足
+
+$$
+P(t,f(t))=0\qquad(0<t<t_0).
+$$
+
+除去 $P$ 的最大公共 $t$ 幂因子，不改变 $t>0$ 上的等式，并保证 $P(0,y)$ 不是零多项式。由于 $f(t)\to0$，连续性给 $P(0,0)=0$。设其在 $y=0$ 的零点重数为 $m\ge1$。则在充分小的 $y\ge0$ 上存在 $c>0$，使
+
+$$
+|P(0,y)|\ge c y^m.
+$$
+
+而 $P(t,y)-P(0,y)$ 被 $t$ 整除，所以在一个固定小矩形上有
+
+$$
+|P(t,y)-P(0,y)|\le C_0 t.
+$$
+
+对充分小的 $t>0$ 代入 $y=f(t)$，得到 $cf(t)^m\le C_0t$，即式（77.1）。常数可放大为严格正数，因此也包含 $f$ 最终恒零的情形。$\square$
+
+这是本节所需的幂次控制的完整证明；没有预先给趋零速度加解析性假设。
+
+### 77.2 原始修复误差也是同一类有限代数对象
+
+将第 64 节的混合量子比特族写为
+
+$$
+\begin{aligned}
+r_0(a,\varepsilon)
+&=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z+\sqrt{1-\varepsilon}\,y,\\
+r_1(a,\varepsilon)
+&=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=r_0r_0^*+r_1r_1^*.
+\end{aligned}
+\tag{77.2}
+$$
+
+记 $\mathcal C$ 为第 70 节的同一个因果修复集合，并令
+
+$$
+e(a,\varepsilon)=\min_{S\in\mathcal C}N(R_{a,\varepsilon}-S),
+\qquad0<a<1,\quad0<\varepsilon<1.
+$$
+
+**引理 77.2（原修复值的半代数性）。** $e(a,\varepsilon)$ 的图是有理系数半代数集。
+
+证明。引入非负实变量 $A,B,E,C$，满足
+
+$$
+A^2=a,\quad B^2=1-a,\quad E^2=\varepsilon,\quad C^2=1-\varepsilon.
+$$
+
+这些条件唯一指定相应正平方根，式（77.2）的向量成为 $Ax+EBz+Cy$ 与 $Bx'-EAz'$，全部矩阵元均为有理系数多项式。
+
+修复的约束为
+
+$$
+S\succeq0,\qquad
+\operatorname{Tr}_D S=I_A\otimes\sigma,\qquad
+\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{77.3}
+$$
+
+再对 $X=R_{a,\varepsilon}-S$ 使用第 55 节的两个符号对偶，上界 $N(X)\le t$ 等价于存在厄米矩阵 $P_\pm,n_\pm$，使
+
+$$
+\begin{gathered}
+P_\pm\succeq0,\qquad P_\pm\succeq\pm X,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes n_\pm,
+\qquad\operatorname{Tr}n_\pm\le t.
+\end{gathered}
+\tag{77.4}
+$$
+
+每个复厄米矩阵以实部和虚部作为实变量。正性可用全部厄米主子式的非负性表达，等价地也可实化为实对称半定矩阵；因而式（77.3）—（77.4）是有限有理多项式条件。
+
+$\mathcal C$ 是非空紧集：正性与偏迹归一化给 $\operatorname{Tr}S=2$，而其余条件闭合。因此连续目标的极小值达到。对偶最优值也由第 55 节保证达到，所以在上述可行性公式中投影掉矩阵见证，准确得到 $t\ge e(a,\varepsilon)$。再排除同参数下的所有更小可行 $t$，正如式（76.7），得到函数图的有理半代数定义。$\square$
+
+### 77.3 全压缩范围的统一幂次误差
+
+定义实际统一偏差
+
+$$
+D(\varepsilon)
+=\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|.
+\tag{77.5}
+$$
+
+**定理 77.3（统一轮廓存在正幂次速率）。** 存在正有理数 $\alpha>0$、常数 $C>0$ 及 $\varepsilon_0>0$，使
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le C\varepsilon^\alpha
+\qquad(0<\varepsilon<\varepsilon_0).
+\tag{77.6}
+$$
+
+证明。引理 77.2 与定理 76.3 给式（77.5）中被取上确界函数的半代数性；除法只在 $\varepsilon>0$ 上使用，可通过乘法等式定义。对固定 $\varepsilon$，上确界有限：候选过程和修复的迹固定，完整 tester 集紧，而 $\gamma_r\le9/8$。
+
+有限上确界仍有半代数图。具体地，$d=D(\varepsilon)$ 由“$d$ 是所有上述值的上界，且不存在更小的上界”这一有限实变量量词公式定义；Tarski–Seidenberg 消元适用于这份公式。这里没有把开区间 $0<a<1$ 上的上确界偷换为必然达到的最大值。
+
+第 74 节已经独立证明 $D(\varepsilon)\to0$。因此对 $D$ 应用引理 77.1，得到式（77.6），其中可取 $\alpha=1/m$。$\square$
+
+记完整压缩族的最坏归一化误差为
+
+$$
+E_*(\varepsilon)=\sup_{0<a<1}\frac{e(a,\varepsilon)}{\varepsilon}.
+$$
+
+**推论 77.4（最坏误差的幂次余项）。** 在适当缩小 $\varepsilon_0$ 后，同一 $\alpha,C$ 满足
+
+$$
+|E_*(\varepsilon)-\Gamma|\le C\varepsilon^\alpha,
+\qquad
+\left|\sup_{0<a<1}e(a,\varepsilon)-\Gamma\varepsilon\right|
+\le C\varepsilon^{1+\alpha}.
+\tag{77.7}
+$$
+
+证明。上界直接来自 $\gamma_r\le\Gamma$ 与定理 77.3。取某个固定最大参数 $r_*\in\mathcal M$；当 $\varepsilon<1/r_*$ 时，$a=1-r_*\varepsilon$ 属于 $(0,1)$，于是同一统一误差界给 $E_*(\varepsilon)\ge\Gamma-C\varepsilon^\alpha$。再乘以正数 $\varepsilon$ 得第二式。$\square$
+
+### 77.4 近最坏压缩尺度的定量定位
+
+第 74 节已经证明渐近最坏尺度靠近 $\mathcal M$。下面保留有限近优误差，给出相应的幂次稳定界。
+
+**定理 77.5（近最坏尺度的稳定性）。** 存在正有理数 $\alpha,\beta$、常数 $C_1,C_2>0$、$\delta_0>0$ 及 $\varepsilon_1>0$，使对任意
+
+$$
+0<\varepsilon<\varepsilon_1,\qquad
+0\le\delta\le\delta_0,\qquad0<a<1,
+$$
+
+只要
+
+$$
+\frac{e(a,\varepsilon)}{\varepsilon}
+\ge E_*(\varepsilon)-\delta,
+\tag{77.8}
+$$
+
+就有
+
+$$
+\operatorname{dist}\left(\frac{1-a}{\varepsilon},\mathcal M\right)
+\le C_1\bigl(\delta+C_2\varepsilon^\alpha\bigr)^\beta.
+\tag{77.9}
+$$
+
+证明。令 $q(r)=\Gamma-\gamma_r$。第 71 节的两端极限与 $\Gamma>1$ 使我们可以选有理数 $0<c<d$，令 $I=[c,d]$，使 $\mathcal M$ 位于 $I$ 的内部，且对 $r\notin I$ 有
+
+$$
+q(r)>\frac{\Gamma-1}{2}.
+\tag{77.10}
+$$
+
+在此固定紧区间上，定义
+
+$$
+\omega(t)=\max\{\operatorname{dist}(r,\mathcal M):
+ r\in I,\ q(r)\le t\},\qquad t\ge0.
+\tag{77.11}
+$$
+
+该集合总是非空，因为包含 $\mathcal M$；连续性和紧性保证最大值存在。$\mathcal M$ 与 $q$ 半代数，距离也半代数：可用非负平方根与紧集上最近点的最小性公式定义。因此 $\omega$ 为非负半代数函数。
+
+并且 $\omega(t)\to0$ 当 $t\downarrow0$。否则可选趋零的 $t_n$ 及对应最大点 $r_n\in I$，使距离有固定正下界。紧性给收敛子列 $r_n\to r$，连续性给 $q(r)=0$，即 $r\in\mathcal M$，与距离下界矛盾。
+
+引理 77.1 因而给某个正有理数 $\beta$ 及常数 $C_1$，使
+
+$$
+\omega(t)\le C_1t^\beta
+$$
+
+对充分小的 $t\ge0$ 成立；$t=0$ 时两侧均为零。
+
+对满足式（77.8）的 $a,\varepsilon$，令 $r=(1-a)/\varepsilon$。定理 77.3 及推论 77.4 给
+
+$$
+\begin{aligned}
+\gamma_r
+&\ge\frac{e(a,\varepsilon)}{\varepsilon}-C\varepsilon^\alpha\\
+&\ge E_*(\varepsilon)-\delta-C\varepsilon^\alpha\\
+&\ge\Gamma-\delta-2C\varepsilon^\alpha.
+\end{aligned}
+$$
+
+因此 $q(r)\le\delta+2C\varepsilon^\alpha$。选 $\delta_0,\varepsilon_1$ 足够小，使该上界小于式（77.10）的阈值，同时位于 $\omega$ 的幂次界适用区间。于是 $r\in I$，代入式（77.11）即得（77.9），取 $C_2=2C$。$\square$
+
+这些指数与常数尚未被显式计算，故本节没有给出可直接代入实验预算的数值误差证书。它给出的增强是：同一有限代数合同将已证的统一渐近轮廓与近优参数定位升级为某个幂次界；精确求值、最优幂次及数值常数仍需要进一步求解。
+
+## 追加锚（本行以下为增补区）
