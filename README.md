@@ -2,7 +2,7 @@
 
 **A scientific method for AI to discover truth and find its next question.**
 
-[Vision](docs/VISION.md) · [Start your journey](#start-your-journey) ·
+[Vision](docs/VISION.md) · [Start](#start-your-journey) · [Method](#from-questions-to-knowledge) ·
 [Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
 [Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
 [First run](#first-run) ·
