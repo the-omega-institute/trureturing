@@ -21,6 +21,8 @@ lean_lib LeanInformationAudit where
 lean_lib LeanInformationAuditAnalysis where
   globs := #[.submodules `LeanInformationAuditAnalysis]
 
+lean_lib InformationSourceFixture
+
 target nativeImage pkg : FilePath := do
   buildLeanO (pkg.buildDir / "c" / "native_image.o")
     (← inputFile (pkg.dir / "native_image.c") true) #[] #["-O3", "-DLEAN_EXPORTING"]
