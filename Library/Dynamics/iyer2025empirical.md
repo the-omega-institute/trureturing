@@ -5360,3 +5360,36 @@ George E. Andrews，*A lower bound for the volume of strictly convex bodies with
 Boistard–Lopuhaä–Ruiz-Gazen `1207.5654v1` 的引理 1 和第 3 节局部展开保留第 122 章已核的条件与直接 Fourier 余项证明。本章只使用固定偏移及方差发散的独立辅助 Bernoulli 和，累积量界只用于二阶及以上；不采用原文过宽的一阶累积量表述。对十标签联合响应，一次展开共同分母后才得到 $O(q^{-2})$ 精度，不能由两次 $O(q^{-1})$ 近似相减取得。
 
 第 126 章的 Bárány–Enriquez、Ryan Schwartz–Solymosi–de Zeeuw 与 Howard–Trifonov 平面结果保持原适用边界，不提升为曲面定理。第 124 章的带标记 Poisson 级数、共同 Gaussian 残差、条件均值平方截断与全输出尾部估计，按新的 $\rho_Q^{-1}\le CQ^{9/4}$ 逐项支付。新增内容是同一原始实验下的五池精确条件结构、同号曲率有限覆盖及其完整后验回接，不主张全球原创性、端点或最优带宽。
+
+## 追加：有限二次惩罚的条件 Laplace 变换
+
+对应理论卷第 129 章。对完整乘积计数律 $Q$，定义辅助族 $Q_s(n)\propto Q(n)e^{-sD(n)^2}$，测量仍用原始 $T,\mu,V,\sigma$。对每个固定有限 $S$，在 $0\le s\le S$、$1\le\alpha\le2$ 及紧输出上一致，响应为
+
+$$
+R_s(\alpha,y)=\frac{s}{1+2\alpha sV}\sqrt\delta\,y
++o_{C^3_\alpha,\mathbb P}(\sqrt\delta).
+$$
+
+误差还可在 $s>0$ 时除以 $s\sqrt\delta$ 后一致趋零。这里的概率是原始 pair/path 数据概率，对确定大小支持一致。有限噪声保持为正，满足严格半指数范围，允许任意缓慢趋零。固定正 $s$ 的族是辅助模型；与原始全 $q$ 选择律的联系只在其实际 $\varepsilon=B^2/(2d_c)$ 处成立。
+
+Eduardo Abi Jaber，*The Laplace transform of the integrated Volterra Wishart process*，[arXiv:1911.07719v3](https://arxiv.org/abs/1911.07719v3)，[42 页原稿](https://arxiv.org/pdf/1911.07719v3)，SHA256 `ac3a87176726d7f62c17de6d32084a129b4e743940c457fb0f76c4fc6ed75057`。arXiv 版本戳为 2024-07-08，首页日期为 2024-07-09；不推定二者关系。附录 A 命题 A.1 对实 Gaussian 向量 $\xi$、均值 $\mu$、半正定协方差 $\Sigma$ 和半正定惩罚矩阵 $u$ 给出经典恒等式
+
+$$
+\mathbb E e^{-\xi^\top u\xi}
+=\det(I+2\Sigma u)^{-1/2}
+ \exp\{-\mu^\top u(I+2\Sigma u)^{-1}\mu\}.
+$$
+
+秩一情形直接提供第 129 章实参数插入式。原稿第 2 节假定平方可积 Gaussian 过程及连续协方差；定理 2.2 的短证明使用给定过滤族后向量仍为 Gaussian 的表示。这一条件不同于本章的二次能量加噪声条件事件，不能据此宣称条件向量仍独立或 Gaussian。正文的复频率延伸由实部正定的有限 Gaussian 积分配方证明，没有把实半正定定理外推到其假设之外。
+
+Galen Reeves，*Conditional Central Limit Theorems for Gaussian Projections*，[arXiv:1612.09252v2](https://arxiv.org/abs/1612.09252v2)，2016-12-30，[12 页原稿](https://arxiv.org/pdf/1612.09252v2)，SHA256 `d217bc5302ffc5606e2bc1d1a1c04c9d51fca4c71b83d1cadaa922620c0f16c2`。定义 1、假设 1–2、定理 1–2 与推论 3 使用独立于输入向量的 IID Gaussian 投影矩阵，误差对投影矩阵平均。第 III.B 节包含球面归约及定理 1 的证明。本章电荷方向固定，条件是能量加噪声的给定值；不存在该独立随机投影矩阵，故不直接应用其定理，也不从平均 Wasserstein 或相对熵界推出点态条件密度的三阶参数导数界。
+
+Elizabeth Meckes，*Quantitative asymptotics of graphical projection pursuit*，[arXiv:0811.2769v2](https://arxiv.org/abs/0811.2769v2)，2009-04-20，[9 页原稿](https://arxiv.org/pdf/0811.2769v2)，SHA256 `d288854b75dc7dbf2234a3cf255496e5be97039bc13caad59003cff33c799f8a`。条件 (3) 控制确定向量的平均径向偏离，条件 (4) 控制所有方向的投影二阶矩；定理 2 对均匀球面随机方向给有界 Lipschitz 测试函数的概率界。其证明使用交换对及球面浓缩。此方向随机性在本章不成立，定理不能直接用于固定方向、非中心、各向异性数组的稀有输出条件律。两篇投影论文在此承担方法边界的归属，不承担本章定量结论。
+
+Reeves 与 Meckes 的 PDF 文本提取分别带有 40447、48205 字节的可选 fontTools/CFF 警告；Abi Jaber 提取无警告文本，但含 NUL 与控制字形。引用以原版本及完整 PDF 哈希为准，不把文本提取的排版异常用作公式前提。Reeves 引理 15 提取中的维度或标签异常不用于任何常数。文献核查范围不等于全球原创性认证。
+
+Gaussian 噪声的条件能量得分恒等式继续使用第 123、125、127 章列出的 Efron 与 Manor–Michaeli 原始条件。正方差卷积密度 $g$ 满足 $\mathbb E[E\mid E+N=h]=h+\eta(\log g)'(h)$；完整鞍点反倾斜后的共同位移须在两个输出相减时精确消去。各向异性条件律未被替换为均匀球面律。
+
+本章新增推导的核心是复方差与零频方差之差的 $O_{C^3}(\sqrt\delta\,|\xi|)$ 界、沿右半平面线段的有限 Taylor 余项及共同 Fourier 包络。它们直接给 $O_{C^3}(s^2\delta+s\delta^6)$ 的函数估计；原始计数转移再支付指数误差。Jensen 在任意固定有限惩罚区间给正下界，因此不需要人为的 $1-Cs>0$ 限制。不是由固定阶矩公式的无穷求和得到。
+
+辅助族的信息谱响应导出 Shannon 熵、信息方差与第三惊异累积量的输出增量差，系数依次为 $-2s^2V/(1+2sV)^2$、$4s^2V/(1+2sV)^3$、$24s^3V^2/(1+2sV)^4$。这些是有限计数后验的 nats 及相应幂次单位，不是原始环境方差或微观状态熵。结论不包含增长的 $S$、负惩罚、超过三阶参数导数、非紧输出、零噪声或半指数等号，也不替代第 127 章精确扣除后的更细高阶尺度。

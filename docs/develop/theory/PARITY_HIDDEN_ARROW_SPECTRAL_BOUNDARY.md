@@ -30215,3 +30215,401 @@ Combining that reference limit, (128.45)-(128.46), the normalized tail payments,
 凸多面体计数、条件多项分布、Bernoulli 局部展开与 Poisson 求和的经典归属、原文条件和不可直接迁移的边界见对应 Library 条目。本章不主张 $\gamma=9/4$、必要性、最优阈值、零噪声或原始数据环境上的期望极限。
 
 ## 追加锚（128 章后）
+
+## 129. 有限二次惩罚的条件 Laplace 变换与非微扰响应
+
+第 127 章给出每个预先固定阶数的累积量层级。本章直接估计条件 Laplace 变换，在每个固定有限惩罚区间上得到有理响应系数。证明保持原始计数重数、中心与噪声，并显式区分辅助二次倾斜族与原始固定大小支持律。
+
+### 129.1 固定有限惩罚下的响应
+
+**定理 129.1（固定有限惩罚区间及相对误差）。**
+
+Retain the original amplitude r, fixed legal beta, legal Q sequence, lambda=Q^3, all M,q and count floors, complete score groups, full window and stationary pair/path experiments. Write
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ L=\log(1/\sigma)\to\infty,\quad
+ \limsup L/Q^3<c_q/2,\quad c_q=\phi(1-\beta)/\beta.
+\tag{129.1}
+$$
+Sigma is positive at every finite level and may tend to zero arbitrarily slowly. In ONE realized raw-data fiber the calibrated product COUNT law and original scalar are
+$$
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+$$
+$$
+ e_j=(\mu_j-C_jp_j)/B,\quad
+ T(n)=\frac{\sum_j((n_j-\mu_j)/B)^2-V}{\sqrt\delta},\quad
+ D(n)=\frac{\sum_j(n_j-C_jp_j)}B.
+\tag{129.2}
+$$
+Every binomial multiplicity stays inside the count mass before powers are taken. The centers mu_j, full V, T and all empirical parameters remain the original full-q ones, fixed under alpha differentiation. There is no recalibration for Q. The same-letter Q for a legal level and its product law is distinguished by its argument.
+
+For alpha in[1,2], define exactly
+$$
+ \mu_{\alpha,y}(n)=
+ \frac{Q(n)^\alpha e^{-\alpha(T(n)-y)^2/(2\sigma^2)}}
+      {\sum_zQ(z)^\alpha e^{-\alpha(T(z)-y)^2/(2\sigma^2)}},\quad
+ Z_s^Q(\alpha,y)=E_{\mu_{\alpha,y}}e^{-\alpha sD^2},
+$$
+$$
+ R_s(\alpha,y)=-\frac1\alpha
+       [\log Z_s^Q(\alpha,y)-\log Z_s^Q(\alpha,0)].
+\tag{129.3}
+$$
+Here z is a count tuple. For each fixed finite S>=0 the auxiliary prior is
+$$
+ Q_s(n)=Q(n)e^{-sD(n)^2}/E_Qe^{-sD^2},\qquad0\le s\le S.
+\tag{129.4}
+$$
+Its posterior uses the SAME T and sigma. The denominator in (129.4) is output independent; it cancels from the output ratios that lead to (129.3).
+
+For a function F(alpha,y), write ||F||_{3,R}=sup_{1<=alpha<=2,|y|<=R} sum_{k=0}^3|partial_alpha^k F|, with all data and s held fixed. For every fixed finite S,R,
+$$
+ \sup_{0\le s\le S}
+ \left\|R_s(\alpha,y)-\frac{s}{1+2\alpha sV}\sqrt\delta\,y\right\|_{3,R}
+                         =o_{\mathbb P}(\sqrt\delta).
+\tag{129.5}
+$$
+Probability is the ACTUAL raw-data probability, uniformly over deterministic size-q supports, separately for the original pair and path experiments. The suprema in s,alpha,y use one common realized fiber, not separately selected environments. There is no path-row independence assumption.
+
+More precisely, on each retained tight-constant common good-event class, with constants allowed to depend on S,R and that class, there is a polynomial-exponential error mathcal E_Q=P(Q)exp(-bQ^3), b>0, such that for every0<=s<=S,
+$$
+ \left\|R_s-\frac{s}{1+2\alpha sV}\sqrt\delta y\right\|_{3,R}
+ \le C_{S,R}\{s\sqrt\delta\,\sigma^2+s^2\delta+s\delta^6+s\mathcal E_Q\}.
+\tag{129.6}
+$$
+Thus the optional stronger statement is also proved:
+$$
+ \sup_{0<s\le S}\frac1{s\sqrt\delta}
+ \left\|R_s-\frac{s}{1+2\alpha sV}\sqrt\delta y\right\|_{3,R}
+                                  \longrightarrow0
+\tag{129.7}
+$$
+in the same actual probability and support-uniform scope. For S=0 the response is identically zero. No growing S, negative s, extra alpha derivatives or new noise rate is asserted.
+
+### 129.2 共同有限数组与完整鞍点
+
+(68.33)、(68.38)–(68.39) 及 (70.6) provide the exact complementary-Bernoulli representation and P=L_x Q. (68.5) 及 (71.3) fix the original scalar and noisy posterior. Their statements do not themselves provide the half-exponent, C3, rare-output comparison; Chapters 117, 119, 121, 123, 125 and 127 supply that interface. Count Renyi entropy from Chapter 70 is not treated as a noisy-output theorem.
+
+On the common actual-data classes used in Chapter 127, let m_Q be the number of nonempty groups. The available geometry is
+$$
+ m_Q\le C\delta^{-4},\quad \log q=c_qQ^3+O(1),\quad
+ p_j\in[1/4,3/4],\quad\sum C_j\le CB^2,
+$$
+$$
+ V\asymp1,\quad v_*\asymp\delta,\quad\sum v_j^2\asymp\delta,
+ \quad |e_j|\le Ce_M\sqrt{v_j},\quad e_M\le C\delta^5,
+$$
+$$
+ \sum e_j^2\le C\delta^{10},\qquad
+ (\sum|e_j|)^2\le C\delta^6.
+\tag{129.8}
+$$
+A block of order 1/delta has v_j comparable to delta. Empty coordinates are deterministic and contribute zero. These are bounds on the same fiber. Exhaustion of the tight-constant classes gives all the probability quantifiers in (129.5)--(129.7), with constants uniform over the deterministic support.
+
+Keep the same proof split H={j:C_j>=exp(zeta Q^3)} as Chapter 127, choosing the inherited l,zeta with L<=lQ^3 eventually, l<c_q/2, 2zeta<c_q-l and zeta<c_q/2. This split is fixed while alpha,s,y vary; the definitions in (129.2)--(129.4) remain full. For the Gaussian comparison set
+$$
+ X_j=-e_j+\sqrt{v_j/\alpha}\,G_j\quad(j\in H),\qquad
+ E_H=\sum_HX_j^2,\quad D_G=\sum_H(X_j+e_j),\quad
+ N_\alpha\sim N(0,\eta_\alpha),\quad\eta_\alpha=\delta\sigma^2/\alpha.
+\tag{129.9}
+$$
+The G_j and energy noise are independent BEFORE conditioning. Gaussian comparison at output y means conditioning on E_H+N_alpha=h_y:=V+sqrt(delta)y. Independence after this conditioning is neither assumed nor needed.
+
+Use the EXACT full real saddle from Chapters 117, 119, 121, 123, 125 and 127:
+$$
+ K_\alpha(t)=-\tfrac12\sum_j\log(1-2tv_j/\alpha)
+   +\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
+   +\frac{\delta\sigma^2t^2}{2\alpha},\qquad K'_\alpha(t_\alpha)=V.
+\tag{129.10}
+$$
+The retained proof gives its unique real root and uniform interior denominators D_j=1-2t_alpha v_j/alpha in[c,C] for1<=alpha<=2. The first three alpha derivatives of t_alpha are O(delta^-1). In particular t_1 can be negative; no positive-saddle premise is introduced.
+
+After tilting at this full t_alpha put m_j=-e_j/D_j, w_j=v_j/(alpha D_j), and let K_H keep H and the ORIGINAL noise. Then
+$$
+ W_H=K''_H(t_\alpha)\asymp\delta,\quad
+ r_H=V-K'_H(t_\alpha)=O_{C^3}(\mathcal E_Q),\quad
+ z_y=(\sqrt\delta y+r_H)/\sqrt{W_H}.
+\tag{129.11}
+$$
+Relative alpha derivatives of w_j and W_H through three are bounded. The z_y and their first three derivatives are uniformly compact for compact y.
+
+### 129.3 复方差涨落的函数估计
+
+**引理 129.2（同一条件 Fourier 积分的函数比较）。**
+
+Let psi_alpha be the characteristic function of the standardized tilted high energy plus noise, and q_alpha^G its density. With a_j=w_j/sqrt(W_H), beta_j=2m_j sqrt(w_j)/sqrt(W_H) and beta_G^2=eta_alpha/W_H, the exact transform is
+$$
+ \psi_\alpha(\xi)=e^{-\beta_G^2\xi^2/2}
+ \prod_H e^{-i\xi a_j}(1-2i\xi a_j)^{-1/2}
+ \exp\{-\beta_j^2\xi^2/[2(1-2i\xi a_j)]\}.
+\tag{129.12}
+$$
+Its variance is exactly1. The bounds (127.13)–(127.15), with their operative hypotheses, give for k<=3 a fixed polynomial in xi times
+$$
+ |\partial_\alpha^k\psi_\alpha(\xi)|
+ \le P_k(|\xi|)(1+c\delta\xi^2)^{-c'/\delta},\qquad
+ q_\alpha^G(z_y)\ge c_R>0.
+\tag{129.13}
+$$
+Every fixed polynomial times this envelope has uniformly bounded integral for sufficiently small delta. Multiplication by any fixed power of xi therefore permits the spatial derivatives needed below. The compact composed density, its inverse and its logarithm have bounded C3 derivatives. This is a differentiated finite transform estimate, not differentiation of an asymptotic C0 density claim.
+
+Define the normalized Fourier insertion operator
+$$
+ \mathcal I_{\alpha,y}[A]=
+ \frac{\int_{\mathbb R}e^{-i\xi z_y}\psi_\alpha(\xi)A_\alpha(\xi)\,d\xi}
+      {2\pi q_\alpha^G(z_y)}.
+\tag{129.14}
+$$
+In particular I[1]=1. If the first three alpha derivatives of A are bounded by eta times a fixed polynomial in |xi|, (129.13), the chain rule and three quotient derivatives give ||I[A]||_{3,R}<=C_R eta. All insertions below are evaluated in this SAME integral and at the SAME output.
+
+At real xi put u=xi/sqrt(W_H),
+$$
+ \widehat w_j=\frac{w_j}{1-2iu w_j},\quad
+ \widehat m_j=\frac{m_j}{1-2iu w_j},\quad
+ c(\xi)=\sum_H\widehat w_j,\quad c_0=c(0)=\sum_Hw_j,
+$$
+$$
+ d(\xi)=\sum_H(\widehat m_j+e_j),\qquad
+ A(\xi)=\sum_H\widehat m_j^2.
+\tag{129.15}
+$$
+These complex parameters represent normalized Gaussian integrals, not a conditional product probability law. Uniformly over the entire real frequency line, Re c>=0, |partial_alpha^k c|<=C, |partial_alpha^k d|<=C delta^3 and |partial_alpha^k A|<=C delta^10 for k<=3. The same bounds hold for c_0. They follow from (129.8), bounded relative derivatives and |u w/(1-2iu w)|<=1/2.
+
+The additional quantitative fact used here is
+$$
+ c(\xi)-c_0=
+    \sum_H\frac{2iu w_j^2}{1-2iu w_j},\qquad
+ |\partial_\alpha^k(c(\xi)-c_0)|\le C\sqrt\delta\,|\xi|,
+                 \quad k\le3.
+\tag{129.16}
+$$
+Indeed sum w_j^2<=C delta and |u|=|xi|/sqrt(W_H)<=C|xi|/sqrt(delta). Each derivative of u or w_j is bounded by a constant times its modulus. Each additional inverse-denominator derivative contributes a bounded factor u w_j/(1-2iu w_j). Thus the same estimate applies after all three derivatives. It is valid globally in xi; it need not be small at arbitrarily large xi, since its square is integrated against (129.13).
+
+For 0<=s<=S and Re z>=0 define the analytic function
+$$
+ f_{\alpha,s}(z)=(1+2\alpha s z)^{-1/2},
+\tag{129.17}
+$$
+using the branch continuous from s=0. On the bounded set of z and alpha derivatives furnished by (129.15), f and its composed C3 norm are bounded by C_S, and the composed C3 norm of its second z derivative is at most C_S s^2. The reason is explicit: f''=3(alpha s)^2(1+2alpha sz)^(-5/2); all further differentiations add bounded z derivatives and inverse denominators of modulus at most1. The line from c_0 to c(xi) stays in the closed right half-plane.
+
+Taylor's EXACT integral formula along that complex line gives
+$$
+ f(c)=f(c_0)+f'(c_0)(c-c_0)
+ +(c-c_0)^2\int_0^1(1-u)f''(c_0+u(c-c_0))\,du.
+\tag{129.18}
+$$
+Here u is only the integration variable, unrelated to the Fourier u in (129.15). By (129.15)--(129.17), all three alpha derivatives of the remainder in (129.18) are bounded by C_S s^2 delta xi^2. Applying (129.14) proves an O_{C3}(s^2 delta) remainder after inversion, including all global frequency tails. This is a second-order expansion in the COMPLEX VARIANCE FLUCTUATION, not an expansion in s. No smallness assumption on S enters.
+
+The exact conditional Gaussian energy mean, denoted mathfrak h_alpha(y), satisfies
+$$
+ \mathfrak h_\alpha(y)=\mathcal I_{\alpha,y}[c+A].
+\tag{129.19}
+$$
+This follows by differentiating the finite Gaussian energy transform, or inserting sum X_j^2 in the same Gaussian integral. It does not require energy-charge independence. Consequently I[c]=mathfrak h-I[A], and the last term is O_C3(delta^10).
+
+For precision about the noise and the reference point c_0, let mathfrak s_alpha=partial_z log q_alpha^G. Exact Gaussian-noise integration by parts, followed by exact un-tilting, gives
+$$
+ \mathfrak h_\alpha(y)=h_y-\eta_\alpha t_\alpha
+              +\frac{\eta_\alpha}{\sqrt{W_H}}\mathfrak s_\alpha(z_y).
+\tag{129.20}
+$$
+Since K'_H(t_alpha)=c_0+sum_Hm_j^2+eta_alpha t_alpha, equations (129.11),(129.20) imply
+$$
+ \mathfrak h_\alpha(y)-c_0=
+ \sqrt\delta y+r_H+\sum_Hm_j^2
+     +\frac{\eta_\alpha}{\sqrt{W_H}}\mathfrak s_\alpha(z_y)
+                           =O_{C^3}(\sqrt\delta).
+\tag{129.21}
+$$
+This uses sigma<=1 eventually. It retains the possibly much larger output-independent displacement -eta_alpha t_alpha. Dropping that displacement before comparison would not be legal for arbitrary slow noise.
+
+Insert (129.19) into the inverse transform of (129.18), and apply a real Taylor formula from c_0 to mathfrak h. Both points are nonnegative and their difference has the C3 bound (129.21). Since f' is O_C3(s), the result is
+$$
+ \mathcal I_{\alpha,y}[f(c)]
+      =f(\mathfrak h_\alpha(y))
+             +O_{C^3,S,R}(s^2\delta+s\delta^{10}).
+\tag{129.22}
+$$
+This is the functional collision estimate. It requires no moment-series convergence, uniform sphere direction, random charge direction, or higher-degree truncation selected as a function of Q.
+
+### 129.4 秩一插入与条件 Laplace 变换
+
+The exact normalized complex Gaussian integral with the charge penalty inserted is
+$$
+ F_{\alpha,s}(\xi)=
+       (1+2\alpha s c(\xi))^{-1/2}
+       \exp\{-\alpha s d(\xi)^2/(1+2\alpha s c(\xi))\}.
+\tag{129.23}
+$$
+For real positive Gaussian variances this is the classical scalar noncentral quadratic Laplace transform, equivalently the rank-one determinant formula. At real Fourier frequency the same formula follows by completing the square in the convergent complex Gaussian integral; the real part of its quadratic precision is positive, also after adding the nonnegative real penalty. The square-root branch is fixed by s=0. Thus no assertion about complex probability measures is required.
+
+Since |1+2alpha s c|>=1, (129.15) gives
+$$
+ |\partial_\alpha^k(F_{\alpha,s}-f_{\alpha,s}(c))|
+                        \le C_S s\delta^6,\qquad k\le3.
+\tag{129.24}
+$$
+The exponential is bounded in modulus by exp(C_S delta^6). Differentiating its exponent through three alpha derivatives leaves a factor s and at least two factors from d and its derivatives. This is a joint noncentral bound before inversion, not an unconditioned estimate divided by a rare density.
+
+Exponential tilting by t_alpha times the total energy does not change conditioning on E_H+N_alpha=h_y. Hence Z_s^G:=E^G_{alpha,y}exp(-alpha sD_G^2)=I[F_alpha,s]. Combining (129.22)--(129.24),
+$$
+ Z_s^G(\alpha,y)=
+    (1+2\alpha s\mathfrak h_\alpha(y))^{-1/2}
+         +O_{C^3,S,R}(s^2\delta+s\delta^6).
+\tag{129.25}
+$$
+No restriction such as 1-Cs>0 is used. The retained conditional moment estimate E^G D_G^2<=C and Jensen's inequality give
+$$
+ Z_s^G\ge \exp[-\alpha sE^G D_G^2]\ge e^{-2SC}>0.
+\tag{129.26}
+$$
+Also mathfrak h is bounded and nonnegative, so the displayed comparator in (129.25) is bounded away from zero for fixed S. Mixed alpha derivatives of Z_s^G are bounded by (129.13),(129.15),(129.23). Taking logarithms, with the exact first three quotient formulas, preserves the error scale:
+$$
+ \log Z_s^G(\alpha,y)=
+    -\tfrac12\log(1+2\alpha s\mathfrak h_\alpha(y))
+          +O_{C^3,S,R}(s^2\delta+s\delta^6).
+\tag{129.27}
+$$
+The same conclusion follows from log(Z/f)=log(1+(Z-f)/f), whose C3 norm is controlled by (129.25) and the positive lower bounds. Constants may depend on S; they do not grow with the count dimension.
+
+### 129.5 返回完整计数后验
+
+**引理 129.3（完整计数律的有限区间转移）。**
+
+We extend the mixed insertion comparison (127.35) from its small interval to[0,S]. This extension needs a new lower-bound argument but no stronger noise margin. It is described explicitly to distinguish the actual theorem from (129.27).
+
+For k<=3,j<=1, each mixed derivative partial_alpha^k partial_s^j exp(-alpha sD^2) is the exponential times a fixed polynomial in D,s,alpha. Its derivative with respect to D has the same property. On0<=s<=S these quantities are bounded by C_S(1+|D|^N) for a FIXED integer N. There are no negative powers of s. The same assertion holds for any selected fixed j, but j=1 is sufficient here.
+
+The original central-cell comparison on H retains exact binomial powers and all mode prefactors. With standardized high displacements bounded by Q^2, its modal-potential error is P(Q)exp(-zeta Q^3/2), the physical scalar error is bounded by
+$$
+ \Delta_Q\le P(Q)[B^{-1}+B^{-2}e^{2\zeta Q^3}],
+ \qquad \Delta_Q/\sigma\le\mathcal E_Q,
+$$
+$$
+ |D-D_G|\le m_Q/(2B)+m_Qe^{\zeta Q^3}/B\le\mathcal E_Q.
+\tag{129.28}
+$$
+The second estimate holds uniformly over ALL low tuples. Low groups stay exact binomials with their escort normalizers and score moments; full V and original centers are not reset. The choices after (129.8) and the strict margin (129.1) make each central error exponential.
+
+Three ACTUAL alpha derivatives insert powers of A_y=S_Q+(T-y)^2/(2sigma^2), where S_Q is the exact modal count surprise. The joint same-output charge moments of every fixed degree are bounded, and fixed modal/likelihood moments grow only polynomially in m_Q,delta^-1. These are the bounds of Chapters 117, 121 and 127. Their joint products are paid by higher fixed moments within this same conditioned law. The shift of tilted likelihood surprise, of order sigma/sqrt(delta), is included; no inverse-noise exponential is hidden in these moments.
+
+For the tiny-noise cell comparison, write u=(T_G-y)/sigma and |a|<=Delta_Q/sigma. The likelihood-potential difference is bounded by |a||u|+a^2/2; differentiated kernel errors are bounded by a polynomial times |a|exp(C|a||u|). Young's inequality absorbs this into a relative O(|a|) change in sigma^2. At the SAME full saddle, the changes of K_H,K'_H,W_H are respectively delta(sigma'^2-sigma^2)t_alpha^2/(2alpha), delta(sigma'^2-sigma^2)t_alpha/alpha and delta(sigma'^2-sigma^2)/alpha. They are exponential times fixed polynomials, so the compact tilted denominator and inserted moments persist. This controls each differentiated integrand; it does not differentiate an ordered noise-width sandwich.
+
+High tails outside the central box have weight P(Q)exp(-cQ^4). Any of the fixed charge/score/likelihood insertions costs at most exp(O(Q^3+L)) on the count box, and Gaussian inserted tails have the same Q^4 domination. The unpenalized Gaussian likelihood partition is at least c sigma exp(-C_R/delta). Rare-denominator division therefore costs only exp(O(Q^3+L+delta^-1)), which is dominated by the Q^4 tail. The bounded-penalty derivatives add only the fixed polynomials already specified; S is fixed.
+
+The common comparator partition is B^|H| times the exact low escort normalizer times the high Gaussian likelihood integral. Mode constants, low normalizers and lattice volume cancel in the ratio. Thus the SAME argument applied to each mixed differentiated numerator and denominator yields exponential absolute C3 errors for Z_s^Q-Z_s^G and their first s derivative, uniformly0<=s<=S. The denominators needed for logarithms satisfy Jensen bounds on BOTH sides:
+$$
+ Z_s^Q\ge e^{-\alpha sE_{\mu_{\alpha,y}}D^2}\ge e^{-2SC},
+ \qquad Z_s^G\ge e^{-2SC}.
+\tag{129.29}
+$$
+The actual count second moment here is the fixed-moment bound; it does not depend on (129.27). Three quotient derivatives and one s derivative now give
+$$
+ \sup_{0\le s\le S}
+  \|\partial_s^j(\log Z_s^Q-\log Z_s^G)\|_{3,R}
+                  \le\mathcal E_Q,\qquad j=0,1.
+\tag{129.30}
+$$
+The exponent b and polynomial in mathcal E_Q may change finitely many times. Fixed S affects constants, not the strict exponent requirement. At s=0 the two logarithms are exactly zero for every alpha,y. Integrating the j=1 estimate from0 to s improves the j=0 error to s mathcal E_Q.
+
+Combining this with (129.27) proves the actual-count functional bridge, including its useful explicit s-dependence:
+$$
+ \left\|\log Z_s^Q(\alpha,y)
+       +\tfrac12\log(1+2\alpha s\mathfrak h_\alpha(y))\right\|_{3,R}
+   \le C_{S,R}(s^2\delta+s\delta^6)+s\mathcal E_Q.
+\tag{129.31}
+$$
+In particular the absolute O_C3(delta+delta^6+exponential) bound holds on every fixed compact penalty interval. This is a statement about the original finite count posterior with full multiplicities. It is not inferred from a Gaussian-only approximation or from finitely many moments alone.
+
+### 129.6 输出相减与任意缓慢噪声
+
+The exact mean in (129.20) is precisely the same high-energy conditional mean used in (127.23), with full original saddle,V, noncentrality and sigma. Its bounds are
+$$
+ \|\mathfrak h_\alpha(0)-V\|_{C^3}\le C\sigma^2,
+ \quad \mathfrak h_\alpha(y)-\mathfrak h_\alpha(0)
+             =\sqrt\delta y+\mathcal N_\alpha(y),
+$$
+$$
+ \mathcal N_\alpha(y)=\frac{\delta\sigma^2}{\alpha\sqrt{W_H}}
+   [\mathfrak s_\alpha(z_y)-\mathfrak s_\alpha(z_0)],
+ \qquad\|\mathcal N\|_{3,R}\le C_R\sqrt\delta\sigma^2.
+\tag{129.32}
+$$
+The bound on mathfrak h(0)-V follows directly from (129.20), t_alpha=O_C3(delta^-1) and the bounded score; it is not an assumed environmental convergence rate. The large common shift -eta_alpha t_alpha cancels EXACTLY from the second line before any asymptotic replacement.
+
+Subtract (129.31) at y and0 and divide by -alpha. This gives the stronger intermediate expression
+$$
+ R_s(\alpha,y)=\frac1{2\alpha}
+  \log\frac{1+2\alpha s\mathfrak h_\alpha(y)}
+            {1+2\alpha s\mathfrak h_\alpha(0)}
+   +O_{C^3,S,R}(s^2\delta+s\delta^6+s\mathcal E_Q).
+\tag{129.33}
+$$
+All logarithms are positive-real branch values of positive quantities. Formula (129.33) keeps finite noise until after the output subtraction.
+
+Let d=mathfrak h_alpha(y)-mathfrak h_alpha(0). The real Taylor formula for the logarithm in (129.33) has linear term s d/(1+2alpha s mathfrak h_alpha(0)) and C3 remainder O(s^2 delta), since d=O_C3(sqrt(delta)). Replacing d by sqrt(delta)y costs O_C3(s sqrt(delta)sigma^2). Replacing mathfrak h_alpha(0) by V only in that linear coefficient costs O_C3(s^2 sqrt(delta)sigma^2), absorbed into C_S s sqrt(delta)sigma^2. All denominators are bounded away from zero and alpha remains in[1,2]. These estimates prove (129.6).
+
+Division by s sqrt(delta), for0<s<=S, leaves
+$$
+ C_{S,R}[\sigma^2+S\sqrt\delta+\delta^{11/2}
+                         +\mathcal E_Q/\sqrt\delta]\longrightarrow0.
+\tag{129.34}
+$$
+This proves (129.7), hence (129.5), on the good-event classes and then in the stated actual probability. Sigma only needs to tend to zero: there is no additional comparison between sigma and a polynomial in delta.
+
+### 129.7 辅助分布族的信息响应
+
+**推论 129.4（辅助族的熵、信息方差及第三惊异响应）。**
+
+Let p_{s,y} be the exact posterior of Q_s using the original measurement, and let Lambda_{s,y}(alpha)=log sum_n p_{s,y}(n)^alpha. For output increments define
+$$
+ \Gamma_s(\alpha,y)=[\Lambda_{s,y}-\Lambda_{s,0}]
+                       -[\Lambda_{0,y}-\Lambda_{0,0}].
+$$
+Finite power-sum algebra gives EXACTLY
+$$
+ \Gamma_s(\alpha,y)=-\alpha R_s(\alpha,y)+\alpha R_s(1,y).
+\tag{129.35}
+$$
+The unconditioned Q_s normalizer cancels. From the proved C3 remainder,
+$$
+ \Gamma_s(\alpha,y)=
+ \frac{2\alpha(\alpha-1)s^2V}
+      {(1+2sV)(1+2\alpha sV)}\sqrt\delta y
+                         +o_{C^3,\mathbb P}(\sqrt\delta),
+\tag{129.36}
+$$
+uniformly0<=s<=S and compact y. Its remainder also satisfies a constant multiple of (129.6); an evaluation at alpha=1 is a bounded operation in the stated norm.
+
+For any posterior p, Lambda'(1)=-H(p), Lambda''(1)=Var_p(-log p), and Lambda'''(1)=-E_p[(-log p-H(p))^3]. These are classical exact finite-sum identities. Alpha derivatives at1 are legitimate ordinary finite derivatives, and the right derivatives furnished by the uniform C3 estimate agree with them.
+
+Let Delta_s H, Delta_s Vcal and Delta_s C3 denote the Q_s-minus-Q differences of the corresponding OUTPUT INCREMENTS y minus0. Differentiating only the proved C3 expression (129.36) gives, uniformly0<=s<=S,
+$$
+ \Delta_s H(y)=-\frac{2s^2V}{(1+2sV)^2}\sqrt\delta y
+                                      +o_{\mathbb P}(\sqrt\delta),
+$$
+$$
+ \Delta_s\mathcal V(y)=\frac{4s^2V}{(1+2sV)^3}\sqrt\delta y
+                                      +o_{\mathbb P}(\sqrt\delta),
+$$
+$$
+ \Delta_s C_3(y)=\frac{24s^3V^2}{(1+2sV)^4}\sqrt\delta y
+                                      +o_{\mathbb P}(\sqrt\delta).
+\tag{129.37}
+$$
+These are posterior count-surprise quantities, in nats or the corresponding powers, not raw-environment variances, microstate entropies, output averages or equality of posterior distributions. No information cumulant above order3 follows from the current remainder.
+
+For connection to the original full-q law P, retain epsilon=B^2/(2d_c) EXACT. The pointwise-power interface of Chapter 121, preserved in (127.10), gives only at this actual epsilon
+$$
+ \log E_{\mu_{\alpha,y}}L_x^\alpha
+   =\alpha\ell_0+\log Z_\varepsilon^Q(\alpha,y)
+                                +O_{C^3}(\mathcal E_Q),
+ \qquad\ell_0=\tfrac12\log(d_{\rm all}/d_c).
+\tag{129.38}
+$$
+The output-independent alpha ell_0 cancels. It does NOT identify P with Q_s at arbitrary fixed s>0. Even (129.6) at s=epsilon is not a replacement forChapter 127's higher-order exact-subtraction theorem: its error need not be negligible at every epsilon^m sqrt(delta) scale. The all-fixed-degree hierarchy remains a separate, unchanged conclusion. No infinite series or exchange of limits is used to establish (129.31) or (129.5).
+
+Gaussian 二次型变换、Fourier 反演、Jensen 不等式、有限 Taylor 公式及 Gaussian 噪声得分恒等式均为经典工具；其原始来源与适用边界见对应 Library 条目。这里没有交换固定阶层级与无穷求和，也不涉及增长的惩罚区间或负惩罚。
+
+## 追加锚（129 章后）
