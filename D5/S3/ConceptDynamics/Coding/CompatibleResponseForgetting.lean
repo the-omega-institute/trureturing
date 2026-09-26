@@ -229,6 +229,52 @@ noncomputable instance (c : CompatibleCertificate A B R S m) : Fintype (Square c
   exact Fintype.ofEquiv (Σ i : Fin n, Σ z : Fin k, EdgePair A R i z)
     (squareCoordinates c).symm
 
+private def incomingResponseFiber {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ) (F : Quotient (L.response d))
+    (v : Q) : Type :=
+  {a : Edge M // ∃ hv : L.project v = a.target,
+    Quotient.mk (L.response d) (L.lift a ⟨v, hv⟩).val = F}
+
+/-- Response-equivalent representatives count the same actual incoming edge
+    lifts into every response class. -/
+theorem incoming_response_fiber_card {p : ℕ} {M : CountMat p p} {Q : Type}
+    (L : IncomingLift M Q) (d : ℕ) (F : Quotient (L.response d))
+    {v w : Q} (h : L.response d v w) :
+    Nat.card (incomingResponseFiber L d F v) =
+      Nat.card (incomingResponseFiber L d F w) := by
+  classical
+  cases d with
+  | zero =>
+      have hzero := (response_zero_and_step L).1
+      rw [hzero] at h
+      change v = w at h
+      subst w
+      rfl
+  | succ d =>
+      have htransport (x y : Q) (hxy : L.response (d + 1) x y)
+          (a : Edge M) :
+          (∃ hx : L.project x = a.target,
+            Quotient.mk (L.response (d + 1)) (L.lift a ⟨x, hx⟩).val = F) →
+          (∃ hy : L.project y = a.target,
+            Quotient.mk (L.response (d + 1)) (L.lift a ⟨y, hy⟩).val = F) := by
+        rintro ⟨hx, hclass⟩
+        have hobs : L.responseReadout (d + 1) x =
+            L.responseReadout (d + 1) y := hxy
+        have hp : L.project x = L.project y := congrArg Prod.fst hobs
+        have hy : L.project y = a.target := hp.symm.trans hx
+        have hlift : L.response (d + 1)
+            (L.lift a ⟨x, hx⟩).val (L.lift a ⟨y, hy⟩).val :=
+          (response_zero_and_step L).2 d _ _
+            (incoming_response_step L d hxy a hx hy)
+        exact ⟨hy, (Quotient.sound hlift).symm.trans hclass⟩
+      let e : incomingResponseFiber L (d + 1) F v ≃
+          incomingResponseFiber L (d + 1) F w where
+        toFun x := ⟨x.val, htransport v w h x.val x.property⟩
+        invFun x := ⟨x.val, htransport w v (Setoid.symm h) x.val x.property⟩
+        left_inv := by intro x; apply Subtype.ext; rfl
+        right_inv := by intro x; apply Subtype.ext; rfl
+      exact Nat.card_congr e
+
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
