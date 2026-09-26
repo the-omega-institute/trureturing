@@ -88,11 +88,11 @@ private non-proposition definitions, and the code of an initial state is the
 frozen `bitsValue` of `D5/S0/Computability/PhysicalDivider/WordArithmetic`.
 The frozen module state has statement
 identity
-`sha256:4bf1e1451030dbb0a28c71ac467e22252abc0a60423bff418be726b518a6d24b`.
+`sha256:09adb6da23aa6264f6d75ce53d12c6b17306fdec171bf72bcbaebd741e9f0851`.
 The result declaration has statement identity
 `sha256:5addb16fd800bbb6df4449cbc2daca34dee660cdad13ca20d32ed9a5379a0cf8`.
 The Freeze event is
-`sha256:c1a4e4806b4412c108ac803e4f5f41ed7c3d410028dc67e55e20e6d27ef64ae5`
+`sha256:1226802d2c617a33415feef6f6a809b829db11f511652d4f2a6c1550a0e7c42d`
 and its project-level frozen prerequisite is
 `D5/S0/Computability/PhysicalDivider/WordArithmetic`. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
