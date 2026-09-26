@@ -32160,3 +32160,525 @@ Combining (132.45),(132.49),(132.50), these tails and the reference limit proves
 格点体积—顶点界和固定阶 Edgeworth 方法属于经典理论。本章的新增桥梁是维数显式常数、同一实际条件律的增长池估计，以及原始全输出解析返回的统一误差支付。端点 $\rho_Q\asymp Q^{-3}$、必要性及锐利阈值仍未给出。
 
 ## 追加锚（132 章后）
+
+## 133. 临界电荷的四次型极限与完整计数回接
+
+第 131 章的负二次倾斜要求固定正精度余量。本章在 $a=1/(2V)-\kappa\sqrt\delta$ 的临界窗口直接处理电荷与能量的共同条件律。Gaussian 电荷的二次衰减在该窗口被抵消，能量观测留下四次型稳定项；全局条件密度界排除更大电荷尺度上的质量逃逸，再由相对计数格胞比较回到原始有限计数。
+
+### 133.1 临界归一化、分布与固定阶矩
+
+**定理 133.1（临界辅助后验的四次型电荷律）。**
+
+Keep the original fixed legal amplitude r and beta, legal Q sequence, lambda=Q^3, all original M,q/count/group floors, full window and original stationary pair/path experiments. Write
+
+$$
+
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ L=\log(1/\sigma)\to\infty,\qquad
+ \limsup L/Q^3<c_q/2,\quad c_q=\phi(1-\beta)/\beta.
+\tag{133.1}
+
+$$
+
+Sigma is positive at each finite level. All statements use one realized raw-data fiber, uniformly over deterministic size-q supports, separately for pair and path laws. The calibrated product COUNT law, using the original full-q calibration without any recalibration, is
+
+$$
+
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,
+ \quad e_j=(\mu_j-C_jp_j)/B,
+
+$$
+
+$$
+ x_j=(n_j-\mu_j)/B,\quad E(n)=\sum_jx_j^2,\quad
+ D(n)=\sum_j(x_j+e_j),\quad T(n)=(E(n)-V)/\sqrt\delta.
+\tag{133.2}
+
+$$
+
+The complete binomial multiplicities remain in Q(n). Empty groups are deterministic zero coordinates. The scalar, centers, intercept V and physical output y are precisely those in Chapter 131. Define
+
+$$
+
+ A_Q(y)=E_Q e^{-(T-y)^2/(2\sigma^2)},\quad
+ \mu_{1,y}(n)=Q(n)e^{-(T(n)-y)^2/(2\sigma^2)}/A_Q(y),
+
+$$
+
+$$
+ C_2=C_{2,Q}=\delta^{-1}\sum_jv_j^2,\quad
+ X_Q=\delta^{1/4}D,\quad a=\frac1{2V}-\kappa\sqrt\delta,
+ \quad Z_Q(\kappa,y)=E_{\mu_{1,y}}e^{aD^2}.
+\tag{133.3}
+
+$$
+
+The probability Pi_{Q,kappa,y} is the normalization of e^{aD^2}mu_{1,y}. It is auxiliary and is not identified with the original uniform-size-q-support prior P or its posterior.
+
+For fixed finite K,R>=0, uniformly |kappa|<=K, |y|<=R, set
+
+$$
+
+ F_Q(\kappa,y;z)=\left(\frac{y}{2V^2}-\kappa\right)z^2
+                         -\frac{C_2}{4V^4}z^4,
+ \quad I_Q(\kappa,y)=\int_{\mathbb R}e^{F_Q(\kappa,y;z)}\,dz,
+
+$$
+
+$$
+ g_{Q,\kappa,y}(z)=I_Q(\kappa,y)^{-1}e^{F_Q(\kappa,y;z)}.
+\tag{133.4}
+
+$$
+
+The exact FULL V and C2 remain in these formulas. No replacement by a continuum limit, and no unproved environmental rate, is used. The conclusions are
+
+$$
+
+ \sup_{|\kappa|\le K,|y|\le R}
+ \left|\delta^{1/4}Z_Q(\kappa,y)
+                -\frac{I_Q(\kappa,y)}{\sqrt{2\pi V}}\right|
+                      \longrightarrow0
+\tag{133.5}
+
+$$
+
+in the stated actual-data probability, and
+
+$$
+
+ \sup_{|\kappa|\le K,|y|\le R}
+ W_1\bigl(\mathcal L_{\Pi_{Q,\kappa,y}}(X_Q),
+                         g_{Q,\kappa,y}(z)\,dz\bigr)\longrightarrow0.
+\tag{133.6}
+
+$$
+
+For EVERY FIXED polynomial p,
+
+$$
+
+ \sup_{|\kappa|\le K,|y|\le R}
+ \left|E_{\Pi_{Q,\kappa,y}}p(X_Q)
+                    -\int p(z)g_{Q,\kappa,y}(z)\,dz\right|\longrightarrow0.
+\tag{133.7}
+
+$$
+
+Every fixed absolute power also has uniformly integrable tails as needed in the proof. There is no uniformity over growing polynomial degree, growing K,R or alpha different from 1. Discrete-versus-continuous total variation is not asserted.
+
+All probabilistic convergence statements mean: for each positive tolerance, the supremum over deterministic supports of its exceedance probability tends to zero, with the kappa,y suprema inside the same data-fiber event.
+
+### 133.2 同一数据纤维上的完整数组与比较几何
+
+The exact count/calibration objects are those of Chapters 68, 70, 71 and 131. The actual-data good events and high-count cell estimates are retained from Chapters 121, 127, 129 and 131. Only the global full-tuple likelihood-tail inequality and the unweighted central-cell geometry of Chapter 131 are reused at the new insertion. Its fixed-margin weighted Gaussian estimates are not used at the critical pole.
+
+On each retained tight-constant good-event class, with m the number of nonempty groups and v_*=max_j v_j,
+
+$$
+
+ m\le C\delta^{-4}=CQ^2,\quad p_j\in [1/4,3/4],\quad
+ \sum C_j\le CB^2,\quad \log q=c_qQ^3+O(1),
+
+$$
+
+$$
+ c\le V,C_2\le C,\quad v_*\le C\delta,\quad
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \sum e_j^2\le C\delta^{10},\quad
+ (\sum|e_j|)^2\le C\delta^6.
+\tag{133.8}
+
+$$
+
+There is a block of at least c/delta coordinates with c delta<=v_j<=C delta. These are simultaneous bounds on the same fiber, with support-uniform constants. Their tight-class exhaustion gives the actual probability in (133.5)--(133.7); no independence of actual path rows is assumed.
+
+Retain H={j:C_j>=exp(zeta Q^3)}, with fixed l,zeta chosen so that eventually L<=lQ^3, l<c_q/2, 2zeta<c_q-l and zeta<c_q/2. Let
+
+$$
+
+ V_H=\sum_Hv_j,\quad s_k=\sum_Hv_j^k,\quad
+ 0\le V-V_H\le P(Q)e^{-(c_q-\zeta)Q^3}.
+\tag{133.9}
+
+$$
+
+All polynomial factors can be absorbed into an error epsilon_Q=P(Q)e^{-bQ^3}, b>0, when used below. In particular s2/delta-C2 is exponential, and the omitted sum e_j^2 is exponential. The spectral block in (133.8) belongs to H for large Q, since C_j is comparable to B^2 delta there and zeta<c_q. This split is a proof device only: V,C2,T and all count definitions remain full.
+
+### 133.3 电荷条件下的精确 Gaussian 能量表示
+
+The Gaussian comparison BEFORE conditioning is
+
+$$
+
+ Y_j=\sqrt{v_j}G_j,\quad X_j=Y_j-e_j\quad(j\in H),\quad
+ D_G=\sum_HY_j,\quad E_H=\sum_HX_j^2,\quad
+ N_\sigma\sim N(0,\delta\sigma^2),\quad h_y=V+\sqrt\delta y.
+\tag{133.10}
+
+$$
+
+The G_j and N_sigma are independent here. We condition on E_H+N_sigma=h_y and keep the full original h_y, not V_H+sqrt(delta)y. No independent charge/energy approximation is assumed. For finite sigma>0, the joint weighted Gaussian integral exists even if the unconditioned insertion E exp(aD_G^2) diverges: inequality (131.14), applied to E_H and D_G, bounds its product with the energy likelihood by a finite constant times a Gaussian expectation. At sigma=0 the comparison densities used below are defined directly by their continuous energy densities; sigma=0 is a proof endpoint only, not an extension of the original model.
+
+Let v denote the column (v_j)_{j in H}, and C=diag(v_j). Since D_G is exactly N(0,V_H), the classical conditional Gaussian formula gives
+
+$$
+
+ (X_j)_{H}\mid D_G=u\;\stackrel{d}=\; m(u)+R,
+ \quad m(u)=vu/V_H-e_H,\quad
+ R\sim N(0,A),\quad A=C-vv^T/V_H.
+\tag{133.11}
+
+$$
+
+R is independent of the conditioned charge parameter and of N_sigma. A is positive semidefinite with one zero eigenvalue. Its nonzero eigenvalues interlace those of C, because it is a rank-one subtraction. Thus at least c/delta-1 eigenvalues are comparable to delta, and ||A||<=C delta. This is the only rank-one spectral assertion used; no maximal-weight gap, optimizer uniqueness or spherical law is assumed.
+
+Write f_{u,sigma} for the density of ||m(u)+R||^2+N_sigma and f_sigma for the unconditional density of E_H+N_sigma. Both exist and are continuous for large Q, as follows from the Fourier bounds below. Bayes' finite Gaussian density formula is EXACT:
+
+$$
+
+ \frac{d}{dz}\left[\delta^{1/4}
+ E^G_{1,y}\{e^{aD_G^2}\mathbf1_{\{\delta^{1/4}D_G\le z\}}\}\right]
+ =q_{G,Q}(\kappa,y;z)
+ =\frac{e^{-\kappa z^2-r_Qz^2}}{\sqrt{2\pi V_H}}
+       \frac{f_{\delta^{-1/4}z,\sigma}(h_y)}{f_\sigma(h_y)},
+
+$$
+
+$$
+ r_Q=\frac{1/(2V_H)-1/(2V)}{\sqrt\delta}\ge0,
+                    \qquad r_Q=O(\epsilon_Q/\sqrt\delta).
+\tag{133.12}
+
+$$
+
+The Jacobian delta^-1/4 cancels the prefactor delta^1/4. The large Gaussian factor exp(-u^2/(2V_H)) is cancelled exactly against exp(a u^2), leaving the displayed finite residual r_Q. It is not discarded in a divergent term without a rate; (133.9) supplies its exponential rate, and its sign helps global domination. Formula (133.12) is a density of a finite measure, not yet a probability density.
+
+### 133.4 中等电荷尺度的一致局部能量密度
+
+The exact mean and variance conditional on D_G=u are
+
+$$
+
+ M(u)=\operatorname{tr}A+\|m(u)\|^2
+   =V_H-s_2/V_H+s_2u^2/V_H^2-2u\,v^Te_H/V_H+\|e_H\|^2,
+
+$$
+
+$$
+ \operatorname{Var}(\|m(u)+R\|^2+N_\sigma)
+             =2\operatorname{tr}A^2+4m(u)^TAm(u)+\delta\sigma^2,
+
+$$
+
+$$
+ \operatorname{tr}A^2=s_2-2s_3/V_H+s_2^2/V_H^2=s_2+O(\delta^2).
+\tag{133.13}
+
+$$
+
+For u=delta^-1/4 z with z in any fixed compact, Cauchy--Schwarz and (133.8) give |v^Te_H|<=sqrt(s2)||e_H||=O(delta^{11/2}) and
+
+$$
+
+ \frac{M(\delta^{-1/4}z)-V}{\sqrt\delta}
+                 =\frac{C_2}{V^2}z^2+o(1),
+ \quad \|m(\delta^{-1/4}z)\|^2=O(\sqrt\delta(1+z^2)),
+
+$$
+
+$$
+ \frac{2\operatorname{tr}A^2+4m^TAm}{\delta}=2C_2+o(1).
+\tag{133.14}
+
+$$
+
+All errors are uniform on the deterministic classes and compact z; in particular the e_j effects are much smaller than sqrt(delta). They are calculated in the SAME conditional vector (133.11), not combined from unrelated marginals.
+
+Here is a direct local-density proof, including its uniformity in noise. Diagonalize A with eigenvalues lambda_i>=0 and rotated means m_i. For the centered energy divided by sqrt(delta), its characteristic function, with t=xi/sqrt(delta), is
+
+$$
+
+ \psi_u(\xi)=e^{-\sigma^2\xi^2/2}
+ \prod_i e^{-it\lambda_i}(1-2it\lambda_i)^{-1/2}
+ \exp\left\{-\frac{2t^2\lambda_i m_i^2}{1-2it\lambda_i}\right\}.
+\tag{133.15}
+
+$$
+
+Zero eigenvalues contribute only a deterministic squared mean, already subtracted. On bounded xi, log expansion is justified by max lambda_i/sqrt(delta)=O(sqrt(delta)). The central quadratic coefficient is -xi^2 tr(A^2)/delta, and the noncentral quadratic term is -2xi^2 m^TAm/delta. The remaining terms tend uniformly to zero by tr(A^3)=O(delta^2) and m^TA^2m<=||A||^2||m||^2. Hence (133.14) implies
+
+$$
+
+ \psi_{\delta^{-1/4}z}(\xi)
+       -\exp[-(2C_2+\sigma^2)\xi^2/2]\longrightarrow0
+\tag{133.16}
+
+$$
+
+uniformly for bounded xi,z and 0<=sigma<=1. This compares to the CURRENT finite C2, not a presumed limiting C2.
+
+For every real xi and every real u, the noncentral factors in (133.15) have modulus at most 1, while the spectral block gives
+
+$$
+
+ |\psi_u(\xi)|\le(1+c\delta\xi^2)^{-c'/\delta}.
+\tag{133.17}
+
+$$
+
+The right side has uniformly integrable tails, also after multiplication by any fixed polynomial in xi. To see this explicitly, on |xi|<=delta^-1/2 it is bounded by exp(-c''xi^2); outside that range substitute t=sqrt(delta)xi, and the power c'/delta makes the integral exponentially small in 1/delta. Fourier inversion of (133.16), using (133.17), is therefore valid in L1 of the frequency variable and uniformly in the density argument. Apply the same argument to the unconditional vector C,-e_H. Its mean is V_H+||e_H||^2=V+o(sqrt(delta)), and variance divided by delta is 2C2+sigma^2+o(1).
+
+With phi_d(t)=(2pi d)^(-1/2)exp(-t^2/(2d)) and d_Q=2C2+sigma^2, the conclusions are
+
+$$
+
+ \sqrt\delta f_{\delta^{-1/4}z,\sigma}(V+\sqrt\delta y)
+       =\phi_{d_Q}\left(y-\frac{C_2}{V^2}z^2\right)+o(1),
+
+$$
+
+$$
+ \sqrt\delta f_\sigma(V+\sqrt\delta y)=\phi_{d_Q}(y)+o(1)\ge c_R>0.
+\tag{133.18}
+
+$$
+
+The errors are uniform in compact z,y, 0<=sigma<=1 and all allowed arrays on a fixed class. Thus (133.12) converges locally uniformly to the FINITE-NOISE profile
+
+$$
+
+ q^{(\sigma)}_Q(\kappa,y;z)=\frac1{\sqrt{2\pi V}}
+ \exp\left\{-\kappa z^2+
+ \frac{C_2y}{V^2(2C_2+\sigma^2)}z^2
+ -\frac{C_2^2}{2V^4(2C_2+\sigma^2)}z^4\right\}.
+\tag{133.19}
+
+$$
+
+This establishes the coefficient locally. Integration over unbounded charges requires the global domination proved next.
+
+### 133.5 全局条件密度界与固定阶矩尾部
+
+This is a lower-tail density estimate, not a probability Chernoff bound divided by an arbitrarily short interval. Put F_u=||m(u)+R||^2+N_sigma, and d_u=M(u)-h_y. Uniformly for |y|<=R and |z|>=Z_R, with Z_R a sufficiently large FIXED constant and u=delta^-1/4 z, (133.8),(133.13) give
+
+$$
+
+ c\delta u^2\le d_u\le C\delta u^2,\qquad
+ \|m(u)\|^2\le C\delta u^2+C\delta^{10}.
+\tag{133.20}
+
+$$
+
+For the lower bound use ||vu/V_H-e_H||^2>=s2 u^2/(2V_H^2)-||e_H||^2. The negative trace defect s2/V_H is O(delta), the full/high variance difference is exponential, and |h_y-V|<=R sqrt(delta). Increasing Z_R absorbs all three. The upper bound follows from the corresponding elementary upper estimate. These estimates hold for ALL real u outside that compact rescaled region, not just for moderate u.
+
+For any lambda>=0 the exact Gaussian transform yields
+
+$$
+
+ \log E\exp[-\lambda(F_u-M(u))]
+ \le\lambda^2\operatorname{tr}A^2
+       +2\lambda^2\|A\|\|m(u)\|^2
+       +\tfrac12\delta\sigma^2\lambda^2
+ \le C\lambda^2\delta(1+\delta u^2).
+\tag{133.21}
+
+$$
+
+Indeed each central eigenvalue term is lambda lambda_i-(1/2)log(1+2lambda lambda_i)<=lambda^2 lambda_i^2; each noncentral term is 2lambda^2 lambda_i m_i^2/(1+2lambda lambda_i). There is no upper restriction on lambda in this negative-energy transform. The independent Gaussian energy noise supplies exactly its displayed positive quadratic term and has not been deleted.
+
+Take lambda=theta d_u/[delta(1+delta u^2)], with a fixed sufficiently small theta>0. By (133.20), lambda<=C/delta. Exponential tilting of F_u by exp(-lambda F_u) changes the Gaussian vector's covariance and mean to
+
+$$
+
+ A_\lambda=A(I+2\lambda A)^{-1},\qquad
+ m_\lambda=(I+2\lambda A)^{-1}m,
+\tag{133.22}
+
+$$
+
+and shifts the independent noise mean to -delta sigma^2 lambda without changing its variance. Zero covariance directions stay deterministic. Since lambda||A|| is bounded, the same block of order 1/delta has eigenvalues of A_lambda between c delta and C delta. The determinant bound (133.17), applied to this tilted vector and divided by the spatial scale sqrt(delta), gives a tilted density bounded above by C/sqrt(delta), uniformly in ALL means m_lambda and all 0<=sigma<=1. Its noncentral factors still have modulus at most 1. Thus the exact density-change identity and (133.21) give
+
+$$
+
+ f_{u,\sigma}(h_y)
+ \le\frac C{\sqrt\delta}
+    \exp\{-\lambda d_u+C\lambda^2\delta(1+\delta u^2)\}
+ \le\frac C{\sqrt\delta}
+    \exp\left\{-\frac{c z^4}{1+\sqrt\delta z^2}\right\}.
+\tag{133.23}
+
+$$
+
+The last exponent is obtained from d_u^2/[delta(1+delta u^2)] and (133.20), so it does not depend on any approximate local density. Dividing by the SAME positive denominator in (133.18) is legitimate and uniform. Inside |z|<=Z_R, the untilted block gives the uniform density upper bound directly. Consequently (133.12), retaining r_Q>=0, satisfies
+
+$$
+
+ q_{G,Q}(\kappa,y;z)
+ \le C_{K,R}\exp\left\{Kz^2-
+                   \frac{c z^4}{1+\sqrt\delta z^2}\right\}
+       \quad(|z|\ge Z_R),
+ \qquad \sup_{|z|\le Z_R}q_{G,Q}\le C_{K,R}.
+\tag{133.24}
+
+$$
+
+This pays the possible positive critical quadratic exponent when kappa is negative. For z^2<=delta^-1/2 the negative term is at least c z^4/2; for z^2>=delta^-1/2 it is at least c z^2/(2sqrt(delta)). Choose delta sufficiently small that c/(2sqrt(delta))>K+1, and then a fixed larger Z that absorbs Kz^2 in the first range. The right side is bounded by C exp(-z^2) for |z|>=Z, uniformly in delta, noise and all allowed arrays. No mass can escape to a larger charge scale. Multiplication by any FIXED power |z| preserves integrability and vanishing tails.
+
+Combining this global domination with the local limit (133.19) gives, for each fixed p>=0,
+
+$$
+
+ \sup_{|\kappa|\le K,|y|\le R}
+ \int(1+|z|^p)|q_{G,Q}(\kappa,y;z)
+                         -q_Q^{(\sigma)}(\kappa,y;z)|\,dz\to0.
+\tag{133.25}
+
+$$
+
+Uniformity follows by first truncating at a fixed Z, using the uniform local result there, and then taking Z large with (133.24); no array limit of V or C2 is required. The quartic profiles themselves have a uniformly strictly negative quartic coefficient and bounded quadratic coefficient. For sigma->0, (133.19) converges in the same weighted L1 sense to
+
+$$
+
+ q_Q^0(\kappa,y;z)=(2\pi V)^{-1/2}e^{F_Q(\kappa,y;z)}.
+\tag{133.26}
+
+$$
+
+One can bound this last weighted difference by C_p sigma^2 on the fixed classes, using the coefficient differences in (133.19) and a common quartic tail. Only sigma->0 is required. This order of operations retains finite-noise effects through the joint density comparison and then pays their disappearance; it does not compare sigma with a power of delta.
+
+### 133.6 临界无界权重回到原始完整计数律
+
+We now establish the count comparison independently of Chapter 131's fixed precision margin. For large Q on the fixed classes, a=1/(2V)-kappa sqrt(delta) lies in [0,A] for a fixed A. Write B_Q for the event that every HIGH count satisfies |n_j-C_jp_j|/sqrt(C_jp_j(1-p_j))<=Q^2. All low tuples remain unrestricted. The raw product-binomial tail and its Gaussian counterpart obey
+
+$$
+
+ Q(B_Q^c)\le P(Q)e^{-cQ^4}.
+\tag{133.27}
+
+$$
+
+For counts this is the binomial Hoeffding bound, since all p_j are in [1/4,3/4], followed by a union over m<=CQ^2 coordinates. At alpha=1 the count weights are exactly normalized binomials; no escort-normalizer approximation is needed. Gaussian central-cell boundaries may be enlarged or shrunk by half a cell, which only changes c in (133.27).
+
+The full-tuple inequality retained from Chapter 131 is valid for EVERY bounded nonnegative a, with no subcritical requirement. With e_sum=sum_j e_j and d=delta sigma^2 it is
+
+$$
+
+ D^2\le2mE+2e_{\rm sum}^2,
+
+$$
+
+$$
+ e^{aD^2-(E-h_y)^2/(2d)}
+ \le e^{2ae_{\rm sum}^2+2am h_y+4a^2m^2d}
+                                  e^{-(E-h_y)^2/(4d)}.
+\tag{133.28}
+
+$$
+
+It follows by maximizing 2amE-(E-h_y)^2/(4d) over real E, an upper bound for its maximum over E>=0. The prefactor has logarithm at most C(1+Q^2+Q^(7/2) sigma^2). It is therefore dominated by the -cQ^4 tail in (133.27), even when the Gaussian unconditioned critical exponential moment diverges. For any fixed p, the maximum of |D|^p on the count box costs at most exp(C_pQ^3): sum C_j<=CB^2 and log B=O(Q^3). Dividing by the unpenalized same-output normalizer costs at most exp(L+C_R/delta) times a constant, by the retained unweighted lower bound. Hence
+
+$$
+
+ \frac{E_Q[(1+|\delta^{1/4}D|^p)e^{aD^2}
+        e^{-(T-y)^2/(2\sigma^2)}\mathbf1_{B_Q^c}]}{A_Q(y)}
+ \le\exp[-cQ^4+C Q^{7/2}+C_p(Q^3+L+\delta^{-1})]
+ \le e^{-c'Q^4}.
+\tag{133.29}
+
+$$
+
+The analogous Gaussian bound holds. There the raw charge is N(0,V_H) with uniformly bounded fixed moments, so Cauchy--Schwarz bounds a fixed charge-power times the raw bad-cell indicator; (133.28) first removes the unbounded critical insertion jointly with the likelihood. Its exp(O(Q^(7/2))) cost remains dominated. Slight noise-width changes below satisfy the same bounds. These are joint original-likelihood estimates, not additive Gaussian-approximation errors subsequently divided by a rare density.
+
+On B_Q, embed each high count n_j into its centered physical cell of width 1/B in the Y_j coordinate, and retain the exact product low-count law. Its lifted high-count density is B^|H| times its binomial probability. Uniform Stirling expansion on standardized |n-Cp|<=Q^2 and the Gaussian density variation across the cell give
+
+$$
+
+ \left|\log\frac{\hbox{lifted high count density}}
+                         {\hbox{high Gaussian density}}\right|
+ \le P(Q)e^{-\zeta Q^3/2}\le\epsilon_Q.
+\tag{133.30}
+
+$$
+
+For clarity, the one-coordinate Stirling/Taylor remainder is bounded by a fixed polynomial in Q times C_j^-1/2, and there are at most CQ^2 coordinates; the half-cell log-density change has the same bound. This comparison includes the exact binomial multiplicities and normalizing constants. It is a relative density estimate on each actual cell, not a total-variation approximation to the unconditioned law.
+
+The retained full-scalar geometry, uniformly over ALL low tuples and points of these high cells, is
+
+$$
+
+ |D-D_G|\le m/(2B)+me^{\zeta Q^3}/B\le\epsilon_Q,
+
+$$
+
+$$
+ |T-T_G|\le\Delta_Q\le P(Q)[B^{-1}+B^{-2}e^{2\zeta Q^3}],
+ \qquad\Delta_Q/\sigma\le\epsilon_Q,
+ \quad T_G=(E_H-V)/\sqrt\delta.
+\tag{133.31}
+
+$$
+
+The exponent choices following (133.8) prove these inequalities: B^-1/sigma has logarithm at most -(c_q/2-l)Q^3+O(log Q), and B^-2 exp(2zeta Q^3)/sigma has logarithm at most -(c_q-2zeta-l)Q^3+O(log Q). Both margins are positive. The low charge bound also uses zeta<c_q/2. Thus no new condition on the speed of sigma->0 has entered. The high charge satisfies |D_G|<=C Q^2 sum_H sqrt(v_j)+o(1)<=C Q^3 on these cells. Consequently |a(D^2-D_G^2)| is exponential times a polynomial and can be absorbed into epsilon_Q. This controls the critical charge insertion relatively on central cells without any reserve below its pole.
+
+It remains to compare the very narrow SAME-output likelihoods. If u=(T_G-y)/sigma and b=(T-T_G)/sigma, |b|<=epsilon_Q, Young's inequality gives, after enlarging its exponential constant,
+
+$$
+
+ e^{-C\epsilon_Q}e^{-(1+\epsilon_Q)u^2/2}
+ \le e^{-(u+b)^2/2}
+ \le e^{C\epsilon_Q}e^{-(1-\epsilon_Q)u^2/2}.
+\tag{133.32}
+
+$$
+
+Put sigma_-=sigma/sqrt(1+epsilon_Q) and sigma_+=sigma/sqrt(1-epsilon_Q). Together (133.30)--(133.32) sandwich the lifted, critically weighted count density on central cells between e^(+/-C epsilon_Q) times the corresponding Gaussian weighted densities at widths sigma_- and sigma_+. Crucially, all three densities use the SAME a,V,h_y and high covariance; the low probabilities sum to one after the pointwise comparison. This is an ordered-integral argument at alpha=1; it asserts no differentiated consequence of an ordered bound.
+
+Here are the normalization and metric details of that sandwich. The ordinary Gaussian likelihood normalizer is exactly
+
+$$
+
+ A_G(y;\sigma)=\sqrt{2\pi\delta}\,\sigma f_\sigma(h_y).
+\tag{133.33}
+
+$$
+
+Equation (133.18) gives A_G>=c_R sigma. It also gives A_G(y;sigma_+)/A_G(y;sigma)->1 and A_G(y;sigma_-)/A_G(y;sigma)->1, since the widths have relative difference O(epsilon_Q) and the limiting density in (133.18) is continuous in sigma uniformly on [0,1]. The same sandwich without the charge insertion, with (133.27), proves A_Q/A_G->1. It can alternatively supply the count denominator lower bound used in (133.29), using only central cells; thus (133.29) and this lower bound are not circular.
+
+For each fixed p, push the lifted central measures forward by z=delta^1/4 D_G and multiply by delta^1/4/A_G(y;sigma). The integrals of 1+|z|^p for the upper and lower Gaussian bounds both tend, uniformly, to the SAME integrals of (133.26), by (133.25),(133.26),(133.33). Gaussian tails outside central cells vanish by (133.29). Their difference therefore tends to zero. The middle measure differs in (1+|z|^p)-weighted total variation from the Gaussian pushforward by o(1): both it and the width-sigma Gaussian measure lie between those ordered lower and upper measures, up to the exponentially small factors. This total-variation assertion concerns the CELL-LIFTED measure using D_G, not the original discrete charge law.
+
+Return from that lifted charge to the original discrete X_Q. On central cells their distance is at most delta^1/4 epsilon_Q by (133.31). On all other cells their polynomially weighted mass is bounded by (133.29). Thus for every bounded Lipschitz test f, and uniformly over the unit Lipschitz class with f(0)=0 after truncating the tails, the difference of the scaled count integrals and the Gaussian integrals tends to zero. For a polynomial of positive degree p the cell difference is bounded by C_p delta^1/4 epsilon_Q(1+|z|^(p-1)) on central cells; the just-proved weighted estimates and (133.29) pay it. Bounds for a higher fixed degree give the uniform integrability needed for every fixed absolute moment.
+
+In particular the scaled finite count measure
+
+$$
+
+ \mathcal M_Q(A)=\delta^{1/4}
+ E_{\mu_{1,y}}[e^{aD^2}\mathbf1_{\{\delta^{1/4}D\in A\}}]
+\tag{133.34}
+
+$$
+
+has mass converging uniformly to I_Q/sqrt(2pi V), has the same limiting bounded-Lipschitz integrals as (133.26), and has all the stated uniform moment tails. Its limit mass is bounded above and bounded away from zero on fixed K,R and the good-event class, because the quartic coefficient is uniformly positive and all coefficients are bounded. The mass convergence proves (133.5). Dividing by this mass gives the normalized law; the normalized Lipschitz estimate proves (133.6) by the dual characterization of W1 on the line. The polynomial estimates prove (133.7). These are uniform deterministic estimates on the simultaneous good-event classes. Their retained support-uniform probability exhaustion proves the asserted original pair/path conclusions separately. Nothing in this return step independently resamples an environment, low tuple, phase, direction or center.
+
+### 133.7 输出响应、经典机制与结论边界
+
+Since the finite quartic integrals are bounded away from zero on the fixed parameter compacts, (133.5) also proves
+
+$$
+
+ \sup_{|\kappa|\le K,|y|\le R}
+ \left| -\log\frac{Z_Q(\kappa,y)}{Z_Q(\kappa,0)}
+                  +\log\frac{I_Q(\kappa,y)}{I_Q(\kappa,0)}\right|\to0.
+\tag{133.35}
+
+$$
+
+The limiting response has sign MINUS log(I_y/I_0). The common delta^-1/4 and (2pi V)^-1/2 factors cancel because the same fiber V is used at both outputs. No entropy-order differentiation or posterior-information-cumulant corollary is asserted in this alpha=1 contribution.
+
+The generic critical quartic mechanism is classical: cancellation of a quadratic rate leaves a quartic stabilizer and a fourth-root scale. The model-specific content here is the exact conditional Gaussian representation with full empirical centering, the global density estimate (133.23) at arbitrary charge, and the count-cell return (133.27)--(133.34) for this unbounded critical insertion under the original strict half-exponent noise range. The coefficient C2/(4V^4) comes from the conditional-energy mean shift C2 z^2/V^2 measured against energy variance 2C2; neither spherical symmetry nor energy-charge independence was used. Finite noise modifies BOTH quartic and output-quadratic coefficients as in (133.19), and its error vanishes with sigma without an added rate.
+
+The result includes negative compact kappa, but it is not a global phase diagram, a pole-crossing theorem for an unconditioned Gaussian integral, a theorem for growing kappa/y or polynomial degree, or an extension of Chapter 131 to a moving precision margin by substitution. No equality of full posterior distributions, no discrete-continuous total variation convergence, and no identification of the auxiliary critical tilt with original full-q P is claimed.
+
+## 追加锚（本行以下为增补区）

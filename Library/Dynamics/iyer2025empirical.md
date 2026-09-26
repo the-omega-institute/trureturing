@@ -5475,3 +5475,26 @@ $$
 $$
 
 同时 $(m+1)N/Q^3\to0$ 保证每个成员数只需有限个候选共振水平。第 111、124、130 章的带标记密度比较、条件均值平方截断、真实参数二阶导数及全输出尾部在 $\rho_Q^{-1}\le CQ^3$ 下逐项支付，给出原始加权 $L^1$ 结论及积分常数 $8/\sqrt3-25/6$，保留精确的 $C_xm_x$。本结论不覆盖 $\rho_Q\asymp Q^{-3}$ 端点、必要性、原始环境期望或计算效率，也不作全球原创性认证。
+
+## 追加：临界四次型电荷与原始计数的全局尾部
+
+对应理论卷第 133 章。在原始校准乘积计数律的能量后验上施加 $a=1/(2V)-\kappa\sqrt\delta$ 的辅助电荷权重，保持完整经验 $V$、$C_2=\delta^{-1}\sum_jv_j^2$ 及原始严格半指数噪声范围。对固定紧集内的 $\kappa,y$，归一化常数的尺度为 $\delta^{-1/4}$，电荷 $\delta^{1/4}D$ 趋近密度正比于
+
+$$
+\exp\!\left[\left(\frac{y}{2V^2}-\kappa\right)z^2
+                  -\frac{C_2}{4V^4}z^4\right].
+$$
+
+结论包括 Wasserstein 距离 $W_1$ 与每个固定阶多项式矩；$\kappa$ 可为负。它属于所定义的辅助后验，不将其认作原始固定大小支持先验 $P$ 的后验，不声称离散—连续全变差收敛或熵阶数导数。
+
+Raphaël Cerf、Matthias Gorny，*A Curie–Weiss model of self-organized criticality*，[arXiv:1301.6911v3](https://arxiv.org/abs/1301.6911v3)，[原始 PDF](https://arxiv.org/pdf/1301.6911v3)，SHA256 `50481fae88774def12c174f3aae1e173de7aad7dc0c731b9c93c9f0780ea2860`；*Annals of Probability* 44(1), 444–478 (2016)，[DOI:10.1214/14-AOP978](https://doi.org/10.1214/14-AOP978)。已核对模型、定理 1、定理 2 与推论 3。其临界权重为 $\exp(S_n^2/(2T_n))$；定理 2 对固定独立同分布对称律要求密度、正指数平方矩及对某个 $p\in(1,2]$ 的卷积可积性条件。四次型极限和第四根归一化属于该经典机制。它不直接给出本章各向异性三角计数阵列、经验中心及带噪声点条件化的相对密度结论；本章的系数由自身条件能量计算取得。
+
+Sander Dommers、Cristian Giardinà、Claudio Giberti、Remco van der Hofstad、Maria Luisa Prioriello，*Ising critical behavior of inhomogeneous Curie–Weiss models and annealed random graphs*，[arXiv:1509.07327v2](https://arxiv.org/abs/1509.07327v2)，[原始 PDF](https://arxiv.org/pdf/1509.07327v2)，SHA256 `eeffb4eae4ade6d59ab0a8176f462ba3a855afdb5784a846a2536af522da85b2`。已核对条件 2.3–2.5、定理 2.15 和第 4.5 节的临界窗口推导。其秩一自旋相互作用与经验权重条件区分有限四阶矩和重尾区间，且有限经验临界参数与其极限的差可改变窗口。第 133 章相应保留有限 $V,C_2$，但不从该自旋模型移植计数条件律。原 PDF 的 arXiv 版本戳为 2016 年 7 月 14 日，正文打印日期为 2018 年 7 月 9 日；不将二者混作同一个版本日期。
+
+Jinho Baik、Ji Oon Lee、Hao Wu，*Ferromagnetic to paramagnetic transition in spherical spin glass*，[arXiv:1805.05630v1](https://arxiv.org/abs/1805.05630v1)，[原始 PDF](https://arxiv.org/pdf/1805.05630v1)，SHA256 `cd97d2490c3eb570b8bc6ea801115cf5461a95d6f541e16ff64d2164bd3efac3`。已核对模型、无序条件、窗口 $2\beta=J^{-1}+B/\sqrt N$、定理 1.4 与其中的积分定义。该文采用球面均匀测度、满足指定独立性与矩条件的 Wigner 无序及固定 $J>1$，研究自由能涨落。这些假设不等同于本章固定经验的各向异性 Gaussian／计数向量及带噪声能量观测；其结果未被用于把本章条件律替换为球面均匀律。
+
+Matthias Schulte、Christoph Thäle，*Cumulants on Wiener chaos: moderate deviations and the fourth moment theorem*，[arXiv:1410.7964v1](https://arxiv.org/abs/1410.7964v1)，[原始 PDF](https://arxiv.org/pdf/1410.7964v1)，SHA256 `39712a2ccc53082b4053315635f230d72459649957751b388c1f58084acb3111`。已核对模型、定理 1 及推论 2。其固定齐次 Wiener chaos 需要规定的归一化和趋零收缩量，允许的中偏差尺度受相应累积量参数控制。这类概率中偏差结论本身不提供本章含电荷依赖非中心项和独立观测噪声的相对点密度。
+
+正文使用条件 Gaussian 公式、秩一特征值交错、精确行列式变换、Fourier 反演和二项式尾界这些经典工具。具体连接包括：在 $D=\delta^{-1/4}z$ 条件下，能量均值移动 $\sqrt\delta C_2z^2/V^2$，而能量方差为 $2\delta C_2+o(\delta)$；负能量倾斜保留数量为 $\delta^{-1}$ 的谱块，从而得到真实密度界 $C\delta^{-1/2}\exp[-cz^4/(1+\sqrt\delta z^2)]$；最后联合支付无界电荷权重与原始似然的计数尾部，并在同一输出上比较相邻噪声宽度。有限噪声同时改变二次项和四次项，保留它们后才令 $\sigma\to0$，无需附加趋零速率。
+
+原始 PDF 的文字提取存在字体或控制字符边界；上述归属只使用已核对的具体陈述与条件，不认证完整提取无误。四次型临界机制属经典理论；本章新增综合是完整经验中心下的全局条件密度界与原始计数回接，不作全球原创性认证。
