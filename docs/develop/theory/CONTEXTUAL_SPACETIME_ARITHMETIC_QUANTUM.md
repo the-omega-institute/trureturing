@@ -59552,3 +59552,158 @@ $$
 四维输出只给出达到该误差的一种实现；本节没有证明达到时的最小输出维数。这里的误差衡量不含参考系统的六个指定状态；没有将其改称 diamond 距离或任意纠缠输入的误差。下界允许任意有限维量子输出，最优实现恰可选为经典记录；这项结论不将所有实矩阵族判为经典模型。
 
 ## 追加锚（本行以下为增补区）
+
+## 273. 共轭双块失衡的精确恢复误差
+
+**定义 273.1（六轴共轭双块模型）。** 令 $0<a\le1$、$0\le p\le1$、$q=1-p$，并令 $u$ 取六个单位坐标轴向量 $\{\pm e_x,\pm e_y,\pm e_z\}$。记
+
+$$
+\rho_a(u)=\frac{I_2+a\,u\cdot\boldsymbol\sigma}{2},
+\qquad
+\Omega_{p,a}(u)=p\rho_a(u)\oplus q\overline{\rho_a(u)},
+\qquad
+\mathcal R_{p,a}=\{\Omega_{p,a}(u):u=\pm e_x,\pm e_y,\pm e_z\}.
+\tag{273.1}
+$$
+
+复共轭相对于固定的 Pauli 基底；双块按所示坐标排序。令 $\delta(\mathcal R_{p,a})$ 为定义272.1中的共轭缺口，令 $e_{\mathbb R}(\mathcal R_{p,a})$ 为所有有限输出维数、所有在某个共同基底中产生实模型的 CPTP 编码与所有 CPTP 解码上的最小最坏迹距离恢复误差。下面的达到构造同时保证这个最小值存在。
+
+**定理 273.2（不平衡质量的精确代价）。** 定义273.1中的两个量满足
+
+$$
+\boxed{\delta(\mathcal R_{p,a})
+=e_{\mathbb R}(\mathcal R_{p,a})
+=\frac a3|2p-1|.}
+\tag{273.2}
+$$
+
+八维输出足以达到恢复误差的最小值；不要求输出维数达到最小。对允许非实残差的任意有限维编码与解码，定义272.1中的误差满足 $e+r\ge a|2p-1|/3$。在整个参数域 $0\le p\le1$ 内，精确可恢复实编码因而恰在 $p=1/2$ 时可行。
+
+证明。交换左右输入块，并将六轴指标作反射 $u\mapsto Su$，其中 $S=\operatorname{diag}(1,-1,1)$，把参数 $p$ 的模型变成参数 $q$ 的模型。块交换为实酉矩阵，指标反射只重排六个状态，因此两个待优化量均不变。以下只需处理 $p\ge q$；此时 $p\ge1/2$。
+
+先给出共轭缺口的下界。取任意候选信道 $\mathcal C:M_4\to M_4$。在其输入、输出两端作块退相干，仍为信道；输入模型和共轭目标原本块对角，而输出退相干收缩迹距离，所以最坏误差不增加。此后可以把信道表示为四个从 $M_2$ 到 $M_2$ 的完全正子映射 $\mathcal C_{ba}$，行指标 $b$ 为输出块，列指标 $a$ 为输入块。每一输入列的子映射之和保迹。
+
+令 $G$ 为保持六轴集合的二十四元正旋转群。对 $g\in G$ 选量子比特酉矩阵 $U_g$，使其 Bloch 作用为 $g$，并在双块输入使用
+
+$$
+V_g=U_g\oplus\overline{U_g}.
+$$
+
+则 $V_g\Omega_{p,a}(u)V_g^*=\Omega_{p,a}(gu)$。将信道替换为
+
+$$
+\widetilde{\mathcal C}(A)
+=\frac1{24}\sum_{g\in G}
+\overline{V_g}^{\,*}\,
+\mathcal C(V_gAV_g^*)\,
+\overline{V_g}.
+\tag{273.3}
+$$
+
+每个求和项仍为 CPTP，最坏共轭误差由六轴重排、酉不变性与凸性不增加。该平均也保持块对角结构。
+
+只需分析平均后的左输出两子映射。这里子映射一般不保迹，故需同时平均迹的变化。一个保持 Hermitian 性的量子比特线性映射可写为
+
+$$
+\Lambda\!\left(\frac{tI_2+v\cdot\boldsymbol\sigma}{2}\right)
+=\frac{(xt+\ell\cdot v)I_2+(tb+Mv)\cdot\boldsymbol\sigma}{2},
+$$
+
+其中 $x$ 为实数，$\ell,b$ 为实向量，$M$ 为实矩阵。有限旋转群的向量平均为零，故平均同时消去平移 $b$ 和依赖输入方向的迹项 $\ell\cdot v$。矩阵共轭平均为迹的三分之一乘单位；可由坐标轴半周旋转消去非对角项，再由坐标置换平均对角项验证。代入式（273.3）的左右旋转，左到左分量留下反射 $S$ 的标量倍，右到左分量留下单位矩阵的标量倍。因此存在实数 $x,y,\alpha,\beta$，使
+
+$$
+\widetilde{\mathcal C}_{LL}(A)
+=\alpha A^{\mathsf T}+(x-\alpha)\operatorname{Tr}(A)I_2/2,
+\qquad
+\widetilde{\mathcal C}_{LR}(A)
+=\beta A+(y-\beta)\operatorname{Tr}(A)I_2/2.
+\tag{273.4}
+$$
+
+这里两者的输出迹分别为 $x\operatorname{Tr}A$ 和 $y\operatorname{Tr}A$。完全正性与输入列的保迹性给出 $0\le x,y\le1$。左到左子映射的未归一化 Choi 矩阵为 $\alpha F+(x-\alpha)I_4/2$，反对称空间上的非负特征值要求 $\alpha\le x/3$；右到左子映射的 Choi 矩阵为 $\beta|I\rangle\rangle\langle\langle I|+(y-\beta)I_4/2$，与 $|I\rangle\rangle$ 正交的空间给出 $\beta\le y$。这是第272节所用标准转置与恒等协变通道的缩放形式，未把它们另作新分类。
+
+在输入 $\Omega_{p,a}(u)$ 上，左输出为
+
+$$
+\frac12\bigl(wI_2+a b(Su)\cdot\boldsymbol\sigma\bigr),
+\qquad
+w=px+qy,\quad b=p\alpha+q\beta.
+$$
+
+共轭目标的左块为 $p\overline{\rho_a(u)}$。由式（273.4）的完全正约束，
+
+$$
+b\le px/3+qy=w/3+2qy/3\le w/3+2q/3.
+\tag{273.5}
+$$
+
+置 $z=w-p$，则 $p-b\ge2(p-q)/3-z/3$。对任意实数 $s,t$ 和单位向量 $v$，Hermitian 矩阵 $(sI_2+t\,v\cdot\boldsymbol\sigma)/2$ 的迹范数为 $\max\{|s|,|t|\}$。故左差块的迹范数至少为 $a[2(p-q)/3-z/3]$。右差块的迹为 $-z$，其迹范数至少为 $|z|$。两个差块直和，从而对每个六轴状态都有
+
+$$
+\begin{aligned}
+\frac12\|\widetilde{\mathcal C}(\Omega_{p,a}(u))
+-\overline{\Omega_{p,a}(u)}\|_1
+&\ge\frac12\left[\frac{2a(p-q)}3-\frac{az}3+|z|\right]\\
+&\ge\frac{a(p-q)}3.
+\end{aligned}
+\tag{273.6}
+$$
+
+第一行右侧的左块估计即使为负也仍是合法下界；第二行用 $|z|-az/3\ge0$，因为 $0<a\le1$。平均及退相干均未增加最坏误差，故这也是原候选的下界。对所有 $\mathcal C$ 取最小，得到 $\delta(\mathcal R_{p,a})\ge a(p-q)/3$。
+
+为达到共轭误差下界，取第272节的标准最优近似转置通道 $\mathcal T(A)=(A^{\mathsf T}+\operatorname{Tr}(A)I_2)/3$。对任意双块矩阵 $A=[A_{ab}]$，定义
+
+$$
+\mathcal C_*(A)
+=\left(A_{RR}+\frac{p-q}{p}\mathcal T(A_{LL})\right)
+\ \oplus\ \frac qp A_{LL}.
+\tag{273.7}
+$$
+
+压缩、信道和非负加权和均完全正，各输入块的输出迹系数之和为一，故这是全输入空间上的 CPTP 映射。对模型，它输出
+
+$$
+\bigl(q\overline{\rho_a(u)}+(p-q)\mathcal T(\rho_a(u))\bigr)
+\oplus q\rho_a(u).
+$$
+
+第二块与共轭目标一致，第一块之差为 $(p-q)(\mathcal T(\rho_a(u))-\overline{\rho_a(u)})$。由第272节的六态转置误差，距离恰为 $(p-q)a/3$，证明共轭缺口的等式。
+
+现在构造完全实输出的编码。令 $\mathcal M:M_2\to M_4$ 和 $\mathcal P:M_4\to M_2$ 分别为式（272.18）的四面体测量和制备信道，因而 $\mathcal P\mathcal M$ 将 Bloch 向量缩为原来的三分之一。令 $Q$ 为式（271.13）的四维酉矩阵。取八维输出为两个四维空间的直和，并定义
+
+$$
+\mathcal E_*(A)
+=Q\left(\frac qp A_{LL}\oplus A_{RR}\right)Q^*
+\ \oplus\ \frac{p-q}{p}\mathcal M(A_{LL}).
+\tag{273.8}
+$$
+
+两项均完全正；其迹之和为 $\operatorname{Tr}A$，故 $\mathcal E_*$ 是信道。模型输入的第一输出块为
+
+$$
+Q\bigl(q\rho_a(u)\oplus q\overline{\rho_a(u)}\bigr)Q^*,
+$$
+
+由式（271.13）是实矩阵，第二块则为 $(p-q)\mathcal M(\rho_a(u))$，是实对角矩阵。因此所有模型输出共享一个实基底。
+
+对任意八维输出矩阵 $Y$，记其两个四维对角块为 $Y_1,Y_2$，并令 $B=Q^*Y_1Q$。定义
+
+$$
+\mathcal D_*(Y)
+=\bigl(B_{LL}+\mathcal P(Y_2)\bigr)\oplus B_{RR}.
+\tag{273.9}
+$$
+
+两个输出块由完全正压缩及制备取得，输出迹为 $\operatorname{Tr}Y_1+\operatorname{Tr}Y_2=\operatorname{Tr}Y$；故这是全输出空间上的 CPTP 解码。其模型恢复为
+
+$$
+\bigl(q\rho_a(u)+(p-q)\mathcal P\mathcal M(\rho_a(u))\bigr)
+\oplus q\overline{\rho_a(u)}.
+\tag{273.10}
+$$
+
+仅左块有误差，其迹距离为 $(p-q)a/3$。所以 $e_{\mathbb R}\le(p-q)a/3$；定理272.2给出反向界 $e_{\mathbb R}\ge\delta$。二者结合得到式（273.2）和达到。相同的通用不等式还给出 $e+r$ 下界。$p=q$ 时残余输出分支为零映射；$q=0$ 时成对输出块只在模型输入上为零，对一般输入仍保留 $A_{RR}$ 的贡献。这一分支保证全输入空间上的保迹性，各公式仍定义合法信道。交换块覆盖 $p<q$ 的情况，证毕。
+
+加权共轭直和是第271节所引 van Luijk–Wilming 例4.11的既有模型形式，近似转置与四面体测量亦使用第272节注明的标准构造。本定理的定量陈述将它们接到同一有限六态模型上：配对质量 $2\min(p,q)$ 可以精确恢复，剩余质量 $|p-q|$ 的最优完全实恢复误差恰为它乘以 $a/3$。误差指标只针对所列六态，不包含参考系统，也不宣称任意模型的共轭缺口都等于最优实编码误差。
+
+## 追加锚（本行以下为增补区）
