@@ -907,3 +907,291 @@ also retain the block recurrences. No new Lean endpoint, kernel check,
 Scribe compilation or independent-model review is asserted for GNT.
 Finite algebraic tests of higher h are labelled synthetic throughout.
 Their cusps, conductors and cover groups do not furnish actual WSS samples.
+
+
+## GMI. A uniform power-basis obstruction and exact generator-index restrictions
+
+### GMI.0 The same order and two different indices
+
+Retain the actual golden blocks B_j=L_(3^j)^2+3 and the order A_j of
+GIR/GNT, for j>=1. Write theta=cuberoot(B_j)>0, a=(B_j-1)/9 and
+beta=(1+theta+theta^2)/3. The proved integral basis of this ORDER is
+(1,theta,beta). Its fraction field has degree three since B_j is not a
+cube. Let O_j be the maximal integer ring and I_j=[O_j:A_j].
+
+For an element alpha in A_j with Q(alpha)=k_j, define instead
+
+$$\mu_j(\alpha)=[A_j:\mathbb Z[\alpha]].$$
+
+The index I_j is the normalization index that detects WSS in GIR/GNT.
+The index mu_j(alpha) measures a specified power basis inside A_j. These
+are distinct inclusions and must not be substituted for each other.
+Monogenicity of A_j means that some mu_j(alpha) equals one.
+
+Use the original oriented Eisenstein factor eta_j=-2+(L_(3^j)-1)omega,
+with omega^2+omega+1=0. For an integer n coprime to B_j, set
+chi_j(n)=(n/eta_j)_3. GCR1, GCC1 and GCC2 already give
+
+$$\chi_j(3)=\omega,\qquad \chi_j(2)=\omega,\qquad
+\chi_j(\ell)=1\quad\left(\ell\mid\prod_{i<j}B_i\text{ prime}\right).\tag{GMI0}$$
+
+These are characters of the actual factorizations with the original
+exponents h_p, not assumptions that h_p=1. The first identity follows
+from eta_j=1+lambda^3 modulo nine, lambda=1+2omega: the classical
+supplementary laws give (lambda/eta_j)_3=omega^2 and 3=-lambda^2.
+The other identities are proved in the existing conjugate-completed
+continuation. All of them use unconditional classical cubic reciprocity.
+
+### GMI.1 Exact index form for every integral element of this order
+
+**Theorem GMI1.** For integers r,b,c with (b,c)!=(0,0), the element
+alpha=r+b theta+c beta generates k_j over Q and
+
+$$\boxed{\mu_j(\alpha)=|F_j(b,c)|,\qquad
+F_j(b,c)=3b^3+3b^2c+bc^2-a c^3
+=\frac{(3b+c)^3-B_jc^3}{9}.}\tag{GMI1}$$
+
+In particular F_j(b,c) is nonzero on every such integer pair.
+
+**Proof.** Since the field degree is prime and alpha is not rational,
+Q(alpha)=k_j. Its powers 1,alpha,alpha^2 are a Z-basis of Z[alpha].
+The integer r does not affect their signed determinant. For alpha=b theta
++c beta, the GIR multiplication table gives the theta and beta
+coordinates of alpha^2 as
+
+$$-b^2+a c^2,\qquad 3b^2+2bc+c^2.$$
+
+The determinant of the columns 1,alpha,alpha^2 in (1,theta,beta) is
+b(3b^2+2bc+c^2)-c(-b^2+a c^2), exactly the cubic in GMI1. Its absolute
+value is the subgroup index. Expanding (3b+c)^3 and using B_j=9a+1
+proves the second expression. This constructs the particular index form;
+it does not import an index form for a different maximal integer ring.
+The general determinant/index-form convention is Kang-Kim, Section 3.
+
+### GMI.2 Cubic phases of the actual generator indices
+
+**Theorem GMI2.** Suppose mu=mu_j(alpha) is coprime to B_j. Then
+
+$$\boxed{\chi_j(\mu)=\omega.}\tag{GMI2}$$
+
+For every individual prime p|B_j with p not dividing mu, one also has
+
+$$\boxed{\mu^{(p-1)/3}\equiv3^{(p-1)/3}\pmod p.}\tag{GMI3}$$
+
+The second statement only requires coprimality to the indicated p.
+
+**Proof.** Put m=F_j(b,c) and w=3b+c. Equation GMI1 gives
+w^3=B_jc^3+9m. If m is coprime to B_j, w is a unit at every prime of
+eta_j. Taking the cubic symbol modulo eta_j gives
+
+$$1=\chi_j(9m)=\omega^2\chi_j(m).$$
+
+Since minus one is a cube, chi_j(m)=chi_j(|m|). This proves GMI2.
+At an individual p, the same congruence gives (9m/varpi_(j,p))_3=1,
+so (m/varpi_(j,p))_3=(3/varpi_(j,p))_3, because cubing a symbol is one.
+The residue field is F_p. Its defining symbol exponent gives GMI3;
+changing m to |m| is harmless since (p-1)/3 is even.
+
+**Consequences.** A generator index coprime to B_j cannot be an integer
+cube. It cannot have all its prime factors among the earlier block
+supports, because the product of their characters is one. If its support
+is contained in {2,3} together with those earlier primes, then
+
+$$v_2(\mu)+v_3(\mu)\equiv1\pmod3.\tag{GMI4}$$
+
+These conditions are necessary. No sufficiency for arbitrary integers
+satisfying a character condition is asserted.
+
+### GMI.3 Uniform nonmonogenicity, with an exact local distinction
+
+**Theorem GMI3.** Every actual order A_j is nonmonogenic:
+
+$$\boxed{\text{for every }j\ge1\text{ and every }\alpha\in A_j,
+\quad A_j\ne\mathbb Z[\alpha].}\tag{GMI5}$$
+
+Equivalently the two integer equations
+
+$$\boxed{w^3-B_jc^3=9\quad\text{or}\quad-9}\tag{GMI5a}$$
+
+have no solutions with integers w,c, for any j>=1. Any such solution
+would have w=c modulo three and hence w=3b+c for an integer b.
+
+**Proof.** A rational alpha cannot generate the rank-three ring. For
+any other alpha, index one would contradict GMI2 because chi_j(1)=1
+while omega!=1. This is a simultaneous proof for all j; it is not an
+extrapolation from a finite list of blocks or a bounded Thue search.
+
+**Theorem GMI3a.** Nevertheless A_j tensor Z_l is generated as a
+Z_l-algebra by one element for EVERY rational prime l. Furthermore
+
+$$\boxed{\gcd\{\mu_j(\alpha):\alpha\in A_j,\ Q(\alpha)=k_j\}=1.}\tag{GMI6}$$
+
+**Proof.** For l!=3, theta generates since beta=(1+theta+theta^2)/3.
+At three, use theta+beta, whose index by GMI1 is |7-a|. Here a_1=2,
+and a_j=0 modulo three for j>=2. Indeed B_1=19 and the block recurrence
+B_(j+1)=B_j^3-3B_j^2+3 give B_2=1 modulo 27 and preserve one modulo 27.
+Thus 7-a is a three-adic unit. The determinant is a unit over Z_3,
+so 1,theta+beta,(theta+beta)^2 form a local integral basis. Finally
+theta has index three and theta+beta has index coprime to three.
+Their greatest common divisor is one, proving GMI6.
+
+This is local ALGEBRA monogenicity. It is not the stronger assertion
+that the globally normalized index form represents +/-1 over every
+Z_l. In fact GCR1a supplies a prime p|B_j at which three is a noncube.
+Then GMI3 forbids index-form value +/-1 already over F_p and Z_p.
+Thus these orders DO have a local index-form obstruction. The distinction
+is explicit in Alpoege-Bhargava-Shnidman, Definition 3 and Section 2.3;
+their global Hasse-failure theorems do not describe this example.
+
+### GMI.4 Sharp minima and a complete prime-power subproblem
+
+Let m_j be the least positive value of mu_j(alpha) over field-generating
+alpha in A_j. Then
+
+$$\boxed{m_j\in\{2,3\},\qquad m_1=2,\qquad m_3=3.}\tag{GMI7}$$
+
+**Proof.** GMI3 excludes one, and theta has index three. For j=1,
+beta has index a_1=2. For j=3, the ACTUAL factorization is
+
+$$B_3=192900153619=3079\cdot62650261.$$
+
+Both factors are prime and
+
+$$3^{1026}\equiv1\pmod{3079},\qquad
+2^{1026}\equiv546\pmod{3079}.$$
+
+Thus GMI3 excludes mu=2 in that block, proving m_3=3. Trial division
+up to each square root certifies these two fixed primes; modular
+exponentiation verifies the displayed residues. The universal exclusion
+of all alpha with index two follows from GMI3, not enumeration of alpha.
+The value of m_2 is not claimed determined here.
+
+**Theorem GMI4.** All generator indices which are powers of three are
+classified exactly, uniformly in j:
+
+$$\boxed{\{\mu_j(\alpha):\mu_j(\alpha)=3^e,\ e\ge0\}
+=\{3^{3k+1}:k\ge0\}.}\tag{GMI8}$$
+
+**Proof.** Since three is prime to every B_j, GMI2 requires
+omega^e=omega, so e=1 modulo three. Conversely alpha=3^k theta
+has index F_j(3^k,0)=3^(3k+1). This proves both exclusion and realization.
+The varying k scales a primitive element, not the original Fibonacci
+recurrence or its initial depths.
+
+### GMI.5 Localizing does not remove every obstruction
+
+**Theorem GMI5.** Let S be any subset of the rational prime factors of
+the earlier blocks B_1,...,B_(j-1). Then
+
+$$\boxed{A_j\otimes\mathbb Z[S^{-1}]
+\text{ is not monogenic over }\mathbb Z[S^{-1}].}\tag{GMI9}$$
+
+In contrast A_j[1/3]=Z[1/3][theta].
+
+**Proof.** Suppose alpha generates after inverting S. Clear its
+denominators to get beta_0=N alpha in A_j, where N is supported on S.
+At every prime l outside S, N is a unit and beta_0 still generates the
+localized algebra. Therefore the finite integer index mu_j(beta_0)
+is supported only on S. The supports of the earlier and current blocks
+are disjoint, so this index is coprime to B_j. Each of its prime factors
+has character one by GMI0. This contradicts GMI2. The second assertion
+follows directly from beta=(1+theta+theta^2)/3.
+
+**Theorem GMI5a.** For the actual third block, even
+
+$$\boxed{A_3[1/2]\text{ is not monogenic over }\mathbb Z[1/2].}\tag{GMI10}$$
+
+**Proof.** Clearing powers of two as above would produce a generator
+index 2^e for some e>=0. At the actual prime p=62650261 dividing B_3,
+
+$$2^{20883420}\equiv1\pmod p,\qquad
+3^{20883420}\equiv31105528\not\equiv1\pmod p.$$
+
+Every 2^e therefore violates the individual necessary condition GMI3.
+This excludes all exponents and all possible generators at once. It
+does not use a bounded search for solutions of F_3(b,c)=+/-2^e.
+No stronger claim about inverting two together with arbitrary earlier
+primes is made: their individual characters at this p need not be one.
+
+### GMI.6 A proved separation from WSS and the two marked covers
+
+**Counterexample to a candidate shortcut.** Nonmonogenicity of the
+specific A_j does NOT imply I_j>1, a singular point of Spec(A_j), or a
+WSS factor in B_j. The actual first block already refutes each implication:
+
+$$B_1=19,\quad I_1=1,\quad A_1=O_{\mathbb Q(\sqrt[3]{19})},
+\quad m_1=2,\quad F_{18}=2584=19\cdot136,\quad19\nmid136.\tag{GMI11}$$
+
+Maximality follows also directly from GIR's discriminant/index formula
+for the squarefree block 19. GNT then makes the total arithmetic scheme
+regular. Yet GMI3 proves no element gives an integral power basis. This
+refutes the stated candidate inference, not the WSS existence conjecture
+and not a claim attributed to a cited author.
+
+A genuine sufficient direction within this family is
+
+$$\boxed{O_{k_j}\text{ monogenic }\Longrightarrow I_j>1
+\Longrightarrow B_j\text{ has a WSS prime factor}.}\tag{GMI12}$$
+
+Indeed I_j=1 would identify this monogenic ring with the nonmonogenic
+A_j. No monogenic maximal integer ring in this actual family is
+constructed here. The first three checked blocks have I_j=1.
+
+To relate this to GNT's topology, keep the marked chain of lattices
+Z[alpha] subset A_j subset O_j in V=k_j tensor R. It gives two covers
+
+$$V/\mathbb Z[\alpha]\longrightarrow V/A_j\longrightarrow V/O_j$$
+
+of degrees mu_j(alpha) and I_j, respectively. The composite degree is
+mu_j(alpha) I_j. Nontriviality of the first cover is forced at EVERY
+layer by GMI3, including the regular block 19. Nontriviality of the
+second is exactly the original WSS-support condition of GIR/GNT.
+An unmarked torus type does not distinguish these inclusions.
+
+The other monogenicity criterion in the existing Katz note, concerning
+the SPECIFIED polynomial X^(2p)-X^p-1, has a different field and order.
+No contradiction to that Jones criterion follows from GMI11. Likewise
+the cubic Thue equation f_pi(u,v)=-2 in GCC5 concerns factorization of
+eta_j and is not the index equation F_j(b,c)=+/-1. The present theorem
+does not eliminate B_j=P^2Q^3 or decide the full original WSS zero set.
+
+### GMI.7 Primary sources and validation boundary
+
+* Minchan Kang and Dohyeong Kim, *The proportion of monogenic orders
+  of prime power indices of the pure cubic field*, arXiv:2306.13295,
+  Section 3, definition of the order index form and Lemma 3.1:
+  https://arxiv.org/abs/2306.13295 .
+  The determinant/index criterion is used after deriving GMI1. The paper's
+  main density theorem assumes m^2 is NOT one modulo nine. Our actual
+  B_j are one modulo nine. That density theorem is not applied here.
+* Levent Alpoege, Manjul Bhargava and Ari Shnidman, *A positive proportion
+  of cubic fields are not monogenic yet have no local obstruction to
+  being so*, arXiv:2011.01186v2; Mathematische Annalen 391 (2025),
+  5535-5551, DOI 10.1007/s00208-024-03054-w:
+  https://arxiv.org/abs/2011.01186 .
+  Definition 3 and Section 2.3 distinguish representing a p-adic unit
+  from representing +/-1 with the fixed global index form. Its example
+  is Q[X]/(X^3-7/5), not a golden block. GMI3a has the former local
+  property and has a genuine obstruction of the latter kind. No new
+  Hasse-principle counterexample or use of their averaging theorem is
+  claimed.
+* Dunn-Radziwill, arXiv:2109.07463v3, equations (1.4)-(1.5), has the
+  classical supplementary laws already cited and used in GCR/GCC.
+  No GRH hypothesis from its analytic theorems enters the proof.
+
+The relevant primary PDF text was read, including the index convention,
+local-obstruction distinction and supplementary formulas. The attempted
+PDF page screenshots failed, so no successful visual-page check is
+claimed. The general index-form machinery and reciprocity laws are
+classical. These fixed-family deductions have no established global
+first-discovery priority. Repository and bounded literature searches
+are not proofs of novelty.
+
+The attached verify_gmi.py checks the symbolic determinant, fixed exact
+matrix determinants, all stated numerical prime/residue certificates,
+actual block recurrences, the required character values and the pure-
+three-power realizations. Finite checks supplement the proofs of the
+unbounded statements. No Lean elaboration, Scribe compilation, complete
+Thue solver, rank/Selmer computation, independent-model review or new
+WSS witness is claimed. No previously undecided WSS prime family has been
+settled, and the full P^2Q^3 branch remains unexcluded.
