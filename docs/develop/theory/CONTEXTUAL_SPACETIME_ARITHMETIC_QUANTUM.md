@@ -58041,3 +58041,281 @@ $$
 本节沿用第261—264节的 SLD、Pauli 表示和标量正性背景。比较始终固定二维表示、精确谱和原矩阵二阶约束；没有排除更高维实表示，也没有限制随参数变化的基底。它不把固定基底下的复数分量单独当作资源，更不声称排除了所有实量子描述。所得区别是：在这个准备曲线问题中，任何固定平面都限制了可取得的信息阶，而一般固定谱方向变化可以超过这一限制。哈密顿量、物理能量、带宽与原处理器附加约束仍不在本节的实现范围内。
 
 ## 追加锚（本行以下为增补区）
+
+## 266. 精确固定谱下的布居摆幅与信息阶过渡
+
+第265节区分了固定平面轨迹与一般固定谱轨迹。本节给出另一个有数值尺度的限制：沿矩阵上界的特征方向，允许对角布居总共改变多少。两个特征值依然完全不变；改变的是状态相对于给定上界方向的布居。
+
+**定义 266.1（带布居摆幅限制的允许类）。** 固定 $b=1/4$。对 $0<\eta\le1$、$0\le\Delta\le b/2$，考虑全实轴上的 $C^2$ 二维密度曲线
+
+$$
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma,
+\qquad |\boldsymbol u(t)|=b,
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta).
+\tag{266.1}
+$$
+
+记 $z(t)=u_z(t)$，并要求
+
+$$
+\operatorname{osc}_{\mathbb R}z
+:=\sup_{t\in\mathbb R}z(t)-\inf_{t\in\mathbb R}z(t)
+\le\Delta.
+\tag{266.2}
+$$
+
+记这一类的名义 SLD 信息上确界为 $F(\eta,\Delta)$，整函数矩阵元子类对应 $F_{\rm ent}(\eta,\Delta)$。式（266.2）也正是对角元 $\rho_{11}=1/2+z$ 的摆幅上界；它与固定特征值条件是不同约束。
+
+**定理 266.2（统一二参数信息阶）。** 存在固定常数 $c>0$、$\eta_0>0$，使对所有 $0<\eta<\eta_0$ 和 $0\le\Delta\le b/2$，
+
+$$
+\boxed{
+c\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr)
+\le F_{\rm ent}(\eta,\Delta)
+\le F(\eta,\Delta)
+\le6\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr).
+}
+\tag{266.3}
+$$
+
+此外，对所有 $0<\eta\le1$，零摆幅端点精确满足
+
+$$
+F_{\rm ent}(\eta,0)=F(\eta,0)=\sqrt\eta.
+\tag{266.4}
+$$
+
+证明。 先证明上界。沿用第264节的 SLD 与行列式计算，
+
+$$
+I_Q=4|\boldsymbol u'|^2,
+\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z'',
+\qquad z''\ge-\eta.
+\tag{266.5}
+$$
+
+令 $z_{\max}=\sup_{\mathbb R}z$；不要求此上确界取到。非负函数 $z_{\max}-z$ 的二阶导数至多为 $\eta$，所以
+
+$$
+z'^2\le2\eta(z_{\max}-z)\le2\eta\Delta.
+\tag{266.6}
+$$
+
+对（266.5）在 $[-h,h]$ 上积分，
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt{2\eta\Delta}.
+\tag{266.7}
+$$
+
+端点弦长至多为 $2b$。第262节的三角核恒等式及其平方积分 $h/6$ 因而给出
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+
+\sqrt{\frac{\eta h^2}{3}
++\frac{h\sqrt{2\eta\Delta}}{3}}.
+\tag{266.8}
+$$
+
+置
+
+$$
+S=\Delta+\sqrt\eta,\qquad h=(\eta S)^{-1/6}.
+\tag{266.9}
+$$
+
+由于 $S\ge\sqrt\eta$ 且 $S\ge\Delta$，
+
+$$
+\eta h^2\le(\eta S)^{1/3},
+\qquad
+h\sqrt{2\eta\Delta}\le\sqrt2\,(\eta S)^{1/3}.
+\tag{266.10}
+$$
+
+代入可得
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac{1+\sqrt2}{3}}\right)^2(\eta S)^{1/3}
+<6\bigl((\eta\Delta)^{1/3}+\sqrt\eta\bigr).
+\tag{266.11}
+$$
+
+这里的上界对全部 $0<\eta\le1$ 有效，只使用有限窗口积分。
+
+当 $\Delta=0$ 时，$z$ 恒定。令 $\boldsymbol w=(u_x,u_y)$，则 $|\boldsymbol w|=R=\sqrt{b^2-z^2}$ 也恒定。若 $R=0$，曲线恒定；否则（266.5）给出 $|\boldsymbol w''|\le\sqrt\eta$，故
+
+$$
+|\boldsymbol w'|^2=-\boldsymbol w\cdot\boldsymbol w''
+\le R\sqrt\eta\le b\sqrt\eta.
+\tag{266.12}
+$$
+
+于是 $I_Q\le4b\sqrt\eta=\sqrt\eta$。第265节的赤道匀速旋转
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad \omega^2=\sqrt\eta/b
+\tag{266.13}
+$$
+
+具有整函数矩阵元、零布居摆幅，且信息精确等于 $\sqrt\eta$。这同时证明（266.4），并为任意允许 $\Delta$ 给出同一个下界。
+
+下面在较大摆幅区间建立第二项的统一下界。保留第264节的固定光滑函数 $F,G,B$ 及常数 $k,J_G,m_B,K_0,A_1,A_2$，并记 $D_0=kJ_G$。选取固定 $\gamma>0$，使
+
+$$
+\frac{4\gamma^2}{m_B}\le\frac14.
+\tag{266.14}
+$$
+
+再固定 $K\ge1$，使
+
+$$
+5D_0^{1/3}\gamma^{2/3}K^{-2/3}\le\frac14.
+\tag{266.15}
+$$
+
+对 $\Delta>0$，令
+
+$$
+r=\gamma\sqrt\Delta,\qquad
+v=\gamma\sqrt{\eta\Delta},\qquad
+T=(D_0/v)^{1/3},\qquad
+L=\frac{4v}{\eta m_B}.
+\tag{266.16}
+$$
+
+使用同一个相位及正、负加速度构造：
+
+$$
+\phi(t)=F(t/T),
+\qquad
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{266.17}
+$$
+
+两个脉冲的积分依次为 $v$、$-v$，所以 $z$ 从零单调增加到一个常值，并且
+
+$$
+0\le z(t)\le5Tv+vL
+=5D_0^{1/3}\gamma^{2/3}(\eta\Delta)^{1/3}
++\frac{4\gamma^2}{m_B}\Delta.
+\tag{266.18}
+$$
+
+若 $\Delta\ge K\sqrt\eta$，则（266.14）—（266.15）给出
+
+$$
+0\le z(t)\le\Delta/2\le b/4.
+\tag{266.19}
+$$
+
+因此摆幅约束保留了固定比例的余量。
+
+取 $w=\sqrt{b^2-z^2}e^{-i\phi}$，再按（264.15）组成密度矩阵 $\rho^{(0)}$，其两个特征值精确为 $3/4,1/4$。现在须使第264节的矩阵余量估计对这两个参数统一成立，而不是逐个固定 $\Delta$ 后才选择阈值。首先
+
+$$
+r\le r_{\max}:=\gamma\sqrt{b/2},
+\qquad
+T\ge\left(\frac{D_0}{\gamma\sqrt{\eta b/2}}\right)^{1/3}.
+\tag{266.20}
+$$
+
+因此 $T\to\infty$ 对全部 $0<\Delta\le b/2$ 统一成立。相位支撑内的（264.18）只含固定的 $D_0$ 与轮廓常数；相位支撑外的（264.20）可统一用 $r_{\max}$ 代替 $r$。特别地，可一次选择 $\eta_0>0$，使所有这些参数对均有 $g\le1/4$，相位支撑内满足 $|w''|\le2K_0/T^2$，支撑外满足
+
+$$
+|w''|^2\le(\eta+g)/4.
+\tag{266.21}
+$$
+
+具体地，支撑外 $g\ge0$ 时使用
+$|w''|^2\le2A_2^2r_{\max}^4\eta^2+2A_1^2g^2$，而 $\sup g=k/T^4$ 一致趋零；$g<0$ 时使用
+$|w''|^2\le(A_2r_{\max}^2+A_1/4)^2\eta^2$ 及 $\eta+g\ge3\eta/4$。这些条件均由同一个充分小的 $\eta_0$ 保证。（266.19）已独立确保所用幅度导数界的适用范围。于是第264节的行列式和迹计算逐式给出
+
+$$
+C_\eta-(\rho^{(0)})''(t)\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{266.22}
+$$
+
+中心相位导数为 $1/T$。同处的 SLD 计算给出
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac{\gamma}{D_0}\right)^{2/3}
+(\eta\Delta)^{1/3}.
+\tag{266.23}
+$$
+
+为得到整函数矩阵元，仍先以高斯核平滑实角函数 $\chi=\arcsin(z/b)$ 和 $\phi$，再以三角函数重建密度。对于每一个固定参数对 $(\eta,\Delta)$，全实轴 $C^2$ 逼近及（266.22）使我们可选取充分小的平滑宽度，同时保留原矩阵上界与至少一半的中心信息。特征值由重建恒等式精确保留。
+
+摆幅约束也在这一步精确保留：由（266.19），
+
+$$
+0\le\chi(t)\le\arcsin\!\left(\frac{\Delta}{2b}\right).
+\tag{266.24}
+$$
+
+高斯正平均保持这个区间，且正弦函数在该区间单调，故重建后的 $z_\epsilon=b\sin\chi_\epsilon$ 仍包含于 $[0,\Delta/2]$。因此，在 $\Delta\ge K\sqrt\eta$ 时，
+
+$$
+F_{\rm ent}(\eta,\Delta)\ge
+\kappa(\eta\Delta)^{1/3},
+\qquad
+\kappa=\frac{3b^2}{2}
+\left(\frac{\gamma}{D_0}\right)^{2/3}>0.
+\tag{266.25}
+$$
+
+所有轮廓、$\gamma,K,\kappa,\eta_0$ 均独立于参数对；只有最后的平滑宽度允许依赖它。
+
+当 $\Delta<K\sqrt\eta$ 时，
+$\sqrt\eta+(\eta\Delta)^{1/3}\le(1+K^{1/3})\sqrt\eta$，赤道曲线已给出所需下界。在互补区间，取赤道下界与（266.25）的较大者，至少是目标和式的 $\min\{1,\kappa\}/2$ 倍。因此可取
+
+$$
+c=\min\left\{
+\frac1{1+K^{1/3}},
+\frac{\min\{1,\kappa\}}2
+\right\}>0.
+\tag{266.26}
+$$
+
+这完成统一下界及定理的证明。证毕。
+
+**推论 266.3（趋近平面与保持阶优势的尺度）。** 对固定 $\beta>0$，令 $\Delta=\eta^\beta$；当 $\eta$ 充分小时，它属于允许范围。则
+
+$$
+F_{\rm ent}(\eta,\eta^\beta)
+\asymp F(\eta,\eta^\beta)
+\asymp
+\eta^{\min\{1/2,(1+\beta)/3\}}.
+\tag{266.27}
+$$
+
+特别地，当 $0<\beta<1/2$，与第265节全部固定实基底类的比较满足
+
+$$
+\frac{F_{\rm ent}(\eta,\eta^\beta)}
+{F_\eta^{\rm real,ent}}
+=\Theta\!\left(\eta^{(2\beta-1)/6}\right)
+\longrightarrow\infty.
+\tag{266.28}
+$$
+
+证明。 直接比较（266.3）中的两个幂次，并使用（265.3）的分母上下界。证毕。
+
+更具体地，在 $0<\beta<1/2$ 时，构造（266.17）及其解析化的整条 $\boldsymbol u$ 轨迹都距赤道平面至多 $\eta^\beta/2$，但其信息下界相对于任意固定平面轨迹的统一上界仍有发散的比例。因此，几何上任意接近平面，并不在这个退化参数族中保证信息阶接近固定平面的极值；矩阵上界本身也随 $\eta$ 退化，比较对象的信息同时趋零。摆幅进入 $\Delta\lesssim\sqrt\eta$ 区间以后，两项才共同回到二分之一次幂阶。
+
+曲线上的导数插值已有黎曼流形版本。Igor Parasyuk，*Landau–Kolmogorov type inequalities for curves on Riemannian manifolds*，Mathematical Inequalities & Applications 22（2019），433—443页，[原文](https://files.ele-math.com/articles/mia-22-31.pdf)，定理1—2，在正 Hessian 或球面小球条件下以协变加速度控制速度。这些是相关的既有背景；本节控制的是密度矩阵在线性空间中的二阶导数，其法向分量也参与 Loewner 约束，不能直接换成球面的协变加速度。式（266.3）的二参数估计由（266.5）—（266.26）证明，没有把流形上的插值思想本身作为新增结果。
+
+本节的摆幅沿给定矩阵上界的特征方向测量，没有给出相对于任意平面的统一厚度定理。全部特征值始终固定；摆幅控制的是对角布居及方向变化，不是谱的变化。SLD、标量正性和有限窗口插值沿用前节的既有背景，二参数常数与全域构造由上述估计给出。这里未求出正摆幅下的精确最优系数，也未施加哈密顿量、物理能量、带宽或原处理器约束。
+
+## 追加锚（本行以下为增补区）
