@@ -18,6 +18,15 @@ internal sealed class CompatibleResponseForgettingDocument : IScribeDocumentDefi
                     Paragraph(Text("For two states with the same numbered path responses at depth d plus one, lifting the same incoming base edge places their predecessor states in one depth-d response class. Appending that edge to each depth-d path identifies the resulting lifted paths with the original depth-(d+1) observations."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("incoming-response-fiber-card"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.incoming_response_fiber_card"),
+                H("Response classes preserve incoming counts"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Within one response class, choosing either representative gives the same number of actual incoming base edges whose lifted predecessor lies in any fixed response class. The edge identity is unchanged by the comparison, and response coherence identifies the two lifted quotient classes."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("compatible-square-left-forgetting"),
                 DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.square_lifts_left_forgetting"),
                 H("Compatible squares forget the left boundary"),

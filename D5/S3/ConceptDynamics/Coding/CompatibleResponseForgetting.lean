@@ -276,6 +276,8 @@ theorem incoming_response_fiber_card {p : ℕ} {M : CountMat p p} {Q : Type}
         right_inv := by intro x; apply Subtype.ext; rfl }
       exact Nat.card_congr e
 
+#print axioms incoming_response_fiber_card
+
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
