@@ -1,4 +1,5 @@
 import LeanInformationAudit.Syntax
+import InformationSourceFixture
 
 namespace LeanInformationAudit.Tests.DeclaredArguments
 open Lean Meta Elab Command
@@ -61,6 +62,36 @@ run_meta do
   check "independent_data_argument_accepted" identityInfo.value none
   check "infinite_carrier_type_accepted" (mkConst ``Int) none
   check "independent_infinite_readout_accepted" (mkConst ``Int.natAbs) none
+  check "imported_name_alias_type_rejected" (mkConst ``InformationSourceFixture.NameAlias)
+    (some "forbidden_dependency:E6.closed_identity")
+  check "imported_name_alias_readout_rejected" (mkConst ``InformationSourceFixture.nameReadout)
+    (some "forbidden_dependency:E6.closed_identity")
+  check "imported_finite_alias_type_accepted" (mkConst ``InformationSourceFixture.BoolAlias) none
+  check "imported_finite_alias_readout_rejected" (mkConst ``InformationSourceFixture.finiteReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.finiteReadout")
+  check "imported_finite_composite_readout_rejected"
+    (mkConst ``InformationSourceFixture.finiteCompositeReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.finiteCompositeReadout")
+  check "imported_erased_carrier_readout_rejected" (mkConst ``InformationSourceFixture.erasedReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.erasedReadout")
+  check "imported_alias_raw_argument_rejected"
+    (mkApp (mkConst ``InformationSourceFixture.ErasedAlias) (mkConst ``Lean.Name))
+    (some "forbidden_dependency:E6.closed_identity")
+  check "imported_infinite_alias_type_accepted" (mkConst ``InformationSourceFixture.IntAlias) none
+  check "imported_infinite_alias_readout_accepted" (mkConst ``InformationSourceFixture.aliasReadout) none
+  check "independent_composite_readout_accepted" (mkConst ``InformationSourceFixture.compositeReadout) none
+  check "independent_aliased_composite_readout_accepted"
+    (mkConst ``InformationSourceFixture.aliasedCompositeReadout) none
+  let metadataSource <- getConstInfo `InformationSourceFixture.metadataReadout
+  unless metadataSource.type matches .mdata _ (.forallE ..) do
+    throwError "setup: metadata must wrap the whole source function type"
+  check "independent_metadata_function_readout_accepted"
+    (mkConst `InformationSourceFixture.metadataReadout) none
+  check "independent_dictionary_alias_readout_rejected"
+    (mkConst ``InformationSourceFixture.dictionaryReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.dictionaryReadout")
+  check "independent_output_only_readout_rejected" (mkConst ``InformationSourceFixture.outputOnlyReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.outputOnlyReadout")
   check "local_unapplied_readout_rejected" (mkConst ``localChoiceReadout)
     (some "unclassified_form:E5.unsaturated_definition:LeanInformationAudit.Tests.DeclaredArguments.localChoiceReadout")
   let sourceInfo ← getConstInfo ``Int.natAbs
@@ -68,7 +99,25 @@ run_meta do
   unless sourceTypeWork < 524288 do throwError "independent source type exhausted work budget"
   let infiniteOutput ← mkArrow (mkConst ``Int) (mkConst ``Int)
   let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
-  check "infinite_function_equality_dictionary_accepted" equalityDictionary none
+  check "classical_equality_dictionary_data_rejected" equalityDictionary
+    (some "unclassified_form:E2.dictionary_position:Classical.decEq")
+  let boolDictionary <- mkAppM ``Classical.decEq #[mkConst ``Bool]
+  check "classical_equality_application_data_rejected"
+    (mkApp2 boolDictionary (mkConst ``Bool.true) (mkConst ``Bool.false))
+    (some "unclassified_form:E2.dictionary_position:Classical.decEq")
+  check "constructive_equality_dictionary_data_accepted" (mkConst ``instDecidableEqBool) none
+  let signature := mkApp3 (mkConst ``RegistrationTemplates.cutSignature)
+    (mkConst ``Int) infiniteOutput equalityDictionary
+  let resultType <- mkAppM ``PrimitiveRealization #[signature]
+  let saved <- getEnv
+  try
+    let (dependencies, _) <- TemplateAudit.checkExtractionType ``target resultType 524288
+    unless dependencies.any (fun dependency => dependency.name == ``Classical.decEq) do
+      throwError "setup: classical dictionary dependency was not retained"
+    logInfo "[PASS] infinite_function_equality_dictionary_type_accepted"
+  catch error =>
+    logError m!"[FAIL] infinite_function_equality_dictionary_type_accepted result={error.toMessageData}"
+  setEnv saved
   check "independent_proof_and_dictionary_accepted" (mkConst ``independent) none
   check "object_projection_accepted"
     (.proj ``Prod 0 (mkConst ``independentPair)) none
