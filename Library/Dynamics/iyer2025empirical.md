@@ -5245,3 +5245,38 @@ Cong Ling、Laura Luzzi、Jean-Claude Belfiore、Damien Stehlé，*Semantically 
 固定总数选择与实际重分配所用的局部 Poisson–binomial／Turán 估计沿用第 122 章已核对的 Boistard–Lopuhaä–Ruiz-Gazen `1207.5654v1`，只使用有界偏移下的 $O(d^{-2})$ 相对精度。Yu `1005.4107v2` 的包含关系、Newton／Turán 归属及 Borcea–Brändén–Liggett `0707.2340v2` 的负相依边界仍保持原范围，不推出原 path 行独立。带中心惊异的有符号质量界与共同通道收缩复用第 111 章；Gaussian 核心全输出极限复用第 101 章纯参考部分，不延用其受旧噪声范围限制的实际量化耦合。
 
 新增的联合推导给每个固定 $\gamma<3/2$ 的充分范围。$3/2$ 来自条件二项最大原子与谐波并集的费用；这里不把它称为原模型的必要阈值，也不主张端点、零噪声、任意实输出上的点态一致收敛、原始数据全平均或全球原创性。
+
+## 追加：精确噪声修正后的二阶选择响应与条件电荷四阶矩
+
+对应理论卷第 125 章。在原始固定总数选择律、同一经验中心与标量、完整计数乘法重数以及严格半指数噪声范围内，保留第 123 章精确定义的 $\mathcal N_\alpha(y)$，得到
+
+$$
+R_\alpha(y)=\varepsilon\sqrt\delta\,y+\varepsilon\mathcal N_\alpha(y)
+ -2\alpha\varepsilon^2V\sqrt\delta\,y
+ +o_{C^3_\alpha,\mathbb P}(\varepsilon^2\sqrt\delta).
+$$
+
+这里 $\varepsilon=B^2/(2d_c)$ 与 $V$ 均为有限精确经验量。归一化信息谱扣除精确噪声响应后，二阶项为 $2\alpha(\alpha-1)\varepsilon^2V\sqrt\delta\,y$。相应 Shannon 熵与信息方差的输出增量系数分别为 $-2$ 和 $4$，该尺度的第三惊异累积量系数为零。上述比较仅针对两种律的输出增量差，保留原 pair/path 概率及固定支持上一致的量词，不推出无条件熵或完整后验相同。
+
+Bradley Efron，*Tweedie's Formula and Selection Bias*，[作者原稿](https://efron.ckirby.su.domains/papers/2011TweediesFormula.pdf)，完整 PDF SHA256 为 `af27a444711d8d8c775ff8e6e3a19f7af32efe003fdb6ea9014af9782f2754c9`。第 2 节 (2.1)–(2.8) 的指数族推导给出，若潜变量 $E$ 与 $N\sim N(0,\eta)$ 独立，卷积密度为 $g$，则
+
+$$
+\mathbb E[E\mid E+N=h]=h+\eta(\log g)'(h),\qquad
+\operatorname{Var}(E\mid E+N=h)=\eta+\eta^2(\log g)''(h).
+$$
+
+本章令潜变量为高计数 Gaussian 总能量，保留正的有限噪声方差与同一完整鞍点。该能量有所有固定阶矩，Gaussian 卷积为正，微分可由核函数支配。原文后续的对数凹性比较不是这两个恒等式的前提；第 123 章所述原稿 (1.3) 展示式的方差约定边界保持不变。
+
+Hila Manor、Tomer Michaeli，*On the Posterior Distribution in Denoising: Application to Uncertainty Quantification*，[arXiv:2309.13598v2](https://arxiv.org/abs/2309.13598v2)，2024-02-19，原稿标注 ICLR 2024，31 页；[PDF](https://arxiv.org/pdf/2309.13598v2) SHA256 为 `4a1dd5dafb17f95e4970c401258725d0b53775824de48329158955ec25db26f0`。适用内容为 §3.1 定理 1 与附录 A 的 (S1)–(S13)。对具有密度的标量潜变量、独立加性 Gaussian 噪声及合法的 Bayes 积分微分，后验中心矩满足
+
+$$
+\mu_2=\sigma^2\mu_1',\qquad
+\mu_3=\sigma^2\mu_2',\qquad
+\mu_{k+1}=\sigma^2\mu_k'+k\mu_{k-1}\mu_2\quad(k\ge3).
+$$
+
+其方差关系提供上述条件能量方差公式的另一经典推导。它不是电荷平方在能量观测下的条件方差定理，也不把潜变量的高阶中心矩变成信息惊异累积量。第 125 章另证非中心 Fourier 插入中的二阶与四阶修正、四次幂坐标和的 $O(\delta)$ 界，以及原始乘积计数桥，得到同一输出下 $\operatorname{Var}(\mathcal D^2)$ 的变化为 $4V\sqrt\delta\,y+o_{C^3}(\sqrt\delta)$。
+
+Cheng–Qian–Zhu `1912.11137v4` 的条件系综定理保留第 123 章已列的区间概率、空间导数、相对独立性及离散—连续近似条件。其加性 KL／概率误差不直接提供本章稀有点输出处的三阶阶数导数与 $\varepsilon^2\sqrt\delta$ 精度。完整选择比继续复用 Siripraparat–Neammanee，*ScienceAsia* 47 (2021)，111–116，定理 2 的独立异质 Bernoulli 局部估计及第 121 章的逐点高次幂转移。
+
+Gaussian 四阶矩、单秩积分、条件倾斜、Fourier 插入与 Taylor 积分余项均属成熟工具。新增联合推导保留实际非中心性、计数格点及稀有输出分母，并把它们的误差支付到二阶选择尺度。允许 $\sigma\to0$ 任意缓慢；只有额外假设 $\sigma^2=o(\varepsilon)$ 的推论才删去噪声修正。不主张零噪声、半指数等号边界、非紧输出、更大阶数或全球原创性。
