@@ -55239,3 +55239,362 @@ $m_2=c+2cg(h)\gamma+O(\gamma^2)$
 对两项原复独立最优上限，峰值要求独自决定最小补偿；达到它后，同一实族的累计代价还严格低于对应上限。此结论来自放宽后的可行关系集合，不把不同预算下的结果说成原可行集合里的共同最优。完全实条件始终相对于固定共轭，未等同于经典性，也未将 Fisher 积分解释为物理能耗。式（254.14）仍是先取固定比值任务极限的参数展开，不提供同时极限的统一误差。
 
 ## 追加锚（本行以下为增补区）
+## 255. 精确任务纤维内的代价注入与完整联合可达区域
+
+**定义 255.1（原尾窗上的联合极限）。** 固定 $\gamma\in(0,\infty)$，沿用第249节的实际任务、处理器、共轭及两个分别成立的全域预算，令
+
+$$
+\delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,
+\qquad 0<e_s=o(s),\qquad
+\frac{\eta_s^2}{4dse_s}\longrightarrow\gamma.
+\tag{255.1}
+$$
+
+令 $c=\pi^2/4$，并沿用
+
+$$
+A(z)=c+(h-z)^2,\quad
+g(z)=1+\frac{z^2-\sqrt{z^4+4}}2,\quad
+D_\gamma(z)=1-\gamma g(z),\quad
+\mathcal Z_\gamma=\{z\in[0,h]:D_\gamma(z)>0\}.
+\tag{255.2}
+$$
+
+两项代价仍在原尾窗 $T_s(\delta_s)$ 上计算：
+
+$$
+P_s=e_s^2\sup_{T_s(\delta_s)}I_Q,\qquad
+Q_s=\frac{e_s}{2ds}\int_{T_s(\delta_s)}I_Q\,du.
+\tag{255.3}
+$$
+
+对满足第244.9式任一低内部代价条件的允许准备族，考察 $(P_s,Q_s)$ 的有限共同极限及有限共同聚点。这里同一个 $s$ 的两项读数必须来自同一个准备；不将不同族的两个分别最优值拼成一个实现。
+
+**定理 255.2（完整的有限联合代价区域）。** 对每条满足（255.1）的实际预算路径，有限共同极限的全体恰为
+
+$$
+\boxed{
+\mathcal C_\gamma=
+\left\{(P,Q):\ 0\le Q\le P<\infty,\quad
+\exists z\in\mathcal Z_\gamma:\quad
+P\ge\frac{A(z)}{D_\gamma(z)^2},\quad
+Q\ge\frac{A(z)}{D_\gamma(z)}\right\}.
+}
+\tag{255.4}
+$$
+
+有限共同聚点的全体也是这个集合。必要性允许任意点态秩；每个点的充分性都可由全域实解析、每点秩至多二的同一准备族实现，保持全输入精确性、实际联合支持四、完整尖锐集合、普通最优双侧曲率、任意指定的有限阶实规范节点数据及两项一致有界的内部代价。不要求族关于 $s$ 连续，不声称每个固定任务存在极小元。
+
+证明。 先记
+
+$$
+\Delta_s=h_3(s)-p_{\delta_s},\qquad
+\kappa_s=\frac{\Delta_s}{dse_s}\longrightarrow1,
+\qquad
+t=\frac{p-p_{\delta_s}}{\Delta_s}\in[0,1].
+\tag{255.5}
+$$
+
+因 $u=2p-1$，原尾窗长度为 $2\Delta_s$。置 $i_s(t)=e_s^2I_Q(u(t))$，则精确地有
+
+$$
+P_s=\sup_{[0,1]}i_s,\qquad
+Q_s=\kappa_s\int_0^1i_s(t)\,dt,\qquad
+Q_s\le\kappa_s P_s.
+\tag{255.6}
+$$
+
+故任何有限共同聚点满足 $Q\le P$。沿得到该聚点的子列，第249.19—249.21式的共同过零方向论证给出某个 $z\in\mathcal Z_\gamma$，使（255.4）中的两个下界同时成立。代价有界保证剩余尾窗比例有正下界，因而所取方向确实可行。这证明必要性。
+
+充分性需要在精确任务纤维内增加实际信息，而不只增加净化因子的导数。下面分步给出这个构造。
+
+**第一步：带严格预算余量的实际背景。** 固定（255.4）的一个见证 $z$，记
+
+$$
+D=D_\gamma(z),\qquad p_0=A(z)/D^2,\qquad q_0=A(z)/D.
+\tag{255.7}
+$$
+
+取第249节解析化之前的光滑因子背景 $\mathsf A_s^0$，令 $\rho_s^0=\mathsf A_s^0(\mathsf A_s^0)^\dagger$，以及
+
+$$
+i_s^0=e_s^2I_Q(\rho_s^0),\qquad
+\bar i_s^0=4e_s^2\|(\mathsf A_s^0)'_u\|_F^2.
+\tag{255.8}
+$$
+
+它保持全部精确矩和两项严格资源余量，并满足
+
+$$
+i_s^0\le\bar i_s^0,\qquad
+\sup\bar i_s^0\le p_0+o(1),\qquad
+\sup i_s^0\to p_0,\qquad
+\kappa_s\int_0^1i_s^0\,dt\to q_0.
+\tag{255.9}
+$$
+
+这些也是光滑背景本身的实际 SLD 结论。实主段的精确信息由第246.14式给出：
+
+$$
+I_Q=\frac1{4p(1-p)}+p(1-p)\theta_p^2+p\|\phi_p\|^2.
+\tag{255.10}
+$$
+
+它与第249.33式因子上界只差 $(1-p)^2\theta_p^2$，其归一化峰值为 $O(s^2)$。近似常速主运动给出（255.9）的两个极限；等待和清理段的归一化贡献趋零。这里不使用 SLD 在秩变化处连续的断言。
+
+可以选紧集 $E_s\subset(0,1)$，每个是有限个闭区间之并，使
+
+$$
+|[0,1]\setminus E_s|\longrightarrow0.
+\tag{255.11}
+$$
+
+其上背景秩恰为二，并具有下面的二维精确矩图。所排除的是趋零比例的清理段、纯态平坦端部及任意窄的连接领圈；若等待段占据正的极限比例，它必须保留在 $E_s$ 中。
+
+**第二步：等待段与实主段都具有两个物理纤维方向。** 在第249.22—249.24式的复等待图中，让 $a$ 与 $y=\phi_y$ 自由，固定当前 $p,\kappa,\ell$；其余两个 $\phi$ 分量、$w,m$ 由原精确方程求解。为避免与代价 $Q_s$ 混淆，此处记矩阵 $\mathcal Q_s=(B_s+B_s^{\mathsf T})/2$。所解方程为
+
+$$
+\begin{aligned}
+\mu&=p-w,\qquad H=1-p-(a^2+\kappa^2)/\mu,\\
+Y&=(e_y-y\phi)/\sqrt{1-y^2},\\
+m&=-\frac{\kappa k_s^{\mathsf T}\phi+
+\ell\phi^{\mathsf T}(B_s^{\mathsf T}-B_s)Y}{k_s^{\mathsf T}Y},\\
+w&=\frac{\ell^2}{\mu}
++\frac{(\kappa\ell/\mu)^2+(m-a\ell/\mu)^2}{H},\\
+\mu\phi^{\mathsf T}\mathcal Q_s\phi
++wY^{\mathsf T}\mathcal Q_sY+a k_s^{\mathsf T}\phi&=a_s,
+\qquad \|\phi\|^2=1.
+\end{aligned}
+\tag{255.12}
+$$
+
+置 $v=\sqrt{se_s}$。在有界等待控制的邻域内，原缩放隐函数论证给出
+
+$$
+a,\kappa,\ell=O(v),\quad y=O(s),\quad
+m=O(sv),\quad w=O(v^2),\quad H\asymp s^2,
+\quad \phi=v_*+O(s),
+\tag{255.13}
+$$
+
+其中 $v_*$ 为实际带符号的第三极限方向，$(v_*)_y=0$，另两分量非零；$\mu\to1$，$k_s^{\mathsf T}Y\to\sigma>0$。
+
+需要核实控制的导数，不能只对（255.13）的零阶近似求导。令 $\mathscr S$ 为（255.12）中 $w$ 方程的残差，先消去 $m$，将 $\phi$ 暂视作独立变量。直接求导得到
+
+$$
+\mathscr S_w=1+o(1),\qquad
+\mathscr S_{\phi_j}=O(v^2/s)=O(e_s),\qquad
+\mathscr S_a=O(e_s+v^3/s^2)=O(v).
+\tag{255.14}
+$$
+
+例如 $m_{\phi_j}=O(v)$、$m-a\ell/\mu=O(sv)$，两者乘积除以 $H\asymp s^2$ 给出 $O(e_s)$。范数—实矩对两个剩余 $\phi$ 分量的 Jacobian 趋于行向量为
+$(2(v_*)_2,2(v_*)_3)$ 与 $(2(v_*)_2,-2(v_*)_3)$ 的可逆矩阵；其 $a,y$ 迫动项均为 $O(s)$，$w$ 系数有界。结合（255.14）隐式求导得到足够的界
+
+$$
+\partial_a\phi=O(s),\qquad
+\partial_y\phi=e_y+O(s),\qquad
+\partial_aw=O(v),\qquad \partial_yw=O(e_s).
+\tag{255.15}
+$$
+
+这里仅使用 $v/s=\sqrt{e_s/s}\to0$，不添加 $e_s$ 的幂次下界。
+
+取两个固定的实际密度读数
+
+$$
+r_1(\rho)=\operatorname{Re}\langle q,\rho v_*\rangle,
+\qquad
+r_2(\rho)=\operatorname{Re}\langle e_y,\rho v_*\rangle.
+\tag{255.16}
+$$
+
+记 $S=\langle\phi,v_*\rangle$。由精确因子及 $\langle Y,v_*\rangle=-yS/\sqrt{1-y^2}$，有
+
+$$
+r_1=aS,\qquad r_2=(p-2w)yS,
+\qquad D_{(a,y)}(r_1,r_2)=I_2+o(1).
+\tag{255.17}
+$$
+
+故 $\partial_a\rho,\partial_y\rho$ 是两个独立的密度切向量，不能解释成净化规范的变化。原因子第一列有非零 $\phi$ 分量，第二列 $\phi$ 分量为零而 $q$ 分量为 $\sqrt H>0$，所以局部秩恰为二。这些性质在每个固定任务的足够小管状邻域保持，包括 $a=0$ 附近。
+
+实主段使用不同的自由坐标 $(\theta,y)$，因子为
+
+$$
+\mathsf A=\phi(\sqrt p,0)+q(\sqrt{1-p}\cos\theta,
+\sqrt{1-p}\sin\theta).
+\tag{255.18}
+$$
+
+范数和实矩仍解其余方向坐标。当 $0<p<1$、$\sin\theta\ne0$ 时，其活动块行列式为 $p(1-p)\sin^2\theta>0$。若固定 $p$ 的一个纤维变分使 $d\rho=0$，非核块先给出
+$p(d\phi\,\phi^{\mathsf T}+\phi\,d\phi^{\mathsf T})=0$，结合 $\phi^{\mathsf T}d\phi=0$ 推出 $d\phi=0$，从而 $dy=0$；核—非核块再给出 $\sin\theta\,d\theta=0$。所以这也是二维物理纤维图。其精确 SLD 线元为
+
+$$
+ds_{\rm SLD}^2=
+\frac{dp^2}{p(1-p)}+4p(1-p)d\theta^2+4p\|d\phi\|^2,
+\tag{255.19}
+$$
+
+在纤维上正定。该图不延伸到纯态角端点；在 $\theta=0$，实际 $\partial_\theta\rho$ 可以为零，不能用非纯处线元的极限替代该点的信息。
+
+**第三步：恒秩区域中的实际信息注入。** 对恒秩密度及其切向量，SLD 二次型为
+
+$$
+G_\rho(X,X)=2\sum_{\lambda_i+\lambda_j>0}
+\frac{|X_{ij}|^2}{\lambda_i+\lambda_j}.
+\tag{255.20}
+$$
+
+切向量的核—核块为零，因而这个型在非零密度切向量上正定。其局部光滑性也不要求正特征值互异：恒秩支撑投影光滑，且算子
+
+$$
+\mathscr A_\rho(Z)=\rho Z+Z\rho+N_\rho ZN_\rho,
+\qquad N_\rho=\Pi_{\ker\rho},
+\tag{255.21}
+$$
+
+可逆；$G_\rho(X,Y)=2\operatorname{Re}\operatorname{Tr}(X\mathscr A_\rho^{-1}(Y))$。对于满列秩因子，支撑投影是
+$\mathsf A(\mathsf A^\dagger\mathsf A)^{-1}\mathsf A^\dagger$。于是每个固定任务的紧秩二区域内，实际信息对曲线的 $C^1$ 扰动连续；相关常数允许随任务退化。
+
+现在固定一个任务及一个精确纤维图 $\rho=\Phi(t,x)$，$x\in\mathbb R^2$。背景为 $x_0(t)$。在归一化度量
+
+$$
+\widehat G=\left(\frac{e_s}{2\Delta_s}\right)^2G
+\tag{255.22}
+$$
+
+下，背景总速度 $\dot\rho^0$ 的平方就是 $i_s^0$。纤维有两个独立方向，所以在每个点可选单位纤维向量，正交于这个总速度。总速度包括 $p$ 随 $t$ 的被迫变化，不能只使用自由坐标的速度。
+
+把所选向量在局部坐标中延拓并沿背景归一化，则在足够小区间上得到光滑场 $V$，满足
+
+$$
+\widehat G(V,V)=1,\qquad
+|\widehat G(\dot\rho^0,V)|<\varepsilon.
+\tag{255.23}
+$$
+
+紧性允许有限分割；各段之间留总长度任意小的领圈，并让扰动在那里平坦归零。这避免了假设一个全域连续的精确正交方向：当背景速度的纤维投影趋零时，其正交线可能无限旋转。有限局部选择仍适用，整个零投影区间也无需丢弃。
+
+给定光滑平方剖面 $b=w^2\ge0$，在一个分割区间中令 $v(t)$ 为 $V$ 的纤维坐标，取满足 $0\le\chi\le1$、领圈外等于一的截断 $\chi$。选周期为一的光滑圆角三角波 $\xi$，使
+
+$$
+|\xi'|\le1,\qquad \|\xi\|_\infty\le C,
+\qquad \int_0^1|\xi'(r)|^2\,dr\ge1-\varepsilon.
+\tag{255.24}
+$$
+
+可令其导数除任意小的圆角区外等于 $\pm1$。在已经求解的精确纤维坐标内作扰动
+
+$$
+x_\alpha(t)=x_0(t)+\alpha\chi(t)w(t)v(t)
+\xi\!\left(\frac{t-t_0}{\alpha}\right).
+\tag{255.25}
+$$
+
+它的振幅趋零，主要新增速度为 $\chi wV\xi'$，其余速度误差对固定任务一致趋零。由实际度量的光滑性，
+
+$$
+i_\alpha=i_s^0+\chi^2b\,\xi'^2
++2\chi w\xi'\widehat G(\dot\rho^0,V)+o(1).
+\tag{255.26}
+$$
+
+因此峰值不超过 $\sup(i_s^0+b)+o(1)+O(\varepsilon\|w\|_\infty)$。具体地，记 $m_\xi=\int_0^1|\xi'|^2$，在每个分割区间 $J$ 有
+
+$$
+\begin{aligned}
+\left|\int_J(i_\alpha-i_s^0)\,dt-\int_Jb\,dt\right|
+\le{}&\int_J(1-\chi^2)b\,dt
++(1-m_\xi)\int_J\chi^2b\,dt\\
+&+2\varepsilon\int_J|\chi w|\,dt+o_\alpha(1).
+\end{aligned}
+$$
+
+对有限分割求和后，先把领圈损失、圆角损失和近似正交误差分别压到指定容差，最后取足够小 $\alpha$。仅减小周期不能消去固定的领圈或圆角损失。由两个资源函数的连续性，先选图内管径，使资源变化分别小于各自严格余量，再令振幅位于该管径内。所有矩始终精确。
+
+还可在指定内点精确实现所需的峰值。让该段向量在该点精确正交，选波形相位使 $\xi(0)=0,\xi'(0)=1$，并令截断在那里等于一。则该点的密度不变，新增速度恰为 $wV$，其信息恰为 $i_s^0+b$。本步骤控制的是实际 SLD；三角波的平均平方斜率趋于一，因此没有正弦波附带的二分之一损失。有限任务的硬峰值上限若要严格成立，须另留误差余量；这里要求的是极限上限。
+
+**第四步：为每个目标配出峰值与积分。** 给定（255.4）中的 $(P,Q)$ 及见证 $z$，有 $P\ge p_0$、$q_0\le Q\le P$。因为 $D\le1$，$p_0\ge q_0$。若 $P=q_0$，则 $P=Q=p_0=q_0$，原背景族即够。其余情形置
+
+$$
+\lambda=\frac{Q-q_0}{P-q_0}\in[0,1],\qquad
+H_s=\max\{P,\sup\bar i_s^0\}+\varepsilon_s\longrightarrow P,
+\quad \varepsilon_s\downarrow0.
+\tag{255.27}
+$$
+
+在 $E_s$ 上选一个光滑峰包 $0\le\psi_s\le1$，其支撑紧含于 $\operatorname{int}E_s$，于某内点 $t_s^*$ 等于一，支撑的相对长度趋零。令
+
+$$
+b_s(t)=\bigl[\lambda+(1-\lambda)\psi_s(t)^2\bigr]
+\bigl(H_s-i_s^0(t)\bigr).
+\tag{255.28}
+$$
+
+于是 $0\le b_s\le H_s-i_s^0$，且 $b_s(t_s^*)=H_s-i_s^0(t_s^*)$。因为 $H_s-i_s^0>0$，它有所需光滑平方表示：$\lambda>0$ 时直接取正平方根；$\lambda=0$ 时取 $w_s=\psi_s\sqrt{H_s-i_s^0}$。
+
+在 $E_s$ 的各个紧区间使用第三步，并将分割领圈的总长度选到趋零，保留 $t_s^*$。在 $E_s$ 外不作扰动。背景与剖面的一致峰值界、指定点的信息值给出
+
+$$
+\sup\widetilde i_s\longrightarrow P.
+\tag{255.29}
+$$
+
+由（255.9）、（255.11）和背景因子上界，
+
+$$
+\kappa_s\int_{E_s}i_s^0\,dt\to q_0,\qquad
+\kappa_s\int_{E_s}b_s\,dt\to\lambda(P-q_0).
+\tag{255.30}
+$$
+
+峰包支撑与各领圈的积分贡献趋零，故最终光滑准备满足
+
+$$
+\kappa_s\int_0^1\widetilde i_s\,dt
+\longrightarrow q_0+\lambda(P-q_0)=Q.
+\tag{255.31}
+$$
+
+这同时覆盖两个端面。若 $Q=q_0<P$，只需在趋零宽度内制造峰值；若 $Q=P$，取 $\lambda=1$，在占比趋于一的区域填满信息余量，包括占正比例的等待段。这里没有把等待段误作免费而不可改变的固定间隔。
+
+**第五步：保持实际代价的全域解析化。** 改后的光滑因子在 $K_s$、规范节点、紧化端点和图连接处邻域等于原背景，保有严格全域资源余量。其秩二部分的两个实矩微分由第249.35—249.38式的实际单重谱论证保证独立；纯段与紧化端点保留原有正则性。因而在
+
+$$
+\mathsf A_q=x\xi,\qquad
+\mathsf A_{q^\perp}=\sqrt p\,W,\qquad
+\|\xi\|=\|W\|_F=1
+\tag{255.32}
+$$
+
+的归一化坐标中，仍能逐任务分别对因子的实、虚分量作实多项式逼近，再作有限 Hermite 匹配、两个球面归一化及解析二矩修正；因子本身仍允许为复数。
+
+解析化的代价控制须分开两处。在紧集 $E_s$ 上，改后因子的最小奇异值有逐任务正下界。选足够细的 $C^1$ 逼近，使最终秩仍为二，并由（255.20）—（255.21）保证
+
+$$
+\sup_{E_s}\left|e_s^2I_Q^{\rm final}-\widetilde i_s\right|
+\le\varepsilon_s.
+\tag{255.33}
+$$
+
+这同时保住新增积分和指定点的峰值下界。在 $E_s$ 外，光滑因子仍是原背景；再把完整节点区间上的因子导数误差控制在 $1/2$ 内，便有
+
+$$
+\sqrt{e_s^2I_Q^{\rm final}}
+\le\sqrt{\bar i_s^0}+e_s
+\le\sqrt{H_s}+e_s.
+\tag{255.34}
+$$
+
+故排除区域不会产生过大的峰值，其归一化积分由（255.11）趋零。由（255.29）—（255.34），最终解析准备实际满足 $P_s\to P$、$Q_s\to Q$。
+
+逼近的零阶容差同时保持两项分别成立的预算。因子结构保持正性、迹、读出及秩上界，二矩修正保持完整复矩和全输入精确性。节点处至少四阶、并覆盖所有指定更高阶的 Hermite 匹配，结合规范纯段的常辅助方向、因子上界及普适下曲率界，保留普通最优双侧曲率。两个原节点和谱必要性保持完整尖锐集合与实际联合支持恰为四。在 $K_s$ 上，背景始终是第一规范支，同一因子导数误差界保持两项一致有界的内部代价。
+
+所有振幅、频率、图管径和解析逼近精度都在固定任务之后选择；不要求统一解析半径、频率上限或关于 $s$ 的正则性。充分性成立。每个点既然已作为完整极限实现，而任何有限聚点又满足必要条件，聚点区域亦为（255.4）。证毕。
+
+**注记 255.3（边界读数固定，内部速度仍有自由）。** 第250节确定最优代价边界，本节进一步确定整个有限可达区域。任务矩和资源预算约束每个输入位置允许出现什么密度；纤维内的小振幅快速往返还可以改变这些密度如何随输入移动。其幅度可以任意小，信息代价却可保有有限的归一化增量。另一方面，尾窗的有限长度始终强制 $Q\le P$，所以不能把最优曲线之上的整个二维上闭包都当成可达区域。
+
+SLD 谱式、净化几何及恒秩限制沿用 Dittmann—Uhlmann（1999）和 Zhong 等（2013）的既有工具及第246、249节的来源范围。快速往返与松弛方法的既有背景，可参见 Ingalls、Sontag、Wang，*A Relaxation Theorem for Differential Inclusions with Applications to Stability Properties*，arXiv:math/0206251，特别是引理2.4与定理3.1；后者的无限区间结论允许初值扰动，不能直接提供本任务的固定节点、有限阶数据或信息峰值保证。本节的纤维振荡、原尾窗剖面及保持代价的解析化均由上面的实际构造证明，没有从该文移入这些额外结论。以上为纯理论文本，未声称 Lean 认证、穷尽文献后的优先权、统一频率复杂度或物理能耗解释。
+
+## 追加锚（本行以下为增补区）
