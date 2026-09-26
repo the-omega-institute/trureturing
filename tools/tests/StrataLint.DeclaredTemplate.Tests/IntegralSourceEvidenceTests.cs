@@ -60,6 +60,7 @@ public sealed class IntegralSourceEvidenceTests
         Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
         foreach (var item in cases)
         {
+            SourceFamilyEvidenceTests.AssertFrozenOriginal(root, item.Source, files[item.Source]);
             var path = "Reg/" + item.Source;
             var wire = JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())!;
             var record = Assert.Single(wire["records"]!.AsArray())!;

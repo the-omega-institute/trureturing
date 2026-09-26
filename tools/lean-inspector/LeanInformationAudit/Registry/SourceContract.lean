@@ -60,6 +60,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     trace[InformationRegistration.check] "source phase=resolve work={limit - (← get)}"
     let arena ← atLevels event event.key.objectArena
     let record ← atLevels event event.realizationName
+    if let some definition := scope.definition then safe definition.name
     safe event.key.theoremName
     safe event.realizationName
     safe event.key.objectArena
@@ -70,7 +71,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let actual ← mkAppM (family ++ `Registration.actual) #[record]
     let signature ← mkAppM (family ++ `Arena.signature) #[arena]
     let law ← mkAppM (family ++ `Arena.Law) #[arena, actual]
-    reconstruct info.type law
+    reconstruct scope.expanded law
     validateFields scope signature actual
     trace[InformationRegistration.check] "source phase=reconstruction_and_fields work={limit - (← get)}"
     checkWithKernel record
@@ -96,6 +97,7 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let lawFunction ← mkAppM (family ++ `Arena.Law) #[arena]
     let (_, work) ← SourceOperands.check event.key.theoremName
       #[descriptor, rawActual] (← get) (some lawFunction)
+      (scope.definition.map (·.value))
     debit work
     trace[InformationRegistration.check] "source phase=operands work={limit - (← get)}"
     unless ← isDefEq descriptor rawActual do throwError "unclassified_form:source.descriptor_actual"
@@ -115,7 +117,34 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
         ("scope_size", toJson readout.context.size),
         ("scope_paths", toJson (readout.context.map (·.path))),
         ("occurrence_identity", toJson (← fingerprint scope.levels closed))]
-    let sourceBinding := Json.mkObj [
+    let definitionInput : Option DependencyIdentity ← match scope.definition with
+      | none => pure none
+      | some definition => do
+        let rawFingerprint := fun e => do
+          let .ok (identity, work) := compactRawIdentity scope.levels e (← get)
+            | throwError "incomplete_closure:E8.source_definition_fingerprint"
+          debit work
+          pure identity
+        let typeIdentity ← rawFingerprint definition.type
+        let bodyIdentity ← rawFingerprint definition.value
+        pure (some {
+          name := definition.name
+          owner := definition.owner
+          typeIdentity := typeIdentity
+          bodyIdentity := bodyIdentity })
+    let definitionEntry ← definitionInput.toList.mapM fun entry => do
+      let reference := mkConst entry.name (scope.levels.map Level.param)
+      let .ok (referenceIdentity, work) := compactRawIdentity scope.levels reference (← get)
+        | throwError "incomplete_closure:E8.source_definition_reference_fingerprint"
+      debit work
+      pure ("definition_entry", Json.mkObj [
+        ("reference_identity", toJson referenceIdentity),
+        ("path", toJson (scope.definition.map (·.path) |>.getD #[])),
+        ("owner", toJson entry.owner.toString),
+        ("name", toJson entry.name.toString),
+        ("type_identity", toJson entry.typeIdentity),
+        ("body_identity", toJson entry.bodyIdentity)])
+    let sourceBinding := Json.mkObj ([
       ("source_owner", toJson selection.owner.toString),
       ("source_name", toJson event.key.theoremName.toString),
       ("source_type_identity", toJson sourceTypeIdentity),
@@ -123,7 +152,8 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       ("level_count", toJson scope.levels.length),
       ("coordinates", toJson selection.coordinates),
       ("coordinate_paths", toJson (scope.coordinates.map (·.path))),
-      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)]
+      ("readouts", Json.arr readouts), ("registration_identity", toJson registrationIdentity)] ++
+      definitionEntry)
     let escape : EscapeRecordEvidence := {
       bridgeKind := "source-equivalence"
       fromObject := some {
@@ -132,8 +162,10 @@ def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
         objectIdentity := actualIdentity }
       continuation := some { kind := "open" } }
     trace[InformationRegistration.check] "source phase=identities work={limit - (← get)}"
-    let extractionInputs ← #[event.key.theoremName, event.realizationName,
+    let mut extractionInputs ← #[event.key.theoremName, event.realizationName,
       event.key.objectArena].mapM inputIdentity
+    if let some entry := definitionInput then
+      extractionInputs := extractionInputs.push entry
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
       descriptorIdentity, actualIdentity, argumentInputs := #[], extractionInputs,

@@ -124,8 +124,20 @@ structure ReadoutScope where
   output : Expr
   projected : Expr
 
+structure DefinitionEntry where
+  path : Array String
+  owner : Name
+  name : Name
+  type : Expr
+  value : Expr
+
 structure Scope where
+  /-- The theorem's raw type remains the binding root even when a named claim
+  definition is entered for lexical source observations. -/
   source : Expr
+  /-- One-step replacement preserves the surrounding raw theorem structure. -/
+  expanded : Expr
+  definition : Option DefinitionEntry
   levels : List Name
   selection : SourceSelection
   telescope : Array SourceBinder
@@ -142,6 +154,51 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
   let owner := (RegistrationReifier.declaringModuleOf (← getEnv) info.name).getD
     (← getEnv).header.mainModule
   unless selection.owner == owner do throwError "unclassified_form:source.owner"
+  let definition : Option DefinitionEntry ← match selection.definition with
+    | none => pure none
+    | some selected => do
+      unless selected.owner == owner do throwError "unclassified_form:source.definition_owner"
+      let definitionInfo ← getConstInfo selected.name
+      let definitionOwner := (RegistrationReifier.declaringModuleOf (← getEnv) selected.name).getD
+        (← getEnv).header.mainModule
+      unless definitionOwner == owner do
+        throwError "unclassified_form:source.definition_owner"
+      let .defnInfo declaration := definitionInfo
+        | throwError "unclassified_form:source.definition_kind"
+      debit
+      if definitionInfo.isUnsafe ||
+          (Compiler.getImplementedBy? (← getEnv) selected.name).isSome ||
+          (getExternAttrData? (← getEnv) selected.name).isSome then
+        throwError "forbidden_dependency:source.definition_safety"
+      unless definitionInfo.type == mkSort .zero do
+        throwError "unclassified_form:source.definition_type"
+      unless definitionInfo.levelParams.length == info.levelParams.length do
+        throwError "unclassified_form:source.definition_universes"
+      let reference := mkConst selected.name (info.levelParams.map Level.param)
+      let occurrence ← if selected.path.isEmpty then pure info.type
+        else if selected.path == #["arg"] && info.type.isAppOfArity ``Not 1 then
+          pure info.type.getAppArgs[0]!
+        else throwError "unclassified_form:source.definition_path"
+      unless occurrence.equal reference do
+        throwError "unclassified_form:source.definition_reference"
+      for readout in selection.readouts do
+        unless selected.path.size < readout.path.size &&
+            readout.path.extract 0 selected.path.size == selected.path do
+          throwError "unclassified_form:source.definition_readout_path"
+      let value := declaration.value.instantiateLevelParams definitionInfo.levelParams
+        (info.levelParams.map Level.param)
+      let type := definitionInfo.type.instantiateLevelParams definitionInfo.levelParams
+        (info.levelParams.map Level.param)
+      pure (some {
+        path := selected.path
+        owner := definitionOwner
+        name := selected.name
+        type := type
+        value := value })
+  let source := match definition with
+    | none => info.type
+    | some entry => if entry.path.isEmpty then entry.value
+      else mkApp info.type.getAppFn entry.value
   let mut telescope := #[]
   let mut e := info.type
   while let .forallE n d b bi := e do
@@ -154,7 +211,7 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     throwError "unclassified_form:source.selection_size"
   if (selection.readouts.map (·.path)).toList.eraseDups.length != selection.readouts.size then
     throwError "unclassified_form:source.duplicate_occurrence"
-  let occurrences ← selection.readouts.mapM fun selected => atPath info.type selected.path
+  let occurrences ← selection.readouts.mapM fun selected => atPath source selected.path
   let coordinateContext := occurrences[0]!.1
   let mut previous : Option Nat := none
   let mut coordinates := #[]
@@ -191,7 +248,15 @@ def resolve (info : ConstantInfo) (selection : SourceSelection) : M Scope := do
     let state ← transport (context.extract 0 selected.stateBinder) slots stateBinder.domain
     let projected ← transport context (slots.push selected.stateBinder) observation
     return { context, observation, state, output, projected : ReadoutScope }
-  return { source := info.type, levels := info.levelParams, selection, telescope, coordinates, readouts }
+  return {
+    source := info.type
+    expanded := source
+    definition := definition
+    levels := info.levelParams
+    selection := selection
+    telescope := telescope
+    coordinates := coordinates
+    readouts := readouts }
 
 private partial def packedType (domains : Array SourceBinder) (i : Nat)
     (parameters : Array Expr) : M Expr := do
@@ -250,6 +315,15 @@ partial def reconstruct (source law : Expr) (depth : Nat := 0) : M Unit := do
   debit
   if depth > 256 then throwError "incomplete_closure:E8.reconstruction_depth"
   let law ← withConfig (fun c => { c with zeta := false }) <| whnf law
+  -- `whnf` exposes Not as an implication. Keep its source polarity and inspect
+  -- the full proposition underneath, including binder modes ignored by defeq.
+  if source.isAppOfArity ``Not 1 then
+    let .forallE _ domain body .default := law
+      | throwError "unclassified_form:source.statement_reconstruction"
+    unless body.equal (mkConst ``False) do
+      throwError "unclassified_form:source.statement_reconstruction"
+    reconstruct source.getAppArgs[0]! domain (depth + 1)
+    return
   match source, law with
   | .letE n d v b _, .letE _ d' v' b' _ =>
     reconstruct d d' (depth + 1)

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
 namespace StrataLint.DeclaredTemplate.Tests;
@@ -151,6 +152,53 @@ public sealed class InformationTemplateEvidenceTests
         }
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire),
             PathA, Snapshot((PathA, TextA))));
+    }
+
+    [Theory]
+    [InlineData("valid")]
+    [InlineData("missing")]
+    [InlineData("owner")]
+    [InlineData("name")]
+    [InlineData("type_identity")]
+    [InlineData("body_identity")]
+    [InlineData("unknown")]
+    [InlineData("null")]
+    [InlineData("reference_identity")]
+    [InlineData("missing-path")]
+    [InlineData("wrong-path")]
+    [InlineData("deep-path")]
+    [InlineData("sibling-readout")]
+    public void explicit_definition_entry_is_strict_and_bound_to_extraction(string mutation)
+    {
+        var wire = SourceWire();
+        var certificate = wire["records"]![0]!["certificate"]!;
+        var source = certificate["source_binding"]!;
+        var entry = JsonSerializer.SerializeToNode(new {
+            owner = "D5.S0.Carrier.Probe", name = "D5.S0.Carrier.Probe.claim",
+            type_identity = Hash("Prop"), body_identity = Hash("original definition body") });
+        source["definition_entry"] = entry!.DeepClone();
+        source["definition_entry"]!["path"] = new JsonArray();
+        source["definition_entry"]!["reference_identity"] = source["source_type_identity"]!.DeepClone();
+        certificate["extraction_inputs"] = new System.Text.Json.Nodes.JsonArray(entry!.DeepClone());
+        switch (mutation)
+        {
+            case "missing": source.AsObject().Remove("definition_entry"); break;
+            case "owner": source["definition_entry"]![mutation] = "D5.Other"; break;
+            case "name": source["definition_entry"]![mutation] = "D5.S0.Carrier.Probe.otherClaim"; break;
+            case "type_identity": case "body_identity": case "reference_identity":
+                source["definition_entry"]![mutation] = Hash("stale definition"); break;
+            case "unknown": source["definition_entry"]!["normalize"] = true; break;
+            case "null": source["definition_entry"] = null; break;
+            case "missing-path": source["definition_entry"]!.AsObject().Remove("path"); break;
+            case "wrong-path": source["definition_entry"]!["path"] = new JsonArray("body"); break;
+            case "deep-path": source["definition_entry"]!["path"] = new JsonArray("arg", "arg"); break;
+            case "sibling-readout": source["definition_entry"]!["path"] = new JsonArray("arg"); break;
+        }
+        InformationTemplateModuleEvidence Read() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA)));
+        if (mutation == "valid")
+            Assert.Equal("D5.S0.Carrier.Probe.claim", Assert.Single(Read().Records).SourceDefinitionName);
+        else Assert.Throws<FormatException>(Read);
     }
 
     [Fact]
