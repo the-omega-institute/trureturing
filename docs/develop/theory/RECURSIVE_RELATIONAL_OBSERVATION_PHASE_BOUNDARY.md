@@ -78954,3 +78954,1864 @@ $$
 本节将标准核范数表示、正性约束与投影扰动连接为一组自包含结论，不据此宣称外部文献原创性。取得完整矩阵的样本预算以及数值实现成本仍须按所用观察协议另行给出。
 
 ## 追加锚（本行以下为增补区）
+
+## 257. 固定响应纤维的精确直径与共同相干下界
+
+§256将两份完整响应合成为复矩阵 $K$，并证明合法数据恰满足 $\|K\|_1\le1$。球内数据具有多个合法填充。本节进一步求出同一数据能够容纳的最大源差异：其半迹距离直径精确等于 $\sqrt{1-\|K\|_1^2}$。
+
+上界来自一个更强的共同相干约束：两份正半定矩阵只要具有相同非对角块 $C$，它们未平方的根保真度就至少为 $2\|C\|_1$。该结论允许非交换对角块、奇异矩阵与任意有限参考维数。
+
+### 257.1 固定数据纤维与距离
+
+沿用§256的明确 $Y$ 输入基，在 $H\otimes E\simeq E\oplus E$ 上定义
+$$
+\mathfrak F(K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}
+\succeq0:
+\operatorname{Tr}P+\operatorname{Tr}Q=1
+\right\}.
+\tag{257.1}
+$$
+参考空间 $E$ 有限维且非零；$K$ 是两份完整算子响应按§256合成的矩阵。设
+$$
+k=\|K\|_1\in[0,1].
+\tag{257.2}
+$$
+由§256，$\mathfrak F(K)$ 非空。它没有额外固定参考边缘或第三条 Pauli 关联。
+
+两态的半迹距离及正半定算子的根保真度分别记为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1,
+\qquad
+\mathsf F(X,Y)=\|\sqrt X\sqrt Y\|_1.
+\tag{257.3}
+$$
+这里 $\mathsf F$ 未平方；当两参数均归一化时，其取值在 $[0,1]$，未归一化时不预设这一上界。
+
+### 257.2 根保真度的 Gram 恒等式与单调性
+
+后续证明需要两个有限维事实，这里给出所需形式。
+
+首先，对任意可以是非方阵的线性映射 $G,H$，只要其输出空间相同，就有
+$$
+\boxed{
+\mathsf F(GG^\dagger,HH^\dagger)=\|G^\dagger H\|_1.
+}
+\tag{257.4}
+$$
+为证明它，记 $X=GG^\dagger$、$Y=HH^\dagger$，用极分解写
+$$
+G=\sqrt X\,U,\qquad H=\sqrt Y\,V,
+\tag{257.5}
+$$
+其中 $U,V$ 为部分等距，$UU^\dagger=P_X$、$VV^\dagger=P_Y$ 是 $X,Y$ 的支撑投影。置 $A_0=\sqrt X\sqrt Y$，则 $P_XA_0P_Y=A_0$，并有
+$$
+G^\dagger H=U^\dagger A_0V,
+\qquad
+A_0=U(G^\dagger H)V^\dagger.
+\tag{257.6}
+$$
+$U,V$ 及其伴随均为收缩。迹范数的理想性质分别给两方向不等式，故两边迹范数相同，得到（257.4）。这个证明也覆盖秩亏与零矩阵。
+
+其次，根保真度在每个正半定参数上对 Loewner 偏序单调：
+$$
+X\succeq X_0\succeq0,\quad Y\succeq Y_0\succeq0
+\quad\Longrightarrow\quad
+\mathsf F(X,Y)\ge\mathsf F(X_0,Y_0).
+\tag{257.7}
+$$
+事实上，
+$$
+\mathsf F(X,Y)=
+\operatorname{Tr}\sqrt{\sqrt Y\,X\sqrt Y}.
+\tag{257.8}
+$$
+当 $X\succeq X_0$ 时，根号内矩阵按相同偏序排列；特征值最小最大原理使各有序特征值单调，因而其平方根之和也单调。根保真度又对两个参数对称，所以可依次降低两个参数，得到（257.7）。
+
+### 257.3 相同非对角块强制根保真度下界
+
+**引理257.1（共同非对角块的根保真度界）。** 设
+$$
+X=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}\succeq0,
+\qquad
+Y=\begin{pmatrix}R&C\\C^\dagger&S\end{pmatrix}\succeq0.
+\tag{257.9}
+$$
+不要求归一化，则
+$$
+\boxed{\mathsf F(X,Y)\ge2\|C\|_1.}
+\tag{257.10}
+$$
+
+**证明。** 先设 $P,R$ 严格正。Schur 补给
+$$
+Q\succeq C^\dagger P^{-1}C,
+\qquad
+S\succeq C^\dagger R^{-1}C.
+\tag{257.11}
+$$
+因此可取保留同一非对角块的较小正半定矩阵
+$$
+X_0=
+\begin{pmatrix}P&C\\C^\dagger&C^\dagger P^{-1}C\end{pmatrix}
+\preceq X,
+\qquad
+Y_0=
+\begin{pmatrix}R&C\\C^\dagger&C^\dagger R^{-1}C\end{pmatrix}
+\preceq Y.
+\tag{257.12}
+$$
+由（257.7），只需证明 $\mathsf F(X_0,Y_0)\ge2\|C\|_1$。
+
+令
+$$
+A=P^{1/2},\qquad B=C^\dagger P^{-1/2},
+\qquad
+D=R^{1/2},\qquad E_1=C^\dagger R^{-1/2}.
+\tag{257.13}
+$$
+则
+$$
+X_0=\begin{pmatrix}A\\B\end{pmatrix}
+\begin{pmatrix}A^\dagger&B^\dagger\end{pmatrix},
+\qquad
+Y_0=\begin{pmatrix}D\\E_1\end{pmatrix}
+\begin{pmatrix}D^\dagger&E_1^\dagger\end{pmatrix},
+\qquad
+AB^\dagger=DE_1^\dagger=C.
+\tag{257.14}
+$$
+$A,D$ 可逆。置 $T=A^{-1}D$，由共同非对角块关系得到
+$$
+D=AT,\qquad E_1=BT^{-\dagger},
+\tag{257.15}
+$$
+其中 $T^{-\dagger}=(T^{-1})^\dagger$。再令
+$$
+\alpha=A^\dagger A,\qquad \beta=B^\dagger B.
+\tag{257.16}
+$$
+Gram 恒等式（257.4）给
+$$
+\mathsf F(X_0,Y_0)
+=\|A^\dagger D+B^\dagger E_1\|_1
+=\|\alpha T+\beta T^{-\dagger}\|_1.
+\tag{257.17}
+$$
+
+对可逆 $T$ 作极分解 $T=UH$，其中 $U$ 酉、$H$ 严格正。于是 $T^{-\dagger}=UH^{-1}$。置 $\alpha'=U^\dagger\alpha U$、$\beta'=U^\dagger\beta U$。由酉不变性以及核范数不小于迹的绝对值，
+$$
+\begin{aligned}
+\|\alpha T+\beta T^{-\dagger}\|_1
+&=\|\alpha'H+\beta'H^{-1}\|_1\\
+&\ge\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1}).
+\end{aligned}
+\tag{257.18}
+$$
+右侧两项均为非负实数。Schatten Hölder 不等式进一步给
+$$
+\begin{aligned}
+\mathsf F(\alpha',\beta')
+&=\|\sqrt{\alpha'}\sqrt{\beta'}\|_1\\
+&=\|(\sqrt{\alpha'}H^{1/2})(H^{-1/2}\sqrt{\beta'})\|_1\\
+&\le
+\sqrt{\operatorname{Tr}(\alpha'H)\,
+\operatorname{Tr}(\beta'H^{-1})}.
+\end{aligned}
+\tag{257.19}
+$$
+再用标量算术—几何平均不等式，得到
+$$
+\operatorname{Tr}(\alpha'H)+\operatorname{Tr}(\beta'H^{-1})
+\ge2\mathsf F(\alpha',\beta')
+=2\mathsf F(\alpha,\beta).
+\tag{257.20}
+$$
+最后，对因子 $A^\dagger,B^\dagger$ 应用（257.4），
+$$
+\mathsf F(\alpha,\beta)=\|AB^\dagger\|_1=\|C\|_1.
+\tag{257.21}
+$$
+（257.17）—（257.21）证明严格正对角块情形。
+
+一般情形下，对任意 $\varepsilon>0$ 用 $X+\varepsilon I$、$Y+\varepsilon I$ 替代 $X,Y$。它们的两个上对角块严格正，非对角块仍为 $C$，故已证结论给
+$$
+\mathsf F(X+\varepsilon I,Y+\varepsilon I)\ge2\|C\|_1.
+\tag{257.22}
+$$
+有限维正平方根及迹范数连续。令 $\varepsilon\downarrow0$，得到（257.10）。$C$ 无需可逆，亦允许为零。$\square$
+
+### 257.4 从根保真度到纤维直径上界
+
+对归一化态，标准纯化距离关系为
+$$
+d(\Omega,\Xi)\le\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.23}
+$$
+可直接用矩阵向量化证明所需形式：取 $\sqrt\Omega$ 与 $\sqrt\Xi V$ 的向量化，$V$ 为辅助空间酉算子。这两个单位向量分别纯化 $\Omega,\Xi$，其内积为 $\operatorname{Tr}(\sqrt\Omega\sqrt\Xi V)$。由极分解可选 $V$ 使内积绝对值等于 $\mathsf F(\Omega,\Xi)$。两纯态之差支撑于至多二维空间，两个可能非零的本征值为
+$$
+\pm\sqrt{1-\mathsf F(\Omega,\Xi)^2}.
+\tag{257.24}
+$$
+因此其半迹距离恰为（257.23）右侧。对辅助空间取偏迹不会增加 Hermitian 差矩阵的迹范数，遂得到（257.23）。
+
+现在任取 $\Omega,\Xi\in\mathfrak F(K)$。它们具有共同非对角块 $C=K/2$。引理257.1给
+$$
+\mathsf F(\Omega,\Xi)\ge k.
+\tag{257.25}
+$$
+结合（257.23），
+$$
+\boxed{
+d(\Omega,\Xi)\le\sqrt{1-k^2}.
+}
+\tag{257.26}
+$$
+该上界没有假定两态的对角块彼此交换、具有共同参考边缘或具有相同秩。
+
+### 257.5 对任意矩阵数据达到上界
+
+设 $0<k<1$。记
+$$
+D_L=\sqrt{KK^\dagger},\qquad D_R=\sqrt{K^\dagger K},
+\qquad
+a=\frac{1+\sqrt{1-k^2}}k>1.
+\tag{257.27}
+$$
+则
+$$
+a+a^{-1}=\frac2k,\qquad
+a-a^{-1}=\frac{2\sqrt{1-k^2}}k.
+\tag{257.28}
+$$
+定义两份联合态
+$$
+\boxed{
+\Omega_+=\frac12
+\begin{pmatrix}aD_L&K\\K^\dagger&a^{-1}D_R\end{pmatrix},
+\qquad
+\Omega_-=\frac12
+\begin{pmatrix}a^{-1}D_L&K\\K^\dagger&aD_R\end{pmatrix}.
+}
+\tag{257.29}
+$$
+
+为验证正性，取 $K=WD_R$ 的任意酉极分解延拓。于是
+$$
+\Omega_+
+=\frac12
+\begin{pmatrix}\sqrt a\,W\\a^{-1/2}I_E\end{pmatrix}
+D_R
+\begin{pmatrix}\sqrt a\,W^\dagger&a^{-1/2}I_E\end{pmatrix}
+\succeq0;
+\tag{257.30}
+$$
+对 $\Omega_-$ 交换 $a$ 与 $a^{-1}$ 即可。这个分解允许 $K$ 奇异。两态的迹均为
+$$
+\frac12(a+a^{-1})k=1,
+\tag{257.31}
+$$
+且非对角块均为 $K/2$，故属于 $\mathfrak F(K)$。
+
+它们的差恰为块对角矩阵：
+$$
+\Omega_+-\Omega_-
+=\frac{a-a^{-1}}2
+\begin{pmatrix}D_L&0\\0&-D_R\end{pmatrix}.
+\tag{257.32}
+$$
+由于 $\operatorname{Tr}D_L=\operatorname{Tr}D_R=k$，
+$$
+\boxed{
+d(\Omega_+,\Omega_-)
+=\frac k2(a-a^{-1})
+=\sqrt{1-k^2}.
+}
+\tag{257.33}
+$$
+此外，取（257.30）对应的两个 Gram 因子 $G_+,G_-$，可直接算得
+$$
+G_+^\dagger G_-=D_R.
+\tag{257.34}
+$$
+由（257.4），这对态也达到根保真度下界：
+$$
+\mathsf F(\Omega_+,\Omega_-)=k.
+\tag{257.35}
+$$
+
+当 $k=0$ 时，$K=0$。任选参考密度矩阵 $\tau$，取 $\operatorname{diag}(\tau,0)$ 与 $\operatorname{diag}(0,\tau)$，两态正交，半迹距离为一、根保真度为零。当 $k=1$ 时，§256已证明纤维是单点 $\Gamma(K)$，其直径为零；同态根保真度为一。
+
+### 257.6 纤维直径的精确公式
+
+**定理257.2（固定完整响应的精确不确定直径）。** 对任意有限非零参考空间及任意合法数据矩阵 $K$，令 $k=\|K\|_1\le1$，则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak F(K)}
+\frac12\|\Omega-\Xi\|_1
+=\sqrt{1-k^2}.
+}
+\tag{257.36}
+$$
+同一纤维的最小根保真度也精确为
+$$
+\boxed{
+\min_{\Omega,\Xi\in\mathfrak F(K)}
+\mathsf F(\Omega,\Xi)=k.
+}
+\tag{257.37}
+$$
+
+**证明。** 全体填充的上界与根保真度下界分别由（257.26）、（257.25）成立。对 $0<k<1$，（257.29）同时达到二者；$k=0,1$ 由上述端点构造成立。$\square$
+
+若数据距离核范数球面的径向缺额为 $h=1-k$，则
+$$
+\operatorname{diam}_{d}\mathfrak F(K)
+=\sqrt{2h-h^2}.
+\tag{257.38}
+$$
+因此即使完整响应已精确取得，球内仍保留这一直径的源差异；当 $h\downarrow0$ 时，其最坏歧义以平方根尺度收缩。球面 $h=0$ 才完全塌缩为一个联合态。
+
+该精确值只由 $\|K\|_1$ 决定，不受参考维数、奇异向量或非零奇异值分布影响。达到态仍使用这些矩阵结构，通过（257.29）实现；这里并没有把不同 $K$ 的来源纤维视为同一个实际来源集合。
+
+### 257.7 同一数据下的歧义与不同数据间的稳定性
+
+本节保持 $K$ 完全相同，求的是其全部合法填充之间的最大差异。§256的噪声恢复界比较球面理想数据与附近数据，回答的是另一项定量问题。二者共同说明：数据充分性既有“纤维是否为单点”的精确判据，也有“仍有多解时最多相差多少”的精确尺度。
+
+证明使用标准根保真度、极分解、Schur 补、Schatten Hölder 不等式及纯化的迹距离关系；所需非方阵 Gram 恒等式、正半定参数单调性和共同非对角块下界均已在正文给出。本节不据这些有限维工具的组合宣称外部文献原创性。
+
+这里没有额外固定参考边缘、形成纠缠或原始档案。若任务再指定这些数据，允许填充集合会变成 $\mathfrak F(K)$ 的子集，其精确直径须按新增合同重新求取。本节的距离始终是同一已声明联合空间中的量子态半迹距离。
+
+## 追加锚（本行以下为增补区）
+
+## 258. 固定参考边缘的数值半径判据与纯态唯一性
+
+§256固定两份完整响应，允许竞争态的参考边缘自由变化。实际记录重置仪器的完整输出还包含参考边缘；把这份数据也固定下来，会改变可实现性和唯一性的边界。
+
+本节将该问题归约到标准 Ando 数值半径定理。支撑约束和可逆同余给出精确可实现性条件；纯态与反例进一步说明：加入边缘后，§256核范数球内部也能出现唯一来源，而新的数值半径球面仍不保证一般混合源唯一。
+
+### 258.1 完整输出所给的额外数据
+
+沿用§256的有限维接口、可信输入轴及坐标
+$$
+A_a=\sqrt A\,Z+b_0X,\qquad
+A_b=\sqrt A\,Z-b_0X,\qquad
+A\ge B>0,\quad b_0^2=B,
+$$
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},\qquad
+R_X=\frac{R_a-R_b}{2b_0},\qquad
+K=R_Z-iR_X.
+\tag{258.1}
+$$
+在输入的 $Y$ 本征基中，任意来源写成
+$$
+\Omega_Y=
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix},
+\qquad
+\operatorname{Tr}_H\Omega_Y=P+Q.
+\tag{258.2}
+$$
+本节还给定一份参考密度矩阵
+$$
+\rho\succeq0,\qquad \operatorname{Tr}\rho=1,
+\tag{258.3}
+$$
+并要求所有竞争态具有同一个参考边缘 $\rho$。问题因而是寻找
+$$
+\boxed{
+\begin{pmatrix}P&K/2\\K^\dagger/2&Q\end{pmatrix}\succeq0,
+\qquad P+Q=\rho.
+}
+\tag{258.4}
+$$
+迹一已经由对角块之和给出。
+
+这一额外数据确实来自§253的实际仪器。在该节的仪器参数合同下，省略共同重置态后，每个可见标签的参考输出块为
+$$
+B_{w,s}=\frac{\rho+sR_w}{4}.
+\tag{258.5}
+$$
+所以
+$$
+\rho=\sum_{w,s}B_{w,s},
+\qquad
+R_w=2(B_{w,+}-B_{w,-}).
+\tag{258.6}
+$$
+固定全部 $B_{w,s}$ 与固定 $(\rho,R_a,R_b)$ 等价。§256讨论的是只保留后两份响应的投影数据合同；本节处理加入 $\rho$ 的合同。这里均指完整精确矩阵，而非一次实验取得的三个标量。
+
+### 258.2 参考核外支撑必须同时消失
+
+记
+$$
+S=\operatorname{supp}\rho,\qquad P_\rho=P_S.
+\tag{258.7}
+$$
+若（258.4）成立，则 $P,Q\succeq0$ 且 $P,Q\preceq\rho$。对任意 $x\in S^\perp$，
+$$
+\langle x,Px\rangle+\langle x,Qx\rangle
+=\langle x,\rho x\rangle=0.
+\tag{258.8}
+$$
+两项非负，故均为零。正半定算子的零二次型向量属于其核，因此 $Px=Qx=0$。
+
+还须控制非对角块。向量 $(x,0)$ 和 $(0,x)$ 在整个正半定块矩阵中的二次型均为零，所以整个矩阵也分别将它们送到零。这给出 $K^\dagger x=Kx=0$。于是
+$$
+\boxed{
+K=P_\rho KP_\rho,
+\qquad
+\Omega_Y=(I_H\otimes P_\rho)\Omega_Y(I_H\otimes P_\rho).
+}
+\tag{258.9}
+$$
+这一步适用于全部合法竞争态。固定边缘排除了参考核外的质量及其相干，不仅排除对角块中的额外权重。
+
+在 $S$ 上，$\rho_S=\rho|_S$ 严格正。若支撑条件成立，定义白化后的数据
+$$
+Z_\rho=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2}.
+\tag{258.10}
+$$
+对（258.4）作可逆同余，得到等价问题
+$$
+\begin{pmatrix}
+F&Z_\rho/2\\
+Z_\rho^\dagger/2&I_S-F
+\end{pmatrix}\succeq0,
+\qquad
+F=\rho_S^{-1/2}(P|_S)\rho_S^{-1/2}.
+\tag{258.11}
+$$
+其对角块正性自动给 $0\preceq F\preceq I_S$。白化是用于判定正性的代数变换；不把它当作无成本、保迹的物理处理。
+
+### 258.3 Ando 定理给出的精确可实现性
+
+对有限维复矩阵 $T$，数值半径定义为
+$$
+w(T)=\max_{\|x\|=1}|\langle x,Tx\rangle|.
+\tag{258.12}
+$$
+所用标准 Ando 定理的精确形式是
+$$
+w(X)\le\frac12
+\iff
+\exists\,F,G\succeq0:\quad F+G=I,\quad
+\begin{pmatrix}F&X\\X^\dagger&G\end{pmatrix}\succeq0.
+\tag{258.13}
+$$
+此非严格不等式版本直接见 Farenick、Kavruk 与 Paulsen，*C*-algebras with the weak expectation property and a multivariable analogue of Ando's theorem on the numerical radius*，[arXiv:1107.0418v2](https://arxiv.org/abs/1107.0418v2)，2012年3月19日版本，PDF第1页引言。该文PDF第14页参考文献[2]列明原始来源：T. Ando，*Structure of operators with numerical radius one*，Acta Sci. Math. (Szeged) **34**（1973），11–15。本节引用（258.13）作为已证明的外部定理，不把它作为新结果。
+
+**定理258.1（固定边缘的可实现性）。** 给定密度矩阵 $\rho$ 与任意复矩阵 $K$，（258.4）有解，当且仅当
+$$
+\boxed{
+K=P_\rho KP_\rho,
+\qquad w(Z_\rho)\le1.
+}
+\tag{258.14}
+$$
+
+**证明。** 有解时，§258.2给支撑条件与（258.11）。将 Ando 定理用于 $X=Z_\rho/2$，由数值半径的齐次性得到 $w(Z_\rho)\le1$。
+
+反向，支撑条件使（258.10）有定义。由 Ando 定理选择满足（258.11）的 $F$，并在 $S$ 上定义
+$$
+P=\rho_S^{1/2}F\rho_S^{1/2},
+\qquad
+Q=\rho_S^{1/2}(I_S-F)\rho_S^{1/2},
+\tag{258.15}
+$$
+再在 $S^\perp$ 上补零。同余保持正性，并将非对角块恢复为 $K/2$；对角块之和为 $\rho$，所以得到迹一的合法来源。$\square$
+
+全部填充亦有一个精确参数合同：令
+$$
+\mathcal F(Z_\rho)=
+\left\{
+F=F^\dagger:
+\begin{pmatrix}
+F&Z_\rho/2\\
+Z_\rho^\dagger/2&I_S-F
+\end{pmatrix}\succeq0
+\right\}.
+\tag{258.16}
+$$
+（258.15）与固定非对角块给出 $\mathcal F(Z_\rho)$ 到全部合法来源的一一对应。唯一来源等价于这个集合为单点，不能仅由数值半径的一个边界等式替代。
+
+还有一个不显式使用逆矩阵的等价合同：
+$$
+\boxed{
+\rho-\operatorname{Re}(e^{i\varphi}K)\succeq0
+\quad\text{对每个 }\varphi\in\mathbb R,
+}
+\tag{258.17}
+$$
+其中 $\operatorname{Re}T=(T+T^\dagger)/2$。它又等价于
+$$
+|\langle x,Kx\rangle|\le\langle x,\rho x\rangle
+\quad\text{对每个 }x\in E.
+\tag{258.18}
+$$
+有支撑条件时，对（258.17）作 $\rho_S^{-1/2}$ 同余，正好得到 $w(Z_\rho)\le1$ 的全角度表述。反向，单独由（258.17）中 $\varphi=0,\pi,\pi/2,3\pi/2$ 的四个正性条件，先得到
+$$
+-\rho\preceq R_Z\preceq\rho,\qquad
+-\rho\preceq R_X\preceq\rho.
+\tag{258.19}
+$$
+对 $x\in\ker\rho$，$\rho\pm R_Z$ 与 $\rho\pm R_X$ 的二次型均为零，故这些正算子都消去 $x$，从而 $R_Zx=R_Xx=0$。由于两者 Hermitian，$K$ 的左右支撑都落在 $S$。再白化即可应用定理258.1。这证明（258.17）已经隐含所需支撑约束。
+
+由（258.1），全角度算子为
+$$
+\operatorname{Re}(e^{i\varphi}K)
+=\cos\varphi\,R_Z+\sin\varphi\,R_X.
+\tag{258.20}
+$$
+所以固定边缘要求所有这些方向的正性约束能由同一个联合源实现；Ando 定理恰好保证该全角度条件的充分性。
+
+### 258.4 两种数据合同确有严格差别
+
+先看奇异边缘。取 $E=\mathbb C^2$，用 $E_{ij}=|i\rangle\langle j|$ 记矩阵单位，令
+$$
+\rho=E_{00},\qquad K=\frac12E_{01}.
+\tag{258.21}
+$$
+响应本身满足 $\|K\|_1=1/2<1$，按§256可实现。但 $K\ne P_\rho KP_\rho$，不可能有边缘为 $\rho$ 的填充。若只将广义逆夹在 $K$ 两侧，会得到零矩阵并误判通过。因此支撑条件不能从（258.14）中删掉。
+
+再给一个边缘满秩的例子：
+$$
+E=\mathbb C^2,\qquad
+\rho=\frac12I_2,\qquad
+K=\frac23E_{00}.
+\tag{258.22}
+$$
+它仍在§256球内，但
+$$
+Z_\rho=\frac43E_{00},\qquad
+w(Z_\rho)=\frac43>1.
+\tag{258.23}
+$$
+因此这份响应能由某个源产生，却不能与指定边缘共同产生。
+
+这种失败甚至不必表现为现有四个输出块的不正性。取实际仪器参数 $A=B=1/2$、$b_0=1/\sqrt2$。则该例对应
+$$
+R_a=R_b=\frac{\sqrt2}{3}E_{00}.
+\tag{258.24}
+$$
+每个候选输出块 $(\rho+sR_w)/4$ 都严格正，因为其相关本征值为 $(1/2\pm\sqrt2/3)/4$，而 $2\sqrt2<3$；其余本征值为 $1/8$。四块总迹为一，且共享正确的标签对边缘和。然而它们仍不属于这个固定仪器作用于联合源所得的像，因为（258.23）已排除共同实现。
+
+### 258.5 数值半径球面不等于唯一填充
+
+若 $w(Z_\rho)<1$，一定有多个固定边缘填充。为证明这一点，选
+$$
+w(Z_\rho)<\lambda<1.
+\tag{258.25}
+$$
+对 $Z_\rho/\lambda$ 应用定理258.1的白化形式，取得一个正半定块矩阵 $T'$，其对角块和为 $I_S$，非对角块为 $Z_\rho/(2\lambda)$。于是
+$$
+T=\lambda T'+\frac{1-\lambda}{2}I_{S\oplus S}
+\succeq\frac{1-\lambda}{2}I_{S\oplus S}
+\tag{258.26}
+$$
+仍有对角块和 $I_S$、非对角块 $Z_\rho/2$。对足够小的非零实数 $t$，
+$$
+T+t\begin{pmatrix}I_S&0\\0&-I_S\end{pmatrix}
+\tag{258.27}
+$$
+保持正性和全部数据。由于 $S$ 非零，撤销白化得到一条非平凡填充线段。因此唯一填充必有 $w(Z_\rho)=1$。
+
+反向不成立，而且可以列出一个边界例的全部填充。取
+$$
+r=2,\qquad \rho=\frac12I_2,\qquad K=\frac12E_{00},
+\qquad Z_\rho=E_{00}.
+\tag{258.28}
+$$
+此时 $w(Z_\rho)=1$。所有合法来源恰为以下矩阵，在原输入基中再共轭 $U_Y\otimes I_E$：
+$$
+\boxed{
+\Omega_Y(t)=
+\begin{pmatrix}
+\frac14E_{00}+\frac t2E_{11}&\frac14E_{00}\\
+\frac14E_{00}&\frac14E_{00}+\frac{1-t}{2}E_{11}
+\end{pmatrix},
+\qquad 0\le t\le1.
+}
+\tag{258.29}
+$$
+这些矩阵显然具有所需数据；$E_{00}$ 部分是一个正的秩一块，$E_{11}$ 部分是两个非负对角权重，所以全部正半定。
+
+为证明没有遗漏其他填充，将白化后的上对角块写成
+$$
+F=\begin{pmatrix}a&c\\\overline c&d\end{pmatrix},
+\qquad 0\preceq F\preceq I_2.
+\tag{258.30}
+$$
+压缩到上半空间的 $e_0$ 与下半空间的 $e_0$，得到
+$$
+\begin{pmatrix}a&1/2\\1/2&1-a\end{pmatrix}\succeq0.
+\tag{258.31}
+$$
+其行列式要求 $a(1-a)\ge1/4$，故 $a=1/2$。该压缩的零向量 $(e_0,-e_0)$ 也被整个正半定块矩阵消去，由其 $e_1$ 分量得到 $c=0$。剩下的条件恰为 $0\le d\le1$。撤销白化并取 $t=d$，正好得到（258.29）。
+
+因此，§256“核范数球面恰为单点纤维”的分类，不能直接改写为“固定边缘的数值半径球面恰为单点纤维”。
+
+### 258.6 固定边缘后的纯态完整分类
+
+**定理258.2（纯源的固定边缘唯一性）。** 固定一个纯联合源及其完整数据 $(\rho,R_a,R_b)$。它在全部归一化正半定态中唯一，当且仅当
+$$
+\boxed{
+\text{该纯源纠缠，或其输入 }Y\text{ 平均值为零}.
+}
+\tag{258.32}
+$$
+其中“纠缠”对 qubit 输入等价于 Schmidt 秩为二。
+
+**证明。** 在 $Y$ 基中写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\|u\|^2+\|v\|^2=1.
+\tag{258.33}
+$$
+于是
+$$
+\rho=uu^\dagger+vv^\dagger,\qquad K=2uv^\dagger.
+\tag{258.34}
+$$
+任意具有同一边缘的正半定竞争态，已由（258.9）限制在 $H\otimes S$，其中 $S=\operatorname{span}\{u,v\}$。因此以下低维归约没有排除合法的核外竞争态。
+
+若 $u,v$ 线性无关，则 $\dim S=2$。定义
+$$
+a=\rho_S^{-1/2}u,\qquad b=\rho_S^{-1/2}v.
+\tag{258.35}
+$$
+它们满足 $aa^\dagger+bb^\dagger=I_S$。以 $a,b$ 为列的二阶方阵因而为酉矩阵，所以 $a,b$ 是正交归一基。白化后 $K/2$ 恰为 $ab^\dagger$。
+
+对任意竞争填充，压缩到上半空间的 $a$ 与下半空间的 $b$，得到
+$$
+\begin{pmatrix}
+\langle a,Fa\rangle&1\\
+1&1-\langle b,Fb\rangle
+\end{pmatrix}\succeq0.
+\tag{258.36}
+$$
+由于 $0\preceq F\preceq I_S$，两对角元都不超过一，而行列式要求它们的乘积至少为一。故两者都等于一：
+$$
+\langle a,Fa\rangle=1,\qquad
+\langle b,Fb\rangle=0.
+\tag{258.37}
+$$
+正性给 $Fb=0$，而 $I-F$ 的正性给 $Fa=a$。这已在正交基 $a,b$ 上唯一确定 $F=aa^\dagger$。撤销同余，得到 $P=uu^\dagger$、$Q=vv^\dagger$，整个填充正好为 $|\psi\rangle\langle\psi|$。所以每个纯纠缠源都唯一。
+
+若 $u,v$ 线性相关，则源为产品态，$S$ 一维。取单位参考向量 $e$，写 $u=\alpha e$、$v=\beta e$，其中 $|\alpha|^2+|\beta|^2=1$。于是
+$$
+\rho=P_e,\qquad K=kP_e,\qquad k=2\alpha\overline\beta.
+\tag{258.38}
+$$
+全部竞争态已限制到 $H\otimes\mathbb Ce$，其块矩阵由一个实参数 $p$ 给出：
+$$
+\begin{pmatrix}
+p&k/2\\
+\overline k/2&1-p
+\end{pmatrix}\otimes P_e,
+\qquad
+\frac{1-\sqrt{1-|k|^2}}2
+\le p\le
+\frac{1+\sqrt{1-|k|^2}}2.
+\tag{258.39}
+$$
+区间来自 $p(1-p)\ge|k|^2/4$，是正性的充要条件。它为单点当且仅当 $|k|=1$，也即 $|\alpha|=|\beta|=1/\sqrt2$。这恰好等价于
+$$
+\langle\psi|Y\otimes I|\psi\rangle
+=|\alpha|^2-|\beta|^2=0.
+\tag{258.40}
+$$
+两种情形合并，证明定理。$\square$
+
+一个显式家族显示新增边缘如何把§256球内的数据变为唯一：
+$$
+|\psi_p\rangle
+=\sqrt p\,|y_+\rangle|0\rangle_E
++\sqrt{1-p}\,|y_-\rangle|1\rangle_E,
+\qquad 0<p<1,\quad p\ne\frac12.
+\tag{258.41}
+$$
+它具有
+$$
+\rho_p=\operatorname{diag}(p,1-p),\qquad
+K_p=2\sqrt{p(1-p)}\,E_{01},
+$$
+$$
+\|K_p\|_1=2\sqrt{p(1-p)}<1,\qquad
+Z_{\rho_p}=2E_{01}.
+\tag{258.42}
+$$
+只给响应时，§256保证多个填充；加入同一 $\rho_p$ 后，定理258.2保证唯一。其输入 $Y$ 平均值为 $2p-1\ne0$，所以也明确区分了两种纯态唯一性合同。
+
+此外 $w(2E_{01})=1$，因为对单位向量 $(x_0,x_1)$，
+$$
+|\langle x,2E_{01}x\rangle|
+=2|\overline{x_0}x_1|\le1
+\tag{258.43}
+$$
+且等模分量达到一；但 $\|2E_{01}\|=2$。因此（258.14）中的数值半径不能替换为算子范数不超过一的更强条件。
+
+### 258.7 适用边界与既有结果的关系
+
+§256的球面唯一源已有由响应确定的参考边缘。对这类数据，加入相同边缘保持唯一，加入不同边缘则无解。本节进一步处理§256球内的情形：边缘可以排除一份本来可实现的响应，也可以把多源纤维缩成单点。
+
+Ando 定理承担的是固定边缘的精确可实现性；一般混合态的唯一性仍须检查（258.16）的完整填充集合。数值半径严格小于一时必不唯一，等于一时既有唯一例，也有（258.29）的多源例。本节已给纯态的完整分类，没有给一般混合态的进一步结构分类。
+
+所有同余与支撑论证均在同一有限维参考接口上进行。这里没有从有限样本认证精确边缘、精确支撑或精确数值半径等式，也未证明边缘扰动下的统一稳定恢复界。尤其对白化后的噪声，不能未经估计就忽略 $\rho$ 的小本征值。§256的响应稳定性适用于其球面真值，不能直接覆盖（258.42）这种仅在固定边缘后才唯一的球内真值。
+
+仓内已有结果在此通过明确的数据合同衔接；数值半径块正性复用所引标准定理。上述归约、纯态分析与实例不据此宣称文献原创性，样本取得预算与数值实现成本也未在本节结算。
+
+## 追加锚（本行以下为增补区）
+
+## 259. Hermitian响应的固定边缘纤维：几何平均、精确直径与最坏重建误差
+
+固定参考边缘以后，来源的不确定性由一个带对角和约束的正半定填充集合承担。§258用数值半径给出了任意复响应矩阵的可实现性条件。本节在响应矩阵为Hermitian，或具有一个已知统一相位而可化为Hermitian的情形，进一步求出该集合的精确半迹直径、最优最坏重建误差和全部来源的唯一性判据。
+
+计算的核心是标准正算子几何平均。它控制可行填充的最大Hermitian非对角块；此处把这个算子序事实转成同一数据纤维的精确误差结论，不要求参考边缘与响应矩阵交换。
+
+### 259.1 固定数据与未知块的重新排列
+
+设参考空间 $E$ 为非零有限维复Hilbert空间，给定
+$$
+\rho\succeq0,\qquad \operatorname{Tr}\rho=1,\qquad K=K^\dagger.
+\tag{259.1}
+$$
+在§256的输入 $Y$ 基中，固定边缘和响应的全部来源为
+$$
+\mathfrak S(\rho,K)=
+\left\{
+\Omega=
+\begin{pmatrix}P&K/2\\K/2&\rho-P\end{pmatrix}
+:\ \Omega\succeq0
+\right\}.
+\tag{259.2}
+$$
+对角和已保证每个成员迹一。引入Hermitian未知量
+$$
+H=2P-\rho,
+\qquad
+\Omega_H=\frac12
+\begin{pmatrix}\rho+H&K\\K&\rho-H\end{pmatrix}.
+\tag{259.3}
+$$
+令 $W=2^{-1/2}\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)$ 作用于这两个输入块，则
+$$
+(W\otimes I)\Omega_H(W^\dagger\otimes I)
+=\frac12\begin{pmatrix}A&H\\H&B\end{pmatrix},
+\qquad
+A=\rho+K,\quad B=\rho-K.
+\tag{259.4}
+$$
+因此
+$$
+\boxed{
+\mathfrak S(\rho,K)\ne\varnothing
+\iff A,B\succeq0
+\iff-\rho\preceq K\preceq\rho.
+}
+\tag{259.5}
+$$
+必要性来自块压缩；充分性由 $H=0$ 给出。以下均假设这一可实现性条件成立。
+
+记态间的半迹距离为
+$$
+d(\Omega,\Xi)=\frac12\|\Omega-\Xi\|_1.
+\tag{259.6}
+$$
+直接由（259.3）的对角块差可得
+$$
+\boxed{
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1.
+}
+\tag{259.7}
+$$
+这个因子将区分下文的纤维直径与重建半径。
+
+### 259.2 标准几何平均及其奇异延拓
+
+对严格正矩阵 $A,B$，正算子几何平均定义为
+$$
+A\#B
+=A^{1/2}\left(A^{-1/2}BA^{-1/2}\right)^{1/2}A^{1/2}.
+\tag{259.8}
+$$
+对一般 $A,B\succeq0$，采用从上方同时正则化的定义
+$$
+A\#B
+=\lim_{\varepsilon\downarrow0}
+(A+\varepsilon I)\#(B+\varepsilon I).
+\tag{259.9}
+$$
+这一均值属于标准Kubo–Ando理论。公式与正算子极限延拓可参见 D. T. Hoa、M. S. Moslehian、C. Conde、P. Zhang，*An extension of the Pólya–Szegö operator inequality*，[arXiv:1610.04162v1](https://arxiv.org/abs/1610.04162v1)，PDF第1—2页；该文第11页文献[9]列出 F. Kubo、T. Ando，*Means of positive linear operators*，Math. Ann. **246**（1980），205—224。以下直接证明本节所需的有限维块矩阵性质及极限存在性。
+
+**引理259.1（最大Hermitian填充）。** 对任意 $A,B\succeq0$，令 $G=A\#B$。则
+$$
+\begin{pmatrix}A&G\\G&B\end{pmatrix}\succeq0,
+\qquad
+\begin{pmatrix}A&-G\\-G&B\end{pmatrix}\succeq0,
+\tag{259.10}
+$$
+并且任意Hermitian矩阵 $H$ 若满足
+$$
+\begin{pmatrix}A&H\\H&B\end{pmatrix}\succeq0,
+\tag{259.11}
+$$
+就有
+$$
+\boxed{-G\preceq H\preceq G.}
+\tag{259.12}
+$$
+特别地，$G$ 是全部此类 $H$ 在Loewner序中的最大元。
+
+**证明。** 先设 $A,B$ 严格正。Schur补给出
+$$
+HA^{-1}H\preceq B.
+\tag{259.13}
+$$
+置
+$$
+X=A^{-1/2}HA^{-1/2},
+\qquad C=A^{-1/2}BA^{-1/2}.
+\tag{259.14}
+$$
+于是 $X=X^\dagger$ 且 $X^2\preceq C$。正平方根的算子单调性给
+$$
+|X|=(X^2)^{1/2}\preceq C^{1/2}.
+\tag{259.15}
+$$
+结合 $-|X|\preceq X\preceq|X|$，再作 $A^{1/2}$ 同余，即得（259.12）。另一方面，由（259.8）直接计算
+$$
+GA^{-1}G=B.
+\tag{259.16}
+$$
+因此 $H=G$ 与 $H=-G$ 都满足Schur补等式，（259.10）成立。
+
+一般情形记 $A_\varepsilon=A+\varepsilon I$、$B_\varepsilon=B+\varepsilon I$、$G_\varepsilon=A_\varepsilon\#B_\varepsilon$。若 $0<\varepsilon<\delta$，将 $G_\varepsilon$ 的正块矩阵两个对角块各增加 $(\delta-\varepsilon)I$，得到它也是 $(A_\delta,B_\delta)$ 的可行填充。严格正情形的最大元性质给
+$$
+0\preceq G_\varepsilon\preceq G_\delta.
+\tag{259.17}
+$$
+在 $G_\delta$ 的正块矩阵上使用向量 $(x,-x)$，还得到
+$$
+2G_\delta\preceq A+B+2\delta I.
+\tag{259.18}
+$$
+故 $G_\varepsilon$ 随 $\varepsilon\downarrow0$ 单调下降且有下界。在有限维中它以算子范数收敛，定义出（259.9）的 $G\succeq0$。
+
+原来的任意可行 $H$ 对每个 $(A_\varepsilon,B_\varepsilon)$ 仍可行，因此 $-G_\varepsilon\preceq H\preceq G_\varepsilon$；取极限得（259.12）。由正半定锥的闭性，$\bigl(\begin{smallmatrix}A_\varepsilon&\pm G_\varepsilon\\\pm G_\varepsilon&B_\varepsilon\end{smallmatrix}\bigr)$ 的极限亦正半定，得到（259.10）。$\square$
+
+这里使用的是指定的单调正则化极限，没有假设几何平均在奇异矩阵对上沿任意逼近路径都联合连续。
+
+还需保留另一条界限：（259.12）只是一般可行 $H$ 的必要条件，不能把它当成（259.11）的充要条件。例如
+$$
+A=\begin{pmatrix}4/5&0\\0&1/5\end{pmatrix},\quad
+B=\begin{pmatrix}1/5&0\\0&4/5\end{pmatrix},\quad
+G=\frac25I_2,\quad
+H=\frac25\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{259.19}
+$$
+虽然 $-G\preceq H\preceq G$，却有
+$$
+B-HA^{-1}H=\operatorname{diag}(-3/5,3/5)\not\succeq0.
+\tag{259.20}
+$$
+精确纤维仍由块正性定义；计算其直径不需要把整条算子序区间都误当作可行纤维。
+
+### 259.3 同一数据纤维的精确半迹直径
+
+**定理259.2（纤维直径）。** 在（259.1）、（259.5）下，令
+$$
+G=(\rho+K)\#(\rho-K).
+\tag{259.21}
+$$
+则
+$$
+\boxed{
+\max_{\Omega,\Xi\in\mathfrak S(\rho,K)}d(\Omega,\Xi)
+=\operatorname{Tr}G.
+}
+\tag{259.22}
+$$
+最大值由同一数据下的两个来源
+$$
+\boxed{
+\Omega_\pm
+=\frac12\begin{pmatrix}\rho\pm G&K\\K&\rho\mp G\end{pmatrix}
+}
+\tag{259.23}
+$$
+取得。
+
+**证明。** 引理259.1保证 $H=\pm G$ 可行，故（259.23）正半定且迹一，并保留相同边缘和响应。
+
+先证明一个迹范数界。若 $T=T^\dagger$ 且 $-G\preceq T\preceq G$，令 $P_+$、$P_-$ 分别为 $T$ 的正、负谱投影。则
+$$
+\begin{aligned}
+\|T\|_1
+&=\operatorname{Tr}(P_+T)-\operatorname{Tr}(P_-T)\\
+&\le\operatorname{Tr}(P_+G)+\operatorname{Tr}(P_-G)\\
+&\le\operatorname{Tr}G.
+\end{aligned}
+\tag{259.24}
+$$
+对任意两个可行填充，$T=(H_1-H_2)/2$ 满足这一序界。由（259.7）得到
+$$
+d(\Omega_{H_1},\Omega_{H_2})
+=\frac12\|H_1-H_2\|_1
+\le\operatorname{Tr}G.
+\tag{259.25}
+$$
+取 $H_1=G,H_2=-G$，正性给 $\|2G\|_1=2\operatorname{Tr}G$，故上界达到。$\square$
+
+在同一数据纤维内，半迹距离也是所有终端效果检验的最大概率差：
+$$
+d(\Omega,\Xi)=
+\sup_{0\preceq F\preceq I}
+|\operatorname{Tr}[F(\Omega-\Xi)]|.
+\tag{259.26}
+$$
+因此（259.22）量化的是完整源态在某些后续检验中仍可具有的最大差别，而不是现有固定响应之间的差别；后者对整个纤维本来就相同。
+
+### 259.4 最优重建半径恰为直径的一半
+
+用现有精确数据选一个合法归一化重建态 $\widehat\Omega$。允许它在纤维外，定义最坏半迹重建误差
+$$
+\mathcal R(\rho,K)=
+\inf_{\widehat\Omega\succeq0,\ \operatorname{Tr}\widehat\Omega=1}
+\sup_{\Omega\in\mathfrak S(\rho,K)}
+d(\widehat\Omega,\Omega).
+\tag{259.27}
+$$
+
+**定理259.3（精确最坏重建误差）。** 有
+$$
+\boxed{
+\mathcal R(\rho,K)=\frac12\operatorname{Tr}G.
+}
+\tag{259.28}
+$$
+一个达到最小值的中心是本身属于纤维的中点源
+$$
+\boxed{
+\Omega_0=\frac12\begin{pmatrix}\rho&K\\K&\rho\end{pmatrix}
+=\frac{\Omega_++\Omega_-}{2}.
+}
+\tag{259.29}
+$$
+因此即使把允许的中心限制在数据纤维中，最优值也不变。
+
+**证明。** 任意可行 $H$ 满足 $-G\preceq H\preceq G$，所以（259.7）、（259.24）给
+$$
+d(\Omega_H,\Omega_0)
+=\frac12\|H\|_1
+\le\frac12\operatorname{Tr}G.
+\tag{259.30}
+$$
+$H=G$ 达到这一上界。另一方面，对任意合法中心 $\widehat\Omega$，三角不等式与定理259.2给
+$$
+\operatorname{Tr}G
+=d(\Omega_+,\Omega_-)
+\le d(\Omega_+,\widehat\Omega)+d(\widehat\Omega,\Omega_-).
+\tag{259.31}
+$$
+故中心到这两个可能来源的最大距离至少为 $\operatorname{Tr}G/2$。上下界相等。$\square$
+
+这一半径是指定精确数据合同下的确定性最坏误差。它没有把状态制备权限、有限样本误差或数据处理成本免费加入模型，也不要求最优中心唯一。
+
+### 259.5 白化公式与一般混合源的唯一性
+
+可实现性 $\rho\pm K\succeq0$ 先给支撑约束
+$$
+K=P_SKP_S,\qquad S=\operatorname{supp}\rho.
+\tag{259.32}
+$$
+理由是：对 $x\in\ker\rho$，两个非负二次型 $\langle x,(\rho\pm K)x\rangle$ 之和为零，故两个正矩阵均消去 $x$，从而 $Kx=0$；Hermitian性再给左支撑。
+
+在非零空间 $S$ 上定义
+$$
+Z=\rho_S^{-1/2}(K|_S)\rho_S^{-1/2}.
+\tag{259.33}
+$$
+它满足 $Z=Z^\dagger$、$-I_S\preceq Z\preceq I_S$。
+
+几何平均对可逆同余有等式
+$$
+(TAT^\dagger)\#(TBT^\dagger)=T(A\#B)T^\dagger.
+\tag{259.34}
+$$
+这可直接从引理259.1证明：$H\mapsto THT^\dagger$ 给两个Hermitian填充集合之间保序的双射，故把唯一最大元送到唯一最大元。证明同时适用于奇异 $A,B$，只要求同余矩阵 $T$ 可逆。
+
+在 $S$ 上使用（259.34），由于 $I_S+Z$ 与 $I_S-Z$ 交换，逐本征值计算得到
+$$
+\boxed{
+G|_S=\rho_S^{1/2}(I_S-Z^2)^{1/2}\rho_S^{1/2},
+\qquad G|_{S^\perp}=0.
+}
+\tag{259.35}
+$$
+零支撑部分也可直接由块正性核条件确认。因此精确直径另有公式
+$$
+\boxed{
+\operatorname{diam}_d\mathfrak S(\rho,K)
+=\operatorname{Tr}_S\!\left[\rho_S(I_S-Z^2)^{1/2}\right].
+}
+\tag{259.36}
+$$
+这里没有要求 $\rho$ 与 $K$ 或 $Z$ 交换。
+
+**推论259.4（Hermitian响应的完整唯一性分类）。** 在可实现性条件下，以下条件等价：
+$$
+\boxed{
+\mathfrak S(\rho,K)\text{ 是单点}
+\iff G=0
+\iff Z^2=I_S.
+}
+\tag{259.37}
+$$
+单点存在时，它恰为（259.29）的 $\Omega_0$。
+
+**证明。** 若 $G=0$，引理259.1强制 $H=0$。若 $G\ne0$，（259.23）给两个不同成员。因此单点等价于 $G=0$。在 $S$ 上 $\rho_S^{1/2}$ 可逆，（259.35）给 $G=0$ 当且仅当 $(I_S-Z^2)^{1/2}=0$，也即 $Z^2=I_S$。$\square$
+
+这是本节Hermitian响应类对全部正半定竞争态的分类，不仅是纯态之间的分类。它还说明数值半径 $w(Z)=1$ 只要求至少一个本征值达到绝对值一，而唯一性要求全部本征值都取 $+1$ 或 $-1$。
+
+### 259.6 一个非交换、混合且可分的唯一来源
+
+在二维参考空间取Pauli矩阵 $X,Z_0$，令
+$$
+0<c<\frac12,\qquad
+\rho=\frac12I_2+cX,
+\qquad
+k=\sqrt{\frac14-c^2},\qquad K=kZ_0.
+\tag{259.38}
+$$
+$\rho$ 严格正且迹一，$K$ 为Hermitian；因 $c,k>0$，$\rho K\ne K\rho$。
+
+矩阵 $\rho\pm K=I_2/2+cX\pm kZ_0$ 的两个本征值是
+$$
+\frac12\pm\sqrt{c^2+k^2}=1,0.
+\tag{259.39}
+$$
+因此 $A=\rho+K$、$B=\rho-K$ 均是秩一密度矩阵，数据可实现。又有
+$$
+\rho^{-1}=\frac{\frac12I_2-cX}{\frac14-c^2},
+\qquad
+K\rho^{-1}K=\rho,
+\tag{259.40}
+$$
+其中使用 $Z_0XZ_0=-X$。于是白化矩阵满足 $Z^2=I_2$，从而 $G=0$，整个固定边缘纤维只有 $\Omega_0$。
+
+在（259.4）的输入基变换后，该唯一源为
+$$
+\frac12|0\rangle\langle0|\otimes A
++\frac12|1\rangle\langle1|\otimes B.
+\tag{259.41}
+$$
+它是两个产品纯态的凸组合，整体秩为二，故是混合可分态。唯一性由固定数据和正性约束给出，并不需要真源纯或纠缠。
+
+同时
+$$
+\|K\|_1=2k=\sqrt{1-4c^2}<1.
+\tag{259.42}
+$$
+按§257，只固定响应而放开参考边缘时，该纤维的半迹直径为 $2c>0$；固定这里的 $\rho$ 后直径恰为零。这把边缘数据消去的真实来源歧义直接量化出来。
+
+### 259.7 交换情形、相位扩展及范围
+
+若 $\rho$ 与 $K$ 交换，在共同本征基中写
+$$
+\rho=\operatorname{diag}(\rho_i),\qquad
+K=\operatorname{diag}(k_i),\qquad |k_i|\le\rho_i.
+\tag{259.43}
+$$
+则
+$$
+\boxed{
+\operatorname{Tr}G
+=\sum_i\sqrt{\rho_i^2-k_i^2}
+=\sum_{\rho_i>0}\rho_i\sqrt{1-(k_i/\rho_i)^2}.
+}
+\tag{259.44}
+$$
+$\rho_i=0$ 时 $k_i=0$，对应项为零。该标量求和式只是交换特例；非交换情形应使用（259.21）或（259.36）。
+
+固定边缘纤维包含于§257相同 $K$ 的自由边缘纤维，因此
+$$
+0\le\operatorname{Tr}G\le\sqrt{1-\|K\|_1^2}\le1.
+\tag{259.45}
+$$
+这一比较保持同一响应数据，没有把不同来源或不同边缘的独立最优值当成同时可达。
+
+若给定响应具有一个已知统一相位
+$$
+K=e^{i\theta}L,\qquad L=L^\dagger,
+\tag{259.46}
+$$
+以输入酉矩阵 $\operatorname{diag}(e^{-i\theta},1)$ 共轭来源块，即把 $K/2$ 变为 $L/2$，同时保持参考边缘和全部半迹距离。因此本节结果全部适用，只需以 $L$ 替换 $K$：可实现性为 $-\rho\preceq L\preceq\rho$，直径为 $\operatorname{Tr}[(\rho+L)\#(\rho-L)]$，最优半径是其一半。
+
+一般复矩阵未必能由一个标量相位化为Hermitian。对这样的 $K$，（259.4）的块重排、上述几何平均直径及 $Z^2=I$ 分类均不能直接使用；任意复响应的可实现性仍由§258的支撑与数值半径条件承担。本节也未把精确固定边缘的结论延伸为边缘有噪声时的统一恢复界。
+
+## 追加锚（本行以下为增补区）
+
+## 260. 精确共同边缘下纯纠缠源的线性稳定性
+
+§256对任意球面源给出平方根全态误差界。§258进一步证明，加入精确参考边缘后，每个纯纠缠源都能在全部合法态中唯一确定。本节给出后一结论的定量版本：边缘保持完全相同时，纯纠缠源的恢复误差可由响应误差线性控制。
+
+常数依赖该边缘在其支撑上的条件数。纯产品源的例子说明，不能将结论推广到全部纯源；一族趋近产品源的纯纠缠态则说明，不能为全部参考边缘选取同一个线性常数。
+
+### 260.1 来源、竞争态与误差合同
+
+固定§256的同一输入与参考接口，以及可信已标定的两条非平行输入方向。由完整响应定义
+$$
+K_\Omega=
+\frac{\mathcal R_a(\Omega)+\mathcal R_b(\Omega)}{2\sqrt A}
+-i\,\frac{\mathcal R_a(\Omega)-\mathcal R_b(\Omega)}{2b_0},
+\qquad A\ge B>0,\quad b_0^2=B.
+\tag{260.1}
+$$
+在明确的 $Y$ 输入基中，$K_\Omega$ 是联合矩阵非对角块的两倍。
+
+理想源为纯纠缠态
+$$
+\Omega_\psi=|\psi\rangle\langle\psi|,
+\qquad
+\rho=\operatorname{Tr}_H\Omega_\psi,
+\qquad
+S=\operatorname{supp}\rho.
+\tag{260.2}
+$$
+qubit 输入使 $\dim S=2$。记 $\rho_S=\rho|_S$，并定义
+$$
+\lambda_{\min}=\lambda_{\min}(\rho_S)>0,\qquad
+\lambda_{\max}=\lambda_{\max}(\rho_S),\qquad
+\kappa(\rho)=\frac{\lambda_{\max}}{\lambda_{\min}}.
+\tag{260.3}
+$$
+环境中的零本征值不计入此条件数。
+
+竞争态 $\Xi$ 是同一联合空间上的任意归一化正半定态，唯一额外限制是
+$$
+\operatorname{Tr}_H\Xi=\rho.
+\tag{260.4}
+$$
+它不必纯、不必纠缠，也不必响应饱和。误差为
+$$
+\delta=\|K_\Xi-K_{\Omega_\psi}\|_1,
+\tag{260.5}
+$$
+其中核范数以及以下联合态迹范数均未除以二。
+
+### 260.2 所有竞争态共用的二阶白化坐标
+
+先排除竞争态的参考核外支撑。对 $x\in S^\perp$，
+$$
+\sum_{\sigma\in\{+,-\}}
+\langle y_\sigma,x|\Xi|y_\sigma,x\rangle
+=\langle x,\rho x\rangle=0.
+\tag{260.6}
+$$
+各项非负，故各为零；正半定矩阵将零二次型向量送到零。因此
+$$
+\Xi=(I_H\otimes P_S)\Xi(I_H\otimes P_S).
+\tag{260.7}
+$$
+同样结论适用于理想源。核外的质量及其相干均已排除，所以以下限制到 $S$ 不会漏掉合法竞争态。
+
+在 $Y$ 基中写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\rho=uu^\dagger+vv^\dagger.
+\tag{260.8}
+$$
+纠缠意味着 $u,v$ 线性无关。令
+$$
+a=\rho_S^{-1/2}u,\qquad b=\rho_S^{-1/2}v.
+\tag{260.9}
+$$
+因为 $aa^\dagger+bb^\dagger=I_S$，二阶方阵的两列 $a,b$ 构成正交归一基。取酉同构 $V:\mathbb C^2\to S$，使 $Ve_0=a$、$Ve_1=b$。
+
+对两态作相同可逆同余：先限制到 $H\otimes S$，再在参考端乘以 $V^\dagger\rho_S^{-1/2}$。理想矩阵变成
+$$
+T_0=
+\begin{pmatrix}E_{00}&E_{01}\\E_{10}&E_{11}\end{pmatrix},
+\tag{260.10}
+$$
+其中 $E_{ij}=|e_i\rangle\langle e_j|$。由于竞争态边缘精确等于 $\rho$，它变成
+$$
+T=
+\begin{pmatrix}
+F&E_{01}+\mathcal E\\
+E_{10}+\mathcal E^\dagger&I_2-F
+\end{pmatrix}\succeq0,
+\tag{260.11}
+$$
+其中 $0\preceq F\preceq I_2$，且
+$$
+\mathcal E=
+\frac12V^\dagger\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}V.
+\tag{260.12}
+$$
+这些白化矩阵的迹为二，不是原来的归一化物理态；证明只使用同余保持正性。也没有要求 $\rho_S$ 在 $a,b$ 基中对角化。
+
+### 260.3 正性把隐藏对角误差线性锁定
+
+**引理260.1（固定对角和的局部块估计）。** 对（260.11）的任意正半定矩阵，
+$$
+\boxed{
+\|F-E_{00}\|_1\le6\|\mathcal E\|,
+\qquad
+\|T-T_0\|_1\le14\|\mathcal E\|_1.
+}
+\tag{260.13}
+$$
+这里 $\|\mathcal E\|$ 为算子范数；不要求误差足够小。
+
+**证明。** 写
+$$
+F=\begin{pmatrix}1-x&c\\\overline c&y\end{pmatrix},
+\qquad x,y\ge0,
+\qquad
+\epsilon=\|\mathcal E\|,
+\qquad
+e_{ij}=\langle e_i,\mathcal E e_j\rangle.
+\tag{260.14}
+$$
+$x,y\ge0$ 分别来自 $I_2-F$ 与 $F$ 的正性。用 $e_{+,j}$、$e_{-,j}$ 表示上、下半空间中的标准基，取
+$$
+\zeta=\frac{e_{+,0}-e_{-,1}}{\sqrt2},
+\qquad
+t=\langle\zeta,T\zeta\rangle.
+\tag{260.15}
+$$
+理想块在这个方向上为零。直接计算得
+$$
+t=-\frac{x+y}{2}-\operatorname{Re}e_{01}\ge0,
+$$
+$$
+x+y+2t=-2\operatorname{Re}e_{01}\le2\epsilon.
+\tag{260.16}
+$$
+
+对任意正半定矩阵，Cauchy–Schwarz 不等式可由其正平方根给出：
+$$
+|\langle z,Tw\rangle|^2
+\le\langle z,Tz\rangle\langle w,Tw\rangle.
+\tag{260.17}
+$$
+令 $z=e_{+,1}$、$w=\zeta$。此时
+$$
+\langle e_{+,1},T\zeta\rangle
+=\frac{\overline c-e_{11}}{\sqrt2},
+\qquad
+\langle e_{+,1},Te_{+,1}\rangle=y,
+\tag{260.18}
+$$
+所以
+$$
+|\overline c-e_{11}|\le\sqrt{2yt}.
+\tag{260.19}
+$$
+由 $y+2t\le2\epsilon$ 及标量算术—几何平均不等式，
+$$
+2yt\le\frac{(y+2t)^2}{4}\le\epsilon^2.
+\tag{260.20}
+$$
+再用 $|e_{11}|\le\epsilon$，得到 $|c|\le2\epsilon$。对角和与非对角块分开取迹范数，
+$$
+\|F-E_{00}\|_1
+\le x+y+2|c|
+\le6\epsilon.
+\tag{260.21}
+$$
+
+记 $D=F-E_{00}$。则
+$$
+T-T_0=
+\begin{pmatrix}D&0\\0&-D\end{pmatrix}
++\begin{pmatrix}0&\mathcal E\\\mathcal E^\dagger&0\end{pmatrix}.
+\tag{260.22}
+$$
+右侧两个矩阵的迹范数分别为 $2\|D\|_1$ 与 $2\|\mathcal E\|_1$。因此
+$$
+\|T-T_0\|_1
+\le12\epsilon+2\|\mathcal E\|_1
+\le14\|\mathcal E\|_1.
+\tag{260.23}
+$$
+证明没有使用对角块交换性，也允许 $T$ 奇异。$\square$
+
+### 260.4 撤销同余后的全态 Lipschitz 界
+
+**定理260.2（精确共同边缘下的线性稳定性）。** 在（260.1）—（260.5）的合同下，
+$$
+\boxed{
+\|\Xi-\Omega_\psi\|_1
+\le\min\{2,\ 7\kappa(\rho)\,\delta\}.
+}
+\tag{260.24}
+$$
+该界适用于全部具有同一参考边缘的合法竞争态，不要求源响应饱和。
+
+**证明。** 令 $C_\rho=\rho_S^{1/2}V$。撤销参考同余时，两个矩阵之差变成
+$$
+(I_H\otimes C_\rho)(T-T_0)(I_H\otimes C_\rho^\dagger).
+\tag{260.25}
+$$
+回到原输入基的酉共轭不改变迹范数。由 Schatten 范数的理想性质及引理260.1，
+$$
+\|\Xi-\Omega_\psi\|_1
+\le\lambda_{\max}\|T-T_0\|_1
+\le14\lambda_{\max}\|\mathcal E\|_1.
+\tag{260.26}
+$$
+另一方面，（260.12）给
+$$
+\|\mathcal E\|_1
+\le\frac{1}{2\lambda_{\min}}\,
+\|K_\Xi-K_{\Omega_\psi}\|_1.
+\tag{260.27}
+$$
+两式合并得到 $7\kappa(\rho)\delta$。两个原始态归一化还给独立上界二，取较小者即得结论。$\square$
+
+若希望保留边缘方向上的精细权重，证明实际还给
+$$
+\|\Xi-\Omega_\psi\|_1
+\le
+7\lambda_{\max}
+\left\|
+\rho_S^{-1/2}
+\bigl((K_\Xi-K_{\Omega_\psi})|_S\bigr)
+\rho_S^{-1/2}
+\right\|_1.
+\tag{260.28}
+$$
+常数七只是上述显式估计的结果，不宣称最优。
+
+对原始响应误差
+$$
+\varepsilon_R=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_\psi)\|_1
++\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_\psi)\|_1,
+\tag{260.29}
+$$
+§256的坐标估计给
+$$
+\delta\le
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon_R.
+\tag{260.30}
+$$
+因此在同一个精确边缘合同下，也得到对两份实际响应误差的线性全态界。这里仅在范数估计中取 $|b_0|=\sqrt B$，不改变恢复坐标中的符号。
+
+### 260.5 纯产品源仍有平方根障碍
+
+精确边缘本身不足以对全部纯源给线性结论。固定单位参考向量 $e$，取
+$$
+\Omega_0=P_{0_H}\otimes P_e,
+\qquad
+\Xi_z=P_{\psi_z}\otimes P_e,
+$$
+$$
+|\psi_z\rangle=\sqrt{1-z^2}|0\rangle+iz|1\rangle,
+\qquad 0<z<1.
+\tag{260.31}
+$$
+两态始终具有完全相同的参考边缘 $P_e$，且均为纯态。理想源的输入 $Y$ 平均值为零，因此按§256或§258，它确实由这里的数据唯一确定。
+
+但该族满足
+$$
+R_X(\Xi_z)=R_X(\Omega_0)=0,
+\qquad
+R_Z(\Xi_z)-R_Z(\Omega_0)=-2z^2P_e.
+\tag{260.32}
+$$
+于是
+$$
+\delta_z=2z^2,\qquad
+\|\Xi_z-\Omega_0\|_1=2z=\sqrt{2\delta_z}.
+\tag{260.33}
+$$
+固定这一理想源与边缘后令 $z\to0$，误差比值为 $1/z$，无有限 Lipschitz 常数。因而定理260.2的纯纠缠条件不能仅以“纯源且已知边缘”替换。
+
+### 260.6 弱纠缠极限不允许跨边缘统一常数
+
+即使始终限定理想源为纯纠缠态，线性常数也不能对所有参考边缘统一有界。固定 $E=\mathbb C^2$，令
+$$
+0<p\le\frac12,\qquad q=1-p,
+$$
+$$
+|\psi_p\rangle
+=\sqrt p\,|y_+\rangle|0\rangle_E
++\sqrt q\,|y_-\rangle|1\rangle_E,
+\qquad
+\rho_p=pE_{00}+qE_{11}.
+\tag{260.34}
+$$
+以下令 $p\downarrow0$。每个 $p>0$ 的源都纯且纠缠，其参考条件数为 $\kappa(\rho_p)=q/p$。取合法竞争态
+$$
+\Xi_p=P_{y_+}\otimes\rho_p.
+\tag{260.35}
+$$
+它是具有同一个 $\rho_p$ 的混合产品态，属于定理的竞争范围。两份数据为
+$$
+K_{\Omega_{\psi_p}}=2\sqrt{pq}\,E_{01},
+\qquad K_{\Xi_p}=0,
+\qquad
+\delta_p=2\sqrt{pq}\longrightarrow0.
+\tag{260.36}
+$$
+
+为直接核验态距离，在有序基
+$(y_+0,y_+1,y_-0,y_-1)$ 中，
+$$
+\Xi_p-\Omega_{\psi_p}=
+\begin{pmatrix}
+0&0&0&-\sqrt{pq}\\
+0&q&0&0\\
+0&0&0&0\\
+-\sqrt{pq}&0&0&-q
+\end{pmatrix}.
+\tag{260.37}
+$$
+其非零本征值是 $q$ 及
+$$
+\frac{-q\pm\sqrt{q^2+4pq}}2.
+\tag{260.38}
+$$
+后两个本征值异号，因此
+$$
+\boxed{
+\|\Xi_p-\Omega_{\psi_p}\|_1
+=q+\sqrt{q^2+4pq}\longrightarrow2.
+}
+\tag{260.39}
+$$
+相应半迹距离趋于一。若存在对所有这些边缘都相同的有限常数 $C$，使全态误差不超过 $C\delta_p$，其右侧会趋于零，与（260.39）矛盾。
+
+这里每个比较对的边缘都精确相同；只有在改变 $p$ 时边缘才改变。这个反例证明某种边缘依赖不可省略，不证明定理260.2中条件数的一次方依赖或常数七最优。
+
+### 260.7 线性界的边界
+
+本节加强的是一个明确的额外合同：理想源纯且纠缠，所有竞争态的参考边缘精确等于它的边缘。证明用该等式把白化后的两个对角块之和固定为 $I_2$，再用正性迫使未直接读取的块只发生线性变化。§256允许边缘改变，其平方根尺度与本节不冲突。
+
+本节没有给出含噪参考边缘的同型界，也没有把近似边缘直接代入精确同余。若实际估计只有 $\|\widehat\rho-\rho\|_1$ 的误差保证，支撑变化、白化误差与合法共同填充都需要另行控制。线性稳定性本身也不提供有限样本的误差保证或候选态搜索算法。
+
+所用工具是正半定矩阵的 Cauchy–Schwarz 不等式、支撑性质、可逆同余与 Schatten 范数理想性质，具体块估计已直接证明。这里不宣称最优常数、文献原创性、数值实现成本。
+
+## 追加锚（本行以下为增补区）
+
+## 261. 纯纠缠源的全数据线性稳定性与合法估计器
+
+§260在参考边缘精确相同时得到纯纠缠源的线性恢复界。本节去掉这项相等要求：边缘和两份响应都允许误差，竞争态也可以在理想参考支撑之外增加质量和相干。只要理想源仍为纯纠缠态，全态误差就能由完整数据误差线性控制。
+
+证明分两步。由数据可读取的正算子先控制纯源正交补中的总质量；其余部分属于一个明确的线性空间，在这个空间中，边缘与非对角块具有维数无关的线性逆界。随后用全部密度态上的凸优化，给任意经典矩阵估计定义一个合法共同填充。
+
+### 261.1 任意竞争态的完整数据合同
+
+沿用§256的同一有限维联合接口 $H\otimes E$，其中 $\dim H=2$。以下块矩阵均写在固定的输入 $Y$ 本征基中；回到原输入基的酉共轭不改变迹范数。
+
+对任意Hermitian联合算子 $X$，定义
+$$
+\mathscr K(X)=2X_{+-},
+\qquad
+\mathcal M(X)=\bigl(\operatorname{Tr}_H X,\mathscr K(X)\bigr),
+$$
+$$
+\|\mathcal M(X)\|_{\oplus}
+=\|\operatorname{Tr}_H X\|_1+\|\mathscr K(X)\|_1.
+\tag{261.1}
+$$
+这里 $\mathscr K$ 对态给出的矩阵就是由两份可信、已标定完整响应合成的
+$$
+K_\Omega=
+\frac{\mathcal R_a(\Omega)+\mathcal R_b(\Omega)}{2\sqrt A}
+-i\,\frac{\mathcal R_a(\Omega)-\mathcal R_b(\Omega)}{2b_0},
+\qquad A\ge B>0,\quad b_0^2=B.
+\tag{261.2}
+$$
+所有核范数与联合态迹范数均未除以二。
+
+固定归一化纯纠缠理想源
+$$
+\Omega_\psi=P_\psi,\qquad
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+$$
+$$
+\rho=uu^\dagger+vv^\dagger,\qquad
+S=\operatorname{supp}\rho,\qquad
+p=\lambda_{\min}(\rho|_S)>0.
+\tag{261.3}
+$$
+纯纠缠与qubit输入使 $\dim S=2$，且 $0<p\le1/2$。$S^\perp$ 可以非零。
+
+竞争态 $\Xi$ 为整个已声明 $H\otimes E$ 上任意归一化正半定态。记
+$$
+\Delta=\Xi-\Omega_\psi,\qquad
+\Delta\rho=\operatorname{Tr}_H\Xi-\rho,\qquad
+\Delta K=\mathscr K(\Xi)-K_{\Omega_\psi},
+$$
+$$
+\varepsilon=\|\Delta\rho\|_1+\|\Delta K\|_1.
+\tag{261.4}
+$$
+不要求竞争态与理想源具有相同边缘、支撑或秩，也不要求竞争态纯或纠缠。
+
+### 261.2 完整数据暴露理想纯源
+
+在 $S$ 上令
+$$
+a=\rho_S^{-1/2}u,\qquad
+b=\rho_S^{-1/2}v,\qquad \rho_S=\rho|_S.
+\tag{261.5}
+$$
+因为 $aa^\dagger+bb^\dagger=I_S$ 且 $\dim S=2$，$a,b$ 为正交归一基。定义整个参考空间上的算子
+$$
+A_\psi=\rho_S^{-1}\oplus I_{S^\perp},
+\qquad
+B_\psi=-\rho_S^{-1/2}|a\rangle\langle b|\rho_S^{-1/2},
+\tag{261.6}
+$$
+其中 $B_\psi$ 在 $S^\perp$ 上及跨参考支撑块上均补零。置
+$$
+L_\psi=
+\begin{pmatrix}
+A_\psi&B_\psi\\
+B_\psi^\dagger&A_\psi
+\end{pmatrix}.
+\tag{261.7}
+$$
+
+**引理261.1（纯源暴露与固定正谱隙）。** 有
+$$
+\boxed{
+L_\psi\succeq I_{H\otimes E}-P_\psi,
+\qquad \ker L_\psi=\mathbb C\psi.
+}
+\tag{261.8}
+$$
+并且
+$$
+\|A_\psi\|\le\frac1p,\qquad
+\|B_\psi\|\le\frac1p.
+\tag{261.9}
+$$
+
+**证明。** 在 $H\otimes S$ 上，
+$$
+L_\psi=D M_0D,\qquad
+D=\operatorname{diag}(\rho_S^{-1/2},\rho_S^{-1/2}),
+$$
+$$
+M_0=
+\begin{pmatrix}
+I_S&-|a\rangle\langle b|\\
+-|b\rangle\langle a|&I_S
+\end{pmatrix}.
+\tag{261.10}
+$$
+$M_0$ 的谱为 $0,1,1,2$，其核为 $\mathbb C(a,b)$。因此同余后的核为
+$\mathbb C(\rho_S^{1/2}a,\rho_S^{1/2}b)=\mathbb C(u,v)$。
+
+还须核对正谱隙。矩阵 $DM_0D$ 与
+$M_0^{1/2}D^2M_0^{1/2}$ 的非零谱相同，因为它们分别是
+$(DM_0^{1/2})(DM_0^{1/2})^\dagger$ 及反序Gram矩阵。又有
+$$
+M_0^{1/2}D^2M_0^{1/2}
+\succeq
+\frac{1}{\lambda_{\max}(\rho_S)}M_0.
+\tag{261.11}
+$$
+二者秩均为三。有序本征值的单调性因而给出，$L_\psi$ 在此参考块中的每个正本征值至少为
+$1/\lambda_{\max}(\rho_S)\ge1$。
+
+在 $H\otimes S^\perp$ 上，$L_\psi$ 为恒等算子，且两个参考块之间没有交叉项。这证明（261.8）。最后，
+$$
+\|B_\psi\|
+\le\|\rho_S^{-1/2}\|^2
+\bigl\||a\rangle\langle b|\bigr\|
+=\frac1p,
+\tag{261.12}
+$$
+而 $A_\psi$ 的范数同样不超过 $1/p$。$\square$
+
+这个暴露算子的期望可由完整数据读取。对任意Hermitian $X$，
+$$
+\operatorname{Tr}(L_\psi X)
+=
+\operatorname{Tr}\!\left(A_\psi\operatorname{Tr}_H X\right)
++\operatorname{Re}\operatorname{Tr}\!\left(B_\psi^\dagger\mathscr K(X)\right).
+\tag{261.13}
+$$
+其系数也只依赖理想完整数据，因为
+$$
+B_\psi=-\frac12\rho_S^{-1}
+\bigl(K_{\Omega_\psi}|_S\bigr)\rho_S^{-1},
+\tag{261.14}
+$$
+再向 $S^\perp$ 补零即可。式（261.9）的较好范数估计使用（261.6）的正交向量结构。
+
+由 $L_\psi\psi=0$，迹范数对偶给
+$$
+0\le\operatorname{Tr}(L_\psi\Xi)
+=\operatorname{Tr}(A_\psi\Delta\rho)
++\operatorname{Re}\operatorname{Tr}(B_\psi^\dagger\Delta K)
+\le\frac{\varepsilon}{p}.
+\tag{261.15}
+$$
+令 $Q_\psi=I-P_\psi$，得到
+$$
+\boxed{
+t:=\operatorname{Tr}(Q_\psi\Xi)\le\frac{\varepsilon}{p}.
+}
+\tag{261.16}
+$$
+这里 $Q_\psi$ 是完整联合纯源的正交补投影，区别于参考投影 $P_S$。它控制的尾部包含参考核外质量，也包含原参考支撑内与 $\psi$ 正交的部分。
+
+### 261.3 纯源切向空间具有显式线性逆
+
+先证明一个不带条件数的代数估计。设 $a,b$ 为任意参考空间中的正交单位向量，令
+$$
+\chi=(a,b),\qquad g=(r,s),\qquad
+T'=|\chi\rangle\langle g|+|g\rangle\langle\chi|.
+\tag{261.17}
+$$
+$r,s$ 可以包含 $\operatorname{span}\{a,b\}$ 之外的任意分量。记
+$$
+T'=\begin{pmatrix}P'&N\\N^\dagger&Q'\end{pmatrix},
+\qquad R'=P'+Q'.
+\tag{261.18}
+$$
+直接展开得
+$$
+P'=ar^\dagger+ra^\dagger,\qquad
+Q'=bs^\dagger+sb^\dagger,\qquad
+N=as^\dagger+rb^\dagger.
+\tag{261.19}
+$$
+
+**引理261.2（切向数据逆界）。** 有
+$$
+\boxed{
+\|T'\|_1\le
+3\|\mathscr K(T')\|_1+
+2\|\operatorname{Tr}_H T'\|_1.
+}
+\tag{261.20}
+$$
+
+**证明。** 两个未直接读取的对角块可以由 $N,R'$ 恢复为
+$$
+\begin{aligned}
+P'&=a(Nb)^\dagger+(Nb)a^\dagger
+-\langle b,R'b\rangle\,|a\rangle\langle a|,\\
+Q'&=b(N^\dagger a)^\dagger+(N^\dagger a)b^\dagger
+-\langle a,R'a\rangle\,|b\rangle\langle b|.
+\end{aligned}
+\tag{261.21}
+$$
+例如 $Nb=r+a(s^\dagger b)$，而
+$\langle b,R'b\rangle=2\operatorname{Re}(b^\dagger s)$，
+代入即得第一式；第二式由
+$N^\dagger a=s+b(r^\dagger a)$ 同样得到。
+
+秩一矩阵的迹范数与迹范数理想性质给
+$$
+\|P'\|_1\le2\|N\|_1+\|R'\|_1,
+\qquad
+\|Q'\|_1\le2\|N\|_1+\|R'\|_1.
+\tag{261.22}
+$$
+再分开对角和非对角块，
+$$
+\|T'\|_1
+\le\|P'\|_1+\|Q'\|_1+2\|N\|_1
+\le6\|N\|_1+2\|R'\|_1.
+\tag{261.23}
+$$
+使用 $\mathscr K(T')=2N$ 即得结论。$\square$
+
+该公式已包括 $r,s$ 的所有环境方向；不靠把它们投影到二维参考支撑来换取逆界。特别地，若切向矩阵的两份完整数据都为零，则该矩阵为零。
+
+回到理想源，定义整个参考空间上的可逆算子
+$$
+D_E=\rho_S^{-1/2}\oplus I_{S^\perp}.
+\tag{261.24}
+$$
+它满足
+$$
+\|D_E\|^2=\frac1p,\qquad
+\|D_E^{-1}\|^2\le1,
+\tag{261.25}
+$$
+并把 $u,v$ 送到 $a,b$。任意Hermitian纯源切向矩阵
+$$
+T=|\psi\rangle\langle h|+|h\rangle\langle\psi|
+\tag{261.26}
+$$
+在 $I_H\otimes D_E$ 同余后属于（261.17）的形式。两个数据分量都与这个参考同余相容：
+$$
+\operatorname{Tr}_H[(I_H\otimes D_E)T(I_H\otimes D_E)]
+=D_E(\operatorname{Tr}_H T)D_E,
+$$
+$$
+\mathscr K[(I_H\otimes D_E)T(I_H\otimes D_E)]
+=D_E\mathscr K(T)D_E.
+\tag{261.27}
+$$
+结合引理261.2、（261.25）以及迹范数理想性质，得到
+$$
+\boxed{
+\|T\|_1\le\frac3p\|\mathcal M(T)\|_{\oplus}.
+}
+\tag{261.28}
+$$
+这里“切向”只命名上述线性空间；不要求 $h$ 很小，也未使用一阶近似。
+
+### 261.4 任意合法竞争态的全数据线性界
+
+将实际误差作精确分解
+$$
+B_{\mathrm{tail}}=Q_\psi\Xi Q_\psi\succeq0,\qquad
+\operatorname{Tr}B_{\mathrm{tail}}=t,\qquad
+T=\Delta-B_{\mathrm{tail}}.
+\tag{261.29}
+$$
+由于 $\Xi$ 归一化，
+$$
+P_\psi\Delta P_\psi=-tP_\psi.
+\tag{261.30}
+$$
+于是 $T$ 恰为（261.26）的形式，具体可取
+$$
+h=Q_\psi\Xi\psi-\frac t2\psi.
+\tag{261.31}
+$$
+所有纯源与正交补之间的相干都保留在 $T$ 中。
+
+正尾部的两个数据范数满足
+$$
+\|\operatorname{Tr}_H B_{\mathrm{tail}}\|_1=t,
+\qquad
+\|\mathscr K(B_{\mathrm{tail}})\|_1\le t.
+\tag{261.32}
+$$
+第一式来自正性与保迹；第二式是§256已证明的Hermitian非对角压缩收缩界。因此
+$$
+\|\mathcal M(T)\|_{\oplus}
+\le\varepsilon+2t.
+\tag{261.33}
+$$
+
+**定理261.3（纯纠缠源的全数据稳定性）。** 在（261.1）—（261.4）的合同下，任意归一化正半定竞争态满足
+$$
+\boxed{
+\|\Xi-\Omega_\psi\|_1
+\le
+\min\left\{
+2,\ C(p)\varepsilon
+\right\},
+\qquad
+C(p)=\frac4p+\frac6{p^2}\le\frac8{p^2}.
+}
+\tag{261.34}
+$$
+常数不依赖参考环境维数，不要求竞争态参考边缘精确，也不要求其支撑落在 $S$。
+
+**证明。** 由切向逆界和正尾部的迹，
+$$
+\begin{aligned}
+\|\Delta\|_1
+&\le\|T\|_1+t\\
+&\le\frac3p(\varepsilon+2t)+t\\
+&\le\left(\frac4p+\frac6{p^2}\right)\varepsilon,
+\end{aligned}
+\tag{261.35}
+$$
+最后一步使用（261.16）。因 $p\le1/2$，$4p+6\le8$。两份原始态归一化还给独立上界二，得到（261.34）。$\square$
+
+该证明没有将竞争态先去相干，也没有把核外相干仅按质量的平方根估计。线性界来自（261.21）对切向矩阵的直接恢复；暴露算子负责剩余正尾部。
+
+如需使用原始两条响应误差，令
+$$
+\varepsilon_R=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_\psi)\|_1
++\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_\psi)\|_1.
+\tag{261.36}
+$$
+由坐标转换，
+$$
+\varepsilon\le
+\|\Delta\rho\|_1+
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon_R.
+\tag{261.37}
+$$
+所以这仍是边缘与两份完整实际响应的全数据误差界。
+
+### 261.5 任意经典估计的合法共同填充
+
+给定同一参考空间上的任意经典矩阵估计
+$$
+\widehat\rho=\widehat\rho^\dagger,\qquad
+\widehat K\in\mathcal L(E).
+\tag{261.38}
+$$
+不要求 $\widehat\rho$ 本身为密度矩阵，也不要求两份估计能够精确共同实现。在全部联合密度矩阵上定义目标
+$$
+J(\Xi)=
+\|\operatorname{Tr}_H\Xi-\widehat\rho\|_1
++\|\mathscr K(\Xi)-\widehat K\|_1,
+$$
+$$
+\widehat\Omega\in
+\operatorname*{arg\,min}_{\Xi\succeq0,\ \operatorname{Tr}\Xi=1}J(\Xi).
+\tag{261.39}
+$$
+有限维密度态集合非空且紧致，$J$ 连续，故最小解存在。范数的凸性与两个数据映射的线性还表明，这是一个数学上定义明确的凸优化问题。任意选取的最小解都自动为合法共同来源。
+
+**推论261.4（估计器误差）。** 若存在（261.3）的纯纠缠真源，且已给定误差合同
+$$
+J(\Omega_\psi)\le\eta,
+\tag{261.40}
+$$
+则（261.39）的任意最小解满足
+$$
+\boxed{
+\|\widehat\Omega-\Omega_\psi\|_1
+\le\min\{2,\ 2C(p)\eta\}.
+}
+\tag{261.41}
+$$
+
+**证明。** 真源属于优化的合法候选集合，所以
+$J(\widehat\Omega)\le J(\Omega_\psi)\le\eta$。对两个数据分量分别应用三角不等式，
+$$
+\|\mathcal M(\widehat\Omega-\Omega_\psi)\|_{\oplus}
+\le J(\widehat\Omega)+J(\Omega_\psi)
+\le2\eta.
+\tag{261.42}
+$$
+代入定理261.3即得。$\square$
+
+目标函数不需要预先知道真源、真实边缘的支撑或 $p$；这些量只进入正确性前提及误差常数。这里不要求最小解唯一，不由该优化自行产生有限样本误差合同，也不宣称求解效率。它是从经典估计定义合法候选的过程，不是作用于单份未知量子态的物理恢复通道。
+
+### 261.6 仍然必要的来源条件
+
+纯纠缠条件不能删去。§260的纯产品例保持参考边缘完全相同，却有
+$$
+\|\Delta\rho\|_1=0,\qquad
+\|\Delta K\|_1=2z^2,\qquad
+\|\Xi_z-\Omega_0\|_1=2z.
+\tag{261.43}
+$$
+因此即使使用本节全数据范数，也不能为该固定纯产品源给有限线性常数。
+
+边缘条件数的某种退化依赖也不可省略。§260的纯纠缠族在每个比较对内具有相同 $\rho_p$，完整数据误差为 $2\sqrt{p(1-p)}\to0$，而未除以二的全态误差趋于二。因此本节常数不能对所有趋近产品源的理想态统一有界。这里没有证明 $p^{-2}$ 阶或数值系数最优。
+
+与§260相比，本节确实允许边缘有误差及竞争态的参考核外支撑。分析中的白化只作用于已声明理想源的固定支撑，并在环境其余方向补恒等算子；估计器没有对含噪边缘直接求逆。全文结论仍以同一有限维联合接口、可信输入轴、完整矩阵数据及纯纠缠理想源为合同。
+
+## 追加锚（本行以下为增补区）
