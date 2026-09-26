@@ -4525,3 +4525,53 @@ Section III.A 相应排除后者的有限强度凝聚转变。
 普通密度归一化由第 105 章的实际相对鞍点比较推出，没有以弱收敛替代密度定理。
 经典包络法、二项对数凹性及 Stirling 展开分别归属其成熟来源；
 有限文献核查不认证全局原创。结论仍是纯理论文本，未进入 Lean 或消化链。
+
+## 第 109 章：半整数带、theta 标记与未闭合的方差抵消
+
+[谱边界卷第 109 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(1/\sigma)\to\infty$ 且任意 $\Delta=\ln(q/Q^{11/4})-\ln(1/\sigma)\to\infty$ 下证明实际标量输出的
+加权 $L^1$ 平滑，并将前两阶信息标记的剩余项定位于非零半整数共振带。
+原完整信息方差定理仍缺带内中心抵消和输出尾部控制，未由标量结果自动推出。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+Section 2 定义采用 $e(x)=\exp(2\pi x)$，复对称矩阵的实部正定；
+参数还必须避开 theta 零除子才能形成归一化分布。
+Proposition 4.1、Remark 4.2（PDF 第 11–12 页及对应原 TeX）
+把特征函数写成移位 theta 比，把矩写成 theta 导数、累积量写成对数导数；
+协方差分子是 $\theta\theta''-(\theta')^2$，并由热方程联系线性与二次倾斜。
+这些基本公式在原文亦归属此前离散 Gaussian 文献。
+
+本章一维 Gaussian 相位对应矩阵参数
+$B_{\rm theta}=1/(2\pi d)-2i\tau$、线性参数
+$u_{\rm theta}=m/(2\pi d)+ib/(2\pi)$，实部条件成立。
+但复杂经验相位处的 theta 分母未获一致非零保证；
+因此本章保留不除以单坐标因子的有限乘积标记公式。
+该文没有给原二项信息标记、固定总数选中律或增长数组下的统一二阶导数估计，
+也不支付条件方差比较的全输出尾部。
+
+J. P. Buhler、A. C. Gamst、R. L. Graham、A. W. Hales，
+*Explicit error bounds for lattice Edgeworth expansions*，
+[arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)。
+Theorem 1 与 Section 1（PDF 第 1–4 页）处理有界、非退化整数随机变量的 iid 和，
+固定格距与平移，给均值两侧概率差的一阶偏度及同余修正；
+归一化表述把格距设为一，允许实平移。
+版本横幅为 2017 年 10 月 24 日，内部标题日期为 2018 年 9 月 12 日，二者区分。
+这说明格点修正须保留自己的算术条件，
+并非直接适用于本章非同分布二次计数、经验实中心、Gaussian 平滑及两个信息标记。
+骰子例子也不构成原实际计数模型的反例。
+
+第 106 章已核对的 Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+的 theta 变换及 Lemmas 3.18–3.19 提供经典 cusp/移位包络关系；
+Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+Section 2、Lemma 3 的完整 Gauss 和界保持其互素条件。
+它们的分布性或最大估计不替代原共同环境的量化相位分离。
+本章另直接证明小分母收缩与单模宽度：分母一、二只有一个模为一的 Fourier 模，
+更大固定分母有严格收缩；使用全部可用中心因子将每个共振带物理积分宽度降至常数。
+
+条件方差的共同调制抵消和信息倾斜二阶导数是经典条件矩与指数族恒等式，
+不被另称为新通用定理。这里的模型内内容是实际标记 Fourier 定位、
+无逆噪声的选中标量回接，以及保留精确中心、完整外部相关性和同一测量残差的接口。
+原中心有理独立只排除精确共振，不给所需的近共振速率。
+有限原文检索未找到直接承担全部剩余估计的结果，不认证其不存在或全局原创。
+纯理论文本未进入 Lean、消化或冻结链。
