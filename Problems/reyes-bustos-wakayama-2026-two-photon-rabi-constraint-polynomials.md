@@ -29,7 +29,8 @@ polynomials
 Issue #10148 fixes the readings: `P_k` is a real polynomial in `y` with real
 parameters `x` and `ε`; the first statement is taken for every real `ε`; the
 second statement is taken for `ε ≥ 0` and means that the coefficients of
-`y^0, …, y^N` are all positive. The source derives its constraint condition
+`y^0, …, y^N` are all positive and that `P_N^{(N,ρ,ε)}(x, y) ≠ 0` for every
+`y > 0`. The source derives its constraint condition
 for `ε ≥ 0` and writes `P_N^{(N,ρ,±ε)}` for the two signs, while the
 conjecture writes `+ε` only.
 
@@ -39,8 +40,9 @@ conjecture writes `+ε` only.
 continuous spectrum, and the absence of positive roots for `x > 1` matches the
 absence of Juddian points past the critical coupling. The frozen declaration
 `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.result` proves both
-statements: the product formula for every `N`, `ρ ∈ {0, 1}` and real `ε`, and
-the positivity of all coefficients for every `x > 1` and `ε ≥ 0`.
+statements: the product formula for every `N`, `ρ ∈ {0, 1}` and real `ε`, and,
+for every `x > 1` and `ε ≥ 0`, the positivity of all coefficients and the
+absence of positive roots in `y`.
 
 ## Gap
 
@@ -79,7 +81,8 @@ so `P_N(x, y) = det(y + J(x)) = ∏ (y + μ_i)` over the eigenvalues `μ_i` of
 `J(x) = √x J(1) + D` with `D` diagonal and
 `D_k = 2k(√x − 1)(√x(4N + 2ρ − 2k + 2ε + 1) + 2(k + ε)) ≥ 0`. So `J(x)` is
 positive definite, every `μ_i > 0`, and every coefficient of `∏ (y + μ_i)`,
-an elementary symmetric function of the `μ_i`, is positive.
+an elementary symmetric function of the `μ_i`, is positive; for `y > 0`
+every factor `y + μ_i` is positive, so `y` is not a root.
 
 ## Falsifier
 
@@ -96,21 +99,23 @@ Symbolic computation confirms the closed form of part (a) for `N ≤ 8` and
 rational arithmetic, part (b) holds in 1488 cases with `N ≤ 12`, random
 `ε ≥ 0` and `x > 1`, including `x = 1.001` and `x = 1.000001`. The source's
 examples at `x = 1` reproduce, except that the product printed for
-`P_5^{(5,1,ε)}(1, y)` carries the roots `2, 12, 30, 56, 90` of the case
-`ρ = 0`; for `ρ = 1` the roots are `6, 20, 42, 72, 110`, as the conjecture
-predicts.
+`P_5^{(5,1,ε)}(1, y)` is `(y + 2)(y + 12)(y + 30)(y + 56)(y + 90)`, the
+product for `ρ = 0`; for `ρ = 1` the product is
+`(y + 6)(y + 20)(y + 42)(y + 72)(y + 110)`, as the conjecture predicts.
 
 The canonical source is
 `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.lean`. Its public
 declarations are `constraintPoly`, `claim`, and `result`; `lam`, `qpoly`,
 `gco`, `coef`, `dg`, `bb` and `jac` are private non-proposition definitions.
 The frozen module state has statement identity
-`sha256:89a679afe7f10fdf8f99bb8d98183ea6a015135f6aa346ceb7dc2ee7c6bca201`.
+`sha256:3ba374453e4fc4b17e185bb485c7751960bf152d401c74d888b3ee4a7e687249`.
 The result declaration has statement identity
 `sha256:45f60c302ea623d163ec21194da6a6e4b0cb9af013871348b816e6c07b17f5df`.
 The Freeze event is
-`sha256:c5ec9331a4082aee028e554893111cbb315cd85cef1337fbb8b6626a047fdc71`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:3413e93218c543e704f968df8f26983f2a470a369a34ca002dcba74e14957fdb`
+and its project-level frozen prerequisite is the module
+`D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant`, whose first-row
+expansion `det_sparse_front` gives the tridiagonal determinant recursion. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

@@ -19,10 +19,10 @@ internal sealed class TwoPhotonRabiConstraintPolynomialsDocument : IScribeDocume
                 "Definition 4.1 of the source, read as polynomials in y with real parameters x, bias eps and parity rho, and the index N of the constraint polynomial P_N.",
                 "constraintPoly", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The conjecture", ClaimDefinitionFormula(),
-                "The first statement is taken for every real bias. The second statement is taken for bias eps >= 0, the sign the source uses when it derives the constraint condition; for eps = -2, N = 1 and rho = 0 one has P_1 = y - 2x + 4, which is negative at y = 0 once x > 2.",
+                "The first statement is taken for every real bias. The second statement, positive coefficients and therefore no positive roots in y, is taken for bias eps >= 0, the sign the source uses when it derives the constraint condition; for eps = -2, N = 1 and rho = 0 one has P_1 = y - 2x + 4, which is negative at y = 0 once x > 2.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture for nonnegative bias", Disp(F.Id("claim")),
-                "Part (a). At x = 1 the bias cancels from the recursion. In the basis of partial products Q_i = (y + lambda_1)...(y + lambda_i), with lambda_n = 2n(2n + 2rho - 1), the polynomial P_k(1, y) has coefficient C(k, i) 4^(k-i) (N-i-1)(N-i-2)...(N-k) (k+1)k...(i+2) at Q_i. Since y Q_i = Q_(i+1) - lambda_(i+1) Q_i, the recursion for these coefficients reduces to a polynomial identity that holds exactly when rho^2 = rho. At k = N every coefficient with i < N contains the factor N - N = 0, so P_N(1, y) = Q_N. Part (b). P_k(x, y) is det(y + J) for the symmetric tridiagonal matrix J(x) with diagonal entries d_k(x) = 2xk(4N + 2rho - 2k + 2eps + 1) - 4k(k + eps) and off-diagonal entries the square roots of the nonnegative couplings b_k x; expanding the determinant along the first row gives the recursion. By part (a) the eigenvalues of J(1) are the numbers lambda_n > 0, so J(1) is positive definite. For x >= 1 and eps >= 0, J(x) = sqrt(x) J(1) + D with D diagonal and D_k = 2k(sqrt(x) - 1)(sqrt(x)(4N + 2rho - 2k + 2eps + 1) + 2(k + eps)) >= 0, so J(x) is positive definite. Its eigenvalues mu_i are positive, P_N(x, y) is the product of the factors y + mu_i, and every coefficient is a sum of products of the mu_i, hence positive.",
+                "Part (a). At x = 1 the bias cancels from the recursion. In the basis of partial products Q_i = (y + lambda_1)...(y + lambda_i), with lambda_n = 2n(2n + 2rho - 1), the polynomial P_k(1, y) has coefficient C(k, i) 4^(k-i) (N-i-1)(N-i-2)...(N-k) (k+1)k...(i+2) at Q_i. Since y Q_i = Q_(i+1) - lambda_(i+1) Q_i, the recursion for these coefficients reduces to a polynomial identity that holds exactly when rho^2 = rho. At k = N every coefficient with i < N contains the factor N - N = 0, so P_N(1, y) = Q_N. Part (b). P_k(x, y) is det(y + J) for the symmetric tridiagonal matrix J(x) with diagonal entries d_k(x) = 2xk(4N + 2rho - 2k + 2eps + 1) - 4k(k + eps) and off-diagonal entries the square roots of the nonnegative couplings b_k x; expanding the determinant along the first row gives the recursion. By part (a) the eigenvalues of J(1) are the numbers lambda_n > 0, so J(1) is positive definite. For x >= 1 and eps >= 0, J(x) = sqrt(x) J(1) + D with D diagonal and D_k = 2k(sqrt(x) - 1)(sqrt(x)(4N + 2rho - 2k + 2eps + 1) + 2(k + eps)) >= 0, so J(x) is positive definite. Its eigenvalues mu_i are positive, P_N(x, y) is the product of the factors y + mu_i, and every coefficient is a sum of products of the mu_i, hence positive; for y > 0 each factor y + mu_i is positive, so y is not a root.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("reyes-bustos-wakayama-2026-two-photon-rabi-constraint-polynomials"),
@@ -112,9 +112,13 @@ internal sealed class TwoPhotonRabiConstraintPolynomialsDocument : IScribeDocume
         Formula factor = Add(F.Id("X"), Product(D(2), j, Parenthesized(Subtract(Add(Times(D(2), j), Times(D(2), rho)), D(1)))));
         Formula critical = All("eps", Reals(),
             Equal(P(D(1), n), ProdOver("n", Call("Finset.Icc", D(1), n), Parenthesized(factor))));
+        Formula y = F.Id("y");
+        Formula coefficients = All("i", Naturals(),
+            Implies(AtMost(i, n), Less(D(0), Call("coeff", P(x, n), i))));
+        Formula noRoots = All("y", Reals(),
+            Implies(Less(D(0), y), new Formula.Relation(Call("eval", y, P(x, n)), FormulaRelationOperator.NotEqual, D(0))));
         Formula positive = All("eps", Reals(), Implies(AtMost(D(0), eps), All("x", Reals(),
-            Implies(Less(D(1), x), All("i", Naturals(),
-                Implies(AtMost(i, n), Less(D(0), Call("coeff", P(x, n), i))))))));
+            Implies(Less(D(1), x), And(coefficients, noRoots)))));
         Formula parity = Or(Equal(rho, D(0)), Equal(rho, D(1)));
         return All("N", Naturals(), All("rho", Reals(), Implies(parity, And(critical, positive))));
     }

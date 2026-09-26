@@ -11,13 +11,15 @@ proof_shape: result: content
 escape_witness: form (2), the public conclusion `result` itself: part (a) is produced by the closed
   form `closedForm` of every intermediate polynomial in the basis of partial products, whose
   coefficient recurrence `cstep` reduces to a polynomial identity valid for rho in {0, 1}; part (b)
-  by the tridiagonal determinant recursion `detJac`, the positive definiteness of the Jacobi matrix
-  at x = 1 obtained from part (a) (`jacOnePosDef`), and the splitting J(x) = sqrt x J(1) + D with a
-  nonnegative diagonal D (`hsplit`, `hDnn`)
+  by the tridiagonal determinant recursion `detJac` (first-row expansion reused from the frozen
+  `det_sparse_front`), the positive definiteness of the Jacobi matrix at x = 1 obtained from
+  part (a) (`jacOnePosDef`), and the splitting J(x) = sqrt x J(1) + D with a nonnegative
+  diagonal D (`hsplit`, `hDnn`)
 admission_basis: open-problem-resolution (issue #10148)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies: D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant.det_sparse_front
 -/
 
+import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.RingTheory.Polynomial.Vieta
@@ -28,6 +30,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials
 
 open Polynomial
+open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (det_sparse_front)
 
 /-!
 Reyes-Bustos and Wakayama, *Two-photon quantum Rabi models – Spectral degeneracy and
@@ -50,14 +53,15 @@ noncomputable def constraintPoly (N : ℕ) (ρ ε x : ℝ) : ℕ → ℝ[X]
       - C (4 * ((k : ℝ) + 2) * ((k : ℝ) + 1) * (2 * ((N : ℝ) - ((k : ℝ) + 2) + 1) + ρ)
         * (2 * ((N : ℝ) - ((k : ℝ) + 2) + 1) + ρ - 1) * x) * constraintPoly N ρ ε x k
 
-/-- Conjecture 4.5 of arXiv:2609.00750v1, the first statement for every bias `ε` and the second
-for `ε ≥ 0`. -/
+/-- Conjecture 4.5 of arXiv:2609.00750v1, the first statement for every bias `ε`, and the second
+(positive coefficients, and therefore no positive roots in `y`) for `ε ≥ 0`. -/
 def claim : Prop :=
   ∀ (N : ℕ) (ρ : ℝ), (ρ = 0 ∨ ρ = 1) →
     (∀ ε : ℝ, constraintPoly N ρ ε 1 N =
       ∏ n ∈ Finset.Icc 1 N, (X + C (2 * (n : ℝ) * (2 * n + 2 * ρ - 1)))) ∧
     (∀ ε : ℝ, 0 ≤ ε → ∀ x : ℝ, 1 < x →
-      ∀ i ≤ N, 0 < (constraintPoly N ρ ε x N).coeff i)
+      (∀ i ≤ N, 0 < (constraintPoly N ρ ε x N).coeff i) ∧
+        ∀ y : ℝ, 0 < y → (constraintPoly N ρ ε x N).eval y ≠ 0)
 
 /-- The eigenvalue `2n(2n + 2ρ - 1)` of the critical tridiagonal matrix. -/
 private noncomputable def lam (ρ : ℝ) (n : ℕ) : ℝ := 2 * n * (2 * n + 2 * ρ - 1)
@@ -362,28 +366,6 @@ theorem result : claim := by
         rw [Nat.cast_sub (by omega), Nat.cast_sub (by omega)]
         push_cast; ring
       rw [coef, if_pos (by omega), gco, this, mul_zero, zero_mul, map_zero, zero_mul]
-  have tridet : ∀ (m : ℕ) (M : Matrix (Fin (m + 2)) (Fin (m + 2)) ℝ),
-      (∀ j : Fin m, M 0 j.succ.succ = 0) → (∀ i : Fin m, M i.succ.succ 0 = 0) →
-      M.det = M 0 0 * (M.submatrix Fin.succ Fin.succ).det -
-        M 0 1 * M 1 0 *
-          (M.submatrix (fun i : Fin m => i.succ.succ) (fun j : Fin m => j.succ.succ)).det := by
-    intro m M h0 h1
-    have hB : (M.submatrix Fin.succ (Fin.succAbove 1)).det =
-        M 1 0 *
-          (M.submatrix (fun i : Fin m => i.succ.succ) (fun j : Fin m => j.succ.succ)).det := by
-      rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ,
-        Finset.sum_eq_zero (fun i _ => by
-          simp only [Matrix.submatrix_apply, Fin.one_succAbove_zero, h1 i, mul_zero, zero_mul]),
-        add_zero]
-      simp only [Fin.val_zero, pow_zero, one_mul, Matrix.submatrix_apply, Fin.one_succAbove_zero,
-        Fin.succ_zero_eq_one]
-      congr 1
-    rw [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Fin.sum_univ_succ,
-      Finset.sum_eq_zero (fun j _ => by rw [h0 j, mul_zero, zero_mul]), add_zero]
-    simp only [Fin.val_zero, pow_zero, one_mul, Fin.succAbove_zero, Fin.succ_zero_eq_one,
-      Fin.val_one, pow_one]
-    rw [hB]
-    ring
   have detJac : ∀ ε x : ℝ, 0 ≤ x → ∀ m, m ≤ N → ∀ t : ℝ,
       (t • (1 : Matrix (Fin m) (Fin m) ℝ) + jac N ρ ε x m).det =
         (constraintPoly N ρ ε x m).eval t := by
@@ -401,7 +383,7 @@ theorem result : claim := by
         push_cast
         ring
       | k + 2, ih, hm =>
-        rw [tridet _ _ ?_ ?_]
+        rw [det_sparse_front _ ?_ ?_]
         · have s1 :
               (t • (1 : Matrix (Fin (k + 2)) (Fin (k + 2)) ℝ) + jac N ρ ε x (k + 2)).submatrix
                 Fin.succ Fin.succ =
@@ -541,12 +523,16 @@ theorem result : claim := by
     rw [hsplit]
     exact ((jacOnePosDef ε).smul (by linarith : (0 : ℝ) < s)).add_posSemidef
       (Matrix.PosSemidef.diagonal hDnn)
-  intro i hi
-  rw [polyEq ε x hx0]
-  rw [Finset.prod_X_add_C_coeff _ _ (by simpa using hi)]
-  refine Finset.sum_pos (fun t _ => Finset.prod_pos fun j _ => ?_) ?_
-  · exact hPD.eigenvalues_pos j
-  · exact Finset.powersetCard_nonempty.mpr (Nat.sub_le _ _)
+  refine ⟨fun i hi => ?_, fun y hy => ?_⟩
+  · rw [polyEq ε x hx0]
+    rw [Finset.prod_X_add_C_coeff _ _ (by simpa using hi)]
+    refine Finset.sum_pos (fun t _ => Finset.prod_pos fun j _ => ?_) ?_
+    · exact hPD.eigenvalues_pos j
+    · exact Finset.powersetCard_nonempty.mpr (Nat.sub_le _ _)
+  · rw [polyEq ε x hx0, eval_prod]
+    refine (Finset.prod_pos fun j _ => ?_).ne'
+    rw [eval_add, eval_X, eval_C]
+    linarith [hPD.eigenvalues_pos j]
 
 #print axioms claim
 #print axioms result

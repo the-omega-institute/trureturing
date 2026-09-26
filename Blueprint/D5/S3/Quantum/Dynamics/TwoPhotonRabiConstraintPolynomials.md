@@ -18,7 +18,7 @@ Definition 4.1 of the source, read as polynomials in y with real parameters x, b
 
 **Definition 1.2 (The conjecture).**
 
-$$claim \Leftrightarrow (\forall N \in \mathbb{N},\; \forall rho \in \mathbb{R},\; ((rho = 0) \lor (rho = 1)) \Rightarrow ((\forall eps \in \mathbb{R},\; \operatorname{constraintPoly}\left(N, rho, eps, 1, N\right) = \prod_{n \in \operatorname{Finset.Icc}\left(1, N\right)} (X + 2 \cdot n \cdot (2 \cdot n + 2 \cdot rho - 1))) \land (\forall eps \in \mathbb{R},\; (0 \le eps) \Rightarrow (\forall x \in \mathbb{R},\; (1 < x) \Rightarrow (\forall i \in \mathbb{N},\; (i \le N) \Rightarrow (0 < \operatorname{coeff}\left(\operatorname{constraintPoly}\left(N, rho, eps, x, N\right), i\right)))))))$$
+$$claim \Leftrightarrow (\forall N \in \mathbb{N},\; \forall rho \in \mathbb{R},\; ((rho = 0) \lor (rho = 1)) \Rightarrow ((\forall eps \in \mathbb{R},\; \operatorname{constraintPoly}\left(N, rho, eps, 1, N\right) = \prod_{n \in \operatorname{Finset.Icc}\left(1, N\right)} (X + 2 \cdot n \cdot (2 \cdot n + 2 \cdot rho - 1))) \land (\forall eps \in \mathbb{R},\; (0 \le eps) \Rightarrow (\forall x \in \mathbb{R},\; (1 < x) \Rightarrow ((\forall i \in \mathbb{N},\; (i \le N) \Rightarrow (0 < \operatorname{coeff}\left(\operatorname{constraintPoly}\left(N, rho, eps, x, N\right), i\right))) \land (\forall y \in \mathbb{R},\; (0 < y) \Rightarrow (\operatorname{eval}\left(y, \operatorname{constraintPoly}\left(N, rho, eps, x, N\right)\right) \ne 0)))))))$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.claim` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$claim \Leftrightarrow (\forall N \in \mathbb{N},\; \forall rho \in \mathbb{R},
 
 *Commentary.*
 
-The first statement is taken for every real bias. The second statement is taken for bias eps >= 0, the sign the source uses when it derives the constraint condition; for eps = -2, N = 1 and rho = 0 one has P_1 = y - 2x + 4, which is negative at y = 0 once x > 2.
+The first statement is taken for every real bias. The second statement, positive coefficients and therefore no positive roots in y, is taken for bias eps >= 0, the sign the source uses when it derives the constraint condition; for eps = -2, N = 1 and rho = 0 one has P_1 = y - 2x + 4, which is negative at y = 0 once x > 2.
 
 **Theorem 1.3 (Proof of the conjecture for nonnegative bias).**
 
@@ -44,10 +44,11 @@ $$claim$$
 
 *Commentary.*
 
-Part (a). At x = 1 the bias cancels from the recursion. In the basis of partial products Q_i = (y + lambda_1)...(y + lambda_i), with lambda_n = 2n(2n + 2rho - 1), the polynomial P_k(1, y) has coefficient C(k, i) 4^(k-i) (N-i-1)(N-i-2)...(N-k) (k+1)k...(i+2) at Q_i. Since y Q_i = Q_(i+1) - lambda_(i+1) Q_i, the recursion for these coefficients reduces to a polynomial identity that holds exactly when rho^2 = rho. At k = N every coefficient with i < N contains the factor N - N = 0, so P_N(1, y) = Q_N. Part (b). P_k(x, y) is det(y + J) for the symmetric tridiagonal matrix J(x) with diagonal entries d_k(x) = 2xk(4N + 2rho - 2k + 2eps + 1) - 4k(k + eps) and off-diagonal entries the square roots of the nonnegative couplings b_k x; expanding the determinant along the first row gives the recursion. By part (a) the eigenvalues of J(1) are the numbers lambda_n > 0, so J(1) is positive definite. For x >= 1 and eps >= 0, J(x) = sqrt(x) J(1) + D with D diagonal and D_k = 2k(sqrt(x) - 1)(sqrt(x)(4N + 2rho - 2k + 2eps + 1) + 2(k + eps)) >= 0, so J(x) is positive definite. Its eigenvalues mu_i are positive, P_N(x, y) is the product of the factors y + mu_i, and every coefficient is a sum of products of the mu_i, hence positive.
+Part (a). At x = 1 the bias cancels from the recursion. In the basis of partial products Q_i = (y + lambda_1)...(y + lambda_i), with lambda_n = 2n(2n + 2rho - 1), the polynomial P_k(1, y) has coefficient C(k, i) 4^(k-i) (N-i-1)(N-i-2)...(N-k) (k+1)k...(i+2) at Q_i. Since y Q_i = Q_(i+1) - lambda_(i+1) Q_i, the recursion for these coefficients reduces to a polynomial identity that holds exactly when rho^2 = rho. At k = N every coefficient with i < N contains the factor N - N = 0, so P_N(1, y) = Q_N. Part (b). P_k(x, y) is det(y + J) for the symmetric tridiagonal matrix J(x) with diagonal entries d_k(x) = 2xk(4N + 2rho - 2k + 2eps + 1) - 4k(k + eps) and off-diagonal entries the square roots of the nonnegative couplings b_k x; expanding the determinant along the first row gives the recursion. By part (a) the eigenvalues of J(1) are the numbers lambda_n > 0, so J(1) is positive definite. For x >= 1 and eps >= 0, J(x) = sqrt(x) J(1) + D with D diagonal and D_k = 2k(sqrt(x) - 1)(sqrt(x)(4N + 2rho - 2k + 2eps + 1) + 2(k + eps)) >= 0, so J(x) is positive definite. Its eigenvalues mu_i are positive, P_N(x, y) is the product of the factors y + mu_i, and every coefficient is a sum of products of the mu_i, hence positive; for y > 0 each factor y + mu_i is positive, so y is not a root.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.claim`
 - Truth anchor: `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.constraintPoly`
 - Truth anchor: `D5/S3/Quantum/Dynamics/TwoPhotonRabiConstraintPolynomials.result`
+- Dependency: [D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminant](../FockSpace/ForbiddenNeighbourDeterminant.md)
