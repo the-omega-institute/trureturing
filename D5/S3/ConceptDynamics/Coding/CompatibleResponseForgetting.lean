@@ -8,6 +8,7 @@
 -/
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
+import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Sigma
 import Mathlib.SetTheory.Cardinal.NatCard
 
