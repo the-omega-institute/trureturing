@@ -58,7 +58,7 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                     F.Id("S"), Sp, Neq, Sp, OpenBrace, D(1), Comma, Dot, Dot, Dot, Comma, Sp, F.Id("d"),
                     CloseBrace, Sp, Rightarrow, Sp,
                     Call("L", F.Id("a"), F.Id("S"), F.Id("T"), F.Id("w")), Eq, Sp,
-                    Open, Frac, Grp(D(1)), Grp(D(2), Caret, Grp(Lvert, F.Id("S"), Rvert)), Close,
+                    Open, Frac, Grp(D(1)), Grp(D(2), Caret, Grp(Lvert, Sp, F.Id("S"), Rvert)), Close,
                     Caret, Grp(F.Id("T"), Plus, D(1))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -125,9 +125,9 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
             Frac, Grp(D(1)), Grp(D(2), Caret, Grp(F.Id("d"))), Sp,
             Prod, Underscore, Grp(t, Lt, F.Id("T")), Sp,
             Sub(F.Id("P"), F.Id("a")), Open, Sub(x, t), Comma, Sp, Sub(x, Seq(t, Plus, D(1))), Close, Sp,
-            Prod, Underscore, Grp(t, Leq, F.Id("T")), Sp,
+            Prod, Underscore, Grp(t, Leq, Sp, F.Id("T")), Sp,
             Mathbf, Grp(D(1)), Underscore,
-            Grp(Sub(x, t), Vert, Underscore, Grp(F.Id("S")), Eq, Sub(F.Id("w"), t), Vert, Underscore,
+            Grp(Sub(x, t), Bar, Underscore, Grp(F.Id("S")), Eq, Sub(F.Id("w"), t), Bar, Underscore,
                 Grp(F.Id("S")))));
     }
 }

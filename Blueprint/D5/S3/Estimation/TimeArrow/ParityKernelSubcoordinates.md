@@ -1,0 +1,77 @@
+# Proper Coordinate Records and Two-Step Mixing of Parity Kernels
+
+## Abstract
+
+On the sign hypercube, every parity kernel started from the uniform law makes each proper set of coordinates an i.i.d. uniform record, and two steps with a balanced second profile reach the uniform kernel.
+
+**Definition 1.1 (Parity character).**
+
+$$\operatorname{chi}(x)= \prod_{j<d} x_{j}$$
+
+*Formalization.* `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parity` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a sign vector x in the hypercube {-1, 1}^d, the parity chi(x) is the product of its coordinates, a real number equal to 1 or -1.
+
+**Definition 1.2 (Parity kernel).**
+
+$$P_{a}(x, y)= \frac{1+\operatorname{a}(x) \operatorname{chi}(y)}{2^{d}}$$
+
+*Formalization.* `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each real profile a on the hypercube defines the transition weights P_a(x, y). Every row sums to one because the parity sums to zero over the hypercube when d >= 1.
+
+**Definition 1.3 (Coordinate-record law).**
+
+$$\operatorname{L}(a, S, T, w)= \sum_{x_{0},...,x_{T}} \frac{1}{2^{d}} \prod_{t<T} P_{a}(x_{t}, x_{t+1}) \prod_{t\leq T} \mathbf{1}_{x_{t}|_{S}=w_{t}|_{S}}$$
+
+*Formalization.* `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a coordinate set S and prescribed sign vectors w_0, ..., w_T, the record law is the total weight, under the uniform start and the kernel P_a, of the paths whose coordinates in S at every time t agree with those of w_t.
+
+**Theorem 1.4 (Proper coordinate records are i.i.d. uniform).**
+
+$$S \neq \{1,..., d\} \Rightarrow \operatorname{L}(a, S, T, w)= (\frac{1}{2^{\lvert S\rvert}})^{T+1}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every dimension d, every real profile a, every proper subset S of the coordinates, every horizon T and every record w, the record law equals (2^(-|S|))^(T+1). Hence the coordinates in S of the chain started from the uniform law form an independent sequence of uniform vectors on {-1, 1}^S. No condition on a is needed; the statement concerns only the proper coordinates.
+
+Fix a coordinate j outside S. Flipping the sign of coordinate j is an involution of every fiber that fixes the coordinates in S, and it negates the parity, so the parity sums to zero on each such fiber. A fiber has 2^(d - |S|) elements. Therefore the kernel mass P_a(x, fiber) equals 2^(-|S|) from every start x. Summing out the last state of the path and inducting on T gives the product formula, with base case the uniform mass of one fiber.
+
+**Theorem 1.5 (Two steps reach the uniform kernel).**
+
+$$\sum_{y} \operatorname{b}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{b}(y)=0 \Rightarrow \sum_{y} P_{a}(x, y) P_{b}(y, z)= \frac{1}{2^{d}}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel_mul_eq_uniform` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let d >= 1. If the second profile b satisfies sum b = 0 and sum chi b = 0, then for every first profile a and all vertices x, z the two-step weight equals 2^(-d). Taking b = a gives P_a^2 = Pi on the family of profiles with E a = 0 and E[chi a] = 0, and any two kernels of that family multiply to Pi.
+
+Expanding the product gives four sums over y. The parity sum vanishes by the fiber lemma applied to the empty coordinate set, which is proper because d >= 1, and the two remaining sums vanish by hypothesis, leaving 2^d / 4^d.
+
+## References
+
+- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parity`
+- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel`
+- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.parityKernel_mul_eq_uniform`
+- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw`
+- Truth anchor: `D5/S3/Estimation/TimeArrow/ParityKernelSubcoordinates.subcoordinateLaw_eq`
