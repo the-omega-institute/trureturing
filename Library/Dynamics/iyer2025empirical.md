@@ -2182,3 +2182,80 @@ general asymptotics and power laws*，
 所查来源未直接提供这条完整实际后验定理，有限检索不构成全局原创认证。
 结果不包括 h-Eh、期望后验熵、坏数据上的一致可积、任意指定 beta 的非退化子序列、
 或计算显式中心的数值效率与稳定性。纯理论正文未进入消化或 Lean 冻结链。
+
+### 第 73 章：典型输出条件信息谱的空间分离
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 73 章
+把第 71 章的输出平均联合信息谱提升为典型输出的条件 CDF 结论。
+在 logplus(1/sigma)=o(Q³) 下，原惊奇量给定带噪精确标量后保留原正态极限；
+在更窄的 o(Q) 范围内，输出后验惊奇量自身保留同一 Q 尺度极限，
+并决定逐输出最优列表质量与输出依赖的固定误差覆盖大小。
+两条噪声范围分别陈述，较宽范围没有被当作信息密度可忽略的保证。
+
+Magda Peligrad，*Conditional central limit theorem via martingale approximation*，
+[arXiv:1101.0174v2](https://arxiv.org/abs/1101.0174v2)，
+PDF 第 3 页式 (3) 在固定过去滤子条件下，以条件期望的 L1 距离描述条件 CLT。
+第 3–4 页定理 1 对平稳有限二阶矩序列刻画平稳差分鞅近似
+S_n=M_n+R_n、E R_n²/n→0；条件为平均条件投影收敛及二阶矩率趋于鞅差分方差。
+第 4 页定理 2 给对应的 plus-norm 等价条件。
+通过受控误差传递条件极限是成熟方法；本章所给定的是随规模改变的带噪非线性统计量，
+没有将固定过去滤子的结论直接移用，也不将该文测试函数措辞解释为离散到连续的 TV 极限。
+
+Dey、Terlov，*Stein's method for Conditional Central Limit Theorem*，
+[arXiv:2109.09274v3](https://arxiv.org/abs/2109.09274v3)，
+PDF 第 9–10 页 Assumptions I–IV 要求交换对、中心化不相关坐标、
+格点条件变量 Y∈zeta+Z、其增量属于 {-1,0,1}，
+以及指定的转移概率、回归与条件二阶增量误差。
+第 12 页定理 2.1 给 W|Y=k 的 Wasserstein 界，
+第 13 页定理 2.4 用相邻条件原子的质量比改进该界。
+本章实值 Gaussian 通道未建立这些交换对假设，故没有直接应用该条件正态定理。
+第 3 页 Section 1.1 的混合反例说明弱联合 Gaussian 极限与渐近独立不足以控制某个条件输出。
+其异常输出概率趋零，不能用该例单独否定典型输出结论；
+正文注记 73.4 另用一位惊奇量符号说明小平均信息不够推出典型输出的原惊奇量 CLT。
+
+Ma、Yao、Yuan、Zhang，*Entropic Conditional Central Limit Theorem and Hadamard Compression*，
+[arXiv:2401.11383v2](https://arxiv.org/abs/2401.11383v2)，
+PDF 第 9 页主定理 3.1 要求几乎处处绝对连续的条件密度、条件方差统一正下界、
+平均 Fisher 信息统一上界、条件二阶矩的统一尾控制、平均条件微分熵收敛，
+以及式 (34) 的独立副本卷积熵跳跃递推。
+它给条件 Gaussian 的 KL 距离依概率趋零和条件方差集中；
+再有条件微分熵的一致可积，才识别平均方差与熵极限。
+第 18 页定理 4.1 与推论 4.2 对 iid 成对变量的归一化和、给定完整侧信息向量，
+保留有限方差、条件绝对连续、有限平均 Fisher 信息、有限下界微分熵及条件方差正下界。
+这些结论在其光滑 iid 设置下使用更强距离。
+本章计数惊奇量即使给定实值噪声输出仍为有限离散分布，不满足其密度条件；
+平滑输出不等于平滑惊奇量。本章没有从该文的 Pinsker 推论借来离散到连续的 TV 结论。
+
+Kuzuoka、Watanabe，*An Information-Spectrum Approach to Weak Variable-Length Source Coding with Side-Information*，
+[arXiv:1401.3809v2](https://arxiv.org/abs/1401.3809v2)，
+版本戳为 2014-04-08，所取得 PDF 页脚日期为 2018-07-21，二者不混作版次推断。
+PDF 第 4 页 Section II.A 采用有限或可数离散字母表，并为渐近结论规定归一化条件惊奇量的一致可积。
+第 6–7 页定理 1 用误差截断条件熵刻画一次共同侧信息下的平均变长码长；
+第 9 页定理 3–4 给 Slepian–Wolf 一次编码的条件惊奇量分位直接界／逆界。
+第 13 页定理 7 使用一致可积，定理 9 另加条件强逆性质以识别固定误差渐近式。
+这些结果给信息谱与侧信息编码的成熟背景，但其编码器、平均变长目标与离散侧信息
+不等于本章的实输出后验列表；正文单独证明所用有限选择器与逐输出计数界。
+
+Kontoyiannis–Verdú [arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)
+PDF 第 9–10 页 Section II、定理 2–3 直接覆盖一次有限原子数阈值论证，沿用第 71 章归属。
+Gavalakis–Kontoyiannis [arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)
+第 4 页定义 2.1 的条件概率排序与第 8 页定理 2.10 的条件信息 CLT 同样相关；
+后者仍保留第 6 页固定平稳有限字母表 Assumption (M) 及正条件 varentropy，
+没有替代本章增长计数向量的三角阵证明。
+
+Aldous–Eagleson，*On Mixing and Stability of Limit Theorems*，
+[DOI:10.1214/aop/1176995577](https://doi.org/10.1214/aop/1176995577)，
+本次原始 Euclid 文档入口以 HTTP 200 返回 HTML，未取得原始 PDF；
+另一次 Dedecker–Merlevède 元数据请求为 HTTP 429。
+这些检索边界没有被当作已核对的原始定理条件，正文也不以其未检查陈述为前提。
+
+Gaussian 平移 TV 界、核收缩、同边缘联合 TV 与平均条件 TV 的等式、
+独立和的可忽略方差删除、Gaussian 最大熵、信息负尾界及有限列表计数均属经典工具。
+新连接是原实际模型在真实 1/sigma 精度下的空间局部化：
+仅 o(Q²) 个核心组即可承载带噪精确标量，而外围计数保留惊奇量的主要方差。
+原路径行依赖由实际 PGF 处理，精确尾中心项保留在核心标量中，
+随后同一个后验向量的联合律比较才控制典型输出条件 CDF。
+没有从零协方差、弱联合收敛或小互信息直接推断条件独立。
+所查原始来源不直接给出这一完整桥梁；有限检索不认证全局原创。
+本章不声称每个输出保证、零噪声结果、临界噪声锐利性、期望对数覆盖、变化误差水平或计算效率。
+第 72 章确定中心的替换仅使用已量化的 o_P(Q) 误差，纯理论文本未进入 Lean 冻结或消化链。
