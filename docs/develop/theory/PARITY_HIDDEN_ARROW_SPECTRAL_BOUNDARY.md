@@ -6699,3 +6699,342 @@ $\log_2(1+L_M/(\sqrt{2\pi}\upsilon_M))=o(Q^5)$。
 平均风险只增加趋零的判向错误概率，不取得新的指数结论。证毕。
 
 ## 追加锚（69 章后）
+
+## 70. 完整后验 Rényi 熵谱与零阶极限的过渡
+
+**定义 70.1（原始数据纤维上的 Rényi 熵）。** 保留第 68 章的模型、完整窗口和计数向量 $R$。
+对每份原始数据 $x$，令 $\mathsf P_x$ 是均匀大小 $q$ 支持先验的精确计数后验，
+$\mathsf Q_x$ 是同一校准参数下的独立二项计数律。
+以 $\nu$ 表示熵的阶数，原计数线斜率 $\alpha$ 不变。定义
+
+```math
+H_{\nu,M}(x)=\frac{\log_2\sum_n\mathsf P_x(n)^\nu}{1-\nu}
+ \quad(0<\nu\ne1),\qquad
+H_{0,M}(x)=\log_2|\operatorname{supp}\mathsf P_x|,
+```
+
+```math
+H_{1,M}=h_M,\qquad H_{\infty,M}=h_{\infty,M},\qquad
+\widetilde H_{\nu,M}=H_\nu(\mathsf Q_x),\qquad
+A(u)=(c_q-I(u))_+.
+```
+
+式 (70.1)。
+
+$h_M,h_{\infty,M},c_q,I,\mathcal I,\ell,\mathscr H$ 均取第 68 章的定义。
+阶数为零时仅数正概率的组计数元组，不数每个元组内部的标签排列。
+这些量都在同一数据纤维上先取有限和，再取对数。
+
+**定理 70.2（固定正阶的次阶熵差与完整支持熵）。** 对每个固定
+$\nu\in(0,\infty)\setminus\{1\}$，两种实际实验分别满足
+
+```math
+H_{\nu,M}-\widetilde H_{\nu,M}=O_{\mathbb P,\nu}(Q^{-5/2}),\qquad
+\frac{H_{\nu,M}-H_{\infty,M}}{Q^2}
+ \longrightarrow\frac{\ell\log\nu}{2(\nu-1)\log2}.
+```
+
+式 (70.2)。
+
+在概率趋一的数据集上，完整实际后验支持精确为
+$\prod_{j\in K_M}\{0,\ldots,C_j\}$，故
+
+```math
+H_{0,M}=\sum_{j\in K_M}\log_2(C_j+1)=\widetilde H_{0,M},\qquad
+\frac{H_{0,M}}{Q^5}\longrightarrow2\mathscr H.
+```
+
+式 (70.3)。
+
+收敛在先验数据概率下成立，亦一致于所有大小 $q$ 确定支持的抽样律；
+后一表述评价同一均匀先验后验函数，不改用点质量先验。
+每个固定正阶的 $Q^5$ 主系数因而都是 $\mathscr H$。
+阶数一的差及阶数无穷的主项分别已由定理 68.7、68.6 给出。
+常数不要求一致于 $\nu\to1$ 或 $\nu\to\infty$。
+
+**证明。** 使用第 68 章的实际一、二行比较、完整线占据数与全局校准。
+记 $N_J=\sum_jC_j$、$d_c=d_{J^c}$。这些估计给
+
+```math
+N_J=O_{\mathbb P}(qQ^{-5/2}),\qquad d_{\rm all},d_c\sim q/2,
+\qquad d_J=O_{\mathbb P}(qQ^{-5/2}).
+```
+
+式 (70.4)。
+
+这里第一式来自实际行数，而不是从后验方差反推。
+所以以概率趋一有 $N_J<q<M-N_J$；补集 Bernoulli 参数均严格在零一之间，
+每个 $0\le\sum_jn_j\le N_J$ 都能由补集凑成总数 $q$。
+这证明完整盒支持。(68.29) 的对数占据数估计及全域 Riemann 和随即证明 (70.3)。
+
+还需要比窗口半宽更精确的参数界。
+在全行截断上，完整窗口恰为原有计数线，因而
+
+```math
+\sup_{j\in K_M}|W_j-\tau|
+ \le C\{\lambda|\alpha-P/Q|+\epsilon\lambda+q^{-1}\}
+ =o(q^{-1/2}),\qquad
+\eta_x:=\max_{j:C_j>0}|p_j-1/2|=O_{\mathbb P}(q^{-1/2}).
+```
+
+式 (70.5)。
+
+第一项的十进制尾是 $10^{-Q^5}$ 阶；第二项乘 $\sqrt q$ 的指数率为
+$-\phi+c_q/2<0$；第三项显然满足。
+又有 $\tau-\log((M-q)/q)=O(q/M)=o(q^{-1/2})$，
+加上 $O_{\mathbb P}(q^{-1/2})$ 的全局校准根即得第二式。
+空组单独置 $p_j=1/2$，不改变任何律。
+
+令 $m_J=\sum_jC_jp_j$、$D=k-m_J$。
+精确后验与乘积律的密度比仍为
+
+```math
+L_x(k)=\frac{\mathsf Q_x(S_{J^c}=q-k)}{\mathsf Q_x(S_{\rm all}=q)},\qquad
+\mathsf P_x(n)=L_x\!\left(\sum_jn_j\right)\mathsf Q_x(n).
+```
+
+式 (70.6)。
+
+(68.39) 的局部 Bernoulli 界给
+$\log L_x(k)\le C(d_J/q+q^{-1/2})$。
+远离中心的下界不能取该加性近似的对数，须另作倾斜。
+对补集定义 $K(t)=\sum_{i\notin J}\log(1-p_i+p_ie^t)$。
+logistic 方差的对数导数绝对值至多为一，所以
+
+```math
+e^{-|t|}d_c\le K''(t)\le e^{|t|}d_c.
+```
+
+式 (70.7)。
+
+在 $d_c\ge c_1q$ 且 $N_J\le c_1q/(4e)$ 的好数据上，
+每个所选总数都对应唯一 $t$，使 $K'(t)=q-k$，且
+$|t|\le C|D|/q=o(1)$，一致于完整盒。
+这是将 (70.7) 先在 $[-1,1]$ 上积分定位根，再用导数下界所得。
+倾斜后的均值恰为目标整数，方差 $d_t=K''(t)\asymp q$，
+故同一局部 Bernoulli 估计给中心原子
+$(2\pi d_t)^{-1/2}(1+O(q^{-1/2}))$。
+撤销倾斜付出 $\exp(-\mathcal I_t)$，其中
+$0\le\mathcal I_t=t(q-k)-K(t)\le C D^2/q$。
+由于 $d_{\rm all}\ge d_c$ 且 $|\log(d_t/d_c)|\le|t|$，得到
+
+```math
+-C\{D^2/q+q^{-1/2}\}\le\log L_x(k)
+ \le C\{d_J/q+q^{-1/2}\},\qquad0\le k\le N_J.
+```
+
+式 (70.8)。
+
+此式允许极端元组具有很小的密度比；并未给出一致的正常数下界。
+
+现在估计乘积计数律的幂倾斜。
+对 $f_{n,p}(k)=\binom nkp^k(1-p)^{n-k}$，令
+
+```math
+f_{n,p;\nu}(k)=\frac{f_{n,p}(k)^\nu}{\sum_h f_{n,p}(h)^\nu}
+ \propto\binom nk^\nu e^{\nu t k},\qquad t=\operatorname{logit}p.
+```
+
+式 (70.9)。
+
+这是经典 COM-binomial 指数族，在 Kadane 的参数化中成功参数为
+$\operatorname{logistic}(\nu\operatorname{logit}p)$，而非原 $p$；其计数组合因子也被取幂，
+因此不同于先对独立标签取幂再合并为计数。
+以下直接证明所需的阶数一致界。
+记未归一化权重为 $w_k$、相邻比为 $r_k=w_{k+1}/w_k$。
+当 $n\ge2$ 时
+
+```math
+\log r_{k+1}-\log r_k
+ =\nu\left\{\log\frac{n-k-1}{n-k}+\log\frac{k+1}{k+2}\right\}
+ \le-2\nu/n=:-\kappa.
+```
+
+式 (70.10)。
+
+取该律的两个独立样本 $X_1,X_2$，条件于和 $h$。
+距离 $d=|X_1-h/2|$ 的格为非负整数或正半整数；
+除零点一次、其余两次的重数外，权重为 $w_{h/2+d}w_{h/2-d}$。
+相邻距离权重比至多为 $e^{-\kappa(2d+1)}$。
+所以其对同重数折叠离散 Gaussian $e^{-\kappa d^2}$ 的密度比随距离不增，
+递增函数的期望不超过该 Gaussian 的期望。
+这一比较由递增函数与递减密度比的协方差非正直接得到。
+整数格、半整数格的 Gaussian 和与积分比较给
+$\mathbb E d^2\le C(1+\kappa^{-1})$；$\kappa\ge1$ 时先提出最小格点权重即可。
+因此
+$2\operatorname{Var}X_1=\mathbb E(X_1-X_2)^2=4\mathbb Ed^2\le C(1+n/\nu)$。
+$n=1$ 用方差至多 $1/4$，$n=0$ 为零。
+
+在 $t=0$ 处均值为 $n/2$，均值对 $t$ 的导数为 $\nu\operatorname{Var}X_1$。
+积分并用 $|\operatorname{logit}p|\le C|p-1/2|$，对 $p\in[1/4,3/4]$ 得
+
+```math
+\operatorname{Var}_{n,p;\nu}X_1\le Cn/\nu,\qquad
+|\mathbb E_{n,p;\nu}X_1-np|\le Cn|p-1/2|,\quad0<\nu\le1.
+```
+
+式 (70.11)。
+
+对每个固定 $\nu>1$，同样的结论以依赖 $\nu$ 的常数成立。
+产品律的幂倾斜仍是这些计数幂倾斜的乘积，故
+
+```math
+\mathbb E_{\mathsf Q_{x,\nu}}D^2
+ \le C\{N_J/\nu+\eta_x^2N_J^2\}\quad(0<\nu\le1).
+```
+
+式 (70.12)。
+
+固定 $\nu>1$ 时右边可写成 $C_\nu(N_J+\eta_x^2N_J^2)$。
+这已足够，无须另证每个组的幂倾斜均值偏移为 $O_\nu(1)$。
+
+在完整盒支持事件上精确有
+
+```math
+(\log2)(H_{\nu,M}-\widetilde H_{\nu,M})
+ =\frac{\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu}{1-\nu}.
+```
+
+式 (70.13)。
+
+Jensen 不等式、(70.8)、(70.12) 给，在 $0<\nu\le1$ 上一致地
+
+```math
+-C\left\{\frac{N_J}q+\frac{\nu\eta_x^2N_J^2}q+\nu q^{-1/2}\right\}
+ \le\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu
+ \le C\nu(d_J/q+q^{-1/2}).
+```
+
+式 (70.14)。
+
+(70.4)、(70.5) 使 $\eta_x^2N_J^2/q=O_{\mathbb P}(Q^{-5})$；
+不需要这些数据函数相互独立。
+故对固定非一正阶得到 (70.2) 第一式，$\nu>1$ 用同一固定阶矩界。
+同时已得到后续所需的更强一致性
+
+```math
+\sup_{0<\nu\le1/2}|H_{\nu,M}-\widetilde H_{\nu,M}|
+ =O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (70.15)。
+
+分母不靠近零；未将此绝对误差界一致地延伸到 $\nu=1$ 的缩小邻域。
+
+固定阶的单组结论由经典二项局部极限给出。
+具体地，紧参数区间上对全部原子都有
+
+```math
+\frac c{\sqrt{n+1}}e^{-C(k-np)^2/(n+1)}
+ \le f_{n,p}(k)\le
+\frac C{\sqrt{n+1}}e^{-c(k-np)^2/(n+1)}.
+```
+
+式 (70.16)。
+
+下界已见 (68.47)。上界在 $k/n$ 离端点有固定距离时由 Stirling 与
+$D(k/n\Vert p)\ge2(k/n-p)^2$ 得到；在其余区域，
+$|k-np|\ge cn$，粗略类型上界 $e^{-nD}$ 的额外指数衰减吸收所需的 $\sqrt{n+1}$ 因子。
+于是中心 Stirling 展开、标准化网格的 Riemann 和及 (70.16) 的尾控制给
+
+```math
+\sum_{k=0}^n f_{n,p}(k)^\nu
+ =(2\pi np(1-p))^{(1-\nu)/2}\nu^{-1/2}(1+o(1)),
+```
+
+```math
+h_\nu(f_{n,p})-h_\infty(f_{n,p})\longrightarrow
+ \frac{\log\nu}{2(\nu-1)},\qquad
+0\le h_\nu(f_{n,p})-h_\infty(f_{n,p})\le C_\nu.
+```
+
+式 (70.17)。
+
+这里 $h$ 用自然对数，阶数固定且不为一，极限对 $p\in[1/4,3/4]$ 一致；
+小 $n$ 包括零由 (70.16) 及双边模态界处理。
+其中有界差还可直接使用 Melbourne–Tkocz 对整数对数凹律的经典界
+$h_\nu-h_\infty<\log\nu/(\nu-1)$；它不要求质量序列单调，
+但不能替代这里的半倍 Gaussian 极限和趋零阶数的一致估计。
+这些单组 Gaussian 熵系数是成熟工具，不是新的抽象熵公式。
+
+产品律的两种熵都逐组相加。
+在 $I\le c_q-e$ 的固定正区域上占据数指数增长，故每组贡献趋于 (70.17) 的常数；
+在 $I\ge c_q+e$ 上实际组以概率趋一全部为空；
+过渡条带用 $C_\nu$ 界。
+先令规模趋无穷，再令 $e\downarrow0$，第 68 章的完整域网格计数给正区域长度 $\ell$。
+由定理 68.6 的最小熵比较及 (70.13) 传回实际律，即得 (70.2) 第二式。
+端点邻接区间未删除，也未分别展开两个熵的较大算术修正。
+支持置换及共同判向成功事件按第 68 章传递全部结论。证毕。
+
+**定理 70.3（阶数随规模趋零的完整过渡）。** 对任意确定序列 $0<\nu_M\le1$，若
+$Q^{-3}\log(1/\nu_M)\to s\in[0,\infty)$，则在定理 70.2 的同一概率意义下
+
+```math
+\frac{H_{\nu_M,M}}{Q^5}
+ \longrightarrow\frac1{2\log2}
+ \int_{\mathcal I}\{A(u)+\min(A(u),s)\}\,du.
+```
+
+式 (70.18)。
+
+$s=0$ 时极限为 $\mathscr H$；$s\ge c_q=\max A$ 时为 $2\mathscr H$。
+若 $Q^{-3}\log(1/\nu_M)\to\infty$，仍得到 $2\mathscr H$。
+
+**证明。** 不能把移动阶数代入 (70.17) 的固定阶展开。
+对 $0<\nu\le1/2$，将 (70.16) 取幂后求和，直接有一致双边估计
+
+```math
+\sum_k f_{n,p}(k)^\nu\asymp(n+1)^{-\nu/2}
+ \min\left\{n+1,\sqrt{\frac{n+1}{\nu}}\right\}.
+```
+
+式 (70.19)。
+
+上界同时使用全格 Gaussian 和及项数；下界在距均值不超过较小宽度的固定倍数内取格点。
+由于 $p\in[1/4,3/4]$，该区域至少含常数倍相应宽度的可行整数，指数项统一有正下界。
+小 $n$ 和零占据数单独满足同一常数界。
+置 $t=\log(n+1)$、$b_\nu=\log(1/\nu)$；对 (70.19) 取对数并除以 $1-\nu$，得
+
+```math
+\left|h_\nu(f_{n,p})-\frac12\{t+\min(t,b_\nu)\}\right|\le C.
+```
+
+式 (70.20)。
+
+额外项至多为 $\nu\log(1/\nu)/(2(1-\nu))$，在这个阶数范围一致有界。
+此估计包括 $\nu n$ 约为一的交界，无须另设空隙。
+
+将 (70.20) 沿完整计数线相加并用 (70.15)，
+再由 (68.29) 将 $\log(1+C_j)$ 换成 $Q^3A(\bar u_j)$。
+最小值对每个参数都是 Lipschitz，故在归一化 $Q^5$ 下，
+占据数替换误差为 $O_{\mathbb P}(\log Q/Q^3)$，单组有界误差之和为 $O(Q^{-3})$。
+剩下的 Riemann 和为
+
+```math
+\frac1{2\log2\,Q^2}\sum_{j\in K_M}
+ \{A(\bar u_j)+\min(A(\bar u_j),Q^{-3}\log(1/\nu_M))\}.
+```
+
+式 (70.21)。
+
+$A$ 在完整闭域连续且支撑紧；有限 $s$ 下由一致连续性及最小值的 Lipschitz 性得到 (70.18)。
+$s=\infty$ 时第二个参数最终超过 $\max A$，给两倍积分。
+
+$s>0$ 或 $s=\infty$ 时阶数最终小于 $1/2$。
+$s=0$ 时，对阶数大于 $1/2$ 的其余指标用
+$H_{1,M}\le H_{\nu_M,M}\le H_{1/2,M}$；
+两端的归一化极限都是 $\mathscr H$，与小阶子列一起完成夹逼。
+这一步允许阶数趋近一甚至等于一，没有除以趋零的 $1-\nu_M$。
+
+极端元组的条件化代价可达 $N_J^2/q$，本身无需趋零。
+真正进入幂和的是 (70.12) 的期望乘阶数：
+$\nu\mathbb E_{\mathsf Q_{x,\nu}}D^2/q
+\le C\{N_J/q+\nu\eta_x^2N_J^2/q\}=O_{\mathbb P}(Q^{-5/2})$。
+所以本模型的固定总数约束不另添一条相变条件。
+先固定正阶取规模极限、再令阶数趋零，得到 $\mathscr H$；
+先在每个有限规模令阶数趋零得到支持熵，再取规模极限，则是 $2\mathscr H$。
+(70.18) 给出这两个顺序之间的过渡。
+所有结论仍为数据概率极限，不涉及期望熵、变化的 $\beta$、负阶、
+随规模增长的阶数或噪声解码风险。证毕。
+
+## 追加锚（70 章后）

@@ -1967,3 +1967,76 @@ $\log^+(1/\sigma_M)=o(Q^5)$ 下完整计数恢复的条件 $Q^5$ 指数。
 先验平均成功概率只能据此断言趋零；坏数据概率与共同判向错误没有所需的 $Q^5$ 指数控制。
 一般猜测包络属于已有信息论，本章新内容是完整实际后验原子和原标量范围之间的连接。
 所查原始来源没有直接给出这一平稳对／路径、固定基数后验的完整结论；不据此宣称全局原创。
+
+### 第 70 章：实际 Rényi 熵谱、计数幂倾斜与支持极限
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 70 章
+保留第 68 章同一完整窗口、组计数和精确固定基数后验。
+每个固定正阶的主系数相同，而零阶支持熵的主系数是它的两倍；
+当阶数按 exp(-sQ³) 缩小时，完整闭域上的截断积分给出两者之间的过渡。
+这里的对象始终是组计数元组，未把一个计数拆成多个标签排列再计算熵。
+下列原始结果承担成熟工具的归属，不把 Gaussian Rényi 公式或一般极限不交换据为新发现。
+
+James Melbourne、Tomasz Tkocz，*Reversals of Rényi Entropy Inequalities under Log-Concavity*，
+[arXiv:2005.10930v1](https://arxiv.org/abs/2005.10930v1)，原始 TeX `Journal.tex`，
+引言主定理 `thm: infinity comparison` 及其同名证明节。
+原文对整数上的对数凹概率质量函数，要求正支撑为连续整数区间，给出自然对数单位下
+$H_\nu-H_\infty<\log\nu/(\nu-1)$，$0<\nu<\infty$，阶数一取连续延拓。
+此定理不要求质量序列单调；其证明用同最大质量的双边几何律、majorization 与 Rényi 熵的 Schur 凹性。
+二项计数律满足这些条件，所以该结果直接覆盖 (70.17) 所需的固定阶有界差。
+它不提供本模型每组半倍 Gaussian 的极限常数、指数缩小阶数的截断过渡，
+也没有承担实际固定总数条件化的误差。
+这与 Melbourne、Palafox-Castillo 的
+[arXiv:2111.06997v1](https://arxiv.org/abs/2111.06997v1)
+中要求单调对数凹序列的尖锐比较与 varentropy 定理有不同适用范围。
+一般二项序列先升后降，近似对称也不等于其另列的精确对称假设。
+
+Joseph B. Kadane，*Sums of Possibly Associated Bernoulli Variables: The Conway-Maxwell-Binomial Distribution*，
+[arXiv:1404.1856v1](https://arxiv.org/abs/1404.1856v1)，原始 TeX `comMAR2014.tex`，
+§2 式 `eq:one` 定义有限支撑质量
+$P(W=k)\propto p^k(1-p)^{m-k}\binom mk^\nu$；§3 给指数族表示，§4 给生成函数。
+本章二项计数质量的幂倾斜恰属此族，但 Kadane 的成功参数须取
+$\operatorname{logistic}(\nu\operatorname{logit}p)$，不是原二项成功参数 $p$。
+取幂作用于组合因子与概率因子两者，不能用独立标签幂倾斜后的二项计数替代。
+所核对原文的共轭先验适当性定理与当前估计不同，未被调用；
+其可交换 Bernoulli 表示也不把本章的实际固定大小标签改成另一抽样模型。
+本章直接以两个独立计数条件于和，比较折叠离散 Gaussian，证明
+$\operatorname{Var}_\nu R\le Cn/\nu$ 及近半参数下的均值偏移界。
+这些估计在 $\nu\downarrow0$、占据数增长的共同范围内使用。
+
+Hervé Bergeron、Evaldo M. F. Curado、Jean-Pierre Gazeau、Ligia M. C. S. Rodrigues，
+*Entropies of deformed binomial distributions*，
+[arXiv:1412.0581v1](https://arxiv.org/abs/1412.0581v1)，原始 TeX `gbin_entrop_vf.tex`，
+引言式 `renyiq` 的熵幂和为
+$\sum_k\binom nk(\mathfrak p_k^{(n)}/\binom nk)^\nu$。
+它将每个计数质量均分给其微观排列，研究 q-exponential、修正 Abel 多项式与 Hermite 多项式产生的变形。
+这个对象与本章 $\sum_k f_{n,p}(k)^\nu$ 不同，
+因此其关于 extensive Rényi entropy 的系数不能迁入本章。
+该来源只用于明确聚合层次的边界，未作为本章渐近系数的前提。
+
+固定阶二项熵的中心展开、Stirling、Gaussian 幂积分和 Rényi 单调性都是经典工具。
+Adell、Lekuona、Yu 的
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)
+定理 4、推论 1 与式 (7) 提供 Shannon 二项熵修正；其紧参数区间上的系数支持第 68 章的阶数一比较。
+固定阶展开不能直接代入随规模指数缩小的阶数。
+本章从覆盖全部二项原子的双边 Gaussian 指数界推出统一幂和估计，
+同时控制宽度 sqrt((n+1)/nu) 与完整支撑长度 n+1，包含二者相等的过渡区。
+
+固定总数条件化、补集指数倾斜与 Fourier 局部估计也属于成熟概率方法。
+Arratia、Goldstein、Langholz 的
+[arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+条件 2.1 要求总方差至少为标签总数的固定正比例；这里总标签数 M、方差约 q/2=o(M)，不满足此条件。
+正文使用只需总方差趋无穷的局部估计，并对每个补集倾斜律重新在其整数均值处应用。
+Boistard、Lopuhaä、Ruiz-Gazen 的
+[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)
+中 rejective sampling 与固定阶包含概率是相关原始工具，未直接给出增长计数向量的幂倾斜比较。
+第 69 章已列的该版任意正整数幂命题反例仍限定于那条原文断言，本章不使用它。
+
+本仓新增连接是：实际计数线的得分接近阈值达到 q^(-1/2) 精度，
+补集的完整盒对数密度比由倾斜控制，计数幂倾斜的平方偏移再乘阶数抵消其方差增长。
+由此，实际后验与独立计数律的 Rényi 熵差对全部 0<nu≤1/2 一致为 O_P(Q^(-5/2))，
+极端元组本身很小的密度比不妨碍完整幂和。
+这条桥梁与实际全域占据数相接，才产生本模型的移动阶数过渡。
+结果限于两种实际实验的数据概率极限，以及同一先验后验函数的一致确定支持评价；
+不含期望熵、负阶、变化的 beta、增长正阶、效率或噪声解码结论。
+所核对原始文献没有直接给出这条完整实际模型陈述；有限检索范围不构成全球原创性认证。
