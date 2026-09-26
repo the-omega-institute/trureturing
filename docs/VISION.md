@@ -39,8 +39,8 @@ Computation still constructs counterexamples, searches for proofs and checks
 them. What truth is and how its proofs are obtained remain different questions.
 
 In practice, returning a result means making it available as a premise. A
-theorem states its dependencies so that others can reuse it; a counterexample
-identifies where a route fails so that others can avoid the same mistake.
+theorem can be reused where its assumptions hold; a counterexample refutes a
+claim within its stated scope and can suggest which conditions to investigate next.
 An AI's output can support further reasoning when it returns to shared
 knowledge with inspectable objects, conditions and evidence.
 
