@@ -78,28 +78,23 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Ask a precise question. Use computation and tests to distinguish hypotheses.
-Look for a proof, a counterexample, or the information still missing. Keep the
-checked result with its assumptions, and make the unanswered question explicit.
-People and AI can contribute; what others can reuse is the checked artifact.
+State a precise question and what would support or overturn its proposed
+answer. Search existing proofs and the literature, then use computation and
+experiments to distinguish hypotheses. Seek a proof, a counterexample, or the
+information still missing. Keep each reusable result with its assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof becomes a premise for further work. A refutation closes off a mistaken
-route. A limit on what observations reveal tells us what to ask or measure next.
-The purpose is to let understanding accumulate without losing its foundations:
-each inquiry starts with what the last one actually established.
+A proof supplies a premise; a refutation rules out a mistaken route. An
+observation limit can suggest what to measure next. When progress stalls,
+check whether the current representation can express the distinction the
+question requires. Applying this method to AI research selection still
+requires evaluation.
 
-Today, the library contains Lean 4 proofs, research inputs, experiments and
-tools for checking and recording results. Golden integers, Fibonacci weights
-and Zeckendorf representations are one research thread; the examples below
-also reach into conjecture refutation and the limits of local observations.
-The ambition is to make more of this discovery process automatic. Each round
-should state what would support or overturn its conjecture before the test,
-reuse existing results, and seek a distinction its present representation
-misses. A new observation, a better formulation or a counterexample can then
-guide the next round. Applying this discipline to AI research is a method to
-evaluate, not a guarantee of discovery.
+The library contains Lean 4 proofs, theory inputs, experiments and checking
+tools. Golden integers, Fibonacci weights and Zeckendorf representations are
+one thread; the examples below also explore conjecture refutation and limits
+of local observation.
 
 ## Toward holographic spacetime
 
