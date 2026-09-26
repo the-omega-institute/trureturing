@@ -15,8 +15,14 @@ internal sealed class TorusOrbitClosureDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Fourier/TorusOrbitClosure.result"),
             H("The complete integer relation criterion"),
             StatementSource.FromAuthor(OrbitFormula()),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Fourier/onishchik2020kronecker")),
             Blocks(
+                Paragraph(Text(
+                    "This is the single-generator torus subgroup criterion in Kronecker's "
+                    + "approximation theorem. Compactness identifies the closures of integer "
+                    + "and nonnegative powers. The literature note gives the additive-to-"
+                    + "multiplicative correspondence and the source locator.")),
                 Paragraph(Text(
                     "Let I be any finite index type. Circle is the multiplicative group of "
                     + "complex numbers of modulus one, and powers of a function are taken "
