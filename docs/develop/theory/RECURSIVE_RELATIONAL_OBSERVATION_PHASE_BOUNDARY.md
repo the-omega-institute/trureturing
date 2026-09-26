@@ -16656,3 +16656,101 @@ $$
 
 
 ## 追加锚（本行以下为增补区）
+
+## 63. 新环境切口的谱尾误差证书
+
+第62节以投影像秩排除不能精确恢复的环境分支。本节保留同一实际切口，把秩障碍推广为由目标谱控制的误差下界。所有系统均有限维。
+
+固定一轮实际纯化输入，未受通道作用的系统记为 $B\otimes E_{\mathrm{old}}$，通道输入为 $D$。新环境实现为等距
+$$
+W:D\longrightarrow K\otimes E_{\mathrm{new}}.
+$$
+纯输出为 $|\Omega\rangle$。目标是归一化纯态 $|\psi\rangle_{BQ}$；接收器只能对 $K$ 实施任意 CPTP 解码 $\mathcal D:K\to Q$，然后丢弃全部环境。记解码输出为 $\rho_{BQ}$。
+
+设目标跨 $B|Q$ 的 Schmidt 权重按非增顺序为 $\lambda_1,\ldots,\lambda_r>0$。定义
+$$
+\Lambda_m=\sum_{i=1}^{\min(m,r)}\lambda_i,\qquad
+\epsilon_m=1-\Lambda_m,
+$$
+其中 $\Lambda_0=0$。
+
+对新环境正交投影 $P$，置
+$$
+W_P=(I_K\otimes P)W,\quad m_P=\operatorname{rank}W_P,
+\quad |\Omega_P\rangle=(I_{B,E_{\mathrm{old}},K}\otimes P)|\Omega\rangle,
+\quad w_P=\|\Omega_P\|^2.
+$$
+这里 $w_P$ 是同一实际联合输入上的投影概率，不是假设环境能够被接收器访问。
+
+**引理63.1（有限 Schmidt 数的纯态重叠上界）。** 若未归一化正算子 $X$ 可以写成有限和 $X=\sum_j|v_j\rangle\langle v_j|$，每个 $v_j\in B\otimes Q$ 的 Schmidt 秩不超过 $m$，则
+$$
+\langle\psi|X|\psi\rangle\le\Lambda_m\operatorname{Tr}X.
+$$
+
+证明。对一个非零 $v_j$，左侧支撑在某个秩至多 $m$ 的投影 $P_j$ 中。Cauchy–Schwarz 给
+$$
+|\langle\psi|v_j\rangle|^2
+\le \|v_j\|^2\langle\psi|(P_j\otimes I)|\psi\rangle
+=\|v_j\|^2\operatorname{Tr}(P_j\rho_B^\psi).
+$$
+在 $\rho_B^\psi$ 的本征基中，投影对角元位于 $[0,1]$，总和至多 $m$，故加权和不超过前 $m$ 个本征值之和 $\Lambda_m$。求和得到结论。零向量不贡献。
+
+**定理63.2（新环境切口的谱尾损失）。** 对任何上述实际输入、任意接收器 CPTP 解码以及任意新环境正交投影，均有
+$$
+1-\langle\psi|\rho_{BQ}|\psi\rangle\ge w_P\epsilon_{m_P},
+$$
+从而
+$$
+\frac12\|\rho_{BQ}-|\psi\rangle\langle\psi|\|_1
+\ge w_P\epsilon_{m_P}.
+$$
+更一般地，若 $P_j$ 是新环境的一组两两正交投影，$m_j=\operatorname{rank}((I_K\otimes P_j)W)$，$w_j$ 是对应实际概率，则
+$$
+1-\langle\psi|\rho_{BQ}|\psi\rangle
+\ge\sum_j w_j\epsilon_{m_j}.
+$$
+
+证明。先看单一投影。$W_P$ 的像至多 $m_P$ 维，因此 $|\Omega_P\rangle$ 在切分
+$$
+(B\otimes E_{\mathrm{old}})\mid(K\otimes E_{\mathrm{new}})
+$$
+上的 Schmidt 秩至多 $m_P$。把 $\mathcal D$ 扩张为作用在右侧 $K$ 的等距，再分别对左侧 $E_{\mathrm{old}}$ 和右侧解码辅助空间及 $E_{\mathrm{new}}$ 取迹。用这些辅助空间的正交基逐项展开偏迹，每个未归一化 $BQ$ 向量仍是至多 $m_P$ 个积向量的和。因此该分支解码正算子 $\rho_P$ 的 Schmidt 数不超过 $m_P$，且 $\operatorname{Tr}\rho_P=w_P$。
+
+引理给 $\langle\psi|\rho_P|\psi\rangle\le w_P\Lambda_{m_P}$。迹掉环境后，不同正交环境投影之间的交叉项为零，所以
+$$
+\rho_{BQ}=\rho_P+\rho_{I-P}.
+$$
+另一分支的重叠至多其迹 $1-w_P$。于是总重叠不超过 $w_P\Lambda_{m_P}+1-w_P$，得到第一式。
+
+用效果 $I-|\psi\rangle\langle\psi|$ 测试两态，其概率差正好是左侧的 infidelity；迹距离是全部效果概率差的上界，得到第二式。
+
+对多投影，加上补投影 $I-\sum_jP_j$，逐分支应用同一上界并求和即可。各项始终来自同一目标、同一解码和同一实际输入。证明完毕。
+
+**推论63.3（精确恢复与小误差恢复）。** 若解码精确恢复 $|\psi\rangle$ 且 $m_P<r$，则 $w_P=0$。若迹距离至多 $\eta$，则在 $m_P<r$ 时
+$$
+w_P\le\eta/\epsilon_{m_P}.
+$$
+第一项恢复了第62节引理62.1的精确 Schmidt 容量排除；第二项说明缺少的独立方向具有由目标谱决定的误差代价。它不把像维数计数等同于终端接收器边缘秩。
+
+**推论63.4（第二终端的显式系数）。** 对本卷非退化来源，理想 Bell 第二终端逻辑态为
+$$
+|\psi_2\rangle=\frac1{\sqrt2}
+\left(a|0\rangle_Rm_0\otimes u+b|0\rangle_Rm_1\otimes v
++|1\rangle_Rm_0\otimes w\right),
+$$
+其中 $u,v,w$ 正交单位、$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$。置 $x=|a|^2$、$y=|b|^2$。跨 $RM|Q$ 的三个 Schmidt 权重为
+$$
+\frac12,\qquad
+\frac{1+\sqrt{1-4xy^2}}4,\qquad
+\frac{1-\sqrt{1-4xy^2}}4.
+$$
+证明。$u,v$ 两列的 Gram 块迹为 $1/2$、行列式为 $xy^2/4$；$w$ 列与前两列正交、范数平方为 $1/2$。求二阶特征值即得。$x,y>0$ 且 $x+y=1$，故最小权重严格正。
+
+因此，对秩至多二的新环境投影像，任何解码的迹距离误差都至少为
+$$
+w_P\frac{1-\sqrt{1-4xy^2}}4.
+$$
+这条结论不要求终端附加态纯，也不要求新旧环境独立；它适用于保持同一来源与通道接口的近似问题。仅有这一误差证书并不能推出近似版本的七维接收器容量下界：还须证明候选必须把正概率送入某个低秩投影分支。精确合同下得到的子空间等式也不能未经稳健化就用于近似接收器。
+
+
+## 追加锚（本行以下为增补区）
