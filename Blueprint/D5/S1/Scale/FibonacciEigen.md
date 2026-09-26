@@ -30,6 +30,8 @@ GMI derives the exact generator-index form of the same order and proves that eve
 
 GTC computes the dyadic splitting and exact local generator counts of the same golden field tower. It proves sharp common-index recurrences, global attaining elements and quadratic index-valuation growth. The full ordinary proofs and classical finite-field generator source are recorded in `D5/L/first2017separablegenerators`. This tower-presentation obstruction is distinct from the block normalization index detecting WSS; it adds no WSS witness or conclusion to this Lean theorem.
 
+GGL in the same finite-generator companion adds the ramified three-adic decomposition and constructs one common integer generating tuple. It determines the exact global generator counts of both golden towers and the exact change after inverting three. The local-order boundary audit credits the parallel GoldenPrimePeriodBounds and GoldenPrimePowerOrder sources without treating their starting depth as one. These ordinary proofs do not add a Lean conclusion or a WSS prime-family decision to this declaration.
+
 ## References
 
 - Truth anchor: `D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec`
