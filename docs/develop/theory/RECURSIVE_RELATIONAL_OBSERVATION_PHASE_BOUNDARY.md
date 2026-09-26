@@ -78185,3 +78185,357 @@ $$
 副本界沿用§253已列明的 Holevo–Helstrom 定理、自然对数 Pinsker 不等式及独立样本方差界；来源为 Watrous，*The Theory of Quantum Information*，Theorem 3.4、Theorem 5.38，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。相对熵在正交记录块上的分解与两套效应的凸混合直接按当前仪器计算。本节不据此宣称文献原创性，也不把副本指数解释为未另行标定的物理时间流速。
 
 ## 追加锚（本行以下为增补区）
+
+## 255. 两份响应判定饱和来源的幅度与夹角证书
+
+§251、§252以理想源饱和为前提。本节给出只涉及两份输入矩阵的充要条件，直接判定是否存在这样的源。充分性从数据构造联合态，再证明其形成纠缠与响应恰好饱和，不预设未知源的正常形，也不先求解形成纠缠的凸屋顶。
+
+一旦条件成立，§251还保证所构造态是全部归一化正半定竞争态中的唯一填充。
+
+### 255.1 给定矩阵与三个数据条件
+
+固定§248的已标定通道及同一有限维参考空间 $E$。记
+$$
+A\ge B>0,\quad b_0^2=B,\quad
+\ell=\sqrt{A+B},\quad D=\frac\ell2,\quad U=\frac{\sqrt A}{2},
+\qquad
+\kappa=\frac{A-B}{A+B}\in[0,1),
+\tag{255.1}
+$$
+输入算子仍为
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{255.2}
+$$
+给定 $E$ 上任意两份 Hermitian 矩阵 $R_a,R_b$。它们目前只是候选响应，并未假定来自某个态。
+
+**条件一：共同响应幅度。** 要求
+$$
+|R_a|=|R_b|=:M\ne0.
+\tag{255.3}
+$$
+令 $S=\operatorname{supp}M$，$P_0$ 为 $S$ 的正交投影，并取
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\tag{255.4}
+$$
+其中核上取零。在 $S$ 上，两者都是 Hermitian 对合。谱函数性质给
+$$
+R_w=H_wM=MH_w,
+\qquad w=a,b.
+\tag{255.5}
+$$
+
+**条件二：允许的相对角谱。** 在 $S$ 上定义
+$$
+J=\frac12(H_aH_b+H_bH_a).
+\tag{255.6}
+$$
+要求
+$$
+\operatorname{spec}(J)\subseteq
+\begin{cases}
+\{\kappa,1\},&A>B,\\
+\{0,1,-1\},&A=B.
+\end{cases}
+\tag{255.7}
+$$
+因为 $J$ 为 Hermitian，该条件分别等价于有限矩阵恒等式
+$$
+\begin{cases}
+(J-\kappa I_S)(J-I_S)=0,&A>B,\\
+J(J^2-I_S)=0,&A=B.
+\end{cases}
+\tag{255.8}
+$$
+在 $S$ 内定义谱投影 $Q=\mathbf1_{\{\kappa\}}(J)$，再向 $E$ 的未占用方向补零。也可显式写成
+$$
+Q\big|_S=
+\begin{cases}
+\dfrac{I_S-J}{1-\kappa},&A>B,\\
+I_S-J^2,&A=B,
+\end{cases}
+\qquad
+P=P_0-Q.
+\tag{255.9}
+$$
+特别在 $A=B$ 时，必须先限制到 $S$；环境中未占用的零方向不属于 $Q$。
+
+**条件三：权重归一化与内点。** 定义
+$$
+\rho_*=\left(\frac Q\ell+\frac P{\sqrt A}\right)M,
+\qquad
+\theta_*:=\operatorname{Tr}(Q\rho_*).
+\tag{255.10}
+$$
+要求
+$$
+\operatorname{Tr}\rho_*=1,
+\qquad0<\theta_*<1.
+\tag{255.11}
+$$
+以下证明 $M$ 与 $J,Q,P$ 自动交换，因此 $\rho_*$ 是正半定矩阵。这里的 $\theta_*$ 完全由给定数据计算，尚未借用任何未知源的形成纠缠。
+
+### 255.2 反对易子中心性与产品块
+
+由 $H_a^2=H_b^2=I_S$，直接计算
+$$
+H_aJ=\frac12(H_b+H_aH_bH_a)=JH_a,
+\qquad H_bJ=JH_b.
+\tag{255.12}
+$$
+共同幅度 $M$ 与两个符号算子交换，所以也与 $J$ 交换。于是 $J$ 的各谱空间同时约化 $H_a,H_b,M$，尤其 $M$ 与 $Q,P$ 交换。
+
+在 $J=1$ 的空间中，
+$$
+(H_a-H_b)^2=2(I-J)=0.
+\tag{255.13}
+$$
+$H_a-H_b$ 为 Hermitian，平方为零迫使 $H_a=H_b$。按共同符号 $+1,-1$，该空间分成两类产品块。
+
+在 $J=-1$ 的空间中，同理
+$$
+(H_a+H_b)^2=2(I+J)=0,
+\tag{255.14}
+$$
+从而 $H_a=-H_b$。条件二只在 $A=B$ 时允许这些块。对产品空间 $PE$，两个符号算子因而交换。定义
+$$
+Q_s=\frac14P(I_E+s_aH_a)(I_E+s_bH_b),
+\qquad E_s=Q_sE,
+\qquad s=(s_a,s_b).
+\tag{255.15}
+$$
+当 $A>B$ 时只使用 $s=(+,+),(-,-)$；当 $A=B$ 时使用全部四个符号对。零投影可省略。它们两两正交，且 $\sum_sQ_s=P$。
+
+令 $u,v$ 分别为 $Z,X$ 的 Bloch 轴，对应输入单位方向为
+$$
+r_s=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{255.16}
+$$
+对应纯输入态记为 $P_{r_s}$。逐项代入（255.2），有
+$$
+\operatorname{Tr}(A_wP_{r_s})=s_w\sqrt A,
+\qquad w=a,b.
+\tag{255.17}
+$$
+这些恰是§248的合法最优产品方向，现由数据代数直接得到。若 $A>B$ 而仍允许 $J=-1$，就会错误纳入不满足（255.17）的相反符号产品方向，因此（255.7）的分情况限制不能省略。
+
+$M$ 与两个符号及所有 $Q_s$ 交换，故在产品空间中分块为
+$$
+M_s=Q_sMQ_s,
+\qquad PMP=\bigoplus_sM_s.
+\tag{255.18}
+$$
+每个非零 $E_s$ 上的 $M_s$ 严格正；不同符号空间之间没有未确定的幅度交叉块。
+
+### 255.3 量子角谱强制一个共同 Pauli 因子
+
+在 $QE$ 上，$J=\kappa I$。定义
+$$
+Z_E=\frac{\ell}{2\sqrt A}(H_a+H_b),
+\qquad
+X_E=\frac{\ell}{2b_0}(H_a-H_b),
+\tag{255.19}
+$$
+这里仅取两个符号在 $QE$ 上的限制。由
+$$
+(H_a+H_b)^2=2(1+\kappa)I,
+\qquad
+(H_a-H_b)^2=2(1-\kappa)I,
+\tag{255.20}
+$$
+以及 $1+\kappa=2A/\ell^2$、$1-\kappa=2B/\ell^2$，得到
+$$
+Z_E^2=X_E^2=I_{QE}.
+\tag{255.21}
+$$
+又因
+$$
+(H_a+H_b)(H_a-H_b)+(H_a-H_b)(H_a+H_b)
+=2(H_a^2-H_b^2)=0,
+\tag{255.22}
+$$
+有 $Z_EX_E+X_EZ_E=0$。$Z_E,X_E$ 都为 Hermitian；$b_0$ 的原符号完整保留。
+
+为明确给出分解，置
+$$
+\mathcal M=\ker(Z_E-I_{QE}),
+\qquad
+V:\mathbb C^2\otimes\mathcal M\longrightarrow QE,
+\quad
+V(|0\rangle\otimes z)=z,
+\quad V(|1\rangle\otimes z)=X_Ez.
+\tag{255.23}
+$$
+反对易性使 $X_E$ 等距交换 $Z_E$ 的正负本征空间，因此 $V$ 是酉同构，并满足
+$$
+V^\dagger Z_EV=Z\otimes I_{\mathcal M},
+\qquad
+V^\dagger X_EV=X\otimes I_{\mathcal M},
+\qquad
+V^\dagger H_wV=\frac{A_w^{\mathsf T}}\ell\otimes I_{\mathcal M}.
+\tag{255.24}
+$$
+最后一式使用当前输入基中 $A_w^{\mathsf T}=A_w$。这也是§248两 Pauli 表示的显式构造，此处完全由候选数据生成。
+
+因为 $M$ 与 $Z_E,X_E$ 交换，变换后的量子幅度先由 $Z$ 交换关系成为块对角，再由 $X$ 交换关系使两对角块相同。因此存在 $\mathcal M$ 上的严格正矩阵 $K$，使
+$$
+\boxed{
+V^\dagger QMQV=I_2\otimes K.
+}
+\tag{255.25}
+$$
+这是共同幅度对量子重数的约束。它没有把候选源已经具有 Bell 因子作为前提。
+
+### 255.4 从数据构造合法源
+
+由上述分解，在 $H\otimes E$ 上定义
+$$
+\boxed{
+\Omega_*=
+(I_H\otimes V)\left(\frac2\ell P_{\Phi^+}\otimes K\right)(I_H\otimes V^\dagger)
++\sum_sP_{r_s}\otimes\frac{M_s}{\sqrt A}.
+}
+\tag{255.26}
+$$
+量子项与各产品项嵌入两两正交的参考空间，$|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$。各项均为正半定。由于 Bell 态的参考边缘为 $I_2/2$，
+$$
+\operatorname{Tr}_H\Omega_*
+=\frac1\ell QMQ+\sum_s\frac{M_s}{\sqrt A}
+=\rho_*.
+\tag{255.27}
+$$
+条件三因而给 $\operatorname{Tr}\Omega_*=1$。量子块与产品块的权重分别是
+$$
+\theta_*=\frac2\ell\operatorname{Tr}K,
+\qquad
+p_s=\frac{\operatorname{Tr}M_s}{\sqrt A},
+\qquad
+\sum_sp_s=1-\theta_*.
+\tag{255.28}
+$$
+
+令 $\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T]$。在量子块中，构造的响应为
+$$
+\begin{aligned}
+\mathcal R_w(\Omega_*)\big|_{QE}
+&=V\left(\frac{A_w^{\mathsf T}}\ell\otimes K\right)V^\dagger\\
+&=H_wQMQ.
+\end{aligned}
+\tag{255.29}
+$$
+在产品块中，由（255.17），
+$$
+\mathcal R_w(\Omega_*)\big|_{E_s}=s_wM_s=H_wM_s.
+\tag{255.30}
+$$
+合并并在 $S^\perp$ 上补零，得到
+$$
+\boxed{\mathcal R_a(\Omega_*)=R_a,\qquad\mathcal R_b(\Omega_*)=R_b.}
+\tag{255.31}
+$$
+因此候选数据的实际可实现性已经由显式正半定源建立。
+
+### 255.5 形成纠缠与响应饱和来自构造
+
+将 $K$ 及各 $M_s$ 谱分解，（255.26）给出一份有限纯态系综：量子项是 Bell 态配一个本地参考向量，每份含一个 ebit，权重总和为 $\theta_*$；其余全部为产品态。形成纠缠的凸屋顶定义于是给
+$$
+E_F(\Omega_*)\le\theta_*.
+\tag{255.32}
+$$
+反向，在参考端读取 $Q$ 与产品空间的正交旗标；量子结果发生概率为 $\theta_*$，在该结果中应用 $V^\dagger$ 并丢弃重数空间，得到一个精确 Bell 对。产品结果仍为可分态。§248已证明的平均形成纠缠 LOCC 单调性给
+$$
+E_F(\Omega_*)\ge\theta_*.
+\tag{255.33}
+$$
+因此
+$$
+\boxed{E_F(\Omega_*)=\theta_*.}
+\tag{255.34}
+$$
+
+对当前固定通道，源的联合输出半迹距离为
+$$
+g(\Omega_*)
+=\frac14\bigl(\|R_a\|_1+\|R_b\|_1\bigr)
+=\frac12\operatorname{Tr}M.
+\tag{255.35}
+$$
+由（255.10）、（255.11）及（255.28），
+$$
+\operatorname{Tr}M
+=\ell\theta_*+\sqrt A(1-\theta_*).
+\tag{255.36}
+$$
+故
+$$
+\boxed{
+g(\Omega_*)=D\theta_*+U(1-\theta_*)
+=U+(D-U)E_F(\Omega_*).
+}
+\tag{255.37}
+$$
+数据条件不仅产生某个合法源，还使该源属于所需的内点饱和类。
+
+### 255.6 必要性及完整充要定理
+
+反向，设 $R_a,R_b$ 确由§248的某个内点饱和态 $\Omega$ 产生，形成纠缠为 $\theta\in(0,1)$。在其正常形坐标中，量子块响应为
+$$
+R_w\big|_{\mathrm{ent}}
+=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_{\mathcal M})V^\dagger,
+\tag{255.38}
+$$
+产品块为 $p_s s_w\sqrt A\,\tau_s$。因为 $|A_a|=|A_b|=\ell I_2$，两份响应的绝对值均等于
+$$
+M\big|_{\mathrm{ent}}
+=\frac{\theta\ell}{2}V(I_2\otimes\sigma_{\mathcal M})V^\dagger,
+\qquad
+M\big|_{E_s}=p_s\sqrt A\,\tau_s.
+\tag{255.39}
+$$
+这给条件一。
+
+量子块的符号算子为 $A_w^{\mathsf T}/\ell$，其反对易子的一半为 $\kappa I$。产品块的 $J$ 值为 $s_as_b$：当 $A>B$ 时只有一；当 $A=B$ 时允许正负一。故条件二成立，而且 $Q$ 恰是原量子参考旗标。
+
+最后将（255.39）代入（255.10），$\rho_*$ 恰为原参考边缘，$\theta_*\! =\theta$。因此条件三成立。
+
+**定理255.1（饱和来源的纯数据充要判据）。** 对固定通道及给定 Hermitian 矩阵 $R_a,R_b$，下列两项等价：
+
+1. 存在归一化正半定源 $\Omega$，具有 $E_F(\Omega)\in(0,1)$，在固定通道下响应饱和，且产生这两份矩阵。
+2. 共同幅度条件（255.3）、允许角谱条件（255.7）及归一化内点条件（255.11）全部成立。
+
+条件成立时，（255.26）构造该源，且
+$$
+E_F(\Omega)=\theta_*.
+\tag{255.40}
+$$
+进一步，其全部合法相容填充为
+$$
+\boxed{
+\left\{\Xi\succeq0:\operatorname{Tr}\Xi=1,
+\ \mathcal R_a(\Xi)=R_a,\ \mathcal R_b(\Xi)=R_b\right\}
+=\{\Omega_*\}.
+}
+\tag{255.41}
+$$
+
+**证明。** 必要性由（255.38）—（255.39）及其符号与权重计算得到。充分性由（255.26）—（255.37）得到，且 $0<\theta_*<1$ 保证内点。此时已建立饱和前提，可直接应用§251的全部正半定竞争态唯一性定理，得到（255.41）。$\square$
+
+选择不同的重数坐标 $V$ 不改变最后的联合态：它们产生同一合法响应填充，而（255.41）保证填充唯一。亦可将由数据算出的 $\rho_*$ 代入§251的 Pauli 恢复式，直接恢复同一联合矩阵。
+
+### 255.7 数据证书的含义与边界
+
+三个条件各承担一项约束。共同幅度使两个响应共享同一正权重结构；允许角谱将这份权重限制到一个量子 Pauli 因子及合法产品方向；缩放后的迹归一化把这些块组合成同一实际源。形成纠缠与饱和性是构造后的结论。
+
+本节的代数来自两个 Hermitian 对合及其中心反对易子。中心性、Pauli 分解与共同幅度的交换子代数均已在正文直接证明；Bell 结构和形成纠缠单调性复用§248，全部合法竞争态的唯一性复用§251。这些成熟有限维工具的组合不自动取得文献原创性资格。
+
+该证书处理精确完整矩阵。有限次带噪读数不能据此断言矩阵恒等式已经精确成立；小的共同幅度残差、角谱多项式残差或归一化残差，也尚未被本节证明必然对应附近的一份有效饱和数据。§252的全态稳定界以存在理想饱和源及已知响应误差为合同，不替代这项近似可实现性义务。内点条件还明确排除了形成纠缠为零或一的端点类。
+
+## 追加锚（本行以下为增补区）
