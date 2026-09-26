@@ -2837,3 +2837,76 @@ Yanqiu Guo、Michael Ilyin，*Sparse distribution of lattice points in annular r
 一个固定区间内的全部晚期单元存在，与一个固定参数落入无穷多个单元有不同量词；
 当前 H_J 的区间依赖正是尚未跨过的边界。
 没有新增 E₂ 的维数下界、类别结论、指定双均值实现、有限精度恢复或形式验证声明。
+
+## 第 82 章归属：带权输出密度与后验熵响应
+
+第 82 章证明原实际后验在整个 L=ln(1/σ)→∞、L=o(Q³) 范围的输出积分熵回归：
+√δ(H_post−h_nat+L)−(γ/ν)Y 的输出积分绝对值趋零。
+平均信息的常数项与典型输出熵的 Q^(1/4) 波动属于不同尺度。
+新增综合是全计数中心信息的带权实际／乘积比较、最终噪声尺度的同一量化耦合，
+以及独立核心块对带权密度导数余项的控制；归属为 repo-derived。
+Bayes 熵恒等式、Gaussian 分部积分、Stirling 与一般光滑密度收敛都是既有工具。
+
+Ivan Nourdin、Giovanni Peccati，*Stein's method on Wiener chaos*，
+DOI 10.1007/s00440-008-0162-x，核对 [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+及其原 TeX。Section 1.2 的 clef 式在等正态过程与中心 Y∈D^(1,2) 上使用
+E[Yf(Y)]=E[〈DY,−DL^−1Y〉f′(Y)]；Section 2 的 ipp 是导数／散度对偶。
+对二阶 chaos 的 F，−DL^−1F=DF/2。
+本章 F=√δ Σ(Z_j²−1)/2 与光滑函数 h(T^G) 的交叉分部积分，
+直接得到 K_M=Σv_jZ_j(Z_j−c_j)。该恒等式及一半系数不作为新发现。
+原文也指出 Stein 因子一般不必对 Y 可测；条件化步骤不能被无条件协方差替代。
+
+Ivan Nourdin、Frederi G. Viens，*Density formula and concentration inequalities with Malliavin calculus*，
+DOI 10.1214/EJP.v14-707，核对 [arXiv:0808.2088v2](https://arxiv.org/abs/0808.2088v2)
+的原 TeX Section 3、key-thm。
+对中心 Z∈D^(1,2)，它定义 g(z)=E[〈DZ,−DL^−1Z〉|Z=z]，
+并额外要求 g(Z)≥σ_min²>0 几乎处处，才给满实数支撑及显式密度公式。
+有限正权平方和有下界，不能自动满足这个全局正下界条件。
+本章没有由该定理取得实际后验的正 Stein 核或密度公式，使用的是直接有限分部积分。
+
+Yaozhong Hu、Fei Lu、David Nualart，
+*Convergence of densities of some functionals of Gaussian processes*，
+DOI 10.1016/j.jfa.2013.09.024，核对 [arXiv:1302.6962v2](https://arxiv.org/abs/1302.6962v2)。
+PDF 第 16 页 Theorem 4.1 要求固定齐次 chaos F=I_q(f)、q≥2、EF²=σ²，
+以及 M₆(F)=(E||DF||^−6)^(1/6)<∞，才给以四阶累积量控制的密度一致误差。
+第 18 页 Theorem 4.4 的高阶导数还要求更高逆导数矩；
+该版本显示式出现 3σ² 而非与四阶矩同量纲的 3σ⁴，此处不使用该显示式。
+第 36 页 Theorem 6.2 另要求 D^(2,s)、s≥8、逆 Stein 因子 r 阶矩、
+r>2 及 2/r+4/s=1。
+第 38 页 Theorem 6.5 在其统一 Sobolev、矩与逆导数或逆 Stein 因子条件下，
+将正态弱收敛加强为密度一致收敛。
+这些额外条件不能省略；本章参考还含一阶项和精确截距，不直接套固定齐次 chaos 结论。
+
+Ronan Herry、Dominique Malicet、Guillaume Poly，
+*Superconvergence phenomenon in Wiener chaoses*，DOI 10.1214/24-AOP1689，
+核对 [arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+及原 TeX 的 th:main-negative-moments-sum-chaos、cor:densitysumofchaos。
+PDF 第 9 页 Theorem 9 对固定有限 chaos 和 F_n，要求最高阶投影趋于标准正态、
+全变量 L² 有界，得到任意固定阶逆 carré-du-champ 矩最终统一有界。
+第 9–10 页 Corollary 10(a) 若再有低阶余项趋零于 L²，且 F_n 趋于标准正态，
+则密度在每个固定 W^(q,p)(R)、q≥0、1≤p≤∞ 中收敛。
+
+此结论直接覆盖本章 T^G/√ν 的一般密度及 L¹ 导数极限：
+最高二阶投影的正态极限由原平方质量剖面得到，一阶与常数余项由精确中心界控制。
+不同有限维数组可放在同一个可数等正态序列中。
+本章没有把这一 Gaussian 光滑性称为新定理；四块 Fourier 推导另外给出了
+两个独立半和的统一导数 L¹ 范数，用于把测量核导数转移给对方块。
+原文的 (n+1)^−1G²+G 例子说明最高阶退化时不能仅凭正态弱收敛作此推断。
+本章中心区 c/δ 个非退化二阶权重排除了该情形。
+
+信息权重 F_M 的方差可随移动核心增长，不能直接将上述有限 chaos 结论
+当作加权二元局部极限；K_M 的中心余项由两个独立块控制，才得到所需签名密度 L¹ 结论。
+原始离散计数、固定总数条件化、精确后验中心、实际路径行依赖和最终 σ
+则由各自的带权比较支付，不属于一般 Gaussian 结果的自动适用范围。
+
+第 79 章已核对的 Huffmann–Mittelbach Gaussian 信息密度与
+Ghourchian–Gohari–Amini 熵连续性原文继续承担其既有范围。
+新增条件信息矩结论还需原完整 T 的固定高阶实际矩界；
+第 77 章仅有输出二阶矩不能控制含 y² 的任意高阶目标核。
+该扩展通过 L_x≤C、Bernoulli 中心矩展开、条件 CDF 截断取得，未用 TV 搬运无界矩。
+
+Hyun-Suk Park，*Density Formula in Malliavin Calculus by Using Stein's Method and Diffusions*，
+DOI 10.3390/math13020323，及预稿 DOI 10.20944/preprints202412.0740.v1，
+书目已定位，三个原始获取入口返回 HTTP 403；未核对其定理条件，不作为证明前置。
+本章不主张一般加权局部极限的新原则、全球原创性、形式验证，
+也不宣称去除首项后的后验熵常数修正、熵响应方差收敛或每个输出的统一结论。
