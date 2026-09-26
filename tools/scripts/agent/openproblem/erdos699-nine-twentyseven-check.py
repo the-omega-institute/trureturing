@@ -395,7 +395,7 @@ def rational_audit(nmax: int) -> dict:
                 continue
             eta=3 if vp(n-1,3)==1 else 1
             q=gcd((n-1)//eta,B);v=B//q;H=(n-1)//q;J=j//q
-            T=F(J*(H-J)*(2H-J),c*d*(n-2))
+            T=F(J*(H-J)*(2*H-J),c*d*(n-2))
             D=F(108*B*B*(A-B)**2*(j-1)*(n-j-1),c**4*(n-2)**2*(n-1)**3)
             theta=F((n-j)*(n-j-1),(n-2)*(n-1))
             assert D*T==F(108*v**3,c**5*d*d)*theta**2*(1-theta)
