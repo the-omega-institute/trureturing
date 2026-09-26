@@ -145,6 +145,8 @@ theorem incoming_response_step {n : ℕ} {A : CountMat n n} {Q : Type}
       exact hj
     simp only [IncomingLift.responseReadout, dif_neg hnotU, dif_neg hnotV]
 
+#print axioms incoming_response_step
+
 /-- The equation is on all typed numbered inputs, including the entire B output path. -/
 structure CompatibleCertificate {n k : ℕ} (A : CountMat n n)
     (B : CountMat k k) (R : CountMat n k) (S : CountMat k n)
