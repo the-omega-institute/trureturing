@@ -63,7 +63,8 @@ Extend the sum to all integers `j`; outside the stated range the factor
   `L(n + 1, 0, r) − L(n + 1, 0, r − 1) = (n + 1) L(n, 0, r)`. Pascal's rule for
   `C(n + 2, ·)`, a shift of `j` and Pascal's rule for the generalized binomial
   coefficient give `R(n + 1, 0, r) − R(n + 1, 0, r − 1) = R(n, 0, r)`.
-- At `r = 1` both sides equal `n!`: only `j = 0` contributes to `R(n, 0, 1)`.
+- At `r = 1`, `L(n, 0, 1) = n!` and `R(n, 0, 1) = 1`, because only `j = 0`
+  contributes; so `L(n, 0, 1) = n! R(n, 0, 1)`.
   Induction on `n`, with an integer induction on `r` from `r = 1`, gives the
   case `k = 0`; for `n = 0`, `R(0, 0, r) = 1` because exactly one `j` has
   `2j + r − 1 ∈ {0, 1}`. Induction on `k` using (K) gives every `k ≤ n`.
@@ -85,15 +86,17 @@ The first rows at `r = 0` are `1`; `0, 2`; `0, 6, 8`; `0, 24, 72, 48`;
 
 The canonical source is
 `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.lean`. Its public
-declarations are `stirlingHat`, `conjectureSum`, `claim`, and `result`; `cz`,
-`fB` and `B` are private non-proposition definitions. The frozen module state
+declarations are `stirlingHat`, `conjectureSum`, `claim`, and `result`; `fB`
+and `B` are private non-proposition definitions. The binomial coefficient with an
+integer lower index is the shared `D5/S0/Conventions/IntegerIndexBinomial.binom`. The frozen module state
 has statement identity
-`sha256:e320e22b1bf106ac6f0aad4594870baad8dafd57feb4e6ab71d8e7b6bd899e89`.
+`sha256:d4147b129fcc7eee06209fce5e10b131b8f22ed69429327ecf75b7449790e19a`.
 The result declaration has statement identity
 `sha256:297d337df538c5c402555676c2199e22ec0e82a59ad18bbb66bd1b12ac7d72c2`.
 The Freeze event is
-`sha256:c85ed53a42d5a1871592dbc6612a8f15c84ea5ecd58e16d806cf277ccff0af81`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:00e6e18e6b7a732583f48bdfaa03e7546f7d31655d05d9212a1ae1d711c8af94`
+and its project-level frozen prerequisite is
+`D5/S0/Conventions/IntegerIndexBinomial`. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

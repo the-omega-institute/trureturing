@@ -56,7 +56,7 @@ $$claim$$
 
 *Commentary.*
 
-Extend the sum to all integers j; the terms outside the range vanish. Both sides f(n, k, r) satisfy f(n, k + 1, r) = f(n, k, r + 2) - f(n, k, r) for k < n: on the left because forward differences commute with the shift x -> x + 1, which sends r to r + 2; on the right by shifting j and Pascal's rule for the generalized binomial coefficient. At k = 0 the left side is the rising factorial of r, and both sides satisfy f(n + 1, 0, r) - f(n + 1, 0, r - 1) = (n + 1) f(n, 0, r): on the left because the rising factorials of r and r - 1 share n factors, on the right by Pascal's rule applied twice and a shift of j. Both sides equal (n + 1)! at r = 1, so induction on n and then on the integer r settles k = 0, and induction on k settles every k <= n.
+Extend the sum to all integers j; the terms outside the range vanish. Both sides f(n, k, r) satisfy f(n, k + 1, r) = f(n, k, r + 2) - f(n, k, r) for k < n: on the left because forward differences commute with the shift x -> x + 1, which sends r to r + 2; on the right by shifting j and Pascal's rule for the generalized binomial coefficient. At k = 0 the left side is the rising factorial of r, and both sides satisfy f(n + 1, 0, r) - f(n + 1, 0, r - 1) = (n + 1) f(n, 0, r): on the left because the rising factorials of r and r - 1 share n factors, on the right by Pascal's rule applied twice and a shift of j. At r = 1 both sides equal n!, that is f(n, 0, 1) = n! for every n, so induction on n and then on the integer r settles k = 0, and induction on k settles every k <= n.
 
 ## References
 
@@ -64,3 +64,4 @@ Extend the sum to all integers j; the terms outside the range vanish. Both sides
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.conjectureSum`
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.result`
 - Truth anchor: `D5/S3/Quantum/FockSpace/BosonOrderingStirlingClosedForm.stirlingHat`
+- Dependency: [D5/S0/Conventions/IntegerIndexBinomial](../../../S0/Conventions/IntegerIndexBinomial.md)
