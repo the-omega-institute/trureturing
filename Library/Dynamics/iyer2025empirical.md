@@ -4431,3 +4431,51 @@ $O(\mathcal D^{-1})$，其中 $\mathcal D=(q/Q^{11/4})\sqrt\delta$；
 有限原文检索不认证全局原创。结论是先验信道积分在实际数据概率下的判断，
 未声称无界原始数据期望、逐输出一致、零噪声或其他泛函已同步推广。
 纯理论正文未进入消化或 Lean 冻结链。
+
+## 第 107 章：最大计数原子与无穷阶端点
+
+[谱边界卷第 107 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原半指数噪声区间给出逐输出最小熵变化的系数 $\gamma/[2\rho(0)]$，
+并独立证明 $\alpha\to\infty$、$\alpha\le\ln Q$ 的一致有限阶桥接。
+最大原子由完整有限计数元组上的约束极小值直接处理；
+固定阶 Rényi 系数的无穷阶极限只作一致性核对，不承担极限交换。
+
+Robert König、Renato Renner、Christian Schaffner，
+*The operational meaning of min- and max-entropy*，
+[arXiv:0807.1338v1](https://arxiv.org/abs/0807.1338v1)，
+Definition 1、独立子系统特例及 Theorem 1，
+将经典—量子态的条件最小熵与最优 POVM 猜测概率的负对数相联系。
+侧信息也为经典时，该量先平均每份侧信息下的最佳猜测概率。
+本章对象是指定输出处的 $-\ln\max_n\mathsf P_x^y(n)$，不是该平均条件熵。
+无条件最大原子定义相容，本文另从原 Gaussian Bayes 公式推导逐输出恒等式，
+并将 bits 转为 nats。
+
+Tim van Erven、Peter Harremoës，
+[arXiv:1206.2459v1](https://arxiv.org/abs/1206.2459v1)，
+Theorem 6 给无穷阶 Rényi 散度的本质上确界表达，
+在可数空间为 $\ln\sup_xP(x)/Q(x)$，须保持其零值约定。
+取有限均匀参照律即得到最大原子熵。
+其固定分布对的阶数连续性不能代替本章增长模型的双极限论证。
+
+Bernard Bercu、Jean-François Bony、Vincent Bruneau，
+*Spectrum of the product of Toeplitz matrices with application in probability*，
+[arXiv:0712.1302v1](https://arxiv.org/abs/0712.1302v1)，
+Theorem 2.3、Theorem 2.4 要求连续实符号 $f,g$ 且 $g\ge0$，
+给有限 Toeplitz 乘积的极端特征值与无限算子谱边缘的对应；
+谱边缘一般不等于 $fg$ 的极值。
+第 3 节、Corollary 3.1 对平稳 Gaussian 过程二次型给速度 $n$ 的大偏差原理，
+其率函数可有斜率 $1/(2\lambda_{\max})$ 的仿射部分。
+这提供谱边缘成本形状的经典近邻，但对象是 Gaussian 事件概率，
+不能直接证明原受条件约束离散计数的最大原子或指数窄平滑密度。
+
+本章使用经典二项众数比的离散曲率，以向量误差避免损失整个组数的常数；
+全盒下界与最大经验方差组的可行整数构造分别承担两个方向。
+原固定总数修正上、下界按各自方向使用，没有假定远元组上的统一正下界。
+增长阶数的密度证明使用固定内部倾斜及单个平方坐标的显式密度，
+未假定边界鞍点对阶数一致内部化。
+高组 Stirling、尾项与核宽度误差中的 $\alpha\le\ln Q$ 因子逐项支付。
+
+有限原文检索不认证全局原创；经典工具与模型内组合分开归属。
+结论保留原实际 pair/path、紧输出和确定支持一致的概率范围，
+不提供下一输出尺度、任意更快阶数、Shannon 阶或输出平均熵的结论。
+纯理论文本未进入消化或 Lean 冻结链。
