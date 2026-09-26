@@ -337,15 +337,51 @@ private def dataTypes : Array Name :=
 private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
 private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
 
-private partial def hasIndependentInputCarrier (type : Expr) : Bool :=
-  match type with
+-- Inspect imported abbreviations with the same bounded substitution used by
+-- expansion. Raw types still pass compileExpr and remain in the checked plan.
+private partial def sourceCarrierShape (type : Expr) (depth : Nat := 0) : CompileM Expr := do
+  charge
+  if depth > 256 then throwError "incomplete_closure:E8.depth"
+  let type := type.consumeMData
+  let .const name levels := type.getAppFn | return type
+  if dataTypes.contains name || propTypes.contains name ||
+      dictionaryTypes.contains name || interfaceTypes.contains name then return type
+  let .defnInfo info ← getConstInfo name | return type
+  unless (info.hints matches .abbrev) && info.safety == .safe && info.all.length == 1 &&
+      (← independentSource name) && !(← isRecursiveDefinition name) do return type
+  let mut value ← construct (fun fuel => PlanTransform.instantiateExpr info.value info.levelParams levels fuel)
+  for arg in type.getAppArgs do
+    let .lam _ _ body _ := value.consumeMData | return type
+    value ← instantiate body arg
+  sourceCarrierShape value (depth + 1)
+
+private partial def containsIndependentCarrier (type : Expr) (depth : Nat := 0) : CompileM Bool := do
+  charge
+  if depth > 256 then throwError "incomplete_closure:E8.depth"
+  let type ← sourceCarrierShape type depth
+  let head := type.getAppFn.constName?.getD .anonymous
+  if dictionaryTypes.contains head || propTypes.contains head || interfaceTypes.contains head then
+    return false
+  if #[`Prod, `Sum, `Option, `Subtype].contains head then
+    -- Subtype's predicate is an obligation, not an input carrier.
+    let carriers := if head == `Subtype then type.getAppArgs.extract 0 1 else type.getAppArgs
+    for carrier in carriers do
+      if ← containsIndependentCarrier carrier (depth + 1) then return true
+    return false
+  if dataTypes.contains head then return false
+  if let .forallE _ domain body _ := type then
+    return (← containsIndependentCarrier domain (depth + 1)) ||
+      (← containsIndependentCarrier body (depth + 1))
+  return !head.isAnonymous && (← independentSource head)
+
+private partial def hasIndependentInputCarrier (type : Expr) (depth : Nat := 0) : CompileM Bool := do
+  charge
+  if depth > 256 then throwError "incomplete_closure:E8.depth"
+  match type.consumeMData with
   | .forallE _ domain body _ =>
-    let head := domain.consumeMData.getAppFn.constName?.getD .anonymous
-    let inputCarrier := !head.isAnonymous &&
-      !(dataTypes.contains head || propTypes.contains head ||
-        dictionaryTypes.contains head || interfaceTypes.contains head)
-    inputCarrier || hasIndependentInputCarrier body
-  | _ => false
+    return (← containsIndependentCarrier domain (depth + 1)) ||
+      (← hasIndependentInputCarrier body (depth + 1))
+  | _ => return false
 
 private def interfaceProjection (env : Environment) (name : Name) : Bool :=
   match env.getProjectionFnInfo? name with
@@ -375,8 +411,10 @@ private def standardDictionaryNames : Array Name := #[
   `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
   `Option.instDecidableEq, `Subtype.instDecidableEq, `Classical.decEq]
 
-private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
+private def checkedDictionary (info : ConstantInfo) (typePosition : Bool) : CompileM Bool := do
   unless standardDictionaryNames.contains info.name do return false
+  if info.name == `Classical.decEq && !typePosition then
+    throwError "unclassified_form:E2.dictionary_position:Classical.decEq"
   let some pin := (primitivePins.getState (← getEnv)).find? (·.identity.name == info.name)
     | throwError "incomplete_closure:E2.dictionary_pin"
   dependency info
@@ -565,7 +603,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
           (r.all.headD .anonymous)
       | _ => false
     let fixedProjection := interfaceProjection (← getEnv) name || #[`Prod.fst, `Prod.snd, `Subtype.val].contains name
-    let dictionary ← checkedDictionary info
+    let dictionary ← checkedDictionary info typePosition
     if fixedType || fixedCtor || fixedCase || recursiveCase || fixedProjection || dictionary || name == `Fin.elim0 then
       dependency info
       let mut plan := PlanNode.atom head
@@ -600,7 +638,12 @@ private partial def compileNode (e : Expr) (depth : Nat)
           plan := .app plan (← child arg)
         rule "E3.constructor_projection"
         return plan
-    if (← isType e) && !(← isProp e) && (← independentSource name) then
+    -- Abbreviations expose their checked underlying type through ordinary E5
+    -- expansion, so aliases cannot hide excluded identities or finite carriers.
+    let carrierAbbrev := match info with
+      | .defnInfo defn => defn.hints matches .abbrev
+      | _ => false
+    if !carrierAbbrev && (← isType e) && !(← isProp e) && (← independentSource name) then
       match info with
       | .thmInfo _ | .axiomInfo _ => pure ()
       | _ =>
@@ -609,11 +652,11 @@ private partial def compileNode (e : Expr) (depth : Nat)
         for arg in args do plan := .app plan (← compileExpr arg (depth + 1) true)
         rule "E2.independent_carrier"
         return plan
-    if args.isEmpty && hasIndependentInputCarrier info.type && (← independentSource name) then
+    if args.isEmpty && (← independentSource name) && (← hasIndependentInputCarrier info.type) then
       if let .defnInfo defn := info then
         if defn.safety == .safe && defn.all.length == 1 &&
             !(← isRecursiveDefinition name) then
-          if let .forallE _ _ result _ := info.type then
+          if let .forallE _ _ result _ := info.type.consumeMData then
             if !result.hasLooseBVars && !(← isProp result) then
               let typePlan ← compileExpr info.type (depth + 1) true
               dependency info
