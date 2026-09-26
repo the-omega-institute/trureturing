@@ -141,11 +141,11 @@ it directly.
 
 The finite-record
 [lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean)
-illustrates another limit. It achieves zero retrospective loss; when its
-construction depends on the copied records, each fails the model's
-nonanticipation condition. Prospective gain is an independent input, so zero
-loss does not ensure positivity for every such function. This motivates
-scrutiny of test provenance, without establishing a general law of machine
+achieves zero retrospective loss. If its construction uses all copied records,
+each fails nonanticipation: the model requires prior freezing and exclusion
+from construction dependencies. Prospective gain is specified separately, so
+zero loss does not ensure positivity for every gain function. This motivates
+checking test provenance, without establishing a general law of machine
 learning performance.
 
 Evaluate AI research selection on questions withheld from method design.

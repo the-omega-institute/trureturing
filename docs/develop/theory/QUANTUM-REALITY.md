@@ -54906,3 +54906,301 @@ $$
 当 $k=2,3$ 时，$N_k=0$，空交集及结论正如陈述。这一有限交对每个 $J_n$ 单独应用失败条件，未使用关于 $n$ 的成功单调性，也未丢弃任何较大制备中的记录。纯见证的全部水平集维数界控制成功配置的维数，归一化紧致性与实际不同射线的插值又阻止成功见证经零水平逃逸；二者共同给出这里的开稠密必要次数结论。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 412. 重复量子比特记录成功配置的精确维数与局部开集
+
+沿用第 411 节的有序不同射线配置空间 $\mathcal D_k$、成功集合 $\mathcal E_{k,n}$ 及其实半代数维数，整数范围始终为 $k\ge2$、$n\ge1$。对每条已知射线选单位代表 $s_j\in\mathbb C^2$，系统和全部原始记录仍为
+
+$$
+S=\mathbb C^k,\qquad R_n=(\mathbb C^2)^{\otimes n},\qquad
+J_n|j\rangle=|j\rangle\otimes s_j^{\otimes n},\qquad
+W_n=\operatorname{Sym}^n(\mathbb C^2)\subseteq R_n.
+$$
+
+这里采用定义 400.1 的受控制备；全部 $n$ 份记录在制备后保持联合可访问，$W_n$ 仅为数学子空间。允许的操作恰为第 411 节的完整有限结果联合 CP instrument，作用于整个 $R_n$，与输入无关的记录辅助装置并入其中；各分支之和保迹，输出记录取迹后得到系统分支 $\mathcal M_y$。每个协议的接受集合 $Y_{\mathrm s}$ 固定，每个实际结果只控制作用于整个 $S$ 的一个终端酉算子 $U_y$；此前不操作系统，任意有限维参考 $A$ 始终不被操作。每个协议的结果数有限，不要求不同协议共用结果数上界。成功要求同一协议和同一 $p>0$ 对全部矩阵满足
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\mathrm s}}U_y\mathcal M_y(X)U_y^\dagger=pX,
+\qquad
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=pX_{AS}
+$$
+
+第一式对每个 $X\in\mathcal L(S)$ 成立，第二式对每个有限维 $A$ 及每个 $X_{AS}\in\mathcal L(A\otimes S)$ 成立。协议和 $p$ 可依赖已知配置与 $n$，不得依赖未知输入；局部构造中的不同配置可以分别校准。
+
+**定理 412.1（完整重复记录成功集合的精确维数及局部实现）。** 在上述接口下，对所有整数 $k\ge2$、$n\ge1$，有
+
+$$
+\boxed{\dim_{\mathbb R}\mathcal E_{k,n}=\min(2k,2n+k+1).}
+$$
+
+当 $k\le2n+1$ 时，$\mathcal E_{k,n}$ 包含 $\mathcal D_k$ 的一个非空相对开子集。当 $k\ge2n+1$ 时，$\mathcal E_{k,n}$ 包含一个实维数为 $2n+k+1$ 的嵌入光滑流形片。这两个局部结论均为存在断言；在边界 $k=2n+1$，所构造的流形片就是一个非空相对开集，其维数同时等于 $2k$ 和 $2n+k+1$。
+
+证明。先在赤道配置附近构造精确成功族。采用定理 407.2 证明中的归一化对称基 $e_0,\ldots,e_n$：$e_\ell$ 为恰有 $\ell$ 个 $|1\rangle$ 的计算基向量之和除以 $\sqrt{\binom n\ell}$。记
+
+$$
+c_\ell=\sqrt{\binom n\ell},\qquad
+z_\ell=x_\ell+i y_\ell\quad(1\le\ell\le n),\qquad
+b(z)=\frac{e_0+\sum_{\ell=1}^n z_\ell e_\ell}
+            {\sqrt{1+\sum_{\ell=1}^n|z_\ell|^2}}.
+$$
+
+$b(z)$ 是 $W_n$ 中的单位向量，其 $e_0$ 系数为正实数，故已固定整体相位，见证参数恰有 $2n$ 个实坐标。对 $r>0$ 和圆周角 $\varphi$，令
+
+$$
+s(r,\varphi)=\frac{|0\rangle+r e^{i\varphi}|1\rangle}{\sqrt{1+r^2}}.
+$$
+
+对称基展开给出
+
+$$
+s(r,\varphi)^{\otimes n}
+ =\frac{\sum_{\ell=0}^n c_\ell r^\ell e^{i\ell\varphi}e_\ell}
+             {(1+r^2)^{n/2}},
+\qquad
+f_z(r,\varphi):=|\langle b(z)|s(r,\varphi)^{\otimes n}\rangle|^2
+ =\frac{\left|1+\sum_{\ell=1}^n\overline{z_\ell}c_\ell
+                       r^\ell e^{i\ell\varphi}\right|^2}
+        {\left(1+\sum_{\ell=1}^n|z_\ell|^2\right)(1+r^2)^n}.
+$$
+
+取赤道半径 $r_0=1$ 和共同响应 $t_0=2^{-n}\in(0,1)$。在 $z=0,r=1$ 处，对任意 $\varphi$ 有
+
+$$
+\begin{aligned}
+f_0(1,\varphi)&=2^{-n},&
+\partial_r f_0(1,\varphi)&=-n2^{-n},&
+\partial_\varphi f_0(1,\varphi)&=0,\\
+\left.\partial_{x_\ell}f_z(r,\varphi)\right|_{z=0,r=1}
+ &=2^{1-n}c_\ell\cos(\ell\varphi),&
+\left.\partial_{y_\ell}f_z(r,\varphi)\right|_{z=0,r=1}
+ &=2^{1-n}c_\ell\sin(\ell\varphi).
+\end{aligned}
+$$
+
+其中正的正弦号来自
+
+$$
+\operatorname{Re}\bigl((x_\ell-i y_\ell)e^{i\ell\varphi}\bigr)
+ =x_\ell\cos(\ell\varphi)+y_\ell\sin(\ell\varphi).
+$$
+
+见证归一化分母 $1+\sum_\ell|z_\ell|^2$ 在 $z=0$ 的一阶微分为零，因此没有额外的一阶项。
+
+任取模 $2\pi$ 两两不同的 $k$ 个角 $\theta_1,\ldots,\theta_k$。在圆周上为它们选两两不交的小开弧，并在各弧上固定以 $\theta_j$ 为中心的实数提升。以下 $\varphi_j$ 均在各自提升区间内。考虑 $k$ 个方程
+
+$$
+G_j(t,z,\boldsymbol r,\boldsymbol\varphi)
+ :=f_z(r_j,\varphi_j)-t=0\qquad(1\le j\le k).
+$$
+
+在 $(t,z,\boldsymbol r,\boldsymbol\varphi)
+ =(t_0,0,\boldsymbol 1,\boldsymbol\theta)$ 处，关于全部径向变量的导数是可逆矩阵
+
+$$
+D_{\boldsymbol r}G=-n2^{-n}I_k.
+$$
+
+实光滑隐函数定理因而给出基点
+
+$$
+a_0=(t_0,0,\ldots,0,\theta_1,\ldots,\theta_k)
+ \in\mathbb R^{2n+1+k}
+$$
+
+的一个开邻域 $\mathcal V$ 以及光滑函数
+
+$$
+r_j=R_j(t,z,\boldsymbol\varphi),\qquad
+R_j(a_0)=1,\qquad
+f_z\bigl(R_j(t,z,\boldsymbol\varphi),\varphi_j\bigr)=t
+\quad(1\le j\le k).
+$$
+
+缩小 $\mathcal V$，使全部 $R_j>0$、$0<t<1$，并使每个 $\varphi_j$ 始终位于其指定开弧。于是各复数 $R_j e^{i\varphi_j}$ 两两不同，对应射线均位于共同仿射图 $[1:u+iv]$，且组成 $\mathcal D_k$ 中的配置。这给出了全部 $k$ 个等响应方程的精确解。邻域的选择可依赖 $k,n$ 及所选角。
+
+对每个这样的解，使用定理 411.1 的充分方向，在完整原始 $R_n$ 上取
+
+$$
+\Pi=|b(z)\rangle\langle b(z)|,\qquad
+\mathcal I_0(Z)=\Pi Z\Pi,\qquad
+\mathcal I_1(Z)=(I_{R_n}-\Pi)Z(I_{R_n}-\Pi).
+$$
+
+两个分支完全正，Kraus 效果之和为 $\Pi+(I_{R_n}-\Pi)=I_{R_n}$，故其总和保迹。固定只接受结果 $0$，结果 $1$ 保留在完整测量内，其终端反馈可取恒等。置
+
+$$
+s_j=s\bigl(R_j(t,z,\boldsymbol\varphi),\varphi_j\bigr),\qquad
+\alpha_j=\langle b(z)|s_j^{\otimes n}\rangle,\qquad
+q_j=\frac{\alpha_j}{\sqrt t},\qquad |q_j|=1.
+$$
+
+接受分支满足
+
+$$
+(I_S\otimes\Pi)J_n|j\rangle=\alpha_j|j\rangle\otimes b(z),
+\qquad
+K=\operatorname{diag}(\alpha_1,\ldots,\alpha_k).
+$$
+
+因此在整个 $S$ 上取终端酉反馈
+
+$$
+U=\operatorname{diag}(\overline{q_1},\ldots,\overline{q_k}),
+\qquad UK=\sqrt t\,I_S,
+$$
+
+便对每个矩阵和每个未操作的有限维参考有
+
+$$
+\mathcal T(X)=UKXK^\dagger U^\dagger=tX,
+\qquad
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})
+ =(I_A\otimes UK)X_{AS}(I_A\otimes UK)^\dagger=tX_{AS}.
+$$
+
+所以这里构造的协议以 $p=t>0$ 成功，全部配置均属于实际物理集合 $\mathcal E_{k,n}$。$t=p$ 仅针对这个具体投影协议；定理 411.1 从任意协议提取的归一化响应 $t$ 不必等于该协议的总成功概率。构造始终使用全部原始记录，$b(z)\in W_n$ 没有改变测量所在的 $R_n$。
+
+接着计算这一精确配置族的微分。按
+
+$$
+a=(t,x_1,y_1,\ldots,x_n,y_n,\varphi_1,\ldots,\varphi_k)
+$$
+
+排列输入坐标，定义径向和角向坐标映射
+
+$$
+H(a)=\bigl(R_1(a),\ldots,R_k(a),\varphi_1,\ldots,\varphi_k\bigr).
+$$
+
+对等式 $f_z(R_j(a),\varphi_j)=t$ 求导并代入上面的基点导数，得到
+
+$$
+DH(a_0)=
+\begin{pmatrix}
+A&0\\
+0&I_k
+\end{pmatrix},
+$$
+
+其中 $A$ 有 $k$ 行、$2n+1$ 列，第 $j$ 行为
+
+$$
+\left(-\frac{2^n}{n},
+ \frac2n c_1\cos\theta_j,\frac2n c_1\sin\theta_j,\ldots,
+ \frac2n c_n\cos(n\theta_j),\frac2n c_n\sin(n\theta_j)\right).
+$$
+
+这些列是实 Fourier 评价矩阵的非零倍数。圆周采样的 Fourier/Vandermonde 结构见 Amiet–Weigert，[quant-ph/9904036v1](https://arxiv.org/pdf/quant-ph/9904036v1)，PDF 第 6 页式 (17)；取该文 $2s=n$，其 $4s+1$ 个圆周采样对应这里的 $2n+1$ 个节点。此处所需的任意不同节点秩，可用以下经典多项式根数论证直接验证。
+
+当节点数为 $2n+1$ 时，设实三角多项式
+
+$$
+T(\varphi)=a_0'+\sum_{\ell=1}^n
+       \bigl(a_\ell'\cos(\ell\varphi)+b_\ell'\sin(\ell\varphi)\bigr)
+$$
+
+在所有这些节点上为零。令 $w=e^{i\varphi}$，则
+
+$$
+w^nT(\varphi)=P(w),\qquad
+P(w)=a_0'w^n+\sum_{\ell=1}^n
+ \left(\frac{a_\ell'-i b_\ell'}2w^{n+\ell}
+       +\frac{a_\ell'+i b_\ell'}2w^{n-\ell}\right)
+$$
+
+是次数至多 $2n$ 的复多项式，却有 $2n+1$ 个不同根 $e^{i\theta_j}$，故为零多项式。各次幂系数分别为零，推出全部 $a_\ell',b_\ell'$ 及 $a_0'$ 为零。因此方形实评价矩阵可逆。当 $k<2n+1$ 时，将给定节点补足为 $2n+1$ 个不同圆周节点；可逆矩阵中保留的 $k$ 行线性无关。当 $k>2n+1$ 时，从给定节点中选出 $2n+1$ 个，其方形子矩阵已经可逆。因全部列缩放系数非零，对任意所选不同角都有
+
+$$
+\operatorname{rank}A=\min(k,2n+1),\qquad
+\operatorname{rank}DH(a_0)=d,
+\qquad d:=k+\min(k,2n+1)=\min(2k,2n+k+1).
+$$
+
+把输出转到实际仿射实坐标，令
+
+$$
+F(a)=(u_1(a),v_1(a),\ldots,u_k(a),v_k(a)),\qquad
+u_j(a)=R_j(a)\cos\varphi_j,\qquad
+v_j(a)=R_j(a)\sin\varphi_j.
+$$
+
+每个从 $(r_j,\varphi_j)$ 到 $(u_j,v_j)$ 的微分块为
+
+$$
+\begin{pmatrix}
+\cos\varphi_j&-r_j\sin\varphi_j\\
+\sin\varphi_j&r_j\cos\varphi_j
+\end{pmatrix},\qquad \det=r_j>0.
+$$
+
+故 $\operatorname{rank}DF(a_0)=d$。记 $m=2n+1+k$，在这个实际的 $2k\times m$ 实 Jacobian 中选定输出坐标指标集 $I\subseteq\{1,\ldots,2k\}$ 和输入坐标指标集 $J\subseteq\{1,\ldots,m\}$，各有 $d$ 个元素，按递增顺序排列，使
+
+$$
+\det\bigl(DF(a_0)_{I,J}\bigr)\ne0.
+$$
+
+这样的子式由刚算出的秩保证存在。固定此选择，将所有不在 $J$ 中的输入坐标冻结为 $a_0$ 的相应值。以 $h\in\mathbb R^d$ 表示剩余坐标，记此坐标嵌入为 $\iota_J(h)$，$h_0=(a_0)_J$，并置
+
+$$
+F_J=F\circ\iota_J,\qquad
+q_I:\mathbb R^{2k}\longrightarrow\mathbb R^d,\qquad
+q_I(w)=(w_i)_{i\in I}.
+$$
+
+这里 $w$ 按 $F$ 的输出次序排列，$I$ 中的坐标按已选顺序读取。限制到 $h_0$ 的小开邻域，使 $\iota_J(h)\in\mathcal V$。映射 $\psi=q_I\circ F_J$ 在 $h_0$ 的导数为可逆矩阵 $DF(a_0)_{I,J}$。实光滑逆函数定理给出非空开邻域 $V\subseteq\mathbb R^d$、$O\subseteq\mathbb R^d$，使 $\psi:V\to O$ 为微分同胚。定义
+
+$$
+\gamma=F_J\circ\psi^{-1}:O\longrightarrow\mathbb R^{2k},
+\qquad q_I\circ\gamma=\operatorname{id}_O.
+$$
+
+将输出坐标按 $I$ 及其补集重排，便有 $\gamma(a)=(a,g(a))$，其中 $g:O\to\mathbb R^{2k-d}$ 光滑。这是一个真正的嵌入光滑图像，其逆由仿射坐标投影 $q_I$ 给出；它的每一点均由前面的完整记录协议实现。
+
+当 $k\le2n+1$ 时，$d=2k$，$I$ 包含全部输出坐标，故这个图像在配置仿射图内开，从而给出 $\mathcal D_k$ 中的非空相对开成功子集。当 $k\ge2n+1$ 时，$d=m=2n+1+k$，$J$ 包含全部输入坐标，无须冻结任何输入；缩小后的整个局部参数族因而给出所述 $2n+k+1$ 维嵌入流形片。这一坐标图中的参数唯一性只针对所选局部族。
+
+最后把这个光滑图像用于半代数集合 $\mathcal E_{k,n}$ 的维数下界。在每个射线因子的仿射图中，$[1:u+iv]$ 与 Bloch 球图的对应为
+
+$$
+(u,v)\longmapsto
+ \frac{(2u,2v,1-u^2-v^2)}{1+u^2+v^2},
+\qquad
+(u,v)=\left(\frac{X_1}{1+X_3},\frac{X_2}{1+X_3}\right)
+\quad(X_3\ne-1).
+$$
+
+这是双向有理的半代数光滑坐标变换。记 $\mathcal D_k^{\mathrm{aff}}\subseteq\mathbb R^{2k}$ 为不同点配置的仿射代表，$\mathcal E_{k,n}^{\mathrm{aff}}$ 为 $\mathcal E_{k,n}$ 在此图内的代表。定理 411.1 的半代数性给出 $\mathcal E_{k,n}^{\mathrm{aff}}$ 半代数；上述构造给出 $\gamma(O)\subseteq\mathcal E_{k,n}^{\mathrm{aff}}$。
+
+在 $F(a_0)\in\mathcal D_k^{\mathrm{aff}}$ 周围选一个足够小的开欧氏球 $B$，使 $B\subseteq\mathcal D_k^{\mathrm{aff}}$。$B$ 是半代数集。由 $\gamma$ 的连续性，可再缩小包含 $q_I(F(a_0))$ 的非空开集 $O$，使 $\gamma(O)\subseteq B$。于是
+
+$$
+O\subseteq q_I\bigl(\mathcal E_{k,n}^{\mathrm{aff}}\cap B\bigr)
+ \subseteq\mathbb R^d.
+$$
+
+投影的对象是已知半代数的 $\mathcal E_{k,n}^{\mathrm{aff}}\cap B$。由 Tarski–Seidenberg 定理，其投影仍为半代数集；因为它包含 $\mathbb R^d$ 的非空开集，维数恰为 $d$。再由投影不增维、子集单调性及半代数坐标变换的维数不变性，得到
+
+$$
+d=\dim_{\mathbb R}q_I\bigl(\mathcal E_{k,n}^{\mathrm{aff}}\cap B\bigr)
+ \le\dim_{\mathbb R}\bigl(\mathcal E_{k,n}^{\mathrm{aff}}\cap B\bigr)
+ \le\dim_{\mathbb R}\mathcal E_{k,n}.
+$$
+
+这里沿用定理 411.1 引用的 Basu–Pollack–Roy，[*Algorithms in Real Algebraic Geometry*, 作者发布稿](https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf)：Theorem 2.76（第 76 页）的投影定理，以及 Theorem 5.25、Propositions 5.28–5.29、Lemma 5.30（第 178–180 页）的维数规则。上述推论只需要 $\gamma$ 为光滑图像，不要求角参数映射 $H,F$ 或 $\gamma(O)$ 半代数。
+
+另一方面，定理 411.1 与环境维数分别给出
+
+$$
+\dim_{\mathbb R}\mathcal E_{k,n}\le2n+k+1,
+\qquad
+\dim_{\mathbb R}\mathcal E_{k,n}\le\dim_{\mathbb R}\mathcal D_k=2k.
+$$
+
+与下界合并即得所述精确维数。特别地，$k=2n+1$ 时
+
+$$
+d=m=2k=2n+k+1,
+$$
+
+局部映射本身为到开配置邻域的微分同胚，两个局部结论在此一致。若 $k\ge2n+2$，构造的流形片维数为 $2n+k+1<2k$，与定理 411.1 中开稠密失败集及成功集零环境测度相容。归一化见证的变形提供至 $n$ 次的径向 Fourier 模态，$k$ 个角坐标同时独立变化；非零仿射子式将这些自由度实现为实际成功配置的局部图像。证毕。
+
+## 追加锚（本行以下为增补区）
