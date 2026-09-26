@@ -73967,3 +73967,391 @@ Schmidt 分解及纯态边缘谱的标准背景，可见 J. Watrous，*The Theor
 本节的完整方向优化与逆向资源曲线由（242.12）—（242.29）直接推导；不据此宣称文献原创性。其量词固定于纯联合探针、一次通道使用、原四标签和均匀目标权重。对混合联合探针，单侧边缘熵不是可直接替代的纠缠成本；对于其他同秩候选、重复查询或不同标签权重，也不能自动沿用（242.24）。
 
 ## 追加锚（本行以下为增补区）
+
+## 243. 最小精确纠缠资源与投影接口的张量组合律
+
+§240已经刻画固定投影候选的全部最坏纯探针：输入边缘必须与全部输入投影对易。本节利用标准有限维代数分解，把这些边缘的 Schmidt 秩和纠缠熵全部写出，再求精确最小值。
+
+对两份此类接口的独立张量组合，所得最小参考维数相乘，最小纯探针纠缠熵相加。证明覆盖跨两份输入相关的全部联合纯探针，不先将探针限制为乘积。标准代数分解作为已有工具用于这些接口的资源计算。
+
+### 243.1 固定候选与精确取等资源
+
+输入 Hilbert 空间为 $H=\mathbb C^d$。固定 $N$ 个经典记录标签及各标签单位量子输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。假设输入投影族满足
+$$
+\sum_{j=1}^N\Pi_j=\frac RdI_H,
+\qquad 1\le R<Nd.
+\tag{243.1}
+$$
+目标与固定候选为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_j|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j,\\
+\mathcal S(X)&=\sum_j|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j.
+\end{aligned}
+\tag{243.2}
+$$
+候选是实际 CPTP 通道，精确总 Choi 秩为 $R$，其完整半 diamond 距离为
+$$
+D_*=\frac12\|\mathcal S-\mathcal R\|_{\diamond}
+=1-\frac R{Nd}.
+\tag{243.3}
+$$
+对归一化纯联合探针 $|\psi\rangle\in H\otimes E$，记输入边缘为 $\rho$，实际半迹距离为 $f(\rho)$。§240已经证明，包括奇异边缘在内，
+$$
+f(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+\tag{243.4}
+$$
+任意相同边缘的纯化在参考支撑上只相差等距变换，故不改变 $f$、Schmidt 秩或纠缠熵。
+
+定义达到完整值的最小纯探针资源
+$$
+\begin{aligned}
+r_{\min}(\mathcal S)&=
+\min\{\operatorname{rank}\rho:f(\rho)=D_*\},\\
+E_{\min}(\mathcal S)&=
+\inf\{S(\rho):f(\rho)=D_*\},
+\end{aligned}
+\tag{243.5}
+$$
+其中 $\rho$ 遍历输入密度矩阵，$S(\rho)=-\operatorname{Tr}(\rho\log_2\rho)$。因为联合探针是纯态，$\operatorname{rank}\rho$ 是其 Schmidt 秩及最小参考支撑维数，$S(\rho)$ 是输入与参考之间的纠缠熵。最大混合边缘 $I_d/d$ 始终满足（243.4），所以取等集合非空。
+
+### 243.2 用标准代数分解写出全部取等边缘
+
+令
+$$
+\mathcal A=\operatorname{Alg}^{*}(I_H,\Pi_1,\ldots,\Pi_N)
+\subseteq\mathcal L(H)
+\tag{243.6}
+$$
+为投影生成的有限维含幺 $C^*$ 代数，$\mathcal A'$ 为其对易代数。采用已有的有限维结构定理，存在酉坐标使
+$$
+H\cong\bigoplus_{z\in Z}
+\left(\mathbb C^{n_z}\otimes\mathbb C^{m_z}\right),
+\tag{243.7}
+$$
+$$
+\mathcal A\cong\bigoplus_{z\in Z}
+\left(M_{n_z}(\mathbb C)\otimes I_{m_z}\right),
+\qquad
+\mathcal A'\cong\bigoplus_{z\in Z}
+\left(I_{n_z}\otimes M_{m_z}(\mathbb C)\right).
+\tag{243.8}
+$$
+这里 $Z$ 为有限中心块集合，$n_z,m_z$ 为正整数：$n_z$ 是不可约作用维数，$m_z$ 是重数。该标准分解只用于本节证明，不单列为新定理。
+
+下文在上述酉坐标中书写边缘。由（243.4），全部取等边缘恰为 $\mathcal A'$ 中的密度矩阵，因此唯一具有形式
+$$
+\boxed{
+\rho=\bigoplus_{z\in Z}
+p_z\left(\frac{I_{n_z}}{n_z}\otimes\sigma_z\right),
+\qquad p_z\ge0,\quad\sum_zp_z=1,
+}
+\tag{243.9}
+$$
+其中在 $p_z>0$ 的块上，$\sigma_z$ 是 $m_z$ 维密度矩阵；$p_z=0$ 时该块为零，$\sigma_z$ 的选择不影响 $\rho$。
+
+具体地，$\mathcal A'$ 中的正矩阵块为 $I_{n_z}\otimes\tau_z$，$\tau_z\succeq0$。设 $p_z=n_z\operatorname{Tr}\tau_z$，在非零块上取 $\sigma_z=\tau_z/\operatorname{Tr}\tau_z$，就得到（243.9）。不同中心块之间没有非对角项，因为取等边缘必须与 $\mathcal A$ 的中心投影对易；这不是额外施加的输入限制。
+
+设 $\sigma_z$ 的正本征值为 $\mu_{z,a}$。则 $\rho$ 在该块的正本征值为 $p_z\mu_{z,a}/n_z$，每个重复 $n_z$ 次。直接计数并计算熵，得到全部取等纯探针的资源式
+$$
+\boxed{
+\operatorname{rank}\rho
+=\sum_{z:p_z>0}n_z\operatorname{rank}\sigma_z,
+}
+\tag{243.10}
+$$
+$$
+\boxed{
+S(\rho)=H(p)+\sum_zp_z\bigl(\log_2n_z+S(\sigma_z)\bigr),
+\qquad H(p)=-\sum_zp_z\log_2p_z.
+}
+\tag{243.11}
+$$
+零权重项按零处理。
+
+中心块标签可以置换，坐标也可酉变换，但这些变化不改变（243.10）—（243.11）及其最小值。不同中心块即使具有相同的 $n_z$，也不因此合并为同一个重数因子：相应中心投影属于 $\mathcal A$，仍可区分这些块。
+
+### 243.3 最小纠缠熵与全部熵最小边缘
+
+**定理 243.1（精确取等的最小纯态资源）。** 令
+$$
+n_{\min}=\min_{z\in Z}n_z.
+$$
+则
+$$
+\boxed{
+r_{\min}(\mathcal S)=n_{\min},
+\qquad
+E_{\min}(\mathcal S)=\log_2n_{\min}
+=\log_2r_{\min}(\mathcal S).
+}
+\tag{243.12}
+$$
+两种最小值由同一份纯联合探针同时取得。全部熵最小边缘恰为：选择一个满足 $n_z=n_{\min}$ 的中心块，在其重数因子上取纯态，其余中心块为零。
+
+**证明。** 由（243.10），任意取等边缘至少有一个非零块，且
+$$
+\operatorname{rank}\rho\ge n_{\min}.
+\tag{243.13}
+$$
+由（243.11），
+$$
+\begin{aligned}
+S(\rho)-\log_2n_{\min}
+&=H(p)+\sum_zp_z
+\left[\log_2\frac{n_z}{n_{\min}}+S(\sigma_z)\right]\\
+&\ge0.
+\end{aligned}
+\tag{243.14}
+$$
+等号要求每一非负贡献为零。$H(p)=0$ 迫使恰有一个权重为一；该块必须有 $n_z=n_{\min}$，并且 $S(\sigma_z)=0$，即 $\sigma_z$ 为纯态。这也证明了熵最小边缘的完整刻画。
+
+反向，任选一个最小块 $z_0$ 及其重数空间中的单位向量 $b$，取
+$$
+\rho_{\min}=
+\left(\frac{I_{n_{\min}}}{n_{\min}}\otimes|b\rangle\langle b|\right)
+\oplus0
+\tag{243.15}
+$$
+并按（243.7）的酉坐标放回原输入空间。它满足取等条件，秩为 $n_{\min}$，熵为 $\log_2n_{\min}$。
+
+记该块在原输入中的等距包含为 $\iota_{z_0}$，选不可约因子的正交基 $e_a$ 及参考中的正交基 $f_a$。纯探针
+$$
+|\psi_{\min}\rangle=
+\frac1{\sqrt{n_{\min}}}
+\sum_{a=1}^{n_{\min}}
+\iota_{z_0}(e_a\otimes b)\otimes f_a
+\tag{243.16}
+$$
+具有边缘（243.15），实际取得完整距离，并同时达到两个资源最小值。$\square$
+
+取等边缘不必都具有最小纠缠，也不必都在整个输入空间最大混合。非平凡重数允许任意 $\sigma_z$，多个非零中心块引入 $H(p)$；这些自由度及其资源代价已经完整保留在（243.9）—（243.11）中。熵最小探针仅在一个最小不可约作用因子与参考之间最大纠缠。
+
+### 243.4 实际张量通道、完整标签及组合距离
+
+现在给两份独立固定接口 $i=1,2$，分别具有输入 $H_i$、维数 $d_i$、标签数 $N_i$、总秩 $R_i$ 及投影族 $\Pi_j^{(i)}$，满足
+$$
+\sum_j\Pi_j^{(i)}=\alpha_iI_{H_i},
+\qquad \alpha_i=R_i/d_i>0,
+\qquad R_i<N_id_i.
+\tag{243.17}
+$$
+各局部目标及候选均按（243.2）给出，记为 $\mathcal R_i,\mathcal S_i$。组合是明确的张量通道
+$$
+\mathcal R_{12}=\mathcal R_1\otimes\mathcal R_2,
+\qquad
+\mathcal S_{12}=\mathcal S_1\otimes\mathcal S_2,
+\tag{243.18}
+$$
+输入为 $H_1\otimes H_2$，记录保留全部 $N_1N_2$ 个标签对 $(j,k)$，量子输出为两个固定局部输出的张量积。
+
+组合投影为
+$$
+\Theta_{jk}=\Pi_j^{(1)}\otimes\Pi_k^{(2)},
+\qquad
+\sum_{j,k}\Theta_{jk}
+=\frac{R_1R_2}{d_1d_2}I_{H_1\otimes H_2}.
+\tag{243.19}
+$$
+对任意输入矩阵 $X$，包括非乘积矩阵，第 $(j,k)$ 个候选分支是
+$$
+\frac{d_1d_2}{R_1R_2}
+\operatorname{Tr}(\Theta_{jk}X)
+\,P_j^{(1)}\otimes P_k^{(2)}.
+\tag{243.20}
+$$
+该式在基本张量上由局部定义成立，再由线性延拓到全部矩阵。其目标分支相应为
+$$
+\frac1{N_1N_2}\operatorname{Tr}(X)
+\,P_j^{(1)}\otimes P_k^{(2)}.
+$$
+必要的输出因子重排只把两套记录放到一起，保留每个标签对及相应量子输出。
+
+每个候选分支的 Choi 秩恰为 $\operatorname{rank}\Pi_j^{(1)}\operatorname{rank}\Pi_k^{(2)}$。经典标签块相加，给组合精确总秩
+$$
+\sum_{j,k}\operatorname{rank}\Theta_{jk}=R_1R_2.
+\tag{243.21}
+$$
+所以组合仍属于同一固定投影候选类，参数为 $(d_1d_2,N_1N_2,R_1R_2)$。应用已有平坦取等公式，得到
+$$
+\boxed{
+D_{12}=1-\frac{R_1R_2}{N_1N_2d_1d_2}
+=1-(1-D_1)(1-D_2),
+}
+\tag{243.22}
+$$
+其中 $D_i=1-R_i/(N_id_i)$。此式由具体投影候选结构得到，不是任意两对量子通道的 diamond 距离恒等式。
+
+### 243.5 允许所有跨输入相关态的资源组合律
+
+**定理 243.2（精确参考资源的乘法与加法律）。** 对（243.18）的固定张量通道对，在全部纯联合探针
+$$
+|\psi\rangle\in(H_1\otimes H_2)\otimes E
+$$
+中优化，不限制 $H_1$ 与 $H_2$ 之间的相关性，则
+$$
+\boxed{
+r_{\min}(\mathcal S_{12})
+=r_{\min}(\mathcal S_1)r_{\min}(\mathcal S_2),
+}
+\tag{243.23}
+$$
+$$
+\boxed{
+E_{\min}(\mathcal S_{12})
+=E_{\min}(\mathcal S_1)+E_{\min}(\mathcal S_2).
+}
+\tag{243.24}
+$$
+这里最小资源都指精确达到各自完整距离（243.22）或（243.3）。
+
+**证明。** 设局部生成代数为 $\mathcal A_1,\mathcal A_2$，组合投影生成代数为
+$$
+\mathcal A_{12}
+=\operatorname{Alg}^{*}(I,\Theta_{jk}:j,k).
+$$
+显然 $\mathcal A_{12}\subseteq\mathcal A_1\otimes\mathcal A_2$。反向，投影和关系及 $\alpha_i>0$ 给
+$$
+\Pi_j^{(1)}\otimes I_{H_2}
+=\frac1{\alpha_2}\sum_k\Theta_{jk},
+\qquad
+I_{H_1}\otimes\Pi_k^{(2)}
+=\frac1{\alpha_1}\sum_j\Theta_{jk}.
+\tag{243.25}
+$$
+所以两组局部生成元都属于 $\mathcal A_{12}$。局部代数中的乘积
+$$
+(A\otimes I)(I\otimes B)=A\otimes B
+$$
+张成有限维张量代数，因此
+$$
+\boxed{\mathcal A_{12}=\mathcal A_1\otimes\mathcal A_2.}
+\tag{243.26}
+$$
+
+对两份局部代数分别采用（243.7）—（243.8），记其块参数为 $(n_z^{(1)},m_z^{(1)})$ 与 $(n_w^{(2)},m_w^{(2)})$。在每个块对 $(z,w)$ 中，将四个张量因子酉重排为
+$$
+(\mathbb C^{n_z^{(1)}}\otimes\mathbb C^{n_w^{(2)}})
+\otimes
+(\mathbb C^{m_z^{(1)}}\otimes\mathbb C^{m_w^{(2)}}).
+\tag{243.27}
+$$
+于是组合代数具有中心块参数
+$$
+\boxed{
+n_{zw}=n_z^{(1)}n_w^{(2)},
+\qquad m_{zw}=m_z^{(1)}m_w^{(2)}.
+}
+\tag{243.28}
+$$
+块对的中心投影都在 $\mathcal A_{12}$ 中；即使不同块对的 $n_{zw}$ 相同，也不能将这些独立中心块错误并作一个重数块。
+
+按定理243.1，组合最小参考维数为
+$$
+\min_{z,w}n_z^{(1)}n_w^{(2)}
+=\left(\min_zn_z^{(1)}\right)
+\left(\min_wn_w^{(2)}\right),
+$$
+且最小纠缠熵是其以二为底的对数，故得到（243.23）—（243.24）。
+
+为明确全称量词，组合的全部取等输入边缘在（243.27）的坐标中为
+$$
+\rho_{12}=\bigoplus_{z,w}p_{zw}
+\left(
+\frac{I_{n_z^{(1)}n_w^{(2)}}}{n_z^{(1)}n_w^{(2)}}
+\otimes\sigma_{zw}
+\right).
+\tag{243.29}
+$$
+$p_{zw}$ 是任意联合概率分布，不要求分解为局部概率的乘积；$\sigma_{zw}$ 是重数乘积空间上的任意密度矩阵，可以在两个重数因子之间相关或纠缠。（243.10）—（243.14）对这一完整集合给下界，因此没有遗漏跨输入相关的候选探针。
+
+可达性取两份局部最小纯探针（243.16）的张量积，并把两份参考合在一起；其参考秩相乘、纠缠熵相加，且组合边缘属于（243.29），所以精确达到 $D_{12}$。$\square$
+
+乘积纯探针只是一个共同达到构造，并非所有最优探针都必须是乘积。若最小块的重数因子足够大，也可在（243.29）的单个最小块内取跨两重数因子的纯纠缠 $\sigma_{zw}$；它不改变输入整体与外部参考之间的最小资源值。这区分了输入两部分之间的纠缠与输入整体相对于参考的纠缠。
+
+### 243.6 同谱通道并排后的指数参考差异
+
+固定§241的量子比特四标签接口，令
+$$
+P_z=|0\rangle\langle0|,
+\qquad P_x=|+\rangle\langle+|.
+$$
+在相同的四个记录位置及固定纯输出上，比较
+$$
+\begin{aligned}
+\boldsymbol\Pi^{\parallel}
+&=(P_z,I_2-P_z,P_z,I_2-P_z),\\
+\boldsymbol\Pi^{\times}
+&=(P_z,I_2-P_z,P_x,I_2-P_x).
+\end{aligned}
+\tag{243.30}
+$$
+两组投影和均为 $2I_2$，对应 $d=2,N=4,R=4$，候选各分支效应均为 $\Pi_j/2$。第一组的生成代数是计算基对角代数 $\mathbb C\oplus\mathbb C$，两个不可约块维数都为一。第二组生成整个 $M_2(\mathbb C)$：$P_z,P_x$ 给出 $I_2,\sigma_z,\sigma_x$，再通过乘积得到 $\sigma_y$。因此
+$$
+\begin{array}{c|cc}
+&r_{\min}&E_{\min}\\ \hline
+\mathcal S_{\parallel}&1&0\\
+\mathcal S_{\times}&2&1
+\end{array}
+\tag{243.31}
+$$
+熵单位为比特。非平行的任意两轴也生成 $M_2$；这里选择正交轴只是固定一个明确实例。
+
+将每份候选分别独立并排 $k$ 次，$k\ge1$，目标在两族中始终为同一个 $\mathcal R^{\otimes k}$，全部标签词及每个标签词的量子输出也相同。组合参数为
+$$
+d_k=2^k,\qquad N_k=4^k,\qquad R_k=4^k,
+\qquad D_*^{(k)}=1-2^{-k}.
+\tag{243.32}
+$$
+每个标签词上的投影都是秩一，实际输入效应为 $2^{-k}\Pi_{\boldsymbol j}$，所以每个候选分支的 Choi 矩阵都只有一个非零本征值 $2^{-k}$。两族全部分支秩和分支谱相同，整体候选 Choi 谱也相同。
+
+差映射的谱同样不能区分它们。每个标签词的差 Choi 矩阵，在固定纯输出支撑上对应
+$$
+\left(2^{-k}\Pi_{\boldsymbol j}-4^{-k}I_{2^k}\right)^{\mathsf T},
+$$
+其非零谱为
+$$
+\left\{
+2^{-k}-4^{-k}\ \text{一次},
+\quad -4^{-k}\ \text{重复 }2^k-1\text{ 次}
+\right\}.
+\tag{243.33}
+$$
+输出正交补上只补零本征值。因此两族的整体差 Choi 谱也相同。
+
+但定理243.2给出精确资源差异：
+$$
+\boxed{
+\begin{aligned}
+r_{\min}(\mathcal S_{\parallel}^{\otimes k})&=1,
+&E_{\min}(\mathcal S_{\parallel}^{\otimes k})&=0,\\
+r_{\min}(\mathcal S_{\times}^{\otimes k})&=2^k,
+&E_{\min}(\mathcal S_{\times}^{\otimes k})&=k.
+\end{aligned}
+}
+\tag{243.34}
+$$
+在第二族中，组合代数为 $M_{2^k}(\mathbb C)$，唯一取等输入边缘为 $I_{2^k}/2^k$，所以这些下界覆盖所有跨 $k$ 份输入相关的纯探针。第一族可用共同计算基的产品输入，不使用外部纠缠。
+
+这两族不仅具有相同 $d_k,N_k,R_k$、目标、输出和完整距离，也具有相同候选及差映射 Choi 谱，却需要指数不同的精确参考维数。与此同时，§240的算术下界在此只有
+$$
+\frac{d_k}{\gcd(d_k,R_k)}=1,
+\tag{243.35}
+$$
+不能区分两族。差异由同一输入空间上的联合生成代数承担。
+
+### 243.7 标准来源与张量合同的范围
+
+有限维代数与对易代数的结构工具可定位到 D. W. Kribs、R. Laflamme、D. Poulin、M. Lesosky，*Operator Quantum Error Correction*，[arXiv:quant-ph/0504189v3](https://arxiv.org/abs/quant-ph/0504189v3)，§1.3，式（3）—（4）（PDF第2—3页）。原文的不可约维数记为 $m_J$、重数记为 $n_J$；本节分别记为 $n_z$、$m_z$，两种记号的角色对应一致。这里仅使用其明确陈述的标准有限维 $C^*$ 代数分解。
+
+原文还讨论特定量子噪声下的不变子系统。本节的 $\mathcal A$ 是输入投影生成代数，取等密度描述区分探针；本节没有证明这些输入被当前记录通道保存，也没有将它们解释为受保护量子码。最小纠缠熵的计算依赖纯联合探针的输入—参考分割，不能对混合探针直接用单侧边缘熵替代。
+
+张量组合律要求（243.18）的实际独立作用以及全部标签的笛卡尔积。共享内存、未保留的共同种子、只允许部分标签对、序列复合或反馈协议不自动满足该合同。证明中允许的是任意相关输入，没有把通道自身的作用规则扩成这些其他组合。
+
+本节求的是精确达到完整距离的资源最小值。固定非零容差下，所需纠缠可能改变；§241—§242的角度族已给出这种区别。式（243.34）的 $k$ 比特必要条件不自动扩展到非零容差，也不转译为物理时间或面积定律。本节不据这些组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
