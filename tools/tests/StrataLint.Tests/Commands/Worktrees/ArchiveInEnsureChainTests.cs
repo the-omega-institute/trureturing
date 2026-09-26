@@ -150,7 +150,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         var fixture = new EnsureArchiveFixture(repository.Path, "dated-warm");
         fixture.WriteProjectOlean();
         var olean = Path.Combine(fixture.Target, ".lake", "build", "lib", "lean", "Warm.olean");
-        File.SetLastWriteTimeUtc(olean, TimeProvider.System.GetUtcNow().UtcDateTime.AddHours(-ageHours));
+        File.SetLastWriteTimeUtc(olean, TestEnvironmentBridge.UtcNow().AddHours(-ageHours));
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"offline\"}\n",
@@ -175,12 +175,12 @@ public sealed partial class LeanCacheEnsureCommandTests
         fixture.WriteProjectOlean();
         var build = Path.Combine(fixture.Target, ".lake", "build");
         File.SetLastWriteTimeUtc(Path.Combine(build, "lib", "lean", "Warm.olean"),
-            TimeProvider.System.GetUtcNow().UtcDateTime.AddHours(-7));
+            TestEnvironmentBridge.UtcNow().AddHours(-7));
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n",
             AfterArchiveFetch = _ => File.WriteAllText(Path.Combine(build, ".release-refreshed-at"),
-                TimeProvider.System.GetUtcNow().ToString("O")),
+                TestEnvironmentBridge.UtcNow().ToString("O")),
         };
 
         Assert.Equal("unpacked", fixture.Ensure(runner).GetProperty("archive_status").GetString());
@@ -214,7 +214,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "old donor\n");
         var olean = WriteProjectOlean(repository.Path, "OldDonor");
-        File.SetLastWriteTimeUtc(olean, TimeProvider.System.GetUtcNow().UtcDateTime.AddHours(-7));
+        File.SetLastWriteTimeUtc(olean, TestEnvironmentBridge.UtcNow().AddHours(-7));
         LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
         var target = AddWorktree(repository.Path, "old-warm-donor");
         WriteFetcher(target);
