@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using System.Text;
 
 namespace StrataLint.Scribe.Tests;
@@ -23,7 +24,7 @@ public sealed class ValuesEmitterReplayTests
                     new UTF8Encoding(false, true));
             }
 
-            var projection = Path.Combine(temporary.FullName, CanonicalValuesWriter.RelativePath);
+            var projection = Path.Combine(temporary.FullName, ValuesProjectionAddress.PathFor("D5/Synthetic"));
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(projection)!);
             TemporaryFileSystem.File.WriteAllText(projection, "stale\n", new UTF8Encoding(false, true));
             var output = new StringWriter();
@@ -52,7 +53,7 @@ public sealed class ValuesEmitterReplayTests
             Assert.Equal(0, emitExit);
             Assert.Empty(error.ToString());
             Assert.Equal(
-                CanonicalValuesWriter.Write(temporary.FullName).ToArray(),
+                Assert.Single(CanonicalValuesWriter.Write(temporary.FullName)).Bytes.ToArray(),
                 TemporaryFileSystem.File.ReadAllBytes(projection));
         }
         finally

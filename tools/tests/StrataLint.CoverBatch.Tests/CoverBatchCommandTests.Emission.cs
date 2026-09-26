@@ -39,7 +39,7 @@ public sealed partial class CoverBatchCommandTests
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", ValuesProjectionAddress.PathFor("D5/Synthetic") })
         {
             TestGit.Run(batch.Root, "ls-files", "--error-unmatch", path);
             TemporaryFileSystem.File.Delete(Path.Combine(batch.Root, path));
@@ -71,7 +71,7 @@ public sealed partial class CoverBatchCommandTests
             Results(result).Select(item => item.Status).ToArray());
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath,
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", ValuesProjectionAddress.PathFor("D5/Synthetic"),
                      "tools/Generated/scribe-emissions.v1.json", "Generated/FILEMAP.md", "Generated/DAG.md",
                      "Generated/truth-graph.v1.json" })
         {
@@ -285,7 +285,7 @@ public sealed partial class CoverBatchCommandTests
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
-        WriteScribeFixture(root, CanonicalValuesWriter.RelativePath, "old values projection\n");
+        WriteScribeFixture(root, ValuesProjectionAddress.PathFor("D5/Synthetic"), "old values projection\n");
         foreach (var path in CanonicalValuesWriter.InputPaths)
         {
             if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))

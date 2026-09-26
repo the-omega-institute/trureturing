@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
 using Tomlyn;
@@ -36,7 +37,11 @@ internal static class ValuesKernelDataLoader
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
-        var bytes = File.ReadAllBytes(fullPath);
+        return LoadBytes(File.ReadAllBytes(fullPath), fullPath);
+    }
+
+    internal static ImmutableArray<ValueDefinition> LoadBytes(byte[] bytes, string fullPath = RelativePath)
+    {
         if (bytes.Length >= 3
             && bytes[0] == 0xEF
             && bytes[1] == 0xBB
@@ -108,7 +113,15 @@ internal static class ValuesKernelDataLoader
     private static ValueDefinition Parse(TomlTable table, string location)
     {
         RequireKeys(table, location, CommonKeys);
-        var id = RequiredString(table, "id", location);
+        var id = table.TryGetValue("id", out var rawId) && rawId is string textId
+            ? textId : throw Invalid(location, "id must be a non-empty string");
+        _ = ValuesProjectionAddress.Encode(id);
+        var numericKeys = ExactKeys().Concat(CphiKeys()).ToHashSet(StringComparer.Ordinal);
+        foreach (var key in table.Keys.Where(key => key != "id" && key != "refs"))
+        {
+            if (numericKeys.Contains(key)) _ = RequiredLong(table, key, location);
+            else _ = RequiredString(table, key, location);
+        }
         var leanGid = RequiredString(table, "lean_gid", location);
         if (!Gid.TryParse(leanGid, out var parsedGid)
             || parsedGid.Path.Value != LeanModulePath
@@ -163,7 +176,13 @@ internal static class ValuesKernelDataLoader
             RequiredString(table, "reference_value", location),
             RequiredString(table, "reference_error", location),
             computation,
-            openReason);
+            openReason,
+            JsonSerializer.SerializeToElement(table.ToDictionary(
+                static pair => pair.Key,
+                static pair => pair.Value is TomlTable nested
+                    ? (object)nested.ToDictionary(static item => item.Key, static item => item.Value)
+                    : pair.Value,
+                StringComparer.Ordinal)));
     }
 
     private static ValueComputation.ExactQuadratic ExactQuadratic(

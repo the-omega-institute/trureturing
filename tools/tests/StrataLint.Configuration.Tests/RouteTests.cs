@@ -9,6 +9,66 @@ namespace StrataLint.Configuration.Tests;
 
 public sealed class RouteTests
 {
+    [Theory]
+    [InlineData("D5/Bh")]
+    [InlineData("D5/bh")]
+    [InlineData("D5.Bh")]
+    [InlineData(".")]
+    [InlineData("..")]
+    [InlineData("/")]
+    [InlineData("é")]
+    [InlineData("e\u0301")]
+    [InlineData("常数/😀")]
+    [InlineData("a\\b\"c")]
+    [InlineData(" ")]
+    public void ValuesRouteRoundTripsOriginalKeysThroughCanonicalPolicy(string id)
+    {
+        var route = Assert.IsType<RouteOutcome.Routed>(RouteEngine.Route(Policy(),
+            new ManifestSyntax("D5", "E", "values", id, "G", "value", "json", "")));
+        Assert.Equal(ValuesProjectionAddress.GidFor(id), route.Result.Gid.Value);
+        Assert.Equal(ValuesProjectionAddress.PathFor(id), route.Result.Path.Value);
+        Assert.True(Gid.TryParse(route.Result.Gid.Value, out var parsed));
+        Assert.Equal(route.Result.Gid.Value, parsed.Value);
+        Assert.Equal(route.Result.Gid.Value, Gid.FromTarget(parsed.ToTarget()).Value);
+        Assert.True(ValuesProjectionAddress.TryIdFromPath(route.Result.Path.Value, out var decoded));
+        Assert.Equal(id, decoded);
+        Assert.Null(RepositoryPathPolicy.Validate(route.Result.Path, Policy()));
+    }
+
+    [Fact]
+    public void ValuesEncodingDistinguishesKeysEvenOnCaseInsensitiveFilesystems()
+    {
+        string[] keys = ["a", "A", ".", "..", "/", "a/b", "a.b", "é", "e\u0301", "常数", "😀"];
+        Assert.Equal(keys.Length, keys.Select(ValuesProjectionAddress.PathFor).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        var longest = ValuesProjectionAddress.PathFor(new string('a', ValuesProjectionAddress.MaximumKeyUtf8Bytes));
+        Assert.Equal(252, Encoding.UTF8.GetByteCount(Path.GetFileName(longest)));
+        Assert.Throws<FormatException>(() => ValuesProjectionAddress.Encode(new string('é', 61)));
+        Assert.Throws<FormatException>(() => ValuesProjectionAddress.Encode(new string('a', 121)));
+        Assert.Throws<FormatException>(() => ValuesProjectionAddress.Encode(""));
+        Assert.Throws<FormatException>(() => ValuesProjectionAddress.Encode("\ud800"));
+    }
+
+    [Theory]
+    [InlineData("D5/E/values--json")]
+    [InlineData("D5/E/values/k61.result--json")]
+    [InlineData("D5/E/values.result--json")]
+    [InlineData("D5/E/values/k2F.value--json")]
+    [InlineData("D5/E/values/kff.value--json")]
+    [InlineData("D5/E/values/kc080.value--json")]
+    [InlineData("D5/E/values/k.value--json")]
+    [InlineData("D5/E/values/k61.other--json")]
+    [InlineData("D5/E/values/k61.value--csv")]
+    public void ValuesRejectsAggregateAndNoncanonicalEncodings(string gid) => Assert.False(Gid.TryParse(gid, out _));
+
+    [Fact]
+    public void ValueSelectorIsReservedForValuesScope()
+    {
+        Assert.IsType<RouteOutcome.Rejected>(RouteEngine.Route(Policy(),
+            new ManifestSyntax("D5", "E", "Carrier", "Probe", "G", "value", "json", "")));
+        Assert.NotNull(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("Evidence/D5/S0/Carrier/Probe.value.json"), Policy()));
+    }
+
     [Fact]
     public void RouteSkeletonEmitsEditMe()
     {
@@ -26,7 +86,7 @@ public sealed class RouteTests
     [InlineData("F", "Carrier", "Probe", "", "lean", "", "D5/S0/Carrier/Probe", "D5/S0/Carrier/Probe.lean")]
     [InlineData("B", "Carrier", "Probe", "", "markdown", "", "D5/B/S0/Carrier/Probe", "Blueprint/D5/S0/Carrier/Probe.md")]
     [InlineData("E", "Carrier", "Probe", "result", "json", "", "D5/E/S0/Carrier/Probe.result--json", "Evidence/D5/S0/Carrier/Probe.result.json")]
-    [InlineData("E", "values", "values", "result", "json", "", "D5/E/values--json", "Evidence/D5/values.json")]
+    [InlineData("E", "values", "D5/Synthetic", "value", "json", "", "D5/E/values/k44352f53796e746865746963.value--json", "Evidence/D5/values/k44352f53796e746865746963.value.json")]
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "D5/C/2026-07-11/round-168", "Chronicle/2026/07/11-round-168.md")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "", "D5/L/sample2026paper", "Library/notes/sample2026paper.md")]
     [InlineData("L", "Weil", "sample2026paper", "", "markdown", "", "D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]
@@ -131,7 +191,7 @@ public sealed class RouteTests
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "")]
     [InlineData("P", "Papers", "D5-P001", "", "recipe", "")]
-    [InlineData("E", "values", "values", "result", "json", "")]
+    [InlineData("E", "values", "D5/Synthetic", "value", "json", "")]
     public void RouteRejectsSubDomainForNonFormalManifestShapes(
         string plane,
         string domain,
@@ -204,7 +264,7 @@ public sealed class RouteTests
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "")]
     [InlineData("P", "Papers", "D5-P001", "", "recipe", "")]
-    [InlineData("E", "values", "values", "result", "json", "")]
+    [InlineData("E", "values", "D5/Synthetic", "value", "json", "")]
     public void ManifestLoaderRejectsSubdomainForNonFormalManifestShapes(
         string plane,
         string domain,

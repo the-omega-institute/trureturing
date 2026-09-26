@@ -172,15 +172,14 @@ public static class RouteEngine
         if (syntax.Domain == "values")
         {
             scope = "values";
-            if (syntax.Module != "values"
-                || syntax.Selector != "result"
+            if (syntax.Selector != "value"
                 || artifactId.Value != "json")
             {
                 throw new FormatException(
-                    "values route requires module=values, selector=result, and artifact=json");
+                    "values route requires a value ID as module, selector=value, and artifact=json");
             }
 
-            coordinates = syntax.Module;
+            coordinates = "values/" + ValuesProjectionAddress.Encode(syntax.Module);
         }
         else if (syntax.Domain == "experiments")
         {
@@ -202,15 +201,14 @@ public static class RouteEngine
             stratum = routed.Stratum;
         }
 
-        if (!artifact.Selectors.Contains(syntax.Selector) || !artifact.PathSelectors.Contains(scope))
+        if (!artifact.Selectors.Contains(syntax.Selector) || !artifact.PathSelectors.Contains(scope)
+            || (syntax.Selector == "value" && scope != "values"))
         {
             throw new FormatException(
                 $"artifact kind {artifactId.Value} does not allow selector {syntax.Selector} in scope {scope}");
         }
 
-        return syntax.Domain == "values"
-            ? ("D5/E/values--json", stratum)
-            : ($"D5/E/{coordinates}.{syntax.Selector}--{artifactId.Value}", stratum);
+        return ($"D5/E/{coordinates}.{syntax.Selector}--{artifactId.Value}", stratum);
     }
 
     private static (string Gid, Stratum? Stratum) Chronicle(ManifestSyntax syntax)

@@ -22,7 +22,7 @@ public sealed partial class ProductionEnvironmentTests
     private static void AssertUnresolvedCoverageProjectsToPartialOpen(bool includeResolvedEdge)
     {
         const string resolvedGid = "D5/S0/Carrier/Ring";
-        const string unresolvedGid = "D5/E/values--json";
+        const string unresolvedGid = "D5/E/values/k44352f53796e746865746963.value--json";
         const string sourceId = "unresolved-coverage";
         var fixture = new RuleFixture();
         Assert.True(Gid.TryParse(unresolvedGid, out var unresolved));

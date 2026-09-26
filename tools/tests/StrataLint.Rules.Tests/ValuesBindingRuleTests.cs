@@ -8,6 +8,19 @@ public sealed class ValuesBindingRuleTests
     private static readonly ImmutableArray<string> StandardAxioms =
         ["Classical.choice", "Quot.sound", "propext"];
 
+    [Theory]
+    [InlineData("常数/../😀")]
+    [InlineData("escaped\\u00e9/key")]
+    [InlineData("quotes\\\"/key")]
+    public void BindingReadsFullTomlKeySemantics(string encodedId)
+    {
+        var fixture = Fixture();
+        var text = fixture.Files[ValuesKernelBindingValidator.RelativePath];
+        var line = text.Split('\n').Single(item => item.StartsWith("id = ", StringComparison.Ordinal));
+        fixture.Files[ValuesKernelBindingValidator.RelativePath] = text.Replace(line, "id = \"" + encodedId + "\"", StringComparison.Ordinal);
+        Assert.Empty(Evaluate(fixture));
+    }
+
     [Fact]
     public void TamperedStatementSha256IsRejectedBySl018()
     {

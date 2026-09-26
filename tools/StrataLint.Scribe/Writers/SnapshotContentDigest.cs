@@ -15,7 +15,10 @@ public static class SnapshotContentDigest
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(documentPaths);
-        var generatedPaths = GeneratedArtifactInventory.Create(documentPaths)
+        var valueIds = snapshot.TryGetFile(ValuesKernelDataLoader.RelativePath, out var catalog)
+            ? ValuesKernelDataLoader.LoadBytes(catalog.RawBytes.ToArray()).Select(static row => row.Id)
+            : [];
+        var generatedPaths = GeneratedArtifactInventory.Create(documentPaths, valueIds)
             .Select(static artifact => artifact.Path)
             .ToHashSet(StringComparer.Ordinal);
         return TruthGraphSnapshotIdentity.Compute(

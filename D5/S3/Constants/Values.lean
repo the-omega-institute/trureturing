@@ -1,7 +1,7 @@
 /- GID: D5/S3/Constants/Values
    generality: I
    mirror-B: none(waiver:canonical-values-live-in-evidence-projection)
-   mirror-E: D5/E/values--json
+   mirror-E: none(waiver:values-evidence-sharded-by-catalog-key)
    anchors: []
    digest: Define the exact content referenced by the canonical values projection. -/
 

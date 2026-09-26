@@ -222,8 +222,8 @@ public sealed partial class CurrentExecutionContractTests
     public void GeneratedFileMapQueriesBindPolicyWithoutBindingTargetBytes(string change, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
-        const string target = "Evidence/D5/values.json";
-        const string filemap = "schema_version = 5\n[[files]]\npattern = \"Evidence/D5/values.json\"\nkind = \"generated\"\nrequire = []\n";
+        const string target = "Evidence/D5/values/k44352f53796e746865746963.value.json";
+        const string filemap = "schema_version = 5\n[[files]]\npattern = \"Evidence/D5/values/k44352f53796e746865746963.value.json\"\nkind = \"generated\"\nrequire = []\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
         fixture.Write(target, "{\"fixture\":1}\n");
         EditRegistration(fixture, rows =>

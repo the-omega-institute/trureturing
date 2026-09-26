@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 
 namespace StrataLint.Scribe;
 
@@ -41,4 +42,5 @@ public sealed record ValueDefinition(
     string? ReferenceValue,
     string? ReferenceError,
     ValueComputation? Computation,
-    string? OpenReason);
+    string? OpenReason,
+    JsonElement NormalizedInput);

@@ -612,7 +612,7 @@ public sealed class RuleEngineTests
                 RuleId.CreateKnown(18),
                 fixture.BuildScopeProbe(RawChangeSet.Create(["Evidence/D5/values.result.json"]))).Diagnostics);
 
-        Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
+        Assert.Equal("canonical values projection must be Evidence/D5/values/<encoded-id>.value.json", diagnostic.Message);
     }
 
     [Fact]
@@ -652,7 +652,7 @@ public sealed class RuleEngineTests
         fixture.Files[wrongAddress] = payload;
         var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18),
             fixture.BuildScopeProbe(RawChangeSet.Create([wrongAddress]))).Diagnostics);
-        Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
+        Assert.Equal("canonical values projection must be Evidence/D5/values/<encoded-id>.value.json", diagnostic.Message);
     }
 
     [Fact]

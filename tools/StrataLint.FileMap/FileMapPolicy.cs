@@ -242,6 +242,14 @@ internal static partial class FileMapPolicy
             : [new FileMapFinding("FILEMAP-POLICY-INVALID", FileMapLoader.RelativePath,
                 ((PolicyLoadOutcome.InfrastructureFailure)policy).Message)];
 
+        var inventoryPaths = scope is { Inventory: true } ? null : selectedPaths;
+        // Related output scopes also cover declared shards absent from the index.
+        // An unrelated local check must not acquire the values catalog dependency.
+        var inspectValues = inventoryPaths is null
+            || inventoryPaths.Any(path => path.StartsWith(ValuesProjectionAddress.DirectoryPath + "/", StringComparison.Ordinal))
+            || scope?.RelatedPatterns is { Length: > 0 };
+        var valueKeys = inspectValues ? CanonicalValuesWriter.MutationKeys(repositoryRoot) : [];
+
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(manifest, paths, selectedManifest.Entries))
             .Concat(pathFindings)
@@ -252,7 +260,7 @@ internal static partial class FileMapPolicy
             .Concat(InspectGeneratedInventory(
                 manifest,
                 paths,
-                GeneratedArtifactInventory.Create(documentPaths), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns))
+                GeneratedArtifactInventory.Create(documentPaths, valueKeys), inventoryPaths, scope?.RelatedPatterns))
             .Concat(InspectDeclaredModes(selectedManifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, selected, paths))
             .Concat(dependencyFindings)
@@ -396,13 +404,9 @@ internal static partial class FileMapPolicy
                 continue;
             }
 
-            if (
-                // The canonical inventory enumerates products whose paths are known at compile time.
-                // A glob set without an aggregate identity derives its member keys from governed data,
-                // so its members cannot be enumerated by the program. FILEMAP already declares producer
-                // ownership, and RepositoryPathPolicy enforces the directory-closure path predicate;
-                // repeating the per-member inventory join would add no information.
-                !IsDataKeyedGeneratedSet(generated)
+            // Values members are enumerated from the current authoritative catalog.
+            // Other data-keyed run-local producers retain their existing ownership contract.
+            if ((generated.ProducedBy == nameof(ValuesEmitter) || !IsDataKeyedGeneratedSet(generated))
                 && !inventoryPaths.Contains(path))
             {
                 findings.Add(new FileMapFinding(

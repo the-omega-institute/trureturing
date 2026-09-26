@@ -292,12 +292,13 @@ internal static partial class RepositoryRules
     {
         var findings = context.Current.Files.Keys
             .Where(static path =>
-                path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
-                && path.Value != RepositoryPathPolicy.ValuesProjectionPath)
+                (path.Value.StartsWith("Evidence/D5/values.", StringComparison.Ordinal)
+                    || path.Value.StartsWith(ValuesProjectionAddress.DirectoryPath + "/", StringComparison.Ordinal))
+                && !ValuesProjectionAddress.TryIdFromPath(path.Value, out _))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .Select(static path => new RuleFinding(
                 path.Value,
-                "canonical values projection must be Evidence/D5/values.json"))
+                "canonical values projection must be Evidence/D5/values/<encoded-id>.value.json"))
             .ToImmutableArray()
             .ToBuilder();
         if (!context.Current.TryGetFile(ValuesKernelBindingValidator.RelativePath, out var values))

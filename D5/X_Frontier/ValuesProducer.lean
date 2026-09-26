@@ -1,7 +1,7 @@
 /- GID: D5/X_Frontier/ValuesProducer
    generality: I
    mirror-B: none(waiver:evidence-ticket)
-   mirror-E: D5/E/values--json
+   mirror-E: none(waiver:values-evidence-sharded-by-catalog-key)
    anchors: []
    digest: Produce fourteen constants through three audited numeric kernels. -/
 

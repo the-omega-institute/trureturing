@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using Tomlyn;
+using Tomlyn.Model;
 
 namespace StrataLint.Engine;
 
@@ -151,96 +153,31 @@ internal static partial class ValuesKernelBindingValidator
     private static ImmutableArray<ValueBinding> Parse(string text)
     {
         ArgumentNullException.ThrowIfNull(text);
-        var bindings = ImmutableArray.CreateBuilder<ValueBinding>();
-        Dictionary<string, string>? current = null;
-        var sawSchema = false;
-        foreach (var rawLine in text.Split('\n'))
+        TomlTable root;
+        try
         {
-            var line = rawLine.Trim();
-            if (line.Length == 0 || line.StartsWith('#'))
-            {
-                continue;
-            }
-
-            if (line == "schema_version = 1")
-            {
-                if (sawSchema || current is not null)
-                {
-                    throw new FormatException("values kernel binding schema_version is duplicated or misplaced");
-                }
-
-                sawSchema = true;
-                continue;
-            }
-
-            if (line == "[[constants]]")
-            {
-                if (current is not null)
-                {
-                    bindings.Add(Binding(current, bindings.Count));
-                }
-
-                current = new Dictionary<string, string>(StringComparer.Ordinal);
-                continue;
-            }
-
-            if (current is null)
-            {
-                throw new FormatException("values kernel binding data must be inside [[constants]]");
-            }
-
-            foreach (var key in new[] { "id", "lean_gid", "lean_statement_sha256" })
-            {
-                var prefix = key + " = ";
-                if (!line.StartsWith(prefix, StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                var value = line[prefix.Length..];
-                if (value.Length < 2 || value[0] != '"' || value[^1] != '"'
-                    || value[1..^1].Contains('"', StringComparison.Ordinal)
-                    || !current.TryAdd(key, value[1..^1]))
-                {
-                    throw new FormatException($"values constant #{bindings.Count + 1} has malformed or duplicate {key}");
-                }
-
-                break;
-            }
+            root = TomlSerializer.Deserialize<TomlTable>(text)
+                ?? throw new FormatException("values kernel binding data is empty");
         }
-
-        if (!sawSchema)
+        catch (TomlException exception)
         {
+            throw new FormatException("values kernel binding data is malformed TOML", exception);
+        }
+        if (!root.TryGetValue("schema_version", out var version) || version is not long schema || schema != 1)
             throw new FormatException("values kernel binding schema_version must be 1");
-        }
-
-        if (current is not null)
-        {
-            bindings.Add(Binding(current, bindings.Count));
-        }
-
-        if (bindings.Count == 0)
-        {
+        if (!root.TryGetValue("constants", out var rows) || rows is not TomlTableArray constants || constants.Count == 0)
             throw new FormatException("values kernel binding data contains no constants");
-        }
-
-        return bindings.ToImmutable();
-    }
-
-    private static ValueBinding Binding(IReadOnlyDictionary<string, string> fields, int index)
-    {
-        foreach (var key in new[] { "id", "lean_gid", "lean_statement_sha256" })
+        var bindings = ImmutableArray.CreateBuilder<ValueBinding>();
+        foreach (var row in constants)
         {
-            if (!fields.TryGetValue(key, out var value) || string.IsNullOrWhiteSpace(value))
-            {
-                throw new FormatException($"values constant #{index + 1} is missing {key}");
-            }
+            string Field(string key) => row.TryGetValue(key, out var raw) && raw is string value
+                && (key == "id" ? value.Length > 0 : !string.IsNullOrWhiteSpace(value))
+                ? value : throw new FormatException($"values constant #{bindings.Count + 1} is missing {key}");
+            var id = Field("id");
+            _ = ValuesProjectionAddress.Encode(id);
+            bindings.Add(new ValueBinding(id, Field("lean_gid"), Field("lean_statement_sha256")));
         }
-
-        return new ValueBinding(
-            fields["id"],
-            fields["lean_gid"],
-            fields["lean_statement_sha256"]);
+        return bindings.ToImmutable();
     }
 
     private sealed record ValueBinding(string Id, string LeanGid, string StatementSha256);

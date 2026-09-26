@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 public static class ValuesEmitter
@@ -14,9 +16,11 @@ public static class ValuesEmitter
 
         try
         {
-            var first = CanonicalValuesWriter.Write(repositoryRoot).ToArray();
-            var second = CanonicalValuesWriter.Write(repositoryRoot).ToArray();
-            if (!first.AsSpan().SequenceEqual(second))
+            var first = CanonicalValuesWriter.Write(repositoryRoot);
+            var second = CanonicalValuesWriter.Write(repositoryRoot);
+            if (first.Length != second.Length || first.Zip(second).Any(pair =>
+                pair.First.Id != pair.Second.Id || pair.First.RelativePath != pair.Second.RelativePath
+                || !pair.First.Bytes.AsSpan().SequenceEqual(pair.Second.Bytes.AsSpan())))
             {
                 throw new InvalidOperationException("Values writer is not byte deterministic.");
             }
@@ -27,19 +31,36 @@ public static class ValuesEmitter
                 return 0;
             }
 
-            var path = Path.Combine(repositoryRoot, CanonicalValuesWriter.RelativePath);
-            var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
-            if (current.AsSpan().SequenceEqual(first))
+            foreach (var projection in first)
             {
-                output.WriteLine("checked: " + CanonicalValuesWriter.RelativePath);
-                return 0;
+                var path = Path.Combine(repositoryRoot, projection.RelativePath);
+                var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
+                if (current.AsSpan().SequenceEqual(projection.Bytes.AsSpan()))
+                {
+                    output.WriteLine("checked: " + projection.RelativePath);
+                    continue;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllBytes(path, projection.Bytes.ToArray());
+                output.WriteLine("wrote: " + projection.RelativePath);
             }
 
-            var parent = Path.GetDirectoryName(path)
-                ?? throw new InvalidOperationException("Values projection path has no parent directory.");
-            Directory.CreateDirectory(parent);
-            File.WriteAllBytes(path, first);
-            output.WriteLine("wrote: " + CanonicalValuesWriter.RelativePath);
+            // Removing a key removes its producer-owned shard. Inventory still derives keys
+            // from the catalog; it does not admit arbitrary files already in this directory.
+            var directory = Path.Combine(repositoryRoot, ValuesProjectionAddress.DirectoryPath);
+            var expected = first.Select(static row => row.RelativePath).ToHashSet(StringComparer.Ordinal);
+            if (Directory.Exists(directory))
+            {
+                foreach (var path in Directory.EnumerateFiles(directory).Order(StringComparer.Ordinal))
+                {
+                    var relative = Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/');
+                    if (ValuesProjectionAddress.TryIdFromPath(relative, out _) && !expected.Contains(relative))
+                    {
+                        File.Delete(path);
+                        output.WriteLine("removed: " + relative);
+                    }
+                }
+            }
             return 0;
         }
         catch (Exception exception) when (

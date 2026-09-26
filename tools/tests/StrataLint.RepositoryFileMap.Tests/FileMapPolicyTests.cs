@@ -1,6 +1,8 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.FileMap;
 using StrataLint.Engine;
+using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 
 namespace StrataLint.RepositoryFileMap.Tests;
@@ -8,6 +10,63 @@ namespace StrataLint.RepositoryFileMap.Tests;
 [Collection(nameof(CanonicalFileMapCollection))]
 public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
 {
+    [Theory]
+    [InlineData("Evidence/D5/S3/Constants/Probe.result.json")]
+    [InlineData("Evidence/D5/X_Frontier/Probe.result.json")]
+    [InlineData("Evidence/D5/kernels/Probe.result.json")]
+    [InlineData("Evidence/D5/experiments/D5-E001.result.json")]
+    public void ValuesShardingPreservesOtherResultFamilies(string path)
+    {
+        var entry = Assert.Single(FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot()).Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal("Evidence/D5/**/*.result.json", entry.Pattern);
+    }
+
+    [Theory]
+    [InlineData("Golden/values-kernels.toml", true)]
+    [InlineData("tools/StrataLint.Engine/Coordinates/ValuesProjectionAddress.cs", true)]
+    [InlineData("removed-shard", false)]
+    public void ValuesInputAndRemovalScopesDetectMissingShards(string changed, bool wholeInventory)
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        using var checks = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "Meta/ci-checks.json")));
+        var registration = checks.RootElement.GetProperty("checks").EnumerateArray()
+            .Single(row => row.GetProperty("id").GetString() == "filemap")
+            .GetProperty("delta_scope").Deserialize<RegisteredFileMapScope>(new JsonSerializerOptions
+                { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
+        var first = ValuesProjectionAddress.PathFor("synthetic/first");
+        var missing = ValuesProjectionAddress.PathFor("synthetic/second");
+        var removed = changed == "removed-shard";
+        var scope = FileMapInspectionScope.Select(registration, [removed ? missing : changed], [first]);
+        Assert.Equal(wholeInventory, scope.Inventory);
+        if (removed)
+            Assert.Contains(scope.RelatedPatterns!, pattern => FileMapGlob.Create(pattern).IsMatch("Meta/reference.yaml"));
+        var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>(), ["synthetic/first", "synthetic/second"]);
+        var findings = FileMapPolicy.InspectGeneratedInventory(FileMapLoader.LoadRepository(root), [first], inventory,
+            scope.Inventory ? null : scope.Paths!.ToHashSet(StringComparer.Ordinal), scope.RelatedPatterns);
+        Assert.Contains(findings, finding => finding.Path == missing && finding.Code == "FILEMAP-GENERATED-STALE-INVENTORY");
+    }
+
+    [Fact]
+    public void ValuesInventoryRejectsUnknownShardAndUsesOneGeneratedGlob()
+    {
+        var manifest = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
+        var first = ValuesProjectionAddress.PathFor("synthetic/first");
+        var second = ValuesProjectionAddress.PathFor("synthetic/second");
+        var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>(), ["synthetic/first"]);
+        var entry = Assert.Single(manifest.Match(first));
+        Assert.Equal("Evidence/D5/values/*.value.json", entry.Pattern);
+        Assert.Equal(FileMapKind.Generated, entry.Kind);
+        Assert.Equal("none", entry.ArtifactId);
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [first, second], inventory,
+            new HashSet<string>([first, second], StringComparer.Ordinal));
+        Assert.Contains(findings, finding => finding.Path == second && finding.Code == "FILEMAP-GENERATED-INVENTORY");
+        Assert.DoesNotContain(findings, finding => finding.Path == first);
+        var expanded = GeneratedArtifactInventory.Create(Array.Empty<string>(), ["synthetic/first", "synthetic/second"]);
+        Assert.Empty(FileMapPolicy.InspectGeneratedInventory(manifest, [first, second], expanded,
+            new HashSet<string>([first, second], StringComparer.Ordinal)));
+    }
+
     [Theory]
     [InlineData("lean-report-inputs.json", "LeanReportSelection", "lean-report")]
     [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths", "test-cache")]
@@ -131,7 +190,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         // 与发射器产物身份的一致性,不判语料内容。故喂一条与下方 manifest.Match 同一字面的
         // 文档路径即可:六个固定工件与文档集无关,文档分区只需一个同形路径。
         var inventory = GeneratedArtifactInventory.Create(
-            ["Blueprint/D5/S0/Carrier/Ring.md"]);
+            ["Blueprint/D5/S0/Carrier/Ring.md"], []);
         var artifacts = inventory
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();

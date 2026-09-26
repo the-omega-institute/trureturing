@@ -128,7 +128,7 @@ public sealed class DagEmitterTests
         // ships without an entry is an ungoverned generated file.
         // 这两条是清单里与文档集无关的固定工件,故空文档列表足以判它们;
         // 文档已迁出本程序集(住 StrataLint.Scribe.Documents),本测试不引用它。
-        var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>());
+        var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>(), []);
         var artifact = Assert.Single(
             inventory.Where(static item => item.Path == DagEmitter.RelativePath));
 

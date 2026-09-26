@@ -23,7 +23,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("pr")]
     public void ValuesProjectionRetainsFileMapAndScribeWithoutEngineering(string mode)
     {
-        var plan = Plan("Evidence/D5/values.json", "", mode);
+        var plan = Plan("Evidence/D5/values/k44352f53796e746865746963.value.json", "", mode);
         Assert.Equal(new[] { "filemap", "scribe" }, Strings(plan["declared_require"]!));
         Assert.Equal(Array.Empty<string>(), Strings(plan["execution"]!["tests"]!));
         Assert.Equal(new[] { "build", "filemap", "lean", "lean-report", "scribe" }, Strings(plan["resources"]!));

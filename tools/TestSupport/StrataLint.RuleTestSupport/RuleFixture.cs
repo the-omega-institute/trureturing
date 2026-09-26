@@ -75,7 +75,7 @@ internal sealed partial class RuleFixture
     internal const string HeartsPath = "D5/X_Frontier/Hearts.lean";
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
-    internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
+    internal const string ValuesProjectionPath = "Evidence/D5/values/k44352f53796e746865746963.value.json";
     internal const string WorkflowPath = RepositoryPathPolicy.PrWorkflowPath;
     internal const string StageScriptPath = "tools/scripts/ci-stage.sh";
     internal const string SyntheticProtectedPath =

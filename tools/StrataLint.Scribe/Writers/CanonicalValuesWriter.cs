@@ -1,41 +1,24 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
 namespace StrataLint.Scribe;
 
+public sealed record ValuesProjection(string Id, string RelativePath, ImmutableArray<byte> Bytes);
+
 public static class CanonicalValuesWriter
 {
-    public const string RelativePath = RepositoryPathPolicy.ValuesProjectionPath;
-    public const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
-    public const string ScribeLockPath =
-        "tools/StrataLint.Scribe/packages.lock.json";
-    public static ImmutableArray<string> InputPaths { get; } =
-    [
-        ValuesKernelDataLoader.LeanModulePath,
-        InputPath,
-        "Directory.Build.props",
-        "Directory.Packages.props",
-        ValuesKernelDataLoader.RelativePath,
-        ScribeLockPath,
-        "global.json",
-    ];
+    public static ImmutableArray<string> InputPaths { get; } = [ValuesKernelDataLoader.RelativePath];
 
-    public static ImmutableArray<byte> Write(string repositoryRoot)
+    public static ImmutableArray<string> MutationKeys(string repositoryRoot) =>
+        ValuesKernelDataLoader.LoadRepository(repositoryRoot).Select(static row => row.Id).ToImmutableArray();
+
+    public static ImmutableArray<ValuesProjection> Write(string repositoryRoot) =>
+        ValuesKernelDataLoader.LoadRepository(repositoryRoot).Select(WriteRow).ToImmutableArray();
+
+    private static ValuesProjection WriteRow(ValueDefinition definition)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var inputs = InputPaths.Select(path =>
-            (Path: path, Sha256: Convert.ToHexStringLower(SHA256.HashData(
-                File.ReadAllBytes(Path.Combine(repositoryRoot, path)))))).ToArray();
-        var inputSha256 = CombinedInputSha256(inputs);
-        var definitions = ValuesKernelDataLoader.LoadRepository(repositoryRoot);
-        var constants = definitions
-            .OrderBy(static item => item.Id, StringComparer.Ordinal)
-            .Select(Project)
-            .ToArray();
         var document = JsonSerializer.SerializeToElement(new
         {
             attestation = new
@@ -46,27 +29,32 @@ public static class CanonicalValuesWriter
                     numeric_binding = "not-kernel-evaluated:noncomputable-real",
                 },
                 emitter = "StrataLint.Scribe.ValuesProducer",
-                emitter_version = 2,
-                input_sha256 = inputSha256,
-                inputs = inputs.Select(static input => new
-                {
-                    path = input.Path,
-                    sha256 = input.Sha256,
-                }).ToArray(),
-                projection = "D5/E/values--json",
-                provenance = definitions.Select(static item => item.LeanGid).ToArray(),
+                emitter_version = 3,
+                projection = ValuesProjectionAddress.GidFor(definition.Id),
+                provenance = definition.LeanGid,
             },
-            constants,
-            schema_version = 2,
+            constant = Project(definition),
+            input = definition.NormalizedInput,
+            schema_version = 3,
         });
-        return StructuredCanonicalWriter.WriteJson(document);
+        var projection = new ValuesProjection(definition.Id, ValuesProjectionAddress.PathFor(definition.Id),
+            StructuredCanonicalWriter.WriteJson(document));
+        ValidateBinding(projection);
+        return projection;
     }
 
-    internal static string CombinedInputSha256(IEnumerable<(string Path, string Sha256)> inputs)
+    // Validate our computed output, never use a tracked snapshot as a freshness oracle.
+    public static void ValidateBinding(ValuesProjection projection)
     {
-        var material = "stratalint-scribe-values-input-v2\0" + string.Concat(
-            inputs.Select(static input => input.Path + "\0" + input.Sha256 + "\n"));
-        return Convert.ToHexStringLower(SHA256.HashData(new UTF8Encoding(false, true).GetBytes(material)));
+        using var parsed = JsonDocument.Parse(projection.Bytes.AsMemory());
+        var root = parsed.RootElement;
+        if (!ValuesProjectionAddress.TryIdFromPath(projection.RelativePath, out var id)
+            || !string.Equals(id, projection.Id, StringComparison.Ordinal)
+            || root.GetProperty("constant").GetProperty("id").GetString() != id
+            || root.GetProperty("input").GetProperty("id").GetString() != id
+            || root.GetProperty("attestation").GetProperty("projection").GetString()
+                != ValuesProjectionAddress.GidFor(id))
+            throw new FormatException("Values projection key, payload and path binding mismatch.");
     }
 
     private static object Project(ValueDefinition definition)

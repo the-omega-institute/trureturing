@@ -339,7 +339,7 @@ internal static partial class RepositoryPathPolicy
 
         var coordinates = evidence.Coordinates.Values;
         string scope;
-        if (coordinates is ["values"])
+        if (coordinates is ["values", _])
         {
             scope = "values";
         }
@@ -371,7 +371,8 @@ internal static partial class RepositoryPathPolicy
             return false;
         }
 
-        return artifact.PathSelectors.Contains(scope);
+        return artifact.PathSelectors.Contains(scope)
+            && (evidence.Selector != "value" || scope == "values");
     }
 
     private static bool HasControlledDomain(RepoPath path, ValidatedPolicy policy)

@@ -279,7 +279,7 @@ files = [
   { pattern = "Directory.Build.props", require = ["delta", "engineering", "filemap", "scribe", "test-cover-batch", "test-repository-contract", "test-repository-filemap", "test-repository-topology", "test-truth-release"], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "Directory.Packages.props", require = ["delta", "engineering", "filemap", "scribe", "test-cover-batch", "test-repository-contract", "test-repository-filemap", "test-repository-topology", "test-truth-release"], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["dotnet"], verified_by = ["make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "Evidence/D5/**/*.result.json", require = ["filemap", "test-repository-filemap"], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-  { pattern = "Evidence/D5/values.json", require = ["filemap", "scribe"], kind = "generated", admission_plane = "content", produced_by = "ValuesEmitter", consumed_by = ["reader"], verified_by = ["ValuesEmitter"], artifact_id = "A-VALUES", runtime_disposition = "committed-source", mode = "100644", history_requirement = "not-required" },
+  { pattern = "Evidence/D5/values/*.value.json", require = ["filemap", "scribe"], kind = "generated", admission_plane = "content", produced_by = "ValuesEmitter", consumed_by = ["reader"], verified_by = ["ValuesEmitter"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "Generated/DAG.md", require = ["filemap"], artifact_id = "A-DAG", mode = "100644", history_requirement = "not-required", kind = "generated", admission_plane = "content", produced_by = "DagEmitter", consumed_by = ["reader"], runtime_disposition = "run-local", verified_by = ["DagEmitter"] },
   { pattern = "Generated/FILEMAP.md", require = ["filemap"], artifact_id = "A-FILEMAP", mode = "100644", history_requirement = "not-required", kind = "generated", admission_plane = "content", produced_by = "FileMapEmitter", consumed_by = ["reader"], runtime_disposition = "run-local", verified_by = ["FileMapEmitter"] },
   { pattern = "Generated/echo-residuals/*.md", require = ["filemap"], kind = "generated", admission_plane = "content", produced_by = "EchoVerifyCommand", consumed_by = ["reader"], verified_by = ["EchoVerifyCommand"], artifact_id = "none", runtime_disposition = "run-local" },
@@ -889,7 +889,7 @@ path_selectors = ["formal"]
 
 [evidence.artifact_kinds."json"]
 profile = "structured-json"
-selectors = ["check", "legacy", "quote", "result", "run"]
+selectors = ["check", "legacy", "quote", "result", "run", "value"]
 path_selectors = ["experiments", "formal", "kernels", "special", "values"]
 
 [evidence.artifact_kinds."md"]

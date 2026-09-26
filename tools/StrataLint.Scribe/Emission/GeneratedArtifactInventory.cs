@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Trureturing.Truth;
+using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
 
@@ -11,26 +12,25 @@ internal sealed record GeneratedArtifactIdentity(
 internal static class GeneratedArtifactInventory
 {
     internal static ImmutableArray<GeneratedArtifactIdentity> Create(
-        IEnumerable<DocumentDefinition> definitions)
+        IEnumerable<DocumentDefinition> definitions, IEnumerable<string> valueIds)
     {
         ArgumentNullException.ThrowIfNull(definitions);
-        return Create(definitions.Select(static definition => definition.RelativePath.Value));
+        return Create(definitions.Select(static definition => definition.RelativePath.Value), valueIds);
     }
 
     internal static ImmutableArray<GeneratedArtifactIdentity> Create(
-        IEnumerable<string> documentPaths)
+        IEnumerable<string> documentPaths, IEnumerable<string> valueIds)
     {
         ArgumentNullException.ThrowIfNull(documentPaths);
+        ArgumentNullException.ThrowIfNull(valueIds);
         var artifacts = documentPaths
             .Select(static path => new GeneratedArtifactIdentity(
                 path,
                 nameof(ScribeEmitter)))
+            .Concat(valueIds.Select(static id => new GeneratedArtifactIdentity(
+                ValuesProjectionAddress.PathFor(id), nameof(ValuesEmitter))))
             .Concat(
             [
-                new GeneratedArtifactIdentity(
-                    CanonicalValuesWriter.RelativePath,
-                    nameof(ValuesEmitter),
-                    "A-VALUES"),
                 new GeneratedArtifactIdentity(
                     DagEmitter.RelativePath,
                     nameof(DagEmitter),

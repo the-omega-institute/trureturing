@@ -160,7 +160,7 @@ public sealed class R15ScopeNarrowingTests
     public void Sl018HistoricalNoncanonicalValuesPathSurvivesEnvironmentDelta()
     {
         const string historicalPath = "Evidence/D5/values.result.json";
-        const string message = "canonical values projection must be Evidence/D5/values.json";
+        const string message = "canonical values projection must be Evidence/D5/values/<encoded-id>.value.json";
 
         var unrelated = ValuesPathHistory(historicalPath);
         AssertFinding(Execute(unrelated, "global.json"), 18, message, historicalPath);
@@ -232,8 +232,8 @@ public sealed class R15ScopeNarrowingTests
         fixture.Files[artifactPath] = anomaly;
         fixture.Baseline[artifactPath] = anomaly;
         fixture.Files["Meta/FILEMAP.toml"] = TestFileMap.Canonical.Replace(
-            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\"]",
-            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\", \"spec\"]",
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\", \"value\"]",
+            "selectors = [\"check\", \"legacy\", \"quote\", \"result\", \"run\", \"spec\", \"value\"]",
             StringComparison.Ordinal);
         Assert.NotEqual(fixture.Baseline["Meta/FILEMAP.toml"], fixture.Files["Meta/FILEMAP.toml"]);
 

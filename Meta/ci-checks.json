@@ -231,7 +231,8 @@
             "inputs": [
               "Blueprint/**/*.md",
               "Generated/**",
-              "Evidence/D5/*.json"
+              "Evidence/D5/*.json",
+              "Evidence/D5/values/*.value.json"
             ],
             "paths": [
               "**/*.json",
@@ -243,6 +244,8 @@
           }
         ],
         "inventory_inputs": [
+          "Golden/values-kernels.toml",
+          "tools/StrataLint.Engine/Coordinates/ValuesProjectionAddress.cs",
           "tools/StrataLint.Scribe/**",
           "tools/StrataLint.Scribe.Documents/**",
           "Blueprint/**/*.scribe.cs",

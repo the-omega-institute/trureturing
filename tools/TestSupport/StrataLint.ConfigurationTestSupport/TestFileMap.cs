@@ -42,7 +42,7 @@ internal static class TestFileMap
 
         [evidence.artifact_kinds."json"]
         profile = "structured-json"
-        selectors = ["check", "legacy", "quote", "result", "run"]
+        selectors = ["check", "legacy", "quote", "result", "run", "value"]
         path_selectors = ["experiments", "formal", "kernels", "special", "values"]
 
         [evidence.artifact_kinds."md"]
