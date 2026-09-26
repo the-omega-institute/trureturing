@@ -77556,3 +77556,297 @@ $$
 全态稳定恢复仍以（252.3）的理想饱和源为中心，以完整矩阵迹范数为误差合同。它既没有将任意两份矩阵变为合法来源，也没有证明任意态的两方向层析完备。正半定共同填充约束与核内定量注入共同承担恢复结论；本节不据这些标准工具的组合宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 253. 同一源微扰在重置前后的二次方与四次方副本预算
+
+§252的平方根恢复界可以进一步转化为实际判别成本。对同一份理想饱和源及其一个已知微扰，若观察者能取得重置前的联合探针，所需副本数为微扰幅度的负二次方；若只能取得规定的重置输出及其完整参考，所需副本数为负四次方。后一个下界允许对所有可访问副本作任意联合量子测量。
+
+本节计算已知二元源的判别预算。独立来源、允许访问的寄存器与成功率均作为合同固定；副本数不自动等于物理历时。
+
+### 253.1 固定二元来源、通道与成功率
+
+采用§244的实际设置记录噪声通道。固定
+$$
+\frac12\le A<1,\qquad 0<B\le1-A,\qquad b_0^2=B,
+\qquad
+A_a=\sqrt A\,Z+b_0X,
+\quad A_b=\sqrt A\,Z-b_0X.
+\tag{253.1}
+$$
+量子输出统一重置到同一纯态 $P_{\mathrm{reset}}$；可见经典记录为 $(w,s)$，其中 $w\in\{a,b\}$、$s\in\{+1,-1\}$。对应实际效应为
+$$
+E_{w,s}=\frac{I_2+sA_w}{4}.
+\tag{253.2}
+$$
+它们来自§244已标定的设置翻转，原设置副本与翻转种子不另行开放。这里 $A+B\le1$ 保证效应正性，四个效应之和为 $I_2$。
+
+固定 $\theta\in(0,1)$，并在本节记
+$$
+q=1-\theta,
+\qquad\alpha=\sqrt A\in(0,1).
+\tag{253.3}
+$$
+参考空间为 $E=\mathbb C^2\oplus\mathbb C|2\rangle_E$，其中前一块与输入组成 Bell 态
+$$
+|\Phi\rangle
+=\frac{|0\rangle_H|0\rangle_E+|1\rangle_H|1\rangle_E}{\sqrt2}.
+\tag{253.4}
+$$
+对每个给定且已知的 $z\in(0,1)$，两份候选源为
+$$
+\begin{aligned}
+\Omega_0&=\theta P_\Phi+qP_{0_H}\otimes P_{2_E},\\
+\Omega_z&=\theta P_\Phi+qP_{\psi_z}\otimes P_{2_E},\\
+|\psi_z\rangle&=\sqrt{1-z^2}|0\rangle_H+iz|1\rangle_H.
+\end{aligned}
+\tag{253.5}
+$$
+由§252，两态参考边缘相同、形成纠缠均为 $\theta$；$\Omega_0$ 响应饱和，$\Omega_z$ 对 $0<z<1$ 不饱和。其单副本半迹距离为
+$$
+d_z:=\frac12\|\Omega_z-\Omega_0\|_1=qz.
+\tag{253.6}
+$$
+
+未知假设 $j\in\{0,z\}$ 以等先验选定，此后给出 $n$ 份同一来源的真正独立副本 $\Omega_j^{\otimes n}$。比较两种访问方式：
+
+- **重置前输入接口：**可访问每份原输入与参考，即 $\Omega_j^{\otimes n}$。
+- **规定输出接口：**固定通道 $\mathcal S_p$ 独立作用于各输入，只开放 $\sigma_j^{\otimes n}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$。通道各次使用没有共享的未建模记忆；每次设置翻转按同一已标定通道独立发生。
+
+两种接口都允许对全部可访问寄存器作任意联合 POVM、辅助处理和自适应测量。规定输出接口不允许回取已经重置的输入，也不允许改用另一通道查询其他 Pauli 方向。
+
+令 $N_{\mathrm{in}}(z)$ 与 $N_{\mathrm{out}}(z)$ 分别为两种接口达到等先验平均正确率至少 $2/3$ 所需的最小整数副本数。判别方案可以使用已知的 $A,B,\theta,z$。
+
+### 253.2 完整输出只在产品符号分布上变化
+
+对任意联合源 $\Omega_j$，记参考边缘为 $\rho_E$、响应为 $R_w^{(j)}=\operatorname{Tr}_H[(A_w\otimes I_E)\Omega_j]$。由（253.2），输出为
+$$
+\sigma_j=
+\sum_{w,s}|w,s\rangle\langle w,s|
+\otimes P_{\mathrm{reset}}
+\otimes\frac{\rho_E+sR_w^{(j)}}4.
+\tag{253.7}
+$$
+共同的 $P_{\mathrm{reset}}$ 不改变迹距离或相对熵，以下在坐标中省略它。
+
+两假设在 Bell 参考块中的输出完全相同。在产品参考方向 $|2\rangle_E$ 上，各可见标签的权重为
+$$
+\begin{aligned}
+\sigma_0\big|_{(w,s,2)}&=\frac q4(1+s\alpha),\\
+\sigma_z\big|_{(w,s,2)}&=\frac q4\bigl(1+s\alpha(1-2z^2)\bigr).
+\end{aligned}
+\tag{253.8}
+$$
+产品旗标概率为 $q$；条件于该旗标，$w$ 均匀且不携带假设区别，符号 $s=+1$ 的概率分别为
+$$
+x=\frac{1+\alpha}{2},
+\qquad p_z=x-\alpha z^2.
+\tag{253.9}
+$$
+因为 $0<\alpha<1$ 且 $0<z<1$，$x,p_z$ 均严格在 $(0,1)$ 内。
+
+完整 $\sigma_0,\sigma_z$ 相互交换：它们在 Bell 参考块上是同一个算子，在产品参考块上都是（253.8）的经典对角分布。若某些 Bell 输出方向本征值为零，两假设在这些方向上仍同时为零，故不会引入相对熵的支撑问题。
+
+采用自然对数相对熵
+$$
+D_{\mathrm{nat}}(\rho\|\tau)
+=\operatorname{Tr}[\rho(\ln\rho-\ln\tau)],
+\qquad
+D_{\mathrm B}(p\|x)
+=p\ln\frac px+(1-p)\ln\frac{1-p}{1-x}.
+\tag{253.10}
+$$
+公共 Bell 块贡献为零，产品块的均匀 $w$ 也抵消，因而
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+=qD_{\mathrm B}(x-\alpha z^2\|x).
+}
+\tag{253.11}
+$$
+由 $\ln u\le u-1$，
+$$
+\begin{aligned}
+D_{\mathrm B}(p\|x)
+&\le\frac{p^2}{x}+\frac{(1-p)^2}{1-x}-1\\
+&=\frac{(p-x)^2}{x(1-x)}.
+\end{aligned}
+\tag{253.12}
+$$
+代入 $x(1-x)=(1-A)/4$，得到
+$$
+\boxed{
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+\le\frac{4qA}{1-A}\,z^4.
+}
+\tag{253.13}
+$$
+
+### 253.3 任意联合输出测量的副本数下界
+
+等先验 Holevo–Helstrom 公式给
+$$
+P_{\mathrm{succ}}^{\mathrm{opt}}(n)
+=\frac12+\frac14
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1.
+\tag{253.14}
+$$
+任意最终输出二元判决的处理都定义了可访问联合系统上的二元 POVM，因此该公式覆盖集体测量与自适应策略。若成功率至少为 $2/3$，必有
+$$
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1\ge\frac23.
+\tag{253.15}
+$$
+自然对数版本的 Pinsker 不等式及相对熵张量加性给
+$$
+\begin{aligned}
+\|\sigma_z^{\otimes n}-\sigma_0^{\otimes n}\|_1^2
+&\le2D_{\mathrm{nat}}(\sigma_z^{\otimes n}\|\sigma_0^{\otimes n})\\
+&=2nD_{\mathrm{nat}}(\sigma_z\|\sigma_0)\\
+&\le\frac{8nqA}{1-A}z^4.
+\end{aligned}
+\tag{253.16}
+$$
+结合（253.15），得到
+$$
+\boxed{
+N_{\mathrm{out}}(z)\ge\frac{1-A}{18qA\,z^4}.
+}
+\tag{253.17}
+$$
+下界已把完整参考与所有量子输出作为可访问系统；共同 Bell 输出块不会补回产品块未保留的一阶相干区别。
+
+### 253.4 逐次输出读出达到相同四次方阶
+
+逐份测量参考是否处于产品方向 $|2\rangle_E$，并读取可见符号 $s$。定义实际随机变量
+$$
+Y=
+\begin{cases}
+s,&\text{参考产品旗标成立},\\
+0,&\text{参考在 Bell 块中}.
+\end{cases}
+\tag{253.18}
+$$
+它满足
+$$
+\mathbb E_0Y=q\alpha,
+\qquad
+\mathbb E_zY=q\alpha(1-2z^2),
+\qquad
+\mathbb E_jY^2=q,
+\quad\operatorname{Var}_jY\le q.
+\tag{253.19}
+$$
+令 $\overline Y_n$ 为 $n$ 份独立读数的均值，以
+$$
+q\alpha(1-z^2)
+\tag{253.20}
+$$
+为阈值。超过阈值判为假设零，否则判为假设 $z$。两个假设的均值到阈值的距离均为 $q\alpha z^2$。Chebyshev 不等式给每一假设下的错误率
+$$
+P_j(\text{判错})
+\le\frac{q/n}{q^2A z^4}
+=\frac1{nqA z^4}.
+\tag{253.21}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{out}}(z)
+\le\left\lceil\frac3{qA z^4}\right\rceil.
+}
+\tag{253.22}
+$$
+这个上界使用逐次测量与经典阈值，而下界允许任意联合测量；两者给出了相同的 $z^{-4}$ 阶，常数不宣称最优。
+
+### 253.5 重置前输入接口的精确距离与二次方阶
+
+原探针的两个参考旗标可直接读取，且读取不破坏各自块内的源态。对 $n$ 份副本，产品块数量
+$$
+K\sim\operatorname{Binomial}(n,q).
+\tag{253.23}
+$$
+不同旗标串对应正交子空间，两假设对这些串具有相同概率。条件于产品数 $K=k$，共同 Bell 因子不影响距离，剩余两份纯态的重叠平方为 $(1-z^2)^k$。纯态半迹距离公式与直和可加性因而给出精确表达式
+$$
+\boxed{
+\frac12\|\Omega_z^{\otimes n}-\Omega_0^{\otimes n}\|_1
+=\mathbb E_K\sqrt{1-(1-z^2)^K}.
+}
+\tag{253.24}
+$$
+对每个非负整数 $K$，有 $1-(1-z^2)^K\le Kz^2$。再用平方根凹性，
+$$
+\frac12\|\Omega_z^{\otimes n}-\Omega_0^{\otimes n}\|_1
+\le\mathbb E\sqrt{Kz^2}
+\le\sqrt{nqz^2}.
+\tag{253.25}
+$$
+Helstrom 公式要求成功率达到 $2/3$ 时半迹距离至少为 $1/3$，故
+$$
+\boxed{
+N_{\mathrm{in}}(z)\ge\frac1{9qz^2}.
+}
+\tag{253.26}
+$$
+这一下界同样允许对全部原探针作联合 POVM。
+
+一个逐次协议给出相同阶上界：每份先读参考产品旗标；旗标成立时测量原输入的 $Z$，检查是否得到 $|1\rangle_H$。假设零下该事件概率恒为零，假设 $z$ 下每份发生概率为 $qz^2$。只要出现一次就判 $z$，否则判零。因此
+$$
+P_{\mathrm{succ}}(n)
+=1-\frac12(1-qz^2)^n
+\ge1-\frac12e^{-nqz^2}.
+\tag{253.27}
+$$
+当 $nqz^2\ge\ln(3/2)$ 时，等先验平均正确率至少为 $2/3$，所以
+$$
+\boxed{
+N_{\mathrm{in}}(z)
+\le\left\lceil\frac{\ln(3/2)}{qz^2}\right\rceil.
+}
+\tag{253.28}
+$$
+这里假设零下错误率为零，另一假设的错误率至多 $2/3$；（253.28）满足的是已声明的等先验平均成功率合同。
+
+### 253.6 访问接口改变最优副本尺度
+
+**定理253.1（同一二元来源的访问代价分离）。** 固定（253.1）的通道及 $\theta\in(0,1)$。对每个已知 $z\in(0,1)$，在（253.5）的等先验独立来源判别中，副本数满足
+$$
+\frac1{9qz^2}
+\le N_{\mathrm{in}}(z)
+\le\left\lceil\frac{\ln(3/2)}{qz^2}\right\rceil,
+\tag{253.29}
+$$
+$$
+\frac{1-A}{18qA z^4}
+\le N_{\mathrm{out}}(z)
+\le\left\lceil\frac3{qA z^4}\right\rceil.
+\tag{253.30}
+$$
+因此在 $z\to0$ 时，
+$$
+\boxed{
+N_{\mathrm{in}}(z)=\Theta(z^{-2}),
+\qquad
+N_{\mathrm{out}}(z)=\Theta(z^{-4}).
+}
+\tag{253.31}
+$$
+固定 $q$ 后，以源半迹距离 $d_z=qz$ 表示，同样得到
+$$
+N_{\mathrm{in}}=\Theta(d_z^{-2}),
+\qquad N_{\mathrm{out}}=\Theta(d_z^{-4}).
+\tag{253.32}
+$$
+**证明。** （253.29）由（253.26）、（253.28）得到；（253.30）由（253.17）、（253.22）得到。固定参数下 $q>0$、$A<1$，上下界系数均为有限正数，故给出（253.31）及（253.32）。$\square$
+
+该结论对每个已知微扰幅度比较同一对源态。它没有给出未知幅度的复合假设检验，更没有把一切不同态都纳入可判别范围。比如把（253.5）中的 $+iz$ 改成 $-iz$，两份不同微扰态具有完全相同的规定输出。这里的任务是一份理想饱和源与指定的非饱和微扰之间的判别；下界不能直接套到“两候选都严格饱和”的另一种任务。
+
+### 253.7 理想数据充分性与有限取得预算
+
+源微扰的一阶变化位于 $Y$ 相干方向。原探针仍在时，产品块中的稀有 $Z$ 点击以概率 $qz^2$ 暴露它；规定重置通道把该方向的一阶区别消去，输出产品符号概率只变化 $\alpha z^2$，由此产生四次方副本预算。
+
+这与§251、§252相容：理想饱和源的完整输出数据可唯一确定源，偏离该数据的合法源也受平方根全态界控制；但观察者要从有限副本取得足以排除（253.5）微扰的精度，仍须支付（253.30）的预算。一次完整算子响应并不等于一次实验读数。
+
+这里使用的判别与相对熵工具见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)：Theorem 3.4，第128—129页（PDF第136—137页），给出一般先验的 Holevo–Helstrom 界；Theorem 5.38，第282—283页（PDF第290—291页），给出量子 Pinsker 不等式。该书使用以二为底的相对熵，常数为 $1/(2\ln2)$；本节使用 $D_{\mathrm{nat}}=(\ln2)D_{\mathrm{bits}}$，因此（253.16）中的系数为二。
+
+副本数计算只包含所声明来源与访问接口中的统计判别。若要换算历时，还须给出制备速率、每份处理历时及并行规则；本节不由副本数直接推出物理钟速。这些具体来源计算也不承担任意态层析或文献原创性主张。
+
+## 追加锚（本行以下为增补区）
