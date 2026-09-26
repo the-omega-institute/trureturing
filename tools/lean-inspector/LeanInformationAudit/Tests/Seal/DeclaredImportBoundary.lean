@@ -25,9 +25,10 @@ run_cmd do
     if modules.contains removed then throwError "retired owner returned: {removed}"
   -- The source-bound contract adds Registry.SourceScope, SourceOperands and
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
+  -- The infinite-domain support adds one D5/Impl module to that closure.
   -- Relative to the split closure (102 = 97 D5/Impl + 5 Interface), no owners leave:
-  -- the intended closure is 106 = 100 D5/Impl + 6 Interface.
+  -- the intended closure is 107 = 101 D5/Impl + 6 Interface.
   let interface := modules.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
-  let unchanged := modules.size == 106 && interface.size == 6
+  let unchanged := modules.size == 107 && interface.size == 6
   (if unchanged then logInfo else logError) m!"[{if unchanged then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
-  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=106 interface={interface.size}"
+  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=107 interface={interface.size}"
