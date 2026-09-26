@@ -55047,3 +55047,195 @@ $F_2(0)=F_1(0)=c+h^2$，所以同一复准备族具有有限代价的共同实�
 虚性具有操作用途的既有背景可见 Wu 等，*Operational Resource Theory of Imaginarity*，Phys. Rev. Lett. **126**, 090401（2021），DOI:10.1103/PhysRevLett.126.090401，arXiv:2007.14847，关于虚性资源、态变换及局域态区分的论述。该文不提供这里的尾窗最优常数、分项预算阈值或曲率保持构造；本节的比较来自实际尾窗长度、完全实全域达到族和第249节的复矩几何。上述领先系数仍先取固定比值的任务极限，未声称在 $\gamma\uparrow1$ 时有统一余项，也未把累计 Fisher 代价识别为能耗。
 
 ## 追加锚（本行以下为增补区）
+
+## 254. 用额外混合预算替代复相干的精确领先补偿量
+
+**定义 254.1（原尾窗上的混合预算补偿）。** 保持第253节的实际任务，固定有限正极限 $\gamma_s\to\gamma\in(0,\infty)$。允许将混合预算由 $\zeta_s$ 增加到 $\widetilde\zeta_s$，但要求
+
+$$
+\zeta_s\le\widetilde\zeta_s\le\delta_s=F_s+e_s,
+\qquad
+\frac{\widetilde\zeta_s-\zeta_s}{e_s}\longrightarrow r.
+\tag{254.1}
+$$
+
+原虚性预算 $\eta_s$ 保持不变；所选准备额外要求完全实。代价 $P_s,Q_s$ 仍在原来的 $T_s(\delta_s)$ 上计量，不改用放宽后合成预算的尾窗。原任务的精确矩、固定处理器和共轭、支持、尖锐集合、曲率及节点数据也都保持。称 $r$ 为领先混合补偿量。
+
+**定理 254.2（同时达到两项代价上限的最小补偿）。** 给定有限常数 $p\ge c$、$q\ge c$，其中 $c=\pi^2/4$。对任一满足（254.1）的预算族，存在满足任一低内部代价条件的完全实允许准备族，使
+
+$$
+\limsup P_s\le p,
+\qquad \limsup Q_s\le q,
+\tag{254.2}
+$$
+
+当且仅当
+
+$$
+r\ge r_{\min}(\gamma;p,q)
+:=\left[\gamma-1+
+\max\left\{\sqrt{\frac cp},\frac cq\right\}\right]_+.
+\tag{254.3}
+$$
+
+这里 $[x]_+=\max\{x,0\}$，且 $0\le r_{\min}\le\gamma$。所需预算族可实现每个 $r\in[0,\gamma]$。条件成立时，可选择全域实解析、每点秩至多二、内部两个代价一致有界且保持全部原任务条件的同一个准备族。
+
+证明。 由精确差商
+
+$$
+\frac{\delta_s-\zeta_s}{e_s}
+=\frac{\eta_s^2}{e_s(\delta_s+\zeta_s)}
+\longrightarrow\gamma,
+\tag{254.4}
+$$
+
+（254.1）必有 $0\le r\le\gamma$。定义只用于分析的有效虚性额度
+
+$$
+\widehat\eta_s=\sqrt{\delta_s^2-\widetilde\zeta_s^2},
+\qquad
+\widehat\gamma_s=\frac{\widehat\eta_s^2}{4dse_s}.
+\tag{254.5}
+$$
+
+因为 $\widetilde\zeta_s\ge\zeta_s$，有 $0\le\widehat\eta_s\le\eta_s=o(s)$。完全实准备的虚性为零，所以它同时满足这一辅助额度和原额度。其混合约束始终是实际的 $J\le\widetilde\zeta_s$。又有
+
+$$
+\gamma_s-\widehat\gamma_s
+=\frac{(\widetilde\zeta_s-\zeta_s)
+(\widetilde\zeta_s+\zeta_s)}{4dse_s}
+\longrightarrow r,
+\quad
+\widehat\gamma_s\longrightarrow\gamma-r.
+\tag{254.6}
+$$
+
+这里 $\widetilde\zeta_s/s\to2d$，由两侧 $\zeta_s\le\widetilde\zeta_s\le\delta_s$ 夹逼得到。辅助两项预算的合成值精确为原 $\delta_s$，故应用第253节不会改变计费尾窗。
+
+若 $\gamma-r<1$，第253节给出完全实类的共同最优系数
+
+$$
+P_{\rm R}=\frac{c}{(1-\gamma+r)^2},
+\qquad Q_{\rm R}=\frac{c}{1-\gamma+r}.
+\tag{254.7}
+$$
+
+若 $\gamma-r=1$，低内部代价实族即使存在，两项原尾窗归一化代价也都发散；若 $\gamma-r>1$，这样的实族不存在。因为 $p,q$ 有限，条件（254.2）因此等价于
+
+$$
+1-\gamma+r\ge
+\max\left\{\sqrt{c/p},c/q\right\}>0.
+\tag{254.8}
+$$
+
+结合 $r\ge0$ 即得（254.3）。由于 $p,q\ge c$，右侧的最大值至多一，故 $r_{\min}\le\gamma$。充分性使用第253节在（254.7）的同一族共同达到，保留全部任务条件；必要性使用其任意秩下界和临界障碍，而非假设固定任务最小元存在。
+
+最后验证补偿量不是仅有形式的变量。对任意固定 $r\in[0,\gamma]$，定义
+
+$$
+\widehat\eta_s^2=4dse_s\max\{\gamma_s-r,0\},
+\qquad
+\widetilde\zeta_s=\sqrt{\delta_s^2-\widehat\eta_s^2}.
+\tag{254.9}
+$$
+
+有 $0\le\widehat\eta_s^2\le\eta_s^2\le\delta_s^2$，所以根式合法且满足（254.1）的逐点顺序。又由
+
+$$
+\frac{\widetilde\zeta_s-\zeta_s}{e_s}
+=\frac{4ds\min\{\gamma_s,r\}}
+{\widetilde\zeta_s+\zeta_s}
+\longrightarrow r,
+\tag{254.10}
+$$
+
+实现了指定补偿量，包括 $r=\gamma$。证毕。
+
+**定理 254.3（两个复最优值所需的实补偿及其严格凸性）。** 若把两项上限分别取为原复允许类的独立最优值
+$p=m_2(\gamma)$、$q=m_1(\gamma)$，则最小补偿为
+
+$$
+R(\gamma)=\gamma-1+\sqrt{\frac{c}{m_2(\gamma)}},
+\qquad 0<R(\gamma)<\gamma.
+\tag{254.11}
+$$
+
+达到这个补偿后，存在同一个完全实允许准备族满足
+
+$$
+P_s\longrightarrow m_2(\gamma),
+\qquad
+Q_s\longrightarrow\sqrt{c\,m_2(\gamma)}<m_1(\gamma).
+\tag{254.12}
+$$
+
+函数 $R$ 在 $(0,\infty)$ 上光滑、严格递增且严格凸。以第250节的峰值最优方向 $z_2(\gamma)$ 表示，其导数为
+
+$$
+R'(\gamma)
+=1-\sqrt{\frac{c}{A(z_2(\gamma))}}\,g(z_2(\gamma)),
+\qquad
+1-g(h)<R'(\gamma)<1.
+\tag{254.13}
+$$
+
+在先取固定比值任务极限后的参数极限中，
+
+$$
+\begin{aligned}
+R(\gamma)&=(1-g(h))\gamma+O(\gamma^2)
+&& (\gamma\downarrow0),\\
+R(\gamma)&=\gamma-1+\sqrt{c/C}+O(\gamma^{-1})
+&& (\gamma\to\infty),
+\qquad C=c+h^2.
+\end{aligned}
+\tag{254.14}
+$$
+
+证明。 设 $z_1$ 为累计代价的唯一极小方向。由第250节 $0<z_1<h$，所以 $A(z_1)>c$。精确地，
+
+$$
+m_1(\gamma)^2
+=A(z_1)F_2(z_1;\gamma)
+>c\,m_2(\gamma).
+\tag{254.15}
+$$
+
+因此（254.3）中的两项要求满足
+$c/m_1<\sqrt{c/m_2}$，峰值上限决定最小补偿。有限正 $\gamma$ 下有 $m_2>c$：$A\ge c$、$D\le1$，等号若成立必须同时有 $z=h$ 和 $D=1$，与 $g(h)>0$ 矛盾；极小值确实取到，故严格大于 $c$。这证明（254.11）的上界。
+
+若 $\gamma\ge1$，（254.11）的表达式显然为正。若 $0<\gamma<1$，第253.13式给出
+$m_2<c/(1-\gamma)^2$，所以
+$\sqrt{c/m_2}>1-\gamma$，同样为正。因此无需取正部。将（254.11）代入（254.7）就得到（254.12），严格积分改进来自（254.15）。它使用增加后的混合预算，不与原预算下第249节禁止共同达到两项独立最优值的结论冲突。
+
+唯一驻点方程和第250节的 $H_2'>0$ 给出 $z_2(\gamma)$ 光滑且严格递减。对
+$m_2=A(z_2)/D(z_2)^2$
+求导，驻点使方向导数项消失，于是
+
+$$
+m_2'(\gamma)
+=\frac{2A(z_2)g(z_2)}{D(z_2)^3}.
+\tag{254.16}
+$$
+
+再对（254.11）求导，便得到（254.13）。因为 $0<z_2<h$、$A(z_2)>c$，且 $g$ 在正区间严格递增，有
+$0<\sqrt{c/A(z_2)}g(z_2)<g(h)<1$，故导数界严格成立。
+
+令 $f(z)=\sqrt c\,g(z)/\sqrt{A(z)}$。在 $0<z<h$，
+
+$$
+f'(z)=\sqrt c\left(
+\frac{g'(z)}{\sqrt{A(z)}}
++\frac{g(z)(h-z)}{A(z)^{3/2}}\right)>0.
+\tag{254.17}
+$$
+
+由 $R'=1-f(z_2)$、$z_2'<0$，得 $R''=-f'(z_2)z_2'>0$。最后用第250节
+$m_2=c+2cg(h)\gamma+O(\gamma^2)$
+和 $m_2=C+O(\gamma^{-1})$，展开（254.11）即得（254.14）。证毕。
+
+**注记 254.4（替代的是两项任务代价约束）。** 补偿量衡量完全实准备为满足给定的两项渐近代价上限所需的最小额外混合额度。它不是逐点把任意复准备转成实准备的转换定理，也不要求保留原复曲线的所有读数。原任务的精确矩及节点结构被保留，优化对象是整个准备族的两个尾窗代价。
+
+对两项原复独立最优上限，峰值要求独自决定最小补偿；达到它后，同一实族的累计代价还严格低于对应上限。此结论来自放宽后的可行关系集合，不把不同预算下的结果说成原可行集合里的共同最优。完全实条件始终相对于固定共轭，未等同于经典性，也未将 Fisher 积分解释为物理能耗。式（254.14）仍是先取固定比值任务极限的参数展开，不提供同时极限的统一误差。
+
+## 追加锚（本行以下为增补区）
