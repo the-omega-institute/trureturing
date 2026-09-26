@@ -53572,3 +53572,362 @@ $$
 **注记 247.3（相同容量不保证相同恢复距离）。** 两个零预算边都在 $F_s$ 处发生相同的端点低内部代价转变。全实混态允许在维持第三规范方向的同时改变相干角；纯态的完整复矩则在小非零相位处把方向拉回 $y/s\to r_0$，而节点要求 $y/s\to2r_0$。额外的实方向恢复距离导致严格更大的领先系数。此处比较的是同一参数任务的 Fisher 几何代价，不将其解释为物理耗时或能量。
 
 ## 追加锚（本行以下为增补区）
+
+## 248. 消失的虚性份额与非消失的恢复距离
+
+**定义 248.1（分别受限的近实预算）。** 沿用第243—247节的实际任务及 $b,\sigma,d,r_0$，其中 $d=\sqrt{D_*}$、$r_0=bd/\sigma$。本节始终分别要求两个全域预算
+
+$$
+I_R^C(\rho_u)\le\eta_s,\qquad J(\rho_u)\le\zeta_s,
+\qquad \delta_s=\sqrt{\eta_s^2+\zeta_s^2}=F_s+e_s,
+\tag{248.1}
+$$
+
+并考察尺度
+
+$$
+0<e_s=o(s),\qquad \eta_s=o(s),\qquad
+\frac{\eta_s}{\sqrt{s e_s}}\longrightarrow\infty.
+\tag{248.2}
+$$
+
+定义
+
+$$
+C_{\rm near}=\frac{\pi^2}{4}+\frac{b^2}{\sigma^2}.
+\tag{248.3}
+$$
+
+这里总预算只是两项给定预算的合成读数；不能把两个分别成立的不等式替换为单个合成约束。
+
+**定理 248.2（近实分配的两个共同最优系数）。** 满足（248.1）—（248.2）的任意允许准备族，只要满足第244.9式任一低内部代价条件，就有
+
+$$
+\begin{aligned}
+\liminf_{s\downarrow0}e_s^2\sup_{T_s}I_Q&\ge C_{\rm near},\\
+\liminf_{s\downarrow0}\frac{e_s}{s}\int_{T_s}I_Q\,du
+&\ge2dC_{\rm near}.
+\end{aligned}
+\tag{248.4}
+$$
+
+下界允许任意点态秩。存在同一族全域实解析、每点秩至多二的准备，将两项下界同时达到为极限，保持 $K_s$ 上两个代价一致有界，以及全输入精确性、实际联合支持四、完整尖锐集合、普通最优双侧曲率和任意预先指定的有限阶实规范节点数据。
+
+因此虚性预算相对于 $s$ 的份额虽然趋零，两个系数仍严格大于全实边的系数，并严格小于纯边的相应系数：
+
+$$
+\frac{\pi^2}{4}<C_{\rm near}
+<\left(\frac\pi2+\frac b\sigma\right)^2.
+\tag{248.5}
+$$
+
+证明。 先证明过零处的方向约束。写 $S=\operatorname{Re}\rho$、$\rho=S+iK$，其中 $K$ 为实反对称矩阵。第242节的同一实部归约给出
+
+$$
+J(S)^2\le I_R^C(\rho)^2+J(\rho)^2\le\eta_s^2+\zeta_s^2=\delta_s^2,
+\qquad I_Q(S)\le I_Q(\rho).
+\tag{248.5a}
+$$
+
+第243—244节因此保证低内部代价族的首次远端分隔面过零位于 $T_s$。在该点记 $x^2=1-p$，并分块
+
+$$
+S=\begin{pmatrix}x^2&\beta^{\mathsf T}\\ \beta&W\end{pmatrix},
+\quad \operatorname{Tr}W=p,\quad
+n_s^{\mathsf T}\beta=0,\quad n_s^{\mathsf T}Wn_s\ge c_0>0.
+\tag{248.6}
+$$
+
+置 $H_s=\delta_s^2-F_s^2=2F_se_s+e_s^2=O(se_s)$。第243节的精确压缩估计给出 $\lambda_1(S)\le p$、$\lambda_2(S)\ge x^2$。若 $\lambda_1(S)=p-t$，其余特征值的和为 $x^2+t$，所以
+
+$$
+J(S)^2-4px^2\ge4t(2p-1-t).
+\tag{248.7}
+$$
+
+近纯性先给出 $t=O(s^2)$。又因 $4px^2\ge F_s^2$、$J(S)\le\delta_s$，式（248.7）改进为 $t=O(H_s)$。故
+
+$$
+\lambda_1(S)=p-O(H_s),\quad
+\lambda_2(S)=x^2+O(H_s),\quad
+\lambda_3(S)+\lambda_4(S)=O(H_s).
+\tag{248.8}
+$$
+
+还须控制这些小谱方向的位置。将非核块写为
+
+$$
+W=\mu\phi\phi^{\mathsf T}+E,\qquad
+E\ge0,\quad E\phi=0,\quad T:=\operatorname{Tr}E=p-\mu.
+\tag{248.9}
+$$
+
+先明确这个块的初步近纯性。正性给出 $\|\beta\|^2\le x^2p=O(s^2)$，而 $\mu\ge p/3$ 使 $\mu-x^2$ 有正下界。对 $W\le\mu I$ 的二阶 Rayleigh 上界有
+
+$$
+\lambda_1(S)\le
+\frac{x^2+\mu+\sqrt{(\mu-x^2)^2+4\|\beta\|^2}}2
+\le\mu+\frac{\|\beta\|^2}{\mu-x^2}.
+\tag{248.9a}
+$$
+
+因此 $\lambda_1(S)=1-O(s^2)$ 蕴含 $\mu=1-O(s^2)$、$T=O(s^2)$。由（248.6），$|n_s^{\mathsf T}\phi|$ 有正下界。正性在 $q\oplus\phi^\perp$ 压缩上给出 $\|\beta_{\phi^\perp}\|^2\le x^2T$，而过零条件给出 $|\beta_\phi|\le C\|\beta_{\phi^\perp}\|$。因为 $\mu-x^2$ 有正下界，块矩阵的最大特征值估计遂给出
+
+$$
+\lambda_1(S)\le\mu+C\|\beta\|^2
+\le p-T+Cs^2T.
+\tag{248.10}
+$$
+
+结合（248.8），得到 $T=O(H_s)$ 和 $\|\beta\|=O(s\sqrt{H_s})$。这一步没有引入一个与 $e_s$ 无关的 $O(s^4)$ 余项。
+
+在实正交分解 $q\oplus\phi\oplus\{q,\phi\}^\perp$ 中，原复密度的正性控制虚部：
+
+$$
+K_{q,\phi^\perp}=O(s\sqrt{H_s}),\qquad
+K_{\phi,\phi^\perp}=O(\sqrt{H_s}),\qquad
+K_{\phi^\perp,\phi^\perp}=O(H_s).
+\tag{248.11}
+$$
+
+这里 $\phi^\perp$ 的块指标均指 $\{q,\phi\}^\perp$。记 $\kappa=K_{q\phi}$。实部谱下界及分别成立的混合预算给出
+
+$$
+\begin{aligned}
+2\|K\|_F^2
+&=J(S)^2-J(\rho)^2\\
+&\ge F_s^2-\zeta_s^2=\eta_s^2-H_s,\\
+2\|K\|_F^2&=4\kappa^2+O(H_s),
+\end{aligned}
+\tag{248.11a}
+$$
+
+其中最后一式来自（248.11）。于是 $4\kappa^2\ge\eta_s^2-O(H_s)$。将 $iK$ 压缩到 $\{q,\phi\}$，又有 $2|\kappa|\le\|K\|_1=I_R^C(\rho)\le\eta_s$。因此
+
+$$
+2|\kappa|=\eta_s(1+o(1)).
+\tag{248.12}
+$$
+
+实际处理器的非核反对称部分为 $O(s)$。将（248.11）代入完整虚矩条件，主项为 $\kappa k_s^{\mathsf T}\phi$，其余项至多 $Cs\sqrt{H_s}$，所以
+
+$$
+|k_s^{\mathsf T}\phi|\le
+Cs\frac{\sqrt{H_s}}{\eta_s}=o(s).
+\tag{248.13}
+$$
+
+为确定方向的符号，只须考察剩余 Fisher 长度
+$\mathcal L_s=\int_{u_\times}^{u_3}\sqrt{I_Q}\,du=O(s)$ 的子列；违反所需长度下界的子列必属于此类。迹速度界及实部归约使剩余路径与实际第三节点投影相距 $O(s)$，从而可选 $\phi=v_*+O(s)$，其中 $v_*$ 为第247.4式的实际带符号极限方向。由实际 $k_s$ 的展开和第247.5式，写 $\phi_y=sR$ 后有
+
+$$
+k_s^{\mathsf T}\phi=\sigma s(R-r_0)+O(s^2).
+\tag{248.14}
+$$
+
+式（248.13）因此强制
+
+$$
+\frac{\phi_y}{s}\longrightarrow r_0,
+\qquad \langle e_y,S_\times v_*\rangle=sr_0+o(s).
+\tag{248.15}
+$$
+
+谱余量给出的是（248.13）；实际节点与有界长度一起才确定（248.15）的符号。
+
+下面将两个方向的变化合为一个长度下界，并避免假定原秩变化曲线有光滑最小净化。取 $\varepsilon_s=s^6$，定义正定实密度
+
+$$
+S^\varepsilon=\frac{S+\varepsilon_sI_4}{1+4\varepsilon_s}.
+\tag{248.16}
+$$
+
+SLD 凸性给出 $I_Q(S^\varepsilon)\le I_Q(S)/(1+4\varepsilon_s)\le I_Q(\rho)$。对这个正定曲线，解实对称 Sylvester 方程
+$S^\varepsilon L+LS^\varepsilon=2(S^\varepsilon)'$，再从终点反向解 $A'=LA/2$。终点因子可取第一列为 $\sqrt{(1+\varepsilon_s)/(1+4\varepsilon_s)}\,\psi_3$，其余列为 $\sqrt{\varepsilon_s/(1+4\varepsilon_s)}$ 乘 $\psi_3^\perp$ 的实正交基。线性方程的唯一性和直接求迹给出
+
+$$
+AA^{\mathsf T}=S^\varepsilon,\qquad
+4\|A'\|_F^2=I_Q(S^\varepsilon),\qquad
+A(u_3)=\psi_3e_0^{\mathsf T}+O(s^3).
+\tag{248.17}
+$$
+
+在 $\mathcal L_s=O(s)$ 的子列上，积分速度界使整个因子路径满足 $A(u)=\psi_3e_0^{\mathsf T}+O(s)$。
+
+令 $a_q,a_y$ 为该同一因子的物理 $q,y$ 两行。整个剩余区间都有
+$\|a_q\|=\sqrt{(1-p+\varepsilon_s)/(1+4\varepsilon_s)}=sd(1+o(1))$。过零处 $a_q\cdot a_n=0$ 仍精确成立，而 $a_n=ce_0+O(s)$、$c\ne0$。所以归一化的 $q$ 行从近似垂直于 $e_0$ 的方向走到 $e_0+o(1)$。变半径曲线的长度至少等于最小半径乘单位球面上的角距离，故
+
+$$
+\int\|a_q'\|\,du\ge sd\left(\frac\pi2-o(1)\right).
+\tag{248.18}
+$$
+
+同时 $v_*$ 行为 $e_0+O(s)$。由整段因子控制和节点坐标 $(\psi_3)_y=O(s)$，有 $a_y=(\psi_3)_ye_0+O(s)=O(s)$；故 $a_y\cdot a_{v_*}=a_y\cdot e_0+O(s^2)$。式（248.15）因此使过零处 $a_y\cdot e_0=sr_0+o(s)$，而实际终点由第247.6式给出 $a_y(u_3)\cdot e_0=2sr_0+o(s)$。于是 $\int\|a_y'\|\,du\ge sr_0+o(s)$。这两个估计属于同一因子的不同物理行，积分 Minkowski 不等式给出
+
+$$
+\mathcal L_s\ge2\int\|A'\|_F\,du
+\ge2s\sqrt{\left(\frac{\pi d}{2}\right)^2+r_0^2}+o(s).
+\tag{248.19}
+$$
+
+以剩余区间长度 $2\Delta_s$ 控制峰值及积分，并使用精确差商 $\Delta_s/(se_s)\to d$，即得（248.4）。正定扰动在这里仅用于证明长度下界，不要求它仍满足原任务矩条件。
+
+上界使用实际相位基底与一个可变相干块。令 $U=(q,\phi)$ 为实正交框架，并写
+
+$$
+\rho=U\mathcal B U^\dagger,\qquad
+\mathcal B=
+\begin{pmatrix}
+1-p&\sqrt{p(1-p)}\,c\\
+\sqrt{p(1-p)}\,\overline c&p
+\end{pmatrix},\qquad
+c=\cos\theta+i t\sin\theta.
+\tag{248.20}
+$$
+
+当 $\phi=\phi_{0,s}(p)$ 满足 $k_s^{\mathsf T}\phi=0$ 时，完整复矩对任意 $\theta,t$ 都精确成立，并有
+
+$$
+I_R^C=f(p)|t\sin\theta|,\qquad
+J=f(p)\sqrt{1-t^2}|\sin\theta|,\qquad
+f(p)=2\sqrt{p(1-p)}.
+\tag{248.21}
+$$
+
+置 $\tau_s=\eta_s/\delta_s$、$\epsilon_s=e_s/s$。由（248.2），$\tau_s\to0$ 且 $\sqrt{\epsilon_s}=o(\tau_s)$。在尾窗之前取 $t=\tau_s$，使用第246节的严格包络
+$\theta_{\rm env}=\pi-\arcsin((1-\epsilon_s)\delta_s/f(p))$，并在尾窗入口附近将其平坦化。入口角为 $\pi/2+O(\sqrt{\epsilon_s})=\pi/2+o(\tau_s)$，两个预算都有严格余量。固定早期实弧和相位基底的连接按第246、247节完成，$K_s$ 背景仍为第一规范支。
+
+在严格位于尾窗左端之后、占总宽度 $O(\beta_s)$ 的两段上，取 $\beta_s=\sqrt{\tau_s}$，先保持 $t=\tau_s$ 将角降至 $\theta_c=\arccos(2\tau_s)$，再保持 $\theta=\theta_c$ 将 $t$ 降为零。第一段由 $f(p)<\delta_s$ 满足两个预算；第二段精确满足
+
+$$
+J\le\delta_s\sqrt{1-4\tau_s^2}
+<\delta_s\sqrt{1-\tau_s^2}=\zeta_s,\qquad
+I_R^C<\eta_s.
+\tag{248.22}
+$$
+
+可变混合权重的导数必须计入。将（248.20）的 Bloch 向量代入 Zhong 等，*Fisher information under decoherence in Bloch representation*，Phys. Rev. A **87**, 022337（2013），arXiv:1212.0917，式（11）的混态公式，得到块内精确线元
+
+$$
+\frac{dp^2}{p(1-p)}+
+4p(1-p)\left(d\theta^2+
+\frac{\sin^2\theta}{1-t^2}\,dt^2\right).
+\tag{248.23}
+$$
+
+实支撑运动另加 $4p\|d\phi\|^2$，因为 $U^\dagger dU=0$。上述两段各自的控制变化为 $O(\tau_s)$，故 Fisher 长度为 $O(s\tau_s)+o(s)$；选择平坦端点的近似常速后，归一化峰值和积分分别至多为
+$O(\tau_s^2/\beta_s^2)+o(1)$ 与 $O(\tau_s^2/\beta_s)+o(1)$，均趋零。这里没有对可变权重误用固定权重的凸性。
+
+在余下占比 $1-o(1)$ 的尾窗上取 $t=0$，用实坐标 $y$ 与角 $\theta$ 解单位范数和实际实矩，选第三节点的 $z,w$ 符号。与第246、247节相同的可逆 Jacobian 一致给出
+
+$$
+\partial_y\phi=e_y+O(s),\qquad
+\partial_\theta\phi=O(s^2),\qquad
+\partial_p\phi\big|_{y,\theta}=O(1).
+\tag{248.24}
+$$
+
+用同一个近似线性进度 $\chi$ 令
+$\theta=(1-\chi)\theta_c$、
+$y=(1-\chi)(\phi_{0,s})_y+\chi(v_{3,s})_y$，两端保留平坦邻域。实际两个 $y$ 坐标的差为 $sr_0(1+o(1))$，而 $p$ 导数为 $O(s)$。故同一次运动的领先度量速度是
+$s\sqrt{d^2\theta_c^2+r_0^2}\,|\chi_p|$。核概率导数的 $O(s^{-1})$ 项相对于 $O(e_s^{-1})$ 为低阶，式（248.24）的其余项同样只给低阶贡献。因此同一个光滑背景满足
+
+$$
+\begin{aligned}
+\sup_{T_s}I_Q
+&\le\frac{s^2[(\pi d/2)^2+r_0^2]}{\Delta_s^2}(1+o(1)),\\
+\int_{T_s}I_Q\,du
+&\le\frac{2s^2[(\pi d/2)^2+r_0^2]}{\Delta_s}(1+o(1)).
+\end{aligned}
+\tag{248.25}
+$$
+
+实段的 $0\le\theta\le\theta_c$ 继续保留（248.22）的严格预算余量。接回第三规范支后，完整紧化背景的两项资源均有逐任务的正余量。
+
+最后以完整的秩二因子完成解析化。不能直接将（248.20）的实方向与复相干分别解析拼接，因为解析恒等式 $\operatorname{Im}c\,k_s^{\mathsf T}\phi=0$ 会强制其中一因子恒零。下面允许最终因子的全部复坐标变化。
+
+记 $h=\sqrt{1-|c|^2}=\sqrt{1-t^2}\sin\theta\ge0$，令
+
+$$
+H=\frac{\mathcal B+x\sqrt p\,hI_2}
+{\sqrt{1+2x\sqrt p\,h}},\qquad x=\sqrt{1-p}.
+\tag{248.26}
+$$
+
+则 $H^2=\mathcal B$。控制在秩变化处取平坦拼接，使 $H$ 在整个闭紧化 $x$ 区间光滑。以下求导可先对 $x$ 进行。置 $K_H=[H,H']$，解酉矩阵方程 $R'=-K_HR$ 并令 $A=UHR$。在 $H$ 的特征基中，交换子的对角项为零，非对角项与 $\mathcal B$ 作反交换时乘以 $\operatorname{Tr}\mathcal B=1$，所以
+
+$$
+\{\mathcal B,K_H\}=K_H,\qquad A^\dagger A'=(A^\dagger A')^\dagger.
+\tag{248.27}
+$$
+
+在秩二段，这是水平净化，满足 $4\|A'_u\|_F^2=I_Q(\rho)$。所用水平净化与 SLD 度量的关系是既有工具，见 Dittmann、Uhlmann，*Connections and metrics respecting purification of quantum states*，J. Math. Phys. **40**, 3246–3267（1999），DOI:10.1063/1.532884，arXiv:quant-ph/9806028，第3—4节。该文也区分了秩退化处的中性切向量，不能据此直接假定跨秩连续性。
+
+本背景的纯实区间上 $H=\mathcal B$，平坦拼接在过渡点还使 $H'=\mathcal B'$。投影恒等式 $\mathcal B^2=\mathcal B$ 给出 $\mathcal B'=\mathcal B\mathcal B'+\mathcal B'\mathcal B$ 及 $\mathcal B\mathcal B'\mathcal B=0$。代入（248.27）得到
+$A'=(U'\mathcal B+U\mathcal B'\mathcal B)R$，其在因子核上为零，因而没有中性导数分量。纯实段上可写 $A=\psi a^\dagger$，水平条件和 $\psi^{\mathsf T}\psi'=0$ 强制辅助单位向量 $a$ 为常数，所以 $4\|A'_u\|_F^2=4\|\psi'_u\|^2=I_Q$；过渡点的同一一阶导数计算也给出该等式。这是对实际平坦秩变化的直接核对。
+
+因子的归一化行坐标为
+
+$$
+A_q=x\xi,\qquad A_{q^\perp}=\sqrt p\,W,\qquad
+\|\xi\|=1,\qquad \|W\|_F=1.
+\tag{248.28}
+$$
+
+其中 $x=0$ 的表观除法可消去：
+$\xi=(x+\sqrt p\,h,\sqrt p\,c)R/\sqrt{1+2x\sqrt p\,h}$，所以这两个球面坐标均光滑至紧化端点。
+
+完整复矩在该球面乘积上的两个实微分处处独立。实密度的实因子与当前因子相差一个右侧酉变换；在 $x>0$ 的实背景点，可用常数辅助酉变换将两列写成 $\alpha=xq+v$、$\beta=w$，其中 $v,w$ 实且垂直于 $q$。允许的虚切变分 $\delta\alpha=i\Omega$ 给出
+
+$$
+D\operatorname{Im}M=
+\bigl((B_s^{\mathsf T}-B_s)v-xk_s\bigr)^{\mathsf T}\Omega.
+\tag{248.29}
+$$
+
+取第243.15式的精确核向量，导数为 $-xk_s^{\mathsf T}\Omega\ne0$；实方向上的独立微分由实际实矩图提供。复相位段在 $t>0$ 且 $0<\theta<\pi$ 时，改变底层纯向量使完整矩的两个微分变为 $(D\operatorname{Re}M,tD\operatorname{Im}M)$，由第243节独立。$t=0$ 或 $\theta=0,\pi$ 时，密度为实矩阵，直接使用（248.29）及独立实方向，因而也覆盖这些秩一下降点。
+
+紧化右端 $x=0$ 则单独计算。第三规范方向 $v=(y,z,w)$ 在这个端点仍有 $z>0,w<0$，由实际矩阵（243.14）得到
+
+$$
+\bigl((B_s^{\mathsf T}-B_s)v\bigr)_y
+=s_\lambda(s_\mu z-\mu s_r w)>0.
+\tag{248.29a}
+$$
+
+所以虚切方向 $i e_y$ 给出非零虚矩微分；这些虚切方向对实单位向量自动满足球面一阶范数条件。实微分也非零，因为端点矩值 $a_s$ 与 $Q_s$ 的谱保持分离，后者趋于 $2\alpha,1,-1$。两种方向的另一个矩微分分别为零，故两行独立。它们都可提升为 $W$ 球面中的纯因子变分；$\xi$ 在 $x=0$ 不参与这个论证。紧化左端有 $x>0$，其独立实方向由第211节规范实矩根的严格正导数提供，虚方向仍由（248.29）给出。
+
+具体完成如下。固定任务后，令 $Z=(\xi,W)$，以复坐标上的实内积定义两个矩残差 $F=(\operatorname{Re}\operatorname{Tr}(T_sAA^\dagger)-a_s,\operatorname{Im}\operatorname{Tr}(T_sAA^\dagger))$。上述正则性与紧性给出背景微分的正最小奇异值 $\gamma_{s,e,\eta}>0$。对 $Z(x)$ 作足够高阶的实多项式逼近与 Hermite 匹配，归一化两球面，记为 $\bar Z$。令 $g_1,g_2$ 为 $F$ 的两个球面乘积梯度，并分别记它们在两个球面中的分量为 $g_{iq},g_{iP}$。用两个实小参数 $v_1,v_2$ 定义
+
+$$
+\widehat Z_j(x,v)=
+\frac{\bar Z_j+v_1g_{1j}+v_2g_{2j}}
+{\sqrt{1+\|v_1g_{1j}+v_2g_{2j}\|^2}},
+\qquad j=q,P.
+\tag{248.29b}
+$$
+
+每个梯度分量都与相应 $\bar Z_j$ 实正交，故这个表达式精确保持两个单位范数。在 $v=0$，$F$ 对 $v$ 的 Jacobian 为梯度 Gram 矩阵 $G_{ij}=\langle g_i,g_j\rangle_{\mathbb R}$。足够精细的预备逼近使它的最小特征值在整个紧区间至少为 $\gamma_{s,e,\eta}^2/2$。解析隐函数定理给出唯一的小解析修正 $v(x)$；覆盖紧区间的有限个隐函数邻域由唯一性拼合。修正及其任意指定的有限阶导数随预备误差趋零。节点残差具有零 Hermite 数据，逐次微分隐式方程使修正的对应数据也为零。
+
+归一化、固定 $P$ 矩、正性及秩至多二始终由因子坐标保持。设背景两项全域资源余量的正最小值为 $m_R,m_J$。对两列因子 $A=(a_1,a_2)$，恒有 $J(AA^\dagger)=2\|a_1\wedge a_2\|$，而虚性由迹范数控制；两者在归一化因子上均有局部 Lipschitz 控制。于是预备误差可取得足够小，使修正后的全域误差小于两项余量的一半，同时在完整节点区间使 $\|(A_{\rm final})'_u-(A_{\rm bg})'_u\|_F\le1/2$。这里 $\partial_u=-(4x)^{-1}\partial_x$，该区间有 $x\ge\sqrt{1-h_3(s)}>0$，所以所需误差放大常数对每个固定任务有限。$\gamma_{s,e,\eta}$、$m_R,m_J$ 及这些常数都允许随任务退化，不要求误差大于某个固定的 $s$ 次幂。
+
+在完整节点区间，因子及其 $u$ 一阶导数的逼近精度可选到使
+
+$$
+\sqrt{I_Q(\rho_{\rm final})}
+\le2\|(A_{\rm final})'_u\|_F
+\le\sqrt{I_Q(\rho_{\rm bg})}+1.
+\tag{248.30}
+$$
+
+第一步是纯净化的信息上界，不需要最终密度的 SLD 连续性。式（248.25）的归一化峰值附加误差趋零；积分附加量至多 $2\int_{T_s}\sqrt{I_Q(\rho_{\rm bg})}\,du+2\Delta_s=O(s)$，归一化后也趋零。$K_s$ 的两个有界代价同样保持。
+
+取 Hermite 阶数至少为四，并不低于任何预先指定的阶数。在节点附近背景为纯规范支，水平辅助方向为常数；因子导数修正为节点距离的至少四阶，故（248.30）所用因子信息上界与背景的差为 $o((u-u_i)^2)$。结合任务的普适下曲率界，保持普通最优双侧曲率与精确校准。保留的两个节点及既有谱必要性又强制完整尖锐集合和实际联合支持恰为四。任意逐任务的逼近次数与常数均允许退化，不要求统一解析延拓半径。
+
+最终准备遂达到（248.25）的两个上极限，与（248.4）合并得到同一族的共同极限。证毕。
+
+**注记 248.3（份额趋零不等于几何影响趋零）。** 在（248.2）的尺度中，单独的实混合预算比全实过零所需的量少了一个大于端点余量的量。虚性因此必须参与过零，并由完整复矩把实主方向限制在 $y/s\to r_0$；终点仍要求 $y/s\to2r_0$。混态允许角运动与方向恢复同时进行，故这两项距离按平方和合成；纯边的完整复矩则使它们先后发生，得到第247节的距离之和。
+
+本节没有确定 $\eta_s\asymp\sqrt{se_s}$ 的过渡区、其他分配尺度或固定任务极小元。若只保留单个合成预算而不分别限制两项资源，全实构造已给出第246节较小的系数，（248.4）便不能套用。
+
+## 追加锚（本行以下为增补区）
