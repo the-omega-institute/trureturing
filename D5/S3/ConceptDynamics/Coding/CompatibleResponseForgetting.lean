@@ -290,30 +290,6 @@ private noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Ty
   classical
   exact fun Z H => if incomingResponseProjection L d H = Z then 1 else 0
 
-/-- The membership factor selects the finer response class of each column. -/
-theorem incoming_response_matrix_factor_left {p : ℕ} {M : CountMat p p}
-    {Q : Type} (L : IncomingLift M Q) (d : ℕ)
-    [Fintype (Quotient (L.response (d + 1)))] :
-    incomingResponseMatrix L d = incomingResponseU L d * incomingResponseV L d := by
-  classical
-  ext F H
-  have hrepresentatives :
-      L.response (d + 1)
-        (Quotient.out (incomingResponseProjection L d H)) (Quotient.out H) := by
-    apply Quotient.exact
-    calc
-      Quotient.mk (L.response (d + 1))
-          (Quotient.out (incomingResponseProjection L d H)) =
-          incomingResponseProjection L d H := Quotient.out_eq _
-      _ = incomingResponseProjection L d
-          (Quotient.mk (L.response d) (Quotient.out H)) := by
-            rw [Quotient.out_eq]
-      _ = Quotient.mk (L.response (d + 1)) (Quotient.out H) := rfl
-  have hcard := incoming_response_fiber_card_step L d F hrepresentatives
-  change Nat.card (incomingResponseFiber L d F (Quotient.out H)) =
-    ∑ Z, incomingResponseU L d F Z * incomingResponseV L d Z H
-  simpa [incomingResponseU, incomingResponseV] using hcard.symm
-
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
