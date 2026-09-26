@@ -21,7 +21,7 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutRegularity
 
 open Set
 open LeanInformationAudit
-open D5.S1.Words.Mechanical.MechanicalReadoutRegularity
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutRegularity
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration

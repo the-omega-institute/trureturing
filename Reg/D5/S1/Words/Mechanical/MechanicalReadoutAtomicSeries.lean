@@ -22,9 +22,9 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
 open Set Finset
 open scoped BigOperators
 open LeanInformationAudit
-open D5.S1.Words.Mechanical
-open D5.S1.Words.Mechanical.MechanicalReadoutOrder
-open D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
+open _root_.D5.S1.Words.Mechanical
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration

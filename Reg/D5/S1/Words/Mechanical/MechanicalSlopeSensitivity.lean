@@ -21,8 +21,8 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
 
 open Set MeasureTheory
 open LeanInformationAudit
-open D5.S1.Words.Mechanical
-open D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
+open _root_.D5.S1.Words.Mechanical
+open _root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration

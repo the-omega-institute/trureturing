@@ -69,9 +69,11 @@ def hitReadout (input : HitInput) : ENNReal :=
   geometricAtomicMeasure input.ratio input.phase {input.threshold}
 
 def hitTarget (input : HitInput) : ENNReal :=
-  ∑' n : ℕ, if ∃ z : ℤ,
-      (z : ℝ) = input.phase + (((n + 1 : ℕ) : ℝ)) * input.threshold then
-    ENNReal.ofReal ((1 - input.ratio) ^ 2 * input.ratio ^ n) else 0
+  by
+    classical
+    exact ∑' n : ℕ, if ∃ z : ℤ,
+        (z : ℝ) = input.phase + (((n + 1 : ℕ) : ℝ)) * input.threshold then
+      ENNReal.ofReal ((1 - input.ratio) ^ 2 * input.ratio ^ n) else 0
 
 abbrev HitOutput := HitInput → ENNReal
 
@@ -128,16 +130,18 @@ def leftJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
     exact {
       toArena := unitArena
       signature := mechanicalReadoutSignature JumpOutput
-      Law := fun realization => ∀ (r x alpha : ℝ), 0 < r → r < 1 →
-        x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
-        ∃ L : ℝ,
-          Filter.Tendsto (fun beta : ℝ => realization.readout () () r beta x)
-            (𝓝[<] alpha) (𝓝 L) ∧
-          L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
-          realization.readout () () r alpha x - L =
-            ∑' n : ℕ, if ∃ z : ℤ,
-                (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-              (1 - r) ^ 2 * r ^ n else 0 }
+      Law := fun realization => by
+        classical
+        exact ∀ (r x alpha : ℝ), 0 < r → r < 1 →
+          x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
+          ∃ L : ℝ,
+            Filter.Tendsto (fun beta : ℝ => realization.readout () () r beta x)
+              (𝓝[<] alpha) (𝓝 L) ∧
+            L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
+            realization.readout () () r alpha x - L =
+              ∑' n : ℕ, if ∃ z : ℤ,
+                  (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
+                (1 - r) ^ 2 * r ^ n else 0 }
   Domain := ℝ
 
 def rationalJumpArena : ObjectDomainArena.{0, 0, 0, 0} where

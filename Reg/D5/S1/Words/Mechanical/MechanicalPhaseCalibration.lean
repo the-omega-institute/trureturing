@@ -22,8 +22,8 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalPhaseCalibration
 open Set MeasureTheory
 open scoped BigOperators
 open LeanInformationAudit
-open D5.S1.Words.Mechanical
-open D5.S1.Words.Mechanical.MechanicalPhaseCalibration
+open _root_.D5.S1.Words.Mechanical
+open _root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration

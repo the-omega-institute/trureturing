@@ -30,7 +30,7 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
 open Set Filter
 open scoped Topology
 open LeanInformationAudit
-open D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration

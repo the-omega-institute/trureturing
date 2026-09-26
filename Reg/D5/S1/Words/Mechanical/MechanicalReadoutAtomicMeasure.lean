@@ -63,7 +63,7 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 
 open Set MeasureTheory
 open LeanInformationAudit
-open D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration
 open D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates

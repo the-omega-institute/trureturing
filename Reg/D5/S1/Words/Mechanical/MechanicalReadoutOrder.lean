@@ -29,7 +29,7 @@ namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder
 
 open Set MeasureTheory
 open LeanInformationAudit
-open D5.S1.Words.Mechanical.MechanicalReadoutOrder
+open _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration
@@ -63,7 +63,7 @@ theorem orderVariation : localOrderArena.Law localOrderRealization ∧
   · intro h
     let alpha : ℝ := Real.sqrt 2 / 2
     have halpha : Irrational alpha :=
-      irrational_sqrt_two.div_nat (by norm_num : (2 : ℕ) ≠ 0)
+      irrational_sqrt_two.div_natCast (by norm_num : (2 : ℕ) ≠ 0)
     have h0 : 0 < alpha := by dsimp [alpha]; positivity
     have h1 : alpha < 1 := by
       dsimp [alpha]
