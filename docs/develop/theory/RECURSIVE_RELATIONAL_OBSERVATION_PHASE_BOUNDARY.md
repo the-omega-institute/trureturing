@@ -68567,3 +68567,1364 @@ $$
 本文没有证明所有矩形矩阵对都具有这样的谱下界与边界绕数，也没有给出一般矩形最优距离公式。已经得到的是：有理显式例的真实 $d_2$，以及允许非平凡主输出线的可复用下界条件。未进行文献穷尽检索，不据本组合推导主张原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 227. 二维输入任意有限输出的精确记录压缩距离
+
+设输入为 $\mathbb C^2$，量子输出为 $\mathbb C^m$，$m\ge1$。本文证明：任意两标签、结果 Choi 秩 $(1,2)$ 的 CPTP 记录通道，到全部同接口总 Choi 秩至多二记录通道的完整半 diamond 距离，恰为最优旋转删除成本与删除整个结果0成本的较小者。
+
+核心连接有三项。第一，将两个 Kraus 在纯输入上的 Gram 矩阵写成 Bloch 仿射映射。第二，用闭球极小极大和极体包含证明两种谱极值怎样共同给出删除成本。第三，在需要主谱下界的分支上，通过连续投影运输保留相位协变，从而给任意单 Kraus 竞争者制造零概率事件。退化目标最后由保持 TP 的稠密逼近处理。
+
+所有结论均为纸面数学推导，未新增或编译 Lean 证明。Sion 极小极大、Bloch 坐标、圆周绕数与有限维凸体极性是成熟工具；本文不把这些工具作为新定理，也不主张已经完成文献穷尽核查。
+
+**定理 227.1（对象与精确距离）。**
+
+固定三个 $m\times2$ 矩阵 $K_0,A,B$，满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2,
+\qquad K_0\ne0,
+$$
+并假设 $A,B$ 线性独立。令
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\Gamma(X).
+\tag{227.GD.1}
+$$
+这是结果 Choi 秩恰为 $(1,2)$ 的 CPTP 记录通道。定义
+$$
+\delta=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+\qquad q_0=\|K_0^\dagger K_0\|_\infty.
+\tag{227.GD.2}
+$$
+设 $\mathfrak C_2$ 是同输入、同量子输出、同经典标签、总 Choi 秩至多二的全部 CPTP 记录通道，并置
+$$
+d_2(\mathcal R)=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+记录通道按指定标签块对角，所以它的总 Choi 秩等于两个分支 Choi 秩之和。竞争者可以任意改变两分支；没有把结果0固定或从完整距离中删除。
+
+**定理。** 对上述全部目标，
+$$
+\boxed{d_2(\mathcal R)=\min(\delta,q_0).}
+\tag{227.GD.3}
+$$
+右侧总由一个明确的删除与共同右 Gram 修复候选取得。最近性不要求竞争者的 Kraus 落在 $\operatorname{span}\{A,B\}$。
+
+**定义 227.2（Gram 矩阵的 Bloch 表示）。**
+
+从本定义到定理 227.7 的第 227.7.3 项先设 $m\ge2$；一维量子输出由第 227.7.4 项单独处理。采用 Pauli 矩阵
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+对单位输入 $v=(x,y)$，约定
+$$
+s(v)=\bigl(2\operatorname{Re}(\overline xy),
+2\operatorname{Im}(\overline xy),|x|^2-|y|^2\bigr),
+\qquad
+P_v=\frac{I+s(v)\cdot\sigma}{2}.
+\tag{227.GD.4}
+$$
+令 $W_v=[Av\ Bv]$，并定义 Kraus 系数空间中的 Gram 矩阵
+$$
+T(s(v))=W_v^\dagger W_v
+=\begin{pmatrix}
+\|Av\|^2&v^\dagger A^\dagger Bv\\
+v^\dagger B^\dagger Av&\|Bv\|^2
+\end{pmatrix}.
+$$
+它对输入密度矩阵线性，故唯一可写成
+$$
+\boxed{
+T(s)=(a+t\cdot s)I_2+(u+Ls)\cdot\sigma,
+}
+\tag{227.GD.5}
+$$
+其中 $a\in\mathbb R$、$t,u\in\mathbb R^3$、$L\in M_3(\mathbb R)$。这里 $T$ 是这一明确 Gram 约定；不把它未经转置便认作通常的环境通道，也不假设它保迹。
+
+对单位系数 $c=(c_0,c_1)$，记 $n=s(c)$。则
+$$
+\|(c_0A+c_1B)v\|^2
+=c^\dagger T(s)c
+=f(s,n),
+$$
+$$
+f(s,n)=a+t\cdot s+u\cdot n+n\cdot Ls.
+\tag{227.GD.6}
+$$
+记闭单位球为 $\mathbb B$，球面为 $S^2$。定义
+$$
+\lambda_\pm(s)=a+t\cdot s\pm\|u+Ls\|,
+$$
+$$
+\alpha=\min_{s\in S^2}\lambda_+(s),
+\qquad
+\beta=\max_{s\in S^2}\lambda_-(s).
+\tag{227.GD.7}
+$$
+$\lambda_\pm$ 是 $T(s)$ 的两个本征值，也给出 $\Gamma(P_v)$ 的两个可能非零本征值。因此 $\beta$ 是输入端口的第二大本征值尾量。
+
+由（227.GD.6），
+$$
+\delta
+=\min_{n\in S^2}\max_{s\in S^2}f(s,n)
+=\min_{n\in S^2}
+\left[a+u\cdot n+\|t+L^Tn\|\right].
+\tag{227.GD.8}
+$$
+一般弱极小极大已给 $\beta\le\delta$。下面确定何时还需要 $\alpha$。
+
+**定理 227.3（Bloch 椭球内部的完整谱公式）。**
+
+先假设
+$$
+\det L\ne0,
+\qquad s_0=-L^{-1}u,
+\qquad\|s_0\|<1.
+\tag{227.GD.9}
+$$
+于是 $u+Ls$ 在球面上从不为零。再置
+$$
+n_0=-L^{-T}t,
+\qquad c=a-n_0\cdot Ls_0.
+\tag{227.GD.10}
+$$
+双仿射配对可以精确重写为
+$$
+f(s,n)=c+(n-n_0)\cdot L(s-s_0).
+\tag{227.GD.11}
+$$
+
+**谱结论。** 在（227.GD.9）下，
+$$
+\boxed{\delta=\max(\alpha,\beta).}
+\tag{227.GD.12}
+$$
+更精确地，
+$$
+\begin{array}{c|c}
+\|n_0\|<1&\delta=\alpha>c>\beta\\
+\|n_0\|=1&\delta=\alpha=\beta=c\\
+\|n_0\|>1&\delta=\beta>c>\alpha.
+\end{array}
+\tag{227.GD.13}
+$$
+此处先证明纯实凸几何结论，不需要把任何球面误当作凸集。
+
+**227.3.1 两个中心都在球内：极体包含给出对称等式。**
+
+设 $\|n_0\|<1$，令
+$$
+K=\mathbb B-s_0,\qquad H=\mathbb B-n_0,\qquad C=LK.
+$$
+三者都是包含原点为内点的紧凸体。记支撑函数为
+$$
+h_C(y)=\max_{x\in C}x\cdot y,
+$$
+极体为
+$$
+C^\circ=\{y:x\cdot y\le1\ \text{对所有 }x\in C\}.
+$$
+由（227.GD.11）及线性函数在闭球上的极值可取于球面，
+$$
+\delta-c=\min_{y\in\partial H}h_C(y),
+\qquad
+\alpha-c=\min_{x\in\partial C}h_H(x).
+\tag{227.GD.14}
+$$
+下面直接说明两式右侧相等。对任意 $r\ge0$，
+$$
+h_C(y)\ge r\quad\text{对所有 }y\in\partial H
+\iff C\supseteq rH^\circ.
+\tag{227.GD.15}
+$$
+理由是 $h_{H^\circ}(y)=1$ 在 $\partial H$ 上成立；由正齐次性，边界上的比较等价于所有向量上的支撑函数比较，再由闭凸集的分离定理等价于包含。取极体并使用双极恒等式，
+$$
+C\supseteq rH^\circ
+\iff H\supseteq rC^\circ.
+\tag{227.GD.16}
+$$
+在 $r>0$ 时这是取极体后反向包含的直接重排，$r=0$ 时两边均成立。再次使用（227.GD.15），得到
+$$
+\min_{y\in\partial H}h_C(y)
+=\min_{x\in\partial C}h_H(x).
+$$
+所以 $\delta=\alpha$。
+
+此外，对 $x=s-s_0\in\partial K$，
+$$
+\lambda_+(s)-c=\|Lx\|-n_0\cdot Lx>0,
+$$
+$$
+\lambda_-(s)-c=-\|Lx\|-n_0\cdot Lx<0,
+$$
+因为 $Lx\ne0$ 且 $\|n_0\|<1$。紧性给 $\alpha>c>\beta$，证明（227.GD.13）的第一行。
+
+**227.3.2 系数中心在球面上：直接处理临界情形。**
+
+设 $\|n_0\|=1$。同样的两式及 Cauchy–Schwarz 给
+$$
+\lambda_+(s)\ge c,\qquad\lambda_-(s)\le c.
+$$
+由于 $0\in\operatorname{int}K$，沿 $Lx$ 的正、负 $n_0$ 射线分别能到达 $\partial(LK)$，所以两侧都能取等，得到 $\alpha=\beta=c$。
+
+另一方面，取球面系数 $n=n_0$，有
+$$
+a+u\cdot n_0+\|t+L^Tn_0\|=c.
+$$
+所以 $\delta\le c$。结合 $\beta\le\delta$，得到三者均为 $c$。这里没有把临界点排除或依赖数值极限。
+
+**227.3.3 系数中心在球外：闭球 Sion 与边界最优。**
+
+设 $\|n_0\|>1$。定义闭球上的
+$$
+g(n)=\max_{s\in\mathbb B}f(s,n)
+=a+u\cdot n+\|t+L^Tn\|,
+$$
+$$
+h(s)=\min_{n\in\mathbb B}f(s,n)
+=a+t\cdot s-\|u+Ls\|.
+$$
+$f$ 在两个闭球上连续，分别仿射；两个闭球都是凸紧集。因此 Sion 定理适用，给
+$$
+\min_{n\in\mathbb B}g(n)=\max_{s\in\mathbb B}h(s).
+\tag{227.GD.17}
+$$
+它只施用于闭球，尚未用于球面。
+
+$g$ 在闭球邻域内可微，因为 $t+L^Tn=L^T(n-n_0)\ne0$。若它在球内部取得最小值，则
+$$
+0=\nabla g(n)
+=u+L\frac{t+L^Tn}{\|t+L^Tn\|},
+$$
+强制一个单位向量等于 $s_0$，违反 $\|s_0\|<1$。故 $g$ 的最小值在球面，等于 $\delta$。
+
+若 $h$ 在内部点 $s\ne s_0$ 取得最大值，则可微性给
+$$
+t=L^T\frac{u+Ls}{\|u+Ls\|},
+$$
+与 $\|L^{-T}t\|=\|n_0\|>1$ 矛盾。$s_0$ 也不是局部最大点：选方向 $d$ 满足 $Ld=-n_0/\|n_0\|$，则小的 $\varepsilon>0$ 给
+$$
+h(s_0+\varepsilon d)-h(s_0)
+=\varepsilon(\|n_0\|-1)>0,
+$$
+且该点仍在球内。因此 $h$ 的最大值也在球面，等于 $\beta$。（227.GD.17）给 $\delta=\beta$。
+
+最后，沿 $Lx$ 的正 $n_0$ 射线取 $x\in\partial K$，得到 $\lambda_+(s)<c$；沿负射线则得到 $\lambda_-(s)>c$。所以 $\beta>c>\alpha$，完成第三行及整个谱公式。
+
+Sion 来源为 Maurice Sion, “On general minimax theorems”, *Pacific Journal of Mathematics* **8** (1958), 171–176，定理3.4，第174页。原文假设凸紧空间及相应半连续、拟凹凸条件；这里用的是连续双仿射的直接特例。[原论文 PDF，第5页](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf#page=5)。
+
+**定理 227.4（非零度数与任意竞争者的主谱下界）。**
+
+仍假设（227.GD.9）。令
+$$
+\nu(s)=\frac{u+Ls}{\|u+Ls\|},
+\qquad\epsilon=\operatorname{sign}\det L\in\{-1,1\}.
+$$
+该映射的度数为 $\epsilon$。下面给出带明确相位的构造，而不只使用“线丛次数相加”的口头解释。
+
+**227.4.1 无简并同伦及起点相位。**
+
+取实极分解 $L=OP$，其中 $O\in O(3)$、$P\succ0$。矩阵路径
+$$
+O((1-\tau)I+\tau P),\qquad0\le\tau\le1,
+$$
+均可逆，将 $O$ 连到 $L$。再沿 $\tau u+Ls$ 加入平移；其零点若存在，只能是 $s=\tau s_0$，不在单位球面上。两段路径归一化后给出 $Os$ 到 $\nu(s)$ 的连续球面同伦，因此度数为 $\det O=\epsilon$。
+
+若 $\epsilon=1$，选酉矩阵 $U$ 实现旋转 $O$，即
+$$
+U(s\cdot\sigma)U^\dagger=(Os)\cdot\sigma.
+$$
+起点主向量可取 $q_0(v)=Uv$，满足
+$$
+q_0(e^{i\theta}v)=e^{i\theta}q_0(v).
+$$
+若 $\epsilon=-1$，令 $R=\operatorname{diag}(1,-1,1)$。复共轭满足 $s(\overline v)=Rs(v)$，而 $OR\in SO(3)$。选择 $U$ 实现旋转 $OR$，取 $q_0(v)=U\overline v$。此时它仍是 $Os(v)$ 的主向量，并满足
+$$
+q_0(e^{i\theta}v)=e^{-i\theta}q_0(v).
+$$
+所以两种情形统一为相位次数 $\epsilon$。任意三维旋转可由 qubit unitary 共轭实现，这是标准 Pauli–旋转对应；也可由轴角式 $\exp(-i\vartheta\,\widehat n\cdot\sigma/2)$ 直接检验。
+
+**227.4.2 有限次投影运输保留相位协变。**
+
+令上述同伦的主投影为
+$$
+P_\tau(s)=\frac{I+\nu_\tau(s)\cdot\sigma}{2}.
+$$
+它在紧集 $[0,1]\times S^2$ 上连续。可选有限分割 $0=\tau_0<\cdots<\tau_N=1$，使相邻投影一致满足
+$$
+\sup_s\|P_{\tau_j}(s)-P_{\tau_{j-1}}(s)\|_\infty<1.
+$$
+从刚才的单位主向量开始，递归定义
+$$
+q_j(v)=
+\frac{P_{\tau_j}(s(v))q_{j-1}(v)}
+{\|P_{\tau_j}(s(v))q_{j-1}(v)\|}.
+\tag{227.GD.18}
+$$
+因为 $q_{j-1}$ 位于前一投影的像中，分母至少为
+$$
+1-\|P_{\tau_j}(s(v))-P_{\tau_{j-1}}(s(v))\|_\infty>0.
+$$
+所以每步均连续且合法。投影只依赖 $s(v)$，故相位协变逐步保留。最终得到 $T(s(v))$ 的连续单位主向量 $q(v)$，满足
+$$
+q(e^{i\theta}v)=e^{i\epsilon\theta}q(v).
+\tag{227.GD.19}
+$$
+这是球面 $S^3$ 上的向量，不把它未经核对便降到 $\mathbb {CP}^1$。
+
+**227.4.3 转成真实输出事件并与任意 Kraus 比较。**
+
+$T(s)$ 正半定且两个本征值不同，故 $\lambda_+(s)>0$。定义
+$$
+r(v)=\frac{W_vq(v)}{\sqrt{\lambda_+(s(v))}}.
+\tag{227.GD.20}
+$$
+则 $r(v)$ 连续、单位，且
+$$
+\Gamma(P_v)r(v)=\lambda_+(s(v))r(v),
+$$
+$$
+\boxed{
+ r(e^{i\theta}v)=e^{i(1+\epsilon)\theta}r(v).
+}
+\tag{227.GD.21}
+$$
+输入自身贡献相位一，Gram 主向量贡献相位 $\epsilon$；这一显式纤维映射固定了符号。$\epsilon=-1$ 给相位零，$\epsilon=1$ 给相位二。
+
+对任意 $m\times2$ 候选单 Kraus $C$，在闭圆盘取
+$$
+v(z)=\sqrt{1-|z|^2}f_0+zf_1,
+\qquad F(z)=\langle r(v(z)),Cv(z)\rangle.
+$$
+在 $|z|=1$ 上，
+$$
+F(z)=z^{-\epsilon}h,
+\qquad h=\langle r(f_1),Cf_1\rangle.
+\tag{227.GD.22}
+$$
+若 $h=0$，边界已有零点；否则假设圆盘无零会使 $F/|F|$ 将绕数 $-\epsilon\ne0$ 的边界映射延拓到圆盘，矛盾。因此存在 $v$ 使候选在事件 $P_{r(v)}$ 上概率为零，而目标结果1在同一事件上的概率为 $\lambda_+(s(v))\ge\alpha$。
+
+与完整标签效果 $|1\rangle\langle1|\otimes P_{r(v)}$ 配对，得到任意结果1秩至多一竞争者的完整半 diamond 下界 $\alpha$。圆周不可延拓性采用 Hatcher《Algebraic Topology》§1.1、第29页定理1.7与第32页定理1.9证明中的标准工具。[官方章节 PDF](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。
+
+另一方面，输入尾谱始终给下界 $\beta$：选使 $\lambda_-(s)=\beta$ 的输入，若 $Cv\ne0$，读取输出效果 $I-P_{Cv/\|Cv\|}$；目标概率至少为第二大本征值 $\beta$，候选为零。若 $Cv=0$，整个结果1即可见证该下界。因此（227.GD.12）给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\max(\alpha,\beta)=\delta
+\tag{227.GD.23}
+$$
+对任意结果1 Choi 秩至多一的竞争者成立。
+
+**定理 227.5（Bloch 椭球外部的尾谱等式）。**
+
+现在假设 $L$ 可逆且 $\|s_0\|>1$，即
+$$
+0\notin u+L\mathbb B.
+\tag{227.GD.24}
+$$
+归一化 Bloch 方向可以在整个闭球上定义，故球面度数为零。此时不需要主输出绕数下界，精确公式是
+$$
+\boxed{\delta=\beta.}
+\tag{227.GD.25}
+$$
+
+证明仍对两个闭球使用（227.GD.17）。首先，凸函数 $g(n)=a+u\cdot n+\|t+L^Tn\|$ 不可能在球内部取最小值。在可微点，内点最小要求 $0=u+Ls$，其中 $s$ 为某单位向量，违反（227.GD.24）；在不可微点 $t+L^Tn=0$，其凸次微分为 $u+L\mathbb B$，仍不含零。这也可直接由范数方向导数与分离定理得到。因此 $g$ 的最小值在球面，等于 $\delta$。
+
+$h(s)=a+t\cdot s-\|u+Ls\|$ 在闭球邻域可微。若最大点已经在边界，结论立即成立。若有内部最大点 $s_*$，置
+$$
+w=\frac{u+Ls_*}{\|u+Ls_*\|},
+$$
+其一阶条件为 $t=L^Tw$，且
+$$
+s_*=s_0+r_*L^{-1}w,\qquad r_*>0.
+$$
+沿同一射线
+$$
+s(r)=s_0+rL^{-1}w,\qquad r>0,
+$$
+有
+$$
+h(s(r))=a+t\cdot s_0+r(t\cdot L^{-1}w-1)
+=a+t\cdot s_0.
+$$
+包含内部点 $s_*$ 的射线与闭球交成一个紧区间；由于 $s_0$ 在球外，该区间的两个端点仍有 $r>0$，并位于球面。因此同一最大值也在球面取得，等于 $\beta$。结合闭球 Sion 得到（227.GD.25）。
+
+于是外部情形下，既有输入尾谱下界已经给任意结果1秩至多一候选的距离至少为 $\delta$。
+
+**推论 227.6（非退化目标的完整距离与达到构造）。**
+
+假设 $L$ 可逆且 $\|L^{-1}u\|\ne1$。前两种情况已经穷尽，均给结果1秩至多一竞争者的下界 $\delta$。若预算候选的结果1秩为二，则结果0必须为零，读取标签0给下界 $q_0$。故
+$$
+d_2(\mathcal R)\ge\min(\delta,q_0).
+\tag{227.GD.26}
+$$
+上界使用第 219 节的全缺失范数右 Gram 修复定理。先注意
+$$
+\delta
+\le\frac{\operatorname{Tr}(A^\dagger A+B^\dagger B)}2
+=1-\frac{\operatorname{Tr}K_0^\dagger K_0}{2}<1.
+\tag{227.GD.27}
+$$
+其中第一次比较可通过两个原 Kraus 的算子范数平方取较小者，再用范数不超过迹得到。
+
+取达到 $\delta$ 的单位系数，旋转出删除项 $D=c_0A+c_1B$，另一个保留 Kraus 记为 $C$。删除结果1的 $DXD^\dagger$，把 $K_0,C$ 共同右乘 $(I-D^\dagger D)^{-1/2}$，得到结果秩 $(1,1)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $\delta$。
+
+若 $q_0<\delta$，则 $q_0<1$，可以删除整个结果0，并把 $A,B$ 共同右乘 $(I-K_0^\dagger K_0)^{-1/2}$。这给结果秩 $(0,2)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $q_0$。
+
+以上修复定理适用于全部缺失效应范数严格小于一，保留全部结果标签与完整参考系统。结合（227.GD.26）即证明非退化目标的（227.GD.3）。
+
+**定理 227.7（保持 TP 的稠密逼近与全部维数）。**
+
+本节先设 $m\ge2$。不对简并主投影直接选取前述向量，而采用非退化目标逼近并对真实距离取极限。$m=1$ 在本节末单独证明。
+
+**227.7.1 可用非退化矩阵对在同一输出维数中稠密。**
+
+$a,t,u,L$ 的各坐标都是 $A,B$ 实虚矩阵元的实二次多项式。因而
+$$
+\mathcal P(A,B)=\det L\,
+\left(\|\operatorname{adj}(L)u\|^2-(\det L)^2\right)
+\tag{227.GD.28}
+$$
+为实多项式。$\mathcal P\ne0$ 恰保证 $L$ 可逆且 $\|L^{-1}u\|\ne1$。
+
+它不是恒零多项式。对二维输出取
+$$
+A=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad B=\begin{pmatrix}0&2\\3&0\end{pmatrix}.
+$$
+在（227.GD.4）、（227.GD.5）的固定约定下，直接有
+$$
+u=(0,0,-2),\qquad
+L=\operatorname{diag}(7/2,-1/2,-1/2),
+\qquad s_0=(0,0,-4).
+\tag{227.GD.29}
+$$
+所以 $\mathcal P\ne0$。当 $m>2$，在其余输出行补零保留同一例。非零实多项式的零集无内点，故满足所需非退化条件的矩阵对在每个 $m\ge2$ 的整个矩阵对空间中稠密。
+
+**227.7.2 在目标 TP 约束内构造逼近。**
+
+原目标满足 $G=A^\dagger A+B^\dagger B\preceq I$。先把 $A,B$ 共同乘以 $\sqrt{1-\varepsilon}$，则新的余量满足
+$$
+I-(1-\varepsilon)G\succeq\varepsilon I\succ0.
+$$
+在足够小的邻域内选一个非退化矩阵对 $(A_\varepsilon,B_\varepsilon)$，仍保持
+$$
+R_\varepsilon=I-A_\varepsilon^\dagger A_\varepsilon
+-B_\varepsilon^\dagger B_\varepsilon\succ0,
+$$
+并使其趋向 $(A,B)$。
+
+$K_0$ 的极分解部分等距总能扩成一个固定等距嵌入 $U:\mathbb C^2\to\mathbb C^m$，因为 $m\ge2$。所以
+$$
+K_0=U(K_0^\dagger K_0)^{1/2}.
+$$
+定义
+$$
+K_{0,\varepsilon}=UR_\varepsilon^{1/2}.
+\tag{227.GD.30}
+$$
+它非零，与 $A_\varepsilon,B_\varepsilon$ 共同满足 TP，并由正平方根的连续性趋向原 $K_0$。非退化条件也保证 $A_\varepsilon,B_\varepsilon$ 线性独立：若两者相关，则 Gram 的无迹像至多在一条直线上，$L$ 不可能可逆。得到的目标 $\mathcal R_\varepsilon$ 因而均为合法结果秩 $(1,2)$，并在完整 diamond 范数下趋向原目标。
+
+**227.7.3 同一候选集上的距离连续性。**
+
+所有目标使用同一个固定候选集 $\mathfrak C_2$。由三角不等式，
+$$
+|d_2(\mathcal R_\varepsilon)-d_2(\mathcal R)|
+\le\frac12\|\mathcal R_\varepsilon-\mathcal R\|_\diamond
+\longrightarrow0.
+\tag{227.GD.31}
+$$
+$q_{0,\varepsilon}\to q_0$ 是算子范数连续性。$\delta_\varepsilon\to\delta$ 则来自单位系数球面上的一致收敛及紧集取最小值的连续性。对非退化目标已有
+$$
+d_2(\mathcal R_\varepsilon)
+=\min(\delta_\varepsilon,q_{0,\varepsilon}).
+$$
+取极限便得到一般目标的（227.GD.3）。推论 227.6的显式修复上界对原目标本身仍有效，所以距离下确界确实取得。证明完毕。
+
+**227.7.4 一维量子输出直接处理。**
+
+当 $m=1$，$A,B$ 是线性独立的行向量。令
+$$
+E_1=A^\dagger A+B^\dagger B,
+\qquad V=\begin{pmatrix}A\\B\end{pmatrix}.
+$$
+$V$ 为可逆 $2\times2$ 矩阵。删除系数的 Rayleigh 最小值给
+$$
+\delta=\lambda_{\min}(VV^\dagger)
+=\lambda_{\min}(V^\dagger V)
+=\lambda_{\min}(E_1).
+$$
+任意结果1秩至多一的候选由一个行向量 $C$ 表示。取其输入核中的单位向量 $v$，则候选结果1概率为零，而目标概率为 $v^\dagger E_1v\ge\delta$。若候选结果1秩为二，则缺失结果0，标签下界为 $q_0$。推论 227.6的修复上界在这一输出维数仍适用。因此（227.GD.3）也对 $m=1$ 成立，不依赖高维输出的多项式稠密论证。
+
+**例 227.8（主谱下界与尾谱下界的互补）。**
+
+以下精确例说明为什么定理 227.3必须保留 $\beta$。取
+$$
+A=\begin{pmatrix}\sqrt6&0\\0&1\\0&0\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0&0\\2&0\\0&\sqrt3\end{pmatrix}.
+$$
+其 Gram Bloch 形式为
+$$
+T(s)=\left(\frac72+\frac32s_z\right)I+s\cdot\sigma.
+\tag{227.GD.32}
+$$
+这里 $L=I,u=0$，Bloch 度数为正一，而 $n_0=-(3/2)e_z$ 在球外。因此
+$$
+\alpha=3,\qquad\beta=4,\qquad\delta=4.
+\tag{227.GD.33}
+$$
+所以“非零度数推出 $\alpha=\delta$”为假。度数保证主谱零事件机制可用；达到删除成本还要比较它与尾谱机制。
+
+若需合法记录通道，将两个 Kraus 同乘 $1/4$，并取
+$$
+K_0=E\sqrt{I_2-\operatorname{diag}(10,4)/16}.
+$$
+其中 $E:\mathbb C^2\to\mathbb C^3$ 是等距嵌入 $E(x,y)=(x,y,0)$。此时 $q_0=3/4$，$\delta=1/4$，故真实距离为 $d_2=1/4$，而缩放后的 $\alpha$ 只有 $3/16$。
+
+**227.9 既有例子、来源与适用范围。**
+
+前一个平坦矩形例的 Gram Bloch 方向度数为负一，输出事件相位次数为零；有理矩形例的度数为正一，输出事件相位次数为二。它们正好对应（227.GD.21）的两个非零度分支。本文的投影运输证明不用假设主输出线总有全局连续单位向量。
+
+标准 Bloch 仿射坐标及 qubit unitary 与三维旋转的关系，可参见 Ruskai–Szarek–Werner, “An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$”, arXiv:quant-ph/0101003，§1.2，第4–6页，式（2）、（4）、（5）。该文也明确区分旋转与任意正交变换，并讨论椭球的符号取向。[原论文 PDF](https://arxiv.org/pdf/quant-ph/0101003)。本文只从中采用标准坐标与旋转背景；当前 Gram 不必保迹，谱极小极大、相位运输及完整距离结论由上文分别证明。
+
+本轮核对的原始来源包括该 Bloch 表示论文、Sion 原论文及 Hatcher 的圆周基本群章节；这些核对没有建立当前距离公式的文献首创性。结论的输入维数固定为二、结果1的实际 Choi 秩固定为二、结果0为单非零 Kraus。未将其扩展到一般输入维数、三个以上保留方向或任意结果预算。
+
+## 追加锚（本行以下为增补区）
+
+## 228. 高维输入的相位事件障碍与精确秩预算平台
+
+固定输入维数 $d\ge2$。本节给出两项结论：具有偶数相位协变的连续输出事件族，可迫使任意少于 $d$ 个 Kraus 的竞争分支漏掉一个统一正概率事件；一个等距分支与纯重置分支组成的记录通道，则实现从预算 $1$ 到 $d-1$ 完全不改善的精确容量平台。
+
+这里不将 qubit 输入的两 Kraus 距离公式推广到一般输入维数。Borsuk–Ulam 是标准工具，仓内已有对跖商的连续坐标障碍；本节将它应用于候选分支的全部复振幅，再连接完整通道距离。所有新增组合推导均为纸面数学，未作 Lean 核验。
+
+### 228.1 偶数相位事件与分支 Kraus 容量
+
+设 $\mathcal R$ 为输入 $\mathbb C^d$、有限维量子输出 $\mathbb C^m$ 及一个固定有限经典结果寄存器上的 CPTP 记录通道。固定结果 $q$ 的完全正分支 $\Gamma$。
+
+假设存在连续单位向量映射
+$$
+r:S^{2d-1}\longrightarrow S^{2m-1},
+$$
+一个偶整数 $n\in2\mathbb Z$，以及统一常数 $\alpha\ge0$，使
+$$
+r(e^{i\theta}v)=e^{in\theta}r(v)
+\quad\text{对所有单位 }v\text{ 及实数 }\theta,
+\tag{228.HC.1}
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对所有单位 }v.
+\tag{228.HC.2}
+$$
+$P_v=|v\rangle\langle v|$。目标是完整 CPTP 通道中的一个已指定分支，因此（228.HC.2）描述同一事件族的真实分支概率，不是另行归一化后的条件概率。
+
+**定理 228.1（连续事件给出分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若其结果 $q$ 的 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{228.HC.3}
+$$
+下界由一个无参考纯输入及同名结果块中的秩一输出事件见证。
+
+证明。先设 $k\ge1$，取该竞争分支的最小 Kraus 表示
+$$
+\mathcal S_q(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+定义连续映射
+$$
+F:S^{2d-1}\to\mathbb C^k\cong\mathbb R^{2k},
+\qquad
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+\tag{228.HC.4}
+$$
+由 $n$ 偶及（228.HC.1），$r(-v)=r(v)$，故
+$$
+F(-v)=-F(v).
+$$
+因为 $k<d$，可在输入的底层实空间 $\mathbb R^{2d}$ 中取一个实 $(2k+1)$ 维线性子空间。其单位球是 $S^{2k}$。限制 $F$ 到这个球面，得到连续奇映射
+$$
+F|_{S^{2k}}:S^{2k}\to\mathbb R^{2k}.
+$$
+标准 Borsuk–Ulam 定理给某个 $v$ 满足 $F(v)=F(-v)$。奇性随即给 $F(v)=0$。
+
+对这个输入，竞争者在完整输出效果
+$$
+E_v=|q\rangle\langle q|\otimes P_{r(v)}
+$$
+上的概率为
+$$
+\operatorname{Tr}(E_v\mathcal S(P_v))
+=\sum_{j=1}^k|\langle r(v),C_jv\rangle|^2=0,
+$$
+而目标概率至少为 $\alpha$。两份完整输出都是迹为一的状态，事件概率差不超过其输出差的迹范数的一半，再不超过完整半 diamond 距离，证明（228.HC.3）。若 $k=0$，竞争分支本来为零，任取单位输入即得同一下界，不需要引入负维球面或空坐标的拓扑约定。证毕。
+
+这里 Borsuk–Ulam 采用 Hatcher《Algebraic Topology》推论2B.7，第176页的形式：每个连续 $g:S^N\to\mathbb R^N$ 都有 $g(x)=g(-x)$。[官方第二章 PDF，第80页](https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf#page=80)。定理施用于实球面和实维数 $2k$；没有把复维数直接当作实维数。
+
+证明实际只使用 $r(-v)=r(v)$；（228.HC.1）的偶数相位是保证这一条件的一种明确结构。它不是结论成立的必要条件。
+
+### 228.2 目标本身的容量下界与相位条件的范围
+
+**推论 228.2（目标分支所需的 Kraus 数量）。** 若（228.HC.1）、（228.HC.2）成立且 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{228.HC.5}
+$$
+证明。若目标分支本身能用 $k<d$ 个 Kraus 表示，将这些 Kraus 代入（228.HC.4），得到某个输入的目标事件概率为零，与（228.HC.2）矛盾。等价地，可在第一节取竞争者 $\mathcal S=\mathcal R$，从零距离得到矛盾。证毕。
+
+不能完全删除相位限制。取 $m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$，令目标为单 Kraus 通道
+$$
+\Gamma(X)=UXU^\dagger,
+\qquad r(v)=Uv.
+$$
+此时 $r$ 的相位次数是一，目标事件概率恒为一，而目标本身已是一个 Kraus 的精确竞争者，距离为零。因此“任意相位次数都给（228.HC.3）”为假。这个反例只排除无条件删除相位假设，不证明偶数是所有可行下界的必要条件。
+
+第 227 节的两种 qubit 主事件构造的相位次数分别为零与二。在 $d=2,k=1$ 时，它们都落在本节的同一零点机制中。高维结论控制的是指定事件族与分支 Kraus 数量；它没有仅由 $d,k$ 计算一般通道的最近距离。
+
+### 228.3 可达到的完整秩预算阶跃例
+
+固定 $d\ge2$、$m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$、单位输出向量 $r_0$，以及 $0<\kappa<1$。定义两个同接口的 CPTP 记录通道
+$$
+\mathcal T_0(X)=|0\rangle\langle0|\otimes UXU^\dagger,
+$$
+$$
+\mathcal T_1(X)=|1\rangle\langle1|\otimes\operatorname{Tr}(X)P_{r_0},
+$$
+并置
+$$
+\boxed{
+\mathcal R_\kappa=(1-\kappa)\mathcal T_0+\kappa\mathcal T_1.
+}
+\tag{228.HC.6}
+$$
+结果0的单 Kraus 为 $\sqrt{1-\kappa}\,U$。对输入正交基 $f_1,\ldots,f_d$，结果1可取 Kraus
+$$
+A_i=\sqrt\kappa\,|r_0\rangle\langle f_i|,
+\qquad1\le i\le d.
+\tag{228.HC.7}
+$$
+这些 Kraus 线性独立，且
+$$
+\sum_iA_i^\dagger A_i=\kappa I_d.
+$$
+共同 TP 与目标结果秩 $(1,d)$ 随即成立。等价地，结果1 Choi 矩阵为
+$$
+J_1=\kappa I_d\otimes P_{r_0},
+$$
+秩恰为 $d$。经典标签正交，故目标总 Choi 秩恰为 $d+1$。
+
+对整数预算 $R\ge1$，记
+$$
+d_R(\mathcal R_\kappa)=
+\inf_{\substack{\mathcal S\text{ 为同接口 CPTP 记录通道}\\
+\operatorname{rank}J_{\mathcal S}\le R}}
+\frac12\|\mathcal R_\kappa-\mathcal S\|_\diamond.
+$$
+竞争者允许任意量子输出方向和任意 Kraus，只保持相同输出空间、相同两个经典标签及总 Choi 秩预算。
+
+**定理 228.3（重置与等距记录通道的精确预算曲线）。**
+$$
+\boxed{
+d_R(\mathcal R_\kappa)=
+\begin{cases}
+\kappa,&1\le R<d,\\
+\min(\kappa,1-\kappa),&R=d,\\
+0,&R\ge d+1.
+\end{cases}
+}
+\tag{228.HC.8}
+$$
+每个预算上的下确界都有显式合法通道取得。
+
+**228.3.1 少于 $d$ 个结果1方向的统一下界。**
+
+若候选结果1秩为 $k<d$，写其 Kraus 为 $C_1,\ldots,C_k$。目标在常值事件族 $r(v)=r_0$ 上的概率恒为 $\kappa$，相位次数为零，所以第一节已经给距离至少为 $\kappa$。
+
+在本例中也可直接用线性代数：定义振幅映射
+$$
+L_C:\mathbb C^d\to\mathbb C^k,
+\qquad
+L_C(v)=\bigl(r_0^\dagger C_1v,\ldots,r_0^\dagger C_kv\bigr).
+$$
+其秩至多为 $k<d$，所以输入核维数至少为 $d-k>0$。选核中的单位 $v$，目标在效果 $|1\rangle\langle1|\otimes P_{r_0}$ 上概率为 $\kappa$，候选为零，给同一下界。
+
+这里取的是振幅行 $r_0^\dagger C_j$ 的共同核，不是完整算子 $C_j$ 的共同核。候选可以把该输入送到其他输出方向；这不改变指定事件上的零概率。
+
+**228.3.2 总预算的穷尽分类。**
+
+当 $1\le R<d$，每个候选的结果1秩都小于 $d$，所以上一小节给 $d_R\ge\kappa$。
+
+当 $R=d$，如果结果1秩小于 $d$，仍有下界 $\kappa$。否则它的秩必须恰为 $d$，总秩预算与标签块的秩可加性强制结果0为零。此时对任意输入，只读取结果标签0即可得到概率差 $1-\kappa$。两类候选穷尽，因此
+$$
+d_d\ge\min(\kappa,1-\kappa).
+$$
+
+**228.3.3 显式候选与完整参考上界。**
+
+$\mathcal T_0$ 的总 Choi 秩为一，适用于每个 $R\ge1$。$\mathcal T_1$ 的总 Choi 秩为 $d$，适用于每个 $R\ge d$。
+
+两个通道具有互斥经典标签，所以
+$$
+\|\mathcal T_1-\mathcal T_0\|_\diamond=2.
+\tag{228.HC.9}
+$$
+上界来自两个 CPTP 通道的 diamond 范数均为一及三角不等式；下界对任意密度输入即可达到，因为两份输出位于正交标签块。该论证保留完整参考系统，未将无参考上界冒作 diamond 上界。
+
+由（228.HC.6），精确得到
+$$
+\frac12\|\mathcal R_\kappa-\mathcal T_0\|_\diamond=\kappa,
+\qquad
+\frac12\|\mathcal R_\kappa-\mathcal T_1\|_\diamond=1-\kappa.
+\tag{228.HC.10}
+$$
+这给前两个预算区间的匹配上界。$R\ge d+1$ 时，目标本身已是预算内候选，距离为零。结合所有下界，证明（228.HC.8）。
+
+### 228.4 平台的精确含义及已有结果的关系
+
+固定输入维数 $d$ 和同一个实际目标。从总秩预算 $1$ 增到 $d-1$，最优误差始终为 $\kappa$。$d$ 可任意大，因此平台可以包含任意多个连续整数预算。它不是某一候选构造没有改进，而是对全部同接口预算候选的精确最优值。
+
+在预算 $d$ 处，纯重置通道开始合法。当 $\kappa>1/2$，最优值严格下降为 $1-\kappa$；当 $\kappa\le1/2$，预算 $d$ 的最优值仍为 $\kappa$。预算达到 $d+1$ 后目标本身可用，误差归零。这里给出了每个预算的可达值，没有宣称全部最近候选的秩分配或 Kraus 表示唯一。
+
+仓内《RECURSIVE_RELATIONAL_OBSERVATION》第15.6节已有基于 Borsuk–Ulam 的连续辅助坐标维数障碍，本节直接使用该标准拓扑机制。现有 Lean 声明 `D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth` 处理精确通用重置膨胀，给出输入维数乘输出态秩不超过保留环境维数的容量约束；本节的对象则是完整记录通道在全部总 Choi 秩预算下的近似距离。边界卷第221节的局部 qubit reset 族也不替代这里的任意 $d,R$ 分段公式。
+
+上述来源关系不把本节纸面推导标为已经编译的 Lean 结果。没有对一般高维量子通道主张同样的阶跃曲线，也没有将偶数相位假设称为所有容量下界的必要条件。
+
+## 追加锚（本行以下为增补区）
+
+## 229. 相对陈类与高维量子容量下界
+
+全节固定输入维数 $d\ge2$，所有向量丛均为有限秩复向量丛。
+
+上一节用偶数相位保证候选振幅为奇映射，再由 Borsuk–Ulam 得到共同零点。本节将充分条件扩展为
+$$
+\boxed{n\in\mathbb Z,\qquad n\ne1.}
+\tag{229.NC.1}
+$$
+因此，奇数相位次数如 $n=-1,3,5$ 也有同样的低 Kraus 容量障碍。证明采用复射影空间的整数上同调及线丛的陈类，逐项固定关联丛约定和符号，不把偶数条件称为必要条件。
+
+同一结论还可只用连续秩一事件投影及其像线丛表述，无需在复射影空间上选择全局单位向量。
+
+这些拓扑工具属于标准理论；本节的新接口应用是把全部候选 Kraus 的实际事件振幅组成同一截面，再将共同零点转为完整通道距离下界。以下为纸面数学推导，未新增或编译 Lean 证明。
+
+### 229.1 标准工具及其范围
+
+令 $H\to\mathbb {CP}^{d-1}$ 为重言线丛，即其在 $[v]$ 上的纤维是复直线 $\mathbb Cv\subset\mathbb C^d$。定义
+$$
+h=c_1(H^*)=-c_1(H).
+\tag{229.NC.2}
+$$
+该定义固定本文的生成元符号，不依赖不同教材对重言线丛第一陈类正负号的命名。
+
+采用以下已核对的标准结果。
+
+- $H^*(\mathbb {CP}^{d-1};\mathbb Z)=\mathbb Z[h]/(h^d)$，其中 $h$ 的上同调次数为二。因此 $h^k\ne0$ 对 $0\le k\le d-1$ 成立，而且相应偶次上同调群为自由整数群。
+- 复线丛的张量积满足 $c_1(L\otimes M)=c_1(L)+c_1(M)$；对偶取负。因此整数张量幂满足 $c_1(L^{\otimes q})=q\,c_1(L)$，负幂解释为对偶的正幂。
+- 总陈类满足 Whitney 直和公式 $c(E\oplus E')=c(E)c(E')$，并且 $c_j(E)=0$ 当 $j$ 大于 $E$ 的复秩。平凡丛的正次陈类为零。
+
+原始来源分别为 Hatcher《Algebraic Topology》第3章定理3.19，第220页，[章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；以及 Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，及命题3.10，第86页，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)、[第90页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=90)。后两处分别给陈类的直和、秩及归一化公理，以及线丛张量积下第一陈类的加法。
+
+只用这些事实即可证明所需零点结论，不需要声称任意非零陈类都给完全分类，也不需要把整数类降到模二。
+
+### 229.2 任意非零整数权的等变振幅必有共同零点
+
+**定理 229.1（非零权的共同零点）。** 固定 $d\ge2$、整数 $q\ne0$ 与 $1\le k<d$。设
+$$
+F:S^{2d-1}\longrightarrow\mathbb C^k
+$$
+连续，且对全部 $a\in U(1)$ 和单位 $v\in\mathbb C^d$ 有
+$$
+F(av)=a^qF(v).
+\tag{229.NC.3}
+$$
+则存在单位 $v$ 满足
+$$
+\boxed{F(v)=0.}
+\tag{229.NC.4}
+$$
+这是标准陈类工具对等变映射的直接应用，下面给出完整的关联丛桥梁。
+
+**229.2.1 明确等价关系，核对关联线丛符号。**
+
+在 $S^{2d-1}\times\mathbb C$ 上取等价关系
+$$
+(v,z)\sim(av,a^qz),\qquad a\in U(1),
+$$
+并定义复线丛
+$$
+E_q=(S^{2d-1}\times\mathbb C)/\sim
+\longrightarrow\mathbb {CP}^{d-1},
+\qquad[v,z]\longmapsto[v].
+\tag{229.NC.5}
+$$
+Hopf 纤维化的局部单位代表给出局部平凡化；相邻局部代表只差一个连续单位相位，其在纤维上的作用为该相位的 $q$ 次幂，所以这确为复线丛。
+
+符号可用 $q=-1$ 直接核对。映射
+$$
+E_{-1}\longrightarrow H,
+\qquad[v,z]\longmapsto zv
+\tag{229.NC.6}
+$$
+良定，因为 $(a^{-1}z)(av)=zv$，且逐纤维为线性同构。因而 $E_{-1}\cong H$。
+
+共同单位代表下的纤维乘法给
+$$
+E_p\otimes E_q\cong E_{p+q},
+\qquad E_0\cong\underline{\mathbb C}.
+$$
+于是 $E_1\cong H^*$，对全部整数 $q$ 有
+$$
+\boxed{E_q\cong(H^*)^{\otimes q},\qquad c_1(E_q)=q h.}
+\tag{229.NC.7}
+$$
+这里使用的是（229.NC.5）的明确约定；若换用带逆角色的另一种关联丛记号，必须同时改变截面约定，不能只改陈类符号。
+
+**229.2.2 等变振幅下降为同一向量丛截面。**
+
+令
+$$
+E=E_q^{\oplus k}.
+$$
+由（229.NC.3），
+$$
+s_F([v])=[v,F(v)]
+\tag{229.NC.8}
+$$
+是一份良定连续截面：把单位代表换成 $av$，其纤维坐标同时变成 $a^qF(v)$，恰为（229.NC.5）的等价关系。它的零点恰好对应 $F$ 的共同零点。
+
+由 Whitney 公式及（229.NC.7），
+$$
+c(E)=(1+qh)^k,
+\qquad
+\boxed{c_k(E)=q^k h^k.}
+\tag{229.NC.9}
+$$
+因为 $1\le k<d$ 且 $q\ne0$，右侧是 $H^{2k}(\mathbb {CP}^{d-1};\mathbb Z)\cong\mathbb Z$ 中的非零元素。
+
+假设 $F$ 从不为零。$E_q$ 的商构造自然保留复数的模长，所以 $E$ 有 Hermitian 度量。将（229.NC.8）归一化，得到一份单位截面；它张成一个平凡复线子丛，其正交补为复秩 $k-1$ 的向量丛 $E'$。于是
+$$
+E\cong\underline{\mathbb C}\oplus E'.
+$$
+Whitney 公式与秩消失条件给
+$$
+c_k(E)=c_k(E')=0,
+$$
+与（229.NC.9）矛盾。这证明（229.NC.4）。
+
+基空间的复维数为 $d-1$、实维数为 $2d-2$；顶陈类在次数 $2k$。因此本论证的维数范围准确为 $k\le d-1$，没有将复秩和实维数混用。
+
+### 229.3 回接量子分支与完整通道距离
+
+固定输入 $\mathbb C^d$，令 $\mathcal R$ 为同前节的有限维 CPTP 记录通道，指定结果 $b$ 的分支为 $\Gamma$。设存在连续单位输出向量
+$$
+r:S^{2d-1}\to S^{2m-1},
+$$
+整数 $n\ne1$ 及统一常数 $\alpha\ge0$，使
+$$
+r(av)=a^n r(v),\qquad a\in U(1),
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.10}
+$$
+
+**定理 229.2（非单位相位次数的分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若它的同名分支 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{229.NC.11}
+$$
+
+证明。$k=0$ 时该竞争分支为零，直接用（229.NC.10）的事件即可。设 $1\le k<d$，写
+$$
+\mathcal S_b(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+将全部候选振幅组成
+$$
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+$$
+复内积对第一变量共轭线性，所以
+$$
+\boxed{F(av)=a^{1-n}F(v).}
+\tag{229.NC.12}
+$$
+现在 $q=1-n\ne0$，第二节给单位输入 $v$ 使全部振幅同时为零。对完整效果
+$$
+E_v=|b\rangle\langle b|\otimes P_{r(v)},
+$$
+候选概率为零，目标概率至少为 $\alpha$。两份完整通道输出都保迹，故事件概率差不超过输出差迹范数的一半，并给完整半 diamond 下界（229.NC.11）。其他结果分支以及任意外部参考都属于完整距离的定义；下界见证本身只需这个无参考纯输入。证毕。
+
+当 $\alpha>0$，取竞争者为目标本身即得到
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{229.NC.13}
+$$
+因此非单位相位次数的统一正事件族要求目标分支至少拥有 $d$ 个独立 Kraus 方向。这个结论只使用已声明的事件族和实际分支，不计算一般高维通道的全部最优预算距离。
+
+### 229.4 边界情形与不能加强的部分
+
+**零 Kraus。** $k=0$ 时任何目标事件概率下界都直接成为与零分支的差异，不需要相位条件或陈类。
+
+**相位次数一。** $n=1$ 对应 $q=0$，$E_q$ 为平凡线丛，正次陈类消失，等变 $F$ 可以为非零常值。真实通道反例仍可取等距 $U$：令 $r(v)=Uv$、目标与竞争者均为 $X\mapsto UXU^\dagger$。此时目标事件概率恒为一，而单 Kraus 竞争者误差为零。故不能把（229.NC.11）无条件扩展到 $n=1$。
+
+**容量达到输入维数。** 当 $k=d$，$h^d=0$，本次顶陈类障碍消失。抽象零点结论在此维数确实失败：对任意非零整数 $q$，映射
+$$
+F(v)=
+\begin{cases}
+(v_1^q,\ldots,v_d^q),&q>0,\\
+(\overline v_1^{-q},\ldots,\overline v_d^{-q}),&q<0
+\end{cases}
+\tag{229.NC.14}
+$$
+连续、具有权 $q$，并且在单位球上从不为零。这里每个幂的指数都是非负整数；第二行不是在零坐标处取负次幂。
+
+这些抽象映射只说明等变零点定理的 $k<d$ 阈值不能普遍提高，不把它们逐一宣称为已构造的量子振幅实例。一个实际通道反例已由纯重置给出：目标 $\Gamma(X)=\operatorname{Tr}(X)P_{r_0}$，常值事件 $r(v)=r_0$、$n=0$、$\alpha=1$，而目标自身 Choi 秩恰为 $d$，距离为零。
+
+**所有非单位整数次数。** 对 $n\ne1$，整数 $q=1-n$ 无论正负、奇偶都非零，$q^k h^k$ 均非零。因此新的范围是全部整数 $n\ne1$，而不再仅为偶数 $n$。这仍是一组可检验的充分条件；没有宣称一切容量障碍都必须由这种相位事件产生。
+
+### 229.5 只保留事件投影的内在线丛版本
+
+相位次数可以由事件线相对于输入线的陈类替代。设直接给出连续秩一正交投影
+$$
+P:\mathbb {CP}^{d-1}\to\operatorname{End}(\mathbb C^m),
+$$
+令其像线丛为 $L\to\mathbb {CP}^{d-1}$。连续且固定秩的投影确实定义子丛：在任一点选一个位于其像中的非零向量，附近将该向量投影并归一化即可得到局部单位帧。
+
+仍令 $H$ 为输入重言线丛、$h=c_1(H^*)$。由于 $H^2(\mathbb {CP}^{d-1};\mathbb Z)\cong\mathbb Z$，存在唯一整数 $a$ 满足
+$$
+c_1(L)=a h.
+\tag{229.NC.15}
+$$
+假设目标指定分支 $\Gamma$ 满足统一事件概率下界
+$$
+\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.16}
+$$
+
+**定理 229.3（事件线相对陈类的容量判据）。** 若 $a\ne-1$，那么对任意同接口 CPTP 记录竞争者，只要同名分支 Choi 秩 $k<d$，其完整半 diamond 距离至少为 $\alpha$。当 $\alpha>0$，目标该分支的 Choi 秩至少为 $d$。
+
+证明。$k=0$ 直接读取指定事件。设 $1\le k<d$，取候选 Kraus $C_1,\ldots,C_k$。每个 $C_j$ 给一份全局连续截面
+$$
+s_j([v])=P([v])C_j|_{H_{[v]}}
+\in\operatorname{Hom}(H_{[v]},L_{[v]}).
+\tag{229.NC.17}
+$$
+这不是依赖所选单位帧的标量定义；它就是从实际输入线到实际事件线的复线性映射。
+
+令
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+$$
+线丛张量公式给
+$$
+c_1(E)=(a+1)h,
+\qquad
+\boxed{c_k(E^{\oplus k})=(a+1)^k h^k\ne0.}
+\tag{229.NC.18}
+$$
+联合截面 $(s_1,\ldots,s_k)$ 因此必有零点，否则它张成平凡线子丛，按第二节的同一正交分裂论证迫使顶陈类为零。在该零点任选单位输入 $v$，对全部 $j$ 有 $P([v])C_jv=0$。候选在效果 $|b\rangle\langle b|\otimes P([v])$ 上概率为
+$$
+\sum_j\|P([v])C_jv\|^2=0,
+$$
+而目标概率至少为 $\alpha$。完整半 diamond 下界与目标自身秩下界于是成立。证毕。
+
+第三节的相位向量族是这一判据的具体坐标实现。令 $L_{[v]}=\mathbb C r(v)$。$H^{\otimes n}$ 的单位帧在 $v\mapsto zv$ 时变为原来的 $z^n$ 倍，而 $r(v)$ 同样乘以 $z^n$；把该帧送到 $r(v)$ 就定义逐纤维线性同构
+$$
+L\cong H^{\otimes n}.
+\tag{229.NC.19}
+$$
+当 $n<0$ 时使用 $H^*$ 的单位对偶帧及其 $-n$ 次张量幂；当 $n=0$ 时使用平凡线丛。于是
+$$
+a=-n,\qquad a+1=1-n,
+$$
+与（229.NC.7）、（229.NC.12）的符号完全一致。
+
+因此需要保留的是事件线与输入线之间的相对陈类
+$$
+c_1(\operatorname{Hom}(H,L))=c_1(L)-c_1(H),
+$$
+而不是强求事件线有全局连续单位向量。对于等距通道，$L\cong H$，$a=-1$，相对类为零，故判据正确地不排除秩一精确实现。对常值重置事件，$L$ 平凡、$a=0$，相对类非零。此前相位次数二的主输出线对应 $a=-2$，虽然没有全局单位帧，仍满足同一容量判据。
+
+### 229.6 与已有结果及标准文献的关系
+
+仓内已有对跖商与低维连续读数的 Borsuk–Ulam 机制；它直接解释前节的偶数相位子类。当前检索到的其他 Chern 叙述主要涉及局部球面绕数、单极子或陈荷，不替代这里在 $\mathbb {CP}^{d-1}$ 上的 $k$ 重直和顶陈类计算。未在所检索的 D5 与钉版 Mathlib 声明中定位到这一完整容量接口；本稿不据此宣称文献原创性。
+
+射影空间上非零上同调拉回不能跨越维数的思路也出现在 Hatcher《Algebraic Topology》§3.2，第229页练习3(a)；同页练习6讨论逐坐标幂映射。这里以已核对的定理3.19、陈类公理和线丛张量公式给出完整推导，不把练习题本身当成未经证明的新增前提。
+
+本节扩展前节的相位充分条件；原有偶数相位结论及重置—等距预算平台保持成立。没有重算该平台，也没有将 qubit 的一般两 Kraus 距离公式推广到任意输入维数。
+
+## 追加锚（本行以下为增补区）
+
+## 230. 高秩事件丛的容量障碍、精确预算阶梯与投影稳定性
+
+秩一事件的相对线丛判据可以扩展到秩 $r$ 的事件接口。关键对象是从输入重言线丛到事件像丛的映射丛，其复秩为 $r$。$k$ 个候选 Kraus 映射产生该丛的 $k$ 份截面；相应顶陈类非零时，它们必须有共同零点。
+
+在统一正事件概率的前提下，这给出目标分支至少需要 $\lceil d/r\rceil$ 个 Kraus 方向的下界。常值事件及输入分块通道达到该阈值；在同一输出接口中还可得到完整半 diamond 距离的精确预算阶梯。以下为纸面数学推导，未新增或编译 Lean 证明。
+
+### 230.1 同一实际接口上的事件与容量
+
+固定整数
+$$
+d\ge2,\qquad 1\le r<d,\qquad m\ge r.
+\tag{230.HR.1}
+$$
+令 $H\to\mathbb {CP}^{d-1}$ 为输入重言线丛，即
+$$
+H_{[v]}=\mathbb Cv\subset\mathbb C^d,
+\qquad h=c_1(H^*).
+\tag{230.HR.2}
+$$
+对单位输入 $v$，记 $P_v=|v\rangle\langle v|$。
+
+给定连续的秩 $r$ 正交事件投影族
+$$
+P:\mathbb {CP}^{d-1}\longrightarrow\operatorname{End}(\mathbb C^m),
+\qquad P(x)^2=P(x)=P(x)^\dagger.
+\tag{230.HR.3}
+$$
+其像定义复秩 $r$ 的向量子丛 $L$：在任意 $x_0$ 选 $\operatorname{im}P(x_0)$ 的一组基，并在邻域内用 $P(x)$ 投影这些固定向量。线性独立性在足够小邻域内保持，给出局部帧。这里不要求存在全局帧。
+
+定义
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+\tag{230.HR.4}
+$$
+由于 $1\le r<d$，上同调群 $H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)$ 由 $h^r$ 自由生成，故存在唯一整数 $\nu$ 满足
+$$
+c_r(E)=\nu h^r.
+\tag{230.HR.5}
+$$
+本节的拓扑假设为 $\nu\ne0$。
+
+目标为有限标签集 $B$ 上的 CPTP 记录通道
+$$
+\mathcal R(X)=\sum_{b\in B}|b\rangle\langle b|\otimes\Gamma_b(X),
+\tag{230.HR.6}
+$$
+其中 $\Gamma_b:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^m)$ 完全正，$\sum_b\Gamma_b$ 保迹。固定一个标签 $b_*$，记 $\Gamma=\Gamma_{b_*}$。假设存在 $\alpha\in[0,1]$，使
+$$
+\boxed{\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位 }v\in\mathbb C^d.}
+\tag{230.HR.7}
+$$
+比较对象 $\mathcal S$ 是具有相同输入、量子输出及标签接口的任意 CPTP 记录通道；其同名分支记为 $\Lambda$。分支 Kraus 容量取
+$$
+k=\operatorname{rank}J_\Lambda,
+\tag{230.HR.8}
+$$
+也就是最小 Kraus 数量。零分支的容量为零。所有距离均取完整通道的
+$$
+d_\diamond(\mathcal R,\mathcal S)
+=\tfrac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{230.HR.9}
+$$
+其中包括全部记录标签，并允许外部参考。单标签通道是这个定义的特例。
+
+### 230.2 顶陈类迫使候选事件振幅共同为零
+
+**定理 230.1（秩 $r$ 事件的共同零点）。** 在（230.HR.1）—（230.HR.5）及 $\nu\ne0$ 下，给定任意 $k\ge1$ 个复线性映射
+$$
+C_j:\mathbb C^d\to\mathbb C^m\quad(1\le j\le k).
+$$
+若 $rk<d$，则存在单位输入 $v$，使
+$$
+\boxed{P([v])C_jv=0\qquad(1\le j\le k).}
+\tag{230.HR.10}
+$$
+这些映射不必构成保迹通道。
+
+**证明。** 每个 $C_j$ 定义一份连续截面
+$$
+s_j(x)=P(x)C_j|_{H_x}\in\operatorname{Hom}(H_x,L_x).
+\tag{230.HR.11}
+$$
+该定义作用于整条输入线，不依赖所选单位代表的相位。全部截面组成
+$$
+s=(s_1,\ldots,s_k)\in\Gamma(E^{\oplus k}),
+\qquad\operatorname{rank}_{\mathbb C}(E^{\oplus k})=rk.
+\tag{230.HR.12}
+$$
+Whitney 直和公式及 $c_i(E)=0$ 对 $i>r$ 成立，给
+$$
+\boxed{c_{rk}(E^{\oplus k})=c_r(E)^k=\nu^k h^{rk}.}
+\tag{230.HR.13}
+$$
+第一等式来自总陈类乘积中的最高可能次数：每个因子的次数至多为 $r$，要得到总次数 $rk$，必须从每个因子取 $c_r(E)$。无需把 $L$ 分裂成线丛。
+
+标准整数上同调环为
+$$
+H^*(\mathbb {CP}^{d-1};\mathbb Z)
+=\mathbb Z[h]/(h^d).
+\tag{230.HR.14}
+$$
+因为 $rk<d$ 且 $\nu\ne0$，式（230.HR.13）是一个非零上同调类。
+
+若 $s$ 没有零点，将其按诱导的 Hermitian 度量归一化，便得到一个平凡复线子丛。其 Hermitian 正交补 $E'$ 为复秩 $rk-1$ 的向量丛，因此
+$$
+E^{\oplus k}\cong\underline{\mathbb C}\oplus E',
+\qquad c_{rk}(E^{\oplus k})=c_{rk}(E')=0,
+$$
+与（230.HR.13）矛盾。故 $s$ 在某个 $[v]$ 为零。任选该输入线的单位代表，即得（230.HR.10）。$\square$
+
+这里唯一使用的分裂，是假定无零点截面后推出的“平凡线子丛及其正交补”。它不预设事件丛或候选映射丛存在全局线丛分解。
+
+### 230.3 完整距离下界与目标分支的最小容量
+
+**定理 230.2（完整半 diamond 下界）。** 保持第一节的所有假设。任意同接口 CPTP 记录竞争者 $\mathcal S$，只要其同名分支容量 $k$ 满足 $rk<d$，就有
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)\ge\alpha.}
+\tag{230.HR.15}
+$$
+
+**证明。** 若 $k\ge1$，取最小 Kraus 表示
+$$
+\Lambda(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+由定理 230.1，存在单位输入 $v$ 使全部 $P([v])C_jv=0$。于是
+$$
+\operatorname{Tr}\bigl[P([v])\Lambda(P_v)\bigr]
+=\sum_{j=1}^k\|P([v])C_jv\|^2=0.
+\tag{230.HR.16}
+$$
+若 $k=0$，则 $\Lambda=0$，任意单位输入都满足（230.HR.16）；这一情形不需要陈类假设。
+
+在完整输出上使用效果
+$$
+F_v=|b_*\rangle\langle b_*|\otimes P([v]),
+\qquad 0\preceq F_v\preceq I.
+\tag{230.HR.17}
+$$
+目标事件概率至少为 $\alpha$，候选概率为零。因为 $\mathcal R(P_v)$ 与 $\mathcal S(P_v)$ 都是迹一正矩阵，差矩阵 $\Delta_v$ 自伴且迹零。其正负部的迹均为 $\tfrac12\|\Delta_v\|_1$，故
+$$
+\alpha\le|\operatorname{Tr}(F_v\Delta_v)|
+\le\tfrac12\|\Delta_v\|_1
+\le d_\diamond(\mathcal R,\mathcal S).
+\tag{230.HR.18}
+$$
+最后一步允许取无外部参考的输入作为完整 diamond 范数的一个见证。$\square$
+
+完整输出的保迹条件承担了（230.HR.18）中的 $1/2$ 因子。不能将目标与候选的非保迹分支单独替换成两份归一化态而沿用同一论证。事件投影可随所选见证输入变化；距离下界只需为每个竞争者找到一个输入及对应检验，并不要求有一项检验同时区分全部输入。
+
+**推论 230.3（目标容量）。** 若 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge
+\left\lceil\frac d r\right\rceil.}
+\tag{230.HR.19}
+$$
+证明：若目标自身的分支秩 $k$ 满足 $rk<d$，在定理 230.2中取 $\mathcal S=\mathcal R$，即得 $0\ge\alpha>0$，矛盾。因此 $rk\ge d$，给出整数下界。$\square$
+
+完整记录通道的 Choi 矩阵在标签方向上是分支 Choi 矩阵的正交直和，其秩为各分支秩之和。因此（230.HR.19）也给完整通道 Kraus 容量的下界，但它首先约束的是指定分支。
+
+### 230.4 达到阈值的实际 CPTP 通道
+
+以下构造适用于任意整数 $d\ge1$、$r\ge1$、$m\ge r$，不受 $r<d$ 限制。令
+$$
+t=\left\lceil\frac d r\right\rceil,
+\qquad d=(t-1)r+s,\qquad 1\le s\le r.
+\tag{230.HR.20}
+$$
+将输入的一组正交基分成 $t$ 个非空块：
+$$
+\{f_{j,i}:1\le j<t,\ 1\le i\le r\}
+\ \cup\ \{f_{t,i}:1\le i\le s\}.
+\tag{230.HR.21}
+$$
+在输出中选正交向量 $e_1,\ldots,e_r$，令 $P_0$ 为它们张成空间的正交投影。置 $n_j=r$ 对 $j<t$，$n_t=s$，并定义
+$$
+K_j=\sum_{i=1}^{n_j}|e_i\rangle\langle f_{j,i}|,
+\qquad
+\mathcal T(X)=\sum_{j=1}^t K_jXK_j^\dagger.
+\tag{230.HR.22}
+$$
+各输入块互相正交且完整覆盖输入，所以
+$$
+\sum_{j=1}^tK_j^\dagger K_j
+=\sum_{j=1}^t\sum_{i=1}^{n_j}|f_{j,i}\rangle\langle f_{j,i}|
+=I_d.
+\tag{230.HR.23}
+$$
+因此 $\mathcal T$ 是实际 CPTP 通道，且 $P_0K_j=K_j$ 给
+$$
+\operatorname{Tr}\bigl[P_0\mathcal T(P_v)\bigr]=1
+\quad\text{对全部单位 }v.
+\tag{230.HR.24}
+$$
+
+这组 Kraus 不仅数量为 $t$，而且线性独立：
+$$
+\operatorname{Tr}(K_j^\dagger K_\ell)
+=\begin{cases}n_j,&j=\ell,\\0,&j\ne\ell.\end{cases}
+\tag{230.HR.25}
+$$
+所有 $n_j$ 均正，故它们是非零的 Hilbert–Schmidt 正交族。由
+$$
+J_{\mathcal T}=\sum_{j=1}^t
+|K_j\rangle\!\rangle\langle\!\langle K_j|,
+\tag{230.HR.26}
+$$
+Choi 矩阵的像等于这些独立向量的张成，因而
+$$
+\boxed{\operatorname{rank}J_{\mathcal T}=t.}
+\tag{230.HR.27}
+$$
+这也证明不存在更短 Kraus 表示：含 $u$ 个 Kraus 的表示使 Choi 秩至多为 $u$。
+
+同一通道有显式等距扩张。用所选基 $e_1,\ldots,e_r$ 将 $\operatorname{im}P_0$ 识别为 $\mathbb C^r$；令 $g_1,\ldots,g_t$ 是 $\mathbb C^t$ 的正交基，定义
+$$
+V:\mathbb C^d\longrightarrow\mathbb C^r\otimes\mathbb C^t,
+\qquad Vf_{j,i}=e_i\otimes g_j.
+\tag{230.HR.28}
+$$
+不同 $(j,i)$ 的像互相正交，因此 $V^\dagger V=I_d$。令 $\iota:\mathbb C^r\hookrightarrow\mathbb C^m$ 为上述输出嵌入，并置 $W=(\iota\otimes I_t)V$，则
+$$
+\boxed{\mathcal T(X)=\operatorname{Tr}_{\mathbb C^t}(WXW^\dagger).}
+\tag{230.HR.29}
+$$
+
+对常值事件 $P([v])=P_0$，像丛 $L$ 为平凡秩 $r$ 丛，故
+$$
+E\cong(H^*)^{\oplus r},\qquad
+c(E)=(1+h)^r,\qquad c_r(E)=h^r.
+\tag{230.HR.30}
+$$
+在 $r<d$ 时，$\nu=1$、$\alpha=1$，目标容量恰好达到（230.HR.19）。因此 $\lceil d/r\rceil$ 这一普适下界不能提高。这是整个允许事件族中的可达实例，不断言每一个非平凡事件丛都能在相同阈值实现统一正概率。
+
+### 230.5 候选集非空的精确完整距离阶梯
+
+在第四节构造中进一步固定
+$$
+m\ge\max(d,r).
+\tag{230.HR.31}
+$$
+所有比较通道均取同一输入 $\mathbb C^d$、同一输出 $\mathbb C^m$ 及单标签接口。对每个整数 $R\ge1$，定义
+$$
+D_R=\inf\left\{
+\tfrac12\|\mathcal T-\mathcal S\|_\diamond:
+\mathcal S\text{ CPTP},\ \operatorname{rank}J_{\mathcal S}\le R
+\right\}.
+\tag{230.HR.32}
+$$
+候选集对每个 $R\ge1$ 都非空：由 $m\ge d$，存在等距 $U:\mathbb C^d\to\mathbb C^m$，通道 $X\mapsto UXU^\dagger$ 的 Choi 秩为一。
+
+**定理 230.4（精确预算阶梯）。** 对（230.HR.22）的目标，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<t,\\
+0,&R\ge t,
+\end{cases}
+\qquad t=\left\lceil\frac d r\right\rceil.
+}
+\tag{230.HR.33}
+$$
+
+**证明。** 若 $1\le R<t$，则 $rR<d$，并且该情形必有 $r<d$。任何候选的容量 $k\le R$ 满足 $rk<d$。由常值事件的 $\nu=1$、目标概率恒一及定理 230.2，每个候选的完整半 diamond 距离至少为一。任意两份 CPTP 通道的 diamond 距离至多为二，所以其完整半距离也至多为一。候选集非空，故 $D_R=1$，且每一个候选都达到该值。
+
+若 $R\ge t$，目标本身属于候选集，故 $D_R=0$。$\square$
+
+常值事件下还可直接看出低预算的分离机制：线性映射
+$$
+v\longmapsto(P_0C_1v,\ldots,P_0C_kv)
+\in(\mathbb C^r)^{\oplus k}
+$$
+的目标维数为 $rk<d$，故有非零核。该输入上，候选输出完全落在 $P_0$ 的正交补中，目标输出完全落在 $P_0$ 中，两者被事件 $P_0$ 完美区分。这是一般事件丛共同零点机制的常值特例。
+
+将输出扩大到 $m\ge d$ 对此实例有实际作用：若只取 $m=r<d$，任何 CPTP 通道都至少需要 $\lceil d/r\rceil$ 个 Kraus，因为每个 $C_j^\dagger C_j$ 秩至多为 $r$ 而其和必须为 $I_d$，低预算候选集将为空。（230.HR.31）明确排除了这种空集原因。
+
+式（230.HR.32）仅对 $R\ge1$ 定义。$R=0$ 时不存在 CPTP 候选，不能把空集下确界报成通道距离一。若 $r\ge d$，则 $t=1$；第一段预算区间为空，全部 $R\ge1$ 都有 $D_R=0$。
+
+### 230.6 投影扰动保留同一容量证书
+
+保持第一节的 $1\le r<d$、$\nu\ne0$ 及目标分支 $\Gamma$。设另有同一基空间、同一输出中的连续秩 $r$ 正交投影族 $Q$，并有
+$$
+\varepsilon=\sup_x\|P(x)-Q(x)\|_{\rm op}<1.
+\tag{230.HR.34}
+$$
+记 $L_P=\operatorname{im}P$、$L_Q=\operatorname{im}Q$。逐纤维映射
+$$
+A_x=Q(x)|_{L_{P,x}}:L_{P,x}\longrightarrow L_{Q,x}
+\tag{230.HR.35}
+$$
+是束同构。事实上，对 $\xi\in L_{P,x}$，
+$$
+\|Q(x)\xi\|
+\ge\|\xi\|-\|(Q(x)-P(x))\xi\|
+\ge(1-\varepsilon)\|\xi\|.
+\tag{230.HR.36}
+$$
+因此 $A_x$ 单射；两边维数同为 $r$，故满射。在任意局部帧中它是连续的可逆方阵，矩阵求逆连续，故各纤维逆连续拼合，得到全局束同构。于是
+$$
+c_r(H^*\otimes L_Q)
+=c_r(H^*\otimes L_P)=\nu h^r.
+\tag{230.HR.37}
+$$
+这里没有选择全局事件基，也没有假定 $P$ 与 $Q$ 交换。
+
+概率稳定性取决于同一目标分支。定义
+$$
+\mu=\sup_{\|v\|=1}\operatorname{Tr}\Gamma(P_v)
+=\|\Gamma^*(I_m)\|_{\rm op}\le1.
+\tag{230.HR.38}
+$$
+最后的不等式来自 $\Gamma$ 是一份 instrument 的分支。对正矩阵 $\Gamma(P_v)$，算子序界 $-\varepsilon I\preceq P([v])-Q([v])\preceq\varepsilon I$ 给
+$$
+\left|\operatorname{Tr}\bigl[(P([v])-Q([v]))\Gamma(P_v)\bigr]\right|
+\le\varepsilon\operatorname{Tr}\Gamma(P_v)
+\le\varepsilon\mu.
+\tag{230.HR.39}
+$$
+所以新事件具有统一下界
+$$
+\operatorname{Tr}\bigl[Q([v])\Gamma(P_v)\bigr]
+\ge\max\{0,\alpha-\varepsilon\mu\}.
+\tag{230.HR.40}
+$$
+对 $Q$ 应用定理 230.2，任何 $rk<d$ 的同名分支候选均满足
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)
+\ge\max\{0,\alpha-\varepsilon\mu\}.}
+\tag{230.HR.41}
+$$
+若只使用 $\mu\le1$，可取更简洁的下界 $\max\{0,\alpha-\varepsilon\}$。$\varepsilon<1$ 保留丛同构类型；$\varepsilon\mu<\alpha$ 则进一步保证扰动后的证书仍给严格正距离及（230.HR.19）的容量下界。这是两个不同条件。
+
+式（230.HR.41）说明用受扰事件族仍能证明的下界；若原来的 $P$ 及其概率下界（230.HR.7）仍然可用，原来的更强下界 $\alpha$ 当然仍成立。
+
+### 230.7 必要的边界与标准来源
+
+**$r\ge d$。** 此时 $h^r=0$，$H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)=0$，所以形式等式 $c_r(E)=\nu h^r$ 不确定唯一整数 $\nu$；即使写下非零 $\nu$，也不能推出非零陈类。不存在正整数 $k$ 使 $rk<d$。统一正事件概率只直接保证分支非零，即 Kraus 秩至少为 $1=\lceil d/r\rceil$。第四、五节的实际构造覆盖这个范围，但主拓扑定理没有给额外下界。
+
+**$\nu=0$。** 顶陈类证明不提供共同零点；这不判定一般竞争者是否能逼近。确有不能沿用正距离结论的实际例子：取输出 $\mathbb C^d\oplus\mathbb C^{r-1}$、等距 $Uv=(v,0)$，事件像为
+$$
+L_{[v]}=\mathbb C(v,0)\oplus(0,\mathbb C^{r-1}).
+\tag{230.HR.42}
+$$
+它是连续秩 $r$ 子丛，满足
+$$
+L\cong H\oplus\underline{\mathbb C}^{r-1},
+\qquad H^*\otimes L
+\cong\underline{\mathbb C}\oplus(H^*)^{\oplus(r-1)}.
+\tag{230.HR.43}
+$$
+因此 $c_r(H^*\otimes L)=0$。实际秩一通道 $X\mapsto UXU^\dagger$ 的事件概率恒一；目标与竞争者取同一通道时距离为零。当 $r<d$ 时，不能删除 $\nu\ne0$ 后仍要求（230.HR.19）。
+
+**$k=0$、$\alpha=0$ 与 $r=0$。** 零竞争分支的事件概率直接为零，无需拓扑。若 $\alpha=0$，距离下界退化为零，不能据此排除零目标分支。秩零事件恒为零，无法满足严格正的统一事件概率，本稿从定义中排除 $r=0$。
+
+**$rk\ge d$。** 此时 $h^{rk}=0$，本次顶陈类障碍不再给共同零点；这不等于证明对任意事件丛均可实现。第四节给出的常值事件实例已表明，不能普遍提高所有事件族共用的容量阈值。
+
+所用拓扑事实均为标准结果：Hatcher《Algebraic Topology》第3章定理3.19，第220页，给射影空间整数上同调环，[官方章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，给陈类的同构不变性、Whitney 公式、秩消失及线丛归一化，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)。本稿使用这些事实，显式完成 Kraus 截面、共同事件零点与完整通道距离之间的接口证明，不据此宣称文献原创性。
+
+仓内 `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.lean` 的 `universal_replacement_capacity_growth` 处理固定输出边缘下的精确 no-hiding 容量，不能直接替代这里的事件丛及低 Kraus 近似问题。`RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md` 定理12.4已经使用相距小于一的投影构造极分解对齐；本稿第六节只需其背后的投影限制同构，并明确给出连续束及同一分支事件概率的桥梁。已检索的 D5 与钉版 Mathlib 未定位到本稿完整事件丛容量接口；这不是证明其在第三方文献中不存在。
+
+## 追加锚（本行以下为增补区）

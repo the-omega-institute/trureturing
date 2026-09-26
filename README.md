@@ -52,9 +52,7 @@ existence of a recovery function alone gives no algorithm or cost bound.
 Bring a question that matters to you. In an installed **Claude Code or Codex**
 with a local workspace and Git, paste this one sentence:
 
-```text
-Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
-```
+> Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
 
 The [agent and skills guide](docs/CONTRIBUTING.md#use-claude-code-or-codex)
 explains how to begin with either client and turn an exploration into a

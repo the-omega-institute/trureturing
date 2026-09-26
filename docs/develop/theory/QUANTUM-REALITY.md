@@ -55204,3 +55204,301 @@ $$
 局部映射本身为到开配置邻域的微分同胚，两个局部结论在此一致。若 $k\ge2n+2$，构造的流形片维数为 $2n+k+1<2k$，与定理 411.1 中开稠密失败集及成功集零环境测度相容。归一化见证的变形提供至 $n$ 次的径向 Fourier 模态，$k$ 个角坐标同时独立变化；非零仿射子式将这些自由度实现为实际成功配置的局部图像。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 413. 两极与三等分纬线的精确恢复阈值及最少原始记录数
+
+沿用第 411 节的有序不同射线空间
+
+$$
+\mathcal D_5=\{(x_1,\ldots,x_5)\in(\mathbb{CP}^1)^5:
+                    x_i\ne x_j\text{ 对所有 }i\ne j\}
+$$
+
+及其通常复射影乘积流形的相对拓扑。给定一个已知配置 $\boldsymbol x\in\mathcal D_5$ 和一个实际整数 $n\ge1$，各选单位代表 $s_i$，按定义 400.1 制备
+
+$$
+S=\mathbb C^5,\qquad R_n=(\mathbb C^2)^{\otimes n},\qquad
+J_n|i\rangle=|i\rangle\otimes s_i^{\otimes n},\qquad
+W_n=\operatorname{Sym}^n(\mathbb C^2)\subseteq R_n.
+$$
+
+全部 $n$ 个原始记录因子在制备后保持联合可访问。允许的操作恰为第 411 节的接口：在完整 $R_n$ 上使用有限结果的联合完全正仪器 $\{\mathcal I_y\}_{y\in Y}$，各分支之和保迹，与输入无关的记录辅助装置并入其中。输出记录取迹后得到系统分支 $\mathcal M_y$；固定接受集合 $Y_{\mathrm s}\subseteq Y$，每个实际结果 $y$ 只控制一个预先指定、作用于整个 $S$ 的终端酉算子 $U_y$。此前不操作系统，任意有限维参考 $A$ 始终不被操作。协议可依赖配置和 $n$，不得依赖未知输入；各协议结果数有限，不要求所有协议共用一个上界。不授予系统滤波、遗漏原始记录、对不可访问记录施加逆操作、系统与记录的相干逆制备或额外可观测 Kraus 指标。
+
+成功集合仍记作 $\mathcal E_{5,n}$：同一个协议和同一个 $p>0$ 必须满足
+
+$$
+\begin{aligned}
+\mathcal T(X)&:=\sum_{y\in Y_{\mathrm s}}
+ U_y\mathcal M_y(X)U_y^\dagger=pX
+ &&\text{对每个 }X\in\mathcal L(S),\\
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})&=pX_{AS}
+ &&\text{对每个有限维 }A\text{ 及每个 }X_{AS}\in\mathcal L(A\otimes S).
+\end{aligned}
+$$
+
+对配置 $\boldsymbol x$，定义最少正整数记录数
+
+$$
+m(\boldsymbol x)=\min\{n\ge1:\boldsymbol x\in\mathcal E_{5,n}\},
+$$
+
+空集的最小值约定为 $+\infty$。令 $\omega=e^{2\pi i/3}$；对每个实数 $r>0$，取两极与三等分纬线的单位代表
+
+$$
+s_1=(1,0),\qquad s_2=(0,1),\qquad
+s_{3+j}=\frac{(1,r\omega^j)}{\sqrt{1+r^2}}\quad(j=0,1,2),
+\qquad \boldsymbol x(r)=([s_1],\ldots,[s_5]).
+$$
+
+在 $W_2$ 中固定第 407 节的正交归一基
+
+$$
+e_0=|00\rangle,\qquad
+e_1=\frac{|01\rangle+|10\rangle}{\sqrt2},\qquad
+e_2=|11\rangle.
+$$
+
+**定理 413.1（五射线纬线族的逐次数恢复判据）。** 对每个 $r>0$，上述代表为两两不同的单位射线，且对每个实际整数 $n\ge1$，
+
+$$
+\boxed{\quad
+\boldsymbol x(r)\in\mathcal E_{5,n}
+\quad\Longleftrightarrow\quad
+n\ge3\ \text{ 或 }\ \bigl(n=2\text{ 且 }\tfrac12\le r^2\le2\bigr).
+\quad}
+$$
+
+对于实际 $n=2$，凡归一化对称见证 $b=b_0e_0+b_1e_1+b_2e_2\in W_2$ 满足五个平方重叠具有同一水平 $t$，均有
+
+$$
+|\langle b|s_i^{\otimes2}\rangle|^2=t\quad(1\le i\le5)
+\quad\Longrightarrow\quad
+|b_0|^2=|b_1|^2=|b_2|^2=t=\frac13.
+$$
+
+此断言只涉及 $W_2$ 中的归一化见证，不涵盖完整 $R_2$ 中带有不可见反对称分量的归一化向量。闭区间内可在完整 $R_2$ 上构造两结果投影仪器，只接受实际结果 $0$，经校准的终端对角反馈使接受映射为 $\operatorname{id}_S/3$，并对每个未操作的有限参考保持同一等式。这里 $p=1/3$ 是该构造达到的成功概率，不是最优概率断言，也不把任意接受仪器的总成功概率等同于归一化见证水平。
+
+特别地，$r=1/2$ 时的五条射线由
+
+$$
+(1,0),\quad(0,1),\quad
+\frac{(2,1)}{\sqrt5},\quad
+\frac{(2,\omega)}{\sqrt5},\quad
+\frac{(2,\omega^2)}{\sqrt5}
+$$
+
+表示，不能以实际两份记录实现正概率恢复。这个配置在完整 $\mathcal D_5$ 中有非空相对开失败邻域。最少记录数及全配置空间上的最坏值为
+
+$$
+\boxed{\quad
+m(\boldsymbol x(r))=
+\begin{cases}
+2,&\frac12\le r^2\le2,\\
+3,&r^2<\frac12\text{ 或 }r^2>2,
+\end{cases}
+\qquad
+\max_{\boldsymbol x\in\mathcal D_5}m(\boldsymbol x)=3.
+\quad}
+$$
+
+此外，$\mathcal E_{5,2}$ 与 $\mathcal D_5\setminus\mathcal E_{5,2}$ 各包含 $\mathcal D_5$ 的非空相对开子集。
+
+证明。两极向量的范数为一，纬线代表的平方范数为 $(1+r^2)/(1+r^2)=1$。因 $r>0$，每个纬线代表的两个坐标都非零，故其射线不同于两极；三个坐标比 $r,r\omega,r\omega^2$ 两两不同，故纬线射线也互不相同。因此 $\boldsymbol x(r)\in\mathcal D_5$。
+
+定理 411.1 在上述完整接口下给出，对每个实际 $n$，成功等价于存在 $W_n$ 中的单位向量 $b$ 和正数 $t$，使全部 $|\langle b|s_i^{\otimes n}\rangle|^2=t$。其必要方向已经允许任意作用于整个系统的终端酉算子及多个接受结果，效果谱分解的数学指标保留所属实际结果的同一个反馈。因此可以用这一判据排除全部允许协议。此处复用的是第 411 节的环境辅助校正判据；其环境测量与酉校正来源仍为 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2。代表重定相 $s_i\mapsto e^{i\theta_i}s_i$ 只将幅度乘以 $e^{in\theta_i}$，可由校准反馈吸收，不改变成功与否。
+
+先处理实际 $n=2$。依第 407 节的对称基与共轭系数约定，置
+
+$$
+\begin{aligned}
+a&=\overline{b_0},& d&=\sqrt2\,\overline{b_1},&c&=\overline{b_2},\\
+F_b(X,Y)&:=\langle b|(X|0\rangle+Y|1\rangle)^{\otimes2}\rangle
+ =aX^2+dXY+cY^2,\\
+\|b\|^2&=|a|^2+\frac{|d|^2}{2}+|c|^2.
+\end{aligned}
+$$
+
+这一二元形式约定沿用定理 407.2 及其 Aulbach–Markham–Murao，[*Geometric Entanglement of Symmetric States and the Majorana Representation*, arXiv:1010.4777v1](https://arxiv.org/abs/1010.4777v1)，§IV 式 (11) 的复振幅表示；中间系数 $\sqrt2$ 与 ket 坐标的共轭都予以保留。
+
+设五个平方重叠等于 $t$。两极立即给出 $|a|^2=|c|^2=t$。若 $t=0$，则 $a=c=0$；任一纬线幅度为 $rd\omega^j/(1+r^2)$，又因 $r>0$ 得 $d=0$，与 $\|b\|=1$ 矛盾。所以 $t>0$。纬线上的三个幅度为
+
+$$
+\langle b|s_{3+j}^{\otimes2}\rangle
+ =\frac{a+rd\omega^j+r^2c\omega^{2j}}{1+r^2}.
+$$
+
+用三点离散 Fourier 正交关系 $\sum_{j=0}^2\omega^{j\ell}=0$（$3\nmid\ell$）取平方模的平均，得到
+
+$$
+\frac{t+r^2|d|^2+r^4t}{(1+r^2)^2}=t.
+$$
+
+因 $r>0$，这等价于 $|d|^2=2t$。因此三个对称基坐标的平方模都等于 $t$，归一化给出 $3t=1$。这一步使用 $b\in W_2$ 的范数式；若在 $R_2$ 中加入反对称分量，范数还包含该分量，而全部 $s_i^{\otimes2}$ 都看不到它，故不能对那样的向量使用同一归一化结论。
+
+继续用同一个三点 Fourier 展开。对任意复数 $u,v,w$，令 $h_j=u+v\omega^j+w\omega^{2j}$，则
+
+$$
+\begin{aligned}
+|h_j|^2&=A_0+D\omega^j+\overline D\omega^{2j},\\
+A_0&=|u|^2+|v|^2+|w|^2,\\
+D&=v\overline u+w\overline v+u\overline w
+  =\frac13\sum_{j=0}^2|h_j|^2\omega^{-j}.
+\end{aligned}
+$$
+
+循环项 $u\overline w$ 来自 $\omega^{-2j}=\omega^j$，不能省略。于是三强度相等当且仅当 $D=0$。在当前幅度分子中代入 $u=a,v=rd,w=r^2c$，得到
+
+$$
+D=rd\overline a+r^3c\overline d+r^2a\overline c.
+$$
+
+把 $F_b$ 除以 $\sqrt t$ 并乘以一个无关的整体相位，使新的首系数为 $1$。前面已确定的模长使新的三个系数可写为
+
+$$
+\widetilde a=1,\qquad
+\widetilde d=\sqrt2 e^{i\beta},\qquad
+\widetilde c=e^{i\gamma}.
+$$
+
+$D=0$ 不受这一非零公共缩放影响。将新方程除以 $r$，再乘以 $e^{i\gamma}$，得到等价条件
+
+$$
+\boxed{\quad
+\sqrt2 e^{i(\beta+\gamma)}
+ +\sqrt2 r^2 e^{i(2\gamma-\beta)}+r=0.
+\quad}
+$$
+
+两个相位可以自由取得。具体地，对任意所需圆周相位选实数提升 $\phi,\psi$，令
+
+$$
+\beta=\frac{2\phi-\psi}{3},\qquad
+\gamma=\frac{\phi+\psi}{3}.
+$$
+
+就有 $\beta+\gamma=\phi$、$2\gamma-\beta=\psi$。这证明相位映射在二维环面上满射；此选择依赖实数提升，不声称给出了环面上的单值逆映射。
+
+因此存在所需相位当且仅当长度
+
+$$
+A=\sqrt2,\qquad B=\sqrt2 r^2,\qquad C=r
+$$
+
+可在复平面闭合成三角形，允许共线退化情形。这里使用引理 408.1 证明内的经典平面向量闭合判据，其当前三边形式为
+
+$$
+|A-B|\le C\le A+B.
+$$
+
+为明确闭端点，长度 $A,B$ 的两向量夹角为 $\delta\in[0,\pi]$ 时，合向量模长为
+
+$$
+\sqrt{A^2+B^2+2AB\cos\delta},
+$$
+
+连续遍历整个闭区间 $[|A-B|,A+B]$。若 $C$ 位于此区间，选合向量模长为 $C$，再整体旋转使合向量等于 $-C$，便得到上面的相位方程；反向由三角不等式和反三角不等式成立。因 $1+r^2\ge2r$，上界 $r\le\sqrt2(1+r^2)$ 对所有 $r>0$ 成立。故剩余条件及其精确化简为
+
+$$
+\begin{aligned}
+\sqrt2\,|1-r^2|\le r
+&\quad\Longleftrightarrow\quad 2(1-r^2)^2\le r^2\\
+&\quad\Longleftrightarrow\quad
+2r^4-5r^2+2=(2r^2-1)(r^2-2)\le0\\
+&\quad\Longleftrightarrow\quad \frac12\le r^2\le2.
+\end{aligned}
+$$
+
+平方时两侧均非负，没有引入额外解。两个端点也有明确提升：$r^2=1/2$ 时可取 $(\phi,\psi)=(\pi,0)$，得到 $(\beta,\gamma)=(2\pi/3,\pi/3)$；$r^2=2$ 时可取 $(\phi,\psi)=(0,\pi)$，得到 $(\beta,\gamma)=(-\pi/3,\pi/3)$。两者都直接满足相位方程。
+
+为完成充分方向，给定闭区间内的 $r$，选上述可行相位，令
+
+$$
+b=\frac{e_0+e^{-i\beta}e_1+e^{-i\gamma}e_2}{\sqrt3},
+\qquad
+F_b(X,Y)=\frac{X^2+\sqrt2 e^{i\beta}XY+e^{i\gamma}Y^2}{\sqrt3}.
+$$
+
+$b$ 为单位向量，两极响应均为 $1/3$。纬线分子的 Fourier 系数 $D$ 为零，平方模平均为 $(1+2r^2+r^4)/3=(1+r^2)^2/3$，故除以 $(1+r^2)^2$ 后三响应也全为 $t=1/3$。
+
+把这个 $b$ 视为完整四维 $R_2$ 中的向量，置
+
+$$
+\begin{aligned}
+\Pi&=|b\rangle\langle b|,&
+e_-&=\frac{|01\rangle-|10\rangle}{\sqrt2},\\
+P_{W_2}&=\sum_{\ell=0}^2|e_\ell\rangle\langle e_\ell|,&
+I_{R_2}-\Pi&=(P_{W_2}-\Pi)+|e_-\rangle\langle e_-|,\\
+\mathcal I_0(Z)&=\Pi Z\Pi,&
+\mathcal I_1(Z)&=(I_{R_2}-\Pi)Z(I_{R_2}-\Pi).
+\end{aligned}
+$$
+
+补投影包括全部反对称方向，两个 Kraus 效果之和为 $I_{R_2}$，故这是完整原始记录空间上的两结果完全正仪器。只接受实际结果 $0$，失败结果 $1$ 保留，且其终端反馈可取恒等。令
+
+$$
+z_i=\frac{\langle b|s_i^{\otimes2}\rangle}{\sqrt t},\qquad
+|z_i|=1,\qquad
+K=\sqrt t\operatorname{diag}(z_1,\ldots,z_5),\qquad
+U=\operatorname{diag}(\overline z_1,\ldots,\overline z_5).
+$$
+
+接受分支满足
+
+$$
+(I_S\otimes\Pi)J_2|i\rangle
+ =\sqrt t\,z_i|i\rangle\otimes b,
+\qquad UK=\sqrt t\,I_S.
+$$
+
+所以 $U$ 是只依赖已知族的校准终端对角酉算子，且
+
+$$
+\begin{aligned}
+\mathcal T(X)&=UKXK^\dagger U^\dagger=tX,\\
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})
+ &=(I_A\otimes UK)X_{AS}(I_A\otimes UK)^\dagger=tX_{AS}
+\end{aligned}
+$$
+
+对所有系统矩阵、每个有限维未操作参考及所有联合矩阵成立。对归一化态取迹给出此构造的 $p=t=1/3$。从任意允许协议提取的归一化见证水平不必等于该协议所有接受结果的总概率，故这一构造不提供最优总概率的断言。结合必要方向，实际 $n=2$ 的充要条件及全部归一化对称见证的水平已经成立。
+
+在 $r=1/2$ 时，纬线代表恰为 $(2,\omega^j)/\sqrt5$，单位性与不同性已由开头的计算保证。已导出的必要三角不等式此时要求
+
+$$
+\sqrt2\le\frac{\sqrt2}{4}+\frac12,
+\qquad\text{即}\qquad 3\sqrt2\le2,
+$$
+
+而两侧非负且 $18>4$，矛盾。零水平也已被排除，因此没有归一化对称见证；定理 411.1 的必要方向遂排除该配置的每个允许正概率两记录恢复协议。
+
+实际 $n=1$ 的失败另作计算。若存在单位见证 $b=(b_0,b_1)\in W_1=\mathbb C^2$，置 $a=\overline{b_0}$、$c=\overline{b_1}$。两极与归一化迫使
+
+$$
+|a|^2=|c|^2=t=\frac12.
+$$
+
+纬线幅度为 $(a+rc\omega^j)/\sqrt{1+r^2}$，平方模的非恒定 Fourier 系数为
+
+$$
+\frac13\sum_{j=0}^2
+ \frac{|a+rc\omega^j|^2}{1+r^2}\,\omega^{-j}
+ =\frac{rc\overline a}{1+r^2},\qquad
+\left|\frac{rc\overline a}{1+r^2}\right|
+ =\frac{rt}{1+r^2}>0.
+$$
+
+三个平方模相等却要求该系数为零，故对每个 $r>0$ 都矛盾。再由定理 411.1，整个允许的一记录接口均不成功；这个排除独立于两记录结论。
+
+对任意 $\boldsymbol x\in\mathcal D_5$，选其五个单位纯量子比特代表，就得到定义 407.1 中 $d=5$、不同射线数 $k=5$ 的记录族，受控制备与当前 $J_n$ 相同。因此定理 408.2 对每个实际整数
+
+$$
+n\ge\max(1,5-2)=3
+$$
+
+分别给出作用于全部 $n$ 个原始因子的完整局部乘积投影仪器、一个接受结果及终端对角反馈，在全部系统矩阵及每个未操作的有限参考上实现 $p\operatorname{id}$，其中 $p>0$。这些完整局部仪器属于当前允许的联合仪器，所以 $\boldsymbol x\in\mathcal E_{5,n}$。这里直接使用定理 408.2 的逐次数结论，其齐次插值与复制纯态线性独立性的文献联系仍见该处的 Chefles，[*Unambiguous Discrimination Between Linearly Dependent States With Multiple Copies*, quant-ph/0105016v3](https://arxiv.org/abs/quant-ph/0105016v3)，§II 式 (2.8)；不将无歧义判别替代当前相干恢复条件。每个 $n$ 使用自身的全部原始记录，不从较短成功分支添加记录、不丢弃记录，也不假设成功性关于 $n$ 单调。
+
+于是每个正整数实际次数都已涵盖：整个纬线族的一记录失败，两记录恰在所述闭区间成功，所有 $n\ge3$ 分别成功。这给出 $m(\boldsymbol x(r))$ 的分段公式。对任意 $\boldsymbol x\in\mathcal D_5$，实际 $n=3$ 又给出 $m(\boldsymbol x)\le3$；而 $\boldsymbol x(1/2)$ 的两个更小正整数次数均失败，故 $m(\boldsymbol x(1/2))=3$，从而全 $\mathcal D_5$ 上的最大值恰为 $3$。
+
+最后，定理 411.1 的相对闭性条件在 $k=5,n=2$ 时满足 $5\ge2+1$，故 $\mathcal D_5\setminus\mathcal E_{5,2}$ 在 $\mathcal D_5$ 中相对开。它包含刚证明失败的 $\boldsymbol x(1/2)$，因而给出完整有序不同配置空间中的非空开失败邻域，而不只是在纬线曲线上的邻域。定理 412.1 在同一拓扑与完整记录接口下，取 $k=5=2\cdot2+1$、$n=2$，又给出 $\mathcal E_{5,2}$ 的非空相对开子集；二者正是所述两个非空开区域。证毕。
+
+## 追加锚（本行以下为增补区）
