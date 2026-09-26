@@ -36,7 +36,7 @@ public sealed class FormalizationWorkflowInstructionTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.DoesNotContain("receipt-ledger", skill, StringComparison.OrdinalIgnoreCase);

@@ -42,7 +42,7 @@ internal sealed class RegisterValidityHistoryDocument : IScribeDocumentDefinitio
                             + "an untouched record keeps its old status and so was never active "
                             + "for the key, and the replacement ends in its active assignment.")),
                     Paragraph(Text(
-                        "This is the Step 5 validity invariant of the codex-formal-answer skill: "
+                        "This is the Step 5 validity invariant of the formal-thinking-and-answer skill: "
                             + "after any revision of P or G, one active settlement per assertion "
                             + "key remains, and the superseded ones stay in the history as void "
                             + "rather than disappearing."))),

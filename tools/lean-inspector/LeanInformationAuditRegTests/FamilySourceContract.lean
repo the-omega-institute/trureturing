@@ -1,3 +1,4 @@
+import LeanInformationAuditRegTests.CausalSourceContract
 import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
 
 open Lean Meta Elab Command LeanInformationAudit

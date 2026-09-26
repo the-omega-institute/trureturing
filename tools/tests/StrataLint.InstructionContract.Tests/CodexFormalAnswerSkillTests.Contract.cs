@@ -4,7 +4,7 @@ using Markdig.Syntax;
 namespace StrataLint.InstructionContract.Tests;
 
 /// <summary>
-/// The conversation contract and the anchor registries of the codex-formal-answer skill.
+/// The conversation contract and the anchor registries of the formal-thinking-and-answer skill.
 /// The contract pins the three interaction modes (plain answer, show-work disclosure, and
 /// in-repository modeling); the anchor tests make every declaration the skill cites resolve
 /// to a tracked theorem, so a renamed or deleted theorem turns the skill red instead of
@@ -72,7 +72,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesConversationContract(Parse(skill)));
@@ -127,7 +127,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = Parse(File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md")));
         var leanSources = StrataLint.Engine.GitIndexRepositoryFiles
             .Enumerate(TestRepositoryLayout.FindRoot())

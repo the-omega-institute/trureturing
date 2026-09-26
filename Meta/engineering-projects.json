@@ -1572,8 +1572,8 @@
         "lakefile.toml",
         "lean-report-inputs.json",
         "lean-toolchain",
-        "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
+        "skills/formal-thinking-and-answer/SKILL.md",
         "skills/theory-volume-template/SKILL.md",
         "tools/Makefile",
         "tools/StrataLint.BuildRuntime/Changed.cs",
@@ -3566,8 +3566,8 @@
       "execution_inputs": [
         "CLAUDE.md",
         "D5/**",
-        "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
+        "skills/formal-thinking-and-answer/SKILL.md",
         "tools/scripts/agent/batch_pr.sh"
       ],
       "execution_excludes": [],

@@ -290,8 +290,8 @@ internal static partial class LeanCacheEnsureCommand
                     // 「dependency cache 命中、project build cache 未命中」的形态：不在这里
                     // 取内容层，后面的 producer 就会从源码重编（#2814 记的那条缺口）。
                     //
-                    // 归档只在**内容层确实为冷且 build 根未被占用**时尝试；本机 donor 命中
-                    // 时根本走不到这里。取回失败一律降级为原样返回 present —— 慢，不是错。
+                    // 冷缓存只填空 build 根；热缓存的周期刷新统一在 SuccessWithState 中处理。
+                    // 取回失败保留本地缓存，由 Lake 增量补编。
                     if (projectWarmth.State == OleanWarmth.Cold)
                     {
                         var contentRoot = stateProbe.InspectContentRoot(
@@ -324,7 +324,7 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard);
+                        out cacheState, writerGuard, runner);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -390,7 +390,7 @@ internal static partial class LeanCacheEnsureCommand
                                                 root,
                                                 new OleanWarmthInspection(OleanWarmth.Warm, null),
                                                 stateProbe,
-                                                out cacheState, writerGuard);
+                                                out cacheState, writerGuard, runner);
                                         }
                                     }
                                 }
@@ -426,7 +426,7 @@ internal static partial class LeanCacheEnsureCommand
                             root,
                             projectWarmth,
                             stateProbe,
-                            out cacheState, writerGuard);
+                            out cacheState, writerGuard, runner);
                     }
                     catch (LeanCacheProvisionException exception)
                     {
@@ -449,7 +449,7 @@ internal static partial class LeanCacheEnsureCommand
                                 root,
                                 projectWarmth,
                                 stateProbe,
-                                out cacheState, writerGuard);
+                                out cacheState, writerGuard, runner);
                         }
                         return FailureReceipt(
                             "failed",
@@ -588,7 +588,7 @@ internal static partial class LeanCacheEnsureCommand
                     root,
                     finalProjectWarmth,
                     stateProbe,
-                    out cacheState, writerGuard);
+                    out cacheState, writerGuard, runner);
             }
             catch (LeanCacheProvisionException exception)
             {
@@ -611,7 +611,7 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState, writerGuard);
+                        out cacheState, writerGuard, runner);
                 }
                 return FailureReceipt(
                     "failed",
@@ -660,8 +660,37 @@ internal static partial class LeanCacheEnsureCommand
         OleanWarmthInspection projectWarmth,
         ILeanCacheStateProbe stateProbe,
         out CacheState? cacheState,
-        LeanCacheWriterGuard writerGuard)
+        LeanCacheWriterGuard writerGuard,
+        IWorktreeProcessRunner runner)
     {
+        // Every successful donor/provision path meets here while holding the
+        // writer lock, including a warm donor that bypassed cold-cache fallback.
+        const string prefix = "LEAN_CACHE ";
+        var payload = JsonNode.Parse(result.Output[prefix.Length..])!.AsObject();
+        if (projectWarmth.IsWarm && payload["archive_status"]?.GetValue<string>() == "not_attempted")
+        {
+            try
+            {
+                if (LeanArchiveFetch.IsExpired(root, TimeProvider.System.GetUtcNow()))
+                {
+                    var refresh = LeanArchiveFetch.Run(root, runner, ArchiveBudget, writerGuard,
+                        refreshStale: true);
+                    payload["archive_status"] = ArchiveStatus(refresh);
+                    payload["archive_mode"] = refresh.Mode;
+                    payload["archive_skip_reason"] = refresh.SkipReason;
+                    payload["archive_reason"] = refresh.Reason;
+                    payload["archive_producer_commit_sha"] = refresh.ProducerCommitSha;
+                    payload["archive_workflow_run_id"] = refresh.WorkflowRunId;
+                    if (refresh.Outcome == LeanArchiveOutcome.Unpacked)
+                        projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
+                }
+            }
+            catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+            {
+                payload["archive_skip_reason"] = $"cache age unavailable: {error.Message}";
+            }
+            result = result with { Output = prefix + payload.ToJsonString() + "\n" };
+        }
         if (RetireRootJudgeOutputs(root, writerGuard))
             projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
         cacheState = new CacheState(

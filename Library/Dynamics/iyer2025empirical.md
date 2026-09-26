@@ -1967,3 +1967,150 @@ $\log^+(1/\sigma_M)=o(Q^5)$ 下完整计数恢复的条件 $Q^5$ 指数。
 先验平均成功概率只能据此断言趋零；坏数据概率与共同判向错误没有所需的 $Q^5$ 指数控制。
 一般猜测包络属于已有信息论，本章新内容是完整实际后验原子和原标量范围之间的连接。
 所查原始来源没有直接给出这一平稳对／路径、固定基数后验的完整结论；不据此宣称全局原创。
+
+### 第 70 章：实际 Rényi 熵谱、计数幂倾斜与支持极限
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 70 章
+保留第 68 章同一完整窗口、组计数和精确固定基数后验。
+每个固定正阶的主系数相同，而零阶支持熵的主系数是它的两倍；
+当阶数按 exp(-sQ³) 缩小时，完整闭域上的截断积分给出两者之间的过渡。
+这里的对象始终是组计数元组，未把一个计数拆成多个标签排列再计算熵。
+下列原始结果承担成熟工具的归属，不把 Gaussian Rényi 公式或一般极限不交换据为新发现。
+
+James Melbourne、Tomasz Tkocz，*Reversals of Rényi Entropy Inequalities under Log-Concavity*，
+[arXiv:2005.10930v1](https://arxiv.org/abs/2005.10930v1)，原始 TeX `Journal.tex`，
+引言主定理 `thm: infinity comparison` 及其同名证明节。
+原文对整数上的对数凹概率质量函数，要求正支撑为连续整数区间，给出自然对数单位下
+$H_\nu-H_\infty<\log\nu/(\nu-1)$，$0<\nu<\infty$，阶数一取连续延拓。
+此定理不要求质量序列单调；其证明用同最大质量的双边几何律、majorization 与 Rényi 熵的 Schur 凹性。
+二项计数律满足这些条件，所以该结果直接覆盖 (70.17) 所需的固定阶有界差。
+它不提供本模型每组半倍 Gaussian 的极限常数、指数缩小阶数的截断过渡，
+也没有承担实际固定总数条件化的误差。
+这与 Melbourne、Palafox-Castillo 的
+[arXiv:2111.06997v1](https://arxiv.org/abs/2111.06997v1)
+中要求单调对数凹序列的尖锐比较与 varentropy 定理有不同适用范围。
+一般二项序列先升后降，近似对称也不等于其另列的精确对称假设。
+
+Joseph B. Kadane，*Sums of Possibly Associated Bernoulli Variables: The Conway-Maxwell-Binomial Distribution*，
+[arXiv:1404.1856v1](https://arxiv.org/abs/1404.1856v1)，原始 TeX `comMAR2014.tex`，
+§2 式 `eq:one` 定义有限支撑质量
+$P(W=k)\propto p^k(1-p)^{m-k}\binom mk^\nu$；§3 给指数族表示，§4 给生成函数。
+本章二项计数质量的幂倾斜恰属此族，但 Kadane 的成功参数须取
+$\operatorname{logistic}(\nu\operatorname{logit}p)$，不是原二项成功参数 $p$。
+取幂作用于组合因子与概率因子两者，不能用独立标签幂倾斜后的二项计数替代。
+所核对原文的共轭先验适当性定理与当前估计不同，未被调用；
+其可交换 Bernoulli 表示也不把本章的实际固定大小标签改成另一抽样模型。
+本章直接以两个独立计数条件于和，比较折叠离散 Gaussian，证明
+$\operatorname{Var}_\nu R\le Cn/\nu$ 及近半参数下的均值偏移界。
+这些估计在 $\nu\downarrow0$、占据数增长的共同范围内使用。
+
+Hervé Bergeron、Evaldo M. F. Curado、Jean-Pierre Gazeau、Ligia M. C. S. Rodrigues，
+*Entropies of deformed binomial distributions*，
+[arXiv:1412.0581v1](https://arxiv.org/abs/1412.0581v1)，原始 TeX `gbin_entrop_vf.tex`，
+引言式 `renyiq` 的熵幂和为
+$\sum_k\binom nk(\mathfrak p_k^{(n)}/\binom nk)^\nu$。
+它将每个计数质量均分给其微观排列，研究 q-exponential、修正 Abel 多项式与 Hermite 多项式产生的变形。
+这个对象与本章 $\sum_k f_{n,p}(k)^\nu$ 不同，
+因此其关于 extensive Rényi entropy 的系数不能迁入本章。
+该来源只用于明确聚合层次的边界，未作为本章渐近系数的前提。
+
+固定阶二项熵的中心展开、Stirling、Gaussian 幂积分和 Rényi 单调性都是经典工具。
+Adell、Lekuona、Yu 的
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)
+定理 4、推论 1 与式 (7) 提供 Shannon 二项熵修正；其紧参数区间上的系数支持第 68 章的阶数一比较。
+固定阶展开不能直接代入随规模指数缩小的阶数。
+本章从覆盖全部二项原子的双边 Gaussian 指数界推出统一幂和估计，
+同时控制宽度 sqrt((n+1)/nu) 与完整支撑长度 n+1，包含二者相等的过渡区。
+
+固定总数条件化、补集指数倾斜与 Fourier 局部估计也属于成熟概率方法。
+Arratia、Goldstein、Langholz 的
+[arXiv:math/0506300v1](https://arxiv.org/abs/math/0506300v1)
+条件 2.1 要求总方差至少为标签总数的固定正比例；这里总标签数 M、方差约 q/2=o(M)，不满足此条件。
+正文使用只需总方差趋无穷的局部估计，并对每个补集倾斜律重新在其整数均值处应用。
+Boistard、Lopuhaä、Ruiz-Gazen 的
+[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)
+中 rejective sampling 与固定阶包含概率是相关原始工具，未直接给出增长计数向量的幂倾斜比较。
+第 69 章已列的该版任意正整数幂命题反例仍限定于那条原文断言，本章不使用它。
+
+本仓新增连接是：实际计数线的得分接近阈值达到 q^(-1/2) 精度，
+补集的完整盒对数密度比由倾斜控制，计数幂倾斜的平方偏移再乘阶数抵消其方差增长。
+由此，实际后验与独立计数律的 Rényi 熵差对全部 0<nu≤1/2 一致为 O_P(Q^(-5/2))，
+极端元组本身很小的密度比不妨碍完整幂和。
+这条桥梁与实际全域占据数相接，才产生本模型的移动阶数过渡。
+结果限于两种实际实验的数据概率极限，以及同一先验后验函数的一致确定支持评价；
+不含期望熵、负阶、变化的 beta、增长正阶、效率或噪声解码结论。
+所核对原始文献没有直接给出这条完整实际模型陈述；有限检索范围不构成全球原创性认证。
+
+### 第 71 章：带噪条件信息谱与列表恢复
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 71 章
+连接定理 68.8 的实际后验信息谱和定理 69.6 的实际标量矩界。
+直接 Gaussian 噪声满足 logplus(1/sigma)=o(Q) 时，输出后验的惊奇量在联合纤维律中
+保留同一 Q 尺度正态极限，最优输出平均列表成功率及固定误差列表大小随之确定。
+原标量、完整计数和精确后验中心保持一致；没有将旧弱极限当作信息论实验的替身。
+
+Kontoyiannis、Verdú，*Lossless Data Compression at Finite Blocklengths*，
+[arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)，PDF 第 9–10 页、Section II、定理 2–3，
+给一次信息随机变量的可达／逆向阈值及正松弛惩罚。
+其有限字母表计数论证直接覆盖 (71.15)，亦可逐输出用于有限后验后再积分。
+该版定理 16–20 的后续正态近似分别保留固定有限字母表无记忆或有限状态 Markov 源假设；
+它们不能仅凭原观测是一条平稳路径就代替这里增长组数、随机环境和固定总数后验的 CLT。
+
+Gavalakis、Kontoyiannis，*Sharp Second-Order Pointwise Asymptotics for Lossless Compression with Side Information*，
+[arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)，PDF 第 4 页定义 2.1
+以条件原子概率排序描述最优条件压缩，定义 2.2 与定理 2.3 给条件信息和码长的比较。
+第 6 页 Assumption (M) 要求固定有限字母表源与侧信息对平稳，并满足三种条件之一：
+严格正转移的 Markov 对；对与侧信息均为有限阶不可约非周期 Markov 链；
+或联合遍历并有文中 alpha(d)=O(d^(-336))、两项 gamma(d)=O(d^(-48)) 的混合界。
+第 8 页 Section 2.5、定理 2.10 在这些条件及正条件 varentropy 下给精确熵中心的条件信息 CLT。
+这是相关经典结果；本章单个 Gaussian 侧通道随 M 改变，计数字母表与后验环境也改变，
+未调用其固定过程条件 CLT。
+
+Tan、Moulin，*Fixed Error Probability Asymptotics For Erasure and List Decoding*，
+[arXiv:1402.4881v2](https://arxiv.org/abs/1402.4881v2)，PDF 第 8 页定理 2
+研究固定 DMC 的二阶列表容量及多项式列表的第三阶界。
+同页命题 3 给平均错误列表码的假设检验逆界，核心比值为消息数除以列表大小；
+Section IV 接着讨论带编码器和擦除选项的 Slepian–Wolf 侧信息问题。
+这些结果表明列表预算和次阶信息谱逆界是成熟工具。
+本章没有消息编码器，输入为数据依赖的非均匀后验，原熵中心随机，
+因而没有从固定 DMC 的容量公式直接取得当前成功率曲线。
+
+Issa、Wagner、Kamath，*An Operational Approach to Information Leakage*，
+[arXiv:1807.07878v1](https://arxiv.org/abs/1807.07878v1)，
+PDF 第 14 页 Section C “Multiple Guesses”、定义 4 与定理 4
+在输入和输出均有限时证明 k-maximal leakage 等于 maximal leakage。
+其第 17 页定理 7、引理 7 的一般字母表密度表达要求联合律相对乘积律绝对连续，
+且输入 sigma 代数可数生成。本章有限正质量输入与严格正 Gaussian 混合输出满足这些条件。
+多次猜测的乘法包络原理已有来源；正文直接对连续密度证明 (71.17)，
+没有把有限输出定理 4 原样迁到实输出。
+该版第 18 页例 10 的全实线正密度输入可有无穷全局泄漏，
+因此 Gaussian 噪声本身不保证一个可用的有限范围包络。
+本章用已证实际二阶矩截断上界中的输入集合，取得 Q 尺度所需的多项式半径。
+
+A. R. Esposito，*Minimax Quantile Bounds via Information Measures*，
+[arXiv:2608.20857v2](https://arxiv.org/abs/2608.20857v2)，版本戳 2026-08-26、PDF 封面 2026-08-27。
+第 6 页定义 2.3、2.5 给先验小球质量和最大泄漏的支配密度表达；
+第 8 页定理 3.1 给任意估计器、辅助先验和通道的损失适配 Neyman–Pearson 逆界，
+第 13 页推论 3.12 给成功概率不超过先验小球质量乘泄漏指数。
+将动作取为大小至多 K 的列表、损失取为目标未在列表中，即有一般列表成功原理；
+正文的直接有限求和证明明确处理该动作空间及连续输出。
+该原文将框架归于既有信息论方法，不能作为本章发明通用列表逆界的依据。
+它也不承担当前实际计数线、精确中心矩界或 Q 尺度条件信息谱。
+
+Saeidian、Pinzón、Palamidessi，*Information Leakage Envelopes*，
+[arXiv:2605.21185v1](https://arxiv.org/abs/2605.21185v1)，PDF 第 2 页 Section II.A 明定所有集合有限。
+第 6 页定理 2、第 7 页定理 3 的 envelope 是对后处理取上确界的逐输出泄漏分位保证，
+并由最大泄漏加 log(1/delta) 与最坏输出界控制。
+它与 (71.17) 积分的 Gaussian 位置密度包络不是同一对象；
+没有凭名称相同就把有限输出、后处理或逐输出保证转给本章。
+
+Gaussian 最大熵、链式法则和信息密度的负尾界均为经典机制。
+正文由严格正通道直接计算 E exp(-i)=1，得到 E|i|≤I+2；
+这一步连同已证原信息谱，才将 o(Q) 互信息转成输出后验惊奇量的 o(Q) 扰动。
+一个平均熵数本身不能确定分位曲线；加入原信息谱后可以，故没有宣称 Shannon 界绝对不能用于列表问题。
+新增组合在原实际模型中保留固定基数、依赖路径、完整窗口和中心项，并将这些条件接到可测最优列表。
+置换不变随机策略核的确定支持风险由群传递性证明：对可测最优列表作独立均匀群对称化，
+每次保留相同大小与最优后验质量；碰撞时不要求字典序破平局本身等变。
+成功率也对这项独立随机性平均，不包含能写死支持的不受限制规则。
+结果对噪声输出平均；未声称每个输出后验的逐点 CLT、期望熵展开、变化误差水平或效率。
+所查原始来源没有直接给出这条完整模型结论，有限文献检索不构成全局原创认证。
