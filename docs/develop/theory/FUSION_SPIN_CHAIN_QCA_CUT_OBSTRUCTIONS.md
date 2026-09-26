@@ -53,7 +53,7 @@ $$
 
 **证明。** 张量积保持复合、单位及伴随。与非零对象张量的函子在酉融合范畴中忠实：可用对偶评价与余评价收回原态射，收回的正标量为对象的非零量子维数。故嵌入单射。两次在左右补单位等于一次补足单位；不交窗口中的两个态射作用于互不重叠的张量位置，交换律来自张量函子的 interchange law。证毕。
 
-在非严格表示中，令 $U_{I,J}$ 为固定括号形式到“左补位、原窗口、右补位”的结合酉同构，将右式替换成 $U_{I,J}^{\dagger}(1\otimes f\otimes1)U_{I,J}$。结合相容性保证同一嵌入，不是逐窗口任意选一个同维矩阵代数同构。
+在非严格表示中，令 $U_{I,J}$ 为固定括号形式到“左补位、原窗口、右补位”的结合酉同构，将右式替换成 $U_{I,J}^{\dagger}(1\otimes f\otimes1)U_{I,J}$。结合相容性保证同一嵌入，不是逐窗口任意选一个同维矩阵代数同构；严格化与结合相容性使用 [EGNO15, §§2.8–2.9] 的标准基础。
 
 取这个有向系统的 C*-归纳极限 $A$。本卷输入的 Fib 是完整酉融合范畴，不是仅凭 $\tau^2=1+\tau$ 就假造出来的物理范畴。
 
@@ -318,7 +318,7 @@ $$
 
 在 $\mathcal C=\mathcal C_1\boxtimes\mathcal C_2$、$X=X_1\boxtimes X_2$、$Z=Z_1\boxtimes Z_2$ 下，式（QCA.20）恰为两个有限层空间的外张量积。内积由 $f^{\dagger}g$ 给出，右作用由预复合给出，左作用及张量子由半编织与复合给出；这些运算全部按两因子分解。扩展映射 $f\mapsto1_X\otimes f\otimes1_X$ 同样分解。故在共尾的相同窗口上取归纳极限，得到 Jones 实现函子与双模外张量积的相容。
 
-使用标准中心乘积等价 $\mathcal Z(\mathcal C_1\boxtimes\mathcal C_2)\simeq\mathcal Z(\mathcal C_1)\boxtimes\mathcal Z(\mathcal C_2)$：外积半编织逐因子给出；Hom 的两套半编织约束分别作用，故该函子全忠实；中心全局维数等于原融合范畴全局维数的平方，使其像与目标维数相同，故在半单情形本质满。结合 [J24, Theorem 4.19] 的中心实现等价，式（QCA.18）于是本质满且全忠实。没有遗漏一个仅因因子分开观察而看不见的“混合扇区”。
+使用标准中心乘积等价 $\mathcal Z(\mathcal C_1\boxtimes\mathcal C_2)\simeq\mathcal Z(\mathcal C_1)\boxtimes\mathcal Z(\mathcal C_2)$：外积半编织逐因子给出；Hom 的两套半编织约束分别作用，故该函子全忠实；由 [EGNO15, Theorem 7.16.6]，中心的 Frobenius–Perron 维数等于原范畴维数的平方。Deligne 乘积的维数相乘，故这个全忠实函子的像与目标维数相同，在半单情形于是本质满。结合 [J24, Theorem 4.19] 的中心实现等价，式（QCA.18）本质满且全忠实。没有遗漏一个仅因因子分开观察而看不见的“混合扇区”。
 
 再核对 QCA 作用。Jones 的扭转定义在原双模向量空间上为
 
@@ -514,11 +514,11 @@ $$
 
 [JL24] Corey Jones and Junhwi Lim, *An index for quantum cellular automata on fusion spin chains*, Annales Henri Poincaré 25 (2024), 4399–4422. [arXiv:2309.10961v2](https://arxiv.org/pdf/2309.10961v2), [DOI](https://doi.org/10.1007/s00023-024-01429-y). 使用 Example 2.3、Definitions 2.4–2.5、Theorem 3.9、Remark 3.10、Proposition 4.1 和 §6。本文的 printed 页码按 arXiv v2；相对交换子原式位于 printed p.9，问题位于 printed p.17。
 
-[J24] Corey Jones, *DHR bimodules of quasi-local algebras and symmetric quantum cellular automata*. [arXiv:2304.00068](https://arxiv.org/pdf/2304.00068), Quantum Topology (2024). 使用 Theorems 3.4、3.15、4.19，Corollary 4.22，以及 §4.2 printed pp.35–36 的实际 AF 双模与张量子公式。本文对乘积网的相容推导在第 5 节，不冒充原文中已经声明了本卷反例。
+[J24] Corey Jones, *DHR bimodules of quasi-local algebras and symmetric quantum cellular automata*. [arXiv:2304.00068](https://arxiv.org/pdf/2304.00068), Quantum Topology. 使用 Theorems 3.4、3.15、4.19，Corollary 4.22，以及 §4.2 printed pp.35–36 的实际 AF 双模与张量子公式。本文对乘积网的相容推导在第 5 节，不冒充原文中已经声明了本卷反例。
 
-[JSW26] Corey Jones, David Penneys Schatz? **作者名以下一条正式书目信息为准，不使用此占位。**
+[EGNO15] Pavel Etingof, Shlomo Gelaki, Dmitri Nikshych and Victor Ostrik, *Tensor Categories*, Mathematical Surveys and Monographs 205, American Mathematical Society, 2015. [作者获准公开的终稿](https://math.mit.edu/~etingof/egnobookfinal.pdf). 使用 §§2.8–2.9 的严格化与结合相容性、§4.6 的 Deligne 乘积基础及 Theorem 7.16.6（printed p.168）的中心 Frobenius–Perron 维数公式。
 
-[JSW26source] *Quantum Cellular Automata and Categorical Dualities of Spin Chains*, Communications in Mathematical Physics 407, article 66 (2026), published 9 March 2026. [期刊全文](https://link.springer.com/article/10.1007/s00220-026-05571-y), [arXiv:2410.08884](https://arxiv.org/abs/2410.08884). 使用 Corollary 1.4 的有限群正则表示范围及引言的未决范围；正式作者信息在配套 Library 记录中核对。
+[JSW26] Corey Jones, Kylan Schatz and Dominic J. Williamson, *Quantum Cellular Automata and Categorical Dualities of Spin Chains*, Communications in Mathematical Physics 407, article 66 (2026), published 9 March 2026. [期刊全文](https://link.springer.com/article/10.1007/s00220-026-05571-y), [arXiv:2410.08884](https://arxiv.org/abs/2410.08884). 使用 Corollary 1.4 的有限群正则表示范围及引言的未决范围；2026 期刊版本与 2025 arXiv v3 的版本日期不混淆。
 
 [Z23] Carolyn Zhang, *Note on quantum cellular automata and strong equivalence*, [arXiv:2306.03171](https://arxiv.org/abs/2306.03171), first submitted 5 June 2023. 仅用于强等价、稳定等价与已有附加对称不变量的范围比较，不作为双 Fib 反例的证明。
 
