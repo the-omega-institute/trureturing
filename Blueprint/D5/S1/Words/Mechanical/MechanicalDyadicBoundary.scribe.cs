@@ -7,17 +7,9 @@ internal sealed class MechanicalDyadicBoundaryDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S1/Words/Mechanical/MechanicalDyadicBoundary.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Lower dyadic slopes miss an exact boundary bit; upper dyadic slopes eventually preserve every fixed finite mechanical observation.",
+        "Upper dyadic slopes eventually preserve every fixed finite mechanical observation.",
         H("Mechanical Dyadic Boundary"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("mechanical-dyadic-boundary-mismatch"),
-                DeclarationHandle.Create(Prefix + "dyadic_lower_boundary_mismatch"),
-                H("Lower approximation and boundary bit"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For an irrational slope strictly between zero and one, the floor dyadic approximation is nonnegative and falls strictly below the slope by less than one binary unit. At phase one minus the exact slope, the first actual mechanical bit is true, while the first bit at every lower dyadic approximation is false. Increasing finite precision cannot remove this specified boundary mismatch."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mechanical-dyadic-upper-eventual-word"),
                 DeclarationHandle.Create(Prefix + "dyadic_upper_eventually_word_eq"),

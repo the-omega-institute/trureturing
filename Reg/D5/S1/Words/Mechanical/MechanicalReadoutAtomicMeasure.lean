@@ -7,10 +7,6 @@ import Reg.Support.MechanicalDyadicRegistration
 run_cmd LeanInformationAudit.RootCatalogs.declare {
   rootId := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
   expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.massArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier,
-      statementIdentity := "sha256:83198120d726aa38d32ede4edb29e664caa0f838217ffd12a0e9a79cb93c3e2c",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
       statementIdentity := "sha256:e86fbc9eb0eaf8616805c1ac35ac784e9bc227197d2020c6eb701448fc79cf84",
@@ -32,10 +28,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
       statementIdentity := "sha256:f0bf059491cefbf0ae23bfd82a712d76dc87b380a5f51575eff9fc07955fad01",
       registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure }]
   source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.massArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier,
-      statementIdentity := "sha256:83198120d726aa38d32ede4edb29e664caa0f838217ffd12a0e9a79cb93c3e2c",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.distributionArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
       statementIdentity := "sha256:e86fbc9eb0eaf8616805c1ac35ac784e9bc227197d2020c6eb701448fc79cf84",
@@ -76,19 +68,13 @@ set_option maxHeartbeats 2000000
 
 attribute [local instance] Classical.propDecidable
 
-local instance : DecidableEq MassOutput := Classical.decEq _
 local instance : DecidableEq DistributionOutput := Classical.decEq _
 local instance : DecidableEq HitOutput := Classical.decEq _
 local instance : DecidableEq SupportOutput := Classical.decEq _
 local instance : DecidableEq JumpOutput := Classical.decEq _
-local instance : DecidableEq massArena.State := massArena.toArena.stateDecidableEq
 local instance : DecidableEq distributionArena.State := distributionArena.toArena.stateDecidableEq
 local instance : DecidableEq hitArena.State := hitArena.toArena.stateDecidableEq
 local instance : DecidableEq supportArena.State := supportArena.toArena.stateDecidableEq
-
-private def massSample : MassInput where
-  ratio := 0
-  phase := 0
 
 private def distributionSample : DistributionInput where
   ratio := 0
@@ -103,81 +89,6 @@ private def hitSample : HitInput where
 private def supportSample : SupportInput where
   ratio := 1 / 2
   phase := 0
-
-theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
-    (∀ (r x : ℝ), 0 ≤ r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
-      IsProbabilityMeasure (geometricAtomicMeasure r x) ∧
-      geometricAtomicMeasure r x (Ioc (0 : ℝ) 1) = 1)
-    massRealization := by
-  constructor
-  change (∀ (r x : ℝ), 0 ≤ r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
-      IsProbabilityMeasure (geometricAtomicMeasure r x) ∧
-      geometricAtomicMeasure r x (Ioc (0 : ℝ) 1) = 1) ↔
-    massReadout = massTarget
-  constructor
-  · intro h
-    funext input
-    change MechanicalReadoutSources.massReadout input =
-      MechanicalReadoutSources.massTarget input
-    by_cases hc : 0 ≤ input.ratio ∧ input.ratio < 1 ∧
-        input.phase ∈ Ico (0 : ℝ) 1
-    · simp only [MechanicalReadoutSources.massTarget, if_pos hc]
-      change (geometricAtomicMeasure input.ratio input.phase Set.univ,
-        geometricAtomicMeasure input.ratio input.phase (Ioc (0 : ℝ) 1)) = (1, 1)
-      obtain ⟨hprob, hcarrier⟩ := h input.ratio input.phase hc.1 hc.2.1 hc.2.2
-      exact Prod.ext (isProbabilityMeasure_iff.mp hprob) hcarrier
-    · simp only [MechanicalReadoutSources.massTarget, if_neg hc]
-  · intro h r x hr0 hr1 hx
-    have hv := congrFun h
-      (MechanicalReadoutSources.MassInput.mk r x)
-    have hc : 0 ≤ r ∧ r < 1 ∧ x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, hx⟩
-    simp only [massReadout, massTarget, MechanicalReadoutSources.massTarget,
-      if_pos hc] at hv
-    change (geometricAtomicMeasure r x Set.univ,
-      geometricAtomicMeasure r x (Ioc (0 : ℝ) 1)) = (1, 1) at hv
-    constructor
-    · apply isProbabilityMeasure_iff.mpr
-      exact congrArg Prod.fst hv
-    · exact congrArg Prod.snd hv
-
-private def massBadOutput : MassOutput := fun input =>
-  if massTarget input = (0, 0) then (1, 1) else (0, 0)
-
-def massBad := @mechanicalReadoutRealization MassOutput
-  (Classical.decEq _) (fun _ : Unit => massBadOutput)
-
-private theorem massBad_not_law : ¬ massArena.Law massBad := by
-  intro h
-  have hh := congrFun h massSample
-  change (if massTarget massSample = (0, 0) then (1, 1) else (0, 0)) =
-    massTarget massSample at hh
-  by_cases hz : massTarget massSample = (0, 0)
-  · simp [hz] at hh
-  · simp only [if_neg hz] at hh
-    exact hz hh.symm
-
-theorem massVariation : massArena.Law massRealization ∧
-    ¬ massArena.Law massBad := by
-  constructor
-  · exact massBridge.equivalence.mp
-      (fun r x hr0 hr1 hx => geometric_atomic_probability_and_carrier r x hr0 hr1 hx)
-  · exact massBad_not_law
-
-theorem massSensitivity : FiniteSlotSensitivity massArena.toPrimitiveLawArena := by
-  constructor
-  · intro i
-    cases i
-    let good := @mechanicalReadoutRealization MassOutput
-      (Classical.decEq _) (fun _ : Unit => massTarget)
-    refine ⟨good, massBad, ?_, ?_, ?_⟩
-    · intro j hj
-      cases j
-      exact (hj rfl).elim
-    · intro j
-      exact Fin.elim0 j
-    · exact ⟨fun _ => massBad_not_law, fun _ => rfl⟩
-  · intro i
-    exact Fin.elim0 i
 
 theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrimitiveLawArena
     (∀ (r alpha x : ℝ), 0 ≤ r → r < 1 →
@@ -549,16 +460,6 @@ theorem rationalJumpSensitivity : FiniteSlotSensitivity rationalJumpArena.toPrim
     exact Fin.elim0 i
 
 register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier
-  in massArena
-  readout via (@mechanicalReadoutRealization MassOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.massReadout))
-  primitives massRealization.toPrimitiveBundle
-  realization massBridge
-  variation massVariation sensitivity massSensitivity
-  escape from (ℝ) escape continues (open)
-
-register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic
   in distributionArena
   readout via (@mechanicalReadoutRealization DistributionOutput (Classical.decEq _)
@@ -611,7 +512,6 @@ register_information_theorem
 open Lean in
 run_meta do
   for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,

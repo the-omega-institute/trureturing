@@ -43,77 +43,6 @@ def geometricAtomicMeasure (r x : ℝ) : Measure ℝ :=
   Measure.sum fun a : AtomicIndex =>
     ENNReal.ofReal (atomicCoefficient r a) • Measure.dirac (atomicPoint x a)
 
-/-- The numbered threshold atoms have unit total mass, and every atom lies
-strictly above zero and at most one for a phase in the unit half-open interval. -/
-theorem geometric_atomic_probability_and_carrier
-    (r x : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
-    (hx : x ∈ Ico (0 : ℝ) 1) :
-    IsProbabilityMeasure (geometricAtomicMeasure r x) ∧
-      geometricAtomicMeasure r x (Ioc (0 : ℝ) 1) = 1 := by
-  let c : AtomicIndex → ℝ := atomicCoefficient r
-  have hc0 (a : AtomicIndex) : 0 ≤ c a := by
-    dsimp [c, atomicCoefficient]
-    exact mul_nonneg (sq_nonneg _) (pow_nonneg hr0 _)
-  have hrnorm : ‖r‖ < 1 := by
-    simpa [Real.norm_eq_abs, abs_of_nonneg hr0] using hr1
-  have hgeom : Summable (fun n : ℕ => (((n + 1 : ℕ) : ℝ) * r ^ n)) := by
-    simpa using (summable_choose_mul_geometric_of_norm_lt_one 1 hrnorm)
-  have houter : Summable
-      (fun n : ℕ => (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ))) := by
-    simpa [mul_assoc, mul_comm, mul_left_comm] using hgeom.mul_left ((1 - r) ^ 2)
-  have hfinite (n : ℕ) :
-      (∑ i : Fin (n + 1), c ⟨n, i⟩) =
-        (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ)) := by
-    simp [c, atomicCoefficient, Finset.sum_const, nsmul_eq_mul]
-    ring
-  have hc : Summable c := by
-    apply (summable_sigma_of_nonneg hc0).2
-    constructor
-    · intro n
-      exact (hasSum_fintype _).summable
-    · simpa only [tsum_fintype, hfinite] using houter
-  have hmass :
-      (∑' n : ℕ, (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ))) = 1 :=
-    (geometric_readout_floor_series_and_mass r 0 x hr0 hr1
-      (by norm_num : (0 : ℝ) ∈ Set.Icc 0 1) hx).2.1
-  have hctsum : (∑' a : AtomicIndex, c a) = 1 := by
-    rw [hc.tsum_sigma' (fun _ => (hasSum_fintype _).summable)]
-    simpa only [tsum_fintype, hfinite] using hmass
-  have hprob : IsProbabilityMeasure (geometricAtomicMeasure r x) := by
-    change IsProbabilityMeasure
-      (Measure.sum fun a : AtomicIndex =>
-        ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a))
-    apply HasSum.isProbabilityMeasure_sum_dirac hc0
-    exact hctsum ▸ hc.hasSum
-  have hpoint (a : AtomicIndex) : atomicPoint x a ∈ Ioc (0 : ℝ) 1 := by
-    rcases a with ⟨n, i⟩
-    have hden : (0 : ℝ) < (((n + 1 : ℕ) : ℝ)) := by positivity
-    have hnum : (0 : ℝ) < (((i.val + 1 : ℕ) : ℝ)) - x := by
-      have hi : (1 : ℝ) ≤ (((i.val + 1 : ℕ) : ℝ)) := by
-        exact_mod_cast Nat.succ_le_succ (Nat.zero_le i.val)
-      linarith [hx.2]
-    have hle : (((i.val + 1 : ℕ) : ℝ)) ≤ (((n + 1 : ℕ) : ℝ)) := by
-      have hi : i.val + 1 ≤ n + 1 := i.isLt
-      exact_mod_cast hi
-    change 0 < (_ - x) / _ ∧ (_ - x) / _ ≤ 1
-    constructor
-    · exact div_pos hnum hden
-    · apply (div_le_iff₀ hden).2
-      linarith [hx.1]
-  constructor
-  · exact hprob
-  · change (Measure.sum fun a : AtomicIndex =>
-      ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a)) (Ioc 0 1) = 1
-    rw [Measure.sum_apply _ measurableSet_Ioc]
-    have hterm (a : AtomicIndex) :
-        (ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a)) (Ioc 0 1) =
-          ENNReal.ofReal (c a) := by
-      rw [Measure.smul_apply, Measure.dirac_apply_of_mem (hpoint a)]
-      simp
-    simp_rw [hterm]
-    rw [← ENNReal.ofReal_tsum_of_nonneg hc0 hc, hctsum]
-    norm_num
-
 /-- The distribution function of the atomic measure is the completed
 mechanical readout, including every coincident threshold atom. -/
 theorem geometric_atomic_apply_Iic
@@ -349,8 +278,71 @@ theorem geometric_atomic_support (r x : ℝ) (hr0 : 0 < r) (hr1 : r < 1)
   have hforward : Set.Icc (0 : ℝ) 1 ⊆ μ.support := by
     rw [← closure_Ico (by norm_num : (0 : ℝ) ≠ 1)]
     exact closure_minimal hIco Measure.isClosed_support
-  have ⟨hprob, hcarrier⟩ :=
-    geometric_atomic_probability_and_carrier r x hr0.le hr1 hx
+  have hprobCarrier : IsProbabilityMeasure μ ∧ μ (Set.Ioc (0 : ℝ) 1) = 1 := by
+    let c : AtomicIndex → ℝ := atomicCoefficient r
+    have hc0 (a : AtomicIndex) : 0 ≤ c a := by
+      dsimp [c, atomicCoefficient]
+      exact mul_nonneg (sq_nonneg _) (pow_nonneg hr0.le _)
+    have hrnorm : ‖r‖ < 1 := by
+      simpa [Real.norm_eq_abs, abs_of_nonneg hr0.le] using hr1
+    have hgeom : Summable (fun n : ℕ => (((n + 1 : ℕ) : ℝ) * r ^ n)) := by
+      simpa using (summable_choose_mul_geometric_of_norm_lt_one 1 hrnorm)
+    have houter : Summable
+        (fun n : ℕ => (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ))) := by
+      simpa [mul_assoc, mul_comm, mul_left_comm] using hgeom.mul_left ((1 - r) ^ 2)
+    have hfinite (n : ℕ) :
+        (∑ i : Fin (n + 1), c ⟨n, i⟩) =
+          (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ)) := by
+      simp [c, atomicCoefficient, Finset.sum_const, nsmul_eq_mul]
+      ring
+    have hc : Summable c := by
+      apply (summable_sigma_of_nonneg hc0).2
+      constructor
+      · intro n
+        exact (hasSum_fintype _).summable
+      · simpa only [tsum_fintype, hfinite] using houter
+    have hmass :
+        (∑' n : ℕ, (1 - r) ^ 2 * r ^ n * (((n + 1 : ℕ) : ℝ))) = 1 :=
+      (geometric_readout_floor_series_and_mass r 0 x hr0.le hr1
+        (by norm_num : (0 : ℝ) ∈ Set.Icc 0 1) hx).2.1
+    have hctsum : (∑' a : AtomicIndex, c a) = 1 := by
+      rw [hc.tsum_sigma' (fun _ => (hasSum_fintype _).summable)]
+      simpa only [tsum_fintype, hfinite] using hmass
+    have hprob : IsProbabilityMeasure μ := by
+      change IsProbabilityMeasure
+        (Measure.sum fun a : AtomicIndex =>
+          ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a))
+      apply HasSum.isProbabilityMeasure_sum_dirac hc0
+      exact hctsum ▸ hc.hasSum
+    have hpointCarrier (a : AtomicIndex) : atomicPoint x a ∈ Ioc (0 : ℝ) 1 := by
+      rcases a with ⟨n, i⟩
+      have hden : (0 : ℝ) < (((n + 1 : ℕ) : ℝ)) := by positivity
+      have hnum : (0 : ℝ) < (((i.val + 1 : ℕ) : ℝ)) - x := by
+        have hi : (1 : ℝ) ≤ (((i.val + 1 : ℕ) : ℝ)) := by
+          exact_mod_cast Nat.succ_le_succ (Nat.zero_le i.val)
+        linarith [hx.2]
+      have hle : (((i.val + 1 : ℕ) : ℝ)) ≤ (((n + 1 : ℕ) : ℝ)) := by
+        have hi : i.val + 1 ≤ n + 1 := i.isLt
+        exact_mod_cast hi
+      change 0 < (_ - x) / _ ∧ (_ - x) / _ ≤ 1
+      constructor
+      · exact div_pos hnum hden
+      · apply (div_le_iff₀ hden).2
+        linarith [hx.1]
+    constructor
+    · exact hprob
+    · change (Measure.sum fun a : AtomicIndex =>
+        ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a)) (Ioc 0 1) = 1
+      rw [Measure.sum_apply _ measurableSet_Ioc]
+      have hterm (a : AtomicIndex) :
+          (ENNReal.ofReal (c a) • Measure.dirac (atomicPoint x a)) (Ioc 0 1) =
+            ENNReal.ofReal (c a) := by
+        rw [Measure.smul_apply, Measure.dirac_apply_of_mem (hpointCarrier a)]
+        simp
+      simp_rw [hterm]
+      rw [← ENNReal.ofReal_tsum_of_nonneg hc0 hc, hctsum]
+      norm_num
+  obtain ⟨hprob, hcarrier⟩ := hprobCarrier
   have hcarrier' : μ (Set.Ioc (0 : ℝ) 1) = 1 := hcarrier
   have hzero : μ (Set.Ioc (0 : ℝ) 1)ᶜ = 0 := by
     rw [measure_compl measurableSet_Ioc (by rw [hcarrier']; norm_num)]
@@ -384,8 +376,12 @@ theorem geometric_readout_left_jump_exact
           (1 - r) ^ 2 * r ^ n else 0 := by
   classical
   let μ := geometricAtomicMeasure r x
-  letI : IsProbabilityMeasure μ :=
-    (geometric_atomic_probability_and_carrier r x hr0.le hr1 hx).1
+  have hunitFinite : μ (Iic (1 : ℝ)) ≠ ⊤ := by
+    rw [geometric_atomic_apply_Iic r 1 x hr0.le hr1
+      (by norm_num : (1 : ℝ) ∈ Set.Icc 0 1) hx]
+    simp
+  have hfinite (s : Set ℝ) (hs : s ⊆ Iic (1 : ℝ)) : μ s ≠ ⊤ :=
+    ne_top_of_le_ne_top hunitFinite (measure_mono hs)
   have hunion : (⋃ beta : Iio alpha, Iic (beta : ℝ)) = Iio alpha := by
     ext y
     simp only [Set.mem_iUnion, Set.mem_Iic, Set.mem_Iio]
@@ -407,7 +403,10 @@ theorem geometric_readout_left_jump_exact
       Filter.Tendsto (fun beta : ℝ => μ (Iic beta))
         (𝓝[<] alpha) (𝓝 (μ (Iio alpha))) :=
     (tendsto_comp_coe_Iio_atTop (a := alpha)).mp hmeasureSubtype
-  have hleftFinite : μ (Iio alpha) ≠ ⊤ := measure_ne_top μ _
+  have hleftFinite : μ (Iio alpha) ≠ ⊤ := by
+    apply hfinite
+    intro y hy
+    exact (hy.trans ha.2).le
   have hrealMeasure :
       Filter.Tendsto (fun beta : ℝ => (μ (Iic beta)).toReal)
         (𝓝[<] alpha) (𝓝 (μ (Iio alpha)).toReal) :=
@@ -444,7 +443,11 @@ theorem geometric_readout_left_jump_exact
     rw [geometric_atomic_apply_Iic r alpha x hr0.le hr1
       ⟨ha.1.le, ha.2.le⟩ hx,
       ENNReal.toReal_ofReal (hreadoutNonneg alpha ⟨ha.1.le, ha.2⟩),
-      ENNReal.toReal_add hleftFinite (measure_ne_top μ {alpha})] at h
+      ENNReal.toReal_add hleftFinite (hfinite {alpha} (by
+        intro y hy
+        change y = alpha at hy
+        subst y
+        exact ha.2.le))] at h
     exact h
   let f : ℕ → ℝ := fun n =>
     if ∃ z : ℤ, (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
@@ -586,7 +589,6 @@ theorem geometric_rational_left_jump_closed_form
     c * r ^ n else 0) = c * r ^ (q - 1) / (1 - r ^ q)
   exact hseries.trans hclosed
 
-#print axioms geometric_atomic_probability_and_carrier
 #print axioms geometric_atomic_apply_Iic
 #print axioms geometric_atomic_singleton_hit
 #print axioms geometric_atomic_support

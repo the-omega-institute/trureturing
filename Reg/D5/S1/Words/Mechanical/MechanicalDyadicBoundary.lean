@@ -6,10 +6,6 @@ import Reg.Support.MechanicalDyadicRegistration
 run_cmd LeanInformationAudit.RootCatalogs.declare {
   rootId := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
   expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.lowerArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch,
-      statementIdentity := "sha256:623de09df40dd9c8ac62166504cc1d12ebb2c9ae1f15f66586e6901f79a3fb9c",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
       statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
@@ -19,10 +15,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
       statementIdentity := "sha256:a4092d2733c8819e7e7bae60e764686bbcbb4ab064a2adbcf8601fce8ed682ae",
       registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }]
   source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.lowerArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch,
-      statementIdentity := "sha256:623de09df40dd9c8ac62166504cc1d12ebb2c9ae1f15f66586e6901f79a3fb9c",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
       statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
@@ -46,68 +38,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 2000000
 
-local instance : DecidableEq LowerOutput := Classical.decEq _
 local instance : DecidableEq UpperOutput := Classical.decEq _
 local instance : DecidableEq StableOutput := Classical.decEq _
-
-theorem lowerBridge : LegacyPrimitiveRealization lowerArena.toPrimitiveLawArena
-    (∀ (alpha : ℝ), Irrational alpha → 0 < alpha → alpha < 1 → ∀ p : ℕ,
-      0 ≤ dyadicLower alpha p ∧
-      0 < alpha - dyadicLower alpha p ∧
-      alpha - dyadicLower alpha p < (1 : ℝ) / ((2 ^ p : ℕ) : ℝ) ∧
-      lowerMechanicalWord alpha (1 - alpha) 0 = true ∧
-      lowerMechanicalWord (dyadicLower alpha p) (1 - alpha) 0 = false)
-    lowerRealization := by
-  constructor
-  change (∀ (alpha : ℝ), Irrational alpha → 0 < alpha → alpha < 1 → ∀ p : ℕ,
-      0 ≤ dyadicLower alpha p ∧
-      0 < alpha - dyadicLower alpha p ∧
-      alpha - dyadicLower alpha p < (1 : ℝ) / ((2 ^ p : ℕ) : ℝ) ∧
-      lowerMechanicalWord alpha (1 - alpha) 0 = true ∧
-      lowerMechanicalWord (dyadicLower alpha p) (1 - alpha) 0 = false) ↔
-    (∀ (alpha : ℝ), Irrational alpha → 0 < alpha → alpha < 1 → ∀ p : ℕ,
-      0 ≤ dyadicLower alpha p ∧
-      0 < alpha - dyadicLower alpha p ∧
-      alpha - dyadicLower alpha p < (1 : ℝ) / ((2 ^ p : ℕ) : ℝ) ∧
-      lowerMechanicalWord alpha (1 - alpha) 0 = true ∧
-      lowerMechanicalWord (dyadicLower alpha p) (1 - alpha) 0 = false)
-  exact Iff.rfl
-
-def lowerBad : PrimitiveRealization lowerArena.signature :=
-  @mechanicalReadoutRealization LowerOutput (Classical.decEq _)
-    (fun _ : Unit => fun _ _ => ((-1 : ℝ), true))
-
-private theorem lowerBad_not_law : ¬ lowerArena.Law lowerBad := by
-  intro h
-  have hIrr : Irrational (Real.sqrt 2 / 2) :=
-    irrational_sqrt_two.div_natCast (by norm_num : (2 : ℕ) ≠ 0)
-  have hPos : (0 : ℝ) < Real.sqrt 2 / 2 := by positivity
-  have hLt : Real.sqrt 2 / 2 < (1 : ℝ) := by
-    have hs := Real.sqrt_nonneg (2 : ℝ)
-    have hs2 := Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
-    nlinarith
-  have hFirst := (h (Real.sqrt 2 / 2) hIrr hPos hLt 0).1
-  norm_num [lowerBad, mechanicalReadoutRealization] at hFirst
-
-theorem lowerVariation : lowerArena.Law lowerRealization ∧
-    ¬ lowerArena.Law lowerBad := by
-  exact ⟨lowerBridge.equivalence.mp
-    (fun alpha hIrr hPos hLt p =>
-      dyadic_lower_boundary_mismatch alpha hIrr hPos hLt p), lowerBad_not_law⟩
-
-theorem lowerSensitivity : FiniteSlotSensitivity lowerArena.toPrimitiveLawArena := by
-  constructor
-  · intro i
-    cases i
-    refine ⟨lowerRealization, lowerBad, ?_, ?_, ?_⟩
-    · intro j hj
-      cases j
-      exact (hj rfl).elim
-    · intro j
-      exact Fin.elim0 j
-    · exact ⟨fun _ => lowerBad_not_law, fun _ => lowerVariation.1⟩
-  · intro i
-    exact Fin.elim0 i
 
 theorem upperBridge : LegacyPrimitiveRealization upperArena.toPrimitiveLawArena
     (∀ (alpha x : ℝ) (n : ℕ), ∃ p₀ : ℕ, ∀ p ≥ p₀, ∀ j < n,
@@ -214,16 +146,6 @@ theorem stableSensitivity : FiniteSlotSensitivity stableArena.toPrimitiveLawAren
     exact Fin.elim0 i
 
 register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch
-  in lowerArena
-  readout via (@mechanicalReadoutRealization LowerOutput (Classical.decEq _)
-    (fun _ : Unit => lowerReadout))
-  primitives lowerRealization.toPrimitiveBundle
-  realization lowerBridge
-  variation lowerVariation sensitivity lowerSensitivity
-  escape from (ℝ) escape continues (open)
-
-register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq
   in upperArena
   readout via (@mechanicalReadoutRealization UpperOutput (Classical.decEq _)
@@ -246,7 +168,6 @@ register_information_theorem
 open Lean in
 run_meta do
   for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch,
       `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
       `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits] do
     let row := (TemplateBinding.records (← getEnv)).find? fun record =>

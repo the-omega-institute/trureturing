@@ -240,6 +240,7 @@ elab "observe_object_domain_routes" : command => do
 
 observe_object_domain_routes
 
+
 def nativeArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
   signature := cutSignature Bool Bool

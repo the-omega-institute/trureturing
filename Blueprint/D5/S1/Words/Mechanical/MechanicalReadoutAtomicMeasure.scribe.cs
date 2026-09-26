@@ -7,17 +7,9 @@ internal sealed class MechanicalReadoutAtomicMeasureDocument : IScribeDocumentDe
     private const string Prefix = "D5/S1/Words/Mechanical/MechanicalReadoutAtomicMeasure.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The completed mechanical readout is the distribution function of a numbered atomic probability measure.",
+        "The completed mechanical readout is the distribution function of a numbered atomic measure.",
         H("Mechanical Readout Atomic Measure"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("mechanical-atomic-probability-carrier"),
-                DeclarationHandle.Create(Prefix + "geometric_atomic_probability_and_carrier"),
-                H("Probability and concentration"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For 0 <= r < 1 and each positive time k, retain all k threshold locations (j-x)/k with their common weight (1-r)^2 r^(k-1). The index records both k and j, so equal locations reached at different times retain separate mass. The geometric mass identity makes the resulting countable Dirac sum a probability measure. Every listed location lies in (0,1] when the phase is in [0,1), and the measure assigns that interval mass one."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mechanical-atomic-distribution-function"),
                 DeclarationHandle.Create(Prefix + "geometric_atomic_apply_Iic"),

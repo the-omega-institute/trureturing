@@ -65,9 +65,7 @@ def normalizeArena (arena : Expr) : MetaM NormalizedArena := do
     else if objectDomain then mkAppM ``PrimitiveLawArena.toArena #[law]
     else if type.isConstOf ``Arena then pure arena
     else throwError "IE-C003 ArenaResolutionFailed: {arena}"
-  let domain ← if witness then
-      some <$> mkAppM (witnessArenaName.str "Domain") #[arena]
-    else if objectDomain then
+  let domain ← if objectDomain then
       some <$> mkAppM (objectDomainArenaName.str "Domain") #[arena]
     else pure none
   return { original := arena, law, finite, witness, domain }
