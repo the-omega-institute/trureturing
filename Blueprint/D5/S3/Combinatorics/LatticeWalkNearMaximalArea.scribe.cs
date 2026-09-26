@@ -40,7 +40,10 @@ internal sealed class LatticeWalkNearMaximalAreaDocument : IScribeDocumentDefini
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "Let r, l, u, d count the right, left, up and down steps. At a right step the height is at most u and at a left step at least -d, so the area is at most r u + l d. If the walk uses both a right or up step and a left or down step, then 4(r u + l d) is at most (r + u)^2 + (l + d)^2, which is at most 1 + (L - 1)^2 for the length L, so the area is at most n^2 - n when L = 2n and at most n^2 when L = 2n + 1. Every walk in the stated range therefore uses only right and up steps or only left and down steps, and exchanging right with left and up with down maps the second kind onto the first without changing the area. A word of u up steps and r right steps has area u r minus the number of pairs of a right step followed later by an up step. Splitting at the first step, the words with u up steps and m such pairs satisfy the recurrence N(u, r, m) = N(u - 1, r, m) + N(u, r - 1, m - u), which is also the recurrence of the partitions of m into parts at most u, split by whether the part u occurs; so for r at least m they are the partitions of m into parts at most u, and for u at least m all partitions of m. With u = n + j and r = n - j the number of pairs is k - j^2, at most the smaller of u and r because k < n, and summing over j gives p(k) + 2 times the sum of p(k - j^2) over j > 0. With u = n + 1 + j and r = n - j it is k - j(j + 1), the substitution j to -1 - j pairs the terms, and the sum is twice the sum of p(k - j(j + 1)) over j at least 0.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zabolotskii-2025-a385672-near-maximal-area-walks"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
