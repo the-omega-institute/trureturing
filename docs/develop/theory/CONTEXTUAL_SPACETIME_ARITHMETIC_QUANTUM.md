@@ -61297,3 +61297,154 @@ $$
 本节确定了不等半径模型在严格实输出端点上的二维代价；允许非零非实残差时的完整不等半径二维预算曲线仍未由本节确定。
 
 ## 追加锚（本行以下为增补区）
+
+## 281. 二维解码的吸收与四角残差公式
+
+**定义 281.1（中心对称量子比特模型）。** 令 $\mathcal V\subseteq\{v\in\mathbb R^3:|v|\le1\}$ 为非空有限集合，满足 $v\in\mathcal V\Rightarrow-v\in\mathcal V$，并取模型态 $\rho_v=(I+v\cdot\boldsymbol\sigma)/2$。编码和解码均为量子比特之间的复线性 CPTP 通道。恢复误差 $e$ 仍是模型上的最大迹距离，非实残差 $r$ 是编码态与其在一个共同输出基底中逐项共轭之态的最大迹距离。
+
+**定理 281.2（中心对称模型的酉解码正规形）。** 对任意上述方案，都存在一个幺元量子比特通道 $\mathcal N$ 与一个酉矩阵 $U$，使新方案
+
+$$
+\mathcal E'=\operatorname{Ad}_U\mathcal N,
+\qquad
+\mathcal D'=\operatorname{Ad}_{U^*}
+\tag{281.1}
+$$
+
+的恢复误差和非实残差分别不大于原方案的对应值。因此，在这些二维模型的两个上界预算问题中，允许一般仿射编码、解码所得到的可行区域，已由式（281.1）的方案完全达到。这里的结论只比较这两个任务量，不宣称保留原方案的所有其他操作性质。
+
+证明。在计算原方案非实残差的输出基底中，写编码与解码的 Bloch 作用为
+
+$$
+\mathcal E:\ v\longmapsto c+Av,
+\qquad
+\mathcal D:\ w\longmapsto d+Lw.
+\tag{281.2}
+$$
+
+沿用第277节的自旋反转 $\mathcal S(X)=YX^{\mathsf T}Y$。对任意量子比特 CPTP 通道 $\Phi$，双侧复合 $\mathcal S\Phi\mathcal S$ 仍为 CPTP：若 $K_j$ 是 $\Phi$ 的 Kraus 算子，相应算子可取 $Y\bar K_jY$。因此分别定义
+
+$$
+\mathcal E_0=\tfrac12(\mathcal E+\mathcal S\mathcal E\mathcal S),
+\qquad
+\mathcal D_0=\tfrac12(\mathcal D+\mathcal S\mathcal D\mathcal S).
+\tag{281.3}
+$$
+
+这两个通道分别具有无平移的线性部分 $A,L$。其复合 $\mathcal N=\mathcal D_0\mathcal E_0$ 是幺元 CPTP，Bloch 矩阵为 $T=LA$。这一步直接计算两个实际因子的线性部分，不假定任意独立平均都会保持复合。
+
+原恢复通道的平移为 $h=d+Lc$。中心对称性给出，对每对 $v,-v$，
+
+$$
+\max\{\|h+(T-I)v\|_2,\|h-(T-I)v\|_2\}
+\ge\|(T-I)v\|_2.
+\tag{281.4}
+$$
+
+所以去掉平移后的恢复误差不增。量子比特状态与其共轭的迹距离等于虚轴 $Y$ 坐标的绝对值；同一中心对称性给出
+
+$$
+r(\mathcal E)=|c_y|+\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|,
+\qquad
+r(\mathcal E_0)=\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|.
+\tag{281.5}
+$$
+
+因此编码去平移也不会增加残差。
+
+现在令 $P=\operatorname{span}_{\mathbb R}\{e_x,e_z\}$ 为原编码输出的实 Bloch 平面。$L(P)$ 的维数至多为二，可取一个单位向量 $n$ 垂直于它。于是
+
+$$
+L^{\mathsf T}n=k e_y
+\tag{281.6}
+$$
+
+对某个实数 $k$ 成立。量子比特通道的迹距离收缩性给出 $\|L\|_{\rm op}\le1$，故 $|k|\le1$。不要求 $L$ 可逆；当像空间维数更低时，仍可选择这样的 $n$。
+
+取酉矩阵 $U$，使其 Bloch 旋转 $R$ 满足 $R^{\mathsf T}e_y=n$，并使用式（281.1）的新编码、解码。其恢复复合恰为 $\mathcal N$，所以恢复误差已经由式（281.4）控制。编码后的虚坐标为
+
+$$
+e_y^{\mathsf T}RTv
+=n^{\mathsf T}LAv
+=k e_y^{\mathsf T}Av.
+$$
+
+从而
+
+$$
+r(\mathcal E')
+=|k|\max_{v\in\mathcal V}|e_y^{\mathsf T}Av|
+\le r(\mathcal E_0)\le r(\mathcal E).
+\tag{281.7}
+$$
+
+所有新通道都在完整 $M_2$ 上 CPTP。式（281.1）的方案本来就是允许的一类方案，而每个原方案都被这一类中的某个方案在两个成本上弱支配，因此两者的上界预算区域相同。证毕。
+
+**定理 281.3（六态预算的单通道归约与四角公式）。** 对定义276.1的正半径六态模型，不要求倒数半径排序。令 $\mathcal U$ 为全部幺元量子比特 CPTP 通道的实 Bloch 矩阵集合。对 $T\in\mathcal U$，定义
+
+$$
+e(T)=\frac12\max_i a_i\|(T-I)e_i\|_2,
+\qquad
+r_*(T)=\min_{|n|=1}\max_i a_i|n^{\mathsf T}Te_i|.
+\tag{281.8}
+$$
+
+则固定二维输出的完整预算优化恰为
+
+$$
+F^{(2)}_a(R)
+=\min\{e(T):T\in\mathcal U,\ r_*(T)\le R\},
+\qquad R\ge0.
+\tag{281.9}
+$$
+
+具体地，对非负上界预算 $E,R$，存在一般编码、解码满足 $e\le E,r\le R$，恰当且仅当存在一个 $T\in\mathcal U$ 满足 $e(T)\le E,r_*(T)\le R$。
+
+记 $\alpha_i=1/a_i$。当 $T$ 奇异时，$r_*(T)=0$；当 $T$ 可逆时，有精确公式
+
+$$
+\boxed{
+r_*(T)=
+\left[
+\max_{\varepsilon\in\{(1,\varepsilon_2,\varepsilon_3):\varepsilon_2,\varepsilon_3\in\{-1,1\}\}}
+\left\|T^{-\mathsf T}\operatorname{diag}(\alpha_1,\alpha_2,\alpha_3)\varepsilon\right\|_2
+\right]^{-1}.}
+\tag{281.10}
+$$
+
+在可逆情形，存在一个最优输出虚轴，使全部六个模型态具有同一个非实残差 $r_*(T)$。所有这些最小值都达到。
+
+证明。定理281.2给出一般方案到式（281.1）的支配归约。对该正规形，恢复矩阵为 $T$，输出基底的选择等价于指定读取虚坐标的单位方向 $n$。半 Bloch 距离公式和虚坐标公式直接给出式（281.8）。反过来，任意 $T\in\mathcal U$ 和单位 $n$ 都可按式（281.1）构造物理方案。因此上界预算的等价关系成立。
+
+若 $T$ 奇异，则 $T^{\mathsf T}$ 有非零核，取其中的单位向量 $n$，式（281.8）中的每一项均为零。
+
+若 $T$ 可逆，令
+
+$$
+G=\operatorname{diag}(a_1,a_2,a_3)T^{\mathsf T}.
+$$
+
+此时
+
+$$
+r_*(T)=\min_{|n|=1}\|Gn\|_\infty
+=\frac1{\displaystyle\max_{\|z\|_\infty\le1}\|G^{-1}z\|_2}.
+\tag{281.11}
+$$
+
+为直接核对这个标准逆算子范数恒等式，记右侧分母为 $M$。对任意单位 $n$，有 $1=\|G^{-1}Gn\|_2\le M\|Gn\|_\infty$，给出下界。另一方面，连续凸函数 $z\mapsto\|G^{-1}z\|_2$ 在立方体上的最大值可在某个顶点 $\varepsilon\in\{-1,1\}^3$ 达到；这是因为立方体中每个点都是顶点的凸组合。取
+
+$$
+n=\frac{G^{-1}\varepsilon}{\|G^{-1}\varepsilon\|_2},
+\tag{281.12}
+$$
+
+则 $|n|=1$ 且 $Gn=\varepsilon/M$，从而达到式（281.11）。$\varepsilon$ 与 $-\varepsilon$ 给出相同的范数，所以八个顶点可以保留第一坐标为正的四个。再代入 $G^{-1}=T^{-\mathsf T}\operatorname{diag}(\alpha_i)$，得到式（281.10）。由 $Gn=\varepsilon/M$，每个加权轴残差都等于 $1/M=r_*(T)$，同时给出所述六态相等性。
+
+最后核对最小值的存在。幺元 CPTP 集在 Choi 表示中紧，因而 $\mathcal U$ 紧；单位球面也紧，式（281.8）的目标连续。$r_*(T)$ 作为在同一紧球面上的连续函数的最小值，随 $T$ 连续，包括奇异矩阵处。预算约束因此闭，且 $T=0$ 是任意 $R\ge0$ 的可行点。于是式（281.9）的最小值达到。证毕。
+
+式（281.10）把给定恢复通道的输出基底搜索化为四个显式向量范数的比较。式（281.9）仍要求在完整幺元 CPTP 集上优化；它没有把不等半径的正残差预算曲线宣布为已求出的闭式。严格实端点接回第280节，等半径完整曲线接回第277节，精确恢复端点则以 $T=I$ 给出 $r_*(I)=(\sum_i\alpha_i^2)^{-1/2}=\eta$。
+
+本节使用的 Bloch 通道表示、酉旋转与完全正背景沿用 Ruskai，*Qubit Entanglement Breaking Channels*，[arXiv:quant-ph/0302032v3](https://arxiv.org/pdf/quant-ph/0302032v3)，式（3）、（5）及第4节；正残差的通道在这里不被假定为纠缠破坏。新增归约所用的关键关系是解码后实平面的像与输出虚轴之间的正交性。中心对称模型和二维输出是当前证明的适用条件。
+
+## 追加锚（本行以下为增补区）
