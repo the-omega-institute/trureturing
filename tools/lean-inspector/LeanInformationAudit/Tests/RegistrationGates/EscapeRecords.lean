@@ -231,7 +231,7 @@ elab "observe_object_domain_routes" : command => do
         record.occurrence.key.objectArena == ``domainObjectArena &&
           record.occurrence.arena.getAppFn.constName? == some ``domainArena
       else true
-    let ok := match expected with
+    let ok : Bool := match expected with
       | none => validated && failure.isEmpty && routed &&
           row.any (·.escape.fromObject.any (·.name == ``Set))
       | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
