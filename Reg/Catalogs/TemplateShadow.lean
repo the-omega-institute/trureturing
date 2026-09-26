@@ -38,19 +38,19 @@ run_meta do
     (``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
       ``D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena),
     (``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena),
+      ``Reg.Support.LegacyAgenda.arena),
     (``D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena),
     (``D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena),
     (``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena),
+      ``Reg.Support.LegacyStaticDesign.arena),
     (``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena),
     (``D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena),
+      ``Reg.Support.LegacyGluing.arena),
     (``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena)]
+      ``Reg.Support.LegacyResidue.arena)]
   for (gold, arena) in cases do
     let key : StatementKey := ⟨gold, theoremStatementIdentity env gold⟩
     match ← CensusQuery.assess index head.stdout.trimAscii.toString key with
@@ -63,10 +63,10 @@ end
 #print axioms D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena/D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyStaticDesign.arena/Reg.Support.LegacyStaticDesign.arena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena/D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyGluing.arena/Reg.Support.LegacyGluing.arena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyResidue.arena/Reg.Support.LegacyResidue.arena».__lowers_escape

@@ -20,11 +20,11 @@ def occurrences : Array SnapshotOccurrence :=
                      theoremName := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
                      statementIdentity := "sha256:b93e6bd918cabb38e32a21f11542a80c47dcc6ba73bdeac72336a5c75648c24c",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena,
+  { objectArenaName := `Reg.Support.LegacyAgenda.arena,
                      theoremName := `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
                      statementIdentity := "sha256:384a1edc32c16ec0b4045c373ce00d995b3fa571bb9cbf36960355b33a93cc00",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Aggregation.AgendaPower.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena,
+  { objectArenaName := `Reg.Support.LegacyResidue.arena,
                      theoremName := `D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification,
                      statementIdentity := "sha256:6f8434c94b05962f830bd9c47522da114d168db8b17fa7825970bf48a600b9e6",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.TemplateShadow },
@@ -40,7 +40,7 @@ def occurrences : Array SnapshotOccurrence :=
                      theoremName := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
                      statementIdentity := "sha256:fd8c5bad3c9b38d167e59ff3889f6897c82fdd7070d8feaae13528062ac13140",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena,
+  { objectArenaName := `Reg.Support.LegacyGluing.arena,
                      theoremName := `D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state,
                      statementIdentity := "sha256:95b576248df546ed3529c83c5c171a1ab2f6cff8fd9f78d7db83204dd4ecfb56",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow },
@@ -48,7 +48,7 @@ def occurrences : Array SnapshotOccurrence :=
                      theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
                      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena,
+  { objectArenaName := `Reg.Support.LegacyStaticDesign.arena,
                      theoremName := `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
                      statementIdentity := "sha256:408742a2c71557575944155350def43ed8f9f37ec3a19fe75f721e084dfe939a",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.TemplateShadow }]
@@ -60,8 +60,8 @@ def contract : RootCatalogContract := {
   baseline := occurrences
   companionPrefix := some rootId }
 
--- Seal reference after the faithful observation/intervention arena transport.
+-- Seal reference after the faithful finite arena transports.
 def expectedSealDigest : String :=
-  "88837f33a4c62ab2f096c07581e54a596b74a181eb7d048ce493a6231a1e3b55"
+  "38adce5abad2e1f800e169afd49aaabc255dcd775f88b958fd1eed3e1d9a3ed8"
 
 end Reg.Support.TemplateShadowContract

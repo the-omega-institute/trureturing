@@ -25,10 +25,10 @@ run_cmd do
   unless digest == Reg.Support.InformationRootContract.expectedSealDigest do
     throwError "seal artifact digest mismatch: {digest}"
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 570 := by
+example : Reg.Support.LegacyAgenda.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 570 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 12 := by
+example : Reg.Support.LegacyResidue.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyResidue.arena/Reg.Support.LegacyResidue.arena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 12 := by
   decide
 
 example : D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 20 := by
@@ -44,7 +44,7 @@ example : D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObserva
     (0 : Fin 1) = 968 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena/D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena».__information_catalog.uniqueCaptureCount
+example : Reg.Support.LegacyStaticDesign.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyStaticDesign.arena/Reg.Support.LegacyStaticDesign.arena».__information_catalog.uniqueCaptureCount
     (0 : Fin 1) = 6 := by
   decide
 
@@ -52,7 +52,7 @@ example : D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExcha
     (0 : Fin 1) = 12 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena/D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena».__information_catalog.uniqueCaptureCount
+example : Reg.Support.LegacyGluing.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyGluing.arena/Reg.Support.LegacyGluing.arena».__information_catalog.uniqueCaptureCount
     (0 : Fin 1) = 48 := by
   decide
 
@@ -63,10 +63,10 @@ example : D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingC
 example : D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena/D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 2 := by
   decide
 
-#check D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__lowers_escape
-#check D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__catalog_irredundant
-#print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena».__catalog_irredundant
+#check D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__lowers_escape
+#check Reg.Support.LegacyAgenda.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__catalog_irredundant
+#print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__lowers_escape
+#print axioms Reg.Support.LegacyAgenda.arena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__catalog_irredundant
 
 
 run_meta do
@@ -111,11 +111,15 @@ run_meta do
         row.theoremName ==
         ``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary ||
         row.theoremName ==
-        ``D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application then
+        ``D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application ||
+        row.theoremName == ``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power ||
+        row.theoremName == ``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification ||
+        row.theoremName == ``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design ||
+        row.theoremName == ``D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state then
       unless observed.result matches .declaredValidated _ do
         throwError "completed production binding regressed"
     else
       unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 5 validated and 6 undeclared statuses"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 9 validated and 2 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline
