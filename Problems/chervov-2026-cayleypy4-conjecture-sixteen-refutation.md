@@ -64,10 +64,12 @@ formula gave `3` at `L = 2`, `N = 5`.
 ## Evidence
 
 Exact breadth-first search for `5 ≤ N ≤ 11` and `2 ≤ L ≤ N` finds the
-`k = 4` clause wrong exactly at `(L, N) = (2, 5), (3, 5), (3, 6), (5, 6),
-(6, 7), (2, 8), (6, 8), (8, 9), (9, 10), (2, 11), (9, 11)`, each time with the
-true value one more than the formula and with `min(L, N − L) ≤ 3`; every pair
-with `L ≥ 4` and `N − L ≥ 4` in this range agrees.
+`k = 4` clause wrong at 13 pairs. At `(L, N) = (2, 5), (3, 5), (3, 6), (5, 6),
+(6, 7), (2, 8), (6, 8), (8, 9), (9, 10), (2, 11), (9, 11)` both the central
+eccentricity and the diameter exceed the formula by one. At `(3, 9)` and
+`(6, 9)` the central eccentricity equals the formula value 6 and the diameter
+is 7. Every mismatch has `min(L, N − L) ≤ 3`, and every pair with `L ≥ 4` and
+`N − L ≥ 4` in this range agrees under both readings.
 
 The canonical source is
 `D5/S3/Combinatorics/ShrunkenGrassmannianConjectureSixteenRefutation.lean`.
