@@ -123,10 +123,10 @@ precisely which directions the local description omits.
 [Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
 
 **03 · Build a result that holds beyond the examples.**
-Write a natural number as its unique sum of nonadjacent Fibonacci weights
-`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
-golden ratio, and call the resulting real value β(n). How far does this
-coordinate fail to preserve addition?
+Write a natural number n as its unique sum of nonadjacent Fibonacci weights
+`F₂ = 1, F₃ = 2, F₄ = 3, …`. Replace each weight Fᵢ by φⁱ, where φ is the
+golden ratio, to obtain β(n). How far does this coordinate fail to preserve
+addition?
 
 $$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
 
