@@ -2,7 +2,7 @@
 
 [Project overview](../README.md) · [Contribute](CONTRIBUTING.md) ·
 [Theory inputs](develop/theory/) · [Formal source](../D5/) ·
-[Research through 2027](#roadmap-2027)
+[Research directions](#research-directions)
 
 **The project's core is a scientific methodology through which AI can make
 its own discoveries, explore the geometry of logical truth, and give Turing
@@ -16,7 +16,7 @@ checked results to a shared network of knowledge. How to sustain the choice of
 valuable research questions remains a goal to investigate and evaluate.
 
 This guide sets out the project's vision, connects it to existing research,
-and gives a direction for continued work through 2027. It complements the
+and identifies open directions. It complements the
 [repository specification](develop/spec/golden-ledger-repo-spec.md); theory
 volumes and research plans do not acquire the status of formal proofs by
 appearing here.
@@ -189,32 +189,28 @@ failed proof attempt does not establish unprovability.
 [O-5 and O-6](../D5/X_Frontier/Hearts.lean) still have open obligations, and
 the project does not claim to have solved the Riemann hypothesis.
 
-<a id="roadmap-2027"></a>
+## Research directions
 
-## Research and documentation through 2027
+Research routes change as evidence reveals new connections and limits.
+Three questions guide the next work:
 
-This program covers the rest of 2026 and all of 2027, with research routes
-adjusted in response to evidence. The time windows organize reviews of
-progress; they do not schedule proofs of unresolved problems.
-
-| Period | Research focus | Evidence of progress and documentation |
+| Direction | Question to advance | Evidence of progress |
 | --- | --- | --- |
-| Rest of 2026 | Connect methodology, truth geometry and spacetime research to existing results; locate specific gaps | The homepage and this guide provide traceable theory, Lean and counterexample entry points. New claims distinguish models, assumptions, proved scope and unproved bridges. |
-| First half of 2027 | Evaluate AI's ability to select questions from observation blind spots, connect modules and revise research routes | Retain necessary experimental programs, data, comparison conditions and results for tasks specified in advance. Mathematical progress supplies reusable proofs or counterexamples. Capability claims in the documentation follow actual evaluation. |
-| Second half of 2027 | Develop interfaces connecting time, space, shared sources, operations and recovery | Test reconstruction, gluing, error and resource bounds in explicit models. Document supported correspondences in the relevant theory and formalization guides; keep unfinished bridges as research questions. |
+| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments on tasks specified in advance, with comparison conditions and reproducible results; reusable proofs or counterexamples where mathematical claims are made. |
+| Geometry of logical truth | Which maps connect proof dependencies, observation distinctions and recovery while preserving the relations needed by a target? | Explicit definitions and maps, proofs of the required preservation properties, and counterexamples locating missing conditions. |
+| Relational spacetime | Which shared sources and historical relations support reconstruction and legal composition at a given resolution and cost? | Reconstruction, gluing, error and resource bounds in stated models; supported correspondences and clearly identified open bridges to physics. |
 
-Iteration continues throughout these periods. When a new theorem,
-counterexample or reproducible experiment changes a conclusion, update its
-explanation. Each quarter, review whether the entry documents match actual
-results and adjust the questions for the next period. Correct existing theory
-volumes through additions; Git preserves history, while the documents retain
-current conclusions and their conditions.
+When a theorem, counterexample or reproducible experiment changes a conclusion,
+revise its explanation and the questions that follow from it. Keep these entry
+documents compact by replacing weaker explanations, removing repetition and
+linking to the detailed sources. Preserve the assumptions and boundaries needed
+to use each result. Correct existing theory volumes through additions; Git
+preserves history, while the entry documents present current understanding.
 
 An update has a concrete test: can readers find the definitions, check the
-stated results, see the remaining conditions, and use them to pose the next
-question? The program is not evidence that its intended results are already
-complete or that automated research or scheduled updates have been configured.
+stated results, see the remaining conditions, and use them to pose a better
+next question?
 
 Choose a verifiable task from the [contribution guide](CONTRIBUTING.md): improve
 an explanation, reproduce a counterexample, connect existing results, or
-advance a genuinely missing proof.
+advance a missing proof.

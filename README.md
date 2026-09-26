@@ -25,8 +25,8 @@ what an observer can recover.
 The project brings together philosophical inquiry, theory, experiments and
 Lean 4 formalization. Its ambition is broad; each proof establishes its exact
 statement under its declared assumptions. The [vision and research
-guide](docs/VISION.md) connects these ideas to existing work and the research
-program through 2027.
+guide](docs/VISION.md) connects these ideas to existing work and open research
+directions.
 
 ## Truth and computation
 
@@ -129,18 +129,18 @@ possible, at what resolution, and with what error and resource bounds.
 Identifying these models with physical spacetime, or deriving a physical
 holographic duality, remains outside the established results presented here.
 
-## Research through 2027
+## A continuing research program
 
-The program continues through 2027 along three connected directions: scientific
+The program follows three connected directions: scientific
 methods for AI to choose and test questions; the geometry of proof dependencies
 and observation limits; and spacetime models that retain the relations needed
 for reconstruction and lawful composition.
 
-The [research roadmap](docs/VISION.md#roadmap-2027) gives review periods and
-concrete evidence for progress. Updates should follow new proofs,
-counterexamples and reproducible experiments, revising explanations when the
-evidence changes. The dates organize continued inquiry; they do not promise
-a completed autonomous scientist or a finished physical theory.
+The [research directions](docs/VISION.md#research-directions) state what evidence
+would count as progress. New proofs, counterexamples and reproducible
+experiments should sharpen the questions and improve the explanations.
+Each revision should make the same compact entrance more useful: clearer
+connections, stronger evidence and more precise boundaries.
 
 ## Information escape
 
