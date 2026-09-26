@@ -14108,3 +14108,344 @@ $$
 原 $E_2$ 的非空性与空性仍是开放问题。
 
 ## 追加锚（91 章后）
+
+## 92. 指数分辨率下的第三阶后验覆盖
+
+**定义 92.1（保留精确观测的扩展噪声范围）。** 沿用定义 90.1 的完整计数后验、
+精确中心、方差中心、有限截距和同一个 $Y=T+\sigma_MG$。
+固定原幅度和 $\beta\in(1/2,1)$，保持全部原取整与两种原实际实验，改取
+
+$$
+L_M=\ln(1/\sigma_M)\longrightarrow\infty,
+\qquad \limsup_M\frac{L_M}{Q^3}<\frac{c_q}{2},
+\qquad c_q=\frac{\phi(1-\beta)}{\beta}.
+\tag{92.1}
+$$
+
+这是一个充分范围，不宣称 $c_q/2$ 是必要阈值。
+仍以自然对数定义 $J_y,H_x(y),N_\varepsilon(x,y)$，并用
+$v=\ell_*/2$、$z=\Phi^{-1}(1-\varepsilon)$，其中 $\varepsilon\in(0,1)$ 固定。
+比较过程中出现的混合标量不替换实际观测，也不作为额外输出交给观察者。
+
+**定理 92.2（指数分辨率的常数阶覆盖公式）。** 在 (92.1) 下，第 90 章的公式仍成立：
+
+$$
+\ln N_\varepsilon(x,Y)
+=H_x(Y)+Q\sqrt v\,z-\ln Q
+ +\frac{z^2-1}{3}+\ln\varphi(z)-\frac12\ln v+o_{\mathbb P}(1).
+\tag{92.2}
+$$
+
+准确量词为：对任意 $\eta,\tau>0$，将余项绝对值超过 $\eta$ 的指标
+对原纤维预测密度 $f_x(y)$ 积分，该积分超过 $\tau$ 的实际数据概率趋零；
+对规定大小的固定真实支持一致，原 pair/path 实验分别成立。
+更强地，在下文共同良好数据事件上有 $k_x=vQ^2+o(Q)$，使
+
+$$
+Q\int f_x(y)\sup_{t\in\mathbb R}
+\left|\Pr_x\{J_y-H_x(y)\le t\mid Y=y\}-F_{k_x}(t)\right|dy
+\longrightarrow0
+\tag{92.3}
+$$
+
+在同一实际数据概率意义下成立；$F_k$ 是 $\operatorname{Gamma}(k,1)-k$ 的 CDF。
+本结论不把输出积分收敛升级为每个输出或无界余项期望收敛。
+
+证明。第 90 章中不依赖噪声的完整向量密度比较、过渡组计数和中心信息矩继续适用。
+其移动大核心的任意逆噪声估计 (90.11) 只在原范围内使用，不能直接外推到 (92.1)。
+这里改用对数大小的能量核心、经典的精确阶二项量化耦合，以及先联合比较再中心化的顺序。
+
+**紧参数二项量化的精确阶。** Bonis 的有限 Wasserstein 中心极限定理
+给出：若 $K\sim\operatorname{Bin}(n,p)$、$p\in[1/4,3/4]$，
+$d=np(1-p)$，则同一单调量化耦合
+$K=F_{n,p}^{-1}(U)$、$Z=\Phi^{-1}(U)$ 满足，对每个固定 $m\ge2$，
+
+$$
+\left\|\frac{K-np}{\sqrt d}-Z\right\|_m\le C_m d^{-1/2}.
+\tag{92.4}
+$$
+
+适用性直接核对如下：将标准化 Bernoulli 和代入原 Theorem 1、式 (9)，
+其均值为零、方差为一，所需四阶及 $(m+2)$ 阶矩在此 $p$ 区间一致有界，
+原常数只依赖 $m$。一维单调量化最小化每个凸代价 $|u-v|^m$，
+故同一个耦合可同时实现这些界；不同组使用独立均匀变量。
+这引用的是成熟的有限定理，不是新增的一般耦合结果。
+取 $m=4$，结合一致四阶矩得
+
+$$
+\|X^2-Z^2\|_2\le\|X-Z\|_4\|X+Z\|_4\le Cd^{-1/2},
+\qquad X=(K-np)/\sqrt d.
+\tag{92.5}
+$$
+
+**仅对能量的对数核心作正态替换。** 记 $\delta=Q^{-1/2}$、$B^2=q/Q^{5/2}$，
+并沿用 $U_j=(R_j-C_jp_j)/B$、$v_j=C_jp_j(1-p_j)/B^2$、
+$e_j=(\mu_j-C_jp_j)/B$、$V_D=\sum_Dv_j$、$V=V_{K_M}$。
+设 $L_x=dP_x/d\mathsf Q_x$，$a_x=\|L_x-1\|_2$。
+已证有限界为 $0<L_x\le C$、$a_x=O_{\mathbb P}(Q^{-5/2})$、
+$\|e_D\|\le a_x\sqrt{V_D}$、$V=O_{\mathbb P}(1)$。
+在良好事件上 $a_x$ 另有固定上界。
+
+选足够大的固定 $D$，令
+
+$$
+H_M^2=D\ln Q,\qquad
+\mathcal H=\{j:|j\delta|\le H_M\},\qquad
+m_H=|\mathcal H|=O(Q^{1/2}\sqrt{\ln Q})=o(Q).
+\tag{92.6}
+$$
+
+原 Poisson 率在均值附近有正定 Hessian，故核心内
+$f_j\ge c\lambda^{-1}e^{-C(j\delta)^2}$。
+原 $\ln q=c_qQ^3+O(1)$ 与实际一行／两行方差界给
+
+$$
+\min_{j\in\mathcal H}m_j\ge e^{c_qQ^3}Q^{-C_D},
+\qquad
+d_{\min,\mathcal H}:=\min_{j\in\mathcal H}C_jp_j(1-p_j)
+\ge e^{c_qQ^3}Q^{-C_D}
+\tag{92.7}
+$$
+
+在共同良好事件成立。具体地，$C_j/m_j\in[1/2,3/2]$ 在核心同时成立的失败概率
+至多 $CQ^2(Q^{C_D}e^{-c_qQ^3}+e_{\rm row})\to0$；
+再交校准事件 $p_j\in[1/4,3/4]$。
+此处保留完整指数 $c_q$，没有将其降成一个固定分数。
+
+在同一扩充乘积空间上只替换核心能量，外部仍使用原二项计数：
+
+$$
+T^{\rm mix}=\delta^{-1/2}
+\left\{\sum_{\mathcal H}(\sqrt{v_j}Z_j-e_j)^2
+       +\sum_{\mathcal H^c}(U_j-e_j)^2-V\right\}.
+\tag{92.8}
+$$
+
+由 (92.5) 及 $\sum_{\mathcal H}|e_j|\sqrt{v_j}\le a_xV_{\mathcal H}$，
+三角不等式给
+
+$$
+\begin{aligned}
+b_x:=\|T-T^{\rm mix}\|_{2,\mathsf Q_x^{\rm ext}}
+&\le C\delta^{-1/2}(1+a_x)V_{\mathcal H}d_{\min,\mathcal H}^{-1/2}\\
+&\le Q^{C_D'}(1+a_x)V e^{-c_qQ^3/2}.
+\end{aligned}
+\tag{92.9}
+$$
+
+因此，令 $\theta_x=b_x/\sigma_M$，对每个固定 $A\ge0$ 都有
+$Q^A\theta_x\to0$，一致地在实际数据概率下成立。
+理由是 (92.1) 给固定 $\eta_0>0$ 使
+$L_M\le(c_q/2-\eta_0)Q^3$；限制 $V\le Q$ 的代价趋零后，
+余下上界为多项式乘 $e^{-\eta_0Q^3}$。
+以下只支付 $b_x/\sigma_M$ 及其平方，不支付 $b_x/\sigma_M^2$。
+
+最终核心参考保留外部精确中心的截距：
+
+$$
+\begin{aligned}
+T_H^{\rm G}
+&=\delta^{-1/2}\left\{
+\sum_{\mathcal H}(\sqrt{v_j}Z_j-e_j)^2-V_{\mathcal H}
+                 +\|e_{\mathcal H^c}\|^2\right\},\\
+E_O:=T^{\rm mix}-T_H^{\rm G}
+&=\delta^{-1/2}\sum_{\mathcal H^c}(U_j^2-v_j-2e_jU_j).
+\end{aligned}
+\tag{92.10}
+$$
+
+故 $\mathbb E_{\mathsf Q_x}|E_O|
+\le C\delta^{-1/2}(1+a_x)V_O$，$O=\mathcal H^c$。
+原实际行界在确定性计数线上给
+
+$$
+\sup_{S_0}\mathbb E_{S_0}V_O
+\le Ce^{-c_{\rm tail}H_M^2}+Q^Ce^{-cQ^3}.
+\tag{92.11}
+$$
+
+窗口与计数线只在共同截断事件上识别，坏事件仍仅以概率删除。
+取 $D>200/c_{\rm tail}$ 即足以支付后续多项式误差；尾部不除以噪声。
+
+**联合比较保留外部信息与能量的相关。** 取 (90.6) 的大组集 $\mathcal B_x$。
+仍有 $N_x=\ell_*Q^2+O(1)$、核心包含于大组集，以及
+
+$$
+\mathcal S=-\ln\mathsf Q_x(R),\quad
+\widetilde h=\mathbb E\mathcal S,\quad s=\mathcal S-\widetilde h,
+\quad S_B=\frac12\sum_{\mathcal B_x}(Z_j^2-1),
+\quad s_b=\sum_{\mathcal B_x^c}s_j,
+\qquad \|s-S_B-s_b\|_2\le CQ^{-98}=:\varepsilon_s.
+\tag{92.12}
+$$
+
+每个外部大组的原计数仍是同一量化均匀变量的像；它没有被独立重抽。
+非大组仅有 $O(1)$ 个非空组，故 $s_b$ 的中心二阶、四阶矩有界；
+$\mathbb Es^2\le CQ^2$、$\mathbb Es^4\le CQ^4$。
+
+第 90 章已证明，对核心的
+$S_H=\frac12\sum_{\mathcal H}(Z_j^2-1)$，
+$(S_H,T_H^{\rm G})$ 的联合密度 $p_H$ 满足
+
+$$
+\|\partial_t p_H\|_{L^1(ds\,dt)}\le C\delta^{-1/2}.
+\tag{92.13}
+$$
+
+所需统一非退化性仅使用趋向两个不同空间位置的 64 对正态坐标，
+其 $v_j/\delta$ 分居两个正的分离区间，而 $e_j/\sqrt{v_j}\to0$。
+对应梯度 Gram 行列式的小值概率至多 $Ct^{16}$，
+足够的逆矩给二维分部积分；余下独立坐标卷积不增导数 $L^1$ 范数。
+这个有限维条件与噪声无关，在当前核心仍成立。
+
+使用同一个独立测量正态 $G$，记
+
+$$
+K=S_B+s_b+G^2/2,\qquad
+Y_m=T^{\rm mix}+\sigma_MG,\qquad Y_H=T_H^{\rm G}+\sigma_MG.
+\tag{92.14}
+$$
+
+条件于所有外部计数、量化变量和 $G$ 后，
+从 $(K,Y_H)$ 到 $(K,Y_m)$ 仅将第二坐标平移 $E_O$。
+这保留了 $E_O$ 与外部信息量之间的相关，因而 (92.13) 给
+
+$$
+e_H:=d_{\rm TV}(\mathcal L(K,Y_m),\mathcal L(K,Y_H))
+\le C\delta^{-1}(1+a_x)V_O=o_{\mathbb P}(Q^{-40}).
+\tag{92.15}
+$$
+
+两律各自的 $K$ 二阶矩均至多 $CQ^2$。
+用差测度被两律之和支配及 Cauchy–Schwarz，
+它们的未归一化一阶矩输出密度之差的 $L^1$ 范数至多 $CQ\sqrt{e_H}$。
+中间输出 $Y_m$ 一般仍依赖外部信息量，不能在它处使用独立 Gamma 密度界。
+
+**先合成联合比较，再作条件中心化。** 在共同潜变量／输出空间定义
+
+$$
+d\mu_A=L_x(R)d\mathsf Q_x^{\rm ext}\varphi_{\sigma_M}(y-T)dy,
+\qquad
+d\mu_m=d\mathsf Q_x^{\rm ext}\varphi_{\sigma_M}(y-T^{\rm mix})dy.
+\tag{92.16}
+$$
+
+若 $D_1=\mathbb E|T-T^{\rm mix}|\le b_x$，则
+$d_{\rm TV}(\mu_A,\mu_m)\le C(a_x+D_1/\sigma_M)=:e_1$。
+在此共同空间上置
+
+$$
+g_A=(y-T)/\sigma_M,\quad g_m=(y-T^{\rm mix})/\sigma_M,
+\quad K_A=-\ln P_x(R)-\widetilde h+g_A^2/2,
+\quad \bar K=S_B+s_b+g_m^2/2.
+\tag{92.17}
+$$
+
+精确 Bayes 恒等式使
+$J_y-H_x(y)=K_A-\mathbb E_{\mu_A}[K_A\mid y]$。
+由 $P_x=L_x\mathsf Q_x$、$L_x\le C$ 和
+$\mathbb E_{P_x}(\ln L_x)^2\le Ca_x^2$，
+
+$$
+\epsilon_1:=\mathbb E_{\mu_A}|K_A-\bar K|
+\le C(a_x+\varepsilon_s+\theta_x+\theta_x^2).
+\tag{92.18}
+$$
+
+残差项用 $|g_A^2-g_m^2|\le
+2|g_A||T-T^{\rm mix}|/\sigma_M+|T-T^{\rm mix}|^2/\sigma_M^2$。
+这是直接的权重误差界，没有把不同残差的图像任意附加到 TV 比较。
+将 (92.16) 经同一 $(\bar K,y)$ 映射，再接 (92.15)，得到
+
+$$
+d_{\rm TV}(\mathcal L_{\mu_A}(\bar K,Y),\mathcal L(K,Y_H))
+\le e:=e_1+e_H.
+\tag{92.19}
+$$
+
+设 $A_A,A_H$ 是 $K_A,K$ 各自在自己联合律下的未归一化一阶矩输出密度。
+对中心信息量换律付 $C(Qa_x+a_x)$；平移核付
+$CQ\sqrt{D_1/\sigma_M}$，因为核的 $L^1$ 距离至多
+$\min(2,C|T-T^{\rm mix}|/\sigma_M)$，其平方期望至多 $CD_1/\sigma_M$。
+对残差平方，使用
+$\psi_\sigma(t)=(t/\sigma)^2\varphi_\sigma(t)$，
+$\int\psi_\sigma=1$、$\|\psi_\sigma'\|_1\le C/\sigma$。
+结合 (92.12)、(92.15)，得
+
+$$
+w:=\|A_A-A_H\|_1
+\le C\left[Qa_x+a_x+Q\sqrt{D_1/\sigma_M}
+ +\varepsilon_s+D_1/\sigma_M+Q\sqrt{e_H}\right].
+\tag{92.20}
+$$
+
+两个自己律下的二阶矩 $\mathbb E_{\mu_A}K_A^2+\mathbb EK^2\le CQ^2$
+由中心信息矩和正态四阶矩直接推出。整个比较没有出现 $Q^5$ 的未中心化熵因子。
+
+现用如下有限条件比较。若律 $A$ 有 $(U,\bar U,Y)$，律 $B$ 有 $(W,Y')$，
+$(\bar U,Y)$ 与 $(W,Y')$ 的 TV 至多 $e$，
+$\mathbb E_A|U-\bar U|\le\epsilon$，各自二阶矩之和至多 $CQ^2$，
+一阶矩输出密度之差的 $L^1$ 范数至多 $w$，且最终 $W\mid Y'=y$ 的密度至多 $C/Q$，则
+
+$$
+\int f_A(y)d_K\left(
+\mathcal L_A(U-\mathbb E_A[U\mid y]\mid y),
+\mathcal L_B(W-\mathbb E_B[W\mid y]\mid y)\right)dy
+\le C\left[e+\epsilon/t_0+t_0/Q+w/Q+\sqrt e\right]
+\tag{92.21}
+$$
+
+对每个 $t_0>0$ 成立。证明为：积分条件 TV 至多 $Ce$，
+$|U-\bar U|>t_0$ 的积分概率至多 $\epsilon/t_0$，
+余下阈值平移经最终密度支付 $Ct_0/Q$。
+比较均值时取 $h_0=\min(f_A,f_B)$，有
+
+$$
+h_0\left|\frac{A_A}{f_A}-\frac{A_B}{f_B}\right|
+\le|A_A-A_B|+(f_A-h_0)\left|\frac{A_A}{f_A}\right|
+ +(f_B-h_0)\left|\frac{A_B}{f_B}\right|.
+\tag{92.22}
+$$
+
+后两项各以自己律下的二阶矩及输出 TV 界支付 $CQ\sqrt e$；
+再用最终密度平移中心即得 (92.21)。这是合成联合比较后才适用的中心化步骤。
+
+在最终 $Y_H$ 处，核心以外的大组正态信息
+$\frac12\sum_{\mathcal B_x\setminus\mathcal H}(Z_j^2-1)$
+独立于 $Y_H$、核心、非大组计数和 $G$，是中心 Gamma，形状
+
+$$
+k_x=(N_x-m_H)/2=vQ^2+o(Q).
+\tag{92.23}
+$$
+
+其密度至多 $C/Q$，与余下条件变量卷积仍保此界。
+故将 (92.18)–(92.20) 代入 (92.21)，取 $t_0=Q^{-1/2}$，
+每一项都是 $o_{\mathbb P}(1/Q)$。
+例如最慢的 $\sqrt e=O_{\mathbb P}(Q^{-5/4})$
+以及 $t_0/Q=Q^{-3/2}$ 均满足这一要求。
+
+最终剩余的中心化条件变量为
+$S_H+s_b+G^2/2-\mathbb E[S_H+s_b+G^2/2\mid Y_H]$，
+其条件方差积分至多 $C(m_H+1)$。
+Gamma 密度导数上界为 $C/Q^2$；条件中心化消去一次 Taylor 项，
+故它对 CDF 的积分影响至多 $C(m_H+1)/Q^2=o(1/Q)$。
+这证明 (92.3)。第 90 章的 Gamma 分位数展开、有界变差计数核和并列组界
+只需要这个精度及 $\sqrt{k_x}=Q\sqrt v+o(1)$，因此直接给出 (92.2)。
+特别地，计数核总变差为二，将 CDF 误差转成 $o(1/Q)$ 的计数边界误差；
+最大并列质量也至多该连续比较误差的两倍，没有遗漏整数覆盖修正。证毕。
+
+**注记 92.3（范围与归属）。** 本章扩展的是精确熵中心下的覆盖与条件 Gamma 比较。
+旧信息增益、熵响应、密度上确界或方差损失结论并未因此自动扩展到 (92.1)：
+例如付 $D_1/\sigma_M^2$ 的核密度估计尚未由本章支付。
+同样没有宣称零噪声、阈值锐性、所有输出、误差水平趋端点或有效解码。
+固定支持的实际联合输出评价仍只通过第 90 章的精确置换不变性转移；
+给定数据和已知固定支持的单一正态输出律不等于 $f_x$。
+未知方向沿用同一事件上的整个纤维与观测一致性，不新造方向后验。
+
+经典量化、密度分部积分及第三阶源编码各归其原文。
+新增推导在于只正态替换对数能量核心、保留外部真实计数关系，
+并在最终参考处统一处理信息量、输出与精确条件中心。
+当前是普通数学推导，未声称 Lean 核验。
+
+## 追加锚（本行以下为增补区）
