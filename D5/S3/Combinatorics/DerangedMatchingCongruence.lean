@@ -20,7 +20,7 @@ admission_basis: open-problem-resolution (issue #10354)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
-import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
 import Mathlib.Data.Nat.Periodic
 import Mathlib.Tactic.LinearCombination
@@ -75,23 +75,14 @@ theorem result : claim := by
   -- Pascal
   have c_succ : ∀ n, c (n + 1) = c n - d n := by
     intro n
-    rw [c_shift (n + 1), c_shift n]
-    unfold d
-    simp only [Nat.choose_succ_succ', Nat.cast_add, mul_add, add_mul, Finset.sum_add_distrib]
-    rw [Finset.sum_range_succ (fun k => (-1 : ℤ) ^ (k + 1) * (n.choose (k + 1) : ℤ) *
-      ((2 * k + 1)‼ : ℤ)) n]
-    have hlast : (-1 : ℤ) ^ (n + 1) * (n.choose (n + 1) : ℤ) * ((2 * n + 1)‼ : ℤ) = 0 := by
-      simp [Nat.choose_succ_self]
-    rw [hlast]
-    have hneg : ∑ k ∈ Finset.range (n + 1), (-1 : ℤ) ^ (k + 1) * (n.choose k : ℤ) *
-        ((2 * k + 1)‼ : ℤ) = -∑ k ∈ Finset.range (n + 1), (-1 : ℤ) ^ k * (n.choose k : ℤ) *
-        ((2 * k + 1)‼ : ℤ) := by
-      rw [← Finset.sum_neg_distrib]
-      apply Finset.sum_congr rfl
-      intro k _
-      ring
-    rw [hneg]
-    ring
+    have h := Finset.sum_choose_succ_mul (R := ℤ) (fun i _ => (-1 : ℤ) ^ i * ((2 * i - 1)‼ : ℤ)) n
+    unfold c d
+    rw [sub_eq_add_neg, ← Finset.sum_neg_distrib]
+    convert h using 1
+    · exact Finset.sum_congr rfl fun k _ => by ring
+    · congr 1
+      · exact Finset.sum_congr rfl fun k _ => by ring
+      · exact Finset.sum_congr rfl fun k _ => by rw [two_succ]; ring
   -- the second relation: `d (n + 1) = c (n + 1) - 2 (n + 1) d n`
   have d_succ : ∀ n, d (n + 1) = c (n + 1) - 2 * (n + 1) * d n := by
     intro n
