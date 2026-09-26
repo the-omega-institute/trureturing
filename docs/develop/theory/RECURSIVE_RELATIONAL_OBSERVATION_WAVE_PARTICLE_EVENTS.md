@@ -2700,3 +2700,426 @@ $$
 本批只给纯理论定义、推导、反例与来源对应。有限来源的支撑覆盖是已给定模型条件，不能从有限次实验无误认证；完成记录数也不等于确定的仪器调用预算。时间均以轮数计，物理秒数需要额外钟标定。本文没有新增 Lean 证明、消化覆盖或冻结结果。
 
 ## 追加锚（本行以下为增补区）
+
+## 50. 随机截止把等待过程变成一份可操作的生成函数
+
+第 45—49 节说明：完整等待律连续，不足以保证无界时间均值连续。本批增加一个实际控制接口——每次未点击后，以固定概率结束本轮实验。它使平均运行成本有限，并把事件时间律变成一族有理响应。以下保持已声明的有限维完整记忆与固定仪器，不改判既有条目。
+
+**定义 50.1（独立几何截止）。** 设每轮原始仪器由未点击 CP 分支 $\mathcal N$ 与点击分支 $\mathcal C_x$ 组成，各分支允许不同的后继空间，并满足 $\operatorname{Tr}\mathcal N(Y)+\sum_x\operatorname{Tr}\mathcal C_x(Y)=\operatorname{Tr}Y$。沿用
+
+$$
+\mathcal A=\mathcal N^*,\qquad
+B=\sum_x\mathcal C_x^*(I)=I-\mathcal A(I),\qquad
+E_n=\mathcal A^{n-1}(B).
+$$
+
+本批对各端口选固定的 CPTP 终端读出 $\Lambda_x$，不依赖点击轮数；共同有限输出空间为 $\mathcal K$，并保留与点击输出正交的截止旗标 $|\partial\rangle$。这是第 38 节允许接口的一种特殊情形。
+
+给定 $0<\eta\le1$，置 $q=1-\eta$。每次至少执行一轮原始仪器；点击则结束，未点击后才抛独立硬币，以概率 $\eta$ 截止，以概率 $q$ 继续。等价地，可预先独立抽取
+
+$$
+\Pr(\mathsf M=m)=\eta q^{m-1},\qquad m=1,2,\ldots,
+$$
+
+运行到首次点击或第 $\mathsf M$ 轮；同轮点击优先于截止。若原始过程永不点击，记原始轮数为 $\mathsf N=\infty$，实际调用次数仍为 $\min\{\mathsf N,\mathsf M\}$。
+
+硬币独立性、其概率标定及重新使用同一仪器，都是操作合同。这里没有在未点击后重新准备初态，因而不是重启协议。每轮相同的硬币规则无需先存储一个无界整数；本批也不要求保留全部原始时间标签。成本只计原仪器调用次数，不含初态制备、硬币生成、终端读出或秒数；期望成本的上界也不等于确定的最大轮数。
+
+**定理 50.2（截止后的完整仪器与终端通道）。** 一轮扩展仪器可写成
+
+$$
+\text{继续}:q\mathcal N,\qquad
+\text{点击 }x:\Lambda_x\mathcal C_x,\qquad
+\text{截止}:Y\longmapsto\eta\operatorname{Tr}[\mathcal N(Y)]|\partial\rangle\langle\partial|.
+$$
+
+它是完整 CP 仪器，且以概率一终止。最终通道为
+
+$$
+\boxed{
+\Psi_\eta(Y)=
+\left[\sum_{n\ge1,x}q^{n-1}
+ \Lambda_x\mathcal C_x\mathcal N^{n-1}(Y)\right]
+\oplus\operatorname{Tr}[(I-G_\eta)Y],
+\qquad
+G_\eta=\sum_{n\ge1}q^{n-1}E_n.
+}
+$$
+
+其中 $0\le G_\eta\le I$ 是截止前实际点击的效果。
+
+证明。三类分支均 CP；其迹之和为
+
+$$
+q\operatorname{Tr}\mathcal N(Y)
++\sum_x\operatorname{Tr}\mathcal C_x(Y)
++\eta\operatorname{Tr}\mathcal N(Y)=\operatorname{Tr}Y.
+$$
+
+连续 $m$ 轮仍未终止的概率为 $q^m\operatorname{Tr}\mathcal N^m(\rho)\le q^m$，故终止概率为一。首次点击在第 $n$ 轮须先经历 $n-1$ 次未点击且硬币均允许继续，因而分支权重为 $q^{n-1}$。这些分支的迹给 $G_\eta$；其余质量进入正交旗标，得到保迹终端通道。$\square$
+
+这里的 $\partial$ 只表示本次被截止，没有认证原始仪器永不点击。它与第 38 节的未解决旗标使用相同输出位置，便于比较；含义仍由实际运行协议决定。
+
+**定理 50.3（点击响应与运行成本的预解式）。** 定义实际调用次数的期望效果 $\mathsf C_\eta$，即
+
+$$
+\mathbb E_\rho\min\{\mathsf N,\mathsf M\}
+=\operatorname{Tr}(\rho\mathsf C_\eta).
+$$
+
+则
+
+$$
+\boxed{
+G_\eta=(\operatorname{id}-q\mathcal A)^{-1}(B),\qquad
+\mathsf C_\eta=(\operatorname{id}-q\mathcal A)^{-1}(I)
+=\sum_{m\ge0}q^mS_m,
+}
+$$
+
+并有
+
+$$
+\boxed{
+I\le\mathsf C_\eta\le\frac I\eta,\qquad
+I=qG_\eta+\eta\mathsf C_\eta.
+}
+$$
+
+因此只要硬币合同已知，截止前点击概率 $a_\eta=\operatorname{Tr}(\rho G_\eta)$ 就确定平均调用成本
+
+$$
+\boxed{c_\eta=\frac{1-q a_\eta}{\eta}.}
+$$
+
+证明。$\mathcal A$ 正且次保单位；在 Hermitian 算子的算子范数下是收缩，因为 $-I\le H\le I$ 推出 $-I\le\mathcal A(H)\le I$。故 $q<1$ 时 Neumann 级数收敛，给出两份逆算子表达。
+
+实际调用次数严格超过 $m$ 的概率为 $q^m\operatorname{Tr}(\rho S_m)$。对 $m\ge0$ 求和得到成本式。由 $S_0=I$、$0\le S_m\le I$ 得两侧界。
+
+最后
+
+$$
+(\operatorname{id}-q\mathcal A)(I)=\eta I+qB.
+$$
+
+作用逆算子即得恒等式，取迹得到标量成本。$\eta=1$ 时 $q=0$，本协议只运行一轮，所有式子仍成立。$\square$
+
+## 51. 永久未点击与有限点击时间矩，是同一成本的两部分
+
+**定理 51.1（截止成本的极点与有限部分）。** 对每一个固定模型，沿用 $F=\lim_mS_m$、$R_m=S_m-F$、$T=\sum_{m\ge0}R_m$。则
+
+$$
+\boxed{
+\mathsf C_\eta
+=\frac F\eta+\sum_{m\ge0}q^mR_m,
+\qquad
+\lim_{\eta\downarrow0}\eta\mathsf C_\eta=F,
+\qquad
+\lim_{\eta\downarrow0}
+\left(\mathsf C_\eta-\frac F\eta\right)=T.
+}
+$$
+
+极限均为算子范数极限。第一项 $F/\eta$ 来自原始过程永久未点击的质量；第二项趋向本卷把永不点击记为零的有限点击时间矩。
+
+证明。将 $S_m=F+R_m$ 代入第 50.3 条，常数项求几何级数即得分解。第 19、43 节对每个固定有限模型给出正级数 $T=\sum_mR_m$ 的收敛。有限维下
+
+$$
+\sum_m\|R_m\|_\infty
+\le\sum_m\operatorname{Tr}R_m=\operatorname{Tr}T<\infty.
+$$
+
+对这个可和上界作有限前缀与尾项分解，$q\uparrow1$ 时得到 $\sum_mq^mR_m\to T$。此外该正和不超过 $T$，所以乘以 $\eta$ 后趋零，给第一个极限。$\square$
+
+对固定初态，若 $\operatorname{Tr}(\rho F)>0$，实际截止成本按 $\operatorname{Tr}(\rho F)/\eta$ 发散；若该权重为零，成本趋向有限点击均值。这与把原始无穷等待赋值为无穷的扩展期望相容，也说明不能把有限点击时间矩误当作所有实际轨迹的完整成本。
+
+**定理 51.2（几何截止的精确输出偏差）。** 将第 38 节最终通道 $\Phi_\infty$ 特殊化为同一族 $\Lambda_x$ 读出，采用共同旗标，则
+
+$$
+\boxed{
+\delta(\Phi_\infty,\Psi_\eta)=\|R-G_\eta\|_\infty,
+\qquad
+0\le R-G_\eta\le\eta(T-R).
+}
+$$
+
+这里 $\delta$ 是含任意有限参考系统的半 diamond 距离。
+
+证明。点击块中，无穷输出减去截止输出，恰是把第 $n$ 轮首次点击分支乘以 $1-q^{n-1}\ge0$ 后求和；它是 CP 映射，效果为
+
+$$
+R-G_\eta=\sum_{n\ge1}(1-q^{n-1})E_n.
+$$
+
+旗标块差为相反号，带参考时仍为等迹的正、负正交块。第 38.2 条的同一证明给出精确半 diamond 范数。由
+
+$$
+1-(1-\eta)^{n-1}\le\eta(n-1)
+$$
+
+及 $\sum_n(n-1)E_n=T-R$，得到算子序界。$\square$
+
+这条偏差界按同一个模型的 $T-R$ 计量。单个模型的有限性不提供跨模型的统一常数，也不自动说明减去极点以后，有限部分对装置校准连续。
+
+## 52. 截止提高稳定性，同时引入可量化的偏差
+
+**定理 52.1（完整仪器校准对随机截止输出的控制）。** 比较两个具有相同端口、相同终端读出和相同截止概率的原始仪器，记其带记录通道的半 diamond 距离为 $\delta_0$。则
+
+$$
+\boxed{
+\delta(\Psi_\eta^I,\Psi_\eta^J)
+\le\min\{1,\delta_0/\eta\},
+}
+$$
+
+以及
+
+$$
+\boxed{
+\|\mathsf C_\eta^I-\mathsf C_\eta^J\|_\infty
+\le\frac q\eta\min\{1,\delta_0/\eta\}.
+}
+$$
+
+证明。以同一独立截止 $\mathsf M$ 对第 38 节有限删失通道混合，得
+
+$$
+\Psi_\eta=\sum_{m\ge1}\eta q^{m-1}\Phi_m.
+$$
+
+这是归一化几何权重的通道混合，级数在通道范数中收敛。第 35、38 节给 $\delta(\Phi_m^I,\Phi_m^J)\le m\delta_0$；凸性与 $\mathbb E\mathsf M=1/\eta$ 给第一界，再与距离不超过一合并。
+
+共同点击旗标检验给 $\|G_\eta^I-G_\eta^J\|_\infty\le\delta(\Psi_\eta^I,\Psi_\eta^J)$。第 50.3 条的恒等式直接给
+
+$$
+\mathsf C_\eta^I-\mathsf C_\eta^J
+=-\frac q\eta(G_\eta^I-G_\eta^J),
+$$
+
+推出第二界。$\square$
+
+**命题 52.2（两种截止敏感度的阶数均可达到）。** 即使只有一维活动空间，固定 $0<\eta<1$ 时，输出对校准误差的一阶系数 $1/\eta$ 与成本的一阶系数 $q/\eta^2$ 都不能在整个模型类上统一降低。
+
+证明。比较每轮从不点击的仪器与每轮以概率 $0<\varepsilon\le1$ 点击的仪器。其未点击分支分别为恒等与 $(1-\varepsilon)\operatorname{id}$，点击分支分别为零与 $\varepsilon\operatorname{id}$；完整带记录通道距离为 $\varepsilon$。使用共同标量点击输出，则
+
+$$
+G_\eta^0=0,\qquad
+G_\eta^\varepsilon=\frac{\varepsilon}{\eta+q\varepsilon},
+\qquad
+\mathsf C_\eta^0=\frac1\eta,\qquad
+\mathsf C_\eta^\varepsilon=\frac1{\eta+q\varepsilon}.
+$$
+
+所以
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{\delta(\Psi_\eta^0,\Psi_\eta^\varepsilon)}{\varepsilon}
+=\frac1\eta,
+\qquad
+\lim_{\varepsilon\downarrow0}
+\frac{|\mathsf C_\eta^0-\mathsf C_\eta^\varepsilon|}{\varepsilon}
+=\frac q{\eta^2}.
+$$
+
+$\square$
+
+**推论 52.3（已知成本尾预算下的偏差—校准分解）。** 若两个模型另满足
+
+$$
+\|T_I-R_I\|_\infty\le K_I,\qquad
+\|T_J-R_J\|_\infty\le K_J,
+$$
+
+则对每个 $0<\eta\le1$，
+
+$$
+\boxed{
+\delta(\Phi_\infty^I,\Phi_\infty^J)
+\le\min\{1,\delta_0/\eta+\eta(K_I+K_J)\}.
+}
+$$
+
+证明。在两个最终输出之间分别插入其截止输出，使用第 51.2、52.1 条与三角不等式。$\square$
+
+减小截止概率会降低每个固定模型的截止偏差，同时放大校准误差的系数。这里的 $K_I,K_J$ 必须来自已知模型或独立证书；不能由一批有限截止记录自动获得。公式给出在这份已知预算下选择 $\eta$ 的依据，不提供未知尾项的无条件认证。
+
+## 53. 有限维先验可以把整条事件时间律压进有限个精确截止读数
+
+这一节的读数是精确概率，不是有限实验样本。保持同一固定仪器在全部轮次重复，并把会影响后续的全部活动记忆计入维数上界。
+
+**定理 53.1（截止响应的有理次数界）。** 固定状态 $\rho$，把 $q=1-\eta$ 作为参数，定义
+
+$$
+a(q)=\operatorname{Tr}\!\left[\rho(\operatorname{id}-q\mathcal A)^{-1}(B)\right]
+=\sum_{n\ge1}q^{n-1}\operatorname{Tr}(\rho E_n),\qquad0\le q<1.
+$$
+
+若 $\dim\mathcal H\le d$、$D=d^2$，则存在实多项式 $P,Q$，满足
+
+$$
+\boxed{
+a(q)=\frac{P(q)}{Q(q)},\qquad
+\deg P\le D-1,\quad\deg Q\le D,\quad
+Q(q)\ne0\ (0\le q<1),\quad Q(0)=1.
+}
+$$
+
+零多项式 $P$ 也允许。对每个端口单独的截止点击概率，同样成立。
+
+证明。在 Hermitian 算子的实向量空间上选基，$\mathcal A$ 由一个阶数 $D_0=(\dim\mathcal H)^2\le D$ 的实矩阵 $A$ 表示。取 $Q(q)=\det(I-qA)$。第 50.3 条保证 $0\le q<1$ 时可逆，且 $Q(0)=1$。由伴随矩阵公式，$\operatorname{adj}(I-qA)$ 的各项次数不超过 $D_0-1$；与固定输入 $B$、输出泛函 $X\mapsto\operatorname{Tr}(\rho X)$ 配对，得到次数不超过 $D-1$ 的分子。端口版本只需换成 $B_x=\mathcal C_x^*(I)$。$\square$
+
+这里的 $d^2$ 来自密度算子的线性动力学空间，不是把概率生成函数等同于纯态振幅生成函数。若另有已知且已证明的较小线性实现维数，可对该维数应用同一论证；仅凭某些样本显示低秩还不构成这份先验。
+
+**定理 53.2（有限精确响应对完整事件律的充分性）。** 给定维数上界 $d$。两份符合上述合同的模型，各使用自己固定的初态。若它们在 $2d^2$ 个不同的 $q_i\in[0,1)$ 上具有相同 $a(q_i)$，则它们的全部首次点击轮数概率、永不点击概率和有限点击时间矩都相同。
+
+如果两模型有共同输入空间，且在这些点的整个效果 $G_{1-q_i}$ 相同，则它们对每个共同初态都具有相同的上述时间统计。若每个截止设置还分别给出各端口的精确点击概率，逐端口应用可恢复时间—端口联合分布；只有总点击概率不提供这份端口分解。
+
+证明。写两响应为 $P_1/Q_1$ 与 $P_2/Q_2$。多项式
+
+$$
+P_1Q_2-P_2Q_1
+$$
+
+次数不超过 $2d^2-1$，却在 $2d^2$ 个不同点为零，故恒为零。因此两有理函数在 $[0,1)$ 上相同。其在零点邻域的幂级数系数唯一，给出每个首次点击概率相同。总有限点击概率及其补数随之相同；逐项加权求和得到有限点击时间矩相同。
+
+效果版本对任意固定初态取迹即可；端口版本对每个 $B_x$ 重复上述推导。$\square$
+
+该结果给出一个充分的读数数量，不主张最少。它唯一确定指定来源的时间律，不唯一确定内部仪器、隐藏记忆或未知初态。相同时间律可以有不同内部实现；若要保留点击后的量子态，则还须保留相应的量子输出接口。
+
+**命题 53.3（没有维数上界时，有限截止读数甚至不能确定均值）。** 任给有限个不同的 $q_1,\ldots,q_r\in[0,1)$，$r\ge1$，存在两个有限支撑、最终必点击的等待律，使全部这些截止点击概率相同，但平均等待不同。它们可由同一维数、同一固定初态的有限 CP 仪器分别实现。
+
+证明。令
+
+$$
+h(z)=(z-1)\prod_{i=1}^r(z-q_i)
+=\sum_{n=1}^{r+2}\Delta_n z^{n-1}.
+$$
+
+则 $\sum_n\Delta_n=h(1)=0$，而
+
+$$
+\sum_{n=1}^{r+2}n\Delta_n
+=h'(1)+h(1)=\prod_{i=1}^r(1-q_i)>0.
+$$
+
+取足够小的 $a>0$，使
+
+$$
+p_n^\pm=\frac1{r+2}\pm a\Delta_n>0
+\qquad(1\le n\le r+2).
+$$
+
+它们都归一化。两概率生成函数之差为 $2ah(z)$，在每个 $q_i$ 为零，而两个均值之差为 $2ah'(1)>0$。
+
+为实现任意一份这样的 $p$，取基 $|0\rangle,\ldots,|r+1\rangle$，共同初态为 $|r+1\rangle$。单个点击标签的 Kraus 算子为
+
+$$
+\sqrt{p_1}|0\rangle\langle r+1|,\qquad |0\rangle\langle0|;
+$$
+
+单个未点击标签的 Kraus 算子为
+
+$$
+\sqrt{p_n}|n-2\rangle\langle r+1|\quad(2\le n\le r+2),
+\qquad
+|k-1\rangle\langle k|\quad(1\le k\le r).
+$$
+
+这些算子的伴随平方之和为 $I$。第一轮点击的概率为 $p_1$；否则以概率 $p_n$ 进入倒计时态 $|n-2\rangle$，再经 $n-2$ 次未点击移位和一次点击，总计第 $n$ 轮首次点击。所有轮次使用同一仪器，且两模型使用相同初态。$\square$
+
+这个实现的活动空间随有限读数数量增长；它没有违反第 53.2 条的已知维数上界。它说明维数证书必须覆盖实际可回流的记忆，不能只数外部可见端口，再把隐藏的倒计时装置排除在模型之外。
+
+## 54. 精确可恢复与稳定可恢复，在同一个量子比特上分开
+
+**定理 54.1（量子比特返回的随机截止响应）。** 对第 46 节的仪器和共同初态 $P_0$，有
+
+$$
+\boxed{
+a_\eta(\gamma)=1-\frac{\gamma\eta}{\eta+q\gamma},\qquad
+c_\eta(\gamma)=1+\frac{q\gamma}{\eta+q\gamma},
+\qquad q=1-\eta.
+}
+$$
+
+其中 $0\le\gamma\le1$、$0<\eta\le1$。特别地，
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}(1-a_\eta(\gamma))=\eta,
+\qquad
+\sup_{0\le\gamma\le1}|\mathbb E_\gamma\mathsf N-c_\eta(\gamma)|=1.
+}
+$$
+
+证明。将第 46.2 条的等待律代入生成函数：
+
+$$
+a_\eta(\gamma)
+=1-\gamma+\frac{q\gamma^2}{1-q(1-\gamma)}
+=1-\frac{\gamma\eta}{\eta+q\gamma}.
+$$
+
+零参数时也直接成立。成本式由第 50.3 条，或对 $q^m s_m$ 求和得到。
+
+函数 $\gamma\eta/(\eta+q\gamma)$ 随 $\gamma$ 单调增加，在 $\gamma=1$ 取得最大值 $\eta$。对正 $\gamma$，原始均值为二，故
+
+$$
+2-c_\eta(\gamma)=\frac{\eta}{\eta+q\gamma};
+$$
+
+固定 $\eta$ 后令正 $\gamma\downarrow0$，上确界为一。零参数时原始均值和截止成本都为一，差为零。$\square$
+
+这份来源上，截止前点击概率一致趋向一；实际成本却不能一致逼近原始均值。所有原始模型都最终必点击，所以这种非一致性完全不需要永久未点击质量。
+
+**命题 54.2（双参数极限具有连续的过渡层）。** 令 $\eta\downarrow0$，同时 $\gamma/\eta\to u\in[0,\infty]$。则
+
+$$
+\boxed{
+a_\eta(\gamma)\longrightarrow1,\qquad
+c_\eta(\gamma)\longrightarrow1+\frac{u}{1+u},
+}
+$$
+
+其中 $u=\infty$ 时分式解释为一。
+
+证明。点击概率结论由第 54.1 条的共同上界 $1-a_\eta\le\eta$。另有
+
+$$
+c_\eta-1=\frac{q(\gamma/\eta)}{1+q(\gamma/\eta)},
+$$
+
+而 $q\to1$，逐种 $u$ 取极限即得。$\square$
+
+因此先让模型退化与先移除截止并不交换；中间的任何有限比值都产生一个介于一与二之间的成本极限。它是探测变化与截止长度的相对尺度，不是物理秒本身出现分数化。
+
+**命题 54.3（有限精确识别不保证均值的稳健恢复）。** 固定任意有限个截止概率 $\eta_i>0$。当 $\gamma\downarrow0$ 时，响应向量
+
+$$
+\bigl(a_{\eta_1}(\gamma),\ldots,a_{\eta_r}(\gamma)\bigr)
+\longrightarrow(1,\ldots,1),
+$$
+
+而原始均值从正参数的二变为零参数的一。因此从这些精确响应向量到原始均值的正确恢复映射，在零模型的响应处不连续。即使在已知的这一参数族内，一个截止概率就已能精确区分零参数与正参数，这种不连续性仍成立。
+
+证明。第 54.1 条给 $0\le1-a_{\eta_i}(\gamma)\le\gamma$，所以向量收敛。对每个固定 $\eta_i>0$，$a_{\eta_i}(0)=1$，而全部正参数都有 $a_{\eta_i}(\gamma)<1$，因此精确区分成立。均值的两个取值使任何正确恢复映射都在极限点不连续。$\square$
+
+第 53.2 条的有限精确充分性与本命题没有矛盾：前者依靠无误的实数概率和已知有限维模型类，后者检验恢复映射对概率误差的稳定性。第 48 节已经给出固定数量完整返回记录的统计下界；本节没有把它擅自升级为任意相干输入、任意自适应控制或任意随机运行预算下的下界。
+
+## 55. 时间边界的充分性还需要给出精度与成本
+
+本批的“AHH”是：一份有限输出接口，可以通过改变一个已标定的截止概率，把整条无穷时间律编码进有理响应；在已知有限记忆上界时，有限个精确响应甚至足以唯一确定整条时间律。但对这些响应施加任意小误差以后，平均时间仍可能无法稳定恢复。信息是否足够、恢复是否连续、实验能否达到所需精度，是三件不同的事。
+
+随机截止还有一个直接物理含义：对每个固定模型，它把实际调用成本分成 $F/\eta$ 与趋向 $T$ 的有限部分。永久未点击权重决定前者，有限点击轨迹决定后者。故同一个操作族既能解释“永远等不到”的成本，也能展示“必然等到但均值不稳定”的限制。
+
+**说明 55.1（标准工具与本批证据范围）。** 本批使用 Neumann 级数、有限矩阵伴随公式、概率生成函数及多项式零点计数。仓内折扣可观测性 Lyapunov 方程与有限序列的 Hankel 实现源码已有相关线性结构；本批将这些工具连接到实际截止仪器、事件记录和运行成本，没有新增或编译这些推导的 Lean 应用。
+
+Mohammed Dahleh、Munther A. Dahleh、George Verghese 的 MIT 讲义 [*Lectures on Dynamic Systems and Control*，第 25.3 节](https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/resources/mit6_241js11_chap25/) 给出线性状态空间的有理传递函数 $H(z)=C(zI-A)^{-1}B+D$，式（25.11）—（25.12）连接其系数与 $CA^{n-1}B$。[第 10 章](https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/resources/mit6_241js11_chap10/) 式（10.20）—（10.21）给出相应的离散时间变换和预解式展开。
+
+第 53 节的精确对应是：$A$ 表示未点击伴随映射，$B$ 表示点击效果，$C$ 是固定初态的迹泛函，直通项 $D=0$；对 $q>0$，$a(q)=q^{-1}H(q^{-1})$。本文只沿原 CP 仪器到线性表示的方向使用这份对应；任意有理函数的线性实现并不自动具有 CP 性、完整仪器归一化或可实现的量子记忆。最小线性实现维数也不能未经证明就当成最小物理记忆维数。
+
+第 49.1 条所引 Grünbaum 等人的原文以酉返回振幅及其 Schur 函数描述返回过程；这里的 $G_\eta$ 是概率效果的生成函数，作用空间为 Hermitian 算子的线性空间，不能把二者的次数与量子化结论直接互换。第 53 节的有理次数界由本文的伴随矩阵证明承担。
+
+本批未声称取得未知装置的维数证书、截止概率校准、精确实数概率或统一尾预算。几何截止只中止当前实验；若要重启并重新准备初态，需要额外的制备与记忆重置合同。全部结论是纯理论文本，不宣称文献原创性、Lean 核验、消化覆盖或冻结。
+
+## 追加锚（本行以下为增补区）
