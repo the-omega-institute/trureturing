@@ -1,10 +1,6 @@
 schema_version = 4
 # Experimental programs, results, and licenses; recursive patterns cover report directories.
-# PR8899 report material is diagnostic, not a frozen proof or generated Lean certificate.
 files = [
-{ pattern = "Evidence/PR8899/*.json", require = ["filemap"], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Evidence/PR8899/*.md", require = ["filemap"], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["reader"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "Evidence/PR8899/*.py", require = ["filemap"], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.b64", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.c", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.cpp", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
