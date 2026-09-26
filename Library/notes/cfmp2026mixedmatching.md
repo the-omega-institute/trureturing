@@ -127,3 +127,128 @@ No new Lean, Scribe, admission, frozen-state or CI result accompanies this
 publication. Full CFMP, unrestricted minimum-six realization, arbitrary
 unequal-length transverse stars and torus-end completeness remain open
 obligations of the original research goal.
+
+## Continuation on 2026-09-26: Sections 70–74
+
+The preceding paragraphs describe the Sections 65–69 publication. This
+appendix records the subsequent results in the same theory continuation.
+The original strict-boundary setting and occurrence-counting conventions
+are retained. There is no new named external conjecture and no claim of
+worldwide mathematical priority.
+
+### Additional primary source and exact index check
+
+Roberto Frigerio and Marco Moraschini, *On volumes of truncated tetrahedra
+with constrained edge lengths*, arXiv:1801.05326v3, 11 April 2019, Section
+1.1, equations (1), (3), (4), printed page 6. The page image was inspected.
+It gives the angle-to-length cosine formula whose denominator reads the
+two endpoint VERTEX triples. The length-to-angle formula instead reads
+FACE triples; a general nonsymmetric computation must not interchange
+them. The paper's volume theorem under a lower-edge-length restriction
+is not being imported as a minimum-six realization result or as an
+unconditional bound on the angles used here.
+
+https://arxiv.org/abs/1801.05326
+https://arxiv.org/pdf/1801.05326
+
+Theorem 6.3 and Proposition 6.7 of Luo–Yang were rechecked in images of
+printed pages 21 and 22. Their common positive length realization and
+local concavity are existing inputs. Michael Joswig's *Projectivities in
+Simplicial Complexes and Colorings of Simple Polytopes*, arXiv:math/0102186,
+was checked at record/abstract level as colouring background only. No
+additional theorem is imported from an unread proof. The parity needed
+below is proved directly by actual oriented endpoint transport.
+
+https://arxiv.org/pdf/1404.5365
+https://arxiv.org/abs/math/0102186
+
+The Zhao arXiv record was checked again on 2026-09-26 and still lists v3.
+The general minimum-nine statement does not directly apply to the new
+six-degree examples. Repository CFMP PR search returned #9474 and #8155.
+These readings are bounded provenance checks, not exhaustive novelty tests.
+
+### New local estimates on six independent lengths
+
+For a genuine tetrahedron, let the two vertex-angle sums at an edge be
+at most sigma_1,sigma_2, both at most pi/2. The new written bound is
+
+`ell < asinh(tan(sigma_1/2)) + asinh(tan(sigma_2/2))`.
+
+At equal caps sigma the sharp supremum of cosh(ell) is
+`(3-cos(sigma))/(1+cos(sigma))`. Thus two endpoint sums at most pi/2
+force cosh(ell)<3. No two lengths need agree. The proof uses the positive
+matrix `[[1,cos(theta)],[cos(theta),1]]`, its Cauchy–Schwarz inequality,
+and the endpoint determinant factorization
+
+`D=(cos(theta)+cos(a+b))*(cos(theta)+cos(a-b))`.
+
+The angle family `(sigma-2eps,eps,eps,eps,eps,eps)` is genuinely realizable
+for small positive eps and converges to the stated supremum. It is a
+local sharpness family, not a globally glued metric.
+
+A second bound allows a target angle and three adjacent angles at most
+pi/5 and the fourth adjacent angle at most pi/3. It gives
+`cosh(ell)<sqrt(237620/28431)<3`, without constraining the opposite angle
+beyond genuineness. The two endpoint determinant lower bounds are
+243/125 and 117/100; the numerator is less than 109/25. The constant is
+not claimed sharp.
+
+These bounds give a shared-length flat-candidate certificate: if both
+selected pi labels have genuine occurrences satisfying either bound,
+then both cosh values are below three. The existing flat inequality
+`(r-1)(o-1)>4` is incompatible with that. This certificate needs neither
+colouring nor role balance, but its qualifying angle witnesses must be
+proved. Minimum degree alone does not supply them at every occurrence.
+
+### Four-colour realization, with genuine transverse anisotropy
+
+The new actual local patterns are `C=(R,A,B,R,A,B)` and
+`D=(R,A,B,S,A,B)`. Global classes have per-edge (C,D) counts
+R:(p,q), A:(u,v), B:(h,k), S:(0,w), all listed parameters positive.
+The four degrees are at least six. These are still role-balance
+hypotheses; the global theorem does not remove them.
+
+Actual counting yields pv=2qu and pk=2qh. Merging R,S creates a global
+rainbow three-edge colouring, so oriented normal-circle transport makes
+all degrees even. Colour-preserving angle averaging retains each edge
+equation. Genuine D blocks and local angle rigidity then determine
+shared values R,A,B,S without requiring A=B.
+
+All three possible flat C states are excluded. Flat R forces p=1,
+q>=5 and u,h even; both R endpoint angle sums are at most 2pi/5, so
+R<3, whereas flatness requires R>=1+A+B>3. Flat A forces u=1,
+v odd and p divisible by four. A direct cosine subtraction gives
+sign(beta-delta)=sign(A-B); flat A therefore puts its true D occurrence
+in the four-small/one-medium angle window, contradicting A>3. The B
+case is the same argument with the two transverse classes interchanged.
+
+The complete 22-tetrahedron packet has degrees
+(6,6,6,6,20,22,22,44), counts (p,q,u,v,h,k,w)=(1,5,2,20,4,40,20),
+and one genus-fifteen vertex link. All its face permutations are EVEN;
+a specified tetrahedron-sign assignment proves orientability. It must
+not be justified using the older packet's odd-permutation argument.
+The exact positive angle assignment has maximum corner sum 31pi/66.
+Its realized lengths satisfy A>B: the angle equations imply
+`(b-c)+10*(beta-delta)=pi/2`, and both differences have sign(A-B).
+This establishes actual unequal transverse lengths, not only formal
+permission to use two letters. Connected cyclic covers give 22n
+blocks and Euler characteristic -14n, without claiming a new census type.
+
+### Check and certification boundaries
+
+The existing supplementary Python checker is extended, rather than
+replaced by a numerical solver. It rechecks the old 11-block packet and
+local star, then the new 44 face pairings, orientations, eight edge
+classes, first oriented returns, all sixteen link-vertex fan cycles,
+role counts and rational strict angles. The analytic checks use 2000
+nonsymmetric angle vectors, 9202 applicable endpoint-cap tests, 1000
+five-angle-window tests, two sharp-family sequences and 722 bounded
+integer-parity cases. These tests do not prove the continuous or
+unbounded statements; the written arguments do.
+
+An additional authored Scribe Remark can describe this continuation
+without referring to a new Lean declaration. Its presence is not a
+Scribe compilation/projection receipt. There is no new Lean, admission,
+Freeze, CI or independent review certification. General unequal-length,
+non-role-balanced CFMP still requires constructing sufficiently many
+qualifying endpoint witnesses or a valid nonuniform averaging method.

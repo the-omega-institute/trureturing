@@ -245,7 +245,74 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "The original critical_transition_star statement and Lean source "
                         + "are unchanged. No Scribe compilation or projection, new kernel "
                         + "certification, independent referee approval, full CFMP proof "
-                        + "or counterexample is represented by this Remark.")))))));
+                        + "or counterexample is represented by this Remark.")))),
+            Describe.Remark(
+                DescribeId.Create("written-endpoint-caps-anisotropic-matching"),
+                H("Written continuation: endpoint caps and unequal transverse pairs"),
+                F.Disp(EndpointCapFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026mixedmatching")),
+                Blocks(
+                    Paragraph(Text("This authored Remark describes ordinary written mathematics, "
+                        + "not a new Lean declaration. GenuineHyperidealAngles is the six positive "
+                        + "dihedral angles with each vertex sum below pi. TetrahedronEdges is "
+                        + "the six local edges. EndpointSumsAtMostHalfPi(a,e) requires the sums "
+                        + "of the three angles at EACH endpoint of e to be at most pi/2. "
+                        + "CoshOriginalEdgeLength(a,e) is the actual angle-to-length formula, "
+                        + "whose denominator reads endpoint vertex triples, not face triples. "
+                        + "No equality between angles or lengths is assumed.")),
+                    Paragraph(Text("More generally, endpoint caps sigma1,sigma2<=pi/2 imply "
+                        + "ell(e)<asinh(tan(sigma1/2))+asinh(tan(sigma2/2)). Cauchy-Schwarz "
+                        + "in the positive matrix [[1,cos(theta)],[cos(theta),1]], followed by "
+                        + "D=(cos(theta)+cos(a+b))*(cos(theta)+cos(a-b)), proves the bound. "
+                        + "At equal cap sigma the sharp cosh supremum is "
+                        + "(3-cos(sigma))/(1+cos(sigma)). The genuine angle family "
+                        + "(sigma-2eps,eps,eps,eps,eps,eps) approaches it. Frigerio-Moraschini "
+                        + "Section 1.1 and Luo-Yang Section 6.1 supply the classical inverse "
+                        + "formula; they are not claimed as new results.")),
+                    Paragraph(Text("A separate window with target and three adjacent angles "
+                        + "at most pi/5 and the fourth at most pi/3 gives cosh(ell) "
+                        + "<sqrt(237620/28431)<3. The endpoint determinant bounds are "
+                        + "243/125 and 117/100, and the numerator is less than 109/25. "
+                        + "Either bound can certify genuine occurrences of the two pi labels "
+                        + "of a proposed flat. Shared lengths below three then contradict "
+                        + "the existing flat requirement (r-1)*(o-1)>4. Such qualifying "
+                        + "witnesses are not automatically supplied by minimum degree.")),
+                    Paragraph(Text("The actual four-class patterns C=(R,A,B,R,A,B) and "
+                        + "D=(R,A,B,S,A,B) have per-edge occurrence counts R:(p,q), "
+                        + "A:(u,v), B:(h,k), S:(0,w), all parameters positive and degrees "
+                        + "at least six. Counts imply pv=2qu and pk=2qh. Merging R,S "
+                        + "gives a rainbow colouring, so actual oriented endpoint return "
+                        + "forces even degrees. Typewise angle averaging preserves each "
+                        + "edge equation; Luo-Yang and genuine D rigidity yield common "
+                        + "R,A,B,S lengths without requiring A=B.")),
+                    Paragraph(Text("All three flat C states are excluded. Flat R forces "
+                        + "p=1,q>=5,u and h even, so a genuine R occurrence has both "
+                        + "endpoint sums at most 2pi/5 and R<3. Flatness requires "
+                        + "R>=1+A+B>3. Flat A forces u=1,v odd,p divisible by four. "
+                        + "The exact cosine difference gives sign(beta-delta)=sign(A-B), "
+                        + "putting A in the four-small/one-medium window and contradicting "
+                        + "A>3. The B branch interchanges the transverse classes.")),
+                    Paragraph(Text("The complete 22-tetrahedron packet has edge degrees "
+                        + "6,6,6,6,20,22,22,44, one genus-fifteen vertex link and counts "
+                        + "(p,q,u,v,h,k,w)=(1,5,2,20,4,40,20). Its even face permutations "
+                        + "are compatible with a specified alternating tetrahedron "
+                        + "orientation. All sixteen link-vertex fans and oriented first "
+                        + "returns are checked. The angle equations force A>B; connected "
+                        + "cyclic covers yield an unbounded genuinely anisotropic family. "
+                        + "The local caps need no role balance, but this global realization "
+                        + "theorem still does. Full CFMP, new Lean certification, Scribe "
+                        + "compilation or projection, CI, Freeze and independent review "
+                        + "approval are not asserted.")))))));
+
+    private static Formula EndpointCapFormula()
+    {
+        var a=F.Id("a"); var e=F.Id("e");
+        return All([("a",F.Id("GenuineHyperidealAngles")),
+                    ("e",F.Id("TetrahedronEdges"))],
+            Imp(Call("EndpointSumsAtMostHalfPi",a,e),
+                Lt(Call("CoshOriginalEdgeLength",a,e),F.D(3))));
+    }
 
     private static Formula ExposedPiEdgeFormula()
     {
