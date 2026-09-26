@@ -12,7 +12,7 @@ internal sealed class OpenIntegrableCircuitDepthRefutationDocument : IScribeDocu
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Conjectures 1 and 2 of Garcia Fernandez, Paletta and Retore on the minimum depth of open-boundary integrable quantum circuits are false: with eight sites and two sites carrying -kappa the configuration (6, 3) runs in three layers, one fewer than conjectured, and with eleven sites the configuration (8, 4) runs in four, one fewer than conjectured.",
-        H("The minimum depth of open integrable circuits is not linear in the number of -kappa sites"),
+        H("The conjectured minimum depths of open integrable circuits are false"),
         Blocks(
             Node("gate", "Gates", GateFormula(),
                 "The two-site gate U_j acts on the sites j and j + 1, the boundary gate K1 on site 1 and the boundary gate KN on site N.",
@@ -21,7 +21,7 @@ internal sealed class OpenIntegrableCircuitDepthRefutationDocument : IScribeDocu
                 "The circuit of Theorems 1 and 2 for the set S of sites carrying -kappa, listed in time order, the rightmost factor of the operator product first. When N is not in S the boundary gate KN acts first, then U_j for the sites j < N outside S in decreasing order, then K1, then U_n for n in S in increasing order; when N is in S, KN acts last and U_N is omitted.",
                 "circuit", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("runs", "Layerings", RunsFormula(),
-                "A list of gates fits in L layers when some layer map below L keeps the time order of every two gates that share a site; gates on disjoint sites may share a layer.",
+                "A list of gates fits in L layers when some layer map below L keeps the time order of every two gates that act on a common site in the chain of N sites; gates on disjoint sites may share a layer.",
                 "RunsIn", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("depth", "Depth", Disp(Equal(Call("depth", F.Id("N"), F.Id("w")),
                 Seq(Named("inf"), Sp, OpenBrace, F.Id("L"), Sp, Mid, Sp, Call("RunsIn", F.Id("N"), F.Id("w"), F.Id("L")), CloseBrace))),
@@ -106,14 +106,20 @@ internal sealed class OpenIntegrableCircuitDepthRefutationDocument : IScribeDocu
             Parenthesized(Seq(Member(j, Seq(sites, Sp, Setminus, Sp, s)), Comma, Sp, Named("decreasing"))));
         Formula up = Seq(Named("U"), Underscore, Grp(m), Sp,
             Parenthesized(Seq(Member(m, s), Comma, Sp, Named("increasing"))));
-        return Disp(Seq(Call("circuit", n, s), Sp, Eq, Sp, F.Id("KN"), Comma, Sp, down, Comma, Sp,
-            F.Id("K1"), Comma, Sp, up, Quad, Parenthesized(new Formula.Not(Member(n, s)))));
+        Formula upBelow = Seq(Named("U"), Underscore, Grp(m), Sp,
+            Parenthesized(Seq(Member(m, Seq(s, Sp, Setminus, Sp, new Formula.SetLiteral([n]))), Comma, Sp, Named("increasing"))));
+        Formula outside = Seq(Call("circuit", n, s), Sp, Eq, Sp, F.Id("KN"), Comma, Sp, down, Comma, Sp,
+            F.Id("K1"), Comma, Sp, up, Quad, Parenthesized(new Formula.Not(Member(n, s))));
+        Formula inside = Seq(Call("circuit", n, s), Sp, Eq, Sp, down, Comma, Sp,
+            F.Id("K1"), Comma, Sp, upBelow, Comma, Sp, F.Id("KN"), Quad, Parenthesized(Member(n, s)));
+        return Disp(Seq(outside, Comma, Quad, inside));
     }
 
     private static Formula RunsFormula()
     {
         Formula n = F.Id("N"), w = F.Id("w"), l = F.Id("L"), f = F.Id("f"), i = F.Id("i"), j = F.Id("j");
-        Formula share = Call("share", Call("w", i), Call("w", j));
+        Formula share = Ex("k", Naturals(), And(Member(F.Id("k"), Call("sites", n, Call("w", i))),
+            Member(F.Id("k"), Call("sites", n, Call("w", j)))));
         Formula body = Ex("f", new Formula.TypeArrow(Naturals(), Naturals()),
             And(All("i", Naturals(), Implies(Less(i, Call("length", w)), Less(Call("f", i), l))),
                 All("j", Naturals(), All("i", Naturals(), Implies(

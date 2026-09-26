@@ -1,4 +1,4 @@
-# The minimum depth of open integrable circuits is not linear in the number of -kappa sites
+# The conjectured minimum depths of open integrable circuits are false
 
 ## Abstract
 
@@ -18,7 +18,7 @@ The two-site gate U_j acts on the sites j and j + 1, the boundary gate K1 on sit
 
 **Definition 1.2 (The circuit of a configuration).**
 
-$$\operatorname{circuit}\left(N, S\right) = KN, \operatorname{U}_{j} (j \in \{1, \operatorname{dots}, N - 1\} \setminus S, \operatorname{decreasing}), K1, \operatorname{U}_{n} (n \in S, \operatorname{increasing})\quad(\neg N \in S)$$
+$$\operatorname{circuit}\left(N, S\right) = KN, \operatorname{U}_{j} (j \in \{1, \operatorname{dots}, N - 1\} \setminus S, \operatorname{decreasing}), K1, \operatorname{U}_{n} (n \in S, \operatorname{increasing})\quad(\neg N \in S),\quad\operatorname{circuit}\left(N, S\right) = \operatorname{U}_{j} (j \in \{1, \operatorname{dots}, N - 1\} \setminus S, \operatorname{decreasing}), K1, \operatorname{U}_{n} (n \in S \setminus \left\{N\right\}, \operatorname{increasing}), KN\quad(N \in S)$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/OpenIntegrableCircuitDepthRefutation.circuit` (`✓ std3`).
 
@@ -30,7 +30,7 @@ The circuit of Theorems 1 and 2 for the set S of sites carrying -kappa, listed i
 
 **Definition 1.3 (Layerings).**
 
-$$\operatorname{RunsIn}\left(N, w, L\right) \Leftrightarrow (\exists f \in \mathbb{N} \to \mathbb{N},\; \left(\forall i \in \mathbb{N},\; (i < \operatorname{length}\left(w\right)) \Rightarrow (\operatorname{f}\left(i\right) < L)\right) \land \left(\forall j \in \mathbb{N},\; \forall i \in \mathbb{N},\; (\left(i < j \land j < \operatorname{length}\left(w\right)\right) \land \operatorname{share}\left(\operatorname{w}\left(i\right), \operatorname{w}\left(j\right)\right)) \Rightarrow (\operatorname{f}\left(i\right) < \operatorname{f}\left(j\right))\right))$$
+$$\operatorname{RunsIn}\left(N, w, L\right) \Leftrightarrow (\exists f \in \mathbb{N} \to \mathbb{N},\; \left(\forall i \in \mathbb{N},\; (i < \operatorname{length}\left(w\right)) \Rightarrow (\operatorname{f}\left(i\right) < L)\right) \land \left(\forall j \in \mathbb{N},\; \forall i \in \mathbb{N},\; (\left(i < j \land j < \operatorname{length}\left(w\right)\right) \land \left(\exists k \in \mathbb{N},\; k \in \operatorname{sites}\left(N, \operatorname{w}\left(i\right)\right) \land k \in \operatorname{sites}\left(N, \operatorname{w}\left(j\right)\right)\right)) \Rightarrow (\operatorname{f}\left(i\right) < \operatorname{f}\left(j\right))\right))$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/OpenIntegrableCircuitDepthRefutation.RunsIn` (`✓ std3`).
 
@@ -38,7 +38,7 @@ $$\operatorname{RunsIn}\left(N, w, L\right) \Leftrightarrow (\exists f \in \math
 
 *Commentary.*
 
-A list of gates fits in L layers when some layer map below L keeps the time order of every two gates that share a site; gates on disjoint sites may share a layer.
+A list of gates fits in L layers when some layer map below L keeps the time order of every two gates that act on a common site in the chain of N sites; gates on disjoint sites may share a layer.
 
 **Definition 1.4 (Depth).**
 
