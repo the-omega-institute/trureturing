@@ -133,7 +133,9 @@ internal static class InformationTemplateEvidence
                     throw new FormatException("DTR-Evidence: binding owner/diagnostic is missing or wrong");
             }
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
-                escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName));
+                escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName) {
+                DefinitionSourceBinding = sourceDefinitionName is null ? null
+                    : certificate.GetProperty("source_binding").Clone() });
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered);
     }
@@ -221,7 +223,8 @@ internal static class InformationTemplateEvidence
                 (definitionPath[0].ValueKind != JsonValueKind.String || definitionPath[0].GetString() != "arg"))
                 throw new FormatException("DTR-Evidence: source definition path");
             // A root entry is exactly the raw theorem type; a Not argument is not.
-            // The producer uses the existing raw source identity for both sides.
+            // This is only a shape check. Collect closes the exact identities
+            // against the source declaration's independent raw type material.
             if ((HashField(definition, "reference_identity") == statement) != (definitionPath.Length == 0))
                 throw new FormatException("DTR-Evidence: source definition reference/path mismatch");
             foreach (var readout in readouts)
@@ -343,21 +346,6 @@ internal static class InformationTemplateEvidence
                 || realizationOwners.Sum(path => report.Files[path].Declarations.Count(
                     declaration => declaration.Name == original.RealizationName)) != 1)
                 throw new FormatException("DTR-Evidence: retained unit/realization owner is missing or ambiguous");
-            if (original.SourceOwner is { } sourceOwner)
-            {
-                var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
-                    .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();
-                if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
-                    || report.Files[sourceOwners[0]].Declarations.Count(d => d.Name == key.Theorem) != 1)
-                    throw new FormatException("DTR-Evidence: source theorem owner is missing or ambiguous");
-                if (original.SourceDefinitionName is { } definitionName)
-                {
-                    var definitions = report.Files[sourceOwners[0]].Declarations
-                        .Where(d => d.Name == definitionName).ToArray();
-                    if (definitions.Length != 1 || definitions[0].Kind != "def")
-                        throw new FormatException("DTR-Evidence: source definition owner is missing or ambiguous");
-                }
-            }
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory declaration claim");
             var selected = declared.SingleOrDefault() ?? original;
@@ -365,6 +353,25 @@ internal static class InformationTemplateEvidence
                 || selected.RegistrationSourcePath != original.RegistrationSourcePath
                 || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
                 throw new FormatException("DTR-Evidence: declaration retargets the occurrence");
+            if (selected.SourceOwner is { } sourceOwner)
+            {
+                var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
+                    .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();
+                if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
+                    || report.Files[sourceOwners[0]].Declarations.Count(d => d.Name == key.Theorem) != 1)
+                    throw new FormatException("DTR-Evidence: source theorem owner is missing or ambiguous");
+                if (selected.SourceDefinitionName is { } definitionName)
+                {
+                    var definitions = report.Files[sourceOwners[0]].Declarations
+                        .Where(d => d.Name == definitionName).ToArray();
+                    if (definitions.Length != 1 || definitions[0].Kind != "def")
+                        throw new FormatException("DTR-Evidence: source definition owner is missing or ambiguous");
+                    InformationTemplateDefinitionReference.Check(selected.DefinitionSourceBinding!.Value,
+                        selected.StatementIdentity,
+                        report.Files[sourceOwners[0]].Declarations.Single(d => d.Name == key.Theorem),
+                        definitions[0]);
+                }
+            }
             joined.Add(key, selected);
         }
         // Inventory is the exact join of compiler registration keys, command

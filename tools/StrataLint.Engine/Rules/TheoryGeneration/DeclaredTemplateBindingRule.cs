@@ -29,6 +29,8 @@ internal sealed record InformationTemplateOccurrence(
     string? SourceOwner = null,
     string? SourceDefinitionName = null)
 {
+    internal System.Text.Json.JsonElement? DefinitionSourceBinding { get; init; }
+
     internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
         && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;
 }

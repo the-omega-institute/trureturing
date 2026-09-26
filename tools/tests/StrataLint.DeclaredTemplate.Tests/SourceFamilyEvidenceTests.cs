@@ -114,8 +114,18 @@ public sealed class SourceFamilyEvidenceTests
                 var theorem = new LeanDeclaration(record!["key"]!["theorem"]!.GetValue<string>(),
                     "theorem", "original compiler declaration", []);
                 var entry = record["certificate"]!["source_binding"]!["definition_entry"];
-                return entry is null ? new[] { theorem } : new[] { theorem,
-                    new LeanDeclaration(entry["name"]!.GetValue<string>(), "def", "named claim", []) };
+                if (entry is null) return new[] { theorem };
+                // Synthetic import-join fixture. Native tests below separately
+                // load and hash-check the actual compiler statement materials.
+                var claimName = owner + ".claim";
+                var nameKey = claimName.Split('.').Aggregate("n0", (parent, part) =>
+                    $"ns({parent},{System.Text.Encoding.UTF8.GetByteCount(part)}:{part})");
+                var reference = "ec(" + nameKey + ",[])";
+                var rawType = theorem.Name.EndsWith("NiceErrorBasisNonNormalStabilizer.result", StringComparison.Ordinal)
+                    ? "ea(ec(ns(n0,3:Not),[])," + reference + ")" : reference;
+                return new[] { theorem with { TypeRepresentation = "statement-v1(uparams=[],type=" + rawType + ")" },
+                    new LeanDeclaration(claimName, "def", "statement-v1(uparams=[],type=es(l0),value=fixture)", []) {
+                        NameKey = nameKey } };
             }).ToImmutableArray()));
             selected.Add(RepoPath.CreateKnown(registration));
         }
@@ -469,8 +479,13 @@ public sealed class SourceFamilyEvidenceTests
             JsonSerializer.SerializeToElement(module), path, snapshot));
     }
 
-    [Fact]
-    public void generated_named_claim_artifacts_pass_production_material_axiom_and_import_join()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("nonroot-reference")]
+    [InlineData("self-consistent-identities")]
+    [InlineData("self-consistent-root-identities")]
+    [InlineData("self-consistent-universes")]
+    public void generated_named_claim_artifacts_pass_production_material_axiom_and_import_join(string? mutation)
     {
         var directory = Environment.GetEnvironmentVariable("NAMED_CLAIM_SOURCE_ARTIFACTS");
         Skip.If(string.IsNullOrEmpty(directory), "Focused named-claim module artifacts were not supplied.");
@@ -522,6 +537,52 @@ public sealed class SourceFamilyEvidenceTests
             LeanAxiomReport.Create(files), selected);
         Assert.Equal(4, evidence.Inventory.Count);
         Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
+        if (mutation is not null)
+        {
+            var rootMutation = mutation == "self-consistent-root-identities";
+            var registration = rootMutation
+                ? "Reg/D5/S3/Constants/Billiards/CollidingBlocksRecords.lean"
+                : "Reg/D5/S3/Quantum/Information/NiceErrorBasisNonNormalStabilizer.lean";
+            var module = JsonNode.Parse(files[registration].InformationTemplates!.Value.GetRawText())!;
+            var row = Assert.Single(module["records"]!.AsArray())!;
+            var binding = row["certificate"]!["source_binding"]!;
+            var entry = binding["definition_entry"]!;
+            Assert.Equal(rootMutation ? Array.Empty<string>() : new[] { "arg" },
+                entry["path"]!.AsArray().Select(n => n!.GetValue<string>()));
+            var wrong = new string('0', 64);
+            Assert.NotEqual(wrong, row["statement_identity"]!.GetValue<string>());
+            Assert.NotEqual(wrong, entry["reference_identity"]!.GetValue<string>());
+            entry["reference_identity"] = wrong;
+            if (mutation != "nonroot-reference")
+            {
+                var wrongStatement = rootMutation ? wrong : new string('1', 64);
+                if (mutation == "self-consistent-universes")
+                {
+                    // Valid compactRawIdentity encodings of this very same name
+                    // with one rigid parameter, including the literal Not root.
+                    // These are corruptions, not replacement compiler evidence.
+                    binding["level_count"] = 1;
+                    entry["reference_identity"] = "4a3b9ddbe1d91b091777c9f7fbb3ee9a1170703228c45ca3beed291326f91e84";
+                    wrongStatement = "5f7d56fa34d4fe9e905e14f46d48a81db6947caf3cb50809bd1efd7d3cfcb697";
+                }
+                row["statement_identity"] = wrongStatement;
+                binding["source_type_identity"] = wrongStatement;
+                row["escape_from"]!["type_identity"] = wrongStatement;
+                row["certificate"]!["extraction_inputs"]!.AsArray().Single(input =>
+                    input!["name"]!.GetValue<string>() == row["key"]!["theorem"]!.GetValue<string>())!
+                    ["type_identity"] = wrongStatement;
+            }
+            // All old closed-shape and same-wire joins still accept the mutation.
+            InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(module), registration, joinedSnapshot);
+            files[registration] = files[registration] with {
+                InformationTemplates = JsonSerializer.SerializeToElement(module) };
+            var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(joinedSnapshot,
+                LeanAxiomReport.Create(files), selected));
+            Assert.Contains(mutation == "self-consistent-universes"
+                ? "source definition raw declaration differs" : "reference identity differs from current declaration",
+                error.Message, StringComparison.Ordinal);
+            return;
+        }
         foreach (var source in files.Keys.Where(p => p.StartsWith("D5/", StringComparison.Ordinal)))
         {
             var incomplete = files.Where(pair => pair.Key != source)

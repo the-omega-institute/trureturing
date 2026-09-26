@@ -554,4 +554,46 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData("Fixture.")]
     public void noncanonical_lean_name_rejected(string name) =>
         Assert.Throws<FormatException>(() => InformationTemplateJson.Name(name));
+    [Theory]
+    [InlineData(false, "valid")]
+    [InlineData(true, "valid")]
+    [InlineData(true, "permuted-universes")]
+    [InlineData(true, "instantiated-universe")]
+    [InlineData(true, "metadata-wrapper")]
+    [InlineData(true, "missing-material")]
+    [InlineData(true, "wrong-polarity")]
+    public void named_reference_uses_raw_rigid_universes_and_structural_names(bool negated, string mutation)
+    {
+        // Synthetic statement-v1 materials exercise the bounded grammar beyond
+        // the native clients' zero universes: UTF-8, quoted dots and a num node.
+        const string nameKey = "ns(nn(ns(ns(ns(n0,2:D5),5:Probe),4:x.λ),7),5:claim)";
+        const string referenceHash = "65960cfc15c52484d5f0825d7c9279debbdd37c841d4c3eddb3f9461b8cf9df9";
+        const string negativeHash = "707564a4041c1bf2627e069ead2754a3de3c4bfc60642f419a2e2ec671a61f91";
+        const string parameters = "ns(n0,1:u),ns(n0,1:v)";
+        var levels = mutation switch {
+            "permuted-universes" => "lp(ns(n0,1:v)),lp(ns(n0,1:u))",
+            "instantiated-universe" => "l0,lp(ns(n0,1:v))",
+            _ => "lp(ns(n0,1:u)),lp(ns(n0,1:v))",
+        };
+        var rawReference = "ec(" + nameKey + ",[" + levels + "])";
+        var rawType = negated && mutation != "wrong-polarity"
+            ? "ea(ec(ns(n0,3:Not),[])," + rawReference + ")" : rawReference;
+        if (mutation == "metadata-wrapper") rawType = "ed(" + rawType + ")";
+        var theorem = new LeanDeclaration("D5.Probe.result", "theorem",
+            mutation == "missing-material" ? "unavailable"
+                : "statement-v1(uparams=[" + parameters + "],type=" + rawType + ")", []);
+        var definition = new LeanDeclaration("D5.Probe.«x.λ».7.claim", "def",
+            "statement-v1(uparams=[ns(n0,1:a),ns(n0,1:b)],type=es(l0),value=fixture)", []) {
+            NameKey = nameKey };
+        var binding = JsonSerializer.SerializeToElement(new {
+            level_count = 2,
+            definition_entry = new { path = negated ? new[] { "arg" } : Array.Empty<string>(),
+                reference_identity = referenceHash },
+        });
+        void Check() => InformationTemplateDefinitionReference.Check(binding,
+            negated ? negativeHash : referenceHash, theorem, definition);
+        if (mutation == "valid") Check();
+        else Assert.Throws<FormatException>(Check);
+    }
+
 }
