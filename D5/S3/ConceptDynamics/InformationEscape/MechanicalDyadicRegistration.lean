@@ -16,7 +16,6 @@ noncomputable section
 namespace D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 
 open D5.S1.Words.Mechanical
-open LeanInformationAudit
 
 /-- One CUT slot carries an entire parameterized observation function. -/
 def mechanicalReadoutSignature (Y : Type) [dY : DecidableEq Y] :
