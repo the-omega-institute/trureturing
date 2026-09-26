@@ -36986,3 +36986,887 @@ $$
 本节没有把八维解释为物理空间维数、边界面积或钟表历时。结论限定于六个精确终端、已知非退化来源、独立纯启动、完整档案与任意参考恢复、同一个固定 CPTP 更新。退化来源、近似恢复、混合启动或允许免费轮次控制的其他合同需要分别研究；超过六个终端也未由本节结算。这里是纸面证明的归结，不宣称新增 Lean 声明或 kernel 核验，也不作原创优先权声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 140. 六终端七维误差隙的来源连续性与退化极限
+
+第139节证明：每份已知非退化来源在完整参考合同下的六终端精确容量为八。本节说明这个零误差结论如何控制同一来源上的近似恢复，并区分三个不同尺度：逐来源的严格正误差隙、非退化紧集上的一致正隙，以及靠近退化端点时趋零的明确上界。
+
+第20、35节已经给出离退化端点一致的显式实代数误差下界，但其期限为 $8D^2$；$D=7$ 时是前392轮，不能直接改成前六轮。第37节的保真度优化还只针对指定初态 $|0\rangle$，不能仅凭第139节的全输入无解就断言这个较弱子任务在六轮内有正隙。本节始终保留全部来源输入与参考，使用第139节的新期限；不重建那些实代数常数，也不给尚未计算的六轮正隙指定数值。
+
+### 140.1 固定同一装置的有限终端误差
+
+记完整复振幅参数空间为
+
+$$
+\Theta=\{\theta=(a,b)\in\mathbb C^2:|a|^2+|b|^2=1\}.
+$$
+
+允许端点 $ab=0$。每轮来源等距为
+
+$$
+T_\theta|0\rangle=(a|0\rangle+b|1\rangle)_M\otimes|0\rangle_B,
+\qquad
+T_\theta|1\rangle=|0\rangle_M\otimes|1\rangle_B.
+\tag{140.1}
+$$
+
+固定容量预算 $D\ge1$ 和有限期限 $N\ge1$，取 $K=\mathbb C^D$。一份装置由一个固定全域 CPTP 接收通道及一族终端解码器组成：
+
+$$
+\mathfrak A=(\mathcal C,\mathcal D_1,\ldots,\mathcal D_N),
+\qquad
+\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K),
+\qquad
+\mathcal D_n:\mathcal L(K)\to\mathcal L(B^{\otimes n}).
+\tag{140.2}
+$$
+
+接收器从独立纯态 $e_0\in K$ 启动。任意其他独立纯初态可由固定接收基变换送到 $e_0$，同时共轭 $\mathcal C$ 和各 $\mathcal D_n$；因此固定 $e_0$ 不损失装置。每一轮重复同一个 $\mathcal C$，允许新环境立即丢弃，全部持久控制计入 $K$，来源活动记忆与外部参考均不可访问。仅 $\mathcal D_n$ 可以随终端改变。
+
+对参考 $R$ 与输入 $\rho_{RM}$，记 $\sigma^{\theta,\mathfrak A}_n(\rho)$ 为前 $n$ 轮接收后的 $RMK$ 态，$\Omega^\theta_n(\rho)$ 为同一来源未经接收的 $RM B_1\cdots B_n$ 态。定义
+
+$$
+\begin{aligned}
+\mathcal E_{D,N}(\theta;\mathfrak A)
+=\max_{1\le n\le N}\ \sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma^{\theta,\mathfrak A}_n(\rho)
+-\Omega^\theta_n(\rho)
+\right\|_1,\\
+\varepsilon_{D,N}(\theta)
+=\inf_{\mathfrak A}\mathcal E_{D,N}(\theta;\mathfrak A).
+\end{aligned}
+\tag{140.3}
+$$
+
+同一个 $\mathfrak A$ 同时服务所有 $1\le n\le N$ 和全部参考完整输入；误差中的接收态与目标态采用同一份 $\theta$。装置可以针对已知 $\theta$ 设计，定义没有要求一台装置同时适用于所有来源参数。
+
+容量小于 $D$ 的装置可嵌入 $K$，并在未访问的正交补上补成全域通道。故（140.3）也恰是容量不超过 $D$ 的最优误差。
+
+**引理140.1（有限最小值与零误差合同）。** 式（140.3）的下确界取得，且对全部 $\theta\in\Theta$，
+
+$$
+0\le\varepsilon_{D,N}(\theta)\le1,
+\qquad
+\varepsilon_{D,N}(\theta)=0
+\ \Longleftrightarrow\
+\text{存在容量不超过 $D$ 的完整前 $N$ 终端精确装置。}
+\tag{140.4}
+$$
+
+**证明。** 输入记忆维数为二，参考可限制为 $\dim R=2$。确切地，任意混合参考—记忆输入可先纯化；纯态相对于输入 $M$ 的 Schmidt 秩至多二，故其参考支撑等距来自二维空间；最后偏迹回原参考不会增大半迹距离。这同时处理任意原参考维数和任意混合输入。
+
+对固定 $D,N$，接收通道和有限多个解码器的 Choi 参数集均紧。第 $n$ 个解码输出是有限的 $2^n$ 维原档案空间；不引入无限个终端或额外持久寄存器。实际有限轮状态连续依赖通道参数。对固定的二维参考输入紧集取最大值，再取有限个终端的最大值，仍为连续函数。因此它在同一紧装置集上取得最小值。半迹距离在密度矩阵间属于 $[0,1]$；最小值为零恰是同一装置实现所有等式。证明完毕。
+
+这一紧性机制与第11、12节一致；新的六终端正性将由第139节提供，而不是由紧性本身提供。
+
+### 140.2 保留复相位的来源扰动界
+
+在 $\Theta$ 上使用完整振幅的欧氏距离
+
+$$
+h(\theta,\theta')
+=\sqrt{|a-a'|^2+|b-b'|^2}.
+\tag{140.5}
+$$
+
+这里没有先去掉振幅相位，也不把两个来源仅按其边缘概率识别。
+
+**定理140.2（有限终端最优误差的 Lipschitz 界）。** 对任意 $D,N$、同一装置 $\mathfrak A$ 及任意 $\theta,\theta'\in\Theta$，
+
+$$
+\left|
+\mathcal E_{D,N}(\theta;\mathfrak A)
+-\mathcal E_{D,N}(\theta';\mathfrak A)
+\right|
+\le2N h(\theta,\theta'),
+\tag{140.6}
+$$
+
+并且
+
+$$
+\boxed{
+|\varepsilon_{D,N}(\theta)-\varepsilon_{D,N}(\theta')|
+\le2N h(\theta,\theta').
+}
+\tag{140.7}
+$$
+
+**证明。** 两个来源等距只在输入 $|0\rangle$ 的列上不同，故
+
+$$
+\|T_\theta-T_{\theta'}\|_{\mathrm{op}}=h(\theta,\theta').
+\tag{140.8}
+$$
+
+对任意附加系统和任意输入密度矩阵，分别施加这两个等距后，输出半迹距离至多 $h$。对纯态，这是单位向量所成纯态的半迹距离不超过向量差范数；对混合态先纯化再偏迹即可。该界允许附加系统包含原参考、接收器以及全部先前档案。
+
+固定同一个 $\mathfrak A$，逐步只替换来源发射。每次替换的半迹距离增量至多 $h$；中间的同一 CPTP 接收操作及其后续演化均收缩半迹距离。因此，对任意相同输入 $\rho$ 和 $n\le N$，
+
+$$
+D\bigl(\sigma^{\theta,\mathfrak A}_n(\rho),
+       \sigma^{\theta',\mathfrak A}_n(\rho)\bigr)\le nh,
+\qquad
+D\bigl(\Omega^\theta_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)\le nh,
+\quad D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{140.9}
+$$
+
+第二项同样逐步比较完整未接收档案，并未只比较活动记忆边缘。对两份来源分别使用同一解码器，三角不等式给
+
+$$
+\begin{aligned}
+&\left|
+D\bigl((\operatorname{id}\otimes\mathcal D_n)
+\sigma^{\theta,\mathfrak A}_n(\rho),\Omega^\theta_n(\rho)\bigr)
+-
+D\bigl((\operatorname{id}\otimes\mathcal D_n)
+\sigma^{\theta',\mathfrak A}_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)
+\right|\\
+&\qquad\le
+D\bigl(\sigma^{\theta,\mathfrak A}_n(\rho),
+       \sigma^{\theta',\mathfrak A}_n(\rho)\bigr)
++D\bigl(\Omega^\theta_n(\rho),\Omega^{\theta'}_n(\rho)\bigr)
+\le2nh.
+\end{aligned}
+\tag{140.10}
+$$
+
+这是接收后联合态变化与真实目标变化的两项之和。省略其中任何一项，均不是本节的来源扰动比较。
+
+对全部参考输入及前 $N$ 个终端取最大值，得到（140.6）。所有 $\theta$ 使用的是同一个可选装置集合，且此估计统一于装置。取 $\theta'$ 的最优装置，得到
+$\varepsilon_{D,N}(\theta)\le\varepsilon_{D,N}(\theta')+2Nh$；交换两个参数即得（140.7）。证明完毕。
+
+### 140.3 六终端的逐来源与紧集正隙
+
+令
+
+$$
+\varepsilon_7(\theta):=\varepsilon_{7,6}(\theta),
+\qquad
+\Theta^\circ=\{(a,b)\in\Theta:ab\ne0\}.
+$$
+
+由引理140.1与定理139.1，对每份 $\theta\in\Theta^\circ$，
+
+$$
+\boxed{\varepsilon_7(\theta)>0.}
+\tag{140.11}
+$$
+
+若最优误差为零，取得最小值的同一七维装置就是第139节已经排除的完整六终端精确接收器。这个理由不把精确证明中的子空间等式直接代入近似装置。
+
+更一般地，对任意非空紧集 $L\subset\Theta^\circ$，定义
+
+$$
+\eta_L=\min_{\theta\in L}\varepsilon_7(\theta).
+$$
+
+由（140.7）的连续性及（140.11），
+
+$$
+\boxed{\eta_L>0.}
+\tag{140.12}
+$$
+
+例如对整数 $k\ge2$，紧集
+
+$$
+L_k=\{(a,b)\in\Theta:|a|^2\ge1/k,\ |b|^2\ge1/k\}
+$$
+
+给出同一 $\eta_{L_k}>0$，统一于全部允许的复相位。这里的 $\eta_{L_k}$ 是六终端最优误差的正最小值，不是把第20或35节的392轮常数改名。
+
+如果允许误差为 $0\le\epsilon<\varepsilon_7(\theta)$，任何至多七维装置均不够；第139节的八维精确构造仍满足该误差要求。因此，对于每份非退化来源，存在一个严格正的误差区间，六终端最小容量仍为八。对 $L$ 上的全部来源，区间 $0\le\epsilon<\eta_L$ 可以统一选择。
+
+本节没有算出（140.11）或（140.12）的数值下界。来源连续性常数 $12=2N$ 不能充当这些正隙。
+
+### 140.4 退化端点的装置给出明确上界
+
+记退化集合
+
+$$
+\Theta_{\mathrm{deg}}=\{(a,b)\in\Theta:ab=0\}.
+$$
+
+第10节在 $a=0$ 时给二维固定 CPTP 接收器，在 $b=0$ 时给三维固定 CPTP 接收器；两种装置都服务全部终端、全部来源输入和参考，并保留单位模非零振幅带来的相位。将它们嵌入七维，再在未使用空间补成全域接收和解码通道，可得
+
+$$
+\varepsilon_7(\theta_0)=0
+\qquad(\theta_0\in\Theta_{\mathrm{deg}}).
+\tag{140.13}
+$$
+
+这是 CPTP 合同的端点装置，未使用第9节逐步纯空白酉合同的端点容量。
+
+选择最近的退化参数，定理140.2给
+
+$$
+\boxed{
+0\le\varepsilon_7(a,b)
+\le\min\left\{1,\,
+12\,\operatorname{dist}\bigl((a,b),\Theta_{\mathrm{deg}}\bigr)
+\right\}.
+}
+\tag{140.14}
+$$
+
+最近点可保留非零坐标的复相位，所以
+
+$$
+\operatorname{dist}\bigl((a,b),\Theta_{\mathrm{deg}}\bigr)
+=\min\{\sqrt{2-2|a|},\sqrt{2-2|b|}\}
+=\sqrt{2-2\max\{|a|,|b|\}}.
+\tag{140.15}
+$$
+
+例如靠近 $a=0$ 时，直接使用参数 $(0,b/|b|)$ 的二维端点装置，仍有前六终端误差至多 $12\sqrt{2-2|b|}$；靠近 $b=0$ 时，使用 $(a/|a|,0)$ 的三维端点装置，误差至多 $12\sqrt{2-2|a|}$。这两项是把同一端点装置运行在实际非退化来源上所得的可实现上界，比较目标始终是实际来源的完整原档案。
+
+因此，$\varepsilon_7$ 在每个非退化点严格为正，却在趋近任一退化端点时趋于零。特别有
+
+$$
+\inf_{\theta\in\Theta^\circ}\varepsilon_7(\theta)=0,
+$$
+
+所以离端点条件不能从一致正隙结论中删除。精确容量的跳变与误差的连续变化相容：零误差要求仍区分每份非退化来源；任何固定正误差容限下，足够接近退化端点的来源可以直接沿用二维或三维端点装置。
+
+上述结论只涉及有限的前六个终端。扰动界随期限为 $2N$，不提供全时域统一连续性，也未确定六终端正隙的最佳端点衰减率。证明没有新增近似子空间分类或 Lean kernel 核验声明。
+
+## 追加锚（本行以下为增补区）
+
+## 141. 八维接收器的可逆子系统续接与共同 Gram 接口
+
+第23节的可逆编码分解把一个精确终端写成逻辑档案与固定附加态的共同编码。对于八维接收器，第三轮以后的四维逻辑档案可以带有秩二附加态，故第45节的纯轨道论证不能直接覆盖这个情形。本节保留附加因子的全部相干运输，并给出有限个实际续接接口由同一个固定 CPTP 通道实现的充要条件。
+
+以下先在有限接收维数 $D$ 下陈述，随后取 $D=8$。全部接口均从独立纯初态开始列入；尾部的局部可行性不代替完整来源前缀的可行性。
+
+### 141.1 实际档案支撑与来源嵌入
+
+固定非退化已知来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\qquad |a|^2+|b|^2=1,
+$$
+
+以及发射等距 $T|i\rangle=|i\rangle_B\otimes m_i$，其中 $B=\mathbb C^2$。令 $H_n=B^{\otimes n}$，$H_0=\mathbb C$，$T^{(n)}:M\to H_n\otimes M$ 为实际累计发射。
+
+取初始活动记忆与二维参考 $R$ 的 Bell 态。经固定因子重排，把第 $n$ 轮的未接收联合纯态记为
+
+$$
+|\Omega_n\rangle\in(R\otimes M)\otimes H_n.
+$$
+
+定义实际档案支撑
+
+$$
+S_n=\operatorname{supp}
+\left(\operatorname{Tr}_{RM}|\Omega_n\rangle\langle\Omega_n|\right)
+\subseteq H_n,\qquad s_n=\dim S_n.
+\tag{141.1}
+$$
+
+这一定义同时保留实际来源、完整参考与活动记忆。来源的档案列满足
+
+$$
+T^{(n)}|i\rangle=\sum_{j=0}^1\chi_{ij}^{n}\otimes m_j,\qquad
+\chi_{ij}^{n+1}
+=\sum_{k=0}^1(m_k)_j\,\chi_{ik}^{n}\otimes|j\rangle.
+\tag{141.2}
+$$
+
+对于 $n\ge1$，$S_n$ 是这些实际列的张成。原因是 $|i\rangle_R\otimes m_j$ 线性独立，故它们在 Bell 输出中的档案系数张成恰为 Schmidt 支撑。第一轮有两个非零首末扇区，第二轮有三个，第三轮起有四个；不同扇区的词支撑不交。非退化条件保证这些扇区此后均非零，因而
+
+$$
+s_0=1,\qquad s_1=2,\qquad s_2=3,\qquad s_n=4\quad(n\ge3).
+\tag{141.3}
+$$
+
+递推（141.2）给出实际包含 $S_{n+1}\subseteq S_n\otimes B$。令
+
+$$
+F_n:S_{n+1}\longrightarrow S_n\otimes B
+\tag{141.4}
+$$
+
+为这一包含的等距映射。若 $\iota_n:S_n\hookrightarrow H_n$ 是自然嵌入，则它由
+$(\iota_n\otimes I_B)F_n=\iota_{n+1}$ 唯一确定，右侧使用 $H_{n+1}=H_n\otimes B$。尤其 $F_0:S_1\to\mathbb C\otimes B$ 就是第一位档案的自然识别。
+
+$F_n$ 固定于实际来源，不是另外自由选择的输入子空间。任何允许初始态及参考所产生的第 $n$ 轮档案，也都支撑于同一个 $S_n$。
+
+### 141.2 由同一编码生成真实接收前接口
+
+固定有限终端数 $N\ge1$，接收空间 $K$ 满足 $\dim K=D$。对 $0\le n\le N$，给定有限维非零附加空间 $\Gamma_n$、在其上正定的密度矩阵 $\tau_n$，以及等距映射
+
+$$
+W_n:S_n\otimes\Gamma_n\longrightarrow K,\qquad
+\mathcal E_n(X)=W_n(X\otimes\tau_n)W_n^*.
+\tag{141.5}
+$$
+
+正定性是把附加空间取为附加态实际支撑后的条件。记 $r_n=\dim\Gamma_n$，则 $s_nr_n\le D$。
+
+独立纯初始化要求
+
+$$
+\Gamma_0=S_0=\mathbb C,\qquad \tau_0=1,\qquad W_0(1)=k,
+\qquad \|k\|=1.
+\tag{141.6}
+$$
+
+这里的 $k$ 与未知来源输入及参考独立。
+
+令 $\Pi_n$ 为只交换最后两个因子的固定重排
+
+$$
+\Pi_n:S_n\otimes B\otimes\Gamma_n
+\longrightarrow S_n\otimes\Gamma_n\otimes B.
+$$
+
+第 $n+1$ 轮实际接收前的编码等距必须取为
+
+$$
+\boxed{
+J_n=(W_n\otimes I_B)\Pi_n(F_n\otimes I_{\Gamma_n})
+:\ S_{n+1}\otimes\Gamma_n\longrightarrow K\otimes B.
+}
+\tag{141.7}
+$$
+
+特别地，$J_0x=k\otimes x$，其中用 $S_1=B$ 作自然识别。对 $X\in\mathcal L(S_{n+1})$，实际输入编码是
+$J_n(X\otimes\tau_n)J_n^*$；其来源嵌入、上一轮编码和附加因子不能独立改选。
+
+对于一个固定全域通道
+$\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)$，精确一步续接等式是
+
+$$
+\boxed{
+\mathcal C\!\left(J_n(X\otimes\tau_n)J_n^*\right)
+=W_{n+1}(X\otimes\tau_{n+1})W_{n+1}^*
+\quad\bigl(X\in\mathcal L(S_{n+1})\bigr).
+}
+\tag{141.8}
+$$
+
+**命题141.1（忠实联合态给出完整矩阵等式）。** 在前一轮实际编码为（141.5）的条件下，第 $n+1$ 轮实际 Bell 参考联合态等于相应的 $\mathcal E_{n+1}$ 编码，当且仅当（141.8）成立。
+
+**证明。** 较早的接收操作与较晚的来源发射作用于不同系统，所以可以先形成完整档案，再对其前缀作累计编码。因此，下一轮来源支撑上的接收前映射正是（141.7），而不是一个仅具有相同维数的替代接口。
+
+由（141.1），实际联合纯态有 Schmidt 展开
+
+$$
+|\Omega_{n+1}\rangle
+=\sum_{j=1}^{s_{n+1}}\sqrt{\lambda_j}\,
+|u_j\rangle_{RM}\otimes|v_j\rangle_{S_{n+1}},
+\qquad \lambda_j>0.
+\tag{141.9}
+$$
+
+把待比较的两个编码记为 $\mathcal A,\mathcal B$。它们作用于这一个联合态后的相等，在参考矩阵块
+$|u_i\rangle\langle u_j|$ 上给出
+
+$$
+\sqrt{\lambda_i\lambda_j}\,
+(\mathcal A-\mathcal B)(|v_i\rangle\langle v_j|)=0.
+$$
+
+所有系数都非零，故两个编码在全部矩阵单位上相等，线性延拓即为（141.8）。反向直接将（141.8）作用于联合态各块。
+
+这里用的是完整 $RM$—档案联合态。仅比较接收器边缘，只会检验一个固定输入密度矩阵，不能推出全部非对角矩阵单位的等式。证毕。
+
+对一个满足原精确终端合同的实际接收器，第23节的标准可逆编码分解给出（141.5）：其累计编码与终端解码的复合，在忠实联合态上恒等，由同一矩阵块论证得到在 $\mathcal L(S_n)$ 上恒等，再应用可逆通道的正交 Kraus 分解。因而（141.8）是实际合同的必要结果；并未要求观察者另有权限制备任意逻辑输入。
+
+### 141.3 满秩附加态强制相干子系统运输
+
+固定同一个 Stinespring 等距
+
+$$
+V:K\otimes B\longrightarrow K\otimes E,\qquad
+\mathcal C(Y)=\operatorname{Tr}_E(VYV^*).
+\tag{141.10}
+$$
+
+$E$ 表示每轮使用后丢弃的新环境。以下所有轮次使用同一环境坐标空间和同一个 $V$，没有把旧环境重新接回接收器。
+
+**引理141.2（固定实现中的附加因子化）。** 对给定 $n$，（141.8）成立，当且仅当存在等距
+
+$$
+R_n:\Gamma_n\longrightarrow\Gamma_{n+1}\otimes E
+$$
+
+满足
+
+$$
+\boxed{
+VJ_n=(W_{n+1}\otimes I_E)
+       (I_{S_{n+1}}\otimes R_n),
+\qquad
+\operatorname{Tr}_E(R_n\tau_nR_n^*)=\tau_{n+1}.
+}
+\tag{141.11}
+$$
+
+等式中的因子结合均取自然识别。
+
+**证明。** 固定 $E$ 的正交基，把（141.10）写成
+$V=\sum_\ell K_\ell\otimes|\ell\rangle$。令 $L=S_{n+1}$，并对输入附加态作谱分解
+
+$$
+\tau_n=\sum_\beta p_\beta|\beta\rangle\langle\beta|,
+\qquad p_\beta>0.
+$$
+
+定义 $B_{\ell\beta}:L\to K$：
+
+$$
+B_{\ell\beta}=K_\ell J_n(I_L\otimes|\beta\rangle).
+$$
+
+（141.8）给出
+
+$$
+\sum_{\ell,\beta}p_\beta B_{\ell\beta}XB_{\ell\beta}^*
+=W_{n+1}(X\otimes\tau_{n+1})W_{n+1}^*.
+\tag{141.12}
+$$
+
+置 $Q=I_K-W_{n+1}W_{n+1}^*$，在（141.12）中取 $X=I_L$ 并左右乘 $Q$。得到一族正半定矩阵之和为零：
+
+$$
+\sum_{\ell,\beta}p_\beta
+QB_{\ell\beta}B_{\ell\beta}^*Q=0.
+$$
+
+由于全部 $p_\beta>0$，每个 $QB_{\ell\beta}=0$，故各 Kraus 分量的像都包含在 $\operatorname{ran}W_{n+1}$ 内。
+
+取 $\Gamma_{n+1}$ 的正交基 $|\alpha\rangle$，定义
+
+$$
+C_{\ell\alpha\beta}
+=(I_L\otimes\langle\alpha|)W_{n+1}^*B_{\ell\beta}
+:\ L\to L.
+$$
+
+将（141.12）压回编码子空间并对输出附加因子取偏迹，得到
+
+$$
+\sum_{\ell,\alpha,\beta}p_\beta
+C_{\ell\alpha\beta}XC_{\ell\alpha\beta}^*=X
+\qquad(X\in\mathcal L(L)).
+\tag{141.13}
+$$
+
+恒等通道的 Choi 矩阵为
+$|I_L\rangle\!\rangle\langle\!\langle I_L|$，秩为一。其任意 Kraus 表示的每个向量化 Kraus 算子，都必须落在这条同一射线上：否则正半定秩一矩阵不能等于这些正半定项之和。因此
+$\sqrt{p_\beta}C_{\ell\alpha\beta}$ 为 $I_L$ 的标量倍数。由 $p_\beta>0$，可写成
+
+$$
+C_{\ell\alpha\beta}=c_{\ell\alpha\beta}I_L.
+$$
+
+令 $R_{n,\ell}:\Gamma_n\to\Gamma_{n+1}$ 的矩阵元为
+$c_{\ell\alpha\beta}$。全部 $\beta$ 上的等式合并为
+
+$$
+K_\ell J_n=W_{n+1}(I_L\otimes R_{n,\ell}).
+$$
+
+在同一个环境基中置
+
+$$
+R_n\gamma=\sum_\ell R_{n,\ell}\gamma\otimes|\ell\rangle.
+$$
+
+便得到（141.11）的第一式。由于 $V,J_n,W_{n+1}$ 均等距，
+
+$$
+I_L\otimes I_{\Gamma_n}
+=(VJ_n)^*(VJ_n)
+=I_L\otimes R_n^*R_n,
+$$
+
+从而 $R_n^*R_n=I_{\Gamma_n}$。再把因子化代入（141.12），取任意迹一的逻辑态，便得
+$\sum_\ell R_{n,\ell}\tau_nR_{n,\ell}^*=\tau_{n+1}$，即第二式。
+
+反向，将（141.11）作用于 $X\otimes\tau_n$ 并对 $E$ 取偏迹，直接得到（141.8）。证毕。
+
+这个结论在整个 $S_{n+1}\otimes\Gamma_n$ 上是算子等式，包含不同附加基向量之间的相干项。虽然实际只准备固定的混合态 $\tau_n$，满秩性和逻辑恒等通道的秩一 Choi 结构已经强制了这份相干约束。它不是新增的制备权限，也不只是一条附加态边缘更新公式。
+
+### 141.4 全部实际轮次的共同 Gram 判据
+
+给定（141.1）—（141.7）的同一套来源、编码与纯初始化数据。对候选等距 $R_n$，记
+
+$$
+T_n=(W_{n+1}\otimes I_E)
+       (I_{S_{n+1}}\otimes R_n)
+:\ S_{n+1}\otimes\Gamma_n\longrightarrow K\otimes E.
+\tag{141.14}
+$$
+
+**定理141.3（给定实际续接接口的共同实现充要条件）。** 下列两项等价。
+
+1. 存在单个全域 CPTP 通道 $\mathcal C:\mathcal L(K\otimes B)\to\mathcal L(K)$，使（141.8）对全部 $0\le n<N$ 成立。
+
+2. 存在同一个有限维空间 $E$ 和等距 $R_n:\Gamma_n\to\Gamma_{n+1}\otimes E$，使
+
+$$
+\dim(K\otimes E)\ge\dim(K\otimes B),\qquad
+\operatorname{Tr}_E(R_n\tau_nR_n^*)=\tau_{n+1},
+\tag{141.15}
+$$
+
+且全部跨轮 Gram 块同时满足
+
+$$
+\boxed{J_n^*J_m=T_n^*T_m\qquad(0\le n,m<N).}
+\tag{141.16}
+$$
+
+完整展开为
+
+$$
+\begin{aligned}
+J_n^*J_m
+={}&(I_{S_{n+1}}\otimes R_n^*)\\
+&\quad\cdot(W_{n+1}^*W_{m+1}\otimes I_E)
+       (I_{S_{m+1}}\otimes R_m).
+\end{aligned}
+\tag{141.17}
+$$
+
+这是从 $S_{m+1}\otimes\Gamma_m$ 到 $S_{n+1}\otimes\Gamma_n$ 的算子等式；不同轮次的逻辑维数或附加维数不必相同。
+
+**证明。** 必要性：对同一个通道取一个全域 Stinespring 等距 $V$。引理141.2对每轮给出同一环境中的 $R_n$ 和 $VJ_n=T_n$，故
+
+$$
+T_n^*T_m=J_n^*V^*VJ_m=J_n^*J_m.
+$$
+
+全域等距要求输出维数不少于输入维数，所以（141.15）的维数条件也必要。
+
+充分性：在实际输入像的共同张成
+
+$$
+\mathcal U=\operatorname{span}_{0\le n<N}\operatorname{ran}J_n
+\subseteq K\otimes B
+$$
+
+上规定
+
+$$
+V_{\mathcal U}\!\left(\sum_nJ_n\xi_n\right)=\sum_nT_n\xi_n.
+\tag{141.18}
+$$
+
+对任意 $\xi_n\in S_{n+1}\otimes\Gamma_n$，全部 Gram 块相等给出
+
+$$
+\left\|\sum_nT_n\xi_n\right\|^2
+=\sum_{n,m}\langle\xi_n,T_n^*T_m\xi_m\rangle
+=\left\|\sum_nJ_n\xi_n\right\|^2.
+$$
+
+所以输入的任意零表示也映到零，（141.18）良定并等距。设 $q=\dim\mathcal U$。它的像维数也是 $q$，而（141.15）保证
+
+$$
+\dim(K\otimes E)-q\ge\dim(K\otimes B)-q.
+$$
+
+因此可以把输入正交补的一个正交基映入输出像的正交补，得到全域等距
+$V:K\otimes B\to K\otimes E$。取
+$\mathcal C(Y)=\operatorname{Tr}_E(VYV^*)$。它全域 CPTP，并满足 $VJ_n=T_n$。引理141.2的反向蕴涵给出全部（141.8）。证毕。
+
+对本节的位输入，维数条件就是 $\dim E\ge2$。只有部分输入子空间上的 Gram 条件、却没有全域输出容量时，不能直接宣称已经构成全域通道。反之，可以共同扩大 $E$；将所有 $R_n$ 经同一环境嵌入扩大不改变 Gram 块和偏迹条件。必要性一侧可取 Kraus 数不超过输入输出维数乘积的实现，故存在解时可以取 $2\le\dim E\le2D^2$。
+
+式（141.16）包括首轮与每个后续轮次、相邻轮次以及所有远隔轮次。只验证每个接口内部或仅验证相邻接口，都没有给出（141.18）在全部线性关系上的良定性。
+
+**推论141.4（完整固定接收合同的接口化）。** 在固定 $D,N,a,b$ 下，存在从独立纯态出发、服务前 $N$ 个完整参考终端的固定 CPTP 接收器，当且仅当可以选择（141.5）—（141.7）的全部数据及（141.15）—（141.17）的共同环境数据。
+
+**证明。** 必要性由实际累计编码、第23节的可逆编码分解、命题141.1和定理141.3给出。
+
+充分性从 $W_0(1)=k$ 开始，按（141.8）逐轮归纳。由于 $F_n$ 是实际来源嵌入，每轮实际联合态都由相应 $\mathcal E_n$ 编码；全部矩阵上的相等也保留任意外部参考。对每个终端，令 $\zeta_n$ 为 $H_n$ 上任意固定密度矩阵，定义
+
+$$
+\begin{aligned}
+\mathcal D_n(Y)
+={}&\iota_n\operatorname{Tr}_{\Gamma_n}(W_n^*YW_n)\iota_n^*\\
+&+\operatorname{Tr}\!\left[(I_K-W_nW_n^*)Y\right]\zeta_n .
+\end{aligned}
+\tag{141.19}
+$$
+
+两项均完全正，总迹为 $\operatorname{Tr}Y$，且
+$\mathcal D_n\mathcal E_n(X)=\iota_nX\iota_n^*$。因此这些全域解码通道恢复原合同要求的完整参考—活动记忆—档案联合态。证毕。
+
+若只在 $n\ge3$ 的尾部列出数据，同一 Gram 定理只给出那些已声明接口的共同实现。完整接收合同仍要求同一个 $V$ 满足从（141.6）开始的全部早期接口；尾部条件本身不会产生独立初态或真实来源前缀。
+
+### 141.5 八维饱和时仍需保留逻辑—附加因子的分解
+
+取 $D=8$。单终端维数约束只给
+
+$$
+r_0=1,\qquad 1\le r_1\le4,\qquad
+1\le r_2\le2,\qquad r_n\in\{1,2\}\quad(n\ge3).
+\tag{141.20}
+$$
+
+当 $n\ge3$ 且 $r_n=2$ 时，
+
+$$
+W_n:S_n\otimes\Gamma_n\longrightarrow K
+$$
+
+是八维到八维的酉同构。实际档案边缘在 $S_n$ 上正定，$\tau_n$ 也正定，故该轮接收边缘具有整个 $K$ 作为支撑。
+
+然而，支撑已经占满 $K$ 并不固定四维逻辑因子与二维附加因子在其中的嵌入。不同 $W_n$ 所描述的分解仍须通过同一个物理通道续接；其相容性恰包含在（141.17）的 $W_{n+1}^*W_{m+1}$ 与实际 $J_n^*J_m$ 中。把每一轮分别改写成标准张量坐标，不能免费加入逐轮可变的物理门，也不能删除相应的跨轮重叠。
+
+引理141.2本身也不给出 $r_n$ 的单调性。秩二附加空间可等距嵌入一维新附加空间与二维环境的乘积，从而把附加信息输出到环境；一维输入附加空间也可映到新附加空间与环境的纠缠向量，使新附加边缘秩二。这两种局部可能性是否属于指定来源下的同一接收器，仍由全部（141.17）判定。
+
+**例141.5（同一满支撑不能决定合法续接）。** 此例只检验可逆编码接口，不替代（141.4）的实际来源嵌入。令
+
+$$
+K=L_1\otimes L_2\otimes G,\qquad
+\dim L_1=\dim L_2=\dim G=2,\qquad \tau=I_G/2.
+$$
+
+以 $L=L_1\otimes L_2$ 为四维逻辑空间。令 $U$ 交换 $L_1,G$，定义两个可逆编码
+
+$$
+\mathcal A_0(\rho)=\rho\otimes\tau,\qquad
+\mathcal A_1(\rho)=U(\rho\otimes\tau)U^*.
+\tag{141.21}
+$$
+
+二者的附加秩与附加谱相同；对任意正定 $\rho$，接收支撑都等于 $K$。对同一正定逻辑态 $\rho=I_L/4$，接收边缘甚至都等于 $I_K/8$。
+
+给输入位 $B$ 一个固定独立状态，并在全域定义固定通道
+
+$$
+\mathcal C_{\mathrm{erase}}(Y)
+=\operatorname{Tr}_{G B}(Y)\otimes\tau_G,
+\tag{141.22}
+$$
+
+其中输出按 $L_1,L_2,G$ 排列。它保留 $\mathcal A_0$ 的全部逻辑态。对 $\mathcal A_1$，则将两个不同逻辑输入
+$|i\rangle\langle i|_{L_1}\otimes\sigma_{L_2}$，$i=0,1$，都映为
+
+$$
+\frac{I_{L_1}}2\otimes\sigma_{L_2}\otimes\frac{I_G}2.
+$$
+
+因此第二个编码中的第一逻辑位被不可逆删除。相同支撑、附加谱，乃至某个正定输入产生的相同接收边缘，都不能代替完整逻辑—参考对应。这正是命题141.1必须使用联合态各矩阵块的原因。该例的固定输入位不是实际来源的 $F_n$，所以它不单独给出原接收问题的维数上下界。
+
+### 141.6 秩一退化与纯环境 Gram 因子
+
+若全部相关附加空间均为一维，则 $\tau_n=1$，$W_n:S_n\to K$，且每个等距 $R_n$ 由一个单位环境向量确定：
+
+$$
+R_n(1)=\eta_{n+1},\qquad \|\eta_{n+1}\|=1.
+$$
+
+此时（141.7）与（141.17）分别退化为
+
+$$
+J_n=(W_n\otimes I_B)F_n,\qquad
+\boxed{
+J_n^*J_m
+=\langle\eta_{n+1},\eta_{m+1}\rangle
+\,W_{n+1}^*W_{m+1}.
+}
+\tag{141.23}
+$$
+
+这正是纯终端分析中的环境 Gram 标量因子。标量的是环境贡献；整个等式仍是不同逻辑支撑之间的算子等式。秩二附加因子将这一标量贡献推广为（141.17）中的相干子系统运输，不能只用环境射线或附加态秩替代。
+
+因此，八维情形的后续缺口可以精确表述为：在实际 $F_n$、独立纯初态和完整前缀下，能否找到同一组 $W_n,\tau_n,R_n$，同时满足全部状态更新与跨轮 Gram 等式。取 $N=7$ 时，这些是七终端八维接收器的充要可行性条件；本节没有给出它们的解或无解证明，因而不确定七终端的最小维数。
+
+## 追加锚（本行以下为增补区）
+
+## 142. 六终端七维最优误差的半代数性与端点幂界
+
+第140节得到七维前六终端最优误差的来源连续性：每个非退化来源都有严格正隙，且靠近退化集合时有线性上界。本节补上一个有限幂阶的下界。新增步骤是确认完整参考合同下的最优半迹误差为连续半代数函数，再复用经典 Łojasiewicz 不等式；不重新建立实代数工具，也不宣称常数、指数或最优端点衰减率已经算出。
+
+沿用第140节的完整复振幅参数空间与最优误差：
+
+$$
+\Theta=\{(a,b)\in\mathbb C^2:|a|^2+|b|^2=1\},
+\qquad
+\varepsilon_{D,N}(\theta)
+=\min_{\mathfrak A}\max_{1\le n\le N}\sup_{R,\rho_{RM}}
+\frac12\left\|
+(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_n^{\theta,\mathfrak A}(\rho)-\Omega_n^\theta(\rho)
+\right\|_1.
+\tag{142.1}
+$$
+
+这里 $\mathfrak A=(\mathcal C,\mathcal D_1,\ldots,\mathcal D_N)$ 从独立纯态 $e_0\in\mathbb C^D$ 启动，逐轮重复同一个全域 CPTP 接收通道 $\mathcal C$；所有持久控制计入容量，只允许解码器依赖终端。误差比较同一实际来源的参考、活动记忆和全部原档案。来源参数已知，装置可据此设计。本节仍允许复相位，不先把参数球面商成一个概率区间。
+
+令
+
+$$
+\begin{gathered}
+\varepsilon_7(\theta)=\varepsilon_{7,6}(\theta),\\
+Z=\{(a,b)\in\Theta:ab=0\},\qquad
+d(\theta)=\operatorname{dist}(\theta,Z).
+\end{gathered}
+\tag{142.2}
+$$
+
+$Z$ 是退化来源的两条圆：$\{(0,e^{it})\}$ 与 $\{(e^{it},0)\}$。
+
+**定理142.1（全参数半代数性与六终端端点幂界）。** 对任意固定有限 $D,N$，$\varepsilon_{D,N}:\Theta\to[0,1]$ 是连续半代数函数。对 $D=7,N=6$，其零集恰为 $Z$，并存在同一正常数 $C>0$ 和正整数 $r\ge1$，使所有 $\theta\in\Theta$ 满足
+
+$$
+\boxed{
+C\,d(\theta)^r
+\le\varepsilon_7(\theta)
+\le\min\{1,12d(\theta)\}.
+}
+\tag{142.3}
+$$
+
+$C,r$ 统一于整个复参数球面，包括所有相位。式（142.3）的左端是存在性幂界；本文不提供它们的数值。
+
+### 142.1 有限参考、实际装置与迹范数的半代数图
+
+把复矩阵的实部、虚部分别作为实坐标。第140.1节已经证明：参考维数二足够，初态固定为标准基向量 $e_0$ 不损失装置，且有限装置优化的最小值取得。下面补足半代数性所需的有限实公式。
+
+对固定 $D,N$，所有装置组成同一个紧半代数集 $\mathscr A_{D,N}$。接收通道与各终端解码器用 Hermitian Choi 矩阵表示，CPTP 条件是矩阵正半定及固定偏迹等于恒等矩阵。有限大小的 Hermitian 正半定条件等价于所有主子式非负，所以这些条件是实多项式等式和不等式。第 $n$ 个解码器的输出维数为 $2^n$；有限 $N$ 保证这里仅有有限多个有限矩阵。
+
+来源与二维参考的输入集为
+
+$$
+\mathscr P=\{\rho\in\operatorname{Herm}(\mathbb C^2_R\otimes\mathbb C^2_M):
+\rho\succeq0,\ \operatorname{Tr}\rho=1\},
+\tag{142.4}
+$$
+
+同样紧且半代数。来源发射等距的矩阵元为 $a,b,1,0$。从 $\rho\otimes|e_0\rangle\langle e_0|$ 出发，重复固定通道有限次，再施加第 $n$ 个解码器，所得状态矩阵元都是来源实坐标、装置 Choi 坐标和输入坐标的多项式；未经接收的真实目标同样如此。
+
+因此每个终端的 Hermitian 差矩阵
+
+$$
+X_n(\theta,\mathfrak A,\rho)
+=(\operatorname{id}_{RM}\otimes\mathcal D_n)
+\sigma_n^{\theta,\mathfrak A}(\rho)-\Omega_n^\theta(\rho)
+\tag{142.5}
+$$
+
+具有多项式矩阵元。其矩阵大小为 $4\cdot2^n$，包括二维参考、二维活动记忆和全部原档案。
+
+迹范数虽非多项式，但它的图是半代数的。对任意给定的 Hermitian $X$，引入同尺寸 Hermitian 变量 $Y$，有
+
+$$
+s=\frac12\|X\|_1
+\quad\Longleftrightarrow\quad
+\exists Y:\quad Y\succeq0,\qquad Y^2=X^2,\qquad
+2s=\operatorname{Tr}Y.
+\tag{142.6}
+$$
+
+因为 $X^2\succeq0$ 的正半定平方根唯一，右侧强制 $Y=|X|$。该描述同样适用于零特征值和秩变化，不要求选取连续本征基。右侧全部是有限实多项式条件；消去 $Y$ 后，$s=\frac12\|X\|_1$ 的图为半代数集。
+
+将（142.5）代入，记这个单终端误差为 $e_n(\theta,\mathfrak A,\rho)$。它连续且半代数。有限终端最大值与输入最大值的图可写成有限实量词公式：
+
+$$
+\begin{aligned}
+t=E(\theta,\mathfrak A)
+\quad\Longleftrightarrow\quad&
+\bigwedge_{n=1}^N
+\forall\rho\in\mathscr P:\ e_n(\theta,\mathfrak A,\rho)\le t,\\
+&\text{且}\quad
+\bigvee_{n=1}^N
+\exists\rho\in\mathscr P:\ e_n(\theta,\mathfrak A,\rho)=t.
+\end{aligned}
+\tag{142.7}
+$$
+
+输入紧性保证最大值确实取得。式中 $e_n$ 可替换为（142.6）的图公式，故只包含有限个实变量、多项式条件和量词。实闭域量词消去，即 Tarski–Seidenberg 定理，给出 $E$ 的半代数图。
+
+再利用装置最小值取得，写
+
+$$
+\begin{aligned}
+t=\varepsilon_{D,N}(\theta)
+\quad\Longleftrightarrow\quad&
+\exists\mathfrak A\in\mathscr A_{D,N}:\ E(\theta,\mathfrak A)=t,\\
+&\text{且}\quad
+\forall\mathfrak A'\in\mathscr A_{D,N}:\ E(\theta,\mathfrak A')\ge t.
+\end{aligned}
+\tag{142.8}
+$$
+
+再次量词消去，得到 $\varepsilon_{D,N}$ 为半代数函数。第140.2节已经给出
+
+$$
+|\varepsilon_{D,N}(\theta)-\varepsilon_{D,N}(\theta')|
+\le2N\|\theta-\theta'\|_2,
+\tag{142.9}
+$$
+
+所以它在整个 $\Theta$ 上连续，包括所有退化来源。这里没有把半代数性误当成自动连续；连续性单独由实际来源扰动界提供。
+
+### 142.2 精确零集与经典 Łojasiewicz 工具
+
+最小值取得保证 $\varepsilon_7(\theta)=0$ 当且仅当同一装置可以精确服务前六终端。第139节排除全部非退化七维装置，第10节的二维和三维退化装置经第140.4节嵌入七维。因此
+
+$$
+\varepsilon_7^{-1}(0)=Z.
+\tag{142.10}
+$$
+
+按第140.4节，
+
+$$
+d(a,b)=\sqrt{2-2\max\{|a|,|b|\}},
+\qquad
+0\le d\le\sqrt{2-\sqrt2}<1.
+\tag{142.11}
+$$
+
+模长、有限最大值和非负平方根均有半代数图，故 $d$ 连续且半代数。
+
+现在复用经典 Łojasiewicz 不等式的紧图版本：若 $f,g$ 在一个集合上具有紧的次解析图，且 $f^{-1}(0)\subseteq g^{-1}(0)$，则存在 $c>0$、$q>0$，使 $|f|\ge c|g|^q$。[^phase_lojasiewicz_compact_graphs] 连续半代数函数在紧半代数集上的图是紧半代数集，因而满足这个定理的次解析图条件。
+
+在实解析环境空间 $\mathbb R^4\cong\mathbb C^2$ 中取定义域 $\Theta$，并取
+
+$$
+f=\varepsilon_7,\qquad g=d.
+$$
+
+式（142.10）给出正确方向的零集包含，实际上两零集相等；两图的紧性由 $\Theta$ 紧及连续性给出。因此存在统一于整个 $\Theta$ 的 $C>0,q>0$，使
+
+$$
+\varepsilon_7(\theta)\ge C d(\theta)^q.
+$$
+
+取 $r=\max\{1,\lceil q\rceil\}$。由（142.11）的 $0\le d<1$，有 $d^r\le d^q$，所以
+
+$$
+\varepsilon_7(\theta)\ge C d(\theta)^r.
+\tag{142.12}
+$$
+
+右侧上界是第140节已有的 $\varepsilon_7\le\min\{1,12d\}$。合并即得（142.3），定理142.1得证。
+
+### 142.3 本例给出的关系与边界
+
+本节的几何机制是：有限维、有限期限的实际装置有紧半代数参数集；全参考最优误差的零集恰是该容量可精确实现的来源集合；经典 Łojasiewicz 不等式再以距这个零集的有限幂控制误差。在本例中，精确分类把这个零集确定为退化两圆。
+
+这比单独的逐点正性进一步限制了近端点行为。对任意非空紧集 $L\subset\Theta\setminus Z$，令 $\delta_L=\min_{\theta\in L}d(\theta)>0$，则
+
+$$
+\min_{\theta\in L}\varepsilon_7(\theta)\ge C\delta_L^r>0.
+\tag{142.13}
+$$
+
+同一对 $C,r$ 服务全部这样的紧集；它们仍是存在性常数。本文没有给出 $C,r$ 的有效数值、最佳指数、最优误差曲线或实用认证算法，也没有把不等式方向不同的上界当成误差下界。第20、35节的392轮显式数值界与本节六轮端点幂界各有自己的期限和合同，不互相替代。
+
+半代数集合与函数、量词消去和 Łojasiewicz 不等式都是既有工具。本节的工作是核对实际全参考误差优化满足这些工具的条件，并连接第139节的精确零集；不作工具原创或 Lean kernel 核验声明，也不把有限期限结论外推为全时域幂界。
+
+[^phase_lojasiewicz_compact_graphs]: Edward Bierstone and Pierre D. Milman, “Semianalytic and subanalytic sets,” *Publications Mathématiques de l’IHÉS* **67** (1988), 5–42, [原文 PDF](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf), [doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126)。Theorem 6.4，印刷第34页，假设 $f,g$ 的图紧且次解析、$f^{-1}(0)\subseteq g^{-1}(0)$，结论为 $|f(x)|\ge c|g(x)|^r$；Remark 6.5 明列距零集的形式。本文使用连续半代数函数的特例，原文的正实指数再按（142.11）上取整，不引用任何有效指数或系数估计。
+
+## 追加锚（本行以下为增补区）
