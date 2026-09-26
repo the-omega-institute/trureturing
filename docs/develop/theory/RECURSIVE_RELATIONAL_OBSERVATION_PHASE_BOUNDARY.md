@@ -68567,3 +68567,5090 @@ $$
 本文没有证明所有矩形矩阵对都具有这样的谱下界与边界绕数，也没有给出一般矩形最优距离公式。已经得到的是：有理显式例的真实 $d_2$，以及允许非平凡主输出线的可复用下界条件。未进行文献穷尽检索，不据本组合推导主张原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 227. 二维输入任意有限输出的精确记录压缩距离
+
+设输入为 $\mathbb C^2$，量子输出为 $\mathbb C^m$，$m\ge1$。本文证明：任意两标签、结果 Choi 秩 $(1,2)$ 的 CPTP 记录通道，到全部同接口总 Choi 秩至多二记录通道的完整半 diamond 距离，恰为最优旋转删除成本与删除整个结果0成本的较小者。
+
+核心连接有三项。第一，将两个 Kraus 在纯输入上的 Gram 矩阵写成 Bloch 仿射映射。第二，用闭球极小极大和极体包含证明两种谱极值怎样共同给出删除成本。第三，在需要主谱下界的分支上，通过连续投影运输保留相位协变，从而给任意单 Kraus 竞争者制造零概率事件。退化目标最后由保持 TP 的稠密逼近处理。
+
+所有结论均为纸面数学推导，未新增或编译 Lean 证明。Sion 极小极大、Bloch 坐标、圆周绕数与有限维凸体极性是成熟工具；本文不把这些工具作为新定理，也不主张已经完成文献穷尽核查。
+
+**定理 227.1（对象与精确距离）。**
+
+固定三个 $m\times2$ 矩阵 $K_0,A,B$，满足
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I_2,
+\qquad K_0\ne0,
+$$
+并假设 $A,B$ 线性独立。令
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\Gamma(X).
+\tag{227.GD.1}
+$$
+这是结果 Choi 秩恰为 $(1,2)$ 的 CPTP 记录通道。定义
+$$
+\delta=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+\qquad q_0=\|K_0^\dagger K_0\|_\infty.
+\tag{227.GD.2}
+$$
+设 $\mathfrak C_2$ 是同输入、同量子输出、同经典标签、总 Choi 秩至多二的全部 CPTP 记录通道，并置
+$$
+d_2(\mathcal R)=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+记录通道按指定标签块对角，所以它的总 Choi 秩等于两个分支 Choi 秩之和。竞争者可以任意改变两分支；没有把结果0固定或从完整距离中删除。
+
+**定理。** 对上述全部目标，
+$$
+\boxed{d_2(\mathcal R)=\min(\delta,q_0).}
+\tag{227.GD.3}
+$$
+右侧总由一个明确的删除与共同右 Gram 修复候选取得。最近性不要求竞争者的 Kraus 落在 $\operatorname{span}\{A,B\}$。
+
+**定义 227.2（Gram 矩阵的 Bloch 表示）。**
+
+从本定义到定理 227.7 的第 227.7.3 项先设 $m\ge2$；一维量子输出由第 227.7.4 项单独处理。采用 Pauli 矩阵
+$$
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+对单位输入 $v=(x,y)$，约定
+$$
+s(v)=\bigl(2\operatorname{Re}(\overline xy),
+2\operatorname{Im}(\overline xy),|x|^2-|y|^2\bigr),
+\qquad
+P_v=\frac{I+s(v)\cdot\sigma}{2}.
+\tag{227.GD.4}
+$$
+令 $W_v=[Av\ Bv]$，并定义 Kraus 系数空间中的 Gram 矩阵
+$$
+T(s(v))=W_v^\dagger W_v
+=\begin{pmatrix}
+\|Av\|^2&v^\dagger A^\dagger Bv\\
+v^\dagger B^\dagger Av&\|Bv\|^2
+\end{pmatrix}.
+$$
+它对输入密度矩阵线性，故唯一可写成
+$$
+\boxed{
+T(s)=(a+t\cdot s)I_2+(u+Ls)\cdot\sigma,
+}
+\tag{227.GD.5}
+$$
+其中 $a\in\mathbb R$、$t,u\in\mathbb R^3$、$L\in M_3(\mathbb R)$。这里 $T$ 是这一明确 Gram 约定；不把它未经转置便认作通常的环境通道，也不假设它保迹。
+
+对单位系数 $c=(c_0,c_1)$，记 $n=s(c)$。则
+$$
+\|(c_0A+c_1B)v\|^2
+=c^\dagger T(s)c
+=f(s,n),
+$$
+$$
+f(s,n)=a+t\cdot s+u\cdot n+n\cdot Ls.
+\tag{227.GD.6}
+$$
+记闭单位球为 $\mathbb B$，球面为 $S^2$。定义
+$$
+\lambda_\pm(s)=a+t\cdot s\pm\|u+Ls\|,
+$$
+$$
+\alpha=\min_{s\in S^2}\lambda_+(s),
+\qquad
+\beta=\max_{s\in S^2}\lambda_-(s).
+\tag{227.GD.7}
+$$
+$\lambda_\pm$ 是 $T(s)$ 的两个本征值，也给出 $\Gamma(P_v)$ 的两个可能非零本征值。因此 $\beta$ 是输入端口的第二大本征值尾量。
+
+由（227.GD.6），
+$$
+\delta
+=\min_{n\in S^2}\max_{s\in S^2}f(s,n)
+=\min_{n\in S^2}
+\left[a+u\cdot n+\|t+L^Tn\|\right].
+\tag{227.GD.8}
+$$
+一般弱极小极大已给 $\beta\le\delta$。下面确定何时还需要 $\alpha$。
+
+**定理 227.3（Bloch 椭球内部的完整谱公式）。**
+
+先假设
+$$
+\det L\ne0,
+\qquad s_0=-L^{-1}u,
+\qquad\|s_0\|<1.
+\tag{227.GD.9}
+$$
+于是 $u+Ls$ 在球面上从不为零。再置
+$$
+n_0=-L^{-T}t,
+\qquad c=a-n_0\cdot Ls_0.
+\tag{227.GD.10}
+$$
+双仿射配对可以精确重写为
+$$
+f(s,n)=c+(n-n_0)\cdot L(s-s_0).
+\tag{227.GD.11}
+$$
+
+**谱结论。** 在（227.GD.9）下，
+$$
+\boxed{\delta=\max(\alpha,\beta).}
+\tag{227.GD.12}
+$$
+更精确地，
+$$
+\begin{array}{c|c}
+\|n_0\|<1&\delta=\alpha>c>\beta\\
+\|n_0\|=1&\delta=\alpha=\beta=c\\
+\|n_0\|>1&\delta=\beta>c>\alpha.
+\end{array}
+\tag{227.GD.13}
+$$
+此处先证明纯实凸几何结论，不需要把任何球面误当作凸集。
+
+**227.3.1 两个中心都在球内：极体包含给出对称等式。**
+
+设 $\|n_0\|<1$，令
+$$
+K=\mathbb B-s_0,\qquad H=\mathbb B-n_0,\qquad C=LK.
+$$
+三者都是包含原点为内点的紧凸体。记支撑函数为
+$$
+h_C(y)=\max_{x\in C}x\cdot y,
+$$
+极体为
+$$
+C^\circ=\{y:x\cdot y\le1\ \text{对所有 }x\in C\}.
+$$
+由（227.GD.11）及线性函数在闭球上的极值可取于球面，
+$$
+\delta-c=\min_{y\in\partial H}h_C(y),
+\qquad
+\alpha-c=\min_{x\in\partial C}h_H(x).
+\tag{227.GD.14}
+$$
+下面直接说明两式右侧相等。对任意 $r\ge0$，
+$$
+h_C(y)\ge r\quad\text{对所有 }y\in\partial H
+\iff C\supseteq rH^\circ.
+\tag{227.GD.15}
+$$
+理由是 $h_{H^\circ}(y)=1$ 在 $\partial H$ 上成立；由正齐次性，边界上的比较等价于所有向量上的支撑函数比较，再由闭凸集的分离定理等价于包含。取极体并使用双极恒等式，
+$$
+C\supseteq rH^\circ
+\iff H\supseteq rC^\circ.
+\tag{227.GD.16}
+$$
+在 $r>0$ 时这是取极体后反向包含的直接重排，$r=0$ 时两边均成立。再次使用（227.GD.15），得到
+$$
+\min_{y\in\partial H}h_C(y)
+=\min_{x\in\partial C}h_H(x).
+$$
+所以 $\delta=\alpha$。
+
+此外，对 $x=s-s_0\in\partial K$，
+$$
+\lambda_+(s)-c=\|Lx\|-n_0\cdot Lx>0,
+$$
+$$
+\lambda_-(s)-c=-\|Lx\|-n_0\cdot Lx<0,
+$$
+因为 $Lx\ne0$ 且 $\|n_0\|<1$。紧性给 $\alpha>c>\beta$，证明（227.GD.13）的第一行。
+
+**227.3.2 系数中心在球面上：直接处理临界情形。**
+
+设 $\|n_0\|=1$。同样的两式及 Cauchy–Schwarz 给
+$$
+\lambda_+(s)\ge c,\qquad\lambda_-(s)\le c.
+$$
+由于 $0\in\operatorname{int}K$，沿 $Lx$ 的正、负 $n_0$ 射线分别能到达 $\partial(LK)$，所以两侧都能取等，得到 $\alpha=\beta=c$。
+
+另一方面，取球面系数 $n=n_0$，有
+$$
+a+u\cdot n_0+\|t+L^Tn_0\|=c.
+$$
+所以 $\delta\le c$。结合 $\beta\le\delta$，得到三者均为 $c$。这里没有把临界点排除或依赖数值极限。
+
+**227.3.3 系数中心在球外：闭球 Sion 与边界最优。**
+
+设 $\|n_0\|>1$。定义闭球上的
+$$
+g(n)=\max_{s\in\mathbb B}f(s,n)
+=a+u\cdot n+\|t+L^Tn\|,
+$$
+$$
+h(s)=\min_{n\in\mathbb B}f(s,n)
+=a+t\cdot s-\|u+Ls\|.
+$$
+$f$ 在两个闭球上连续，分别仿射；两个闭球都是凸紧集。因此 Sion 定理适用，给
+$$
+\min_{n\in\mathbb B}g(n)=\max_{s\in\mathbb B}h(s).
+\tag{227.GD.17}
+$$
+它只施用于闭球，尚未用于球面。
+
+$g$ 在闭球邻域内可微，因为 $t+L^Tn=L^T(n-n_0)\ne0$。若它在球内部取得最小值，则
+$$
+0=\nabla g(n)
+=u+L\frac{t+L^Tn}{\|t+L^Tn\|},
+$$
+强制一个单位向量等于 $s_0$，违反 $\|s_0\|<1$。故 $g$ 的最小值在球面，等于 $\delta$。
+
+若 $h$ 在内部点 $s\ne s_0$ 取得最大值，则可微性给
+$$
+t=L^T\frac{u+Ls}{\|u+Ls\|},
+$$
+与 $\|L^{-T}t\|=\|n_0\|>1$ 矛盾。$s_0$ 也不是局部最大点：选方向 $d$ 满足 $Ld=-n_0/\|n_0\|$，则小的 $\varepsilon>0$ 给
+$$
+h(s_0+\varepsilon d)-h(s_0)
+=\varepsilon(\|n_0\|-1)>0,
+$$
+且该点仍在球内。因此 $h$ 的最大值也在球面，等于 $\beta$。（227.GD.17）给 $\delta=\beta$。
+
+最后，沿 $Lx$ 的正 $n_0$ 射线取 $x\in\partial K$，得到 $\lambda_+(s)<c$；沿负射线则得到 $\lambda_-(s)>c$。所以 $\beta>c>\alpha$，完成第三行及整个谱公式。
+
+Sion 来源为 Maurice Sion, “On general minimax theorems”, *Pacific Journal of Mathematics* **8** (1958), 171–176，定理3.4，第174页。原文假设凸紧空间及相应半连续、拟凹凸条件；这里用的是连续双仿射的直接特例。[原论文 PDF，第5页](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf#page=5)。
+
+**定理 227.4（非零度数与任意竞争者的主谱下界）。**
+
+仍假设（227.GD.9）。令
+$$
+\nu(s)=\frac{u+Ls}{\|u+Ls\|},
+\qquad\epsilon=\operatorname{sign}\det L\in\{-1,1\}.
+$$
+该映射的度数为 $\epsilon$。下面给出带明确相位的构造，而不只使用“线丛次数相加”的口头解释。
+
+**227.4.1 无简并同伦及起点相位。**
+
+取实极分解 $L=OP$，其中 $O\in O(3)$、$P\succ0$。矩阵路径
+$$
+O((1-\tau)I+\tau P),\qquad0\le\tau\le1,
+$$
+均可逆，将 $O$ 连到 $L$。再沿 $\tau u+Ls$ 加入平移；其零点若存在，只能是 $s=\tau s_0$，不在单位球面上。两段路径归一化后给出 $Os$ 到 $\nu(s)$ 的连续球面同伦，因此度数为 $\det O=\epsilon$。
+
+若 $\epsilon=1$，选酉矩阵 $U$ 实现旋转 $O$，即
+$$
+U(s\cdot\sigma)U^\dagger=(Os)\cdot\sigma.
+$$
+起点主向量可取 $q_0(v)=Uv$，满足
+$$
+q_0(e^{i\theta}v)=e^{i\theta}q_0(v).
+$$
+若 $\epsilon=-1$，令 $R=\operatorname{diag}(1,-1,1)$。复共轭满足 $s(\overline v)=Rs(v)$，而 $OR\in SO(3)$。选择 $U$ 实现旋转 $OR$，取 $q_0(v)=U\overline v$。此时它仍是 $Os(v)$ 的主向量，并满足
+$$
+q_0(e^{i\theta}v)=e^{-i\theta}q_0(v).
+$$
+所以两种情形统一为相位次数 $\epsilon$。任意三维旋转可由 qubit unitary 共轭实现，这是标准 Pauli–旋转对应；也可由轴角式 $\exp(-i\vartheta\,\widehat n\cdot\sigma/2)$ 直接检验。
+
+**227.4.2 有限次投影运输保留相位协变。**
+
+令上述同伦的主投影为
+$$
+P_\tau(s)=\frac{I+\nu_\tau(s)\cdot\sigma}{2}.
+$$
+它在紧集 $[0,1]\times S^2$ 上连续。可选有限分割 $0=\tau_0<\cdots<\tau_N=1$，使相邻投影一致满足
+$$
+\sup_s\|P_{\tau_j}(s)-P_{\tau_{j-1}}(s)\|_\infty<1.
+$$
+从刚才的单位主向量开始，递归定义
+$$
+q_j(v)=
+\frac{P_{\tau_j}(s(v))q_{j-1}(v)}
+{\|P_{\tau_j}(s(v))q_{j-1}(v)\|}.
+\tag{227.GD.18}
+$$
+因为 $q_{j-1}$ 位于前一投影的像中，分母至少为
+$$
+1-\|P_{\tau_j}(s(v))-P_{\tau_{j-1}}(s(v))\|_\infty>0.
+$$
+所以每步均连续且合法。投影只依赖 $s(v)$，故相位协变逐步保留。最终得到 $T(s(v))$ 的连续单位主向量 $q(v)$，满足
+$$
+q(e^{i\theta}v)=e^{i\epsilon\theta}q(v).
+\tag{227.GD.19}
+$$
+这是球面 $S^3$ 上的向量，不把它未经核对便降到 $\mathbb {CP}^1$。
+
+**227.4.3 转成真实输出事件并与任意 Kraus 比较。**
+
+$T(s)$ 正半定且两个本征值不同，故 $\lambda_+(s)>0$。定义
+$$
+r(v)=\frac{W_vq(v)}{\sqrt{\lambda_+(s(v))}}.
+\tag{227.GD.20}
+$$
+则 $r(v)$ 连续、单位，且
+$$
+\Gamma(P_v)r(v)=\lambda_+(s(v))r(v),
+$$
+$$
+\boxed{
+ r(e^{i\theta}v)=e^{i(1+\epsilon)\theta}r(v).
+}
+\tag{227.GD.21}
+$$
+输入自身贡献相位一，Gram 主向量贡献相位 $\epsilon$；这一显式纤维映射固定了符号。$\epsilon=-1$ 给相位零，$\epsilon=1$ 给相位二。
+
+对任意 $m\times2$ 候选单 Kraus $C$，在闭圆盘取
+$$
+v(z)=\sqrt{1-|z|^2}f_0+zf_1,
+\qquad F(z)=\langle r(v(z)),Cv(z)\rangle.
+$$
+在 $|z|=1$ 上，
+$$
+F(z)=z^{-\epsilon}h,
+\qquad h=\langle r(f_1),Cf_1\rangle.
+\tag{227.GD.22}
+$$
+若 $h=0$，边界已有零点；否则假设圆盘无零会使 $F/|F|$ 将绕数 $-\epsilon\ne0$ 的边界映射延拓到圆盘，矛盾。因此存在 $v$ 使候选在事件 $P_{r(v)}$ 上概率为零，而目标结果1在同一事件上的概率为 $\lambda_+(s(v))\ge\alpha$。
+
+与完整标签效果 $|1\rangle\langle1|\otimes P_{r(v)}$ 配对，得到任意结果1秩至多一竞争者的完整半 diamond 下界 $\alpha$。圆周不可延拓性采用 Hatcher《Algebraic Topology》§1.1、第29页定理1.7与第32页定理1.9证明中的标准工具。[官方章节 PDF](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。
+
+另一方面，输入尾谱始终给下界 $\beta$：选使 $\lambda_-(s)=\beta$ 的输入，若 $Cv\ne0$，读取输出效果 $I-P_{Cv/\|Cv\|}$；目标概率至少为第二大本征值 $\beta$，候选为零。若 $Cv=0$，整个结果1即可见证该下界。因此（227.GD.12）给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\max(\alpha,\beta)=\delta
+\tag{227.GD.23}
+$$
+对任意结果1 Choi 秩至多一的竞争者成立。
+
+**定理 227.5（Bloch 椭球外部的尾谱等式）。**
+
+现在假设 $L$ 可逆且 $\|s_0\|>1$，即
+$$
+0\notin u+L\mathbb B.
+\tag{227.GD.24}
+$$
+归一化 Bloch 方向可以在整个闭球上定义，故球面度数为零。此时不需要主输出绕数下界，精确公式是
+$$
+\boxed{\delta=\beta.}
+\tag{227.GD.25}
+$$
+
+证明仍对两个闭球使用（227.GD.17）。首先，凸函数 $g(n)=a+u\cdot n+\|t+L^Tn\|$ 不可能在球内部取最小值。在可微点，内点最小要求 $0=u+Ls$，其中 $s$ 为某单位向量，违反（227.GD.24）；在不可微点 $t+L^Tn=0$，其凸次微分为 $u+L\mathbb B$，仍不含零。这也可直接由范数方向导数与分离定理得到。因此 $g$ 的最小值在球面，等于 $\delta$。
+
+$h(s)=a+t\cdot s-\|u+Ls\|$ 在闭球邻域可微。若最大点已经在边界，结论立即成立。若有内部最大点 $s_*$，置
+$$
+w=\frac{u+Ls_*}{\|u+Ls_*\|},
+$$
+其一阶条件为 $t=L^Tw$，且
+$$
+s_*=s_0+r_*L^{-1}w,\qquad r_*>0.
+$$
+沿同一射线
+$$
+s(r)=s_0+rL^{-1}w,\qquad r>0,
+$$
+有
+$$
+h(s(r))=a+t\cdot s_0+r(t\cdot L^{-1}w-1)
+=a+t\cdot s_0.
+$$
+包含内部点 $s_*$ 的射线与闭球交成一个紧区间；由于 $s_0$ 在球外，该区间的两个端点仍有 $r>0$，并位于球面。因此同一最大值也在球面取得，等于 $\beta$。结合闭球 Sion 得到（227.GD.25）。
+
+于是外部情形下，既有输入尾谱下界已经给任意结果1秩至多一候选的距离至少为 $\delta$。
+
+**推论 227.6（非退化目标的完整距离与达到构造）。**
+
+假设 $L$ 可逆且 $\|L^{-1}u\|\ne1$。前两种情况已经穷尽，均给结果1秩至多一竞争者的下界 $\delta$。若预算候选的结果1秩为二，则结果0必须为零，读取标签0给下界 $q_0$。故
+$$
+d_2(\mathcal R)\ge\min(\delta,q_0).
+\tag{227.GD.26}
+$$
+上界使用第 219 节的全缺失范数右 Gram 修复定理。先注意
+$$
+\delta
+\le\frac{\operatorname{Tr}(A^\dagger A+B^\dagger B)}2
+=1-\frac{\operatorname{Tr}K_0^\dagger K_0}{2}<1.
+\tag{227.GD.27}
+$$
+其中第一次比较可通过两个原 Kraus 的算子范数平方取较小者，再用范数不超过迹得到。
+
+取达到 $\delta$ 的单位系数，旋转出删除项 $D=c_0A+c_1B$，另一个保留 Kraus 记为 $C$。删除结果1的 $DXD^\dagger$，把 $K_0,C$ 共同右乘 $(I-D^\dagger D)^{-1/2}$，得到结果秩 $(1,1)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $\delta$。
+
+若 $q_0<\delta$，则 $q_0<1$，可以删除整个结果0，并把 $A,B$ 共同右乘 $(I-K_0^\dagger K_0)^{-1/2}$。这给结果秩 $(0,2)$ 的合法 CPTP 通道，完整半 diamond 误差不超过 $q_0$。
+
+以上修复定理适用于全部缺失效应范数严格小于一，保留全部结果标签与完整参考系统。结合（227.GD.26）即证明非退化目标的（227.GD.3）。
+
+**定理 227.7（保持 TP 的稠密逼近与全部维数）。**
+
+本节先设 $m\ge2$。不对简并主投影直接选取前述向量，而采用非退化目标逼近并对真实距离取极限。$m=1$ 在本节末单独证明。
+
+**227.7.1 可用非退化矩阵对在同一输出维数中稠密。**
+
+$a,t,u,L$ 的各坐标都是 $A,B$ 实虚矩阵元的实二次多项式。因而
+$$
+\mathcal P(A,B)=\det L\,
+\left(\|\operatorname{adj}(L)u\|^2-(\det L)^2\right)
+\tag{227.GD.28}
+$$
+为实多项式。$\mathcal P\ne0$ 恰保证 $L$ 可逆且 $\|L^{-1}u\|\ne1$。
+
+它不是恒零多项式。对二维输出取
+$$
+A=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad B=\begin{pmatrix}0&2\\3&0\end{pmatrix}.
+$$
+在（227.GD.4）、（227.GD.5）的固定约定下，直接有
+$$
+u=(0,0,-2),\qquad
+L=\operatorname{diag}(7/2,-1/2,-1/2),
+\qquad s_0=(0,0,-4).
+\tag{227.GD.29}
+$$
+所以 $\mathcal P\ne0$。当 $m>2$，在其余输出行补零保留同一例。非零实多项式的零集无内点，故满足所需非退化条件的矩阵对在每个 $m\ge2$ 的整个矩阵对空间中稠密。
+
+**227.7.2 在目标 TP 约束内构造逼近。**
+
+原目标满足 $G=A^\dagger A+B^\dagger B\preceq I$。先把 $A,B$ 共同乘以 $\sqrt{1-\varepsilon}$，则新的余量满足
+$$
+I-(1-\varepsilon)G\succeq\varepsilon I\succ0.
+$$
+在足够小的邻域内选一个非退化矩阵对 $(A_\varepsilon,B_\varepsilon)$，仍保持
+$$
+R_\varepsilon=I-A_\varepsilon^\dagger A_\varepsilon
+-B_\varepsilon^\dagger B_\varepsilon\succ0,
+$$
+并使其趋向 $(A,B)$。
+
+$K_0$ 的极分解部分等距总能扩成一个固定等距嵌入 $U:\mathbb C^2\to\mathbb C^m$，因为 $m\ge2$。所以
+$$
+K_0=U(K_0^\dagger K_0)^{1/2}.
+$$
+定义
+$$
+K_{0,\varepsilon}=UR_\varepsilon^{1/2}.
+\tag{227.GD.30}
+$$
+它非零，与 $A_\varepsilon,B_\varepsilon$ 共同满足 TP，并由正平方根的连续性趋向原 $K_0$。非退化条件也保证 $A_\varepsilon,B_\varepsilon$ 线性独立：若两者相关，则 Gram 的无迹像至多在一条直线上，$L$ 不可能可逆。得到的目标 $\mathcal R_\varepsilon$ 因而均为合法结果秩 $(1,2)$，并在完整 diamond 范数下趋向原目标。
+
+**227.7.3 同一候选集上的距离连续性。**
+
+所有目标使用同一个固定候选集 $\mathfrak C_2$。由三角不等式，
+$$
+|d_2(\mathcal R_\varepsilon)-d_2(\mathcal R)|
+\le\frac12\|\mathcal R_\varepsilon-\mathcal R\|_\diamond
+\longrightarrow0.
+\tag{227.GD.31}
+$$
+$q_{0,\varepsilon}\to q_0$ 是算子范数连续性。$\delta_\varepsilon\to\delta$ 则来自单位系数球面上的一致收敛及紧集取最小值的连续性。对非退化目标已有
+$$
+d_2(\mathcal R_\varepsilon)
+=\min(\delta_\varepsilon,q_{0,\varepsilon}).
+$$
+取极限便得到一般目标的（227.GD.3）。推论 227.6的显式修复上界对原目标本身仍有效，所以距离下确界确实取得。证明完毕。
+
+**227.7.4 一维量子输出直接处理。**
+
+当 $m=1$，$A,B$ 是线性独立的行向量。令
+$$
+E_1=A^\dagger A+B^\dagger B,
+\qquad V=\begin{pmatrix}A\\B\end{pmatrix}.
+$$
+$V$ 为可逆 $2\times2$ 矩阵。删除系数的 Rayleigh 最小值给
+$$
+\delta=\lambda_{\min}(VV^\dagger)
+=\lambda_{\min}(V^\dagger V)
+=\lambda_{\min}(E_1).
+$$
+任意结果1秩至多一的候选由一个行向量 $C$ 表示。取其输入核中的单位向量 $v$，则候选结果1概率为零，而目标概率为 $v^\dagger E_1v\ge\delta$。若候选结果1秩为二，则缺失结果0，标签下界为 $q_0$。推论 227.6的修复上界在这一输出维数仍适用。因此（227.GD.3）也对 $m=1$ 成立，不依赖高维输出的多项式稠密论证。
+
+**例 227.8（主谱下界与尾谱下界的互补）。**
+
+以下精确例说明为什么定理 227.3必须保留 $\beta$。取
+$$
+A=\begin{pmatrix}\sqrt6&0\\0&1\\0&0\end{pmatrix},
+\qquad
+B=\begin{pmatrix}0&0\\2&0\\0&\sqrt3\end{pmatrix}.
+$$
+其 Gram Bloch 形式为
+$$
+T(s)=\left(\frac72+\frac32s_z\right)I+s\cdot\sigma.
+\tag{227.GD.32}
+$$
+这里 $L=I,u=0$，Bloch 度数为正一，而 $n_0=-(3/2)e_z$ 在球外。因此
+$$
+\alpha=3,\qquad\beta=4,\qquad\delta=4.
+\tag{227.GD.33}
+$$
+所以“非零度数推出 $\alpha=\delta$”为假。度数保证主谱零事件机制可用；达到删除成本还要比较它与尾谱机制。
+
+若需合法记录通道，将两个 Kraus 同乘 $1/4$，并取
+$$
+K_0=E\sqrt{I_2-\operatorname{diag}(10,4)/16}.
+$$
+其中 $E:\mathbb C^2\to\mathbb C^3$ 是等距嵌入 $E(x,y)=(x,y,0)$。此时 $q_0=3/4$，$\delta=1/4$，故真实距离为 $d_2=1/4$，而缩放后的 $\alpha$ 只有 $3/16$。
+
+**227.9 既有例子、来源与适用范围。**
+
+前一个平坦矩形例的 Gram Bloch 方向度数为负一，输出事件相位次数为零；有理矩形例的度数为正一，输出事件相位次数为二。它们正好对应（227.GD.21）的两个非零度分支。本文的投影运输证明不用假设主输出线总有全局连续单位向量。
+
+标准 Bloch 仿射坐标及 qubit unitary 与三维旋转的关系，可参见 Ruskai–Szarek–Werner, “An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$”, arXiv:quant-ph/0101003，§1.2，第4–6页，式（2）、（4）、（5）。该文也明确区分旋转与任意正交变换，并讨论椭球的符号取向。[原论文 PDF](https://arxiv.org/pdf/quant-ph/0101003)。本文只从中采用标准坐标与旋转背景；当前 Gram 不必保迹，谱极小极大、相位运输及完整距离结论由上文分别证明。
+
+本轮核对的原始来源包括该 Bloch 表示论文、Sion 原论文及 Hatcher 的圆周基本群章节；这些核对没有建立当前距离公式的文献首创性。结论的输入维数固定为二、结果1的实际 Choi 秩固定为二、结果0为单非零 Kraus。未将其扩展到一般输入维数、三个以上保留方向或任意结果预算。
+
+## 追加锚（本行以下为增补区）
+
+## 228. 高维输入的相位事件障碍与精确秩预算平台
+
+固定输入维数 $d\ge2$。本节给出两项结论：具有偶数相位协变的连续输出事件族，可迫使任意少于 $d$ 个 Kraus 的竞争分支漏掉一个统一正概率事件；一个等距分支与纯重置分支组成的记录通道，则实现从预算 $1$ 到 $d-1$ 完全不改善的精确容量平台。
+
+这里不将 qubit 输入的两 Kraus 距离公式推广到一般输入维数。Borsuk–Ulam 是标准工具，仓内已有对跖商的连续坐标障碍；本节将它应用于候选分支的全部复振幅，再连接完整通道距离。所有新增组合推导均为纸面数学，未作 Lean 核验。
+
+### 228.1 偶数相位事件与分支 Kraus 容量
+
+设 $\mathcal R$ 为输入 $\mathbb C^d$、有限维量子输出 $\mathbb C^m$ 及一个固定有限经典结果寄存器上的 CPTP 记录通道。固定结果 $q$ 的完全正分支 $\Gamma$。
+
+假设存在连续单位向量映射
+$$
+r:S^{2d-1}\longrightarrow S^{2m-1},
+$$
+一个偶整数 $n\in2\mathbb Z$，以及统一常数 $\alpha\ge0$，使
+$$
+r(e^{i\theta}v)=e^{in\theta}r(v)
+\quad\text{对所有单位 }v\text{ 及实数 }\theta,
+\tag{228.HC.1}
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对所有单位 }v.
+\tag{228.HC.2}
+$$
+$P_v=|v\rangle\langle v|$。目标是完整 CPTP 通道中的一个已指定分支，因此（228.HC.2）描述同一事件族的真实分支概率，不是另行归一化后的条件概率。
+
+**定理 228.1（连续事件给出分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若其结果 $q$ 的 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{228.HC.3}
+$$
+下界由一个无参考纯输入及同名结果块中的秩一输出事件见证。
+
+证明。先设 $k\ge1$，取该竞争分支的最小 Kraus 表示
+$$
+\mathcal S_q(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+定义连续映射
+$$
+F:S^{2d-1}\to\mathbb C^k\cong\mathbb R^{2k},
+\qquad
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+\tag{228.HC.4}
+$$
+由 $n$ 偶及（228.HC.1），$r(-v)=r(v)$，故
+$$
+F(-v)=-F(v).
+$$
+因为 $k<d$，可在输入的底层实空间 $\mathbb R^{2d}$ 中取一个实 $(2k+1)$ 维线性子空间。其单位球是 $S^{2k}$。限制 $F$ 到这个球面，得到连续奇映射
+$$
+F|_{S^{2k}}:S^{2k}\to\mathbb R^{2k}.
+$$
+标准 Borsuk–Ulam 定理给某个 $v$ 满足 $F(v)=F(-v)$。奇性随即给 $F(v)=0$。
+
+对这个输入，竞争者在完整输出效果
+$$
+E_v=|q\rangle\langle q|\otimes P_{r(v)}
+$$
+上的概率为
+$$
+\operatorname{Tr}(E_v\mathcal S(P_v))
+=\sum_{j=1}^k|\langle r(v),C_jv\rangle|^2=0,
+$$
+而目标概率至少为 $\alpha$。两份完整输出都是迹为一的状态，事件概率差不超过其输出差的迹范数的一半，再不超过完整半 diamond 距离，证明（228.HC.3）。若 $k=0$，竞争分支本来为零，任取单位输入即得同一下界，不需要引入负维球面或空坐标的拓扑约定。证毕。
+
+这里 Borsuk–Ulam 采用 Hatcher《Algebraic Topology》推论2B.7，第176页的形式：每个连续 $g:S^N\to\mathbb R^N$ 都有 $g(x)=g(-x)$。[官方第二章 PDF，第80页](https://pi.math.cornell.edu/~hatcher/AT/ATch2.pdf#page=80)。定理施用于实球面和实维数 $2k$；没有把复维数直接当作实维数。
+
+证明实际只使用 $r(-v)=r(v)$；（228.HC.1）的偶数相位是保证这一条件的一种明确结构。它不是结论成立的必要条件。
+
+### 228.2 目标本身的容量下界与相位条件的范围
+
+**推论 228.2（目标分支所需的 Kraus 数量）。** 若（228.HC.1）、（228.HC.2）成立且 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{228.HC.5}
+$$
+证明。若目标分支本身能用 $k<d$ 个 Kraus 表示，将这些 Kraus 代入（228.HC.4），得到某个输入的目标事件概率为零，与（228.HC.2）矛盾。等价地，可在第一节取竞争者 $\mathcal S=\mathcal R$，从零距离得到矛盾。证毕。
+
+不能完全删除相位限制。取 $m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$，令目标为单 Kraus 通道
+$$
+\Gamma(X)=UXU^\dagger,
+\qquad r(v)=Uv.
+$$
+此时 $r$ 的相位次数是一，目标事件概率恒为一，而目标本身已是一个 Kraus 的精确竞争者，距离为零。因此“任意相位次数都给（228.HC.3）”为假。这个反例只排除无条件删除相位假设，不证明偶数是所有可行下界的必要条件。
+
+第 227 节的两种 qubit 主事件构造的相位次数分别为零与二。在 $d=2,k=1$ 时，它们都落在本节的同一零点机制中。高维结论控制的是指定事件族与分支 Kraus 数量；它没有仅由 $d,k$ 计算一般通道的最近距离。
+
+### 228.3 可达到的完整秩预算阶跃例
+
+固定 $d\ge2$、$m\ge d$、等距嵌入 $U:\mathbb C^d\to\mathbb C^m$、单位输出向量 $r_0$，以及 $0<\kappa<1$。定义两个同接口的 CPTP 记录通道
+$$
+\mathcal T_0(X)=|0\rangle\langle0|\otimes UXU^\dagger,
+$$
+$$
+\mathcal T_1(X)=|1\rangle\langle1|\otimes\operatorname{Tr}(X)P_{r_0},
+$$
+并置
+$$
+\boxed{
+\mathcal R_\kappa=(1-\kappa)\mathcal T_0+\kappa\mathcal T_1.
+}
+\tag{228.HC.6}
+$$
+结果0的单 Kraus 为 $\sqrt{1-\kappa}\,U$。对输入正交基 $f_1,\ldots,f_d$，结果1可取 Kraus
+$$
+A_i=\sqrt\kappa\,|r_0\rangle\langle f_i|,
+\qquad1\le i\le d.
+\tag{228.HC.7}
+$$
+这些 Kraus 线性独立，且
+$$
+\sum_iA_i^\dagger A_i=\kappa I_d.
+$$
+共同 TP 与目标结果秩 $(1,d)$ 随即成立。等价地，结果1 Choi 矩阵为
+$$
+J_1=\kappa I_d\otimes P_{r_0},
+$$
+秩恰为 $d$。经典标签正交，故目标总 Choi 秩恰为 $d+1$。
+
+对整数预算 $R\ge1$，记
+$$
+d_R(\mathcal R_\kappa)=
+\inf_{\substack{\mathcal S\text{ 为同接口 CPTP 记录通道}\\
+\operatorname{rank}J_{\mathcal S}\le R}}
+\frac12\|\mathcal R_\kappa-\mathcal S\|_\diamond.
+$$
+竞争者允许任意量子输出方向和任意 Kraus，只保持相同输出空间、相同两个经典标签及总 Choi 秩预算。
+
+**定理 228.3（重置与等距记录通道的精确预算曲线）。**
+$$
+\boxed{
+d_R(\mathcal R_\kappa)=
+\begin{cases}
+\kappa,&1\le R<d,\\
+\min(\kappa,1-\kappa),&R=d,\\
+0,&R\ge d+1.
+\end{cases}
+}
+\tag{228.HC.8}
+$$
+每个预算上的下确界都有显式合法通道取得。
+
+**228.3.1 少于 $d$ 个结果1方向的统一下界。**
+
+若候选结果1秩为 $k<d$，写其 Kraus 为 $C_1,\ldots,C_k$。目标在常值事件族 $r(v)=r_0$ 上的概率恒为 $\kappa$，相位次数为零，所以第一节已经给距离至少为 $\kappa$。
+
+在本例中也可直接用线性代数：定义振幅映射
+$$
+L_C:\mathbb C^d\to\mathbb C^k,
+\qquad
+L_C(v)=\bigl(r_0^\dagger C_1v,\ldots,r_0^\dagger C_kv\bigr).
+$$
+其秩至多为 $k<d$，所以输入核维数至少为 $d-k>0$。选核中的单位 $v$，目标在效果 $|1\rangle\langle1|\otimes P_{r_0}$ 上概率为 $\kappa$，候选为零，给同一下界。
+
+这里取的是振幅行 $r_0^\dagger C_j$ 的共同核，不是完整算子 $C_j$ 的共同核。候选可以把该输入送到其他输出方向；这不改变指定事件上的零概率。
+
+**228.3.2 总预算的穷尽分类。**
+
+当 $1\le R<d$，每个候选的结果1秩都小于 $d$，所以上一小节给 $d_R\ge\kappa$。
+
+当 $R=d$，如果结果1秩小于 $d$，仍有下界 $\kappa$。否则它的秩必须恰为 $d$，总秩预算与标签块的秩可加性强制结果0为零。此时对任意输入，只读取结果标签0即可得到概率差 $1-\kappa$。两类候选穷尽，因此
+$$
+d_d\ge\min(\kappa,1-\kappa).
+$$
+
+**228.3.3 显式候选与完整参考上界。**
+
+$\mathcal T_0$ 的总 Choi 秩为一，适用于每个 $R\ge1$。$\mathcal T_1$ 的总 Choi 秩为 $d$，适用于每个 $R\ge d$。
+
+两个通道具有互斥经典标签，所以
+$$
+\|\mathcal T_1-\mathcal T_0\|_\diamond=2.
+\tag{228.HC.9}
+$$
+上界来自两个 CPTP 通道的 diamond 范数均为一及三角不等式；下界对任意密度输入即可达到，因为两份输出位于正交标签块。该论证保留完整参考系统，未将无参考上界冒作 diamond 上界。
+
+由（228.HC.6），精确得到
+$$
+\frac12\|\mathcal R_\kappa-\mathcal T_0\|_\diamond=\kappa,
+\qquad
+\frac12\|\mathcal R_\kappa-\mathcal T_1\|_\diamond=1-\kappa.
+\tag{228.HC.10}
+$$
+这给前两个预算区间的匹配上界。$R\ge d+1$ 时，目标本身已是预算内候选，距离为零。结合所有下界，证明（228.HC.8）。
+
+### 228.4 平台的精确含义及已有结果的关系
+
+固定输入维数 $d$ 和同一个实际目标。从总秩预算 $1$ 增到 $d-1$，最优误差始终为 $\kappa$。$d$ 可任意大，因此平台可以包含任意多个连续整数预算。它不是某一候选构造没有改进，而是对全部同接口预算候选的精确最优值。
+
+在预算 $d$ 处，纯重置通道开始合法。当 $\kappa>1/2$，最优值严格下降为 $1-\kappa$；当 $\kappa\le1/2$，预算 $d$ 的最优值仍为 $\kappa$。预算达到 $d+1$ 后目标本身可用，误差归零。这里给出了每个预算的可达值，没有宣称全部最近候选的秩分配或 Kraus 表示唯一。
+
+仓内《RECURSIVE_RELATIONAL_OBSERVATION》第15.6节已有基于 Borsuk–Ulam 的连续辅助坐标维数障碍，本节直接使用该标准拓扑机制。现有 Lean 声明 `D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth` 处理精确通用重置膨胀，给出输入维数乘输出态秩不超过保留环境维数的容量约束；本节的对象则是完整记录通道在全部总 Choi 秩预算下的近似距离。边界卷第221节的局部 qubit reset 族也不替代这里的任意 $d,R$ 分段公式。
+
+上述来源关系不把本节纸面推导标为已经编译的 Lean 结果。没有对一般高维量子通道主张同样的阶跃曲线，也没有将偶数相位假设称为所有容量下界的必要条件。
+
+## 追加锚（本行以下为增补区）
+
+## 229. 相对陈类与高维量子容量下界
+
+全节固定输入维数 $d\ge2$，所有向量丛均为有限秩复向量丛。
+
+上一节用偶数相位保证候选振幅为奇映射，再由 Borsuk–Ulam 得到共同零点。本节将充分条件扩展为
+$$
+\boxed{n\in\mathbb Z,\qquad n\ne1.}
+\tag{229.NC.1}
+$$
+因此，奇数相位次数如 $n=-1,3,5$ 也有同样的低 Kraus 容量障碍。证明采用复射影空间的整数上同调及线丛的陈类，逐项固定关联丛约定和符号，不把偶数条件称为必要条件。
+
+同一结论还可只用连续秩一事件投影及其像线丛表述，无需在复射影空间上选择全局单位向量。
+
+这些拓扑工具属于标准理论；本节的新接口应用是把全部候选 Kraus 的实际事件振幅组成同一截面，再将共同零点转为完整通道距离下界。以下为纸面数学推导，未新增或编译 Lean 证明。
+
+### 229.1 标准工具及其范围
+
+令 $H\to\mathbb {CP}^{d-1}$ 为重言线丛，即其在 $[v]$ 上的纤维是复直线 $\mathbb Cv\subset\mathbb C^d$。定义
+$$
+h=c_1(H^*)=-c_1(H).
+\tag{229.NC.2}
+$$
+该定义固定本文的生成元符号，不依赖不同教材对重言线丛第一陈类正负号的命名。
+
+采用以下已核对的标准结果。
+
+- $H^*(\mathbb {CP}^{d-1};\mathbb Z)=\mathbb Z[h]/(h^d)$，其中 $h$ 的上同调次数为二。因此 $h^k\ne0$ 对 $0\le k\le d-1$ 成立，而且相应偶次上同调群为自由整数群。
+- 复线丛的张量积满足 $c_1(L\otimes M)=c_1(L)+c_1(M)$；对偶取负。因此整数张量幂满足 $c_1(L^{\otimes q})=q\,c_1(L)$，负幂解释为对偶的正幂。
+- 总陈类满足 Whitney 直和公式 $c(E\oplus E')=c(E)c(E')$，并且 $c_j(E)=0$ 当 $j$ 大于 $E$ 的复秩。平凡丛的正次陈类为零。
+
+原始来源分别为 Hatcher《Algebraic Topology》第3章定理3.19，第220页，[章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；以及 Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，及命题3.10，第86页，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)、[第90页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=90)。后两处分别给陈类的直和、秩及归一化公理，以及线丛张量积下第一陈类的加法。
+
+只用这些事实即可证明所需零点结论，不需要声称任意非零陈类都给完全分类，也不需要把整数类降到模二。
+
+### 229.2 任意非零整数权的等变振幅必有共同零点
+
+**定理 229.1（非零权的共同零点）。** 固定 $d\ge2$、整数 $q\ne0$ 与 $1\le k<d$。设
+$$
+F:S^{2d-1}\longrightarrow\mathbb C^k
+$$
+连续，且对全部 $a\in U(1)$ 和单位 $v\in\mathbb C^d$ 有
+$$
+F(av)=a^qF(v).
+\tag{229.NC.3}
+$$
+则存在单位 $v$ 满足
+$$
+\boxed{F(v)=0.}
+\tag{229.NC.4}
+$$
+这是标准陈类工具对等变映射的直接应用，下面给出完整的关联丛桥梁。
+
+**229.2.1 明确等价关系，核对关联线丛符号。**
+
+在 $S^{2d-1}\times\mathbb C$ 上取等价关系
+$$
+(v,z)\sim(av,a^qz),\qquad a\in U(1),
+$$
+并定义复线丛
+$$
+E_q=(S^{2d-1}\times\mathbb C)/\sim
+\longrightarrow\mathbb {CP}^{d-1},
+\qquad[v,z]\longmapsto[v].
+\tag{229.NC.5}
+$$
+Hopf 纤维化的局部单位代表给出局部平凡化；相邻局部代表只差一个连续单位相位，其在纤维上的作用为该相位的 $q$ 次幂，所以这确为复线丛。
+
+符号可用 $q=-1$ 直接核对。映射
+$$
+E_{-1}\longrightarrow H,
+\qquad[v,z]\longmapsto zv
+\tag{229.NC.6}
+$$
+良定，因为 $(a^{-1}z)(av)=zv$，且逐纤维为线性同构。因而 $E_{-1}\cong H$。
+
+共同单位代表下的纤维乘法给
+$$
+E_p\otimes E_q\cong E_{p+q},
+\qquad E_0\cong\underline{\mathbb C}.
+$$
+于是 $E_1\cong H^*$，对全部整数 $q$ 有
+$$
+\boxed{E_q\cong(H^*)^{\otimes q},\qquad c_1(E_q)=q h.}
+\tag{229.NC.7}
+$$
+这里使用的是（229.NC.5）的明确约定；若换用带逆角色的另一种关联丛记号，必须同时改变截面约定，不能只改陈类符号。
+
+**229.2.2 等变振幅下降为同一向量丛截面。**
+
+令
+$$
+E=E_q^{\oplus k}.
+$$
+由（229.NC.3），
+$$
+s_F([v])=[v,F(v)]
+\tag{229.NC.8}
+$$
+是一份良定连续截面：把单位代表换成 $av$，其纤维坐标同时变成 $a^qF(v)$，恰为（229.NC.5）的等价关系。它的零点恰好对应 $F$ 的共同零点。
+
+由 Whitney 公式及（229.NC.7），
+$$
+c(E)=(1+qh)^k,
+\qquad
+\boxed{c_k(E)=q^k h^k.}
+\tag{229.NC.9}
+$$
+因为 $1\le k<d$ 且 $q\ne0$，右侧是 $H^{2k}(\mathbb {CP}^{d-1};\mathbb Z)\cong\mathbb Z$ 中的非零元素。
+
+假设 $F$ 从不为零。$E_q$ 的商构造自然保留复数的模长，所以 $E$ 有 Hermitian 度量。将（229.NC.8）归一化，得到一份单位截面；它张成一个平凡复线子丛，其正交补为复秩 $k-1$ 的向量丛 $E'$。于是
+$$
+E\cong\underline{\mathbb C}\oplus E'.
+$$
+Whitney 公式与秩消失条件给
+$$
+c_k(E)=c_k(E')=0,
+$$
+与（229.NC.9）矛盾。这证明（229.NC.4）。
+
+基空间的复维数为 $d-1$、实维数为 $2d-2$；顶陈类在次数 $2k$。因此本论证的维数范围准确为 $k\le d-1$，没有将复秩和实维数混用。
+
+### 229.3 回接量子分支与完整通道距离
+
+固定输入 $\mathbb C^d$，令 $\mathcal R$ 为同前节的有限维 CPTP 记录通道，指定结果 $b$ 的分支为 $\Gamma$。设存在连续单位输出向量
+$$
+r:S^{2d-1}\to S^{2m-1},
+$$
+整数 $n\ne1$ 及统一常数 $\alpha\ge0$，使
+$$
+r(av)=a^n r(v),\qquad a\in U(1),
+$$
+$$
+\langle r(v),\Gamma(P_v)r(v)\rangle\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.10}
+$$
+
+**定理 229.2（非单位相位次数的分支容量下界）。** 对任意同接口 CPTP 记录竞争者 $\mathcal S$，若它的同名分支 Choi 秩 $k<d$，则
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.
+}
+\tag{229.NC.11}
+$$
+
+证明。$k=0$ 时该竞争分支为零，直接用（229.NC.10）的事件即可。设 $1\le k<d$，写
+$$
+\mathcal S_b(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+将全部候选振幅组成
+$$
+F(v)=\bigl(\langle r(v),C_1v\rangle,\ldots,
+\langle r(v),C_kv\rangle\bigr).
+$$
+复内积对第一变量共轭线性，所以
+$$
+\boxed{F(av)=a^{1-n}F(v).}
+\tag{229.NC.12}
+$$
+现在 $q=1-n\ne0$，第二节给单位输入 $v$ 使全部振幅同时为零。对完整效果
+$$
+E_v=|b\rangle\langle b|\otimes P_{r(v)},
+$$
+候选概率为零，目标概率至少为 $\alpha$。两份完整通道输出都保迹，故事件概率差不超过输出差迹范数的一半，并给完整半 diamond 下界（229.NC.11）。其他结果分支以及任意外部参考都属于完整距离的定义；下界见证本身只需这个无参考纯输入。证毕。
+
+当 $\alpha>0$，取竞争者为目标本身即得到
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge d.}
+\tag{229.NC.13}
+$$
+因此非单位相位次数的统一正事件族要求目标分支至少拥有 $d$ 个独立 Kraus 方向。这个结论只使用已声明的事件族和实际分支，不计算一般高维通道的全部最优预算距离。
+
+### 229.4 边界情形与不能加强的部分
+
+**零 Kraus。** $k=0$ 时任何目标事件概率下界都直接成为与零分支的差异，不需要相位条件或陈类。
+
+**相位次数一。** $n=1$ 对应 $q=0$，$E_q$ 为平凡线丛，正次陈类消失，等变 $F$ 可以为非零常值。真实通道反例仍可取等距 $U$：令 $r(v)=Uv$、目标与竞争者均为 $X\mapsto UXU^\dagger$。此时目标事件概率恒为一，而单 Kraus 竞争者误差为零。故不能把（229.NC.11）无条件扩展到 $n=1$。
+
+**容量达到输入维数。** 当 $k=d$，$h^d=0$，本次顶陈类障碍消失。抽象零点结论在此维数确实失败：对任意非零整数 $q$，映射
+$$
+F(v)=
+\begin{cases}
+(v_1^q,\ldots,v_d^q),&q>0,\\
+(\overline v_1^{-q},\ldots,\overline v_d^{-q}),&q<0
+\end{cases}
+\tag{229.NC.14}
+$$
+连续、具有权 $q$，并且在单位球上从不为零。这里每个幂的指数都是非负整数；第二行不是在零坐标处取负次幂。
+
+这些抽象映射只说明等变零点定理的 $k<d$ 阈值不能普遍提高，不把它们逐一宣称为已构造的量子振幅实例。一个实际通道反例已由纯重置给出：目标 $\Gamma(X)=\operatorname{Tr}(X)P_{r_0}$，常值事件 $r(v)=r_0$、$n=0$、$\alpha=1$，而目标自身 Choi 秩恰为 $d$，距离为零。
+
+**所有非单位整数次数。** 对 $n\ne1$，整数 $q=1-n$ 无论正负、奇偶都非零，$q^k h^k$ 均非零。因此新的范围是全部整数 $n\ne1$，而不再仅为偶数 $n$。这仍是一组可检验的充分条件；没有宣称一切容量障碍都必须由这种相位事件产生。
+
+### 229.5 只保留事件投影的内在线丛版本
+
+相位次数可以由事件线相对于输入线的陈类替代。设直接给出连续秩一正交投影
+$$
+P:\mathbb {CP}^{d-1}\to\operatorname{End}(\mathbb C^m),
+$$
+令其像线丛为 $L\to\mathbb {CP}^{d-1}$。连续且固定秩的投影确实定义子丛：在任一点选一个位于其像中的非零向量，附近将该向量投影并归一化即可得到局部单位帧。
+
+仍令 $H$ 为输入重言线丛、$h=c_1(H^*)$。由于 $H^2(\mathbb {CP}^{d-1};\mathbb Z)\cong\mathbb Z$，存在唯一整数 $a$ 满足
+$$
+c_1(L)=a h.
+\tag{229.NC.15}
+$$
+假设目标指定分支 $\Gamma$ 满足统一事件概率下界
+$$
+\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位输入 }v.
+\tag{229.NC.16}
+$$
+
+**定理 229.3（事件线相对陈类的容量判据）。** 若 $a\ne-1$，那么对任意同接口 CPTP 记录竞争者，只要同名分支 Choi 秩 $k<d$，其完整半 diamond 距离至少为 $\alpha$。当 $\alpha>0$，目标该分支的 Choi 秩至少为 $d$。
+
+证明。$k=0$ 直接读取指定事件。设 $1\le k<d$，取候选 Kraus $C_1,\ldots,C_k$。每个 $C_j$ 给一份全局连续截面
+$$
+s_j([v])=P([v])C_j|_{H_{[v]}}
+\in\operatorname{Hom}(H_{[v]},L_{[v]}).
+\tag{229.NC.17}
+$$
+这不是依赖所选单位帧的标量定义；它就是从实际输入线到实际事件线的复线性映射。
+
+令
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+$$
+线丛张量公式给
+$$
+c_1(E)=(a+1)h,
+\qquad
+\boxed{c_k(E^{\oplus k})=(a+1)^k h^k\ne0.}
+\tag{229.NC.18}
+$$
+联合截面 $(s_1,\ldots,s_k)$ 因此必有零点，否则它张成平凡线子丛，按第二节的同一正交分裂论证迫使顶陈类为零。在该零点任选单位输入 $v$，对全部 $j$ 有 $P([v])C_jv=0$。候选在效果 $|b\rangle\langle b|\otimes P([v])$ 上概率为
+$$
+\sum_j\|P([v])C_jv\|^2=0,
+$$
+而目标概率至少为 $\alpha$。完整半 diamond 下界与目标自身秩下界于是成立。证毕。
+
+第三节的相位向量族是这一判据的具体坐标实现。令 $L_{[v]}=\mathbb C r(v)$。$H^{\otimes n}$ 的单位帧在 $v\mapsto zv$ 时变为原来的 $z^n$ 倍，而 $r(v)$ 同样乘以 $z^n$；把该帧送到 $r(v)$ 就定义逐纤维线性同构
+$$
+L\cong H^{\otimes n}.
+\tag{229.NC.19}
+$$
+当 $n<0$ 时使用 $H^*$ 的单位对偶帧及其 $-n$ 次张量幂；当 $n=0$ 时使用平凡线丛。于是
+$$
+a=-n,\qquad a+1=1-n,
+$$
+与（229.NC.7）、（229.NC.12）的符号完全一致。
+
+因此需要保留的是事件线与输入线之间的相对陈类
+$$
+c_1(\operatorname{Hom}(H,L))=c_1(L)-c_1(H),
+$$
+而不是强求事件线有全局连续单位向量。对于等距通道，$L\cong H$，$a=-1$，相对类为零，故判据正确地不排除秩一精确实现。对常值重置事件，$L$ 平凡、$a=0$，相对类非零。此前相位次数二的主输出线对应 $a=-2$，虽然没有全局单位帧，仍满足同一容量判据。
+
+### 229.6 与已有结果及标准文献的关系
+
+仓内已有对跖商与低维连续读数的 Borsuk–Ulam 机制；它直接解释前节的偶数相位子类。当前检索到的其他 Chern 叙述主要涉及局部球面绕数、单极子或陈荷，不替代这里在 $\mathbb {CP}^{d-1}$ 上的 $k$ 重直和顶陈类计算。未在所检索的 D5 与钉版 Mathlib 声明中定位到这一完整容量接口；本稿不据此宣称文献原创性。
+
+射影空间上非零上同调拉回不能跨越维数的思路也出现在 Hatcher《Algebraic Topology》§3.2，第229页练习3(a)；同页练习6讨论逐坐标幂映射。这里以已核对的定理3.19、陈类公理和线丛张量公式给出完整推导，不把练习题本身当成未经证明的新增前提。
+
+本节扩展前节的相位充分条件；原有偶数相位结论及重置—等距预算平台保持成立。没有重算该平台，也没有将 qubit 的一般两 Kraus 距离公式推广到任意输入维数。
+
+## 追加锚（本行以下为增补区）
+
+## 230. 高秩事件丛的容量障碍、精确预算阶梯与投影稳定性
+
+秩一事件的相对线丛判据可以扩展到秩 $r$ 的事件接口。关键对象是从输入重言线丛到事件像丛的映射丛，其复秩为 $r$。$k$ 个候选 Kraus 映射产生该丛的 $k$ 份截面；相应顶陈类非零时，它们必须有共同零点。
+
+在统一正事件概率的前提下，这给出目标分支至少需要 $\lceil d/r\rceil$ 个 Kraus 方向的下界。常值事件及输入分块通道达到该阈值；在同一输出接口中还可得到完整半 diamond 距离的精确预算阶梯。以下为纸面数学推导，未新增或编译 Lean 证明。
+
+### 230.1 同一实际接口上的事件与容量
+
+固定整数
+$$
+d\ge2,\qquad 1\le r<d,\qquad m\ge r.
+\tag{230.HR.1}
+$$
+令 $H\to\mathbb {CP}^{d-1}$ 为输入重言线丛，即
+$$
+H_{[v]}=\mathbb Cv\subset\mathbb C^d,
+\qquad h=c_1(H^*).
+\tag{230.HR.2}
+$$
+对单位输入 $v$，记 $P_v=|v\rangle\langle v|$。
+
+给定连续的秩 $r$ 正交事件投影族
+$$
+P:\mathbb {CP}^{d-1}\longrightarrow\operatorname{End}(\mathbb C^m),
+\qquad P(x)^2=P(x)=P(x)^\dagger.
+\tag{230.HR.3}
+$$
+其像定义复秩 $r$ 的向量子丛 $L$：在任意 $x_0$ 选 $\operatorname{im}P(x_0)$ 的一组基，并在邻域内用 $P(x)$ 投影这些固定向量。线性独立性在足够小邻域内保持，给出局部帧。这里不要求存在全局帧。
+
+定义
+$$
+E=\operatorname{Hom}(H,L)=H^*\otimes L.
+\tag{230.HR.4}
+$$
+由于 $1\le r<d$，上同调群 $H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)$ 由 $h^r$ 自由生成，故存在唯一整数 $\nu$ 满足
+$$
+c_r(E)=\nu h^r.
+\tag{230.HR.5}
+$$
+本节的拓扑假设为 $\nu\ne0$。
+
+目标为有限标签集 $B$ 上的 CPTP 记录通道
+$$
+\mathcal R(X)=\sum_{b\in B}|b\rangle\langle b|\otimes\Gamma_b(X),
+\tag{230.HR.6}
+$$
+其中 $\Gamma_b:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^m)$ 完全正，$\sum_b\Gamma_b$ 保迹。固定一个标签 $b_*$，记 $\Gamma=\Gamma_{b_*}$。假设存在 $\alpha\in[0,1]$，使
+$$
+\boxed{\operatorname{Tr}\bigl[P([v])\Gamma(P_v)\bigr]\ge\alpha
+\quad\text{对每个单位 }v\in\mathbb C^d.}
+\tag{230.HR.7}
+$$
+比较对象 $\mathcal S$ 是具有相同输入、量子输出及标签接口的任意 CPTP 记录通道；其同名分支记为 $\Lambda$。分支 Kraus 容量取
+$$
+k=\operatorname{rank}J_\Lambda,
+\tag{230.HR.8}
+$$
+也就是最小 Kraus 数量。零分支的容量为零。所有距离均取完整通道的
+$$
+d_\diamond(\mathcal R,\mathcal S)
+=\tfrac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{230.HR.9}
+$$
+其中包括全部记录标签，并允许外部参考。单标签通道是这个定义的特例。
+
+### 230.2 顶陈类迫使候选事件振幅共同为零
+
+**定理 230.1（秩 $r$ 事件的共同零点）。** 在（230.HR.1）—（230.HR.5）及 $\nu\ne0$ 下，给定任意 $k\ge1$ 个复线性映射
+$$
+C_j:\mathbb C^d\to\mathbb C^m\quad(1\le j\le k).
+$$
+若 $rk<d$，则存在单位输入 $v$，使
+$$
+\boxed{P([v])C_jv=0\qquad(1\le j\le k).}
+\tag{230.HR.10}
+$$
+这些映射不必构成保迹通道。
+
+**证明。** 每个 $C_j$ 定义一份连续截面
+$$
+s_j(x)=P(x)C_j|_{H_x}\in\operatorname{Hom}(H_x,L_x).
+\tag{230.HR.11}
+$$
+该定义作用于整条输入线，不依赖所选单位代表的相位。全部截面组成
+$$
+s=(s_1,\ldots,s_k)\in\Gamma(E^{\oplus k}),
+\qquad\operatorname{rank}_{\mathbb C}(E^{\oplus k})=rk.
+\tag{230.HR.12}
+$$
+Whitney 直和公式及 $c_i(E)=0$ 对 $i>r$ 成立，给
+$$
+\boxed{c_{rk}(E^{\oplus k})=c_r(E)^k=\nu^k h^{rk}.}
+\tag{230.HR.13}
+$$
+第一等式来自总陈类乘积中的最高可能次数：每个因子的次数至多为 $r$，要得到总次数 $rk$，必须从每个因子取 $c_r(E)$。无需把 $L$ 分裂成线丛。
+
+标准整数上同调环为
+$$
+H^*(\mathbb {CP}^{d-1};\mathbb Z)
+=\mathbb Z[h]/(h^d).
+\tag{230.HR.14}
+$$
+因为 $rk<d$ 且 $\nu\ne0$，式（230.HR.13）是一个非零上同调类。
+
+若 $s$ 没有零点，将其按诱导的 Hermitian 度量归一化，便得到一个平凡复线子丛。其 Hermitian 正交补 $E'$ 为复秩 $rk-1$ 的向量丛，因此
+$$
+E^{\oplus k}\cong\underline{\mathbb C}\oplus E',
+\qquad c_{rk}(E^{\oplus k})=c_{rk}(E')=0,
+$$
+与（230.HR.13）矛盾。故 $s$ 在某个 $[v]$ 为零。任选该输入线的单位代表，即得（230.HR.10）。$\square$
+
+这里唯一使用的分裂，是假定无零点截面后推出的“平凡线子丛及其正交补”。它不预设事件丛或候选映射丛存在全局线丛分解。
+
+### 230.3 完整距离下界与目标分支的最小容量
+
+**定理 230.2（完整半 diamond 下界）。** 保持第一节的所有假设。任意同接口 CPTP 记录竞争者 $\mathcal S$，只要其同名分支容量 $k$ 满足 $rk<d$，就有
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)\ge\alpha.}
+\tag{230.HR.15}
+$$
+
+**证明。** 若 $k\ge1$，取最小 Kraus 表示
+$$
+\Lambda(X)=\sum_{j=1}^k C_jXC_j^\dagger.
+$$
+由定理 230.1，存在单位输入 $v$ 使全部 $P([v])C_jv=0$。于是
+$$
+\operatorname{Tr}\bigl[P([v])\Lambda(P_v)\bigr]
+=\sum_{j=1}^k\|P([v])C_jv\|^2=0.
+\tag{230.HR.16}
+$$
+若 $k=0$，则 $\Lambda=0$，任意单位输入都满足（230.HR.16）；这一情形不需要陈类假设。
+
+在完整输出上使用效果
+$$
+F_v=|b_*\rangle\langle b_*|\otimes P([v]),
+\qquad 0\preceq F_v\preceq I.
+\tag{230.HR.17}
+$$
+目标事件概率至少为 $\alpha$，候选概率为零。因为 $\mathcal R(P_v)$ 与 $\mathcal S(P_v)$ 都是迹一正矩阵，差矩阵 $\Delta_v$ 自伴且迹零。其正负部的迹均为 $\tfrac12\|\Delta_v\|_1$，故
+$$
+\alpha\le|\operatorname{Tr}(F_v\Delta_v)|
+\le\tfrac12\|\Delta_v\|_1
+\le d_\diamond(\mathcal R,\mathcal S).
+\tag{230.HR.18}
+$$
+最后一步允许取无外部参考的输入作为完整 diamond 范数的一个见证。$\square$
+
+完整输出的保迹条件承担了（230.HR.18）中的 $1/2$ 因子。不能将目标与候选的非保迹分支单独替换成两份归一化态而沿用同一论证。事件投影可随所选见证输入变化；距离下界只需为每个竞争者找到一个输入及对应检验，并不要求有一项检验同时区分全部输入。
+
+**推论 230.3（目标容量）。** 若 $\alpha>0$，则
+$$
+\boxed{\operatorname{rank}J_\Gamma\ge
+\left\lceil\frac d r\right\rceil.}
+\tag{230.HR.19}
+$$
+证明：若目标自身的分支秩 $k$ 满足 $rk<d$，在定理 230.2中取 $\mathcal S=\mathcal R$，即得 $0\ge\alpha>0$，矛盾。因此 $rk\ge d$，给出整数下界。$\square$
+
+完整记录通道的 Choi 矩阵在标签方向上是分支 Choi 矩阵的正交直和，其秩为各分支秩之和。因此（230.HR.19）也给完整通道 Kraus 容量的下界，但它首先约束的是指定分支。
+
+### 230.4 达到阈值的实际 CPTP 通道
+
+以下构造适用于任意整数 $d\ge1$、$r\ge1$、$m\ge r$，不受 $r<d$ 限制。令
+$$
+t=\left\lceil\frac d r\right\rceil,
+\qquad d=(t-1)r+s,\qquad 1\le s\le r.
+\tag{230.HR.20}
+$$
+将输入的一组正交基分成 $t$ 个非空块：
+$$
+\{f_{j,i}:1\le j<t,\ 1\le i\le r\}
+\ \cup\ \{f_{t,i}:1\le i\le s\}.
+\tag{230.HR.21}
+$$
+在输出中选正交向量 $e_1,\ldots,e_r$，令 $P_0$ 为它们张成空间的正交投影。置 $n_j=r$ 对 $j<t$，$n_t=s$，并定义
+$$
+K_j=\sum_{i=1}^{n_j}|e_i\rangle\langle f_{j,i}|,
+\qquad
+\mathcal T(X)=\sum_{j=1}^t K_jXK_j^\dagger.
+\tag{230.HR.22}
+$$
+各输入块互相正交且完整覆盖输入，所以
+$$
+\sum_{j=1}^tK_j^\dagger K_j
+=\sum_{j=1}^t\sum_{i=1}^{n_j}|f_{j,i}\rangle\langle f_{j,i}|
+=I_d.
+\tag{230.HR.23}
+$$
+因此 $\mathcal T$ 是实际 CPTP 通道，且 $P_0K_j=K_j$ 给
+$$
+\operatorname{Tr}\bigl[P_0\mathcal T(P_v)\bigr]=1
+\quad\text{对全部单位 }v.
+\tag{230.HR.24}
+$$
+
+这组 Kraus 不仅数量为 $t$，而且线性独立：
+$$
+\operatorname{Tr}(K_j^\dagger K_\ell)
+=\begin{cases}n_j,&j=\ell,\\0,&j\ne\ell.\end{cases}
+\tag{230.HR.25}
+$$
+所有 $n_j$ 均正，故它们是非零的 Hilbert–Schmidt 正交族。由
+$$
+J_{\mathcal T}=\sum_{j=1}^t
+|K_j\rangle\!\rangle\langle\!\langle K_j|,
+\tag{230.HR.26}
+$$
+Choi 矩阵的像等于这些独立向量的张成，因而
+$$
+\boxed{\operatorname{rank}J_{\mathcal T}=t.}
+\tag{230.HR.27}
+$$
+这也证明不存在更短 Kraus 表示：含 $u$ 个 Kraus 的表示使 Choi 秩至多为 $u$。
+
+同一通道有显式等距扩张。用所选基 $e_1,\ldots,e_r$ 将 $\operatorname{im}P_0$ 识别为 $\mathbb C^r$；令 $g_1,\ldots,g_t$ 是 $\mathbb C^t$ 的正交基，定义
+$$
+V:\mathbb C^d\longrightarrow\mathbb C^r\otimes\mathbb C^t,
+\qquad Vf_{j,i}=e_i\otimes g_j.
+\tag{230.HR.28}
+$$
+不同 $(j,i)$ 的像互相正交，因此 $V^\dagger V=I_d$。令 $\iota:\mathbb C^r\hookrightarrow\mathbb C^m$ 为上述输出嵌入，并置 $W=(\iota\otimes I_t)V$，则
+$$
+\boxed{\mathcal T(X)=\operatorname{Tr}_{\mathbb C^t}(WXW^\dagger).}
+\tag{230.HR.29}
+$$
+
+对常值事件 $P([v])=P_0$，像丛 $L$ 为平凡秩 $r$ 丛，故
+$$
+E\cong(H^*)^{\oplus r},\qquad
+c(E)=(1+h)^r,\qquad c_r(E)=h^r.
+\tag{230.HR.30}
+$$
+在 $r<d$ 时，$\nu=1$、$\alpha=1$，目标容量恰好达到（230.HR.19）。因此 $\lceil d/r\rceil$ 这一普适下界不能提高。这是整个允许事件族中的可达实例，不断言每一个非平凡事件丛都能在相同阈值实现统一正概率。
+
+### 230.5 候选集非空的精确完整距离阶梯
+
+在第四节构造中进一步固定
+$$
+m\ge\max(d,r).
+\tag{230.HR.31}
+$$
+所有比较通道均取同一输入 $\mathbb C^d$、同一输出 $\mathbb C^m$ 及单标签接口。对每个整数 $R\ge1$，定义
+$$
+D_R=\inf\left\{
+\tfrac12\|\mathcal T-\mathcal S\|_\diamond:
+\mathcal S\text{ CPTP},\ \operatorname{rank}J_{\mathcal S}\le R
+\right\}.
+\tag{230.HR.32}
+$$
+候选集对每个 $R\ge1$ 都非空：由 $m\ge d$，存在等距 $U:\mathbb C^d\to\mathbb C^m$，通道 $X\mapsto UXU^\dagger$ 的 Choi 秩为一。
+
+**定理 230.4（精确预算阶梯）。** 对（230.HR.22）的目标，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<t,\\
+0,&R\ge t,
+\end{cases}
+\qquad t=\left\lceil\frac d r\right\rceil.
+}
+\tag{230.HR.33}
+$$
+
+**证明。** 若 $1\le R<t$，则 $rR<d$，并且该情形必有 $r<d$。任何候选的容量 $k\le R$ 满足 $rk<d$。由常值事件的 $\nu=1$、目标概率恒一及定理 230.2，每个候选的完整半 diamond 距离至少为一。任意两份 CPTP 通道的 diamond 距离至多为二，所以其完整半距离也至多为一。候选集非空，故 $D_R=1$，且每一个候选都达到该值。
+
+若 $R\ge t$，目标本身属于候选集，故 $D_R=0$。$\square$
+
+常值事件下还可直接看出低预算的分离机制：线性映射
+$$
+v\longmapsto(P_0C_1v,\ldots,P_0C_kv)
+\in(\mathbb C^r)^{\oplus k}
+$$
+的目标维数为 $rk<d$，故有非零核。该输入上，候选输出完全落在 $P_0$ 的正交补中，目标输出完全落在 $P_0$ 中，两者被事件 $P_0$ 完美区分。这是一般事件丛共同零点机制的常值特例。
+
+将输出扩大到 $m\ge d$ 对此实例有实际作用：若只取 $m=r<d$，任何 CPTP 通道都至少需要 $\lceil d/r\rceil$ 个 Kraus，因为每个 $C_j^\dagger C_j$ 秩至多为 $r$ 而其和必须为 $I_d$，低预算候选集将为空。（230.HR.31）明确排除了这种空集原因。
+
+式（230.HR.32）仅对 $R\ge1$ 定义。$R=0$ 时不存在 CPTP 候选，不能把空集下确界报成通道距离一。若 $r\ge d$，则 $t=1$；第一段预算区间为空，全部 $R\ge1$ 都有 $D_R=0$。
+
+### 230.6 投影扰动保留同一容量证书
+
+保持第一节的 $1\le r<d$、$\nu\ne0$ 及目标分支 $\Gamma$。设另有同一基空间、同一输出中的连续秩 $r$ 正交投影族 $Q$，并有
+$$
+\varepsilon=\sup_x\|P(x)-Q(x)\|_{\rm op}<1.
+\tag{230.HR.34}
+$$
+记 $L_P=\operatorname{im}P$、$L_Q=\operatorname{im}Q$。逐纤维映射
+$$
+A_x=Q(x)|_{L_{P,x}}:L_{P,x}\longrightarrow L_{Q,x}
+\tag{230.HR.35}
+$$
+是束同构。事实上，对 $\xi\in L_{P,x}$，
+$$
+\|Q(x)\xi\|
+\ge\|\xi\|-\|(Q(x)-P(x))\xi\|
+\ge(1-\varepsilon)\|\xi\|.
+\tag{230.HR.36}
+$$
+因此 $A_x$ 单射；两边维数同为 $r$，故满射。在任意局部帧中它是连续的可逆方阵，矩阵求逆连续，故各纤维逆连续拼合，得到全局束同构。于是
+$$
+c_r(H^*\otimes L_Q)
+=c_r(H^*\otimes L_P)=\nu h^r.
+\tag{230.HR.37}
+$$
+这里没有选择全局事件基，也没有假定 $P$ 与 $Q$ 交换。
+
+概率稳定性取决于同一目标分支。定义
+$$
+\mu=\sup_{\|v\|=1}\operatorname{Tr}\Gamma(P_v)
+=\|\Gamma^*(I_m)\|_{\rm op}\le1.
+\tag{230.HR.38}
+$$
+最后的不等式来自 $\Gamma$ 是一份 instrument 的分支。对正矩阵 $\Gamma(P_v)$，算子序界 $-\varepsilon I\preceq P([v])-Q([v])\preceq\varepsilon I$ 给
+$$
+\left|\operatorname{Tr}\bigl[(P([v])-Q([v]))\Gamma(P_v)\bigr]\right|
+\le\varepsilon\operatorname{Tr}\Gamma(P_v)
+\le\varepsilon\mu.
+\tag{230.HR.39}
+$$
+所以新事件具有统一下界
+$$
+\operatorname{Tr}\bigl[Q([v])\Gamma(P_v)\bigr]
+\ge\max\{0,\alpha-\varepsilon\mu\}.
+\tag{230.HR.40}
+$$
+对 $Q$ 应用定理 230.2，任何 $rk<d$ 的同名分支候选均满足
+$$
+\boxed{d_\diamond(\mathcal R,\mathcal S)
+\ge\max\{0,\alpha-\varepsilon\mu\}.}
+\tag{230.HR.41}
+$$
+若只使用 $\mu\le1$，可取更简洁的下界 $\max\{0,\alpha-\varepsilon\}$。$\varepsilon<1$ 保留丛同构类型；$\varepsilon\mu<\alpha$ 则进一步保证扰动后的证书仍给严格正距离及（230.HR.19）的容量下界。这是两个不同条件。
+
+式（230.HR.41）说明用受扰事件族仍能证明的下界；若原来的 $P$ 及其概率下界（230.HR.7）仍然可用，原来的更强下界 $\alpha$ 当然仍成立。
+
+### 230.7 必要的边界与标准来源
+
+**$r\ge d$。** 此时 $h^r=0$，$H^{2r}(\mathbb {CP}^{d-1};\mathbb Z)=0$，所以形式等式 $c_r(E)=\nu h^r$ 不确定唯一整数 $\nu$；即使写下非零 $\nu$，也不能推出非零陈类。不存在正整数 $k$ 使 $rk<d$。统一正事件概率只直接保证分支非零，即 Kraus 秩至少为 $1=\lceil d/r\rceil$。第四、五节的实际构造覆盖这个范围，但主拓扑定理没有给额外下界。
+
+**$\nu=0$。** 顶陈类证明不提供共同零点；这不判定一般竞争者是否能逼近。确有不能沿用正距离结论的实际例子：取输出 $\mathbb C^d\oplus\mathbb C^{r-1}$、等距 $Uv=(v,0)$，事件像为
+$$
+L_{[v]}=\mathbb C(v,0)\oplus(0,\mathbb C^{r-1}).
+\tag{230.HR.42}
+$$
+它是连续秩 $r$ 子丛，满足
+$$
+L\cong H\oplus\underline{\mathbb C}^{r-1},
+\qquad H^*\otimes L
+\cong\underline{\mathbb C}\oplus(H^*)^{\oplus(r-1)}.
+\tag{230.HR.43}
+$$
+因此 $c_r(H^*\otimes L)=0$。实际秩一通道 $X\mapsto UXU^\dagger$ 的事件概率恒一；目标与竞争者取同一通道时距离为零。当 $r<d$ 时，不能删除 $\nu\ne0$ 后仍要求（230.HR.19）。
+
+**$k=0$、$\alpha=0$ 与 $r=0$。** 零竞争分支的事件概率直接为零，无需拓扑。若 $\alpha=0$，距离下界退化为零，不能据此排除零目标分支。秩零事件恒为零，无法满足严格正的统一事件概率，本稿从定义中排除 $r=0$。
+
+**$rk\ge d$。** 此时 $h^{rk}=0$，本次顶陈类障碍不再给共同零点；这不等于证明对任意事件丛均可实现。第四节给出的常值事件实例已表明，不能普遍提高所有事件族共用的容量阈值。
+
+所用拓扑事实均为标准结果：Hatcher《Algebraic Topology》第3章定理3.19，第220页，给射影空间整数上同调环，[官方章节 PDF 第36页](https://pi.math.cornell.edu/~hatcher/AT/ATch3.pdf#page=36)；Hatcher《Vector Bundles and K-Theory》Version 2.2（2017年11月）定理3.2，第78页，给陈类的同构不变性、Whitney 公式、秩消失及线丛归一化，[官方 PDF 第82页](https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf#page=82)。本稿使用这些事实，显式完成 Kraus 截面、共同事件零点与完整通道距离之间的接口证明，不据此宣称文献原创性。
+
+仓内 `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.lean` 的 `universal_replacement_capacity_growth` 处理固定输出边缘下的精确 no-hiding 容量，不能直接替代这里的事件丛及低 Kraus 近似问题。`RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md` 定理12.4已经使用相距小于一的投影构造极分解对齐；本稿第六节只需其背后的投影限制同构，并明确给出连续束及同一分支事件概率的桥梁。已检索的 D5 与钉版 Mathlib 未定位到本稿完整事件丛容量接口；这不是证明其在第三方文献中不存在。
+
+## 追加锚（本行以下为增补区）
+
+## 231. 三标签纯重置的精确容量曲线与参考系统增益
+
+固定量子比特输入及三个经典记录标签，将输入均匀地重置为三个指定纯输出。对全部同接口 CPTP 记录通道，在总 Kraus 容量预算 $R$ 下，最小完整半 diamond 误差依次为
+$$
+\boxed{1,\quad\frac23,\quad\frac12,\quad\frac13,\quad\frac13,\quad0
+\qquad(R=1,2,3,4,5,\ge6).}
+\tag{231.TR.1}
+$$
+预算为三时，同一个 trine 测量—制备通道同时达到完整最优误差 $1/2$ 和无参考最优误差 $1/3$。下面证明全部预算值；竞争者的量子输出方向完全任意，未预先限制为重置通道或测量—制备通道。
+
+本文为纸面数学推导，未新增或编译 Lean 证明。Trine POVM 是标准测量结构；这里将它用于指定记录接口的总 Kraus 预算及完整误差问题。
+
+### 231.1 固定目标、预算及两种误差
+
+固定输入 $A=\mathbb C^2$、量子输出 $O=\mathbb C^m$，其中 $m\ge2$，以及经典记录 $B=\mathbb C^3$ 的指定正交标签 $|1\rangle,|2\rangle,|3\rangle$。任取三个固定单位向量
+$$
+r_1,r_2,r_3\in\mathbb C^m,\qquad P_j=|r_j\rangle\langle r_j|.
+\tag{231.TR.2}
+$$
+它们不必互相正交，可以全部相同。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes\mathcal R_j(X),
+\qquad\mathcal R_j(X)=\frac13\operatorname{Tr}(X)P_j.
+\tag{231.TR.3}
+$$
+候选为同一输入、输出及记录接口的任意 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{231.TR.4}
+$$
+其中各 $\mathcal S_j$ 完全正、总和保迹。经典标签方向上的块对角性属于共同接口；不允许改成有相干标签的另一类输出模型。
+
+以非归一化 Choi 矩阵定义
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},
+\qquad K(\mathcal S)=\sum_{j=1}^3k_j
+=\operatorname{rank}J_{\mathcal S}.
+\tag{231.TR.5}
+$$
+末等式来自标签方向的正交直和。因此 $K$ 正是完整记录通道的最小 Kraus 数。零分支的秩为零。目标每个分支的 Choi 矩阵为 $(I_2\otimes P_j)/3$，故每个分支秩为二，总秩为六。
+
+定义完整误差及无参考误差
+$$
+\delta_\diamond(\mathcal R,\mathcal S)
+=\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+\delta_0(\mathcal R,\mathcal S)
+=\sup_{\rho\in\mathcal D(\mathbb C^2)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{231.TR.6}
+$$
+第一项允许外部参考；第二项只允许输入密度矩阵，不保留外部参考。显然 $\delta_0\le\delta_\diamond$。
+
+对整数 $R\ge1$，令
+$$
+D_R=\inf_{K(\mathcal S)\le R}\delta_\diamond(\mathcal R,\mathcal S),
+\qquad
+U_R=\inf_{K(\mathcal S)\le R}\delta_0(\mathcal R,\mathcal S).
+\tag{231.TR.7}
+$$
+两个下确界都在（231.TR.4）的全部同接口 CPTP 候选上取。由于 $m\ge2$，任选等距 $V:\mathbb C^2\to\mathbb C^m$，将 $X\mapsto VXV^\dagger$ 放在一个标签、其余分支取零，即得到总秩一候选。所以每个 $R\ge1$ 的候选集均非空。$R=0$ 无 CPTP 候选，不属于本节的预算范围。
+
+### 231.2 两项完整范数事实
+
+**引理 231.1（Hermitian 泛函的完整范数）。** 对有限维 Hermitian 矩阵 $M$，令 $f_M(X)=\operatorname{Tr}(MX)$。则
+$$
+\boxed{\|f_M\|_\diamond=\|M\|_{\rm op}.}
+\tag{231.TR.8}
+$$
+若 $\tau$ 是任意固定密度矩阵，则 $X\mapsto f_M(X)\tau$ 具有相同的 diamond 范数。
+
+**证明。** 对任意有限维参考空间 $E$ 及任意矩阵 $X$，
+$$
+(f_M\otimes\operatorname{id}_E)(X)
+=\operatorname{Tr}_A[(M\otimes I_E)X].
+$$
+迹范数的对偶公式给
+$$
+\begin{aligned}
+\|\operatorname{Tr}_A[(M\otimes I_E)X]\|_1
+&=\sup_{\|Y\|_{\rm op}\le1}
+\left|\operatorname{Tr}[(M\otimes Y^\dagger)X]\right|\\
+&\le\|M\|_{\rm op}\|X\|_1.
+\end{aligned}
+\tag{231.TR.9}
+$$
+这对任意参考维数及任意 $X$ 成立，给完整范数上界。取 $M$ 的一个最大绝对本征值所对应的单位本征向量 $v$，无参考输入 $P_v$ 满足
+$$
+|f_M(P_v)|=\|M\|_{\rm op},
+$$
+给匹配下界。固定态输出只将放大后的结果变为 $\tau\otimes(f_M\otimes\operatorname{id})(X)$，而
+$$
+\|\tau\otimes Z\|_1=\|\tau\|_1\|Z\|_1=\|Z\|_1.
+$$
+所以范数不变。$\square$
+
+**引理 231.2（纯重置权重的精确距离）。** 对概率向量 $p=(p_1,p_2,p_3)$、$q=(q_1,q_2,q_3)$，令
+$$
+\mathcal T_p(X)=\sum_jp_j\operatorname{Tr}(X)|j\rangle\langle j|\otimes P_j.
+$$
+则
+$$
+\boxed{\delta_\diamond(\mathcal T_p,\mathcal T_q)
+=\delta_0(\mathcal T_p,\mathcal T_q)
+=\frac12\sum_{j=1}^3|p_j-q_j|.}
+\tag{231.TR.10}
+$$
+证明：任意迹一输入上的输出差是标签块 $ (p_j-q_j)P_j$ 的直和，给右侧值及无参考下界。对任意参考及任意输入矩阵，标签块迹范数相加，再对各块使用引理 231.1的 $M=I_2$，得到相同完整上界。$\square$
+
+### 231.3 低秩分支的事件核下界
+
+每个标签的目标支持事件为
+$$
+F_j=|j\rangle\langle j|\otimes P_j.
+\tag{231.TR.11}
+$$
+对每个迹一输入，目标在 $F_j$ 上的概率恒为 $1/3$。不同 $F_j$ 互相正交，所以任意子集之和仍是效果。
+
+若候选第 $j$ 个分支秩为一，写成
+$$
+\mathcal S_j(X)=C_jXC_j^\dagger.
+$$
+行映射
+$$
+v\longmapsto\langle r_j,C_jv\rangle
+\quad:\mathbb C^2\to\mathbb C
+\tag{231.TR.12}
+$$
+必有非零核。取核中的单位 $v$，该分支在 $F_j$ 上的概率为零。这里求核的是单个目标事件振幅行，不要求 $C_jv=0$；候选仍可产生位于 $r_j^\perp$ 的非零输出。若分支秩为零，该事件概率对全部输入都是零。
+
+因为完整输出都是密度矩阵，任意效果的概率差不超过完整输出差的迹范数的一半。因此这些输入与事件同时给出 $\delta_0$ 及 $\delta_\diamond$ 的下界。
+
+**预算一。** $K(\mathcal S)\le1$ 时，保迹性保证恰有一个非零分支，而且该分支秩一。选择使其目标事件振幅为零的输入，候选对
+$$
+F_1+F_2+F_3
+$$
+的概率为零，目标概率为一。因此每个候选都有
+$$
+\delta_0=\delta_\diamond=1.
+\tag{231.TR.13}
+$$
+这里用到任意两份 CPTP 通道的完整半 diamond 距离至多为一。
+
+**预算二。** 若候选只有一个非零标签，读取另两个缺失标签的事件，概率差为 $2/3$。若有两个非零标签，由总秩限制它们各为秩一；取其中一个标签的振幅核输入，再读取这个标签及第三个缺失标签的事件之和，概率差仍为 $2/3$。因此
+$$
+U_2\ge\frac23,\qquad D_2\ge\frac23.
+\tag{231.TR.14}
+$$
+取 $q=(1,0,0)$ 的纯重置候选，其总秩为二。引理 231.2给距离 $2/3$，所以两项下界均可达。
+
+**预算不超过五。** 只要 $K(\mathcal S)\le5$，就至少有一个标签的分支秩不超过一；否则总秩至少为六。对这个标签使用（231.TR.12），或使用零分支，得到
+$$
+\delta_0(\mathcal R,\mathcal S)\ge\frac13.
+\tag{231.TR.15}
+$$
+特别地，$U_R,D_R\ge1/3$ 对 $R=3,4,5$ 成立。取 $q=(1/2,1/2,0)$ 的纯重置候选，其两个非零分支各秩二，总秩四。引理 231.2给误差 $1/3$。因而预算四、五的两种最优误差均为 $1/3$。
+
+### 231.4 预算三的完整下界来自共同参考
+
+取二级参考 $E=\mathbb C^2$，输入归一化最大纠缠态
+$$
+|\Omega\rangle=\frac{|0\rangle_A|0\rangle_E+|1\rangle_A|1\rangle_E}{\sqrt2}.
+\tag{231.TR.16}
+$$
+目标输出为
+$$
+\tau=(\mathcal R\otimes\operatorname{id}_E)(P_\Omega)
+=\frac16\sum_{j=1}^3|j\rangle\langle j|\otimes P_j\otimes I_E
+=\frac16\Pi,
+\tag{231.TR.17}
+$$
+其中 $\Pi$ 为秩六正交投影；标签正交保证这一结论，即使所有 $r_j$ 相同也成立。
+
+对任意总秩至多三的候选，令
+$$
+\sigma=(\mathcal S\otimes\operatorname{id}_E)(P_\Omega).
+$$
+它是候选归一化 Choi 态，故 $\operatorname{rank}\sigma=K(\mathcal S)\le3$。令 $Q$ 为 $\sigma$ 的支撑投影，则
+$$
+\operatorname{Tr}(Q\sigma)=1,
+\qquad
+\operatorname{Tr}(Q\tau)=\frac16\operatorname{Tr}(Q\Pi)
+\le\frac16\operatorname{rank}Q\le\frac12.
+\tag{231.TR.18}
+$$
+使用效果 $I-Q$，候选概率为零，目标概率至少为 $1/2$。因此
+$$
+\boxed{D_3\ge\frac12.}
+\tag{231.TR.19}
+$$
+候选的支撑不必包含于目标支撑；（231.TR.18）仅使用 $0\preceq\Pi\preceq I$。这一论证覆盖任意允许的 Kraus 及量子输出方向。
+
+### 231.5 Trine 候选达到完整上界
+
+令 $\sigma_x,\sigma_y,\sigma_z$ 为 Pauli 矩阵，取平面中的三个单位 Bloch 向量
+$$
+n_j=\left(\cos\frac{2\pi(j-1)}3,
+\sin\frac{2\pi(j-1)}3,0\right),\qquad j=1,2,3.
+\tag{231.TR.20}
+$$
+它们满足 $\sum_jn_j=0$、$n_i\cdot n_j=-1/2$ 对 $i\ne j$。选纯态
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\qquad P_{\psi_j}=\frac{I+n_j\cdot\sigma}{2}.
+\tag{231.TR.21}
+$$
+标准 trine 效应为
+$$
+E_j=\frac23P_{\psi_j}=\frac{I+n_j\cdot\sigma}{3},
+\qquad\sum_jE_j=I_2.
+\tag{231.TR.22}
+$$
+定义每个标签只有一个 Kraus 的候选
+$$
+C_j=\sqrt{\frac23}\,|r_j\rangle\langle\psi_j|,
+\qquad\mathcal S_j^{\rm tr}(X)=C_jXC_j^\dagger
+=\operatorname{Tr}(E_jX)P_j.
+\tag{231.TR.23}
+$$
+因为 $C_j^\dagger C_j=E_j$，这是一份 CPTP 记录通道。各分支均非零且秩一，标签正交使完整 Choi 秩恰为三。
+
+目标与候选的第 $j$ 个分支之差为
+$$
+(\mathcal S_j^{\rm tr}-\mathcal R_j)(X)
+=\operatorname{Tr}(M_jX)P_j,
+\qquad M_j=\frac13n_j\cdot\sigma.
+\tag{231.TR.24}
+$$
+矩阵 $M_j$ 的本征值为 $\pm1/3$，引理 231.1给每个分支差的 diamond 范数恰为 $1/3$。完整输出的各标签块迹范数相加，因此对任意参考及任意输入矩阵都有
+$$
+\|(\mathcal S^{\rm tr}-\mathcal R)\otimes\operatorname{id}(X)\|_1
+\le\sum_{j=1}^3\frac13\|X\|_1=\|X\|_1.
+\tag{231.TR.25}
+$$
+故
+$$
+\delta_\diamond(\mathcal R,\mathcal S^{\rm tr})\le\frac12.
+$$
+结合（231.TR.19），得到
+$$
+\boxed{D_3=\delta_\diamond(\mathcal R,\mathcal S^{\rm tr})=\frac12.}
+\tag{231.TR.26}
+$$
+
+最大纠缠输入也直接达到这个上界。在输入基下取复共轭，则（231.TR.23）的联合输出为
+$$
+\sigma_{\rm tr}=\frac13\sum_{j=1}^3
+|j\rangle\langle j|\otimes P_j\otimes P_{\overline{\psi_j}}.
+\tag{231.TR.27}
+$$
+目标的各标签参考块为 $I_E/6$，候选为 $P_{\overline{\psi_j}}/3$。每个差块在目标支撑中的两个本征值为 $\pm1/6$；三块总迹范数为一，半迹距离为 $1/2$。
+
+### 231.6 同一候选的无参考最优误差为三分之一
+
+任意输入态写成
+$$
+\rho_s=\frac{I+s\cdot\sigma}{2},\qquad s\in\mathbb R^3,\quad\|s\|\le1.
+\tag{231.TR.28}
+$$
+由（231.TR.24），trine 候选在该输入上的半迹距离为
+$$
+\frac12\|\mathcal S^{\rm tr}(\rho_s)-\mathcal R(\rho_s)\|_1
+=\frac16\sum_{j=1}^3|n_j\cdot s|.
+\tag{231.TR.29}
+$$
+绝对值和可写成
+$$
+\sum_j|n_j\cdot s|
+=\max_{\epsilon_j\in\{-1,1\}}
+\left(\sum_j\epsilon_jn_j\right)\cdot s.
+\tag{231.TR.30}
+$$
+三个符号相同时，向量和为零；否则向量和为某个 $\pm2n_j$，因为 $n_1+n_2+n_3=0$。因此
+$$
+\max_{\epsilon_j\in\{-1,1\}}
+\left\|\sum_j\epsilon_jn_j\right\|=2.
+\tag{231.TR.31}
+$$
+于是（231.TR.29）至多为 $1/3$。取 $s=n_1$，三个内积为 $1,-1/2,-1/2$，达到等号。
+
+另一方面，第三节的低秩标签事件论证给全部预算三候选的无参考误差至少为 $1/3$。故
+$$
+\boxed{U_3=\delta_0(\mathcal R,\mathcal S^{\rm tr})=\frac13
+<\frac12=D_3.}
+\tag{231.TR.32}
+$$
+这同时比较了两个优化问题，而不只是某个非最优候选的两个误差读数。
+
+### 231.7 全部预算的结算及适用范围
+
+**定理 231.3（完整与无参考的精确容量曲线）。** 综合各下界与显式候选，得到
+
+| 总 Kraus 预算 $R$ | 完整最优误差 $D_R$ | 无参考最优误差 $U_R$ | 一份达到上界的候选 |
+|---|---:|---:|---|
+| $1$ | $1$ | $1$ | 一个标签上的等距通道 |
+| $2$ | $2/3$ | $2/3$ | 权重 $(1,0,0)$ 的纯重置 |
+| $3$ | $1/2$ | $1/3$ | 三个单 Kraus 分支的 trine 候选 |
+| $4$ | $1/3$ | $1/3$ | 权重 $(1/2,1/2,0)$ 的纯重置 |
+| $5$ | $1/3$ | $1/3$ | 同一总秩四候选 |
+| $R\ge6$ | $0$ | $0$ | 目标本身 |
+
+预算按“至多 $R$”定义，故预算五可由总秩四候选达到最优；没有要求人为增加一个非零 Kraus 方向。记录标签保留了对应关系，输出向量 $r_j$ 之间无需任何分离假设。
+
+参考系统带来的差别发生在共同关系上。对最大纠缠输入，目标和 trine 候选在不读取参考时的输出完全相同：各标签概率均为 $1/3$，条件量子输出均为 $P_j$；两者的参考边缘也同为 $I_E/2$。但是目标在每个标签下的条件参考态是 $I_E/2$，候选是 $P_{\overline{\psi_j}}$。联合检验读取了这些标签—参考关系，给出（231.TR.26）的完整误差。分别一致的边缘没有固定共同状态。
+
+这条预算曲线专用于两维输入、三个均匀标签、固定纯输出及上述完整记录接口。不把它推广成一般多标签通道的公式，也不将无参考界当作可自动提升的完整界。
+
+### 231.8 标准结构与来源
+
+Trine 结构可见 S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，§3.1.b、式（33）及其后文字，[PDF 第10页](https://arxiv.org/pdf/0810.1970v1#page=10)，明确给 $\widehat\pi_i=(2/3)|\psi_i\rangle\langle\psi_i|$。同文 §3.3、式（64）—（65），[PDF 第18页](https://arxiv.org/pdf/0810.1970v1#page=18)，写出了与（231.TR.21）相同的赤道三态及其 $2/3$ 权重。其判据是态区分的测量优化；本文的目标、总 Kraus 预算及通道误差由上文单独证明，不将该文的测量结论改报成本节的精确容量曲线。
+
+Hermitian 泛函的完整范数、归一化 Choi 秩下界及全部事件核界都已在正文给出直接证明。仓内现有两标签预算结果与低 Kraus 事件振幅核机制提供相邻接口；本次定向检索未在 D5 量子声明及钉版 Mathlib 相应目录定位到这条完整三标签预算曲线。本稿不据此声称文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 232. 均匀多标签纯重置的完整总 Kraus 容量曲线
+
+三标签例子可推广为任意有限标签数 $N\ge2$。在量子比特输入、同一经典记录接口及任意量子输出方向的竞争者中，除最低预算与最后一个缺额外，完整最优误差精确等于归一化 Choi 态的秩损失下界。达到下界需要一份实际满足保迹性的共同候选；下面用平衡的量子比特纯态框架显式构造。
+
+本文只计算完整半 diamond 误差，不猜测一般 $N$ 的无参考最优值。第231节的三标签预算三的严格差异 $1/3<1/2$ 仍保留其原来的范围。以下为纸面数学证明，未新增或编译 Lean 证明。
+
+### 232.1 目标、候选与结论
+
+固定整数 $N\ge2$、$m\ge2$，输入 $A=\mathbb C^2$，量子输出 $O=\mathbb C^m$，记录空间 $B=\mathbb C^N$，其指定正交标签为 $|1\rangle,\ldots,|N\rangle$。任选固定单位向量
+$$
+r_j\in\mathbb C^m,\qquad P_j=|r_j\rangle\langle r_j|\quad(1\le j\le N).
+\tag{232.UC.1}
+$$
+这些输出向量可以相同，不需要正交。目标为均匀纯重置记录通道
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal R_j(X),
+\qquad\mathcal R_j(X)=\frac1N\operatorname{Tr}(X)P_j.
+\tag{232.UC.2}
+$$
+
+候选为同接口的任意 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{232.UC.3}
+$$
+各分支完全正，总和保迹。仅要求保留该经典记录接口；不将候选预先限制为重置通道、秩一输出通道或测量—制备通道。定义
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},\qquad
+K(\mathcal S)=\sum_{j=1}^Nk_j=\operatorname{rank}J_{\mathcal S},
+\tag{232.UC.4}
+$$
+即完整记录通道的最小 Kraus 数。最后一个等式来自标签块正交。零分支计秩零。
+
+对每个整数预算 $R\ge1$，置
+$$
+D_R=\inf\left\{
+\frac12\|\mathcal R-\mathcal S\|_\diamond:
+\mathcal S\text{ 满足（232.UC.3），}\ K(\mathcal S)\le R
+\right\}.
+\tag{232.UC.5}
+$$
+距离包含完整记录、量子输出及任意外部参考。候选集非空：由于 $m\ge2$，可以将一个等距通道放入单个标签，其余分支取零，得到 $K=1$ 的合法候选。预算 $R=0$ 不存在 CPTP 候选，不属于（232.UC.5）的定义域。
+
+**定理 232.1（完整精确预算曲线）。** 在上述假设下，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&R=1,\\[2pt]
+1-\dfrac{R}{2N},&2\le R\le2N-2,\\[5pt]
+\dfrac1N,&R=2N-1,\\[5pt]
+0,&R\ge2N.
+\end{cases}}
+\tag{232.UC.6}
+$$
+每个预算的下确界都有实际候选达到。主区间 $2\le R\le2N-2$ 的构造总秩恰为 $R$；预算 $2N-1$ 的最优值可由总秩 $2N-2$ 的同一候选达到。
+
+### 232.2 固定纯输出将效应序变为完全正序
+
+对任意正矩阵 $F\succeq0$ 和单位输出 $r$，定义
+$$
+\mathsf M_{F,r}(X)=\operatorname{Tr}(FX)|r\rangle\langle r|.
+\tag{232.UC.7}
+$$
+若 $F=\sum_{\ell=1}^q\lambda_\ell|u_\ell\rangle\langle u_\ell|$ 是正本征值分解，则
+$$
+\mathsf M_{F,r}(X)=\sum_{\ell=1}^q
+K_\ell XK_\ell^\dagger,
+\qquad K_\ell=\sqrt{\lambda_\ell}|r\rangle\langle u_\ell|.
+\tag{232.UC.8}
+$$
+因此该映射完全正，其迹效应为 $F$：
+$$
+\mathsf M_{F,r}^*(I)=F.
+\tag{232.UC.9}
+$$
+在固定输入基的 Choi 约定下，
+$$
+J_{\mathsf M_{F,r}}=F^{\mathsf T}\otimes|r\rangle\langle r|,
+\qquad\operatorname{rank}J_{\mathsf M_{F,r}}=\operatorname{rank}F.
+\tag{232.UC.10}
+$$
+特别地，若 $0\preceq F\preceq G$，则
+$$
+\mathsf M_{G,r}-\mathsf M_{F,r}=\mathsf M_{G-F,r}
+\quad\text{完全正}.
+\tag{232.UC.11}
+$$
+以下上界使用同一固定 $r_j$ 上的这项 CP 序关系。只有迹效应相等，一般并不足以证明两份任意量子分支之间的 CP 序关系。
+
+### 232.3 公共完全正部分给完整误差上界
+
+**引理 232.2（标量迹权重的公共 CP 部分）。** 设 $\mathcal A,\mathcal B$ 为同接口 CPTP 通道。若存在完全正映射 $\mathcal C$，满足
+$$
+\mathcal A-\mathcal C\text{ 完全正},\qquad
+\mathcal B-\mathcal C\text{ 完全正},\qquad
+\mathcal C^*(I)=cI,\qquad0\le c<1,
+\tag{232.UC.12}
+$$
+则
+$$
+\boxed{\frac12\|\mathcal A-\mathcal B\|_\diamond\le1-c.}
+\tag{232.UC.13}
+$$
+
+**证明。** 两个残差的迹效应都为 $(1-c)I$，所以
+$$
+\mathcal A'=\frac{\mathcal A-\mathcal C}{1-c},
+\qquad
+\mathcal B'=\frac{\mathcal B-\mathcal C}{1-c}
+\tag{232.UC.14}
+$$
+都是 CPTP 通道。于是
+$$
+\mathcal A-\mathcal B=(1-c)(\mathcal A'-\mathcal B'),
+\qquad
+\|\mathcal A-\mathcal B\|_\diamond\le2(1-c).
+$$
+这里使用 CPTP 通道的 diamond 范数为一：由 Kraus 表示构造等距扩张，等距嵌入保持迹范数；部分迹的迹范数收缩可由其对偶 $Y\mapsto I\otimes Y$ 的算子范数保持直接证明。两者在张量任意恒等参考后仍成立，给上界一；任意密度矩阵输入给下界一。$\square$
+
+标量条件 $\mathcal C^*(I)=cI$ 保证共同部分的权重对所有输入相同，也保证（232.UC.14）是真正的 CPTP 归一化。不能把依赖输入的成功概率在每个输入上分别归一化后，当作一个线性通道使用。
+
+若 $c=1$ 且其余条件成立，两份 CP 残差迹效应为零，必为零映射，直接得到 $\mathcal A=\mathcal B$；主区间构造只使用 $c<1$。
+
+### 232.4 任意候选的三个下界
+
+#### 232.4.1 归一化 Choi 态的平坦谱下界
+
+取二级参考 $E=\mathbb C^2$ 和归一化最大纠缠输入
+$$
+|\Omega\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}.
+\tag{232.UC.15}
+$$
+目标联合输出为
+$$
+\tau=(\mathcal R\otimes\operatorname{id}_E)(P_\Omega)
+=\frac1{2N}\sum_{j=1}^N|j\rangle\langle j|\otimes P_j\otimes I_E
+=\frac1{2N}\Pi,
+\tag{232.UC.16}
+$$
+其中 $\Pi$ 为秩 $2N$ 的正交投影。故目标完整 Choi 秩恰为 $2N$。
+
+对任意候选，记
+$$
+\sigma=(\mathcal S\otimes\operatorname{id}_E)(P_\Omega),
+\qquad Q=\operatorname{supp}\sigma.
+$$
+因为 $\sigma$ 是归一化 Choi 态，$\operatorname{rank}Q=K(\mathcal S)\le R$。候选在效果 $I-Q$ 上概率为零，而目标概率满足
+$$
+\operatorname{Tr}[(I-Q)\tau]
+=1-\frac{\operatorname{Tr}(Q\Pi)}{2N}
+\ge1-\frac{R}{2N}.
+\tag{232.UC.17}
+$$
+这里仅用 $0\preceq\Pi\preceq I$；不假定候选支撑包含于目标支撑。因此对全部候选有
+$$
+\boxed{D_R\ge\max\left\{0,1-\frac{R}{2N}\right\}.}
+\tag{232.UC.18}
+$$
+
+#### 232.4.2 预算一的完全分离
+
+若 $K(\mathcal S)\le1$，保迹性保证恰有一个非零标签 $j_0$，其分支只有一个 Kraus $C$。复线性行映射
+$$
+v\longmapsto\langle r_{j_0},Cv\rangle\quad:\mathbb C^2\to\mathbb C
+$$
+有非零核。取核中的单位输入 $v$，候选在效果
+$$
+F=\sum_{j=1}^N|j\rangle\langle j|\otimes P_j
+\tag{232.UC.19}
+$$
+上的概率为零，目标概率为一。故每个预算一候选的完整半 diamond 误差均为一。候选集非空，得到
+$$
+\boxed{D_1=1.}
+\tag{232.UC.20}
+$$
+所求核是目标事件的振幅行之核，不是断言 $Cv=0$。
+
+#### 232.4.3 最后一个缺额仍损失一个完整标签事件
+
+若 $K(\mathcal S)\le2N-1$，至少有一个标签 $j$ 满足 $k_j\le1$。否则所有 $k_j\ge2$ 会使总秩至少为 $2N$。
+
+若 $k_j=0$，该标签的候选概率恒为零。若 $k_j=1$，按上节的振幅行核选择输入，使候选在事件 $|j\rangle\langle j|\otimes P_j$ 上概率为零。目标概率恒为 $1/N$。于是
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac1N
+\quad\text{只要 }K(\mathcal S)\le2N-1,
+\tag{232.UC.21}
+$$
+特别地 $D_{2N-1}\ge1/N$。这一下界无需参考，且允许候选在量子输出的任意方向上行动。
+
+### 232.5 任意数量的平衡量子比特纯态
+
+对任意整数 $M\ge2$，令
+$$
+|\psi_a^{(M)}\rangle
+=\frac{|0\rangle+e^{2\pi i(a-1)/M}|1\rangle}{\sqrt2},
+\qquad P_a^{(M)}=|\psi_a^{(M)}\rangle\langle\psi_a^{(M)}|,
+\quad1\le a\le M.
+\tag{232.UC.22}
+$$
+由等比数列求和
+$$
+\sum_{a=1}^Me^{2\pi i(a-1)/M}=0
+$$
+得到精确的算子恒等式
+$$
+\boxed{\sum_{a=1}^MP_a^{(M)}=\frac M2I_2.}
+\tag{232.UC.23}
+$$
+因此 $\{(2/M)P_a^{(M)}\}_{a=1}^M$ 构成 POVM。$M=2$ 时为一组正交二结果投影；$M=3$ 时为 trine POVM；更大的 $M$ 对应 Bloch 赤道上的规则多边形。以下只使用（232.UC.23）的紧框架恒等式，不要求不同纯态正交。
+
+### 232.6 预算 $2\le R\le N$：选择 $R$ 个秩一标签
+
+置 $M=R$，只在前 $M$ 个原标签上放置分支
+$$
+\mathcal S_j(X)=\frac2M\operatorname{Tr}(P_j^{(M)}X)P_j
+\quad(1\le j\le M),
+\qquad\mathcal S_j=0\quad(j>M).
+\tag{232.UC.24}
+$$
+上式中的 $P_j^{(M)}$ 作用于输入，$P_j$ 作用于输出。由（232.UC.23），总迹效应为
+$$
+\sum_{j=1}^M\frac2MP_j^{(M)}=I_2,
+$$
+故该候选为 CPTP。每个非零分支恰为秩一，显式 Kraus 为
+$$
+C_j=\sqrt{\frac2M}|r_j\rangle\langle\psi_j^{(M)}|.
+\tag{232.UC.25}
+$$
+标签块正交，故 $K(\mathcal S)=M=R$。
+
+定义共同 CP 部分
+$$
+\mathcal C=\frac M{2N}\mathcal S.
+\tag{232.UC.26}
+$$
+在活跃标签上，它的输入效应为 $P_j^{(M)}/N$，而目标效应为 $I_2/N$。由（232.UC.11），目标与 $\mathcal C$ 的分支差完全正；在缺失标签上该差就是目标分支。因此 $\mathcal R-\mathcal C$ 完全正。
+
+因为 $M\le N$，$0<M/(2N)\le1/2$，所以 $\mathcal S-\mathcal C=(1-M/(2N))\mathcal S$ 也完全正。并且
+$$
+\mathcal C^*(I)=\frac M{2N}I_2.
+\tag{232.UC.27}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac M{2N}=1-\frac R{2N}.
+\tag{232.UC.28}
+$$
+结合统一下界（232.UC.18），首个预算区间得到精确等号。
+
+### 232.7 预算 $N\le R\le2N-2$：完整标签与秩一标签共同保迹
+
+置
+$$
+a=R-N,\qquad M=2N-R=N-a.
+\tag{232.UC.29}
+$$
+这时 $0\le a\le N-2$、$M\ge2$。对前 $a$ 个标签保留目标完整分支，对余下 $M$ 个标签使用一份共同平衡框架：
+$$
+\mathcal S_j=\mathcal R_j\quad(1\le j\le a),
+$$
+$$
+\mathcal S_{a+b}(X)
+=\frac2N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}
+\quad(1\le b\le M).
+\tag{232.UC.30}
+$$
+由（232.UC.23）及 $a+M=N$，总迹效应为
+$$
+\frac aNI_2+\frac2N\sum_{b=1}^MP_b^{(M)}
+=\frac{a+M}{N}I_2=I_2.
+\tag{232.UC.31}
+$$
+所以候选 CPTP。前 $a$ 个分支各有秩二，余下 $M$ 个各有秩一，因此
+$$
+\boxed{K(\mathcal S)=2a+M=R.}
+\tag{232.UC.32}
+$$
+前者可用 $|r_j\rangle\langle0|/\sqrt N$、$|r_j\rangle\langle1|/\sqrt N$ 两个 Kraus；后者用 $\sqrt{2/N}|r_{a+b}\rangle\langle\psi_b^{(M)}|$。这给出全部实际算子，也验证了分支秩。
+
+定义共同 CP 部分
+$$
+\mathcal C_j=\mathcal R_j\quad(1\le j\le a),
+\qquad
+\mathcal C_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.33}
+$$
+前 $a$ 个标签的两份残差为零；后 $M$ 个标签的目标残差及候选残差分别为
+$$
+(\mathcal R-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}[(I_2-P_b^{(M)})X]P_{a+b},
+$$
+$$
+(\mathcal S-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.34}
+$$
+输入效应都正半定，所以两份残差完全正。共同部分的总效应为
+$$
+\mathcal C^*(I)
+=\frac aNI_2+\frac1N\sum_{b=1}^MP_b^{(M)}
+=\frac{2a+M}{2N}I_2
+=\frac R{2N}I_2.
+\tag{232.UC.35}
+$$
+因此两份残差都具有同一迹权重
+$$
+1-\frac R{2N}=\frac M{2N}>0.
+\tag{232.UC.36}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac R{2N}.
+\tag{232.UC.37}
+$$
+再次与（232.UC.18）匹配，得到第二个预算区间的精确等号。在共同端点 $R=N$，$a=0$、$M=N$，本构造就是第六节的同一候选，两段定义一致。
+
+### 232.8 最后平台、边界及与已有结果的关系
+
+预算 $R=2N-2$ 时，第七节取 $a=N-2$、$M=2$，得到总秩 $2N-2$、完整误差 $1/N$ 的实际候选。它也属于预算 $2N-1$ 的候选集。结合（232.UC.21），
+$$
+\boxed{D_{2N-2}=D_{2N-1}=\frac1N.}
+\tag{232.UC.38}
+$$
+最后增加一个 Kraus 预算并未改善误差；只要仍有一个标签至多秩一，就有输入使该标签的整个目标支持事件消失。
+
+预算 $R\ge2N$ 时，目标本身的总 Choi 秩为 $2N$，可以精确实现，故 $D_R=0$。这完成定理 232.1的证明。
+
+**最小标签数。** 当 $N=2$，主区间仅有 $R=2$，两份构造在那里一致，完整曲线为
+$$
+D_1=1,\qquad D_2=D_3=\frac12,\qquad D_R=0\ (R\ge4).
+\tag{232.UC.39}
+$$
+没有空框架或单个纯态框架被暗中使用。假如将第七节形式延伸到 $R=2N-1$，会得到 $M=1$；但一个秩一投影不可能满足 $P=I_2/2$，保迹构造恰在这里失效。对应的事件核下界说明这不是选择框架不当，而是所需更低误差确实不可达到。
+
+**三标签恢复。** 当 $N=3$，式（232.UC.6）变为
+$$
+1,\quad\frac23,\quad\frac12,\quad\frac13,\quad\frac13,\quad0,
+$$
+与三标签结果一致。预算三的框架恰为 trine；此前已经证明它的无参考最优误差为 $1/3$、完整最优误差为 $1/2$。本节的一般构造没有给出一般 $N,R$ 的无参考全局最优值。
+
+**共同接口。** 所有候选均保留原来的 $N$ 个经典标签及每个标签对应的实际量子输出空间。上界中未使用的标签仍在接口中，取零分支；下界始终允许任意输出方向。$m\ge2$ 保证最低预算的等距候选存在；输出向量之间无正交要求。若允许相干标签输出、改变输入维数、使用非均匀权重或混合目标输出，需要重新核对秩谱与共同保迹构造，不能直接沿用（232.UC.6）。
+
+### 232.9 标准工具与来源
+
+平衡纯态框架对应标准 square-root measurement。S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，§3.1.b 的式（22）给
+$$
+E_j=p_j\bar\rho^{-1/2}\rho_j\bar\rho^{-1/2};
+$$
+同节式（23）—（27）讨论由有限阶酉生成的等先验对称纯态，[PDF 第8—9页](https://arxiv.org/pdf/0810.1970v1#page=8)。对（232.UC.22）的 $M$ 态集合，$p_j=1/M$、$\bar\rho=I_2/2$，该标准构造就是 $E_j=(2/M)P_j^{(M)}$。本稿已用等比求和直接证明所需恒等式（232.UC.23），不把文献中的态区分最优性当作本节通道容量最优性的证明。
+
+仓内 `UniversalReplacementCapacityGrowth.lean` 的精确 no-hiding 容量结果，以及第231节的归一化 Choi 秩与事件振幅核机制，是相邻已有结果；前者处理精确普遍重置，不直接给出本节全部预算的近似曲线。本稿定向检索未在 D5 量子声明及钉版 Mathlib 对应目录定位到（232.UC.6）的完整接口。公共 CP 部分、平坦谱秩下界及框架构造的组合已在正文逐项证明；本稿不据此宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 233. 平坦 Choi 秩下界的取等判据：投影和与紧融合框架
+
+对一般输入维数的均匀纯输出记录重置，归一化 Choi 态给出普适下界 $1-R/(dN)$。这一谱下界是否可达，还取决于同一候选能否对全部输入方向保持保迹及相同最坏误差。该缺口可以精确归结为固定输入空间上的一个投影和问题。
+
+本文证明：预算 $1\le R\le dN$ 下，完整最优误差达到平坦 Choi 下界，当且仅当存在 $N$ 个输入正交投影，其和为 $(R/d)I$。每个投影须自伴幂等，但不同投影的像不要求相互正交；允许零投影与恒等投影。这就是单位权重的紧融合框架条件。
+
+必要性中的迹范数微分对有零本征值的差矩阵同样成立。下面给出直接夹逼证明，不假定谱非退化。全部结果为纸面数学推导，未新增或编译 Lean 证明。
+
+### 233.1 共同接口与取等定理
+
+固定整数 $d,N\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$，以及记录空间 $B=\mathbb C^N$ 的指定正交标签。任取固定单位向量 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，定义目标
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\frac1N\operatorname{Tr}(X)P_j.
+\tag{233.FF.1}
+$$
+输出向量不必互相正交。候选为全部同接口 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{233.FF.2}
+$$
+其中各分支完全正、总和保迹。保留经典标签块对角接口，但不限制候选的量子输出方向或分支 Kraus 形状。
+
+使用非归一化 Choi 约定
+$$
+J_\Phi=\sum_{a,b=1}^d|a\rangle\langle b|\otimes\Phi(|a\rangle\langle b|),
+\tag{233.FF.3}
+$$
+其中第一因子为固定输入基的 Choi 副本。定义完整总 Kraus 容量
+$$
+K(\mathcal S)=\operatorname{rank}J_{\mathcal S}
+=\sum_{j=1}^N\operatorname{rank}J_{\mathcal S_j}.
+\tag{233.FF.4}
+$$
+对每个整数 $R\ge1$，置
+$$
+D_R=\inf_{K(\mathcal S)\le R}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{233.FF.5}
+$$
+距离包含全部记录、量子输出及任意外部参考。$m\ge d$ 保证每个预算的候选集非空：将一个等距通道放在单个标签即可得到总秩一候选。
+
+**定理 233.1（平坦谱下界的精确取等条件）。** 对任意整数 $1\le R\le dN$，下列条件等价：
+$$
+\boxed{D_R=1-\frac R{dN};}
+\tag{233.FF.6}
+$$
+存在 $A$ 上的正交投影 $\Pi_1,\ldots,\Pi_N$，使
+$$
+\boxed{\sum_{j=1}^N\Pi_j=\frac RdI_d.}
+\tag{233.FF.7}
+$$
+投影的总秩自动为 $R$。若（233.FF.7）不存在，则
+$$
+\boxed{D_R>1-\frac R{dN}.}
+\tag{233.FF.8}
+$$
+这只给严格差距，不给差距的数值大小。
+
+### 233.2 最优候选存在及普适下界
+
+#### 233.2.1 固定预算集合紧致
+
+候选 Choi 矩阵满足正半定、固定输入边缘 $\operatorname{Tr}_{BO}J=I_d$、指定记录块对角性及 $\operatorname{rank}J\le R$。这些条件在有限维矩阵空间中都是闭条件；秩上界可由所有 $(R+1)$ 阶子式消失表示。又有 $\operatorname{Tr}J=d$，故该正矩阵集合有界。因此候选集合紧致且非空。
+
+Diamond 范数是有限维映射空间上的连续范数，所以（233.FF.5）的下确界由某个候选达到。这里不需要候选集合凸。
+
+#### 233.2.2 平坦目标支撑
+
+令
+$$
+P_{\rm tar}=\sum_{j=1}^NI_d\otimes|j\rangle\langle j|\otimes P_j.
+\tag{233.FF.9}
+$$
+这是秩 $dN$ 的正交投影，且 $J_{\mathcal R}=P_{\rm tar}/N$。归一化最大纠缠输入得到目标 Choi 态
+$$
+\tau=\frac1dJ_{\mathcal R}=\frac1{dN}P_{\rm tar}.
+\tag{233.FF.10}
+$$
+对任意候选，记 $Q=\operatorname{supp}J_{\mathcal S}$、$k=\operatorname{rank}Q\le R$。候选归一化 Choi 态在效果 $I-Q$ 上概率为零，而目标概率为
+$$
+1-\frac1{dN}\operatorname{Tr}(QP_{\rm tar})
+\ge1-\frac{k}{dN}\ge1-\frac R{dN}.
+\tag{233.FF.11}
+$$
+两份完整输出都是密度矩阵，事件概率差不超过半迹距离。因此
+$$
+\boxed{D_R\ge\max\left\{0,1-\frac R{dN}\right\}.}
+\tag{233.FF.12}
+$$
+此处不假定候选支撑包含于目标支撑。
+
+### 233.3 投影和条件给出实际最优候选
+
+假设（233.FF.7）成立。对两边取迹，得
+$$
+\sum_j\operatorname{rank}\Pi_j=R.
+\tag{233.FF.13}
+$$
+定义候选效应及实际分支
+$$
+E_j=\frac dR\Pi_j,
+\qquad
+\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{233.FF.14}
+$$
+各效应正半定且 $\sum_jE_j=I_d$，故给出一份 CPTP 记录通道。取 $\operatorname{im}\Pi_j$ 的正交基 $\{u_{j,a}\}_a$，其显式 Kraus 为
+$$
+C_{j,a}=\sqrt{\frac dR}|r_j\rangle\langle u_{j,a}|.
+\tag{233.FF.15}
+$$
+该分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，所以分支秩恰为 $\operatorname{rank}\Pi_j$。标签块正交，候选总秩恰为 $R$。
+
+构造公共完全正部分
+$$
+\mathcal C_j(X)=\frac1N\operatorname{Tr}(\Pi_jX)P_j.
+\tag{233.FF.16}
+$$
+在每个固定纯输出 $P_j$ 上，正输入效应给完全正映射，因此
+$$
+(\mathcal R-\mathcal C)_j(X)
+=\frac1N\operatorname{Tr}[(I_d-\Pi_j)X]P_j
+$$
+和
+$$
+(\mathcal S-\mathcal C)_j(X)
+=\left(\frac dR-\frac1N\right)\operatorname{Tr}(\Pi_jX)P_j
+\tag{233.FF.17}
+$$
+都是完全正映射。第二项的系数非负，因为 $R\le dN$。
+
+共同部分的总迹效应为
+$$
+\mathcal C^*(I)=\frac1N\sum_j\Pi_j
+=cI_d,\qquad c=\frac R{dN}.
+\tag{233.FF.18}
+$$
+若 $R<dN$，两份残差除以同一个标量 $1-c$ 后都是 CPTP 通道。任意 CPTP 通道的 diamond 范数为一，所以
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-c=1-\frac R{dN}.
+\tag{233.FF.19}
+$$
+若 $R=dN$，（233.FF.7）迫使全部 $\Pi_j=I_d$，因为 $\sum_j(I_d-\Pi_j)=0$ 且各项正半定；此时（233.FF.14）就是目标本身。结合（233.FF.12），充分性成立。
+
+### 233.4 有零本征值时的合同迹范数微分
+
+**引理 233.2。** 设 $H,A$ 是同一有限维空间上的 Hermitian 矩阵。对足够小的正负实数 $t$，令
+$$
+S_t=(I+tA)^{1/2}.
+$$
+则
+$$
+\boxed{\left.\frac d{dt}\right|_{t=0}\|S_tHS_t\|_1
+=\operatorname{Tr}(A|H|).}
+\tag{233.FF.20}
+$$
+不要求 $H$ 可逆、无重根，也不要求 $A$ 与 $H$ 交换。
+
+**证明。** 将 $H$ 分为正负部 $H=H_+-H_-$，两者均正半定。由三角不等式，
+$$
+\begin{aligned}
+\|S_tHS_t\|_1
+&\le\operatorname{Tr}(S_tH_+S_t)+\operatorname{Tr}(S_tH_-S_t)\\
+&=\operatorname{Tr}(S_t^2|H|)\\
+&=\operatorname{Tr}|H|+t\operatorname{Tr}(A|H|).
+\end{aligned}
+\tag{233.FF.21}
+$$
+这是精确线性上界。
+
+令 $Z=\operatorname{sign}H$，在 $H$ 的零本征空间上取零。于是 $\|Z\|_{\rm op}\le1$、$ZH=HZ=|H|$。迹范数对偶性给
+$$
+\|S_tHS_t\|_1\ge\operatorname{Tr}(ZS_tHS_t).
+\tag{233.FF.22}
+$$
+在 $A$ 的固定本征基中逐项展开平方根，可得算子范数意义下
+$$
+S_t=I+\frac t2A+O(t^2).
+$$
+因此
+$$
+\begin{aligned}
+\operatorname{Tr}(ZS_tHS_t)
+&=\operatorname{Tr}(ZH)
++\frac t2\operatorname{Tr}[Z(AH+HA)]+O(t^2)\\
+&=\operatorname{Tr}|H|+t\operatorname{Tr}(A|H|)+O(t^2).
+\end{aligned}
+\tag{233.FF.23}
+$$
+（233.FF.21）与（233.FF.22）—（233.FF.23）在 $t$ 的两侧夹出同一个一阶项，故导数存在并等于（233.FF.20）。零本征空间已包含在符号算子定义中，没有遗漏其可能的贡献。$\square$
+
+这一证明只对正定因子 $I+tA$ 展开；没有对 $|H|$ 在零本征值处求通常的标量导数。
+
+### 233.5 取等强制投影和条件
+
+假设 $D_R=1-R/(dN)$，取第二节保证存在的最优候选 $\mathcal S$。记
+$$
+J=J_{\mathcal S},\qquad Q=\operatorname{supp}J,
+\qquad H=J-\frac1NP_{\rm tar}.
+\tag{233.FF.24}
+$$
+下文 $H$ 是通道差的 Hermitian Choi 矩阵，不是一个 Hilbert 空间。
+
+#### 233.5.1 等号强制实际秩与共同支撑
+
+最大纠缠输入及（233.FF.11）给连续不等式
+$$
+\begin{aligned}
+1-\frac R{dN}
+&=\frac12\|\mathcal S-\mathcal R\|_\diamond\\
+&\ge\frac1{2d}\|H\|_1\\
+&\ge1-\frac{\operatorname{Tr}(QP_{\rm tar})}{dN}\\
+&\ge1-\frac{\operatorname{rank}Q}{dN}\\
+&\ge1-\frac R{dN}.
+\end{aligned}
+\tag{233.FF.25}
+$$
+故每一步都为等号，特别是
+$$
+\operatorname{rank}Q=R,
+\qquad\operatorname{Tr}(QP_{\rm tar})=R.
+\tag{233.FF.26}
+$$
+由于
+$$
+\|(I-P_{\rm tar})Q\|_{\rm HS}^2
+=\operatorname{Tr}Q-\operatorname{Tr}(QP_{\rm tar})=0,
+$$
+得到
+$$
+\boxed{Q\preceq P_{\rm tar}.}
+\tag{233.FF.27}
+$$
+因此一个取等候选的输出不能泄漏到目标支撑之外。这个限制由等号推出，并未施加在原优化集合上。
+
+在正交分解 $Q\oplus(P_{\rm tar}-Q)\oplus(I-P_{\rm tar})$ 中，
+$$
+H=\left(J-\frac QN\right)\oplus
+\left(-\frac{P_{\rm tar}-Q}{N}\right)\oplus0.
+\tag{233.FF.28}
+$$
+而
+$$
+\operatorname{Tr}\left(J-\frac QN\right)=d-\frac RN.
+$$
+（233.FF.25）的半迹范数等号使
+$$
+\left\|J-\frac QN\right\|_1=d-\frac RN
+=\operatorname{Tr}\left(J-\frac QN\right).
+$$
+Hermitian 矩阵的迹范数等于其迹，当且仅当它正半定，故
+$$
+\boxed{J\succeq\frac QN,\qquad
+|H|=J+\frac1NP_{\rm tar}-\frac2NQ.}
+\tag{233.FF.29}
+$$
+这些等式包括 $R=dN$ 的零差情形。
+
+#### 233.5.2 所有输入方向上的驻点条件
+
+对输入 Choi 因子上的任意密度矩阵 $\rho$，定义
+$$
+g(\rho)=\| (\sqrt\rho\otimes I_{BO})\,H\,
+(\sqrt\rho\otimes I_{BO})\|_1.
+\tag{233.FF.30}
+$$
+该矩阵正是通道差作用于某个归一化纯输入及其参考后的输出。具体地，在参考副本上令
+$$
+|\psi_\rho\rangle=\sum_{a=1}^d(\sqrt\rho|a\rangle)\otimes|a\rangle,
+\qquad\|\psi_\rho\|^2=\operatorname{Tr}\rho=1.
+\tag{233.FF.31}
+$$
+因此 $g(\rho)\le\|\mathcal S-\mathcal R\|_\diamond$。由（233.FF.25），
+$$
+g(I_d/d)=\frac1d\|H\|_1
+=\|\mathcal S-\mathcal R\|_\diamond,
+\tag{233.FF.32}
+$$
+所以 $g$ 在 $I_d/d$ 取得全局最大。此处只使用实际纯输入（233.FF.31），不需要额外假定一条 diamond 范数变分公式。
+
+任取 $A=A^\dagger$、$\operatorname{Tr}A=0$，令
+$$
+\rho_t=\frac{I_d+tA}{d}.
+$$
+对足够小的正负 $t$，它是密度矩阵。将引理233.2应用于 $H$ 和 $A\otimes I_{BO}$，得
+$$
+\left.\frac d{dt}\right|_{0}g(\rho_t)
+=\frac1d\operatorname{Tr}[(A\otimes I_{BO})|H|]=0.
+\tag{233.FF.33}
+$$
+最后一个等号来自（233.FF.32）的局部最大性。于是
+$$
+\operatorname{Tr}_{BO}|H|=\lambda I_d
+\tag{233.FF.34}
+$$
+对某个实数 $\lambda$ 成立：若一份 Hermitian 矩阵与所有迹零 Hermitian 矩阵的迹配对均为零，它就是标量矩阵。
+
+由保迹性及（233.FF.9），
+$$
+\operatorname{Tr}_{BO}J=I_d,
+\qquad\operatorname{Tr}_{BO}(P_{\rm tar}/N)=I_d.
+$$
+代入（233.FF.29），得到
+$$
+2I_d-\frac2N\operatorname{Tr}_{BO}Q=\lambda I_d.
+\tag{233.FF.35}
+$$
+故 $\operatorname{Tr}_{BO}Q$ 为标量矩阵。其迹为 $\operatorname{Tr}Q=R$，所以
+$$
+\boxed{\operatorname{Tr}_{BO}Q=\frac RdI_d.}
+\tag{233.FF.36}
+$$
+
+#### 233.5.3 记录块与输入转置
+
+候选保持经典记录块结构，加上 $Q\preceq P_{\rm tar}$，可写
+$$
+J=\sum_{j=1}^NB_j\otimes|j\rangle\langle j|\otimes P_j,
+\qquad B_j\succeq0,
+\tag{233.FF.37}
+$$
+并有
+$$
+Q=\sum_{j=1}^NQ_j\otimes|j\rangle\langle j|\otimes P_j,
+\qquad Q_j=\operatorname{supp}B_j.
+\tag{233.FF.38}
+$$
+每个 $Q_j$ 是输入 Choi 因子上的正交投影。式（233.FF.36）恰为
+$$
+\sum_jQ_j=\frac RdI_d.
+\tag{233.FF.39}
+$$
+按照（233.FF.3）的约定，实际输入分支效应为 $B_j^{\mathsf T}$，其支撑投影为 $\Pi_j=Q_j^{\mathsf T}$。转置保持正交投影，并保持上述实标量恒等式，故
+$$
+\sum_j\Pi_j=\frac RdI_d.
+$$
+必要性成立。投影和条件本身不依赖所选输入基；这里的转置只固定 Choi 坐标与实际输入效应的对应。
+
+结合最优候选存在性与普适下界，若不存在这些投影，就不能有等号，故（233.FF.8）为严格不等式。这完成定理233.1。
+
+### 233.6 两个完整预算区间
+
+**命题 233.3（总预算小于输入维数）。** 若 $1\le R<d$，则
+$$
+\boxed{D_R=1.}
+\tag{233.FF.40}
+$$
+证明：对任意候选取全部最小 Kraus $C_{j,a}$，总数 $K\le R<d$。考虑同时收集全部目标事件振幅的线性映射
+$$
+v\longmapsto\bigl(\langle r_j,C_{j,a}v\rangle\bigr)_{j,a}
+\quad:\mathbb C^d\to\mathbb C^K.
+\tag{233.FF.41}
+$$
+它有非零核。取核中的单位输入，候选在 $\sum_j|j\rangle\langle j|\otimes P_j$ 上概率为零，目标概率为一。故半 diamond 距离至少为一；任意两份 CPTP 通道的半 diamond 距离至多为一，且候选集非空。$\square$
+
+相应的投影和条件也不可能成立：$0<R/d<1$，但任意非零 $\Pi_j$ 都满足 $\Pi_j\preceq\sum_i\Pi_i=(R/d)I$，在其单位像向量上会给 $1\le R/d$，矛盾。
+
+**命题 233.4（最后一个标签的容量区间）。** 若
+$$
+d(N-1)\le R\le dN-1,
+$$
+则
+$$
+\boxed{D_R=\frac1N.}
+\tag{233.FF.42}
+$$
+证明：任何总秩至多 $dN-1$ 的候选至少有一个标签 $j$ 的分支秩 $k_j<d$。把该标签的 $k_j$ 个目标事件振幅组成 $\mathbb C^d\to\mathbb C^{k_j}$ 的线性映射，选非零核输入，便使该标签的目标事件候选概率为零，目标概率仍为 $1/N$。给出完整误差下界 $1/N$。
+
+上界取一个原标签为零，其余 $N-1$ 个标签各以权重 $1/(N-1)$ 做同一指定纯重置。这份候选的总秩为 $d(N-1)$。它与目标的完整误差是标签权重的总变差距离
+$$
+\frac12\left[\frac1N+(N-1)\left(\frac1{N-1}-\frac1N\right)\right]=\frac1N.
+\tag{233.FF.43}
+$$
+这一完整上界可直接由差映射 $X\mapsto\operatorname{Tr}(X)(\tau-\sigma)$ 得到：任意参考放大后为固定输出差张量输入的部分迹，后者的迹范数不增；无参考密度矩阵输入达到相同值。$\square$
+
+预算 $R\ge dN$ 时目标本身给 $D_R=0$。在最后区间的左端点 $R=d(N-1)$，投影取 $N-1$ 个恒等及一个零，确实达到平坦下界；再增加预算但未到 $dN$ 时，平坦下界严格低于真实值 $1/N$。
+
+### 233.7 补投影与三维三标签的严格缺口
+
+投影和的可实现性具有补投影对应：若
+$$
+\sum_j\Pi_j=\frac RdI_d,
+$$
+则
+$$
+\sum_j(I_d-\Pi_j)=\frac{dN-R}{d}I_d.
+\tag{233.FF.44}
+$$
+反向再取补恢复原投影。因此总秩 $R$ 与总秩 $dN-R$ 的投影和存在性等价。它是取等可实现性的对应，不是完整距离数值的对称公式。
+
+现在取 $d=N=3$、$R=4$。若（233.FF.7）成立，按秩排序只有
+$$
+(3,1,0),\qquad(2,2,0),\qquad(2,1,1)
+\tag{233.FF.45}
+$$
+三种秩型。每一型都包含一个秩至少二的投影 $\Pi_j$，余下两投影的总秩至多二。但
+$$
+\sum_{i\ne j}\Pi_i=\frac43I_3-\Pi_j
+\tag{233.FF.46}
+$$
+右侧的本征值只可能为 $1/3$ 与 $4/3$，所以正定且秩三；左侧秩至多为余下总秩二，矛盾。故 $R=4$ 不存在投影和。
+
+若 $R=5$ 存在，则由（233.FF.44）得到总秩四、和为 $(4/3)I_3$ 的补投影，同样矛盾。因此定理233.1给
+$$
+\boxed{D_4>\frac59,\qquad D_5>\frac49.}
+\tag{233.FF.47}
+$$
+这些严格不等式由已达到的最优值及不存在取等投影推出，不依赖数值实验。单标签纯重置的总秩为三、误差为 $2/3$，另外给
+$$
+\frac59<D_4\le\frac23,\qquad
+\frac49<D_5\le\frac23.
+\tag{233.FF.48}
+$$
+本节没有计算 $D_4,D_5$ 的精确值。
+
+### 233.8 紧融合框架、投影和文献及适用边界
+
+对 $W_j=\operatorname{im}\Pi_j$，恒等式（233.FF.7）等价于
+$$
+\sum_{j=1}^N\|\Pi_jv\|^2=\frac Rd\|v\|^2
+\quad\text{对所有 }v\in\mathbb C^d.
+\tag{233.FF.49}
+$$
+省略零子空间后，它是单位权重、紧界 $R/d$ 的有限紧融合框架。各子空间可以相交，维数也可以不同。总维数 $\sum_j\dim W_j=R$ 是恒等式的迹，不是额外独立假设。
+
+这一结构属于成熟框架理论。P. G. Casazza、G. Kutyniok、S. Li，*Fusion Frames and Distributed Processing*，[arXiv:math/0605374v1](https://arxiv.org/abs/math/0605374v1)，Definition 3.1，[PDF 第5页](https://arxiv.org/pdf/math/0605374v1#page=5)，用加权投影平方范数定义融合框架及紧性；Proposition 3.5，第6页，给紧界与加权子空间维数之和的关系；§3.2，第7页，定义融合框架算子为 $\sum_jv_j^2\Pi_j$。论文发表于 *Applied and Computational Harmonic Analysis* 25(1), 114–132 (2008)，[DOI 10.1016/j.acha.2007.10.001](https://doi.org/10.1016/j.acha.2007.10.001)。这里的投影和条件就是该标准框架的单位权重特例。
+
+标量算子作为投影和的问题亦有专门文献：S. A. Kruglyak、V. I. Rabanovich、Yu. S. Samoilenko，*On Sums of Projections*，*Functional Analysis and Its Applications* 36(3), 182–195 (2002)，[DOI 10.1023/A:1020193804109](https://doi.org/10.1023/A:1020193804109)。该文的出版方摘要明确研究哪些标量 $\alpha I$ 可以表示为给定数量的正交投影之和。本稿将它作为标准问题的文献定位，不调用未在正文证明的分类结论；尤其保留这里固定有限维 $d$、固定投影数量 $N$ 和总秩 $R$ 的共同实现约束。
+
+仓内已有平坦 Choi 态秩下界、记录分支事件振幅核及量子比特平衡框架的相邻结果。对 D5 量子声明及钉版 Mathlib 投影、矩阵与内积空间目录的定向检索未定位到本节“完整通道误差取等当且仅当固定维数投影和存在”的接口定理。本文用标准矩阵工具给出该桥梁，未据此宣称文献原创性。
+
+本定理针对均匀权重、固定纯输出、经典标签及完整参考误差。非均匀权重改变目标 Choi 谱；混合输出改变支撑结构；相干记录改变分支直和；无参考优化不具备本节使用的全部纯化输入。这些变更不能直接沿用（233.FF.6）—（233.FF.7）的等价判据。
+
+## 追加锚（本行以下为增补区）
+
+## 234. 子空间参考探针与三维三标签的精确容量阶梯
+
+完整参考检验可以选择输入子空间。一个候选在整个输入空间上的归一化 Choi 态接近目标，并不保证它在每个子空间上的续接响应都同样接近。本节把这个区别写成可直接使用的秩下界，并计算三维输入、三个均匀纯重置标签的全部容量预算。
+
+所得完整最优误差在预算五时为 $1/2$；一份达到最优的候选在全三维最大纠缠输入上只有 $4/9$ 的半迹距离，而在合适的二维最大纠缠输入上达到 $1/2$。这里比较的是两份指定输入探针，绝不表示扩大可用参考空间会降低最优检验能力。
+
+以下为纸面数学证明，未新增或编译 Lean 声明。
+
+### 234.1 共同接口与事件振幅矩阵
+
+先固定一般整数 $d,N\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、经典记录 $B=\mathbb C^N$。指定各标签的单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\frac1N\operatorname{Tr}(X)P_j.
+\tag{234.SP.1}
+$$
+输出向量可以相同；正交标签承担各分支的区别。
+
+候选遍历同一接口的所有 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{\ell=1}^{k_j}C_{j\ell}XC_{j\ell}^{\dagger},
+\qquad \sum_{j,\ell}C_{j\ell}^{\dagger}C_{j\ell}=I_d,
+\tag{234.SP.2}
+$$
+其中每个分支采用最小 Kraus 表示，因此
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},\qquad
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{234.SP.3}
+$$
+零分支允许 $k_j=0$。不限制候选的量子输出方向，也不先假定它是测量—制备通道。
+
+定义目标支持事件的振幅矩阵
+$$
+L_j:A\longrightarrow\mathbb C^{k_j},\qquad
+(L_jv)_\ell=\langle r_j,C_{j\ell}v\rangle.
+\tag{234.SP.4}
+$$
+每个 $L_j$ 是复线性映射，秩至多为 $k_j$。$L_jv=0$ 只说明候选在该标签的指定纯输出事件上没有振幅，不表示所有 $C_{j\ell}v$ 为零。
+
+对非零输入子空间 $H\subseteq A$，置
+$$
+h=\dim H,\qquad a_j(H)=\operatorname{rank}(L_j|_H).
+\tag{234.SP.5}
+$$
+
+### 234.2 由子空间秩轮廓得到完整误差下界
+
+**引理 234.1（子空间参考的遗漏支持事件）。** 对任意候选（234.SP.2）及任意非零 $H$，有
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge 1-\frac{\sum_{j=1}^Na_j(H)}{Nh}.
+}
+\tag{234.SP.6}
+$$
+右侧由一个维数为 $h$ 的参考系统和一次合法效果检验实现为概率差。
+
+**证明。** 选 $H$ 的正交基 $u_1,\ldots,u_h$，以及参考 $E=\mathbb C^h$ 的指定基 $|a\rangle$，输入
+$$
+|\Omega_H\rangle=\frac1{\sqrt h}\sum_{a=1}^hu_a\otimes|a\rangle.
+\tag{234.SP.7}
+$$
+对每个 $j,\ell$，把候选 Kraus 输出投影到 $r_j$ 后，所得向量为
+$$
+(P_jC_{j\ell}\otimes I_E)|\Omega_H\rangle
+=|r_j\rangle\otimes w_{j\ell},\qquad
+w_{j\ell}=\frac1{\sqrt h}\sum_a\langle r_j,C_{j\ell}u_a\rangle|a\rangle.
+\tag{234.SP.8}
+$$
+令 $Q_j$ 为 $\{w_{j\ell}\}_\ell$ 的张成空间上的正交投影。行秩等于列秩给
+$$
+\operatorname{rank}Q_j=\operatorname{rank}(L_j|_H)=a_j(H).
+$$
+考虑效果
+$$
+F_H=\sum_j|j\rangle\langle j|\otimes P_j\otimes(I_E-Q_j).
+\tag{234.SP.9}
+$$
+各标签块正交，故 $0\preceq F_H\preceq I$。式（234.SP.8）说明每个候选 Kraus 向量在此效果下都为零，因此候选概率为零；候选在 $r_j$ 之外的输出分量同样被 $P_j$ 消去。
+
+目标在（234.SP.7）上的输出是
+$$
+(\mathcal R\otimes\operatorname{id}_E)(P_{\Omega_H})
+=\frac1{Nh}\sum_j|j\rangle\langle j|\otimes P_j\otimes I_E.
+\tag{234.SP.10}
+$$
+所以目标效果概率为
+$$
+\operatorname{Tr}\!\left[F_H(\mathcal R\otimes\operatorname{id}_E)(P_{\Omega_H})\right]
+=\frac1{Nh}\sum_j(h-a_j(H)).
+$$
+两份完整输出都是密度矩阵，任意效果的概率差不超过半迹距离；再取完整范数上界即得（234.SP.6）。$\square$
+
+该下界没有把候选投影成另一份保迹通道后重新计秩。它直接在原候选上执行一个效果测试，因而允许所有输出泄漏与任意 Kraus 结构。$H$ 可以依赖被检验的候选，这符合每个候选分别取最坏输入的量词。
+
+**推论 234.2（一维共同核与全空间读数）。** 若某标签集合 $J$ 满足
+$$
+\sum_{j\in J}k_j<d,
+\tag{234.SP.11}
+$$
+则各 $L_j$（$j\in J$）有共同非零核向量。在其单位化输入上，目标标签支持事件的并集具有概率 $|J|/N$，候选概率为零。因此无需参考就有误差下界 $|J|/N$。
+
+证明：把这些 $L_j$ 纵向堆叠，行数小于 $d$，所以存在非零核。目标每个标签的支持事件概率恒为 $1/N$，标签互斥，概率相加即可。$\square$
+
+另一方面，取 $H=A$，引理 234.1给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac{\sum_ja_j(A)}{Nd}
+\ge1-\frac{K(\mathcal S)}{Nd}.
+\tag{234.SP.12}
+$$
+全空间秩界只是可选子空间下界中的一项，不保证已经给出最强检验。
+
+### 234.3 三维三标签的两种优化任务
+
+以下固定 $d=N=3$、$m\ge3$，沿用（234.SP.1）—（234.SP.3）。对整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+U_R=\inf_{K(\mathcal S)\le R}
+\sup_{\rho\in\mathcal D(\mathbb C^3)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{234.SP.13}
+$$
+$D_R$ 包括任意参考，$U_R$ 不包括参考，故 $U_R\le D_R$。由于 $m\ge3$，将一个等距通道放入单个标签即可得到总秩一候选，所有上述候选集非空。目标各标签秩三，总秩九。
+
+**定理 234.3（三维三标签的精确容量阶梯）。** 全部预算的最优值为
+
+| 总 Kraus 预算 $R$ | 完整误差 $D_R$ | 无参考误差 $U_R$ |
+|---|---:|---:|
+| $1,2$ | $1$ | $1$ |
+| $3,4$ | $2/3$ | $2/3$ |
+| $5$ | $1/2$ | $1/3$ |
+| $6,7,8$ | $1/3$ | $1/3$ |
+| $R\ge9$ | $0$ | $0$ |
+
+每个下确界都有实际同接口 CPTP 候选达到。
+
+### 234.4 任意候选的低预算与末端下界
+
+若 $K(\mathcal S)\le2$，所有事件振幅行的总数小于三。推论 234.2取全部三个标签给无参考误差一。通道半 diamond 距离至多一，因此 $U_R=D_R=1$（$R=1,2$）。
+
+若 $K(\mathcal S)\le4$，将分支秩按 $k_1\le k_2\le k_3$ 重排用于计数，有
+$$
+k_1+k_2\le\frac23(k_1+k_2+k_3)\le\frac83.
+$$
+整数性给 $k_1+k_2\le2$。两个标签的振幅行因此有共同核，推论 234.2给无参考误差至少 $2/3$。
+
+匹配上界由单标签纯重置实现：在某个标签放置 $X\mapsto\operatorname{Tr}(X)P_j$，其余分支为零。其总秩为三，目标与候选的标签概率向量分别为 $(1/3,1/3,1/3)$ 和 $(1,0,0)$，完整半 diamond 距离等于其总变差 $2/3$。这一等式可直接对标签直和使用迹范数对偶；也正是第231节引理231.2的纯重置权重计算，输入维数不影响该计算。故预算三和四的两个最优值均为 $2/3$。
+
+若 $K(\mathcal S)\le8$，至少一个标签满足 $k_j\le2<d$。对该标签应用推论 234.2，得到全部这类候选的无参考误差至少 $1/3$。在两个标签上各放置权重 $1/2$ 的完整纯重置、第三标签置零，实际总秩为六，完整误差为 $1/3$。所以预算六、七、八均达到该值。预算至少九时可使用目标本身，误差为零。
+
+### 234.5 预算五的普遍完整下界
+
+固定任意 $K(\mathcal S)\le5$ 的候选。若某两个分支的秩和小于三，推论 234.2已经给出更强的 $2/3$ 下界。
+
+否则，排序后的非负整数秩只能为
+$$
+(k_1,k_2,k_3)=(1,2,2).
+\tag{234.SP.14}
+$$
+确实，若 $k_1=0$，则 $k_2,k_3\ge3$，总和至少六；若 $k_1\ge2$，总和也至少六；因此 $k_1=1$，而 $k_2,k_3\ge2$ 与总和至多五强制（234.SP.14）。
+
+矩阵 $L_2,L_3:\mathbb C^3\to\mathbb C^2$ 各有非零核。分别取核中的单位向量 $v_2,v_3$，选择二维子空间 $H$ 包含它们。若二者线性独立，取其张成空间；若二者共线，将该直线扩成任意二维子空间。
+
+因为 $L_2|_H,L_3|_H$ 各有非零核，且 $L_1$ 只有一行，故
+$$
+a_1(H)\le1,\qquad a_2(H)\le1,\qquad a_3(H)\le1.
+\tag{234.SP.15}
+$$
+引理 234.1在 $N=3,h=2$ 时给
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac3{3\cdot2}=\frac12.}
+\tag{234.SP.16}
+$$
+此论证覆盖任意量子输出方向，未把候选限制为后文的达到构造。它使用二维参考来同时检验三个标签上的遗漏方向。结合其他秩型的更强下界，得到 $D_5\ge1/2$。
+
+### 234.6 预算五的实际达到构造
+
+固定输入正交分解
+$$
+A=H_0\oplus G,\qquad H_0=\operatorname{span}\{|0\rangle,|1\rangle\},\quad
+G=\operatorname{span}\{|2\rangle\}.
+\tag{234.SP.17}
+$$
+在 $H_0$ 上取标准 trine 纯态
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\qquad \Pi_j=|\psi_j\rangle\langle\psi_j|,
+\qquad \sum_j\Pi_j=\frac32I_{H_0}.
+\tag{234.SP.18}
+$$
+定义输入效应
+$$
+E_1=\frac23\Pi_1\oplus0,
+\qquad E_2=\frac23\Pi_2\oplus\frac12I_G,
+\qquad E_3=\frac23\Pi_3\oplus\frac12I_G.
+\tag{234.SP.19}
+$$
+三者正半定且总和为 $I_A$，故
+$$
+\mathcal S^{(5)}_j(X)=\operatorname{Tr}(E_jX)P_j
+\tag{234.SP.20}
+$$
+定义同接口 CPTP 通道。各分支 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，精确秩型为 $(1,2,2)$，总秩五。显式 Kraus 为每标签的 $\sqrt{2/3}|r_j\rangle\langle\psi_j|$，加上标签二和三各自的 $|r_j\rangle\langle2|/\sqrt2$。
+
+目标与候选都消去输入 $H_0$ 和 $G$ 间的非对角块。在 $H_0$ 上，两者之差正是第231节的 trine 近似：完整半 diamond 误差为 $1/2$，无参考误差为 $1/3$。在一维 $G$ 上，差别只是概率向量 $(1/3,1/3,1/3)$ 与 $(0,1/2,1/2)$，两种误差均为 $1/3$。
+
+为确认这些分块计算给完整上界，令 $\Delta=\mathcal S^{(5)}-\mathcal R$。对任意参考及任意输入矩阵 $X$，记对应两个对角块为 $X_H,X_G$。由三角不等式及上述两个完整范数，
+$$
+\|(\Delta\otimes\operatorname{id})(X)\|_1
+\le\|X_H\|_1+\frac23\|X_G\|_1
+\le\|X_H\|_1+\|X_G\|_1
+\le\|X\|_1.
+\tag{234.SP.21}
+$$
+末步来自去掉非对角块的 pinching：该映射等于恒等共轭与按两个子空间赋予相反符号的酉共轭的平均，故在任意参考下对所有矩阵的迹范数收缩；其输出为两块直和，迹范数就是两块范数之和。
+
+因此 $\delta_\diamond(\mathcal R,\mathcal S^{(5)})\le1/2$，结合（234.SP.16）得到
+$$
+\boxed{D_5=\delta_\diamond(\mathcal R,\mathcal S^{(5)})=\frac12.}
+\tag{234.SP.22}
+$$
+对无参考密度矩阵，两块均为次归一化正矩阵，迹之和为一。分别使用两块的无参考误差 $1/3$，得到整体误差至多 $1/3$。上节的单标签振幅核下界又给全部预算五候选 $U_5\ge1/3$，所以
+$$
+\boxed{U_5=\delta_0(\mathcal R,\mathcal S^{(5)})=\frac13<\frac12=D_5.}
+\tag{234.SP.23}
+$$
+这也完成定理234.3中尚缺的预算五及全部达到性证明。
+
+### 234.7 全空间最大纠缠输入没有读到完整最坏误差
+
+对达到候选 $\mathcal S^{(5)}$，取全空间最大纠缠态
+$$
+|\Omega_3\rangle=\frac{|00\rangle+|11\rangle+|22\rangle}{\sqrt3}.
+\tag{234.SP.24}
+$$
+目标与候选都消去 $H_0$ 与 $G$ 间输入交叉项，所以联合输出差在参考的 $H_0$ 块与 $G$ 块上正交分解，权重分别为 $2/3$ 和 $1/3$。第一块是二维 trine 的最大纠缠差，半迹距离 $1/2$；第二块的半迹距离为 $1/3$。故
+$$
+\boxed{
+\frac12\|((\mathcal R-\mathcal S^{(5)})\otimes\operatorname{id})(P_{\Omega_3})\|_1
+=\frac23\cdot\frac12+\frac13\cdot\frac13=\frac49.
+}
+\tag{234.SP.25}
+$$
+它恰好等于全空间平坦 Choi 谱给出的 $1-5/9$。然而把输入完全放在 $H_0$，使用 $|\Omega_{H_0}\rangle$，便达到完整最坏误差 $1/2$。
+
+因此，这里已经出现一份具体通道：其归一化 Choi 态达到预算五的平坦谱态距离下界，但通道的完整误差严格更大。第233节的投影和障碍给出的严格不等式，在此由子空间事件与实际候选进一步确定为精确值。
+
+可用参考维数三当然包含二维探针的嵌入；“全三维最大纠缠态不是最坏输入”与“更大参考系统不会降低最优检验能力”完全相容。丢失信息应定位到被选探针如何分配输入权重，不能归因为参考空间本身过大。
+
+### 234.8 来源、复用与关系边界
+
+本节的 trine 构造及其两种误差直接复用第231节的已给纸面证明，公共纯输出与 Choi 转置约定承接第232节。标准 trine POVM 的原始参考仍为 S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，式（33）及其后文字、式（64）—（65）。该文提供标准测量结构；本文的子空间秩事件和三维容量曲线由上文证明，不归给该文，也不宣称文献原创性。
+
+相对于第232节的量子比特曲线，三维情形新增的实际区别是：总方向数在某个预算下虽然通过全空间谱测试，仍可能在一个较小输入子空间中同时漏掉多个标签的方向。完整边界的检验必须允许这些共同子空间上的续接。局部遗漏方向的联合位置与数量一起决定可恢复性；只记录总体秩不能取代这份关系。
+
+## 追加锚（本行以下为增补区）
+
+## 235. 三标签均匀纯重置在任意输入维数下的精确容量阶梯
+
+三标签的精确容量曲线可以对全部输入维数求出。关键的普遍下界来自三个实际事件核的共同位置：当总 Kraus 容量小于 $2d$ 时，三个核的维数和大于输入维数。它们之间必有一条非零线性关系；这条关系给出两个标签的共同核直线，或者一张同时与三个核相交的二维输入平面。后者允许一次二维参考检验同时读取三个标签的遗漏方向。
+
+完整误差由此出现四个正的平台。最中间的平台在允许参考时为 $1/2$，无参考时为 $1/3$；相同的一份实际候选同时达到两种最优值。以下为纸面数学证明，未新增或编译 Lean 证明。
+
+### 235.1 固定接口与两种优化任务
+
+固定整数 $d\ge2$、$m\ge d$，输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$，以及三个指定经典标签。任取固定单位输出 $r_1,r_2,r_3\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes
+\frac13\operatorname{Tr}(X)P_j.
+\tag{235.AD.1}
+$$
+输出向量可以相同；标签正交承担各分支的区别。
+
+候选遍历同接口的全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^3|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^\dagger,
+\qquad\sum_{j,a}C_{j,a}^\dagger C_{j,a}=I_d.
+\tag{235.AD.2}
+$$
+各分支采用最小 Kraus 表示，故
+$$
+K(\mathcal S)=\sum_{j=1}^3k_j
+=\operatorname{rank}J_{\mathcal S}.
+\tag{235.AD.3}
+$$
+允许零分支、任意量子输出方向及任意合法 Kraus 结构，保留经典记录块对角接口。
+
+对每个整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\tag{235.AD.4}
+$$
+$$
+U_R=\inf_{K(\mathcal S)\le R}\sup_{\rho\in\mathcal D(A)}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{235.AD.5}
+$$
+以下以 $\delta_\diamond(\mathcal R,\mathcal S)$、$\delta_0(\mathcal R,\mathcal S)$ 分别记（235.AD.4）、（235.AD.5）下确界内的单候选误差。第一项允许任意外部参考，第二项没有参考，故 $U_R\le D_R$。由 $m\ge d$，可将一个等距通道放入单个标签，得到总秩一的合法候选，所以全部上述候选集非空。预算零不允许 CPTP 候选，不纳入定义。
+
+置
+$$
+R_*=\left\lceil\frac{3d}{2}\right\rceil.
+\tag{235.AD.6}
+$$
+
+**定理 235.1（任意输入维数的三标签精确阶梯）。** 有
+
+| 总 Kraus 预算 | 完整最优误差 $D_R$ | 无参考最优误差 $U_R$ |
+|---|---:|---:|
+| $1\le R<d$ | $1$ | $1$ |
+| $d\le R<R_*$ | $2/3$ | $2/3$ |
+| $R_*\le R<2d$ | $1/2$ | $1/3$ |
+| $2d\le R<3d$ | $1/3$ | $1/3$ |
+| $R\ge3d$ | $0$ | $0$ |
+
+每个下确界都有实际同接口 CPTP 候选达到。预算按“至多 $R$”计数；同一低秩候选可在一个预算区间内重复达到最优。
+
+### 235.2 实际事件振幅与子空间参考
+
+对任意候选（235.AD.2），定义复线性映射
+$$
+L_j:A\to\mathbb C^{k_j},
+\qquad(L_jv)_a=\langle r_j,C_{j,a}v\rangle,
+\qquad G_j=\ker L_j.
+\tag{235.AD.7}
+$$
+因此
+$$
+\operatorname{rank}L_j\le k_j,
+\qquad\dim G_j\ge d-k_j.
+\tag{235.AD.8}
+$$
+这里的核只消去指定目标输出方向上的振幅；不要求 $C_{j,a}v=0$，也不删除候选的其他输出。
+
+直接应用第234节引理234.1，对任意非零输入子空间 $H\subseteq A$、$h=\dim H$，有
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac{\sum_{j=1}^3\operatorname{rank}(L_j|_H)}{3h}
+=\frac{\sum_{j=1}^3\dim(H\cap G_j)}{3h}.
+}
+\tag{235.AD.9}
+$$
+最后一个等号是限制映射上的秩—零化度公式。此前的效果构造直接作用于原候选，允许任意输出泄漏；这里保留其全部候选量词，不重复那份证明。
+
+一维情形就是共同核事件。更具体地，若标签集合 $J$ 满足 $\sum_{j\in J}k_j<d$，将其振幅矩阵纵向堆叠后必有非零核。该单位输入一次消去这些标签的目标事件，给无参考下界
+$$
+\delta_0(\mathcal R,\mathcal S)\ge\frac{|J|}{3}.
+\tag{235.AD.13}
+$$
+子空间 $H$ 及事件可以依赖被检验的候选，这符合每个候选分别取最坏输入的量词。
+
+### 235.3 三个核的维数超额给二维共同见证
+
+**引理 235.2（三个子空间的共同直线或共同平面）。** 若 $G_1,G_2,G_3\subseteq A$ 满足
+$$
+\dim G_1+\dim G_2+\dim G_3>d,
+\tag{235.AD.14}
+$$
+则至少有以下一种情形：两个 $G_j$ 有共同非零向量；或存在二维子空间 $H$，使 $H\cap G_j\ne\{0\}$ 对三个 $j$ 全部成立。
+
+**证明。** 考虑外部直和上的加法映射
+$$
+T:G_1\oplus G_2\oplus G_3\to A,
+\qquad T(w_1,w_2,w_3)=w_1+w_2+w_3.
+\tag{235.AD.15}
+$$
+域的维数大于陪域，所以其核中有非零三元组。至少两个分量非零，否则它们不可能相加为零。
+
+若恰有两个非零分量，它们互为相反向量，给两个子空间的共同非零向量。若三个分量非零但共线，该共同直线实际包含在全部三个 $G_j$ 中。余下情形中三个向量非零且不共线；关系 $w_1+w_2+w_3=0$ 强制它们张成二维子空间 $H$，而每个 $w_j$ 就是 $H\cap G_j$ 中的非零向量。$\square$
+
+**推论 235.3（总秩小于 $2d$ 的普遍完整下界）。** 若 $K(\mathcal S)<2d$，则
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac12.}
+\tag{235.AD.16}
+$$
+
+证明：由（235.AD.8），
+$$
+\sum_j\dim G_j\ge3d-K(\mathcal S)>d.
+$$
+在引理235.2的共同直线情形，两个标签的目标事件被同一个无参考输入消去，给更强的 $2/3$ 下界；若三个核有共同直线则甚至给一。在共同平面情形，取该二维 $H$，每个限制 $L_j|_H$ 的秩至多一，第234节引理234.1给
+$$
+1-\frac{1+1+1}{3\cdot2}=\frac12.
+$$
+两种情形穷尽，结论成立。$\square$
+
+这项下界对任意输出泄漏成立，且至多需要二维参考；它不声称任意一对高维通道的完整最坏输入都只需要二维参考。
+
+### 235.4 全部预算的其余下界
+
+**总秩小于 $d$。** 全部三个事件振幅矩阵的行数总和小于 $d$，所以有一个输入同时消去三个目标事件。（235.AD.13）给无参考误差一，因而 $U_R=D_R=1$ 对 $R<d$ 成立。
+
+**总秩小于 $R_*$。** 将分支秩按大小排列为 $k_1\le k_2\le k_3$，这里只重排计数，不改变原标签接口。若 $K(\mathcal S)\le R<R_*$，整数性保证 $R<3d/2$，于是
+$$
+k_1+k_2\le\frac23(k_1+k_2+k_3)
+\le\frac{2R}{3}<d.
+\tag{235.AD.17}
+$$
+两个对应事件的振幅矩阵有共同核，故无参考误差至少为 $2/3$。
+
+**总秩小于 $3d$。** 至少有一个标签的分支秩小于 $d$，否则总秩至少为 $3d$。对该标签使用振幅核，得到无参考误差至少为 $1/3$。
+
+结合推论235.3，这些下界分别给出定理235.1中的全部正平台。余下只需构造匹配候选。
+
+### 235.5 两种端部重置候选
+
+在单个标签放置完整纯重置 $X\mapsto\operatorname{Tr}(X)P_j$、其他分支置零，总 Choi 秩为 $d$。目标与候选的差只来自标签概率向量
+$$
+(1/3,1/3,1/3),\qquad(1,0,0).
+$$
+两种误差均为总变差 $2/3$，给预算 $d\le R<R_*$ 的匹配上界。
+
+在两个标签各放置权重 $1/2$ 的完整纯重置、第三个标签置零，总 Choi 秩为 $2d$。对应概率向量为 $(1/2,1/2,0)$，两种误差均为 $1/3$，给预算 $2d\le R<3d$ 的上界。
+
+这些总变差等式包含任意参考：差映射为 $X\mapsto\operatorname{Tr}(X)(\tau-\sigma)$，其参考放大给固定输出差张量输入的部分迹；部分迹的迹范数收缩给完整上界，无参考迹一输入达到相同值。
+
+预算至少为 $3d$ 时，目标本身的三个分支各有秩 $d$，总秩 $3d$，给零误差。最低预算区间已有非空候选，任意两份 CPTP 通道的完整半 diamond 距离至多一。
+
+### 235.6 二维 trine 块的两种误差
+
+在一个二维输入块上取
+$$
+|\psi_j\rangle=\frac{|0\rangle+e^{2\pi i(j-1)/3}|1\rangle}{\sqrt2},
+\quad\Pi_j=|\psi_j\rangle\langle\psi_j|,
+\quad\sum_j\Pi_j=\frac32I_2.
+\tag{235.AD.18}
+$$
+令 $E_j=(2/3)\Pi_j$，以 $X\mapsto\operatorname{Tr}(E_jX)P_j$ 作为该块候选。三个效应的和为恒等，分支各为秩一。
+
+第231节对同一 trine 通道已经证明两项精确误差：
+$$
+\delta_\diamond^{\rm tr}=\frac12,
+\tag{235.AD.20}
+$$
+$$
+\delta_0^{\rm tr}=\frac13.
+\tag{235.AD.22}
+$$
+其中完整上界由 Hermitian 泛函的完整范数得到，二维最大纠缠输入达到；无参考上界由三个 Bloch 向量的符号和得到，一个 trine 方向的纯输入达到。本节直接复用这两个结果。它们允许当前任意固定纯输出 $r_j$，不需要输出向量正交。
+
+### 235.7 达到 $R_*$ 的实际高维候选
+
+写
+$$
+d=2t+\epsilon,\qquad t=\lfloor d/2\rfloor\ge1,
+\qquad\epsilon\in\{0,1\}.
+\tag{235.AD.23}
+$$
+选择输入正交分解
+$$
+A=H_1\oplus\cdots\oplus H_t\oplus G,
+\qquad\dim H_a=2,
+\qquad\dim G=\epsilon.
+\tag{235.AD.24}
+$$
+当 $\epsilon=0$ 时省略 $G$。在每个 $H_a$ 上使用第六节的 trine 投影 $\Pi_j^{(a)}$。
+
+若 $d=2t$，定义
+$$
+E_j=\bigoplus_{a=1}^t\frac23\Pi_j^{(a)}
+\quad(j=1,2,3).
+\tag{235.AD.25}
+$$
+若 $d=2t+1$，则定义
+$$
+E_1=\left(\bigoplus_{a=1}^t\frac23\Pi_1^{(a)}\right)\oplus0,
+$$
+$$
+E_2=\left(\bigoplus_{a=1}^t\frac23\Pi_2^{(a)}\right)\oplus\frac12I_G,
+\qquad
+E_3=\left(\bigoplus_{a=1}^t\frac23\Pi_3^{(a)}\right)\oplus\frac12I_G.
+\tag{235.AD.26}
+$$
+各效应正半定且总和为 $I_A$，所以
+$$
+\mathcal S_j^{\rm blk}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{235.AD.27}
+$$
+定义实际 CPTP 记录通道 $\mathcal S^{\rm blk}$。其第 $j$ 个分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，因此精确分支秩为
+$$
+(t,t,t)\quad\text{若 }d=2t,
+\qquad
+(t,t+1,t+1)\quad\text{若 }d=2t+1.
+\tag{235.AD.28}
+$$
+总秩为
+$$
+\boxed{K(\mathcal S^{\rm blk})=3t+2\epsilon
+=\left\lceil\frac{3d}{2}\right\rceil=R_*.}
+\tag{235.AD.29}
+$$
+
+显式 Kraus 为每个标签、每个二维块的
+$$
+\sqrt{\frac23}|r_j\rangle\langle\psi_j^{(a)}|,
+\tag{235.AD.30}
+$$
+在奇数维时再给标签二和三各加一个 $|r_j\rangle\langle g|/\sqrt2$，其中 $g$ 是 $G$ 的单位基。它们的输入支撑分属正交块，故每个标签内的所列 Kraus 均非零且线性独立。全部块组成同一份实际 CPTP 效应族。
+
+### 235.8 输入分块保持任意参考的上界
+
+目标与候选 $\mathcal S^{\rm blk}$ 都消去（235.AD.24）不同输入块之间的非对角项。令 $\Delta=\mathcal S^{\rm blk}-\mathcal R$，并以 $Q_a$ 记各输入块的投影。
+
+定义输入 pinching
+$$
+\mathcal P(X)=\sum_aQ_aXQ_a,
+\qquad\Delta=\Delta\circ\mathcal P.
+\tag{235.AD.31}
+$$
+若共有 $b$ 个块，将它们编号为 $a=0,\ldots,b-1$，令 $\omega=e^{2\pi i/b}$、$V=\sum_{a=0}^{b-1}\omega^aQ_a$，则
+$$
+\mathcal P(X)=\frac1b\sum_{\ell=0}^{b-1}V^\ell X(V^\dagger)^\ell.
+\tag{235.AD.32}
+$$
+因此 pinching 是酉共轭的平均，对任意矩阵及任意参考都迹范数收缩。其输出为输入块直和，故相应块 $X_a$ 满足
+$$
+\sum_a\|X_a\|_1=\|(\mathcal P\otimes\operatorname{id})(X)\|_1
+\le\|X\|_1.
+\tag{235.AD.33}
+$$
+
+每个二维块的完整差范数为一；奇数维附加的一维块只改变标签概率向量 $(1/3,1/3,1/3)$ 与 $(0,1/2,1/2)$，完整差范数为 $2/3$。所以对任意参考及任意输入矩阵，
+$$
+\|(\Delta\otimes\operatorname{id})(X)\|_1
+\le\sum_{a=1}^t\|X_{H_a}\|_1
++\frac23\|X_G\|_1
+\le\|X\|_1,
+\tag{235.AD.34}
+$$
+其中偶数维时省略 $G$ 项。故完整半误差至多 $1/2$；将输入放在任意一个二维块的最大纠缠态上即达到该值。
+
+对无参考密度矩阵，各对角块均为次归一化正矩阵，迹之和为一。每个二维块及可选的一维块的无参考误差都至多 $1/3$，由三角不等式得到整体上界 $1/3$；在一个二维块内取达到（235.AD.22）的纯输入实现等号。因此
+$$
+\boxed{
+\delta_\diamond(\mathcal R,\mathcal S^{\rm blk})=\frac12,
+\qquad
+\delta_0(\mathcal R,\mathcal S^{\rm blk})=\frac13.
+}
+\tag{235.AD.35}
+$$
+候选总秩为 $R_*$，所以它在全部预算 $R_*\le R<2d$ 中都可用。第三、四节对全部候选的下界恰与两项上界匹配。结合第五节，定理235.1全部成立。
+
+### 235.9 边界、来源与共同关系的作用
+
+当 $d=2$，$R_*=3$，本定理恢复三标签量子比特曲线。$d=3$ 时，$R_*=5$，恢复三维三标签的全部预算及预算五的严格参考增益。对全部 $d\ge2$，$d<R_*\le2d-1$，所以中间平台存在，且奇偶构造都有至少一个二维块。
+
+平台的阈值取自实际共同实现：$d$ 个 Kraus 足够保留一个完整标签；$R_*$ 个 Kraus 足够在所有二维块上实施同一组三标签 trine 效应；$2d$ 个 Kraus 足够保留两个完整标签；$3d$ 个 Kraus 精确给出目标。反向下界分别由全部事件的共同核、两个事件的共同核、三个核的共同平面，以及单个缺秩事件承担。
+
+引理235.2只使用外部直和、加法映射和秩—零化度定理。它是标准有限维线性代数的直接论证，不把该共同核关系称为新创的子空间理论。子空间遗漏事件的实现延续此前的实际振幅与参考支撑构造；没有在证明下界时把候选先替换成某个更受限的通道。
+
+Trine POVM 是标准结构。S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，式（33）后及式（64）—（65），明确给出三态与 $2/3$ 权重；参见 [PDF 第10页](https://arxiv.org/pdf/0810.1970v1#page=10)及[第18页](https://arxiv.org/pdf/0810.1970v1#page=18)。该文提供测量结构；这里的全维容量阶梯由上文普遍下界与同一候选的完整误差计算证明，不归给该文，也不宣称文献原创性。
+
+本次对 D5 量子声明及钉版 Mathlib 相应线性代数目录的定向检索，未定位到本节全部维数的三标签容量接口。该范围不等于整个第三方文献，未检索命中不构成原创性结论。
+
+本定理仍固定三个均匀标签、纯目标输出、经典记录及 $m\ge d$ 的同一输出接口。更多标签的核之间可能需要不同维数的共同见证，非均匀权重也会改变事件概率；不能直接把这里的四个平台外推到这些情形。
+
+## 追加锚（本行以下为增补区）
+
+## 236. 最小支持核关系与多标签重置的单纯形容量平台
+
+对三个标签，三个实际事件核之间的非零关系给出了共同二维见证。对更多标签，应从加法核中选择非零分量数最少的关系：若它涉及 $q$ 个标签，这 $q$ 个向量恰张成 $q-1$ 维输入子空间。一次相应维数的参考检验，能够同时读取这些标签各自遗漏的方向。
+
+结合正则单纯形的补投影框架，这一机制给出一般均匀多标签纯重置在最后标签平台之前的一段精确完整误差。本文只计算指定平台及其最小到达预算，不给一般无参考最优值，也不猜测更低预算的完整曲线。
+
+### 236.1 目标、预算与精确平台
+
+固定输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、$m\ge d$，以及 $N$ 个指定经典标签。各标签固定一个单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{236.MP.1}
+$$
+这些输出向量不必互相正交，可以相同。
+
+候选遍历同接口全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^\dagger,
+\qquad \sum_{j,a}C_{j,a}^\dagger C_{j,a}=I_d.
+\tag{236.MP.2}
+$$
+各分支采用最小 Kraus 表示，故总容量
+$$
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{236.MP.3}
+$$
+允许零分支和任意量子输出方向，保留经典记录块结构。对整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{236.MP.4}
+$$
+该误差包括全部记录、量子输出及任意外部参考。$m\ge d$ 允许将一个等距通道放入单标签，从而保证每个上述候选集非空。
+
+主定理固定
+$$
+N\ge3,\qquad d\ge N-1,
+\qquad
+R_0=(N-1)d-\left\lfloor\frac d{N-1}\right\rfloor
+=\left\lceil\frac{N(N-2)d}{N-1}\right\rceil.
+\tag{236.MP.5}
+$$
+两种写法相同，因为 $N(N-2)=(N-1)^2-1$。
+
+**定理 236.1（单纯形补投影平台）。** 对全部整数
+$$
+R_0\le R\le(N-1)d-1,
+$$
+有
+$$
+\boxed{D_R=\frac1{N-1}.}
+\tag{236.MP.6}
+$$
+一份实际总 Kraus 秩为 $R_0$ 的同接口 CPTP 候选在整段预算中达到该值。该区间包含恰好 $\lfloor d/(N-1)\rfloor$ 个整数预算，因 $d\ge N-1$ 而非空。
+
+此外，对每个 $1\le R<R_0$，
+$$
+\boxed{D_R>\frac1{N-1}.}
+\tag{236.MP.7}
+$$
+所以 $R_0$ 是使完整最优误差不超过 $1/(N-1)$ 的最小整数预算。式（236.MP.7）不确定这些更低预算的精确距离。
+
+### 236.2 子空间遗漏支持事件
+
+为证明下界，先允许一般 $d,N\ge2$。对任意候选定义实际目标事件振幅
+$$
+L_j:A\to\mathbb C^{k_j},
+\qquad(L_jv)_a=\langle r_j,C_{j,a}v\rangle,
+\qquad G_j=\ker L_j.
+\tag{236.MP.8}
+$$
+每个 $L_j$ 复线性且秩不超过 $k_j$。$L_jv=0$ 只说明该标签的目标纯输出事件没有振幅，不要求整个候选 Kraus 输出为零。
+
+对任意非零输入子空间 $H$，令 $h=\dim H$。实际子空间参考效果给
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge1-\frac{\sum_j\operatorname{rank}(L_j|_H)}{Nh}
+=\frac{\sum_j\dim(H\cap G_j)}{Nh}.
+}
+\tag{236.MP.9}
+$$
+式（236.MP.9）直接复用第234节引理234.1；最后一个等号由限制映射的秩—零化度公式得到。此前的效果直接检验原候选，允许任意输出泄漏，没有把投影后的映射当作另一份保迹候选。子空间和效果仍可以依赖被检验候选，符合逐候选取最坏输入的量词。
+
+### 236.3 最小支持线性关系给统一下界
+
+假设候选总容量满足
+$$
+K(\mathcal S)<(N-1)d.
+\tag{236.MP.12}
+$$
+由（236.MP.8），
+$$
+\sum_j\dim G_j
+=Nd-\sum_j\operatorname{rank}L_j
+\ge Nd-K(\mathcal S)>d.
+\tag{236.MP.13}
+$$
+所以外部直和上的加法映射
+$$
+T:\bigoplus_{j=1}^NG_j\to A,
+\qquad T((w_j)_j)=\sum_jw_j
+\tag{236.MP.14}
+$$
+有非零核。
+
+从所有非零核元中，选择非零分量数最少的一份 $(w_j)_j$。记其支持为 $J$，$q=|J|$。由于一份非零向量不能独自相加为零，
+$$
+2\le q\le N.
+$$
+对全部 $j\in J$，$w_j\ne0$ 且 $w_j\in G_j$，并有
+$$
+\sum_{j\in J}w_j=0.
+\tag{236.MP.15}
+$$
+
+**引理 236.2（最小支持关系的精确维数）。** 令 $H=\operatorname{span}\{w_j:j\in J\}$，则
+$$
+\boxed{\dim H=q-1.}
+\tag{236.MP.16}
+$$
+
+**证明。** （236.MP.15）已经给出一条非零标量关系，故 $\dim H\le q-1$。若严格小于 $q-1$，这些向量的标量关系空间至少二维，所以存在一份系数关系 $(a_j)_{j\in J}$ 与全一系数不成比例。固定某个 $j_0\in J$，令
+$$
+b_j=a_j-a_{j_0}.
+$$
+有 $b_{j_0}=0$、$(b_j)$ 不全零，并且
+$$
+\sum_jb_jw_j=\sum_ja_jw_j-a_{j_0}\sum_jw_j=0.
+$$
+于是 $(b_jw_j)_{j\in J}$，在其余标签补零，构成（236.MP.14）的一份非零核元：每个分量仍在自己的 $G_j$ 中，而非零分量数严格小于 $q$。这与最小性矛盾。$\square$
+
+该证明允许不同核子空间重合或相交，也允许所选向量起初存在共线；这些情形已由最小支持选择处理。
+
+由（236.MP.16），$h=q-1\le d$。在每个 $j\in J$ 上，$H\cap G_j$ 至少包含非零向量 $w_j$，所以（236.MP.9）给
+$$
+\boxed{
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\frac{q}{N(q-1)}.
+}
+\tag{236.MP.17}
+$$
+其他标签的交维数非负，只会加强该界。函数 $q/(q-1)$ 对整数 $q\ge2$ 递减，而
+$$
+q\le\min(N,d+1).
+$$
+故得到更一般的统一下界：令 $Q=\min(N,d+1)$，则
+$$
+\boxed{
+K(\mathcal S)<(N-1)d
+\quad\Longrightarrow\quad
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge\frac{Q}{N(Q-1)}.
+}
+\tag{236.MP.18}
+$$
+该见证只需 $q-1\le\min(N-1,d)$ 维参考。它是一项普遍误差下界，不断言任意两份通道的完整最坏输入都只需要这么多维参考。
+
+在主定理的 $d\ge N-1$ 范围，$Q=N$，所以
+$$
+\boxed{D_R\ge\frac1{N-1}\qquad(R<(N-1)d).}
+\tag{236.MP.19}
+$$
+
+### 236.4 一个正则单纯形补投影块
+
+以下固定 $N\ge3$，令 $n=N-1$，在 $\mathbb C^N$ 中取
+$$
+V=\mathbf1^\perp,\qquad\mathbf1=(1,\ldots,1),
+\qquad\dim V=n.
+\tag{236.MP.20}
+$$
+对标准基 $e_j$，定义
+$$
+u_j=\sqrt{\frac N{N-1}}
+\left(e_j-\frac1N\mathbf1\right),
+\qquad U_j=|u_j\rangle\langle u_j|.
+\tag{236.MP.21}
+$$
+每个 $u_j\in V$ 且范数为一。若 $P_V$ 为 $V$ 的正交投影，$u_j=\sqrt{N/(N-1)}P_Ve_j$，因此
+$$
+\sum_jU_j
+=\frac N{N-1}P_V\left(\sum_j|e_j\rangle\langle e_j|\right)P_V
+=\frac N{N-1}I_V.
+\tag{236.MP.22}
+$$
+此外不同向量的内积为 $-1/(N-1)$，给出正则单纯形的标准紧框架。
+
+取补投影
+$$
+Q_j=I_V-U_j,
+\qquad\operatorname{rank}Q_j=N-2,
+\qquad\sum_jQ_j=\frac{N(N-2)}{N-1}I_V.
+\tag{236.MP.23}
+$$
+定义候选输入效应
+$$
+E_j=\frac{N-1}{N(N-2)}Q_j.
+\tag{236.MP.24}
+$$
+各效应正半定且总和为 $I_V$，故分支
+$$
+\mathcal S_j^{\rm simp}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{236.MP.25}
+$$
+构成实际 CPTP 记录通道。每个分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，秩恰为 $N-2$，总秩恰为 $N(N-2)$。
+
+具体地，取 $\operatorname{im}Q_j$ 的正交基 $u_{j,1},\ldots,u_{j,N-2}$，Kraus 可取
+$$
+C_{j,a}=\sqrt{\frac{N-1}{N(N-2)}}
+|r_j\rangle\langle u_{j,a}|.
+\tag{236.MP.26}
+$$
+同一标签内的这些 Kraus 非零且 Hilbert–Schmidt 正交，验证了所报精确分支秩。
+
+#### 236.4.1 完整误差上界
+
+块目标的各效应为 $I_V/N$。取共同 CP 部分的各效应为 $Q_j/N$。目标残差效应为 $U_j/N$，候选残差效应为
+$$
+E_j-Q_j/N=\frac1{N(N-2)}Q_j,
+\tag{236.MP.27}
+$$
+都正半定。由于分支输出固定为同一个 $P_j$，这些效应的正性确实给出分支差的完全正性。
+
+共同部分的总迹效应为
+$$
+\frac1N\sum_jQ_j=\frac{N-2}{N-1}I_V.
+\tag{236.MP.28}
+$$
+两份 CP 残差因此都具有标量迹权重 $1/(N-1)$，除以该权重后均为 CPTP 通道。任意 CPTP 通道的 diamond 范数为一，故块目标与候选满足
+$$
+\frac12\|\mathcal R_V-\mathcal S^{\rm simp}\|_\diamond
+\le\frac1{N-1}.
+\tag{236.MP.29}
+$$
+
+#### 236.4.2 块距离精确达到
+
+输入维数为 $n=N-1$ 时，目标归一化 Choi 态在 $nN$ 维支撑上为恒定本征值 $1/(nN)$。任何 Choi 秩 $K$ 的候选，读取其支撑补的效果，都给半 diamond 下界 $1-K/(nN)$。对当前块 $K=N(N-2)$，这正是
+$$
+1-\frac{N(N-2)}{N(N-1)}=\frac1{N-1}.
+$$
+因此
+$$
+\boxed{\frac12\|\mathcal R_V-\mathcal S^{\rm simp}\|_\diamond
+=\frac1{N-1}.}
+\tag{236.MP.30}
+$$
+
+### 236.5 任意 $d\ge N-1$ 的实际达到通道
+
+按欧几里得除法写
+$$
+d=t(N-1)+r,\qquad
+t=\left\lfloor\frac d{N-1}\right\rfloor\ge1,
+\qquad0\le r<N-1.
+\tag{236.MP.31}
+$$
+选择输入正交分解
+$$
+A=V_1\oplus\cdots\oplus V_t\oplus G,
+\qquad\dim V_a=N-1,\quad\dim G=r.
+\tag{236.MP.32}
+$$
+$r=0$ 时省略 $G$。每个 $V_a$ 上使用第四节的同一形状补投影效应，均配合原接口中的实际输出 $r_j$。
+
+若 $r>0$，在 $G$ 上取一个原标签分支为零，其余 $N-1$ 个标签各使用权重 $1/(N-1)$ 的完整纯重置。其总 Kraus 秩为 $(N-1)r$，完整误差是概率向量总变差
+$$
+\frac12\left[\frac1N+(N-1)
+\left(\frac1{N-1}-\frac1N\right)\right]=\frac1N.
+\tag{236.MP.33}
+$$
+该完整误差计算与输入维数无关：差映射为固定输出差乘以输入迹；任意参考放大后的部分迹收缩给上界，迹一输入达到等号。
+
+对每个标签，将这些输入块的效应取正交直和，记为 $F_j$。全部效应均正半定且
+$$
+\sum_jF_j=I_A,
+$$
+所以
+$$
+\mathcal S_j^{\rm blk}(X)=\operatorname{Tr}(F_jX)P_j
+\tag{236.MP.34}
+$$
+给出一份同接口 CPTP 候选。其各标签 Choi 秩为 $\operatorname{rank}F_j$，不同输入块的秩相加，故
+$$
+\begin{aligned}
+K(\mathcal S^{\rm blk})
+&=tN(N-2)+(N-1)r\\
+&=(N-1)d-t\\
+&=R_0.
+\end{aligned}
+\tag{236.MP.35}
+$$
+这些是精确秩：在每个单纯形块使用（236.MP.26），在余块对非零标签使用 $|r_j\rangle\langle g_b|/\sqrt{N-1}$；同标签内来自不同块的输入支撑正交，所列非零 Kraus 线性独立。
+
+#### 236.5.1 任意参考的分块上界
+
+目标与（236.MP.34）都消去不同输入块之间的非对角项。对任意参考及任意输入矩阵 $X$，记各对角块为 $X_a$。输入 pinching 是给不同块赋根单位相位的有限酉共轭平均，所以在任意参考下迹范数收缩，且
+$$
+\sum_a\|X_a\|_1\le\|X\|_1.
+\tag{236.MP.36}
+$$
+各单纯形块的完整差范数为 $2/(N-1)$，余块为 $2/N$。三角不等式给
+$$
+\|((\mathcal R-\mathcal S^{\rm blk})\otimes\operatorname{id})(X)\|_1
+\le\frac2{N-1}\sum_a\|X_a\|_1
+\le\frac2{N-1}\|X\|_1.
+\tag{236.MP.37}
+$$
+因此整体半 diamond 误差至多 $1/(N-1)$。因为 $t\ge1$，也可以将输入全部放在一个单纯形块，用其最大纠缠见证达到该值；或者直接用（236.MP.19）及 $R_0<(N-1)d$ 得到匹配下界。故
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S^{\rm blk}\|_\diamond
+=\frac1{N-1}.}
+\tag{236.MP.38}
+$$
+这同一份总秩 $R_0$ 候选适用于全部 $R\ge R_0$。在 $R\le(N-1)d-1$ 的范围，下界（236.MP.19）仍成立，证明（236.MP.6）。
+
+### 236.6 全部输入维数上的最小到达预算
+
+一般 $d,N$ 下，目标归一化 Choi 态在 $dN$ 维支撑上平坦，故对任何预算有
+$$
+D_R\ge1-\frac R{dN}.
+\tag{236.MP.39}
+$$
+若整数 $R<R_0$，由（236.MP.5）的上取整表达式，
+$$
+R<\frac{N(N-2)d}{N-1}.
+$$
+因此
+$$
+D_R\ge1-\frac R{dN}>\frac1{N-1},
+\tag{236.MP.40}
+$$
+证明（236.MP.7）。这是严格的预算门槛结论，但不确定更低预算的精确最优值。
+
+阈值结论还可以单独扩展到全部 $N\ge3,d\ge2$。继续用（236.MP.5）的同一表达式定义 $R_0$，则
+$$
+\boxed{\min\{R\in\mathbb N:R\ge1,\ D_R\le1/(N-1)\}=R_0.}
+\tag{236.MP.40a}
+$$
+当 $d\ge N-1$，第五节候选证明其可达性。若 $d<N-1$，则 $\lfloor d/(N-1)\rfloor=0$，从而 $R_0=(N-1)d$。在 $N-1$ 个标签上等权纯重置的候选具有这一总秩，完整误差为 $1/N\le1/(N-1)$。两种情形的所有更小预算都由（236.MP.39）—（236.MP.40）严格排除。因此（236.MP.40a）对全部所述输入维数成立。
+
+平台之后，已有的一般最后标签区间为
+$$
+D_R=\frac1N
+\qquad((N-1)d\le R\le Nd-1).
+\tag{236.MP.41}
+$$
+其下界来自至少一个秩小于 $d$ 的标签的振幅共同核；上界由删去一个标签、其余 $N-1$ 个标签等权重置达到，总秩为 $(N-1)d$。因此这里明确计算了两个相邻区间之间的跃迁，不把更低预算的未知值填入曲线。
+
+### 236.7 边界与具体代入
+
+**三个标签。** $N=3$ 时，
+$$
+R_0=2d-\lfloor d/2\rfloor=\lceil3d/2\rceil,
+$$
+本平台为 $R_0\le R\le2d-1$ 上的 $1/2$，恢复任意输入维数三标签定理的中间平台。此时单纯形位于二维空间，其秩一补投影又组成 trine 型紧框架。
+
+**四标签、三维输入。** $N=4,d=3$ 给 $t=1,r=0,R_0=8$，故
+$$
+D_8=\frac13,
+\qquad D_9=D_{10}=D_{11}=\frac14.
+\tag{236.MP.42}
+$$
+第一段仅含一个预算点。
+
+**四标签、四维输入。** $N=4,d=4$ 给 $t=1,r=1,R_0=11$，故
+$$
+D_{11}=\frac13,
+\qquad D_{12}=D_{13}=D_{14}=D_{15}=\frac14.
+\tag{236.MP.43}
+$$
+第一段同样仅含一个预算点。
+
+**较小输入维数。** 若 $d<N-1$，本构造没有完整单纯形块，主平台定理不作适用声明。此时 $R_0=(N-1)d$，所谓区间 $R_0\le R\le(N-1)d-1$ 为空。在最小到达预算 $R_0$ 处，实际误差已经为 $1/N$，没有经过本节证明的 $1/(N-1)$ 平台。一般下界（236.MP.18）仍可使用，此时 $Q=d+1$，在 $R<(N-1)d$ 时给
+$$
+D_R\ge\frac{d+1}{Nd}>\frac1{N-1}.
+\tag{236.MP.44}
+$$
+所以不能把主平台无条件移到该范围。
+
+**两个标签。** $N=2$ 时单纯形块维数一、补投影秩零，而（236.MP.24）的分母 $N-2$ 为零。因此整个补投影归一化构造明确要求 $N\ge3$；不能在 $N=2$ 处使用它。最小支持关系下界本身在 $N=2$ 仍有定义，但它不提供此构造。
+
+### 236.8 标准结构与结论范围
+
+最小支持关系的精确维数是通常的有限维线性依赖事实；正文用消去一个系数给了完整证明。正则单纯形的紧框架恒等式及补投影和也已直接从 $\mathbf1^\perp$ 的正交投影计算得到。这些结构不被宣称为本项目新创的理论。
+
+单位权重的标量投影和属于标准紧融合框架语言，参见 P. G. Casazza、G. Kutyniok、S. Li，*Fusion Frames and Distributed Processing*，[arXiv:math/0605374v1](https://arxiv.org/abs/math/0605374v1)，Definition 3.1、Proposition 3.5 及 §3.2（PDF 第5—7页）；正式发表版本 [DOI 10.1016/j.acha.2007.10.001](https://doi.org/10.1016/j.acha.2007.10.001)。本稿所用的是（236.MP.23）的具体有限维投影族，实际通道完全正性、预算及误差由正文另行验证。
+
+这里得到的是同一实际记录通道、同一均匀纯输出目标及完整参考误差的一段精确平台。非均匀权重、混合目标输出、相干记录或一般无参考最优均未由本定理结算。低预算的秩损失与高预算的逐标签缺额之间，还可以存在其他共同子空间约束；本文没有为那些预算指定未证明的数值。
+
+## 追加锚（本行以下为增补区）
+
+## 237. 足够多记录标签下的完整平坦容量区间
+
+投影和取等判据把均匀纯输出记录重置的精确近似问题连到了固定输入维数上的共同投影构造。本节给出一个明确的充分标签数条件：在该条件下，每个中间整数预算都能构造所需投影和，因而完整最优误差在整个中间区间等于平坦 Choi 秩下界。
+
+构造使用归一化离散 Fourier 矩阵的等模列，不要求各投影彼此正交。标签数条件只被证明充分，不作为必要条件；一般无参考最优值不在本节计算。
+
+### 237.1 共同目标及全部完整曲线
+
+固定
+$$
+d\ge2,\qquad N\ge\max(d+1,2d-2),\qquad m\ge d.
+\tag{237.FL.1}
+$$
+输入为 $A=\mathbb C^d$、量子输出为 $O=\mathbb C^m$，记录接口有 $N$ 个指定正交标签。任选固定单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{237.FL.2}
+$$
+输出向量可以相同。候选为同接口的全部 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{237.FL.3}
+$$
+各分支完全正、总和保迹。候选保持经典标签块对角性，允许任意量子输出及 Kraus 结构。以完整 Choi 秩计预算：
+$$
+K(\mathcal S)=\sum_j\operatorname{rank}J_{\mathcal S_j}
+=\operatorname{rank}J_{\mathcal S}.
+\tag{237.FL.4}
+$$
+对每个整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+\tag{237.FL.5}
+$$
+该距离包含全部记录、量子输出及任意外部参考。由 $m\ge d$，一个标签上的等距通道给总秩一候选，故每个预算的候选集非空。
+
+**定理 237.1（充分标签数下的完整曲线）。** 在（237.FL.1）下，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&1\le R<d,\\[2pt]
+1-\dfrac R{Nd},&d\le R\le(N-1)d,\\[5pt]
+\dfrac1N,&(N-1)d<R<Nd,\\[5pt]
+0,&R\ge Nd.
+\end{cases}}
+\tag{237.FL.6}
+$$
+所有上界均由实际同接口 CPTP 通道达到。在 $R=(N-1)d$，平坦区间的值也为 $1/N$，与后续平台一致。
+
+### 237.2 复用平坦 Choi 取等判据
+
+对（237.FL.2）的目标，第233节的取等判据为：在 $1\le R\le Nd$ 时，
+$$
+D_R=1-\frac R{Nd}
+\quad\Longleftrightarrow\quad
+\exists\,\Pi_1,\ldots,\Pi_N:
+\Pi_j^2=\Pi_j=\Pi_j^\dagger,
+\quad\sum_{j=1}^N\Pi_j=\frac RdI_d.
+\tag{237.FL.7}
+$$
+这里的投影可以为零或恒等，其像可以相交。该判据的必要性已由候选紧致性、完整误差取等及合同迹范数驻点证明；本节直接复用，不重复该证明。
+
+本节的任务是对每个整数 $R\in[d,(N-1)d]$ 实际构造（237.FL.7）右侧的投影。全部投影都位于同一输入空间 $A$，并使用同一固定的 $N$ 个记录位置。
+
+### 237.3 Fourier 等模列给出 $d+1$ 个投影的基本构造
+
+固定整数 $k\in\{0,\ldots,d\}$。在输入的标准正交基中，取坐标秩 $k$ 投影
+$$
+P^{(k)}=\operatorname{diag}(
+\underbrace{1,\ldots,1}_{k},
+\underbrace{0,\ldots,0}_{d-k}).
+\tag{237.FL.8}
+$$
+置
+$$
+\alpha=\frac{d+k}{d},
+\qquad T=\alpha I_d-P^{(k)}.
+\tag{237.FL.9}
+$$
+它是正对角矩阵，且
+$$
+\operatorname{Tr}T=\alpha d-k=d.
+\tag{237.FL.10}
+$$
+具体地，当 $1\le k<d$ 时，像方向的本征值为 $k/d$，核方向为 $1+k/d$；$k=0$ 和 $k=d$ 时均有 $T=I_d$。因此两个端点也合法。
+
+令 $\zeta=e^{2\pi i/d}$，取归一化 Fourier 矩阵
+$$
+F_{ab}=\frac1{\sqrt d}\zeta^{ab},
+\qquad0\le a,b\le d-1.
+\tag{237.FL.11}
+$$
+几何级数求和给
+$$
+(F^\dagger F)_{bc}
+=\frac1d\sum_{a=0}^{d-1}\zeta^{a(c-b)}
+=\begin{cases}1,&b=c,\\0,&b\ne c,\end{cases}
+\tag{237.FL.12}
+$$
+所以 $F$ 酉，并且每个矩阵元的模都是 $1/\sqrt d$。
+
+定义 $d$ 个向量
+$$
+w_b=\sqrt T\,Fe_b,
+\qquad0\le b\le d-1.
+\tag{237.FL.13}
+$$
+由于 $T$ 在上述基中对角，每个向量的范数恰为
+$$
+\|w_b\|^2=\sum_{a=0}^{d-1}T_{aa}|F_{ab}|^2
+=\frac1d\operatorname{Tr}T=1.
+\tag{237.FL.14}
+$$
+因此 $W_b=|w_b\rangle\langle w_b|$ 是真实的秩一正交投影，无需再对向量逐一重归一化。又有
+$$
+\sum_{b=0}^{d-1}W_b
+=\sqrt T\,FF^\dagger\sqrt T=T.
+\tag{237.FL.15}
+$$
+于是 $P^{(k)}$ 与这 $d$ 个秩一投影组成 $d+1$ 个投影的共同实现：
+$$
+\boxed{P^{(k)}+\sum_{b=0}^{d-1}W_b
+=\frac{d+k}{d}I_d,}
+\qquad
+\boxed{\operatorname{rank}P^{(k)}+\sum_b\operatorname{rank}W_b=d+k.}
+\tag{237.FL.16}
+$$
+这覆盖全部整数总秩 $d,d+1,\ldots,2d$。当 $k=0$，第一投影为零；当 $k=d$，第一投影为恒等，其余投影为一组正交基的秩一投影。零投影仍占据一个允许为空分支的原记录位置。
+
+### 237.4 加恒等投影与取补覆盖全部中间整数预算
+
+#### 237.4.1 第一段预算
+
+在（237.FL.16）的 $d+1$ 个投影之外，增加 $a$ 个恒等投影，再以零投影补足总共 $N$ 个标签，其中
+$$
+0\le a\le N-d-1.
+\tag{237.FL.17}
+$$
+该范围由 $N\ge d+1$ 保证非空。所构造的 $N$ 个投影满足
+$$
+\sum_j\Pi_j
+=\left(a+1+\frac kd\right)I_d
+=\frac RdI_d,
+\qquad R=d(a+1)+k.
+\tag{237.FL.18}
+$$
+其总秩也是 $R$。固定 $a$、令 $k=0,\ldots,d$，得到全部整数
+$$
+d(a+1)\le R\le d(a+2).
+$$
+相邻 $a$ 的区间在端点相接，因此所有 $a$ 合起来覆盖
+$$
+\boxed{d\le R\le d(N-d+1).}
+\tag{237.FL.19}
+$$
+没有遗漏区间内的整数预算。
+
+#### 237.4.2 补投影的第二段预算
+
+若 $N$ 个投影实现总秩 $R'$ 的标量和，则在同一输入空间、同一标签集合中，将每个投影取补，得到
+$$
+\sum_{j=1}^N(I_d-\Pi_j)
+=\frac{Nd-R'}dI_d,
+\qquad\sum_j\operatorname{rank}(I_d-\Pi_j)=Nd-R'.
+\tag{237.FL.20}
+$$
+将（237.FL.19）的整个区间取补，覆盖
+$$
+\boxed{d(d-1)\le R\le(N-1)d.}
+\tag{237.FL.21}
+$$
+
+#### 237.4.3 两段确实接上
+
+条件 $N\ge2d-2$ 恰好保证本构造中的两个区间满足
+$$
+d(N-d+1)\ge d(d-1).
+\tag{237.FL.22}
+$$
+因此（237.FL.19）与（237.FL.21）重叠或在端点相接，其并集覆盖
+$$
+\boxed{d\le R\le(N-1)d.}
+\tag{237.FL.23}
+$$
+结合 $N\ge d+1$，所需全部投影族均已在不超过 $N$ 个原标签位置上明确构造。$N=2d-2$ 时两段在一个端点相接；更大的 $N$ 允许重叠。
+
+这只是上述覆盖构造的充分标签数条件；本节没有证明它是得到完整曲线（237.FL.6）的必要标签数。
+
+### 237.5 从实际投影到实际 CPTP 通道及精确秩
+
+对第237.4节构造的任一投影族，定义实际输入效应
+$$
+E_j=\frac dR\Pi_j,
+\qquad\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{237.FL.24}
+$$
+各效应正半定，且（237.FL.7）给
+$$
+\sum_jE_j=I_d.
+\tag{237.FL.25}
+$$
+因此这些分支组成同接口 CPTP 记录通道。取 $\operatorname{im}\Pi_j$ 的正交基 $\{u_{j,a}\}_a$，一组显式 Kraus 为
+$$
+C_{j,a}=\sqrt{\frac dR}|r_j\rangle\langle u_{j,a}|.
+\tag{237.FL.26}
+$$
+其平方和正是（237.FL.25），验证保迹性。每个非零分支的 Kraus 线性独立；等价地，该分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，所以
+$$
+K(\mathcal S)=\sum_j\operatorname{rank}E_j
+=\sum_j\operatorname{rank}\Pi_j=R.
+\tag{237.FL.27}
+$$
+这验证了候选是给定预算内的真实通道，且秩不是由某份冗余 Kraus 列表虚增而来。
+
+最后应用（237.FL.7），得到每个中间预算的完整精确误差
+$$
+\boxed{D_R=1-\frac R{Nd}\qquad(d\le R\le(N-1)d).}
+\tag{237.FL.28}
+$$
+取等判据的公共 CP 部分在这里可直接取分支效应 $\Pi_j/N$：它被目标效应 $I_d/N$ 和候选效应 $(d/R)\Pi_j$ 同时支配，总迹效应为 $(R/(Nd))I_d$。因而该构造沿用的是同一实际完整通道误差证书。
+
+### 237.6 两端区间与全部端点
+
+第233节已对同一候选族证明：$R<d$ 时 $D_R=1$；$(N-1)d\le R<Nd$ 时 $D_R=1/N$；$R\ge Nd$ 时目标自身给 $D_R=0$。这些结论均允许候选取任意量子输出方向，故直接适用于本节，不另限制候选到重置形式。
+
+在中间区间的左端 $R=d$，可用一个恒等投影和其余零投影，得到单标签纯重置及误差 $1-1/N$。右端 $R=(N-1)d$ 则取其补族，得到 $N-1$ 个恒等投影及一个零投影，误差为 $1/N$。所有端点与（237.FL.6）一致。这完成定理237.1。
+
+### 237.7 三维输入与四标签实例
+
+取 $d=3,N=4$。两个充分条件都取等：$d+1=2d-2=4$。基本构造覆盖 $R=3,4,5,6$，补投影覆盖 $R=6,7,8,9$，完整预算曲线为
+
+| 总 Kraus 预算 $R$ | 完整最优误差 $D_R$ |
+|---|---:|
+| $1,2$ | $1$ |
+| $3$ | $3/4$ |
+| $4$ | $2/3$ |
+| $5$ | $7/12$ |
+| $6$ | $1/2$ |
+| $7$ | $5/12$ |
+| $8$ | $1/3$ |
+| $9,10,11$ | $1/4$ |
+| $R\ge12$ | $0$ |
+
+三维三标签的预算四、五曾因投影和不存在而无法达到各自的平坦 Choi 下界。这里是四标签的另一个目标与记录接口，其目标谱、归一化和允许投影数量都不同。本例说明固定输入维数时增加可用投影数量可以改变标量投影和的可实现性；不从这些不同目标的数值比较推出一般标签单调律。
+
+### 237.8 标准工具与适用范围
+
+归一化 DFT 的酉性与等模性属于标准有限 Fourier 分析；本稿已用有限几何级数和（237.FL.12）证明所需事实。单位向量框架和指定框架算子的关系在这里由（237.FL.14）—（237.FL.15）直接计算，未借用未经核对的抽象存在性结论。
+
+本节完整求出了（237.FL.1）范围内的全部完整参考预算值。对于标签数较少的其他输入维数、非均匀权重、混合目标输出、相干记录或一般无参考最优值，仍需核对各自的共同实现条件，不能自动套用这条曲线。
+
+## 追加锚（本行以下为增补区）
+
+## 238. 四维四标签重置的完整容量曲线：Naimark 补在实际通道构造中的应用
+
+固定四维输入与四个经典记录标签，均匀纯输出重置的完整最优误差可以在全部整数 Kraus 预算上精确计算。预算 $6$ 至 $10$ 连续达到平坦 Choi 下界；预算 $5$ 与 $11$ 则分别受共同输入核和共同子空间核的更强限制。
+
+本节把标准紧融合框架的 Naimark 补用于构造缺少的四维投影族，再通过既有的投影和—通道取等接口得到实际 CPTP 通道。Naimark 补本身属于成熟框架理论，不单列为新增数学成果。
+
+### 238.1 同一记录接口与完整最优值
+
+固定输入 $A=\mathbb C^4$、量子输出 $O=\mathbb C^m$、$m\ge4$，以及记录空间 $B=\mathbb C^4$ 的指定正交标签 $|j\rangle$。对每个标签固定一个单位向量 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。这些向量可以相同，不要求彼此正交。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\frac14\operatorname{Tr}(X)P_j.
+\tag{238.1}
+$$
+候选遍历同接口全部 CPTP 经典记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^{\dagger},
+\qquad
+\sum_{j,a}C_{j,a}^{\dagger}C_{j,a}=I_4.
+\tag{238.2}
+$$
+每个分支采用最小 Kraus 表示，允许零分支、任意候选量子输出方向及任意 Kraus 结构。因此总容量为
+$$
+K(\mathcal S)=\sum_jk_j
+=\sum_j\operatorname{rank}J_{\mathcal S_j}
+=\operatorname{rank}J_{\mathcal S}.
+\tag{238.3}
+$$
+最后一个等式使用保留的经典记录直和。对每个整数 $R\ge1$，定义
+$$
+D_R=\inf_{K(\mathcal S)\le R}
+\frac12\|\mathcal R-\mathcal S\|_{\diamond}.
+\tag{238.4}
+$$
+距离包含全部记录、量子输出及任意外部参考。$m\ge4$ 允许把一个等距通道放在一个标签上，得到总秩一候选，故每个预算的候选集非空。
+
+**定理 238.1（四维四标签完整容量曲线）。** 在上述同一接口下，全部整数预算的最优值为
+
+| 总 Kraus 预算 $R$ | 完整最优误差 $D_R$ |
+|---|---:|
+| $1,2,3$ | $1$ |
+| $4,5$ | $3/4$ |
+| $6$ | $5/8$ |
+| $7$ | $9/16$ |
+| $8$ | $1/2$ |
+| $9$ | $7/16$ |
+| $10$ | $3/8$ |
+| $11$ | $1/3$ |
+| $12,13,14,15$ | $1/4$ |
+| $R\ge16$ | $0$ |
+
+所有上界均由实际同接口 CPTP 通道达到。预算是秩上界；因此平台上的不同预算可以由同一较低秩候选达到。
+
+### 238.2 对任意候选输出方向有效的下界
+
+#### 238.2.1 平坦 Choi 下界
+
+第233节的平坦 Choi 支持下界在当前目标处给出
+$$
+\boxed{D_R\ge\max\{0,1-R/16\}.}
+\tag{238.6}
+$$
+该结论允许候选的 Choi 支撑超出目标支撑，保持本节全部候选的量词。
+
+#### 238.2.2 标签事件与实际振幅核
+
+对（238.2）的任意候选，定义
+$$
+L_j:A\to\mathbb C^{k_j},
+\qquad (L_jv)_a=\langle r_j,C_{j,a}v\rangle,
+\qquad G_j=\ker L_j.
+\tag{238.7}
+$$
+当 $v\in G_j$ 时，该候选在输入 $|v\rangle\langle v|$ 上得到事件 $|j\rangle\langle j|\otimes P_j$ 的概率为零。候选输出可以仍有 $r_j^\perp$ 分量；它们被这个实际效果消去。
+
+第233节的低预算结论给
+$$
+\boxed{D_R=1\quad(1\le R\le3).}
+\tag{238.8}
+$$
+
+若 $K(\mathcal S)\le5$，选出分支秩最小的三个标签，记其集合为 $J$。三个最小值的平均不超过全部四个值的平均，所以
+$$
+\sum_{j\in J}k_j\le\frac34K(\mathcal S)\le\frac{15}{4}.
+$$
+左侧是整数，故至多为三。这三个标签的振幅行在四维输入中有共同非零核；取其中单位向量，三个目标事件的并集给概率差 $3/4$。因此
+$$
+\boxed{D_4,D_5\ge3/4.}
+\tag{238.9}
+$$
+若 $K(\mathcal S)\le15$，至少有一个分支秩 $k_j<4$。它的振幅核非零，单标签目标事件给
+$$
+\boxed{D_R\ge1/4\quad(R\le15).}
+\tag{238.10}
+$$
+这些都是对原候选直接作的检验，没有先把任意输出候选替换为纯输出候选。
+
+#### 238.2.3 预算十一的共同子空间下界
+
+第236节的最小支持核关系下界对 $N=4,d=4$ 给出：当 $K(\mathcal S)<12$ 时，存在一个至多三维的共同输入子空间，使子空间参考检验的误差至少为 $1/3$。该结果直接针对（238.7）的实际振幅核，允许候选取任意输出方向。因此
+$$
+\boxed{D_{11}\ge1/3.}
+\tag{238.14}
+$$
+这里仅使用该参数处已经证明的下界，不对一般通道的最坏参考维数作额外结论。
+
+### 238.3 投影族怎样产生实际达到通道
+
+承接§233的取等接口。若四维输入上有四个自伴投影
+$$
+\sum_{j=1}^4\Pi_j=\frac R4I_4,
+\qquad 1\le R\le16,
+\tag{238.15}
+$$
+则定义
+$$
+E_j=\frac4R\Pi_j,
+\qquad
+\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j.
+\tag{238.16}
+$$
+各效应正半定且和为 $I_4$，所以这是实际 CPTP 通道。选 $\operatorname{im}\Pi_j$ 的正交基 $u_{j,a}$，其 Kraus 可取
+$$
+C_{j,a}=\sqrt{\frac4R}\,|r_j\rangle\langle u_{j,a}|.
+\tag{238.17}
+$$
+分支 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，故精确分支秩为 $\operatorname{rank}\Pi_j$。对（238.15）取迹，得到候选总秩恰为 $R$。
+
+为直接看到完整上界，取公共 CP 部分的分支效应 $\Pi_j/4$。它同时被目标效应 $I_4/4$ 和候选效应 $(4/R)\Pi_j$ 支配，且总迹效应为
+$$
+\frac14\sum_j\Pi_j=\frac R{16}I_4.
+\tag{238.18}
+$$
+两份 CP 残差除以 $1-R/16$ 后均为 CPTP，故 $R<16$ 时半 diamond 距离至多 $1-R/16$；$R=16$ 时候选就是目标。结合（238.6），得
+$$
+\boxed{D_R=1-R/16\quad\text{只要（238.15）的投影族存在}.}
+\tag{238.19}
+$$
+这里使用既有取等判据的充分方向，不重新建立其必要性，也不把实例化另立为新的桥梁定理。
+
+### 238.4 预算六至十的共同投影构造
+
+#### 238.4.1 预算六及其空间补
+
+在 $\mathbb C^2$ 中取 $\omega=e^{2\pi i/3}$ 及
+$$
+x_j=\frac1{\sqrt2}(1,\omega^{j-1}),
+\qquad j=1,2,3.
+$$
+由 $1+\omega+\omega^2=0$，直接得到
+$$
+\sum_{j=1}^3|x_j\rangle\langle x_j|=\frac32I_2.
+\tag{238.20}
+$$
+在 $A=\mathbb C^2\oplus\mathbb C^2$ 中，定义
+$$
+\Pi_j=|x_j\rangle\langle x_j|\oplus|x_j\rangle\langle x_j|
+\quad(j=1,2,3),
+\qquad \Pi_4=0.
+\tag{238.21}
+$$
+秩型为 $(2,2,2,0)$，投影和为 $(3/2)I_4$，总秩六。故 $D_6=5/8$。
+
+逐个取空间补 $I_4-\Pi_j$，得到秩型 $(2,2,2,4)$、投影和 $(5/2)I_4$、总秩十，故 $D_{10}=3/8$。
+
+#### 238.4.2 预算七所用的三维起点
+
+在 $U=\mathbb C^3$ 中取
+$$
+P=\operatorname{diag}(1,1,0),
+\qquad T=\frac53I_3-P
+=\operatorname{diag}(2/3,2/3,5/3).
+\tag{238.22}
+$$
+令 $F$ 为归一化三阶 Fourier 矩阵，$F_{ab}=3^{-1/2}e^{2\pi iab/3}$，$0\le a,b\le2$。定义 $w_b=\sqrt TFe_b$。矩阵 $F$ 酉且等模，$\operatorname{Tr}T=3$，所以
+$$
+\|w_b\|^2=1,
+\qquad
+\sum_{b=0}^2|w_b\rangle\langle w_b|=T.
+\tag{238.23}
+$$
+于是 $P$ 与三个秩一投影之和为 $(5/3)I_3$。逐个取空间补，得到四个投影 $Q_j$，满足
+$$
+\sum_{j=1}^4Q_j=\frac73I_3,
+\qquad
+(\operatorname{rank}Q_1,\ldots,\operatorname{rank}Q_4)=(1,2,2,2).
+\tag{238.24}
+$$
+这是§237 Fourier 构造在当前参数处的直接应用；所需的实际矩阵已在（238.22）—（238.23）给定。
+
+#### 238.4.3 在证明内部应用标准 Naimark 补
+
+说明所用补操作的具体归一化。一般地，设 $d_0$ 维空间 $U$ 上有投影族 $Q_j$，满足
+$$
+\sum_jQ_j=\alpha I_U,
+\qquad
+\alpha=R/d_0>1,
+\qquad R=\sum_j\operatorname{rank}Q_j.
+\tag{238.25}
+$$
+令 $W_j=\operatorname{im}Q_j$，取外部正交直和 $W=\bigoplus_jW_j$，$\dim W=R$。定义
+$$
+\mathsf Av=\alpha^{-1/2}(Q_jv)_j,
+\qquad \mathsf A:U\to W.
+\tag{238.26}
+$$
+由（238.25），$\mathsf A^{\dagger}\mathsf A=I_U$。令
+$$
+Z=(\operatorname{im}\mathsf A)^\perp,
+\qquad\dim Z=R-d_0,
+\qquad P_Z=I_W-\mathsf A\mathsf A^{\dagger}.
+\tag{238.27}
+$$
+对坐标包含 $\iota_j:W_j\to W$，定义 $B_j=P_Z\iota_j:W_j\to Z$。由于 $\mathsf A^{\dagger}\iota_j$ 是 $W_j\hookrightarrow U$ 乘以 $\alpha^{-1/2}$，有
+$$
+B_j^{\dagger}B_j
+=\iota_j^{\dagger}(I_W-\mathsf A\mathsf A^{\dagger})\iota_j
+=\frac{\alpha-1}{\alpha}I_{W_j}.
+\tag{238.28}
+$$
+所以 $V_j=\sqrt{\alpha/(\alpha-1)}B_j$ 是等距嵌入，$\Pi'_j=V_jV_j^{\dagger}$ 是 $Z$ 上秩为 $\dim W_j$ 的正交投影。利用坐标投影之和为 $I_W$，得到
+$$
+\sum_j\Pi'_j
+=\frac{\alpha}{\alpha-1}
+P_Z\left(\sum_j\iota_j\iota_j^{\dagger}\right)P_Z\big|_Z
+=\frac{\alpha}{\alpha-1}I_Z
+=\frac R{R-d_0}I_Z.
+\tag{238.29}
+$$
+因此 Naimark 补保持标签数与各投影秩，把共同实现从维数 $d_0$ 转到 $R-d_0$。零子空间也由同一公式处理；$\alpha=1$ 时（238.28）不能作此归一化，所以构造明确要求 $R>d_0$。对子空间维数不等、投影像相交或含有满投影的情形，证明不需另加限制。
+
+对（238.24）取 $d_0=3$、$R=7$、$\alpha=7/3$，所得 $Z$ 恰为四维，并满足
+$$
+\sum_{j=1}^4\Pi'_j=\frac74I_Z,
+\qquad
+(\operatorname{rank}\Pi'_j)_j=(1,2,2,2).
+\tag{238.30}
+$$
+选择 $Z$ 到实际输入 $A=\mathbb C^4$ 的任意酉识别，便得到（238.15）要求的同一四维输入上的投影族。用（238.16）—（238.17）构造实际秩七通道，得到
+$$
+\boxed{D_7=9/16.}
+\tag{238.31}
+$$
+再在四维空间逐个取空间补，得到总秩九、秩型 $(3,2,2,2)$、投影和 $(9/4)I_4$，因此 $D_9=7/16$。
+
+#### 238.4.4 预算八与构造汇总
+
+取 $(\Pi_1,\Pi_2,\Pi_3,\Pi_4)=(I_4,I_4,0,0)$，即可得到总秩八与投影和 $2I_4$，故 $D_8=1/2$。
+
+| 预算 | 在同一四维输入上的投影秩型 | 投影和 | 实际候选总秩 |
+|---|---|---|---:|
+| $6$ | $(2,2,2,0)$ | $(3/2)I_4$ | $6$ |
+| $7$ | $(1,2,2,2)$ | $(7/4)I_4$ | $7$ |
+| $8$ | $(4,4,0,0)$ | $2I_4$ | $8$ |
+| $9$ | $(3,2,2,2)$ | $(9/4)I_4$ | $9$ |
+| $10$ | $(2,2,2,4)$ | $(5/2)I_4$ | $10$ |
+
+每行的实际 CPTP 候选均由该行投影及（238.16）—（238.17）给出；（238.6）与（238.18）在完整参考误差上匹配。因此这里证明了全部整数预算 $6\le R\le10$ 的精确值。
+
+### 238.5 预算十一的实际保迹达到通道
+
+在 $\mathbb C^4$ 的标准基中取 $\mathbf1=(1,1,1,1)$，令 $V=\mathbf1^\perp$，$\dim V=3$。定义
+$$
+u_j=\sqrt{\frac43}\left(e_j-\frac14\mathbf1\right),
+\qquad
+Q_j=I_V-|u_j\rangle\langle u_j|.
+\tag{238.32}
+$$
+每个 $u_j$ 单位化，且 $\sum_j|u_j\rangle\langle u_j|=(4/3)I_V$，所以
+$$
+\operatorname{rank}Q_j=2,
+\qquad\sum_jQ_j=\frac83I_V.
+\tag{238.33}
+$$
+把实际输入酉识别为 $A=V\oplus\mathbb C$。取标量权重
+$$
+(p_1,p_2,p_3,p_4)=(0,1/3,1/3,1/3),
+$$
+并定义输入效应
+$$
+E_j=\frac38Q_j\oplus p_j.
+\tag{238.34}
+$$
+正性显然，且由（238.33）及 $\sum_jp_j=1$，有 $\sum_jE_j=I_4$。因此 $\mathcal S_j(X)=\operatorname{Tr}(E_jX)P_j$ 给一份实际 CPTP 候选，其分支 Choi 秩为
+$$
+(\operatorname{rank}E_1,\ldots,\operatorname{rank}E_4)=(2,3,3,3),
+\qquad K(\mathcal S)=11.
+\tag{238.35}
+$$
+显式 Kraus 可取：在每个 $\operatorname{im}Q_j$ 的正交基 $v_{j,1},v_{j,2}$ 上使用 $\sqrt{3/8}|r_j\rangle\langle v_{j,a}|$；在额外一维的单位向量 $g$ 上，对 $j=2,3,4$ 另加 $|r_j\rangle\langle g|/\sqrt3$。同标签中所用输入向量正交，故所报分支秩是精确最小秩。
+
+完整上界可直接用同一公共 CP 部分证明。令它的分支输入效应为
+$$
+H_j=\frac14Q_j\oplus\frac23p_j.
+\tag{238.36}
+$$
+在三维块上，$Q_j/4\preceq I_V/4$ 且 $Q_j/4\preceq3Q_j/8$；在一维块上，非零公共权重为 $2/9$，同时不超过目标权重 $1/4$ 与候选权重 $1/3$。故
+$$
+0\preceq H_j\preceq I_4/4,
+\qquad H_j\preceq E_j.
+$$
+更有
+$$
+\sum_jH_j
+=\frac23I_V\oplus\frac23
+=\frac23I_4.
+\tag{238.37}
+$$
+以 $H_j$ 为输入效应、$P_j$ 为输出的记录通道分支构成公共 CP 部分；目标和候选减去它后都剩下迹权重 $1/3$ 的完全正映射。两份残差分别除以 $1/3$ 后均为 CPTP，因此
+$$
+\frac12\|\mathcal R-\mathcal S\|_{\diamond}\le\frac13.
+\tag{238.38}
+$$
+这条上界包含任意参考及输入块间相干，没有将输入预先限制为块对角态。结合（238.14），得到
+$$
+\boxed{D_{11}=1/3>5/16=1-11/16.}
+\tag{238.39}
+$$
+这一具体构造承接§236的单纯形平台，公共部分（238.36）使四维完整上界直接闭合。
+
+### 238.6 剩余预算的达到通道与整条曲线
+
+预算四、五使用同一个单标签完整重置：$\mathcal S_1(X)=\operatorname{Tr}(X)P_1$，其他标签为零。其精确总秩为四。公共 CP 部分取目标的第一个分支，总迹效应为 $I_4/4$，故完整误差至多 $3/4$。由（238.9），
+$$
+D_4=D_5=3/4.
+\tag{238.40}
+$$
+预算十二至十五使用同一个三标签重置：第一个标签为零，其他标签分别取 $\mathcal S_j(X)=\operatorname{Tr}(X)P_j/3$。每个非零分支秩四，总秩十二。公共 CP 部分取三个保留标签的目标分支，总迹效应为 $(3/4)I_4$，故完整误差至多 $1/4$。由（238.10），
+$$
+D_{12}=D_{13}=D_{14}=D_{15}=1/4.
+\tag{238.41}
+$$
+目标自身每个标签的 Choi 秩为四，总秩十六。因此 $R\ge16$ 时 $D_R=0$。预算一至三由（238.8）结算，预算六至十由§238.4结算，预算十一由（238.39）结算，全部整数预算均已覆盖，定理238.1得证。
+
+### 238.7 成熟来源、补操作的含义与结果边界
+
+标准 Naimark 补及其融合框架推广参见：P. G. Casazza、M. Fickus、D. G. Mixon、J. Peterson、I. Smalyanau，*Every Hilbert space frame has a Naimark complement*，[arXiv:1104.0810v3](https://arxiv.org/abs/1104.0810v3)，版本日期2013年4月22日；正式发表于 *Journal of Mathematical Analysis and Applications* 406(1), 111–119 (2013)，[DOI 10.1016/j.jmaa.2013.04.047](https://doi.org/10.1016/j.jmaa.2013.04.047)。其§2在PDF第2页以等距分析算子和正交补说明 Naimark 构造；§4、Definition 4.1 与 Remark 4.2 在PDF第6—7页给融合框架的对应构造，允许各子空间维数 $D_j$ 不同，并说明补空间中的子空间由补框架向量张成。第8页明确说明这些子空间保持原维数。
+
+本节对应其紧框架、单位权重的情形：原紧界为 $\alpha$，补框架各块内向量的平方范数为 $\alpha-1$；重新单位化后得到投影和 $\alpha/(\alpha-1)$。式（238.26）采用预先除以 $\sqrt\alpha$ 的 Parseval 归一化，因此（238.28）的系数为 $(\alpha-1)/\alpha$。两种写法一致。本节不调用原文的主夹角或弦距离公式，也没有把这些几何距离当作 diamond 距离。
+
+紧融合框架的投影和定义亦见 P. G. Casazza、G. Kutyniok、S. Li，*Fusion Frames and Distributed Processing*，[arXiv:math/0605374v1](https://arxiv.org/abs/math/0605374v1)，Definition 3.1、Proposition 3.5、§3.2；正式发表 [DOI 10.1016/j.acha.2007.10.001](https://doi.org/10.1016/j.acha.2007.10.001)。标准补操作在这里是通道构造内部的工具；本节的结论是固定四维四标签目标的完整预算曲线。
+
+对一般满足（238.25）的投影族，再作一次 Naimark 补会把维数 $R-d_0$ 转回 $d_0$，所以它给出固定标签数、固定总秩下两个维数的投影和存在性对应。结合空间补 $Q_j\mapsto I-Q_j$，可以寻找新的投影构造。但前者改变输入维数，后者改变总秩；它们都不自动给同一实际通道的物理操作，也不保持两个容量问题的 diamond 距离数值。例如本节三维总秩七的平坦值为 $1-7/12=5/12$，经 Naimark 补得到的四维总秩七平坦值为 $1-7/16=9/16$。
+
+本文没有计算一般无参考最优距离，没有给四标签全部输入维数的完整曲线。非均匀标签权重、混合输出或相干记录会改变目标谱及分支结构，需重新核对共同实现与下界。本节所有上界均有实际保迹候选，所有下界均针对原优化集合中的任意输出方向。
+
+## 追加锚（本行以下为增补区）
+
+## 239. 首个额外 Kraus 预算的完整与无参考误差：同一单纯形通道的联合最优性
+
+在均匀纯输出记录重置中，输入维数为 $d$ 时，一个完整单标签重置需要总 Kraus 秩 $d$。本节计算首个额外预算 $R=d+1$：当原记录接口至少有 $d+1$ 个标签时，同一份实际 CPTP 通道同时达到完整参考误差与无参考误差各自的全体候选最优值。
+
+所用正则单纯形属于标准紧框架结构，不单列为新增数学成果。以下结算的是任意输出方向候选族上的两个优化问题及同一达到对象。
+
+### 239.1 固定接口与联合最优值
+
+固定整数
+$$
+d\ge2,\qquad N\ge d+1,\qquad m\ge d.
+\tag{239.1}
+$$
+输入为 $A=\mathbb C^d$，量子输出为 $O=\mathbb C^m$，记录空间保留全部 $N$ 个指定正交标签。任选固定单位向量 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$。目标为
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{239.2}
+$$
+输出向量可以相同。候选为同接口全部 CPTP 经典记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\sum_{a=1}^{k_j}C_{j,a}XC_{j,a}^{\dagger},
+\qquad \sum_{j,a}C_{j,a}^{\dagger}C_{j,a}=I_d.
+\tag{239.3}
+$$
+各分支采用最小 Kraus 表示，允许零分支和任意量子输出方向；总容量为
+$$
+K(\mathcal S)=\sum_jk_j=\operatorname{rank}J_{\mathcal S}.
+\tag{239.4}
+$$
+对一份固定候选，定义完整误差及无参考误差
+$$
+D(\mathcal S)=\frac12\|\mathcal R-\mathcal S\|_{\diamond},
+\qquad
+U(\mathcal S)=\sup_{\rho\succeq0,\ \operatorname{Tr}\rho=1}
+\frac12\|\mathcal R(\rho)-\mathcal S(\rho)\|_1.
+\tag{239.5}
+$$
+前者允许任意外部参考，后者只使用原输入系统中的密度矩阵，输出仍保留全部记录与量子部分。相应预算最优值为
+$$
+D_R=\inf_{K(\mathcal S)\le R}D(\mathcal S),
+\qquad U_R=\inf_{K(\mathcal S)\le R}U(\mathcal S).
+\tag{239.6}
+$$
+
+**定理 239.1（首个额外预算的联合精确值）。** 在（239.1）下，
+$$
+\boxed{
+D_{d+1}=1-\frac{d+1}{Nd},
+\qquad
+U_{d+1}=1-\frac2N.
+}
+\tag{239.7}
+$$
+存在一份精确总 Choi 秩为 $d+1$ 的同接口 CPTP 通道 $\mathcal S^{\triangle}$，同时满足
+$$
+D(\mathcal S^{\triangle})=D_{d+1},
+\qquad
+U(\mathcal S^{\triangle})=U_{d+1}.
+\tag{239.8}
+$$
+因此两个最优值的严格差距为
+$$
+\boxed{D_{d+1}-U_{d+1}=\frac{d-1}{Nd}>0.}
+\tag{239.9}
+$$
+这里的两项由同一候选同时取得，没有把两份分别可达的通道拼作共同实现。
+
+### 239.2 任意候选的两个下界
+
+第233节的平坦 Choi 秩下界在预算 $R=d+1$ 处给
+$$
+D_{d+1}\ge1-\frac{d+1}{Nd}.
+\tag{239.10}
+$$
+其候选族包含本节全部允许量子输出方向，不要求候选支撑位于目标支撑中。
+
+无参考下界需要一个共同输入向量。对任意候选定义实际目标事件振幅
+$$
+L_jv=(\langle r_j,C_{j,a}v\rangle)_{a=1}^{k_j}.
+\tag{239.11}
+$$
+假设 $K(\mathcal S)\le d+1$。若至少有两个非零分支，从标签中删去分支秩最大的两个，其秩和至少为二，所以剩余 $N-2$ 个标签构成的集合 $J$ 满足
+$$
+\sum_{j\in J}k_j\le K(\mathcal S)-2\le d-1.
+\tag{239.12}
+$$
+若只有一个非零分支，就删去它和任一其他标签，剩余秩和为零，同样满足（239.12）。没有非零分支与保迹性矛盾。这些情形覆盖全部候选。
+
+把 $j\in J$ 的振幅映射纵向堆叠，其目标维数至多为 $d-1$，所以在 $d$ 维输入中存在非零共同核。取其中单位向量 $v$。对合法输出效果
+$$
+F_J=\sum_{j\in J}|j\rangle\langle j|\otimes P_j,
+\tag{239.13}
+$$
+候选概率为零，目标概率为 $(N-2)/N$。两份输出都是密度矩阵，事件概率差不超过半迹距离，故
+$$
+U(\mathcal S)\ge\frac{N-2}{N}.
+$$
+由于 $\mathcal S$ 任意，
+$$
+\boxed{U_{d+1}\ge1-2/N.}
+\tag{239.14}
+$$
+这个证明读取原候选的实际振幅。即使候选输出泄漏到 $r_j^\perp$，效果（239.13）仍使那些分量对所检事件贡献为零；无需把候选替换为纯输出通道。所用输入是原系统中的纯态，没有引入参考。
+
+### 239.3 正则单纯形给出同一实际候选
+
+在 $\mathbb C^{d+1}$ 中令
+$$
+\mathbf1=(1,\ldots,1),
+\qquad V=\mathbf1^\perp,
+\qquad
+P_V=I_{d+1}-\frac1{d+1}\mathbf1\mathbf1^{\dagger}.
+\tag{239.15}
+$$
+选择实际输入 $A$ 与 $V$ 的酉识别。对标准基 $e_j$，定义
+$$
+v_j=P_Ve_j,
+\qquad
+u_j=\sqrt{\frac{d+1}{d}}\,v_j,
+\qquad 1\le j\le d+1.
+\tag{239.16}
+$$
+由（239.15），$\|v_j\|^2=d/(d+1)$，故各 $u_j$ 单位化，并且
+$$
+\langle u_i,u_j\rangle=-\frac1d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}|u_j\rangle\langle u_j|
+=\frac{d+1}{d}I_V.
+\tag{239.17}
+$$
+这就是正则单纯形紧框架。定义输入效应
+$$
+E_j=|v_j\rangle\langle v_j|
+=\frac d{d+1}|u_j\rangle\langle u_j|
+\quad(1\le j\le d+1),
+\qquad
+E_j=0\quad(j>d+1).
+\tag{239.18}
+$$
+效应和为 $I_V$，所以
+$$
+\mathcal S_j^{\triangle}(X)=\operatorname{Tr}(E_jX)P_j
+\tag{239.19}
+$$
+给出实际同接口 CPTP 记录通道。各活跃分支仅需一个非零 Kraus
+$$
+C_j=|r_j\rangle\langle v_j|,
+\qquad 1\le j\le d+1.
+\tag{239.20}
+$$
+其平方和为 $I_V$。每个活跃分支的 Choi 矩阵为 $E_j^{\mathsf T}\otimes P_j$，秩恰为一；其余分支为零。经典标签使这些支撑直和，因而
+$$
+\boxed{K(\mathcal S^{\triangle})=d+1.}
+\tag{239.21}
+$$
+当 $N>d+1$ 时，零效应只表示候选在那些原标签上不输出；目标依然在全部 $N$ 个标签上各有权重 $1/N$。
+
+### 239.4 同一候选的完整误差
+
+令活跃标签上的投影为 $\Pi_j=|u_j\rangle\langle u_j|$，其余标签上的投影为零。式（239.17）给
+$$
+\sum_{j=1}^N\Pi_j=\frac{d+1}{d}I_V.
+\tag{239.22}
+$$
+因此（239.19）就是§233投影和取等判据在 $R=d+1$ 时给出的实际通道。
+
+为明确完整参考上界，在每个分支取公共 CP 部分的输入效应 $\Pi_j/N$。目标效应与候选效应分别为 $I_V/N$ 和 $d\Pi_j/(d+1)$，均支配它；所需标量不等式 $1/N\le d/(d+1)$ 由（239.1）保证。共同部分的总迹效应为
+$$
+\frac1N\sum_j\Pi_j=cI_V,
+\qquad c=\frac{d+1}{Nd}.
+\tag{239.23}
+$$
+目标与候选减去该部分后，分别是迹权重 $1-c$ 的完全正映射。各自归一化成 CPTP 通道，得到
+$$
+D(\mathcal S^{\triangle})\le1-c
+=1-\frac{d+1}{Nd}.
+\tag{239.24}
+$$
+这使用完整 diamond 范数，包含任意参考。结合（239.10），
+$$
+\boxed{D(\mathcal S^{\triangle})=D_{d+1}
+=1-\frac{d+1}{Nd}.}
+\tag{239.25}
+$$
+同一通道的 $d$ 维最大纠缠输入已经达到该值：其候选 Choi 支撑秩为 $d+1$，位于目标秩 $Nd$ 的平坦支撑内，支撑补的目标概率恰为 $1-(d+1)/(Nd)$。
+
+### 239.5 同一候选的无参考误差
+
+对任意密度输入 $\rho$，令 $p_j=\operatorname{Tr}(E_j\rho)$。目标与候选在第 $j$ 个记录块中都沿同一个 $P_j$ 输出，且不同记录块正交，所以
+$$
+\frac12\|\mathcal R(\rho)-\mathcal S^{\triangle}(\rho)\|_1
+=\frac12\sum_{j=1}^N|p_j-1/N|.
+\tag{239.26}
+$$
+归一化概率分布的总变差等于其在任意标签子集上的最大正概率差。交换有限个子集的最大值与密度矩阵的最大值，得到
+$$
+U(\mathcal S^{\triangle})
+=\max_{J\subseteq\{1,\ldots,N\}}
+\left[
+\lambda_{\max}\left(\sum_{j\in J}E_j\right)-\frac{|J|}{N}
+\right].
+\tag{239.27}
+$$
+空集给零。向 $J$ 中加入零效应标签不改变算子和，却减少方括号中的值，故只需考虑 $d+1$ 个活跃标签的子集。
+
+设活跃子集大小为 $k\ge1$。对应列向量 $v_j=P_Ve_j$ 的 Gram 矩阵为
+$$
+G_k=I_k-\frac1{d+1}\mathbf1_k\mathbf1_k^{\dagger}.
+\tag{239.28}
+$$
+它与输入效应和 $\sum_{j\in J}|v_j\rangle\langle v_j|$ 有相同非零谱，因为二者分别是同一列矩阵的 $M^{\dagger}M$ 与 $MM^{\dagger}$。
+
+当 $k=1$ 时，最大本征值为 $d/(d+1)$，所以对应值为
+$$
+\frac d{d+1}-\frac1N
+\le1-\frac2N.
+\tag{239.29}
+$$
+该不等式恰等价于 $N\ge d+1$。
+
+当 $2\le k\le d+1$ 时，$G_k$ 在 $\mathbf1_k^\perp$ 上的本征值为一，在 $\mathbf1_k$ 方向的本征值为 $1-k/(d+1)\in[0,1)$。因此其最大本征值恰为一，对应值为
+$$
+1-\frac kN\le1-\frac2N,
+\tag{239.30}
+$$
+且 $k=2$ 时达到等号。于是
+$$
+\boxed{U(\mathcal S^{\triangle})=1-2/N.}
+\tag{239.31}
+$$
+
+实际达到输入也可明确写出。任选两个不同的活跃标签 $a,b$，取
+$$
+g_{ab}=\frac{e_a-e_b}{\sqrt2}\in V.
+\tag{239.32}
+$$
+它是原输入空间中的单位向量，没有参考。因为 $P_Vg_{ab}=g_{ab}$，活跃标签的概率由相应坐标给出，非活跃标签的效应为零。因此对全部原标签有
+$$
+\langle g_{ab},E_jg_{ab}\rangle
+=\begin{cases}
+|\langle e_j,g_{ab}\rangle|^2,&1\le j\le d+1,\\
+0,&j>d+1
+\end{cases}
+=
+\begin{cases}
+1/2,&j=a\text{ 或 }j=b,\\
+0,&\text{其余标签}.
+\end{cases}
+\tag{239.33}
+$$
+故候选只在这两个标签上等概率输出，与原来全部 $N$ 标签均匀目标的总变差恰为 $1-2/N$。结合（239.14），这份实际候选同时证明了无参考最优值和（239.8）；再与（239.25）相减，得到（239.9），定理239.1得证。
+
+### 239.6 预算意义、实例与适用边界
+
+在相同接口的预算 $R=d$，完整最优值与无参考最优值均为 $1-1/N$：单标签完整重置达到该值；下界可通过删去一个非零分支，把其余至多 $d-1$ 个目标事件振幅行取共同核得到。对于完整误差，平坦 Choi 下界也给同一个值。
+
+因此增加一个总 Kraus 预算后，完整最优误差下降 $1/(Nd)$，无参考最优误差下降 $1/N$：
+$$
+D_d-D_{d+1}=\frac1{Nd},
+\qquad
+U_d-U_{d+1}=\frac1N.
+\tag{239.34}
+$$
+这是固定输入维数、固定记录接口和固定目标上的容量比较，不是改变物理时间、输入维数或测试对象。
+
+| 输入维数 $d$ | 标签数 $N$ | 预算 $d+1$ | 完整最优值 | 无参考最优值 | 差距 |
+|---:|---:|---:|---:|---:|---:|
+| $2$ | $3$ | $3$ | $1/2$ | $1/3$ | $1/6$ |
+| $3$ | $4$ | $4$ | $2/3$ | $1/2$ | $1/6$ |
+| $4$ | $5$ | $5$ | $3/4$ | $3/5$ | $3/20$ |
+
+第一行恢复量子比特三线构造。一般构造只需 $N\ge d+1$，不需要§237为整段预算曲线使用的额外条件 $N\ge2d-2$。但本节只结算 $R=d+1$ 及其与 $R=d$ 的比较，不据此填写其他预算。四维四标签不满足 $N\ge d+1$，§238的预算五结论不能由本节公式替换。
+
+标准框架来源可定位到 P. G. Casazza、M. Fickus、D. G. Mixon、J. Peterson、I. Smalyanau，*Every Hilbert space frame has a Naimark complement*，[arXiv:1104.0810v3](https://arxiv.org/abs/1104.0810v3)，PDF第1页的 Naimark 定理及第2页的等距分析算子证明；正式发表 [DOI 10.1016/j.jmaa.2013.04.047](https://doi.org/10.1016/j.jmaa.2013.04.047)。取一维中的 $d+1$ 个相等 Parseval 框架向量 $1/\sqrt{d+1}$，其 Naimark 补正是（239.16）的 $v_j=P_Ve_j$；这给出本节单纯形结构的成熟来源定位。正文已直接计算所需投影和与 Gram 谱，不依赖额外框架分类。
+
+本文没有把该来源中的标准框架结论归作通道优化结论，也不宣称本节容量公式已由该论文证明。相干记录、非均匀目标权重、混合目标输出或不同的输入资源会改变优化问题。这里精确比较的是同一经典记录接口、同一任意纯输出目标及同一实际候选下的完整与无参考实验误差。
+
+## 追加锚（本行以下为增补区）
+
+## 240. 投影候选的全部最坏纯探针与最小参考维数
+
+平坦 Choi 下界取等以后，还可以精确回答：哪些纯联合输入真正达到这份固定候选的完整最坏误差？答案由输入边缘与投影族的对易性决定。由此得到最小参考维数的共同约化子空间判据，以及一个只依赖输入维数与总秩的整除障碍。
+
+本节先结算这一精确判据，再对单纯形候选给出受限参考维数的已证下界与严格不足结论。中间参考维数的精确公式仍作为未证明的候选，不用数值结果替代上界。
+
+### 240.1 固定投影候选与纯化约定
+
+固定 $d,N\ge2$、输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、$m\ge d$，以及 $N$ 个经典记录标签。每个标签给定单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，并定义目标
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{240.1}
+$$
+给定同一输入空间上的正交投影族，满足
+$$
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\qquad 1\le R<Nd.
+\tag{240.2}
+$$
+各投影可为零或恒等，不要求其像彼此正交。对（240.2）取迹得 $\sum_j\operatorname{rank}\Pi_j=R$，故 $R$ 为整数。固定实际候选
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j.
+\tag{240.3}
+$$
+这份候选保迹、完全正、精确总 Choi 秩为 $R$。§233已证明
+$$
+D(\mathcal S):=\frac12\|\mathcal S-\mathcal R\|_{\diamond}
+=D_*:=1-\frac R{Nd}.
+\tag{240.4}
+$$
+以下始终研究这份固定候选，不对相同预算下其他最优候选所需的参考维数作结论。
+
+设 $|\psi\rangle\in A\otimes E$ 为归一化纯联合输入，输入边缘为
+$$
+\rho=\operatorname{Tr}_E|\psi\rangle\langle\psi|.
+\tag{240.5}
+$$
+其实际区分误差为
+$$
+\varepsilon(\psi)=\frac12
+\|[(\mathcal S-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\|_1.
+\tag{240.6}
+$$
+选择输入正交基，标准纯化取
+$$
+|\psi_\rho\rangle=
+\sum_{a=1}^d\sqrt\rho\,|a\rangle\otimes|a\rangle.
+\tag{240.7}
+$$
+它的输入边缘确为 $\rho$。输入效应 $M$ 对应的未归一化参考块为
+$$
+\operatorname{Tr}_A[(M\otimes I)|\psi_\rho\rangle
+\langle\psi_\rho|]
+=(\sqrt\rho M\sqrt\rho)^{\mathsf T}.
+\tag{240.8}
+$$
+转置相对于所选参考基。任一具有相同输入边缘的纯化，在其参考支撑上与此纯化相差一个等距映射，因而输出迹范数相同。所以（240.6）只依赖 $\rho$；下文也写作 $\varepsilon(\rho)$。整个论证不要求 $\rho$ 可逆。
+
+### 240.2 全部达到边缘的对易判据
+
+**定理 240.1（最坏纯探针的精确刻画）。** 对任意归一化纯联合输入及其输入边缘 $\rho$，
+$$
+\boxed{
+\varepsilon(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+}
+\tag{240.9}
+$$
+因此全部最坏纯探针的输入边缘，恰是与整个投影族对易的密度矩阵。
+
+**证明。** 令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+$$
+并定义正半定矩阵
+$$
+A_j=a\sqrt\rho\,\Pi_j\sqrt\rho,
+\qquad
+B_j=b\sqrt\rho\,(I_d-\Pi_j)\sqrt\rho.
+\tag{240.10}
+$$
+按（240.8），第 $j$ 个记录块的参考差为 $(A_j-B_j)^{\mathsf T}$，另张量固定纯输出 $P_j$。记录块正交，转置不改变迹范数，$\|P_j\|_1=1$，故
+$$
+\varepsilon(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{240.11}
+$$
+逐项三角不等式给
+$$
+\|A_j-B_j\|_1\le\operatorname{Tr}A_j+\operatorname{Tr}B_j.
+\tag{240.12}
+$$
+而（240.2）与 $\operatorname{Tr}\rho=1$ 给
+$$
+\begin{aligned}
+\sum_j(\operatorname{Tr}A_j+\operatorname{Tr}B_j)
+&=a\frac Rd+b\left(N-\frac Rd\right)\\
+&=2\left(1-\frac R{Nd}\right)=2D_*.
+\end{aligned}
+\tag{240.13}
+$$
+因此全局取等当且仅当每个标签在（240.12）中取等。
+
+对任意正半定矩阵 $A,B$，有标准迹范数取等条件
+$$
+\|A-B\|_1=\operatorname{Tr}A+\operatorname{Tr}B
+\quad\Longleftrightarrow\quad AB=0.
+\tag{240.14}
+$$
+为包含奇异情形，取 $Z=\operatorname{sign}(A-B)$。由 $-I\preceq Z\preceq I$，三角上界与实际范数之差等于
+$$
+\operatorname{Tr}[(I-Z)A]+\operatorname{Tr}[(I+Z)B]\ge0.
+$$
+等号使两个非负项分别为零，因而 $A$ 的像落在 $Z$ 的 $+1$ 特征子空间，$B$ 的像落在 $-1$ 特征子空间；二者正交，即 $AB=0$。反之，正交支撑直接给（240.14）的等号。正半定性还给
+$$
+AB=0\quad\Longleftrightarrow\quad\operatorname{Tr}(AB)=0,
+\tag{240.15}
+$$
+因为 $\operatorname{Tr}(AB)=\|A^{1/2}B^{1/2}\|_{\mathrm{HS}}^2$。
+
+在（240.10）中，循环移位计算得到
+$$
+\begin{aligned}
+\operatorname{Tr}(A_jB_j)
+&=ab\operatorname{Tr}[\Pi_j\rho(I_d-\Pi_j)\rho]\\
+&=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{240.16}
+$$
+由于 $ab>0$，此式为零恰当且仅当 $(I_d-\Pi_j)\rho\Pi_j=0$。取伴随还得到 $\Pi_j\rho(I_d-\Pi_j)=0$，所以这恰等价于 $[\rho,\Pi_j]=0$。结合（240.11）—（240.15）及每项非负的取等缺额，得到（240.9）。$\square$
+
+该证明保留了参考块的转置，再利用范数不变性转回输入坐标；最后的对易条件针对实际输入边缘 $\rho$。证明没有对 $\rho$ 求逆，因此同样覆盖秩亏纯探针边缘。
+
+### 240.3 最小参考维数恰是最小共同约化维数
+
+称非零输入子空间 $H\subseteq A$ 为投影族的共同约化子空间，若其正交投影 $P_H$ 满足
+$$
+[P_H,\Pi_j]=0\quad\text{对全部 }j.
+\tag{240.17}
+$$
+因 $\Pi_j$ 自伴，这等价于 $H$ 对全部 $\Pi_j$ 不变；其正交补也自动不变。记
+$$
+r_{\min}=\min\{\dim H:H\ne0,\ H\text{ 是共同约化子空间}\}.
+\tag{240.18}
+$$
+整个输入空间总是其中一个，故该最小值存在。
+
+**定理 240.2（固定候选的最小参考判据）。** 达到 $D_*$ 的纯联合输入中，最小 Schmidt 秩、最小所需参考维数及（240.18）相等：
+$$
+\boxed{
+\min\{\operatorname{rank}\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,
+\ \varepsilon(\rho)=D_*\}=r_{\min}.
+}
+\tag{240.19}
+$$
+若仅允许参考维数 $h$，定义
+$$
+D_h(\mathcal S)=
+\max_{\substack{|\psi\rangle\in A\otimes\mathbb C^h\\\|\psi\|=1}}
+\varepsilon(\psi),
+\qquad 1\le h\le d.
+\tag{240.20}
+$$
+则
+$$
+\boxed{
+D_h(\mathcal S)=D_*\ \Longleftrightarrow\ h\ge r_{\min};
+\qquad h<r_{\min}\ \Longrightarrow\ D_h(\mathcal S)<D_*.
+}
+\tag{240.21}
+$$
+
+**证明。** 若 $\rho$ 达到 $D_*$，由定理240.1，它与全部 $\Pi_j$ 对易。其支撑投影作为谱投影也与这些投影对易，所以 $H=\operatorname{supp}\rho$ 是共同约化子空间，且 $\dim H=\operatorname{rank}\rho\ge r_{\min}$。
+
+反向，取最小共同约化子空间 $H$，令 $\rho=P_H/r_{\min}$。它是与全部 $\Pi_j$ 对易的密度矩阵，因此达到 $D_*$。它在 $H$ 上的最大纠缠纯化使用恰好 $r_{\min}$ 维参考。
+
+纯联合态的 Schmidt 秩等于其输入边缘秩，也等于压缩其参考支撑所需的维数，因此（240.19）成立。任意 Schmidt 秩至多 $h$、位于更大参考空间的纯态，都能压缩到 $\mathbb C^h$，而区分误差在参考等距映射下不变。
+
+最后，$A\otimes\mathbb C^h$ 的单位球面紧，$\varepsilon$ 连续，所以（240.20）的最大值实际取得。当 $h<r_{\min}$ 时，每个纯态都不能取等；紧性排除了只能逼近 $D_*$ 的情形，故最大值严格小于 $D_*$。当 $h\ge r_{\min}$ 时，嵌入前述纯化即可取等。$\square$
+
+若在同一个 $h$ 维参考系统上允许混合联合输入，分解为纯态并用迹范数凸性，得到的最大误差仍为（240.20）。所以（240.21）的严格不足也覆盖这类混合输入。本节没有给严格差距的数值下界。
+
+### 240.4 整除障碍与互素参数的强制最大纠缠
+
+**定理 240.3（参考维数的算术下界）。** 对任意共同约化子空间 $H$，设 $r=\dim H$，则
+$$
+\boxed{\frac{d}{\gcd(d,R)}\ \bigm|\ r.}
+\tag{240.22}
+$$
+因此每个达到纯态的 Schmidt 秩都被 $d/\gcd(d,R)$ 整除，特别是
+$$
+\boxed{r_{\min}\ge\frac{d}{\gcd(d,R)}.}
+\tag{240.23}
+$$
+若 $\gcd(d,R)=1$，则全部达到纯态的输入边缘唯一为
+$$
+\boxed{\rho=I_d/d,\qquad r_{\min}=d.}
+\tag{240.24}
+$$
+
+**证明。** 由于 $H$ 约化全部投影，每个限制 $\Pi_j|_H$ 仍为正交投影。将（240.2）限制到 $H$ 并取迹，得到
+$$
+\frac Rd r=\sum_j\operatorname{rank}(\Pi_j|_H)\in\mathbb Z.
+\tag{240.25}
+$$
+故 $d\mid Rr$，等价于（240.22）。达到边缘的支撑是共同约化子空间，得到 Schmidt 秩的整除结论。
+
+若 $\gcd(d,R)=1$，非零共同约化子空间只能有维数 $d$。任意达到边缘 $\rho$ 的每个非零本征值的特征子空间都共同约化；所以只能有一个本征值，且其特征子空间是整个 $A$。迹归一化迫使 $\rho=I_d/d$。反向这一边缘始终对易并取等，完成证明。$\square$
+
+算术条件给出下界；一般参数的精确最小维数仍由（240.18）决定。互素情形的结论还强于“必须满 Schmidt 秩”：全部达到纯探针都必须在整个输入上最大纠缠，允许参考端作任意等距变换。
+
+### 240.5 单纯形候选与同接口、同谱的不同参考需求
+
+对§239的单纯形候选，$N\ge d+1$、$R=d+1$，活跃投影为
+$$
+\Pi_j=|u_j\rangle\langle u_j|,
+\qquad
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\frac{d+1}{d}I_d.
+\tag{240.26}
+$$
+其余原标签保留零投影。因 $\gcd(d,d+1)=1$，定理240.3立即给
+$$
+\boxed{
+\varepsilon(\rho)=1-\frac{d+1}{Nd}
+\quad\Longleftrightarrow\quad \rho=I_d/d;
+\qquad r_{\min}=d.
+}
+\tag{240.27}
+$$
+也可直接从几何读取这个事实：与秩一投影 $|u_j\rangle\langle u_j|$ 对易的 Hermitian 矩阵使 $u_j$ 成为本征向量；两个非正交本征向量的本征值必须相同。全部单纯形向量两两非正交且张成输入空间，故矩阵只能为标量。
+
+这证明每个 $h<d$ 都严格达不到该固定候选的完整最坏误差。它没有把这份候选的必要参考维数自动传给全部同预算最优候选。
+
+更强的区分来自同一接口、同一总秩、甚至相同分支 Choi 谱的两份候选。固定 $d=2,N=4,R=4$ 及相同的全部输出向量 $r_j$。令
+$$
+Q_z=|0\rangle\langle0|,
+\qquad Q_x=|+\rangle\langle+|,
+\qquad |+\rangle=(|0\rangle+|1\rangle)/\sqrt2.
+$$
+比较两组实际投影：
+$$
+\begin{aligned}
+\mathsf A&=(Q_z,Q_z,I_2-Q_z,I_2-Q_z),\\
+\mathsf B&=(Q_z,I_2-Q_z,Q_x,I_2-Q_x).
+\end{aligned}
+\tag{240.27a}
+$$
+两组之和都为 $2I_2$，每个分支秩都为一。按（240.3），实际效应均为 $E_j=\Pi_j/2$；每个分支 Choi 矩阵的唯一非零本征值都为 $1/2$，整个 Choi 矩阵的非零谱也同为四个 $1/2$。两份固定候选的完整误差都等于 $1/2$。
+
+族 $\mathsf A$ 共同对角化，存在一维共同约化子空间，所以 $r_{\min}=1$。族 $\mathsf B$ 中，与 $Q_z$ 对易的密度矩阵是计算基对角矩阵，再与 $Q_x$ 对易便迫使两对角元相同，因此唯一达到边缘为 $I_2/2$，$r_{\min}=2$。
+
+其无参考误差也能直接计算。任意输入密度矩阵写成
+$$
+\rho=\frac12
+\begin{pmatrix}
+1+r_z&r_x-ir_y\\
+r_x+ir_y&1-r_z
+\end{pmatrix},
+\qquad r_x^2+r_y^2+r_z^2\le1.
+$$
+族 $\mathsf A$ 的标签概率相对于均匀目标的总变差为 $|r_z|/2$，最大值为 $1/2$。族 $\mathsf B$ 的相应总变差为
+$$
+\frac{|r_z|+|r_x|}{4}\le\frac{\sqrt2}{4},
+\tag{240.27b}
+$$
+由 $r_x=r_z=1/\sqrt2$、$r_y=0$ 的纯态取得等号。故
+
+| 同接口候选 | 完整误差 | 无参考误差 | 最小参考维数 |
+|---|---:|---:|---:|
+| 族 $\mathsf A$ | $1/2$ | $1/2$ | $1$ |
+| 族 $\mathsf B$ | $1/2$ | $\sqrt2/4$ | $2$ |
+
+这两份实际通道说明：输入维数、标签数、总秩、每个分支秩及 Choi 谱都相同，仍不能确定最坏观察所需的参考维数。区别由投影之间能否共同约化这一联合关系承担。
+
+同一判据也连接§238的四维实例：总秩六的两个二维三线块各自共同约化，结合（240.23）得最小参考维数恰为二；其总秩十空间补具有同一共同约化结构。总秩七、九与输入维数四互素，故都必须使用四维参考和输入边缘 $I_4/4$。这里仅指§238实际给出的投影候选，不将判据套到预算十一的其他系数构造。
+
+### 240.6 单纯形的有限参考下界与未结算的中间曲线
+
+以下仍固定§239的同一单纯形候选 $\mathcal S^{\triangle}$，并使用（240.20）的参考维数限制。对每个整数 $1\le h\le d$，有实际达到的下界
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})\ge
+1-\frac{h+1}{Nh}.
+}
+\tag{240.28}
+$$
+证明如下。在 $V=\mathbf1^\perp\subset\mathbb C^{d+1}$ 中，选 $h+1$ 个活跃坐标组成集合 $J$，令
+$$
+H_J=\{x\in V:x_j=0\ \text{对 }j\notin J\},
+\qquad \dim H_J=h.
+\tag{240.29}
+$$
+以 $H_J$ 和 $h$ 维参考之间的最大纠缠态为输入。对于 $j\in J$，投影 $P_{H_J}e_j$ 的范数平方为 $h/(h+1)$，候选参考块为
+$$
+\frac1h|P_{H_J}e_j\rangle\langle P_{H_J}e_j|,
+\tag{240.30}
+$$
+在选择相同基时可整体带转置，谱不变。其唯一非零本征值为 $1/(h+1)$。对全部原标签，目标参考块都是 $I_h/(Nh)$；对 $j\notin J$，候选块为零。
+
+候选减目标的正本征值仅出现在 $j\in J$，每块恰为 $1/(h+1)-1/(Nh)$，因此完整输出差的半迹范数为
+$$
+(h+1)\left(\frac1{h+1}-\frac1{Nh}\right)
+=1-\frac{h+1}{Nh}.
+\tag{240.31}
+$$
+这证明（240.28），且每个下界都有明确的 Schmidt 秩 $h$ 纯输入。
+
+两端已经精确结算：§239给 $D_1(\mathcal S^{\triangle})=1-2/N$，而（240.27）给 $D_d(\mathcal S^{\triangle})=1-(d+1)/(Nd)$。对中间整数 $1<h<d$，本节严格证明的范围是
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+<1-\frac{d+1}{Nd}.
+}
+\tag{240.32}
+$$
+左端是否总为精确值，在本节未证明；以下将缺少的统一上界写成一个等价的明确矩阵不等式。
+
+### 240.7 剩余上界的精确等价形式
+
+令 $n=d+1$。任意纯输入 $|\psi\rangle\in V\otimes\mathbb C^h$ 可唯一写成
+$$
+|\psi\rangle=\sum_{j=1}^n e_j\otimes w_j,
+\qquad
+\sum_{j=1}^n w_j=0,
+\qquad
+\sum_{j=1}^n\|w_j\|^2=1.
+\tag{240.33}
+$$
+反向，满足这些约束的向量族也给合法归一化纯输入。其参考边缘记为
+$$
+\sigma=\sum_{j=1}^n w_jw_j^{\dagger}.
+\tag{240.34}
+$$
+候选第 $j\le n$ 个参考块为 $w_jw_j^{\dagger}$，目标各原标签的参考块为 $\sigma/N$。非活跃标签的候选为零，因而其差块没有正谱。全部差块总迹为零，故实际半迹距离为
+$$
+\varepsilon(\psi)=
+\sum_{j=1}^n\operatorname{Tr}
+\left(w_jw_j^{\dagger}-\frac\sigma N\right)_+.
+\tag{240.35}
+$$
+每个括号内的 Hermitian 矩阵至多有一个正本征值：在 $w_j^\perp$ 上其二次型非正。因此它的正谱投影可取秩至多一。对任意独立的正交投影 $F_j$，$\operatorname{rank}F_j\le1$，允许 $F_j=0$，正谱变分公式给
+$$
+\begin{aligned}
+1-\varepsilon(\psi)
+=\min_{(F_j)}\bigg[
+\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\frac1N\sum_{i,j=1}^n\|F_iw_j\|^2
+\bigg].
+\end{aligned}
+\tag{240.36}
+$$
+这里 $\operatorname{Tr}(F_i\sigma)=\sum_j\|F_iw_j\|^2$，且正交投影的勾股分解给第一项。
+
+因此，候选的中间维数公式
+$$
+D_h(\mathcal S^{\triangle})\stackrel{?}{=}
+1-\frac{h+1}{Nh}
+\tag{240.37}
+$$
+尚缺的上界，准确等价于对全部满足 $\sum_jw_j=0$ 的 $h$ 维向量族以及全部上述投影族证明
+$$
+\boxed{
+N\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\sum_{i,j=1}^n\|F_iw_j\|^2
+\ge
+\left(1+\frac1h\right)\sum_{j=1}^n\|w_j\|^2.
+}
+\tag{240.38}
+$$
+从归一化族到一般族只使用齐次性，零族两边均为零。（240.36）及其等价归约已证明；（240.38）在中间维数的一般有效性未在本节证明。对易判据只排除了小参考维数取得完整值，不能直接升级为（240.38）所需的定量上界。本节在（240.32）处保留准确的未解边界。
+
+### 240.8 来源与适用范围
+
+量子通道区分中“参考空间与输入同维总是足够，但较小维数未必足够”的标准问题，参见 D. Puzzuoli、J. Watrous，*Ancilla dimension in quantum channel discrimination*，[arXiv:1604.08197v2](https://arxiv.org/abs/1604.08197v2)，§3、Theorem 2 与 Theorem 3（PDF第5页），[DOI 10.1007/s00023-016-0537-y](https://doi.org/10.1007/s00023-016-0537-y)。原文给一般区分的参考维数背景及一族需要完整输入维数参考的通道；本节不将其例子与当前投影重置候选混为一谈，也不把本节对易判据或（240.37）归给该论文。
+
+迹范数与二元状态检验的标准联系可见 J. Watrous，*The Theory of Quantum Information*，Theorem 3.4，正文第128—129页，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本节对取等所需的正交支撑条件已在（240.14）—（240.16）直接证明。
+
+本节要求 $R<Nd$，使（240.10）的两个系数严格为正。若 $R=Nd$，投影和条件迫使全部投影为恒等，候选与目标相同、误差为零，任意输入都达到；不通过除以正系数的上述步骤处理此退化点。零投影、满投影与奇异输入边缘均已包含在非退化证明内。
+
+对易判据与最小约化维数是固定实际候选的精确结论；整除式是其算术约束；单纯形中间维数公式仍是单独的未解上界。它们都不意味着任意通道对、任意最优容量候选或任意实验语言具有同一参考资源需求。
+
+## 追加锚（本行以下为增补区）
+
+## 241. 参考维数不足的显式缺口与近最坏探针的资源证书
+
+§240用共同对易性刻画了固定投影候选的全部最坏纯探针。本节进一步量化：偏离对易边缘会损失多少可观察差异；对单纯形候选，较小参考维数至少损失多少；反过来，一份纯探针若已经接近完整最坏差异，它至少需要多大 Schmidt 秩及纠缠熵。
+
+这里的显式界不声称最优，也不结算单纯形中间参考维数的精确公式。全部结论指向同一固定实际候选。
+
+### 241.1 固定候选与一般误差缺口
+
+沿用§240：输入 $A=\mathbb C^d$，$d,N\ge2$，固定全部经典记录标签及各标签的单位纯输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。目标与固定投影候选分别为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j,\\
+\mathcal S(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j,
+\qquad
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\quad 1\le R<Nd.
+\end{aligned}
+\tag{241.1}
+$$
+令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+\qquad D_*=1-\frac R{Nd}.
+\tag{241.2}
+$$
+已知 $D_*=(1/2)\|\mathcal S-\mathcal R\|_{\diamond}$。若纯联合输入的输入边缘为密度矩阵 $\rho$，其实际半迹距离记作 $f(\rho)$。标准纯化给第 $j$ 个参考差块
+$$
+(A_j-B_j)^{\mathsf T},
+\qquad
+A_j=a\sqrt\rho\Pi_j\sqrt\rho,
+\quad
+B_j=b\sqrt\rho(I_d-\Pi_j)\sqrt\rho.
+\tag{241.3}
+$$
+与§240相同，转置不影响迹范数；参考等距变化也不影响距离。因此
+$$
+f(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{241.4}
+$$
+
+**定理 241.1（一般交换子缺口界）。** 对任意输入密度矩阵，包括奇异矩阵，
+$$
+\boxed{
+D_*-f(\rho)
+\ge\min(a,b)\sum_j
+\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+=\frac{\min(a,b)}2\sum_j
+\|[\rho,\Pi_j]\|_{\mathrm{HS}}^2.
+}
+\tag{241.5}
+$$
+该式把实际区分差异与完整最大值之间的缺额，控制在同一输入边缘、同一投影族的非对易方向上。
+
+### 241.2 正半定分支的迹范数损失
+
+**定理241.1的证明。** 先在证明内部建立所需的正矩阵估计。设 $A,B\succeq0$，$t=\operatorname{Tr}(A+B)>0$，令 $P$ 为 $A-B$ 的正谱投影，并置
+$$
+e_A=\operatorname{Tr}[(I-P)A],
+\qquad e_B=\operatorname{Tr}(PB).
+$$
+正负谱分解给
+$$
+\ell:=t-\|A-B\|_1=2(e_A+e_B).
+\tag{241.6}
+$$
+在 Hilbert–Schmidt 范数中分解
+$$
+\sqrt A\sqrt B
+=\sqrt A P\sqrt B+\sqrt A(I-P)\sqrt B.
+$$
+第一项满足
+$$
+\begin{aligned}
+\|\sqrt A P\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}(\sqrt B P A P\sqrt B)\\
+&\le\|A\|_{\mathrm{op}}\operatorname{Tr}(\sqrt B P\sqrt B)\\
+&\le\operatorname{Tr}(A)e_B.
+\end{aligned}
+\tag{241.7}
+$$
+第二项用 $B\preceq\operatorname{Tr}(B)I$，得到
+$$
+\begin{aligned}
+\|\sqrt A(I-P)\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}[\sqrt A(I-P)B(I-P)\sqrt A]\\
+&\le\operatorname{Tr}(B)e_A.
+\end{aligned}
+\tag{241.8}
+$$
+所以三角不等式及二项 Cauchy–Schwarz 给
+$$
+\begin{aligned}
+\sqrt{\operatorname{Tr}(AB)}
+&\le\sqrt{\operatorname{Tr}(A)e_B}
++\sqrt{\operatorname{Tr}(B)e_A}\\
+&\le\sqrt{t(e_A+e_B)}.
+\end{aligned}
+\tag{241.9}
+$$
+平方后结合（241.6），得到
+$$
+\ell\ge\frac{2\operatorname{Tr}(AB)}{t}.
+\tag{241.10}
+$$
+$t=0$ 时 $A=B=0$，相应项直接为零。这里没有把不同迹权重的分支归一化成同一概率，也没有交换不等式方向。
+
+现在应用于（241.3）。设 $p_j=\operatorname{Tr}(\rho\Pi_j)\in[0,1]$，则
+$$
+t_j:=\operatorname{Tr}(A_j+B_j)
+=ap_j+b(1-p_j)
+\in[\min(a,b),\max(a,b)].
+\tag{241.11}
+$$
+由于 $a,b>0$，所有 $t_j$ 严格为正，零投影或满投影也不例外。§240的乘积计算给
+$$
+\operatorname{Tr}(A_jB_j)
+=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.12}
+$$
+又有 $\sum_jt_j=2D_*$，故
+$$
+\begin{aligned}
+D_*-f(\rho)
+&=\frac12\sum_j(t_j-\|A_j-B_j\|_1)\\
+&\ge\sum_j\frac{\operatorname{Tr}(A_jB_j)}{t_j}\\
+&\ge\frac{ab}{\max(a,b)}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{241.13}
+$$
+最后的系数为 $\min(a,b)$。在投影 $\Pi_j$ 的像与核分解中，交换子仅有互为负伴随的两个非对角块，所以
+$$
+\|[\rho,\Pi_j]\|_{\mathrm{HS}}^2
+=2\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.14}
+$$
+这证明（241.5）。$\square$
+
+### 241.3 单纯形投影的显式谱隙
+
+现在固定§239的单纯形候选 $\mathcal S^{\triangle}$：$d\ge2$、$N\ge d+1$、$R=d+1$，活跃投影为 $\Pi_j=|u_j\rangle\langle u_j|$，$1\le j\le d+1$，其中
+$$
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\alpha I_d,
+\qquad \alpha=\frac{d+1}{d}.
+\tag{241.15}
+$$
+其余原标签使用零投影。记
+$$
+\kappa=\frac{d+1}{Nd^2},
+\qquad D_*=1-\frac{d+1}{Nd}.
+\tag{241.16}
+$$
+
+**定理 241.2（单纯形的边缘偏差证书）。** 对每份纯联合输入的输入边缘 $\rho$，
+$$
+\boxed{
+D_*-f(\rho)\ge
+\kappa\|\rho-I_d/d\|_{\mathrm{HS}}^2
+=\kappa\left(\operatorname{Tr}\rho^2-\frac1d\right).
+}
+\tag{241.17}
+$$
+
+**证明。** 令 $H=\rho-I_d/d$，则 $H$ Hermitian 且迹零。恒等部分没有投影非对角块，秩一投影还给
+$$
+\begin{aligned}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+&=\sum_{j=1}^{d+1}
+\left[\operatorname{Tr}(\Pi_jH^2)
+-(\operatorname{Tr}(\Pi_jH))^2\right]\\
+&=\alpha\operatorname{Tr}H^2
+-\sum_{j=1}^{d+1}(\operatorname{Tr}(\Pi_jH))^2.
+\end{aligned}
+\tag{241.18}
+$$
+定义迹零 Hermitian 向量 $T_j=\Pi_j-I_d/d$，以 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 为实 Hilbert–Schmidt 内积。其 Gram 矩阵为
+$$
+\operatorname{Tr}(T_iT_j)=
+\begin{cases}
+(d-1)/d,&i=j,\\
+-(d-1)/d^2,&i\ne j.
+\end{cases}
+\tag{241.19}
+$$
+等价地，令 $n=d+1$，有
+$$
+\Gamma=
+\left(1-\frac1{d^2}\right)
+\left(I_n-\frac1n\mathbf1\mathbf1^{\mathsf T}\right).
+\tag{241.20}
+$$
+因此 $\Gamma$ 的最大本征值为 $\gamma=1-1/d^2$。对任意实系数 $c_j$、$\sum_jc_j^2=1$，
+$$
+\left|\sum_jc_j\operatorname{Tr}(T_jH)\right|
+\le\|H\|_{\mathrm{HS}}
+\left\|\sum_jc_jT_j\right\|_{\mathrm{HS}}
+\le\sqrt\gamma\|H\|_{\mathrm{HS}}.
+$$
+对系数取上确界，并使用 $\operatorname{Tr}H=0$，得到
+$$
+\sum_j(\operatorname{Tr}(\Pi_jH))^2
+=\sum_j(\operatorname{Tr}(T_jH))^2
+\le\left(1-\frac1{d^2}\right)\operatorname{Tr}H^2.
+\tag{241.21}
+$$
+代入（241.18），可得
+$$
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+\ge\left(\frac{d+1}{d}-1+\frac1{d^2}\right)\operatorname{Tr}H^2
+=\frac{d+1}{d^2}\|H\|_{\mathrm{HS}}^2.
+\tag{241.22}
+$$
+在当前参数下，$a=d/(d+1)-1/N\ge1/N=b$，因为 $N\ge d+1$、$d\ge2$。因此定理241.1中的系数为 $b=1/N$。结合（241.22）得到（241.17）。$\square$
+
+该证明使用同一投影族的完整 Gram 关系。它没有仅凭各投影秩或各自谱推出正的统一系数。
+
+### 241.4 受限参考维数的明确区间
+
+若纯联合输入的 Schmidt 秩至多为 $h$，则 $\operatorname{rank}\rho\le h$。对非零本征值用 Cauchy–Schwarz，得到
+$$
+1=(\operatorname{Tr}\rho)^2
+\le h\operatorname{Tr}\rho^2,
+\qquad\operatorname{Tr}\rho^2\ge1/h.
+\tag{241.23}
+$$
+故（241.17）给
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})
+\le D_*-\kappa\left(\frac1h-\frac1d\right),
+\qquad1\le h\le d.
+}
+\tag{241.24}
+$$
+其中 $D_h$ 仍指同一固定通道在 Schmidt 秩至多 $h$ 的纯输入上的最坏实际半迹距离。$h<d$ 时右侧比完整值低一个明确正数；$h=d$ 时缺口项为零，与最大纠缠取等相容。
+
+在固定 $h$ 维参考系统上，任意混合联合输入可分解为纯态，每个分量的 Schmidt 秩都至多为 $h$。迹范数凸性给同一上界。更一般地，若一份混合联合态具有一个分解
+$$
+\Omega=\sum_t p_t|\psi_t\rangle\langle\psi_t|,
+\qquad p_t\ge0,\quad\sum_tp_t=1,
+\quad\operatorname{SchmidtRank}(\psi_t)\le h,
+\tag{241.25}
+$$
+即其 Schmidt number 至多为 $h$，则即使总参考空间大于 $h$，逐项应用（241.24）和凸性仍给同一上界。这一扩展依赖实际存在的分解条件，不把混合态边缘秩当作 Schmidt number。
+
+结合§240已构造的 $h+1$ 坐标子空间最大纠缠输入，得到双侧区间
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+\le1-\frac{d+1}{Nd}
+-\frac{d+1}{Nd^2}\left(\frac1h-\frac1d\right).
+}
+\tag{241.26}
+$$
+$h=1$ 的精确值已经由§239给出，仍为 $1-2/N$；$h=d$ 时两端一致。对 $1<h<d$，本式是一段已证区间，没有把左端候选式宣称为精确值。
+
+本显式界确实不总紧。取 $d=2,N=3,h=1$，有 $D_*=1/2$、$\kappa=1/4$，因此（241.24）给缺口至少 $1/8$、$D_1\le3/8$；而已知精确值是 $D_1=1/3$，真实缺口为 $1/6$。
+
+### 241.5 近最坏纯探针的必要秩与纠缠熵
+
+**定理 241.3（近最坏探针的资源证书）。** 固定同一单纯形候选。若一份归一化纯联合输入满足
+$$
+f(\rho)\ge D_*-\varepsilon,
+\qquad\varepsilon\ge0,
+\tag{241.27}
+$$
+则其输入边缘纯度、Schmidt 秩 $r$ 及纠缠熵满足
+$$
+\boxed{
+\operatorname{Tr}\rho^2
+\le\frac1d+\frac{Nd^2}{d+1}\varepsilon,
+}
+\tag{241.28}
+$$
+$$
+\boxed{
+r\ge
+\left\lceil
+\frac1{\displaystyle 1/d+\frac{Nd^2}{d+1}\varepsilon}
+\right\rceil,
+}
+\tag{241.29}
+$$
+以及
+$$
+\boxed{
+S(\rho)\ge
+\max\left\{0,
+\log_2d-
+\log_2\left(1+\frac{Nd^3}{d+1}\varepsilon\right)
+\right\}.
+}
+\tag{241.30}
+$$
+
+**证明。** 将（241.27）代入（241.17）得
+$$
+\kappa(\operatorname{Tr}\rho^2-1/d)\le\varepsilon,
+$$
+这正是（241.28）。另一方面，$\operatorname{Tr}\rho^2\ge1/r$，故
+$$
+r\ge1/\operatorname{Tr}\rho^2
+\ge\frac1{1/d+Nd^2\varepsilon/(d+1)}.
+$$
+$r$ 是整数，取上整得到（241.29）。
+
+记 $\rho$ 的正本征值为 $\lambda_i$。对凹函数 $\log_2$ 应用 Jensen 不等式，得到
+$$
+\sum_i\lambda_i\log_2\lambda_i
+\le\log_2\left(\sum_i\lambda_i^2\right),
+$$
+即
+$$
+S(\rho)=-\sum_i\lambda_i\log_2\lambda_i
+\ge-\log_2\operatorname{Tr}\rho^2.
+\tag{241.31}
+$$
+结合（241.28）及熵非负，整理即为（241.30）。由于联合输入是纯态，这里的 $S(\rho)$ 正是两侧的纠缠熵。$\square$
+
+这些是必要资源下界，不是构造充分条件，也不声称最优。$\varepsilon=0$ 时恢复 $r=d$、$S(\rho)=\log_2d$ 及最大混合输入边缘。对混合联合态，单侧边缘熵不能直接解释成纠缠熵，本推论不作这种替换。
+
+### 241.6 最小参考维数不单独给统一稳定间隔
+
+§240同接口、同谱的成对实例还可以连续变化，区分“必须使用更大参考”和“缺口有统一正下界”。固定 $d=2,N=4,R=4$，取单位 Bloch 向量 $n,m\in\mathbb R^3$，并定义
+$$
+P_n=\frac{I_2+n\cdot\sigma}{2},
+\qquad P_m=\frac{I_2+m\cdot\sigma}{2},
+\qquad
+(\Pi_1,\Pi_2,\Pi_3,\Pi_4)
+=(P_n,I_2-P_n,P_m,I_2-P_m),
+\tag{241.32}
+$$
+其中 $\sigma$ 为三份标准 Pauli 矩阵。所有参数处都满足投影和 $2I_2$、四个分支秩均一、实际输入效应 $\Pi_j/2$；每分支 Choi 矩阵的非零本征值均为 $1/2$。完整误差恒为 $D_*=1/2$。
+
+差映射的各分支 Choi 矩阵也有固定谱：
+$$
+J_{\mathcal S_j-\mathcal R_j}
+=\left(\frac12\Pi_j-\frac14I_2\right)^{\mathsf T}\otimes P_j,
+\qquad\operatorname{spec}_{\ne0}J_{\mathcal S_j-\mathcal R_j}
+=\{1/4,-1/4\}.
+\tag{241.32a}
+$$
+所以整个差 Choi 矩阵的非零谱恒为四个 $1/4$ 与四个 $-1/4$，同样不随两轴夹角变化。
+
+对 Bloch 向量为 $r$、$\|r\|\le1$ 的输入，无参考实际误差为
+$$
+\frac{|r\cdot n|+|r\cdot m|}{4}.
+$$
+在两种符号及单位球上取最大值，得到精确值
+$$
+\begin{aligned}
+U&=\frac14\max\{\|n+m\|,\|n-m\|\}\\
+&=\frac12\sqrt{\frac{1+|n\cdot m|}{2}}.
+\end{aligned}
+\tag{241.33}
+$$
+达到输入取沿较长的 $n+m$ 或 $n-m$ 方向的纯态。
+
+当 $n,m$ 不平行时，与两份非对易 qubit 投影同时对易的密度矩阵只能为 $I_2/2$，故最小参考维数恒为二。若夹角为 $0<\theta\le\pi/2$，则
+$$
+U=\frac12\cos(\theta/2),
+\qquad D_*-U=\frac12[1-\cos(\theta/2)]>0.
+\tag{241.34}
+$$
+令 $\theta\downarrow0$，最小参考维数始终为二，但这个正缺口趋于零。输入维数、标签数、总秩、全部候选分支谱、差 Choi 谱及最小参考维数在此过程中均保持不变。
+
+因此，仅保留这些离散量或谱读数，不能给整个候选族的统一正稳定间隔。单纯形的（241.17）之所以有明确系数，还使用了（241.19）—（241.20）中固定的联合投影关系。把一份固定候选的严格不足推广为整个变化族的统一下界，必须另外控制这些关系的谱隙。
+
+### 241.7 标准工具与结果边界
+
+本节的矩阵估计使用正谱检验、Hilbert–Schmidt 三角不等式及 Cauchy–Schwarz；单纯形部分使用明确计算的实 Gram 矩阵；熵证书使用 Jensen 不等式。各项都在同一实际候选和同一输入边缘上组合。
+
+关于迹距离与保真度的标准比较，可参见 J. Watrous，*The Theory of Quantum Information*，Theorem 3.33（Fuchs–van de Graaf inequalities），正文第161—163页，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。该定理的陈述针对归一化密度矩阵。本节分支 $A_j,B_j$ 通常迹不相等，因此（241.6）—（241.10）直接证明所需的未归一化估计，没有未经调整地套用归一化版本。
+
+这里得到的是固定投影候选的定量取等稳定性，以及固定单纯形候选的参考资源必要条件。它不把（241.26）提升为中间维数精确曲线，不把必要秩或熵下界当作充分条件，也不把固定候选的参考需求变成全部容量竞争者的需求。
+
+## 追加锚（本行以下为增补区）

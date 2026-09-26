@@ -9106,3 +9106,611 @@ $$
 不包含期望熵、无界矩转移、数值起效、有限精度或效率保证。
 
 ## 追加锚（76 章后）
+
+## 77. 实际输出密度与低噪声平均信息的常数项
+
+**定义 77.1（纤维内平均信息）。** 保持第 75 章的原实验、完整计数目标和精确标量
+$T=t_x(R)$；$Y=T+\sigma_MG$，其中 $G$ 是独立标准正态，
+$L_M=\ln(1/\sigma_M)\to\infty$ 且 $L_M=o(Q^3)$。
+$p_x(n\mid y)$、$f_x(y)$、$h_x=H_2(P_x)$ 均保持原定义。
+记 $w_n(y)=\varphi_{\sigma_M}(y-t_x(n))$，定义
+
+$$
+\begin{aligned}
+\mathsf h_M(x)&=-\int f_x(y)\ln f_x(y)\,dy,\\
+I_M(x)&=\sum_nP_x(n)\int w_n(y)\ln\frac{w_n(y)}{f_x(y)}\,dy,\\
+\overline H_M(x)&=\int H_2(p_x(\cdot\mid y))f_x(y)\,dy.
+\end{aligned}
+\tag{77.1}
+$$
+
+前两项使用自然单位，第三项使用 bits。这些都是指定均匀大小 $q$ 支持先验下的纤维量。
+它们可以作为数据函数在确定支持的原始数据律下求概率；定义本身不改为点质量先验。
+令原空间剖面与方差常数为
+
+$$
+\rho(t)=\frac{e^{-\kappa t^2/2}}{4\pi\sqrt{ab}},\qquad
+\kappa=a^{-1}+\alpha^2/b,\qquad
+ g_0=\int_{\mathbb R}\rho(t)^2dt
+ =\frac1{16\pi^2ab}\sqrt{\frac\pi\kappa},\qquad \nu=2g_0>0.
+\tag{77.2}
+$$
+
+$a=(1+r)/2$、$b=(1-r)/2$ 和 $\alpha$ 均为原固定参数。
+以 $\varphi_\nu$ 表示方差为 $\nu$ 的中心正态密度，区别于按标准差标记的测量核。
+
+**定理 77.2（真实噪声精度的密度控制）。** 对每个上述确定噪声序列，在两种实际实验中，
+
+$$
+\|f_{\mathscr X}\|_\infty=O_{\mathbb P}(1),\qquad
+\|f_{\mathscr X}-\varphi_\nu\|_1\longrightarrow0,\qquad
+\mathbb E_{P_{\mathscr X}}T^2=O_{\mathbb P}(1).
+\tag{77.3}
+$$
+
+收敛与紧性均一致于确定真实支持。例如第二式的量词是对每个 $\varepsilon>0$，
+$\sup_{S:|S|=q}\Pr_S^{\mathscr X}
+\{\|f_{\mathscr X}-\varphi_\nu\|_1>\varepsilon\}\to0$。
+不是对所有尚未指定收敛速度的噪声序列同时取上确界。
+
+证明。以下全部环境估计来自原一、二行比较，平稳路径中不假定观测行独立。
+沿用第 75 章的单个完整乘积计数律 $\mathsf Q_x$、
+密度 $L_x=dP_x/d\mathsf Q_x$、$a_x=\|L_x-1\|_2$、
+$v_j=C_jp_j(1-p_j)/B^2$、$V=\sum_jv_j$、
+$U_j=(R_j-C_jp_j)/B$ 和 $e_j=(\mu_j-C_jp_j)/B$。
+噪声对数 $L_M$ 与密度 $L_x$ 不混用。
+
+先把完整密度的上界保留到一阶精度。令 $d_A,d_C,d_J$ 分别为校准 Bernoulli
+总和、窗口补集和窗口内的方差，$m_J$ 为窗口总和均值。
+第 68 章的精确条件化式与方差型局部 Bernoulli 估计给
+
+$$
+L_x(k)=\sqrt{d_A/d_C}\,
+ e^{-(k-m_J)^2/(2d_C)}+O(q^{-1/2}),\qquad
+0\le L_x\le1+\eta_x,\quad
+\eta_x\le C(d_J/q+q^{-1/2})=O_{\mathbb P}(Q^{-5/2}).
+\tag{77.4}
+$$
+
+误差在所有整数 $k$ 上一致；分母是均值恰为整数 $q$ 的总和中心质量。
+这里 $d_A,d_C\asymp q$，$d_J=O_{\mathbb P}(B^2)$。
+这些关系与 $a_x=O_{\mathbb P}(Q^{-5/2})$ 在同一好事件成立。
+由密度恒等式与 Hilbert 空间 Cauchy–Schwarz，任意指标集 $D$ 满足
+
+$$
+ e_D=\mathbb E_{\mathsf Q_x}[(L_x-1)U_D],\qquad
+ \|e_D\|\le a_x\sqrt{V_D}.
+\tag{77.5}
+$$
+
+实际二阶矩可直接重新核对。精确展开为
+$T=\delta^{-1/2}\{\sum_j(U_j^2-v_j)-2e\cdot U+\|e\|^2\}$。
+乘积律下二项四阶矩给
+$\mathbb E(\sum_j(U_j^2-v_j))^2\le2\sum_jv_j^2+B^{-2}V$。
+利用 (77.4) 的非负密度上界，得到
+
+$$
+\mathbb E_{P_x}T^2\le\frac C\delta
+ \left[2\sum_jv_j^2+B^{-2}V+4a_x^2V^2+a_x^4V^2\right]
+ =O_{\mathbb P}(1).
+\tag{77.6}
+$$
+
+此处 $V=O_{\mathbb P}(1)$、$\sum_jv_j^2=O_{\mathbb P}(\delta)$、
+$B^{-2}/\delta=Q^3/q\to0$。这是实际纤维内的矩估计，不通过 TV 搬运无界函数。
+
+还需识别平方质量的常数。固定 $H<\infty$，原 Poisson 率与 Stirling 展开在
+$|j\delta|\le H$ 上给
+
+$$
+f_j=\frac{e^{-\kappa(j\delta)^2/2}}{2\pi\lambda\sqrt{ab}}(1+o(1)),\qquad
+\sup_{|j\delta|\le H}\left|\frac{v_j}{\delta\rho(j\delta)}-1\right|
+ \longrightarrow0.
+\tag{77.7}
+$$
+
+第二式使用实际占据均值 $m_j\sim2qf_j$、校准 $p_j\to1/2$，
+以及原一、二行方差界在这个固定核心内的一致相对集中。
+例如取相对容差 $Q^{-1}$，对 $O_H(\delta^{-1})$ 组取并的失败概率至多
+$C_HQ^2\delta^{-1}\{\exp[-c_q\lambda+O_H(1)+O(\ln Q)]+e_{row}\}\to0$。
+若 $a_j^{occ}=m_j/B^2$，原实际二阶占据界给
+$\mathbb E_Sv_j^2\le C[(a_j^{occ})^2+B^{-2}a_j^{occ}]$。
+率函数的 Gaussian 尾和非正规端点的指数界因而给
+
+$$
+\sup_S\mathbb E_S\left[\delta^{-1}
+ \sum_{|j\delta|>H}v_j^2\right]
+ \le Ce^{-cH^2}+CB^{-2}/\delta+Q^Ce^{-c\lambda}.
+\tag{77.8}
+$$
+
+这在确定截断计数线上先计算，只有移除原全行截断失败事件后才与完整窗口认同。
+紧核心的 Riemann 和、(77.8) 的 Markov 界及 $H\to\infty$ 证明
+$\delta^{-1}\sum_jv_j^2\to g_0$。
+累积方差钟的收敛本身不替代这个逐组平方质量计算。
+
+现在取第 75 章的移动核心
+$R_M^2=\sqrt{\lambda(L_M+\ln Q+1)}$，及其 $\mathcal C_M,\mathcal O_M$。
+保留 (75.12) 的全部精确非中心项和外部中心截距，令该参考量仍为 $T^{\rm G}$。
+在同一完整乘积向量与独立分位耦合上，设
+$D_M(x)=\mathbb E|T-T^{\rm G}|$。
+原实际一阶占据尾界及 (75.13) 给
+
+$$
+\begin{aligned}
+\sup_S\mathbb E_S V_{\mathcal O}&\le Ce^{-cR_M^2}+Q^Ce^{-c\lambda},\\
+D_M(x)&\le CQ^{1/4}
+ \{V_{\mathcal O}+(1+a_x)V e^{-c_q\lambda/24}\}.
+\end{aligned}
+\tag{77.9}
+$$
+
+第一式仍在确定计数线上使用。第二式的尾差精确为
+$\delta^{-1/2}\sum_{\mathcal O}(U_j^2-v_j-2e_jU_j)$；
+(77.5) 使其绝对均值至多 $C\delta^{-1/2}V_{\mathcal O}$。
+没有把尾部 $\|e_{\mathcal O}\|^2$ 删去后再付出噪声放大。
+相较于第 75 章，这里需要支付更强的 $\sigma_M^{-2}$。
+由于 $R_M^2/(L_M+\ln Q+1)\to\infty$，有
+
+$$
+\begin{aligned}
+ Q^{1/4}e^{2L_M}(e^{-cR_M^2}+Q^Ce^{-c\lambda})&\to0,\\
+ Q^{5/4}e^{2L_M-c_q\lambda/24}&\to0,\\
+ \sigma_M^{-2}D_M(\mathscr X)&\longrightarrow0.
+\end{aligned}
+\tag{77.10}
+$$
+
+最后一式使用实际尾部期望的 Markov 界及高概率事件 $V\le Q$。
+所有精确 $e_j$ 和随机 $v_j$ 先保留在参考量内；空间剖面近似误差不乘 $\sigma_M^{-2}$。
+
+参考密度需要强于弱极限的结论。令核心内 $w_j=v_j/\sqrt\delta$。
+移动核心的实际相对占据上界与 (77.7)–(77.8) 给
+$\max w_j\le C\sqrt\delta\to0$、$\sum w_j^2\to g_0$。
+参考量精确展开为
+
+$$
+T^{\rm G}=\sum_{\mathcal C}w_j(Z_j^2-1)
+ -2\delta^{-1/2}\sum_{\mathcal C}e_j\sqrt{v_j}Z_j
+ +\delta^{-1/2}\|e\|^2.
+\tag{77.11}
+$$
+
+最后一项是 $o_{\mathbb P}(1)$，线性项的条件方差至多
+$4\delta^{-1}(\max v_j)\|e\|^2=o_{\mathbb P}(1)$。
+它不必与二次项独立。对固定 $t$，中心二次项的对数特征函数为
+$-t^2\sum w_j^2+O_t((\max w_j)\sum w_j^2)\to-g_0t^2$。
+故参考极限的方差恰为 $2g_0$。
+
+(75.16) 的非中心特征函数估计保留了任意 $e_j$。
+中心小核心有 $n_0\asymp\delta^{-1}$ 个 $w_j\asymp\sqrt\delta$，因而完整特征函数满足
+$|\psi_x(t)|\le(1+c\delta t^2)^{-n_0/4}$。
+在 $|t|\le\delta^{-1/2}$ 上它由固定 Gaussian 函数控制；外部积分至多
+$C\delta^{-1/2}(1+c)^{-n_0/8}\int_1^\infty(1+cu^2)^{-1}du\to0$。
+所以特征函数的 $L^1$ 尾一致消失。
+固定 $t$ 极限与 Fourier 反演给无噪声参考密度 $g_x^0$ 满足
+$\|g_x^0-\varphi_\nu\|_\infty\to0$，且 $\|g_x^0\|_\infty\le C$。
+两密度积分均为一，对 $\min(g_x^0,\varphi_\nu)$ 用支配收敛得到
+$\|g_x^0-\varphi_\nu\|_1\to0$。
+这些论证先对任意满足上述参数极限的确定环境序列成立，
+再由各环境误差的一致概率界推出一致原数据概率版本。
+令 $g_x=g_x^0*\varphi_{\sigma_M}$，卷积收缩与 Gaussian 方差
+$\nu+\sigma_M^2\to\nu$ 给
+
+$$
+ \|g_x\|_\infty\le C,\qquad \|g_x-\varphi_\nu\|_1\to0.
+\tag{77.12}
+$$
+
+最后回到实际输出。乘积标量密度
+$f_x^{prod}(y)=\mathbb E_{\mathsf Q_x}\varphi_{\sigma_M}(y-T)$ 使用同一精确中心。
+(77.4) 直接给逐点正密度支配
+$f_x(y)\le(1+\eta_x)f_x^{prod}(y)$。
+Gaussian 核的导数范数为
+$\|\varphi_\sigma'\|_\infty=e^{-1/2}/(\sqrt{2\pi}\sigma^2)$、
+$\|\varphi_\sigma'\|_1=\sqrt{2/\pi}/\sigma$。
+对 (77.9) 的同一标量耦合应用平移界，再对完整后验向量使用一次核收缩，得
+
+$$
+\begin{aligned}
+\|f_x\|_\infty
+ &\le(1+\eta_x)\left[C+\frac{e^{-1/2}}{\sqrt{2\pi}}
+                  \sigma_M^{-2}D_M(x)\right],\\
+\|f_x-\varphi_\nu\|_1
+ &\le a_x+\sqrt{2/\pi}\,\sigma_M^{-1}D_M(x)
+               +\|g_x-\varphi_\nu\|_1.
+\end{aligned}
+\tag{77.13}
+$$
+
+(77.10)–(77.12) 证明所需两个密度结论。
+完整密度误差 $a_x$ 从未除以噪声；上确界控制依靠正密度支配及指数精度标量耦合。
+这里未声称实际密度在上确界范数收敛到 Gaussian。证毕。
+
+**定理 77.3（平均信息与平均输出后验熵）。** 在定义 77.1 的整个范围内，
+各有限纤维的积分均存在，并有精确恒等式
+
+$$
+ I_M(x)=L_M-\tfrac12\ln(2\pi e)+\mathsf h_M(x),\qquad
+ \overline H_M(x)=h_x-I_M(x)/\ln2.
+\tag{77.14}
+$$
+
+进而，在定理 77.2 的同一一致原数据概率意义下，
+
+$$
+\begin{aligned}
+\mathsf h_M(\mathscr X)&\longrightarrow\tfrac12\ln(2\pi e\nu),\\
+I_M(\mathscr X)&=L_M+\tfrac12\ln\nu+o_{\mathbb P}(1),\\
+\overline H_M(\mathscr X)&=h_{\mathscr X}
+ -\frac{L_M}{\ln2}-\frac{\ln\nu}{2\ln2}+o_{\mathbb P}(1).
+\end{aligned}
+\tag{77.15}
+$$
+
+证明。先明确所需经典熵连续性条件。若概率密度 $f$ 满足
+$\|f\|_\infty\le B\ge1$ 和 $\int y^2f(y)dy\le K$，则对 $R>0$，
+
+$$
+\int_{|y|>R}|f\ln f|\,dy
+ \le\frac{K\ln B}{R^2}+\frac{2e^{-R}}e+\frac KR.
+\tag{77.16}
+$$
+
+在 $f>1$ 上用 $f\ln f\le f\ln B$；在 $f\le1$ 上置
+$q_0(y)=e^{-|y|}$，由 $u\ln(1/u)\le1/e$ 得
+$f\ln(1/f)\le q_0/e+|y|f$，再积分即得该式。
+需要的是二阶矩有界给出的一阶矩尾控制，不要求二阶矩本身一致可积。
+
+对共同满足这些界的 $f,g$，置 $d=\|f-g\|_1$，
+$M_B=\sup_{[0,B]}|t\ln t|$，$\omega_B(u)$ 为 $t\ln t$ 在该区间的连续模。
+紧区间按 $|f-g|\le u$ 分开，补集长度至多 $d/u$，从而
+
+$$
+|\mathsf h(f)-\mathsf h(g)|
+ \le2\left[\frac{K\ln B}{R^2}+\frac{2e^{-R}}e+\frac KR\right]
+      +2R\omega_B(u)+2M_Bd/u.
+\tag{77.17}
+$$
+
+先取 $R$ 大，再取 $u$ 小，最后取 $d$ 小，给出该密度／矩类上的 $L^1$ 熵连续性。
+这是经典结果的本章所需一维证明。
+有限纤维中 $f_x\le1/(\sqrt{2\pi}\sigma_M)$、$\mathbb E_xY^2<\infty$，
+故 (77.16) 先保证每个纤维的 $\int|f_x\ln f_x|<\infty$。
+
+在渐近分析中，$\mathbb E_xY^2=\mathbb E_{P_x}T^2+\sigma_M^2=O_{\mathbb P}(1)$。
+给定任意外层失败容差，定理 77.2 允许选确定 $B,K$，
+使实际密度及 Gaussian 极限共同满足两界，除去的原数据概率不超过该容差。
+在余下事件使用 (77.17) 和 (77.3) 的 $L^1$ 收敛，最后令外层容差趋零，
+即得 (77.15) 第一式。弱收敛和密度有界本身不足以排除细密度振荡，
+而单独 $L^1$ 收敛不足以控制熵尾；本证明分别给出两部分。
+
+有限 Gaussian 通道上，实际同一实现满足
+$\ln w_R(Y)=L_M-\tfrac12\ln(2\pi)-G^2/2$。
+给定原始数据的 $G$ 仍为标准正态，积分得
+$\mathbb E_x\ln w_R(Y)=L_M-\tfrac12\ln(2\pi e)$。
+对每个正先验原子 $n$，$f_x\ge P_x(n)w_n$，
+而 $\ln^+f_x$ 有有限上界，所以各 $w_n|\ln f_x|$ 的积分有限。
+由有限求和可交换积分，信息密度的期望即给 (77.14) 第一式。
+有限字母 Bayes 恒等式
+$-\log_2p_x(n\mid y)=-\log_2P_x(n)-\ln(w_n(y)/f_x(y))/\ln2$
+再给第二式；输出后验熵本身介于零和有限 $\log_2|\mathcal F_x|$ 之间。
+代入已证微分熵极限即得全部展开。证毕。
+
+本章新增了第 75 章未承担的期望结论，凭据是新的实际密度支配、
+$\sigma^{-2}$ 精度耦合、平方质量极限和熵尾控制，未从概率信息密度结论直接取期望。
+当 $L_M=a_{noise}Q+o(Q)$ 时，(77.15) 给该精确噪声对数之上的常数修正；
+若只知道 $L_M=a_{noise}Q+o(Q)$，不能把其中的 $o(Q)$ 擅自降为 $o(1)$。
+本章精确熵中心 $h_x$ 不由其 $Q^5$ 主项或只有 $o_{\mathbb P}(Q)$ 精度的中心替代。
+
+原支持置换保持全部数据函数不变，未知方向仍只使用原共同判向相等事件，
+其失败概率 $O(q^{-1})$ 只进入概率结论。所有输出积分使用先验预测混合 $f_x$；
+它不等于固定支持给定数据后的单个 Gaussian 密度。
+本章没有全原始数据平均的信息／熵展开，也没有逐输出后验 Shannon 熵集中、
+期望对数覆盖、任意解码器不可能性或计算效率结论。
+$L_M\asymp Q^3$ 时当前半径及耦合预算不再给出上述推导；这不是该尺度的反例或必要阈值。
+零噪声、其他幅度、向量／适应性通道均未纳入。
+Gaussian 平移界、二次型密度、熵连续性与有限 Bayes 链式公式保留经典归属；
+新增连接是原实际后验在整个所述低噪声范围内满足这些定理的联合条件。
+
+## 追加锚（77 章后）
+
+## 78. 一个固定参数实现全部正 Poisson 均值
+
+**定义 78.1（正根均值的通用子序列集）。** 保持第 72、74 章的原幅度、合法规模、
+全部取整和补偿、完整得分组及两种实际实验。
+以 $\bar c_{Q,j}^{\mathcal E}(\beta)$ 表示包含原计数线点
+$(k_0+jQ,l_0+jP)$ 的完整组之实际占据均值；它不是后验标签中心。
+仍用 $\vartheta$ 表示原 Liouville 斜率，$\theta$ 专指目标 Poisson 均值。
+定义 $\mathcal U$ 为满足以下性质的固定 $\beta\in(1/2,1)$ 的集合：
+对每个实数 $\theta>0$，存在原合法层的严格递增子序列及正根侧索引 $j_n$，使
+
+$$
+\bar c_{Q_n,j_n}^{pair}(\beta)\longrightarrow\theta,
+\qquad
+\bar c_{Q_n,j_n}^{path}(\beta)\longrightarrow\theta.
+\tag{78.1}
+$$
+
+同一个参数、子序列和索引用于两种确定均值；这不把两种不同数据实验耦合为一次观测。
+由 (74.6)，只用其中任一种实验定义的集合也等于 $\mathcal U$。
+本章将构造一个明确的稠密 $G_\delta$ 子集 $\mathcal U_0\subset\mathcal U$。
+
+**引理 78.2（精确阶乘相位的区间下计数）。** 使用 (74.3) 的
+$\chi_{Q,j}=2e^{-z_0}f_j$。固定稍大的紧参数区间 $K\Subset(1/2,1)$，
+只取其正根所对应的紧 $u=j/Q^2$ 区间。
+把 $\log_2\chi_{Q,j}$ 延伸为实变量函数
+
+$$
+\Phi_Q(t)=\frac1{\ln2}\left[
+\ln2-z_0-\lambda+(k_0+Qt)\ln(a\lambda)+(l_0+Pt)\ln(b\lambda)
+ -\ln\Gamma(k_0+Qt+1)-\ln\Gamma(l_0+Pt+1)\right].
+\tag{78.2}
+$$
+
+在任意 $N$ 个连续可用索引上，对每个固定正整数 $h$，有
+
+$$
+\left|\sum_j e^{2\pi ih\Phi_Q(j)}\right|
+ \le C_K\{N\sqrt{h/Q}+\sqrt{Q/h}\}.
+\tag{78.3}
+$$
+
+对圆周上每个固定非空开弧 $A$，存在 $p_A>0,C_{K,A}<\infty$ 使
+
+$$
+\#\{j:\{\Phi_Q(j)\}\in A\}
+ \ge p_AN-C_{K,A}(N/\sqrt Q+\sqrt Q).
+\tag{78.4}
+$$
+
+证明。Euler 乘积的二阶对数导数为
+$\psi_1(x)=\sum_{m\ge0}(x+m)^{-2}$，且
+$x^{-1}\le\psi_1(x)\le x^{-1}+x^{-2}$。
+导数级数在正半轴紧集上一致收敛，积分比较给两界。
+因此原精确相位满足
+
+$$
+\Phi_Q''(t)=-\frac{Q^2\psi_1(k_0+Qt+1)+P^2\psi_1(l_0+Pt+1)}{\ln2},
+\qquad c_K/Q\le-\Phi_Q''(t)\le C_K/Q.
+\tag{78.5}
+$$
+
+两个 Gamma 参数与 $Q^3$ 同阶，$P/Q$ 有正的有限界。
+这里保留了精确 $k_0,l_0,P$，没有对一个未控制导数的 Stirling 余项求导。
+
+经典二阶导数检验给：若 $\eta\le|f''|\le C\eta$、$0<\eta\le1/16$，
+则长 $N$ 的整数区间上指数和至多 $C'(N\sqrt\eta+\eta^{-1/2})$。
+其所需一致性可直接看出：$f'$ 单调，删去距整数不足 $\sqrt\eta$ 的部分，
+其 $O(N\eta+1)$ 个分量共包含 $O(N\sqrt\eta+\eta^{-1/2})$ 个整数。
+余下每段的相邻相位差单调、距整数至少 $\sqrt\eta$，
+利用 $(1-e^{2\pi it})^{-1}=1/2+(i/2)\cot(\pi t)$ 的望远镜分解，
+端点与总变差给每段 $O(\eta^{-1/2})$；段数同阶，得到所述界。
+边界整数只增加相同量级。对 $h\Phi_Q$ 应用即得 (78.3)。
+
+为得到真正的下界，选 $0\le g\le1$ 为支撑于 $A$ 的连续圆周函数，且 $\int g>0$。
+它的一个固定足够高阶 Fejér 均值 $P$ 满足
+$\|P-g\|_\infty<\epsilon<\frac12\int g$。
+于是 $P-\epsilon\le\mathbf1_A$ 且积分为正。
+对这个有限三角多项式各非零频率用 (78.3)，便得 (78.4)。
+固定弧后，若 $N$ 大于弧相关常数乘 $\sqrt Q$，且 $Q$ 足够大，下界至少为 $p_AN/2$。
+这也是经典有限序列 discrepancy 不等式的直接后果。
+这里只在每个合法 $Q$ 上横跨索引作计数，未证明一个固定参数沿层数等分布。证毕。
+
+**引理 78.3（任意窄均值带的原 floor 区间）。** 固定
+$B=(A,B')\Subset(0,\infty)$，且 $\log_2(B'/A)<1$。
+在 $B$ 内依次固定有正宽度的嵌套内带，最内带为 $(A_2,B_2)$。
+筛选满足存在整数 $L=L(j)$ 使
+
+$$
+ A_2<2^{L+\Phi_Q(j)}<B_2
+\tag{78.6}
+$$
+
+的正根索引。$L$ 唯一；相位条件是一条固定正长度圆弧，跨零时可再取非空子弧。
+以 $x_{Q,j}$ 表示原 floor 区间 $\mathcal J_{Q,L(j)}$ 的中点。
+在每个紧参数区间中，这些中点最小间距至少 $c_KQ^{-2}$，区间宽度与 $Q^{-3}$ 同阶。
+任意长 $r$ 的区间内中点数至多 $C_K(1+rQ^2)$。
+对一个已经固定的父区间，所有充分大合法 $Q$ 都有至少
+
+$$
+ a_{K,B}\,rQ^2\quad(a_{K,B}>0)
+\tag{78.7}
+$$
+
+个完整选中区间内含于其中央部分。两种实际均值在每个这样的整个原区间上均属于 $B$。
+
+证明。引理 74.2 的全部原 floor 与补偿估计给
+$m_j=2^{L_0(\beta)}\chi_{Q,j}(1+o_K(1))$ 及
+$|\bar c_j^{\mathcal E}-m_j|\le\varepsilon_Mm_j+\rho_M$。
+有界正均值带上这是两种实际均值的统一相对近似；内带余量保证落入外带。
+每个原 $M$-floor 区间上 $M,q$、补偿、实际分布与均值均不变。
+
+正根紧区间上的精确阶乘 Stirling 展开为
+
+$$
+\ln\chi_{Q,j}=-Q^3[\phi+I(j/Q^2)]-\ln(Q^3)+O_K(1).
+\tag{78.8}
+$$
+
+$z_0$ 和两个计数取整的有界影响包含在末项。
+故对 $F(u)=\phi/(\phi+I(u))$，
+$x_{Q,j}=F(j/Q^2)+O_{K,B}(\ln Q/Q^3)$。
+$|F'|$ 在此紧区间有正的有限上下界，误差为 $o(Q^{-2})$，
+从而不同索引不落入同一个 floor 区间，并给最小间距及上计数界。
+
+父区间中央部分的 $F$ 逆像含 $N\asymp_KrQ^2$ 个连续整数索引。
+(78.4) 在 $rQ^2$ 超过带相关常数乘 $\sqrt Q$ 时给正比例下计数。
+再令位置误差与区间宽度相对 $r$ 足够小，便得 (78.7)。
+这里只得到父区间内的正比例计数，没有得到筛选网格的 $O(Q^{-2})$ 最大空隙界。证毕。
+
+**定理 78.4（一个固定参数的全部均值与局部维数）。** 存在稠密 $G_\delta$ 集
+$\mathcal U_0\subset\mathcal U\subset E$，使每个非空开区间 $J\subset(1/2,1)$ 满足
+
+$$
+\dim_H(\mathcal U_0\cap J)=\dim_H(\mathcal U\cap J)=\frac23.
+\tag{78.9}
+$$
+
+两集合均为 Lebesgue 零测度的余贫集，局部 packing 维数为一。
+对 $\beta\in\mathcal U_0$，(78.1) 在任意正整数目标处还可分别指定从下侧或上侧趋近，
+且两种实际均值具有同一指定侧。
+
+证明。取正半轴上端点有理、端点比小于二的可数开区间基 $\mathscr B$。
+对每个带固定引理 78.3 的内带。
+令 $U_{n,B}$ 为该层全部选中原区间的开放中三分之一之并，
+每层只取可行正索引且区间落在 $(1/2,1)$ 中。
+引理 78.3 使 $\bigcup_{n\ge N}U_{n,B}$ 对每个 $B,N$ 都稠密，故
+
+$$
+\mathcal U_0=\bigcap_{B\in\mathscr B}\bigcap_{N\ge1}
+                   \bigcup_{n\ge N}U_{n,B}
+\tag{78.10}
+$$
+
+是稠密 $G_\delta$。
+固定其中一个 $\beta$ 和任意实 $\theta>0$，取直径趋零、逼近 $\theta$ 的基区间。
+逐次选择严格更晚的命中层，并超过该固定带的实际／代理误差阈值，
+即可让两种实际均值同时趋于 $\theta$。
+整数目标可把每个带都置于其严格下侧或上侧。
+这是先固定一次 $\beta$ 后的对角选取，不只覆盖有理均值，也不让 $\beta$ 随层变化。
+完整集合 $\mathcal U$ 也可用每个有理基带中无穷多次实际命中表述，因而是 Borel 集。
+(74.6) 给两种实验定义相同，定理 72.3 给 $\mathcal U\subset E$。
+若负根也保留有限项，两个独立非退化 Poisson 熵项不能相互抵消。
+
+维数下界需要重新控制任意尺度，不能给筛选网格借用未证的最大空隙性质。
+固定非退化闭区间 $K_0\Subset J$ 及稍大紧邻域 $K$。
+事先排列均值带 $B_s$，使每个基带出现无穷多次，并固定相应下计数常数
+$a_s\in(0,1]$，记 $A_s=-\ln a_s$。这些常数可以随 $s$ 任意趋零。
+取只依赖 $K$ 的小常数 $\kappa_0>0$，递归选择原合法层的子序列
+$R_s=Q_{n_s}$，置 $\ell_s=\kappa_0R_s^{-3}$、$t_s=\ln R_s$。
+在每个父区间中央部分保留以 $B_s$-选中原区间中点为中心、长度 $\ell_s$ 的闭区间，
+使它严格位于相应开放中三分之一中。引理 78.3 允许要求每个父区间的子数满足
+
+$$
+ a_s\ell_{s-1}R_s^2\le N_s(P)\le C_K\ell_{s-1}R_s^2,
+ \qquad a_s\ell_{s-1}R_s^2\ge2,
+\tag{78.11}
+$$
+
+首层用 $\ell_0=|K_0|$。每阶段还要求
+
+$$
+t_s\ge s^2\left[\sum_{i<s}t_i+\sum_{i\le s+1}A_i
+ +C(s+1)+C|\ln\ell_0|+C|\ln\kappa_0|\right].
+\tag{78.12}
+$$
+
+下一带的 $a_{s+1}$ 在选择 $R_s$ 前已经确定，故这是合法的前瞻条件。
+原合法序列无界，可同时满足所有有限阈值、各父区间下计数与实际带内条件。
+这只是抽取原层，不修改任何 $M,q$ 或模型。
+
+嵌套交集 $\mathcal K$ 是非空紧集，且 $\mathcal K\subset\mathcal U_0\cap J$。
+将每个父区间质量等分给其子区间，所得概率测度记为 $\nu_0$。
+若 $M_s$ 为最大第 $s$ 层质量，则 (78.11) 给
+
+$$
+\ln M_s\le-2t_s+\sum_{i<s}t_i+\sum_{i\le s}A_i
+                 +O(s+|\ln\ell_0|).
+\tag{78.13}
+$$
+
+固定 $0<d<2/3$，由 (78.12) 可同时得到
+
+$$
+ M_s\le C_d\ell_s^d,
+ \qquad M_{s-1}\le C_d(a_s\ell_{s-1})^d.
+\tag{78.14}
+$$
+
+第一式的对数差含主项 $-(2-3d)t_s$；第二式在第 $s-1$ 层多付 $dA_s$，
+由该层的前瞻项吸收。有限初始层只改变 $C_d$。
+第二式是控制筛选密度损失的必要额外步骤。
+
+设任意短区间 $A$ 的长度为 $r$，取 $\ell_s\le r<\ell_{s-1}$。
+上一层间距远大于其宽度，故 $A$ 只交固定多个父区间。
+若 $r<R_s^{-2}$，子中点最小间距使其只交固定多个子区间，
+于是 $\nu_0(A)\le CM_s\le C_dr^d$。
+若 $r\ge R_s^{-2}$，上计数界与 (78.11) 给
+
+$$
+\nu_0(A)\le C_KM_{s-1}
+       \min\{1,r/(a_s\ell_{s-1})\}.
+\tag{78.15}
+$$
+
+置 $r_0=a_s\ell_{s-1}$，以 (78.14) 第二式替换父质量。
+$r\ge r_0$ 时界为 $C_dr_0^d\le C_dr^d$；
+$r<r_0$ 时界为 $C_dr_0^d(r/r_0)
+=C_dr^d(r/r_0)^{1-d}\le C_dr^d$。
+所以任意足够细区间覆盖都满足
+$1\le C_d\sum|A_i|^d$，得到 $\dim_H\mathcal K\ge d$。
+同一构造对每个固定 $d<2/3$ 成立，故下界为 $2/3$。
+上界与零测度来自 $\mathcal U\subset E$ 和第 74 章。
+两集包含稠密 $G_\delta$，故余贫；第 76 章的 Baire／packing 论证逐区间给 packing 维数一。
+它使用第一纲闭包覆盖的矛盾，不由稠密性单独推得。证毕。
+
+**推论 78.5（一个参数的整族单 Poisson 熵极限）。** 对每个
+$\beta\in\mathcal U_0\cap(1/2,\beta_*)$，以及每个
+$\beta\in\mathcal U_0\setminus E_2$ 且 $\beta>\beta_*$，
+实际后验熵残差在每个非整数 $\theta>0$ 都有合法子序列极限
+
+$$
+h_M-d_M^{\mathcal E}\ \Rightarrow\
+ b(P_\theta)-b(\lfloor\theta\rfloor),
+ \qquad b(k)=H_2(\operatorname{Bin}(k,1/2)),\quad P_\theta\sim\operatorname{Poi}(\theta).
+\tag{78.16}
+$$
+
+在每个正整数 $m$，分别有子序列达到
+
+$$
+ b(P_m)-b(m-1),\qquad b(P_m)-b(m).
+\tag{78.17}
+$$
+
+两种实验各使用自己的精确确定中心 $d_M^{\mathcal E}$。
+此外，每个非空开 $J\subset(\beta_*,1)$ 满足
+
+$$
+\dim_H((\mathcal U_0\setminus E_2)\cap J)=\frac23.
+\tag{78.18}
+$$
+
+证明。定理 72.3 的实际熵表示只保留最多两个过渡根的
+$b(C_j)-b(\lfloor\bar c_j^{\mathcal E}\rfloor)$，误差为 $o_{\mathbb P}(1)$。
+正有限均值的实际占据极限由原固定阶多行 PGF 给 Poisson 律；
+若两根同时存在，其极限独立。
+在单根区间，将定理 78.4 的同一固定参数子序列代入即可。
+非整数目标使 floor 最终固定；整数目标从下／上侧分别选带，
+让两种实际均值同时有 floor $m-1$／$m$，不是假定代理与实际的 floor 自动相同。
+
+在两根区间，对 $\beta\notin E_2$ 的一个右根均值子序列，
+左根不可能再有正有限紧子极限，否则正是 $E_2$ 的定义。
+进一步抽取后，左侧趋零、趋无穷或无过渡组，其贡献由第 72 章实际熵增量估计趋零。
+正根极限及指定侧保留，得到相同单项律。
+在指定 $\beta_*$，引理 74.6 排除了负端点正有限均值，
+故若该指定参数属于 $\mathcal U_0$，结论亦成立；本章没有判定其成员身份。
+
+定理 76.5 给 $\dim_HE_2\le4/9<2/3$。
+若 (78.18) 的差集维数更小，则将其与 $\mathcal U_0\cap E_2$ 作有限并，
+会使 $\mathcal U_0\cap J$ 维数小于 $2/3$，与 (78.9) 矛盾。证毕。
+
+这里没有给 $\mathcal U_0\setminus E_2$ 余贫性结论：小 Hausdorff 维数不蕴含贫性。
+在整个 $\mathcal U_0$ 上已证明所有正根均值的通用性，但未排除某些子序列附带左侧 Poisson 项。
+$E_2$ 的非空性、锐利维数及指定同步均值仍未解决。
+
+(78.14) 只对 $d<2/3$ 有效；临界时负主项消失。
+因此本章未确定 $\mathcal H^{2/3}(\mathcal U_0\cap J)$ 或
+$\mathcal H^{2/3}(\mathcal U\cap J)$。
+第 76 章对更大集合 $E$ 的临界无穷测度不能经包含关系传给这里；
+其收敛规范的零测度结论可以传递。
+也未把可数个均值带 limsup 的维数或测度直接当作其交集的结论。
+
+全部统计结论先固定参数，再在原实际数据律下取概率或弱极限，
+由原支持对称性一致于确定支持，未知方向只付一次共同相等事件的失败概率。
+没有参数随机化、独立 Poisson 替代实验、全数据期望或无界矩转移。
+经典二阶导数检验、Fourier 小函数逼近、Baire 和质量分布各保留归属；
+新增连接是精确阶乘相位、任意窄带的原 floor 区间下计数，以及同时守住所有尺度的通用参数构造。
+
+## 追加锚（78 章后）
