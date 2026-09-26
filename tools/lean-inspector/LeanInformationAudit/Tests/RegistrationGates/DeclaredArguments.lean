@@ -115,7 +115,7 @@ run_meta do
     (some "unclassified_form:E2.dictionary_position:Classical.decEq")
   let dictionarySlot ← RegistrationGates.templateArgumentsCurrent ``target
     #[equalityDictionary] 524288 #[] #[true]
-  let dictionarySlotAccepted := match dictionarySlot with
+  let dictionarySlotAccepted : Bool := match dictionarySlot with
     | .ok _ => true
     | .error _ => false
   (if dictionarySlotAccepted then logInfo else logError)
