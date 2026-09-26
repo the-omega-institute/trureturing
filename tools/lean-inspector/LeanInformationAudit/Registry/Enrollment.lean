@@ -276,6 +276,10 @@ private def ownerOf (env : Environment) (name : Name) : Option Name :=
 def sourceAvoidsTargetProof (source target : Name) : CompileM Bool := do
   let env ← getEnv
   let some targetOwner := ownerOf env target | return false
+  let ordinal (owner : Name) : Option Nat :=
+    if owner == env.header.mainModule then some env.header.moduleNames.size
+    else (env.getModuleIdx? owner).map (·.toNat)
+  let some targetIdx := ordinal targetOwner | return false
   let mut pending := [source]
   let mut seen : NameSet := {}
   while let name :: rest := pending do
@@ -283,14 +287,14 @@ def sourceAvoidsTargetProof (source target : Name) : CompileM Bool := do
     if seen.contains name then continue
     charge
     seen := seen.insert name
-    let info ← getConstInfo name
-    if name == target || (ownerOf env name == some targetOwner && info.isTheorem) then
-      return false
     let some owner := ownerOf env name | return false
-    if owner == targetOwner || (`D5).isPrefixOf owner then
-      pending := info.type.getUsedConstants.toList ++ pending
-      if let some value := info.value? then
-        pending := value.getUsedConstants.toList ++ pending
+    let some ownerIdx := ordinal owner | return false
+    if ownerIdx < targetIdx then continue
+    let info ← getConstInfo name
+    if name == target || (owner == targetOwner && info.isTheorem) then return false
+    pending := info.type.getUsedConstants.toList ++ pending
+    if let some value := info.value? then
+      pending := value.getUsedConstants.toList ++ pending
   return true
 
 private def independentSource (name : Name) : CompileM Bool := do
