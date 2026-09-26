@@ -30,6 +30,7 @@ class UnknownCarrier where
 def unknown : UnknownCarrier := ⟨true⟩
 def independentPair : Bool × Bool := (true, false)
 def companion.__information_unit (x : Bool) : Bool := x
+def proofOnly (_ : ∀ n : Int, True) : Bool := true
 
 private def check (label : String) (argument : Expr) (expected : Option String)
     (work : Nat := 524288) (theoremName : Name := ``target) : MetaM Unit := do
@@ -66,7 +67,7 @@ run_meta do
   check "imported_name_alias_type_rejected" (mkConst ``InformationSourceFixture.NameAlias)
     (some "forbidden_dependency:E6.closed_identity")
   check "imported_name_alias_readout_rejected" (mkConst ``InformationSourceFixture.nameReadout)
-    (some "forbidden_dependency:E6.closed_identity")
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.nameReadout")
   check "imported_finite_alias_type_accepted" (mkConst ``InformationSourceFixture.BoolAlias) none
   check "imported_finite_alias_readout_rejected" (mkConst ``InformationSourceFixture.finiteReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.finiteReadout")
@@ -79,15 +80,20 @@ run_meta do
     (mkApp (mkConst ``InformationSourceFixture.ErasedAlias) (mkConst ``Lean.Name))
     (some "forbidden_dependency:E6.closed_identity")
   check "imported_infinite_alias_type_accepted" (mkConst ``InformationSourceFixture.IntAlias) none
-  check "imported_infinite_alias_readout_accepted" (mkConst ``InformationSourceFixture.aliasReadout) none
-  check "independent_composite_readout_accepted" (mkConst ``InformationSourceFixture.compositeReadout) none
-  check "independent_aliased_composite_readout_accepted"
-    (mkConst ``InformationSourceFixture.aliasedCompositeReadout) none
+  check "judge_package_alias_readout_rejected" (mkConst ``InformationSourceFixture.aliasReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.aliasReadout")
+  check "judge_package_composite_readout_rejected"
+    (mkConst ``InformationSourceFixture.compositeReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.compositeReadout")
+  check "judge_package_aliased_composite_readout_rejected"
+    (mkConst ``InformationSourceFixture.aliasedCompositeReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.aliasedCompositeReadout")
   let metadataSource <- getConstInfo `InformationSourceFixture.metadataReadout
   unless metadataSource.type matches .mdata _ (.forallE ..) do
     throwError "setup: metadata must wrap the whole source function type"
-  check "independent_metadata_function_readout_accepted"
-    (mkConst `InformationSourceFixture.metadataReadout) none
+  check "judge_package_metadata_function_readout_rejected"
+    (mkConst `InformationSourceFixture.metadataReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.metadataReadout")
   check "independent_dictionary_alias_readout_rejected"
     (mkConst ``InformationSourceFixture.dictionaryReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.dictionaryReadout")
@@ -100,8 +106,9 @@ run_meta do
   check "aliased_class_only_readout_rejected"
     (mkConst ``InformationSourceFixture.aliasedClassOnlyReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.aliasedClassOnlyReadout")
-  check "class_and_infinite_readout_accepted"
-    (mkConst ``InformationSourceFixture.classAndInfiniteReadout) none
+  check "judge_package_class_and_infinite_readout_rejected"
+    (mkConst ``InformationSourceFixture.classAndInfiniteReadout)
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.classAndInfiniteReadout")
   check "independent_output_only_readout_rejected" (mkConst ``InformationSourceFixture.outputOnlyReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.outputOnlyReadout")
   check "local_unapplied_readout_rejected" (mkConst ``localChoiceReadout)
@@ -109,6 +116,13 @@ run_meta do
   let sourceInfo ← getConstInfo ``Int.natAbs
   let (_, sourceTypeWork) ← TemplateAudit.checkExtractionType ``target sourceInfo.type 524288
   unless sourceTypeWork < 524288 do throwError "independent source type exhausted work budget"
+  unless ← TemplateAudit.checkIndependentInputCarrier ``target sourceInfo.type 524288 do
+    throwError "[FAIL] independent_data_input_carrier"
+  logInfo "[PASS] independent_data_input_carrier"
+  let proofOnlyType := (← getConstInfo ``proofOnly).type
+  if ← TemplateAudit.checkIndependentInputCarrier ``target proofOnlyType 524288 then
+    throwError "[FAIL] proof_only_infinite_carrier_rejected"
+  logInfo "[PASS] proof_only_infinite_carrier_rejected"
   let infiniteOutput ← mkArrow (mkConst ``Int) (mkConst ``Int)
   let equalityDictionary ← mkAppM ``Classical.decEq #[infiniteOutput]
   check "classical_equality_dictionary_data_rejected" equalityDictionary
@@ -151,13 +165,6 @@ run_meta do
   let .defnInfo hiddenInfo ← getConstInfo ``hidden | throwError "setup"
   check "argument_theorem_helper_let_rejected" hiddenInfo.value
     (some "forbidden_dependency:dtr.argument_audit") 524288 ``identityTarget
-  let (cleanSource, _) ←
-    (TemplateAudit.sourceAvoidsTargetProof ``identity ``identityTarget).run {}
-  let (dependentSource, _) ←
-    (TemplateAudit.sourceAvoidsTargetProof ``hidden ``identityTarget).run {}
-  unless cleanSource && !dependentSource do
-    throwError "source declaration closure failed to distinguish independent data from target proof"
-  logInfo "[PASS] source_declaration_dependency_boundary"
   check "argument_theorem_instance_rejected" (mkConst ``targetDecision)
     (some "forbidden_dependency:dtr.argument_audit") 524288 ``identityTarget
   let type := (← getConstInfo ``target).type
