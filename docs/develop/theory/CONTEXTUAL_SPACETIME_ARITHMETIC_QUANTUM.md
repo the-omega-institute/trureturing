@@ -51927,3 +51927,158 @@ $$
 **注记 239.3（不交换的任务极限与资源极限）。** 沿 $\varepsilon=o(s)$，两个归一化代价趋于严格正的常数；沿 $\varepsilon=Cs$，（239.2）却使它们趋于零。这里比较的是明确给定的两个联合极限，不是同一个固定任务违反第236节的结论。定理没有确定 $\varepsilon/s$ 趋于任意有限正数时的完整过渡规律，也没有优化远端构造中的常数 $C$；窗口外的 Fisher 代价仍可很大。
 
 ## 追加锚（本行以下为增补区）
+
+## 240. 退化边界上虚性与混合的共同平方预算
+
+**定义 240.1（移动任务中的联合资源）。** 沿用第239节的实际任务族和窗口 $K_s$，并对每个 $s$ 使用第238节的联合允许类。固定 $\lambda,\mu\ge0$、$\lambda^2+\mu^2>0$，置 $R_0=\sqrt{\lambda^2+\mu^2}$。仍以 $Q_s^{\lambda,\mu}(\varepsilon),E_s^{\lambda,\mu}(\varepsilon)$ 表示窗口内的峰值和积分下确界。两个全域预算分别为 $I_R^C\le\lambda\varepsilon$、$J\le\mu\varepsilon$，每个实际任务的处理器及共轭固定。
+
+**定理 240.2（共同退化极限与端点资源分配）。** 对任意 $s\downarrow0$、$\varepsilon/s\to0$，有
+
+$$
+\varepsilon^4Q_s^{\lambda,\mu}(\varepsilon)
+\longrightarrow\frac{L_*^2\gamma_*^2}{4\kappa_*^2R_0^4},
+\qquad
+\varepsilon^2E_s^{\lambda,\mu}(\varepsilon)
+\longrightarrow\frac{L_*^2\gamma_*}{2\kappa_*R_0^2}.
+\tag{240.1}
+$$
+
+另有正数 $C,C_Q,C_E,s_0$，使每个 $0<s<s_0$、$R_0\varepsilon\ge Cs$ 都存在同一允许准备满足
+
+$$
+\sup_{K_s}I_Q\le C_Q,\qquad
+\int_{K_s}I_Q\,du\le C_E.
+\tag{240.2}
+$$
+
+下界允许任意混态秩。两组上界各由同一族处处秩至多二的解析准备给出，并保持实际支持四、全输入精确性、完整尖锐集合、普通最优双侧曲率及任意预先指定的有限阶规范节点数据。零混合预算可取精确纯态，零虚性预算可取精确实态。预算比例固定；不主张整个有限正 $\varepsilon/s$ 区间上的过渡公式。
+
+证明。 在两个节点之间写 $x=\sqrt{1-p}>0$，对任意允许秩的实际密度取唯一的 $q$-Schur 分解
+
+$$
+\rho=\alpha\alpha^\dagger+R,\qquad
+\alpha=\frac{\rho q}{x}=xq+v+i\beta,\qquad
+R\ge0,\quad Rq=0,\quad t=\operatorname{Tr}R.
+\tag{240.3}
+$$
+
+其中 $v,\beta$ 实且与 $q$ 正交，$\|v\|^2+\|\beta\|^2=p-t$。这个分解满足两个精确的秩无关估计
+
+$$
+I_R^C(\rho)\ge2x\|\beta\|,
+\qquad J(\rho)^2\ge4x^2t.
+\tag{240.4}
+$$
+
+第一式直接检测原密度的参考列。当 $\beta\ne0$ 时，置 $e=\beta/\|\beta\|$，把 $\rho-C\rho C$ 压缩到实平面 $\operatorname{span}\{q,e\}$，得到
+
+$$
+\begin{pmatrix}
+0&-2ix\|\beta\|\\
+2ix\|\beta\|&0
+\end{pmatrix}.
+\tag{240.5}
+$$
+
+其迹范数为 $4x\|\beta\|$。压缩不增迹范数，故第一式成立；$\beta=0$ 时直接成立。虽然 $R$ 可以有虚部，但 $Rq=0$ 使它不能抵消这一列。第二式由第238.6式的纯度展开与正性给出：$\alpha^\dagger R\alpha\le(p-t)t$、$\operatorname{Tr}R^2\le t^2$，代入即得。
+
+因此整个节点区间内都有
+
+$$
+t+\|\beta\|^2
+\le\frac{J(\rho)^2+[I_R^C(\rho)]^2}{4(1-p)}
+\le\frac{R_0^2\varepsilon^2}{4(1-p)}
+=O((\varepsilon/s)^2).
+\tag{240.6}
+$$
+
+末式使用实际第三节点的 $1-h_3(s)=D_*s^2+O(s^3)$。在 $\varepsilon=o(s)$ 时，Schur 余项与原虚向量在整个节点区间一致趋零，原实部的范数平方一致趋于 $p$。
+
+第216节的非临界节点秩界仍强制两个节点为纯态，简单谱则固定原来的实规范态。对原实部使用第239节的延伸分隔面，端点仍异号。远端实分隔面具有固定正间隙；矩与平面的扰动为 $O(s)$，范数亏损及附加实矩项为 $O(t+\|\beta\|^2)$。式（240.6）因此使首次过零点进入共同内部鞍点邻域，并趋于临界鞍点。
+
+在这个内部邻域，$x$ 有统一正下界。第238节的同一实际状态的 Schur 展开遂恢复 $t=O(\varepsilon^2)$、$\beta=O(\varepsilon)$，实际矩阵及其局部导数在共同紧邻域有界，$j_s$ 的范数、横向正二次型和 $g_s'$ 均有统一正下界，所以第238.9—238.14式的投影与三阶余项常数可统一。于是
+
+$$
+u_\varepsilon-u_1(s)
+\le\frac{2[\lambda^2\kappa(s)+\mu^2\kappa_{\rm mix}(s)]}
+{\gamma(s)}\varepsilon^2+O(\varepsilon^3).
+\tag{240.7}
+$$
+
+过零前的短参数路径处于同一内部窗口，Schur 余项和虚部都一致趋零。按迹弧长重参数化的紧性论证给出长度至少 $L_*-o(1)$。点态混态 SLD 迹速度不等式与 Cauchy–Schwarz 因而给出两个下极限。第237节的实际 Rayleigh 系数和第239节的临界公式满足 $\kappa(s),\kappa_{\rm mix}(s)\to\kappa_*$、$\gamma(s)\to\gamma_*$，从而得到（240.1）的常数。
+
+两个上界由同一个固定权重准备同时得到。对任意解析纯态曲线 $\sigma_u$，固定 $0\le\tau\le1$，定义
+
+$$
+\mathcal M_\tau(\sigma_u)
+=\frac{1+\tau}{2}\sigma_u
++\frac{1-\tau}{2}C\sigma_uC.
+\tag{240.8}
+$$
+
+这是逐点指定的正密度曲线，秩至多二。这里没有将共轭或 $\mathcal M_\tau$ 宣称为作用于任意未知输入的 CPTP 通道。两个已指定准备的权重不依赖 $u$。
+
+纯态虚性公式及迹的展开给出精确恒等式
+
+$$
+\begin{aligned}
+I_R^C(\mathcal M_\tau(\sigma))
+&=\tau I_R^C(\sigma),\\
+J(\mathcal M_\tau(\sigma))
+&=\sqrt{1-\tau^2}\,I_R^C(\sigma).
+\end{aligned}
+\tag{240.9}
+$$
+
+事实上，共轭差恰为 $\tau(\sigma-C\sigma C)$；若 $\sigma=|\psi\rangle\langle\psi|$，则
+$[I_R^C(\sigma)]^2=1-|\langle\psi,C\psi\rangle|^2$。将两项凸混合平方后取迹，得到
+$J^2=(1-\tau^2)(1-|\langle\psi,C\psi\rangle|^2)$。这两式针对同一个实际密度成立。
+
+这种固定权重的准备还满足点态信息上界
+
+$$
+I_Q(\mathcal M_\tau(\sigma_u))\le I_Q(\sigma_u).
+\tag{240.10}
+$$
+
+证明时先保留两种准备的正交标签。标签态的 SLD 信息等于两个固定权重的信息量之和；共轭保留 SLD 方程及其平方迹，所以 $I_Q(C\sigma_uC)=I_Q(\sigma_u)$。再丢弃标签是固定偏迹，其单调性给出（240.10）。该论证包括输出秩变化的点。权重不依赖参数，标签分布没有附加的经典 Fisher 代价；辅助标签不计入实际程序空间。
+
+现取
+
+$$
+\tau=\frac{\lambda}{R_0},\qquad
+\sqrt{1-\tau^2}=\frac{\mu}{R_0}.
+\tag{240.11}
+$$
+
+将第239节的同一纯态族按预算 $R_0\varepsilon$ 准备，再应用（240.8）。式（240.9）同时给出两个全域预算；（240.10）同时保留峰值和积分上界。
+
+还须核对全部实际任务条件。共同处理器中的两个矩算子均实，目标矩也实，所以 $\sigma$ 与 $C\sigma C$ 满足完全相同的复矩等式，凸混合保持全输入精确性。纯态族在节点匹配的有限阶规范数据全为实，故这些密度导数在（240.8）下原样保留。特别地，节点的态及一阶导数保持点态校准；（240.10）与第211节的秩无关下界夹逼普通曲率，得到同一个最优双侧极限。两节点的尖锐性与共同处理器的谱必要性给出完整尖锐集合和实际支持四。解析性及秩至多二由有限凸混合直接保留，无需对混态重新近似。$\mu=0$ 时 $\tau=1$，输出精确纯；$\lambda=0$ 时 $\tau=0$，输出精确实。
+
+因为 $R_0$ 固定，$\varepsilon=o(s)$ 当且仅当 $R_0\varepsilon=o(s)$。第239.4式及（240.10）于是给出
+
+$$
+\limsup \varepsilon^4Q_s^{\lambda,\mu}(\varepsilon)
+\le\frac{L_*^2\gamma_*^2}{4\kappa_*^2R_0^4},
+\qquad
+\limsup \varepsilon^2E_s^{\lambda,\mu}(\varepsilon)
+\le\frac{L_*^2\gamma_*}{2\kappa_*R_0^2}.
+\tag{240.12}
+$$
+
+结合已经证明的任意秩下极限，即得（240.1），且同一个准备族同时达到两式。若 $R_0\varepsilon\ge Cs$，则直接对第239.2式的纯态族使用同一构造，得到（240.2）及同族达到。证毕。
+
+**注记 240.3（近纯主态可以位于 Schur 余项中）。** 第239节的端点半相位圆在 $\theta=\pi/2$ 时为 $\psi=xq+i\sqrt p\,v$，其中 $v$ 为与 $q$ 正交的实单位向量。对它使用（240.8），所得密度的 $q$-Schur 因子和余项为
+
+$$
+\alpha=xq+i\tau\sqrt p\,v,\qquad
+R=p(1-\tau^2)vv^{\mathsf T},\qquad
+J^2=4x^2p(1-\tau^2).
+\tag{240.13}
+$$
+
+当 $x=O(s)$ 且 $\tau<1$ 固定时，余项的迹不趋于零，实际不纯度却趋于零。近纯主贡献可以落在这个 Schur 分解的余项中，所以退化参考分量处不能从近纯性直接推断该余项很小。式（240.4）直接控制不能被余项更改的参考列，并配合纯度界得到（240.6）；这给出了小比值极限所需的一致控制。
+
+式（240.9）是逐个实际状态上的精确资源分配，并不声称固定正 $s$ 下达到第238节的最优联合系数。$\mu>0$ 时，那里有严格更大的混合容量 $\kappa_{\rm mix}(s)>\kappa(s)$；本构造仅需它们在退化极限中趋于同一个 $\kappa_*$。整个有限正 $\varepsilon/s$ 区间的最优过渡规律，以及窗口外的 Fisher 代价，仍不由本定理确定。
+
+## 追加锚（本行以下为增补区）
