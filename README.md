@@ -9,12 +9,10 @@
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
-trureturing develops a scientific methodology through which AI can propose
-questions, test its own conjectures, discover the limits of its representations,
-and return checked results to a growing library. We want Turing computation to
-find direction in those results: to recognize what is missing and choose a
-fruitful next investigation. Autonomous choice of research direction is an
-ongoing research goal.
+trureturing develops a scientific method for AI to turn gaps in knowledge into
+questions, test conjectures, expose limits in its representations, and return
+checked results to a reusable library. We want those results to guide the next
+investigation; autonomous research selection remains a goal to evaluate.
 
 The name expresses **true · return · Turing**. Truth guides the search;
 verified knowledge returns as a premise for the next inquiry; computation
@@ -22,11 +20,10 @@ explores the connections. We call the structure we seek the **geometry of
 logical truth**: dependencies, invariants, distinctions and the boundaries of
 what an observer can recover.
 
-The project brings together philosophical inquiry, theory, experiments and
-Lean 4 formalization. Its ambition is broad; each proof establishes its exact
-statement under its declared assumptions. The [vision and research
-guide](docs/VISION.md) connects these ideas to existing work and open research
-directions.
+The project combines philosophical inquiry, theory, experiments and Lean 4
+formalization. Each proof establishes its exact statement under declared
+assumptions. The [vision and research guide](docs/VISION.md) connects this work
+to open directions.
 
 ## Truth and computation
 
@@ -36,12 +33,10 @@ encompassing network of truths and their logical relations**, within which a
 finite observer discovers connections. This is the project's metaphysical
 orientation, not a theorem about the existence of God or the physical universe.
 
-Computation still does essential work: constructing examples, exposing
-counterexamples, searching for proofs and checking them. A verified proof
-extends what the library can justify. Returning that result to the library
-lets later inquiry begin from a firmer foundation. Neither this conviction
-nor a growing proof library establishes that one program can enumerate or
-decide every truth.
+Computation constructs examples and counterexamples, searches for proofs and
+checks them. A verified proof extends what the library can justify and reuse.
+Neither this philosophical conviction nor a growing proof library establishes
+that one program can enumerate or decide every truth.
 
 The repository makes part of this geometry precise. Its
 [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
@@ -51,7 +46,6 @@ says that, on a nonempty state space, a target admits a recovery function from
 an observation exactly when that target is constant on each observation
 fiber. Here a fiber is the set of states giving the same observation; the
 existence of a recovery function alone gives no algorithm or cost bound.
-These are precise structures with which to investigate our guiding picture.
 
 ## Start your journey
 
@@ -91,10 +85,9 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
-The library contains Lean 4 proofs, theory inputs, experiments and checking
-tools. Golden integers, Fibonacci weights and Zeckendorf representations are
-one thread; the examples below also explore conjecture refutation and limits
-of local observation.
+Golden integers, Fibonacci weights and Zeckendorf representations are one
+thread of the library; the examples below also explore conjecture refutation
+and limits of local observation.
 
 ## Three places to look
 
@@ -141,39 +134,43 @@ between an arithmetic algorithm and an exact bound, however large the inputs.
 
 ## Toward holographic spacetime
 
-We aim to study time and space together in a **holographic spacetime geometry**:
-how a whole relational structure is represented through observations, and
-under which conditions those observations support reconstruction and action.
-This is a research program, with explicit models and open bridges to physics.
+We study **holographic spacetime geometry** as a question about time, space and
+observation: when do partial records support reconstruction and action?
 
-[Contextual spacetime arithmetic](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
-keeps finite event archives with time, position, causal order and provenance,
-then studies what survives a numerical projection.
-[Recursive relational observation](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
-asks when observations preserve composition, shared sources and the target
-of a question. The
-[context geometry volume](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
-develops distances using allowed experiments and their responses. These
-volumes are theory inputs; their prose does not certify formal coverage.
+Theory inputs study
+[event archives](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+retaining time, position, causal order and provenance;
+[when observations preserve](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+composition, shared sources and targets; and
+[experimental distances](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+defined through allowed experiments and responses. Their prose does not certify
+formal coverage.
 
-A concrete [Lean counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
-shows why the distinction matters: in its finite archive model, adding an
-inactive event can leave the current spatial readout unchanged while making
-a specified temporal composition illegal. What a snapshot preserves and what
-a history permits must therefore be checked separately in this model.
+A [finite-archive counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+leaves the current spatial readout unchanged when an inactive event is added,
+while making a specified temporal composition illegal.
 
-The holographic direction asks which additional relations make reconstruction
-possible, at what resolution, and with what error and resource bounds.
-Identifying these models with physical spacetime, or deriving a physical
-holographic duality, remains outside the established results presented here.
+A positive [tree extension theorem](D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+applies to nonempty local record sets on a finite tree: each recorded variable
+must occur on a connected subtree, and neighbors must allow exactly the same
+joint assignments on their full overlap. Then any allowed local record extends
+to a record on the union of the local variable sets, satisfying every local
+constraint.
+
+This establishes a compatible completion; uniqueness, original-history recovery
+and computational cost require further results. Reconstruction with stated
+resolution and error bounds, and links to physical spacetime or holographic
+duality, remain research questions.
 
 ## A continuing research program
 
-The [research directions](docs/VISION.md#research-directions) pair each open
-question with evidence that would advance it. Let new proofs, counterexamples
-and reproducible experiments sharpen those questions. Keep this entrance
-compact by replacing weaker explanations and preserving the assumptions
-needed to reuse each result.
+The [research directions](docs/VISION.md#research-directions) ask:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
+
+The guide states what would advance each question.
 
 ## Information escape
 
@@ -222,23 +219,26 @@ these four questions to follow what becomes distinguishable and what stays open.
 
 ## What is proved, and what is open
 
-[D5/](D5/) contains the formal development. [Theory prose](docs/develop/theory/)
-supplies research input, and [experiments](Evidence/) supply observations within
-their declared scope. Neither prose nor numerical agreement establishes a
-Lean theorem. The C# harness checks repository rules, proof reports and frozen
-state; independent review examines whether statements faithfully express the
-intended mathematics. Admitted proofs are recorded in the
-[frozen ledger](Golden/Frozen/state/), with precise Lean statements and their
-assumptions and axiom dependencies as the formal basis for reuse.
+Mathematical reuse rests on the statements, checked proof terms and axiom
+dependencies in the [Lean source](D5/). The
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[Theory prose](docs/develop/theory/) supplies research input, and
+[experiments](Evidence/) supply observations within their declared scope;
+neither substitutes for a Lean proof. The C# harness checks repository rules,
+proof reports and frozen state. Independent review examines whether statements
+faithfully express the intended mathematics.
 
 ```mermaid
 flowchart TD
     accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, compute and test hypotheses, check a proof or refutation, and keep a reusable result. A dashed arrow leads to the next open question.
+    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
     Q([Ask a precise question]) --> T[Compute and test hypotheses]
     T --> P[Check a proof or refutation]
     P --> R[[Keep a reusable result]]
     R -.-> N{What remains open?}
+    T -.-> N
+    P -.-> N
+    N -.-> Q
     classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
     classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
     classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
@@ -247,11 +247,9 @@ flowchart TD
     class N frontier
 ```
 
-*A schematic of inquiry, not runtime behavior or dependency data.* In words:
-question → computation and tests → checked proof or refutation → reusable
-result → next open question. A question can remain unresolved at any stage;
-tests alone do not establish a theorem. The dashed arrow and diamond mark the
-open frontier, so color is not needed to read the distinction.
+*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
+do not establish a theorem. Dashed paths return unresolved questions to
+another inquiry, including when no checked result was obtained.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by

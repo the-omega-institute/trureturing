@@ -62016,3 +62016,1960 @@ $$
 证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 211. 圆盘接触附近的精确最优秩切换
+
+固定 $\beta>0$、$0<\gamma<\beta$、$R>1$，令
+$\delta=R-1$、$\Sigma=R+1$。沿用第189、200、206、207节
+同一个全共同 CPTP、全部外部参考的恢复任务，来源为 $\ell=h\epsilon$。
+为避免与第190节的误差过零点混名，把圆盘接触点写为 $h_b$：
+
+$$
+n_b=\frac{\gamma}{2\beta},\qquad
+m_b=\sqrt{\frac14-n_b^2},\qquad
+h_b=\frac{3\beta Rm_b}{2-m_b}
+=\frac{3\beta R\sqrt{1-(\gamma/\beta)^2}}
+{4-\sqrt{1-(\gamma/\beta)^2}}.
+\tag{211.1}
+$$
+
+第206、207节的一致值展开不固定有限噪声下的精确 Choi 秩。
+本节建立带符号额外权重的局部 TP 图，把真实完整目标逐次约化为
+一个标量互补约束，再由实际 PSD 梯度对偶证明全类最优性。
+
+### 211.1 结论与准确范围
+
+**定理211.1（局部精确最优秩切换）。**
+存在固定 $0<\eta<h_b$、$\epsilon_0>0$ 及实解析函数 $h_b(\epsilon)$，
+$h_b(0)=h_b$，使对 $0<\epsilon<\epsilon_0$、$|h-h_b|<\eta$：
+
+1. 精确最优的对称化两结果 Choi 对唯一；
+2. 若 $h<h_b(\epsilon)$，其 Choi 秩模式为 $(1,2)$；
+3. 若 $h\ge h_b(\epsilon)$，其 Choi 秩模式为 $(1,1)$。
+
+选择 $\epsilon_0$ 时同时保证
+$(h_b+\eta)\epsilon_0\le1/2$ 及
+$R\epsilon_0\le\beta/(\beta^2+\gamma^2)$，
+从而当前邻域中的来源和入口均合法。
+
+曲线在该固定邻域中唯一，且 $h_b(\epsilon)=h_b+O(\epsilon)$。
+两侧的 Choi 对分别由解析分支给出，在曲线上相合；
+不要求合并后的最优器跨曲线解析。
+曲线上的结果1 primal 秩为一，但其对偶核为二维。
+
+这里只讨论正噪声和接触点的固定小邻域。
+不声称全部有限噪声只有一条秩切换曲线，
+不声称未对称化原旗标操作或物理实现唯一。
+$\epsilon=0$ 时实际来源也是零，不将解析分支的选取
+升级为该退化物理点的最优器唯一性。
+
+### 211.2 允许额外 Choi 权重过零的精确 TP 图
+
+按输入优先次序 $(a,c,b,d)$ 写 Choi 向量。
+两份主 Kraus 固定 $a_j>0$：
+
+$$
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},
+\qquad k_j=(a_j,c_j,b_j,d_j)^{\mathsf T}.
+$$
+
+给结果1增加带符号权重：
+
+$$
+J_0=k_0k_0^\dagger,\qquad
+J_1=k_1k_1^\dagger+tww^\dagger,\qquad
+w=(0,u,1,v)^{\mathsf T},\quad u,v\in\mathbb C.
+\tag{211.2}
+$$
+
+$t$ 暂可正可负；只有 $t\ge0$ 才作为物理候选。
+额外矩阵为 $W=\begin{psmallmatrix}0&1\\u&v\end{psmallmatrix}$。
+因为 $a_1>0$，$w,k_1$ 独立，所以 $t>0$ 时结果1 Choi 秩恰为二，
+$t=0$ 时恰为一。
+
+用五个快实坐标
+$x=(\xi,\operatorname{Re}c_0,\operatorname{Im}c_0,
+\operatorname{Re}c_1,\operatorname{Im}c_1)$，置
+
+$$
+P=1-t|u|^2,\qquad C_{\rm main}=|c_0|^2+|c_1|^2,
+$$
+
+$$
+a_j=\sqrt{(P-C_{\rm main})/2+(-1)^j\xi},\qquad
+p=(a_0,c_0,a_1,c_1)^{\mathsf T}.
+\tag{211.3}
+$$
+
+于是 $\|p\|^2=P$。在 $p^\perp$ 中取解析正交标架，
+用五个实变量 $y$ 参数化其中单位球面的局部图 $s(x,t,u;y)$。
+基点为
+
+$$
+s_*=(i\sqrt2n_b,\sqrt2m_b,-i\sqrt2n_b,\sqrt2m_b)^{\mathsf T}.
+$$
+
+它是单位向量，且与 $p_*=(1,0,1,0)^{\mathsf T}/\sqrt2$ 正交。
+先投影并作 Gram–Schmidt，再用两个复坐标和一个相位，
+可得所需解析球面图。令
+
+$$
+R_t=1-t(1+|v|^2),\qquad
+r=-\frac{t\overline u v}{P}p+
+\sqrt{R_t-\frac{t^2|u|^2|v|^2}{P}}\,s(x,t,u;y).
+\tag{211.4}
+$$
+
+把 $r$ 分量依次读为 $b_0,d_0,b_1,d_1$。
+根号及分母在固定基点邻域严格合法；全图实解析，并且
+
+$$
+\|p\|^2+t|u|^2=1,\quad
+\|r\|^2+t(1+|v|^2)=1,\quad
+p^\dagger r+t\overline u v=0.
+\tag{211.5}
+$$
+
+因此对带符号 $t$ 都有同一仿射 TP 约束；
+当 $t\ge0$ 时，得到真实共同 CPTP instrument。
+
+固定 $(t,u,v)$ 时，$(x,y)$ 覆盖两份主 Kraus 的全部局部 TP 切向，
+模去两份整体相位。$K_0$ 在基点可逆，附近仍可逆。
+这里只构造候选，尚未对原优化集合限制秩。
+
+### 211.3 逐层消去与解析除法
+
+第207节提供环境实解析函数；它只在基点附近的合法共同 CPTP 点上
+与真实完整参考误差一致。
+记其与上述图的复合为
+
+$$
+f(\epsilon,h,x,y,t,u,v)
+=\widetilde e(h\epsilon,\epsilon,\Gamma(x,y,t,u,v)).
+\tag{211.6}
+$$
+
+带符号变量只用于解析延拓，不解释为物理操作。
+
+**五个快坐标。**
+
+在 $\epsilon=0$，精确基点公式为
+
+$$
+f(0,h,x,y,t,u,v)
+=\frac34+\frac{C_{\rm main}+t|u|^2}{4}
++\frac{\xi^2}{1-C_{\rm main}-t|u|^2}.
+\tag{211.7}
+$$
+
+快 Hessian 在全基点为
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)\succ0$。
+隐函数定理唯一解出 $x=X(\epsilon,h,y,t,u,v)$，
+使 $\partial_xf=0$，且
+$X(0,h,y,t,u,v)=0$ 是整面恒等式。
+消去后记为 $f_1$，则
+
+$$
+f_1(0,h,y,t,u,v)=\frac34+\frac{t|u|^2}{4}.
+\tag{211.8}
+$$
+
+**额外 Kraus 的泄漏方向。**
+
+$t=0$ 时图及 $f_1$ 与 $u,v$ 无关，
+故 $\partial_uf_1$ 的每个实分量可被 $t$ 解析整除。
+将
+
+$$
+\frac1t\partial_uf_1=0
+\tag{211.9}
+$$
+
+按解析延拓解释，包括 $t=0$。
+它在 $\epsilon=0$ 为 $u/2=0$，
+两个实分量的 Jacobian 为 $I_2/2$。
+隐函数定理给 $u=U(\epsilon,h,y,t,v)$，
+且 $U(0,h,y,t,v)=0$。
+
+消去后记 $f_2$，整面上 $f_2(0,h,y,t,v)=3/4$，
+故有真正的解析整除
+
+$$
+H(\epsilon,h,y,t,v)=\frac{f_2-3/4}{\epsilon}.
+\tag{211.10}
+$$
+
+$H$ 在 $t=0$ 仍与 $v$ 无关。
+
+**额外 Kraus 的剩余方向。**
+
+令 $\kappa_0=\beta\delta/4>0$、$\kappa_d=\beta R/4>0$。
+在 $\epsilon=0,h=h_b$，消去后 $x=u=0$，
+$a_j=1/\sqrt2$、$b_1=-b_0$，
+额外向量为 $(0,0,1,v)$。
+第206节在 $\rho=0$ 的平方恒等式精确给
+
+$$
+\begin{aligned}
+H(0,h_b,y,t,v)-\Phi_{h_b}
+={}&\kappa_0|b_0-i\sqrt2n_b|^2\\
+&+\left(\kappa_d+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right)
++\kappa_dt|v|^2.
+\end{aligned}
+\tag{211.11}
+$$
+
+它对小带符号 $t$ 也成立，因为只使用仿射 TP 和代数展开。
+$\partial_vH$ 可被 $t$ 解析整除。
+在全基点，$(1/t)\partial_vH$ 对两个实 $v$ 分量的 Jacobian
+为 $2\kappa_dI_2=\beta RI_2/2\succ0$。
+主列关于 $v$ 只通过 $t|v|^2$ 变化，
+而主列二次型在基点的一阶导数为零，
+故 Jacobian 正是最后一项的 $2\kappa_dI_2$。
+于是
+
+$$
+\frac1t\partial_vH=0
+\tag{211.12}
+$$
+
+唯一给出解析 $v=V(\epsilon,h,y,t)$。
+在 $\epsilon=0$，一阶函数对 $v$ 仅通过 $|v|^2$ 依赖，
+所以 $V(0,h,y,t)=0$。
+
+**五个慢坐标和一个标量约束。**
+
+代入 $V$ 得 $H_1(\epsilon,h,y,t)$。
+在全基点，其关于六个实坐标 $(y,t)$ 的 Hessian 严格正定。
+确实，当 $x=u=v=0$ 时，
+
+$$
+2|b_0|^2+|d_0|^2+|d_1|^2=1-t.
+$$
+
+$(y,t)\mapsto(b_0,d_0,d_1)\in\mathbb C^3$
+是局部实微分同胚：$y$ 给五个球面方向，$t$ 给非零径向方向。
+（211.11）在这六个方向为正定二次型。
+
+$\partial_yH_1=0$ 唯一给解析 $y=Y(\epsilon,h,t)$。
+最终定义
+
+$$
+q(\epsilon,h,t)=H_1(\epsilon,h,Y(\epsilon,h,t),t),
+\qquad
+\mu(\epsilon,h,t)=\partial_tq(\epsilon,h,t).
+\tag{211.13}
+$$
+
+Schur 补给 $q_{tt}(0,h_b,0)>0$，
+固定缩小邻域后保持 $q_{tt}>0$。
+沿完全消去后的候选族，精确目标为
+
+$$
+\mathcal V(\epsilon,h,t)=\frac34+\epsilon q(\epsilon,h,t).
+\tag{211.14}
+$$
+
+### 211.4 标量活跃约束的横截性
+
+只用 $\epsilon=0$ 的一阶函数计算接触导数。
+此时 $x=u=v=0$，固定 $t$ 的唯一慢驻点具有
+
+$$
+b_0=i\sqrt2n,\quad b_1=-i\sqrt2n,\quad
+d_0=d_1=\sqrt2m,\qquad m^2+n^2=\frac{1-t}{4}.
+\tag{211.15}
+$$
+
+其余相位及反对称方向由正 Hessian 唯一固定。
+函数为第189节的
+
+$$
+F_h=\frac{7h}{12}-\frac{\beta\delta}{8}
+-\frac{4h}{3}m+\left(\frac h3+\beta R\right)m^2
++\frac{\delta}{2}(\beta n^2-\gamma n).
+\tag{211.16}
+$$
+
+允许带符号乘子 $\rho$，
+使用 $F_h+\rho(m^2+n^2-(1-t)/4)$，局部驻点满足
+
+$$
+m=\frac{2h}{h+3\beta R+3\rho},\qquad
+n=\frac{\gamma\delta}{2(\beta\delta+2\rho)},\qquad
+m^2+n^2=\frac{1-t}{4}.
+\tag{211.17}
+$$
+
+令
+
+$$
+A_b=\frac{h_b}{3}+\beta R,\qquad
+D_b=\frac{2m_b^2}{A_b}+\frac{4n_b^2}{\beta\delta}>0,\qquad
+m'_b=\frac{6\beta R}{(h_b+3\beta R)^2}>0.
+\tag{211.18}
+$$
+
+约束左侧对 $\rho$ 的导数为 $-D_b$，
+所以（211.17）确有唯一解析解。
+包络微分给
+
+$$
+\mu(0,h,t)=\frac{\rho(h,t)}4.
+\tag{211.19}
+$$
+
+在接触点精确有
+
+$$
+\boxed{
+q_{tt}(0,h_b,0)=\frac1{16D_b}>0,\qquad
+q_{th}(0,h_b,0)=\frac{m_bm'_b}{2D_b}>0.
+}
+\tag{211.20}
+$$
+
+不约束 $t$ 的驻点对应 $\rho=0$，位置为
+
+$$
+t_0(h)=1-4\left(\frac{2h}{h+3\beta R}\right)^2-4n_b^2,
+\qquad t'_0(h_b)=-8m_bm'_b<0.
+\tag{211.21}
+$$
+
+这些是实际标量约束的非退化和横截读数，
+没有使用最优值的二阶系数或两侧值相等。
+
+$\mu_h(0,h_b,0)>0$ 使
+$\mu(\epsilon,h,0)=0$ 唯一给解析曲线 $h=h_b(\epsilon)$。
+固定缩小邻域，使 $\mu_h>0$，则
+
+$$
+\mu(\epsilon,h,0)<0\iff h<h_b(\epsilon).
+\tag{211.22}
+$$
+
+由 $q_{tt}>0$，$\mu(\epsilon,h,t)=0$
+有唯一解析根 $\widehat t(\epsilon,h)$，
+在左侧严格为正、右侧为负。
+物理候选取
+
+$$
+t^\sharp=
+\begin{cases}
+\widehat t(\epsilon,h),&h<h_b(\epsilon),\\
+0,&h\ge h_b(\epsilon).
+\end{cases}
+\tag{211.23}
+$$
+
+于是 $t^\sharp\ge0,\mu^\sharp\ge0,t^\sharp\mu^\sharp=0$。
+可写
+$h_b'(0)=-q_{\epsilon t}(0,h_b,0)/q_{ht}(0,h_b,0)$；
+此式确定该解析曲线的位移首系数。
+
+### 211.5 实际完整参考梯度的 PSD 证书
+
+候选已在全部主 Kraus TP 切向上驻定。
+$K_0$ 可逆，所以共同 TP 约束微分满秩：
+给定 Hermitian $H$，取
+$\delta K_0=K_0^{-\dagger}H/2$、$\delta K_1=0$。
+于是存在唯一 Hermitian 乘子 $\Lambda$，实解析依赖
+$(\epsilon,h,t)$，使
+
+$$
+S_j=G_j+\Lambda\otimes I,\qquad
+G_j=\partial_{J_j}\widetilde e(h\epsilon,\epsilon,\Gamma),
+\qquad S_jk_j=0.
+\tag{211.24}
+$$
+
+唯一性来自 $K_0$ 可逆；
+解析性来自满秩线性方程的解析右逆。
+输入优先乘子沿用第209节的约定。
+
+**整条零噪声参数面上的解析整除。**
+
+在 $\epsilon=0$，消去后的快变量满足
+$a_j=1/\sqrt2,c_j=0,u=0$。于是
+
+$$
+G_j(0,h,t)=-P_a/4,\qquad
+\Lambda(0,h,t)=P_0/4,\qquad
+S_j(0,h,t)=P_c/4.
+\tag{211.25}
+$$
+
+这是整个小 $(h,t)$ 面上的恒等式。
+所以慢块和快慢交叉块能逐条目被 $\epsilon$ 解析整除。
+
+全基点的慢块首项由完整目标的 $L_h$ 梯度直接核对：
+第200.6式给
+$\partial_{B_j}L_h=-\beta c_j^{\rm in}/4$，
+$\partial_{D_j}L_h=0$，
+及 $(\partial_{J_j}L_h)_{da}=-h_b(2-m_b)/6$。
+在（211.24）的 $d$ 分量使用
+$a_j=1/\sqrt2,d_j=\sqrt2m_b$，得到
+
+$$
+(\partial_\epsilon\Lambda)_{11}
+=\frac{h_b(2-m_b)}{12m_b}=\frac{\beta R}{4}.
+\tag{211.26}
+$$
+
+$\epsilon$ 引起的基点梯度移动只在 $a$ 对角上出现，
+不会改变 $b,d$ 块；
+零阶 slack 作用在移动的 $k_j$ 上也只影响 $c$ 方程。
+故 $S_0/\epsilon$ 的 $b,d$ 慢块极限为
+$\operatorname{diag}(\beta\delta/4,\beta R/4)$；
+$S_1/\epsilon$ 在 $d$ 方向的极限为 $\beta R/4$，
+在 $b$ 方向为零。
+
+**结果1的精确剩余标量。**
+
+主 Kraus 驻定后，（211.9）、（211.12）精确等价于
+
+$$
+e_c^\dagger S_1w=0,\qquad e_d^\dagger S_1w=0.
+\tag{211.27}
+$$
+
+在 $t=0$，这由已证解析除法延拓得到，
+不是把自动为零的 $t$ 倍方程误当约束。
+变动额外权重，使用主 Kraus 驻定及 TP，精确得到
+
+$$
+w^\dagger S_1w=\partial_t\mathcal V
+=\epsilon\mu(\epsilon,h,t).
+\tag{211.28}
+$$
+
+因此在可逆基矩阵 $(k_1,e_c,e_d,w)$ 中，
+$S_1$ 的合同矩阵严格为
+
+$$
+S_1\ \sim\
+\begin{pmatrix}
+0&0&0\\
+0&B_1&0\\
+0&0&\epsilon\mu
+\end{pmatrix},
+\tag{211.29}
+$$
+
+其中 $B_1$ 为 $2\times2$ Hermitian 矩阵。
+$c$ 快对角在基点为 $1/4$，
+$d$ 慢对角除以 $\epsilon$ 后为 $\beta R/4$，
+交叉项是 $O(\epsilon)$。
+整面消失（211.25）和 Schur 补给：
+固定缩小邻域后，$B_1\succ0$ 对小 $\epsilon>0$ 成立。
+
+同理，在 $(k_0,e_c,e_b,e_d)$ 基中，
+$S_0$ 的首行首列为零，其余块有一个固定快正方向、
+两个 $\epsilon$ 阶慢正方向；
+由（211.26）及 Schur 补，它严格正定。
+对（211.23）的物理候选，因此
+
+$$
+\boxed{
+S_0\succeq0,\quad\ker S_0=\mathbb Ck_0,\qquad
+S_1\succeq0.
+}
+\tag{211.30}
+$$
+
+$\mu>0$ 时，$\ker S_1=\mathbb Ck_1$；
+$\mu=0$ 时，$\ker S_1=\operatorname{span}_{\mathbb C}\{k_1,w\}$。
+候选精确满足 $S_jJ_j^\sharp=0$，
+包括临界点 $t=\mu=0$。
+
+### 211.6 任意多 Kraus 共同 CPTP 的全局匹配
+
+完整误差对共同 Choi 对凸。
+任取合法竞争者 $\Gamma$，不限制其秩或距离；
+可行线段在候选端的导数由环境解析函数给出。因此
+
+$$
+\begin{aligned}
+e(\Gamma)
+&\ge e(\Gamma^\sharp)
++\sum_j\operatorname{Tr}[G_j(J_j-J_j^\sharp)]\\
+&=e(\Gamma^\sharp)+\sum_j\operatorname{Tr}(S_jJ_j)\\
+&\ge e(\Gamma^\sharp).
+\end{aligned}
+\tag{211.31}
+$$
+
+共同 TP 消去乘子，精确互补消去候选项，
+真实 PSD slack 给最后一步。
+候选物理可行，故精确达到全类最优值。
+第189节无损对称化仍保证这也是原完整任务的最优值。
+
+平方恒等式在本证明中只确定消元 Jacobian 和慢块极限；
+有限噪声对偶来自实际梯度、解析整除、Schur 补和精确标量互补。
+没有把一阶平方恒等式直接当成有限噪声的全类证书。
+
+### 211.7 全体最优器的唯一性与临界线
+
+若另一个 Choi 对也最优，（211.31）等号条件强制
+
+$$
+\operatorname{ran}J_0\subseteq\mathbb Ck_0,\qquad
+\operatorname{ran}J_1\subseteq\ker S_1.
+\tag{211.32}
+$$
+
+$\mu>0$ 时两份结果至多秩一；
+$\mu=0$ 时结果1至多秩二。
+在此固定核面内，靠近候选的每个 PSD 点都可用同一局部图表示，
+且 $t\ge0$。
+结果0只改变 $k_0$ 的正权重；
+在 $\operatorname{span}\{k_1,w\}$ 内，对结果1的正 $a$ 主元
+作 Schur 分解，余项是非负标量乘 $ww^\dagger$。
+$w_a=0,w_b=1$ 保证这恰落入当前图。
+
+在固定小图内，前述每次消元也是真实局部最小化：
+
+- 快 Hessian 严格正定；
+- 消去快变量后，$u$ Hessian 为 $t$ 乘一个正定矩阵；
+- 继续消去后，$v$ Hessian 为 $\epsilon t$ 乘一个正定矩阵；
+- 慢 $y$ Hessian 为 $\epsilon$ 乘一个正定矩阵；
+- 最终 $q_{tt}>0$。
+
+各正性来自已计算的解析 Jacobian 和连续性。
+$t=0$ 时，$u,v$ 不影响 Choi 点，本就不是不同物理候选。
+因此在 $t\ge0$ 的当前图内最小 Choi 点唯一：
+$t>0$ 取 $\mu=0$ 的唯一根；
+$t=0,\mu\ge0$ 时边界极小也唯一。
+临界线 $t=\mu=0$ 上，$q_{tt}>0$ 排除任何正 $t$ 的同值近邻。
+
+若有远处另一最优点，凸性使连接两最优点的整条线段仍最优。
+线段位于（211.32）的核面，
+任意足够短的非零段都进入刚才的唯一局部极小图，矛盾。
+所以对称化 Choi 对全局唯一；
+结合 $t^\sharp$ 的符号和（211.2），得到定理211.1的精确秩分类。证毕。
+
+### 211.8 解析分支的相接与接触曲线的严格负位移
+
+上述正规形同时给出两条关于 $(\epsilon,h)$ 联合解析的值分支：
+
+$$
+E_A(\epsilon,h)=\frac34+\epsilon q(\epsilon,h,0),\qquad
+E_I(\epsilon,h)=\frac34+
+\epsilon q(\epsilon,h,\widehat t(\epsilon,h)).
+\tag{211.33}
+$$
+
+$E_A$ 在接触曲线的右侧是真实最优值；
+$E_I$ 在左侧是真实最优值。
+跨过曲线后，两者仍作为解析延拓存在，
+其中带负额外权重的延拓不解释为合法操作。
+
+在 $h=h_b(\epsilon)$ 上，
+$\widehat t(\epsilon,h)=0$ 且 $q_t(\epsilon,h,0)=0$。
+链式法则因此精确给
+
+$$
+\boxed{
+E_I=E_A,\qquad
+\partial_hE_I=\partial_hE_A,\qquad
+\partial_\epsilon E_I=\partial_\epsilon E_A
+\quad\text{在 }h=h_b(\epsilon)\text{ 上}.
+}
+\tag{211.34}
+$$
+
+所以实际最优值在该曲线上一阶连续相接。
+此相接来自已经证明的精确标量互补，
+不是额外假设，也不是从二阶值相等猜得。
+
+**两侧展开的可微性。**
+因为（211.33）联合解析，存在解析的系数函数和解析余因子，使
+
+$$
+E_\nu(\epsilon,h)
+=\frac34+\epsilon\Phi_\nu(h)+\epsilon^2Q_\nu(h)
++\epsilon^3R_\nu(\epsilon,h),\qquad \nu=I,A.
+\tag{211.35}
+$$
+
+这里先由实际解析分支定义 Taylor 系数，再识别它们：
+对每个固定 $h<h_b$，充分小正 $\epsilon$ 时 $E_I$
+是真实最优值，第206、207节唯一确定它的前两阶系数；
+同理，固定 $h>h_b$ 时识别 $E_A$ 的系数。
+内侧公式使用
+$m_I=2h/(h+3\beta R)$、$n_I=\gamma/(2\beta)$；
+外侧公式使用（211.17）在 $t=0$ 的解析乘子分支，
+允许延拓后的 $\rho$ 为负。
+两套 $\Phi,Q$ 的代数表达式在 $h_b$ 的邻域解析，
+故其在各开侧的系数等式延拓到整个共同邻域。
+
+因此（211.35）中的 $\Phi_\nu,Q_\nu$
+正是第206节两侧公式的解析延拓。
+在固定小闭邻域，$R_\nu$ 及其 $h$ 导数有界；
+于是可以对（211.35）求 $h$ 导数，
+余项仍为 $O(\epsilon^3)$。
+这里没有对一个仅有数值上界的值余项擅自求导。
+
+令
+
+$$
+s=\sqrt{1-(\gamma/\beta)^2}\in(0,1),\qquad
+\mathcal D=(R-1)s^2(4-s)+8R(1-s^2)>0.
+$$
+
+定义
+
+$$
+\begin{aligned}
+P_R(s)={}&6(3R+1)-(11R+13)s^2+4(R+1)s^3\\
+&+(5-R)s^4-(R+2)s^5.
+\end{aligned}
+\tag{211.36}
+$$
+
+**推论211.2（接触曲线的一次负位移）。** 有
+
+$$
+\boxed{
+h_b(\epsilon)
+=h_b-\frac{\beta^2R\,P_R(s)}{s(4-s)^2}\epsilon
++O(\epsilon^2),
+\qquad P_R(s)>0.
+}
+\tag{211.37}
+$$
+
+相应实际来源边界为
+
+$$
+\ell_b(\epsilon)
+=h_b\epsilon-\frac{\beta^2R\,P_R(s)}{s(4-s)^2}\epsilon^2
++O(\epsilon^3).
+\tag{211.38}
+$$
+
+**证明。**
+令 $\Delta\Phi''=\Phi_I''(h_b)-\Phi_A''(h_b)$，
+$\Delta Q'=Q_I'(h_b)-Q_A'(h_b)$。
+在 $\epsilon=0$，内侧分支消去自由的 $t$，
+外侧分支固定 $t=0$。
+由（211.20），约化 Hessian 的 Schur 补直接给
+
+$$
+\begin{aligned}
+\Delta\Phi''
+&=-\frac{q_{ht}(0,h_b,0)^2}{q_{tt}(0,h_b,0)}
+=-\frac{4(m_bm_b')^2}{D_b}\\
+&=-\frac{s^2(R-1)(4-s)^4}
+{72\beta R\,\mathcal D}<0.
+\end{aligned}
+\tag{211.39}
+$$
+
+最后一步使用
+$D_b=\mathcal D/[8\beta R(R-1)]$。
+这独立保证位移分母非零。
+
+为核对完整二阶系数的导数差，记 $g=\gamma/\beta$，
+并把第206节的 $Q$ 暂看成光滑变量 $(h,m,n)$ 的函数：
+在其中使用
+$\theta=\gamma(R+1)/2+\beta(R-1)n$
+和 $\Phi=F_h(m,n)$。
+接触点满足 $m_b=s/2,n_b=g/2$，且
+$\partial_mF_h=\partial_nF_h=0$。
+
+令
+$\alpha=s(4-s)/(8\beta R)$、
+$\zeta=g/[\beta(R-1)]$。
+对（211.17）在 $t=0$ 微分，得到
+
+$$
+\rho_A'(h_b)=\frac{s(R-1)(4-s)^2}{3\mathcal D},\qquad
+m_I'-m_A'=\alpha\rho_A',\qquad
+n_I'-n_A'=\zeta\rho_A'.
+\tag{211.40}
+$$
+
+两侧共同的显式 $h$ 偏导相消，所以
+$\Delta Q'=\rho_A'(\alpha Q_m+\zeta Q_n)$。
+直接微分（206.7）—（206.8），在接触点得到
+
+$$
+\begin{aligned}
+Q_m&=\frac{\beta^2Rs}{3(4-s)}
+\left[-4(R-1)-4(R+1)s-2(R+1)s^2+(R+2)s^3\right],\\
+Q_n&=-\frac{\beta^2g(R-1)}8
+\left[(R-1)s^2+6R+2\right].
+\end{aligned}
+\tag{211.41}
+$$
+
+例如 $n$ 偏导中
+$L_{s,n}=L_{d,n}=0$、
+$T_{s,n}=\beta g(R-1)s$、
+$a_{{\rm eff},n}=-\beta(R-1)g$、
+$\theta_n=\beta(R-1)$；
+这些直接给第二式。
+第一式由同一 $Z-a_{\rm eff}^2/4-\theta^2m^2$ 的 $m$ 偏导取得。
+使用 $g^2=1-s^2$ 合并，即得
+
+$$
+\alpha Q_m+\zeta Q_n=-\frac{\beta}{24}P_R(s),\qquad
+\Delta Q'
+=-\frac{\beta s(R-1)(4-s)^2}{72\mathcal D}P_R(s).
+\tag{211.42}
+$$
+
+令 $h_b(\epsilon)=h_b+k\epsilon+O(\epsilon^2)$。
+将（211.35）的 $h$ 导数代入精确相接（211.34）。
+两侧 $\Phi'$ 在接触点相同，故
+
+$$
+0=\epsilon^2(\Delta\Phi''\,k+\Delta Q')+O(\epsilon^3).
+$$
+
+于是 $k=-\Delta Q'/\Delta\Phi''$；
+代入（211.39）、（211.42）得到（211.37）。
+
+最后，严格正性来自恒等分解
+
+$$
+\begin{aligned}
+P_R(s)
+={}&s^2\left[
+4(R-1)+4(R+1)s+2(R+1)s^2-(R+2)s^3
+\right]\\
+&+3(1-s^2)\left[(R-1)s^2+6R+2\right].
+\end{aligned}
+\tag{211.43}
+$$
+
+第一行括号中的最后两项为
+$s^2[2(R+1)-(R+2)s]>Rs^2>0$，
+其余项也为正。因此 $P_R(s)>0$，
+有限小噪声下的精确秩切换位置严格向较小 $h$ 移动。
+乘以 $\epsilon$ 得（211.38）。证毕。
+
+### 211.9 结论边界
+
+本节只分类接触点的固定小邻域，不分类整个有限噪声区域，
+也没有证明
+$\gamma\to0$、$\gamma\to\beta$ 或 $R\to1$ 时常数统一。
+“Choi 秩一”指最小 Kraus 数一，不指可逆主 Kraus 矩阵秩一。
+
+## 追加锚（本行以下为增补区）
+
+## 212. 操作容量切换的二次代价与连续响应
+
+固定第211节的模型参数 $\beta>0$、$0<\gamma<\beta$、$R>1$，
+仍对同一个共同 CPTP 接收器和全部外部参考计算误差，来源为 $\ell=h\epsilon$。
+把第211节的切换曲线简记为 $b(\epsilon)=h_b(\epsilon)$，
+并记完整最优值为 $E(\epsilon,h)=\mathscr E(h\epsilon,\epsilon)$。
+以下均可再缩小第211节的固定接触邻域及正噪声范围。
+
+第211节把精确优化化成解析函数 $q(\epsilon,h,t)$，其中
+$q_{tt}>0$、$q_{th}>0$，而额外 Choi 权重满足 $t\ge0$。
+记全部辅助坐标消去后的解析 Choi 候选为 $\Gamma(\epsilon,h,t)$，并置
+
+$$
+\begin{gathered}
+q_t(\epsilon,h,\widehat t(\epsilon,h))=0,\qquad
+\widehat t(\epsilon,b(\epsilon))=0,\\
+\Gamma_A(\epsilon,h)=\Gamma(\epsilon,h,0),\qquad
+\Gamma_I(\epsilon,h)=\Gamma(\epsilon,h,\widehat t(\epsilon,h)).
+\end{gathered}
+\tag{212.1}
+$$
+
+两支对应的解析值为 $E_A=3/4+\epsilon q(\epsilon,h,0)$ 和
+$E_I=3/4+\epsilon q(\epsilon,h,\widehat t)$。
+左侧 $h<b(\epsilon)$ 的物理最优器是 $\Gamma_I$；
+线上及右侧是 $\Gamma_A$。
+本节进一步确定少保留一个操作方向的完整误差代价，以及这次容量变化的可见正则性。
+
+### 212.1 对每个结果限制一个 Kraus 方向
+
+定义紧集
+
+$$
+\mathcal K_{11}=
+\left\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\rm out}(J_0+J_1)=I,\quad
+\operatorname{rank}J_j\le1\right\},
+\tag{212.2}
+$$
+
+并令 $E_{11}(\epsilon,h)$ 为同一完整参考误差在此集合上的最小值。
+这里限制的是无损对称化后的正旗标两结果 instrument。
+不把这个限制等同于原未对称化设备的任意硬件预算。
+
+**定理212.1（全部双秩一操作的精确最优值）。**
+在充分小固定接触邻域和充分小正噪声下，
+
+$$
+\boxed{E_{11}(\epsilon,h)=E_A(\epsilon,h).}
+\tag{212.3}
+$$
+
+在 $\mathcal K_{11}$ 中，唯一最优 Choi 对为 $\Gamma_A$。
+这一结论也覆盖 $h<b(\epsilon)$，此时该受限最优器不是全 CPTP 最优器。
+
+**证明。**
+秩约束使 $\mathcal K_{11}$ 非凸，需要单独证明全局定位。
+由第198节，零噪声完整误差满足
+
+$$
+\lambda=1-\frac{A_0A_1}{A_0+A_1}\ge\frac34,
+\qquad
+\mathcal F=\{A_0=A_1=1/2,\ C_0=C_1=0\}
+\tag{212.4}
+$$
+
+是它的精确最优面；分母为零时误差为一。
+在 $\mathcal K_{11}\cap\mathcal F$ 上，固定两主 Kraus 的正规范
+$a_j=1/\sqrt2$，则
+
+$$
+c_j=0,\qquad b_1=-b_0,\qquad
+2|b_0|^2+|d_0|^2+|d_1|^2=1.
+\tag{212.5}
+$$
+
+这给出该紧集的完整五维实球面表示。
+在 $h=h_b$，第206节的平方恒等式限制到此球面后为
+
+$$
+\begin{aligned}
+L_{h_b}-\Phi_{h_b}
+={}&\frac{\beta(R-1)}4|b_0-i\sqrt2n_b|^2\\
+&+\left(\frac{\beta R}4+\frac{h_b}{12}\right)
+\left(|d_0-\sqrt2m_b|^2+|d_1-\sqrt2m_b|^2\right).
+\end{aligned}
+\tag{212.6}
+$$
+
+因此球面上只有一个极小点，其局部球面 Hessian 正定。
+紧性保证当 $h\to h_b$ 时，所有球面全局极小点都进入该点的任意固定小邻域；
+否则取极小点聚点会得到 $h_b$ 处另一个极小点。
+正 Hessian 和隐函数定理随后给唯一解析极小分支。
+它就是第211节允许带符号 $\rho$ 的圆周驻点分支。
+再缩小并固定一个闭 $h$ 区间，上述定位和 Hessian 正性均一致成立。
+
+现在令 $\epsilon_n\downarrow0$、$h_n$ 位于该闭区间，
+并取任意 $\mathcal K_{11}$ 最优器 $\Gamma_n$。
+合法候选 $\Gamma_A$ 给出 $e(\Gamma_n)\le3/4+O(\epsilon_n)$。
+紧性和目标连续性先使全部聚点落在 $\mathcal K_{11}\cap\mathcal F$。
+在该面的固定邻域，第207节给一致冻结展开
+
+$$
+e(\Gamma_n)=\lambda(\Gamma_n)
++\epsilon_n L_{h_n}(\Gamma_n)+O(\epsilon_n^2).
+\tag{212.7}
+$$
+
+与 $\Gamma_A$ 的值比较，使用 $\lambda\ge3/4$，
+可知任意聚点的 $L_h$ 值不大于上段唯一球面极小值。
+所以所有聚点恰是对应的解析球面极小点。
+这证明真实受限最优器一致进入第211节在 $t=0$ 的完整主 Kraus 图。
+
+此处 $A_j$ 接近 $1/2$，所以两份 Choi 秩都恰为一，
+每个最优器都是该光滑 TP 流形上的驻点。
+快坐标隐函数定理与除以 $\epsilon$ 后的慢坐标隐函数定理
+唯一确定该图内的驻点为 $\Gamma_A$。
+故它是整个 $\mathcal K_{11}$ 的唯一最优器，得到（212.3）。证毕。
+
+### 212.2 缺少操作方向的精确代价
+
+记 $[x]_+=\max\{x,0\}$。
+
+**定理212.2（容量限制的正部平方代价）。**
+存在联合实解析且严格正的函数 $C(\epsilon,h)$，使
+
+$$
+\boxed{
+E_{11}(\epsilon,h)-E(\epsilon,h)
+=\epsilon C(\epsilon,h)[b(\epsilon)-h]_+^2.
+}
+\tag{212.8}
+$$
+
+因此在固定小邻域存在常数 $0<c_-\le c_+<\infty$，使该代价介于
+$c_-\epsilon[b(\epsilon)-h]_+^2$ 与
+$c_+\epsilon[b(\epsilon)-h]_+^2$ 之间。
+
+**证明。**
+解析根满足 $\widehat t_h=-q_{th}/q_{tt}<0$。
+沿其解析零集整除，得到严格正解析函数 $a$，使
+
+$$
+\widehat t(\epsilon,h)=a(\epsilon,h)[b(\epsilon)-h],\qquad
+a(\epsilon,b(\epsilon))=
+\frac{q_{th}(\epsilon,b(\epsilon),0)}{q_{tt}(\epsilon,b(\epsilon),0)}.
+\tag{212.9}
+$$
+
+也可对 $\widehat t_h$ 沿 $h$ 积分直接构造 $a$。
+由于 $q_t(\epsilon,h,\widehat t)=0$，两次基本积分精确给
+
+$$
+q(\epsilon,h,0)-q(\epsilon,h,\widehat t)
+=\widehat t^2\int_0^1 r\,
+q_{tt}(\epsilon,h,r\widehat t)\,dr.
+\tag{212.10}
+$$
+
+这个恒等式对正负小 $\widehat t$ 都成立。
+置
+
+$$
+C(\epsilon,h)=a(\epsilon,h)^2
+\int_0^1 r\,q_{tt}(\epsilon,h,r\widehat t)\,dr>0.
+\tag{212.11}
+$$
+
+积分保留局部实解析性。
+左侧物理区的最优值是 $E_I$，右侧是 $E_A=E_{11}$，
+所以（212.10）恰给（212.8）。
+缩小至紧邻域，正连续函数 $C$ 有正下界和有限上界，得到两侧估计。证毕。
+
+**推论212.3（值的一阶光滑与二阶跳跃）。**
+在正噪声接触邻域内，完整最优值 $E$ 对 $(\epsilon,h)$ 为 $C^1$，
+其梯度局部 Lipschitz；但在切换线上不具有连续的 $h$ 二阶导数。
+准确地，左右单侧二阶导数满足
+
+$$
+\boxed{
+E_{hh}\big|_{\rm 右}-E_{hh}\big|_{\rm 左}
+=\epsilon\frac{q_{th}^2}{q_{tt}}
+=2\epsilon C(\epsilon,b(\epsilon))>0,
+}
+\tag{212.12}
+$$
+
+其中 $q$ 的导数在 $(\epsilon,b(\epsilon),0)$ 取值。
+
+**证明。**
+$E_A$、$C$、$b$ 均解析，而 $[x]_+^2$ 是 $C^1$ 且一阶导数局部 Lipschitz，
+故（212.8）给前半结论。
+在曲线上对两解析值分支分别求导，隐式极小消去给
+$\partial_h^2E_I=\epsilon(q_{hh}-q_{ht}^2/q_{tt})$，
+而 $\partial_h^2E_A=\epsilon q_{hh}$。
+相减即得（212.12）。证毕。
+
+第211节的接触导数还给
+
+$$
+a(0,h_b)=8m_bm_b',\qquad
+C(0,h_b)=\frac{2(m_bm_b')^2}{D_b}.
+\tag{212.13}
+$$
+
+### 212.3 最优操作本身的折角与新方向的权重
+
+在切换线上记
+$k=k_1(\epsilon,b(\epsilon),0)$、$w=w(\epsilon,b(\epsilon),0)$，并令
+
+$$
+P=I-\frac{kk^\dagger}{\|k\|^2},\qquad
+a_c=a(\epsilon,b(\epsilon)).
+\tag{212.14}
+$$
+
+因为 $k_a>0$、$w_a=0$、$w_b=1$，有 $Pw\ne0$。
+
+**定理212.4（Choi 导数折角与小特征值的线性启用）。**
+唯一最优 Choi 对跨曲线连续并局部 Lipschitz，但在曲线上关于 $h$ 不可微。
+结果1的导数差具有不随主向量规范消失的投影：
+
+$$
+\boxed{
+P\left[(J_1)_h\big|_{\rm 左}-(J_1)_h\big|_{\rm 右}\right]P
+=-a_cPww^\dagger P\ne0.
+}
+\tag{212.15}
+$$
+
+若 $\lambda_2$ 为最优 $J_1$ 的第二大特征值，则对固定小正 $\epsilon$，
+
+$$
+\boxed{
+\lambda_2
+=c_\lambda(\epsilon)[b(\epsilon)-h]_+
++O([b(\epsilon)-h]_+^2),\qquad
+c_\lambda(\epsilon)=a_c\|Pw\|^2>0.
+}
+\tag{212.16}
+$$
+
+余项可在固定小 $\epsilon$ 区间一致选取。
+
+**证明。**
+两条解析 Choi 分支在线上相合，因此拼接后局部 Lipschitz。
+链式法则给
+$\Gamma_{I,h}-\Gamma_{A,h}=\Gamma_t\widehat t_h=-a_c\Gamma_t$。
+在 $t=0$ 对 $J_1=k_1k_1^\dagger+tww^\dagger$ 求 $t$ 导数，
+左右乘 $P$ 后，主向量移动产生的项全部消失，只剩 $Pww^\dagger P$。
+这证明（212.15），也证明整体最优器不可微。
+
+对第二特征值，在 $\operatorname{span}\{k_1,w\}$ 中使用随参数解析变化的
+正交基。该二维矩阵的迹与行列式分别为
+
+$$
+\|k_1\|^2+t\|w\|^2,\qquad
+t\|k_1\|^2\left\|P_{k_1^\perp}w\right\|^2.
+\tag{212.17}
+$$
+
+在 $t=0$，大特征值是严格正的简单根 $\|k_1\|^2$。
+小根因而解析，且展开为
+$t\|P_{k_1^\perp}w\|^2+O(t^2)$；其余两个 Choi 特征值恒为零。
+代入（212.9），再在曲线上取系数，即得（212.16）。
+所有候选及谱因子在共同解析邻域有界，故可统一控制余项。证毕。
+
+令 $s=\sqrt{1-(\gamma/\beta)^2}$。
+零噪声接触分支有 $\|k\|^2=1$、$\|Pw\|^2=(1+s^2)/2$，
+而 $m_b'=(4-s)^2/(24\beta R)$，所以
+
+$$
+c_\lambda(0)=\frac{s(4-s)^2(1+s^2)}{12\beta R}>0.
+\tag{212.18}
+$$
+
+按 Choi 谱取正交 Kraus 表示，新增 Kraus 向量的范数为 $\sqrt{\lambda_2}$，
+因此以 $\sqrt{b(\epsilon)-h}$ 阶启用；通道本身仍以一阶距离连续。
+Kraus 表示可以改变，这里的不变量是 Choi 秩和 Choi 特征值。
+
+### 212.4 最小接口维数与可见误差不是同一个读数
+
+若把结果标签保留为正交经典输出，正旗标记录通道的 Choi 矩阵是
+$J_0\oplus J_1$。
+其最小 Kraus 数在左侧为三，线上及右侧为二：
+任何 $k$ 个 Kraus 给出的 Choi 矩阵秩至多为 $k$，
+而谱分解又用恰好等于秩的 Kraus 数实现它。
+
+这个离散变化不迫使响应值跳跃。
+在纯初始环境的 Stinespring 表示中，固定使用三维环境，
+让其中一个方向的权重连续降到零，就能连续表示两侧操作；
+按（212.2）限制每个结果至多一个 Kraus 方向时，
+（212.8）给出实际完整参考误差的精确二次代价。
+因此，在这个指定恢复任务中，最小精确接口容量、最优操作的光滑性和
+可见误差的光滑性是三个不同、但可以精确联系的量。
+
+本节没有把 Kraus 数解释为物理空间面积或钟表历时，
+也不扩展到未对称化操作的唯一性或第211节排除的参数退化端点。
+
+## 追加锚（本行以下为增补区）
+
+## 213. 双退化端点的联合解析临界图与来源尺度
+
+固定 $\beta>0$、$R>1$，置 $\delta=R-1$、$\Sigma=R+1$。
+沿用第187—189、207、208节的同一完整参考恢复任务，
+接收端不可访问 $M$，优化仍覆盖全部共同 CPTP 操作。
+采用参数
+
+$$
+x=\beta\epsilon,\qquad H=h/\beta,\qquad
+\nu=1-(\gamma/\beta)^2,\qquad \gamma=\beta\sqrt{1-\nu}.
+\tag{213.1}
+$$
+
+物理来源为 $\ell=h\epsilon=xH$。
+$\nu>0$ 对应题设的 $0<\gamma<\beta$；
+推导中的小负 $\nu$ 也有合法正 $\gamma$，只用于统一局部解析图。
+第211节固定参数下的接触位置展开不覆盖 $\nu\to0,h\to0$ 的联合退化。
+本节先从纯来源精确问题求临界参数，再将实际共同 CPTP 正规形延伸到
+$\gamma=\beta,h=0$，证明联合解析临界图。该图进一步给出
+$\nu\asymp\epsilon$、$h\asymp\sqrt\epsilon$ 下的统一尺度，
+实际来源 $\ell=h\epsilon$ 则按 $\epsilon^{3/2}$ 缩放。
+
+### 213.1 纯来源有限正噪声的精确临界参数
+
+取 $h=0$，$0<x<1/(8R)$，并令 $\nu$ 在零的固定小邻域。
+这同时排除第208节的高噪声平台，并保证两个入口态严格正定。
+第208节的记号在此写成
+
+$$
+A=\frac1{1+(\gamma/\beta)^2}=\frac1{2-\nu},\qquad
+u=A-x,\quad w=A-Rx,\quad r=\sqrt{u/w}.
+$$
+
+缩放投影分支的精确条件为
+$w(1+r)=w+\sqrt{uw}\ge1$。
+因为 $u=w+\delta x$，等号化为
+
+$$
+w+\sqrt{w(w+\delta x)}=1
+\iff w(2+\delta x)=1.
+\tag{213.2}
+$$
+
+右侧解 $w=1/(2+\delta x)<1$，所以平方没有引入伪根；
+左侧严格随 $w>0$ 增加。
+因此临界参数为
+
+$$
+A_*(x)=Rx+\frac1{2+\delta x}.
+$$
+
+特别地，
+
+$$
+\boxed{
+\left(\frac{\gamma_*(\epsilon)}{\beta}\right)^2
+=\frac{1-\Sigma x-R\delta x^2}{1+2Rx+R\delta x^2},
+\qquad
+\nu_*(x)
+=\frac{(3R+1)x+2R\delta x^2}{1+2Rx+R\delta x^2}.
+}
+\tag{213.3}
+$$
+
+所取小噪声范围使分子严格正；临界点位于严格合法区间。
+这是有限正 $\epsilon$ 的精确等式，不是由固定 $\nu$ 的位移式外推。
+有
+
+$$
+\nu_*(x)=(3R+1)x-4R(R+1)x^2+O(x^3)>0.
+\tag{213.4}
+$$
+
+由 $A$ 随 $\nu$ 增加，$\nu>\nu_*(x)$ 时
+第208节最优效果为严格缩放的秩一投影 $\lambda P_v$，$0<\lambda<1$；
+$\nu=\nu_*(x)$ 时 $\lambda=1$；
+$\nu<\nu_*(x)$ 时为中间分支的秩一投影。
+等价地，额外方向在 $\gamma\ge\gamma_*(\epsilon)$ 时消失，
+且 $\gamma_*(\epsilon)<\beta$。
+
+### 213.2 完整对称化 Choi 的唯一性与秩
+
+第208节只声明归约效果唯一，不能不加论证就称原 instrument 唯一。
+在当前纯来源、严格正入口态下，可以补上这一点。
+
+记正旗标上的两份 CP 结果映射为 $\Gamma_j$，
+$\Gamma_0+\Gamma_1$ 保迹。令
+
+$$
+a_j=\operatorname{Tr}[P_0\Gamma_j(\rho_j)],\qquad
+b_j=\operatorname{Tr}[\Gamma_j(\rho_j)].
+$$
+
+显然 $0\le a_j\le b_j$，而
+$E_j=\Gamma_j^*(I)$ 构成二元 POVM。
+第189节的正确纯输出压缩给
+
+$$
+e(\Gamma)\ge1-\frac{a_0a_1}{a_0+a_1}
+\ge1-\frac{b_0b_1}{b_0+b_1}
+\ge\mathscr E(0,\epsilon).
+\tag{213.5}
+$$
+
+最优值不超过 $3/4$，所以达到最优时 $a_0,a_1>0$。
+函数 $ab/(a+b)$ 在两个正变量上严格增加，
+故等号强制 $a_j=b_j$。
+于是
+
+$$
+0=\operatorname{Tr}[\rho_j\Gamma_j^*(P_1)].
+$$
+
+由于 $\rho_j\succ0$、$\Gamma_j^*(P_1)\succeq0$，
+必有 $\Gamma_j^*(P_1)=0$。
+这迫使该结果的每个 Kraus 的第二输出行为零。
+所以实际映射必为
+
+$$
+\Gamma_j(X)=\operatorname{Tr}(E_jX)P_0.
+\tag{213.6}
+$$
+
+第208节的唯一效果因而唯一确定整个对称化 Choi 对：
+$J_j=E_j^{\mathsf T}\otimes P_0$。
+其秩等于效果秩。因此纯来源的精确模式是
+
+$$
+\boxed{
+\nu>\nu_*(x):\ (1,2),\qquad
+\nu\le\nu_*(x):\ (1,1).
+}
+\tag{213.7}
+$$
+
+唯一性只指已固定旗标对称化约定后的 Choi 对。
+它没有把不同环境装置或未经归约旗标实现也判为唯一。
+严格正入口态是本段新增唯一性论证的必要前提；
+不能把它套到 $\epsilon=0$。
+
+### 213.3 端点处的带符号权重图
+
+使用第211节的解析图，但中心改为
+
+$$
+\epsilon=h=\nu=t=u=v=0,\qquad
+K_0^*=\frac1{\sqrt2}\begin{pmatrix}1&i\\0&0\end{pmatrix},
+\quad
+K_1^*=\frac1{\sqrt2}\begin{pmatrix}1&-i\\0&0\end{pmatrix}.
+\tag{213.8}
+$$
+
+仍写
+$J_0=k_0k_0^\dagger$、
+$J_1=k_1k_1^\dagger+tww^\dagger$、
+$w=(0,u,1,v)^{\mathsf T}$，
+用第211节的两列参数化严格满足共同 TP。
+$t$ 可带符号，只有 $t\ge0$ 是物理候选。
+
+**关键修正是满秩条件。**
+此处单个 $K_j$ 不可逆，但共同主 Kraus Gram 为
+
+$$
+B=K_0^\dagger K_0+K_1^\dagger K_1
+=I-tW^\dagger W\succ0
+\tag{213.9}
+$$
+
+在固定邻域仍严格正定。
+对任意 Hermitian $L$，取
+
+$$
+\delta K_j=\frac12K_jB^{-1}L.
+\tag{213.10}
+$$
+
+则共同 TP 的微分恰为 $L$，故约束微分仍满秩。
+若同一乘子差同时消灭两个 Choi 向量，
+等价于该输入作用被两份 $K_j$ 同时消灭；
+由 $B\succ0$ 可知乘子差为零。
+因此实际 Hermitian 乘子仍存在、唯一并解析，
+不需要任何单个 Kraus 可逆。
+
+第207节的谱解析证明也对 $\nu$ 联合成立：
+矩阵系数对 $\gamma=\beta\sqrt{1-\nu}$ 解析，
+基点最高根间隙仍为 $3/4$，参考负曲率仍为 $-3/2$。
+同一谱隐函数与偶性论证给附近合法共同 CPTP 点真实误差的
+$(\epsilon,h,\nu,\Gamma)$ 环境解析延拓。
+这不是把固定参数的大 $O$ 常数未经检验改成统一常数。
+
+### 213.4 双退化中心的解析消元与实际对偶
+
+五个快变量的 Hessian 仍为
+$\operatorname{diag}(2,1/2,1/2,1/2,1/2)$。
+消去后对额外 $u$ 方向的方程除以 $t$，
+其两个实方向 Jacobian 仍为 $I_2/2$。
+随后目标减 $3/4$ 可解析除以 $\epsilon$。
+
+把中心参数下的冻结一阶函数记为 $\mathcal L_*$，
+其平方恒等式成为
+
+$$
+\mathcal L_*-\Phi_0
+=\frac{\beta\delta}{4}|b_0-i/\sqrt2|^2
++\frac{\beta R}{4}(|d_0|^2+|d_1|^2)
++\frac{\beta R}{4}t|v|^2.
+\tag{213.11}
+$$
+
+故额外 $v$ 方程除以 $t$ 后的 Jacobian 为 $\beta RI_2/2$；
+其余五个慢变量加 $t$ 的六维 Hessian 也正定。
+球面加径向坐标到 $(b_0,d_0,d_1)\in\mathbb C^3$
+仍是局部微分同胚，因为中心 $b_0=i/\sqrt2\ne0$。
+没有使用 $m>0$。
+
+因此逐次隐函数和合法解析除法产生
+$q(\epsilon,h,\nu,t)$，其候选目标为
+
+$$
+\mathcal V(\epsilon,h,\nu,t)=\frac34+\epsilon q(\epsilon,h,\nu,t),
+\qquad \mu=\partial_tq.
+\tag{213.12}
+$$
+
+整个零噪声参数面上的实际 slack 仍为 $P_c/4$。
+其余块可精确除以 $\epsilon$。
+
+为核对慢块，不能沿用第211节除以 $m_b$ 的计算。
+在当前中心，第200节完整一阶梯度给
+$(G_j^{(1)})_{ba}=i\beta c_j^{\rm in}/4$、
+$(G_j^{(1)})_{bb}=-\beta c_j^{\rm in}/4$、
+$(G_j^{(1)})_{dd}=0$，
+其中 $c_0^{\rm in}=1,c_1^{\rm in}=R$。
+记乘子的一阶 $ba$ 输入项为 $\Lambda_{10}^{(1)}$。
+两份实际互补方程的 $b$ 分量分别为
+
+$$
+\Lambda_{10}^{(1)}+i\Lambda_{11}^{(1)}=0,\qquad
+\Lambda_{10}^{(1)}+\frac{i\beta R}{2}
+-i\Lambda_{11}^{(1)}=0.
+$$
+
+因此
+
+$$
+\Lambda_{11}^{(1)}=\frac{\beta R}{4}.
+\tag{213.13}
+$$
+
+结果0的两个慢方向极限为
+$\operatorname{diag}(\beta\delta/4,\beta R/4)\succ0$；
+结果1保留的 $d$ 慢方向极限为 $\beta R/4>0$。
+额外方向由消元精确给
+$w^\dagger S_1w=\epsilon\mu$、
+$e_c^\dagger S_1w=e_d^\dagger S_1w=0$。
+
+固定缩小参数邻域，真实 Schur 补于是给
+$S_0\succeq0$，且 $S_1\succeq0$ 当且仅当 $\mu\ge0$。
+再取
+
+$$
+t\ge0,\qquad \mu\ge0,\qquad t\mu=0,
+\tag{213.14}
+$$
+
+候选为合法共同 CPTP，并满足精确互补。
+对任意多 Kraus、任意距离的共同 CPTP 竞争者，
+实际完整目标的凸支持给
+$e(\Gamma)\ge e(\Gamma^\sharp)+\sum_j\operatorname{Tr}(S_jJ_j)
+\ge e(\Gamma^\sharp)$。
+因此这是全类精确最优，未预先限制竞争者秩。
+
+第211节的核面 Schur 坐标、逐层正 Hessian 及最优线段论证
+在此逐项仍成立：它们只需要 $a_j>0$、共同 Gram 正定和上述正读数。
+故对每个正小 $\epsilon$，最优对称化 Choi 对唯一，
+其秩由 $t$ 的正性精确决定，包括 $\mu=t=0$ 的边界。
+
+### 213.5 关于 $\nu$ 的联合解析临界图
+
+在 $\epsilon=h=0$，消去后的首阶约束给 $m=0$、
+$n=\sqrt{1-t}/2$。于是直接有
+
+$$
+\mu(0,0,\nu,t)
+=\frac{\beta\delta}{8}
+\left(\sqrt{\frac{1-\nu}{1-t}}-1\right).
+\tag{213.15}
+$$
+
+中心的导数为
+
+$$
+\boxed{
+\mu_t=\frac{\beta\delta}{16}>0,\qquad
+\mu_\nu=-\frac{\beta\delta}{16}<0,\qquad
+\mu_h=0.
+}
+\tag{213.16}
+$$
+
+**定理213.1（联合解析临界图与精确秩）。**
+存在唯一联合解析临界图
+$\nu=\nu_b(\epsilon,h)$，满足
+
+$$
+\mu(\epsilon,h,\nu_b(\epsilon,h),0)=0.
+\tag{213.17}
+$$
+
+固定小参数箱内仍有 $\mu_t>0,\mu_\nu<0$。
+这给对全部正小 $\epsilon$ 的精确分类：
+
+$$
+\boxed{
+\nu>\nu_b(\epsilon,h):\ (1,2),\qquad
+\nu\le\nu_b(\epsilon,h):\ (1,1).
+}
+\tag{213.18}
+$$
+
+该图穿过 $\gamma=\beta,h=0$ 附近；
+不声称将它反解成 $h(\epsilon,\nu)$ 后在抛物顶点也解析。
+物理参数箱选择同时保证 $h\ge0$、$h\epsilon\le1/2$
+及 $R\epsilon<\beta/(\beta^2+\gamma^2)$。
+
+令 $\widehat t$ 为不约束符号时 $\mu=0$ 的解析根。
+由（213.16），存在解析正函数 $a$、$a(0,0,0)=1$，使
+
+$$
+\widehat t(\epsilon,h,\nu)
+=a(\epsilon,h,\nu)[\nu-\nu_b(\epsilon,h)],\qquad
+t^\sharp=a(\epsilon,h,\nu)[\nu-\nu_b(\epsilon,h)]_+.
+\tag{213.19}
+$$
+
+这是精确局部因子化，不只是阶数估计。
+
+### 213.6 两条精确轴线决定联合尺度
+
+把临界图改写成无量纲函数
+$N(x,H)=\nu_b(x/\beta,\beta H)$。
+由纯来源的精确分类与局部临界图唯一性，
+
+$$
+N(x,0)=\nu_*(x).
+\tag{213.20}
+$$
+
+在 $\epsilon=0$ 的解析延拓轴，
+首阶标量互补的无约束根由 $\rho=0$ 给
+$m=2h/(h+3\beta R)$、$n=\sqrt{1-\nu}/2$。
+它在 $t=0$ 接触时满足
+
+$$
+N(0,H)=\frac{16H^2}{(H+3R)^2}.
+\tag{213.21}
+$$
+
+这是解析分支在零噪声轴的首阶选择界，
+不是宣称原物理问题在 $\epsilon=0$ 有唯一最优器。
+
+两轴读数和联合解析性给真正的双变量整除：
+
+$$
+\boxed{
+N(x,H)
+=\nu_*(x)+\frac{16H^2}{(H+3R)^2}
++xH\,B(x,H),
+}
+\tag{213.22}
+$$
+
+其中 $B$ 在原点邻域实解析。
+确实，减去两条轴函数的差在 $x=0$ 和 $H=0$ 都为零，
+联合收敛级数因而可提出 $xH$。
+特别地，
+
+$$
+N(x,H)
+=(3R+1)x+\frac{16H^2}{9R^2}
++O(x^2+x|H|+|H|^3).
+\tag{213.23}
+$$
+
+这一步使用精确纯来源解和实际 CPTP 正规形，
+没有将固定 $s$ 的发散位移式代入移动参数。
+
+现在令
+
+$$
+\nu=x\sigma,\qquad H=\sqrt x\,\kappa,\qquad
+h=\beta\sqrt x\,\kappa,\qquad \ell=x^{3/2}\kappa,
+\tag{213.24}
+$$
+
+其中 $\sigma,\kappa$ 在固定紧集内，物理区域取 $\sigma,\kappa\ge0$。
+由（213.22），一致有
+
+$$
+\boxed{
+\frac{N(x,\sqrt x\,\kappa)}x
+=3R+1+\frac{16\kappa^2}{9R^2}+O(\sqrt x).
+}
+\tag{213.25}
+$$
+
+再由（213.19）及正部函数的 Lipschitz 性，
+
+$$
+\boxed{
+\frac{t^\sharp}{x}
+=\left[\sigma-(3R+1)-\frac{16\kappa^2}{9R^2}\right]_+
++O(\sqrt x).
+}
+\tag{213.26}
+$$
+
+余项在所给紧集内统一。
+因此极限临界曲线是
+
+$$
+\boxed{\sigma=3R+1+\frac{16\kappa^2}{9R^2}.}
+\tag{213.27}
+$$
+
+在该曲线两侧保持固定正间隙时，
+（213.18）对充分小正 $x$ 分别给精确的 $(1,2)$ 与 $(1,1)$。
+在极限曲线上，单凭（213.25）不能判断高阶侧别；
+实际侧别仍由精确解析图 $N$ 决定。
+
+对固定 $\sigma>3R+1$，
+令 $\kappa_0=(3R/4)\sqrt{\sigma-(3R+1)}>0$。
+以 $\tau=\sqrt x$ 为变量，
+$N(\tau^2,\tau\kappa)/\tau^2$ 在 $\tau=0$ 解析，
+且其 $\kappa$ 导数在 $\kappa_0$ 为
+$32\kappa_0/(9R^2)>0$。
+隐函数定理给局部唯一的实际接触分支，
+$\kappa_b=\kappa_0+O(\sqrt x)$。
+所以
+
+$$
+h_b(\epsilon,\nu=x\sigma)
+=\frac{3\beta R}{4}
+\sqrt{x[\sigma-(3R+1)]}+O(\beta x).
+\tag{213.28}
+$$
+
+这证明了所问的联合尺度：
+$\nu=s^2$ 与 $\epsilon$ 同阶，$h$ 与 $\sqrt\epsilon$ 同阶，
+而实际来源 $\ell=h\epsilon$ 与 $\epsilon^{3/2}$ 同阶。
+式（213.28）只在固定 $\sigma>3R+1$，
+或远离该端点的固定紧 $\sigma$ 区间内适用。
+
+### 213.7 更细边界与结论范围
+
+本节未计算混合解析系数 $B(0,0)$，
+所以不把（213.27）当成有限噪声的精确抛物线。
+当 $\sigma=3R+1$ 时，更细的 $H=O(x)$ 区域会同时读取
+纯来源的 $x^2$ 项、$xH B(0,0)$ 与 $H^2$ 项。
+它需要更高阶计算，不能从固定参数的第211节位移直接获得。
+
+在该特殊 $\sigma$ 且 $H=0$，
+精确式（213.4）已经确定
+$\nu-\nu_*(x)=4R(R+1)x^2+O(x^3)>0$，
+故该点的秩确为 $(1,2)$；
+未计算的是这一细层在正 $H$ 方向的完整显式界。
+整体解析图及其精确秩判据（213.18）没有因此失效。
+
+所有结论仍限定于固定 $\beta,R$ 和上述局部合法参数箱；
+不将归约后 Choi 唯一性升级为物理装置唯一性。
+
+## 追加锚（本行以下为增补区）
+
+## 214. 临界图的一阶噪声导数与更细来源层
+
+沿用第213节的无量纲变量
+$x=\beta\epsilon$、$H=h/\beta$、$\nu=1-(\gamma/\beta)^2$，
+实际来源仍为 $\ell=xH$。
+其联合解析临界图 $N(x,H)$ 满足
+
+$$
+N(x,0)=\nu_*(x),\qquad
+N(0,H)=\frac{16H^2}{(H+3R)^2},
+\tag{214.1}
+$$
+
+并按 $\nu>N(x,H)$ 或 $\nu\le N(x,H)$ 区分精确最优 Choi 秩
+$(1,2)$ 与 $(1,1)$。
+本节利用第211节的精确曲线导数，识别这张联合图的一阶噪声导数。
+所用连接是两份真实临界曲线的共同身份，不把固定参数余项外推到移动参数。
+
+### 214.1 从固定参数曲线识别联合图的导数
+
+令
+
+$$
+s(H)=\frac{4H}{H+3R},
+\qquad
+\begin{aligned}
+P_R(s)={}&6(3R+1)-(11R+13)s^2+4(R+1)s^3\\
+&+(5-R)s^4-(R+2)s^5.
+\end{aligned}
+\tag{214.2}
+$$
+
+**定理214.1（第一噪声导数与混合项消失）。**
+在 $H=0$ 的解析邻域有精确恒等式
+
+$$
+\boxed{
+N_x(0,H)=\frac{P_R(s(H))}{6}.
+}
+\tag{214.3}
+$$
+
+特别地，第213节混合余因子满足
+
+$$
+\boxed{B(0,0)=N_{xH}(0,0)=0.}
+\tag{214.4}
+$$
+
+**证明。**
+先固定足够小的 $s>0$，取 $\nu=s^2$。
+第211节的精确接触曲线换成当前变量后记为 $H_b(x;s)$，有
+
+$$
+H_b(0;s)=H_0(s)=\frac{3Rs}{4-s},\qquad
+\partial_xH_b(0;s)
+=-\frac{RP_R(s)}{s(4-s)^2}.
+\tag{214.5}
+$$
+
+这里 $H_b=h_b(x/\beta;s)/\beta$，所以导数中的两个 $\beta$ 因子恰好约去。
+对当前固定 $s$，取充分小正 $x$，使第211节与第213节的合法邻域重叠。
+这个允许的 $x$ 区间可以依赖 $s$。
+
+在第211节的接触线上，精确秩为 $(1,1)$；
+从其左侧的 $(1,2)$ 区域趋近该线。
+第213节的精确秩判据及 $N$ 的连续性分别给
+$s^2\le N(x,H_b(x;s))$ 和 $s^2\ge N(x,H_b(x;s))$。
+因此两条真实边界满足精确身份
+
+$$
+N(x,H_b(x;s))=s^2.
+\tag{214.6}
+$$
+
+两侧关于 $x$ 解析，该恒等式可在 $x=0$ 求导。
+由（214.1），在 $H=H_0(s)$ 有
+
+$$
+N_H(0,H)=\frac{s(4-s)^2}{6R}.
+\tag{214.7}
+$$
+
+结合（214.5）—（214.7）得到
+
+$$
+N_x(0,H_0(s))
+=-N_H(0,H_0(s))\partial_xH_b(0;s)
+=\frac{P_R(s)}6.
+\tag{214.8}
+$$
+
+这已对所有充分小的固定正 $s$ 成立。
+映射 $H_0$ 的逆为（214.2）的 $s(H)$，
+故（214.3）在 $H>0$ 的一个开区间成立。
+其两侧都是 $H=0$ 附近的解析函数，解析恒等原理将等式延拓到该点及其邻域。
+
+多项式 $P_R$ 没有一次项，所以 $P_R'(0)=0$，
+从（214.3）得 $N_{xH}(0,0)=0$。
+第213节的分解
+$N=\nu_*+N(0,H)+xHB(x,H)$ 又给 $B(0,0)=N_{xH}(0,0)$。
+这证明（214.4）。证毕。
+
+上述顺序先识别每个固定参数下的精确导数，再使用已经建立的联合解析图。
+没有要求第211节原先的 $O(\epsilon^2)$ 余项对 $s\downarrow0$ 一致。
+
+### 214.2 联合二阶展开
+
+**推论214.2（没有 $xH$ 项的临界图展开）。**
+有
+
+$$
+\boxed{
+N(x,H)=(3R+1)x-4R(R+1)x^2+\frac{16H^2}{9R^2}
++O((|x|+|H|)^3).
+}
+\tag{214.9}
+$$
+
+**证明。**
+两条精确轴（214.1）确定常数项、两种纯变量的一二阶系数；
+定理214.1使唯一剩下的二阶混合系数为零。
+联合解析函数的二阶 Taylor 余项在固定小邻域有上述三阶界。证毕。
+
+更精确地，存在解析函数 $B_1(x,H)$、$B_2(H)$，使
+
+$$
+N(x,H)=\nu_*(x)+\frac{16H^2}{(H+3R)^2}
++x^2HB_1(x,H)+xH^2B_2(H).
+\tag{214.10}
+$$
+
+确实，（214.4）使 $B(0,H)$ 可被 $H$ 解析整除；
+再将 $B(x,H)-B(0,H)$ 除以 $x$，即得这两个解析因子。
+
+### 214.3 二阶调谐下的来源平方尺度
+
+为区别第213节的一阶尺度参数，本节用 $\zeta$ 表示二阶偏移，取
+
+$$
+\nu=(3R+1)x+x^2\zeta,\qquad
+H=x\kappa,\qquad h=\beta x\kappa,\qquad
+\ell=x^2\kappa.
+\tag{214.11}
+$$
+
+$\zeta\in\mathbb R$ 和 $\kappa\ge0$ 限于任意固定紧集。
+对充分小正 $x$，这些参数满足第213节的物理合法性范围。
+
+**定理214.3（细层的统一秩判据）。**
+一致有
+
+$$
+\boxed{
+\frac{N(x,x\kappa)-(3R+1)x}{x^2}
+=-4R(R+1)+\frac{16\kappa^2}{9R^2}+O(x),
+}
+\tag{214.12}
+$$
+
+以及精确最优额外 Choi 权重的展开
+
+$$
+\boxed{
+\frac{t^\sharp}{x^2}
+=\left[\zeta+4R(R+1)-\frac{16\kappa^2}{9R^2}\right]_+
++O(x).
+}
+\tag{214.13}
+$$
+
+因此，方括号内保持固定正间隙或固定负间隙时，
+充分小正噪声下的精确秩分别为 $(1,2)$ 和 $(1,1)$。
+
+**证明。**
+将（214.11）代入（214.9），除以 $x^2$ 得（214.12）；
+有界 $\kappa$ 使三阶余项一致成为 $O(x)$。
+第213节的精确因子化为
+$t^\sharp=a(\epsilon,h,\nu)[\nu-N(x,H)]_+$，
+其中 $a$ 解析、$a(0,0,0)=1$。
+在当前尺度上，三个参数都为 $O(x)$，所以 $a=1+O(x)$ 一致成立。
+再用正部函数的 Lipschitz 性，得到（214.13）。
+固定间隙保留真实符号，精确秩结论随之成立。证毕。
+
+**推论214.4（细层实际接触的位置）。**
+固定 $\zeta>-4R(R+1)$，令
+
+$$
+\kappa_0=\frac{3R}{4}\sqrt{\zeta+4R(R+1)}>0.
+\tag{214.14}
+$$
+
+存在局部唯一解析接触分支 $\kappa_b(x)=\kappa_0+O(x)$，满足
+
+$$
+\boxed{
+h_b=\beta x\kappa_0+O(\beta x^2),\qquad
+\ell_b=x^2\kappa_0+O(x^3).
+}
+\tag{214.15}
+$$
+
+结论亦可在远离 $-4R(R+1)$ 的固定紧 $\zeta$ 区间上一致选取。
+
+**证明。**
+把 $N(x,x\kappa)-(3R+1)x$ 的联合收敛级数提出 $x^2$，
+得到在 $x=0$ 也解析的函数 $G(x,\kappa)$。
+由（214.9），
+$G(0,\kappa)=-4R(R+1)+16\kappa^2/(9R^2)$。
+在 $\kappa_0$，方程 $G=\zeta$ 成立且
+$G_\kappa=32\kappa_0/(9R^2)>0$。
+隐函数定理给所述解析接触分支；
+乘以（214.11）中的相应因子即得（214.15）。证毕。
+
+特别地，本节的 $\zeta=0$ 对应第213节粗层的
+$\sigma=3R+1$，即 $\nu=(3R+1)x$。
+此时
+
+$$
+\kappa_0=\frac{3R}{2}\sqrt{R(R+1)},\qquad
+\ell_b=\frac{3R}{2}\sqrt{R(R+1)}\,x^2+O(x^3).
+\tag{214.16}
+$$
+
+所以第213节未决定的正来源细层具有 $\epsilon^2$ 的实际来源尺度。
+这是对参数路径作更精确调谐后的结果；
+第213节在另一类固定路径上的 $\epsilon^{3/2}$ 尺度仍然成立。
+
+本节的极限细层曲线上，高阶侧别仍须读取精确函数 $N$；
+也未分析 $\zeta=-4R(R+1)$ 处反演导数再次消失的更细尺度。
+全部结论保留固定 $\beta,R$、局部合法参数和指定共同恢复任务的范围。
+
+## 追加锚（本行以下为增补区）
+
+## 215. 联合接触图的精确平方坐标与物理来源半轴
+
+固定第213—214节的同一共同 CPTP 恢复任务及参数 $\beta>0,R>1$。
+使用 $x=\beta\epsilon,H=h/\beta,\ell=xH$ 和精确临界图 $N(x,H)$。
+附近正噪声的最优对称化 Choi 秩由 $\nu>N(x,H)$ 或 $\nu\le N(x,H)$
+分别给出 $(1,2)$ 或 $(1,1)$。
+本节只使用第213—214节的联合解析性、两条精确轴和 $N_{xH}(0,0)=0$，
+不假设尚未知的 $N_H(x,0)$ 恒为零。
+
+记
+
+$$
+a_R=3R+1,\quad c_R=4R(R+1),\quad
+b_R=\frac{16}{9R^2},\quad d_R=R(5R^2+10R+1)>0.
+$$
+
+### 215.1 唯一解析中心和精确平方坐标
+
+**定理215.1（保持噪声坐标的平方正规形）。**
+存在唯一解析函数 $H_c(x)$，满足 $H_c(0)=0$ 和
+$N_H(x,H_c(x))=0$，且 $H_c(x)=O(x^2)$。
+存在联合解析坐标 $u(x,H)$，在固定原点邻域有 $u_H>0$，使
+$N(x,H)=V(x)+u(x,H)^2$，其中 $V(x)=N(x,H_c(x))$。
+若 $u_0(x)=u(x,0)$，则精确有
+$V(x)=\nu_*(x)-u_0(x)^2$，并有 $u_0=O(x^2)$、$V=\nu_*+O(x^4)$。
+
+**证明。**
+
+由 $N_H(0,0)=0$、$N_{HH}(0,0)=2b_R>0$，
+隐函数定理给唯一解析中心 $H_c(x)$，使
+
+$$
+N_H(x,H_c(x))=0,\qquad H_c(0)=0.
+$$
+
+再由 $N_{xH}(0,0)=0$，得 $H_c'(0)=0$，所以 $H_c(x)=O(x^2)$。
+缩小固定实参数箱，使 $N_{HH}>0$，并定义
+
+$$
+V(x)=N(x,H_c(x)),\qquad
+A(x,H)=\int_0^1(1-r)
+N_{HH}(x,H_c(x)+r(H-H_c(x)))\,dr.
+$$
+
+Taylor积分余项精确给
+
+$$
+N(x,H)=V(x)+(H-H_c(x))^2A(x,H).
+$$
+
+$A$ 联合实解析，$A(0,0)=b_R>0$。
+取正解析平方根并令
+
+$$
+u(x,H)=(H-H_c(x))\sqrt{A(x,H)}.
+$$
+
+此处 $u$ 是新来源坐标，与参数 $\nu$ 不同。
+由于 $u_H(0,0)=\sqrt{b_R}>0$，它给保持 $x$ 的局部解析坐标变换。
+在固定更小参数箱中 $u_H>0$，故
+
+$$
+\boxed{N(x,H)=V(x)+u(x,H)^2.}
+$$
+
+它是直接构造的精确恒等式，不是截断多项式。
+
+令 $u_0(x)=u(x,0)$。由 $H_c=O(x^2)$ 得 $u_0=O(x^2)$；
+纯来源轴给更强的精确关系
+
+$$
+\boxed{V(x)=\nu_*(x)-u_0(x)^2\le\nu_*(x),\qquad
+V(x)=\nu_*(x)+O(x^4).}
+$$
+
+因此即使真实中心有位移，它对临界最小值的首个影响也只能从四阶开始。
+这一区分不需要先计算 $B_x(0,0)$。证毕。
+
+### 215.2 物理半轴不能随坐标变换删去
+
+取固定小 $\eta>0$，物理来源为 $0\le H\le\eta$。
+因 $u_H>0$，该区间映到 $u_0(x)\le u\le u_\eta(x)$，
+其中 $u_\eta(x)>0$ 对充分小 $x$ 成立。
+缩小 $\nu,x$ 的邻域，使所有涉及的正根都小于 $u_\eta$。
+记 $\Delta=\nu-V(x)$。
+
+**定理215.2（物理半轴上的接触分类）。**
+精确额外秩区域为
+
+$$
+\boxed{u\in[u_0,u_\eta]\quad\text{且}\quad u^2<\Delta.}
+$$
+
+**证明及分类。**
+平方正规形与第213节的精确秩判据直接给上述集合身份。
+严格递增的 $u$ 使每个允许坐标只对应一个来源。
+若 $\Delta<0$，没有接触也没有 $(1,2)$ 区域。
+若 $\Delta=0$，可能只有 $u=0$ 的相切点，且只有 $H_c\ge0$ 时它是物理点；
+整段仍为 $(1,1)$。
+若 $\Delta>0$，额外秩区域恰是
+$(-\sqrt\Delta,\sqrt\Delta)\cap[u_0,u_\eta]$。
+等号根只有在不小于 $u_0$ 时才对应物理接触。
+
+当 $H_c\le0$，有 $u_0\ge0$。此时 $\nu>\nu_*$ 才有从纯来源开始的
+$(1,2)$ 区域和一个正来源接触；$\nu=\nu_*$ 仅在 $H=0$ 接触；
+$\nu<\nu_*$ 没有物理接触。
+
+当 $H_c>0$，有 $u_0<0$。若 $0<\Delta<u_0^2$，两个根均为正来源，
+$(1,2)$ 只位于两根之间；$\Delta=u_0^2$ 时一个根为零；
+$\Delta>u_0^2$ 时只有正根在物理半轴，$(1,2)$ 区域包含零来源。
+所有根的计数均由严格递增的坐标对应和二次不等式得到。证毕。
+
+两接触区只有在 $H_c>0$ 且 $V<\nu<\nu_*$ 时才可能存在，
+其参数窗口宽度为 $\nu_*-V=u_0^2=O(x^4)$。
+这是按未知中心符号写出的条件分类，未证明当前模型已经出现两接触区。
+
+第213节精确额外权重亦化为
+
+$$
+t^\sharp=a(\epsilon,h,\nu)[\Delta-u^2]_+,\qquad a>0.
+$$
+
+所以不同幂次来源尺度是在同一实际临界图上沿不同调谐路径取得的，
+不是不同的恢复优化问题。
+
+### 215.3 三阶调谐的确定侧别与来源尺度
+
+**定理215.3（纯轴三阶项与物理接触）。**
+固定实数 $\xi$，取 $\nu=a_Rx-c_Rx^2+x^3\xi$。
+若 $\xi<d_R$，则充分小正噪声下，整个固定小物理来源区间均为 $(1,1)$。
+若 $\xi>d_R$，则该区间内恰有一个正来源接触，且
+
+$$
+\ell_b=\frac{3R}{4}\sqrt{\xi-d_R}\,x^{5/2}+O(x^3).
+$$
+
+接触下方含零来源的区间为 $(1,2)$，接触点及其上方为 $(1,1)$。
+
+**证明。**
+
+对精确纯轴的有理函数直接展开，得
+
+$$
+\nu_*(x)=a_Rx-c_Rx^2+d_Rx^3+O(x^4).
+$$
+
+三阶系数由
+
+$$
+(3R+1)\bigl(4R^2-R(R-1)\bigr)-4R^2(R-1)
+=R(5R^2+10R+1)
+$$
+
+得到。因此精确中心值同样满足
+
+$$
+V(x)=a_Rx-c_Rx^2+d_Rx^3+O(x^4).
+$$
+
+沿第214节未分析的指定路径
+$\nu=a_Rx-c_Rx^2$，有
+$\nu-V(x)=-d_Rx^3+O(x^4)<0$。
+故充分小正噪声下，整个上述固定物理来源区间都为 $(1,1)$。
+这不依赖 $H_c$ 的未知符号，不能将“反演导数退化”误读成“当前侧别未知”。
+
+更一般地，令
+
+$$
+\nu=a_Rx-c_Rx^2+x^3\xi
+$$
+
+并固定 $\xi$。
+若 $\xi<d_R$，同样在固定局部物理来源区间没有额外秩区域。
+若 $\xi>d_R$，则
+
+$$
+\Delta=(\xi-d_R)x^3+O(x^4)>0,\qquad
+\sqrt\Delta=\sqrt{\xi-d_R}\,x^{3/2}+O(x^{5/2}).
+$$
+
+因为 $u_0=O(x^2)$，负根严格低于物理起点，正根在物理区间内，
+故有且只有一个正来源接触，且其下方含纯来源的区域为 $(1,2)$。
+利用局部坐标的逆映射，
+
+$$
+H_b(x)=\sqrt{\frac{\xi-d_R}{b_R}}\,x^{3/2}+O(x^2),
+\qquad
+\boxed{\ell_b(x)=\frac{3R}{4}\sqrt{\xi-d_R}\,x^{5/2}+O(x^3).}
+$$
+
+误差中的 $O(x^2)$ 允许包含未知的中心位移，因此未静默假设它消失。
+对远离 $d_R$ 的固定紧 $\xi$ 集，各余项和符号结论统一。
+证毕。
+
+在 $\xi=d_R$，四阶中心值修正及 $u_0$ 可能同时参与，本节不计算其侧别。
+
+### 215.4 坐标、范围与仍缺的读数
+
+构造保留了物理来源半轴及实际全共同 CPTP 的秩判据。
+新坐标 $u$ 是数学坐标，不能替代真实来源 $\ell=xH$ 的可操作含义。
+参数Morse结构是经典局部解析机制；这里新增的是对实际接触图、半轴和来源成本的连接。
+未声称现实时间由指数决定，未声称当前模型必有双接触区，未作Lean验证。
+
+## 追加锚（本行以下为增补区）
