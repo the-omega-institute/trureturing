@@ -292,12 +292,9 @@ theorem result : ¬ claim := by
       generalize f₀ v = a
       fin_cases a <;> rfl
     have hstep_len : ∀ s, (stepM s).length = 18 := by intro s; simp [stepM]
-    have hiter_len : ∀ t s, s.length = 18 → (stepM^[t] s).length = 18 := by
-      intro t
-      induction t with
-      | zero => intro s h; exact h
-      | succ t ih => intro s _; exact ih _ (hstep_len s)
-    have hlen25 : (stepM^[25] initM).length = 18 := hiter_len 25 initM (by simp [initM])
+    have hlen25 : (stepM^[25] initM).length = 18 :=
+      Set.MapsTo.iterate (s := {l : List (ℕ × ℕ) | l.length = 18}) (fun l _ => hstep_len l) 25
+        (by simp [initM])
     have hall := iter_decode (bitsValue bs) hj 25 initM hd0
     rw [hdec] at hall
     rw [← hall]
