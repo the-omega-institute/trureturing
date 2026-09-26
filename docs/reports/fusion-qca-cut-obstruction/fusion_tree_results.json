@@ -1,0 +1,210 @@
+{
+  "status": "passed",
+  "coefficient_ring": "Q[s]/(s^4+s^2-1), s=sqrt(phi^-1)",
+  "case_counts": {
+    "pentagon_entries": 50,
+    "pentagon_boundary_cases": 32,
+    "F_unitarity_entries": 15,
+    "path_counts": 30,
+    "algebra_dimensions": 15,
+    "projection_relations": 72,
+    "right_extension_coefficients": 10857,
+    "adjacent_TL_relations": 112,
+    "distant_commutations": 112,
+    "matrix_unit_products": 199,
+    "two_channel_identities": 5,
+    "deliberate_negative_controls": 1,
+    "pulse_unitarity": 12,
+    "pulse_composition": 72,
+    "pulse_transfer": 6,
+    "tomography_states": 29,
+    "tomography_sharp_bound": 1,
+    "observable_closure_witness": 1
+  },
+  "pentagon_dimension_histogram": {
+    "1": 21,
+    "0": 5,
+    "2": 5,
+    "3": 1
+  },
+  "nontrivial_pentagons": {
+    "0": {
+      "source": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "target": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "matrix": [
+        [
+          [
+            "1",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        ],
+        [
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "1",
+            "0",
+            "0",
+            "0"
+          ]
+        ]
+      ]
+    },
+    "1": {
+      "source": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "target": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "matrix": [
+        [
+          [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "1",
+            "0"
+          ],
+          [
+            "0",
+            "1",
+            "0",
+            "0"
+          ]
+        ],
+        [
+          [
+            "0",
+            "0",
+            "1",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "1",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "-1"
+          ]
+        ],
+        [
+          [
+            "0",
+            "1",
+            "0",
+            "0"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "-1"
+          ],
+          [
+            "1",
+            "0",
+            "-1",
+            "0"
+          ]
+        ]
+      ]
+    }
+  },
+  "wrong_F_failed_entries": [
+    [
+      0,
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "largest_chain_n": 9,
+  "scope": "Finite exact arithmetic/matrix diagnostics. No Lean, infinite-net, DHR or full-classification validation."
+}
