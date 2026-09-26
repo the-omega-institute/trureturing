@@ -24807,3 +24807,424 @@ Goodman 的可微鞍点误差提供方法来源，其固定 iid 条件不直接�
 未作 Lean 核验或全局原创性认证。
 
 ## 追加锚（第 117 章后续增补区）
+
+## 118. 在相位积分的算术精度上压缩实际共同中心
+
+**定理 118.1（实际中心的两个定量归约）。** 保持第 116 章的原完整计数模型、
+固定 $\beta\in(1/2,1)$、固定幅度、全部取整、经验中心和同一个 Gaussian 观测。
+特别地，
+
+$$
+\delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+\mathcal B=q/Q^{11/4},\quad
+\Delta_Q=\ln\mathcal B-\ln(1/\sigma)\to D\in\mathbb R,
+\quad a_Q=\sigma\mathcal B\to e^D>0.
+\tag{118.1}
+$$
+
+原通道仍为
+$T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta$、$Y=T+\sigma G$。
+保持 (116.2) 的完整有限 $A,\Lambda,C_x$、精确先验方差、精确输出均值及 $D_x,R_*$。
+第 116 章已给
+
+$$
+\int f_x|D_x-R_*|=\mathfrak J_x+o_{\mathbb P}(1),\qquad
+\mathfrak J_x=\frac1{2\pi}\int_0^{2\pi}
+\left|M_2-\frac{M_1^2}{M_0}\right|d\theta.
+\tag{118.2}
+$$
+
+下面构造原实际数据的两个中心表示 $\widehat\mu,\check\mu$，使在原共同局部化好事件上
+
+$$
+|\mathfrak J_x-\mathfrak J(\widehat\mu)|
+\le C_Dq^{-1/2}Q^{-7/2},
+\tag{118.3}
+$$
+
+$$
+|\mathfrak J_x-\mathfrak J(\check\mu)|
+\le C_DQ^{5/2}q^{3/2}
+\left((q/M)^2+e^{-2cQ^5}\right)=o(1).
+\tag{118.4}
+$$
+
+第一个表示使用校准概率及两个全行和，第二个仅使用两个共同的精确后验量。
+两者都覆盖每个原合法 $\beta\in(1/2,1)$，不附加算术假设。
+故式 (118.2) 中的 $\mathfrak J_x$ 可换为任一个归约后的泛函，
+仍在实际原始数据概率下、对大小 $q$ 的每个固定支撑一致，pair/path 分别成立。
+本章不证明这些泛函趋零。无修正的固定间隙目标仍未解决。
+
+**中心距离与原有限数组。** 沿用 (116.8)–(116.13) 的
+$m_j=C_jp_j$、$d_j=C_jp_j(1-p_j)$、$w_j=d_j/\mathcal B$，
+$J=\{j:d_j\ge Q^{3600}\}$、$E=\{j\notin J:C_j>0\}$。
+原占据与剖面好事件给
+
+$$
+N_x:=\#\{j:C_j>0\}\le CQ^2,\quad
+\max_jC_j\le Cq/Q^3,\quad |E|\le C,
+$$
+
+$$
+\varepsilon:=\max_Jw_j\asymp Q^{-1/4},\quad
+A_b:=\sum_Jw_j,\quad A_b\varepsilon\le C,\quad
+\nu_b:=2\sum_Jw_j^2\in[c,C],\quad
+k_b:=8\sum_Jw_j^3=O(\varepsilon).
+\tag{118.5}
+$$
+
+其中最大 $C_j$ 界由 $v_j=d_j/B^2\le C\delta$ 与
+$p_j(1-p_j)\ge3/16$ 得到。实际 path 占据界来自原生成函数，未把观察行换为独立行。
+
+固定 $C,p,m,d,w$、所有有限系数和 $E$ 惊讶标记，
+只在 (116.10)–(116.13) 的完整相位系数中把中心自变量换成任意实向量 $v$，记为 $M_a^v$。
+这包括单位相位和 $E$ 扭转中的同一次替换。
+定义
+
+$$
+\mathfrak J(v)=\frac1{2\pi}\int_0^{2\pi}
+\left|M_2^v-\frac{(M_1^v)^2}{M_0^v}\right|d\theta,
+\qquad
+\rho(v,\widetilde v)^2=
+\sum_{j:C_j>0}d_j(\widetilde v_j-v_j)^2.
+\tag{118.6}
+$$
+
+它是有限系数泛函，不是均值为 $v$ 的新先验。原泛函为 $\mathfrak J(\mu)$。
+对偶频率放大中心误差的尺度是 $\sqrt{d_j}$；相对均值误差或选择律的总变差本身不够。
+
+**引理 118.2（完整非线性周期泛函的稳定性）。** 在 (118.5) 下，$a_Q$ 位于固定正紧集时，
+对任意实 $v,\widetilde v$，令 $\Delta_j=\widetilde v_j-v_j$ 及
+
+$$
+\psi=\pi\sum_j\left[2(v_j-m_j)\Delta_j+\Delta_j^2\right].
+\tag{118.7}
+$$
+
+则
+
+$$
+\max_{a=0,1,2}\sup_\theta
+|M_a^{\widetilde v}(\theta+\psi)-M_a^v(\theta)|
+\le C_D\rho(v,\widetilde v),\qquad
+|\mathfrak J(\widetilde v)-\mathfrak J(v)|
+\le C_D\rho(v,\widetilde v).
+\tag{118.8}
+$$
+
+相位平移 $\psi$ 不要求小；它只能在全周期平均后消去。
+
+证明。对固定 $\ell,k$，记
+$b_j=\pi\ell(1-2v_j)$、$\xi_j=\sqrt{d_j}(b_j-2\pi k_j)$，
+$E_0=\|\xi\|^2$、$B_1=\sum_Jw_j\xi_j^2$、$B_2=\sum_Jw_j^2\xi_j^2$、
+$\eta=\pi\ell a_Q$、$h=E_0+\eta^2$。
+这里 $E_0$ 是对偶能量，区别于非大组集合 $E$。
+式 (116.12) 的多项式是
+
+$$
+P_1=-h/2+A_bB_1/\nu_b,
+$$
+
+$$
+P_2=h^2/4-h+(2-h)A_bB_1/\nu_b
++A_b^2k_bB_1/\nu_b^3
++A_b^2(B_1^2-4B_2)/\nu_b^2.
+\tag{118.9}
+$$
+
+它们保留同一残差噪声的 $\eta$ 及其二、四次项。
+对保留的 $E$ 二项律，取 $H_0=1,H_1=s_E,H_2=s_E^2-V_E$，使用中心化扭转
+
+$$
+\widehat\chi_{\ell,a}(v)
+=\mathbb E_E\left[H_ae^{i\sum_Eb_j(R_j-m_j)}\right].
+\tag{118.10}
+$$
+
+将提出的 $E$ 相位与大组相位合并，得到完整因子
+
+$$
+\exp\left(i\pi\ell\left[\sum_jv_j^2-B^2V\right]
++i\sum_jb_jm_j-2\pi i\sum_Jk_jm_j\right).
+\tag{118.11}
+$$
+
+沿 $v+t\Delta$，它的变化精确为 $e^{i\ell\psi_t}$，其中
+$\psi_t=\pi[2t\sum(v-m)\Delta+t^2\sum\Delta^2]$。
+在新自变量 $\theta+\psi_t$ 处，它被 $e^{-i\ell\theta}$ 的变化精确抵消。
+不单独估计可能很大的 $\sum m_j\Delta_j$，也不丢掉有限截距。
+
+消相位后，$\dot\xi_j=-2\pi\ell\sqrt{d_j}\Delta_j$，其范数至多为
+$2\pi|\ell|\rho_J$。又有
+
+$$
+B_1\le\varepsilon E_0,\quad B_2\le\varepsilon^2E_0,\quad
+\|\nabla B_1\|\le2\varepsilon\sqrt{E_0},\quad
+\|\nabla B_2\|\le2\varepsilon^2\sqrt{E_0}.
+$$
+
+由于 $A_b\varepsilon$、$A_b^2k_b\varepsilon$、$A_b^2\varepsilon^2$ 有界，
+对 $P_0=1,P_1,P_2$ 存在固定次数 $r$，使
+
+$$
+|e^{-h/2}P_a|+\|\nabla_\xi(e^{-h/2}P_a)\|
+\le C(1+E_0+\eta^2)^r e^{-(E_0+\eta^2)/2}.
+\tag{118.12}
+$$
+
+没有组数因子。式 (116.30) 的最近格点求和对所有中间扭转一致给
+
+$$
+\sum_{k\in\mathbb Z^J}(1+E_0)^r e^{-c'E_0}\le C_{r,c'}.
+\tag{118.13}
+$$
+
+边界最近格点并列已由大 $d_j$ 的指数小项控制；乘积界为
+$1+O(\sum_Je^{-cd_j})$，不是常数的组数次幂。
+固定 $c_{\rm lat}$ 有界，故大组导数和至多为
+$C_D|\ell|\rho_J$ 乘 $\eta$ 的固定多项式及 $e^{-c\eta^2}$。
+
+非大组部分精确求导为
+
+$$
+\frac d{dt}\widehat\chi_{\ell,a}(v+t\Delta)
+=-2\pi i\ell\,
+\mathbb E_E\left[H_a\,\Delta_E\cdot(R_E-m_E)
+e^{ib(v+t\Delta)\cdot(R_E-m_E)}\right].
+$$
+
+由保留的四阶中心惊讶界、线性计数组合的乘积方差和 Cauchy–Schwarz，
+
+$$
+|\dot{\widehat\chi}_{\ell,a}|
+\le C|\ell|\left(\sum_Ed_j\Delta_j^2\right)^{1/2}.
+\tag{118.14}
+$$
+
+这是同一律的联合期望，不假设惊讶标记与扭转独立。
+合并 (118.12)–(118.14)，对 $\ell$ 求带 $e^{-c_D\ell^2}$ 的和，再对 $t\in[0,1]$ 积分，
+即得 (118.8) 的第一式，绝对包络亦正当化各次求和与求导。
+第 116 章的正包裹核表示对一致替换后的任意实中心仍给
+$M_0^v\ge c_D$、$|M_a^v|\le C_D$。
+因此实映射 $x_2-x_1^2/x_0$ 在该区域 Lipschitz。
+再用绝对值的 Lipschitz 性和周期平移不变性，得第二式。
+完整条件均值平方项始终在此商式中。
+
+**经典拒绝抽样修正的直接应用。** 固定实际数据，对全部 $M$ 个候选行令 $L_i=e^{W_i}>0$。
+原标签后验为
+
+$$
+P_x(I)=e_q(L)^{-1}\prod_{i\in I}L_i,\qquad |I|=q.
+\tag{118.15}
+$$
+
+用原共同校准
+$\wp_i=\operatorname{logistic}(W_i-\log B_0+\theta_M)$、
+$B_0=(M-q)/q$、$\sum_i\wp_i=q$。
+独立 Bernoulli$(\wp_i)$ 在总数为 $q$ 下条件化，精确得到 (118.15)，
+因为共同赔率乘子在固定基数下抵消。该表示不是实际观察行的独立性。
+定义两个全 $M$ 行量
+
+$$
+\mathcal D_x=\sum_i\wp_i(1-\wp_i),\qquad
+\bar p_x=\mathcal D_x^{-1}\sum_i\wp_i^2(1-\wp_i).
+\tag{118.16}
+$$
+
+原共同校准估计给 $cq\le\mathcal D_x\le q$；上界直接来自 $\sum\wp_i=q$。
+它们不是组窗的方差和，也不是信号先验 $q/M$。
+同一组中 $\wp_i=p_j$，精确包含概率 $\pi_i$ 相同，故 $\mu_j=C_j\pi_i$。
+
+Boistard–Lopuhaä–Ruiz-Gazen，arXiv:1207.5654v1 的 Lemma 1 和
+Theorem 1 证明中标作 `eq:expansion1` 的 $k=1$ 情形直接给
+
+$$
+\pi_i=\wp_i+
+\frac{\wp_i(1-\wp_i)(\wp_i-\bar p_x)}{\mathcal D_x}
++O(\mathcal D_x^{-2}).
+\tag{118.17}
+$$
+
+余项在上述 Bernoulli 数组及行指标上一致。
+核对正号：原 Lemma 1 中
+$c_2-c_1=[B_2-(B_1-k)^2-(B_1-k)(1-2\bar p_x)]/2$；
+取 $k=1,B_1=\wp_i,B_2=\wp_i(1-\wp_i)$，得
+$(1-\wp_i)(\wp_i-\bar p_x)$。精确 Bayes 比再乘 $\wp_i$，即为 (118.17)。
+
+原结论所需的条件化前独立 Bernoulli、整数均值和方差趋无穷均已验证。
+后文高阶相关应用的 $N/d$ 有界条件不属于这里使用的展开；允许 $M/\mathcal D_x\to\infty$。
+原 Section 4.1 的证明以固定阶 Bernoulli 累积量及删除有限坐标的 Edgeworth 展开得到余项。
+二阶及以上累积量均由 $C_k\mathcal D_x$ 一致控制，删除一项只改变有界的累积量和中心；
+特征乘积还满足
+$|\Phi(t)|\le e^{-2\mathcal D_x\sin^2(t/2)}$，$|t|\le\pi$。
+这些界使零附近的展开和外侧积分估计对数组一致，不要求每个 $\wp_i$ 有正的统一下界。
+原累积量引理的文字包含一阶，但其证明单列一阶为 $\sum\wp_i$；这里仅使用二阶及以上的方差阶界。
+经典展开直接复用，不作为新的一般包含概率定理。
+
+定义同一实际校准下的修正中心
+
+$$
+\widehat\mu_j=C_j\left[p_j+
+\frac{p_j(1-p_j)(p_j-\bar p_x)}{\mathcal D_x}\right].
+\tag{118.18}
+$$
+
+由 (118.17)，$|\mu_j-\widehat\mu_j|\le CC_jq^{-2}$。
+用 $d_j\le C_j/4$ 和 (118.5)，
+
+$$
+\sum_jd_jC_j^2\le CQ^2(q/Q^3)^3=Cq^3Q^{-7},\qquad
+\rho(\mu,\widehat\mu)\le Cq^{-1/2}Q^{-7/2}.
+\tag{118.19}
+$$
+
+这也包括非大组。应用 (118.8) 得 (118.3)。于是
+
+$$
+\int f_x|D_x-R_*|=\mathfrak J(\widehat\mu)+o_{\mathbb P}(1).
+\tag{118.20}
+$$
+
+仅用 $\pi_i=p_j+O(q^{-1})$ 时，同一路线只给
+$\rho\le Cq^{1/2}Q^{-7/2}$，不能据此授权未修正的替换；这不证明实际未修正替换必然失败。
+经典一阶修正恰好支付当前精度缺口，无须逆噪声因子。
+沿原计数线 $p_j=\operatorname{logistic}(\operatorname{logit}p_0+jh_Q)$，
+故修正中心的连续环境依赖通过三个共同量 $(p_0,\mathcal D_x,\bar p_x)$，另保留完整整数直方图。
+这三个量与直方图彼此耦合。
+
+**精确共同响应率与双锚表示。** 在同一好事件上 $C_0\to\infty$。
+取第零组两个不同实际行 $a,b$，其似然均为 $L_0$，定义
+
+$$
+p_* =P_x(X_a=1),\qquad
+\tau_* =P_x(X_a=1,X_b=0)
+=\frac{L_0e_{q-1}(L_{-\{a,b\}})}{e_q(L)}.
+\tag{118.21}
+$$
+
+等似然交换性使锚的选取无关。这是原完整后验的两个共同量。
+Recovery 卷式 (26.16) 的二行删除恒等式给
+$\pi_i-\pi_a=(L_i-L_0)e_{q-1}(L_{-\{i,a\}})/e_q(L)$。
+对 $i\notin\{a,b\}$，再按唯一不同坐标展开，精确得到
+
+$$
+e_{q-1}(L_{-\{i,a\}})
+=e_{q-1}(L_{-\{a,b\}})
+-(L_i-L_0)e_{q-2}(L_{-\{i,a,b\}}).
+$$
+
+令 $t_j=L_j/L_0-1$，则
+
+$$
+\pi_i=p_*+\tau_*t_j-u_it_j^2,\qquad
+u_i=\frac{L_0^2e_{q-2}(L_{-\{i,a,b\}})}{e_q(L)}
+=P_x(X_a=X_b=1,X_i=0)\in[0,1].
+\tag{118.22}
+$$
+
+两个符号的 $t_j$ 都允许；第零组 $t_j=0$，含锚在内直接成立。
+没有近似 $e_q$ 或假设后验独立，二次余项系数非负且有界。
+原计数线为 $(k_j,l_j)=(k_0+jQ,l_0+jP)$，令 $\epsilon_M=rq/(M-q)$，有
+
+$$
+L_j/L_0=e^{jh_Q},\qquad
+h_Q=Q\log\frac{1+r}{1-\epsilon_M}
++P\log\frac{1-r}{1+\epsilon_M}.
+\tag{118.23}
+$$
+
+这是保留共同补偿的精确确定步长。
+仅在相位系数中定义
+
+$$
+\check\mu_j=C_j[p_*+\tau_*(e^{jh_Q}-1)].
+\tag{118.24}
+$$
+
+由 (118.22)，$0\le\check\mu_j-\mu_j\le C_j(e^{jh_Q}-1)^2$。
+原第 68 章给 $|j|\le CQ^2$、
+$0<\vartheta-P/Q<2e^{-(\ln10)Q^5}$，其中
+$\vartheta=\log(1+r)/[-\log(1-r)]$。
+将 (118.23) 分成未补偿近共振项与
+$-Q\log(1-\epsilon_M)-P\log(1+\epsilon_M)$，得到
+
+$$
+|h_Q|\le CQ\left(q/M+e^{-cQ^5}\right),\qquad
+\max_j|jh_Q|\to0.
+\tag{118.25}
+$$
+
+正的首项 $(Q-P)\epsilon_M$ 未被删去。
+最终 $|e^{jh_Q}-1|\le2|jh_Q|$，因而
+
+$$
+\rho(\mu,\check\mu)^2\le Ch_Q^4\sum_jd_jC_j^2j^4
+\le Ch_Q^4q^3Q,
+$$
+
+$$
+\rho(\mu,\check\mu)
+\le CQ^{5/2}q^{3/2}\left((q/M)^2+e^{-2cQ^5}\right).
+\tag{118.26}
+$$
+
+保留取整的原尺度满足
+$\log M=\phi Q^3/\beta+O(1)$、$\log q=c_qQ^3+O(1)$，
+$c_q=\phi(1-\beta)/\beta<\phi$。
+式 (118.26) 第一项的指数率为 $3c_q/2-2\phi<-\phi/2$，第二项由负 $Q^5$ 主导。
+所以它对每个原 $\beta\in(1/2,1)$ 趋零。线性余项不能用同一预算覆盖这个完整参数范围。
+再用 (118.8)、(118.2)，即得 (118.4) 和
+
+$$
+\int f_x|D_x-R_*|=\mathfrak J(\check\mu)+o_{\mathbb P}(1).
+\tag{118.27}
+$$
+
+该路线由精确有限恒等式和原计数线几何完成，不需要拒绝抽样渐近展开。
+共同归一化仍留在 $p_*,\tau_*$ 中。
+
+**同一物理输出与未解决的概率律。** 对任一 $v'=\widehat\mu$ 或 $\check\mu$，
+令 $\psi$ 为 (118.7) 中 $v=\mu$ 时的值。
+记 $\mathcal K^v=M_2^v/M_0^v-(M_1^v/M_0^v)^2$，稳定性还给
+
+$$
+\sup_y|\mathcal K^{v'}(\pi\mathcal B y+\psi)
+-\mathcal K^\mu(\pi\mathcal B y)|\le C_D\rho(\mu,v').
+\tag{118.28}
+$$
+
+乘以原 $f_x$ 积分仅付总质量一，因此 (116.6) 也可使用上述带平移的相位修正。
+固定物理输出下不能删除 $\psi$；它在 (118.20)、(118.27) 中消失只因全周期平移不变。
+原通道、实际后验、有限截距、$\Lambda$ 中的 $\sigma^2$、精确先验方差及输出均值均未改变。
+误差对所有 $y$ 一致，所以不另需新的尾部论证；第 116 章的原选择返回与全输出控制保持原范围。
+
+固定原共同好事件的局部化常数 $K$ 后，两个中心误差由上面确定性消失界控制。
+先令规模增长，再释放 $K$，使用
+$\lim_{K\to\infty}\limsup_M\sup_S\mathbb P_S(E_{M,K}^c)=0$，
+得到各实验所述的实际固定支撑一致概率结论。这里没有对稀有原始数据环境取无界期望。
+
+剩余问题是这些共同量与整数直方图的实际联合算术律。
+$p_*,\tau_*$ 依赖包含 $C_j$ 在内的整个环境，不是两个独立均匀相位；
+$(p_0,\mathcal D_x,\bar p_x)$ 的表示也没有解除这种耦合。
+原一、二行生成函数足以给本章使用的占据好事件，尚未给定余下环境后这些泛函的精细条件分布。
+
+例如形式上仅将某一似然改为 $L_a\mapsto e^tL_a$，固定其他似然时，对同一选中集合上的统计量 $F$，
+精确有
+
+$$
+\mathbb E_tF=
+\frac{\mathbb E_xF+(e^t-1)\mathbb E_x(FX_a)}{1-\pi_a+e^t\pi_a},
+\qquad
+\left.\frac d{dt}\mathbb E_tF\right|_{t=0}=\operatorname{Cov}_x(F,X_a).
+\tag{118.29}
+$$
+
+这是经典指数族代数，不能证明实际 pair/path 原始数据律允许独立实施该变动，
+也不给该变动的条件概率。合法占据交换还须满足实际计数约束。
+趋零证明仍需实际数据的细尺度反集中，或直接控制完整商式；
+反驳仍需实际非消失概率事件。定性有理独立不提供所需速率，
+第 116 章的充分能量发散条件也没有被改称必要条件。
+本章只关闭中心表示的精度缺口，不声称原固定间隙目标、阈值尖锐性、计算效率、
+全环境期望、形式核验或全局原创性。
+
+## 追加锚（第 118 章后续增补区）
