@@ -171,11 +171,13 @@ duality, remain research questions.
 
 ## A continuing research program
 
-The [research directions](docs/VISION.md#research-directions) pair each open
-question with evidence that would advance it. Let new proofs, counterexamples
-and reproducible experiments sharpen those questions. Keep this entrance
-compact by replacing weaker explanations and preserving the assumptions
-needed to reuse each result.
+The [research directions](docs/VISION.md#research-directions) ask:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
+
+The guide states what would advance each question.
 
 ## Information escape
 
@@ -224,23 +226,26 @@ these four questions to follow what becomes distinguishable and what stays open.
 
 ## What is proved, and what is open
 
-[D5/](D5/) contains the formal development. [Theory prose](docs/develop/theory/)
-supplies research input, and [experiments](Evidence/) supply observations within
-their declared scope. Neither prose nor numerical agreement establishes a
-Lean theorem. The C# harness checks repository rules, proof reports and frozen
-state; independent review examines whether statements faithfully express the
-intended mathematics. Admitted proofs are recorded in the
-[frozen ledger](Golden/Frozen/state/), with precise Lean statements and their
-assumptions and axiom dependencies as the formal basis for reuse.
+Mathematical reuse rests on the statements, checked proof terms and axiom
+dependencies in the [Lean source](D5/). The
+[frozen ledger](Golden/Frozen/state/) tracks frozen module identities.
+[Theory prose](docs/develop/theory/) supplies research input, and
+[experiments](Evidence/) supply observations within their declared scope;
+neither substitutes for a Lean proof. The C# harness checks repository rules,
+proof reports and frozen state. Independent review examines whether statements
+faithfully express the intended mathematics.
 
 ```mermaid
 flowchart TD
     accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, compute and test hypotheses, check a proof or refutation, and keep a reusable result. A dashed arrow leads to the next open question.
+    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
     Q([Ask a precise question]) --> T[Compute and test hypotheses]
     T --> P[Check a proof or refutation]
     P --> R[[Keep a reusable result]]
     R -.-> N{What remains open?}
+    T -.-> N
+    P -.-> N
+    N -.-> Q
     classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
     classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
     classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
@@ -249,11 +254,11 @@ flowchart TD
     class N frontier
 ```
 
-*A schematic of inquiry, not runtime behavior or dependency data.* In words:
-question → computation and tests → checked proof or refutation → reusable
-result → next open question. A question can remain unresolved at any stage;
-tests alone do not establish a theorem. The dashed arrow and diamond mark the
-open frontier, so color is not needed to read the distinction.
+*A schematic of inquiry, not runtime behavior or dependency data.* Questions
+can remain unresolved, and tests alone do not establish a theorem. Dashed
+paths return remaining questions to another inquiry, including when no checked
+result was obtained. Labels and shapes carry the distinction without relying
+on color.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by
