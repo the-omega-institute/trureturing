@@ -21,10 +21,8 @@ Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Int.ModEq
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
 import Mathlib.Data.Nat.Periodic
-import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
