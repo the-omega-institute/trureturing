@@ -276,7 +276,20 @@ internal static partial class CleanLanesCommand
             .Order(StringComparer.Ordinal);
         foreach (var branch in branches)
         {
-            var head = ResolveCommit(repositoryRoot, $"refs/heads/{branch}", runner);
+            // 枚举与解析之间,别的会话可能合并后删掉了该分支;缺 ref 只跳过这一项。
+            var head = TryResolveBranchCommit(repositoryRoot, branch, runner);
+            if (head is null)
+            {
+                events.Add(new CleanLaneEvent(
+                    "orphan_branch",
+                    null,
+                    branch,
+                    null,
+                    "skipped",
+                    "vanished"));
+                continue;
+            }
+
             if (!IsAncestor(repositoryRoot, head, baseCommit, runner))
             {
                 events.Add(new CleanLaneEvent(
@@ -461,6 +474,23 @@ internal static partial class CleanLanesCommand
             ["rev-parse", "--verify", "--end-of-options", $"{revision}^{{commit}}"],
             runner,
             $"revision does not resolve: {revision}").StandardOutput).Trim();
+
+    private static string? TryResolveBranchCommit(
+        string repositoryRoot,
+        string branch,
+        IWorktreeProcessRunner runner)
+    {
+        var result = runner.Run(
+            "git",
+            ["rev-parse", "-q", "--verify", "--end-of-options", $"refs/heads/{branch}^{{commit}}"],
+            repositoryRoot,
+            TimeSpan.FromSeconds(120));
+        if (result.ExitCode == 0) return Decode(result.StandardOutput).Trim();
+        if (result.ExitCode == 1 && result.StandardOutput.Length == 0) return null;
+        var error = Decode(result.StandardError).Trim();
+        throw new InvalidOperationException(
+            error.Length == 0 ? $"revision does not resolve: refs/heads/{branch}" : error);
+    }
 
     private static string ResolveCommonGitDirectory(
         string repositoryRoot,
