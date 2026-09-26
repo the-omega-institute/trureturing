@@ -110,10 +110,6 @@ private def decode (s : List (ℕ × ℕ)) (j : ℕ) : Fin 18 → Fin 3 := fun v
   if (s.getD v.val (0, 0)).1.testBit j then 1
   else if (s.getD v.val (0, 0)).2.testBit j then 2 else 0
 
-private def iterM : ℕ → List (ℕ × ℕ) → List (ℕ × ℕ)
-  | 0, s => s
-  | t + 1, s => iterM t (stepM s)
-
 private def initM : List (ℕ × ℕ) := (List.finRange 18).map fun v => (coord v.val, 0)
 
 private def allClear (s : List (ℕ × ℕ)) : Bool := s.all fun p => p.1 == 0 && p.2 == 0
@@ -265,15 +261,15 @@ theorem result : ¬ claim := by
   have iter_decode : ∀ (j : ℕ) (hj : j < 2 ^ 18), ∀ (t : ℕ) (s : List (ℕ × ℕ)),
       (∀ v : Fin 18, ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧
         (s.getD v.val (0, 0)).2.testBit j = true)) →
-      decode (iterM t s) j = (step (wheelAdj 18) 4)^[t] (decode s j) := by
+      decode (stepM^[t] s) j = (step (wheelAdj 18) 4)^[t] (decode s j) := by
     intro j hj t
     induction t with
     | zero => intro s _; rfl
     | succ t ih =>
       intro s hd
       obtain ⟨h1, h2⟩ := step_decode s j hj hd
-      rw [iterM, ih _ h2, h1, Function.iterate_succ_apply]
-  have clear25 : allClear (iterM 25 initM) = true := by
+      rw [Function.iterate_succ_apply, ih _ h2, h1, Function.iterate_succ_apply]
+  have clear25 : allClear (stepM^[25] initM) = true := by
     decide +kernel
   have extinct : ∀ (f₀ : Fin 18 → Fin 2),
       (step (wheelAdj 18) 4)^[25] (fun v => (f₀ v).castSucc) = fun _ => 0 := by
@@ -296,19 +292,19 @@ theorem result : ¬ claim := by
       generalize f₀ v = a
       fin_cases a <;> rfl
     have hstep_len : ∀ s, (stepM s).length = 18 := by intro s; simp [stepM]
-    have hiter_len : ∀ t s, s.length = 18 → (iterM t s).length = 18 := by
+    have hiter_len : ∀ t s, s.length = 18 → (stepM^[t] s).length = 18 := by
       intro t
       induction t with
       | zero => intro s h; exact h
       | succ t ih => intro s _; exact ih _ (hstep_len s)
-    have hlen25 : (iterM 25 initM).length = 18 := hiter_len 25 initM (by simp [initM])
+    have hlen25 : (stepM^[25] initM).length = 18 := hiter_len 25 initM (by simp [initM])
     have hall := iter_decode (bitsValue bs) hj 25 initM hd0
     rw [hdec] at hall
     rw [← hall]
     funext v
     have hc := clear25
     simp only [allClear, List.all_eq_true] at hc
-    have hmem : (iterM 25 initM).getD v.val (0, 0) ∈ iterM 25 initM := by
+    have hmem : (stepM^[25] initM).getD v.val (0, 0) ∈ stepM^[25] initM := by
       rw [List.getD_eq_getElem _ _ (by rw [hlen25]; exact v.isLt)]
       exact List.getElem_mem _
     have hv := hc _ hmem
