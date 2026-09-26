@@ -44,13 +44,14 @@ identifies where a route fails so that others can avoid the same mistake.
 An AI's output can support further reasoning when it returns to shared
 knowledge with inspectable objects, conditions and evidence.
 
-[Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) develops
-this orientation within the project: use beauty and intuition to choose
-questions, logic to test conclusions, and extensions that preserve verified
-results. [GICT](develop/theory/GICT.md) provides research background on
-coordinates, transformations and invariants. These are theoretical references.
-“Beauty is a compass; logic is a ratchet” is a research discipline, not a
-substitute for a particular proof.
+[Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) outlines
+a discipline: beauty and intuition guide questions, logic tests
+conclusions, and extensions preserve verified results.
+[GICT](develop/theory/GICT.md) studies coordinates, transformations and
+invariants. [Math Myth Match](develop/theory/MATH_MYTH_MATCH.md) examines
+how images of parts reflecting wholes translate into explicit relations,
+while preserving differences between philosophical traditions. These volumes
+are research inputs; their guiding metaphors do not substitute for proofs.
 
 ## The shape of logical truth
 
