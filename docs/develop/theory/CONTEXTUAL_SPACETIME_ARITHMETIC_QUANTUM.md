@@ -50645,3 +50645,462 @@ $$
 **注记 235.3（幅度趋零与变化代价）。** 第234节的固定任务零下确界不提供一列具有统一正则性界的准备。这里量化了其中的缺失：在一个预先固定的节点邻域，虚性幅度越小，Fisher 峰值与积分代价越大，尽管节点自身的有限阶规范数据保持不变。窗口外的参数端点本来就可导致 Fisher 信息发散，因此定理只讨论固定内部窗口 $K$。$u$ 是任务参数，未被假定为物理时间；$E_s$ 也未被认作某个 Hamiltonian 的能量。共轭固定为原模型的 $C$，本节不对共轭另作优化。
 
 ## 追加锚（本行以下为增补区）
+
+## 236. 临界实纤维长度与 Fisher 代价的首项常数
+
+**定义 236.1（固定任务的临界矩阵系数与实弧长）。** 固定第235节的充分小 $s>0$、$a=a_{\rm c}(s)$、共同处理器、共轭 $C$ 和窗口 $K$。置 $p_0=h_1$、$x_0=\sqrt{1-p_0}$，以 $v_0=v_{\rm sad}(a,s,p_0)$ 表示实际实鞍点，写
+
+$$
+T=\begin{pmatrix}0&0\\k&B\end{pmatrix},\qquad Q=\frac{B+B^{\mathsf T}}2.
+\tag{236.1}
+$$
+
+令 $\ell_0$ 为球面驻点乘子，并定义
+
+$$
+\begin{aligned}
+Qv_0+\frac{x_0k}{2}&=\ell_0v_0,&H_0&=Q-\ell_0I,\\
+j&=(B^{\mathsf T}-B)v_0-x_0k,&E&=j^\perp,\qquad M=I-v_0v_0^{\mathsf T}.
+\end{aligned}
+\tag{236.2}
+$$
+
+置
+
+$$
+\kappa=\max_{\beta\in E\setminus\{0\}}
+\frac{-\beta^{\mathsf T}H_0\beta}{4\beta^{\mathsf T}M\beta},
+\qquad\gamma=\partial_pg(a,s,p_0).
+\tag{236.3}
+$$
+
+在固定 $p=p_0$ 的精确实纤维 $\mathcal F_{p_0}^{\mathbb R}$ 中，以 $\rho_A$ 表示被强制的第一节点，以 $\rho_0$ 表示向量 $x_0q+v_0$ 的纯态密度。定义
+
+$$
+L=\inf_{\rho:[0,1]\to\mathcal F_{p_0}^{\mathbb R}\atop
+\rho(0)=\rho_A,\ \rho(1)=\rho_0}
+\int_0^1\|\rho'(t)\|_1\,dt,
+\tag{236.4}
+$$
+
+其中路径分段 $C^1$，纤维中的向量取正 $q$ 规范。这个长度只涉及单个临界截面；$Q_s,E_s$ 仍是第235节对全域解析准备定义的两个代价。
+
+**定理 236.2（两个最优代价的首项与单截面计算）。** 对上述充分小而固定的 $s>0$，有 $0<\kappa,\gamma,L<\infty$，并且
+
+$$
+\lim_{\varepsilon\downarrow0}\varepsilon^4Q_s(\varepsilon)
+=\frac{L^2\gamma^2}{4\kappa^2},\qquad
+\lim_{\varepsilon\downarrow0}\varepsilon^2E_s(\varepsilon)
+=\frac{L^2\gamma}{2\kappa}.
+\tag{236.5}
+$$
+
+两个极限可由同一族全域解析准备同时达到。构造保持全输入精确性、实际支持四维、完整尖锐集合 $\{u_1,u_3\}$ 和两节点最优普通双侧曲率；任意预先固定的有限阶规范节点数据也可同时保持。$L$ 等于证明中式（236.9）给出的两段显式一维弧长积分的较小值。
+
+证明。
+
+先核对本节所用的实际几何。
+
+令 $\alpha=a_*$、$c=\alpha+2\alpha^2$、$\sigma=\sqrt{1-4\alpha^2}$。由
+$$
+4\alpha^2(1+\alpha)=1
+$$
+得到
+$$
+c(1-c)=\alpha^2,\qquad \sigma=2c-1>0.
+$$
+第225.2式的处理器在 $(a,s)=(\alpha,0)$ 满足
+$$
+k_*=(\sigma,0,0)^{\mathsf T},\qquad
+Q_*=\operatorname{diag}(2\alpha,1,-1).
+$$
+鞍点为 $v_*=(-\sqrt c,0,0)$，其乘子为
+$$
+\ell_*=2\alpha-\frac{\sigma\sqrt{1-c}}{2\sqrt c}
+=\alpha+\frac{\alpha}{2c},
+\qquad 0<\ell_*<2\alpha<1.
+$$
+所以完整三维二次型 $Q_*-\ell_*I$ 有两个正方向和一个负方向；实球面切空间上的二次型为
+$$
+(1-\ell_*)\,dz^2-(1+\ell_*)\,dw^2.
+$$
+同时
+$$
+j_*=-\sigma\sqrt{1-c}\,e_y\ne0,
+$$
+故虚切空间也是 $\operatorname{span}\{e_z,e_w\}$，其二次型同样一正一负。
+
+第214.6式在 $h=c(a)+sz$ 处的简单根展开给出
+$$
+h_1=c(a)-K(a)s+O(s^2),\qquad
+K(a)^2=\frac{8a^3(1+a)(1+2a)}{1-2a}.
+$$
+第三根及矩阵中的平方根也具有所需解析延拓。因此球面鞍点由含参隐函数定理延拓。直接微分临界值给出
+$$
+g_p(\alpha,0,c)=\frac1{2\alpha}>0,\qquad
+G_a(\alpha,0)=\frac{2\alpha(3\alpha+2)}{\sigma}>0.
+$$
+这独立确定了局部解析分界 $G(a_{\mathrm c}(s),s)=0$。缩小 $s$ 的范围，上述严格符号全部保持。
+
+特别地，$H_0$ 具有惯性 $(2,1)$，在 $E$ 上具有惯性 $(1,1)$，且
+$$
+M\ge(1-p_0)I>0.
+$$
+因而定义236.1中的 $\kappa$ 确实严格为正。还可直接计算
+$$
+\boxed{\gamma=\ell_0-\frac{k^{\mathsf T}v_0}{2x_0}}. \tag{236.6}
+$$
+这是对球面驻点值求导所得，使用了
+$2v_{\rm sad}^{\mathsf T}\partial_pv_{\rm sad}=1$。
+
+下面确定临界纤维及其内在长度。记
+$$
+F_p(v)=v^{\mathsf T}Qv+\sqrt{1-p}\,k^{\mathsf T}v-a.
+$$
+球面驻点方程给出精确恒等式
+$$
+F_{p_0}(v)
+=(v-v_0)^{\mathsf T}H_0(v-v_0),
+\qquad \|v\|^2=p_0. \tag{236.7}
+$$
+所以临界实纤维就是球面与以 $v_0$ 为顶点的二次锥的交线。
+
+这一交线有完整的显式参数化。取正交单位向量 $e_1,e_2,n$，使
+$$
+H_0e_i=\nu_i e_i\quad(i=1,2),\qquad
+H_0n=-\nu_3n,\qquad \nu_i>0,
+$$
+并令
+$$
+w(\theta)=
+\frac{\cos\theta}{\sqrt{\nu_1}}e_1+
+\frac{\sin\theta}{\sqrt{\nu_2}}e_2+
+\frac1{\sqrt{\nu_3}}n,
+$$
+$$
+v(\theta)=v_0-
+\frac{2v_0^{\mathsf T}w(\theta)}{\|w(\theta)\|^2}\,w(\theta). \tag{236.8}
+$$
+因为 $w^{\mathsf T}H_0w=0$，式（236.8）满足（236.7）；它又是对 $v_0$ 的欧氏反射，故 $\|v(\theta)\|^2=p_0$。
+
+反过来，每个非零的 $H_0$-零向量都唯一地写成 $tw(\theta)$。球面条件迫使
+$$
+t=-\frac{2v_0^{\mathsf T}w(\theta)}{\|w(\theta)\|^2}.
+$$
+因此（236.8）覆盖整个临界实纤维，且除鞍点外一一对应。
+
+在基点及其充分小邻域，
+$$
+v_0^{\mathsf T}H_0^{-1}v_0>0.
+$$
+故 $v_0^{\mathsf T}w(\theta)$ 恰有两个简单零点。这两个参数值都映到 $v_0$，其余点均正则：纤维是两条仅在鞍点相接的环，没有其他临界点。
+
+正 $q$ 规范使向量到密度的映射单射。沿固定 $p_0$ 的实路径，
+$$
+\left\|\frac{d}{dt}|\psi\rangle\langle\psi|\right\|_1
+=2\|\dot v\|.
+$$
+设强制第一节点对应 $\theta_A$，包含它的环对应相邻零点之间的区间
+$\theta_-<\theta_A<\theta_+$。于是
+$$
+\boxed{
+L=2\min\left\{
+\int_{\theta_-}^{\theta_A}\|v'(\theta)\|\,d\theta,\quad
+\int_{\theta_A}^{\theta_+}\|v'(\theta)\|\,d\theta
+\right\}.} \tag{236.9}
+$$
+第一节点不在分隔面上，故不同于鞍点，得到 $0<L<\infty$。有限图的结构还说明：允许绝对连续或 Lipschitz 路径不会降低 $L$，因为任何到鞍点的路径都必须走完上述两条弧之一。
+
+现在证明尖锐下界。
+
+在两个节点之间，对任意允许准备采用正 $q$ 规范：
+$$
+\psi=\sqrt{1-p}\,q+v_R+i\beta,\qquad
+\|v_R\|^2+\|\beta\|^2=p.
+$$
+令 $t=\|\beta\|^2$。虚性有精确表达式
+$$
+I_R^C(\rho)^2
+=4\bigl[(1-t)t-(v_R^{\mathsf T}\beta)^2\bigr]
+\ge4(1-p)t. \tag{236.10}
+$$
+由于 $s$ 固定且 $h_3<1$，全域虚性约束给出
+$$
+\|\beta\|=O_s(\varepsilon)
+$$
+在整个节点区间上一致成立。
+
+令 $n$ 为 $Q$ 的最低特征向量，在第一节点附近取移动平面
+$$
+n^{\mathsf T}v_R=d(p),\qquad
+d(p)=n^{\mathsf T}v_{\rm sad}(p). \tag{236.11}
+$$
+这里使用的是**原实部** $v_R$。
+
+该平面可以延伸到第三节点，使所有 $p>p_0$ 的实精确纤维都不能穿过它。理由如下：
+
+在临界邻域，$H(p)=Q-\ell(p)I$ 在 $n^\perp$ 上正定，因此实球面与平面的交圆上，$F_p$ 的唯一最小点是 $v_{\rm sad}(p)$，最小值为
+$$
+g(p)>0\qquad(p>p_0).
+$$
+远离临界邻域时，极限模型在 $w=0$ 上的最小残差是
+$$
+2\alpha p-\sigma\sqrt{p(1-p)}-\alpha,
+$$
+在 $p>c$ 上严格为正；紧性使其正间隙保持到实际小参数模型。将局部偏移 $d(p)$ 连续截断到零，即得所需延伸平面。
+
+第213节的尖锐等号及共同模型的简单谱强制两个节点为唯一的实规范状态；第225.19—225.20式的节点投影使它们位于上述平面两侧。因此任意允许曲线都存在首次过零点 $p_\varepsilon>p_0$。
+
+由（236.10）、紧性和刚证明的实分隔性质，
+$$
+p_\varepsilon\longrightarrow p_0,\qquad
+v_R(p_\varepsilon)\longrightarrow v_0
+$$
+对所有允许曲线一致成立。否则抽取极限就会得到禁行平面上的另一个实精确状态。
+
+在过零点写
+$$
+\delta=v_R-v_{\rm sad}(p_\varepsilon).
+$$
+范数约束和驻点方程给出完整复矩的精确实部恒等式
+$$
+0=g(p_\varepsilon)
++\delta^{\mathsf T}H(p_\varepsilon)\delta
++\beta^{\mathsf T}H(p_\varepsilon)\beta. \tag{236.12}
+$$
+因为 $\delta\in n^\perp$，中间项非负且控制 $\|\delta\|^2$。结合
+$g(p)=\gamma(p-p_0)+O((p-p_0)^2)$，先得到
+$$
+p_\varepsilon-p_0=O(\varepsilon^2),\qquad
+\delta=O(\varepsilon). \tag{236.13}
+$$
+
+虚矩方程同样精确：
+$$
+\bigl[(B^{\mathsf T}-B)v_R-\sqrt{1-p}\,k\bigr]^{\mathsf T}\beta=0.
+$$
+故在过零点
+$$
+j^{\mathsf T}\beta=O(\varepsilon^2).
+$$
+将 $\beta$ 正交投影到 $E=j^\perp$，只改变 $O(\varepsilon^2)$。同时（236.10）和（236.13）给出
+$$
+I_R^C(\rho)^2=4\beta^{\mathsf T}M\beta+O(\varepsilon^3).
+$$
+因此，由 $\kappa$ 的定义，
+$$
+-\beta^{\mathsf T}H(p_\varepsilon)\beta
+\le \kappa\,I_R^C(\rho)^2+O(\varepsilon^3)
+\le\kappa\varepsilon^2+O(\varepsilon^3).
+$$
+代入（236.12），得到所需的尖锐时间限制：
+$$
+\boxed{
+p_\varepsilon-p_0\le
+\frac{\kappa}{\gamma}\varepsilon^2+O(\varepsilon^3).} \tag{236.14}
+$$
+换回原任务参数，记
+$$
+T_*=\frac{2\kappa}{\gamma},
+$$
+则
+$$
+u_\varepsilon-u_1\le T_*\varepsilon^2+O(\varepsilon^3). \tag{236.15}
+$$
+
+还需把端点距离提升为内在长度。令 $\mathscr L_\varepsilon$ 为曲线从 $u_1$ 到首次过零点的迹速率长度。有
+$$
+\mathscr L_\varepsilon\ge L-o(1) \tag{236.16}
+$$
+一致成立。
+
+若不成立，就有一列这样的路径，长度始终小于 $L-\delta_0$。按迹弧长将它们重参数化到 $[0,1]$，得到一致 Lipschitz 的密度路径。Arzelà–Ascoli 定理给出一致收敛子列。由（236.10）、（236.13），极限是一条完全位于 $p=p_0$ 精确实纯态纤维中的路径，起点是强制第一节点，终点是鞍点。长度的下半连续性使其长度不超过 $L-\delta_0$，与（236.9）矛盾。这证明（236.16）。
+
+纯态具有恒等式
+$$
+I_Q(\rho_u)=\|\rho'_u\|_1^2. \tag{236.17}
+$$
+它可由密度导数的两个非零特征值
+$\pm\|(I-\rho)\psi'\|$ 直接验证。因此
+$$
+\sup_KI_Q
+\ge\frac{\mathscr L_\varepsilon^2}{(u_\varepsilon-u_1)^2},
+\qquad
+\int_KI_Q\,du
+\ge\frac{\mathscr L_\varepsilon^2}{u_\varepsilon-u_1}.
+$$
+结合（236.15）—（236.16），便有
+$$
+\liminf_{\varepsilon\downarrow0}\varepsilon^4Q_s(\varepsilon)
+\ge\frac{L^2}{T_*^2},
+\qquad
+\liminf_{\varepsilon\downarrow0}\varepsilon^2E_s(\varepsilon)
+\ge\frac{L^2}{T_*}. \tag{236.18}
+$$
+
+下面构造同时达到两个常数的上界。
+
+在实际鞍点附近，先消去范数约束和虚矩方程。后者的线性化为 $j\ne0$，所以可以解析消去一个虚坐标。剩下四个实坐标，共轭作用为
+$$
+(x,y,X,Y)\longmapsto(x,y,-X,-Y).
+$$
+实矩的实、虚二次块分别是 $H(p)$ 在实球面切空间和虚切空间 $E_p$ 上的限制，两块均一正一负。
+
+在当前截面将（236.2）—（236.3）中的 $p_0,v_0,x_0$ 换成 $p,v_{\rm sad}(p),\sqrt{1-p}$，记相应对象为 $E_p,M_p,\kappa(p)$。选择虚负方向 $b_p$ 为广义 Rayleigh 商的最大化方向，并归一化为
+$$
+-b_p^{\mathsf T}H(p)b_p=1,\qquad
+4b_p^{\mathsf T}M_pb_p=\frac1{\kappa(p)},
+\quad
+\kappa(p)\to\kappa.
+$$
+负广义特征值是简单的，故这些选择可随 $p$ 解析变化。
+
+可以在保持这一线性方向和共轭的条件下作解析 Morse 配方。具体地，线性归一化后把残差写成
+$$
+g+\xi^{\mathsf T}A(\xi)\xi,\qquad
+A(0)=D=\operatorname{diag}(1,-1,1,-1).
+$$
+变换
+$$
+\xi\longmapsto [DA(\xi)]^{1/2}\xi
+$$
+在原点微分为恒等，且将二次表达式精确化为 $D$。矩阵平方根取单位阵附近的收敛幂级数；该级数同时保持共轭对称性。于是得到精确方程
+$$
+g+x^2-y^2+X^2-Y^2=0, \tag{236.19}
+$$
+并且逆坐标在 $Y$ 方向的虚部微分恰为 $b_p$。
+
+对 $g>0$，使用半圆
+$$
+x=X=0,\qquad
+(y,Y)=\sqrt g\,(\cos\theta,\sin\theta),
+\quad 0\le\theta\le\pi. \tag{236.20}
+$$
+它精确连接两条实负方向相反的分支。整个半圆上
+$$
+\boxed{
+I_R^C(\rho)^2
+=\frac{g}{\kappa(p)}\sin^2\theta+O(g^{3/2}).} \tag{236.21}
+$$
+这一步保留了最优虚方向的真实资源度量，没有把 Morse 坐标中的欧氏模误认成虚性。
+
+所连的也确实是需要的两侧：实负方向必须具有非零 $n$ 分量，否则与 $H|_{n^\perp}>0$ 矛盾。两条实分支因而分处原分隔面的两侧。最短入弧可能选择任一实正方向；半圆端点位于 $x=0$，出弧可以向任一 $x$ 符号离开，故不会产生“最优虚方向连接了错误两臂”的障碍。
+
+取（236.9）中的一条最短入弧。它在鞍点外正则，因而可随 $p>p_0$ 扰动；在 Morse 图内用
+$$
+y=+\sqrt{g(p)+x^2}
+$$
+延伸到端点 $x=0$。这得到从实际规范第一分支 $A(p)$ 到半圆入口的实精确弧族。将每条弧按归一化迹弧长参数 $z\in[0,1]$ 参数化，记密度为 $\Gamma(p,z)$，则
+$$
+\|\partial_z\Gamma(p,z)\|_1=\mathscr L(p),\qquad
+\mathscr L(p)\longrightarrow L,
+$$
+$$
+\sup_z\|\partial_p\Gamma(p,z)\|_1
+\le C(p-p_0)^{-1/2}. \tag{236.22}
+$$
+这些估计可直接从双曲线得到：
+$$
+|\partial_xy|\le1,\qquad
+|\partial_py|\le C(g+x^2)^{-1/2}.
+$$
+弧长重参数化的参数导数也满足同一界，因为其可能奇异的积分项受
+$$
+\int_0^\delta\frac{x\,dx}{(g+x^2)^{3/2}}\le g^{-1/2}
+$$
+控制。图外的所有参数导数有界。因此（236.22）包含所需的速度控制，并非仅仅路径存在性。
+
+固定 $0<\eta<1$，置
+$$
+T_\eta=(1-\eta)T_*,
+\qquad d_\varepsilon=\varepsilon^{5/2}.
+$$
+作如下调度：
+
+- 在 $u_1$ 后先保留长度 $d_\varepsilon$ 的规范分支。
+- 在
+  $$
+  u_1+d_\varepsilon\le u\le u_1+T_\eta\varepsilon^2
+  $$
+  内走完 $\Gamma$，使用两端平坦、近乎匀速的调度
+  $$
+  0\le z'(u)\le
+  \frac{1+o(1)}{T_\eta\varepsilon^2}.
+  $$
+- 在随后的长度 $d_\varepsilon$ 内走半圆（236.20）。
+- 此后在固定的小窗口内沿另一实侧离开，再接到实际第三规范分支。
+
+在主入弧上，（236.22）给出
+$$
+\sup\|\rho'_u\|_1
+\le\frac{L+o(1)}{T_\eta\varepsilon^2}
++O(\varepsilon^{-5/4}),
+$$
+$$
+\int_{\rm 入弧}\|\rho'_u\|_1^2du
+\le\frac{L^2+o(1)}{T_\eta\varepsilon^2}. \tag{236.23}
+$$
+第二式中，$\partial_p\Gamma$ 的平方积分至多为
+$O(|\log\varepsilon|)$，与主速度的交叉项也是低阶。
+
+半圆期间
+$$
+g(p)=\kappa(1-\eta)\varepsilon^2+o(\varepsilon^2).
+$$
+由（236.21），其最大虚性平方不超过
+$$
+(1-\eta/2)\varepsilon^2
+$$
+对充分小 $\varepsilon$ 成立，故保留了严格资源余量。半圆长度为 $O(\varepsilon)$，在 $d_\varepsilon$ 内完成时，
+$$
+\sup_{\rm 颈部}\|\rho'_u\|_1=O(\varepsilon^{-3/2}),
+\qquad
+\int_{\rm 颈部}\|\rho'_u\|_1^2du=O(\varepsilon^{-1/2}). \tag{236.24}
+$$
+两者都不贡献目标首项。
+
+出鞍后的实弧族有同类估计
+$$
+\|\rho'_u\|_1\le C\bigl(1+(p-p_0)^{-1/2}\bigr).
+$$
+从 $p-p_0\asymp\varepsilon^2$ 开始，在固定窗口内走完，故其峰值平方为 $O(\varepsilon^{-2})$，积分为 $O(|\log\varepsilon|)$。窗口可以预先选在 $K$ 内；其余部分使用规范分支。
+
+于是得到全域光滑、精确的背景曲线，同时满足
+$$
+\sup_KI_Q
+\le\frac{L^2+o(1)}{T_\eta^2\varepsilon^4},
+\qquad
+\int_KI_Q\,du
+\le\frac{L^2+o(1)}{T_\eta\varepsilon^2}. \tag{236.25}
+$$
+
+最后说明解析性及全部任务条件。
+
+对每个固定 $\varepsilon>0$，上述背景始终避开完整二矩的奇点：实弧正则，半圆的剩余矩梯度范数为 $2\sqrt g>0$，规范尾部的正则性由第221、225节的端点计算保证。使用 $x=\sqrt{1-p}$ 紧化后，背景在闭区间上具有严格正的最小矩 Jacobian 奇异值；它可以依赖 $\varepsilon$。
+
+逐坐标多项式逼近、有限 Hermite 节点匹配、归一化，再沿两个矩的球面梯度作解析隐式修正，因而可以同时做到：
+
+$$
+\sup_{J_a}\|\rho^{\rm an}-\rho^{\rm bg}\|_1=o(\varepsilon),
+\qquad
+\sup_K\|(\rho^{\rm an})'-(\rho^{\rm bg})'\|_1\le1,
+$$
+并精确保留任意预先指定的有限阶规范节点数据。Hermite 匹配使节点矩残差的相应阶导数为零；逐次微分隐式修正方程，便知修正的这些阶导数也为零。
+
+虚性的迹范数 Lipschitz 性与（236.21）的余量保证最终曲线满足全域虚性约束。上述 $C^1$ 误差不改变（236.25）的首项。
+
+两个精确矩通过第211.18式处理器的矩阵单位计算保证全部信号输入精确。节点二阶数据保留最优普通双侧曲率；固定处理器只有两个正签名，而第213.19式证明正签名随尖锐位置严格单调，所以不存在额外尖锐点。谱下界又强制实际联合支持恰为四维。
+
+因此
+$$
+\limsup_{\varepsilon\downarrow0}\varepsilon^4Q_s(\varepsilon)
+\le\frac{L^2}{T_\eta^2},
+\qquad
+\limsup_{\varepsilon\downarrow0}\varepsilon^2E_s(\varepsilon)
+\le\frac{L^2}{T_\eta}.
+$$
+令 $\eta\downarrow0$，结合（236.18）即得两个等式。对 $\eta$ 作对角选取，还得到同时达到两个首项的同一曲线族。证毕。
+
+**注记 236.3（局部相位方向与完整入弧）。** 首项分开保留了两种几何资料：$\kappa$ 是实际虚切空间中的广义 Rayleigh 商，$L$ 是第一强制态通向临界接点所需的完整实弧长。只保留局部 Hessian 不能恢复 $L$；只保留两端的外在迹距离也不能替代临界纤维内的路径长度。$H_0$ 是二次项矩阵，完整 Hessian 是其相应限制的两倍；原参数关系 $u-u_1=2(p-p_0)$ 已计入两个常数。这里先固定 $s$ 再令 $\varepsilon\downarrow0$，未声称联合极限、共轭优化或物理时间中的能量定律。
+
+## 追加锚（本行以下为增补区）
