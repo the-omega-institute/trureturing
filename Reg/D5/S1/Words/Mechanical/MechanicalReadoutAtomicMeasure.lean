@@ -135,10 +135,12 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
   · intro h r x hr0 hr1 hx
     have hv := congrFun (h ())
       (MechanicalReadoutSources.MassInput.mk r x hr0 hr1 hx)
+    change (geometricAtomicMeasure r x Set.univ,
+      geometricAtomicMeasure r x (Ioc (0 : ℝ) 1)) = (1, 1) at hv
     constructor
     · apply isProbabilityMeasure_iff.mpr
-      simpa [massReadout, massTarget] using congrArg Prod.fst hv
-    · simpa [massReadout, massTarget] using congrArg Prod.snd hv
+      exact congrArg Prod.fst hv
+    · exact congrArg Prod.snd hv
 
 private def massZero : MassOutput := fun _ => (0, 0)
 private def massOne : MassOutput := fun _ => (1, 1)
