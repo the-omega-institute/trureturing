@@ -264,15 +264,15 @@ theorem incoming_response_fiber_card {p : ℕ} {M : CountMat p p} {Q : Type}
         have hy : L.project y = a.target := hp.symm.trans hx
         have hlift : L.response (d + 1)
             (L.lift a ⟨x, hx⟩).val (L.lift a ⟨y, hy⟩).val :=
-          (response_zero_and_step L).2 d _ _
+          ((response_zero_and_step L).2 d)
             (incoming_response_step L d hxy a hx hy)
         exact ⟨hy, (Quotient.sound hlift).symm.trans hclass⟩
       let e : incomingResponseFiber L (d + 1) F v ≃
-          incomingResponseFiber L (d + 1) F w where
+          incomingResponseFiber L (d + 1) F w := {
         toFun x := ⟨x.val, htransport v w h x.val x.property⟩
         invFun x := ⟨x.val, htransport w v (Setoid.symm h) x.val x.property⟩
         left_inv := by intro x; apply Subtype.ext; rfl
-        right_inv := by intro x; apply Subtype.ext; rfl
+        right_inv := by intro x; apply Subtype.ext; rfl }
       exact Nat.card_congr e
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
