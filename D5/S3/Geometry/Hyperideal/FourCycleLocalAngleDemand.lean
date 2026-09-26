@@ -293,7 +293,6 @@ theorem paired_angle_demand
               (2 * Real.sin eta * Real.cos phi) /
                 (2 * Real.cos eta * Real.cos phi) := by
             field_simp [hcos_eta_ne, hcos_phi_ne]
-            ring
           _ = (Real.sin beta + Real.sin delta) /
               (Real.cos beta + Real.cos delta) := by
             rw [← hsin_sum_trig, ← hcos_sum_trig']
@@ -335,12 +334,14 @@ theorem paired_angle_demand
       Real.cos_pos_of_mem_Ioo ⟨by linarith [Real.pi_pos], by linarith⟩
     have hdouble : Real.cos theta =
         2 * Real.cos (theta / 2)^2 - 1 := by
+      have harg : 2 * (theta / 2) = theta := by ring
       calc
-        Real.cos theta = Real.cos (2 * (theta / 2)) := by congr 1 <;> ring
+        Real.cos theta = Real.cos (2 * (theta / 2)) := congrArg Real.cos harg.symm
         _ = 2 * Real.cos (theta / 2)^2 - 1 := Real.cos_two_mul _
     have htrig := Real.sin_sq_add_cos_sq (theta / 2)
     have hcos_sq : 2 * Real.cos (theta / 2)^2 = 1 + ct := by
-      nlinarith only [hdouble, hcos_theta]
+      rw [hcos_theta] at hdouble
+      linarith only [hdouble]
     have hsin_sq : 2 * Real.sin (theta / 2)^2 = 1 - ct := by
       nlinarith only [htrig, hcos_sq]
     rw [Real.tan_eq_sin_div_cos]
