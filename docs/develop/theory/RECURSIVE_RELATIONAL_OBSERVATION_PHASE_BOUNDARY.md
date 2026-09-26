@@ -57600,3 +57600,259 @@ $$
 第188节可行族的二阶系数不能替代这一义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 199. 完整恢复误差的二阶系数与临界曲线位移
+
+本节保持第188—198节的共同接收端恢复任务，固定
+$\beta>0$、$\gamma\in\mathbb R$、$R>1$。
+第191节的统一二阶余项界给出系数的有界性；有限维量子优化的半代数结构进一步给出每条固定比例路径上的系数极限。
+随后用冻结操作的导数控制，将固定临界比例上的系数传递到实际移动阈值。
+
+### 199.1 固定比例路径上的完整二阶展开
+
+**定理199.1（固定比例的二阶系数存在）。** 对每个固定有限
+$h\ge0$，存在有限实数 $Q(h)$，使
+
+$$
+\boxed{
+\mathscr E(h\epsilon,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_h(\epsilon^2)
+\qquad(\epsilon\downarrow0).
+}
+\tag{199.1}
+$$
+
+这里 $\mathscr E$ 仍是全部合法共同接收端 CPTP 操作的最优完整参考误差，
+不是第188节某个可行族的误差。结论包括 $h=0$，但只对每个固定有限 $h$ 断言二阶极限。
+
+**证明。** 先将第142.1节的有限实量词方法应用于当前任务。
+取固定合法参数域
+
+$$
+\mathcal D=\left\{(\ell,\epsilon):
+0\le\ell\le\frac12,\quad
+0\le\epsilon\le\frac{\beta}{R(\beta^2+\gamma^2)}\right\}.
+$$
+
+第189节的无损对称化将最小化限制到第198节的固定紧 Choi 集
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+$$
+
+把复数条目分成实部和虚部。Hermitian 正半定性等价于有限多个主子式非负，
+共同 TP 条件为线性等式，故 $\mathcal K$ 半代数。
+令 $\mathsf B(q,\ell,\epsilon,\Gamma)$ 为（189.10）的精确匹配偶块。
+其大小固定为四；条目只使用 Choi 坐标的实多项式及
+$\sqrt\ell,\sqrt{1-\ell},\sqrt q,\sqrt{1-q}$。
+每个根号可由唯一的非负辅助变量表达，例如
+$u\ge0,u^2=\ell$。因此这些矩阵条目具有有限实多项式的图描述。
+
+第173、189节的完整参考约化给
+
+$$
+\mathscr E(\ell,\epsilon)
+=\min_{\Gamma\in\mathcal K}\max_{q\in[0,1]}
+\lambda_{\max}\mathsf B(q,\ell,\epsilon,\Gamma).
+\tag{199.2}
+$$
+
+紧性和连续性使最小值及最大值均取得。于是其上图可精确写成
+
+$$
+\begin{aligned}
+\mathsf U(\ell,\epsilon,t)
+\quad\Longleftrightarrow\quad
+\exists\Gamma\in\mathcal K\
+\forall q\in[0,1]:\quad
+tI_4-\mathsf B(q,\ell,\epsilon,\Gamma)\succeq0.
+\end{aligned}
+\tag{199.3}
+$$
+
+这里 $\mathsf U(\ell,\epsilon,t)$ 等价于
+$t\ge\mathscr E(\ell,\epsilon)$。用上述辅助变量及主子式替换根号和矩阵不等式后，
+（199.3）是有限个实多项式条件的量词公式。
+再写
+
+$$
+t=\mathscr E(\ell,\epsilon)
+\quad\Longleftrightarrow\quad
+\mathsf U(\ell,\epsilon,t)\ \wedge\
+\neg\exists u<t:\ \mathsf U(\ell,\epsilon,u),
+\tag{199.4}
+$$
+
+实闭域量词消去给出 $\mathscr E$ 的半代数图。
+此处使用 Tarski–Seidenberg 的标准结论，见
+Basu–Pollack–Roy，*Algorithms in Real Algebraic Geometry*，
+[作者公开文本](https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf)定理2.77，页77；
+实线上可定义集为有限个区间和点之并见同书推论2.79，页78。
+固定模型参数允许是任意实数：半代数描述允许这些实系数，不要求它们为有理数或代数数。
+
+现在固定 $h\ge0$，在足够小的正 $\epsilon$ 上定义
+
+$$
+Q_\epsilon(h)
+=\frac{\mathscr E(h\epsilon,\epsilon)-3/4-\epsilon\Phi_h}
+{\epsilon^2}.
+\tag{199.5}
+$$
+
+这是关于 $\epsilon$ 的一元半代数函数；在这里 $h$ 和 $\Phi_h$ 是固定实常数。
+第191节给 $|Q_\epsilon(h)|\le C_h$。
+若它的下极限和上极限不同，取严格位于二者之间的实数 $a$。
+那么集合
+
+$$
+\{\epsilon>0:Q_\epsilon(h)>a\}
+$$
+
+及其在定义区间内的补集，都在零点右侧有任意小的元素。
+但一个一元半代数集是有限个区间和点之并，因此在足够靠近零的右邻域内，
+它要么包含整个邻域，要么完全不与之相交，矛盾。
+有界性遂保证有限极限 $Q(h)$ 存在，恰给（199.1）。证毕。
+
+### 199.2 最优器的来源斜率收敛
+
+为处理阈值的移动，沿用第198节远离零的临界紧区间
+$I=[a,b]$，$h_c\in(a,b)$，并沿用纯来源最优面
+$\mathcal F$ 及冻结操作的系数 $\mathcal N,\mathcal P$。
+记
+
+$$
+\mathcal A_\epsilon(h)
+=\operatorname{Argmin}_{\Gamma\in\mathcal K}
+e_\epsilon(h,\Gamma),\qquad
+F_\epsilon(h)=\mathscr E(h\epsilon,\epsilon).
+$$
+
+**引理199.2（临界最优器的共同斜率）。** 当
+$\epsilon\downarrow0$、$h\to h_c$ 时，全部
+$\Gamma\in\mathcal A_\epsilon(h)$ 都满足
+
+$$
+\boxed{\mathcal P(\Gamma)\longrightarrow\Phi'_{h_c}>0.}
+\tag{199.6}
+$$
+
+即对任意 $\epsilon_n\downarrow0$、$h_n\to h_c$ 和任意选择的相应最优器，
+上述斜率极限相同；不要求最优器本身具有唯一极限。
+
+**证明。** 取任意这样的序列，再取 Choi 聚点
+$\Gamma_n\to\Gamma_*$。由第198.4节，
+
+$$
+\Gamma_*\in\mathcal F,\qquad
+\mathcal N(\Gamma_*)+h_c\mathcal P(\Gamma_*)\le\Phi_{h_c}=0.
+\tag{199.7}
+$$
+
+另一方面，把这个固定可行操作 $\Gamma_*$ 用于任意固定 $u\in I$。
+其基点误差恰为 $3/4$。将
+$F_\epsilon(u)\le e_\epsilon(u,\Gamma_*)$
+两边减去 $3/4$，除以 $\epsilon$ 并取极限，
+第191节和引理198.2给
+
+$$
+\Phi_u\le\mathcal N(\Gamma_*)+u\mathcal P(\Gamma_*)
+\qquad(u\in I).
+\tag{199.8}
+$$
+
+在 $u=h_c$，（199.7）与（199.8）迫使等号成立。
+因此右侧仿射函数在 $h_c$ 从上方接触 $\Phi$。
+第190节保证 $\Phi$ 在该内点可微，故
+
+$$
+\mathcal P(\Gamma_*)=\Phi'_{h_c}.
+$$
+
+每个聚点都给同一斜率，$\mathcal P$ 在统一邻域连续；紧性反证即给（199.6）。
+正性来自第190节的严格过零导数。证毕。
+
+### 199.3 移动阈值的二阶位置
+
+**定理199.3（完整最优阈值的二阶位移）。**
+第198节的唯一阈值 $\ell_\epsilon$ 满足
+
+$$
+\boxed{
+\ell_\epsilon
+=h_c\epsilon-
+\frac{Q(h_c)}{\Phi'_{h_c}}\epsilon^2+o(\epsilon^2).
+}
+\tag{199.9}
+$$
+
+**证明。** 置 $h_\epsilon=\ell_\epsilon/\epsilon$。
+第198节给 $h_\epsilon-h_c=O(\epsilon)$。
+在 $h_c$ 和 $h_\epsilon$ 分别选择任意最优器
+$\Gamma_c,\Gamma_\epsilon$。两者均位于引理198.2的固定解析邻域，
+引理199.2给
+
+$$
+\mathcal P(\Gamma_c),\ \mathcal P(\Gamma_\epsilon)
+=\Phi'_{h_c}+o(1).
+$$
+
+冻结各自操作，沿两个端点之间的区间积分（198.5），得到
+
+$$
+\begin{aligned}
+e_\epsilon(h_\epsilon,\Gamma_c)-e_\epsilon(h_c,\Gamma_c)
+&=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2),\\
+e_\epsilon(h_\epsilon,\Gamma_\epsilon)-e_\epsilon(h_c,\Gamma_\epsilon)
+&=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2).
+\end{aligned}
+\tag{199.10}
+$$
+
+具体地，斜率误差的贡献为
+$\epsilon|h_\epsilon-h_c|o(1)=o(\epsilon^2)$，
+统一导数余项的贡献为
+$O(\epsilon^2|h_\epsilon-h_c|)=O(\epsilon^3)$。
+这些估计对端点先后和端点重合均成立。
+
+最小值定义分别给
+
+$$
+\begin{aligned}
+e_\epsilon(h_\epsilon,\Gamma_\epsilon)-e_\epsilon(h_c,\Gamma_\epsilon)
+&\le F_\epsilon(h_\epsilon)-F_\epsilon(h_c)\\
+&\le e_\epsilon(h_\epsilon,\Gamma_c)-e_\epsilon(h_c,\Gamma_c).
+\end{aligned}
+$$
+
+由（199.10）夹逼，
+
+$$
+F_\epsilon(h_\epsilon)-F_\epsilon(h_c)
+=\epsilon(h_\epsilon-h_c)\Phi'_{h_c}+o(\epsilon^2).
+\tag{199.11}
+$$
+
+左侧第一项恰为 $3/4$。
+只在固定点 $h_c$ 使用定理199.1，并利用 $\Phi_{h_c}=0$，得到
+
+$$
+F_\epsilon(h_c)=\frac34+\epsilon^2Q(h_c)+o(\epsilon^2).
+$$
+
+代入（199.11），除以 $\epsilon^2$，得
+
+$$
+\frac{h_\epsilon-h_c}{\epsilon}
+\longrightarrow-\frac{Q(h_c)}{\Phi'_{h_c}}.
+$$
+
+再乘回 $\epsilon$ 即为（199.9）。证毕。
+
+定理199.1只给点态二阶展开；定理199.3并未把它直接代入移动的
+$h_\epsilon$，而是通过同一可行操作集上的双侧比较完成传递。
+本节不要求 $Q$ 连续，也不声称关于 $h$ 的统一二阶余项。
+$Q(h_c)$ 的数值与符号仍须求解完整共同 CPTP 二阶问题；
+其存在性不能把可行子族的系数提升为最优系数。
+
+## 追加锚（本行以下为增补区）
