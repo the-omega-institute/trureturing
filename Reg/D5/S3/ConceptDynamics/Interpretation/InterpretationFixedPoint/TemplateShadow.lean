@@ -1,3 +1,4 @@
+import Reg.Support.LegacyContextObstruction
 import LeanInformationAudit.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 

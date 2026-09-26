@@ -44,7 +44,7 @@ def occurrences : Array SnapshotOccurrence :=
                      theoremName := `D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state,
                      statementIdentity := "sha256:95b576248df546ed3529c83c5c171a1ab2f6cff8fd9f78d7db83204dd4ecfb56",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow },
-  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena,
+  { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena,
                      theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
                      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
                      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.TemplateShadow },
@@ -60,9 +60,8 @@ def contract : RootCatalogContract := {
   baseline := occurrences
   companionPrefix := some rootId }
 
--- Independently translated from the existing D5 seal: only catalog, verdict,
--- unit and certificate names change to this root's generated names.
+-- Seal reference after the faithful observation/intervention arena transport.
 def expectedSealDigest : String :=
-  "ef013c5f573c8bfe35cdc82d8422fb8674b69d82925938ad809316a289bf146f"
+  "88837f33a4c62ab2f096c07581e54a596b74a181eb7d048ce493a6231a1e3b55"
 
 end Reg.Support.TemplateShadowContract

@@ -1,3 +1,4 @@
+import Reg.Support.LegacyContextObstruction
 import LeanInformationAudit.Syntax
 import LeanInformationAudit.SealCommand
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations
