@@ -20,8 +20,9 @@ finish() {
 }
 trap 'finish "$?"' EXIT
 
+test_exit=0
 dotnet test "$@" --configuration Release --verbosity normal -p:RestoreLockedMode=true -nr:false \
-  --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY"
+  --logger 'trx;LogFilePrefix=canonical' --results-directory "$RESULTS_DIRECTORY" || test_exit=$?
 
 OWNER_ASSEMBLY_ARGS=()
 test_target="${1:-$ROOT/tools/StrataLint.sln}"
@@ -42,10 +43,13 @@ while IFS= read -r owner_assembly; do
   OWNER_ASSEMBLY_ARGS+=(--required-assembly "$owner_assembly")
 done <<< "$owner_assemblies"
 
+evidence_exit=0
 dotnet run \
   --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
   verify-trx --results-directory "$RESULTS_DIRECTORY" \
-  ${OWNER_ASSEMBLY_ARGS[@]+"${OWNER_ASSEMBLY_ARGS[@]}"}
+  ${OWNER_ASSEMBLY_ARGS[@]+"${OWNER_ASSEMBLY_ARGS[@]}"} || evidence_exit=$?
 
 completed=1
+if [[ "$test_exit" -ne 0 ]]; then exit "$test_exit"; fi
+exit "$evidence_exit"

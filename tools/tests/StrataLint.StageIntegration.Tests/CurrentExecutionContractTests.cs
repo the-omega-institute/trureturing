@@ -1,5 +1,6 @@
 using StrataLint.EngineeringScope;
 using System.Diagnostics;
+using System.Xml.Linq;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -59,6 +60,44 @@ public sealed partial class CurrentExecutionContractTests
         }, TextWriter.Null);
         Assert.NotEqual(0, exit);
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
+    }
+
+    [Fact]
+    public void GuardAndBusinessFailureRemainVisibleThroughBothEvidenceConsumers()
+    {
+        using var fixture = new ExecutionFixture();
+        using var output = new StringWriter();
+        var directories = new List<string>();
+        var exit = Program.RunCurrentTests(fixture.Root, (_, directory) =>
+        {
+            directories.Add(directory);
+            fixture.WriteTrx(directory, "Failed");
+            var path = Path.Combine(directory, "execution.trx");
+            var document = XDocument.Load(path);
+            document.Root!.Element("Results")!.Element("UnitTestResult")!.Add(
+                new XElement("Output", new XElement("ErrorInfo", new XElement("Message", "business failure sentinel"))));
+            document.Root.Element("Results")!.Add(new XElement("UnitTestResult",
+                new XAttribute("testId", "hung"), new XAttribute("testName", "Fixture.Hung"),
+                new XAttribute("outcome", "NotExecuted"), new XElement("Output", new XElement("ErrorInfo",
+                    new XElement("Message", "infrastructure-hang-guard expired for engineering fixture")))));
+            var definition = new XElement(document.Root.Element("TestDefinitions")!.Element("UnitTest")!);
+            definition.SetAttributeValue("id", "hung");
+            definition.Element("TestMethod")!.SetAttributeValue("name", "Hung");
+            document.Root.Element("TestDefinitions")!.Add(definition);
+            document.Save(path);
+            return 1;
+        }, output);
+
+        Assert.Equal(1, exit);
+        Assert.Contains("raw_exit=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("INFRASTRUCTURE_UNRESOLVED count=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains("business failure sentinel", output.ToString(), StringComparison.Ordinal);
+        Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
+
+        using var error = new StringWriter();
+        Assert.Equal(2, Program.Run(["verify-trx", "--results-directory", directories[0]], TextWriter.Null, error));
+        Assert.Contains("INFRASTRUCTURE_UNRESOLVED count=1", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("business failure sentinel", error.ToString(), StringComparison.Ordinal);
     }
 
     [Fact]

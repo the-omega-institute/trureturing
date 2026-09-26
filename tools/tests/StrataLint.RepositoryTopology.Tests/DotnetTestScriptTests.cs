@@ -21,7 +21,11 @@ public sealed class DotnetTestScriptTests
     [InlineData("solution", "selected", false, 2)]
     [InlineData("solution", "selected", true, 0)]
     [InlineData("solution", "zero", true, 2)]
-    public void DotnetTestBindsEvidenceToTheExplicitRegisteredTarget(string scope, string evidence, bool filtered, int expectedExit)
+    [InlineData("project", "unresolved", false, 2, 0)]
+    [InlineData("project", "unresolved", false, 2, 1)]
+    [InlineData("project", "selected", false, 2, 7)]
+    public void DotnetTestBindsEvidenceToTheExplicitRegisteredTarget(string scope, string evidence, bool filtered, int expectedExit,
+        int rawExit = 0)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -36,7 +40,7 @@ public sealed class DotnetTestScriptTests
         var emitted = evidence switch
         {
             "all-owners" => owners,
-            "selected" => [selectedAssembly],
+            "selected" or "unresolved" => [selectedAssembly],
             "other" => new[] { otherAssembly },
             "zero" => [],
             _ => throw new ArgumentException("unknown fixture evidence", nameof(evidence)),
@@ -46,14 +50,38 @@ public sealed class DotnetTestScriptTests
         var trx = Path.Combine(fixture.Path, "fixture.trx");
         var log = Path.Combine(fixture.Path, "dotnet.log");
         Directory.CreateDirectory(binDirectory);
-        new XDocument(new XElement("TestRun",
+        var document = new XDocument(new XElement("TestRun",
             new XElement("Results", emitted.Select((assembly, index) => new XElement("UnitTestResult",
                 new XAttribute("testId", index), new XAttribute("testName", assembly + ".Runs"), new XAttribute("outcome", "Passed")))),
             new XElement("TestDefinitions", emitted.Select((assembly, index) => new XElement("UnitTest",
                 new XAttribute("id", index), new XAttribute("storage", assembly + ".dll"),
                 new XElement("TestMethod", new XAttribute("className", assembly + ".Fixture"), new XAttribute("name", "Runs"))))),
             new XElement("ResultSummary", new XAttribute("outcome", "Completed"), new XElement("Counters",
-                new XAttribute("executed", emitted.Length), new XAttribute("passed", emitted.Length))))).Save(trx);
+                new XAttribute("executed", emitted.Length), new XAttribute("passed", emitted.Length)))));
+        if (evidence == "unresolved")
+        {
+            AddResult("Hung", "NotExecuted", "infrastructure-hang-guard expired for script fixture");
+            if (rawExit != 0)
+            {
+                AddResult("Fails", "Failed", "business failure sentinel");
+                var summary = document.Root!.Element("ResultSummary")!;
+                summary.SetAttributeValue("outcome", "Failed");
+                summary.Element("Counters")!.SetAttributeValue("executed", emitted.Length + 1);
+                summary.Element("Counters")!.SetAttributeValue("failed", 1);
+            }
+        }
+        document.Save(trx);
+
+        void AddResult(string name, string outcome, string message)
+        {
+            document.Root!.Element("Results")!.Add(new XElement("UnitTestResult",
+                new XAttribute("testId", name), new XAttribute("testName", "Synthetic." + name),
+                new XAttribute("outcome", outcome),
+                new XElement("Output", new XElement("ErrorInfo", new XElement("Message", message)))));
+            document.Root.Element("TestDefinitions")!.Add(new XElement("UnitTest",
+                new XAttribute("id", name), new XAttribute("storage", selectedAssembly + ".dll"),
+                new XElement("TestMethod", new XAttribute("className", "Synthetic"), new XAttribute("name", name))));
+        }
         WriteExecutable(Path.Combine(binDirectory, "dotnet"),
             """
             #!/bin/bash
@@ -64,7 +92,7 @@ public sealed class DotnetTestScriptTests
                 if [[ "$1" == --results-directory ]]; then
                   mkdir -p "$2"
                   cp "$DOTNET_TEST_FIXTURE_TRX" "$2/selected.trx"
-                  exit 0
+                  exit "$DOTNET_TEST_EXIT"
                 fi
                 shift
               done
@@ -89,6 +117,7 @@ public sealed class DotnetTestScriptTests
             ["-u", "MAKEFLAGS", "-u", "MAKEOVERRIDES", "-u", "TEST_PROJECT", "-u", "TEST_FILTER",
                 $"PATH={binDirectory}:/usr/bin:/bin", $"REAL_DOTNET={Encoding.UTF8.GetString(dotnetPath.StandardOutput).Trim()}",
                 $"DOTNET_TEST_LOG={log}", $"DOTNET_TEST_FIXTURE_TRX={trx}",
+                $"DOTNET_TEST_EXIT={rawExit}",
                 $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "make", "--no-print-directory", "-C", "tools", "test", $"TEST_PROJECT={target}",
                 $"TEST_FILTER={(filtered ? "FullyQualifiedName~Fixture" : "")}"],
@@ -100,7 +129,22 @@ public sealed class DotnetTestScriptTests
         var error = Encoding.UTF8.GetString(result.StandardError);
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
         Assert.Single(File.ReadAllLines(log), line => line.StartsWith("test ", StringComparison.Ordinal));
-        if (expectedExit == 0 && (!filtered || scope != "solution"))
+        if (evidence == "unresolved")
+        {
+            Assert.Contains("INFRASTRUCTURE_UNRESOLVED count=1", error, StringComparison.Ordinal);
+            Assert.Contains("Synthetic.Hung", error, StringComparison.Ordinal);
+            if (rawExit != 0)
+            {
+                Assert.Contains("business failure sentinel", error, StringComparison.Ordinal);
+                Assert.Contains($"Error {rawExit}", error, StringComparison.Ordinal);
+            }
+        }
+        else if (rawExit != 0)
+        {
+            Assert.Contains("TEST_ASSEMBLY_EVIDENCE_ACCEPTED", output, StringComparison.Ordinal);
+            Assert.Contains($"Error {rawExit}", error, StringComparison.Ordinal);
+        }
+        else if (expectedExit == 0 && (!filtered || scope != "solution"))
         {
             var required = scope == "solution" ? owners : [selectedAssembly];
             foreach (var assembly in required)

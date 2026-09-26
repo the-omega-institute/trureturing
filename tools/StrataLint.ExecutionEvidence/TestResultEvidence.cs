@@ -12,12 +12,43 @@ internal sealed record TestResultEvidence(
         var files = Directory.GetFiles(resultsDirectory, "*.trx", SearchOption.TopDirectoryOnly);
         if (files.Length == 0) throw new InvalidDataException("dotnet test produced no TRX evidence");
 
+        var runs = files.Select(file => (File: file, Document: XDocument.Load(file, LoadOptions.None))).ToArray();
+        var results = runs.SelectMany(run => run.Document.Descendants()
+            .Where(element => element.Name.LocalName == "UnitTestResult")).ToArray();
+        foreach (var result in results) _ = Message(result);
+        var unresolved = results.Where(result => (string?)result.Attribute("outcome") == "NotExecuted")
+            .Where(result => Message(result)?.StartsWith(InfrastructureHangGuard.SkipReasonPrefix, StringComparison.Ordinal) == true)
+            .Select(Describe).ToArray();
+        try
+        {
+            var evidence = LoadSuccessfulRuns(runs);
+            if (unresolved.Length != 0) throw new InfrastructureUnresolvedException(unresolved);
+            return evidence;
+        }
+        catch (Exception failure) when (unresolved.Length != 0
+            && failure is InvalidDataException or InvalidOperationException or ArgumentException)
+        {
+            // Guard expiration and a business failure can coexist, even in different
+            // TRX files. Keep the validation failure and named outcomes alongside the guard.
+            var failed = results.Where(result => (string?)result.Attribute("outcome") is not ("Passed" or "NotExecuted"))
+                .Select(Describe).ToArray();
+            var detail = failure.Message + (failed.Length == 0 ? ""
+                : $"; test outcomes={string.Join(" | ", failed)}");
+            throw new InfrastructureUnresolvedException(unresolved, detail);
+        }
+
+        static string? Message(XElement result) => result.Descendants()
+            .SingleOrDefault(element => element.Name.LocalName == "Message")?.Value;
+        static string Describe(XElement result) =>
+            $"{(string?)result.Attribute("testName")} [{(string?)result.Attribute("outcome")}]: {Message(result)}";
+    }
+
+    private static TestResultEvidence LoadSuccessfulRuns((string File, XDocument Document)[] runs)
+    {
         var executed = 0;
         var actual = new HashSet<(string Assembly, string Id)>();
-        var unresolved = new List<string>();
-        foreach (var file in files)
+        foreach (var (file, document) in runs)
         {
-            var document = XDocument.Load(file, LoadOptions.None);
             if (document.Root?.Name.LocalName != "TestRun") throw new InvalidDataException("invalid TRX root");
             var summary = document.Descendants().Single(element => element.Name.LocalName == "ResultSummary");
             if ((string?)summary.Attribute("outcome") is not ("Completed" or "Passed"))
@@ -48,17 +79,6 @@ internal sealed record TestResultEvidence(
             var definitions = document.Descendants().Where(element => element.Name.LocalName == "UnitTest")
                 .Select(element => (string?)element.Attribute("id")).ToHashSet(StringComparer.Ordinal);
             if (results.Keys.Any(id => !definitions.Contains(id))) throw new InvalidDataException("TRX result has no matching definition");
-            foreach (var result in results.Values)
-            {
-                var message = result.Descendants()
-                    .SingleOrDefault(element => element.Name.LocalName == "Message")?.Value;
-                if ((string?)result.Attribute("outcome") == "NotExecuted"
-                    && message?.StartsWith(InfrastructureHangGuard.SkipReasonPrefix, StringComparison.Ordinal) == true)
-                {
-                    unresolved.Add($"{(string?)result.Attribute("testName")}: {message}");
-                }
-            }
-
             foreach (var test in document.Descendants().Where(element => element.Name.LocalName == "UnitTest"))
             {
                 var id = (string?)test.Attribute("id");
@@ -80,11 +100,6 @@ internal sealed record TestResultEvidence(
             }
         }
 
-        if (unresolved.Count != 0)
-        {
-            throw new InfrastructureUnresolvedException(unresolved);
-        }
-
         if (executed == 0) throw new InvalidDataException("dotnet test executed zero tests");
         return new TestResultEvidence(executed, actual);
     }
@@ -94,6 +109,7 @@ internal sealed record TestResultEvidence(
             StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, expectedAssembly));
 }
 
-internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests)
+internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests, string? validationFailure = null)
     : Exception(
-        $"INFRASTRUCTURE_UNRESOLVED count={tests.Count} tests={string.Join(" | ", tests)}");
+        $"INFRASTRUCTURE_UNRESOLVED count={tests.Count} tests={string.Join(" | ", tests)}"
+        + (validationFailure is null ? "" : $"; TRX_VALIDATION_FAILED {validationFailure}"));
