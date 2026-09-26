@@ -57442,3 +57442,313 @@ $$
 这两个读数把第261节的跳变具体定位到未固定的谱下界。它们不改变第262节在固定谱下界上的非交换阶优势，也没有给出一般非交换类的精确最优系数。全部构造仍属于本节定义的全实轴密度曲线类；原处理器的附加约束没有在此实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 264. 固定全部特征值的解析曲线仍有非交换阶优势
+
+第262节的一般曲线允许特征值和特征方向共同改变。本节固定两个特征值，只允许特征方向变化。在同一个全实轴矩阵二阶上界下，这个更小的类仍然达到三分之一次幂的信息阶。
+
+**定义 264.1（固定谱的允许类）。** 对 $0<\eta\le1$，记
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{264.1}
+$$
+
+令 $\mathcal U_\eta$ 为全实轴上的 $C^2$ 二维密度曲线，满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta
+\quad(t\in\mathbb R).
+\tag{264.2}
+$$
+
+记名义点信息的上确界为 $F_\eta^{\rm iso}$。其中要求矩阵元可延拓成整函数的子类，其上确界记为 $F_\eta^{\rm iso,ent}$。
+
+**定理 264.2（固定谱下的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k_{r}>0$ 和 $\eta_0>0$，使
+
+$$
+k_{r}\eta^{1/3}
+\le F_\eta^{\rm iso,ent}
+\le F_\eta^{\rm iso}
+\le C_*\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{264.3}
+$$
+
+其中 $C_*=4(1/4+\sqrt{2/3})^2<5$，不要求该常数最优。
+
+证明。 先直接证明上界。写任意允许曲线为 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$，其中 $|\boldsymbol u|=b=1/4$。因 $\boldsymbol u\cdot\boldsymbol u'=0$，矩阵 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程，从而
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{264.4}
+$$
+
+记 $z=u_z$。矩阵上界的对角元及行列式给出
+
+$$
+-\eta\le z''\le1,\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z''.
+\tag{264.5}
+$$
+
+对全实轴上的非负函数 $b-z$ 使用标量正性界，得到 $z'^2\le2\eta(b-z)\le4b\eta=\eta$。因此
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt\eta.
+\tag{264.6}
+$$
+
+两端的向量差长至多为 $2b$。应用第262节明确给出的三角核差商恒等式，其核的平方积分为 $h/6$，得到
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+\sqrt{\frac{\eta h^2}{3}+\frac{\sqrt\eta\,h}{3}}.
+\tag{264.7}
+$$
+
+取 $h=\eta^{-1/6}$ 并使用 $0<\eta\le1$，可知
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac23}\right)^2\eta^{1/3}
+=C_*\eta^{1/3}.
+\tag{264.8}
+$$
+
+以下构造下界，并在解析化时保持特征值精确不变。
+
+置 $b=1/4$。固定实值函数 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$，记
+
+$$
+M_1=\|F'\|_\infty,\qquad
+M_2=\|F''\|_\infty,\qquad
+K_0=b(M_2+M_1^2)>0,
+\qquad k=16K_0^2+1.
+\tag{264.9}
+$$
+
+另取 $G\in C_c^\infty((-2,2))$，满足 $0\le G\le1$ 且 $G=1$ 于 $[-1,1]$，以及非零 $B\in C_c^\infty((0,1))$，满足 $0\le B\le1$。记
+
+$$
+J_G=\int G>0,\qquad m_B=\int B>0.
+\tag{264.10}
+$$
+
+固定充分小的 $r>0$，使 $4r^2/m_B\le b/16$。对每个正 $\eta$ 定义
+
+$$
+v=r\sqrt\eta,
+\qquad T=\left(\frac{kJ_G}{v}\right)^{1/3},
+\qquad L=\frac{4v}{\eta m_B},
+\qquad\phi(t)=F(t/T).
+\tag{264.11}
+$$
+
+令
+
+$$
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{264.12}
+$$
+
+正、负两项分别支撑于 $[-2T,2T]$ 与 $[3T,3T+L]$，积分分别为 $v$ 与 $-v$。所以 $z'$ 从零增加到 $v$，再下降到零，全程非负。由此
+
+$$
+0\le z(t)\le5Tv+vL
+=5Tv+\frac{4r^2}{m_B}.
+\tag{264.13}
+$$
+
+由于 $Tv=O(\eta^{1/3})$，对所有充分小的 $\eta$，有
+
+$$
+0\le z\le b/2,\qquad
+0\le z'\le v,\qquad
+-\eta/4\le g=z''\le k/T^4\le1/4.
+\tag{264.14}
+$$
+
+函数 $z$ 光滑，并在左右两个尾部各为常值。定义
+
+$$
+a(z)=\sqrt{b^2-z^2},\qquad
+w(t)=a(z(t))e^{-i\phi(t)},\qquad
+\rho^{(0)}(t)=
+\begin{pmatrix}
+1/2+z(t)&w(t)\\
+\overline{w(t)}&1/2-z(t)
+\end{pmatrix}.
+\tag{264.15}
+$$
+
+因 $|w|^2+z^2=b^2$，两个特征值始终精确等于 $1/2\pm b$，即 $3/4,1/4$。
+
+现证明矩阵上界还有一个对全参数有效的正余量。在 $0\le z\le b/2$ 上，
+
+$$
+|a'(z)|\le A_1=1/\sqrt3,
+\qquad
+|a''(z)|\le A_2=\frac8{3\sqrt3\,b}.
+\tag{264.16}
+$$
+
+两次求导并使用三角不等式，得到
+
+$$
+|w''|\le
+A_2v^2+A_1|g|+2A_1v|\phi'|
++b\bigl(|\phi''|+|\phi'|^2\bigr).
+\tag{264.17}
+$$
+
+在相位变化的支撑 $|t|<T$ 内，$g=k/T^4$，而 $v=kJ_G/T^3$，故
+
+$$
+|w''|
+\le\frac{K_0}{T^2}
++\frac{A_1k+2A_1kJ_GM_1}{T^4}
++\frac{A_2k^2J_G^2}{T^6}.
+\tag{264.18}
+$$
+
+对充分大的 $T$，右侧至多为 $2K_0/T^2$。由 $k\ge16K_0^2$，
+
+$$
+|w''|^2\le\frac g4\le\frac{\eta+g}{4}.
+\tag{264.19}
+$$
+
+在相位支撑外，$\phi$ 及其导数为零，所以（264.17）简化为
+
+$$
+|w''|\le A_2r^2\eta+A_1|g|.
+\tag{264.20}
+$$
+
+当 $g\ge0$ 时，其平方至多为 $2A_2^2r^4\eta^2+2A_1^2g^2$。因为 $\eta\to0$ 且 $\sup g\to0$，该式对充分小的 $\eta$ 至多为 $(\eta+g)/4$。当 $g<0$ 时，$|g|\le\eta/4$，故平方至多为 $(A_2r^2+A_1/4)^2\eta^2$，也最终小于 $(\eta+g)/4$，因为 $\eta+g\ge3\eta/4$。于是（264.19）在整个实轴成立。
+
+从而
+
+$$
+D(t)=C_\eta-(\rho^{(0)})''(t)
+=\begin{pmatrix}
+1-g&-w''\\
+-\overline{w''}&\eta+g
+\end{pmatrix}
+\tag{264.21}
+$$
+
+满足 $1-g\ge3/4$、$\eta+g\ge3\eta/4$，并且
+
+$$
+\det D\ge\frac12(\eta+g)\ge\frac{3\eta}{8},
+\qquad\operatorname{Tr}D=1+\eta\le2.
+\tag{264.22}
+$$
+
+两个特征值为正，最大特征值至多为迹。因此
+
+$$
+C_\eta-(\rho^{(0)})''(t)
+\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{264.23}
+$$
+
+下面计算信息。令 $\chi(t)=\arcsin(z(t)/b)$，则 $0\le\chi\le\pi/6$，并写
+
+$$
+\rho^{(0)}=I/2+\boldsymbol u\cdot\boldsymbol\sigma,
+\qquad
+\boldsymbol u=b(\cos\chi\cos\phi,\cos\chi\sin\phi,\sin\chi).
+\tag{264.24}
+$$
+
+因为 $\boldsymbol u\cdot\boldsymbol u'=0$，Pauli 乘法关系直接表明 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程。因此
+
+$$
+I_Q(\rho^{(0)}_t)
+=4|\boldsymbol u'(t)|^2
+=4b^2\bigl(\chi'(t)^2+\cos^2\chi(t)\,\phi'(t)^2\bigr).
+\tag{264.25}
+$$
+
+在中心 $\phi'(0)=1/T$ 且 $\cos^2\chi(0)\ge3/4$，所以
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac r{kJ_G}\right)^{2/3}\eta^{1/3}.
+\tag{264.26}
+$$
+
+为得到整函数矩阵元，此处平滑两个实角函数，随后重建密度矩阵。对每个固定 $\eta$，$\chi,\phi$ 及其前两阶导数均有界且一致连续；导数在有限区间之外为零。令 $g_\epsilon$ 为归一化高斯核，置
+
+$$
+\chi_\epsilon=g_\epsilon*\chi,
+\qquad\phi_\epsilon=g_\epsilon*\phi,
+\qquad
+\boldsymbol u_\epsilon
+=b(\cos\chi_\epsilon\cos\phi_\epsilon,
+\cos\chi_\epsilon\sin\phi_\epsilon,
+\sin\chi_\epsilon),
+\tag{264.27}
+$$
+
+并取 $\rho_\epsilon=I/2+\boldsymbol u_\epsilon\cdot\boldsymbol\sigma$。两个角函数延拓成整函数，三角函数的复合仍为整函数，因此矩阵元也是整函数。对实参数，角函数为实数，$|\boldsymbol u_\epsilon|=b$ 精确成立，故特征值和谱下界完全保留。
+
+高斯逼近在这两个角函数的 $C^2$ 范数中一致收敛。链式法则与实轴上有界的三角函数导数于是给出 $\rho_\epsilon\to\rho^{(0)}$ 的全实轴一致 $C^2$ 收敛。为每个固定 $\eta$ 选择充分小的 $\epsilon$，可同时保证
+
+$$
+\sup_t\|\rho_\epsilon''(t)-(\rho^{(0)})''(t)\|_{\rm op}
+\le\frac{3\eta}{32}
+\tag{264.28}
+$$
+
+及中心信息至少保留（264.26）的一半。这里信息的一致谱下界固定为 $1/4$，也可直接用（264.25）的角函数形式判断一阶数据的连续性。由（264.23），
+
+$$
+C_\eta-\rho_\epsilon''(t)\succeq\frac{3\eta}{32}I,
+\qquad
+I_Q((\rho_\epsilon)_0)
+\ge k_{r}\eta^{1/3},
+\quad
+k_{r}=\frac{3b^2}{2}\left(\frac r{kJ_G}\right)^{2/3}>0.
+\tag{264.29}
+$$
+
+这证明了整函数子类中的下界。所有轮廓函数与常数先固定，再取充分小 $\eta$，最后按该 $\eta$ 选取平滑宽度；矩阵上界和精确特征值没有放宽。证毕。
+
+上述解析化没有把密度矩阵作凸平均；密度的凸平均一般不能保持特征值。它先逼近角函数，再利用三角恒等式保留固定谱，并以（264.23）的严格矩阵余量吸收二阶近似误差。
+
+**推论 264.3（固定谱变化与更大的对易比较类）。** 对上述构造的每条实参数曲线，可以写成
+
+$$
+\rho(t)=U(t)\operatorname{diag}(3/4,1/4)U(t)^*,
+\quad
+U(t)=e^{-i\phi(t)\sigma_z/2}
+e^{-i(\pi/2-\chi(t))\sigma_y/2},
+\tag{264.30}
+$$
+
+解析化后使用 $\chi_\epsilon,\phi_\epsilon$ 得到相同结论。因而所有只依赖特征值的量沿曲线恒定，但与第263节允许特征值变化的全部对易曲线相比，仍有
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_{\rm com}(1/4,\eta)}
+=\Theta(\eta^{-1/6}).
+\tag{264.31}
+$$
+
+证明。 Pauli 旋转公式给出（264.30）。固定谱立即使所有谱函数恒定。再结合（264.3）与 $F_{\rm com}(1/4,\eta)=2\sqrt\eta$ 得到（264.31）。证毕。
+
+作为更小的特殊情形，连续且两两对易的固定谱二维密度族必为常值：其共同特征基固定，而两个离散特征值不能沿连续参数互换。因此（264.31）使用的是第263节更大的对易比较类，其阶差不依赖于把比较对象预先限制成常值。
+
+这里的酉表示描述准备曲线的数学结构，未施加哈密顿量、物理能量、带宽或原处理器的矩与分项预算约束。固定谱没有消去关系响应：本节的信息变化全部来自特征方向的组合，而精确矩阵二阶条件仍由（264.23）、（264.28）共同保证。
+
+## 追加锚（本行以下为增补区）
