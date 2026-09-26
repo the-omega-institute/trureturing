@@ -8,13 +8,20 @@ open Lean LeanInformationAudit
 -- Independent production expectations, supplied before this root is sealed.
 def rootId : Name := `Reg.Catalogs.InformationRoot
 
--- Preserve the historical snapshots above; transport only the observation/intervention
--- arena address whose state kernel and statement are checked in
--- Reg.Support.LegacyCausalMapping.
+-- Preserve historical snapshots; each current arena has a complete statement
+-- bridge and proved kernel correspondence in its Reg support module.
 def currentOccurrence (row : SnapshotOccurrence) : SnapshotOccurrence :=
   { row with objectArenaName :=
     if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena then
       `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena then
+      `Reg.Support.LegacyAgenda.arena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena then
+      `Reg.Support.LegacyResidue.arena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena then
+      `Reg.Support.LegacyStaticDesign.arena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena then
+      `Reg.Support.LegacyGluing.arena
     else row.objectArenaName }
 
 def contract : RootCatalogContract := {
@@ -24,8 +31,8 @@ def contract : RootCatalogContract := {
   baseline := Reg.Support.frozenInformationRootBaseline.map currentOccurrence
   companionPrefix := some rootId }
 
--- Seal reference after the faithful observation/intervention arena transport.
+-- Seal reference after the faithful finite arena transports.
 def expectedSealDigest : String :=
-  "f798368c769e9f926f8125492d7ded9586f7be28411d8dcdb567d720c37b80ae"
+  "cd8c19cacb8d659c4107da83aa4f1b0e4bd1f439c41a31a7eb89a9debb8872b0"
 
 end Reg.Support.InformationRootContract
