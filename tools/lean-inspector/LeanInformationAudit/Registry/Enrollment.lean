@@ -271,31 +271,11 @@ private def ownerOf (env : Environment) (name : Name) : Option Name :=
     some ((RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule)
   else none
 
--- A later source module may import the target for data definitions. In that
--- case, inspect the source declaration closure rather than its import closure.
-def sourceAvoidsTargetProof (source target : Name) : CompileM Bool := do
-  let env ← getEnv
-  let some targetOwner := ownerOf env target | return false
-  let ordinal (owner : Name) : Option Nat :=
-    if owner == env.header.mainModule then some env.header.moduleNames.size
-    else (env.getModuleIdx? owner).map (·.toNat)
-  let some targetIdx := ordinal targetOwner | return false
-  let mut pending := [source]
-  let mut seen : NameSet := {}
-  while let name :: rest := pending do
-    pending := rest
-    if seen.contains name then continue
-    charge
-    seen := seen.insert name
-    let some owner := ownerOf env name | return false
-    let some ownerIdx := ordinal owner | return false
-    if ownerIdx < targetIdx then continue
-    let info ← getConstInfo name
-    if name == target || (owner == targetOwner && info.isTheorem) then return false
-    pending := info.type.getUsedConstants.toList ++ pending
-    if let some value := info.value? then
-      pending := value.getUsedConstants.toList ++ pending
-  return true
+private def judgePackageModule (owner : Name) : Bool :=
+  #[`Reg, `LeanInformationAudit, `LeanInformationAuditAnalysis,
+    `LeanInformationAuditRegAnalysis, `LeanInformationAuditRegTests,
+    `LeanInformationAuditInterface, `InformationSourceFixture,
+    `Inspector, `Census].any (·.isPrefixOf owner)
 
 private def independentSource (name : Name) : CompileM Bool := do
   let some identity := (← get).identityState | return false
@@ -303,7 +283,7 @@ private def independentSource (name : Name) : CompileM Bool := do
   let some sourceOwner := ownerOf env name | return false
   let some targetOwner := ownerOf env identity.theoremName | return false
   if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
-      (`LeanInformationAudit).isPrefixOf sourceOwner || (`Reg).isPrefixOf sourceOwner then
+      judgePackageModule sourceOwner then
     return false
   if (← get).independentOwners[sourceOwner]? == some true then return true
   let some sourceIdx := env.getModuleIdx? sourceOwner | return false
@@ -318,9 +298,7 @@ private def independentSource (name : Name) : CompileM Bool := do
     charge
     let owner := pending.back!
     pending := pending.pop
-    if owner == targetOwner then
-      unless (`D5).isPrefixOf sourceOwner do return false
-      return ← sourceAvoidsTargetProof name identity.theoremName
+    if owner == targetOwner then return false
     if seen.contains owner then continue
     seen := seen.insert owner
     let some idx := env.getModuleIdx? owner | return false
@@ -384,6 +362,7 @@ private partial def sourceCarrierShape (type : Expr) (depth : Nat := 0) : Compil
 private partial def containsIndependentCarrier (type : Expr) (depth : Nat := 0) : CompileM Bool := do
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
+  if ← isProp type then return false
   let type ← sourceCarrierShape type depth
   let head := type.getAppFn.constName?.getD .anonymous
   if dictionaryTypes.contains head || propTypes.contains head || interfaceTypes.contains head ||
@@ -1021,6 +1000,15 @@ def checkExtractionType (theoremName : Name) (type : Expr) (available : Nat)
     discard <| compileExpr (← eraseInput type) 0 true
   let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity }
   return (state.dependencies, limit - state.remaining)
+
+/-- Check the data-input condition used by the independent source rule. -/
+def checkIndependentInputCarrier (theoremName : Name) (type : Expr)
+    (available : Nat) : MetaM Bool := do
+  let limit := min 524288 available
+  let identity ← RegistrationGates.argumentIdentityState theoremName limit
+  let (result, _) ← hasIndependentInputCarrier type |>.run
+    { remaining := identity.exprFuel, identityState := some identity }
+  return result
 
 end LeanInformationAudit.TemplateAudit
 
