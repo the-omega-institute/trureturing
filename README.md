@@ -107,12 +107,11 @@ nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-flo
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
 **02 · Find what observations cannot tell you.**
-Can knowing each part of a quantum system determine the whole? The
-[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
-constructs two distinct two-qubit states: a pure Bell state and the equal
-classical mixture of `00` and `11`. Both have exactly the same reduced state
-on each qubit. Even these complete local descriptions cannot identify the
-joint state.
+The [local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
+gives two-qubit states with identical reduced states on both qubits: the pure
+Bell state `(|00⟩+|11⟩)/√2` and the equal `00`/`11` mixture. An added joint
+`X⊗X` readout has expectations `1` and `0`, respectively, where [X](D5/S3/Quantum/FiniteDimensional.lean) swaps
+`0` and `1`. This separates this pair.
 
 For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
 proves that the correlation sector in the Hermitian tensor model is orthogonal
