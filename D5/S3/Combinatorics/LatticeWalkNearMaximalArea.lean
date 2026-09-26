@@ -14,8 +14,9 @@ escape_witness: form (2), the public conclusion `result` itself: the area of a w
   exchanging right with left and up with down keeps the area (`area_flip`); an up-right word with u
   up steps and r right steps has area u r minus its inversions (`area_bool`); words with u up steps
   and m inversions satisfy the recurrence of partitions of m into parts at most u (`word_rec`,
-  `boxed_rec` through `Nat.Partition.partitionWithPartEquiv`), so for u + m at most the length they
-  are counted by the partitions of m (`core`); summing over u gives the two theta coefficients
+  `boxed_rec` through `Nat.Partition.partitionWithPartEquiv`), so for u + m at most the length and
+  m at most u they are counted by the partitions of m (`core`); summing over u gives the two theta
+  coefficients
 admission_basis: open-problem-resolution (issue #10337)
 Direct frozen dependencies: `D5/S1/Digit/Carry/ListInversions`: `inv`
 -/
@@ -126,42 +127,10 @@ theorem result : claim := by
         (Finset.univ.filter fun g : Fin L → Bool => Q (true :: List.ofFn g)).card +
           (Finset.univ.filter fun g : Fin L → Bool => Q (false :: List.ofFn g)).card := by
     intro L Q _
-    have hcons : ∀ (c : Bool) (g : Fin L → Bool), List.ofFn (Fin.cons c g : Fin (L + 1) → Bool) =
-        c :: List.ofFn g := by
-      intro c g
-      simp [List.ofFn_succ]
-    have part : ∀ c : Bool,
-        (Finset.univ.filter fun f : Fin (L + 1) → Bool => Q (List.ofFn f) ∧ f 0 = c).card =
-          (Finset.univ.filter fun g : Fin L → Bool => Q (c :: List.ofFn g)).card := by
-      intro c
-      refine Finset.card_bij' (fun f _ => Fin.tail f) (fun g _ => Fin.cons c g) ?_ ?_ ?_ ?_
-      · intro f hf
-        simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hf ⊢
-        have : f = Fin.cons c (Fin.tail f) := by
-          rw [← hf.2]
-          exact (Fin.cons_self_tail f).symm
-        rw [this, hcons] at hf
-        exact hf.1
-      · intro g hg
-        simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hg ⊢
-        rw [hcons]
-        exact ⟨hg, by simp⟩
-      · intro f hf
-        simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hf
-        rw [← hf.2]
-        exact Fin.cons_self_tail f
-      · intro g _
-        funext i
-        simp [Fin.tail]
-    rw [← part true, ← part false, ← Finset.card_union_of_disjoint]
-    · congr 1
-      ext f
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_union]
-      cases f 0 <;> simp
-    · rw [Finset.disjoint_filter]
-      intro f _ h1 h2
-      rw [h1.2] at h2
-      exact Bool.noConfusion h2.2
+    simp only [Finset.card_filter]
+    rw [← Equiv.sum_comp (Fin.consEquiv fun _ : Fin (L + 1) => Bool), Fintype.sum_prod_type,
+      Fintype.sum_bool]
+    simp only [Fin.consEquiv_apply, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ]
   -- words without `true`
   have word_zero : ∀ L m, wordCount L 0 m = if m = 0 then 1 else 0 := by
     intro L
