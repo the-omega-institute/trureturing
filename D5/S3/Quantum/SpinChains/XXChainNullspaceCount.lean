@@ -8,19 +8,16 @@
 
 /-
 proof_shape: result: content
-escape_witness: form (1), local steps of `result`: `hP` (a subset K of {1,…,2p} has zero cosine
-  sum iff its class-state function w satisfies the odd-parity relation z(r) + z(-r) = 2z(0) or the
-  even-parity symmetry z(r) = z(-1-r) on ZMod p), `countA` (exactly two class-state functions of odd
-  parity satisfy the first) and `countB` (exactly 2·6^m satisfy the second, by an explicit bijection
-  with pairs over a fundamental domain of r ↦ -1-r)
+escape_witness: form (2), the public conclusion `result` itself: the count 2 + 2·6^m is produced
+  by a construction on its live proof path (local steps `hP`, the characterization of zero cosine
+  sums by relations on class-state functions over ZMod p; `countA`; and `countB`, an explicit
+  bijection with pairs of class states over a fundamental domain of r ↦ -1 - r)
 admission_basis: open-problem-resolution (issue #10063)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Data.Nat.Totient
 import Mathlib.RingTheory.Polynomial.Cyclotomic.Roots
-import Mathlib.RingTheory.PowerBasis
 import Mathlib.RingTheory.RootsOfUnity.Complex
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
@@ -121,53 +118,22 @@ theorem result : claim := by
     · intro r _; simp
     · intro i hi; simp only [mem_range] at hi; exact ZMod.val_cast_of_lt hi
     · intro r _; rfl
-  -- The only rational relation among `1, η, …, η^(p-1)` is `1 + η + ⋯ + η^(p-1) = 0`.
-  have vanish : ∀ c : ℕ → ℤ, ∑ i ∈ range p, (c i : ℂ) * η ^ i = 0 → ∀ i < p, c i = c (p - 1) := by
-    intro c h
-    have hdeg : (minpoly ℚ η).natDegree = p - 1 := by
-      rw [← cyclotomic_eq_minpoly_rat hη hp.out.pos, natDegree_cyclotomic, Nat.totient_prime hp.out]
-    have hli := linearIndependent_pow (K := ℚ) η
-    rw [hdeg] at hli
-    have hgeom : ∑ i ∈ range p, η ^ i = 0 := hη.geom_sum_eq_zero hp.out.one_lt
-    have hsum : ∑ i : Fin (p - 1), (((c i - c (p - 1) : ℤ) : ℚ)) • η ^ (i : ℕ) = 0 := by
-      rw [Fin.sum_univ_eq_sum_range (fun i => (((c i - c (p - 1) : ℤ) : ℚ)) • η ^ i) (p - 1)]
-      have hp1 : p = p - 1 + 1 := (Nat.succ_pred_eq_of_pos hp.out.pos).symm
-      have h2 : ∑ i ∈ range p, ((c i : ℂ) - c (p - 1)) * η ^ i = 0 := by
-        have e : ∑ i ∈ range p, ((c i : ℂ) - c (p - 1)) * η ^ i =
-            ∑ i ∈ range p, (c i : ℂ) * η ^ i - (c (p - 1) : ℂ) * ∑ i ∈ range p, η ^ i := by
-          rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
-          exact Finset.sum_congr rfl fun i _ => by ring
-        rw [e, h, hgeom]; ring
-      rw [show range p = range (p - 1 + 1) by rw [← hp1], Finset.sum_range_succ] at h2
-      simp only [sub_self, zero_mul, add_zero] at h2
-      rw [← h2]
-      refine Finset.sum_congr rfl fun i _ => ?_
-      rw [Algebra.smul_def]; push_cast; rfl
-    intro i hi
-    rcases Nat.lt_or_ge i (p - 1) with h' | h'
-    · have := Fintype.linearIndependent_iff.mp hli
-        (fun j : Fin (p - 1) => (((c j - c (p - 1) : ℤ) : ℚ))) hsum ⟨i, h'⟩
-      simp only at this
-      exact_mod_cast sub_eq_zero.mp (by exact_mod_cast this)
-    · have : i = p - 1 := by omega
-      rw [this]
+  -- The only integer relations among `1, η, …, η^(p-1)` have all coefficients equal
+  -- (Mathlib `IsPrimitiveRoot.sum_eq_zero_iff_forall_eq_int`), read on `ZMod p`.
   have vanishZ : ∀ c : ZMod p → ℤ, ∑ r : ZMod p, (c r : ℂ) * η ^ r.val = 0 ↔ ∀ r, c r = c 0 := by
     intro c
+    have e : ∑ r : ZMod p, (c r : ℂ) * η ^ r.val =
+        ∑ i : Fin p, ((c ((i : ℕ) : ZMod p) : ℤ) : ℂ) * η ^ (i : ℕ) := by
+      rw [Fin.sum_univ_eq_sum_range (fun i => ((c (i : ZMod p) : ℤ) : ℂ) * η ^ i) p,
+        ← sumVal (fun i => ((c (i : ZMod p) : ℤ) : ℂ) * η ^ i)]
+      simp
+    rw [e, hη.sum_eq_zero_iff_forall_eq_int hpr (fun i : Fin p => c ((i : ℕ) : ZMod p))]
     constructor
     · intro h r
-      have h' : ∑ i ∈ range p, ((c (i : ZMod p) : ℤ) : ℂ) * η ^ i = 0 := by
-        rw [← sumVal (fun i => ((c (i : ZMod p) : ℤ) : ℂ) * η ^ i)]
-        simpa using h
-      have hv := vanish (fun i => c (i : ZMod p)) h'
-      have h1 := hv r.val (ZMod.val_lt r)
-      have h0 := hv 0 hp.out.pos
-      simp only [ZMod.natCast_val, ZMod.cast_id', id_eq, Nat.cast_zero] at h1 h0
-      rw [h1, h0]
-    · intro h
-      have e : ∑ r : ZMod p, (c r : ℂ) * η ^ r.val = (c 0 : ℂ) * ∑ i ∈ range p, η ^ i := by
-        rw [Finset.mul_sum, ← sumVal (fun i => (c 0 : ℂ) * η ^ i)]
-        exact Finset.sum_congr rfl fun r _ => by rw [h r]
-      rw [e, hη.geom_sum_eq_zero hp.out.one_lt, mul_zero]
+      have := h ⟨r.val, ZMod.val_lt r⟩ ⟨0, hpr.pos⟩
+      simpa using this
+    · intro h i j
+      rw [h, h (((j : ℕ) : ZMod p))]
   have powval : ∀ a b : ZMod p, η ^ (a + b).val = η ^ a.val * η ^ b.val := by
     intro a b
     rw [ZMod.val_add, ← pow_add]
