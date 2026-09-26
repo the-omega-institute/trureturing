@@ -22,6 +22,8 @@ def currentOccurrence (row : SnapshotOccurrence) : SnapshotOccurrence :=
       `Reg.Support.LegacyStaticDesign.arena
     else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena then
       `Reg.Support.LegacyGluing.arena
+    else if row.objectArenaName == `D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena then
+      `Reg.Support.LegacyContextReplacement.objectArena
     else row.objectArenaName }
 
 def contract : RootCatalogContract := {

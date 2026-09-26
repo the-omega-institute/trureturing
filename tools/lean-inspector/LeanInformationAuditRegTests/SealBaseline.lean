@@ -34,7 +34,7 @@ example : Reg.Support.LegacyResidue.arena.«Reg.Catalogs.InformationRoot/Reg.Sup
 example : D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 20 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 56 := by
+example : Reg.Support.LegacyContextReplacement.objectArena.«Reg.Catalogs.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 56 := by
   decide
 
 example : D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 240 := by

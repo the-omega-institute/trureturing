@@ -21,6 +21,6 @@ def contract : RootCatalogContract := {
 
 -- Seal reference after the faithful observation/intervention arena transport.
 def expectedSealDigest : String :=
-  "ebfbc7633da209a2a2e788a578d2ef6b463ceb9e59d90bf2f91e81d48795e8e5"
+  "c13fb34fffb44834e52f466bfa860ed6d7735d9eb1708575ae99875dc02e2f1e"
 
 end Reg.Support.SharedInformationRootContract

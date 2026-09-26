@@ -42,7 +42,7 @@ run_meta do
     (``D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
       ``D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena),
     (``D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena),
+      ``Reg.Support.LegacyContextReplacement.objectArena),
     (``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
       ``Reg.Support.LegacyStaticDesign.arena),
     (``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
@@ -65,7 +65,7 @@ end
 #print axioms D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyAgenda.arena/Reg.Support.LegacyAgenda.arena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena/D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena».__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena».__lowers_escape
+#print axioms D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyStaticDesign.arena/Reg.Support.LegacyStaticDesign.arena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.«Reg.Catalogs.TemplateShadow/D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena».__lowers_escape
 #print axioms D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state.«Reg.Catalogs.TemplateShadow/Reg.Support.LegacyGluing.arena/Reg.Support.LegacyGluing.arena».__lowers_escape
