@@ -33,13 +33,10 @@ verify relations within it. From this perspective, Dao (道), or God (神), can
 name an encompassing network of all truths and their logical relations.
 Each proof and each refuted conjecture changes our knowledge of that network.
 
-This is the project's ontological picture, not a proof about the existence
-or nature of Dao, God or the universe. Saying that truth is discovered does
-not diminish computational proofs: searching for proofs, constructing
-counterexamples and checking them are themselves computations. The
-philosophical status of truth and the process of obtaining its proof are
-different questions; this position supplies no algorithm for enumerating or
-deciding every truth.
+This position proves nothing about the existence or nature of Dao, God or the
+universe. It supplies no algorithm enumerating or deciding every truth.
+Computation still constructs counterexamples, searches for proofs and checks
+them. What truth is and how its proofs are obtained remain different questions.
 
 In practice, returning a result means making it available as a premise. A
 theorem states its dependencies so that others can reuse it; a counterexample
@@ -65,15 +62,15 @@ answered? Existing work gives this picture several mathematical entry points.
 | Entry point | Relation under study | Existing result and scope |
 | --- | --- | --- |
 | Proof dependencies | How a declaration connects to others through dependency paths | [Dependency Alexandrov topology](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean) constructs an upper-set topology from reachability. A node's reachable upper set is its smallest open neighborhood in this topology. This describes dependencies, not physical distance. |
-| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, equates the existence of a recovery function with the target being constant on each observation fiber. Existence does not establish computability or a cost bound. |
+| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, says a target can be recovered exactly when states with the same reading have the same target value. Existence does not establish computability or a cost bound. |
 | Local and joint information | Which correlations remain unknown after observing each part separately | The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two distinct two-qubit states: a Bell pure state and the equal classical mixture of `00` and `11`. They have the same two single-qubit reduced states. This counterexample limits claims of recovering a joint state from local readings alone. |
 | Space and history | Whether a current spatial reading preserves historical conditions needed for later operations | The [hidden archive temporal-domain counterexample](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean) adds an inactive event to a finite event model, preserving the current region, selection and spatial reading while changing whether a temporal composition is legal. It does not identify the model's time labels with physical time. |
 
-These entry points give shape an inspectable meaning. A proof dependency
-graph, an observation space and physical spacetime remain different objects.
-Connecting them in one theory requires explicit maps and checks of the
-relations, operations and error bounds those maps preserve. Shared vocabulary,
-similar patterns or equal numbers cannot establish that correspondence.
+The recovery criterion links both counterexamples. The two quantum states share local readings but differ as joint states; the two archives share
+a spatial reading but differ on a temporal operation's legality. Recovering
+either target requires readings that separate its witness pair. This condition
+alone supplies no executable or efficient reconstruction. Relating these models to proof dependencies or physical spacetime still requires maps
+and checks of the relations, operations and error bounds they preserve.
 
 For further reading,
 [proof topology, involutive logic and observational escape](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)
