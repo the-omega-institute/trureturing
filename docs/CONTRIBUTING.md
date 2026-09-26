@@ -1,12 +1,15 @@
 # Contributing
 
-trureturing is a truth-discovery library. Help turn a precise question into a
-result that others can check and reuse: through examples, counterexamples,
-proofs, clearer explanations or useful tools. The current mathematical subjects
-offer concrete places to start.
+trureturing develops a scientific method for AI to discover truth and use
+checked results to guide further inquiry. Help turn a precise question into
+a result that others can check and reuse: through examples, counterexamples,
+proofs, clearer explanations or useful tools. The
+[vision and research guide](VISION.md) connects the current mathematical
+subjects to this purpose and the research program through 2027.
 
 You do not need to write a new proof to make a useful contribution. Public-facing
-documentation defaults to English.
+documentation defaults to English; the [Chinese vision guide](VISION.md)
+provides a companion entrance to the project's ideas.
 
 [Project entrance](../README.md) ·
 [Use Claude Code or Codex](#use-claude-code-or-codex) ·
@@ -85,6 +88,13 @@ need a mathematical skill. A contribution request you can paste:
 
 ## Choose a starting point
 
+- **Connect a question to a research direction.** Use the
+  [roadmap](VISION.md#roadmap-2027) to identify an observation, missing relation
+  or reusable lemma that could advance an existing line. State what would
+  support or refute the proposed step, search the library first, and explain
+  what the result would enable next. New evidence should also update the
+  relevant explanation; preserve the distinction between a philosophical
+  commitment, a model, an experiment and a checked theorem.
 - **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
   from explanation to Lean statement. Clarify terminology, fix a link or improve
   a translation while preserving the result's assumptions and scope.
@@ -115,13 +125,16 @@ Make and Bash, with these tools on `PATH`:
   [lakefile.toml](../lakefile.toml), with resolved dependencies in
   [lake-manifest.json](../lake-manifest.json).
 - [.NET SDK](https://dotnet.microsoft.com/en-us/download),
-  selected by [global.json](../global.json) with roll-forward disabled. The
+  selected by [global.json](../global.json) using its declared roll-forward
+  policy. The
   repository's Lean wrapper also uses .NET.
 - **Python** available as `python3` for the CI/preflight scripts, which require
   the standard-library `tomllib` module.
 
-The shell examples below use macOS/Linux conventions. The installed SDK must
-match [global.json](../global.json); a runtime alone is insufficient.
+The shell examples below use macOS/Linux conventions. Install the SDK version
+specified in [global.json](../global.json), even when its roll-forward policy
+allows a newer installed SDK: integration fixtures also exercise exact version
+selection. A runtime alone is insufficient.
 Check `dotnet --version`, `lean --version` and
 `python3 --version` from the checkout. Dependency downloads need network access;
 individual experiments may have additional prerequisites.
