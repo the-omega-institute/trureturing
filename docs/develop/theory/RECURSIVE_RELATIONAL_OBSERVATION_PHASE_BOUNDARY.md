@@ -77850,3 +77850,338 @@ $$
 副本数计算只包含所声明来源与访问接口中的统计判别。若要换算历时，还须给出制备速率、每份处理历时及并行规则；本节不由副本数直接推出物理钟速。这些具体来源计算也不承担任意态层析或文献原创性主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 254. 互补传感器的预算收益与选择记录擦除后的精确碰撞
+
+§253的四次方副本预算来自规定输出遗漏了一阶 $Y$ 相干区别。本节允许在重置前实际选择一个互补 $Y$ 传感器。若选择记录可读，副本预算在旧接口的四次方尺度与互补接口的二次方尺度之间统一插值；若擦掉选择记录，两种响应可以精确抵消，使不同源的完整输出相同。
+
+因此，新增传感器的能力与保存其实际选择记录共同决定边界的信息。下面分别定义这两个合法但不同的输出接口。
+
+### 254.1 两种真实仪器与随机选择接口
+
+沿用§253的固定参数及实际旧仪器 $\mathcal S_p$：
+$$
+\frac12\le A<1,\quad 0<B\le1-A,\quad b_0^2=B,
+\qquad
+A_a=\sqrt A\,Z+b_0X,
+\quad A_b=\sqrt A\,Z-b_0X.
+\tag{254.1}
+$$
+旧仪器在可见标签 $(w,s)$ 上的效应为
+$$
+E_{w,s}=\frac{I_2+sA_w}{4},
+\qquad w\in\{a,b\},\quad s\in\{+1,-1\}.
+\tag{254.2}
+$$
+新增仪器 $\mathcal T$ 的效应为
+$$
+F_{w,s}=\frac{I_2+sY}{4}.
+\tag{254.3}
+$$
+其中 $w$ 是均匀生成的辅助标签，与结果 $s$ 无关；两个 $w$ 值使用同一个 $Y$ 测量。$F_{w,s}\succeq0$ 且 $\sum_{w,s}F_{w,s}=I_2$，所以按效应测量并重置给出合法仪器。
+
+两种仪器都使用同一个可见寄存器 $(w,s)$、同一个纯重置输出 $P_{\mathrm{reset}}$，并保留完整参考 $E$。例如
+$$
+\mathcal T(X)
+=\sum_{w,s}|w,s\rangle\langle w,s|
+\otimes\operatorname{Tr}(F_{w,s}X)P_{\mathrm{reset}}.
+\tag{254.4}
+$$
+$Y$ 操作发生在原输入尚可访问时。它是本节新增的实际取得权限，不能从旧重置输出的后处理免费产生。
+
+取§253的同一三维参考与源族，记 $q=1-\theta\in(0,1)$：
+$$
+\begin{aligned}
+\Omega_0&=\theta P_\Phi+qP_{0_H}\otimes P_{2_E},\\
+\Omega_z&=\theta P_\Phi+qP_{\psi_z}\otimes P_{2_E},\\
+|\psi_z\rangle&=\sqrt{1-z^2}|0\rangle_H+iz|1\rangle_H,
+\qquad0<z<1.
+\end{aligned}
+\tag{254.5}
+$$
+两态的参考边缘相同，形成纠缠均为 $\theta$，半迹距离为 $qz$。$\Omega_0$ 对旧仪器响应饱和，$\Omega_z$ 不饱和。
+
+每份原探针到达时，以已知概率 $\gamma\in[0,1]$ 选择 $\mathcal T$，其余概率选择 $\mathcal S_p$。选择种子独立于未知源，并在各次使用间独立。定义两种仪器各自的完整输出
+$$
+\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j),
+\qquad
+\upsilon_j=(\mathcal T\otimes\operatorname{id}_E)(\Omega_j),
+\qquad j=0,z.
+\tag{254.6}
+$$
+若保留选择记录 $h\in\{\mathrm{old},Y\}$，实际输出为
+$$
+\tau_j^\gamma
+=(1-\gamma)|\mathrm{old}\rangle\langle\mathrm{old}|\otimes\sigma_j
++\gamma|Y\rangle\langle Y|\otimes\upsilon_j.
+\tag{254.7}
+$$
+若擦除 $h$，且没有其他可取得的选择记录副本，则输出为
+$$
+\overline\tau_j^\gamma
+=\operatorname{Tr}_h\tau_j^\gamma
+=(1-\gamma)\sigma_j+\gamma\upsilon_j.
+\tag{254.8}
+$$
+擦除后仍保留 $(w,s)$、共同重置输出与全部参考。两种仪器相同的重置态及均匀 $w$ 约定，是此处完整接口的一部分。
+
+对每个已知 $z,\gamma$，未知假设 $j=0$ 或 $z$ 等先验选定，全部副本来自同一 $\Omega_j$。独立来源与独立选择给 $n$ 份输出 $(\tau_j^\gamma)^{\otimes n}$，或 $(\overline\tau_j^\gamma)^{\otimes n}$。允许对全部已开放输出作任意联合 POVM、自适应测量与后处理，目标为等先验平均正确率至少 $2/3$。仪器选择仍遵守已声明的固定 $\gamma$ 独立随机规则。
+
+### 254.2 有选择记录时的相对熵与联合测量下界
+
+先限制 $0<z\le1/2$，允许 $\gamma$ 在整个 $[0,1]$ 内取值，也允许其随 $z$ 变化。记达到目标成功率的最小整数副本数为 $N_{\mathrm{log}}(z,\gamma)$。
+
+在 $Y$ 仪器的产品参考块中，符号均值从零变为
+$$
+y_z=\langle\psi_z|Y|\psi_z\rangle
+=2z\sqrt{1-z^2}.
+\tag{254.9}
+$$
+Bell 参考块在两假设下保持相同，故自然对数相对熵为
+$$
+D_{\mathrm{nat}}(\upsilon_z\|\upsilon_0)
+=qD_{\mathrm B}\left(\frac{1+y_z}{2}\middle\|\frac12\right)
+\le qy_z^2
+\le4qz^2.
+\tag{254.10}
+$$
+这里使用§253由 $\ln u\le u-1$ 得到的 Bernoulli 相对熵上界。旧仪器已有
+$$
+D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
+\le\frac{4qA}{1-A}z^4.
+\tag{254.11}
+$$
+选择标签正交，且两假设的选择概率相同，所以
+$$
+\begin{aligned}
+D_{\mathrm{nat}}(\tau_z^\gamma\|\tau_0^\gamma)
+&=(1-\gamma)D_{\mathrm{nat}}(\sigma_z\|\sigma_0)
++\gamma D_{\mathrm{nat}}(\upsilon_z\|\upsilon_0)\\
+&\le4q\left((1-\gamma)\frac A{1-A}z^4+\gamma z^2\right).
+\end{aligned}
+\tag{254.12}
+$$
+$\gamma=0,1$ 时省略零权重块，该式仍成立。
+
+由等先验 Helstrom 公式，成功率至少 $2/3$ 要求两份 $n$ 副本态的迹范数距离至少为 $2/3$。自然对数 Pinsker 界与相对熵加性给
+$$
+\frac49
+\le\| (\tau_z^\gamma)^{\otimes n}-(\tau_0^\gamma)^{\otimes n}\|_1^2
+\le8nq\left((1-\gamma)\frac A{1-A}z^4+\gamma z^2\right).
+\tag{254.13}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+\ge
+\frac1{18q\left((1-\gamma)\dfrac A{1-A}z^4+\gamma z^2\right)}.
+}
+\tag{254.14}
+$$
+该下界对任何联合输出测量成立。
+
+### 254.3 可实施统计量给出统一上界
+
+每份输出读取实际选择 $h$、参考产品旗标及符号 $s$。构造两个随机变量
+$$
+V_{\mathrm{old}}=
+\begin{cases}s,&h=\mathrm{old}\text{ 且参考产品旗标成立},\\0,&\text{其余},\end{cases}
+\qquad
+V_Y=
+\begin{cases}s,&h=Y\text{ 且参考产品旗标成立},\\0,&\text{其余}.\end{cases}
+\tag{254.15}
+$$
+旧统计量在两假设下的均值分别为
+$$
+q(1-\gamma)\sqrt A,
+\qquad q(1-\gamma)\sqrt A(1-2z^2),
+\tag{254.16}
+$$
+方差均不超过 $q(1-\gamma)$。$Y$ 统计量的均值分别为零与 $q\gamma y_z$，方差均不超过 $q\gamma$。
+
+对所用统计量取独立样本均值，以两假设均值中点作阈值。若使用旧统计量，两侧的错误率由 Chebyshev 界控制为
+$$
+P_j(\text{判错})\le\frac1{nq(1-\gamma)Az^4}
+\qquad(\gamma<1).
+\tag{254.17}
+$$
+若使用 $Y$ 统计量，两侧错误率满足
+$$
+P_j(\text{判错})
+\le\frac4{nq\gamma y_z^2}
+=\frac1{nq\gamma z^2(1-z^2)}
+\qquad(\gamma>0).
+\tag{254.18}
+$$
+旧统计量较大的一侧判零，$Y$ 统计量较大的一侧判 $z$。
+
+令
+$$
+u=q(1-\gamma)Az^4,
+\qquad v=q\gamma z^2(1-z^2).
+\tag{254.19}
+$$
+选择 $u,v$ 较大者对应的统计量。至少一个严格为正，零概率分支无须使用。每侧错误率至多为 $1/[n\max\{u,v\}]$。
+
+定义共同尺度
+$$
+r(z,\gamma)=(1-\gamma)z^4+\gamma z^2.
+\tag{254.20}
+$$
+因为 $A\ge1/2$、$z\le1/2$，
+$$
+u+v\ge\frac q2r(z,\gamma),
+\qquad
+\max\{u,v\}\ge\frac q4r(z,\gamma).
+\tag{254.21}
+$$
+所以取 $n\ge12/[qr(z,\gamma)]$ 即使两侧错误率均不超过 $1/3$，得到
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+\le\left\lceil\frac{12}{q\bigl((1-\gamma)z^4+\gamma z^2\bigr)}\right\rceil.
+}
+\tag{254.22}
+$$
+上界只需逐次读取与一个均值检验；其取样次数包含随机选择没有选中所用仪器的试次。
+
+### 254.4 对选择概率统一成立的预算插值
+
+**定理254.1（保留选择记录的统一副本界）。** 固定 $A,B,\theta$，在（254.1）—（254.7）的已知二元来源任务中，对所有 $0<z\le1/2$、$0\le\gamma\le1$，
+$$
+\boxed{
+\frac{1-A}{18qA\,r(z,\gamma)}
+\le N_{\mathrm{log}}(z,\gamma)
+\le\left\lceil\frac{12}{q\,r(z,\gamma)}\right\rceil.
+}
+\tag{254.23}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{log}}(z,\gamma)
+=\Theta\left(\frac1{(1-\gamma)z^4+\gamma z^2}\right),
+}
+\tag{254.24}
+$$
+其中上下界常数只依赖固定参数，可对全部 $\gamma$ 统一选择。
+
+**证明。** 上界即（254.22）。由于 $A/(1-A)\ge1$，
+$$
+(1-\gamma)\frac A{1-A}z^4+\gamma z^2
+\le\frac A{1-A}r(z,\gamma).
+\tag{254.25}
+$$
+将其代入（254.14）得到下界。$r(z,\gamma)>0$，且取整的加一项可被统一常数吸收，得到（254.24）。$\square$
+
+当 $\gamma(z)/z^2\to0$，旧响应项主导，副本数为 $\Theta(z^{-4})$。当 $\gamma(z)/z^2\to\infty$，互补项主导，副本数为 $\Theta(1/[\gamma(z)z^2])$。任意固定 $\gamma>0$ 都给 $\Theta(z^{-2})$，端点 $\gamma=0$ 则保留旧接口的四次方阶。
+
+对 $0<\gamma<1$，理想输出矩阵（254.7）的两个标签块，分别除以已知概率 $1-\gamma,\gamma$，即可恢复两种仪器各自的总体响应。这是精确数据层面的可恢复性；实际有限副本仍按（254.23）计价，不把该除法当作一次样本可实现的确定性恢复通道。
+
+### 254.5 擦除选择记录后的精确同输出源
+
+现在允许全部 $0<z<1$，固定任意 $0<\gamma<1$。擦除标签后的仪器效应为
+$$
+\overline E_{w,s}
+=(1-\gamma)E_{w,s}+\gamma F_{w,s}
+=\frac{I_2+s\overline A_w}{4},
+\qquad
+\overline A_w=(1-\gamma)A_w+\gamma Y.
+\tag{254.26}
+$$
+它们是原两套效应的凸组合，保持正性与归一化。校准已知的 $\gamma$ 不会补回被擦除的选择记录。
+
+定义
+$$
+\boxed{
+z_\gamma=
+\frac{\gamma}{\sqrt{\gamma^2+(1-\gamma)^2A}}
+\in(0,1).
+}
+\tag{254.27}
+$$
+该数满足
+$$
+\gamma\sqrt{1-z_\gamma^2}
+=(1-\gamma)\sqrt A\,z_\gamma.
+\tag{254.28}
+$$
+
+**定理254.2（擦除标签后的精确碰撞）。** 对每个 $0<\gamma<1$，
+$$
+\boxed{
+\overline\tau_{z_\gamma}^\gamma
+=\overline\tau_0^\gamma,
+\qquad
+\frac12\|\Omega_{z_\gamma}-\Omega_0\|_1=qz_\gamma>0.
+}
+\tag{254.29}
+$$
+
+**证明。** 两态的参考边缘相同，Bell 部分也完全相同。对产品部分，$X$ 期望始终为零，$Z$ 期望从一变为 $1-2z^2$，$Y$ 期望从零变为 $2z\sqrt{1-z^2}$。因此两条混合响应的参考矩阵差均为
+$$
+\begin{aligned}
+&\operatorname{Tr}_H[(\overline A_w\otimes I_E)(\Omega_z-\Omega_0)]\\
+&\qquad=2qz\left[\gamma\sqrt{1-z^2}-(1-\gamma)\sqrt A\,z\right]P_{2_E},
+\qquad w=a,b.
+\end{aligned}
+\tag{254.30}
+$$
+在 $z=z_\gamma$ 时，（254.28）使括号为零。由共同边缘与（254.26），每个可见 $(w,s)$ 的整个参考输出块都相同；共同重置态也相同，得到第一式。第二式来自源半迹距离 $qz$，而 $q,z_\gamma>0$。$\square$
+
+因此任意有限副本数 $n$ 都有
+$$
+(\overline\tau_{z_\gamma}^\gamma)^{\otimes n}
+=(\overline\tau_0^\gamma)^{\otimes n},
+\qquad
+P_{\mathrm{succ}}^{\mathrm{opt}}(n)=\frac12.
+\tag{254.31}
+$$
+不存在任何副本预算或输出后处理能在此接口上达到 $2/3$。该结论覆盖全部参考与任意联合量子测量。
+
+这并不改变§251对旧接口的结论：$\Omega_0$ 的饱和性质对应旧仪器，而（254.26）已经改变输入方向并擦除了选择记录；本节没有假定它仍是新混合接口的饱和源。
+
+### 254.6 任意小选择频率下的近源碰撞
+
+当 $\gamma\to0$ 时，
+$$
+z_\gamma\sim\frac{\gamma}{\sqrt A},
+\tag{254.32}
+$$
+所以擦除标签造成的碰撞源可任意接近固定 $\Omega_0$。这里每个 $\gamma$ 都规定自己的已知随机仪器接口及已知候选对。
+
+若保留选择标签，同一候选对的输出不同：旧标签块中的两份产品响应仍相差 $-2q\sqrt A\,z_\gamma^2P_{2_E}$，并带正权重 $1-\gamma$，故不能被 $Y$ 标签块抵消。
+
+对充分小的 $\gamma$，$z_\gamma\le1/2$，可以应用定理254.1。此时
+$$
+r(z_\gamma,\gamma)
+=(1-\gamma)z_\gamma^4+\gamma z_\gamma^2
+\sim\frac{\gamma^3}{A}.
+\tag{254.33}
+$$
+因此同一对源在三种规定接口下具有以下预算：
+$$
+\boxed{
+\begin{aligned}
+\text{保留选择记录：}\quad
+&N_{\mathrm{log}}(z_\gamma,\gamma)=\Theta(\gamma^{-3}),\\
+\text{只用旧仪器：}\quad
+&N_{\mathrm{out}}(z_\gamma)=\Theta(\gamma^{-4}),\\
+\text{混合后擦除选择记录：}\quad
+&\text{任意有限副本均不能超过正确率 }1/2.
+\end{aligned}
+}
+\tag{254.34}
+$$
+第二式直接应用§253。前两式是 $\gamma\to0$、其余参数固定时的渐近阶；第三式对全部 $0<\gamma<1$ 精确成立。
+
+### 254.7 控制记录属于关系接口
+
+选择记录使读数能够归属于实际实施的操作。保留它时，旧关系与互补关系分别约束同一个来源；擦除它时，观察者只能取得两者的混合，式（254.30）给出了不同来源落入同一观察纤维的实际实现。
+
+新增 $Y$ 仪器确实提高了已保留选择记录的任务能力；式（254.29）的信息丢失发生在另一个明确动作——将选择寄存器迹掉。因而硬件测试族、可取得控制记录与最后观察接口须一起声明，才能判断边界是否充分。
+
+副本界沿用§253已列明的 Holevo–Helstrom 定理、自然对数 Pinsker 不等式及独立样本方差界；来源为 Watrous，*The Theory of Quantum Information*，Theorem 3.4、Theorem 5.38，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。相对熵在正交记录块上的分解与两套效应的凸混合直接按当前仪器计算。本节不据此宣称文献原创性，也不把副本指数解释为未另行标定的物理时间流速。
+
+## 追加锚（本行以下为增补区）
