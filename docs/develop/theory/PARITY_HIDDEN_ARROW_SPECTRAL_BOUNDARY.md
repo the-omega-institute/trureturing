@@ -36207,3 +36207,407 @@ The purely reference calculation(101.25)–(101.31) needs sigma->0 with an upper
 There is no remaining(1+rho^-1)Q^-428 term. Its old upper bound remains valid but unusable; it is not asserted to have magically improved. The new argument uses111's signed tuple contraction for the part with polynomial approximation error and keeps exact lattice localization exponential for the period-summed part. The full original scalar, finite coefficients and auxiliary partition are unchanged. Fixed moment/derivative orders only are used. Constants depend on the original fixed parameters, bandwidth comparison constants and fixed good-event bounds, never on Q or support. Good-event constants are localized and then released in the usual tightness argument.
 
 ## 追加锚（本行以下为增补区）
+
+## 141. 弱外场的双尺度响应与少数相相对估计
+
+第 139 章确定移动双阱内的高斯尺度。本章在同一乘积计数后验中加入弱外场，给出逐相指数可积性和相对于少数相的计数比较。两种外场尺度分别改变双阱权重和井内中心，精确经验鞍点同时保留物理输出造成的有限修正。
+
+### 141.1 原始乘积计数律与弱外场结论
+
+**定理 141.1（弱外场下的逐相相对响应）。** Use the original fixed-amplitude/floored model, the full PRODUCT count prior and physical calibration
+$$
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\qquad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,
+$$
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ e_j=(\mu_j-C_jp_j)/B,\quad x_j=(n_j-\mu_j)/B,
+ \quad E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),
+ \quad T=(E-V)/\sqrt\delta .
+ \tag{141.1}
+$$
+The level Q and the prior Q(n) retain their inherited distinct meanings. The full original mu,V,T are used throughout, including all low groups. The PRODUCT law is auxiliary and is not the original full-q support-selection law P.
+
+Let eta=eta_Q be EACH deterministic positive sequence such that eta->0 and t=eta/sqrt(delta)->infinity, with no lower divergence rate; put v=t^2=eta^2/delta and a=1/(2V)+eta. The positive original sigma obeys
+$$
+ L=\log(1/\sigma)\to\infty,\qquad
+ \limsup L/Q^3<c_q/2,\qquad c_q=\phi(1-\beta)/\beta .
+ \tag{141.2}
+$$
+No further rate on sigma is imposed. To avoid confusing the physical output with the field, write H_y=V+sqrt(delta)y for the energy observation and h for the external scalar field. Define the finite raw partition and posterior
+$$
+ Z_y(h)=\sum_n Q(n)
+       \exp\{aD(n)^2+hD(n)-(T(n)-y)^2/(2\sigma^2)\},
+ \qquad
+ \pi_{y,h}(n)=Z_y(h)^{-1}Q(n)e^{aD^2+hD-(T-y)^2/(2\sigma^2)} .
+ \tag{141.3}
+$$
+Defining Z instead with respect to the ordinary product posterior changes it by an h-independent factor and leaves all ratios below identical.
+
+Retain exactly the zero-field Chapter 139 finite saddle center r_*=r_*(Q,y), recalled in (141.10). Set S=sign(D), with sign(0)=0, and
+$$
+ W=2\sqrt\eta(D-Sr_*),\qquad
+ \lambda=h/(2\sqrt\eta),\qquad
+ \ell_s(h,y)=\frac{e^{s h r_*}}{2\cosh(h r_*)},\quad s\in\{-1,1\}.
+ \tag{141.4}
+$$
+For EVERY fixed finite K,R>=0, uniformly |h|<=Ksqrt(eta), |y|<=R,
+$$
+ \frac{Z_y(h)}{Z_y(0)\cosh(h r_*)\,\exp(h^2/(8\eta))}
+                  =1+o_{\mathbb P}(1),
+ \tag{141.5}
+$$
+$$
+ \max_{s=\pm1}\left|\frac{\pi_{y,h}(S=s)}{\ell_s(h,y)}-1\right|
+                       =o_{\mathbb P}(1).
+ \tag{141.6}
+$$
+For every fixed continuous f:R->R with |f(w)|<=C(1+|w|^p), p>=0 finite,
+$$
+ \max_{s=\pm1}\left|
+ E_{\pi_{y,h}}[f(W-\lambda)\mid S=s]
+       -\int_{\mathbb R}f(w)\frac{e^{-w^2/2}}{\sqrt{2\pi}}\,dw
+                   \right|=o_{\mathbb P}(1).
+ \tag{141.7}
+$$
+The signs have positive probabilities on the common good classes for all sufficiently large levels. Conditional expressions may be extended arbitrarily outside that event. The sign-zero mass is negligible even relative to either sign mass; this is proved below.
+
+Each o_P statement means that the supremum over the specified h,y domain tends to zero in original raw-data probability uniformly over deterministic size-q supports, separately for the actual pair law and actual path law. Equivalently, for each positive tolerance, the supremum over deterministic supports of the probability that that same-fiber supremum exceeds the tolerance tends to zero. No independent resampling of rows, phases, centers, low tuples or environments occurs. Uniformity in fields permits fields chosen as functions of this same fiber inside the stated interval.
+
+The scope is each fixed K and each fixed polynomial-growth test. There is no growing-field or growing-test-degree assertion, entropy-order differentiation, discrete-to-continuous total variation, or full-q P conclusion.
+
+### 141.2 共同假设与有限经验中心
+
+Work on the same fixed tight-constant deterministic classes as Chapters 137 and 139. There
+$$
+ c\le V,C_2\le C,\quad v_*\le C\delta,\quad n_g\le C\delta^{-4},
+ \quad p_j\in[1/4,3/4],\quad \sum_j C_j\le CB^2,
+$$
+$$
+ |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \|e\|^2\le C\delta^{10},\quad
+ \big(\sum_j|e_j|\big)^2\le C\delta^6,\qquad
+ \log q=c_qQ^3+O(1).
+ \tag{141.8}
+$$
+A block of at least c/delta variances lies between cdelta and Cdelta. Complements of these classes are exhausted in the stated actual probability, uniformly over supports. Zero-variance coordinates are deterministic.
+
+Fix Chapter 139's high block H={j:C_j>=exp(zeta Q^3)} once for the entire output/field domain. Choose l,zeta as in Section 139.2: eventually L<=lQ^3, l<c_q/2, zeta<c_q/2, 2zeta<c_q-l. Set V_H=sum_Hv_j, C_H=diag(v_j), w_H=(v_j), d=w_H/V_H and
+$$
+ A=C_H-w_Hw_H^T/V_H,\qquad
+ r_H=(2V_H)^{-1}-(2V)^{-1},\qquad \gamma=\eta-r_H,
+$$
+$$
+ K_0(z)=-\tfrac12\log\det(I-2zA)+\tfrac12\delta\sigma^2z^2,
+ \qquad \Psi(z)=z\,d^T(I-2zA)^{-1}d.
+ \tag{141.9}
+$$
+High/full variance differences are exponentially small, but full V remains in every original scalar. The exact center is
+$$
+ \Psi(z_*)=-\gamma,\quad z_*<0,\qquad
+ R_*(y)=\frac{H_y-K_0'(z_*)}{\Psi'(z_*)},\qquad
+ r_*=\sqrt{R_*(y)}.
+ \tag{141.10}
+$$
+Chapter 139 proves the unique negative real root, positive numerator, measurability and local uniqueness of the corresponding density mode. It proves |z_*|delta=O(eta), Psi'(z_*)~delta, r_*~sqrt(eta/delta)m_Q, m_Q=sqrt(2V^4/C_2), and that the exact centered-Gaussian mode differs from r_* by O(sqrt(delta)/sqrt(eta)). Finite sigma, full V and H_y are retained in (141.9)--(141.10). Define
+$$
+ u_*=\sqrt{\delta/\eta}\,r_*;\qquad c\le u_*\le C,\quad
+ u_*-m_Q\to0,\quad \sqrt\eta\,r_*=t u_* .
+ \tag{141.11}
+$$
+Only the exact r_* is used inside exponentials. Its leading asymptotic value cannot replace it with a controlled absolute field error throughout the stated field range.
+
+The interfaces from Chapter 139 are its exact local log ratio (139.27), band envelope (139.28), compact speed gap and global density tails (139.29)--(139.35), normalization (139.36), relative noncentral comparison (139.37)--(139.39), and the cell geometry in Section 139.8. The joint modal/likelihood-score estimate (137.28) and full-tuple tail inequality (137.32) will be applied with the field below. The polynomial-test conclusion (139.5) alone does not establish exponential integrability.
+
+### 141.3 移动井内的指数积分
+
+Let Y_H be centered independent Gaussians with variances v_j, D_G=sum_HY_j. Conditional on D_G=r, the centered energy plus independent N(0,delta sigma^2) has cumulant K_0(z)+r^2Psi(z). Denote its density at H_y by f_r^0(H_y), and the analogous actual-e energy density by f_r^e(H_y), using sum_H(Y_j-e_j)^2. Put
+$$
+ g_y^0(r)=e^{\gamma r^2}f_r^0(H_y),\qquad
+ g_y^e(r)=e^{\gamma r^2}f_r^e(H_y),\qquad
+ A_y=\frac{\sqrt{2\pi}}{2\sqrt\eta}\,g_y^0(r_*).
+ \tag{141.12}
+$$
+The centered function g^0 is exactly even. The actual-e function need not be. The fixed fractional bands B_s around s r_* have |r-sr_*|<=epsilon_0 r_*, for the epsilon_0 of Section 139.5. On these bands, writing r=s r_*+w/(2sqrt(eta)), we have
+$$
+ \frac{g_y^0(s r_*+w/(2\sqrt\eta))}{g_y^0(r_*)}
+       \to e^{-w^2/2}\quad\hbox{uniformly on fixed w compacts},
+$$
+$$
+ \frac{g_y^0(s r_*+w/(2\sqrt\eta))}{g_y^0(r_*)}
+       \le C e^{-c_1w^2},\quad
+ |w|\le2\epsilon_0\sqrt\eta r_* .
+ \tag{141.13}
+$$
+The relative actual-e/centered ratio tends to one uniformly on every fixed u=sqrt(delta/eta)r compact. The two bands lie inside a single such compact. For any fixed Lambda,p the resulting integrand with weight exp(lambda w)(1+|w|^p), |lambda|<=Lambda, is bounded on each band by
+$$
+ C(1+|w|^p)\exp(\Lambda|w|-c_1w^2).
+ \tag{141.14}
+$$
+This has an integrable tail, uniformly in lambda,Q,y. Thus, for a fixed continuous polynomial-growth f, local integration gives uniformly |lambda|<=Lambda
+$$
+ \frac1{A_y}\int_{B_s}
+   e^{\lambda\,2\sqrt\eta(r-sr_*)}
+   f(2\sqrt\eta(r-sr_*)-\lambda)g_y^e(r)\,dr
+   =e^{\lambda^2/2}\,\mathcal N f+o(1),
+ \tag{141.15}
+$$
+where mathcal Nf=int f(w)e^{-w^2/2}dw/sqrt(2pi). On bounded w, uniformity in lambda follows from uniform continuity of f(w-lambda) on its compact translated domain and the uniform local ratio. Off that compact, (141.14), with the polynomial growth bound, pays the error uniformly. This proves the assertion without differentiating an asymptotic approximation.
+
+The coefficient and mean shift follow independently by completing the square:
+$$
+ e^{\lambda w-w^2/2}
+       =e^{\lambda^2/2}e^{-(w-\lambda)^2/2}.
+ \tag{141.16}
+$$
+It remains to justify that the whole sign half-line can replace B_s, uniformly after the field factor associated with that sign is removed. This is essential for the minority phase.
+
+### 141.4 相对于每一符号的全局指数尾界
+
+Use u=sqrt(delta/eta)r, v=t^2. The compact logarithmic estimate and global density envelope of Chapters 137 and 139 are available for the actual-e density, with the ordinary density normalization included. Relative to the centered peak, on a fixed u compact outside B_+ union B_- they give exp(-c_2t^2). In the far region the normalized density is bounded by
+$$
+ C\exp\left[t^2\left\{u^2-\frac{c u^4}{1+\eta u^2}\right\}\right].
+ \tag{141.17}
+$$
+The ordinary denominator is independent of u and cancels in a comparison with the peak; its scaled value is bounded above and below. The peak has logarithm t^2G_Q+o(t^2), G_Q=V^4/C_2 bounded away from zero. There is no discarded polynomial prefactor in Q at this step.
+
+On the sign-s half-line, exactly
+$$
+ W_s=2\sqrt\eta(r-sr_*)=2t(u-su_*),\qquad
+ |W_s|\le2t(|u|+u_*).
+ \tag{141.18}
+$$
+On a fixed u compact the added exponential exp(Lambda|W_s|) therefore costs exp(C_Lambda t), while any fixed W_s moment costs at most C_p t^p(1+|u|^p). The Jacobian ratio dr to the local width1/sqrt(eta) is exactly t. It follows that the compact part outside B_s, restricted to sign s, costs at most C_p t^{p+1}exp(-c_2t^2+C_Lambda t) relative to A_y.
+
+For the remaining far region, choose a fixed large M. As in Section 137.4, u^2/(1+eta u^2) is increasing, so the braces in (141.17) are <=-B_0u^2 on |u|>=M, eventually, for an arbitrarily large fixed B_0 after choosing M. Moreover
+$$
+ 2\Lambda t|u|\le (B_0/2)t^2u^2+2\Lambda^2/B_0 .
+ \tag{141.19}
+$$
+The remaining factor exp(2Lambda t u_*) costs only exp(C_Lambda t). Gaussian tail integration in u pays every fixed power, with the same t Jacobian. Comparing to the peak only improves the estimate. Thus for every fixed Lambda,p,
+$$
+ \max_{s=\pm1}\frac1{A_y}
+ \int_{\{sr>0\}\setminus B_s}
+       (1+|W_s|^p)e^{\Lambda|W_s|}g_y^e(r)\,dr
+ \le C_{\Lambda,p}t^{p+1}e^{-c_3t^2+C_\Lambda t}\to0.
+ \tag{141.20}
+$$
+It is this inequality, not polynomial uniform integrability, that licenses the new tilt. All estimates use the same actual-e Gaussian fiber and observation. The factor t^{p+1}, rather than a power of Q, ensures convergence for arbitrarily slowly diverging t.
+
+Combining (141.14),(141.20) also gives the useful whole-half-line uniform integrability assertion
+$$
+ \lim_{M\to\infty}\limsup_{Q\to\infty}\sup_{|y|\le R}
+ \max_{s=\pm1}\frac1{A_y}\int_{sr>0,\ |W_s|>M}
+       (1+|W_s|^p)e^{\Lambda|W_s|}g_y^e(r)\,dr=0 .
+ \tag{141.21}
+$$
+The limit is deterministic on each common class. It implies (141.15) with the entire sign half-line in place of B_s.
+
+For |h|<=Ksqrt(eta), lambda=h/(2sqrt(eta)) and h r=s h r_*+lambda W_s. We consequently obtain
+$$
+ J_s(h,f):=\int_{sr>0}e^{hr}f(W_s-\lambda)g_y^e(r)\,dr
+     =A_y e^{s h r_*+\lambda^2/2}
+                      \{\mathcal N f+o(1)\}.
+ \tag{141.22}
+$$
+The error in braces is absolute for signed f; for f=1 the estimate is relative. It is uniform in h,y and both signs. Crucially the factor exp(s h r_*) was removed BEFORE estimating errors. For the minority sign it can be as small as exp(-C_Kt), but it multiplies the main term and the integrated error alike. The noncentral ratio error is a pointwise relative o(1) on the bands, so it is not amplified into an error of order exp(Ct). Outside the bands the explicit bound (141.20) has already paid that possible loss.
+
+No exact reflection symmetry is asserted for the original binomial law or even the actual-e Gaussian density. Its small asymmetry is paid by the relative same-saddle estimate (139.37), not by symmetry of a different environment. The centered Gaussian density is only the analytic comparator in (141.12)--(141.15).
+
+### 141.5 同一输出下的外场加权计数比较
+
+Let N^G_{s,y}(h,f) denote the raw Gaussian numerator with the same field, sign restriction and test, and let N^Q denote its original full-count counterpart. The original energy likelihood is never replaced by an unconditioned quadratic exponential moment. Indeed the exact conversion between likelihood and Gaussian energy density gives
+$$
+ N^G_{s,y}(h,f)=\sigma\sqrt{\delta/V_H}\ J_s(h,f).
+ \tag{141.23}
+$$
+Define C_y=sigma sqrt(delta/V_H) A_y. The zero-field numerator satisfies N^G_y(0)=2C_y(1+o(1)) and C_y>=c sigma for large Q, by the numerator lower bound in Section 137.8 together with the sign-specific normalization (139.36)--(139.37). Thus (141.22) implies
+$$
+ N^G_{s,y}(h,1)\ge c\sigma e^{-C_Kt}.
+ \tag{141.24}
+$$
+This explicit sigma lower bound is sufficient to return counts relative to EACH sign. No unproved rare-density lower bound is introduced.
+
+The following elementary bound is the main new count interface. For every real D and |h|<=Ksqrt(eta),
+$$
+ hD\le |hD|\le\eta D^2+\frac{K^2}{4},
+ \qquad
+ e^{aD^2+hD}\le e^{K^2/4}e^{a_+D^2},
+ \quad a_+=\frac1{2V}+2\eta .
+ \tag{141.25}
+$$
+It follows by completing the square sqrt(eta)|D|-K/2. The comparison uses the SAME original D,E,T,V,mu and likelihood. It is a domination argument, not a change of physical prior or center. The admissible sequence2eta tends to zero with (2eta)/sqrt(delta)=2t->infinity and speed4v. The joint Gaussian score estimate (137.28) at that sequence is therefore available, including widths in [sigma/2,2sigma].
+
+Specifically put S_G=(1/2)sum_HY_j^2/v_j and Lambda_y=(E_H-H_y)^2/(2delta sigma^2). For all fixed nonnegative integers j,k and fixed p>=0, (141.25) and (137.28) give under the ordinary same-output Gaussian product posterior
+$$
+ E_y^G[e^{aD_G^2+hD_G}(1+S_G)^j
+                   (1+\Lambda_y)^k(1+|U_G|^p)]
+       \le P_{j,k,p,K}(Q)e^{C_{j,k,p,K}v},\qquad
+ U_G=\sqrt{\delta/\eta}D_G .
+ \tag{141.26}
+$$
+At2eta, its native U is U_G/sqrt(2), so fixed powers change by fixed constants. Positive insertions and the SAME joint conditioned law make this domination legal. Modal, charge and likelihood scores have not been independently optimized or multiplied as marginal estimates. There is no inverse sigma in (141.26).
+
+Take the original central high cells |n_j-C_jp_j|/sqrt(C_jp_j(1-p_j))<=Q^2. Lift each high atom into its centered physical Gaussian cell of width1/B, retaining every low tuple with its exact product-binomial probability. The inherited uniform cell estimates are
+$$
+ |\log(\hbox{lifted high density}/\phi_C)|\le\mathcal E_Q,\quad
+ |D-D_G|\le\mathcal E_Q,\quad
+ |T-T_G|/\sigma\le\mathcal E_Q,\quad |D_G|\le CQ^3,
+ \quad \mathcal E_Q=P(Q)e^{-bQ^3},
+ \tag{141.27}
+$$
+where T_G=(E_H-V)/sqrt(delta), with original full V. The positive exponent margins c_q/2-l and c_q-2zeta-l pay cell rounding and all low tuples after division by sigma; high Stirling error has a positive zeta margin. Empty/zero-variance coordinates are treated deterministically.
+
+The new field variation is at most |h||D-D_G|<=Ksqrt(eta)mathcal E_Q. The quadratic variation is a fixed polynomial times mathcal E_Q. With b_0=(T-T_G)/sigma, u_0=(T_G-y)/sigma the likelihood exponent difference is b_0u_0+b_0^2/2, up to its immaterial overall sign in an absolute-error bound. The mean-value inequality bounds the kernel difference by mathcal E_Q times a fixed polynomial in |u_0|,|D_G|,Q, times the Gaussian weighted likelihood and exp(Cmathcal E_Q|u_0|+Cmathcal E_Q).
+
+Young's inequality absorbs the last exponential into width sigma_+=sigma/sqrt(1-Cmathcal E_Q). Equation (141.26) applies at that width. The exact derivative of the likelihood kernel with respect to log sigma is2Lambda_y times the same kernel, so integration over these log widths pays the width-change error by (141.26), with its explicit ordinary likelihood normalization of order sigma. This is an exact derivative identity, not differentiation of an asymptotic error. Summing the exact low probabilities only after this pointwise uniform comparison gives, for the central lifted measures,
+$$
+ \|\nu^Q_{y,h,\mathrm{lift}}-\nu^G_{y,h}\|_{1+|U_G|^p}
+       \le \sigma P_{p,K}(Q)e^{-bQ^3+C_{p,K}v}
+             +\hbox{excluded-cell terms}.
+ \tag{141.28}
+$$
+The norm is over all measurable tests bounded by the displayed weight. This is a measure comparison AFTER lifting, not total variation between an atomic law and a continuous law. Unlike the old polynomial-weight result alone, its proof explicitly includes the globally unbounded field insertion.
+
+Extreme counts also require a joint estimate. Apply (141.25), then the lawful full-tuple inequality with a_+ and d_noise=delta sigma^2:
+$$
+ D^2\le2n_gE+2(\sum_j e_j)^2,
+$$
+$$
+ e^{aD^2+hD-(E-H_y)^2/(2d_{\rm noise})}
+ \le \exp\{K^2/4+2a_+(\sum e_j)^2
+              +2a_+n_gH_y+4a_+^2n_g^2d_{\rm noise}\}
+                       e^{-(E-H_y)^2/(4d_{\rm noise})}.
+ \tag{141.29}
+$$
+The exponent before the remaining likelihood is O(Q^(7/2)); a_+ is bounded. The raw high-cell binomial complement is P(Q)exp(-cQ^4). Every fixed polynomial in the full-count U or W costs at most exp(C_pQ^3) on the finite box. Division by sigma adds L=O(Q^3). Thus its normalized cost is exp(-c'Q^4), even after exp(C_Kt) for a minority denominator. Gaussian excluded cells obey the same estimate by raw Gaussian tails, fixed moments and a reserved part of the likelihood. No assertion about a divergent unconditioned supercritical Gaussian integral is used.
+
+Including these tails in (141.28), and observing that
+$$
+ 1+|2\sqrt\eta(D_G-\operatorname{sign}(D_G)r_*)|^p
+          \le C_p(1+t^p)(1+|U_G|^p),
+ \tag{141.30}
+$$
+gives the same bound for every fixed W weight, with an enlarged polynomial in Q. Indeed t<=delta^-1/2 eventually. Dividing by (141.24), the relative count-return error on each sign is bounded by
+$$
+ P_{p,K}(Q)\exp[-bQ^3+C_{p,K}v+C_Kt]\le e^{-b'_{p,K}Q^3}.
+ \tag{141.31}
+$$
+Here v=o(Q^(1/2)) and t=o(Q^(1/4)), so no polynomial factor is divided by an arbitrarily slow v. The strict half-exponent condition has exactly its old role; the new field consumes none of its margin. Equations (141.25)--(141.31) are the new original-model field/minority interface.
+
+### 141.6 符号、零点质量与原始离散观测量
+
+For now compare signs and W on lifted D_G. Because the norm in (141.28) is a supremum over all measurable tests with a fixed weight, it permits the sign restriction and the Q-dependent W transformation in (141.30). Equation (141.31) is relative to the Gaussian numerator for EACH sign, not merely to the total numerator. Combined with (141.22), it transfers all compact or polynomial-growth test integrals on each lifted sign.
+
+The actual D and D_G differ by at most mathcal E_Q on central cells. When they have the same sign,
+$$
+ |W-W_G|\le2\sqrt\eta\,\mathcal E_Q\to0.
+ \tag{141.32}
+$$
+A sign disagreement, including D=0, requires |D_G|<=mathcal E_Q. That set is outside the two fractional bands. By (141.20), its Gaussian field-weighted mass, with any fixed W weight, divided by the numerator of either sign is at most
+$$
+ C_{p,K}t^{p+1}e^{-ct^2+C_Kt}=o(1).
+ \tag{141.33}
+$$
+One may apply (141.20) separately on the two Gaussian signs; replacing either reference exp(s h r_*) by the other costs at most exp(2|h|r_*)<=exp(C_Kt), already absorbed in (141.33). Thus this estimate also bounds the possible jump in W when the sign changes. The count lift error (141.31) and excluded-cell bound (141.29) pay the remaining mass. In particular
+$$
+ \frac{\pi_{y,h}(D=0)}{\pi_{y,h}(S=s)}\to0
+                  \quad(s=\pm1)
+ \tag{141.34}
+$$
+uniformly; a lattice atom cannot hide inside an absolute o(1) error larger than the minority probability.
+
+For each continuous polynomial-growth f, truncate W-lambda to a fixed compact. Uniform continuity on that compact, with |lambda|<=K/2, and (141.32) replace lifted W by actual W. The exponential band envelope (141.14), global bound (141.20), the weighted comparison (141.31) and a higher fixed moment remove the truncation on EACH sign. This proves the original full-count version of (141.22)--(141.23):
+$$
+ N^Q_{s,y}(h,f)
+    = C_y e^{s h r_*+\lambda^2/2}
+                  \{\mathcal N f+o(1)\},
+ \qquad s=\pm1,
+ \tag{141.35}
+$$
+with C_y as in (141.23)--(141.24), uniform in h,y. For f=1 the error is relative. Every empirical object and low tuple in this proof belongs to the same original fiber.
+
+A stronger useful way to state the bridge is that for each fixed Lambda,p the original zero-field posterior has sign-specific local exponential uniform integrability:
+$$
+ \lim_{M\to\infty}\limsup_{Q\to\infty}
+ \sup_{|y|\le R}\max_{s=\pm1}
+ E_{\pi_{y,0}}\!\left[
+  \mathbf1_{\{S=s,\ |W|>M\}}(1+|W|^p)e^{\Lambda|W|}
+                         \right]=0
+ \tag{141.36}
+$$
+on the common deterministic classes. To verify the two-sided exponential explicitly, use exp(Lambda|W|)<=exp(Lambda W)+exp(-Lambda W), and apply the already established signed field comparison at h=+/-2Lambdasqrt(eta), with exp(-s h r_*) factored out. Its error still has the form (141.31). The corresponding band/global Gaussian estimates are (141.14),(141.20). Thus (141.36) is not inferred from weak convergence. It combines with the local comparison to give
+$$
+ 2E_{\pi_{y,0}}\!\left[\mathbf1_{\{S=s\}}e^{\lambda W}
+                  f(W-\lambda)\right]
+       =e^{\lambda^2/2}\mathcal N f+o(1)
+ \tag{141.37}
+$$
+uniformly on fixed lambda compacts. This is new exponential, sign-specific information about the ACTUAL counts.
+
+### 141.7 配分函数、相权重与条件波动
+
+Since D=S r_*+W/(2sqrt(eta)) on each nonzero sign, the field insertion factors there exactly as exp(s h r_*)exp(lambda W). The finite sign-zero numerator is h-independent. With f=1, (141.35) says
+$$
+ N^Q_{s,y}(h,1)
+      =C_y e^{s h r_*+\lambda^2/2}(1+\epsilon_s(h,y)),
+ \qquad\sup_{s,h,y}|\epsilon_s|\to0 .
+ \tag{141.38}
+$$
+By (141.33)--(141.34), N^Q_{0,y}=o(C_y e^{-|h|r_*}) uniformly. Summing (141.38) gives
+$$
+ Z_y(h)=2C_y\cosh(h r_*)e^{\lambda^2/2}(1+o(1)),
+ \qquad Z_y(0)=2C_y(1+o(1)).
+ \tag{141.39}
+$$
+The relative sum error is bounded by the maximum of the two relative sign errors, since the weights are positive. Thus (141.5) follows with lambda^2/2=h^2/(8eta). Dividing each term in (141.38) by (141.39) proves (141.6) RELATIVELY, even when exp(s h r_*) is the smaller term. Dividing (141.35) by (141.38) proves (141.7). It also verifies that the local shift is +lambda on BOTH signs: the definition W=2sqrt(eta)(D-Sr_*) uses the increasing D direction even at the negative well.
+
+These results imply, without any differentiation of a remainder,
+$$
+ \log\frac{Z_y(h)}{Z_y(0)}
+   =\log\cosh(h r_*)+\frac{h^2}{8\eta}+o(1),\qquad
+ \log\frac{\pi_{y,h}(S=+1)}{\pi_{y,h}(S=-1)}
+                         =2h r_*+o(1),
+ \tag{141.40}
+$$
+uniformly. Every fixed conditional polynomial moment follows from (141.7), including
+E[W|S=s]=lambda+o(1) and Var(W|S=s)=1+o(1). No parameter derivative or unscaled entropy response is inferred.
+
+The deterministic common classes are exactly those of Chapters 137 and 139. Exhausting them yields the original support-uniform pair/path probability scope in Section 141.1. None of the arguments requires independent optimization over environments, independent path rows, a stronger sigma rate, a faster t divergence, or a fixed positive limiting curvature.
+
+### 141.8 两种外场尺度与经验输出修正
+
+The separation of scales is exact up to a bounded empirical factor:
+$$
+ \frac{\sqrt\eta}{1/r_*}=\sqrt\eta r_*=t u_*\asymp t\to\infty .
+ \tag{141.41}
+$$
+For field h=b/r_*(Q,y) with b in a fixed compact, this lies in the proved field range eventually, and lambda=b/(2t u_*)->0. Equations (141.5)--(141.7) give a finite logistic sign bias e^{sb}/(2cosh b), partition ratio cosh b(1+o(1)), and no limiting local mean shift in W. Choosing such an empirical field is permitted by the uniform theorem, without changing the observation.
+
+For h=c sqrt(eta), fixed nonzero c or c in a fixed compact, lambda=c/2 and h r_*=c t u_*. The theorem retains the exact form
+$$
+ \frac{Z_y(c\sqrt\eta)}{Z_y(0)}
+    =\cosh(c t u_*)\,e^{c^2/8}(1+o(1)),\qquad
+ W-c/2\mid S=s\Longrightarrow N(0,1).
+ \tag{141.42}
+$$
+For fixed c!=0 the minority probability is exp(-2|c|t u_*)(1+o(1)), and its own local conditional limit still holds. We keep u_* inside the exponent: replacing it by m_Q from a mere o(1) approximation could change a multiplicative limit.
+
+The exact physical-output dependence cannot be omitted either. Equation (139.46) gives
+$$
+ 2\sqrt\eta\{r_*(Q,y)-r_*(Q,0)\}
+                =\frac{y}{\sqrt{2C_2}}+o(1)
+ \tag{141.43}
+$$
+uniformly compact y, after retaining finite sigma in the exact center. Hence throughout the current bounded-lambda range
+$$
+ h\{r_*(Q,y)-r_*(Q,0)\}
+            =\lambda\,\frac{y}{\sqrt{2C_2}}+o(1).
+ \tag{141.44}
+$$
+At the sqrt(eta) field scale this is an order-one effect in individual phase weights, although it vanishes in the coarse speed action. At scale1/r_* it vanishes. We use (141.43)--(141.44) only as consequences; no continuum center or limiting variance replaces the exact finite coefficients in (141.5)--(141.7).
+
+The whole-half-line estimate (141.20)--(141.22), the same-output domination (141.25)--(141.31), and the sign-zero estimate (141.33)--(141.35) supply the exponential and minority-relative bounds used in (141.5)--(141.7). The algebra of cosh/logistic weights and Gaussian exponential tilting is classical. These conclusions do not assert an exact finite reflection law for counts, a full-q P result, a global phase diagram, a growing field range, or derivatives of the asymptotic error in Chapter 139.
+
+## 追加锚（本行以下为增补区）
