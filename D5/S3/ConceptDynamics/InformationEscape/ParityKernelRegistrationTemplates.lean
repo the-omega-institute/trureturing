@@ -39,4 +39,16 @@ def twoStepKernelSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+/-- A finite role observes one real path-functional value as a function of the number of steps.
+Parameters are the dimension and two kernel profiles; the state is the path length. -/
+def profilePairStepSignature : Signature where
+  Params := Σ d : ℕ, Σ _ : (Fin d → ℤˣ) → ℝ, (Fin d → ℤˣ) → ℝ
+  State := fun _ => ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
 end D5.S3.ConceptDynamics.InformationEscape.ParityKernelRegistrationTemplates
