@@ -5280,3 +5280,28 @@ $$
 Cheng–Qian–Zhu `1912.11137v4` 的条件系综定理保留第 123 章已列的区间概率、空间导数、相对独立性及离散—连续近似条件。其加性 KL／概率误差不直接提供本章稀有点输出处的三阶阶数导数与 $\varepsilon^2\sqrt\delta$ 精度。完整选择比继续复用 Siripraparat–Neammanee，*ScienceAsia* 47 (2021)，111–116，定理 2 的独立异质 Bernoulli 局部估计及第 121 章的逐点高次幂转移。
 
 Gaussian 四阶矩、单秩积分、条件倾斜、Fourier 插入与 Taylor 积分余项均属成熟工具。新增联合推导保留实际非中心性、计数格点及稀有输出分母，并把它们的误差支付到二阶选择尺度。允许 $\sigma\to0$ 任意缓慢；只有额外假设 $\sigma^2=o(\varepsilon)$ 的推论才删去噪声修正。不主张零噪声、半指数等号边界、非紧输出、更大阶数或全球原创性。
+
+## 追加：双池合法重分配与指数薄水平带的整数凸链
+
+对应理论卷第 126 章。在原始 pair/path 实验的同一奇偶记录与两个标签池掩码下，两个正计数分配具有真正的联合条件二项乘积律。完整固定总数后验中心保留共同归一化，其响应可在一致 $O(q^{-2})$ 误差内写成两个双曲函数之和。排除单池平衡与两池互补这三种实际退化事件后，水平曲线具有逐层一致的有限凸／凹分片；指数薄带的整数点仍保持严格凸链的斜率次序。
+
+相应每个谐波的坏事件费用为 $O(Q^{-2}(\ln Q)^{1/3})$，共同坏环境只支付一次。取 $N_Q=\lceil1000\rho_Q^{-1}\sqrt{\ln Q}\rceil$ 后得到每个固定 $0<\gamma<2$、$\rho_Q\asymp Q^{-\gamma}$ 的完整加权 $L^1$ 信息方差极限。原始标量、Gaussian 残差、经验中心与有限系数 $A,\Lambda,C_x,Vprior_x$ 及积分项 $C_xm_x$ 均保留。端点、必要性、零噪声及原始数据全平均不在结论内。
+
+Imre Bárány、Nathanaël Enriquez，*Jarník's convex lattice n-gon for non-symmetric norms*，[arXiv:0911.4361v1](https://arxiv.org/abs/0911.4361v1)，[原始源码](https://arxiv.org/src/0911.4361v1)。源归档 SHA256 为 `e4547dccf51473e9df4332dbbbea5ff93e4da0329cd78e644f3c15890e2e64e6`，`BarE.tex` 为 `a77a673f7359d88af79f0c92fc30670269daa4c51a65d5febb0d9fb7718ffae2`。第 2 节的 increasing slope construction 与主定理处理固定凸紧单位体、原点在内部的范数，以及极点互异的整数凸多边形。相邻边方向互异，最小周长具有 $n^{3/2}$ 量级。v1 引言印为 $n^{3/3}$，后续主定理明确使用 $n^{-3/2}L_n$；本章使用自行列出的粗整数边向量计数，不依赖该引言常数或极限形状结论。
+
+Ryan Schwartz、József Solymosi、Frank de Zeeuw，*Simultaneous Arithmetic Progressions on Algebraic Curves*，[arXiv:0910.0904v3](https://arxiv.org/abs/0910.0904v3)，[原始源码](https://arxiv.org/src/0910.0904v3)。源归档 SHA256 为 `0f10a77936028fe0e4826f291b20345406ae72789e5d784876b6a4643c4f0117`，`sap.tex` 为 `39d42c930fa3fb2fac054e1f8cbc23b020bc9c74062188247874fc1af196c1b0`。第 3 节的定理及第二证明将无一次因子的实代数曲线分成有限条凸／凹、单调曲线，再用 Jarník 的长度—格点估计得到 $C_d k^{2/3}$ 上界。
+
+本章的双曲余弦变换不保留整数网格，因而没有直接套用该代数曲线定理。正文在原计数坐标中证明分片数、曲率分子系数下界及薄带取整后的斜率严格次序，再由互异整数边向量的总长度得到 $O(W^{2/3})$。经典 1926 年原文未据此宣称已核对；这里使用上述原始现代论述和显式初等证明。
+
+Ralph Howard、Ognian Trifonov，*Bounding the number of lattice points near a convex curve by curvature*，[arXiv:2207.09532v1](https://arxiv.org/abs/2207.09532v1)，[原始源码](https://arxiv.org/src/2207.09532v1)。源归档 SHA256 为 `7f1d382525ec23db2f019d1cf634b212c25c13e2c77d5bba921575a962f4ae1c`，主 TeX 为 `7b3379ec81037dcca9e11b645581f28086b679b6d7cc0878b7f460f143f8f17e`。第 8 节的三角形扰动、非共线性与近开弧定理要求总曲率不超过 $\pi$，曲率半径满足 $R_1\le\rho\le R_2$；对格间距 $d_{\mathcal L}$、余体积 $A_{\mathcal L}$、弧长 $L$ 和带宽 $h$，还要求
+
+$$
+h<\frac{d_{\mathcal L}^2}{2(R_2+d_{\mathcal L}+\sqrt{(R_2+d_{\mathcal L})^2-d_{\mathcal L}^2})},
+\qquad A_{\mathcal L}/2-Lh-3h^2/2>0.
+$$
+
+其上界为 $2+L/[R_1(A_{\mathcal L}-2Lh-3h^2)]^{1/3}$；引言的相应版本还列出 $h<R_1$。仅代入本章粗略的指数曲率半径界不能得到所需多项式点数。因此正文另外证明薄带投影位移远小于曲率下界，保持整数点本身的凸链结构后使用经典边向量计数；一般近曲线定理本身不承担最终后验结论。
+
+第 122 章的 Boistard–Lopuhaä–Ruiz-Gazen `1207.5654v1` 有界偏移局部展开提供 $O(d^{-2})$ 相对精度。Yu `1005.4107v2` 与 Borcea–Brändén–Liggett `0707.2340v2` 的包含关系与负相依边界不变，不据它们制造独立实际行。第 124 章的带标记 Poisson 展开、归一化实倾斜、条件商式及全输出截断按新的 $\rho_Q^{-1}\le CQ^2$ 费用逐项回接。
+
+新增内容是同一原始实现上的双池条件律、精确响应、退化概率、定量曲率和指数薄带整数计数的联合证明，以及更小带宽下的完整后验极限；不主张新的普适 Jarník 定理、全球原创性或最优带宽阈值。

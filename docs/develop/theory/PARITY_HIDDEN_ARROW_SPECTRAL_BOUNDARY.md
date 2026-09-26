@@ -28726,3 +28726,564 @@ These conclusions concern differences of OUTPUT INCREMENTS. They do not assert e
 Gaussian 条件矩、单秩积分和配分函数微分的经典归属及适用条件见对应 Library 条目。本章结论保留精确有限噪声项；较强噪声率只用于明确列出的推论。
 
 ## 追加锚（125 章后）
+
+## 126. 双池合法重分配、双曲水平曲线与更小噪声下的信息方差
+
+第 124 章以单个条件二项分配支付每个谐波的费用。本章同时重分配两个合法标签池，保留共同的固定总数归一化，并证明指数薄水平带内的整数点形成有限条凸链。由此把充分带宽范围扩展到每个固定 $0<\gamma<2$；完整后验的有限经验系数保持精确。
+
+### 126.1 原始模型与更小的格点带宽
+
+**定理 126.1（双池重分配下的全输出加权信息方差极限）。**
+
+For every fixed gamma in(0,2), and every original legal deterministic sequence with
+
+$$
+ \rho_Q=\sigma\mathcal B\asymp Q^{-\gamma},\qquad
+ \mathcal B=q/Q^{11/4},\qquad
+ \Delta_Q=-\gamma\ln Q+O(1),                         \tag{126.1}
+$$
+
+the ORIGINAL selected-prior posterior satisfies
+
+$$
+ \boxed{\quad\int_{\mathbb R}f_x(y)|D_x(y)-R_*(y)|\,dy
+                \longrightarrow0.\quad}             \tag{126.2}
+$$
+
+Convergence is in actual fixed-support raw-data probability, uniformly over the support, separately for both original pair and path experiments. Original fixed r, beta>1/2, all legal scales and floors, the full count tuple, exact empirical centers and calibrated variance, one actual scalar and the SAME Gaussian G are retained. The fiber functions are the original prior-defined functions, not point-mass-prior quantities or known-support conditional densities.
+
+All finite coefficients remain exactly124.3:
+
+$$
+ \delta=Q^{-1/2},\ B^2=q/Q^{5/2},\quad
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \quad Y=T+\sigma G,
+$$
+$$
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_Hw_j^2,\quad
+ \kappa_3=8\sum_Hw_j^3,\quad \Lambda=\nu_0+\sigma^2,
+$$
+$$
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,\qquad
+ D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+$$
+$$
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu.
+                                                        \tag{126.3}
+$$
+
+Vprior is exact, H is the same admissible core used in the finite coefficients, and nu=2g_0 is the original limiting energy variance. In particular the channel-averaged consequence retains m_x=E_xY exactly:
+
+$$
+ \int Vpost_x(y)f_x(y)\,dy-Vprior_x+A^2/\Lambda-C_xm_x
+              \longrightarrow8/\sqrt3-25/6.          \tag{126.4}
+$$
+
+The new arithmetic failure bound is
+
+$$
+ b_Q+C N Q^{-2}(\ln Q)^{1/3}+Q^{-100},\quad b_Q\to0,
+                                                        \tag{126.5}
+$$
+
+uniformly over a band1<=ell<=N=o(Q^3). With N=ceil(1000 rho_Q^{-1}sqrt(ln Q)), it tends to zero for every fixed gamma<2. The inherited bad environment is paid once. This is neither a claim at gamma=2 nor a necessary or sharp boundary.
+
+### 126.2 精确尺度和计数输入
+
+The original scale facts used throughout are
+
+$$
+ \lambda=Q^3,\quad a=(1+r)/2,\quad b=(1-r)/2,
+ \ln q=c_qQ^3+O(1),\quad c_q=\phi(1-\beta)/\beta>0,
+$$
+$$
+ B_0=(M-q)/q,\quad\epsilon_M=rq/(M-q),\quad
+ a_s=\ln\frac{1+r}{1-\epsilon_M}>0,\quad
+ b_s=\ln\frac{1-r}{1+\epsilon_M}<0,
+$$
+$$
+ L_i=\exp(a_sk_i+b_sl_i),\qquad
+ a_s\text{ is bounded above and below by positive constants}.
+                                                        \tag{126.6}
+$$
+
+These keep the original floors through122.6. In particular the central likelihood L_0 obeys L_0/B_0->1, the full calibrated Bernoulli variance is comparable to q, and the untouched central count is comparable to q/Q^3 on support-uniform good environments. These are the Chapter 68 and Chapter 122 facts, not new row-independence assumptions.
+
+### 126.3 同一实际实验的四标签条件律
+
+For each fixed true support S choose four distinct labels u_1,v_1,u_2,v_2 in S in advance. This is a probability-proof choice, with constants independent of the labels. It is not an adaptive data-selection rule. The original q tends to infinity, so four such labels exist eventually.
+
+For the original aligned path kernel, conditional on the entire parity record, the departure label at time t has probability
+
+$$
+ 1_{\{\chi(i)=s_t\}}[1+b_S(i)s_{t+1}]/M,
+                                                        \tag{126.7}
+$$
+
+and these time-slot labels are independent; the final label is uniform in its parity class. This is122.13, derived from the exact factorized path density after fixing all parities. The pair experiment has the corresponding independent departure slots conditional on pair parities and uniform arrival labels. It does NOT follow that the original row-count vectors are independent.
+
+Let F_0 reveal that parity record, the two disjoint pair-membership masks for all departure slots, all outside labels, and the final path label (or all arrival labels in the pair experiment). It reveals both positive pool totals K_i and negative pool totals L_i. In every positive slot of pair i, the labels u_i and v_i have identical weight1+r; in every negative slot they have identical weight1-r. Conditional on F_0, all four within-pool allocations are therefore independent fair-binomial variables. Revealing additionally l_i=l_{u_i}, i=1,2, gives F with
+
+$$
+ \boxed{\quad
+ P_S(k_1=j_1,k_2=j_2\mid F)
+   =2^{-K_1-K_2}{K_1\choose j_1}{K_2\choose j_2}.
+ \quad}                                               \tag{126.8}
+$$
+
+The remaining row counts are exactly
+
+$$
+ (k_{u_i},l_{u_i},k_{v_i},l_{v_i})
+       =(k_i,l_i,K_i-k_i,L_i-l_i),\quad i=1,2.         \tag{126.9}
+$$
+
+This product law is obtained from the single common conditional path/pair density. It is not a multiplication of two separately obtained marginal laws. Reassigning a label within either mask leaves all parities and outside labels fixed. In a path the preceding factor sees the same next parity, so the reassignment is a genuine original path of positive probability. The posterior full-q normalizer, calibration and entire histogram co-vary with(k_1,k_2).
+
+On K_i comparable to Q^3,
+
+$$
+ \max_{j_1,j_2}P_S(k_1=j_1,k_2=j_2\mid F)\le C Q^{-3}.
+                                                        \tag{126.10}
+$$
+
+Choose a fixed sufficiently large D_0 and put W=D_0 Q^{3/2}sqrt(ln Q). Conditional on the same F-event, Hoeffding bounds give
+
+$$
+ P_S\{\max_i|k_i-K_i/2|>W\mid F\}\le Q^{-100}.       \tag{126.11}
+$$
+
+This one joint tail is paid once, not once per harmonic. Product atoms alone do not imply an improvement; §§126.6–126.8 prove the needed small level-set cardinality.
+
+### 126.4 完整固定总数响应与共同校准
+
+Remove the four varying labels from the raw central group. Its remaining size n_0 is F_0-measurable and comparable to q/Q^3 on a high-probability event. Choose a central anchor c from this outside group by a fixed ordering. This choice is F_0-measurable and does not alter(126.8). Let F_j be the elementary symmetric polynomial of order j in the likelihoods of all M-5 labels other than the four varying labels and c.
+
+Write B_i=L_{u_i}L_{v_i}=exp(a_sK_i+b_sL_i), z_i=L_{u_i}+L_{v_i}. The coefficients of
+
+$$
+ (1+z_1t+B_1t^2)(1+z_2t+B_2t^2)=\sum_{h=0}^4 c_ht^h
+$$
+
+are c_0=1,c_1=z_1+z_2,c_2=B_1+B_2+z_1z_2,c_3=B_1z_2+B_2z_1,c_4=B_1B_2. The EXACT anchor probability is
+
+$$
+ p_*(z_1,z_2)=
+ \frac{L_0\sum_{h=0}^4c_hF_{q-1-h}}
+      {\sum_{h=0}^4c_h(F_{q-h}+L_0F_{q-1-h})}.        \tag{126.12}
+$$
+
+For a prescribed anchor level this is a bilinear equation in z_1,z_2. Equation(126.12), including its full common normalizer, defines the actual response throughout this proof.
+
+Choose the unique outside calibration t_o>0 satisfying
+
+$$
+ \sum_{j\notin\{u_1,v_1,u_2,v_2,c\}}
+          \frac{t_oL_j}{1+t_oL_j}=q-2.               \tag{126.13}
+$$
+
+Let d and kappa_3^o be the variance and third cumulant of this outside independent Bernoulli representation. Write x=t_oL_0, p=x/(1+x), v=p(1-p), a_3=kappa_3^o/d. These variables are F_0-measurable. Deleting five Bernoulli terms from the observed full calibration changes its mean by at most5 and its variance by at most5/4. The desired mean q-2 differs by at most3. The same mean-derivative argument as122.27 gives
+
+$$
+ |\ln(t_o/t_{all})|\le C/q,\quad d\asymp q,
+ \quad |\ln(t_oB_0)|\le2q^{-1/4},\quad x\in[1/3,3]
+                                                        \tag{126.14}
+$$
+
+on an F_0-measurable event of support-uniform probability tending to one. This event is defined using outside quantities; its probability follows because the original full good event implies it. Independence between t_o and pool totals is not assumed.
+
+At this fixed t_o, set
+
+$$
+ b_i=t_o^2B_i=e^{2t_i},\quad
+ \zeta_i=t_oz_i=2e^{t_i}\cosh X_i,\quad
+ X_i=a_s(k_i-k_i^*),
+$$
+$$
+ k_i^*=K_i/2+\frac{b_s(L_i-2l_i)}{2a_s}.             \tag{126.15}
+$$
+
+The physical score sign b_s<0 has not been changed. Under the independent Bernoulli representation of pair i its expected total occupancy is
+
+$$
+ m_i=\frac{\zeta_i+2b_i}{1+\zeta_i+b_i}
+     =1+\frac{\sinh t_i}{\cosh t_i+\cosh X_i}.       \tag{126.16}
+$$
+
+### 126.5 一致响应展开与三个实际退化事件
+
+The Chapter 122 local Bernoulli expansion, for any fixed bounded integer s around its integer mean n, gives
+
+$$
+ \frac{P(N=n+s)}{P(N=n)}
+   =1-\frac{s^2+a_3s}{2d}+O(d^{-2}).                 \tag{126.17}
+$$
+
+Its elementary Fourier proof122.22-25 applies without change to s in{-3,-2,-1,0,1,2}; the cumulant bounds start at order2. This is the Boistard–Lopuhaa–Ruiz-Gazen local mechanism, not a derivative of a CLT. The error is uniform over Bernoulli arrays and these finitely many offsets.
+
+Let X be the anchor Bernoulli with mean p and U the sum of the four pair Bernoullis under the auxiliary unconditioned representation. The exact selection weighs(X,U) by P(N=q-X-U). Because EN=q-2, substitute s=2-X-U in(126.17). The numerator/denominator expansion is uniform over EVERY positive pair odds, since X+U takes only six values and their weights form a probability. In particular,
+
+$$
+ p_*=p-\frac1{2d}\operatorname{Cov}
+     (X,(2-X-U)^2+a_3(2-X-U))+O(d^{-2}).
+$$
+
+For a binary X independent of U before the full-q conditioning, this covariance equals v(2EU-3-a_3). Using EU=2+f_1(X_1)+f_2(X_2), where
+
+$$
+ f_i(X)=\frac{\sinh t_i}{\cosh t_i+\cosh X},
+ \qquad p_{ref}=p+\frac{v}{2d}(a_3-1),
+$$
+
+we obtain the actual uniform response estimate
+
+$$
+ \boxed{\quad
+ p_*(k_1,k_2)=p_{ref}-\frac vd[f_1(X_1)+f_2(X_2)]
+                           +O(q^{-2}).\quad}         \tag{126.18}
+$$
+
+The error is absolute and uniform over all allocations, not two separate O(q^{-1}) estimates subtracted. It follows directly from the exact selected formula. Also |f_i|<1, so the full range of p_* has length at most C/q.
+
+We now pay the possible degeneracies in the SAME actual raw environment. Conditional on parity, the two positive pools jointly form categories in a multinomial distribution; each single-pair positive total is Bin(N_+,2(1+r)/M), and the four-label positive total is Bin(N_+,4(1+r)/M). The corresponding negative totals have1-r instead of1+r. The positive and negative arrays are independent conditional on parity. Independence of K_1 and K_2 is NOT asserted here.
+
+On the original parity-total event |N_\pm-n_obs/4|<=MQ, each of these positive totals has variance comparable to Q^3 and maximal atom C Q^{-3/2}. Conditional on its negative total, a fixed interval of bounded width for a_sK+b_sL contains only O(1) integers K. Apply this to the deterministic centers2ln B_0 for each pair and4ln B_0 for the union of four labels. The deterministic enclosure(126.14) then gives, for any one fixed sufficiently small eta>0,
+
+$$
+ P_S\{(126.14)\text{ and }
+    \min(|t_1|,|t_2|,|t_1+t_2|)<\eta\}
+       \le C Q^{-3/2}+O(Q/M).                        \tag{126.19}
+$$
+
+For example |t_1+t_2|<eta implies
+|a_s(K_1+K_2)+b_s(L_1+L_2)-4ln B_0|<3eta eventually. The analogous single-pair interval has a different harmless fixed width. These are unconditional implications on(126.14); they do not freeze the outside calibration while changing a pool total.
+
+Combine(126.19), the original outside/central good events, K_i=2a lambda+O(Q^2), L_i=2b lambda+O(Q^2), and |l_i-L_i/2|<=Q^2. These last events follow by the same pool concentration and fair-binomial conditional tails as122.32/36, for only finitely many pools. We have one F-measurable event G_Q, independent of ell, with
+
+$$
+ \inf_S P_S(G_Q)\to1,\quad
+ n_0\asymp q/Q^3,\ d\asymp q,\ v\asymp1,
+$$
+$$
+ |t_1|,|t_2|,|t_1+t_2|\ge\eta,\qquad
+ |t_i|+|X_i|\le C Q^2                               \tag{126.20}
+$$
+
+for every allocation in the rectangle(126.11). The last bounds follow from the exact scores/floors as122.42 and W=o(Q^2). This is an actual common-data event. In particular complementary pair products have been excluded by an explicit actual probability estimate, not by an aesthetic genericity assumption.
+
+### 126.6 逐层一致的曲率与直线退化排除
+
+We prove the needed deterministic fact. Assume(126.20), allow any level c in[-3,3], and consider
+
+$$
+ f_1(X)+f_2(Y)=c.                                   \tag{126.21}
+$$
+
+Put A_i=sinh t_i, a_i=cosh t_i, u=cosh X, z=cosh Y. The equation is
+
+$$
+ \alpha uz+\beta u+\chi z+\delta_c=0,
+$$
+$$
+ \alpha=c,\quad \beta=ca_2-A_2,\quad\chi=ca_1-A_1,
+ \quad\delta_c=ca_1a_2-A_1a_2-A_2a_1.                \tag{126.22}
+$$
+
+This delta_c is a level coefficient, unrelated to the original delta=Q^{-1/2}. Two exact algebraic facts are crucial:
+
+$$
+ \mathcal D:=\alpha\delta_c-\beta\chi=-A_1A_2,
+ \qquad A_1a_2+A_2a_1=\sinh(t_1+t_2).               \tag{126.23}
+$$
+
+Thus |mathcal D| is bounded below by a positive eta-dependent constant, independently of the level. Neither an axis factor nor a constant rational branch can occur. The third actual gap will rule out a curve arbitrarily flat on the scale relevant below.
+
+On a fixed quadrant away from X=0,Y=0, solve z=-(beta u+delta_c)/(alpha u+chi). Write d_c(u)=alpha u+chi, n_c(u)=beta u+delta_c and
+
+$$
+ E_c(u)=n_c(u)^2-d_c(u)^2,
+$$
+$$
+ \mathcal P_c(u)=E_c(u)(-\alpha u^2+\chi u+2\alpha)
+                    +\mathcal D n_c(u)(u^2-1).      \tag{126.24}
+$$
+
+Direct implicit differentiation, retaining the signs of sinh X and sinh Y, gives
+
+$$
+ z_X=\frac{\mathcal D\sinh X}{d_c^2},\qquad
+ z_{XX}=\frac{\mathcal D(-\alpha u^2+\chi u+2\alpha)}{d_c^3},
+$$
+$$
+ \frac{d^2Y}{dX^2}
+       =\frac{\mathcal D\mathcal P_c(u)}{d_c(u)^5\sinh^3Y}.
+                                                        \tag{126.25}
+$$
+
+The curvature numerator has degree at most4. Its highest two coefficients are
+
+$$
+ [u^4]\mathcal P_c=-\alpha(\beta^2-\alpha^2),\qquad
+ [u^3]\mathcal P_c=-\alpha(\beta\delta_c-\alpha\chi).
+                                                        \tag{126.26}
+$$
+
+At alpha=0 its u^2 coefficient is beta chi delta_c. Here beta=-A_2, chi=-A_1 and delta_c=-sinh(t_1+t_2), so this coefficient is bounded away from zero by(126.20). This identifies the missing straight-branch condition: even when the level alpha vanishes, the combined product gap prevents the curvature polynomial from vanishing. For completeness, if alpha=0 and A_1A_2!=0, an identically zero polynomial would require delta_c=0 and beta^2=chi^2; complementary t_2=-t_1 indeed gives this leading straight symmetry. It has not been silently discarded.
+
+We need quantitative, level-uniform separation, not just nonzero curvature. Let M_Q=exp(C_0Q^2), with C_0 fixed large enough that it bounds all |A_i|,a_i, |alpha|,|beta|,|chi|,|delta_c| and all cosh coordinates in the rectangle enlarged by a fixed amount. Its value can be increased by a fixed power below without changing its form. There are fixed c_eta>0 and an absolute exponent, for example30, such that
+
+$$
+ \|\mathcal P_c\|_{coeff,\infty}\ge c_\eta M_Q^{-30}
+              \quad\text{for all }|c|\le3.           \tag{126.27}
+$$
+
+Here is an explicit proof avoiding an unquantified compactness argument. The coefficients are fixed-degree polynomials in c,a_i,A_i. If |alpha|<=c_eta M_Q^{-6} with c_eta small enough, their difference from the alpha=0 values is at most C|alpha|M_Q^6; the u^2 coefficient remains bounded below. Otherwise use
+
+$$
+ \beta\mathcal D
+  =\alpha(\beta\delta_c-\alpha\chi)
+                  -\chi(\beta^2-\alpha^2).          \tag{126.28}
+$$
+
+If |beta|>=|alpha|/2, (126.26)-(126.28) and |mathcal D|>=c_eta imply coefficient norm at least c_eta alpha^2/M_Q. If |beta|<|alpha|/2, the u^4 coefficient is at least3|alpha|^3/4. With |alpha|>=c_eta M_Q^{-6}, both bounds are stronger than c_eta M_Q^{-30}, after changing fixed constants. Thus no level-dependent tiny coefficient is hidden in(126.27).
+
+Remove the bands |X|<=3, |Y|<=3. For each complex root r of the nonzero polynomial mathcal P_c with Re r>=1, also remove |X-arcosh(Re r)|<=1 and |X+arcosh(Re r)|<=1. There are at most eight such X-bands, of fixed width. Away from them,
+
+$$
+ |\mathcal P_c(\cosh X)|\ge c\|\mathcal P_c\|_{coeff,\infty}
+                                      \ge e^{-C Q^2}.\tag{126.29}
+$$
+
+To verify the first inequality, factor the polynomial over the complex numbers. Its leading coefficient times product(1+|r|) dominates its coefficient norm. For |X|>=3 outside the stated bands, |cosh X-r|/(1+|r|) has a universal positive lower bound: separate Re r<1, large imaginary part, and Re r>=1 with the indicated unit separation in X. Multiply at most four such bounds. This also treats arbitrarily close complex roots without assuming they are real or separated from each other.
+
+On each remaining graph segment, d_c does not vanish; moreover
+
+$$
+ d_c(\alpha z+\beta)=-\mathcal D.                    \tag{126.30}
+$$
+
+The coordinate and coefficient upper bounds and(126.23),(126.30) bound |d_c| above and below by fixed powers of M_Q. The same holds for the nonzero sinh coordinates. Equations(126.25),(126.29) therefore give
+
+$$
+ e^{-C Q^2}\le|Y_X|\le e^{C Q^2},\qquad
+ e^{-C Q^2}\le|Y_{XX}|\le e^{C Q^2}.                 \tag{126.31}
+$$
+
+The first derivative also follows from f_1'/f_2', with both derivatives nonzero away from the turning bands. The signs are constant on each segment. There are only a bounded number of segments: four quadrants, at most one rational pole, at most four polynomial roots (with their removed bands), and rectangle endpoints. In a quadrant u is monotone in X, z is monotone in u since z_u=mathcal D/d_c^2, and Y is monotone in z. Intersecting with the rectangle cannot generate additional oscillating pieces. All segment counts are Q-, level- and harmonic-independent.
+
+Thus the graph pieces are strictly convex or concave in the actual count coordinates as well: the changes X=a_s(k_1-k_1^*), Y=a_s(k_2-k_2^*) have fixed positive slopes bounded above/below. The derivative bounds change only fixed constants. This proof uses no independent empirical phases and no quantitative transcendence assertion about r.
+
+### 126.7 指数薄带到整数凸链的回接
+
+The exact-curve theorem alone would be insufficient. We now prove the needed thin-strip version in the original integer allocation coordinates. For any c in[-3,3] and
+
+$$
+ 0<\varepsilon_Q\le C q^{-1/2}Q^{11/2}+C/q,
+                                                        \tag{126.32}
+$$
+
+consider the integer points in a rectangle of side at most2W+2 satisfying
+
+$$
+ |f_1(X_1)+f_2(X_2)-c|\le\varepsilon_Q.              \tag{126.33}
+$$
+
+Uniformly over all common data obeying(126.20) and all such levels,
+
+$$
+ \boxed{\quad \#\{(k_1,k_2)\text{ satisfying }(126.33)\}
+                         \le C(1+W^{2/3}).\quad}     \tag{126.34}
+$$
+
+For this counting step enlarge the two turning bands to |X_i|<=4, so that the later displacement of less than one leaves projections outside |X_i|<=3. Every removed X-band in §126.6 covers only O(1) integer k_1 values, because a_s is bounded below. For a fixed k_1, f_2 is monotone on either side of its turning point. Away from |X_2|<=3 its derivative has absolute value at least exp(-C Q^2), while its sign is constant. The spacing of consecutive retained integer arguments is at least that amount times a fixed constant. Since epsilon_Q exp(CQ^2)->0, each branch meets the value interval in at most one retained integer. The O(1) near-turn integers cost O(1). Thus each removed vertical band contains O(1) points, not O(W). The removed horizontal turning band is paid in exactly this way using f_1. The fixed enlargement changes only this constant. This argument uses the individual product gaps as well as the third gap.
+
+For every remaining point, the derivative bound for f_2 and the intermediate value theorem give a unique point on the exact level curve with the same k_1 and a vertical displacement at most
+
+$$
+ h_Q\le e^{C Q^2}\varepsilon_Q.                      \tag{126.35}
+$$
+
+Enlarge the rectangle by one before this projection. Both coordinates remain away from their turning points; on an interval of this displacement the derivative lower bound still holds. Therefore the inversion assertion also holds at original rectangle boundaries. The projected points lie on the bounded collection of monotone convex/concave graph pieces from §126.6.
+
+On any one such piece let k_2=g(k_1). Its curvature satisfies |g''|>=kappa_Q=exp(-C Q^2), with one sign. For three distinct integer abscissae a<b<c on it, convexity with this quantitative second derivative gives
+
+$$
+ \frac{g(c)-g(b)}{c-b}-\frac{g(b)-g(a)}{b-a}
+           \ge\frac{\kappa_Q}{2}(c-a)\ge\kappa_Q
+                                                        \tag{126.36}
+$$
+
+in the convex case, and the reversed inequality in the concave case. Rounding each ordinate by at most h_Q changes this difference by at most4h_Q. The decisive comparison is
+
+$$
+ h_Q/\kappa_Q\le e^{C Q^2}
+       (Cq^{-1/2}Q^{11/2}+C/q)\longrightarrow0,        \tag{126.37}
+$$
+
+because ln q=c_qQ^3+O(1), c_q>0. Thus the integer points themselves form a strictly convex/concave chain. There is at most one point at each integer abscissa since2h_Q<1. The first-derivative lower bound similarly preserves monotonicity, though one could instead split at the at-most-one sign change of the increasing slopes.
+
+The classical Jarnik edge-vector count now applies with a Q-independent constant. Here is the exact elementary form needed. Consecutive nonzero integer edge vectors of a strictly convex chain have distinct slopes and hence are distinct vectors. At most C R^2 nonzero integer vectors have Euclidean length at most R. If there are n edges, their total length is at least c n^{3/2}. A monotone chain within a square of side2W+O(1) has length at most4W+O(1), by its total horizontal and vertical variation. Hence n<=C(1+W^{2/3}). Add the bounded number of graph pieces and the O(1) removed-band points to prove(126.34).
+
+This is why a near-straight strip cannot conceal a one-dimensional integer fiber on the retained actual event. Both a coefficient lower bound and the rounding comparison were proved before applying the lattice-chain theorem. Neither strict curvature alone nor an algebraic degree in the transformed cosh coordinates would justify the count.
+
+### 126.8 增长谐波带上的实际算术估计
+
+Let J={j:d_j>=Q^{3600}} be exactly Chapter 124's comparison bulk, and use its unchanged empirical dual energy
+
+$$
+ E^{min}_{\ell,x}=4\pi^2\sum_{j\in J}d_j
+       \operatorname{dist}(\ell(1/2-\mu_j),\mathbb Z)^2.
+                                                        \tag{126.38}
+$$
+
+Throughout a four-label allocation the central raw group size is one of n_0,n_0+1,...,n_0+4. Every label in that central group has the same likelihood L_0, hence its exact total posterior center is
+
+$$
+ \mu_0=C_0p_*(k_1,k_2),\qquad C_0\in\{n_0,...,n_0+4\}.
+                                                        \tag{126.39}
+$$
+
+This handles all four possible changed-row memberships, rather than ignoring whole exceptional rows/columns of the allocation grid. For EVERY allocation, full calibration differs from t_o by at most C/q: at t_o the total mean differs from q by at most3, while the fixed outside variance is comparable to q. Consequently d_0 is comparable to C_0 throughout the fiber, and the central group belongs to J for all large Q.
+
+If E_min<=Q^2, the central coordinate forces, for some integer m,
+
+$$
+ \left|p_* - \frac{1/2-m/\ell}{C_0}\right|
+                    \le\frac{C Q}{\ell C_0^{3/2}}.   \tag{126.40}
+$$
+
+For each of the five possible C_0 values the range of p_* has length at most C/q by(126.18). For1<=ell<=N=o(Q^3), the corresponding phase range ell C_0 range(p_*) is o(1). Including the small tolerance, at most a fixed number of resonance levels m can occur. This is uniform in all ell in the band, even though the levels and empirical products share the same data.
+
+Apply(126.18) to each level p_m in(126.40). With
+c=(p_ref-p_m)d/v, the necessary condition is(126.33) with
+
+$$
+ \varepsilon_{Q,\ell}\le
+ C\frac{qQ}{\ell(q/Q^3)^{3/2}}+C/q
+      =C\frac{Q^{11/2}}{\ell\sqrt q}+C/q.            \tag{126.41}
+$$
+
+If solutions exist the level satisfies |c|<=3 eventually. Thus(126.34) applies uniformly, including the O(q^{-2}) exact-response error AFTER the correct amplification. For each harmonic there are at most C(1+W^{2/3}) bad allocation pairs. This is a count for the actual coupled full-q center, not for independent random phases.
+
+By the exact product atom bound(126.10), the single-harmonic conditional probability in the typical rectangle is at most
+
+$$
+ C Q^{-3}(1+W^{2/3})
+                 \le C Q^{-2}(\ln Q)^{1/3}.         \tag{126.42}
+$$
+
+Take a union over all1<=ell<=N conditional on the SAME F, use(126.11) once, then add the complement of G_Q and the original observed global good event once. This proves
+
+$$
+ \sup_S P_S\{\exists1\le\ell\le N:E^{min}_{\ell,x}\le Q^2\}
+ \le b_Q+C N Q^{-2}(\ln Q)^{1/3}+Q^{-100},\quad b_Q\to0.
+                                                        \tag{126.43}
+$$
+
+The event G_Q and b_Q do not depend on the harmonic band. The root-band partitions used to count each level may depend on that level; their deterministic uniform cardinality bounds justify the union. No independence between different levels or harmonics is assumed. Negative harmonics have the same energy.
+
+Set
+
+$$
+ N_Q=\lceil1000\rho_Q^{-1}\sqrt{\ln Q}\rceil.
+$$
+
+For every fixed gamma<2, N_Q=o(Q^3), and(126.43) becomes
+
+$$
+ b_Q+C Q^{\gamma-2}(\ln Q)^{5/6}+Q^{-100}\longrightarrow0.
+                                                        \tag{126.44}
+$$
+
+This strictly improves Chapter 124's one-binomial-atom ceiling. The new mechanism is the actual product allocation law plus its quantitatively curved thin level sets; it is not a logarithmic endpoint alteration of the old bound.
+
+### 126.9 完整后验的加权极限
+
+The arithmetic estimate is not by itself the target. We apply the complete Chapter 124 return with rho_Q^{-1}<=C Q^2. All constants below can depend on the original fixed model parameters, the fixed gamma and comparison constants in(126.1), and a fixed localization of tight raw-data bounds; none depends on Q, the support or a harmonic.
+
+Keep the full comparison split J={d_j>=Q^{3600}}, E its complement of nonempty groups, with |E|=O(1). The exact binomial/lattice signed centered-surprise comparison through degree4 is unchanged. Gaussian period summation for the SAME noise marks h0,h2,h4 costs C(1+rho_Q^{-1}) even on the entire frequency line. Therefore124.18 is now
+
+$$
+ \max_{h\le2}\|\widehat q_h^{prod}-\widehat q_h^{lat}\|_1
+                   \le C Q^{-438}.                  \tag{126.45}
+$$
+
+The previous exponent was438.5; no other change is hidden. Integration on |y|<=Q^{100} plus fourth-output and fourth-target moments still gives O(Q^{-198}) signed moment-density L1 errors. Clipping the conditional mean square at Q^{10} still gives O(Q^{-16}), the exact product prior variance difference is O(Q^{-448}), and the mass/finite coefficient payments vanish. The original selected/full-q common-channel comparison remains C a_x Q^2=O_P(Q^{-1/2}), where a_x=O_P(Q^{-5/2}); its log-density target correction is included. It has no inverse sigma. Thus124.22 remains valid:
+
+$$
+ \|f_xD_x-f_{lat}D_{lat}\|_1=o_P(1),\qquad
+ \int(1+y^2)|f_x-f_{lat}|\,dy=o_P(1).                 \tag{126.46}
+$$
+
+For clarity the SAME normalized temperature identity used after that comparison is retained, not inferred from C0 flatness. Tilt the joint prior by exp(u(s_lat+G^2/2)) and normalize, with tau=1-u, while holding all original mu,V, output y and physical frequency fixed. For t=pi ell mathcal B+s the exact Poisson integrand is124.30:
+
+$$
+ \Psi_{\ell k}(u,s)=c_{lat}(u)z_{\ell k}
+ e^{is(\sum_Jw_ja_j^2-V/\sqrt\delta)}
+ \prod_J\left(\frac{\tau}{\tau-2isw_j}\right)^{1/2}
+$$
+$$
+ \cdot\exp\left[-\frac12\sum_J
+ \frac{(\xi_{\ell k,j}-2sw_ja_j)^2}{\tau-2isw_j}
+             -\frac{(\pi\ell\rho_Q+\sigma s)^2}{2\tau}\right]
+ H_{E,\ell}(u,s).                                   \tag{126.47}
+$$
+
+Here a_j=(mu_j-m_j)/sqrt(d_j), xi=sqrt(d_j)[pi ell(1-2mu_j)-2pi k_j], z is the original unit phase, and H_E is the joint tilted outside surprise/energy factor124.29. It is not replaced by a surprise factor independent of its energy. The residual is pi ell rho_Q+sigma s from the SAME G. The real lattice normalizers and their first two derivatives are superpolynomially close to their continuous counterparts.
+
+On |s|<=1/(8 max w_j), the exact first two u derivatives satisfy124.32 with Q-independent damping,
+
+$$
+ |\partial_u^j\Psi_{\ell k}(0,s)|
+ \le C Q^8 |P(s)|(1+E_{\ell k}+\pi^2\ell^2\rho_Q^2)^8
+        e^{-(E_{\ell k}+\pi^2\ell^2\rho_Q^2)/16},\quad j\le2.
+                                                        \tag{126.48}
+$$
+
+The Gaussian determinant product P has bounded fixed Fourier moments. Its constants do not require a lower bound on rho_Q. This includes both normalized noise derivatives (h2/h4), the noncentral terms and all outside marks. On the common event from(126.44), the low band has E_min>Q^2; above N_Q the residual factor supplies pi^2 ell^2 rho_Q^2>=10^6 pi^2 ln Q. The same nearest-grid sum, which has no C^{|J|} loss, gives
+
+$$
+ \sum_{\ell\ne0,k}\int|\partial_u^j\Psi_{\ell k}(0,s)|ds
+ \le C Q^{10}\left[e^{-Q^2/256}
+                 +e^{-\pi^2\rho_Q^2N_Q^2/256}\right]\le Q^{-500}.
+                                                        \tag{126.49}
+$$
+
+The old prefactor Q^{9.5} is now Q^{10}. Zero-harmonic nonzero-dual terms remain exponentially small in Q^{3600}. Off-half-integer strips and narrowing annuli cost C(1+rho_Q^{-1})Q^8 exp(-c sqrt Q). The spare unnormalized localization error Q^{-430}, multiplied by the period loss and the Q^2 normalization coefficient, is at most Q^{-426}. Thus the complete first/two normalized density-derivative comparison is still bounded by C Q^{-400}, rather than merely C0 convergence.
+
+The marked series are now near-flat by(126.49), with M0>=1/2 and |M0-1|+|M1|+|M2|<=Q^{-400}. No exp(C/rho_Q^2) worst-case heat-kernel inverse is used. For the continuous-bulk reference g_u, on |y|<=sqrt(100 nu ln Q), g_0>=cQ^{-60} and |partial_u g_u|+|partial_u^2 g_u|<=CQ^4. These reference bounds need only an upper bound on sigma, not a lower one. In differentiating f_lat,u/g_u exactly twice the worst division is Q^{188}, so124.38-39 still yields
+
+$$
+ \sup_{|y|\le\sqrt{100\nu\ln Q}}
+   |\partial_u^2\ln(f_{lat,u}/g_u)|_{u=0}\le C Q^{-200}.
+                                                        \tag{126.50}
+$$
+
+Real denominators are therefore positive on this moderate interval on the same arithmetic event. No complex theta logarithm or differentiation of a uniform C0 error is invoked.
+
+The exact normalized-tilt identity remains
+
+$$
+ \operatorname{Var}(s+G^2/2\mid Y=y)-\operatorname{Var}s
+             =\tfrac12+\partial_u^2\ln f_u(y)|_{0}.  \tag{126.51}
+$$
+
+It subtracts the full prior variance before the comparison and retains the conditional-mean-square cancellation. The exact finite A,Lambda,C_x terms cancel between lattice and reference. Bayes identifies the original conditional variance with Vpost.
+
+Finally124.42-44's real-mgf tails require only sigma<=1/mathcal B, which holds here eventually. They give tail probability O(Q^{-40}); target fourth norm CQ then gives variance-tail payment O(Q^{-18}). Prior variance O(Q^2), A^2/Lambda=O(Q^{1/2}), C_x=O(Q^{1/4}) and the quadratic R_* have vanishing tail payments. No denominator is divided on those tails. The continuous reference weighted L1 statement124.45 uses precisely the corrected map: unweighted(101.19), removal of correlated outside energy by joint translation BEFORE independence, fourth-moment clipping (101.8), then noncentral split (101.22)–(101.23) and reference (101.31). None needs a lower sigma bound; costs remain O(Q^{-7})+O(Q^{-1/4}[1+(ln Q)^{3/4}]).
+
+Combining this reference limit, (126.50)-(126.51), the tail payments and(126.46) proves(126.2) by the same all-output triangle inequality124.47. This is the original selected law with exact centers and finite coefficients. The inherited direction-agreement event and original pair/path evaluation pass through the same support-uniform good environments. The original calibrated second output moment tends to nu, so the integral of R_* gives(126.4), with the exact C_xm_x left in place.
+
+### 126.10 结果与边界
+
+The new common-realization inputs are: simultaneous legal two-pool conditioning; the full-q response(126.12) and uniformly accurate separable form(126.18); the actual combined-product anti-small-ball estimate; the quantitative curvature coefficient separation uniform in levels; the exponentially thin strip to integer-chain comparison; and the resulting Q^{-2}(ln Q)^{1/3} harmonic cost. None replaces original centers by independent phases or changes the original histogram.
+
+The classical parts are multinomial conditioning, bounded-offset Bernoulli local expansions, elementary symmetric normalization, Gaussian tilts/Poisson summation, and Jarnik's convex lattice-chain count. The exact model synthesis and its error payments are displayed rather than attributed to an unrelated general theorem.
+
+The common bad event is independent of ell and is paid once. The four fixed labels need not lie on the selected score line. Central membership changes are accounted for by all five possible group sizes. Degeneracies involving either balanced pair or complementary combined product are paid by their actual pool probabilities. No rate of Diophantine approximation of the fixed transcendental r is asserted or required.
+
+The sufficient range is gamma<2; no gamma=2 endpoint, gamma>2 theorem, sharpness, necessity, zero-noise statement, all-real-output pointwise convergence, or efficiency result is supplied. No expectation over rare raw-data environments is requested or taken. No entropy, covering or E2 extension is added.
+
+Jarník 的整数凸链估计、条件多项分布、Bernoulli 局部展开与 Poisson 求和保留经典归属。原文、适用条件及非线性坐标变换的边界见对应 Library 条目。
+
+## 追加锚（126 章后）
