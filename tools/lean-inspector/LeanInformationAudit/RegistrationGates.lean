@@ -137,7 +137,7 @@ def variationError (root catalog theoremName arena : Name)
 
 /-- Identify slots in the signature's finite enumeration order. Only indices are
 reflected, never realizations, states, outputs or Law truth tables. -/
-private def indices (indexType fintype : Expr) : MetaM (Array Expr) := do
+def indices (indexType fintype : Expr) : MetaM (Array Expr) := do
   let elems ← mkAppOptM ``Fintype.elems #[some indexType, some fintype]
   let multiset ← whnf (← mkAppM ``Finset.val #[elems])
   unless multiset.isAppOfArity ``Quot.mk 3 do

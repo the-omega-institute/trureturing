@@ -103,7 +103,9 @@ def sourcePath := TemplateAudit.sourcePath
 
 def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName
-  let statementIdentity := match TemplateAudit.rawStatementIdentity info.levelParams info.type with
+  let identity := if entry.sourceBound then TemplateAudit.compactRawIdentity info.levelParams info.type
+    else TemplateAudit.rawStatementIdentity info.levelParams info.type
+  let statementIdentity := match identity with
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
@@ -172,7 +174,10 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   unless input.sha256 == event.registrationSourceIdentity do
     throwError "incomplete_closure:dtr.event_source"
   let info ← getConstInfo event.key.theoremName
-  let .ok (identity, _) := TemplateAudit.rawStatementIdentity info.levelParams info.type
+  let sourceBound := (← getConstInfo event.realizationName).type.isAppOfArity
+    `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2
+  let .ok (identity, _) := (if sourceBound then TemplateAudit.compactRawIdentity else
+      TemplateAudit.rawStatementIdentity) info.levelParams info.type
     | throwError "incomplete_closure:dtr.event_statement"
   unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
       info.type.equal event.statement do
@@ -220,13 +225,14 @@ def keyJson (key : TemplateOccurrenceKey) : Json := Json.mkObj [
   ("theorem", toJson key.theoremName.toString), ("object_arena", toJson key.objectArena.toString),
   ("catalog", toJson key.catalog.toString)]
 
-private def certificateJson (certificate : TemplateBindingCertificate) : Json := Json.mkObj [
+private def certificateJson (certificate : TemplateBindingCertificate) : Json := Json.mkObj <| [
   ("key", keyJson certificate.key), ("evidence_ref", toJson certificate.evidenceRef),
   ("plan_identity", toJson certificate.planIdentity),
   ("descriptor_identity", toJson certificate.descriptorIdentity),
   ("actual_identity", toJson certificate.actualIdentity),
   ("argument_inputs", Json.arr (certificate.argumentInputs.map dependencyJson)),
-  ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
+  ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))] ++
+  (certificate.sourceBinding.toList.map fun source => ("source_binding", source))
 
 private def isRepositoryModule (name : Name) : Bool :=
   #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||

@@ -9379,3 +9379,6607 @@ $$
 这里的“最大”只在固定 $M$、固定早期/晚输入端口和同一完整 tester 合同下比较扩展，不外推为只固定数值 $\delta$ 的所有边缘之间的最大值。
 
 ## 追加锚（本行以下为增补区）
+
+## 58. 两轮量子因果修复的显式上界与准确八分之九渐近比例
+
+### 58.1 接口与显式修复
+
+使用 $A\otimes B\otimes D$ 次序，$\dim A=\dim B=2$、$\dim D=3$，其中 $B$ 是早输出、$A$ 是晚输入、$D$ 是晚输出。因果归一化修复满足
+
+$$
+S\succeq0,\qquad \operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+$$
+
+完整 tester 的归一化算符为 $C\otimes I_D$，其中 $C\succeq0$、$\operatorname{Tr}_A C=I_B$；事件遍历全部 $0\preceq E\preceq C\otimes I_D$，全转置已吸收到配对约定。对任意厄米 $X$ 定义
+
+$$
+h(X)=\max_{C,E}\operatorname{Tr}(XE),\qquad
+N(X)=\max\{h(X),h(-X)\}.
+\tag{58.1}
+$$
+
+因果修复的完整事件误差是 $D(R,S)=N(R-S)$。
+
+记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,2\rangle,\quad h_0=|0,1,0\rangle,
+\qquad c=\sqrt{1-\varepsilon},\quad s=\sqrt\varepsilon,
+$$
+
+并取 $0<\varepsilon\le1/4$。候选与修复定义为
+
+$$
+\begin{aligned}
+R_\varepsilon&=|x+cy+sz\rangle\langle x+cy+sz|,\\
+S_\varepsilon&=|cx+cy+sz\rangle\langle cx+cy+sz|
++\varepsilon|h_0\rangle\langle h_0|.
+\end{aligned}
+\tag{58.2}
+$$
+
+三个向量 $x,y,z$ 的 $D$ 坐标不同，故
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(1-\varepsilon,\varepsilon).
+\tag{58.3}
+$$
+
+因此 $S_\varepsilon$ 是正且归一化的因果梳。候选 $R_\varepsilon$ 的归一化缺陷是 $\varepsilon$。
+
+**定理 58.1。** 对式（58.2）的显式修复，准确误差为
+
+$$
+D(R_\varepsilon,S_\varepsilon)
+=\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon,
+\qquad 0<\varepsilon\le\frac14.
+\tag{58.4}
+$$
+
+尤其
+
+$$
+\lim_{\varepsilon\downarrow0}
+\frac{D(R_\varepsilon,S_\varepsilon)}{\varepsilon}=\frac98.
+\tag{58.5}
+$$
+
+式（58.4）给最优修复的上界；式（58.5）先计算这一份显式修复的极限；第 58.6 节另用匹配下界证明真正最优误差具有相同极限。
+
+### 58.2 联合相位平均与完整 tester
+
+定义
+
+$$
+\begin{aligned}
+U_A(\alpha)&=\operatorname{diag}(1,e^{i\alpha}),\\
+U_B(\beta)&=\operatorname{diag}(1,e^{i\beta}),\\
+U_D(\alpha,\beta)&=
+\operatorname{diag}(1,e^{-i\alpha},e^{-i(\alpha+\beta)}),\\
+U(\alpha,\beta)&=U_A(\alpha)\otimes U_B(\beta)\otimes U_D(\alpha,\beta).
+\end{aligned}
+\tag{58.6}
+$$
+
+$U$ 分别固定 $x,y,z$，将 $h_0$ 乘以 $e^{i\beta}$。因此 $R_\varepsilon,S_\varepsilon$ 及其厄米差均在该群下不变。
+
+**引理 58.2（联合平均允许取对角归一化算符）。** 对任意在式（58.6）下不变的厄米 $X$，计算 $h(X)$ 和 $h(-X)$ 时可限制 $C$ 为 $AB$ 指定基上的对角算符，但事件 $E$ 仍遍历完整的正区间，不要求对角。
+
+**证明。** 若 $E\preceq C\otimes I_D$，则
+
+$$
+UEU^*\preceq
+[(U_A\otimes U_B)C(U_A\otimes U_B)^*]\otimes I_D.
+$$
+
+$C$ 的偏迹条件在此变换下保持，且 $X$ 不变给
+$\operatorname{Tr}(XUEU^*)=\operatorname{Tr}(XE)$。
+对 $(\alpha,\beta)\in\{0,\pi\}^2$ 的四个变换同时平均 $(E,C)$，得到可行对 $(\bar E,\bar C)$ 和相同响应。$AB$ 四个基向量在这个四元群上具有不同字符，所以 $\bar C$ 对角。这个联合平均保留事件的合法性；不能只把 $C$ 对角化而保留未经变换的 $E$。反过来，对角 $C$ 是原可行集的子集，故最优值相同。$\square$
+
+同一平均也保持 CPTP 静态候选和因果修复集合：对因果 $S$，
+
+$$
+\operatorname{Tr}_D(USU^*)
+=I_A\otimes U_B\sigma U_B^*.
+$$
+
+平均保持正性及归一化；由事件误差的凸性和 $R_\varepsilon$ 不变性，平均一个修复不会增加其误差。故这种对称化也可用于最优修复问题，并非只适用于当前显式构造。
+
+每个对角反馈归一化算符可唯一写成
+
+$$
+C=\operatorname{diag}(q,1-r,1-q,r),
+\qquad 0\le q,r\le1,
+\tag{58.7}
+$$
+
+其中对角次序为 $00,01,10,11$。
+
+### 58.3 准确差算符与谱
+
+令
+
+$$
+k=\frac{c}{1+c},\qquad b=\frac{\sqrt\varepsilon}{1+c},
+\qquad X_\varepsilon=\frac{S_\varepsilon-R_\varepsilon}{\varepsilon}.
+$$
+
+直接展开式（58.2），使用 $1-c=\varepsilon/(1+c)$，得到
+
+$$
+X_\varepsilon
+=-|x\rangle\langle x|
+-k(|x\rangle\langle y|+|y\rangle\langle x|)
+-b(|x\rangle\langle z|+|z\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+\tag{58.8}
+$$
+
+对固定 $C$，完整正区间的支持函数是
+
+$$
+\max_{0\preceq E\preceq C\otimes I_D}\operatorname{Tr}(X_\varepsilon E)
+=\operatorname{Tr}\left[
+\sqrt{C\otimes I_D}X_\varepsilon\sqrt{C\otimes I_D}
+\right]_+.
+\tag{58.9}
+$$
+
+式（58.9）在奇异 $C$ 时亦成立：在其支撑上写 $E=\sqrt{C\otimes I_D}F\sqrt{C\otimes I_D}$，$0\preceq F\preceq I$，再选正谱投影。
+
+对式（58.7），压缩算符在 $\operatorname{span}\{x,y,z\}$ 上的矩阵为
+
+$$
+\begin{pmatrix}
+-q&-k\sqrt{q(1-q)}&-b\sqrt{qr}\\
+-k\sqrt{q(1-q)}&0&0\\
+-b\sqrt{qr}&0&0
+\end{pmatrix}.
+$$
+
+其特征值是零与
+
+$$
+\lambda_\pm(q,r)=
+\frac{-q\pm\sqrt{q^2+4k^2q(1-q)+4b^2qr}}2.
+\tag{58.10}
+$$
+
+另外，$h_0$ 方向的特征值为 $1-r\ge0$。因此
+
+$$
+\begin{aligned}
+h(X_\varepsilon)&=\max_{q,r}\bigl[1-r+\lambda_+(q,r)\bigr],\\
+h(-X_\varepsilon)&=\max_{q,r}\bigl[-\lambda_-(q,r)\bigr].
+\end{aligned}
+\tag{58.11}
+$$
+
+### 58.4 两个方向的极值
+
+**引理 58.3。** 对全部 $0<\varepsilon<1$，
+
+$$
+h(X_\varepsilon)=1+\frac{k^2}{1+2k},
+\qquad
+h(-X_\varepsilon)=\frac{1+\sqrt{1+4b^2}}2.
+\tag{58.12}
+$$
+
+**证明。** 记
+$A(q)=q^2+4k^2q(1-q)\ge q^2$。对 $q>0$，
+
+$$
+\lambda_+(q,r)-\lambda_+(q,0)
+=\frac{2b^2qr}{\sqrt{A(q)+4b^2qr}+\sqrt{A(q)}}
+\le b^2r.
+$$
+
+当 $q=0$ 时此增量为零。因为
+$b^2=(1-c)/(1+c)<1$，式（58.11）的第一式在 $r=0$ 达到最大。
+
+设
+
+$$
+a=\frac{k^2}{1+2k},\qquad q_* =\frac{k}{1+2k}.
+$$
+
+恒等式
+
+$$
+(q+2a)^2-[q^2+4k^2q(1-q)]
+=4k^2(q-q_*)^2\ge0
+$$
+
+给 $\lambda_+(q,0)\le a$，且在 $q=q_*$ 达到等号，得第一式。
+
+第二式随 $r$ 不减，故可取 $r=1$。此时根号内为
+
+$$
+(1-4k^2)q^2+4(k^2+b^2)q.
+$$
+
+由于 $0<k<1/2$，该式随 $q\in[0,1]$ 不减，所以 $-\lambda_-$ 在 $q=1$ 最大，给第二式。$\square$
+
+当 $0<\varepsilon\le1/4$ 时，$c\ge\sqrt3/2>5/6$，故
+
+$$
+k>\frac5{11},\qquad b^2<\frac1{11}.
+$$
+
+函数 $k^2/(1+2k)$ 随 $k\ge0$ 递增，而
+$\sqrt{1+4b^2}\le1+2b^2$。所以
+
+$$
+h(X_\varepsilon)>1+\frac{25}{231}
+>1+\frac{21}{231}
+>h(-X_\varepsilon).
+$$
+
+结合式（58.1）、（58.12），得到定理 58.1 的准确表达式，因为
+
+$$
+\frac{k^2}{1+2k}=\frac{c^2}{(1+c)(1+3c)}.
+$$
+
+最后，$0<c<1$ 给
+
+$$
+8c^2<(1+c)(1+3c)
+\iff(5c+1)(c-1)<0,
+$$
+
+故式（58.4）的 $9/8$ 上界严格成立；令 $\varepsilon\downarrow0$、$c\to1$ 即得式（58.5）。$\square$
+
+### 58.5 显式构造的一阶极限
+
+式（58.8）给
+
+$$
+X_\varepsilon\longrightarrow
+H=-|x\rangle\langle x|
+-\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
++|h_0\rangle\langle h_0|.
+$$
+
+同一完整 tester 计算给 $h(H)=9/8$、$h(-H)=1$。有限 $\varepsilon$ 的准确计算比只使用该极限更强：没有必要为式（58.4）添加 $O(\varepsilon^{3/2})$ 余项。
+
+与第 56 节的统一线性下界结合，当前先得到
+
+$$
+\left(1+\frac1{10000}\right)\varepsilon
+<\min_{S\text{ 因果}}D(R_\varepsilon,S)
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.13}
+$$
+
+因此，单用上述构造只能推出最优比例的上极限至多 $9/8$。下面给匹配的一阶下界。
+
+
+### 58.6 对全部因果修复的匹配渐近下界
+
+记
+
+$$
+e_\varepsilon=\min_{S\text{ 因果}}D(R_\varepsilon,S).
+\tag{58.14}
+$$
+
+因果集合有限维、闭且具有固定迹二，因此紧；完整 tester 事件集也紧，所以事件误差连续，最小值达到。
+
+**定理 58.4（最优修复的准确渐近比例）。** 对 $0<\varepsilon\le1/4$，
+
+$$
+\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
+\le e_\varepsilon
+\le\varepsilon\left(1+\frac{c^2}{(1+c)(1+3c)}\right)
+<\frac98\varepsilon.
+\tag{58.15}
+$$
+
+特别地，
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon}{\varepsilon}
+=\frac98,
+\qquad
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon-\varepsilon}{\varepsilon}
+=\frac18.
+\tag{58.16}
+$$
+
+**证明。** 取达到 $e_\varepsilon$ 的因果修复 $S$，并写
+
+$$
+p=\sigma_{11},\qquad S_{uv}=\langle u|S|v\rangle.
+$$
+
+先用两个事件测量 $x,z$ 间的实矩阵元。令
+
+$$
+C_+=|0,0\rangle\langle0,0|+|1,1\rangle\langle1,1|.
+$$
+
+它满足 $\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+E_\pm=\left|\frac{x\pm z}{\sqrt2}\right\rangle
+\left\langle\frac{x\pm z}{\sqrt2}\right|
+\preceq C_+\otimes I_D
+$$
+
+是合法事件。令 $J=S-R_\varepsilon$，两个事件各满足
+$|\operatorname{Tr}(JE_\pm)|\le e_\varepsilon$，相减的配对为 $2\operatorname{Re}J_{xz}$，故
+
+$$
+|\operatorname{Re}J_{xz}|\le e_\varepsilon,
+\qquad
+\operatorname{Re}S_{xz}\ge\sqrt\varepsilon-e_\varepsilon.
+\tag{58.17}
+$$
+
+因果偏迹给 $S_{xx}\le1$、$S_{zz}\le p$。$S\succeq0$ 的 $xz$ 主子式因此给
+
+$$
+p\ge S_{zz}\ge |S_{xz}|^2
+\ge (\sqrt\varepsilon-e_\varepsilon)_+^2.
+\tag{58.18}
+$$
+
+这里若式（58.17）的右端为负，最后一项按正部取零，未对负下界直接平方。定理 58.1 给 $e_\varepsilon\le9\varepsilon/8$；在 $\varepsilon\le1/4$ 时，
+$\sqrt\varepsilon-9\varepsilon/8>0$，于是
+
+$$
+p\ge\left(\sqrt\varepsilon-\frac98\varepsilon\right)^2
+=\varepsilon-\frac94\varepsilon^{3/2}
++\frac{81}{64}\varepsilon^2.
+\tag{58.19}
+$$
+
+再固定一个同时读取全部相关块的事件。记
+$B_{ab}=|a,b\rangle\langle a,b|\otimes I_D$，取
+
+$$
+\begin{aligned}
+C_*&=\operatorname{diag}(1/4,1,3/4,0),\\
+w&=\frac14x-\frac34y,\\
+E_*&=|w\rangle\langle w|
++\frac14(B_{00}-|x\rangle\langle x|)
++\frac34(B_{10}-|y\rangle\langle y|)
++B_{01}.
+\end{aligned}
+\tag{58.20}
+$$
+
+$C_*$ 满足 $\operatorname{Tr}_A C_*=I_B$。在 $xy$ 子空间，$w$ 是
+$\operatorname{diag}(1/2,\sqrt3/2)$ 作用于单位向量
+$(1/2,-\sqrt3/2)$ 所得，所以
+
+$$
+|w\rangle\langle w|
+\preceq\frac14|x\rangle\langle x|
++\frac34|y\rangle\langle y|.
+$$
+
+其他项支撑正交，故 $0\preceq E_*\preceq C_*\otimes I_D$。这个事件把 $00$、$10$ 块中 $x,y$ 以外的质量也计入，未把修复限制在 $\operatorname{span}\{x,y,z,h_0\}$。
+
+利用因果偏迹，$B_{00}$ 和 $B_{10}$ 的响应都为 $1-p$，$B_{01}$ 的响应为 $p$。因此准确计算得到
+
+$$
+\begin{aligned}
+\operatorname{Tr}(SE_*)
+&=1-\frac3{16}(S_{xx}+S_{yy})-\frac38\operatorname{Re}S_{xy},\\
+\operatorname{Tr}(R_\varepsilon E_*)
+&=\frac1{16}+\frac9{16}(1-\varepsilon)-\frac38c.
+\end{aligned}
+$$
+
+相减即
+
+$$
+\operatorname{Tr}((S-R_\varepsilon)E_*)
+=\frac3{16}\bigl[2+3\varepsilon+2c
+-S_{xx}-S_{yy}-2\operatorname{Re}S_{xy}\bigr].
+\tag{58.21}
+$$
+
+正性与因果偏迹给
+
+$$
+\operatorname{Re}S_{xy}\le\sqrt{S_{xx}S_{yy}}
+\le\frac{S_{xx}+S_{yy}}2,
+\qquad S_{xx},S_{yy}\le1-p.
+$$
+
+将其代入式（58.21），得到对任意因果修复均成立的事件下界
+
+$$
+\begin{aligned}
+D(R_\varepsilon,S)
+&\ge\operatorname{Tr}((S-R_\varepsilon)E_*)\\
+&\ge\frac34p+\frac9{16}\varepsilon+\frac38(c-1)\\
+&=\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\end{aligned}
+\tag{58.22}
+$$
+
+最后一个等号使用
+$c-1=-\varepsilon/2-\varepsilon^2/[2(1+c)^2]$。代入式（58.19），有
+
+$$
+e_\varepsilon
+\ge\frac98\varepsilon-\frac{27}{16}\varepsilon^{3/2}
++\left(\frac{243}{256}-\frac{3}{16(1+c)^2}\right)\varepsilon^2.
+$$
+
+括号为正，丢掉最后一项便得式（58.15）的下界。式（58.15）的上界来自定理 58.1，两边除以 $\varepsilon$ 并令 $\varepsilon\downarrow0$，得到式（58.16）。$\square$
+
+### 58.7 结论范围
+
+式（58.16）给整个完整量子 tester 合同下、对所有因果修复取最小后的渐近比例。上界使用一个显式合法修复；下界同时使用合法矩阵元事件和固定事件 $E_*$，且不限制未知修复的支撑或对称形态。
+
+这证明完整末输出相干造成的一阶额外成本在本族中恰为 $\varepsilon/8+o(\varepsilon)$。它没有给有限 $\varepsilon$ 的精确最优值，也没有证明其他边缘或其他两轮候选的统一最优常数为 $9/8$。
+
+## 追加锚（本行以下为增补区）
+
+## 59. 完整两轮因果修复的单参数精确约化
+
+### 59.1 接口与准确优化结论
+
+沿用第 58 节的端口次序 $A\otimes B\otimes D$，维数为 $2\times2\times3$，其中 $A$ 为晚输入、$B$ 为早输出、$D$ 为晚输出。记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,2\rangle,\quad h_0=|0,1,0\rangle,
+$$
+
+并在本节固定
+
+$$
+0<\varepsilon\le\frac1{16},\qquad
+c=\sqrt{1-\varepsilon},\qquad s=\sqrt\varepsilon,
+\qquad r_0=(1,c,s)^{\mathsf T},
+\qquad R_\varepsilon=|x+cy+sz\rangle\langle x+cy+sz|.
+\tag{59.1}
+$$
+
+全部归一化因果修复满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{59.2}
+$$
+
+在吸收全转置后的配对约定下，完整 tester 归一化算符和事件遍历
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\tag{59.3}
+$$
+
+这些量词包含全部有限量子参考、记忆和最终测量。对厄米 $X$ 记
+
+$$
+h(X)=\max_{C,E}\operatorname{Tr}(XE),
+\qquad N(X)=\max\{h(X),h(-X)\},
+\qquad e_\varepsilon=\min_{S\text{ 满足式（59.2）}}N(R_\varepsilon-S).
+\tag{59.4}
+$$
+
+**定理 59.1（单参数精确约化）。** 对 $p\in[1-c,\varepsilon]$，定义
+
+$$
+\begin{aligned}
+v_p&=\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z,\\
+S_p&=|v_p\rangle\langle v_p|+p|h_0\rangle\langle h_0|.
+\end{aligned}
+\tag{59.5}
+$$
+
+则 $S_p$ 是归一化因果梳，而且
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p).
+\tag{59.6}
+$$
+
+进一步，对 $q,t\in[0,1]$ 定义
+
+$$
+\begin{aligned}
+U&=q+c^2(1-q)+\varepsilon t,\\
+V&=1-p+pt,\\
+W&=\sqrt{1-p}\,[q+c(1-q)]+\sqrt{\varepsilon p}\,t,\\
+\Lambda(p,q,t)
+&=\frac{U-V+\sqrt{(U+V)^2-4W^2}}2.
+\end{aligned}
+\tag{59.7}
+$$
+
+则有完全标量的准确表达式
+
+$$
+e_\varepsilon
+=\min_{1-c\le p\le\varepsilon}
+\max_{0\le q,t\le1}
+\left[\Lambda(p,q,t)+\varepsilon(1-q-t)_+\right],
+\tag{59.8}
+$$
+
+其中 $a_+=\max\{a,0\}$。该结论从全体因果修复推出，不预先假设未知修复只有式（59.5）的支撑或秩。
+
+### 59.2 合法对称化与完整事件公式
+
+使用连续联合相位群
+
+$$
+\begin{aligned}
+U_A(\alpha)&=\operatorname{diag}(1,e^{i\alpha}),\\
+U_B(\beta)&=\operatorname{diag}(1,e^{i\beta}),\\
+U_D(\alpha,\beta)&=
+\operatorname{diag}(1,e^{-i\alpha},e^{-i(\alpha+\beta)}),\\
+U(\alpha,\beta)&=U_A(\alpha)\otimes U_B(\beta)\otimes U_D(\alpha,\beta).
+\end{aligned}
+\tag{59.9}
+$$
+
+该群固定 $R_\varepsilon$，并同时保持因果集合与完整 tester 集合。$N$ 是凸函数，所以对 $\alpha,\beta$ 平均一个最优修复不会增加误差。
+
+在十二个标准基向量中，恰好 $x,y,z$ 具有零相位字符。记 $\Pi$ 为它们张成空间的投影。平均后的修复满足
+
+$$
+S=P\oplus S_\perp,
+\qquad P=\Pi S\Pi\succeq0,
+\qquad S_\perp\succeq0.
+\tag{59.10}
+$$
+
+早输出边缘也被相位平均为 $\sigma=\operatorname{diag}(1-p,p)$，其中 $0\le p\le1$，故
+
+$$
+P_{xx},P_{yy}\le1-p,
+\qquad P_{zz}\le p.
+\tag{59.11}
+$$
+
+复共轭保持 $R_\varepsilon$、因果集合及 tester 集合，因此再取 $(S+\overline S)/2$ 仍不增加误差。主块解耦性质保持，可设 $P$ 实对称。
+
+对这样的 $S$，$R_\varepsilon-S$ 仍在联合相位群下不变。按第 58 节的联合平均论证，计算 $h$ 时可取
+
+$$
+C(q,t)=\operatorname{diag}(q,1-t,1-q,t),
+\qquad0\le q,t\le1,
+\tag{59.12}
+$$
+
+其对角次序为 $00,01,10,11$；事件仍遍历整个正区间。令
+
+$$
+D(q,t)=\operatorname{diag}(\sqrt q,\sqrt{1-q},\sqrt t),
+\qquad
+B(P;q,t)=D(q,t)(r_0r_0^{\mathsf T}-P)D(q,t),
+$$
+
+并定义
+
+$$
+\lambda(P;q,t)=\max\{0,\lambda_{\max}(B(P;q,t))\}.
+\tag{59.13}
+$$
+
+由于 $P\succeq0$，$B$ 至多有一个严格正特征值。$C\otimes I_D$ 与 $\Pi$ 交换，而 $R_\varepsilon-S$ 在 $\Pi$ 外的压缩非正。因此固定 $C$ 时，$R_\varepsilon-S$ 的加权正谱和就是 $\lambda$。
+
+反向使用 $\operatorname{Tr}X_+=\operatorname{Tr}X+\operatorname{Tr}(-X)_+$，以及因果归一化
+$\operatorname{Tr}(S(C\otimes I_D))=1$，得到固定 $C$ 时 $S-R_\varepsilon$ 的加权正谱和为
+
+$$
+\lambda+1-\operatorname{Tr}(R_\varepsilon(C\otimes I_D))
+=\lambda+\varepsilon(1-q-t).
+$$
+
+所以完整双向事件误差恰为
+
+$$
+N(R_\varepsilon-S)
+=\max_{0\le q,t\le1}
+\left[\lambda(P;q,t)+\varepsilon(1-q-t)_+\right].
+\tag{59.14}
+$$
+
+补块 $S_\perp$ 的细节通过归一化迹项进入此式；其正质量没有被丢弃。
+
+### 59.3 最优修复的边缘参数区间
+
+因果集合闭且迹固定为二，完整事件集合也紧，因此最优修复存在。
+
+先看下端。第 58 节的合法 $xz$ 事件与正性给
+
+$$
+p\ge(\sqrt\varepsilon-e_\varepsilon)_+^2.
+$$
+
+显式修复 $S_\varepsilon$ 给 $e_\varepsilon<9\varepsilon/8$。由于 $\varepsilon\le1/16$，括号为正，并有
+
+$$
+p\ge\varepsilon\left(1-\frac98\sqrt\varepsilon\right)^2
+\ge\frac{529}{1024}\varepsilon.
+$$
+
+另一方面，$c\ge\sqrt{15}/4>15/16$，所以
+
+$$
+1-c=\frac\varepsilon{1+c}
+<\frac{16}{31}\varepsilon
+<\frac{529}{1024}\varepsilon.
+\tag{59.15}
+$$
+
+最后一个比较是 $16\cdot1024=16384<16399=529\cdot31$。故最优修复的 $p>1-c$。
+
+再看上端。令
+
+$$
+d_\varepsilon=N(R_\varepsilon-S_\varepsilon),
+\qquad k=\frac c{1+c},
+\qquad q_* =\frac{k}{1+2k}=\frac c{1+3c},
+\qquad C_*=C(q_*,0).
+$$
+
+第 58 节证明 $d_\varepsilon=h(S_\varepsilon-R_\varepsilon)$，且最大值在 $C_*$ 达到。在 $xy$ 主块，加权算符
+$(C_*\otimes I_D)^{1/2}(S_\varepsilon-R_\varepsilon)(C_*\otimes I_D)^{1/2}/\varepsilon$
+是
+
+$$
+\begin{pmatrix}
+-q_*&-k\sqrt{q_*(1-q_*)}\\
+-k\sqrt{q_*(1-q_*)}&0
+\end{pmatrix}.
+$$
+
+它的单位负特征向量 $n=(n_x,n_y)$ 可取两个分量严格为正：取矩阵的相反数后，非对角严格为正，最大特征向量可取严格正。令
+
+$$
+\ell=\sqrt{q_*}\,n_x\,x+\sqrt{1-q_*}\,n_y\,y,
+\qquad L=|\ell\rangle\langle\ell|,
+\qquad g=(\ell_x+\ell_y)^2>0.
+\tag{59.16}
+$$
+
+$n$ 单位给 $L\preceq C_*\otimes I_D$，故
+
+$$
+E_*=C_*\otimes I_D-L
+$$
+
+合法。它去掉加权差算符唯一的负特征方向，因此
+
+$$
+\operatorname{Tr}((S_\varepsilon-R_\varepsilon)E_*)=d_\varepsilon.
+$$
+
+对任意因果 $S$，正性与对角预算给
+
+$$
+\operatorname{Tr}(SL)
+\le(1-p)(\ell_x+\ell_y)^2=(1-p)g.
+$$
+
+这个不等式在未经平均的 $S$ 上也成立，因为
+$\operatorname{Re}S_{xy}\le\sqrt{S_{xx}S_{yy}}\le1-p$。$S_\varepsilon$ 在该界达到等号，故
+
+$$
+\begin{aligned}
+\operatorname{Tr}((S-R_\varepsilon)E_*)
+&=1-\operatorname{Tr}(R_\varepsilon E_*)-\operatorname{Tr}(SL)\\
+&\ge d_\varepsilon+g(p-\varepsilon).
+\end{aligned}
+\tag{59.17}
+$$
+
+若最优修复有 $p>\varepsilon$，其误差便严格大于 $d_\varepsilon$，与显式修复 $S_\varepsilon$ 矛盾。因此每个最优修复满足 $p\le\varepsilon$。这些参数界针对最优解，不施加于任意非最优修复。
+
+### 59.4 逐元素比较保留全部事件误差
+
+对已平均的最优修复及其 $p\in[1-c,\varepsilon]$，令
+
+$$
+\widehat v_p=(\sqrt{1-p},\sqrt{1-p},\sqrt p)^{\mathsf T},
+\qquad P_p=\widehat v_p\widehat v_p^{\mathsf T}.
+$$
+
+式（59.11）与 $P\succeq0$ 逐项给
+
+$$
+P_{ii}\le(P_p)_{ii},
+\qquad P_{ij}\le\sqrt{P_{ii}P_{jj}}\le(P_p)_{ij}.
+\tag{59.18}
+$$
+
+所以 $r_0r_0^{\mathsf T}-P$ 的每个实矩阵元都不小于
+$r_0r_0^{\mathsf T}-P_p$。后者的三个非对角元分别为
+
+$$
+c-(1-p),\qquad
+\sqrt\varepsilon-\sqrt{p(1-p)},\qquad
+c\sqrt\varepsilon-\sqrt{p(1-p)}.
+\tag{59.19}
+$$
+
+第一项由 $p\ge1-c$ 非负；第二项由 $p\le\varepsilon$ 非负；第三项使用
+$p\le\varepsilon<1/2$ 及 $u(1-u)$ 在 $[0,1/2]$ 上递增，也非负。
+
+因此对每个非负对角矩阵 $D(q,t)$，
+$D(q,t)(r_0r_0^{\mathsf T}-P_p)D(q,t)$ 是实对称且非对角非负的矩阵。给两个比较矩阵加同一个充分大的标量单位阵，得到逐项有序的非负对称矩阵；Perron 最大特征值的单调性给
+
+$$
+\lambda(P;q,t)\ge\lambda(P_p;q,t).
+\tag{59.20}
+$$
+
+也可取右侧矩阵的非负单位最大特征向量，代入左侧的 Rayleigh 商直接证明式（59.20）。这里使用的是逐元素比较和非负特征向量，不将逐元素序等同于 Loewner 序。
+
+$x,y,z$ 的末输出坐标互异，所以式（59.5）的 $S_p$ 有偏迹
+$I_A\otimes\operatorname{diag}(1-p,p)$，是合法因果修复；其主块恰为 $P_p$。式（59.14）、（59.20）于是同时控制两个事件方向，给
+
+$$
+N(R_\varepsilon-S_p)\le N(R_\varepsilon-S).
+$$
+
+故全体因果修复的最优值在这一族中达到。反向比较由该族包含于全部因果修复集合得到，证明式（59.6）。
+
+### 59.5 标量根式与适用边界
+
+对 $P_p$，加权主块为
+
+$$
+B=(D r_0)(D r_0)^{\mathsf T}
+-(D\widehat v_p)(D\widehat v_p)^{\mathsf T}.
+$$
+
+两向量的平方范数是式（59.7）的 $U,V$，内积为 $W$，故 $W^2\le UV$。$B$ 的两个可能非零特征值之和为 $U-V$、之积为 $W^2-UV$，所以其正部最大特征值就是
+
+$$
+\Lambda(p,q,t)
+=\frac{U-V+\sqrt{(U+V)^2-4W^2}}2\ge0.
+$$
+
+共线或零向量的退化情形也由该式给出 $\max\{U-V,0\}$。代入式（59.14）得到式（59.8），定理 59.1 证毕。
+
+这将当前族的完整矩阵修复精确降为一个外层修复参数和两个 tester 归一化参数。结论限定于式（59.1）的族与 $0<\varepsilon\le1/16$；不主张其他候选具有相同的秩一主块约化，也尚未求出式（59.8）在有限 $\varepsilon$ 下的闭式最优值。
+
+## 追加锚（本行以下为增补区）
+
+## 60. 两条相干保留时的量子比特末输出修复证书
+
+### 60.1 同边缘的 CPTP 压缩族
+
+取端口序 $A\otimes B\otimes D$，三者均为二维，$B$ 是早输出，$A$ 是晚输入，$D$ 是晚输出。在指定基上记
+
+$$
+x=|0,0,0\rangle,\quad y=|1,0,1\rangle,
+\quad z=|1,1,1\rangle,
+\quad h_0=|0,1,0\rangle,\quad h_1=|0,1,1\rangle,
+\quad v=|1,0,0\rangle.
+$$
+
+对 $0<a<1$、$0<\varepsilon<1$，令
+
+$$
+R_{a,\varepsilon}
+=|\sqrt a\,x+\sqrt{1-\varepsilon}\,y\rangle
+ \langle\sqrt a\,x+\sqrt{1-\varepsilon}\,y|
++|\sqrt{1-a}\,x+\sqrt\varepsilon\,z\rangle
+ \langle\sqrt{1-a}\,x+\sqrt\varepsilon\,z|.
+\tag{60.1}
+$$
+
+这是一个正、秩二的全局通道 Choi 算符。其早期边缘为
+
+$$
+\operatorname{Tr}_D R_{a,\varepsilon}
+=|0,0\rangle\langle0,0|
++(1-\varepsilon)|1,0\rangle\langle1,0|
++\varepsilon|1,1\rangle\langle1,1|.
+\tag{60.2}
+$$
+
+式（60.1）可以由第 55 节三维末输出的纯等距反例作 CPTP 末端处理得到：对输入末端基 $0,1,2$ 使用
+
+$$
+K_0=\sqrt a\,|0\rangle\langle0|+|1\rangle\langle1|,
+\qquad
+K_1=\sqrt{1-a}\,|0\rangle\langle0|+|1\rangle\langle2|.
+\tag{60.3}
+$$
+
+$K_0^*K_0+K_1^*K_1=I_3$；两条原先的 $xy$、$xz$ 相干都保留但衰减，而 $yz$ 相干被丢弃。
+
+因果修复与完整 tester 的合同为
+
+$$
+\begin{gathered}
+S\succeq0,\quad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\quad\operatorname{Tr}\sigma=1,\\
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\quad0\preceq E\preceq C\otimes I_D,\\
+D(R,S)=\max_{C,E}|\operatorname{Tr}((R-S)E)|.
+\end{gathered}
+\tag{60.4}
+$$
+
+全转置已吸收到 $C$ 的配对约定，事件量词包含全部量子参考与记忆。式（60.2）给所有反馈总响应的范围 $[1-\varepsilon,1+\varepsilon]$，故归一化缺陷为 $\varepsilon$。可用 $AB$ 的对角投影 $C_+=|00\rangle\langle00|+|11\rangle\langle11|$、$C_-=|01\rangle\langle01|+|10\rangle\langle10|$ 达到两端。
+
+### 60.2 指定点的准确修复
+
+**定理 60.1。** 在 $a=1/2$、$\varepsilon=1/4$ 时，
+
+$$
+\min_{S\text{ 因果}}D(R_{1/2,1/4},S)=\frac14.
+\tag{60.5}
+$$
+
+特别地，保留两条非零相干本身不充分保证严格超过归一化缺陷的修复成本。
+
+**证明。** 定义正候选 $S$ 的对角元素为
+
+$$
+\begin{array}{c|rrrrrr}
+\text{向量}&x&y&z&h_0&h_1&v\\\hline
+\text{对角值}&17/20&4/5&3/20&3/40&3/40&1/20
+\end{array}
+$$
+
+另外两个基向量 $|0,0,1\rangle,|1,1,0\rangle$ 的对角值为零。仅有的非零非对角元素为
+
+$$
+S_{xy}=S_{yx}=\frac35,
+\qquad S_{xz}=S_{zx}=\frac6{25}.
+\tag{60.6}
+$$
+
+在 $x,y,z$ 的星形块上，Schur 补为
+
+$$
+\frac{17}{20}-\frac{(3/5)^2}{4/5}
+-\frac{(6/25)^2}{3/20}=\frac2{125}>0.
+\tag{60.7}
+$$
+
+其余非零对角值为正，故 $S\succeq0$。直接偏迹给
+
+$$
+\operatorname{Tr}_D S
+=I_A\otimes\operatorname{diag}(17/20,3/20),
+\tag{60.8}
+$$
+
+所以 $S$ 因果且归一化。
+
+记
+
+$$
+\alpha=\frac{\sqrt6}{4}-\frac35,
+\qquad
+\beta=\frac{\sqrt2}{4}-\frac6{25}.
+$$
+
+平方比较给简单有理界
+
+$$
+0<\alpha<\frac1{80},\qquad0<\beta<\frac3{25}.
+\tag{60.9}
+$$
+
+令 $Q_-=C_-\otimes I_D$，并定义正向上界
+
+$$
+P=R_{1/2,1/4}-S+\frac18Q_-.
+\tag{60.10}
+$$
+
+它的非零对角值为
+
+$$
+P_{xx}=\frac3{20},\quad
+P_{yy}=P_{vv}=\frac3{40},\quad
+P_{zz}=\frac1{10},\quad
+P_{h_0h_0}=P_{h_1h_1}=\frac1{20},
+$$
+
+非零非对角元素为 $P_{xy}=\alpha$、$P_{xz}=\beta$ 及其共轭。其星形块的 Schur 补由式（60.9）满足
+
+$$
+\frac3{20}-\frac{\alpha^2}{3/40}-\frac{\beta^2}{1/10}
+>\frac3{20}-\frac1{480}-\frac{18}{125}
+=\frac{47}{12000}>0.
+\tag{60.11}
+$$
+
+因此 $P\succeq0$，式（60.10）又直接给 $P\succeq R-S$，且
+
+$$
+\operatorname{Tr}_D P
+=I_A\otimes\operatorname{diag}(3/20,1/10).
+\tag{60.12}
+$$
+
+这是质量 $1/4$ 的正因果上界。
+
+负向上界 $N$ 在标准二进制基次序
+$000,001,010,011,100,101,110,111$ 上的对角为
+
+$$
+\operatorname{diag}N=
+(1/20,1/20,3/40,3/40,1/20,1/20,3/40,3/40),
+$$
+
+仅有的非零非对角元素为 $N_{xy}=N_{yx}=-\alpha$。由于 $\alpha<1/80<1/20$，$N\succeq0$，并有
+
+$$
+\operatorname{Tr}_D N
+=I_A\otimes\operatorname{diag}(1/10,3/20).
+\tag{60.13}
+$$
+
+$Y=N-S+R$ 支撑在 $Q_+=C_+\otimes I_D$ 上。其 $xz$ 块为
+
+$$
+\begin{pmatrix}1/5&\beta\\\beta&7/40\end{pmatrix},
+$$
+
+另外在 $|0,0,1\rangle$、$|1,1,0\rangle$ 上分别有正对角 $1/20,3/40$。由式（60.9），
+
+$$
+\frac15\frac7{40}-\beta^2
+>\frac7{200}-\frac9{625}>0,
+$$
+
+故 $Y\succeq0$，即 $N\succeq S-R$。
+
+对每个合法事件，正性和因果偏迹给
+
+$$
+\begin{aligned}
+\operatorname{Tr}((R-S)E)
+&\le\operatorname{Tr}(PE)
+\le\operatorname{Tr}(P(C\otimes I_D))=\frac14,\\
+\operatorname{Tr}((S-R)E)
+&\le\operatorname{Tr}(NE)
+\le\operatorname{Tr}(N(C\otimes I_D))=\frac14.
+\end{aligned}
+$$
+
+因此 $D(R,S)\le1/4$。整个事件的归一化缺陷给反向下界 $D(R,S)\ge1/4$，从而式（60.5）成立。$\square$
+
+### 60.3 同一证书对参数邻域的充分条件
+
+上述构造还能给同族内可直接检验的参数区域，不将单点结论外推为整个族。保持定理 60.1 的 $S$ 不变，并令
+
+$$
+\alpha(a,\varepsilon)=\sqrt{a(1-\varepsilon)}-\frac35,
+\qquad
+\beta(a,\varepsilon)=\sqrt{(1-a)\varepsilon}-\frac6{25}.
+$$
+
+**命题 60.2（同一证书的参数区域）。** 若 $1/5<\varepsilon<2/5$ 且以下三个不等式成立：
+
+$$
+\begin{aligned}
+\frac3{20}
+&\ge\frac{\alpha(a,\varepsilon)^2}{1/5-\varepsilon/2}
++\frac{\beta(a,\varepsilon)^2}{\varepsilon-3/20},\\
+\frac{\varepsilon-3/20}{2}(\varepsilon-1/5)
+&\ge\alpha(a,\varepsilon)^2,\\
+\frac{\varepsilon+3/20}{2}(\varepsilon-3/40)
+&\ge\beta(a,\varepsilon)^2,
+\end{aligned}
+\tag{60.14}
+$$
+
+则同样有
+
+$$
+\min_{S'\text{ 因果}}D(R_{a,\varepsilon},S')
+=D(R_{a,\varepsilon},S)=\varepsilon.
+\tag{60.15}
+$$
+
+**证明。** 取
+
+$$
+P=R_{a,\varepsilon}-S+\frac\varepsilon2Q_-.
+$$
+
+其偏迹是 $I_A\otimes\operatorname{diag}(3/20,\varepsilon-3/20)$。星形块的对角为 $3/20,1/5-\varepsilon/2,\varepsilon-3/20$，交叉项为 $\alpha,\beta$；第一项条件给其正性。其余非零对角为
+$P_{vv}=\varepsilon/2-1/20$、$P_{h_ih_i}=\varepsilon/2-3/40$，在给定区间均正。
+
+负向 $N$ 的对角依次取
+
+$$
+\left(
+\frac{\varepsilon-3/20}{2},
+\frac{\varepsilon-3/20}{2},
+\frac3{40},\frac3{40},
+\frac1{20},\varepsilon-\frac15,
+\frac3{40},\frac3{40}
+\right),
+$$
+
+仅令 $N_{xy}=N_{yx}=-\alpha$。其偏迹是
+$I_A\otimes\operatorname{diag}(\varepsilon-3/20,3/20)$；第二项条件给 $N\succeq0$。余量 $N-S+R$ 的 $xz$ 块对角为
+$(\varepsilon+3/20)/2,\varepsilon-3/40$，交叉项为 $\beta$；第三项条件给该块正性。其余非零余量对角为
+$(\varepsilon-3/20)/2,3/40$，所以 $N\succeq S-R$。两个方向的上界质量均为 $\varepsilon$，同上得式（60.15）。$\square$
+
+在 $(a,\varepsilon)=(1/2,1/4)$，式（60.14）均严格成立，故由连续性它们至少覆盖该点的一个非空开邻域。这是一个带显式充分条件的参数族结算，不是对所有量子比特末输出、所有秩二扩展或所有 $(a,\varepsilon)$ 的定理。
+
+### 60.4 机制范围
+
+第 55 节三维纯化反例的严格正性约束来自同一秩一扩展；式（60.3）的 CPTP 压缩把它变成秩二扩展。即使 $xy,xz$ 两条矩阵元均非零，因果修复仍能在其他同端口块配置正质量，并分别选择两个质量为 $\varepsilon$ 的正因果上界。这里给出的 $P,N$ 并不要求来自一个共同的正下包络。
+
+因此，“两条相干保留”不是纯反例证明的充分迁移条件；扩展的共同秩、支撑及两个事件方向的正性余量必须一并核对。这个证书没有解决所有末输出为量子比特的候选是否都满足同系数修复。
+
+## 追加锚（本行以下为增补区）
+
+## 61. 两轮因果修复的 $\varepsilon^{3/2}$ 阶渐近与最优边缘参数
+
+### 61.1 合同与结论
+
+沿用 $A\otimes B\otimes D$ 的 $2\times2\times3$ 接口、完整量子 tester 事件和候选
+
+$$
+R_\varepsilon=|x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z\rangle
+\langle x+\sqrt{1-\varepsilon}\,y+\sqrt\varepsilon\,z|,
+\qquad x=000,\ y=101,\ z=112,
+$$
+
+记全部归一化因果修复中的最优事件误差为 $e_\varepsilon$。采用定理 59.1 的单参数约化：对 $0<\varepsilon\le1/16$，
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\quad c=\sqrt{1-\varepsilon},
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z\rangle
+\langle\sqrt{1-p}\,x+\sqrt{1-p}\,y+\sqrt p\,z|
++p|010\rangle\langle010|.
+\tag{61.1}
+$$
+
+$N$ 是完整双向事件误差，不删归一化迹项。
+
+**定理 61.1。** 当 $\varepsilon\downarrow0$，
+
+$$
+e_\varepsilon
+=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.2}
+$$
+
+对任意最优参数的选择 $p_\varepsilon$，都有
+
+$$
+p_\varepsilon
+=\varepsilon-\frac34\varepsilon^{3/2}
++o(\varepsilon^{3/2}).
+\tag{61.3}
+$$
+
+式（61.3）还适用于任意原始最优因果修复的边缘参数 $p=\sigma_{11}$，因为单参数约化在保持该 $p$ 时不会增加误差。
+
+证明使用单参数约化、特征值公式和一致的有限维极值分析。
+
+### 61.2 正向事件最大值的准确公式
+
+令 $P_p$ 为式（61.1）在 $x,y,z$ 上的秩一主块，$r=(1,c,\sqrt\varepsilon)^{\mathsf T}$。对反馈参数 $q,t\in[0,1]$，记
+
+$$
+D(q,t)=\operatorname{diag}(\sqrt q,\sqrt{1-q},\sqrt t),
+\quad
+\lambda_\varepsilon(p;q,t)
+=\max\{0,\lambda_{\max}(D(rr^{\mathsf T}-P_p)D)\}.
+$$
+
+精确的两单向函数为
+
+$$
+\begin{aligned}
+f_\varepsilon^+(p)&=\max_{q,t}\lambda_\varepsilon(p;q,t),\\
+f_\varepsilon^-(p)&=\max_{q,t}
+[\lambda_\varepsilon(p;q,t)+\varepsilon(1-q-t)],\\
+N(R_\varepsilon-S_p)&=\max\{f_\varepsilon^+(p),f_\varepsilon^-(p)\}.
+\end{aligned}
+\tag{61.4}
+$$
+
+**引理 61.2。** 对 $1-c\le p\le\varepsilon\le1/16$，正向最大值在 $q=t=1$ 达到，且
+
+$$
+f_\varepsilon^+(p)
+=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2.
+\tag{61.5}
+$$
+
+**证明。** 在该 $p$ 区间，$rr^{\mathsf T}-P_p$ 的非对角元素均非负，且 $zz$ 对角为 $\varepsilon-p\ge0$。增加 $t$ 只增加这些非负元素。因此加共同标量单位阵后的 Perron 比较给 $\lambda$ 随 $t$ 不减，可取 $t=1$。
+
+此时两加权向量的范数平方为 $1+\varepsilon q$ 和 $1$，内积为 $A+Bq$，其中
+
+$$
+A=c\sqrt{1-p}+\sqrt{\varepsilon p},
+\qquad B=(1-c)\sqrt{1-p}.
+$$
+
+Cauchy 给 $A\le1$。又因为 $p\ge1-c$，
+
+$$
+2B\le2(1-c)\sqrt c
+\le(1-c)(1+c)=\varepsilon.
+$$
+
+特征值根式内的多项式是
+
+$$
+4(1-A^2)+4(\varepsilon-2AB)q+(\varepsilon^2-4B^2)q^2.
+$$
+
+三个系数均非负，迹项 $\varepsilon q$ 也随 $q$ 不减，因此可取 $q=1$。这时两个向量的楔积为
+$\sqrt p-\sqrt{\varepsilon(1-p)}$，特征值公式给式（61.5）。$\square$
+
+### 61.3 全部 tester 的一致首阶极限
+
+写
+
+$$
+\delta=\sqrt\varepsilon,
+\qquad p=\delta^2-\kappa\delta^3.
+\tag{61.6}
+$$
+
+当 $\kappa$ 在任意固定有界区间变化时，充分小的 $\delta>0$ 使下列根式有定义。主块有一致展开
+
+$$
+\frac{rr^{\mathsf T}-P_p}{\delta^2}
+=H_\kappa+O(\delta),
+\qquad
+H_\kappa=\frac{uv_\kappa^{\mathsf T}+v_\kappa u^{\mathsf T}}2,
+\quad u=(1,1,0)^{\mathsf T},\quad v_\kappa=(1,0,\kappa)^{\mathsf T}.
+\tag{61.7}
+$$
+
+$D(q,t)u$ 的范数为一，$D(q,t)v_\kappa$ 的范数平方为 $q+\kappa^2t$，内积为 $q$。所以
+
+$$
+\frac{\lambda_\varepsilon(p;q,t)}{\varepsilon}
+=\frac{q+\sqrt{q+\kappa^2t}}2+O(\delta),
+\tag{61.8}
+$$
+
+余项在 $q,t\in[0,1]$ 和有界 $\kappa$ 上一致。这里可以直接使用最大特征值对算符范数的 Lipschitz 界，不要求特征值在原点简单。
+
+因此正向首阶最大值为
+
+$$
+F^+(\kappa)=\frac{1+\sqrt{1+\kappa^2}}2.
+\tag{61.9}
+$$
+
+负向首阶函数是
+
+$$
+G_\kappa(q,t)
+=1-\frac q2-t+\frac12\sqrt{q+\kappa^2t}.
+\tag{61.10}
+$$
+
+令 $w=q+\kappa^2t$，则
+
+$$
+G_\kappa(q,t)
+=1-\frac w2+\frac{\sqrt w}2
+-t\left(1-\frac{\kappa^2}{2}\right).
+$$
+
+当 $\kappa^2<2$ 时，其唯一全局最大点为 $(q,t)=(1/4,0)$，最大值为 $9/8$。特别地，$\kappa_0=3/4$ 满足
+
+$$
+F^+(\kappa_0)=\frac98,
+\qquad
+\partial_tG_{\kappa_0}(1/4,0)
+=-1+\frac{\kappa_0^2}{2}=-\frac{23}{32}<0.
+\tag{61.11}
+$$
+
+这一步检查了整个 tester 参数方形，不只比较两个预选 tester。
+
+### 61.4 负向最大值的一致下一阶
+
+需要证明，在 $\kappa$ 靠近 $\kappa_0$ 时，有限 $\delta$ 的负向最大值仍在边界 $t=0$ 达到。下面写出局部光滑性，避免把一致值收敛误用为导数收敛。
+
+定义可在 $\delta=0$ 光滑延拓的系数
+
+$$
+\begin{aligned}
+a_\delta&=\frac{\sqrt{1-\delta^2+\kappa\delta^3}}{1+\sqrt{1-\delta^2}},\\
+b_\delta&=\frac{-\kappa+\delta-\kappa\delta^2}
+{\sqrt{1-\kappa\delta}+\sqrt{1-\delta^2+\kappa\delta^3}},\\
+d_\delta&=\frac{-\kappa}
+{\sqrt{1-\delta^2}\sqrt{1-\kappa\delta}
++\sqrt{1-\delta^2+\kappa\delta^3}}.
+\end{aligned}
+\tag{61.12}
+$$
+
+它们是两个加权向量的三个楔积系数除以 $\delta^2$，且在 $\delta=0$ 分别为 $1/2,-\kappa/2,-\kappa/2$。令
+
+$$
+\begin{aligned}
+T_\delta&=q+\kappa\delta(t-1),\\
+Q_\delta&=a_\delta^2q(1-q)+b_\delta^2qt+d_\delta^2(1-q)t.
+\end{aligned}
+$$
+
+则准确地有
+
+$$
+\frac{\lambda_\varepsilon(p;q,t)}{\varepsilon}
+=\frac{T_\delta+\sqrt{T_\delta^2+4Q_\delta}}2.
+\tag{61.13}
+$$
+
+在 $(\kappa,q,t)=(3/4,1/4,0)$ 附近，根式内在 $\delta=0$ 为 $q+\kappa^2t>0$，故式（61.13）及其 $q,t$ 导数都连续光滑，并一致趋于首阶表达式。
+
+取 $\kappa_0$ 的一个小闭邻域。式（61.10）的唯一最大点始终为 $(1/4,0)$；紧性和一致收敛使有限 $\delta$ 的全局最大点全部落入该点的任意预定小邻域。缩小邻域后，式（61.11）及导数一致收敛保证整个邻域内的有限 $\delta$ 负向函数对 $t$ 严格递减。因此所有最大点必有 $t=0$。
+
+在 $t=0$ 时，主块只剩 $xy$。由直接展开，
+
+$$
+\frac{D(rr^{\mathsf T}-P_p)D}{\varepsilon}\bigg|_{xy}
+=
+\begin{pmatrix}q&\frac12\sqrt{q(1-q)}\\
+\frac12\sqrt{q(1-q)}&0\end{pmatrix}
+-\kappa\delta
+\begin{pmatrix}q&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&1-q\end{pmatrix}
++O(\delta^2),
+\tag{61.14}
+$$
+
+余项在 $q$ 靠近 $1/4$、$\kappa$ 靠近 $\kappa_0$ 时一致。$q=1/4$ 时，第一个矩阵的单位正特征向量为
+$n=(\sqrt3/2,1/2)^{\mathsf T}$，而第二个矩阵是
+$w w^{\mathsf T}$，$w=(1/2,\sqrt3/2)^{\mathsf T}$。故
+
+$$
+|n^{\mathsf T}w|^2=\frac34.
+$$
+
+局部正特征值简单，因此式（61.14）的一阶特征值改变量为 $-3\kappa\delta/4$。其余 $q$ 的最大点趋于 $1/4$。用固定 $q=1/4$ 给下界、实际最大点和首阶函数的 $\le9/8$ 给上界，得到一致的极值展开
+
+$$
+\frac{f_\varepsilon^-(p)}{\varepsilon}
+=\frac98-\frac34\kappa\delta+o(\delta)
+\qquad(\kappa\to\kappa_0,\ \delta\downarrow0).
+\tag{61.15}
+$$
+
+这里最大点定位与式（61.14）的余项一致性保证可沿变化的 $\kappa$ 使用式（61.15），无需先假设最优 $q$ 的收敛速率。
+
+### 61.5 二阶最优值的下界
+
+对任意最优修复的边缘参数 $p_\varepsilon$，已证区间给 $p_\varepsilon\le\varepsilon$。合法 $xz$ 事件又给
+
+$$
+p_\varepsilon\ge(\sqrt\varepsilon-e_\varepsilon)_+^2,
+\qquad e_\varepsilon<\frac98\varepsilon.
+$$
+
+因此，写 $p_\varepsilon=\varepsilon-\kappa_\varepsilon\varepsilon^{3/2}$ 时，有
+
+$$
+0\le\kappa_\varepsilon\le\frac94
+$$
+
+对充分小的 $\varepsilon$ 成立。单参数约化允许保留同一个 $p_\varepsilon$ 而取 $S_{p_\varepsilon}$ 为最优修复。
+
+若沿某个趋零子列有 $\kappa_\varepsilon\ge3/4+\eta$，其中 $\eta>0$ 固定，则式（61.8）、（61.9）的一致收敛会给
+
+$$
+\frac{e_\varepsilon}{\varepsilon}
+\ge F^+(3/4+\eta)+o(1)>\frac98,
+$$
+
+与已证上界矛盾。所以
+
+$$
+\limsup_{\varepsilon\downarrow0}\kappa_\varepsilon\le\frac34.
+\tag{61.16}
+$$
+
+第 58 节的固定全块事件 $E_*$ 对任意因果修复给准确下界
+
+$$
+D(R_\varepsilon,S)
+\ge\frac34p+\frac38\varepsilon
+-\frac{3\varepsilon^2}{16(1+c)^2}.
+\tag{61.17}
+$$
+
+代入最优参数并使用式（61.16），得到
+
+$$
+\liminf_{\varepsilon\downarrow0}
+\frac{e_\varepsilon-9\varepsilon/8}{\varepsilon^{3/2}}
+\ge-\frac9{16}.
+\tag{61.18}
+$$
+
+### 61.6 匹配上界与最优参数收敛
+
+选取明确的竞争参数
+
+$$
+\kappa(\delta)=\frac34-\sqrt\delta,
+\qquad
+p(\delta)=\delta^2-\kappa(\delta)\delta^3.
+\tag{61.19}
+$$
+
+充分小的 $\delta>0$ 时，$0<\kappa(\delta)<3/4$ 且
+$1-\sqrt{1-\delta^2}<p(\delta)<\delta^2$，故该修复合法并位于约化区间。
+
+式（61.8）、（61.9）或准确式（61.5）给
+
+$$
+\frac{f_\varepsilon^+(p(\delta))}{\varepsilon}
+=F^+(\kappa(\delta))+O(\delta)
+=\frac98-\frac3{10}\sqrt\delta+O(\delta),
+\tag{61.20}
+$$
+
+其中 $(F^+)'(3/4)=3/10$。另一方面，式（61.15）给
+
+$$
+\frac{f_\varepsilon^-(p(\delta))}{\varepsilon}
+=\frac98-\frac9{16}\delta+o(\delta).
+\tag{61.21}
+$$
+
+正向距 $9/8$ 的裕量为 $\sqrt\delta$ 阶，严格大于负向的 $\delta$ 阶下降，所以充分小的 $\delta$ 时，完整误差由负向决定。式（61.21）给式（61.2）的匹配上界，与式（61.18）合并，证明式（61.2）。
+
+最后，对任意最优参数，在式（61.17）中代入式（61.2），得到
+
+$$
+-\frac9{16}+o(1)
+\ge-\frac34\kappa_\varepsilon-O(\sqrt\varepsilon).
+$$
+
+故 $\liminf\kappa_\varepsilon\ge3/4$。与式（61.16）合并得
+$\kappa_\varepsilon\to3/4$，证明式（61.3）。$\square$
+
+### 61.7 范围
+
+上述结果只描述指定 $2\times2\times3$ 候选族在 $\varepsilon\downarrow0$ 时的最优修复误差及其边缘参数。它没有给有限 $\varepsilon$ 的闭式最优值，也没有给 $p_\varepsilon$ 的 $\varepsilon^2$ 系数。证明不依赖对全体候选的比例猜测或有限点数值外推。
+
+## 追加锚（本行以下为增补区）
+
+## 62. 有限参数的准确最优修复、边缘唯一性与更高阶展开
+
+### 62.1 接口与结论范围
+
+沿用 $2\times2\times3$ 接口、全部量子 tester 事件和纯等距候选
+
+$$
+R_\varepsilon=|x+c y+\sqrt\varepsilon z\rangle
+\langle x+c y+\sqrt\varepsilon z|,
+\quad c=\sqrt{1-\varepsilon},
+\quad x=|000\rangle,\ y=|101\rangle,\ z=|112\rangle.
+$$
+
+记最优因果修复误差为 $e_\varepsilon$。第 59 节的精确单参数约化给
+
+$$
+e_\varepsilon=\min_{1-c\le p\le\varepsilon}N(R_\varepsilon-S_p),
+\tag{62.1}
+$$
+
+其中
+
+$$
+S_p=|\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z\rangle
+\langle\sqrt{1-p}x+\sqrt{1-p}y+\sqrt p z|
++p|010\rangle\langle010|.
+$$
+
+这个约化针对全部归一化因果修复：每个最优修复的早输出边缘参数 $p=\sigma_{11}$ 均在上述区间内，且相同 $p$ 的 $S_p$ 不增加误差。事件误差包含归一化迹项。
+
+对 $0<\varepsilon\le1/16$，令
+
+$$
+\begin{aligned}
+d&=1-c,\qquad p_0=\frac{d(3-d)}2,
+\qquad p_* =\frac{\varepsilon}{1+\varepsilon},\\
+B(p)&=4(p-d)+d^2,\qquad b(p)^2=d^2(1-p),\\
+F_\varepsilon(p)&=p+\frac{b(p)^2}{B(p)},\\
+G_\varepsilon(p)&=\frac{\varepsilon+
+\sqrt{\varepsilon^2+4(\sqrt{\varepsilon(1-p)}-\sqrt p)^2}}2,\\
+\gamma(p)&=c\sqrt p-\sqrt{\varepsilon(1-p)},\\
+L_\varepsilon(p)&=p(p-\varepsilon)
++(p+\varepsilon)\frac{b(p)^2}{B(p)}-\gamma(p)^2.
+\end{aligned}
+\tag{62.2}
+$$
+
+$F_\varepsilon$ 与 $L_\varepsilon$ 的使用范围为 $p\ge p_0$，等价于 $B(p)\ge\varepsilon>0$。
+
+**定理 62.1（整个参数区间的准确最优修复）。** 对每个 $0<\varepsilon\le1/16$，有
+
+$$
+d<p_0<p_*<\varepsilon.
+\tag{62.3}
+$$
+
+方程
+
+$$
+F_\varepsilon(p)=G_\varepsilon(p)
+\tag{62.4}
+$$
+
+在 $(p_0,p_*)$ 内恰有一个解 $\bar p_\varepsilon$，并且
+
+$$
+e_\varepsilon=
+F_\varepsilon(\bar p_\varepsilon)
+=G_\varepsilon(\bar p_\varepsilon).
+\tag{62.5}
+$$
+
+交点处具有统一的严格证书下界
+
+$$
+L_\varepsilon(\bar p_\varepsilon)>\frac{\varepsilon^2}{34}>0.
+\tag{62.6}
+$$
+
+修复 $S_{\bar p_\varepsilon}$ 达到最优值，而且所有最优修复的早输出边缘参数均满足
+
+$$
+\sigma_{11}=\bar p_\varepsilon.
+\tag{62.7}
+$$
+
+**推论 62.2（最优参数的解析展开）。** 写唯一最优边缘参数为 $p_\varepsilon=\bar p_\varepsilon$。存在实解析函数 $\kappa(\delta)$，在零附近满足 $\kappa(0)=3/4$，并对充分小的正 $\varepsilon$ 有
+
+$$
+p_\varepsilon=\varepsilon-\kappa(\sqrt\varepsilon)\varepsilon^{3/2}.
+\tag{62.8}
+$$
+
+特别地，
+
+$$
+\begin{aligned}
+p_\varepsilon
+&=\varepsilon-\frac34\varepsilon^{3/2}
++\frac{65}{64}\varepsilon^2+O(\varepsilon^{5/2}),\\
+e_\varepsilon
+&=\frac98\varepsilon-\frac9{16}\varepsilon^{3/2}
++\frac{255}{256}\varepsilon^2+O(\varepsilon^{5/2}).
+\end{aligned}
+\tag{62.9}
+$$
+
+唯一性指边缘参数，不宣称完整最优修复算符唯一。准确交点公式覆盖整个 $0<\varepsilon\le1/16$；幂级数展开描述 $\varepsilon\downarrow0$。
+
+### 62.2 两个方向的事件下界
+
+精确单参数约化中，反馈归一化算符为
+$C(q,t)=\operatorname{diag}(q,1-t,1-q,t)$；事件仍遍历整个正区间 $0\preceq E\preceq C\otimes I_D$。记 $\lambda(p;q,t)$ 为加权 $R_\varepsilon-S_p$ 主块的非负最大特征值，则
+
+$$
+\begin{aligned}
+h(R_\varepsilon-S_p)&=\max_{q,t}\lambda(p;q,t),\\
+h(S_p-R_\varepsilon)&=\max_{q,t}
+[\lambda(p;q,t)+\varepsilon(1-q-t)].
+\end{aligned}
+\tag{62.10}
+$$
+
+正向最大值准确地为 $G_\varepsilon(p)$，由 $q=t=1$ 达到。其证明只需非负矩阵比较：在 $p\in[d,\varepsilon]$ 上，主块的非对角元素及 $zz$ 对角均非负，增加 $t$ 不减最大特征值，所以可取 $t=1$。此时两加权向量的范数平方为 $1+\varepsilon q$ 与 $1$，内积为 $A+Hq$，其中
+
+$$
+A=c\sqrt{1-p}+\sqrt{\varepsilon p}\le1,
+\qquad H=d\sqrt{1-p},\qquad
+2H\le2d\sqrt c\le d(1+c)=\varepsilon.
+$$
+
+特征值根式的被开方多项式为
+
+$$
+4(1-A^2)+4(\varepsilon-2AH)q+(\varepsilon^2-4H^2)q^2.
+$$
+
+各系数非负，迹项 $\varepsilon q$ 也不减，故可取 $q=1$。此时特征值公式就是 $G_\varepsilon(p)$。
+
+**引理 62.3（$t=0$ 的准确负向最大值）。** 对 $p\in[d,\varepsilon]$，有
+
+$$
+J_\varepsilon(p):=
+\max_{0\le q\le1}
+[\lambda(p;q,0)+\varepsilon(1-q)]
+=
+\begin{cases}
+\varepsilon,&d\le p\le p_0,\\
+F_\varepsilon(p),&p_0\le p\le\varepsilon.
+\end{cases}
+\tag{62.11}
+$$
+
+后一段的达到点为
+
+$$
+q_* =\frac{B-\varepsilon}{2B},
+\qquad
+F_\varepsilon(p)\ge\varepsilon,
+\qquad F_\varepsilon'(p)=1-\frac{\varepsilon^2}{B^2}\ge0.
+\tag{62.12}
+$$
+
+**证明。** 当 $t=0$ 时，加权主块的迹是
+$T_0=p-\varepsilon+\varepsilon q$，秩二特征方程的常数项是 $-b^2q(1-q)$。因此负向值为
+
+$$
+\frac{p+\varepsilon-\varepsilon q+
+\sqrt{T_0^2+4b^2q(1-q)}}2.
+$$
+
+先设 $p\le p_0$。使用 $\varepsilon=2d-d^2$，有
+
+$$
+\varepsilon(\varepsilon-p)-b^2
+=2d(1-d)(p_0-p)\ge0.
+$$
+
+于是准确平方差满足
+
+$$
+\frac{(\varepsilon-p+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}
+=b^2q^2+[\varepsilon(\varepsilon-p)-b^2]q\ge0.
+\tag{62.13}
+$$
+
+$\varepsilon-p+\varepsilon q\ge0$，故可取平方根，给出负向值不超过 $\varepsilon$；$q=0$ 达到 $\varepsilon$。
+
+再设 $p\ge p_0$，等价于 $B\ge\varepsilon$。令 $u=b^2/B$、$\mu=p+u=F_\varepsilon(p)$。直接核得
+
+$$
+\varepsilon^2-4b^2=d^2B,
+\qquad
+u(\mu-\varepsilon)=b^2q_*^2.
+$$
+
+第二式左端的 $u>0$，所以 $\mu\ge\varepsilon$。准确平方差为
+
+$$
+\begin{aligned}
+&\frac{(2\mu-p-\varepsilon+\varepsilon q)^2
+-[T_0^2+4b^2q(1-q)]}{4}\\
+&\qquad=b^2q^2+(\varepsilon u-b^2)q+u(\mu-\varepsilon)
+=b^2(q-q_*)^2.
+\end{aligned}
+\tag{62.14}
+$$
+
+根号上界的右侧满足
+$2\mu-p-\varepsilon+\varepsilon q\ge\varepsilon-p\ge0$，因此可以取平方根，得到值不超过 $\mu$，并在合法的 $q_*\in[0,1/2)$ 达到。$p=p_0$ 时 $B=\varepsilon$、$q_*=0$，上面的恒等式也给 $F_\varepsilon(p_0)=\varepsilon$，所以两段接合。
+
+求导给
+
+$$
+F'(p)=1-\frac{d^2[B+4(1-p)]}{B^2}
+=1-\frac{\varepsilon^2}{B^2},
+$$
+
+因为 $d^2[B+4(1-p)]=\varepsilon^2$。$\square$
+
+### 62.3 一个控制全部 tester 的多项式证书
+
+令
+
+$$
+\beta=\sqrt p-\sqrt{\varepsilon(1-p)},
+\qquad
+\gamma=c\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+对任意 $q,t\in[0,1]$，主块的迹及秩二特征多项式常数项可写为
+
+$$
+\begin{aligned}
+T&=p-\varepsilon+\varepsilon q+(\varepsilon-p)t,\\
+Q&=b^2q(1-q)+\beta^2qt+\gamma^2(1-q)t,\\
+\lambda(p;q,t)&=\frac{T+\sqrt{T^2+4Q}}2.
+\end{aligned}
+\tag{62.15}
+$$
+
+**引理 62.4（全 tester 证书）。** 若 $p\in[p_0,\varepsilon]$ 且 $L_\varepsilon(p)\ge0$，则
+
+$$
+h(S_p-R_\varepsilon)=F_\varepsilon(p).
+\tag{62.16}
+$$
+
+**证明。** 记 $\mu=F_\varepsilon(p)$、$u=\mu-p=b^2/B>0$，并置
+
+$$
+k=\mu-\varepsilon+\varepsilon(q+t).
+$$
+
+引理 62.3 给 $k\ge0$，且 $k-T=u+pt>0$。直接展开，并使用
+
+$$
+\gamma^2-\beta^2=-\varepsilon p
++2d\sqrt{\varepsilon p(1-p)},
+$$
+
+得到准确分解
+
+$$
+\begin{aligned}
+k(k-T)-Q
+={}&b^2(q-q_*)^2\\
+&+t\left[L_\varepsilon(p)+2d\sqrt{\varepsilon p(1-p)}\,q\right]
++\varepsilon p t^2.
+\end{aligned}
+\tag{62.17}
+$$
+
+在声明条件下右侧非负。由于 $k\ge0$ 且 $k>T$，$k$ 位于二次函数 $z(z-T)-Q$ 的递增区域 $z\ge\max\{0,T\}$；式（62.17）因此给 $k\ge\lambda(p;q,t)$。这也处理 $k=0$ 的边界：此时 $T<0$，而非负乘积条件强制 $Q=0$，故 $\lambda=0$。
+
+于是所有 $q,t$ 都满足
+
+$$
+\lambda(p;q,t)+\varepsilon(1-q-t)\le\mu.
+$$
+
+$t=0,q=q_*$ 由引理 62.3 达到 $\mu$，证明式（62.16）。$\square$
+
+这个证书明确控制整个 tester 参数方形，不将 $t=0$ 最优先验化。
+
+### 62.4 唯一交点与条件达界
+
+**定理 62.1 的交点与条件达界部分。** 因为 $0<d\le\varepsilon\le1/16$，有
+
+$$
+p_0>d,\qquad
+\frac{p_*}{d}=\frac{2-d}{1+\varepsilon}
+\ge\frac{31}{17}>\frac32>\frac{p_0}{d},
+\qquad p_*<\varepsilon.
+$$
+
+因此式（62.3）成立。函数 $F_\varepsilon$ 在 $[p_0,\varepsilon]$ 上严格递增；其导数只在左端点为零。对 $p<p_*$，
+$\sqrt{\varepsilon(1-p)}-\sqrt p$ 为正且严格递减，所以 $G_\varepsilon$ 在 $[d,p_*]$ 上严格递减。并且
+
+$$
+F_\varepsilon(p_0)=\varepsilon<G_\varepsilon(p_0),
+\qquad
+G_\varepsilon(p_*)=\varepsilon<F_\varepsilon(p_*).
+\tag{62.18}
+$$
+
+介值定理与严格单调性给 $(p_0,p_*)$ 内的唯一交点 $\bar p_\varepsilon$。
+
+由第 62.2 节，对所有 $p\in[d,\varepsilon]$，均有
+
+$$
+N(R_\varepsilon-S_p)\ge
+\max\{G_\varepsilon(p),J_\varepsilon(p)\}.
+\tag{62.19}
+$$
+
+记交点值为 $m_\varepsilon$。若 $p<\bar p_\varepsilon$，则 $G_\varepsilon(p)>m_\varepsilon$；若 $p>\bar p_\varepsilon$，则 $p>p_0$，故 $J_\varepsilon(p)=F_\varepsilon(p)>m_\varepsilon$。在交点两者同等于 $m_\varepsilon$。因此式（62.19）右端在整个约化区间上的唯一最小点是 $\bar p_\varepsilon$，最小值是 $m_\varepsilon$。这与式（62.1）给出 $e_\varepsilon\ge m_\varepsilon$。
+
+如果 $L_\varepsilon(\bar p_\varepsilon)\ge0$，引理 62.4 和正向准确公式给
+
+$$
+N(R_\varepsilon-S_{\bar p_\varepsilon})
+=\max\{F_\varepsilon(\bar p_\varepsilon),
+G_\varepsilon(\bar p_\varepsilon)\}=m_\varepsilon.
+\tag{62.20}
+$$
+
+所以达到全局下界。任意原始最优修复的参数 $p=\sigma_{11}$ 均在 $[d,\varepsilon]$，且替换为相同参数的 $S_p$ 不增加误差；式（62.19）的严格性迫使 $p=\bar p_\varepsilon$，因此只要该交点满足正性条件，式（62.5）、（62.7）就成立。下面证明整个参数区间都有统一的严格正性余量。
+
+### 62.5 整个参数区间的统一证书
+
+**证明。** 以下固定 $p=\bar p_\varepsilon$，并记
+
+$$
+u=\frac{b^2}{B},\qquad\mu=p+u,
+\qquad\beta=\sqrt p-\sqrt{\varepsilon(1-p)}.
+$$
+
+交点关系 $\mu=G_\varepsilon(p)$ 给
+
+$$
+\beta^2=\mu(\mu-\varepsilon).
+\tag{62.21}
+$$
+
+直接展开两项平方还给出恒等式
+
+$$
+\gamma^2=c\beta^2+d\varepsilon-d(c+\varepsilon)p.
+\tag{62.22}
+$$
+
+式（62.21）、（62.22）使 $L_\varepsilon(p)$ 在交点处可完全改写成有理代数式。
+
+令
+
+$$
+\rho=\frac d{2-d}=\frac{1-c}{1+c},
+\qquad w=\frac B\varepsilon.
+\tag{62.23}
+$$
+
+由于 $d\le\varepsilon\le1/16$ 且 $2-d>1$，有
+$0<\rho\le1/16$。又因 $p_0<p<p_*<\varepsilon$，
+
+$$
+1<w<\frac{B(\varepsilon)}\varepsilon=2-\rho<2.
+\tag{62.24}
+$$
+
+利用 $\varepsilon=d(2-d)$ 与
+$\varepsilon^2-4b^2=d^2B$，得到
+
+$$
+\begin{aligned}
+P:=\frac p\varepsilon&=\frac{2+w+\rho}{4},\\
+U:=\frac u\varepsilon&=\frac{1/w-\rho}{4},\\
+M:=\frac\mu\varepsilon&=\frac{(w+1)^2}{4w},\\
+c&=\frac{1-\rho}{1+\rho},\qquad
+\frac d\varepsilon=\frac{1+\rho}{2},\qquad
+\frac{d(c+\varepsilon)}\varepsilon
+=\frac{1+4\rho-\rho^2}{2(1+\rho)}.
+\end{aligned}
+\tag{62.25}
+$$
+
+将式（62.21）、（62.22）代入 $L_\varepsilon$，可得
+
+$$
+\begin{aligned}
+\frac{L_\varepsilon(p)}{\varepsilon^2}
+={}&P(P-1)+(P+1)U-cM(M-1)\\
+&-\frac{1+\rho}{2}
++\frac{1+4\rho-\rho^2}{2(1+\rho)}P.
+\end{aligned}
+\tag{62.26}
+$$
+
+将式（62.25）代入式（62.26），整理为
+
+$$
+16w^2(1+\rho)\frac{L_\varepsilon(p)}{\varepsilon^2}
+=N_0(w)+\rho N_1(w)
+-\rho^2w(w^2+10w-1)-2\rho^3w^2,
+\tag{62.27}
+$$
+
+其中
+
+$$
+\begin{aligned}
+N_0(w)&=2w^3-5w^2+6w-1,\\
+N_1(w)&=2w^4+9w^3-9w^2+7w+1.
+\end{aligned}
+$$
+
+在 $1\le w\le2$ 上，两个正项有直接的下界：
+
+$$
+\begin{aligned}
+N_0(w)
+&=2(w-1)^3+(w-1)^2+2(w-1)+2\ge2,\\
+N_1(w)
+&=2w^4+9w^2(w-1)+7w+1\ge10.
+\end{aligned}
+\tag{62.28}
+$$
+
+同时
+
+$$
+0<w(w^2+10w-1)\le46,\qquad 2w^2\le8.
+$$
+
+所以式（62.27）的右侧满足
+
+$$
+\begin{aligned}
+N_0+\rho N_1-\rho^2w(w^2+10w-1)-2\rho^3w^2
+&\ge2+\rho(10-46\rho-8\rho^2)\\
+&\ge2+\frac{227}{32}\rho>2,
+\end{aligned}
+\tag{62.29}
+$$
+
+最后一步用了 $\rho\le1/16$。另一方面，
+
+$$
+16w^2(1+\rho)<16\cdot4\cdot\frac{17}{16}=68.
+$$
+
+因此 $L_\varepsilon(p)/\varepsilon^2>2/68=1/34$，这就是式（62.6）。第 62.4 节的条件达界部分随即给出式（62.5）、最优修复的达到性及全部最优边缘参数的唯一性，完成定理 62.1 的证明。$\square$
+
+### 62.6 解析交点
+
+令 $\delta=\sqrt\varepsilon$、$p=\delta^2(1-\kappa\delta)$、$c=\sqrt{1-\delta^2}$，并定义缩放函数
+
+$$
+f(\delta,\kappa)=\frac{F_{\delta^2}(p)}{\delta^2},
+\qquad g(\delta,\kappa)=\frac{G_{\delta^2}(p)}{\delta^2}.
+$$
+
+其在 $\delta=0$ 处的解析延拓可直接写为
+
+$$
+\begin{aligned}
+f(\delta,\kappa)
+&=1-\kappa\delta+
+\frac{(1-p)/(1+c)^2}
+{4(1-\kappa\delta)-4/(1+c)+\delta^2/(1+c)^2},\\
+z(\delta,\kappa)
+&=\frac{\kappa-\delta+\kappa\delta^2}
+{\sqrt{1-p}+\sqrt{1-\kappa\delta}},\\
+g(\delta,\kappa)
+&=\frac{1+\sqrt{1+4z(\delta,\kappa)^2}}2.
+\end{aligned}
+\tag{62.30}
+$$
+
+在 $(\delta,\kappa)=(0,3/4)$ 附近，分母非零且根号内严格正，所以这些是实解析函数。并有
+
+$$
+f(0,\kappa)=\frac98,
+\qquad g(0,\kappa)=\frac{1+\sqrt{1+\kappa^2}}2,
+\qquad
+\partial_\kappa(f-g)(0,3/4)=-\frac3{10}\ne0.
+\tag{62.31}
+$$
+
+解析隐函数定理给唯一的实解析 $\kappa(\delta)$，满足 $f=g$、$\kappa(0)=3/4$。当 $\delta>0$ 充分小时，其对应参数在 $(p_0,p_*)$：下端关系来自 $p/\varepsilon\to1$ 与 $p_0/\varepsilon\to3/4$，上端关系来自
+
+$$
+p_*-p=\kappa(\delta)\delta^3-
+\frac{\delta^4}{1+\delta^2}>0.
+$$
+
+因此这个解析交点正是定理 62.1 中的 $\bar p_\varepsilon$。沿该交点，直接展开给
+
+$$
+\frac{B(p)}\varepsilon\longrightarrow2,
+\qquad
+\frac{L_\varepsilon(p)}{\varepsilon^2}
+\longrightarrow\frac{1-(3/4)^2}{4}=\frac7{64}>0.
+\tag{62.32}
+$$
+
+定理 62.1 已在整个参数区间给出严格正性与最优性，因此这个解析交点就是所有最优修复的唯一边缘参数。这证明式（62.8），不需要预先假定最优参数的渐近位置。
+
+### 62.7 更高阶系数
+
+直接展开式（62.30）得到
+
+$$
+f(\delta,\kappa)
+=\frac98-\frac34\kappa\delta
++\left(\frac{\kappa^2}{2}-\frac3{64}\right)\delta^2
++O(\delta^3).
+\tag{62.33}
+$$
+
+在 $\kappa=3/4$，另一函数的偏导为
+
+$$
+\partial_\delta g(0,3/4)=-\frac{33}{128},
+\qquad
+\partial_\kappa g(0,3/4)=\frac3{10}.
+$$
+
+因此对 $f(\delta,\kappa(\delta))=g(\delta,\kappa(\delta))$ 求导，得到
+
+$$
+-\frac9{16}
+=-\frac{33}{128}+\frac3{10}\kappa'(0),
+\qquad\kappa'(0)=-\frac{65}{64}.
+\tag{62.34}
+$$
+
+所以
+
+$$
+\kappa(\delta)=\frac34-\frac{65}{64}\delta+O(\delta^2).
+$$
+
+代入 $p=\delta^2-\kappa(\delta)\delta^3$ 给式（62.9）的第一式。再代入式（62.33），$\delta^2$ 系数为
+
+$$
+-\frac34\left(-\frac{65}{64}\right)
++\frac12\left(\frac34\right)^2-\frac3{64}
+=\frac{255}{256},
+$$
+
+乘以 $\delta^2=\varepsilon$ 得式（62.9）的第二式。$\square$
+
+### 62.8 含义与边界
+
+对全部 $0<\varepsilon\le1/16$，最优边缘由两个相反方向的合法续接事件达到同一误差来确定：正向在 $q=t=1$，负向在 $t=0,q=q_*$。这是具体相同接口上的平衡条件。
+
+式（62.4）给整个区间内有限非零参数的准确修复误差，不只是渐近拟合。统一证书下界（62.6）使结果无需逐点检验条件；上述范围与第 59 节全体因果修复的单参数约化范围一致。
+
+所得唯一性限定于早输出边缘的 $\sigma_{11}$；完整最优修复仍可有不同补块或其他等误差实现。结论不推广到其他候选族或其他末输出维数。
+
+## 追加锚（本行以下为增补区）
+
+## 63. 秩至多二的量子比特早边缘：全部扩张均可同系数修复
+
+### 63.1 合同与结论
+
+固定晚输入 $A=\mathbb C^2$、早输出 $B=\mathbb C^2$，晚输出 $D$ 可以是任意非零有限维空间，张量次序为 $A\otimes B\otimes D$。早边缘与它的扩张满足
+
+$$
+M\succeq0,\quad\operatorname{Tr}_B M=I_A,
+\qquad
+R\succeq0,\quad\operatorname{Tr}_D R=M.
+\tag{63.1}
+$$
+
+因果修复与全部量子 tester 合同为
+
+$$
+\begin{aligned}
+\mathcal S_D&=\{S\succeq0:\operatorname{Tr}_D S=I_A\otimes\sigma,
+\quad\sigma\succeq0,\ \operatorname{Tr}\sigma=1\},\\
+C&\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\end{aligned}
+\tag{63.2}
+$$
+
+采用吸收全转置的配对约定，记
+
+$$
+\begin{aligned}
+N_D(X)&=\max_{C,E}|\operatorname{Tr}(XE)|,\\
+e_D(R)&=\min_{S\in\mathcal S_D}N_D(R-S),\\
+\Delta(M)&=\max_C|\operatorname{Tr}(MC)-1|.
+\end{aligned}
+\tag{63.3}
+$$
+
+事件量词包含任意有限量子参考、记忆和最终测量。即使候选在部分反馈下没有归一化，式（63.3）仍是事件响应误差；这里没有把它当作两个归一化分布的总变差距离。
+
+**定理 63.1（低秩早边缘的全部扩张）。** 若 $\operatorname{rank}M\le2$，则对每个有限维 $D$ 和每个满足式（63.1）的扩张，均有
+
+$$
+e_D(R)=\Delta(M).
+\tag{63.4}
+$$
+
+**推论 63.2（纯三量子比特候选无严格间隙）。** 若 $A,B,D$ 均为量子比特且 $R$ 是纯的静态通道 Choi 算符，则 $e_D(R)=\Delta(M)$。因此在这个 $2\times2\times2$ 接口上，任何严格间隙 $e_D(R)>\Delta(M)$ 必须同时满足
+
+$$
+\operatorname{rank}R\ge2,
+\qquad\operatorname{rank}(\operatorname{Tr}_D R)\ge3.
+\tag{63.5}
+$$
+
+式（63.5）是必要条件，没有声称存在满足它的严格反例，也没有解决所有混合 $D=2$ 候选。
+
+### 63.2 两角标准族及其显式因果修复
+
+先在三个量子比特上取
+
+$$
+x=|000\rangle,\quad h=|011\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,
+$$
+
+以及非负参数
+
+$$
+a^2+b^2=c^2+d^2=1,
+\qquad a\ge c,\qquad d\ge b.
+\tag{63.6}
+$$
+
+等价地可写 $a=\cos\alpha,b=\sin\alpha,c=\cos\beta,d=\sin\beta$，其中 $0\le\alpha\le\beta\le\pi/2$。定义
+
+$$
+r_0=ax+cy,\qquad r_1=bh+dz,
+\qquad r=r_0+r_1,\qquad R=|r\rangle\langle r|,
+\qquad t=a^2-c^2=d^2-b^2\ge0.
+\tag{63.7}
+$$
+
+向量 $r$ 是等距
+
+$$
+V|0\rangle=a|00\rangle+b|11\rangle,
+\qquad
+V|1\rangle=c|01\rangle+d|10\rangle
+$$
+
+的 Choi 向量，所以 $\operatorname{Tr}_{BD}R=I_A$。
+
+**引理 63.3（完整 tester 下的两角准确修复）。** 对每个满足式（63.6）的参数组，有
+
+$$
+e_D(R)=\Delta(M)=t+2ad=(a+d)^2-1.
+\tag{63.8}
+$$
+
+一个显式最优修复由任意
+
+$$
+p\in[ac,1-bd]
+\tag{63.9}
+$$
+
+给出：在正交分解 $\operatorname{span}\{x,y\}\oplus\operatorname{span}\{h,z\}$ 上令
+
+$$
+S_p=
+\begin{pmatrix}p&ac\\ac&p\end{pmatrix}_{x,y}
+\oplus
+\begin{pmatrix}1-p&bd\\bd&1-p\end{pmatrix}_{h,z},
+\tag{63.10}
+$$
+
+在其正交补上取零。
+
+**证明。** 先检查参数区间与正性。Cauchy–Schwarz 给
+
+$$
+ac+bd\le\sqrt{a^2+b^2}\sqrt{c^2+d^2}=1,
+$$
+
+故式（63.9）非空。由 $a\ge c,d\ge b$，
+
+$$
+c^2\le ac\le p\le1-bd\le1-b^2=a^2.
+\tag{63.11}
+$$
+
+两个二阶块的特征值分别是 $p\pm ac$ 和 $1-p\pm bd$，均非负。每个块的交叉项具有不同的 $D$ 坐标，偏迹后消失，因此
+
+$$
+\operatorname{Tr}_D S_p
+=I_A\otimes\operatorname{diag}(p,1-p).
+$$
+
+所以 $S_p$ 是归一化因果修复。
+
+令
+
+$$
+R_{\mathrm{diag}}=|r_0\rangle\langle r_0|
++|r_1\rangle\langle r_1|,
+\qquad
+X=R-R_{\mathrm{diag}}=|r_0\rangle\langle r_1|
++|r_1\rangle\langle r_0|.
+\tag{63.12}
+$$
+
+修复保留了每个早输出分支内部的交叉项。因此
+
+$$
+R_{\mathrm{diag}}-S_p
+=(a^2-p)(|x\rangle\langle x|-|h\rangle\langle h|)
++(p-c^2)(|z\rangle\langle z|-|y\rangle\langle y|).
+\tag{63.13}
+$$
+
+两系数非负、和为 $t$。对任意完整 tester，$\operatorname{Tr}_A C=I_B$ 使每个标准基对角元均位于 $[0,1]$。由 $0\preceq E\preceq C\otimes I_D$，式（63.13）的正、负两个部分与 $E$ 的配对各自至多 $t$，所以
+
+$$
+|\operatorname{Tr}[(R_{\mathrm{diag}}-S_p)E]|\le t.
+\tag{63.14}
+$$
+
+对跨分支项，不限制 $C$ 或 $E$ 的非对角元。正算子 $E$ 的 Cauchy–Schwarz 不等式给
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(XE)|
+&\le2|\langle r_1|E|r_0\rangle|\\
+&\le2\sqrt{\langle r_0|E|r_0\rangle
+\langle r_1|E|r_1\rangle}\\
+&\le2\sqrt{\langle r_0|C\otimes I_D|r_0\rangle
+\langle r_1|C\otimes I_D|r_1\rangle}.
+\end{aligned}
+$$
+
+向量 $x,y$ 具有不同的 $D$ 坐标，$h,z$ 也如此。记 $C$ 对角元按 $AB$ 标记，则
+
+$$
+\begin{aligned}
+\langle r_0|C\otimes I_D|r_0\rangle
+&=a^2C_{00,00}+c^2C_{10,10}\le a^2,\\
+\langle r_1|C\otimes I_D|r_1\rangle
+&=b^2C_{01,01}+d^2C_{11,11}\le d^2,
+\end{aligned}
+\tag{63.15}
+$$
+
+因为每行右侧所用的两个 $C$ 对角元和为 $1$。于是
+
+$$
+|\operatorname{Tr}(XE)|\le2ad.
+\tag{63.16}
+$$
+
+式（63.14）、（63.16）在同一个任意 $C,E$ 上同时成立，直接相加得到
+
+$$
+N_D(R-S_p)\le t+2ad.
+\tag{63.17}
+$$
+
+下界由一个合法的完整总事件达到。令
+
+$$
+|\chi\rangle=|00\rangle+|11\rangle,
+\qquad C_+=|\chi\rangle\langle\chi|,
+\qquad E_+=C_+\otimes I_D.
+\tag{63.18}
+$$
+
+$\operatorname{Tr}_A C_+=I_B$，而
+
+$$
+\operatorname{Tr}(RE_+)=(a+d)^2.
+$$
+
+每个归一化因果修复的同一总响应均为 $1$，因此
+
+$$
+t+2ad=(a+d)^2-1\le\Delta(M)\le e_D(R)
+\le N_D(R-S_p)\le t+2ad.
+$$
+
+全部不等式均取等，证明式（63.8）。这个推导也直接算出了 $\Delta$，无需先求另一个反馈端点。$\square$
+
+### 63.3 为什么标准族覆盖全部低秩量子比特边缘
+
+采用已发表的量子比特通道标准形。Ruskai、Szarek、Werner 的《An Analysis of Completely-Positive Trace-Preserving Maps on $M_2$》，[arXiv:quant-ph/0101003v2](https://arxiv.org/abs/quant-ph/0101003v2)，定理 12（PDF 第 18 页）证明以下条件等价：量子比特通道的 Choi 秩至多二；存在至多两个 Kraus 算符；经输入、输出酉基变换后可化成其式（17）。该文第 1.4 节式（18）（PDF 第 10 页）给出一个对角和一个反对角的 Kraus 表示。本文只使用这些标准形事实，不把它们作为新分类结论。
+
+在通常的 $K\rho K^*$ 约定下，必要时将该文 $A^*\rho A$ 约定中的 Kraus 算符取伴随，可以写成
+
+$$
+K_0=\begin{pmatrix}a&0\\0&d\end{pmatrix},
+\qquad
+K_1=\begin{pmatrix}0&c\\b&0\end{pmatrix},
+\qquad a^2+b^2=c^2+d^2=1,
+\tag{63.19}
+$$
+
+其中四个系数可取非负。具体而言，对角、反对角表示先给四个可能带相位的系数；把它们写入纯化向量的 $000,011,101,110$ 四个位置后，整体相位和 $A,B,D$ 三个局部对角相位可以分别消去四个相位。例如四个相位依次为 $\phi_a,\phi_b,\phi_c,\phi_d$ 时，取整体相位 $-\phi_a$，以及三个局部相位
+
+$$
+\theta_A=\frac{\phi_a+\phi_b-\phi_c-\phi_d}{2},\qquad
+\theta_B=\frac{\phi_a-\phi_b+\phi_c-\phi_d}{2},\qquad
+\theta_D=\frac{\phi_a-\phi_b-\phi_c+\phi_d}{2}.
+$$
+
+这些相位消去全部四项的相位；零系数的相位可以任意指定，不添条件。故无需假设通道本来是实的。
+
+这些 Kraus 算符给出 $M$ 的一个至多二维纯化，其向量正是式（63.7）的 $r$。若 $a<c$，同时交换 $A$ 和 $D$ 的两个基向量，会把 $(a,b,c,d)$ 变为 $(c,d,a,b)$。这样总能达到式（63.6）的次序 $a\ge c,d\ge b$。秩一边界可以给第二个 Kraus 算符补零，仍包含于同一结论；例如 $a=d=1,b=c=0$ 时 $\Delta=3$，不应把它排除为小缺陷区间之外的例外。
+
+输入、早输出和晚输出上的局部酉变换都保持因果集合及完整 tester 集合，因而保持 $e_D$ 与 $\Delta$。例如把 $X$ 共轭为 $(U_A\otimes U_B\otimes U_D)X(U_A\otimes U_B\otimes U_D)^*$ 时，对 tester 作相同共轭即可保持配对及两项偏迹归一化；Choi 输入基变换所出现的共轭酉仍属于同一个允许的局部酉集合。
+
+因此每个秩至多二的量子比特早边缘，都存在一个末输出为量子比特的纯扩张，其修复误差由引理 63.3 准确等于 $\Delta(M)$。同一 $M$ 的任意其他纯化，仅在纯化支撑上相差等距；这也保持最优误差。
+
+### 63.4 从纯化到所有混合扩张
+
+**定理 63.1 的证明。** 对给定 $M$，取第 63.3 节的纯扩张 $R^{\mathrm{pur}}$。第 57 节的固定边缘扩张定理给：对任意满足式（63.1）的 $R$，存在作用在末输出的 CPTP 通道 $\Lambda$，使
+
+$$
+R=(\operatorname{id}_{AB}\otimes\Lambda)(R^{\mathrm{pur}}).
+\tag{63.20}
+$$
+
+若使用带有多余零 Kraus 方向的二维纯化，可在其实际支撑上构造该通道，再任意以固定态补全正交方向，从而仍得到定义在整个二维输入空间上的 CPTP 通道。
+
+完整事件误差在末端 CPTP 处理下收缩，而 $\Delta(M)$ 由固定早边缘决定。因此
+
+$$
+\Delta(M)\le e_D(R)
+\le e_2(R^{\mathrm{pur}})=\Delta(M).
+\tag{63.21}
+$$
+
+这证明式（63.4）。一个达到最优值的修复可以直接取第 63.2 节显式修复经相应局部酉还原后，再施加同一个 $\Lambda$ 的像。$\square$
+
+**推论 63.2 的证明。** 若 $R=|r\rangle\langle r|$ 且 $\dim D=2$，则
+
+$$
+\operatorname{rank}(\operatorname{Tr}_D|r\rangle\langle r|)
+\le\dim D=2.
+$$
+
+定理 63.1 给同系数等式。因此严格间隙排除了纯 $R$，也排除了任何秩至多二的早边缘，得到式（63.5）。$\square$
+
+### 63.5 范围与剩余问题
+
+该结论对 $A=B=2$、$\operatorname{rank}M\le2$ 的全部扩张成立，末输出维数不必等于二。其新量词是固定早边缘的全部纯、混合扩张；末输出通道不能在这一类边缘上制造严格修复间隙。
+
+对同样的量子比特早、晚端口，已有三维末输出的纯反例早边缘秩恰三。因此就纯静态候选而言，末输出维数三已经足以产生严格间隙，而维数至多二不可能产生；这没有把同样的最小维数结论推广到混合候选。
+
+末输出为量子比特、$\operatorname{rank}M\in\{3,4\}$ 的混合候选仍未由本定理结算。第 60 节的秩二压缩族有秩三早边缘，所以它不属于定理 63.1 的假设范围；其局部参数等式及当前结果均不能替代一般混合量子比特问题的证明或反例。
+
+## 追加锚（本行以下为增补区）
+
+## 64. 三个量子比特上的混合候选严格因果修复间隙
+
+### 64.1 接口与结论
+
+固定晚输入 $A$、早输出 $B$、晚输出 $D$ 均为量子比特，张量次序为 $A\otimes B\otimes D$。因果修复满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{64.1}
+$$
+
+使用完整量子 tester 合同
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+\tag{64.2}
+$$
+
+全转置已吸收在 tester 的配对约定中。对静态候选 $R\succeq0$、$\operatorname{Tr}_{BD}R=I_A$，记
+
+$$
+\Delta(R)=\max_C|\operatorname{Tr}(R(C\otimes I_D))-1|,
+\qquad
+ e(R)=\min_{S\text{ 满足（64.1）}}\max_{C,E}
+ |\operatorname{Tr}((R-S)E)|.
+\tag{64.3}
+$$
+
+选取参数 $0<\varepsilon<1$、$0<a<1$，记 $c=\sqrt{1-\varepsilon}$，并定义
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,
+\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\\
+u&=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z,\\
+v&=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|u+cy\rangle\langle u+cy|+|v\rangle\langle v|.
+\end{aligned}
+\tag{64.4}
+$$
+
+这是秩恰二的静态通道 Choi 算符；它的早边缘是
+
+$$
+M_\varepsilon=|00\rangle\langle00|
++(1-\varepsilon)|10\rangle\langle10|
++\varepsilon|11\rangle\langle11|,
+\tag{64.5}
+$$
+
+秩恰三。
+
+**定理 64.1（混合量子比特末输出的严格间隙）。** 若
+
+$$
+\sqrt a\,(c-\varepsilon)>\varepsilon(1+c),
+\tag{64.6}
+$$
+
+则
+
+$$
+e(R_{a,\varepsilon})>\Delta(R_{a,\varepsilon})=\varepsilon.
+\tag{64.7}
+$$
+
+特别地，式（64.7）对整个参数区域
+
+$$
+0<\varepsilon\le\frac1{16},
+\qquad\frac1{49}\le a<1
+\tag{64.8}
+$$
+
+成立。因此 $a=1/2,\varepsilon=1/16$ 给出一个具体的 $2\times2\times2$ 混合严格反例。
+
+证明只使用归一化总事件的饱和、正性和二阶主子式；不需要数值优化。
+
+### 64.2 静态合法性、早边缘与三维纯反例的压缩
+
+式（64.4）的两个向量具有不交的标准基支撑，且均非零，因此 $R_{a,\varepsilon}$ 正且秩恰二。对 $D$ 取偏迹时，$u$ 中 $x,z$ 的交叉项与 $v$ 中 $x',z'$ 的交叉项准确相消：它们分别为
+
+$$
+\pm\sqrt{\varepsilon a(1-a)}\,|00\rangle\langle11|
+$$
+
+及其伴随。其余非对角项具有不同的 $D$ 坐标，偏迹后为零。各对角项相加得到式（64.5），所以 $\operatorname{Tr}_{BD}R=I_A$。
+
+若令 $q=C_{00,00}$、$t=C_{11,11}$，则 $q,t\in[0,1]$，且
+
+$$
+\operatorname{Tr}(M_\varepsilon C)=1-\varepsilon+\varepsilon(q+t).
+\tag{64.9}
+$$
+
+两端 $1+\varepsilon$、$1-\varepsilon$ 分别由
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad
+C_-=|01\rangle\langle01|+|10\rangle\langle10|
+\tag{64.10}
+$$
+
+达到。由此 $\Delta=\varepsilon$，并且任意因果修复都满足 $e(R)\ge\varepsilon$。
+
+这个候选可由三维末输出的纯候选
+
+$$
+R^{(3)}_\varepsilon
+=|000+c\,101+\sqrt\varepsilon\,112\rangle
+\langle000+c\,101+\sqrt\varepsilon\,112|
+$$
+
+经真实末端 CPTP 通道得到。定义等距 $W:\mathbb C^3\to\mathbb C^2_D\otimes\mathbb C^2_F$：
+
+$$
+\begin{aligned}
+W|0\rangle&=\sqrt a\,|0,0\rangle+\sqrt{1-a}\,|1,1\rangle,\\
+W|1\rangle&=|1,0\rangle,\\
+W|2\rangle&=\sqrt{1-a}\,|0,0\rangle-\sqrt a\,|1,1\rangle.
+\end{aligned}
+\tag{64.11}
+$$
+
+三列正交归一，故 $\Lambda_a(X)=\operatorname{Tr}_F(WXW^*)$ 是 CPTP，并有
+
+$$
+R_{a,\varepsilon}
+=(\operatorname{id}_{AB}\otimes\Lambda_a)(R^{(3)}_\varepsilon).
+\tag{64.12}
+$$
+
+末端处理保持全部反馈总响应，却将晚输出压缩成量子比特。下面证明这一个压缩族仍保留严格修复间隙。
+
+### 64.3 若同系数可修复，两个饱和总事件强迫哪些矩阵元
+
+假设存在因果 $S$ 使完整事件误差至多 $\varepsilon$。记
+
+$$
+\Pi_+=C_+\otimes I_D,
+\qquad\Pi_-=C_-\otimes I_D.
+$$
+
+对任意因果 $S$，两个总响应均为 $1$。因此
+
+$$
+\operatorname{Tr}(\Pi_+(R-S)\Pi_+)=\varepsilon,
+\qquad
+\operatorname{Tr}(\Pi_-(S-R)\Pi_-)=\varepsilon.
+$$
+
+如果第一个压缩有负特征值，其正谱投影就是合法的 $\Pi_+$ 以下事件，响应将严格超过总迹 $\varepsilon$，与误差假设矛盾。第二个压缩同理。故
+
+$$
+S_+:=\Pi_+S\Pi_+\preceq R_+:=\Pi_+R\Pi_+,
+\qquad
+S_-:=\Pi_-S\Pi_-\succeq R_-:=\Pi_-R\Pi_-.
+\tag{64.13}
+$$
+
+这里
+
+$$
+R_+=|u\rangle\langle u|+|v\rangle\langle v|,
+\qquad R_-=c^2|y\rangle\langle y|.
+$$
+
+正性与 $S_+\preceq R_+$ 强制 $S_+$ 支撑在 $\operatorname{span}\{u,v\}$。可写
+
+$$
+S_+=m|u\rangle\langle u|+n|v\rangle\langle v|
++w|u\rangle\langle v|+\overline w|v\rangle\langle u|,
+\tag{64.14}
+$$
+
+其中 $m,n\in[0,1]$。因果条件中 $A=0$ 到 $A=1$ 的非对角块为零，故
+
+$$
+0=(\operatorname{Tr}_D S)_{00,11}
+=\sqrt{\varepsilon a(1-a)}(m-n).
+$$
+
+$0<a<1$、$\varepsilon>0$ 保证系数非零，因此 $m=n$。此时
+
+$$
+\sigma_{00}=S_{x,x}+S_{x',x'}=m,
+\qquad
+\sigma_{11}=S_{z,z}+S_{z',z'}=\varepsilon m.
+$$
+
+归一化迫使
+
+$$
+\mu:=m=n=\frac1{1+\varepsilon},
+\qquad p:=\sigma_{11}=\frac{\varepsilon}{1+\varepsilon},
+\qquad
+S_{x,x}=\mu a,\quad S_{x',x'}=\mu(1-a).
+\tag{64.15}
+$$
+
+这一结论不要求把 $S$ 相位平均，也不要求式（64.14）的 $w$ 为零。
+
+令
+
+$$
+s=S_{y,y},\qquad
+k=\frac{S_{x,y}}{\sqrt a},
+\qquad
+\eta=\mu-c^2=\frac{\varepsilon^2}{1+\varepsilon}.
+\tag{64.16}
+$$
+
+$S_-\succeq c^2|y\rangle\langle y|$ 给 $s\ge c^2$；而因果偏迹在 $AB=10$ 上给 $s\le\sigma_{00}=\mu$。$S$ 在 $x,y$ 上的二阶主子式给
+
+$$
+c^2\le s\le\mu,
+\qquad |k|^2\le\mu s\le\mu^2.
+\tag{64.17}
+$$
+
+### 64.4 第三个反馈族给出不相容的二阶约束
+
+取任意 $0<q<1$，令
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0)
+\tag{64.18}
+$$
+
+按 $AB=00,01,10,11$ 排列。它满足 $\operatorname{Tr}_A C_q=I_B$。记
+
+$$
+H_q=(C_q^{1/2}\otimes I_D)(R-S)(C_q^{1/2}\otimes I_D).
+$$
+
+它在 $x,y$ 子空间上的主块为
+
+$$
+B_q=
+\begin{pmatrix}
+a p q&\sqrt{a q(1-q)}(c-k)\\
+\sqrt{a q(1-q)}(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{64.19}
+$$
+
+令 $\lambda_q=\max\{0,\lambda_{\max}(B_q)\}$。因为第一个对角元非负、第二个非正，$B_q$ 至多有一个正特征值，故它的正谱和等于 $\lambda_q$。
+
+在加权空间中取 $B_q$ 的正谱投影，再加上与它正交的 $|x'\rangle\langle x'|$ 投影，得到一个效果 $0\preceq F_q\preceq I$。把它变为
+
+$$
+E_q=(C_q^{1/2}\otimes I_D)F_q(C_q^{1/2}\otimes I_D)
+$$
+
+就是合法 tester 事件，且
+
+$$
+\operatorname{Tr}((R-S)E_q)=\lambda_q+p(1-a)q.
+\tag{64.20}
+$$
+
+即使 $H_q$ 在这些子空间之间有交叉项，它们与所选分块投影配对时也不贡献。另一方面，式（64.9）给完整总响应差
+
+$$
+\operatorname{Tr}((R-S)(C_q\otimes I_D))=-\varepsilon(1-q).
+$$
+
+因此互补事件 $C_q\otimes I_D-E_q$ 的响应为
+$-\varepsilon(1-q)-\lambda_q-p(1-a)q$。误差至多 $\varepsilon$ 的假设迫使
+
+$$
+\lambda_q\le q A,
+\qquad A:=\varepsilon-p(1-a)=\eta+ap.
+\tag{64.21}
+$$
+
+于是 $qA I_2-B_q\succeq0$。其行列式非负，除以 $q>0$ 得
+
+$$
+\eta\,[qA+(s-c^2)(1-q)]
+-a|c-k|^2(1-q)\ge0.
+$$
+
+令 $q\downarrow0$，得到必须满足的二阶约束
+
+$$
+a|c-k|^2\le\eta(s-c^2)\le\eta^2.
+\tag{64.22}
+$$
+
+条件（64.6）保证 $c>\mu$；由式（64.17），$|k|\le\mu$，所以
+
+$$
+|c-k|\ge c-|k|\ge c-\mu.
+$$
+
+因此任何同系数修复都必须满足
+
+$$
+a(c-\mu)^2\le\eta^2.
+\tag{64.23}
+$$
+
+但准确恒等式为
+
+$$
+c-\mu=
+\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)},
+\qquad
+\eta=\frac{\varepsilon^2}{1+\varepsilon}.
+\tag{64.24}
+$$
+
+故条件（64.6）恰好使式（64.23）严格失败。矛盾说明不存在事件误差至多 $\varepsilon$ 的因果修复。
+
+因果修复集合由正性、闭线性约束及固定迹 $\operatorname{Tr}S=2$ 给出，有限维下紧；完整事件误差连续。因此最优值达到，不存在误差至多 $\varepsilon$ 的修复推出严格的 $e(R)>\varepsilon$，证明定理 64.1 的一般条件部分。
+
+### 64.5 一个完整参数区域与维数含义
+
+若 $0<\varepsilon\le1/16$，则
+
+$$
+c=\sqrt{1-\varepsilon}>1-\varepsilon\ge\frac{15}{16},
+\qquad c-\varepsilon>\frac78,
+\qquad1+c<2.
+$$
+
+从而
+
+$$
+\frac{\varepsilon(1+c)}{c-\varepsilon}<\frac17.
+\tag{64.25}
+$$
+
+对 $a\ge1/49$，有 $\sqrt a\ge1/7$，所以式（64.6）严格成立；加上 $a<1$，即可应用全部支撑与因果约束。这证明参数区域（64.8）。$\square$
+
+对该区域，末端通道收缩和三维纯候选的已证上界还给
+
+$$
+\varepsilon<e(R_{a,\varepsilon})
+\le e(R^{(3)}_\varepsilon)<\frac98\varepsilon.
+\tag{64.26}
+$$
+
+这里没有给混合候选的准确最优值，也没有给统一的正比例间隙下界；严格不等式本身由前述有限维矩阵论证给出。
+
+该结果与第 63 节的低秩早边缘等式相容：候选恰好具有 $\operatorname{rank}R=2$、$\operatorname{rank}M=3$，满足纯量子比特排除定理留下的必要条件。对于 $A=B=2$，第 54 节已证晚输出一维时同系数修复总可行，而上述晚输出二维混合候选已经不可同系数修复。因此在允许混合静态候选的范围，严格间隙的最小晚输出维数是二；若限于纯候选，二维被排除而已有三维反例。
+
+## 追加锚（本行以下为增补区）
+
+## 65. 混合量子比特反例的显式修复与尖锐首阶误差
+
+### 65.1 结论
+
+沿用第 64 节三个量子比特上的混合候选，令
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+r_0&=\sqrt a\,x+cy+\sqrt\varepsilon b\,z,\\
+r_1&=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|r_0\rangle\langle r_0|+|r_1\rangle\langle r_1|,
+\qquad0<a<1.
+\end{aligned}
+\tag{65.1}
+$$
+
+完整 tester 合同、因果修复集合及最优事件响应误差 $e(R)$ 均保持不变。早边缘仍给 $\Delta(R_{a,\varepsilon})=\varepsilon$。
+
+**定理 65.1。** 对 $0<\varepsilon<1-a$，定义
+
+$$
+\beta=\sqrt{\frac{1-a-\varepsilon}{1-\varepsilon}},
+\qquad
+\xi=\sqrt\varepsilon(b-\beta)
+=\frac{a\varepsilon^{3/2}}{(1-\varepsilon)(b+\beta)},
+\qquad
+\zeta=\frac{a\varepsilon^2}{1-\varepsilon}.
+\tag{65.2}
+$$
+
+则有显式准确上界
+
+$$
+\varepsilon\le e(R_{a,\varepsilon})
+\le\varepsilon+2(1+\sqrt a)\xi+\zeta.
+\tag{65.3}
+$$
+
+因此对每个固定 $a\in(0,1)$，
+
+$$
+e(R_{a,\varepsilon})
+=\varepsilon+O_a(\varepsilon^{3/2}),
+\qquad
+\lim_{\varepsilon\downarrow0}
+\frac{e(R_{a,\varepsilon})}{\varepsilon}=1.
+\tag{65.4}
+$$
+
+同时，第 64 节的严格反例条件对充分小的正 $\varepsilon$ 成立，故在该范围仍有
+
+$$
+0<e(R_{a,\varepsilon})-\varepsilon
+=O_a(\varepsilon^{3/2}).
+\tag{65.5}
+$$
+
+式（65.5）的上界不是对差值首个非零阶或系数的确定；它排除了固定 $a$ 下统一的正比例间隙 $e\ge(1+\kappa)\varepsilon$、$\kappa>0$。
+
+### 65.2 显式因果修复
+
+定义
+
+$$
+\begin{aligned}
+s_0&=\sqrt a\,x+cy+\sqrt\varepsilon\beta\,z,\\
+s_1&=\sqrt{1-a-\varepsilon}\,x'
+-\frac{\sqrt{\varepsilon a}}c\,z',\\
+S_{a,\varepsilon}
+&=|s_0\rangle\langle s_0|+|s_1\rangle\langle s_1|
++\varepsilon|h\rangle\langle h|.
+\end{aligned}
+\tag{65.6}
+$$
+
+该算符显然正。其早输出 $B=0$ 对角质量在 $A=0$ 和 $A=1$ 下分别是
+
+$$
+a+(1-a-\varepsilon)=1-\varepsilon,
+\qquad c^2=1-\varepsilon.
+$$
+
+早输出 $B=1$ 对角质量在两输入下分别是
+
+$$
+\varepsilon,
+\qquad
+\varepsilon\beta^2+\frac{\varepsilon a}{c^2}
+=\varepsilon\frac{1-a-\varepsilon+a}{1-\varepsilon}
+=\varepsilon.
+$$
+
+唯一可能在 $D$ 偏迹后留下的非对角项是 $AB=00$ 与 $AB=11$ 之间，其系数为
+
+$$
+\sqrt{\varepsilon a}\left(
+\beta-\frac{\sqrt{1-a-\varepsilon}}c\right)=0.
+$$
+
+所以
+
+$$
+\operatorname{Tr}_D S_{a,\varepsilon}
+=I_A\otimes\operatorname{diag}(1-\varepsilon,\varepsilon).
+\tag{65.7}
+$$
+
+这是合法的归一化因果修复，不需要优化未知矩阵。
+
+### 65.3 完整事件误差的上界
+
+记 $w=\sqrt a\,x+cy$。由
+
+$$
+b^2-\beta^2=\frac{a\varepsilon}{1-\varepsilon},
+\qquad
+\frac{\sqrt{1-a-\varepsilon}}c=\beta,
+$$
+
+直接展开得到准确分解
+
+$$
+\begin{aligned}
+R_{a,\varepsilon}-S_{a,\varepsilon}
+={}&\varepsilon(|x'\rangle\langle x'|-|h\rangle\langle h|)\\
+&+\xi\bigl(
+|w\rangle\langle z|+|z\rangle\langle w|
+-\sqrt a\,|x'\rangle\langle z'|
+-\sqrt a\,|z'\rangle\langle x'|
+\bigr)\\
+&+\zeta(|z\rangle\langle z|-|z'\rangle\langle z'|).
+\end{aligned}
+\tag{65.8}
+$$
+
+对任意完整 tester $C,E$，每个 $C$ 标准基对角元位于 $[0,1]$。因此第一行与 $E$ 的配对绝对值至多 $\varepsilon$，第三行至多 $\zeta$。
+
+第二行使用正算子 $E$ 的 Cauchy–Schwarz，以及 $E\preceq C\otimes I_D$。因为 $x,y$ 具有不同的 $D$ 坐标，
+
+$$
+\langle w|C\otimes I_D|w\rangle
+=a C_{00,00}+c^2C_{10,10}\le1,
+$$
+
+其中 $C_{00,00}+C_{10,10}=1$。其他三个标准基向量也满足
+
+$$
+\langle z|C\otimes I_D|z\rangle\le1,
+\qquad\langle x'|C\otimes I_D|x'\rangle\le1,
+\qquad\langle z'|C\otimes I_D|z'\rangle\le1.
+$$
+
+于是
+
+$$
+|\langle z|E|w\rangle|\le1,
+\qquad|\langle z'|E|x'\rangle|\le1.
+$$
+
+第二行与 $E$ 的配对绝对值至多 $2(1+\sqrt a)\xi$。三个界对同一个任意 $C,E$ 同时成立，相加给
+
+$$
+N(R_{a,\varepsilon}-S_{a,\varepsilon})
+\le\varepsilon+2(1+\sqrt a)\xi+\zeta.
+\tag{65.9}
+$$
+
+结合总响应下界 $e\ge\Delta=\varepsilon$，得到式（65.3）。
+
+### 65.4 极限与严格性的相容
+
+固定 $0<a<1$ 时，$b>0$ 且 $\beta\to b$，所以
+
+$$
+\xi=\frac{a}{2\sqrt{1-a}}\varepsilon^{3/2}
++O_a(\varepsilon^{5/2}),
+\qquad\zeta=a\varepsilon^2+O_a(\varepsilon^3).
+$$
+
+式（65.3）于是给更具体的上界展开
+
+$$
+e(R_{a,\varepsilon})
+\le\varepsilon+
+\frac{a(1+\sqrt a)}{\sqrt{1-a}}\varepsilon^{3/2}
++a\varepsilon^2+O_a(\varepsilon^{5/2}).
+\tag{65.10}
+$$
+
+这个展开属于显式修复的误差上界，不是未知最优误差的等式展开。上下夹逼证明式（65.4）。这里固定 $a$；误差常数依赖 $a$，显示的系数在 $a\uparrow1$ 时发散，且修复要求 $\varepsilon<1-a$。因此不能将结论当作整个 $a\in(0,1)$ 上的一致极限，也不能直接代入随 $\varepsilon$ 趋近端点的 $a(\varepsilon)$。
+
+严格反例条件是
+
+$$
+\sqrt a(c-\varepsilon)>\varepsilon(1+c).
+$$
+
+对固定 $a>0$，左侧趋于 $\sqrt a>0$，右侧趋于零，因此充分小的正 $\varepsilon$ 必满足。它与式（65.4）并不冲突：差值严格为正，但相对误差 $e/\Delta$ 趋于一。由此得到式（65.5）。$\square$
+
+同一固定 $a$ 的末端压缩把三维纯候选的 $e/\Delta\to9/8$ 变成混合量子比特族的 $e/\Delta\to1$，同时在每个充分小的非零参数处保留严格间隙。这一区别由两个相同接口问题的解析结论给出，不由有限参数数值拟合推出。混合族差值的尖锐阶数、非零系数及有限参数准确最优值仍未由这里的上界确定。
+
+## 追加锚（本行以下为增补区）
+
+## 66. 混合量子比特反例的二阶修复上界
+
+### 66.1 候选、参数与结论
+
+沿用第 64 节三个量子比特混合候选及完整 tester 事件误差。记
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+r_0&=\sqrt a\,x+cy+\sqrt\varepsilon b\,z,\\
+r_1&=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|r_0\rangle\langle r_0|+|r_1\rangle\langle r_1|,
+\end{aligned}
+\tag{66.1}
+$$
+
+其中固定 $0<a<1$。它的归一化缺陷仍是 $\Delta=\varepsilon$。现在取
+
+$$
+0<\varepsilon\le\frac{1-a}{8}=\frac{b^2}{8},
+\tag{66.2}
+$$
+
+令 $p$ 为下述二次方程的小根：
+
+$$
+p^2-b^2(1+\varepsilon)p+\varepsilon b^2=0.
+\tag{66.3}
+$$
+
+显式地，
+
+$$
+p=\frac{b^2(1+\varepsilon)
+-\sqrt{b^4(1+\varepsilon)^2-4b^2\varepsilon}}2,
+\qquad s=1-p,
+\qquad d=p-\varepsilon.
+\tag{66.4}
+$$
+
+**定理 66.1。** 参数范围（66.2）保证 $\varepsilon<p\le2\varepsilon<b^2$。在这一范围内有准确上界
+
+$$
+\varepsilon\le e(R_{a,\varepsilon})
+\le\varepsilon+d\left[
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt{1-p}}
+\right].
+\tag{66.5}
+$$
+
+因此对每个固定 $a\in(0,1)$，
+
+$$
+e(R_{a,\varepsilon})=\varepsilon+O_a(\varepsilon^2).
+\tag{66.6}
+$$
+
+在充分小的正 $\varepsilon$ 下，严格反例定理仍给 $e>\varepsilon$，故
+
+$$
+0<e(R_{a,\varepsilon})-\varepsilon
+=O_a(\varepsilon^2).
+\tag{66.7}
+$$
+
+这是差值的上界阶数，不宣称差值为 $\Theta_a(\varepsilon^2)$，也不宣称式（66.5）的显式修复必为最优。
+
+### 66.2 小根合法性与因果修复
+
+判别式满足
+
+$$
+b^4(1+\varepsilon)^2-4b^2\varepsilon
+\ge b^4-4b^2\varepsilon\ge\frac{b^4}{2}>0.
+$$
+
+有理化式（66.4）给
+
+$$
+p=\frac{2\varepsilon}
+{1+\varepsilon+\sqrt{(1+\varepsilon)^2-4\varepsilon/b^2}}
+\le2\varepsilon\le\frac{b^2}{4}<b^2.
+\tag{66.8}
+$$
+
+$p>0$ 由同一式明显成立。二次方程等价于
+
+$$
+p(b^2-p)=\varepsilon b^2(1-p)=\varepsilon b^2s,
+\qquad
+p-\varepsilon=\frac{a\varepsilon p}{b^2-p}>0.
+\tag{66.9}
+$$
+
+这也证明 $s>0$，且 $d>0$。
+
+定义
+
+$$
+\begin{aligned}
+s_0&=\sqrt a\,x+\sqrt s\,y+\sqrt\varepsilon b\,z,\\
+s_1&=\sqrt{b^2-p}\,x'-\sqrt{\frac{pa}{s}}\,z',\\
+S&=|s_0\rangle\langle s_0|+|s_1\rangle\langle s_1|
++p|h\rangle\langle h|.
+\end{aligned}
+\tag{66.10}
+$$
+
+所有根式均合法，$S\succeq0$。$B=0$ 的两个输入对角质量是
+
+$$
+a+b^2-p=s,\qquad s.
+$$
+
+$B=1$ 的两个输入对角质量是 $p$ 及
+
+$$
+\varepsilon b^2+\frac{pa}{s}=p;
+$$
+
+最后一个等式来自式（66.9）。偏迹后唯一可能的跨输入非对角项满足
+
+$$
+\sqrt{\varepsilon a}\,b
+-\sqrt{b^2-p}\sqrt{\frac{pa}{s}}=0,
+$$
+
+因为 $p(b^2-p)/s=\varepsilon b^2$。所以
+
+$$
+\operatorname{Tr}_D S=I_A\otimes\operatorname{diag}(s,p).
+\tag{66.11}
+$$
+
+这给出归一化因果修复。式（66.9）同时保证两条跨输入、相同末输出的相干项与原候选完全匹配。
+
+### 66.3 准确差算符与共同 tester 上界
+
+令
+
+$$
+w=\sqrt a\,x+\sqrt\varepsilon b\,z,
+\qquad
+\gamma=c-\sqrt s=\frac{d}{c+\sqrt s}>0.
+\tag{66.12}
+$$
+
+式（66.10）保持 $r_0$ 在 $x,z$ 上的两个系数，只改变 $y$ 系数。式（66.9）又使 $s_1$ 与 $r_1$ 的交叉项完全相同。因此直接展开得到
+
+$$
+\begin{aligned}
+R_{a,\varepsilon}-S
+={}&p(|x'\rangle\langle x'|-|h\rangle\langle h|)\\
+&+d(|y\rangle\langle y|-|z'\rangle\langle z'|)\\
+&+\gamma(|w\rangle\langle y|+|y\rangle\langle w|).
+\end{aligned}
+\tag{66.13}
+$$
+
+这里 $y$ 对角差为 $c^2-s=d$；$z'$ 对角差为
+$\varepsilon a-pa/s=\varepsilon-p=-d$。
+
+固定任意完整 tester
+
+$$
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+$C$ 的每个标准基对角元都位于 $[0,1]$，所以式（66.13）第一、二行与 $E$ 配对的绝对值分别至多 $p,d$。
+
+对第三行，正性给
+
+$$
+|C_{00,11}|\le\sqrt{C_{00,00}C_{11,11}}.
+$$
+
+因为 $x,z$ 具有同一个 $D$ 坐标，
+
+$$
+\begin{aligned}
+\langle w|C\otimes I_D|w\rangle
+&\le\left(\sqrt a\sqrt{C_{00,00}}
++\sqrt\varepsilon b\sqrt{C_{11,11}}\right)^2\\
+&\le(\sqrt a+\sqrt\varepsilon b)^2.
+\end{aligned}
+\tag{66.14}
+$$
+
+同时 $\langle y|C\otimes I_D|y\rangle=C_{10,10}\le1$。正算子 $E$ 的 Cauchy–Schwarz 不等式及 $E\preceq C\otimes I_D$ 因而给
+
+$$
+|\langle y|E|w\rangle|
+\le\sqrt{\langle y|E|y\rangle\langle w|E|w\rangle}
+\le\sqrt a+\sqrt\varepsilon b.
+\tag{66.15}
+$$
+
+三个上界始终使用同一个任意 $C,E$。相加可得
+
+$$
+|\operatorname{Tr}((R-S)E)|
+\le p+d+2\gamma(\sqrt a+\sqrt\varepsilon b)
+=\varepsilon+d\left[
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt s}
+\right].
+$$
+
+取全部事件最大值，再与 $\Delta=\varepsilon$ 的下界合并，证明式（66.5）。
+
+### 66.4 固定参数展开与范围
+
+固定 $a\in(0,1)$ 后，小根在 $\varepsilon=0$ 附近解析：式（66.3）对 $p$ 的偏导在 $(0,0)$ 为 $-b^2\ne0$。直接展开得到
+
+$$
+p=\varepsilon+\frac{a}{1-a}\varepsilon^2+O_a(\varepsilon^3),
+\qquad
+\gamma=\frac{a}{2(1-a)}\varepsilon^2+O_a(\varepsilon^3).
+\tag{66.16}
+$$
+
+故式（66.5）的上界具有展开
+
+$$
+e(R_{a,\varepsilon})
+\le\varepsilon+
+\frac{a(2+\sqrt a)}{1-a}\varepsilon^2
++\frac{a}{\sqrt{1-a}}\varepsilon^{5/2}
++O_a(\varepsilon^3).
+\tag{66.17}
+$$
+
+这是一个显式可行修复的上界展开，不能把其中的系数当作最优误差的系数。式（66.17）与 $e\ge\varepsilon$ 给式（66.6）。严格反例条件对每个固定 $a>0$ 在充分小的正 $\varepsilon$ 下成立，得到式（66.7）。$\square$
+
+该修复的参数区间和展开常数依赖 $a$；当 $a\uparrow1$ 时，允许的 $\varepsilon$ 区间缩小，显示系数发散。这不是整个 $a\in(0,1)$ 上的一致二阶估计。差值的匹配下界、尖锐阶数、最优系数和有限参数准确最优值仍需另证。
+
+## 追加锚（本行以下为增补区）
+
+## 67. 混合量子比特候选的相位阻尼阈值
+
+### 67.1 相位阻尼保持同一早边缘
+
+沿用第64节的完整 tester、因果修复与混合候选。本节对该族施加真实末端相位阻尼，给出同系数修复区间和严格间隙区间，并由这两个区间确定转变位置的首阶。
+
+设 $0<a<1$、$0<\varepsilon<1$，$c=\sqrt{1-\varepsilon}$，
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,\quad h=|010\rangle,
+$$
+
+$$
+u=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z,
+\qquad v=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z'.
+$$
+
+对 $0\le\lambda\le1$ 定义
+
+$$
+R_\lambda=|u\rangle\langle u|+|v\rangle\langle v|
++c^2|y\rangle\langle y|
++\lambda c(|u\rangle\langle y|+|y\rangle\langle u|).
+$$
+
+这是对 $R_1=R_{a,\varepsilon}$ 的末输出 $D$ 作相位阻尼所得：保留两个对角块，将异 $D$ 坐标块乘以 $\lambda$。该通道是恒等与完全退相干的凸组合。因此每个 $R_\lambda$ 正、具有同一早边缘 $M_\varepsilon$，归一化缺陷恒为 $\Delta=\varepsilon$。
+
+记
+
+$$
+\mu=\frac1{1+\varepsilon},\qquad
+p=\frac{\varepsilon}{1+\varepsilon},\qquad
+\eta=\mu-c^2=\frac{\varepsilon^2}{1+\varepsilon}.
+$$
+
+### 67.2 显式可修复区间
+
+**命题 67.1（阻尼后的显式同系数修复）。** 若 $\lambda c\le\mu$，则 $e(R_\lambda)=\varepsilon$。
+
+**证明。** 取
+
+$$
+S_\lambda=\mu(|u\rangle\langle u|+|v\rangle\langle v|+|y\rangle\langle y|)
++p|h\rangle\langle h|
++\lambda c(|u\rangle\langle y|+|y\rangle\langle u|).
+$$
+
+在列向量 $u,y$ 所定的合同变换下，相关系数矩阵是
+
+$$
+\begin{pmatrix}\mu&\lambda c\\\lambda c&\mu\end{pmatrix}\succeq0.
+$$
+
+其余两项亦正，故 $S_\lambda\succeq0$。$u,y$ 的 $D$ 坐标不同，交叉项的 $D$ 偏迹为零；$u,v$ 的 $00,11$ 交叉项相消。于是
+
+$$
+\operatorname{Tr}_D S_\lambda
+=\mu|00\rangle\langle00|+p|01\rangle\langle01|
++\mu|10\rangle\langle10|+p|11\rangle\langle11|
+=I_A\otimes\operatorname{diag}(\mu,p).
+$$
+
+这是因果修复。其差算符与 $\lambda$ 无关：
+
+$$
+R_\lambda-S_\lambda=P-N,
+\qquad P=p(|u\rangle\langle u|+|v\rangle\langle v|),
+\quad N=\eta|y\rangle\langle y|+p|h\rangle\langle h|.
+$$
+
+对同一任意完整 tester $C,E$，$P,N\succeq0$ 及 $0\preceq E\preceq C\otimes I_D$ 给
+
+$$
+0\le\operatorname{Tr}(PE)\le p(C_{00,00}+\varepsilon C_{11,11})\le p(1+\varepsilon)=\varepsilon,
+$$
+
+$$
+0\le\operatorname{Tr}(NE)\le\eta C_{10,10}+pC_{01,01}\le\eta+p=\varepsilon.
+$$
+
+因此配对差的绝对值至多 $\varepsilon$。总事件给普遍下界 $e\ge\Delta=\varepsilon$，故等式成立。
+
+特别地，$\lambda=0$ 总能同系数修复；此时 $D$ 已经典化，但各 $D$ 条件块仍含有 $AB$ 的非对角相干。本命题是该明确族的结论。
+
+### 67.3 严格间隙区间
+
+**命题 67.2（阻尼后仍保留严格间隙的充分条件）。** 若 $\lambda c>\mu+\eta/\sqrt a$，则 $e(R_\lambda)>\varepsilon$。
+
+**证明。** 反设存在因果 $S$，其完整事件误差至多 $\varepsilon$。第64节两个总事件 $C_+,C_-$ 及其饱和压缩保持原样：$R_+=uu^*+vv^*$、$R_-=c^2yy^*$ 都不依赖 $\lambda$。同一支撑、偏迹和归一化论证给
+
+$$
+S_{x,x}=\mu a,\quad S_{x',x'}=\mu(1-a),\quad
+c^2\le s:=S_{y,y}\le\mu,\quad
+k:=S_{x,y}/\sqrt a,\quad |k|^2\le\mu s\le\mu^2.
+$$
+
+对 $C_q=\operatorname{diag}(q,1,1-q,0)$，$0<q<1$，加权 $x,y$ 主块变为
+
+$$
+B_q=\begin{pmatrix}
+apq&\sqrt{aq(1-q)}(\lambda c-k)\\
+\sqrt{aq(1-q)}(\lambda c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+$$
+
+取该块正谱投影加 $x'$ 投影，再取其互补事件。其总响应仍为 $-\varepsilon(1-q)$，故同样得到
+
+$$
+\max\{0,\lambda_{\max}(B_q)\}\le q(\eta+ap).
+$$
+
+由 $q(\eta+ap)I-B_q\succeq0$ 的行列式非负，除以 $q$ 并令 $q\downarrow0$，得到
+
+$$
+a|\lambda c-k|^2\le\eta(s-c^2)\le\eta^2.
+$$
+
+而假设 $\lambda c>\mu+\eta/\sqrt a$ 及 $|k|\le\mu$ 给
+$\sqrt a|\lambda c-k|\ge\sqrt a(\lambda c-\mu)>\eta$，矛盾。
+
+因果修复集合紧、误差连续，最优值达到；所以不可能达到误差 $\varepsilon$ 意味着最优值严格大于它。
+
+### 67.4 转变位置的二阶夹逼
+
+**定理 67.3（相位阻尼转变的首阶定位）。** 固定满足 $c>\mu+\eta/\sqrt a$ 的 $(a,\varepsilon)$；例如第64节全部参数区域 $0<\varepsilon\le1/16$、$1/49\le a<1$。则存在唯一转变位置 $\lambda_*\in(0,1)$，使
+
+$$
+e(R_\lambda)=\varepsilon\quad\Longleftrightarrow\quad0\le\lambda\le\lambda_*,
+$$
+
+并且
+
+$$
+\frac\mu c\le\lambda_*\le\frac{\mu+\eta/\sqrt a}{c}<1.
+$$
+
+**证明。** 若 $0\le\lambda'\le\lambda$ 且 $\lambda>0$，对 $R_\lambda$ 再施阻尼系数 $\lambda'/\lambda$ 的末端 CPTP 通道就得到 $R_{\lambda'}$。末端数据处理给 $e(R_{\lambda'})\le e(R_\lambda)$。函数 $e$ 对输入连续：三角不等式给 $|e(R)-e(R')|\le N(R-R')$，有限维下右侧连续。因而同系数修复集合是闭初段；前两个命题给其非空性、真子区间性与两端夹逼。
+
+对每个固定 $a\in(0,1)$，充分小的正 $\varepsilon$ 满足上述条件，且
+
+$$
+\frac\mu c=1-\frac\varepsilon2+\frac78\varepsilon^2+O(\varepsilon^3),
+\qquad
+\frac{\eta}{c\sqrt a}=\frac{\varepsilon^2}{\sqrt a}+O_a(\varepsilon^3).
+$$
+
+所以
+
+$$
+\lambda_*=1-\frac\varepsilon2+O_a(\varepsilon^2),
+\qquad
+1-\lambda_*=\frac\varepsilon2+O_a(\varepsilon^2).
+$$
+
+这里确定的是消除严格间隙所需相位阻尼强度的首阶，而不是准确转变点。对固定 $\lambda<1$，充分小 $\varepsilon$ 时已经处于可同系数修复区间；$\lambda=1$ 却在每个充分小非零参数处保留严格间隙。所有比较保留同一早边缘、同一完整 tester 合同及同一末端处理权限。
+
+## 追加锚（本行以下为增补区）
+
+## 68. 对称压缩混合反例的匹配二阶间隙下界
+
+### 68.1 候选与结论
+
+固定三个量子比特 $A,B,D$，次序为 $A\otimes B\otimes D$，使用全部量子 tester
+
+$$
+C\succeq0,\quad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,
+$$
+
+以及归一化因果修复 $S\succeq0$、$\operatorname{Tr}_D S=I_A\otimes\sigma$、$\operatorname{Tr}\sigma=1$。取
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+$$
+
+并固定
+
+$$
+0<\varepsilon\le\frac1{16},\qquad c=\sqrt{1-\varepsilon},
+\qquad
+R_\varepsilon=
+\left|\frac{x+\sqrt\varepsilon z}{\sqrt2}+cy\right\rangle
+\left\langle\frac{x+\sqrt\varepsilon z}{\sqrt2}+cy\right|
++\frac12|x'-\sqrt\varepsilon z'\rangle
+\langle x'-\sqrt\varepsilon z'|.
+\tag{68.1}
+$$
+
+这是前述混合严格反例的 $a=1/2$ 子族。记完整事件最优修复误差为 $e_\varepsilon$；早边缘给 $\Delta=\varepsilon$。
+
+**定理 68.1（对称压缩的二阶间隙）。** 对整个 $0<\varepsilon\le1/16$，有显式严格下界
+
+$$
+e_\varepsilon>\varepsilon+\frac{\varepsilon^2}{1024}.
+\tag{68.2}
+$$
+
+与第66节的二阶修复上界合并，得到
+
+$$
+\frac{\varepsilon^2}{1024}
+<e_\varepsilon-\varepsilon
+\le\left(2+\frac1{\sqrt2}\right)\varepsilon^2
++\frac1{\sqrt2}\varepsilon^{5/2}+O(\varepsilon^3).
+\tag{68.3}
+$$
+
+因此 $e_\varepsilon-\varepsilon=\Theta(\varepsilon^2)$；差值的二阶量级已定，而尖锐系数及有限参数准确最优值仍未由这些界确定。
+
+### 68.2 总事件近饱和控制核方向质量
+
+反设存在因果 $S$ 满足
+
+$$
+N(R_\varepsilon-S)\le\varepsilon+g,
+\qquad0\le g\le\frac{\varepsilon^2}{1024}.
+\tag{68.4}
+$$
+
+令
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+\quad S_+=\Pi_+S\Pi_+,
+\quad R_+=\Pi_+R_\varepsilon\Pi_+.
+$$
+
+归一化给 $\operatorname{Tr}S_+=1$、$\operatorname{Tr}R_+=1+\varepsilon$。$R_+-S_+$ 的正谱投影是合法事件，所以它的正谱和至多 $\varepsilon+g$。总迹等于 $\varepsilon$，因此负谱绝对值之和至多 $g$。
+
+记 $K$ 为 $\operatorname{ran}\Pi_+$ 内 $R_+$ 的核投影，则
+
+$$
+\operatorname{Tr}(KS_+)=-\operatorname{Tr}(K(R_+-S_+))\le g.
+\tag{68.5}
+$$
+
+这是对同一实际修复的核方向正质量的界，没有把小负谱当成精确正性。
+
+在四维 $\operatorname{ran}\Pi_+$ 中取正交归一基
+
+$$
+\begin{aligned}
+\xi_0&=\frac{x+\sqrt\varepsilon z}{\sqrt{1+\varepsilon}},
+&\nu_0&=\frac{\sqrt\varepsilon x-z}{\sqrt{1+\varepsilon}},\\
+\xi_1&=\frac{x'-\sqrt\varepsilon z'}{\sqrt{1+\varepsilon}},
+&\nu_1&=\frac{\sqrt\varepsilon x'+z'}{\sqrt{1+\varepsilon}}.
+\end{aligned}
+\tag{68.6}
+$$
+
+$\xi_0,\xi_1$ 张成 $R_+$ 的像，$\nu_0,\nu_1$ 张成其核。定义
+
+$$
+m_j=\langle\xi_j|S|\xi_j\rangle,
+\quad k_j=\langle\nu_j|S|\nu_j\rangle,
+\quad f_j=\langle\xi_j|S|\nu_j\rangle
+\quad(j=0,1).
+$$
+
+不假设其他矩阵元为零。核方向正质量和总迹给
+
+$$
+0\le k_0+k_1\le g,\qquad m_0+m_1=1-k_0-k_1.
+$$
+
+现在同时使用误差假设对同一个差算符的约束。记 $X=R_+-S_+$。其负谱绝对值之和至多 $g$，所以 $X+gI\succeq0$；其正谱和至多 $\varepsilon+g$，所以
+
+$$
+\langle\xi_j|X|\xi_j\rangle\le\varepsilon+g.
+$$
+
+$X+gI$ 在 $\xi_j,\nu_j$ 上的二阶主子式非负，而其核方向对角为 $g-k_j$、交叉项为 $-f_j$。因此
+
+$$
+\begin{aligned}
+|f_j|^2
+&\le(\langle\xi_j|X|\xi_j\rangle+g)(g-k_j)
+\le(\varepsilon+2g)(g-k_j)\\
+&\le(\varepsilon+2g)g,\\
+|f_0|+|f_1|&\le2\sqrt{(\varepsilon+2g)g}
+\le L:=2\sqrt{2\varepsilon g}.
+\end{aligned}
+\tag{68.7}
+$$
+
+最后一步使用式（68.4）与 $\varepsilon\le1/16$，从而 $2g\le\varepsilon$。这一估计把总事件近饱和与实际修复的核方向质量同时用于同一个矩阵主子式。
+
+### 68.3 因果偏迹与矩阵元的定量约束
+
+因果条件给 $S_{x,z}+S_{x',z'}=0$。在基（68.6）中取实部，得到
+
+$$
+\sqrt\varepsilon\,[(m_0-m_1)-(k_0-k_1)]
+=(1-\varepsilon)\operatorname{Re}(f_0-f_1).
+$$
+
+因此
+
+$$
+|m_0-m_1|\le g+
+\frac{1-\varepsilon}{\sqrt\varepsilon}L.
+\tag{68.8}
+$$
+
+记
+
+$$
+\mu=\frac1{1+\varepsilon},\qquad p_*=\frac{\varepsilon}{1+\varepsilon},
+\qquad A=S_{x,x},\qquad p=\sigma_{11}.
+$$
+
+由式（68.6）直接展开，
+
+$$
+\begin{aligned}
+A&=\frac{m_0+\varepsilon k_0+2\sqrt\varepsilon\operatorname{Re}f_0}{1+\varepsilon},\\
+p&=\frac{\varepsilon(m_0+m_1)+(k_0+k_1)
+-2\sqrt\varepsilon\operatorname{Re}(f_0+f_1)}{1+\varepsilon}.
+\end{aligned}
+\tag{68.9}
+$$
+
+式（68.7）、（68.8）从而给
+
+$$
+\begin{aligned}
+\delta_A:=\left|A-\frac\mu2\right|
+&\le g+\frac{1+3\varepsilon}{2(1+\varepsilon)\sqrt\varepsilon}L
+\le g+\frac{19\sqrt2}{16}\sqrt g,\\
+\delta_p:=|p-p_*|&\le g+2\sqrt\varepsilon L
+\le g+4\sqrt2\,\varepsilon\sqrt g.
+\end{aligned}
+\tag{68.10}
+$$
+
+在式（68.4）的参数范围内，使用 $\sqrt2<3/2$ 可以取完全显式的简化界
+
+$$
+\begin{aligned}
+\delta_A
+&\le\left(\frac{57}{1024}+\frac1{16384}\right)\varepsilon
+<\frac\varepsilon{16},\\
+\delta_p
+&\le\left(\frac3{16}+\frac1{1024}\right)\varepsilon^2
+<\frac{\varepsilon^2}{4}.
+\end{aligned}
+\tag{68.11}
+$$
+
+再令
+
+$$
+s=S_{y,y},\qquad k=\sqrt2\,S_{x,y}.
+$$
+
+因果偏迹和正性给 $s\le1-p$，$S$ 在 $x,y$ 上的主子式给 $|k|\le\sqrt{2As}$。算术—几何均值不等式于是给
+
+$$
+|k|\le A+\frac s2
+\le\mu+\delta_A+\frac{\delta_p}{2}.
+\tag{68.12}
+$$
+
+另一方面，
+
+$$
+c-\mu=
+\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)}
+>\frac7{17}\varepsilon,
+$$
+
+因为 $c-\varepsilon>7/8$ 且 $(1+c)(1+\varepsilon)<17/8$。由式（68.11）、（68.12），
+
+$$
+\begin{aligned}
+|c-k|&\ge c-|k|\\
+&>\left(\frac7{17}-\frac1{16}-\frac1{128}\right)\varepsilon
+>\frac\varepsilon3.
+\end{aligned}
+\tag{68.13}
+$$
+
+这里仍允许 $S_{x,y}$ 为复数。
+
+### 68.4 同一反馈下的二阶正性矛盾
+
+对 $0<q<1$，取
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0),
+\quad
+H_q=(C_q^{1/2}\otimes I_D)(R_\varepsilon-S)(C_q^{1/2}\otimes I_D).
+$$
+
+$H_q$ 在 $x,y$ 上的主块为
+
+$$
+B_q=
+\begin{pmatrix}
+q(1/2-A)&\sqrt{q(1-q)/2}\,(c-k)\\
+\sqrt{q(1-q)/2}\,(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{68.14}
+$$
+
+记 $\lambda_q=\max\{0,\lambda_{\max}(B_q)\}$。在加权空间中选择一个对应最大非负特征值的投影（若无正特征值则取零），并加上正交的 $x'$ 投影，得到合法事件。它的响应为
+
+$$
+\lambda_q+q(1/2-S_{x',x'})
+=\lambda_q+q(A+p-1/2),
+$$
+
+其中用了 $S_{x',x'}=1-p-A$。同一 $C_q$ 的总响应差为 $-\varepsilon(1-q)$；将所选事件从总事件中取补，误差假设（68.4）给
+
+$$
+\lambda_q\le qF+g,
+\qquad F=\varepsilon-p+\frac12-A.
+\tag{68.15}
+$$
+
+这一步不需要假设所选事件的响应为正，也不要求 $H_q$ 在各子空间间没有相干。
+
+式（68.15）蕴含 $(qF+g)I_2-B_q\succeq0$，所以
+
+$$
+\bigl[q(\varepsilon-p)+g\bigr]
+\bigl[qF+g+(s-c^2)(1-q)\bigr]
+\ge\frac{q(1-q)}2|c-k|^2.
+\tag{68.16}
+$$
+
+现在选取同一个具体反馈参数 $q=\varepsilon$。由式（68.11），
+
+$$
+\varepsilon-p\le\varepsilon-p_*+\delta_p<2\varepsilon^2,
+\qquad s-c^2\le\varepsilon-p<2\varepsilon^2.
+$$
+
+并且
+
+$$
+F\le2\varepsilon^2+\frac{p_*}{2}+\delta_A
+<2\varepsilon^2+\frac\varepsilon2+\frac\varepsilon{16}
+\le\frac{11}{16}\varepsilon<\varepsilon.
+$$
+
+式（68.16）左侧的两个因子由正性非负。第一个因子满足
+
+$$
+q(\varepsilon-p)+g
+<2\varepsilon^3+\frac{\varepsilon^2}{1024}
+\le\left(\frac18+\frac1{1024}\right)\varepsilon^2
+<\frac{\varepsilon^2}{7}.
+$$
+
+第二个因子严格小于
+
+$$
+\varepsilon^2+g+2\varepsilon^2<4\varepsilon^2.
+$$
+
+故左侧严格小于
+
+$$
+\frac47\varepsilon^4\le\frac1{28}\varepsilon^3.
+$$
+
+式（68.13）却使其右侧严格大于
+
+$$
+\frac{\varepsilon(1-\varepsilon)}2\left(\frac\varepsilon3\right)^2
+\ge\frac5{96}\varepsilon^3
+>\frac1{28}\varepsilon^3.
+$$
+
+矛盾。由此排除所有满足式（68.4）的因果修复。
+
+因果修复集合在有限维下紧，事件误差连续，所以最小值达到。排除误差至多 $\varepsilon+\varepsilon^2/1024$ 的全部修复，便得到严格下界（68.2）。$\square$
+
+### 68.5 尖锐阶数与未定系数
+
+该结果对 $a=1/2$、$0<\varepsilon\le1/16$ 给出一个显式、非零、随参数变化的间隙下界。证明使用同一修复在总事件和 $q=\varepsilon$ 反馈下必须同时满足的约束，没有把分别可达的最优值拼接。
+
+与第 66 节的二阶上界合并，差值的尖锐阶数确定为二阶。下界常数 $1/1024$ 和上界系数仍未匹配，不能据此给出极限系数或有限参数准确最优值。证明限定于 $a=1/2$；其他固定 $a$ 的匹配下界及随参数变化的统一性均需另证。
+
+## 追加锚（本行以下为增补区）
+
+## 69. 每个固定压缩参数的匹配二阶间隙
+
+### 69.1 候选、显式常数与结论
+
+沿用第 64、66 节三个量子比特 $A,B,D$ 的混合候选，张量次序为 $A\otimes B\otimes D$。明确写成
+
+$$
+\begin{aligned}
+x&=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,\\
+z&=|110\rangle,\quad z'=|111\rangle,\\
+b&=\sqrt{1-a},\qquad c=\sqrt{1-\varepsilon},\\
+u&=\sqrt a\,x+\sqrt\varepsilon b\,z,\qquad
+v=b x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=|u+cy\rangle\langle u+cy|+|v\rangle\langle v|.
+\end{aligned}
+\tag{69.1}
+$$
+
+其早边缘为
+
+$$
+\operatorname{Tr}_D R_{a,\varepsilon}
+=|00\rangle\langle00|+(1-\varepsilon)|10\rangle\langle10|
++\varepsilon|11\rangle\langle11|,
+$$
+
+归一化缺陷是 $\Delta=\varepsilon$。误差仍对全部量子 tester 事件取最大值：
+
+$$
+\begin{gathered}
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,\\
+N(X)=\max_{C,E}|\operatorname{Tr}(XE)|,
+\qquad e(R)=\min_{S\ \mathrm{causal}}N(R-S).
+\end{gathered}
+\tag{69.2}
+$$
+
+这里因果修复满足 $S\succeq0$、$\operatorname{Tr}_D S=I_A\otimes\sigma$、$\sigma\succeq0$、$\operatorname{Tr}\sigma=1$；不限制事件的非对角元或修复的相干项。
+
+**定理 69.1。** 对每个固定 $0<a<1$，令
+
+$$
+m=\min(a,1-a),\qquad
+\kappa_a=\left(\frac{am}{256}\right)^2>0.
+\tag{69.3}
+$$
+
+则
+
+$$
+e(R_{a,\varepsilon})>\varepsilon+\kappa_a\varepsilon^2
+\qquad\left(0<\varepsilon\le\frac{\sqrt a}{16}\right).
+\tag{69.4}
+$$
+
+与第 66 节的修复上界合并，在共同区间
+
+$$
+0<\varepsilon\le\min\left(\frac{\sqrt a}{16},\frac{1-a}{8}\right)
+\tag{69.5}
+$$
+
+上有一个完全显式的双侧估计
+
+$$
+\kappa_a\varepsilon^2
+<e(R_{a,\varepsilon})-\varepsilon
+\le\frac{16a}{1-a}\varepsilon^2.
+\tag{69.6}
+$$
+
+因此
+
+$$
+e(R_{a,\varepsilon})-\varepsilon=\Theta_a(\varepsilon^2)
+\qquad(\varepsilon\downarrow0)
+\tag{69.7}
+$$
+
+对每个固定 $a\in(0,1)$ 成立。两个常数和允许区间依赖 $a$；这不是包含 $a\downarrow0$ 或 $a\uparrow1$ 的一致估计。对称情形第 68 节的下界常数 $1/1024$ 比式（69.3）在 $a=1/2$ 的值更强。
+
+### 69.2 近饱和、支撑方向与核方向
+
+固定 $a$ 和式（69.4）的参数范围。反设存在因果修复 $S$ 满足
+
+$$
+N(R_{a,\varepsilon}-S)\le\varepsilon+g,
+\qquad0\le g\le\kappa_a\varepsilon^2.
+\tag{69.8}
+$$
+
+因为 $0<a<1$，以下始终有 $\varepsilon\le1/16$、$m\le1/2$、$g\le\varepsilon^2$。取
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+$$
+
+并记 $R_+=\Pi_+R_{a,\varepsilon}\Pi_+$、$S_+=\Pi_+S\Pi_+$、$X=R_+-S_+$。因果归一化给
+
+$$
+\operatorname{Tr}R_+=1+\varepsilon,\qquad
+\operatorname{Tr}S_+=1,\qquad\operatorname{Tr}X=\varepsilon.
+$$
+
+$X$ 的正谱投影是合法事件，所以正谱和至多 $\varepsilon+g$，负谱绝对值之和至多 $g$。在 $\operatorname{ran}\Pi_+$ 上，
+
+$$
+X+gI\succeq0,
+\qquad\langle\xi|X|\xi\rangle\le\varepsilon+g
+\quad\text{对每个单位向量 }\xi.
+\tag{69.9}
+$$
+
+若 $K$ 是该四维空间中 $R_+$ 的核投影，则
+
+$$
+\operatorname{Tr}(KS_+)=-\operatorname{Tr}(KX)\le g.
+\tag{69.10}
+$$
+
+令
+
+$$
+\alpha=a+\varepsilon b^2,\qquad
+\beta=b^2+\varepsilon a.
+$$
+
+在同一四维空间内取正交归一基
+
+$$
+\begin{aligned}
+\xi_0&=\frac{\sqrt a\,x+\sqrt\varepsilon b\,z}{\sqrt\alpha},
+&\nu_0&=\frac{\sqrt\varepsilon b\,x-\sqrt a\,z}{\sqrt\alpha},\\
+\xi_1&=\frac{b x'-\sqrt{\varepsilon a}\,z'}{\sqrt\beta},
+&\nu_1&=\frac{\sqrt{\varepsilon a}\,x'+b z'}{\sqrt\beta}.
+\end{aligned}
+\tag{69.11}
+$$
+
+$\xi_0,\xi_1$ 张成 $R_+$ 的像，$\nu_0,\nu_1$ 张成其核。定义
+
+$$
+m_j=\langle\xi_j|S|\xi_j\rangle,\qquad
+k_j=\langle\nu_j|S|\nu_j\rangle,\qquad
+f_j=\langle\xi_j|S|\nu_j\rangle,
+\qquad\omega=k_0+k_1.
+$$
+
+正性、总迹与式（69.10）给
+
+$$
+0\le\omega\le g,\qquad m_0+m_1=1-\omega.
+\tag{69.12}
+$$
+
+$X+gI$ 在 $\xi_j,\nu_j$ 上的二阶主子式给
+
+$$
+|f_j|^2\le(\varepsilon+2g)(g-k_j).
+$$
+
+从而，记 $L=|f_0|+|f_1|$，有
+
+$$
+L\le2\sqrt{(\varepsilon+2g)g}\le3\sqrt{\varepsilon g}.
+\tag{69.13}
+$$
+
+最后一步使用 $g\le\varepsilon^2$、$\varepsilon\le1/16$，故 $\varepsilon+2g\le(9/8)\varepsilon$。这些估计全部作用于同一个实际修复；其他矩阵元仍可任意。
+
+### 69.3 不等长支撑方向与因果约束
+
+因果条件给 $S_{x,z}+S_{x',z'}=0$。用式（69.11）展开并取实部，得到
+
+$$
+\sqrt{\varepsilon a b^2}
+\left[\frac{m_0-k_0}{\alpha}-\frac{m_1-k_1}{\beta}\right]
+=\frac{a-\varepsilon b^2}{\alpha}\operatorname{Re}f_0
+-\frac{b^2-\varepsilon a}{\beta}\operatorname{Re}f_1.
+\tag{69.14}
+$$
+
+设
+
+$$
+r_0=\frac{m_0}{\alpha},\qquad r_1=\frac{m_1}{\beta},
+\qquad D_0=r_0-r_1,\qquad\mu=\frac1{1+\varepsilon}.
+$$
+
+因为 $\alpha,\beta\ge m$、$\sqrt{ab^2}\ge m$，且式（69.14）右侧的两个实数系数绝对值均不超过 $1$，所以
+
+$$
+|D_0|\le\frac{g}{m}
++\frac{L}{\sqrt\varepsilon\sqrt{ab^2}}
+\le\frac{g+3\sqrt g}{m}
+\le\frac{5\sqrt g}{m}.
+\tag{69.15}
+$$
+
+这里 $g\le1$，故 $g\le\sqrt g$；最后的常数保留了余量。又因
+
+$$
+\alpha+\beta=1+\varepsilon,
+\qquad\alpha r_0+\beta r_1=1-\omega,
+$$
+
+可准确解得
+
+$$
+r_0-\mu=-\mu\omega+\beta\mu D_0,
+\qquad r_1-\mu=-\mu\omega-\alpha\mu D_0.
+$$
+
+$\alpha\mu,\beta\mu\le1$，因此
+
+$$
+|r_j-\mu|\le\frac{6\sqrt g}{m}\qquad(j=0,1).
+\tag{69.16}
+$$
+
+记
+
+$$
+A=S_{x,x},\qquad p=\sigma_{11},\qquad p_*=\varepsilon\mu.
+$$
+
+基变换（69.11）直接给
+
+$$
+\begin{aligned}
+A={}&a r_0+\frac{\varepsilon b^2}{\alpha}k_0
++\frac{2\sqrt{\varepsilon ab^2}}{\alpha}\operatorname{Re}f_0,\\
+p={}&\varepsilon b^2r_0+\varepsilon ar_1
++\frac a\alpha k_0+\frac{b^2}\beta k_1\\
+&-2\sqrt{\varepsilon ab^2}
+\left(\frac{\operatorname{Re}f_0}{\alpha}
++\frac{\operatorname{Re}f_1}{\beta}\right).
+\end{aligned}
+\tag{69.17}
+$$
+
+对于第一式，$\varepsilon b^2/\alpha\le1$，且算术—几何均值不等式给 $2\sqrt{\varepsilon ab^2}/\alpha\le1$。式（69.13）、（69.16）于是给
+
+$$
+\begin{aligned}
+\delta_A:=|A-a\mu|
+&\le\frac{6a\sqrt g}{m}+g+3\sqrt{\varepsilon g}\\
+&\le\frac{6\sqrt g}{m}+\frac74\sqrt g
+\le\frac{7\sqrt g}{m}.
+\end{aligned}
+\tag{69.18}
+$$
+
+最后两步用了 $g\le\sqrt g$、$\sqrt\varepsilon\le1/4$ 及 $m\le1/2$。对于第二式，$a/\alpha,b^2/\beta\le1$，且 $\sqrt{ab^2}\le1$，所以
+
+$$
+\begin{aligned}
+\delta_p:=|p-p_*|
+&\le\frac{6\varepsilon\sqrt g}{m}+g
++\frac{2\sqrt\varepsilon}{m}L\\
+&\le g+\frac{12\varepsilon\sqrt g}{m}.
+\end{aligned}
+\tag{69.19}
+$$
+
+由式（69.3）、（69.8），$\sqrt g\le am\varepsilon/256$，故
+
+$$
+\delta_A\le\frac{7a}{256}\varepsilon,
+\qquad
+\delta_p\le\left(\kappa_a+\frac{3a}{64}\right)\varepsilon^2
+<\frac{\varepsilon^2}{16}.
+\tag{69.20}
+$$
+
+其中 $\kappa_a\le a/65536\le1/65536$，所以最后一个严格不等式对全部 $0<a<1$ 成立。
+
+### 69.4 无法同时消去的相干差
+
+令
+
+$$
+s=S_{y,y},\qquad k=\frac{S_{x,y}}{\sqrt a}.
+$$
+
+因果偏迹与正性给 $s\le1-p$，而 $S$ 在 $x,y$ 上的二阶主子式给 $|k|\le\sqrt{As/a}$。于是
+
+$$
+\begin{aligned}
+|k|&\le\frac{A/a+s}{2}
+\le\mu+\frac{\delta_A}{2a}+\frac{\delta_p}{2},\\
+\frac{\delta_A}{2a}+\frac{\delta_p}{2}
+&<\frac7{512}\varepsilon+\frac{\varepsilon^2}{32}
+\le\frac\varepsilon{64}.
+\end{aligned}
+\tag{69.21}
+$$
+
+在 $0<\varepsilon\le1/16$ 上，$c-\varepsilon>7/8$、$(1+c)(1+\varepsilon)<17/8$，所以
+
+$$
+c-\mu
+=\frac{\varepsilon(c-\varepsilon)}{(1+c)(1+\varepsilon)}
+>\frac7{17}\varepsilon.
+$$
+
+因此，对允许任意复相位的 $k$，
+
+$$
+|c-k|\ge c-|k|
+>\left(\frac7{17}-\frac1{64}\right)\varepsilon
+>\frac\varepsilon3.
+\tag{69.22}
+$$
+
+### 69.5 一个具体反馈下的行列式矛盾
+
+对 $0<q<1$，选择合法反馈
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0),
+\qquad
+H_q=(C_q^{1/2}\otimes I_D)(R_{a,\varepsilon}-S)
+(C_q^{1/2}\otimes I_D).
+$$
+
+$H_q$ 在 $x,y$ 上的主块为
+
+$$
+B_q=\begin{pmatrix}
+q(a-A)&\sqrt{aq(1-q)}(c-k)\\
+\sqrt{aq(1-q)}(c-\overline k)&(c^2-s)(1-q)
+\end{pmatrix}.
+\tag{69.23}
+$$
+
+令 $\lambda_q=\max(0,\lambda_{\max}(B_q))$。在加权空间选择对应最大正特征值的投影；若无正特征值则取零。将它与正交的 $x'$ 投影相加，得到某个 $0\preceq F_q\preceq I$，从而
+
+$$
+E_q=(C_q^{1/2}\otimes I_D)F_q(C_q^{1/2}\otimes I_D)
+$$
+
+是合法事件。因为 $S_{x',x'}=1-p-A$，该事件的响应差为
+
+$$
+\operatorname{Tr}((R_{a,\varepsilon}-S)E_q)
+=\lambda_q+q(A+p-a).
+$$
+
+同一 $C_q$ 的总响应差是 $-\varepsilon(1-q)$。将所选事件取补，式（69.8）的误差界给
+
+$$
+\lambda_q\le qF+g,
+\qquad F=\varepsilon-p+a-A.
+\tag{69.24}
+$$
+
+这一推导不预设所选事件的响应符号，也不要求 $H_q$ 的其他块或跨块矩阵元为零。
+
+式（69.24）蕴含 $(qF+g)I_2-B_q\succeq0$；取行列式可得
+
+$$
+\bigl[q(\varepsilon-p)+g\bigr]
+\bigl[qF+g+(s-c^2)(1-q)\bigr]
+\ge aq(1-q)|c-k|^2.
+\tag{69.25}
+$$
+
+左侧两个因子均非负。现取同一个具体参数 $q=\varepsilon$。式（69.20）给
+
+$$
+\varepsilon-p\le\frac{\varepsilon^2}{1+\varepsilon}+\delta_p
+<2\varepsilon^2,
+\qquad s-c^2\le\varepsilon-p<2\varepsilon^2.
+$$
+
+同时
+
+$$
+\begin{aligned}
+F&\le2\varepsilon^2+a(1-\mu)+\delta_A\\
+&\le2\varepsilon^2+\frac{263a}{256}\varepsilon
+\le\frac{295}{256}\varepsilon<2\varepsilon.
+\end{aligned}
+$$
+
+因此式（69.25）第一个因子严格小于 $\varepsilon^2(2\varepsilon+\kappa_a)$，第二个因子严格小于 $5\varepsilon^2$，左侧严格小于
+
+$$
+5\varepsilon^4(2\varepsilon+\kappa_a).
+\tag{69.26}
+$$
+
+另一方面，式（69.22）使右侧严格大于
+
+$$
+a\varepsilon(1-\varepsilon)\frac{\varepsilon^2}{9}
+\ge\frac{5a}{48}\varepsilon^3.
+\tag{69.27}
+$$
+
+式（69.4）的参数范围与 $\kappa_a\le a/65536$ 保证
+
+$$
+\varepsilon(2\varepsilon+\kappa_a)
+\le\frac a{128}+\frac a{65536}<\frac a{48}.
+\tag{69.28}
+$$
+
+故式（69.26）严格小于式（69.27），与式（69.25）矛盾。
+
+这排除了全部满足式（69.8）的因果修复。有限维因果修复集合是紧集，事件误差连续，最小值达到。因此所有修复均不能达到误差 $\varepsilon+\kappa_a\varepsilon^2$ 或更小，便得到严格下界（69.4）。
+
+### 69.6 与上界配合及端点边界
+
+在式（69.5）的共同区间，调用第 66 节的显式修复。其参数满足 $\varepsilon<p\le2\varepsilon$ 以及
+
+$$
+p-\varepsilon=\frac{a\varepsilon p}{b^2-p}
+\le\frac{8a}{3b^2}\varepsilon^2,
+$$
+
+其中用了 $\varepsilon\le b^2/8$，所以 $b^2-p\ge3b^2/4$。该节准确上界中的因子满足
+
+$$
+2+\frac{2(\sqrt a+\sqrt\varepsilon b)}{c+\sqrt{1-p}}<6:
+$$
+
+确实，$\sqrt a+\sqrt\varepsilon b<2$，而 $\varepsilon\le1/8$、$p\le1/4$ 保证 $c+\sqrt{1-p}>1$。相乘得式（69.6）的上界，完成定理证明。$\square$
+
+更细的上界展开仍由第 66 节给出：
+
+$$
+e(R_{a,\varepsilon})-\varepsilon
+\le\frac{a(2+\sqrt a)}{1-a}\varepsilon^2
++\frac a{\sqrt{1-a}}\varepsilon^{5/2}+O_a(\varepsilon^3).
+\tag{69.29}
+$$
+
+匹配下界现在确定每个固定 $a\in(0,1)$ 的尖锐阶数，但未确定最优二阶系数，亦未证明 $(e(R_{a,\varepsilon})-\varepsilon)/\varepsilon^2$ 有极限。有限参数准确最优值、$a$ 随 $\varepsilon$ 变化时的尺度及端点过渡仍未由这些界解决。
+
+## 追加锚（本行以下为增补区）
+
+## 70. 随缺陷移动的末端压缩与严格大于一的极限系数
+
+### 70.1 同一混合族的移动参数
+
+固定 $r>0$，令 $a_\varepsilon=1-r\varepsilon$，取
+
+$$
+0<\varepsilon<\min\{1/r,1/16\}.
+\tag{70.1}
+$$
+
+沿用三个量子比特 $A,B,D$ 的完整 tester 和因果修复合同，张量次序为 $A\otimes B\otimes D$。记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle.
+$$
+
+第 64 节同一压缩混合族此时为
+
+$$
+\begin{aligned}
+r_{0,\varepsilon}&=\sqrt{1-r\varepsilon}\,x
++\sqrt{1-\varepsilon}\,y+\sqrt r\,\varepsilon z,\\
+r_{1,\varepsilon}&=\sqrt{r\varepsilon}\,x'
+-\sqrt{\varepsilon(1-r\varepsilon)}\,z',\\
+R_\varepsilon&=|r_{0,\varepsilon}\rangle\langle r_{0,\varepsilon}|
++|r_{1,\varepsilon}\rangle\langle r_{1,\varepsilon}|.
+\end{aligned}
+\tag{70.2}
+$$
+
+早边缘仍为
+
+$$
+M_\varepsilon=|00\rangle\langle00|
++(1-\varepsilon)|10\rangle\langle10|
++\varepsilon|11\rangle\langle11|,
+\tag{70.3}
+$$
+
+所以归一化缺陷是 $\varepsilon$。在厄米算符空间上记
+
+$$
+\begin{gathered}
+N(X)=\max_{C,E}|\operatorname{Tr}(XE)|,\\
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D,
+\end{gathered}
+\tag{70.4}
+$$
+
+并令 $\mathcal C$ 为满足
+
+$$
+S\succeq0,\qquad\operatorname{Tr}_D S=I_A\otimes\sigma,
+\qquad\sigma\succeq0,\quad\operatorname{Tr}\sigma=1
+\tag{70.5}
+$$
+
+的因果修复集合。完整事件最优误差为
+
+$$
+e_\varepsilon=\min_{S\in\mathcal C}N(R_\varepsilon-S).
+$$
+
+**定理 70.1。** 对每个固定 $r>0$，存在实数 $\gamma_r$，使
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e_\varepsilon}{\varepsilon}
+=\gamma_r,
+\qquad 1<\gamma_r\le\frac98.
+\tag{70.6}
+$$
+
+特别地，$e_\varepsilon=\gamma_r\varepsilon+o_r(\varepsilon)$。下面给出 $\gamma_r$ 的一个达到最小值的准确切锥变分式；不将它进一步识别为某个显式数值。
+
+### 70.2 一阶展开与事件范数
+
+令
+
+$$
+w=x+y,\qquad R_0=|w\rangle\langle w|.
+$$
+
+它满足 $\operatorname{Tr}_D R_0=I_A\otimes|0\rangle\langle0|$，所以 $R_0\in\mathcal C$。在固定有限维算符空间中，
+
+$$
+R_\varepsilon=R_0+\varepsilon H_r+O_r(\varepsilon^2),
+\tag{70.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+H_r={}&-\frac12\bigl(|rx+y\rangle\langle w|
++|w\rangle\langle rx+y|\bigr)\\
+&+\sqrt r\bigl(|z\rangle\langle w|+|w\rangle\langle z|\bigr)\\
+&+|\sqrt r\,x'-z'\rangle\langle\sqrt r\,x'-z'|.
+\end{aligned}
+\tag{70.8}
+$$
+
+确实，第一向量为 $w+\varepsilon(-rx/2-y/2+\sqrt r\,z)+O_r(\varepsilon^2)$，第二向量的外积为式（70.8）第三行乘以 $\varepsilon$，加 $O_r(\varepsilon^2)$。特别地，
+
+$$
+\operatorname{Tr}H_r=0,\qquad
+\operatorname{Tr}_D H_r=-|10\rangle\langle10|+|11\rangle\langle11|.
+\tag{70.9}
+$$
+
+$N$ 是有限维实厄米空间上的范数。正齐次性和三角不等式直接来自式（70.4）。对任意厄米 $X$，取合法反馈 $C=I_{AB}/2$，再分别取 $E=P_+(X)/2$、$E=P_-(X)/2$，得到
+
+$$
+N(X)\ge\frac12\max\{\operatorname{Tr}X_+,\operatorname{Tr}X_-\}
+\ge\frac14\|X\|_1.
+\tag{70.10}
+$$
+
+这里 $X=X_+-X_-$ 是正负部分分解。另一方面，$\operatorname{Tr}C=2$ 给 $\|E\|_\infty\le2$，所以
+
+$$
+N(X)\le2\|X\|_1.
+\tag{70.11}
+$$
+
+这同时证明正定性、连续性及与迹范数的等价。因果集合 $\mathcal C$ 是含 $R_0$ 的紧凸集：它由闭约束给出，且所有元素正、迹恒为 $2$。
+
+### 70.3 缩放修复集与实际切锥
+
+令 $P$ 为 $w$ 张成的一维空间的正交投影，$P_0=I-P$。定义
+
+$$
+\mathcal D_t=\frac{\mathcal C-R_0}{t}\quad(t>0),
+\qquad
+\mathcal T=\overline{\bigcup_{t>0}\mathcal D_t}.
+\tag{70.12}
+$$
+
+若 $0<t'\le t$，则 $\mathcal D_t\subseteq\mathcal D_{t'}$：对 $K=(S-R_0)/t$，有
+
+$$
+R_0+t'K=\left(1-\frac{t'}t\right)R_0+\frac{t'}t S\in\mathcal C.
+$$
+
+所以式（70.12）确实是这个因果修复集合在 $R_0$ 处的闭切锥。
+
+在本问题中，它具有准确描述
+
+$$
+\mathcal T=
+\left\{K=K^*:
+\begin{array}{l}
+\operatorname{Tr}_D K=I_A\otimes\dot\sigma
+\text{ 对某个 }\dot\sigma=\dot\sigma^*,\quad\operatorname{Tr}\dot\sigma=0,\\
+P_0KP_0\succeq0
+\end{array}\right\}.
+\tag{70.13}
+$$
+
+先证必要性。对 $K=(S-R_0)/t$，因果等式相减得到所需偏迹；又因 $P_0R_0P_0=0$，有 $P_0KP_0=P_0SP_0/t\succeq0$。这两个条件均闭，故对闭包中所有 $K$ 成立。
+
+再证充分性。固定式（70.13）右侧的任意 $K$，选择严格正的因果算符
+
+$$
+S_{\mathrm{full}}=\frac14 I_{ABD}\in\mathcal C.
+$$
+
+对任意 $\delta>0$，置
+
+$$
+K_\delta=K+\delta(S_{\mathrm{full}}-R_0).
+\tag{70.14}
+$$
+
+它仍满足迹零因果线性约束，且在 $P_0$ 空间内
+
+$$
+B_\delta:=P_0K_\delta P_0
+=P_0KP_0+\frac\delta4P_0\succeq\frac\delta4P_0.
+\tag{70.15}
+$$
+
+令 $\widehat w=w/\sqrt2$、$\alpha_\delta=\langle\widehat w|K_\delta|\widehat w\rangle$、$b_\delta=P_0K_\delta\widehat w$。相对于 $\operatorname{span}(\widehat w)\oplus w^\perp$，
+
+$$
+R_0+tK_\delta=
+\begin{pmatrix}
+2+t\alpha_\delta&t b_\delta^*\\
+t b_\delta&tB_\delta
+\end{pmatrix}.
+\tag{70.16}
+$$
+
+对 $t>0$，右下块严格正，其 Schur 补为
+
+$$
+2+t\left(\alpha_\delta-b_\delta^*B_\delta^{-1}b_\delta\right).
+$$
+
+它对充分小的正 $t$ 严格为正。因此 $R_0+tK_\delta\succeq0$。因果线性约束给
+
+$$
+\operatorname{Tr}_D(R_0+tK_\delta)
+=I_A\otimes\bigl(|0\rangle\langle0|+t\dot\sigma_\delta\bigr),
+\qquad\operatorname{Tr}\dot\sigma_\delta=0.
+$$
+
+括号内的算符由左侧正性自动为正，迹为 $1$。所以 $R_0+tK_\delta\in\mathcal C$，即 $K_\delta\in\mathcal D_t$。令 $\delta\downarrow0$，得到 $K\in\mathcal T$，完成式（70.13）的证明。这个闭包逼近没有把单独的切向正性冒充每个步长上的实际可行性。
+
+### 70.4 极限与达到最小值的系数
+
+令 $H_\varepsilon=(R_\varepsilon-R_0)/\varepsilon$。正齐次性给准确等式
+
+$$
+\frac{e_\varepsilon}{\varepsilon}
+=\operatorname{dist}_N(H_\varepsilon,\mathcal D_\varepsilon).
+\tag{70.17}
+$$
+
+任意非空集合 $A$ 的距离函数满足
+
+$$
+|\operatorname{dist}_N(U,A)-\operatorname{dist}_N(V,A)|\le N(U-V).
+$$
+
+式（70.7）、（70.11）因此给
+
+$$
+\left|\frac{e_\varepsilon}{\varepsilon}
+-\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)\right|
+\le N(H_\varepsilon-H_r)=O_r(\varepsilon)\longrightarrow0.
+\tag{70.18}
+$$
+
+由式（70.12）的嵌套性，$\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)$ 随 $\varepsilon\downarrow0$ 单调下降，其极限为
+
+$$
+\inf_{t>0}\operatorname{dist}_N(H_r,\mathcal D_t)
+=\operatorname{dist}_N(H_r,\mathcal T).
+\tag{70.19}
+$$
+
+最后一个等式使用距离对取闭包不变。将 $t$ 限制在任意固定小区间内也给同一个并集闭包，因为更小的缩放集合包含更大的步长所给集合。
+
+故极限存在，并且
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K).
+\tag{70.20}
+$$
+
+最小值确实达到：$0\in\mathcal T$，所以一个极小化序列可以满足 $N(H_r-K_n)\le N(H_r)+1$；式（70.10）使 $K_n$ 在迹范数下有界。有限维收敛子列、$\mathcal T$ 的闭性与 $N$ 的连续性给一个达到下确界的 $K$。
+
+对任意 $K\in\mathcal T$，取
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D.
+$$
+
+式（70.9）、（70.13）给 $\operatorname{Tr}((H_r-K)\Pi_+)=1$，所以 $N(H_r-K)\ge1$，即 $\gamma_r\ge1$。下一步排除等号。
+
+### 70.5 同一切向修复的饱和矛盾
+
+反设 $\gamma_r=1$，取式（70.20）的极小值点 $K$，置 $Y=H_r-K$。再令
+
+$$
+C_-=|01\rangle\langle01|+|10\rangle\langle10|,
+\qquad\Pi_-=C_-\otimes I_D.
+$$
+
+两个总事件的迹满足
+
+$$
+\operatorname{Tr}(\Pi_+Y\Pi_+)=1,
+\qquad\operatorname{Tr}(\Pi_-Y\Pi_-)=-1.
+$$
+
+因为 $N(Y)=1$，每个压缩的正负谱投影也是合法事件；正负谱和于是迫使
+
+$$
+\Pi_+Y\Pi_+\succeq0,
+\qquad\Pi_-(K-H_r)\Pi_-\succeq0.
+\tag{70.21}
+$$
+
+在 $\Pi_+$ 空间中，式（70.8）给
+
+$$
+(H_{xx},H_{x'x'},H_{zz},H_{z'z'})=(-r,r,0,1),
+\qquad H_{xz}=\sqrt r,\quad H_{x'z'}=-\sqrt r.
+$$
+
+由于 $z\perp w$，切向正性给 $K_{zz}\ge0$；式（70.21）又给 $Y_{zz}=-K_{zz}\ge0$。所以 $K_{zz}=Y_{zz}=0$。正矩阵的零对角行列全零，故
+
+$$
+K_{xz}=H_{xz}=\sqrt r.
+$$
+
+因果偏迹的跨输入 $00,11$ 元为零，遂有
+
+$$
+K_{x'z'}=-K_{xz}=-\sqrt r.
+\tag{70.22}
+$$
+
+令 $t=K_{x'x'}$、$p=\dot\sigma_{11}=K_{zz}+K_{z'z'}=K_{z'z'}$。$x',z'$ 均在 $w^\perp$，所以切向正性在这两个方向的主块给
+
+$$
+t,p\ge0,\qquad tp\ge r.
+$$
+
+式（70.21）同时给 $t\le r$、$p\le1$。固定 $r>0$ 使这些条件只能在
+
+$$
+t=r,\qquad p=1
+\tag{70.23}
+$$
+
+时成立。因 $\dot\sigma$ 迹零，其另一个对角元为 $-1$。因果条件从而给
+
+$$
+K_{xx}+K_{x'x'}=-1,\qquad K_{xx}=-1-r.
+\tag{70.24}
+$$
+
+另一方面，式（70.21）在 $y$ 上给 $K_{yy}\ge H_{yy}=-1$。向量 $|100\rangle$ 在 $w^\perp$，故 $K_{100,100}\ge0$；因果关系 $K_{100,100}+K_{yy}=-1$ 又给 $K_{yy}\le-1$。因此
+
+$$
+K_{yy}=-1.
+\tag{70.25}
+$$
+
+最后用 $x-y\perp w$ 的切向正性：
+
+$$
+0\le\langle x-y|K|x-y\rangle
+=-r-2-2\operatorname{Re}K_{xy}.
+$$
+
+结合 $H_{xy}=-(r+1)/2$，得到
+
+$$
+\operatorname{Re}Y_{xy}\ge\frac12,
+\qquad Y_{xx}=1,\qquad Y_{yy}=0.
+\tag{70.26}
+$$
+
+取任意 $q\in(0,1)$，例如 $q=1/2$，并选择
+
+$$
+C_q=\operatorname{diag}(q,1,1-q,0).
+$$
+
+加权 $Y$ 在 $x,y$ 上的主块为
+
+$$
+B_q=\begin{pmatrix}
+q&\sqrt{q(1-q)}\,Y_{xy}\\
+\sqrt{q(1-q)}\,\overline{Y_{xy}}&0
+\end{pmatrix}.
+\tag{70.27}
+$$
+
+由 $|Y_{xy}|\ge1/2$，有 $\det(qI-B_q)<0$，故最大特征值 $\lambda_q>q$。取对应秩一投影嵌入全空间，再按 $C_q^{1/2}\otimes I_D$ 加权，得到响应为 $\lambda_q$ 的合法事件。
+
+同一总事件的响应由式（70.9）、（70.13）等于 $-(1-q)$。所以互补事件响应为
+
+$$
+-(1-q)-\lambda_q<-1,
+$$
+
+与 $N(Y)=1$ 矛盾。由极小值达到可知 $\gamma_r>1$。
+
+### 70.6 上界与非一致端点
+
+对每个参数点，式（70.2）仍是第 64 节的末端 CPTP 压缩
+
+$$
+R_\varepsilon=(\operatorname{id}_{AB}\otimes\Lambda_{a_\varepsilon})
+(R_\varepsilon^{(3)}).
+$$
+
+末端处理保持因果修复并收缩完整事件误差，所以
+
+$$
+e_\varepsilon\le e(R_\varepsilon^{(3)}).
+$$
+
+第 62 节三维纯候选的准确最优值展开给
+
+$$
+\lim_{\varepsilon\downarrow0}\frac{e(R_\varepsilon^{(3)})}{\varepsilon}
+=\frac98.
+$$
+
+结合已证极限，得到 $\gamma_r\le9/8$，完成定理证明。$\square$
+
+对固定 $a\in(0,1)$，第 69 节给 $e(R_{a,\varepsilon})/\varepsilon\to1$。这里沿 $1-a_\varepsilon=r\varepsilon$ 移动，同一混合族的比值却收敛到严格大于一的 $\gamma_r$。因此固定参数的结论不能对整个参数开区间一致化。
+
+式（70.20）是系数的准确变分描述，已证明其达到最小值；本节未求出 $\gamma_r$ 的显式值、最优 $r$ 或不依赖 $r$ 的统一正比例间隙。
+
+## 追加锚（本行以下为增补区）
+
+## 71. 移动压缩系数的连续性、两个端点与内部最大值
+
+### 71.1 系数函数及结论
+
+第 70 节对每个固定 $r>0$ 定义了同一混合量子比特族沿
+
+$$
+a_\varepsilon=1-r\varepsilon
+$$
+
+移动时的准确极限系数
+
+$$
+\gamma_r=\lim_{\varepsilon\downarrow0}\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+=\min_{K\in\mathcal T}N(H_r-K),
+\qquad1<\gamma_r\le\frac98.
+\tag{71.1}
+$$
+
+这里 $\mathcal T$ 是第 70 节的同一个闭因果切锥，与 $r$ 无关；$N$ 是完整 tester 事件范数。将式（71.1）的变分式延伸到 $r=0$，仍记所得值为 $\gamma_0$。
+
+**定理 71.1。** 该函数满足
+
+$$
+\gamma_0=1,
+\qquad
+|\gamma_r-\gamma_s|
+\le2|r-s|+4|\sqrt r-\sqrt s|
+\quad(r,s\ge0).
+\tag{71.2}
+$$
+
+因而它在 $[0,\infty)$ 连续，在每个远离零的紧参数区间上 Lipschitz 连续。两个端点均满足
+
+$$
+\lim_{r\downarrow0}\gamma_r=1,
+\qquad\lim_{r\uparrow\infty}\gamma_r=1.
+\tag{71.3}
+$$
+
+更明确地，若 $r\ge8$，令
+
+$$
+u_r=\frac{r-\sqrt{r^2-4r}}2
+=\frac{2}{1+\sqrt{1-4/r}},
+\tag{71.4}
+$$
+
+则
+
+$$
+1<\gamma_r\le
+\min\left\{\frac98,\ 1+3(u_r-1)\right\}.
+\tag{71.5}
+$$
+
+因此存在某个有限正数 $r_*$，使
+
+$$
+\gamma_{r_*}=\max_{r>0}\gamma_r\in(1,9/8].
+\tag{71.6}
+$$
+
+本结论不指定最大值、最大点或其唯一性。
+
+### 71.2 同一个切锥上的参数分解
+
+沿用
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad w=x+y.
+$$
+
+将第 70 节的一阶方向准确分解为
+
+$$
+H_r=H_0+rJ_1+\sqrt r\,J_{1/2},
+\tag{71.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+H_0&=-\frac12\bigl(|y\rangle\langle w|+|w\rangle\langle y|\bigr)
++|z'\rangle\langle z'|,\\
+J_1&=-\frac12\bigl(|x\rangle\langle w|+|w\rangle\langle x|\bigr)
++|x'\rangle\langle x'|,\\
+J_{1/2}&=|z\rangle\langle w|+|w\rangle\langle z|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{aligned}
+\tag{71.8}
+$$
+
+固定任意完整 tester $C,E$，即 $C\succeq0$、$\operatorname{Tr}_A C=I_B$、$0\preceq E\preceq C\otimes I_D$。$C$ 的标准基对角元均位于 $[0,1]$，故对上列任一标准基向量 $v$，
+
+$$
+0\le\langle v|E|v\rangle\le1.
+$$
+
+更具体地，$x,y$ 的末输出坐标不同，而它们的 $AB$ 坐标为 $00,10$，所以
+
+$$
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\tag{71.9}
+$$
+
+对正算子 $E$ 使用 Cauchy–Schwarz，不要求 $E$ 在任何基下对角。式（71.9）及上述标准基对角界给
+
+$$
+|\langle w|E|x\rangle|\le1,
+\qquad|\langle w|E|z\rangle|\le1,
+\qquad|\langle z'|E|x'\rangle|\le1.
+$$
+
+因此
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(J_1E)|
+&=\bigl|-\operatorname{Re}\langle w|E|x\rangle
++\langle x'|E|x'\rangle\bigr|\le2,\\
+|\operatorname{Tr}(J_{1/2}E)|
+&=\bigl|2\operatorname{Re}\langle w|E|z\rangle
+-2\operatorname{Re}\langle z'|E|x'\rangle\bigr|\le4.
+\end{aligned}
+$$
+
+取全部 tester 的最大值得到
+
+$$
+N(J_1)\le2,\qquad N(J_{1/2})\le4.
+\tag{71.10}
+$$
+
+任意固定集合的范数距离函数是 $1$-Lipschitz 的。由于所有参数共用同一个 $\mathcal T$，式（71.7）、（71.10）遂给
+
+$$
+\begin{aligned}
+|\gamma_r-\gamma_s|
+&\le N(H_r-H_s)\\
+&\le2|r-s|+4|\sqrt r-\sqrt s|.
+\end{aligned}
+\tag{71.11}
+$$
+
+这证明连续性模量。若 $r,s\ge d>0$，则 $|\sqrt r-\sqrt s|\le|r-s|/(2\sqrt d)$，因此可取局部 Lipschitz 常数 $2+2/\sqrt d$。
+
+### 71.3 零端点的准确修复
+
+把原混合族连续延伸至 $a=1$。对 $0<\varepsilon<1$，置 $c=\sqrt{1-\varepsilon}$、$d=1-c$，并令 $h=|010\rangle$。此时候选为
+
+$$
+R_{1,\varepsilon}=|x+cy\rangle\langle x+cy|
++\varepsilon|z'\rangle\langle z'|.
+$$
+
+定义显式因果修复
+
+$$
+S_\varepsilon=c|w\rangle\langle w|
++d\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr).
+\tag{71.12}
+$$
+
+它正，且
+
+$$
+\operatorname{Tr}_D S_\varepsilon
+=I_A\otimes\operatorname{diag}(c,d).
+$$
+
+因为 $c+d=1$，这是归一化因果修复。准确差算符为
+
+$$
+R_{1,\varepsilon}-S_\varepsilon
+=d\bigl(|x\rangle\langle x|-|h\rangle\langle h|\bigr)
++cd\bigl(|z'\rangle\langle z'|-|y\rangle\langle y|\bigr).
+\tag{71.13}
+$$
+
+对任意完整事件 $E$，正项响应至多 $d+cd=\varepsilon$，负项绝对响应同样至多 $d+cd=\varepsilon$；这只使用各标准基事件对角元位于 $[0,1]$。所以 $N(R_{1,\varepsilon}-S_\varepsilon)\le\varepsilon$。原早边缘总事件又给下界 $\varepsilon$，故
+
+$$
+e(R_{1,\varepsilon})=\varepsilon
+\qquad(0<\varepsilon<1).
+\tag{71.14}
+$$
+
+为了直接核对变分式的零端点，式（71.12）的一阶方向为
+
+$$
+K_0=-\frac12|w\rangle\langle w|
++\frac12\bigl(|h\rangle\langle h|+|z'\rangle\langle z'|\bigr)
+\in\mathcal T.
+$$
+
+它的因果偏迹为 $I_A\otimes\operatorname{diag}(-1/2,1/2)$，在 $w^\perp$ 上的压缩正；也可直接由式（71.12）的可行割线极限确认其切锥成员身份。此时
+
+$$
+H_0-K_0=
+\frac12\bigl(|x\rangle\langle x|+|z'\rangle\langle z'|
+-|y\rangle\langle y|-|h\rangle\langle h|\bigr).
+\tag{71.15}
+$$
+
+同样的对角事件界给 $N(H_0-K_0)\le1$。而对任意 $K\in\mathcal T$，第 70 节的 $C_+$ 总事件仍给 $\operatorname{Tr}((H_0-K)\Pi_+)=1$。因此 $\gamma_0=1$。
+
+将 $s=0$ 代入式（71.11），得到显式估计
+
+$$
+1<\gamma_r\le1+2r+4\sqrt r\quad(r>0),
+\tag{71.16}
+$$
+
+以及 $r\downarrow0$ 时的极限 $1$。
+
+### 71.4 无穷端点由同一显式修复控制
+
+固定 $r\ge8$，沿 $a_\varepsilon=1-r\varepsilon$ 取充分小的正 $\varepsilon$。第 66 节所需条件
+
+$$
+\varepsilon\le\frac{1-a_\varepsilon}{8}
+$$
+
+此时等价于 $r\ge8$，所以同一显式二阶修复对每个这样的参数点合法。
+
+将该修复的小根写成 $p_\varepsilon=\varepsilon u_{r,\varepsilon}$。原二次方程变成
+
+$$
+u_{r,\varepsilon}^2-r(1+\varepsilon)u_{r,\varepsilon}+r=0,
+$$
+
+其小根为
+
+$$
+u_{r,\varepsilon}
+=\frac{r(1+\varepsilon)
+-\sqrt{r^2(1+\varepsilon)^2-4r}}2
+\longrightarrow u_r.
+\tag{71.17}
+$$
+
+第 66 节的准确事件上界除以 $\varepsilon$ 后为
+
+$$
+\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\le1+(u_{r,\varepsilon}-1)
+\left[
+2+\frac{2(\sqrt{1-r\varepsilon}+\sqrt r\,\varepsilon)}
+{\sqrt{1-\varepsilon}+\sqrt{1-p_\varepsilon}}
+\right].
+\tag{71.18}
+$$
+
+固定 $r$ 后，方括号趋于 $3$。由第 70 节已证的真实极限可得
+
+$$
+\gamma_r\le1+3(u_r-1).
+\tag{71.19}
+$$
+
+结合 $\gamma_r\le9/8$，得到式（71.5）。式（71.4）显示 $u_r\to1$；因此 $1\le\gamma_r\le1+3(u_r-1)$ 迫使 $r\uparrow\infty$ 时 $\gamma_r\to1$。
+
+显式上界本身还满足
+
+$$
+3(u_r-1)=\frac3r+O(r^{-2})\qquad(r\uparrow\infty).
+\tag{71.20}
+$$
+
+这只是上界的渐近式，不能将 $3/r$ 识别为实际 $\gamma_r-1$ 的首项。
+
+### 71.5 最大值在内部达到及范围
+
+选择一个正参数，例如 $r=1$。第 70 节给 $\gamma_1>1$。取
+
+$$
+\rho=\frac{1+\gamma_1}{2}\in(1,\gamma_1).
+$$
+
+由两个端点极限，存在 $0<d<1<R<\infty$，使 $r\in[0,d)$ 或 $r>R$ 时均有 $\gamma_r<\rho$。连续函数 $\gamma_r$ 在紧区间 $[d,R]$ 达到最大值，且该值至少为 $\gamma_1>\rho$，因此也是整个 $r>0$ 上的最大值。这证明式（71.6）。$\square$
+
+两个端点结果是在已经定义的系数函数 $\gamma_r$ 上取极限；本节没有交换 $r$ 与 $\varepsilon$ 的极限，也没有证明任意共同变化路径上的一致展开。它们证明不存在对所有 $r>0$ 通用的严格正比例间隙。内部最大值的准确大小、位置和唯一性仍未由这些界确定。
+
+## 追加锚（本行以下为增补区）
+
+## 72. 移动压缩系数与三维纯候选之间的统一严格间隙
+
+### 72.1 固定合同与结论
+
+沿用第70、71节的三个量子比特、完整 tester 范数 $N$、闭因果切锥 $\mathcal T$ 及系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r\ge0.
+\tag{72.1}
+$$
+
+切锥和范数不随 $r$ 改变。第71节已证明 $\gamma_0=1$、$\gamma_r>1$ 对每个 $r>0$ 成立、两个端点均趋于一，且全局最大值在有限正参数处取得。
+
+**定理72.1（系数的统一严格上界）。** 存在与 $r$ 无关的 $\eta>0$，使
+
+$$
+1<\gamma_r\le\frac98-\eta
+\qquad(r>0).
+\tag{72.2}
+$$
+
+特别地，同一混合量子比特族的移动压缩系数的最大值严格小于三维纯候选的系数 $9/8$。本节不确定 $\eta$ 的显式值，也不将该系数界升级为任意 $r,\varepsilon$ 共同变化时的一致有限参数展开。
+
+### 72.2 一个保持全部因果约束的切向扰动
+
+继续记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,
+\qquad w=x+y.
+$$
+
+对固定 $r>0$，取 $0\le\delta<1$，令
+
+$$
+p=1-\delta,\qquad g=\sqrt{rp}.
+$$
+
+定义实厄米方向
+
+$$
+\begin{aligned}
+K_{r,\delta}={}&-(r+p)|x\rangle\langle x|-p|y\rangle\langle y|
+-\left(\frac r2+p\right)(|x\rangle\langle y|+|y\rangle\langle x|)\\
+&+g(|w\rangle\langle z|+|z\rangle\langle w|)\\
+&+r|x'\rangle\langle x'|-g(|x'\rangle\langle z'|+|z'\rangle\langle x'|)
++p|z'\rangle\langle z'|+p|h\rangle\langle h|.
+\end{aligned}
+\tag{72.3}
+$$
+
+它的因果偏迹为
+
+$$
+\operatorname{Tr}_D K_{r,\delta}=I_A\otimes\operatorname{diag}(-p,p).
+\tag{72.4}
+$$
+
+其中跨输入的两个偏迹项 $K_{xz}=g$ 与 $K_{x'z'}=-g$ 相消，其他非对角项在末端偏迹中消失。在 $w^\perp$ 上压缩时，$x-y$ 方向的二次型和它与 $z$ 的配对均为零；$z$ 的对角也为零。其余非零压缩正是
+
+$$
+\begin{pmatrix}r&-g\\-g&p\end{pmatrix}
+\quad\text{在 }\operatorname{span}(x',z')\text{ 上},
+\qquad p|h\rangle\langle h|.
+\tag{72.5}
+$$
+
+因为 $rp=g^2$ 且 $r,p\ge0$，它们均正。由第70节切锥的准确刻画，
+
+$$
+K_{r,\delta}\in\mathcal T.
+\tag{72.6}
+$$
+
+记 $Y_{r,\delta}=H_r-K_{r,\delta}$。在 $\delta=0$ 时，所有 $r$ 依赖恰好相消：
+
+$$
+Y_{r,0}=Y_*:=|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\tag{72.7}
+$$
+
+固定 $r$ 后，$\sqrt{1-\delta}=1-\delta/2+O(\delta^2)$ 给
+
+$$
+Y_{r,\delta}=Y_*+\delta Z_r+O_r(\delta^2),
+\tag{72.8}
+$$
+
+其中
+
+$$
+\begin{aligned}
+Z_r={}&-|w\rangle\langle w|+|h\rangle\langle h|+|z'\rangle\langle z'|\\
+&+\frac{\sqrt r}{2}\bigl(
+|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|
+\bigr).
+\end{aligned}
+\tag{72.9}
+$$
+
+下面证明，这个可行扰动使完整事件范数从 $9/8$ 严格下降。
+
+### 72.3 基准误差的全部最优事件
+
+合法 tester 仍为
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+考虑两个独立角参数的局部酉算符
+
+$$
+U_{\phi,\psi}
+=\operatorname{diag}(1,e^{i\phi})_A
+\otimes\operatorname{diag}(1,e^{i\psi})_B
+\otimes\operatorname{diag}(1,e^{-i\phi})_D.
+\tag{72.10}
+$$
+
+它固定 $x,y$，将 $h$ 乘以相位，所以保持 $Y_*$。同时，局部共轭把合法 tester 送到合法 tester。对两个角分别均匀平均，可把任意 $C$ 变成保持原对角的对角矩阵，而 $\operatorname{Tr}(Y_*E)$ 不变。故对 $Y_*$ 的正、负响应最大值都可在
+
+$$
+C=\operatorname{diag}(q,t,1-q,1-t),\qquad0\le q,t\le1
+\tag{72.11}
+$$
+
+中求取。
+
+令 $L=C^{1/2}\otimes I_D$。加权算符 $LY_*L$ 在 $x,y$ 上的主块为
+
+$$
+\begin{pmatrix}
+q&\frac12\sqrt{q(1-q)}\\
+\frac12\sqrt{q(1-q)}&0
+\end{pmatrix},
+\tag{72.12}
+$$
+
+其本征值为 $(q+\sqrt q)/2$ 与 $(q-\sqrt q)/2$；另有 $h$ 上的本征值 $-t$，其余全零。任意合法事件可写为 $E=LFL$，其中 $0\preceq F\preceq I$，在 $L$ 的核上如何延伸 $F$ 不影响结果。因此正响应最多为
+
+$$
+\frac{q+\sqrt q}{2}\le1,
+$$
+
+负响应绝对值最多为
+
+$$
+t+\frac{\sqrt q-q}{2}\le\frac98.
+\tag{72.13}
+$$
+
+后一等号只能在 $t=1,q=1/4$ 时成立，也确由负本征投影达到。于是 $N(Y_*)=9/8$，每个绝对值最优事件均满足
+
+$$
+\operatorname{Tr}(Y_*E)=-\frac98.
+\tag{72.14}
+$$
+
+这里还能控制未平均的全部最优 tester。将任一最优 $(C,E)$ 按（72.10）平均，原对角不变，平均后仍达到（72.14），所以原 $C$ 必满足
+
+$$
+C_{00,00}=\frac14,\quad C_{01,01}=1,
+\quad C_{10,10}=\frac34,\quad C_{11,11}=0.
+\tag{72.15}
+$$
+
+正性使 $C$ 的 $11$ 行列全零。由于 $0\preceq E\preceq C\otimes I_D$，$E$ 的 $z,z'$ 行列也全零。因此（72.9）中所有含 $z$ 或 $z'$ 的项对这个事件的配对为零，得到
+
+$$
+\operatorname{Tr}(Z_rE)
+=-\langle w|E|w\rangle+\langle h|E|h\rangle.
+\tag{72.16}
+$$
+
+右侧被（72.10）的平均保持。只需在平均后的对角 tester 中计算它。此时（72.12）的负本征单位向量为
+
+$$
+v_-=-\frac12x+\frac{\sqrt3}{2}y.
+$$
+
+达到最负响应要求 $F$ 在 $v_-$ 和 $h$ 上恒等、在正本征方向上为零。其核空间上的自由部分不影响 $w,h$ 的读数。所以
+
+$$
+\begin{aligned}
+\langle w|E|w\rangle
+&=|\langle v_-|Lw\rangle|^2
+=\left|-\frac14+\frac34\right|^2=\frac14,\\
+\langle h|E|h\rangle&=1.
+\end{aligned}
+\tag{72.17}
+$$
+
+这些值也适用于未平均的原事件。结合（72.16），对 $Y_*$ 的每个最优 tester 都有
+
+$$
+-\operatorname{Tr}(Z_rE)=-\frac34.
+\tag{72.18}
+$$
+
+这一步保留了全部最优事件，未以一个方便的对角事件代替完整范数。
+
+### 72.4 紧致最大化的单侧变化
+
+合法 $(C,E)$ 构成紧集：$C$ 正且迹二，$E$ 正且迹至多四，所有约束闭。把符号 $\varsigma\in\{-1,1\}$ 一起加入，便有
+
+$$
+N(Y)=\max_{C,E,\varsigma}\varsigma\operatorname{Tr}(YE).
+$$
+
+式（72.8）的余项与所有合法事件配对时仍为 $O_r(\delta^2)$，因为 $\|E\|_\infty\le2$。对任意 $\delta_n\downarrow0$，取最大化事件和符号。紧性给收敛子列；由 $Y_{r,\delta_n}\to Y_*$，其极限必是 $Y_*$ 的最大化点。式（72.13）、（72.14）使极限符号为负，式（72.18）使相应的一阶配对为 $-3/4$。
+
+更明确地，将最大化点记为 $(C_n,E_n,\varsigma_n)$，则
+
+$$
+\frac{N(Y_{r,\delta_n})-N(Y_*)}{\delta_n}
+\le\varsigma_n\operatorname{Tr}(Z_rE_n)+O_r(\delta_n).
+\tag{72.19}
+$$
+
+这是因为同一个点在 $Y_*$ 上的响应至多 $N(Y_*)$。取达到上极限的子列后，用（72.18）得到上极限至多 $-3/4$。反向，固定任意一个 $Y_*$ 的最优负事件，将它用于 $Y_{r,\delta}$，便由（72.8）、（72.18）得到下极限至少 $-3/4$。因此
+
+$$
+N(Y_{r,\delta})=\frac98-\frac34\delta+o_r(\delta)
+\qquad(\delta\downarrow0).
+\tag{72.20}
+$$
+
+对每个固定有限 $r>0$，充分小正 $\delta$ 遂满足 $N(Y_{r,\delta})<9/8$。由（72.1）、（72.6），
+
+$$
+\gamma_r\le N(Y_{r,\delta})<\frac98.
+\tag{72.21}
+$$
+
+这里的允许扰动大小可以依赖 $r$，尚未声称同一 $\delta$ 对全部参数有效。
+
+### 72.5 从逐点严格性到系数的统一间隙
+
+第71节证明存在有限正 $r_*$，使 $\gamma_{r_*}=\max_{r>0}\gamma_r$。式（72.21）在这个实际最大点也成立，所以
+
+$$
+\eta:=\frac98-\gamma_{r_*}>0.
+\tag{72.22}
+$$
+
+所有参数均满足 $\gamma_r\le\gamma_{r_*}=9/8-\eta$。再用第70节的逐点下界 $\gamma_r>1$，即得定理。证明完毕。
+
+这个统一间隙属于先固定移动尺度参数 $r$、再令缺陷趋零得到的系数族。其结论强于逐参数末端处理收缩给出的 $\gamma_r\le9/8$；但没有比较任意量子比特过程与任意三维过程，也未确定该混合族的最优系数或所有双参数路径的误差尺度。
+
+## 追加锚（本行以下为增补区）
+
+## 73. 移动压缩系数的显式统一间隙
+
+### 73.1 定量结论与同一切向修复
+
+沿用第 70—72 节完整 tester 范数、闭因果切锥及准确极限系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r>0.
+$$
+
+**定理 73.1。** 对每个 $r>0$，都有显式估计
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.1}
+$$
+
+结合大参数的修复上界，可以进一步取一个与 $r$ 无关的明确常数：
+
+$$
+1<\gamma_r\le\frac98-\frac{23}{394240}
+\qquad(r>0).
+\tag{73.2}
+$$
+
+这些常数是可行修复给出的保守界，不是最优间隙。
+
+证明仍使用第 72 节的显式切向修复 $K_{r,\delta}$。取
+
+$$
+0<\delta\le\frac14,\qquad p=1-\delta,
+\qquad g=\sqrt{rp},
+\qquad \rho=\sqrt r-g=\sqrt r\,(1-\sqrt{1-\delta}).
+\tag{73.3}
+$$
+
+第 72 节已直接验证 $K_{r,\delta}\in\mathcal T$。记
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,
+\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle,\\
+w=x+y,\\
+J=|w\rangle\langle z|+|z\rangle\langle w|
+-|x'\rangle\langle z'|-|z'\rangle\langle x'|.
+\end{gathered}
+$$
+
+其差算符具有准确分解
+
+$$
+\begin{aligned}
+Y_{r,\delta}:=H_r-K_{r,\delta}
+={}&Y_* -\delta|w\rangle\langle w|
++\delta|h\rangle\langle h|+\delta|z'\rangle\langle z'|
++\rho J,\\
+Y_*={}&|x\rangle\langle x|
++\frac12(|x\rangle\langle y|+|y\rangle\langle x|)
+-|h\rangle\langle h|.
+\end{aligned}
+\tag{73.4}
+$$
+
+以下直接估计所有 tester 对式（73.4）的正负响应，不需要知道其最优事件。
+
+### 73.2 任意 tester 的末支撑质量
+
+固定任意完整 tester
+
+$$
+C\succeq0,\qquad\operatorname{Tr}_A C=I_B,
+\qquad0\preceq E\preceq C\otimes I_D.
+$$
+
+记
+
+$$
+s=C_{11,11}\in[0,1],\qquad q=C_{00,00}\in[0,1].
+$$
+
+偏迹归一化给 $C_{01,01}=1-s$、$C_{10,10}=1-q$。由 $E\preceq C\otimes I_D$，
+
+$$
+\begin{gathered}
+\langle z|E|z\rangle,\ \langle z'|E|z'\rangle\le s,
+\qquad\langle x'|E|x'\rangle\le q\le1,\\
+\langle w|E|w\rangle
+\le\langle w|C\otimes I_D|w\rangle
+=C_{00,00}+C_{10,10}=1.
+\end{gathered}
+\tag{73.5}
+$$
+
+最后一个等式使用 $x,y$ 的末输出坐标不同。正算子 $E$ 的 Cauchy–Schwarz 不等式于是给
+
+$$
+|\operatorname{Tr}(JE)|
+\le2|\langle z|E|w\rangle|+2|\langle z'|E|x'\rangle|
+\le4\sqrt s.
+\tag{73.6}
+$$
+
+这是对同一个任意 tester 的约束；没有将它与另一个 tester 的最优事件拼接。
+
+### 73.3 中心块负响应的准确最大值
+
+定义不含末支撑相干项的中心算符
+
+$$
+Z_\delta=Y_*-\delta|w\rangle\langle w|+\delta|h\rangle\langle h|.
+\tag{73.7}
+$$
+
+它被第 72 节的两个角局部相位群保持。将任意给定 $(C,E)$ 按该群平均，不改变 $-\operatorname{Tr}(Z_\delta E)$，也不改变原对角参数 $q,s$；平均后的反馈矩阵为
+
+$$
+\overline C=\operatorname{diag}(q,1-s,1-q,s).
+$$
+
+因此对于中心项可以在这个对角反馈下求上界，同时保留原 tester 在式（73.6）中的同一个 $s$。
+
+加权 $Z_\delta$ 在 $x,y$ 上的主块为
+
+$$
+B_{q,\delta}=
+\begin{pmatrix}
+(1-\delta)q&(1/2-\delta)\sqrt{q(1-q)}\\
+(1/2-\delta)\sqrt{q(1-q)}&-\delta(1-q)
+\end{pmatrix}.
+\tag{73.8}
+$$
+
+其迹为 $q-\delta$，行列式为 $-q(1-q)/4$。唯一可能的负本征值绝对值为
+
+$$
+n_\delta(q)=
+\frac{\sqrt{\delta^2+(1-2\delta)q}-q+\delta}{2}.
+\tag{73.9}
+$$
+
+其余非零部分只有 $h$ 上的负本征值 $-p(1-s)$。故任意原 tester 满足
+
+$$
+-\operatorname{Tr}(Z_\delta E)
+\le p(1-s)+n_\delta(q).
+\tag{73.10}
+$$
+
+在 $0<\delta\le1/4$ 上，式（73.9）是 $q\in[0,1]$ 的凹函数，最大点为
+
+$$
+q_\delta=\frac{1-4\delta}{4(1-2\delta)}\in[0,1].
+$$
+
+可直接求导确认；在 $\delta=1/4$ 时最大点位于 $q=0$。代入得到
+
+$$
+F_\delta:=p+\max_{0\le q\le1}n_\delta(q)
+=\frac98-\frac34\delta+
+\frac{\delta^2}{2(1-2\delta)}.
+\tag{73.11}
+$$
+
+因此中心负响应具有保留末支撑质量罚项的界
+
+$$
+-\operatorname{Tr}(Z_\delta E)\le F_\delta-p s.
+\tag{73.12}
+$$
+
+### 73.4 完整负响应与正响应
+
+式（73.4）等于 $Z_\delta+\delta|z'\rangle\langle z'|+\rho J$。因为 $E\succeq0$，在负响应上可以舍去非正贡献 $-\delta\langle z'|E|z'\rangle$。式（73.6）、（73.12）于是给
+
+$$
+\begin{aligned}
+-\operatorname{Tr}(Y_{r,\delta}E)
+&\le F_\delta-p s+4\rho\sqrt s\\
+&\le F_\delta+\frac{4\rho^2}{p}.
+\end{aligned}
+\tag{73.13}
+$$
+
+最后一步是完成平方：$-p s+4\rho\sqrt s=-p(\sqrt s-2\rho/p)^2+4\rho^2/p$。
+
+由
+
+$$
+\rho=\frac{\sqrt r\,\delta}{1+\sqrt p},
+\qquad1+\sqrt p\ge2\sqrt p,
+$$
+
+以及 $p\ge3/4$，有
+
+$$
+\frac{4\rho^2}{p}
+\le\frac{r\delta^2}{p^2}
+\le\frac{16}{9}r\delta^2\le2r\delta^2.
+$$
+
+式（73.11）中 $\delta^2/[2(1-2\delta)]\le\delta^2$。取全部 tester 最大值，得到
+
+$$
+\max_{C,E}-\operatorname{Tr}(Y_{r,\delta}E)
+\le\frac98-\frac34\delta+(1+2r)\delta^2.
+\tag{73.14}
+$$
+
+正响应也须控制。第 72 节已准确计算 $\max_{C,E}\operatorname{Tr}(Y_*E)=1$。式（73.4）中的 $-\delta|w\rangle\langle w|$ 对正响应不增益，而两个新增对角元满足
+
+$$
+\langle h|E|h\rangle+\langle z'|E|z'\rangle
+\le C_{01,01}+C_{11,11}=1.
+$$
+
+再用式（73.6）及 $s\le1$，便有
+
+$$
+\begin{aligned}
+\max_{C,E}\operatorname{Tr}(Y_{r,\delta}E)
+&\le1+\delta+4\rho\\
+&\le1+\delta(1+4\sqrt r).
+\end{aligned}
+\tag{73.15}
+$$
+
+最后一步只用 $\rho\le\sqrt r\,\delta$。正负响应界分别对全部合法事件成立，故可以共同用于 $N$。
+
+### 73.5 明确选择扰动参数
+
+现在对每个固定 $r>0$ 选择
+
+$$
+\delta_r=\frac{1}{32(1+2r)}\le\frac1{32}<\frac14.
+\tag{73.16}
+$$
+
+式（73.14）给
+
+$$
+\max_{C,E}-\operatorname{Tr}(Y_{r,\delta_r}E)
+\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.17}
+$$
+
+对正响应，恒等式
+
+$$
+2(1+2r)-(1+4\sqrt r)=(2\sqrt r-1)^2\ge0
+$$
+
+使式（73.15）成为
+
+$$
+\max_{C,E}\operatorname{Tr}(Y_{r,\delta_r}E)
+\le1+\frac{1+4\sqrt r}{32(1+2r)}\le\frac{17}{16}.
+\tag{73.18}
+$$
+
+而式（73.17）的右侧对所有 $r\ge0$ 至少为
+
+$$
+\frac98-\frac{23}{1024}=\frac{1129}{1024}
+>\frac{17}{16}.
+$$
+
+因此正负响应合并给
+
+$$
+N(H_r-K_{r,\delta_r})
+\le\frac98-\frac{23}{1024(1+2r)}.
+\tag{73.19}
+$$
+
+由切锥变分式及已证 $\gamma_r>1$，得到式（73.1）。这里参数和常数均显式，不以未计算的小量余项决定可行范围。
+
+### 73.6 与大参数上界组合
+
+第 71 节对 $r\ge8$ 给
+
+$$
+\gamma_r\le1+3(u_r-1),
+\qquad u_r=\frac{r-\sqrt{r^2-4r}}2.
+$$
+
+小根满足 $u_r^2=r(u_r-1)$ 且 $1<u_r\le2$，所以
+
+$$
+\gamma_r\le1+\frac{12}{r}\qquad(r\ge8).
+\tag{73.20}
+$$
+
+当 $r\ge192$ 时，式（73.20）给 $\gamma_r\le17/16$。当 $0<r\le192$ 时，式（73.1）给
+
+$$
+\gamma_r\le\frac98-\frac{23}{1024\cdot385}
+=\frac98-\frac{23}{394240}.
+$$
+
+后一个上界大于 $17/16$，所以同一式对全部 $r>0$ 成立，证明式（73.2）。$\square$
+
+显式常数没有确定真实最大系数或最大点；其意义是给第 72 节的统一严格间隙提供一个可以直接代入的下界。全部估计仍属于先固定 $r$、再令原缺陷趋零得到的系数函数，未据此交换双参数极限。
+
+## 追加锚（本行以下为增补区）
+
+## 74. 全压缩参数的一致尺度轮廓与最坏参数的集中
+
+### 74.1 两个同时变化的参数
+
+考虑第64节同一混合族 $R_{a,\varepsilon}$，其中 $0<a<1$、$0<\varepsilon<1$。完整事件最优修复误差仍为 $e(R_{a,\varepsilon})$，归一化缺陷为 $\varepsilon$。定义尺度比
+
+$$
+r=\frac{1-a}{\varepsilon}.
+\tag{74.1}
+$$
+
+第70、71节的函数 $\gamma_r=\operatorname{dist}_N(H_r,\mathcal T)$ 在 $r\ge0$ 连续，$\gamma_0=1$，且在 $r\to\infty$ 时趋于一。置
+
+$$
+\Gamma=\max_{r>0}\gamma_r,\qquad
+\mathcal A=\{r>0:\gamma_r=\Gamma\}.
+\tag{74.2}
+$$
+
+前述结果保证 $\mathcal A$ 为非空紧集，包含于 $(0,\infty)$，并且 $1<\Gamma<9/8$。
+
+**定理74.1（一致尺度轮廓）。** 在整个开压缩参数区间上，有
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}
+\left|
+\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|=0.
+\tag{74.3}
+$$
+
+因此，对任意随 $\varepsilon\downarrow0$ 变化的合法参数 $a_\varepsilon$，如果
+
+$$
+\frac{1-a_\varepsilon}{\varepsilon}\longrightarrow r\in[0,\infty),
+$$
+
+则 $e(R_{a_\varepsilon,\varepsilon})/\varepsilon\to\gamma_r$；如果该比值趋于无穷，则误差比趋于一。
+
+整个候选族的最坏比例也具有准确极限：
+
+$$
+\lim_{\varepsilon\downarrow0}
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+=\Gamma.
+\tag{74.4}
+$$
+
+若 $a_\varepsilon$ 渐近达到同一族的最坏比例，即
+
+$$
+\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}
+-\frac{e(R_{a_\varepsilon,\varepsilon})}{\varepsilon}
+\longrightarrow0,
+\tag{74.5}
+$$
+
+则必有
+
+$$
+\operatorname{dist}\left(
+\frac{1-a_\varepsilon}{\varepsilon},\mathcal A
+\right)\longrightarrow0.
+\tag{74.6}
+$$
+
+特别地，这些参数满足 $1-a_\varepsilon=\Theta(\varepsilon)$。这并未断言最优尺度唯一。
+
+### 74.2 有界尺度上的一致一阶展开
+
+记 $R_0=|x+y\rangle\langle x+y|$，并沿用第70节的紧凸因果修复集合 $\mathcal C$、缩放集合
+
+$$
+\mathcal D_\varepsilon=\frac{\mathcal C-R_0}{\varepsilon},
+\qquad
+\mathcal T=\overline{\bigcup_{t>0}\mathcal D_t}.
+\tag{74.7}
+$$
+
+若 $r\ge0$ 且 $r\varepsilon<1$，把 $a=1-r\varepsilon$ 代入候选，得到
+
+$$
+\begin{aligned}
+R_{1-r\varepsilon,\varepsilon}
+={}&|\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z\rangle
+\langle\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
++\sqrt r\,\varepsilon z|\\
+&+\varepsilon|\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\rangle
+\langle\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'|.
+\end{aligned}
+\tag{74.8}
+$$
+
+在 $r=0$ 时使用第71节已经定义的端点 $a=1$。对任意固定 $R<\infty$，存在常数 $C_R<\infty$，使充分小正 $\varepsilon$ 满足
+
+$$
+\sup_{0\le r\le R}
+N\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}-H_r
+\right)\le C_R\varepsilon.
+\tag{74.9}
+$$
+
+为核对一致性，可将（74.8）逐矩阵元展开。只需对 $\sqrt{1-r\varepsilon}$ 和 $\sqrt{1-\varepsilon}$ 沿 $\varepsilon$ 作二阶 Taylor 估计。在紧集
+
+$$
+0\le r\le R,\qquad
+0\le\varepsilon\le\frac1{2(1+R)}
+$$
+
+上，两个根号的被开方数均至少为 $1/2$，各矩阵元关于 $\varepsilon$ 的二阶导数连续且一致有界。因 $\sqrt r$ 在此紧参数集上连续有界，第二行外积同样满足这一性质。一阶项恰为第70节的 $H_r$，于是余项的迹范数一致为 $O_R(\varepsilon^2)$。再用 $N(X)\le2\|X\|_1$ 即得（74.9）。这里没有要求关于 $r$ 在零点可微。
+
+### 74.3 切锥距离的紧参数一致收敛
+
+定义
+
+$$
+d_\varepsilon(H)=\operatorname{dist}_N(H,\mathcal D_\varepsilon),
+\qquad d_0(H)=\operatorname{dist}_N(H,\mathcal T).
+$$
+
+第70节已证明 $\mathcal D_\varepsilon$ 随 $\varepsilon\downarrow0$ 扩大，且对每个固定 $H$，
+
+$$
+d_\varepsilon(H)\downarrow d_0(H).
+\tag{74.10}
+$$
+
+所有这些距离函数都具有同一个 $1$-Lipschitz 界。$r\mapsto H_r$ 连续，故 $\{H_r:0\le r\le R\}$ 紧。这使（74.10）在该参数集上一致。
+
+具体地，给定 $\xi>0$，取有限个 $r_1,\ldots,r_k$，使每个 $H_r$ 都与某个 $H_{r_j}$ 的 $N$ 距离小于 $\xi$。对有限多个中心同时应用（74.10），充分小的 $\varepsilon$ 满足
+
+$$
+d_\varepsilon(H_{r_j})-d_0(H_{r_j})<\xi
+\quad\text{对所有 }j.
+$$
+
+因为 $\mathcal D_\varepsilon\subset\mathcal T$，结合两个距离函数的 Lipschitz 性，有
+
+$$
+0\le d_\varepsilon(H_r)-d_0(H_r)<3\xi
+\quad(0\le r\le R).
+\tag{74.11}
+$$
+
+另一方面，范数正齐次性给准确等式
+
+$$
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}
+=d_\varepsilon\left(
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}
+\right).
+\tag{74.12}
+$$
+
+结合（74.9）、（74.11）和 $d_0(H_r)=\gamma_r$，得到
+
+$$
+\sup_{0\le r\le R}
+\left|
+\frac{e(R_{1-r\varepsilon,\varepsilon})}{\varepsilon}-\gamma_r
+\right|\longrightarrow0.
+\tag{74.13}
+$$
+
+这一步证明有界尺度中的共同变化结论，不依赖先后交换两个未验证的极限。
+
+### 74.4 无界尺度由显式修复统一控制
+
+现在考虑任意 $0<a<1$，置 $s=1-a$。若 $r=s/\varepsilon\ge8$，则 $\varepsilon\le s/8$，第66节的显式修复适用。其小根满足
+
+$$
+\varepsilon<p\le2\varepsilon,\qquad
+p-\varepsilon=\frac{a\varepsilon p}{s-p}
+\le\frac{8a}{3s}\varepsilon^2.
+\tag{74.14}
+$$
+
+最后一式使用 $s-p\ge3s/4$。准确事件上界中的另一因子满足
+
+$$
+2+\frac{2(\sqrt a+\sqrt{\varepsilon s})}
+{\sqrt{1-\varepsilon}+\sqrt{1-p}}<6.
+$$
+
+确实，$\varepsilon\le s/8\le1/8$、$p\le1/4$，故分母大于一，而分子括号中的两项和小于二。总事件的下界与这个修复上界合并，给出对所有这些参数同时成立的估计
+
+$$
+1\le\frac{e(R_{a,\varepsilon})}{\varepsilon}
+\le1+\frac{16a}{r}\le1+\frac{16}{r}.
+\tag{74.15}
+$$
+
+这里直接使用第66节修复，不需要第69节匹配下界所用的附加条件 $\varepsilon\le\sqrt a/16$。
+
+第71节给同一尺度范围内
+
+$$
+1\le\gamma_r\le1+3(u_r-1)\le1+\frac{12}{r},
+\tag{74.16}
+$$
+
+其中
+
+$$
+u_r-1=\frac{4/r}{(1+\sqrt{1-4/r})^2}\le\frac4r.
+$$
+
+因此，两个量同在 $[1,1+16/r]$ 中，遂有
+
+$$
+\left|\frac{e(R_{a,\varepsilon})}{\varepsilon}-\gamma_r\right|
+\le\frac{16}{r}
+\qquad(r\ge8).
+\tag{74.17}
+$$
+
+给定误差容限，先取足够大的有限 $R\ge8$，使 $16/R$ 小于该容限；再对 $0\le r\le R$ 使用（74.13）。所有合法参数的尺度比均属于 $(0,1/\varepsilon)$，已被这两个区域覆盖。故得到（74.3）。各条共同变化路径的结论再由 $\gamma$ 的连续性与无穷端点极限推出。
+
+### 74.5 最坏误差与实际参数尺度
+
+记
+
+$$
+F_\varepsilon=\sup_{0<a<1}\frac{e(R_{a,\varepsilon})}{\varepsilon}.
+$$
+
+（74.3）给 $\limsup F_\varepsilon\le\Gamma$。反向，取任意 $r_*\in\mathcal A$，令 $a_\varepsilon=1-r_*\varepsilon$。充分小正 $\varepsilon$ 时它属于 $(0,1)$，且第70节给对应比例趋于 $\gamma_{r_*}=\Gamma$。故 $\liminf F_\varepsilon\ge\Gamma$，证明（74.4）。
+
+最后，假设（74.5），记 $r_\varepsilon=(1-a_\varepsilon)/\varepsilon$。由（74.3）、（74.4），
+
+$$
+\gamma_{r_\varepsilon}\longrightarrow\Gamma>1.
+\tag{74.18}
+$$
+
+由于 $\gamma_r$ 在零与无穷两个端点均趋于一，存在 $0<d<R<\infty$，使这些渐近最坏参数最终全部满足 $r_\varepsilon\in[d,R]$。如果到 $\mathcal A$ 的距离不趋零，可取一个距离统一有正下界的子列，再在此紧区间取收敛子列 $r_{\varepsilon_j}\to r_\infty$。（74.18）和连续性给 $\gamma_{r_\infty}=\Gamma$，所以 $r_\infty\in\mathcal A$，与距离下界矛盾。得到（74.6），也得到 $d\varepsilon\le1-a_\varepsilon\le R\varepsilon$。证明完毕。
+
+一致尺度轮廓同时描述固定参数下的比值极限、临界移动参数的一阶比例间隙及两端退化行为；固定参数的二阶超额仍由第69节的更精细估计承担。它只针对本候选族与完整 tester 合同；没有把 $\Gamma$ 识别为所有有限量子过程的通用常数。
+
+## 追加锚（本行以下为增补区）
+
+## 75. 移动压缩系数的显式正下界
+
+### 75.1 一个固定尺度与最坏系数的双侧区间
+
+沿用第 70 节完整 tester 范数 $N$、闭因果切锥 $\mathcal T$ 以及准确极限系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K).
+$$
+
+本节固定 $r=1$。不限制切向修复的矩阵分块或复相干，也不假设最优修复属于某个显式参数族。
+
+**定理 75.1。** 有明确的严格下界
+
+$$
+\gamma_1>\frac{401}{400}.
+\tag{75.1}
+$$
+
+因此第 71、74 节的最坏渐近系数满足
+
+$$
+\frac{401}{400}<\Gamma:=\max_{r>0}\gamma_r
+\le\frac98-\frac{23}{394240}.
+\tag{75.2}
+$$
+
+右侧使用第 73 节的显式统一上界。这给出最坏超额的明确正下界 $\Gamma-1>1/400$，不将任一端点常数识别为最优值。
+
+### 75.2 同一总事件的近饱和约束
+
+记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad j=|100\rangle,\quad w=x+y.
+$$
+
+固定任意 $K\in\mathcal T$，令 $Y=H_1-K$。切锥的准确刻画给
+
+$$
+\operatorname{Tr}_D K=I_A\otimes\dot\sigma,
+\qquad\dot\sigma=\dot\sigma^*,\quad\operatorname{Tr}\dot\sigma=0,
+\qquad P_0KP_0\succeq0,
+\tag{75.3}
+$$
+
+其中 $P_0$ 是 $w^\perp$ 上的正交投影。这里不要求 $K$ 本身为正。
+
+反设对某个
+
+$$
+0\le g\le\frac1{400}
+$$
+
+有
+
+$$
+N(Y)\le1+g.
+\tag{75.4}
+$$
+
+选择合法总事件
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+\qquad X=\Pi_+Y\Pi_+.
+$$
+
+第 70 节的一阶早边缘和式（75.3）给 $\operatorname{Tr}X=1$。$X$ 的正谱投影是合法事件，所以其正谱和至多 $1+g$，负谱绝对值之和至多 $g$。在 $\operatorname{ran}\Pi_+$ 上，
+
+$$
+X+gI\succeq0,
+\qquad\langle v|X|v\rangle\le1+g
+\quad\text{对每个单位向量 }v.
+\tag{75.5}
+$$
+
+第 70 节式（70.8）在 $r=1$ 时给
+
+$$
+\begin{gathered}
+(H_{xx},H_{x'x'},H_{yy},H_{zz},H_{z'z'})=(-1,1,-1,0,1),\\
+H_{xz}=1,\qquad H_{x'z'}=-1,\qquad H_{xy}=-1.
+\end{gathered}
+\tag{75.6}
+$$
+
+由于 $z\perp w$，令 $\alpha=K_{zz}$，切向正性给 $\alpha\ge0$。而 $X_{zz}=-\alpha$，故式（75.5）给
+
+$$
+0\le\alpha\le g.
+$$
+
+在 $x,z$ 上取 $X+gI$ 的二阶主子式，得到
+
+$$
+\begin{aligned}
+|1-K_{xz}|^2
+&\le(X_{xx}+g)(g-\alpha)\\
+&\le(1+2g)g.
+\end{aligned}
+\tag{75.7}
+$$
+
+定义
+
+$$
+d_g=\sqrt{(1+2g)g},\qquad
+\ell_g=\frac{(1-d_g)^2}{1+g}.
+\tag{75.8}
+$$
+
+本节参数范围保证 $d_g<1$；因此即使 $K_{xz}$ 为任意复数，式（75.7）也给 $|K_{xz}|\ge1-d_g$。
+
+### 75.3 因果偏迹与核正性共同强迫对角质量
+
+令
+
+$$
+t=K_{x'x'},\qquad\beta=K_{z'z'},\qquad
+p=\dot\sigma_{11}=\alpha+\beta,
+\qquad s=-K_{yy}.
+$$
+
+$x',z'$ 均在 $w^\perp$，所以 $t,\beta\ge0$。式（75.5）在相应对角上还给
+
+$$
+t\le1+g,\qquad\beta\le1+g.
+\tag{75.9}
+$$
+
+因果偏迹的跨输入 $00,11$ 元为零，故
+
+$$
+K_{x'z'}=-K_{xz}.
+$$
+
+将 $P_0KP_0\succeq0$ 压缩到 $x',z'$，得到
+
+$$
+t\beta\ge|K_{x'z'}|^2=|K_{xz}|^2\ge(1-d_g)^2.
+\tag{75.10}
+$$
+
+结合式（75.9），这迫使
+
+$$
+t\ge\ell_g,\qquad\beta\ge\ell_g,
+\qquad p=\alpha+\beta\ge\ell_g.
+\tag{75.11}
+$$
+
+由于 $j\perp w$，还有 $K_{jj}\ge0$。式（75.3）在 $AB=10$ 上给 $K_{jj}+K_{yy}=-p$，所以
+
+$$
+s=p+K_{jj}\ge p\ge\ell_g.
+\tag{75.12}
+$$
+
+同一因果偏迹在 $AB=00$ 上给
+
+$$
+K_{xx}=-p-t.
+$$
+
+再使用 $x-y\perp w$ 的切向正性，
+
+$$
+0\le\langle x-y|K|x-y\rangle
+=-p-t-s-2\operatorname{Re}K_{xy}.
+$$
+
+由式（75.6），这给出同一实际方向 $Y$ 的约束
+
+$$
+\begin{gathered}
+Y_{xx}=p+t-1,\qquad Y_{yy}=s-1,\\
+\operatorname{Re}Y_{xy}\ge\frac{p+t+s}{2}-1.
+\end{gathered}
+\tag{75.13}
+$$
+
+从而
+
+$$
+\langle w|Y|w\rangle\ge2(p+t+s-2).
+\tag{75.14}
+$$
+
+至此没有删去任何未跟踪的相干项，也没有将分别可达的矩阵元界换成另一修复。
+
+### 75.4 一个固定反馈事件给出定量矛盾
+
+选择固定反馈
+
+$$
+C=\operatorname{diag}\left(\frac14,1,\frac34,0\right),
+\qquad L=C^{1/2}\otimes I_D,
+\qquad v_+=\frac{\sqrt3}{2}x+\frac12y.
+$$
+
+它满足 $\operatorname{Tr}_A C=I_B$，且 $v_+$ 为单位向量。因此
+
+$$
+E=L|v_+\rangle\langle v_+|L
+=\frac3{16}|w\rangle\langle w|
+\tag{75.15}
+$$
+
+是合法事件；它在整个推导中不随 $K$ 变化。
+
+由一阶早边缘与因果约束，同一反馈总事件的响应为
+
+$$
+\operatorname{Tr}(Y(C\otimes I_D))=-\frac34.
+$$
+
+其互补事件 $C\otimes I_D-E$ 也合法。因此，式（75.14）给
+
+$$
+\begin{aligned}
+N(Y)
+&\ge-\operatorname{Tr}\bigl(Y(C\otimes I_D-E)\bigr)\\
+&=\frac34+\frac3{16}\langle w|Y|w\rangle\\
+&\ge\frac38(p+t+s)
+\ge\frac98\ell_g.
+\end{aligned}
+\tag{75.16}
+$$
+
+现在仅需比较显式常数。若 $0\le g\le1/400$，则
+
+$$
+d_g^2=(1+2g)g\le\frac{201}{80000}<\frac1{361},
+$$
+
+最后一步等价于 $201\cdot361=72561<80000$。所以 $d_g<1/19$，式（75.8）、（75.16）给
+
+$$
+N(Y)\ge\frac98\ell_g
+>\frac98\frac{(18/19)^2}{1+g}
+=\frac{729}{722(1+g)}.
+\tag{75.17}
+$$
+
+若误差假设（75.4）成立，便必须有
+
+$$
+(1+g)^2>\frac{729}{722}.
+$$
+
+但同一参数范围内
+
+$$
+(1+g)^2\le\left(\frac{401}{400}\right)^2
+=\frac{160801}{160000}<\frac{729}{722},
+\tag{75.18}
+$$
+
+矛盾。这排除了所有满足式（75.4）的 $K\in\mathcal T$。
+
+特别地，没有切向修复能达到误差 $401/400$ 或更小。第 70 节已经证明切锥距离的极小值达到，所以严格下界（75.1）成立。再用 $\Gamma\ge\gamma_1$ 与第 73 节的显式统一上界，即得（75.2）。$\square$
+
+该下界使用固定尺度 $r=1$ 和一个固定补事件，未求解真实最优切向修复，也不定位使 $\gamma_r$ 最大的参数。它提供了明确的系数下界，与同一完整 tester 合同下的显式统一上界共同约束最坏渐近误差。
+
+## 追加锚（本行以下为增补区）
+
+## 76. 最坏修复系数的有限对称约化与实代数性质
+
+### 76.1 从完整复 tester 问题到四个固定荷块
+
+第 70—75 节已经给出完整 tester 合同下的准确系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r\ge0,
+$$
+
+其中最小值达到，$\gamma_0=1$，$\gamma_r>1$ 对每个 $r>0$ 成立，两个参数端点的极限均为一。本节不预设最优修复的秩，也不将某个数值矩阵的零元提升为普遍结构。
+
+沿用三个量子比特的顺序 $A,B,D$，并将八个标准基向量写为
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,\quad k=|011\rangle,\\
+j=|100\rangle,\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle.
+\end{gathered}
+$$
+
+令 $w=x+y$、$P_0=I-ww^*/2$。对 $u\ge0$ 定义 $H(u)=H_{u^2}$，即
+
+$$
+\begin{aligned}
+H(u)={}&-\frac12\bigl[(u^2x+y)w^*+w(u^2x+y)^*\bigr]\\
+&+u(zw^*+wz^*)+(ux'-z')(ux'-z')^*.
+\end{aligned}
+\tag{76.1}
+$$
+
+它的全部矩阵元是 $u$ 的有理系数多项式。
+
+定义四阶局部酉算符
+
+$$
+U=\operatorname{diag}(1,i)_A\otimes
+\operatorname{diag}(1,-i)_B\otimes
+\operatorname{diag}(1,-i)_D.
+\tag{76.2}
+$$
+
+其互异特征值对应子空间为
+
+$$
+\begin{array}{c|c}
+1&\operatorname{span}(x,y,z)\\
+-i&\operatorname{span}(x',h,z')\\
+i&\operatorname{span}(j)\\
+-1&\operatorname{span}(k).
+\end{array}
+\tag{76.3}
+$$
+
+**定理 76.1（精确实块约化）。** 计算 $\gamma_{u^2}$ 时，可以将切向修复 $K$ 限制为相对于式（76.3）的实对称块对角矩阵。其块大小为 $3,3,1,1$；这个限制保持最优值，并存在达到最优值的此类 $K$。
+
+证明。由式（76.1），$Uw=w$ 且 $UH(u)U^*=H(u)$。若 $K\in\mathcal T$，则
+
+$$
+\operatorname{Tr}_D(UKU^*)
+=I_A\otimes U_B\dot\sigma U_B^*,
+\qquad P_0UKU^*P_0=U(P_0KP_0)U^*\succeq0.
+$$
+
+所以 $UKU^*\in\mathcal T$。另一方面，将合法 tester $C,E$ 同时变换为
+
+$$
+C'=(U_A\otimes U_B)C(U_A\otimes U_B)^*,\qquad E'=UEU^*,
+$$
+
+仍保持 $C'\succeq0$、$\operatorname{Tr}_A C'=I_B$ 和 $0\preceq E'\preceq C'\otimes I_D$。该变换可逆，因此 $N(UXU^*)=N(X)$。
+
+对 $K$ 作有限平均
+
+$$
+\mathcal A(K)=\frac14\sum_{a=0}^{3}U^aK(U^*)^a.
+\tag{76.4}
+$$
+
+凸性和 $H(u)$ 的不变性给
+
+$$
+\mathcal A(K)\in\mathcal T,
+\qquad N(H(u)-\mathcal A(K))\le N(H(u)-K).
+$$
+
+不同特征值之间的矩阵元在四项平均中消去，所以 $\mathcal A(K)$ 正好具有式（76.3）的块形。
+
+标准基中的复共轭同样保持切锥和 tester 可行集，且 $H(u)$ 为实矩阵。因此再用
+
+$$
+K_{\mathbb R}=\frac12\bigl(\mathcal A(K)+\overline{\mathcal A(K)}\bigr)
+$$
+
+替换，仍然可行且不增目标值。它是同一块形的实对称矩阵。取第 70 节保证存在的原问题最优修复，即得最优值保持及达到性。$\square$
+
+此处只约去由实际局部酉对称强制消失的块间相干；每个三维块内部的所有实相干仍被保留。
+
+**定理 76.1a（切向修复的准确十实参数表示）。** 在定理 76.1 的实块空间内，全部因果线性约束可以完全消去。具体地，令
+
+$$
+\theta=(p,t,\zeta,\alpha,\beta,d,e,f,\ell,m)\in\mathbb R^{10},
+$$
+
+相对于有序块 $(x,y,z)$、$(x',h,z')$、$(j)$、$(k)$ 定义
+
+$$
+\begin{aligned}
+K(\theta)&=M_0(\theta)\oplus M_1(\theta)\oplus[\alpha]\oplus[\beta],\\
+M_0(\theta)&=
+\begin{pmatrix}
+-p-t&d&e\\
+d&-p-\alpha&f\\
+e&f&\zeta
+\end{pmatrix},\\
+M_1(\theta)&=
+\begin{pmatrix}
+t&\ell&-e\\
+\ell&p-\beta&m\\
+-e&m&p-\zeta
+\end{pmatrix}.
+\end{aligned}
+\tag{76.4a}
+$$
+
+则 $\mathcal T$ 与实块空间的交恰由这些矩阵中满足
+
+$$
+\alpha\ge0,\qquad\beta\ge0,\qquad M_1(\theta)\succeq0,
+\qquad
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}\succeq0
+\tag{76.4b}
+$$
+
+者构成；每个这样的矩阵对应唯一的 $\theta$。因此完整 tester 系数也准确等于
+
+$$
+\gamma_{u^2}
+=\min_{\theta\text{ 满足（76.4b）}}N(H(u)-K(\theta)),
+\tag{76.4c}
+$$
+
+且这个最小值达到。没有对两个正块的秩作限制。
+
+证明。先取任意实块矩阵 $K\in\mathcal T$。因果偏迹为 $I_A\otimes\dot\sigma$；由四阶相位不变性，$\dot\sigma$ 对角且迹零，所以可唯一写为 $\operatorname{diag}(-p,p)$。定义
+
+$$
+\begin{gathered}
+t=K_{x'x'},\quad\zeta=K_{zz},\quad
+\alpha=K_{jj},\quad\beta=K_{kk},\\
+d=K_{xy},\quad e=K_{xz},\quad f=K_{yz},
+\quad\ell=K_{x'h},\quad m=K_{hz'}.
+\end{gathered}
+$$
+
+所有这些数均实。偏迹在四个 $AB$ 对角位置的约束分别为
+
+$$
+K_{xx}+t=-p,\qquad
+K_{hh}+\beta=p,\qquad
+\alpha+K_{yy}=-p,\qquad
+\zeta+K_{z'z'}=p.
+$$
+
+在非对角位置，实块形使除 $AB=00,11$ 及其转置外的所有偏迹项自动为零；该剩余位置的因果条件恰为
+
+$$
+K_{xz}+K_{x'z'}=0.
+$$
+
+这五条等式给出式（76.4a）的全部指定矩阵元。反向，逐项取 $D$ 偏迹可直接验证，式（76.4a）对任意实参数都满足
+
+$$
+\operatorname{Tr}_D K(\theta)=I_A\otimes\operatorname{diag}(-p,p).
+$$
+
+因此没有剩余的因果线性条件。上述各条矩阵元及任一因果对角和又可恢复全部参数，故参数表示唯一。
+
+再核对核压缩正性。因为 $w=x+y$，有正交子空间分解
+
+$$
+w^\perp
+=\operatorname{span}(x-y,z)
+\oplus\operatorname{span}(x',h,z')
+\oplus\mathbb Cj\oplus\mathbb Ck.
+$$
+
+实块形使核压缩在这四个子空间之间没有耦合。第一块在基 $(x-y,z)$ 中的二次型矩阵正是
+
+$$
+\begin{pmatrix}
+K_{xx}+K_{yy}-2K_{xy}&K_{xz}-K_{yz}\\
+K_{zx}-K_{zy}&K_{zz}
+\end{pmatrix}
+=
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}.
+$$
+
+向量 $x-y$ 未归一化，但基变换为可逆合同变换，因此该矩阵半正定与对应子空间上的正性等价。其余三个块分别为 $M_1(\theta)$、$[\alpha]$、$[\beta]$。所以 $P_0KP_0\succeq0$ 恰等价于式（76.4b）。由第 70 节的准确切锥刻画，得到双向参数化。
+
+最后应用定理 76.1 的最优值保持及达到性，即得式（76.4c）。此处只消去了已明确的线性等式；块内相干以及核压缩的所有允许秩均保留。$\square$
+
+这一表示使修复变量从实块空间的十四维降为十个实参数，并把它自身的正性要求准确化为一个二阶正块、一个三阶正块及两个非负标量。事件范数 $N$ 仍取全部合法复 tester，后面的双向半定上界算子 继续承担其完整约束。
+
+### 76.2 保留全部事件的有限半定规划
+
+令 $\mathcal B$ 表示式（76.3）的实对称块对角矩阵空间。它作为实向量空间的维数是 $6+6+1+1=14$，不计随后施加的线性等式。
+
+**定理 76.2（系数的准确半定规划）。** $\gamma_{u^2}$ 是下列有限优化问题的达到最小值：最小化实数 $t$，变量为
+
+$$
+K,P_+,P_-\in\mathcal B,\qquad p,a_+,b_+,a_-,b_-\in\mathbb R,
+$$
+
+约束为
+
+$$
+\begin{gathered}
+P_0KP_0\succeq0,\qquad
+\operatorname{Tr}_D K=I_A\otimes\operatorname{diag}(-p,p),\\
+P_+\succeq0,\quad P_+-H(u)+K\succeq0,\\
+P_-\succeq0,\quad P_-+H(u)-K\succeq0,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes\operatorname{diag}(a_\pm,b_\pm),\\
+a_++b_+\le t,\qquad a_-+b_-\le t.
+\end{gathered}
+\tag{76.5}
+$$
+
+对每个固定 $u$，上述约束都是实仿射矩阵不等式与线性等式。
+
+证明。沿用第 55 节引理 55.1 的单向支持函数 $h$ 及其达到的对偶表示。完整范数满足
+
+$$
+N(X)=\max\{h(X),h(-X)\}.
+$$
+
+所以 $N(X)\le t$ 当且仅当存在两个半定上界算子 $P_\pm$，分别满足 $P_+\succeq X$、$P_-\succeq-X$，且它们的因果偏迹质量均不超过 $t$。这是同时保留两个符号的对偶约束，并未删去非因果方向的总事件读数。
+
+先取定理 76.1 的最优 $K\in\mathcal B$，于是 $X=H(u)-K$ 也在 $\mathcal B$。对每个符号，取达到单向最优值的对偶见证，然后作式（76.4）的四项平均及复共轭平均。$P_\pm\succeq0$ 与 $P_\pm\succeq\pm X$ 均被保持，偏迹形式及质量也被保持。所得 $P_\pm$ 属于 $\mathcal B$。
+
+在偏迹等式中，有限平均同时使 $n_\pm$ 与 $U_B=\operatorname{diag}(1,-i)$ 对易，故 $n_\pm$ 对角；同样，$\dot\sigma$ 对角且迹零，恰写成 $\operatorname{diag}(-p,p)$。于是得到式（76.5）的可行点，取 $t=N(H(u)-K)$ 即达到 $\gamma_{u^2}$。
+
+反方向，任意满足式（76.5）的变量均给 $K\in\mathcal T$。第 55 节的对偶上界分别给 $h(H(u)-K)\le t$ 与 $h(K-H(u))\le t$，故 $\gamma_{u^2}\le N(H(u)-K)\le t$。两方向合并得到准确等价。$\square$
+
+因此这是一份对全部合法复 tester 有效的有限实问题。块内可以继续出现满秩矩阵；式（76.5）没有给秩另设假设。
+
+### 76.3 从有限多项式合同到实代数系数
+
+本节使用实代数几何的标准消元结论：有理系数多项式等式与不等式定义的集合，在有限次投影和补集下仍为有理系数半代数集；等价地，实闭域的一阶公式可消去量词。这是 Tarski–Seidenberg 定理及实闭域量词消去的内容，相关算法背景见 Basu–Pollack–Roy，*Algorithms in Real Algebraic Geometry*，[第二版](https://doi.org/10.1007/3-540-33099-2)。这里只使用该成熟结果，不把有限矩阵表示本身当作代数性的证明。
+
+**定理 76.3（系数图与代数参数）。** 函数 $r\mapsto\gamma_r$ 在 $r\ge0$ 上的图是有理系数半代数集。特别地，每个非负实代数参数 $r$ 都给实代数数 $\gamma_r$。
+
+证明。实对称矩阵半正定当且仅当全部主子式非负。$P_0$ 是固定有理矩阵，而 $H(u)$ 的矩阵元是有理系数多项式。因此，将式（76.5）的实变量展开后，全部可行性条件是一份有限有理多项式合同，记作 $\mathsf F(u,t,\xi)$，其中 $\xi$ 汇总矩阵与标量见证。
+
+由定理 76.2 的达到性，$u\ge0$ 时
+
+$$
+\exists\xi\;\mathsf F(u,t,\xi)
+\quad\Longleftrightarrow\quad t\ge\gamma_{u^2}.
+\tag{76.6}
+$$
+
+因而 $\gamma_{u^2}$ 的图准确由公式
+
+$$
+u\ge0,\qquad
+\exists\xi\;\mathsf F(u,t,\xi),\qquad
+\neg\exists(s,\zeta)\;\bigl[s<t\ \wedge\ \mathsf F(u,s,\zeta)\bigr]
+\tag{76.7}
+$$
+
+定义。量词消去给出其有理半代数性。再加入 $r=u^2$ 并投影掉 $u$，得到 $\gamma_r$ 的图。
+
+固定一个实代数 $r_0\ge0$。它可以由一个有理多项式及隔离该根的有理区间定义，因此再固定 $r=r_0$ 并投影后，单点集合 $\{\gamma_{r_0}\}$ 仍是有理半代数集。
+
+任何有理半代数单点都是实代数点：在一个无量词定义中只出现有限多个有理多项式；若单点坐标不是它们中任何非零多项式的根，则所有多项式的符号在该点附近不变，使定义不能只选出一个点，矛盾。因此 $\gamma_{r_0}$ 是实代数数。$\square$
+
+这里没有声称 $\gamma_r$ 是 $r$ 的一个全局有理函数，也没有通过有限个数值样本拟合代数方程。
+
+### 76.4 最坏压缩系数与最大参数集的有限代数描述
+
+**定理 76.4（最坏系数的实代数性）。** 第 71、74 节的
+
+$$
+\Gamma=\max_{r>0}\gamma_r
+$$
+
+是实代数数。最大参数集
+
+$$
+\mathcal M=\{r>0:\gamma_r=\Gamma\}
+\tag{76.8}
+$$
+
+是非空紧集，并且是有限多个实代数单点与闭区间的并；每个非退化区间的两个端点也都是正实代数数。特别地，至少存在一个正实代数参数达到最坏系数。
+
+证明。先用第 71 节的连续性、两端极限为一以及 $\Gamma>1$，将 $\mathcal M$ 限制在某个 $[a,b]\subset(0,\infty)$ 内。它是非空闭集，故紧。
+
+记定理 76.3 的图关系为 $\mathsf G(r,t)$。$\Gamma$ 是下列公式唯一选出的 $t$：
+
+$$
+\bigl[\exists r>0\;\mathsf G(r,t)\bigr]
+\ \wedge\
+\neg\exists(s,v)\;\bigl[s>0\ \wedge\ \mathsf G(s,v)\ \wedge\ v>t\bigr].
+\tag{76.9}
+$$
+
+由于 $\mathsf G$ 为有理半代数关系，量词消去使该单点集合也为有理半代数集。定理 76.3 证明末尾的单点论证给出 $\Gamma$ 的实代数性。
+
+同理，把式（76.9）与 $\mathsf G(r,t)$ 联合并消去 $t$，得到 $\mathcal M$ 的有理半代数定义。实直线上的半代数集是有限多个点与区间的并：取无量词定义中所有非零多项式的实根，相邻根之间全部符号恒定；有限个根将实线分成有限个这样的区间与点。紧性排除无界区间和缺失的有限端点，因此可写成有限个闭区间与孤立点。全部有限边界点是上述有理多项式的根，所以为实代数数。任取一个孤立点或区间端点便得到代数最大参数。$\square$
+
+结合第 75 节，本模型的同一个实代数常数满足
+
+$$
+\frac{401}{400}<\Gamma\le\frac98-\frac{23}{394240}.
+\tag{76.10}
+$$
+
+量词消去给出了原则上可终止的精确求解路线，但本节没有执行它、没有给出 $\Gamma$ 的最小多项式或隔离区间，也没有排除最大值平台。实际求解的运算成本仍是另一个问题。
+
+这里可以准确连接静态表示与继续研究的接口：完整 tester 修复合同先由局部相位对称约为固定大小的矩阵关系，再由有限多项式合同约束最坏误差及其参数。静态编码保留了可验证的优化条件；它本身不提供一次低成本的最优值计算。
+
+## 追加锚（本行以下为增补区）
+
+## 77. 统一缩放轮廓的幂次误差界与最坏尺度的稳定性
+
+### 77.1 有限代数结构给趋零量一个幂次上界
+
+第 74 节证明了全压缩参数的统一极限，第 76 节把准确系数及其最大参数集写成有限实多项式关系。本节将两者连接：在同一个有限量子模型内，统一误差不只是趋零，还必然具有某个正幂次的上界。这里证明幂次存在，不计算最优指数或常数。
+
+**引理 77.1（一元半代数趋零量的幂次界）。** 设 $f:(0,t_0)\to[0,\infty)$ 的图为半代数集，且 $f(t)\to0$ 当 $t\downarrow0$。则存在整数 $m\ge1$、常数 $C>0$ 和 $t_1>0$，使
+
+$$
+f(t)\le Ct^{1/m}\qquad(0<t<t_1).
+\tag{77.1}
+$$
+
+证明。对函数图取一个由有限个非零实多项式的符号条件组成的无量词定义，恒零多项式可先从定义中删去。在每个图点 $(t,f(t))$，至少一个定义多项式为零。否则全部多项式的符号在该点的某个二维开邻域内不变，定义会把整个邻域都包含进函数图，与每个 $t$ 只有一个函数值矛盾。
+
+令 $P(t,y)$ 为这些非零多项式的乘积，便有非零多项式满足
+
+$$
+P(t,f(t))=0\qquad(0<t<t_0).
+$$
+
+除去 $P$ 的最大公共 $t$ 幂因子，不改变 $t>0$ 上的等式，并保证 $P(0,y)$ 不是零多项式。由于 $f(t)\to0$，连续性给 $P(0,0)=0$。设其在 $y=0$ 的零点重数为 $m\ge1$。则在充分小的 $y\ge0$ 上存在 $c>0$，使
+
+$$
+|P(0,y)|\ge c y^m.
+$$
+
+而 $P(t,y)-P(0,y)$ 被 $t$ 整除，所以在一个固定小矩形上有
+
+$$
+|P(t,y)-P(0,y)|\le C_0 t.
+$$
+
+对充分小的 $t>0$ 代入 $y=f(t)$，得到 $cf(t)^m\le C_0t$，即式（77.1）。常数可放大为严格正数，因此也包含 $f$ 最终恒零的情形。$\square$
+
+这是本节所需的幂次控制的完整证明；没有预先给趋零速度加解析性假设。
+
+### 77.2 原始修复误差也是同一类有限代数对象
+
+将第 64 节的混合量子比特族写为
+
+$$
+\begin{aligned}
+r_0(a,\varepsilon)
+&=\sqrt a\,x+\sqrt{\varepsilon(1-a)}\,z+\sqrt{1-\varepsilon}\,y,\\
+r_1(a,\varepsilon)
+&=\sqrt{1-a}\,x'-\sqrt{\varepsilon a}\,z',\\
+R_{a,\varepsilon}&=r_0r_0^*+r_1r_1^*.
+\end{aligned}
+\tag{77.2}
+$$
+
+记 $\mathcal C$ 为第 70 节的同一个因果修复集合，并令
+
+$$
+e(a,\varepsilon)=\min_{S\in\mathcal C}N(R_{a,\varepsilon}-S),
+\qquad0<a<1,\quad0<\varepsilon<1.
+$$
+
+**引理 77.2（原修复值的半代数性）。** $e(a,\varepsilon)$ 的图是有理系数半代数集。
+
+证明。引入非负实变量 $A,B,E,C$，满足
+
+$$
+A^2=a,\quad B^2=1-a,\quad E^2=\varepsilon,\quad C^2=1-\varepsilon.
+$$
+
+这些条件唯一指定相应正平方根，式（77.2）的向量成为 $Ax+EBz+Cy$ 与 $Bx'-EAz'$，全部矩阵元均为有理系数多项式。
+
+修复的约束为
+
+$$
+S\succeq0,\qquad
+\operatorname{Tr}_D S=I_A\otimes\sigma,\qquad
+\sigma\succeq0,\quad\operatorname{Tr}\sigma=1.
+\tag{77.3}
+$$
+
+再对 $X=R_{a,\varepsilon}-S$ 使用第 55 节的两个符号对偶，上界 $N(X)\le t$ 等价于存在厄米矩阵 $P_\pm,n_\pm$，使
+
+$$
+\begin{gathered}
+P_\pm\succeq0,\qquad P_\pm\succeq\pm X,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes n_\pm,
+\qquad\operatorname{Tr}n_\pm\le t.
+\end{gathered}
+\tag{77.4}
+$$
+
+每个复厄米矩阵以实部和虚部作为实变量。正性可用全部厄米主子式的非负性表达，等价地也可实化为实对称半定矩阵；因而式（77.3）—（77.4）是有限有理多项式条件。
+
+$\mathcal C$ 是非空紧集：正性与偏迹归一化给 $\operatorname{Tr}S=2$，而其余条件闭合。因此连续目标的极小值达到。对偶最优值也由第 55 节保证达到，所以在上述可行性公式中投影掉矩阵见证，准确得到 $t\ge e(a,\varepsilon)$。再排除同参数下的所有更小可行 $t$，正如式（76.7），得到函数图的有理半代数定义。$\square$
+
+### 77.3 全压缩范围的统一幂次误差
+
+定义实际统一偏差
+
+$$
+D(\varepsilon)
+=\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|.
+\tag{77.5}
+$$
+
+**定理 77.3（统一轮廓存在正幂次速率）。** 存在正有理数 $\alpha>0$、常数 $C>0$ 及 $\varepsilon_0>0$，使
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le C\varepsilon^\alpha
+\qquad(0<\varepsilon<\varepsilon_0).
+\tag{77.6}
+$$
+
+证明。引理 77.2 与定理 76.3 给式（77.5）中被取上确界函数的半代数性；除法只在 $\varepsilon>0$ 上使用，可通过乘法等式定义。对固定 $\varepsilon$，上确界有限：候选过程和修复的迹固定，完整 tester 集紧，而 $\gamma_r\le9/8$。
+
+有限上确界仍有半代数图。具体地，$d=D(\varepsilon)$ 由“$d$ 是所有上述值的上界，且不存在更小的上界”这一有限实变量量词公式定义；Tarski–Seidenberg 消元适用于这份公式。这里没有把开区间 $0<a<1$ 上的上确界偷换为必然达到的最大值。
+
+第 74 节已经独立证明 $D(\varepsilon)\to0$。因此对 $D$ 应用引理 77.1，得到式（77.6），其中可取 $\alpha=1/m$。$\square$
+
+记完整压缩族的最坏归一化误差为
+
+$$
+E_*(\varepsilon)=\sup_{0<a<1}\frac{e(a,\varepsilon)}{\varepsilon}.
+$$
+
+**推论 77.4（最坏误差的幂次余项）。** 在适当缩小 $\varepsilon_0$ 后，同一 $\alpha,C$ 满足
+
+$$
+|E_*(\varepsilon)-\Gamma|\le C\varepsilon^\alpha,
+\qquad
+\left|\sup_{0<a<1}e(a,\varepsilon)-\Gamma\varepsilon\right|
+\le C\varepsilon^{1+\alpha}.
+\tag{77.7}
+$$
+
+证明。上界直接来自 $\gamma_r\le\Gamma$ 与定理 77.3。取某个固定最大参数 $r_*\in\mathcal M$；当 $\varepsilon<1/r_*$ 时，$a=1-r_*\varepsilon$ 属于 $(0,1)$，于是同一统一误差界给 $E_*(\varepsilon)\ge\Gamma-C\varepsilon^\alpha$。再乘以正数 $\varepsilon$ 得第二式。$\square$
+
+### 77.4 近最坏压缩尺度的定量定位
+
+第 74 节已经证明渐近最坏尺度靠近 $\mathcal M$。下面保留有限近优误差，给出相应的幂次稳定界。
+
+**定理 77.5（近最坏尺度的稳定性）。** 存在正有理数 $\alpha,\beta$、常数 $C_1,C_2>0$、$\delta_0>0$ 及 $\varepsilon_1>0$，使对任意
+
+$$
+0<\varepsilon<\varepsilon_1,\qquad
+0\le\delta\le\delta_0,\qquad0<a<1,
+$$
+
+只要
+
+$$
+\frac{e(a,\varepsilon)}{\varepsilon}
+\ge E_*(\varepsilon)-\delta,
+\tag{77.8}
+$$
+
+就有
+
+$$
+\operatorname{dist}\left(\frac{1-a}{\varepsilon},\mathcal M\right)
+\le C_1\bigl(\delta+C_2\varepsilon^\alpha\bigr)^\beta.
+\tag{77.9}
+$$
+
+证明。令 $q(r)=\Gamma-\gamma_r$。第 71 节的两端极限与 $\Gamma>1$ 使我们可以选有理数 $0<c<d$，令 $I=[c,d]$，使 $\mathcal M$ 位于 $I$ 的内部，且对 $r\notin I$ 有
+
+$$
+q(r)>\frac{\Gamma-1}{2}.
+\tag{77.10}
+$$
+
+在此固定紧区间上，定义
+
+$$
+\omega(t)=\max\{\operatorname{dist}(r,\mathcal M):
+ r\in I,\ q(r)\le t\},\qquad t\ge0.
+\tag{77.11}
+$$
+
+该集合总是非空，因为包含 $\mathcal M$；连续性和紧性保证最大值存在。$\mathcal M$ 与 $q$ 半代数，距离也半代数：可用非负平方根与紧集上最近点的最小性公式定义。因此 $\omega$ 为非负半代数函数。
+
+并且 $\omega(t)\to0$ 当 $t\downarrow0$。否则可选趋零的 $t_n$ 及对应最大点 $r_n\in I$，使距离有固定正下界。紧性给收敛子列 $r_n\to r$，连续性给 $q(r)=0$，即 $r\in\mathcal M$，与距离下界矛盾。
+
+引理 77.1 因而给某个正有理数 $\beta$ 及常数 $C_1$，使
+
+$$
+\omega(t)\le C_1t^\beta
+$$
+
+对充分小的 $t\ge0$ 成立；$t=0$ 时两侧均为零。
+
+对满足式（77.8）的 $a,\varepsilon$，令 $r=(1-a)/\varepsilon$。定理 77.3 及推论 77.4 给
+
+$$
+\begin{aligned}
+\gamma_r
+&\ge\frac{e(a,\varepsilon)}{\varepsilon}-C\varepsilon^\alpha\\
+&\ge E_*(\varepsilon)-\delta-C\varepsilon^\alpha\\
+&\ge\Gamma-\delta-2C\varepsilon^\alpha.
+\end{aligned}
+$$
+
+因此 $q(r)\le\delta+2C\varepsilon^\alpha$。选 $\delta_0,\varepsilon_1$ 足够小，使该上界小于式（77.10）的阈值，同时位于 $\omega$ 的幂次界适用区间。于是 $r\in I$，代入式（77.11）即得（77.9），取 $C_2=2C$。$\square$
+
+这些指数与常数尚未被显式计算，故本节没有给出可直接代入实验预算的数值误差证书。它给出的增强是：同一有限代数合同将已证的统一渐近轮廓与近优参数定位升级为某个幂次界；精确求值、最优幂次及数值常数仍需要进一步求解。
+
+## 追加锚（本行以下为增补区）
+
+## 78. 切锥修复的显式正则化与三分之一次统一误差界
+
+### 78.1 将一个切向修复变成真实的小步因果修复
+
+第 77 节通过半代数结构证明某个正幂次速率存在。对当前三个量子比特模型，还能直接构造真实修复，得到一份不依赖消元输出的显式界。以下仍使用第 70 节的 $R_0=ww^*$、$w=x+y$、$P_0=I-ww^*/2$、完整 tester 范数 $N$ 与同一个因果修复集合 $\mathcal C$。
+
+令
+
+$$
+J=\frac{I_8}{4}-R_0.
+\tag{78.1}
+$$
+
+相对于单位向量 $w/\sqrt2$ 及其正交补，$J$ 的两个块为 $-7/4$ 与 $I_7/4$，且
+
+$$
+\operatorname{Tr}_D J
+=I_A\otimes\left(\frac{I_B}{2}-|0\rangle\langle0|\right),
+\qquad \|J\|_1=\frac72,
+\qquad N(J)\le7.
+\tag{78.2}
+$$
+
+最后一项使用第 70 节的 $N(X)\le2\|X\|_1$。
+
+**引理 78.1（显式有限步修复）。** 若 $K\in\mathcal T$、$\|K\|_{\rm op}\le M$、$M\ge1$ 且 $0<\varepsilon M\le1/8$，则取
+
+$$
+\delta=4\varepsilon M^2,\qquad
+S=R_0+\varepsilon(K+\delta J)
+\tag{78.3}
+$$
+
+有 $S\in\mathcal C$，并且
+
+$$
+N\left(\frac{S-R_0}{\varepsilon}-K\right)
+\le28\varepsilon M^2.
+\tag{78.4}
+$$
+
+证明。切锥的因果偏迹条件及式（78.2）使 $S$ 的偏迹为 $I_A\otimes\sigma$，其中 $\sigma$ 厄米、迹一。只需证明 $S\succeq0$；此后偏迹正性自动给 $\sigma\succeq0$。
+
+将 $K$ 在 $\mathbb Cw\oplus w^\perp$ 的正交单位坐标中写为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&B\end{pmatrix},
+\qquad B\succeq0,\quad |a|\le M,\quad\|b\|\le M.
+$$
+
+$S$ 的左上标量块为
+
+$$
+A=2+\varepsilon a-\frac74\varepsilon\delta
+\ge2-\varepsilon M-7(\varepsilon M)^2>1,
+$$
+
+其中最后一步由 $\varepsilon M\le1/8$ 得到。右下块为
+
+$$
+\varepsilon B+\frac{\varepsilon\delta}{4}I
+=\varepsilon B+\varepsilon^2M^2I.
+$$
+
+因此对应 Schur 补满足
+
+$$
+\varepsilon B+\varepsilon^2M^2I
+-\frac{\varepsilon^2}{A}bb^*\succeq0.
+$$
+
+故 $S\succeq0$，从而为真实归一化因果修复。最后由式（78.2）有 $N(\delta J)\le7\delta=28\varepsilon M^2$。$\square$
+
+该引理控制的是一个已经给定的完整切向修复，不把一般半正定切锥误当作有限步可行域。
+
+### 78.2 紧尺度上的可计算余项
+
+定义
+
+$$
+\mathcal D_\varepsilon=(\mathcal C-R_0)/\varepsilon,
+\qquad
+X_{r,\varepsilon}=
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}.
+$$
+
+**引理 78.2（有界尺度的显式统一界）。** 若 $R\ge0$、$0\le r\le R$、$0<\varepsilon\le1/2$ 且
+
+$$
+9\varepsilon(R+1)\le\frac18,
+$$
+
+则在该族有效的参数范围内，
+
+$$
+\left|
+\frac{e(1-r\varepsilon,\varepsilon)}{\varepsilon}-\gamma_r
+\right|
+\le2280\varepsilon(R+1)^2.
+\tag{78.5}
+$$
+
+$r=0$ 时使用第 71 节的端点 $a=1$ 定义，其余情形均在原参数域内。
+
+证明。首先由式（76.1）及秩一算子的迹范数，
+
+$$
+\begin{aligned}
+\|H_r\|_1
+&\le\sqrt{2(r^2+1)}+2\sqrt{2r}+r+1\\
+&\le(1+2\sqrt2)(r+1)<4(r+1).
+\end{aligned}
+\tag{78.6}
+$$
+
+取达到 $\gamma_r$ 的 $K_r\in\mathcal T$。第 70—73 节的范数下界与 $\gamma_r\le9/8$ 给
+
+$$
+\|H_r-K_r\|_1\le4N(H_r-K_r)\le\frac92.
+$$
+
+所以
+
+$$
+\|K_r\|_{\rm op}\le\|K_r\|_1
+\le4(r+1)+\frac92\le9(R+1)=:M.
+\tag{78.7}
+$$
+
+应用引理 78.1，得到某个 $K_{r,\varepsilon}\in\mathcal D_\varepsilon$，满足
+
+$$
+N(K_{r,\varepsilon}-K_r)
+\le28\varepsilon M^2=2268\varepsilon(R+1)^2.
+$$
+
+而 $\mathcal D_\varepsilon\subset\mathcal T$。因此
+
+$$
+0\le\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)-\gamma_r
+\le2268\varepsilon(R+1)^2.
+\tag{78.8}
+$$
+
+还需在同一范围控制实际过程的一阶余项。实际两列为
+
+$$
+\begin{aligned}
+r_0&=\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
+       +\varepsilon\sqrt r\,z,\\
+r_1&=\sqrt\varepsilon\left(\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\right).
+\end{aligned}
+$$
+
+令
+
+$$
+v=-\frac r2x-\frac12y+\sqrt r\,z,
+\qquad t_0=\sqrt r\,x'-z',
+$$
+
+并写 $r_0=w+\varepsilon v+d$。对 $0\le s\le1/2$，
+
+$$
+\left|\sqrt{1-s}-1+\frac s2\right|
+=\frac{s^2}{2(1+\sqrt{1-s})^2}\le\frac{s^2}{2}.
+$$
+
+本节假设给 $\varepsilon(R+1)\le1/2$，故
+
+$$
+\|v\|\le r+1,\qquad
+\|d\|\le\frac12\varepsilon^2(r+1)^2.
+$$
+
+于是第一列外积满足
+
+$$
+\begin{aligned}
+\|r_0r_0^*-R_0-\varepsilon(vw^*+wv^*)\|_1
+&\le2\|w\|\|d\|+\|\varepsilon v+d\|^2\\
+&\le\left(\sqrt2+\frac{25}{16}\right)
+\varepsilon^2(r+1)^2\\
+&<3\varepsilon^2(r+1)^2.
+\end{aligned}
+\tag{78.9}
+$$
+
+对第二列，置 $d_1=(1-\sqrt{1-r\varepsilon})z'$，则 $\|d_1\|\le r\varepsilon$、$r_1=\sqrt\varepsilon(t_0+d_1)$。因此
+
+$$
+\begin{aligned}
+\|r_1r_1^*-\varepsilon t_0t_0^*\|_1
+&\le\varepsilon\left(2\sqrt{r+1}\,r\varepsilon+r^2\varepsilon^2\right)\\
+&\le\frac52\varepsilon^2(r+1)^2.
+\end{aligned}
+$$
+
+一阶和正是 $H_r=vw^*+wv^*+t_0t_0^*$。合并两项、再用 $N(X)\le2\|X\|_1$，得到
+
+$$
+N(X_{r,\varepsilon}-H_r)
+\le12\varepsilon(R+1)^2.
+\tag{78.10}
+$$
+
+距离函数对自身范数一-Lipschitz，且 $e(1-r\varepsilon,\varepsilon)/\varepsilon=operatorname{dist}_N(X_{r,\varepsilon},\mathcal D_\varepsilon)$。将式（78.8）与（78.10）相加，得到式（78.5）。$\square$
+
+### 78.3 全参数范围的显式三分之一次界
+
+**定理 78.3（全压缩范围的三分之一次界）。** 对
+
+$$
+0<\varepsilon\le2^{-12}
+$$
+
+有
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le3000\varepsilon^{1/3}.
+\tag{78.11}
+$$
+
+证明。取 $R=\varepsilon^{-1/3}\ge16$。则
+
+$$
+9\varepsilon(R+1)
+=9(\varepsilon^{2/3}+\varepsilon)
+\le\frac{153}{4096}<\frac18,
+$$
+
+所以引理 78.2 适用于 $0<r=(1-a)/\varepsilon\le R$。由 $R\ge8$ 有 $R+1\le9R/8$，于是
+
+$$
+2280\varepsilon(R+1)^2
+\le\frac{2280\cdot81}{64}\varepsilon^{1/3}
+<3000\varepsilon^{1/3}.
+$$
+
+对 $r\ge R$，第 74 节的实际修复上界与第 71 节的系数尾界为
+
+$$
+1\le\frac{e(a,\varepsilon)}{\varepsilon}\le1+\frac{16}{r},
+\qquad
+1\le\gamma_r\le1+\frac{12}{r},
+$$
+
+它们都对 $r\ge8$ 成立。两者同在 $[1,1+16/r]$ 中，因此差至多
+
+$$
+\frac{16}{r}\le\frac{16}{R}=16\varepsilon^{1/3}.
+$$
+
+两区间覆盖全部 $0<a<1$，得到统一界。$\square$
+
+### 78.4 最大参数的显式有限区间与最坏误差余项
+
+**推论 78.4。** 第 76 节的最大参数集满足
+
+$$
+\mathcal M\subset\left(\frac1{4000000},4800\right).
+\tag{78.12}
+$$
+
+因此对 $0<\varepsilon\le2^{-13}$，
+
+$$
+\left|E_*(\varepsilon)-\Gamma\right|
+\le3000\varepsilon^{1/3},
+\qquad
+\left|\sup_{0<a<1}e(a,\varepsilon)-\Gamma\varepsilon\right|
+\le3000\varepsilon^{4/3}.
+\tag{78.13}
+$$
+
+证明。第 71 节的连续性模给
+
+$$
+\gamma_r\le1+2r+4\sqrt r.
+$$
+
+当 $0<r\le1/4000000$ 时，右侧至多 $1+1/2000000+1/500<401/400$。当 $r\ge4800$ 时，尾界给 $\gamma_r\le1+12/r\le401/400$。第 75 节却证明 $\Gamma>401/400$，所以这两个区域均不含最大参数，得到式（78.12）。
+
+取任意 $r_*\in\mathcal M$。若 $\varepsilon\le2^{-13}$，则 $r_*\varepsilon<4800/8192<1$，所以 $a=1-r_*\varepsilon$ 在原参数域内。用定理 78.3 分别给全体参数的上界与这个实际参数的下界，即得式（78.13）。$\square$
+
+常数 $3000$ 和幂次 $1/3$ 都未被证明最优。该界在给出的整个范围内有效，但其右侧数值可以很宽；它的内容是通过真实正修复与大尺度尾界直接取得显式、统一的收敛保证，不声称已经得到紧的有限误差估计。第 77 节关于近最坏参数的稳定指数 $\beta$ 仍未显式计算。
+
+## 追加锚（本行以下为增补区）
