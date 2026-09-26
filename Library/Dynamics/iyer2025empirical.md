@@ -1691,3 +1691,102 @@ Haoran Wang，*Sharp High-Entropy Bounds for Sums of Independent Discrete Random
 有限检索未发现直接涵盖上述完整实际后验结论的原文，不构成全球原创性认证。
 新增综合的范围是固定参数、两种实际实验、完整精确中心和同一标签实现。
 全部恢复读数均为潜在标签的精确增广；没有规模一致分离下界、有限位数、抗噪或计算效率结论。
+
+
+### 完整组计数的最小熵与条件化最大原子
+
+定理 68.6 使用的“最小熵”是每个原始数据纤维上 $-\log_2\max_n p_x(n)$。
+Geoffrey Smith，*On the Foundations of Quantitative Information Flow*，FOSSACS 2009，
+LNCS 5504，288–302，[DOI:10.1007/978-3-642-00596-1_21](https://doi.org/10.1007/978-3-642-00596-1_21)，
+§5、定义 1–4，区分最大原子、其负对数与对输出平均后的猜测成功概率。
+后两种操作不能交换；本章未把纤维最小熵等同于平均成功概率的负对数。
+二项模态距均值至多一、紧参数区间的最大原子为 $(1+n)^{-1/2}$ 阶，均是成熟有限分布工具。
+正文分别用相邻概率比、Fourier 上界与 Chebyshev 下界给出所需版本，包括空组。
+
+新增推导在于实际固定 $q$ 后验的相对原子比较。
+完整窗口有 $O(Q^2)$ 个组，乘积模态的总数偏移因而为 $O(Q^2)=o(\sqrt q)$。
+将它代入补集 Bernoulli 中心原子的精确密度比，得到实际最大原子与乘积最大原子之比趋一；
+再接全行对数占据数估计，得到与 Shannon 熵相同的 $Q^5$ 主系数。
+加性 $O_{\mathbb P}(Q^{-5/2})$ TV 误差不能控制 $2^{-cQ^5}$ 量级的原子，
+所以本结论不由第 68.5 条的有限字母表熵连续性直接推出。
+这不是新的抽象最小熵定义或一般二项定理，也不声称数据平均最大原子的同阶指数。
+
+### 完整后验的熵差与中心化信息量
+
+定理 68.7 将完整组计数的 Shannon 熵与最小熵相减，得到
+$Q^2\ell(r,\beta)/(2\log2)$ 的次阶系数。
+每个大二项坐标贡献半 nat 是经典事实：上述 Adell–Lekuona–Yu
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1) 的 Theorem 4、Corollary 1
+与式 (7)，结合二项模态的 Stirling 界，直接涵盖该步。
+新增综合是完整实际后验的绝对熵比较，以及实际占据区域的测度系数。
+补集中心原子的密度比具有 $O_{\mathbb P}(Q^{-5/2})$ 的 $L^2$ 误差，
+乘积信息量的方差只有 $O(Q^2)$；先消去均值再用 Cauchy–Schwarz，
+将实际 Shannon 熵误差压到 $O_{\mathbb P}(Q^{-3/2})$。
+模态处同一密度比使最小熵误差为 $O_{\mathbb P}(Q^{-5/2})$。
+这不同于以完整字母表大小乘 TV 的一阶界。
+
+James Melbourne、Gerardo Palafox-Castillo，*A discrete complement of Lyapunov's inequality and its information theoretic consequences*，
+[arXiv:2111.06997v1](https://arxiv.org/abs/2111.06997v1)。
+原始 TeX 的 Theorem 1.1 要求单调且 log-concave 的序列；
+Theorem 2.5 在同样单调条件下给离散 varentropy 严格小于一。
+一般二项概率序列并非单调，且实际 $p_j$ 只是趋近 $1/2$，不是恰等于 $1/2$，
+故不能用 原文的精确对称扩展代替本章的统一二项信息量矩界。
+正文从全部二项原子的上下界和四阶矩证明所需版本。
+
+Matthieu Fradelizi、Mokshay Madiman、Liyao Wang，*Optimal concentration of information content for log-concave densities*，
+[arXiv:1508.04093v2](https://arxiv.org/abs/1508.04093v2)。
+原始 TeX 的 Theorem 2.3 对 $\mathbb R^n$ 上具有 log-concave Lebesgue 密度的向量给
+varentropy 不超过 $n$，并注明此前 Nguyen 与 Wang 的证明。
+它的测度与连续密度条件不覆盖这里的离散计数分布；本章未将其直接离散化。
+
+Jonathan Hermon、Xiangying Huang、Francesco Pedrotti、Justin Salez，*Concentration of information on discrete groups*，
+[arXiv:2409.16869v1](https://arxiv.org/abs/2409.16869v1)。
+原始 TeX 的 Assumption 1 与 Theorem 1 要求有限支持跳率、可逆性和共轭不变性，
+研究从群单位元出发的连续时间随机游走。
+其 varentropy 与自由 Abelian 游走比较不提供本章后验计数的所需表示。
+这里仅以该文定位离散信息量集中这一邻近问题，不调用其界。
+
+本章的正区域、负区域和固定过渡条带划分保留零计数左端点；
+在相减后取极限，因此无需分别取得两个 $Q^5$ 阶熵的次阶展开。
+结论仍是固定参数下的数据概率极限，不是期望熵、全局新颖性或有限规模解码保证。
+
+
+### 完整后验的信息谱、方差密度与固定误差覆盖
+
+定理 68.8 的信息量在 $Q$ 尺度上有正态波动，中心为每份数据的精确 Shannon 熵。
+其方差系数为 $\ell(r,\beta)/(2(\log2)^2)$：
+每个指数占据的二项组贡献半 nat 平方，宏观正占据区域贡献 $\ell Q^2$ 个组。
+这与一阶熵所积分的率函数高度不同，也不是将 $Q^5\mathscr H$ 当成足够精确的中心。
+新增承重步骤是完整实际占据区域、统一二项信息量四阶矩、
+条件化密度的 $L^2$ 控制与中心化熵比较共同连接到同一后验计数向量。
+实际信息量方差另由密度加权的四阶矩估计传递，不从弱收敛推断矩收敛。
+
+Ioannis Kontoyiannis、Sergio Verdú，*Optimal lossless data compression: Non-asymptotics and asymptotics*，
+[arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)。
+原文第 9 页 Theorem 2 及第 10 页 Theorem 3 对一般有限离散源给信息量与最优码长的上下比较；
+其小原子集合论证直接涵盖正文所用的覆盖不等式，正 slack 的余项为 $2^{-t}$。
+第 10 页还说明直接界可以扩展到可数字母表。
+本章采用有限集合大小的写法，以免码长约定带来一位偏移；不把此经典信息谱论证据为新内容。
+
+同文第 23–26 页 Theorems 16–17 的更精确正态编码近似使用固定分布的有限字母表无记忆源、
+正 varentropy 及其矩条件；展示的直接界限定 $0<\varepsilon\le1/2$。
+第 27–29 页 Theorems 18–20 则对有限状态、不可约、非周期的固定阶 Markov 源施加条件。
+这里给定数据后的组计数是增长维数、非同分布二项坐标再条件于总数的分布，
+其原始数据来自路径并不使后验组序列变成该有限状态 Markov 源。
+正文独立证明辅助三角阵极限，随后只对完整计数向量使用一次实际密度比较。
+
+上述 Melbourne–Palafox-Castillo 原文的单调或精确对称假设仍不直接覆盖全部校准二项组。
+全原子二项下界与 Bernoulli 八阶中心矩保证统一信息量四阶矩，
+中心区域的 Stirling 展开与普通二项 CLT 再识别单组方差极限为 $1/2$。
+Boistard–Lopuhaä–Ruiz-Gazen
+[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1) 的式 (2.1)、(2.5)
+涵盖经典固定总数条件化及 Bayes 原子比；Lemma 1 和 Theorem 1 的包含概率展开是固定阶，
+不提供随完整窗口增长的熵或信息量结论。正文使用自行给出的全计数密度估计。
+
+Hayashi 的 *Second order asymptotics in fixed-length source coding and intrinsic randomness*
+在此次文献检索中定位到 [arXiv:cs/0503089v2](https://arxiv.org/abs/cs/0503089v2)，
+但原文下载返回失败，未以其定理作为已核实前提。
+Hájek 1964 的原始文献地址返回 HTML challenge，也未当作已读论文。
+这些来源获取边界不由元数据补足。
+精确标量的覆盖结论只使用定理 68.2 已证明的原子重标记及已核对的 Baker–Wüstholz 前提，
+不提供噪声稳定性、消失误差参数的一致性、期望覆盖数或有效算法。

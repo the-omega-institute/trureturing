@@ -5393,4 +5393,402 @@ $|H(P)-H(Q)|\le h_2(t)+t\log_2(D-1)$；$D=1$ 时两熵都为零。
 共同判向成功事件上所有数据、中心、组及熵函数同时一致，原未知方向结论同样按事件概率转移。
 这不提供期望熵极限、二阶熵展开、增长维数 CLT、组内站点恢复、稳定逆或计算效率。证毕。
 
+**定理 68.6（完整组计数的最大后验原子）。** 在定理 68.5 的同一均匀支持先验下，令
+
+```math
+p_{\max,M}(x)=\max_n\mathbb P(R=n\mid\mathscr X_M=x),\qquad
+h_{\infty,M}(x)=-\log_2p_{\max,M}(x).
+```
+
+式 (68.36)。
+
+$h_{\infty,M}$ 是每份原始数据上有限计数律的最小熵。
+两种实际实验分别满足
+
+```math
+\frac{h_{\infty,M}(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.37)。
+
+收敛在先验数据概率下成立，并一致于确定支持的抽样律；后者仍使用均匀先验定义的函数。
+在定理 68.2 的单射事件 $H_M$ 上，精确标量 $T_M$ 的最大原子与 $p_{\max,M}$ 相等。
+
+**证明。** 继续使用 (68.23) 的完整计数线、校准乘积律 $\mathsf Q_x$ 与精确后验
+$\mathsf P_x$。在概率趋一的实际数据集上，
+$p_j\in[1/4,3/4]$、$d_{\rm all},d_{J^c}\asymp q$、
+$d_J=O_{\mathbb P}(B^2)$、$|J|=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$。
+这些估计来自定理 68.5 的实际一、二行比较与校准。
+由 (68.33) 的同一条件化，组计数的概率精确满足
+
+```math
+\mathsf P_x(R=n)=L\left(\sum_jn_j\right)
+                     \prod_j\mathbb P\{\operatorname{Bin}(C_j,p_j)=n_j\}.
+```
+
+式 (68.38)。
+
+设 $m_J=\mathbb E_{\mathsf Q_x}S_J$。
+同一个 Bernoulli 局部估计在中心分母与任意分子上给
+
+```math
+L(k)=\sqrt{d_{\rm all}/d_{J^c}}
+         e^{-(k-m_J)^2/(2d_{J^c})}+O(q^{-1/2}),\qquad
+\sup_kL(k)\le1+C(d_J/q+q^{-1/2}).
+```
+
+式 (68.39)。
+
+误差对全部整数 $k$ 统一；总均值恰为 $q$，所以分母至少为 $c/\sqrt q$。
+这是相对最大原子比较所需的密度信息，不能用 (68.34) 的加性 TV 误差替代。
+
+对于 $N\ge0$、$p\in[1/4,3/4]$，记二项最大原子为 $b_{N,p}$。
+经典 Fourier 模界给 $b_{N,p}\le C/\sqrt{1+N}$。
+另一方面，方差至多 $N/4$，半径 $\sqrt{N+1}$ 内由 Chebyshev 至少容纳 $3/4$ 的质量；
+该区间最多有 $3\sqrt{N+1}$ 个整数，故有统一下界。
+相邻概率之比为 $(N-k)p/((k+1)(1-p))$，因此可取模态
+$n^*=\lfloor(N+1)p\rfloor$，并有 $|n^*-Np|\le1$。
+$N=0$ 时单独取 $n^*=0$、$b_{0,p}=1$。于是
+
+```math
+\frac c{\sqrt{1+N}}\le b_{N,p}\le\frac C{\sqrt{1+N}},\qquad
+\left|\sum_j n_j^*-m_J\right|\le |K_M|\le CQ^2=o(\sqrt q).
+```
+
+式 (68.40)。
+
+乘积模态向量在实际后验中可行：好事件上 $|J|<q<M-|J|$，
+所以任何所选总数 $0\le k\le|J|$ 都可由补集凑成总数 $q$；所有辅助 Bernoulli 参数严格在零一之间。
+将 $k^*=\sum_jn_j^*$ 代入 (68.39)，得到
+$L(k^*)=1+O(d_J/q+Q^4/q+q^{-1/2})$。
+令 $\widetilde p_{\max,M}=\prod_jb_{C_j,p_j}$，则 (68.38) 直接给
+
+```math
+L(k^*)\widetilde p_{\max,M}\le p_{\max,M}
+       \le (\sup_kL(k))\widetilde p_{\max,M},\qquad
+\left|\log\frac{p_{\max,M}}{\widetilde p_{\max,M}}\right|
+ =O_{\mathbb P}(Q^{-5/2}+Q^4/q+q^{-1/2}).
+```
+
+式 (68.41)。
+
+所以实际与乘积最大原子的比趋一，即使二者本身都以 $Q^5$ 指数尺度趋零。
+(68.40) 又给
+
+```math
+-\log_2\widetilde p_{\max,M}
+ =\frac1{2\log2}\sum_{j\in K_M}\log(1+C_j)+O(Q^2).
+```
+
+式 (68.42)。
+
+由 (68.29) 与同一全域 Riemann 和，右边除以 $Q^5$ 趋于 $\mathscr H(r,\beta)$，
+证明 (68.37)。空组、稀有组、率函数过渡区域及零计数左端点均未删去。
+坏数据只付其概率；没有平均最小熵或平均最大原子的指数断言。
+单射事件上，$T_M$ 与 $R$ 只是同一有限概率表的重标记。
+支持置换与共同判向事件按定理 68.5 处理，得到所述一致性。证毕。
+
+**定理 68.7（Shannon 熵与最小熵的次阶差）。** 沿用定理 68.5、68.6 的全部参数、
+完整计数向量及概率含义，令
+
+```math
+\ell(r,\beta)=\operatorname{Leb}\{u\in\mathcal I:I(u)<c_q\}.
+```
+
+式 (68.43)。
+
+该长度有限且严格为正。两种实际实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)-h_{\infty,M}(\mathscr X_M)}{Q^2}
+ \longrightarrow\frac{\ell(r,\beta)}{2\log2}.
+```
+
+式 (68.44)。
+
+收敛在先验数据概率下成立，亦一致于确定支持的抽样律。
+若 $\widetilde h_M,\widetilde h_{\infty,M}$ 是同一数据上校准乘积组计数律的两种熵，则还有绝对比较
+
+```math
+h_M-\widetilde h_M=O_{\mathbb P}(Q^{-3/2}),\qquad
+h_{\infty,M}-\widetilde h_{\infty,M}=O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (68.45)。
+
+在 $H_M$ 上，精确标量 $T_M$ 的离散 Shannon 熵与最小熵之差等于 (68.44) 的分子，
+故它也满足同一极限。这里不分别给出两种熵在 $Q^2$ 阶的展开。
+
+**证明。** 首先加强 (68.34) 的密度比较。下文在给定好数据 $x$ 上以
+$\mathsf Q_x$ 表示乘积组计数律，$\mathsf P_x$ 表示精确后验计数律，
+$V=S_J-\mathbb E_{\mathsf Q_x}S_J$。
+由 (68.39)、$|\sqrt{d_{\rm all}/d_{J^c}}-1|\le Cd_J/q$、
+$1-e^{-t}\le t$ 及独立 Bernoulli 和的四阶中心矩，
+
+```math
+\mathbb E_{\mathsf Q_x}V^4\le3d_J^2+d_J,\qquad
+\chi_x^2:=\mathbb E_{\mathsf Q_x}(L(S_J)-1)^2
+ \le C\{(d_J/q)^2+q^{-1}\}.
+```
+
+式 (68.46)。
+
+这里 $d_J\le q$，$d_{J^c}\asymp q$。
+因此 $\chi_x=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+密度比只依赖组计数之和，所以对计数律仍有
+$\mathsf P_x(n)=L(\sum_j n_j)\mathsf Q_x(n)$、
+$\mathbb E_{\mathsf Q_x}L=1$；没有另行近似实际各组独立。
+
+所需二项信息量界可直接从全部原子取得。
+固定 $p_0\in(0,1/2)$，记 $f_{n,p}$ 为二项概率质量，
+$n\ge0$、$p\in[p_0,1-p_0]$。Fourier 模界及带端点的 Stirling 界给
+
+```math
+\max_k f_{n,p}(k)\le\frac C{\sqrt{n+1}},\qquad
+f_{n,p}(k)\ge\frac c{\sqrt{n+1}}
+       \exp\left(-C\frac{(k-np)^2}{n+1}\right),\quad0\le k\le n.
+```
+
+式 (68.47)。
+
+具体地，对 $n\ge1$、$z=k/n$，阶乘界给
+$\binom nk\ge c\sqrt{(n+1)/((k+1)(n-k+1))}\,e^{n[-z\log z-(1-z)\log(1-z)]}$。
+前因子至少为 $c/\sqrt{n+1}$；乘 $p^k(1-p)^{n-k}$ 后的指数为
+$-nD(z\Vert p)$。由 $\log t\le t-1$ 有
+$D(z\Vert p)\le(z-p)^2/[p(1-p)]$，包括 $z=0,1$ 的连续延拓，得下界。
+$n=0$ 的单位原子单独满足两界。
+
+令 $K\sim\operatorname{Bin}(n,p)$、$Z=-\log f_{n,p}(K)$、$\Delta=K-np$。
+于是 $-C\le Z-\tfrac12\log(n+1)\le C+C\Delta^2/(n+1)$；
+而 $\mathbb E\Delta^4\le C(n+1)^2$，故
+
+```math
+\mathbb E\{Z-\tfrac12\log(n+1)\}^2\le C,\qquad
+\operatorname{Var}(Z)\le C.
+```
+
+式 (68.48)。
+
+这些常数不随占据数增长。完整乘积计数的信息量
+$\mathcal S(n)=-\log\mathsf Q_x(n)$ 是这些独立坐标信息量之和，所以
+$\operatorname{Var}_{\mathsf Q_x}(\mathcal S)\le C|K_M|\le CQ^2$。
+以自然对数计算有限分布的熵 $h$，精确恒等式与相对熵界为
+
+```math
+\begin{aligned}
+h(\mathsf P_x)-h(\mathsf Q_x)
+ &=\mathbb E_{\mathsf Q_x}[(L-1)(\mathcal S-\mathbb E_{\mathsf Q_x}\mathcal S)]
+       -D(\mathsf P_x\Vert\mathsf Q_x),\\
+0\le D(\mathsf P_x\Vert\mathsf Q_x)
+ &\le\mathbb E_{\mathsf Q_x}L(L-1)=\chi_x^2.
+\end{aligned}
+```
+
+式 (68.49)。
+
+零密度点按 $0\log0=0$ 处理。第二行仍只用 $\log t\le t-1$ 与归一化。
+Cauchy–Schwarz 因而给
+
+```math
+|h(\mathsf P_x)-h(\mathsf Q_x)|
+ \le\chi_x\sqrt{\operatorname{Var}_{\mathsf Q_x}(\mathcal S)}+\chi_x^2
+ \le CQ(d_J/q+q^{-1/2})+C\{(d_J/q)^2+q^{-1}\}
+ =O_{\mathbb P}(Q^{-3/2}).
+```
+
+式 (68.50)。
+
+信息量的 $Q^5$ 阶均值在估计之前已精确消去。
+这是由密度的 $L^2$ 范数及乘积信息量方差控制期望，不能仅由 TV 推出。
+除以 $\log2$ 得 (68.45) 第一式；第二式由 (68.41) 直接得到。
+
+最后比较同一个二项坐标的两种熵。记自然对数下的差为
+$g(n,p)=h(\operatorname{Bin}(n,p))-h_\infty(\operatorname{Bin}(n,p))$。
+经典二项熵渐近式与模态 Stirling 估计给
+
+```math
+0\le g(n,p)\le C,\qquad g(0,p)=0,\qquad
+\sup_{p\in[p_0,1-p_0]}|g(n,p)-1/2|\longrightarrow0.
+```
+
+式 (68.51)。
+
+半 nat 常数属于经典二项熵结论，可由 Adell–Lekuona–Yu 的统一熵界与模态估计直接取得。
+此处给出适于全部占据数的验证：在模态 $k^*=np+O(1)$ 处，
+$-\log f_{n,p}(k^*)=\tfrac12\log(2\pi np(1-p))+O(n^{-1})$。
+在 $|\Delta|\le n^{5/8}$ 内，对二项相对熵作 Taylor 展开得到
+$-\log f_{n,p}(K)+\log f_{n,p}(k^*)=\Delta^2/[2np(1-p)]+O(n^{-1/8})$，
+误差对上述参数区间统一。
+补集上，(68.47) 将非负差界为 $C+C\Delta^2/n$；四阶矩给
+$\mathbb P(|\Delta|>n^{5/8})\le Cn^{-1/2}$ 及
+$\mathbb E[(\Delta^2/n)1_{\{|\Delta|>n^{5/8}\}}]\le Cn^{-1/4}$。
+故期望趋于 $\mathbb E\Delta^2/[2np(1-p)]=1/2$。
+统一有界性则由 (68.48) 与模态的双边 $(n+1)^{-1/2}$ 界给出，包括小 $n$。
+
+乘积律的熵与最小熵均逐坐标相加，故其差精确等于
+$\sum_{j\in K_M}g(C_j,p_j)$。固定 $0<e<c_q$。
+在 $I(\bar u_j)\le c_q-e$ 的格点，(68.29) 使全部 $C_j\ge e^{e\lambda/2}$，
+所以每项统一趋于 $1/2$。
+在 $I(\bar u_j)\ge c_q+e$ 的格点，(68.27)、(68.28) 给
+$\mathbb E\sum C_j\le Q^{C}e^{-e\lambda}\to0$，
+所以这些组以概率趋一全部为空，贡献精确为零。
+剩余条带 $|I(\bar u_j)-c_q|\le e$ 中只用 $0\le g\le C$。
+
+$I$ 的严格凸性及两侧单调性使水平集 $I=c_q$ 至多含两点。
+固定条带和子水平集都是有限个区间，网格间距为 $Q^{-2}$，
+投影到闭左端点只改变有界个格点。
+先令规模趋无穷，再令 $e\downarrow0$，条带长度趋零，得到
+
+```math
+\frac1{Q^2}\sum_{j\in K_M}g(C_j,p_j)
+       \longrightarrow\frac12\operatorname{Leb}\{I<c_q\}.
+```
+
+式 (68.52)。
+
+(68.45) 将其传回实际后验，换算为比特即得 (68.44)。
+若正区域接触闭左端点，其整个邻接区间仍被计入。
+这里先逐组相减，故不必排除两种熵各自可能存在的更大格点或端点修正。
+坏数据只付其概率；支持置换、未知方向的共同成功事件及 $H_M$ 上的原子重标记
+均按定理 68.5 传递。没有期望熵、参数趋端点的一致性或有限精度解码结论。证毕。
+
+
+**定理 68.8（完整后验的信息量波动与概率覆盖）。** 沿用定理 68.7，令
+
+```math
+Y_M=-\log_2\mathbb P(R\mid\mathscr X_M),\qquad
+v(r,\beta)=\frac{\ell(r,\beta)}{2(\log2)^2}>0.
+```
+
+式 (68.53)。
+
+$Y_M$ 在给定数据后仍由同一后验计数向量 $R$ 随机产生。
+两种实际实验分别满足
+
+```math
+\sup_{z\in\mathbb R}\left|
+\mathbb P\!\left\{\frac{Y_M-h_M(x)}Q\le z\,\middle|\,\mathscr X_M=x\right\}
+ -\Phi\!\left(\frac z{\sqrt{v(r,\beta)}}\right)\right|
+ \longrightarrow0
+```
+
+式 (68.54)。
+
+同一概率意义下还有 $Q^{-2}\operatorname{Var}(Y_M\mid\mathscr X_M)\to v(r,\beta)$。
+收敛以原始数据概率理解；$\Phi$ 是标准正态分布函数。
+固定 $0<\varepsilon<1$，定义
+
+```math
+N_{\varepsilon,M}(x)=\min\{|A|:\mathbb P(R\in A\mid\mathscr X_M=x)\ge1-\varepsilon\}.
+```
+
+式 (68.55)。
+
+最小值在有限后验支持的子集上取到，且
+
+```math
+\log_2N_{\varepsilon,M}(x)
+ =h_M(x)+Q\sqrt{v(r,\beta)}\,\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (68.56)。
+
+这些后验函数仍有对确定支持抽样律一致的含义；在 $H_M$ 上，精确标量 $T_M$ 的原子覆盖数相同。
+中心必须是实际纤维熵 $h_M(x)$，不是仅有一阶极限的 $Q^5\mathscr H(r,\beta)$。
+
+**证明。** 先给出二项信息量的统一矩估计。记自然对数下
+$Z_{n,p}=-\log f_{n,p}(K)$，$K\sim\operatorname{Bin}(n,p)$、$p\in[1/4,3/4]$。
+由 (68.47)，信息量减去模态信息量是非负的，并至多为
+$C+C(K-np)^2/(n+1)$。
+八阶中心矩 $\mathbb E(K-np)^8\le C(n+1)^4$ 因而给
+
+```math
+\sup_{n,p}\mathbb E|Z_{n,p}-\mathbb EZ_{n,p}|^4<\infty,\qquad
+\sup_p\left|\operatorname{Var}(Z_{n,p})-\frac12\right|\longrightarrow0
+ \quad(n\to\infty).
+```
+
+式 (68.57)。
+
+第二个极限可沿 (68.51) 的中心区间证明。
+在 $|K-np|\le n^{5/8}$ 内，信息量减模态信息量与
+$(K-np)^2/[2np(1-p)]$ 的差一致为 $O(n^{-1/8})$。
+补集上的差平方由 $C+C(K-np)^4/n^2$ 控制；八阶矩使该补集期望趋零。
+二项 CLT 对紧参数区间统一成立，其标准化四阶矩趋于三，
+所以这个二次信息量的方差趋于 $\operatorname{Var}(G^2/2)=1/2$。
+$n=0$ 时信息量恒为零；全部小 $n$ 的统一界保留。
+
+在给定好数据的辅助乘积计数律下，各组信息量独立。
+令 $s_x^2$ 为自然对数总信息量的方差。
+以 (68.52) 的正区域、空区域及固定过渡条带分解，
+(68.57) 与 $|K_M|=O(Q^2)$ 给
+
+```math
+\frac{s_x^2}{Q^2}\longrightarrow\frac\ell2,\qquad
+\frac{\sum_{j\in K_M}\mathbb E_{\mathsf Q_x}
+ |Z_{C_j,p_j}-\mathbb E_{\mathsf Q_x}Z_{C_j,p_j}|^4}{s_x^4}
+ \le\frac{CQ^2}{s_x^4}\longrightarrow0
+```
+
+式 (68.58)。
+
+这里两次收敛均在实际数据概率下；方差系数严格为正。
+独立三角阵的 Lyapunov 定理于是给辅助总信息量的条件正态极限。
+等价地，统一三阶矩与 Berry–Esseen 界在 $s_x\asymp Q$ 的事件上
+给至多 $C/Q$ 的标准化分布误差。
+再用 (68.58) 的方差极限，得到以 $Q$ 为尺度、方差为 $\ell/2$ 的极限。
+随机环境的陈述可由任意子列再取上述系数几乎处处收敛的子列得到，故不要求环境本身独立。
+
+最后处理精确后验。设 $\mathcal S=-\log\mathsf Q_x(R)$，则
+$-\log\mathsf P_x(R)=\mathcal S-\log L(S_J)$，在实际正概率原子上精确成立。
+(68.34) 使 $\mathcal S$ 的有界分布测试从乘积律传回实际律。
+由 $L\le C$ 及 $\mathsf P_x=L\mathsf Q_x$，对任意固定 $a>0$，
+
+```math
+\mathsf P_x\{-\log L>aQ\}\le e^{-aQ},\qquad
+\log L\le\log C.
+```
+
+式 (68.59)。
+
+所以 $\log L/Q$ 在实际后验中趋零；零密度点没有实际质量。
+(68.45) 又使两个精确均值之差为 $o_{\mathbb P}(Q)$。
+Slutsky 定理及连续极限分布函数的统一性给 (68.54)，并按 $\log2$ 换算方差。
+没有从 TV 直接传递无界信息量的期望。
+
+方差结论需要单独核对。对 $0\le t\le C$，函数
+$t(\log t)^2/(t-1)^2$ 在零和一处连续延拓后有界，故
+$\mathbb E_{\mathsf P_x}(\log L)^2\le C\chi_x^2$。
+独立组的信息量四阶中心矩之和与交叉二阶项给
+$\mathbb E_{\mathsf Q_x}(\mathcal S-\mathbb E_{\mathsf Q_x}\mathcal S)^4\le CQ^4$。
+以 $L-1$ 加权，再用 Cauchy–Schwarz，实际二阶中心矩与乘积值之差至多为
+$C\chi_xQ^2$，实际均值偏移至多为 $C\chi_xQ$。
+加入 $-\log L$ 的方差误差至多为 $C(Q\chi_x+\chi_x^2)$，
+重新中心化还至多贡献 $C\chi_x^2Q^2$。
+除以 $Q^2$ 并用 (68.46)、(68.58)，得所述实际方差极限。
+
+概率覆盖使用经典有限字母表信息谱不等式。
+若有限律的比特信息量为 $Y$，则 $A_b=\{Y\le b\}$ 至多有 $2^b$ 个原子；
+另一方面，任意至多 $N$ 点的集合 $A$ 和任意 $t>0$ 满足
+
+```math
+\mathbb P(A)\le\mathbb P\{Y\le\log_2N+t\}+2^{-t}.
+```
+
+式 (68.60)。
+
+因为阈值之外每个原子的概率小于 $2^{-t}/N$。
+以 $h_M+Q(\sqrt v\,\Phi^{-1}(1-\varepsilon)+a)$ 截断，
+(68.54) 给覆盖概率严格超过 $1-\varepsilon$，概率趋一；这给 (68.56) 的上界。
+若 $\log_2N\le h_M+Q(\sqrt v\,\Phi^{-1}(1-\varepsilon)-a)$，
+在 (68.60) 中取 $t=aQ/2$，其右边以数据概率趋于严格小于 $1-\varepsilon$ 的数，
+给下界。任意 $a>0$ 的夹逼即得结论。
+取整至多影响常数位数，因 $h_M/Q^5\to\mathscr H>0$ 而不影响本尺度。
+
+支持置换及未知方向的共同成功事件按定理 68.5 处理；
+$H_M$ 上单射仅重标记原子，因此也重标记达到最小覆盖数的集合。
+结论不要求实际各组独立，不给 $\varepsilon\to0$ 的一致性、期望覆盖数、
+有效枚举算法或带噪解码保证。证毕。
+
+
 ## 追加锚（68 章后）
