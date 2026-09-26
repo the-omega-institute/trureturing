@@ -43,7 +43,7 @@ run_cmd do
   unless records.size == 12 do throwError "ROOT-B-designated-seal: expected twelve catalogs"
   let artifact ← liftTermElabM <| serializeSealArtifact records
   unless Sha256.hex artifact.toUTF8 == SharedInformationRootContract.expectedSealDigest do
-    throwError "ROOT-B-designated-seal: independent digest mismatch"
+    throwError "ROOT-B-designated-seal: independent digest mismatch; expected={SharedInformationRootContract.expectedSealDigest}; actual={Sha256.hex artifact.toUTF8}"
   unless SealRecords.systemCatalogIrredundant env root do
     throwError "ROOT-B-designated-seal: system_catalog_irredundant lacks staged proofs"
   for record in records do

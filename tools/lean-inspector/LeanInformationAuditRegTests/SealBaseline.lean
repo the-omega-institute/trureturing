@@ -112,6 +112,7 @@ run_meta do
         ``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary ||
         row.theoremName ==
         ``D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application ||
+        row.theoremName == ``D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points ||
         row.theoremName == ``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power ||
         row.theoremName == ``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification ||
         row.theoremName == ``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design ||
@@ -120,6 +121,6 @@ run_meta do
         throwError "completed production binding regressed"
     else
       unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 9 validated and 2 undeclared statuses"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 10 validated and 1 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline

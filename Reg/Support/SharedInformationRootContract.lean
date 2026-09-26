@@ -19,8 +19,8 @@ def contract : RootCatalogContract := {
   baseline := InformationRootContract.contract.baseline
   companionPrefix := some rootId }
 
--- Seal reference after the faithful observation/intervention arena transport.
+-- Seal reference for the combined finite and lossless context transports.
 def expectedSealDigest : String :=
-  "c13fb34fffb44834e52f466bfa860ed6d7735d9eb1708575ae99875dc02e2f1e"
+  "2438640b3303fdcc8c622ad046a241e457d90f212afc0c29f044b90f4f8c0764"
 
 end Reg.Support.SharedInformationRootContract

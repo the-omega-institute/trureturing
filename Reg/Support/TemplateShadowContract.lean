@@ -62,6 +62,6 @@ def contract : RootCatalogContract := {
 
 -- Seal reference after the faithful finite arena transports.
 def expectedSealDigest : String :=
-  "38adce5abad2e1f800e169afd49aaabc255dcd775f88b958fd1eed3e1d9a3ed8"
+  "5e709d80870dc02db612730e4b6434a3ece16ae326be768c1fb00d9fba90515f"
 
 end Reg.Support.TemplateShadowContract
