@@ -56129,3 +56129,478 @@ $\mathscr E$ 沿所有这些路径都趋于 $3/4$。被单点表示遗漏的是�
 该坐标由已有来源权重和噪声参数计算，没有生成新的实验记录。它的作用是使此前被“同一个退化点”合并的参数路径重新可区分。这里的几何是本模型的参数与响应几何，没有把 $\rho$ 或 $z$ 宣称为物理时间、空间面积或普适时空坐标。
 
 ## 追加锚（本行以下为增补区）
+
+## 194. 来源主导区间的统一误差带与定量恢复刚性
+
+第192节用带权恢复损失证明了 $\epsilon/\ell\to0$ 时的一阶极限。本节保留完整参考压缩中的标签偏置平方，得到显式的误差尺度。恢复器仍只操作接收端 $QR$，系统 $M$ 不可访问，两个输出结果仍受同一 TP 约束。
+
+### 194.1 统一定量结论
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，记
+$\Sigma=R+1$、$\delta=R-1$。任务及最优完整半 diamond 误差
+$\mathscr E(\ell,\epsilon)$ 与第192节相同。
+存在只依赖 $\beta,\gamma,R$ 的正常数
+$\epsilon_0,K,C$，使
+
+$$
+0<\epsilon\le\epsilon_0,\qquad
+K\epsilon\le\ell\le\frac12
+$$
+
+时，
+
+$$
+\boxed{
+\left|
+\mathscr E(\ell,\epsilon)
+-\left(\frac34+\frac{\beta\Sigma}{8}\epsilon\right)
+\right|
+\le C\frac{\epsilon^2}{\ell}.
+}
+\tag{194.1}
+$$
+
+对任意固定 $K_0\ge0$，还有只依赖
+$\beta,\gamma,R,K_0$ 的常数 $C_{K_0}$。
+若共同恢复器的完整误差满足
+
+$$
+e\le\mathscr E(\ell,\epsilon)+K_0\frac{\epsilon^2}{\ell},
+\tag{194.2}
+$$
+
+则先作第192节不增加误差的输出标签与旗标对称化后，其二结果 instrument 满足
+
+$$
+\boxed{
+\max_{\substack{j=0,1\\s=\pm1}}
+\left\|\Gamma_{j,s}-\frac12\operatorname{id}\right\|_\diamond
+\le C_{K_0}\frac{\epsilon}{\ell}.
+}
+\tag{194.3}
+$$
+
+这里的 instrument 距离使用完整 diamond 范数；任务误差仍按半 diamond 范数定义。逐旗标结论以对称化为前提，不给未经对称化的标签随机分配附加条件。常数对整个上述来源区间一致，允许恢复器依赖 $\ell,\epsilon$，也允许任意 Kraus 表示。
+
+### 194.2 完整参考压缩保留标签偏置
+
+采用第192节正旗标 Kraus 记号，令 $r=1-\ell$，
+$U_j,V_j,W_j$ 仍由（192.5）前的振幅定义。置
+
+$$
+D=1-U_0-U_1,\qquad t=U_0-U_1,
+$$
+
+$$
+L_j=c_j^{\mathrm{in}}
+[\beta(V_j-U_j)+2\gamma W_j],
+\qquad
+f_j=U_j+\epsilon L_j,
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+$$
+
+于是 $f_j$ 是正确输出块与完整来源 $\Xi$ 的配对收益。
+第192节的共同 TP 恒等式为
+
+$$
+D=r\sum|c|^2+\ell\sum|b|^2+r\ell\sum|a-d|^2\ge0.
+\tag{194.4}
+$$
+
+对参考权重 $q$，将匹配标签差矩阵压缩到来源方向 $\Xi$，
+得到
+$P_{u_q}-\operatorname{diag}(qf_0,(1-q)f_1)$。
+取 $q=f_1/(f_0+f_1)$，其最高根给完整误差下界
+
+$$
+\begin{aligned}
+e
+&\ge1-\frac{f_0f_1}{f_0+f_1}\\
+&=\frac34+\frac D4-\frac{\epsilon(L_0+L_1)}4
++\frac{[t+\epsilon(L_0-L_1)]^2}{4(f_0+f_1)}.
+\end{aligned}
+\tag{194.5}
+$$
+
+若 $f_0+f_1=0$，将两个零分子商均取零，第一行取值为一，等式仍成立。这里使用的是允许的参考输入及数学压缩；解码器没有获得对 $M$ 的操作权限。
+
+记 $g=|\gamma|$、$B_*=\Sigma(\beta+2g)$。由
+$0\le U_j,V_j,f_j\le1$ 和 $|W_j|\le\sqrt{U_jV_j}$，有
+
+$$
+|L_0-L_1|\le B_*,
+\qquad
+0\le f_0+f_1\le2.
+$$
+
+利用 $(x+y)^2\ge x^2/2-y^2$，最后的非负项满足
+
+$$
+\frac{[t+\epsilon(L_0-L_1)]^2}{4(f_0+f_1)}
+\ge\frac{t^2}{16}-\frac{B_*^2\epsilon^2}{8}.
+\tag{194.6}
+$$
+
+该估计在零分母约定下同样成立。
+
+### 194.3 用恢复损失吸收噪声收益
+
+逐 Kraus 的恒等式
+
+$$
+r|b|^2+\ell|c|^2-|rb-\ell c|^2
+=r\ell|b+c|^2
+$$
+
+以及 $r\ge1/2\ge\ell$、（194.4）给
+
+$$
+V_0+V_1
+\le r\sum|b|^2+\ell\sum|c|^2
+\le\frac D\ell.
+$$
+
+因此
+
+$$
+V_0+RV_1\le\frac{RD}{\ell},
+\qquad
+|W_0+RW_1|
+\le R\sqrt{(U_0+U_1)(V_0+V_1)}
+\le R\sqrt{\frac D\ell}.
+\tag{194.7}
+$$
+
+另一方面，精确有
+
+$$
+U_0+RU_1=\frac{\Sigma(1-D)-\delta t}{2}.
+$$
+
+将它与（194.6）—（194.7）代入（194.5），得到
+
+$$
+\begin{aligned}
+e\ge{}&\frac34+\frac{\beta\Sigma}{8}\epsilon\\
+&+\left(\frac14-\frac{\beta\Sigma\epsilon}{8}
+-\frac{\beta R\epsilon}{4\ell}\right)D
+-\frac{gR\epsilon}{2\sqrt\ell}\sqrt D\\
+&+\frac{t^2}{16}-\frac{\beta\delta\epsilon}{8}t
+-\frac{B_*^2\epsilon^2}{8}.
+\end{aligned}
+\tag{194.8}
+$$
+
+例如可选 $K\ge\max\{1,\beta(5R+1)\}$。
+因为 $\ell\le1/2$ 且 $\ell\ge K\epsilon$，$D$ 前的括号至少为 $3/16$。
+两次完成平方给
+
+$$
+\frac{3D}{16}
+-\frac{gR\epsilon}{2\sqrt\ell}\sqrt D
+\ge\frac D{16}-\frac{g^2R^2\epsilon^2}{2\ell},
+$$
+
+$$
+\frac{t^2}{16}-\frac{\beta\delta\epsilon}{8}t
+\ge\frac{t^2}{32}-\frac{\beta^2\delta^2\epsilon^2}{8}.
+$$
+
+由于 $\ell\le1/2$，若置
+
+$$
+A=\frac{g^2R^2}{2}
++\frac{B_*^2+\beta^2\delta^2}{16},
+$$
+
+便得到对全部共同对称化 instrument 成立的定量下界
+
+$$
+\boxed{
+e\ge\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac D{16}+\frac{t^2}{32}
+-A\frac{\epsilon^2}{\ell}.
+}
+\tag{194.9}
+$$
+
+这同时保留了来源恢复损失和输出标签偏置，未假设二者预先具有某种参数阶数。
+
+### 194.4 统一误差带及带权操作缺陷
+
+第192节的恒等保持、均匀标签构造严格给
+
+$$
+\mathscr E(\ell,\epsilon)
+\le\frac34+\frac{\beta\Sigma}{8}\epsilon
++\frac{\beta^2\delta^2\epsilon^2}
+{16(1-\beta\Sigma\epsilon/2)}.
+$$
+
+在上述 $K$ 的选择下，分母中的
+$1-\beta\Sigma\epsilon/2\ge1/2$。因此令
+$B=\beta^2\delta^2/16$，并使用 $\ell\le1/2$，有
+
+$$
+\mathscr E(\ell,\epsilon)
+\le\frac34+\frac{\beta\Sigma}{8}\epsilon
++B\frac{\epsilon^2}{\ell}.
+\tag{194.10}
+$$
+
+对最优恢复器应用（194.9），舍去两个非负项，即得（194.1），可取
+$C=\max\{A,B\}$。选择 $\epsilon_0>0$ 足够小使所有入口态合法即可。
+
+更一般地，对满足（194.2）的恢复器，对称化后仍满足该上界；
+（194.9）与（194.10）给
+
+$$
+\boxed{
+D+t^2
+\le32(A+B+K_0)\frac{\epsilon^2}{\ell}.
+}
+\tag{194.11}
+$$
+
+（194.4）进一步给
+
+$$
+\sum|c|^2=O_{K_0}(\epsilon^2/\ell),\qquad
+\sum|b|^2+\sum|a-d|^2
+=O_{K_0}(\epsilon^2/\ell^2).
+\tag{194.12}
+$$
+
+这些估计的常数与 $\ell,\epsilon$ 无关，且各和都是相应 Choi 矩阵的线性泛函。
+
+### 194.5 从带权缺陷到完整 instrument 距离
+
+对每个正旗标 Kraus 作正交分解
+
+$$
+K_{j,\alpha}=\alpha_{j,\alpha}I+E_{j,\alpha},
+\qquad
+\alpha_{j,\alpha}=\frac{a+d}{2},
+\qquad
+\operatorname{Tr}E_{j,\alpha}=0.
+$$
+
+定义
+
+$$
+p_j=\sum_\alpha|\alpha_{j,\alpha}|^2,\qquad
+\eta_j=\sum_\alpha\|E_{j,\alpha}\|_{\mathrm{HS}}^2,\qquad
+\eta=\eta_0+\eta_1.
+$$
+
+共同 TP 的迹及上述正交分解给
+$2(p_0+p_1)+\eta=2$，所以 $p_0+p_1\le1$、$0\le\eta\le2$。
+此外
+
+$$
+\eta
+=\sum\left(|b|^2+|c|^2+\frac12|a-d|^2\right)
+\le\frac D\ell.
+\tag{194.13}
+$$
+
+展开 Kraus 作用。对于任意参考系统，夹乘映射
+$X\mapsto AXB$ 的完全迹范数不超过
+$\|A\|\,\|B\|$；再用 Cauchy–Schwarz 得
+
+$$
+Q_j:=\|\Gamma_{j,+}-p_j\operatorname{id}\|_\diamond
+\le2\sqrt{p_j\eta_j}+\eta_j,
+\qquad
+Q_0+Q_1\le2\sqrt\eta+\eta.
+\tag{194.14}
+$$
+
+这里直接控制了全部参考上的映射差，没有以 Choi 重叠替代操作距离。
+在来源态上作同一目标投影，还给
+$|p_j-U_j|\le Q_j$。因而
+
+$$
+\begin{aligned}
+\sum_j\|\Gamma_{j,+}-\tfrac12\operatorname{id}\|_\diamond
+&\le2(Q_0+Q_1)+D+|t|\\
+&\le8\sqrt{\frac{D+t^2}{\ell}}.
+\end{aligned}
+\tag{194.15}
+$$
+
+最后一步使用（194.13）、$\eta\le2$、$D\le1$ 与 $\ell\le1/2$。
+结合（194.11），正旗标距离至多为
+
+$$
+8\sqrt{32(A+B+K_0)}\,\frac{\epsilon}{\ell}.
+$$
+
+负旗标由 $Z$ 共轭得到，diamond 范数在此共轭下不变，故（194.3）成立。
+
+这个估计量化了第192节的刚性：来源权重比噪声大得越多，保留来源关系的共同操作就越接近恒等保持。误差中的次阶改善受 $\epsilon^2/\ell$ 控制，而操作本身允许偏离的尺度是 $\epsilon/\ell$。这两个尺度属于同一带权来源、同一操作权限及完整参考任务，不借用固定满秩展开的非一致余项。
+
+## 追加锚（本行以下为增补区）
+
+## 195. 纠缠熵尺度下的恢复边界
+
+第193节证明，小 Schmidt 权重与噪声的比例决定统一的一阶恢复响应。本节把这一比例与同一来源纯化的纠缠熵连接起来。这里的熵属于实际来源边缘态，而不是接收端的存储位数，也不是外部观察者已经取得的记录量。
+
+### 195.1 同一来源的熵与有效比例
+
+固定此前的 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，保持第193节的全部操作权限与完整参考任务。来源边缘态及其熵为
+
+$$
+\sigma_\ell=\operatorname{diag}(1-\ell,\ell),\qquad
+s(\ell)=S(\sigma_\ell)
+=-\ell\log_2\ell-(1-\ell)\log_2(1-\ell),
+\quad0\le\ell\le\frac12,
+\tag{195.1}
+$$
+
+取 $0\log_2 0=0$。因为联合来源 $P_{\Xi_\ell}$ 是纯态，$s(\ell)$ 也是这份纯化跨 $M:R$ 切口的纠缠熵。
+
+对 $0<\epsilon<1/2$，定义
+
+$$
+L_\epsilon=\log_2\frac1\epsilon,\qquad
+h_S(\ell,\epsilon)=\frac{s(\ell)}{\epsilon L_\epsilon}.
+\tag{195.2}
+$$
+
+**引理195.1（有界比例上的熵渐近）。** 对每个有限 $H>0$，
+
+$$
+\sup_{0\le h\le H}
+\left|
+\frac{s(h\epsilon)}{\epsilon L_\epsilon}-h
+\right|\longrightarrow0.
+\tag{195.3}
+$$
+
+**证明。** 在 $t\downarrow0$ 时，
+
+$$
+s(t)=t\log_2\frac1t+\frac{t}{\ln2}+O(t^2).
+\tag{195.4}
+$$
+
+这是将 $-(1-t)\ln(1-t)=t+O(t^2)$ 代入定义。令 $t=h\epsilon$，得到
+
+$$
+\frac{s(h\epsilon)}{\epsilon L_\epsilon}-h
+=\frac{-h\log_2h+h/\ln2}{L_\epsilon}
++O\left(\frac{H^2\epsilon}{L_\epsilon}\right).
+$$
+
+$h\log h$ 在零点连续延拓为零，故分子在 $[0,H]$ 有界；余项对该区间一致，证明结论。证毕。
+
+### 195.2 熵比例保留全部一阶方向
+
+**定理195.2（按纠缠熵尺度读取统一恢复响应）。** 第193节的完整最优误差满足
+
+$$
+\boxed{
+\lim_{\epsilon\downarrow0}
+\sup_{0\le\ell\le1/2}
+\left|
+\frac{\mathscr E(\ell,\epsilon)-3/4}{\epsilon}
+-\Phi_{h_S(\ell,\epsilon)}
+\right|=0.
+}
+\tag{195.5}
+$$
+
+**证明。** 根据第193节，只需证明
+$\Phi_{\ell/\epsilon}-\Phi_{h_S(\ell,\epsilon)}$ 对全部 $\ell$ 一致趋零。反设存在反例序列，记 $h_n=\ell_n/\epsilon_n$。
+
+若有有界子列，引理195.1在该子列上给
+$h_S(\ell_n,\epsilon_n)-h_n\to0$。两个比例处于同一紧区间，$\Phi$ 在其上连续，故响应差趋零。
+
+若无有界子列，则 $h_n\to\infty$。任取固定 $A>0$，最终有 $\ell_n\ge A\epsilon_n$。二元熵在 $[0,1/2]$ 单调增加，所以
+
+$$
+h_S(\ell_n,\epsilon_n)
+\ge\frac{s(A\epsilon_n)}{\epsilon_nL_{\epsilon_n}}
+\longrightarrow A.
+$$
+
+由于 $A$ 任意，$h_S\to\infty$。两项响应同时趋于
+$\Phi_\infty=\beta(R+1)/8$，差仍趋零，矛盾。证毕。
+
+这不是把两种比例逐点认作相等。例如固定正 $\ell$ 时，
+$s(\ell)/(\ell L_\epsilon)\to0$，两种比值的商也趋零；但它们都发散，且落在同一个已证的远端响应。定理保持的是任务的一阶响应。
+
+### 195.3 全部有限噪声等值点的位置
+
+令第190节的唯一一阶零点为 $h_c>0$。对每个充分小正 $\epsilon$，定义完整来源区间上的等值集合
+
+$$
+\mathcal Z_\epsilon
+=\left\{\ell\in[0,1/2]:
+\mathscr E(\ell,\epsilon)=\frac34\right\}.
+$$
+
+**定理195.3（全来源区间上的等值带）。** 存在 $C>0$，使充分小正 $\epsilon$ 时
+$\mathcal Z_\epsilon\ne\varnothing$，且
+
+$$
+\boxed{
+\ell\in\mathcal Z_\epsilon
+\Longrightarrow
+|\ell-h_c\epsilon|\le C\epsilon^2.
+}
+\tag{195.6}
+$$
+
+这里不声明 $\mathcal Z_\epsilon$ 只有一个点。
+
+**证明。** 第191节已经给出 $h_c$ 附近至少一个等值点。还需排除该邻域以外的来源权重。
+
+固定 $H>h_c$，使 $\Phi_H>0$。第193节的全尺度一致式与
+$h\ge H\Rightarrow\Phi_h\ge\Phi_H$ 保证，对充分小 $\epsilon$，全部 $\ell/\epsilon\ge H$ 都有 $\mathscr E(\ell,\epsilon)>3/4$。
+
+在紧区间 $h\in[0,H]$ 上，$\Phi_h$ 只有零点 $h_c$，且
+$\Phi'_{h_c}>0$。因此函数
+$|\Phi_h|/|h-h_c|$ 在 $h_c$ 用该导数连续延拓以后，具有严格正的最小值 $a$。第191节的统一二阶余项于是给：若 $\mathscr E(h\epsilon,\epsilon)=3/4$，则
+
+$$
+a|h-h_c|\le|\Phi_h|\le C_H\epsilon.
+$$
+
+乘以 $\epsilon$，得到（195.6）。证毕。
+
+### 195.4 熵阈值的两项渐近
+
+**推论195.4（全部等值点共享的熵位置）。** 对任意选择
+$\ell_\epsilon\in\mathcal Z_\epsilon$，一致有
+
+$$
+\boxed{
+s(\ell_\epsilon)
+=h_c\epsilon\log_2\frac1\epsilon
++h_c\epsilon\log_2\frac{e}{h_c}
++O\left(\epsilon^2\log\frac1\epsilon\right).
+}
+\tag{195.7}
+$$
+
+**证明。** 定理195.3给
+$\ell_\epsilon=h_c\epsilon+O(\epsilon^2)$。充分小参数处，
+$\ell_\epsilon$ 与 $h_c\epsilon$ 之间的所有点都位于
+$[h_c\epsilon/2,2h_c\epsilon]$。由
+
+$$
+s'(t)=\log_2\frac{1-t}{t},
+$$
+
+该区间上的导数绝对值为 $O(\log(1/\epsilon))$。
+中值定理因此给
+$s(\ell_\epsilon)=s(h_c\epsilon)+O(\epsilon^2\log(1/\epsilon))$。
+再将（195.4）用于 $h_c\epsilon$，便得（195.7）。证毕。
+
+对第190节的具体系数，$h_c$ 已由（190.10）精确给出，因此（195.7）的前两项均确定；有限噪声等值点即使不唯一，也共享这些项。
+
+在这些路径上，来源边缘态的秩一直是二，而熵趋于零。决定一阶恢复方向的是熵相对于 $\epsilon\log_2(1/\epsilon)$ 的尺度，不能只用“纠缠非零”或“熵正在变小”替代。这个结论依赖本节固定的二维来源族、噪声模型和共同接收端任务；没有证明任意量子网络的边界能力都由一个熵值决定。
+
+## 追加锚（本行以下为增补区）
