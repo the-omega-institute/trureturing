@@ -17355,3 +17355,379 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 65. 外置首轮二维尾环境的二次纤维排除
+
+本节继续第62、64节归约后的七维六纯终端接收问题。来源仍为
+$m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中 $ab\ne0$、
+$|a|^2+|b|^2=1$。接收器从独立纯态启动，全部持久资源计入七维 $K$，每轮使用同一个全域 CPTP 通道；新环境丢弃后不再访问，来源活动记忆及参考均不允许接收器访问。六个终端要求保留完整参考—活动记忆—档案关系。
+
+本节只处理纯环境向量满足
+
+$$
+F=\operatorname{span}\{\eta_2,\eta_3,\eta_4,\eta_5,\eta_6\},
+\qquad\dim F=2,\qquad\eta_1\notin F
+\tag{65.1}
+$$
+
+的外置首轮子类。将证明其中不能出现
+
+$$
+[\eta_2],[\eta_3],[\eta_4],[\eta_5]\text{ 两两不同}.
+\tag{65.2}
+$$
+
+按首次出现命名，这排除尾词 $ABCDE,ABCDA,ABCDB,ABCDC,ABCDD$，其中不同字母表示不同射线，仍可全部位于同一二维环境中。没有假定这些射线正交，也没有预设周期。
+
+固定共同 Stinespring 等距的两个位块 $V_0,V_1:K\to K\otimes E$。它们分别等距，且像空间正交。沿用实际初态 $k$ 及早期正交单位向量 $p,q$、$u,v,w$：
+
+$$
+\begin{gathered}
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,\\
+V_0p=u\otimes\eta_2,\qquad V_1p=v\otimes\eta_2,
+\qquad V_0q=w\otimes\eta_2,\\
+H_1=\operatorname{span}\{p,q\},\qquad
+G_2=\operatorname{span}\{u,w\},\qquad
+H_2=\operatorname{span}\{a^2u+bv,w\}.
+\end{gathered}
+\tag{65.3}
+$$
+
+对 $n=3,4,5,6$，实际二维空间 $H_n,G_n,Q_n$ 满足
+
+$$
+\begin{gathered}
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,\\
+G_n\perp Q_n,\qquad H_n\subseteq G_n\oplus Q_n,\qquad
+P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\end{gathered}
+\tag{65.4}
+$$
+
+后两个投影在 $H_n$ 上均为同构。第二轮的一位接收空间只有 $\mathbb Cv$，不把它算成二维 $Q_2$。以下 $G_i\otimes\eta_i$ 表示 $G_i\otimes\mathbb C\eta_i$；代数直和不自动表示正交。
+
+### 65.1 外置首轮迫出的共同四加二维接收结构
+
+**引理65.1（共同接收矩形）。** 在（65.1）—（65.2）的反设下，存在接收器内正交子空间 $R,Q$，满足
+
+$$
+\begin{gathered}
+\dim R=4,\qquad\dim Q=2,\qquad R\perp Q,\\
+G_2+G_3=G_2+G_4=G_3+G_4=R,\qquad
+G_2,G_3,G_4,G_5,G_6\subset R,\\
+Q_3=Q_4=Q_5=Q_6=Q,\qquad V_1R=Q\otimes F.
+\end{gathered}
+\tag{65.5}
+$$
+
+置 $S_0=H_1+\cdots+H_5$，则 $\dim S_0=6$，且
+
+$$
+\begin{gathered}
+V_0S_0=(G_2\otimes\eta_2)\dotplus(G_3\otimes\eta_3)
+\dotplus(G_4\otimes\eta_4)\subset R\otimes F,\\
+V_0K=(\mathbb Cp\otimes\eta_1)\dotplus V_0S_0,
+\qquad k\notin S_0.
+\end{gathered}
+\tag{65.6}
+$$
+
+此外 $v\perp R$。如果 $P_F\eta_1\ne0$，还有 $p\perp Q$、$q\perp R$。
+
+**证明。** $V_0S_0\subset K\otimes F$，而 $V_0k=p\otimes\eta_1\notin K\otimes F$。固定等距的单射性给 $k\notin S_0$，所以 $\dim S_0\le6$。这一步没有把 $k$ 与 $S_0$ 判为正交。
+
+固定 $V_1$ 在 $G_2,G_3,G_4$ 上分别具有不同的后继环境射线 $\eta_3,\eta_4,\eta_5$，故这些二维空间两两交零。这里尚不对 $G_5$ 与前三个平面的交作判断。
+
+以 $\eta_2,\eta_3$ 为 $F$ 的代数基，$\eta_4$ 的两个坐标均非零。三个乘积块
+
+$$
+G_2\otimes\eta_2+G_3\otimes\eta_3+G_4\otimes\eta_4
+$$
+
+构成六维代数直和：若三项和为零，逐环境坐标比较便使第三项的接收向量落入 $G_2\cap G_3=0$，于是三项均零。因此这个和已等于 $V_0S_0$。
+
+$\eta_5$ 与上述三个环境射线均不同。仅为比较乘积子空间，重选每条射线的非零代表及 $F$ 的代数基，可使四条射线的坐标依次为
+
+$$
+(1,0),\quad(0,1),\quad(1,1),\quad(1,t),\qquad t\ne0,1.
+$$
+
+这种缩放不改变任何接收子空间或乘积子空间。对每个 $z\in G_5$，六维代数直和提供唯一的 $r_2\in G_2,r_3\in G_3,r_4\in G_4$，使
+
+$$
+z=r_2+r_4,\qquad tz=r_3+r_4.
+\tag{65.6a}
+$$
+
+减去这两式的适当倍数，得到
+
+$$
+(t-1)r_4=r_3-tr_2\in G_2+G_3.
+$$
+
+映射 $z\mapsto r_4$ 线性且单射：若 $r_4=0$，则 $z\in G_2$、$tz\in G_3$，$t\ne0$ 和 $G_2\cap G_3=0$ 给 $z=0$。域和值域 $G_4$ 均二维，所以该映射满射。又 $t-1\ne0$，故
+
+$$
+G_4\subset G_2+G_3=:R,\qquad\dim R=4.
+$$
+
+（65.6a）再给 $G_5\subset R$。前三个接收平面两两交零，所以 $G_2+G_4=G_3+G_4=R$。由 $V_0S_0\subset R\otimes F$ 及 $G_6\otimes\eta_6\subset V_0S_0$，得到 $G_6\subset R$。六维尾像与首轮外置一维像饱和七维 $V_0K$，故（65.6）成立。整个论证没有要求最后两条环境射线不同。
+
+现在 $G_2,G_3,G_4\subset R$，所以
+
+$$
+\dim\bigl(Q_3\otimes\eta_3+Q_4\otimes\eta_4+Q_5\otimes\eta_5\bigr)\le4.
+$$
+
+三个环境射线互异且张成二维，左侧维数恰为
+
+$$
+6-\dim(Q_3\cap Q_4\cap Q_5).
+$$
+
+确切地说，写 $\eta_5=\alpha\eta_3+\beta\eta_4$、$\alpha\beta\ne0$ 后，自然求和映射的核由 $(-\alpha z,-\beta z,z)$、$z\in Q_3\cap Q_4\cap Q_5$ 构成。因此三个二维 $Q_i$ 必相等，记为 $Q$。于是
+
+$$
+V_1R=V_1(G_2+G_3)=Q\otimes\eta_3+Q\otimes\eta_4=Q\otimes F.
+$$
+
+又 $G_5\subset R$、$V_1G_5=Q_6\otimes\eta_6$，得到 $Q_6=Q$。跨位正交将 $Q\otimes F$ 与每个 $G_i\otimes\eta_i$ 比较，给 $Q\perp G_i$，故 $Q\perp R$。
+
+最后，$V_1p=v\otimes\eta_2$。三条不同射线 $[\eta_2],[\eta_3],[\eta_4]$ 中，至少两条与 $\eta_2$ 非正交；对应的任意两个 $G_2,G_3,G_4$ 均张成 $R$。跨位正交于是给 $v\perp R$。这里没有声称 $G_5$ 与前三个接收平面全部交零。
+
+若 $P_F\eta_1\ne0$，$p\otimes\eta_1=V_0k$ 与 $Q\otimes F$ 跨位正交，直接给 $p\perp Q$。同样，在 $[\eta_2],[\eta_3],[\eta_4]$ 中至少两条与 $\eta_1$ 非正交；将相应零位像与 $q\otimes\eta_1=V_1k$ 比较，得到 $q\perp R$。证明完毕。
+
+### 65.2 非退化双线性核与共同六维尾域
+
+**引理65.2（二次纤维与尾域饱和）。** 在引理65.1的反设下，令 $U=V_1|_R:R\to Q\otimes F$。存在可逆线性算子 $A:F\to F$ 及三维子空间
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}\subset F\otimes F,
+$$
+
+满足
+
+$$
+\begin{gathered}
+(U\otimes I_F)V_0S_0=Q\otimes J,\\
+A\eta_i\parallel\eta_{i+1}\qquad(2\le i\le5).
+\end{gathered}
+\tag{65.7}
+$$
+
+因而 $[\eta_6]$ 不可能等于 $[\eta_3]$、$[\eta_4]$ 或 $[\eta_5]$；四条 $[\eta_3],\ldots,[\eta_6]$ 两两不同。取辅助非零向量 $\eta_7=A\eta_6$，则
+
+$$
+UG_6=Q\otimes\mathbb C\eta_7,
+\qquad
+S_0=H_3+H_4+H_5=R\oplus Q,
+\qquad v\in Q,\quad p\in R,\quad q\in R\oplus Q.
+\tag{65.8}
+$$
+
+$\eta_7$ 只标记一个纤维，没有宣称第七轮存在或具有这一环境。
+
+**证明。** 由引理65.1，$U$ 为满等距，且
+
+$$
+UG_i=Q\otimes\eta_{i+1}\qquad(2\le i\le5).
+$$
+
+置
+
+$$
+J=\operatorname{span}\{
+\eta_3\otimes\eta_2,
+\eta_4\otimes\eta_3,
+\eta_5\otimes\eta_4\}.
+\tag{65.9}
+$$
+
+将（65.6）的接收器因子送入 $U$，得到 $(U\otimes I_F)V_0S_0=Q\otimes J$。左侧六维、$Q$ 二维，所以 $J$ 三维。取核恰为 $J$ 的非零线性泛函，将其视为复双线性形式 $B:F\times F\to\mathbb C$。
+
+若 $B$ 秩一，则 $B(x,y)=\ell(x)m(y)$，其中 $\ell,m$ 均为非零线性泛函。由于 $[\eta_2],[\eta_3],[\eta_4]$ 互异，$m$ 至多杀掉其中一个；（65.9）的三个张量都在核内，便要求 $\ell$ 杀掉 $[\eta_3],[\eta_4],[\eta_5]$ 中至少两个不同射线，矛盾。所以 $B$ 秩二。
+
+二维非退化双线性形式对每个非零 $y$ 恰有一条解射线 $B(x,y)=0$；在任一基中，将非零行泛函的两个系数交换并改变其中一个符号，就得到一个可逆线性算子 $A$，使这条解射线为 $\mathbb C Ay$。因此（65.9）给
+
+$$
+A\eta_2\parallel\eta_3,\quad A\eta_3\parallel\eta_4,
+\quad A\eta_4\parallel\eta_5.
+$$
+
+又因 $G_5\otimes\eta_5\subset V_0S_0$ 且 $UG_5=Q\otimes\eta_6$，得到 $\eta_6\otimes\eta_5\in J$，故 $A\eta_5\parallel\eta_6$。可逆射影映射的单射性排除 $[\eta_6]=[\eta_j]$，$j=3,4,5$：每种情形都会把不同输入 $[\eta_5]$ 与 $[\eta_{j-1}]$ 映到同一射线。四条 $[\eta_3],\ldots,[\eta_6]$ 遂互异。
+
+所有 $Az\otimes z$ 都在 $\ker B$ 中，而三个不同射线的平方张量线性无关，故这些张量张成的空间恰为三维 $J$。这里的独立性可直接核对：以前两个射线为基，第三个向量的两个基坐标都非零，其平方具有非零混合坐标，前两个平方则没有；第一因子的可逆变换 $A$ 不改变独立性。
+
+由 $G_6\otimes\eta_6\subset V_0S_0$，每个 $x\in UG_6\subset Q\otimes F$ 都满足 $x\otimes\eta_6\in Q\otimes\ker B$。对 $Q$ 因子施加任意线性泛函，所得 $F$ 系数必须位于
+
+$$
+\ker B(-,\eta_6)=\mathbb C A\eta_6=\mathbb C\eta_7.
+$$
+
+故 $UG_6\subset Q\otimes\mathbb C\eta_7$；两侧均二维，得到等号。
+
+现考察实际 $V_0H_3,V_0H_4,V_0H_5$。在 $U$ 坐标下，它们分别为
+
+$$
+Q\otimes(\eta_5\otimes\eta_4),\qquad
+Q\otimes(\eta_6\otimes\eta_5),\qquad
+Q\otimes(\eta_7\otimes\eta_6).
+\tag{65.10}
+$$
+
+对第一张量因子作用 $A^{-1}$，三个标量张量成为 $\eta_4\otimes\eta_4,\eta_5\otimes\eta_5,\eta_6\otimes\eta_6$ 的非零倍数；三条射线互异，故独立。于是（65.10）的和六维，等距性给 $\dim(H_3+H_4+H_5)=6$。实际来源又给
+
+$$
+H_j\subset G_j\oplus Q_j\subset R\oplus Q\qquad(j=3,4,5).
+$$
+
+右侧恰六维，所以 $H_3+H_4+H_5=R\oplus Q=S_0$。早期 $a^2u+bv\in H_2\subset S_0$、$u\in R$、$b\ne0$，再结合引理65.1的 $v\perp R$，给 $v\in Q$。于是 $V_1p=v\otimes\eta_2\in Q\otimes F=V_1R$；固定单射性给 $p\in R$。最后 $q\in H_1\subset S_0$。证明完毕。
+
+此处初态仍满足 $k\notin R\oplus Q$。令 $Z=(R\oplus Q)^\perp$，则 $\dim Z=1$、$P_Zk\ne0$。若 $\eta_1\perp F$，等距性还给 $k\in Z$；若 $P_F\eta_1\ne0$，引理65.1给 $q\in Q$，但不消除 $k$ 的 $Z$ 分量。下一步不需要删除这个第七维。
+
+### 65.3 四个二次纤维与满余等距不相容
+
+**引理65.3（二次纤维的四点禁阻）。** 设 $Q$ 为非零有限维复 Hilbert 空间，$F$ 为二维复 Hilbert 空间，$A:F\to F$ 可逆，且
+
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+
+不存在同时满足下述两项的线性映射 $M:Q\otimes J\to Q\otimes F$：
+
+$$
+MM^*=I_{Q\otimes F},
+\tag{65.11}
+$$
+
+以及对四条不同射线 $[z_1],\ldots,[z_4]\in\mathbb P(F)$，
+
+$$
+M\bigl(Q\otimes\mathbb C(Az_i\otimes z_i)\bigr)
+\subset Q\otimes\mathbb Cz_i.
+\tag{65.12}
+$$
+
+（65.11）称为余等距条件，要求同一个 $M$ 的伴随为等距；（65.12）也使用同一个映射，不是四个分别可选的映射。
+
+**证明。** 选择 $F$ 的正交单位基 $e_0,e_1$，使
+
+$$
+A^*Ae_0=\mu e_0,\qquad A^*Ae_1=\nu e_1,
+\qquad\mu,\nu>0.
+$$
+
+这是对同一个 $z$ 所在空间的酉换基；$Az$ 的坐标同步按 $Ae_0,Ae_1$ 表示，不额外假定 $A$ 在该基中对角。写 $z=z_0e_0+z_1e_1$。由线性性，存在算子值二次齐次多项式 $B_0(z),B_1(z)$，使
+
+$$
+M(q\otimes Az\otimes z)
+=B_0(z)q\otimes e_0+B_1(z)q\otimes e_1.
+\tag{65.13}
+$$
+
+纤维条件要求三次齐次矩阵多项式 $z_1B_0(z)-z_0B_1(z)$ 在四条不同射线上消失。逐矩阵元应用次数至多三的齐次多项式根数界，得到它恒为零；无穷远点可用另一射影图处理，或作为齐次线性因子计入根数。恒等式先使 $B_0$ 被 $z_0$ 整除、$B_1$ 被 $z_1$ 整除，除去共同因子后两个一次多项式相等。因此存在固定 $L_0,L_1\in\operatorname{End}(Q)$，使
+
+$$
+B_0(z)=z_0(z_0L_0+z_1L_1),\qquad
+B_1(z)=z_1(z_0L_0+z_1L_1).
+\tag{65.14}
+$$
+
+下面三个向量是 $J$ 的正交基：
+
+$$
+t_{00}=Ae_0\otimes e_0,\quad
+t_{01}=Ae_0\otimes e_1+Ae_1\otimes e_0,\quad
+t_{11}=Ae_1\otimes e_1.
+$$
+
+其平方范数分别为 $\mu,\mu+\nu,\nu$；正交性使用 $Ae_0\perp Ae_1$。比较（65.13）—（65.14）的三个单项式系数，在归一化后的域基和值域基 $e_0,e_1$ 下得到
+
+$$
+M=
+\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt{\mu+\nu}&0\\
+0&L_0/\sqrt{\mu+\nu}&L_1/\sqrt\nu
+\end{pmatrix}.
+\tag{65.15}
+$$
+
+置 $X=L_0L_0^*$、$Y=L_1L_1^*$。余等距条件的三个块给
+
+$$
+\frac X\mu+\frac Y{\mu+\nu}=I_Q,
+\qquad
+\frac X{\mu+\nu}+\frac Y\nu=I_Q,
+\qquad L_1L_0^*=0.
+\tag{65.16}
+$$
+
+解前两个标量系数的线性方程，得到
+
+$$
+X=\frac{\mu^2(\mu+\nu)}{\mu^2+\mu\nu+\nu^2}I_Q,
+\qquad
+Y=\frac{\nu^2(\mu+\nu)}{\mu^2+\mu\nu+\nu^2}I_Q.
+\tag{65.17}
+$$
+
+两个系数均严格为正，故有限维方阵 $L_0,L_1$ 均可逆，与 $L_1L_0^*=0$ 矛盾。证明完毕。$Q$ 的有限性及两个方向共用同一 $Q$ 都是本引理条件，不能据此直接外推到不同维数的端口。
+
+### 65.4 从实际切面满投影得到排除
+
+**定理65.4（外置首轮的四前置射线排除）。** 七维六纯终端合同下，若二维尾环境满足 $\eta_1\notin F$，则前四条尾射线 $[\eta_2],\ldots,[\eta_5]$ 不可能两两不同。因此 $ABCDE,ABCDA,ABCDB,ABCDC,ABCDD$ 五种尾词均不能实现。
+
+**证明。** 反设（65.2）成立，使用引理65.1—65.2。定义满等距
+
+$$
+T=(U\otimes I_F)V_0|_{S_0}:S_0=R\oplus Q\longrightarrow Q\otimes J,
+$$
+
+以及
+
+$$
+M=(UP_R)T^{-1}:Q\otimes J\longrightarrow Q\otimes F,
+\tag{65.18}
+$$
+
+其中 $P_R:S_0\to R$ 是正交投影。$T,U$ 满等距且 $P_RP_R^*=I_R$，所以 $MM^*=I_{Q\otimes F}$。
+
+实际 $n=2,3,4,5$ 均满足 $P_RH_n=G_n$。当 $n\ge3$，这来自（65.4）的同一来源满投影及 $Q_n=Q$；当 $n=2$，使用
+
+$$
+H_2=\operatorname{span}\{a^2u+bv,w\},\quad
+G_2=\operatorname{span}\{u,w\},\quad u,w\in R,\quad v\in Q,\quad a\ne0.
+$$
+
+这一步不能用任意二维子空间替代实际第二轮数据。同时由实际固定零位映射，
+
+$$
+TH_n=(UG_{n+1})\otimes\mathbb C\eta_{n+1}
+=Q\otimes\mathbb C(A\eta_{n+1}\otimes\eta_{n+1}).
+\tag{65.19}
+$$
+
+故同一个 $M$ 满足
+
+$$
+M\bigl(Q\otimes\mathbb C(A\eta_{n+1}\otimes\eta_{n+1})\bigr)
+=Q\otimes\mathbb C\eta_{n+1}
+\qquad(n=2,3,4,5).
+\tag{65.20}
+$$
+
+引理65.2已使四条 $[\eta_3],\ldots,[\eta_6]$ 两两不同，恰触发引理65.3的禁阻，矛盾。$n=5$ 只使用实际第六轮的 $G_6$；辅助 $\eta_7$ 仅表示 $UG_6$ 的纤维，没有调用第七轮。证明完毕。
+
+该排除保留任意允许的环境 Gram 参数，也保留实际初态的第七维分量。它使用四个实际切面的满投影和同一个接收等距，不能简化为四份分别成立的几何编码。
+
+本节未结算外置首轮中前四条尾射线已有重复的全部模式，也未结算内置首轮 $\eta_1\in F$ 子类。因此一般容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{65.21}
+$$
+
+以上为普通数学证明，未将本节新增结论宣称为已经编译的 Lean 证明。
+
+## 追加锚（本行以下为增补区）
