@@ -9714,3 +9714,317 @@ $\mathcal H^{2/3}(\mathcal U\cap J)$。
 新增连接是精确阶乘相位、任意窄带的原 floor 区间下计数，以及同时守住所有尺度的通用参数构造。
 
 ## 追加锚（78 章后）
+
+## 79. 实际信息增益的乘积正态波动与典型输出条件律
+
+**定义 79.1（同一测量实现的信息波动）。** 保持第 75、77 章的原模型、
+完整计数向量 $R$、精确标量 $T=t_x(R)$ 与实际先验纤维律 $P_x$。
+对每个确定正噪声序列，令
+
+$$
+Y=T+\sigma_MG,\qquad L_M=\ln(1/\sigma_M)\to\infty,\qquad L_M=o(Q^3),
+\tag{79.1}
+$$
+
+其中 $G$ 独立于完整原实验，服从标准正态。沿用第 77 章的
+$\nu=2g_0>0$、方差参数密度 $\varphi_\nu$ 和实际输出密度 $f_x$，置
+
+$$
+\begin{aligned}
+i_x(n,y)&=\ln\frac{\varphi_{\sigma_M}(y-t_x(n))}{f_x(y)},\\
+H_M&=i_x(R,Y)-L_M,\qquad c=\tfrac12\ln\nu,\\
+\Lambda_x(y)&=\ln\frac{f_x(y)}{\varphi_\nu(y)}.
+\end{aligned}
+\tag{79.2}
+$$
+
+测量核 $\varphi_{\sigma_M}$ 仍按标准差标记。$H_M$ 是自然单位的信息波动，
+不是 Shannon 熵。$\mathbb E_x$ 积分同一个先验计数向量及其独立测量噪声。
+下文所有随机环境结论均对每个上述噪声序列、两种实际平稳实验成立，
+且一致于确定真实支持的原始数据概率；不对所有噪声序列同时取上确界。
+
+**定理 79.2（实际联合波动律）。** 给定原始数据的条件律满足
+
+$$
+\mathcal L_x(T,Y,G,H_M)
+ \Longrightarrow
+ \mathcal L\left(\sqrt\nu Z,\sqrt\nu Z,G_\infty,
+               c+\frac{Z^2-G_\infty^2}{2}\right),
+\qquad Z\perp G_\infty,\quad Z,G_\infty\sim N(0,1).
+\tag{79.3}
+$$
+
+精确含义是 $\mathbb R^4$ 上的有界 Lipschitz 距离在上述原数据概率中趋零。
+标量 $H_M$ 的条件 Kolmogorov 距离也趋零。
+
+证明。任意概率密度 $f$、严格正密度 $p$ 与 $u>0$ 满足有限不等式
+
+$$
+ \int_{\{|\ln(f/p)|>u\}}f(y)dy
+ \le\frac{\|f-p\|_1}{1-e^{-u}}.
+\tag{79.4}
+$$
+
+在 $f>e^up$ 上，$|f-p|\ge(1-e^{-u})f$；在不相交的
+$f<e^{-u}p$ 上，$|f-p|\ge(e^u-1)f$。相加积分即得，零密度点不贡献质量。
+定理 77.2 因而给
+
+$$
+\Pr_x\{|\Lambda_x(Y)|>u\}
+ \le\frac{\|f_x-\varphi_\nu\|_1}{1-e^{-u}}\longrightarrow0.
+\tag{79.5}
+$$
+
+这是实际输出质量加权的对数密度替换，不要求逐点相对误差一致趋零。
+Gaussian 通道的精确恒等式为
+
+$$
+H_M=-\tfrac12\ln(2\pi)-\tfrac12G^2-\ln f_x(Y)
+   =c+\frac{Y^2}{2\nu}-\frac{G^2}{2}-\Lambda_x(Y).
+\tag{79.6}
+$$
+
+第 77 章给 $Y$ 的律在 TV 中趋于 $N(0,\nu)$，而
+$|\mathbb E_xh(T)-\mathbb E_xh(Y)|\le\sigma_M\mathbb E|G|$
+对每个一阶 Lipschitz 测试函数成立。因此 $T$ 条件弱收敛到同一正态。
+每个有限纤维中 $T$ 与 $G$ 独立；它们的联合律就是该实际 $T$ 边缘与标准正态的乘积。
+紧性、紧集上的有限乘积测试函数逼近给其联合弱极限。
+再用 $Y-T=\sigma_MG\to0$、(79.5) 和 (79.6) 的连续映射，得到 (79.3)。
+此处极限中出现的 $G_\infty$ 正是同一测量残差的极限，不能用一个独立拷贝替代。
+
+上述证明适用于误差读数趋零的任意确定好环境序列。
+各读数的一致原数据概率控制，再以反证选取失败环境序列，给所述随机环境结论。
+没有把无界测试函数在异常数据上的值乘以其概率。
+令 $U=(Z+G_\infty)/\sqrt2$、$V_*=(Z-G_\infty)/\sqrt2$，则
+$U,V_*$ 是独立标准正态，且 $(Z^2-G_\infty^2)/2=UV_*$。
+条件于非零的一个因子可知乘积无原子，故极限 CDF 连续。
+在两尾和有限内部网格上用 CDF 单调性，弱收敛升级为标量 Kolmogorov 收敛。证毕。
+
+**定理 79.3（信息矩、方差与同一残差的相关性）。** 对每个固定 $p>0$ 和整数 $k\ge0$，
+
+$$
+\begin{aligned}
+\mathbb E_x|H_M|^p&\longrightarrow\mathbb E|c+\Xi|^p,\\
+\mathbb E_xH_M^k&\longrightarrow\mathbb E(c+\Xi)^k,
+\qquad\Xi=(Z^2-G_\infty^2)/2.
+\end{aligned}
+\tag{79.7}
+$$
+
+任意固定的 $(G,H_M)$ 混合多项式矩也收敛。以实际纤维均值中心化后，
+
+$$
+\begin{aligned}
+\mathbb E_x(H_M-\mathbb E_xH_M)^{2m}&\longrightarrow[(2m-1)!!]^2,\\
+\mathbb E_x(H_M-\mathbb E_xH_M)^{2m+1}&\longrightarrow0,\qquad m\ge1,\\
+\mathbb E_x|H_M-\mathbb E_xH_M|^p
+ &\longrightarrow\frac{2^p\Gamma((p+1)/2)^2}{\pi}.
+\end{aligned}
+\tag{79.8}
+$$
+
+特别地，$\operatorname{Var}_x i_x(R,Y)\to1$，四阶中心矩趋于 $9$，
+$\operatorname{Cov}_x(H_M,G^2)\to-1$。
+
+证明。必须另证一致可积，不能对 (79.3) 直接取矩。
+固定确定 $B\ge1,K<\infty$，限制在
+$\|f_x\|_\infty\le B$、$\mathbb E_xY^2\le K$ 的环境类。
+对任意 $r,R>0$，
+
+$$
+\Pr_x\{-\ln f_x(Y)>r\}\le2Re^{-r}+K/R^2.
+\tag{79.9}
+$$
+
+第一项是区间 $[-R,R]$ 内密度小于 $e^{-r}$ 部分的积分上界，第二项是二阶矩尾界。
+取 $R=e^{r/3}$，得到
+
+$$
+\Pr_x\{(-\ln f_x(Y))_+>r\}\le(2+K)e^{-2r/3},\qquad
+(\ln f_x(Y))_+\le\ln B.
+\tag{79.10}
+$$
+
+对任意固定 $s>0$ 分层积分，
+$\mathbb E_x[(-\ln f_x(Y))_+]^s\le(2+K)\Gamma(s+1)(3/2)^s$。
+由 (79.6) 第一种表达及 $G$ 的精确 Gaussian 矩，便得
+
+$$
+\mathbb E_x|\ln f_x(Y)|^s\le C_{s,B,K},\qquad
+\mathbb E_x|H_M|^s\le C'_{s,B,K}.
+\tag{79.11}
+$$
+
+不要求 $G$ 与 $f_x(Y)$ 独立，也不要求 $Y$ 的任意高阶矩。
+每个有限纤维的密度上确界和二阶矩均有限，因此全部信息绝对矩在每个纤维上存在。
+这不证明其全原数据期望一致可积。
+
+固定 $s>p$，(79.11) 给
+$\mathbb E_x[|H_M|^p\mathbf1_{|H_M|>A}]\le C'_{s,B,K}A^{p-s}$。
+对连续截断使用 (79.3)，再令 $A\to\infty$，得到固定环境类上的矩转移。
+定理 77.2 与 $\mathbb E_xY^2=\mathbb E_xT^2+\sigma_M^2$
+使这类环境的补集原数据概率任意小；最后令该失败容差趋零，证明 (79.7)。
+对混合矩用 Hölder，把所需更高阶 $|G^jH_M^k|$ 矩分成精确 Gaussian 矩
+与 (79.11)，同样得到一致可积。
+
+经典正态旋转给 $\Xi=UV_*$，所以
+
+$$
+\mathbb Ee^{it\Xi}=(1+t^2)^{-1/2},\qquad
+\mathbb E\Xi^{2m}=[(2m-1)!!]^2,\qquad
+\mathbb E\Xi^{2m+1}=0,\qquad
+\mathbb E|\Xi|^p=\frac{2^p\Gamma((p+1)/2)^2}{\pi}.
+\tag{79.12}
+$$
+
+第一式可由条件于 $U$ 后积分 $e^{-t^2U^2/2}$ 直接得到。
+均值收敛给 $\mathbb E_xH_M\to c$；展开整数中心矩并对绝对中心矩再用截断，证明 (79.8)。
+同一联合极限中
+$\operatorname{Cov}(c+(Z^2-G_\infty^2)/2,G_\infty^2)=-1$。
+标量乘积表示识别的是分布，未把信息波动与测量残差变成独立变量。证毕。
+
+**定理 79.4（典型输出的残差与信息条件 CDF）。** 令 $N$ 为用于描述目标核的标准正态，
+$a_0(y)=c+y^2/(2\nu)$，并定义可测距离
+
+$$
+\begin{aligned}
+D_M^G(x,y)&=\sup_{z\in\mathbb Q}
+ \left|\Pr_x(G\le z\mid Y=y)-\Phi(z)\right|,\\
+D_M^H(x,y)&=\sup_{z\in\mathbb Q}
+ \left|\Pr_x(H_M\le z\mid Y=y)
+            -\Pr\{a_0(y)-N^2/2\le z\}\right|.
+\end{aligned}
+\tag{79.13}
+$$
+
+则在相同一致原数据概率意义下，
+
+$$
+\int D_M^G(x,y)f_x(y)dy\longrightarrow0,\qquad
+\int D_M^H(x,y)f_x(y)dy\longrightarrow0.
+\tag{79.14}
+$$
+
+证明。输出边缘密度收敛不足以证明此式，需要保留计数向量与参考标量的联合关系。
+取第 77 章同一分位耦合中的完整乘积向量 $R$、精确非中心 Gaussian 标量
+$T^{\rm G}$ 和独立测量正态 $G_0$。设 $\mathsf B_x$ 是
+$(R,Y_g)$ 的联合律，其中 $Y_g=T^{\rm G}+\sigma_MG_0$。
+$T^{\rm G}$ 依赖构造该 $R$ 的分位随机数，不能另行独立抽取。
+记第 77 章的 $D_M(x)=\mathbb E|T-T^{\rm G}|$、
+$a_x=\|L_x-1\|_{L^2(\mathsf Q_x)}$，则完整向量变换及 Gaussian 平移界给
+
+$$
+\epsilon_x:=d_{\rm TV}(\mathcal L_x(R,Y),\mathsf B_x)
+ \le\tfrac12a_x+\frac{D_M(x)}{\sqrt{2\pi}\sigma_M}\longrightarrow0.
+\tag{79.15}
+$$
+
+TV 采用半 $L^1$ 约定。第一项仅改变完整计数律而保持精确通道，
+第二项条件于同一耦合后改变平滑标量。
+在两种联合律上使用相同可测映射 $h_x(n,y)=(y-t_x(n))/\sigma_M$。
+实际律下它恰为 $G$；参考律下为 $G_0+\Delta_x$，其中
+
+$$
+\Delta_x=(T^{\rm G}-t_x(R))/\sigma_M,\qquad
+\mathbb E_{\mathsf B_x}|\Delta_x|\le D_M(x)/\sigma_M.
+\tag{79.16}
+$$
+
+令 $g_x^0$ 为第 77 章的无噪声参考密度、$g_x=g_x^0*\varphi_{\sigma_M}$。
+参考 $(G_0,Y_g)$ 的密度为 $\varphi_1(u)g_x^0(y-\sigma_Mu)$。
+由于 $\varphi_\nu'\in L^1$，有
+
+$$
+\begin{aligned}
+\beta_x&:=d_{\rm TV}(\mathcal L_{\mathsf B_x}(G_0,Y_g),
+                         N(0,1)\otimes N(0,\nu))\\
+ &\le\tfrac12\|g_x^0-\varphi_\nu\|_1
+       +\tfrac12\sigma_M\mathbb E|G_0|\,\|\varphi_\nu'\|_1\longrightarrow0,\\
+\int g_x(y)d_{\rm TV}(\mathcal L_{\mathsf B_x}(G_0\mid Y_g=y),N(0,1))dy
+ &\le2\beta_x.
+\end{aligned}
+\tag{79.17}
+$$
+
+最后一式把联合律与其实际参考输出边缘的乘积作比较，边缘收缩再付一次 $\beta_x$。
+它尚未断言实际残差给定输出后正态。
+
+为明确条件核转移，记实际与参考有限计数／输出联合密度为 $p_n(y),b_n(y)$，
+边缘为严格正的 $f_x,g_x$。积分
+$|p_n-f_xb_n/g_x|\le|p_n-b_n|+|1-f_x/g_x|b_n$ 并求和得到
+
+$$
+\int f_x(y)d_{\rm TV}(P_x(R\in\cdot\mid y),
+                   \mathsf B_x(R\in\cdot\mid y))dy\le2\epsilon_x.
+\tag{79.18}
+$$
+
+逐输出经映射 $h_x$ 推前不增 TV；把 $[0,1]$ 值参考距离的输出积分从 $g_x$
+换到 $f_x$ 再至多付出 $\epsilon_x$。在 $|\Delta_x|\le b$ 上，
+残差 CDF 夹在 $G_0$ 的两个平移 CDF 之间；补集的平均概率至多 $D_M/(b\sigma_M)$。
+所以对每个固定 $b>0$，
+
+$$
+\int D_M^G(x,y)f_x(y)dy
+ \le3\epsilon_x+2\beta_x+\frac b{\sqrt{2\pi}}
+                         +\frac{D_M(x)}{b\sigma_M}.
+\tag{79.19}
+$$
+
+第 77 章已证 $D_M/\sigma_M^2\to0$，足以支付这里的位移项。
+先取原序列极限，再令 $b\downarrow0$，得 (79.14) 第一式。
+多项式后验密度误差没有除以噪声。
+
+精确恒等式 (79.6) 还给
+$H_M=a_x^{shift}(Y)-G^2/2$，其中
+$a_x^{shift}(y)=-\tfrac12\ln(2\pi)-\ln f_x(y)$，
+$a_x^{shift}(y)-a_0(y)=-\Lambda_x(y)$。
+若一个实随机变量的 CDF 距离 $\Phi$ 至多 $d$，其负半平方的 CDF 距离
+$-N^2/2$ 的 CDF 至多 $2d$：用对称区间的两个端点；有原子时取左极限。
+后者的统一连续模满足
+
+$$
+\omega_-(b)\le\min\{1,2\sqrt{b/\pi}\}.
+\tag{79.20}
+$$
+
+因为 $N^2/2$ 的一个长度 $b$ 区间的原像总长度至多 $2\sqrt{2b}$，
+再乘标准正态密度上界即可。故 (79.5) 给有限界
+
+$$
+\int D_M^H(x,y)f_x(y)dy
+ \le2\int D_M^G(x,y)f_x(y)dy
+    +\omega_-(b)+\frac{\|f_x-\varphi_\nu\|_1}{1-e^{-b}}.
+\tag{79.21}
+$$
+
+依次令 $M\to\infty$、$b\downarrow0$ 证明第二式。
+有限计数 Gaussian 混合核与有理 CDF 上确界保证可测性；右连续性使有理上确界等于实数上确界。
+给定数据后再用 Markov，得到先验预测输出中坏 CDF 距离的质量趋零。证毕。
+
+每个有限纤维、固定输出 $y$ 的实际残差只取有限个值
+$\{(y-t_x(n))/\sigma_M:n\in\mathcal F_x\}$。
+因此它与连续标准正态的 TV 距离恰为 $1$，与 (79.14) 的 CDF 结论并不矛盾。
+参考连续残差的 TV 比较和实际有限残差的 CDF 比较承担不同作用。
+
+本章信息矩结论均是纤维内积分作为原数据函数的收敛；未增加全原数据无界期望、
+实际指数矩收敛、任意 $T,Y$ 高阶混合矩或大偏差结论。
+输出条件结论使用 $f_x$，不等于已知固定真实支持下给定数据的单个 Gaussian 通道。
+对有界联合测试或典型输出失败事件，原支持置换的传递作用保持计数、标量与信息不变，
+可先在均匀先验上平均，再转为每个固定支持的无条件联合实验结论。
+这不把其给定数据条件律改为先验条件律。
+
+有限 Bayes 公式仍给第 77 章的
+$\int H_2(p_x(\cdot\mid y))f_x(y)dy=h_x-\mathbb E_xi_x/\ln2$。
+(79.7) 恢复平均信息的常数项，但典型输出的信息条件 CDF
+不自动给逐输出后验 Shannon 熵集中；后者还涉及原先验惊奇度给定输出的条件均值。
+精确 $h_x$ 不由其 $Q^5$ 主项代替。
+已知反向按原方式对齐；未知方向只在原共同判向相等事件上转移，失败概率只进入概率界。
+没有零噪声、$L_M\asymp Q^3$ 边界分类、计算效率或任意旧场的新增联合极限定理。
+
+乘积正态分布及 Gaussian 信息密度的这种表示是经典结果。
+本章新增连接是第 77 章的实际密度控制与同向量耦合如何同时支持
+原模型的信息联合律、全部固定信息矩及典型输出条件 CDF；
+不是一种新分布、通用连续性原则或全球原创性声明。
+
+## 追加锚（79 章后）
