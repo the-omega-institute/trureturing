@@ -73,16 +73,8 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
         exact h
       simp only [sweep]
       rw [hs]
-      have hphi :
-          (phi i u).symm
-            ⟨((phi i u) ⟨j, a, s⟩).1,
-             ((phi i u) ⟨j, a, s⟩).2.1,
-             ((phi i u) ⟨j, a, s⟩).2.2⟩ = ⟨j, a, s⟩ := by
-        simpa only [Sigma.eta, Prod.mk.eta] using
-          (phi i u).symm_apply_apply ⟨j, a, s⟩
-      rw [hphi]
-      rw [htail]
-      rfl
+      simp only [unsweep, Sigma.fst, Sigma.snd, Prod.fst, Prod.snd,
+        Prod.mk.eta, Sigma.eta, Equiv.symm_apply_apply, htail]
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
@@ -477,7 +469,7 @@ theorem square_column_lift_count (c : CompatibleCertificate A B R S m)
   calc
     c.squareMatrix (e s) (e r) = Fintype.card fiber := by
       simpa only [Fintype.card_fin] using hnumber
-    _ = Nat.card fiber := (Nat.card_eq_fintype_card fiber).symm
+    _ = Nat.card fiber := (Nat.card_eq_fintype_card (α := fiber)).symm
     _ = Nat.card incidence := hcard
 
 /-- A row counts the numbered B edges whose outgoing square lift reaches
@@ -553,7 +545,7 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
   calc
     c.squareMatrix (e r) (e s) = Fintype.card fiber := by
       simpa only [Fintype.card_fin] using hnumber
-    _ = Nat.card fiber := (Nat.card_eq_fintype_card fiber).symm
+    _ = Nat.card fiber := (Nat.card_eq_fintype_card (α := fiber)).symm
     _ = Nat.card incidence := hcard
 
 #print axioms square_column_lift_count
