@@ -1176,10 +1176,10 @@ $$
 
 ## 59. 概念动力学：知道一个侧面与知道怎样行动
 
-**定义 59.1（目标相对的充分性）。** [《形式概念动力学》第 7、9、10 节](FORMAL_CONCEPT_DYNAMICS.md)把概念精化、命题为真与对目标忠实分开。将其接到本卷，先给状态集合 $X$、读数 $q:X\to O$ 与所问目标 $h:X\to Y$。若存在 $\bar h:q(X)\to Y$，使
+**定义 59.1（目标相对的充分性）。** [《形式概念动力学》第 7、9、10 节](FORMAL_CONCEPT_DYNAMICS.md)把概念精化、命题为真与对目标忠实分开。将其接到本卷，先给状态集合 $X$、读数 $q:X\to O$ 与所问目标 $h:X\to Y$。记 $q_{\mathrm{eff}}:X\to q(X)$ 为映到实际像的同一读数，即 $q_{\mathrm{eff}}(x)=q(x)$，但陪域限定为 $q(X)$。若存在 $\bar h:q(X)\to Y$，使
 
 $$
-h=\bar h\circ q,
+h=\bar h\circ q_{\mathrm{eff}},
 $$
 
 便能从实际读数确定 $h$。这只要求 $h$ 在每条观察纤维上恒定，未要求 $q$ 区分整个 $X$。这里的因子定义在实际像 $q(X)$ 上；未实现的标签不承担额外答案。假如 $h$ 表示某项品格条件，因子化本身也没有断言这项条件在实际人身上为真。
@@ -1210,7 +1210,7 @@ $$
 \bigcap_{x\in B}G_K(x)\ne\varnothing.
 $$
 
-因此，选择观察语言可以从行动目标倒推：哪些状态必须分开，哪些可以共用一个标签。原声明把“$m$ 确为最小值”的两种表述联系起来，并不无条件断言存在某个有限最小值。对于本卷有限非空 $X$，若每个 $G_K(x)$ 非空，单点分割提供一个可行方案，故有限最小值存在；若某个状态没有成功行动，增加标签也不能补出一个。
+因此，选择观察语言可以从行动目标倒推：哪些状态必须分开，哪些可以共用一个标签。原声明把“$m$ 确为最小值”的两种表述联系起来，并不无条件断言存在某个有限最小值。对于本卷有限非空 $X$，若每个 $G_K(x)$ 非空，每块均为单元素集的离散分割提供一个可行方案，故有限最小值存在；若某个状态没有成功行动，增加标签也不能补出一个。
 
 **命题 60.2（两两相容不足以保证共同处方）。** 设三种情境 $u,v,w$ 的成功行动集合为
 
@@ -1230,18 +1230,23 @@ $$
 
 ## 61. 候选状态与控制递推：修养怎样接上有限保证
 
-**定义 61.1（把未知实际状态换成已知候选状态）。** 项目的 [`finite_horizon_reachability`](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean)以状态、该状态可选的行动、行动后的非空后继集合构造有限胜利区域。第 53 节使用同一控制结构，但承载状态取为 $\mathcal B_q$。具体对应为
+**定义 61.1（把未知实际状态换成已知候选状态）。** 项目的 [`finite_horizon_reachability`](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean)以状态、该状态可选的行动、行动后的非空后继集合构造有限胜利区域。第 53 节使用同一控制结构，以候选集为状态。要准确接到源码的依赖类型，须把合法候选集和共同可用行动分别构成子类型。令 $|\widehat B|$、$|\widehat a|$ 表示忘去成员证明后所得的候选集、行动。具体对应为
 
 $$
 \begin{aligned}
-\widehat X&=\mathcal B_q,\\
-\widehat A(B)&=A(B),\\
-\widehat R(B,a)&=\{B_{a,o}:o\in q(R(B,a))\},\\
-\widehat K&=\{B\in\mathcal B_q:B\subseteq K\}.
+\widehat X&=\{B:\mathcal P(X)\mid B\in\mathcal B_q\},\\
+\widehat A(\widehat B)&=\{a:A\mid a\in A(|\widehat B|)\},\\
+\widehat R(\widehat B,\widehat a)
+&=\left\{\widehat C:\widehat X\ \middle|\
+\exists o\in q(R(|\widehat B|,|\widehat a|)),\
+|\widehat C|=(|\widehat B|)_{|\widehat a|,o}\right\},\\
+\widehat K&=\{\widehat B:\widehat X\mid |\widehat B|\subseteq K\}.
 \end{aligned}
 $$
 
-对于共同可采用的 $a$，$B$ 非空且每个实际状态都有非空后继，所以 $R(B,a)$ 非空；它至少产生一个读数，故 $\widehat R(B,a)$ 非空。这正好履行源码控制系统的后继非空前提。源码中的受控前驱在这个承载空间上成为“存在一个共同行动，使每个可能更新集都落在上一阶段”，从而得到本卷 $W_n$ 的递推。
+前两行的花括号表示子类型：状态携带其候选集合法的证明，行动携带它在该候选集上共同可采用的证明；后两行表示 $\widehat X$ 上的集合。$(|\widehat B|)_{|\widehat a|,o}$ 使用第 53.1 节的完整更新，且每个可能读数的更新确属 $\mathcal B_q$，因而可以提升为 $\widehat X$ 的元素。
+
+对于共同可采用的 $a=|\widehat a|$，$B=|\widehat B|$ 非空且每个实际状态都有非空后继，所以 $R(B,a)$ 非空；它至少产生一个读数，故 $\widehat R(\widehat B,\widehat a)$ 非空。这正好履行源码控制系统的后继非空前提。源码中的受控前驱在这个承载空间上成为“存在一个共同行动，使每个可能更新集都落在上一阶段”。忘去成员证明后，所得递推正是本卷 $W_n$：提升状态 $\widehat B$ 属于源码的第 $n$ 个胜利区域，当且仅当 $|\widehat B|\in W_n$。
 
 这个对应也指出一处容易漏掉的条件：策略知道的是模型据行动与读数更新出的 $B$，并非不知道的 $x$。若把控制系统直接放在 $X$ 上、允许策略读取 $x$，将得到另一种信息权限，不能用它证明观察受限的修养处方。
 
