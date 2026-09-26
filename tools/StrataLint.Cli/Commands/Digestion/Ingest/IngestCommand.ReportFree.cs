@@ -86,7 +86,8 @@ internal static partial class IngestCommand
         {
             ApplyLedgerUpdatesAtomically(repositoryRoot, prepared.CurrentRaw, ledgerUpdates);
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
+        catch (Exception exception) when (exception is not OutOfMemoryException
+            and not IncompleteLedgerRollbackException)
         {
             RollbackCasObjects(createdCasPaths, exception);
             throw;
@@ -158,7 +159,8 @@ internal static partial class IngestCommand
             {
                 ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
             }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
+            catch (Exception exception) when (exception is not OutOfMemoryException
+                and not IncompleteLedgerRollbackException)
             {
                 RollbackCasObjects(createdCasPaths, exception);
                 throw;

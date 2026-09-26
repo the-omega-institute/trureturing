@@ -16,7 +16,8 @@ internal static partial class IngestCommand
         {
             applyLedger(root, current, updates);
         }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
+        catch (Exception exception) when (exception is not OutOfMemoryException
+            and not IncompleteLedgerRollbackException)
         {
             rollbackCas(created, exception);
             throw;

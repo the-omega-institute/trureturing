@@ -7,6 +7,83 @@ namespace StrataLint.Tests;
 public sealed partial class IngestRobustTests
 {
     [Fact]
+    public void Ingest_IncompleteLedgerRollbackKeepsReferencedCas()
+    {
+        if (OperatingSystem.IsWindows())
+            throw new SkipException("infrastructure-unavailable: Unix directory permission fault requires Unix");
+        var fixture = Fixture(Ledger(populated: false), AlphaText + Addition);
+        using var temporary = new TemporaryDirectory();
+        RequireEffectiveDirectoryWriteDenial(temporary);
+        WriteFixture(temporary, fixture);
+        using var gitDirectory = DirectoryLedgerTestSupport.UseGitDirectoryPointer(temporary);
+        string? committed = null;
+        string? deniedDirectory = null;
+        UnixFileMode originalMode = default;
+        var attempts = 0;
+        var dependencies = new ReportFreeIngestDependencies(CommitLedgerFile: (pending, target) =>
+        {
+            if (OperatingSystem.IsWindows())
+                throw new InvalidOperationException("Unix filesystem fault reproduction requires Unix");
+            if (++attempts == 1)
+            {
+                File.Move(pending, target, overwrite: false);
+                committed = target;
+                return;
+            }
+            deniedDirectory = Path.GetDirectoryName(committed!)!;
+            originalMode = File.GetUnixFileMode(deniedDirectory);
+            File.SetUnixFileMode(deniedDirectory, UnixFileMode.UserRead | UnixFileMode.UserExecute);
+            throw new IOException("injected publication failure after first committed atom");
+        });
+        CommandResult result;
+        try
+        {
+            result = Environment(fixture, temporary, dependencies: dependencies).Ingest(Arguments("alpha"));
+        }
+        finally
+        {
+            if (deniedDirectory is not null)
+                File.SetUnixFileMode(deniedDirectory, originalMode);
+        }
+        Assert.False(result.Success);
+        Assert.Contains("rollback was incomplete", result.Error, StringComparison.Ordinal);
+        Assert.NotNull(committed);
+        Assert.True(File.Exists(committed));
+        var atomId = Path.GetFileNameWithoutExtension(committed);
+        Assert.True(File.Exists(Path.Combine(temporary.Path, DigestionCasStore.RootPath, atomId)),
+            "A surviving canonical atom entry must retain its CAS bytes after rollback failure.");
+    }
+
+    private static void RequireEffectiveDirectoryWriteDenial(TemporaryDirectory temporary)
+    {
+        if (OperatingSystem.IsWindows())
+            throw new SkipException("infrastructure-unavailable: Unix directory permissions unsupported");
+        var directory = Path.Combine(temporary.Path, "permission-probe");
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, "write-probe");
+        var original = File.GetUnixFileMode(directory);
+        try
+        {
+            File.SetUnixFileMode(directory, UnixFileMode.UserRead | UnixFileMode.UserExecute);
+            try
+            {
+                File.WriteAllText(path, "probe");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return;
+            }
+        }
+        finally
+        {
+            File.SetUnixFileMode(directory, original);
+            File.Delete(path);
+            Directory.Delete(directory);
+        }
+        throw new SkipException("infrastructure-unavailable: directory write denial is not effective");
+    }
+
+    [Fact]
     public void Ingest_CreateOnlyPathCollisionRollsBackOnlyOwnFiles() =>
         AssertCreateFailureRollsBack("collision");
 

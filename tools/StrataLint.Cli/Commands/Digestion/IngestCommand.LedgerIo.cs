@@ -201,11 +201,16 @@ internal static partial class IngestCommand
 
         if (rollbackFailures.Count > 0)
         {
-            throw new AggregateException(
-                "ledger write failed and rollback was incomplete",
-                new[] { writeFailure }.Concat(rollbackFailures));
+            throw new IncompleteLedgerRollbackException(writeFailure, rollbackFailures);
         }
     }
+
+    // A surviving ledger entry may still reference newly created CAS. Callers must
+    // preserve those bytes when restoration failed, even while propagating failure.
+    private sealed class IncompleteLedgerRollbackException(
+        Exception writeFailure, IEnumerable<Exception> rollbackFailures)
+        : AggregateException("ledger write failed and rollback was incomplete",
+            new[] { writeFailure }.Concat(rollbackFailures));
 
     private static RawRepositorySnapshot AddCasObjects(
         RawRepositorySnapshot snapshot,
