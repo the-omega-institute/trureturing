@@ -469,13 +469,18 @@ theorem paired_angle_demand
       ring
     rw [← sub_nonneg]
     rw [heq]
-    positivity
+    have hdom_k : 0 ≤ r - k - 1 := by dsimp [k]; linarith only [hdom]
+    exact div_nonneg (by positivity) (by positivity)
   have hFbase : (6 - k) / (k + 2) <
       ((k + 1 - 1) * (2 * (k + 1 + 1) - j^2) /
         ((k + 1 + 1) * k^2)) := by
-    have hden : 0 < (k + 2) * k^2 := mul_pos hk2 hksq
-    apply (div_lt_div_iff₀ hk2 hden).2
-    nlinarith [hjbound]
+    have heq : ((k + 1 - 1) * (2 * (k + 1 + 1) - j^2) /
+        ((k + 1 + 1) * k^2)) - (6 - k) / (k + 2) =
+        ((k - 2)^2 - j^2) / ((k + 2) * k) := by
+      field_simp [hk.ne', hk2.ne']
+      ring
+    rw [← sub_pos, heq]
+    exact div_pos (sub_pos.mpr hjbound) (mul_pos hk2 hk)
   have ht_lower : (6 - k) / (k + 2) < t := by
     have hFb := hFmono
     have hFs : F < t := sub_pos.mp hslack
@@ -484,7 +489,7 @@ theorem paired_angle_demand
     field_simp
     ring
   have hkey : 1 < t + 2 * q := by
-    nlinarith [ht_lower, hq_lower, hbase_sum]
+    linarith only [ht_lower, hq_lower, hbase_sum]
 
   have htan_eta_sq : T * t = q := by
     dsimp [T, t, q]
