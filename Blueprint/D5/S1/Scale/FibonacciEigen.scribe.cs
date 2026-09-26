@@ -97,7 +97,18 @@ Blocks(
                             + "parallel GoldenPrimePeriodBounds and GoldenPrimePowerOrder "
                             + "sources without treating their starting depth as one. These "
                             + "ordinary proofs do not add a Lean conclusion or a WSS "
-                            + "prime-family decision to this declaration."))),
+                            + "prime-family decision to this declaration.")),
+                    Paragraph(
+                        Text("OSE returns to the original odd-depth prime support. "),
+                        Ref(LibraryNoteRef.Create("D5/L/andrejic2006fibonaccipowers").Value),
+                        Text(" supplies a finite rank-closure descent and an explicit "
+                            + "cardinality bound for powerful Fibonacci indices covered "
+                            + "by any fixed finite odd-super-depth support. It credits "
+                            + "the older ZBD/PBC witness and classical square-class "
+                            + "classification, and records both exact-rank channels. "
+                            + "Finiteness of the full exceptional set is not assumed "
+                            + "without disclosure. These ordinary proofs add neither "
+                            + "a WSS example nor a conclusion to this Lean declaration."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
