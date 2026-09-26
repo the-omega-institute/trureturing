@@ -95,12 +95,14 @@ The canonical source is
 are `Step` with its `Fintype` instance, `areaFrom`, `area`, `walkCount`,
 `partitionCount`, `a029552`, `a098613`, `claim`, and `result`. The frozen
 module state has statement identity
-`sha256:df298d449590f6bc99f5f9e887b9155360b6242c2b6d71ba73b9558b97538121`.
+`sha256:6639596759e184fc8a1197ce73e16b955e828cd248af51a0c40725c51bd177b7`.
 The result declaration has statement identity
 `sha256:5a7077f0a336013db4a54321671108018045aaf07e895eb2c7146a634171e8f2`.
 The Freeze event is
-`sha256:a9c551b5131a25b29d41167100c6ed4f3f87299e611abb8a52fd2c6d8cb6d29e`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:ed6a0a8151cb1f8cf3082770b55ea02b7e0f71791d2f3fb2a101ae9238f63887`
+and its project-level frozen prerequisite is
+`D5/S1/Digit/Carry/ListInversions`, whose `inv` counts the inversions of an
+up-right word read with `false ↦ 1` and `true ↦ 0`. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

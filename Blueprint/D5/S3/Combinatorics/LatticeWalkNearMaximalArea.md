@@ -42,7 +42,7 @@ The algebraic area of a walk from the origin: the sum of the heights at its righ
 
 **Definition 1.4 (The triangle A385672).**
 
-$$\operatorname{walkCount}\left(n, k\right) = \left|\{w \in \left(\operatorname{Fin}\left(n\right) \to \operatorname{Step}\right) \mid \operatorname{area}\left(w\right) = k\}\right|$$
+$$\operatorname{walkCount}\left(n, k\right) = \left|\{w \in \left(\operatorname{Fin}\left(n\right) \to \operatorname{Step}\right) \mid \operatorname{area}\left(\operatorname{ofFn}\left(w\right)\right) = k\}\right|$$
 
 *Formalization.* `D5/S3/Combinatorics/LatticeWalkNearMaximalArea.walkCount` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$\operatorname{walkCount}\left(n, k\right) = \left|\{w \in \left(\operatorname{
 
 *Commentary.*
 
-The number of n-step walks, read as maps from the n positions to the four steps, whose algebraic area is k.
+The number of n-step walks, read as maps from the n positions to the four steps and turned into the list of their values in order (ofFn), whose algebraic area is k.
 
 **Definition 1.5 (Partition numbers).**
 
@@ -129,3 +129,4 @@ Let r, l, u, d count the right, left, up and down steps. At a right step the hei
 - Truth anchor: `D5/S3/Combinatorics/LatticeWalkNearMaximalArea.partitionCount`
 - Truth anchor: `D5/S3/Combinatorics/LatticeWalkNearMaximalArea.result`
 - Truth anchor: `D5/S3/Combinatorics/LatticeWalkNearMaximalArea.walkCount`
+- Dependency: [D5/S1/Digit/Carry/ListInversions](../../S1/Digit/Carry/ListInversions.md)

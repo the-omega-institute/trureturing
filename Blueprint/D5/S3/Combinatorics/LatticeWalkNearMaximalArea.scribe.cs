@@ -24,7 +24,7 @@ internal sealed class LatticeWalkNearMaximalAreaDocument : IScribeDocumentDefini
                 "The algebraic area of a walk from the origin: the sum of the heights at its right steps minus the sum of the heights at its left steps.",
                 "area", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("count", "The triangle A385672", WalkCountFormula(),
-                "The number of n-step walks, read as maps from the n positions to the four steps, whose algebraic area is k.",
+                "The number of n-step walks, read as maps from the n positions to the four steps and turned into the list of their values in order (ofFn), whose algebraic area is k.",
                 "walkCount", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("partitions", "Partition numbers", PartitionFormula(),
                 "A000041: the number of partitions of m, the coefficients of the reciprocal of f(-x) = the product of (1 - x^i) over i > 0.",
@@ -87,7 +87,7 @@ internal sealed class LatticeWalkNearMaximalAreaDocument : IScribeDocumentDefini
     private static Formula Cons(Formula head, Formula tail) => Call("cons", head, tail);
     private static Formula Square(Formula value) => new Formula.Power(value, D(2));
     private static Formula SumOver(Formula index, Formula lower, Formula upper, Formula condition, Formula body) =>
-        Seq(Sum, Underscore, Grp(AtMost(lower, index), Comma, Sp, AtMost(index, upper), Comma, Sp, condition),
+        Seq(Sum, Underscore, Grp(Seq(AtMost(lower, index), Comma, Sp, AtMost(index, upper), Comma, Sp, condition)),
             Sp, body);
 
     private static Formula StepFormula() =>
@@ -109,7 +109,7 @@ internal sealed class LatticeWalkNearMaximalAreaDocument : IScribeDocumentDefini
     {
         Formula n = F.Id("n"), k = F.Id("k"), w = F.Id("w");
         Formula walks = new Formula.TypeArrow(Call("Fin", n), Named("Step"));
-        return Disp(Equal(Call("walkCount", n, k), Count(Member(w, walks), Equal(Call("area", w), k))));
+        return Disp(Equal(Call("walkCount", n, k), Count(Member(w, walks), Equal(Call("area", Call("ofFn", w)), k))));
     }
 
     private static Formula PartitionFormula()

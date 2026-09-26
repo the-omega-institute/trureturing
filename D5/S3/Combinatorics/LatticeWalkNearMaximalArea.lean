@@ -17,11 +17,13 @@ escape_witness: form (2), the public conclusion `result` itself: the area of a w
   `boxed_rec` through `Nat.Partition.partitionWithPartEquiv`), so for u + m at most the length they
   are counted by the partitions of m (`core`); summing over u gives the two theta coefficients
 admission_basis: open-problem-resolution (issue #10337)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies: `D5/S1/Digit/Carry/ListInversions`: `inv`
 -/
 
+import D5.S1.Digit.Carry.ListInversions
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
+import Mathlib.Data.Bool.Count
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
@@ -30,6 +32,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.LatticeWalkNearMaximalArea
+
+open D5.S1.Digit.Carry
 
 /-- A unit step of a walk on the square lattice. -/
 inductive Step
@@ -88,16 +92,12 @@ private def toStep : Bool → Step
   | true => Step.up
   | false => Step.right
 
-/-- The number of pairs of a `false` followed later by a `true`. -/
-private def inv : List Bool → ℕ
-  | [] => 0
-  | true :: w => inv w
-  | false :: w => w.count true + inv w
-
-/-- Words of length `L` with `u` letters `true` and `m` inversions. -/
+/-- Words of length `L` with `u` letters `true` and `m` inversions, a `false` before a `true`
+being an inversion of the word read with `false ↦ 1` and `true ↦ 0`. -/
 private def wordCount (L u m : ℕ) : ℕ :=
   (Finset.univ.filter fun b : Fin L → Bool =>
-    (List.ofFn b).count true = u ∧ inv (List.ofFn b) = m).card
+    (List.ofFn b).count true = u ∧
+      ListInversions.inv ((List.ofFn b).map fun x => (!x).toNat) = m).card
 
 /-- The words of length `N` with `u` up steps and area `A`, counted through their inversions. -/
 private def summand (N : ℕ) (A : ℤ) (u : ℕ) : ℕ :=
@@ -108,6 +108,18 @@ private def boxedCount (u m : ℕ) : ℕ := (Nat.Partition.restricted m (· ≤ 
 
 theorem result : claim := by
   classical
+  -- the inversions of a Boolean word, read with `false ↦ 1` and `true ↦ 0`
+  have inv_true : ∀ w : List Bool, ListInversions.inv ((true :: w).map fun x => (!x).toNat) =
+      ListInversions.inv (w.map fun x => (!x).toNat) := by
+    intro w
+    simp [ListInversions.inv]
+  have inv_false : ∀ w : List Bool, ListInversions.inv ((false :: w).map fun x => (!x).toNat) =
+      w.count true + ListInversions.inv (w.map fun x => (!x).toNat) := by
+    intro w
+    rw [List.map_cons, ListInversions.inv, List.countP_map, List.count_eq_countP, add_comm]
+    congr 2
+    funext x
+    cases x <;> rfl
   -- splitting a word at its first letter
   have split : ∀ (L : ℕ) (Q : List Bool → Prop) [DecidablePred Q],
       (Finset.univ.filter fun f : Fin (L + 1) → Bool => Q (List.ofFn f)).card =
@@ -159,16 +171,16 @@ theorem result : claim := by
       unfold wordCount
       by_cases hm : m = 0
       · subst hm
-        simp [inv]
-      · simp [inv, hm]
+        simp [ListInversions.inv]
+      · simp [ListInversions.inv, hm]
         omega
     | succ L ih =>
       intro m
       rw [← ih m]
       unfold wordCount
-      rw [split L (fun l => l.count true = 0 ∧ inv l = m)]
+      rw [split L (fun l => l.count true = 0 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
       have h1 : (Finset.univ.filter fun g : Fin L → Bool =>
-          (true :: List.ofFn g).count true = 0 ∧ inv (true :: List.ofFn g) = m).card = 0 := by
+          (true :: List.ofFn g).count true = 0 ∧ ListInversions.inv ((true :: List.ofFn g).map fun x => (!x).toNat) = m).card = 0 := by
         rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
         intro g _ h
         simp at h
@@ -176,7 +188,7 @@ theorem result : claim := by
       congr 1
       apply Finset.filter_congr
       intro g _
-      simp only [inv, List.count_cons_of_ne (Bool.false_ne_true)]
+      simp only [inv_false, List.count_cons_of_ne (Bool.false_ne_true)]
       constructor
       · rintro ⟨h1, h2⟩
         exact ⟨h1, by omega⟩
@@ -187,17 +199,17 @@ theorem result : claim := by
       wordCount L u m + if u + 1 ≤ m then wordCount L (u + 1) (m - (u + 1)) else 0 := by
     intro L u m
     unfold wordCount
-    rw [split L (fun l => l.count true = u + 1 ∧ inv l = m)]
+    rw [split L (fun l => l.count true = u + 1 ∧ ListInversions.inv (l.map fun x => (!x).toNat) = m)]
     congr 1
     · congr 1
       apply Finset.filter_congr
       intro g _
-      simp [inv]
+      simp only [inv_true, List.count_cons_self, Nat.add_right_cancel_iff]
     · split_ifs with h
       · congr 1
         apply Finset.filter_congr
         intro g _
-        simp only [inv, List.count_cons_of_ne (Bool.false_ne_true)]
+        simp only [inv_false, List.count_cons_of_ne (Bool.false_ne_true)]
         constructor
         · rintro ⟨h1, h2⟩
           exact ⟨h1, by omega⟩
@@ -205,7 +217,7 @@ theorem result : claim := by
           exact ⟨h1, by omega⟩
       · rw [Finset.card_eq_zero, Finset.filter_eq_empty_iff]
         intro g _ hg
-        simp only [inv, List.count_cons_of_ne (Bool.false_ne_true)] at hg
+        simp only [inv_false, List.count_cons_of_ne (Bool.false_ne_true)] at hg
         omega
   -- partitions with all parts at most `0`
   have boxed_zero : ∀ m, boxedCount 0 m = if m = 0 then 1 else 0 := by
@@ -314,10 +326,13 @@ theorem result : claim := by
   have hlen : ∀ w : List Step, (w.length : ℤ) =
       w.count Step.right + w.count Step.left + w.count Step.up + w.count Step.down := by
     intro w
-    induction w with
-    | nil => simp
-    | cons s w ih =>
-      cases s <;> simp <;> linarith
+    have h := Multiset.sum_count_eq_card (s := Finset.univ) (m := (w : Multiset Step))
+      (fun a _ => Finset.mem_univ a)
+    simp only [Multiset.coe_count, Multiset.coe_card] at h
+    rw [← h]
+    push_cast
+    simp [Finset.univ, Fintype.elems]
+    ring
   -- each right step sees height at most `y + #up`, each left step depth at most `-y + #down`
   have bound : ∀ (w : List Step) (y : ℤ), areaFrom y w ≤
       (w.count Step.right : ℤ) * (y + w.count Step.up) +
@@ -389,26 +404,24 @@ theorem result : claim := by
         rw [show -y + 1 = -(y - 1) by ring, ih]
   -- area of an up-right word
   have area_bool : ∀ (l : List Bool) (y : ℤ),
-      areaFrom y (l.map toStep) + inv l = (y + l.count true) * l.count false := by
+      areaFrom y (l.map toStep) + ListInversions.inv (l.map fun x => (!x).toNat) =
+        (y + l.count true) * l.count false := by
     intro l
     induction l with
-    | nil => intro y; simp [areaFrom, inv]
+    | nil => intro y; simp [areaFrom, ListInversions.inv]
     | cons b l ih =>
       intro y
       cases b
       · have := ih y
-        simp only [List.map_cons, toStep, areaFrom, inv, List.count_cons]
+        rw [inv_false]
+        simp only [List.map_cons, toStep, areaFrom, List.count_cons]
         simp
         linear_combination this
       · have := ih (y + 1)
-        simp only [List.map_cons, toStep, areaFrom, inv, List.count_cons]
+        rw [inv_true]
+        simp only [List.map_cons, toStep, areaFrom, List.count_cons]
         simp
         linear_combination this
-  have count_split : ∀ l : List Bool, l.count true + l.count false = l.length := by
-    intro l
-    induction l with
-    | nil => simp
-    | cons b l ih => cases b <;> simp <;> omega
   -- reduction of the walk count to up-right words
   have reduce : ∀ (N : ℕ) (A : ℤ), 1 ≤ N → 1 + ((N : ℤ) - 1) ^ 2 < 4 * A →
       walkCount N A = 2 * ∑ u ∈ Finset.range (N + 1), summand N A u := by
@@ -504,11 +517,12 @@ theorem result : claim := by
       · intro b _
         funext i
         cases h : b i <;> simp [h, toStep]
-    have key : ∀ b : Fin N → Bool, area (List.ofFn (toStep ∘ b)) + inv (List.ofFn b) =
+    have key : ∀ b : Fin N → Bool, area (List.ofFn (toStep ∘ b)) +
+        ListInversions.inv ((List.ofFn b).map fun x => (!x).toNat) =
         ((List.ofFn b).count true : ℤ) * ((N : ℤ) - (List.ofFn b).count true) := by
       intro b
       have h1 := area_bool (List.ofFn b) 0
-      have h2 := count_split (List.ofFn b)
+      have h2 := List.count_true_add_count_false (List.ofFn b)
       rw [List.length_ofFn] at h2
       have h3 : ((List.ofFn b).count false : ℤ) = N - (List.ofFn b).count true := by
         omega
