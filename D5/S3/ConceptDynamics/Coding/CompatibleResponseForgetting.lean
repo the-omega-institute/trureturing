@@ -8,7 +8,6 @@
 -/
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
-import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Sigma
 import Mathlib.SetTheory.Cardinal.NatCard
 
@@ -293,26 +292,27 @@ private noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Ty
 
 /-- The membership factor selects the finer response class of each column. -/
 theorem incoming_response_matrix_factor_left {p : ℕ} {M : CountMat p p}
-    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ)
+    {Q : Type} (L : IncomingLift M Q) (d : ℕ)
     [Fintype (Quotient (L.response (d + 1)))] :
     incomingResponseMatrix L d = incomingResponseU L d * incomingResponseV L d := by
   classical
   ext F H
-  have hprojection (H : Quotient (L.response d)) :
-      incomingResponseProjection L d H =
-        Quotient.mk (L.response (d + 1)) (Quotient.out H) := by
-    induction H using Quotient.inductionOn with
-    | h q => rfl
   have hrepresentatives :
       L.response (d + 1)
         (Quotient.out (incomingResponseProjection L d H)) (Quotient.out H) := by
     apply Quotient.exact
-    rw [Quotient.out_eq, ← hprojection H]
+    calc
+      Quotient.mk (L.response (d + 1))
+          (Quotient.out (incomingResponseProjection L d H)) =
+          incomingResponseProjection L d H := Quotient.out_eq _
+      _ = incomingResponseProjection L d
+          (Quotient.mk (L.response d) (Quotient.out H)) := by
+            rw [Quotient.out_eq]
+      _ = Quotient.mk (L.response (d + 1)) (Quotient.out H) := rfl
   have hcard := incoming_response_fiber_card_step L d F hrepresentatives
   change Nat.card (incomingResponseFiber L d F (Quotient.out H)) =
     ∑ Z, incomingResponseU L d F Z * incomingResponseV L d Z H
-  simp only [incomingResponseU, incomingResponseV, mul_ite, mul_one, mul_zero]
-  simpa only [Finset.sum_ite_eq', Finset.mem_univ, ite_true] using hcard.symm
+  simpa [incomingResponseU, incomingResponseV] using hcard.symm
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
