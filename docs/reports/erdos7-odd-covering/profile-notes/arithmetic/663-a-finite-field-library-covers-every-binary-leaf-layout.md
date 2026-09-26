@@ -201,6 +201,107 @@ Indeed deleting the neighbours ofv successively insideA\{v} expresses `q_(A\{v})
 
 For a branch of global phase layouts, fix some edge roles and put all remaining marker increments on in every permitted cell as a virtual upper bound. This preserves the numerical labels; each actual layout remains fixed within the branch. The upper caps are bounded by `b_e+d_e`, soB3 proves the strict region for every such branch table. A successful compatible virtual field would then cover every layout in that branch byB11--B12. To obtain a new global theorem one must still certify a paying gate on EVERY branch of an explicit exhaustive cover. This obligation is not discharged by the binary1024-layout certificate.
 
+## 8. A single supported ternary row cannot have a positive complete head gate
+
+A possible reduction would choose a row carrying at most two of the ten edge activations and use fields supported only on that row. It would suffice to certify all5×(1+10+45)=280 labelled sparse-row cases. However, none of these required row-supported positive95-field certificates exists under the current complete coefficient envelope. This follows from four already present selector-mode families; no LP or layout scan is needed.
+
+This is an ordinary proof plus a minimal exact rational coefficient certificate. It concerns the specified gate, not actual survivor mass. It does not exclude general fields supported on several rows, layout-adapted fields, different query bounds, or a different complete-charge method. No Lean verification is claimed.
+
+### 8.1. Every queried-support response is at least the empty response
+
+For U subset Q, write its matching polynomial as
+
+    H(U)=sum_(matchings F in U)(-1)^|F|
+                  product_(e in F)beta_e
+                  product_(q in U\vertices(F))Zq.
+
+Assume0<Zq<=1, beta_e>=0, and H(U)>0 for all U. These hypotheses hold on every unmasked cell of the current uniformly strict response box, for any of the live-leaf layouts and any subset of active9qs labels.
+
+Partition matchings according to the status of vertex v in U. Either v is unmatched or matched to exactly one u. This gives the exact recurrence
+
+    H(U)=Z_v H(U-v)-sum_(u in U-v) beta_{vu} H(U\{v,u}).
+
+Every subtracted term is nonnegative, so
+
+    0<H(U)<=Z_v H(U-v)<=H(U-v).
+
+Delete the physical query-support vertices one at a time. Since `H_T=H(Q\T)` and `H_empty=H(Q)`,
+
+    H_T(c)>=H_empty(c)>0 for every T.                 (SR1)
+
+On the common null/mask cells both field contributions are zero, and no division is needed. This is a physical-vertex matching recurrence; it does not require numerical prime permutations or a fractional hard-core theorem.
+
+### 8.2. The weak corner of the supported row forces four query charges
+
+Fix a live ternary row l and ANY nonnegative field theta supported there. Take a numerical corner `(i,j)` with i=l; j may be any of the19 live quinary weak markers. Its row mass is `w_l^i=1/9`. Define the field's source mass
+
+    M=(1/9) sum_m v_m^j theta(l,m) H_empty(l,m)>=0.
+
+For each outside query support T, use quinary mode b=0, the whole v vector. The ternary modes a=0,1,2,3 have legal choices: whole w, the first-root block containing l, leaf l, and deep delta_l. Because the field vanishes off l, their selected query values are respectively
+
+    (1/9) sum_m v_m theta H_T,
+    (1/9) sum_m v_m theta H_T,
+    (1/9) sum_m v_m theta H_T,
+            sum_m v_m theta H_T.
+
+By(SR1) the corresponding COMPLETE menu maxima are at least
+
+    M, M, M, 9M.                                     (SR2)
+
+These are only legal lower bounds on the maxima; they do not assume an active selector or freeze selector switching. The factor9 comes from the genuine deep selector delta_l, which has no extra source-leaf probability.
+
+No priority assumption is needed for this single-corner inequality. It holds for arbitrary field values and any active edge subset on that row.
+
+### 8.3. The exact current coefficients make every such gate nonpositive
+
+Write `C_(a,b,T)` for the current complete nonnegative512 coefficients, with flattened mode `4a+b` and support indexT. The mass coefficient is
+
+    g=200163067/201247200.
+
+Keep only the four mode families `(a,b)=(0,0),(1,0),(2,0),(3,0)`, flattened modes0,4,8,12. All remaining fees are nonnegative and can be dropped when obtaining an UPPER bound on the gate. By(SR2),
+
+    G(theta)<= [g-K]M,
+    K=sum_(T subset Q)[C_(0,0,T)+C_(1,0,T)
+                            +C_(2,0,T)+9 C_(3,0,T)].    (SR3)
+
+Exact arithmetic on the pinned640 coefficient JSON gives
+
+    K=5410561403800247066694067
+          /4539696895445741568000000
+      =1.1918331836709546...,
+
+    delta=K-g=895320178864953734214067
+                   /4539696895445741568000000
+          =0.19722025489480272... >0.
+
+The four guarded9q² additions used by661--664 are at mode `(2,1)`, flattened mode9. They are outside the selected four families and are nonnegative. Thus the value of K is unchanged and the upper bound is valid for the FULL current array, not just the old base.
+
+Therefore
+
+    G_(i=l,j)(theta)<=-delta M<=0.                    (SR4)
+
+It is strictly negative for a positive source mass. A zero field gives zero gate.
+
+### 8.4. Exact quantified consequence for the sparse-row proposal
+
+Let a whole95-field family be supported on ONE fixed row l. At each of its19 corners with weak ternary index i=l, its field obeys(SR4). Hence
+
+    min_(i,j) G_(i,j)(theta^ij)<=0.
+
+Taking the supremum over all such families, even allowing arbitrary compatible or incompatible choices of fields across corners, cannot make this uniform minimum positive. The all-zero compatible family is feasible and has all gates zero. Thus the best uniform HEAD gate among row-supported compatible families is exactly zero.
+
+This statement is uniform in the row, original layout, active subset S and quinary weak marker. In particular it excludes every one of the proposed `5×(1+10+45)=280` paying row-supported cases, before subtracting any positive complete network fee. Sparse occupancy of pair activations does not compensate for concentrating the entire source on a weak ternary leaf, because the deep-query debit loses the1/9 mass factor.
+
+The pigeonhole fact that some row contains at most two of the ten edge activations remains true. The conditional implication "if each sparse row has a paying whole95 family, then all layouts are covered" remains true. What fails is its proposed sufficient premise under the literal current envelope. Escalating from19 row variables to the full1805 row-supported variables, or repairing priorities while keeping that support, cannot fix(SR4).
+
+This does not exclude a certificate choosing a different support ROW within each numerical field if the ENTIRE resulting family satisfies the actual coupled priorities. Such a family is outside the fixed-row premise and may need several rows after actual-source transport. It also does not exclude discarding unattainable corners in a different source-specific argument; the current result concerns the full95-corner criterion.
+
+The [coefficient certificate](../../frontier/cover-geometry/sparse_row_complete_gate_obstruction.py) and [exact result](../../frontier/cover-geometry/sparse_row_complete_gate_obstruction.json) pin the original640 coefficient array, reconstruct the four nonnegative guarded additions and verify the displayed charge and strict gap. All14 explicit checks pass with assertions disabled. A separate local coefficient sum reproduced K and delta; the portable program's retained output was reproduced byte for byte. The recurrence and selector inequalities above supply the all-fields/all-layouts statement. Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/sparse_row_complete_gate_obstruction.py
+```
+
 ## Exact evidence
 
 The portable [producer](../../frontier/cover-geometry/binary_leaf_pair_library_certificate.py) and [exact data](../../frontier/cover-geometry/binary_leaf_pair_library_certificate.json) use only Python's standard library and the pinned640 and658 sibling JSON. The field library and1024-entry selection function are literal certificate data; no optimizer or exploratory helper is required. It passes231,778 explicit checks with assertions disabled:

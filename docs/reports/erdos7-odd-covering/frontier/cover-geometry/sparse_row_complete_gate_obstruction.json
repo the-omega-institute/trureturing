@@ -1,0 +1,109 @@
+{
+  "schema": "single-row-complete-gate-obstruction-v1",
+  "status": "PASS",
+  "scope": "For any fixed live row l and any admitted matching response, every field supported on that row has gate <= -delta*M at each corner with weak3=l. Hence every single-row-supported95 family has minimum head gate <=0; the zero family attains0. This is an envelope-method obstruction, not an actual-survivor assertion.",
+  "source640_sha256": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+  "producer_sha256": "b1d7278d48b59681b4669efb8f667f5f4b3ccfdc6df8e012343a3513453425d9",
+  "new_lean_verification": false,
+  "g": "200163067/201247200",
+  "selected_modes": [
+    {
+      "ternary_mode": 0,
+      "quinary_mode": 0,
+      "mode": 0,
+      "support_count": 32,
+      "screen_mass_multiplier": 1,
+      "coefficient_sum": "20022369716765928019493/648528127920820224000000",
+      "weighted_charge": "20022369716765928019493/648528127920820224000000"
+    },
+    {
+      "ternary_mode": 1,
+      "quinary_mode": 0,
+      "mode": 4,
+      "support_count": 32,
+      "screen_mass_multiplier": 1,
+      "coefficient_sum": "286422866936615159262851/1513232298481913856000000",
+      "weighted_charge": "286422866936615159262851/1513232298481913856000000"
+    },
+    {
+      "ternary_mode": 2,
+      "quinary_mode": 0,
+      "mode": 8,
+      "support_count": 32,
+      "screen_mass_multiplier": 1,
+      "coefficient_sum": "137381956262971362990851/907939379089148313600000",
+      "weighted_charge": "137381956262971362990851/907939379089148313600000"
+    },
+    {
+      "ternary_mode": 3,
+      "quinary_mode": 0,
+      "mode": 12,
+      "support_count": 32,
+      "screen_mass_multiplier": 9,
+      "coefficient_sum": "3500212813588518118247/38399691784785408000000",
+      "weighted_charge": "3500212813588518118247/4266632420531712000000"
+    }
+  ],
+  "guarded_mode9_additions": [
+    {
+      "prime": 11,
+      "mode": 9,
+      "support_mask": 2,
+      "index": 290,
+      "increment": "200163067/19923472800"
+    },
+    {
+      "prime": 13,
+      "mode": 9,
+      "support_mask": 4,
+      "index": 292,
+      "increment": "15397159/2213719200"
+    },
+    {
+      "prime": 17,
+      "mode": 9,
+      "support_mask": 8,
+      "index": 296,
+      "increment": "200163067/51318036000"
+    },
+    {
+      "prime": 19,
+      "mode": 9,
+      "support_mask": 16,
+      "index": 304,
+      "increment": "200163067/65002845600"
+    }
+  ],
+  "selected_total_charge": "5410561403800247066694067/4539696895445741568000000",
+  "selected_total_charge_decimal": 1.1918331836709546,
+  "delta": "895320178864953734214067/4539696895445741568000000",
+  "delta_decimal": 0.19722025489480272,
+  "weak_corner_mass": "1/9",
+  "gate_upper_bound": "-delta * source_mass",
+  "best_single_row_uniform_head_gate": "0",
+  "ordinary_proof_premises": [
+    "All induced physical-support matching responses are positive.",
+    "Every coordinate mass satisfies0<Z_q<=1 and every edge cap is nonnegative.",
+    "Fields vanish off one fixed live ternary row.",
+    "The complete selectors retain delta_l at deep ternary mode."
+  ],
+  "all_general_priority_families_excluded": false,
+  "actual_survivor_nonexistence_claimed": false,
+  "check_count": 14,
+  "checks": [
+    "pinned_report640",
+    "complete512_length",
+    "complete512_nonnegative",
+    "mass_coefficient",
+    "unit_mass_identity",
+    "guarded_fees_nonnegative",
+    "guard_mode9_does_not_change_mode_0",
+    "guard_mode9_does_not_change_mode_4",
+    "guard_mode9_does_not_change_mode_8",
+    "guard_mode9_does_not_change_mode_12",
+    "selected_charge_exact",
+    "strict_homogeneous_gap",
+    "gap_exact",
+    "all_other_fees_can_only_lower_gate"
+  ]
+}
