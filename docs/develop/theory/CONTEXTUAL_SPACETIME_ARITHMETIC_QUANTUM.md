@@ -56401,3 +56401,838 @@ $$
 标量步骤使用（259.4）的单调性，量子步骤使用固定测量的经典信息不超过 SLD 信息；文献背景与第257节的 Glaeser—Malgrange 正性估计及标准 SLD 测量关系一致。这里的端点最大界、实际节点尺度和积分因子由正文推导承担，不把它们归于未核对的外部定理。本节未判定量子端点界的联合最优常数，也未给出原处理器下这些二阶下界的达到或最优性证明；本节仍是纯理论文本，不主张 Lean 认证或物理能量解释。
 
 ## 追加锚（本行以下为增补区）
+
+## 260. 共同矩阵上界、测量对偶与方向敏感的信息认证
+
+第258节区分了同一参数位置的二阶变化总量与分布在不同尺度上的变化。本节保留更多关系资料：不把每个二阶导数压成一个范数，而是寻找一个固定正矩阵，同时在 Loewner 次序下控制整段曲线。这个共同上界的最小迹具有标准的测量优化对偶；它可以直接用于信息认证，也能区别范数相同而方向不同的数据。
+
+**定义 260.1（共同二阶矩阵上界）。** 对定义在区间 $I$ 上的 $C^2$ 密度曲线，称与参数无关的 Hermitian 矩阵 $C$ 为共同上界，如果
+
+$$
+C\succeq0,
+\qquad C\succeq\rho''(t)\quad(t\in I).
+\tag{260.1}
+$$
+
+在紧区间上，定义
+
+$$
+\nu_I(\rho)=
+\min\left\{\operatorname{Tr}C:
+C\succeq0,\ C\succeq\rho''(t)\ \text{对所有 }t\in I\right\}.
+\tag{260.2}
+$$
+
+这个最小值存在：有界的 $\rho''$ 使足够大的标量矩阵可行，且半正定矩阵的迹有界子水平集紧；全部约束的交集闭。这里要求同一个 $C$ 对所有参数有效，不以一族随参数改变的上界代替它。
+
+**定理 260.2（共同矩阵上界的信息控制）。** 若（260.1）在 $[u-r,u+r]$ 上成立，其中 $r>0$，则
+
+$$
+I_Q(\rho_u)\le2\operatorname{Tr}C+r^{-2}.
+\tag{260.3}
+$$
+
+若同一个 $C$ 在整个实轴上控制一条 $C^2$ 密度曲线，则
+
+$$
+I_Q(\rho_u)\le2\operatorname{Tr}C.
+\tag{260.4}
+$$
+
+若密度曲线在 $[a,b]$ 的非负开邻域上为 $C^2$，且 $C$ 在 $[a,b]$ 上有效，则
+
+$$
+\sup_{[a,b]}I_Q
+\le2\operatorname{Tr}C+I_Q(\rho_a)+I_Q(\rho_b).
+\tag{260.5}
+$$
+
+证明。 在每个名义点固定其 SLD 的一个正交特征基 $e_j$，令 $p_j(t)=\langle e_j,\rho(t)e_j\rangle$，并置
+
+$$
+c_j=\langle e_j,Ce_j\rangle\ge0.
+\tag{260.6}
+$$
+
+由（260.1），在所需的整个区间上 $p_j''\le c_j$。第257节的标量局部正性界逐项给出
+
+$$
+\frac{p_j'(u)^2}{p_j(u)}
+\le2c_j+\frac{p_j(u)}{r^2}
+\quad\text{当 }p_j(u)>0.
+\tag{260.7}
+$$
+
+零概率项的导数为零。名义 SLD 测量精确给出点态信息，故求和并使用 $\sum_jc_j=\operatorname{Tr}C$、$\sum_jp_j=1$，得到（260.3）。全实轴上令 $r\to\infty$ 即得（260.4）。对于端点形式，改为对每个 $p_j$ 使用第259节的标量最大界，并将两个端点的固定测量信息分别控制为端点 SLD 信息，得到（260.5）。以上论证允许秩变化，且不对测量基随参数求导。证毕。
+
+在（260.5）中取最小共同上界，便得到 $2\nu_{[a,b]}(\rho)$。这是一条上界，不声称对每一个预先指定的矩阵 $C$ 都达到最优 Fisher 信息。选取 $C=L_{\rm op}I$ 立即恢复第259节的标量范数界；直接保留矩阵方向则可能给出更小的迹。
+
+为建立下述有限采样认证，先定义其有限矩阵优化问题，并调用既有的测量对偶。给定非空有限组 $n$ 阶 Hermitian 矩阵 $H_1,\ldots,H_m$，另置 $H_0=0$，定义
+
+$$
+\nu(H)=\min\left\{\operatorname{Tr}C:
+C=C^*,\ C\succeq H_j\ (0\le j\le m)\right\}.
+\tag{260.8}
+$$
+
+则
+
+$$
+\boxed{
+\nu(H)=
+\max\left\{
+\sum_{j=0}^m\operatorname{Tr}(E_jH_j):
+E_j\succeq0,\ \sum_{j=0}^mE_j=I
+\right\}.
+}
+\tag{260.9}
+$$
+
+两端最优值都取得。加入 $H_0=0$ 正好要求共同上界半正定；等价地，可以删去目标中的零项，把其余测量效应的约束写成 $\sum_{j=1}^mE_j\preceq I$。
+
+证明。 对任意两侧可行解，
+
+$$
+\sum_j\operatorname{Tr}(E_jH_j)
+\le\sum_j\operatorname{Tr}(E_jC)
+=\operatorname{Tr}C.
+\tag{260.10}
+$$
+
+反向最优值相等正是标准的 Hermitian 测量收益半定规划对偶：测量侧取 $E_j=I/(m+1)$ 可严格可行，上界侧取足够大的 $C=\beta I$ 也严格可行。Slater 强对偶给出相等与达到；测量集合紧，以及 $H_0=0$ 下共同上界的迹子水平集紧，也直接保证两边的达到。这是 Watrous《The Theory of Quantum Information》§3.1.2 的最优测量规划在 $\phi(j)=H_j$ 上的应用，不把半定规划对偶本身当作新增定理。
+
+在这个对应中，$E_j$ 是一个实际 POVM 的效应，$H_j$ 是 Hermitian 收益矩阵。$H_j$ 可以有负特征值，因此（260.9）一般不是未经转换的状态判别成功概率；其意义是标准的测量收益优化。它给共同上界的迹提供一个可核验的下界证据，与可行 $C$ 提供的上界证据配对。
+
+**定理 260.4（有限采样的有效共同上界及收敛误差）。** 设 $I=[a,b]$，$\rho\in C^3$，并已知
+
+$$
+\sup_{t\in I}\|\rho'''(t)\|_{\rm op}\le M.
+\tag{260.11}
+$$
+
+非空有限采样集 $\{v_j\}_{j=1}^m\subset I$ 的填充半径为 $h$。假设 Hermitian 估计矩阵满足
+
+$$
+\|H_j-\rho''(v_j)\|_{\rm op}\le\varepsilon.
+\tag{260.12}
+$$
+
+记 $d=\varepsilon+Mh$，并令
+
+$$
+\nu_d(H)=
+\min\left\{\operatorname{Tr}C:
+C\succeq0,\ C\succeq H_j+dI\ (1\le j\le m)\right\}.
+\tag{260.13}
+$$
+
+则每个最优 $C$ 都是实际曲线在 $I$ 上的共同上界，并有
+
+$$
+\boxed{
+\nu_I(\rho)\le\nu_d(H)
+\le\nu_I(\rho)+n(2\varepsilon+Mh).
+}
+\tag{260.14}
+$$
+
+另外，直接使用未加偏移的有限矩阵问题也给出
+
+$$
+\nu_d(H)\le\nu(H)+n(\varepsilon+Mh).
+\tag{260.15}
+$$
+
+证明。 对任意 $t\in I$，取最近采样点 $v_j$。由（260.11）、（260.12）及 Hermitian 算子范数误差，
+
+$$
+\rho''(t)
+\preceq\rho''(v_j)+MhI
+\preceq H_j+(\varepsilon+Mh)I
+\preceq C.
+\tag{260.16}
+$$
+
+因此（260.13）中的可行解也对实际连续区间可行，给出（260.14）的左侧。反之，取（260.2）的最优解 $C_*$。由 $H_j\preceq\rho''(v_j)+\varepsilon I\preceq C_*+\varepsilon I$，可知
+
+$$
+C_*+(2\varepsilon+Mh)I
+\tag{260.17}
+$$
+
+对（260.13）可行，得到右侧。若 $C_H$ 是（260.8）的最优解，则 $C_H+dI$ 对偏移后的问题可行，得到（260.15）。证毕。
+
+（260.14）中的两个估计误差项不能在一般 Hermitian 读数下合并成一个。例如实际 $\rho$ 为常值、$M=0$，而每个读数都是 $H_j=\varepsilon I$，则 $\nu_I(\rho)=0$，但偏移后的认证值为 $2n\varepsilon$。这说明了本认证程序中该误差系数的必要性；若另加无偏或迹约束，须重新分析对应的估计类。
+
+若另满足定理260.2的端点条件，即 $\rho$ 在 $[a,b]$ 的一个开邻域上为 $C^2$ 密度曲线，并有有效端点上界 $B_a\ge I_Q(\rho_a)$、$B_b\ge I_Q(\rho_b)$，则得到
+
+$$
+\sup_I I_Q\le2\nu_d(H)+B_a+B_b.
+\tag{260.18}
+$$
+
+任意可测子集 $T\subset I$ 上的积分再乘以 $|T|$ 即被控制。局部形式适用于满足 $[u-r,u+r]\subset I$ 的名义点：此时 $I_Q(\rho_u)\le2\nu_d(H)+r^{-2}$。若目标集合 $T$ 中每一点都满足这一包含关系，则该界控制 $\sup_T I_Q$，并相应控制其积分。在固定曲线和已知 $M$ 下，当认证误差与网格半径同时趋零时，（260.14）使这个有限矩阵认证值收敛到真正的连续共同上界值。没有已知的变化模或误差界时，不能把这一结论用于第256节的无限制准备类。
+
+**命题 260.5（非交换二阶方向的精确共同上界）。** 在二维空间中取
+
+$$
+H_1=\Lambda\sigma_x,\qquad H_2=\Lambda\sigma_z,
+\qquad \Lambda>0,
+\tag{260.19}
+$$
+
+其中 $\sigma_x,\sigma_z$ 为 Pauli 矩阵。则
+
+$$
+\nu(H_1,H_2)=\sqrt2\,\Lambda.
+\tag{260.20}
+$$
+
+一个达到最小值的共同上界为
+
+$$
+C_0=\frac{\Lambda}{\sqrt2}I
++\frac{\Lambda}{2}(\sigma_x+\sigma_z).
+\tag{260.21}
+$$
+
+证明。 对 $aI+v\cdot\sigma$，两个特征值为 $a\pm\|v\|$。在 $C_0$、$C_0-H_1$ 和 $C_0-H_2$ 中，向量部分长度均为 $\Lambda/\sqrt2$，故三者均半正定，且 $\operatorname{Tr}C_0=\sqrt2\Lambda$。另一方面，取
+
+$$
+E_1=\frac12\left(I+\frac{\sigma_x-\sigma_z}{\sqrt2}\right),
+\qquad E_2=I-E_1,\qquad E_0=0.
+\tag{260.22}
+$$
+
+这是一个可行测量，收益为
+
+$$
+\operatorname{Tr}(E_1H_1)+\operatorname{Tr}(E_2H_2)
+=\sqrt2\Lambda.
+\tag{260.23}
+$$
+
+由（260.10），两个可行证据相等，证明（260.20）。若两份矩阵都加 $dI$，其中 $d\ge0$，则 $C_0+dI$ 与同一个测量分别给出相等的两侧值，故
+
+$$
+\nu(H_1+dI,H_2+dI)=\sqrt2\Lambda+2d.
+\tag{260.24}
+$$
+
+这些二阶数据也能由实际正密度曲线在一个有限区间上共同实现。取 $\ell>0$ 满足 $\Lambda\ell^2\le1/2$，令 $x=t/\ell$，并在 $0\le t\le\ell$ 上定义
+
+$$
+\rho(t)=\frac I2+\Lambda\ell^2
+\left[
+\left(\frac{x^2}{2}-\frac{x^3}{6}\right)\sigma_x
++\frac{x^3}{6}\sigma_z
+\right].
+\tag{260.25}
+$$
+
+方括号中向量系数的长度至多为 $\sqrt5/6$，因此 $\rho(t)$ 的两个特征值都严格为正；连续性还给出整个闭区间的正开邻域。它的迹恒为一，矩阵元是多项式，并且
+
+$$
+\rho''(t)=\Lambda\bigl((1-x)\sigma_x+x\sigma_z\bigr).
+\tag{260.26}
+$$
+
+这是两个端点二阶矩阵的凸组合，故 $C_0$ 控制整段曲线；端点又迫使任何共同上界满足（260.19），所以 $\nu_{[0,\ell]}(\rho)=\sqrt2\Lambda$。该曲线的最大二阶算子范数恰为 $\Lambda$。对同一条曲线、同样的两个端点信息，标量范数证书的二阶项是 $4\Lambda$，共同矩阵证书的对应项则是 $2\sqrt2\Lambda$，得到严格改进。这个比较不主张实际 Fisher 峰值达到任一上界，也不把多项式密度延拓后的全实轴正性当作已知。证毕。
+
+**推论 260.6（实际节点区间的方向敏感二阶代价）。** 在第259节的完整节点区间 $I_s^{\rm node}$ 上，记
+
+$$
+\nu_s=\nu_{I_s^{\rm node}}(\rho_s).
+\tag{260.27}
+$$
+
+沿用其精确端点和 $C_s$，原尾窗代价满足
+
+$$
+P_s\le e_s^2(2\nu_s+C_s),
+\qquad
+Q_s\le\kappa_s e_s^2(2\nu_s+C_s).
+\tag{260.28}
+$$
+
+在原任一低内部代价条件、有限正过渡参数 $\gamma$ 及全部原尺度 $0<e_s=o(s)$ 下，
+
+$$
+\liminf_{s\downarrow0}e_s^2\nu_s
+\ge\frac{m_2(\gamma)}2.
+\tag{260.29}
+$$
+
+证明。 对（260.5）取共同上界的最小迹，使用第259节的节点校准和尾窗归一化，得到（260.28）。再由 $e_s^2C_s\to0$ 及原峰值下界即得（260.29）。同时，两个简单可行上界给出
+
+$$
+\nu_s\le4L_{{\rm op},s}^{\rm node},
+\qquad
+\nu_s\le2L_{1,s}^{\rm node},
+\tag{260.30}
+$$
+
+所以本结论与第259节的两个范数版本相容，并保留了它们舍去的共同方向资料。这里仍不证明原处理器约束下的达到或最优常数。证毕。
+
+**命题 260.7（共同性与定义域的两种限制）。** 在紧区间上，共同上界满足
+
+$$
+\nu_I(\rho)\ge
+\sup_{t\in I}\operatorname{Tr}\bigl(\rho''(t)_+\bigr),
+\tag{260.31}
+$$
+
+但一般不能取等号。另一方面，若一个秩至多一的固定半正定 $C$ 在整个实轴上满足（260.1），则密度曲线必为常值。
+
+证明。 令 $P_t$ 为 $\rho''(t)$ 正谱的投影。对每个可行 $C$，有
+
+$$
+\operatorname{Tr}C\ge\operatorname{Tr}(P_tC)
+\ge\operatorname{Tr}\bigl(\rho''(t)_+\bigr).
+\tag{260.32}
+$$
+
+取参数上确界和共同上界下确界得到（260.31）。在命题260.5中，右侧为 $\Lambda$，而左侧为 $\sqrt2\Lambda$，因此两者确实不同。第258节的分尺度例子还表明，这种差别并不需要非交换矩阵。
+
+现在设 $C$ 秩至多一，且在整个实轴上有效。对任意 $w\in\ker C$，函数 $f_w(t)=\langle w,\rho(t)w\rangle$ 有界且满足 $f_w''\le0$，故为实轴上的有界凹函数，必须为常值。于是 $\langle w,\rho''(t)w\rangle=0$。由 $C-\rho''(t)\succeq0$，零二次型蕴含 $(C-\rho''(t))w=0$，从而 $\rho''(t)w=0$。Hermitian 矩阵 $\rho''(t)$ 因而支撑在 $C$ 的至多一维像空间中；它又迹为零，所以只能为零。最后，密度曲线在实轴上仿射且有界，故为常值。证毕。
+
+命题260.5中的 $C_0$ 恰为秩一，却允许有限区间中的非平凡正密度曲线。这不与本命题冲突：要求同一个上界与正性在整个实轴共同延续，是额外且更强的条件。因此 $2\operatorname{Tr}C$ 是一般有效上界，但不能对每个指定的 $C$ 都宣称达到。
+
+测量收益及其半定规划对偶的来源为 John Watrous，*The Theory of Quantum Information*（Cambridge University Press，2018），[作者公开的书稿版本](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§1.2.3 的定理1.18及 §3.1.2 第133—136页的 Hermitian 收益规划、式（3.33）—（3.42）。该书已经允许一般 Hermitian 收益，故本节不把有符号收益或强对偶作为新发现。共同二阶上界的信息控制、带误差的连续区间认证、明确的正密度实现及原尾窗代价的连接由上述推导承担。没有统一矩阵上界、变化模或认证误差的有限观测，仍不能获得这些保证。
+
+## 追加锚（本行以下为增补区）
+
+## 261. 固定矩阵二阶上界的精确全实轴极值
+
+第260节给出 $I_Q\le2\operatorname{Tr}C$，但同节的秩一结论说明：对一个指定矩阵 $C$，这个数未必是最优值。本节在全实轴上完成该问题的分类。决定能否逼近迹上界的条件是 $C$ 是否至少具有两个正特征方向；构造可以始终与 $C$ 对角化在同一个基中。
+
+**定义 261.1（固定共同上界的允许类）。** 固定 $n$ 阶半正定矩阵 $C$，令
+
+$$
+\mathcal R(C)=
+\left\{\rho\in C^2(\mathbb R;M_n):
+\rho(t)\succeq0,\ \operatorname{Tr}\rho(t)=1,
+\ \rho''(t)\preceq C\ \text{对所有 }t\in\mathbb R\right\},
+\tag{261.1}
+$$
+
+并定义
+
+$$
+\mathfrak F(C)=\sup_{\rho\in\mathcal R(C)}I_Q(\rho_0).
+\tag{261.2}
+$$
+
+这个类总含常值密度，故非空。矩阵 $C$ 在整个问题中固定，不随参数或准备曲线改变。
+
+**定理 261.2（秩分界与精确上确界）。** 有
+
+$$
+\boxed{
+\mathfrak F(C)=
+\begin{cases}
+0,&\operatorname{rank}C\le1,\\
+2\operatorname{Tr}C,&\operatorname{rank}C\ge2.
+\end{cases}
+}
+\tag{261.3}
+$$
+
+两种情况下，即使把允许类进一步限制为每个矩阵元可延拓成整函数、每个有限实数参数处满秩、且全部状态与 $C$ 在同一个固定基中对角化，上确界仍相同。第二种情形只断言任意逼近，不要求一条曲线恰好取得等号。
+
+证明。 第260节已给出上界 $I_Q\le2\operatorname{Tr}C$。当 $C$ 秩至多一时，该节的核空间凹性论证使所有允许曲线恒定，所以信息为零；常值密度 $I/n$ 也属于所述更小类。
+
+以下设 $m=\operatorname{rank}C\ge2$。先在固定基中写
+
+$$
+C=\operatorname{diag}(c_0,c_1,\ldots,c_N,0,\ldots,0),
+\qquad N=m-1,\quad c_j>0.
+\tag{261.4}
+$$
+
+第零方向作为补偿概率，其余 $N$ 个正方向作为分别改变的概率。令 $c_{\min}=\min_{0\le j\le N}c_j$，任取 $\kappa>0$，并选
+
+$$
+\lambda>1+\frac1{\kappa c_{\min}}.
+\tag{261.5}
+$$
+
+对 $1\le i\le N$，置
+
+$$
+v_i=R\lambda^{-(i-1)},\qquad \tau_i=\kappa v_i,
+\tag{261.6}
+$$
+
+其中 $R>0$ 稍后由归一化确定。定义非负连续分段线性的速度
+
+$$
+w_i(t)=
+\begin{cases}
+0,&t\le-\tau_i-v_i/c_0,\\
+c_0(t+\tau_i+v_i/c_0),
+&-\tau_i-v_i/c_0<t<-\tau_i,\\
+v_i,&-\tau_i\le t\le\tau_i,\\
+c_i(\tau_i+v_i/c_i-t),
+&\tau_i<t<\tau_i+v_i/c_i,\\
+0,&t\ge\tau_i+v_i/c_i.
+\end{cases}
+\tag{261.7}
+$$
+
+它在左侧以斜率 $c_0$ 上升，在右侧以斜率 $-c_i$ 下降；两侧一般不对称。令
+
+$$
+q_i(t)=\int_t^\infty w_i(x)\,dx,
+\qquad
+q_0(t)=\mu-\sum_{i=1}^Nq_i(t).
+\tag{261.8}
+$$
+
+若 $m=n$，取 $\mu=1$；若 $m<n$，取任意固定 $0<\mu<1$，并在 $\ker C$ 的 $n-m$ 个方向各放常值概率 $(1-\mu)/(n-m)$。
+
+各速度的总面积为
+
+$$
+\int_{\mathbb R}w_i(t)\,dt
+=v_i^2\left(2\kappa+\frac1{2c_0}+\frac1{2c_i}\right).
+\tag{261.9}
+$$
+
+因此选择
+
+$$
+R^2=
+\frac{\mu}{
+\displaystyle\sum_{i=1}^N\lambda^{-2(i-1)}
+\left(2\kappa+\frac1{2c_0}+\frac1{2c_i}\right)}
+\tag{261.10}
+$$
+
+便使 $\sum_iq_i(-\infty)=\mu$。所有 $q_i$ 非负且递减，故 $q_0\ge0$，总活动概率恒为 $\mu$。连同核空间中的常值部分，得到一条迹为一的对角密度曲线 $\rho^{(0)}$。
+
+现在核对固定矩阵预算，而不将它改成标量范数。因为 $q_i'=-w_i$，其弱二阶导数在左侧转弯区间等于 $-c_0$，在右侧转弯区间等于 $c_i$，其余处为零。对任一正特征值 $c_j$，由（261.5）有
+
+$$
+v_{i+1}\left(\kappa+\frac1{c_j}\right)
+\le\frac{v_i}{\lambda}
+\left(\kappa+\frac1{c_{\min}}\right)
+<\kappa v_i=\tau_i.
+\tag{261.11}
+$$
+
+故不同概率的转弯区间在正、负两侧分别互不相交。几乎每个 $t$ 至多有一个非零的 $q_i''$。在左侧转弯时，非零二阶分量为
+
+$$
+q_i''=-c_0,\qquad q_0''=c_0;
+\tag{261.12}
+$$
+
+在右侧转弯时则为
+
+$$
+q_i''=c_i,\qquad q_0''=-c_i.
+\tag{261.13}
+$$
+
+逐个对角分量比较可见，两种情况下都满足 $(\rho^{(0)})''\preceq C$。各 $w_i$ 连续且 Lipschitz，故这条曲线为 $C^{1,1}$，上述有界弱二阶导数没有额外点质量。
+
+在中心，速度处于平台，直接计算两侧面积得到
+
+$$
+\begin{aligned}
+q_i(0)&=v_i^2\left(\kappa+\frac1{2c_i}\right),
+&q_i'(0)&=-v_i,\\
+q_0(0)&=\left(\kappa+\frac1{2c_0}\right)\sum_i v_i^2,
+&q_0'(0)&=\sum_i v_i.
+\end{aligned}
+\tag{261.14}
+$$
+
+所有活动中心概率严格为正，核空间部分在需要时也严格为正。因此中心 Fisher 信息为
+
+$$
+\begin{aligned}
+I^{(0)}(0)
+&=\sum_{i=1}^N\frac1{\kappa+1/(2c_i)}
++\frac{(\sum_i v_i)^2}
+{(\kappa+1/(2c_0))\sum_i v_i^2}\\
+&\ge\sum_{j=0}^N\frac1{\kappa+1/(2c_j)}.
+\end{aligned}
+\tag{261.15}
+$$
+
+最后一步只使用正数 $v_i$ 的关系 $(\sum_i v_i)^2\ge\sum_i v_i^2$。当 $\kappa\downarrow0$，右侧趋于 $2\sum_jc_j=2\operatorname{Tr}C$。归一化尺度 $R$ 与活动总质量 $\mu$ 都在这些比值中消去。
+
+为得到所要求的解析曲线，对整条有界密度曲线作高斯卷积
+
+$$
+\rho^{(\epsilon)}(t)
+=\int_{\mathbb R}g_\epsilon(t-x)\rho^{(0)}(x)\,dx,
+\qquad
+g_\epsilon(t)=\frac{e^{-t^2/(2\epsilon^2)}}{\sqrt{2\pi}\epsilon}.
+\tag{261.16}
+$$
+
+正性、迹一及共同对角基由凸平均保留。每个 $q_i$ 在左侧半轴严格为正，$q_0$ 在右侧半轴严格为正；高斯核处处正，故每个活动分量在每个有限实数参数处严格为正。核空间中的常值概率不变。由此整条曲线在实轴上满秩。与第258节相同，有界函数的高斯卷积逐矩阵元延拓为整函数。
+
+固定矩阵上界也被精确保留：弱导数与卷积可交换，且
+
+$$
+C-(\rho^{(\epsilon)})''(t)
+=\int_{\mathbb R}g_\epsilon(t-x)
+\bigl(C-(\rho^{(0)})''(x)\bigr)\,dx
+\succeq0.
+\tag{261.17}
+$$
+
+对已经固定的 $\kappa,\lambda,R$，高斯逼近恒等使中心概率及其一阶导数收敛到（261.14）。这些中心概率严格为正，所以对角 Fisher 信息的有限有理和连续，得到
+
+$$
+I_Q(\rho^{(\epsilon)}_0)\longrightarrow I^{(0)}(0)
+\quad(\epsilon\downarrow0).
+\tag{261.18}
+$$
+
+因此，对任意 $0<\delta<1$，先选足够小 $\kappa$，再依次确定 $\lambda,R$，最后选足够小 $\epsilon$，即可在固定 $C$ 下达到
+
+$$
+I_Q(\rho^{(\epsilon)}_0)
+\ge(1-\delta)2\operatorname{Tr}C.
+\tag{261.19}
+$$
+
+结合既有上界即得（261.3）。固定酉共轭把构造送回任意给定矩阵 $C$ 的原坐标，同时保持 Loewner 条件与信息。证毕。
+
+这里两侧速度通常不对称，所以本节只使用平滑后中心一阶数据的收敛，不宣称像第258节的偶对称构造那样精确保留中心概率或 $\rho''(0)=0$。所需的固定矩阵预算由（261.17）直接保证，无需这些额外等式。
+
+**推论 261.3（上界矩阵失秩处的极值不连续）。** 在二维空间取
+
+$$
+C_\varepsilon=\operatorname{diag}(1,\varepsilon),
+\qquad \varepsilon\ge0.
+\tag{261.20}
+$$
+
+则 $C_\varepsilon\to C_0$ 的算子范数差为 $\varepsilon$，但
+
+$$
+\mathfrak F(C_\varepsilon)=2(1+\varepsilon)
+\quad(\varepsilon>0),
+\qquad
+\mathfrak F(C_0)=0.
+\tag{261.21}
+$$
+
+证明。 正 $\varepsilon$ 时矩阵秩为二，零时秩为一，直接应用定理261.2。证毕。
+
+这个不连续性属于对整类允许曲线取最优值之后的结论，不是某一条固定曲线的信息突然变化。精确的零特征方向使相应概率在全实轴上凹且有界，从而固定；任意正余量则允许非对称的转弯。逼近最优值时，曲线及其参数尺度随上界变化；虽然各曲线均延拓到整个复平面，本节没有给出态的统一正谱隙、统一三阶导数界、复域上的统一函数大小界或尺度复杂度控制。
+
+一个固定正矩阵的迹给出总上界，但能否使用这些方向，还取决于它们是否允许概率守恒下的共同续接。只有一个可变正方向时，迹为一把变化全部消掉；至少两个方向时，负二阶变化可以由另一个方向承担，再在不同参数区间分别恢复。上述构造把这种共同实现写成了具体的概率曲线。
+
+每条逼近曲线中的状态两两对易，并与给定的 $C$ 对易，因此这里没有量子独有优势主张。问题定义要求正性和同一个矩阵上界在整个实轴上成立，不能把（261.3）无条件搬到有限区间、任意随参数变化的上界，或原处理器的矩、分项预算、尖锐节点约束类中。高斯解析化及标量正性背景沿用第258—260节；固定矩阵的各向异性达到由本节构造承担，不要求原处理器约束下的达到。
+
+## 追加锚（本行以下为增补区）
+
+## 262. 固定正谱隙下的失秩连续性与非交换尺度优势
+
+第261节的极值跳变允许准备曲线随上界矩阵变化，且没有统一的态谱下界。本节固定这个缺失的条件。在二维上界 $C_\eta=\operatorname{diag}(1,\eta)$ 趋于秩一时，所有保持固定正谱隙的允许曲线，其信息都趋于零；但一般量子曲线和两两对易曲线的最优衰减阶不同。
+
+**定理 262.1（接近秩一时的定量刚性）。** 设 $C\succeq0$，记
+
+$$
+\Lambda=\|C\|_{\rm op},\qquad
+\delta=\operatorname{Tr}C-\Lambda,
+\qquad 0<\delta\le\Lambda.
+\tag{262.1}
+$$
+
+若 $\rho$ 是全实轴上的 $C^2$ 密度曲线，处处满足 $\rho''\preceq C$，则
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.2}
+$$
+
+若名义点还满足 $\rho(0)\succeq\alpha I$，其中 $\alpha>0$，则
+
+$$
+I_Q(\rho_0)\le
+\frac5\alpha\Lambda^{2/3}\delta^{1/3}.
+\tag{262.3}
+$$
+
+证明。 取 $C$ 的一个最大特征方向投影 $P$，令 $Q=I-P$，写成
+
+$$
+C=\Lambda P+C_Q,\qquad
+W=\Lambda Q-C_Q\succeq0,
+\qquad f(t)=\operatorname{Tr}(W\rho(t)).
+\tag{262.4}
+$$
+
+置 $\tau=\operatorname{Tr}C$ 以及
+
+$$
+\beta=\operatorname{Tr}(WC)
+=\Lambda\delta-\operatorname{Tr}(C_Q^2),
+\qquad K=\tau^2-\operatorname{Tr}(C^2).
+\tag{262.5}
+$$
+
+有 $0\le f\le\Lambda$、$0\le\beta\le\Lambda\delta$，并且 $f''\le\beta$。对非负标量函数使用全实轴正性界，得到
+
+$$
+|f'|\le\sqrt{2\beta\Lambda}.
+\tag{262.6}
+$$
+
+此处允许 $\beta=0$，那时 $f$ 为常值。令 $H=\rho''$、$D=C-H$。由 $D\succeq0$、$\operatorname{Tr}H=0$，有 $\operatorname{Tr}D=\tau$，从而 $\operatorname{Tr}(D^2)\le\tau^2$。展开并使用 $C+W=\Lambda I$，得到
+
+$$
+\|H(t)\|_{\rm HS}^2
+\le K+2\operatorname{Tr}(CH(t))
+=K-2f''(t).
+\tag{262.7}
+$$
+
+因此，对任意 $h>0$，
+
+$$
+\int_{-h}^h\|\rho''(t)\|_{\rm HS}^2\,dt
+\le2hK+4\sqrt{2\beta\Lambda}.
+\tag{262.8}
+$$
+
+以下直接给出所需的一维插值步骤。两个密度矩阵的 Hilbert–Schmidt 距离至多为 $\sqrt2$，故对称差商满足
+
+$$
+\left\|\frac{\rho(h)-\rho(-h)}{2h}\right\|_{\rm HS}
+\le\frac1{\sqrt2h}.
+\tag{262.9}
+$$
+
+一阶导数与此差商的差可以写成 $\rho''$ 对一个带符号三角核的积分；该核的平方积分为 $h/6$。Cauchy–Schwarz 和（262.8）于是给出
+
+$$
+\|\rho'(0)\|_{\rm HS}
+\le\frac1{\sqrt2h}
++\sqrt{\frac{Kh^2}{3}
++\frac{2h}{3}\sqrt{2\beta\Lambda}}.
+\tag{262.10}
+$$
+
+具体地，这个核在 $[-h,0]$ 上为 $(h+t)/(2h)$，在 $[0,h]$ 上为 $-(h-t)/(2h)$。又因为
+
+$$
+K=2\Lambda\delta+\delta^2-\operatorname{Tr}(C_Q^2)
+\le3\Lambda\delta,
+\tag{262.11}
+$$
+
+取 $h=(\Lambda^2\delta)^{-1/6}$，使用 $\delta\le\Lambda$，可得
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le
+\left(\frac1{\sqrt2}+\sqrt{1+\frac{2\sqrt2}{3}}\right)^2
+\Lambda^{2/3}\delta^{1/3}
+<5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.12}
+$$
+
+最后，在 $\rho(0)$ 的特征基中，所有特征值至少为 $\alpha$。标准 SLD 公式给出
+
+$$
+I_Q(\rho_0)
+=\sum_{i,j}\frac{2|\rho'_{ij}(0)|^2}{\lambda_i+\lambda_j}
+\le\frac1\alpha\|\rho'(0)\|_{\rm HS}^2.
+\tag{262.13}
+$$
+
+结合（262.12）即得结论。证毕。
+
+该信息上界只需要名义点的谱下界；全实轴上的统一谱下界是一个更强的充分条件。若 $\delta=0$，第260节的秩一刚性直接给出零信息。对于有界的 $\Lambda$ 和固定正 $\alpha$，因此恢复了靠近秩一上界的信息连续性。这里没有声称数字 $5$ 最优。
+
+**定义 262.2（保持正谱隙的二维比较类）。** 对 $0<\eta\le1$，令
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{262.14}
+$$
+
+记 $\mathcal A_\eta$ 为全实轴上满足
+
+$$
+\rho\in C^2,\qquad
+\operatorname{Tr}\rho=1,\qquad
+\rho(t)\succeq I/4,\qquad
+\rho''(t)\preceq C_\eta
+\tag{262.15}
+$$
+
+的密度曲线集合；$\mathcal A_\eta^{\rm com}$ 再要求 $[\rho(t),\rho(s)]=0$ 对所有实数 $s,t$ 成立。后者不要求状态与 $C_\eta$ 对易。分别定义两类的名义信息上确界为 $F_\eta$ 和 $F_\eta^{\rm com}$。
+
+**定理 262.3（非交换曲线的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k>0$ 和 $\eta_0>0$，使得
+
+$$
+k\eta^{1/3}\le F_\eta\le20\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{262.16}
+$$
+
+即使只允许逐矩阵元可延拓成整函数的曲线，下界仍成立。
+
+证明。 上界是定理262.1在 $\Lambda=1$、$\delta=\eta$、$\alpha=1/4$ 上的直接应用。为构造下界，固定实值 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$、$\|F\|_\infty\le1$，并置
+
+$$
+J=\int_{\mathbb R}F''(u)^2\,du>0,\quad
+A=\frac1{16},\quad
+v=\frac{\sqrt\eta}{8},\quad
+T=\left(\frac{2A^2J}{v}\right)^{1/3},\quad
+x(t)=AF(t/T).
+\tag{262.17}
+$$
+
+定义有界分段连续函数
+
+$$
+g(t)=
+\begin{cases}
+2x''(t)^2,&-T\le t\le T,\\
+-\eta/2,&T<t<T+2v/\eta,\\
+0,&\text{其余情形},
+\end{cases}
+\tag{262.18}
+$$
+
+并以 $y''=g$、$y(-\infty)=1/2$、$y'(-\infty)=0$ 定义 $y$。第一段加速度的积分为
+
+$$
+\int_{-T}^T2x''(t)^2\,dt
+=\frac{2A^2J}{T^3}=v,
+\tag{262.19}
+$$
+
+第二段的积分为 $-v$。故 $y'$ 从零增加到 $v$，再下降到零，全程非负。总增量满足
+
+$$
+0\le y(t)-\frac12
+\le2Tv+\frac{v^2}{\eta}
+=O(\eta^{1/3})+\frac1{64}.
+\tag{262.20}
+$$
+
+对所有充分小的 $\eta$，有 $1/2\le y\le5/8$。定义中间密度曲线
+
+$$
+\rho^{(0)}(t)=
+\begin{pmatrix}y(t)&x(t)\\x(t)&1-y(t)\end{pmatrix}.
+\tag{262.21}
+$$
+
+它的最小特征值至少为
+
+$$
+\frac12-\sqrt{(1/8)^2+(1/16)^2}>\frac14.
+\tag{262.22}
+$$
+
+现核对同一个指定上界。第一段中 $g=2x''{}^2$，并因 $T\to\infty$ 而有 $g\le1/2$。于是
+
+$$
+C_\eta-(\rho^{(0)})''
+=\begin{pmatrix}1-g&-x''\\-x''&\eta+g\end{pmatrix}
+\succeq0,
+\tag{262.23}
+$$
+
+因为其对角元非负，行列式至少为 $(1/2)g-x''{}^2=0$。第二段中 $x''=0$、$g=-\eta/2$，两个对角元也为正。其余位置二阶导数为零。这条曲线为 $C^{1,1}$，弱二阶导数有界，故这些比较几乎处处有效，没有额外点质量。
+
+在名义点，$x(0)=0$、$x'(0)=A/T$。测量 $\sigma_x$ 的两个概率为 $1/2\pm x$，因此其经典信息恰为
+
+$$
+4A^2/T^2
+=\frac{4A^2}{(16A^2J)^{2/3}}\eta^{1/3}.
+\tag{262.24}
+$$
+
+对整条曲线作宽度 $\epsilon$ 的高斯卷积。凸平均同时保留 $\rho\succeq I/4$、迹一和精确的上界 $C_\eta$；有界矩阵元的卷积延拓成整函数。对每个已经固定的 $\eta$，中心的一阶数据在 $\epsilon\downarrow0$ 时收敛。因此可选择 $\epsilon$，使同一个 $\sigma_x$ 测量的信息至少保留（262.24）的一半。SLD 信息不小于这份测量信息，故可取
+
+$$
+k=\frac{2A^2}{(16A^2J)^{2/3}}>0.
+\tag{262.25}
+$$
+
+这证明下界及解析性版本。平滑宽度允许依赖 $\eta$，谱下界和矩阵上界则不因此放宽。证毕。
+
+**定理 262.4（所有两两对易二维曲线的平方根阶）。** 对定义262.2中的整个对易类，有
+
+$$
+\sqrt\eta\le F_\eta^{\rm com}
+\le\frac83\sqrt\eta.
+\tag{262.26}
+$$
+
+下界也由整函数曲线实现。
+
+证明。 非常值的两两对易二维密度族有一个共同特征基，因此可以写成
+
+$$
+\rho(t)=I/2+z(t)N,\qquad
+N=\boldsymbol n\cdot\boldsymbol\sigma,\quad
+\|\boldsymbol n\|=1,\quad |z(t)|\le b=1/4.
+\tag{262.27}
+$$
+
+这里允许这个基相对于 $C_\eta$ 任意旋转。上界条件的行列式给出
+
+$$
+\eta+(1-\eta)n_z z''-(z'')^2\ge0.
+\tag{262.28}
+$$
+
+因此存在 $a,d>0$，使 $-a\le z''\le d$、$ad=\eta$。分别对非负函数 $z+b$ 和 $b-z$ 使用全实轴标量正性界，得到
+
+$$
+z'^2\le\min\{2d(z+b),\,2a(b-z)\}
+\le\frac{4adb}{a+d}
+\le2b\sqrt\eta.
+\tag{262.29}
+$$
+
+中间的不等式取两条仿射函数交点处的最大值。由于特征值为 $1/2\pm z$，
+
+$$
+I_Q=\frac{z'^2}{1/4-z^2}
+\le\frac{2b\sqrt\eta}{1/4-b^2}
+=\frac83\sqrt\eta.
+\tag{262.30}
+$$
+
+常值族的信息为零，也满足该界。反向取
+
+$$
+\rho(t)=I/2+A_0\sin(\omega t)\sigma_x,
+\qquad A_0=1/4,\quad
+\omega^2=\sqrt\eta/A_0.
+\tag{262.31}
+$$
+
+其状态两两对易，处处至少为 $I/4$，矩阵元为整函数，二阶非对角元的绝对值至多为 $\sqrt\eta$。因此 $C_\eta-\rho''$ 的对角元为 $1,\eta$，行列式非负，满足相同矩阵上界。中心信息为 $4A_0\sqrt\eta=\sqrt\eta$，证明下界。证毕。
+
+合并两条定理可知，在完全相同的上界和谱下界条件下，
+
+$$
+F_\eta=\Theta(\eta^{1/3}),\qquad
+F_\eta^{\rm com}=\Theta(\eta^{1/2}),\qquad
+\frac{F_\eta}{F_\eta^{\rm com}}=\Theta(\eta^{-1/6}).
+\tag{262.32}
+$$
+
+因而充分小的 $\eta$ 时，定理262.3中的逼近曲线必不两两对易。这个区别已与“仅要求状态和上界在同一基中对角化”的更小比较类分开：定理262.4允许全部固定特征基方向。
+
+定理262.1所用标量正性估计沿用第257—261节的 Glaeser–Malgrange 背景，SLD 公式沿用同处的标准来源；插值结构的经典背景为 L. Nirenberg，*On elliptic partial differential equations*，Annali della Scuola Normale Superiore di Pisa，第三辑第13卷（1959），115—162页，[公开原文](https://www.numdam.org/item/ASNSP_1959_3_13_2_115_0.pdf)，Lecture II，第124—126页，式（2.2）—（2.3）。其中的一维参数 $j=1,m=2,p=q=\infty,r=2$ 给出经典指数 $2/3$；本节不把插值方法本身作为新增结果。这里使用的有限窗口估计及其常数由（262.9）—（262.12）直接证明，不额外假设全实轴二阶导数平方可积。正性与矩阵上界均要求在全实轴成立。定理262.1的信息上界仅需名义点的固定正谱下界；定义262.2及两类上确界的比较则共同要求全实轴上的统一下界 $\rho(t)\succeq I/4$。下界构造保持这一全域条件。它们不加入原处理器的矩、分项预算、校准节点或规定有限阶数据，所以（262.32）是本节所定义曲线类中的非交换优势，不能自动提升为原受限任务的最优优势。
+
+## 追加锚（本行以下为增补区）
