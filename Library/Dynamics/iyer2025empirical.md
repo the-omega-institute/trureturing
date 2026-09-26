@@ -4575,3 +4575,48 @@ Section 2、Lemma 3 的完整 Gauss 和界保持其互素条件。
 原中心有理独立只排除精确共振，不给所需的近共振速率。
 有限原文检索未找到直接承担全部剩余估计的结果，不认证其不存在或全局原创。
 纯理论文本未进入 Lean、消化或冻结链。
+
+## 第 110 章：有限 Gibbs 响应、Prékopa 边缘与高阶端点
+
+[谱边界卷第 110 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在原半指数噪声条件、固定原幅度与固定 $\beta$ 下，把紧输出的 Rényi 熵差
+一致延伸到 $\alpha\ge a_Q$ 的整个无界区间，其中 $a_Q\sqrt\delta\to\infty$。
+更强的有限阶因子公式覆盖每个固定 $c>0$ 的 $\alpha\ge c/\sqrt\delta$；
+当 $\alpha\sqrt\delta\to c$，相对最小熵响应留下 $y/(2c\rho_0)$。
+经验最大方差保留在放大中心中，收敛仍为实际数据概率、支持一致、pair/path 分别成立。
+
+John C. Baez，*Rényi Entropy and Free Energy*，
+[arXiv:1102.2098v4](https://arxiv.org/abs/1102.2098v4)。
+完整五页原文的 Section 1 equations (1)–(2)、Section 2 equations (3)–(9)
+把有限正概率写成 Gibbs 分布，并将 Rényi 熵表示为自由能差商。
+原文注明 Beck–Schlögl 等已有相关恒等式；本章精确幂后验恒等式属于这一经典代数。
+计数元组保留原二项质量及乘数，不能换成微观标签的等概率状态。
+该文不给增长维数和阶数下的统一响应、稀有能量输出回接或实际路径行估计。
+版本横幅为 2022 年 5 月 17 日，内部标题日期为 5 月 18 日，两者区分。
+提取文本中 equation (9) 前一个未使用中间式缺少所需对数符号，
+未判定来自原 PDF 还是提取；这里使用可读的 (9) 与正文直接有限求和，不依赖该中间式。
+
+Dario Cordero-Erausquin，*On matrix-valued log-concavity and related Prékopa and Brascamp–Lieb inequalities*，
+[arXiv:1801.04862v1](https://arxiv.org/abs/1801.04862v1)。
+Theorem 1（PDF 第 2 页）对 $C^2$、正定、逐纤维可积的矩阵值 N-log-concave 函数，
+给边缘仍为 N-log-concave；矩阵维数一就是经典 Prékopa 对数凹边缘定理。
+Section 4（第 14–17 页）的 Proposition 10、Fact 11 及结尾证明已核对。
+本章用明确的光滑正函数逼近 Gaussian 密度乘凸球上图集指标，
+以支配收敛核对非中心、非等方差有限数组下的小球 CDF 对数凹性。
+该定理只给每个有限维度的定性凹性；维度一致的小球下界、对数导数界与卷积尾界由本章另证。
+不把平方和密度本身说成对数凹。
+原文 reference [8] 归属 Prékopa 1971 年论文；另查的 1973 年原文未取得，未冒称已读。
+两份当前原 PDF 的字体提取警告保留为来源边界，可读原命题与直接推导承担所用结论。
+
+第 108 章已核对的 Mounaix–Majumdar–Banerjee
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)
+讨论不同的 Gaussian 场凝聚问题，其齐次性、维数和谱端条件不直接承担本章原计数定理。
+本章从原经验剖面证明 $v_*=v_0$ 及 $1-v_j/v_0\gtrsim\min(j^2\delta^2,1)$，
+再对非最大模作合法临界倾斜，保留最大平方的未归一化核。
+有限 CDF 控制全部非最大模，未由端点优化推出典型单模凝聚。
+
+本章新增综合连接是原缩小谱隙、逆平方权重的小球支付、
+至 $Q^6$ 的原计数幂律相对比较，以及由 $\ln N\le CQ^5$ 与无穷阶重叠。
+有限支持的 $H_\alpha-H_\infty$ 界分别用于两个输出，未推断熵差单调。
+有限文献检索不认证全局原创；未给无界输出、期望熵、Shannon 端点或更宽噪声结论。
+纯理论正文未进入 Lean、消化或冻结链。
