@@ -60,6 +60,7 @@ public sealed class LegacyRelationsNativeTests
         Assert.Equal(5, evidence.Inventory.Count);
         Assert.Equal(5, evidence.Occurrences.Count);
         Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
+        AssertFiniteNamedReference(joined, files, selected);
         foreach (var path in assigned)
         {
             var wire = files[path].InformationTemplates!.Value;
@@ -133,6 +134,96 @@ public sealed class LegacyRelationsNativeTests
             var path = $"Reg/Support/LegacyRelations/{support}.lean";
             Assert.Contains(files[path].Declarations, declaration =>
                 declaration.Name == $"Reg.Support.LegacyRelations.{support}.registration");
+        }
+    }
+
+    // Exercise the fusion against System's actual finite catalog projection.
+    // These mutations retain internally consistent wire identities, so the
+    // current raw declaration material must remain an independent check.
+    private static void AssertFiniteNamedReference(RepositorySnapshot snapshot,
+        Dictionary<string, LeanFileReport> files, RepoPath[] selected)
+    {
+        const string registration = "Reg/D5/S3/ConceptDynamics/InformationEscape/SystemUnit.lean";
+        const string source = "D5/S3/ConceptDynamics/InformationEscape/SystemUnit.lean";
+        var wire = files[registration].InformationTemplates!.Value;
+        var original = Assert.Single(wire.GetProperty("records").EnumerateArray());
+        var theoremName = original.GetProperty("key").GetProperty("theorem").GetString()!;
+        var definitionName = original.GetProperty("certificate").GetProperty("source_binding")
+            .GetProperty("definition_entry").GetProperty("name").GetString()!;
+        var theorem = files[source].Declarations.Single(d => d.Name == theoremName);
+        var definition = files[source].Declarations.Single(d => d.Name == definitionName);
+        var material = theorem.LoadTypeRepresentation();
+        Assert.StartsWith("statement-v1(uparams=[],type=ec(", material, StringComparison.Ordinal);
+        foreach (var mutation in new[] { "reference", "universe", "retarget", "polarity",
+            "material", "missing-material", "missing-definition", "definition-kind",
+            "definition-material", "projection-owner", "projection-owner-duplicate" })
+        {
+            var changed = JsonNode.Parse(wire.GetRawText())!;
+            var row = changed["records"]![0]!;
+            var binding = row["certificate"]!["source_binding"]!;
+            var entry = binding["definition_entry"]!;
+            Assert.NotNull(binding["finite_projection"]);
+            var candidates = new Dictionary<string, LeanFileReport>(files);
+            var replacement = theorem;
+            switch (mutation)
+            {
+                case "reference":
+                    var wrong = new string('0', 64);
+                    entry["reference_identity"] = wrong;
+                    row["statement_identity"] = wrong;
+                    binding["source_type_identity"] = wrong;
+                    row["escape_from"]!["type_identity"] = wrong;
+                    row["certificate"]!["extraction_inputs"]!.AsArray().Single(input =>
+                        input!["name"]!.GetValue<string>() == theoremName)!["type_identity"] = wrong;
+                    break;
+                case "universe": binding["level_count"] = 1; break;
+                case "retarget":
+                    replacement = theorem with { TypeRepresentation = material.Replace(
+                        definition.NameKey, "ns(n0,5:Other)", StringComparison.Ordinal) };
+                    break;
+                case "polarity":
+                    const string prefix = "statement-v1(uparams=[],type=";
+                    replacement = theorem with { TypeRepresentation = prefix
+                        + "ea(ec(ns(n0,3:Not),[])," + material[prefix.Length..^1] + "))" };
+                    break;
+                case "material": replacement = theorem with { TypeRepresentation = "wrong-material" }; break;
+                case "missing-material":
+                    replacement = new(theorem.Name, theorem.Kind, "", theorem.Axioms) { NameKey = theorem.NameKey };
+                    break;
+                case "missing-definition":
+                    candidates[source] = files[source] with { Declarations = files[source].Declarations
+                        .Where(d => d.Name != definitionName).ToImmutableArray() };
+                    break;
+                case "definition-kind":
+                case "definition-material":
+                    var badDefinition = mutation == "definition-kind" ? definition with { Kind = "theorem" }
+                        : definition with { TypeRepresentation = "statement-v1(uparams=[],type=es(ls(l0)),value=fixture)" };
+                    candidates[source] = files[source] with { Declarations = files[source].Declarations
+                        .Select(d => d.Name == definitionName ? badDefinition : d).ToImmutableArray() };
+                    break;
+                case "projection-owner":
+                    var bridge = binding["finite_projection"]!["bridge"]!.GetValue<string>();
+                    row["certificate"]!["extraction_inputs"]!.AsArray().Single(input =>
+                        input!["name"]!.GetValue<string>() == bridge)!["owner"] = "D5.Wrong";
+                    break;
+                case "projection-owner-duplicate":
+                    var bridgeName = binding["finite_projection"]!["bridge"]!.GetValue<string>();
+                    candidates[source] = files[source] with { Declarations = files[source].Declarations.Add(
+                        new(bridgeName, "def", "duplicate import owner", [])) };
+                    break;
+            }
+            if (replacement != theorem)
+                candidates[source] = files[source] with { Declarations = files[source].Declarations
+                    .Select(d => d.Name == theoremName ? replacement : d).ToImmutableArray() };
+            // Each mutation passes the closed wire shape before the actual
+            // source/material/projection join rejects it.
+            InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(changed), registration, snapshot);
+            candidates[registration] = files[registration] with {
+                InformationTemplates = JsonSerializer.SerializeToElement(changed) };
+            var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
+                LeanAxiomReport.Create(candidates), selected));
+            Assert.True(error is FormatException or InvalidDataException,
+                $"finite named source accepted {mutation}: {error}");
         }
     }
 
