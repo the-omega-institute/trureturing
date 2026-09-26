@@ -25228,3 +25228,595 @@ $$
 全环境期望、形式核验或全局原创性。
 
 ## 追加锚（第 118 章后续增补区）
+
+## 119. 中心化条件矩消除全计数选择误差：后验信息方差的输出响应
+
+第 117 章控制 Rényi 阶数的一阶导数，本章把精度推进到二阶，并得到同一实际计数后验的信息方差随物理输出变化的绝对误差公式。关键新增内容是条件中心化四阶矩：先消去随组数增长的均值，再估计固定总数选择所引起的方差差。直接以未中心化二阶矩估计会得到不趋零的误差，不能支持本章结论。
+
+以下仍是原始 pair/path 模型中的普通数学推导。全窗口、完整计数多重度、精确后验中心、有限噪声和同一固定总数后验均保留；未进入 Lean 形式化、消化、覆盖或冻结。
+
+### 119.1 原始后验信息方差及精确响应
+
+**定理 119.1（紧输出上的后验信息方差响应）。**
+
+Fix the original beta and amplitude and a finite R. Keep the original legal Q_n, lambda=Q^3, all original M,q/support/count floors, complete score groups, calibrated centers and the same uniform-size-q-support prior. Let
+$$
+ \delta=Q^{-1/2},\qquad L=\log(1/\sigma),\qquad
+ L\to\infty,\qquad \limsup L/Q^3<c_q/2,\qquad
+ c_q=\phi(1-\beta)/\beta.
+\tag{119.1}
+$$
+There is no additional rate restriction on sigma->0. The noise is positive at every finite level.
+
+On an actual data fiber x, let P_x be the original full count-vector posterior before the noisy scalar, and P_x^y the exact positive posterior after T_x+sigma G=y. Define
+$$
+ \mathcal V_x(y)=\operatorname{Var}_{P_x^y}[-\log P_x^y(N)].
+\tag{119.2}
+$$
+This is variance within the fixed posterior, measured in nats squared. It is not variance over raw-data environments or over outputs.
+
+Use the exact original quantities
+$$
+ B^2=q/Q^{5/2},\quad v_j=C_jp_j(1-p_j)/B^2,\quad
+ v_*=\max_jv_j,\quad V=\sum_jv_j,\quad
+ e_j=(\mu_j-C_jp_j)/B,
+$$
+$$
+ E(n)=\sum_j((n_j-\mu_j)/B)^2,\qquad
+ T_x(n)=(E(n)-V)/\sqrt\delta.
+\tag{119.3}
+$$
+Every sum includes the full original window. Empty groups have v_j=e_j=0. As in Chapter 117, set
+$$
+ K_\alpha(t)=-\frac12\sum_j\log(1-2tv_j/\alpha)
+       +\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
+       +\frac{\delta\sigma^2t^2}{2\alpha},\quad
+ t<\frac{\alpha}{2v_*},
+$$
+$$
+ K_\alpha'(t_\alpha)=V,\qquad
+ W_\alpha=K_\alpha''(t_\alpha),\qquad
+ b_\alpha=\frac{\sqrt\delta\,t_\alpha}{\alpha},\qquad
+ c_\alpha=\frac{\delta}{2\alpha W_\alpha}.
+\tag{119.4}
+$$
+The root is the unique real root, including a possibly negative t_1. All derivatives in this chapter hold x, mu, V, sigma, counts, group set and floors fixed.
+
+The conclusion, separately for the actual pair and path experiments, is
+$$
+ \sup_{|y|\le R}\left|
+ \mathcal V_x(y)-\mathcal V_x(0)
+ +(2b'_1+b''_1)y+(2c'_1+c''_1)y^2
+ \right|\ \longrightarrow\ 0
+\tag{119.5}
+$$
+in actual raw-data probability, uniformly over all deterministic supports of size q. Thus for every eta>0 the supremum over these supports of the probability that the displayed quantity exceeds eta tends to zero. The same actual data and posterior are used at every output and throughout every comparison.
+
+The finite coefficients can equivalently be written without the quotient-rule cancellations:
+$$
+ \mathcal V_x(y)-\mathcal V_x(0)
+ =-\sqrt\delta\,t''_1y
+ +\frac{\delta}{2}
+       \left(\frac{W''_1}{W_1^2}-\frac{2(W'_1)^2}{W_1^3}\right)y^2
+ +o_{\mathbb P}(1),
+\tag{119.6}
+$$
+uniformly on the same compact. Formula(119.6) is exactly the same finite coefficient as(119.5), not an asymptotic replacement.
+
+### 119.2 同一实际纤维上的输入
+
+The original mapping is unchanged. Chapter 68.2 fixes M=2^floor(phi Q^3/(beta log2)), k_0=floor(a Q^3), l_0=Q^3-k_0, z_0=k_0 log(1+r)+l_0 log(1-r), and q=floor(M exp(-z_0)). Complete groups lie on(k_0+jQ,l_0+jP) within the original full truncation. The mu_j are exact full-q marginal sums. Chapter 68.5 gives the exact scalar relation in(119.3), and Chapter 71.3 defines the finite Gaussian-mixture posterior. Count multiplicities remain inside every powered mass.
+
+For clarity the original profile constants are
+$$
+ a=(1+r)/2,\quad b=(1-r)/2,\quad
+ \theta=\frac{\log(1+r)}{-\log(1-r)},\quad
+ \kappa=1/a+\theta^2/b,
+$$
+$$
+ \rho(s)=\rho_0e^{-\kappa s^2/2},\quad
+ \rho_0=(4\pi\sqrt{ab})^{-1},\quad
+ \gamma=\int\rho,\quad \nu=2\int\rho^2.
+\tag{119.7}
+$$
+The bare letter b in(119.7) is unrelated to b_alpha.
+
+We use the original-data good-event estimates of Chapter 117, with all quantities taken from the same actual model:
+$$
+ m_Q:=\#\{j:C_j>0\}\le C Q^2=C\delta^{-4},\quad
+ \log q=c_qQ^3+O(1),\quad N_J=\sum_jC_j\le C B^2,
+$$
+$$
+ V\to\gamma>0,\quad v_*/\delta\to\rho_0>0,\quad
+ \delta^{-1}\sum_jv_j^2\to\nu/2,\quad
+ \max_j|p_j-1/2|=O_{\mathbb P}(q^{-1/2}).
+\tag{119.8}
+$$
+A core block of order1/delta indices has v_j comparable to delta. The coordinatewise original Chapter 69.10 bound is
+$$
+ |e_j|\le C\sqrt{v_j}\,e_M,\qquad
+ \|e\|\le C\sqrt V\,e_M,\qquad
+ e_M=O_{\mathbb P}(\delta^5+q^{-1/2}).
+\tag{119.9}
+$$
+It is used coordinatewise when dividing by v_j, not weakened to only a total norm bound.
+
+For the auxiliary calibrated product count law Q_x=product_j Bin(C_j,p_j), the exact full-q law satisfies
+$$
+ P_x(n)=e^{\ell(n)}Q_x(n),\qquad
+ \mathcal D(n)=B^{-1}\sum_j(n_j-C_jp_j),
+$$
+$$
+ |\ell(n)|\le C\delta^5(1+\mathcal D(n)^2),\qquad
+ \ell(n)\le C\delta^5
+\tag{119.10}
+$$
+on the entire feasible count box. These are the original Chapter 70.6–70.8 bounds with B^2/q=delta^5. No normal lower bound for the selection density is asserted at every extreme tuple.
+
+All deterministic estimates below are uniform after bounding the tight constants in(119.8)–(119.10), bounding V,v_*/delta away from zero and imposing the already established core profile conditions. Exhausting these common good events yields support-uniform actual probability convergence. Auxiliary independence is only used after conditioning on the actual fiber; actual path rows and the full-q posterior are not assumed independent.
+
+### 119.3 Finite posterior algebra fixes the signs and factors
+
+For a finite positive law p_y=P_x^y define
+$$
+ \Lambda_y(\alpha)=\log\sum_n p_y(n)^\alpha.
+$$
+Finite differentiation gives
+$$
+ \Lambda_y''(1)=\operatorname{Var}_{p_y}[\log p_y(N)]
+                         =\mathcal V_x(y).
+\tag{119.11}
+$$
+Both signs of the surprise have the same variance.
+
+Let P_alpha=P_x^alpha/sum P_x^alpha and let f_alpha be the density of the original scalar under P_alpha plus independent Gaussian noise sigma/sqrt(alpha). Define
+$$
+ D_\alpha(y)=-\alpha^{-1}
+                 \log\{f_\alpha(y)/f_\alpha(0)\}.
+\tag{119.12}
+$$
+Writing the exact Gaussian posterior atom and summing its alpha power cancels prior-power and Gaussian constants between y and0, and gives
+$$
+ \Lambda_y(\alpha)-\Lambda_0(\alpha)
+             =-\alpha D_\alpha(y)+\alpha D_1(y).
+\tag{119.13}
+$$
+There is no limiting operation in this identity. Differentiating twice at1 yields
+$$
+ \mathcal V_x(y)-\mathcal V_x(0)
+                =-2D'_1(y)-D''_1(y).
+\tag{119.14}
+$$
+It therefore suffices to prove a C2 remainder on a fixed order neighborhood:
+$$
+ D_\alpha(y)=b_\alpha y+c_\alpha y^2+r_\alpha(y),\qquad
+ \sup_{\alpha\in[1,2],\,|y|\le R}
+       \sum_{k=0}^2|\partial_\alpha^k r_\alpha(y)|\to0.
+\tag{119.15}
+$$
+Right derivatives at1 in this compact interval equal the ordinary derivatives of the finite smooth functions. The proof of(119.15), not formal differentiation of Chapter 117, is the proof below.
+
+### 119.4 Twice differentiable finite-saddle geometry
+
+The strict positivity of the noise gives K''>0 and K'(t)->-infinity as t->-infinity; the maximal positive coordinate gives K'(t)->infinity at the right pole. Thus the real root is unique and smooth. The original empty zero-variance coordinates contribute nothing; deterministic zero-variance terms can also be interpreted directly.
+
+The compact-order geometry from Chapter 117 uses
+$$
+ s_\alpha=2v_*t_\alpha/\alpha,\quad r_j=v_j/v_*,\quad
+ D_j=1-s_\alpha r_j,\qquad -C\|e\|^2\le s_\alpha\le s_+<1.
+\tag{119.16}
+$$
+Here s_+ is fixed on each good-event class. The root equation is
+$$
+ F(s_\alpha)/\alpha+C(s_\alpha)
+             +\delta\sigma^2s_\alpha/(2v_*)=V,
+\quad F(s)=\sum_j\frac{v_j}{1-sr_j},\quad
+ C(s)=\sum_j\frac{e_j^2}{(1-sr_j)^2}.
+\tag{119.17}
+$$
+Its derivative in s is uniformly bounded below by a positive constant, from sum v_j^2/v_* bounded below, and above by a constant. On(119.16) all fixed further derivatives in s and alpha are bounded. Twice implicit differentiation therefore gives |s'_alpha|+|s''_alpha|<=C. This is a direct finite-equation estimate, including the small negative portion near1.
+
+At the full saddle let
+$$
+ w_j=v_j/(\alpha D_j),\qquad m_j=-e_j/D_j.
+\tag{119.18}
+$$
+For k=1,2, product and quotient differentiation give
+$$
+ w_j\asymp v_j,\quad
+ |\partial_\alpha^k w_j|\le Cw_j,\quad
+ |\partial_\alpha^k m_j|\le C|e_j|,\quad
+ W_\alpha\asymp\delta,\quad
+ |\partial_\alpha^kW_\alpha|\le C\delta.
+\tag{119.19}
+$$
+One may equally bound derivatives of m_j relative to |m_j|; at e_j=0 all such derivatives vanish. The formulas follow from D_j bounded above and below, bounded s derivatives, and
+W=2sum w_j^2+4sum w_jm_j^2+delta sigma^2/alpha.
+
+Choose l<c_q/2 with L<=lQ^3 eventually, and choose zeta>0 with2zeta<c_q-l. Split H={j:C_j>=exp(zeta Q^3)} only within the proof. The full arrays in(119.4) are unchanged. The omitted sums obey
+$$
+ \sum_{j\notin H}v_j\le\operatorname{poly}(Q)e^{-(c_q-\zeta)Q^3},
+ \quad
+ \sum_{j\notin H}e_j^2
+          \le\operatorname{poly}(Q)e^{-(c_q-2\zeta)Q^3}.
+\tag{119.20}
+$$
+Let K_H retain the high coordinate sums and the original noise. At the full t_alpha put epsilon_H=V-K_H'(t_alpha), W_H=K_H''(t_alpha). The differences epsilon_H, W_alpha-W_H and their first TWO total alpha derivatives are exponentially small times polynomials. Indeed |t_alpha^(k)|<=C/delta for k<=2 and each differentiated omitted summand retains a v_j or e_j^2 factor from(119.20). The high core still has order1/delta coordinates. All constants allow arbitrarily slow sigma->0.
+
+### 119.5 C2 local ratio for the tilted Gaussian array
+
+The standardized high tilted energy including its noise is
+$$
+ Z_\alpha=\sum_{j\in H}a_j(Z_j^2-1)
+       +\sum_{j\in H}\beta_jZ_j+\beta_GG,\quad
+ a_j=w_j/\sqrt{W_H},\quad
+ \beta_j=2m_j\sqrt{w_j}/\sqrt{W_H},\quad
+ \beta_G=\sqrt{\delta\sigma^2/\alpha}/\sqrt{W_H}.
+\tag{119.21}
+$$
+Its variance is1 exactly. Equations(119.19) imply, for k=1,2,
+$$
+ \max_j a_j\le C\sqrt\delta,\quad
+ |a_j^{(k)}|\le Ca_j,\quad
+ |\beta_j^{(k)}|\le C|\beta_j|,\quad
+ |\beta_G^{(k)}|\le C|\beta_G|.
+\tag{119.22}
+$$
+On a core block of order1/delta, a_j^2 is comparable to delta.
+
+Its exact characteristic function is
+$$
+ \psi_\alpha(\xi)=e^{-\beta_G^2\xi^2/2}
+ \prod_{j\in H}e^{-i\xi a_j}(1-2i\xi a_j)^{-1/2}
+       \exp\!\left[-\frac{\beta_j^2\xi^2}{2(1-2i\xi a_j)}\right].
+\tag{119.23}
+$$
+The block gives
+$$
+ |\psi_\alpha(\xi)|\le E_Q(\xi):=(1+c\delta\xi^2)^{-c'/\delta}.
+\tag{119.24}
+$$
+All fixed polynomial moments of this envelope are integrable uniformly, and their tails tend uniformly to zero: below delta^(-1/2) use a Gaussian bound; above it rescale u=sqrt(delta)|xi| and integrate the power with exponent of order1/delta.
+
+Differentiate(119.23) twice. For a central log factor, all terms in its first two derivatives are bounded by Cxi^2 a_j^2, since |a_j^(k)|<=Ca_j and |xi a_j|/|1-2i xi a_j|<=1/2. The linear-noncentral factors obey the analogous bound Cxi^2 beta_j^2, as does the noise term. Consequently
+$$
+ |\partial_\alpha\psi_\alpha|\le C\xi^2 E_Q,\qquad
+ |\partial_\alpha^2\psi_\alpha|
+                         \le C(\xi^2+\xi^4)E_Q.
+\tag{119.25}
+$$
+The squared first log derivative is included in the second inequality.
+
+On a fixed frequency compact, expansion of the exact log transform and its first two derivatives gives
+$$
+ \log\psi_\alpha(\xi)=-\xi^2/2+O(\sqrt\delta|\xi|^3),\qquad
+ \partial_\alpha^k\log\psi_\alpha(\xi)
+                =O(\sqrt\delta|\xi|^3)\quad(k=1,2).
+\tag{119.26}
+$$
+Both derivatives of the quadratic term vanish because the variance in(119.21) is identically1. The remainder bounds use(119.22) and the squared coefficient sums; no derivative is inferred from a C0 or C1 asymptotic.
+
+Fourier inversion with(119.24)–(119.26), including factors xi and xi^2 for spatial derivatives, proves for the density q_alpha
+$$
+ \partial_z^l q_\alpha\to\partial_z^l\varphi\quad(l=0,1,2),
+ \qquad
+ \partial_\alpha q_\alpha,\qquad
+ \partial_\alpha\partial_zq_\alpha,\qquad
+ \partial_\alpha^2q_\alpha\to0
+\tag{119.27}
+$$
+uniformly over alpha in[1,2] and real z. Differentiability itself follows from the same integrable bounds.
+
+The standardized physical location is z_y=(sqrt(delta)y+epsilon_H)/sqrt(W_H). It and its first two alpha derivatives stay in a fixed compact for |y|<=R. Thus q_alpha(z_y) is bounded below, and the twice differentiated chain rule in(119.27) yields
+$$
+ \log\{q_\alpha(z_y)/q_\alpha(z_0)\}
+                =-(z_y^2-z_0^2)/2+o_{C^2_\alpha}(1).
+\tag{119.28}
+$$
+Exact un-tilting of the physical high Gaussian density g_alpha gives
+$$
+ g_\alpha(y)=\frac{\sqrt\delta}{\sqrt{W_H}}\,
+ e^{K_H(t_\alpha)-t_\alpha(V+\sqrt\delta y)}q_\alpha(z_y).
+$$
+Its output-independent rate and prefactor cancel in the ratio. The full/high differences and their two derivatives were paid in(119.20). Hence
+$$
+ D_\alpha^G(y):=-\alpha^{-1}\log\{g_\alpha(y)/g_\alpha(0)\}
+       =b_\alpha y+c_\alpha y^2+o_{C^2_\alpha}(1)
+\tag{119.29}
+$$
+uniformly on the compact output interval. The full finite coefficients remain in this formula.
+
+### 119.6 The new centered conditional-score estimate
+
+Set S_j(n)=-log(q_j(n)/max_k q_j(k)) for the exact binomial count mass q_j, and S_Q=sum S_j. Let
+$$
+ \lambda_y(n)=(T_x(n)-y)^2/(2\sigma^2),\qquad
+ A_y(n)=S_Q(n)+\lambda_y(n),\qquad
+ M_Q=1+m_Q+\delta^{-2}.
+\tag{119.30}
+$$
+In the next estimates expectation mu_{alpha,y} denotes the SAME product-count escort with the SAME output weight:
+mu_{alpha,y}(n) proportional to exp(-alpha A_y(n)).
+
+We prove the quantitative actual-count bridge
+$$
+ \mathbb E_{\mu_{\alpha,y}}
+       |A_y-\mathbb E_{\mu_{\alpha,y}}A_y|^4\le C M_Q^2,
+\qquad
+ \operatorname{Var}_{\mu_{\alpha,y}}A_y\le C M_Q,
+$$
+$$
+ \mathbb E_{\mu_{\alpha,y}}
+ [(1+\mathcal D^2)(A_y-\mathbb E_{\mu_{\alpha,y}}A_y)^2]
+                        \le C M_Q.
+\tag{119.31}
+$$
+All are uniform1<=alpha<=2, |y|<=R. This is stronger than the uncentered polynomial score estimates of Chapter 117.
+
+First establish the centered high Gaussian estimate. Under the high Gaussian law before output conditioning, X_j=sqrt(v_j/alpha)Z_j-e_j. Write
+$$
+ S_G=\frac12\sum_{j\in H}(X_j+e_j)^2/v_j,\qquad
+ s_H=\frac12\sum_{j\in H}[w_j+(m_j+e_j)^2]/v_j.
+\tag{119.32}
+$$
+The number s_H is the expectation under the full-saddle tilted high normals, before conditioning their energy plus noise. We need not assert it is the conditional expectation.
+
+Condition on total energy plus Gaussian energy noise equal to h_y=V+sqrt(delta)y. Tilting at t_alpha does not change this conditional law. The scalar density denominator is q_alpha(z_y)/sqrt(W_H)>=c_R/sqrt(W_H). At Fourier frequency u=xi/sqrt(W_H), normalized polynomial insertion is evaluated under complex independent Gaussian coordinates with
+$$
+ \widehat w_j=\frac{w_j}{1-2iu w_j},\qquad
+ \widehat m_j=\frac{m_j}{1-2iu w_j}.
+\tag{119.33}
+$$
+This is an analytic Gaussian integral, not a claim that the conditioned coordinates are independent.
+
+For the complex mean of S_G minus s_H, elementary subtraction gives
+$$
+ |d(\xi)|\le C|u|
+ \left[\sum_{j\in H}\frac{w_j^2}{v_j}
+       +\sum_{j\in H}\frac{w_j|m_j|(|m_j|+|e_j|)}{v_j}\right]
+                  \le C|\xi|/\sqrt\delta.
+\tag{119.34}
+$$
+Indeed |hat w-w|<=2|u|w^2 and |hat m-m|<=2|u|w|m|. Use w_j comparable to v_j, |m_j|<=C|e_j|, sum v_j bounded, and(119.9). Keeping the real center s_H removes the order-m_Q mean; the residual frequency-dependent shift has only order delta^(-1/2).
+
+For completeness, a complex Gaussian Y of mean M and covariance w has the exact cumulants of cY^2
+$$
+ \kappa_r(cY^2)
+ =2^{r-1}(r-1)!c^r w^r
+       +2^{r-1}r!c^r M^2w^{r-1}.
+\tag{119.35}
+$$
+It follows by expanding -.5 log(1-2zcw)+zcM^2/(1-2zcw), so remains valid for the complex parameters in(119.33). Here c=1/(2v_j), M=hat m_j+e_j. By(119.9),(119.19), |hat w_j|/v_j<=C and |M|^2/v_j<=C e_M^2. Thus the cumulants kappa_r of S_G under this complex insertion obey |kappa_r|<=C_r m_Q for r=2,3,4.
+
+The fourth moment about s_H is exactly
+$$
+ \kappa_4+4d\kappa_3+3\kappa_2^2+6d^2\kappa_2+d^4.
+\tag{119.36}
+$$
+Using(119.34) bounds its absolute value by
+C(1+m_Q^2+delta^(-2))(1+|xi|^4).
+The actual inserted Fourier integrand has this multiplier times psi_alpha(xi). Integrate with(119.24), divide by the lower scalar density, and obtain
+$$
+ \mathbb E_{\alpha,y}^G|S_G-s_H|^4
+                    \le C(1+m_Q^2+\delta^{-2}).
+\tag{119.37}
+$$
+This is a centered conditional bound; integrating uncentered S_G^4 would instead cost m_Q^4.
+
+The likelihood part must also be retained. In the same conditioned Gaussian representation, U_y=(E_H-h_y)/(sqrt(delta)sigma) is minus the energy-noise variable divided by sqrt(delta)sigma. After tilting, that noise has mean t_alpha delta sigma^2/alpha and variance delta sigma^2/alpha. In its Fourier polynomial insertion the normalized complex mean is bounded by
+C(sigma/sqrt(delta)+|xi|sigma).
+Consequently integration against(119.24) gives
+$$
+ \mathbb E_{\alpha,y}^G\lambda_y^4
+      =2^{-4}\mathbb E_{\alpha,y}^G U_y^8\le C\delta^{-4}.
+\tag{119.38}
+$$
+No rate assumption makes that shifted noise mean small. This coarse bound explicitly pays it.
+
+For low groups, Chapter 117's uniform binomial-surprise estimates give every fixed moment of S_j bounded under its one-group escort, for1<=alpha<=2 and p_j in[1/4,3/4]. They follow from c z^2-C<=S_j<=C(1+z^2) and a partition sum comparable to sqrt(C_j+1). Under the independent low escort, putting s_L=E S_low,
+$$
+ \mathbb E|S_{\mathrm{low}}-s_L|^4
+  =\sum_j\mathbb E(S_j-\mathbb E S_j)^4
+       +6\sum_{i<j}\operatorname{Var}S_i\operatorname{Var}S_j
+                 \le C(1+m_Q^2).
+\tag{119.39}
+$$
+In the Gaussian-high/low comparator the output depends only on the high variables, so this low law remains exactly independent of the output. Equations(119.37)–(119.39) and |u+v+w|^4<=27(|u|^4+|v|^4+|w|^4) imply
+$$
+ \mathbb E_{\mathrm{comparator},\alpha,y}
+ |S_G+S_{\mathrm{low}}+\lambda_y-(s_H+s_L)|^4
+                          \le C M_Q^2.
+\tag{119.40}
+$$
+The center s_H+s_L is O(1+m_Q). It is only a convenient finite center at each order; it is not differentiated to evaluate the original partition.
+
+### 119.7 Original count transfer with TWO score insertions
+
+This section both transfers(119.40) to the original product-count law and establishes the new C2 count comparison. The exponential error scale allows uncentered polynomial moments here; the polynomial selection correction in the next section requires the centered estimate.
+
+On the high central box |n_j-C_jp_j|/sqrt(C_jp_j(1-p_j))<=Q^2, Stirling's logarithmic remainder and mode subtraction give
+$$
+ |S_{\mathrm{high}}(n)-S_G(X)|
+             \le\epsilon_Q,\qquad
+ \epsilon_Q\le\operatorname{poly}(Q)e^{-\zeta Q^3/2},
+\tag{119.41}
+$$
+where X_j=(n_j-mu_j)/B. The bound holds across the associated Gaussian lattice cells. It follows by summing O((1+Q^6)/sqrt(C_j)) remainders and the smaller mode displacement costs. All binomial coefficients are included.
+
+Rounding high coordinates and adjoining any original low tuple gives
+$$
+ |T_x(n)-T_G(X)|\le\Delta_Q
+ \le\operatorname{poly}(Q)[B^{-1}+B^{-2}e^{2\zeta Q^3}],
+\quad
+ \eta_Q:=\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-bQ^3}.
+\tag{119.42}
+$$
+The strict half-exponent bound and2zeta<c_q-l are exactly what imply b>0.
+
+Let u=(T_G-y)/sigma and d=(T_x(n)-T_G)/sigma. With |d|<=eta_Q,
+$$
+ |\lambda_y(n)-u^2/2|\le\eta_Q|u|+\eta_Q^2/2,\qquad
+ |e^{-\alpha[(u+d)^2-u^2]/2}-1|
+       \le C\eta_Q(1+|u|)e^{C\eta_Q|u|}.
+\tag{119.43}
+$$
+For second inserted powers use additionally
+|a^2-b^2|<=|a-b|(|a|+|b|).
+The same inequality for a fixed fourth power transfers(119.40).
+
+The extra exponential in(119.43) is absorbed into a relative noise-width change of order eta_Q by Young's inequality. This width change is quantitatively paid at the SAME full saddle: changes of K_H,K_H',W_H are
+delta(sigma'^2-sigma^2)t_alpha^2/(2alpha),
+delta(sigma'^2-sigma^2)t_alpha/alpha,
+delta(sigma'^2-sigma^2)/alpha.
+They are polynomial times an exponential small error. The tilted block, compact standardized locations and density lower bound persist; ratios of the nearby-width densities are bounded. All fixed polynomial score/noise/charge insertions therefore remain polynomially bounded, using Chapter 117's Gaussian moment argument or(119.33)–(119.38). No derivative is inferred from a width sandwich.
+
+To make the C2 statement precise set
+$$
+ J_Q(\alpha,y)=\sum_n e^{-\alpha A_y(n)},\qquad
+ J_G(\alpha,y)=\int e^{-\alpha(S_G+\lambda_y^G)}\,dX,\qquad
+ Z_L(\alpha)=\sum_{n_L}e^{-\alpha S_L(n_L)},
+$$
+$$
+ C_Q(\alpha,y)=B^{|H|} Z_L(\alpha)J_G(\alpha,y).
+\tag{119.44}
+$$
+For k=0,1,2 the derivatives of J_Q insert(-A_y)^k. The derivatives of C_Q insert the same powers of S_G+S_L+lambda_y^G in the comparator. These are exact identities because potentials, centers, floors and sigma stay fixed in differentiation. Equations(119.41)–(119.43), with the corresponding polynomial moments, imply
+$$
+ |J_Q^{(k)}-C_Q^{(k)}|/C_Q
+                    \le\operatorname{poly}(Q)e^{-b'Q^3},
+ \quad k=0,1,2,
+\tag{119.45}
+$$
+uniformly on the compact order/output set, initially on the central cells. Factors |C_Q^(k)|/C_Q are polynomial, since the uncentered fixed moments in Chapter 117 are polynomial. Hence the identities for the first two derivatives of a logarithm turn(119.45) into a C2-o(1) error in log(J_Q/C_Q). A polynomially large first derivative multiplying the small relative error is still exponentially small.
+
+All tails and rare denominators in(119.45) are paid. Under powered binomial and Gaussian product laws, the discarded high-coordinate probabilities are bounded by poly(Q)exp(-cQ^4), uniformly1<=alpha<=2. On the full count box S_Q<=C N_J and maximal charge and likelihood powers of any fixed degree are at most exp(C_kQ^3+2kL). Gaussian tail insertions have the same domination after allowing sigma^(-2k). The normalized Gaussian output density is at least exp(-C_R/delta), by exact un-tilting and its positive compact tilted density. The kernel partition therefore has lower bound c sigma exp(-C_R/delta) after product normalization. The unweighted high normalizer comparison follows from the same Stirling/cell bounds and unweighted tails, so the two normalizations can be compared before dividing. All inserted-tail costs in the exponent are O_k(Q^3+L+delta^(-1)), dominated by Q^4. This proves(119.45) for the full sums and integrals.
+
+The same central-cell argument with insertion |A_y-(s_H+s_L)|^4 proves the transfer of(119.40): its finite center is O(1+m_Q), all required moments remain polynomial, and the error is exponential times a polynomial. The omitted charge caused by high rounding and arbitrary low tuples is at most
+m_Q/(2B)+m_Q exp(zeta Q^3)/B, exponentially small because zeta<c_q/2. Thus Chapter 117's charge moments remain available jointly:
+$$
+ \mathbb E_{\mu_{\alpha,y}}|\mathcal D|^{2k}\le C_k
+ \quad\text{for every fixed }k.
+\tag{119.46}
+$$
+We obtain E_mu|A_y-(s_H+s_L)|^4<=C M_Q^2. Replacing that deterministic center by E_mu A_y costs only a fixed factor, by Jensen and the fourth-power inequality. Cauchy–Schwarz gives Var_mu A_y<=C M_Q. Applying Cauchy–Schwarz to (1+Dcal^2) and the centered squared score, with(119.46), gives the third assertion in(119.31). Thus(119.31) holds for the actual product COUNT law with the original output weight, not only for its Gaussian comparison.
+
+Finally all low normalizers, mode constants, lattice volume and Gaussian normalization constants cancel in the ratio at y and0. From(119.45),
+$$
+ D_\alpha^Q(y):=-\alpha^{-1}
+       \log\frac{f_{Q_\alpha,\sigma/\sqrt\alpha}(y)}
+                     {f_{Q_\alpha,\sigma/\sqrt\alpha}(0)}
+       =D_\alpha^G(y)+o_{C^2_\alpha}(1).
+\tag{119.47}
+$$
+This establishes the count C2 transfer without differentiating Chapter 117's C1 conclusion.
+
+### 119.8 The connected full-q second derivative
+
+Let mu=mu_{alpha,y} from(119.30) and define
+$$
+ Z(\alpha,y)=\mathbb E_\mu e^{\alpha\ell},\qquad
+ w(n)=e^{\alpha\ell(n)}/Z(\alpha,y),\qquad
+ \widetilde\mu=w\mu.
+\tag{119.48}
+$$
+The law tilde mu is exactly the original full-q count escort under the same output: it is proportional to exp(-alpha(A_y-ell)). Constants from modal masses are output independent.
+
+From(119.10),(119.46), uniformly1<=alpha<=2,
+$$
+ |Z-1|\le C\delta^5,\quad Z\ge1/2,\quad
+ 0<w\le C,\quad |w-1|\le C\delta^5(1+\mathcal D^2),
+$$
+$$
+ \mathbb E_{\widetilde\mu}\ell^2\le C\delta^{10}.
+\tag{119.49}
+$$
+For negative ell use1-e^{alpha ell}<=alpha|ell|, and for positive ell its uniform upper bound. The final inequality uses the fourth charge moment and bounded w. These are full-box inequalities, not a truncation that drops extreme selection costs.
+
+The exact second derivative is particularly useful:
+$$
+ \partial_\alpha^2\log Z(\alpha,y)
+      =\operatorname{Var}_{\widetilde\mu}(A_y-\ell)
+                       -\operatorname{Var}_\mu(A_y).
+\tag{119.50}
+$$
+It follows by twice differentiating the two finite partition logs whose ratio is Z. All scores inside the original partitions remain fixed under differentiation.
+
+Put B_y=A_y-E_mu A_y. Then E_mu B_y=0, and algebra gives
+$$
+ \operatorname{Var}_{\widetilde\mu}A_y-\operatorname{Var}_\mu A_y
+    =\mathbb E_\mu[(w-1)B_y^2]
+                      -\{\mathbb E_\mu[(w-1)B_y]\}^2.
+\tag{119.51}
+$$
+Equations(119.31),(119.46),(119.49) bound the first term by Cdelta^5 M_Q and the squared term by Cdelta^10 M_Q. Moreover Var_tilde A_y<=E_tilde B_y^2<=C M_Q and Var_tilde ell<=Cdelta^10. Thus
+$$
+ |\operatorname{Cov}_{\widetilde\mu}(A_y,\ell)|
+                         \le C\delta^5\sqrt{M_Q}.
+\tag{119.52}
+$$
+Substitute Var_tilde(A_y-ell)=Var_tilde A_y-2Cov_tilde(A_y,ell)+Var_tilde ell into(119.50):
+$$
+ |\partial_\alpha^2\log Z(\alpha,y)|
+ \le C\{\delta^5 M_Q+\delta^{10}M_Q
+                +\delta^5\sqrt{M_Q}+\delta^{10}\}
+                      =O(\delta).
+\tag{119.53}
+$$
+The last step uses m_Q<=Cdelta^(-4). This is the missing connected estimate: the leading m_Q mean cancels before the polynomial selection bound is applied.
+
+For closure of the full C2 norm, also
+$$
+ |\log Z|\le C\delta^5,\qquad
+ |\partial_\alpha\log Z|
+       \le C\delta^5(1+\sqrt{M_Q}).
+\tag{119.54}
+$$
+Indeed the first derivative is E_mu A_y-E_tilde(A_y-ell), equal to -E_mu[(w-1)B_y]+E_tilde ell. Apply(119.49),(119.31),(119.46) and Cauchy–Schwarz. This supplies both lower derivatives directly as well.
+
+Exactly, the ratio of the two output-density ratios for P_alpha and Q_alpha is Z(alpha,y)/Z(alpha,0). Unconditioned escort normalizers cancel. Equations(119.53)–(119.54), including differentiation of the bounded factor -1/alpha, yield
+$$
+ D_\alpha(y)-D_\alpha^Q(y)=o_{C^2_\alpha}(1)
+\tag{119.55}
+$$
+uniformly on[1,2] and compact outputs. This step includes the exact full-q selection and actual path dependence through the same fiber and the good-event inputs. It is not a product-independence assertion for the original posterior.
+
+Combining(119.29),(119.47),(119.55) proves(119.15). No additional constant-order term remains in the C2 remainder.
+
+### 119.9 Varentropy conclusion and finite derivative coefficients
+
+Insert(119.15) into the exact identity(119.14). Uniform convergence of r'_1 and r''_1 gives(119.5), with the claimed signs and the factor2. This is an absolute o(1) response statement, even if its retained linear coefficient diverges. The exact output normalization in(119.13) is affine in alpha and has zero second derivative; it has not been separately approximated at insufficient precision.
+
+The finite derivative expressions can be evaluated without choosing a continuum saddle. With all K partial derivatives evaluated at(alpha,t_alpha),
+$$
+ t'=-K_{t\alpha}/W,\qquad
+ t''=-\{K_{t\alpha\alpha}+2K_{tt\alpha}t'
+                                      +K_{ttt}(t')^2\}/W,
+$$
+$$
+ W'=K_{tt\alpha}+K_{ttt}t',\qquad
+ W''=K_{tt\alpha\alpha}+2K_{ttt\alpha}t'
+                          +K_{tttt}(t')^2+K_{ttt}t''.
+\tag{119.56}
+$$
+Every partial is obtained from the explicit finite sum(119.4). These formulas retain full V, noncentrality and finite sigma. Since alpha b_alpha=sqrt(delta)t_alpha and alpha c_alpha=delta/(2W_alpha), twice differentiation gives
+2b'_1+b''_1=sqrt(delta)t''_1 and
+2c'_1+c''_1=(delta/2)(2(W'_1)^2/W_1^3-W''_1/W_1^2).
+This proves the exact equivalence of(119.5) and(119.6).
+
+No extra sigma rate is hidden. The Gaussian noise stays in every saddle and standardized cumulant; its shifted conditional mean was retained in(119.38). Noise-width changes are exponentially small relative changes paid in(119.43). The count and score-tail bounds lose only fixed powers of sigma^(-1), whose logarithms are O(Q^3), while their tail exponent has order-Q^4. The finite derivative coefficients are never replaced by their limits inside amplified terms.
+
+All estimates hold on one common actual-data good event uniformly in alpha in[1,2] and compact y. Their exhaustion gives the probability statement in(119.5). The original support permutation equivariance and row estimates yield uniformity over deterministic size-q supports while evaluating the same uniform-prior posterior. Finite sums and the smooth real root make the relevant functions continuous; compact-output suprema are measurable through a countable dense set.
+
+The new reusable actual-model bridge is(119.31), together with the O(delta) second derivative(119.53). The previous Chapter 117 theorem and all older results remain unchanged. No all-order derivative theorem, derivative at infinity, higher posterior information cumulant, or unbounded-output extension is claimed.
+
+### 119.10 来源、适用范围与未解决边界
+
+有限对数配分函数的导数给出累积量、Gaussian 平方的复特征函数、中心化矩与累积量的关系、Stirling 展开及 Fourier 反演均为经典工具。本章新增的是它们在原始增长维计数阵列、同一输出条件和固定总数选择修正下的联合精度验证，尤其是 (119.31) 与 (119.53)；不把经典恒等式或一般鞍点方法列为新定理。
+
+Goodman 的 *Asymptotic accuracy of the saddlepoint approximation for maximum likelihood estimation*，arXiv:2005.11028v3，Theorem 6(b) 与 Appendix H（印刷页 51–52）说明：把一阶误差升级为二阶误差，须另控 Fourier 被积函数和尾部的二阶导数。其条件 (2.10) 加强至 $k\le2,\ 1\le k+\ell\le7$ 及 $k=3,\ \ell\le4$，并保留 iid 标准渐近制度与识别性条件。其固定 iid 参数化及 MLE 结论不直接覆盖本章增长维经验阵列；(119.19)–(119.29) 单独给出所需有限阵列导数界。
+
+Kolassa–Li 的 *Multivariate saddlepoint approximations in tail probability and conditional inference*，Bernoulli 16(4), 2010, 1191–1207，DOI 10.3150/09-BEJ237，arXiv:1011.5775v1，在固定维 iid 向量均值模型中，通过条件反演比值 (4.1)、Lemma 4.1 的 Watson 展开及分母 (4.3) 得到条件尾概率的相对近似；其格点公式为 (4.8)。该结论不提供本章增长维计数后验的阶数二阶导数，也不替代 (119.45) 或固定总数修正 (119.53)。正文仅借用条件分子分母必须共同控制的经典方法关系；具体归因与版本边界见对应 Library 条目。
+
+所有结论都针对给定实际数据后、同一完整计数后验中的信息方差，单位为 nats 平方；不是跨数据环境的方差、输出平均、微观标签熵或另选先验。本章允许任意缓慢的正噪声趋零，但不覆盖有限层级的零噪声、半指数边界等号、非紧物理输出或三阶及更高阶信息累积量。第 117 章及更早结论保持原范围；原始固定间隙周期项的消失问题仍未解决。此处不作经全局文献核查的原创声明。
+
+## 追加锚（本行以下为增补区）
