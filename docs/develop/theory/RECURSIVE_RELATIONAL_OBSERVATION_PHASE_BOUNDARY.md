@@ -41771,3 +41771,336 @@ $$
 与第150节的紧性共同实现结论相比，这里额外使用实际来源的规范目标速率和实际转移的有限收缩证书。它们共同给出（154.22）的可用余项，才使有限前缀与有限极限 SDP 能承担全部后续终端的误差控制。
 
 ## 追加锚（本行以下为增补区）
+
+## 155. 非周期外围相位的静态几何与全时域误差
+
+第154节要求实际可达转移的外围特征值具有共同有限周期。本节保留同一来源、同一物理接收器及完整参考恢复任务，去掉该周期要求。永久保留的相位组成一个有限维紧群；最优恢复误差的全部渐近取值，恰为一个连续的解码最优值函数在该群上的像。
+
+这给非周期情形的静态表示，也给条件明确的有限证书：若已经掌握这份实际相位群的一张有限覆盖网，则网点上的解码 SDP、相位覆盖半径及衰减余项，共同控制全部未来终端。覆盖网必须属于同一实际相位群；独立任取各边缘相位不能代替共同可实现性。
+
+### 155.1 实际可达外围空间及共同相位群
+
+沿用第154节的固定非退化来源、$p=|b|^2\in(0,1)$、目标通道 $\mathcal V_*$、常数 $C_p$，以及固定装置诱导的
+
+$$
+\mathcal R_n=\mathcal F^n\mathcal E_\omega,
+\qquad
+\mathscr V=\operatorname{span}_{\mathbb C}
+\{\mathcal F^j\mathcal E_\omega(Z):j\ge0,\ Z\in\mathcal L(M_{\mathrm{in}})\},
+\qquad
+\mathcal A=\mathcal F|_{\mathscr V}.
+\tag{155.1}
+$$
+
+$\dim M_{\mathrm{in}}=\dim M=2$、$\dim K=D$，所以 $\dim\mathscr V\le4D^2$。只取实际初始化能生成的方向。
+
+CPTP 幂的有界性使 $\mathcal A$ 的谱落在闭单位圆内，且单位模特征值半单。将其互不相同的单位模特征值列为
+
+$$
+\lambda_1,\ldots,\lambda_s,
+\qquad |\lambda_j|=1,
+$$
+
+记相应谱投影为 $P_j$，并置
+
+$$
+\Pi=\sum_{j=1}^sP_j,
+\qquad
+\Phi_j=P_j\mathcal E_\omega.
+\tag{155.2}
+$$
+
+这些投影只作用在 $\mathscr V$ 上。它们不要求正交或各自保持正性；$\Phi_j$ 也不是逐项的物理通道。实际通道保迹，故外围部分非空：例如真实态轨道的 Cesàro 极限给出 $\mathscr V$ 内的非零固定态。
+
+**定义155.1（共同外围相位群）。** 在 $\mathbb T^s$ 中取
+
+$$
+g=(\lambda_1,\ldots,\lambda_s),
+\qquad
+G=\overline{\{g^n:n\in\mathbb N_0\}},
+\tag{155.3}
+$$
+
+乘法与幂均逐坐标进行。对 $z=(z_1,\ldots,z_s)\in G$，定义
+
+$$
+\mathcal R_z=\sum_{j=1}^s z_j\Phi_j.
+\tag{155.4}
+$$
+
+$G$ 保留这些相位由同一个整数轮次同时产生的限制。若两个特征值满足代数关系，例如 $\lambda_2=\lambda_1^2$，则每个实际相位点均满足 $z_2=z_1^2$；不能将两个坐标分别自由选择。
+
+**引理155.2（共同相位群及真实通道极限）。** $G$ 是紧群，且对任意 $N\ge0$，
+
+$$
+\overline{\{g^n:n\ge N\}}=G.
+\tag{155.5}
+$$
+
+每个 $z\in G$ 都能由某个 $n_k\to\infty$ 的实际轮次子列实现，并且
+
+$$
+\mathcal R_{n_k}\longrightarrow\mathcal R_z.
+\tag{155.6}
+$$
+
+因而每个 $\mathcal R_z$ 都是从原始二维输入到 $M\otimes K$ 的 CPTP 通道。
+
+**证明。** 单位环面的紧性给出一个收敛子列 $g^{n_k}$，可以进一步令 $n_{k+1}-n_k\to\infty$。于是
+
+$$
+g^{n_{k+1}-n_k}\longrightarrow1.
+$$
+
+因此 $g^{-1}$ 是非负整数幂的极限。非负整数幂闭包对乘法封闭，既包含 $g$ 也包含 $g^{-1}$，故与整个循环群的闭包相同；后者是紧群。这也涵盖有限周期情形。
+
+对固定 $N$，尾部幂的闭包为 $g^NG=G$，得到（155.5）。逐次从第 $k$ 个尾部选择趋近给定 $z$ 的点，即可令 $n_k\to\infty$ 且 $g^{n_k}\to z$。
+
+在外围空间上，半单性给
+
+$$
+\mathcal F^n\Pi\mathcal E_\omega
+=\sum_j\lambda_j^n\Phi_j.
+\tag{155.7}
+$$
+
+而 $\mathcal A$ 在 $\ker\Pi$ 上的谱半径严格小于一，故
+$\mathcal F^n(I_{\mathscr V}-\Pi)\mathcal E_\omega\to0$。将这两部分相加即得（155.6）。每个实际 $\mathcal R_{n_k}$ 均为 CPTP，有限维 Choi 正性及固定偏迹在极限下保留，故 $\mathcal R_z$ 为 CPTP。证毕。
+
+这份正性来自整个共同相位点的实际实现，不能按（155.4）的每一项单独解释。
+
+### 155.2 不依赖有限周期的显式衰减余项
+
+令 $\mathscr H=\ker\Pi$。由于其谱半径小于一，可以选择整数 $L\ge1$ 与 $0<\kappa<1$，使
+
+$$
+\|\mathcal A^L|_{\mathscr H}\|_{\mathrm{HS}\to\mathrm{HS}}
+\le\kappa.
+\tag{155.8}
+$$
+
+这里 $L$ 不再要求是某个共同相位周期的倍数。使用第153节未归一化的 Choi 约定，定义
+
+$$
+B=\max_{0\le t<L}
+\left\|J\!\left(
+\mathcal F^t(I_{\mathscr V}-\Pi)\mathcal E_\omega
+\right)\right\|_{\mathrm{HS}}.
+\tag{155.9}
+$$
+
+若 $\mathscr H=\{0\}$，取 $B=0$，收缩约束为空。
+
+**引理155.3（实际通道与外围相位通道的距离）。** 对全部 $n\ge0$，
+
+$$
+\boxed{
+\frac12\|\mathcal R_n-\mathcal R_{g^n}\|_\diamond
+\le\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor}.
+}
+\tag{155.10}
+$$
+
+**证明。** 由（155.7），两通道之差恰为
+$\mathcal F^n(I_{\mathscr V}-\Pi)\mathcal E_\omega$。写 $n=Lk+t$，$0\le t<L$。其 Choi 矩阵的四个输出块均在 $\mathscr H$ 内，逐块施加 $\mathcal A^{Lk}$ 后的 Hilbert–Schmidt 范数至多乘以 $\kappa^k$，所以总 Choi Hilbert–Schmidt 范数至多 $B\kappa^k$。
+
+两项均为 CPTP，差映射保持厄米性。按第154节（154.17），二维输入、$2D$ 维输出给
+$\tfrac12\|\Delta\|_\diamond\le\sqrt D\|J(\Delta)\|_{\mathrm{HS}}$。代入即得。证毕。
+
+因此这仍是原始来源输入及任意参考下的通道界。使用时，须给出实际的投影、收缩块及常数；谱半径小于一只证明存在这样的有限块，不代替（155.8）的核验。
+
+### 155.3 渐近误差的全部取值来自一份静态几何
+
+对任意 CPTP 通道 $\mathcal R:M_{\mathrm{in}}\to M\otimes K$，沿用
+
+$$
+\mathfrak h(\mathcal R)
+=\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ \mathrm{CPTP}}
+\frac12\|(\operatorname{id}_M\otimes\mathcal D)\mathcal R-\mathcal V_*\|_\diamond,
+\qquad
+h(z)=\mathfrak h(\mathcal R_z).
+\tag{155.11}
+$$
+
+每个 $h(z)$ 都是第153节的固定数据解码 SDP 值；其矩阵阶数仍为 $4D$ 与 $16$。令 $e_n$ 为实际第 $n$ 终端的最优完整参考误差，并置
+
+$$
+\zeta_n=C_pp^{n-1}+\sqrt D\,B\,\kappa^{\lfloor n/L\rfloor},
+\qquad n\ge3.
+\tag{155.12}
+$$
+
+**定理155.4（最优误差的相位几何）。** 函数 $h:G\to[0,1]$ 连续，且
+
+$$
+\boxed{|e_n-h(g^n)|\le\zeta_n\qquad(n\ge3).}
+\tag{155.13}
+$$
+
+$e_n$ 的全部子列极限组成的集合恰为 $h(G)$。特别地，
+
+$$
+\boxed{
+\limsup_{n\to\infty}e_n=\max_{z\in G}h(z),
+\qquad
+\liminf_{n\to\infty}e_n=\min_{z\in G}h(z).
+}
+\tag{155.14}
+$$
+
+因此 $e_n$ 收敛，当且仅当 $h$ 在实际共同相位群 $G$ 上为常数。
+
+**证明。** 第154节的最优解码扰动界给
+
+$$
+|\mathfrak h(\mathcal R)-\mathfrak h(\mathcal S)|
+\le\tfrac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+
+式（155.4）对 $z$ 连续，因此 $h$ 连续。实际目标换到固定四维坐标后，与 $\mathcal V_*$ 的半 diamond 距离至多 $C_pp^{n-1}$；再应用（155.10），得到（155.13）。
+
+若 $e_{n_k}$ 收敛，由 $G$ 紧，可以进一步取子列使 $g^{n_k}\to z\in G$。连续性及 $\zeta_{n_k}\to0$ 强制该极限为 $h(z)$。
+
+反过来，给定任何 $z\in G$，引理155.2提供 $n_k\to\infty$、$g^{n_k}\to z$。再次用（155.13），有 $e_{n_k}\to h(z)$。所以极限集合恰为 $h(G)$。连续函数在紧集上达到最大与最小值，得到（155.14）。有界实序列恰在全部子列极限相同时收敛，故得到最后的充要条件。证毕。
+
+该结论没有预设 $h$ 恒定，也没有用通道本身不收敛证明 $h$ 不恒定。它把尚未解决的局部解码不变性准确定位为同一个静态相位群上的函数性质。
+
+### 155.4 全时域误差与有限相位覆盖证书
+
+记
+
+$$
+E_\infty=\sup_{n\ge1}e_n,
+\qquad M_{N-1}=\max_{1\le n<N}e_n,
+\qquad h_G=\max_{z\in G}h(z).
+$$
+
+**推论155.5（一般外围相位下的全时域夹逼）。** 对全部 $N\ge3$，
+
+$$
+\boxed{
+\max\{M_{N-1},h_G\}
+\le E_\infty
+\le\max\{M_{N-1},h_G+\zeta_N\}.
+}
+\tag{155.15}
+$$
+
+**证明。** 有限前缀最大值及（155.14）的上极限都不超过全时域上确界。对 $n\ge N$，式（155.13）及 $\zeta_n\le\zeta_N$ 给 $e_n\le h_G+\zeta_N$。合并前缀即得。证毕。
+
+$h_G$ 仍然是相位几何上的整体优化，不能仅因每个点的解码问题是 SDP 就将其称为一个凸 SDP。以下用明确的覆盖证书把它夹住。
+
+在 $G$ 上采用坐标弦距离
+
+$$
+d_G(z,w)=\max_{1\le j\le s}|z_j-w_j|,
+$$
+
+并定义有限常数
+
+$$
+C_{\mathrm{ph}}
+=\sqrt D\sum_{j=1}^s\|J(\Phi_j)\|_{\mathrm{HS}}.
+\tag{155.16}
+$$
+
+**引理155.6（相位变化的统一误差界）。** 对所有 $z,w\in G$，
+
+$$
+\boxed{|h(z)-h(w)|\le C_{\mathrm{ph}}\,d_G(z,w).}
+\tag{155.17}
+$$
+
+**证明。** $\mathcal R_z-\mathcal R_w$ 是两个 CPTP 通道之差，故可再次使用（154.17）。由 Choi 线性性及三角不等式，
+
+$$
+\begin{aligned}
+|h(z)-h(w)|
+&\le\tfrac12\|\mathcal R_z-\mathcal R_w\|_\diamond\\
+&\le\sqrt D\left\|\sum_j(z_j-w_j)J(\Phi_j)\right\|_{\mathrm{HS}}\\
+&\le C_{\mathrm{ph}}\,d_G(z,w).
+\end{aligned}
+$$
+
+这里只对整个物理通道之差应用厄米保持界，没有假定每个复谱分量 $\Phi_j$ 自身为通道或保持厄米性。证毕。
+
+**定理155.7（有限相位网的全时域证书）。** 假设已经给出有限集合
+
+$$
+Z_\eta=\{z^{(1)},\ldots,z^{(m)}\}\subseteq G
+$$
+
+及其经过证明的覆盖界
+
+$$
+\forall z\in G\quad\min_{1\le k\le m}d_G(z,z^{(k)})\le\eta.
+\tag{155.18}
+$$
+
+令 $h_\eta=\max_k h(z^{(k)})$。则
+
+$$
+h_\eta\le h_G\le h_\eta+C_{\mathrm{ph}}\eta,
+\tag{155.19}
+$$
+
+并且对每个 $N\ge3$，
+
+$$
+\boxed{
+\max\{M_{N-1},h_\eta\}
+\le E_\infty
+\le\max\{M_{N-1},h_\eta+C_{\mathrm{ph}}\eta+\zeta_N\}.
+}
+\tag{155.20}
+$$
+
+**证明。** 网点属于 $G$，给（155.19）的下界。给定任意 $z\in G$，选择（155.18）的一个网点，用引理155.6得到 $h(z)\le h_\eta+C_{\mathrm{ph}}\eta$。对 $z$ 取最大值即得上界。再代入（155.15）。证毕。
+
+实际计算可以使用第153节的原始、对偶可行点，而非假设每个 SDP 已精确求解。若有限前缀给 $\ell_n\le e_n\le u_n$，每个相位网点给 $\ell_k^G\le h(z^{(k)})\le u_k^G$，则
+
+$$
+\begin{aligned}
+L_{N,\eta}
+&=\max\left\{\max_{n<N}\ell_n,\ \max_k\ell_k^G\right\},\\
+U_{N,\eta}
+&=\max\left\{\max_{n<N}u_n,\ \max_k u_k^G+C_{\mathrm{ph}}\eta+\zeta_N\right\},\\
+L_{N,\eta}&\le E_\infty\le U_{N,\eta}.
+\end{aligned}
+\tag{155.21}
+$$
+
+这些上界还给出合法终端解码器。对每个网点固定给出上界 $u_k^G$ 的原始 SDP 可行解码器 $\mathcal D_k$；在 $n\ge N$ 的指定终端，选择一个距 $g^n$ 不超过 $\eta$ 的网点，使用相应 $\mathcal D_k$，再通过 $F_n^{-1}$ 与实际档案嵌入恢复原坐标。第154节的扰动估计对每个固定解码器都成立，因此同样给出（155.21）的统一上界。这里的网点选择与坐标变换只使用原合同已经允许的终端编号；持续运行的接收器没有获得外部轮次控制，也没有增加持久存储。
+
+因此有限数据可以承担整条无限尾部的上下界，但它必须同时包含转移收缩、相位覆盖和 SDP 可行性三类实际证书。本节没有从有限采样本身推断覆盖半径。
+
+### 155.5 可实现相位约束与有限证书的边界
+
+若所有外围特征值为共同 $q$ 次单位根，则 $G$ 有限；取全部不同相位点、令 $\eta=0$，恢复第154节的有限周期情形。
+
+若已证明实际相位群恰为
+
+$$
+G=\{(1,z,\overline z):|z|=1\},
+\tag{155.22}
+$$
+
+则可取 $m$ 个等间隔点
+$z=e^{2\pi i k/m}$，其三坐标点属于 $G$，并有覆盖半径
+
+$$
+\eta\le2\sin\frac{\pi}{2m}.
+\tag{155.23}
+$$
+
+这是因为任意圆周角距离最近网点的角差至多 $\pi/m$，弦长为该角差一半的正弦乘二；共轭坐标具有同一距离。式（155.22）本身仍须由实际谱的共同相位关系证明，不能只由小数特征值宣布。
+
+对任意紧 $G$，有限覆盖网存在，且由（155.5）甚至可从实际整数轮次的相位点中选出。但是，存在性不提供一份已核实的覆盖网，也不自动给出相位关系的有效识别算法。近似浮点谱不能独自判定一个相位是否为单位根，或若干相位是否满足整数关系。本节不为任意输入表示承诺统一有效的识别程序。
+
+同样，若只知道 $G\subseteq\mathbb T^s$，不能把整个环面上的任意点当成实际来源来求下界：该点按（155.4）组合出的映射甚至可能不保持正性。所述精确几何与网点证书始终以真实的 $G$ 为域。
+
+第154节的独立接收相位例中，各 $\mathcal R_z$ 仅差接收端的已知局部酉，终端解码器可逆向吸收它，因而 $h$ 在该轨道上恒定。对一般固定接收器，是否所有实际外围相位都具有这种本地可消去性，仍需额外结构证明。定理155.4已经在不预设答案的条件下刻画其全部渐近误差；定理155.7也不以误差序列收敛为前提。
+
+本节固定一台物理接收器；相位参数描述这台装置的长期轨道，没有按相位另换持续接收通道。上述证书不成为全体同维装置的误差下界，也不自动在来源退化极限上一致。本节给出纸面推导，未运行数值 SDP、相位覆盖程序或 Lean 核验。
+
+## 追加锚（本行以下为增补区）
