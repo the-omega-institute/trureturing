@@ -118,6 +118,8 @@ def domainArena : ObjectDomainArena where
     Law r := (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ r.readout () false = false }
   Domain := Set Nat
 
+def domainObjectArena : Arena := domainArena.toArena
+
 local instance : DecidableEq domainArena.State := domainArena.toArena.stateDecidableEq
 
 def domainReads : PrimitiveRealization (cutSignature Bool Bool) :=
@@ -174,18 +176,39 @@ elab "observe_object_domain_routes" : command => do
     "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) "
   let slots := "variation domainVariation sensitivity domainSensitivity " ++
     "escape from (Set Nat) escape continues (open)"
-  let cases : Array (String × String × Name) := #[
+  let occurrence := " object_arena domainObjectArena catalog domain "
+  let cases : Array (String × String × Name × Option String) := #[
     ("object_domain_native_validated",
       "information_theorem domainNative in domainArena " ++ readout ++
         "primitives domainReads " ++ slots ++
         " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
-      `LeanInformationAudit.Tests.EscapeRecords.domainNative),
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
     ("object_domain_inline_validated",
       "register_information_theorem domainStatement in domainArena " ++ readout ++
         "primitives domainReads.toPrimitiveBundle " ++
         "realization inline domainReads := domainBridge " ++ slots,
-      ``domainStatement)]
-  for (label, source, theoremName) in cases do
+      ``domainStatement, none),
+    ("object_domain_occurrence_native_validated",
+      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads " ++ slots ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
+    ("object_domain_occurrence_named_validated",
+      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads.toPrimitiveBundle realization domainBridge " ++ slots,
+      ``domainStatement, none),
+    ("object_domain_occurrence_inline_validated",
+      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads.toPrimitiveBundle " ++
+        "realization inline domainReads := domainBridge " ++ slots,
+      ``domainStatement, none),
+    ("object_domain_occurrence_wrong_origin",
+      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads variation domainVariation sensitivity domainSensitivity " ++
+        "escape from (Bool) escape continues (open)" ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, some "dtr.escape_from_state")]
+  for (label, source, theoremName, expected) in cases do
     let saved ← get
     modify fun state => { state with messages := {} }
     let mut failure := ""
@@ -203,7 +226,15 @@ elab "observe_object_domain_routes" : command => do
         failure := failure ++ diagnostic
     for message in (← get).messages.toList do
       if message.severity == .error then failure := failure ++ (← message.data.toString)
-    let ok := validated && failure.isEmpty && row.any (·.escape.fromObject.any (·.name == ``Set))
+    let routed := if label.startsWith "object_domain_occurrence" then
+      row.any fun record =>
+        record.occurrence.key.objectArena == ``domainObjectArena &&
+          record.occurrence.arena.getAppFn.constName? == some ``domainArena
+      else true
+    let ok := match expected with
+      | none => validated && failure.isEmpty && routed &&
+          row.any (·.escape.fromObject.any (·.name == ``Set))
+      | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
     set saved
     (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
 
