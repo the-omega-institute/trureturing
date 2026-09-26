@@ -42,7 +42,7 @@ The weight of the two vertices at which the arrows turn.
 
 **Definition 1.4 (Vertex weights).**
 
-$$\operatorname{vertexWeight}\left(p, t, right, right, up, up\right) = \operatorname{a}\left(p, t\right),\quad\operatorname{vertexWeight}\left(p, t, left, left, up, up\right) = \operatorname{b}\left(t\right),\quad\operatorname{vertexWeight}\left(p, t, right, left, up, down\right) = \operatorname{c}\left(p\right)$$
+$$\operatorname{vertexWeight}\left(p, t, right, right, up, up\right) = \operatorname{a}\left(p, t\right),\quad\operatorname{vertexWeight}\left(p, t, left, left, down, down\right) = \operatorname{a}\left(p, t\right),\quad\operatorname{vertexWeight}\left(p, t, left, left, up, up\right) = \operatorname{b}\left(t\right),\quad\operatorname{vertexWeight}\left(p, t, right, right, down, down\right) = \operatorname{b}\left(t\right),\quad\operatorname{vertexWeight}\left(p, t, right, left, up, down\right) = \operatorname{c}\left(p\right),\quad\operatorname{vertexWeight}\left(p, t, left, right, down, up\right) = \operatorname{c}\left(p\right),\quad\operatorname{vertexWeight}\left(p, t, hl, hr, vt, vb\right) = 0 \operatorname{otherwise}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.vertexWeight` (`✓ std3`).
 
@@ -54,7 +54,7 @@ At the crossing of a horizontal line with parameter x and a vertical line with p
 
 **Definition 1.5 (Left wall).**
 
-$$\operatorname{leftWall}\left(p, x, xi, right, left\right) = \operatorname{b}\left(x \cdot xi_{L}\right),\quad\operatorname{leftWall}\left(p, x, xi, left, right\right) = \operatorname{b}\left(\frac{x}{p \cdot xi_{L}}\right)$$
+$$\operatorname{leftWall}\left(p, x, xi_{L}, right, left\right) = \operatorname{b}\left(x \cdot xi_{L}\right),\quad\operatorname{leftWall}\left(p, x, xi_{L}, left, right\right) = \operatorname{b}\left(\frac{x}{p \cdot xi_{L}}\right),\quad\operatorname{leftWall}\left(p, x, xi_{L}, e, f\right) = 0 \operatorname{otherwise}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.leftWall` (`✓ std3`).
 
@@ -66,7 +66,7 @@ A pair of horizontal lines ends at the left wall; the weight is b(x xi_L) when t
 
 **Definition 1.6 (Right wall).**
 
-$$\operatorname{rightWall}\left(p, x, xi, left, right\right) = \operatorname{b}\left(x \cdot xi_{R}\right),\quad\operatorname{rightWall}\left(p, x, xi, right, left\right) = \operatorname{b}\left(\frac{x \cdot p}{xi_{R}}\right)$$
+$$\operatorname{rightWall}\left(p, x, xi_{R}, left, right\right) = \operatorname{b}\left(x \cdot xi_{R}\right),\quad\operatorname{rightWall}\left(p, x, xi_{R}, right, left\right) = \operatorname{b}\left(\frac{x \cdot p}{xi_{R}}\right),\quad\operatorname{rightWall}\left(p, x, xi_{R}, e, f\right) = 0 \operatorname{otherwise}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.rightWall` (`✓ std3`).
 
@@ -78,7 +78,7 @@ A pair of horizontal lines starts at the right wall; the weight is b(x xi_R) whe
 
 **Definition 1.7 (Top wall).**
 
-$$\operatorname{topWall}\left(p, y, xi, down, up\right) = \operatorname{b}\left(y \cdot xi_{U}\right),\quad\operatorname{topWall}\left(p, y, xi, up, down\right) = \operatorname{b}\left(\frac{y \cdot p}{xi_{U}}\right)$$
+$$\operatorname{topWall}\left(p, y, xi_{U}, down, up\right) = \operatorname{b}\left(y \cdot xi_{U}\right),\quad\operatorname{topWall}\left(p, y, xi_{U}, up, down\right) = \operatorname{b}\left(\frac{y \cdot p}{xi_{U}}\right),\quad\operatorname{topWall}\left(p, y, xi_{U}, e, f\right) = 0 \operatorname{otherwise}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.topWall` (`✓ std3`).
 
@@ -90,7 +90,7 @@ A pair of vertical lines starts at the top wall; the weight is b(y xi_U) when th
 
 **Definition 1.8 (Bottom wall).**
 
-$$\operatorname{bottomWall}\left(p, y, xi, up, down\right) = \operatorname{b}\left(y \cdot xi_{D}\right),\quad\operatorname{bottomWall}\left(p, y, xi, down, up\right) = \operatorname{b}\left(\frac{y}{p \cdot xi_{D}}\right)$$
+$$\operatorname{bottomWall}\left(p, y, xi_{D}, up, down\right) = \operatorname{b}\left(y \cdot xi_{D}\right),\quad\operatorname{bottomWall}\left(p, y, xi_{D}, down, up\right) = \operatorname{b}\left(\frac{y}{p \cdot xi_{D}}\right),\quad\operatorname{bottomWall}\left(p, y, xi_{D}, e, f\right) = 0 \operatorname{otherwise}$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.bottomWall` (`✓ std3`).
 
@@ -126,7 +126,7 @@ The vertical lines 2j and 2j + 1, counted from the left, carry y_j and 1/y_j.
 
 **Definition 1.11 (The box partition function).**
 
-$$\operatorname{Z}\left(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}\right) = \sum_{h,v} \operatorname{walls} \prod_{r,s} \operatorname{vertexWeight}\left(p, \frac{\operatorname{rowParam}\left(xs, r\right)}{\operatorname{colParam}\left(ys, s\right)}, \operatorname{hl}, \operatorname{hr}, \operatorname{vt}, \operatorname{vb}\right)$$
+$$\operatorname{Z}(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}) = \sum_{h \in \left(\operatorname{Fin}\left(2 \cdot M\right) \to \left(\operatorname{Fin}\left(2 \cdot M + 1\right) \to \operatorname{HArrow}\right)\right), v \in \left(\operatorname{Fin}\left(2 \cdot M\right) \to \left(\operatorname{Fin}\left(2 \cdot M + 1\right) \to \operatorname{VArrow}\right)\right)} \prod_{i \in \operatorname{Fin}\left(M\right)} (\operatorname{leftWall}\left(p, x_{i}, xi_{L}, \operatorname{h}\left(2 \cdot i, 0\right), \operatorname{h}\left(2 \cdot i + 1, 0\right)\right) \cdot \operatorname{rightWall}\left(p, x_{i}, xi_{R}, \operatorname{h}\left(2 \cdot i, 2 \cdot M\right), \operatorname{h}\left(2 \cdot i + 1, 2 \cdot M\right)\right)) \prod_{j \in \operatorname{Fin}\left(M\right)} (\operatorname{topWall}\left(p, y_{j}, xi_{U}, \operatorname{v}\left(2 \cdot j, 0\right), \operatorname{v}\left(2 \cdot j + 1, 0\right)\right) \cdot \operatorname{bottomWall}\left(p, y_{j}, xi_{D}, \operatorname{v}\left(2 \cdot j, 2 \cdot M\right), \operatorname{v}\left(2 \cdot j + 1, 2 \cdot M\right)\right)) \prod_{r,s \in \operatorname{Fin}\left(2 \cdot M\right)} \operatorname{vertexWeight}\left(p, \frac{\operatorname{rowParam}\left(xs, r\right)}{\operatorname{colParam}\left(ys, s\right)}, \operatorname{h}\left(r, s\right), \operatorname{h}\left(r, s + 1\right), \operatorname{v}\left(s, r\right), \operatorname{v}\left(s, r + 1\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.Z` (`✓ std3`).
 
@@ -134,7 +134,7 @@ $$\operatorname{Z}\left(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}\right) = \s
 
 *Commentary.*
 
-A configuration puts an arrow on each of the 2M + 1 segments of every horizontal and every vertical line; its weight is the product of the M left, right, top and bottom wall weights and of the weights of the 4M^2 crossings, and the partition function is the sum over all configurations.
+A configuration h, v puts an arrow on each of the 2M + 1 segments of every horizontal line (segment 0 at the left wall, segment 2M at the right wall) and of every vertical line (segment 0 at the top wall, segment 2M at the bottom wall); x_i = xs(i) and y_j = ys(j). Its weight is the product of the wall weights of the M pairs of rows and the M pairs of columns and of the weights of the 4M^2 crossings, where the crossing of row r and column s sees the arrows h(r, s), h(r, s + 1) on its left and right and v(s, r), v(s, r + 1) above and below; the partition function is the sum over all configurations.
 
 **Definition 1.12 (The factor W).**
 
@@ -174,7 +174,7 @@ The sum over the two arrow states of the loop through the bottom and right walls
 
 **Definition 1.15 (The conjectured value).**
 
-$$\operatorname{formula}\left(M, p, xs, ys\right) = \frac{\prod_{i,j} \frac{x_{i}}{y_{j}} - \frac{y_{j}}{x_{i}} \operatorname{W}\left(p, x_{i}, y_{j}\right)}{\prod_{i < j} (\frac{x_{j}}{x_{i}} - \frac{x_{i}}{x_{j}}) (\frac{y_{i}}{y_{j}} - \frac{y_{j}}{y_{i}})} \operatorname{det} (\frac{\operatorname{c}\left(p\right)^{2} \cdot \operatorname{a}\left(p, x_{i} \cdot y_{j}\right) \cdot \operatorname{a}\left(p, \frac{1}{x_{i} \cdot y_{j}}\right) \cdot \operatorname{FLU}\left(p, x_{i}, xi_{L}, xi_{U}\right) \cdot \operatorname{FDR}\left(p, y_{j}, xi_{D}, xi_{R}\right)}{(\frac{x_{j}}{y_{i}} - \frac{y_{i}}{x_{j}}) \cdot \operatorname{W}\left(p, x_{i}, y_{j}\right)})$$
+$$\operatorname{formula}(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}) = \frac{\prod_{i,j \in \operatorname{Fin}\left(M\right)} ((\frac{x_{i}}{y_{j}} - \frac{y_{j}}{x_{i}}) \operatorname{W}\left(p, x_{i}, y_{j}\right))}{\prod_{i < j, i,j \in \operatorname{Fin}\left(M\right)} (\frac{x_{j}}{x_{i}} - \frac{x_{i}}{x_{j}}) (\frac{y_{i}}{y_{j}} - \frac{y_{j}}{y_{i}})} \operatorname{det}_{i,j \in \operatorname{Fin}\left(M\right)} (\frac{\operatorname{c}\left(p\right)^{2} \cdot \operatorname{a}\left(p, x_{i} \cdot y_{j}\right) \cdot \operatorname{a}\left(p, \frac{1}{x_{i} \cdot y_{j}}\right) \cdot \operatorname{FLU}\left(p, x_{i}, xi_{L}, xi_{U}\right) \cdot \operatorname{FDR}\left(p, y_{j}, xi_{D}, xi_{R}\right)}{(\frac{x_{j}}{y_{i}} - \frac{y_{i}}{x_{j}}) \cdot \operatorname{W}\left(p, x_{i}, y_{j}\right)})$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.formula` (`✓ std3`).
 
@@ -186,7 +186,7 @@ The product over all i, j of (x_i/y_j - y_j/x_i) W(x_i, y_j), divided by the pro
 
 **Definition 1.16 (The conjecture).**
 
-$$claim \Leftrightarrow (\forall M \in \mathbb{N},\; (\operatorname{nonzero}) \Rightarrow (\operatorname{Z}\left(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}\right) = \operatorname{formula}\left(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}\right)))$$
+$$claim \Leftrightarrow (\forall M \in \mathbb{N}, \forall p,xi_{L},xi_{U},xi_{R},xi_{D} \in \mathbb{C}, \forall xs,ys \in \left(\operatorname{Fin}\left(M\right) \to \mathbb{C}\right), (\forall i,j \in \operatorname{Fin}\left(M\right), \left(\left(p,xi_{L},xi_{U},xi_{R},xi_{D},x_{i},y_{j} \ne 0 \land \frac{x_{j}}{y_{i}} - \frac{y_{i}}{x_{j}} \ne 0\right) \land \operatorname{W}\left(p, x_{i}, y_{j}\right) \ne 0\right) \land \left((i < j) \Rightarrow ((\frac{x_{j}}{x_{i}} - \frac{x_{i}}{x_{j}}) \cdot (\frac{y_{i}}{y_{j}} - \frac{y_{j}}{y_{i}}) \ne 0)\right)) \Rightarrow (\operatorname{Z}(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D}) = \operatorname{formula}(M, p, xs, ys, xi_{L}, xi_{U}, xi_{R}, xi_{D})))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/KadeBoxBoundaryRefutation.claim` (`✓ std3`).
 

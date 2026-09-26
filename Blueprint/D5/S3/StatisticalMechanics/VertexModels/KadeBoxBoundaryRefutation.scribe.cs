@@ -26,19 +26,19 @@ internal sealed class KadeBoxBoundaryRefutationDocument : IScribeDocumentDefinit
             Node("vertex", "Vertex weights", VertexFormula(),
                 "At the crossing of a horizontal line with parameter x and a vertical line with parameter y the spectral ratio is t = x/y. The weight is a when all four arrows point right and up or all point left and down, b when the horizontal arrows point left and the vertical ones up or the horizontal ones right and the vertical ones down, c when the horizontal arrows point into the crossing and the vertical ones out of it or the reverse, and 0 for the ten configurations that break the ice rule.",
                 "vertexWeight", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("left", "Left wall", WallFormula("leftWall", F.Id("x"), F.Id("right"), F.Id("left"),
+            Node("left", "Left wall", WallFormula("leftWall", Xi("L"), F.Id("x"), F.Id("right"), F.Id("left"),
                     Times(F.Id("x"), Xi("L")), new Formula.Fraction(F.Id("x"), Times(P, Xi("L")))),
                 "A pair of horizontal lines ends at the left wall; the weight is b(x xi_L) when the upper edge points right and the lower edge left, b(x/(p xi_L)) for the reverse, and 0 otherwise.",
                 "leftWall", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("right", "Right wall", WallFormula("rightWall", F.Id("x"), F.Id("left"), F.Id("right"),
+            Node("right", "Right wall", WallFormula("rightWall", Xi("R"), F.Id("x"), F.Id("left"), F.Id("right"),
                     Times(F.Id("x"), Xi("R")), new Formula.Fraction(Times(F.Id("x"), P), Xi("R"))),
                 "A pair of horizontal lines starts at the right wall; the weight is b(x xi_R) when the upper edge points left and the lower edge right, b(x p/xi_R) for the reverse, and 0 otherwise.",
                 "rightWall", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("top", "Top wall", WallFormula("topWall", F.Id("y"), F.Id("down"), F.Id("up"),
+            Node("top", "Top wall", WallFormula("topWall", Xi("U"), F.Id("y"), F.Id("down"), F.Id("up"),
                     Times(F.Id("y"), Xi("U")), new Formula.Fraction(Times(F.Id("y"), P), Xi("U"))),
                 "A pair of vertical lines starts at the top wall; the weight is b(y xi_U) when the left edge points down and the right edge up, b(y p/xi_U) for the reverse, and 0 otherwise.",
                 "topWall", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("bottom", "Bottom wall", WallFormula("bottomWall", F.Id("y"), F.Id("up"), F.Id("down"),
+            Node("bottom", "Bottom wall", WallFormula("bottomWall", Xi("D"), F.Id("y"), F.Id("up"), F.Id("down"),
                     Times(F.Id("y"), Xi("D")), new Formula.Fraction(F.Id("y"), Times(P, Xi("D")))),
                 "A pair of vertical lines ends at the bottom wall; the weight is b(y xi_D) when the left edge points up and the right edge down, b(y/(p xi_D)) for the reverse, and 0 otherwise.",
                 "bottomWall", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -49,7 +49,7 @@ internal sealed class KadeBoxBoundaryRefutationDocument : IScribeDocumentDefinit
                 "The vertical lines 2j and 2j + 1, counted from the left, carry y_j and 1/y_j.",
                 "colParam", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("z", "The box partition function", ZFormula(),
-                "A configuration puts an arrow on each of the 2M + 1 segments of every horizontal and every vertical line; its weight is the product of the M left, right, top and bottom wall weights and of the weights of the 4M^2 crossings, and the partition function is the sum over all configurations.",
+                "A configuration h, v puts an arrow on each of the 2M + 1 segments of every horizontal line (segment 0 at the left wall, segment 2M at the right wall) and of every vertical line (segment 0 at the top wall, segment 2M at the bottom wall); x_i = xs(i) and y_j = ys(j). Its weight is the product of the wall weights of the M pairs of rows and the M pairs of columns and of the weights of the 4M^2 crossings, where the crossing of row r and column s sees the arrows h(r, s), h(r, s + 1) on its left and right and v(s, r), v(s, r + 1) above and below; the partition function is the sum over all configurations.",
                 "Z", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("w", "The factor W", Disp(Equal(Call("W", P, F.Id("x"), F.Id("y")),
                     Times(Times(Times(Call("a", P, Times(F.Id("x"), F.Id("y"))), Call("a", P, Inv(Times(F.Id("x"), F.Id("y"))))),
@@ -99,6 +99,12 @@ internal sealed class KadeBoxBoundaryRefutationDocument : IScribeDocumentDefinit
     private static Formula Inv(Formula value) => new Formula.Fraction(D(1), value);
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula NotEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula Member(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
     private static Formula Less(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Add(Formula left, Formula right) =>
@@ -120,17 +126,22 @@ internal sealed class KadeBoxBoundaryRefutationDocument : IScribeDocumentDefinit
         Formula r = F.Id("right"), l = F.Id("left"), u = F.Id("up"), d = F.Id("down");
         return Disp(Seq(
             Equal(Call("vertexWeight", P, T, r, r, u, u), Call("a", P, T)), Comma, Quad,
+            Equal(Call("vertexWeight", P, T, l, l, d, d), Call("a", P, T)), Comma, Quad,
             Equal(Call("vertexWeight", P, T, l, l, u, u), Call("b", T)), Comma, Quad,
-            Equal(Call("vertexWeight", P, T, r, l, u, d), Call("c", P))));
+            Equal(Call("vertexWeight", P, T, r, r, d, d), Call("b", T)), Comma, Quad,
+            Equal(Call("vertexWeight", P, T, r, l, u, d), Call("c", P)), Comma, Quad,
+            Equal(Call("vertexWeight", P, T, l, r, d, u), Call("c", P)), Comma, Quad,
+            Equal(Call("vertexWeight", P, T, F.Id("hl"), F.Id("hr"), F.Id("vt"), F.Id("vb")), D(0)), Sp,
+            Named("otherwise")));
     }
 
-    private static Formula WallFormula(string name, Formula parameter, Formula first, Formula second,
+    private static Formula WallFormula(string name, Formula xi, Formula parameter, Formula first, Formula second,
         Formula plus, Formula minus)
     {
-        Formula xi = F.Id("xi");
         return Disp(Seq(
             Equal(Call(name, P, parameter, xi, first, second), Call("b", plus)), Comma, Quad,
-            Equal(Call(name, P, parameter, xi, second, first), Call("b", minus))));
+            Equal(Call(name, P, parameter, xi, second, first), Call("b", minus)), Comma, Quad,
+            Equal(Call(name, P, parameter, xi, F.Id("e"), F.Id("f")), D(0)), Sp, Named("otherwise")));
     }
 
     private static Formula ParamFormula(string name, string variable)
@@ -141,36 +152,68 @@ internal sealed class KadeBoxBoundaryRefutationDocument : IScribeDocumentDefinit
             Equal(Call(name, xs, Add(Times(D(2), i), D(1))), Inv(Sub(variable, "i")))));
     }
 
+    private static Formula FinOf(Formula n) => Call("Fin", n);
+    private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Args() => Seq(F.Id("M"), Comma, Sp, P, Comma, Sp, F.Id("xs"), Comma, Sp, F.Id("ys"), Comma, Sp,
+        Xi("L"), Comma, Sp, Xi("U"), Comma, Sp, Xi("R"), Comma, Sp, Xi("D"));
+    private static Formula CallArgs(string name) => Seq(Named(name), Parenthesized(Args()));
+
     private static Formula ZFormula()
     {
-        Formula r = F.Id("r"), s = F.Id("s");
-        Formula weight = Call("vertexWeight", P, new Formula.Fraction(Call("rowParam", F.Id("xs"), r), Call("colParam", F.Id("ys"), s)),
-            Named("hl"), Named("hr"), Named("vt"), Named("vb"));
-        return Disp(Equal(Call("Z", F.Id("M"), P, F.Id("xs"), F.Id("ys"), Xi("L"), Xi("U"), Xi("R"), Xi("D")),
-            Seq(Sum, Underscore, Grp(Seq(F.Id("h"), Comma, F.Id("v"))), Sp, Named("walls"), Sp,
-                Prod, Underscore, Grp(Seq(r, Comma, s)), Sp, weight)));
+        Formula m = F.Id("M"), i = F.Id("i"), j = F.Id("j"), r = F.Id("r"), s = F.Id("s");
+        Formula m2 = Times(D(2), m);
+        Formula hType = new Formula.TypeArrow(FinOf(m2), new Formula.TypeArrow(FinOf(Add(m2, D(1))), Named("HArrow")));
+        Formula vType = new Formula.TypeArrow(FinOf(m2), new Formula.TypeArrow(FinOf(Add(m2, D(1))), Named("VArrow")));
+        Formula twoI = Times(D(2), i), twoIp = Add(Times(D(2), i), D(1));
+        Formula twoJ = Times(D(2), j), twoJp = Add(Times(D(2), j), D(1));
+        Formula walls = Seq(
+            Prod, Underscore, Grp(Member(i, FinOf(m))), Sp,
+            Parenthesized(Times(
+                Call("leftWall", P, Sub("x", "i"), Xi("L"), Call("h", twoI, D(0)), Call("h", twoIp, D(0))),
+                Call("rightWall", P, Sub("x", "i"), Xi("R"), Call("h", twoI, m2), Call("h", twoIp, m2)))), Sp,
+            Prod, Underscore, Grp(Member(j, FinOf(m))), Sp,
+            Parenthesized(Times(
+                Call("topWall", P, Sub("y", "j"), Xi("U"), Call("v", twoJ, D(0)), Call("v", twoJp, D(0))),
+                Call("bottomWall", P, Sub("y", "j"), Xi("D"), Call("v", twoJ, m2), Call("v", twoJp, m2)))));
+        Formula cross = Seq(Prod, Underscore, Grp(Member(Seq(r, Comma, s), FinOf(m2))), Sp,
+            Call("vertexWeight", P, new Formula.Fraction(Call("rowParam", F.Id("xs"), r), Call("colParam", F.Id("ys"), s)),
+                Call("h", r, s), Call("h", r, Add(s, D(1))), Call("v", s, r), Call("v", s, Add(r, D(1)))));
+        return Disp(Equal(CallArgs("Z"),
+            Seq(Sum, Underscore, Grp(Seq(Member(F.Id("h"), hType), Comma, Sp, Member(F.Id("v"), vType))), Sp,
+                walls, Sp, cross)));
     }
 
     private static Formula FormulaFormula()
     {
-        Formula i = F.Id("i"), j = F.Id("j");
+        Formula m = F.Id("M"), i = F.Id("i"), j = F.Id("j");
         Formula xi = Sub("x", "i"), xj = Sub("x", "j"), yi = Sub("y", "i"), yj = Sub("y", "j");
-        Formula numerator = Seq(Prod, Underscore, Grp(Seq(i, Comma, j)), Sp, Ratio(xi, yj), Sp, Call("W", P, xi, yj));
-        Formula denominator = Seq(Prod, Underscore, Grp(Less(i, j)), Sp, Parenthesized(Ratio(xj, xi)), Sp, Parenthesized(Ratio(yi, yj)));
+        Formula range = Member(Seq(i, Comma, j), FinOf(m));
+        Formula numerator = Seq(Prod, Underscore, Grp(range), Sp,
+            Parenthesized(Seq(Parenthesized(Ratio(xi, yj)), Sp, Call("W", P, xi, yj))));
+        Formula denominator = Seq(Prod, Underscore, Grp(Seq(Less(i, j), Comma, Sp, range)), Sp,
+            Parenthesized(Ratio(xj, xi)), Sp, Parenthesized(Ratio(yi, yj)));
         Formula entry = new Formula.Fraction(
             Times(Times(Times(Times(new Formula.Power(Call("c", P), D(2)), Call("a", P, Times(xi, yj))), Call("a", P, Inv(Times(xi, yj)))),
                 Call("FLU", P, xi, Xi("L"), Xi("U"))), Call("FDR", P, yj, Xi("D"), Xi("R"))),
             Times(Parenthesized(Ratio(xj, yi)), Call("W", P, xi, yj)));
-        return Disp(Equal(Call("formula", F.Id("M"), P, F.Id("xs"), F.Id("ys")),
-            Seq(new Formula.Fraction(numerator, denominator), Sp, Named("det"), Sp, Parenthesized(entry))));
+        return Disp(Equal(CallArgs("formula"),
+            Seq(new Formula.Fraction(numerator, denominator), Sp, Named("det"), Underscore, Grp(range), Sp,
+                Parenthesized(entry))));
     }
 
     private static Formula ClaimFormula()
     {
-        Formula body = Implies(Named("nonzero"),
-            Equal(Call("Z", F.Id("M"), P, F.Id("xs"), F.Id("ys"), Xi("L"), Xi("U"), Xi("R"), Xi("D")),
-                Call("formula", F.Id("M"), P, F.Id("xs"), F.Id("ys"), Xi("L"), Xi("U"), Xi("R"), Xi("D"))));
-        return Disp(Iff(F.Id("claim"), new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("M"),
-            Seq(Mathbb, Grp(F.Id("N"))), body)));
+        Formula m = F.Id("M"), i = F.Id("i"), j = F.Id("j");
+        Formula xi = Sub("x", "i"), xj = Sub("x", "j"), yi = Sub("y", "i"), yj = Sub("y", "j");
+        Formula quantifiers = Seq(
+            Forall, Sp, Member(m, Seq(Mathbb, Grp(F.Id("N")))), Comma, Sp,
+            Forall, Sp, Member(Seq(P, Comma, Xi("L"), Comma, Xi("U"), Comma, Xi("R"), Comma, Xi("D")), Complex()), Comma, Sp,
+            Forall, Sp, Member(Seq(F.Id("xs"), Comma, F.Id("ys")), new Formula.TypeArrow(FinOf(m), Complex())), Comma, Sp);
+        Formula nonzero = NotEqual(Seq(P, Comma, Xi("L"), Comma, Xi("U"), Comma, Xi("R"), Comma, Xi("D"), Comma, xi, Comma, yj), D(0));
+        Formula conditions = Seq(Forall, Sp, Member(Seq(i, Comma, j), FinOf(m)), Comma, Sp,
+            And(And(And(nonzero, NotEqual(Ratio(xj, yi), D(0))), NotEqual(Call("W", P, xi, yj), D(0))),
+                Implies(Less(i, j), NotEqual(Times(Parenthesized(Ratio(xj, xi)), Parenthesized(Ratio(yi, yj))), D(0)))));
+        return Disp(Iff(F.Id("claim"),
+            Seq(quantifiers, Implies(conditions, Equal(CallArgs("Z"), CallArgs("formula"))))));
     }
 }
