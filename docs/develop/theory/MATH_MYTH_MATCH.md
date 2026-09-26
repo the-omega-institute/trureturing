@@ -1706,7 +1706,7 @@ $$
 $$
 C=\{(y_i)\in\prod_{i\in I}Y_i:
        y_j=\tau_{ij}(y_i)\text{ 对全部 }i,j\},
-\qquad p_i:C\to Y_i,quad p_i(y)=y_i.
+\qquad p_i:C\to Y_i,\quad p_i(y)=y_i.
 $$
 
 这里已经给出所有位置之间的转换，不是在任意拓扑覆盖上只给局部交叠数据。一般覆盖上出现的拼接障碍，不能因为本例成立而被删除；第 7 节的回路反例仍适用。
