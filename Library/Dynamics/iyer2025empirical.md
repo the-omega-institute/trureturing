@@ -2040,3 +2040,145 @@ Boistard、Lopuhaä、Ruiz-Gazen 的
 结果限于两种实际实验的数据概率极限，以及同一先验后验函数的一致确定支持评价；
 不含期望熵、负阶、变化的 beta、增长正阶、效率或噪声解码结论。
 所核对原始文献没有直接给出这条完整实际模型陈述；有限检索范围不构成全球原创性认证。
+
+### 第 71 章：带噪条件信息谱与列表恢复
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 71 章
+连接定理 68.8 的实际后验信息谱和定理 69.6 的实际标量矩界。
+直接 Gaussian 噪声满足 logplus(1/sigma)=o(Q) 时，输出后验的惊奇量在联合纤维律中
+保留同一 Q 尺度正态极限，最优输出平均列表成功率及固定误差列表大小随之确定。
+原标量、完整计数和精确后验中心保持一致；没有将旧弱极限当作信息论实验的替身。
+
+Kontoyiannis、Verdú，*Lossless Data Compression at Finite Blocklengths*，
+[arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)，PDF 第 9–10 页、Section II、定理 2–3，
+给一次信息随机变量的可达／逆向阈值及正松弛惩罚。
+其有限字母表计数论证直接覆盖 (71.15)，亦可逐输出用于有限后验后再积分。
+该版定理 16–20 的后续正态近似分别保留固定有限字母表无记忆或有限状态 Markov 源假设；
+它们不能仅凭原观测是一条平稳路径就代替这里增长组数、随机环境和固定总数后验的 CLT。
+
+Gavalakis、Kontoyiannis，*Sharp Second-Order Pointwise Asymptotics for Lossless Compression with Side Information*，
+[arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)，PDF 第 4 页定义 2.1
+以条件原子概率排序描述最优条件压缩，定义 2.2 与定理 2.3 给条件信息和码长的比较。
+第 6 页 Assumption (M) 要求固定有限字母表源与侧信息对平稳，并满足三种条件之一：
+严格正转移的 Markov 对；对与侧信息均为有限阶不可约非周期 Markov 链；
+或联合遍历并有文中 alpha(d)=O(d^(-336))、两项 gamma(d)=O(d^(-48)) 的混合界。
+第 8 页 Section 2.5、定理 2.10 在这些条件及正条件 varentropy 下给精确熵中心的条件信息 CLT。
+这是相关经典结果；本章单个 Gaussian 侧通道随 M 改变，计数字母表与后验环境也改变，
+未调用其固定过程条件 CLT。
+
+Tan、Moulin，*Fixed Error Probability Asymptotics For Erasure and List Decoding*，
+[arXiv:1402.4881v2](https://arxiv.org/abs/1402.4881v2)，PDF 第 8 页定理 2
+研究固定 DMC 的二阶列表容量及多项式列表的第三阶界。
+同页命题 3 给平均错误列表码的假设检验逆界，核心比值为消息数除以列表大小；
+Section IV 接着讨论带编码器和擦除选项的 Slepian–Wolf 侧信息问题。
+这些结果表明列表预算和次阶信息谱逆界是成熟工具。
+本章没有消息编码器，输入为数据依赖的非均匀后验，原熵中心随机，
+因而没有从固定 DMC 的容量公式直接取得当前成功率曲线。
+
+Issa、Wagner、Kamath，*An Operational Approach to Information Leakage*，
+[arXiv:1807.07878v1](https://arxiv.org/abs/1807.07878v1)，
+PDF 第 14 页 Section C “Multiple Guesses”、定义 4 与定理 4
+在输入和输出均有限时证明 k-maximal leakage 等于 maximal leakage。
+其第 17 页定理 7、引理 7 的一般字母表密度表达要求联合律相对乘积律绝对连续，
+且输入 sigma 代数可数生成。本章有限正质量输入与严格正 Gaussian 混合输出满足这些条件。
+多次猜测的乘法包络原理已有来源；正文直接对连续密度证明 (71.17)，
+没有把有限输出定理 4 原样迁到实输出。
+该版第 18 页例 10 的全实线正密度输入可有无穷全局泄漏，
+因此 Gaussian 噪声本身不保证一个可用的有限范围包络。
+本章用已证实际二阶矩截断上界中的输入集合，取得 Q 尺度所需的多项式半径。
+
+A. R. Esposito，*Minimax Quantile Bounds via Information Measures*，
+[arXiv:2608.20857v2](https://arxiv.org/abs/2608.20857v2)，版本戳 2026-08-26、PDF 封面 2026-08-27。
+第 6 页定义 2.3、2.5 给先验小球质量和最大泄漏的支配密度表达；
+第 8 页定理 3.1 给任意估计器、辅助先验和通道的损失适配 Neyman–Pearson 逆界，
+第 13 页推论 3.12 给成功概率不超过先验小球质量乘泄漏指数。
+将动作取为大小至多 K 的列表、损失取为目标未在列表中，即有一般列表成功原理；
+正文的直接有限求和证明明确处理该动作空间及连续输出。
+该原文将框架归于既有信息论方法，不能作为本章发明通用列表逆界的依据。
+它也不承担当前实际计数线、精确中心矩界或 Q 尺度条件信息谱。
+
+Saeidian、Pinzón、Palamidessi，*Information Leakage Envelopes*，
+[arXiv:2605.21185v1](https://arxiv.org/abs/2605.21185v1)，PDF 第 2 页 Section II.A 明定所有集合有限。
+第 6 页定理 2、第 7 页定理 3 的 envelope 是对后处理取上确界的逐输出泄漏分位保证，
+并由最大泄漏加 log(1/delta) 与最坏输出界控制。
+它与 (71.17) 积分的 Gaussian 位置密度包络不是同一对象；
+没有凭名称相同就把有限输出、后处理或逐输出保证转给本章。
+
+Gaussian 最大熵、链式法则和信息密度的负尾界均为经典机制。
+正文由严格正通道直接计算 E exp(-i)=1，得到 E|i|≤I+2；
+这一步连同已证原信息谱，才将 o(Q) 互信息转成输出后验惊奇量的 o(Q) 扰动。
+一个平均熵数本身不能确定分位曲线；加入原信息谱后可以，故没有宣称 Shannon 界绝对不能用于列表问题。
+新增组合在原实际模型中保留固定基数、依赖路径、完整窗口和中心项，并将这些条件接到可测最优列表。
+置换不变随机策略核的确定支持风险由群传递性证明：对可测最优列表作独立均匀群对称化，
+每次保留相同大小与最优后验质量；碰撞时不要求字典序破平局本身等变。
+成功率也对这项独立随机性平均，不包含能写死支持的不受限制规则。
+结果对噪声输出平均；未声称每个输出后验的逐点 CLT、期望熵展开、变化误差水平或效率。
+所查原始来源没有直接给出这条完整模型结论，有限文献检索不构成全局原创认证。
+
+### 第 72 章：确定熵中心与格点边缘残差
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 72 章
+将实际后验 Shannon 熵减去完整得分组的平均占据数中心，证明其为 O_P(1)。
+至多两个多项式过渡组承担全部渐近残差；任一正有限均值子序列产生实际行占据数的独立 Poisson 极限。
+正文进一步以原 M 的取整区间构造一个固定合法 beta，使残差有非退化子序列极限。
+这给出不能普遍加强为 o_P(1) 的实际模型反例，同时允许在既有 Q 尺度信息谱中使用确定中心。
+
+Hillion、Johnson，*A proof of the Shepp–Olkin entropy concavity conjecture*，
+[arXiv:1503.01570v1](https://arxiv.org/abs/1503.01570v1)，
+原文引言定义独立 Bernoulli 和及其有限质量函数，Shepp–Olkin Theorem
+（原始 TeX 标签 th:SO）对每个固定 n≥1 证明熵关于整个成功参数向量凹。
+它直接覆盖固定试验次数、改变参数时的凹性；结合对称性给公平参数处的最大值。
+此结论不直接给改变整数试验次数的倒数增量率，也不控制依赖实际行数上的熵波动。
+正文 (72.13) 由链式法则、交换性和二元相对熵的卡方上界直接推得所需增量，
+这些信息论工具为经典工具，不作为新独立理论归属。
+
+Ioan Raşa，*Complete monotonicity of some entropies*，
+[arXiv:1606.05520v2](https://arxiv.org/abs/1606.05520v2)，
+Section 1 定义 $p_{n,k}^{[c]}(x)$，在 c<0 时要求 n=-cl、l 为正整数且 x∈[0,-1/c]；
+c=-1 对应 Bin(n,x)。Section 2 第一条定理给关于 x 的正偶阶导数非正，
+以及奇阶导数在 -1/(2c) 两侧的符号。
+这里变化的是成功参数，不能把导数改名为关于整数 n 的增量，
+也不能据此宣称随机占据数的浓缩。正文的参数扰动界另由二项 varentropy
+和得分协方差给出，所需 O_P(Q^(-1/4)) 总误差保留实际近半校准率。
+
+Adell、Lekuona、Yu，*Sharp bounds on the entropy of the Poisson law and related quantities*，
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，
+原文定理 4、推论 1 和式 (7) 的二项熵界要求整数 n,m≥1、p∈(0,1)，
+系数在成功参数紧区间上有界。其公平参数特例直接给
+H(Bin(n,1/2))=log(pi e n/2)/(2 log 2)+O(1/n)。
+第 72 章只在高占据组上使用这一成熟展开；零组单独定义，有限均值过渡组保留精确二项熵。
+原均值的阶乘、M 与 q 的下取整及补偿参数均未以粗率函数替代。
+实际均值与显式均值即使相差 o(1)，跨过整数时仍可留下一个熵增量，
+因此正文只给两个中心相差 O(1)，没有把它冒报为 o(1)。
+
+Barbour、Gnedin，*Small counts in the infinite occupancy scheme*，
+[arXiv:0809.4387v1](https://arxiv.org/abs/0809.4387v1)，
+引言的模型将球独立投向固定概率 p_1≥p_2≥⋯>0、总和为 1 的无限盒子；
+X[n,r] 是恰含 r 个球的盒数。命题 2.2 要求 k(n)→∞、
+k(n)exp(-np[k(n)]/10)→0，并取 m(n)≤np[k(n)]/2，
+以 TV 比较小计数向量与其 Poisson 化版本。
+Section 3 定理（原始 TeX 标签 approximation）要求各选定计数方差发散，
+得到随规模改变协方差的多元正态近似；收敛到固定正态律还要求协方差矩阵收敛。
+该文关于指数衰减频率的振荡说明格点效应有成熟背景。
+这些变量与假设并不直接对应本章的依赖路径行、移动二计数标记或有限均值边缘组。
+正文用原有限秩 PGF 的任意固定多行系数比较和混合下降阶乘矩，
+单独证明实际两种实验的有限均值 Poisson 极限，未假定原行独立。
+
+Gnedin、Hansen、Pitman，*Notes on the occupancy problem with infinitely many boxes:
+general asymptotics and power laws*，
+[arXiv:math/0701718v2](https://arxiv.org/abs/math/0701718v2)，属于相关背景检索。
+该版本 PDF 可取得，原始源文件请求返回 HTTP 403；本章没有从它导入未核对的定理条件。
+已有 Arratia–Goldstein–Langholz 的总方差占比条件与本模型不合，
+以及既有 rejective-sampling 版本中未使用的高幂矩表述边界，均维持先前归属；
+本章的后验熵比较使用方差参数本身的 Fourier 局部估计与密度范数。
+
+新增组合的实质在于同一实际模型内的定量连接：
+完整窗口的近半参数替换为 o_P(1)，高占据组的倒数增量误差求和为 o_P(1)，
+严格凸率函数的至多两个阈值邻域比原格距更窄，
+留下的实际行占据数再由原 PGF 得到 Poisson 极限。
+嵌套原取整区间证明有限均值边缘可以由一个固定合法 beta 实现，
+不需要让 beta 随规模改变或假定算术等分布。
+上述经典熵、占据数和矩方法本身没有被改称原创；
+所查来源未直接提供这条完整实际后验定理，有限检索不构成全局原创认证。
+结果不包括 h-Eh、期望后验熵、坏数据上的一致可积、任意指定 beta 的非退化子序列、
+或计算显式中心的数值效率与稳定性。纯理论正文未进入消化或 Lean 冻结链。

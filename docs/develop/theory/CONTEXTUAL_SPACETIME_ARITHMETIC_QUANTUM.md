@@ -56933,3 +56933,2777 @@ $$
 每条逼近曲线中的状态两两对易，并与给定的 $C$ 对易，因此这里没有量子独有优势主张。问题定义要求正性和同一个矩阵上界在整个实轴上成立，不能把（261.3）无条件搬到有限区间、任意随参数变化的上界，或原处理器的矩、分项预算、尖锐节点约束类中。高斯解析化及标量正性背景沿用第258—260节；固定矩阵的各向异性达到由本节构造承担，不要求原处理器约束下的达到。
 
 ## 追加锚（本行以下为增补区）
+
+## 262. 固定正谱隙下的失秩连续性与非交换尺度优势
+
+第261节的极值跳变允许准备曲线随上界矩阵变化，且没有统一的态谱下界。本节固定这个缺失的条件。在二维上界 $C_\eta=\operatorname{diag}(1,\eta)$ 趋于秩一时，所有保持固定正谱隙的允许曲线，其信息都趋于零；但一般量子曲线和两两对易曲线的最优衰减阶不同。
+
+**定理 262.1（接近秩一时的定量刚性）。** 设 $C\succeq0$，记
+
+$$
+\Lambda=\|C\|_{\rm op},\qquad
+\delta=\operatorname{Tr}C-\Lambda,
+\qquad 0<\delta\le\Lambda.
+\tag{262.1}
+$$
+
+若 $\rho$ 是全实轴上的 $C^2$ 密度曲线，处处满足 $\rho''\preceq C$，则
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.2}
+$$
+
+若名义点还满足 $\rho(0)\succeq\alpha I$，其中 $\alpha>0$，则
+
+$$
+I_Q(\rho_0)\le
+\frac5\alpha\Lambda^{2/3}\delta^{1/3}.
+\tag{262.3}
+$$
+
+证明。 取 $C$ 的一个最大特征方向投影 $P$，令 $Q=I-P$，写成
+
+$$
+C=\Lambda P+C_Q,\qquad
+W=\Lambda Q-C_Q\succeq0,
+\qquad f(t)=\operatorname{Tr}(W\rho(t)).
+\tag{262.4}
+$$
+
+置 $\tau=\operatorname{Tr}C$ 以及
+
+$$
+\beta=\operatorname{Tr}(WC)
+=\Lambda\delta-\operatorname{Tr}(C_Q^2),
+\qquad K=\tau^2-\operatorname{Tr}(C^2).
+\tag{262.5}
+$$
+
+有 $0\le f\le\Lambda$、$0\le\beta\le\Lambda\delta$，并且 $f''\le\beta$。对非负标量函数使用全实轴正性界，得到
+
+$$
+|f'|\le\sqrt{2\beta\Lambda}.
+\tag{262.6}
+$$
+
+此处允许 $\beta=0$，那时 $f$ 为常值。令 $H=\rho''$、$D=C-H$。由 $D\succeq0$、$\operatorname{Tr}H=0$，有 $\operatorname{Tr}D=\tau$，从而 $\operatorname{Tr}(D^2)\le\tau^2$。展开并使用 $C+W=\Lambda I$，得到
+
+$$
+\|H(t)\|_{\rm HS}^2
+\le K+2\operatorname{Tr}(CH(t))
+=K-2f''(t).
+\tag{262.7}
+$$
+
+因此，对任意 $h>0$，
+
+$$
+\int_{-h}^h\|\rho''(t)\|_{\rm HS}^2\,dt
+\le2hK+4\sqrt{2\beta\Lambda}.
+\tag{262.8}
+$$
+
+以下直接给出所需的一维插值步骤。两个密度矩阵的 Hilbert–Schmidt 距离至多为 $\sqrt2$，故对称差商满足
+
+$$
+\left\|\frac{\rho(h)-\rho(-h)}{2h}\right\|_{\rm HS}
+\le\frac1{\sqrt2h}.
+\tag{262.9}
+$$
+
+一阶导数与此差商的差可以写成 $\rho''$ 对一个带符号三角核的积分；该核的平方积分为 $h/6$。Cauchy–Schwarz 和（262.8）于是给出
+
+$$
+\|\rho'(0)\|_{\rm HS}
+\le\frac1{\sqrt2h}
++\sqrt{\frac{Kh^2}{3}
++\frac{2h}{3}\sqrt{2\beta\Lambda}}.
+\tag{262.10}
+$$
+
+具体地，这个核在 $[-h,0]$ 上为 $(h+t)/(2h)$，在 $[0,h]$ 上为 $-(h-t)/(2h)$。又因为
+
+$$
+K=2\Lambda\delta+\delta^2-\operatorname{Tr}(C_Q^2)
+\le3\Lambda\delta,
+\tag{262.11}
+$$
+
+取 $h=(\Lambda^2\delta)^{-1/6}$，使用 $\delta\le\Lambda$，可得
+
+$$
+\|\rho'(0)\|_{\rm HS}^2
+\le
+\left(\frac1{\sqrt2}+\sqrt{1+\frac{2\sqrt2}{3}}\right)^2
+\Lambda^{2/3}\delta^{1/3}
+<5\Lambda^{2/3}\delta^{1/3}.
+\tag{262.12}
+$$
+
+最后，在 $\rho(0)$ 的特征基中，所有特征值至少为 $\alpha$。标准 SLD 公式给出
+
+$$
+I_Q(\rho_0)
+=\sum_{i,j}\frac{2|\rho'_{ij}(0)|^2}{\lambda_i+\lambda_j}
+\le\frac1\alpha\|\rho'(0)\|_{\rm HS}^2.
+\tag{262.13}
+$$
+
+结合（262.12）即得结论。证毕。
+
+该信息上界只需要名义点的谱下界；全实轴上的统一谱下界是一个更强的充分条件。若 $\delta=0$，第260节的秩一刚性直接给出零信息。对于有界的 $\Lambda$ 和固定正 $\alpha$，因此恢复了靠近秩一上界的信息连续性。这里没有声称数字 $5$ 最优。
+
+**定义 262.2（保持正谱隙的二维比较类）。** 对 $0<\eta\le1$，令
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{262.14}
+$$
+
+记 $\mathcal A_\eta$ 为全实轴上满足
+
+$$
+\rho\in C^2,\qquad
+\operatorname{Tr}\rho=1,\qquad
+\rho(t)\succeq I/4,\qquad
+\rho''(t)\preceq C_\eta
+\tag{262.15}
+$$
+
+的密度曲线集合；$\mathcal A_\eta^{\rm com}$ 再要求 $[\rho(t),\rho(s)]=0$ 对所有实数 $s,t$ 成立。后者不要求状态与 $C_\eta$ 对易。分别定义两类的名义信息上确界为 $F_\eta$ 和 $F_\eta^{\rm com}$。
+
+**定理 262.3（非交换曲线的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k>0$ 和 $\eta_0>0$，使得
+
+$$
+k\eta^{1/3}\le F_\eta\le20\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{262.16}
+$$
+
+即使只允许逐矩阵元可延拓成整函数的曲线，下界仍成立。
+
+证明。 上界是定理262.1在 $\Lambda=1$、$\delta=\eta$、$\alpha=1/4$ 上的直接应用。为构造下界，固定实值 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$、$\|F\|_\infty\le1$，并置
+
+$$
+J=\int_{\mathbb R}F''(u)^2\,du>0,\quad
+A=\frac1{16},\quad
+v=\frac{\sqrt\eta}{8},\quad
+T=\left(\frac{2A^2J}{v}\right)^{1/3},\quad
+x(t)=AF(t/T).
+\tag{262.17}
+$$
+
+定义有界分段连续函数
+
+$$
+g(t)=
+\begin{cases}
+2x''(t)^2,&-T\le t\le T,\\
+-\eta/2,&T<t<T+2v/\eta,\\
+0,&\text{其余情形},
+\end{cases}
+\tag{262.18}
+$$
+
+并以 $y''=g$、$y(-\infty)=1/2$、$y'(-\infty)=0$ 定义 $y$。第一段加速度的积分为
+
+$$
+\int_{-T}^T2x''(t)^2\,dt
+=\frac{2A^2J}{T^3}=v,
+\tag{262.19}
+$$
+
+第二段的积分为 $-v$。故 $y'$ 从零增加到 $v$，再下降到零，全程非负。总增量满足
+
+$$
+0\le y(t)-\frac12
+\le2Tv+\frac{v^2}{\eta}
+=O(\eta^{1/3})+\frac1{64}.
+\tag{262.20}
+$$
+
+对所有充分小的 $\eta$，有 $1/2\le y\le5/8$。定义中间密度曲线
+
+$$
+\rho^{(0)}(t)=
+\begin{pmatrix}y(t)&x(t)\\x(t)&1-y(t)\end{pmatrix}.
+\tag{262.21}
+$$
+
+它的最小特征值至少为
+
+$$
+\frac12-\sqrt{(1/8)^2+(1/16)^2}>\frac14.
+\tag{262.22}
+$$
+
+现核对同一个指定上界。第一段中 $g=2x''{}^2$，并因 $T\to\infty$ 而有 $g\le1/2$。于是
+
+$$
+C_\eta-(\rho^{(0)})''
+=\begin{pmatrix}1-g&-x''\\-x''&\eta+g\end{pmatrix}
+\succeq0,
+\tag{262.23}
+$$
+
+因为其对角元非负，行列式至少为 $(1/2)g-x''{}^2=0$。第二段中 $x''=0$、$g=-\eta/2$，两个对角元也为正。其余位置二阶导数为零。这条曲线为 $C^{1,1}$，弱二阶导数有界，故这些比较几乎处处有效，没有额外点质量。
+
+在名义点，$x(0)=0$、$x'(0)=A/T$。测量 $\sigma_x$ 的两个概率为 $1/2\pm x$，因此其经典信息恰为
+
+$$
+4A^2/T^2
+=\frac{4A^2}{(16A^2J)^{2/3}}\eta^{1/3}.
+\tag{262.24}
+$$
+
+对整条曲线作宽度 $\epsilon$ 的高斯卷积。凸平均同时保留 $\rho\succeq I/4$、迹一和精确的上界 $C_\eta$；有界矩阵元的卷积延拓成整函数。对每个已经固定的 $\eta$，中心的一阶数据在 $\epsilon\downarrow0$ 时收敛。因此可选择 $\epsilon$，使同一个 $\sigma_x$ 测量的信息至少保留（262.24）的一半。SLD 信息不小于这份测量信息，故可取
+
+$$
+k=\frac{2A^2}{(16A^2J)^{2/3}}>0.
+\tag{262.25}
+$$
+
+这证明下界及解析性版本。平滑宽度允许依赖 $\eta$，谱下界和矩阵上界则不因此放宽。证毕。
+
+**定理 262.4（所有两两对易二维曲线的平方根阶）。** 对定义262.2中的整个对易类，有
+
+$$
+\sqrt\eta\le F_\eta^{\rm com}
+\le\frac83\sqrt\eta.
+\tag{262.26}
+$$
+
+下界也由整函数曲线实现。
+
+证明。 非常值的两两对易二维密度族有一个共同特征基，因此可以写成
+
+$$
+\rho(t)=I/2+z(t)N,\qquad
+N=\boldsymbol n\cdot\boldsymbol\sigma,\quad
+\|\boldsymbol n\|=1,\quad |z(t)|\le b=1/4.
+\tag{262.27}
+$$
+
+这里允许这个基相对于 $C_\eta$ 任意旋转。上界条件的行列式给出
+
+$$
+\eta+(1-\eta)n_z z''-(z'')^2\ge0.
+\tag{262.28}
+$$
+
+因此存在 $a,d>0$，使 $-a\le z''\le d$、$ad=\eta$。分别对非负函数 $z+b$ 和 $b-z$ 使用全实轴标量正性界，得到
+
+$$
+z'^2\le\min\{2d(z+b),\,2a(b-z)\}
+\le\frac{4adb}{a+d}
+\le2b\sqrt\eta.
+\tag{262.29}
+$$
+
+中间的不等式取两条仿射函数交点处的最大值。由于特征值为 $1/2\pm z$，
+
+$$
+I_Q=\frac{z'^2}{1/4-z^2}
+\le\frac{2b\sqrt\eta}{1/4-b^2}
+=\frac83\sqrt\eta.
+\tag{262.30}
+$$
+
+常值族的信息为零，也满足该界。反向取
+
+$$
+\rho(t)=I/2+A_0\sin(\omega t)\sigma_x,
+\qquad A_0=1/4,\quad
+\omega^2=\sqrt\eta/A_0.
+\tag{262.31}
+$$
+
+其状态两两对易，处处至少为 $I/4$，矩阵元为整函数，二阶非对角元的绝对值至多为 $\sqrt\eta$。因此 $C_\eta-\rho''$ 的对角元为 $1,\eta$，行列式非负，满足相同矩阵上界。中心信息为 $4A_0\sqrt\eta=\sqrt\eta$，证明下界。证毕。
+
+合并两条定理可知，在完全相同的上界和谱下界条件下，
+
+$$
+F_\eta=\Theta(\eta^{1/3}),\qquad
+F_\eta^{\rm com}=\Theta(\eta^{1/2}),\qquad
+\frac{F_\eta}{F_\eta^{\rm com}}=\Theta(\eta^{-1/6}).
+\tag{262.32}
+$$
+
+因而充分小的 $\eta$ 时，定理262.3中的逼近曲线必不两两对易。这个区别已与“仅要求状态和上界在同一基中对角化”的更小比较类分开：定理262.4允许全部固定特征基方向。
+
+定理262.1所用标量正性估计沿用第257—261节的 Glaeser–Malgrange 背景，SLD 公式沿用同处的标准来源；插值结构的经典背景为 L. Nirenberg，*On elliptic partial differential equations*，Annali della Scuola Normale Superiore di Pisa，第三辑第13卷（1959），115—162页，[公开原文](https://www.numdam.org/item/ASNSP_1959_3_13_2_115_0.pdf)，Lecture II，第124—126页，式（2.2）—（2.3）。其中的一维参数 $j=1,m=2,p=q=\infty,r=2$ 给出经典指数 $2/3$；本节不把插值方法本身作为新增结果。这里使用的有限窗口估计及其常数由（262.9）—（262.12）直接证明，不额外假设全实轴二阶导数平方可积。正性与矩阵上界均要求在全实轴成立。定理262.1的信息上界仅需名义点的固定正谱下界；定义262.2及两类上确界的比较则共同要求全实轴上的统一下界 $\rho(t)\succeq I/4$。下界构造保持这一全域条件。它们不加入原处理器的矩、分项预算、校准节点或规定有限阶数据，所以（262.32）是本节所定义曲线类中的非交换优势，不能自动提升为原受限任务的最优优势。
+
+## 追加锚（本行以下为增补区）
+
+## 263. 正谱隙下对易极值的精确公式与方向转换
+
+第262节比较了固定正谱隙下的一般曲线与对易曲线。本节将对易侧的阶估计推进为精确上确界，并允许谱下界变化。对易状态的共同特征基可以相对于给定的矩阵上界旋转；这个方向自由度必须保留。
+
+**定义 263.1（二维对易极值及其参数）。** 固定 $0<\alpha<1/2$、$0<\eta\le1$。记 $F_{\rm com}(\alpha,\eta)$ 为全实轴上所有 $C^2$ 密度曲线的名义 SLD 信息上确界，其中
+
+$$
+\rho(t)\succeq\alpha I,\qquad
+\rho''(t)\preceq\operatorname{diag}(1,\eta),\qquad
+[\rho(s),\rho(t)]=0
+\quad(s,t\in\mathbb R).
+\tag{263.1}
+$$
+
+置
+
+$$
+b=\frac12-\alpha,
+\qquad q=\frac{1-\eta}{1+\eta},
+\qquad
+z_*=
+\min\left\{\sqrt{(2b^2-1/4)_+},\ bq\right\}.
+\tag{263.2}
+$$
+
+**定理 263.2（全部共同特征基方向上的精确极值）。** 有
+
+$$
+\boxed{
+F_{\rm com}(\alpha,\eta)
+=\frac{2\sqrt\eta\sqrt{b^2-z_*^2}}{1/4-z_*^2}.
+}
+\tag{263.3}
+$$
+
+即使只允许逐矩阵元可延拓成整函数的曲线，上确界仍相同。
+
+证明。 非常值的对易二维族可以写成
+
+$$
+\rho(t)=I/2+z(t)N,
+\qquad N=\boldsymbol n\cdot\boldsymbol\sigma,
+\qquad\|\boldsymbol n\|=1,
+\qquad |z(t)|\le b.
+\tag{263.4}
+$$
+
+固定 $N$ 后，由矩阵上界的行列式可知
+
+$$
+-a\le z''\le d,\qquad
+a,d>0,\qquad ad=\eta,\qquad
+d-a=(1-\eta)n_z.
+\tag{263.5}
+$$
+
+反之，满足这些关系的加速度给出同一个矩阵上界：差矩阵的迹为 $1+\eta>0$，行列式非负，故为半正定。允许方向的全部范围等价于
+
+$$
+\eta\le a\le1,\qquad d=\eta/a.
+\tag{263.6}
+$$
+
+名义点记 $z=z(0)$、$v=z'(0)$。由非负函数 $z(t)+b$ 和 $b-z(t)$ 的标量正性估计，
+
+$$
+v^2\le\min\{2d(z+b),\,2a(b-z)\}.
+\tag{263.7}
+$$
+
+同时反转 $N$ 与 $z(t)$ 不改变状态，所以求上确界时可设 $z\ge0$。对固定 $0\le z<b$，第一项随 $a$ 递减，第二项随 $a$ 递增。无约束的平衡值为
+
+$$
+a_z=\sqrt\eta\sqrt{\frac{b+z}{b-z}},\qquad
+d_z=\sqrt\eta\sqrt{\frac{b-z}{b+z}}.
+\tag{263.8}
+$$
+
+其中 $a_z\ge\sqrt\eta\ge\eta$，而 $a_z\le1$ 当且仅当 $z\le bq$。因此，在所有方向上优化（263.7）得到
+
+$$
+v^2\le
+\begin{cases}
+2\sqrt\eta\sqrt{b^2-z^2},&0\le z\le bq,\\
+2(b-z),&bq<z\le b.
+\end{cases}
+\tag{263.9}
+$$
+
+在 $z=b$ 时导数为零，也包含于第二式。信息为 $I_Q=v^2/(1/4-z^2)$。第二段对应的比值严格递减，因为
+
+$$
+\frac{d}{dz}\frac{b-z}{1/4-z^2}
+=-\frac{(z-b)^2+1/4-b^2}{(1/4-z^2)^2}<0.
+\tag{263.10}
+$$
+
+故只需在 $0\le z\le bq$ 上最大化
+
+$$
+R(z)=\frac{2\sqrt\eta\sqrt{b^2-z^2}}{1/4-z^2}.
+\tag{263.11}
+$$
+
+对 $w=z^2$ 求对数导数，其符号由
+
+$$
+-\frac1{2(b^2-w)}+\frac1{1/4-w}
+=\frac{2b^2-1/4-w}{2(b^2-w)(1/4-w)}
+\tag{263.12}
+$$
+
+决定。最大值正好位于（263.2）的 $z_*$，证明上界。
+
+为证明可任意逼近，选取（263.8）在 $z_*$ 上的 $a,d$。若 $\eta<1$，取一个 Pauli 方向满足
+
+$$
+n_z=\frac{d-a}{1-\eta};
+\tag{263.13}
+$$
+
+由 $z_*\le bq$，其绝对值至多为一。若 $\eta=1$，则 $z_*=0$、$a=d=1$，直接取 $N=\sigma_x$。令
+
+$$
+v_*^2=2d(z_*+b)=2a(b-z_*).
+\tag{263.14}
+$$
+
+构造一个在 $[-b,b]$ 之间周期运动的标量函数。上升段从 $z=-b$、$z'=0$ 开始，以加速度 $d$ 到达 $z_*$，此时速度为 $v_*$；继而以加速度 $-a$ 到达 $z=b$ 并停止。下降段从 $b$ 以加速度 $-a$ 到达 $z_*$，再以加速度 $d$ 回到 $-b$ 并停止。各段一阶数据相接，周期为
+
+$$
+\mathcal T=2v_*\left(\frac1a+\frac1d\right).
+\tag{263.15}
+$$
+
+所得 $z^{(0)}$ 为全实轴上的 $C^{1,1}$ 周期函数，值域包含于 $[-b,b]$，弱二阶导数只取 $d$ 和 $-a$。因此
+
+$$
+\rho^{(0)}=I/2+z^{(0)}N
+\tag{263.16}
+$$
+
+保持谱下界 $\alpha I$，并几乎处处满足指定矩阵上界。令名义点位于上升段的加速度切换处，则其中心信息等于
+
+$$
+\frac{v_*^2}{1/4-z_*^2}=R(z_*).
+\tag{263.17}
+$$
+
+用高斯核卷积整条周期曲线。凸平均保留谱下界、迹一和矩阵上界；所有状态仍在同一 Pauli 方向上，所以保持两两对易。有界函数的高斯卷积给出整函数矩阵元。对固定 $\alpha,\eta$，中心状态与一阶导数收敛，而特征值始终至少为 $\alpha$，故信息趋于（263.17）。这证明精确上确界及整函数版本。证毕。
+
+这里是上确界的达到序列；没有要求一条光滑曲线精确取得（263.3）。方向（263.13）可以不同于 $C_\eta$ 的特征方向，把对易比较类限制为与上界矩阵共同对角化会丢失这一自由度。
+
+**推论 263.3（谱下界阈值和两个极限）。** 令
+
+$$
+\alpha_c=\frac{1-1/\sqrt2}{2}.
+\tag{263.18}
+$$
+
+若 $\alpha_c\le\alpha<1/2$，则对所有 $0<\eta\le1$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=8(1/2-\alpha)\sqrt\eta.
+\tag{263.19}
+$$
+
+尤其在第262节的谱下界 $\alpha=1/4$ 下，
+
+$$
+F_{\rm com}(1/4,\eta)=2\sqrt\eta.
+\tag{263.20}
+$$
+
+若 $0<\alpha<\alpha_c$，则对所有充分小的正 $\eta$，
+
+$$
+F_{\rm com}(\alpha,\eta)
+=\frac{\sqrt\eta}{\sqrt{\alpha(1-\alpha)}}.
+\tag{263.21}
+$$
+
+对于每个固定 $0<\eta\le1$，另外有
+
+$$
+\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)
+=2(1+\eta).
+\tag{263.22}
+$$
+
+证明。 第一种情形中 $2b^2\le1/4$，故 $z_*=0$，代入（263.3）得到（263.19）。第二种情形中 $\sqrt{2b^2-1/4}<b$，而 $bq\to b$，所以充分小的 $\eta$ 时 $z_*^2=2b^2-1/4$。使用 $1/4-b^2=\alpha(1-\alpha)$ 即得（263.21）。对于固定 $0<\eta<1$，当 $\alpha\downarrow0$，有 $b\to1/2$ 且 $z_*=bq$ 最终成立。代入（263.3）并使用 $1-q^2=4\eta/(1+\eta)^2$，得到（263.22）；当 $\eta=1$ 时，$q=z_*=0$，由（263.3）直接得到对所有 $0<\alpha<1/2$ 均成立的 $F_{\rm com}(\alpha,1)=8b$，故 $\alpha\downarrow0$ 时极限为 $4$。证毕。
+
+式（263.22）恢复了第261节同一满秩上界的无限制对易上确界，但任意固定正 $\alpha$ 下的信息在 $\eta\downarrow0$ 时仍趋于零。因此两个依次取极限的次序不同：
+
+$$
+\lim_{\eta\downarrow0}\lim_{\alpha\downarrow0}F_{\rm com}(\alpha,\eta)=2,
+\qquad
+\lim_{\alpha\downarrow0}\lim_{\eta\downarrow0}F_{\rm com}(\alpha,\eta)=0.
+\tag{263.23}
+$$
+
+这两个读数把第261节的跳变具体定位到未固定的谱下界。它们不改变第262节在固定谱下界上的非交换阶优势，也没有给出一般非交换类的精确最优系数。全部构造仍属于本节定义的全实轴密度曲线类；原处理器的附加约束没有在此实现。
+
+## 追加锚（本行以下为增补区）
+
+## 264. 固定全部特征值的解析曲线仍有非交换阶优势
+
+第262节的一般曲线允许特征值和特征方向共同改变。本节固定两个特征值，只允许特征方向变化。在同一个全实轴矩阵二阶上界下，这个更小的类仍然达到三分之一次幂的信息阶。
+
+**定义 264.1（固定谱的允许类）。** 对 $0<\eta\le1$，记
+
+$$
+C_\eta=\operatorname{diag}(1,\eta).
+\tag{264.1}
+$$
+
+令 $\mathcal U_\eta$ 为全实轴上的 $C^2$ 二维密度曲线，满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta
+\quad(t\in\mathbb R).
+\tag{264.2}
+$$
+
+记名义点信息的上确界为 $F_\eta^{\rm iso}$。其中要求矩阵元可延拓成整函数的子类，其上确界记为 $F_\eta^{\rm iso,ent}$。
+
+**定理 264.2（固定谱下的三分之一次幂阶）。** 存在与 $\eta$ 无关的 $k_{r}>0$ 和 $\eta_0>0$，使
+
+$$
+k_{r}\eta^{1/3}
+\le F_\eta^{\rm iso,ent}
+\le F_\eta^{\rm iso}
+\le C_*\eta^{1/3}
+\qquad(0<\eta<\eta_0).
+\tag{264.3}
+$$
+
+其中 $C_*=4(1/4+\sqrt{2/3})^2<5$，不要求该常数最优。
+
+证明。 先直接证明上界。写任意允许曲线为 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$，其中 $|\boldsymbol u|=b=1/4$。因 $\boldsymbol u\cdot\boldsymbol u'=0$，矩阵 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程，从而
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{264.4}
+$$
+
+记 $z=u_z$。矩阵上界的对角元及行列式给出
+
+$$
+-\eta\le z''\le1,\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z''.
+\tag{264.5}
+$$
+
+对全实轴上的非负函数 $b-z$ 使用标量正性界，得到 $z'^2\le2\eta(b-z)\le4b\eta=\eta$。因此
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt\eta.
+\tag{264.6}
+$$
+
+两端的向量差长至多为 $2b$。应用第262节明确给出的三角核差商恒等式，其核的平方积分为 $h/6$，得到
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+\sqrt{\frac{\eta h^2}{3}+\frac{\sqrt\eta\,h}{3}}.
+\tag{264.7}
+$$
+
+取 $h=\eta^{-1/6}$ 并使用 $0<\eta\le1$，可知
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac23}\right)^2\eta^{1/3}
+=C_*\eta^{1/3}.
+\tag{264.8}
+$$
+
+以下构造下界，并在解析化时保持特征值精确不变。
+
+置 $b=1/4$。固定实值函数 $F\in C_c^\infty((-1,1))$，满足 $F(0)=0$、$F'(0)=1$，记
+
+$$
+M_1=\|F'\|_\infty,\qquad
+M_2=\|F''\|_\infty,\qquad
+K_0=b(M_2+M_1^2)>0,
+\qquad k=16K_0^2+1.
+\tag{264.9}
+$$
+
+另取 $G\in C_c^\infty((-2,2))$，满足 $0\le G\le1$ 且 $G=1$ 于 $[-1,1]$，以及非零 $B\in C_c^\infty((0,1))$，满足 $0\le B\le1$。记
+
+$$
+J_G=\int G>0,\qquad m_B=\int B>0.
+\tag{264.10}
+$$
+
+固定充分小的 $r>0$，使 $4r^2/m_B\le b/16$。对每个正 $\eta$ 定义
+
+$$
+v=r\sqrt\eta,
+\qquad T=\left(\frac{kJ_G}{v}\right)^{1/3},
+\qquad L=\frac{4v}{\eta m_B},
+\qquad\phi(t)=F(t/T).
+\tag{264.11}
+$$
+
+令
+
+$$
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{264.12}
+$$
+
+正、负两项分别支撑于 $[-2T,2T]$ 与 $[3T,3T+L]$，积分分别为 $v$ 与 $-v$。所以 $z'$ 从零增加到 $v$，再下降到零，全程非负。由此
+
+$$
+0\le z(t)\le5Tv+vL
+=5Tv+\frac{4r^2}{m_B}.
+\tag{264.13}
+$$
+
+由于 $Tv=O(\eta^{1/3})$，对所有充分小的 $\eta$，有
+
+$$
+0\le z\le b/2,\qquad
+0\le z'\le v,\qquad
+-\eta/4\le g=z''\le k/T^4\le1/4.
+\tag{264.14}
+$$
+
+函数 $z$ 光滑，并在左右两个尾部各为常值。定义
+
+$$
+a(z)=\sqrt{b^2-z^2},\qquad
+w(t)=a(z(t))e^{-i\phi(t)},\qquad
+\rho^{(0)}(t)=
+\begin{pmatrix}
+1/2+z(t)&w(t)\\
+\overline{w(t)}&1/2-z(t)
+\end{pmatrix}.
+\tag{264.15}
+$$
+
+因 $|w|^2+z^2=b^2$，两个特征值始终精确等于 $1/2\pm b$，即 $3/4,1/4$。
+
+现证明矩阵上界还有一个对全参数有效的正余量。在 $0\le z\le b/2$ 上，
+
+$$
+|a'(z)|\le A_1=1/\sqrt3,
+\qquad
+|a''(z)|\le A_2=\frac8{3\sqrt3\,b}.
+\tag{264.16}
+$$
+
+两次求导并使用三角不等式，得到
+
+$$
+|w''|\le
+A_2v^2+A_1|g|+2A_1v|\phi'|
++b\bigl(|\phi''|+|\phi'|^2\bigr).
+\tag{264.17}
+$$
+
+在相位变化的支撑 $|t|<T$ 内，$g=k/T^4$，而 $v=kJ_G/T^3$，故
+
+$$
+|w''|
+\le\frac{K_0}{T^2}
++\frac{A_1k+2A_1kJ_GM_1}{T^4}
++\frac{A_2k^2J_G^2}{T^6}.
+\tag{264.18}
+$$
+
+对充分大的 $T$，右侧至多为 $2K_0/T^2$。由 $k\ge16K_0^2$，
+
+$$
+|w''|^2\le\frac g4\le\frac{\eta+g}{4}.
+\tag{264.19}
+$$
+
+在相位支撑外，$\phi$ 及其导数为零，所以（264.17）简化为
+
+$$
+|w''|\le A_2r^2\eta+A_1|g|.
+\tag{264.20}
+$$
+
+当 $g\ge0$ 时，其平方至多为 $2A_2^2r^4\eta^2+2A_1^2g^2$。因为 $\eta\to0$ 且 $\sup g\to0$，该式对充分小的 $\eta$ 至多为 $(\eta+g)/4$。当 $g<0$ 时，$|g|\le\eta/4$，故平方至多为 $(A_2r^2+A_1/4)^2\eta^2$，也最终小于 $(\eta+g)/4$，因为 $\eta+g\ge3\eta/4$。于是（264.19）在整个实轴成立。
+
+从而
+
+$$
+D(t)=C_\eta-(\rho^{(0)})''(t)
+=\begin{pmatrix}
+1-g&-w''\\
+-\overline{w''}&\eta+g
+\end{pmatrix}
+\tag{264.21}
+$$
+
+满足 $1-g\ge3/4$、$\eta+g\ge3\eta/4$，并且
+
+$$
+\det D\ge\frac12(\eta+g)\ge\frac{3\eta}{8},
+\qquad\operatorname{Tr}D=1+\eta\le2.
+\tag{264.22}
+$$
+
+两个特征值为正，最大特征值至多为迹。因此
+
+$$
+C_\eta-(\rho^{(0)})''(t)
+\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{264.23}
+$$
+
+下面计算信息。令 $\chi(t)=\arcsin(z(t)/b)$，则 $0\le\chi\le\pi/6$，并写
+
+$$
+\rho^{(0)}=I/2+\boldsymbol u\cdot\boldsymbol\sigma,
+\qquad
+\boldsymbol u=b(\cos\chi\cos\phi,\cos\chi\sin\phi,\sin\chi).
+\tag{264.24}
+$$
+
+因为 $\boldsymbol u\cdot\boldsymbol u'=0$，Pauli 乘法关系直接表明 $S=2\boldsymbol u'\cdot\boldsymbol\sigma$ 满足 SLD 方程。因此
+
+$$
+I_Q(\rho^{(0)}_t)
+=4|\boldsymbol u'(t)|^2
+=4b^2\bigl(\chi'(t)^2+\cos^2\chi(t)\,\phi'(t)^2\bigr).
+\tag{264.25}
+$$
+
+在中心 $\phi'(0)=1/T$ 且 $\cos^2\chi(0)\ge3/4$，所以
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac r{kJ_G}\right)^{2/3}\eta^{1/3}.
+\tag{264.26}
+$$
+
+为得到整函数矩阵元，此处平滑两个实角函数，随后重建密度矩阵。对每个固定 $\eta$，$\chi,\phi$ 及其前两阶导数均有界且一致连续；导数在有限区间之外为零。令 $g_\epsilon$ 为归一化高斯核，置
+
+$$
+\chi_\epsilon=g_\epsilon*\chi,
+\qquad\phi_\epsilon=g_\epsilon*\phi,
+\qquad
+\boldsymbol u_\epsilon
+=b(\cos\chi_\epsilon\cos\phi_\epsilon,
+\cos\chi_\epsilon\sin\phi_\epsilon,
+\sin\chi_\epsilon),
+\tag{264.27}
+$$
+
+并取 $\rho_\epsilon=I/2+\boldsymbol u_\epsilon\cdot\boldsymbol\sigma$。两个角函数延拓成整函数，三角函数的复合仍为整函数，因此矩阵元也是整函数。对实参数，角函数为实数，$|\boldsymbol u_\epsilon|=b$ 精确成立，故特征值和谱下界完全保留。
+
+高斯逼近在这两个角函数的 $C^2$ 范数中一致收敛。链式法则与实轴上有界的三角函数导数于是给出 $\rho_\epsilon\to\rho^{(0)}$ 的全实轴一致 $C^2$ 收敛。为每个固定 $\eta$ 选择充分小的 $\epsilon$，可同时保证
+
+$$
+\sup_t\|\rho_\epsilon''(t)-(\rho^{(0)})''(t)\|_{\rm op}
+\le\frac{3\eta}{32}
+\tag{264.28}
+$$
+
+及中心信息至少保留（264.26）的一半。这里信息的一致谱下界固定为 $1/4$，也可直接用（264.25）的角函数形式判断一阶数据的连续性。由（264.23），
+
+$$
+C_\eta-\rho_\epsilon''(t)\succeq\frac{3\eta}{32}I,
+\qquad
+I_Q((\rho_\epsilon)_0)
+\ge k_{r}\eta^{1/3},
+\quad
+k_{r}=\frac{3b^2}{2}\left(\frac r{kJ_G}\right)^{2/3}>0.
+\tag{264.29}
+$$
+
+这证明了整函数子类中的下界。所有轮廓函数与常数先固定，再取充分小 $\eta$，最后按该 $\eta$ 选取平滑宽度；矩阵上界和精确特征值没有放宽。证毕。
+
+上述解析化没有把密度矩阵作凸平均；密度的凸平均一般不能保持特征值。它先逼近角函数，再利用三角恒等式保留固定谱，并以（264.23）的严格矩阵余量吸收二阶近似误差。
+
+**推论 264.3（固定谱变化与更大的对易比较类）。** 对上述构造的每条实参数曲线，可以写成
+
+$$
+\rho(t)=U(t)\operatorname{diag}(3/4,1/4)U(t)^*,
+\quad
+U(t)=e^{-i\phi(t)\sigma_z/2}
+e^{-i(\pi/2-\chi(t))\sigma_y/2},
+\tag{264.30}
+$$
+
+解析化后使用 $\chi_\epsilon,\phi_\epsilon$ 得到相同结论。因而所有只依赖特征值的量沿曲线恒定，但与第263节允许特征值变化的全部对易曲线相比，仍有
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_{\rm com}(1/4,\eta)}
+=\Theta(\eta^{-1/6}).
+\tag{264.31}
+$$
+
+证明。 Pauli 旋转公式给出（264.30）。固定谱立即使所有谱函数恒定。再结合（264.3）与 $F_{\rm com}(1/4,\eta)=2\sqrt\eta$ 得到（264.31）。证毕。
+
+作为更小的特殊情形，连续且两两对易的固定谱二维密度族必为常值：其共同特征基固定，而两个离散特征值不能沿连续参数互换。因此（264.31）使用的是第263节更大的对易比较类，其阶差不依赖于把比较对象预先限制成常值。
+
+这里的酉表示描述准备曲线的数学结构，未施加哈密顿量、物理能量、带宽或原处理器的矩与分项预算约束。固定谱没有消去关系响应：本节的信息变化全部来自特征方向的组合，而精确矩阵二阶条件仍由（264.23）、（264.28）共同保证。
+
+## 追加锚（本行以下为增补区）
+
+## 265. 固定实基底的平面限制与不可消去的方向变化
+
+第264节在固定全部特征值时保留了非交换阶优势。非交换性本身还不能解释这项优势：同一个 Bloch 大圆上的状态通常已经不对易，但它们仍能在一个固定基底中同时写成实矩阵。本节允许这个固定基底任意选择，比较平面轨迹与一般固定谱轨迹。
+
+**定义 265.1（可在固定基底中取实的曲线类）。** 对 $0<\eta\le1$，在定义264.1的允许类中，进一步要求存在一个不依赖实参数 $t$ 的酉矩阵 $V$，使
+
+$$
+V\rho(t)V^*\in M_2(\mathbb R)
+\quad(t\in\mathbb R).
+\tag{265.1}
+$$
+
+$V$ 可以依赖整条曲线和 $\eta$。记这一类的名义 SLD 信息上确界为 $F_\eta^{\rm real}$，其中矩阵元可延拓成整函数的子类对应 $F_\eta^{\rm real,ent}$。曲线仍在原基底中满足
+
+$$
+\operatorname{spec}\rho(t)=\{3/4,1/4\},
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta)
+\quad(t\in\mathbb R).
+\tag{265.2}
+$$
+
+这里没有要求 $V$ 同时对角化 $C_\eta$。
+
+**定理 265.2（全部固定实基底上的二分之一次幂阶）。** 对 $0<\eta\le1$，
+
+$$
+\boxed{
+\sqrt\eta
+\le F_\eta^{\rm real,ent}
+\le F_\eta^{\rm real}
+\le\min\{1,256\sqrt\eta\}.
+}
+\tag{265.3}
+$$
+
+证明。 置 $b=1/4$，写 $\rho=I/2+\boldsymbol u\cdot\boldsymbol\sigma$。固定谱条件等价于 $|\boldsymbol u|=b$，而第264节的直接 SLD 计算给出
+
+$$
+I_Q=4|\boldsymbol u'|^2.
+\tag{265.4}
+$$
+
+先处理 $\rho(t)$ 本身在 $C_\eta$ 的特征基中为实矩阵的情形。此时 $\boldsymbol u=(x,0,z)$ 在半径 $b$ 的圆上。实轴单连通，故有全域 $C^2$ 角函数使
+
+$$
+x=b\sin\theta,\qquad z=-b\cos\theta.
+\tag{265.5}
+$$
+
+也可从任一点选择初始角，再积分 $\theta'=(xz'-zx')/b^2$ 得到此提升。先给出适用于全部固定谱曲线的一个点态估计。由 $\rho''\preceq C_\eta\preceq I$，且 $\rho''=\boldsymbol u''\cdot\boldsymbol\sigma$，可知 $|\boldsymbol u''|\le1$。对 $|\boldsymbol u|^2=b^2$ 两次求导，得到 $|\boldsymbol u'|^2=-\boldsymbol u\cdot\boldsymbol u''\le b$，故 $I_Q\le4b=1$。特别地，下面可以使用较宽松的全域速度界：
+
+$$
+4b^2\theta'^2=I_Q\le1\le4,
+\qquad |\theta'|\le4.
+\tag{265.6}
+$$
+
+上界矩阵差的对角元及行列式同时给出
+
+$$
+z''\ge-\eta,\qquad
+b^2(\theta'^4+\theta''^2)
+\le\eta+(1-\eta)b(\cos\theta\,\theta'^2+\sin\theta\,\theta'').
+\tag{265.7}
+$$
+
+非负函数 $b-z$ 的二阶导数至多为 $\eta$，所以标量正性界给出
+
+$$
+z'^2\le2\eta(b-z)\le4b\eta=\eta.
+\tag{265.8}
+$$
+
+另一方面，从（265.7）丢去左侧非负的 $\theta'^4$，并用 $|\sin\theta|\le|\theta|$，得到
+
+$$
+|\theta''|^2
+\le16\eta+4\theta'^2+4|\theta|\,|\theta''|.
+\tag{265.9}
+$$
+
+解这个关于 $|\theta''|$ 的二次不等式，并使用平方根的次可加性，可得方便的估计
+
+$$
+|\theta''|
+\le4\bigl(|\theta|+|\theta'|+\sqrt\eta\bigr).
+\tag{265.10}
+$$
+
+改变角函数的整数周数，使 $\theta(0)\in[-\pi,\pi]$。若 $|\theta(0)|\ge1/4$，在 $\sin\theta(0)\ne0$ 时，把（265.8）的第一式除以 $b^2\sin^2\theta(0)$，得到
+
+$$
+\theta'(0)^2
+\le\frac{2\eta}{b(1-\cos\theta(0))}.
+\tag{265.11}
+$$
+
+若 $\theta(0)=\pm\pi$，则 $z''(0)=-b\theta'(0)^2\ge-\eta$，仍给出同一个界。由 $1-\cos(1/4)\ge1/48$，
+
+$$
+I_Q(\rho_0)\le96\eta\le96\sqrt\eta.
+\tag{265.12}
+$$
+
+余下只需处理 $|\theta(0)|<1/4$。令 $h=1/32$。式（265.6）保证
+
+$$
+|\theta(t)|\le3/8\qquad(|t|\le h).
+\tag{265.13}
+$$
+
+必要时反转实参数，使 $\theta'(0)=v\ge0$；二阶矩阵上界不因此改变。若 $v\le\sqrt\eta$，则信息至多为 $\eta/4$。若 $|\theta(0)|\ge hv$，使用 $|\sin\theta(0)|\ge|\theta(0)|/2$，由（265.8）得到
+
+$$
+\sqrt\eta\ge |z'(0)|\ge\frac{bhv^2}{2},
+\qquad
+I_Q(\rho_0)\le\frac{8b}{h}\sqrt\eta=64\sqrt\eta.
+\tag{265.14}
+$$
+
+最后考虑 $v>\sqrt\eta$ 且 $|\theta(0)|<hv$。置
+
+$$
+J(t)=|\theta(t)|+|\theta'(t)|+\sqrt\eta.
+\tag{265.15}
+$$
+
+由（265.10），几乎处处有 $|J'|\le5J$。对正、负两个参数方向分别积分，
+
+$$
+J(t)\le e^{5|t|}J(0)
+<e^{5h}(2+h)v<3v
+\quad(|t|\le h).
+\tag{265.16}
+$$
+
+最后一个常数估计可直接用 $e^{5/32}\le32/27$，于是乘积至多为 $65/27<3$。因此 $|\theta''|\le12v$，并且
+
+$$
+\theta'(t)\ge v-12vh\ge v/2
+\quad(|t|\le h).
+\tag{265.17}
+$$
+
+若 $\theta(0)\ge0$，取 $t_*=h$；否则取 $t_*=-h$。式（265.17）给出 $|\theta(t_*)|\ge hv/2$，再由（265.13），
+
+$$
+\sqrt\eta
+\ge |z'(t_*)|
+=b|\sin\theta(t_*)|\,|\theta'(t_*)|
+\ge\frac{bhv^2}{8}.
+\tag{265.18}
+$$
+
+所以
+
+$$
+I_Q(\rho_0)=4b^2v^2
+\le\frac{32b}{h}\sqrt\eta
+=256\sqrt\eta.
+\tag{265.19}
+$$
+
+这证明了在上界特征基中取实的情形。
+
+现在处理任意固定基底。式（265.1）等价于整条向量曲线 $\boldsymbol u(t)$ 包含于某个过原点的固定二维平面 $P$：实矩阵的 Pauli 向量在 $xz$ 平面内，固定酉共轭则对应一个固定旋转。写
+
+$$
+C_\eta=c_0I+\boldsymbol c\cdot\boldsymbol\sigma,
+\qquad
+c_0=\frac{1+\eta}{2},
+\qquad
+\boldsymbol c=(0,0,(1-\eta)/2).
+\tag{265.20}
+$$
+
+令 $\boldsymbol c_P$ 为 $\boldsymbol c$ 到 $P$ 的正交投影，定义辅助正定矩阵
+
+$$
+\widehat C
+=\sqrt{\eta+|\boldsymbol c_P|^2}\,I
++\boldsymbol c_P\cdot\boldsymbol\sigma.
+\tag{265.21}
+$$
+
+对于任意 $\boldsymbol k\in P$ 及 $H=\boldsymbol k\cdot\boldsymbol\sigma$，有
+
+$$
+\det(C_\eta-H)
+=\eta+2\boldsymbol c_P\cdot\boldsymbol k-|\boldsymbol k|^2
+=\det(\widehat C-H).
+\tag{265.22}
+$$
+
+两个 Hermitian 差矩阵的迹均严格为正。在二维中，非负行列式和正迹等价于半正定，因此
+
+$$
+C_\eta-H\succeq0
+\quad\Longleftrightarrow\quad
+\widehat C-H\succeq0
+\qquad(\boldsymbol k\in P).
+\tag{265.23}
+$$
+
+这是一条在指定平面内的约束等价，没有把原矩阵上界直接投影后当成新上界。
+
+将 $P$ 旋转到 $xz$ 平面后，所有状态和 $\widehat C$ 都是实矩阵。再以实正交矩阵对角化 $\widehat C$，仍保持所有状态为实矩阵。其两个特征值满足
+
+$$
+\lambda_+\ge\lambda_->0,
+\qquad\lambda_+\lambda_-=\det\widehat C=\eta.
+\tag{265.24}
+$$
+
+以该固定基变换后的曲线记为 $\rho_1$，并令
+
+$$
+\widetilde\rho(s)=\rho_1(s/\sqrt{\lambda_+}),
+\qquad r=\lambda_-/\lambda_+\in(0,1].
+\tag{265.25}
+$$
+
+此曲线保持精确谱，且在同一实基底中满足 $\widetilde\rho''\preceq\operatorname{diag}(1,r)$。信息在这次参数变换下除以 $\lambda_+$，因此已证的（265.19）给出
+
+$$
+I_Q(\rho_0)
+\le256\lambda_+\sqrt r
+=256\sqrt\eta.
+\tag{265.26}
+$$
+
+该界与平面的方向无关，故覆盖定义265.1中允许的全部固定基底。
+
+最后给出整函数下界。取
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad
+\omega^2=\frac{\sqrt\eta}{b},
+\qquad
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma.
+\tag{265.27}
+$$
+
+其特征值精确固定，矩阵元为整函数。由 $\boldsymbol u''=-\omega^2\boldsymbol u$，
+
+$$
+\det(C_\eta-\rho'')=\eta-b^2\omega^4=0,
+\qquad
+\operatorname{Tr}(C_\eta-\rho'')=1+\eta>0.
+\tag{265.28}
+$$
+
+所以原矩阵上界在全实轴成立。整条曲线在 $xy$ 平面内，经过一个固定酉旋转即能同时取实，属于所需比较类。其信息为
+
+$$
+I_Q=4b^2\omega^2=4b\sqrt\eta=\sqrt\eta.
+\tag{265.29}
+$$
+
+由此得到（265.3）的全部不等式。证毕。
+
+**推论 265.3（一般固定谱曲线与全部平面曲线的阶差）。** 当 $\eta\downarrow0$，
+
+$$
+\frac{F_\eta^{\rm iso,ent}}{F_\eta^{\rm real,ent}}
+=\Theta(\eta^{-1/6}).
+\tag{265.30}
+$$
+
+证明。 第264节给出分子的上下界为正固定常数乘 $\eta^{1/3}$；（265.3）给出分母的上下界为正固定常数乘 $\eta^{1/2}$。上下界分别组合即得结论。证毕。
+
+同一 $256\sqrt\eta$ 上界还覆盖任意固定仿射平面内的轨迹，虽然这种轨迹未必能在固定基底中同时取实。确实，写 $\boldsymbol u=\boldsymbol p+\boldsymbol v$，其中 $\boldsymbol v(t)\in P$、$\boldsymbol p\perp P$ 为常向量，则 $|\boldsymbol v|=R=\sqrt{b^2-|\boldsymbol p|^2}$。$R=0$ 时曲线恒定；否则令 $\widehat{\boldsymbol u}=(b/R)\boldsymbol v$。对应密度保持所需固定谱，轨迹在过原点的平面中，矩阵上界为 $(b/R)C_\eta$。通过参数缩放，（265.26）对正数 $a$ 倍上界给出 $I_Q\le256a\sqrt\eta$；取 $a=b/R$，再按一阶向量长度换回原曲线，得到
+
+$$
+I_Q(\rho_0)
+\le256\frac Rb\sqrt\eta
+\le256\sqrt\eta.
+\tag{265.31}
+$$
+
+因此，第264节中取得相应下界的曲线，在充分小的 $\eta$ 下不能通过任何固定二维基变换使整条曲线同时取实，也不能包含于任何固定仿射平面。这比两两不对易更严格：式（265.27）的大圆曲线已经通常不对易，但其信息仍只有二分之一次幂阶。相反，仅有非平面性也不保证任意一条曲线达到三分之一次幂阶；这里比较的是明确约束下的类上确界。
+
+固定基底中同时取实的统计模型已有反酉对称的表述。Jisho Miyazaki 与 Keiji Matsumoto，*Imaginarity-free quantum multiparameter estimation*，Quantum 6（2022），665，[原文 arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，第3.1节定义1及附录A.2分别讨论参数无关的反酉对称与过原点的 Bloch 平面模型。本节沿用这项既有几何对应；上述证明处理额外固定矩阵二阶约束下的信息阶，并另外覆盖不经过原点的仿射平面。
+
+本节沿用第261—264节的 SLD、Pauli 表示和标量正性背景。比较始终固定二维表示、精确谱和原矩阵二阶约束；没有排除更高维实表示，也没有限制随参数变化的基底。它不把固定基底下的复数分量单独当作资源，更不声称排除了所有实量子描述。所得区别是：在这个准备曲线问题中，任何固定平面都限制了可取得的信息阶，而一般固定谱方向变化可以超过这一限制。哈密顿量、物理能量、带宽与原处理器附加约束仍不在本节的实现范围内。
+
+## 追加锚（本行以下为增补区）
+
+## 266. 精确固定谱下的布居摆幅与信息阶过渡
+
+第265节区分了固定平面轨迹与一般固定谱轨迹。本节给出另一个有数值尺度的限制：沿矩阵上界的特征方向，允许对角布居总共改变多少。两个特征值依然完全不变；改变的是状态相对于给定上界方向的布居。
+
+**定义 266.1（带布居摆幅限制的允许类）。** 固定 $b=1/4$。对 $0<\eta\le1$、$0\le\Delta\le b/2$，考虑全实轴上的 $C^2$ 二维密度曲线
+
+$$
+\rho(t)=I/2+\boldsymbol u(t)\cdot\boldsymbol\sigma,
+\qquad |\boldsymbol u(t)|=b,
+\qquad \rho''(t)\preceq C_\eta=\operatorname{diag}(1,\eta).
+\tag{266.1}
+$$
+
+记 $z(t)=u_z(t)$，并要求
+
+$$
+\operatorname{osc}_{\mathbb R}z
+:=\sup_{t\in\mathbb R}z(t)-\inf_{t\in\mathbb R}z(t)
+\le\Delta.
+\tag{266.2}
+$$
+
+记这一类的名义 SLD 信息上确界为 $F(\eta,\Delta)$，整函数矩阵元子类对应 $F_{\rm ent}(\eta,\Delta)$。式（266.2）也正是对角元 $\rho_{11}=1/2+z$ 的摆幅上界；它与固定特征值条件是不同约束。
+
+**定理 266.2（统一二参数信息阶）。** 存在固定常数 $c>0$、$\eta_0>0$，使对所有 $0<\eta<\eta_0$ 和 $0\le\Delta\le b/2$，
+
+$$
+\boxed{
+c\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr)
+\le F_{\rm ent}(\eta,\Delta)
+\le F(\eta,\Delta)
+\le6\bigl(\sqrt\eta+(\eta\Delta)^{1/3}\bigr).
+}
+\tag{266.3}
+$$
+
+此外，对所有 $0<\eta\le1$，零摆幅端点精确满足
+
+$$
+F_{\rm ent}(\eta,0)=F(\eta,0)=\sqrt\eta.
+\tag{266.4}
+$$
+
+证明。 先证明上界。沿用第264节的 SLD 与行列式计算，
+
+$$
+I_Q=4|\boldsymbol u'|^2,
+\qquad
+|\boldsymbol u''|^2\le\eta+(1-\eta)z'',
+\qquad z''\ge-\eta.
+\tag{266.5}
+$$
+
+令 $z_{\max}=\sup_{\mathbb R}z$；不要求此上确界取到。非负函数 $z_{\max}-z$ 的二阶导数至多为 $\eta$，所以
+
+$$
+z'^2\le2\eta(z_{\max}-z)\le2\eta\Delta.
+\tag{266.6}
+$$
+
+对（266.5）在 $[-h,h]$ 上积分，
+
+$$
+\int_{-h}^h|\boldsymbol u''|^2
+\le2h\eta+2\sqrt{2\eta\Delta}.
+\tag{266.7}
+$$
+
+端点弦长至多为 $2b$。第262节的三角核恒等式及其平方积分 $h/6$ 因而给出
+
+$$
+|\boldsymbol u'(0)|
+\le\frac bh+
+\sqrt{\frac{\eta h^2}{3}
++\frac{h\sqrt{2\eta\Delta}}{3}}.
+\tag{266.8}
+$$
+
+置
+
+$$
+S=\Delta+\sqrt\eta,\qquad h=(\eta S)^{-1/6}.
+\tag{266.9}
+$$
+
+由于 $S\ge\sqrt\eta$ 且 $S\ge\Delta$，
+
+$$
+\eta h^2\le(\eta S)^{1/3},
+\qquad
+h\sqrt{2\eta\Delta}\le\sqrt2\,(\eta S)^{1/3}.
+\tag{266.10}
+$$
+
+代入可得
+
+$$
+I_Q(\rho_0)
+\le4\left(b+\sqrt{\frac{1+\sqrt2}{3}}\right)^2(\eta S)^{1/3}
+<6\bigl((\eta\Delta)^{1/3}+\sqrt\eta\bigr).
+\tag{266.11}
+$$
+
+这里的上界对全部 $0<\eta\le1$ 有效，只使用有限窗口积分。
+
+当 $\Delta=0$ 时，$z$ 恒定。令 $\boldsymbol w=(u_x,u_y)$，则 $|\boldsymbol w|=R=\sqrt{b^2-z^2}$ 也恒定。若 $R=0$，曲线恒定；否则（266.5）给出 $|\boldsymbol w''|\le\sqrt\eta$，故
+
+$$
+|\boldsymbol w'|^2=-\boldsymbol w\cdot\boldsymbol w''
+\le R\sqrt\eta\le b\sqrt\eta.
+\tag{266.12}
+$$
+
+于是 $I_Q\le4b\sqrt\eta=\sqrt\eta$。第265节的赤道匀速旋转
+
+$$
+\boldsymbol u(t)=b(\cos\omega t,\sin\omega t,0),
+\qquad \omega^2=\sqrt\eta/b
+\tag{266.13}
+$$
+
+具有整函数矩阵元、零布居摆幅，且信息精确等于 $\sqrt\eta$。这同时证明（266.4），并为任意允许 $\Delta$ 给出同一个下界。
+
+下面在较大摆幅区间建立第二项的统一下界。保留第264节的固定光滑函数 $F,G,B$ 及常数 $k,J_G,m_B,K_0,A_1,A_2$，并记 $D_0=kJ_G$。选取固定 $\gamma>0$，使
+
+$$
+\frac{4\gamma^2}{m_B}\le\frac14.
+\tag{266.14}
+$$
+
+再固定 $K\ge1$，使
+
+$$
+5D_0^{1/3}\gamma^{2/3}K^{-2/3}\le\frac14.
+\tag{266.15}
+$$
+
+对 $\Delta>0$，令
+
+$$
+r=\gamma\sqrt\Delta,\qquad
+v=\gamma\sqrt{\eta\Delta},\qquad
+T=(D_0/v)^{1/3},\qquad
+L=\frac{4v}{\eta m_B}.
+\tag{266.16}
+$$
+
+使用同一个相位及正、负加速度构造：
+
+$$
+\phi(t)=F(t/T),
+\qquad
+g(t)=\frac{k}{T^4}G(t/T)
+-\frac\eta4 B\!\left(\frac{t-3T}{L}\right),
+\qquad
+z(t)=\int_{-\infty}^t(t-s)g(s)\,ds.
+\tag{266.17}
+$$
+
+两个脉冲的积分依次为 $v$、$-v$，所以 $z$ 从零单调增加到一个常值，并且
+
+$$
+0\le z(t)\le5Tv+vL
+=5D_0^{1/3}\gamma^{2/3}(\eta\Delta)^{1/3}
++\frac{4\gamma^2}{m_B}\Delta.
+\tag{266.18}
+$$
+
+若 $\Delta\ge K\sqrt\eta$，则（266.14）—（266.15）给出
+
+$$
+0\le z(t)\le\Delta/2\le b/4.
+\tag{266.19}
+$$
+
+因此摆幅约束保留了固定比例的余量。
+
+取 $w=\sqrt{b^2-z^2}e^{-i\phi}$，再按（264.15）组成密度矩阵 $\rho^{(0)}$，其两个特征值精确为 $3/4,1/4$。现在须使第264节的矩阵余量估计对这两个参数统一成立，而不是逐个固定 $\Delta$ 后才选择阈值。首先
+
+$$
+r\le r_{\max}:=\gamma\sqrt{b/2},
+\qquad
+T\ge\left(\frac{D_0}{\gamma\sqrt{\eta b/2}}\right)^{1/3}.
+\tag{266.20}
+$$
+
+因此 $T\to\infty$ 对全部 $0<\Delta\le b/2$ 统一成立。相位支撑内的（264.18）只含固定的 $D_0$ 与轮廓常数；相位支撑外的（264.20）可统一用 $r_{\max}$ 代替 $r$。特别地，可一次选择 $\eta_0>0$，使所有这些参数对均有 $g\le1/4$，相位支撑内满足 $|w''|\le2K_0/T^2$，支撑外满足
+
+$$
+|w''|^2\le(\eta+g)/4.
+\tag{266.21}
+$$
+
+具体地，支撑外 $g\ge0$ 时使用
+$|w''|^2\le2A_2^2r_{\max}^4\eta^2+2A_1^2g^2$，而 $\sup g=k/T^4$ 一致趋零；$g<0$ 时使用
+$|w''|^2\le(A_2r_{\max}^2+A_1/4)^2\eta^2$ 及 $\eta+g\ge3\eta/4$。这些条件均由同一个充分小的 $\eta_0$ 保证。（266.19）已独立确保所用幅度导数界的适用范围。于是第264节的行列式和迹计算逐式给出
+
+$$
+C_\eta-(\rho^{(0)})''(t)\succeq\frac{3\eta}{16}I
+\quad(t\in\mathbb R).
+\tag{266.22}
+$$
+
+中心相位导数为 $1/T$。同处的 SLD 计算给出
+
+$$
+I_Q(\rho^{(0)}_0)
+\ge\frac{3b^2}{T^2}
+=3b^2\left(\frac{\gamma}{D_0}\right)^{2/3}
+(\eta\Delta)^{1/3}.
+\tag{266.23}
+$$
+
+为得到整函数矩阵元，仍先以高斯核平滑实角函数 $\chi=\arcsin(z/b)$ 和 $\phi$，再以三角函数重建密度。对于每一个固定参数对 $(\eta,\Delta)$，全实轴 $C^2$ 逼近及（266.22）使我们可选取充分小的平滑宽度，同时保留原矩阵上界与至少一半的中心信息。特征值由重建恒等式精确保留。
+
+摆幅约束也在这一步精确保留：由（266.19），
+
+$$
+0\le\chi(t)\le\arcsin\!\left(\frac{\Delta}{2b}\right).
+\tag{266.24}
+$$
+
+高斯正平均保持这个区间，且正弦函数在该区间单调，故重建后的 $z_\epsilon=b\sin\chi_\epsilon$ 仍包含于 $[0,\Delta/2]$。因此，在 $\Delta\ge K\sqrt\eta$ 时，
+
+$$
+F_{\rm ent}(\eta,\Delta)\ge
+\kappa(\eta\Delta)^{1/3},
+\qquad
+\kappa=\frac{3b^2}{2}
+\left(\frac{\gamma}{D_0}\right)^{2/3}>0.
+\tag{266.25}
+$$
+
+所有轮廓、$\gamma,K,\kappa,\eta_0$ 均独立于参数对；只有最后的平滑宽度允许依赖它。
+
+当 $\Delta<K\sqrt\eta$ 时，
+$\sqrt\eta+(\eta\Delta)^{1/3}\le(1+K^{1/3})\sqrt\eta$，赤道曲线已给出所需下界。在互补区间，取赤道下界与（266.25）的较大者，至少是目标和式的 $\min\{1,\kappa\}/2$ 倍。因此可取
+
+$$
+c=\min\left\{
+\frac1{1+K^{1/3}},
+\frac{\min\{1,\kappa\}}2
+\right\}>0.
+\tag{266.26}
+$$
+
+这完成统一下界及定理的证明。证毕。
+
+**推论 266.3（趋近平面与保持阶优势的尺度）。** 对固定 $\beta>0$，令 $\Delta=\eta^\beta$；当 $\eta$ 充分小时，它属于允许范围。则
+
+$$
+F_{\rm ent}(\eta,\eta^\beta)
+\asymp F(\eta,\eta^\beta)
+\asymp
+\eta^{\min\{1/2,(1+\beta)/3\}}.
+\tag{266.27}
+$$
+
+特别地，当 $0<\beta<1/2$，与第265节全部固定实基底类的比较满足
+
+$$
+\frac{F_{\rm ent}(\eta,\eta^\beta)}
+{F_\eta^{\rm real,ent}}
+=\Theta\!\left(\eta^{(2\beta-1)/6}\right)
+\longrightarrow\infty.
+\tag{266.28}
+$$
+
+证明。 直接比较（266.3）中的两个幂次，并使用（265.3）的分母上下界。证毕。
+
+更具体地，在 $0<\beta<1/2$ 时，构造（266.17）及其解析化的整条 $\boldsymbol u$ 轨迹都距赤道平面至多 $\eta^\beta/2$，但其信息下界相对于任意固定平面轨迹的统一上界仍有发散的比例。因此，几何上任意接近平面，并不在这个退化参数族中保证信息阶接近固定平面的极值；矩阵上界本身也随 $\eta$ 退化，比较对象的信息同时趋零。摆幅进入 $\Delta\lesssim\sqrt\eta$ 区间以后，两项才共同回到二分之一次幂阶。
+
+曲线上的导数插值已有黎曼流形版本。Igor Parasyuk，*Landau–Kolmogorov type inequalities for curves on Riemannian manifolds*，Mathematical Inequalities & Applications 22（2019），433—443页，[原文](https://files.ele-math.com/articles/mia-22-31.pdf)，定理1—2，在正 Hessian 或球面小球条件下以协变加速度控制速度。这些是相关的既有背景；本节控制的是密度矩阵在线性空间中的二阶导数，其法向分量也参与 Loewner 约束，不能直接换成球面的协变加速度。式（266.3）的二参数估计由（266.5）—（266.26）证明，没有把流形上的插值思想本身作为新增结果。
+
+本节的摆幅沿给定矩阵上界的特征方向测量，没有给出相对于任意平面的统一厚度定理。全部特征值始终固定；摆幅控制的是对角布居及方向变化，不是谱的变化。SLD、标量正性和有限窗口插值沿用前节的既有背景，二参数常数与全域构造由上述估计给出。这里未求出正摆幅下的精确最优系数，也未施加哈密顿量、物理能量、带宽或原处理器约束。
+
+## 追加锚（本行以下为增补区）
+
+## 267. 共同反酉对称的平方符号与固定实基底的区别
+
+第265节使用的是一条曲线能否在同一个固定基底中同时取实。在二维非简并谱情形，共同反酉对称可以给出这样的实结构。高维退化谱需要额外区分反酉算子的平方：保持整族状态不变的反酉算子，其平方可以是 $-I$，而基底复共轭的平方必须是 $I$。
+
+下面给出四个满秩状态的明确构造，再将其实现为一条周期、整函数矩阵元且精确固定谱的曲线。
+
+**定义 267.1（共同反酉对称与共轭）。** 对有限维 Hilbert 空间上的密度族 $\mathcal R$，共同反酉对称是反酉算子 $T$，满足
+
+$$
+T\rho T^{-1}=\rho
+\qquad(\rho\in\mathcal R).
+\tag{267.1}
+$$
+
+称反酉算子 $J$ 为共轭，如果 $J^2=I$。密度族能在一个固定正交基中同时写成实矩阵，当且仅当它有一个共同共轭：一个方向取该基中的逐项复共轭；另一个方向使用共轭的不动实子空间的正交基。这是实结构的通常对应。
+
+**定理 267.2（有共同反酉对称但无共同实基底的固定谱族）。** 存在四维空间中的四个满秩密度矩阵，具有同一谱
+
+$$
+\{3/8,3/8,1/8,1/8\},
+\tag{267.2}
+$$
+
+其所有共同反酉对称的平方都等于 $-I_4$。同一性质也由一条全实轴周期密度曲线实现，其矩阵元为整函数，且每个实参数处的谱均精确等于（267.2）。
+
+证明。 在 $\mathbb C^2\otimes\mathbb C^2$ 中，令 $X,Y,Z$ 为标准 Pauli 矩阵，置
+
+$$
+G_1=X\otimes I_2,\qquad
+G_2=Z\otimes I_2,\qquad
+G_3=Y\otimes X,\qquad
+G_4=Y\otimes Y.
+\tag{267.3}
+$$
+
+这些矩阵满足
+
+$$
+G_j^*=G_j,\qquad G_j^2=I_4,\qquad
+\operatorname{Tr}G_j=0,\qquad
+G_jG_k=-G_kG_j\quad(j\ne k).
+\tag{267.4}
+$$
+
+定义
+
+$$
+\rho_j=\frac14\left(I_4+\frac12G_j\right)
+\qquad(j=1,2,3,4).
+\tag{267.5}
+$$
+
+每个 $G_j$ 的特征值为 $1,-1$，各重数为二，故 $\rho_j$ 迹为一、严格正定，并有谱（267.2）。
+
+令 $K$ 为标准基中的逐项复共轭，并置
+
+$$
+U=I_2\otimes Y,\qquad T=UK.
+\tag{267.6}
+$$
+
+$U$ 是酉矩阵，且 $\overline U=-U$，所以
+
+$$
+T^2=U\overline U=-I_4.
+\tag{267.7}
+$$
+
+$G_1,G_2,G_4$ 为实矩阵，而 $\overline{G_3}=-G_3$。另一方面，$U$ 与 $G_1,G_2,G_4$ 对易，并且 $UG_3U^*=-G_3$。于是对每个 $j$，
+
+$$
+U\overline{G_j}U^*=G_j,
+\qquad T\rho_jT^{-1}=\rho_j.
+\tag{267.8}
+$$
+
+下面证明这些状态没有共同共轭。先求共同复线性交换子。若复矩阵 $A$ 同时与 $G_1,G_2$ 对易，则把它写成以第一张量因子分块的矩阵，由与 $Z\otimes I_2$ 对易可知非对角块为零，再由与 $X\otimes I_2$ 对易可知两个对角块相等。因此
+
+$$
+A=I_2\otimes B
+\tag{267.9}
+$$
+
+对某个 $2\times2$ 复矩阵 $B$ 成立。继续与 $G_3,G_4$ 对易，分别给出 $BX=XB$ 和 $BY=YB$。由于 $X,Y$ 生成全部 $2\times2$ 复矩阵代数，$B$ 为标量矩阵。因此
+
+$$
+\{A\in M_4(\mathbb C):[A,G_j]=0\ \forall j\}
+=\mathbb C I_4.
+\tag{267.10}
+$$
+
+这也正是四个 $\rho_j$ 的共同复线性交换子。
+
+若 $J$ 是任意共同反酉对称，则 $JT^{-1}$ 是复线性酉算子，且与全部 $\rho_j$ 对易。由（267.10），必有 $J=\zeta T$，其中 $|\zeta|=1$。反酉性使标量在第二次作用时被共轭，所以
+
+$$
+J^2=\zeta\overline\zeta\,T^2=-I_4.
+\tag{267.11}
+$$
+
+特别地，不存在平方为 $I_4$ 的共同共轭，也不存在使四个状态同时取实的固定基底。
+
+为构造一条整函数曲线，取实向量
+
+$$
+\begin{aligned}
+n_1(t)&=\cos t\cos2t,&
+n_2(t)&=\sin t\cos2t,\\
+n_3(t)&=\cos t\sin2t,&
+n_4(t)&=\sin t\sin2t,
+\end{aligned}
+\qquad |n(t)|^2=1.
+\tag{267.12}
+$$
+
+定义
+
+$$
+\rho(t)=\frac14\left(I_4+\frac12
+\sum_{j=1}^4n_j(t)G_j\right).
+\tag{267.13}
+$$
+
+由反对易关系，$(\sum_j n_jG_j)^2=I_4$，且该矩阵迹为零。因此每个实参数处的谱都为（267.2）。矩阵元由正弦、余弦的乘积组成，所以延拓成整函数，曲线以 $2\pi$ 为周期。由于 $n_j(t)$ 在实轴取实值，（267.8）说明同一个 $T$ 保持整条曲线不变。
+
+在四个参数处，
+
+$$
+\begin{aligned}
+n(0)&=e_1,&n(\pi/2)&=-e_2,\\
+n(\pi/4)&=(e_3+e_4)/\sqrt2,&
+n(3\pi/4)&=(e_3-e_4)/\sqrt2.
+\end{aligned}
+\tag{267.14}
+$$
+
+这些向量张成 $\mathbb R^4$。故任何保持整条曲线不变的反酉算子，也保持四个 $G_j$ 不变；这里恢复 $G_j$ 所用的线性组合系数均为实数。由（267.11），它的平方必为 $-I_4$。这完成曲线版本。证毕。
+
+这条曲线的信息也处处非零。写 $N(t)=\sum_jn_j(t)G_j$，则 $|n'(t)|^2=5$，所以 $N'^2=5I_4$；由 $N^2=I_4$ 又有 $NN'+N'N=0$。代入 SLD 方程可见 $L=N'/2$，故
+
+$$
+\frac{\rho L+L\rho}{2}=\rho',
+\qquad
+I_Q(\rho_t)=\operatorname{Tr}(\rho L^2)=5/4.
+\tag{267.15}
+$$
+
+因此，上述障碍并非来自某处参数导数退化或信息为零。
+
+这个区别也可直接从平方符号的基底不变性看出。若反酉算子写成 $T=UK$，更换酉基底后其酉部分变为 $V U\overline{V}^{-1}$，而 $T^2$ 作为复线性算子按通常酉共轭变换。因而平方为 $-I$ 的对称不能仅靠换基变为平方为 $I$ 的复共轭。定理267.2还排除了另选一个不同共同反酉对称的办法，因为该族的交换子只有标量。
+
+与第265节所引文献的对应需要精确限制。Miyazaki–Matsumoto，*Imaginarity-free quantum multiparameter estimation*，[arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，第3.1节定义1，把存在任意共同反酉对称的模型称为具有 global antiunitary symmetry。该版本定理1随后写道：
+
+> If a model $\{\rho_x\mid x\in X\}$ is imaginarity-free, there is a conjugation which is a GAS for $\{\rho_x\mid x\in X\}$.
+
+其后的说明还明确允许离散参数集和一般 Hermitian 算子族。定理267.2的四态族满足该定义，却没有共同共轭；其周期曲线版本说明这个区别也存在于光滑、满秩且精确固定谱的单参数模型。因此，该版本定理1在没有其他条件的一般维数表述下不成立。
+
+原证明中可以具体定位一个不成立的细分步骤。该版本式（44）—（46）把两个由同一反酉算子保持的正交分解，按子空间交集继续细分。对本节的矩阵，令
+
+$$
+E=\ker(G_1-I_4),\qquad
+F_+=\ker(G_2-I_4),\qquad
+F_-=\ker(G_2+I_4).
+\tag{267.16}
+$$
+
+这些二维子空间都由 $T$ 保持，且 $F_+\oplus F_-=\mathbb C^4$。但反对易关系给出 $E\cap F_+=E\cap F_-=\{0\}$：若非零 $v$ 同时满足 $G_1v=v$ 与 $G_2v=\pm v$，则 $G_1G_2v=-G_2G_1v$ 的两边矛盾。因此
+
+$$
+E\ne(E\cap F_+)\oplus(E\cap F_-).
+\tag{267.17}
+$$
+
+原文另要求被细分子空间的维数“more than 2”。按此字面条件，本四维例在首次分成两个二维谱子空间后，程序已无法继续到一维。即使把该条件改为“more than 1”，式（267.17）仍表明交集细分不成立，因此修改维数门槛不能修复该证明。
+
+同一个反酉算子保持两个正交分解，并不保证这两个分解能由交集共同细化；这里对应的谱投影不对易。这个失败步骤与前面的完整反例相互对应。
+
+非简并条件则足以保留所需对应。若族中有一个状态谱非简并，任一共同反酉对称都会保持它的每条一维特征空间；在单位特征向量 $v$ 上写 $Tv=\lambda v$，其中 $|\lambda|=1$，便有 $T^2v=\overline\lambda\lambda v=v$。因此 $T^2=I$。这正是同篇文献引理1(b)的情形。第265节的两个特征值不同，其直接平面证明及信息上界均不受上述高维区别影响。
+
+以上文献判定只针对所引用 arXiv v3 的定理文本。当前 arXiv 摘要页列出的最后修订也是 v3；本文未完成期刊勘误状态的核验，不据此宣称期刊现行状态或反例发现优先权。
+
+本节没有据此否定文献中其他估计或可达性结论；那些陈述须分别核对是否需要平方为 $I$。这里保留的结果是一个完整的矩阵反例及其适用边界：共同反酉对称、共同共轭、固定基底中同时取实，在退化谱高维模型中不能不加条件地视为同一要求。实型与四元数型反酉结构的区分属于既有背景。Armin Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，式（114）—（115）区分共轭与平方为负单位的 skew conjugation，第4.2.2节命题4.8给出后者的二维配对标准形。本节使用这种既有结构提供明确反例，不把平方符号的区分作为新的表示论发现。
+
+## 追加锚（本行以下为增补区）
+
+## 268. 四元数型状态族的实基底扩充与辅助混合度
+
+第267节的反例排除了原四维空间中的共同实基底。本节固定一种具体的扩充操作：给每个状态附加同一个、与参数无关的辅助密度矩阵，然后在扩充空间中作一次固定酉变换。这个操作可以保留原模型的全部统计信息；能否使扩充后的整族同时取实，则取决于辅助谱的重数。
+
+**定义 268.1（固定乘积辅助扩充）。** 设 $\mathcal R$ 是 $\mathbb C^d$ 上的非空密度矩阵族，$\tau$ 是有限维辅助空间上的固定密度矩阵。称 $\tau$ 允许该族的固定实基底扩充，如果存在一个固定酉矩阵 $W$，使
+
+$$
+W(\rho\otimes\tau)W^*
+\quad\text{对每个 }\rho\in\mathcal R\text{ 均为实矩阵。}
+\tag{268.1}
+$$
+
+辅助态可以不满秩。式（268.1）要求同一个 $\tau$ 和同一个 $W$ 适用于整个族。
+
+**定理 268.2（辅助谱的偶重数判据）。** 假设 $\mathcal R$ 满足：其共同复线性交换子只有标量；存在共同反酉对称 $T$，且 $T^2=-I_d$。则 $\tau$ 允许（268.1），当且仅当 $\tau$ 的每个正特征值都具有偶数重数。零特征值的重数不受限制。等价地，在其支撑上，$\tau$ 可酉变换为 $(I_2/2)\otimes\sigma$，其中 $\sigma$ 是某个密度矩阵。
+
+证明。 固定实基底存在，等价于扩充族存在共同共轭 $J$，其中 $J$ 反酉且 $J^2=I$。先计算扩充族的共同复线性交换子，以排除不同辅助谱块之间的混合。
+
+原族的共同核为零：因为全部状态 Hermitian，共同核的正交投影与每个状态对易，因而只能是零或单位投影；状态的迹为一排除了后一种情形。
+
+在 $\tau$ 的特征基中，一个交换矩阵的系统块 $B$ 若连接辅助特征值 $\lambda,\mu$，就必须满足
+
+$$
+\lambda\rho B=\mu B\rho
+\qquad(\rho\in\mathcal R).
+$$
+
+若 $\lambda,\mu>0$，取伴随并分别乘以 $B$、$B^*$，得到
+
+$$
+\mu B^*B\rho
+=\lambda B^*\rho B
+=\mu\rho B^*B.
+$$
+
+所以 $B^*B$ 属于原族的共同交换子，必为 $cI_d$。若 $B\ne0$，则 $c>0$，从而 $B=\sqrt c\,V$，其中 $V$ 酉。块方程变为 $\lambda\rho=\mu V\rho V^*$，取迹得 $\lambda=\mu$。当这两个特征值相等时，块方程直接说明 $B$ 为标量。
+
+若恰有一个特征值为零，块方程或其伴随把 $B$ 或 $B^*$ 的像限制在原族的共同核中，因此 $B=0$。两个零特征值之间的块则没有限制。故若正特征值 $\lambda_a$ 的重数为 $m_a$，零特征值重数为 $m_0$，扩充族的共同交换子恰为
+
+$$
+\left(\bigoplus_a I_d\otimes M_{m_a}(\mathbb C)\right)
+\oplus M_{dm_0}(\mathbb C).
+$$
+
+取标准基复共轭 $K_d$，写 $T=UK_d$，于是 $U$ 酉且 $U\overline U=-I_d$。在整个辅助空间的特征基中，$(U\otimes I)K$ 保持扩充族并逐块保持辅助特征子空间。任何共同反酉对称 $J$ 与它的商为上述交换子中的酉矩阵，因此 $J$ 也必须保持各个正谱块和零谱块。于是可逐块判断：在一个重数为 $m$ 的正谱块中令
+
+$$
+T_m=(U\otimes I_m)K_{dm},
+\qquad T_m^2=-I_{dm}.
+\tag{268.2}
+$$
+
+这里 $K_{dm}$ 是乘积基中的逐项复共轭；$T_m$ 保持每个 $\rho\otimes I_m$。
+
+这族的共同复线性交换子为
+
+$$
+\{\rho\otimes I_m:\rho\in\mathcal R\}'
+=I_d\otimes M_m(\mathbb C).
+\tag{268.3}
+$$
+
+这也可直接按辅助指标展开成 $d\times d$ 块，由原族的标量交换子得到。
+
+若 $J_m$ 是任意共同反酉对称，则 $J_mT_m^{-1}$ 为共同复线性酉对称，由（268.3）有
+
+$$
+J_m=(I_d\otimes V)T_m
+\quad\text{对某个酉 }V\in M_m(\mathbb C).
+\tag{268.4}
+$$
+
+直接计算平方得
+
+$$
+J_m^2=-I_d\otimes V\overline V.
+\tag{268.5}
+$$
+
+所以 $J_m$ 为共轭，当且仅当 $V\overline V=-I_m$。取行列式，
+
+$$
+1=|\det V|^2=(-1)^m,
+\tag{268.6}
+$$
+
+故 $m$ 必为偶数。反过来，若 $m=2k$，取实正交矩阵
+
+$$
+V=\bigoplus_{j=1}^k
+\begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+\tag{268.7}
+$$
+
+则 $V\overline V=V^2=-I_m$，式（268.4）给出所需共轭。
+
+在每个正特征值块上分别这样构造；在零特征值块上取任意共轭，因为扩充状态在该块恒为零。块的正交直和仍为共轭，并保持扩充族。由其不动实子空间的正交基得到（268.1）。将每对相同正特征值 $\lambda$ 合并为 $\sigma$ 的特征值 $2\lambda$，便得到陈述中的张量形式；反方向由该张量形式立即给出偶重数。证毕。
+
+**推论 268.3（最小辅助熵与纯辅助态障碍）。** 在定理268.2的假设下，任何允许的辅助态均满足
+
+$$
+S(\tau):=-\operatorname{Tr}(\tau\log\tau)\ge\log2.
+\tag{268.8}
+$$
+
+等号成立当且仅当辅助谱的非零部分恰为 $\{1/2,1/2\}$。因此，一个最大混合的二维辅助态充分且达到最小熵；任意有限维纯辅助态都不充分。
+
+证明。 将每个正特征值的偶数重数写成 $m_a=2k_a$，并把相同特征值两两配对。每一对的总质量为 $q_{a,j}=2\lambda_a$，其中 $1\le j\le k_a$，且 $\sum_{a,j}q_{a,j}=1$。于是
+
+$$
+S(\tau)=\log2-\sum_{a,j}q_{a,j}\log q_{a,j}
+\ge\log2.
+\tag{268.9}
+$$
+
+等号当且仅当只有一对有正质量，即该对的两个特征值均为 $1/2$。纯辅助态的唯一正特征值重数为一，不满足定理268.2。证毕。
+
+偶数秩本身还不够。例如 $\operatorname{diag}(7/10,3/10)$ 的两个正特征值各为单重，因而不能完成（268.1）。判据要求每个谱块能成对组织。
+
+对第267节的整函数周期曲线，$n(t+\pi)=-n(t)$，故
+
+$$
+\rho(t)+\rho(t+\pi)=I_4/2.
+\tag{268.10}
+$$
+
+该恒等式使曲线的对称结构直观可见；定理268.2本身并不要求单位矩阵属于状态的实线性张成。曲线的标量交换子及负平方对称已由（267.6）—（267.14）证明。取 $\tau=I_2/2$ 即得到八维空间中的共同实基底，扩充后的谱精确为
+
+$$
+\{3/16,3/16,3/16,3/16,
+1/16,1/16,1/16,1/16\}.
+\tag{268.11}
+$$
+
+同一结论也适用于第267节最初的四个状态；这四态族的实线性张成并不包含 $I_4$，但它依然满足定理268.2的两个假设。
+
+原四维空间中的障碍与八维扩充中的可行性分别属于两个不同的操作范围。最小扩充还可以写出明确换基矩阵。按辅助指标将空间排列为 $\mathbb C^d\oplus\mathbb C^d$，取
+
+$$
+W=\frac1{\sqrt2}
+\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}
+\begin{pmatrix}I&0\\0&U^*\end{pmatrix}.
+$$
+
+由 $U^*\rho U=\overline\rho$，直接相乘得
+
+$$
+W\left(\rho\otimes\frac{I_2}{2}\right)W^*
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho&-\operatorname{Im}\rho\\
+\operatorname{Im}\rho&\operatorname{Re}\rho
+\end{pmatrix}.
+$$
+
+右侧的实部和虚部均按矩阵元取；$\rho$ Hermitian 保证右侧为实对称矩阵。这一等式对给定反酉不变族成立，不宣称同一个信道在任意输入态上都实现右侧的标准实化公式。
+
+标量交换子假设不可省略。例如单态族 $\{I_2/2\}$ 已经取实，同时也由平方为负单位的 $YK$ 保持；它不需要混合辅助态。仅存在某个负平方对称，不能推出本节的辅助熵下界。
+
+**命题 268.4（统计恢复与 SLD 信息保持）。** 对任意固定辅助态 $\tau$ 和固定酉矩阵 $W$，编码
+
+$$
+\mathcal E(\rho)=W(\rho\otimes\tau)W^*
+\tag{268.12}
+$$
+
+为量子信道，且有与参数无关的量子信道
+
+$$
+\mathcal D(\sigma)=\operatorname{Tr}_{\rm anc}(W^*\sigma W)
+\tag{268.13}
+$$
+
+满足 $\mathcal D\mathcal E(\rho)=\rho$。对光滑满秩原模型，整个 SLD 量子 Fisher 信息矩阵在该编码下保持不变，即使 $\tau$ 不满秩。
+
+证明。 附加固定密度矩阵、酉共轭及偏迹都是完全正保迹操作；$\operatorname{Tr}\tau=1$ 直接给出恢复恒等式。原 POVM $\{E_a\}$ 对应扩充 POVM $\{W(E_a\otimes I)W^*\}$，且
+
+$$
+\operatorname{Tr}\bigl[\mathcal E(\rho)W(E_a\otimes I)W^*\bigr]
+=\operatorname{Tr}(\rho E_a).
+\tag{268.14}
+$$
+
+反方向可由 $\mathcal E$ 的对偶信道将扩充测量拉回原模型，因此两个模型的测量分布可以互相实现。
+
+若原模型的第 $i$ 个 SLD 是 $L_i$，则在固定支撑 $\mathbb C^d\otimes\operatorname{supp}\tau$ 上，$L_i\otimes I$ 满足乘积模型的 SLD 方程：
+
+$$
+\frac{(\rho\otimes\tau)(L_i\otimes I)
++(L_i\otimes I)(\rho\otimes\tau)}2
+=(\partial_i\rho)\otimes\tau.
+\tag{268.15}
+$$
+
+零支撑块可任意补为零，不影响信息。于是
+
+$$
+\operatorname{Re}\operatorname{Tr}
+\bigl[(\rho\otimes\tau)(L_i\otimes I)(L_j\otimes I)\bigr]
+=\operatorname{Re}\operatorname{Tr}(\rho L_iL_j).
+\tag{268.16}
+$$
+
+固定酉共轭同时变换状态及 SLD，迹不变，因此编码后仍有相同信息矩阵。证毕。
+
+特别地，第267节曲线的 $I_Q=5/4$ 在上述八维实基底扩充后仍精确保持。辅助熵下界描述的是固定乘积辅助态所需的混合度，不是物理能耗或热力学功下界，也不表示编码损失了原模型的信息。
+
+本节的表示论机制已有标准来源。Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，第4.2.2节命题4.8给出平方为负单位的反酉算子的二维配对形式，第4.2.3节说明两个这种反酉结构的张量积成为共轭。定理268.2将这一既有机制与共同交换子、辅助态的各个谱块组合；辅助谱判据与熵结论由上面的逐块证明给出，不宣称反酉配对机制的原创性。
+
+这也须与 Miyazaki–Matsumoto，[arXiv:2010.15465v3](https://arxiv.org/pdf/2010.15465v3)，附录A.3式（136）的纯态 embedding quantum simulator 编码区别开。该文明确说明那种将态矢量与其共轭同时编码的操作不是完全正映射，且其信息矩阵可以改变。式（268.12）附加固定混合态并作固定酉变换，具有（268.13）的信道恢复，不借用该纯态编码的可实现性或信息结论。
+
+全部最小性结论仅针对定义268.1，并使用定理268.2列出的标量交换子与负平方共同反酉对称假设。本节未给出任意通道、相关辅助系统或近似模拟的最小维数与最小熵。扩充后的维数及谱已经改变，不能把它代入第265节固定二维、固定谱、固定矩阵上界的优化类。
+
+## 追加锚（本行以下为增补区）
+
+## 269. 共轭不变的轨道、实代表与有限矩阵字检验
+
+第267节的矩阵族由共同反酉算子保持，因而每个矩阵字的迹都是实数；但该族没有共同实基底。这个现象可以精确表述为：在固定维数中，一个酉轨道与其复共轭相同，并不保证轨道内部含有全实矩阵族。轨道的不变性与不动代表的存在，需要分开判断。
+
+本节先给出有限长度的充分检验，再计算决定实代表是否存在的平方符号。有限长度界只用于说明如何结束精确检验，不宣称最优长度或低计算成本。
+
+**定义 269.1（矩阵字与生成长度）。** 给定 Hermitian 矩阵 $A_1,\ldots,A_r\in M_d(\mathbb C)$，矩阵字是这些矩阵的有限有序乘积，空字为 $I_d$。假设这些字的复线性张成是全部 $M_d(\mathbb C)$。选取包含空字的矩阵字基底 $W_1,\ldots,W_{d^2}$，并令 $L$ 为其中最大的字长。
+
+总可以选到 $L\le d^2-1$：令 $V_\ell$ 为长度至多 $\ell$ 的字张成的空间。若 $V_{\ell+1}=V_\ell$，则 $V_\ell$ 在每个生成元的左乘下封闭，此后不再增长；由于最终张成全部矩阵代数，在到达维数 $d^2$ 前，每一步维数必须严格增加。起点 $V_0$ 的维数为一。
+
+**定理 269.2（有限实迹检验）。** 在定义269.1的假设下，以下三条等价：
+
+1. 每个长度至多 $2L+1$ 的矩阵字都具有实迹。
+2. 存在共同反酉对称 $T$，使 $TA_jT^{-1}=A_j$ 对全部 $j$ 成立。
+3. 任意长度的矩阵字都具有实迹。
+
+因此，长度至多 $2d^2-1$ 是一个统一的充分检验范围。
+
+证明。 第二条推出第三条：共同反酉对称保持每个有序乘积 $B$，且反酉共轭使迹取复共轭，所以
+
+$$
+\operatorname{Tr}B
+=\operatorname{Tr}(TBT^{-1})
+=\overline{\operatorname{Tr}B}.
+\tag{269.1}
+$$
+
+第三条显然推出第一条。以下证明第一条推出第二条。
+
+取矩阵字基底的 Hilbert–Schmidt Gram 矩阵
+
+$$
+G_{ki}=\operatorname{Tr}(W_k^*W_i).
+\tag{269.2}
+$$
+
+由于生成元各自 Hermitian，$W_k^*$ 也是反序矩阵字；右侧的总字长至多为 $2L$，故 $G$ 的每个元素都为实数。基底的线性无关性使 $G$ 正定可逆。
+
+对任意生成元 $A_j$ 和基底字 $W_i$，写
+
+$$
+A_jW_i=\sum_\ell c_\ell W_\ell.
+\tag{269.3}
+$$
+
+系数向量满足 $Gc=b$，其中
+
+$$
+b_k=\operatorname{Tr}(W_k^*A_jW_i).
+\tag{269.4}
+$$
+
+右侧的字长至多 $2L+1$，所以 $b$ 为实向量；$G$ 实可逆，故全部 $c_\ell$ 为实数。
+
+定义复线性映射 $\Psi:M_d(\mathbb C)\to M_d(\mathbb C)$，令
+
+$$
+\Psi(W_i)=\overline{W_i}.
+\tag{269.5}
+$$
+
+这里 $\Psi$ 是按基底定义的复线性映射，不是对任意矩阵逐项取共轭。由于共轭后的基底仍线性无关，它为双射，并且 $\Psi(I_d)=I_d$。式（269.3）的系数为实数，因此
+
+$$
+\Psi(A_jX)=\overline{A_j}\Psi(X)
+\qquad(X\in M_d(\mathbb C)).
+\tag{269.6}
+$$
+
+按字长归纳，再对矩阵字作复线性组合，得到
+
+$$
+\Psi(XY)=\Psi(X)\Psi(Y).
+\tag{269.7}
+$$
+
+对任意字 $W$，式（269.6）也给出 $\Psi(W)=\overline W$；反序取伴随及生成元的 Hermitian 性质于是给出
+
+$$
+\Psi(X^*)=\Psi(X)^*.
+\tag{269.8}
+$$
+
+所以 $\Psi$ 是复线性的保单位、保伴随矩阵代数自同构，因而可由某个酉矩阵 $Q$ 实现：$\Psi(X)=QXQ^*$。这一标准矩阵代数事实也可直接从矩阵单位验证：$\Psi(E_{ii})$ 是相互正交的极小投影；选取其中一个单位向量 $f_1$，令 $f_i=\Psi(E_{i1})f_1$，便得到一组正交基，使 $\Psi(E_{ij})=|f_i\rangle\langle f_j|$。
+
+于是 $QA_jQ^*=\overline{A_j}$。令 $K$ 为标准复共轭，则
+
+$$
+T=Q^*K
+\tag{269.9}
+$$
+
+是保持全部 $A_j$ 的反酉算子，完成证明。证毕。
+
+长度中的额外一步不能一般地直接删去。对二维空间的三个 Pauli 矩阵 $X,Y,Z$，$I,X,Y,Z$ 已构成字长至多一的矩阵基底，即 $L=1$。全部长度至多二的迹都为实数，但 $\operatorname{Tr}(XYZ)=2i$。所以 $2L$ 不能在一般情况下替代定理中的 $2L+1$；这不表示统一界 $2d^2-1$ 已经最优。
+
+**定理 269.3（有限迹数据的实表示与辅助谱证书）。** 在定理269.2的等价条件成立时，记
+
+$$
+H_{ij}=\operatorname{Tr}(W_iW_j),
+\qquad
+G_{ij}=\operatorname{Tr}(W_i^*W_j).
+\tag{269.10}
+$$
+
+则由有限迹数据计算的数
+
+$$
+\boxed{
+\varepsilon=\frac1d\sum_{i,j=1}^{d^2}(G^{-1})_{ij}H_{ij}
+}
+\tag{269.11}
+$$
+
+必为正一或负一。它等于任意共同反酉对称的平方符号；矩阵族存在固定实基底，当且仅当它等于正一。右侧只使用字长至多 $2L$ 的精确迹值，但定理269.2中的反酉存在性仍是本结论的前提。
+
+若这些生成元本身为密度矩阵，负证书还给出具体的辅助谱约束：固定乘积辅助态及一次固定酉变换能使整个族取实，当且仅当辅助态的每个正特征值都具有偶数重数；最小辅助熵为 $\log2$。正证书则允许纯辅助态，最小辅助熵为零。
+
+证明。先在本证明内使用经典的 Schur 交织论证确定平方符号，再证明它可由式（269.11）读取。共轭与平方为负单位的反酉结构之区别、配对形式及张量符号规则见 Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，式（114）—（115）、命题4.8及第4.2.3节。
+
+考虑复线性交织方程组
+
+$$
+\mathcal I_A
+=\{U\in M_d(\mathbb C):A_jU=U\overline{A_j}\ \forall j\}.
+\tag{269.12}
+$$
+
+全矩阵代数的共同交换子只有标量。若 $U$ 满足（269.12），对方程取伴随，并利用全部 $A_j$ 和 $\overline{A_j}$ 均 Hermitian，可得 $U^*U$ 与每个 $\overline{A_j}$ 对易。因此 $U^*U=cI_d$。对非零 $U$，$c>0$，于是 $U_0=U/\sqrt c$ 酉。
+
+若 $V$ 是另一非零解，则 $VU^{-1}$ 与每个 $A_j$ 对易，故为标量。交织空间因而至多一维；非零时恰为一维。
+
+令 $T=U_0K$。它是共同反酉对称，而 $T^2$ 是共同复线性酉对称，故 $T^2=\lambda I_d$，其中 $|\lambda|=1$。结合律给出 $TT^2=T^2T$，反线性使左侧的标量被共轭，所以 $\overline\lambda=\lambda$，即 $\lambda=\pm1$。将 $U_0$ 乘以单位相位不改变 $U_0\overline{U_0}$，因此符号唯一。
+
+因此存在唯一的 $\varepsilon\in\{+1,-1\}$，满足
+
+$$
+U_0\overline{U_0}=\varepsilon I_d.
+\tag{269.13}
+$$
+
+正号时 $T$ 本身为共轭，从其不动实子空间取得共同实基底。负号时，全部共同反酉对称的平方都为负单位，不存在共同共轭；固定实基底若存在则会提供共同共轭，矛盾。
+
+接着计算这个符号。此时 $G$ 是实对称正定矩阵。令 $C=G^{-1/2}$，并取
+
+$$
+B_\alpha=\sum_i W_i C_{i\alpha}.
+\tag{269.14}
+$$
+
+这些矩阵构成 Hilbert–Schmidt 正交归一基底。由于 $C$ 的元素为实数，每个 $B_\alpha$ 仍由共同反酉 $T=UK$ 保持。因此
+
+$$
+\begin{aligned}
+\sum_\alpha\operatorname{Tr}(B_\alpha^2)
+&=\sum_{i,j}(G^{-1})_{ij}\operatorname{Tr}(W_iW_j),\\
+\sum_\alpha (B_\alpha)_{ij}\overline{(B_\alpha)_{kl}}
+&=\delta_{ik}\delta_{jl}.
+\end{aligned}
+\tag{269.15}
+$$
+
+在第一行左端展开矩阵迹，再将其中一个因子替换为 $B_\alpha=U\overline{B_\alpha}U^*$，第二行的完备关系给出
+
+$$
+\sum_\alpha\operatorname{Tr}(B_\alpha^2)
+=\sum_{i,j}U_{ij}\overline{U_{ji}}
+=\operatorname{Tr}(U\overline U)
+=\varepsilon d.
+$$
+
+与第一行相比较即得式（269.11）。若生成元是密度矩阵，全矩阵代数生成假设使其共同交换子为标量。负号时直接适用定理268.2及推论268.3；正号时原族已有共同实基底，附加一个纯辅助态即可，且熵非负给出最小值零。证毕。
+
+这表明符号判别是对已有精确迹数据的进一步计算，不是额外索取这些数据之外的信息。若没有先验证反酉存在性，右侧未必等于正负一；例如前面的 $I,X,Y,Z$ 基底给出右侧为二。
+
+这里必须保留两步检验的分工。有限实迹条件判断的是酉轨道是否在复共轭下保持不变；交织解的平方符号判断这个轨道是否含有全实代表。定理269.2并未把任意共同反酉对称都当成共轭。
+
+第267节的四个 $G_j$ 生成全部 $M_4(\mathbb C)$：它们的共同交换子为标量，而所生成的代数在伴随下封闭，有限维双交换子定理给出该结论。其共同反酉对称使每个矩阵字的迹为实数，但定理269.3的证书为 $-1$。这给出“共轭不变轨道没有实代表”的明确实例。
+
+还可直接计算本例的有限证书。取十六个有序子集字 $W_S=\prod_{j\in S}G_j$，其中 $S\subseteq\{1,2,3,4\}$，乘积按指标递增排列。这四个生成元为两两反对易的对合。每个非空子集字都无迹：当其长度为偶数，取子集内的一个生成元共轭；当其长度为奇数，取子集外的一个生成元共轭，均使该字变号。不同子集字的乘积约化为非空子集字，故
+
+$$
+G_{\rm Gram}=4I_{16},\qquad
+H_{SS}=4(-1)^{|S|(|S|-1)/2},\qquad
+H_{ST}=0\quad(S\ne T).
+\tag{269.16}
+$$
+
+这同时证明十六个字线性无关，因而构成矩阵基底。长度为零、一、四的字共有六个，平方为正单位；长度为二、三的字共有十个，平方为负单位。于是式（269.11）给出 $\varepsilon=(6-10)/4=-1$，从具体迹值读出了第268节辅助谱配对所需的负证书。上述矩阵族与其密度族由 $G_j=8\rho_j-2I_4$ 互相生成，且具有相同共同反酉对称，故该证书同样判断对应密度族的平方类型。
+
+全部矩阵字的精确迹值仍然能在固定维数中区分酉轨道。上述反例没有否定这一完整性：仅知道每个值都是实数，远弱于知道并比较全部具体值。若另一个同维度的全实矩阵族与该四元数型族具有全部相同的矩阵字迹，它们就会酉等价，反而与无实代表结论矛盾。
+
+矩阵字迹的这种完整性属于既有结果。Futorny、Horn、Sergeichuk，*Specht's criterion for systems of linear mappings*，[arXiv:1701.08826v1](https://arxiv.org/pdf/1701.08826v1)，引言式（2）陈述 Wiegmann 的同时酉相似判据：比较全部含生成元及其伴随的矩阵字迹。本文的生成元各自 Hermitian，伴随不再增加字母。该文还将闭合有向路的迹用于一般线性映射系统；本节只使用单空间矩阵族的情形。有限基底证明给出本节所需的可结束范围，不宣称矩阵字不变量、经典判据或最优长度界的原创性。
+
+第268节的可恢复扩充进一步说明适用范围的重要性。原四维族没有共同实基底，附加一个固定最大混合量子比特后却可同时取实，而编码有量子信道恢复并保持全部测量分布与 SLD 信息。因此，若把这种扩充及恢复列为允许的等价操作，“存在共同实基底”就不是统计实验等价类上的不变量；它仍可作为固定表示、固定维数和辅助资源范围内的约束。
+
+一个相应的成对读数是
+
+$$
+\frac14\operatorname{Tr}w(G_1,\ldots,G_4)
+=\frac18\operatorname{Tr}w(G_1\otimes I_2,\ldots,G_4\otimes I_2)
+\tag{269.17}
+$$
+
+对全部矩阵字成立。左边的四维表示没有共同共轭，右边的八维表示有共同共轭。这里保持的是归一化迹读数；维数和共同交换子已经改变，不能将它说成同维度完整迹不变量失效。
+
+式（269.17）比较的是生成元 $G_j$ 的归一化矩阵字迹，不是密度编码后所有乘积迹都不变。对固定乘积编码 $\rho_j\mapsto\rho_j\otimes I_2/2$，长度为 $k$ 的密度矩阵乘积满足
+
+$$
+\operatorname{Tr}\!\left[\prod_{\ell=1}^k
+(\rho_{j_\ell}\otimes I_2/2)\right]
+=2^{1-k}\operatorname{Tr}(\rho_{j_1}\cdots\rho_{j_k}).
+\tag{269.18}
+$$
+
+统计实验的可恢复性由编码与恢复信道证明，并不要求这些密度矩阵字迹保持原数值。
+
+本节所有检验均针对精确矩阵及精确等式。字数可以很大，未给出高效复杂度界；在有限精度数据下如何可靠判定零交织空间、平方符号与近似实化，也未由这些等式解决。实矩阵族仍可不对易，所以共同实基底的有无不能单独充当量子与经典的通用分界。
+
+## 追加锚（本行以下为增补区）
+
+## 270. 可恢复实表示的维数—熵区域与三种对称类型
+
+第268节固定了乘积辅助扩充的形式。本节允许任意有限维完全正保迹编码，只要求一个同样完全正保迹的解码能恢复指定状态族。对共同交换子为标量的族，这个恢复条件会迫使编码在整个输入矩阵空间上可恢复。因此，辅助谱的约束可以转化为任意这类编码的精确维数—熵区域。
+
+**定义 270.1（模型可恢复实编码）。** 设 $\mathcal R$ 是 $\mathbb C^d$ 上的非空密度矩阵族，且
+
+$$
+\mathcal R'=\mathbb C I_d.
+\tag{270.1}
+$$
+
+给定正整数 $D$，一个模型可恢复实编码由两个完全正保迹复线性映射
+
+$$
+\mathcal E:M_d(\mathbb C)\longrightarrow M_D(\mathbb C),
+\qquad
+\mathcal D:M_D(\mathbb C)\longrightarrow M_d(\mathbb C)
+\tag{270.2}
+$$
+
+组成，满足 $\mathcal D\mathcal E(\rho)=\rho$ 对全部 $\rho\in\mathcal R$ 成立，并且整个 $\mathcal E(\mathcal R)$ 在同一个固定正交基底中均为实矩阵。输出可以有从未占用的维数。熵使用自然对数，约定 $0\log0=0$。
+
+若 $\mathcal R$ 有共同反酉对称，任意两个这样的对称之商是共同复线性酉对称，由标量交换子假设必为单位相位。对一个共同反酉 $T$，其平方也属于该交换子，故 $T^2=\lambda I_d$，其中 $|\lambda|=1$。结合律 $T(T^2)=(T^2)T$ 与反线性给出 $\overline\lambda=\lambda$，所以 $\lambda=\pm1$。给 $T$ 乘上单位相位不改变它的平方，因此平方符号为整个族唯一确定。
+
+以下将平方符号为正一和负一的族分别称为正型和负型；没有共同反酉对称时称为无反酉型。这是经典实型、四元数型与复型区分在本节状态族上的用法；共轭与负平方反酉结构的标准定义见 Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，式（114）—（115）。
+
+**定理 270.2（完整可行区域）。** 在定义270.1的条件下，每个模型可恢复实编码都满足
+
+$$
+\mathcal D\mathcal E=\operatorname{id}_{M_d(\mathbb C)}.
+\tag{270.3}
+$$
+
+此外，存在一个与输入无关的数 $h$，使对每个输入密度矩阵 $\rho$ 都有
+
+$$
+S(\mathcal E(\rho))-S(\rho)=h.
+\tag{270.4}
+$$
+
+固定输出维数 $D$ 时，所有可达的 $h$ 精确如下：
+
+$$
+\begin{array}{c|c|c}
+\text{类型}&\text{维数可行条件}&\text{全部可达熵增}\hline
+\text{正型}&D\ge d&[0,\log\lfloor D/d\rfloor]\\
+\text{负型}&D\ge2d&[\log2,\log(2\lfloor D/(2d)\rfloor)]\\
+\text{无反酉型}&\text{无有限维可行值}&\varnothing
+\end{array}
+\tag{270.5}
+$$
+
+维数未满足相应条件时，可行集合为空。负型中 $h=\log2$ 当且仅当恢复正规形的辅助态非零谱为 $(1/2,1/2)$。
+
+证明。先将只在模型上恢复的条件提升为式（270.3）。原族的共同核为零：其正交投影与每个 Hermitian 状态对易，由（270.1）只能为零或单位，迹归一化排除单位。因此全部状态的支撑共同张成输入空间；有限维性还保证某个有限凸组合是满秩态，但不要求任何单个状态满秩。
+
+对信道 $\Phi=\mathcal D\mathcal E$ 使用 Koashi–Imoto 的不扰动分解。这是既有结构定理：在状态族的共同支撑上，存在分解
+
+$$
+\mathbb C^d=\bigoplus_a H_{J,a}\otimes H_{K,a},
+\qquad
+\rho=\bigoplus_a p_a(\rho)\rho_{J,a}\otimes\tau_{K,a},
+\tag{270.6}
+$$
+
+其中 $\tau_{K,a}$ 与所选状态无关；保持全部状态的信道之 Stinespring 等距实现，在每块上对 $H_{J,a}$ 作恒等作用，只能作用于 $H_{K,a}$ 与环境。其精确来源是 Koashi、Imoto，*What is Possible Without Disturbing Partially Known Quantum States?*，[arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)，式（85）—（89）及定理3式（103）。
+
+各直和块投影都与 $\mathcal R$ 对易，所以（270.1）排除多个块。若唯一的 $H_K$ 维数大于一，取与 $\tau_K$ 对易的非平凡正交投影 $P$；这样的投影总可从 $\tau_K$ 的特征基中取得，即使它是标量矩阵也一样。于是 $I_J\otimes P$ 是 $\mathcal R$ 的非标量共同交换子，矛盾。故只有一个块，且 $\dim H_K=1$。不扰动结构遂要求 $\Phi$ 在整个输入空间上为恒等信道。这一步使用不扰动定理，不把一般完全正映射当成代数同态。
+
+由第39.1节已使用的可恢复信道正规形，存在有限维密度矩阵 $\tau$ 和等距映射 $V$，使
+
+$$
+\mathcal E(X)=V(X\otimes\tau)V^*,
+\qquad V^*V=I.
+\tag{270.7}
+$$
+
+可将辅助空间限制在 $\operatorname{supp}\tau$，令其维数为 $r=\operatorname{rank}\tau$；于是 $dr\le D$。这个既有正规形可由 Nayak、Sen，*Invertible quantum operations and perfect encryption of quantum states*，[arXiv:quant-ph/0605041v4](https://arxiv.org/pdf/quant-ph/0605041v4)，定理2.1证明中的式（2）—（3）直接取得：恢复使 Kraus 算子满足 $A_i^*A_j=\alpha_{ij}I$，将正矩阵 $\alpha$ 对角化后得到正交像的等距算子及固定混合权重。式（270.7）只作用于占用子空间，不要求 $D$ 是 $d$ 的倍数。
+
+等距变换保留非零谱，乘积态的熵相加，因此
+
+$$
+S(\mathcal E(\rho))=S(\rho)+S(\tau)
+\tag{270.8}
+$$
+
+对所有输入成立，得到 $h=S(\tau)$。
+
+令 $\mathcal S=V(\mathbb C^d\otimes\operatorname{supp}\tau)$。它是全部编码状态支撑的共同张成，故输出的共同共轭 $J$ 保持 $\mathcal S$。限制到该子空间并拉回，得到
+
+$$
+J_0=V^*(J|_{\mathcal S})V,
+\qquad J_0^2=I,
+\qquad
+J_0(\rho\otimes\tau)J_0^{-1}=\rho\otimes\tau.
+\tag{270.9}
+$$
+
+这里 $V$ 被视为从乘积支撑到 $\mathcal S$ 的酉同构。输出中未占用的维数不能与占用支撑混合以消除这一限制。
+
+先处理无反酉型，以证明任意有限扩充都不可能。将 $\tau$ 在其支撑上对角化，特征值均严格为正，写 $J_0=ZK$，其中 $Z$ 酉。对辅助指标取系统矩阵块 $B$，式（270.9）给出
+
+$$
+\lambda\rho B=\mu B\overline\rho
+\qquad(\rho\in\mathcal R),
+\qquad\lambda,\mu>0.
+\tag{270.10}
+$$
+
+取伴随、左右乘以 $B^*$ 和 $B$，得到
+
+$$
+\mu B^*B\overline\rho
+=\lambda B^*\rho B
+=\mu\overline\rho B^*B.
+$$
+
+共轭族的共同交换子也为标量，所以非零块必为 $B=\sqrt c\,U$，其中 $c>0$、$U$ 酉。对（270.10）归一化后取迹，得到 $\lambda=\mu$，继而 $U\overline\rho U^*=\rho$。因此 $UK$ 是原族的共同反酉对称。酉矩阵 $Z$ 至少有一个非零块，产生矛盾。无反酉型的可行集合为空。
+
+负型中，将定理268.2用于（270.9），每个正辅助特征值均须具有偶数重数，亦即
+
+$$
+\tau\simeq(I_2/2)\otimes\sigma.
+\tag{270.11}
+$$
+
+于是 $r=2k$，其中 $k=\operatorname{rank}\sigma$，并且
+
+$$
+2dk\le D,
+\qquad
+h=\log2+S(\sigma).
+\tag{270.12}
+$$
+
+密度矩阵的熵不超过其秩的对数，故 $h$ 位于（270.5）的负型区间中，且 $D\ge2d$。等号 $h=\log2$ 的辅助谱刻画由推论268.3给出。
+
+正型中，原族已存在共同实基底；辅助态在其特征基中也为实，所以任意 $\tau$ 都可实现共同实表示。另一方面，任何编码的正规形均有 $r\le\lfloor D/d\rfloor$，因此
+
+$$
+0\le h=S(\tau)\le\log\lfloor D/d\rfloor.
+\tag{270.13}
+$$
+
+最后证明区间中的每一点都可达。对整数 $m\ge1$，连接纯态和最大混合态的连续路径
+
+$$
+\sigma_t=(1-t)|1\rangle\langle1|+tI_m/m,
+\qquad0\le t\le1,
+\tag{270.14}
+$$
+
+熵连续，端点分别为零与 $\log m$，所以取遍该区间。正型取 $m=\lfloor D/d\rfloor$ 并令 $\tau=\sigma_t$。负型取 $m=\lfloor D/(2d)\rfloor$ 并令 $\tau=(I_2/2)\otimes\sigma_t$；定理268.2给出一个固定酉变换，使整个乘积族取实。把所得实矩阵族等距嵌入输出的前若干坐标，其余补零，即可在恰为 $D$ 的空间中实现。
+
+这些等距编码确有定义在全部输出上的恢复信道。若 $P=VV^*$，固定任意输入密度矩阵 $\omega$，可取
+
+$$
+\mathcal D(Y)
+=\operatorname{Tr}_{\rm anc}(V^*YV)
++\operatorname{Tr}[(I-P)Y]\,\omega.
+\tag{270.15}
+$$
+
+两项完全正，迹之和为 $\operatorname{Tr}Y$；在编码像上第二项为零，第一项恢复 $X$。式（270.5）的全部可行值因而达到。证毕。
+
+**命题 270.3（三种区域均有有限状态族实现）。** 取 Pauli 矩阵 $X,Y,Z$，并令 $\rho_A=(I_2+A/2)/2$。二态族 $\{\rho_X,\rho_Z\}$ 为正型；三态族 $\{\rho_X,\rho_Y,\rho_Z\}$ 为无反酉型；第267节的四态族为负型。它们各自的共同复线性交换子均只有标量。
+
+证明。与 $\rho_X,\rho_Z$ 对易等价于与 $X,Z$ 对易，因而交换子为标量；二态族本身取实。若三态族存在共同反酉对称，由 $A=4\rho_A-2I_2$，该对称也保持 $X,Y,Z$，从而保持其乘积。但
+
+$$
+\operatorname{Tr}(XYZ)=2i
+\tag{270.16}
+$$
+
+在反酉共轭下取复共轭，与保持不变矛盾。负型四态族的标量交换子和平方为负单位的对称已在第267节给出。证毕。
+
+因此，负型的最小熵增不是编码损失信息的度量：式（270.3）仍使每个输入都能完全恢复。它衡量的是在完全正可恢复操作下取得共同实表示所需的额外混合度。正型允许零熵增，负型必须至少增加 $\log2$，而无反酉型在任意有限维输出中均不可行。该结论依赖精确恢复、单一固定实基底和标量共同交换子；它不包括近似恢复、仅保持部分统计量、非完全正编码或热力学功成本。
+
+## 追加锚（本行以下为增补区）
+
+## 271. 共轭状态块的概率平衡与可恢复实编码
+
+第270节的标量共同交换子假设排除了可独立读取的经典块。本节允许两个这样的块，并考察一个具体拼接：第一块承载一个状态族，第二块承载其复共轭。两块各自都没有共同反酉对称，整体却可以在概率恰好平衡时具有共同实表示。精确恢复要求使这种平衡成为任何有限维编码都无法绕开的条件。
+
+**定义 271.1（加权共轭双块）。** 设 $\mathcal R=\{\rho_s:s\in S\}$ 是 $\mathbb C^d$ 上的非空密度矩阵族，满足共同复线性交换子为 $\mathbb CI_d$，且没有共同反酉对称。固定一组基底以定义逐项复共轭。对固定 $p\in(0,1)$，定义
+
+$$
+\Omega_p(s)=p\rho_s\oplus(1-p)\overline{\rho_s}
+\quad\text{作用于 }\mathbb C^d\oplus\mathbb C^d.
+\tag{271.1}
+$$
+
+所谓可恢复实编码，是固定的完全正保迹复线性映射 $\mathcal E:M_{2d}\to M_D$ 和 $\mathcal D:M_D\to M_{2d}$，使 $\mathcal D\mathcal E(\Omega_p(s))=\Omega_p(s)$ 对每个 $s$ 成立，并使全部 $\mathcal E(\Omega_p(s))$ 在同一个固定正交基底中取实。
+
+**定理 271.2（平衡判据与完整熵区间）。** 定义271.1中存在某个有限输出维数上的可恢复实编码，当且仅当 $p=1/2$。平衡时，固定输出维数 $D$ 的可行条件为 $D\ge2d$；全部可达熵增为
+
+$$
+0\le h\le\log\lfloor D/(2d)\rfloor.
+\tag{271.2}
+$$
+
+这里每个编码的 $h=S(\mathcal E(\Omega_{1/2}(s)))-S(\Omega_{1/2}(s))$ 与 $s$ 无关。更强地，同一熵增适用于任意输入块对角密度矩阵。定理不要求恢复两个输入块之间的相干，也不将该熵恒等式扩展到一般含非零非对角块的输入。
+
+所用的加权共轭直和族已有文献先例：van Luijk、Wilming，*Sufficiency and Petz recovery for positive maps*，[arXiv:2604.08380v2](https://arxiv.org/pdf/2604.08380v2)，例4.11及第32页续证，研究同一族在正保迹映射下的充分 Jordan 代数，并由定理5.1描述正映射互换。那些允许转置的正映射不保证完全正。本定理要求编码与恢复均完全正，所断言的是该要求下的平衡条件、辅助谱配对和精确维数—熵区间；不将共轭直和构造或正映射充分代数作为新增内容。
+
+证明。首先，原族及其共轭族的共同支撑均为整个 $\mathbb C^d$，由标量交换子和迹归一化可得。故 $\Omega_p$ 的共同支撑为整个双块空间。
+
+令 $\Phi=\mathcal D\mathcal E$。对 $\Omega_p$ 使用 Koashi–Imoto 不扰动结构，来源及操作形式见第270节所引 [arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)，定义1式（90）—（92）及定理3式（103）。这里两个直和块、各自一维的冗余因子，已经满足其极大结构判据：每块内部的共同交换投影只有零与单位；两个块之间若存在酉矩阵 $V$ 及正常数 $c$，满足
+
+$$
+p\rho_s=c(1-p)V\overline{\rho_s}V^*
+\quad\text{对全部 }s,
+\tag{271.3}
+$$
+
+取迹后得 $p=c(1-p)$，继而 $VK$ 为原族的共同反酉对称，与假设矛盾。
+
+不扰动结构因而要求 $\Phi$ 的初始化 Stinespring 等距映射形如
+
+$$
+|\psi\rangle_L\longmapsto|\psi\rangle_L\otimes|e_L\rangle,
+\qquad
+|\psi\rangle_R\longmapsto|\psi\rangle_R\otimes|e_R\rangle.
+\tag{271.4}
+$$
+
+两个环境向量不必相同。因此 $\Phi$ 固定每个块对角算子，却可以改变两个块之间的相干；特别地，它在每个输入块上都是恒等信道。
+
+分别限制 $\mathcal E$ 到两个输入块。为核对限制后的恢复仍由保迹信道实现，令 $\iota_a:\mathbb C^d\to\mathbb C^d\oplus\mathbb C^d$ 为块 $a$ 的包含映射，$\Pi_a=\iota_a\iota_a^*$，并固定一个 $d$ 维密度矩阵 $\omega_a$。对受限编码 $\mathcal E_a(X)=\mathcal E(\iota_aX\iota_a^*)$，取
+
+$$
+\mathcal D_a(Y)
+=\iota_a^*\mathcal D(Y)\iota_a
++\operatorname{Tr}[(I-\Pi_a)\mathcal D(Y)]\,\omega_a.
+$$
+
+两项均完全正，迹之和为 $\operatorname{Tr}Y$；由于 $\Phi$ 固定全部块对角算子，$\mathcal D_a\mathcal E_a(X)=X$。单独压缩原解码一般不保迹，上式的制备项补足了它。现在可以分别使用既有可恢复信道正规形，得到
+
+$$
+\mathcal E_L(X)=V_L(X\otimes\tau_L)V_L^*,
+\qquad
+\mathcal E_R(X)=V_R(X\otimes\tau_R)V_R^*.
+\tag{271.5}
+$$
+
+该正规形仍为第39.1、270节使用的 Nayak–Sen / Knill–Laflamme 结构。将两个辅助空间分别限制到其支撑，记秩为 $r_L,r_R$，则 $V_a$ 为等距映射，$\tau_a$ 在对应辅助空间上严格为正。
+
+两个等距映射的像必须正交，而非预先假设编码保持块标签。取分别支撑在左、右输入块上的最大混合态 $\omega_L,\omega_R$。解码精确恢复它们，迹距离的信道收缩性给出
+
+$$
+2=\|\omega_L-\omega_R\|_1
+\le\|\mathcal E(\omega_L)-\mathcal E(\omega_R)\|_1
+\le2.
+\tag{271.6}
+$$
+
+两个密度矩阵的迹范数距离等于二，当且仅当支撑正交；而式（271.5）使这两个输出的支撑恰为 $\mathcal S_L=\operatorname{im}V_L$ 与 $\mathcal S_R=\operatorname{im}V_R$。因此它们正交，并且 $d(r_L+r_R)\le D$。对模型状态，编码在这些占用子空间上等距等同于
+
+$$
+p\rho_s\otimes\tau_L
+\ \oplus
+(1-p)\overline{\rho_s}\otimes\tau_R.
+\tag{271.7}
+$$
+
+共同实输出给出共同共轭。该共轭保持全部输出支撑的共同张成 $\mathcal S_L\oplus\mathcal S_R$，故可以限制并拉回到式（271.7）的乘积直和空间；记所得共轭为 $J=ZK$。
+
+先证明 $J$ 不可能在同一个经典块内有非零分量。在辅助特征基中，$Z$ 的左到左系统块 $B$ 必须满足
+
+$$
+\lambda\rho_s B=\mu B\overline{\rho_s},
+\qquad\lambda,\mu>0.
+\tag{271.8}
+$$
+
+取伴随并比较乘积，使 $B^*B$ 与全部 $\overline{\rho_s}$ 对易。非零 $B$ 因而为正标量乘酉矩阵；归一化后取迹得 $\lambda=\mu$，继而产生原族的共同反酉对称，矛盾。右到右块同理为零，因为共轭族也没有共同反酉对称。于是 $J$ 只能交换整个左右占用子空间。
+
+记左右投影为 $P_L,P_R$。对式（271.7）的状态 $\widehat\Omega_p(s)$，有
+
+$$
+JP_LJ^{-1}=P_R,
+\qquad
+J\widehat\Omega_p(s)J^{-1}=\widehat\Omega_p(s).
+$$
+
+反酉共轭使迹取复共轭，而以下概率为实数，故
+
+$$
+p=\operatorname{Tr}(P_L\widehat\Omega_p(s))
+=\operatorname{Tr}(P_R\widehat\Omega_p(s))=1-p.
+\tag{271.9}
+$$
+
+因此 $p=1/2$ 必要。任意辅助混合度和额外零维数都不能改变这一质量平衡。
+
+在平衡情形进一步比较跨块分量。若辅助特征值为 $\lambda$ 和 $\mu$，行指标位于左块、列指标位于右块的交织方程变成
+
+$$
+\lambda\rho_s B=\mu B\rho_s.
+\tag{271.10}
+$$
+
+同样的伴随与标量交换子论证使非零 $B$ 为比例酉矩阵，取迹得 $\lambda=\mu$，随后 $B$ 本身为标量。由于 $Z$ 是交换两个占用空间的酉矩阵，每个正特征值的左右辅助重数必须相同。故
+
+$$
+\operatorname{spec}\tau_L=\operatorname{spec}\tau_R,
+\qquad r_L=r_R=r,
+\qquad2dr\le D.
+\tag{271.11}
+$$
+
+反之，若两辅助谱相同，选取各自特征基后可令 $\tau_L=\tau_R=\tau$。交换两块并逐项复共轭便是保持式（271.7）的共同共轭。因此这也是对每个可恢复编码占用正规形的充分谱条件。
+
+对任意块对角输入 $q\sigma_L\oplus(1-q)\sigma_R$，输入熵为 $H(q)+qS(\sigma_L)+(1-q)S(\sigma_R)$。正交输出块的熵公式和辅助谱相同给出
+
+$$
+S\!\left(\mathcal E(q\sigma_L\oplus(1-q)\sigma_R)\right)
+-S(q\sigma_L\oplus(1-q)\sigma_R)
+=S(\tau).
+\tag{271.12}
+$$
+
+端点 $q=0,1$ 按零质量项为零解释。于是 $h=S(\tau)$，且 $0\le h\le\log r\le\log\lfloor D/(2d)\rfloor$。
+
+最后给出全部可行值的构造。平衡模型本身已经有共轭 $J(v,w)=(\overline w,\overline v)$。令
+
+$$
+Q=\frac1{\sqrt2}
+\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}.
+$$
+
+直接相乘得
+
+$$
+Q\Omega_{1/2}(s)Q^*
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho_s&-\operatorname{Im}\rho_s\\
+\operatorname{Im}\rho_s&\operatorname{Re}\rho_s
+\end{pmatrix}.
+\tag{271.13}
+$$
+
+这是对给定双块输入的一次酉变换。附加任意对角辅助态 $\tau$，再将整体嵌入 $D$ 维输出并补零，仍得到实矩阵族。若 $m=\lfloor D/(2d)\rfloor$，在 $m$ 维辅助空间中从纯态连续插值到最大混合态，辅助熵取遍 $[0,\log m]$。上述构造的编码可以恢复全部双块输入，包括块间相干：撤销等距映射、偏迹，并在未占用输出补一个固定制备项，正如式（270.15）。因此区间中每点均可达；$D=2d$、纯辅助态给出最小维数和零熵增。证毕。
+
+**命题 271.3（四维平衡实例及恢复范围的边界）。** 对定义271.1中的任意平衡模型，存在可恢复实编码，其块对角熵增为零，却没有全空间左逆，并且某个含块间相干的纯输入的熵增为 $\log2$。此外，取 $\rho_A=(I_2+A/2)/2$，其中 $A=X,Y,Z$。则式（271.1）的三态族在 $p=1/2$ 时有四维实表示；任意 $p\in(0,1)\setminus\{1/2\}$ 都没有任何有限维可恢复实编码。同时，对每个 $s$ 有
+
+$$
+\frac12\|\Omega_p(s)-\Omega_{1/2}(s)\|_1
+=|p-1/2|.
+\tag{271.14}
+$$
+
+证明。先证明恢复范围的限定。定理中的块对角限定确实不可省略。记输入块退相干为 $\Delta(X)=\Pi_LX\Pi_L+\Pi_RX\Pi_R$，在平衡点取
+
+$$
+\mathcal E(X)=Q\Delta(X)Q^*,
+\qquad
+\mathcal D(Y)=\Delta(Q^*YQ).
+$$
+
+这两者都是信道，且 $\mathcal D\mathcal E=\Delta$；所以模型和所有块对角输入均被精确恢复，模型输出仍取实，块对角熵增为零。但对单位向量 $v,w$ 所构成的纯态 $|\psi\rangle=(|v\rangle_L+|w\rangle_R)/\sqrt2$，编码先删去块间相干，输出为两个正交纯态的等权混合，熵增为 $\log2$。该编码没有全空间左逆。这说明定理的必要结论与达到端点时可选用的全空间可逆构造具有不同适用范围。
+
+再考察所示三态。三态原族具有标量交换子，且不存在共同反酉对称，已由命题270.3的 Pauli 乘积论证给出。于是定理271.2适用。两模型之差为 $(p-1/2)\rho_s\oplus-(p-1/2)\overline{\rho_s}$；两块的迹范数各为 $|p-1/2|$，得到所示等式。证毕。
+
+式（271.14）说明，这里的可行性结论使用精确相等与精确恢复；它没有给出近似恢复的误差下界。式（271.13）的物理操作以已经给定的共轭双块状态为输入，也没有声称可以用完全正信道从任意未知 $\rho$ 制备 $(\rho\oplus\overline\rho)/2$。本节所判断的是两个实际准备块的联合组织及其概率权重。
+
+## 追加锚（本行以下为增补区）
+
+## 272. 共轭信道判据与六态实编码的精确恢复误差
+
+前两节使用状态族的分块结构判断实表示。本节直接以允许的信道表述同一问题：是否可以在给定状态族上实现复共轭。这个判据不要求标量共同交换子，并把任意输出维数上的实编码问题归约为输入维数内的一个信道问题。其近似版本给出与输出维数无关的恢复误差下界。
+
+**定义 272.1（有限模型的共轭缺口）。** 固定输入基底，设 $\mathcal R=\{\rho_1,\ldots,\rho_n\}$ 是 $M_d(\mathbb C)$ 中的非空有限密度矩阵族，定义
+
+$$
+\delta(\mathcal R)
+=\min_{\mathcal C\ \mathrm{CPTP}}
+\max_{1\le j\le n}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1,
+\qquad\mathcal C:M_d\to M_d.
+\tag{272.1}
+$$
+
+对任意有限维编码 $\mathcal E:M_d\to M_D$、解码 $\mathcal D:M_D\to M_d$ 及固定输出基底，定义
+
+$$
+e(\mathcal D,\mathcal E)
+=\max_j\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1,
+\qquad
+r(\mathcal E)
+=\max_j\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1.
+\tag{272.2}
+$$
+
+全部映射均要求复线性、完全正且保迹；两处复共轭分别取所固定的输入和输出基底。$r=0$ 恰表示整个输出模型在该基底中取实。
+
+**定理 272.2（信道归约与误差传递）。** 定义272.1中的最小值达到。存在某个有限输出维数上的精确可恢复实编码，当且仅当 $\delta(\mathcal R)=0$。可行时，输出维数 $2d$ 已经充分。
+
+对任意有限 $D$ 和任意编码、解码，都有
+
+$$
+\boxed{e(\mathcal D,\mathcal E)+r(\mathcal E)
+\ge\delta(\mathcal R).}
+\tag{272.3}
+$$
+
+因此，若精确可恢复实编码不可行，任何维数上的完全实输出都具有严格正的统一恢复误差下界 $\delta(\mathcal R)$。
+
+证明。对一个信道 $\mathcal A$ 定义其共轭信道
+
+$$
+\overline{\mathcal A}(X)
+=\overline{\mathcal A(\overline X)}.
+\tag{272.4}
+$$
+
+右端外层横线作用于输出矩阵，内层横线作用于输入矩阵。若 $A_k$ 是 $\mathcal A$ 的 Kraus 算子，则 $\overline{A_k}$ 是式（272.4）的 Kraus 算子；所以它仍为复线性 CPTP 映射。这里没有把单独的复共轭当成物理信道。
+
+给定任意 $\mathcal E,\mathcal D$，取输入维数内的信道 $\mathcal C=\overline{\mathcal D}\mathcal E$。对每个模型状态，
+
+$$
+\begin{aligned}
+\frac12\|\mathcal C(\rho_j)-\overline{\rho_j}\|_1
+&\le\frac12\|\overline{\mathcal D}(\mathcal E(\rho_j))
+-\overline{\mathcal D}(\overline{\mathcal E(\rho_j)})\|_1\\
+&\quad+\frac12\|\overline{\mathcal D\mathcal E(\rho_j)}
+-\overline{\rho_j}\|_1\\
+&\le\frac12\|\mathcal E(\rho_j)-\overline{\mathcal E(\rho_j)}\|_1
++\frac12\|\mathcal D\mathcal E(\rho_j)-\rho_j\|_1.
+\end{aligned}
+\tag{272.5}
+$$
+
+第二步使用信道对密度矩阵迹距离的收缩性及复共轭保持迹范数。对 $j$ 取最大值，再在输入维数内的信道上取最小值，即得（272.3）。特别地，精确恢复且完全实输出给出 $\mathcal C(\rho_j)=\overline{\rho_j}$。
+
+反过来，若一个 CPTP 映射 $\mathcal C$ 在整个模型上实现复共轭，则
+
+$$
+\overline{\mathcal C}(\overline{\rho_j})=\rho_j.
+\tag{272.6}
+$$
+
+定义到 $2d$ 维空间的信道
+
+$$
+\mathcal F(X)=\frac12\bigl(X\oplus\mathcal C(X)\bigr),
+\qquad
+\mathcal E(X)=Q\mathcal F(X)Q^*,
+\qquad
+Q=\frac1{\sqrt2}\begin{pmatrix}I&I\\-iI&iI\end{pmatrix}.
+\tag{272.7}
+$$
+
+两个对角块均由完全正映射取得，迹之和经二分之一归一化后为 $\operatorname{Tr}X$，而 $Q$ 酉。因此这是对全部输入定义的 CPTP 编码。在模型上，式（271.13）的直接乘法给出
+
+$$
+\mathcal E(\rho_j)
+=\frac12
+\begin{pmatrix}
+\operatorname{Re}\rho_j&-\operatorname{Im}\rho_j\\
+\operatorname{Im}\rho_j&\operatorname{Re}\rho_j
+\end{pmatrix},
+\tag{272.8}
+$$
+
+故所有输出均为实矩阵。令 $Y'=Q^*YQ$，按两个 $d$ 维块记其压缩为 $Y'_{LL},Y'_{RR}$，取
+
+$$
+\mathcal D(Y)=Y'_{LL}+\overline{\mathcal C}(Y'_{RR}).
+\tag{272.9}
+$$
+
+这是两个完全正压缩及信道的和，且输出迹为两个对角块的迹之和，等于 $\operatorname{Tr}Y$。由（272.6），
+
+$$
+\mathcal D\mathcal E(\rho_j)
+=\tfrac12\bigl(\rho_j+\overline{\mathcal C}\mathcal C(\rho_j)\bigr)
+=\rho_j.
+\tag{272.10}
+$$
+
+上述共轭直和构造具有正映射层面的文献先例。van Luijk、Wilming，*Sufficiency and Petz recovery for positive maps*，[arXiv:2604.08380v2](https://arxiv.org/pdf/2604.08380v2)，例4.11及第32页续证，以正映射研究加权共轭直和；定理5.1描述正保迹互换。其第32页显示的是 Heisenberg 图景的保单位元的正映射（unital positive maps）。取迹对偶后，相应状态图景映射为
+
+$$
+\mathcal F_p^+(X)=pX\oplus(1-p)X^{\mathsf T},
+\qquad
+\mathcal G^+(Y)=Y_{LL}+Y_{RR}^{\mathsf T}.
+$$
+
+这两个映射正且保迹，并有 $\mathcal G^+\mathcal F_p^+=\mathrm{id}$。当 $d\ge2$、$0<p<1$ 时，两者均不完全正：否则压缩转置分支或限制输入到该分支会使转置本身完全正。故在 $p=1/2$ 时，上述先例结合 $Q$ 已给出普遍的正映射可恢复实表示。本证明要求全部操作完全正，式（272.7）以模型上可实现的 $\mathcal C$ 替换转置分支，式（272.9）以其共轭信道恢复；这正是这里需要判定的额外条件。既有正映射互换并未消去该完全正约束。
+
+最后，固定有限维输入与输出的 CPTP 信道集可由 Choi 矩阵 $J\succeq0$、$\operatorname{Tr}_{\rm out}J=I_d$ 表示。它闭且有界，因为 $\operatorname{Tr}J=d$，故为紧集。式（272.1）的有限个连续函数之最大值连续，最小值达到。因此 $\delta=0$ 等价于某个信道精确实现模型共轭，结合上述构造得到所述等价。不可行时最小值严格为正，而（272.3）对全部有限 $D$ 都成立。证毕。
+
+这个归约还给出有限维半正定规划。使用输出指标在前的未归一化 Choi 矩阵，记
+
+$$
+X_j(J)=\operatorname{Tr}_{\rm in}
+\left[J(I_d\otimes\rho_j^{\mathsf T})\right]
+-\overline{\rho_j}.
+$$
+
+最小化实数 $t$，约束为
+
+$$
+J\succeq0,\quad\operatorname{Tr}_{\rm out}J=I_d,
+\qquad
+Y_j\succeq X_j(J),\quad Y_j\succeq-X_j(J),
+\quad\operatorname{Tr}Y_j\le2t\quad(1\le j\le n).
+\tag{272.11}
+$$
+
+其中 $Y_j$ Hermitian。这是迹范数的标准半正定表示：对 Hermitian $X$，满足 $Y\succeq\pm X$ 的最小迹为 $\|X\|_1$，可取 $Y=|X|$；反向下界由 $X$ 的正、负谱投影分别压缩两条不等式得到。因此该规划的值正是 $\delta(\mathcal R)$。它消除了对任意输出维数的搜索，不宣称有限精度下的零值判定算法。
+
+**定理 272.3（六个 Pauli 状态的最优实编码误差）。** 对 $0<a\le1$，令
+
+$$
+\mathcal R_a=
+\left\{\frac{I_2\pm aX}{2},
+\frac{I_2\pm aY}{2},
+\frac{I_2\pm aZ}{2}\right\}.
+\tag{272.12}
+$$
+
+则
+
+$$
+\delta(\mathcal R_a)=\frac a3.
+\tag{272.13}
+$$
+
+在所有有限输出维数、所有在同一基底中产生完全实模型的 CPTP 编码及所有 CPTP 解码上，最小最坏恢复误差亦为 $a/3$，并由一个四维经典输出编码达到。对允许非实残差的编码，仍有 $e+r\ge a/3$。
+
+证明。以 Bloch 向量表示量子比特，逐项复共轭对应反射矩阵
+
+$$
+S=\operatorname{diag}(1,-1,1).
+$$
+
+将任意候选 $\mathcal C$ 在保持六个坐标轴方向的二十四个立方体旋转 $g$ 上平均。输入旋转 $g$ 由酉矩阵实现；输出旋转 $Sg^{-1}S$ 也是正旋转，故同样由酉矩阵实现。取相应的前后酉共轭后再平均，仍为 CPTP 信道。每项都仅排列六个输入并相应旋转共轭目标，最大迹距离不增加。
+
+若原 Bloch 仿射映射为 $u\mapsto Mu+b$，平均后的映射为
+
+$$
+u\longmapsto
+S\left(\frac1{24}\sum_g g^{-1}(SM)g\right)u
++\frac1{24}\sum_g Sg^{-1}Sb
+=tSu,
+\qquad t=\frac13\operatorname{Tr}(SM).
+\tag{272.14}
+$$
+
+这些有限平均恒等式可直接由群中的坐标轴半周旋转和坐标置换验证：前者消去向量平均及矩阵非对角项，后者使三个对角项相等。因而只须考虑
+
+$$
+\mathcal C_t(A)=tA^{\mathsf T}+(1-t)\operatorname{Tr}(A)I_2/2.
+\tag{272.15}
+$$
+
+其未归一化 Choi 矩阵为 $tF+(1-t)I_4/2$，其中 $F$ 是两量子比特交换算子。在三维对称空间和一维反对称空间上，特征值分别为 $(1+t)/2$ 和 $(1-3t)/2$。因此完全正的精确范围为
+
+$$
+-1\le t\le1/3.
+\tag{272.16}
+$$
+
+两个量子比特状态的迹距离为其 Bloch 向量欧氏距离的一半，所以式（272.12）每个状态的共轭误差均为 $a|1-t|/2$。它在合法区间上的最小值为 $a/3$，由 $t=1/3$ 达到。有限平均没有增加误差，故这同时给出所有 CPTP 候选中的下界及达到，证明（272.13）。
+
+这里使用的近似转置通道是既有结果。Buscemi、D’Ariano、Perinotti、Sacchi，*Optimal realization of the transposition maps*，[arXiv:quant-ph/0304175v1](https://arxiv.org/pdf/quant-ph/0304175v1)，第2节式（15）给出一般维数的 $\mathcal C(\rho)=(I+\rho^{\mathsf T})/(d+1)$，其原文优化指标为纯态转置保真度。本证明的有限旋转平均与 Choi 特征值计算将该标准通道接到这里的六态、迹距离目标，不把不同优化指标的结论直接互换。
+
+现在对完全实编码应用（272.3），得到 $e\ge a/3$。为达到这个下界，取正四面体的四个单位向量
+
+$$
+n_1=(1,1,1)/\sqrt3,\quad
+n_2=(1,-1,-1)/\sqrt3,\quad
+n_3=(-1,1,-1)/\sqrt3,\quad
+n_4=(-1,-1,1)/\sqrt3.
+$$
+
+它们满足 $\sum_k n_k=0$、$\sum_k n_kn_k^{\mathsf T}=4I_3/3$。令 $\boldsymbol\sigma=(X,Y,Z)$，定义 POVM 效应和制备态
+
+$$
+F_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{4},
+\qquad
+P_k=\frac{I_2+n_k\cdot\boldsymbol\sigma}{2}.
+\tag{272.17}
+$$
+
+由 $|n_k|=1$ 得 $F_k\succeq0$、$P_k$ 为纯态；向量和为零使 $\sum_kF_k=I_2$。取
+
+$$
+\mathcal E(\rho)=\sum_{k=1}^4\operatorname{Tr}(F_k\rho)|k\rangle\langle k|,
+\qquad
+\mathcal D(Y)=\sum_{k=1}^4\langle k|Y|k\rangle P_k.
+\tag{272.18}
+$$
+
+它们分别是测量和按记录制备的 CPTP 映射，编码的每个输出均为实对角矩阵。对任意 Bloch 向量 $u$，输出记录概率为 $(1+n_k\cdot u)/4$，所以解码后的 Bloch 向量为
+
+$$
+\sum_k\frac{1+n_k\cdot u}{4}n_k=\frac u3.
+\tag{272.19}
+$$
+
+故六个模型状态的恢复误差均为 $\tfrac12|au-au/3|=a/3$，其中 $u$ 为对应单位轴向量。这达到对所有实输出量子编码的下界，完成证明。证毕。
+
+式（272.17）是标准量子比特四面体 SIC POVM 的归一化。近似转置的量子设计与测量—制备实现见 Kalev、Bae，*Optimal approximate transpose map via quantum designs and its applications to entanglement detection*，[arXiv:1303.3096v2](https://arxiv.org/pdf/1303.3096v2)，式（1）—（2）及 SIC 实现式（6）。这里的解码制备 $P_k$ 本身，得到式（272.19）的收缩；若按该文制备共轭态，则得到近似转置。四面体设计与近似转置通道均为所用的既有构造，本节的最优实编码误差由（272.3）与上述达到共同确定。
+
+四维输出只给出达到该误差的一种实现；本节没有证明达到时的最小输出维数。这里的误差衡量不含参考系统的六个指定状态；没有将其改称 diamond 距离或任意纠缠输入的误差。下界允许任意有限维量子输出，最优实现恰可选为经典记录；这项结论不将所有实矩阵族判为经典模型。
+
+## 追加锚（本行以下为增补区）
+
+## 273. 共轭双块失衡的精确恢复误差
+
+**定义 273.1（六轴共轭双块模型）。** 令 $0<a\le1$、$0\le p\le1$、$q=1-p$，并令 $u$ 取六个单位坐标轴向量 $\{\pm e_x,\pm e_y,\pm e_z\}$。记
+
+$$
+\rho_a(u)=\frac{I_2+a\,u\cdot\boldsymbol\sigma}{2},
+\qquad
+\Omega_{p,a}(u)=p\rho_a(u)\oplus q\overline{\rho_a(u)},
+\qquad
+\mathcal R_{p,a}=\{\Omega_{p,a}(u):u=\pm e_x,\pm e_y,\pm e_z\}.
+\tag{273.1}
+$$
+
+复共轭相对于固定的 Pauli 基底；双块按所示坐标排序。令 $\delta(\mathcal R_{p,a})$ 为定义272.1中的共轭缺口，令 $e_{\mathbb R}(\mathcal R_{p,a})$ 为所有有限输出维数、所有在某个共同基底中产生实模型的 CPTP 编码与所有 CPTP 解码上的最小最坏迹距离恢复误差。下面的达到构造同时保证这个最小值存在。
+
+**定理 273.2（不平衡质量的精确代价）。** 定义273.1中的两个量满足
+
+$$
+\boxed{\delta(\mathcal R_{p,a})
+=e_{\mathbb R}(\mathcal R_{p,a})
+=\frac a3|2p-1|.}
+\tag{273.2}
+$$
+
+八维输出足以达到恢复误差的最小值；不要求输出维数达到最小。对允许非实残差的任意有限维编码与解码，定义272.1中的误差满足 $e+r\ge a|2p-1|/3$。在整个参数域 $0\le p\le1$ 内，精确可恢复实编码因而恰在 $p=1/2$ 时可行。
+
+证明。交换左右输入块，并将六轴指标作反射 $u\mapsto Su$，其中 $S=\operatorname{diag}(1,-1,1)$，把参数 $p$ 的模型变成参数 $q$ 的模型。块交换为实酉矩阵，指标反射只重排六个状态，因此两个待优化量均不变。以下只需处理 $p\ge q$；此时 $p\ge1/2$。
+
+先给出共轭缺口的下界。取任意候选信道 $\mathcal C:M_4\to M_4$。在其输入、输出两端作块退相干，仍为信道；输入模型和共轭目标原本块对角，而输出退相干收缩迹距离，所以最坏误差不增加。此后可以把信道表示为四个从 $M_2$ 到 $M_2$ 的完全正子映射 $\mathcal C_{ba}$，行指标 $b$ 为输出块，列指标 $a$ 为输入块。每一输入列的子映射之和保迹。
+
+令 $G$ 为保持六轴集合的二十四元正旋转群。对 $g\in G$ 选量子比特酉矩阵 $U_g$，使其 Bloch 作用为 $g$，并在双块输入使用
+
+$$
+V_g=U_g\oplus\overline{U_g}.
+$$
+
+则 $V_g\Omega_{p,a}(u)V_g^*=\Omega_{p,a}(gu)$。将信道替换为
+
+$$
+\widetilde{\mathcal C}(A)
+=\frac1{24}\sum_{g\in G}
+\overline{V_g}^{\,*}\,
+\mathcal C(V_gAV_g^*)\,
+\overline{V_g}.
+\tag{273.3}
+$$
+
+每个求和项仍为 CPTP，最坏共轭误差由六轴重排、酉不变性与凸性不增加。该平均也保持块对角结构。
+
+只需分析平均后的左输出两子映射。这里子映射一般不保迹，故需同时平均迹的变化。一个保持 Hermitian 性的量子比特线性映射可写为
+
+$$
+\Lambda\!\left(\frac{tI_2+v\cdot\boldsymbol\sigma}{2}\right)
+=\frac{(xt+\ell\cdot v)I_2+(tb+Mv)\cdot\boldsymbol\sigma}{2},
+$$
+
+其中 $x$ 为实数，$\ell,b$ 为实向量，$M$ 为实矩阵。有限旋转群的向量平均为零，故平均同时消去平移 $b$ 和依赖输入方向的迹项 $\ell\cdot v$。矩阵共轭平均为迹的三分之一乘单位；可由坐标轴半周旋转消去非对角项，再由坐标置换平均对角项验证。代入式（273.3）的左右旋转，左到左分量留下反射 $S$ 的标量倍，右到左分量留下单位矩阵的标量倍。因此存在实数 $x,y,\alpha,\beta$，使
+
+$$
+\widetilde{\mathcal C}_{LL}(A)
+=\alpha A^{\mathsf T}+(x-\alpha)\operatorname{Tr}(A)I_2/2,
+\qquad
+\widetilde{\mathcal C}_{LR}(A)
+=\beta A+(y-\beta)\operatorname{Tr}(A)I_2/2.
+\tag{273.4}
+$$
+
+这里两者的输出迹分别为 $x\operatorname{Tr}A$ 和 $y\operatorname{Tr}A$。完全正性与输入列的保迹性给出 $0\le x,y\le1$。左到左子映射的未归一化 Choi 矩阵为 $\alpha F+(x-\alpha)I_4/2$，反对称空间上的非负特征值要求 $\alpha\le x/3$；右到左子映射的 Choi 矩阵为 $\beta|I\rangle\rangle\langle\langle I|+(y-\beta)I_4/2$，与 $|I\rangle\rangle$ 正交的空间给出 $\beta\le y$。这是第272节所用标准转置与恒等协变通道的缩放形式，未把它们另作新分类。
+
+在输入 $\Omega_{p,a}(u)$ 上，左输出为
+
+$$
+\frac12\bigl(wI_2+a b(Su)\cdot\boldsymbol\sigma\bigr),
+\qquad
+w=px+qy,\quad b=p\alpha+q\beta.
+$$
+
+共轭目标的左块为 $p\overline{\rho_a(u)}$。由式（273.4）的完全正约束，
+
+$$
+b\le px/3+qy=w/3+2qy/3\le w/3+2q/3.
+\tag{273.5}
+$$
+
+置 $z=w-p$，则 $p-b\ge2(p-q)/3-z/3$。对任意实数 $s,t$ 和单位向量 $v$，Hermitian 矩阵 $(sI_2+t\,v\cdot\boldsymbol\sigma)/2$ 的迹范数为 $\max\{|s|,|t|\}$。故左差块的迹范数至少为 $a[2(p-q)/3-z/3]$。右差块的迹为 $-z$，其迹范数至少为 $|z|$。两个差块直和，从而对每个六轴状态都有
+
+$$
+\begin{aligned}
+\frac12\|\widetilde{\mathcal C}(\Omega_{p,a}(u))
+-\overline{\Omega_{p,a}(u)}\|_1
+&\ge\frac12\left[\frac{2a(p-q)}3-\frac{az}3+|z|\right]\\
+&\ge\frac{a(p-q)}3.
+\end{aligned}
+\tag{273.6}
+$$
+
+第一行右侧的左块估计即使为负也仍是合法下界；第二行用 $|z|-az/3\ge0$，因为 $0<a\le1$。平均及退相干均未增加最坏误差，故这也是原候选的下界。对所有 $\mathcal C$ 取最小，得到 $\delta(\mathcal R_{p,a})\ge a(p-q)/3$。
+
+为达到共轭误差下界，取第272节的标准最优近似转置通道 $\mathcal T(A)=(A^{\mathsf T}+\operatorname{Tr}(A)I_2)/3$。对任意双块矩阵 $A=[A_{ab}]$，定义
+
+$$
+\mathcal C_*(A)
+=\left(A_{RR}+\frac{p-q}{p}\mathcal T(A_{LL})\right)
+\ \oplus\ \frac qp A_{LL}.
+\tag{273.7}
+$$
+
+压缩、信道和非负加权和均完全正，各输入块的输出迹系数之和为一，故这是全输入空间上的 CPTP 映射。对模型，它输出
+
+$$
+\bigl(q\overline{\rho_a(u)}+(p-q)\mathcal T(\rho_a(u))\bigr)
+\oplus q\rho_a(u).
+$$
+
+第二块与共轭目标一致，第一块之差为 $(p-q)(\mathcal T(\rho_a(u))-\overline{\rho_a(u)})$。由第272节的六态转置误差，距离恰为 $(p-q)a/3$，证明共轭缺口的等式。
+
+现在构造完全实输出的编码。令 $\mathcal M:M_2\to M_4$ 和 $\mathcal P:M_4\to M_2$ 分别为式（272.18）的四面体测量和制备信道，因而 $\mathcal P\mathcal M$ 将 Bloch 向量缩为原来的三分之一。令 $Q$ 为式（271.13）的四维酉矩阵。取八维输出为两个四维空间的直和，并定义
+
+$$
+\mathcal E_*(A)
+=Q\left(\frac qp A_{LL}\oplus A_{RR}\right)Q^*
+\ \oplus\ \frac{p-q}{p}\mathcal M(A_{LL}).
+\tag{273.8}
+$$
+
+两项均完全正；其迹之和为 $\operatorname{Tr}A$，故 $\mathcal E_*$ 是信道。模型输入的第一输出块为
+
+$$
+Q\bigl(q\rho_a(u)\oplus q\overline{\rho_a(u)}\bigr)Q^*,
+$$
+
+由式（271.13）是实矩阵，第二块则为 $(p-q)\mathcal M(\rho_a(u))$，是实对角矩阵。因此所有模型输出共享一个实基底。
+
+对任意八维输出矩阵 $Y$，记其两个四维对角块为 $Y_1,Y_2$，并令 $B=Q^*Y_1Q$。定义
+
+$$
+\mathcal D_*(Y)
+=\bigl(B_{LL}+\mathcal P(Y_2)\bigr)\oplus B_{RR}.
+\tag{273.9}
+$$
+
+两个输出块由完全正压缩及制备取得，输出迹为 $\operatorname{Tr}Y_1+\operatorname{Tr}Y_2=\operatorname{Tr}Y$；故这是全输出空间上的 CPTP 解码。其模型恢复为
+
+$$
+\bigl(q\rho_a(u)+(p-q)\mathcal P\mathcal M(\rho_a(u))\bigr)
+\oplus q\overline{\rho_a(u)}.
+\tag{273.10}
+$$
+
+仅左块有误差，其迹距离为 $(p-q)a/3$。所以 $e_{\mathbb R}\le(p-q)a/3$；定理272.2给出反向界 $e_{\mathbb R}\ge\delta$。二者结合得到式（273.2）和达到。相同的通用不等式还给出 $e+r$ 下界。$p=q$ 时残余输出分支为零映射；$q=0$ 时成对输出块只在模型输入上为零，对一般输入仍保留 $A_{RR}$ 的贡献。这一分支保证全输入空间上的保迹性，各公式仍定义合法信道。交换块覆盖 $p<q$ 的情况，证毕。
+
+加权共轭直和是第271节所引 van Luijk–Wilming 例4.11的既有模型形式，近似转置与四面体测量亦使用第272节注明的标准构造。本定理的定量陈述将它们接到同一有限六态模型上：配对质量 $2\min(p,q)$ 可以精确恢复，剩余质量 $|p-q|$ 的最优完全实恢复误差恰为它乘以 $a/3$。误差指标只针对所列六态，不包含参考系统，也不宣称任意模型的共轭缺口都等于最优实编码误差。
+
+## 追加锚（本行以下为增补区）

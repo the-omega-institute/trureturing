@@ -278,7 +278,7 @@ public sealed partial class LeanCacheProvisionerTests
             Assert.Equal(waits[index - 1] + waits[index - 1], waits[index]);
         }
         var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
-        Assert.Equal("-R", copy.Arguments[0]);
+        Assert.Equal("-pR", copy.Arguments[0]);
         Assert.Equal(5, result.Clonefile.Attempts);
         Assert.Equal([5, 5, 5, 5, 5], result.Clonefile.Errnos);
         Assert.Equal(5, result.Clonefile.LastErrno);
@@ -305,7 +305,7 @@ public sealed partial class LeanCacheProvisionerTests
         Assert.Equal(0, result.Clonefile.Attempts);
         Assert.Empty(result.Clonefile.Errnos);
         var copy = Assert.Single(runner.Invocations, static call => call.FileName == "cp");
-        Assert.Equal("-R", copy.Arguments[0]);
+        Assert.Equal("-pR", copy.Arguments[0]);
     }
 
     [Fact]
@@ -324,7 +324,7 @@ public sealed partial class LeanCacheProvisionerTests
         Assert.Equal("cache-get", result.Method);
         Assert.Contains(
             runner.Invocations,
-            static call => call.FileName == "cp" && call.Arguments[0] == "-R");
+            static call => call.FileName == "cp" && call.Arguments[0] == "-pR");
         Assert.Contains(
             runner.Invocations,
             static call => Path.GetFileName(call.FileName) == "lake"
