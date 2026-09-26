@@ -48,7 +48,10 @@ private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
   modify fun s => { s with visited := s.visited.insert e }
   let state ← get
   let env ← getEnv
-  let (_, identity) ← (argumentIdentityNode env e).run state.identity
+  -- This branch already settles rigid proposition identity by Lean conversion
+  -- below. Do not first expand the same complete telescope through the legacy
+  -- statement-apart grammar. Raw heads, types and dependencies are still checked.
+  let (_, identity) ← (argumentIdentityNode env e (deferStatementApart := true)).run state.identity
   if identity.forbidden then throwError "forbidden_dependency:source.operand_identity"
   if identity.incomplete then throwError "incomplete_closure:source.operand_identity:{e}"
   let identity ← if identity.unclassified.isSome then do

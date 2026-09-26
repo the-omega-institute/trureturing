@@ -725,9 +725,16 @@ private def elabSourceRegistration : CommandElab := fun stx => registrationTrans
     (source.levelParams.map Level.param))
   let root := (← getEnv).header.mainModule
   let unit := catalogQualifiedName root arenaName .anonymous theoremName theoremUnitSuffix
-  liftCoreM <| addAndCompile <| .defnDecl {
+  let unitDecl : Declaration := .defnDecl {
     name := unit, levelParams := info.levelParams, type := info.type,
     value := mkConst recordName (info.levelParams.map Level.param), hints := .abbrev, safety := .safe }
+  if isNoncomputable (← getEnv) recordName then
+    -- Retaining a mathematical record does not make its readout executable.
+    -- addDecl still sends the unchanged declaration through the kernel.
+    liftCoreM <| addDecl unitDecl
+    modifyEnv (addNoncomputable · unit)
+  else
+    liftCoreM <| addAndCompile unitDecl
   TemplateBinding.withDeclaration {
     theoremName, arena := arenaName, descriptor, diagnostic,
     escapeInput := { residual with sourceSelection := some selection } } do
