@@ -87,7 +87,17 @@ Blocks(
                         Ref(LibraryNoteRef.Create("D5/L/first2017separablegenerators").Value),
                         Text(". This tower-presentation obstruction is distinct from "
                             + "the block normalization index detecting WSS; it adds no "
-                            + "WSS witness or conclusion to this Lean theorem."))),
+                            + "WSS witness or conclusion to this Lean theorem.")),
+                    Paragraph(
+                        Text("GGL in the same finite-generator companion adds the ramified "
+                            + "three-adic decomposition and constructs one common integer "
+                            + "generating tuple. It determines the exact global generator "
+                            + "counts of both golden towers and the exact change after "
+                            + "inverting three. The local-order boundary audit credits the "
+                            + "parallel GoldenPrimePeriodBounds and GoldenPrimePowerOrder "
+                            + "sources without treating their starting depth as one. These "
+                            + "ordinary proofs do not add a Lean conclusion or a WSS "
+                            + "prime-family decision to this declaration."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
