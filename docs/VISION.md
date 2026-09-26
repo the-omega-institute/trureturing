@@ -33,13 +33,10 @@ verify relations within it. From this perspective, Dao (道), or God (神), can
 name an encompassing network of all truths and their logical relations.
 Each proof and each refuted conjecture changes our knowledge of that network.
 
-This is the project's ontological picture, not a proof about the existence
-or nature of Dao, God or the universe. Saying that truth is discovered does
-not diminish computational proofs: searching for proofs, constructing
-counterexamples and checking them are themselves computations. The
-philosophical status of truth and the process of obtaining its proof are
-different questions; this position supplies no algorithm for enumerating or
-deciding every truth.
+This position proves nothing about the existence or nature of Dao, God or the
+universe. It supplies no algorithm enumerating or deciding every truth.
+Computation still constructs counterexamples, searches for proofs and checks
+them. What truth is and how its proofs are obtained remain different questions.
 
 In practice, returning a result means making it available as a premise. A
 theorem states its dependencies so that others can reuse it; a counterexample
@@ -47,13 +44,14 @@ identifies where a route fails so that others can avoid the same mistake.
 An AI's output can support further reasoning when it returns to shared
 knowledge with inspectable objects, conditions and evidence.
 
-[Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) develops
-this orientation within the project: use beauty and intuition to choose
-questions, logic to test conclusions, and extensions that preserve verified
-results. [GICT](develop/theory/GICT.md) provides research background on
-coordinates, transformations and invariants. These are theoretical references.
-“Beauty is a compass; logic is a ratchet” is a research discipline, not a
-substitute for a particular proof.
+[Fixed-point philosophy](develop/theory/FIXED_POINT_PHILOSOPHY.md) outlines
+a discipline: beauty and intuition guide questions, logic tests
+conclusions, and extensions preserve verified results.
+[GICT](develop/theory/GICT.md) studies coordinates, transformations and
+invariants. [Math Myth Match](develop/theory/MATH_MYTH_MATCH.md) examines
+how images of parts reflecting wholes translate into explicit relations,
+while preserving differences between philosophical traditions. These volumes
+are research inputs; their guiding metaphors do not substitute for proofs.
 
 ## The shape of logical truth
 
@@ -65,15 +63,15 @@ answered? Existing work gives this picture several mathematical entry points.
 | Entry point | Relation under study | Existing result and scope |
 | --- | --- | --- |
 | Proof dependencies | How a declaration connects to others through dependency paths | [Dependency Alexandrov topology](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean) constructs an upper-set topology from reachability. A node's reachable upper set is its smallest open neighborhood in this topology. This describes dependencies, not physical distance. |
-| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, equates the existence of a recovery function with the target being constant on each observation fiber. Existence does not establish computability or a cost bound. |
+| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, says a target can be recovered exactly when states with the same reading have the same target value. Existence does not establish computability or a cost bound. |
 | Local and joint information | Which correlations remain unknown after observing each part separately | The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two distinct two-qubit states: a Bell pure state and the equal classical mixture of `00` and `11`. They have the same two single-qubit reduced states. This counterexample limits claims of recovering a joint state from local readings alone. |
 | Space and history | Whether a current spatial reading preserves historical conditions needed for later operations | The [hidden archive temporal-domain counterexample](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean) adds an inactive event to a finite event model, preserving the current region, selection and spatial reading while changing whether a temporal composition is legal. It does not identify the model's time labels with physical time. |
 
-These entry points give shape an inspectable meaning. A proof dependency
-graph, an observation space and physical spacetime remain different objects.
-Connecting them in one theory requires explicit maps and checks of the
-relations, operations and error bounds those maps preserve. Shared vocabulary,
-similar patterns or equal numbers cannot establish that correspondence.
+The recovery criterion links both counterexamples. The two quantum states share local readings but differ as joint states; the two archives share
+a spatial reading but differ on a temporal operation's legality. Recovering
+either target requires readings that separate its witness pair. This condition
+alone supplies no executable or efficient reconstruction. Relating these models to proof dependencies or physical spacetime still requires maps
+and checks of the relations, operations and error bounds they preserve.
 
 For further reading,
 [proof topology, involutive logic and observational escape](develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)
@@ -125,18 +123,18 @@ loss does not ensure positivity for every such function. This motivates
 scrutiny of test provenance, without establishing a general law of machine
 learning performance.
 
-Applying these structures to AI research selection is a methodological transfer
-that needs practical evaluation. On questions not used to construct an answer,
-does the AI reduce a stated gap, discover a reusable connection, or recognize
-and stop an unproductive route? Those capabilities require corresponding
-experiments; formalizing a method does not establish them by itself.
+Evaluate AI research selection on questions withheld from method design.
+Compare with a stated baseline under matched information and resource budgets.
+Set success and stopping criteria beforehand; assess gap reduction, reusable
+connections and justified route changes. Report unsuccessful and unresolved
+cases. These experiments evaluate the methodological transfer; formalizing
+the structures alone does not establish these capabilities.
 
 ## Studying time and space through holographic geometry
 
-We aim to place time, space, provenance and observation in a shared relational
-framework: how does a whole appear through finite viewpoints, and how can
-those viewpoints support reconstruction? This is the project's **holographic
-spacetime geometry research direction**.
+We aim to study time, space, provenance and observation through **holographic
+spacetime geometry**: how does a whole appear through finite viewpoints, and
+when do those viewpoints support reconstruction?
 
 Imagine viewing the same history through different windows. Each window has a
 visible extent; some windows overlap. Events have an order, records have
@@ -169,13 +167,14 @@ Existing work offers several connected routes:
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
 
-Bringing these routes together requires attention to **joint realization,
-recoverability, executability and cost**. Whether local readings come from the
-same object or from incompatible candidate worlds changes the gluing problem.
-Recovering a target value and recovering a complete history also have different
-success criteria. The Lean temporal-domain counterexample above supplies one
-concrete test: preserving current spatial readings alone does not preserve
-all historical admission conditions in that model.
+The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+gives one criterion for compatible completion. Arrange nonempty sets of allowed
+local records on a finite tree. Each recorded variable must occur on a connected
+subtree, and neighbors must allow exactly the same joint assignments on their
+full overlap. Every allowed local record then extends to a record on the union
+of the local variable sets, satisfying every local constraint. This establishes
+existence; uniqueness, original-history recovery and computational cost require
+further results.
 
 Here, holography names a research direction concerning wholes and observations.
 This guide establishes no physical holographic duality, area law or model of
@@ -205,7 +204,7 @@ Three questions guide the next work:
 
 | Direction | Question to advance | Evidence of progress |
 | --- | --- | --- |
-| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments on tasks specified in advance, with comparison conditions and reproducible results; reusable proofs or counterexamples where mathematical claims are made. |
+| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments with tasks and comparisons specified in advance, reproducible results, and reusable proofs or counterexamples for mathematical claims. |
 | Geometry of logical truth | Which maps connect proof dependencies, observation distinctions and recovery while preserving the relations needed by a target? | Explicit definitions and maps, proofs of the required preservation properties, and counterexamples locating missing conditions. |
 | Relational spacetime | Which shared sources and historical relations support reconstruction and legal composition at a given resolution and cost? | Reconstruction, gluing, error and resource bounds in stated models; supported correspondences and clearly identified open bridges to physics. |
 

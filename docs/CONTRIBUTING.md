@@ -75,7 +75,7 @@ need a mathematical skill. A contribution request you can paste:
 
 1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
    and read the linked rules before editing.
-2. Follow [Your first change](#your-first-change) to create an isolated worktree;
+2. Follow [Your first change](#your-first-change) to create or reuse a worktree;
    open that directory as the agent's workspace for the contribution.
 3. [Edit the owning source](#edit-the-owning-source), run
    [focused validation](#check-your-change), and arrange independent review of
@@ -140,24 +140,31 @@ individual experiments may have additional prerequisites.
 
 ## Your first change
 
-Fork [the repository](https://github.com/the-omega-institute/trureturing/fork)
-on GitHub. In the following example, replace `YOUR-USERNAME` with your account.
-Keep the initial checkout for tracking `dev`; make edits in an isolated
-worktree created by the repository command:
+Fork [the repository](https://github.com/the-omega-institute/trureturing/fork).
+Clone only if needed, replacing `YOUR-USERNAME`:
 
 ```sh
 git clone https://github.com/YOUR-USERNAME/trureturing.git
 cd trureturing
+```
+
+From your `dev` checkout, run `git worktree list --porcelain`; reuse this
+session's worktree if listed. Otherwise replace `SESSION-ID` with your actual
+session ID and run the following, adding `upstream` only if absent:
+
+```sh
 git remote add upstream https://github.com/the-omega-institute/trureturing.git
 git fetch upstream dev
-make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-first-docs
-cd ../trureturing-first-docs
+make worktree KIND=governance NAME=first-docs BASE=upstream/dev DEST=../trureturing-SESSION-ID
+cd ../trureturing-SESSION-ID
 ```
 
 This creates `lane/governance/first-docs` and restores locked .NET dependencies.
-Use a fresh task name for each change. The command's other current kinds are
-`math` and `theory`; its branch kind does not replace file-level admission rules.
-For a maintainer checkout, `BASE=origin/dev` selects the project remote instead.
+For later tasks, commit existing work, confirm a clean tree and switch to a
+validated branch in the same session worktree, following
+[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
+Other branch kinds are `math` and `theory`; file-level checks still apply.
+Maintainers use `BASE=origin/dev`.
 
 The worktree starts without a Lean cache. Its first `make lean` prepares a
 private cache, using a compatible local donor when available or downloading
@@ -185,10 +192,11 @@ the routing and delivery contracts. Generated Markdown, reports, frozen pins
 and digestion state have designated writers; do not repair them by hand.
 New files must fit the existing [FILEMAP](../Meta/FILEMAP.toml) and routing rules.
 
-Keep each PR focused and keep **content changes separate from changes to the
-rules that judge them**. The current FILEMAP classifies `README.md` as content
-and `docs/CONTRIBUTING.md` as judge-plane, so changes to these two files belong
-in separate PRs. This classification is about admission, not the file extension.
+Keep each PR focused. [Current policy](../CLAUDE.md#75-base-判官永久禁令与-sl-030-边界)
+permits a coherent PR to include both content and its checking rules. FILEMAP
+still selects each path's required checks; mixed scope waives none. Different
+classifications for `README.md` and this guide do not themselves require
+separate PRs.
 
 For mathematical work, follow [the reuse and admission rules](../CLAUDE.md#3-形式化逃逸内容用途与研究):
 search this repository, pinned Mathlib and admissible upstream libraries before
@@ -229,9 +237,8 @@ known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
 interval. Warnings and errors appear immediately with their details; complete
 command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
 JSON and check evidence keep their complete contents.
-Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
-before any work. For delta validation, resolve the intended baseline commit and
-select the complete baseline-to-worktree scope:
+Bare `make preflight` lists modes and exits 2. For delta validation, select an
+explicit baseline:
 
 ```sh
 base_sha="$(git rev-parse upstream/dev^{commit})"
@@ -287,8 +294,8 @@ Arrange independent review. The repository's documented merge checks are
 results on your PR and address failures. GitHub branch-protection configuration
 is an external setting, not a guarantee supplied by this guide. An open PR or
 green local check is not a merged contribution: completion is **MERGED** into
-`dev`. Clean up an isolated worktree only after confirming the merge and a
-clean working tree.
+`dev`. Reuse the session worktree for subsequent tasks; cleanup follows
+[§6.1](../CLAUDE.md#61-独立-worktree-与-merged-完成态).
 
 The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
 [licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)

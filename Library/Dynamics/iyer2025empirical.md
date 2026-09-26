@@ -2114,3 +2114,148 @@ Gaussian 最大熵、链式法则和信息密度的负尾界均为经典机制�
 成功率也对这项独立随机性平均，不包含能写死支持的不受限制规则。
 结果对噪声输出平均；未声称每个输出后验的逐点 CLT、期望熵展开、变化误差水平或效率。
 所查原始来源没有直接给出这条完整模型结论，有限文献检索不构成全局原创认证。
+
+### 第 72 章：确定熵中心与格点边缘残差
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 72 章
+将实际后验 Shannon 熵减去完整得分组的平均占据数中心，证明其为 O_P(1)。
+至多两个多项式过渡组承担全部渐近残差；任一正有限均值子序列产生实际行占据数的独立 Poisson 极限。
+正文进一步以原 M 的取整区间构造一个固定合法 beta，使残差有非退化子序列极限。
+这给出不能普遍加强为 o_P(1) 的实际模型反例，同时允许在既有 Q 尺度信息谱中使用确定中心。
+
+Hillion、Johnson，*A proof of the Shepp–Olkin entropy concavity conjecture*，
+[arXiv:1503.01570v1](https://arxiv.org/abs/1503.01570v1)，
+原文引言定义独立 Bernoulli 和及其有限质量函数，Shepp–Olkin Theorem
+（原始 TeX 标签 th:SO）对每个固定 n≥1 证明熵关于整个成功参数向量凹。
+它直接覆盖固定试验次数、改变参数时的凹性；结合对称性给公平参数处的最大值。
+此结论不直接给改变整数试验次数的倒数增量率，也不控制依赖实际行数上的熵波动。
+正文 (72.13) 由链式法则、交换性和二元相对熵的卡方上界直接推得所需增量，
+这些信息论工具为经典工具，不作为新独立理论归属。
+
+Ioan Raşa，*Complete monotonicity of some entropies*，
+[arXiv:1606.05520v2](https://arxiv.org/abs/1606.05520v2)，
+Section 1 定义 $p_{n,k}^{[c]}(x)$，在 c<0 时要求 n=-cl、l 为正整数且 x∈[0,-1/c]；
+c=-1 对应 Bin(n,x)。Section 2 第一条定理给关于 x 的正偶阶导数非正，
+以及奇阶导数在 -1/(2c) 两侧的符号。
+这里变化的是成功参数，不能把导数改名为关于整数 n 的增量，
+也不能据此宣称随机占据数的浓缩。正文的参数扰动界另由二项 varentropy
+和得分协方差给出，所需 O_P(Q^(-1/4)) 总误差保留实际近半校准率。
+
+Adell、Lekuona、Yu，*Sharp bounds on the entropy of the Poisson law and related quantities*，
+[arXiv:1001.2897v1](https://arxiv.org/abs/1001.2897v1)，
+原文定理 4、推论 1 和式 (7) 的二项熵界要求整数 n,m≥1、p∈(0,1)，
+系数在成功参数紧区间上有界。其公平参数特例直接给
+H(Bin(n,1/2))=log(pi e n/2)/(2 log 2)+O(1/n)。
+第 72 章只在高占据组上使用这一成熟展开；零组单独定义，有限均值过渡组保留精确二项熵。
+原均值的阶乘、M 与 q 的下取整及补偿参数均未以粗率函数替代。
+实际均值与显式均值即使相差 o(1)，跨过整数时仍可留下一个熵增量，
+因此正文只给两个中心相差 O(1)，没有把它冒报为 o(1)。
+
+Barbour、Gnedin，*Small counts in the infinite occupancy scheme*，
+[arXiv:0809.4387v1](https://arxiv.org/abs/0809.4387v1)，
+引言的模型将球独立投向固定概率 p_1≥p_2≥⋯>0、总和为 1 的无限盒子；
+X[n,r] 是恰含 r 个球的盒数。命题 2.2 要求 k(n)→∞、
+k(n)exp(-np[k(n)]/10)→0，并取 m(n)≤np[k(n)]/2，
+以 TV 比较小计数向量与其 Poisson 化版本。
+Section 3 定理（原始 TeX 标签 approximation）要求各选定计数方差发散，
+得到随规模改变协方差的多元正态近似；收敛到固定正态律还要求协方差矩阵收敛。
+该文关于指数衰减频率的振荡说明格点效应有成熟背景。
+这些变量与假设并不直接对应本章的依赖路径行、移动二计数标记或有限均值边缘组。
+正文用原有限秩 PGF 的任意固定多行系数比较和混合下降阶乘矩，
+单独证明实际两种实验的有限均值 Poisson 极限，未假定原行独立。
+
+Gnedin、Hansen、Pitman，*Notes on the occupancy problem with infinitely many boxes:
+general asymptotics and power laws*，
+[arXiv:math/0701718v2](https://arxiv.org/abs/math/0701718v2)，属于相关背景检索。
+该版本 PDF 可取得，原始源文件请求返回 HTTP 403；本章没有从它导入未核对的定理条件。
+已有 Arratia–Goldstein–Langholz 的总方差占比条件与本模型不合，
+以及既有 rejective-sampling 版本中未使用的高幂矩表述边界，均维持先前归属；
+本章的后验熵比较使用方差参数本身的 Fourier 局部估计与密度范数。
+
+新增组合的实质在于同一实际模型内的定量连接：
+完整窗口的近半参数替换为 o_P(1)，高占据组的倒数增量误差求和为 o_P(1)，
+严格凸率函数的至多两个阈值邻域比原格距更窄，
+留下的实际行占据数再由原 PGF 得到 Poisson 极限。
+嵌套原取整区间证明有限均值边缘可以由一个固定合法 beta 实现，
+不需要让 beta 随规模改变或假定算术等分布。
+上述经典熵、占据数和矩方法本身没有被改称原创；
+所查来源未直接提供这条完整实际后验定理，有限检索不构成全局原创认证。
+结果不包括 h-Eh、期望后验熵、坏数据上的一致可积、任意指定 beta 的非退化子序列、
+或计算显式中心的数值效率与稳定性。纯理论正文未进入消化或 Lean 冻结链。
+
+### 第 73 章：典型输出条件信息谱的空间分离
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)第 73 章
+把第 71 章的输出平均联合信息谱提升为典型输出的条件 CDF 结论。
+在 logplus(1/sigma)=o(Q³) 下，原惊奇量给定带噪精确标量后保留原正态极限；
+在更窄的 o(Q) 范围内，输出后验惊奇量自身保留同一 Q 尺度极限，
+并决定逐输出最优列表质量与输出依赖的固定误差覆盖大小。
+两条噪声范围分别陈述，较宽范围没有被当作信息密度可忽略的保证。
+
+Magda Peligrad，*Conditional central limit theorem via martingale approximation*，
+[arXiv:1101.0174v2](https://arxiv.org/abs/1101.0174v2)，
+PDF 第 3 页式 (3) 在固定过去滤子条件下，以条件期望的 L1 距离描述条件 CLT。
+第 3–4 页定理 1 对平稳有限二阶矩序列刻画平稳差分鞅近似
+S_n=M_n+R_n、E R_n²/n→0；条件为平均条件投影收敛及二阶矩率趋于鞅差分方差。
+第 4 页定理 2 给对应的 plus-norm 等价条件。
+通过受控误差传递条件极限是成熟方法；本章所给定的是随规模改变的带噪非线性统计量，
+没有将固定过去滤子的结论直接移用，也不将该文测试函数措辞解释为离散到连续的 TV 极限。
+
+Dey、Terlov，*Stein's method for Conditional Central Limit Theorem*，
+[arXiv:2109.09274v3](https://arxiv.org/abs/2109.09274v3)，
+PDF 第 9–10 页 Assumptions I–IV 要求交换对、中心化不相关坐标、
+格点条件变量 Y∈zeta+Z、其增量属于 {-1,0,1}，
+以及指定的转移概率、回归与条件二阶增量误差。
+第 12 页定理 2.1 给 W|Y=k 的 Wasserstein 界，
+第 13 页定理 2.4 用相邻条件原子的质量比改进该界。
+本章实值 Gaussian 通道未建立这些交换对假设，故没有直接应用该条件正态定理。
+第 3 页 Section 1.1 的混合反例说明弱联合 Gaussian 极限与渐近独立不足以控制某个条件输出。
+其异常输出概率趋零，不能用该例单独否定典型输出结论；
+正文注记 73.4 另用一位惊奇量符号说明小平均信息不够推出典型输出的原惊奇量 CLT。
+
+Ma、Yao、Yuan、Zhang，*Entropic Conditional Central Limit Theorem and Hadamard Compression*，
+[arXiv:2401.11383v2](https://arxiv.org/abs/2401.11383v2)，
+PDF 第 9 页主定理 3.1 要求几乎处处绝对连续的条件密度、条件方差统一正下界、
+平均 Fisher 信息统一上界、条件二阶矩的统一尾控制、平均条件微分熵收敛，
+以及式 (34) 的独立副本卷积熵跳跃递推。
+它给条件 Gaussian 的 KL 距离依概率趋零和条件方差集中；
+再有条件微分熵的一致可积，才识别平均方差与熵极限。
+第 18 页定理 4.1 与推论 4.2 对 iid 成对变量的归一化和、给定完整侧信息向量，
+保留有限方差、条件绝对连续、有限平均 Fisher 信息、有限下界微分熵及条件方差正下界。
+这些结论在其光滑 iid 设置下使用更强距离。
+本章计数惊奇量即使给定实值噪声输出仍为有限离散分布，不满足其密度条件；
+平滑输出不等于平滑惊奇量。本章没有从该文的 Pinsker 推论借来离散到连续的 TV 结论。
+
+Kuzuoka、Watanabe，*An Information-Spectrum Approach to Weak Variable-Length Source Coding with Side-Information*，
+[arXiv:1401.3809v2](https://arxiv.org/abs/1401.3809v2)，
+版本戳为 2014-04-08，所取得 PDF 页脚日期为 2018-07-21，二者不混作版次推断。
+PDF 第 4 页 Section II.A 采用有限或可数离散字母表，并为渐近结论规定归一化条件惊奇量的一致可积。
+第 6–7 页定理 1 用误差截断条件熵刻画一次共同侧信息下的平均变长码长；
+第 9 页定理 3–4 给 Slepian–Wolf 一次编码的条件惊奇量分位直接界／逆界。
+第 13 页定理 7 使用一致可积，定理 9 另加条件强逆性质以识别固定误差渐近式。
+这些结果给信息谱与侧信息编码的成熟背景，但其编码器、平均变长目标与离散侧信息
+不等于本章的实输出后验列表；正文单独证明所用有限选择器与逐输出计数界。
+
+Kontoyiannis–Verdú [arXiv:1212.2668v1](https://arxiv.org/abs/1212.2668v1)
+PDF 第 9–10 页 Section II、定理 2–3 直接覆盖一次有限原子数阈值论证，沿用第 71 章归属。
+Gavalakis–Kontoyiannis [arXiv:2005.10823v1](https://arxiv.org/abs/2005.10823v1)
+第 4 页定义 2.1 的条件概率排序与第 8 页定理 2.10 的条件信息 CLT 同样相关；
+后者仍保留第 6 页固定平稳有限字母表 Assumption (M) 及正条件 varentropy，
+没有替代本章增长计数向量的三角阵证明。
+
+Aldous–Eagleson，*On Mixing and Stability of Limit Theorems*，
+[DOI:10.1214/aop/1176995577](https://doi.org/10.1214/aop/1176995577)，
+本次原始 Euclid 文档入口以 HTTP 200 返回 HTML，未取得原始 PDF；
+另一次 Dedecker–Merlevède 元数据请求为 HTTP 429。
+这些检索边界没有被当作已核对的原始定理条件，正文也不以其未检查陈述为前提。
+
+Gaussian 平移 TV 界、核收缩、同边缘联合 TV 与平均条件 TV 的等式、
+独立和的可忽略方差删除、Gaussian 最大熵、信息负尾界及有限列表计数均属经典工具。
+新连接是原实际模型在真实 1/sigma 精度下的空间局部化：
+仅 o(Q²) 个核心组即可承载带噪精确标量，而外围计数保留惊奇量的主要方差。
+原路径行依赖由实际 PGF 处理，精确尾中心项保留在核心标量中，
+随后同一个后验向量的联合律比较才控制典型输出条件 CDF。
+没有从零协方差、弱联合收敛或小互信息直接推断条件独立。
+所查原始来源不直接给出这一完整桥梁；有限检索不认证全局原创。
+本章不声称每个输出保证、零噪声结果、临界噪声锐利性、期望对数覆盖、变化误差水平或计算效率。
+第 72 章确定中心的替换仅使用已量化的 o_P(Q) 误差，纯理论文本未进入 Lean 冻结或消化链。
