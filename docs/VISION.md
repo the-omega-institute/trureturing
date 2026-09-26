@@ -131,10 +131,9 @@ the structures alone does not establish these capabilities.
 
 ## Studying time and space through holographic geometry
 
-We aim to place time, space, provenance and observation in a shared relational
-framework: how does a whole appear through finite viewpoints, and how can
-those viewpoints support reconstruction? This is the project's **holographic
-spacetime geometry research direction**.
+We aim to study time, space, provenance and observation through **holographic
+spacetime geometry**: how does a whole appear through finite viewpoints, and
+when do those viewpoints support reconstruction?
 
 Imagine viewing the same history through different windows. Each window has a
 visible extent; some windows overlap. Events have an order, records have
@@ -167,13 +166,14 @@ Existing work offers several connected routes:
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
 
-Bringing these routes together requires attention to **joint realization,
-recoverability, executability and cost**. Whether local readings come from the
-same object or from incompatible candidate worlds changes the gluing problem.
-Recovering a target value and recovering a complete history also have different
-success criteria. The Lean temporal-domain counterexample above supplies one
-concrete test: preserving current spatial readings alone does not preserve
-all historical admission conditions in that model.
+These routes must distinguish a compatible completion from recovery of the
+original source. In the [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean),
+arrange nonempty sets of allowed local records on a finite tree. Each recorded
+variable must occur on a connected subtree, and neighbors must allow exactly
+the same assignments on their full overlap. Then any allowed local record
+extends to a record satisfying every local constraint. This establishes
+existence; uniqueness, identifying the original history and computational cost
+require further results.
 
 Here, holography names a research direction concerning wholes and observations.
 This guide establishes no physical holographic duality, area law or model of
