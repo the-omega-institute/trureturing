@@ -1,0 +1,103 @@
+{
+  "schema": "weak-priority-actual-mixing-v1",
+  "status": "PASS",
+  "scope": "Weak-priority corner selections: one actual source and a positive complete gate.\nThe complete gate lower bound reuses643's full512 certificate via monotonicity;\nthis does not re-enumerate its corners. A literal higher-pure source checks all\ncentral prefixes through resolving heights3 and all32 outside response fields.\nAll-height scope belongs to the ordinary same-source density proof.\n",
+  "epsilon": "1/1000",
+  "inherited_positive_mask_count": 23,
+  "inherited_minimum_gate": "41908790232778304321/59732853887443968000000",
+  "outside_mass_envelope": "935/1536",
+  "uniform_complete_gate": "11487698589965543917/119465707774887936000000",
+  "head_haar_lower_bound": "11487698589965543917/4945603202221473792000000",
+  "actual_example": {
+    "pure3_originals": [
+      [
+        3,
+        2
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        27,
+        3
+      ]
+    ],
+    "pure5_originals": [
+      [
+        5,
+        4
+      ],
+      [
+        25,
+        0
+      ],
+      [
+        125,
+        1
+      ]
+    ],
+    "ternary_null_index": 0,
+    "quinary_null_index": 0,
+    "conditional_second7_leaves": [
+      1,
+      3
+    ],
+    "alpha": {
+      "1": "2/3",
+      "2": "1/3",
+      "3": "0",
+      "4": "0",
+      "5": "0"
+    },
+    "beta": {
+      "1": "0",
+      "2": "0",
+      "3": "0",
+      "4": "0",
+      "5": "4/5",
+      "6": "0",
+      "7": "0",
+      "8": "0",
+      "9": "0",
+      "10": "1/5",
+      "11": "0",
+      "12": "0",
+      "13": "0",
+      "14": "0",
+      "15": "0",
+      "16": "0",
+      "17": "0",
+      "18": "0",
+      "19": "0"
+    },
+    "central_mass": "78307/84375",
+    "outside_integrated_mass": "203628601/388800000"
+  },
+  "checks": {
+    "full512_nonnegative": 1,
+    "conditional_source_pin": 1,
+    "inherited_complete_positive_class": 1,
+    "actual_outside_mass_envelope": 1,
+    "uniform_positive_complete_gate": 1,
+    "actual_probabilities": 1,
+    "actual_density_caps": 1,
+    "product_mixing": 1,
+    "actual_capacity_deficiency_correlation": 1,
+    "weak_priority": 9025,
+    "actual_submeasure": 95,
+    "old_query_fields_without_clipping": 95,
+    "capacity_clip_exactly_zero_loss": 95,
+    "nonconstant_corner_selection": 1,
+    "actual_source_domination": 1,
+    "one_actual_outside_restriction": 25,
+    "same32_conditional_response_fields": 160,
+    "all32_times6240_prefix_bounds": 199680,
+    "query_inventory": 1
+  },
+  "check_count": 209187,
+  "source_certificate_sha256": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+  "conditional_certificate_sha256": "084f92585945d50057cbdeb2f70a3b4a626368e8698d172671eec9cf61f7a1ae",
+  "producer_sha256": "7f2ef3eba7ce47a7cc69ec30400c17c2914cd6372475e902ec5b46a14810850e",
+  "new_lean_verification": false
+}
