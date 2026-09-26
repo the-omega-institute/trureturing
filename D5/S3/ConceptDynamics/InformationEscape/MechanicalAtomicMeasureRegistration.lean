@@ -104,26 +104,6 @@ local instance : DecidableEq JumpOutput := Classical.decEq _
 def jumpReadout (r alpha x : ℝ) : ℝ :=
   MechanicalReadoutSources.jumpReadout r alpha x
 
-def leftJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
-  toPrimitiveLawArena := by
-    letI : DecidableEq JumpOutput := Classical.decEq _
-    exact {
-      toArena := unitArena
-      signature := mechanicalReadoutSignature JumpOutput
-      Law := fun realization => by
-        classical
-        exact ∀ (r x alpha : ℝ), 0 < r → r < 1 →
-          x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
-          ∃ L : ℝ,
-            Filter.Tendsto (fun beta : ℝ => realization.readout () () r beta x)
-              (𝓝[<] alpha) (𝓝 L) ∧
-            L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
-            realization.readout () () r alpha x - L =
-              ∑' n : ℕ, if ∃ z : ℤ,
-                  (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-                (1 - r) ^ 2 * r ^ n else 0 }
-  Domain := ℝ
-
 def rationalJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
   toPrimitiveLawArena := by
     letI : DecidableEq JumpOutput := Classical.decEq _

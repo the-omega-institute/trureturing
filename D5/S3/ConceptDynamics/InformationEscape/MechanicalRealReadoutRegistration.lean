@@ -72,14 +72,6 @@ def uniformBoundClaim (o : CompletionOutput) : Prop :=
     (1 - r) * (Int.fract x - 1) ≤ o.1 r alpha x - alpha ∧
       o.1 r alpha x - alpha ≤ (1 - r) * Int.fract x
 
-def iteratedLimitClaim (o : CompletionOutput) : Prop :=
-  ∀ (alpha x : ℝ), alpha ∈ Ico (0 : ℝ) 1 →
-    (∀ r : ℝ, r ∈ Ico (0 : ℝ) 1 →
-      Tendsto (fun n : ℕ => o.2 r alpha x n) atTop (𝓝 (o.1 r alpha x))) ∧
-    Tendsto (fun r : ℝ => o.1 r alpha x) (𝓝[<] (1 : ℝ)) (𝓝 alpha) ∧
-    (∀ n : ℕ, Tendsto (fun r : ℝ => o.2 r alpha x n)
-      (𝓝[<] (1 : ℝ)) (𝓝 (0 : ℝ)))
-
 def regularityClaim (o : CompletionOutput) : Prop :=
   ∀ (r alpha x : ℝ), 0 < r → r < 1 → alpha ∈ Ioo (0 : ℝ) 1 →
     ((∀ eps : ℝ, 0 < eps → ∃ radius : ℝ, 0 < radius ∧
@@ -115,14 +107,6 @@ def uniformBoundArena : ObjectDomainArena.{0, 0, 0, 0} where
     exact { toArena := unitArena
             signature := mechanicalReadoutSignature CompletionOutput
             Law := fun realization => uniformBoundClaim (realization.readout () ()) }
-  Domain := ℝ
-
-def iteratedLimitArena : ObjectDomainArena.{0, 0, 0, 0} where
-  toPrimitiveLawArena := by
-    letI : DecidableEq CompletionOutput := Classical.decEq _
-    exact { toArena := unitArena
-            signature := mechanicalReadoutSignature CompletionOutput
-            Law := fun realization => iteratedLimitClaim (realization.readout () ()) }
   Domain := ℝ
 
 def regularityArena : ObjectDomainArena.{0, 0, 0, 0} where

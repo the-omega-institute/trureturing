@@ -88,19 +88,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 Geometric readouts lie within one minus the ratio of the slope, with phase-sensitive one-sided bounds.
 
-**Definition 1.8 (iteratedLimitClaim).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitClaim`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitClaim` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Finite horizons converge to the completion; flattening first sends each finite prefix to zero while the completion tends to the slope.
-
-**Definition 1.9 (regularityClaim).**
+**Definition 1.8 (regularityClaim).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.regularityClaim`
 
@@ -112,7 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 Integer hits classify fixed-phase continuity and give a quantitative lower jump at each hit.
 
-**Definition 1.10 (localOrderArena).**
+**Definition 1.9 (localOrderArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.localOrderArena`
 
@@ -124,7 +112,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 One CUT slot retains the entire weighted-prefix function for the order law.
 
-**Definition 1.11 (isometricArena).**
+**Definition 1.10 (isometricArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.isometricArena`
 
@@ -136,7 +124,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 One CUT slot retains both real functions needed for the L1 completion law.
 
-**Definition 1.12 (uniformBoundArena).**
+**Definition 1.11 (uniformBoundArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.uniformBoundArena`
 
@@ -148,19 +136,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 The same paired observation supports the uniform slope bound.
 
-**Definition 1.13 (iteratedLimitArena).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitArena`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitArena` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The same paired observation supports the two limiting orders.
-
-**Definition 1.14 (regularityArena).**
+**Definition 1.12 (regularityArena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.regularityArena`
 
@@ -172,7 +148,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 The completed-value component supports the continuity and jump law.
 
-**Definition 1.15 (localOrderRealization).**
+**Definition 1.13 (localOrderRealization).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.localOrderRealization`
 
@@ -184,7 +160,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRe
 
 The slot is filled with actual finite mechanical-letter sums.
 
-**Definition 1.16 (completionRealization).**
+**Definition 1.14 (completionRealization).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.completionRealization`
 
@@ -205,8 +181,6 @@ The slot is filled with the actual geometric readout and its finite prefixes.
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.completionRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.isometricArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.isometricClaim`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitArena`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.iteratedLimitClaim`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.localOrderArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.localOrderClaim`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalRealReadoutRegistration.localOrderRealization`

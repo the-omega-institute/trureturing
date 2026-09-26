@@ -27,14 +27,6 @@ internal sealed class MechanicalReadoutAtomicMeasureDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("At an interior slope, a time k contributes one threshold atom precisely when x+k times the slope is an integer. There is at most one such threshold at each fixed time, while hits at different times all contribute. The singleton mass is the sum of their geometric weights. The interior condition excludes the zero-slope endpoint, where an integer hit can correspond to the omitted index j=0."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("mechanical-atomic-left-jump"),
-                DeclarationHandle.Create(Prefix + "geometric_readout_left_jump_exact"),
-                H("Exact left jump"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("As a slope approaches an interior value from below, the measures of its closed threshold half-lines converge to the measure of the open half-line at that value. The completed readout therefore has a real left limit equal to that open-half-line mass. Its value at the slope exceeds the limit by exactly the singleton mass, hence by the real sum of the weights at every integer-hit time. Coincident hits are retained."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("mechanical-atomic-rational-jump"),
                 DeclarationHandle.Create(Prefix + "geometric_rational_left_jump_closed_form"),
                 H("Reduced rational jump"),

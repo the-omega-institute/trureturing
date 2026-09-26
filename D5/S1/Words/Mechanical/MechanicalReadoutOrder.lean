@@ -166,7 +166,6 @@ theorem local_order_iff_decreasing_weights
 
 /- The concrete source measure, with its normalization proved here. -/
 local notation "μ₀" => (volume.restrict (Ico (0 : ℝ) 1))
-local instance : IsProbabilityMeasure μ₀ := ⟨by simp⟩
 
 /-- Integrate the actual shifted floor by deriving its single carry interval.
 No expectation of a bit, invariant-measure assertion, or readout integral is
@@ -175,6 +174,7 @@ private theorem shifted_floor_mean (t : ℝ) :
     Integrable (fun x : ℝ => (⌊x + t⌋ : ℝ)) μ₀ ∧
       (∫ x : ℝ, (⌊x + t⌋ : ℝ) ∂μ₀) = t := by
   classical
+  haveI : IsProbabilityMeasure μ₀ := ⟨by simp⟩
   let c : ℝ := 1 - Int.fract t
   let f : ℝ → ℝ := fun x => (⌊t⌋ : ℝ) + (Ico c 1).indicator (fun _ => (1 : ℝ)) x
   have hc0 : 0 ≤ c := by dsimp [c]; linarith [Int.fract_lt_one t]
@@ -213,19 +213,6 @@ private theorem shifted_floor_mean (t : ℝ) :
       simp [hind]
     _ = t := Int.floor_add_fract t
 
-private theorem actual_letter_mean (alpha : ℝ) (k : ℕ) :
-    Integrable (fun x : ℝ => (lowerMechanicalLetter alpha x k : ℝ)) μ₀ ∧
-      (∫ x : ℝ, (lowerMechanicalLetter alpha x k : ℝ) ∂μ₀) = alpha := by
-  have hnext := shifted_floor_mean (((k + 1 : ℕ) : ℝ) * alpha)
-  have hprev := shifted_floor_mean ((k : ℝ) * alpha)
-  constructor
-  · apply (hnext.1.sub hprev.1).congr
-    exact ae_of_all _ fun x => by simp [lowerMechanicalLetter]
-  · simp only [lowerMechanicalLetter, Int.cast_sub]
-    rw [integral_sub hnext.1 hprev.1, hnext.2, hprev.2]
-    push_cast
-    ring
-
 /-- The completed geometric readout of the actual mechanical letters.
 The usual binary numerical readout is obtained at r=1/2. -/
 def geometricReadout (r alpha x : ℝ) : ℝ :=
@@ -254,6 +241,7 @@ theorem geometric_readout_isometric_completion
       |geometricReadout r alpha x - weightedPrefix q beta x n|) =
         alpha - beta * (1 - r ^ n)) := by
   classical
+  haveI : IsProbabilityMeasure μ₀ := ⟨by simp⟩
   let q : ℕ → ℝ := fun k => (1 - r) * r ^ k
   let P : ℝ → ℕ → ℝ → ℝ := fun a n x => weightedPrefix q a x n
   let G : ℝ → ℝ → ℝ := geometricReadout r
@@ -283,22 +271,34 @@ theorem geometric_readout_isometric_completion
       Summable (fun k : ℕ => q k * (lowerMechanicalLetter a x k : ℝ)) :=
     Summable.of_nonneg_of_le (fun k => (hterm a ha' x k).1)
       (fun k => (hterm a ha' x k).2) hqs
+  have hletter (a : ℝ) (k : ℕ) :
+      Integrable (fun x : ℝ => (lowerMechanicalLetter a x k : ℝ)) μ₀ ∧
+        (∫ x : ℝ, (lowerMechanicalLetter a x k : ℝ) ∂μ₀) = a := by
+    have hnext := shifted_floor_mean (((k + 1 : ℕ) : ℝ) * a)
+    have hprev := shifted_floor_mean ((k : ℝ) * a)
+    constructor
+    · apply (hnext.1.sub hprev.1).congr
+      exact ae_of_all _ fun x => by simp [lowerMechanicalLetter]
+    · simp only [lowerMechanicalLetter, Int.cast_sub]
+      rw [integral_sub hnext.1 hprev.1, hnext.2, hprev.2]
+      push_cast
+      ring
   have hPint (a : ℝ) (n : ℕ) : Integrable (P a n) μ₀ := by
     induction n with
     | zero => simp [P, weightedPrefix]
     | succ n ih =>
-        apply (ih.add ((actual_letter_mean a n).1.const_mul (q n))).congr
+        apply (ih.add ((hletter a n).1.const_mul (q n))).congr
         exact ae_of_all _ fun x => by simp [P, weightedPrefix, sum_range_succ]
   have hPmean (a : ℝ) (n : ℕ) : (∫ x : ℝ, P a n x ∂μ₀) = a * (1 - r ^ n) := by
     dsimp [P, weightedPrefix]
-    rw [integral_finsetSum (range n) (fun k _ => (actual_letter_mean a k).1.const_mul (q k))]
+    rw [integral_finsetSum (range n) (fun k _ => (hletter a k).1.const_mul (q k))]
     simp_rw [integral_const_mul]
     calc
       (∑ k ∈ range n, q k * ∫ x : ℝ, (lowerMechanicalLetter a x k : ℝ) ∂μ₀) =
           ∑ k ∈ range n, q k * a := by
         apply sum_congr rfl
         intro k hk
-        rw [(actual_letter_mean a k).2]
+        rw [(hletter a k).2]
       _ = a * (1 - r ^ n) := by rw [← sum_mul, hqn n]; ring
   have hPbound (a : ℝ) (ha' : a ∈ Ico (0 : ℝ) 1) (n : ℕ) (x : ℝ) :
       0 ≤ P a n x ∧ P a n x ≤ 1 := by

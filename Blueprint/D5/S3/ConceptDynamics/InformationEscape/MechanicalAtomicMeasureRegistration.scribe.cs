@@ -12,7 +12,7 @@ internal sealed class MechanicalAtomicMeasureRegistrationDocument : IScribeDocum
         H("MechanicalAtomicMeasureRegistration"),
         Blocks(
             Node("mass-input", "MassInput", "Mass parameters",
-                "The ratio is nonnegative and below one, and the phase belongs to the half-open unit interval."),
+                "The input stores a real ratio and phase; the target law checks the admissible range."),
             Node("mass-readout", "massReadout", "Mass readout",
                 "The first coordinate is total mass and the second is mass on the positive unit interval."),
             Node("mass-target", "massTarget", "Mass target",
@@ -20,7 +20,7 @@ internal sealed class MechanicalAtomicMeasureRegistrationDocument : IScribeDocum
             Node("mass-output", "MassOutput", "Mass family",
                 "Each readout retains its value on every admissible mass input."),
             Node("distribution-input", "DistributionInput", "Distribution parameters",
-                "The threshold lies in the closed unit interval and the phase in the half-open unit interval."),
+                "The input stores a real ratio, threshold, and phase; the target law checks their admissible ranges."),
             Node("distribution-readout", "distributionReadout", "Distribution readout",
                 "The geometric atomic measure is evaluated on the interval below the threshold."),
             Node("distribution-target", "distributionTarget", "Distribution target",
@@ -28,7 +28,7 @@ internal sealed class MechanicalAtomicMeasureRegistrationDocument : IScribeDocum
             Node("distribution-output", "DistributionOutput", "Distribution family",
                 "The readout is a function on all admissible distribution parameters."),
             Node("hit-input", "HitInput", "Singleton parameters",
-                "The phase belongs to the half-open unit interval and the threshold is interior."),
+                "The input stores a real ratio, phase, and threshold; the target law checks the phase and interior threshold conditions."),
             Node("hit-readout", "hitReadout", "Singleton mass",
                 "The atomic measure is evaluated at the singleton threshold."),
             Node("hit-target", "hitTarget", "Integer-hit series",
@@ -36,7 +36,7 @@ internal sealed class MechanicalAtomicMeasureRegistrationDocument : IScribeDocum
             Node("hit-output", "HitOutput", "Singleton family",
                 "The singleton law retains all admissible ratios, phases, and thresholds."),
             Node("support-input", "SupportInput", "Support parameters",
-                "The ratio is strictly between zero and one and the phase belongs to the half-open unit interval."),
+                "The input stores a real ratio and phase; the target law checks their admissible ranges."),
             Node("support-readout", "supportReadout", "Measured support",
                 "The readout is the topological support of the geometric atomic measure."),
             Node("support-target", "supportTarget", "Support target",
@@ -63,12 +63,10 @@ internal sealed class MechanicalAtomicMeasureRegistrationDocument : IScribeDocum
                 "The output records the completed mechanical readout at every ratio, slope, and phase."),
             Node("jump-readout", "jumpReadout", "Selected readout",
                 "The selected function is the completed mechanical readout."),
-            Node("left-jump-arena", "leftJumpArena", "Left jump law",
-                "The CUT function has a left limit whose difference from its value is the integer-hit series."),
             Node("rational-jump-arena", "rationalJumpArena", "Rational jump law",
                 "At reduced rational slopes and zero phase, the CUT function has the stated geometric jump."),
             Node("jump-realization", "jumpRealization", "Readout realization",
-                "The realization uses the same completed mechanical readout in both jump laws."))));
+                "The realization uses the completed mechanical readout in the rational jump law."))));
 
     private static DocumentBlock.Describe Node(
         string id, string declaration, string title, string text) =>

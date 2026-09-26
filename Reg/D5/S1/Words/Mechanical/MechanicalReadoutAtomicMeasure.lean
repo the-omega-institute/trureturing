@@ -19,10 +19,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,
       statementIdentity := "sha256:578195477c952f318d98ac2002403e3f637cf1444a98e508a938820465abb21a",
       registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.leftJumpArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact,
-      statementIdentity := "sha256:f63d30a471314f53d52edd81663e251c8fa9d83f96353d7d8a1eb3cad0373045",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.rationalJumpArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form,
       statementIdentity := "sha256:f0bf059491cefbf0ae23bfd82a712d76dc87b380a5f51575eff9fc07955fad01",
@@ -39,10 +35,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.supportArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,
       statementIdentity := "sha256:578195477c952f318d98ac2002403e3f637cf1444a98e508a938820465abb21a",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.leftJumpArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact,
-      statementIdentity := "sha256:f63d30a471314f53d52edd81663e251c8fa9d83f96353d7d8a1eb3cad0373045",
       registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure },
     { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.rationalJumpArena,
       theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form,
@@ -305,41 +297,6 @@ theorem supportSensitivity : FiniteSlotSensitivity supportArena.toPrimitiveLawAr
   · intro i
     exact Fin.elim0 i
 
-theorem leftJumpBridge : LegacyPrimitiveRealization leftJumpArena.toPrimitiveLawArena
-    (∀ (r x alpha : ℝ), 0 < r → r < 1 →
-      x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
-      ∃ L : ℝ,
-        Filter.Tendsto (fun beta : ℝ => D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r beta x)
-          (𝓝[<] alpha) (𝓝 L) ∧
-        L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
-        D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r alpha x - L =
-          ∑' n : ℕ, if ∃ z : ℤ,
-              (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-            (1 - r) ^ 2 * r ^ n else 0)
-    jumpRealization := by
-  constructor
-  change (∀ (r x alpha : ℝ), 0 < r → r < 1 →
-      x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
-      ∃ L : ℝ,
-        Filter.Tendsto (fun beta : ℝ => D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r beta x)
-          (𝓝[<] alpha) (𝓝 L) ∧
-        L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
-        D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r alpha x - L =
-          ∑' n : ℕ, if ∃ z : ℤ,
-              (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-            (1 - r) ^ 2 * r ^ n else 0) ↔
-    (∀ (r x alpha : ℝ), 0 < r → r < 1 →
-      x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
-      ∃ L : ℝ,
-        Filter.Tendsto (fun beta : ℝ => jumpRealization.readout () () r beta x)
-          (𝓝[<] alpha) (𝓝 L) ∧
-        L = (geometricAtomicMeasure r x (Iio alpha)).toReal ∧
-        jumpRealization.readout () () r alpha x - L =
-          ∑' n : ℕ, if ∃ z : ℤ,
-              (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-            (1 - r) ^ 2 * r ^ n else 0)
-  exact Iff.rfl
-
 theorem rationalJumpBridge : LegacyPrimitiveRealization rationalJumpArena.toPrimitiveLawArena
     (∀ (r : ℝ) (p q : ℕ), 0 < r → r < 1 →
       0 < p → p < q → Nat.Coprime p q →
@@ -369,47 +326,6 @@ theorem rationalJumpBridge : LegacyPrimitiveRealization rationalJumpArena.toPrim
 def jumpBad := @mechanicalReadoutRealization JumpOutput (Classical.decEq _)
   (fun _ : Unit => fun _ _ _ => (0 : ℝ))
 
-private theorem positiveHalfHitSeries :
-    0 < ∑' n : ℕ, if ∃ z : ℤ,
-        (z : ℝ) = (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * (1 / 2 : ℝ) then
-      (1 - (1 / 2 : ℝ)) ^ 2 * (1 / 2 : ℝ) ^ n else 0 := by
-  obtain ⟨L₁, hlimit₁, _, hseries⟩ :=
-    geometric_readout_left_jump_exact (1 / 2) 0 (1 / 2)
-      (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  obtain ⟨L₂, hlimit₂, hclosed⟩ :=
-    geometric_rational_left_jump_closed_form (1 / 2) 1 2
-      (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by decide)
-  have hlimit₂' : Filter.Tendsto
-      (fun beta : ℝ => D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout
-        (1 / 2) beta 0) (𝓝[<] (1 / 2 : ℝ)) (𝓝 L₂) := by
-    simpa using hlimit₂
-  have hsame : L₁ = L₂ := tendsto_nhds_unique hlimit₁ hlimit₂'
-  rw [← hsame] at hclosed
-  have hformula :
-      (∑' n : ℕ, if ∃ z : ℤ,
-          (z : ℝ) = (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * (1 / 2 : ℝ) then
-        (1 - (1 / 2 : ℝ)) ^ 2 * (1 / 2 : ℝ) ^ n else 0) =
-        (1 - (1 / 2 : ℝ)) ^ 2 * (1 / 2 : ℝ) ^ (2 - 1) /
-          (1 - (1 / 2 : ℝ) ^ 2) := by
-    linarith [hseries, hclosed]
-  rw [hformula]
-  norm_num
-
-private theorem leftJumpBad_not_law : ¬ leftJumpArena.Law jumpBad := by
-  intro h
-  obtain ⟨L, hlimit, _, hseries⟩ := h (1 / 2) 0 (1 / 2)
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have hlimitZero : Filter.Tendsto (fun _ : ℝ => (0 : ℝ))
-      (𝓝[<] (1 / 2 : ℝ)) (𝓝 L) := by
-    simpa [jumpBad, mechanicalReadoutRealization] using hlimit
-  have hL : L = 0 := tendsto_nhds_unique hlimitZero tendsto_const_nhds
-  have hzero :
-      (0 : ℝ) = ∑' n : ℕ, if ∃ z : ℤ,
-          (z : ℝ) = (0 : ℝ) + (((n + 1 : ℕ) : ℝ)) * (1 / 2 : ℝ) then
-        (1 - (1 / 2 : ℝ)) ^ 2 * (1 / 2 : ℝ) ^ n else 0 := by
-    simpa [jumpBad, mechanicalReadoutRealization, hL] using hseries
-  exact (ne_of_gt positiveHalfHitSeries) hzero.symm
-
 private theorem rationalJumpBad_not_law : ¬ rationalJumpArena.Law jumpBad := by
   intro h
   obtain ⟨L, hlimit, hclosed⟩ := h (1 / 2) 1 2
@@ -421,29 +337,10 @@ private theorem rationalJumpBad_not_law : ¬ rationalJumpArena.Law jumpBad := by
   simp [jumpBad, mechanicalReadoutRealization, hL] at hclosed
   norm_num at hclosed
 
-theorem leftJumpVariation : leftJumpArena.Law jumpRealization ∧
-    ¬ leftJumpArena.Law jumpBad := by
-  exact ⟨leftJumpBridge.equivalence.mp geometric_readout_left_jump_exact,
-    leftJumpBad_not_law⟩
-
 theorem rationalJumpVariation : rationalJumpArena.Law jumpRealization ∧
     ¬ rationalJumpArena.Law jumpBad := by
   exact ⟨rationalJumpBridge.equivalence.mp geometric_rational_left_jump_closed_form,
     rationalJumpBad_not_law⟩
-
-theorem leftJumpSensitivity : FiniteSlotSensitivity leftJumpArena.toPrimitiveLawArena := by
-  constructor
-  · intro i
-    cases i
-    refine ⟨jumpRealization, jumpBad, ?_, ?_, ?_⟩
-    · intro j hj
-      cases j
-      exact (hj rfl).elim
-    · intro j
-      exact Fin.elim0 j
-    · exact ⟨fun _ => leftJumpBad_not_law, fun _ => leftJumpVariation.1⟩
-  · intro i
-    exact Fin.elim0 i
 
 theorem rationalJumpSensitivity : FiniteSlotSensitivity rationalJumpArena.toPrimitiveLawArena := by
   constructor
@@ -490,16 +387,6 @@ register_information_theorem
   escape from (ℝ) escape continues (open)
 
 register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact
-  in leftJumpArena
-  readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.jumpReadout))
-  primitives jumpRealization.toPrimitiveBundle
-  realization leftJumpBridge
-  variation leftJumpVariation sensitivity leftJumpSensitivity
-  escape from (ℝ) escape continues (open)
-
-register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form
   in rationalJumpArena
   readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
@@ -515,7 +402,6 @@ run_meta do
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact,
       `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form] do
     let row := (TemplateBinding.records (← getEnv)).find? fun record =>
       record.occurrence.key.theoremName == theoremName

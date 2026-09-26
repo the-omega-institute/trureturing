@@ -14,7 +14,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 *Commentary.*
 
-The ratio is nonnegative and below one, and the phase belongs to the half-open unit interval.
+The input stores a real ratio and phase; the target law checks the admissible range.
 
 **Definition 1.2 (Mass readout).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 *Commentary.*
 
-The threshold lies in the closed unit interval and the phase in the half-open unit interval.
+The input stores a real ratio, threshold, and phase; the target law checks their admissible ranges.
 
 **Definition 1.6 (Distribution readout).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 *Commentary.*
 
-The phase belongs to the half-open unit interval and the threshold is interior.
+The input stores a real ratio, phase, and threshold; the target law checks the phase and interior threshold conditions.
 
 **Definition 1.10 (Singleton mass).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 *Commentary.*
 
-The ratio is strictly between zero and one and the phase belongs to the half-open unit interval.
+The input stores a real ratio and phase; the target law checks their admissible ranges.
 
 **Definition 1.14 (Measured support).**
 
@@ -316,19 +316,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 The selected function is the completed mechanical readout.
 
-**Definition 1.27 (Left jump law).**
-
-Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.leftJumpArena`
-
-*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.leftJumpArena` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The CUT function has a left limit whose difference from its value is the integer-hit series.
-
-**Definition 1.28 (Rational jump law).**
+**Definition 1.27 (Rational jump law).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.rationalJumpArena`
 
@@ -340,7 +328,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 At reduced rational slopes and zero phase, the CUT function has the stated geometric jump.
 
-**Definition 1.29 (Readout realization).**
+**Definition 1.28 (Readout realization).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.jumpRealization`
 
@@ -350,7 +338,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasure
 
 *Commentary.*
 
-The realization uses the same completed mechanical readout in both jump laws.
+The realization uses the completed mechanical readout in the rational jump law.
 
 ## References
 
@@ -373,7 +361,6 @@ The realization uses the same completed mechanical readout in both jump laws.
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.hitTarget`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.jumpReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.jumpRealization`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.leftJumpArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.massArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.massReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/MechanicalAtomicMeasureRegistration.massRealization`
