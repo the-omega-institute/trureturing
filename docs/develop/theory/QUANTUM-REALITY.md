@@ -55502,3 +55502,427 @@ $$
 最后，定理 411.1 的相对闭性条件在 $k=5,n=2$ 时满足 $5\ge2+1$，故 $\mathcal D_5\setminus\mathcal E_{5,2}$ 在 $\mathcal D_5$ 中相对开。它包含刚证明失败的 $\boldsymbol x(1/2)$，因而给出完整有序不同配置空间中的非空开失败邻域，而不只是在纬线曲线上的邻域。定理 412.1 在同一拓扑与完整记录接口下，取 $k=5=2\cdot2+1$、$n=2$，又给出 $\mathcal E_{5,2}$ 的非空相对开子集；二者正是所述两个非空开区域。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 414. 高维纯记录成功集的精确几何与拓扑边界
+
+设整数 $q\ge2$、$k\ge2$、$n\ge1$。令
+
+$$
+\mathcal C_{q,k}=\{(x_1,\ldots,x_k)\in(\mathbb{CP}^{q-1})^k:
+ x_i\ne x_j\ (i\ne j)\}
+$$
+
+为有序不同射线配置流形，并在其上取乘积 Fubini--Study 测度的归一化限制。置
+
+$$
+W=\operatorname{Sym}^n(\mathbb C^q),\qquad
+M=\binom{n+q-1}{n},\qquad
+m=2q-2,\qquad
+D=2M-1.
+$$
+
+这里的 $D$ 是见证参数的实维数，不是配置流形；$\dim_{\mathbb R}\mathcal C_{q,k}=km$。取 $S=\mathbb C^k$，已知射线的单位代表为 $s_j$，并写
+
+$$
+R_n=(\mathbb C^q)^{\otimes n},\qquad
+r_j=s_j^{\otimes n},\qquad
+J_n|j\rangle=|j\rangle\otimes r_j.
+$$
+
+所有原始记录因子在物理上保持联合可访问，$W$ 只是 $R_n$ 的数学子空间，不表示压缩或新的物理张量分解。$J_n$ 之后允许在完整 $R_n$ 上作有限结果的联合 CP instrument $\{\mathcal I_y\}_{y\in Y}$，与输入无关的记录辅助装置并入该 instrument，输出记录取迹。固定接受集合 $Y_{\rm s}$；每个实际经典结果 $y$ 只控制一个预先指定的、作用于整个 $S$ 的终端酉 $U_y$，在此以前不操作 $S$。任意有限维外部参考始终不操作。协议可以依赖已知配置及 $n$，但不依赖未知输入；每个协议的结果数有限，不要求不同协议有共同的结果数上界。记 $\mathcal E_{q,k,n}\subseteq\mathcal C_{q,k}$ 为存在同一协议及同一 $p>0$、使
+
+$$
+\mathcal T(X)=\sum_{y\in Y_{\rm s}}U_y\mathcal M_y(X)U_y^\dagger=pX
+\qquad(X\in\mathcal L(S))
+$$
+
+的配置集。等价地，对每个有限维 $A$ 及每个 $X_{AS}$ 都有
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=pX_{AS}.
+$$
+
+等价性来自矩阵张量基的展开及 $A=\mathbb C$ 的特例；完整 instrument 的保迹性给出 $p\le1$。以下始终保留上述完整接口，不引入局部、LOCC 或隐藏的谱反馈权限。
+
+**定理 414.1（一般纯记录成功集的维数与共同泛型失败）。** 在上述接口下，
+
+$$
+\mathcal E_{q,k,n}
+=\left\{(x_1,\ldots,x_k)\in\mathcal C_{q,k}:\begin{array}{l}
+\exists\,b\in W,\ \|b\|=1,\ \exists\,t\in(0,1],\\
+|\langle b|s_j^{\otimes n}\rangle|^2=t\quad(1\le j\le k)
+\end{array}\right\}.
+$$
+
+该集合是半代数集，并且
+
+$$
+\boxed{\quad
+\dim_{\mathbb R}\mathcal E_{q,k,n}
+=L:=\min\bigl(km,D+k(m-1)\bigr)
+=k(m-1)+\min(k,D).
+\quad}
+$$
+
+它包含一个实际嵌入的、维数为 $L$ 的光滑片；当 $k\le D$ 时，该片给出非空相对开成功集。当 $k\ge D+1=2M$ 时，
+
+$$
+\mathcal C_{q,k}\setminus\overline{\mathcal E_{q,k,n}}^{\,\mathcal C_{q,k}}
+$$
+
+是开、稠密且具有满乘积 Fubini--Study 测度的集合，并且包含于失败集。这里不声称 $\mathcal E_{q,k,n}$ 闭，也不声称全部失败集开。固定 $q,k$，令
+
+$$
+B_{q,k}=\left\{n\ge1:2\binom{n+q-1}{n}\le k\right\}.
+$$
+
+这是有限集。对每个 $n\in B_{q,k}$ 分别取上面的相对闭包补集，并约定空交集为 $\mathcal C_{q,k}$；所得有限交仍开、稠密且满测度。在这个共同集合上，任何实际次数 $n$ 若成功，必满足
+
+$$
+2\binom{n+q-1}{n}>k.
+$$
+
+**证明。** 先验证物理接口与纯见证的精确对应；这一步沿用第 411 节的维数无关矩阵单位提取。环境测量与固定反馈的原始框架见 Gregoratti 与 Werner，*Quantum Lost and Found*, [arXiv:quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，Theorem 1、Proposition 2（PDF 第 4--5 页）。令
+
+$$
+E_y=\mathcal I_y^*(I_{\mathrm{out},y})\succeq0,
+\qquad\sum_{y\in Y}E_y=I_{R_n}.
+$$
+
+其中 $I_{\mathrm{out},y}$ 是分支 $y$ 的输出空间上的恒等算符，$E_y$ 作用于原始 $R_n$。
+
+对系统矩阵单位 $E_{ij}=|i\rangle\langle j|$，取记录迹得到
+
+$$
+\mathcal M_y(E_{ij})
+=\langle r_j|E_y|r_i\rangle E_{ij}.
+$$
+
+对每个实际结果作有限谱分解
+
+$$
+E_y=\sum_a|v_{ya}\rangle\langle v_{ya}|,
+\qquad
+K_{ya}=\operatorname{diag}\bigl(\langle v_{ya}|r_1\rangle,\ldots,
+\langle v_{ya}|r_k\rangle\bigr).
+$$
+
+于是
+
+$$
+\mathcal M_y(X)=\sum_aK_{ya}XK_{ya}^\dagger.
+$$
+
+指标 $a$ 只是同一实际结果的数学分解，同一 $y$ 的所有项必须使用同一个 $U_y$。令 $|\Omega\rangle=\sum_j|j\rangle\otimes|j\rangle$，$|L\rangle\!\rangle=(I\otimes L)|\Omega\rangle$。全矩阵恒等式的 Choi 形式为
+
+$$
+\sum_{y\in Y_{\rm s},a}|U_yK_{ya}\rangle\!\rangle
+\langle\!\langle U_yK_{ya}|
+=p|I_S\rangle\!\rangle\langle\!\langle I_S|.
+$$
+
+对任意 $w\perp|I_S\rangle\!\rangle$，左侧是非负项之和且为零，所以每个 $|U_yK_{ya}\rangle\!\rangle$ 都属于 $\mathbb C|I_S\rangle\!\rangle$。故
+
+$$
+U_yK_{ya}=c_{ya}I_S,\qquad
+\sum_{y\in Y_{\rm s},a}|c_{ya}|^2=p.
+$$
+
+取某个 $c_{ya}\ne0$，记相应向量为 $v$。酉性给出
+
+$$
+|\langle v|r_j\rangle|^2=|c_{ya}|^2>0\qquad(1\le j\le k).
+$$
+
+由于 $r_j\in W$，令 $v_W=P_Wv$，则 $v_W\ne0$ 且保持这些评价。归一化
+
+$$
+ b=\frac{v_W}{\|v_W\|},\qquad
+ t=\frac{|c_{ya}|^2}{\|v_W\|^2}
+$$
+
+得到 $|\langle b|r_j\rangle|^2=t$。Cauchy--Schwarz 给出 $0<t\le1$。注意 $t$ 是归一化见证的共同响应，不必等于原协议接受结果的总概率 $p$。
+
+反过来，给定这样的 $b,t$，把 $b$ 看作完整 $R_n$ 中的单位向量，令
+
+$$
+\Pi=|b\rangle\langle b|,
+\qquad
+\mathcal I_0(Z)=\Pi Z\Pi,
+\qquad
+\mathcal I_1(Z)=(I_{R_n}-\Pi)Z(I_{R_n}-\Pi).
+$$
+
+这是完整原始空间上的两结果 instrument。写
+
+$$
+\langle b|r_j\rangle=\sqrt t\,z_j,\qquad |z_j|=1,
+$$
+
+接受结果 $0$，取
+
+$$
+K=\sqrt t\,\operatorname{diag}(z_1,\ldots,z_k),\qquad
+U=\operatorname{diag}(\overline z_1,\ldots,\overline z_k).
+$$
+
+则 $UK=\sqrt t I_S$，因而 $\mathcal T(X)=tX$，并对每个未操作参考有
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=tX_{AS}.
+$$
+
+所有失败结果均保留在完整 instrument 中。代表重定相 $s_j\mapsto e^{i\theta_j}s_j$ 只把幅度乘以 $e^{in\theta_j}$，由已知校准反馈吸收，故该条件确实定义在射线上。这证明了物理成功集与纯见证投影完全相同。
+
+下面证明上界，并同时处理所有奇异水平。用迹一 Hermitian 幂等矩阵模型
+
+$$
+\mathcal P_a=\{P=P^\dagger:P^2=P,\ \operatorname{Tr}P=1\}
+$$
+
+表示 $\mathbb{CP}^{a-1}$。幂等矩阵的谱只含 $0,1$，迹一迫使它为秩一投影；这些多项式等式给出紧致实代数集。在 $P_{\ell\ell}>0$ 的图上取
+
+$$
+ w_\ell=1,\qquad w_i=P_{i\ell}/P_{\ell\ell}\quad(i\ne\ell),
+\qquad P=\frac{ww^\dagger}{w^\dagger w}.
+$$
+
+有限个这样的有理半代数图覆盖 $\mathcal P_a$，所以其维数为 $2a-2$。取固定等距包含 $Q:W\hookrightarrow R_n$，并以 $P$ 表示记录射线的秩一投影，置
+
+$$
+C_n(P)=Q^\dagger P^{\otimes n}Q,\qquad
+f_B(P)=\operatorname{Tr}(BC_n(P)),
+$$
+
+其中 $B\in\mathcal P_M$。矩阵坐标中的响应是实多项式；若 $B=|b\rangle\langle b|$、$P=|s\rangle\langle s|$，则
+
+$$
+ f_B(P)=|\langle b|s^{\otimes n}\rangle|^2.
+$$
+
+在占据数基 $e_\beta$（$|\beta|=n$）中，
+
+$$
+F_b(Z)=\langle b|Z^{\otimes n}\rangle
+=\sum_{|\beta|=n}\overline{b_\beta}
+ \sqrt{\frac{n!}{\beta!}}Z^\beta.
+$$
+
+这是非零的正次数齐次多项式。取 $F_b(v)\ne0$ 及与 $v$ 线性无关的 $w$。则 $F_b(zv+w)$ 是首项系数为 $F_b(v)$ 的 $n$ 次一元多项式；基本代数定理给出复根 $z_0$，且 $z_0v+w\ne0$。所以响应在某点为零，在 $[v]$ 处为正，必不恒定。
+
+在任一射影仿射图中，水平条件写成
+
+$$
+|F_b(1,z)|^2-t(1+\|z\|^2)^n=0.
+$$
+
+对每个实数 $t$，这个实多项式不可能恒等为零；否则由稠密仿射图及连续性，响应将在整个射影空间恒定。非零实多项式的零集没有满维胞腔，故其半代数维数至多 $m-1$。有限图覆盖给出
+
+$$
+\dim_{\mathbb R}\{P:f_B(P)=t\}\le m-1
+$$
+
+对所有 $B,t$，包括临界、奇异、空及零水平；没有使用正则值假设。
+
+定义关联集
+
+$$
+\mathcal I=\{(B,t,\boldsymbol P)\in\mathcal P_M\times(0,1]\times\mathcal C_{q,k}:
+ f_B(P_j)=t\ (1\le j\le k)\}.
+$$
+
+其底空间维数为 $(2M-2)+1=D$。在 $(B,t)$ 上的每个纤维是 $k$ 个上述水平集的乘积去掉碰撞对角线，维数至多 $k(m-1)$。对连续半代数投影 $(B,t,\boldsymbol P)\mapsto(B,t)$ 应用 Basu--Pollack--Roy，*Algorithms in Real Algebraic Geometry* 作者稿 Theorem 5.45（PDF 第 194 页）的全纤维 Hardt 半代数平凡化；该定理在此不要求 properness。有限分拆、乘积和有限并的维数规则（同稿 Theorem 5.25、Propositions 5.28--5.29、Lemma 5.30，第 178--180 页）给出
+
+$$
+\dim_{\mathbb R}\mathcal I\le D+k(m-1).
+$$
+
+由前面的物理等价，投影到配置坐标的像恰为 $\mathcal E_{q,k,n}$。Tarski--Seidenberg 投影定理（同稿 Theorem 2.76，PDF 第 76 页）给出半代数性，投影不增维给出
+
+$$
+\dim\mathcal E_{q,k,n}\le\min(km,D+k(m-1)).
+$$
+
+下界使用实际球面节点，而不是任意不同节点。置 $d=q-1$，$\Sigma=S^{2d-1}\subset\mathbb C^d$，并令
+
+$$
+A=\{\alpha\in\mathbb N^d:1\le|\alpha|\le n\}.
+$$
+
+球面上的 $D$ 个实函数
+
+$$
+1,\quad\operatorname{Re}u^\alpha,\quad\operatorname{Im}u^\alpha\qquad(\alpha\in A)
+$$
+
+线性无关。事实上，若
+
+$$
+ c_0+\operatorname{Re}\sum_{\ell=1}^nH_\ell(u)=0
+$$
+
+其中 $H_\ell$ 是次数 $\ell$ 的全纯齐次多项式，则代入 $e^{i\theta}u$ 并比较 Fourier 频率，得到 $c_0=0$ 及 $H_\ell(u)=0$。任意非零 $z\in\mathbb C^d$ 可写作 $z=\|z\|u$，齐次性遂给出 $H_\ell(z)=0$；所有系数均为零。
+
+因此评价行张成 $\mathbb R^D$。选取 $D$ 个线性无关的评价行；节点必彼此不同，因为重复节点会重复行。若 $k\le D$，保留其中 $k$ 个；若 $k>D$，再添取任意彼此不同的球面节点。于是得到 $k\times D$ 评价矩阵，秩为 $a=\min(k,D)$。这只断言存在所选节点，不断言任意不同节点组均满秩。
+
+在这些节点附近取
+
+$$
+ e_0=e_{(n,0,\ldots,0)},\qquad
+ e_\alpha=e_{(n-|\alpha|,\alpha)},\qquad
+ C_\alpha=\sqrt{\frac{n!}{(n-|\alpha|)!\,\alpha!}},
+$$
+
+并以
+
+$$
+ b(c)=\frac{e_0+\sum_{\alpha\in A}c_\alpha e_\alpha}
+ {\sqrt{1+\|c\|^2}},\qquad c_\alpha=x_\alpha+iy_\alpha,
+$$
+
+作见证图。令
+
+$$
+ s(r,u)=\frac{(1,ru)}{\sqrt{1+r^2}},\qquad r>0.
+$$
+
+直接展开得到
+
+$$
+ f(c,r,u)=
+\frac{\left|1+\sum_{\alpha\in A}\!C_\alpha\overline{c_\alpha}
+ r^{|\alpha|}u^\alpha\right|^2}
+ {(1+\|c\|^2)(1+r^2)^n}.
+$$
+
+在每个所选球面节点附近选取含 $m-1$ 个实坐标的局部球面坐标 $\theta_j$，并写 $u_j=u_j(\theta_j)$。在 $c=0,r=1$ 处 $f= t_0=2^{-n}$。令 $F_j=f(c,r_j,u_j)-t$。径向导数和见证导数为
+
+$$
+\frac{\partial F_j}{\partial r_\ell}=-n2^{-n}\delta_{j\ell},\qquad
+\frac{\partial F_j}{\partial x_\alpha}=2^{1-n}C_\alpha\operatorname{Re}(u_j^\alpha),
+$$
+
+$$
+\frac{\partial F_j}{\partial y_\alpha}=2^{1-n}C_\alpha\operatorname{Im}(u_j^\alpha),
+\qquad 2^{1-n}C_\alpha>0\ \text{为其对应虚部评价的系数},
+\qquad
+\frac{\partial F_j}{\partial t}=-1.
+$$
+
+在种子点球面切向导数为零。这里的正号来自 $\overline{c_\alpha}=x_\alpha-iy_\alpha$，故没有把共轭坐标换成相反的导数约定。径向 Jacobi 矩阵可逆，故实隐函数定理解出
+
+$$
+ r_j=r_j(c,t,\theta_1,\ldots,\theta_k)
+$$
+
+使全部 $F_j=0$；缩小邻域可保持 $r_j>0$、$0<t<1$ 及所有仿射点互异。微分公式为
+
+$$
+ dr_j=\frac2n\sum_{\alpha\in A}C_\alpha
+ \bigl(\operatorname{Re}(u_j^\alpha)dx_\alpha
+      +\operatorname{Im}(u_j^\alpha)dy_\alpha\bigr)
+      -\frac{2^n}{n}\,dt.
+$$
+
+由所选评价行及非零列系数，$dr$ 对 $(x,y,t)$ 的秩为 $a$；对球面切向变量的一阶导数在种子处为零。
+
+现在在普通仿射输出坐标中考虑
+
+$$
+\Phi(c,t,\theta)=\bigl(r_ju_j(\theta_j)\bigr)_{j=1}^k\in(\mathbb C^d)^k\cong\mathbb R^{km}.
+$$
+
+有
+
+$$
+ d z_j=u_j\,dr_j+du_j.
+$$
+
+每个 $du_j$ 的球面切向空间维数为 $m-1$，并且实正交于径向直线 $\mathbb Ru_j$，所以这些方向提供 $k(m-1)$ 个独立输出方向；径向部分再提供 $a$ 个独立方向。选出 $a$ 个 $(c,t)$ 坐标列，固定其余见证输入；再在实际输出坐标中选出一个非零的 $L\times L$ 子式，其中
+
+$$
+L=k(m-1)+a.
+$$
+
+记相应坐标投影为 $\pi$。实逆函数定理应用于 $\pi\circ\Phi$，给出非空开集 $O\subset\mathbb R^L$ 及图像
+
+$$
+\gamma:O\longrightarrow\mathcal E_{q,k,n}^{\rm aff},\qquad
+\pi\circ\gamma=\operatorname{id}_O,
+$$
+
+其中 $\gamma$ 是嵌入的光滑图。这里没有把球面坐标、$\Phi$ 或 $\gamma$ 声称为半代数；$\mathcal E_{q,k,n}^{\rm aff}$ 已由前面的精确见证投影知道是半代数，故其坐标投影包含 $O$，从而
+
+$$
+L\le\dim\mathcal E_{q,k,n}.
+$$
+
+这与上界合并即得维数公式；当 $k\le D$ 时 $L=km$，故实际成功集含有相对开片。当 $q=2$ 时，维数公式及局部开成功片对应第 412 节，第 411 节在该特例下给出的成功集闭性仍然成立。
+
+最后处理拓扑和实际次数。半代数闭包的维数与原集合相同；这是有限半代数分层的 frontier 性质（Basu--Pollack--Roy 同稿 Theorem 5.38，PDF 第 185 页）的直接维数后果。相对闭包仍在同一开配置流形中。若 $k\ge D+1$，则
+
+$$
+\dim\overline{\mathcal E_{q,k,n}}^{\,\mathcal C_{q,k}}
+=D+k(m-1)<km.
+$$
+
+所以闭包的相对内部为空，闭包补集开且稠密。有限光滑分层的每个片维数小于 $km$，在仿射图中为零 Lebesgue 测度；Fubini--Study 密度光滑且处处为正，故闭包为零乘积测度。闭包补集中的配置当然不在成功集，因而属于失败集。注意这一步只给出失败集含有开稠密满测度子集，不把失败集本身改称开集。
+
+固定 $q,k$ 时，$M(n)=\binom{n+q-1}{n}$ 严格递增且 $M(n)\ge n+1$，故 $B_{q,k}$ 有限。对每个 $n\in B_{q,k}$，分别应用刚才的闭包补集结论并作有限交。有限个开稠密集的交仍开稠密，有限个零测集的并仍零测；空指标时交集为整个配置空间。若共同集合中的某个实际 $n$ 成功，则它不在 $B_{q,k}$，即 $2M(n)>k$。整个论证对每个实际 $J_n$ 独立进行，没有丢弃记录，也没有使用成功性关于 $n$ 的单调性。证毕。
+
+**命题 414.2（两个三维拓扑边界）。**
+
+(a) 取 $q=3,n=1,k=6$，令
+
+$$
+\begin{aligned}
+v_1&=e_0,&v_2&=e_1,&v_3&=\frac{e_0+e_1}{\sqrt2},\\
+v_4&=\frac{e_0+i e_1}{\sqrt2},&
+ v_5&=\frac{e_0-e_1}{\sqrt2},&
+ v_6&=\frac{e_0-i e_1}{\sqrt2}.
+\end{aligned}
+$$
+
+六条射线彼此不同。该配置不属于 $\mathcal E_{3,6,1}$，但对每个 $0<\varepsilon<1$，定义
+
+$$
+ v_j(\varepsilon)=\sqrt{1-\varepsilon^2}\,v_j+\varepsilon e_2
+$$
+
+后所得配置属于 $\mathcal E_{3,6,1}$，并收敛到上述失败配置。因此成功集在此参数处不相对闭，全部失败集也不必开。
+
+(b) 取 $q=3,n=1,k=5$，用前四个向量再加 $v_5=e_2$。该配置不在成功集的相对闭包中，所以有相对开失败邻域；另一方面定理 414.1 在同一参数下给出非空相对开成功集。
+
+证明。
+
+(a) 先证六条射线不同。前两条的支撑分别为 $\mathbb Ce_0$、$\mathbb Ce_1$；其余四条的两个坐标均非零，而四个坐标比 $1,-1,i,-i$ 两两不同。若有单位见证 $b$ 和共同正水平，置
+
+$$
+ a=\langle b|e_0\rangle,\qquad h=\langle b|e_1\rangle.
+$$
+
+前四条的等水平条件给出
+
+$$
+|a|^2=|h|^2=t>0,
+\qquad
+\operatorname{Re}(a\overline h)=0,
+\qquad
+\operatorname{Im}(a\overline h)=0.
+$$
+
+最后两个等式分别来自 $v_3,v_4$ 的平方模；故 $a\overline h=0$，与 $|a\overline h|=t$ 矛盾。$b$ 的 $e_2$ 分量在这四个平面记录上的响应中不可见，不能消除矛盾。由定理 414.1 的物理等价，这排除了所有完整接口中的正概率协议；这里使用的是直接正见证矛盾，而非把确定性不可能性当作正概率结论。这个四元组的已知环境反馈背景见 Buscemi、Chiribella 与 D'Ariano，*Inverting Quantum Decoherence by Classical Feedback from the Environment*, [arXiv:quant-ph/0504195v5](https://arxiv.org/abs/quant-ph/0504195v5)，式 (9)（PDF 第 3 页）；第 392、410 节已保留该四元组作为二维障碍；其余两条射线只用于构成当前六射线配置。
+
+对 $0<\varepsilon<1$，各 $v_j(\varepsilon)$ 为单位向量。它们有相同的非零 $e_2$ 坐标；若两条射线成比例，比较该坐标即知比例因子为 $1$，再由平面分量知两向量相同，故射线仍彼此不同。取 $b=e_2$，每个重叠平方为 $\varepsilon^2$。在完整 $R_1=\mathbb C^3$ 上使用投影 $|e_2\rangle\langle e_2|$ 及其补投影，接受第一结果并取恒等终端反馈，便在每个系统矩阵及每个未操作参考上得到 $\varepsilon^2\operatorname{id}$。因此这些成功配置趋于失败配置，命题 (a) 得证。
+
+(b) 前四条记录仍迫使 $a\overline h=0$，所以该五条记录不存在正水平见证。它们连同 $e_2$ 张成 $\mathbb C^3$。若有成功配置序列趋于该点，取对应单位纯见证的秩一投影 $B_\ell$ 与水平 $t_\ell\in(0,1]$。紧性给出子列
+
+$$
+(B_\ell,t_\ell)\longrightarrow(B,t)\in\mathcal P_3\times[0,1].
+$$
+
+若 $t>0$，连续性给出极限正见证，和前四条的矛盾冲突；若 $t=0$，则单位见证同时正交于 $e_0,e_1,e_2$，因而为零，也矛盾。故该配置不在相对闭包中，闭包补集给出相对开失败邻域。另一方面这里 $D=2M-1=5$，定理 414.1 的 $k\le D$ 情形给出另一个非空相对开成功集。两个开集均有正 Fubini--Study 测度，故成功既非普遍，也不能由此参数推出稠密或满测度。证毕。
+
+本节只处理有限维、有限结果、全原始记录联合可访问的存在性与维数。它不主张低于阈值时的最优概率、统一正下界、一般充分的泛型性、未知状态复制、LOCC 或局部等价、鲁棒性、算法、物理成本或成功性的单调性。Lieb 与 Solovej，*Proof of the Wehrl-type Entropy Conjecture for Symmetric SU(N) Coherent States*, [arXiv:1506.07633v2](https://arxiv.org/abs/1506.07633v2)，第 2--4 页，在此仅提供对称 $SU(q)$ coherent-state、Husimi、复射影空间与 Fubini--Study 模型的背景（其 $N=q$、张量指数 $M=n$）；本节不使用该文的熵定理。Basu、Pollack 与 Roy，*Algorithms in Real Algebraic Geometry* [作者稿](https://www.math.purdue.edu/~sbasu/bpr-posted1.pdf) 则提供半代数投影（Theorem 2.76，PDF 第 76 页）、维数（Theorem 5.25、Propositions 5.28--5.29、Lemma 5.30，第 178--180 页）、frontier 分层（Theorem 5.38，第 185 页）及 Hardt 平凡化（Theorem 5.45，第 194 页）。这里的证明将这些已知工具作为中间步骤，不把它们改写成新的独立工具定理。
+
+## 追加锚（本行以下为增补区）
