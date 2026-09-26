@@ -516,54 +516,168 @@ private theorem incoming_response_matrix_at_forgetting {p : ℕ} {M : CountMat p
     _ = Nat.card (Fin (M i j)) := Nat.card_congr edgeEquiv
     _ = M i j := Nat.card_fin _
 
-private inductive HExchangeChain :
-    {α β : Type} → Matrix α α ℕ → Matrix β β ℕ → ℕ → Prop where
-  | nil {α : Type} (M : Matrix α α ℕ) : HExchangeChain M M 0
-  | cons {α γ β : Type} [Fintype α] [Fintype γ]
-      (U : Matrix α γ ℕ) (V : Matrix γ α ℕ)
-      {T : Matrix β β ℕ} {length : ℕ}
-      (tail : HExchangeChain (V * U) T length) :
-      HExchangeChain (U * V) T (length + 1)
+private theorem response_matrix_forgetting_reindexed {p : ℕ}
+    {M : CountMat p p} {Q : Type} [Fintype Q]
+    (L : IncomingLift M Q) (d : ℕ)
+    (hd : L.response d = Setoid.ker L.project) :
+    ∃ e : Quotient (L.response d) ≃ Fin p,
+      Matrix.reindex e e (incomingResponseMatrix L d) = M := by
+  classical
+  let rep : Fin p → Q := Function.surjInv L.onto
+  have hsection : ∀ i, L.project (rep i) = i :=
+    Function.rightInverse_surjInv L.onto
+  let e : Quotient (L.response d) ≃ Fin p := {
+    toFun := Quotient.lift L.project (by
+      intro a b hab
+      exact Eq.mp
+        (congrArg (fun T : Setoid Q => T.r a b) hd) hab)
+    invFun := fun i => Quotient.mk (L.response d) (rep i)
+    left_inv := by
+      intro F
+      refine Quotient.inductionOn F ?_
+      intro q
+      apply Quotient.sound
+      change (L.response d).r (rep (L.project q)) q
+      exact Eq.mp
+        (congrArg (fun T : Setoid Q => T.r (rep (L.project q)) q) hd.symm)
+        (hsection (L.project q))
+    right_inv := hsection }
+  refine ⟨e, ?_⟩
+  ext i j
+  have hrepr (v : Fin p) :
+      e.symm v = Quotient.mk (L.response d) (rep v) := rfl
+  change incomingResponseMatrix L d (e.symm i) (e.symm j) = M i j
+  rw [hrepr i, hrepr j]
+  exact incoming_response_matrix_at_forgetting L d hd rep hsection i j
 
-private theorem HExchangeChain.trans {α β γ : Type}
-    {M : Matrix α α ℕ} {N : Matrix β β ℕ} {P : Matrix γ γ ℕ}
-    {l₁ l₂ : ℕ} (left : HExchangeChain M N l₁)
-    (right : HExchangeChain N P l₂) :
-    HExchangeChain M P (l₁ + l₂) := by
-  induction left with
-  | nil _ => simpa using right
-  | cons U V tail ih =>
-      simpa [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
-        HExchangeChain.cons U V (ih right)
+private noncomputable def responseFintype {p : ℕ} {M : CountMat p p}
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ) :
+    Fintype (Quotient (L.response d)) := by
+  classical
+  exact Fintype.ofFinite _
 
-private theorem HExchangeChain.reverse {α β : Type}
-    {M : Matrix α α ℕ} {N : Matrix β β ℕ} {length : ℕ}
-    (chain : HExchangeChain M N length) :
-    HExchangeChain N M length := by
-  induction chain with
-  | nil M => exact HExchangeChain.nil M
-  | cons U V tail ih =>
-      have step : HExchangeChain (V * U) (U * V) 1 :=
-        HExchangeChain.cons V U (HExchangeChain.nil _)
-      simpa [Nat.add_comm] using ih.trans step
+private noncomputable def responseIndex {p : ℕ} {M : CountMat p p}
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ) :
+    Quotient (L.response d) ≃
+      Fin (@Fintype.card _ (responseFintype L d)) :=
+  @Fintype.equivFin _ (responseFintype L d)
 
-private theorem incoming_response_hchain {p : ℕ} {M : CountMat p p}
+private noncomputable def finiteResponseMatrix {p : ℕ} {M : CountMat p p}
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ) :
+    CountMat (@Fintype.card _ (responseFintype L d))
+      (@Fintype.card _ (responseFintype L d)) :=
+  Matrix.reindex (responseIndex L d) (responseIndex L d)
+    (incomingResponseMatrix L d)
+
+private theorem finite_response_chain {p : ℕ} {M : CountMat p p}
     {Q : Type} [Fintype Q] (L : IncomingLift M Q)
     (start length : ℕ) :
-    HExchangeChain (incomingResponseMatrix L start)
-      (incomingResponseMatrix L (start + length)) length := by
+    ExchangeChain ℕ (finiteResponseMatrix L start)
+      (finiteResponseMatrix L (start + length)) length := by
   classical
   induction length generalizing start with
   | zero =>
-      simpa using HExchangeChain.nil (incomingResponseMatrix L start)
+      simpa using ExchangeChain.nil (finiteResponseMatrix L start)
   | succ length ih =>
-      rw [incoming_response_matrix_factor_base L start]
-      refine HExchangeChain.cons (incomingResponseU L start)
-        (incomingResponseV L start) ?_
-      rw [← incoming_response_matrix_factor_step L start]
+      letI := responseFintype L start
+      letI := responseFintype L (start + 1)
+      let e0 := responseIndex L start
+      let e1 := responseIndex L (start + 1)
+      let U := Matrix.reindex e0 e1 (incomingResponseU L start)
+      let V := Matrix.reindex e1 e0 (incomingResponseV L start)
+      have hbase : finiteResponseMatrix L start = U * V := by
+        change Matrix.reindex e0 e0 (incomingResponseMatrix L start) = U * V
+        rw [incoming_response_matrix_factor_base L start]
+        change (incomingResponseU L start * incomingResponseV L start).submatrix
+            e0.symm e0.symm =
+          (incomingResponseU L start).submatrix e0.symm e1.symm *
+            (incomingResponseV L start).submatrix e1.symm e0.symm
+        exact (Matrix.submatrix_mul_equiv _ _ e0.symm e1.symm e0.symm).symm
+      have hstep : finiteResponseMatrix L (start + 1) = V * U := by
+        change Matrix.reindex e1 e1 (incomingResponseMatrix L (start + 1)) =
+          V * U
+        rw [incoming_response_matrix_factor_step L start]
+        change (incomingResponseV L start * incomingResponseU L start).submatrix
+            e1.symm e1.symm =
+          (incomingResponseV L start).submatrix e1.symm e0.symm *
+            (incomingResponseU L start).submatrix e0.symm e1.symm
+        exact (Matrix.submatrix_mul_equiv _ _ e1.symm e0.symm e1.symm).symm
+      rw [hbase]
+      refine ExchangeChain.cons U V ?_
+      rw [← hstep]
       have hindex : start + 1 + length = start + (length + 1) := by omega
       rw [← hindex]
       exact ih (start + 1)
+
+private theorem exchange_chain_trans {a b c : ℕ}
+    {X : CountMat a a} {Y : CountMat b b} {Z : CountMat c c}
+    {l₁ l₂ : ℕ} (left : ExchangeChain ℕ X Y l₁)
+    (right : ExchangeChain ℕ Y Z l₂) :
+    ExchangeChain ℕ X Z (l₁ + l₂) := by
+  induction left with
+  | nil _ => simpa using right
+  | cons U V tail ih =>
+      simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
+        ExchangeChain.cons U V (ih right)
+
+private theorem exchange_chain_reverse {a b : ℕ}
+    {X : CountMat a a} {Y : CountMat b b} {length : ℕ}
+    (chain : ExchangeChain ℕ X Y length) :
+    ExchangeChain ℕ Y X length := by
+  induction chain with
+  | nil _ => exact ExchangeChain.nil _
+  | cons U V tail ih =>
+      have step : ExchangeChain ℕ (V * U) (U * V) 1 :=
+        ExchangeChain.cons V U (ExchangeChain.nil _)
+      simpa [Nat.add_comm] using exchange_chain_trans ih step
+
+private theorem exchange_chain_transpose {a b : ℕ}
+    {X : CountMat a a} {Y : CountMat b b} {length : ℕ}
+    (chain : ExchangeChain ℕ X Y length) :
+    ExchangeChain ℕ X.transpose Y.transpose length := by
+  induction chain with
+  | nil _ => exact ExchangeChain.nil _
+  | cons U V tail ih =>
+      rw [Matrix.transpose_mul]
+      refine ExchangeChain.cons V.transpose U.transpose ?_
+      simpa only [Matrix.transpose_mul] using ih
+
+private theorem finite_response_chain_to {p : ℕ} {M : CountMat p p}
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q)
+    (start length : ℕ) {r : ℕ}
+    (eEnd : Quotient (L.response (start + length + 1)) ≃ Fin r) :
+    ExchangeChain ℕ (finiteResponseMatrix L start)
+      (Matrix.reindex eEnd eEnd
+        (incomingResponseMatrix L (start + length + 1)))
+      (length + 1) := by
+  classical
+  let d := start + length
+  letI := responseFintype L d
+  letI := responseFintype L (d + 1)
+  let eMid := responseIndex L d
+  let U := Matrix.reindex eMid eEnd (incomingResponseU L d)
+  let V := Matrix.reindex eEnd eMid (incomingResponseV L d)
+  have hbase : finiteResponseMatrix L d = U * V := by
+    change Matrix.reindex eMid eMid (incomingResponseMatrix L d) = U * V
+    rw [incoming_response_matrix_factor_base L d]
+    change (incomingResponseU L d * incomingResponseV L d).submatrix
+        eMid.symm eMid.symm =
+      (incomingResponseU L d).submatrix eMid.symm eEnd.symm *
+        (incomingResponseV L d).submatrix eEnd.symm eMid.symm
+    exact (Matrix.submatrix_mul_equiv _ _ eMid.symm eEnd.symm eMid.symm).symm
+  have hstep : Matrix.reindex eEnd eEnd (incomingResponseMatrix L (d + 1)) =
+      V * U := by
+    rw [incoming_response_matrix_factor_step L d]
+    change (incomingResponseV L d * incomingResponseU L d).submatrix
+        eEnd.symm eEnd.symm =
+      (incomingResponseV L d).submatrix eEnd.symm eMid.symm *
+        (incomingResponseU L d).submatrix eMid.symm eEnd.symm
+    exact (Matrix.submatrix_mul_equiv _ _ eEnd.symm eMid.symm eEnd.symm).symm
+  have last : ExchangeChain ℕ (finiteResponseMatrix L d)
+      (Matrix.reindex eEnd eEnd (incomingResponseMatrix L (d + 1))) 1 := by
+    rw [hbase, hstep]
+    exact ExchangeChain.cons U V (ExchangeChain.nil (V * U))
+  exact exchange_chain_trans (finite_response_chain L start length) last
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
@@ -1201,6 +1315,99 @@ private theorem square_first_row_invariance
           ((Fintype.equivFin (Edge R)) s) :=
             (c.square_row_lift_count v s).symm
 
+private theorem square_left_zero_fiber_count
+    (c : CompatibleCertificate A B R S m) (r s : Edge R) :
+    Nat.card (incomingResponseFiber c.squareIncomingLift 0
+      (Quotient.mk (c.squareIncomingLift.response 0) s) r) =
+    c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+      ((Fintype.equivFin (Edge R)) r) := by
+  classical
+  let L := c.squareIncomingLift
+  let leftFiber := incomingResponseFiber L 0
+    (Quotient.mk (L.response 0) s) r
+  let rightFiber := {a : Edge A //
+    ∃ h : a.target = r.source, (c.incomingLift a r h).val = s}
+  let e : leftFiber ≃ rightFiber := {
+    toFun := fun x => by
+      let a := x.val
+      let hv := Classical.choose x.property
+      have hclass := Classical.choose_spec x.property
+      have heq : (c.incomingLift a r hv.symm).val = s := by
+        change (L.lift a ⟨r, hv⟩).val = s
+        have hrel : (L.response 0).r (L.lift a ⟨r, hv⟩).val s :=
+          Quotient.exact hclass
+        exact Eq.mp
+          (congrArg (fun T : Setoid (Edge R) =>
+            T.r (L.lift a ⟨r, hv⟩).val s) (response_zero_and_step L).1)
+          hrel
+      exact ⟨a, ⟨hv.symm, heq⟩⟩
+    invFun := fun x => by
+      let a := x.val
+      let h := Classical.choose x.property
+      have heq := Classical.choose_spec x.property
+      refine ⟨a, ⟨h.symm, Quotient.sound ?_⟩⟩
+      rw [(response_zero_and_step L).1]
+      exact heq
+    left_inv := by intro x; apply Subtype.ext; rfl
+    right_inv := by intro x; apply Subtype.ext; rfl }
+  calc
+    Nat.card leftFiber = Nat.card rightFiber := Nat.card_congr e
+    _ = c.squareMatrix ((Fintype.equivFin (Edge R)) s)
+          ((Fintype.equivFin (Edge R)) r) :=
+            (c.square_column_lift_count r s).symm
+
+private theorem square_right_zero_fiber_count
+    (c : CompatibleCertificate A B R S m) (r s : Edge R) :
+    Nat.card (incomingResponseFiber c.squareOutgoingLift 0
+      (Quotient.mk (c.squareOutgoingLift.response 0) s) r) =
+    c.squareMatrix ((Fintype.equivFin (Edge R)) r)
+      ((Fintype.equivFin (Edge R)) s) := by
+  classical
+  let L := c.squareOutgoingLift
+  let flip : Edge B.transpose ≃ Edge B := {
+    toFun := fun a => ⟨a.target, a.source, a.number⟩
+    invFun := fun b => ⟨b.target, b.source, b.number⟩
+    left_inv := by intro a; cases a; rfl
+    right_inv := by intro b; cases b; rfl }
+  let leftFiber := incomingResponseFiber L 0
+    (Quotient.mk (L.response 0) s) r
+  let rightFiber := {b : Edge B //
+    ∃ h : r.target = b.source, (c.outgoingLift r b h).val = s}
+  let e : leftFiber ≃ rightFiber := {
+    toFun := fun x => by
+      let b := flip x.val
+      let hv := Classical.choose x.property
+      have hclass := Classical.choose_spec x.property
+      have heq : (c.outgoingLift r b hv).val = s := by
+        change (L.lift x.val ⟨r, hv⟩).val = s
+        have hrel : (L.response 0).r (L.lift x.val ⟨r, hv⟩).val s :=
+          Quotient.exact hclass
+        exact Eq.mp
+          (congrArg (fun T : Setoid (Edge R) =>
+            T.r (L.lift x.val ⟨r, hv⟩).val s) (response_zero_and_step L).1)
+          hrel
+      exact ⟨b, ⟨hv, heq⟩⟩
+    invFun := fun x => by
+      let b := x.val
+      let h := Classical.choose x.property
+      have heq := Classical.choose_spec x.property
+      refine ⟨flip.symm b, ⟨h, Quotient.sound ?_⟩⟩
+      rw [(response_zero_and_step L).1]
+      exact heq
+    left_inv := by
+      intro x
+      apply Subtype.ext
+      exact flip.symm_apply_apply x.val
+    right_inv := by
+      intro x
+      apply Subtype.ext
+      exact flip.apply_symm_apply x.val }
+  calc
+    Nat.card leftFiber = Nat.card rightFiber := Nat.card_congr e
+    _ = c.squareMatrix ((Fintype.equivFin (Edge R)) r)
+          ((Fintype.equivFin (Edge R)) s) :=
+            (c.square_row_lift_count r s).symm
+
 private noncomputable def firstLeftClass
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareIncomingLift.response 1))] :
@@ -1237,15 +1444,189 @@ private noncomputable def firstRightRep
   exact fun f => (Fintype.equivFin (Edge R))
     (Quotient.out ((Fintype.equivFin _).symm f))
 
+private theorem square_left_first_matrix
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareIncomingLift.response 1))]
+    (f g : Fin (Fintype.card
+      (Quotient (c.squareIncomingLift.response 1)))) :
+    incomingResponseMatrix c.squareIncomingLift 1
+        ((Fintype.equivFin _).symm f) ((Fintype.equivFin _).symm g) =
+      (FirstResponseDiamond.columnMembership c.firstLeftClass *
+        c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep)
+        f g := by
+  classical
+  let L := c.squareIncomingLift
+  let e := Fintype.equivFin (Edge R)
+  let eL := Fintype.equivFin (Quotient (L.response 1))
+  let e0 : Edge R ≃ Quotient (L.response 0) :=
+    Equiv.ofBijective (fun r => Quotient.mk (L.response 0) r) (by
+      constructor
+      · intro r s hrs
+        have hrel := Quotient.exact hrs
+        exact Eq.mp
+          (congrArg (fun T : Setoid (Edge R) => T.r r s)
+            (response_zero_and_step L).1) hrel
+      · intro F
+        exact ⟨Quotient.out F, Quotient.out_eq F⟩)
+  have hfiber (r : Edge R) :
+      incomingResponseU L 0 (e0 r) (eL.symm g) =
+        c.squareMatrix (e r) (c.firstLeftRep g) := by
+    change Nat.card (incomingResponseFiber L 0
+      (Quotient.mk (L.response 0) r) (Quotient.out (eL.symm g))) = _
+    simpa [firstLeftRep, e, eL] using
+      c.square_left_zero_fiber_count (Quotient.out (eL.symm g)) r
+  have hclass (r : Edge R) :
+      incomingResponseV L 0 (eL.symm f) (e0 r) =
+        FirstResponseDiamond.columnMembership c.firstLeftClass f (e r) := by
+    have hprojection : incomingResponseProjection L 0 (e0 r) =
+        Quotient.mk (L.response 1) r := rfl
+    have hclass_eq : c.firstLeftClass (e r) =
+        eL (Quotient.mk (L.response 1) r) := by
+      change eL (Quotient.mk (L.response 1) (e.symm (e r))) =
+        eL (Quotient.mk (L.response 1) r)
+      rw [e.symm_apply_apply]
+    change (if incomingResponseProjection L 0 (e0 r) = eL.symm f
+      then 1 else 0) = (if c.firstLeftClass (e r) = f then 1 else 0)
+    rw [hprojection, hclass_eq]
+    by_cases h : f = eL (Quotient.mk (L.response 1) r)
+    · subst f
+      simp
+    · have hne : Quotient.mk (L.response 1) r ≠ eL.symm f := by
+        intro hk
+        apply h
+        calc
+          f = eL (eL.symm f) := (eL.apply_symm_apply f).symm
+          _ = eL (Quotient.mk (L.response 1) r) := congrArg eL hk.symm
+      simp [h, hne, eq_comm]
+  calc
+    incomingResponseMatrix L 1 (eL.symm f) (eL.symm g) =
+        (incomingResponseV L 0 * incomingResponseU L 0)
+          (eL.symm f) (eL.symm g) := by
+            rw [incoming_response_matrix_factor_step L 0]
+    _ = ∑ r : Edge R,
+          FirstResponseDiamond.columnMembership c.firstLeftClass f (e r) *
+            c.squareMatrix (e r) (c.firstLeftRep g) := by
+        rw [Matrix.mul_apply]
+        exact (Fintype.sum_equiv e0 _ _ (fun r => by
+          rw [hclass r, hfiber r])).symm
+    _ = (FirstResponseDiamond.columnMembership c.firstLeftClass *
+          c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep)
+          f g := by
+        have hsum :
+            (∑ r : Edge R,
+              FirstResponseDiamond.columnMembership c.firstLeftClass f (e r) *
+                c.squareMatrix (e r) (c.firstLeftRep g)) =
+            ∑ u : Fin (Fintype.card (Edge R)),
+              FirstResponseDiamond.columnMembership c.firstLeftClass f u *
+                c.squareMatrix u (c.firstLeftRep g) :=
+          Fintype.sum_equiv e _ _ (fun _ => rfl)
+        rw [hsum]
+        simp only [Matrix.mul_apply, FirstResponseDiamond.columnSelector]
+        simp
+
+private theorem square_right_first_matrix
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareOutgoingLift.response 1))]
+    (f g : Fin (Fintype.card
+      (Quotient (c.squareOutgoingLift.response 1)))) :
+    incomingResponseMatrix c.squareOutgoingLift 1
+        ((Fintype.equivFin _).symm f) ((Fintype.equivFin _).symm g) =
+      (FirstResponseDiamond.rowSelector c.firstRightRep *
+        c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass)
+        g f := by
+  classical
+  let L := c.squareOutgoingLift
+  let e := Fintype.equivFin (Edge R)
+  let eR := Fintype.equivFin (Quotient (L.response 1))
+  let e0 : Edge R ≃ Quotient (L.response 0) :=
+    Equiv.ofBijective (fun r => Quotient.mk (L.response 0) r) (by
+      constructor
+      · intro r s hrs
+        have hrel := Quotient.exact hrs
+        exact Eq.mp
+          (congrArg (fun T : Setoid (Edge R) => T.r r s)
+            (response_zero_and_step L).1) hrel
+      · intro F
+        exact ⟨Quotient.out F, Quotient.out_eq F⟩)
+  have hfiber (r : Edge R) :
+      incomingResponseU L 0 (e0 r) (eR.symm g) =
+        c.squareMatrix (c.firstRightRep g) (e r) := by
+    change Nat.card (incomingResponseFiber L 0
+      (Quotient.mk (L.response 0) r) (Quotient.out (eR.symm g))) = _
+    simpa [firstRightRep, e, eR] using
+      c.square_right_zero_fiber_count (Quotient.out (eR.symm g)) r
+  have hclass (r : Edge R) :
+      incomingResponseV L 0 (eR.symm f) (e0 r) =
+        FirstResponseDiamond.rowMembership c.firstRightClass (e r) f := by
+    have hprojection : incomingResponseProjection L 0 (e0 r) =
+        Quotient.mk (L.response 1) r := rfl
+    have hclass_eq : c.firstRightClass (e r) =
+        eR (Quotient.mk (L.response 1) r) := by
+      change eR (Quotient.mk (L.response 1) (e.symm (e r))) =
+        eR (Quotient.mk (L.response 1) r)
+      rw [e.symm_apply_apply]
+    change (if incomingResponseProjection L 0 (e0 r) = eR.symm f
+      then 1 else 0) = (if c.firstRightClass (e r) = f then 1 else 0)
+    rw [hprojection, hclass_eq]
+    by_cases h : f = eR (Quotient.mk (L.response 1) r)
+    · subst f
+      simp
+    · have hne : Quotient.mk (L.response 1) r ≠ eR.symm f := by
+        intro hk
+        apply h
+        calc
+          f = eR (eR.symm f) := (eR.apply_symm_apply f).symm
+          _ = eR (Quotient.mk (L.response 1) r) := congrArg eR hk.symm
+      simp [h, hne, eq_comm]
+  calc
+    incomingResponseMatrix L 1 (eR.symm f) (eR.symm g) =
+        (incomingResponseV L 0 * incomingResponseU L 0)
+          (eR.symm f) (eR.symm g) := by
+            rw [incoming_response_matrix_factor_step L 0]
+    _ = ∑ r : Edge R,
+          FirstResponseDiamond.rowMembership c.firstRightClass (e r) f *
+            c.squareMatrix (c.firstRightRep g) (e r) := by
+        rw [Matrix.mul_apply]
+        exact (Fintype.sum_equiv e0 _ _ (fun r => by
+          rw [hclass r, hfiber r])).symm
+    _ = (FirstResponseDiamond.rowSelector c.firstRightRep *
+          c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass)
+          g f := by
+        have hsum :
+            (∑ r : Edge R,
+              FirstResponseDiamond.rowMembership c.firstRightClass (e r) f *
+                c.squareMatrix (c.firstRightRep g) (e r)) =
+            ∑ u : Fin (Fintype.card (Edge R)),
+              c.squareMatrix (c.firstRightRep g) u *
+                FirstResponseDiamond.rowMembership c.firstRightClass u f := by
+          calc
+            _ = ∑ u : Fin (Fintype.card (Edge R)),
+                  FirstResponseDiamond.rowMembership c.firstRightClass u f *
+                    c.squareMatrix (c.firstRightRep g) u :=
+              Fintype.sum_equiv e _ _ (fun _ => rfl)
+            _ = _ := by
+              apply Finset.sum_congr rfl
+              intro u _
+              exact Nat.mul_comm _ _
+        rw [hsum]
+        simp [Matrix.mul_apply, FirstResponseDiamond.rowSelector]
+
 private theorem square_first_diamond
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareIncomingLift.response 1))]
     [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
-    Nonempty (ExchangeChain ℕ
-      (FirstResponseDiamond.columnMembership c.firstLeftClass *
-        c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep)
-      (FirstResponseDiamond.rowSelector c.firstRightRep *
-        c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass) 1) := by
+    let IL := FirstResponseDiamond.columnMembership c.firstLeftClass
+    let IJ := FirstResponseDiamond.rowMembership c.firstRightClass
+    let SL := FirstResponseDiamond.columnSelector c.firstLeftRep
+    let SJ := FirstResponseDiamond.rowSelector c.firstRightRep
+    ∃ D : CountMat
+        (Fintype.card (Quotient (c.squareOutgoingLift.response 1)))
+        (Fintype.card (Quotient (c.squareIncomingLift.response 1))),
+      IL * c.squareMatrix * SL = (IL * IJ) * D ∧
+      SJ * c.squareMatrix * IJ = D * (IL * IJ) ∧
+      Nonempty (ExchangeChain ℕ
+        (IL * c.squareMatrix * SL)
+        (SJ * c.squareMatrix * IJ) 1) := by
   classical
   let e := Fintype.equivFin (Edge R)
   let eL := Fintype.equivFin (Quotient (c.squareIncomingLift.response 1))
@@ -1276,7 +1657,150 @@ private theorem square_first_diamond
     FirstResponseDiamond.first_response_diamond c.squareMatrix
       c.firstLeftClass c.firstRightClass c.firstLeftRep c.firstRightRep
       hleftRep hrightRep hcolumns hrows
-  exact chain
+  exact ⟨D, hleft, hright, chain⟩
+
+private theorem square_exchange_chain_ge_two
+    (c : CompatibleCertificate A B R S m) (hm : 2 ≤ m) :
+    Nonempty (ExchangeChain ℕ A B (2 * m - 1)) := by
+  classical
+  let L := c.squareIncomingLift
+  let K := c.squareOutgoingLift
+  letI := responseFintype L 1
+  letI := responseFintype K 1
+  let Cleft := FirstResponseDiamond.columnMembership c.firstLeftClass *
+    c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep
+  let Cright := FirstResponseDiamond.rowSelector c.firstRightRep *
+    c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass
+  have hleftFirst : finiteResponseMatrix L 1 = Cleft := by
+    ext f g
+    change incomingResponseMatrix L 1
+      ((Fintype.equivFin _).symm f) ((Fintype.equivFin _).symm g) =
+        Cleft f g
+    exact c.square_left_first_matrix f g
+  have hrightFirst : (finiteResponseMatrix K 1).transpose = Cright := by
+    ext f g
+    change incomingResponseMatrix K 1
+      ((Fintype.equivFin _).symm g) ((Fintype.equivFin _).symm f) =
+        Cright f g
+    exact c.square_right_first_matrix g f
+  let d := 1 + (m - 2) + 1
+  have hd : d = m := by dsimp [d]; omega
+  have hleftForget : L.response d = Setoid.ker Edge.source := by
+    rw [hd]
+    exact c.squareIncomingLift_forgets_at_lag
+  have hrightForget : K.response d = Setoid.ker Edge.target := by
+    rw [hd]
+    exact c.squareOutgoingLift_forgets_at_lag
+  obtain ⟨eA, hA⟩ := response_matrix_forgetting_reindexed L d hleftForget
+  obtain ⟨eB, hB⟩ := response_matrix_forgetting_reindexed K d hrightForget
+  have left : ExchangeChain ℕ A Cleft ((m - 2) + 1) := by
+    have chain := finite_response_chain_to L 1 (m - 2) eA
+    rw [hleftFirst, hA] at chain
+    exact exchange_chain_reverse chain
+  have right : ExchangeChain ℕ Cright B ((m - 2) + 1) := by
+    have chain := finite_response_chain_to K 1 (m - 2) eB
+    rw [hB] at chain
+    have transposed := exchange_chain_transpose chain
+    simpa only [hrightFirst, Matrix.transpose_transpose] using transposed
+  obtain ⟨_, _, _, ⟨middle⟩⟩ := c.square_first_diamond
+  have assembled := exchange_chain_trans (exchange_chain_trans left middle) right
+  refine ⟨?_⟩
+  convert assembled using 1 <;> omega
+
+private theorem square_exchange_chain_one
+    (c : CompatibleCertificate A B R S 1) :
+    Nonempty (ExchangeChain ℕ A B 1) := by
+  classical
+  let L := c.squareIncomingLift
+  let K := c.squareOutgoingLift
+  letI := responseFintype L 1
+  letI := responseFintype K 1
+  let Cleft := FirstResponseDiamond.columnMembership c.firstLeftClass *
+    c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep
+  let Cright := FirstResponseDiamond.rowSelector c.firstRightRep *
+    c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass
+  have hleftFirst : finiteResponseMatrix L 1 = Cleft := by
+    ext f g
+    change incomingResponseMatrix L 1
+      ((Fintype.equivFin _).symm f) ((Fintype.equivFin _).symm g) =
+        Cleft f g
+    exact c.square_left_first_matrix f g
+  have hrightFirst : (finiteResponseMatrix K 1).transpose = Cright := by
+    ext f g
+    change incomingResponseMatrix K 1
+      ((Fintype.equivFin _).symm g) ((Fintype.equivFin _).symm f) =
+        Cright f g
+    exact c.square_right_first_matrix g f
+  obtain ⟨eA, hA⟩ := response_matrix_forgetting_reindexed L 1
+    c.squareIncomingLift_forgets_at_lag
+  obtain ⟨eB, hB⟩ := response_matrix_forgetting_reindexed K 1
+    c.squareOutgoingLift_forgets_at_lag
+  let eLeft := (responseIndex L 1).symm.trans eA
+  let eRight := (responseIndex K 1).symm.trans eB
+  have hleftIndex (i : Fin n) :
+      (responseIndex L 1).symm (eLeft.symm i) = eA.symm i := by
+    simp [eLeft]
+  have hrightIndex (i : Fin k) :
+      (responseIndex K 1).symm (eRight.symm i) = eB.symm i := by
+    simp [eRight]
+  have hleftReindex : Matrix.reindex eLeft eLeft Cleft = A := by
+    ext i j
+    rw [← hleftFirst]
+    change incomingResponseMatrix L 1
+      ((responseIndex L 1).symm (eLeft.symm i))
+      ((responseIndex L 1).symm (eLeft.symm j)) = A i j
+    rw [hleftIndex i, hleftIndex j]
+    exact congrArg (fun X : CountMat n n => X i j) hA
+  have hrightReindex : Matrix.reindex eRight eRight Cright = B := by
+    ext i j
+    rw [← hrightFirst]
+    change incomingResponseMatrix K 1
+      ((responseIndex K 1).symm (eRight.symm j))
+      ((responseIndex K 1).symm (eRight.symm i)) = B i j
+    rw [hrightIndex j, hrightIndex i]
+    exact congrArg (fun X : CountMat k k => X j i) hB
+  obtain ⟨D, hcol, hrow, _⟩ := c.square_first_diamond
+  let P := FirstResponseDiamond.columnMembership c.firstLeftClass *
+    FirstResponseDiamond.rowMembership c.firstRightClass
+  let P' := Matrix.reindex eLeft eRight P
+  let D' := Matrix.reindex eRight eLeft D
+  have hprodA : A = P' * D' := by
+    calc
+      A = Matrix.reindex eLeft eLeft Cleft := hleftReindex.symm
+      _ = Matrix.reindex eLeft eLeft (P * D) :=
+        congrArg (Matrix.reindex eLeft eLeft) hcol
+      _ = P' * D' := by
+        change (P * D).submatrix eLeft.symm eLeft.symm =
+          P.submatrix eLeft.symm eRight.symm *
+            D.submatrix eRight.symm eLeft.symm
+        exact (Matrix.submatrix_mul_equiv P D eLeft.symm eRight.symm eLeft.symm).symm
+  have hprodB : B = D' * P' := by
+    calc
+      B = Matrix.reindex eRight eRight Cright := hrightReindex.symm
+      _ = Matrix.reindex eRight eRight (D * P) :=
+        congrArg (Matrix.reindex eRight eRight) hrow
+      _ = D' * P' := by
+        change (D * P).submatrix eRight.symm eRight.symm =
+          D.submatrix eRight.symm eLeft.symm *
+            P.submatrix eLeft.symm eRight.symm
+        exact (Matrix.submatrix_mul_equiv D P eRight.symm eLeft.symm eRight.symm).symm
+  rw [hprodA, hprodB]
+  exact ⟨ExchangeChain.cons P' D' (ExchangeChain.nil _)⟩
+
+/-- A compatible numbered certificate produces a strong-shift-equivalence
+    chain with a linear length bound from its positive lag. -/
+theorem compatible_exchange_chain_bound
+    (c : CompatibleCertificate A B R S m) :
+    Nonempty (ExchangeChain ℕ A B (2 * m - 1)) := by
+  by_cases h : m = 1
+  · subst m
+    simpa using c.square_exchange_chain_one
+  · have hm : 2 ≤ m := by
+      have hpos := c.positiveLag
+      omega
+    exact c.square_exchange_chain_ge_two hm
+
+#print axioms compatible_exchange_chain_bound
 
 end CompatibleCertificate
 

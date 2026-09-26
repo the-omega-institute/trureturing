@@ -70,5 +70,14 @@ internal sealed class CompatibleResponseForgettingDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Dually, each square-matrix entry equals the number of B edges leaving the initial R edge whose unique outgoing square lift reaches the terminal R edge. Reconstructing the inverse phi square from the B edge and initial R edge makes the equality a numbered-edge fiber bijection, not just an unnumbered support relation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("compatible-exchange-chain-bound"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.compatible_exchange_chain_bound"),
+                H("Compatible certificates give a bounded exchange chain"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("A positive-lag compatible certificate on essential finite count matrices A and B constructs a strong-shift-equivalence chain of length exactly twice the lag minus one. Its numbered compatible squares determine both response quotients of the square graph. The first incoming and outgoing response matrices meet in a one-step matrix diamond; the remaining quotient exchanges reach A and B at the lag, preserving every intermediate matrix dimension and all parallel-edge counts. At lag one the diamond itself gives the single exchange."))),
                 DescribeRole.Theorem))));
 }
