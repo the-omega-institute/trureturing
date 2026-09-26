@@ -5,7 +5,7 @@ checked results to guide further inquiry. Help turn a precise question into
 a result that others can check and reuse: through examples, counterexamples,
 proofs, clearer explanations or useful tools. The
 [vision and research guide](VISION.md) connects the current mathematical
-subjects to this purpose and the research program through 2027.
+subjects to this purpose and the open research directions.
 
 You do not need to write a new proof to make a useful contribution. Public-facing
 documentation defaults to English.
@@ -88,7 +88,7 @@ need a mathematical skill. A contribution request you can paste:
 ## Choose a starting point
 
 - **Connect a question to a research direction.** Use the
-  [roadmap](VISION.md#roadmap-2027) to identify an observation, missing relation
+  [research directions](VISION.md#research-directions) to identify an observation, missing relation
   or reusable lemma that could advance an existing line. State what would
   support or refute the proposed step, search the library first, and explain
   what the result would enable next. New evidence should also update the
