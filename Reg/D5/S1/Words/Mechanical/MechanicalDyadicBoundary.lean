@@ -3,12 +3,34 @@ import D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
--- The independent statement-identity snapshot is pending remote Lean evidence.
--- Empty rows preserve companion ownership without certifying a source catalog.
 run_cmd LeanInformationAudit.RootCatalogs.declare {
   rootId := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
-  expected := #[]
-  source := #[]
+  expected := #[
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.lowerArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch,
+      statementIdentity := "sha256:623de09df40dd9c8ac62166504cc1d12ebb2c9ae1f15f66586e6901f79a3fb9c",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
+      statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits,
+      statementIdentity := "sha256:a4092d2733c8819e7e7bae60e764686bbcbb4ab064a2adbcf8601fce8ed682ae",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }]
+  source := #[
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.lowerArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_lower_boundary_mismatch,
+      statementIdentity := "sha256:623de09df40dd9c8ac62166504cc1d12ebb2c9ae1f15f66586e6901f79a3fb9c",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.upperArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.dyadic_upper_eventually_word_eq,
+      statementIdentity := "sha256:cd129c14a2561274769568cc1b202f52388daa5a0bade1344c03ab7761260418",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary },
+    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration.stableArena,
+      theoremName := `D5.S1.Words.Mechanical.MechanicalDyadicBoundary.finite_word_stable_off_integer_hits,
+      statementIdentity := "sha256:a4092d2733c8819e7e7bae60e764686bbcbb4ab064a2adbcf8601fce8ed682ae",
+      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }]
   companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary }
 
 noncomputable section
