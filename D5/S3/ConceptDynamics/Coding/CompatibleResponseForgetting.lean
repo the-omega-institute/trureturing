@@ -270,7 +270,8 @@ theorem incoming_response_fiber_card {p : ℕ} {M : CountMat p p} {Q : Type}
       let e : incomingResponseFiber L (d + 1) F v ≃
           incomingResponseFiber L (d + 1) F w := {
         toFun x := ⟨x.val, htransport v w h x.val x.property⟩
-        invFun x := ⟨x.val, htransport w v (Setoid.symm h) x.val x.property⟩
+        invFun x := ⟨x.val,
+          htransport w v ((L.response (d + 1)).iseqv.symm h) x.val x.property⟩
         left_inv := by intro x; apply Subtype.ext; rfl
         right_inv := by intro x; apply Subtype.ext; rfl }
       exact Nat.card_congr e
