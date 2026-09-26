@@ -229,6 +229,95 @@ public sealed class SourceFamilyEvidenceTests
         }
     }
 
+    [Fact]
+    public void original_torus_compiled_wire_passes_strict_join()
+    {
+        var wire = CompiledWire("CompiledTorusWire.lean");
+        var (snapshot, report, selected) = Inputs(wire);
+        var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
+        var row = Assert.Single(evidence.Occurrences.Values);
+        Assert.True(row.HasFourSlots);
+        var source = wire[0]!["records"]![0]!["certificate"]!["source_binding"]!;
+        Assert.Equal(3, source["telescope_size"]!.GetValue<int>());
+        Assert.Equal(1, source["level_count"]!.GetValue<int>());
+        Assert.Equal(new[] { 0, 2 }, source["coordinates"]!.AsArray().Select(n => n!.GetValue<int>()));
+        var bytes = File.ReadAllBytes(Path.Combine(TestRepositoryLayout.FindRoot(),
+            "D5/S3/Fourier/Asymptotics/TorusOrbitEquidistribution.lean"));
+        Assert.Equal("c3f04b199c1259b849fe76e72cc7bb3c29c0dafbbc452f1f66a1023a924d3bbe",
+            Convert.ToHexStringLower(SHA256.HashData(bytes)));
+    }
+
+    [Theory]
+    [InlineData("sibling-coordinate")]
+    [InlineData("missing-context")]
+    [InlineData("non-ancestor")]
+    [InlineData("coordinate-count")]
+    [InlineData("coordinate-bound")]
+    public void compiled_torus_lexical_wire_mutations_reject(string mutation)
+    {
+        var wire = CompiledWire("CompiledTorusWire.lean");
+        var (snapshot, _, selected) = Inputs(wire);
+        var source = wire[0]!["records"]![0]!["certificate"]!["source_binding"]!;
+        switch (mutation)
+        {
+            case "sibling-coordinate": source["coordinate_paths"]![0] = new JsonArray("arg", "body"); break;
+            case "missing-context": source["readouts"]![0]!.AsObject().Remove("scope_paths"); break;
+            case "non-ancestor": source["readouts"]![0]!["scope_paths"]![0] = new JsonArray("arg", "body"); break;
+            case "coordinate-count": source["coordinate_paths"] = new JsonArray(); break;
+            case "coordinate-bound": source["coordinates"]![1] = 256; break;
+        }
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire[0]), selected[0].Value, snapshot));
+    }
+
+    [Fact]
+    public void generated_torus_artifacts_pass_production_material_axiom_and_import_join()
+    {
+        var directory = Environment.GetEnvironmentVariable("TORUS_SOURCE_ARTIFACTS");
+        Skip.If(string.IsNullOrEmpty(directory), "Focused Torus native module artifacts were not supplied.");
+        var root = TestRepositoryLayout.FindRoot();
+        var files = new Dictionary<string, LeanFileReport>();
+        var sources = new Dictionary<string, RawRepositoryEntry>();
+        RawRepositoryEntry Source(string path) => new(path,
+            ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
+        using var scratch = new TemporaryDirectory();
+        var artifacts = Directory.GetFiles(directory!, "*.zip");
+        Assert.Equal(2, artifacts.Length);
+        foreach (var artifact in artifacts)
+        {
+            var extracted = Path.Combine(scratch.Path, Path.GetFileNameWithoutExtension(artifact));
+            ZipFile.ExtractToDirectory(artifact, extracted);
+            var reportPath = Path.Combine(extracted, "raw-lean-report.json");
+            using var document = JsonDocument.Parse(File.ReadAllBytes(reportPath));
+            var row = Assert.Single(document.RootElement.GetProperty("modules").EnumerateArray());
+            var source = row.GetProperty("source_path").GetString()!;
+            sources.Add(source, Source(source));
+            var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                RawRepositorySnapshot.Create([sources[source], Source("lean-report-inputs.json")]))).Snapshot;
+            var file = RawLeanReportArtifact.ReadFile(reportPath, snapshot, validateMaterials: true)
+                .Files[RepoPath.CreateKnown(source)];
+            Assert.All(file.Declarations, declaration =>
+            {
+                Assert.NotEmpty(declaration.LoadTypeRepresentation());
+                Assert.All(declaration.Axioms, axiom =>
+                    Assert.Contains(axiom, new[] { "propext", "Classical.choice", "Quot.sound" }));
+            });
+            files.Add(source, file);
+        }
+        sources.Add("lean-report-inputs.json", Source("lean-report-inputs.json"));
+        var joinedSnapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+            RawRepositorySnapshot.Create(sources.Values))).Snapshot;
+        var registration = RepoPath.CreateKnown("Reg/D5/S3/Fourier/Asymptotics/TorusOrbitEquidistribution.lean");
+        var report = LeanAxiomReport.Create(files);
+        var joined = InformationTemplateEvidence.Collect(joinedSnapshot, report, [registration]);
+        Assert.True(Assert.Single(joined.Occurrences.Values).HasFourSlots);
+        Assert.Equal(CompiledWire("CompiledTorusWire.lean")[0]!.ToJsonString(),
+            JsonNode.Parse(files[registration.Value].InformationTemplates!.Value.GetRawText())!.ToJsonString());
+        files.Remove("D5/S3/Fourier/Asymptotics/TorusOrbitEquidistribution.lean");
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(joinedSnapshot,
+            LeanAxiomReport.Create(files), [registration]));
+    }
+
     [Theory]
     [InlineData("stale-version")]
     [InlineData("cross-occurrence")]

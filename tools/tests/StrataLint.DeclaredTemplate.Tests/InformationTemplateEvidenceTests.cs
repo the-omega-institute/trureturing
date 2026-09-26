@@ -75,9 +75,12 @@ public sealed class InformationTemplateEvidenceTests
         row["certificate"]!["source_binding"] = JsonSerializer.SerializeToNode(new {
             source_owner = "D5.S0.Carrier.Probe", source_name = Key.Theorem,
             source_type_identity = Hash("fixture statement A"), telescope_size = 13, level_count = 2,
-            coordinates = new[] { 0, 1, 11 }, registration_identity = Hash("fixture registration"),
-            readouts = new[] { new { path = Enumerable.Repeat("body", 13).Concat(new[] { "arg", "body" }).ToArray(),
-                state_binder = 16, scope_size = 17, occurrence_identity = Hash("fixture original projection") } } });
+            coordinates = new[] { 0, 1, 11 },
+            coordinate_paths = new[] { 0, 1, 11 }.Select(i => Enumerable.Repeat("body", i + 1).ToArray()).ToArray(), registration_identity = Hash("fixture registration"),
+            readouts = new[] { new { path = Enumerable.Repeat("body", 17).Concat(new[] { "arg" }).ToArray(),
+                state_binder = 16, scope_size = 17,
+                scope_paths = Enumerable.Range(1, 17).Select(i => Enumerable.Repeat("body", i).ToArray()).ToArray(),
+                occurrence_identity = Hash("fixture original projection") } } });
         return wire;
     }
 
@@ -116,6 +119,8 @@ public sealed class InformationTemplateEvidenceTests
     [InlineData("coordinates")]
     [InlineData("telescope_size")]
     [InlineData("level_count")]
+    [InlineData("coordinate_paths")]
+    [InlineData("scope_paths")]
     [InlineData("readouts")]
     [InlineData("state_binder")]
     [InlineData("path")]
@@ -133,7 +138,9 @@ public sealed class InformationTemplateEvidenceTests
             case "source_type_identity": source[field] = Hash("stale statement"); break;
             case "source_owner": source[field] = "Reg.WrongOwner"; break;
             case "coordinates": source[field] = JsonSerializer.SerializeToNode(new[] { 0, 11, 1 }); break;
-            case "telescope_size": source[field] = 11; break;
+            case "telescope_size": source[field] = 65; break;
+            case "coordinate_paths": source[field] = JsonSerializer.SerializeToNode(new[] { new[] { "arg", "body" } }); break;
+            case "scope_paths": source["readouts"]![0]![field] = new System.Text.Json.Nodes.JsonArray(); break;
             case "level_count": source[field] = 65; break;
             case "readouts": source[field] = new System.Text.Json.Nodes.JsonArray(); break;
             case "state_binder": source["readouts"]![0]![field] = 17; break;

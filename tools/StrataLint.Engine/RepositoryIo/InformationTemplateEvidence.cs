@@ -138,7 +138,7 @@ internal static class InformationTemplateEvidence
     private static string CheckSourceBinding(JsonElement value, InformationOccurrenceKey key, string statement)
     {
         InformationTemplateJson.Fields(value, "source_owner", "source_name", "source_type_identity",
-            "telescope_size", "level_count", "coordinates", "readouts", "registration_identity");
+            "telescope_size", "level_count", "coordinates", "coordinate_paths", "readouts", "registration_identity");
         var owner = InformationTemplateJson.Name(InformationTemplateJson.String(value, "source_owner"));
         if (!owner.StartsWith("D5.", StringComparison.Ordinal)
             || InformationTemplateJson.String(value, "source_name") != key.Theorem
@@ -152,13 +152,28 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: source coordinate bounds");
             return result;
         }
-        var telescope = Bounded(value.GetProperty("telescope_size"), 64);
+        Bounded(value.GetProperty("telescope_size"), 64);
         Bounded(value.GetProperty("level_count"), 64);
-        var previous = -1;
-        foreach (var coordinate in Array(value, "coordinates"))
+        static string[] Path(JsonElement path)
         {
-            var index = Bounded(coordinate, 63);
-            if (index <= previous || index >= telescope)
+            if (path.ValueKind != JsonValueKind.Array)
+                throw new FormatException("DTR-Evidence: source occurrence path");
+            var steps = path.EnumerateArray().ToArray();
+            if (steps.Length is < 1 or > 256 || steps.Any(step => step.ValueKind != JsonValueKind.String
+                || step.GetString() is not ("fn" or "arg" or "domain" or "body" or "type" or "value")))
+                throw new FormatException("DTR-Evidence: source occurrence path");
+            return steps.Select(step => step.GetString()!).ToArray();
+        }
+        static bool Prefix(string[] prefix, string[] path) =>
+            prefix.Length <= path.Length && prefix.SequenceEqual(path.Take(prefix.Length));
+        var coordinates = Array(value, "coordinates").Select(n => Bounded(n, 255)).ToArray();
+        var coordinatePaths = Array(value, "coordinate_paths").Select(Path).ToArray();
+        if (coordinates.Length > 64 || coordinatePaths.Length != coordinates.Length)
+            throw new FormatException("DTR-Evidence: source coordinate count");
+        var previous = -1;
+        foreach (var index in coordinates)
+        {
+            if (index <= previous)
                 throw new FormatException("DTR-Evidence: source coordinate order");
             previous = index;
         }
@@ -168,17 +183,28 @@ internal static class InformationTemplateEvidence
         var paths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var readout in readouts)
         {
-            InformationTemplateJson.Fields(readout, "path", "state_binder", "scope_size", "occurrence_identity");
+            InformationTemplateJson.Fields(readout, "path", "state_binder", "scope_size", "scope_paths", "occurrence_identity");
             var scope = Bounded(readout.GetProperty("scope_size"), 256);
             var binder = Bounded(readout.GetProperty("state_binder"), 255);
             if (binder >= scope || binder <= previous)
                 throw new FormatException("DTR-Evidence: source state scope");
             HashField(readout, "occurrence_identity");
-            var path = Array(readout, "path").ToArray();
-            if (path.Length is < 1 or > 256 || path.Any(step => step.ValueKind != JsonValueKind.String
-                || step.GetString() is not ("fn" or "arg" or "domain" or "body" or "type" or "value"))
-                || !paths.Add(string.Join("/", path.Select(step => step.GetString()))))
+            var path = Path(readout.GetProperty("path"));
+            if (!paths.Add(string.Join("/", path)))
                 throw new FormatException("DTR-Evidence: source occurrence path");
+            var scopePaths = Array(readout, "scope_paths").Select(Path).ToArray();
+            if (scopePaths.Length != scope)
+                throw new FormatException("DTR-Evidence: source lexical scope size");
+            for (var i = 0; i < scopePaths.Length; i++)
+            {
+                var anchor = scopePaths[i];
+                if (anchor[^1] != "body" || !Prefix(anchor, path)
+                    || i > 0 && (scopePaths[i - 1].Length >= anchor.Length || !Prefix(scopePaths[i - 1], anchor)))
+                    throw new FormatException("DTR-Evidence: source lexical ancestor");
+            }
+            for (var i = 0; i < coordinates.Length; i++)
+                if (!coordinatePaths[i].SequenceEqual(scopePaths[coordinates[i]]))
+                    throw new FormatException("DTR-Evidence: source captured coordinate");
         }
         return owner;
     }
