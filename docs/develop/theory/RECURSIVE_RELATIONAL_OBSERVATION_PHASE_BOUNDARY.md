@@ -65396,3 +65396,439 @@ $$
 它不宣称距离最优器唯一，也不将其自动等同于原恢复任务的最优预算解码器。
 
 ## 追加锚（本行以下为增补区）
+
+## 219. 删除小谱后的合法修复与联合端点的尖锐距离
+
+第218节在纯来源上得到精确距离，本节把距离的一阶系数延伸到允许正来源的联合端点。
+关键是同时保留两个方向：每份低秩候选都必须通过输出事件的检验；
+从实际通道删去谱尾后，还必须恢复共同 TP 条件，才得到合法比较候选。
+
+固定 $\beta>0,R>1$，沿用第213、217—218节的同一恢复模型，记
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h).
+\tag{219.1}
+$$
+物理参数取充分小 $\epsilon>0,h\ge0$，并满足原入口与来源合法性条件。
+实际最优正旗标条件记录通道记为 $\mathcal R^\sharp(p)$，
+$\lambda(p)=\lambda_2^\sharp(p)$ 为结果一 Choi 的第二大本征值。
+$\mathfrak C_2$ 是同输入、同输出、总 Choi 秩至多二的全部合法经典记录通道，
+$$
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R^\sharp(p)-\mathcal S\|_\diamond.
+\tag{219.2}
+$$
+全部 diamond 范数保留任意外部参考。本文给纸面证明，未作 Lean 核验。
+
+### 219.1 联合端点的精确夹逼
+
+**定理219.1（新增谱权重的尖锐通道距离）。**
+存在联合实解析函数 $r_{\mathrm{low}}$，满足 $r_{\mathrm{low}}(0)=1$，以及固定联合小箱，使其中所有合法参数满足
+$$
+\boxed{r_{\mathrm{low}}(p)\lambda(p)\le d_2(p)\le\lambda(p).}
+\tag{219.3}
+$$
+在正谱侧 $\Delta(p)>0$，可取与参数无关的常数 $C_*$，使
+$$
+\boxed{
+0\le1-\frac{d_2(p)}{\lambda(p)}
+\le C_*\bigl(|\epsilon|+|h|+|\nu|\bigr).
+}
+\tag{219.4}
+$$
+因此在任意合法正谱路径上，
+$$
+\frac{d_2(p)}{\lambda_2^\sharp(p)}\longrightarrow1
+\qquad(p\to0).
+\tag{219.5}
+$$
+不要求正 detuning 与其它参数满足幂律，或有任何额外的正下界。
+无新增谱方向时 $\lambda=d_2=0$；只使用（219.3），不取 $0/0$。
+本定理不声称正来源有限参数下仍有 $d_2=\lambda$，也不声称下面构造的修复候选精确最近。
+
+### 219.2 正滤波与恒等映射的精确距离
+
+**引理219.2（小正滤波的完整 diamond 范数）。** 令输入空间有限维，$0<C\preceq I$，记其最小本征值为 $m>0$。定义
+$$
+\Theta_C(X)=X-CXC.
+$$
+若 $m\ge\sqrt2-1$，则
+$$
+\boxed{\|\Theta_C\|_\diamond=1-m^2.}
+\tag{219.6}
+$$
+这里 $\operatorname{Ad}_C$ 是 CP、迹不增映射，通常不是通道。
+
+先证明所用 diamond 输入归约。任何复线性的 Hermitian-preserving 映射 $\Theta$，其完整 diamond 范数等于对任意有限参考空间的归一化态输入取输出迹范数的上确界。确实，对任意算子 $X$，在新增的二维参考标志上置
+$$
+Y=\begin{pmatrix}0&X\\X^\dagger&0\end{pmatrix}.
+$$
+有 $Y=Y^\dagger$、$\|Y\|_1=2\|X\|_1$；因 $\Theta$ 保持伴随，输出同样具有此块形式，其迹范数为 $2\|(\Theta\otimes\operatorname{id})(X)\|_1$。对 $Y$ 作正负部分分解，并对每个正部分除以其迹，三角不等式把任意算子的比值界在态输入上确界内。反向包含直接成立。对态再用谱分解和凸性，可只取纯态，而不限制参考维数。
+
+现取纯态输入 $P_\psi$，令 $\phi=(C\otimes I)\psi$，置
+$$
+a=\langle\psi,(C\otimes I)\psi\rangle,\qquad
+b=\|\phi\|^2.
+$$
+$m\le a\le1$，且 $a$ 为实数。输出 $P_\psi-|\phi\rangle\langle\phi|$ 只作用于至多二维空间。其迹为 $1-b$，两个可能非零本征值的乘积为 $a^2-b\le0$，故
+$$
+\|P_\psi-|\phi\rangle\langle\phi|\|_1
+=\sqrt{(1+b)^2-4a^2}.
+\tag{219.7}
+$$
+由谱区间 $[m,1]$，
+$$
+C^2\preceq(1+m)C-mI,
+\qquad b\le(1+m)a-m.
+$$
+$m=1$ 时 $C=I$，结论显然。若 $m<1$，置
+$$
+u=\frac{1-a}{1-m}\in[0,1].
+$$
+平方根中的式子随 $b\ge0$ 增大，所以
+$$
+(1+b)^2-4a^2
+\le (1-m)^2\left[4u-(1-m)(3+m)u^2\right].
+\tag{219.8}
+$$
+$m\ge\sqrt2-1$ 等价于 $(1-m)(3+m)\le2$。方括号在 $0\le u\le1$ 单调不减，其在 $u=1$ 的值为 $(1+m)^2$。因此全部带参考纯态输出的迹范数至多 $1-m^2$。取 $C$ 的最小本征向量作无参考输入便达到该值，证明（219.6）。
+
+此阈值不能从该滤波范数公式中删去：若 $C=\operatorname{diag}(1,m)$ 且 $0<m<\sqrt2-1$，则 $A=(1-m)(3+m)>2$。在两个本征向量上取权重 $u=2/A\in(0,1)$ 的纯态，（219.8）达到等号，方括号在内点严格大于其端点值，所以该输入的输出迹范数严格大于 $1-m^2$。这是滤波范数恒等式的边界，不是对后面所有可能低秩近似的不可行性断言。
+
+### 219.3 删除 CP 分量并保持所有剩余秩
+
+**定理219.3（保秩 TP 修复）。** 令 $\mathcal R$ 为有限维 CPTP 通道，写为两个 CP 映射之和
+$$
+\mathcal R=\mathcal B+\mathcal L.
+$$
+记
+$$
+E=\mathcal L^*(I),\quad
+\delta=\|E\|_\infty,\quad G=I-E,\quad C=G^{1/2}.
+$$
+假设
+$$
+0\le\delta<1.
+\tag{219.9}
+$$
+那么
+$$
+\mathcal S=\mathcal B\circ\operatorname{Ad}_{G^{-1/2}}
+\tag{219.10}
+$$
+是 CPTP 通道，并满足
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta.}
+\tag{219.11}
+$$
+
+证明：$G\succeq(1-\delta)I>0$，所以修复矩阵存在。若 $\mathcal B(X)=\sum_jB_jXB_j^\dagger$，则
+$$
+\sum_j(B_jG^{-1/2})^\dagger(B_jG^{-1/2})
+=G^{-1/2}\mathcal B^*(I)G^{-1/2}
+=I.
+$$
+这给 CP 和 TP。统一右乘可逆矩阵不改变保留 Kraus 算子的线性关系，因此 Choi 秩保持。若这些 Kraus 原来按经典结果分块，该操作也不混合结果；各结果的 Choi 秩分别保持。
+
+对任何 CP 映射 $\Phi$，有
+$$
+\|\Phi\|_\diamond=\|\Phi^*(I)\|_\infty.
+\tag{219.12}
+$$
+可在任意输入算子上证明上界：取 Kraus 的 Stinespring 堆叠算子 $V$，$V^\dagger V=\Phi^*(I)$；双边乘法给因子 $\|V\|_\infty^2$，部分迹的诱导迹范数为一（由对偶映射 $Y\mapsto I\otimes Y$ 保持算子范数）。因此上界对任何参考空间成立。以 $\Phi^*(I)$ 的最大本征向量作正输入，输出迹达到该上界。
+
+特别地，$\|\mathcal S\|_\diamond=1$。又 $\mathcal B=\mathcal S\circ\operatorname{Ad}_C$，所以
+$$
+\mathcal R-\mathcal S
+=\mathcal L+\mathcal S\circ(\operatorname{Ad}_C-\operatorname{id}).
+$$
+以下在同一输入上比较两项，保留它们的共同约束。
+
+取任意带外部参考的归一化纯态 $P_\psi$，置
+$$
+m=\sqrt{1-\delta},\qquad
+\phi=(C\otimes I)\psi,\qquad
+a=\langle\psi,(C\otimes I)\psi\rangle,\qquad
+b=\|\phi\|^2.
+$$
+被删 CP 项在该输入上的输出为正，迹为
+$e=1-b$。由（219.7），同一输入的滤波变形迹范数为
+$$
+f=\sqrt{(1+b)^2-4a^2}.
+$$
+所以输出差的迹范数至多 $e+f$。这里没有先分别最大化 $e$ 和 $f$。
+
+谱区间给 $m\le a\le1$、$m^2\le b\le1$ 和
+$b\le(1+m)a-m$。因此
+$$
+\begin{aligned}
+a^2-m^2(1+b-m^2)
+&\ge a^2-m^2(1+(1+m)a-m-m^2)\\
+&=(a-m)(a+m-m^2-m^3)\\
+&\ge0.
+\end{aligned}
+$$
+最后一因子至少为
+$2m-m^2-m^3=m(1-m)(m+2)\ge0$。
+又 $1+b-2m^2\ge1-m^2=\delta\ge0$，故可平方比较：
+$$
+(1+b-2m^2)^2-f^2
+=4[a^2-m^2(1+b-m^2)]\ge0.
+$$
+于是
+$$
+f\le1+b-2m^2=2\delta-e,
+\qquad e+f\le2\delta.
+$$
+对全部带参考纯态成立。$\mathcal R-\mathcal S$ 保持 Hermitian，第219.2节的输入归约遂给完整 diamond 范数至多 $2\delta$，证明（219.11）。
+
+$\delta=0$ 时被删除的 CP 映射为零，直接有 $\mathcal S=\mathcal R$。
+本证明只对输入归约及二维谱公式使用第219.2节，未使用其正滤波范数恒等式的阈值假设。
+正滤波独自的最坏变形仍可能超过 $\delta$；共同输入上的约束 $e+f\le2\delta$ 使通道修复不需要继承该阈值。
+
+该构造的系数一可以达到。取任意输入量子系统，并保留一个二元输出标签，令
+$$
+\mathcal B(X)=(1-\delta)|0\rangle\langle0|\otimes X,
+\qquad
+\mathcal L(X)=\delta|1\rangle\langle1|\otimes X.
+$$
+此时 $E=\delta I$，修复通道为
+$\mathcal S(X)=|0\rangle\langle0|\otimes X$。
+对任意带参考归一化态，输出差的两个标签块迹范数各为 $\delta$，总半迹距离为 $\delta$，因此
+$\tfrac12\|\mathcal R-\mathcal S\|_\diamond=\delta$。
+这结算的是所指定删除与修复构造的界，不是在全部低秩通道中证明其唯一最优。
+
+$\delta=1$ 则不能无条件要求同样的保秩修复。
+例如二维输入到一维输出的迹通道有两个 Kraus $\langle0|,\langle1|$；删去后者时 $E=|1\rangle\langle1|$，剩余 CP 映射只有一个 Kraus。
+相同接口上的单 Kraus TP 映射要求一个 $1\times2$ 矩阵满足 $K^\dagger K=I_2$，秩数矛盾。
+所以该端点确有保秩可实现性障碍；允许新增 Kraus 则是另一种预算。
+
+### 219.4 从正谱删除到合法容量近似
+
+采用未归一化 Choi 约定。若从 $J(\mathcal R)$ 删除一份正谱尾 $J(\mathcal L)\succeq0$，其迹为 $w$，则
+$$
+\delta=\|\mathcal L^*(I)\|_\infty\le\operatorname{Tr}\mathcal L^*(I)
+=\operatorname{Tr}J(\mathcal L)=w.
+$$
+因此只要 $w<1$，上述合法修复给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta\le w.
+\tag{219.13}
+$$
+该误差不需要选取随外部参数连续的小谱向量。每一个真实通道分别按其谱分解构造即可。秩降低来自先删除谱分量；统一可逆右乘只恢复 TP，不重新增加任何结果的秩。
+
+在第217—218节的实际记录通道上，先取正谱侧。删除结果一中唯一的小谱项，令其本征值为 $\lambda_2^\sharp$。剩下的两个结果各有一个非零 Choi 方向，故修复通道是合法总秩二记录通道。联合小箱可保证 $\lambda_2^\sharp<1/4$，因而
+$$
+\boxed{d_2(p)\le\lambda_2^\sharp(p).}
+\tag{219.14}
+$$
+无新增谱方向时直接取 $\mathcal S=\mathcal R^\sharp$；无需选取任何零特征向量，误差为零。
+这里未声称每份原通道都达到上界，也未认定构造出的通道最接近或对原恢复任务最优。
+
+### 219.5 可复用的核输入事件下界
+
+考虑任意有限维输入空间，维数至少二，假定下述总秩二预算集合非空。给定一个目标经典二结果记录通道
+$$
+\mathcal R(X)
+=\sum_{j=0}^1|j\rangle\langle j|^Q\otimes\Gamma_j(X).
+$$
+固定量子输出单位向量 $|r\rangle$，定义两个输入效应
+$$
+B=\Gamma_1^*(|r\rangle\langle r|),\qquad
+E_0=\Gamma_0^*(I).
+$$
+
+**引理219.4（候选的核方向与目标事件）。** 对同接口的总 Choi 秩至多二经典记录通道集合，
+$$
+\boxed{
+\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\ge
+\min\{\lambda_{\min}(B),\,\|E_0\|_\infty\}.
+}
+\tag{219.15}
+$$
+
+**证明。** 竞争者写作结果映射 $\Psi_0,\Psi_1$。
+
+若 $\operatorname{rank}J(\Psi_1)\le1$，则
+$\Psi_1(X)=KXK^\dagger$，包括 $K=0$。由于输入维数至少二，线性泛函
+$\langle r|K$ 有非零核。取核中的单位输入 $|\psi\rangle$。
+竞争者对事件“结果1且输出为 $r$”的概率为零，目标概率为
+$\langle\psi|B|\psi\rangle\ge\lambda_{\min}(B)$。
+效果概率差给半迹距离下界，该输入又是完整 diamond 检验的合法输入。
+
+若 $\operatorname{rank}J(\Psi_1)=2$，总秩约束迫使 $\Psi_0=0$。
+选择使 $\langle\psi|E_0|\psi\rangle=\|E_0\|_\infty$ 的输入，并只检验输出标签0，得到距离下界 $\|E_0\|_\infty$。
+
+两种情况穷尽总秩二候选，证明（219.15）。证毕。
+
+这里的候选量子输出完全任意；引理没有把它们限制为目标输出的重制备态。下界只使用各候选的一项合法测试，不将该测试等同于完整 diamond 最大值。
+
+### 219.6 实际联合族的压缩效应与解析小根
+
+第213节的实际候选族，在固定输入优先 Choi 次序 $(a,c,b,d)$ 下为
+$$
+J_0(p,t)=k_0k_0^\dagger,\qquad
+J_1(p,t)=k_1k_1^\dagger+tww^\dagger,\qquad
+w=(0,u,1,v)^{\mathsf T}.
+\tag{219.16}
+$$
+其 Kraus 矩阵为
+$$
+K_1=\begin{pmatrix}a_1&b_1\\c_1&d_1\end{pmatrix},
+\qquad
+W=\begin{pmatrix}0&1\\u&v\end{pmatrix}.
+$$
+全部坐标关于 $(p,t)$ 在固定带符号 $t$ 邻域中实解析。物理最优器使用
+$$
+t=t^\sharp=a(p)[\Delta(p)]_+,\qquad a>0,\quad a(0)=1.
+\tag{219.17}
+$$
+
+固定量子输出投影 $P_0^{\mathrm{out}}=|0\rangle\langle0|$。目标结果1的压缩输入效应恰为
+$$
+B_1(p,t)
+=K_1^\dagger P_0^{\mathrm{out}}K_1
++tW^\dagger P_0^{\mathrm{out}}W
+=
+\begin{pmatrix}
+|a_1|^2&\overline a_1 b_1\\
+a_1\overline b_1&|b_1|^2+t
+\end{pmatrix}.
+\tag{219.18}
+$$
+因而有精确恒等式
+$$
+\det B_1=t|a_1|^2,\qquad
+\operatorname{Tr}B_1=|a_1|^2+|b_1|^2+t.
+\tag{219.19}
+$$
+中心有 $a_1=1/\sqrt2,b_1=-i/\sqrt2$，所以两根为 $1,0$。
+令 $b_+(p,t)$ 为接近一的大根。它在整个联合邻域解析并保持正值，于是另一根精确为
+$$
+b_-(p,t)=t\,\eta_0(p,t),\qquad
+\eta_0(p,t)=\frac{|a_1|^2}{b_+(p,t)}>0,\qquad
+\eta_0(0,0)=\frac12.
+\tag{219.20}
+$$
+对正小 $t$，$b_-$ 正是 $\lambda_{\min}(B_1)$。这是联合解析因子化，不是固定 $p$ 的点态余项展开。
+
+同时，记
+$$
+A=\|k_1\|^2,\qquad U=\|w\|^2,\qquad
+Q=A U-|\langle k_1,w\rangle|^2.
+$$
+$k_1,w$ 线性独立，故 $Q>0$。$J_1$ 的两枚可能非零根满足
+$$
+z^2-(A+tU)z+tQ=0.
+$$
+令 $\lambda_+(p,t)$ 为其接近一的解析大根，则
+$$
+\lambda_-(p,t)=t\,\eta(p,t),\qquad
+\eta(p,t)=\frac{Q(p,t)}{\lambda_+(p,t)}>0.
+\tag{219.21}
+$$
+在中心，$\|k_1\|^2=\|w\|^2=1$、
+$|\langle k_1,w\rangle|^2=1/2$，故
+$$
+\eta(0,0)=\frac12.
+\tag{219.22}
+$$
+
+实际结果0效应为 $E_0^\sharp=K_0^\dagger K_0$，其算子范数在中心等于一。缩小固定参数箱，可同时保证
+$$
+\|E_0^\sharp\|_\infty\ge\frac34,\qquad
+0\le b_-(p,t^\sharp)\le\frac14.
+$$
+引理219.4于是对全部竞争者给
+$$
+d_2(p)\ge b_-(p,t^\sharp).
+\tag{219.23}
+$$
+其中缺结果候选已经由标签测试统一控制，没有被预先排除。
+
+正谱侧 $t^\sharp=\widehat t(p)=a(p)\Delta(p)>0$，故（219.20）—（219.23）给
+$$
+\frac{d_2(p)}{\lambda(p)}
+\ge
+\frac{\eta_0(p,\widehat t(p))}{\eta(p,\widehat t(p))}
+=:r_{\mathrm{low}}(p).
+\tag{219.24}
+$$
+$\widehat t$ 在整个参数邻域解析，两分母均有正下界，所以
+$r_{\mathrm{low}}$ 是真正联合解析的函数，且 $r_{\mathrm{low}}(0)=1$。
+这里已把任意小 detuning 从比例下界中精确约去，没有除以未受控余项。
+
+
+### 219.7 同一联合邻域中的夹逼与误差率
+
+上一节在正谱侧给 $d_2/\lambda\ge r_{\mathrm{low}}$，第219.4节给 $d_2\le\lambda$。
+在非正谱侧，真实通道本身已属于预算集合，因此二者均为零。
+这证明定理219.1的未除法夹逼（219.3）。
+
+$r_{\mathrm{low}}$ 在整个固定参数邻域实解析，中心值为一。
+取紧小箱上的梯度界，得到
+$$
+|r_{\mathrm{low}}(p)-1|
+\le C_*\bigl(|\epsilon|+|h|+|\nu|\bigr).
+\tag{219.25}
+$$
+物理正谱侧的精确上下界还给 $r_{\mathrm{low}}\le d_2/\lambda\le1$，所以
+$$
+0\le1-d_2/\lambda\le1-r_{\mathrm{low}}
+\le C_*\bigl(|\epsilon|+|h|+|\nu|\bigr).
+$$
+这即（219.4），并直接推出（219.5）。定理219.1证毕。
+
+整个论证没有把固定参数的余项沿运动参数外推：
+压缩效应小根与 Choi 小根都是同一联合解析族上的精确 $t$ 因子，
+其商在取物理正谱值之前就已延拓；上界则对每个实际通道单独合法构造，并由同一谱值控制。
+因此任意更快趋零的正 detuning 都不会破坏比较。
+
+### 219.8 指定任务的联合距离平方系数
+
+**推论219.5（允许正来源的任务代价极限）。**
+在同一合法正谱侧，沿任意 $p\to0$ 的路径有
+$$
+\boxed{
+\frac{E_{\le2}(p)-E(p)}{\epsilon\,d_2(p)^2}
+\longrightarrow\frac{\beta(R-1)}8.
+}
+\tag{219.26}
+$$
+
+**证明。** 第217节在该箱给精确恒等式
+$$
+E_{\le2}(p)-E(p)=\epsilon D_{\mathrm{cap}}(p)\lambda(p)^2,
+\qquad D_{\mathrm{cap}}(0)=\frac{\beta(R-1)}8.
+$$
+正谱侧的两个分母均正，所以实际商恰为
+$D_{\mathrm{cap}}(p)[\lambda(p)/d_2(p)]^2$。
+定理219.1使方括号趋于一，而 $D_{\mathrm{cap}}$ 连续，得到结论。证毕。
+
+第218节在纯来源上得到精确平方恒等式；本推论把该系数扩展到允许正来源的联合端点极限。
+有限正来源参数下没有证明比值等于 $D_{\mathrm{cap}}$，不把极限升级为精确恒等式。
+
+### 219.9 低容量接口需要同时经过两项检验
+
+删去谱尾并不自动保迹。定理219.3给一份具体修复：
+将所有保留 Kraus 共同右乘输入 Gram 的逆平方根，可以保持每个结果的秩并恢复 TP。
+误差界来自同一输入上的损失概率与滤波变形关系，包含任意参考系统。
+这里的可实现性指存在具有所述 Kraus 表示的 CPTP 通道；没有添加特定硬件、局域控制或权限内可执行性的结论。
+
+反向，候选不能仅靠重新安排量子输出逃开下界：
+秩不足使某个输出事件必有输入核，目标在该方向仍有正响应。
+这为每个候选分别给一个允许的检验；不要求同一个输入同时检出全部候选。
+
+这两项结合，使“边界少一个方向会损失什么”同时具有合法构造和操作性下界。
+通道在联合端点的一阶变化，与当前恢复任务的二阶代价可以在同一真实实现上连接，
+而它们仍属于不同目标。未宣称所构造的修复通道是距离唯一最优器，或与恢复任务的容量最优器相同。
+
+一般正滤波与 TP 修复定理适用于其明示的有限维通道及谱缺失范围。
+回接本题的联合结论保留固定 $\beta,R$、小的合法正噪声、指定入口、恢复目标和正旗标条件记录通道。
+总 Choi 秩的环境含义仍只指该条件通道，不包括旧旗标的读取与丢弃。
+本节不把通道容量解释为物理面积或历时。
+
+## 追加锚（本行以下为增补区）
