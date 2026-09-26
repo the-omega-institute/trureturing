@@ -14,7 +14,9 @@ triage: anchor
 
 # Integer relations and torus subgroup closures
 
-## Source and locator
+## Verified locator
+
+https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528
 
 Encyclopedia of Mathematics, "Kronecker theorem", revision 47528, last
 edited June 5, 2020. The entry credits A. L. Onishchik as the originator of
