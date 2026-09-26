@@ -90,6 +90,61 @@ def appendPath {k : ℕ} {B : CountMat k k} :
   | _, _, _, z, .nil _, b => .cons b (.nil z)
   | _, _, _, _, .cons a tail, b => .cons a (appendPath tail b)
 
+/-- A response class at the next depth maps into one response class after an
+    actual numbered incoming edge. -/
+theorem incoming_response_step {n : ℕ} {A : CountMat n n} {Q : Type}
+    (L : IncomingLift A Q) (d : ℕ) {u v : Q}
+    (h : L.response (d + 1) u v) (a : Edge A)
+    (hu : L.project u = a.target) (hv : L.project v = a.target) :
+    L.response d (L.lift a ⟨u, hu⟩).val (L.lift a ⟨v, hv⟩).val := by
+  have hsnoc : ∀ {d : ℕ} {i j z : Fin n}
+      (path : FinitePath A d i j) (edge : Fin (A j z))
+      (q : {x : Q // L.project x = z}),
+      L.liftPath (appendPath path edge) q =
+        L.liftPath path (L.lift ⟨j, z, edge⟩ q) := by
+    intro length i j z path
+    induction path with
+    | nil i =>
+        intro edge q
+        rfl
+    | @cons length i j t edge tail ih =>
+        intro last q
+        simp only [appendPath, IncomingLift.liftPath]
+        exact congrArg (L.lift ⟨i, j, edge⟩) (ih last q)
+  rcases a with ⟨source, target, number⟩
+  let lu := L.lift (⟨source, target, number⟩ : Edge A) ⟨u, hu⟩
+  let lv := L.lift (⟨source, target, number⟩ : Edge A) ⟨v, hv⟩
+  have hobs : L.responseReadout (d + 1) u = L.responseReadout (d + 1) v := h
+  have hsourceU : L.project lu.val = source := lu.property
+  have hsourceV : L.project lv.val = source := lv.property
+  change L.responseReadout d lu.val = L.responseReadout d lv.val
+  apply Prod.ext (hsourceU.trans hsourceV.symm)
+  funext i j path
+  by_cases hj : source = j
+  · subst j
+    have hpath := congrArg
+      (fun p => p.2 i target (appendPath path number)) hobs
+    simp only [IncomingLift.responseReadout, dif_pos hu, dif_pos hv,
+      Option.some.injEq] at hpath
+    have hsame : L.liftPath path lu = L.liftPath path lv := by
+      have hwhole :
+          L.liftPath (appendPath path number) ⟨u, hu⟩ =
+            L.liftPath (appendPath path number) ⟨v, hv⟩ :=
+        Subtype.ext hpath
+      rw [hsnoc path number ⟨u, hu⟩,
+        hsnoc path number ⟨v, hv⟩] at hwhole
+      exact hwhole
+    simp only [IncomingLift.responseReadout, dif_pos hsourceU,
+      dif_pos hsourceV, Option.some.injEq]
+    exact congrArg Subtype.val hsame
+  · have hnotU : L.project lu.val ≠ j := by
+      rw [hsourceU]
+      exact hj
+    have hnotV : L.project lv.val ≠ j := by
+      rw [hsourceV]
+      exact hj
+    simp only [IncomingLift.responseReadout, dif_neg hnotU, dif_neg hnotV]
+
 /-- The equation is on all typed numbered inputs, including the entire B output path. -/
 structure CompatibleCertificate {n k : ℕ} (A : CountMat n n)
     (B : CountMat k k) (R : CountMat n k) (S : CountMat k n)
