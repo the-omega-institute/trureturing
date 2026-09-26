@@ -41,7 +41,12 @@ public sealed class PhysicalParserEvidenceTests
             var row = Assert.Single(document.RootElement.GetProperty("modules").EnumerateArray());
             var source = row.GetProperty("source_path").GetString()!;
             Source(source);
-            var report = RawLeanReportArtifact.ReadFile(reportPath, Tree(sources), validateMaterials: true);
+            var reportSources = new Dictionary<string, string>
+            {
+                ["lean-report-inputs.json"] = sources["lean-report-inputs.json"],
+                [source] = sources[source],
+            };
+            var report = RawLeanReportArtifact.ReadFile(reportPath, Tree(reportSources), validateMaterials: true);
             var file = report.Files[RepoPath.CreateKnown(source)];
             Assert.All(file.Declarations, declaration =>
             {
@@ -55,10 +60,9 @@ public sealed class PhysicalParserEvidenceTests
         var selected = new List<RepoPath>();
         var changes = new List<string>();
         var acceptedEvents = Directory.GetFiles(Path.Combine(root, "Golden/Frozen/accepted"), "*.json")
-            .Select(p => (Path: p, Text: File.ReadAllText(p)))
-            .Where(p => Originals.Any(o => p.Text.Contains(
-                "\"descriptor_selector\":\"D5/S0/Computability/Coding/" + o.Module + ".lean\"", StringComparison.Ordinal)))
-            .Select(p => (p.Path, Node: JsonNode.Parse(p.Text)!)).ToArray();
+            .Select(p => (Path: p, Node: JsonNode.Parse(File.ReadAllText(p))!))
+            .Where(p => Originals.Any(o => p.Node["payload"]?["descriptor_selector"]?.GetValue<string>()
+                == "D5/S0/Computability/Coding/" + o.Module + ".lean")).ToArray();
         Assert.Equal(Originals.Length, acceptedEvents.Length);
         foreach (var (module, theorem) in Originals)
         {
@@ -94,6 +98,9 @@ public sealed class PhysicalParserEvidenceTests
             changes.AddRange([path.Value, registration, pinPath]);
         }
 
+        Source(EngineeringProjectRegistry.ManifestPath);
+        foreach (var input in EngineeringProjectRegistry.Parse(sources[EngineeringProjectRegistry.ManifestPath]).RuleBuildInputs)
+            Source(input);
         var current = Tree(sources);
         var joined = LeanAxiomReport.Create(files);
         var evidence = InformationTemplateEvidence.Collect(current, joined, selected);
