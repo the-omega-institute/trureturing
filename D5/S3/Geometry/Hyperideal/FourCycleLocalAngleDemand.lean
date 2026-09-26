@@ -376,23 +376,25 @@ theorem paired_angle_demand
     Real.sqrt_pos.2 (by nlinarith [ha])
   have hroot_b : 0 < Real.sqrt (b^2 - 1) :=
     Real.sqrt_pos.2 (by nlinarith [hb])
+  have hA : 0 ≤ a^2 - 1 := by nlinarith only [ha, sq_nonneg (a - 1)]
+  have hB : 0 ≤ b^2 - 1 := by nlinarith only [hb, sq_nonneg (b - 1)]
   have hroot_prod : (a - 1) * (b - 1) <
       Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
     apply (sq_lt_sq₀ (by positivity) (Real.sqrt_nonneg _)).mp
-    rw [Real.sq_sqrt (mul_nonneg (by nlinarith only [ha, sq_nonneg (a - 1)])
-      (by nlinarith only [hb, sq_nonneg (b - 1)]))]
+    rw [Real.sq_sqrt (mul_nonneg hA hB)]
     calc
       ((a - 1) * (b - 1))^2 <
           ((a - 1) * (b - 1))^2 + 2 * (a - 1) * (b - 1) * (a + b) := by
-        positivity
+        have hp : 0 < 2 * (a - 1) * (b - 1) * (a + b) := by positivity
+        linarith only [hp]
       _ = (a^2 - 1) * (b^2 - 1) := by ring
   have hroot_sum_sq : k * (k - 2) <
       (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 := by
-    have hsa := Real.sq_sqrt (show 0 ≤ a^2 - 1 by nlinarith [ha])
-    have hsb := Real.sq_sqrt (show 0 ≤ b^2 - 1 by nlinarith [hb])
+    have hsa := Real.sq_sqrt hA
+    have hsb := Real.sq_sqrt hB
     have hprod : Real.sqrt (a^2 - 1) * Real.sqrt (b^2 - 1) =
         Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
-      rw [Real.sqrt_mul (by positivity)]
+      rw [Real.sqrt_mul hA]
     calc
       k * (k - 2) =
           (a^2 - 1) + (b^2 - 1) + 2 * (a - 1) * (b - 1) := by
