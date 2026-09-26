@@ -26,16 +26,21 @@ abbrev SeriesOutput :=
   (ℝ → ℝ → ℝ → ℝ) × (ℝ → ℝ) × (ℝ → ℝ → ℝ → ℝ)
 
 /-- The three quantities compared by the atomic-series theorem. -/
+def floorSeriesReadout (r alpha x : ℝ) : ℝ :=
+  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
+    (⌊x + ((j + 1 : ℕ) : ℝ) * alpha⌋ : ℝ)
+
+def coefficientMassReadout (r : ℝ) : ℝ :=
+  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j * ((j + 1 : ℕ) : ℝ)
+
+def thresholdSeriesReadout (r alpha x : ℝ) : ℝ :=
+  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
+    (∑ i ∈ range (j + 1),
+      if (((i + 1 : ℕ) : ℝ) - x) / ((j + 1 : ℕ) : ℝ) ≤ alpha then
+        (1 : ℝ) else 0)
+
 def seriesReadout : SeriesOutput :=
-  (fun r alpha x =>
-      ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
-        (⌊x + ((j + 1 : ℕ) : ℝ) * alpha⌋ : ℝ),
-    fun r => ∑' j : ℕ, (1 - r) ^ 2 * r ^ j * ((j + 1 : ℕ) : ℝ),
-    fun r alpha x =>
-      ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
-        (∑ i ∈ range (j + 1),
-          if (((i + 1 : ℕ) : ℝ) - x) / ((j + 1 : ℕ) : ℝ) ≤ alpha then
-            (1 : ℝ) else 0))
+  (floorSeriesReadout, coefficientMassReadout, thresholdSeriesReadout)
 
 local instance : DecidableEq SeriesOutput := Classical.decEq _
 

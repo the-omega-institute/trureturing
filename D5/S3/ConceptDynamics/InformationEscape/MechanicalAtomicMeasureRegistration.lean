@@ -121,8 +121,7 @@ abbrev JumpOutput := ℝ → ℝ → ℝ → ℝ
 
 local instance : DecidableEq JumpOutput := Classical.decEq _
 
-def jumpReadout (_ : Unit) : JumpOutput :=
-  fun r alpha x => geometricReadout r alpha x
+def jumpReadout (r alpha x : ℝ) : ℝ := geometricReadout r alpha x
 
 def leftJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
   toPrimitiveLawArena := by
@@ -160,6 +159,6 @@ def rationalJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
   Domain := ℝ
 
 def jumpRealization := @mechanicalReadoutRealization JumpOutput
-  (Classical.decEq _) jumpReadout
+  (Classical.decEq _) (fun _ : Unit => jumpReadout)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration

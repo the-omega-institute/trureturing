@@ -27,11 +27,12 @@ abbrev SlopeOutput := ℝ → ℝ → ℕ → Set ℝ
 abbrev PhaseOutput := ℝ → ℝ → ℕ → ℝ → ENNReal
 
 /-- Actual phase sets on which finite words disagree after a slope change. -/
-def slopeReadout : SlopeOutput := fun alpha beta n => slopeDisagreement alpha beta n
+def slopeReadout (alpha beta : ℝ) (n : ℕ) : Set ℝ :=
+  slopeDisagreement alpha beta n
 
 /-- Volume of phases on which simultaneous slope and phase changes alter a word. -/
-def phaseReadout : PhaseOutput :=
-  fun alpha delta n u => volume (jointMismatchSet alpha delta n u)
+def phaseReadout (alpha delta : ℝ) (n : ℕ) (u : ℝ) : ENNReal :=
+  volume (jointMismatchSet alpha delta n u)
 
 local instance : DecidableEq SlopeOutput := Classical.decEq _
 local instance : DecidableEq PhaseOutput := Classical.decEq _

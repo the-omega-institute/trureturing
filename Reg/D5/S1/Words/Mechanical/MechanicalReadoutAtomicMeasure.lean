@@ -74,6 +74,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 2000000
 
+attribute [local instance] Classical.propDecidable
+
 local instance : DecidableEq MassOutput := Classical.decEq _
 local instance : DecidableEq DistributionOutput := Classical.decEq _
 local instance : DecidableEq HitOutput := Classical.decEq _
@@ -271,7 +273,7 @@ private theorem supportEmpty_ne_full : supportEmpty ≠ supportFull := by
   have hh := congrFun h supportSample
   have hmem : (0 : ℝ) ∈ supportFull supportSample := Set.mem_univ _
   rw [← hh] at hmem
-  exact Set.not_mem_empty _ hmem
+  simpa [supportEmpty] using hmem
 
 def supportBad := @homogeneousPointwiseEqRealization Unit SupportOutput
   (Classical.decEq _) (fun _ => supportEmpty) (fun _ => supportFull)
@@ -362,7 +364,11 @@ private theorem positiveHalfHitSeries :
   obtain ⟨L₂, hlimit₂, hclosed⟩ :=
     geometric_rational_left_jump_closed_form (1 / 2) 1 2
       (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by decide)
-  have hsame : L₁ = L₂ := tendsto_nhds_unique hlimit₁ hlimit₂
+  have hlimit₂' : Filter.Tendsto
+      (fun beta : ℝ => D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout
+        (1 / 2) beta 0) (𝓝[<] (1 / 2 : ℝ)) (𝓝 L₂) := by
+    simpa using hlimit₂
+  have hsame : L₁ = L₂ := tendsto_nhds_unique hlimit₁ hlimit₂'
   rw [← hsame] at hclosed
   have hformula :
       (∑' n : ℕ, if ∃ z : ℤ,
@@ -481,7 +487,8 @@ register_information_theorem
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact
   in leftJumpArena
-  readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _) jumpReadout)
+  readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
+    (fun _ : Unit => jumpReadout))
   primitives jumpRealization.toPrimitiveBundle
   realization leftJumpBridge
   variation leftJumpVariation sensitivity leftJumpSensitivity
@@ -490,7 +497,8 @@ register_information_theorem
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form
   in rationalJumpArena
-  readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _) jumpReadout)
+  readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
+    (fun _ : Unit => jumpReadout))
   primitives jumpRealization.toPrimitiveBundle
   realization rationalJumpBridge
   variation rationalJumpVariation sensitivity rationalJumpSensitivity

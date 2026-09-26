@@ -25,12 +25,17 @@ abbrev PrefixOutput := (ℕ → ℝ) → ℝ → ℝ → ℕ → ℝ
 abbrev CompletionOutput := (ℝ → ℝ → ℝ → ℝ) × (ℝ → ℝ → ℝ → ℕ → ℝ)
 
 /-- The complete weighted finite readout, with weights, slope, phase, and horizon retained. -/
-def actualPrefix : PrefixOutput := fun weights alpha x n => weightedPrefix weights alpha x n
+def actualPrefix (weights : ℕ → ℝ) (alpha x : ℝ) (n : ℕ) : ℝ :=
+  weightedPrefix weights alpha x n
 
 /-- The completed readout and every geometric finite prefix share one observation. -/
+def completedReadout (r alpha x : ℝ) : ℝ := geometricReadout r alpha x
+
+def finitePrefixReadout (r alpha x : ℝ) (n : ℕ) : ℝ :=
+  weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n
+
 def actualCompletion : CompletionOutput :=
-  (fun r alpha x => geometricReadout r alpha x,
-   fun r alpha x n => weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n)
+  (completedReadout, finitePrefixReadout)
 
 def localOrderClaim (P : PrefixOutput) : Prop :=
   ∀ (alpha : ℝ), Irrational alpha → 0 < alpha → alpha < 1 →
