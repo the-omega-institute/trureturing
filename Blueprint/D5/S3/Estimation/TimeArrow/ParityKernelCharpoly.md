@@ -6,7 +6,7 @@ A parity kernel on the sign hypercube whose profile a satisfies E a = 0 and E[ch
 
 **Theorem 1.1 (Characteristic polynomial of a balanced parity kernel).**
 
-$$\sum_{y} \operatorname{a}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{a}(y)=0 \Rightarrow \operatorname{charpoly}(P_{a})= (X-1) X^{2^{d}-1}$$
+$$d\geq 1, \sum_{y} \operatorname{a}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{a}(y)=0 \Rightarrow \operatorname{charpoly}(P_{a})= (X-1) X^{2^{d}-1}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/ParityKernelCharpoly.charpoly_parityKernel` (`✓ std3`). ∎
 

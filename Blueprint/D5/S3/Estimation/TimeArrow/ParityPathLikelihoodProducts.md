@@ -14,7 +14,7 @@ $$L_{a,+}(x)= \prod_{t<s} 2^{d} P_{a}(x_{t}, x_{t+1})$$
 
 *Commentary.*
 
-For a path x_0, ..., x_s of sign vectors, the forward likelihood of the parity kernel P_a against the uniform product reference is the product of 2^d P_a over the steps.
+For a path x_0, ..., x_s of sign vectors and a real profile a, the forward likelihood of the parity kernel P_a against the uniform product reference is the product of 2^d P_a over the steps.
 
 **Definition 1.2 (Backward path likelihood).**
 
@@ -38,7 +38,7 @@ $$E_{U}[F]= (\frac{1}{2^{d}})^{s+1} \sum_{x} \operatorname{F}(x)$$
 
 *Commentary.*
 
-The reference law makes the s + 1 states of a path independent and uniform on the hypercube.
+The reference law makes the s + 1 states of a path independent and uniform on the hypercube. When |a| < 1 the forward and backward products are the likelihood ratios of the forward and time-reversed path laws of P_a against this reference; the identities below are stated for every real profile.
 
 **Theorem 1.4 (Forward likelihoods: inner product).**
 
@@ -68,7 +68,7 @@ Under the same hypotheses the backward likelihoods have the same inner product. 
 
 **Theorem 1.6 (Opposite directions are orthogonal after centering).**
 
-$$\sum_{y} \operatorname{b}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{b}(y)=0 \Rightarrow E_{U}[L_{a,+} L_{b,-}]=1$$
+$$d\geq 1, \sum_{y} \operatorname{b}(y)=0, \sum_{y} \operatorname{chi}(y) \operatorname{b}(y)=0 \Rightarrow E_{U}[L_{a,+} L_{b,-}]=1$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/ParityPathLikelihoodProducts.forward_backward_inner_product` (`✓ std3`). ∎
 
