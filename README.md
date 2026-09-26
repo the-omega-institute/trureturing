@@ -52,9 +52,7 @@ existence of a recovery function alone gives no algorithm or cost bound.
 Bring a question that matters to you. In an installed **Claude Code or Codex**
 with a local workspace and Git, paste this one sentence:
 
-```text
-Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
-```
+> Help me explore https://github.com/the-omega-institute/trureturing: use an existing checkout or clone it into a new directory if needed, read AGENTS.md and README.md, then read the relevant SKILL.md under skills/ to investigate a question I care about and find a checked result or a clearly stated open question.
 
 The [agent and skills guide](docs/CONTRIBUTING.md#use-claude-code-or-codex)
 explains how to begin with either client and turn an exploration into a
@@ -85,24 +83,7 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
-```mermaid
-flowchart TD
-    accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
-    Q([Ask a precise question]) --> T[Compute and test hypotheses]
-    T --> P[Check a proof or refutation]
-    P --> R[[Keep a reusable result]]
-    R -.-> N{What remains open?}
-    T -.-> N
-    P -.-> N
-    N -.-> Q
-    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
-    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
-    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
-    class Q,T foundation
-    class P,R proved
-    class N frontier
-```
+![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.](docs/assets/inquiry-cycle.svg)
 
 *A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
 do not establish a theorem. Dashed paths return unresolved questions to
@@ -126,12 +107,11 @@ nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-flo
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
 **02 · Find what observations cannot tell you.**
-Can knowing each part of a quantum system determine the whole? The
-[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
-constructs two distinct two-qubit states: a pure Bell state and the equal
-classical mixture of `00` and `11`. Both have exactly the same reduced state
-on each qubit. Even these complete local descriptions cannot identify the
-joint state.
+The [local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
+gives two-qubit states with identical reduced states on both qubits: the pure
+Bell state `(|00⟩+|11⟩)/√2` and the equal `00`/`11` mixture. An added joint
+`X⊗X` readout has expectations `1` and `0`, respectively, where [X](D5/S3/Quantum/FiniteDimensional.lean) swaps
+`0` and `1`. This separates this pair.
 
 For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
 proves that the correlation sector in the Hermitian tensor model is orthogonal
@@ -140,10 +120,10 @@ precisely which directions the local description omits.
 [Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
 
 **03 · Build a result that holds beyond the examples.**
-Write a natural number as its unique sum of nonadjacent Fibonacci weights
-`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
-golden ratio, and call the resulting real value β(n). How far does this
-coordinate fail to preserve addition?
+Write a natural number n as its unique sum of nonadjacent Fibonacci weights
+`F₂ = 1, F₃ = 2, F₄ = 3, …`. Replace each weight Fᵢ by φⁱ, where φ is the
+golden ratio, to obtain β(n). How far does this coordinate fail to preserve
+addition?
 
 $$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
 

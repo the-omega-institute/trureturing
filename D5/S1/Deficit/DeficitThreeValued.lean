@@ -258,7 +258,7 @@ the three values `-1`, `0`, and `1`.  Each contraction-face reading lands in
 the window `[-1 / phi ^ 2, 1 / phi]`, so the deficit lies strictly between
 `-2` and `2`; the integer certificate of `deficit_integer` then pins it to
 the three central integers.  The final numeric gates are exactly
-`-(2 + psi) > -2` and `1 - psi = phi < 2`: the window of length one admits
+`-(2 + psi) > -2` and `1 - psi = phi < 2`: the resulting open interval admits
 precisely three integers. -/
 
 theorem deficit_three_valued (v₁ v₂ : ℕ) :

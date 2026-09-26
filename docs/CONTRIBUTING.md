@@ -43,12 +43,38 @@ the portable way to use a skill is to ask the agent to read its canonical
 
 > Read skills/formal-thinking-and-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
 
-| Skill | When to use it / what to provide | Work and outcome |
-| --- | --- | --- |
-| [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
-| [codex-formalize](../skills/codex-formalize/SKILL.md) | One existing open digestion atom: “Work on atom `<atom-id>`, reusing results first.” | Searches for reusable results first, then works on formalization or settlement of that source claim; a new theorem or closure is not guaranteed. |
-| [codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md) | Externally authored material: “Ingest the document at `<path>` from `<source-URL>` under `<license>`.” | Brings reference input through the digestion workflow into open formalization atoms; ingestion is not proof. |
-| [theory-volume-template](../skills/theory-volume-template/SKILL.md) | Your own volume: “Draft a new volume on `<topic>`,” or “Append to `<volume-path>` while preserving existing atoms.” | Structures the volume for digestion while preserving existing atoms; use this for authoring and appending, and the ingest skill for externally authored material. |
+- **[formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md)**
+
+  A mathematical, philosophical or conceptual question: “Does knowing every part
+  determine the whole?”
+
+  Reasons from repository results, uses formal checking where applicable, and
+  returns an ordinary answer with its assumptions and unresolved boundaries;
+  can create and retain scoped formal artifacts under repository rules.
+
+- **[codex-formalize](../skills/codex-formalize/SKILL.md)**
+
+  One existing open digestion atom: “Work on atom `<atom-id>`, reusing results
+  first.”
+
+  Searches for reusable results first, then works on formalization or settlement
+  of that source claim; a new theorem or closure is not guaranteed.
+
+- **[codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md)**
+
+  Externally authored material: “Ingest the document at `<path>` from
+  `<source-URL>` under `<license>`.”
+
+  Brings reference input through the digestion workflow into open formalization
+  atoms; ingestion is not proof.
+
+- **[theory-volume-template](../skills/theory-volume-template/SKILL.md)**
+
+  Your own volume: “Draft a new volume on `<topic>`,” or “Append to
+  `<volume-path>` while preserving existing atoms.”
+
+  Structures the volume for digestion while preserving existing atoms; use this
+  for authoring and appending, and the ingest skill for externally authored material.
 
 A digestion atom is a source claim tracked by the repository's ingestion
 workflow. Replace the placeholders with your actual input; each linked skill
