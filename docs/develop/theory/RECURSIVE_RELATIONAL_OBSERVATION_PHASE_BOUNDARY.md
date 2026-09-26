@@ -42104,3 +42104,913 @@ $$
 本节固定一台物理接收器；相位参数描述这台装置的长期轨道，没有按相位另换持续接收通道。上述证书不成为全体同维装置的误差下界，也不自动在来源退化极限上一致。本节给出纸面推导，未运行数值 SDP、相位覆盖程序或 Lean 核验。
 
 ## 追加锚（本行以下为增补区）
+
+## 156. 固定接收器的最优终端误差不必收敛
+
+第155节把固定装置的渐近误差归结为实际外围相位群上的连续读出；收敛要求该读出在实际相位群上为常数。这个条件不会由本卷来源和局部接收限制自动满足。本节构造一个独立纯初始化、全部控制计费、每轮使用同一全域 CPTP 通道的有限维接收器，使两组交替终端的最优完整参考半迹误差最终严格分离。
+
+构造使用同一个非退化二元来源。运行阶段存在一个精确的比较二周期；实际装置经有限启动接近该周期，后续距离由收缩性统一控制。反例不要求实际轨道精确周期。其误差间隔已经优化全部终端解码器，不能用接收器局部旋转消去。
+
+### 156.1 固定来源、目标与结论
+
+取正实振幅 $a,b>0$、$a^2+b^2=1$，并令 $p=b^2\in(0,1)$。来源等距与活动记忆边缘通道为
+
+$$
+T|0\rangle=|m_0\rangle_M|0\rangle_B,
+\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,
+\qquad |m_0\rangle=a|0\rangle+b|1\rangle,
+$$
+
+$$
+\mathcal E(X)=X_{00}|m_0\rangle\langle m_0|
++X_{11}|0\rangle\langle0|.
+\tag{156.1}
+$$
+
+其满秩平稳态及规范纯化记为
+
+$$
+\rho_*=\frac{|m_0\rangle\langle m_0|+p|0\rangle\langle0|}{1+p},
+\qquad
+\lambda_*=\lambda_{\min}(\rho_*)>0,
+\qquad
+A=\sqrt{\rho_*},
+\qquad
+|\Xi\rangle_{MR}=\operatorname{vec}A.
+\tag{156.2}
+$$
+
+这里 $M,R\cong\mathbb C^2$，$\operatorname{vec}A=\sum_{m,r}A_{mr}|m\rangle_M|r\rangle_R$。矩阵 $\rho_*,A$ 在此固定基下均为实对称矩阵，且
+
+$$
+\det\rho_*=\frac{p^2}{(1+p)^2}.
+$$
+
+沿用第11、147节的规范启动量
+
+$$
+\delta_t=
+\max_{j=0,1}\left\|\sqrt{\rho_{j,t}}-\sqrt{\rho_*}\right\|_{\mathrm{HS}},
+\qquad t\ge3.
+\tag{156.3}
+$$
+
+对于固定 $p$，已有估计
+
+$$
+\delta_t\le C_pp^{t-1}\longrightarrow0,
+\qquad
+C_p=\frac{\sqrt{2p}}{(1+p)\sqrt{\lambda_*}}.
+\tag{156.4}
+$$
+
+为避免与来源等距 $T$ 混淆，本节把启动长度写为 $L$。
+
+**定理156.1（真实局部接收的非收敛反例）。** 对每个上述来源，任取整数 $L\ge3$ 满足
+
+$$
+\delta_L<\frac{\lambda_*}{4}.
+\tag{156.5}
+$$
+
+存在持久维数恰为 $D=4L$ 的接收空间 $K$、与来源独立的纯初态，以及每轮重复使用的全域通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K),
+$$
+
+使其实际最优终端误差
+
+$$
+e_n=\min_{\mathcal D_n}\frac12
+\left\|
+(\operatorname{id}_{M}\otimes\mathcal D_n)\mathcal R_n
+-\operatorname{Ad}_{T^{(n)}}
+\right\|_\diamond
+\tag{156.6}
+$$
+
+满足
+
+$$
+\boxed{
+\begin{aligned}
+\limsup_{k\to\infty}e_{L+2k}
+&\le\frac12+\delta_L,\\
+\liminf_{k\to\infty}e_{L+2k+1}
+&\ge\frac12+\frac{\lambda_*}{2}-\delta_L
+>\frac12+\delta_L.
+\end{aligned}
+}
+\tag{156.7}
+$$
+
+其中 $\mathcal R_n$ 为该同一装置的实际保留通道，最小化遍历所有只访问 $K$、输出完整档案 $B^{\otimes n}$ 的 CPTP 解码器；diamond 输入仍为原始二维活动记忆。因而 $(e_n)$ 不收敛。
+
+下面给出通道和全部误差估计的构造性证明。
+
+### 156.2 同一来源释放两份纯化的隐藏标签
+
+令
+
+$$
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},
+\qquad
+|\psi_0\rangle=|\Xi\rangle,
+\qquad
+|\psi_1\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{156.8}
+$$
+
+两态具有相同活动记忆边缘 $\rho_*$。再发射一次，定义
+
+$$
+|\chi_j\rangle_{MRB}=(T\otimes I_R)|\psi_j\rangle_{MR},
+\qquad j=0,1,
+\tag{156.9}
+$$
+
+系统次序按下标作固定置换。两份 $\chi_j$ 的 $M$ 边缘仍为 $\rho_*$。
+
+**引理156.2（发射后接收支撑正交）。** 两份 $\chi_j$ 在 $R\otimes B$ 上的 Schmidt 支撑是正交的二维子空间。因此存在一个全空间酉
+
+$$
+U:R\otimes B\longrightarrow R\otimes B
+$$
+
+同时满足
+
+$$
+(I_M\otimes U)|\chi_j\rangle
+=|\Xi\rangle_{MR}|j\rangle_B,
+\qquad j=0,1.
+\tag{156.10}
+$$
+
+**证明。** 实对称二阶矩阵满足 $AYA=(\det A)Y$。按照上述 vectorization 约定，$Y^{\mathsf T}=-Y$，故
+
+$$
+\operatorname{Tr}_R|\psi_0\rangle\langle\psi_1|
+=-AYA=-(\det A)Y.
+\tag{156.11}
+$$
+
+右侧的计算基对角元全为零，由（156.1）得到
+
+$$
+\operatorname{Tr}_{RB}|\chi_0\rangle\langle\chi_1|
+=\mathcal E\!\left(-AYA\right)=0.
+\tag{156.12}
+$$
+
+在 $\rho_*$ 的同一个本征基中写
+
+$$
+\rho_*=\sum_{r=0}^1\lambda_r|u_r\rangle\langle u_r|,
+\qquad
+|\chi_j\rangle
+=\sum_{r=0}^1\sqrt{\lambda_r}|u_r\rangle_M|v_{j,r}\rangle_{RB}.
+$$
+
+因 $\lambda_r>0$，式（156.12）逐矩阵元给出
+$\langle v_{1,s},v_{0,r}\rangle=0$ 对所有 $r,s$ 成立。每个固定 $j$ 的两向量本已正交归一，所以四个 $v_{j,r}$ 组成四维 $RB$ 的一组正交基。定义
+
+$$
+U|v_{j,r}\rangle=|\overline{u_r}\rangle_R|j\rangle_B.
+\tag{156.13}
+$$
+
+右侧也是完整正交基；这直接定义全空间酉。又因
+$|\Xi\rangle=\sum_r\sqrt{\lambda_r}|u_r\rangle|\overline{u_r}\rangle$，即得（156.10）。证毕。
+
+特别地，$U$ 在 $j=0$ 分支是第11节的平稳纯化吸收器。此处同时指定其在正交补空间上的作用，使 $j=1$ 分支输出另一个正交位标签。
+
+### 156.3 两个运行扇区与全域局部通道
+
+取互相正交的运行扇区
+
+$$
+K_A=Q\otimes R,\quad \dim K_A=4,
+\qquad
+K_B=R,\quad\dim K_B=2.
+\tag{156.14}
+$$
+
+其中 $Q\cong\mathbb C^2$。两扇区使用各自的 $R$ 副本，公式中的自然同构均固定。
+
+从 $K_A$ 到 $K_B$ 的接收步骤定义为：先测量并丢弃 $Q$ 标签 $j$，对 $R$ 与新发射位作用 $U$，再对保留的 $R$ 作用 $Y^j$，最后丢弃新位。其全域 Kraus 算子可写为
+
+$$
+L_{j,s}=Y^j(I_R\otimes\langle s|_B)
+U(\langle j|_Q\otimes I_{RB}),
+\qquad j,s\in\{0,1\},
+$$
+
+$$
+\mathcal C_A(X)=\sum_{j,s}L_{j,s}XL_{j,s}^*,
+\qquad
+\sum_{j,s}L_{j,s}^*L_{j,s}=I_{K_A\otimes B}.
+\tag{156.15}
+$$
+
+所以 $\mathcal C_A$ 是整个八维输入 $Q\otimes R\otimes B$ 到二维 $K_B$ 的 CPTP 通道。其实际作用为
+
+$$
+|j\rangle_Q|\Xi\rangle_{MR}
+\ \xrightarrow{\ T\;\text{及}\;\mathcal C_A\ }\
+|\psi_j\rangle_{MR}.
+\tag{156.16}
+$$
+
+从 $K_B$ 到 $K_A$ 的步骤直接使用酉
+
+$$
+V:R\otimes B\longrightarrow Q\otimes R,
+\qquad
+V=\mathsf S U,
+\qquad
+\mathsf S(|r\rangle_R|j\rangle_B)=|j\rangle_Q|r\rangle_R.
+\tag{156.17}
+$$
+
+令 $\mathcal C_B=\operatorname{Ad}_V$。式（156.10）给出
+
+$$
+|\psi_j\rangle_{MR}
+\ \xrightarrow{\ T\;\text{及}\;\mathcal C_B\ }\
+|j\rangle_Q|\Xi\rangle_{MR}.
+\tag{156.18}
+$$
+
+两个步骤都只操作持久接收空间和本轮新发射位；$M$ 从未受接收器控制。
+
+对原始输入空间定义两个通道
+
+$$
+\begin{aligned}
+\mathsf A(X)
+&=\sum_{j=0}^1X_{jj}|j\rangle\langle j|_Q
+\otimes|\Xi\rangle\langle\Xi|_{MR},\\
+\mathsf B(X)
+&=\sum_{j=0}^1X_{jj}|\psi_j\rangle\langle\psi_j|_{MR}.
+\end{aligned}
+\tag{156.19}
+$$
+
+输出分别嵌入 $M\otimes K_A$、$M\otimes K_B$。来源发射和相应接收步骤的合成记为 $\mathcal F$，则
+
+$$
+\mathcal F\mathsf A=\mathsf B,
+\qquad
+\mathcal F\mathsf B=\mathsf A.
+\tag{156.20}
+$$
+
+这些是通道恒等式，故张量任意外部参考后同样成立。理想通道已丢弃原始输入的基间相干；两相位所保留的经典标签可访问性仍不同。
+
+### 156.4 比较二周期的最优解码误差严格分离
+
+定义共同比较目标
+
+$$
+W_*|j\rangle=|j\rangle_Q|\Xi\rangle_{MR},
+\qquad
+\mathcal W_* =\operatorname{Ad}_{W_*}.
+\tag{156.21}
+$$
+
+分别优化仅作用于 $K_A$ 或 $K_B$、输出 $Q\otimes R$ 的全部 CPTP 解码器，得到比较误差 $e_A^*,e_B^*$。
+
+**引理156.3（两相位的解码间隔）。** 比较误差满足
+
+$$
+\boxed{
+e_A^*=\frac12,
+\qquad
+e_B^*\ge\frac12+\frac{\lambda_*}{2}.
+}
+\tag{156.22}
+$$
+
+**证明。** 对相位 A 取恒等解码器，输出是原始 qubit 完全退相干后再经 $W_*$ 编码。令 $\Delta$ 为计算基退相干，则
+
+$$
+\Delta=\frac12(\operatorname{id}+\operatorname{Ad}_Z),
+\qquad
+\frac12\|\Delta-\operatorname{id}\|_\diamond\le\frac12.
+$$
+
+故 $e_A^*\le1/2$。对 Bell 输入，任一解码器后的状态都在外部参考 $J$ 的计算基上分块对角。它与目标纯态
+
+$$
+|\Gamma\rangle
+=\frac{|0\rangle_J|0\rangle_Q+|1\rangle_J|1\rangle_Q}{\sqrt2}
+\otimes|\Xi\rangle_{MR}
+\tag{156.23}
+$$
+
+的重叠概率至多 $1/2$。用目标投影测量得到半迹距离至少 $1/2$，从而 $e_A^*=1/2$。
+
+对相位 B，固定任意解码器 $\mathcal D:R\to Q\otimes R$，令
+
+$$
+\sigma_j=(\operatorname{id}_M\otimes\mathcal D)
+|\psi_j\rangle\langle\psi_j|,
+\qquad
+f_j=\langle j|_Q\langle\Xi|_{MR}\,
+\sigma_j\,|j\rangle_Q|\Xi\rangle_{MR}.
+$$
+
+Bell 输入的实际解码态为 $\sigma=\tfrac12\sum_j|j\rangle\langle j|_J\otimes\sigma_j$，所以
+
+$$
+\langle\Gamma|\sigma|\Gamma\rangle
+=\frac14(f_0+f_1).
+\tag{156.24}
+$$
+
+设 $q_j$ 为解码输出标签等于 $j$ 的概率。目标投影是标签 $j$ 投影的子投影，故 $f_j\le q_j$。解码器再测量 $Q$ 构成 $R$ 上的二结果 POVM $E_0,E_1$，且
+
+$$
+q_j=\operatorname{Tr}(E_j\tau_j),
+\qquad
+\tau_0=\rho_*^{\mathsf T}=\rho_*,
+\qquad
+\tau_1=Y\rho_*Y=I-\rho_*.
+\tag{156.25}
+$$
+
+这里最后一个等式使用迹一、实对称的二阶矩阵。由于 $E_1=I-E_0$、$0\preceq E_0\preceq I$，直接的二态判别界给出
+
+$$
+\begin{aligned}
+q_0+q_1
+&=1+\operatorname{Tr}[E_0(\tau_0-\tau_1)]\\
+&\le1+\frac12\|\tau_0-\tau_1\|_1
+=2-2\lambda_*.
+\end{aligned}
+\tag{156.26}
+$$
+
+于是（156.24）至多为 $(1-\lambda_*)/2$。对纯目标，二结果测量 $\{|\Gamma\rangle\langle\Gamma|,I-|\Gamma\rangle\langle\Gamma|\}$ 给
+
+$$
+\frac12\|\sigma-|\Gamma\rangle\langle\Gamma|\|_1
+\ge1-\langle\Gamma|\sigma|\Gamma\rangle
+\ge\frac{1+\lambda_*}{2}.
+\tag{156.27}
+$$
+
+这一固定 Bell 输入下的下界对任意 $\mathcal D$ 成立，故也下界最优完整参考误差。证毕。
+
+式（156.22）已经把所有合法终端解码器纳入优化。两相位的差别由接收端可访问标签的判别能力给出，不能由再选一个接收器局部酉消去。
+
+### 156.5 独立纯初始化、全域补全与 $4L$ 维计费
+
+比较态 $|\Xi\rangle$ 不作为免费初态提供。以下从独立纯态出发，以有限精确档案压缩建立真实运行输入。
+
+取第141节的实际档案支撑 $S_t$，并令 $S_0=\mathbb C$。本来源满足
+
+$$
+s_t:=\dim S_t=1,2,3,4,4,\ldots
+\quad(t=0,1,2,3,4,\ldots),
+\qquad
+S_{t+1}\subseteq S_t\otimes B.
+\tag{156.28}
+$$
+
+对 $0\le t<L$ 选一个 $s_t$ 维启动扇区 $K_t$ 和等距同构 $J_t:S_t\to K_t$。全部持久空间取为正交直和
+
+$$
+K=\left(\bigoplus_{t=0}^{L-1}K_t\right)\oplus K_A\oplus K_B,
+$$
+
+$$
+\dim K=1+2+3+4(L-3)+4+2=4L.
+\tag{156.29}
+$$
+
+初态取一维 $K_0$ 扇区中的固定单位向量，与来源和外部参考作张量积。
+
+对每个 $0\le t<L$，把 $S_{t+1}$ 经 $J_t\otimes I_B$ 识别为 $K_t\otimes B$ 中的实际子空间，投影记为 $P_t$。当 $t<L-1$ 时，定义 $B_t$ 在该子空间上等于 $J_{t+1}(J_t^*\otimes I_B)$，并在正交补上取零。因此
+
+$$
+B_t^*B_t=P_t.
+$$
+
+选任意输出密度矩阵 $\tau_t$，定义全域启动通道
+
+$$
+\mathcal C_t(X)
+=B_tXB_t^*
++\operatorname{Tr}[(I-P_t)X]\tau_t.
+\tag{156.30}
+$$
+
+它是 CPTP，并在实际支撑上精确压缩。最后一步 $t=L-1$ 使用第11节的规范等距
+
+$$
+F_L:S_L\longrightarrow Q\otimes R=K_A
+$$
+
+定义同样的 $B_{L-1}$ 与补全（156.30），随后对 $Q$ 作完全退相干。这个最后通道仍是全域 CPTP。前 $L-1$ 步的实际档案均被精确保留；最后一步的主动退相干是反例装置的一部分。
+
+现在把所有 $\mathcal C_t$、$\mathcal C_A$、$\mathcal C_B$ 合成一个固定通道：测量输入持久扇区，将各扇区内 $K_s\otimes B$ 块送入对应全域通道，再嵌入其指定输出扇区。若 $P_s^K$ 是持久扇区投影，$\iota_{d(s)}$ 是目标扇区嵌入，则
+
+$$
+\mathcal C(X)=\sum_{s\in\{0,\ldots,L-1,A,B\}}
+\operatorname{Ad}_{\iota_{d(s)}}\!\left(
+\mathcal C_s\bigl[(P_s^K\otimes I_B)X(P_s^K\otimes I_B)\bigr]
+\right),
+\tag{156.31}
+$$
+
+其中各块经自然识别视为 $K_s\otimes B$ 上的算子，且
+
+$$
+d(t)=t+1\ (t<L-1),\qquad
+d(L-1)=A,\qquad d(A)=B,\qquad d(B)=A.
+$$
+
+各块通道完全正且保块迹，输入扇区投影和为恒等；所以（156.31）是整个 $K\otimes B$ 上的 CPTP 通道。它每一轮都相同。启动计数和运行相位由（156.29）的持久扇区承担，未使用不计费的外部时钟。
+
+### 156.6 真实轨道与真实档案目标的统一比较
+
+对每个 $n\ge3$，第11节给出一份仅作用于档案的规范坐标
+
+$$
+F_n:S_n\xrightarrow{\ \cong\ }Q\otimes R,
+\qquad
+W_n=(I_M\otimes F_n)T^{(n)},
+$$
+
+$$
+W_n|j\rangle=|j\rangle_Q\operatorname{vec}\sqrt{\rho_{j,n}},
+\qquad
+\|W_n-W_*\|=\delta_n.
+\tag{156.32}
+$$
+
+对等距通道，完整参考半 diamond 距离由相应等距的算子范数差控制，因此
+
+$$
+\frac12\|\operatorname{Ad}_{W_n}-\mathcal W_*\|_\diamond
+\le\delta_n.
+\tag{156.33}
+$$
+
+构造的真实启动通道 $\mathcal R_L$ 是 $\operatorname{Ad}_{W_L}$ 在 $Q$ 上退相干的结果。对 $\mathcal W_*$ 作相同退相干恰得 $\mathsf A$，故
+
+$$
+\frac12\|\mathcal R_L-\mathsf A\|_\diamond\le\delta_L.
+\tag{156.34}
+$$
+
+以后让真实状态和比较状态经过同一个来源及同一个固定接收器。由通道收缩性和（156.20），对于所有 $k\ge0$，
+
+$$
+\begin{aligned}
+\frac12\|\mathcal R_{L+2k}-\mathsf A\|_\diamond&\le\delta_L,\\
+\frac12\|\mathcal R_{L+2k+1}-\mathsf B\|_\diamond&\le\delta_L.
+\end{aligned}
+\tag{156.35}
+$$
+
+输出统一视为 $M\otimes K$。后续误差不随轮数累加。
+
+由第153节的输出支撑压缩，真实完整档案解码优化精确等价于输出规范 $Q\otimes R$、以 $\operatorname{Ad}_{W_n}$ 为目标的优化。对任一固定解码器，三角不等式使接收通道和目标通道两侧的扰动至多相加；再取最小值保留该界。运行态只占据一个扇区，任何该扇区上的解码器又都可通过正交补替换补成整个 $K$ 上的 CPTP 解码器。因此
+
+$$
+\begin{aligned}
+|e_{L+2k}-e_A^*|&\le\delta_L+\delta_{L+2k},\\
+|e_{L+2k+1}-e_B^*|&\le\delta_L+\delta_{L+2k+1}.
+\end{aligned}
+\tag{156.36}
+$$
+
+这里第二项 $\delta_n$ 比较的是第 $n$ 步真实来源档案目标与共同极限目标；不能只控制接收轨道而遗漏目标仍随 $n$ 变化这一项。
+
+代入（156.22），并使用 $\delta_n\to0$，即得（156.7）。由（156.5），两条界的间隔
+
+$$
+\frac{\lambda_*}{2}-2\delta_L>0.
+\tag{156.37}
+$$
+
+这完成定理156.1的证明。
+
+合成演化 $\mathcal F$ 确实具有外围本征值 $-1$：任选密度矩阵 $\eta$，由（156.20），
+
+$$
+\mathcal F\bigl(\mathsf A(\eta)-\mathsf B(\eta)\bigr)
+=-\bigl(\mathsf A(\eta)-\mathsf B(\eta)\bigr),
+$$
+
+而两项占据正交持久扇区，差不为零。真正阻止最优误差收敛的是（156.22）和（156.36）的可访问性间隔；仅有 $-1$ 本征值本身并不足以推出该结论。
+
+### 156.7 一个明确的三十二维实例
+
+**推论156.4（$a=b=1/\sqrt2$ 的定量反例）。** 存在 $32$ 维固定接收器，满足
+
+$$
+\boxed{
+\limsup_{k\to\infty}e_{8+2k}\le\frac{33}{64},
+\qquad
+\liminf_{k\to\infty}e_{9+2k}\ge\frac{311}{576},
+\qquad
+\frac{311}{576}-\frac{33}{64}=\frac7{288}>0.
+}
+\tag{156.38}
+$$
+
+**证明。** 取 $a=b=1/\sqrt2$，则
+
+$$
+p=\frac12,
+\qquad
+\rho_*=\begin{pmatrix}2/3&1/3\\1/3&1/3\end{pmatrix},
+\qquad
+\lambda_*=\frac{3-\sqrt5}{6}\ge\det\rho_*=\frac19.
+$$
+
+最后的不等式也可由 $\det\rho_*=\lambda_*(1-\lambda_*)\le\lambda_*$ 直接得到。于是（156.4）中的
+
+$$
+C_p=\frac1{(3/2)\sqrt{\lambda_*}}\le2.
+$$
+
+取启动长度 $L=8$，有
+
+$$
+\delta_8\le2\cdot2^{-7}=\frac1{64}<\frac1{36}\le\frac{\lambda_*}{4}.
+$$
+
+定理156.1给出 $D=4L=32$，以及
+
+$$
+\limsup_ke_{8+2k}\le\frac12+\frac1{64}=\frac{33}{64},
+$$
+
+$$
+\liminf_ke_{9+2k}\ge\frac12+\frac1{18}-\frac1{64}
+=\frac{311}{576}.
+$$
+
+相减即得所示严格分离。证毕。
+
+这是一份对所有终端解码器成立的解析反例。它针对同一固定物理接收器的单终端最优解码误差 $e_n$；它不反驳第150节前缀最优值 $\varepsilon_{D,N}$ 的单调收敛，也不是对最优物理接收器性能的新下界。二周期已经足以否定总会收敛的断言；本节未构造非单位根外围相位驱动的另一个反例，也未给出本装置全时域最大误差的精确值。
+
+## 追加锚（本行以下为增补区）
+
+## 157. 固定代数装置的全时域误差仍为实代数数
+
+第155节把固定接收器的渐近恢复误差表示为共同外围相位群上的连续函数。本节证明一个算术结论：若已知来源和固定物理装置均由实代数坐标给定，那么重新优化全部终端解码器后的全时域最坏误差，仍是一个实代数数。
+
+证明不把无限多个终端直接塞入有限量词公式。先证明每个有限终端值及共同相位群上的最大极限值均为实代数数；然后证明，全时域上确界若高于这个最大极限值，就必在某个有限终端取得。
+
+### 157.1 固定代数数据与完整参考任务
+
+记
+
+$$
+\mathbb A=\overline{\mathbb Q}\cap\mathbb R,
+\qquad
+\mathbb A_{\mathbb C}=\mathbb A+i\mathbb A.
+\tag{157.1}
+$$
+
+$\mathbb A$ 是实代数数构成的实闭域，$\mathbb A_{\mathbb C}$ 是复代数数域。称一个复矩阵具有代数坐标，若其全部条目的实部、虚部均属于 $\mathbb A$。
+
+固定本卷的同一非退化来源
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1,
+\tag{157.2}
+$$
+
+以及有限接收空间 $K=\mathbb C^D$、与来源及参考独立的纯初态 $\omega_K$，和逐轮重复的全域 CPTP 通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K).
+$$
+
+本节的代数假设为
+
+$$
+a,b\in\mathbb A_{\mathbb C},\qquad
+\omega_K\text{ 与 }J(\mathcal C)\text{ 具有代数坐标}.
+\tag{157.3}
+$$
+
+Choi 约定沿用第153节。代数假设只约束装置描述；初始来源态、参考以及终端解码器仍在原合同允许的全部复量子态和全部 CPTP 映射中优化。
+
+沿用第150、153节固定装置的单终端最优完整参考半迹误差 $e_n$，以及
+
+$$
+E_\infty=\sup_{n\ge1}e_n.
+\tag{157.4}
+$$
+
+持续运行的来源、接收初态与物理接收通道均固定，只有本地终端解码器可以依赖终端编号。再沿用第155节的实际共同相位群 $G$、相位通道 $\mathcal R_z$、稳定目标 $\mathcal V_*$，记
+
+$$
+h(z)=
+\min_{\mathcal D:\mathcal L(K)\to\mathcal L(H_{\mathrm{can}})\ {\rm CPTP}}
+\frac12\|
+(\operatorname{id}_M\otimes\mathcal D)\mathcal R_z-\mathcal V_*
+\|_\diamond,
+\qquad
+h_G=\max_{z\in G}h(z).
+\tag{157.5}
+$$
+
+**定理157.1（固定代数装置的全时域代数性）。** 在（157.2）—（157.3）下，
+
+$$
+\boxed{
+e_n\in\mathbb A\quad(n\ge1),\qquad
+h_G\in\mathbb A,\qquad
+E_\infty\in\mathbb A.
+}
+\tag{157.6}
+$$
+
+更确切地，
+
+$$
+\boxed{
+E_\infty\in
+\{h_G\}\cup\{e_n:n\ge1\}.
+}
+\tag{157.7}
+$$
+
+以下逐步证明。结论保持固定装置和完整参考合同，不给出发生有限峰值的统一终端界。
+
+### 157.2 有限终端值的代数性
+
+先记录实闭域量词消去的一个标准推论。
+
+**引理157.2（代数系数的唯一实值）。** 若单点集合 $\{t_*\}\subseteq\mathbb R$ 可以由一个系数属于 $\mathbb A$ 的有限实多项式量词公式定义，则 $t_*\in\mathbb A$。
+
+**证明。** 实闭域量词消去将该公式化为有限个代数系数多项式的符号条件的布尔组合。若 $t_*\notin\mathbb A$，则任何非零 $\mathbb A$ 系数一元多项式都不在 $t_*$ 处为零：它的实根均为实代数数。有限多个这样的多项式在 $t_*$ 的某个共同邻域内保持符号，因而该布尔组合也在该邻域内保持真值，不能定义单点。矛盾。证毕。
+
+这复用第142.1节已经采用的实闭域量词消去机制，不需要把最优值事先写成某个特定多项式的根。
+
+**引理157.3（各有限终端的代数值）。** 对每个固定整数 $n\ge1$，有 $e_n\in\mathbb A$。
+
+**证明。** 由（157.3），来源等距、其伴随、初始化嵌入，以及由接收 Choi 矩阵定义的线性映射，均具有代数坐标。有限次复合仍具有代数坐标。因此实际保留通道 $\mathcal R_n$ 与未接收的完整目标通道
+$\operatorname{Ad}_{T^{(n)}}$ 都具有代数坐标。
+
+本步直接保留完整有限档案 $H_n=B^{\otimes n}$，无需为实际支撑另选基。对这个固定有限输出空间，第153节的解码 SDP 证明原样适用：解码器 Choi 变量、距离证书和目标标量只有有限多个实坐标；厄米半正定约束可由全部主子式非负表达，偏迹等式及不等式也都是代数系数多项式条件。
+
+记该有限可行性公式为 $\operatorname{Feas}_n(X,Y,t)$。第153节的最小值取得保证，下式恰好定义单点 $\{e_n\}$：
+
+$$
+\begin{aligned}
+&\exists X,Y\ \operatorname{Feas}_n(X,Y,t),\\
+&\forall X',Y',t'\quad
+\operatorname{Feas}_n(X',Y',t')\Longrightarrow t\le t'.
+\end{aligned}
+\tag{157.8}
+$$
+
+公式的全部系数属于 $\mathbb A$。应用引理157.2即得结论。证毕。
+
+这里的量词仍遍历所有真实解码器坐标，没有把优化限制为代数坐标解码器。使用完整有限档案只是避免额外选基；第153节的四维实际支撑压缩仍可用于同一有限问题。
+
+### 157.3 实际可达谱与稳定目标保留代数坐标
+
+沿用第154、155节的初始化嵌入和实际转移
+
+$$
+\mathcal E_\omega(Z)=Z\otimes\omega_K,\qquad
+\mathcal R_n=\mathcal F^n\mathcal E_\omega,\qquad
+\mathscr V=
+\operatorname{span}_{\mathbb C}
+\{\mathcal F^j\mathcal E_\omega(Z):j\ge0,\ Z\in\mathcal L(M_{\mathrm{in}})\}.
+\tag{157.9}
+$$
+
+**引理157.4（代数的外围数据与稳定目标）。** 在某个具有代数坐标的 $\mathscr V$ 基中，$\mathcal A=\mathcal F|_{\mathscr V}$ 的矩阵具有代数坐标。其每个外围特征值 $\lambda_j$ 为复代数数，相应谱投影 $P_j$ 以及原矩阵坐标中的映射
+
+$$
+\Phi_j=P_j\mathcal E_\omega
+\tag{157.10}
+$$
+
+也具有代数坐标。第154节的稳定目标等距 $W_*$ 同样具有代数坐标。
+
+**证明。** 从四个初始矩阵单位出发，取
+$\mathcal F^j\mathcal E_\omega$ 的像，$0\le j<4D^2$。这些矩阵全有代数坐标，并由 Cayley–Hamilton 张成 $\mathscr V$。从中选取一个极大线性无关子族，就得到具有代数坐标的基。代数系数线性方程组的消元仍在 $\mathbb A_{\mathbb C}$ 内进行，所以 $\mathcal A$ 在该基中的矩阵也具有代数坐标。
+
+其特征值是代数系数特征多项式的根，因而属于 $\mathbb A_{\mathbb C}$。谱投影亦可由代数系数多项式取得：将最小多项式分解为不同特征值的互素幂因子，对相应因子用多项式中国剩余定理，选取在目标因子模下为一、在其余因子模下为零的多项式，再代入 $\mathcal A$。该构造允许稳定谱有 Jordan 块，也不要求谱投影正交。所有系数均为复代数数。回到原矩阵坐标并与 $\mathcal E_\omega$ 复合，得到（157.10）的代数性。
+
+最后，置 $p=|b|^2$。第154节的
+
+$$
+\rho_*=
+\frac{|m_0\rangle\langle m_0|+p|0\rangle\langle0|}{1+p},
+\qquad m_0=a|0\rangle+b|1\rangle
+$$
+
+具有代数坐标，且 $\det\rho_*=p^2/(1+p)^2$。第146节的二维平方根公式给
+
+$$
+\sqrt{\rho_*}
+=
+\frac{\rho_*+\frac p{1+p}I}
+{\sqrt{1+\frac{2p}{1+p}}}.
+\tag{157.11}
+$$
+
+这里的正平方根仍为实代数数。因而
+
+$$
+W_*|i\rangle
+=|i\rangle_Q|\operatorname{vec}\sqrt{\rho_*}\rangle_{MA}
+\tag{157.12}
+$$
+
+具有代数坐标。证毕。
+
+本引理使用通道 Choi 描述直接传递代数性，没有要求另选一份接收 Stinespring 实现或逐轮环境基。
+
+### 157.4 共同相位群的有限整数多项式定义
+
+沿用第155节互不相同的外围特征值，置
+
+$$
+g=(\lambda_1,\ldots,\lambda_s)\in\mathbb T^s,\qquad
+G=\overline{\{g^n:n\in\mathbb N_0\}}.
+\tag{157.13}
+$$
+
+第155节已经证明 $G$ 为紧群。定义整数关系格
+
+$$
+\Lambda=
+\left\{k=(k_1,\ldots,k_s)\in\mathbb Z^s:
+\prod_{j=1}^s\lambda_j^{k_j}=1\right\},
+\qquad
+\chi_k(z)=\prod_{j=1}^s z_j^{k_j}.
+\tag{157.14}
+$$
+
+**引理157.5（共同相位群的字符刻画）。** 有
+
+$$
+\boxed{
+G=\{z\in\mathbb T^s:\chi_k(z)=1\text{ 对全部 }k\in\Lambda\}.
+}
+\tag{157.15}
+$$
+
+**证明。** 若 $k\in\Lambda$，则 $\chi_k(g^n)=1$ 对全部非负整数 $n$ 成立；由连续性，该字符在 $G$ 上恒为一。得到正向包含。
+
+为证反向，固定一个满足右侧全部字符条件的 $z\in\mathbb T^s$。使用环面上的平移不变弦距离
+$d(u,v)=\max_j|u_j-v_j|$，令
+
+$$
+f(w)=\operatorname{dist}(w,G).
+$$
+
+由于 $G$ 为闭群，$f$ 连续、$f(1)=0$，且
+$f(wg')=f(w)$ 对全部 $g'\in G$ 成立。
+
+三角多项式的一致稠密性是 Stone–Weierstrass 定理的标准特例。给定任意 $\epsilon>0$，取有限三角多项式
+
+$$
+P(w)=\sum_{k\in F}c_k\chi_k(w),\qquad F\subset\mathbb Z^s\text{ 有限},
+$$
+
+使 $\|P-f\|_\infty<\epsilon$。沿实际共同相位作 Cesàro 平均：
+
+$$
+P_N(w)=\frac1N\sum_{n=0}^{N-1}P(wg^n).
+$$
+
+因 $f(wg^n)=f(w)$，仍有 $\|P_N-f\|_\infty<\epsilon$。逐项计算有限几何和，
+
+$$
+\frac1N\sum_{n=0}^{N-1}\chi_k(g)^n
+\longrightarrow
+\begin{cases}
+1,&k\in\Lambda,\\
+0,&k\notin\Lambda.
+\end{cases}
+$$
+
+因此 $P_N$ 一致收敛到
+
+$$
+\overline P(w)=\sum_{k\in F\cap\Lambda}c_k\chi_k(w),
+\qquad
+\|\overline P-f\|_\infty\le\epsilon.
+$$
+
+由 $z$ 的字符条件，$\overline P(z)=\overline P(1)$，故
+$|f(z)-f(1)|\le2\epsilon$。令 $\epsilon\downarrow0$，得到 $f(z)=0$，即 $z\in G$。证毕。
+
+这是紧环面闭子群字符分离的成熟结论的短证明。它保留实际共同轮次产生的全部整数关系，没有从近似相位值猜测稠密性。
+
+**推论157.6（相位群的有限实代数定义）。** 当前固定 $G$ 是由整数系数多项式方程定义的紧实代数集。
+
+**证明。** $\Lambda$ 是 $\mathbb Z^s$ 的子群，因此有限生成。取整数生成元
+$k^{(1)},\ldots,k^{(r)}$。字符的乘法规则说明，在（157.15）中只要求这 $r$ 个生成元对应的等式已经足够。
+
+写 $z_j=u_j+iv_j$，先加入单位圆方程
+$u_j^2+v_j^2=1$。在这些方程下，负幂可由共轭表示，所以
+
+$$
+\chi_k(z)=
+\prod_{k_j\ge0}(u_j+iv_j)^{k_j}
+\prod_{k_j<0}(u_j-iv_j)^{-k_j}
+$$
+
+是实坐标中的复值整数系数多项式。对每个生成元加入其实部等于一、虚部等于零的两个方程，即得有限实代数定义。证毕。
+
+这里须保留整数关系格本身，不能以其实线性张成或饱和格代替。例如单坐标 $\lambda=-1$ 的关系格为 $2\mathbb Z$，给相位群 $\{1,-1\}$；保留有限周期分支与保留连续相位同样必要。
+
+推论157.6是固定相位群的存在性描述。它不声称已经计算了 $\Lambda$ 的一份完整生成表，也不从浮点特征值推断全部整数关系。该推论本身甚至不需要特征值代数；（157.3）的作用还在于保证上一小节的转移谱投影与目标矩阵具有代数系数。
+
+### 157.5 极限优化的代数值
+
+**引理157.7（最大渐近误差为实代数数）。** 有 $h_G\in\mathbb A$。
+
+**证明。** 在当前固定装置下，
+
+$$
+\mathcal R_z=\sum_j z_j\Phi_j.
+\tag{157.16}
+$$
+
+由引理157.4，$\Phi_j$ 与 $\mathcal V_*=\operatorname{Ad}_{W_*}$ 的矩阵具有代数坐标；因此（157.16）的实坐标对 $z$ 的实部、虚部为代数系数线性函数。对 $z\in G$，第155节证明 $\mathcal R_z$ 为实际 CPTP 子序列极限，所以第153节的解码 SDP 及其最小值取得适用。
+
+把 $z$ 作为自由实变量，在这个 SDP 中用与（157.8）相同的最优值公式。全部可行性条件都是代数系数实多项式条件。量词消去给出当前函数 $h:G\to[0,1]$ 的图为定义在 $\mathbb A$ 上的半代数集。
+
+由推论157.6，$G$ 具有整数系数有限定义；由第155节，$G$ 紧且 $h$ 连续。因此 $h_G$ 确实由某个 $z\in G$ 取得。若以 $\operatorname{Graph}_h(z,t)$ 表示上述半代数图，则
+
+$$
+\begin{aligned}
+&\exists z\in G\quad \operatorname{Graph}_h(z,t),\\
+&\forall w\in G,\ u\in\mathbb R\quad
+\operatorname{Graph}_h(w,u)\Longrightarrow u\le t
+\end{aligned}
+\tag{157.17}
+$$
+
+是系数属于 $\mathbb A$ 的有限实量词公式，且恰好定义单点 $\{h_G\}$。应用引理157.2，得到 $h_G\in\mathbb A$。证毕。
+
+此处没有断言每个任意实相位点上的 $h(z)$ 都是实代数数。结论使用的是同一代数定义紧群上的整体最大值，以及代数系数的最优值图。
+
+### 157.6 从最大极限值到全时域上确界
+
+现在完成定理157.1。引理157.3、157.7已经给出每个 $e_n$ 和 $h_G$ 的代数性。第155节则给出
+
+$$
+\limsup_{n\to\infty}e_n=h_G.
+\tag{157.18}
+$$
+
+由于 $0\le e_n\le1$，$E_\infty$ 有限，且 $E_\infty\ge h_G$。
+
+若 $E_\infty=h_G$，由引理157.7即得 $E_\infty\in\mathbb A$。
+
+若 $E_\infty>h_G$，置
+
+$$
+\epsilon=\frac{E_\infty-h_G}{2}>0.
+$$
+
+由（157.18），存在有限整数 $N\ge2$，使
+
+$$
+e_n\le h_G+\epsilon<E_\infty
+\qquad(n\ge N).
+\tag{157.19}
+$$
+
+因此整个尾部的上确界严格低于 $E_\infty$，从而
+
+$$
+E_\infty=\max_{1\le n<N}e_n.
+\tag{157.20}
+$$
+
+有限最大值由某个终端 $n_0<N$ 取得，所以 $E_\infty=e_{n_0}\in\mathbb A$。这同时证明（157.6）和（157.7）。证毕。
+
+### 157.7 固定装置结论的边界
+
+本节没有得到与装置无关的有限峰值期限，也没有从代数性给出该值的最小多项式、次数界或已计算的根隔离区间。严格高于 $h_G$ 时的有限取得来自（157.18），其中的间隙与终端 $N$ 尚须另外确定。等于 $h_G$ 时，也未要求存在有限终端取得上确界。
+
+相位群的有限整数定义与最优值的有限实公式承担的是当前固定装置的数学结论。要把这些公式变成具体计算，仍须取得完整的实际整数关系数据及相应代数证书；本节没有将这些存在性步骤升级为已经运行的识别或优化程序。
+
+本节只对固定代数来源、固定初态与固定接收 Choi 矩阵证明全时域值为实代数数。它没有证明 $E_\infty$ 随来源及物理装置参数变化的函数具有半代数图，也没有证明对全部同维物理接收器再取最优后的值为实代数数。终端解码优化一直保留在原任务中，持续接收通道则始终未参与新的优化。
+
+所用实闭域量词消去、整数格有限生成、谱投影多项式表示和紧环面字符分离均为成熟工具。本节将它们与实际固定装置的渐近相位结构相接；结论为纸面证明，不作 Lean kernel 核验或数值计算声明。
+
+## 追加锚（本行以下为增补区）
