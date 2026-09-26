@@ -52711,3 +52711,270 @@ $$
 谱压缩使用的是经典极小极大原理；近端渐近、固定标签混合和解析续接沿用前节。本节的关系在于用实部归约把远端资源下界精确到等号，再用同一个实际处理器的核恒等式给出任意严格超额下的续接。两边使用相同的 $h_3(s)$、相同的全域资源和相同的窗口目标。
 
 ## 追加锚（本行以下为增补区）
+
+## 244. 端点余量压缩下的信息代价
+
+**定义 244.1（第三节点前的预算尾窗）。** 沿用第243节的实际任务与允许准备，记第三节点参数为 $u_3(s)=2h_3(s)-1$。给定 $F_s<\delta<1$，置
+
+$$
+\begin{aligned}
+p_\delta&=\frac{1+\sqrt{1-\delta^2}}2,\\
+\Delta_s(\delta)&=h_3(s)-p_\delta>0,\\
+T_s(\delta)&=[2p_\delta-1,u_3(s)].
+\end{aligned}
+\tag{244.1}
+$$
+
+这是由实际预算确定的区间，长度为 $2\Delta_s(\delta)$。令 $\Pi_3(s)$ 为强制的第三节点实规范纯态，$n_s$ 为第243节的实际分隔面单位法向，定义
+
+$$
+c_s=\langle q,\Pi_3(s)n_s\rangle\in\mathbb R.
+\tag{244.2}
+$$
+
+本节的代价均针对同一条实际准备，不将不同曲线的两个下确界当成共同实现。
+
+**引理 244.2（远端过零强制的有限任务代价）。** 使用第243节中固定的端点邻域 $p\ge p_R>1/2$。对充分小的实际任务，若一条满足两个预算、总预算为 $F_s<\delta<1$ 的允许准备，其实部平均 $S=(\rho+C\rho C)/2$ 在该邻域内于两个节点之间经过分隔面，则
+
+$$
+\sup_{u\in T_s(\delta)}I_Q(\rho_u)
+\ge\frac{c_s^2}{\Delta_s(\delta)^2},
+\qquad
+\int_{T_s(\delta)}I_Q(\rho_u)\,du
+\ge\frac{2c_s^2}{\Delta_s(\delta)}.
+\tag{244.3}
+$$
+
+证明。 设该过零发生于 $p_\times<h_3(s)$。第243.10式和实部归约给出
+
+$$
+\delta^2\ge J(S_{p_\times})^2
+\ge4p_\times(1-p_\times).
+\tag{244.4}
+$$
+
+因为 $p_\times>1/2$，函数 $4p(1-p)$ 严格递减，故 $p_\times\ge p_\delta$。于是 $u_\times=2p_\times-1$ 位于尾窗内，剩余参数长度满足 $u_3-u_\times\le2\Delta_s(\delta)$。
+
+在这个固定任务中取自伴算子
+
+$$
+O_s=|q\rangle\langle n_s|+|n_s\rangle\langle q|,
+\qquad \|O_s\|=1.
+\tag{244.5}
+$$
+
+远端分隔面的偏移为零，所以 $\operatorname{Tr}(O_sS_{u_\times})=0$；在强制第三节点，$S_{u_3}=\Pi_3$，故 $\operatorname{Tr}(O_sS_{u_3})=2c_s$。迹范数的对偶性及曲线长度给出
+
+$$
+2|c_s|
+\le\|S_{u_3}-S_{u_\times}\|_1
+\le\int_{u_\times}^{u_3}\|S'_u\|_1\,du
+\le\int_{u_\times}^{u_3}\sqrt{I_Q(\rho_u)}\,du.
+\tag{244.6}
+$$
+
+最后一步先用第237.12式的点态 SLD 迹速度界，再用第242节的 $I_Q(S_u)\le I_Q(\rho_u)$；它们也适用于秩变化点。以区间长度乘峰值平方根控制最后一项，得到（244.3）的第一个不等式。再用 Cauchy–Schwarz，得到
+
+$$
+4c_s^2\le(u_3-u_\times)
+\int_{u_\times}^{u_3}I_Q(\rho_u)\,du
+\le2\Delta_s(\delta)
+\int_{T_s(\delta)}I_Q(\rho_u)\,du,
+\tag{244.7}
+$$
+
+即第二个不等式。证毕。
+
+**定理 244.3（低内部代价族的端点集中下界）。** 设 $s\downarrow0$、$0<e_s=o(s)$，并取任意预算分配满足
+
+$$
+\sqrt{\eta_s^2+\zeta_s^2}=\delta_s=F_s+e_s.
+\tag{244.8}
+$$
+
+对任意一族满足全部实际任务条件及这两个预算的解析准备，只要满足以下任一个条件：
+
+$$
+s^4\sup_{K_s}I_Q(\rho_u)\longrightarrow0,
+\qquad\text{或}\qquad
+s^2\int_{K_s}I_Q(\rho_u)\,du\longrightarrow0,
+\tag{244.9}
+$$
+
+就有
+
+$$
+\begin{aligned}
+\liminf_{s\downarrow0}e_s^2
+\sup_{T_s(\delta_s)}I_Q(\rho_u)
+&\ge\frac{\pi^2}{4},\\
+\liminf_{s\downarrow0}\frac{e_s}{s}
+\int_{T_s(\delta_s)}I_Q(\rho_u)\,du
+&\ge\frac{\pi^2\sqrt{D_*}}2>0.
+\end{aligned}
+\tag{244.10}
+$$
+
+特别地，第243节中内部窗口的峰值和积分一致有界的准备族满足（244.9），因而必须同时支付这两个尾窗代价下界。结论允许任意点态秩与随 $s$ 变化的预算分配，包括两个零预算边。
+
+证明。 对每个实际准备取同一实部平均 $S$，并考察其首次分隔面过零。由 $\delta_s/s\to R_{\rm c}$，仍有 $\delta_s=O(s)$。第241节的共同内部紧区间正间隙排除了过零点留在远离第一鞍点与端点的紧区间。
+
+若一列首次过零趋于第一鞍点，则第243.12式的局部实混合估计及共同迹弧长下界仍成立；这两个局部步骤只要求过零位于该邻域，不要求总预算小于 $F_s$。沿该列，它们给出
+
+$$
+\liminf s^4\sup_{K_s}I_Q(\rho_u)
+\ge\frac{A_*}{R_{\rm c}^4}>0,
+\qquad
+\liminf s^2\int_{K_s}I_Q(\rho_u)\,du
+\ge\frac{B_*}{R_{\rm c}^2}>0.
+\tag{244.11}
+$$
+
+无论（244.9）中哪一个条件成立，都与（244.11）矛盾。所以首次过零一致趋于端点，最终进入固定的 $p\ge p_R$ 邻域。引理244.2遂适用于同一准备族。
+
+以下保留实际 $F_s$ 来处理任意小的正余量。由（244.1）及 $h_3>1/2$，精确有
+
+$$
+\Delta_s(\delta_s)
+=\frac{\delta_s^2-F_s^2}
+{2\bigl(\sqrt{1-F_s^2}+\sqrt{1-\delta_s^2}\bigr)}.
+\tag{244.12}
+$$
+
+将分子写为 $e_s(2F_s+e_s)$，结合 $F_s/s\to2\sqrt{D_*}$，得到
+
+$$
+\frac{\Delta_s(\delta_s)}{s e_s}
+\longrightarrow\sqrt{D_*}.
+\tag{244.13}
+$$
+
+这一推导使用精确差商，没有用一个可能大于 $e_s$ 的端点展开误差。
+
+为得到比（244.3）更强的渐近常数，下面保留整个窄尾窗内的参考概率约束。记首次过零处的实密度为 $S_\times$，并写
+
+$$
+S_\times=(1-\epsilon_s)|\omega_s\rangle\langle\omega_s|+E_s,
+\quad E_s\ge0,\quad E_s\omega_s=0,
+\quad\operatorname{Tr}E_s=\epsilon_s=O(s^2).
+\tag{244.14}
+$$
+
+这里 $\omega_s$ 为实单位向量；最大特征值大于 $1/2$，故唯一。最后的估计来自 $1-\lambda_1(S_\times)\le J(S_\times)^2/2\le\delta_s^2/2$。
+
+第243.7式在固定端点邻域给出 $n_s^{\mathsf T}S_\times n_s\ge m_0>0$，故 $|\langle n_s,\omega_s\rangle|$ 有统一正下界。过零条件 $n_s^{\mathsf T}S_\times q=0$ 于是强制
+
+$$
+(1-\epsilon_s)\langle n_s,\omega_s\rangle
+\langle\omega_s,q\rangle=-\langle n_s,E_sq\rangle,
+\qquad \langle\omega_s,q\rangle=O(s^2).
+\tag{244.15}
+$$
+
+这里控制了主实向量的整个参考分量，并非只控制一项节点相干。
+
+令 $h=h_3(s)$、$x_3=\sqrt{1-h}$，取第三节点的正 $q$ 规范纯向量
+$\psi_3=x_3q+\sqrt h\,v_3$，其中 $v_3\perp q$ 为实单位向量。定义同一剩余路径的 Fisher 长度
+
+$$
+\mathcal L_s=\int_{u_\times}^{u_3}\sqrt{I_Q(\rho_u)}\,du.
+\tag{244.16}
+$$
+
+下面证明 $\liminf\mathcal L_s/s\ge\pi\sqrt{D_*}$。只须考察 $\mathcal L_s=O(s)$ 的子列；若下极限违反所述界，就存在这样的子列。由第237.12式和实部归约，沿整个剩余区间有
+
+$$
+\bigl|\langle v_3,S_uv_3\rangle-h\bigr|
+\le\|S_u-S_{u_3}\|_1\le\mathcal L_s=O(s).
+\tag{244.17}
+$$
+
+将 $S_u$ 固定压缩到 $\operatorname{span}\{q,v_3\}$，其余空间合并成一个正交标记。这是一个固定 CPTP 映射。记保留的二阶正块为
+
+$$
+B_u=\begin{pmatrix}a_u&z_u\\z_u&b_u\end{pmatrix},
+\qquad
+ a_u=1-p(u),\quad b_u=\langle v_3,S_uv_3\rangle,
+\quad z_u=\langle q,S_uv_3\rangle.
+\tag{244.18}
+$$
+
+在所考察子列上，$a_u\ge x_3^2>0$、$a_u=O(s^2)$、$b_u=1-O(s)>0$ 一致成立。正性保证 $|z_u|\le\sqrt{a_ub_u}$，故可定义连续相干角
+
+$$
+\theta_s(u)=\arccos\frac{z_u}{\sqrt{a_ub_u}}\in[0,\pi].
+\tag{244.19}
+$$
+
+在 $|z_u|<\sqrt{a_ub_u}$ 处，二阶块为正定。以 $B'=	frac12(BL_B+L_BB)$、$I(B)=\operatorname{Tr}(BL_B^2)$ 定义其未归一化 SLD 信息，则具有精确表达式
+
+$$
+I(B_u)=\frac{a_u'^2}{a_u}+\frac{b_u'^2}{b_u}
++\frac{4a_ub_u}{a_u+b_u}\,\theta_s'(u)^2.
+\tag{244.20}
+$$
+
+为核对这一成熟的二能级度量公式，令 $t=a+b$，并以 $a/t=\cos^2\varphi$、$b/t=\sin^2\varphi$ 参数化归一化块。它的 Bloch 向量为
+$(\sin(2\varphi)\cos\theta,0,\cos(2\varphi))$。将此向量代入既有的混态 Bloch 公式 $I_Q=|r'|^2+(r^{\mathsf T}r')^2/(1-|r|^2)$，可得归一化信息 $4\varphi'^2+\sin^2(2\varphi)\theta'^2$，两个角的交叉项相消。未归一化块另有 $t'^2/t$ 项；恒等式 $t'^2/t+4t\varphi'^2=a'^2/a+b'^2/b$ 即给出（244.20）。所用混态 Bloch 公式见 Zhong、Sun、Ma、Wang、Nori，*Fisher information under decoherence in Bloch representation*，Phys. Rev. A **87**, 022337（2013），arXiv:1212.0917，式（11）的第一行；有限维 SLD 方程及逆算子表达也见 Šafránek，*Simple expression for the quantum Fisher information matrix*，arXiv:1801.00945，式（3）—（5）。这里是既有度量在所需两个角坐标中的直接计算。
+
+标记块的信息非负，固定映射的 SLD 单调性与（244.20）因而给出
+
+$$
+I_Q(\rho_u)\ge I_Q(S_u)
+\ge\frac{4a_ub_u}{a_u+b_u}\,\theta_s'(u)^2.
+\tag{244.21}
+$$
+
+该式只在正定二阶块处使用。若角接触零或 $\pi$，先将 $z_u/\sqrt{a_ub_u}$ 截在 $[-1+\varepsilon,1-\varepsilon]$，再取反余弦。截断后角坐标绝对连续，在截断区外导数为零，在区内由（244.21）控制。最后令 $\varepsilon\downarrow0$，便得到同样的积分长度界；这不要求点态 SLD 在秩变化处连续。
+
+在过零点，（244.14）—（244.15）给出
+
+$$
+z_{u_\times}
+=(1-\epsilon_s)\langle q,\omega_s\rangle
+\langle\omega_s,v_3\rangle+\langle q,E_sv_3\rangle
+=O(s^2).
+\tag{244.22}
+$$
+
+所以 $\theta_s(u_\times)\to\pi/2$；在第三节点，$z_{u_3}=x_3\sqrt h$，故 $\theta_s(u_3)=0$。同时整个剩余区间的系数满足
+
+$$
+\frac{4a_ub_u}{a_u+b_u}
+\ge4x_3^2(1-o(1)).
+\tag{244.23}
+$$
+
+积分（244.21），并用角的总变差至少为两端差，得到
+
+$$
+\mathcal L_s
+\ge2x_3(1-o(1))
+\bigl|\theta_s(u_\times)-\theta_s(u_3)\bigr|
+\ge\pi\sqrt{D_*}\,s(1-o(1)).
+\tag{244.24}
+$$
+
+这证明了所需下极限：任何使它失效的子列都已包含在 $\mathcal L_s=O(s)$ 的情形内，并被（244.24）排除。
+
+最后，剩余区间长度至多 $2\Delta_s(\delta_s)$。用峰值界及 Cauchy–Schwarz 分别控制（244.16），并代入（244.13），得到
+
+$$
+\begin{aligned}
+\sup_{T_s(\delta_s)}I_Q
+&\ge\frac{\pi^2D_*s^2(1-o(1))}
+{4\Delta_s(\delta_s)^2},\\
+\int_{T_s(\delta_s)}I_Q\,du
+&\ge\frac{\pi^2D_*s^2(1-o(1))}
+{2\Delta_s(\delta_s)}.
+\end{aligned}
+\tag{244.25}
+$$
+
+这正是（244.10）。所有误差先按任务尺度 $s$ 控制，余量 $e_s$ 只通过精确差商（244.12）进入；结论因此涵盖任意小的正 $e_s=o(s)$。证毕。
+
+**注记 244.4（窗口选择与资源集中）。** 对内部窗口而言，第243节允许每个严格超临界预算都有有界代价。对定理244.3的同一准备，第三节点前的尾窗却只有约 $2\sqrt{D_*}s e_s$ 的长度；近纯谱结构与过零条件使相干角从近似 $\pi/2$ 回到零；同时参考概率在整个窄区间仍为 $D_*s^2(1+o(1))$，因此恢复规范节点要求至少 $\pi\sqrt{D_*}s(1-o(1))$ 的 Fisher 长度。因此尾窗峰值至少按 $e_s^{-2}$ 增长，积分至少按 $s/e_s$ 增长。例如 $e_s=s^r$、$r>1$ 时，两者分别有 $s^{-2r}$ 与 $s^{1-r}$ 阶的下界。
+
+这些是必要下界，本节未证明其常数最优或存在同阶上界。（244.9）是将过零排除在第一鞍点附近的明确条件；没有该条件时，允许准备可以支付内部窗口的代价，因而不能对所有准备无条件套用尾窗结论。所用谱约束、迹范数对偶性与 Fisher 长度不等式均为前节的既有工具；新增比较把同一实际任务的资源余量、剩余参数长度及规范节点相干连接起来。
+
+## 追加锚（本行以下为增补区）
