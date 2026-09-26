@@ -4441,3 +4441,431 @@ $$
 上述三个反例把成本边界的关系要求写成了严格不同的量词：从哪个来源出发、容许哪些记录后继、对什么扰动保持认证。定理 68.2 和 70.2 给出能实际履行后两类量词的共同余量条件；定理 71.2 同时表明，这种充分条件的最优性仍不等于物理失效阈值的精确性。
 
 ## 追加锚（本行以下为增补区）
+
+## 73. 相干暗态给出一个可精确计算的失效仪器
+
+**定义 73.1（同一二维端口上的两个完整仪器）。** 继续使用第 71 节的共同活动空间 $\mathcal H=\mathbb C^2$、两个正交记录标签“未点击、点击”和相同量子输出空间。名义仪器 $\Gamma_0$ 与相干暗态仪器 $\Gamma_+$ 的 Kraus 算子为
+
+$$
+Q_0=|0\rangle\langle1|,\qquad L_0=|0\rangle\langle0|,
+\qquad
+Q_+=P_+=|+\rangle\langle+|,\qquad L_+=|0\rangle\langle-|,
+$$
+
+其中 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。完整通道记为
+
+$$
+\Gamma_i(\rho)
+=|\varnothing\rangle\langle\varnothing|\otimes Q_i\rho Q_i^\dagger
++|\mathrm{click}\rangle\langle\mathrm{click}|\otimes L_i\rho L_i^\dagger,
+\qquad i\in\{0,+\}.
+$$
+
+每次未点击后重复同一仪器，第一次点击后停止；永久未点击的实际成本为无穷。两组算子均满足 $Q_i^\dagger Q_i+L_i^\dagger L_i=I$，因此都是完整合法仪器。
+
+**定理 73.2（显式失效仪器的完整半 diamond 距离）。** 记
+
+$$
+c_*=\sqrt{\frac{11+5\sqrt5}{32}}.
+$$
+
+则
+
+$$
+\boxed{
+\frac12\|\Gamma_+-\Gamma_0\|_\diamond=c_*.
+}
+$$
+
+该最大区分距离可由单个纯系统输入达到，针对这两个指定通道不需要外部参考系统。$\Gamma_+$ 从 $P_+$ 出发永不点击，所以第 71.1 条的全量子同接口失效距离满足
+
+$$
+\boxed{
+\frac45\le\mathfrak r_{\mathrm{fail}}\le c_*<1.
+}
+$$
+
+右侧是由一个具体失效仪器提供的上界；此处不把 $c_*$ 声明为全体失效仪器的最小距离。
+
+证明。由于通道之差保持 Hermitian 性，其 diamond 范数可以在纯联合输入上取最大，参考维数取输入维数已经足够。这里使用 John Watrous，[*The Theory of Quantum Information*，第 3.3.3 节、定理 3.51、式 (3.291)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf#page=184) 的标准表征；同节定理 3.52 说明其通道区分含义。下面为当前两个完整仪器计算该最大值，而不是由系统输入上的若干检验代替 diamond 范数。
+
+对任意纯联合输入 $|\Psi\rangle_{R\mathcal H}$，写系统边缘态为
+
+$$
+\rho=
+\begin{pmatrix}
+a&u+iv\\
+u-iv&1-a
+\end{pmatrix},
+\qquad
+0\le a\le1,\quad u^2+v^2\le a(1-a),
+\qquad x=a-u.
+$$
+
+每个记录块都是两个未归一化纯态的差。对任意向量 $\xi,\zeta$，由它们张成的至多二维空间中的迹与行列式，
+
+$$
+\bigl\||\xi\rangle\langle\xi|-|\zeta\rangle\langle\zeta|\bigr\|_1
+=\sqrt{(\|\xi\|^2+\|\zeta\|^2)^2-4|\langle\xi,\zeta\rangle|^2}.
+\tag{73.1}
+$$
+
+线性相关或零向量情形由同式直接包含。对未点击块，两向量的范数平方为 $1/2+u$、$1-a$，内积模平方为 $\bigl((1-a+u)^2+v^2\bigr)/4$；对点击块，相应三量为 $1/2-u$、$a$、$\bigl((a-u)^2+v^2\bigr)/2$。正交记录块的迹范数相加，故完整输出半迹距离恰为
+
+$$
+F(x,v)
+=\frac12\left[
+\sqrt{\frac54-x-v^2}
++\sqrt{\frac14+x-x^2-2v^2}
+\right].
+\tag{73.2}
+$$
+
+将 $\rho$ 的虚部 $v$ 置零保持正性与迹一，且不改变 $x$，两个根号内的数均不减。因此最大值可在实密度矩阵上取得。
+
+定义实对称算子
+
+$$
+H=
+\begin{pmatrix}
+1&-1/2\\
+-1/2&0
+\end{pmatrix}.
+$$
+
+有 $x=\operatorname{Tr}(\rho H)$，故
+
+$$
+x\in J:=
+\left[\frac{1-\sqrt2}{2},\frac{1+\sqrt2}{2}\right].
+$$
+
+反过来，$J$ 中每个点都由某个实纯态达到：取 $H$ 的实正交本征基，对两个本征向量作具有适当实系数的归一化叠加，其期望遍历整个区间。因此 diamond 最大化归结为单变量函数
+
+$$
+f(x)=F(x,0)
+=\frac12\left[\sqrt{\frac54-x}+\sqrt{\frac14+x-x^2}\right],
+\qquad x\in J.
+$$
+
+两项在 $J$ 上均为凹函数，第一项严格凹。其内部导数为
+
+$$
+f'(x)
+=\frac14\left[
+-\frac1{\sqrt{5/4-x}}
++\frac{1-2x}{\sqrt{1/4+x-x^2}}
+\right].
+$$
+
+取 $x_*=(3-\sqrt5)/4$，它位于 $J$ 内部，直接代入给 $f'(x_*)=0$。所以它是唯一最大点。记 $s=\sqrt5$，则
+
+$$
+\frac54-x_*=\frac{2+s}{4},\qquad
+\frac14+x_*-x_*^2=\frac{1+s}{8},
+$$
+
+$$
+\sqrt{\left(\frac54-x_*\right)
+\left(\frac14+x_*-x_*^2\right)}
+=\frac{3+s}{8}.
+$$
+
+于是 $f(x_*)^2=(11+5s)/32$，得到精确距离。由于 $x_*$ 也可由实纯系统态实现，外部参考并非达到这对通道最坏距离的必要资源。这不推广为任意仪器对都无纠缠辅助增益。
+
+最后，$Q_+|+\rangle=|+\rangle$ 且 $L_+|+\rangle=0$，故 $\Gamma_+$ 是一个实际不终止仪器。它给 $\mathfrak r_{\mathrm{fail}}\le c_*$；下界沿用定理 71.2。$\sqrt5<3$ 还给 $c_*^2<26/32<1$。$\square$
+
+## 74. 限制未点击后继的相干权限，会改变失效距离
+
+**定义 74.1（对角不变的未点击扰动类）。** 仍固定定义 73.1 的名义仪器与完整端口。称实际未点击映射 $\mathcal N$ 对角不变，若每个计算基对角密度矩阵经过 $\mathcal N$ 后仍为对角正算子；输出可以未归一化。不要求它抹除任意输入的相干项，也不要求点击分支满足额外对角条件。
+
+令 $\mathfrak r_{\mathrm{diag}}$ 为第 71.1 条失效距离的受限版本：取下确界时只允许未点击映射对角不变的完整仪器，距离仍用完整半 diamond 范数。活动空间和完整量子输出接口均不改变。
+
+**定理 74.2（对角不变类的失效距离严格大于相干例子的距离）。** 有
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{diag}}=1,
+\qquad
+\mathfrak r_{\mathrm{fail}}\le c_*<\mathfrak r_{\mathrm{diag}}.
+}
+$$
+
+因而即使名义过程把两个基输入都送到同一个量子输出，允许扰动生成相干后继仍会严格缩小到永久未点击的距离。
+
+证明。设对角不变的 $\mathcal N$ 从某初态 $\rho$ 出发具有正的永不点击概率。因为 $\rho\le I$，有 $I/2\ge\rho/2$；正性给
+
+$$
+\operatorname{Tr}\mathcal N^n(I/2)
+\ge\frac12\operatorname{Tr}\mathcal N^n(\rho).
+$$
+
+所以从 $I/2$ 出发也有正的永久生存概率，而且每个 $\mathcal N^n(I/2)$ 都对角。应用第 71.2 条证明中的 Cesàro 平均构造，得到一个对角未点击固定态
+
+$$
+\sigma=aP_0+(1-a)P_1,\qquad
+\mathcal N(\sigma)=\sigma.
+$$
+
+若 $0<a<1$，$\sigma$ 满秩。完整保迹性使点击效果在 $\sigma$ 上期望为零，正性迫使整个点击效果为零。输入 $P_0$ 时，实际仪器必未点击，名义仪器必点击，完整输出可完美区分，距离为一。
+
+若 $a=1$，同一个输入 $P_0$ 直接给上述正交记录。若 $a=0$，实际仪器对 $P_1$ 输出未点击块中的 $P_1$，名义仪器对它输出未点击块中的 $P_0$。记录虽相同，量子后继正交，完整输出仍可完美区分。
+
+因此受限类中每个失效仪器与 $\Gamma_0$ 的完整半 diamond 距离都至少为一；通道间该距离至多为一，所以恰为一。未点击恒等映射、零点击分支给一个该类内的失效实例，保证下确界的对象非空。再结合定理 73.2。$\square$
+
+## 75. 同一次校准若丢掉量子后继，失效距离可以变为零
+
+**定义 75.1（只保留单轮结果标签的校准）。** 对共同完整仪器 $\Gamma$，定义结果通道
+
+$$
+\mathcal M_\Gamma(\rho)
+=\operatorname{Tr}_{\mathcal H}\Gamma(\rho),
+\qquad
+\delta_{\mathrm{rec}}(\Gamma,\Gamma_0)
+=\frac12\|\mathcal M_\Gamma-\mathcal M_{\Gamma_0}\|_\diamond.
+$$
+
+它保留单次调用的未点击或点击标签。校准实验仍可使用外部参考；但每次调用后的活动量子输出不属于读出。该伪距离可能把不同完整仪器识别成同一点。
+
+令 $\mathfrak r_{\mathrm{rec}}$ 为对同一名义仪器、同一不终止目标，使用 $\delta_{\mathrm{rec}}$ 取代完整距离得到的下确界。这里的读出不包括重复调用后的全部时间记录；后者是另一类实验。
+
+**定理 75.2（显式仪器同时区分三种校准合同）。** 对定义 73.1 的两个仪器，有
+
+$$
+\boxed{
+\delta_{\mathrm{rec}}(\Gamma_+,\Gamma_0)=\frac1{\sqrt2}
+<
+\frac12\|\Gamma_+-\Gamma_0\|_\diamond=c_*.
+}
+$$
+
+另取
+
+$$
+Q_c=P_1,\qquad L_c=P_0
+$$
+
+定义完整仪器 $\Gamma_c$。则
+
+$$
+\boxed{
+\mathcal M_{\Gamma_c}=\mathcal M_{\Gamma_0},\qquad
+\frac12\|\Gamma_c-\Gamma_0\|_\diamond=1,\qquad
+\mathfrak r_{\mathrm{rec}}=0.
+}
+$$
+
+这些等式对同一合法二维仪器族成立，不以改变活动维数或把未读 Kraus 指标当作记录实现。
+
+证明。两个二结果测量的未点击效果差为
+
+$$
+F=P_+-P_1
+=\frac12
+\begin{pmatrix}
+1&1\\
+1&-1
+\end{pmatrix},
+\qquad
+F^2=\frac12I.
+$$
+
+对任意联合输入态 $\eta_{R\mathcal H}$，两结果通道的差在两个记录块上分别为 $X_R$ 与 $-X_R$，其中
+
+$$
+X_R=\operatorname{Tr}_{\mathcal H}[(I_R\otimes F)\eta].
+$$
+
+用 $F=F_+-F_-$ 的正负部分分解，得到
+
+$$
+\|X_R\|_1
+\le\operatorname{Tr}[(I_R\otimes|F|)\eta]
+\le\|F\|_\infty.
+$$
+
+完整记录差的半迹范数恰为 $\|X_R\|_1$。取 $F$ 的一个归一化本征态作为系统输入就达到 $\|F\|_\infty=1/\sqrt2$；这也证明参考系统不能提高本例的结果通道距离。定理 73.2 给完整距离，而
+
+$$
+c_*^2-\frac12=\frac{5(\sqrt5-1)}{32}>0
+$$
+
+给严格不等式。
+
+对 $\Gamma_c$，未点击、点击效果仍为 $P_1,P_0$，与 $\Gamma_0$ 完全相同，故两个结果通道作为线性映射相等，包括任意参考扩展。另一方面，输入 $P_1$ 后，$\Gamma_c$ 永久保持 $P_1$ 且不点击；$\Gamma_0$ 的单轮未点击后继为 $P_0$，下一轮必点击。第一轮的两个量子输出已经正交，所以完整单轮距离为一。由于 $\Gamma_c$ 是结果伪距离为零的实际失效仪器，$\mathfrak r_{\mathrm{rec}}=0$。$\square$
+
+相同效果遗漏后继的现象属于量子仪器与 POVM 的既有区别；它不被当作新的测量原理。这里的计算把它与同一个名义仪器的正失效半径、相干失效上界及对角不变阈值放在同一比较中。
+
+## 76. 有限占据态给出超出原证书半径的显式成本界
+
+**定义 76.1（有限调用的归一化占据态）。** 对任一同接口实际仪器 $\Gamma$，记未点击、点击分支为 $\mathcal N,\mathcal C$。给定初态 $\rho$、整数 $n\ge1$，置
+
+$$
+\rho_j=\mathcal N^j(\rho),\qquad
+s_j=\operatorname{Tr}\rho_j,\qquad
+\mu_n=\sum_{j=0}^{n-1}s_j=\mathbb E_\rho\min(\mathsf N,n),
+$$
+
+$$
+\sigma_n=\frac1{\mu_n}\sum_{j=0}^{n-1}\rho_j.
+$$
+
+由于 $s_0=1$，有 $\mu_n\ge1$，且 $\sigma_n$ 是归一化密度矩阵。它把前 $n$ 轮的活动态按实际活动质量组合；定义不使用无限运行的收敛性。
+
+**定理 76.2（$\delta<4/5$ 校准球中的统一平均等待界）。** 设实际完整仪器满足
+
+$$
+\frac12\|\Gamma-\Gamma_0\|_\diamond\le\delta<\frac45,
+\qquad \delta\ge0.
+$$
+
+则对每个初态 $\rho$，实际等待均值满足
+
+$$
+\boxed{
+\mathbb E_\rho\mathsf N
+\le
+\frac{3-\delta}{(1-\delta)(4/5-\delta)}.
+}
+$$
+
+该上界同时覆盖整个指定校准球与全部初态，不预设其中各实际模型已经终止。因此它在 $1/2\le\delta<4/5$ 的范围仍给有限的显式成本保证，尽管第 69.1 条标量余量证书族无法认证这些距离。
+
+证明。先固定有限 $n$，不假定无限成本势存在。由望远镜恒等式，
+
+$$
+\mathcal N(\sigma_n)-\sigma_n
+=\frac{\rho_n-\rho}{\mu_n},
+\qquad
+\operatorname{Tr}\mathcal C(\sigma_n)
+=\frac{1-s_n}{\mu_n}.
+$$
+
+把 $\sigma_n$ 全放入未点击记录块形成理想联合态，记为 $|\varnothing\rangle\langle\varnothing|\otimes\sigma_n$。记录块正交、点击分支为正以及 $\|\rho_n-\rho\|_1\le s_n+1$ 给
+
+$$
+D\!\left(
+\Gamma(\sigma_n),
+|\varnothing\rangle\langle\varnothing|\otimes\sigma_n
+\right)
+\le\frac{(1+s_n)+(1-s_n)}{2\mu_n}
+=\frac1{\mu_n}.
+\tag{76.1}
+$$
+
+这里 $D$ 为半迹距离。
+
+设 $\sigma_n$ 的最小本征值为 $t\in[0,1/2]$。选择最大本征值对应的秩一投影 $P$，则 $D(\sigma_n,P)=t$，包括 $t=1/2$ 的退化情况。记实际点击效果为 $E=\mathcal C^*(I)$。名义仪器对 $P_0$ 必点击，完整校准界于是给
+
+$$
+\langle0|E|0\rangle\ge1-\delta,\qquad
+\operatorname{Tr}E\ge1-\delta.
+$$
+
+由 $\sigma_n\ge tI$，
+
+$$
+t(1-\delta)
+\le\operatorname{Tr}(\sigma_nE)
+=\frac{1-s_n}{\mu_n}
+\le\frac1{\mu_n},
+\qquad
+t\le\frac1{(1-\delta)\mu_n}.
+\tag{76.2}
+$$
+
+另一方面，对任意纯态投影 $P$，第 71.2 条的秩一计算给
+
+$$
+D\!\left(
+\Gamma_0(P),
+|\varnothing\rangle\langle\varnothing|\otimes P
+\right)
+=\frac{a+\sqrt{a^2+4(1-a)^2}}2
+\ge\frac45,
+\qquad a=\operatorname{Tr}(P P_0).
+\tag{76.3}
+$$
+
+这个纯态不等式只涉及名义仪器；它不要求 $P$ 是实际仪器的固定态。沿
+
+$$
+\Gamma_0(P),\quad
+\Gamma_0(\sigma_n),\quad
+\Gamma(\sigma_n),\quad
+|\varnothing\rangle\langle\varnothing|\otimes\sigma_n,\quad
+|\varnothing\rangle\langle\varnothing|\otimes P
+$$
+
+应用三角不等式。名义通道的收缩性、校准界和式 (76.1)—(76.3) 依次给
+
+$$
+\frac45
+\le 2t+\delta+\frac1{\mu_n}
+\le\delta+\frac1{\mu_n}\left(1+\frac2{1-\delta}\right).
+$$
+
+因为 $\delta<4/5$，可移项得到
+
+$$
+\mu_n
+\le\frac{3-\delta}{(1-\delta)(4/5-\delta)}.
+$$
+
+最后令 $n\to\infty$，$\min(\mathsf N,n)$ 单调增加到实际扩展等待 $\mathsf N$，单调收敛给结论并排除正概率的无穷等待。$\square$
+
+**推论 76.3（同一校准球中的两类有效成本证书）。** 当 $0\le\delta<1/2$ 时，可同时使用第 68.3 条和定理 76.2，得到
+
+$$
+\boxed{
+\sup_{\Gamma:\,D_\diamond(\Gamma,\Gamma_0)\le\delta}
+\ \sup_\rho\mathbb E_\rho^\Gamma\mathsf N
+\le
+\min\left\{
+\frac2{1-2\delta},
+\frac{3-\delta}{(1-\delta)(4/5-\delta)}
+\right\}.
+}
+$$
+
+当 $1/2\le\delta<4/5$ 时，第二项仍独立有效。这里 $D_\diamond$ 表示完整仪器的半 diamond 距离。
+
+证明。名义最大成本为二，所以第 68.3 条给第一项；定理 76.2 给第二项，且两项对相同的每个实际仪器与初态同时成立，因而可取其最小值。$\square$
+
+
+## 77. 一个固定装置的四个半径不能互换
+
+**定义 77.1（固定名义装置的四种比较）。** 对 $\Gamma_0$，同时保留以下量词与观察范围：
+
+| 量 | 校准所见 | 允许的实际仪器或证书 |
+| --- | --- | --- |
+| $\mathfrak r_{\mathrm{cert}}$ | 完整记录与量子后继 | 第 69.1 条的正漂移标量余量证书 |
+| $\mathfrak r_{\mathrm{fail}}$ | 完整记录与量子后继 | 全部同接口二维齐次 CP 仪器 |
+| $\mathfrak r_{\mathrm{diag}}$ | 完整记录与量子后继 | 未点击映射保持计算基对角态的仪器 |
+| $\mathfrak r_{\mathrm{rec}}$ | 单轮经典结果标签 | 全部同接口二维齐次 CP 仪器 |
+
+前三行使用相同的完整距离，但第一行只优化第 69.1 条的特定证书族，后两行寻找实际失效过程；第四行更换了校准读出。定理 76.2 给出了越过第一行半径的另一类有效成本论证，故此处不把某个证书族的半径等同于全部可认证范围。
+
+**定理 77.2（同一来源下的严格半径分层）。** 上述四种比较满足
+
+$$
+\boxed{
+\mathfrak r_{\mathrm{rec}}=0
+<
+\mathfrak r_{\mathrm{cert}}=\frac12
+<
+\frac45
+\le
+\mathfrak r_{\mathrm{fail}}
+\le
+\sqrt{\frac{11+5\sqrt5}{32}}
+<
+\mathfrak r_{\mathrm{diag}}=1.
+}
+$$
+
+证明。证书半径由定理 69.2 与名义最大均值二得到；完整失效下界由定理 71.2 给出；显式相干仪器与其精确距离由定理 73.2 给上界；对角不变阈值和结果伪距离阈值分别由定理 74.2、75.2 给出。各量均针对同一个 $\Gamma_0$，所以这些结论可以共同排列；并未把不同名义装置各自达到的极值拼在一起。$\square$
+
+**定义 77.3（仍待确定的全量子最小距离）。** 定理 77.2 将全量子失效距离限制在闭区间 $[4/5,c_*]$，但未决定它是否等于显式仪器 $\Gamma_+$ 的距离 $c_*$。证明等号仍需要对全部同接口不终止 CP 仪器建立距离至少为 $c_*$ 的下界；推翻等号则需要一个距离严格小于 $c_*$ 的实际不终止仪器。单独优化 $\Gamma_+$ 的输入，或只给出若干候选的距离，均未履行这个全仪器量词。
+
+## 追加锚（本行以下为增补区）
