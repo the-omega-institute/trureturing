@@ -6157,3 +6157,474 @@ $$
 [^wave_endpoint_arc]: Edward Bierstone and Pierre D. Milman, “Semianalytic and subanalytic sets,” *Publications Mathématiques de l’IHÉS* **67** (1988), 5–42，[原文 PDF](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf)，[doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126)。Lemma 6.3(1)，印刷第 33 页，给一维半解析集在删点后局部连通条件下的实解析参数弧。第 89 节使用连续正向单值图核对条件，再用两个解析坐标的整数消失阶取得主项与余项；代数首系数由有限图闭包另证，并非该引理直接宣告。
 
 ## 追加锚（本行以下为增补区）
+
+## 91. 最近失效装置只有一个临界未点击方向
+
+**定义 91.1（最近失效集合与未点击谱）。** 保留定义 87.1 的名义仪器
+$Q_0=|0\rangle\langle1|$、$L_0=|0\rangle\langle0|$，以及完整二维活动记忆、两个结果记录与同一仪器齐次重复的合同。记
+
+$$
+\mathfrak F_R=\{\Gamma\in\mathfrak F:\delta(\Gamma)=R\},
+\qquad
+\mathcal A_\Gamma=\mathcal N_\Gamma^*,
+\qquad
+r(\Gamma)=\operatorname{spr}(\mathcal N_\Gamma).
+\tag{91.1}
+$$
+
+这里 $\operatorname{spr}$ 是作用于全部复矩阵空间的谱半径；它也等于伴随映射的谱半径。引理 79.1 保证 $\mathfrak F_R$ 非空紧致，第 85 节给 $0<R<1$。对无永久失效的仪器，记
+
+$$
+T_\Gamma=\sum_{n\ge0}\mathcal A_\Gamma^n(I),
+\qquad M(\Gamma)=\|T_\Gamma\|_\infty.
+$$
+
+**定理 91.2（最近失效的唯一暗态与统一谱分离）。** 每个 $\Gamma_*\in\mathfrak F_R$ 恰有一个未点击固定密度矩阵，且它是纯态 $P=|\psi\rangle\langle\psi|$。取与 $\psi$ 正交的单位向量 $\eta$，可以把任一未点击 Kraus 表示写成
+
+$$
+A_j=\begin{pmatrix}c_j&b_j\\0&a_j\end{pmatrix},
+\qquad
+\sum_j|c_j|^2=1,\qquad
+\sum_j\overline{c_j}b_j=0.
+\tag{91.2}
+$$
+
+令
+
+$$
+\beta=\sum_j|b_j|^2,\quad
+v=\sum_j|a_j|^2,\quad
+d=\sum_j\overline{c_j}a_j,\quad
+e=1-\beta-v.
+$$
+
+则
+
+$$
+e\ge1-R>0,\qquad
+\beta+v\le R,\qquad |d|\le\sqrt v\le\sqrt R<1.
+\tag{91.3}
+$$
+
+未点击映射与其伴随的特征值，计代数重数，均为
+
+$$
+\boxed{1,\ d,\ \overline d,\ v.}
+\tag{91.4}
+$$
+
+特别地，特征值 $1$ 是代数简单的，其余谱统一位于 $|z|\le\sqrt R$ 中。最终未点击效果准确为
+
+$$
+F_*:=\lim_{n\to\infty}\mathcal A_{\Gamma_*}^n(I)
+=P+q(I-P),\qquad
+q=\frac{\beta}{1-v}\le R<1.
+\tag{91.5}
+$$
+
+伴随映射的全部 Hermitian 固定点恰为实数倍的 $F_*$。在正固定点中，$F_*$ 是唯一算子范数为一的成员，其最大本征空间恰为暗态直线。
+
+证明。记实际点击效果为 $E=\mathcal C_{\Gamma_*}^*(I)$。名义仪器从 $P_0=|0\rangle\langle0|$ 出发必点击，完整距离控制这一结果概率，故
+
+$$
+\operatorname{Tr}E\ge\langle0|E|0\rangle\ge1-R>0.
+\tag{91.6}
+$$
+
+任一未点击固定密度矩阵 $\sigma$ 满足 $\operatorname{Tr}(E\sigma)=0$。正性使其支撑包含于 $\ker E$。二维性与 $E\ne0$ 使该核至多一维，而固定密度矩阵存在，因此它恰是一维且 $\sigma=P$ 唯一。于是 $E=e(I-P)$，其中 $e=\operatorname{Tr}E\ge1-R$。
+
+从 $\sum_jA_jPA_j^\dagger=P$ 可知各 $A_j\psi=c_j\psi$，得到上三角形状及 $\sum_j|c_j|^2=1$。完整性给
+
+$$
+\sum_jA_j^\dagger A_j=I-E
+=\begin{pmatrix}1&0\\0&1-e\end{pmatrix}.
+$$
+
+对比矩阵元便得到式（91.2）及 $\beta+v=1-e$；Cauchy–Schwarz 给 $|d|^2\le v$。
+
+若 $H=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}$ 为 Hermitian，令 $k=\sum_j\overline{b_j}a_j$，直接计算得
+
+$$
+\mathcal A_{\Gamma_*}(H)=
+\begin{pmatrix}
+x&dz\\
+\overline d\,\overline z&\beta x+vy+2\operatorname{Re}(kz)
+\end{pmatrix}.
+\tag{91.7}
+$$
+
+在复化坐标 $(x,z,\overline z,y)$ 下这是三角线性系统，故特征多项式为
+$(\lambda-1)(\lambda-d)(\lambda-\overline d)(\lambda-v)$。
+伴随关系使 $\mathcal N_{\Gamma_*}$ 具有共轭谱，而上述多重集已在共轭下不变，得到式（91.4）。
+
+固定点方程先给 $z=0$，再给 $y=\beta x/(1-v)$。从 $I$ 开始迭代时，$x_n=1,z_n=0$，且 $y_{n+1}=\beta+vy_n$，因而收敛到式（91.5）。又
+
+$$
+1-q=\frac e{1-v}\ge e\ge1-R,
+$$
+
+故 $q\le R$，其余固定点及最大本征空间的结论随即成立。$\square$
+
+这里的统一界使用了名义仪器的确定点击输入 $P_0$。不能仅从任意二维名义仪器满足 $R<1$，就省略式（91.6）的实际接口条件。
+
+**命题 91.3（较小失效半径并不单独保证唯一暗态）。** 在相同二维活动空间和两个结果接口上，另取名义仪器
+
+$$
+\widetilde\Gamma_0
+=((1-\gamma)\operatorname{id},\,\gamma\operatorname{id}),
+\qquad 0<\gamma<1.
+$$
+
+相对于这个新名义仪器，完整失效半径恰为 $\widetilde R=\gamma<1$，但一个最近失效仪器是
+$\widetilde\Gamma_*=(\operatorname{id},0)$，它的每个密度矩阵都是暗态。在其子临界校准球内，
+
+$$
+\widetilde{\mathscr K}(u)=\frac1{\gamma-u}
+\qquad(0\le u<\gamma),
+\tag{91.8}
+$$
+
+而且每个初态都能与同一个最优仪器共同取得该值，包括混态。
+
+证明。任一失效仪器有未点击固定密度矩阵 $\sigma$；该来源在失效仪器上的点击概率为零，在 $\widetilde\Gamma_0$ 上为 $\gamma$，故完整距离至少 $\gamma$。两个记录块直接相减给
+$\frac12\|\widetilde\Gamma_*-\widetilde\Gamma_0\|_\diamond=\gamma$，因此半径准确。
+
+若完整距离至多 $u<\gamma$，每个输入的点击概率都至少 $\gamma-u$，即实际点击效果满足
+$E\succeq(\gamma-u)I$。未点击分支因而使每个正输入的迹至多乘 $1-\gamma+u$；逐轮迭代并求尾和，得到式（91.8）的上界。
+
+取
+
+$$
+\widetilde\Gamma_u
+=((1-\gamma+u)\operatorname{id},\,(\gamma-u)\operatorname{id}).
+$$
+
+它与新名义仪器的完整距离恰为 $u$，每个初态都产生成功参数为 $\gamma-u$ 的几何等待律，达到上界。其成本势为 $I/(\gamma-u)$，归一化后恒为 $I$；极限失效仪器的特征值 $1$ 具有四重代数重数。因此唯一纯暗态、统一分离的其余三个谱值和唯一最坏初态均不能只由 $\widetilde R<1$ 推出。$\square$
+
+## 92. 最坏初态与最近失效装置共同趋向同一暗态
+
+**定理 92.1（最优装置、初态与成本势的共同极限）。** 设 $0\le u_j<R$ 且 $u_j\to R$。对每个 $j$，取一个实际达到最坏成本的仪器与初态：
+
+$$
+\Gamma_j\in\mathfrak B_{u_j},\qquad
+\operatorname{Tr}(\rho_jT_{\Gamma_j})=\mathscr K(u_j).
+\tag{92.1}
+$$
+
+这里 $\rho_j$ 可以是混态。若某子列 $\Gamma_j\to\Gamma_*$，则该极限属于 $\mathfrak F_R$，并且沿同一子列
+
+$$
+\boxed{
+\rho_j\longrightarrow P_*,\qquad
+\frac{T_{\Gamma_j}}{\mathscr K(u_j)}\longrightarrow F_*,
+}
+\tag{92.2}
+$$
+
+其中 $P_*$ 是 $\Gamma_*$ 自己的唯一暗态，$F_*$ 是它自己的最终未点击效果。特别地，最坏装置族接近最近失效集合；不要求这个集合只有一个装置。
+
+证明。由最坏值定义及式（92.1），必有
+$M(\Gamma_j)=\mathscr K(u_j)$。第 80.4 条给该值趋于无穷。
+
+假设某仪器极限 $\Gamma_*$ 不失效。有限维全状态终止给所有未点击谱严格位于单位圆内，所以 $\operatorname{id}-\mathcal A_{\Gamma_*}$ 可逆。有限矩阵逆在可逆点附近连续，而
+
+$$
+T_{\Gamma_j}=(\operatorname{id}-\mathcal A_{\Gamma_j})^{-1}(I),
+$$
+
+这将使其范数有界，与最坏成本发散矛盾。因此 $\Gamma_*$ 失效。由 $\delta(\Gamma_j)\le u_j$ 的连续极限，$\delta(\Gamma_*)\le R$；失效半径的最小性迫使等号成立。
+
+置 $H_j=T_{\Gamma_j}/\mathscr K(u_j)$。有
+
+$$
+0\preceq H_j\preceq I,\quad
+\|H_j\|_\infty=1,\quad
+\operatorname{Tr}(\rho_jH_j)=1,
+\quad H_j-\mathcal A_{\Gamma_j}(H_j)
+=\frac I{\mathscr K(u_j)}\longrightarrow0.
+\tag{92.3}
+$$
+
+从紧性取任何共同收敛子列 $(H_j,\rho_j)\to(H_*,\rho_*)$。极限满足
+$H_*\succeq0$、$\|H_*\|_\infty=1$、$\mathcal A_{\Gamma_*}(H_*)=H_*$，故定理 91.2 强制 $H_*=F_*$。
+
+又 $\operatorname{Tr}(\rho_*F_*)=1$，而 $F_*=P_*+q_*(I-P_*)$ 且 $q_*<1$，所以
+$\operatorname{Tr}[\rho_*(I-P_*)]=0$。正性给 $\rho_*=P_*$。所有聚点均为同一对 $(F_*,P_*)$，从而沿原来的仪器收敛子列成立式（92.2）。若最优仪器不接近 $\mathfrak F_R$，再用紧性取一个与该集合距离保持正值的聚点便得到矛盾。$\square$
+
+**推论 92.2（充分接近临界时，给定最优装置的最坏初态唯一）。** 存在 $0\le u_0<R$，使每个 $u_0<u<R$ 的每个最坏成本仪器都有唯一的最大等待初态，且该态为纯态。仪器本身仍可不唯一。
+
+证明。若否，可以取 $u_j\to R$ 和最优仪器，使其成本势最高本征值重数至少为二。二维下，归一化成本势便为 $I$。但定理 92.1 的任一仪器收敛子列迫使其趋于 $F_*$，而定理 91.2 给 $F_*$ 的本征值间隙至少 $1-R>0$，矛盾。最高本征值简单时，唯一最大化密度矩阵是其纯本征态。$\square$
+
+## 93. 发散项之外的全部预解贡献统一有界
+
+**定理 93.1（最近失效附近的统一单极点分解）。** 存在包含紧集 $\mathfrak F_R$ 的仪器邻域 $\mathcal U$，使每个 $\Gamma\in\mathcal U$ 都有一个代数简单的正实特征值 $r(\Gamma)$，它严格大于其余特征值的模。对应于伴随映射的谱投影记为 $\Pi_\Gamma$。对其中所有不失效的仪器，
+
+$$
+\boxed{
+T_\Gamma
+=\frac{\Pi_\Gamma(I)}{1-r(\Gamma)}+B_\Gamma,
+\qquad
+\sup_{\Gamma\in\mathcal U\setminus\mathfrak F}
+\|B_\Gamma\|_\infty<\infty.
+}
+\tag{93.1}
+$$
+
+并且，当不失效的 $\Gamma$ 到 $\mathfrak F_R$ 的距离趋零时，统一有
+
+$$
+\boxed{(1-r(\Gamma))M(\Gamma)\longrightarrow1.}
+\tag{93.2}
+$$
+
+若 $\Gamma\to\Gamma_*\in\mathfrak F_R$，则更强地
+
+$$
+(1-r(\Gamma))T_\Gamma\longrightarrow F_*.
+\tag{93.3}
+$$
+
+证明。先说明所用有限矩阵谱事实的参数范围。取
+$\sqrt R<a<b<1$，并取围住 $1$、与闭圆盘 $|z|\le a$ 分离的小圆盘。定理 91.2 使每个边界装置的特征多重集在小圆盘内恰有一个根，其他三个根在 $|z|\le\sqrt R$ 内。多项式根随系数连续，紧性因而给一个共同闭邻域，在其中小圆盘内仍恰有一个简单根，其他根的模至多 $a$，且所取根的模大于 $b$。
+
+这一根连续性可直接由有限根的紧性理解：单首多项式系数有界使全部根有界；若系数列收敛，将每次的全部根共同取子列，则极限乘积恰为极限多项式，保留代数重数。于是上述根数和分离若沿任一逼近边界的序列失效，就与边界多重集矛盾。伴随映射在 Hermitian 实基中的矩阵为实矩阵，小圆盘内的唯一根必须等于其共轭，因此为正实数。
+
+CP 次保单位映射的幂在 Hermitian 算子范数下有界；将一般复矩阵分解为两个 Hermitian 矩阵可得复空间上的幂同样有界，故全部谱模长至多一。所取正实根严格支配其余根，所以就是 $r(\Gamma)$。若仪器不失效，第 71 节的有限收缩块使 $r(\Gamma)<1$。
+
+下面给出投影和有界余项的有限代数表达，避免把谱分离本身当成非正规矩阵的范数界。设 $\chi_\Gamma$ 为四维伴随矩阵的特征多项式，写
+
+$$
+\chi_\Gamma(z)=(z-r(\Gamma))q_\Gamma(z),
+\qquad
+\Pi_\Gamma=\frac{q_\Gamma(\mathcal A_\Gamma)}
+{q_\Gamma(r(\Gamma))}.
+\tag{93.4}
+$$
+
+简单性给分母非零。Cayley–Hamilton 与广义特征空间分解说明：该多项式算子在所取特征直线上为恒等，在其他全部广义特征空间上为零；即使其他谱有 Jordan 块也成立。因此 $\Pi_\Gamma$ 为连续的秩一谱投影，与 $\mathcal A_\Gamma$ 对易。
+
+令
+
+$$
+\mathcal D_\Gamma=
+(\operatorname{id}-\mathcal A_\Gamma+\Pi_\Gamma)^{-1}
+(\operatorname{id}-\Pi_\Gamma).
+\tag{93.5}
+$$
+
+第一因子中的算子在所取特征直线上为乘 $2-r(\Gamma)$，在其余广义特征空间上为 $\operatorname{id}-\mathcal A_\Gamma$，所以在整个共同闭邻域上可逆。它及其逆连续；闭邻域是紧致仪器集的闭子集，故 $\mathcal D_\Gamma$ 具有共同有限范数界。这一步控制了稳定部分全部 Jordan 与非正规贡献。
+
+对不失效仪器，在两份不变子空间上分别计算可得
+
+$$
+(\operatorname{id}-\mathcal A_\Gamma)^{-1}
+=\frac{\Pi_\Gamma}{1-r(\Gamma)}+\mathcal D_\Gamma.
+$$
+
+作用于 $I$，取 $B_\Gamma=\mathcal D_\Gamma(I)$，即得式（93.1）。
+
+在任一 $\Gamma_*\in\mathfrak F_R$ 上，$\mathcal N_{\Gamma_*}(P_*)=P_*$，而伴随的特征直线由 $F_*$ 张成，且 $\operatorname{Tr}(P_*F_*)=1$。因此
+
+$$
+\Pi_{\Gamma_*}(X)=\operatorname{Tr}(P_*X)F_*,
+\qquad\Pi_{\Gamma_*}(I)=F_*,
+\qquad\|\Pi_{\Gamma_*}(I)\|_\infty=1.
+\tag{93.6}
+$$
+
+连续性与边界紧性给：到 $\mathfrak F_R$ 的距离趋零时，$r(\Gamma)\to1$ 且 $\|\Pi_\Gamma(I)\|_\infty\to1$，均为统一极限。式（93.1）的有界余项于是给式（93.2）；指定仪器极限时，投影的连续性还给式（93.3）。$\square$
+
+本证明与《相位边界》卷第 162.6 节同样保留了“统一谱分离加紧性控制预解算子”的条件；这里用式（93.4）—（93.5）直接写出固定四维的有限矩阵表达。没有把一般 CP 映射当成自伴算子，也没有将非正交谱投影换成正交投影。
+
+## 94. 最坏等待幂律就是最慢未点击谱隙的闭合幂律
+
+**定义 94.1（同一校准球内的最大生存谱半径）。** 对 $0\le u<R$，令
+
+$$
+r_{\max}(u)=\max_{\Gamma\in\mathfrak B_u}r(\Gamma),
+\qquad \varepsilon(u)=1-r_{\max}(u).
+\tag{94.1}
+$$
+
+谱半径的连续性与校准球紧性保证该最大值取得。此处仍在每次执行前选定一个完整仪器，未点击后重复它；$r_{\max}$ 不表示逐轮重新优化或切换装置。
+
+**定理 94.2（成本与最慢谱隙的首项相同）。** 有 $\varepsilon(u)>0$，且
+
+$$
+\boxed{\lim_{u\uparrow R}\mathscr K(u)\varepsilon(u)=1.}
+\tag{94.2}
+$$
+
+因此，若 $p,c$ 为定理 89.1 的实际临界参数，则
+
+$$
+\boxed{1-r_{\max}(R-h)\sim c^{-1}h^p.}
+\tag{94.3}
+$$
+
+证明。有限维下，仪器不失效当且仅当 $r(\Gamma)<1$。一方向由全状态终止的有限收缩块成立；另一方向由矩阵幂的有限 Jordan 展开给 $\mathcal N_\Gamma^n\to0$。失效时已有特征值为一的固定密度矩阵，而次保单位的幂有界保证谱半径不会超过一。
+
+每个子临界球都无失效且紧，连续最大值因而严格小于一，得到 $\varepsilon(u)>0$。取最近失效仪器 $\Gamma_*$ 及其固定态 $P_*$，并沿第 80.4 条令
+
+$$
+\Gamma_t=t\Gamma_*+(1-t)\Gamma_0,\qquad t=u/R.
+$$
+
+正性给 $\mathcal N_{\Gamma_t}^n(P_*)\succeq t^nP_*$。若其谱半径严格小于 $t$，有限 Jordan 展开将使该矩阵幂为 $o(t^n)$，矛盾。因此
+
+$$
+r_{\max}(u)\ge u/R\longrightarrow1.
+\tag{94.4}
+$$
+
+取谱半径最优仪器 $\Gamma_u^{\rm sp}$。当 $u\uparrow R$ 时，它的任一仪器聚点都有谱半径一，因而失效；距离极限至多为 $R$，故属于 $\mathfrak F_R$。因此全部谱最优仪器也接近该紧集。
+
+另取成本最优仪器 $\Gamma_u^{\rm cost}$。定理 92.1 使它们接近同一个最近失效集合。定理 93.1 对这两类实际仪器分别给
+
+$$
+\begin{aligned}
+M(\Gamma_u^{\rm sp})[1-r(\Gamma_u^{\rm sp})]&\longrightarrow1,\\
+\mathscr K(u)[1-r(\Gamma_u^{\rm cost})]&\longrightarrow1.
+\end{aligned}
+$$
+
+两类最优装置不必相同，但它们都属于同一个球。由各自极值的方向，
+
+$$
+M(\Gamma_u^{\rm sp})\varepsilon(u)
+\le\mathscr K(u)\varepsilon(u)
+\le\mathscr K(u)[1-r(\Gamma_u^{\rm cost})].
+\tag{94.5}
+$$
+
+两端都趋于一，得到式（94.2）。再代入定理 89.1 即得式（94.3）。$\square$
+
+这份比较没有把两个最优装置强行认作共同实现，而是对各自装置先证明同一个统一预解估计，再按正确的上下界方向夹逼。它也没有声称有限 $u$ 时严格有 $\mathscr K(u)=1/\varepsilon(u)$。
+
+## 95. 一次相干旋转给二次发散留下准确的待证条件
+
+**定义 95.1（只旋转未点击后继的固定仪器族）。** 取任意 $\Gamma_*\in\mathfrak F_R$，并使用定理 91.2 的基 $(\psi,\eta)$ 与参数 $e,v,d$。对实控制角 $\theta$，定义
+
+$$
+U_\theta=
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix},
+\qquad
+\mathcal N_\theta=\operatorname{Ad}_{U_\theta}\circ\mathcal N_{\Gamma_*},
+\qquad \mathcal C_\theta=\mathcal C_{\Gamma_*}.
+\tag{95.1}
+$$
+
+$\Gamma_\theta=(\mathcal N_\theta,\mathcal C_\theta)$ 是同接口完整仪器，因为旋转不改变未点击效果。每次执行固定一个 $\theta$ 并齐次重复该仪器；$\theta$ 是控制角，不是事件时间或钟读数。
+
+**定理 95.2（暗态后继旋转的二阶泄漏与等待）。** 对充分小的 $\theta\ne0$，$\Gamma_\theta$ 对所有初态终止，且
+
+$$
+\boxed{
+1-r(\Gamma_\theta)=a_*\theta^2+O(|\theta|^3),
+\qquad
+a_*=
+\frac{e}{1-v}\frac{1-|d|^2}{|1-d|^2}>0.
+}
+\tag{95.2}
+$$
+
+因此
+
+$$
+\boxed{M(\Gamma_\theta)\sim\frac1{a_*\theta^2}.}
+\tag{95.3}
+$$
+
+证明。点击效果仍是 $E=e(I-P)$。若旋转后的仪器失效，则其固定密度矩阵仍必须支撑在 $\ker E=\mathbb C\psi$，只能为 $P$。但
+
+$$
+\mathcal N_\theta(P)=U_\theta P U_\theta^\dagger\ne P
+$$
+
+对充分小的非零 $\theta$ 成立。因此它不失效。
+
+简单特征值及其谱投影随这个实解析矩阵族实解析变化：这也可由特征多项式在简单根处的隐函数定理及式（93.4）直接得到。取 trace 归一化的 Hermitian 特征矩阵
+
+$$
+\sigma_\theta=
+\begin{pmatrix}1-y(\theta)&z(\theta)\\
+\overline{z(\theta)}&y(\theta)\end{pmatrix},
+\qquad
+\mathcal N_\theta(\sigma_\theta)=r(\Gamma_\theta)\sigma_\theta,
+\qquad \sigma_0=P.
+\tag{95.4}
+$$
+
+它可由状态侧谱投影作用于 $P$ 后除以迹获得；该迹在零点为一，故在邻域内非零。下面的展开只需这些解析特征方程，不先假定特征矩阵的正性。
+
+沿用 $k=\sum_j\overline{b_j}a_j$。未旋转的状态映射为
+
+$$
+\mathcal N_{\Gamma_*}(\sigma_\theta)=
+\begin{pmatrix}
+1-y+\beta y&\overline d\,z+\overline k\,y\\
+d\overline z+ky&vy
+\end{pmatrix}.
+\tag{95.5}
+$$
+
+取迹先得准确关系
+
+$$
+r(\Gamma_\theta)=1-ey(\theta).
+\tag{95.6}
+$$
+
+令 $y(\theta)=y_1\theta+y_2\theta^2+O(|\theta|^3)$，
+$z(\theta)=z_1\theta+O(\theta^2)$。将式（95.5）左右乘旋转矩阵，并与式（95.4）的右侧比较。右下角的一阶项给 $y_1=vy_1$，故 $y_1=0$；右上角的一阶项给
+
+$$
+z_1=1+\overline d\,z_1,
+\qquad z_1=\frac1{1-\overline d}.
+$$
+
+右下角的二阶项于是给
+
+$$
+(1-v)y_2
+=1+2\operatorname{Re}(\overline d\,z_1)
+=\frac{1-|d|^2}{|1-d|^2}.
+\tag{95.7}
+$$
+
+其中 $\overline k\,y$ 只在该角的三阶及更高项出现。由式（95.6）得式（95.2）；$e>0,v<1,|d|<1$ 保证 $a_*>0$。最后对 $\Gamma_\theta\to\Gamma_*\in\mathfrak F_R$ 应用式（93.2），得到式（95.3）。$\square$
+
+**定理 95.3（完整距离的一阶向内方向足以判定 $p=2$）。** 若存在某个实际最近失效仪器及上述旋转方向，使某个 $b_*>0$ 满足
+
+$$
+\delta(\Gamma_\theta)
+=R-b_*\theta+o(\theta)
+\qquad(\theta\downarrow0),
+\tag{95.8}
+$$
+
+则定理 89.1 的实际临界指数必为 $p=2$，其首系数满足
+
+$$
+\frac{b_*^2}{a_*}\le c\le\frac1{1-R}.
+\tag{95.9}
+$$
+
+证明。置 $h_\theta=R-\delta(\Gamma_\theta)=b_*\theta+o(\theta)>0$。旋转后的同一个仪器属于半径 $R-h_\theta$ 的实际校准球，所以
+
+$$
+\mathscr K(R-h_\theta)\ge M(\Gamma_\theta),
+\qquad
+\liminf_{\theta\downarrow0}
+h_\theta^2\mathscr K(R-h_\theta)
+\ge\frac{b_*^2}{a_*}>0.
+$$
+
+若定理 89.1 的 $p<2$，左侧将趋于零，矛盾。结合已知 $p\le2$ 得 $p=2$，并得到 $c$ 的下界；上界复用推论 89.2。$\square$
+
+式（95.8）是本节尚未履行的条件。旋转确实使暗态发生二阶泄漏，不保证完整 diamond 距离向名义仪器一阶减小；该距离包含全部参考输入及两个量子后继。第 73 节显式候选的距离只是 $R$ 的上界，不能把该候选代入式（95.8）就冒充对真实最近失效装置的结论。因此本节仍保留 $1\le p\le2$，没有无条件宣告二次指数。
+
+本批使用的 Kraus 表示、有限矩阵特征多项式、广义特征空间、简单根隐函数定理及连续求逆均为成熟工具。量子表示沿用第 81 节的 Watrous 来源；统一预解机制与《相位边界》卷第 162.6 节相接。式（91.2）—（91.7）、（93.4）—（93.6）和（95.4）—（95.7）给出当前完整仪器任务所需的具体矩阵连接。所有结论仍要求同一有限活动记忆与齐次重复；它们不提供任意切换协议的谱判据。
+
+## 追加锚（本行以下为增补区）
