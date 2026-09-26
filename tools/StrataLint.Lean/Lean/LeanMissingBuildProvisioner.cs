@@ -68,7 +68,7 @@ internal static class LeanMissingBuildProvisioner
             {
                 copy = runner.Run(
                     "cp",
-                    ["-R", source, staged],
+                    ["-pR", source, staged],
                     worktreeRoot,
                     LeanCacheProvisioner.DirectoryCopyBudget);
             }
@@ -82,7 +82,7 @@ internal static class LeanMissingBuildProvisioner
             if (copy.ExitCode != 0)
             {
                 exit.AppendWarning(
-                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -R failed")})");
+                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -pR failed")})");
                 exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
                 return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
             }

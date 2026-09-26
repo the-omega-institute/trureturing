@@ -105,7 +105,7 @@ internal static class LeanCacheProvisioner
     // 病不在「四个点共用一个数」,而在「共用是隐式的、无人说得出为什么」。
     //
     // 三点的实际发生数(2026-08-23,本会话 47 条 ensure 收据):
-    //   cp -R 回退      0 次(clonefile_errno 全为 null)
+    //   cp -pR 回退      0 次(clonefile_errno 全为 null)
     //   lake cache get  3 次,离预算差两个数量级(ensure 端到端 13 秒)
     //   任意 Lake 命令  常走,是唯一会接近该值的点
     //
@@ -121,7 +121,7 @@ internal static class LeanCacheProvisioner
     internal static TimeSpan LeanCommandBudget => ProvisionBudgetForTree();
 
     /// <summary>
-    /// `cp -R` 目录复制,即 clonefile 失败时的回退路径。**继承 <see cref="LeanCommandBudget"/>,
+    /// `cp -pR` 目录复制,即 clonefile 失败时的回退路径。**继承 <see cref="LeanCommandBudget"/>,
     /// 不是独立取值**:该路径本机实测 **0 次发生**,为零发生路径派生一个末值会新增一个无源常数,
     /// 违第 20″ 条。若日后收据中出现非 null 的 `clonefile_errno`,该继承即失去依据,
     /// 须按「量腹而食」三型之一为其单独收口并带新案号。
@@ -373,7 +373,7 @@ internal static class LeanCacheProvisioner
         {
             copy = runner.Run(
                 "cp",
-                ["-R", source, staged],
+                ["-pR", source, staged],
                 worktreeRoot,
                 DirectoryCopyBudget);
         }
@@ -403,7 +403,7 @@ internal static class LeanCacheProvisioner
                 out warning);
         }
 
-        var copyError = Error(copy, "cp -R failed");
+        var copyError = Error(copy, "cp -pR failed");
         exit.AppendWarning($"ordinary copy failed ({copyError})");
         exit.TryCleanup(staged, removePartial, "staging cleanup");
         cloneReceipt = exit.Receipt;

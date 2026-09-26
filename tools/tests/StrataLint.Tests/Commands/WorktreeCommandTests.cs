@@ -288,7 +288,7 @@ public sealed partial class WorktreeCommandTests
             runner.Invocations,
             static call => (Path.GetFileName(call.FileName) == "lake"
                     && call.Arguments.SequenceEqual(["exe", "cache", "get"]))
-                || (call.FileName == "cp" && call.Arguments.FirstOrDefault() == "-R"));
+                || (call.FileName == "cp" && call.Arguments.FirstOrDefault() == "-pR"));
     }
 
     [Fact]
