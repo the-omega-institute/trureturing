@@ -61792,3 +61792,227 @@ $\epsilon^2D(\ell)=O_H(\epsilon^3)$，
 不声明全有限噪声范围内最优器或最优值都有解析选支。
 
 ## 追加锚（本行以下为增补区）
+
+## 210. 严格正来源角点的精确恢复器唯一性与 Kraus 支撑
+
+**定义210.1（共同恢复任务与对称化操作）。** 固定 $\beta>0,\gamma>0,R>1$，
+置 $\delta=R-1$、$\Sigma=R+1$。沿用第209节的实际来源、不可访问系统 $M$、
+全部外部参考和共同 CPTP 恢复任务，写 $\epsilon=\ell\tau$。
+第189节的无损旗标对称化后，以正旗标上的两个 Choi 矩阵表示操作：
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\quad
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+\tag{210.1}
+$$
+
+Choi 向量采用输入优先次序 $(a,c,b,d)^{\mathsf T}$。
+记第209节的解析最优候选为
+$J_j^\sharp=|k_j^\sharp\rangle\langle k_j^\sharp|$，
+$k_j^\sharp=\operatorname{vec}(K_j^{\sharp\mathsf T})$，
+以及其实际对偶为 $S_j$。候选满足
+$K_0^{\sharp\dagger}K_0^\sharp+K_1^{\sharp\dagger}K_1^\sharp=I$。
+本节的唯一性比较（210.1）中的 Choi 对；不同 Kraus 表示和未对称化实现不作为同一比较空间。
+
+**定理210.1（严格正来源上的精确唯一性）。** 存在固定的
+$\ell_0,\tau_0>0$，使全部
+
+$$
+0<\ell\le\ell_0,\qquad 0\le\tau\le\tau_0
+\tag{210.2}
+$$
+
+满足：完整恢复误差在 $\mathcal K$ 上具有唯一极小点，恰为
+$(J_0^\sharp,J_1^\sharp)$。每个结果的最优 Choi 秩均为一。
+唯一最优对在 $(\ell,\tau)$ 中等于同一个实解析函数的限制。
+这些结论针对每个有限参数点的精确最优值，而不只针对渐近首项。
+
+证明。第209节的实际对偶在核外有一个固定正间隙和两个常数倍
+$\ell$ 的正间隙。缩小固定角点矩形后，对 $\ell>0$ 有
+
+$$
+\ker S_j=\operatorname{span}\{k_j^\sharp\}.
+\tag{210.3}
+$$
+
+任意最优对 $\Gamma=(J_0,J_1)$ 由该节的全 Choi 支持不等式满足
+
+$$
+0=e(\ell,\ell\tau,\Gamma)-\mathscr E(\ell,\ell\tau)
+\ge\sum_j\operatorname{Tr}(S_jJ_j)\ge0.
+\tag{210.4}
+$$
+
+各项非负，故逐项为零。对半正定矩阵 $S,J$，
+$\operatorname{Tr}(SJ)=0$ 蕴涵
+$\operatorname{ran}J\subseteq\ker S$：
+$S^{1/2}JS^{1/2}$ 半正且迹为零，因此为零，继而
+$J^{1/2}S^{1/2}=0$。结合（210.3），存在 $b_j\ge0$ 使
+
+$$
+J_j=b_jJ_j^\sharp.
+\tag{210.5}
+$$
+
+这一结论先控制全部秩的竞争者，没有预先限制 Kraus 数目。
+
+令 $E_j=K_j^{\sharp\dagger}K_j^\sharp$。共同 TP 条件给
+
+$$
+E_0+E_1=I,\qquad
+(b_0-b_1)E_0+(b_1-1)I=0.
+\tag{210.6}
+$$
+
+以下证明 $\tau>0$ 时 $E_0$ 不是标量矩阵。
+使用第209节的五个快坐标 $x$ 和五个慢坐标
+$y=(\operatorname{Re}z_1,\operatorname{Im}z_1,
+\operatorname{Re}z_2,\operatorname{Im}z_2,\varphi)$。
+在 $x=0$ 平面，
+
+$$
+a_0=a_1=1/\sqrt2,\qquad
+b_0^{\mathrm K}=z_1/\sqrt2,\qquad
+b_1^{\mathrm K}=-z_1/\sqrt2,
+\tag{210.7}
+$$
+
+其中 $b_j^{\mathrm K}$ 表示 Kraus 的右上条目，与（210.5）的缩放系数区分。
+因此
+$B_0=B_1=|z_1|^2/2$、
+$N_0=\overline z_1/2$、$N_1=-\overline z_1/2$。
+由第189节的精确纯来源噪声系数，约化目标的噪声首项为
+
+$$
+\mathcal N(y)=
+\frac{\beta\Sigma}{8}(1-|z_1|^2)
+-\frac{\gamma\delta}{4}\operatorname{Im}z_1.
+\tag{210.8}
+$$
+
+第209节的慢来源函数在原点满足
+
+$$
+\mathcal P(y)=\frac{|z_1|^2}{4}
++\frac{|z_2|^2}{3}+\frac{\varphi^2}{3}+O(|y|^4).
+\tag{210.9}
+$$
+
+在 $\ell=0$，慢驻定方程严格是
+$\partial_y[\mathcal P(y)+\tau\mathcal N(y)]=0$。
+对该方程在 $\tau=0$ 求导，正定 Hessian 给
+
+$$
+\partial_\tau z_1(0,0)=i\gamma\delta/2,
+\qquad \partial_\tau z_2(0,0)=0,
+\qquad \partial_\tau\varphi(0,0)=0.
+\tag{210.10}
+$$
+
+快解在整条 $\ell=0$ 轴恒为零，故没有额外快坐标贡献。
+于是
+
+$$
+\partial_\tau(E_0)_{01}(0,0)=i\gamma\delta/4.
+\tag{210.11}
+$$
+
+另一方面，零噪声整轴满足 $K_j^\sharp(\ell,0)=I/\sqrt2$，
+所以 $(E_0)_{01}(\ell,0)=0$。
+实解析性给
+
+$$
+(E_0)_{01}(\ell,\tau)=\tau U(\ell,\tau),
+\qquad U(0,0)=i\gamma\delta/4\ne0.
+\tag{210.12}
+$$
+
+再缩小固定矩形，使 $|U|\ge\gamma\delta/8$。
+故 $\tau>0$ 时 $E_0$ 有非零非对角条目。
+（210.6）于是强制 $b_0=b_1=1$。
+
+当 $\tau=0$ 时，$E_j=I/2$，（210.6）只给 $b_0+b_1=2$。
+置 $p=b_0/2\in[0,1]$。此时两个结果以概率 $p,1-p$
+保持接收量子位；输入已经退相干而全部外部参考仍保留。
+正确匹配块沿同一目标纯化向量，完整误差严格约化为
+
+$$
+\begin{aligned}
+e_p&=\max_{0\le q\le1}\lambda_{\max}
+\left[
+P_{(\sqrt q,\sqrt{1-q})^{\mathsf T}}
+-\operatorname{diag}(qp,(1-q)(1-p))
+\right]\\
+&=1-p(1-p)=\frac34+(p-1/2)^2.
+\end{aligned}
+\tag{210.13}
+$$
+
+等式是第207节纯匹配 $2\times2$ 参考最大值公式，
+此处 $A_0=p,A_1=1-p$；端点由连续性得到。
+故最优性仍强制 $p=1/2$，即 $b_0=b_1=1$。
+候选解析性已由第209节给出，证明完成。
+
+**定理210.2（近最优操作的法向 Kraus 缺陷）。**
+可进一步缩小上述固定矩形并取常数 $c>0$，使对（210.2）内全部参数、
+任意 $\Gamma\in\mathcal K$ 及其任意 Kraus 表示
+$J_j=\sum_\alpha|k_{j,\alpha}\rangle\langle k_{j,\alpha}|$，有
+
+$$
+\boxed{
+\sum_{j,\alpha}\left\|
+(I-\Pi_j)k_{j,\alpha}\right\|^2
+\le
+\frac{e(\ell,\ell\tau,\Gamma)-\mathscr E(\ell,\ell\tau)}{c\ell},
+\qquad
+\Pi_j=\frac{|k_j^\sharp\rangle\langle k_j^\sharp|}{\|k_j^\sharp\|^2}.
+}
+\tag{210.14}
+$$
+
+证明。第209节在候选核的正交补上给出实际块矩阵
+
+$$
+\begin{pmatrix}
+H_j&\ell B_j^\dagger\\
+\ell B_j&\ell T_j
+\end{pmatrix},
+\qquad H_j(0,0)=1/4,\quad
+T_j(0,0)=\operatorname{diag}(1/2,1/4).
+\tag{210.15}
+$$
+
+所有系数解析有界。先取固定矩形使 $H_j,T_j$ 都有统一正下界，
+再缩小 $\ell_0$，以配方吸收交叉项：
+对任意标量 $u$、二维向量 $z$，
+
+$$
+H_j|u|^2+2\ell\operatorname{Re}(u^*B_j^\dagger z)
++\ell z^\dagger T_jz
+\ge c_1|u|^2+c_2\ell\|z\|^2.
+\tag{210.16}
+$$
+
+由 $0<\ell\le\ell_0$，可取一个固定 $c>0$ 使
+$S_j\succeq c\ell(I-\Pi_j)$。
+代入第209节的全 Choi 支持不等式，再逐 Kraus 展开迹，得到（210.14）。
+该左侧也等于 $\sum_j\operatorname{Tr}[(I-\Pi_j)J_j]$，
+因此不依赖 Kraus 表示。证毕。
+
+**定理210.3（零来源角点的确切退化）。**
+在 $\ell=\epsilon=0$，最优 Choi 对不唯一，因而定理210.1的严格正来源条件不能删除。
+
+证明。任取 $0\le s\le1$，置
+
+$$
+K_0=\operatorname{diag}(1/\sqrt2,\sqrt s),\qquad
+K_1=\operatorname{diag}(1/\sqrt2,\sqrt{1-s}).
+\tag{210.17}
+$$
+
+这些算子共同 TP。纯来源只占据输入 $|0\rangle$，
+故全部 $s$ 给 $A_0=A_1=1/2$，完整误差均为 $3/4$，达到纯角点最优值。
+不同 $s$ 的 Choi 对不同。它们在未占据输入方向上的作用没有被当前任务读取。
+证毕。
+
+## 追加锚（本行以下为增补区）
