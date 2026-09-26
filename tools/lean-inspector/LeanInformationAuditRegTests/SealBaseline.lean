@@ -105,11 +105,17 @@ run_meta do
     if row.theoremName ==
         ``D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective ||
         row.theoremName ==
-        ``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention then
+        ``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention ||
+        row.theoremName ==
+        ``D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause ||
+        row.theoremName ==
+        ``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary ||
+        row.theoremName ==
+        ``D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application then
       unless observed.result matches .declaredValidated _ do
         throwError "completed production binding regressed"
     else
       unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 2 validated and 9 undeclared statuses"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 5 validated and 6 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline

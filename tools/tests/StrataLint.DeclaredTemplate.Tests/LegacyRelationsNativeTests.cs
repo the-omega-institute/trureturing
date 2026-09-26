@@ -9,10 +9,10 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class LegacyRelationsNativeTests
 {
-    // Supply focused :report artifacts from the current tree. This check never
-    // treats the full-law support proofs as completed registration certificates.
+    // Consume focused current native reports, including the actual retained units,
+    // source declarations, finite bridges and family registration owners.
     [SkippableFact]
-    public void assigned_occurrences_keep_honest_native_status_and_reject_missing_evidence()
+    public void five_original_occurrences_have_four_slots_and_reject_missing_or_retargeted_evidence()
     {
         var directory = Environment.GetEnvironmentVariable("LEGACY_RELATIONS_ARTIFACTS");
         Skip.If(string.IsNullOrEmpty(directory), "Focused native artifacts were not supplied.");
@@ -59,30 +59,75 @@ public sealed class LegacyRelationsNativeTests
         var evidence = InformationTemplateEvidence.Collect(joined, LeanAxiomReport.Create(files), selected);
         Assert.Equal(5, evidence.Inventory.Count);
         Assert.Equal(5, evidence.Occurrences.Count);
-        Assert.All(evidence.Occurrences.Values, occurrence => Assert.False(occurrence.HasFourSlots));
+        Assert.All(evidence.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
         foreach (var path in assigned)
         {
             var wire = files[path].InformationTemplates!.Value;
             var row = Assert.Single(wire.GetProperty("records").EnumerateArray());
-            Assert.Equal("undeclared", row.GetProperty("state").GetString());
-            Assert.Equal(JsonValueKind.Null, row.GetProperty("certificate").ValueKind);
-            var changed = JsonNode.Parse(wire.GetRawText())!;
-            changed["records"]![0]!["state"] = "declared_validated";
-            changed["records"]![0]!["diagnostic"] = null;
-            Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
-                JsonSerializer.SerializeToElement(changed), path, joined));
-            var original = path.EndsWith("/TemplateShadow.lean", StringComparison.Ordinal)
-                ? "D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.lean"
-                : path.Contains("EndStateOmitsPreemptingCause", StringComparison.Ordinal)
-                ? "D5/S3/ConceptDynamics/InformationEscapeRealizations/EndStateOmitsPreemptingCause.lean"
-                : path.Contains("CommutingCompletionExchange", StringComparison.Ordinal)
-                    ? "D5/S3/ConceptDynamics/InformationEscapeRealizations/CommutingCompletionExchange.lean"
-                    : "D5/S3/ConceptDynamics/InformationEscape/SystemUnit.lean";
-            var missing = files.Where(pair => pair.Key != original)
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
-            Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
-                joined, LeanAxiomReport.Create(missing), selected));
+            Assert.Equal("declared_validated", row.GetProperty("state").GetString());
+            Assert.Equal("source-equivalence", row.GetProperty("bridge_kind").GetString());
+            var certificate = row.GetProperty("certificate");
+            Assert.Equal(15, wire.GetProperty("compatibility_version").GetInt32());
+            Assert.True(certificate.GetProperty("source_binding").TryGetProperty("finite_projection", out _));
+            foreach (var mutation in new[] { "certificate", "source-owner", "source-name", "projection",
+                "bridge", "arena-dependency", "path", "occurrence", "law-identity", "realization" })
+            {
+                var changed = JsonNode.Parse(wire.GetRawText())!;
+                var record = changed["records"]![0]!;
+                var binding = record["certificate"]!["source_binding"]!;
+                switch (mutation)
+                {
+                    case "certificate": record["certificate"] = null; break;
+                    case "source-owner": binding["source_owner"] = "D5.Wrong"; break;
+                    case "source-name": binding["source_name"] = "D5.Wrong.result"; break;
+                    case "projection": binding.AsObject().Remove("finite_projection"); break;
+                    case "bridge": binding["finite_projection"]!["bridge"] = "D5.Wrong.bridge"; break;
+                    case "arena-dependency":
+                        var dependencies = record["certificate"]!["extraction_inputs"]!.AsArray();
+                        dependencies.Remove(dependencies.Single(input => input!["name"]!.GetValue<string>()
+                            == record["key"]!["object_arena"]!.GetValue<string>()));
+                        break;
+                    case "path": binding["readouts"]![0]!["path"] = new JsonArray("absent"); break;
+                    case "occurrence": record["key"]!["catalog"] = "D5.Wrong.catalog"; break;
+                    case "law-identity": record["statement_identity"] = new string('0', 64); break;
+                    case "realization": record["realization_name"] = "D5.Wrong.actual"; break;
+                }
+                var mutated = new Dictionary<string, LeanFileReport>(files)
+                {
+                    [path] = files[path] with { InformationTemplates = JsonSerializer.SerializeToElement(changed) }
+                };
+                Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
+                    joined, LeanAxiomReport.Create(mutated), selected));
+            }
+            var source = certificate.GetProperty("source_binding").GetProperty("source_owner").GetString()!
+                .Replace('.', '/') + ".lean";
+            var support = path.Contains("EndStateOmitsPreemptingCause", StringComparison.Ordinal) ? "Preemption"
+                : path.Contains("CommutingCompletionExchange", StringComparison.Ordinal) ? "Completion" : "System";
+            var bridgeName = certificate.GetProperty("source_binding").GetProperty("finite_projection")
+                .GetProperty("bridge").GetString();
+            var bridgeOwner = certificate.GetProperty("extraction_inputs").EnumerateArray()
+                .Single(input => input.GetProperty("name").GetString() == bridgeName)
+                .GetProperty("owner").GetString()!.Replace('.', '/') + ".lean";
+            foreach (var missingPath in new[] { source, $"Reg/Support/LegacyRelations/{support}.lean", bridgeOwner }.Distinct())
+            {
+                var missing = files.Where(pair => pair.Key != missingPath)
+                    .ToDictionary(pair => pair.Key, pair => pair.Value);
+                Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
+                    joined, LeanAxiomReport.Create(missing), selected));
+            }
         }
+        string[] predecessors = [
+            "Reg/D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentScope/InformationRoot.lean",
+            "Reg/D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentScope/TemplateShadow.lean",
+            "Reg/D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation/InformationRoot.lean",
+            "Reg/D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation/TemplateShadow.lean"
+        ];
+        var preserved = InformationTemplateEvidence.Collect(joined, LeanAxiomReport.Create(files),
+            predecessors.Select(RepoPath.CreateKnown));
+        Assert.Equal(4, preserved.Occurrences.Count);
+        Assert.All(preserved.Occurrences.Values, occurrence => Assert.True(occurrence.HasFourSlots));
+        Assert.All(new[] { "Reg/Catalogs/InformationRoot.lean", "Reg/Catalogs/TemplateShadow.lean" },
+            catalog => Assert.True(files.ContainsKey(catalog)));
         foreach (var support in new[] { "Preemption", "Completion", "System" })
         {
             var path = $"Reg/Support/LegacyRelations/{support}.lean";

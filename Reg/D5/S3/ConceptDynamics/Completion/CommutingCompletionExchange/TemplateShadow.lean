@@ -1,3 +1,4 @@
+import Reg.Support.LegacyRelations.Completion
 import LeanInformationAudit.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
@@ -28,8 +29,15 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
 open InformationEscapeArenas.CommutingCompletionExchange
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary in commutingCompletionArena
-  primitives completionRealization.toPrimitiveBundle realization completion_bridge
+register_information_theorem _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary
+  in commutingCompletionArena
+  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
+    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)
+  realizes Reg.Support.LegacyRelations.Completion.registration
+  finite via completion_bridge
+  variation Reg.Support.LegacyRelations.Completion.finite_variation sensitivity Reg.Support.LegacyRelations.Completion.finite_sensitivity
+  escape from source (Reg.Support.LegacyRelations.Completion.selection)
+  escape continues (open)
 end
 
 section
