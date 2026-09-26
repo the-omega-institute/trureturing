@@ -49354,3 +49354,719 @@ $$
 本节尚未计算整条真实曲线，也没有仅凭同相位差异推出两份误差经验分布不同：不同的连续函数仍可能具有相同的推前分布。本节结论由显式 Choi 收益恒等式、公共半正定支配和 Bell 输入检验给出，不作新增 Lean 核验或原创性声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 175. 足够长的有限启动使整条真实曲线离开比较支持下端
+
+第174节严格区分了同相位的真实最优误差与常值比较误差，但没有从局部曲线差异推断经验分布不同。本节改为控制全部相位与全部共同解码器，证明存在有限阈值 $L_0$：当 $L\ge L_0$ 时，整条真实误差曲线严格高于 $3/4$，其经验分布因此与第166节的常值比较分布不同。
+
+这里首先计算一个 Bell 检验收益的精确一阶渐近，再把它作为完整参考恢复误差的下界。两种优化量保持区分；本节不给 $L_0$ 的显式数值，也不据此单独判定 $L=9$ 是否已越过该阈值。
+
+### 175.1 将真实入口写成共同基点加两份不同权重
+
+沿用第174节的记号。令
+
+$$
+A=\frac{42}{2353}X-\frac{288}{2353}Z,
+\qquad
+\tau_j=P_0+w_jA,
+\qquad
+\beta=\frac{288}{2353}.
+\tag{175.1}
+$$
+
+因此
+
+$$
+\xi_j^\varphi=\xi_*^\varphi+w_j\dot\xi^\varphi,
+\qquad
+\xi_*^\varphi=\mathfrak E(U_\varphi P_0U_\varphi^\dagger),
+\qquad
+\dot\xi^\varphi=\mathfrak E(U_\varphi A U_\varphi^\dagger).
+\tag{175.2}
+$$
+
+$\dot\xi^\varphi$ 是迹为零的 Hermitian 算子，不是另一个输入态。
+置
+
+$$
+\epsilon_L=w_0>0,\qquad R_L=\frac{w_1}{w_0}.
+\tag{175.3}
+$$
+
+第171、174节给
+
+$$
+\epsilon_L\longrightarrow0,\qquad
+R_L\longrightarrow4,\qquad
+\epsilon_L\sim\frac38\,4^{-(L-1)}.
+\tag{175.4}
+$$
+
+这里 $R_L$ 只是无量纲权重比，不表示第170节的运行通道
+$\mathcal R_{L+k}$。
+
+对任意一个固定合法解码器 $\mathcal D$，取输出
+$Q_{\mathrm{out}}$ 的两个对角块，记为
+$\mathcal D_0,\mathcal D_1:QR\to R_{\mathrm{out}}$。
+两者完全正，且 $\mathcal D_0+\mathcal D_1$ 保迹。对输入 $j$ 的正确纯化收益定义
+
+$$
+f_j(\mathcal D,\varphi,L)=
+\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_j)(\xi_j^\varphi)
+\right].
+\tag{175.5}
+$$
+
+以下函数都在同一个解码器上取值：
+
+$$
+\begin{aligned}
+F_0(\mathcal D,\varphi)
+&=\sum_{j=0}^1
+\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_j)(\xi_*^\varphi)
+\right],\\
+G(\mathcal D,\varphi,R)
+&=\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_0)(\dot\xi^\varphi)
+\right]\\
+&\quad+
+R\operatorname{Tr}\!\left[
+P_\Xi(\operatorname{id}_M\otimes\mathcal D_1)(\dot\xi^\varphi)
+\right].
+\end{aligned}
+\tag{175.6}
+$$
+
+线性性给精确分解
+
+$$
+f_0+f_1
+=F_0(\mathcal D,\varphi)
++\epsilon_LG(\mathcal D,\varphi,R_L).
+\tag{175.7}
+$$
+
+让 $\varphi$ 在 $\mathbb R/\pi\mathbb Z$ 上变化，解码器在固定输入、输出维数的 CPTP Choi 集合中变化。两者的乘积
+$\mathcal K$ 为紧集；$F_0$ 和 $G$ 连续。定义全相位 Bell 正确收益
+
+$$
+S_L=\max_{(\mathcal D,\varphi)\in\mathcal K}
+\bigl(f_0(\mathcal D,\varphi,L)+f_1(\mathcal D,\varphi,L)\bigr).
+\tag{175.8}
+$$
+
+这个最大值不是完整 diamond 恢复任务的最优误差。
+
+### 175.2 基点收益的全部等号情形
+
+因为 $\mathcal D_0+\mathcal D_1$ 保迹，$F_0$ 正是从常值基点
+$\xi_*^\varphi$ 恢复纯化 $\Xi$ 的重叠。第163节的精确重叠公式给
+
+$$
+F_0(\mathcal D,\varphi)
+\le1-\frac29\bigl(1-|\sin2\varphi|\bigr)
+\le1.
+\tag{175.9}
+$$
+
+在 $|\sin2\varphi|=1$ 时可以达到一。因此
+
+$$
+\max_{\mathcal K}F_0=1.
+$$
+
+令等号集为
+
+$$
+\mathcal Z=
+\{(\mathcal D,\varphi)\in\mathcal K:F_0(\mathcal D,\varphi)=1\}.
+\tag{175.10}
+$$
+
+它非空且紧；其中的相位只能为
+$\varphi=\pi/4$ 或 $3\pi/4$，模 $\pi$。
+
+先考察 $\varphi=\pi/4$。按第174节的接收端酉与旗标换基，基点态变为
+
+$$
+\frac12\sum_{r=0}^1P_{q_r}^Q\otimes P_\Xi.
+\tag{175.11}
+$$
+
+固定旗标 $r$ 后，写两个输出分支的 Kraus 为
+$K_{j,r,\alpha}:R\to R_{\mathrm{out}}$。同一个解码器的保迹性给
+
+$$
+\sum_{j,\alpha}K_{j,r,\alpha}^\dagger K_{j,r,\alpha}=I_R
+\quad\text{对每个 }r.
+\tag{175.12}
+$$
+
+识别固定的输入、输出计算基后，$F_0=1$ 等价于
+
+$$
+\frac12\sum_{r,j,\alpha}
+\left|\operatorname{Tr}(\rho K_{j,r,\alpha})\right|^2=1.
+\tag{175.13}
+$$
+
+另一方面，（175.12）给
+
+$$
+\frac12\sum_{r,j,\alpha}
+\operatorname{Tr}\!\left(\rho
+K_{j,r,\alpha}^\dagger K_{j,r,\alpha}\right)=1.
+\tag{175.14}
+$$
+
+对任意 $K$，令 $c=\operatorname{Tr}(\rho K)$，则
+
+$$
+\operatorname{Tr}(\rho K^\dagger K)-|c|^2
+=\operatorname{Tr}\!\left[
+\rho(K-cI)^\dagger(K-cI)
+\right]\ge0.
+\tag{175.15}
+$$
+
+由于 $\rho$ 严格正定，等号成立当且仅当 $K=cI$。
+（175.13）—（175.14）使这些非负差的总和为零，故逐旗标、逐结果、逐 Kraus 都有
+
+$$
+K_{j,r,\alpha}=c_{j,r,\alpha}I.
+\tag{175.16}
+$$
+
+置
+
+$$
+p_{j,r}=\sum_\alpha|c_{j,r,\alpha}|^2,
+\qquad
+p_j=\frac12\sum_rp_{j,r}.
+$$
+
+于是 $p_{0,r}+p_{1,r}=1$，并且 $p_0+p_1=1$。
+
+第174节的条件态（174.10）在 $\Xi$ 上的重叠为
+$1-\beta w_j$；其与 $\psi$ 的非对角项不贡献该重叠。由（175.16），在整个等号集的此类相位上，
+
+$$
+G(\mathcal D,\pi/4,R)
+=-\beta(p_0+Rp_1).
+\tag{175.17}
+$$
+
+另一类相位具有相同结论。具体地，令
+$J=-iY=U_{\pi/2}$。因 $JZ=-ZJ$，编码满足
+
+$$
+\mathfrak E(J\sigma J^\dagger)
+=(J_Q\otimes I_{MR})\mathfrak E(\sigma)
+(J_Q^\dagger\otimes I_{MR}).
+\tag{175.18}
+$$
+
+所以从 $\pi/4$ 到 $3\pi/4$ 的基点及扰动都只需同一个接收端局部酉变换。它可吸收到解码器中，不改变（175.12）的保迹预算或（175.17）的损失系数。
+
+因此
+
+$$
+\boxed{
+\max_{(\mathcal D,\varphi)\in\mathcal Z}
+G(\mathcal D,\varphi,4)=-\beta.
+}
+\tag{175.19}
+$$
+
+上界由 $p_0+4p_1\ge1$ 得到。取好相位、执行接收端解掩码、保持 $R$，并恒输出原标签 $0$，即有
+$p_0=1$，达到该上界。
+
+### 175.3 紧域最大值的一阶展开
+
+以下有限维优化事实说明为什么只需分析基点的等号集。
+
+**引理175.1（紧域上的最大值一阶项）。** 设 $K$ 为非空紧度量空间，
+$F:K\to\mathbb R$ 连续，$\max_KF=1$。设
+$G:K\times I\to\mathbb R$ 连续，其中 $I$ 为紧参数区间。
+若 $\epsilon_n>0$、$\epsilon_n\to0$，且 $r_n\to r_*\in I$，则
+
+$$
+\boxed{
+\max_{x\in K}\bigl(F(x)+\epsilon_nG(x,r_n)\bigr)
+=1+\epsilon_n
+\max_{F(x)=1}G(x,r_*)+o(\epsilon_n).
+}
+\tag{175.20}
+$$
+
+**证明。** 记等号集上 $G(\cdot,r_*)$ 的最大值为 $g_*$。
+取一个达到 $g_*$ 的等号点，立即得到
+所求差商的下极限不小于 $g_*$。
+
+对上界，令 $x_n$ 为左侧最大值点。$G$ 在紧集上有界，而上述下界给
+$F(x_n)\to1$。任取可能实现差商上极限的子列，再由紧性取子列使
+$x_n\to x_*$，则 $F(x_*)=1$。又
+
+$$
+\frac{F(x_n)+\epsilon_nG(x_n,r_n)-1}{\epsilon_n}
+\le G(x_n,r_n)\longrightarrow G(x_*,r_*)\le g_*.
+$$
+
+上下界相合即得结论。证毕。
+
+应用时，只需将最终的 $R_L$ 放入一个包含 $4$ 的固定紧区间；有限多个早期 $L$ 不参与渐近陈述。由（175.7）、（175.19）与引理175.1，
+
+$$
+\boxed{
+S_L=1-\beta w_0+o(w_0).
+}
+\tag{175.21}
+$$
+
+这是全部相位、全部共同解码器上的 Bell 正确收益最大值的精确一阶渐近。它没有给完整参考恢复误差的精确渐近等式。
+
+### 175.4 全相位误差下界与经验分布的分离
+
+令
+
+$$
+m_L=\min_\varphi e_L(\varphi)
+=\min_{\zeta\in\mathbb T}h_L(\zeta).
+\tag{175.22}
+$$
+
+连续性保证最小值达到。对任意相位和任意解码器，第174节的 Bell 输入检验给
+
+$$
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\mathcal D)\mathcal N_{L,\varphi},
+\mathcal V_*
+\right)
+\ge1-\frac{f_0+f_1}{4}
+\ge1-\frac{S_L}{4}.
+$$
+
+故
+
+$$
+\boxed{
+\liminf_{L\to\infty}
+\frac{m_L-3/4}{w_0}
+\ge\frac{\beta}{4},
+\qquad
+\liminf_{L\to\infty}
+4^{L-1}(m_L-3/4)
+\ge\frac{27}{2353}>0.
+}
+\tag{175.23}
+$$
+
+特别地，存在有限整数 $L_0$，使对全部 $L\ge L_0$ 和全部相位，
+
+$$
+\boxed{
+e_L(\varphi)\ge\frac34+\frac{\beta w_0}{8}>\frac34.
+}
+\tag{175.24}
+$$
+
+现在令
+$\nu_L=(h_L)_\#m_{\mathbb T}$ 为第170节的真实共同经验分布。
+圆上的 Haar 测度对每个非空开弧都为正，$h_L$ 连续，故其像中的每一点都属于 $\nu_L$ 的支持。圆连通且紧，从而
+
+$$
+\operatorname{supp}\nu_L
+=\left[\min_{\mathbb T}h_L,\ \max_{\mathbb T}h_L\right].
+\tag{175.25}
+$$
+
+当 $L\ge L_0$ 时，该支持的下端由（175.24）严格高于 $3/4$。
+第166节常值比较分布在本来源 $\Delta=1/9$ 下的支持下端恰为
+$3/4$，且每个右侧邻域都有正质量。因此
+
+$$
+\boxed{
+\nu_L\ne\nu_{1/9}^{\mathrm{comparison}}
+\qquad(L\ge L_0).
+}
+\tag{175.26}
+$$
+
+第170节已经把所有有限等差运行子序列的真实经验律识别为同一个
+$\nu_L$，故这里的分布分离也适用于那些实际误差序列的共同极限律。
+
+本节没有给 $L_0$ 的可计算上界，所以不能将（175.24）—（175.26）直接套到指定的十维或三十四维实例。对每个有限 $L\ge3$ 已成立的是第174节的同相位严格差异；对所有足够大的有限 $L$，本节进一步给全相位统一分离与经验分布支持分离。证明保留了真实输入依赖、同一个接收端解码器和全部参考系统边界，不作 Lean 核验或原创性声明。
+
+## 追加锚（本行以下为增补区）
+
+## 176. 真实全相位最小误差的精确一阶启动增量
+
+第175节使用 Bell 目标投影的通过概率，给出了真实误差的统一渐近下界。本节进一步保留 Bell 输出差的最大本征值。这个谱量在基点最优集合上具有统一的简单最高本征值，因而能够计算最小值的一阶变化，并与一个合法接收端解码器的完整参考误差相匹配。
+
+结果是：真实全相位最小误差，以及第174节指定相位的真实误差，都具有同一个精确一阶增量。这里仍只处理 $L\to\infty$ 的渐近式，不给固定 $L$ 的整条误差曲线闭式。
+
+### 176.1 保留 Bell 输出差的谱下界
+
+沿用第174、175节的
+
+$$
+\epsilon_L=w_0>0,\qquad
+R_L=w_1/w_0\longrightarrow4,\qquad
+\beta=\frac{288}{2353}.
+\tag{176.1}
+$$
+
+根据第173节，可以无损地把解码器限制为共同二结果 instrument
+$\mathcal D_0,\mathcal D_1:QR\to R_{\mathrm{out}}$，
+其和保迹。对 $x=(\varphi,\mathcal D)$，令
+
+$$
+\sigma_{jj}^{\epsilon,R}(x)
+=(\operatorname{id}_M\otimes\mathcal D_j)
+\bigl(\xi_*^\varphi+\epsilon r_j\dot\xi^\varphi\bigr),
+\qquad r_0=1,\quad r_1=R.
+\tag{176.2}
+$$
+
+真实参数是 $(\epsilon,R)=(\epsilon_L,R_L)$。
+定义匹配标签空间中的固定单位向量
+
+$$
+|u\rangle
+=\frac{|0\rangle_C|\Xi\rangle+|1\rangle_C|\Xi\rangle}{\sqrt2},
+$$
+
+$$
+C_{\epsilon,R}(x)
+=P_u-\frac12\operatorname{diag}
+\bigl(\sigma_{00}^{\epsilon,R}(x),
+\sigma_{11}^{\epsilon,R}(x)\bigr),
+\qquad
+b_{\epsilon,R}(x)=\lambda_{\max}(C_{\epsilon,R}(x)).
+\tag{176.3}
+$$
+
+这是第173节参考权重 $q=1/2$ 的精确误差，故它下界同一 instrument 的完整参考最坏误差。令
+
+$$
+\mathcal K=(\mathbb R/\pi\mathbb Z)
+\times\{\text{共同二结果 instrument 的 Choi 对}\}.
+$$
+
+这是有限维紧度量空间。定义
+
+$$
+\underline b_L=\min_{x\in\mathcal K}b_{\epsilon_L,R_L}(x),
+\qquad
+m_L=\min_\varphi e_L(\varphi).
+$$
+
+于是
+
+$$
+m_L\ge\underline b_L.
+\tag{176.4}
+$$
+
+下面分析的是最大本征值 $b_{\epsilon,R}$ 的最小值，
+不是第175节的线性 Bell 收益最大值。
+
+### 176.2 基点谱最优解必须平衡两个输出标签
+
+当 $\epsilon=0$ 时，两份原输入态相同。令
+$f_j^0=\langle\Xi|\sigma_{jj}^{0,R}(x)|\Xi\rangle$。
+基点矩阵与 $R$ 无关，记为 $C_0(x)$，其最高本征值记为 $b_0(x)$。
+由同一个 instrument 的保迹性，
+$f_0^0+f_1^0\le1$，从而
+
+$$
+b_0(x)\ge\langle u|C_0(x)|u\rangle
+=1-\frac{f_0^0+f_1^0}{4}
+\ge\frac34.
+\tag{176.5}
+$$
+
+等号可达。现在刻画全部等号点。
+
+若 $b_0(x)=3/4$，则（176.5）的两个不等式都取等。因此
+$f_0^0+f_1^0=1$。第175节的等号分析强制
+$\varphi=\pi/4$ 或 $3\pi/4$，模 $\pi$；在该相位的接收端解掩码坐标中，每个旗标、每个 instrument 分支的 Kraus 都为 $cI_R$。故存在
+$p_0,p_1\ge0$、$p_0+p_1=1$，使
+
+$$
+\sigma_{00}^{0,R}=p_0P_\Xi,\qquad
+\sigma_{11}^{0,R}=p_1P_\Xi.
+\tag{176.6}
+$$
+
+Rayleigh 商等于最大本征值时，$u$ 必须属于最高本征空间。把（176.6）代入
+$C_0u=(3/4)u$，两个标签分量分别给
+$1-p_j/2=3/4$，所以
+
+$$
+\boxed{p_0=p_1=\frac12.}
+\tag{176.7}
+$$
+
+反过来，好相位上的上述平衡条件使
+
+$$
+C_0=P_u-\frac14
+\left(P_0^C\otimes P_\Xi+P_1^C\otimes P_\Xi\right),
+\tag{176.8}
+$$
+
+其谱为
+
+$$
+\boxed{
+\operatorname{spec}(C_0)
+=\left\{\frac34,-\frac14,0,0,0,0,0,0\right\}.
+}
+\tag{176.9}
+$$
+
+因此，令
+
+$$
+\mathcal Z_b=\{x\in\mathcal K:b_0(x)=3/4\},
+\tag{176.10}
+$$
+
+则它非空且紧，其中每一点都具有同一个最高单位本征向量 $u$，
+最高本征值均简单，谱间隙均为 $3/4$。
+这些点也恰好是基点完整参考误差达到 $3/4$ 的点：
+其常值输出为 $I_{Q_{\mathrm{out}}}/2\otimes P_\Xi$，
+而第173节的完整参考公式给误差 $3/4$。
+
+### 176.3 简单最高本征值的统一一阶展开
+
+先给一个足以承担本节极限交换的有限矩阵估计。
+
+**引理176.1（带统一谱间隙的扰动余项）。** 设 Hermitian 矩阵 $H$ 的最高本征值
+$\lambda$ 简单，单位本征向量为 $v$，且其与其余谱的间隙至少为
+$g>0$。设 $B$ Hermitian，$\|B\|\le M$。若
+$|\epsilon|M\le g/4$，则
+
+$$
+0\le
+\lambda_{\max}(H+\epsilon B)
+-\lambda-\epsilon\langle v|B|v\rangle
+\le\frac{2M^2}{g}\epsilon^2.
+\tag{176.11}
+$$
+
+**证明。** 下界直接取测试向量 $v$。对任意单位向量
+$y=av+w$，$w\perp v$，令 $t=\|w\|$。谱间隙给
+$\langle y|H|y\rangle\le\lambda-gt^2$。
+将扰动的 $v$ 方向对角项单独取出，其余部分的绝对值至多为
+$2|\epsilon|Mt+2|\epsilon|Mt^2$。所以
+
+$$
+\langle y|(H+\epsilon B)|y\rangle
+\le\lambda+\epsilon\langle v|B|v\rangle
+-\frac g2t^2+2|\epsilon|Mt
+\le\lambda+\epsilon\langle v|B|v\rangle
++\frac{2M^2}{g}\epsilon^2.
+$$
+
+对 $y$ 取最大值即得结论。证毕。
+
+本问题有精确仿射形式
+
+$$
+C_{\epsilon,R}(x)=C_0(x)+\epsilon V_R(x),
+$$
+
+$$
+V_R(x)=-\frac12\operatorname{diag}\left(
+(\operatorname{id}_M\otimes\mathcal D_0)(\dot\xi^\varphi),
+R(\operatorname{id}_M\otimes\mathcal D_1)(\dot\xi^\varphi)
+\right).
+\tag{176.12}
+$$
+
+当 $R$ 限制在包含 $4$ 的固定紧区间时，
+$V_R(x)$ 的范数有统一上界。由（176.9）和本征值连续性，
+存在 $\mathcal Z_b$ 的一个邻域，其闭包上 $C_0(x)$ 的最高本征值仍简单，谱间隙至少为 $1/2$。最高谱投影记为 $P(x)$，它在该邻域上连续。引理176.1给一致展开
+
+$$
+b_{\epsilon,R}(x)
+=b_0(x)+\epsilon g(x,R)+O(\epsilon^2),
+\qquad
+g(x,R)=\operatorname{Tr}(P(x)V_R(x)).
+\tag{176.13}
+$$
+
+这里的余项常数同时独立于该邻域中的 $x$ 和紧区间中的 $R$。
+
+在 $x\in\mathcal Z_b$ 上，$P(x)=P_u$。第175节逐旗标的标量 Kraus 计算与（176.7）给
+
+$$
+\begin{aligned}
+g(x,R)
+&=-\frac14\left.
+\frac{d}{d\epsilon}
+\bigl(f_0+f_1\bigr)\right|_{\epsilon=0}\\
+&=\frac{\beta}{4}(p_0+Rp_1)
+=\frac{\beta(1+R)}8.
+\end{aligned}
+\tag{176.14}
+$$
+
+特别地，这个导数在整个基点最优集合上取同一个值
+$5\beta/8$，而不是第175节线性收益优化出现的 $\beta/4$。
+
+### 176.4 Bell 谱最小值的一阶包络
+
+**命题176.2（谱下界的精确一阶最小值）。** 有
+
+$$
+\boxed{
+\underline b_L
+=\frac34+\frac{5\beta}{8}w_0+o(w_0).
+}
+\tag{176.15}
+$$
+
+**证明。** 在整个紧集 $\mathcal K$ 上，
+$b_{\epsilon_L,R_L}\to b_0$ 一致。令 $x_L$ 为前者的最小点。
+任意收敛子列的极限都必须属于 $\mathcal Z_b$：
+否则 $b_0$ 在远离该最小集合的紧集上有严格正的基点间隔，
+而扰动的统一范数趋零，不能在那里达到最小值。
+因此 $x_L$ 最终进入（176.13）的统一展开邻域，并且
+
+$$
+g(x_L,R_L)\longrightarrow\frac{5\beta}{8}.
+$$
+
+由 $b_0(x_L)\ge3/4$ 及（176.13），
+最小值差商的下极限至少为 $5\beta/8$。
+反过来，固定任意 $x_*\in\mathcal Z_b$，用它测试最小值，
+同一展开和（176.14）给上极限至多为 $5\beta/8$。
+上下界一致即得结论。证毕。
+
+这个论证只在基点最优集合附近使用统一谱导数；
+集合外由基点间隔排除。它没有假设每个相位或每个 instrument 上的最大本征值都处处可微。
+
+### 176.5 一个接收端合法解码器给出匹配的完整误差上界
+
+固定 $\varphi=\pi/4$。执行第174节的接收端解掩码，
+丢弃旗标，保持 $R$，并在 $Q_{\mathrm{out}}$ 制备 $I/2$。
+这是对两个原输入共同使用的固定 CPTP 解码器，未访问 $M$。
+两份正确输出块为
+
+$$
+\sigma_{jj}
+=\frac12\left[
+(1-\beta w_j)P_\Xi+\beta w_jP_\psi
+\right].
+\tag{176.16}
+$$
+
+置
+
+$$
+a=\frac{1-\beta w_0}{2},\qquad
+b=\frac{1-\beta w_1}{2}.
+\tag{176.17}
+$$
+
+$\Xi\perp\psi$。第173节匹配矩阵在两份 $\Xi$ 的张成上为
+
+$$
+\begin{pmatrix}
+q(1-a)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-b)
+\end{pmatrix},
+\tag{176.18}
+$$
+
+其余方向均半负定或为零。因此这个解码器的完整参考误差，恰为
+（176.18）的最高本征值对 $q\in[0,1]$ 的最大值。第173节的二阶调和计算给
+
+$$
+e_L^{\mathrm{unif}}
+=1-\frac{ab}{a+b}.
+\tag{176.19}
+$$
+
+这里 $a,b>0$，最大值在 $q=b/(a+b)$ 达到。代数整理得到精确式
+
+$$
+\boxed{
+e_L^{\mathrm{unif}}
+=\frac34+\frac{\beta(w_0+w_1)}8
++\frac{\beta^2(w_1-w_0)^2}
+{8\bigl(2-\beta(w_0+w_1)\bigr)}.
+}
+\tag{176.20}
+$$
+
+故由 $w_1/w_0\to4$，
+
+$$
+e_L^{\mathrm{unif}}
+=\frac34+\frac{5\beta}{8}w_0+o(w_0).
+\tag{176.21}
+$$
+
+这个显式解码器只用于给完整误差上界；本节没有声称它在固定有限 $L$ 上恰好最优。
+
+### 176.6 真实最小误差与指定相位的相同精确一阶项
+
+（176.4）和显式解码器给
+
+$$
+\underline b_L
+\le m_L
+\le e_L(\pi/4)=h_L(i)
+\le e_L^{\mathrm{unif}}.
+\tag{176.22}
+$$
+
+两端具有相同的一阶展开，因而得到：
+
+**定理176.3（真实误差最小值的精确启动尺度）。**
+当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+\min_{\zeta\in\mathbb T}h_L(\zeta)
+&=\frac34+\frac{5\beta}{8}w_0+o(w_0),\\
+h_L(i)
+&=\frac34+\frac{5\beta}{8}w_0+o(w_0).
+\end{aligned}
+}
+\tag{176.23}
+$$
+
+利用 $w_0\sim(3/8)4^{-(L-1)}$ 与 $\beta=288/2353$，
+等价地，
+
+$$
+\boxed{
+\begin{aligned}
+\min_{\zeta\in\mathbb T}h_L(\zeta)
+&=\frac34+\frac{135}{4706}\,4^{-(L-1)}
++o\!\left(4^{-(L-1)}\right),\\
+h_L(i)
+&=\frac34+\frac{135}{4706}\,4^{-(L-1)}
++o\!\left(4^{-(L-1)}\right).
+\end{aligned}
+}
+\tag{176.24}
+$$
+
+因此第175节中真实经验分布支持下端的升高，不仅对足够大
+$L$ 为正，而且具有这里给出的精确一阶系数。
+本节仍未确定有限 $L$ 的最优相位位置；两份渐近式相同不表示
+$i$ 在每个有限 $L$ 上都是精确最小点。
+它也没有给全相位误差曲线、完整分布或有限阈值的闭式。
+
+本节始终保留第171节的真实原输入依赖、同一个接收端 instrument，以及第173节的完整参考最坏输入。严格下界来自 Bell 差矩阵的最大本征值，严格上界来自一份实际可实施的共同解码器；没有把线性重叠收益直接认作 diamond 误差，也不作新增 Lean 核验或原创性声明。
+
+## 追加锚（本行以下为增补区）
