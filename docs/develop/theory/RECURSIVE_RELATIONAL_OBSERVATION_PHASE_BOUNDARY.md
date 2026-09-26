@@ -75912,3 +75912,267 @@ $S(\Omega_E)$ 是混合探针的参考边缘熵，不是其纠缠；$E_F$ 也没
 本节依赖精确形成纠缠最优和精确响应取等，不提供“接近最优”时的稳健熵界。结论限定于当前固定双轴记录通道及单次比较，保留 $A=B$ 的方向简并，但要求 $B>0$ 使两条响应轴非平行；不据该组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 248. 响应饱和态的共同 Bell 解码与精确单次成功概率
+
+§247证明，最省形成纠缠的响应取等态必须在参考端保留正交的最大纠缠块与产品块。本节把该结构推进为具体本地解码：最大纠缠块中的所有纯分量共享同一个可解码 Bell 因子，剩余混合性完全留在额外参考因子中。
+
+由此，每份取等探针都能以概率 $\theta$ 抽取一个带成功标记的精确 Bell 对；形成纠缠的平均 LOCC 单调性又证明任何允许的有限轮协议都不能超过这个概率。抽取的输入是尚未送入记录通道的联合探针本身，两方实际持有它的输入与参考部分。
+
+### 248.1 固定取等态与已有共同见证
+
+固定§244—§247的双轴记录通道。所有量子重置输出为同一纯态，设置翻转概率已标定，原设置副本与翻转种子不在可取得接口中。采用
+$$
+0<B\le A,\qquad
+b_0=\beta\sqrt K\ne0,\qquad b_0^2=B,\qquad
+\ell=\sqrt{A+B},
+\tag{248.1}
+$$
+以及
+$$
+D=\frac\ell2,\qquad U=\frac{\sqrt A}{2},\qquad
+\delta=D-U>0.
+\tag{248.2}
+$$
+输入选共同轴 $u$ 的本征基，并选相位使正交轴 $v$ 对应 $X=\sigma_x$；令 $Z=\sigma_z$。两条效应差方向因此写成实矩阵
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{248.3}
+$$
+这里 $A_a,A_b$ 是输入算子；标量 $A$ 与其区分。所用 Pauli 矩阵 $X,Z$ 均等于自身转置。
+
+取任意有限参考及任意联合态 $\Omega$，满足
+$$
+E_F(\Omega)=\theta,\qquad
+ g(\Omega)=U+\delta\theta,
+\qquad 0<\theta<1.
+\tag{248.4}
+$$
+$g$ 仍为该探针用于原固定通道比较时的联合输出半迹距离。由§247，每个有限最优形成纠缠分解都只有两类纯分量：权重总和为 $\theta$ 的最大纠缠分量，以及权重总和为 $1-\theta$ 的最优产品分量。参考分解为真正正交的
+$$
+E_{\mathrm{ent}}\perp E_{\mathrm{prod}},
+\qquad
+\Omega=\theta\Omega_{\mathrm{ent}}
+\oplus(1-\theta)\Omega_{\mathrm{prod}}.
+\tag{248.5}
+$$
+两块均归一化，零权重的未使用参考子空间可以忽略。
+
+同一对 Hermitian 收缩 $H_a,H_b$ 见证各响应块的迹范数取等。对每个最大纠缠分量，存在等距 $W_j:\mathbb C^2\to E_{\mathrm{ent}}$，使
+$$
+|\psi_j\rangle=\frac1{\sqrt2}
+\sum_{i=0}^1|i\rangle\otimes W_j|i\rangle,
+\qquad
+H_aW_j=W_j\frac{A_a}{\ell},\quad
+H_bW_j=W_j\frac{A_b}{\ell}.
+\tag{248.6}
+$$
+$E_{\mathrm{ent}}$ 由这些 $W_j$ 的像张成，并且对 $H_a,H_b$ 同时约化。这些是§247已证明的共同取等合同。
+
+### 248.2 显式构造共同参考解码
+
+在 $E_{\mathrm{ent}}$ 上定义
+$$
+Z_E=\frac{\ell}{2\sqrt A}(H_a+H_b),
+\qquad
+X_E=\frac{\ell}{2b_0}(H_a-H_b).
+\tag{248.7}
+$$
+此处只取两个见证在该约化子空间上的限制。它们为 Hermitian，且（248.6）给
+$$
+Z_EW_j=W_jZ,
+\qquad
+X_EW_j=W_jX.
+\tag{248.8}
+$$
+每个像平面上均有 Pauli 关系；这些像平面张成整个 $E_{\mathrm{ent}}$，所以
+$$
+\boxed{
+Z_E^2=X_E^2=I_{E_{\mathrm{ent}}},
+\qquad Z_EX_E+X_EZ_E=0.
+}
+\tag{248.9}
+$$
+这一步无需假定不同最大纠缠分量的参考平面两两正交：共同算子已经在它们的重叠处保持相容。
+
+令
+$$
+M=\ker(Z_E-I).
+\tag{248.10}
+$$
+$X_E$ 是酉的 Hermitian 对合，反对易性使它把 $M$ 等距双射到 $\ker(Z_E+I)$。两个本征子空间正交且覆盖 $E_{\mathrm{ent}}$。因此以下映射是酉同构：
+$$
+\begin{aligned}
+V:\mathbb C^2\otimes M&\longrightarrow E_{\mathrm{ent}},\\
+V(|0\rangle\otimes z)&=z,\\
+V(|1\rangle\otimes z)&=X_Ez.
+\end{aligned}
+\tag{248.11}
+$$
+直接计算得
+$$
+V^\dagger Z_EV=Z\otimes I_M,
+\qquad
+V^\dagger X_EV=X\otimes I_M.
+\tag{248.12}
+$$
+
+对每个 $j$，置 $W'_j=V^\dagger W_j$。它同时满足
+$$
+(Z\otimes I_M)W'_j=W'_jZ,
+\qquad
+(X\otimes I_M)W'_j=W'_jX.
+\tag{248.13}
+$$
+第一式给 $W'_j|0\rangle=|0\rangle\otimes z_j$、$W'_j|1\rangle=|1\rangle\otimes z'_j$；第二式强制 $z'_j=z_j$。等距性保证 $\|z_j\|=1$，故
+$$
+W'_j|i\rangle=|i\rangle\otimes z_j,
+\qquad i=0,1.
+\tag{248.14}
+$$
+
+**定理 248.1（全部最大纠缠分量的共同 Bell 解码）。** 存在同一个参考本地酉同构 $V^\dagger$，使归一化最大纠缠块满足
+$$
+\boxed{
+(I_H\otimes V^\dagger)\Omega_{\mathrm{ent}}(I_H\otimes V)
+=P_{\Phi^+}\otimes\sigma_M,
+}
+\tag{248.15}
+$$
+其中
+$$
+|\Phi^+\rangle_{H,Q}=\frac{|00\rangle+|11\rangle}{\sqrt2},
+\qquad
+\sigma_M=\sum_{j\in J_1}\frac{\lambda_j}{\theta}
+|z_j\rangle\langle z_j|
+\tag{248.16}
+$$
+为 $M$ 上的密度矩阵，$Q=\mathbb C^2$ 是解码出的参考量子比特。
+
+**证明。** 将（248.14）代入（248.6），每份最大纠缠分量都被送到同一个 $|\Phi^+\rangle_{H,Q}\otimes z_j$。按原权重混合即得（248.15）。$\square$
+
+因此各分量之间的混合性只留在 $M$ 中。共同响应见证锁定了同一输入—参考对应，并提供对整块有效的一个解码器。
+
+### 248.3 全部响应饱和态的正交正常形
+
+产品部分也可细分为由响应见证确定的正交经典块。§247已证明，每个最优产品分量 $|\varphi\rangle\otimes|z\rangle$ 都满足
+$$
+H_a z=s_a z,\qquad H_b z=s_b z,
+\qquad s_a,s_b\in\{+1,-1\},
+\tag{248.17}
+$$
+且输入的单位 Bloch 向量 $r$ 满足
+$$
+r\cdot a=s_a\sqrt A,
+\qquad r\cdot b=s_b\sqrt A.
+\tag{248.18}
+$$
+在正交轴 $u,v$ 上，这等价于
+$$
+r\cdot u=\frac{s_a+s_b}{2},
+\qquad
+r\cdot v=\frac{\sqrt A}{2b_0}(s_a-s_b).
+\tag{248.19}
+$$
+若两符号相同，单位长度强制 $r=s_a u$。若两符号相反，则 $|r\cdot v|=\sqrt{A/B}$；因 $A\ge B$，这只在 $A=B$ 时可能，并且强制 $r=s_a\operatorname{sgn}(b_0)v$。
+
+所以允许的符号集合及唯一输入方向为
+$$
+\Sigma=
+\begin{cases}
+\{(+,+),(-,-)\},&A>B,\\
+\{(+,+),(+,-),(-,+),(-,-)\},&A=B,
+\end{cases}
+\tag{248.20}
+$$
+$$
+r_{s_a,s_b}=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\text{ 且 }A=B.
+\end{cases}
+\tag{248.21}
+$$
+这里保留 $b_0$ 的符号，因此也覆盖 $p>1/2$ 的固定标签合同。
+
+不同符号对至少在 $H_a,H_b$ 中的一个本征值上不同；Hermitian 算子不同本征值的向量正交。因此各符号对的产品参考向量分别张成相互正交的子空间 $E_s$，又都与 $E_{\mathrm{ent}}$ 正交。同一符号对的输入态唯一，故其联合块为固定纯输入与参考密度矩阵的乘积。
+
+**定理 248.2（饱和态的完整正常形）。** 在当前通道下，满足（248.4）的态，恰好是在参考本地等距换坐标后可写为
+$$
+\boxed{
+\theta P_{\Phi^+}\otimes\sigma_M
+\quad\oplus\quad
+\bigoplus_{s\in\Sigma}q_s P_{r_s}\otimes\tau_s,
+\qquad
+q_s\ge0,\quad\sum_s q_s=1-\theta.
+}
+\tag{248.22}
+$$
+$\sigma_M$ 与各正权重块中的 $\tau_s$ 为归一化密度矩阵；参考的 $Q\otimes M$ 与各 $E_s$ 两两正交。$P_{r_s}$ 表示（248.21）对应的纯量子比特态，零权重块可以省略。
+
+**证明。** 必要性由定理248.1的共同 Bell 因子化，以及（248.17）—（248.21）的产品方向与参考正交性得到。
+
+反向，任给（248.22）的态。Bell 因子配任意独立 $\sigma_M$ 的响应为 $D$，每个指定产品输入配任意 $\tau_s$ 的响应为 $U$。参考块正交，且局部参考等距变换保持距离，所以
+$$
+g(\Omega)=\theta D+\sum_s q_sU=U+\delta\theta.
+\tag{248.23}
+$$
+将 $\sigma_M$ 与各 $\tau_s$ 作纯态分解，所得联合纯分量的纠缠分别为一和零，给 $E_F(\Omega)\le\theta$。§245的普遍上界 $g(\Omega)\le U+\delta E_F(\Omega)$ 与 $\delta>0$ 再给 $E_F(\Omega)\ge\theta$。两者合并得到 $E_F(\Omega)=\theta$，故（248.4）成立。$\square$
+
+这里并未只列出一个达到族，而是由共同见证给出必要结构，再由实际通道响应证明充分性。$A=B$ 时的四种最优产品方向也完整保留。
+
+### 248.4 单份探针上的带成功标记 Bell 抽取
+
+把尚未输入记录通道的 $\Omega$ 作为抽取协议的输入，两方分别持有 $H$ 与整个 $E$。允许本地量子操作、无预共享纠缠的本地辅助态、经典通信及有限轮 LOCC。协议有双方可取得的成功标记；成功时，指定的两个输出量子比特处于确切 Bell 态，失败时输出任意态。若成功分支还保留其他寄存器，允许最后本地丢弃这些寄存器。
+
+这个操作框架采用 J. Watrous，*The Theory of Quantum Information*，[作者版原文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§6.1.2，印刷第324—325页、PDF第332—333页对 LOCC 的定义。形成纠缠及最优有限系综沿用同书 Exercise 6.3，印刷第385页、PDF第393页。
+
+先说明本节所用的标准平均单调性。对一个纯联合态，把单方 instrument 细化到每个结果只有一个 Kraus 算子，所得非零概率分支仍是纯态。未操作方的平均边缘保持不变，熵凹性给
+$$
+\sum_y p_y e(\psi_y)\le e(\psi).
+\tag{248.24}
+$$
+对混合态，取达到 $E_F$ 的纯系综 $\Omega=\sum_j\lambda_jP_{\psi_j}$。记第 $j$ 个纯分量在结果 $y$ 的概率为 $p_{y|j}$，对应纯态为 $\psi_{j,y}$。每份条件输出态的凸屋上界与（248.24）给
+$$
+\begin{aligned}
+\sum_y p_y E_F(\Omega_y)
+&\le\sum_j\lambda_j\sum_y p_{y|j}e(\psi_{j,y})\\
+&\le\sum_j\lambda_je(\psi_j)
+=E_F(\Omega).
+\end{aligned}
+\tag{248.25}
+$$
+零概率分支直接略去。若 instrument 的报告结果合并若干细分结果，$E_F$ 的凸性使平均值只会进一步降低；该凸性本身由拼接纯系综得到。逐条件分支迭代（248.25），就得到任意有限轮 LOCC 的平均形成纠缠单调性。加入本地无纠缠辅助态或丢弃本地寄存器也属于这些允许操作。
+
+**定理 248.3（精确 Bell 抽取的最优成功概率）。** 对每份满足（248.4）的态，以上允许协议中，从单份 $\Omega$ 抽取一个带成功标记的确切 Bell 对的最大成功概率为
+$$
+\boxed{p_{\mathrm{Bell}}^{\max}(\Omega)=\theta.}
+\tag{248.26}
+$$
+
+**证明。** 可达性只需参考端本地操作。先读取§247已经证明存在的 $E_{\mathrm{ent}}/E_{\mathrm{prod}}$ 正交旗标。量子块以概率 $\theta$ 出现；在该块上实施（248.11）的 $V^\dagger$，得到（248.15）的 $P_{\Phi^+}\otimes\sigma_M$，然后丢弃 $M$。参考方宣布成功，此时两方的指定量子比特精确处于 $\Phi^+$。产品块宣布失败。这给 $p_{\mathrm{Bell}}\ge\theta$。
+
+反向，任取允许的有限轮 LOCC 抽取协议。将成功分支上的其余本地寄存器丢弃，并按成功记录作必要的局部 Bell 坐标校正。每个成功条件态的形成纠缠为一，失败条件态的形成纠缠非负。由（248.25）的有限轮迭代，
+$$
+p_{\mathrm{Bell}}
+\le\sum_y p_yE_F(\Omega_y)
+\le E_F(\Omega)=\theta.
+\tag{248.27}
+$$
+与实际构造合并得到精确最优值。$\square$
+
+端点中，$\theta=1$ 的 Bell 因子块可确定性抽取一对；$\theta=0$ 的产品混合块没有正概率的精确 Bell 抽取。主定理的内部参数则对应一次有成功或失败记录的概率协议。
+
+### 248.5 同一正常形连接的资源与取得边界
+
+在这些精确响应饱和态上，$\theta$ 同时是形成纠缠值、强制量子旗标的权重，以及最优带标记 Bell 抽取概率。这三个角色由正常形和允许操作的证明连接，不是定义上直接相等。§247的最小总参考边缘熵仍为 $H_2(\theta)+\theta$；Bell 因子之外的参考寄存器与经典块都属于总可访问参考。
+
+$V$ 与旗标投影允许依赖已声明的探针、已知输入—参考划分及其范数见证。定理给出了这些数据下的本地解码存在性与构造，没有声称仅凭一个标量响应就能恢复未知态的坐标，或得到适用于所有未知探针的同一个解码器。协议使用完整本地量子操作；无设备信任的自检验、求解坐标的算法成本及噪声稳健性不在结论内。
+
+Bell 抽取作用于原联合探针 $\Omega$，需要两方仍实际持有 $H$ 与 $E$。它没有从记录通道的重置输出反演被测输入。形成纠缠也没有被识别为单次确定性消耗的分数个 Bell 对；（248.26）计量的是确切成功分支的概率。
+
+范围固定为当前通道、已标定参数、精确响应饱和及有限轮单份协议。近似饱和、无限轮 LOCC 和多次使用不由本节结论自动覆盖。标准平均形成纠缠单调性只作工具，本节不据这些组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
