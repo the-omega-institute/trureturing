@@ -64856,3 +64856,543 @@ $$
 本节未作 Lean 核验，不把环境维数解释为物理面积或历时。
 
 ## 追加锚（本行以下为增补区）
+
+## 218. 条件记录通道的容量距离与任务误差的不同阶数
+
+固定 $\beta>0$、$R>1$，沿用第213节的同一联合端点模型及其实际最优对称化 Choi 对。以下为纸面数学结果；不作 Lean 核验。
+
+采用
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h)
+=\nu-N(\beta\epsilon,h/\beta).
+\tag{218.1}
+$$
+物理参数取充分小 $\epsilon>0,h\ge0$，且满足原有输入与来源合法性条件。
+
+本节使用第213节的解析共同 TP 候选族，以及第217节的容量与谱因子结果。所有比较保留同一个条件记录通道接口。
+
+### 218.1 距离所比较的确切接口
+
+输入量子空间 $\mathcal H_{\mathrm{in}}$ 为二维；输出是经典结果标签 $Q_{\mathrm{out}}$ 和二维量子输出 $\mathcal H_{\mathrm{out}}$。正旗标条件记录通道为
+$$
+\mathcal R_+(X)
+=\sum_{j=0}^1|j\rangle\langle j|^{Q_{\mathrm{out}}}
+\otimes\Gamma_{j,+}(X).
+\tag{218.2}
+$$
+它是共同 CPTP instrument 的记录形式。采用未归一化 Choi 约定，固定因子重排后
+$$
+\mathsf J(\mathcal R_+)=J_0\oplus J_1,\qquad
+\operatorname{Tr}\mathsf J=2.
+\tag{218.3}
+$$
+
+令 $\mathfrak C_2$ 为所有同输入、同输出、保留经典结果标签的合法 CPTP 记录通道，且其总 Choi 秩至多二。它不要求每个结果分别非零或分别秩一。
+
+对实际最优条件记录通道 $\mathcal R_+^\sharp(p)$，定义
+$$
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R_+^\sharp(p)-\mathcal S\|_\diamond.
+\tag{218.4}
+$$
+$\mathfrak C_2$ 非空且紧：CPTP、经典标签块和秩上界都是有限维闭条件，Choi 迹固定为二。因此该最小值取得。此处 diamond 范数包含任意外部参考。
+
+记 $\lambda_2^\sharp(p)$ 为实际最优 $J_1$ 的第二大本征值；在秩一相区它取零。此量由 Choi 矩阵决定，不依赖 Kraus 表示。
+
+**定理218.1（完整通道距离与新增谱权重的统一比较）。** 可固定缩小同一个联合参数箱，使全部合法参数一致满足
+$$
+\boxed{
+\frac12\lambda_2^\sharp(p)
+\le d_2(p)\le2\lambda_2^\sharp(p).
+}
+\tag{218.5}
+$$
+因此与合法总秩二通道集合的最小操作距离，恰与新启用的 Choi 谱权重同阶。定理不声称任意特定候选达到距离最小值。
+
+### 218.2 秩二 Choi 支撑给出下界
+
+先取 $\Delta(p)>0$。实际最优 Choi 秩模式是 $(1,2)$。在中心，两枚主本征值都等于一，小本征值为零。由联合连续性，可统一缩小参数箱，使 $J_0$ 的唯一正本征值及 $J_1$ 的大本征值均大于 $3/4$，且
+$$
+0<\lambda_2^\sharp<1/4.
+\tag{218.6}
+$$
+于是完整记录 Choi 矩阵 $\mathsf J^\sharp=J_0^\sharp\oplus J_1^\sharp$ 的三枚正本征值中，最小者确为 $\lambda_2^\sharp$。
+
+任取 $\mathcal S\in\mathfrak C_2$。归一化 Choi 态为
+$$
+\rho_{\mathsf J}=\mathsf J^\sharp/2,\qquad
+\sigma_{\mathsf J}=\mathsf J(\mathcal S)/2.
+$$
+令 $P$ 为 $\sigma_{\mathsf J}$ 的支撑投影，则 $\operatorname{rank}P\le2$。迹距离的效果测试下界给
+$$
+\frac12\|\rho_{\mathsf J}-\sigma_{\mathsf J}\|_1
+\ge
+\operatorname{Tr}\bigl[(I-P)(\rho_{\mathsf J}-\sigma_{\mathsf J})\bigr]
+=
+\operatorname{Tr}[(I-P)\rho_{\mathsf J}].
+\tag{218.7}
+$$
+秩至多二的投影从 $\mathsf J^\sharp$ 中取得的迹不超过其最大两枚本征值之和。具体地，在本征基中，$p_i=\langle e_i,Pe_i\rangle$ 满足
+$0\le p_i\le1$、$\sum_i p_i\le2$，故按非增本征值加权时，最大值由前两项取一得到。因此
+$$
+\operatorname{Tr}[(I-P)\mathsf J^\sharp]\ge\lambda_2^\sharp.
+\tag{218.8}
+$$
+
+输入维数为二，归一化最大纠缠输入的两份输出恰为
+$\rho_{\mathsf J},\sigma_{\mathsf J}$，至多相差固定因子排列。它是 diamond 优化中的一个合法测试，故
+$$
+\begin{aligned}
+\frac12\|\mathcal R_+^\sharp-\mathcal S\|_\diamond
+&\ge \frac12\|\rho_{\mathsf J}-\sigma_{\mathsf J}\|_1\\
+&\ge\frac{\lambda_2^\sharp}{2}.
+\end{aligned}
+\tag{218.9}
+$$
+对 $\mathcal S$ 取最小值即得下界。式中的 $1/2$ 来自输入维数对应的 Choi 归一化；半 diamond 与半迹距离的因子没有再额外丢失。
+
+此下界事实上对同输出空间上全部 Choi 秩至多二的 CPTP 通道都成立，不依赖候选是否保留经典标签。本文的最优化集合仍为（218.4）指定的记录通道集合。
+
+### 218.3 合法解析候选给出上界
+
+第213节给解析共同 TP 族
+$$
+J_0(p,t)=k_0(p,t)k_0(p,t)^\dagger,\qquad
+J_1(p,t)=k_1(p,t)k_1(p,t)^\dagger+t\,w(p,t)w(p,t)^\dagger.
+\tag{218.10}
+$$
+对 $t\ge0$，它是合法 CPTP instrument。写
+$$
+\mathsf J(p,t)=J_0(p,t)\oplus J_1(p,t).
+$$
+实际最优权重为
+$$
+t^\sharp=a(p)[\Delta(p)]_+,\qquad a>0.
+\tag{218.11}
+$$
+边界候选 $\Gamma_A(p)=\Gamma(p,0)$ 的两份 Choi 均秩一，因此其记录通道
+$\mathcal R_A(p)$ 属于 $\mathfrak C_2$。
+
+对任意两通道之差 $\Theta$，在当前未归一化 Choi 约定下，
+$$
+\|\Theta\|_\diamond\le\|\mathsf J(\Theta)\|_1.
+\tag{218.12}
+$$
+这里可直接在 diamond 定义中的任意输入算子上证明，不必只检查态输入。给任意有限参考空间和算子 $X$，取奇异值分解
+$$
+X=\sum_l s_l|u_l\rangle\langle v_l|,\qquad
+s_l\ge0,\quad \|u_l\|=\|v_l\|=1,\quad
+\sum_l s_l=\|X\|_1.
+$$
+记未归一化向量 $|\Omega\rangle=\sum_{i=1}^2|ii\rangle$。
+可写
+$$
+u_l=(I\otimes A_l)|\Omega\rangle,\qquad
+v_l=(I\otimes B_l)|\Omega\rangle,
+$$
+其中 $\|A_l\|_{\mathrm{HS}}=\|B_l\|_{\mathrm{HS}}=1$，故两个算子的算子范数都至多一。
+固定因子排列后，有
+$$
+(\Theta\otimes\operatorname{id})(|u_l\rangle\langle v_l|)
+=(I\otimes A_l)\mathsf J(\Theta)(I\otimes B_l^\dagger).
+$$
+迹范数的双边乘法界给每项至多 $\|\mathsf J(\Theta)\|_1$。
+求和得到
+$$
+\|(\Theta\otimes\operatorname{id})(X)\|_1
+\le \|X\|_1\|\mathsf J(\Theta)\|_1.
+$$
+这对全部参考空间和非 Hermitian 输入同样成立，取上确界便得（218.12）。
+
+由（218.12）和沿 $t$ 的基本积分，
+$$
+\begin{aligned}
+d_2(p)
+&\le\frac12\|\mathcal R_+^\sharp(p)-\mathcal R_A(p)\|_\diamond\\
+&\le\frac12\|\mathsf J(p,t^\sharp)-\mathsf J(p,0)\|_1\\
+&\le
+\frac{t^\sharp}{2}
+\sup_{0\le t\le t^\sharp}\|\partial_t\mathsf J(p,t)\|_1.
+\end{aligned}
+\tag{218.13}
+$$
+比较路径上的所有 $t$ 都非负，所以整条路径都给合法共同 CPTP 候选。这里 $\mathcal R_A$ 仅用于上界，不被宣称为距离最优器。
+
+### 218.4 中心导数给出显式统一常数二
+
+在联合中心 $p=0$，第213节固定 $t$ 的冻结驻点满足
+$$
+k_0(0,t)=\frac1{\sqrt2}(1,0,i\sqrt{1-t},0)^{\mathsf T},\qquad
+k_1(0,t)=\frac1{\sqrt2}(1,0,-i\sqrt{1-t},0)^{\mathsf T},
+\qquad w(0,t)=e_b.
+\tag{218.14}
+$$
+在输出 $0$ 的 $(a,b)$ 二维块上，
+$$
+\partial_tJ_0(0,0)
+=
+D:=
+\begin{pmatrix}
+0&i/4\\
+-i/4&-1/2
+\end{pmatrix},
+\qquad
+\partial_tJ_1(0,0)=-D,
+\tag{218.15}
+$$
+其余块均零。$D$ 的两枚本征值为
+$$
+\frac{-1+\sqrt2}{4},\qquad
+\frac{-1-\sqrt2}{4}.
+$$
+因此
+$$
+\|\partial_t\mathsf J(0,0)\|_1
+=2\|D\|_1=\sqrt2<\frac32.
+\tag{218.16}
+$$
+
+另一方面，候选 $J_1$ 的小谱根具有精确解析因子
+$$
+\lambda_-(p,t)=t\,\eta(p,t),\qquad \eta>0,\qquad\eta(0,0)=\frac12.
+\tag{218.17}
+$$
+其来源是两维支撑上的大根 $\lambda_+>0$ 及行列式恒等式：
+$$
+\eta(p,t)=
+\frac{\|k_1\|^2\|P_{k_1^\perp}w\|^2}{\lambda_+(p,t)}.
+$$
+因为 $k_{1,a}>0,w_a=0,w_b=1$，投影分子严格正；$\eta$ 关于整个带符号 $t$ 邻域解析。在物理 $t>0$ 时，$\lambda_-$ 是第二大 Choi 本征值。
+
+连续性允许在固定联合小箱中同时保证
+$$
+\|\partial_t\mathsf J(p,t)\|_1\le\frac32,\qquad
+\eta(p,t)\ge\frac38.
+\tag{218.18}
+$$
+对 $\Delta>0$，实际 $\lambda_2^\sharp=t^\sharp\eta(p,t^\sharp)$。因此（218.13）给
+$$
+d_2(p)\le\frac34t^\sharp
+\le2\lambda_2^\sharp.
+\tag{218.19}
+$$
+这与（218.9）合起来证明（218.5）。
+
+当 $\Delta\le0$ 时，$t^\sharp=\lambda_2^\sharp=0$，实际最优通道本身属于
+$\mathfrak C_2$，故 $d_2=0$；定理在整个局部箱，包括临界图上成立。
+
+数值常数 $1/2$ 和 $2$ 不是最优常数的断言。证明给出它们共同适用的固定邻域，不要求靠近临界图时另行改变邻域或比较常数。
+
+### 218.5 与指定任务的二次代价作同箱比较
+
+容量结果在同一个联合小箱中给
+$$
+E_{\le2}(p)-E(p)
+=\epsilon D_{\mathrm{cap}}(p)(\lambda_2^\sharp(p))^2,\qquad
+D_{\mathrm{cap}}>0,\qquad
+D_{\mathrm{cap}}(0)=\frac{\beta(R-1)}8.
+\tag{218.20}
+$$
+这里 $E_{\le2}$ 是原恢复任务在同一个条件记录通道总秩预算下的最优误差。其与逐结果秩一预算最优值相等的桥梁，依赖实际标签接口：缺少任一结果的候选，其完整恢复误差恰为一。
+
+再缩小邻域使
+$$
+\frac{\beta(R-1)}{16}
+\le D_{\mathrm{cap}}(p)\le
+\frac{\beta(R-1)}4.
+$$
+由（218.5），
+$$
+\frac{d_2}{2}\le\lambda_2^\sharp\le2d_2.
+$$
+于是有具体的统一比较
+$$
+\boxed{
+\frac{\beta(R-1)}{64}\,\epsilon d_2(p)^2
+\le
+E_{\le2}(p)-E(p)
+\le
+\beta(R-1)\,\epsilon d_2(p)^2.
+}
+\tag{218.21}
+$$
+
+因此在这个指定恢复任务、固定接口和联合端点邻域内：
+
+- 通道与合法秩二实现集合的操作距离，随新增谱权重一次变化；
+- 限制同一容量后，重新优化所付的指定任务误差代价，随该距离平方变化，并额外乘以 $\epsilon$。
+
+两个最优化目标不同。（218.21）没有认定距离最优通道与任务最优受限通道相同；也没有把当前任务的二次规律推广到所有观察任务。$d_2$ 已用完整 diamond 距离比较条件通道，而任务误差还包含本题固定的实际入口、不可访问记忆及目标。
+
+环境预算继续只针对（218.2）的正旗标条件记录通道：总 Choi 秩等于其最小 Kraus 数，也等于纯初始 Stinespring 环境的最小维数。本稿不把它扩展成整个含旧旗标读取与丢弃的未归约解码器总环境预算。
+
+### 218.6 纯来源重制备族的精确距离
+
+令输入空间 $\mathcal H_{\mathrm{in}}$ 二维，$P=|p\rangle\langle p|$ 为任意秩一投影，$P^\perp=I-P$。本小节允许任意固定有限维输出量子空间，其中含指定单位向量 $|r\rangle$，置 $\sigma_r=|r\rangle\langle r|$。结果标签 $Q$ 为经典二元标签。
+
+对 $0\le q\le1$，定义
+$$
+E_0(q)=(1-q)P,\qquad
+E_1(q)=I-(1-q)P=qP+P^\perp,
+$$
+$$
+\mathcal R_q(X)
+=
+|0\rangle\langle0|^Q\otimes
+\operatorname{Tr}[E_0(q)X]\sigma_r
++
+|1\rangle\langle1|^Q\otimes
+\operatorname{Tr}[E_1(q)X]\sigma_r.
+\tag{218.22}
+$$
+这是一个明确定义的重制备记录通道族。原联合端点任务的纯来源最优通道由第208、213、216节给出此形式；此处先独立研究整个 $q\in[0,1]$ 区间，不把原任务的局部结论扩大到全区间。这里的 $q$ 是效果权重，区别于第213节的约化目标函数 $q(p,t)$。
+
+竞争者为任意合法经典记录通道
+$$
+\mathcal S(X)
+=\sum_{j=0}^1|j\rangle\langle j|^Q\otimes\Psi_j(X),
+\qquad \Psi_j\ \mathrm{CP},\quad \Psi_0+\Psi_1\ \mathrm{TP}.
+\tag{218.23}
+$$
+各 $\Psi_j$ 可输出任意量子态。令 $J_j$ 为其未归一化 Choi 矩阵，定义
+$$
+\begin{aligned}
+d_2(q)
+&=\min_{\operatorname{rank}J_0+\operatorname{rank}J_1\le2}
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond,\\
+d_{11}(q)
+&=\min_{\operatorname{rank}J_0\le1,\ \operatorname{rank}J_1\le1}
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond.
+\end{aligned}
+\tag{218.24}
+$$
+两处最优化均只对（218.23）中的合法 CPTP 记录通道进行。集合紧且非空，最小值取得。
+
+**定理218.2（纯来源重制备族的精确容量距离）。** 对所有 $q\in[0,1]$，任意输入投影 $P$ 及指定输出纯态 $\sigma_r$，
+$$
+\boxed{
+d_{11}(q)=q,\qquad
+d_2(q)=\min\{q,1-q\}.
+}
+\tag{218.25}
+$$
+特别地，
+$$
+\boxed{d_2(q)=q\qquad(0\le q\le1/2).}
+\tag{218.26}
+$$
+因此小 $q$ 不存在任何二阶或更高阶的严格距离改进。
+
+$\mathcal R_0$ 在 $0\le q\le1/2$ 达到总秩二的距离最优值；$\mathcal R_1$ 在 $1/2\le q\le1$ 达到该最优值。$\mathcal R_0$ 对全部 $q\in[0,1]$ 都达到逐结果秩一预算的距离最优值。此处不声称最优器唯一。
+
+### 218.7 任意单 Kraus 输出的核方向
+
+先证明更一般的下界：只要竞争者结果 $1$ 的 Choi 秩至多一，就有
+$$
+\frac12\|\mathcal R_q-\mathcal S\|_\diamond\ge q.
+\tag{218.27}
+$$
+对结果 $0$ 的秩不需要额外假设。
+
+因为 $\Psi_1$ 的 Choi 秩至多一，可以写
+$$
+\Psi_1(X)=K_1XK_1^\dagger,
+$$
+零映射时取 $K_1=0$。考虑线性泛函
+$$
+b=\langle r|K_1:\mathcal H_{\mathrm{in}}\longrightarrow\mathbb C.
+$$
+输入维数为二，所以 $\ker b$ 至少一维。取单位向量
+$|\psi\rangle\in\ker b$，作为合法无外部参考输入。
+
+固定输出事件为
+$$
+F=|1\rangle\langle1|^Q\otimes\sigma_r.
+\tag{218.28}
+$$
+它是一个合法投影效果，且不依赖输入方向。竞争者对此事件的概率为
+$$
+\operatorname{Tr}[F\mathcal S(P_\psi)]
+=
+|\langle r|K_1|\psi\rangle|^2=0.
+\tag{218.29}
+$$
+目标通道对此事件的概率为
+$$
+\operatorname{Tr}[F\mathcal R_q(P_\psi)]
+=
+\langle\psi|E_1(q)|\psi\rangle
+\ge q,
+\tag{218.30}
+$$
+因为
+$$
+E_1(q)=qI+(1-q)P^\perp\succeq qI.
+$$
+两份输出都是归一化状态，任意效果概率差不超过其半迹距离。因此
+$$
+\frac12\|\mathcal R_q(P_\psi)-\mathcal S(P_\psi)\|_1\ge q.
+$$
+diamond 距离允许这个输入，立即得到（218.27）。
+
+此输入可依赖被检验的竞争者，这是最小—最大距离问题中合法的下界方式。下界没有将某个固定参考探针的数值等同于 diamond 范数；它对每个竞争者各给一个合法测试，而下一节将完整处理上界的全部外部参考。
+
+若竞争者每个结果的 Choi 秩都至多一，（218.27）直接给
+$d_{11}(q)\ge q$。
+
+### 218.8 完整参考下的合法最优候选
+
+任选单位向量 $|p^\perp\rangle$ 张成 $P^\perp$。端点 $\mathcal R_0$ 的两个结果分别只有一个 Kraus：
+$$
+K_{0}^{(0)}=|r\rangle\langle p|,\qquad
+K_{1}^{(0)}=|r\rangle\langle p^\perp|.
+\tag{218.31}
+$$
+所以 $\mathcal R_0$ 同时满足逐结果秩一和总秩二预算。
+
+端点 $\mathcal R_1$ 的结果 $0$ 为零，结果 $1$ 为
+$$
+X\longmapsto\operatorname{Tr}(X)\sigma_r.
+$$
+后者可取两个 Kraus
+$$
+K_{1,a}^{(1)}=|r\rangle\langle p|,\qquad
+K_{1,b}^{(1)}=|r\rangle\langle p^\perp|.
+\tag{218.32}
+$$
+因此 $\mathcal R_1$ 是合法的总秩二记录通道。
+
+对任意 $q,s\in[0,1]$，通道差为
+$$
+(\mathcal R_q-\mathcal R_s)(X)
+=(q-s)\operatorname{Tr}(PX)
+\bigl(|1\rangle\langle1|-|0\rangle\langle0|\bigr)^Q
+\otimes\sigma_r.
+\tag{218.33}
+$$
+取任意带外部参考 $\mathcal H_{\mathrm{ref}}$ 的输入算子 $X$，置
+$$
+Z_P=(\langle p|\otimes I_{\mathrm{ref}})
+X(|p\rangle\otimes I_{\mathrm{ref}}).
+$$
+双边乘法的迹范数界给 $\|Z_P\|_1\le\|X\|_1$，无需假设 $X$ 为 Hermitian。
+输出差为
+$$
+(q-s)
+\bigl(|1\rangle\langle1|-|0\rangle\langle0|\bigr)^Q
+\otimes\sigma_r\otimes Z_P,
+$$
+故其半迹范数恰为
+$$
+|q-s|\,\|Z_P\|_1\le|q-s|\,\|X\|_1.
+$$
+该界覆盖任意参考维数与全部 diamond 定义输入，而无参考输入 $P$ 达到等号。因此
+$$
+\boxed{
+\frac12\|\mathcal R_q-\mathcal R_s\|_\diamond=|q-s|.
+}
+\tag{218.34}
+$$
+这既证明上界已控制全部外部参考，也给出
+$$
+d_{11}(q)\le q,\qquad
+d_2(q)\le\min\{q,1-q\}.
+\tag{218.35}
+$$
+与（218.27）结合，首先完成 $d_{11}(q)=q$ 的证明。
+
+### 218.9 总秩二竞争者的完整分类
+
+任取总 Choi 秩至多二的竞争者。分两种情况：
+
+1. 若 $\operatorname{rank}J_1\le1$，已有（218.27），距离至少为 $q$。
+2. 若 $\operatorname{rank}J_1=2$，总秩预算迫使 $J_0=0$。竞争者永不输出结果标签 $0$。取输入 $P$ 并检验输出效果
+   $|0\rangle\langle0|^Q\otimes I_{\mathrm{out}}$：
+   目标概率为 $1-q$，竞争者概率为零，故完整半 diamond 距离至少为 $1-q$。
+
+两种情况穷尽全部合法总秩二候选。因此所有候选的距离都至少为
+$\min\{q,1-q\}$。结合（218.35），得到（218.25）。
+
+这里没有预先排除缺结果候选，也没有将总秩二与逐结果秩一预算视为同一集合。事实上，当 $q>1/2$ 时，两种距离最优值严格不同：
+$$
+d_2(q)=1-q<q=d_{11}(q).
+$$
+小 $q$ 的相等来自上面的精确下界，而不是沿用另一种任务目标的预算等价结论。
+
+### 218.10 回接纯来源实际最优通道
+
+对（218.22），未归一化 Choi 矩阵为
+$$
+J_0(q)=(1-q)P^{\mathsf T}\otimes\sigma_r,\qquad
+J_1(q)=(qP+P^\perp)^{\mathsf T}\otimes\sigma_r.
+\tag{218.36}
+$$
+$J_1$ 的两枚可能非零本征值是 $1,q$，故
+$$
+\lambda_2=q.
+$$
+在项目的纯来源小 $q$ 分支上，因而精确有
+$$
+\boxed{d_2=\lambda_2=q.}
+\tag{218.37}
+$$
+这一等式对输入投影 $P$ 的变化完全统一；比较常数不依赖 $P$，也不涉及任何 Kraus 规范。
+
+在该分支，采用 $\mathcal R_0$ 这一合法通道已是通道距离最优。它是否也等于原恢复任务在容量限制下的最优通道，是另一个最优化问题；本定理不据距离最优性认定两者相同。
+
+若同时使用此前已证明的指定任务容量恒等式
+$$
+E_{\le2}-E
+=\epsilon D_{\mathrm{cap}}(\lambda_2^\sharp)^2,
+$$
+则仅在当前纯来源重制备分支可直接改写为
+$$
+E_{\le2}-E=\epsilon D_{\mathrm{cap}}\,d_2^2.
+\tag{218.38}
+$$
+其含义仍严格局限于本题实际入口、目标和条件记录接口，不推广成任意任务的误差规律。
+
+
+### 218.11 纯来源容量代价的精确距离表达
+
+**推论218.3（纯来源距离平方的精确任务系数）。**
+在所证联合小箱内，沿纯来源 $h=0$ 有
+$$
+\boxed{
+E_{\le2}(p)-E(p)=\epsilon D_{\mathrm{cap}}(p)\,d_2(p)^2.
+}
+\tag{218.39}
+$$
+沿 $\Delta(p)>0$ 的任意合法纯来源参数族趋于联合端点 $p=0$，相应非零商满足
+$$
+\frac{E_{\le2}(p)-E(p)}{\epsilon\,d_2(p)^2}
+\longrightarrow\frac{\beta(R-1)}8.
+\tag{218.40}
+$$
+
+**证明。** 纯来源的实际最优通道属于定理218.2的族，其三枚可能非零 Choi 本征值为 $1,1-q,q$，且 $q=\lambda_2^\sharp$ 在小箱内小于 $1/2$。因此 $d_2=\lambda_2^\sharp$ 精确成立，并对移动投影 $P$ 统一。
+代入第217节的恒等式（218.20），即得（218.39）；$D_{\mathrm{cap}}(p)\to\beta(R-1)/8$ 给第二式。证毕。
+
+在临界图和秩二相区，恒等式（218.39）仍成立，但分子与分母均为零，不取实际商。
+本推论没有把纯来源的精确系数或精确距离公式扩展到正来源路径。
+另外，当独立通道族取 $1/2<q<1$ 时，完整记录 Choi 的最小正谱为 $1-q$，而 $J_1$ 的第二谱仍是 $q$；一般局部比较与原任务的容量公式都不因定理218.2而被扩大到这个区间。
+
+### 218.12 结果的关系几何含义
+
+同一条件记录通道有三份可以严格连接、但不能互相替代的读数：
+总 Choi 秩判断精确实现所需的纯初始环境维数；小 Choi 谱权重衡量新启用方向的大小；
+完整 diamond 距离判断把通道改成较低容量实现时，某个允许外部检验至少能察觉多少变化。
+指定恢复任务的额外误差还要经过本题的实际入口和目标比较，因此其变化可以只在二阶出现。
+
+这给出一个具体的区分：一个方向在允许全部续接检验时已有一阶可检测变化，
+但对当前恢复任务，重新优化后的容量损失仍只有二阶。
+它说明边界容量与任务误差必须连同接口和允许检验一起陈述；
+本节没有把这种任务依赖规律解释成普遍的物理面积律或时钟速率。
+
+本节为纸面数学结果，未作 Lean 核验。一般距离比较和任务代价比较限定于所证的固定联合小箱；
+定理218.2则对其明确定义的重制备通道族及全部 $q\in[0,1]$ 成立，并给出达到距离最优值的候选。
+它不宣称距离最优器唯一，也不将其自动等同于原恢复任务的最优预算解码器。
+
+## 追加锚（本行以下为增补区）
