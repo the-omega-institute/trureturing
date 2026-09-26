@@ -24,6 +24,7 @@ namespace D5.S3.Geometry.Hyperideal.FourCycleLocalAngleDemand
 open D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 
 /- The six entries are in the fixed order (12,13,14,34,24,23). -/
+set_option maxHeartbeats 1000000 in
 theorem paired_angle_demand
     (r a b o : ℝ)
     (hr : 1 < r) (ha : 1 < a) (hb : 1 < b) (ho : 1 < o)
