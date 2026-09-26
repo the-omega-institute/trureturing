@@ -56701,3 +56701,235 @@ $$
 测量收益及其半定规划对偶的来源为 John Watrous，*The Theory of Quantum Information*（Cambridge University Press，2018），[作者公开的书稿版本](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§1.2.3 的定理1.18及 §3.1.2 第133—136页的 Hermitian 收益规划、式（3.33）—（3.42）。该书已经允许一般 Hermitian 收益，故本节不把有符号收益或强对偶作为新发现。共同二阶上界的信息控制、带误差的连续区间认证、明确的正密度实现及原尾窗代价的连接由上述推导承担。没有统一矩阵上界、变化模或认证误差的有限观测，仍不能获得这些保证。
 
 ## 追加锚（本行以下为增补区）
+
+## 261. 固定矩阵二阶上界的精确全实轴极值
+
+第260节给出 $I_Q\le2\operatorname{Tr}C$，但同节的秩一结论说明：对一个指定矩阵 $C$，这个数未必是最优值。本节在全实轴上完成该问题的分类。决定能否逼近迹上界的条件是 $C$ 是否至少具有两个正特征方向；构造可以始终与 $C$ 对角化在同一个基中。
+
+**定义 261.1（固定共同上界的允许类）。** 固定 $n$ 阶半正定矩阵 $C$，令
+
+$$
+\mathcal R(C)=
+\left\{\rho\in C^2(\mathbb R;M_n):
+\rho(t)\succeq0,\ \operatorname{Tr}\rho(t)=1,
+\ \rho''(t)\preceq C\ \text{对所有 }t\in\mathbb R\right\},
+\tag{261.1}
+$$
+
+并定义
+
+$$
+\mathfrak F(C)=\sup_{\rho\in\mathcal R(C)}I_Q(\rho_0).
+\tag{261.2}
+$$
+
+这个类总含常值密度，故非空。矩阵 $C$ 在整个问题中固定，不随参数或准备曲线改变。
+
+**定理 261.2（秩分界与精确上确界）。** 有
+
+$$
+\boxed{
+\mathfrak F(C)=
+\begin{cases}
+0,&\operatorname{rank}C\le1,\\
+2\operatorname{Tr}C,&\operatorname{rank}C\ge2.
+\end{cases}
+}
+\tag{261.3}
+$$
+
+两种情况下，即使把允许类进一步限制为每个矩阵元可延拓成整函数、每个有限实数参数处满秩、且全部状态与 $C$ 在同一个固定基中对角化，上确界仍相同。第二种情形只断言任意逼近，不要求一条曲线恰好取得等号。
+
+证明。 第260节已给出上界 $I_Q\le2\operatorname{Tr}C$。当 $C$ 秩至多一时，该节的核空间凹性论证使所有允许曲线恒定，所以信息为零；常值密度 $I/n$ 也属于所述更小类。
+
+以下设 $m=\operatorname{rank}C\ge2$。先在固定基中写
+
+$$
+C=\operatorname{diag}(c_0,c_1,\ldots,c_N,0,\ldots,0),
+\qquad N=m-1,\quad c_j>0.
+\tag{261.4}
+$$
+
+第零方向作为补偿概率，其余 $N$ 个正方向作为分别改变的概率。令 $c_{\min}=\min_{0\le j\le N}c_j$，任取 $\kappa>0$，并选
+
+$$
+\lambda>1+\frac1{\kappa c_{\min}}.
+\tag{261.5}
+$$
+
+对 $1\le i\le N$，置
+
+$$
+v_i=R\lambda^{-(i-1)},\qquad \tau_i=\kappa v_i,
+\tag{261.6}
+$$
+
+其中 $R>0$ 稍后由归一化确定。定义非负连续分段线性的速度
+
+$$
+w_i(t)=
+\begin{cases}
+0,&t\le-\tau_i-v_i/c_0,\\
+c_0(t+\tau_i+v_i/c_0),
+&-\tau_i-v_i/c_0<t<-\tau_i,\\
+v_i,&-\tau_i\le t\le\tau_i,\\
+c_i(\tau_i+v_i/c_i-t),
+&\tau_i<t<\tau_i+v_i/c_i,\\
+0,&t\ge\tau_i+v_i/c_i.
+\end{cases}
+\tag{261.7}
+$$
+
+它在左侧以斜率 $c_0$ 上升，在右侧以斜率 $-c_i$ 下降；两侧一般不对称。令
+
+$$
+q_i(t)=\int_t^\infty w_i(x)\,dx,
+\qquad
+q_0(t)=\mu-\sum_{i=1}^Nq_i(t).
+\tag{261.8}
+$$
+
+若 $m=n$，取 $\mu=1$；若 $m<n$，取任意固定 $0<\mu<1$，并在 $\ker C$ 的 $n-m$ 个方向各放常值概率 $(1-\mu)/(n-m)$。
+
+各速度的总面积为
+
+$$
+\int_{\mathbb R}w_i(t)\,dt
+=v_i^2\left(2\kappa+\frac1{2c_0}+\frac1{2c_i}\right).
+\tag{261.9}
+$$
+
+因此选择
+
+$$
+R^2=
+\frac{\mu}{
+\displaystyle\sum_{i=1}^N\lambda^{-2(i-1)}
+\left(2\kappa+\frac1{2c_0}+\frac1{2c_i}\right)}
+\tag{261.10}
+$$
+
+便使 $\sum_iq_i(-\infty)=\mu$。所有 $q_i$ 非负且递减，故 $q_0\ge0$，总活动概率恒为 $\mu$。连同核空间中的常值部分，得到一条迹为一的对角密度曲线 $\rho^{(0)}$。
+
+现在核对固定矩阵预算，而不将它改成标量范数。因为 $q_i'=-w_i$，其弱二阶导数在左侧转弯区间等于 $-c_0$，在右侧转弯区间等于 $c_i$，其余处为零。对任一正特征值 $c_j$，由（261.5）有
+
+$$
+v_{i+1}\left(\kappa+\frac1{c_j}\right)
+\le\frac{v_i}{\lambda}
+\left(\kappa+\frac1{c_{\min}}\right)
+<\kappa v_i=\tau_i.
+\tag{261.11}
+$$
+
+故不同概率的转弯区间在正、负两侧分别互不相交。几乎每个 $t$ 至多有一个非零的 $q_i''$。在左侧转弯时，非零二阶分量为
+
+$$
+q_i''=-c_0,\qquad q_0''=c_0;
+\tag{261.12}
+$$
+
+在右侧转弯时则为
+
+$$
+q_i''=c_i,\qquad q_0''=-c_i.
+\tag{261.13}
+$$
+
+逐个对角分量比较可见，两种情况下都满足 $(\rho^{(0)})''\preceq C$。各 $w_i$ 连续且 Lipschitz，故这条曲线为 $C^{1,1}$，上述有界弱二阶导数没有额外点质量。
+
+在中心，速度处于平台，直接计算两侧面积得到
+
+$$
+\begin{aligned}
+q_i(0)&=v_i^2\left(\kappa+\frac1{2c_i}\right),
+&q_i'(0)&=-v_i,\\
+q_0(0)&=\left(\kappa+\frac1{2c_0}\right)\sum_i v_i^2,
+&q_0'(0)&=\sum_i v_i.
+\end{aligned}
+\tag{261.14}
+$$
+
+所有活动中心概率严格为正，核空间部分在需要时也严格为正。因此中心 Fisher 信息为
+
+$$
+\begin{aligned}
+I^{(0)}(0)
+&=\sum_{i=1}^N\frac1{\kappa+1/(2c_i)}
++\frac{(\sum_i v_i)^2}
+{(\kappa+1/(2c_0))\sum_i v_i^2}\\
+&\ge\sum_{j=0}^N\frac1{\kappa+1/(2c_j)}.
+\end{aligned}
+\tag{261.15}
+$$
+
+最后一步只使用正数 $v_i$ 的关系 $(\sum_i v_i)^2\ge\sum_i v_i^2$。当 $\kappa\downarrow0$，右侧趋于 $2\sum_jc_j=2\operatorname{Tr}C$。归一化尺度 $R$ 与活动总质量 $\mu$ 都在这些比值中消去。
+
+为得到所要求的解析曲线，对整条有界密度曲线作高斯卷积
+
+$$
+\rho^{(\epsilon)}(t)
+=\int_{\mathbb R}g_\epsilon(t-x)\rho^{(0)}(x)\,dx,
+\qquad
+g_\epsilon(t)=\frac{e^{-t^2/(2\epsilon^2)}}{\sqrt{2\pi}\epsilon}.
+\tag{261.16}
+$$
+
+正性、迹一及共同对角基由凸平均保留。每个 $q_i$ 在左侧半轴严格为正，$q_0$ 在右侧半轴严格为正；高斯核处处正，故每个活动分量在每个有限实数参数处严格为正。核空间中的常值概率不变。由此整条曲线在实轴上满秩。与第258节相同，有界函数的高斯卷积逐矩阵元延拓为整函数。
+
+固定矩阵上界也被精确保留：弱导数与卷积可交换，且
+
+$$
+C-(\rho^{(\epsilon)})''(t)
+=\int_{\mathbb R}g_\epsilon(t-x)
+\bigl(C-(\rho^{(0)})''(x)\bigr)\,dx
+\succeq0.
+\tag{261.17}
+$$
+
+对已经固定的 $\kappa,\lambda,R$，高斯逼近恒等使中心概率及其一阶导数收敛到（261.14）。这些中心概率严格为正，所以对角 Fisher 信息的有限有理和连续，得到
+
+$$
+I_Q(\rho^{(\epsilon)}_0)\longrightarrow I^{(0)}(0)
+\quad(\epsilon\downarrow0).
+\tag{261.18}
+$$
+
+因此，对任意 $0<\delta<1$，先选足够小 $\kappa$，再依次确定 $\lambda,R$，最后选足够小 $\epsilon$，即可在固定 $C$ 下达到
+
+$$
+I_Q(\rho^{(\epsilon)}_0)
+\ge(1-\delta)2\operatorname{Tr}C.
+\tag{261.19}
+$$
+
+结合既有上界即得（261.3）。固定酉共轭把构造送回任意给定矩阵 $C$ 的原坐标，同时保持 Loewner 条件与信息。证毕。
+
+这里两侧速度通常不对称，所以本节只使用平滑后中心一阶数据的收敛，不宣称像第258节的偶对称构造那样精确保留中心概率或 $\rho''(0)=0$。所需的固定矩阵预算由（261.17）直接保证，无需这些额外等式。
+
+**推论 261.3（上界矩阵失秩处的极值不连续）。** 在二维空间取
+
+$$
+C_\varepsilon=\operatorname{diag}(1,\varepsilon),
+\qquad \varepsilon\ge0.
+\tag{261.20}
+$$
+
+则 $C_\varepsilon\to C_0$ 的算子范数差为 $\varepsilon$，但
+
+$$
+\mathfrak F(C_\varepsilon)=2(1+\varepsilon)
+\quad(\varepsilon>0),
+\qquad
+\mathfrak F(C_0)=0.
+\tag{261.21}
+$$
+
+证明。 正 $\varepsilon$ 时矩阵秩为二，零时秩为一，直接应用定理261.2。证毕。
+
+这个不连续性属于对整类允许曲线取最优值之后的结论，不是某一条固定曲线的信息突然变化。精确的零特征方向使相应概率在全实轴上凹且有界，从而固定；任意正余量则允许非对称的转弯。逼近最优值时，曲线及其参数尺度随上界变化；虽然各曲线均延拓到整个复平面，本节没有给出态的统一正谱隙、统一三阶导数界、复域上的统一函数大小界或尺度复杂度控制。
+
+一个固定正矩阵的迹给出总上界，但能否使用这些方向，还取决于它们是否允许概率守恒下的共同续接。只有一个可变正方向时，迹为一把变化全部消掉；至少两个方向时，负二阶变化可以由另一个方向承担，再在不同参数区间分别恢复。上述构造把这种共同实现写成了具体的概率曲线。
+
+每条逼近曲线中的状态两两对易，并与给定的 $C$ 对易，因此这里没有量子独有优势主张。问题定义要求正性和同一个矩阵上界在整个实轴上成立，不能把（261.3）无条件搬到有限区间、任意随参数变化的上界，或原处理器的矩、分项预算、尖锐节点约束类中。高斯解析化及标量正性背景沿用第258—260节；固定矩阵的各向异性达到由本节构造承担，不要求原处理器约束下的达到。
+
+## 追加锚（本行以下为增补区）
