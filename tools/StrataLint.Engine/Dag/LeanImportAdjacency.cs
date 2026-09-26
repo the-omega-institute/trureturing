@@ -56,7 +56,9 @@ internal static class LeanImportAdjacency
                 .ToImmutableArray());
     }
 
-    /// Enumerates the transitive closure of roots in dependency-first order.
+    /// Enumerates the reflexive transitive closure of roots once per distinct RepoPath.
+    /// Dependencies precede dependents when the reachable subgraph is acyclic.
+    /// Visited nodes are skipped, including on cycles; this method does not detect cycles.
     internal static ImmutableArray<RepoPath> DependenciesFirst(
         IEnumerable<RepoPath> roots,
         IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
