@@ -31,6 +31,7 @@ internal sealed record InformationTemplateOccurrence(
     ImmutableDictionary<string, string>? SourceProjectionOwners = null)
 {
     internal System.Text.Json.JsonElement? DefinitionSourceBinding { get; init; }
+    internal ImmutableHashSet<string> RealizationDependencyOwners { get; init; } = [];
 
     internal bool HasFourSlots => EscapeFrom is not null && EscapeContinues is not null
         && State == InformationTemplateBindingState.DeclaredValidated && EvidenceRef is not null;

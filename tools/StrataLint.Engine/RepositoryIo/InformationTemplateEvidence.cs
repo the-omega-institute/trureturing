@@ -91,6 +91,7 @@ internal static class InformationTemplateEvidence
             string? sourceOwner = null;
             string? sourceDefinitionName = null;
             ImmutableDictionary<string, string>? projectionOwners = null;
+            var realizationDependencyOwners = ImmutableHashSet<string>.Empty;
             if (state == InformationTemplateBindingState.DeclaredValidated)
             {
                 var fields = new[] { "key", "evidence_ref", "plan_identity", "descriptor_identity",
@@ -104,8 +105,8 @@ internal static class InformationTemplateEvidence
                 HashField(certificate, "plan_identity");
                 HashField(certificate, "descriptor_identity");
                 HashField(certificate, "actual_identity");
-                CheckDependencies(certificate, "argument_inputs");
-                CheckDependencies(certificate, "extraction_inputs");
+                realizationDependencyOwners = CheckDependencies(certificate, "argument_inputs", realization)
+                    .Union(CheckDependencies(certificate, "extraction_inputs", realization));
                 if (bridgeKind == "source-equivalence")
                 {
                     (sourceOwner, sourceDefinitionName) = CheckSourceBinding(
@@ -135,6 +136,7 @@ internal static class InformationTemplateEvidence
             }
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
                 escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName, projectionOwners) {
+                RealizationDependencyOwners = realizationDependencyOwners,
                 DefinitionSourceBinding = sourceDefinitionName is null ? null
                     : certificate.GetProperty("source_binding").Clone() });
         }
@@ -401,6 +403,11 @@ internal static class InformationTemplateEvidence
                 || selected.RegistrationSourcePath != original.RegistrationSourcePath
                 || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
                 throw new FormatException("DTR-Evidence: declaration retargets the occurrence");
+            var realizationOwner = realizationOwners.Single(path => report.Files[path].Declarations
+                .Any(declaration => declaration.Name == original.RealizationName));
+            if (records.SelectMany(record => record.RealizationDependencyOwners)
+                .Any(owner => owner != ModuleForSource(realizationOwner.Value)))
+                throw new FormatException("DTR-Evidence: realization dependency owner differs from declaration");
             if (selected.SourceOwner is { } sourceOwner)
             {
                 var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
@@ -460,14 +467,21 @@ internal static class InformationTemplateEvidence
     private static string HashField(JsonElement value, string field) =>
         InformationTemplateJson.Hash(InformationTemplateJson.String(value, field), 64);
 
-    private static void CheckDependencies(JsonElement value, string field)
+    private static ImmutableHashSet<string> CheckDependencies(JsonElement value, string field, string realization)
     {
         var names = new HashSet<string>(StringComparer.Ordinal);
+        var realizationOwners = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         foreach (var input in Array(value, field))
         {
             InformationTemplateJson.Fields(input, "name", "owner", "type_identity", "body_identity");
-            var name = InformationTemplateJson.Name(InformationTemplateJson.String(input, "name"));
-            InformationTemplateJson.Name(InformationTemplateJson.String(input, "owner"));
+            var name = InformationTemplateJson.String(input, "name");
+            var owner = InformationTemplateJson.Name(InformationTemplateJson.String(input, "owner"));
+            // The generated realization can contain an unescapable Name.toString
+            // component, just as realization_name above can. Only that exact
+            // reference uses display spelling; Collect resolves it uniquely in
+            // the actual import closure and checks this dependency's owner.
+            if (name == realization) realizationOwners.Add(owner);
+            else InformationTemplateJson.Name(name);
             HashField(input, "type_identity");
             // Kernel primitives have no executable body.
             var body = input.GetProperty("body_identity");
@@ -475,5 +489,6 @@ internal static class InformationTemplateEvidence
             if (body.GetString() is { Length: > 0 } text) InformationTemplateJson.Hash(text, 64);
             if (!names.Add(name)) throw new FormatException("DTR-Evidence: duplicate dependency");
         }
+        return realizationOwners.ToImmutable();
     }
 }
