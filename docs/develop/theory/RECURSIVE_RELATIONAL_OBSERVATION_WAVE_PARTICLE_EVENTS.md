@@ -7444,3 +7444,450 @@ $$
 精确半径与指数现由本批证明给出；本批尚未确定首系数 $c$ 的精确值，也未给出全部原始点击后继的最近失效分类或每个子临界半径的最优装置。第 102.2 条只分类未点击分支及重置后的完整装置，不能把该后处理的结果当成原接口的全部分类。所有结论继续限于本文固定名义装置、完整二维活动记忆和每轮重复同一实际仪器。全部新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 106. 最近失效装置的完整分支映射构成一圈平衡投影
+
+**定理 106.1（保留原始点击后继的最近失效分类）。** 对定义 87.1 的原名义仪器和完整二维接口，最近失效集合准确为
+
+$$
+\boxed{
+\mathfrak F_R=
+\{\Gamma_\vartheta^{\rm eq}:\vartheta\in\mathbb R/(2\pi\mathbb Z)\},
+}
+\tag{106.1}
+$$
+
+其中
+
+$$
+\psi_\vartheta=\frac{|0\rangle+e^{i\vartheta}|1\rangle}{\sqrt2},
+\quad P_\vartheta=|\psi_\vartheta\rangle\langle\psi_\vartheta|,
+$$
+
+$$
+\mathcal N_\vartheta^{\rm eq}(X)=P_\vartheta XP_\vartheta,
+\qquad
+\mathcal C_\vartheta^{\rm eq}(X)
+=\operatorname{Tr}[(I-P_\vartheta)X]P_0.
+\tag{106.2}
+$$
+
+该分类按实际 CP 分支映射成立，不分类实现同一映射的内部 Kraus 表示或环境搭建。它补足第 105.2 条未给出的原始点击后继分类。
+
+证明。推论 102.2 已证明：每个最近失效装置的暗态平衡，且原始未点击分支就是 $X\mapsto P_\psi XP_\psi$。以计算基对角酉变换对齐相位，可令 $\psi=|+\rangle$；该变换保持名义仪器及完整距离，也保持 $P_0$。
+
+完整性使点击效果恰为 $P_\eta=I-P_\psi$。取任一点击 Kraus 表示 $\mathcal C(X)=\sum_j B_jXB_j^\dagger$。因
+
+$$
+\sum_j\|B_j\psi\|^2
+=\langle\psi|P_\eta|\psi\rangle=0,
+$$
+
+每个 $B_j$ 都消去 $\psi$，故 $B_j=|v_j\rangle\langle\eta|$。因此存在迹一正算子 $\tau=\sum_j|v_j\rangle\langle v_j|$，使
+
+$$
+\mathcal C(X)=\operatorname{Tr}(P_\eta X)\tau.
+\tag{106.3}
+$$
+
+现在对这个原始点击输出使用第 101 节的同一个联合输入和负谱检验，取 $a=1/2,z=z_0=\phi/2$。与重置后的 $\Gamma_+$ 相比，未点击块完全相同，点击块只增加
+
+$$
+w|0_R\rangle\langle0_R|\otimes(\tau-P_0),
+\qquad w=\frac12(1-z_0)>0.
+$$
+
+原检验 $E_C$ 支撑在参考系统张量量子输出 $|0\rangle$ 的空间内，且
+$h_C=\langle0_R0|E_C|0_R0\rangle>0$。所以同一个负谱检验给
+
+$$
+\delta(\Gamma)
+\ge R+w h_C\bigl(1-\langle0|\tau|0\rangle\bigr).
+\tag{106.4}
+$$
+
+最近失效要求左侧恰为 $R$。正性和迹一保证括号非负，因 $w h_C>0$，只能有 $\langle0|\tau|0\rangle=1$，从而 $\tau=P_0$。撤销相位对齐得到式（106.2）。
+
+反过来，每个式（106.2）都是 $\Gamma_+$ 的计算基对角相位共轭，故具有相同的完整距离 $R$，并固定 $P_\vartheta$ 而永久未点击。它们全部属于 $\mathfrak F_R$。不同相位模 $2\pi$ 给不同的 $P_\vartheta$；而未点击效果就是 $P_\vartheta$，所以不同参数确实给不同分支映射。$\square$
+
+**推论 106.2（边界本身的有限事件律只有第一轮点击）。** 从初态 $\rho$ 在 $\Gamma_\vartheta^{\rm eq}$ 上运行，令 $\alpha=\operatorname{Tr}(\rho P_\vartheta)$。则
+
+$$
+\Pr(\mathsf N=1)=1-\alpha,\qquad
+\Pr(2\le\mathsf N<\infty)=0,\qquad
+\Pr(\mathsf N=\infty)=\alpha.
+\tag{106.5}
+$$
+
+在正概率的点击分支上，量子后继为 $P_0$；在正概率的未点击分支上，后继为 $P_\vartheta$，以后一直未点击。
+
+证明。式（106.2）直接给第一次两分支为 $(1-\alpha)P_0$ 与 $\alpha P_\vartheta$，且 $\mathcal N_\vartheta^{\rm eq}(P_\vartheta)=P_\vartheta$、$\mathcal C_\vartheta^{\rm eq}(P_\vartheta)=0$。$\square$
+
+该边界律与第 97 节的临界逼近不同：每个子临界装置仍最终点击，趋向永久保留的质量在逼近中形成长尾。直接将边界的无穷等待换成一个有限点击轮数，会丢掉这一极限次序。
+
+## 107. 同一子临界校准球内，可以改变点击后继而保持全部等待律
+
+**定义 107.1（未点击动力学相同的后继参数族）。** 固定 $a>0$，取充分小的 $t>0$，令
+
+$$
+\psi=|+\rangle,\quad P=|\psi\rangle\langle\psi|,
+\quad \eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},
+\quad \psi_t=\cos t\,\psi-\sin t\,\eta,
+\quad S_t=|\psi_t\rangle\langle\psi_t|,
+\quad k_t=at^2<1.
+$$
+
+对任意密度矩阵 $\tau$，定义
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal N_t(X)&=(1-k_t)\operatorname{Tr}(PX)S_t,\\
+\mathcal C_t^\tau(X)&=
+\operatorname{Tr}[(I-P)X]P_0+k_t\operatorname{Tr}(PX)\tau,
+\qquad \Gamma_t^\tau=(\mathcal N_t,\mathcal C_t^\tau).
+\end{aligned}
+}
+\tag{107.1}
+$$
+
+$\tau$ 是装置参数，每次执行前固定；不是观察者取得的额外结果。实际记录仍只有未点击与点击。点击 CP 映射的两项也未被声明为可读取的两个记录标签。
+
+令
+
+$$
+r_t=(1-k_t)\cos^2t,\qquad
+\epsilon_t=1-r_t
+=k_t+(1-k_t)\sin^2t>0,
+\tag{107.2}
+$$
+
+并记第 103 节不附加 $k_t$ 分支的向内旋转仪器为 $\widehat\Gamma_{-t}$。取共同校准半径
+
+$$
+u_t=\delta(\widehat\Gamma_{-t})+k_t.
+\tag{107.3}
+$$
+
+这里 $u_t$ 随 $t$ 变化，不是一个固定的子临界常数。
+
+**定理 107.2（共同合法性、完整距离与全部来源的相同等待）。** 对充分小的 $t>0$，定义 107.1 的全部 $\Gamma_t^\tau$ 都是同接口完整仪器，并同时属于 $\mathfrak B_{u_t}$，其中
+
+$$
+u_t=R-\kappa t+O(t^2)<R,
+\qquad \kappa=\frac{\sqrt\phi}{4}.
+\tag{107.4}
+$$
+
+它们都对全部初态终止，并且对任意两个后继参数
+
+$$
+\boxed{
+\frac12\|\Gamma_t^\tau-\Gamma_t^{\tau'}\|_\diamond
+=k_tD(\tau,\tau'),
+\qquad D(\tau,\tau')=\frac12\|\tau-\tau'\|_1.
+}
+\tag{107.5}
+$$
+
+若 $p=\operatorname{Tr}(\rho P)$，则每个 $\tau$ 给完全相同的首次点击概率：
+
+$$
+\begin{aligned}
+\Pr_\rho(\mathsf N=1)&=1-(1-k_t)p,\\
+\Pr_\rho(\mathsf N=n)&=(1-k_t)p\,\epsilon_t r_t^{n-2}\quad(n\ge2),\\
+\mathbb E_\rho\mathsf N&=1+\frac{(1-k_t)p}{\epsilon_t},\qquad
+M_t=1+\frac{1-k_t}{\epsilon_t}.
+\end{aligned}
+\tag{107.6}
+$$
+
+从准平稳态 $S_t$ 出发，等待准确服从 $\operatorname{Geom}(\epsilon_t)$。所有这些时间律都不含 $\tau$。
+
+证明。各分支是完全正的测量制备映射，其效果分别为 $(1-k_t)P$ 与 $I-(1-k_t)P$，总和为 $I$，得到完整性。未点击映射为秩一超算子，非零特征值为 $r_t<1$，所以全部初态终止。
+
+与 $\widehat\Gamma_{-t}$ 相比，未点击块减少 $k_t\operatorname{Tr}(PX)S_t$，点击块增加 $k_t\operatorname{Tr}(PX)\tau$。对任意带参考的归一化联合输入 $\omega\succeq0$、$\operatorname{Tr}\omega=1$，定义未归一化参考态
+
+$$
+\omega_R^P=(I_R\otimes\langle\psi|)\omega
+(I_R\otimes|\psi\rangle)\succeq0,
+\qquad\operatorname{Tr}\omega_R^P\le1.
+$$
+
+两块之差分别为 $-k_t\omega_R^P\otimes S_t$ 与 $k_t\omega_R^P\otimes\tau$。记录正交使其半迹范数为 $k_t\operatorname{Tr}\omega_R^P\le k_t$，由输入 $P$ 达到。因此
+
+$$
+\frac12\|\Gamma_t^\tau-\widehat\Gamma_{-t}\|_\diamond=k_t.
+$$
+
+三角不等式给 $\delta(\Gamma_t^\tau)\le u_t$，且这个上界对全部 $\tau$ 同时成立。定理 103.2 给式（107.4）。比较 $\tau,\tau'$ 时未点击块相同，点击块差为 $k_t\omega_R^P\otimes(\tau-\tau')$；取范数并再次用输入 $P$ 达到上界，得到式（107.5）。
+
+直接迭代得
+
+$$
+\mathcal N_t^n(\rho)=(1-k_t)p\,r_t^{n-1}S_t
+\qquad(n\ge1).
+$$
+
+取迹得到生存概率，作相邻差及尾和得到式（107.6）。最大值由 $p=1$ 的初态 $P$ 取得。对 $S_t$，未点击后仍为 $S_t$，且单轮生存概率为 $r_t$，所以等待为准确几何律。$\square$
+
+相同时间律并不只针对一份准备态。首次点击效果由共同未点击映射与共同点击效果确定，所以全部来源乃至保留参考系统而丢弃点击量子后继的时间记录通道都相同。$\tau$ 的区别位于仍可读取的量子后继中。
+
+## 108. 完整等待记录相同，最终量子后继仍保持有限差异
+
+**定义 108.1（终端量子通道与有限停止输出）。** 对定义 107.1 的装置，忽略点击轮数但保留点击后的量子系统，定义
+
+$$
+\Xi_t^\tau(X)=\sum_{n\ge1}
+\mathcal C_t^\tau\mathcal N_t^{n-1}(X).
+\tag{108.1}
+$$
+
+所有初态终止且尾部几何衰减，故该有限维输入输出的级数在算子范数中收敛，并定义 CPTP 通道。另用 $\Omega_m^{t,\tau}$ 表示第 35 节的有限停止通道：保留每个首次点击轮数及量子后继，并保留截至 $m$ 轮尚未点击的块。
+
+**定理 108.2（有限停止输出与终端输出的精确距离）。** 对每个密度矩阵 $\rho$，置 $p=\operatorname{Tr}(\rho P)$。有
+
+$$
+\boxed{
+\Xi_t^\tau(\rho)
+=\left(1-\frac{k_t p}{\epsilon_t}\right)P_0
++\frac{k_t p}{\epsilon_t}\tau.
+}
+\tag{108.2}
+$$
+
+并且，对每个 $m\ge1$，包含任意参考输入的完整距离准确为
+
+$$
+\boxed{
+\begin{aligned}
+\frac12\|\Omega_m^{t,\tau}-\Omega_m^{t,\tau'}\|_\diamond
+&=\frac{k_t(1-r_t^m)}{\epsilon_t}D(\tau,\tau'),\\
+\frac12\|\Xi_t^\tau-\Xi_t^{\tau'}\|_\diamond
+&=\frac{k_t}{\epsilon_t}D(\tau,\tau').
+\end{aligned}
+}
+\tag{108.3}
+$$
+
+输入 $P$ 同时达到这两条等式。当 $t\downarrow0$ 时，
+
+$$
+\frac{k_t}{\epsilon_t}\longrightarrow\frac a{1+a}>0,
+\qquad
+\frac12\|\Gamma_t^\tau-\Gamma_t^{\tau'}\|_\diamond
+\longrightarrow0.
+\tag{108.4}
+$$
+
+证明。未点击后的 $P$ 占据满足
+
+$$
+\operatorname{Tr}[P\mathcal N_t^{n-1}(X)]
+=r_t^{n-1}\operatorname{Tr}(PX)
+\qquad(n\ge1).
+\tag{108.5}
+$$
+
+所以每个首次点击分支中，含 $\tau$ 的项准确为
+$k_t r_t^{n-1}\operatorname{Tr}(PX)\tau$。当 $X\succeq0$ 时，其余点击项均为 $P_0$ 的非负倍数。几何求和与总迹一给式（108.2）；$k_t\le\epsilon_t$ 保证它是概率凸组合。
+
+对任意带参考输入，两个装置的第 $n$ 个点击块之差准确为
+
+$$
+k_t r_t^{n-1}\omega_R^P\otimes(\tau-\tau').
+$$
+
+截至 $m$ 轮尚未点击的块完全相同。不同轮数记录正交，因此半迹范数相加为
+
+$$
+\frac{k_t(1-r_t^m)}{\epsilon_t}
+\operatorname{Tr}(\omega_R^P)D(\tau,\tau').
+$$
+
+参考态的迹至多一，输入 $P$ 取得一，得到第一条距离等式。终端通道之差由式（108.2）直接得到相同形式，只将有限几何和换成 $1/\epsilon_t$，给第二条等式。
+
+最后，$k_t=at^2$，而
+$\epsilon_t=at^2+(1-at^2)\sin^2t=(1+a)t^2+O(t^4)$，故式（108.4）成立。$\square$
+
+**推论 108.3（只使用全部时间记录也不能普适恢复点击后继）。** 取 $\tau=P_0$、$\tau'=P_1$，并固定共同初态 $P$。两模型的全部首次点击时间律完全相同；任何仅接收这些时间记录、使用同一规则的后处理，输出的平均恢复态只能是同一个 $\sigma_t$。因此
+
+$$
+\boxed{
+\max\{D(\sigma_t,\Xi_t^{P_0}(P)),
+D(\sigma_t,\Xi_t^{P_1}(P))\}
+\ge\frac{k_t}{2\epsilon_t}
+\longrightarrow\frac a{2(1+a)}.
+}
+\tag{108.6}
+$$
+
+此不可恢复性也适用于已经精确知道全部来源的时间概率，而没有取得区分 $\tau$ 的其他读数的情形。
+
+证明。两个恢复任务提供相同的输入记录分布；相同后处理因而产生相同平均态。定理 108.2 给两个目标态距离 $k_t/\epsilon_t$；迹距离三角不等式迫使至少一个误差不小于其一半。全部来源的时间律仍不含 $\tau$，所以给出更多同类精确概率也不能区分这两个装置。$\square$
+
+这一结论没有否定完整单轮仪器校准。两个仪器的完整单轮距离确实可读且趋零；不一致来自临界附近越来越长的执行，将小的分支后继差异累积成有限的最终区别。
+
+**定理 108.4（相同临界装置和时间律下，终端态可趋向任意预定量子态）。** 在式（107.1）的同一分支构造中，另取 $\widetilde k_t=t^{3/2}$，记得到的装置为 $\widetilde\Gamma_t^\tau$，以及
+
+$$
+\widetilde\epsilon_t=\widetilde k_t+(1-\widetilde k_t)\sin^2t,
+\qquad
+\widetilde u_t=\delta(\widehat\Gamma_{-t})+\widetilde k_t.
+$$
+
+对充分小的 $t>0$，所有预先固定的密度矩阵参数 $\tau$ 同时满足
+
+$$
+\widetilde\Gamma_t^\tau\in\mathfrak B_{\widetilde u_t},
+\qquad \widetilde u_t=R-\kappa t+o(t)<R,
+\qquad \widetilde\Gamma_t^\tau\longrightarrow\Gamma_+.
+\tag{108.7}
+$$
+
+它们对全部初态具有相同的首次点击时间律；但对共同初态 $P$，其终端通道满足
+
+$$
+\boxed{
+\widetilde\Xi_t^\tau(P)\longrightarrow\tau
+\quad\text{且该收敛对全部密度矩阵 }\tau\text{ 一致}.
+}
+\tag{108.8}
+$$
+
+特别地，取 $\tau=P_0,\tau'=P_1$，单轮完整距离为 $t^{3/2}\to0$，终端输出距离却趋于一；只用共同时间记录作恢复的最坏半迹距离误差下界趋于 $1/2$。
+
+证明。式（107.1）的完全正性、完整性及第 107—108 节的有限几何求和，均只要求 $0<k_t<1$ 与 $r_t=(1-k_t)\cos^2t<1$；将 $k_t$ 换成 $\widetilde k_t$ 后同样成立。只有涉及参数阶数的渐近式需要重新计算。
+
+由于 $t^{3/2}=o(t)$，与无附加分支的旋转仪器之完整距离准确为 $\widetilde k_t$，所以定理 103.2 给式（108.7）的共同半径及装置极限。另一方面，$\sin^2t=o(\widetilde k_t)$，故
+
+$$
+\widetilde w_t:=\frac{\widetilde k_t}{\widetilde\epsilon_t}
+=\left[1+\frac{(1-\widetilde k_t)\sin^2t}{\widetilde k_t}\right]^{-1}
+\longrightarrow1.
+$$
+
+终端态准确为 $(1-\widetilde w_t)P_0+\widetilde w_t\tau$，所以
+
+$$
+D(\widetilde\Xi_t^\tau(P),\tau)
+=(1-\widetilde w_t)D(P_0,\tau)
+\le1-\widetilde w_t\longrightarrow0,
+$$
+
+其界不依赖 $\tau$。两端点的距离及恢复误差结论分别由同一距离公式与三角不等式得到。$\square$
+
+这里没有从相同记录中恢复不同的未知态。不同的 $\tau$ 是事先指定的不同仪器；它们给出相同的时间读数，却把不同的量子状态交给未来。相同的临界装置极限也没有使这些终端通道趋于同一个通道，因为终端化包含越来越长的实际执行。
+
+## 109. 活动质量加权的停止误差界，其系数一不能统一降低
+
+**定理 109.1（同接口量子仪器中停止界的渐近锐常数）。** 固定 $a>0$，使用定义 107.1 的两装置 $\Gamma_t^{P_0},\Gamma_t^{P_1}$ 与共同初态 $P$。记其完整单轮距离为 $d_t=k_t$，共同均值为 $M_t$。则
+
+$$
+\boxed{
+\frac{D(\Xi_t^{P_0}(P),\Xi_t^{P_1}(P))}{d_tM_t}
+=\frac1{1+(1-k_t)\sin^2t}
+\longrightarrow1.
+}
+\tag{109.1}
+$$
+
+而且，第 63.1 条保留全部有限停止记录和后继的界中，乘在 $d_t\min(c_m^I,c_m^J)$ 前面的系数一也不能被某个统一的更小正数替代。
+
+证明。由式（107.6）与（108.3），分子为 $k_t/\epsilon_t$，分母为
+$k_t[1+(1-k_t)/\epsilon_t]$。相除得到
+
+$$
+\frac1{\epsilon_t+1-k_t}
+=\frac1{1+(1-k_t)\sin^2t},
+$$
+
+从而成立式（109.1）。
+
+对有限截断，两个装置在同一来源上的活动成本均为
+
+$$
+c_m=\mathbb E_P\min(\mathsf N,m)
+=1+\frac{(1-k_t)(1-r_t^{m-1})}{\epsilon_t}
+\qquad(m\ge1).
+\tag{109.2}
+$$
+
+取 $m_t=\lceil\epsilon_t^{-2}\rceil$，则 $r_t^{m_t}\to0$，同时
+
+$$
+\frac{D(\Omega_{m_t}^{t,P_0}(P),\Omega_{m_t}^{t,P_1}(P))}
+{d_t c_{m_t}}
+=\frac{1-r_t^{m_t}}
+{\epsilon_t+(1-k_t)(1-r_t^{m_t-1})}
+\longrightarrow1.
+\tag{109.3}
+$$
+
+这里 $d_t c_{m_t}\to a/(1+a)<1$，所以第 63.1 条与一取最小值的上限没有遮住该比例。任取统一常数 $c_0<1$，充分小的 $t$ 都使式（109.3）的比例大于 $c_0$，由实际有限停止输出直接推翻该替换。$\square$
+
+**推论 109.2（共同半径趋近失效阈值是必要的范围条件）。** 第 108 节的非零极限使用随 $t$ 变化且趋于 $R$ 的共同半径 $u_t$。在任何预先固定的 $u<R$ 内，若两完整仪器的单轮距离趋零，则其在共同来源上的最终记录后继距离也趋零，并有统一上界
+
+$$
+D(\text{最终完整输出}_I,\text{最终完整输出}_J)
+\le d(I,J)\mathscr K(u).
+\tag{109.4}
+$$
+
+该上界包含有限参考输入；丢弃事件时间后，对终端量子通道同样成立。
+
+证明。第 80 节使整个固定球上的均值统一不超过有限的 $\mathscr K(u)$。第 63.1 条于是对每个有限 $m$ 给 $d(I,J)\mathscr K(u)$。把各有限停止输出嵌入同一个由未解决标签与全部有限轮数标签组成的可数记录空间。有限前缀与最终完整输出的差只涉及未解决质量和相应未来记录；其半迹范数等于该生存概率。两过程都全状态终止，故这些概率趋零，取极限得式（109.4）。带参考时活动概率由系统边缘决定，具有同一均值上界。最后使用偏迹收缩。$\square$
+
+**推论 109.3（原半径 $4/5$ 的明确预算可降至 4744 以下）。** 在原名义仪器的半径 $u=4/5$ 内，每个完整仪器及每个初态都满足
+
+$$
+\boxed{\mathbb E_\rho^\Gamma\mathsf N
+\le\mathscr K(4/5)<4744.}
+\tag{109.5}
+$$
+
+证明。定理 102.1 给精确 $R$。因为
+
+$$
+5\cdot25000^2-55889^2=1419679>0,
+$$
+
+有 $\sqrt5>55889/25000$，从而
+
+$$
+R^2-\left(\frac{333}{400}\right)^2
+=\frac{25000\sqrt5-55889}{160000}>0.
+$$
+
+因此 $R>333/400$，$g=R-4/5>13/400$。沿用第 83.3 条的同一成本界，
+
+$$
+\mathscr K(4/5)
+\le10+\frac5{g^2}
+<10+\frac{800000}{169}
+=\frac{801690}{169}<4744.
+$$
+
+证毕。
+
+这是从已经求出的阈值复用原预算公式得到的保证；不是对最优成本的精确计算，也不把调用轮数换成秒数。它加强第 85.3 条的数值上界，不改写或否定该条原有较宽的保证。
+
+## 110. 时间记录与量子后继的差别可以在同一个真实过程内分离
+
+**关系结论 110.1（同一时间律并不确定同一后继关系）。** 第 106 节完成了最近失效装置按完整分支映射的分类。第 107—109 节随后保留同一活动空间、同一未点击映射和同一来源，把点击后的量子状态作为唯一可变参数。由此得到
+
+$$
+\boxed{
+\text{全部来源的首次点击时间律相同}
+\quad\text{而}\quad
+\text{点击后的完整量子作用不同}.
+}
+$$
+
+本批的“AHH”在于：记录告诉我们事件何时发生，还必须保留事件把什么状态交给下一次续接。第 108.4 条甚至允许终端态趋向任意预定密度矩阵，同时保持全部时间律相同和同一个临界装置极限。这里两份单轮完整仪器越来越接近，执行中的时间记录却始终完全相同；不断增长的等待把量子后继中每轮很小的差别累积到有限大小。式（109.3）进一步说明，这份累积准确达到活动质量加权误差界的首项，而非只给一个抽象的不充分性反例。
+
+**来源与边界 110.2。** 本批复用第 101—103 节的同一参考检验、精确失效半径及向内距离导数，并把第 35、63 节的停止通道与活动质量界应用于可逐项求和的同接口仪器族。完全正测量制备映射、迹距离收缩与带参考输入的通道距离仍沿用已核对的 Watrous 来源。第 106.4、107.5、108.3、109.3 式展示本批所需的具体连接，不主张文献原创性。
+
+共同半径 $u_t$ 必须随参数趋近 $R$；固定子临界球内仍有式（109.4）的统一连续性。后继参数族不被宣称为每个球内的精确最坏装置，首系数 $c$ 的精确值与全部子临界最优装置仍未确定。本批未添加可读取的内部 Kraus 标签，也未把单轮仪器的分类当成内部实现的唯一性。所有新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
