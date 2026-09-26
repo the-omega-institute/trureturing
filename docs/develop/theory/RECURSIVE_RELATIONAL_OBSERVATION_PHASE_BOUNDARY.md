@@ -74355,3 +74355,477 @@ $$
 本节求的是精确达到完整距离的资源最小值。固定非零容差下，所需纠缠可能改变；§241—§242的角度族已给出这种区别。式（243.34）的 $k$ 比特必要条件不自动扩展到非零容差，也不转译为物理时间或面积定律。本节不据这些组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 244. 设置记录噪声、精确纠缠曲线与共同测量的不同阈值
+
+§242在完整四标签记录上求得双轴通道的精确纯探针资源曲线。本节只改变一项实际合同：已形成的设置标签经过已标定的独立翻转，而符号记录保留。量子输出统一重置为同一纯态，观察接口中不再保留原设置或翻转种子的额外副本。
+
+在这个明确的通道族中，可以同时求出完整方向优化、参考优势、容差下最小纯态纠缠、Choi 秩，以及两份条件测量的联合可测阈值。结果表明：记录噪声可增加实现所需的 Choi 秩，同时降低完整区分能力；而条件测量已经可以共同实现时，当前通道比较仍可严格受益于量子参考。
+
+### 244.1 固定共同输出与实际设置标签翻转
+
+输入为量子比特 $H=\mathbb C^2$，经典输出标签为 $(a,s)$，其中 $a\in\{0,1\}$、$s\in\{+1,-1\}$。固定单位 Bloch 轴 $n,m\in\mathbb R^3$，本节首先限制
+$$
+n\cdot m=c\in[0,1),
+\qquad A=\frac{1+c}{2},\qquad K=\frac{1-c}{2}.
+\tag{244.1}
+$$
+所以 $A+K=1$、$A\ge K>0$。这里 $c$ 是带既定符号标签的实际内积，没有在推导中把 $m$ 改成 $-m$。平行端点 $c=1$ 在下文另行处理。
+
+所有量子重置输出为同一个固定纯态 $P=|r_0\rangle\langle r_0|$。原始候选与均匀目标为
+$$
+\begin{aligned}
+\mathcal S(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\operatorname{Tr}(E_{a,s}X)P,\\
+E_{0,s}&=\frac{I_2+s\,n\cdot\sigma}{4},
+\qquad E_{1,s}=\frac{I_2+s\,m\cdot\sigma}{4},\\
+\mathcal R(X)&=\sum_{a,s}|a,s\rangle\langle a,s|
+\otimes\frac14\operatorname{Tr}(X)P.
+\end{aligned}
+\tag{244.2}
+$$
+这里 $\sigma$ 是 Pauli 矩阵三元组。两组效应各自求和为 $I_2/2$，因此原设置标签在这个通道内部以均匀概率产生，且其边缘概率与输入态无关。当前比较没有另向观察者提供一份原设置控制档案。
+
+令 $p\in[0,1]$ 为已标定的翻转概率。经典 CPTP 后处理 $\mathcal C_p$ 以概率 $1-p$ 保留 $a$，以概率 $p$ 把它改为 $1-a$，保持 $s$ 与共同量子输出不变。翻转选择与输入、参考独立，其种子不在可取得输出内。定义
+$$
+\mathcal S_p=\mathcal C_p\circ\mathcal S,
+\qquad
+\mathcal R_p=\mathcal C_p\circ\mathcal R=\mathcal R.
+\tag{244.3}
+$$
+后处理后的效应直接为
+$$
+\begin{aligned}
+E^{(p)}_{0,s}&=(1-p)E_{0,s}+pE_{1,s}
+=\frac{I_2+s\,a_p\cdot\sigma}{4},\\
+E^{(p)}_{1,s}&=pE_{0,s}+(1-p)E_{1,s}
+=\frac{I_2+s\,b_p\cdot\sigma}{4},\\
+a_p&=(1-p)n+pm,
+\qquad b_p=pn+(1-p)m.
+\end{aligned}
+\tag{244.4}
+$$
+每个效应正且四者之和为 $I_2$，所以这是实际 CPTP 通道，并非只对概率表达式作形式替换。
+
+置
+$$
+\beta=1-2p,\qquad q=|\beta|,\qquad B=q^2K,
+\qquad \ell=\sqrt{A+B}.
+\tag{244.5}
+$$
+两条有效轴等长，且
+$$
+\|a_p\|^2=\|b_p\|^2=\ell^2
+=1-2p(1-p)(1-c),
+\qquad a_p\cdot b_p=A-B\ge0.
+\tag{244.6}
+$$
+为同时保留两条轴的关系，取正交单位向量
+$$
+u=\frac{n+m}{2\sqrt A},\qquad
+v=\frac{n-m}{2\sqrt K}.
+\tag{244.7}
+$$
+那么
+$$
+a_p=\sqrt A\,u+\beta\sqrt K\,v,
+\qquad
+b_p=\sqrt A\,u-\beta\sqrt K\,v.
+\tag{244.8}
+$$
+共享方向不随翻转概率改变，设置差方向则乘以 $\beta$。$p=1$ 只交换设置名称，是可逆后处理；$p=1/2$ 才完全消去这两个设置的记录差异。
+
+### 244.2 任意纯联合探针的精确响应
+
+设归一化纯联合探针 $|\psi\rangle\in H\otimes E$ 的输入边缘为
+$$
+\rho=\frac{I_2+r\cdot\sigma}{2},\qquad t=\|r\|\in[0,1].
+\tag{244.9}
+$$
+它的输入—参考纠缠熵是
+$$
+E(\psi)=S(\rho)=H_2\left(\frac{1+t}{2}\right),
+\tag{244.10}
+$$
+其中 $H_2(x)=-x\log_2x-(1-x)\log_2(1-x)$，零项按连续延拓取值。实际半迹距离记为
+$$
+f_p(\rho)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\right\|_1.
+\tag{244.11}
+$$
+同一边缘的纯化在参考支撑上只相差等距变换，所以该值只依赖 $\rho$。
+
+四个差效应分别是 $\pm a_p\cdot\sigma/4$ 与 $\pm b_p\cdot\sigma/4$。标准纯化将每个效应变为参考块 $[\sqrt\rho(\cdot)\sqrt\rho]^{\mathsf T}$。经典输出块正交、转置保持迹范数、共同纯输出的迹范数为一，故
+$$
+f_p(\rho)=\frac14\left[
+\|\sqrt\rho(a_p\cdot\sigma)\sqrt\rho\|_1+
+\|\sqrt\rho(b_p\cdot\sigma)\sqrt\rho\|_1
+\right].
+\tag{244.12}
+$$
+
+对任意实向量 $w$，记 $X=\sqrt\rho(w\cdot\sigma)\sqrt\rho$。其迹与行列式为
+$$
+\operatorname{Tr}X=r\cdot w,
+\qquad
+\det X=-\frac{1-t^2}{4}\|w\|^2\le0.
+\tag{244.13}
+$$
+两个本征值异号或至少一个为零，所以
+$$
+\|X\|_1^2=(\operatorname{Tr}X)^2-4\det X
+=(r\cdot w)^2+(1-t^2)\|w\|^2.
+\tag{244.14}
+$$
+该式也覆盖 $t=1$ 的奇异边缘与零矩阵。代入两条等长轴，得到
+$$
+\boxed{
+f_p(\rho)=\frac14\left[
+\sqrt{\ell^2(1-t^2)+(r\cdot a_p)^2}
++
+\sqrt{\ell^2(1-t^2)+(r\cdot b_p)^2}
+\right].
+}
+\tag{244.15}
+$$
+这里直接使用实际噪声通道。对 $0<p<1$、$c<1$，效应一般不再是缩放投影，因此没有把§240的投影取等判据越界用于本节。
+
+### 244.3 固定纠缠的全局方向最优曲线
+
+**定理 244.1（全部 Bloch 方向上的共同取等）。** 对每个 $t\in[0,1]$，
+$$
+\boxed{
+F_p(t;c):=\max_{\|r\|=t}f_p(\rho)
+=\frac12\sqrt{A+B(1-t^2)}.
+}
+\tag{244.16}
+$$
+最大值由沿 $u$ 的同一实际输入边缘及其纯化取得。
+
+**证明。** 平方根凹性给
+$$
+f_p(\rho)\le\frac12
+\sqrt{\ell^2(1-t^2)+
+\frac{(r\cdot a_p)^2+(r\cdot b_p)^2}{2}}.
+\tag{244.17}
+$$
+由（244.8），
+$$
+a_pa_p^{\mathsf T}+b_pb_p^{\mathsf T}
+=2A\,uu^{\mathsf T}+2B\,vv^{\mathsf T}.
+\tag{244.18}
+$$
+因为 $B\le K\le A$，最大本征值为 $2A$，从而
+$$
+(r\cdot a_p)^2+(r\cdot b_p)^2\le2At^2.
+\tag{244.19}
+$$
+将其代入（244.17），并用 $\ell^2=A+B$，得到（244.16）的上界。
+
+反向取 $r=tu$。此时
+$$
+(r\cdot a_p)^2=(r\cdot b_p)^2=t^2A,
+\tag{244.20}
+$$
+所以两项根号相同，同时达到凹性与 Rayleigh 上界。令 $|u,+\rangle,|u,-\rangle$ 为 $u\cdot\sigma$ 的正交本征基，参考取两个正交向量 $|0\rangle,|1\rangle$。纯探针
+$$
+|\psi_t\rangle=
+\sqrt{\frac{1+t}{2}}\,|u,+\rangle|0\rangle+
+\sqrt{\frac{1-t}{2}}\,|u,-\rangle|1\rangle
+\tag{244.21}
+$$
+实际具有该边缘并达到所给值。$t=1$ 时只需一维参考支撑，$t=0$ 时为最大纠缠纯探针。$\square$
+
+**定理 244.2（完整与无参考区分能力）。** 定义
+$$
+D_p=\frac12\|\mathcal S_p-\mathcal R\|_\diamond,
+\qquad
+U_p=\max_{\rho\text{ 为输入密度矩阵}}
+\frac12\|\mathcal S_p(\rho)-\mathcal R(\rho)\|_1.
+$$
+则
+$$
+\boxed{
+D_p=\frac{\sqrt{A+B}}2=\frac\ell2,
+\qquad
+U_p=\frac{\sqrt A}{2},
+\qquad
+\delta_p:=D_p-U_p
+=\frac{\sqrt{A+B}-\sqrt A}{2}.
+}
+\tag{244.22}
+$$
+
+**证明。** 对任意维数参考的纯联合探针，定理244.1给 $f_p\le\ell/2$，并由 $t=0$ 取得。任意联合混合态可分解为纯态，输出迹范数的凸性保持这个上界；纯态的 Schmidt 支撑又不超过输入维数二。因此，按两个通道之差的标准 diamond 区分刻画，完整值恰为 $\ell/2$。
+
+无参考输入的半迹距离是输入态的凸函数，其最大值可在纯输入上取得。纯输入对应 $t=1$ 的乘积纯探针，所以 $U_p=F_p(1;c)=\sqrt A/2$。$\square$
+
+在 $c<1$ 的本节主范围中，$B>0$ 当且仅当 $p\ne1/2$。因此
+$$
+\delta_p>0\quad\Longleftrightarrow\quad p\ne\frac12.
+\tag{244.23}
+$$
+完整距离在 $p=0,1$ 时为 $1/2$，在 $p=1/2$ 时为 $\sqrt A/2$。无参考最优值沿整个噪声族保持不变，因为沿共同轴 $u$ 的产品输入已经同时达到两条有效轴所需的投影值。这是当前通道族的精确性质。
+
+### 244.4 容差下的精确最小纯态纠缠
+
+对给定缺额 $\epsilon\ge0$，要求实际探针达到
+$$
+f_p(\rho)\ge D_p-\epsilon.
+\tag{244.24}
+$$
+令 $E_{\min}(\epsilon;p,c)$ 为所有满足该式的纯联合探针的最小纠缠熵，$r_{\min}(\epsilon;p,c)$ 为其最小 Schmidt 秩。
+
+**定理 244.3（资源反解及全部端点）。** 若 $B=0$，则所有 $\epsilon\ge0$ 都有
+$$
+E_{\min}(\epsilon;p,c)=0,
+\qquad r_{\min}(\epsilon;p,c)=1.
+\tag{244.25}
+$$
+若 $B>0$，则
+$$
+\boxed{
+E_{\min}(\epsilon;p,c)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{4\epsilon(\sqrt{A+B}-\epsilon)/B}}2
+\right),&0\le\epsilon<\delta_p,\\[6pt]
+0,&\epsilon\ge\delta_p,
+\end{cases}
+}
+\tag{244.26}
+$$
+且
+$$
+\boxed{
+r_{\min}(\epsilon;p,c)=
+\begin{cases}
+2,&0\le\epsilon<\delta_p,\\
+1,&\epsilon\ge\delta_p.
+\end{cases}
+}
+\tag{244.27}
+$$
+
+**证明。** $B=0$ 时，（244.16）对任意 $t$ 都等于完整值，特别是沿 $u$ 的产品输入已经取得完整值，故（244.25）成立。
+
+设 $B>0$。当 $\epsilon\ge\delta_p$，无参考值 $U_p=D_p-\delta_p$ 已满足目标，最小资源为零纠缠与一维参考支撑。
+
+当 $0\le\epsilon<\delta_p$，右侧 $D_p-\epsilon$ 严格为正，定理244.1说明给定 $t$ 存在合格方向，当且仅当
+$$
+\frac12\sqrt{\ell^2-Bt^2}\ge\frac\ell2-\epsilon.
+$$
+两侧平方合法，整理后得到
+$$
+t^2\le t_\epsilon^2,
+\qquad
+t_\epsilon^2:=\frac{4\epsilon(\ell-\epsilon)}B<1.
+\tag{244.28}
+$$
+熵 $H_2((1+t)/2)$ 在 $t\in[0,1]$ 上递减，故最小熵由最大允许值 $t=t_\epsilon$ 取得。取（244.21）的同一方向纯化就实现这个值，得到（244.26）。严格不等式 $t_\epsilon<1$ 又使每个合格纯探针的边缘都秩二，证明（244.27）。$\square$
+
+端点可以直接核对：$\epsilon=0$ 时 $t_\epsilon=0$，所以只要 $B>0$，精确达到完整距离就需要一比特纯态纠缠；在阈值处
+$$
+4\delta_p(\ell-\delta_p)=B,
+\tag{244.29}
+$$
+从而 $t_\epsilon\to1$、熵连续降为零。若 $p=0$ 或 $p=1$，则 $\ell=1$、$B=(1-c)/2$，根号中的量恢复为§242的
+$$
+\frac{8\epsilon(1-\epsilon)}{1-c}.
+\tag{244.30}
+$$
+
+当 $p\to1/2$ 而 $p\ne1/2$，优势 $\delta_p$ 连续趋零，但精确取等的最小纠缠仍是一比特；在 $p=1/2$ 本身则为零。给定任意固定正容差，足够接近 $1/2$ 时产品探针已经合格。这里精确取等与允许非零缺额的资源判据不同。
+
+平行端点 $c=1$ 有 $n=m$、$A=1$、$K=B=0$，通道与 $p$ 无关，$D_p=U_p=1/2$，始终无需纠缠。此时不用（244.7）中含 $\sqrt K$ 的表达式，直接取 $u=n$ 即可。
+
+### 244.5 Choi 秩增加而完整区分能力降低
+
+在本节约定的未归一化 Choi 表示下，每个候选分支为
+$$
+J^{(p)}_{a,s}=(E^{(p)}_{a,s})^{\mathsf T}\otimes P.
+\tag{244.31}
+$$
+共同纯输出不增加非零谱，因此分支的两个可能非零本征值为
+$$
+\frac{1+\ell}{4},\qquad\frac{1-\ell}{4}.
+\tag{244.32}
+$$
+若 $c<1$，则 $p=0,1$ 时 $\ell=1$，每个分支秩一；而 $0<p<1$ 时 $0<\ell<1$，每个分支秩二。经典记录块彼此正交，所以
+$$
+\boxed{
+\operatorname{rank}J_{\mathcal S_p}=
+\begin{cases}
+4,&p=0\text{ 或 }p=1,\\
+8,&0<p<1.
+\end{cases}
+}
+\tag{244.33}
+$$
+目标 $\mathcal R$ 的总 Choi 秩始终为八。
+
+另一方面，$c<1$ 时 $p(1-p)$ 在 $[0,1/2]$ 上严格增加，因此（244.6）与（244.22）给出：$D_p$ 在该区间严格降低，而 $U_p$ 不变。任意首次非零翻转 $p\in(0,1/2]$ 已把候选总 Choi 秩从四提高到八，同时降低相对同一目标的完整区分能力。$p>1/2$ 由 $p\leftrightarrow1-p$ 的报告标签交换对称性决定。
+
+Choi 秩在这里是通道最小 Kraus 数或最小纯环境实现维数的标准计数。随机后处理把两个不同设置效应混合成满秩效应，同时削弱输入与可见设置记录的关联。因此，该实现计数不能直接充当“当前任务保留了多少可区分信息”的单调量。这一结果不改变固定预算集合下优化问题的定义，也不把通道秩解释为物理面积、原始历史长度或信息熵。
+
+### 244.6 条件测量的联合可测阈值与显式共同测量
+
+由（244.4），后处理后的报告设置标签仍以概率 $1/2$ 出现。对这一报告标签条件化，得到两份无偏二元 POVM
+$$
+M^{a_p}_s=\frac{I_2+s\,a_p\cdot\sigma}{2},
+\qquad
+M^{b_p}_t=\frac{I_2+t\,b_p\cdot\sigma}{2}.
+\tag{244.34}
+$$
+这里 $s,t\in\{+1,-1\}$ 是两份条件测量各自的结果。所问的联合可测性，是是否存在同一个四结果 POVM $\{G_{st}\}$，其两组边缘分别为（244.34）；它不把原过程的两个随机设置误称为已经同时执行。
+
+使用标准无偏量子比特准则
+$$
+\|a+b\|+\|a-b\|\le2.
+\tag{244.35}
+$$
+其原始可核对来源是 P. Busch、T. Heinosaari，*Approximate joint measurements of qubit observables*，[arXiv:0706.1415v2](https://arxiv.org/abs/0706.1415v2)，PDF第9页 Proposition 4 及式（39）。原文在 $\alpha=\beta=1$ 的无偏情形断言该条件充要，正好对应（244.34）；本节只将其作为已有工具。
+
+为明确实现与必要性，任意具有上述两组边缘的共同 POVM 都可按 Pauli 坐标写成
+$$
+G_{st}=\frac14\left[
+(1+st\,\gamma)I_2+
+(s a+t b+st\,z)\cdot\sigma
+\right]
+\tag{244.36}
+$$
+其中 $\gamma\in\mathbb R$、$z\in\mathbb R^3$。这是将四个算子按符号基 $1,s,t,st$ 展开，再用总和及两组边缘固定前三类系数得到的表示。
+
+正性给 $1+\gamma\ge\|a+b+z\|$ 及 $1+\gamma\ge\|-a-b+z\|$。对两向量的差用三角不等式，得 $1+\gamma\ge\|a+b\|$。同理另外两个结果给 $1-\gamma\ge\|a-b\|$。相加即（244.35），说明一般共同实现不能避开该必要条件。
+
+在本节通道族中，
+$$
+\|a_p+b_p\|=2\sqrt A,
+\qquad
+\|a_p-b_p\|=2q\sqrt K.
+\tag{244.37}
+$$
+因此精确阈值是
+$$
+\boxed{
+M^{a_p},M^{b_p}\text{ 联合可测}
+\quad\Longleftrightarrow\quad
+q\le q_{\mathrm{JM}}(c):=
+\frac{1-\sqrt A}{\sqrt K}
+=\frac{\sqrt K}{1+\sqrt A}.
+}
+\tag{244.38}
+$$
+对全部 $c\in[0,1)$，$0<q_{\mathrm{JM}}(c)<1$。等价地，翻转概率属于闭区间
+$$
+\frac{1-q_{\mathrm{JM}}(c)}2
+\le p\le
+\frac{1+q_{\mathrm{JM}}(c)}2.
+\tag{244.39}
+$$
+
+充分性可以用一个明确共同测量实现：取
+$$
+\boxed{
+G_{st}=\frac14\left[
+(1+st\,\gamma)I_2+
+(s a_p+t b_p)\cdot\sigma
+\right],
+\qquad
+\gamma=\sqrt A-q\sqrt K.
+}
+\tag{244.40}
+$$
+当 $st=+1$，正性所需的差为
+$$
+1+\gamma-\|s a_p+t b_p\|
+=1-\sqrt A-q\sqrt K\ge0.
+$$
+当 $st=-1$，对应差为
+$$
+1-\gamma-\|s a_p+t b_p\|
+=1-\sqrt A-q\sqrt K\ge0.
+$$
+所以四个算子均正。它们之和为 $I_2$，并且
+$$
+\sum_tG_{st}=M^{a_p}_s,
+\qquad
+\sum_sG_{st}=M^{b_p}_t.
+\tag{244.41}
+$$
+这给出整个阈值闭区间内的共同实现，包括边界。
+
+### 244.7 已能共同测量，仍有严格量子参考优势
+
+**定理 244.4（两个精确阈值的分离）。** 对每个 $c\in[0,1)$，取
+$$
+0<q=|1-2p|\le q_{\mathrm{JM}}(c).
+\tag{244.42}
+$$
+则两份条件 POVM 已联合可测，但同一实际记录通道相对均匀目标仍满足
+$$
+\boxed{
+D_p>U_p,
+\qquad E_{\min}(0;p,c)=1,
+\qquad r_{\min}(0;p,c)=2.
+}
+\tag{244.43}
+$$
+
+**证明。** 上界条件由（244.38）保证联合可测。另一方面 $q>0$ 与 $K>0$ 给 $B=q^2K>0$，所以（244.22）中优势严格为正；（244.26）—（244.27）在零缺额处给其余两式。这个区间非空，因为 $q_{\mathrm{JM}}(c)>0$。$\square$
+
+一个完全显式的内部例子取 $n\perp m$、$c=0$、$p=1/3$。此时
+$$
+q=\frac13<\sqrt2-1=q_{\mathrm{JM}}(0),
+\qquad
+a_p=\frac{2n+m}{3},\quad b_p=\frac{n+2m}{3},
+\tag{244.44}
+$$
+且
+$$
+\boxed{
+D_p=\frac{\sqrt5}{6},
+\qquad U_p=\frac{\sqrt2}{4},
+\qquad D_p-U_p>0.
+}
+\tag{244.45}
+$$
+最后一个严格不等式由 $5/36>2/16$ 得到。还可不用（244.40）的特定参数而直接取 $\gamma=1/2$，得到
+$$
+\begin{aligned}
+G_{++}&=\frac14\left[\frac32I_2+(n+m)\cdot\sigma\right],&
+G_{--}&=\frac14\left[\frac32I_2-(n+m)\cdot\sigma\right],\\
+G_{+-}&=\frac14\left[\frac12I_2+\frac{n-m}{3}\cdot\sigma\right],&
+G_{-+}&=\frac14\left[\frac12I_2-\frac{n-m}{3}\cdot\sigma\right].
+\end{aligned}
+\tag{244.46}
+$$
+它们严格为正，因为 $3/2>\sqrt2$ 且 $1/2>\sqrt2/3$；求和与边缘直接满足（244.41）。与此同时，候选总 Choi 秩为八，精确达到完整距离仍需一比特纯探针纠缠。
+
+共同 POVM 确实给出了一个固定的结果对空间及每份准备下的联合分布
+$$
+\Pr_\rho(s,t)=\operatorname{Tr}(\rho G_{st}).
+\tag{244.47}
+$$
+该分布依赖准备。它的存在不消除与未触动量子参考的相关性。具体地，联合输入 $\omega_{HE}$ 在该共同测量下给未归一化参考块
+$$
+\omega^E_{st}=\operatorname{Tr}_H
+\left[(\sqrt{G_{st}}\otimes I_E)
+\omega_{HE}
+(\sqrt{G_{st}}\otimes I_E)\right].
+\tag{244.48}
+$$
+偏迹对被迹掉的 $H$ 因子具有循环性，所以该块也等于 $\operatorname{Tr}_H[(G_{st}\otimes I_E)\omega_{HE}]$，对效应线性。由（244.41），这些块求和为原参考边缘，按 $t$ 或 $s$ 求和则给两份条件测量的参考响应。实施这个共同测量后，再独立均匀选择报告设置并保留相应坐标，正好实现当前四标签通道及其参考作用；共同量子输出仍重置为 $P$。
+
+相较之下，均匀目标的每个报告块都携带原参考边缘的四分之一。共同测量可以使报告与参考相关，这种联合区别由（244.43）严格检出。因此，“存在共同测量”与“当前通道比较无需量子参考就达到完整值”是两个不同命题。这里也没有将参考优势等同于非局域性或情境性。
+
+### 244.8 取得接口与适用边界
+
+本节的记录损失发生在已声明的观察接口中。共同输出 $P$ 排除了量子输出携带原设置副本的可能；原设置控制档案和独立翻转种子也没有另行提供。若这些额外数据可取得，必须按扩大的联合输出重新比较通道，不能沿用本节删失后的距离。$p$ 已标定，未知校准参数与未知输入状态没有被混成同一个任务。
+
+本节量化的是单次通道使用、指定四标签及纯联合探针资源。混合探针的单侧熵不能直接代替纠缠熵；联合可测结论只针对（244.34）的两份条件 POVM。噪声区间内的共同测量给出各准备下的真实联合分布，不宣称该分布与准备无关，也不取消量子参考的合法续接。
+
+Bloch 谱、纯化、通道 diamond 区分刻画、有限维 Choi 秩及无偏二元联合可测准则均为已有工具。这里集中得到的是当前实际设置记录噪声族的精确方向曲线、资源反解、实现秩变化及两种阈值的关系；不据这一组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
