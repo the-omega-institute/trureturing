@@ -4479,3 +4479,49 @@ Theorem 2.3、Theorem 2.4 要求连续实符号 $f,g$ 且 $g\ge0$，
 结论保留原实际 pair/path、紧输出和确定支持一致的概率范围，
 不提供下一输出尺度、任意更快阶数、Shannon 阶或输出平均熵的结论。
 纯理论文本未进入消化或 Lean 冻结链。
+
+## 第 108 章：绝对众数成本与近端包络
+
+[谱边界卷第 108 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+把最大后验原子的领先阶成本推进到绝对 $o(1)$ 精度。
+原完整经验最大方差 $v_*$ 保留在放大输出斜率中；
+有限噪声项在逐输出成本中可发散，却在两个输出相减时严格抵消。
+证明覆盖全部最小化元组，不预设唯一最大权重或唯一最优配置。
+
+Jean-Jacques Moreau，*Proximité et dualité dans un espace hilbertien*，
+Bulletin de la Société Mathématique de France **93** (1965)，273–299，
+[Numdam 原文](https://www.numdam.org/item/BSMF_1965__93__273_0/)。
+第 1 节的 $\Gamma_0(H)$ 是实 Hilbert 空间上适当、下半连续的凸扩展实函数。
+Proposition 3.a 给平方距离罚项加该函数的唯一极小点；
+Examples 3.c–3.e 分别处理仿射函数、非空闭凸集的示性函数和两者之和。
+Example 3.e 的答案是先按仿射系数平移再投影。
+取 $H=\mathbb R$、$C=[0,\infty)$、仿射系数 $\delta\sigma^2/(2v_*)$，
+直接得到本章 $e^\circ(h)=(h-\delta\sigma^2/(2v_*))_+$。
+这一步是经典定理的直接应用；它不证明原离散计数成本与仿射成本相差 $o(1)$，
+也不赋予离散实际极小元唯一性。
+原文完整 PDF 的提取含一项数值 token 替换警告；上述法文假设及公式可读，
+未把提取进程成功等同于所有字形无误。
+
+Philippe Mounaix、Satya N. Majumdar、Abhimanyu Banerjee，
+*Bose-Einstein Condensation of a Gaussian Random Field in the Thermodynamic Limit*，
+[arXiv:1111.3229v2](https://arxiv.org/abs/1111.3229v2)。
+Section II 的 (i)–(iii) 假设包括环面上中心齐次 Gaussian 场、归一化正定协方差、
+严格的零频最大协方差模、存在的极限谱、径向对称和谱边缘幂律。
+式 (21)–(24) 把临界强度写为谱亏损倒数的积分；
+边缘指数 $\zeta$ 小于维数 $d$ 时该积分有限，$\zeta\ge d$ 时无限。
+Section III.A 相应排除后者的有限强度凝聚转变。
+这些是热力学极限下条件场质量的结论，不是固定总数离散计数的最大原子公式。
+
+形式上的谱轮廓 $\rho(s)/\rho_0=e^{-\kappa s^2/2}$ 对应一维二次边缘，
+亏损倒数在零附近不可积。这与本卷 $K'(1/(2\rho_0)-)=\infty$ 的边界相容，
+但不构成原计数模型的凝聚或非凝聚定理。
+尤其不能从“单个最大方差坐标给可行上界”推导“典型后验质量凝聚于该坐标”。
+本章未采用严格最大值或谱间隙假设。
+所取版本横幅为 2012 年 1 月 30 日的 v2，PDF 内部日期为 2021 年 9 月 6 日；
+两种日期原样区分，不由内部日期推断另一个版本。
+
+本章的实际模型内容是完整有限经验系数比较、全元组离散曲率下界、
+同一数据纤维的整数上界构造，以及原噪声精度下的绝对成本拼接。
+普通密度归一化由第 105 章的实际相对鞍点比较推出，没有以弱收敛替代密度定理。
+经典包络法、二项对数凹性及 Stirling 展开分别归属其成熟来源；
+有限文献核查不认证全局原创。结论仍是纯理论文本，未进入 Lean 或消化链。

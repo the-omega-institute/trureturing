@@ -20057,3 +20057,338 @@ $$
 [Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
 
 ## 追加锚（第 107 章后续增补区）
+
+## 108. 最大原子成本的绝对精度与输出差中的噪声抵消
+
+**定义 108.1（保留经验系数的极小值包络）。** 保持第 107 章原实际计数律、
+原固定总数先验、全部取整、精确中心及同一输出 $Y=T+\sigma G$。
+熵仍以 nats 计。记 $u=\sigma^2$、$h_y=V+\sqrt\delta y$，并使用
+(107.4) 的 $A_x(y)$、完整数组的 $v_* =\max_jv_j$。令
+
+$$
+c_* =\frac1{2v_*},\qquad
+\Phi_x(h)=\min_{E\ge0}\left[c_*E+\frac{(E-h)^2}{2\delta u}\right],
+\qquad e^\circ(h)=(h-\delta u c_*)_+.
+\tag{108.1}
+$$
+
+有限层级 $v_* =0$ 的数据计作失败事件；下述比值只在 $v_* >0$ 处评价。
+由 $v_*/\delta\to\rho_0>0$，其失败概率对原确定支持一致趋零。
+也可在该事件任意作可测延拓，不改变概率收敛。
+
+**定理 108.2（绝对成本与常数精度的最小熵响应）。** 在原半指数条件
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2
+\tag{108.2}
+$$
+
+下，对每个固定有限 $R$，在原实际数据概率下、对全部规定大小的确定支持一致，
+原 stationary pair 与连续 path 实验分别有
+
+$$
+\sup_{|y|\le R}
+\left|A_x(y)-\frac{V+\sqrt\delta y}{2v_*}
+                 +\frac{\delta\sigma^2}{8v_*^2}\right|\to0,
+\tag{108.3}
+$$
+
+以及
+
+$$
+\sup_{|y|\le R}\left|
+H_\infty(\mathsf P_x^y)-H_\infty(\mathsf P_x^0)
+-\frac{\sqrt\delta}{2v_*}y+\frac{y^2}{2\nu}\right|\to0.
+\tag{108.4}
+$$
+
+更完整的绝对展开是
+
+$$
+H_\infty(\mathsf P_x^y)-H_\infty(\mathsf P_x)+L_M
+=\frac{V+\sqrt\delta y}{2v_*}
+ -\frac{\delta\sigma^2}{8v_*^2}
+ -\frac12\ln\nu-\frac{y^2}{2\nu}+o_{\mathbb P}(1),
+\tag{108.5}
+$$
+
+其中余项对上述紧输出一致。保留的 $V,v_*$ 是同一实际数据纤维的精确量。
+本章不假定最大权重唯一、与次大权重分离，或实际最小化元组只有一个非众数坐标。
+
+**证明：精确经验系数的全元组下界。** 仍取二项计数乘积律 $\mathsf Q_x$，
+众数向量 $k^\circ$、标量组数 $m\le CQ^2$、$C_{\max}=\max_jC_j$。
+第 103、107 章的实际输入界给
+
+$$
+\epsilon_p:=\max_j|p_j-1/2|=O_{\mathbb P}(q^{-1/2}),\qquad
+\epsilon_e:=\|e\|_2=O_{\mathbb P}(Q^{-5/2}+q^{-1/2}),
+\quad v_*/\delta\to\rho_0,
+\quad V\to\gamma.
+\tag{108.6}
+$$
+
+使用 (107.7)–(107.8) 的未缩放形式，设
+
+$$
+c_Q=\frac{2B^2}{C_{\max}+2},\qquad
+b_Q=\epsilon_e+\frac{2\sqrt m}{B}.
+$$
+
+则全盒上精确有
+
+$$
+S_Q(n)\ge c_Q(\sqrt{E(n)}-b_Q)_+^2.
+\tag{108.7}
+$$
+
+这里使用众数比的离散曲率与向量 Cauchy–Schwarz，没有损失 $O(m)$ 常数。
+校准精度直接比较两个有限经验系数：
+
+$$
+(1-4\epsilon_p^2)C_{\max}\le4B^2v_*\le C_{\max},\qquad
+0\le c_*-c_Q
+\le c_*\left(4\epsilon_p^2+\frac2{C_{\max}+2}\right).
+\tag{108.8}
+$$
+
+对每个固定 $K>0$，由 $(a-b)_+^2\ge a^2-2ab$，在全部 $E(n)\le K$ 的元组上
+
+$$
+S_Q(n)\ge c_*E(n)-r_Q(K),\quad
+r_Q(K)=c_*\left[
+\left(4\epsilon_p^2+\frac2{C_{\max}+2}\right)K+2b_Q\sqrt K\right]
+\to0.
+\tag{108.9}
+$$
+
+确实 $C_{\max}\asymp_{\mathbb P}B^2\delta$、$c_*\asymp_{\mathbb P}\delta^{-1}$，
+故中心误差 $\epsilon_e/v_* =O_{\mathbb P}(Q^{-2})$，
+组数众数舍入误差 $\sqrt m/(Bv_*)$ 及其余项均为指数小量乘固定多项式。
+不需要 $v_*/\delta-\rho_0$ 的收敛速率；提前把系数换成其极限会丢失这一绝对精度。
+
+完整固定总数修正仍是
+$\mathsf P_x(n)=\mathcal L_x(\sum_jn_j)\mathsf Q_x(n)$。
+令 $D(n)=\sum_j(n_j-C_jp_j)$、$d_J=B^2V$，沿用全局两个方向的界
+
+$$
+-C[D(n)^2/q+q^{-1/2}]\le\ln\mathcal L_x
+\le C[d_J/q+q^{-1/2}].
+\tag{108.10}
+$$
+
+因 $|D(k^\circ)|\le m$，记
+$\ell_Q=C(m^2/q+q^{-1/2})$、$u_Q=C(d_J/q+q^{-1/2})$，有
+
+$$
+-\ell_Q\le\ln(P_*/Q_*)\le u_Q,\qquad
+S_P(n)\ge S_Q(n)-\ell_Q-u_Q.
+\tag{108.11}
+$$
+
+两误差均趋零，$u_Q=O_{\mathbb P}(Q^{-5/2})$ 加指数小量。因此
+
+$$
+S_P(n)\ge c_*E(n)-r_x(K),\qquad
+r_x(K):=r_Q(K)+\ell_Q+u_Q\to0
+\quad\text{对所有 }E(n)\le K.
+\tag{108.12}
+$$
+
+这里只在众数处使用修正的下界；没有假定它在远元组上一致远离零。
+
+**小组与实际背景能量。** 上述全元组界直接保留所有组。
+也可选固定 $0<\epsilon<c_q/2$，把 $C_j<e^{\epsilon Q^3}$ 作为低组。
+因 $0\le n_j,\mu_j\le C_j$，它们对每个元组的能量满足
+
+$$
+E_{\rm low}(n)\le\frac{m e^{2\epsilon Q^3}}{B^2}
+=\operatorname{poly}(Q)e^{-(c_q-2\epsilon)Q^3}.
+\tag{108.13}
+$$
+
+低组众数信息量非负，故丢掉该非负信息量并在能量项支付
+$c_*E_{\rm low}$ 仍给 (108.12) 的趋零误差。
+这是下界的证明分组，不更改完整标量。以下可行上界保留低组的精确众数能量，
+从未要求把该能量除以指数小的噪声后仍可忽略。
+
+**同一原模型中的整数上界。** 对固定 $0<k<K<\infty$，
+选任一达到 $v_*$ 的组 $j_*$，以确定规则处理并列。
+其余坐标保持在二项众数，保留
+
+$$
+E_0=\sum_{j\ne j_*}(k_j^\circ-\mu_j)^2/B^2
+\le(\epsilon_e+\sqrt m/B)^2.
+\tag{108.14}
+$$
+
+对每个所需能量 $e\in[k,K]$，令
+
+$$
+n_*(e)=\operatorname{nearestInteger}
+ [\mu_*+B\sqrt{e-E_0}],\qquad
+n_j(e)=k_j^\circ\ (j\ne j_*),\qquad E_e=E(n(e)).
+\tag{108.15}
+$$
+
+在概率一致趋一的事件上，所有这些元组同时可行且
+
+$$
+|E_e-e|\le C_K/B.
+\tag{108.16}
+$$
+
+可行性来自 $C_*\asymp_{\mathbb P}B^2\delta$、$p_*\to1/2$、
+$|\mu_*-C_*p_*|\le B\epsilon_e$ 和 $B\delta\to\infty$；
+$O(B)$ 位移严格留在 $[0,C_*]$ 内。原全盒支持事件保证它属于同一固定总数后验。
+特别地，最大方差组是高组，无须对低组作 Gaussian 原子近似。
+
+写 $a_e=(n_*(e)-\mu_*)/B$。只有一个坐标离开众数，
+第 103、107 章的含众数归一化 Stirling 估计给
+
+$$
+S_Q(n(e))
+=\frac{(n_*(e)-C_*p_*)^2}{2C_*p_*(1-p_*)}+o_{\mathbb P}(1)
+=c_*(a_e+e_*)^2+o_{\mathbb P}(1)
+\tag{108.17}
+$$
+
+一致于 $e\in[k,K]$。标准位移仅为 $O_{\mathbb P}(\delta^{-1/2})$，
+而 $C_*$ 指数增长，所以误差
+$O((1+|z|^3)/\sqrt{C_*})$ 是指数小量乘多项式。
+因 $E_e=a_e^2+E_0$，
+
+$$
+|S_Q(n(e))-c_*E_e|
+\le c_*[2|a_e e_*|+e_*^2+E_0]+o_{\mathbb P}(1)=o_{\mathbb P}(1).
+\tag{108.18}
+$$
+
+$|D(n(e))|\le C_KB+m$ 还给 $D(n(e))^2/q=O_{\mathbb P}(Q^{-5/2})+o(1)$。
+按 (108.10)–(108.11) 的正确方向使用修正，得到实际可行证据
+
+$$
+S_P(n(e))\le c_*E_e+\widetilde r_x(k,K),\qquad
+\widetilde r_x(k,K)\to0,
+\tag{108.19}
+$$
+
+对整段 $e$ 一致。它只是一个上界构造，不宣告实际最优元组的坐标结构。
+
+**包络极小值与全部实际极小元。** (108.1) 是实直线上仿射函数加半直线示性函数的
+经典 Moreau 包络。配方给极小能量 $e^\circ(h)$。
+因 $h_y\to\gamma>0$ 且 $\delta u c_*\to0$，
+对紧输出其极小能量同时位于某固定 $[k,K]\subset(0,\infty)$。
+此时
+
+$$
+\Phi_x(h_y)=c_*h_y-\frac{\delta u c_*^2}{2},\qquad
+c_*E+\frac{(E-h_y)^2}{2\delta u}
+=\Phi_x(h_y)+\frac{(E-e^\circ(h_y))^2}{2\delta u}.
+\tag{108.20}
+$$
+
+将 (108.15) 应用于 $e=e^\circ(h_y)$，得到
+
+$$
+A_x(y)\le\Phi_x(h_y)+\frac{C_K}{B^2\delta\sigma^2}
+                         +\widetilde r_x(k,K).
+\tag{108.21}
+$$
+
+线性舍入项在配方中严格抵消，不用一个随噪声爆炸的粗导数界。
+选 $l<c_q/2$ 使最终 $L_M\le lQ^3$，则原取整给
+
+$$
+\frac1{B^2\delta\sigma^2}
+=\frac{Q^3e^{2L_M}}q
+\le C Q^3e^{-(c_q-2l)Q^3}\to0.
+\tag{108.22}
+$$
+
+上界为 $O_{\mathbb P}(\delta^{-1})$，而 $S_P\ge0$，
+故每一个实际最小化元组 $n_y$ 都满足
+
+$$
+|E(n_y)-h_y|\le C\sigma
+\tag{108.23}
+$$
+
+在紧事件上一致成立。于是它们的能量同时留在固定有界区间。
+对全部这些元组用 (108.12)，得到
+
+$$
+A_x(y)\ge c_*E(n_y)+\frac{(E(n_y)-h_y)^2}{2\delta u}-r_x(K')
+\ge\Phi_x(h_y)-r_x(K').
+\tag{108.24}
+$$
+
+(108.21)–(108.24) 证明 $\sup_{|y|\le R}|A_x(y)-\Phi_x(h_y)|\to0$，
+即 (108.3)。远能量由实际非负信息量与原 Gaussian 罚项排除，
+不是从假设最优配置为单坐标推出。
+
+**普通密度的绝对极限。** 为得到 (108.5)，需要比 (103.27) 更强的普通密度归一化。
+它已由第 105 章的相对比较导出：在 $c=1$ 处，
+$F_{1,u}'(0)=V+\|e\|^2$，(105.12) 的有限 Legendre 成本在目标 $V$ 处为
+$O_{\mathbb P}(\|e\|^4)$，除以 $\delta$ 仍趋零；曲率趋于 $\nu$。
+故 $g_{1,u}(0)\to(2\pi\nu)^{-1/2}$，再由 (105.16)、(105.18)，
+
+$$
+\sup_{|y|\le R}|f_{\mathsf P_x,\sigma}(y)-\varphi_\nu(y)|\to0,
+\qquad
+\sup_{|y|\le R}\left|
+\ln\frac{f_{\mathsf P_x,\sigma}(y)}{f_{\mathsf P_x,\sigma}(0)}
++\frac{y^2}{2\nu}\right|\to0.
+\tag{108.25}
+$$
+
+紧区间上极限密度为正，允许上述对数运算。
+这是实际相对密度桥的推论，不从弱中心极限定理推导密度收敛。
+将 (108.3)、(108.25) 代入精确式 (107.5) 得 (108.5)。
+对 $y$ 与零相减，
+
+$$
+\Phi_x(V+\sqrt\delta y)-\Phi_x(V)=\frac{\sqrt\delta}{2v_*}y,
+\tag{108.26}
+$$
+
+有限噪声修正先严格抵消，再取极限，给 (108.4)。
+全部输入均保留原支持一致性、pair/path 各自的实际概率律，证毕。
+
+**推论 108.3（所有最优能量的细定位）。** 同一条件下，不要求最小化元组唯一，
+仍有
+
+$$
+\sup_{\substack{|y|\le R\\n_y\in\operatorname{argmin}_n
+\{S_P(n)+(E(n)-h_y)^2/(2\delta\sigma^2)\}}}
+\frac{|E(n_y)-h_y+\delta\sigma^2/(2v_*)|}{\sigma\sqrt\delta}\to0.
+\tag{108.27}
+$$
+
+证明是把 (108.12)、(108.20) 与实际可行上界合并，
+该比值的平方不超过两个非负趋零误差之和的两倍。
+这定位能量，不识别坐标分配，也不宣称后验典型质量集中在某个最大权重坐标。
+
+**命题 108.4（逐输出噪声项可以发散）。** 合法噪声 $\sigma=\delta^{1/8}$ 满足
+(108.2)，但 (108.3) 给
+
+$$
+\sup_{|y|\le R}\left|
+\delta^{3/4}\left[A_x(y)-\frac{h_y}{2v_*}\right]
++\frac1{8\rho_0^2}\right|\to0.
+\tag{108.28}
+$$
+
+因此在每份输出成本中删除噪声项，会丢掉 $\delta^{-3/4}$ 阶的量。
+该项与输出无关，所以不反驳 (108.4)。这是原模型的解析序列，非代理数值实验。
+
+**注记 108.5（归属与结论边界）。** 半直线上的仿射近端公式直接属于 Moreau 的
+经典结果，二项众数比、Stirling 与配方也不是本章新工具。
+这里新增的模型内桥梁是：用指数精确校准比较两个有限经验曲率，
+在完整固定总数后验上取得绝对 $o(1)$ 的全元组下界与可行上界，
+再于原半指数噪声精度支付整数误差。
+最大权重坐标仅提供存在证据；Gaussian 场的条件质量凝聚定理不自动适用于它。
+本章不将经验 $v_*$ 换成极限系数，不扩张输出紧区间或噪声范围，
+不导出任意增长 Rényi 阶、Shannon 阶、期望熵或全局原创结论。
+
+## 追加锚（本行以下为增补区）
