@@ -97,12 +97,32 @@ run_meta do
     let count := (expected.filter (·.registrationModuleName == owner)).size
     LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership.checkImportedOwners owner count
   let bindings := TemplateBinding.records env
+  let sourceValidated : Array SnapshotOccurrence := #[
+    { theoremName := `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
+      objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena,
+      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.InformationRoot,
+      statementIdentity := "sha256:b93e6bd918cabb38e32a21f11542a80c47dcc6ba73bdeac72336a5c75648c24c" },
+    { theoremName := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
+      objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena,
+      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot,
+      statementIdentity := "sha256:1aed443dafdf76d41d4cca3a5a8bbf76e5a0f33e4a90453061b57fc3f432fb0a" }]
+  let mut validatedCount := 0
   for row in expected do
     let some observed := bindings.find? fun entry =>
         entry.occurrence.key.theoremName == row.theoremName &&
         entry.occurrence.key.registrationModule == row.registrationModuleName
       | throwError "missing production binding row"
-    unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 11 undeclared statuses"
+    if sourceValidated.any (fun source => source.theoremName == row.theoremName &&
+        source.registrationModuleName == row.registrationModuleName &&
+        source.objectArenaName == row.objectArenaName &&
+        source.statementIdentity == row.statementIdentity) then
+      unless observed.result matches .declaredValidated _ do
+        throwError "expected validated source occurrence: {row.theoremName}"
+      validatedCount := validatedCount + 1
+    else
+      unless observed.result matches .undeclared do
+        throwError "expected undeclared production occurrence: {row.theoremName}"
+  unless validatedCount == 2 do throwError "expected exactly two validated source occurrences"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 2 declaredValidated source occurrences, 9 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline
