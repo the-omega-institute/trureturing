@@ -78539,3 +78539,418 @@ $$
 该证书处理精确完整矩阵。有限次带噪读数不能据此断言矩阵恒等式已经精确成立；小的共同幅度残差、角谱多项式残差或归一化残差，也尚未被本节证明必然对应附近的一份有效饱和数据。§252的全态稳定界以存在理想饱和源及已知响应误差为合同，不替代这项近似可实现性义务。内点条件还明确排除了形成纠缠为零或一的端点类。
 
 ## 追加锚（本行以下为增补区）
+
+## 256. 两份完整响应的核范数球、唯一填充与稳定重建
+
+两份完整算子响应的可实现性可以不再依赖饱和源假设。选取明确的输入基后，它们等价于联合密度矩阵的一个非对角块；该块允许哪些正半定归一化填充，由核范数精确刻画。
+
+本节证明：数据空间的实际像是核范数单位球，球面每一点恰有一个合法联合态，球内每一点都有多个填充。球面源还满足维数无关的全态稳定界，并有显式带噪合法重建公式。
+
+### 256.1 两份 Hermitian 响应合成一个复矩阵
+
+固定输入 $H=\mathbb C^2$、非零有限维参考 $E$，并令 $r=\dim E$。可信且已标定的输入方向为
+$$
+A_a=\sqrt A\,Z+b_0X,\qquad
+A_b=\sqrt A\,Z-b_0X,\qquad
+A\ge B>0,\quad b_0^2=B.
+\tag{256.1}
+$$
+联合态的实际响应定义为 $\mathcal R_w(\Omega)=\operatorname{Tr}_H[(A_w\otimes I_E)\Omega]$，$w=a,b$。给定任意两份 Hermitian 候选矩阵 $R_a,R_b$，定义
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0},
+\qquad
+K=R_Z-iR_X.
+\tag{256.2}
+$$
+$b_0$ 的符号保留在转换中。每个复矩阵 $K\in\mathcal L(E)$ 都唯一对应
+$$
+R_Z=\frac{K+K^\dagger}{2},
+\qquad
+R_X=\frac{K^\dagger-K}{2i},
+\tag{256.3}
+$$
+再由（256.1）恢复 $R_a,R_b$。这是两份 Hermitian 矩阵与一个任意复矩阵之间的实线性双射，共含 $2r^2$ 个实坐标。
+
+取输入的 $Y$ 本征基
+$$
+|y_+\rangle=\frac{|0\rangle+i|1\rangle}{\sqrt2},
+\qquad
+|y_-\rangle=\frac{|0\rangle-i|1\rangle}{\sqrt2},
+\qquad
+U_Y=\frac1{\sqrt2}
+\begin{pmatrix}1&1\\ i&-i\end{pmatrix}.
+\tag{256.4}
+$$
+直接相乘得到
+$$
+U_Y^\dagger ZU_Y=X,\qquad
+U_Y^\dagger XU_Y=Y,\qquad
+U_Y^\dagger YU_Y=Z.
+\tag{256.5}
+$$
+对任意联合态，写
+$$
+\Omega_Y=(U_Y^\dagger\otimes I_E)\Omega(U_Y\otimes I_E)
+=\begin{pmatrix}P&C\\ C^\dagger&Q\end{pmatrix}.
+\tag{256.6}
+$$
+按输入偏迹计算，
+$$
+R_Z=C+C^\dagger,\qquad
+R_X=i(C-C^\dagger),\qquad
+\boxed{K=2C.}
+\tag{256.7}
+$$
+因此给定响应的来源问题，等价于求
+$$
+\begin{pmatrix}P&K/2\\ K^\dagger/2&Q\end{pmatrix}\succeq0,
+\qquad
+\operatorname{Tr}P+\operatorname{Tr}Q=1.
+\tag{256.8}
+$$
+参考边缘 $P+Q$ 与第三个算子响应 $R_Y=P-Q$ 均未作为输入数据给定。
+
+### 256.2 固定非对角块的唯一最小迹填充
+
+以下 $\|\cdot\|_1$ 为矩阵核范数，即奇异值之和；在 Hermitian 矩阵上也称迹范数。
+
+**引理256.1（固定非对角块的最小迹）。** 给定任意 $C\in\mathcal L(E)$，每个正半定块矩阵
+$$
+T=\begin{pmatrix}P&C\\ C^\dagger&Q\end{pmatrix}\succeq0
+\tag{256.9}
+$$
+都满足
+$$
+\operatorname{Tr}T\ge2\|C\|_1.
+\tag{256.10}
+$$
+最小迹解唯一，为
+$$
+\boxed{
+T_{\min}(C)=
+\begin{pmatrix}
+\sqrt{CC^\dagger}&C\\
+C^\dagger&\sqrt{C^\dagger C}
+\end{pmatrix}.
+}
+\tag{256.11}
+$$
+
+**证明。** 令 $|C|=\sqrt{C^\dagger C}$。有限维方阵的极分解部分等距可以延拓成酉算子，故可选 $W:E\to E$ 酉，使 $C=W|C|$。即使 $C$ 奇异或为零，也可作这种延拓。
+
+定义
+$$
+L_W=\begin{pmatrix}I_E&-W\\-W^\dagger&I_E\end{pmatrix},
+\qquad
+J_W=\frac1{\sqrt2}\begin{pmatrix}W\\ I_E\end{pmatrix}.
+\tag{256.12}
+$$
+$J_W$ 是等距映射；$L_W\succeq0$，且
+$$
+\ker L_W=\{(Wv,v):v\in E\}=\operatorname{ran}J_W,
+\qquad
+L_W=2(I-J_WJ_W^\dagger).
+\tag{256.13}
+$$
+因 $T\succeq0$，
+$$
+0\le\operatorname{Tr}(L_WT)
+=\operatorname{Tr}T-2\operatorname{Re}\operatorname{Tr}(W^\dagger C)
+=\operatorname{Tr}T-2\|C\|_1.
+\tag{256.14}
+$$
+另一方面，
+$$
+\begin{pmatrix}W\\I_E\end{pmatrix}
+|C|
+\begin{pmatrix}W^\dagger&I_E\end{pmatrix}
+\succeq0
+\tag{256.15}
+$$
+的非对角块为 $C$，迹为 $2\|C\|_1$，上对角块为 $W|C|W^\dagger=\sqrt{CC^\dagger}$，所以恰为（256.11）。
+
+若另一个 $T$ 也取到最小迹，（256.14）给 $\operatorname{Tr}(L_WT)=0$。由正性，
+$$
+\|L_W^{1/2}T^{1/2}\|_{\mathrm{HS}}^2=0,
+\tag{256.16}
+$$
+故 $\operatorname{supp}T\subseteq\operatorname{ran}J_W$，可以写成 $T=J_WSJ_W^\dagger$，其中 $S\succeq0$。其非对角块为 $WS/2=C$，于是 $S=2|C|$，唯一得到（256.11）。$C=0$ 时最小迹为零，唯一最小解也为零。$\square$
+
+酉延拓 $W$ 的选择不影响（256.11），其表达式只使用 $C$ 及两个正平方根。
+
+### 256.3 可实现数据的完整分类
+
+对任意复矩阵 $K$，定义
+$$
+\Gamma(K)=\frac12
+\begin{pmatrix}
+\sqrt{KK^\dagger}&K\\
+K^\dagger&\sqrt{K^\dagger K}
+\end{pmatrix}.
+\tag{256.17}
+$$
+由引理256.1，
+$$
+\Gamma(K)\succeq0,\qquad
+\operatorname{Tr}\Gamma(K)=\|K\|_1.
+\tag{256.18}
+$$
+
+**定理256.2（核范数球与填充数目）。** 对（256.2）的完整响应数据：
+
+1. 若 $\|K\|_1>1$，不存在归一化正半定来源。
+2. 若 $\|K\|_1=1$，存在且仅存在一个合法来源，其 $Y$ 坐标矩阵为 $\Gamma(K)$。
+3. 若 $\|K\|_1<1$，存在多个合法来源，且包含一条非平凡线段。
+
+**证明。** 任意合法来源在（256.8）中具有非对角块 $C=K/2$。引理256.1给 $\operatorname{Tr}\Omega_Y\ge\|K\|_1$，证明必要条件 $\|K\|_1\le1$。
+
+若 $\|K\|_1=1$，归一化恰好要求最小迹，故引理的唯一性给 $\Omega_Y=\Gamma(K)$。
+
+若 $\|K\|_1<1$，取任意预先选定的参考密度矩阵 $\tau$，置 $h=1-\|K\|_1>0$。以下两个矩阵都正半定、迹一，且具有同一个非对角块：
+$$
+\Omega_Y^{(+)}
+=\Gamma(K)+h\begin{pmatrix}\tau&0\\0&0\end{pmatrix},
+\qquad
+\Omega_Y^{(-)}
+=\Gamma(K)+h\begin{pmatrix}0&0\\0&\tau\end{pmatrix}.
+\tag{256.19}
+$$
+它们满足
+$$
+\frac12\|\Omega_Y^{(+)}-\Omega_Y^{(-)}\|_1=h>0.
+\tag{256.20}
+$$
+两者之间的全部凸组合也保留数据，给出所需线段。回到原输入基，只需共轭 $U_Y\otimes I_E$。$\square$
+
+因此两份完整响应的实际像，在（256.2）的可逆坐标中恰为
+$$
+\boxed{\mathcal B_1=\{K\in\mathcal L(E):\|K\|_1\le1\}.}
+\tag{256.21}
+$$
+对一个已经可实现的数据点，其全部态纤维为单点的充要条件是
+$$
+\boxed{\|K\|_1=1.}
+\tag{256.22}
+$$
+这里的“球”是复矩阵实向量空间中的核范数单位球，不是物理空间形状或另行引入的时空度量。
+
+### 256.4 球面源的谱、参考边缘与适用范围
+
+在球面上，选 $K=W|K|$ 的任意酉极分解延拓，则
+$$
+\Gamma(K)=J_W|K|J_W^\dagger.
+\tag{256.23}
+$$
+$J_W$ 等距，故唯一源满足
+$$
+\operatorname{rank}\Omega=\operatorname{rank}K,
+\tag{256.24}
+$$
+其非零本征值恰为 $K$ 的非零奇异值。尤其 $\operatorname{rank}\Omega\le r<2r$，满秩联合态不可能由这两份响应唯一确定。
+
+参考边缘和未直接输入的第三条关联分别恢复为
+$$
+\boxed{
+\rho_E=\frac{\sqrt{KK^\dagger}+\sqrt{K^\dagger K}}2,
+\qquad
+R_Y=\frac{\sqrt{KK^\dagger}-\sqrt{K^\dagger K}}2.
+}
+\tag{256.25}
+$$
+第二式使用（256.5）的 $U_Y^\dagger YU_Y=Z$。两个平方根具有相同迹，所以唯一源必有 $\operatorname{Tr}R_Y=0$，即输入的 $Y$ 平均值为零。
+
+对纯联合态，可以进一步精确说明这一条件。写
+$$
+|\psi\rangle=|y_+\rangle\otimes u+|y_-\rangle\otimes v,
+\qquad
+\|u\|^2+\|v\|^2=1.
+\tag{256.26}
+$$
+则
+$$
+K=2uv^\dagger,
+\qquad
+\|K\|_1=2\|u\|\|v\|\le1.
+\tag{256.27}
+$$
+等号当且仅当 $\|u\|^2=\|v\|^2=1/2$，也即 $\langle\psi|Y\otimes I|\psi\rangle=0$。因此
+$$
+\boxed{
+\text{纯源由两份完整响应在全部态中唯一确定}
+\iff
+\langle Y\otimes I\rangle=0.
+}
+\tag{256.28}
+$$
+这一纯态范围不要求最大纠缠或响应饱和。对混合态，单有 $\langle Y\otimes I\rangle=0$ 不够；例如 $I_{H\otimes E}/(2r)$ 的 $K=0$，落在球内。
+
+§248的饱和态已由§251证明在全部态中唯一，因此按定理256.2，其数据都位于球面。§255的共同幅度与角谱条件进一步识别球面上的那个特定饱和子族，并非本节全部唯一源的必要条件。
+
+### 256.5 球面源的维数无关全态稳定性
+
+先记录一个对任意 Hermitian 块矩阵成立的收缩关系。在 $Y$ 坐标中定义
+$$
+\mathscr K(T)=2T_{+-},
+\qquad
+Z_0=\begin{pmatrix}I_E&0\\0&-I_E\end{pmatrix}.
+\tag{256.29}
+$$
+若 $T=\begin{pmatrix}P&C\\C^\dagger&Q\end{pmatrix}$，则
+$$
+T-Z_0TZ_0=\begin{pmatrix}0&2C\\2C^\dagger&0\end{pmatrix}.
+\tag{256.30}
+$$
+右侧的非零奇异值是 $2C$ 的非零奇异值各重复两次，故
+$$
+4\|C\|_1=\|T-Z_0TZ_0\|_1\le2\|T\|_1,
+\qquad
+\boxed{\|\mathscr K(T)\|_1\le\|T\|_1.}
+\tag{256.31}
+$$
+该论证适用于本节所需的 Hermitian 差矩阵。
+
+令 $\Omega_0$ 为任意球面数据 $K_0$ 的唯一源，即 $\|K_0\|_1=1$。令 $\Xi$ 为同一联合空间中的任意归一化正半定态，并记
+$$
+K_\Xi=\mathscr K(\Xi_Y),
+\qquad
+\delta=\|K_\Xi-K_0\|_1.
+\tag{256.32}
+$$
+选 $K_0=W|K_0|$ 的酉极分解延拓，以（256.12）定义 $L_W,J_W$，并令 $\Pi=J_WJ_W^\dagger$。理想源为
+$$
+\Omega_{0,Y}=J_W|K_0|J_W^\dagger.
+\tag{256.33}
+$$
+由归一化，
+$$
+\begin{aligned}
+0\le\operatorname{Tr}(L_W\Xi_Y)
+&=1-\operatorname{Re}\operatorname{Tr}(W^\dagger K_\Xi)\\
+&=\operatorname{Re}\operatorname{Tr}[W^\dagger(K_0-K_\Xi)]
+\le\delta.
+\end{aligned}
+\tag{256.34}
+$$
+而 $L_W=2(I-\Pi)$，所以核外权重满足
+$$
+t:=\operatorname{Tr}[(I-\Pi)\Xi_Y]\le\frac\delta2.
+\tag{256.35}
+$$
+保留次归一化压缩 $\Xi_{\mathcal K}=\Pi\Xi_Y\Pi$。§252直接证明的投影扰动界给
+$$
+a:=\|\Xi_Y-\Xi_{\mathcal K}\|_1
+\le2\sqrt t\le\sqrt{2\delta}.
+\tag{256.36}
+$$
+
+核内压缩写成 $\Xi_{\mathcal K}=J_WS J_W^\dagger$，其中 $S\succeq0$，无需把它归一化。它的响应为 $\mathscr K(\Xi_{\mathcal K})=WS$。于是
+$$
+\begin{aligned}
+\|\Xi_{\mathcal K}-\Omega_{0,Y}\|_1
+&=\|S-|K_0|\|_1\\
+&=\|\mathscr K(\Xi_{\mathcal K})-K_0\|_1\\
+&\le\delta+\|\mathscr K(\Xi_{\mathcal K}-\Xi_Y)\|_1\\
+&\le\delta+a.
+\end{aligned}
+\tag{256.37}
+$$
+第一式使用等距嵌入，第二式使用 $W$ 酉，最后一式使用（256.31）。三角不等式及两态归一化给出结论。
+
+**定理256.3（任意球面源的稳定性）。** 对上述任意球面源及任意合法竞争态，
+$$
+\boxed{
+\|\Xi-\Omega_0\|_1
+\le\min\{2,\ \delta+2\sqrt{2\delta}\}.
+}
+\tag{256.38}
+$$
+它不依赖参考维数、非零奇异值下界或响应饱和假设。
+
+若原始误差写为
+$$
+\varepsilon=
+\|\mathcal R_a(\Xi)-\mathcal R_a(\Omega_0)\|_1+
+\|\mathcal R_b(\Xi)-\mathcal R_b(\Omega_0)\|_1,
+\tag{256.39}
+$$
+则（256.2）给
+$$
+\delta\le
+\left(\frac1{2\sqrt A}+\frac1{2\sqrt B}\right)\varepsilon.
+\tag{256.40}
+$$
+这里仅在范数估计中使用 $|b_0|=\sqrt B$，不改变坐标恢复时的符号。
+
+平方根阶仍不可统一改进。对§252的固定三维参考族，记产品权重为 $q=1-\theta$，其理想源位于球面，而微扰满足
+$$
+\delta=2qz^2,\qquad
+\|\Omega_z-\Omega_0\|_1=2qz=\sqrt{2q\,\delta}.
+\tag{256.41}
+$$
+固定 $q>0$ 后令 $z\to0$，便排除了统一的 $o(\sqrt\delta)$ 误差模量。
+
+### 256.6 任意矩阵估计的显式合法重建
+
+给定任意复矩阵估计 $\widehat K$，假设存在球面真值 $K_0$ 满足已声明误差合同
+$$
+\|\widehat K-K_0\|_1\le\eta.
+\tag{256.42}
+$$
+先作径向缩放
+$$
+\overline K=\frac{\widehat K}{\max\{1,\|\widehat K\|_1\}}.
+\tag{256.43}
+$$
+显然 $\|\overline K\|_1\le1$。若 $\|\widehat K\|_1>1$，反三角不等式给
+$$
+\|\overline K-\widehat K\|_1
+=\|\widehat K\|_1-1\le\eta;
+\tag{256.44}
+$$
+否则该差为零。因此
+$$
+\|\overline K-K_0\|_1\le2\eta.
+\tag{256.45}
+$$
+
+预先任选一个参考密度矩阵 $\tau$，构造
+$$
+\widehat\Omega_Y
+=\Gamma(\overline K)
++(1-\|\overline K\|_1)
+\begin{pmatrix}\tau&0\\0&0\end{pmatrix},
+\qquad
+\widehat\Omega
+=(U_Y\otimes I_E)\widehat\Omega_Y(U_Y^\dagger\otimes I_E).
+\tag{256.46}
+$$
+由定理256.2的构造，$\widehat\Omega$ 总是合法密度矩阵，且其实际数据恰为 $\overline K$。将（256.45）代入定理256.3，得到
+$$
+\boxed{
+\|\widehat\Omega-\Omega_0\|_1
+\le\min\{2,\ 2\eta+4\sqrt\eta\}.
+}
+\tag{256.47}
+$$
+该过程只需核范数、矩阵平方根或奇异值分解及正半定补迹；不需要识别真实参考边缘，也不需要从噪声中稳定提取稀有方向的谱符号。它是从经典矩阵数据构造合法候选的明确数学过程，未被宣称为直接作用于一份未知量子态的物理恢复通道。
+
+### 256.7 标准核范数表示与当前结论的边界
+
+核范数的块半正定表示属于标准工具。Recht、Fazel 与 Parrilo 的 *Guaranteed Minimum-Rank Solutions of Linear Matrix Equations via Nuclear Norm Minimization*，[arXiv:0706.4138v1](https://arxiv.org/abs/0706.4138v1)，PDF第7页 Proposition 2.1 及第8页式（2.6），给出实矩阵的表示
+$$
+\|X\|_*=
+\min\left\{
+\frac12(\operatorname{Tr}W_1+\operatorname{Tr}W_2):
+\begin{pmatrix}W_1&X\\X^{\mathsf T}&W_2\end{pmatrix}\succeq0
+\right\},
+\tag{256.48}
+$$
+并以奇异值分解构造达到矩阵。本节在复数方阵上直接证明所需最小迹结论及其唯一性，再推导量子来源分类与稳定界；没有使用该文其他测量随机性或受限等距条件，也不把实矩阵表示冒充本文全部结论的现成证明。
+
+球面条件给精确唯一来源，球内则有（256.19）的实际多来源。这里保留了固定联合空间、可信输入轴和两份完整算子响应；这些条件不能退化为两个标量读数或任意无标记边界。带噪重建还使用（256.42）的球面真值与误差合同，不由有限样本自行断言精确球面等式。
+
+本节将标准核范数表示、正性约束与投影扰动连接为一组自包含结论，不据此宣称外部文献原创性。取得完整矩阵的样本预算以及数值实现成本仍须按所用观察协议另行给出。
+
+## 追加锚（本行以下为增补区）
