@@ -3359,3 +3359,67 @@ $\delta\asymp X^{-1/2}$；但不能由此断言指定 $q=X$ 有命中。
 两种实验可共享确定均值的子序列，不表示数据被耦合成同一次观测。
 文献核对覆盖上述原定理的权重、曲率和分母量词；
 未找到能直接补上指定原层同步下界的已检索原文，不证明这种定理不存在或本章全球原创。
+
+## 原文对照：第 89 章的一般规范律与经典大交集接口
+
+[理论卷第 89 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+保持第 88 章两根边缘通用集的定义、原 floor 单元、固定均值带和合法层序列不变，
+将测度判据扩展到连续非减且 $f(t)/t$ 在零处单调趋于无穷的全部规范：
+局部 $f$-Hausdorff 测度由 $\sum_nQ_n^2f(Q_n^{-3})$ 的收敛／发散判为零／无穷。
+包括层代价趋零、相邻比值无界振荡的规范。
+删除第 86 章同步集 $E_2$ 后保持同一判据；其存在性与空性仍未解决。
+
+**局部 ubiquity 的原定理。** Victor Beresnevich、Detta Dickinson、Sanju Velani，
+*Measure theoretic laws for lim sup sets*，
+[arXiv:math/0401118v3](https://arxiv.org/abs/math/0401118v3)，
+[原 TeX](https://arxiv.org/e-print/math/0401118v3)。
+采用原文 Theorem 1 后标签 cor2 的推论，及紧邻的 dsm2、afm1 推导。
+原条件 M2 要求紧致度量空间上球测度与 $r^\delta$ 同阶；
+点状共振集的 intersection conditions 在 $\gamma=0$ 时成立。
+推论以局部 ubiquity、开集可测、发散级数
+$\sum_n(\psi(u_n)/\rho(u_n))^{\delta-\gamma}$
+及 $\psi$ 或 $\rho$ 的 $u$-regular 性推出全测度。
+这里取紧区间上的归一化 Lebesgue 测度、$\delta=1,\gamma=0$、
+$u_n=Q_n,\rho(t)=c_0t^{-2}$。原单元中点的分离与局部下计数验证 ubiquity，
+合法层增长验证 $\rho(Q_{n+1})/\rho(Q_n)\le1/4$ 最终成立。
+原推论允许由 $\rho$ 控制双重和；并不要求
+$\psi(Q_n)/\rho(Q_n)$ 单调或具有正的上极限。
+局部固定正比例覆盖与放大球 limsup 的全测度分别属于假设和结论，
+不能用前者冒充后者。
+
+**严格规范与可数交。** Arnaud Durand，
+*Sets with large intersection and ubiquity*，
+Mathematical Proceedings of the Cambridge Philosophical Society 144 (2008)，
+[DOI:10.1017/S0305004107000746](https://doi.org/10.1017/S0305004107000746)，
+[作者原稿](https://www.imo.universite-paris-saclay.fr/~arnaud.durand/files/sets_with_large_intersection_and_ubiquity.pdf)。
+采用所核对的 26 页作者稿 Proposition 1(e,f)、Theorems 1(a,c)、2，
+不声称作者稿与最终排印版逐字相同。
+Theorem 2 将全测度放大球族按规范的广义逆缩小后送入大交集类；
+逼近族须局部有限于每个正半径阈值之上。
+Proposition 1(e) 给包含该集合的 $G_\delta$ 集向上封闭性，
+Theorem 1(a) 给可数交封闭性。
+原严格顺序 $f\prec g$ 指 $f/g$ 在零处单调趋于无穷；
+Theorem 1(c) 对这样的 $f$ 给无穷 $f$-测度，不能直接取 $f=g$。
+第 89 章以 $g=f/\Theta(f/t)$ 保留级数发散并逐项核对规范单调性，
+因而同一个 $g$ 可供所有有符号均值带使用，再在所需的 $f$ 处结算测度。
+辅助规范削薄是成熟方法，原稿证明其有理逼近规范律时也采用这一机制。
+广义逆允许规范存在平坦段；本章不额外假定严格可逆。
+
+Arnaud Durand，*Describability via ubiquity and eutaxy in Diophantine approximation*，
+Annales mathématiques Blaise Pascal 22 (2015)，
+[DOI:10.5802/ambp.349](https://doi.org/10.5802/ambp.349)，
+[出版原文](https://ambp.centre-mersenne.org/item/10.5802/ambp.349.pdf)。
+Definition 6.4、Theorems 6.9–6.10 及印刷页 63 的端点说明保留上述严格规范边界。
+该文文本提取中的部分交集符号失真，承重公式取前述作者稿中清晰的原陈述，
+不根据失真文本扩大结论。
+
+**增量与适用边界。** 大交集类、一般质量传递和辅助规范方法均直接归属上述经典理论；
+不宣称新的一般 ubiquity 或可数交定理。
+本章的模型内增量是两根原单元的完整条件映射、全部振荡规范的级数分类，
+以及在同一固定通用集上删除同步集合的结论。
+删除步骤使用 $h=\min(f,\sqrt t)$：其级数仍发散，
+而 $\dim_HE_2\le38/87<1/2$ 给 $\mathcal H^h(E_2)=0$。
+没有据维数上界断言任意发散规范都满足 $\mathcal H^f(E_2)=0$。
+参数集测度不作为统计先验；每根各自的子序列仍不等于共同原层。
+文献直接覆盖的是通用测度工具，原模型的对象与条件由正文连接；
+上述有限文献核对不构成全球原创性认证。
