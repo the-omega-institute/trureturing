@@ -23082,3 +23082,942 @@ $\{ABAAA,ABAAB,ABABB,ABBAB,ABBBA\}$。第84节定理84.1排除其中的 $ABAAA$�
 该表只是必要分类，没有断言三词中任一词存在同一个实际接收器的共同实现，也没有收紧一般接收容量区间。
 
 ## 追加锚（本行以下为增补区）
+
+## 86. ABABB 尾词归约到公共向量矩阵禁阻
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯接收初态 $k$、七维持久接收空间 $K$、每轮共用的全域 CPTP 通道及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入 $K$，活动来源与参考不可访问。固定 Stinespring 位块 $V_0,V_1$ 均为等距且像正交。设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,B,B),
+\qquad A\ne B.
+\tag{86.1}
+$$
+
+也用 $A,B$ 表示单位环境代表；同射线各轮的共同相位可同步吸收。首环境外置不被预设为与尾环境正交。
+
+**定理86.1（外置首轮 ABABB 不可能）。** 上述七维实际合同不能具有尾词 $ABABB$。
+
+### 86.1 第78节矩阵矛盾所需的局部接口
+
+先明确一个与尾射线命名无关的接口推论。
+
+**引理86.2（公共向量的局部矩阵禁阻）。** 在同一非退化来源的前六个实际纯终端中，以下数据不能同时成立：
+
+1. 存在二维平面 $L,T,Q,R$，使
+
+$$
+G_2=G_4=G_5=T,\qquad G_3=L,\qquad
+Q_3=Q_5=Q_6=Q,\qquad Q_4=R,
+$$
+
+$$
+P=L+T,\qquad \dim P=4,\qquad Q,R\perp P.
+\tag{86.2}
+$$
+
+2. 第3至第6轮环境的射线为 $(B,C,B,B)$，其中 $B,C$ 不同且内积非零。第2轮环境不受额外射线限制，特别允许它与 $C$ 相同。
+
+3. 早期向量与实际来源列满足
+
+$$
+T=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{86.3}
+$$
+
+其中 $u,v,w$ 为同一候选的正交单位向量，后续零记忆列均由该来源及同一个 $V_0,V_1$ 递推。
+
+**证明。** 这些条件给出以下实际接口：
+
+$$
+V_1L=R\otimes C,\qquad V_1T=Q\otimes B,
+$$
+
+$$
+\begin{array}{c|c|c}
+\text{实际域}&V_0\text{ 像}&\text{同轮分解}\\ \hline
+H_2&L\otimes B&\operatorname{span}(a^2u+bv,w)\\
+H_3&T\otimes C&H_3\subset L\oplus Q\\
+H_4&T\otimes B&H_4\subset T\oplus R\\
+H_5&G_6\otimes B&H_5\subset T\oplus Q
+\end{array}
+\tag{86.4}
+$$
+
+这正是第78节（78.5）、（78.6）、（78.8）在矩阵计算开始时使用的全部空间与环境关系。以下说明它们如何接到该节的矩阵矛盾，避免将定理78.1对三条不同尾射线的初始假设直接扩大。
+
+取环境相位使 $r=\langle C,B\rangle\in(0,1)$，按第78节78.2的固定来源与输入位换基令 $a,b>0$。用同一实际来源的归一化列定义该节（78.10）的六个正对角系数矩阵 $\mathsf A,\mathsf B,\mathsf C,\mathsf D,\mathsf E,\mathsf F$。这里矩阵 $\mathsf C$ 与环境向量 $C$ 不同。取实际 $G_3,G_4,Q_5,Q_4$ 的列等距 $L_0,T_0,Q_0,R_0$，写
+
+$$
+J=R_0^*Q_0,\qquad L_0^*T_0=rJ,
+$$
+
+并以任意酉 $U,W$ 表示实际 $G_5,G_2$ 相对于 $T_0$ 的基旋转。来源递推与（86.4）逐项给出（78.13）的三个列式；固定 $V_0$ 保持内积，以及 $H_3$ 去掉在 $H_4$ 上的投影后与 $H_5$ 正交，又给
+
+$$
+r\mathsf A J\mathsf C+\mathsf B W^*J^*\mathsf D=rU,
+$$
+
+$$
+r\mathsf A J U\mathsf E+\mathsf B W^*\mathsf F
+=rU(\mathsf C U\mathsf E+\mathsf D J\mathsf F).
+\tag{86.5}
+$$
+
+同一个实际早期向量 $w$ 则给
+
+$$
+e_2^*W^*\mathsf C=r e_2^*JU,\qquad
+ e_2^*W^*J^*\mathsf A=r e_2^*J,
+\tag{86.6}
+$$
+
+其中 $e_2=(0,1)^T$。这就是（78.14）—（78.16），没有使用第2轮环境与 $C$ 不同。
+
+第78节78.3—78.5已在全部任意复酉 $U,W$ 下证明上述方程不相容：令 $\xi=J^*e_2$、$z=We_2$、$M=\mathsf C-U^*\mathsf A J$，得到非零秩一的 $M$、$Mz=0$，以及
+
+$$
+\mathsf D(I-JJ^*)\mathsf D
+=-M U\mathsf C^{-1}M^*U^*\mathsf C\succeq0.
+$$
+
+该节分别排除 $\xi_1=0$、$\xi_2=0$；两坐标均非零时，实际向量方程将 $U$ 化为正对角元的实旋转 $U_0$，使右侧正半定性迫 $\mathsf C U_0$ 具有严格负实特征值，而其行列式和迹均严格为正。矛盾。因此本引理的实际接口不能同时成立。证明完毕。
+
+该推论复用的是已经展开的矩阵矛盾及其精确接口，不要求重新假定三条不同尾射线，也没有给 $G_6$ 添加下一轮操作。
+
+### 86.2 ABABB 的四维分叉跨度
+
+实际早期正交单位组 $p,q$ 与 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,
+\qquad V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{86.7}
+$$
+
+对实际 $3\le n\le6$，各 $H_n,G_n,Q_n$ 二维，且满足同一实际位块关系以及
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{86.8}
+$$
+
+两个投影均为同构，故 $H_n\cap G_n=0$。
+
+置 $S_0=H_1+\cdots+H_5$。由首环境外置，$\dim S_0\le6$。当前 $B$ 的第3、5轮分别具有后继 $A,B$，所以 $G_3\cap G_5=0$。令
+
+$$
+P_B=G_3+G_5+G_6.
+$$
+
+$P_B\otimes B$ 与 $G_2\otimes A$ 是包含于 $V_0S_0$ 的代数直和。故 $\dim P_B=4$，且
+
+$$
+P:=P_B=G_3+G_5,\qquad
+V_0S_0=(P\otimes B)\dotplus(G_2\otimes A).
+$$
+
+实际 $G_4\otimes A$ 位于右侧，比较环境纤维，得到 $G_4=G_2$。记
+
+$$
+T=G_2=G_4,\qquad L=G_3,\qquad U=G_5,
+\qquad R=Q_4,\quad Q=Q_6,\quad S=Q_3=Q_5.
+\tag{86.9}
+$$
+
+其中 $Q_3=Q_5$ 来自 $G_2=G_4$ 及这两个实际一位像均采用环境 $B$。实际关系为
+
+$$
+P=L+U,\qquad L\cap U=0,\qquad \dim P=4,
+$$
+
+$$
+\begin{aligned}
+V_1L&=R\otimes A,&V_1U&=Q\otimes B,&V_1T&=S\otimes B,\\
+V_0H_1&=T\otimes A,&V_0H_2&=L\otimes B,&V_0H_3&=T\otimes A,\\
+V_0H_4&=U\otimes B,&V_0H_5&=G_6\otimes B.
+\end{aligned}
+\tag{86.10}
+$$
+
+所以
+
+$$
+H_3=H_1,\qquad
+H_3\subset L\oplus S,\qquad
+H_4\subset T\oplus R,\qquad P_TH_4=T.
+\tag{86.11}
+$$
+
+### 86.3 正交分支的早期公共向量矛盾
+
+若 $A\perp B$，实际 $V_1L=R\otimes A$ 与 $V_1U=Q\otimes B$ 正交，固定等距性给 $L\perp U$。同一个零位等距及（86.10）继而给
+
+$$
+H_2\perp H_4.
+$$
+
+但实际单位向量 $w$ 属于 $H_2\cap T$，而（86.11）给 $P_TH_4=T$。因此 $w\perp H_4$ 会迫 $w\perp T$，与 $w\in T$ 且 $w\ne0$ 矛盾。这一分支不能发生。
+
+### 86.4 非正交分支被三维补空间压成局部禁阻
+
+以下取 $\langle A,B\rangle\ne0$。首先
+
+$$
+v\notin R.
+\tag{86.12}
+$$
+
+否则实际 $V_1p=v\otimes A\in V_1L$ 将给 $p\in L=G_3$。又 $p\in H_1=H_3$，与 $H_3\cap G_3=0$ 及 $p\ne0$ 矛盾。
+
+因为 $P\otimes B\subset V_0K$，它与实际一位像 $R\otimes A$、$\mathbb Cv\otimes A$ 的跨位正交以及 $\langle A,B\rangle\ne0$ 给
+
+$$
+R,v\perp P.
+$$
+
+另一方面，实际零位像 $T\otimes A$ 与相同一位像正交，给 $R,v\perp T$。于是
+
+$$
+N:=R+\mathbb Cv
+$$
+
+为三维，且 $N\perp P,T$。七维预算与 $\dim P=4$ 强制
+
+$$
+K=P\oplus N,\qquad P=N^\perp,\qquad T\subset P.
+\tag{86.13}
+$$
+
+现在
+
+$$
+V_1P=(R\otimes A)\dotplus(Q\otimes B),\qquad
+V_1T=S\otimes B.
+$$
+
+读取 $B$ 纤维得到 $S\subset Q$，二维性使 $S=Q$；固定单射性再给 $T=U$。因此
+
+$$
+G_2=G_4=G_5=T,\qquad G_3=L,\qquad
+Q_3=Q_5=Q_6=Q,\qquad Q_4=R.
+\tag{86.14}
+$$
+
+此外 $Q\perp P$ 来自相同环境 $B$ 上的跨位正交，$R\perp P$ 已由非正交分支得到。第3至第6轮环境为 $(B,A,B,B)$，其中 $A,B$ 不同且内积非零；早期向量满足（86.3）。于是（86.14）及上述正交关系正好满足引理86.2，取其中 $C=A$ 即得矛盾。
+
+正交与非正交两个分支均被排除，定理86.1证明完毕。
+
+这里使矩阵禁阻能够复用的关键，是实际 $H_3=H_1$ 先迫出 $v\notin R$，随后三维补空间将 $T$ 压入同一四维 $P$，而固定一位映射再识别全部必要平面。没有将“射线名字不同”当作矩阵矛盾的数学条件。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{86.15}
+$$
+
+## 追加锚（本行以下为增补区）
+
+## 87. ABBAB 尾词的早期公共向量与严格投影禁阻
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯接收初态 $k$、七维持久接收空间 $K$、每轮共用的全域 CPTP 通道，以及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入 $K$，活动来源与参考不可访问。固定 Stinespring 位块 $V_0,V_1$ 都是等距，且像相互正交。假设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,B,A,B),
+\qquad A\ne B.
+\tag{87.1}
+$$
+
+以下也用 $A,B$ 表示单位环境代表。同射线各轮的共同相位可以同步吸收；所有子空间、等距映射和投影均属于同一个实际候选。
+
+**定理87.1（外置首轮 ABBAB 不可能）。** 上述七维实际合同不能具有尾词 $ABBAB$。
+
+### 87.1 四加二维的尾像与第四终端返回
+
+实际早期有正交单位向量 $p,q$ 及 $u,v,w$，满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{87.2}
+$$
+
+特别地，$w$ 是 $H_2\cap G_2$ 中的单位向量。对 $3\le n\le6$，实际 $H_n,G_n,Q_n$ 均二维，并满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,\qquad
+P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{87.3}
+$$
+
+因此 $H_n\cap G_n=0$。这些关系是第26节及第75节的实际来源合同。
+
+令 $S_0=H_1+\cdots+H_5$。首环境外置给 $k\notin S_0$，因为 $V_0S_0\subset K\otimes F$，而 $V_0k=p\otimes\eta_1\notin K\otimes F$。所以 $\dim S_0\le6$。
+
+当前 $B$ 的第3、4轮具有不同的已执行后继 $B,A$，故固定 $V_1$ 给 $G_3\cap G_4=0$。令
+
+$$
+P=G_3+G_4+G_6.
+$$
+
+则 $(P\otimes B)\dotplus((G_2+G_5)\otimes A)\subset V_0S_0$，而两项维数分别至少四和二。因此
+
+$$
+\dim P=4,\qquad G_5=G_2=:L,\qquad
+\dim S_0=6,
+$$
+
+$$
+V_0S_0=(P\otimes B)\dotplus(L\otimes A).
+\tag{87.4}
+$$
+
+这是第69节饱和分叉接口在当前尾词中的直接应用。记
+
+$$
+T=G_3,\qquad U=G_4,\qquad Z=G_6,\qquad
+R=Q_3,\qquad S=Q_4,\qquad Q=Q_5.
+$$
+
+有 $P=T+U$、$T\cap U=0$。全部使用的位块关系为
+
+$$
+\begin{aligned}
+V_0H_1&=L\otimes A,&
+V_0H_2&=T\otimes B,&
+V_0H_3&=U\otimes B,\\
+V_0H_4&=L\otimes A,&
+V_0H_5&=Z\otimes B,\\
+V_1L&=R\otimes B,&
+V_1T&=S\otimes B,&
+V_1U&=Q\otimes A.
+\end{aligned}
+\tag{87.5}
+$$
+
+固定 $V_0$ 单射性使
+
+$$
+H_4=H_1,\qquad
+H_1\subset U\oplus S,\qquad
+H_3\subset T\oplus R,
+$$
+
+$$
+P_SH_1=S,\qquad P_RH_3=R.
+\tag{87.6}
+$$
+
+第6轮的 $Z$ 仅用于实际零位像，没有为它增添一位后继。
+
+### 87.2 两个初期零记忆平面必须相同
+
+**引理87.2。** 有 $L=T$，并且 $R=S$。
+
+**证明。** 跨位像正交及 $P\otimes B\subset V_0K$ 给
+
+$$
+R,S\subset P^\perp.
+\tag{87.7}
+$$
+
+反设 $L\ne T$，置
+
+$$
+D=L+T,\qquad N=R+S.
+$$
+
+由（87.5），$V_1D=N\otimes B$，所以 $\dim D=\dim N$。两个不同二维平面的和至少三维，而 $N\subset P^\perp$ 至多三维。因此
+
+$$
+\dim D=\dim N=3,\qquad N=P^\perp.
+\tag{87.8}
+$$
+
+如果 $\langle A,B\rangle\ne0$，则 $V_0H_1=L\otimes A$ 与 $V_1D=N\otimes B$ 正交，迫 $L\perp N$，即 $L\subset P$。但是
+
+$$
+V_1P=(S\otimes B)\dotplus(Q\otimes A).
+$$
+
+其中 $A,B$ 线性独立，而 $V_1L=R\otimes B$。逐环境坐标比较给 $R\subset S$；二者均二维，故 $R=S$，再由固定 $V_1$ 单射性得到 $L=T$，矛盾。
+
+剩下只能 $A\perp B$。此时 $V_1U=Q\otimes A$ 与 $V_1D=N\otimes B$ 正交，固定等距性使 $U\perp D$，特别地 $U\perp T$。同样，由（87.5）的零位像得到
+
+$$
+H_1\perp H_3.
+$$
+
+对于任意 $h\in H_1$、$h'\in H_3$，按（87.6）分别写成 $h=u+s$、$h'=t+r$。由 $U\perp T$ 及（87.7），所有混合内积都消失，只剩
+
+$$
+0=\langle h,h'\rangle=\langle s,r\rangle.
+$$
+
+（87.6）的两个满投影使 $s,r$ 可以分别遍历 $S,R$，所以 $S\perp R$。这要求四维正交和 $S\oplus R$ 包含在三维 $N$ 中，矛盾。
+
+故 $L=T$。将它代入（87.5），同一个 $V_1$ 的像给 $R=S$。证明完毕。
+
+### 87.3 非正交射线下的严格投影矛盾
+
+由引理87.2，现有
+
+$$
+P=L+U,\qquad R\perp P,\qquad
+H_1=H_4\subset U\oplus R,\qquad
+H_3\subset L\oplus R,
+$$
+
+$$
+P_RH_1=R,\qquad P_RH_3=R.
+\tag{87.9}
+$$
+
+令
+
+$$
+\rho=|\langle A,B\rangle|,\qquad 0\le\rho<1.
+$$
+
+首先，同一个零位等距把 $H_1,H_2$ 分别送到 $L\otimes A,L\otimes B$。两个接收因子相同，因此对于每个 $h\in H_2$，
+
+$$
+\|P_{H_1}h\|=\rho\|h\|.
+\tag{87.10}
+$$
+
+确切地，等距保持投影范数，而 $L\otimes B$ 上的向量投影到 $L\otimes A$ 时，其范数恰乘 $\rho$。取（87.2）的单位公共向量 $w\in H_2\cap L$，得到
+
+$$
+\|P_{H_1}w\|=\rho.
+\tag{87.11}
+$$
+
+其次，固定一位映射给
+
+$$
+V_1L=R\otimes B,\qquad V_1U=Q\otimes A.
+$$
+
+故对任意 $l\in L,u\in U$，
+
+$$
+|\langle l,u\rangle|
+=|\langle V_1l,V_1u\rangle|
+\le\rho\|l\|\|u\|,
+$$
+
+从而
+
+$$
+\|P_Ul\|\le\rho\|l\|\qquad(l\in L).
+\tag{87.12}
+$$
+
+最后，实际第四终端的满投影给 $H_1\cap U=H_4\cap G_4=0$。在有限维空间中，这意味着
+
+$$
+\kappa:=\|P_{H_1}|_U\|<1.
+\tag{87.13}
+$$
+
+若该范数为一，紧致单位球面上将有单位 $u\in U$ 的正交投影范数为一，迫 $u\in H_1$，与交零矛盾。
+
+因为 $w\in L$ 而 $L\perp R$，且 $H_1\subset U\oplus R$，有
+
+$$
+P_{H_1}w=P_{H_1}P_Uw.
+$$
+
+结合（87.11）—（87.13），得到
+
+$$
+\rho=\|P_{H_1}w\|
+\le\kappa\|P_Uw\|
+\le\kappa\rho.
+\tag{87.14}
+$$
+
+若 $\rho>0$，这与 $\kappa<1$ 矛盾。因此任何尚未排除的候选只能满足 $A\perp B$。
+
+这里的严格性来自同一实际第四终端的满投影；没有用一个抽象上界替代实际来源关系。早期公共向量 $w$ 同时使（87.11）的等号和（87.12）的上界适用于同一个对象。
+
+### 87.4 正交射线下的公共一位平面矛盾
+
+设 $\rho=0$。固定 $V_1$ 的两个环境像给 $L\perp U$，固定 $V_0$ 的两个像 $L\otimes A,U\otimes B$ 给 $H_1\perp H_3$。
+
+由（87.9），对于任意 $h\in H_1,h'\in H_3$，可以分别写
+
+$$
+h=u+r,\qquad h'=l+r',
+\qquad u\in U,\quad l\in L,\quad r,r'\in R.
+$$
+
+$L\perp U$ 及 $R\perp(L+U)$ 使
+
+$$
+0=\langle h,h'\rangle=\langle r,r'\rangle.
+$$
+
+两个满投影 $P_RH_1=P_RH_3=R$ 表明 $r,r'$ 可以独立遍历同一个二维 $R$。于是 $R\perp R$，与 $\dim R=2$ 矛盾。两个环境内积分支均已排除，定理87.1证明完毕。
+
+本节只使用前六轮已经执行的关系、首环境外置以及同一非退化来源的实际早期公共向量和满投影合同。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{87.15}
+$$
+
+## 追加锚（本行以下为增补区）
+
+## 88. ABBBA 尾词的共同补空间与正交投影禁阻
+
+固定同一非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，其中 $ab\ne0$、$|a|^2+|b|^2=1$。接收器独立纯启动，全部持久资源计入七维 $K$，每轮使用同一个全域 CPTP 通道，活动来源和参考不可访问；前六个终端精确恢复完整参考—活动记忆—原档案联合态，且终端附加态均纯。固定 Stinespring 位块 $V_0,V_1$ 都是等距，像相互正交。
+
+设尾环境跨度和射线词满足
+
+$$
+F=\operatorname{span}(\eta_2,\ldots,\eta_6),\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])
+=(A,B,B,B,A),\qquad A\ne B.
+\tag{88.1}
+$$
+
+同射线各轮同步吸收共同相位，也用 $A,B$ 表示单位环境代表。没有预设它们的内积，亦没有预设首环境与整个 $F$ 正交。
+
+**定理88.1（外置首轮 ABBBA 不可能）。** 上述实际七维合同不能具有尾词 $ABBBA$。
+
+### 88.1 饱和分叉与两个回返输入域
+
+实际早期正交单位组 $p,q$ 与 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+$$
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{88.2}
+$$
+
+特别有 $0\ne w\in H_2\cap G_2$。对 $3\le n\le6$，实际二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{88.3}
+$$
+
+两个投影均为同构，因此 $H_n\cap G_n=0$。
+
+令 $S_0=H_1+\cdots+H_5$。由于 $V_0S_0\subset K\otimes F$ 而真实首轮像 $V_0k=p\otimes\eta_1$ 不属于该空间，$k\notin S_0$，故 $\dim S_0\le6$。
+
+当前 $B$ 在第3、5轮的已见后继分别为 $B,A$。固定单射 $V_1$ 使 $G_3\cap G_5=0$。令 $P=G_3+G_4+G_5$，则 $\dim P\ge4$。实际零位像包含代数直和
+
+$$
+(P\otimes B)\dotplus(G_2\otimes A)\subset V_0S_0.
+$$
+
+两个环境方向线性独立而 $G_2$ 二维，所以该六维预算迫使
+
+$$
+\dim P=4,\qquad
+V_0S_0=(P\otimes B)\dotplus(G_2\otimes A).
+\tag{88.4}
+$$
+
+实际末轮零位像 $G_6\otimes A$ 也属于（88.4），比较 $A$ 纤维得到 $G_6=G_2=:L$。另置 $T=G_3$、$U=G_5$，于是 $P=T+U$、$T\cap U=0$。一位像为
+
+$$
+V_1P=(Q_4\otimes B)\dotplus(Q_6\otimes A).
+$$
+
+$G_4\subset P$ 且 $V_1G_4=Q_5\otimes B$，读取该像的 $B$ 纤维得到 $Q_5=Q_4=:Q$；固定单射性再给 $G_4=T$。记 $R=Q_3$、$S=Q_6$。全部需要的实际位像为
+
+$$
+\begin{aligned}
+V_1L&=R\otimes B,&V_1T&=Q\otimes B,&V_1U&=S\otimes A,\\
+V_0H_1&=L\otimes A,&V_0H_2&=T\otimes B,&V_0H_3&=T\otimes B,\\
+V_0H_4&=U\otimes B,&V_0H_5&=L\otimes A.
+\end{aligned}
+\tag{88.5}
+$$
+
+因而同一个零位单射给
+
+$$
+H_2=H_3,\qquad H_1=H_5.
+\tag{88.6}
+$$
+
+实际第四、第五终端尤其满足
+
+$$
+H_4\subset T\oplus Q,\qquad H_5\subset U\oplus Q,
+\qquad P_QH_4=P_QH_5=Q.
+\tag{88.7}
+$$
+
+由于 $P\otimes B\subset V_0K$ 而 $Q\otimes B\subset V_1K$，跨位正交给
+
+$$
+Q\perp P.
+\tag{88.8}
+$$
+
+### 88.2 真实早期向量排除非正交尾环境
+
+先有
+
+$$
+v\notin S.
+\tag{88.9}
+$$
+
+否则 $V_1p=v\otimes A$ 属于 $S\otimes A=V_1U$，固定单射性给 $p\in U=G_5$。但 $p\in H_1=H_5$，与 $H_5\cap G_5=0$ 和 $p\ne0$ 矛盾。
+
+现设 $\langle A,B\rangle\ne0$。将一位像 $S\otimes A$、$\mathbb Cv\otimes A$ 分别与零位像 $P\otimes B$ 和 $L\otimes A$ 比较，跨位正交给
+
+$$
+S,v\perp P+L.
+\tag{88.10}
+$$
+
+由（88.9），$N=S+\mathbb Cv$ 是三维空间。它正交于至少四维的 $P+L$，而整个 $K$ 只有七维，因此 $\dim(P+L)=4$，即 $L\subset P$。
+
+于是 $V_1L=R\otimes B\subset V_1P$。由（88.5），$V_1P$ 的 $B$ 纤维恰为 $Q$，故 $R\subset Q$。两者均二维，所以 $R=Q$；同一个 $V_1$ 的单射性遂给 $L=T$。
+
+由（88.2）、（88.6），实际非零向量 $w$ 随即满足
+
+$$
+0\ne w\in H_2\cap L=H_3\cap G_3,
+$$
+
+违反（88.3）的交零。这排除了非正交分支。
+
+### 88.3 正交尾环境与两个共同满投影不相容
+
+只剩 $A\perp B$。同一个一位等距将 $T,U$ 分别送入 $Q\otimes B$、$S\otimes A$，故
+
+$$
+T\perp U.
+\tag{88.11}
+$$
+
+同一个零位等距将 $H_4,H_5$ 分别送入 $U\otimes B$、$L\otimes A$，因此
+
+$$
+H_4\perp H_5.
+\tag{88.12}
+$$
+
+但（88.7）与（88.8）已经使两者对同一个 $Q$ 满投影。任取 $0\ne q_0\in Q$，存在 $h_4\in H_4$、$h_5\in H_5$，使
+
+$$
+h_4=t+q_0,\qquad h_5=u_0+q_0,
+\qquad t\in T,\quad u_0\in U.
+$$
+
+由 $Q\perp(T+U)$ 和（88.11），
+
+$$
+\langle h_4,h_5\rangle=\|q_0\|^2>0,
+$$
+
+与（88.12）矛盾。两个尾环境内积分支均被排除，定理88.1证明完毕。
+
+本节用的是同一接收器中的实际共享空间：非正交分支把三维补空间接回早期交向量；正交分支把两个终端的共同满投影接回内积。末轮仅使用已执行的零位像，没有添加第七轮后继。该结论排除外置首轮尾词 $ABBBA$，一般容量区间仍为 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+
+## 追加锚（本行以下为增补区）
+
+## 89. 七维六终端存在性归约到固定量子比特酉碰撞
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收合同仍为定义12.1：独立纯接收初态、每轮同一个全域 CPTP 通道、全部持久资源计入接收空间 $K$，以及前六个终端对任意参考、活动记忆和完整原档案联合态的精确恢复。来源活动记忆和参考不可访问，新环境丢弃后不再复用。
+
+本节把全部七维候选的存在性归约到一个固定酉碰撞：输入为七维接收器与来源发出的一个量子比特，输出为同一个七维接收器与一个当轮即丢弃的量子比特。归约保留原候选在前六轮的全部联合轨迹和原有解码器。它不要求原通道在未使用输入上的动作已经具有二维环境。
+
+### 89.1 全部六个实际环境恰张成二维
+
+设存在七维候选。固定其全域接收通道
+
+$$
+\mathcal C:\mathcal L(K\otimes B)\longrightarrow\mathcal L(K),
+\qquad \dim K=7,\quad \dim B=2,
+$$
+
+及同一个 Stinespring 等距
+
+$$
+V:K\otimes B\longrightarrow K\otimes E.
+\tag{89.1}
+$$
+
+以初始活动记忆与一个二维参考 $J$ 的最大纠缠态作为忠实测试输入。推论62.4说明六个终端的固定附加态均秩一，因此相应实际 $JMK$ 联合态均纯。每轮接收前，来源等距作用于前一纯终端和新发出的量子比特，故接收前联合态也纯。作用（89.1）后仍纯，而丢弃 $E$ 后的实际终端纯，所以本轮输出必分解为该终端与一个单位新环境向量 $\eta_n$ 的张量积。
+
+**命题89.1（六轮环境的二维封闭性）。** 每个七维六终端候选的上述实际新环境满足
+
+$$
+F:=\operatorname{span}\{\eta_2,\ldots,\eta_6\},
+\qquad
+\dim F=2,\qquad \eta_1\in F.
+\tag{89.2}
+$$
+
+因此 $\operatorname{span}\{\eta_1,\ldots,\eta_6\}=F$ 恰为二维。
+
+**证明。** 定理64.11给 $\dim F\le2$。若 $\dim F=1$，则第3至第6轮的新环境都在同一条射线上，定理71.1会要求 $\dim K\ge8$；该定理不要求首轮环境外置。因此七维候选只能有 $\dim F=2$。
+
+若 $\eta_1\notin F$，推论85.2将五位尾词限制为 $ABABB,ABBAB,ABBBA$。定理86.1、87.1、88.1分别排除这三词。因此 $\eta_1\in F$。证明完毕。
+
+（89.2）首先是在同一固定 Stinespring 实现和同一忠实测试输入上取得的共同二维空间。下面通过实际输入支撑把它提升为对全部允许初始输入均有效的替代实现。
+
+### 89.2 带参考关联的输入支撑仍映入同一环境纤维
+
+先给所需的有限维支撑事实。$\operatorname{supp}\rho$ 表示正算子 $\rho$ 的像空间。
+
+**引理89.2（边缘支撑与等距像）。** 设 $\omega$ 是 $R\otimes H$ 上的状态，$\rho=\operatorname{Tr}_R\omega$，且 $U=\operatorname{supp}\rho$。则
+
+$$
+\operatorname{supp}\omega\subset R\otimes U.
+\tag{89.3}
+$$
+
+若等距 $T:H\to K\otimes E$ 作用后给环境边缘一个纯态 $|\eta\rangle\langle\eta|$，则
+
+$$
+T(U)\subset K\otimes\mathbb C\eta.
+\tag{89.4}
+$$
+
+这里不要求 $\omega$ 为乘积态或纯态。
+
+**证明。** 令 $P_U$ 为 $U$ 上的正交投影。正性及
+
+$$
+\operatorname{Tr}\bigl[(I_R\otimes(I-P_U))\omega\bigr]
+=\operatorname{Tr}[(I-P_U)\rho]=0
+$$
+
+给 $(I_R\otimes(I-P_U))\omega^{1/2}=0$，从而得到（89.3）。
+
+纯环境边缘又由同一论证使输出支撑落在 $R\otimes K\otimes\mathbb C\eta$。取 $R$ 的偏迹，便有
+
+$$
+\operatorname{supp}(T\rho T^*)\subset K\otimes\mathbb C\eta.
+$$
+
+由于 $T$ 为等距，$\operatorname{supp}(T\rho T^*)=T(\operatorname{supp}\rho)=T(U)$，给出（89.4）。证明完毕。
+
+回到实际接收器，令 $H=K\otimes B$。对于上述最大纠缠测试输入，记第 $n$ 轮接收前的 $H$ 边缘为 $\rho_n$，置
+
+$$
+U_n=\operatorname{supp}\rho_n\subset H,\qquad
+U=U_1+\cdots+U_6.
+\tag{89.5}
+$$
+
+其余系统包括测试参考和本轮来源作用后的活动记忆，均可纳入引理89.2的 $R$。由实际纯新环境和（89.2），
+
+$$
+V(U_n)\subset K\otimes\mathbb C\eta_n
+\subset K\otimes F,
+\qquad
+V(U)\subset K\otimes F.
+\tag{89.6}
+$$
+
+这里 $U$ 是同一个输入 Hilbert 空间 $K\otimes B$ 中六个支撑的线性和；没有将各轮复制为彼此独立的输入空间。
+
+### 89.3 一次固定酉延拓保留全部已用动作
+
+**定理89.3（七维候选的固定酉替代）。** 若存在本节合同中的七维接收器，则存在一个固定酉
+
+$$
+W:K\otimes B\longrightarrow K\otimes F,\qquad \dim F=2,
+\tag{89.7}
+$$
+
+使新全域 CPTP 通道
+
+$$
+\widetilde{\mathcal C}(X)
+=\operatorname{Tr}_F(WXW^*)
+\tag{89.8}
+$$
+
+在前六轮对任意初始输入与任意参考都产生与原接收器完全相同的联合状态。因此同一个独立纯初态和原六个终端解码器仍满足完整合同。
+
+**证明：构造一个同时延拓六轮的酉。** 由（89.6），$V|_U$ 可视为 $U\to K\otimes F$ 的等距。输入和目标全空间维数相同：
+
+$$
+\dim(K\otimes B)=\dim(K\otimes F)=14.
+$$
+
+设 $\dim U=r$，则 $U^\perp$ 与 $V(U)^\perp\cap(K\otimes F)$ 均为 $14-r$ 维。任取两者之间的酉 $J_0$，定义
+
+$$
+W(u+u^\perp)=Vu+J_0u^\perp
+\qquad(u\in U,\ u^\perp\in U^\perp).
+\tag{89.9}
+$$
+
+两个输出像正交且覆盖 $K\otimes F$，所以 $W$ 为全域酉。若 $\iota:F\hookrightarrow E$ 为包含映射，则
+
+$$
+(I_K\otimes\iota)Wu=Vu\qquad(u\in U).
+\tag{89.10}
+$$
+
+这一次延拓同时固定了全部 $U_n$ 上的动作；对交叠输入的相容性已由原来的同一个 $V$ 保证。补空间上的自由选择不会改变任何 $U_n$ 上的作用。
+
+**证明：忠实输入的支撑涵盖任意初始输入。** 初始活动记忆空间记为 $S\cong\mathbb C^2$，令 $\pi_S=I_S/2$。对原接收器，记从初始 $S$ 状态到第 $n$ 轮接收前 $H$ 边缘的固定 CPTP 映射为 $\mathcal T_n$。它包括此前所有来源和接收操作、独立纯初始化，以及对其他系统取偏迹。最大纠缠测试输入的 $S$ 边缘就是 $\pi_S$，故
+
+$$
+\rho_n=\mathcal T_n(\pi_S).
+$$
+
+任意初始状态 $\sigma_S$ 满足 $0\preceq\sigma_S\preceq I_S=2\pi_S$。由正性，
+
+$$
+0\preceq\mathcal T_n(\sigma_S)\preceq2\rho_n,
+\qquad
+\operatorname{supp}\mathcal T_n(\sigma_S)\subset U_n.
+\tag{89.11}
+$$
+
+如果初始 $S$ 与任意参考 $R_0$ 关联，其接收前 $H$ 边缘仍是 $\mathcal T_n(\sigma_S)$；把参考、活动记忆及其他未受接收器作用的系统一并记为 $R$，引理89.2的（89.3）给该完整接收前状态的支撑包含于 $R\otimes U_n$。所以（89.11）没有丢弃参考关联所携带的限制。
+
+**证明：六轮联合轨迹的归纳。** 两个接收器从相同的独立纯 $k$ 和相同来源、参考输入启动。假设第 $n-1$ 轮后的完整参考—活动记忆—接收器状态相同；$n=1$ 时由共同初始化成立。下一次来源操作相同，因此第 $n$ 轮接收前的联合状态 $\omega_n$ 也相同。按（89.11）及引理89.2，其支撑在 $R\otimes U_n$。
+
+由（89.10），$I_R\otimes V$ 与 $I_R\otimes((I_K\otimes\iota)W)$ 在该支撑上一致，故
+
+$$
+(I_R\otimes V)\omega_n(I_R\otimes V)^*
+=
+(I_R\otimes((I_K\otimes\iota)W))
+\omega_n
+(I_R\otimes((I_K\otimes\iota)W))^*.
+\tag{89.12}
+$$
+
+左侧取 $E$ 偏迹与右侧取 $F$ 偏迹给相同的参考—活动记忆—接收器联合状态。因此归纳成立，直至第六轮。相同终端状态再经过原来的同一个终端解码器，自然给相同的完整原档案联合态。证明完毕。
+
+这里没有逐轮选择不同酉，也没有让补空间延拓参与控制或留下新的持久寄存器。输入量子比特经过固定碰撞后成为当轮丢弃的输出环境因子；它不在下一轮复用。
+
+### 89.4 精确的 Kraus 秩二存在性归约
+
+替代通道（89.8）的全域最小 Kraus 秩恰为二。取 $F$ 的正交单位基 $f_0,f_1$，令
+
+$$
+K_i=(I_K\otimes\langle f_i|)W:
+K\otimes B\longrightarrow K\qquad(i=0,1).
+$$
+
+则
+
+$$
+\widetilde{\mathcal C}(X)=K_0XK_0^*+K_1XK_1^*,\qquad
+\sum_{i=0}^1K_i^*K_i=I_{14},
+$$
+
+$$
+K_iK_j^*=\delta_{ij}I_7.
+\tag{89.13}
+$$
+
+最后一式来自 $WW^*=I_{14}$。因此两个 Kraus 算子均非零且线性无关。也可直接从全域输入、输出维数看出不可能只有一个 Kraus 算子：若 $K^*K=I_{14}$，则 $K:\mathbb C^{14}\to\mathbb C^7$ 必须秩十四，矛盾。故最小 Kraus 秩为二。
+
+反向，任意从十四维到七维的全域 CPTP 通道，如果最小 Kraus 秩为二，则两 Kraus 算子给出的 Stinespring 等距目标恰为 $K\otimes\mathbb C^2$，维数也是十四，因而该等距本身就是酉。因此下列存在性完全等价：
+
+$$
+\begin{gathered}
+\text{存在一般七维全域 CPTP 接收器满足前六个完整终端合同}\\
+\Longleftrightarrow\\
+\text{存在全域最小 Kraus 秩恰为二的七维接收器满足同一合同}\\
+\Longleftrightarrow\\
+\text{存在固定酉 }W:K\otimes\mathbb C^2\to K\otimes\mathbb C^2,
+\text{ 每轮丢弃输出量子比特并满足同一合同。}
+\end{gathered}
+\tag{89.14}
+$$
+
+这是一条替代实现的存在性归约。原全域通道在 $U$ 以外仍可具有更大的 Kraus 秩；本节没有断言它本身等于（89.8）。归约也没有构造七维解或排除全部固定酉解，所以一般容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{89.15}
+$$
+
+## 追加锚（本行以下为增补区）
