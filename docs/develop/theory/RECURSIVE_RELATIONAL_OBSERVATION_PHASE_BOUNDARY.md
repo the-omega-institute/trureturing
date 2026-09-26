@@ -33468,3 +33468,945 @@ $$
 $$
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 一重纤维的三维尾侧不能先行
+
+沿用第89、112、119、120、123节的同一七维六终端实际合同。来源为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，各轮使用同一个固定全域通道，全部完整参考—活动记忆—原档案终端来自同一个实际过程。本节限定通常纤维维数为一，两个完整零位尾纤维的尺寸为三与四。
+
+第120、123节使五个尾环境恰使用两个正交方向。按第二轮命名单位代表 $A,B$，现在假设
+
+$$
+[\eta_2]=[A],\qquad A\perp B,\qquad
+\dim U_A=3,\quad \dim U_B=4.
+\tag{126.1}
+$$
+
+完整位像为
+
+$$
+\begin{aligned}
+R_0&=(U_A\otimes A)\oplus(U_B\otimes B),\\
+R_1&=(U_A^\perp\otimes A)\oplus(U_B^\perp\otimes B).
+\end{aligned}
+\tag{126.2}
+$$
+
+并且
+
+$$
+P=U_A\cap U_B,\quad\dim P=1,\qquad
+S_0=U_A+U_B,\quad\dim S_0=6,\qquad
+Q=S_0^\perp,\quad\dim Q=1.
+\tag{126.3}
+$$
+
+这里 $U_A,U_B$ 是完整接收纤维，不只是尾部实际 $G_i$ 的跨度；它们也不被预设为正交。
+
+**定理126.1（三维尾侧先行不可能）。** 在上述一重实际合同中，（126.1）不能成立。因此，完整零位尾纤维尺寸为四与三的一重候选，第二轮只能位于四维尾纤维。
+
+### 126.1 两个完整一位输入块及五种必要尾词
+
+在同一个固定一位等距下定义
+
+$$
+\begin{aligned}
+F_A&=V_1^{-1}(U_A^\perp\otimes A),\\
+F_B&=V_1^{-1}(U_B^\perp\otimes B).
+\end{aligned}
+$$
+
+因为 $V_1$ 满到完整 $R_1$，故
+
+$$
+K=F_A\oplus F_B,\qquad F_A\perp F_B,\qquad
+\dim F_A=4,\quad\dim F_B=3.
+\tag{126.4}
+$$
+
+真实 $V_1p=v\otimes A$ 给 $p\in F_A$。对第2至5轮，每个 $G_i$ 属于其已执行后继所对应的 $F_A$ 或 $F_B$。
+
+当前为 $A$ 的所有实际二维 $G_i$ 都在三维 $U_A$ 内，任意两个必有非零交。固定 $V_1$ 因而使当前 $A$ 的已见后继唯一。第三轮不能仍为 $A$，否则这条已见自循环会将整个五位尾词锁在 $A$，违反两尾合同。所以尾词从 $AB$ 开始，且任何已执行的 $A$ 都以后继 $B$ 结束。五位尾词只有
+
+$$
+ABABA,\quad ABABB,\quad ABBAB,\quad ABBBA,\quad ABBBB.
+\tag{126.5}
+$$
+
+这里只对第2至5轮使用后继。最后一词的第3至6轮环境共同，已由第71节排除。以下依次排除其余四词。
+
+后期实际合同还给：若当前环境为 $A$，则
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad Q_n\subset U_A^\perp,
+\qquad P_{U_A}H_n=G_n,\qquad H_n\cap U_A=0
+\quad(n\ge3),
+\tag{126.6}
+$$
+
+当前为 $B$ 时交换 $A,B$。最后一个零交来自 $P_{Q_n}|_{H_n}$ 单射，不能用于第二轮早期平面。
+
+### 126.2 ABABA：三维小侧与早期图差
+
+令
+
+$$
+E=G_2+G_4\subset U_A,\qquad O=G_3+G_5\subset U_B.
+$$
+
+第99.3节的局部实际证明给
+
+$$
+\dim O\ge3,\qquad
+V_1E\subset K\otimes B,\quad
+V_1O\subset K\otimes A.
+\tag{126.7}
+$$
+
+若首环境为 $B$，完整六轮为正交交替 $B,A,B,A,B,A$，第47节给八维下界，违反七维合同。
+
+若首环境为 $A$，真实零位首像给 $p\in U_A$；若首环境为第三条射线，第123.8式的完整纤维给 $p\in P\subset U_A$。因此剩余情形均有 $p\in U_A$。又 $p\in F_A$、$E\subset F_B$，所以 $p\perp E$。三维 $U_A$ 内的非零 $p$ 迫
+
+$$
+\dim E=2,\qquad G_2=G_4=E.
+$$
+
+相同零位环境上的相同接收平面使
+
+$$
+H_1=H_3,\qquad p\in H_3.
+\tag{126.8}
+$$
+
+如果 $\dim O=4$，则 $O=F_A$，从而 $p\in O\subset U_B$。第三轮当前为 $B$，（126.6）给 $H_3\cap U_B=0$，与（126.8）矛盾。
+
+只剩 $\dim O=3$。真实早期数据为
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+$$
+
+其中 $u,v,w$ 正交归一。由于 $v\in U_A^\perp$、$Q_4\subset U_A^\perp$，$H_2,H_4$ 都是共同域 $E$ 上的线性图，分别写为
+
+$$
+T_2:E\longrightarrow\mathbb Cv,\qquad
+T_2u=(b/a^2)v,\quad T_2w=0,
+$$
+
+以及同构
+
+$$
+T_4:E\longrightarrow Q_4.
+$$
+
+固定零位像给
+
+$$
+\dim(H_2+H_4)=\dim(G_3+G_5)=3.
+$$
+
+图和向 $E$ 的投影满射，其核为差图像，故
+
+$$
+3=\dim E+\operatorname{rank}(T_4-T_2)
+=2+\operatorname{rank}(T_4-T_2).
+\tag{126.9}
+$$
+
+若 $v\notin Q_4$，等式 $T_4z=T_2z$ 的共同值只能为零；$T_4$ 单射继而给 $z=0$，使差映射秩二，违反（126.9）。所以 $v\in Q_4$。实际
+
+$$
+V_1p=v\otimes A\in Q_4\otimes A=V_1G_3
+$$
+
+给 $p\in G_3$。与（126.8）合并，违反后期 $H_3\cap G_3=0$。这个图差步骤只用第99.4节中的局部实际关系，没有使用该节的正则铅笔假设。
+
+### 126.3 ABABB：两个同后继平面必须相同
+
+本词中 $G_2,G_4\subset U_A$ 的后继均为 $B$，$G_5\subset U_B$ 的后继也为 $B$。
+
+若 $G_2\ne G_4$，它们在三维 $U_A$ 内张成整个 $U_A$，又同处三维 $F_B$，所以 $U_A=F_B$。于是
+
+$$
+G_5\subset U_A\cap U_B=P,
+$$
+
+与 $G_5$ 二维、$P$ 一维矛盾。故
+
+$$
+G_2=G_4=:T.
+\tag{126.10}
+$$
+
+与此同时，$G_3,G_5\subset U_B$ 的后继分别为 $A,B$，所以 $G_3\perp G_5$。实际零位像
+
+$$
+V_0H_2=G_3\otimes B,\qquad
+V_0H_4=G_5\otimes B
+$$
+
+遂使 $H_2\perp H_4$。但非零 $w\in H_2\cap G_2$ 由（126.10）也属于 $G_4$，而 $H_4$ 满投影到 $G_4$。非零 $G_4$ 向量不可能同时正交于 $H_4$，矛盾。
+
+### 126.4 ABBAB：首态与完整一位纤维的正交冲突
+
+此时 $G_2,G_5\subset U_A$ 与 $G_3\subset U_B$ 的后继均为 $B$。与上一小节相同的三维饱和论证给
+
+$$
+G_2=G_5=:T.
+\tag{126.11}
+$$
+
+$G_3,G_4\subset U_B$ 的后继分别为 $B,A$，所以
+
+$$
+U_B=G_3\oplus G_4,\qquad G_3\perp G_4.
+\tag{126.12}
+$$
+
+两个二维平面 $T,G_3$ 同处三维 $F_B$，且交包含于一维 $U_A\cap U_B=P$，于是
+
+$$
+T\cap G_3=P,\qquad T+G_3=F_B,\qquad G_4\perp F_B.
+\tag{126.13}
+$$
+
+相同零位像 $T\otimes A$ 给 $H_1=H_4$。若首环境是 $B$，则 $p\in U_B$；若首环境为第三条射线，则 $p\in P\subset U_B$。这两种情况都违反 $0\ne p\in H_4$ 与后期 $H_4\cap U_B=0$。因此
+
+$$
+[\eta_1]=[A],\qquad p\in U_A,\qquad q\in U_A^\perp.
+\tag{126.14}
+$$
+
+$p\in F_A$ 又给 $p\perp T$，所以
+
+$$
+U_A=T\oplus\mathbb Cp,\qquad
+S_0=F_B+\mathbb Cp+G_4.
+\tag{126.15}
+$$
+
+零位环境正交使 $H_1\perp H_2,H_5$。真实 $q\in H_1$ 且 $q\perp T$，由早期
+
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad u,w\in T,\quad b\ne0,
+$$
+
+先得 $q\perp v$。再由 $H_5\subset T\oplus Q_5$ 及其对 $Q_5$ 的满投影，得到
+
+$$
+q\perp Q_5.
+\tag{126.16}
+$$
+
+这些关系作用于同一个真实首态 $k$：
+
+$$
+V_1k=q\otimes A,\qquad
+V_1p=v\otimes A,\qquad
+V_1G_4=Q_5\otimes A.
+$$
+
+等距性给 $k\perp p,G_4$。首式还使 $k\in F_A$，故 $k\perp F_B$。结合（126.15），
+
+$$
+k\perp S_0,\qquad Q=\mathbb Ck,\qquad k^\perp=S_0.
+\tag{126.17}
+$$
+
+最后一个等式使用本节一重合同的 $\dim S_0=6$。
+
+真实零位首像 $V_0k=p\otimes A$ 与 $p\perp T$ 给 $k\perp H_1=H_4$；它又与 $V_0H_3=G_4\otimes B$ 正交，所以 $k\perp H_3$。由（126.17），
+
+$$
+H_3,H_4\subset S_0.
+$$
+
+第3、4轮当前环境都为 $B$。因为 $U_B\subset S_0$，正交投影 $P_{U_B^\perp}$ 保持 $S_0$，后期满投影于是给
+
+$$
+Q_3=P_{U_B^\perp}H_3\subset S_0,\qquad
+Q_4=P_{U_B^\perp}H_4\subset S_0.
+\tag{126.18}
+$$
+
+另一方面，固定一位等距与（126.13）给
+
+$$
+V_1F_B
+=V_1(T+G_3)
+=(Q_3+Q_4)\otimes B
+=U_B^\perp\otimes B,
+$$
+
+所以 $Q_3+Q_4=U_B^\perp$。它包含非零 $k\in Q\subset U_B^\perp$，却由（126.18）完全落在 $S_0=k^\perp$ 中，矛盾。
+
+### 126.5 ABBBA：共同一位投影不能接出两个正交后继
+
+$G_3,G_4,G_5\subset U_B$，前两个的后继为 $B$，最后一个的后继为 $A$。故
+
+$$
+G_3,G_4\perp G_5.
+$$
+
+四维 $U_B$ 中 $G_5^\perp\cap U_B$ 恰二维，因此
+
+$$
+G_3=G_4=:T,\qquad T\perp G_5.
+\tag{126.19}
+$$
+
+同一个 $V_1$ 与相同输出环境 $B$ 给
+
+$$
+Q_4=Q_5=:Q'\subset U_B^\perp.
+$$
+
+实际后期平面满足
+
+$$
+H_4\subset T\oplus Q',\qquad
+H_5\subset G_5\oplus Q',
+\tag{126.20}
+$$
+
+且它们对共同 $Q'$ 的投影都满。第5、6轮零位输出环境分别为 $B,A$，所以 $H_4\perp H_5$。
+
+任取非零 $z\in Q'$，利用两份满投影选
+
+$$
+h_4=t+z\in H_4,\qquad h_5=g+z\in H_5,
+\qquad t\in T,\quad g\in G_5.
+$$
+
+由 $T\perp G_5$ 且 $Q'\perp U_B$，
+
+$$
+\langle h_4,h_5\rangle=\|z\|^2>0,
+$$
+
+与 $H_4\perp H_5$ 矛盾。本小节只使用四维 $U_B$、两个正交环境及后期满投影，未使用一重共同核的维数。
+
+五种必要尾词全部排除，定理126.1得证。本节将一重四加三分支的第二轮限制到四维尾侧；其余实际合同仍须另行检验。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+
+## 追加锚（本行以下为增补区）
+
+## 127. 正交二加一三尾不能从普通方向启动
+
+沿用第89、103、112、119、124节的同一七维六终端实际合同。假设通常纤维维数为二，三维乘积剩余空间采用重数二与一的两个支持。第124节已迫使这两个支持正交。按零位纤维尺寸命名两个正交方向 $X,Y$，则
+
+$$
+X\perp Y,\qquad
+\mathcal G_0(X)=U,\quad\dim U=4,
+\qquad \mathcal G_0(Y)=M,\quad\dim M=3,
+$$
+
+$$
+U\cap M=P,\quad\dim P=2,\qquad
+U+M=S,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{127.1}
+$$
+
+完整位像沿这两个环境分块，故完整一位纤维为
+
+$$
+\mathcal G_1(X)=U^\perp,\qquad
+\mathcal G_1(Y)=M^\perp.
+$$
+
+任何不同于 $X,Y$ 的方向 $Z$ 都满足
+
+$$
+\mathcal G_0(Z)=P,\qquad \mathcal G_1(Z)=Q.
+\tag{127.2}
+$$
+
+两个接收空间 $U,M$ 不预设正交；唯一使用的正交分解 $U=P\oplus(U\cap P^\perp)$ 来自原接收内积。所有一位接收因子均正交于 $P$，包括真实 $q,v$ 与各 $Q_n$。
+
+**定理127.1（小异常方向在尾时的普通启动禁阻）。** 若五个尾环境的三条射线恰为 $X,Y,Z$，其中 $Z\ne X,Y$，则第二轮不能采用 $Z$。
+
+本定理显式要求小异常方向 $Y$ 也出现在尾部。它不处理 $Y$ 仅在首轮出现、尾部为 $X$ 加两条普通方向的另一分支，也不排除从 $X$ 或 $Y$ 开始的三尾。
+
+### 127.1 普通启动只留下六个实际词
+
+反设 $[\eta_2]=Z$。真实 $G_2=P$ 且 $v\in Q$。任何已有后继的小侧 $Y$ 平面都位于三维 $M$ 中，与 $P$ 非零相交；每个普通当前位置的实际平面也等于 $P$。固定 $V_1$ 因而使所有非大当前位置具有相同后继。
+
+第三轮不能仍为 $Z$。否则 $G_3=G_2=P$，相同零位像给 $H_1=H_2$；但真实 $q\perp P$ 使 $P_PH_1$ 至多一维，而早期
+
+$$
+H_2=\operatorname{span}(a^2u+bv,w),\qquad
+G_2=\operatorname{span}(u,w)=P,
+$$
+
+以及 $v\perp P$、$a\ne0$ 使 $P_PH_2=P$ 二维，矛盾。
+
+第三轮也不能为 $Y$。此时 $G_3\cap P\ne0$，使第4轮仍为 $Y$；三维小侧的二维平面两两非零相交，随后也被迫停留 $Y$。后四轮共线，违第71节。因此第三轮必须为 $X$。
+
+第69、74节的必要三尾词，以及所有非大当前位置后继相同的限制，准确留下
+
+$$
+ZXZXY,\quad ZXXXY,\quad ZXXYX,\quad
+ZXYXZ,\quad ZXYXX,\quad ZXYXY.
+\tag{127.3}
+$$
+
+这些约束只读取第2至5轮的后继。下文令
+
+$$
+T=U\cap P^\perp,\qquad U=P\oplus T,\qquad\dim T=2.
+\tag{127.4}
+$$
+
+### 127.2 四个直接的早期回返禁阻
+
+**$ZXZXY$。** 普通 $Z$ 给 $G_2=G_4=P$，相同零位像遂给 $H_1=H_3$。真实 $V_1p=v\otimes Z$ 与 $V_1G_3=Q_4\otimes Z$ 同属完整二维一位纤维 $Q\otimes Z$，所以 $p\in G_3$。这使非零 $p$ 落入后期 $H_3\cap G_3=0$，矛盾。
+
+**$ZXXXY$。** $G_5$ 的一位后继为 $Y$，而 $G_2=P,G_3,G_4$ 的后继均为 $X$。正交环境使 $G_5$ 正交于这些平面。它们都包含于 $U$；（127.4）因此给 $G_5=T$、$G_3=G_4=P$。相同零位像给 $H_2=H_3$，非零 $w\in H_2\cap P$ 违反 $H_3\cap G_3=0$。
+
+**$ZXXYX$。** $G_4$ 的后继为 $Y$，而 $G_2=P,G_3$ 的后继为 $X$。同一四维预算给 $G_4=T$、$G_3=P$。实际零位像
+
+$$
+V_0H_2=P\otimes X,\qquad V_0H_3=T\otimes X
+$$
+
+使 $H_2\perp H_3$，却有非零 $w\in H_2\cap P=H_2\cap G_3$，与后期满投影 $P_{G_3}H_3=G_3$ 矛盾。
+
+**$ZXYXY$。** $G_3,G_5\subset U$ 的后继均为 $Y$，它们正交于后继为 $X$ 的 $G_2=P$，所以 $G_3=G_5=T$。相同零位输出环境 $X$ 给 $H_2=H_4$。第119.3节遂要求 $\eta_2\perp\eta_4$，即 $Z\perp Y$；但 $Y^\perp=X\ne Z$，矛盾。
+
+### 127.3 ZXYXZ 的真实首轮回返与投影秩
+
+此词满足 $G_2=G_6=P$。$G_3\subset U$ 的后继为 $Y$，而 $P$ 的后继为 $X$，所以 $G_3=T$。固定一位映射给
+
+$$
+V_1U=(Q_3\otimes X)\oplus(Q_4\otimes Y).
+\tag{127.5}
+$$
+
+实际 $G_5\subset U$ 的后继是普通 $Z$，故 $V_1G_5=Q\otimes Z$。$Z$ 在正交 $X,Y$ 上的两个坐标均非零；在（127.5）中逐环境分量读取整个 $Q\otimes Z$，得到 $Q\subset Q_3\cap Q_4$。各平面均二维，故
+
+$$
+Q_3=Q_4=Q,\qquad V_1U=Q\otimes F,
+\qquad V_1P=Q\otimes X.
+\tag{127.6}
+$$
+
+真实 $V_1p=v\otimes Z$ 且 $v\in Q$，由固定单射性得 $p\in U$。另一方面，$G_2=G_6=P$ 且输出环境同为 $Z$，所以 $H_1=H_5$。
+
+这个回返迫使首环境与第5轮环境正交。确切地说，若 $\langle\eta_1,\eta_5\rangle\ne0$，则真实 $q\otimes\eta_1\in R_1$ 与 $G_5\otimes\eta_5\subset R_0$ 的跨位正交给 $q\perp G_5$；非零 $q\in H_1=H_5$ 便违反后期投影到 $G_5$ 的单射性。因此 $\eta_1\perp\eta_5=X$，即 $[\eta_1]=Y$。真实零位首像遂使
+
+$$
+p\in U\cap M=P.
+\tag{127.7}
+$$
+
+所有一位接收因子都正交于 $P$，特别 $q\perp P$，所以 $P_PH_1=\mathbb Cp$ 只有一维。
+
+但（127.6）与 $V_1G_5=Q\otimes Z$ 使 $P_P|_{G_5}$ 单射：若 $g\in G_5$ 正交于 $P$，其像 $y\otimes Z$ 正交于整个 $Q\otimes X$；$\langle X,Z\rangle\ne0$ 迫 $y=0$，从而 $g=0$。二维性给 $P_PG_5=P$。又 $Q_5\perp P$、后期满投影 $P_{G_5}H_5=G_5$，故
+
+$$
+P_PH_5=P_PG_5=P,
+$$
+
+二维。这与 $H_1=H_5$ 的一维读数冲突。
+
+### 127.4 ZXYXX 的满三维前像与真实一位向量
+
+最后一词满足 $G_2=P$。$G_3$ 的后继为 $Y$，故 $G_3=T$。$G_5\subset U$ 的后继为 $X$，使它正交于 $T$，因此 $G_5=P$。实际零位像
+
+$$
+V_0H_2=T\otimes X,\qquad V_0H_4=P\otimes X
+$$
+
+给 $H_2\perp H_4$。若 $G_4=P$，非零 $w\in H_2\cap P$ 便正交于满投影到 $P$ 的 $H_4$，矛盾。
+
+因此 $G_4\ne P$。它属于三维 $M$，所以 $P+G_4=M$。这两个实际平面的一位后继都为 $X$；同一个 $V_1$ 遂将整个三维 $M$ 送入三维完整一位 $X$ 纤维，准确得到
+
+$$
+V_1M=U^\perp\otimes X.
+\tag{127.8}
+$$
+
+若首环境不是 $X$，则完整零位首像使 $p\in M$：采用 $Y$ 时属于 $M$，采用其他方向时属于 $P\subset M$。式（127.8）会把非零 $V_1p$ 放在环境 $X$，与真实 $V_1p=v\otimes Z$ 冲突。因此首环境为 $X$，且 $p\in U$。
+
+由 $U=P\oplus T$ 及已执行像，仍有
+
+$$
+V_1U=(Q_3\otimes X)\oplus(Q_4\otimes Y).
+$$
+
+真实 $v\otimes Z$ 属于该空间，$Z$ 在 $X,Y$ 两环境的系数均非零，所以
+
+$$
+v\in Q_3\cap Q_4.
+\tag{127.9}
+$$
+
+另一方面，$P\perp T$ 且所有一位接收因子都正交于 $P$，故 $P\perp H_3\subset T\oplus Q_3$，特别 $u\perp H_3$。实际零位像
+
+$$
+V_0H_2=T\otimes X,\qquad V_0H_3=G_4\otimes Y
+$$
+
+还给 $H_2\perp H_3$。由真实 $a^2u+bv\in H_2$、$b\ne0$ 得 $v\perp H_3$，但（127.9）使非零 $v\in Q_3$，与满投影 $P_{Q_3}H_3=Q_3$ 矛盾。
+
+六个必要词全部排除，定理127.1得证。本节没有为末轮添加一位动作，也没有把对偶接收块视作正交。剩余正交二加一三尾仍须处理从 $X$ 或 $Y$ 开始的情形，以及小方向 $Y$ 不在尾部的独立分支；一般容量保持 $7\le d_{\mathrm{CPTP},6}(a,b)\le8$。
+
+## 追加锚（本行以下为增补区）
+
+## 128. 正交二加一的三尾不能把小零位方向留在首轮
+
+沿用第89、101、103、112、119节的同一七维六终端实际合同。非退化来源固定为
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+接收器独立纯启动，每轮使用同一个固定全域接收通道，完整参考—活动记忆—原档案终端按原合同恢复。本节处理通常纤维维数二、三维乘积生成剩余空间采用两个正交环境支持且重数为 $2+1$ 的子类。
+
+按完整零位纤维尺寸命名正交单位环境 $X,Y$。第119节正规形给
+
+$$
+R_0=(U\otimes X)\oplus(W\otimes Y),\qquad
+\dim U=4,\quad\dim W=3,
+$$
+
+$$
+R_1=(U^\perp\otimes X)\oplus(W^\perp\otimes Y),
+\qquad P=U\cap W,\quad\dim P=2,
+$$
+
+$$
+S=U+W,\quad\dim S=5,\qquad Q=S^\perp,\quad\dim Q=2.
+\tag{128.1}
+$$
+
+$U,W$ 不预设接收正交。完整零位纤维在 $X,Y$ 上分别为 $U,W$，其他方向均为同一个二维 $P$；完整一位纤维在 $X,Y$ 上分别为 $U^\perp,W^\perp$，其他方向均为 $Q$。令
+
+$$
+J=S\cap U^\perp,\qquad \dim J=1,\qquad U^\perp=Q\oplus J.
+\tag{128.2}
+$$
+
+**定理128.1（小零位方向必须进入实际三尾）。** 若五个尾环境恰有三条不同射线，则小零位方向 $Y$ 必须在第2至6轮实际出现。
+
+证明反设 $Y$ 不在尾部。以下全部空间及向量仍属于同一个实际过程。
+
+### 128.1 首轮必须采用小侧，四维尾输入已全部张成
+
+由于 $Y$ 不在尾部，每个 $G_i$、$2\le i\le6$ 都包含于 $U$；若当前环境不等于 $X$，则它填满同一个普通纤维 $P$。第103节给
+
+$$
+S=\mathbb Cp+G_2+G_3+G_4+G_5.
+$$
+
+$\dim S=5>\dim U=4$，所以
+
+$$
+p\notin U,\qquad G_2+G_3+G_4+G_5=U.
+\tag{128.3}
+$$
+
+首轮零位像的接收因子若不在 $U$，其环境只能为 $Y$；故
+
+$$
+[\eta_1]=Y,\qquad p\in W\setminus U.
+\tag{128.4}
+$$
+
+若 $X$ 也不在尾部，所有 $G_i=P$，实际 $S$ 至多三维，矛盾。因此三个尾方向恰为大侧 $X$ 和两个不同于 $X,Y$ 的普通方向。
+
+同一个五维实际一位尾像为
+
+$$
+E=V_1S=\mathbb C(v\otimes\eta_2)+\sum_{n=3}^6Q_n\otimes\eta_n.
+$$
+
+其生成环境均不为 $Y$，所以完整一位纤维公式使
+
+$$
+E\subset(Q\otimes F)\oplus(J\otimes X).
+$$
+
+两侧都五维，故
+
+$$
+\boxed{E=(Q\otimes F)\oplus(J\otimes X).}
+\tag{128.5}
+$$
+
+另记实际四维尾输入像
+
+$$
+E_U=V_1U=\sum_{n=3}^6Q_n\otimes\eta_n,
+\qquad\dim E_U=4.
+\tag{128.6}
+$$
+
+这个等式使用（128.3），不把 $E_U$ 与五维 $E$ 混同。
+
+所有一位乘积接收因子都正交于 $P$，因为 $P\otimes F\subset R_0$。因此真实 $q,v$ 及所有 $Q_n$ 均在 $P^\perp$ 中。早期仍有
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_1=\operatorname{span}(p,q),\qquad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{128.7}
+$$
+
+其中 $u,v,w$ 正交归一。若后期当前环境为大侧 $X$，则 $Q_n\subset U^\perp$，从而 $P_UH_n=G_n$；若额外已得 $Q_n=Q$，则 $H_n\subset U\oplus Q$。
+
+### 128.2 三尾的十三个必要词及大侧标签
+
+按尾部首次出现命名 $A,B,C$。两个普通方向的实际平面均为同一个 $P$，所以所有已有后继的普通当前位置必须具有同一个后继。第69、74节的十三个必要三尾词经这一条件筛选后如下；第二列表示哪一个字母必须是大侧 $X$。
+
+| 尾词 | 可能的大侧字母 |
+|---|---|
+| $AAABC$ | $A$ |
+| $AABAC$ | $A$ |
+| $AABCC$ | $A$ |
+| $ABAAC$ | $A$ |
+| $ABABC$ | $B$ |
+| $ABACA$ | $A$ |
+| $ABBBC$ | $B$ |
+| $ABBCB$ | $B$ |
+| $ABCAB$ | 无 |
+| $ABCBA$ | $B$ |
+| $ABCBB$ | $B$ |
+| $ABCBC$ | $B$ |
+| $ABCCC$ | $A$ |
+
+该表只读第2至5轮的已执行后继。$ABCAB$ 的三个当前字母具有三个不同后继，任取一个大侧标签后，两个普通字母的后继仍不同，所以直接排除。其余十二词逐项处理。
+
+### 128.3 大侧为第二个字母时，普通首字不能回返
+
+先取 $X=B$，所以 $A,C$ 均为普通方向。真实 $V_1p=v\otimes A$ 中的 $v$ 属于二维 $Q$。若第3至6轮再次出现 $A$，该轮的实际二维 $Q_n$ 填满 $Q$，使
+
+$$
+V_1p\in Q\otimes A=V_1G_{n-1}.
+$$
+
+固定单射性迫使 $p\in G_{n-1}\subset U$，违反（128.3）。这直接排除普通首字回返的 $ABABC$ 和 $ABCBA$。
+
+### 128.4 ABBBC、ABBCB、ABCBB 的四维一位像
+
+这三个词仍取 $X=B$。其后四轮只采用 $B,C$，其中普通 $C$ 的每个一位平面都等于 $Q$。将 $B$ 上实际一位平面的接收跨度记为 $T_B$。由（128.6），
+
+$$
+E_U=(T_B\otimes B)\dotplus(Q\otimes C),\qquad\dim E_U=4.
+$$
+
+两个不同环境的块代数交零，故 $\dim T_B=2$。因此所有采用 $B$ 的后继平面都相同，等于 $T_B\subset U^\perp$；对应的已执行输入平面也相同。
+
+**$ABBBC$。** 前三个后继都为 $B$，于是 $G_2=G_3=G_4$，且普通首字给 $G_2=P$。相同零位像给 $H_2=H_3$，非零 $w\in H_2\cap G_2$ 落入后期 $H_3\cap G_3=0$，矛盾。
+
+**$ABBCB$。** 此时
+
+$$
+G_2=G_3=G_5=P,\qquad Q_3=Q_4=Q_6=T_B,
+\qquad Q_5=Q.
+$$
+
+实际零位像为 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$。置 $r=|\langle B,C\rangle|$；因为 $B=X$ 而普通 $C\ne Y=X^\perp$，有 $r>0$。同一个单位早期 $w\in H_2\cap G_2$ 满足
+
+$$
+\|P_{H_4}w\|=r,\qquad \|P_{G_4}w\|\le r.
+$$
+
+第一式来自两份零位像；第二式来自 $G_2,G_4$ 的实际一位环境 $B,C$。又 $Q_4=T_B\subset U^\perp$、$w\in U$，所以 $P_{H_4}w=P_{H_4}P_{G_4}w$。后期 $H_4\cap G_4=0$ 给非零方向上的严格投影收缩，遂有 $r<r$，矛盾。
+
+**$ABCBB$。** 四维分块准确给
+
+$$
+G_2=G_4=G_5=P,\qquad G_3=L_0,
+\qquad Q_3=Q_5=Q_6=T_B,\quad Q_4=Q.
+$$
+
+由（128.3），$L_0+P=U$ 四维；两个补平面 $T_B,Q$ 都正交于 $U$。第3至6轮的环境为 $(B,C,B,B)$，且 $\langle B,C\rangle\ne0$。这逐项满足第86节引理86.2的公共向量局部矩阵禁阻：该引理中的 $(L,T,Q,R)$ 分别取 $(L_0,P,T_B,Q)$，共同四维输入取当前 $U$，早期 $u,v,w$ 与来源列全部保持同一实际数据。该引理不限制第二轮环境，也不要求首轮环境外置，故直接得到矛盾。
+
+### 128.5 ABCBC 的后期空间对重复
+
+最后一个 $X=B$ 的词是 $ABCBC$。普通 $C$ 给 $G_4=G_6=P$，相同零位像使 $H_3=H_5$。第3、第5轮当前环境同为大侧 $B$，所以向同一 $U$ 投影得到 $G_3=G_5$。相同空间对 $(H_3,G_3)=(H_5,G_5)$ 违反实际来源的 $\delta_3\ne\delta_5$。
+
+### 128.6 大侧为首字时，两个普通后继填满固定一位块
+
+现在取 $X=A$，其余 $B,C$ 普通。对 $AAABC,AABAC,ABAAC,ABACA$ 四词，后四轮都实际使用了普通 $B,C$，所以 $E_U$ 包含 $Q\otimes B$ 和 $Q\otimes C$。它们共同张成四维 $Q\otimes F$，而 $E_U$ 本身四维，因此
+
+$$
+\boxed{V_1U=Q\otimes F.}
+\tag{128.8}
+$$
+
+这些词在大侧上的实际后继平面也就全等于 $Q$。任何后期 $H_n$ 都因此包含于 $U\oplus Q$，只要其当前方向为 $A$。
+
+**$AAABC$。** $G_2,G_3$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_3$，相同零位像给 $H_1=H_2$。普通 $B$ 位于第5轮，给 $G_5=P$，其后继为 $C$，所以 $V_1P=Q\otimes C$。
+
+由于普通 $C\ne A^\perp=Y$，$\langle A,C\rangle\ne0$；同一个 $V_1$ 把 $G_2,P$ 分别映到 $Q\otimes A,Q\otimes C$，所以 $P_P|_{G_2}$ 单射，两个平面均二维，得到 $P_PG_2=P$。又 $v\perp P$、$a\ne0$，真实早期式（128.7）给
+
+$$
+P_PH_2=P_PG_2=P.
+$$
+
+但 $q\perp P$ 使 $P_PH_1\subset\mathbb C(P_Pp)$，维数至多一。这与 $H_1=H_2$ 矛盾。
+
+**$AABAC$。** 普通第4轮给 $G_4=P$，其后继为 $A$。结合（128.8），$G_2,G_4$ 的一位像都为 $Q\otimes A$，所以 $G_2=G_4=P$。普通第6轮也给 $G_6=P$。因此
+
+$$
+V_0H_1=P\otimes A,\qquad
+V_0H_3=P\otimes B,\qquad V_0H_5=P\otimes C.
+$$
+
+两个普通环境 $B,C$ 独立，所以 $H_1\subset H_3+H_5$。第3、第5轮当前环境均为大侧 $A$，由（128.8）有 $H_3,H_5\subset U\oplus Q$。真实 $p\in H_1\cap S$ 因而属于 $(U\oplus Q)\cap S=U$，违反（128.3）。
+
+**$ABAAC$。** 普通第3轮给 $G_3=P$，其后继为 $A$；（128.8）使 $G_4$ 的一位像也为 $Q\otimes A$，故 $G_4=P$。实际零位像为 $V_0H_2=P\otimes B$、$V_0H_3=P\otimes A$。
+
+置 $r=|\langle A,B\rangle|>0$，正值来自普通 $B\ne Y=A^\perp$。同一个单位 $w\in H_2\cap G_2$ 满足 $\|P_{H_3}w\|=r$；$G_2,G_3$ 的一位环境分别为 $B,A$，给 $\|P_{G_3}w\|\le r$。当前第3轮普通，所以 $Q_3=Q\perp U\ni w$。后期严格投影再次给 $r<r$，矛盾。
+
+### 128.7 ABACA 的同一个首轮向量与两次投影夹逼
+
+此词仍有 $X=A$，并满足（128.8）。两个普通当前平面为 $G_3=G_5=P$，都具有后继 $A$，所以
+
+$$
+V_1P=Q\otimes A,\qquad Q_4=Q_6=Q.
+$$
+
+同时 $V_1G_2=Q\otimes B$、$V_1G_4=Q\otimes C$，并且 $G_2+G_4=U$。
+
+先置 $r=|\langle B,C\rangle|$。零位像 $V_0H_2=P\otimes B$、$V_0H_4=P\otimes C$ 给同一单位 $w\in H_2\cap G_2$ 的精确读数 $\|P_{H_4}w\|=r$；一位等距给 $\|P_{G_4}w\|\le r$。由于 $Q_4=Q\perp U\ni w$，若 $r>0$，后期严格投影产生矛盾。故
+
+$$
+B\perp C,\qquad G_2\perp G_4,\qquad H_2\perp H_4.
+\tag{128.9}
+$$
+
+这里 $B,C$ 都普通，它们彼此正交仍须继续检验，不能仅以此排除。
+
+$u\in G_2$ 与 $H_4\subset G_4\oplus Q$ 使 $u\perp H_4$。真实 $a^2u+bv\in H_2$、$b\ne0$ 结合（128.9）给 $v\perp H_4$。一位 $A$ 纤维是 $U^\perp=Q\oplus J$，所以 $v\in Q\oplus J$。$J\perp U\oplus Q$，特别 $J\perp H_4$；因此 $P_Qv\perp H_4$。后期 $P_QH_4=Q$ 迫使
+
+$$
+P_Qv=0.
+$$
+
+真实 $V_1p=v\otimes A$ 遂正交于 $Q\otimes F=V_1U$，故 $p\perp U$。又 $p\in S\perp Q$，所以 $p\perp H_4$。
+
+最后比较真实零位像 $V_0p=u\otimes A$ 与 $V_0H_4=P\otimes C$。普通 $C\ne A^\perp=Y$ 使 $\langle A,C\rangle\ne0$，所以 $p\perp H_4$ 迫使 $u\perp P$。另一方面，同一个一位等距满足
+
+$$
+V_1G_2=Q\otimes B,\qquad V_1P=Q\otimes A,
+\qquad \langle A,B\rangle\ne0.
+$$
+
+因此 $P_P|_{G_2}$ 单射：若 $x\in G_2$ 正交于 $P$，写 $V_1x=y\otimes B$，它正交于整个 $Q\otimes A$，非零环境内积迫使 $y=0$，进而 $x=0$。非零单位 $u\in G_2$ 不可能正交于 $P$，矛盾。$ABACA$ 完整排除。
+
+### 128.8 最后两个普通尾部与完整结算
+
+余下 $X=A$ 的词只有 $AABCC,ABCCC$。两词都使 $G_4=G_5=G_6=P$，末两份零位像同处环境 $C$，所以 $H_4=H_5$。相同空间对 $(H_4,G_4)=(H_5,G_5)$ 违反实际 $\delta_4\ne\delta_5$。
+
+十三个必要尾词已全部排除：$ABCAB$ 无合法大侧标签，$X=B$ 的六词由第128.3—128.5节排除，$X=A$ 的六词由第128.6—128.8节排除。反设 $Y$ 不在尾部不成立，定理128.1得证。所用实际来源差值为
+
+$$
+\delta_5-\delta_3=\frac{x^4y^2}{t_3t_5}>0,\qquad
+\delta_5-\delta_4=-\frac{x^3y^3}{t_4t_5}\ne0,
+\quad x=|a|^2,\quad y=|b|^2,\quad
+ t_0=1,\quad t_j=1-yt_{j-1}.
+$$
+
+本节排除的是小零位方向 $Y$ 只在首轮出现、尾部采用大侧 $X$ 与两个普通方向的全部三尾形态。仍须检验 $Y$ 在尾部实际出现的正交 $2+1$ 候选，以及其他未结算分支；本节没有给出七维实现，也没有排除全部七维接收器。一般容量区间保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+
+## 追加锚（本行以下为增补区）
+
+## 129. 一重四加三双尾的两个剩余排列
+
+沿用第89、112、123、125节的七维六终端实际合同，来源非退化，接收器独立纯启动，全部持久资源计入同一个七维空间 $K$，每轮使用同一个固定全域通道。本节假设通常纤维维数为一，尾部有两条不同射线。已有结论使两尾正交，且两个完整零位纤维只能具有四维与三维。
+
+本节按尺寸命名 $A,B$，不按首次出现重新命名：
+
+$$
+R_0=(U\otimes A)\oplus(M\otimes B),\qquad
+R_1=(U^\perp\otimes A)\oplus(M^\perp\otimes B),
+$$
+
+$$
+\dim U=4,\quad\dim M=3,\quad
+P=U\cap M,\quad\dim P=1.
+\tag{129.1}
+$$
+
+固定共同一位核心为 $(U+M)^\perp$，维数一。完整一位 $A$ 纤维却为三维 $U^\perp$，两者不混用。首轮环境仍可为 $A$、$B$ 或第三条射线；相应真实 $p$ 分别位于 $U$、$M$ 或 $P$。
+
+**定理129.1（一重双尾的两词必要条件）。** 在上述合同中，第二轮必须采用四维侧 $A$，而五位尾词只可能为
+
+$$
+\boxed{AABBB\qquad\text{或}\qquad ABABA.}
+\tag{129.2}
+$$
+
+本结论只是必要条件，不声称这两个词可实现。本节的大侧证明不使用第六轮之后的任何接收动作；第二轮从三维侧开始的排除由第126节给出。
+
+### 129.1 四维分叉的两个真实输入平面
+
+当前环境为 $B$ 的两个二维实际平面都包含于三维 $M$，必有非零交。因此它们不能具有不同的已执行后继。
+
+若当前 $A$ 的已执行后继同时出现 $A,B$，取各一份实际平面 $X,Y$。固定 $V_1$ 和环境正交使
+
+$$
+X\perp Y,\qquad U=X\oplus Y,\qquad
+V_1X\subset K\otimes A,\quad V_1Y\subset K\otimes B.
+\tag{129.3}
+$$
+
+这里两个平面都是二维，恰好填满四维 $U$。于是同一个当前环境 $A$ 上，所有后继为 $A$ 的实际平面都等于 $X$，所有后继为 $B$ 的平面都等于 $Y$：把任一输入沿（129.3）分解，不允许的环境坐标必须为零，等距单射性使对应分量为零。
+
+使用第69节的共同分叉限制及三维侧不能分叉，第二轮从 $A$ 开始的必要词恰为
+
+$$
+AAAAB,\ AAABA,\ AAABB,\ AABAA,\ AABAB,
+\ AABBB,\ ABAAA,\ ABAAB,\ ABABA,\ ABBBB.
+\tag{129.4}
+$$
+
+以下排除其中八词。
+
+### 129.2 同一三维一位纤维的两侧交限制
+
+**引理129.2（两侧平面的三维共同后继）。** 设 $X\subset U$、$Y\subset M$ 均二维，且同一个 $V_1$ 把它们送入纯环境 $A$。则
+
+$$
+X\cap Y=P,\qquad \dim(X+Y)=3,
+$$
+
+$$
+U\cap(X+Y)=X,\qquad M\cap(X+Y)=Y,
+\qquad V_1(X+Y)=U^\perp\otimes A.
+\tag{129.5}
+$$
+
+如果真实第二轮环境为 $A$，还必有 $p\in X\cup Y$。
+
+证明：两个像都包含于三维完整一位 $A$ 纤维，故 $\dim(X+Y)\le3$。另一方面 $X\cap Y\subset U\cap M=P$ 至多一维，迫使维数恰为三，交恰为 $P$，并且共同像填满完整纤维。
+
+若 $x+y\in U$，其中 $x\in X,y\in Y$，则 $y\in U\cap M=P\subset X$，所以 $x+y\in X$；对 $M$ 对称，得到两条交公式。真实 $V_1p=v\otimes A$ 属于该完整像，所以 $p\in X+Y$。首轮零位像又使 $p$ 属于 $U$、$M$ 或 $P$，由交公式即得 $p\in X\cup Y$。证毕。
+
+该引理依赖（129.1）的一维交，不能仅凭同为四维与三维就套到二重共同纤维。
+
+### 129.3 四个短排除与 AABAA 的首轮回接
+
+保留实际早期列
+
+$$
+H_1=\operatorname{span}(p,q),\quad
+G_2=\operatorname{span}(u,w),\quad
+H_2=\operatorname{span}(a^2u+bv,w),
+\tag{129.6}
+$$
+
+其中 $p,q$ 以及 $u,v,w$ 分别正交归一，$ab\ne0$。因为第二轮采用 $A$，$v\in U^\perp$。后期始终保留 $H_n\subset G_n\oplus Q_n$、两份正交投影均为同构，以及 $H_n\cap G_n=0$。
+
+**$AAAAB$。** （129.3）给 $G_2=G_3=G_4$。同一零位像使 $H_2=H_3$，于是非零 $w\in H_2\cap G_2$ 落入 $H_3\cap G_3=0$。
+
+**$AAABA$ 或 $AAABB$。** 两词均有 $G_2=G_3=X$、$G_4=Y\perp X$。第3、第4轮当前环境同为 $A$，所以 $H_2\perp H_3$。但 $0\ne w\in H_2\cap X$，而 $H_3$ 满投影到 $G_3=X$，矛盾。
+
+**$ABBBB$。** 第3至6轮环境相同，直接违反第71节。
+
+**$AABAA$。** 分叉识别给
+
+$$
+G_2=G_5=X,\qquad G_3=Y,\qquad U=X\oplus Y.
+$$
+
+第2、第5轮相同零位像使 $H_1=H_4$。真实非零 $q\in H_1$，且首轮一位像为 $q\otimes\eta_1$。第4轮零位像含 $G_4\otimes B$。若 $\langle\eta_1,B\rangle\ne0$，跨位正交给 $q\perp G_4$，与 $q\in H_4$ 和后期满投影的单射性矛盾。因此 $[\eta_1]=A$，从而 $p\in U$。
+
+真实 $V_1p=v\otimes A$ 和（129.3）继而使 $p\in X$。但第2、第3轮零位像分别为 $X\otimes A,Y\otimes A$，所以 $H_1\perp H_2$。由于 $v\perp X$、$a\ne0$，早期（129.6）满足 $P_XH_2=X$，非零 $p\in H_1\cap X$ 不可能正交于 $H_2$。本词排除。
+
+这一回接使用首轮的真实 $q$ 强制首环境位置，没有将首轮环境预先放入尾对。
+
+### 129.4 AABAB 的早期与后期共同平面
+
+此词由（129.3）给
+
+$$
+G_2=X,\qquad G_3=G_5=Y,\qquad X\perp Y.
+$$
+
+相同零位像分别给
+
+$$
+H_2=H_4,\qquad H_1\perp H_2.
+\tag{129.7}
+$$
+
+当前 $G_2=X\subset U$ 和 $G_4\subset M$ 都具有已执行后继 $A$，引理129.2遂使 $p\in X\cup G_4$。
+
+若 $p\in X=G_2$，早期 $P_XH_2=X$ 与 $p\in H_1\perp H_2$ 矛盾；若 $p\in G_4$，后期 $H_4=H_2$ 满投影到 $G_4$，给同一矛盾。故本词不可能。
+
+### 129.5 ABAAA 的两个后期投影
+
+当前 $A$ 的分叉给
+
+$$
+G_4=G_5=X,\qquad G_2=Y,\qquad X\perp Y.
+$$
+
+于是同一零位像满足
+
+$$
+H_3=H_4,\qquad H_1\perp H_3.
+\tag{129.8}
+$$
+
+当前 $G_4=X\subset U$ 和 $G_3\subset M$ 的一位后继都为 $A$，引理129.2给 $p\in X\cup G_3$。同一个非零 $p\in H_1$ 因而属于 $G_4$ 或 $G_3$，同时正交于 $H_4=H_3$。后期的两份满投影分别排除两种位置。故本词不可能。
+
+### 129.6 ABAAB 的同一个早期一位向量
+
+此词给
+
+$$
+G_4=X,\qquad G_2=G_5=Y,\qquad X\perp Y,
+$$
+
+并由实际零位像得到
+
+$$
+H_1=H_4,\qquad H_2\perp H_4.
+\tag{129.9}
+$$
+
+再次对 $X=G_4\subset U$ 与 $G_3\subset M$ 的共同后继 $A$ 使用引理129.2，得 $p\in X\cup G_3$。若 $p\in X$，则 $0\ne p\in H_1=H_4$ 违反 $H_4\cap G_4=0$，所以只能 $p\in G_3$。
+
+同一个 $V_1$ 给
+
+$$
+v\otimes A=V_1p\in V_1G_3=Q_4\otimes A,
+\qquad v\in Q_4.
+\tag{129.10}
+$$
+
+另一方面 $H_4\subset X\oplus Q_4$，其中 $Q_4\subset U^\perp$。真实 $u,w\in G_2=Y$ 因而都正交于 $H_4$。（129.9）又使非零系数的 $a^2u+bv\in H_2$ 正交于 $H_4$，从 $b\ne0$ 得 $v\perp H_4$。这与（129.10）、$v\ne0$ 及 $H_4$ 满投影到 $Q_4$ 矛盾。本词排除。
+
+### 129.7 剩余范围
+
+（129.4）的十词中，上面分别排除八词，留下（129.2）。第126节排除第二轮从三维侧开始的全部必要词，故定理129.1成立。
+
+缩减使用了完整边界的尺寸和同一个实际过程的早期向量。三维完整一位纤维让两个不同零位侧的已执行平面共同填满同一响应，从而将首轮真实 $p$ 限制回其中一侧；后期满投影又阻止这个非零向量被所需正交关系消去。
+
+仍须判断 $AABBB$ 与 $ABABA$ 能否同时满足全部来源角度、首轮回接及六个终端。二重共同纤维的剩余合同不在本节排除范围内。一般容量区间继续为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+$$
+
+## 追加锚（本行以下为增补区）
