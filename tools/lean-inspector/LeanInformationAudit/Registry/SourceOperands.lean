@@ -115,10 +115,27 @@ private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
 
 /-- Source linkage supplies the positive operand rule; the existing identity
 rejection machinery is applied before any reduction or proof erasure. -/
-def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat) (law : Option Expr := none) : MetaM (Array Name × Nat) := do
+def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
+    (law : Option Expr := none) (sourceDefinition : Option Expr := none)
+    (checkedFiniteArena : Option Expr := none) : MetaM (Array Name × Nat) := do
   let limit := min 524288 fuel
   let identity ← argumentIdentityState theoremName limit
-  let (source, remaining) ← sourceNames (← getConstInfo theoremName).type identity.exprFuel
+  let theoremType := (← getConstInfo theoremName).type
+  let (source, remaining) ← sourceNames theoremType identity.exprFuel
+  let (source, remaining) ← match sourceDefinition with
+    | none => pure (source, remaining)
+    | some definition => do
+      let (definitionSource, remaining) ← sourceNames definition remaining
+      pure (definitionSource.toArray.foldl (init := source) (fun acc name => acc.insert name), remaining)
+  -- Only SourceContract supplies this after SourceFinite checks the complete
+  -- signature, source observations, all-realization Law and original catalog unit.
+  -- Its fixed finite dictionaries are source dependencies; arbitrary registration
+  -- helpers do not acquire this authority. Unsafe heads still reject before lookup.
+  let (source, remaining) ← match checkedFiniteArena with
+    | none => pure (source, remaining)
+    | some arena => do
+      let (arenaSource, remaining) ← sourceNames arena remaining
+      pure (arenaSource.toArray.foldl (init := source) (fun acc name => acc.insert name), remaining)
   let action : M Unit := do
     for e in expressions do visit e
     if let some law := law then visit law
