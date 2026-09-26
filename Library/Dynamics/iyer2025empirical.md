@@ -5618,3 +5618,17 @@ Daniel Gandolfo、Jean Ruiz、Marc Wouts 的 arXiv:0811.2735v1 及其版本边�
 新文献核对范围为 Gaspard 的对称关系完整证明、有限配分恒等式与 Curie–Weiss 双峰讨论，以及 Mukherjee–Liu–Bhattacharya 的模型、极大点分类、定理 1/2/3 陈述和定理 2(1)(2) 的完整证明，包括所用定理 5 条件；未声称核对两文全部证明或数值例子。两份抽取分别为 57532、54139 字节，警告分别为 131747、111682 字节；不把抽取无误当作前提。已检文献未直接提供本章完整模型接口，这只是有范围的适用性判断，不是全球原创性证明。
 
 两种外场尺度相差 $\sqrt\eta r_*\asymp t\to\infty$：$h=b/r_*$ 改变两井权重但不产生极限井内位移；固定 $c\ne0$ 的 $h=c\sqrt\eta$ 产生局部位移 $c/2$，且少数相概率为 $\exp(-2|c|\sqrt\eta r_*)(1+o(1))$。后者仍保留其自身条件高斯极限。物理输出修正满足 $h\{r_*(Q,y)-r_*(Q,0)\}=h\,y/(2\sqrt{2\eta C_2})+o(1)$，在第二尺度影响相权重的有限因子。本文不以主导中心替换指数中的精确中心，不对旧渐近误差求导，不推出增长场强、增长测试阶数、全局相图或选择律 $P$ 的结论。
+
+## 谱边界第 142 章补充：加宽谐波带与二次 Weyl 极大估计的迁移边界
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 142 章在原固定幅度、$\beta\in(1/2,1)$、原取整序列及完整选择后验下，将加权方差熵结论推进到 $\rho_Q\asymp\exp(-Q^{3/4})$。原始相对一行／两行律给出 $|j|\le Q^{7/8}$ 上的同时占据下界；加宽的半整数带外获得足够多的逐因子 Gauss 收缩，带内则保留每个偏移处的双格能量。展开阶数和辅助双标签池固定，原数组及证明所用占据块随 $Q$ 增长。
+
+Alex Barron，*An L4 maximal estimate for quadratic Weyl sums*，[arXiv:2011.09885v4](https://arxiv.org/abs/2011.09885v4)。核对该版本主定理、Section 2 的有理矩形构造、其调用的 Bourgain 界及相关证明段落。主定理对无权和 $\sum_{n=1}^N e^{2\pi i(nx+n^2t)}$ 给出 $L^4_x([0,1])$ 下的 $t\in(0,1)$ 极大估计 $C_\epsilon N^{3/4+\epsilon}$；这里的积分是 Lebesgue 积分。证明中的一维矩形族要求水平交叠至多二次，并按既约有理逼近分组。所引 Bourgain 界要求 $1\le q\le N$、$\gcd(a,q)=1$、$|t-a/q|\le1/(qN)$，并一致于线性变量；相应界及局部时间估计的前人成果归属沿用原文。原始归档 21,289 字节，SHA256 `0274d9a049b1fb7e1faf5a9e473f985a7b669703d40f3e26b135b72038f08a60`；所核对主 TeX 68,428 字节，SHA256 `d752aa6226520d5d2b8cf78f0b82bd0243b906ce1f0a379e7c23b86fee917e3f`。
+
+该文的 Lebesgue 线性变量、无权有限和与本卷共同数据生成的非同分布 Gaussian 格点乘积并不相同；两阶惊异标记亦需另行处理。因此其极大定理、有理例子和下界均不直接充当本模型的估计或反例。第 142 章所需的一致收缩由有限 Gauss 和的平方差分解、Dirichlet 逼近及实 Gaussian Poisson 求和直接给出，包含偶分母和任意实中心。
+
+Roger Baker，*Lp maximal estimates for quadratic Weyl sums*，[arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)，Section 2 的 Lemmas 1–3 及 Lemma 3 的证明归属承接第 106、109 章已核对材料。Lemma 3(i) 的完全和假设为 $\gcd(q,a_1,a_2)=1$，并将 $C\sqrt q$ 界归于 Estermann；奇分母的求值见其第二部分。本卷使用的正规化 $\sqrt{2/b}$ 界由差变量满足 $b\mid2ah$ 的至多两个选择直接推出，不将奇分母公式外推到偶分母。
+
+Agostini–Amendola 的离散 Gaussian／theta 实矩关系以及 Cellarosi–Marklof 的 theta 变换保留既有归属与假设；正文不使用未证零点条件下的复 theta 对数。Dytso–Poor–Shamai 的条件导数恒等式仍受第 140 章说明的 Markov 边界约束：完整惊异中的同一残差 $G^2/2$ 必须直接求导。
+
+第 142 章是这些工具在原始共同实现中的新组合及定量桥梁：先证明同时占据，再控制加宽带内的位移能量、同一噪声和两次实温度导数，最后支付有符号核、条件均值平方及全部输出尾部。结论分别在原 pair/path 数据概率下对确定支持一致；不声称全局原创、阈值必要性、零噪声或环境期望收敛。
