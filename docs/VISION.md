@@ -85,8 +85,7 @@ claim; a related link does not establish that an entire volume is formalized.
 
 ## How AI can find its next direction
 
-The scientific method here is a cycle of inquiry whose conjectures and methods
-can be tested:
+The method links five steps:
 
 1. **Work backward from the target to the gap.** Specify the objects, shared
    sources, allowed operations, question and resource limits. Check whether
@@ -106,15 +105,25 @@ can be tested:
    reusable content, and state the conditions still to be met. Let the next
    question begin from an explicit boundary.
 
-A concrete formal reminder comes from the
-[lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean).
-In its finite-record model, copying a table achieves zero retrospective loss,
-but the copied records enter the construction's dependency set, violating the
-model's nonanticipation condition. The theorem also treats prospective gain as
-an independent input: zero retrospective loss cannot guarantee positivity for
-every given future-gain function. This supports scrutiny of the source of a
-test result; it is not a law of generalization error for arbitrary machine
-learning models.
+A [quantum error model question](../Problems/eidesen-2025-nice-error-basis-non-normal-stabilizer.md)
+asks whether a size relation can hold while stabilizers fail to remain closed
+under conjugation. The
+[Lean construction](../D5/S3/Quantum/Information/NiceErrorBasisNonNormalStabilizer.lean)
+gives a projective error model on a four-dimensional complex space: the group
+has 16 elements, and the logical and stabilizer sets for a code subspace each
+have four. Their sizes satisfy `4 × 4 = 16`, but conjugation can take a
+stabilizer outside the set. This suggests a research move: identify
+which structural relation a numerical condition leaves unresolved, then test
+it directly.
+
+The finite-record
+[lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean)
+illustrates another limit. It achieves zero retrospective loss; when its
+construction depends on the copied records, each fails the model's
+nonanticipation condition. Prospective gain is an independent input, so zero
+loss does not ensure positivity for every such function. This motivates
+scrutiny of test provenance, without establishing a general law of machine
+learning performance.
 
 Applying these structures to AI research selection is a methodological transfer
 that needs practical evaluation. On questions not used to construct an answer,
