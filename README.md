@@ -171,11 +171,13 @@ duality, remain research questions.
 
 ## A continuing research program
 
-The [research directions](docs/VISION.md#research-directions) pair each open
-question with evidence that would advance it. Let new proofs, counterexamples
-and reproducible experiments sharpen those questions. Keep this entrance
-compact by replacing weaker explanations and preserving the assumptions
-needed to reuse each result.
+The [research directions](docs/VISION.md#research-directions) ask:
+
+- Can AI choose questions that yield reusable knowledge?
+- Which maps connect proof dependencies and observational distinctions?
+- Which historical relations support reconstruction and legal composition?
+
+The guide states what would advance each question.
 
 ## Information escape
 
