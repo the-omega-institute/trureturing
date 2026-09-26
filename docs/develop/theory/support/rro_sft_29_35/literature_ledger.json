@@ -1,0 +1,56 @@
+{
+  "access_date": "2026-09-24",
+  "remote_library_write_performed": false,
+  "entries": [
+    {
+      "key": "rrosft5-ls09",
+      "authors": [
+        "Ross A. Lippert",
+        "Gilbert Strang"
+      ],
+      "title": "The Jordan forms of AB and BA",
+      "venue": "The Electronic Journal of Linear Algebra",
+      "volume": "18",
+      "year": 2009,
+      "doi": "10.13001/1081-3810.1313",
+      "publisher_url": "https://journals.uwyo.edu/index.php/ela/article/view/627",
+      "read_scope": "Publisher metadata and abstract; no claim to have read the PDF proof.",
+      "use": "Classical AB/BA nilpotent block intertwinement and Weyr-characteristic attribution. Appendix 30.2 supplies a self-contained general-lag proof."
+    },
+    {
+      "key": "rrosft5-bdr26",
+      "authors": [
+        "Boris Bilich",
+        "Adam Dor-On",
+        "Efren Ruiz"
+      ],
+      "title": "Shift equivalence relations through the lens of C*-correspondences",
+      "venue": "Mathematische Annalen",
+      "volume": "396",
+      "article": "29",
+      "published": "2026-09-04",
+      "doi": "10.1007/s00208-026-03544-z",
+      "publisher_url": "https://link.springer.com/article/10.1007/s00208-026-03544-z",
+      "read_scope": "Publisher full-text excerpts returned by search: Definitions 2.1, 3.2-3.3; Theorem 3.5; Remark 3.8. Direct page opening returned cache misses.",
+      "use": "Same-tuple, same-lag aligned/balanced/compatible equivalence; no universal equality of minimum SSE length and minimum certificate lag is attributed to this source."
+    },
+    {
+      "key": "rrosft5-epperlein26",
+      "authors": [
+        "Jeremias Epperlein"
+      ],
+      "title": "Eventual conjugacy of free inert G-SFTs",
+      "venue": "Ergodic Theory and Dynamical Systems",
+      "published_online": "2026-05-25",
+      "doi": "10.1017/etds.2026.10309",
+      "publisher_url": "https://www.cambridge.org/core/journals/ergodic-theory-and-dynamical-systems/article/eventual-conjugacy-of-free-inert-gsfts/10263959BAC1EDFA88170521C1D18782",
+      "read_scope": "Publisher HTML, including introduction and group-extension framework.",
+      "use": "Precise distinction between original-time and sufficiently-high-power equivariant conjugacy; not used to assert a general original-time classification."
+    }
+  ],
+  "derivation_status": {
+    "partition_positive_family_and_exact_metric": "repo-derived in the accompanying appendix; global priority not established",
+    "fixed_C2_two_step_chain_and_integral_one_step_obstruction": "repo-derived in the accompanying appendix; global priority not established",
+    "long_path_proof": "Explicit reproof/refinement of existing classic chain constructions; not labelled a new general existence theorem"
+  }
+}

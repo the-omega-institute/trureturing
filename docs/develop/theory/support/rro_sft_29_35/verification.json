@@ -1,0 +1,99 @@
+{
+  "seed": 2026092408336,
+  "arithmetic": "exact integers; no floating point",
+  "scope": "finite checks only; not universal proof, Lean validation, independent review, or a remote commit",
+  "partitions": {
+    "max_n": 12,
+    "ordered_pairs": 12647,
+    "geodesic_steps": 33794,
+    "ordered_adjacent_factorizations": 3098,
+    "independent_bfs_pair_checks": 12647
+  },
+  "group_algebra": {
+    "groups": [
+      "C2",
+      "C3",
+      "S3",
+      "D8"
+    ],
+    "max_n": 5,
+    "positive_ordered_factor_pairs": 160,
+    "uniformization_power_checks": 168
+  },
+  "labelled_certificates": {
+    "groups": [
+      "C2",
+      "C3",
+      "S3",
+      "D8"
+    ],
+    "lags": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "chains_per_group_lag": 4,
+    "samples_per_chain": 32,
+    "input_sampling": "seeded; not exhaustive",
+    "compatibility_equations": 4096,
+    "triangle_inverse_identities": 8192,
+    "window_code_recovery_checks": 4096,
+    "left_equivariance_checks": 2048
+  },
+  "example": {
+    "lambda": [
+      4,
+      4
+    ],
+    "mu": [
+      4,
+      1,
+      1,
+      1,
+      1
+    ],
+    "distance": 3,
+    "geodesic": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        3,
+        1
+      ],
+      [
+        4,
+        2,
+        1,
+        1
+      ],
+      [
+        4,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "equal_tau": 4,
+    "rank_profile_lambda": [
+      8,
+      6,
+      4,
+      2,
+      0
+    ],
+    "rank_profile_mu": [
+      8,
+      3,
+      2,
+      1,
+      0
+    ]
+  },
+  "sentinel": "ALL_PARTITION_AND_PATH_CLOSURE_CHECKS_PASSED",
+  "script_sha256": "780614da239b9a26496e70b92b0ff17fa4cfbf88f5f8ae37c70887eb9fa0a1af"
+}
