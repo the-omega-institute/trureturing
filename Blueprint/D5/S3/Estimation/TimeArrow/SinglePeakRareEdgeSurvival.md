@@ -18,7 +18,7 @@ The survival mass at time T is the total uniform-start weight of explicit paths 
 
 **Theorem 1.2 (Exact survival recurrence).**
 
-$$p=\frac{1}{2\lvert X \rvert},\quad \varepsilon =1-r \Rightarrow s_{0}=1,\quad s_{1}=1-p,\quad s_{2}=1-2p,\quad \forall T\geq 0, s_{T+3}=s_{T+2}-p \varepsilon s_{T+1}-p r s_{T}$$
+$$\operatorname{chi}(x) \in \{\pm 1\}, \operatorname{chi}(z)=1, \lvert X \rvert=2 M, \lvert \{\operatorname{chi}(x)=1\} \rvert=M, M\geq 2, q=\frac{r}{M-1}, p=\frac{1}{2\lvert X \rvert},\quad \varepsilon =1-r \Rightarrow s_{0}=1,\quad s_{1}=1-p,\quad s_{2}=1-2p,\quad \forall T\geq 0, s_{T+3}=s_{T+2}-p \varepsilon s_{T+1}-p r s_{T}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/TimeArrow/SinglePeakRareEdgeSurvival.survival_recurrence` (`✓ std3`). ∎
 
