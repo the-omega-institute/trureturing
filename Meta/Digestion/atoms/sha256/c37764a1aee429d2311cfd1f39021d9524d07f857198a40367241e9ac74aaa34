@@ -1,0 +1,9 @@
+## theorem 7.1: 互补读出通道塔
+
+两族通道 CPTP、满射且非恒定，对 $e\mid d\mid D$ 在全部输入矩阵上严格满足 $\mathcal C^j_{d,e}\mathcal C^j_{D,d}=\mathcal C^j_{D,e}$。此外
+
+$$
+(\mathcal C^Z_{D,d}\otimes\mathcal C^F_{D,d})(|\Omega_{D,\alpha}\rangle\langle\Omega_{D,\alpha}|)
+=|\Omega_{d,\alpha}\rangle\langle\Omega_{d,\alpha}|.
+$$
+

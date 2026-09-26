@@ -1,0 +1,25 @@
+## proposition 23.1: 码空间父 Hamiltonian
+
+在定理 20.3 的解码半边寄存器上，冻结边投影为 $P_e=|\phi_e\rangle\langle\phi_e|$，自由边投影为
+
+$$
+P_e^{\mathrm{rep}}=\sum_{x=0}^{d-1}|x,x\rangle\langle x,x|.
+$$
+
+令 $U$ 为各顶点本地幺正之积，定义
+
+$$
+H_{\mathsf S}=U\left[\sum_{e\in\mathsf F}(I-P_e)
++\sum_{e\in\mathsf S}(I-P_e^{\mathrm{rep}})\right]U^*.
+$$
+
+各项对易且只作用于相邻顶点块；零能空间恰为共同码，维数 $d^{|\mathsf S|}$，单位系数下谱隙为一。能量 $k$ 的重数由多项式
+
+$$
+\sum_k m_k z^k=
+[1+(d^2-1)z]^{|\mathsf F|}
+[d+(d^2-d)z]^{|\mathsf S|}
+$$
+
+给出。
+

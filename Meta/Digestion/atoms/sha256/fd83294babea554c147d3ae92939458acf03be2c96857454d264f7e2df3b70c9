@@ -1,0 +1,16 @@
+## theorem 21.1: 受约束码的全输入粗化
+
+对 $d\mid D$ 和所有自由逻辑密度矩阵，
+
+$$
+\mathcal R^{(L)}_{D,d}\mathcal E^{\mathsf S}_{D,L}
+=\mathcal E^{\mathsf S}_{d,L}Q_{D,d}^{\otimes|\mathsf S|},
+$$
+
+$$
+\mathcal S_{\Pi,d}\mathcal E^{\mathsf S}_{d,L}
+=\mathcal E^{\mathsf S_\Pi}_{d,r}\operatorname{tr}^{\mathsf S}_{\Pi}.
+$$
+
+嵌套空间粗化、嵌套精度粗化及二者的交换继续在这些码族上成立，包括与任意外部参考纠缠的输入。若唯一自由边作为宏块边界保留，非平凡的 $d$ 维逻辑系统也被保留；若它落在宏块内部并被丢弃，则粗码退化为相应的一维固定态码。
+

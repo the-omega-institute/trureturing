@@ -1,0 +1,4 @@
+## lemma 9.1: 纯 AME 输出的因子化
+
+设 $D=de$，$\psi$ 为 AME$(4,D)$，$\varphi$ 为 AME$(4,d)$。四个独立局部 CPTP 通道能够把 $\psi$ 精确变成纯态 $\varphi$，当且仅当 $\psi$ 局部幺正等价于按参与方重组的 $\varphi\otimes\eta$，其中 $\eta$ 为某个 AME$(4,e)$。
+

@@ -1,0 +1,17 @@
+## theorem 4.3: 精确相位亏损与全区域判据
+
+令
+
+$$
+c_k=2\alpha+(-1)^L(2^{-k}+2^{-(L-k)})\in R_d,\quad0\le k\le L.
+$$
+
+若区域 $C$ 在每个顶点恰选一腿，其中 $k$ 条是 $b_i$，则
+
+$$
+S(\rho_C)=L\log d-\log\gcd(d,c_k),\qquad
+r_C=d^L/\gcd(d,c_k).
+$$
+
+最大公因子与整数代表元无关。$\Psi^\alpha_{d,L}$ 对所有边界子集满足 $S(\rho_C)=m(C)\log d$，当且仅当所有 $c_k$ 都为单位。
+

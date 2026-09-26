@@ -1,0 +1,4 @@
+## proposition 2.2: 局部完美性和乘积群
+
+$T_G$ 是 AME$(4,|G|)$，任意单方约化态为 $I_{|G|}/|G|$；按参与方重组时，$T_{G\times H}=T_G\otimes T_H$。
+

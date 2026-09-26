@@ -1,0 +1,4 @@
+- `D5/S3/Quantum/Entanglement/CoherentHistorySchmidt.lean`：实际历史系数矩阵、秩和 Schmidt 权重。
+
+[情境时空算术量子卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md) 提供量子记录和相干历史语境；[QUANTUM-RH](QUANTUM-RH.md) 评注 29.4 提供 M2 相容读数与算术全息接口。本卷后续定理尚未由这些 Lean 文件证明。边界重建、谱平坦性、几何面积和跨尺度操作分别承担证明义务。
+

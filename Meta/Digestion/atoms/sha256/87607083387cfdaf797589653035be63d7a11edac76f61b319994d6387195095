@@ -1,0 +1,23 @@
+## theorem 34.1: 有限多个面积扇区的共同最优误差
+
+上述任务可行，当且仅当每个 $m_s=r_s/d_s$ 为正整数。把不同的 $\ell_s=\log m_s$ 排为 $\ell_1<\cdots<\ell_k$，令
+
+$$
+T=\sum_{i=1}^{k-1}\tanh\frac{\ell_{i+1}-\ell_i}{4}.
+$$
+
+对全部允许的两侧局部信道，精确最优值为
+
+$$
+\boxed{\inf_{\Lambda_X,\Lambda_Y}
+\| (\Lambda_X\otimes\Lambda_Y)J_r-J_d\|_\diamond
+=\frac{2T}{1+T}.}
+$$
+
+这里的 $J_r,J_d$ 代表等距编码诱导的信道。同一对局部等距在所有扇区同时达到最优：每侧按 $|s,a+d_sb\rangle\mapsto|s,a\rangle|b\rangle$ 拆分，再丢弃环境。环境态是前 $m_s$ 个标签上的最大纠缠态，故诱导的逻辑信道是 Schur 乘子，Gram 核为
+
+$$
+K_{st}=\sqrt{\frac{\min(m_s,m_t)}{\max(m_s,m_t)}}
+=e^{-|\ell_s-\ell_t|/2}.
+$$
+

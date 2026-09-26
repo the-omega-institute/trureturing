@@ -1,0 +1,42 @@
+## theorem 31.3: 同一中心码的精确预测缺陷
+
+设 $\Phi_t$ 是一个保单位的逻辑信道，且它的区域可见坐标满足
+
+$$
+z_t=\alpha_tz_0+\beta_ty_0,
+\quad z=\operatorname{Tr}(\sigma_z\rho),\quad
+ y=\operatorname{Tr}(\sigma_y\rho)=-2\operatorname{Im}\rho_{01}.
+$$
+
+则 $|\alpha_t|\le1$，并且
+
+$$
+\boxed{\delta(t)=|\beta_t|.}
+$$
+
+一个达到下确界的实际预测器是 $\mathcal C_t=\mathcal E T_{\alpha_t}\mathcal M$，其中对角二态信道
+
+$$
+T_c=\frac12\begin{pmatrix}1+c&1-c\\1-c&1+c\end{pmatrix}
+\qquad(-1\le c\le1)
+$$
+
+采用列概率约定。在给定当前 $p=\rho_{11}$ 的全部相容逻辑密度矩阵中，仅依赖 $p$ 的实数面积预测器的精确 minimax 绝对风险是
+
+$$
+\boxed{\mathcal R_t(p)=\Delta a\,\sqrt{p(1-p)}\,|\beta_t|.}
+$$
+
+**证明。** 正性应用于两种 $\sigma_z$ 本征态给出 $|\alpha_t|\le1$，所以 $T_{\alpha_t}$ 是合法随机信道。直接计算差映射为
+
+$$
+(\mathcal N\Phi_t-\mathcal C_t\mathcal N)(X)
+=\beta_t\operatorname{Tr}(\sigma_yX)\frac{\tau_0-\tau_1}{2}.
+$$
+
+两块正交，$\|(\tau_0-\tau_1)/2\|_1=1$，引理 31.2 给出上界 $|\beta_t|$，包括任意参考纠缠。反向取 $\rho_\pm=(I\pm\sigma_y)/2$；当前区域态完全相同，未来区域态的迹范数距离为 $2|\beta_t|$。任意同输入预测器输出相同，三角不等式强迫至少一个误差不小于 $|\beta_t|$。
+
+固定 $p$ 时，正性等价于 $|\rho_{01}|\le\sqrt{p(1-p)}$，所以 $y_0$ 的准确范围是 $[-2\sqrt{p(1-p)},2\sqrt{p(1-p)}]$。未来 $p_t$ 的范围以 $[1-\alpha_t(1-2p)]/2$ 为中心、半径为 $\sqrt{p(1-p)}|\beta_t|$。纯态的两种相反虚相干达到端点。面积是 $\log3+\Delta a p_t$，区间中点给出上界，两端共同当前读数给出匹配下界。证毕。此任务提供了完整当前区域密度矩阵；只知道其熵不会改善下界。
+
+对于第 28.4 节的闭系统 $h=(\Omega/2)\sigma_x$，$\alpha_t=\cos\Omega t$、$\beta_t=\sin\Omega t$。因此当前面积或中心概率在某些时间可完全不足以预测未来区域态，虽然全局编码和时间演化都是精确的。
+

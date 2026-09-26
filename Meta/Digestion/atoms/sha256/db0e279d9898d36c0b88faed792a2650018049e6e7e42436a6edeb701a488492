@@ -1,0 +1,18 @@
+## theorem 19.1: 同一码中的四方 GHZ 方向
+
+取 $L\ge4$ 和任意奇数 $d\ge3$。在第 12 节历史空间取
+
+$$
+|\eta_p\rangle=\sum_{x\in R_d}\sqrt{p_x}\,|x,x,\ldots,x\rangle,
+\qquad H(p)>0.
+$$
+
+任意 $\alpha$ 下，实际编码输出为
+
+$$
+J_d|\eta_p\rangle=\sum_x\sqrt{p_x}\,\omega_d^{(1+\alpha)x^2}
+\bigotimes_{i=0}^{L-1}|2x,3x\rangle_i.
+$$
+
+每个块的标签 $x\mapsto(2x,3x)$ 单射，局部基变换与在一个块上消去相位后，此态等价于 $L$ 方 GHZ$(p)$。将所有完整块分成四个非空组 $A,B,C,D$，任意非空真子集的熵都是 $H(p)$，因此 $I_3=H(p)>0$。它不能由一个静态、无体熵修正的 RT 几何同时实现全部七项熵。证毕。该态已经位于原码像空间，故不能对全历史码整体赋予这种几何解释。
+

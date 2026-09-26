@@ -1,0 +1,22 @@
+## theorem 9.3: 联合进位消除
+
+取奇数 $d,e\ge3$、$D=de$。每条腿分解为 $W|a+db\rangle=|a\rangle_d|b\rangle_e$。写 $x=a+db,y=c+df$，并令
+
+$$
+r=(a+c)\bmod d,\quad s=(a+2c)\bmod d,\quad
+\kappa_1=(a+c-r)/d,\quad\kappa_2=(a+2c-s)/d.
+$$
+
+$(r,s)$ 唯一确定 $a=(2r-s)\bmod d,c=(s-r)\bmod d$，故也确定两进位。在第三、第四参与方上取联合置换
+
+$$
+C_{d,e}:|r,k\rangle_3|s,h\rangle_4
+\mapsto|r,k-\kappa_1(r,s)\rangle_3|s,h-\kappa_2(r,s)\rangle_4,
+$$
+
+高位减法取模 $e$。按低、高层重组后，
+
+$$
+C_{d,e}W^{\otimes4}|T_{de}\rangle=|T_d\rangle\otimes|T_e\rangle.
+$$
+

@@ -1,0 +1,31 @@
+## theorem 20.2: 同一码、全部块区域、全部输入
+
+对任意块区域 $A$，把自由边分为两端均在 $A$ 的 $I_A$、仅一端在 $A$ 的 $C_A$ 和两端均在补集的 $O_A$。令 $\Delta_{C_A}$ 为这些自由历史的计算基退相干，
+
+$$
+\tau_A=\Delta_{C_A}\operatorname{Tr}_{O_A}\rho,\qquad
+f_A=|\mathsf F\cap\delta A|.
+$$
+
+忽略区域内固定纯态及在实际支撑上的等距后，边界约化态为
+
+$$
+[\mathcal E^{\mathsf S}_{d,L}(\rho)]_A
+\simeq\tau_A\otimes I_{d^{f_A}}/d^{f_A}.
+$$
+
+其最大可恢复逻辑代数和非零面积项为
+
+$$
+\mathcal M_A=\mathcal B(\mathcal H_{I_A})\otimes
+\operatorname{Diag}(\mathcal H_{C_A})\otimes I_{O_A},\qquad
+\mathcal L_A=f_A\log d\ I_K,
+$$
+
+$$
+\boxed{S([\mathcal E^{\mathsf S}_{d,L}(\rho)]_A)
+=f_A\log d+S_{\mathcal M_A}(\rho).}
+$$
+
+两侧代数互为交换子，区域包含关系 $A\subseteq B$ 给出实际逻辑代数包含 $\mathcal M_A\subseteq\mathcal M_B$。对任意两输入，边界相对熵等于该区域代数相对熵，包含无穷值的支持约定。
+
