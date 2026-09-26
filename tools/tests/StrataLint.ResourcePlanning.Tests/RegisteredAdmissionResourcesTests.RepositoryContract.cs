@@ -59,14 +59,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan(path, "", mode);
             var readsInstructions = path.StartsWith("D5/", StringComparison.Ordinal);
             var readsDigestion = readsInstructions || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
-            var readsSourceAtomizer = path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
             var readsRegistry = readsDigestion || path == "docs/reports/prime-slab-corner-order-0909.json";
-            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { InstructionContractProject } : [])
+            var consumers = OrderedConsumers((readsInstructions ? new[] { InstructionContractProject } : [])
                     .Concat(readsDigestion ? new[] { RepositoryDigestionProject } : [])
                     .Concat(readsRegistry ? new[] { RepositoryFileMapProject } : [])
-                    .Concat(readsSourceAtomizer ? new[] { SourceAtomizerProject } : [])),
-                Strings(plan["execution"]!["tests"]!));
-            Assert.Equal("required",
+                    .Concat(path.StartsWith("tools/", StringComparison.Ordinal) || path.EndsWith(".lean", StringComparison.Ordinal) ? new[] { WorktreeContractProject } : [])).ToArray();
+            Assert.Equal(consumers, Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(consumers.Length == 0 ? "not-required" : "required",
                 plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
         }
@@ -76,13 +75,15 @@ public sealed partial class RegisteredAdmissionResourcesTests
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj";
 
     [Theory]
+    [InlineData("push", "A")]
+    [InlineData("pr", "A")]
     [InlineData("push", "M")]
     [InlineData("pr", "M")]
     [InlineData("push", "D")]
     [InlineData("pr", "D")]
     [InlineData("push", "R")]
     [InlineData("pr", "R")]
-    public void WholeRepositoryTextChangesKeepTheirCompleteConsumer(string mode, string change)
+    public void ContentChangesKeepOnlyTheirActualConsumers(string mode, string change)
     {
         foreach (var path in new[] {
             "README.md",
@@ -94,22 +95,81 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode, change);
             var consumers = path.StartsWith("D5/", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject }
+                ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject, WorktreeContractProject }
                 : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
-                    ? [RepositoryDigestionProject, RepositoryFileMapProject, SourceAtomizerProject]
-                    : path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) ? [SourceAtomizerProject] : [];
+                    ? [RepositoryDigestionProject, RepositoryFileMapProject] : [];
             Assert.Equal(WithPathInventory(consumers, change), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
             var original = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
-            Assert.Contains("test-worktree-contract", Strings(original!["require"]!));
+            Assert.Equal(path.EndsWith(".lean", StringComparison.Ordinal), Strings(original!["require"]!).Contains("test-worktree-contract"));
             if (change == "R")
             {
                 var destination = Assert.Single(plan["paths"]!.AsArray(),
                     row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
-                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology", "test-worktree-contract" }, Strings(destination!["require"]!));
+                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology" }, Strings(destination!["require"]!));
             }
         }
+    }
+
+    [Theory]
+    [InlineData("push", "A")]
+    [InlineData("pr", "A")]
+    [InlineData("push", "M")]
+    [InlineData("pr", "M")]
+    [InlineData("push", "D")]
+    [InlineData("pr", "D")]
+    [InlineData("push", "R")]
+    [InlineData("pr", "R")]
+    public void WorktreeProgramInputsRetainGuardAcrossEveryChangeKind(string mode, string change)
+    {
+        foreach (var path in new[] {
+            "tools/scripts/agent/openproblem/worktree-guard-probe.py",
+            "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeGuardProbe.cs",
+            "Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs",
+            "D5/S0/WorktreeContractProbe.lean",
+            "Reg/Catalogs/TemplateShadow.lean",
+            "Trureturing.lean",
+            "docs/reports/worktree-guard-probe.py",
+            "docs/reports/worktree-guard-probe.mjs",
+            "docs/reports/worktree-guard-probe.c",
+            "docs/reports/worktree-guard-probe.cpp",
+            "docs/reports/worktree-guard-probe.h",
+        })
+        {
+            var plan = Plan(path, "", mode, change);
+            var consumers = new[] { WorktreeContractProject }
+                .Concat(path.StartsWith("tools/", StringComparison.Ordinal)
+                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : [])
+                .Concat(path.EndsWith(".cs", StringComparison.Ordinal)
+                    ? new[] { RepositoryFileMapProject, RepositoryTopologyProject } : [])
+                .Concat(path.StartsWith("D5/", StringComparison.Ordinal)
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject, RepositoryFileMapProject } : [])
+                .Concat(path.StartsWith("Reg/", StringComparison.Ordinal) || path == "Trureturing.lean"
+                    ? new[] { RepositoryFileMapProject } : []);
+            Assert.Equal(WithPathInventory(consumers, change), Strings(plan["execution"]!["tests"]!));
+            var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
+            Assert.Contains("test-worktree-contract", Strings(input!["require"]!));
+            Assert.Equal(new[] { "test-worktree-contract" }, Strings(input!["path_input_require"]!));
+            if (change == "R")
+            {
+                var destination = Assert.Single(plan["paths"]!.AsArray(),
+                    row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
+                Assert.Equal(new[] { "test-repository-filemap", "test-repository-topology" }, Strings(destination!["require"]!));
+            }
+        }
+    }
+
+    private static void AssertNoResourcePlan(System.Text.Json.Nodes.JsonNode plan)
+    {
+        foreach (var field in new[] { "declared_require", "resources", "selected_stages", "tools", "cache_layers", "materials" })
+            Assert.Empty(plan[field]!.AsArray());
+        foreach (var field in new[] { "projects", "tests", "checks", "steps", "lean_targets" })
+            Assert.Empty(plan["execution"]![field]!.AsArray());
+        foreach (var stage in new[] { "build", "engineering", "current" })
+            Assert.Equal("not-required", plan["stages"]![stage]!["status"]!.GetValue<string>());
+        Assert.Equal(plan["mode"]!.GetValue<string>() == "pr" ? "not-required" : "not-applicable",
+            plan["stages"]!["delta"]!["status"]!.GetValue<string>());
     }
 
     [Theory]
@@ -151,7 +211,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     private static IEnumerable<string> WithWorktreeContract(IEnumerable<string> consumers) =>
-        consumers.Append(WorktreeContractProject).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal);
+        OrderedConsumers(consumers.Append(WorktreeContractProject));
+
+    private static IEnumerable<string> OrderedConsumers(IEnumerable<string> consumers) =>
+        consumers.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal);
 
     private static IEnumerable<string> WithRepositoryContract(IEnumerable<string> consumers) =>
         WithWorktreeContract(consumers.Append(RepositoryContractProject));

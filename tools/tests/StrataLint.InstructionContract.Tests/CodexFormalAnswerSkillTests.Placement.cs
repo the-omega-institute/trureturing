@@ -30,7 +30,7 @@ public sealed partial class CodexFormalAnswerSkillTests
         var skill = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "skills",
-            "codex-formal-answer",
+            "formal-thinking-and-answer",
             "SKILL.md"));
 
         Assert.True(DefinesCanonicalProjectPlacement(Parse(skill)));

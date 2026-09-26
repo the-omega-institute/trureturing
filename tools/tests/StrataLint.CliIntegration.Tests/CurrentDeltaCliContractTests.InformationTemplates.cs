@@ -44,7 +44,7 @@ public sealed partial class CurrentDeltaCliContractTests
             var own = new[] { occurrence };
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = 9,
+                schema_version = 1, compatibility_version = 10,
                 inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
                 records = own.Select(key => new

@@ -16,12 +16,17 @@ public sealed class FileMapResourceParityTests
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
             Assert.Equal(path switch
             {
-                "docs/develop/theory/input.md" => new[] { "test-source-atomizer", "test-worktree-contract" },
+                "tools/lean-inspector/README.md" => new[] { "test-worktree-contract" },
                 "docs/reports/a110037-0910/BoundaryProbe.lean" or "docs/reports/prime-slab-corner-order-0909.json" =>
-                    new[] { "test-repository-filemap", "test-worktree-contract" },
-                _ => ["test-worktree-contract"],
+                    new[] { "test-repository-filemap" },
+                _ => [],
             },
                 Assert.Single(map.Match(path)).Require);
+        var worktreeInputs = Assert.Single(map.Resources, resource => resource.Id == "test-worktree-contract").PathInputs;
+        Assert.Contains(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("tools/lean-inspector/README.md"));
+        Assert.DoesNotContain(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
+        var atomizerInputs = Assert.Single(map.Resources, resource => resource.Id == "test-source-atomizer").PathInputs;
+        Assert.DoesNotContain(atomizerInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
         // Repository path inventory is declared on resources separately from per-file body requirements.
         foreach (var id in new[] { "test-repository-filemap", "test-repository-topology" })
             Assert.Equal(["**"], Assert.Single(map.Resources, resource => resource.Id == id).PathInventory.ToArray());

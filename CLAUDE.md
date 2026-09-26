@@ -1,5 +1,7 @@
 # trureturing — 不动点(所有 agent 的必读标架)
 
+**默认 thinking 与回答技能**：所有 agent 开始处理用户请求时，默认读取并使用 [`skills/formal-thinking-and-answer/SKILL.md`](skills/formal-thinking-and-answer/SKILL.md)，无需用户显式点名。按该技能进行思考、核验证据与组织回答；具体形式化和编译范围遵守技能的适用条件，面向用户默认用普通语言回答，并保留影响结论的条件与未决边界。
+
 ## 1. 权威、本体与不可逆真值 DAG
 
 ### 1.1 权威原文与守护强度
@@ -54,7 +56,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 2.2 机器判对错与不可判 open
 
-**对错,机器判;真 ⊋ 证,诚实标 open。** 正确性由形式验证(`lake build`、Lean kernel 无 sorry 无私 axiom)与多模型对抗(sshx 三席+异模型)检验忠实性、空洞性、矛盾;自信也须交独立机器,不得自证。给定形式系统内不可证亦不可反证者,对人和机器都不可判,应标 `open`,不是等人裁决。`Hearts.lean` 两行 sorry 标形式不可达边界。人类门只授权不可逆动作、选择价值/方向,不替机器判对错(第 5.9 条)。
+**对错,机器判;真 ⊋ 证,诚实标 open。** 正确性由形式验证(`lake build`、Lean kernel 无 sorry 无私 axiom)与多模型对抗(sshx 三席+异模型)检验忠实性、空洞性、矛盾;自信也须交独立机器,不得自证。给定形式系统内不可证亦不可反证者,对人和机器都不可判,应标 `open`,不是等人裁决。人类门只授权不可逆动作、选择价值/方向,不替机器判对错(第 5.9 条)。
 *成熟锚*:Gödel 不完备(1931)、形式核验、多模型对抗。〔守护:**硬**·SL-002/SL-008/axiom 白名单、Lean kernel、sshx;不可判者诚实标 open〕
 
 ### 2.3 美与逻辑
@@ -221,14 +223,16 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 3.9 登记即声明模板与 delta 判官
 
-**每条信息登记显式声明它用的模板;判官不搜索、只判 delta;没有模板就加模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与编译产物证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),文法不认的写法先改内容。
+**每条信息登记显式声明它用的模板;判官不搜索、只判 delta;优先复用合法模板,缺少时新增有意义的内容模板。** `register_information_theorem` 必须以 `readout via <模板>` 指明所用的已 enroll 模板(`register_information_template`),判官只核对这一条声明的 enrollment 判断(E1–E8)与编译产物证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则),内容无法忠实表达时按下款登记受阻例外处理。
 **delta 律**:判官只评估候选相对受保护基线**新增、字节变化**的 `Reg` 模块里的登记;另按 SL-031 的 changed/first-pin D5 选择源识别新增公开定理,只到其源码所有者的镜像 `Reg/D5/<同路径>.lean` 及该镜像显式 import 的 Reg 模块找登记,不读取 D5 的登记 payload;已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared`;声明了但未解析/证据缺失、畸形、不一致或无有效证书 ⇒ `DTR-Evidence`;声明且验证通过 ⇒ `DTR-Declared`;新增公开定理无登记 ⇒ `DTR-Unregistered`(下款)。判词名单封闭为这四个,无别的名字;**四个判词全部为 Observe(告警)**,判官只收集登记状态、不阻断准入。判官的改动权限收归 #5214 登记即程序线,其他 lane 不改判官、只提供告警读数(τ=0 owner 2026-09-20 裁决,原话「把判官从block 改成warning … 把改的权限全部收到你这边来吧, 否则太乱了. 你只要收集他们的warning就可以了」)。
-**作者交付义务**:在上述 delta/first-pin 选择中的**选中 D5 源模块**里,每条新写的公开 `theorem`/`lemma` 声明,作者与评审必须在同一交付中提交其源码所有者对应的 `Reg/D5/<镜像路径>.lean` 登记,至少一条 `declared_validated` 四槽记录,并带已编译的登记证明及当前 binding evidence。D5 内容模板若本身新增公开 `theorem`/`lemma` 声明也在此范围内;`Reg`、`Interface`、`Impl` 中的 helper 声明不是 D5 源声明,不会递归产生新的 Reg/D5 审计目标,但仍执行其现有 kernel、`sorry`、axiom 检查。该义务独立于判官的 Observe 取值:CI 绿、任何 `DTR-*` warning 或仅有告警收据都不能视为完成;登记缺失、无效或所需证明缺失即交付不完整。它不是历史全库回填要求,不改变 DTR 四种 Observe 或 delta-only runtime,也不改变 judge ownership。登记证明属于审计证据,不取得数学 GID、Scribe、deposit 或 utility 义务。
-**没有模板就加模板**(τ=0 owner 2026-09-18 裁决,原话「默认就是没有模版就加模版, 以后也这样」):某条登记在现有模板下找不到合法归属时,唯一处置是由 D5 内容所有者在内容面新增有意义的参数化数学模板,并在 `Reg/Support` 完成共享 enrollment 后再在对应镜像声明;不得留作未声明,不得硬套错误模板或放宽判官;数学所有者已冻结时仍按其 Reg 镜像登记;sidecar 命令已退役。存量未声明的登记按族由内容 PR 迁移;不设债务账本、不设兼容开关、不设宽限期。不得为了制造审计目标新增 bind-only D5 包装;复用既有定理或模板且没有新 Lean 声明时不产生人工审计义务。
-**新定理即四槽逃逸登记**(τ=0 owner 2026-09-18 裁决,原话「你就只判delta就可以, 很简单新定理需要给出几个东西, 原来逃逸在哪里, 把逃逸怎么处理的, 出来什么新信息, 新信息在哪里继续逃逸.」及「应该至少一种吧, 就是这个本质上就是你写了能过机器验证肯定是对的, 至于有没有其他种类, 那你写两种就有两种逃逸方式?」):**选中 D5 源模块中**相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明须有**至少一条** `declared_validated` 四槽登记;同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。`Reg`、`Interface`、`Impl` 的 helper 声明不属于该 D5 author target,不会递归产生 Reg/D5 审计目标,其现有 kernel、`sorry`、axiom 检查照常执行。四槽各有机器消费者:
+**作者交付义务**:在上述 delta/first-pin 选择中的**选中 D5 源模块**里,每条新写的公开 `theorem`/`lemma` 声明,作者与评审须尝试在同一交付中完成忠实的逃逸登记。登记完成须提交其源码所有者对应的 `Reg/D5/<镜像路径>.lean`,至少一条 `declared_validated` 四槽记录,并带已编译的登记证明及当前 binding evidence。D5 内容模板若本身新增公开 `theorem`/`lemma` 声明也在此范围内;`Reg`、`Interface`、`Impl` 中的 helper 声明不是 D5 源声明,不会递归产生新的 Reg/D5 审计目标,但仍执行其现有 kernel、`sorry`、axiom 检查。CI 绿、任何 `DTR-*` warning 或仅有告警收据都不能视为登记完成;登记缺失、无效或所需证明缺失即审计未完成,交付可按下款继续。它不是历史全库回填要求,不改变 DTR 四种 Observe 或 delta-only runtime,也不改变 judge ownership。登记证明属于审计证据,不取得数学 GID、Scribe、deposit 或 utility 义务。
+**登记受阻则 issue 后继续**(τ=0 owner 最新指令,原话「改一下claude md 跟形式化skills, 如果无法登记, 则留个issues, 然后继续即可.」):忠实登记因模板表达力、接口、登记证明或证据的产生或处理遇到具体障碍时,新建或复用相关 issue,指明原定理及源码/来源、实际失败和缺少的证据或义务;交付链接该 issue 并明确「逃逸审计未完成」,即可继续数学开发与交付,无需等待登记修复。不要求穷尽编码、反复重试、另开 hotfix/修复 lane 或另行豁免。**本例外优先于第 5.4、5.5 条的立即实施与 hotfix 要求,仅限登记受阻**,不放宽其它职责。issue 不是证明、`declared_validated` 或新机器状态;不得硬套错误模板、削弱原定理或新增 bind-only 包装,Lean/kernel、`sorry`、axiom、冻结及其它 required checks 仍须通过。
+**依赖族源绑定 API**：`DependentFamily.realize` 可经现有 `register_information_template` 登记；`Reg/Support/DependentFamily` 提供共享 enrollment。原源码镜像使用 `register_information_theorem … readout via (…) realizes auditRecord escape from source (SourceSelection) escape continues (open)`。选择器只定位 compiler 原陈述的坐标与实际读出位置；机器核对作用域、依赖闭合、逆映射、完整陈述重构与 rigid universes，kernel 核对等价 bridge、actual 正律、全族干预、固定其它读出/锚的敏感性及 actual 观察依赖。有限角色不要求有限参数、State 或输出；退化纤维可保留。具体契约与当前限制见 spec A5.3；不能据 API 的存在冒领未编译案例。上述登记受阻后 issue 并继续的例外仍适用。
+**没有模板就加内容模板**:沿用 2026-09-18 owner 裁决的默认方向,现有模板无合法归属时由 D5 内容所有者新增有意义的参数化数学模板,在 `Reg/Support` 完成共享 enrollment 后用于对应镜像;具体障碍按上款处理,不再以加模板作为唯一继续路线。数学所有者已冻结时仍按其 Reg 镜像登记;sidecar 命令已退役。不要求历史回填,不设新债务账本、兼容开关或宽限期。不得为了制造审计目标新增 bind-only D5 包装;复用既有定理或模板且没有新 Lean 声明时不产生人工审计义务。
+**新定理即四槽逃逸登记**(τ=0 owner 2026-09-18 裁决,原话「你就只判delta就可以, 很简单新定理需要给出几个东西, 原来逃逸在哪里, 把逃逸怎么处理的, 出来什么新信息, 新信息在哪里继续逃逸.」及「应该至少一种吧, 就是这个本质上就是你写了能过机器验证肯定是对的, 至于有没有其他种类, 那你写两种就有两种逃逸方式?」):**选中 D5 源模块中**相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明,登记完成的标准是有**至少一条** `declared_validated` 四槽登记;登记受阻时的交付按上款例外。同一定理可在多个舞台登记多条逃逸路线,不判完备性或自然性。`Reg`、`Interface`、`Impl` 的 helper 声明不属于该 D5 author target,不会递归产生 Reg/D5 审计目标,其现有 kernel、`sorry`、axiom 检查照常执行。四槽各有机器消费者:
 
 - **原来逃逸在哪里**:`escape from (<term>)` 指明常量或 binder 类型;检查其在 elaborate 后的定理陈述中出现,并与闭合舞台 State 所代表的对象作身份核对,不搜索。
-- **把逃逸怎么处理**:`readout via (<已 enroll 模板应用>)` 由现役 DTR 的 E1–E8、精确提取与编译产物证据核对;没有模板就加内容模板,不为语料放宽判官。
+- **把逃逸怎么处理**:`readout via (<已 enroll 模板应用>)` 由现役 DTR 的 E1–E8、精确提取与编译产物证据核对;模板选择与受阻处理按上款,不为语料放宽判官。
 - **出来什么新信息**:`realization <桥>` 核对原陈述、闭合 Law 和实现参数;既有 `LegacyPrimitiveRealization` 等价桥继续有效,`EscapePrimitiveRealization` 只要求陈述 ⇒ Law,但强制有效 variation·sensitivity,否则报 `dtr.forward_bridge_requires_sensitivity`。native 形式保留精确 Law 检查。`CounterexampleRecord.WitnessPrimitiveRealization` 是反例桥(`bridge_kind=witness`):陈述须为闭合零参数 `Prop` 定义 `c` 的否定,`c` 定义等价于 `∀ d : Domain, predicate d`,此时 `escape from` 对 `Domain` 而非 State 核对;桥的实现须与舞台自算读出定义相等,variation 须在同一实现上为正、对常真读出为负,sensitivity 必填;判官只看具名断言与桥参数,不打开反驳证明体。
 - **新信息在哪里继续逃逸**:`escape continues (<term>)` 是闭合舞台上具名 `LayerChain` 的 `EscapeResidualWitness` 值、`EscapeResidualEmpty` 证明,或字面 `open`。前两者核对证书声明、类型及链所属舞台,内核检查 membership/empty 证明;判官不求值证书。字面 `open` 只诚实标记残余未知,没有证书,不证明不可判定性或残余无穷/不可穷尽,也不能替代必需的 realization bridge、variation/sensitivity 或其它 binding evidence;只要其余证据有效,显式 open residual 仍可构成完整登记。
 
@@ -482,7 +486,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 7.2 真值机器、自建与保守扩展
 
-**harness 判形式对错,可持续自建而不违前真。** lint/编译/双射/状态/一致性由机器判;新规则/分类/流程须保守单调扩展,旧判对者不得新判错。SL-022、一致性检验与升层让新 harness 判旧 harness,内化塔不封顶;同层不自证一致(Gödel、PZG 16.2),不可判者标 open/sorry(Hearts),不交人或冒领可判。
+**harness 判形式对错,可持续自建而不违前真。** lint/编译/双射/状态/一致性由机器判;新规则/分类/流程须保守单调扩展,旧判对者不得新判错。SL-022、一致性检验与升层让新 harness 判旧 harness,内化塔不封顶;同层不自证一致(Gödel、PZG 16.2),不可判者标 open,不交人或冒领可判。
 *成熟锚*:反射/内化塔、保守扩展、Gödel 第二不完备、可判/半可判分列。〔守护:**元准则+半硬**·全部 SL/编译/SL-022 判可判者;自建受保守扩展义务与元门约束。现役成本形为候选判官+SL-029 警告+独立对抗评审,保守重放/C0/证书机器已退役,不冒充现役巡检〕
 
 ### 7.3 分类与规范先于实例
@@ -557,7 +561,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 - **τ**:受管路径各有封闭信任地层;0 为不可伪造能力链/canonical writer/GID 代数/bootstrap gate/保护面清单等信任根,越大越外层,内容为 τ_max。
 - **`C(τ)=C_leaf·α^(τ_max−τ)`,α>1**:内容≈免费,每向核心一层×α,信任根 α^τ_max。三种机器可算货币为验证宽度 W(独立席/异模型/人审数)、证明深度 D(lint→类型→Lean→保守扩展证明)、保守扩展义务 E。
 - **承重保守扩展律**:`∀a, τ(a)≥τ: H(a)=admit ⟹ H′(a)=admit`,新 harness 不推翻旧 admit(可更严拒新坏,不可松旧判)。范围越核心越大,核心改动须证不破坏整塔。
-- **递归**:改 τ 的保守性由更核心 τ−1 harness 判,至 τ=0 人类可信 bootstrap 注入;同层一致性不可自证(Gödel/PZG 16.2),塔顶成本不可判/∞,Hearts 两 sorry 标 open。塔无封顶;dev-baseline 判 candidate 只是 inactive 旧例,现役不执行 base 代码。
+- **递归**:改 τ 的保守性由更核心 τ−1 harness 判,至 τ=0 人类可信 bootstrap 注入;同层一致性不可自证(Gödel/PZG 16.2),塔顶成本不可判/∞。塔无封顶;dev-baseline 判 candidate 只是 inactive 旧例,现役不执行 base 代码。
 - **筛选**:仅 `Benefit>C(τ)` 才改;成本梯度排轻率改动、容真正收益,对错/成本机器算,不需人判准入。
 *成熟锚*:反射、PZG 18.11 成本单调/17.8 Con 燃料、保守扩展、庇古/科斯定价、proof-of-work。〔守护:**元准则+半硬**·τ/C 可算、保守律可机器验不等于已有执行器;旧 golden 重放/C0/证书机制均 inactive。更核心层验证、τ=0 可信注入且顶标 open;落地的 harness τ 机制仍 open,属 τ=0 元改,立永久工单渐进实现〕
 
@@ -796,6 +800,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 ### 10.2 Lean 构建成本的两个坐标:缓存与证明项
 
 **跑得久,先去看缓存,别熬**。裸 `lake` **拦不住**——第 8.3 条 那条禁令是软守,全仓无任何机器规则(实测 `BareLake`/`LakeInvocation` 零命中)。拦不住的东西就别假装拦得住,改为给出**症状→诊断**的映射:**症状**=`make lean` / `make lean-report` / `lake build` 跑过几分钟仍未完。**别做的**=等下去,或据「已用时间」推断题难(第 8.4 条:判定看退出码不看已用时间)。**该做的**=读 `LEAN_CACHE` 收据——ensure 每次都打,字段自带答案:`status`(`seeded` 播种成功 / `present` 已在 / `degraded` 降级)、`method`(`clonefile` 本机 donor / `cache-get` 公共供给 / `none`)、`project_olean_state` 与 `mathlib_olean_state`(`warm`/`cold`)、`archive_status` 与 `archive_skip_reason`。**`project_olean_state: cold` 就是「接下来要全量重编内容层」的事前信号**,不必等它编完才知道。**参照点(2026-08-23 实测,同日同机)**:有热 donor 的新 lane = **13 秒**(`status=seeded, method=clonefile`,内容层 1430 + 依赖层 8550,两层 warm);无 donor 走 release 归档 = **6.5 分钟**(取 5m08s 走 `mode=prefix` + 补编 1m18s,重编 19/1513 个模块)。⟹ **本地任何 Lean 构建超过约 10 分钟,先怀疑缓存,不要先怀疑数学。** **本条不给「冷编译要多久」的参照值,因为没有可信的**:2026-08-15 CI 两键全未命中的 17m51s 被用作冷编译代价是无效推断,**该数不可用**——当时 D5 仅 773 个 `.lean`(对照树为 1562),且 `LeanCacheBudgetPolicy` 注释里 1656s 的最贵子图(`TribonacciPeriodicElevenDistinct` / `NodupAssembly`)**2026-08-18 才进树**,那次根本没建它;而该 job 自己的日志里 `Built` 行为 **0**,建了什么亦无证据。**凡引「冷编译要多久」,须同时说明测于哪棵树、含不含那个枚举子图**,否则该数不承重。〔守护:**全软**·不可 lint —— 裸 `lake` 无机器规则,这正是本条存在的理由,不得因此豁免(第 8.5 条 同形);硬投影仅一条=凡声称「构建慢是因为数学难」,须同时贴出该次的 `LEAN_CACHE` 收据,收据缺失即该归因无效〕
+**macOS 与 Linux 的 arm64 共用 Release 内容层快照**。快照装的是项目 buildDir:其中 `.olean`/`.ilean`/IR 在两平台通用;原生产物(`.o`、可执行文件)由 Lake 按平台重新 trace 并自动重建,不会被误用。故取回按 `tools/scripts/worktree/lean_cache.py` 的 `SHARED_SEED_PLATFORMS` 接受同族分区(按发布时间取最新);发布、保留清理与 Actions 缓存键(含原生 judge 二进制、elan)仍按本平台分区。**读数(2026-09-26,darwin-arm64 主检出,装 linux-arm64 快照,producer `a727ef8`)**:取回 362 s;随后 `make lean` 80 s,仅 Built 28 个快照后新增模块;`reportInspector` 等原生目标 11 s 重建为 Mach-O。x64 未测,不在共享族内;加入新平台须先有同形读数。
 **坐标二:缓存正常仍付不起时量证明项,不抬预算**。症状为`LEAN_CACHE` 收据显示两层 `warm`、本地 make lean 成功且远低于10min而 CI `Build candidate Lean project` 失败/被杀,或同类40–44s而该模块数分钟;不能只沿冷缓存诊断。本地绿只报成败,不报 kernel checked 时间/峰值内存,也不证明 runner 能承受。
 先经 `/usr/bin/time -l lake env lean -Dprofiler=true -Dtrace.profiler=true -Dtrace.profiler.threshold=1000 <模块>.lean` 量 checked 秒数与 maximum resident set size,按声明找主成本,每改一处重量,PR 给前后读数(第 2.8 条)。
 **三类已实测的病因与处方(2026-09-10,`CrimGrundyRefutation`,同一模块同一台机)**:①**一次性 `decide +kernel` 判一个大集合** —— 内核要把全部状态的归约中间项同时驻留,峰值即其和;处方是先 `reduce`、`simp only` 拆合取、`repeat' apply And.intro` 分解,再 `all_goals decide +kernel`,每次只驻留一项。②**证书用线性表** —— `List.lookup` 在内核归约里是二次代价(377 个位置各查一次、平均走一半);处方是换成平衡树的归纳类型,降到对数级。③**伞形 `import Mathlib.Tactic`** —— 载入整个 tactic 库的环境;处方是精确导入,并把无限制的 `simp` 换成 `simp only [具名引理]` 配 `omega`。配置比较:

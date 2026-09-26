@@ -26,6 +26,8 @@ the build step.
 Ask the agent to read [AGENTS.md](../AGENTS.md), [README.md](../README.md) and
 this guide. In this repository, `AGENTS.md` points to `CLAUDE.md`; both names
 lead to the same rules.
+Those rules select [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md)
+as the default thinking and answering workflow; you do not need to invoke it explicitly.
 Work that produces or checks proofs needs the [build prerequisites](#prerequisites).
 Client access, build tools, network search and independent review services
 depend on your environment; the repository skills do not install them.
@@ -37,11 +39,11 @@ and `.codex/skills` directories are aliases to it. Discovery varies by client;
 the portable way to use a skill is to ask the agent to read its canonical
 `SKILL.md` explicitly. For example, paste this into the **client conversation**:
 
-> Read skills/codex-formal-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
+> Read skills/formal-thinking-and-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
 
 | Skill | When to use it / what to provide | Work and outcome |
 | --- | --- | --- |
-| [codex-formal-answer](../skills/codex-formal-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
+| [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
 | [codex-formalize](../skills/codex-formalize/SKILL.md) | One existing open digestion atom: “Work on atom `<atom-id>`, reusing results first.” | Searches for reusable results first, then works on formalization or settlement of that source claim; a new theorem or closure is not guaranteed. |
 | [codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md) | Externally authored material: “Ingest the document at `<path>` from `<source-URL>` under `<license>`.” | Brings reference input through the digestion workflow into open formalization atoms; ingestion is not proof. |
 | [theory-volume-template](../skills/theory-volume-template/SKILL.md) | Your own volume: “Draft a new volume on `<topic>`,” or “Append to `<volume-path>` while preserving existing atoms.” | Structures the volume for digestion while preserving existing atoms; use this for authoring and appending, and the ingest skill for externally authored material. |
@@ -53,8 +55,8 @@ contains the full workflow. A skill guides the work; [repository rules](../AGENT
 what can be claimed or admitted.
 
 If the skill appears in your client's list, [Codex](https://learn.chatgpt.com/docs/build-skills)
-lets you select it with `/skills` or mention it as `$codex-formal-answer`;
-[Claude Code](https://code.claude.com/docs/en/skills) uses `/codex-formal-answer`.
+lets you select it with `/skills` or mention it as `$formal-thinking-and-answer`;
+[Claude Code](https://code.claude.com/docs/en/skills) uses `/formal-thinking-and-answer`.
 Substitute another listed skill name for the other workflows. These are client
 inputs, not shell commands. Current Codex documentation describes repository
 discovery under `.agents/skills`; do not assume this checkout's `.codex/skills`
@@ -208,6 +210,13 @@ Commit each logical change and push it to your fork immediately; run any local
 checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
 local preflight modes are **optional** early feedback and
 diagnostics. Current remote CI checks remain **required and authoritative**.
+CI stages print progress summaries every 30 seconds and once at completion:
+the active step, latest reported work count or percentage, elapsed time, new
+information count and latest activity. Quiet stages keep reporting their last
+known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
+interval. Warnings and errors appear immediately with their details; complete
+command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
+JSON and check evidence keep their complete contents.
 Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
 before any work. For delta validation, resolve the intended baseline commit and
 select the complete baseline-to-worktree scope:
