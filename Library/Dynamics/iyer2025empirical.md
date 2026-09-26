@@ -2985,3 +2985,88 @@ $\inf_j\|\theta n_j\|>c\epsilon/|\log\epsilon|$。
 这些条件核对仅说明已查原文不能直接补齐当前固定分母的同步缺口；
 不构成没有更强结果或全局原创性的断言。
 $E_2$ 的存在性、锐利维数及指定双均值的共同实现仍未解决。
+
+## 关联补充 84：噪声衰减校正与后验熵的常数阶二次响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 84 章在第 82 章的同一计数实现和同一带噪声输出上，确定后验熵的常数阶项。
+自然单位下，需扣除的首阶线性项是
+$\gamma y/[\sqrt\delta(\nu+\sigma_M^2)]$，完整噪声范围仍为
+$\ln(1/\sigma_M)\to\infty$、$\ln(1/\sigma_M)=o(Q^3)$。
+扣除后，输出积分 $L^1$ 剖面为
+$(1/2-2/\sqrt3)(y^2-\nu)/\nu-\tfrac12\ln\nu$。
+未校正分母 $\nu$ 给同一剖面的充要条件是 $\sigma_M^2=o(\sqrt\delta)$；
+合法序列 $\sigma_M=Q^{-1/16}$ 则使未校正余量在实际条件输出概率下逃离每个有界区间。
+
+Gaussian 回归的噪声衰减、分部积分、Hermite 二次多项式与
+Edgeworth 展开的思想都是成熟工具。新增推导的范围是：实际观测方差和的定量速率、
+完整后验的未尺度化中心信息比较、含精确中心的两次分部积分余项、
+最终噪声尺度上的返回估计，以及由此得到的模型特定剖面和实际反例。
+本条不把一般加权展开或二阶 Gaussian 微积分称作新理论。
+
+Ivan Nourdin 与 Giovanni Peccati 的
+*Stein's method and exact Berry–Esseen asymptotics for functionals of Gaussian fields*，
+[arXiv:0803.0458v3](https://arxiv.org/abs/0803.0458v3)，
+[DOI:10.1214/09-AOP461](https://doi.org/10.1214/09-AOP461)，
+提供精确 Gaussian 逼近误差与一项 Edgeworth 修正。
+核对的是 2009 年 12 月 9 日 v3 的 32 页作者／IMS 电子重印本；
+原件说明其页码及排版与期刊版不同。
+Theorem 3.1 位于 PDF 第 11—12 页：中心变量 $F_n\in\mathbb D^{1,2}$、
+绝对连续律、方差趋一，Stein 因子误差
+$\varphi(n)=\{\mathbb E(1-\langle DF_n,-DL^{-1}F_n\rangle)^2\}^{1/2}$
+有限、最终为正且趋零，并要求 $F_n$ 与标准化 Stein 因子误差联合趋于
+具有单位边缘方差的二元正态。结论包含 Kolmogorov 界及每个固定阈值的归一化 CDF 误差。
+PDF 第 13 页 Proposition 3.3 再要求精确单位方差、有限第三绝对矩及
+统一 $2+\varepsilon$ 阶矩，得到
+
+$$
+\Pr(F_n\le z)-\Phi(z)+\frac{\mathbb EF_n^3}{6}\Phi'''(z)
+ =o_z(\varphi(n)).
+$$
+
+这一固定阈值结论不能直接替代增长信息权下的全直线 $L^1$ 带符号密度展开。
+第 84 章的累积量常数符合这一经典机制，证明则另行支付实际离散后验、
+移动核心以及精细噪声的误差。该 v3 的原始源码端点返回 403；
+所需命题取自可读 PDF，未将源码访问失败记为已读 TeX。
+
+Ciprian A. Tudor 与 Nakahiro Yoshida 的
+*High order asymptotic expansion for Wiener functionals*，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+给出更强的一般多项式加权展开。
+核对的是 2019 年 9 月 19 日提交、题页日期 9 月 20 日的 57 页 v1 PDF
+及其原始 TeX；[2023 年期刊 DOI](https://doi.org/10.1016/j.spa.2023.07.001)
+仅作书目关联，不断言两版本相同。
+对象是固定维 Wiener 泛函向量与确定正定目标矩阵。
+PDF 第 10 页 [A1] 要求所有 $r>1$ 的统一 Sobolev 正则性、
+二阶 Gamma 因子到非奇异矩阵的多项式 Sobolev 速率；
+第 11 页 [A2] 要求中心高阶 Gamma 因子的指定 Sobolev $O(N^{-q})$
+及 $L^r$ 中的 $o(N^{-q})$；第 15 页 [A3] 给出阶数关系
+$q_0(k+1)>q$、$\xi(\ell-d)>q$、$\ell_1>p+1+d$
+及期望 Gamma 因子的加权速率。
+PDF 第 17 页 Proposition 1 给截断局部密度的加权一致逼近；
+第 19 页 Theorem 1 在这些假设下对所有满足
+$|g(x)|\le a(1+|x|)^b$ 的可测函数统一给 $o(N^{-q})$ 期望逼近，
+每个固定 $a,b>0$ 均可。它覆盖真正的多项式加权测试，不能缩称为只对光滑或紧支撑函数的结果。
+
+将本章 Gaussian 参考对标准化后，该理论提供候选通用路线；
+但 $S_G$ 的方差随核心增长，其标准化、再放大的成本必须进入全部 Gamma 因子速率。
+本章未仅凭“二者是二次型”就断言 [A1]—[A3] 成立，
+而是给出所需的有限恒等式及显式 $O(\sqrt\delta)$ 二阶导数余项。
+这不证明该 Gaussian 特例超出上述一般理论。
+
+第 82 章已核对的 Herry–Malicet–Poly
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+Corollary 10(a) 继续直接覆盖有限 chaos 参考的 $W^{2,1}$ 导数收敛；
+正文的 Fourier 分块计算同时记录独立半块所需的一致常数。
+已核对的 Nourdin–Peccati [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+提供 Gaussian 导数／散度对偶。
+Nourdin–Viens 的全局正 Stein 核下界并未在此假设；
+Hu–Lu–Nualart 原文 Theorem 4.4 的既有印刷维度问题也未作为前提使用。
+含噪声的有限恒等式必须保留 $v_G+\sigma_M^2$，这些通用引用不能删除该项。
+
+文献检索范围为 Gaussian 精确误差、Wiener 多项式加权展开与条件二次型，
+未命中的关键词结果不构成不存在或全球原创证明。
+第 84 章结论是普通数学文本，未作 Lean、摄入、覆盖或冻结声明。
+它证明输出积分 $L^1$、同一实现的有界联合极限及纤维内第一平均；
+不宣称余量方差／高阶矩收敛、每个输出控制、无界数据平均、
+零噪声、$L_M$ 与 $Q^3$ 同阶的噪声、解码效率或实验等价性。
