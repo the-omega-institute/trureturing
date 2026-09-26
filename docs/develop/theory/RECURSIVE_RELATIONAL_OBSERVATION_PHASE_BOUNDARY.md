@@ -70243,3 +70243,361 @@ Trine 结构可见 S. M. Barnett 与 S. Croke，*Quantum state discrimination*�
 Hermitian 泛函的完整范数、归一化 Choi 秩下界及全部事件核界都已在正文给出直接证明。仓内现有两标签预算结果与低 Kraus 事件振幅核机制提供相邻接口；本次定向检索未在 D5 量子声明及钉版 Mathlib 相应目录定位到这条完整三标签预算曲线。本稿不据此声称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 232. 均匀多标签纯重置的完整总 Kraus 容量曲线
+
+三标签例子可推广为任意有限标签数 $N\ge2$。在量子比特输入、同一经典记录接口及任意量子输出方向的竞争者中，除最低预算与最后一个缺额外，完整最优误差精确等于归一化 Choi 态的秩损失下界。达到下界需要一份实际满足保迹性的共同候选；下面用平衡的量子比特纯态框架显式构造。
+
+本文只计算完整半 diamond 误差，不猜测一般 $N$ 的无参考最优值。第231节的三标签预算三的严格差异 $1/3<1/2$ 仍保留其原来的范围。以下为纸面数学证明，未新增或编译 Lean 证明。
+
+### 232.1 目标、候选与结论
+
+固定整数 $N\ge2$、$m\ge2$，输入 $A=\mathbb C^2$，量子输出 $O=\mathbb C^m$，记录空间 $B=\mathbb C^N$，其指定正交标签为 $|1\rangle,\ldots,|N\rangle$。任选固定单位向量
+$$
+r_j\in\mathbb C^m,\qquad P_j=|r_j\rangle\langle r_j|\quad(1\le j\le N).
+\tag{232.UC.1}
+$$
+这些输出向量可以相同，不需要正交。目标为均匀纯重置记录通道
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal R_j(X),
+\qquad\mathcal R_j(X)=\frac1N\operatorname{Tr}(X)P_j.
+\tag{232.UC.2}
+$$
+
+候选为同接口的任意 CPTP 记录通道
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes\mathcal S_j(X),
+\tag{232.UC.3}
+$$
+各分支完全正，总和保迹。仅要求保留该经典记录接口；不将候选预先限制为重置通道、秩一输出通道或测量—制备通道。定义
+$$
+k_j=\operatorname{rank}J_{\mathcal S_j},\qquad
+K(\mathcal S)=\sum_{j=1}^Nk_j=\operatorname{rank}J_{\mathcal S},
+\tag{232.UC.4}
+$$
+即完整记录通道的最小 Kraus 数。最后一个等式来自标签块正交。零分支计秩零。
+
+对每个整数预算 $R\ge1$，置
+$$
+D_R=\inf\left\{
+\frac12\|\mathcal R-\mathcal S\|_\diamond:
+\mathcal S\text{ 满足（232.UC.3），}\ K(\mathcal S)\le R
+\right\}.
+\tag{232.UC.5}
+$$
+距离包含完整记录、量子输出及任意外部参考。候选集非空：由于 $m\ge2$，可以将一个等距通道放入单个标签，其余分支取零，得到 $K=1$ 的合法候选。预算 $R=0$ 不存在 CPTP 候选，不属于（232.UC.5）的定义域。
+
+**定理 232.1（完整精确预算曲线）。** 在上述假设下，
+$$
+\boxed{
+D_R=
+\begin{cases}
+1,&R=1,\\[2pt]
+1-\dfrac{R}{2N},&2\le R\le2N-2,\\[5pt]
+\dfrac1N,&R=2N-1,\\[5pt]
+0,&R\ge2N.
+\end{cases}}
+\tag{232.UC.6}
+$$
+每个预算的下确界都有实际候选达到。主区间 $2\le R\le2N-2$ 的构造总秩恰为 $R$；预算 $2N-1$ 的最优值可由总秩 $2N-2$ 的同一候选达到。
+
+### 232.2 固定纯输出将效应序变为完全正序
+
+对任意正矩阵 $F\succeq0$ 和单位输出 $r$，定义
+$$
+\mathsf M_{F,r}(X)=\operatorname{Tr}(FX)|r\rangle\langle r|.
+\tag{232.UC.7}
+$$
+若 $F=\sum_{\ell=1}^q\lambda_\ell|u_\ell\rangle\langle u_\ell|$ 是正本征值分解，则
+$$
+\mathsf M_{F,r}(X)=\sum_{\ell=1}^q
+K_\ell XK_\ell^\dagger,
+\qquad K_\ell=\sqrt{\lambda_\ell}|r\rangle\langle u_\ell|.
+\tag{232.UC.8}
+$$
+因此该映射完全正，其迹效应为 $F$：
+$$
+\mathsf M_{F,r}^*(I)=F.
+\tag{232.UC.9}
+$$
+在固定输入基的 Choi 约定下，
+$$
+J_{\mathsf M_{F,r}}=F^{\mathsf T}\otimes|r\rangle\langle r|,
+\qquad\operatorname{rank}J_{\mathsf M_{F,r}}=\operatorname{rank}F.
+\tag{232.UC.10}
+$$
+特别地，若 $0\preceq F\preceq G$，则
+$$
+\mathsf M_{G,r}-\mathsf M_{F,r}=\mathsf M_{G-F,r}
+\quad\text{完全正}.
+\tag{232.UC.11}
+$$
+以下上界使用同一固定 $r_j$ 上的这项 CP 序关系。只有迹效应相等，一般并不足以证明两份任意量子分支之间的 CP 序关系。
+
+### 232.3 公共完全正部分给完整误差上界
+
+**引理 232.2（标量迹权重的公共 CP 部分）。** 设 $\mathcal A,\mathcal B$ 为同接口 CPTP 通道。若存在完全正映射 $\mathcal C$，满足
+$$
+\mathcal A-\mathcal C\text{ 完全正},\qquad
+\mathcal B-\mathcal C\text{ 完全正},\qquad
+\mathcal C^*(I)=cI,\qquad0\le c<1,
+\tag{232.UC.12}
+$$
+则
+$$
+\boxed{\frac12\|\mathcal A-\mathcal B\|_\diamond\le1-c.}
+\tag{232.UC.13}
+$$
+
+**证明。** 两个残差的迹效应都为 $(1-c)I$，所以
+$$
+\mathcal A'=\frac{\mathcal A-\mathcal C}{1-c},
+\qquad
+\mathcal B'=\frac{\mathcal B-\mathcal C}{1-c}
+\tag{232.UC.14}
+$$
+都是 CPTP 通道。于是
+$$
+\mathcal A-\mathcal B=(1-c)(\mathcal A'-\mathcal B'),
+\qquad
+\|\mathcal A-\mathcal B\|_\diamond\le2(1-c).
+$$
+这里使用 CPTP 通道的 diamond 范数为一：由 Kraus 表示构造等距扩张，等距嵌入保持迹范数；部分迹的迹范数收缩可由其对偶 $Y\mapsto I\otimes Y$ 的算子范数保持直接证明。两者在张量任意恒等参考后仍成立，给上界一；任意密度矩阵输入给下界一。$\square$
+
+标量条件 $\mathcal C^*(I)=cI$ 保证共同部分的权重对所有输入相同，也保证（232.UC.14）是真正的 CPTP 归一化。不能把依赖输入的成功概率在每个输入上分别归一化后，当作一个线性通道使用。
+
+若 $c=1$ 且其余条件成立，两份 CP 残差迹效应为零，必为零映射，直接得到 $\mathcal A=\mathcal B$；主区间构造只使用 $c<1$。
+
+### 232.4 任意候选的三个下界
+
+#### 232.4.1 归一化 Choi 态的平坦谱下界
+
+取二级参考 $E=\mathbb C^2$ 和归一化最大纠缠输入
+$$
+|\Omega\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}.
+\tag{232.UC.15}
+$$
+目标联合输出为
+$$
+\tau=(\mathcal R\otimes\operatorname{id}_E)(P_\Omega)
+=\frac1{2N}\sum_{j=1}^N|j\rangle\langle j|\otimes P_j\otimes I_E
+=\frac1{2N}\Pi,
+\tag{232.UC.16}
+$$
+其中 $\Pi$ 为秩 $2N$ 的正交投影。故目标完整 Choi 秩恰为 $2N$。
+
+对任意候选，记
+$$
+\sigma=(\mathcal S\otimes\operatorname{id}_E)(P_\Omega),
+\qquad Q=\operatorname{supp}\sigma.
+$$
+因为 $\sigma$ 是归一化 Choi 态，$\operatorname{rank}Q=K(\mathcal S)\le R$。候选在效果 $I-Q$ 上概率为零，而目标概率满足
+$$
+\operatorname{Tr}[(I-Q)\tau]
+=1-\frac{\operatorname{Tr}(Q\Pi)}{2N}
+\ge1-\frac{R}{2N}.
+\tag{232.UC.17}
+$$
+这里仅用 $0\preceq\Pi\preceq I$；不假定候选支撑包含于目标支撑。因此对全部候选有
+$$
+\boxed{D_R\ge\max\left\{0,1-\frac{R}{2N}\right\}.}
+\tag{232.UC.18}
+$$
+
+#### 232.4.2 预算一的完全分离
+
+若 $K(\mathcal S)\le1$，保迹性保证恰有一个非零标签 $j_0$，其分支只有一个 Kraus $C$。复线性行映射
+$$
+v\longmapsto\langle r_{j_0},Cv\rangle\quad:\mathbb C^2\to\mathbb C
+$$
+有非零核。取核中的单位输入 $v$，候选在效果
+$$
+F=\sum_{j=1}^N|j\rangle\langle j|\otimes P_j
+\tag{232.UC.19}
+$$
+上的概率为零，目标概率为一。故每个预算一候选的完整半 diamond 误差均为一。候选集非空，得到
+$$
+\boxed{D_1=1.}
+\tag{232.UC.20}
+$$
+所求核是目标事件的振幅行之核，不是断言 $Cv=0$。
+
+#### 232.4.3 最后一个缺额仍损失一个完整标签事件
+
+若 $K(\mathcal S)\le2N-1$，至少有一个标签 $j$ 满足 $k_j\le1$。否则所有 $k_j\ge2$ 会使总秩至少为 $2N$。
+
+若 $k_j=0$，该标签的候选概率恒为零。若 $k_j=1$，按上节的振幅行核选择输入，使候选在事件 $|j\rangle\langle j|\otimes P_j$ 上概率为零。目标概率恒为 $1/N$。于是
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac1N
+\quad\text{只要 }K(\mathcal S)\le2N-1,
+\tag{232.UC.21}
+$$
+特别地 $D_{2N-1}\ge1/N$。这一下界无需参考，且允许候选在量子输出的任意方向上行动。
+
+### 232.5 任意数量的平衡量子比特纯态
+
+对任意整数 $M\ge2$，令
+$$
+|\psi_a^{(M)}\rangle
+=\frac{|0\rangle+e^{2\pi i(a-1)/M}|1\rangle}{\sqrt2},
+\qquad P_a^{(M)}=|\psi_a^{(M)}\rangle\langle\psi_a^{(M)}|,
+\quad1\le a\le M.
+\tag{232.UC.22}
+$$
+由等比数列求和
+$$
+\sum_{a=1}^Me^{2\pi i(a-1)/M}=0
+$$
+得到精确的算子恒等式
+$$
+\boxed{\sum_{a=1}^MP_a^{(M)}=\frac M2I_2.}
+\tag{232.UC.23}
+$$
+因此 $\{(2/M)P_a^{(M)}\}_{a=1}^M$ 构成 POVM。$M=2$ 时为一组正交二结果投影；$M=3$ 时为 trine POVM；更大的 $M$ 对应 Bloch 赤道上的规则多边形。以下只使用（232.UC.23）的紧框架恒等式，不要求不同纯态正交。
+
+### 232.6 预算 $2\le R\le N$：选择 $R$ 个秩一标签
+
+置 $M=R$，只在前 $M$ 个原标签上放置分支
+$$
+\mathcal S_j(X)=\frac2M\operatorname{Tr}(P_j^{(M)}X)P_j
+\quad(1\le j\le M),
+\qquad\mathcal S_j=0\quad(j>M).
+\tag{232.UC.24}
+$$
+上式中的 $P_j^{(M)}$ 作用于输入，$P_j$ 作用于输出。由（232.UC.23），总迹效应为
+$$
+\sum_{j=1}^M\frac2MP_j^{(M)}=I_2,
+$$
+故该候选为 CPTP。每个非零分支恰为秩一，显式 Kraus 为
+$$
+C_j=\sqrt{\frac2M}|r_j\rangle\langle\psi_j^{(M)}|.
+\tag{232.UC.25}
+$$
+标签块正交，故 $K(\mathcal S)=M=R$。
+
+定义共同 CP 部分
+$$
+\mathcal C=\frac M{2N}\mathcal S.
+\tag{232.UC.26}
+$$
+在活跃标签上，它的输入效应为 $P_j^{(M)}/N$，而目标效应为 $I_2/N$。由（232.UC.11），目标与 $\mathcal C$ 的分支差完全正；在缺失标签上该差就是目标分支。因此 $\mathcal R-\mathcal C$ 完全正。
+
+因为 $M\le N$，$0<M/(2N)\le1/2$，所以 $\mathcal S-\mathcal C=(1-M/(2N))\mathcal S$ 也完全正。并且
+$$
+\mathcal C^*(I)=\frac M{2N}I_2.
+\tag{232.UC.27}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac M{2N}=1-\frac R{2N}.
+\tag{232.UC.28}
+$$
+结合统一下界（232.UC.18），首个预算区间得到精确等号。
+
+### 232.7 预算 $N\le R\le2N-2$：完整标签与秩一标签共同保迹
+
+置
+$$
+a=R-N,\qquad M=2N-R=N-a.
+\tag{232.UC.29}
+$$
+这时 $0\le a\le N-2$、$M\ge2$。对前 $a$ 个标签保留目标完整分支，对余下 $M$ 个标签使用一份共同平衡框架：
+$$
+\mathcal S_j=\mathcal R_j\quad(1\le j\le a),
+$$
+$$
+\mathcal S_{a+b}(X)
+=\frac2N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}
+\quad(1\le b\le M).
+\tag{232.UC.30}
+$$
+由（232.UC.23）及 $a+M=N$，总迹效应为
+$$
+\frac aNI_2+\frac2N\sum_{b=1}^MP_b^{(M)}
+=\frac{a+M}{N}I_2=I_2.
+\tag{232.UC.31}
+$$
+所以候选 CPTP。前 $a$ 个分支各有秩二，余下 $M$ 个各有秩一，因此
+$$
+\boxed{K(\mathcal S)=2a+M=R.}
+\tag{232.UC.32}
+$$
+前者可用 $|r_j\rangle\langle0|/\sqrt N$、$|r_j\rangle\langle1|/\sqrt N$ 两个 Kraus；后者用 $\sqrt{2/N}|r_{a+b}\rangle\langle\psi_b^{(M)}|$。这给出全部实际算子，也验证了分支秩。
+
+定义共同 CP 部分
+$$
+\mathcal C_j=\mathcal R_j\quad(1\le j\le a),
+\qquad
+\mathcal C_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.33}
+$$
+前 $a$ 个标签的两份残差为零；后 $M$ 个标签的目标残差及候选残差分别为
+$$
+(\mathcal R-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}[(I_2-P_b^{(M)})X]P_{a+b},
+$$
+$$
+(\mathcal S-\mathcal C)_{a+b}(X)
+=\frac1N\operatorname{Tr}(P_b^{(M)}X)P_{a+b}.
+\tag{232.UC.34}
+$$
+输入效应都正半定，所以两份残差完全正。共同部分的总效应为
+$$
+\mathcal C^*(I)
+=\frac aNI_2+\frac1N\sum_{b=1}^MP_b^{(M)}
+=\frac{2a+M}{2N}I_2
+=\frac R{2N}I_2.
+\tag{232.UC.35}
+$$
+因此两份残差都具有同一迹权重
+$$
+1-\frac R{2N}=\frac M{2N}>0.
+\tag{232.UC.36}
+$$
+引理 232.2给
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond
+\le1-\frac R{2N}.
+\tag{232.UC.37}
+$$
+再次与（232.UC.18）匹配，得到第二个预算区间的精确等号。在共同端点 $R=N$，$a=0$、$M=N$，本构造就是第六节的同一候选，两段定义一致。
+
+### 232.8 最后平台、边界及与已有结果的关系
+
+预算 $R=2N-2$ 时，第七节取 $a=N-2$、$M=2$，得到总秩 $2N-2$、完整误差 $1/N$ 的实际候选。它也属于预算 $2N-1$ 的候选集。结合（232.UC.21），
+$$
+\boxed{D_{2N-2}=D_{2N-1}=\frac1N.}
+\tag{232.UC.38}
+$$
+最后增加一个 Kraus 预算并未改善误差；只要仍有一个标签至多秩一，就有输入使该标签的整个目标支持事件消失。
+
+预算 $R\ge2N$ 时，目标本身的总 Choi 秩为 $2N$，可以精确实现，故 $D_R=0$。这完成定理 232.1的证明。
+
+**最小标签数。** 当 $N=2$，主区间仅有 $R=2$，两份构造在那里一致，完整曲线为
+$$
+D_1=1,\qquad D_2=D_3=\frac12,\qquad D_R=0\ (R\ge4).
+\tag{232.UC.39}
+$$
+没有空框架或单个纯态框架被暗中使用。假如将第七节形式延伸到 $R=2N-1$，会得到 $M=1$；但一个秩一投影不可能满足 $P=I_2/2$，保迹构造恰在这里失效。对应的事件核下界说明这不是选择框架不当，而是所需更低误差确实不可达到。
+
+**三标签恢复。** 当 $N=3$，式（232.UC.6）变为
+$$
+1,\quad\frac23,\quad\frac12,\quad\frac13,\quad\frac13,\quad0,
+$$
+与三标签结果一致。预算三的框架恰为 trine；此前已经证明它的无参考最优误差为 $1/3$、完整最优误差为 $1/2$。本节的一般构造没有给出一般 $N,R$ 的无参考全局最优值。
+
+**共同接口。** 所有候选均保留原来的 $N$ 个经典标签及每个标签对应的实际量子输出空间。上界中未使用的标签仍在接口中，取零分支；下界始终允许任意输出方向。$m\ge2$ 保证最低预算的等距候选存在；输出向量之间无正交要求。若允许相干标签输出、改变输入维数、使用非均匀权重或混合目标输出，需要重新核对秩谱与共同保迹构造，不能直接沿用（232.UC.6）。
+
+### 232.9 标准工具与来源
+
+平衡纯态框架对应标准 square-root measurement。S. M. Barnett 与 S. Croke，*Quantum state discrimination*，[arXiv:0810.1970v1](https://arxiv.org/abs/0810.1970v1)，§3.1.b 的式（22）给
+$$
+E_j=p_j\bar\rho^{-1/2}\rho_j\bar\rho^{-1/2};
+$$
+同节式（23）—（27）讨论由有限阶酉生成的等先验对称纯态，[PDF 第8—9页](https://arxiv.org/pdf/0810.1970v1#page=8)。对（232.UC.22）的 $M$ 态集合，$p_j=1/M$、$\bar\rho=I_2/2$，该标准构造就是 $E_j=(2/M)P_j^{(M)}$。本稿已用等比求和直接证明所需恒等式（232.UC.23），不把文献中的态区分最优性当作本节通道容量最优性的证明。
+
+仓内 `UniversalReplacementCapacityGrowth.lean` 的精确 no-hiding 容量结果，以及第231节的归一化 Choi 秩与事件振幅核机制，是相邻已有结果；前者处理精确普遍重置，不直接给出本节全部预算的近似曲线。本稿定向检索未在 D5 量子声明及钉版 Mathlib 对应目录定位到（232.UC.6）的完整接口。公共 CP 部分、平坦谱秩下界及框架构造的组合已在正文逐项证明；本稿不据此宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
