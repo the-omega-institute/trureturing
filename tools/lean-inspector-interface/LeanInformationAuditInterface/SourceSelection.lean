@@ -7,7 +7,13 @@ No pretty-printing or normalization selects occurrences.
 Steps are fn/arg, domain/body, type/value/body, or projection/metadata body. -/
 structure SourceReadoutSelection where
   path : Array String
-  stateBinder : Nat
+  stateBinder : Nat := 0
+  /-- Select an existing function operand, introducing only its single input. -/
+  functionOperand : Bool := false
+  /-- Abstract this exact data occurrence inside the selected observation. -/
+  stateOperand : Option (Array String) := none
+  /-- Reify an observed predicate by its constructive Boolean decision. -/
+  booleanPredicate : Bool := false
   deriving BEq, Inhabited, Repr
 
 /-- A bounded entry into a named source definition.  The theorem remains the

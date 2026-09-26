@@ -31,7 +31,13 @@ def checkImportedOwners (root : Name) (expected : Nat) : MetaM Unit := do
     throwError "imported owner setup: {root}: expected={expected} actual={events.size}"
   for event in events do
     TemplateBinding.validateEvent event
-    rejectsOwner { event with realizationName := ``foreignDeclaration }
+    -- The foreign Nat definition selects the legacy identity dialect. Keep that
+    -- prerequisite valid so this mutation reaches the unchanged ownership gate.
+    let .ok (identity, _) := TemplateAudit.rawStatementIdentity event.levelParams event.statement
+      | throwError "wrong-owner control requires a representable legacy statement"
+    rejectsOwner { event with
+      realizationName := ``foreignDeclaration
+      statementIdentity := identity }
     rejectsOwner { event with unitName := ``foreignDeclaration }
   logInfo m!"[PASS] imported_realizations_keep_original_owner root={root} accepted={expected}"
   logInfo m!"[PASS] imported_realization_wrong_owner_rejected root={root} rejected={expected}"

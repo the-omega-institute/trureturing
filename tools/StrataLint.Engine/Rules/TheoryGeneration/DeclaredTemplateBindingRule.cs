@@ -27,7 +27,8 @@ internal sealed record InformationTemplateOccurrence(
     InformationEscapeContinuation? EscapeContinues = null,
     string BridgeKind = "legacy",
     string? SourceOwner = null,
-    string? SourceDefinitionName = null)
+    string? SourceDefinitionName = null,
+    ImmutableDictionary<string, string>? SourceProjectionOwners = null)
 {
     internal System.Text.Json.JsonElement? DefinitionSourceBinding { get; init; }
 
