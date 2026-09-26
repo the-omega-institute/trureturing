@@ -90,6 +90,32 @@ def appendPath {k : ℕ} {B : CountMat k k} :
   | _, _, _, z, .nil _, b => .cons b (.nil z)
   | _, _, _, _, .cons a tail, b => .cons a (appendPath tail b)
 
+private def reverseFinitePath {k : ℕ} {B : CountMat k k} :
+    {d : ℕ} → {i j : Fin k} → FinitePath B d i j →
+      FinitePath B.transpose d j i
+  | _, _, _, .nil i => .nil i
+  | _, _, _, .cons a tail => appendPath (reverseFinitePath tail) a
+
+/-- The inverse sweep extends by one actual B edge at the terminal end. -/
+private theorem unsweep_append {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
+    {R : CountMat n k} (phi : ∀ i z, EdgePair A R i z ≃ EdgePair R B i z) :
+    ∀ {d : ℕ} {i : Fin n} {t u z : Fin k} (r : Fin (R i t))
+      (beta : FinitePath B d t u) (b : Fin (B u z)),
+      unsweep phi r (appendPath beta b) =
+        (let prior := unsweep phi r beta
+         let sq := (phi prior.1 z).symm ⟨u, prior.2.2, b⟩
+         ⟨sq.1, appendPath prior.2.1 sq.2.1, sq.2.2⟩) := by
+  intro d i t u z r beta
+  induction beta generalizing i with
+  | nil t =>
+      intro b
+      rfl
+  | @cons d t w u a tail ih =>
+      intro b
+      simp only [appendPath, unsweep]
+      rw [ih]
+      rfl
+
 /-- A response class at the next depth maps into one response class after an
     actual numbered incoming edge. -/
 theorem incoming_response_step {n : ℕ} {A : CountMat n n} {Q : Type}
@@ -741,6 +767,38 @@ private def squareOutgoingLift (c : CompatibleCertificate A B R S m) :
     intro b r
     exact c.outgoingLift r.val ⟨b.target, b.source, b.number⟩ r.property
 
+private theorem squareOutgoingLift_path (c : CompatibleCertificate A B R S m) :
+    ∀ {d : ℕ} {z t : Fin k} {i : Fin n}
+      (beta : FinitePath B.transpose d z t) (r : Fin (R i t)),
+      (c.squareOutgoingLift.liftPath beta
+        ⟨(⟨i, t, r⟩ : Edge R), rfl⟩).val =
+      (let lifted := c.liftOutgoingPath r
+          (reverseFinitePath beta : FinitePath B d t z)
+       (⟨lifted.1, z, lifted.2.2⟩ : Edge R)) := by
+  intro d z t i beta
+  induction beta generalizing i with
+  | nil z =>
+      intro r
+      rfl
+  | @cons d z u t b tail ih =>
+      intro r
+      let p : FinitePath B d t u := reverseFinitePath tail
+      let prior := c.liftOutgoingPath r p
+      have htail : c.squareOutgoingLift.liftPath tail
+          ⟨(⟨i, t, r⟩ : Edge R), rfl⟩ =
+          ⟨(⟨prior.1, u, prior.2.2⟩ : Edge R), rfl⟩ := by
+        apply Subtype.ext
+        exact ih r
+      change (c.squareOutgoingLift.lift ⟨z, u, b⟩
+          (c.squareOutgoingLift.liftPath tail
+            ⟨(⟨i, t, r⟩ : Edge R), rfl⟩)).val =
+        (let lifted := unsweep c.phi r (appendPath p b)
+         (⟨lifted.1, z, lifted.2.2⟩ : Edge R))
+      rw [htail]
+      dsimp only
+      rw [unsweep_append c.phi r p b]
+      rfl
+
 private theorem squareIncomingLift_path (c : CompatibleCertificate A B R S m) :
     ∀ {d : ℕ} {i j : Fin n} {z : Fin k}
       (alpha : FinitePath A d i j) (r : Fin (R j z)),
@@ -806,6 +864,49 @@ private theorem squareIncomingLift_forgets_at_lag
             _ = _ := (c.squareIncomingLift_path alpha vr).symm
         simpa [squareIncomingLift] using congrArg some hsame
       · simp [squareIncomingLift, hj]
+
+private theorem squareOutgoingLift_forgets_at_lag
+    (c : CompatibleCertificate A B R S m) :
+    c.squareOutgoingLift.response m = Setoid.ker Edge.target := by
+  apply Setoid.ext
+  intro u v
+  constructor
+  · intro h
+    exact congrArg Prod.fst h
+  · intro h
+    rcases u with ⟨ui, ut, ur⟩
+    rcases v with ⟨vi, vt, vr⟩
+    change ut = vt at h
+    subst vt
+    change c.squareOutgoingLift.responseReadout m
+        (⟨ui, ut, ur⟩ : Edge R) =
+      c.squareOutgoingLift.responseReadout m
+        (⟨vi, ut, vr⟩ : Edge R)
+    unfold IncomingLift.responseReadout
+    apply Prod.ext
+    · rfl
+    · funext i j alpha
+      by_cases hj : ut = j
+      · cases hj
+        have hsame :
+            (c.squareOutgoingLift.liftPath alpha
+              ⟨(⟨ui, ut, ur⟩ : Edge R), rfl⟩).val =
+            (c.squareOutgoingLift.liftPath alpha
+              ⟨(⟨vi, ut, vr⟩ : Edge R), rfl⟩).val := by
+          let beta : FinitePath B m ut i := reverseFinitePath alpha
+          calc
+            _ = (let lifted := c.liftOutgoingPath ur beta
+              (⟨lifted.1, i, lifted.2.2⟩ : Edge R)) :=
+                c.squareOutgoingLift_path alpha ur
+            _ = (let sr := (c.psiB ut i).symm beta
+              (⟨sr.1, i, sr.2.2⟩ : Edge R)) :=
+                square_lifts_right_forgetting c ur beta
+            _ = (let lifted := c.liftOutgoingPath vr beta
+              (⟨lifted.1, i, lifted.2.2⟩ : Edge R)) :=
+                (square_lifts_right_forgetting c vr beta).symm
+            _ = _ := (c.squareOutgoingLift_path alpha vr).symm
+        simpa [squareOutgoingLift] using congrArg some hsame
+      · simp [squareOutgoingLift, hj]
 
 /-- A column counts the numbered A edges whose incoming square lift reaches
     its row edge. The proof reconstructs each square from that A edge and its
