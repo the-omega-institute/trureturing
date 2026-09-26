@@ -17116,3 +17116,367 @@ $$
 同步集合下维数、类别判定或指定联合均值的结论。
 
 ## 追加锚（第 99 章后续增补区）
+
+## 100. 精确有限系数扣除后的常数阶信息方差剖面
+
+**定义 100.1（有限系数与同一残差）。** 保持定义 98.1 的完整计数先验后验、
+原精确标量 $T$、同一观测 $Y=T+\sigma_MG$ 及全部原取整，并仍要求
+
+$$
+L_M=\ln(1/\sigma_M)\to\infty,\qquad
+\limsup_M L_M/Q^3<c_q/2.
+\tag{100.1}
+$$
+
+信息量用自然对数，方差为 nats 的平方。沿用第 96、98 章的
+$v_j,\delta=Q^{-1/2},\rho,\gamma,g_0,g_3,\nu=2g_0$，另置
+$g_4=\int_{\mathbb R}\rho(t)^4\,dt$。
+取一个满足原共同截断要求的固定整数 $C_0\ge2$，定义
+
+$$
+c_*=\frac1{64(C_0+1)},\quad D_*=1+\frac{2000}{c_*},\quad
+\mathcal H=\{j\in K_M:|j\delta|\le\sqrt{D_*\ln Q}\}.
+\tag{100.2}
+$$
+
+这只是证明核心，不改变原窗口或完整计数向量。对实际观测数据定义有限和
+
+$$
+\begin{gathered}
+w_j=v_j/\sqrt\delta,\qquad A=\sum_{\mathcal H}w_j,\qquad
+\nu_0=2\sum_{\mathcal H}w_j^2,\\
+\kappa_3=8\sum_{\mathcal H}w_j^3,\quad
+\kappa_4=48\sum_{\mathcal H}w_j^4,\quad
+s=\sigma_M^2,\quad\Lambda=\nu_0+s,\\
+C_x=\frac{A^2\kappa_3}{\Lambda^3}-\frac{2A\nu_0}{\Lambda^2}.
+\end{gathered}
+\tag{100.3}
+$$
+
+这里保留观测到的有限系数及有限噪声，不以极限常数替代发散的扣除项。
+
+**定理 100.2（常数阶剖面）。** 令
+
+$$
+R(y)=\frac{29}{6}-3\sqrt2+
+\left(3\sqrt2+\frac8{\sqrt3}-9\right)\frac{y^2}{\nu}.
+\tag{100.4}
+$$
+
+则对每个固定 $0\le K<\infty$，
+
+$$
+\sup_{|y|\le K}\left|
+V_{{\rm post},x}(y)-V_{{\rm prior},x}
++\frac{A^2}{\Lambda}-C_xy-R(y)\right|\longrightarrow0.
+\tag{100.5}
+$$
+
+收敛为原实际数据概率收敛，对规定大小的固定真实支持一致，
+pair/path 两种原实验分别成立。即对每个 $\eta>0$，超出 $\eta$ 的概率
+对支持及两种实验取上确界后趋零。这里评价同一均匀支持先验定义的有限后验函数，
+不把固定支持条件输出律识别为先验混合输出律。
+
+证明分为实际二阶矩传递、同一 Gaussian 残差的精确倾斜及二阶导数展开。
+第 98 章的最终 $O_{\mathbb P}(1)$ 余项本身不推出这个常数极限。
+
+**核心及四阶剖面。** 对 $J_a(z)=z\ln(z/a)-z+a$，
+$0\le z\le C_0$ 上凸性积分给
+$J_a(z)\ge(z-a)^2/[2(C_0+1)]$，端点由连续性解释；$b$ 项同理。
+在 $k_j\ge aQ^3/2,l_j\ge bQ^3/2$ 的区域，Stirling 前因子为 $O(Q^{-3})$，
+而 $k_j-aQ^3=jQ+O(1)$，故信号行质量满足
+
+$$
+f_j^{\rm sig}\le CQ^{-3}
+\exp\{- (j\delta)^2/[4(C_0+1)]\}.
+\tag{100.6}
+$$
+
+非正则区域至少一个率函数有固定正下界，全部贡献至多
+$Q^Ce^{-cQ^3}$。原混合行均值至多 $Cqf_j^{\rm sig}$，
+实际行比较只乘有界因子，且总有 $p_j(1-p_j)\le1/4$。
+以确定性计数线占用先求实际期望，再比较 Gaussian 网格尾积分，得
+
+$$
+\sup_{S,\mathcal E}\mathbb E_S V_O
+\le Ce^{-c_*D_*\ln Q}+Q^Ce^{-cQ^3},
+\qquad V_O=\sum_{K_M\setminus\mathcal H}v_j.
+\tag{100.7}
+$$
+
+因此在一致高概率数据事件上 $V_O\le Q^{-200}$。
+这不把截断外坏事件上的完整后验无界矩当作已控制。
+固定增大核心只改变多项式因子，核心占用的指数仍为 $c_q$，
+所以第 98 章足够高的固定阶耦合矩仍覆盖整个 (100.1)。
+
+同一良好环境上 $v_j=\delta\rho(j\delta)(1+\epsilon_j)$，
+$\sup_{\mathcal H}|\epsilon_j|=o_{\mathbb P}(\delta)$。
+令 $G_{r,H}=\delta^{1-r}\sum_{\mathcal H}v_j^r$。
+对 $r=4$，
+
+$$
+\left|G_{4,H}-\delta\sum_{\mathcal H}\rho(j\delta)^4\right|
+\le C\sup_{\mathcal H}|\epsilon_j|\,
+\delta\sum_{\mathcal H}\rho(j\delta)^4=o_{\mathbb P}(1).
+$$
+
+导数可积的网格积分误差与确定性 Gaussian 尾给
+$V_H\to\gamma,\nu_0\to\nu,G_{3,H}\to g_3,G_{4,H}\to g_4$。
+因此
+
+$$
+A=O(\delta^{-1/2}),\quad \max w_j=O(\sqrt\delta),\quad
+\kappa_3=O(\sqrt\delta),\quad\kappa_4=O(\delta),\quad
+\sum|w_j|^5=O(\delta^{3/2}).
+\tag{100.8}
+$$
+
+还有至少 $c/\delta$ 个中央系数介于 $c\sqrt\delta$ 与 $C\sqrt\delta$，
+可提供不依赖噪声的 Fourier 平滑。
+
+**实际二阶矩已具有常数精度。** 在第 98 章同一个辅助耦合上，置
+
+$$
+m=|\mathcal H|,\quad S_H=\tfrac12\sum_{\mathcal H}(Z_j^2-1),\quad
+T_0=\sum_{\mathcal H}w_j(Z_j^2-1),\quad Y_0=T_0+\sigma_MG,\quad
+U=S_H+G^2/2.
+$$
+
+第 98 章实际局部密度的质量、一阶／混合一阶、中心二阶误差依次是
+$O(Q^{-5/2}),O(Q^{-3/2}),O(Q^{-1/2})$。
+参考密度在固定紧区间有正下界，一阶有符号密度为 $O(1+A)$，
+中心二阶为 $O(1+A^2)$。归一化二阶矩成本至多
+$C_K[Q^{-1/2}+(1+A^2)Q^{-5/2}]$；
+条件均值平方的成本至多
+
+$$
+C_K(1+A)[Q^{-3/2}+(1+A)Q^{-5/2}]
++C_K[Q^{-3/2}+(1+A)Q^{-5/2}]^2=o(1).
+$$
+
+同一个残差的二次、四次局部矩及与中心信息量的混合矩均已有相应界。
+Bayes 恒等式
+$J_{x,y}=S_x+G^2/2+\frac12\ln(2\pi)-L_M+\ln f_x(y)$
+说明其条件方差恰由这些矩决定。第 98 章已先联合消去相关的外部能量／信息量，
+再支付精确非中心偏移，没有把多项式误差除以 $\sigma_M$。
+由此在同一良好数据事件上直接复用其更强中间估计：
+
+$$
+\sup_{|y|\le K}\left|
+[V_{{\rm post},x}(y)-V_{{\rm prior},x}]
+-[\operatorname{Var}(U\mid Y_0=y)-m/2]\right|
+\le C_KQ^{-1/2}.
+\tag{100.9}
+$$
+
+这是中心平方信息量的局部传递，不是用 TV 传递无界二阶矩。
+
+**包含残差的精确倾斜。** 令 $g_s$ 为 $T_0+\sqrt sG$ 的密度，
+$\ell_s=\ln g_s$、$R_j=g_s^{(j)}/g_s$，撇号表示 $y$ 导数。
+有有限数组恒等式
+
+$$
+\operatorname{Var}(U\mid Y_0=y)-m/2
+=(A+y)^2\ell_s''+s(A+y)R_2'
++\frac{s^2}{4}(R_4-R_2^2)-\frac12.
+\tag{100.10}
+$$
+
+为证明它，取完整中心 Gaussian 半径
+$F=\frac12(\sum Z_j^2+G^2-(m+1))=U-\frac12$，
+以 $e^{\theta F}$ 归一化倾斜所有 $m+1$ 个坐标，$\theta<1$ 近零。
+倾斜后每个坐标等于原坐标除以 $\sqrt{1-\theta}$，
+因此倾斜输出密度恰为
+
+$$
+f_\theta(y)=(1-\theta)
+g_{s(1-\theta)}\bigl(y-\theta(A+y)\bigr).
+\tag{100.11}
+$$
+
+另一方面，
+$\ln f_\theta-\ln g_s=\ln\mathbb E[e^{\theta F}\mid Y_0=y]
+-\ln\mathbb E e^{\theta F}$。
+在零点二次微分，右侧为
+$\operatorname{Var}(F\mid Y_0=y)-(m+1)/2$。
+固定有限数组和正 $s$ 的 Gaussian 指数可积性保证微分。
+左侧微分给
+
+$$
+-1+(A+y)^2\partial_y^2\ell_s
++2s(A+y)\partial_y\partial_s\ell_s+s^2\partial_s^2\ell_s.
+$$
+
+热方程给 $\partial_s\ell_s=R_2/2$、
+$\partial_y\partial_s\ell_s=R_2'/2$、
+$\partial_s^2\ell_s=(R_4-R_2^2)/4$，得到 (100.10)。
+常数 $-1/2$ 来自 Jacobian 与额外噪声坐标，不能只倾斜 $Z$ 后丢弃它。
+这里没有假设 $G$ 在给定输出后仍独立。
+
+**二阶导数展开。** 令 $p_\Lambda$ 为方差 $\Lambda$ 的中心 Gaussian 密度。
+对每个固定导数阶 $j$，特别是 $0\le j\le4$，有
+
+$$
+\left\|g_s^{(j)}-
+\left[p_\Lambda-\frac{\kappa_3}{6}p_\Lambda'''
++\frac{\kappa_4}{24}p_\Lambda^{(4)}
++\frac{\kappa_3^2}{72}p_\Lambda^{(6)}\right]^{(j)}
+\right\|_\infty\le C_j\delta^{3/2},
+\quad 0<s\le1.
+\tag{100.12}
+$$
+
+证明用精确特征函数
+$\widehat g_s(t)=e^{-st^2/2}\prod e^{-itw_j}(1-2itw_j)^{-1/2}$。
+在 $|t|\le\delta^{-1/20}$，其对数为
+
+$$
+-\Lambda t^2/2+\kappa_3(it)^3/6+\kappa_4(it)^4/24
++O(\delta^{3/2}|t|^5).
+$$
+
+指数展开保留三次项的平方，余项由
+$C\delta^{3/2}P_{12}(|t|)e^{-ct^2}$ 控制。
+其余频率利用中央系数得到
+
+$$
+|\widehat g_s(t)|\le(1+c_1\delta t^2)^{-c_2/\delta}.
+\tag{100.13}
+$$
+
+直到 $\delta^{-1/2}$ 它被 $e^{-ct^2}$ 控制；
+更外侧令 $z=\sqrt\delta|t|$，一半幂给 $e^{-c/\delta}$，
+另一半幂支配任意固定阶可积多项式。
+带 $|t|^j$ 的尾积分小于任意固定 $\delta$ 幂，Fourier 反演证明 (100.12)。
+这是观测系数数组的导数上确界估计，不从带符号 TV 展开或弱收敛中求导。
+
+固定紧区间内 $p_\Lambda$ 有正下界，故取对数并两次求导合法。
+令
+$P_3=y^3/\Lambda^3-3y/\Lambda^2$，
+$P_4=y^4/\Lambda^4-6y^2/\Lambda^3+3/\Lambda^2$，
+$P_6=y^6/\Lambda^6-15y^4/\Lambda^5+45y^2/\Lambda^4-15/\Lambda^3$。
+$C^2$ 展开为
+$\ell_s=\ln p_\Lambda+\kappa_3P_3/6+\kappa_4P_4/24+
+\kappa_3^2(P_6-P_3^2)/72+O_K(\delta^{3/2})$，所以
+
+$$
+\begin{aligned}
+\ell_s''={}&-\Lambda^{-1}+\kappa_3y/\Lambda^3\\
+&+\frac{\kappa_4}{2}(y^2/\Lambda^4-\Lambda^{-3})
++\kappa_3^2(\Lambda^{-4}-3y^2/(2\Lambda^5))
++O_K(\delta^{3/2}).
+\end{aligned}
+\tag{100.14}
+$$
+
+同一展开给 $R_2'=2y/\Lambda^2+O_K(\sqrt\delta)$、
+$|R_j|\le C_K$（$0\le j\le4$）。
+
+**有限噪声抵消与常数。** 将上式代入 (100.10)。
+可能发散的有限噪声线性项精确合并为
+
+$$
+-2Ay/\Lambda+2sAy/\Lambda^2=-2A\nu_0y/\Lambda^2.
+\tag{100.15}
+$$
+
+没有丢弃 $sA$。定义有界的观测多项式
+
+$$
+\begin{aligned}
+\mathcal R_x(y)={}&-\tfrac12-y^2/\Lambda
++2A\kappa_3y^2/\Lambda^3\\
+&+\tfrac12A^2\kappa_4(y^2/\Lambda^4-\Lambda^{-3})\\
+&+A^2\kappa_3^2(\Lambda^{-4}-3y^2/(2\Lambda^5)).
+\end{aligned}
+\tag{100.16}
+$$
+
+对 $D_x(y)=V_{{\rm post},x}(y)-V_{{\rm prior},x}+A^2/\Lambda-C_xy$，
+(100.9)–(100.15) 给出实际有限估计
+
+$$
+\sup_{|y|\le K}|D_x(y)-\mathcal R_x(y)|
+\le C_K[Q^{-1/2}+\sqrt\delta+\sigma_M^2].
+\tag{100.17}
+$$
+
+逐项余项如下：$A^2O(\delta^{3/2})=O(\sqrt\delta)$；
+四次／三次平方曲率的 $2Ay,y^2$ 交叉项至多 $O(\sqrt\delta)$；
+剩余三次项为 $O(\sqrt\delta)$；
+$s(A+y)R_2'$ 的误差是 $O(s)$，其有界 Gaussian 剩项也为 $O(s)$；
+$s^2(R_4-R_2^2)$ 为 $O(s^2)$。没有额外要求 $s=o(\sqrt\delta)$。
+
+现在只在有界乘积中取极限：
+
+$$
+A\kappa_3\to8\gamma g_3,\qquad
+A^2\kappa_4\to48\gamma^2g_4,\qquad
+A^2\kappa_3^2\to64\gamma^2g_3^2,\qquad\Lambda\to\nu.
+$$
+
+因此极限为
+
+$$
+\begin{aligned}
+-\tfrac12-\frac{y^2}{\nu}
++\frac{16\gamma g_3y^2}{\nu^3}
++24\gamma^2g_4\left(\frac{y^2}{\nu^4}-\frac1{\nu^3}\right)
++64\gamma^2g_3^2\left(\frac1{\nu^4}-\frac{3y^2}{2\nu^5}\right).
+\end{aligned}
+\tag{100.18}
+$$
+
+对原 $\rho(t)=c_\rho e^{-\kappa t^2/2}$，
+令 $d_\rho=\sqrt{2\pi/\kappa}$，Gaussian 积分给
+$\gamma=c_\rho d_\rho,g_0=c_\rho^2d_\rho/\sqrt2,
+g_3=c_\rho^3d_\rho/\sqrt3,g_4=c_\rho^4d_\rho/2$。
+故
+
+$$
+\frac{\gamma g_3}{\nu^2}=\frac1{2\sqrt3},\quad
+\frac{\gamma^2g_4}{\nu^3}=\frac{\sqrt2}{8},\quad
+\frac{\gamma^2g_3^2}{\nu^4}=\frac1{12}.
+$$
+
+(100.18) 正是 (100.4)。良好数据事件概率对固定支持和实验一致，
+紧的随机常数先限制再放大，得到 (100.5)。有限 Gaussian 混合处处正，
+有限后验矩连续，所以紧区间上确界可用可数稠密集表示，包含 $K=0$。证毕。
+
+**命题 100.3（允许核心内的常数阶不变性）。** 可将 (100.2) 换为任意固定
+对数核心，只要它保留核心占用指数 $c_q$、上述局部剖面，并在一致良好事件上
+$V_O\le Q^{-200}$；例如每个固定 $D'>1000/c_*$ 均满足。
+该类中有限系数扣除改变 $o_{\mathbb P}(1)$，故极限 $R$ 不变。
+
+证明。两个对称对数核心嵌套，差集的方差质量 $t\le Q^{-200}$。
+非负性给
+$|\Delta A|\le\delta^{-1/2}t$、
+$|\Delta\nu_0|\le2\delta^{-1}t^2$、
+$|\Delta\kappa_3|\le8\delta^{-3/2}t^3$。
+两个 $\Lambda$ 使用同一 $s$ 且有正下界，均值定理给
+
+$$
+\left|\Delta\frac{A^2}{\Lambda}\right|
+\le C(\delta^{-1}t+\delta^{-2}t^2)=o(1),
+$$
+
+$$
+|\Delta C_x|
+\le C(\delta^{-1/2}t+\delta^{-3/2}t^2+\delta^{-5/2}t^3)=o(1).
+\tag{100.19}
+$$
+
+乘固定有界 $y$ 不改变结论。原实际先验／后验方差本来不依赖证明核心。
+没有声称任意小的对数截断均满足常数阶要求。证毕。
+
+可用的 $V_H-\gamma,\nu_0-\nu=O_{\mathbb P}(\delta)$
+在发散项 $A^2/\Lambda$ 中仍允许常数量级变化，因此不能把 (100.3)
+替换为其极限等价式。合法慢噪声 $\sigma_M=Q^{-1/16}$ 下，
+删除分母中的 $\sigma_M^2$ 会产生 $\sigma_M^2/\delta$ 量级的发散差异。
+本章不包含零噪声、严格区间端点、增长输出区间、输出尾积分、
+实际数据期望或噪声阈值的必要性结论。换用 bits 时所有信息方差及
+$R$ 除以 $(\ln2)^2$，能量坐标 $y$ 不变。
+成熟倾斜、热方程和 Edgeworth 工具的来源范围见
+[Library 说明](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（第 100 章后续增补区）
