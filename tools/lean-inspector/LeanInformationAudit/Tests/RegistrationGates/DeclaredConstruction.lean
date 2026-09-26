@@ -84,9 +84,21 @@ run_meta do
     (fun ex => pure ex.isMaxHeartbeat)
   let positive ← tryCatchRuntimeEx
     (withCumulativeBudget (pure true)) (fun _ => pure false)
+  let heartbeatDiagnostic ← tryCatchRuntimeEx
+    (do
+      throwMaxHeartbeat `DeclaredConstruction `maxHeartbeats 1
+      pure "unexpected success")
+    exceptionDiagnostic
+  let ordinaryDiagnostic ← tryCatchRuntimeEx
+    (throwError "unclassified_form:test" : MetaM String)
+    exceptionDiagnostic
   for (label, ok) in #[
       ("nested_meta_work_remains_cumulative", rejected),
-      ("bounded_meta_work_accepted", positive)] do
+      ("bounded_meta_work_accepted", positive),
+      ("heartbeat_diagnostic_without_lazy_message", heartbeatDiagnostic ==
+        "incomplete_closure:E8.heartbeats"),
+      ("ordinary_diagnostic_preserved", ordinaryDiagnostic ==
+        "unclassified_form:test")] do
     (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 end LeanInformationAudit.Tests.DeclaredConstruction

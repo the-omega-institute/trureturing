@@ -942,6 +942,11 @@ def withCumulativeBudget (action : MetaM α) : MetaM α :=
       Core.checkMaxHeartbeats "template cumulative budget"
       return result
 
+def exceptionDiagnostic (error : Exception) : MetaM String := do
+  if error.isMaxHeartbeat then return "incomplete_closure:E8.heartbeats"
+  if error.isMaxRecDepth then return "incomplete_closure:E8.recursion_depth"
+  return ← error.toMessageData.toString
+
 /-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
 def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
   let saved ← getEnv
@@ -958,7 +963,7 @@ def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Exce
       modifyEnv fun env => templateIndexExt.addEntry env checkedPlan
       pure (.ok ()))
     (fun error => do
-      let message ← error.toMessageData.toString
+      let message ← exceptionDiagnostic error
       pure (.error (if message.startsWith "unclassified_form:" ||
           message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
         then message else "incomplete_closure:E8.elaboration:" ++ message)))
@@ -1025,7 +1030,7 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
     (TemplateAudit.withCumulativeBudget <| .ok <$> TemplateAudit.checkArguments
       theoremName arguments availableWork constructors indices)
     (fun error => do
-      let message ← error.toMessageData.toString
+      let message ← TemplateAudit.exceptionDiagnostic error
       return .error (if message.startsWith "unclassified_form:" ||
           message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
         then message else "incomplete_closure:E8.argument_elaboration:" ++ message))
