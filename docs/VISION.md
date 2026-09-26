@@ -39,8 +39,8 @@ Computation still constructs counterexamples, searches for proofs and checks
 them. What truth is and how its proofs are obtained remain different questions.
 
 In practice, returning a result means making it available as a premise. A
-theorem states its dependencies so that others can reuse it; a counterexample
-identifies where a route fails so that others can avoid the same mistake.
+theorem can be reused where its assumptions hold; a counterexample refutes a
+claim within its stated scope and can suggest which conditions to investigate next.
 An AI's output can support further reasoning when it returns to shared
 knowledge with inspectable objects, conditions and evidence.
 
@@ -141,11 +141,11 @@ it directly.
 
 The finite-record
 [lookup copier](../D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean)
-illustrates another limit. It achieves zero retrospective loss; when its
-construction depends on the copied records, each fails the model's
-nonanticipation condition. Prospective gain is an independent input, so zero
-loss does not ensure positivity for every such function. This motivates
-scrutiny of test provenance, without establishing a general law of machine
+achieves zero retrospective loss. If its construction uses all copied records,
+each fails nonanticipation: the model requires prior freezing and exclusion
+from construction dependencies. Prospective gain is specified separately, so
+zero loss does not ensure positivity for every gain function. This motivates
+checking test provenance, without establishing a general law of machine
 learning performance.
 
 Evaluate AI research selection on questions withheld from method design.
