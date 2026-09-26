@@ -1,0 +1,3482 @@
+{
+  "schema": "new-null-uniform-affine-bound-independent-v1",
+  "status": "PASS",
+  "new_lean_verification": false,
+  "read_same_round_producer": false,
+  "source_sha256": {
+    "remaining33_global_root_exclusion_certificate.json": "dd00b0e9f6a93713d437394c368a4ef81407cabd5ecb931ae7753926d9d8c3e4",
+    "joint_square_pair_225_star_certificate.json": "cbdc3903174d5640ea6518160abaaa9ac567424f9f8afc717128e1202f378be5"
+  },
+  "driver_sha256": "af6b6a2365aca19b82353d17181c5d9aafe8687cc122e29c59d2761cacb55398",
+  "edge_primes": [
+    [
+      7,
+      11
+    ],
+    [
+      7,
+      13
+    ],
+    [
+      7,
+      17
+    ],
+    [
+      7,
+      19
+    ],
+    [
+      11,
+      13
+    ],
+    [
+      11,
+      17
+    ],
+    [
+      11,
+      19
+    ],
+    [
+      13,
+      17
+    ],
+    [
+      13,
+      19
+    ],
+    [
+      17,
+      19
+    ]
+  ],
+  "strict_matching_box_margin": "754111121894423/876550251053789",
+  "exact_response_scale": 8462661375168000,
+  "exact_fee_scale": 326858176472093392896000000,
+  "common_gate_denominator": 1867110794002055719193168440354406400000000000,
+  "uniform_gate_lower": "1/100",
+  "weaker_inherited_gate": "193/100000",
+  "geometry_results": [
+    {
+      "null_leaves": [
+        0,
+        5
+      ],
+      "live_cell_count": 85,
+      "quinary_corner_representatives": [
+        0,
+        6,
+        10,
+        15
+      ],
+      "represented_weak_corners": 95,
+      "computed_weak_corners": 20,
+      "role_count": 40,
+      "minimum": {
+        "square7_roles": [
+          1,
+          2,
+          3
+        ],
+        "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+        "minimum_gate_decimal": 0.017956595955204956,
+        "weak_corner": [
+          1,
+          6
+        ],
+        "source_lower_at_minimum": "396301231377157/829672683840000",
+        "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+        "edge_lower_bound_leaf_witnesses": [
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "roles": [
+        {
+          "square7_roles": [
+            0,
+            0,
+            1
+          ],
+          "minimum_gate": "10676817082651137818021599/470284225262582290560000000",
+          "minimum_gate_decimal": 0.02270290285983919,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "186106001776880929/380819761882560000",
+          "fee_upper_at_minimum": "4794069018055346387734172627/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            2
+          ],
+          "minimum_gate": "10676817082651137818021599/470284225262582290560000000",
+          "minimum_gate_decimal": 0.02270290285983919,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "186106001776880929/380819761882560000",
+          "fee_upper_at_minimum": "4794069018055346387734172627/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            3
+          ],
+          "minimum_gate": "234150336246015115924613617/10346252955776810392320000000",
+          "minimum_gate_decimal": 0.02263141421796359,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "12377480373756703/25387984125504000",
+          "fee_upper_at_minimum": "1195704097818616763064697727/2586563238944202598080000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            4
+          ],
+          "minimum_gate": "234150336246015115924613617/10346252955776810392320000000",
+          "minimum_gate_decimal": 0.02263141421796359,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "12377480373756703/25387984125504000",
+          "fee_upper_at_minimum": "1195704097818616763064697727/2586563238944202598080000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            5
+          ],
+          "minimum_gate": "234150336246015115924613617/10346252955776810392320000000",
+          "minimum_gate_decimal": 0.02263141421796359,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "12377480373756703/25387984125504000",
+          "fee_upper_at_minimum": "1195704097818616763064697727/2586563238944202598080000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            1
+          ],
+          "minimum_gate": "8697916520590405672028621/397932805991415784320000000",
+          "minimum_gate_decimal": 0.021857751835565015,
+          "weak_corner": [
+            2,
+            10
+          ],
+          "source_lower_at_minimum": "185836107991011281/380819761882560000",
+          "fee_upper_at_minimum": "368886160820453309343284423/795865611982831568640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            2
+          ],
+          "minimum_gate": "8697916520590405672028621/397932805991415784320000000",
+          "minimum_gate_decimal": 0.021857751835565015,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "185836107991011281/380819761882560000",
+          "fee_upper_at_minimum": "368886160820453309343284423/795865611982831568640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            3
+          ],
+          "minimum_gate": "3467787537892932790782809/159173122396566313728000000",
+          "minimum_gate_decimal": 0.021786263193689415,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "16853846529134627/34619978352960000",
+          "fee_upper_at_minimum": "18401028707250052638412753/39793280599141578432000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            4
+          ],
+          "minimum_gate": "3467787537892932790782809/159173122396566313728000000",
+          "minimum_gate_decimal": 0.021786263193689415,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "16853846529134627/34619978352960000",
+          "fee_upper_at_minimum": "18401028707250052638412753/39793280599141578432000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            5
+          ],
+          "minimum_gate": "3467787537892932790782809/159173122396566313728000000",
+          "minimum_gate_decimal": 0.021786263193689415,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "16853846529134627/34619978352960000",
+          "fee_upper_at_minimum": "18401028707250052638412753/39793280599141578432000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            1
+          ],
+          "minimum_gate": "108567481388100525336233123/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.020986821383964342,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "16858209774644123/34619978352960000",
+          "fee_upper_at_minimum": "252307138503562446933542981/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            2
+          ],
+          "minimum_gate": "108567481388100525336233123/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.020986821383964342,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "16858209774644123/34619978352960000",
+          "fee_upper_at_minimum": "252307138503562446933542981/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            3
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            4
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            5
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            1
+          ],
+          "minimum_gate": "108567481388100525336233123/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.020986821383964342,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "16858209774644123/34619978352960000",
+          "fee_upper_at_minimum": "252307138503562446933542981/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            2
+          ],
+          "minimum_gate": "108567481388100525336233123/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.020986821383964342,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "16858209774644123/34619978352960000",
+          "fee_upper_at_minimum": "252307138503562446933542981/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            3
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            4
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            5
+          ],
+          "minimum_gate": "6182723520111175274302991/295607227307908868352000000",
+          "minimum_gate_decimal": 0.02091533274208874,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "527055587893319/1084956586560000",
+          "fee_upper_at_minimum": "119564575119670178906548373/258656323894420259808000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            1
+          ],
+          "minimum_gate": "21962842363945395346509043/1034625295577681039232000000",
+          "minimum_gate_decimal": 0.02122782272753392,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "9664314492785279/20043145362240000",
+          "fee_upper_at_minimum": "55790672630447322263206319/121720623009138945792000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            2
+          ],
+          "minimum_gate": "21962842363945395346509043/1034625295577681039232000000",
+          "minimum_gate_decimal": 0.02122782272753392,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "9664314492785279/20043145362240000",
+          "fee_upper_at_minimum": "55790672630447322263206319/121720623009138945792000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            3
+          ],
+          "minimum_gate": "407076994038706320979276643/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.019672677431079803,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "3202946657156327/6681048454080000",
+          "fee_upper_at_minimum": "9459630935238597425846572867/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            4
+          ],
+          "minimum_gate": "407076994038706320979276643/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.019672677431079803,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "3202946657156327/6681048454080000",
+          "fee_upper_at_minimum": "9459630935238597425846572867/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            5
+          ],
+          "minimum_gate": "407076994038706320979276643/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.019672677431079803,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "3202946657156327/6681048454080000",
+          "fee_upper_at_minimum": "9459630935238597425846572867/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            1
+          ],
+          "minimum_gate": "15063162668319962067239957/739018068269772170880000000",
+          "minimum_gate_decimal": 0.020382671703259744,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "61117360525683551/126939920627520000",
+          "fee_upper_at_minimum": "4743658246198569026101061987/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            2
+          ],
+          "minimum_gate": "15063162668319962067239957/739018068269772170880000000",
+          "minimum_gate_decimal": 0.020382671703259744,
+          "weak_corner": [
+            2,
+            10
+          ],
+          "source_lower_at_minimum": "61117360525683551/126939920627520000",
+          "fee_upper_at_minimum": "4743658246198569026101061987/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            3
+          ],
+          "minimum_gate": "389588701472757351931814579/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.018827526406805628,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "182298065672040991/380819761882560000",
+          "fee_upper_at_minimum": "9462533080459690693303622611/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            4
+          ],
+          "minimum_gate": "389588701472757351931814579/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.018827526406805628,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "182298065672040991/380819761882560000",
+          "fee_upper_at_minimum": "9462533080459690693303622611/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            5
+          ],
+          "minimum_gate": "389588701472757351931814579/20692505911553620784640000000",
+          "minimum_gate_decimal": 0.018827526406805628,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "182298065672040991/380819761882560000",
+          "fee_upper_at_minimum": "9462533080459690693303622611/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            1
+          ],
+          "minimum_gate": "100936705298664986070540749/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.01951174125165907,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "7318251244284989/15232790475302400",
+          "fee_upper_at_minimum": "249577567742124341914509533/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            2
+          ],
+          "minimum_gate": "100936705298664986070540749/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.01951174125165907,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "7318251244284989/15232790475302400",
+          "fee_upper_at_minimum": "249577567742124341914509533/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            3
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            4
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            5
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            1
+          ],
+          "minimum_gate": "100936705298664986070540749/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.01951174125165907,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "7318251244284989/15232790475302400",
+          "fee_upper_at_minimum": "249577567742124341914509533/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            2
+          ],
+          "minimum_gate": "100936705298664986070540749/5173126477888405196160000000",
+          "minimum_gate_decimal": 0.01951174125165907,
+          "weak_corner": [
+            2,
+            6
+          ],
+          "source_lower_at_minimum": "7318251244284989/15232790475302400",
+          "fee_upper_at_minimum": "249577567742124341914509533/544539629251411073280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            3
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            4
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            5
+          ],
+          "minimum_gate": "4825545038369589069237127/268733843007189880320000000",
+          "minimum_gate_decimal": 0.017956595955204956,
+          "weak_corner": [
+            1,
+            6
+          ],
+          "source_lower_at_minimum": "396301231377157/829672683840000",
+          "fee_upper_at_minimum": "9459164162263277633852860891/20692505911553620784640000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "null_leaves": [
+        3,
+        0
+      ],
+      "live_cell_count": 83,
+      "quinary_corner_representatives": [
+        1,
+        5,
+        10,
+        15
+      ],
+      "represented_weak_corners": 95,
+      "computed_weak_corners": 20,
+      "role_count": 40,
+      "minimum": {
+        "square7_roles": [
+          0,
+          1,
+          0
+        ],
+        "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+        "minimum_gate_decimal": 0.010125181649713714,
+        "weak_corner": [
+          4,
+          10
+        ],
+        "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+        "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+        "edge_lower_bound_leaf_witnesses": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      "roles": [
+        {
+          "square7_roles": [
+            0,
+            0,
+            0
+          ],
+          "minimum_gate": "126704582971229590949077697/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.01347106453554596,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "288769401557342677/634699603137600000",
+          "fee_upper_at_minimum": "6489290647887003806313076589/14780361365395443417600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            1
+          ],
+          "minimum_gate": "126704582971229590949077697/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.01347106453554596,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "288769401557342677/634699603137600000",
+          "fee_upper_at_minimum": "6489290647887003806313076589/14780361365395443417600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            2
+          ],
+          "minimum_gate": "126704582971229590949077697/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.01347106453554596,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "288769401557342677/634699603137600000",
+          "fee_upper_at_minimum": "6489290647887003806313076589/14780361365395443417600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            4
+          ],
+          "minimum_gate": "88131959726075129565466261/6466408097360506495200000000",
+          "minimum_gate_decimal": 0.013629198528631268,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "173738721817725769/380819761882560000",
+          "fee_upper_at_minimum": "3252685032540866751836913991/7390180682697721708800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            5
+          ],
+          "minimum_gate": "88131959726075129565466261/6466408097360506495200000000",
+          "minimum_gate_decimal": 0.013629198528631268,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "173738721817725769/380819761882560000",
+          "fee_upper_at_minimum": "3252685032540866751836913991/7390180682697721708800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            0
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            1
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            2
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            4
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            5
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            5,
+            10
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            0
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            1
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            2
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            4
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            5
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            0
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            1
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            2
+          ],
+          "minimum_gate": "1047576905711276274236418259/103462529557768103923200000000",
+          "minimum_gate_decimal": 0.010125181649713714,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "859003648276033783/1904098809412800000",
+          "fee_upper_at_minimum": "45376440391131173568004546211/103462529557768103923200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            4
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            5
+          ],
+          "minimum_gate": "132992231080619105855502971/12932816194721012990400000000",
+          "minimum_gate_decimal": 0.010283315642799022,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "287129684230878199/634699603137600000",
+          "fee_upper_at_minimum": "22744498155747140724764902981/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            0
+          ],
+          "minimum_gate": "468309036385471212601643/29919759848978630400000000",
+          "minimum_gate_decimal": 0.01565216561728044,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "2189983523194927/4772177467200000",
+          "fee_upper_at_minimum": "6594049195894791393708761/14959879924489315200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            1
+          ],
+          "minimum_gate": "468309036385471212601643/29919759848978630400000000",
+          "minimum_gate_decimal": 0.01565216561728044,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "2189983523194927/4772177467200000",
+          "fee_upper_at_minimum": "6594049195894791393708761/14959879924489315200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            2
+          ],
+          "minimum_gate": "468309036385471212601643/29919759848978630400000000",
+          "minimum_gate_decimal": 0.01565216561728044,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "2189983523194927/4772177467200000",
+          "fee_upper_at_minimum": "6594049195894791393708761/14959879924489315200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            4
+          ],
+          "minimum_gate": "370035457925481621120680647/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.014306066534701262,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "872367248905599737/1904098809412800000",
+          "fee_upper_at_minimum": "22833049136474163730120944871/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            5
+          ],
+          "minimum_gate": "370035457925481621120680647/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.014306066534701262,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "872367248905599737/1904098809412800000",
+          "fee_upper_at_minimum": "22833049136474163730120944871/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            0
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            1
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            2
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            4
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            5,
+            10
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            5
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            4,
+            10
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            0
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            1
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            2
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            4
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            5
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            0
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            1
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            2
+          ],
+          "minimum_gate": "636619570424355113486522543/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.012306282731448197,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "6931990954870253/15232790475302400",
+          "fee_upper_at_minimum": "11388962523682631050675700291/25865632389442025980800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            4
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            5,
+            5
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            5
+          ],
+          "minimum_gate": "5154401476043987537633119/470284225262582290560000000",
+          "minimum_gate_decimal": 0.010960183648869016,
+          "weak_corner": [
+            4,
+            5
+          ],
+          "source_lower_at_minimum": "96118076945511721/211566534379200000",
+          "fee_upper_at_minimum": "4561750412887047438405489983/10346252955776810392320000000",
+          "edge_lower_bound_leaf_witnesses": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "null_leaves": [
+        0,
+        0
+      ],
+      "live_cell_count": 87,
+      "quinary_corner_representatives": [
+        1,
+        5,
+        10,
+        15
+      ],
+      "represented_weak_corners": 95,
+      "computed_weak_corners": 20,
+      "role_count": 40,
+      "minimum": {
+        "square7_roles": [
+          1,
+          1,
+          3
+        ],
+        "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+        "minimum_gate_decimal": 0.027516675673476383,
+        "weak_corner": [
+          1,
+          10
+        ],
+        "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+        "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+        "edge_lower_bound_leaf_witnesses": [
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ]
+      },
+      "roles": [
+        {
+          "square7_roles": [
+            0,
+            0,
+            1
+          ],
+          "minimum_gate": "833356263327423648845764049/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.03221866957591137,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "949823629428606841/1904098809412800000",
+          "fee_upper_at_minimum": "23999434928037842084593553747/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            2
+          ],
+          "minimum_gate": "833356263327423648845764049/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.03221866957591137,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "949823629428606841/1904098809412800000",
+          "fee_upper_at_minimum": "23999434928037842084593553747/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            3
+          ],
+          "minimum_gate": "88150052850248089730608399/2722698146257055366400000000",
+          "minimum_gate_decimal": 0.03237599179748575,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "3717837038221511/7467054154560000",
+          "fee_upper_at_minimum": "272083265740059303081983513/587855281578227863200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            4
+          ],
+          "minimum_gate": "88150052850248089730608399/2722698146257055366400000000",
+          "minimum_gate_decimal": 0.03237599179748575,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "3717837038221511/7467054154560000",
+          "fee_upper_at_minimum": "272083265740059303081983513/587855281578227863200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            0,
+            5
+          ],
+          "minimum_gate": "88150052850248089730608399/2722698146257055366400000000",
+          "minimum_gate_decimal": 0.03237599179748575,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "3717837038221511/7467054154560000",
+          "fee_upper_at_minimum": "272083265740059303081983513/587855281578227863200000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            1
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            2,
+            10
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            2
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            3
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            4
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            1,
+            5
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            1
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            2
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            3
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            4
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            2,
+            5
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            1
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            2
+          ],
+          "minimum_gate": "22151973438437198405630041/739018068269772170880000000",
+          "minimum_gate_decimal": 0.029974873943610824,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "10386613736876867/20924162740800000",
+          "fee_upper_at_minimum": "685430831045604852913692157/1478036136539544341760000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            3
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            4
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            0,
+            3,
+            5
+          ],
+          "minimum_gate": "1558776618190470295584134353/51731264778884051961600000000",
+          "minimum_gate_decimal": 0.030132196165185202,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "134772380767667623/272014115630400000",
+          "fee_upper_at_minimum": "5983492885920886609650055223/12932816194721012990400000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            1
+          ],
+          "minimum_gate": "73367187112878358187876497/2351421126312911452800000000",
+          "minimum_gate_decimal": 0.03120121117050606,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "938291089699864469/1904098809412800000",
+          "fee_upper_at_minimum": "23740436887684768635781184171/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            2
+          ],
+          "minimum_gate": "73367187112878358187876497/2351421126312911452800000000",
+          "minimum_gate_decimal": 0.03120121117050606,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "938291089699864469/1904098809412800000",
+          "fee_upper_at_minimum": "23740436887684768635781184171/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            3
+          ],
+          "minimum_gate": "279917603829732347096489461/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.029760471305776935,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "311080969420027117/634699603137600000",
+          "fee_upper_at_minimum": "2492479595088109144266724501/5445396292514110732800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            4
+          ],
+          "minimum_gate": "279917603829732347096489461/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.029760471305776935,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "311080969420027117/634699603137600000",
+          "fee_upper_at_minimum": "2492479595088109144266724501/5445396292514110732800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            0,
+            5
+          ],
+          "minimum_gate": "279917603829732347096489461/9405684505251645811200000000",
+          "minimum_gate_decimal": 0.029760471305776935,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "311080969420027117/634699603137600000",
+          "fee_upper_at_minimum": "2492479595088109144266724501/5445396292514110732800000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            1
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            2
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            2,
+            10
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            3
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            4
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            1,
+            5
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            10
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            1
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            2
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            3
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            4
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            2,
+            5
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            1
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            2
+          ],
+          "minimum_gate": "749001865259540235417928853/25865632389442025980800000000",
+          "minimum_gate_decimal": 0.02895741553820551,
+          "weak_corner": [
+            2,
+            5
+          ],
+          "source_lower_at_minimum": "12448657471027367/25387984125504000",
+          "fee_upper_at_minimum": "23731081046243096403166855919/51731264778884051961600000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            3
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            4
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        {
+          "square7_roles": [
+            1,
+            3,
+            5
+          ],
+          "minimum_gate": "43799151849208753837946671/1591731223965663137280000000",
+          "minimum_gate_decimal": 0.027516675673476383,
+          "weak_corner": [
+            1,
+            5
+          ],
+          "source_lower_at_minimum": "928601128887269407/1904098809412800000",
+          "fee_upper_at_minimum": "728283086519857373474447831/1591731223965663137280000000",
+          "edge_lower_bound_leaf_witnesses": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      ]
+    }
+  ],
+  "computed_corner_count": 2400,
+  "literal_selector_count": 1341600,
+  "complete_mode_support_maxima": 1228800,
+  "policies": [
+    {
+      "kind": "RS",
+      "K": 46,
+      "fee": "27592718249033437024994547118821047767430582678234601882096494191705183901269422123064691408341210003243653863428103624967740312996255654011408799043905556247447824210082068876993943231143778905943777557816054199/14716272514563427007056108870035954267934715741440075198112558175306871351301093341653481619661913197474533448077510006008801670404767744000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "projected_reserve_at_inherited_gate": "809687704073977098623743000348343969683418702744743250260743086637077806741688026326528117606282467882195691361490686629246910884946091908591200956094443752552175789917931123006056768856221094056222442183945801/609219547838208222556229249204152097071673739276016820472257103421906904694939687547327969362255393482881396644393919650172075435955847168000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "strict_density_denominator": 2000000
+    },
+    {
+      "kind": "elementary",
+      "K": 68,
+      "fee": "4496003644629066490445025291455000601676087206029685766112349855302969537682802457010904858456627708571575964267999187548612616285969518237427496058555394185454233773501678961797676062096141835319953373491434739060113847152706420138858760594913601116073623464464173067725468096116105314902306946378627487416081279889850684544026394996754603531950213083994389155346274775621269410538848988214422263233325517105169902919899250453275971422864824491649683/2363021031601349217156097748342619139604707155067168457976684717411031052675817985105279571784381395585640781246652931553629593736753665214756742257468276671064212493947822584388694671416019882823128516811643637011390676108747264488604972773798013877706019302893226535315946985174675944143946536060918111636612779562315273425834410861280836451727741758820919146692754641256448000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "projected_reserve_at_inherited_gate": "64626946361537498666243362846254337760997603249949357782651649300320393981526254242284715087228384908710743538040970349892499625965055627053016498358379789699696339817618626072504653736776538528684663955037480371870157737175800324148836858516565667898993790119754145434309585271019257295509868218944468042581384665417793167834017965517410819884328510529984797770741682003675229461151011785577736766674482894830097080100749546724028577135175508350317/97823589701787840992751647003591793307930592948414737331039290718232342747809695084103934266880848376327970927657922481855007977753166321737419405627538205504407593614025535315419153595290346484727313563901697829080601068271431836607209826882676028302071557044875748407003901829962192770367582452060214949966712957443905310964883115699922274000144029952894735913368296888467456000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "strict_density_denominator": 2000000
+    }
+  ],
+  "checks": {
+    "source_pin": 2,
+    "strict_whole_box": 1,
+    "baseline_and_max_positive": 128,
+    "negative_edge_derivative_box": 320,
+    "negative_linear_coefficient": 40,
+    "positive_quadratic_coefficient": 60,
+    "matching_expansion_exact": 4096,
+    "affine_source_lower": 4096,
+    "exact_response_integer_scale": 168,
+    "complete_fee_inventory": 1,
+    "exact_fee_integer_scale": 513,
+    "corner_orbit_census": 3,
+    "unary_decrement_inventory": 120,
+    "corner_weights_normalized": 2400,
+    "edge_loss_uniform_over_actual_leaf": 120000,
+    "literal_selector_mass": 1341600,
+    "all_original_selectors_retained": 38400,
+    "uniform_public_gate": 2400,
+    "all_forty_live_roles": 3,
+    "complete_corner_count": 1,
+    "complete_literal_selector_count": 1,
+    "complete_mode_support_count": 1,
+    "inherited_complete_three_parent_policy": 2
+  },
+  "check_count": 1514356,
+  "scope": "All labelled edge layouts, every40 live square7 role, and all95 weak corners in each of the three declared null geometries. The source lower bound and query upper bounds apply to the same fixed actual layout. No large-layout enumeration, independent-actual-parent assumption, incidence release, unrestricted-parent conclusion or new Lean verification."
+}
