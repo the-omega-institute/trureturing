@@ -492,7 +492,7 @@ theorem paired_angle_demand
     linarith only [ht_lower, hq_lower, hbase_sum]
 
   have htan_eta_sq : T * t = q := by
-    dsimp [T, t, q]
+    dsimp [T, q]
     rw [htan_eta, htan_relation_eq]
     field_simp [hL.ne', (by linarith : r + 1 ≠ 0), hk.ne', hM.ne']
     ring
@@ -500,7 +500,7 @@ theorem paired_angle_demand
     have hone := Real.one_add_tan_sq_mul_cos_sq_eq_one (ne_of_gt hcos_eta)
     dsimp [T] at hone ⊢
     apply (eq_div_iff (by positivity : 1 + Real.tan eta ^ 2 ≠ 0)).2
-    nlinarith [hone]
+    nlinarith only [hone]
   have hcos_sq_bound : Real.cos eta ^ 2 < 2 * t / (1 + t) := by
     have hden1 : 0 < 1 + t := by linarith [ht_pos]
     have hden2 : 0 < 1 + T := by dsimp [T]; positivity
