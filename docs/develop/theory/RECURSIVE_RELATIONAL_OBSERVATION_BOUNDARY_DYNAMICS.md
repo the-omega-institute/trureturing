@@ -15689,3 +15689,297 @@ $$
 这些指数与常数尚未被显式计算，故本节没有给出可直接代入实验预算的数值误差证书。它给出的增强是：同一有限代数合同将已证的统一渐近轮廓与近优参数定位升级为某个幂次界；精确求值、最优幂次及数值常数仍需要进一步求解。
 
 ## 追加锚（本行以下为增补区）
+
+## 78. 切锥修复的显式正则化与三分之一次统一误差界
+
+### 78.1 将一个切向修复变成真实的小步因果修复
+
+第 77 节通过半代数结构证明某个正幂次速率存在。对当前三个量子比特模型，还能直接构造真实修复，得到一份不依赖消元输出的显式界。以下仍使用第 70 节的 $R_0=ww^*$、$w=x+y$、$P_0=I-ww^*/2$、完整 tester 范数 $N$ 与同一个因果修复集合 $\mathcal C$。
+
+令
+
+$$
+J=\frac{I_8}{4}-R_0.
+\tag{78.1}
+$$
+
+相对于单位向量 $w/\sqrt2$ 及其正交补，$J$ 的两个块为 $-7/4$ 与 $I_7/4$，且
+
+$$
+\operatorname{Tr}_D J
+=I_A\otimes\left(\frac{I_B}{2}-|0\rangle\langle0|\right),
+\qquad \|J\|_1=\frac72,
+\qquad N(J)\le7.
+\tag{78.2}
+$$
+
+最后一项使用第 70 节的 $N(X)\le2\|X\|_1$。
+
+**引理 78.1（显式有限步修复）。** 若 $K\in\mathcal T$、$\|K\|_{\rm op}\le M$、$M\ge1$ 且 $0<\varepsilon M\le1/8$，则取
+
+$$
+\delta=4\varepsilon M^2,\qquad
+S=R_0+\varepsilon(K+\delta J)
+\tag{78.3}
+$$
+
+有 $S\in\mathcal C$，并且
+
+$$
+N\left(\frac{S-R_0}{\varepsilon}-K\right)
+\le28\varepsilon M^2.
+\tag{78.4}
+$$
+
+证明。切锥的因果偏迹条件及式（78.2）使 $S$ 的偏迹为 $I_A\otimes\sigma$，其中 $\sigma$ 厄米、迹一。只需证明 $S\succeq0$；此后偏迹正性自动给 $\sigma\succeq0$。
+
+将 $K$ 在 $\mathbb Cw\oplus w^\perp$ 的正交单位坐标中写为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&B\end{pmatrix},
+\qquad B\succeq0,\quad |a|\le M,\quad\|b\|\le M.
+$$
+
+$S$ 的左上标量块为
+
+$$
+A=2+\varepsilon a-\frac74\varepsilon\delta
+\ge2-\varepsilon M-7(\varepsilon M)^2>1,
+$$
+
+其中最后一步由 $\varepsilon M\le1/8$ 得到。右下块为
+
+$$
+\varepsilon B+\frac{\varepsilon\delta}{4}I
+=\varepsilon B+\varepsilon^2M^2I.
+$$
+
+因此对应 Schur 补满足
+
+$$
+\varepsilon B+\varepsilon^2M^2I
+-\frac{\varepsilon^2}{A}bb^*\succeq0.
+$$
+
+故 $S\succeq0$，从而为真实归一化因果修复。最后由式（78.2）有 $N(\delta J)\le7\delta=28\varepsilon M^2$。$\square$
+
+该引理控制的是一个已经给定的完整切向修复，不把一般半正定切锥误当作有限步可行域。
+
+### 78.2 紧尺度上的可计算余项
+
+定义
+
+$$
+\mathcal D_\varepsilon=(\mathcal C-R_0)/\varepsilon,
+\qquad
+X_{r,\varepsilon}=
+\frac{R_{1-r\varepsilon,\varepsilon}-R_0}{\varepsilon}.
+$$
+
+**引理 78.2（有界尺度的显式统一界）。** 若 $R\ge0$、$0\le r\le R$、$0<\varepsilon\le1/2$ 且
+
+$$
+9\varepsilon(R+1)\le\frac18,
+$$
+
+则在该族有效的参数范围内，
+
+$$
+\left|
+\frac{e(1-r\varepsilon,\varepsilon)}{\varepsilon}-\gamma_r
+\right|
+\le2280\varepsilon(R+1)^2.
+\tag{78.5}
+$$
+
+$r=0$ 时使用第 71 节的端点 $a=1$ 定义，其余情形均在原参数域内。
+
+证明。首先由式（76.1）及秩一算子的迹范数，
+
+$$
+\begin{aligned}
+\|H_r\|_1
+&\le\sqrt{2(r^2+1)}+2\sqrt{2r}+r+1\\
+&\le(1+2\sqrt2)(r+1)<4(r+1).
+\end{aligned}
+\tag{78.6}
+$$
+
+取达到 $\gamma_r$ 的 $K_r\in\mathcal T$。第 70—73 节的范数下界与 $\gamma_r\le9/8$ 给
+
+$$
+\|H_r-K_r\|_1\le4N(H_r-K_r)\le\frac92.
+$$
+
+所以
+
+$$
+\|K_r\|_{\rm op}\le\|K_r\|_1
+\le4(r+1)+\frac92\le9(R+1)=:M.
+\tag{78.7}
+$$
+
+应用引理 78.1，得到某个 $K_{r,\varepsilon}\in\mathcal D_\varepsilon$，满足
+
+$$
+N(K_{r,\varepsilon}-K_r)
+\le28\varepsilon M^2=2268\varepsilon(R+1)^2.
+$$
+
+而 $\mathcal D_\varepsilon\subset\mathcal T$。因此
+
+$$
+0\le\operatorname{dist}_N(H_r,\mathcal D_\varepsilon)-\gamma_r
+\le2268\varepsilon(R+1)^2.
+\tag{78.8}
+$$
+
+还需在同一范围控制实际过程的一阶余项。实际两列为
+
+$$
+\begin{aligned}
+r_0&=\sqrt{1-r\varepsilon}\,x+\sqrt{1-\varepsilon}\,y
+       +\varepsilon\sqrt r\,z,\\
+r_1&=\sqrt\varepsilon\left(\sqrt r\,x'-\sqrt{1-r\varepsilon}\,z'\right).
+\end{aligned}
+$$
+
+令
+
+$$
+v=-\frac r2x-\frac12y+\sqrt r\,z,
+\qquad t_0=\sqrt r\,x'-z',
+$$
+
+并写 $r_0=w+\varepsilon v+d$。对 $0\le s\le1/2$，
+
+$$
+\left|\sqrt{1-s}-1+\frac s2\right|
+=\frac{s^2}{2(1+\sqrt{1-s})^2}\le\frac{s^2}{2}.
+$$
+
+本节假设给 $\varepsilon(R+1)\le1/2$，故
+
+$$
+\|v\|\le r+1,\qquad
+\|d\|\le\frac12\varepsilon^2(r+1)^2.
+$$
+
+于是第一列外积满足
+
+$$
+\begin{aligned}
+\|r_0r_0^*-R_0-\varepsilon(vw^*+wv^*)\|_1
+&\le2\|w\|\|d\|+\|\varepsilon v+d\|^2\\
+&\le\left(\sqrt2+\frac{25}{16}\right)
+\varepsilon^2(r+1)^2\\
+&<3\varepsilon^2(r+1)^2.
+\end{aligned}
+\tag{78.9}
+$$
+
+对第二列，置 $d_1=(1-\sqrt{1-r\varepsilon})z'$，则 $\|d_1\|\le r\varepsilon$、$r_1=\sqrt\varepsilon(t_0+d_1)$。因此
+
+$$
+\begin{aligned}
+\|r_1r_1^*-\varepsilon t_0t_0^*\|_1
+&\le\varepsilon\left(2\sqrt{r+1}\,r\varepsilon+r^2\varepsilon^2\right)\\
+&\le\frac52\varepsilon^2(r+1)^2.
+\end{aligned}
+$$
+
+一阶和正是 $H_r=vw^*+wv^*+t_0t_0^*$。合并两项、再用 $N(X)\le2\|X\|_1$，得到
+
+$$
+N(X_{r,\varepsilon}-H_r)
+\le12\varepsilon(R+1)^2.
+\tag{78.10}
+$$
+
+距离函数对自身范数一-Lipschitz，且 $e(1-r\varepsilon,\varepsilon)/\varepsilon=operatorname{dist}_N(X_{r,\varepsilon},\mathcal D_\varepsilon)$。将式（78.8）与（78.10）相加，得到式（78.5）。$\square$
+
+### 78.3 全参数范围的显式三分之一次界
+
+**定理 78.3（全压缩范围的三分之一次界）。** 对
+
+$$
+0<\varepsilon\le2^{-12}
+$$
+
+有
+
+$$
+\sup_{0<a<1}
+\left|
+\frac{e(a,\varepsilon)}{\varepsilon}
+-\gamma_{(1-a)/\varepsilon}
+\right|
+\le3000\varepsilon^{1/3}.
+\tag{78.11}
+$$
+
+证明。取 $R=\varepsilon^{-1/3}\ge16$。则
+
+$$
+9\varepsilon(R+1)
+=9(\varepsilon^{2/3}+\varepsilon)
+\le\frac{153}{4096}<\frac18,
+$$
+
+所以引理 78.2 适用于 $0<r=(1-a)/\varepsilon\le R$。由 $R\ge8$ 有 $R+1\le9R/8$，于是
+
+$$
+2280\varepsilon(R+1)^2
+\le\frac{2280\cdot81}{64}\varepsilon^{1/3}
+<3000\varepsilon^{1/3}.
+$$
+
+对 $r\ge R$，第 74 节的实际修复上界与第 71 节的系数尾界为
+
+$$
+1\le\frac{e(a,\varepsilon)}{\varepsilon}\le1+\frac{16}{r},
+\qquad
+1\le\gamma_r\le1+\frac{12}{r},
+$$
+
+它们都对 $r\ge8$ 成立。两者同在 $[1,1+16/r]$ 中，因此差至多
+
+$$
+\frac{16}{r}\le\frac{16}{R}=16\varepsilon^{1/3}.
+$$
+
+两区间覆盖全部 $0<a<1$，得到统一界。$\square$
+
+### 78.4 最大参数的显式有限区间与最坏误差余项
+
+**推论 78.4。** 第 76 节的最大参数集满足
+
+$$
+\mathcal M\subset\left(\frac1{4000000},4800\right).
+\tag{78.12}
+$$
+
+因此对 $0<\varepsilon\le2^{-13}$，
+
+$$
+\left|E_*(\varepsilon)-\Gamma\right|
+\le3000\varepsilon^{1/3},
+\qquad
+\left|\sup_{0<a<1}e(a,\varepsilon)-\Gamma\varepsilon\right|
+\le3000\varepsilon^{4/3}.
+\tag{78.13}
+$$
+
+证明。第 71 节的连续性模给
+
+$$
+\gamma_r\le1+2r+4\sqrt r.
+$$
+
+当 $0<r\le1/4000000$ 时，右侧至多 $1+1/2000000+1/500<401/400$。当 $r\ge4800$ 时，尾界给 $\gamma_r\le1+12/r\le401/400$。第 75 节却证明 $\Gamma>401/400$，所以这两个区域均不含最大参数，得到式（78.12）。
+
+取任意 $r_*\in\mathcal M$。若 $\varepsilon\le2^{-13}$，则 $r_*\varepsilon<4800/8192<1$，所以 $a=1-r_*\varepsilon$ 在原参数域内。用定理 78.3 分别给全体参数的上界与这个实际参数的下界，即得式（78.13）。$\square$
+
+常数 $3000$ 和幂次 $1/3$ 都未被证明最优。该界在给出的整个范围内有效，但其右侧数值可以很宽；它的内容是通过真实正修复与大尺度尾界直接取得显式、统一的收敛保证，不声称已经得到紧的有限误差估计。第 77 节关于近最坏参数的稳定指数 $\beta$ 仍未显式计算。
+
+## 追加锚（本行以下为增补区）
