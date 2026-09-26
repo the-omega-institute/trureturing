@@ -73654,3 +73654,316 @@ $$
 这里得到的是固定投影候选的定量取等稳定性，以及固定单纯形候选的参考资源必要条件。它不把（241.26）提升为中间维数精确曲线，不把必要秩或熵下界当作充分条件，也不把固定候选的参考需求变成全部容量竞争者的需求。
 
 ## 追加锚（本行以下为增补区）
+
+## 242. 双轴记录通道的精确纯探针纠缠—可见误差曲线
+
+承接§241的双轴记录候选，本节把“非平行轴需要二维参考才能取得完整最大差异”细化为连续资源曲线：固定输入边缘的纯度或纯态纠缠熵后，究竟还能取得多大的可见误差；若允许距离完整最大值有给定缺额，又最少需要多少纯态纠缠。
+
+这里的可见误差以两个实际输出态的半迹距离计。对等先验二元通道区分，给定探针的最优成功概率为 $(1+f)/2$，其中 $f$ 是该半迹距离。以下均为同一固定通道对、单次使用及纯联合探针的结论。
+
+### 242.1 固定接口与纯探针资源
+
+输入为量子比特 $A=\mathbb C^2$，记录接口有四个指定正交标签。每个标签保留固定单位量子输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。量子输出空间及全部 $r_j$ 在本节保持固定。
+
+对单位 Bloch 轴 $n,m\in\mathbb R^3$，令
+$$
+c=|n\cdot m|\in[0,1],
+\qquad P_n=\frac{I_2+n\cdot\sigma}{2},
+\qquad P_m=\frac{I_2+m\cdot\sigma}{2},
+\tag{242.1}
+$$
+其中 $\sigma$ 为标准 Pauli 矩阵三元组。取四个输入投影
+$$
+(\Pi_1,\Pi_2,\Pi_3,\Pi_4)
+=(P_n,I_2-P_n,P_m,I_2-P_m).
+\tag{242.2}
+$$
+目标及固定候选为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\frac14\operatorname{Tr}(X)P_j,\\
+\mathcal S_{n,m}(X)&=\sum_{j=1}^4|j\rangle\langle j|\otimes
+\frac12\operatorname{Tr}(\Pi_jX)P_j.
+\end{aligned}
+\tag{242.3}
+$$
+§241已验证这是一份实际 CPTP 候选，总 Choi 秩为四，并且
+$$
+\frac12\|\mathcal S_{n,m}-\mathcal R\|_{\diamond}
+=D_*=\frac12.
+\tag{242.4}
+$$
+以下复用该结论，不重新证明基础端点与保迹性。
+
+设归一化纯联合探针为 $|\psi\rangle\in A\otimes E$，输入边缘写作
+$$
+\rho=\operatorname{Tr}_E|\psi\rangle\langle\psi|
+=\frac{I_2+r\cdot\sigma}{2},
+\qquad t=\|r\|\in[0,1].
+\tag{242.5}
+$$
+其边缘本征值、纯度及纠缠熵分别为
+$$
+\lambda_\pm=\frac{1\pm t}{2},
+\qquad \operatorname{Tr}\rho^2=\frac{1+t^2}{2},
+\qquad E(\psi)=S(\rho)=H_2\left(\frac{1+t}{2}\right),
+\tag{242.6}
+$$
+其中
+$$
+H_2(x)=-x\log_2x-(1-x)\log_2(1-x),
+\qquad 0\log_2 0=0.
+$$
+由于探针是纯态，边缘熵确实是两侧纠缠熵。其实际半迹距离记为
+$$
+f(\rho)=\frac12
+\|[(\mathcal S_{n,m}-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\|_1.
+\tag{242.7}
+$$
+按§240的纯化接口，同一输入边缘的纯化只相差参考端等距变换，所以 $f$ 只依赖 $\rho$。
+
+### 242.2 给定输入边缘的精确可见误差
+
+四个输入效应差分别为
+$$
+\frac14n\cdot\sigma,
+\quad-\frac14n\cdot\sigma,
+\quad\frac14m\cdot\sigma,
+\quad-\frac14m\cdot\sigma.
+\tag{242.8}
+$$
+标准纯化将其变为对应的 $\sqrt\rho(\cdot)\sqrt\rho$ 参考块，再作转置。转置保持迹范数，固定纯输出的迹范数为一，记录块又彼此正交，故
+$$
+f(\rho)=\frac14\left[
+\|\sqrt\rho(n\cdot\sigma)\sqrt\rho\|_1
++\|\sqrt\rho(m\cdot\sigma)\sqrt\rho\|_1
+\right].
+\tag{242.9}
+$$
+对任意单位轴 $v$，记 $Q=v\cdot\sigma$、$X=\sqrt\rho Q\sqrt\rho$。由于 $Q$ 的本征值为 $1,-1$，
+$$
+\operatorname{Tr}X=r\cdot v,
+\qquad
+\det X=\det\rho\det Q=-\frac{1-t^2}{4}.
+\tag{242.10}
+$$
+当 $t<1$，行列式为负，两个本征值异号，因而
+$$
+\|X\|_1^2=(\operatorname{Tr}X)^2-4\det X.
+$$
+当 $t=1$，$\det X=0$，$X$ 至多秩一，同一公式仍给 $\|X\|_1=|\operatorname{Tr}X|$，包括 $X=0$ 的情形。因此对全部 $t\in[0,1]$，
+$$
+\|\sqrt\rho(v\cdot\sigma)\sqrt\rho\|_1
+=\sqrt{1-t^2+(r\cdot v)^2}.
+\tag{242.11}
+$$
+代回（242.9），得到完整的固定边缘公式
+$$
+\boxed{
+f(\rho)=\frac14\left[
+\sqrt{1-t^2+(r\cdot n)^2}
++\sqrt{1-t^2+(r\cdot m)^2}
+\right].
+}
+\tag{242.12}
+$$
+这里没有假设输入边缘满秩，也没有把纯联合探针的量子参考改成经典变量。
+
+### 242.3 固定纯度或固定纠缠的全局方向优化
+
+**定理 242.1（方向最优边界）。** 对每个 $t\in[0,1]$，所有长度为 $t$ 的 Bloch 向量中，最大实际半迹距离恰为
+$$
+\boxed{
+F(t;c):=\max_{\|r\|=t}f(\rho)
+=\frac12\sqrt{1-\frac{1-c}{2}t^2}.
+}
+\tag{242.13}
+$$
+该最大值由一份实际纯联合探针达到。结合（242.6），它同时给出固定边缘纯度与固定纯态纠缠熵的完整方向最优曲线。
+
+**证明。** 由平方根的凹性，（242.12）给
+$$
+f(\rho)\le
+\frac12\sqrt{1-t^2+
+\frac{(r\cdot n)^2+(r\cdot m)^2}{2}}.
+\tag{242.14}
+$$
+实对称矩阵 $nn^{\mathsf T}+mm^{\mathsf T}$ 的最大本征值为 $1+c$。当两轴不平行时，其在两轴张成平面上的本征值为 $1+c$、$1-c$，正交方向本征值为零；平行或反平行情形则为 $2,0,0$，同一最大值公式仍成立。因此
+$$
+(r\cdot n)^2+(r\cdot m)^2
+\le t^2(1+c).
+\tag{242.15}
+$$
+将（242.15）代入（242.14），就得到（242.13）的上界。
+
+现在构造同时达到两步上界的同一方向。选择 $s\in\{1,-1\}$，使 $n\cdot(sm)=c$；若 $n\cdot m=0$，任选一个符号。置
+$$
+u=\frac{n+sm}{\sqrt{2(1+c)}},
+\qquad r=tu.
+\tag{242.16}
+$$
+分母始终为正，$u$ 是单位向量，而且
+$$
+(u\cdot n)^2=(u\cdot m)^2=\frac{1+c}{2}.
+\tag{242.17}
+$$
+所以两根号内的数相同，（242.14）取等；同时（242.15）也取等。故上界确实取得。
+
+为验证实际纯探针的共同实现，取 $u\cdot\sigma$ 的单位本征向量 $|u_+\rangle,|u_-\rangle$，并使用二维参考中的正交基 $|0\rangle,|1\rangle$。定义
+$$
+|\psi_{t,u}\rangle
+=\sqrt{\frac{1+t}{2}}\,|u_+\rangle\otimes|0\rangle
++\sqrt{\frac{1-t}{2}}\,|u_-\rangle\otimes|1\rangle.
+\tag{242.18}
+$$
+其输入边缘正是（242.5）中 $r=tu$ 的密度矩阵，具有指定纯度与纠缠熵，并实际得到（242.13）。$t=1$ 时第二项消失，参考支撑可压成一维；$t=0$ 时是最大纠缠探针。$\square$
+
+若直接以纯度 $p=\operatorname{Tr}\rho^2\in[1/2,1]$ 为参数，等价形式为
+$$
+\boxed{
+F_{\mathrm{pur}}(p;c)
+=\frac12\sqrt{1-\frac{1-c}{2}(2p-1)}.
+}
+\tag{242.19}
+$$
+而 $t\mapsto H_2((1+t)/2)$ 在 $[0,1]$ 上从一严格下降到零，所以
+$$
+\left(
+H_2\left(\frac{1+t}{2}\right),
+\frac12\sqrt{1-\frac{1-c}{2}t^2}
+\right),\qquad0\le t\le1,
+\tag{242.20}
+$$
+是固定纯态纠缠熵下的精确可见误差边界；不是仅由一类可行探针给出的下界。
+
+### 242.4 给定容差所需的精确最小纯态纠缠
+
+给定允许缺额 $\varepsilon\ge0$，要求实际探针满足
+$$
+f(\rho)\ge D_*-\varepsilon=\frac12-\varepsilon.
+\tag{242.21}
+$$
+定义其最小纯态纠缠成本
+$$
+E_{\min}(\varepsilon;c)=
+\inf_{\substack{|\psi\rangle\text{ 为归一化纯联合探针}\\
+f(\rho)\ge1/2-\varepsilon}}
+S(\rho).
+\tag{242.22}
+$$
+参考空间可以自由选择；（242.18）说明至多二维已足以实现以下全部最优值。
+
+**定理 242.2（精确逆向资源曲线）。** 对 $0\le c<1$，令
+$$
+\varepsilon_0(c)=\frac12\left(1-\sqrt{\frac{1+c}{2}}\right)>0.
+\tag{242.23}
+$$
+则
+$$
+\boxed{
+E_{\min}(\varepsilon;c)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{\,8\varepsilon(1-\varepsilon)/(1-c)\,}}{2}
+\right),&0\le\varepsilon<\varepsilon_0(c),\\[8pt]
+0,&\varepsilon\ge\varepsilon_0(c).
+\end{cases}
+}
+\tag{242.24}
+$$
+平行或反平行轴 $c=1$ 时，则对所有 $\varepsilon\ge0$ 都有
+$$
+\boxed{E_{\min}(\varepsilon;1)=0.}
+\tag{242.25}
+$$
+以上下确界全部由实际纯探针取得。
+
+**证明。** 先设 $c<1$。不纠缠纯探针对应 $t=1$，定理242.1给其方向最优值
+$$
+F(1;c)=\frac12\sqrt{\frac{1+c}{2}}
+=\frac12-\varepsilon_0(c).
+\tag{242.26}
+$$
+所以当 $\varepsilon\ge\varepsilon_0(c)$ 时，（242.18）中 $t=1$ 的产品探针已满足要求，最小熵为零。
+
+现在设 $0\le\varepsilon<\varepsilon_0(c)$。由于 $\varepsilon_0(c)<1/2$，所需阈值 $1/2-\varepsilon$ 为正，以下平方是等价变形。对任意 $t$，存在满足（242.21）的方向，当且仅当
+$$
+F(t;c)\ge\frac12-\varepsilon
+\quad\Longleftrightarrow\quad
+1-\frac{1-c}{2}t^2\ge(1-2\varepsilon)^2.
+$$
+因此恰好要求
+$$
+t^2\le\frac{8\varepsilon(1-\varepsilon)}{1-c}
+=:t_\varepsilon^2.
+\tag{242.27}
+$$
+阈值的恒等式
+$$
+8\varepsilon_0(c)(1-\varepsilon_0(c))=1-c
+\tag{242.28}
+$$
+及 $\varepsilon(1-\varepsilon)$ 在 $[0,1/2]$ 上严格增加，保证当前分支中 $0\le t_\varepsilon<1$。
+
+纯态纠缠熵随 $t$ 严格下降；在 $0<t<1$，导数为
+$$
+\frac{d}{dt}H_2\left(\frac{1+t}{2}\right)
+=\frac12\log_2\frac{1-t}{1+t}<0.
+\tag{242.29}
+$$
+所以满足要求的最小熵在最大允许的 $t=t_\varepsilon$ 处取得，正是（242.24）的第一分支。选择（242.16）的共同最优方向及（242.18）的纯化，实际达到 $f=1/2-\varepsilon$ 和该熵值。这同时证明必要性与可实现性。
+
+最后，若 $c=1$，两轴平行或反平行。选共同轴方向的纯输入，$t=1$，定理242.1给 $f=1/2$，不需纠缠便满足任意 $\varepsilon\ge0$。这个端点单独处理，不对 $1-c$ 作除法。$\square$
+
+同一证明还给出纯探针所需的最小 Schmidt 秩、也即最小参考支撑维数：
+$$
+\boxed{
+r_{\min}(\varepsilon;c)=
+\begin{cases}
+2,&c<1,\quad0\le\varepsilon<\varepsilon_0(c),\\
+1,&c<1,\quad\varepsilon\ge\varepsilon_0(c),\\
+1,&c=1.
+\end{cases}
+}
+\tag{242.30}
+$$
+因为第一种情形迫使 $t<1$，输入边缘秩为二，而最优纯化确实只用二维参考；其余两种情形已有实际产品探针。
+
+### 242.5 端点、连续容差与几何关系
+
+**最大纠缠端点。** $t=0$ 时，$\rho=I_2/2$，纠缠熵为一比特，所有轴关系都给 $F(0;c)=1/2$。此时 Bloch 方向没有意义，方向优化自然退化。
+
+**产品端点。** $t=1$ 时，（242.13）恢复§241的精确无参考值（242.26）。当 $c<1$，每个 $t>0$ 都使方向最优值严格低于 $1/2$；完整取等只允许最大混合输入边缘。
+
+**正交轴。** $c=0$ 时，任选一个符号 $s$ 都可在（242.16）中构造最优角平分方向，且
+$$
+F(t;0)=\frac12\sqrt{1-t^2/2},
+\qquad
+\varepsilon_0(0)=\frac12(1-1/\sqrt2).
+\tag{242.31}
+$$
+平面内其他方向未必取等，故不能只满足最大 Rayleigh 商而省略（242.17）的共同取等条件。
+
+**平行与反平行轴。** $c=1$ 时，每个固定 $t$ 都可沿共同轴达到 $1/2$，而最小纠缠成本始终为零。这是方向最大值的陈述，不是任意方向的输入都取等。轴的反向会交换该轴对应的两个投影位置，但本文始终使用原四个标签及各自固定输出；对 $c=|n\cdot m|$ 的依赖由（242.12）中的平方关系给出。
+
+**容差阈值。** 对固定 $c<1$，$\varepsilon\uparrow\varepsilon_0(c)$ 时，$t_\varepsilon\uparrow1$，二元熵趋于零，与第二分支连续相接。$\varepsilon=0$ 则强制 $t=0$，最小熵恰为一比特。$\varepsilon\ge\varepsilon_0(c)$ 已由产品探针处理，其中也包括要求阈值非正的较大 $\varepsilon$；无需在该范围继续使用平方反解式。
+
+**轴关系接近退化。** 若 $c=\cos\theta$、$0<\theta\le\pi/2$，则
+$$
+\varepsilon_0(c)=\frac12[1-\cos(\theta/2)]\longrightarrow0
+\quad(\theta\downarrow0).
+\tag{242.32}
+$$
+因此零容差下，每个非平行轴实例仍需一比特纠缠；但对任意固定正容差，当轴足够接近平行时，产品探针就已足够。在阈值以下，最优 Schmidt 秩保持为二，其最小纠缠熵仍可随容差趋近阈值而连续趋零。这区分了参考支撑维数的整数门槛与允许容差时的连续纠缠需求。
+
+### 242.6 成熟背景与结论范围
+
+Schmidt 分解及纯态边缘谱的标准背景，可见 J. Watrous，*The Theory of Quantum Information*，正文第31页“Schmidt decompositions”；纯态纠缠熵的解释见第352页相关 Remark，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本节所用的二元熵来自（242.6）两份明确本征值，并不要求额外的混合态纠缠公式。
+
+纯纠缠能够增强测量区分已有原始研究。C. Datta、T. Biswas、D. Saha、R. Augusiak，*Perfect discrimination of quantum measurements using entangled systems*，[arXiv:2012.07069v2](https://arxiv.org/abs/2012.07069v2)，Theorem 5 及式（64）（PDF第9页），在其两个三结果 POVM 的任务中给出关于纯态 concurrence 的区分优势；正式发表于 *New Journal of Physics* 23, 043021 (2021)，[DOI 10.1088/1367-2630/abecaf](https://doi.org/10.1088/1367-2630/abecaf)。其具体任务与本节固定四标签通道相对于均匀重置的比较不同，本节不直接移用该曲线，也不把“纯纠缠提供优势”单列为新内容。
+
+本节的完整方向优化与逆向资源曲线由（242.12）—（242.29）直接推导；不据此宣称文献原创性。其量词固定于纯联合探针、一次通道使用、原四标签和均匀目标权重。对混合联合探针，单侧边缘熵不是可直接替代的纠缠成本；对于其他同秩候选、重复查询或不同标签权重，也不能自动沿用（242.24）。
+
+## 追加锚（本行以下为增补区）
