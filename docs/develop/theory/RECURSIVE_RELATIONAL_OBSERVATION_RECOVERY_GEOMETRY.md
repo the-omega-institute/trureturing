@@ -7507,3 +7507,68 @@ $$
 [^rrorec33_caratheodory]: 有限 Carathéodory 扩张定理；可见 Scott Sheffield, [18.175 Lecture 2, PDF 第28页](https://math.mit.edu/~sheffield/2016175/Lecture2.pdf#page=28)。定理33.4先验证柱代数上的有限预测度，再用唯一扩张至生成 $\sigma$ 代数的结论。
 
 ## 33.99 追加锚
+
+## 34. 恢复器自然性、相容线程与实际完成
+
+**本批导航。** 第33节区分了有限割面、相容概率和完成可行性。本节把恢复器本身作为接口态射，明确它何时随分辨率运输；同时说明有限层都有代表，不足以推出一个实际来源中的全局线程。
+
+### 34.1 线程双射的两个独立条件
+
+设 $X$ 是实际来源，$B_\ell$ 是一列有限层读出，限制箭头为 $r_{\ell}^{\ell'}:B_{\ell'}\to B_\ell$. 状态到线程的映射记为
+
+$$
+\Theta:X\to\varprojlim_\ell B_\ell,
+\qquad
+\Theta(x)=(q_\ell x)_\ell.
+\tag{34.1}
+$$
+
+要把这条映射称为原状态的无损完成表达，需要分开证明：
+
+$$
+\operatorname{ThreadComplete}:
+\operatorname{im}\Theta=\varprojlim_\ell B_\ell,
+\tag{34.2}
+$$
+
+以及
+
+$$
+\operatorname{SeparatesStates}:
+\Theta(x)=\Theta(y)\Rightarrow x=y.
+\tag{34.3}
+$$
+
+两者合起来才给双射。仓内 `InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates` 精确采用这两个条件；它不自动供应拓扑、概率或可计算的恢复算法。
+
+### 34.2 恢复器的交换方块
+
+若第 $\ell$ 层有实际像恢复器 $R_\ell:\operatorname{im}q_\ell\to X_\ell$，粗化与恢复不能只比较每层数值，至少要检查
+
+$$
+r_{\ell}^{\ell'}\circ q_{\ell'}=q_\ell,
+\qquad
+R_\ell\circ r_{\ell}^{\ell'}\approx R_{\ell'}
+\tag{34.4}
+$$
+
+在声明的共同实际像上成立。若目标是另一载体 $Z$,则将第二式替换为 $T_\ell R_\ell r_{\ell}^{\ell'}=T_{\ell'}R_{\ell'}$. 只要 (34.4) 只在有限层分别成立，而没有统一误差或实际来源纤维闭性，不能把这些恢复器拼成无限层恢复器。
+
+`StableObservationInverseLimit.stable_observation_inverse_limit_laws` 供应限制箭头的相容性；`CompactLocalRealization.compact_local_realization` 还需要紧环境、闭纤维和同时有限可实现性，才能把有限交叠提升为实际点。可见有限层相容与完成来源存在是两个不同命题。
+
+### 34.3 弱收敛、总变差与共同来源
+
+若恢复的是概率律，逐坐标或弱收敛不自动给出总变差收敛。一个序列可以在每个连续测试上收敛，却在不断移动的柱事件上保持固定差异；所以需要明确测试族和距离，再谈恢复误差。另一方面，即便每个有限柱都有共同实现，也必须验证
+
+$$
+\bigcap_\ell q_\ell^{-1}(\{b_\ell\})\ne\varnothing
+\tag{34.5}
+$$
+
+才有同一实际来源实现整个线程。第33节的非闭候选类与本卷已有的有限层逃逸反例分别承担这两个障碍。
+
+### 34.4 结算范围
+
+空间切面、时间切面和记忆恢复器可以互相运输，只有在 (34.2)—(34.4) 的共同来源、分离性和自然性同时成立时，才可称为同一完成对象的不同表达。缺少任何一项时，最多得到形式 completion、近似恢复或任务相对的可识别性。本文新增的是恢复器接口的普通数学组织，Claim status: open；没有新增 Lean 声明。
+
+## 34.99 追加锚
