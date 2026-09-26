@@ -11,6 +11,7 @@ def unsupported : Name := `LeanInformationAudit.arenaSourceUnsupported
 private def arenaType (type : Expr) : Bool :=
   #[`D5.S3.ConceptDynamics.InformationEscape.Arena,
     `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena,
+    `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena,
     `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena].any
     type.isAppOf
 

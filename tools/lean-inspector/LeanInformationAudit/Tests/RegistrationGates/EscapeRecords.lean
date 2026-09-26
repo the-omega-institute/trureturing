@@ -103,13 +103,142 @@ elab "observe_escape_records" : command => do
           | _ => false
         pure <| originOk && residualOk && hashesOk &&
           wire.getObjValAs? String "bridge_kind" == .ok kind
-    let ok := match expected with
+    let ok : Bool := match expected with
       | none => validated && failure.isEmpty && metadataOk
       | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
     set saved
     (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
 
 observe_escape_records
+
+def domainArena : ObjectDomainArena where
+  toPrimitiveLawArena := {
+    toArena := Arena.ofFintype Bool
+    signature := cutSignature Bool Bool
+    Law r := (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ r.readout () false = false }
+  Domain := Set Nat
+
+def domainObjectArena : Arena := domainArena.toArena
+
+local instance : DecidableEq domainArena.State := domainArena.toArena.stateDecidableEq
+
+def domainReads : PrimitiveRealization (cutSignature Bool Bool) :=
+  cutRealization (fun b : Bool => b)
+def domainOther : PrimitiveRealization (cutSignature Bool Bool) :=
+  cutRealization (fun _ : Bool => true)
+theorem domainStatement : (∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false :=
+  ⟨fun _ _ => rfl, rfl⟩
+theorem domainBridge : LegacyPrimitiveRealization domainArena.toPrimitiveLawArena
+    ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) domainReads := ⟨Iff.rfl⟩
+theorem domainVariation : domainArena.Law domainReads ∧ ¬ domainArena.Law domainOther :=
+  ⟨domainStatement, fun h => Bool.noConfusion h.2⟩
+theorem domainSensitivity : FiniteSlotSensitivity domainArena.toPrimitiveLawArena := by
+  constructor
+  · intro i
+    refine ⟨domainReads, domainOther, ?_, ?_, ?_⟩
+    · intro j ne; cases i; cases j; exact (ne rfl).elim
+    · intro j; exact Fin.elim0 j
+    · exact ⟨fun _ => domainVariation.2, fun _ => domainVariation.1⟩
+  · intro i; exact Fin.elim0 i
+
+elab "observe_object_domain" : command => do
+  let commandStartDomain := "register_information_theorem domainStatement in domainArena " ++
+    "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) " ++
+    "primitives domainReads.toPrimitiveBundle realization domainBridge " ++
+    "variation domainVariation sensitivity domainSensitivity "
+  for (label, origin, expected) in #[("infinite_domain", "Set Nat", none),
+      ("wrong_domain", "Nat", some "dtr.escape_from_state")] do
+    let saved ← get
+    modify fun state => { state with messages := {} }
+    let source := commandStartDomain ++ "escape from (" ++ origin ++ ") escape continues (open)"
+    let mut failure := ""
+    match Parser.runParserCategory (← getEnv) `command source with
+    | .error message => failure := "parse: " ++ message
+    | .ok command =>
+      try elabCommand command catch error => failure := ← error.toMessageData.toString
+    let row := (TemplateBinding.records (← getEnv)).find? (·.occurrence.key.theoremName == ``domainStatement)
+    let validated := row.any fun row => match row.result with
+      | .declaredValidated _ => true | _ => false
+    if let some row := row then
+      if let .declaredUnresolved diagnostic := row.result then failure := failure ++ diagnostic
+    for message in (← get).messages.toList do
+      if message.severity == .error then failure := failure ++ (← message.data.toString)
+    let ok : Bool := match expected with
+      | none => validated && failure.isEmpty && row.any (·.escape.fromObject.any (·.name == ``Set))
+      | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
+    set saved
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
+
+observe_object_domain
+
+elab "observe_object_domain_routes" : command => do
+  let readout :=
+    "readout via (@cutRealization Bool Bool instDecidableEqBool (fun b : Bool => b)) "
+  let slots := "variation domainVariation sensitivity domainSensitivity " ++
+    "escape from (Set Nat) escape continues (open)"
+  let occurrence := " object_arena domainObjectArena catalog domain "
+  let cases : Array (String × String × Name × Option String) := #[
+    ("object_domain_native_validated",
+      "information_theorem domainNative in domainArena " ++ readout ++
+        "primitives domainReads " ++ slots ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
+    ("object_domain_inline_validated",
+      "register_information_theorem domainStatement in domainArena " ++ readout ++
+        "primitives domainReads.toPrimitiveBundle " ++
+        "realization inline domainReads := domainBridge " ++ slots,
+      ``domainStatement, none),
+    ("object_domain_occurrence_native_validated",
+      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads " ++ slots ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, none),
+    ("object_domain_occurrence_named_validated",
+      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads.toPrimitiveBundle realization domainBridge " ++ slots,
+      ``domainStatement, none),
+    ("object_domain_occurrence_inline_validated",
+      "register_information_theorem domainStatement in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads.toPrimitiveBundle " ++
+        "realization inline domainReads := domainBridge " ++ slots,
+      ``domainStatement, none),
+    ("object_domain_occurrence_wrong_origin",
+      "information_theorem domainNative in domainArena" ++ occurrence ++ readout ++
+        "primitives domainReads variation domainVariation sensitivity domainSensitivity " ++
+        "escape from (Bool) escape continues (open)" ++
+        " : ((∀ n : Nat, ∀ A : Set Nat, A = A) ∧ false = false) := domainStatement",
+      `LeanInformationAudit.Tests.EscapeRecords.domainNative, some "dtr.escape_from_state")]
+  for (label, source, theoremName, expected) in cases do
+    let saved ← get
+    modify fun state => { state with messages := {} }
+    let mut failure := ""
+    match Parser.runParserCategory (← getEnv) `command source with
+    | .error message => failure := "parse: " ++ message
+    | .ok command =>
+      try elabCommand command catch error => failure := ← error.toMessageData.toString
+    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
+      record.occurrence.key.theoremName == theoremName
+    let validated := row.any fun record => match record.result with
+      | .declaredValidated _ => true
+      | _ => false
+    if let some record := row then
+      if let .declaredUnresolved diagnostic := record.result then
+        failure := failure ++ diagnostic
+    for message in (← get).messages.toList do
+      if message.severity == .error then failure := failure ++ (← message.data.toString)
+    let routed := if label.startsWith "object_domain_occurrence" then
+      row.any fun record =>
+        record.occurrence.key.objectArena == ``domainObjectArena &&
+          record.occurrence.arena.getAppFn.constName? == some ``domainArena
+      else true
+    let ok : Bool := match expected with
+      | none => validated && failure.isEmpty && routed &&
+          row.any (·.escape.fromObject.any (·.name == ``Set))
+      | some diagnostic => !validated && (failure.splitOn diagnostic).length > 1
+    set saved
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={failure}"
+
+observe_object_domain_routes
 
 
 def nativeArena : PrimitiveLawArena where

@@ -44,9 +44,9 @@ run_cmd do
   logInfo m!"DTR_M3_MODULE_SET {(toJson (inRepo.map Name.toString |>.qsort (· < ·))).compress}"
   -- The source-bound contract adds Registry.SourceScope, SourceOperands and
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
-  -- The split closure's 138 = 133 D5/Impl + 5 Interface therefore becomes
-  -- 142 = 136 D5/Impl + 6 Interface, with no unrelated additions or removals.
+  -- The infinite-domain support adds one D5/Impl module, so the split closure's
+  -- 138 = 133 D5/Impl + 5 Interface becomes 143 = 137 D5/Impl + 6 Interface.
   let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
-  if inRepo.size > 142 || interface.size != 6 then
+  if inRepo.size > 143 || interface.size != 6 then
     throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
-  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=142 interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=143 interface={interface.size}"
