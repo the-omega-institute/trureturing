@@ -89,6 +89,7 @@ internal static class InformationTemplateEvidence
             };
             string? reference = null;
             string? sourceOwner = null;
+            string? sourceDefinitionName = null;
             if (state == InformationTemplateBindingState.DeclaredValidated)
             {
                 var fields = new[] { "key", "evidence_ref", "plan_identity", "descriptor_identity",
@@ -106,7 +107,9 @@ internal static class InformationTemplateEvidence
                 CheckDependencies(certificate, "extraction_inputs");
                 if (bridgeKind == "source-equivalence")
                 {
-                    sourceOwner = CheckSourceBinding(certificate.GetProperty("source_binding"), key, statement);
+                    (sourceOwner, sourceDefinitionName) = CheckSourceBinding(
+                        certificate.GetProperty("source_binding"), key, statement);
+                    CheckDefinitionDependency(certificate, key, realization, sourceDefinitionName);
                     if (escapeFrom is null || escapeFrom.Name != key.Theorem
                         || escapeFrom.TypeIdentity != statement
                         || escapeFrom.ObjectIdentity != HashField(certificate, "actual_identity")
@@ -130,15 +133,20 @@ internal static class InformationTemplateEvidence
                     throw new FormatException("DTR-Evidence: binding owner/diagnostic is missing or wrong");
             }
             records.Add(new(key, registration, statement, state, reference, diagnostic, binding, unit, realization,
-                escapeFrom, escapeContinues, bridgeKind, sourceOwner));
+                escapeFrom, escapeContinues, bridgeKind, sourceOwner, sourceDefinitionName) {
+                DefinitionSourceBinding = sourceDefinitionName is null ? null
+                    : certificate.GetProperty("source_binding").Clone() });
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered);
     }
 
-    private static string CheckSourceBinding(JsonElement value, InformationOccurrenceKey key, string statement)
+    private static (string Owner, string? DefinitionName) CheckSourceBinding(
+        JsonElement value, InformationOccurrenceKey key, string statement)
     {
-        InformationTemplateJson.Fields(value, "source_owner", "source_name", "source_type_identity",
-            "telescope_size", "level_count", "coordinates", "readouts", "registration_identity");
+        string[] fields = ["source_owner", "source_name", "source_type_identity",
+            "telescope_size", "level_count", "coordinates", "coordinate_paths", "readouts", "registration_identity"];
+        InformationTemplateJson.Fields(value, value.TryGetProperty("definition_entry", out _)
+            ? [.. fields, "definition_entry"] : fields);
         var owner = InformationTemplateJson.Name(InformationTemplateJson.String(value, "source_owner"));
         if (!owner.StartsWith("D5.", StringComparison.Ordinal)
             || InformationTemplateJson.String(value, "source_name") != key.Theorem
@@ -152,13 +160,28 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: source coordinate bounds");
             return result;
         }
-        var telescope = Bounded(value.GetProperty("telescope_size"), 64);
+        Bounded(value.GetProperty("telescope_size"), 64);
         Bounded(value.GetProperty("level_count"), 64);
-        var previous = -1;
-        foreach (var coordinate in Array(value, "coordinates"))
+        static string[] Path(JsonElement path)
         {
-            var index = Bounded(coordinate, 63);
-            if (index <= previous || index >= telescope)
+            if (path.ValueKind != JsonValueKind.Array)
+                throw new FormatException("DTR-Evidence: source occurrence path");
+            var steps = path.EnumerateArray().ToArray();
+            if (steps.Length is < 1 or > 256 || steps.Any(step => step.ValueKind != JsonValueKind.String
+                || step.GetString() is not ("fn" or "arg" or "domain" or "body" or "type" or "value")))
+                throw new FormatException("DTR-Evidence: source occurrence path");
+            return steps.Select(step => step.GetString()!).ToArray();
+        }
+        static bool Prefix(string[] prefix, string[] path) =>
+            prefix.Length <= path.Length && prefix.SequenceEqual(path.Take(prefix.Length));
+        var coordinates = Array(value, "coordinates").Select(n => Bounded(n, 255)).ToArray();
+        var coordinatePaths = Array(value, "coordinate_paths").Select(Path).ToArray();
+        if (coordinates.Length > 64 || coordinatePaths.Length != coordinates.Length)
+            throw new FormatException("DTR-Evidence: source coordinate count");
+        var previous = -1;
+        foreach (var index in coordinates)
+        {
+            if (index <= previous)
                 throw new FormatException("DTR-Evidence: source coordinate order");
             previous = index;
         }
@@ -168,19 +191,76 @@ internal static class InformationTemplateEvidence
         var paths = new HashSet<string>(StringComparer.Ordinal);
         foreach (var readout in readouts)
         {
-            InformationTemplateJson.Fields(readout, "path", "state_binder", "scope_size", "occurrence_identity");
+            InformationTemplateJson.Fields(readout, "path", "state_binder", "scope_size", "scope_paths", "occurrence_identity");
             var scope = Bounded(readout.GetProperty("scope_size"), 256);
             var binder = Bounded(readout.GetProperty("state_binder"), 255);
             if (binder >= scope || binder <= previous)
                 throw new FormatException("DTR-Evidence: source state scope");
             HashField(readout, "occurrence_identity");
-            var path = Array(readout, "path").ToArray();
-            if (path.Length is < 1 or > 256 || path.Any(step => step.ValueKind != JsonValueKind.String
-                || step.GetString() is not ("fn" or "arg" or "domain" or "body" or "type" or "value"))
-                || !paths.Add(string.Join("/", path.Select(step => step.GetString()))))
+            var path = Path(readout.GetProperty("path"));
+            if (!paths.Add(string.Join("/", path)))
                 throw new FormatException("DTR-Evidence: source occurrence path");
+            var scopePaths = Array(readout, "scope_paths").Select(Path).ToArray();
+            if (scopePaths.Length != scope)
+                throw new FormatException("DTR-Evidence: source lexical scope size");
+            for (var i = 0; i < scopePaths.Length; i++)
+            {
+                var anchor = scopePaths[i];
+                if (anchor[^1] != "body" || !Prefix(anchor, path)
+                    || i > 0 && (scopePaths[i - 1].Length >= anchor.Length || !Prefix(scopePaths[i - 1], anchor)))
+                    throw new FormatException("DTR-Evidence: source lexical ancestor");
+            }
+            for (var i = 0; i < coordinates.Length; i++)
+                if (!coordinatePaths[i].SequenceEqual(scopePaths[coordinates[i]]))
+                    throw new FormatException("DTR-Evidence: source captured coordinate");
         }
-        return owner;
+        string? definitionName = null;
+        if (value.TryGetProperty("definition_entry", out var definition))
+        {
+            InformationTemplateJson.Fields(definition, "path", "reference_identity", "owner", "name", "type_identity", "body_identity");
+            var definitionPath = Array(definition, "path").ToArray();
+            if (definitionPath.Length > 1 || definitionPath.Length == 1 &&
+                (definitionPath[0].ValueKind != JsonValueKind.String || definitionPath[0].GetString() != "arg"))
+                throw new FormatException("DTR-Evidence: source definition path");
+            // A root entry is exactly the raw theorem type; a Not argument is not.
+            // This is only a shape check. Collect closes the exact identities
+            // against the source declaration's independent raw type material.
+            if ((HashField(definition, "reference_identity") == statement) != (definitionPath.Length == 0))
+                throw new FormatException("DTR-Evidence: source definition reference/path mismatch");
+            foreach (var readout in readouts)
+            {
+                var path = Path(readout.GetProperty("path"));
+                if (path.Length <= definitionPath.Length || definitionPath.Length == 1 && path[0] != "arg")
+                    throw new FormatException("DTR-Evidence: source definition readout path");
+            }
+            var definitionOwner = InformationTemplateJson.Name(
+                InformationTemplateJson.String(definition, "owner"));
+            if (definitionOwner != owner)
+                throw new FormatException("DTR-Evidence: source definition owner differs from theorem owner");
+            definitionName = InformationTemplateJson.Name(
+                InformationTemplateJson.String(definition, "name"));
+            HashField(definition, "type_identity");
+            HashField(definition, "body_identity");
+        }
+        return (owner, definitionName);
+    }
+
+    private static void CheckDefinitionDependency(JsonElement certificate, InformationOccurrenceKey key,
+        string realization, string? definitionName)
+    {
+        var extra = Array(certificate, "extraction_inputs").Where(input =>
+            InformationTemplateJson.String(input, "name") is var name
+                && name != key.Theorem && name != realization && name != key.ObjectArena).ToArray();
+        if (definitionName is null)
+        {
+            if (extra.Length != 0) throw new FormatException("DTR-Evidence: missing source definition entry");
+            return;
+        }
+        var definition = certificate.GetProperty("source_binding").GetProperty("definition_entry");
+        if (extra.Length != 1 || new[] { "name", "owner", "type_identity", "body_identity" }
+                .Any(field => InformationTemplateJson.String(extra[0], field)
+                    != InformationTemplateJson.String(definition, field)))
+            throw new FormatException("DTR-Evidence: source definition dependency differs from entry");
     }
 
     private static InformationEscapeFrom? ReadEscapeFrom(JsonElement value)
@@ -266,14 +346,6 @@ internal static class InformationTemplateEvidence
                 || realizationOwners.Sum(path => report.Files[path].Declarations.Count(
                     declaration => declaration.Name == original.RealizationName)) != 1)
                 throw new FormatException("DTR-Evidence: retained unit/realization owner is missing or ambiguous");
-            if (original.SourceOwner is { } sourceOwner)
-            {
-                var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
-                    .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();
-                if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
-                    || report.Files[sourceOwners[0]].Declarations.Count(d => d.Name == key.Theorem) != 1)
-                    throw new FormatException("DTR-Evidence: source theorem owner is missing or ambiguous");
-            }
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory declaration claim");
             var selected = declared.SingleOrDefault() ?? original;
@@ -281,6 +353,25 @@ internal static class InformationTemplateEvidence
                 || selected.RegistrationSourcePath != original.RegistrationSourcePath
                 || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
                 throw new FormatException("DTR-Evidence: declaration retargets the occurrence");
+            if (selected.SourceOwner is { } sourceOwner)
+            {
+                var sourceOwners = realizationOwners.Where(path => report.Files[path].Declarations
+                    .Any(declaration => declaration.Name == key.Theorem && declaration.Kind == "theorem")).ToArray();
+                if (sourceOwners.Length != 1 || ModuleForSource(sourceOwners[0].Value) != sourceOwner
+                    || report.Files[sourceOwners[0]].Declarations.Count(d => d.Name == key.Theorem) != 1)
+                    throw new FormatException("DTR-Evidence: source theorem owner is missing or ambiguous");
+                if (selected.SourceDefinitionName is { } definitionName)
+                {
+                    var definitions = report.Files[sourceOwners[0]].Declarations
+                        .Where(d => d.Name == definitionName).ToArray();
+                    if (definitions.Length != 1 || definitions[0].Kind != "def")
+                        throw new FormatException("DTR-Evidence: source definition owner is missing or ambiguous");
+                    InformationTemplateDefinitionReference.Check(selected.DefinitionSourceBinding!.Value,
+                        selected.StatementIdentity,
+                        report.Files[sourceOwners[0]].Declarations.Single(d => d.Name == key.Theorem),
+                        definitions[0]);
+                }
+            }
             joined.Add(key, selected);
         }
         // Inventory is the exact join of compiler registration keys, command

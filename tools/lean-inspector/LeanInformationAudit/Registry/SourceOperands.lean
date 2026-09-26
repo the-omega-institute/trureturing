@@ -115,10 +115,17 @@ private partial def visit (e : Expr) (depth : Nat := 0) : M Unit := do
 
 /-- Source linkage supplies the positive operand rule; the existing identity
 rejection machinery is applied before any reduction or proof erasure. -/
-def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat) (law : Option Expr := none) : MetaM (Array Name × Nat) := do
+def check (theoremName : Name) (expressions : Array Expr) (fuel : Nat)
+    (law : Option Expr := none) (sourceDefinition : Option Expr := none) : MetaM (Array Name × Nat) := do
   let limit := min 524288 fuel
   let identity ← argumentIdentityState theoremName limit
-  let (source, remaining) ← sourceNames (← getConstInfo theoremName).type identity.exprFuel
+  let theoremType := (← getConstInfo theoremName).type
+  let (source, remaining) ← sourceNames theoremType identity.exprFuel
+  let (source, remaining) ← match sourceDefinition with
+    | none => pure (source, remaining)
+    | some definition => do
+      let (definitionSource, remaining) ← sourceNames definition remaining
+      pure (definitionSource.toArray.foldl (init := source) (fun acc name => acc.insert name), remaining)
   let action : M Unit := do
     for e in expressions do visit e
     if let some law := law then visit law
