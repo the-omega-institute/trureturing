@@ -16,7 +16,6 @@ Direct frozen dependencies: none (pinned Mathlib only)
 -/
 
 import Mathlib.Data.Rat.Lemmas
-import Mathlib.Algebra.Order.Field.Power
 import Mathlib.Data.Nat.Choose.Basic
 import Mathlib.Tactic.NormNum
 

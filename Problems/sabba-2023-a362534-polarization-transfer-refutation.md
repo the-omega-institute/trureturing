@@ -56,9 +56,9 @@ literature search or priority.
 `g(19) = 2 (1 − 2^(-19) · C(19, 9))`. With `C(18, 9) = 48620` and
 `C(19, 9) = 92378`,
 
-``text
+```text
 f(19) = 230945/65536,   g(19) = 215955/131072,   f(19)/g(19) = 92378/43191.
-``
+```
 
 The numerator of `g(19)` is `215955 = 5 · 43191`, while the denominator of
 `f(19)/g(19)` is `43191`, so the conjectured equality fails at `n = 19`.
