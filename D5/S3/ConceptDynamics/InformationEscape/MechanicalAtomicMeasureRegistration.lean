@@ -83,16 +83,20 @@ def distributionArena := equalityArena DistributionOutput
 def hitArena := equalityArena HitOutput
 def supportArena := equalityArena SupportOutput
 
-def massRealization := homogeneousPointwiseEqRealization
+def massRealization := @homogeneousPointwiseEqRealization Unit MassOutput
+  (Classical.decEq _)
   (fun _ : Unit => MechanicalReadoutSources.massReadout)
   (fun _ : Unit => MechanicalReadoutSources.massTarget)
-def distributionRealization := homogeneousPointwiseEqRealization
+def distributionRealization := @homogeneousPointwiseEqRealization Unit DistributionOutput
+  (Classical.decEq _)
   (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
   (fun _ : Unit => MechanicalReadoutSources.distributionTarget)
-def hitRealization := homogeneousPointwiseEqRealization
+def hitRealization := @homogeneousPointwiseEqRealization Unit HitOutput
+  (Classical.decEq _)
   (fun _ : Unit => MechanicalReadoutSources.hitReadout)
   (fun _ : Unit => MechanicalReadoutSources.hitTarget)
-def supportRealization := homogeneousPointwiseEqRealization
+def supportRealization := @homogeneousPointwiseEqRealization Unit SupportOutput
+  (Classical.decEq _)
   (fun _ : Unit => MechanicalReadoutSources.supportReadout)
   (fun _ : Unit => MechanicalReadoutSources.supportTarget)
 
