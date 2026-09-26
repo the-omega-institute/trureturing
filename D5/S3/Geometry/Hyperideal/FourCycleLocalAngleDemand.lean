@@ -403,16 +403,21 @@ theorem paired_angle_demand
       _ < (a^2 - 1) + (b^2 - 1) +
           2 * Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
         linarith only [hroot_prod]
+      _ = (a^2 - 1) + (b^2 - 1) +
+          2 * (Real.sqrt (a^2 - 1) * Real.sqrt (b^2 - 1)) := by
+        rw [hprod]
       _ = (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 := by
-        rw [add_sq, hsa, hsb, hprod]
+        rw [add_sq, hsa, hsb]
         ring
   have hratio_r : k / (k + 2) ≤ (r - 1) / (r + 1) := by
-    apply (div_le_div_iff₀ hk2 (by linarith)).2
-    nlinarith [hdom]
+    have hdom_k : k + 1 ≤ r := by dsimp [k]; linarith only [hdom]
+    apply (div_le_div_iff₀ hk2 (by linarith only [hr])).2
+    nlinarith only [hdom_k]
   have hratio_a : (k - 2) / k <
       (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 / k^2 := by
     apply (div_lt_div_iff₀ hk hksq).2
-    nlinarith [hroot_sum_sq]
+    have hmul := mul_lt_mul_of_pos_left hroot_sum_sq hk
+    nlinarith only [hmul]
   have hq_lower : (k - 2) / (k + 2) < q := by
     dsimp [q]
     have hnonneg : 0 ≤ (r - 1) / (r + 1) := by positivity
