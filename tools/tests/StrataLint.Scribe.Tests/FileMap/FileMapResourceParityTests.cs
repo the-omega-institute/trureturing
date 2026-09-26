@@ -7,17 +7,32 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FileMapResourceParityTests
 {
     [Fact]
-    public void RegisteredReferenceExamplesAvoidResourcesWhileChecksKeepTheirRequirements()
+    public void RegisteredReferenceExamplesKeepTheirDeclaredResourceRequirements()
     {
         var map = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
         foreach (var path in new[] { "README.md", "tools/lean-inspector/README.md", "docs/develop/theory/input.md",
             "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
             "docs/develop/spec/trureturing_engineering_optimization_v1.md",
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
-            Assert.Empty(Assert.Single(map.Match(path)).Require);
+            Assert.Equal(path switch
+            {
+                "tools/lean-inspector/README.md" => new[] { "test-worktree-contract" },
+                "docs/reports/a110037-0910/BoundaryProbe.lean" or "docs/reports/prime-slab-corner-order-0909.json" =>
+                    new[] { "test-repository-filemap" },
+                _ => [],
+            },
+                Assert.Single(map.Match(path)).Require);
+        var worktreeInputs = Assert.Single(map.Resources, resource => resource.Id == "test-worktree-contract").PathInputs;
+        Assert.Contains(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("tools/lean-inspector/README.md"));
+        Assert.DoesNotContain(worktreeInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
+        var atomizerInputs = Assert.Single(map.Resources, resource => resource.Id == "test-source-atomizer").PathInputs;
+        Assert.DoesNotContain(atomizerInputs, pattern => FileMapGlob.Create(pattern).IsMatch("docs/develop/theory/input.md"));
+        // Repository path inventory is declared on resources separately from per-file body requirements.
+        foreach (var id in new[] { "test-repository-filemap", "test-repository-topology" })
+            Assert.Equal(["**"], Assert.Single(map.Resources, resource => resource.Id == id).PathInventory.ToArray());
         foreach (var path in new[] { "Library/Notes/input.md", "Problems/input.md",
-            "Blueprint/D5/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
-            "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
+            "Blueprint/D5/S0/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
+            "tools/StrataLint.Engine/RepositoryIo/FileMapResources.cs",
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);
         var filemap = Assert.Single(map.Resources, resource => resource.Id == "filemap");

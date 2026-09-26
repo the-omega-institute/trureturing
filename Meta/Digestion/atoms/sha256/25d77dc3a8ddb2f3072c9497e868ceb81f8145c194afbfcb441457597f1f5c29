@@ -1,0 +1,15 @@
+**证明。** 先设 $h(x)=x/\sinh x$，$h(0)=1$。由双曲正弦的 Euler 乘积，
+\[
+ h(x)=\prod_{n=1}^{\infty}\left(1+\frac{x^2}{\pi^2n^2}\right)^{-1}.
+\]
+取独立、均值为一的指数随机变量 $E_n$，令 $T=\sum_{n\ge1}E_n/(\pi^2n^2)$。其期望有限，所以 $0<T<\infty$ 几乎处处。有限乘积的 Laplace 变换与控制收敛给出 $h(x)=\mathbb E e^{-Tx^2}$。因此
+\[
+ \frac{h(x+y)+h(x-y)}2
+ =\mathbb E\big[e^{-T(x^2+y^2)}\cosh(2Txy)\big]
+ \ge\mathbb E\big[e^{-Tx^2}e^{-Ty^2}\big]
+ \ge h(x)h(y).
+\]
+最后一步来自同向单调函数的协方差非负：若 $T'$ 为独立副本，则 $2\operatorname{Cov}(f(T),g(T))=\mathbb E[(f(T)-f(T'))(g(T)-g(T'))]\ge0$，这里两个函数都非增。若 $xy\ne0$，第一步因 $T>0$ 而严格；若 $xy=0$，两步均取等。
+
+置 $a=s e^x,b=s e^{-x},c=t e^y,d=t e^{-y}$，$s,t>0$。则 $\ell(a,b)=h(x)/s$、$\ell(c,d)=h(y)/t$，两个左项分别为 $h(x+y)/(st)$ 与 $h(x-y)/(st)$。代回便得四点不等式和等号条件。此处使用的无限乘积是经典恒等式，概率表示只用于给出所需标量比较的证明。证毕。[^tcs7-dlmf]
+

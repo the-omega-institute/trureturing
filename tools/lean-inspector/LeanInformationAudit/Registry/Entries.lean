@@ -349,6 +349,20 @@ def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
 /-- Complete the declaration and definitional-equality checks shared by both phases. -/
 private def validateEntryCore (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
+  if entry.sourceBound then
+    try
+      let source ← getConstInfo entry.theoremName
+      let unit ← getConstInfo entry.unitName
+      let record ← getConstInfo entry.realizationName
+      unless source.isTheorem && unit.type.equal record.type && record.type.isAppOfArity
+          `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2 &&
+          record.levelParams.length == source.levelParams.length do
+        return .error "unclassified_form:source.registration_type"
+      unless env.contains entry.arenaName && entry.objectArenaName == entry.arenaName &&
+          entry.resolvedArenaName == entry.arenaName do
+        return .error "unclassified_form:source.arena_identity"
+      return .ok ()
+    catch _ => return .error "unclassified_form:source.registration_type"
   match validateEntryDeclarations env entry with
   | .error message => return .error message
   | .ok () => pure ()
@@ -422,7 +436,9 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)
-        unless ← isDefEq legacyArgs[0]! arenaExpr do
+        let expectedBridgeArena := if realizationHead == some RegistrationGates.witnessBridgeName then
+          arenaExpr else normalized.law
+        unless ← isDefEq legacyArgs[0]! expectedBridgeArena do
           return .error (statementMismatchError entry.theoremName)
         unless ← isDefEq legacyArgs[1]! theoremType do
           return .error (statementMismatchError entry.theoremName)
@@ -456,7 +472,7 @@ private def sameCertificate : Option AutoDerivedSemanticCertificate →
 def sameEntry (left right : InformationRegistryEntry) : Bool :=
   RegistrationReifier.occurrenceBinding left == RegistrationReifier.occurrenceBinding right &&
     left.catalogKind == right.catalogKind && left.statementIdentity == right.statementIdentity &&
-    left.localRegistrationNames == right.localRegistrationNames &&
+    left.localRegistrationNames == right.localRegistrationNames && left.sourceBound == right.sourceBound &&
     sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
@@ -536,7 +552,7 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
   match result with
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
-      let diagnostic ← RegistrationGates.validateFinite entry
+      let diagnostic ← if entry.sourceBound then pure none else RegistrationGates.validateFinite entry
       let type := (← getConstInfo entry.realizationName).type
       if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
           diagnostic.isSome then

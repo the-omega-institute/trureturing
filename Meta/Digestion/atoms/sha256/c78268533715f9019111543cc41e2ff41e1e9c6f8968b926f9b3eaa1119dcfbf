@@ -1,0 +1,15 @@
+**定义 2.1（行为关系与精确表示）。** 给定非空状态集 $X$、总确定性更新 $F_a:X\to X$（$a\in\Sigma$）及观察 $o:X\to Y$，定义
+\[
+ B(x)(w)=o(F_wx),\qquad
+ x\sim y\iff B(x)=B(y).
+\]
+对关系 $R\subseteq X^2$ 定义
+\[
+ \Phi(R)=\ker o\cap\bigcap_{a\in\Sigma}(F_a\times F_a)^{-1}(R).
+\]
+精确表示由 $r:X\to S$、$G_a:S_r\to S_r$ 及 $\bar o:S_r\to Y$ 构成，其中 $S_r=r[X]$，并要求
+\[
+ rF_a=G_ar,\qquad o=\bar o r.
+\]
+所有下降映射只在实际像上定义。
+

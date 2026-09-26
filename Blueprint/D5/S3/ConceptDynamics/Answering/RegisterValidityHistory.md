@@ -28,7 +28,7 @@ $$\forall R \in Type, K \in Type, k \in R \to K, h \in \operatorname{List}\left(
 
 Suppose the delta voids every record that was active for the key and the replacement is a fresh record carrying that key. After revision a record is active for the key exactly when it is the replacement: a superseded record now ends in a void assignment, an untouched record keeps its old status and so was never active for the key, and the replacement ends in its active assignment.
 
-This is the Step 5 validity invariant of the codex-formal-answer skill: after any revision of P or G, one active settlement per assertion key remains, and the superseded ones stay in the history as void rather than disappearing.
+This is the Step 5 validity invariant of the formal-thinking-and-answer skill: after any revision of P or G, one active settlement per assertion key remains, and the superseded ones stay in the history as void rather than disappearing.
 
 **Lemma 1.3 (Revision of one key leaves other keys unchanged).**
 

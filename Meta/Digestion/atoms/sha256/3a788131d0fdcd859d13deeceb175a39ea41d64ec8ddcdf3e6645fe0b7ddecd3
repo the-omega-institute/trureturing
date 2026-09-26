@@ -1,0 +1,12 @@
+**定义 13.1（表示几何与返回缺陷）。** 给定不全相同的有限码点 $c_1,\ldots,c_m\in\mathbb R^d$，令
+\[
+ \bar c=m^{-1}\sum_i c_i,\quad u_i=c_i-\bar c,\quad
+ U=\operatorname{span}\{u_i\},\quad
+ \Sigma=m^{-1}\sum_i u_i u_i^{\mathsf T},\quad V_c=\operatorname{tr}\Sigma>0.
+\]
+记 $\gamma^2>0$ 为 $\Sigma$ 限制到 $U$ 的最小特征值。对仿射返回映射 $T(z)=Az+b$，定义均方根表示缺陷
+\[
+ \eta(T)^2=m^{-1}\sum_i\|T(c_i)-c_i\|_2^2.
+\]
+返回任务要求每个码点代表的符号状态保持不变；不预设 $T$ 已经精确满足该要求。
+

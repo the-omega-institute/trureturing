@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 
 /// <summary>
 /// stamp 匹配不代表项目产物已就绪。
-/// 内容层为冷且 build 根未占用时才尝试归档;热内容层或已占用的根不得访问归档。
+/// 冷缓存只填空根；热缓存超过发布周期后可经校验替换，失败保留原缓存。
 /// </summary>
 public sealed partial class LeanCacheEnsureCommandTests
 {
@@ -95,7 +95,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     /// <summary>
-    /// 内容层已经为热时不访问归档。
+    /// 周期内的热内容层不访问归档。
     /// </summary>
     [Fact]
     public void WarmProjectDoesNotReachForTheArchive()
@@ -139,6 +139,98 @@ public sealed partial class LeanCacheEnsureCommandTests
             "project olean state is warm",
             receipt.GetProperty("archive_skip_reason").GetString());
         }
+    }
+
+    [Theory]
+    [InlineData(5, false)]
+    [InlineData(7, true)]
+    public void WarmCacheRefreshUsesSourceAge(int ageHours, bool refresh)
+    {
+        using var repository = new TemporaryDirectory();
+        var fixture = new EnsureArchiveFixture(repository.Path, "dated-warm");
+        fixture.WriteProjectOlean();
+        var olean = Path.Combine(fixture.Target, ".lake", "build", "lib", "lean", "Warm.olean");
+        File.SetLastWriteTimeUtc(olean, TestEnvironmentBridge.UtcNow().AddHours(-ageHours));
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"offline\"}\n",
+            ArchiveExitCode = 1,
+        };
+
+        var receipt = fixture.Ensure(runner);
+
+        Assert.Equal(refresh ? 1 : 0, runner.ArchiveInvocations);
+        Assert.Equal(refresh ? "miss" : "not_attempted", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("warm\n", File.ReadAllText(olean));
+        if (refresh)
+            Assert.Contains("--refresh-stale", Assert.Single(runner.Invocations,
+                call => call.FileName == "/bin/bash").Arguments);
+    }
+
+    [Fact]
+    public void SuccessfulRefreshDoesNotRedownloadWithinTheCycle()
+    {
+        using var repository = new TemporaryDirectory();
+        var fixture = new EnsureArchiveFixture(repository.Path, "refresh-once");
+        fixture.WriteProjectOlean();
+        var build = Path.Combine(fixture.Target, ".lake", "build");
+        File.SetLastWriteTimeUtc(Path.Combine(build, "lib", "lean", "Warm.olean"),
+            TestEnvironmentBridge.UtcNow().AddHours(-7));
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n",
+            AfterArchiveFetch = _ => File.WriteAllText(Path.Combine(build, ".release-refreshed-at"),
+                TestEnvironmentBridge.UtcNow().ToString("O")),
+        };
+
+        Assert.Equal("unpacked", fixture.Ensure(runner).GetProperty("archive_status").GetString());
+        Assert.Equal("not_attempted", fixture.Ensure(runner).GetProperty("archive_status").GetString());
+        Assert.Equal(1, runner.ArchiveInvocations);
+    }
+
+    [Fact]
+    public void RefreshTimestampHasAnExactSixHourBoundary()
+    {
+        using var repository = new TemporaryDirectory();
+        var build = Path.Combine(repository.Path, ".lake", "build");
+        Directory.CreateDirectory(build);
+        var now = DateTimeOffset.Parse("2026-09-26T12:00:00Z");
+        var marker = Path.Combine(build, ".release-refreshed-at");
+        File.WriteAllText(marker, now.AddHours(-6).ToString("O"));
+        Assert.False(LeanArchiveFetch.IsExpired(repository.Path, now));
+        Assert.True(LeanArchiveFetch.IsExpired(repository.Path, now.AddTicks(1)));
+        File.WriteAllText(marker, now.AddHours(1).ToString("O"));
+        Assert.True(LeanArchiveFetch.IsExpired(repository.Path, now));
+        File.WriteAllText(marker, "invalid");
+        Assert.True(LeanArchiveFetch.IsExpired(repository.Path, now));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void OldWarmDonorIsRefreshedAfterCopying(bool copyFallback)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        WriteCache(repository.Path, "old donor\n");
+        var olean = WriteProjectOlean(repository.Path, "OldDonor");
+        File.SetLastWriteTimeUtc(olean, TestEnvironmentBridge.UtcNow().AddHours(-7));
+        LeanCacheStamp.Write(Path.Combine(repository.Path, ".lake"), ReadPins(repository.Path));
+        var target = AddWorktree(repository.Path, "old-warm-donor");
+        WriteFetcher(target);
+        var runner = new RecordingWorktreeProcessRunner
+        {
+            ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n",
+        };
+
+        var receipt = ReadReceipt(WorktreeCommand.Run(repository.Path,
+            ["ensure-cache", "--path", target], runner,
+            new RecordingDirectoryCloner { FailureReason = copyFallback ? "clone unavailable" : null }));
+
+        Assert.Equal(1, runner.ArchiveInvocations);
+        Assert.Equal("unpacked", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("seeded", receipt.GetProperty("status").GetString());
+        Assert.True(File.Exists(olean));
     }
 
     /// <summary>

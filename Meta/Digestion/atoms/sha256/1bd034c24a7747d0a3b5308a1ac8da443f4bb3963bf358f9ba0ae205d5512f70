@@ -1,0 +1,15 @@
+**证明。** 保持面积等价于 $\partial_\theta u+\partial_\phi v=0$。对零均值部分取 Fourier 系数 $\widehat u_k,\widehat v_k$，$k=(k_1,k_2)\ne0$，有 $k_1\widehat u_k+k_2\widehat v_k=0$。定义
+\[
+ \widehat H_{0,k}=-i\frac{k_2\widehat u_k-k_1\widehat v_k}{|k|^2},
+ \qquad \widehat H_{0,0}=0.
+\]
+光滑性保证系数快速衰减，故该级数定义光滑函数；实向量场的共轭对称保证 $H_0$ 实值。逐项计算 $i k_2\widehat H_{0,k}=\widehat u_k$、$-i k_1\widehat H_{0,k}=\widehat v_k$，得到分解。零均值固定加常数自由度，因此唯一。任意周期 Hamilton 场的平均值为零，所以全局 Hamilton 的必要条件是 $a=b=0$，充分性来自构造。
+
+也可直接看到拓扑障碍：$\iota_X\Omega=u\,d\phi-v\,d\theta$ 是闭一形式。对上述分解，其沿两个基本闭路的积分分别为 $-2\pi b$、$2\pi a$；单值函数的全微分沿闭路积分为零。常量项因此不能通过在同一环面上改写一个周期标量能量消除。
+
+对任意 $H$，$X_{H_0-H}$ 平均为零，故正交分解给
+\[
+ \|X-X_H\|_{L^2(\mu)}^2=a^2+b^2+\|X_{H_0-H}\|_{L^2(\mu)}^2.
+\]
+取 $H=H_0$ 达到第一式。又 $\|X-X_H\|_\infty\ge\|\int(X-X_H)d\mu\|=\sqrt{a^2+b^2}$，同一选择达到界。该误差下界要求固定相空间、固定辛形式和全局单值周期 Hamilton 参数化；增加状态维数、使用局部图或加入非 Hamilton 通量，会改变模型类。分解属于环面 Hodge/闭形式理论的具体 Fourier 实现，不作为新的拓扑定理。证毕。[^tcs9-symplectic]
+

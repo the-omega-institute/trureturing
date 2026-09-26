@@ -1,0 +1,7335 @@
+# 奇偶隐箭头的谱边界层
+
+## 54. 消失宽度的谱边界层与端点不紧性
+
+**定义 54.1（趋零的谱区间左端点）。** 保持[窗口相位卷](PARITY_HIDDEN_ARROW_WINDOW_PHASES.md)第 49–52 章的原序列、
+同一完整后验标签、精确中心及全部空间归一化。
+记 $`\delta=Q^{-1/2}`$，$`\mathfrak L=\log(1/h)`$，并把定义 51.1 的有限谱公式
+按原式定义到 $`u=0`$：
+
+```math
+\begin{aligned}
+N_M(u)&=\left\lfloor h^{-1}e^{u/\sqrt\delta}\right\rfloor,\qquad u\ge0,\\
+\mathcal Z_M(u)&=\sum_{|k|\le N_M(u)}(1+k^2)^{-1/2}
+ |\widehat\mu_M(k)|^2-2\mathfrak L Y_M^2-\frac{2u}{\sqrt\delta}V_M,\\
+\mathcal J_M&=b_*\mathcal Q_M+
+ \sum_{t\ne r}H(x_t,x_r)A_tA_r,\qquad
+\mathcal Q_M=\sum_tA_t^2,\qquad
+T_M=\frac{\mathcal Q_M-V_M}{\sqrt\delta}.
+\end{aligned}
+```
+
+式 (54.1)。
+
+这里 $`A_t`$ 为按完整得分组合并的精确中心标签和，
+$`H(x,y)=1+2D_{\rm w}-2\log(\omega|x-y|)`$，$`\omega=\pi/2`$。
+固定 $`U>0`$；取任意确定性序列 $`a_M\in(0,U)`$，满足
+
+```math
+a_M\longrightarrow0,\qquad
+\ell_M:=\frac{a_M}{\sqrt\delta}\longrightarrow\infty,
+\qquad
+\vartheta_M(t)=a_M+\left(1-\frac{a_M}{U}\right)t,\quad 0\le t\le U.
+```
+
+式 (54.2)。
+
+**定理 54.2（外部仿射律可逼近端点，但不能包含端点）。** 对定义 54.1 的任意序列，
+
+```math
+\sup_{a_M\le u\le U}
+ \left|\mathcal Z_M(u)-\mathcal J_M-2uT_M\right|
+ \longrightarrow0
+```
+
+式 (54.3)。
+
+依联合概率成立；在均匀固定基数支持先验的条件版本中，
+相应条件误差概率依数据概率趋零。
+于是 $`\mathcal Z_M\circ\vartheta_M`$ 在 $`D[0,U]`$ 的 $`J_1`$ 拓扑中收敛到
+
+```math
+t\longmapsto\mathcal J_\infty+2tN_2,\qquad
+\mathcal J_\infty=b_*\gamma+I_2(H),
+```
+
+式 (54.4)。
+
+并联合保留第 51 章的同一端点、固定紧区间轮廓、桥、偶极子及二次坐标。
+条件有界 Lipschitz、无条件固定支持一致性及共同方向事件的范围均保持原义。
+这里不要求 $`\ell_M/\log Q\to\infty`$。
+
+另一方面，定义到 $`u=0`$ 的整族 $`\mathcal Z_M|_{[0,U]}`$
+在任意固定支持序列的无条件律下都不是 $`J_1`$ 紧的。
+更精确地，对任意固定 $`c>0`$，置
+
+```math
+D_c=2\int_1^{e^c}(|F(v)|^2-\gamma)\,\frac{dv}{v},\qquad
+\sigma_c^2=\mathbb E D_c^2>0.
+```
+
+式 (54.5)。
+
+则
+
+```math
+\mathcal Z_M(c\sqrt\delta)-\mathcal Z_M(0)\Longrightarrow D_c,
+\qquad
+\liminf_M\inf_S\mathbb P_S\left\{
+ |\mathcal Z_M(c\sqrt\delta)-\mathcal Z_M(0)|>
+ \frac{\sigma_c}{\sqrt2}\right\}\ge\frac1{60}.
+```
+
+式 (54.6)。
+
+将 $`V_M`$ 换成 $`\gamma`$ 时，这些结论也成立，外部二次坐标同时换成
+$`T_M^\circ=(\mathcal Q_M-\gamma)/\sqrt\delta`$。
+
+证明。第 51 章的有限二次型逼近已经给出
+$`(\mathcal J_M,T_M)`$ 与所列空间对象的联合极限。
+这里需补足趋零左端点上的一致谱估计。
+以下辅助二阶矩均在第 51 章固定截断索引集上估计，最后才移除全行截断事件；
+不把截断失败概率乘以无界谱量。
+
+先保留有限频率的 $`\mathrm{Ci}`$ 余项。
+对 $`0<|\theta|\le1`$，令 $`g_\theta(v)=(\cos(\theta v)-1)/v`$，
+$`g_\theta(0)=0`$。逐格积分给出
+
+```math
+\begin{aligned}
+\left|\sum_{k=1}^Ng_\theta(k)-\int_0^Ng_\theta(v)\,dv\right|
+ &\le\int_0^N|g_\theta'(v)|\,dv\\
+ &\le C|\theta|\{1+\log_+(N|\theta|)\}.
+\end{aligned}
+```
+
+式 (54.7)。
+
+第二行在换元 $`z=|\theta|v`$ 后使用
+$`|\sin z|/z+|1-\cos z|/z^2`$：零点附近有界，远处积分至多对数增长。
+把调和数的 $`\log N+\gamma_{\rm E}+O(N^{-1})`$ 与 Ci 恒等式代入，得
+
+```math
+\sum_{k=1}^N\frac{\cos(k\theta)}k
+ =-\log|\theta|+\mathrm{Ci}(N|\theta|)
+ +O\left(N^{-1}+|\theta|\{1+\log_+(N|\theta|)\}\right).
+```
+
+式 (54.8)。
+
+第 51 章的可和权重修正仍为
+$`D_{\rm w}+O(\theta^2(1+|\log|\theta||)+N^{-2})`$。
+在截断组上 $`\omega h\delta\le|\theta|\le Ch\sqrt\lambda`$，
+而 $`s=u/\sqrt\delta\in[0,U/\sqrt\delta]`$。
+频率取整满足 $`|\log(Nh/e^s)|\le Che^{-s}`$；
+因 Ci 对其对数参数的导数为余弦，替换 Ci 的参数也只产生这一量级的误差。
+因此有限谱核在所有这些参数上同时满足
+
+```math
+\begin{aligned}
+K_{N_M(u)}(0)&=2\mathfrak L+2s+b_*+O(h),\\
+K_{N_M(u)}(h(x_t-x_r))
+ &=2\mathfrak L+H(x_t,x_r)+K_s^{\rm tail}(x_t,x_r)+O(\epsilon_M),
+ \qquad t\ne r,\\
+K_s^{\rm tail}(x,y)&=2\mathrm{Ci}(\omega e^s|x-y|),\\
+\epsilon_M&=C\left[h+h\sqrt\lambda(1+U/\sqrt\delta+\log\lambda)
+ +h^2\lambda(1+\mathfrak L+\log\lambda)\right],\qquad
+Q^2\epsilon_M\longrightarrow0.
+\end{aligned}
+```
+
+式 (54.9)。
+
+最后一个极限使用原序列的 $`\mathfrak L\asymp\lambda=Q^3`$。
+所有组的共同端点项精确相消后，组数 $`O(Q^2)`$ 与 Cauchy 不等式给出
+
+```math
+\sup_{0\le u\le U}\left|
+ \mathcal Z_M(u)-\mathcal J_M-2uT_M
+ -\sum_{t\ne r}K_{u/\sqrt\delta}^{\rm tail}(x_t,x_r)A_tA_r
+ \right|\le CQ^2\epsilon_M\mathcal Q_M=o_{\mathbb P}(1).
+```
+
+式 (54.10)。
+
+余下的尾核不能在最小组距上粗略取最大值。
+由 Ci 的对数及倒数包络，对所有 $`s\ge0`$ 有
+
+```math
+\delta\sum_{k\ge1}\mathrm{Ci}(\omega e^s k\delta)^2\le Ce^{-s}.
+```
+
+式 (54.11)。
+
+为证此式，置 $`z=\omega e^s\delta`$。
+当 $`z\le1`$，$`kz\le1`$ 的部分由
+$`\sum_{k\le1/z}(1+|\log(kz)|)^2\le C/z`$ 控制，
+其余部分由 $`\sum_{k>1/z}(kz)^{-2}\le C/z`$ 控制。
+当 $`z>1`$，全部求和至多 $`C/z^2\le C/z`$。
+乘以 $`\delta`$ 即得结论。
+
+第 51 章不同组的实际两行占据数界与 Gaussian 包络，
+对同一辅助乘积标签向量的条件方差 $`v_t`$ 给出
+
+```math
+\begin{aligned}
+\mathbb E_S\sum_{t\ne r}
+ |K_s^{\rm tail}(x_t,x_r)|^2v_tv_r&\le Ce^{-s}+\eta_M,\\
+\mathbb E_S\sum_{t\ne r}
+ |\partial_sK_s^{\rm tail}(x_t,x_r)|^2v_tv_r&\le C+\eta_M,
+ \qquad s\ge0,\\
+0\le\eta_M&\le Q^C(1+\log Q)^Ce^{-c_1\lambda}.
+\end{aligned}
+```
+
+式 (54.12)。
+
+第一行在规则计数区使用
+$`\mathbb E_S(v_tv_r)\le C\delta^2e^{-c_1(x_t^2+x_r^2)}`$，
+先固定差 $`k=t-r`$ 求和，其余 Gaussian 格和乘以 $`\delta`$ 有统一界，
+再用 (54.11)。低计数区的指数小点界、$`O(Q^2)`$ 个组与
+$`\sup_{s\ge0,t\ne r}|K_s^{\rm tail}(x_t,x_r)|\le C(1+\log Q)`$
+给出所列 $`\eta_M`$。
+第二行使用 $`\partial_sK_s^{\rm tail}=2\cos(\omega e^s|x_t-x_r|)`$。
+这些估计只需要不同组对应的不同实际行；不假定实际四行独立。
+
+记辅助中心组和为 $`U_t`$，并置
+$`B_M(s)=\sum_{t\ne r}K_s^{\rm tail}(x_t,x_r)U_tU_r`$。
+这是有限个光滑函数之和。辅助独立性给出
+$`\mathbb E_{\mathsf Q}B_M(s)^2=2\sum_{t\ne r}(K_s^{\rm tail})^2v_tv_r`$，
+导数也有同一等式。
+对任意长为一的区间 $`I_n=[n,n+1]`$，一维 Sobolev 不等式的直接形式是
+
+```math
+\sup_{I_n}|f|^2\le\int_{I_n}|f|^2
+ +2\left(\int_{I_n}|f|^2\int_{I_n}|f'|^2\right)^{1/2}.
+```
+
+式 (54.13)。
+
+可先选一点使其函数平方不超过积分，再积分 $`(|f|^2)'`$ 并用 Cauchy 不等式。
+将 (54.12) 代入，再对数据及辅助律取期望，得到
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}\sup_{I_n}|B_M(s)|^2
+ \le C e^{-n/2}+C\sqrt{\eta_M},\qquad n\ge0.
+```
+
+式 (54.14)。
+
+把至多 $`C\delta^{-1/2}`$ 个单位区间相加，得
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+\sup_{\ell_M\le s\le U/\sqrt\delta}|B_M(s)|^2
+\le Ce^{-\lfloor\ell_M\rfloor/2}+C\delta^{-1/2}\sqrt{\eta_M}\longrightarrow0.
+```
+
+式 (54.15)。
+
+这正是任意缓慢发散的 $`\ell_M`$ 所需的统一估计。
+
+最后换回精确后验中心。所有 $`s\ge0`$ 的截断尾核矩阵算子范数
+同时至多 $`CQ^2(1+\log Q)`$。
+第 43 章的 Hilbert 中心界给出组向量位移
+$`\|e\|_2\le C\sqrt{V_M}\,r_M`$，
+$`r_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})`$。
+故统一二次型位移至多
+$`CQ^2(1+\log Q)(2\|U\|_2\|e\|_2+\|e\|_2^2)=o_{\mathbb P}(1)`$。
+用一次完整后验向量总变差比较转移这些有界事件，移除截断事件，
+便由 (54.10)、(54.15) 得到 (54.3)。没有通过总变差转移任何无界矩。
+联合系数极限、$`a_M\to0`$ 及 (54.3) 随即证明 (54.4)。
+
+为证明另一端的障碍，令 $`\mathcal R_M`$ 为第 50 章的有限谱曲线。
+对每个固定 $`c>0`$，包括取整在内，定义精确给出
+
+```math
+\mathcal Z_M(c\sqrt\delta)-\mathcal Z_M(0)
+=\mathcal R_M(c)-\mathcal R_M(0)-2cV_M.
+```
+
+式 (54.16)。
+
+第 50 章固定区间上的联合收敛和 $`V_M\to\gamma`$ 因而给出 (54.6) 的分布极限。
+这是固定参数定理的应用，没有代入变化参数。
+
+实 Gaussian 乘积公式写出
+$`D_c=I_2(d_c)`$，其中
+$`d_c(x,y)=2\int_1^{e^c}\cos(\omega v(x-y))\,dv/v`$。
+该连续有界核在对角线上等于 $`2c`$，在其邻域严格为正，
+故 $`\sigma_c^2=2\|d_c\|_{L^2(\rho\otimes\rho)}^2>0`$。
+所引[二阶 Wiener 混沌谱表示](../../../Library/Dynamics/iyer2025empirical.md)给出四阶矩界
+$`\mathbb E D_c^4\le15\sigma_c^4`$。
+Paley–Zygmund 不等式于是给出
+$`\mathbb P\{|D_c|>\sigma_c/\sqrt2\}\ge1/60`$。
+对这个开集用 Portmanteau 下界及固定支持一致性，即得 (54.6)。
+
+$`J_1`$ 紧集在左端点零处必须一致右连续：否则可取紧集内收敛的路径列
+及趋零时间列，时间变换固定零点且一致趋于恒等，
+从而与极限路径在零处右连续矛盾。
+因此紧性要求任意 $`\varepsilon>0`$ 下，
+
+```math
+\lim_{\zeta\downarrow0}\limsup_M
+\mathbb P_S\{\sup_{0\le u\le\zeta}|\mathcal Z_M(u)-\mathcal Z_M(0)|
+>\varepsilon\}=0.
+```
+
+式 (54.17)。
+
+式 (54.6) 在 $`c\sqrt\delta\to0`$ 处给出严格正下界，否定这一必要条件。
+
+第 52 章最后给出
+
+```math
+\sup_{0\le u\le U}|\mathcal Z_M^\circ(u)-\mathcal Z_M(u)|
+\le\frac{2U}{\sqrt\delta}|V_M-\gamma|\longrightarrow0,
+```
+
+式 (54.18)。
+
+故确定中心版本的全部结论随之成立。
+
+## 追加锚（本行以下为增补区）
+
+## 55. 谱边界层的紧化轮廓与精确分离判据
+
+**定义 55.1（同一谱曲线的边界层余项）。** 保持定义 54.1 的原模型及记号，固定 $`U>0`$，
+记 $`S_M=U/\sqrt\delta`$，$`\psi(s)=s/(1+s)`$。定义右连续余项
+
+```math
+\mathcal B_M(s)=
+\begin{cases}
+ \mathcal Z_M(s\sqrt\delta)-\mathcal J_M-2s\sqrt\delta\,T_M,
+       &0\le s<S_M,\\
+ 0,&s\ge S_M,
+\end{cases}
+\qquad
+\widetilde{\mathcal B}_M(x)=
+\begin{cases}
+ \mathcal B_M\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.1)。
+
+$`S_M`$ 处采用右侧的零值；允许该处有跳跃。
+在第 53 章的同一实 Gaussian 空间上，令
+
+```math
+\mathcal E(s)=I_2(K_s^{\rm tail}),\qquad
+K_s^{\rm tail}(x,y)=2\mathrm{Ci}(\omega e^s|x-y|),\qquad s\ge0,
+\qquad
+\widetilde{\mathcal E}(x)=
+\begin{cases}
+ \mathcal E\!\left(\dfrac{x}{1-x}\right),&0\le x<1,\\
+ 0,&x=1.
+\end{cases}
+```
+
+式 (55.2)。
+
+空间核的对角线取值不参与二重 Wiener 积分。
+
+**定理 55.2（原始数组的完整边界层轮廓）。** $`\mathcal E`$ 有一个在
+$`[0,\infty)`$ 连续且在无穷远几乎处处趋零的版本。
+对该版本，$`\widetilde{\mathcal E}\in C[0,1]`$，且
+
+```math
+\left(\widetilde{\mathcal B}_M,\mathcal J_M,T_M\right)
+\Longrightarrow
+\left(\widetilde{\mathcal E},\mathcal J_\infty,N_2\right)
+\quad\text{于 }D[0,1]_{J_1}\times\mathbb R^2.
+```
+
+式 (55.3)。
+
+该收敛为 C 紧，并可联合保留第 51 章的同一端点、固定紧区间轮廓、桥和偶极子。
+$`\mathcal J_\infty=b_*\gamma+I_2(H)`$ 与整个 $`\widetilde{\mathcal E}`$
+由同一个 $`\mathcal W_\rho`$ 产生，$`N_2`$ 独立于整个 $`\mathcal W_\rho`$。
+条件有界 Lipschitz 收敛依数据概率成立的先验空间、固定支持的无条件一致性
+以及未知方向的共同一致事件，均保持第 54 章的范围。
+若同时将谱曲线中的 $`V_M`$ 及二次坐标的中心换成 $`\gamma`$，
+余项 $`\mathcal B_M`$ 在每个有限样本上完全不变。
+
+证明。先证明连续对象的尾部和版本。
+第 53 章的 Ci 等距式及 Gaussian 卷积包络给出，对 $`s\ge0`$，
+
+```math
+\mathbb E|\mathcal E(s)|^2\le Ce^{-s},\qquad
+\partial_sK_s^{\rm tail}(x,y)=2\cos(\omega e^s|x-y|),\qquad
+\mathbb E|I_2(\partial_sK_s^{\rm tail})|^2\le8\gamma^2.
+```
+
+式 (55.4)。
+
+在每个固定区间上，核及其导数均平方可积。
+Bochner 积分与二重 Wiener 积分的连续性给出具有该弱导数的随机 $`H^1`$ 版本，
+因而有连续版本；可在可数个整端点区间上取相容版本。
+对第 54 章的单位区间不等式取期望，得
+
+```math
+\mathbb E\sup_{n\le s\le n+1}|\mathcal E(s)|^2\le Ce^{-n/2},
+\qquad
+\mathbb E\sup_{s\ge R}|\mathcal E(s)|^2\le Ce^{-\lfloor R\rfloor/2},
+\qquad R\ge0.
+```
+
+式 (55.5)。
+
+第二式把第一式求和。整数 $`R`$ 对应的尾部上确界递减，期望趋零，
+故其极限几乎处处为零。这同时给出所需的无穷远版本和紧化连续性。
+
+现回到实际数组。仍在固定截断索引集上用同一个辅助标签向量，令
+
+```math
+X_M(s)=\sum_{t\ne r}K_s^{\rm tail}(x_t,x_r)U_tU_r.
+```
+
+式 (55.6)。
+
+第 54 章的有限谱分解在 $`0\le s\le S_M`$ 上一致成立，
+其余误差及统一精确中心位移依概率趋零。
+先考虑任意固定 $`R<\infty`$。
+第 54 章的核及导数二阶界给出
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+ \|X_M\|_{H^1[0,R]}^2\le C_R.
+```
+
+式 (55.7)。
+
+因此在辅助联合律下，路径在 $`C[0,R]`$ 中紧。
+此处使用一维 $`H^1`$ 有界集的紧嵌入：
+其函数一致有界，增量至多为导数 $`L^2`$ 范数乘距离的平方根。
+条件版本先用条件 Markov 不等式，再用数据期望控制坏环境。
+
+还需识别与截距的联合有限维律。
+对任意固定 $`s_1,\ldots,s_m\in[0,R]`$，
+把核 $`H,K_{s_1}^{\rm tail},\ldots,K_{s_m}^{\rm tail}`$
+同时在空间远尾和近对角线外截断。
+它们在近对角线均至多为 $`C_R(1+|\log|x-y||)`$，
+远处至多为 Gaussian 空间包络可积的对数或有界函数。
+第 51 章不同组的实际两行估计因而给出
+
+```math
+\begin{aligned}
+\sup_{s\in[0,R]}\mathbb E_S
+ \sum_{\substack{t\ne r\\|x_t-x_r|\le\varepsilon}}
+ |K_s^{\rm tail}(x_t,x_r)|^2v_tv_r
+ &\le C_R\varepsilon(1+|\log\varepsilon|^2)+o(1),\\
+\sup_{s\in[0,R]}\mathbb E_S
+ \sum_{\substack{t\ne r\\|x_t|>A\ \mathrm{or}\ |x_r|>A}}
+ |K_s^{\rm tail}(x_t,x_r)|^2v_tv_r
+ &\le C_Re^{-c_R A^2}+o(1).
+\end{aligned}
+```
+
+式 (55.8)。
+
+这些是实际数据环境上的辅助方差界，不是实际后验噪声的矩收敛。
+截断后的一组连续核可由同一个有限空间分割上的矩形阶梯核逼近。
+对任一阶梯核 $`K=\sum_{i,j}k_{ij}\mathbf1_{I_i}\otimes\mathbf1_{I_j}`$，
+同一辅助向量给出精确恒等式
+
+```math
+\sum_{t\ne r}K(x_t,x_r)U_tU_r
+ =\sum_{i,j}k_{ij}U(I_i)U(I_j)
+  -\sum_i k_{ii}\sum_{x_t\in I_i}U_t^2.
+```
+
+式 (55.9)。
+
+第 49、51 章的混合联合中心极限定理和块内平方和集中，
+同时使这些量收敛到同一 $`\mathcal W_\rho`$ 上的二重积分，
+并与二次坐标的极限 $`N_2`$ 独立。
+有限核族的逼近误差由 (55.8) 和辅助二次型等距式控制；
+连续极限误差由 Wiener 等距式控制。
+这证明所需的联合有限维收敛，而非由不同对象的边缘律拼接联合律。
+结合 (55.7)、已有空间路径紧性及极限的连续性，即得固定 $`R`$ 的联合路径极限。
+
+统一中心位移、一次完整后验向量总变差比较及截断事件移除，
+按第 54 章转移上述有界测试。
+各条件误差在数据概率中趋零，因此亦得到固定 $`R`$ 的条件联合结论。
+没有把 $`H^1`$ 无界范数的期望经总变差传到实际后验。
+
+接着控制增长区间。
+第 54 章的单位区间求和对固定 $`R`$ 也成立，给出
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+ \sup_{R\le s\le S_M}|X_M(s)|^2
+ \le Ce^{-\lfloor R\rfloor/2}
+       +C\delta^{-1/2}\sqrt{\eta_M},\qquad
+\delta^{-1/2}\sqrt{\eta_M}\longrightarrow0.
+```
+
+式 (55.10)。
+
+统一精确中心、有限谱误差和一次向量比较从而证明，对任意 $`\varepsilon>0`$，
+
+```math
+\lim_{R\to\infty}\limsup_M\sup_S
+ \mathbb P_S\left\{\sup_{s\ge R}|\mathcal B_M(s)|>\varepsilon\right\}=0.
+```
+
+式 (55.11)。
+
+条件尾部误差亦在先取 $`M`$、再取 $`R`$ 的意义下依数据概率趋零。
+设 $`\chi_R`$ 在 $`[0,R]`$ 等于一，在 $`[R+1,\infty)`$ 等于零，
+并在中间线性连接。
+固定区间联合收敛给出 $`\chi_R\mathcal B_M`$ 紧化后的联合极限。
+由 (55.5)、(55.11)，去掉 $`\chi_R`$ 的一致范数误差在两端都趋零。
+对有界 Lipschitz 测试作三角估计，再令 $`R\to\infty`$，便得到 (55.3)。
+同一逼近证明 C 紧性；它也控制移动截断处的跳跃，未把有限谱曲线假定为连续。
+具体地，截断处的左极限由原余项在 $`[S_M-1,S_M]`$ 的上确界控制，
+该上确界依 (55.10) 和同一转移依概率趋零。
+被零延拓舍去的原始端点 $`u=U`$ 也由这个闭区间估计控制，
+因而后文对原始闭区间取最大值时不会漏掉端点。
+
+固定支持等价性和共同方向事件作用于整个已构造对象，保持联合结论。
+最后精确代入
+
+```math
+\mathcal Z_M^\circ(u)-\mathcal Z_M(u)
+ =\frac{2u}{\sqrt\delta}(V_M-\gamma),\qquad
+T_M^\circ-T_M=\frac{V_M-\gamma}{\sqrt\delta},
+```
+
+式 (55.12)。
+
+可见余项中两次中心变化完全相消。
+
+**定理 55.3（外层仿射近似的必要充分条件）。** 对任意确定性序列
+$`a_M\in[0,U)`$、$`a_M\to0`$，下列两条件等价：
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \longrightarrow0\quad\text{依概率},
+\qquad
+\frac{a_M}{\sqrt\delta}\longrightarrow\infty.
+```
+
+式 (55.13)。
+
+概率结论可取任意固定支持序列的无条件律；当条件成立时，
+第 54 章的固定支持一致性和条件版本同时成立。
+将中心同时换成 $`\gamma`$ 不改变这个等价关系。
+
+证明。充分性由定理 54.2 给出。
+若比例不趋无穷，则存在子列使 $`a_M/\sqrt\delta\to c<\infty`$。
+定理 55.2 的连续极限及确定性移动时刻取值给出
+
+```math
+\mathcal Z_M(a_M)-\mathcal J_M-2a_MT_M
+ =\mathcal B_M(a_M/\sqrt\delta)
+ \Longrightarrow\mathcal E(c).
+```
+
+式 (55.14)。
+
+$`K_c^{\rm tail}`$ 在对角线附近有非零对数奇性，
+而 $`\rho`$ 处处为正，故
+$`\mathbb E\mathcal E(c)^2=2\|K_c^{\rm tail}\|_{L^2(\rho\otimes\rho)}^2>0`$。
+因此该非零极限不可能同时依概率趋零，否定 (55.13) 的第一个条件。
+这个反证适用于任意固定支持序列，因为整个统计量的固定支持律由置换等变性相同。
+(55.12) 的精确相消最后给出确定中心版本。
+
+**推论 55.4（有限比例的最大误差律及一致概率障碍）。** 记
+$`r_M=a_M/\sqrt\delta`$。
+若 $`r_M\to c<\infty`$，则与定理 55.2 的同一联合对象一起，
+
+```math
+\sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+ \Longrightarrow \sup_{s\ge c}|\mathcal E(s)|.
+```
+
+式 (55.15)。
+
+右侧保留与截距、端点和空间轮廓的共同 Gaussian 来源，并不声称独立。
+此外，对固定 $`R<\infty`$，令
+
+```math
+\begin{aligned}
+g(d)&=\int_{\mathbb R}\rho(x)\rho(x+d)\,dx
+      =g(0)e^{-\kappa d^2/4},\\
+z_0&=e^{-1-\gamma_{\mathrm E}},\qquad
+d_R=\min\{1,z_0/(\omega e^R)\},\qquad v_R=16d_Rg(1)>0.
+\end{aligned}
+```
+
+式 (55.16)。
+
+在任意满足 $`r_M\le R`$ 的子列上，任意固定支持序列均有
+
+```math
+\liminf_M\mathbb P_S\!\left\{
+ \sup_{a_M\le u\le U}|\mathcal Z_M(u)-\mathcal J_M-2uT_M|
+       >\sqrt{v_R/2}\right\}\ge\frac1{60}.
+```
+
+式 (55.17)。
+
+证明。紧化后的下端点 $`\psi(r_M)`$ 趋于 $`\psi(c)`$。
+在连续极限处，$`J_1`$ 收敛蕴含一致收敛；极限路径的一致连续性
+使移动下端点的尾部上确界成为连续泛函。
+定理 55.2 因而给出零延拓余项的 (55.15)。
+原始 $`u=U`$ 端点与其零替代值的差依概率趋零，故原闭区间也有同一极限。
+
+为证明定量障碍，使用
+$`\mathrm{Ci}(z)=\gamma_{\mathrm E}+\log z+\int_0^z(\cos t-1)\,dt/t`$。
+当 $`0<z\le z_0`$ 时，$`\mathrm{Ci}(z)\le-1`$。
+将方差积分限制在 $`0<|d|\le d_R`$，由 $`g(d)\ge g(1)`$ 得
+$`\inf_{0\le s\le R}\operatorname{Var}\mathcal E(s)\ge v_R`$。
+第二混沌的四阶矩不超过方差平方的十五倍，
+Paley–Zygmund 不等式遂给出
+$`\inf_{0\le s\le R}\mathbb P\{|\mathcal E(s)|>\sqrt{v_R/2}\}\ge1/60`$。
+对任意 $`r_M\le R`$ 的子列，再取比例收敛的子列，
+以 (55.14) 和开集 Portmanteau 将该下界转移到实际下端点余项，
+再用最大误差大于等于该余项的绝对值。
+若整个有界比例子列的下极限小于 $`1/60`$，可先取违反该下界的子列，
+再取比例收敛子列而得到矛盾，故 (55.17) 成立。
+此处始终转移概率，不用实际后验矩的收敛代替概率障碍。
+
+## 追加锚（本行以下为增补区）
+
+## 56. 算术网格以下的实际谱 OU 极限
+
+**定义 56.1（增长频率上的放大余项）。** 保持定义 54.1 的原始模型、
+固定幅度、固定 $`\beta\in(1/2,1)`$、$`\lambda=Q^3`$ 及同一组精确中心标签。
+记 $`\delta=Q^{-1/2}`$。取确定性序列及固定紧区间
+
+```math
+s_M\longrightarrow\infty,\qquad R_M=e^{s_M},\qquad
+r_M=R_M\delta\longrightarrow0,\qquad I=[t_0,t_1]\subset\mathbb R.
+```
+
+式 (56.1)。
+
+用定义 54.1 的有限截距 $`\mathcal J_M`$，定义
+
+```math
+\mathcal U_M(t)=e^{(s_M+t)/2}
+ \left\{\mathcal Z_M((s_M+t)\sqrt\delta)
+       -\mathcal J_M-2(s_M+t)\sqrt\delta\,T_M\right\},\qquad t\in I.
+```
+
+式 (56.2)。
+
+所有充分大的 $`M`$ 都使取值点位于任意预先固定的 $`(0,U)`$ 内。
+截距必须是 $`b_*\mathcal Q_M+\sum_{j\ne k}H(x_j,x_k)A_jA_k`$；
+若另取只有相同弱极限的有限截距，仍须额外控制它与此截距的差为
+$`o_{\mathbb P}(R_M^{-1/2})`$。
+
+**定理 56.2（完整网格分离范围内的联合实际极限）。** 对 (56.1) 的每个序列，
+实际平稳独立对实验及实际连续路径实验均有
+
+```math
+\left(\mathcal U_M,T_M,\mathcal J_M,Y_M,
+       L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip}\right)
+\Longrightarrow
+\left(\mathcal U,N_2,\mathcal J_\infty,Y,
+       L|_{[-A,A]},C|_{[-A,A]},Z\right),\qquad A>0.
+```
+
+式 (56.3)。
+
+路径坐标取紧区间 $`J_1`$ 拓扑，且为 C-tight。
+$`Z_M^{\rm dip}`$ 表示原空间偶极子，以区别于谱曲线。
+新过程 $`\mathcal U`$ 是中心平稳连续 Gaussian 过程，满足
+
+```math
+\mathbb E[\mathcal U(t)\mathcal U(v)]
+ =16g_0e^{-|t-v|/2},\qquad g_0=\int_{\mathbb R}\rho(x)^2\,dx.
+```
+
+式 (56.4)。
+
+在原实 isonormal Gaussian 噪声 $`W_\rho`$ 上，旧坐标仍为
+$`Y=W_\rho(1)`$、$`L(x)=W_\rho(1_{(-\infty,x]})`$、
+$`C(x)=L(x)-F_0(x)Y`$、$`Z=W_\rho(x)`$ 和
+$`\mathcal J_\infty=b_*\gamma+I_2(H)`$。
+$`N_2\sim N(0,\nu_2)`$，$`\nu_2=2g_0`$；
+联合对象 $`(\mathcal U,N_2)`$ 独立于整个 $`W_\rho`$，且两个新坐标相互独立。
+收敛同时具有均匀支持先验下依数据概率成立的条件有界 Lipschitz 版本，
+以及无条件固定支持一致版本。
+未知方向使用原共同判向事件。将 $`V_M`$ 与 $`T_M`$ 同时改为
+$`\gamma`$ 与 $`(\mathcal Q_M-\gamma)/\sqrt\delta`$ 时，
+(56.2) 逐样本不变；本结论不涉及实际后验无界矩的收敛。
+
+证明。以下比较都作用于同一个完整标签向量。
+第 53 章的连续谱极限只用于识别核，不能在其弱收敛中代入 $`s_M`$。
+这里直接控制有限原始统计量的放大误差。
+
+先给出实际数据环境上的增长核心估计。
+在第 49–51 章的共同计数截断事件上，完整得分组的标记为 $`x_j=j\delta`$，
+组数至多 $`CQ^2`$，$`|x_j|\le C\sqrt\lambda`$。
+该事件的补集概率一致趋零。
+令 $`C_j`$ 为实际组占用数，$`f_j`$ 为信号 Poisson 点概率，
+$`m_j`$ 为信号与背景的混合比较均值。
+原始一行、两行点概率与对应独立 Poisson 点概率的相对误差
+在固定计数截断上分别为 $`O(\lambda^2/M)`$、$`O(\lambda^3/M)`$。
+这些是实际联合行概率估计，不是观测行独立性。
+它们及精确去倾斜给出
+
+```math
+\begin{aligned}
+m_j&=2qf_j(1+O(\eta_M)),\qquad
+ \eta_M=O(\lambda\eta+\epsilon\lambda+q/M+q^{-1}),\\
+|\mathbb EC_j-m_j|&\le e_Mm_j,\qquad
+ \operatorname{Var}(C_j)\le C(m_j+e_Mm_j^2),\qquad
+ e_M=C\lambda^3/M.
+\end{aligned}
+```
+
+式 (56.5)。
+
+此处 $`\eta=\alpha-P/Q`$；$`\eta_M`$ 乘任意固定 $`Q`$ 次幂仍趋零。
+这些估计对连续路径实验成立，因其标记生成函数的主特征值是
+$`1+A_z+O(M^{-2})`$，在 $`T=2M\lambda`$ 时相对生成函数误差为
+$`O(\lambda/M)`$；固定截断上的 Cauchy 系数提取对两行至多损失
+$`O(\lambda^2)`$。独立对实验直接用 $`(1+A_z)^T`$。
+因此两种实验可共用 (56.5)。
+
+取充分大的固定 $`K`$，令 $`H_Q=\sqrt{K\log Q}`$，
+$`\mathcal C_Q=\{j:|j\delta|\le H_Q\}`$。
+写 $`\xi=a\lambda-\lfloor a\lambda\rfloor`$，
+两个计数偏差是 $`\sqrt\lambda x_j-\xi`$ 和
+$`(P/Q)\sqrt\lambda x_j+\xi`$。
+在此核心内展开 Poisson 率函数并保留 Stirling 余项，得
+
+```math
+f_j=\frac{e^{-\kappa x_j^2/2}}{2\pi\lambda\sqrt{ab}}
+ \left[1+O_K\left(\frac{1+H_Q^3}{\sqrt\lambda}
+            +\frac{1+H_Q^6}{\lambda}+\eta H_Q^2\right)\right].
+```
+
+式 (56.6)。
+
+二次率函数给出 $`-\kappa x_j^2/2`$；取整误差为
+$`O((1+|x_j|)/\sqrt\lambda)`$，三次项为
+$`O((1+|x_j|^3)/\sqrt\lambda)`$，四次余项和指数展开给出所列平方阶。
+核心有 $`O(Q^{1/2}\sqrt{\log Q})`$ 组，且最小 $`m_j`$ 至少为
+$`qQ^{-C_K}`$。由 (56.5) 的 Chebyshev 界及有限并集，对每个固定 $`D>0`$，
+
+```math
+Q^D\max_{j\in\mathcal C_Q}|C_j/m_j-1|\longrightarrow0
+\quad\hbox{依数据概率}.
+```
+
+式 (56.7)。
+
+令 $`p_i`$ 为原校准 logistic 参数，$`d_j=\sum_{i\in J_j}p_i(1-p_i)`$，
+$`v_j=d_j/B^2`$。校准根为 $`O_{\mathbb P}(q^{-1/2})`$，
+而 logistic 方差在零点的一阶导数为零。因此
+$`\sup_J|p_i(1-p_i)-1/4|=O_{\mathbb P}(\lambda/q+(q/M)^2+q^{-1})`$。
+结合 $`B^2\delta=q/\lambda`$，得到
+
+```math
+\max_{j\in\mathcal C_Q}
+ \left|\frac{v_j}{\delta\rho(x_j)}-1\right|
+ =O_{\mathbb P}\bigl(Q^{-3/2}(1+\log Q)^{3/2}\bigr),
+\qquad \min_{j\in\mathcal C_Q}d_j\ge q^{9/10}
+```
+
+式 (56.8)。
+
+其中最后一个不等式在概率趋一的环境上成立。
+固定截断上的全局 Poisson 包络为：两坐标均大于各自均值一半时，
+$`m_j/B^2\le C\delta e^{-c x_j^2}`$；其余位置至多为
+$`CQ^{5/2}e^{-c\lambda}`$。
+因为 $`v_j\le C_j/(4B^2)`$，增大固定 $`K`$ 即可使
+
+```math
+\mathbb E\sum_{|x_j|>H_Q}(1+|x_j|)^m v_j=O(Q^{-100}),
+\qquad 0\le m\le4.
+```
+
+式 (56.9)。
+
+故这些尾质量在概率趋一的环境上均不超过 $`Q^{-60}`$。
+同时 $`V_M=\sum_jv_j\to\gamma`$、$`|J|/B^2\to4\gamma`$，
+选中标签总方差 $`d_J=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)`$。
+
+下面保留足以承受放大的精确中心误差。
+给定数据，令 $`\mathsf Q_M`$ 是参数为 $`p_i`$ 的独立 Bernoulli 标签律；
+条件于标签总数为 $`q`$ 后，它恰为完整支持后验。
+Siripraparat–Neammanee 的 Bernoulli 局部极限定理
+（文献条件见 [Library 归因](../../../Library/Dynamics/iyer2025empirical.md)）
+对总数和补集给出
+
+```math
+d_{\rm TV}(\mathsf P_J,\mathsf Q_J)
+ \le C(d_J/q+q^{-1/2})=o_{\mathbb P}(1).
+```
+
+式 (56.10)。
+
+补集方差至少为 $`cq`$，且因 $`|J|=o_{\mathbb P}(q)`$，涉及的条件计数合法。
+更精确地，若 $`\pi_i`$ 是原精确后验边缘，任意数据可测 Hilbert 系数满足
+
+```math
+\left\|\sum_{i\in J}f_i(\pi_i-p_i)\right\|
+ \le C\left(\sum_{i\in J}p_i(1-p_i)\|f_i\|^2\right)^{1/2}\alpha_M,
+\qquad
+\alpha_M=\frac{d_J+\sqrt{d_J}}q+q^{-1/2}
+ =O_{\mathbb P}(Q^{-5/2}+q^{-1/2}).
+```
+
+式 (56.11)。
+
+为验证此加强，局部定理把条件密度比写成
+$`\sqrt{d_{\rm all}/d_O}\exp(-(k-\mu_J)^2/(2d_O))+O(q^{-1/2})`$。
+设 $`F=\sum f_i(\zeta_i-p_i)`$、$`S=\sum_J(\zeta_i-p_i)`$。
+减掉常数项后以 Cauchy–Schwarz 控制
+$`q^{-1}\mathsf E(\|F\|S^2)+q^{-1/2}\mathsf E\|F\|`$，
+使用 $`\mathsf ES^4\le3d_J^2+d_J`$ 即得 (56.11)。
+这也证明向量形式，不只是逐个标量中心的界。
+
+记 $`X_j=B^{-1}\sum_{J_j}(\zeta_i-p_i)`$。
+精确组中心与乘积中心之差的 $`\ell^2`$ 范数至多为
+$`C\sqrt{V_M}\alpha_M`$。
+在整个计数截断上，零对角矩阵
+
+```math
+K_{R,t}(j,k)=2\sqrt{Re^t}\,\mathrm{Ci}(\omega Re^t|x_j-x_k|),\qquad j\ne k,
+\qquad
+\sup_{t\in I}\|K_{R,t}\|_{\rm op}
+ \le C_I\sqrt R\,Q^2(1+\log Q)
+```
+
+式 (56.12)。
+
+由组数界及 Ci 的小参数对数、大参数倒数包络即得此粗界。
+因 $`R\delta\to0`$ 蕴含最终 $`R\le Q^{1/2}`$，
+且 $`\mathsf E\|X\|_2^2=V_M`$，改变整个路径中心的条件概率误差趋零，其系数为
+
+```math
+\sqrt R\,Q^2(1+\log Q)\alpha_M
+ =O_{\mathbb P}\bigl(Q^{-1/4}(1+\log Q)\bigr)+o_{\mathbb P}(1).
+```
+
+式 (56.13)。
+
+旧截距和二次坐标分别用 $`Q^2(1+\log Q)\alpha_M`$ 与
+$`\delta^{-1/2}\alpha_M`$ 控制。
+轮廓所有前缀直接在 (56.11) 取子集指标，偶极子取标记系数。
+
+有限谱恒等式在放大之前使用。
+设 $`z=s_M+t`$、$`n=\lfloor e^z/h\rfloor`$，
+$`E_M(z)=\sum_{|k|\le n}(1+k^2)^{-1/2}|\widehat\mu_M(k)|^2`$。
+由于 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$，花括号内精确等于
+$`E_M(z)-2\mathfrak L Y_M^2-2z\mathcal Q_M-\mathcal J_M`$。
+应用 (54.8) 及可和权重修正，零距离核为
+$`2\mathfrak L+2z+b_*+O_I(h/R)`$，非零距离核为
+$`2\mathfrak L+H(x_j,x_k)+2\mathrm{Ci}(\omega e^z|x_j-x_k|)+O_I(\varepsilon_Q)`$，其中
+
+```math
+\varepsilon_Q\le C_I\{h\sqrt\lambda(1+\log Q)
+          +h^2\lambda(1+\mathfrak L+\log\lambda)+h/R\}.
+```
+
+式 (56.14)。
+
+取整改变对数参数至多 $`C_Ih/R`$，而 Ci 对对数参数的导数为余弦，故同一界控制取整。
+由 $`(\sum_j|A_j|)^2\le CQ^2\sum_jA_j^2`$，
+
+```math
+\sup_{t\in I}\left|\mathcal U_M(t)
+          -\sum_{j\ne k}K_{R,t}(j,k)A_jA_k\right|
+ \le C_I\sqrt R\,Q^2\varepsilon_Q\|A\|_2^2=o_{\mathbb P}(1).
+```
+
+式 (56.15)。
+
+$`h`$ 在 $`Q^3`$ 尺度指数小，故其系数比任意逆多项式更快趋零；
+$`\|A\|_2^2`$ 的紧性由辅助矩、(56.11) 及一次 (56.10) 得到。
+原有限谱路径虽有取整跳跃，但在此已一致逼近连续的二次型路径。
+
+现在在一个耦合中同时替换所有核心组。
+(56.9) 与 (56.12) 先使删去非核心组的全部路径误差趋零；
+例如尾向量条件二阶矩至多 $`Q^{-60}`$，整个矩阵范数至多
+$`CQ^{9/4}(1+\log Q)`$。
+二次坐标的尾绝对期望至多 $`2\delta^{-1/2}\sum_{\rm tail}v_j`$。
+线性前缀和偶极子用组数与最大标记的多项式界，亦同时趋零。
+
+对每个核心 Bernoulli 和，局部点概率误差为 $`C/d_j`$。
+在标准化坐标 $`[-d_j^{1/6},d_j^{1/6}]`$ 内只有
+$`O(d_j^{2/3})`$ 个格点；外面用 Chebyshev，得
+
+```math
+\sup_x\left|\mathsf Q_M\{BX_j/\sqrt{d_j}\le x\}-\Phi(x)\right|
+ \le C d_j^{-1/3}.
+```
+
+式 (56.16)。
+
+取独立均匀变量，以逆分布函数同时生成各标准化组和及标准正态 $`g_j`$。
+所有均匀变量落在 $`[q^{-1/16},1-q^{-1/16}]`$ 的补事件概率
+至多为 $`2|\mathcal C_Q|q^{-1/16}`$。
+在此区间稍作扩张后，逆正态导数至多为 $`Cq^{1/16}`$。
+由 $`d_j\ge q^{9/10}`$ 得，最终在该共同事件上
+
+```math
+\max_{j\in\mathcal C_Q}|BX_j/\sqrt{d_j}-g_j|\le q^{-1/8},\qquad
+\|X-(\sqrt{v_j}g_j)_j\|_2\le q^{-1/8}\sqrt{V_M}.
+```
+
+式 (56.17)。
+
+这是离散与连续变量的概率耦合，不是两种分布的总变差趋零。
+所有有关系数范数只按 $`Q`$ 多项式增长，故一个向量耦合同时替换
+增长频率路径、旧截距、二次坐标及全部旧线性路径。
+
+再令 $`I_j=[(j-1/2)\delta,(j+1/2)\delta)`$、
+$`m_j^\circ=\int_{I_j}\rho(x)\,dx`$、$`G_j=\sqrt{m_j^\circ}g_j`$。
+格心对称 Taylor 展开及 (56.8) 给出
+
+```math
+\max_{j\in\mathcal C_Q}|v_j/m_j^\circ-1|
+ =O_{\mathbb P}(Q^{-1}(1+\log Q)).
+```
+
+式 (56.18)。
+
+核心矩阵只有 $`O(Q^{1/2}\sqrt{\log Q})`$ 行，
+故 (56.12) 在核心改善为 $`O_I(Q^{3/4}(1+\log Q)^{3/2})`$。
+与 (56.18) 相乘，改变 Gaussian 方差的整个路径误差为
+$`O_{\mathbb P}(Q^{-1/4}(1+\log Q)^{5/2})`$，依概率趋零。
+二次坐标在两边分别减去对应方差，其误差系数是
+$`\delta^{-1/2}Q^{-1}(1+\log Q)`$，同样趋零。
+至此未要求 $`R\delta`$ 以任何指定速率趋零。
+
+在同一个 $`W_\rho`$ 上实现 $`G_j=W_\rho(1_{I_j})`$。
+令 $`f_a(z)=2\mathrm{Ci}(a|z|)`$，并采用
+$`\widehat f(\xi)=\int e^{-i\xi z}f(z)\,dz`$ 的 Fourier 约定。
+先截断频率再取 $`L^2`$ 极限，得到经典恒等式
+
+```math
+\widehat f_a(\xi)=-\frac{2\pi}{|\xi|}1_{\{|\xi|\ge a\}},\qquad
+\int_{\mathbb R}f_a(z)f_b(z)\,dz=\frac{4\pi}{\max(a,b)}.
+```
+
+式 (56.19)。
+
+不需要且不声称 Ci 绝对可积。
+记 $`q_{R,t}(x,y)=\sqrt{Re^t}f_{\omega Re^t}(x-y)`$。
+在不同核心格 $`I_j\times I_k`$ 上把它取为格心值，
+在相同格及核心外置零，所得核记作 $`q^\delta_{R,t}`$。
+于是参考过程和参考二次坐标分别是
+
+```math
+\mathcal U_Q^G(t)=I_2(q^\delta_{R,t}),\qquad
+T_Q^G=\delta^{-1/2}\sum_{j\in\mathcal C_Q}(G_j^2-m_j^\circ).
+```
+
+式 (56.20)。
+
+实际网格上的零对角不可忽略而不作估计。
+对 $`r=R\delta\to0`$，有
+
+```math
+\sup_{t\in I}\|q^\delta_{R,t}-q_{R,t}\|_{L^2(\rho\otimes\rho)}^2
+ \le C_I r(1+|\log r|^2)+C_Ie^{-cH_Q^2}.
+```
+
+式 (56.21)。
+
+证明此估计时先用 Gaussian 格质量的卷积界
+$`\sum_jm_j^\circ m_{j+k}^\circ\le C\delta e^{-c(k\delta)^2}`$。
+相同格和邻格的连续核平方积分不超过
+$`CR\int_0^{3\delta}(1+|\log(Rz)|^2)\,dz`$，
+邻格的采样值用同一格质量界，均受第一项控制。
+对相距 $`m\ge2`$ 格的位置，格心距离与真实距离相差至多 $`\delta`$，而
+
+```math
+\left|\frac{d}{dz}\{\sqrt{Re^t}f_{\omega Re^t}(z)\}\right|
+ \le C_I\sqrt R/|z|.
+```
+
+式 (56.22)。
+
+该格的平方误差至多 $`C_IR/m^2`$；求和后为
+$`C_IR\delta\sum_{m\ge2}m^{-2}`$。
+核心外至少一个坐标绝对值超过 $`H_Q-\delta`$，
+从其 Gaussian 密度提取 $`e^{-cH_Q^2}`$ 后，
+余下卷积密度有界，(56.19) 使归一化核的平方积分一致有界。
+这证明 (56.21)，包括被删除的同格区域。
+
+在 $`L^2(\rho dx)`$ 上记相应核算子为 $`T_q`$。
+乘以 $`\sqrt\rho`$ 后，连续算子化为有界权重夹住的 Fourier 乘子。
+(56.19) 给出 $`\|T_{q_{R,t}}\|_{\rm op}\le C_IR^{-1/2}`$，于是
+
+```math
+\sup_{t\in I}\|T_{q^\delta_{R,t}}\|_{\rm op}
+ \le C_I\{R^{-1/2}+\sqrt r(1+|\log r|)+e^{-cH_Q^2/2}\}
+ \longrightarrow0.
+```
+
+式 (56.23)。
+
+令 $`g(z)=\int\rho(x)\rho(x-z)\,dx=g_0e^{-\kappa z^2/4}`$。
+在连续核内积中换元 $`z=y/R`$，以 Ci 乘积的绝对可积性作支配收敛，
+再用 (56.19)、$`\omega=\pi/2`$ 及 (56.21)，得
+
+```math
+2\langle q^\delta_{R,t},q^\delta_{R,v}\rangle
+ \longrightarrow \frac{8\pi g_0}{\omega}e^{-|t-v|/2}
+ =16g_0e^{-|t-v|/2}.
+```
+
+式 (56.24)。
+
+还须在离散网格上直接证明紧性。
+对 $`0\le d\le1`$，积分表达式和一次分部积分分别给出
+
+```math
+|\mathrm{Ci}(ze^d)-\mathrm{Ci}(z)|
+ \le C\min(d,z^{-1}),\qquad z>0.
+```
+
+式 (56.25)。
+
+由格质量卷积界，过程增量的二阶矩至多为常数乘
+$`\delta\sum_{k\ne0}|\sqrt{Re^t}f_{\omega Re^t}(k\delta)
+-\sqrt{Re^v}f_{\omega Re^v}(k\delta)|^2`$。
+设 $`t\le v`$、$`d=v-t`$、$`r_t=Re^t\delta`$。
+用 Ci 对数及倒数包络，有
+$`r_t\sum_{k\ne0}\mathrm{Ci}(\omega r_t|k|)^2\le C`$，
+所以振幅因子变化贡献至多 $`Cd^2`$。
+其余项由 (56.25) 及在 $`k=(r_td)^{-1}`$ 处分割求和得到
+
+```math
+r_t\sum_{k\ge1}\min\{d^2,(r_tk)^{-2}\}\le Cd,
+\qquad
+\mathbb E|\mathcal U_Q^G(t)-\mathcal U_Q^G(v)|^4
+ \le C_I|t-v|^2.
+```
+
+式 (56.26)。
+
+最后一步使用第二混沌四阶矩不超过二阶矩平方的十五倍。
+大于一的增量由固定紧区间上的有界方差处理。
+连续参考路径因而满足一致 Kolmogorov 紧性判据。
+这一步单独证明过程紧性；逐点的 (56.21) 本身不承担该结论。
+
+最后识别联合 Gaussian 极限及与整个旧噪声的独立性。
+在正交格基 $`e_j=1_{I_j}/\sqrt{m_j^\circ}`$ 下，
+$`T_Q^G=I_2(D_Q)`$，其中
+
+```math
+\begin{aligned}
+D_Q&=\sum_{j\in\mathcal C_Q}\frac{m_j^\circ}{\sqrt\delta}\,e_j\otimes e_j,\\
+\|T_{D_Q}\|_{\rm op}&\le C\sqrt\delta\longrightarrow0,\qquad
+2\|D_Q\|_{\rm HS}^2=2\delta^{-1}\sum_{j\in\mathcal C_Q}(m_j^\circ)^2
+ \longrightarrow\nu_2,\\
+\langle D_Q,q^\delta_{R,t}\rangle&=0.
+\end{aligned}
+```
+
+式 (56.27)。
+
+最后一个等式是严格的同格对角与异格非对角正交。
+对有限个时刻的核与 $`D_Q`$ 的任意固定实线性组合，
+算子范数趋零，Hilbert–Schmidt 范数平方有极限。
+若其特征值是 $`\lambda_{Q,j}`$，Gaussian 平方的特征函数展开给出
+
+```math
+\log\mathbb E e^{iz I_2(K_Q)}
+ =-z^2\sum_j\lambda_{Q,j}^2
+  +O_z\left(\max_j|\lambda_{Q,j}|\sum_j\lambda_{Q,j}^2\right).
+```
+
+式 (56.28)。
+
+有限秩时由独立中心正态平方直接计算，一般情形再取 $`L^2`$ 逼近。
+此式与 Cramér–Wold 先证明联合 Gaussian 性，
+然后才由 (56.27) 的零协方差推出 $`\mathcal U`$ 与 $`N_2`$ 独立。
+退化线性组合由方差趋零处理。
+
+若 $`P`$ 是固定有限秩正交投影，$`P^\perp=1-P`$，则
+
+```math
+\|T-P^\perp TP^\perp\|_{\rm HS}
+ \le2\sqrt{\operatorname{rank}P}\,\|T\|_{\rm op}.
+```
+
+式 (56.29)。
+
+所以从上述每个核中删除所有触及 $`P`$ 的分量只产生趋零的 $`L^2`$ 误差。
+剩下的二重积分只依赖正交补噪声，独立于 $`P`$ 中原有 Gaussian 坐标。
+令有限秩投影递增到恒等，任意旧噪声的有界可测测试可用其有限柱条件期望
+在 $`L^1`$ 中逼近，得到相对于整个 $`\sigma(W_\rho)`$ 的 mixing 收敛。
+结合 (56.26) 和有理时刻识别，结论适用于整个紧区间过程。
+这里的 mixing 是联合有界测试的因子分解，
+不是给定整个 Gaussian 噪声后条件分布趋于非退化常数律。
+
+同一噪声上的旧参考轮廓是 $`W_\rho`$ 作用于连续格并集；
+格端点与所需位置相差至多 $`\delta/2`$，原轮廓是连续时间变换 Brownian motion，
+故在每个固定紧区间上一致依概率收敛。
+端点及分段常数标记的偶极子在 $`L^2`$ 收敛，桥由相同确定投影得到。
+旧对数核 $`H`$ 的异格采样满足
+
+```math
+\|H_Q^\circ-H\|_{L^2(\rho\otimes\rho)}^2
+ \le C\delta(1+|\log\delta|^2)+o(1),\qquad
+\sum_{j\in\mathcal C_Q}G_j^2\longrightarrow\gamma\quad\hbox{于 }L^2.
+```
+
+式 (56.30)。
+
+第一式重复 (56.21) 的同格、邻格、远格划分而不含增长频率；
+远端由 Gaussian 对数包络控制。
+第二式的方差为 $`2\sum_j(m_j^\circ)^2=O(\delta)`$。
+因此旧截距在同一空间收敛到 $`b_*\gamma+I_2(H)`$，
+其与旧线性对象的关系由共同实现保留，且与新联合对象独立。
+
+上述确定 Gaussian 参考律不依赖观测数据。
+从任意子列取进一步子列，使环境估计及其条件概率误差几乎处处成立，
+逐个环境应用共同耦合与参考极限，便得条件有界 Lipschitz 收敛；
+子列原理将它还原为依数据概率的结论。
+最后以 (56.10) 对完整选中向量作一次比较。
+总变差在映到全部路径和坐标的可测映射下收缩，
+故只需转移概率和有界测试，不必转移任何辅助无界矩。
+所有固定基数支持在正奇偶类置换作用下属于同一轨道，
+两种实际实验及整个统计量均等变，故无条件律等于先验混合律，
+得到固定支持一致性。
+在原共同方向正确事件上所有坐标逐样本等于对齐版本；
+其补集概率 $`O(q^{-1})`$ 只作为有界测试误差。
+(56.15)、(56.26) 与上述一致概率逼近同时给出实际路径的 C-tight 性。
+这完成 (56.3)。
+
+该证明允许例如 $`R_M\delta=1/\log\log Q`$；
+关键平方核误差 $`r(1+|\log r|^2)`$ 仍趋零。
+本定理的量词是每个确定性序列和每个固定紧区间，
+不包含数据自适应频率、增长的 $`I`$ 或 $`R_M\delta`$ 趋于正数的情形。
+
+## 追加锚（本行以下为增补区）
+
+## 57. 临界谱网格、共振及跨尺度独立性
+
+**定义 57.1（临界网格过程）。** 保持定义 54.1 的原始模型和有限截距，
+固定 $`\varrho\in(0,\infty)`$，取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad
+r_M=e^{s_M}\delta\longrightarrow\varrho,
+\qquad
+\mathcal U_M^{\rm cr}(t)=e^{(s_M+t)/2}
+ \{\mathcal Z_M((s_M+t)\sqrt\delta)-\mathcal J_M
+                       -2(s_M+t)\sqrt\delta\,T_M\}.
+```
+
+式 (57.1)。
+
+参数 $`\varrho`$ 表示网格尺度，与固定信号幅度不同。
+在独立于旧 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上定义
+
+```math
+G_\varrho(t)=4\sqrt{\varrho g_0}\,e^{t/2}
+       \sum_{k\ge1}\mathrm{Ci}(\omega\varrho e^t k)\xi_k,
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (57.2)。
+
+级数先按均方定义，再取下面证明的连续版本。
+所有 $`\varrho>0`$ 共用这一个序列。
+
+**定理 57.2（两种实际实验的临界网格律）。** 对每个固定紧时间区间 $`I`$，
+两种原始平稳实验都满足
+
+```math
+(\mathcal U_M^{\rm cr}|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(G_\varrho|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0.
+```
+
+式 (57.3)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight；
+旧坐标保持定理 56.2 的共同来源。
+新过程独立于整个联合对象 $`(N_2,W_\rho)`$，协方差是
+
+```math
+C_\varrho(t,u)=16\varrho g_0e^{(t+u)/2}
+ \sum_{k\ge1}\mathrm{Ci}(\omega\varrho e^t k)
+                  \mathrm{Ci}(\omega\varrho e^u k).
+```
+
+式 (57.4)。
+
+条件先验、无条件固定支持一致性和共同方向事件保持定理 56.2 的范围。
+同时改变两个方差中心时放大余项仍逐样本相同。
+
+证明。这里 $`e^{s_M}\le C\delta^{-1}`$，
+且谱曲线的取值点最终落在任意固定正外区间内。
+第 56 章从实际占用到同一个 Gaussian 格向量的误差估计
+(56.5)–(56.18) 只需 $`R\le C\delta^{-1}`$；
+其中常数可随此处固定 $`\varrho`$ 和时间紧区间改变。
+具体而言，增长核心 $`H_Q=\sqrt{K\log Q}`$ 上的方差相对误差仍为
+$`O_{\mathbb P}(Q^{-3/2}(1+\log Q)^{3/2})`$，
+最小组方差至少 $`q^{9/10}`$，非核心加权方差质量可取至多 $`Q^{-60}`$。
+完整截断上矩阵范数至多 $`CQ^{9/4}(1+\log Q)`$，
+故放大后的精确中心误差、共同逆分布耦合误差、有限 Fourier 取整误差
+及核心外误差全部趋零。
+格质量替换的核心误差仍为 $`O_{\mathbb P}(Q^{-1/4}(1+\log Q)^{5/2})`$。
+这些步骤联合保留旧截距、二次坐标和线性路径。
+
+因此只需研究同一格向量 $`G_j=W_\rho(1_{I_j})`$ 的二次型。
+记 $`m_j^\circ=\int_{I_j}\rho`$，核心外将此质量置零，并令
+$`h_Q(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ`$。
+Gaussian 密度的格和给出
+
+```math
+0\le h_Q(k)\le C\quad(k\in\mathbb Z),\qquad
+h_Q(k)\longrightarrow g_0\quad\hbox{对每个固定 }k.
+```
+
+式 (57.5)。
+
+前者也由 $`\max_jm_j^\circ\le C\delta`$ 与质量总和有界得到；
+后者是固定间距 $`k\delta\to0`$ 下的 Riemann 和，核心外由 Gaussian 尾移除。
+在独立标准正态格坐标下，参考矩阵的非对角元为
+
+```math
+(A_Q(t))_{jl}=2\sqrt{r_M/\delta}\,e^{t/2}
+ \mathrm{Ci}(\omega r_Me^t|j-l|)\sqrt{m_j^\circ m_l^\circ},
+\qquad (A_Q(t))_{jj}=0.
+```
+
+式 (57.6)。
+
+Wick 恒等式于是给出
+
+```math
+2\operatorname{tr}(A_Q(t)A_Q(u))
+ =8r_Me^{(t+u)/2}\sum_{k\ne0}
+    \mathrm{Ci}(\omega r_Me^t|k|)
+    \mathrm{Ci}(\omega r_Me^u|k|)h_Q(k).
+```
+
+式 (57.7)。
+
+因为 $`r_M`$ 保持在正的紧区间内，Ci 的倒数包络将每个求和项
+一致控制在 $`C_I/k^2`$ 之下。
+(57.5) 与支配收敛证明 (57.4)，其中两个距离方向产生额外的因子二。
+采样核此时保留离散间距，所以不需要连续核近似。
+
+同一倒数界还给出
+
+```math
+|(A_Q(t))_{jl}|\le \frac{C_I\sqrt\delta}{|j-l|},\qquad
+\sup_{t\in I}\|A_Q(t)\|_{\rm op}
+ \le C_I\sqrt\delta(1+\log|\mathcal C_Q|)\longrightarrow0.
+```
+
+式 (57.8)。
+
+这是真正的算子范数控制；仅有逐行方差小不能排除一个存活的大特征值。
+二次坐标的格矩阵 $`D_Q`$ 仍满足 (56.27)，
+且 $`\operatorname{tr}(A_Q(t)D_Q)=0`$ 严格成立。
+对任意有限时刻及 $`D_Q`$ 的混合线性组合应用 (56.28)，
+先得联合 Gaussian 极限，再由交叉协方差为零推出与 $`N_2`$ 的独立性。
+(56.29) 的有限秩删除论证同时使这个联合对象独立于整个旧 $`W_\rho`$。
+(56.30) 又在同一个空间识别 $`\mathcal J_\infty`$，
+故旧非 Gaussian 截距不需重新抽取。
+
+紧性直接从整数距离级数获得。
+对 $`c`$ 在正的紧集内，置
+$`q_{c,k}(t)=e^{t/2}\mathrm{Ci}(\omega ce^t k)`$。
+在固定时间紧集上，$`|q_{c,k}|\le C_I/k`$、$`|q'_{c,k}|\le C_I`$，故
+
+```math
+|q_{c,k}(t)-q_{c,k}(u)|\le C_I\min\{|t-u|,k^{-1}\},\qquad
+\sum_{k\ge1}|q_{c,k}(t)-q_{c,k}(u)|^2\le C_I|t-u|.
+```
+
+式 (57.9)。
+
+最后一式在 $`k=|t-u|^{-1}`$ 处分割求和，
+对任意小的时间间距都成立，不要求时间格。
+(57.5)、二次型等距式与第二混沌四阶界遂给出参考路径的
+二阶增量 $`C_I|t-u|`$ 和四阶增量 $`C_I|t-u|^2`$。
+Kolmogorov 判据给出连续参考路径的紧性。
+同一增量计算应用于 (57.2)，证明该 Gaussian 级数有连续版本。
+不能把级数逐项求导后要求导数平方可和，因为余弦项不满足该条件。
+
+共同向量耦合给出整个紧区间的一致概率逼近。
+最后以一次完整后验向量比较转移有界测试和紧性事件；
+坏环境、计数截断及方向错误只按概率移除。
+条件数据子列论证和支持置换等变性与定理 56.2 相同。
+由一致逼近可知原始取整路径的跳幅趋零，得到 (57.3) 的 C-tight 性。
+上述论证没有转移实际后验无界矩。
+
+**定理 57.3（同一临界过程族的连续极限与共振）。** 以同一正态序列实现的
+连续过程可以选为满足
+
+```math
+G_\varrho(t+c)=G_{\varrho e^c}(t),\qquad
+C_\varrho(t+c,u+c)=C_{\varrho e^c}(t,u).
+```
+
+式 (57.10)。
+
+当 $`\varrho\downarrow0`$ 时，$`G_\varrho|_I`$ 在每个 $`C(I)`$ 中趋于
+协方差为 (56.4) 的平稳 OU 过程；该收敛相对于
+$`\sigma(\xi_1,\xi_2,\ldots)`$ 是 mixing。
+每个固定正 $`\varrho`$ 的全实轴过程则非平稳。
+置 $`V(z)=C_z(0,0)`$，当 $`z\to\infty`$，令
+$`\theta=\omega z\bmod\pi\in[0,\pi)`$，则一致地有
+
+```math
+V(z)=\frac{8g_0}{\omega^2z}\theta(\pi-\theta)+O(z^{-2}).
+```
+
+式 (57.11)。
+
+在精确共振 $`\omega z\in\pi\mathbb Z`$ 上，更强地有
+
+```math
+V(z)=\frac{16g_0\zeta(4)}{\omega^4z^3}+O(z^{-5}).
+```
+
+式 (57.12)。
+
+这些 $`z`$ 渐近结论描述已识别的 Gaussian 过程族，不改变实际定理 (57.3)
+要求网格比例趋于固定正数的量词。
+
+证明。先在有理参数上由级数逐项核对 (57.10)，
+再用 $`G_\varrho(t)=G_1(t+\log\varrho)`$ 选择所有连续版本。
+对固定时间紧集，Ci 乘积近零由 $`C(1+|\log|x||)^2`$ 控制，
+远处由 $`C/x^2`$ 控制；环带上关于空间与时间一致连续。
+删去中心小带和远尾后用一致 Riemann 和，再恢复它们，得
+
+```math
+\varrho\sum_{k\ne0}
+ \mathrm{Ci}(\omega\varrho e^t|k|)\mathrm{Ci}(\omega\varrho e^u|k|)
+ \longrightarrow
+ \int_{\mathbb R}\mathrm{Ci}(\omega e^t|x|)
+                 \mathrm{Ci}(\omega e^u|x|)\,dx
+ =\frac{\pi}{\omega e^{\max(t,u)}}.
+```
+
+式 (57.13)。
+
+最后一个恒等式是 (56.19) 的同一 $`L^2`$ Fourier 计算。
+因此协方差一致趋于 $`16g_0e^{-|t-u|/2}`$。
+紧性不能直接套 (57.9) 中依赖正下界的常数；
+改用 (56.25) 及归一化格和
+$`r\sum_k\min\{d^2,(rk)^{-2}\}\le Cd`$，
+便得对 $`0<\varrho\le1`$ 一致的二阶增量 $`C_I|t-u|`$。
+Gaussian 四阶矩和 Kolmogorov 判据补上 $`C(I)`$ 收敛。
+对每个固定 $`k`$，(57.2) 的系数是
+$`O_I(\sqrt\varrho(1+|\log\varrho|))\to0`$。
+因而新路径与任意有限组 $`\xi_k`$ 的交叉协方差趋零，
+联合 Gaussian 性先给出与有限柱的独立极限；
+对整个序列的有界可测测试作 $`L^1`$ 柱条件期望逼近，得到 mixing。
+
+由 (57.13)，$`V(z)\to16g_0`$ 当 $`z\downarrow0`$；
+倒数包络则给出 $`V(z)\le C/z\to0`$ 当 $`z\to\infty`$。
+所以 $`C_\varrho(t,t)=V(\varrho e^t)`$ 在全实轴上不恒定。
+此结论不要求方差在每个小区间严格单调。
+
+两次分部积分给出
+$`\mathrm{Ci}(x)=\sin x/x-\cos x/x^2+O(x^{-3})`$，$`x\ge1`$。
+在 (57.4) 的方差级数中逐项平方，余项由可和的 $`k^{-3}`$、$`k^{-4}`$ 控制，得
+$`V(z)=16g_0(\omega^2z)^{-1}\sum_{k\ge1}\sin^2(\omega zk)/k^2+O(z^{-2})`$。
+经典 Bernoulli 多项式 Fourier 级数给出
+$`\sum_{k\ge1}\sin^2(k\theta)/k^2=\theta(\pi-\theta)/2`$，
+即 (57.11)，其误差在相位上一致。
+在精确共振上正弦项全消；再作两次分部积分，得
+$`\mathrm{Ci}(\omega zk)=-\cos(\omega zk)/(\omega zk)^2+O((zk)^{-4})`$。
+平方求和即 (57.12)。不能用 (57.11) 的绝对误差在接近共振时直接推出等价式。
+
+**定理 57.4（同一实际数据的两个分离谱尺度）。** 在同一个完整后验标签向量上，
+分别取确定性序列
+
+```math
+R_M^{\rm lo}\longrightarrow\infty,\quad
+r_M^{\rm lo}=R_M^{\rm lo}\delta\longrightarrow0,
+\qquad R_M^{\rm cr}\delta\longrightarrow\varrho\in(0,\infty),
+```
+
+式 (57.14)。
+
+以 (56.2) 的同一公式构造两个放大余项。
+在各自固定紧时间区间上，两个过程与全部旧坐标联合收敛到
+$`(\mathcal U,G_\varrho,N_2,W_\rho)`$ 所决定的对象，
+其中 $`\mathcal U`$、$`G_\varrho`$、$`N_2`$ 三者相互独立，
+且联合独立于整个旧 $`W_\rho`$。
+条件先验、无条件支持一致性及方向范围与定理 57.2 相同。
+
+证明。用同一增长核心、同一组均匀变量和同一格 Gaussian 向量，
+同时进行第 56 章及定理 57.2 的实际误差替换。
+有限个过程的误差仍一致依概率趋零，两个边缘的紧性给出乘积紧性。
+剩下的义务是混合协方差，而不是再拼接两个边缘极限。
+写 $`r=r_M^{\rm lo}`$。由 (57.5) 和临界 Ci 的倒数包络，
+两个 Gaussian 二次型的交叉协方差绝对值至多为
+
+```math
+C\sqrt r\sum_{k\ge1}\frac{|\mathrm{Ci}(\omega r e^t k)|}{k}
+ \le C\sqrt r(1+|\log r|^2)\longrightarrow0,
+```
+
+式 (57.15)。
+
+常数在两个时间紧区间上一致。
+对 $`k\le1/r`$ 使用对数包络，调和求和给出 $`O(1+|\log r|^2)`$；
+对 $`k>1/r`$ 用倒数包络，余和为 $`O(1)`$。
+所有低频与临界矩阵的算子范数分别由 (56.23)、(57.8) 趋零，
+混合有限线性组合也如此。
+其与 $`D_Q`$ 的内积均为零。
+所以 (56.28) 对全部混合组合证明联合 Gaussian 性，
+然后 (57.15) 和对角正交给出三者相互独立。
+有限秩删除和旧核逼近保留与整个旧噪声的联合独立性。
+最后仍只对完整原后验向量作一次总变差比较，得到实际联合结论。
+
+## 追加锚（本行以下为增补区）
+
+## 58. 超临界谱网格的微观 Brownian bridge
+
+**定义 58.1（微观相位曲线）。** 保持定义 54.1 的原始模型、完整得分组、
+精确标签中心和有限截距，固定 $`U>0`$。取确定性序列
+
+```math
+s_M\longrightarrow\infty,\qquad R_M=e^{s_M},\qquad
+\eta_M=R_M\delta\longrightarrow\infty,\qquad
+0\le s_M\sqrt\delta\le U/2,
+\qquad \omega\eta_M\bmod 2\pi\longrightarrow\phi
+```
+
+式 (58.1)。
+
+最后的收敛取圆周拓扑；$`\phi`$ 是给定的确定性子列相位，
+不假设这些相位的分布。这里 $`\eta_M`$ 表示谱网格，不是 Liouville 逼近误差。
+对固定紧区间 $`I=[\theta_0,\theta_1]`$，令
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M,\qquad
+u_M(\theta)=z_M(\theta)\sqrt\delta,
+\qquad
+\mathcal V_M(\theta)=\sqrt{\eta_M}\,e^{z_M(\theta)/2}
+ \{\mathcal Z_M(u_M(\theta))-\mathcal J_M-2u_M(\theta)T_M\}.
+```
+
+式 (58.2)。
+
+这些取值点最终都在 $`[0,U]`$ 内。
+在独立于旧联合对象 $`(N_2,W_\rho)`$ 的标准正态序列 $`(\xi_k)_{k\ge1}`$ 上，
+先按均方定义
+
+```math
+S(a)=\sum_{k\ge1}\frac{\sin(ka)}k\xi_k,\qquad
+\mathcal V(\theta)=\frac{4\sqrt{g_0}}\omega S(\phi+\omega\theta),
+\qquad g_0=\int\rho^2,\quad\omega=\pi/2.
+```
+
+式 (58.3)。
+
+**定理 58.2（实际微观桥极限）。** 对 (58.1) 的每个序列，
+两种原始平稳实验都满足
+
+```math
+(\mathcal V_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal V|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0.
+```
+
+式 (58.4)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight。
+旧坐标保持定理 56.2 的共同实现；新过程独立于整个 $`(N_2,W_\rho)`$。
+可同时附加旧固定频率紧区间上的 Fourier 场
+$`F(v)=W_\rho(e^{-i\omega v\cdot})`$，以及旧负 Sobolev 空间中的测度与偶极子逼近。
+收敛具有均匀支持先验下依数据概率成立的条件有界 Lipschitz 版本，
+以及无条件固定支持一致版本；未知方向使用同一个判向事件。
+同时改变 $`V_M`$ 与 $`T_M`$ 的方差中心仍使 (58.2) 逐样本不变。
+
+$`S`$ 有连续、奇对称、$`2\pi`$ 周期的版本，其部分和在
+$`L^2(\Omega;C[0,2\pi])`$ 中收敛。对 $`0\le a,b\le\pi`$，
+
+```math
+\operatorname{Cov}(S(a),S(b))
+ =\frac\pi2\left(\min(a,b)-\frac{ab}\pi\right).
+```
+
+式 (58.5)。
+
+因此 $`S`$ 在 $`[0,\pi]`$ 上等于长度为 $`\pi`$ 的实 Brownian bridge
+乘以 $`\sqrt{\pi/2}`$；其余区间由同一条桥奇对称、周期延拓。
+不同周期和反射区间不引入独立桥。
+
+证明。全部比较保留同一个实际后验标签向量。
+本证明从有限谱恒等式开始，不把增长的 $`\eta_M`$ 代入定理 57.2 的弱极限。
+第 56 章的环境估计只涉及实际得分组，不依赖本章所选的谱频率，故仍适用。
+在共同计数截断事件上，$`x_j=j\delta`$，组数至多 $`CQ^2`$，
+$`|x_j|\le C\sqrt\lambda`$，且 $`\mathfrak L=c_hQ^3+O(1)`$，$`c_h>0`$。
+共同事件的补集用概率去除。
+
+先将有限 Fourier 误差保留到新的精度。
+对 $`0<\vartheta<1`$，有限和满足
+
+```math
+\begin{aligned}
+\sum_{k=1}^N\frac{\cos(k\vartheta)}k
+ &=-\log\vartheta+\mathrm{Ci}(N\vartheta)
+   +O\{N^{-1}+\vartheta[1+\log_+(N\vartheta)]\},\\
+\sum_{k\le N}\bigl((1+k^2)^{-1/2}-k^{-1}\bigr)\cos(k\vartheta)
+ &=D_{\rm w}+O\{\vartheta^2(1+|\log\vartheta|)+N^{-2}\}.
+\end{aligned}
+```
+
+式 (58.6)。
+
+第一式把 $`(\cos(\vartheta v)-1)/v`$ 的和与积分比较：
+在 $`v\le1/\vartheta`$ 上导数至多 $`C\vartheta^2`$，
+在其余区间至多 $`\vartheta/v+2/v^2`$，积分即给出所列误差。
+再加入调和和的常数与余项。
+第二式用权重差 $`O(k^{-3})`$，在 $`k=1/\vartheta`$ 分割即可。
+对 $`N(z)=\lfloor e^z/h\rfloor`$、$`0\le z\le U/\sqrt\delta`$，
+代入 $`\vartheta=\omega h|x_j-x_l|`$ 后，非对角核为
+$`2\mathfrak L+H(x_j,x_l)+2\mathrm{Ci}(\omega e^z|x_j-x_l|)`$，
+对角核为 $`2\mathfrak L+2z+b_*`$，一致误差至多
+
+```math
+\varepsilon_M=C\{h+h\sqrt\lambda(1+U/\sqrt\delta+\log\lambda)
+                 +h^2\lambda(1+\mathfrak L+\log\lambda)\}.
+```
+
+式 (58.7)。
+
+取整改变对数参数至多 $`Che^{-z}`$；
+$`d\mathrm{Ci}(v)/d\log v=\cos v`$，故同一界控制 Ci 的取整误差。
+共同空间平移消失于 Fourier 模平方。
+用 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$，
+(58.2) 中括号精确抵消 $`2\mathfrak L Y_M^2`$ 和 $`2z\mathcal Q_M`$。
+因为 $`(\sum|A_j|)^2\le CQ^2\mathcal Q_M`$、$`\mathcal Q_M=O_{\mathbb P}(1)`$，
+且
+
+```math
+\sup_{\theta\in I}\sqrt{\eta_M}e^{z_M(\theta)/2}Q^2\varepsilon_M
+ \le \exp\{-c_hQ^3+(U/2)Q^{1/4}+C_I\log Q\}\longrightarrow0,
+```
+
+式 (58.8)。
+
+原过程一致逼近连续的非对角二次型。这里的紧性由辅助标签矩、
+精确中心界和全向量 TV 对有界尾事件的比较得到，不要求实际后验矩收敛。
+
+对非零整数 $`k`$ 定义
+
+```math
+q_{\eta,k}(\theta)=\eta e^{\theta/(2\eta)}
+       \mathrm{Ci}(\omega\eta e^{\theta/\eta}|k|),\qquad
+b_M(\theta,k)=2\delta^{-1/2}q_{\eta_M,k}(\theta).
+```
+
+式 (58.9)。
+
+由 $`|\mathrm{Ci}(v)|\le C/v`$ 及直接微分，
+对 $`\eta\ge1`$、$`\theta\in I`$ 一致有
+
+```math
+|q_{\eta,k}(\theta)|\le C_I/|k|,\qquad
+\partial_\theta q_{\eta,k}(\theta)
+ =\tfrac12e^{\theta/(2\eta)}\mathrm{Ci}(\omega\eta e^{\theta/\eta}|k|)
+  +e^{\theta/(2\eta)}\cos(\omega\eta e^{\theta/\eta}|k|),
+\qquad |\partial_\theta q_{\eta,k}(\theta)|\le C_I.
+```
+
+式 (58.10)。
+
+增长的 $`\eta`$ 从核包络中消失。
+完整截断上 $`\sup_I\|b_M(\theta)\|_{\rm op}\le C_IQ^{9/4}`$。
+记 $`X_j`$ 为乘积标签的中心组和，$`A_j=X_j-e_j`$。
+由 (56.11) 得
+
+```math
+\sup_I|(X-e)^\top b_M(X-e)-X^\top b_MX|
+ \le C_IQ^{9/4}(2\|X\|_2\|e\|_2+\|e\|_2^2)
+ =O_{\mathbb P}(Q^{-1/4})+o_{\mathbb P}(1).
+```
+
+式 (58.11)。
+
+此处 $`\|e\|_2\le C\sqrt{V_M}\alpha_M`$，
+$`\alpha_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})`$。
+这是放大之后的中心界。
+
+继续使用第 56 章的增长核心 $`\mathcal C_Q`$。
+在其好环境上，尾向量条件平方范数期望至多 $`Q^{-60}`$。
+上述矩阵范数界使删除核心外所有组的路径误差一致趋零；
+它控制的是整个向量二次型之差，故不需要逐时并集。
+旧截距、二次坐标、前缀和与偶极子的对应矩阵或系数也只有多项式增长，
+同一尾估计同时适用。
+核心内 (56.8) 和 (56.16)–(56.17) 的共同逆分布耦合将
+$`X_j`$ 换成 $`G_j=\sqrt{v_j}\zeta_j`$，$`\zeta_j`$ 为独立标准正态。
+所有标准化组误差同时至多 $`q^{-1/8}`$ 的事件概率趋一。
+组数及矩阵范数均只有多项式增长，所以耦合误差在本章放大尺度下一致趋零。
+这是概率耦合，不是离散律与连续 Gaussian 律之间的 TV 比较。
+保留实际环境方差 $`v_j`$，无需再用粗矩阵界替换它。
+
+在核心外设 $`v_j=G_j=0`$。对固定正整数滞后定义
+
+```math
+\Lambda_{M,k}=\delta^{-1/2}\sum_jG_jG_{j+k},\qquad
+h_M(k)=\delta^{-1}\sum_jv_jv_{j+k}.
+```
+
+式 (58.12)。
+
+由核心上的 $`v_j/\delta\rho(j\delta)\to1`$ 和 Gaussian 尾，
+对每个固定 $`k`$，$`h_M(k)\to g_0`$；同时
+$`0\le h_M(k)\le C`$ 对所有整数一致成立，因
+$`\max v_j\le C\delta`$、$`\sum v_j\le C`$。
+$`\Lambda_{M,k}=\zeta^\top B_{M,k}\zeta`$，
+其中每个无序对的两个矩阵元均为
+$`\sqrt{v_jv_{j+k}}/(2\sqrt\delta)`$。因此
+
+```math
+\|B_{M,k}\|_{\rm op}\le C\sqrt\delta,\qquad
+2\operatorname{tr}(B_{M,k}B_{M,l})=1_{\{k=l\}}h_M(k).
+```
+
+式 (58.13)。
+
+每行至多有两个非零元，且不同正滞后没有共同无序对。
+旧对角坐标的矩阵为 $`D_M=\operatorname{diag}(v_j/\sqrt\delta)`$，
+其算子范数趋零、方差趋于 $`2g_0`$，与每个 $`B_{M,k}`$ 的内积精确为零。
+任意固定线性组合 $`B`$ 满足 $`\|B\|_{\rm op}\to0`$、
+$`\operatorname{tr}B^2=O(1)`$，Gaussian 特征函数给出
+
+```math
+\log\mathbb E e^{i(\zeta^\top B\zeta-\operatorname{tr}B)}
+ =-\operatorname{tr}B^2
+    +O(\|B\|_{\rm op}\operatorname{tr}B^2).
+```
+
+式 (58.14)。
+
+先得到联合 Gaussian 极限，再由交叉迹为零得独立性。
+加入任意范数有界的旧线性系数 $`\ell`$ 时，特征函数额外因子是
+$`\exp\{-\tfrac12\ell^\top(I-2iB)^{-1}\ell\}`$，
+其指数与 $`-\|\ell\|_2^2/2`$ 之差趋零。
+旧线性坐标的 Gram 矩阵由方差钟收敛确定；
+端点、偶极子和固定频率 Fourier 场用总质量及 $`x^2`$ 尾控制。
+把旧 $`H`$ 核按 (51.9)–(51.10) 的有限矩形块逼近，
+块平方和趋于相应确定方差，故同一个旧 $`I_2(H)`$ 也被保留。
+近对角对数平方界与远端 Gaussian 界使矩形逼近误差趋零。
+由可数稠密线性测试及单调类论证，这证明固定滞后向量的极限
+
+```math
+(\Lambda_{M,1},\ldots,\Lambda_{M,K},T_M^G)
+ \Longrightarrow(\sqrt{g_0}\xi_1,\ldots,\sqrt{g_0}\xi_K,N_2)
+```
+
+式 (58.15)。
+
+右侧全部坐标独立，且联合独立于整个旧 $`W_\rho`$。
+旧截距没有换成另一份二次噪声。
+
+现在证明无限滞后尾的路径界。
+令 $`\mathscr T_{M,K}(\theta)=4\sum_{k>K}q_{\eta_M,k}(\theta)\Lambda_{M,k}`$。
+这是有限的中心 Gaussian 二次型，(58.10)–(58.13) 给出
+
+```math
+\begin{aligned}
+\mathbb E_G|\mathscr T_{M,K}(\theta)|^2&\le C_I/K,\\
+\mathbb E_G|\mathscr T_{M,K}(\theta)-\mathscr T_{M,K}(\psi)|^2
+ &\le C_I\sum_{k>K}\min(|\theta-\psi|^2,k^{-2})
+ \le C_I\min(|\theta-\psi|,K^{-1}).
+\end{aligned}
+```
+
+式 (58.16)。
+
+求和在 $`k=|\theta-\psi|^{-1}`$ 分割，适用于任意微小增量。
+任意中心 Gaussian 二次型 $`Q`$ 满足
+$`\mathbb EQ^4\le15(\mathbb EQ^2)^2`$。
+将 $`I`$ 分成 $`O_I(K)`$ 个长度至多 $`1/K`$ 的区间，
+网格点最大值的平方期望至多
+$`(\sum_{\rm grid}\mathbb E_G|\mathscr T_{M,K}|^4)^{1/2}\le C_IK^{-1/2}`$。
+逐级二分，第 $`n`$ 层有 $`O_I(K2^n)`$ 个增量，
+最大增量的 $`L^4`$ 范数至多 $`C_IK^{-1/4}2^{-n/4}`$。
+Minkowski 不等式和连续性遂给出
+
+```math
+\mathbb E_G\sup_{\theta\in I}|\mathscr T_{M,K}(\theta)|^2
+ \le C_IK^{-1/2}.
+```
+
+式 (58.17)。
+
+它对组数及 $`\eta_M\ge1`$ 一致。
+全级数亦有第四增量矩至多 $`C_I|\theta-\psi|^2`$，故连续二次型路径为 C-tight。
+以上中心、核心删除和耦合误差界在删去任意滞后时仍成立，
+因为相应粗矩阵元界不变。
+于是 (58.17) 可通过一次全向量后验比较传给实际过程的有界尾事件。
+尤其有
+
+```math
+\limsup_M\sup_{|S|=q}\mathbb P_S\!\left(
+ \sup_{\theta\in I}\left|\mathcal V_M(\theta)
+ -4\sum_{k=1}^Kq_{\eta_M,k}(\theta)
+       \delta^{-1/2}\sum_jA_jA_{j+k}\right|>\varepsilon\right)
+ \le C_I\varepsilon^{-2}K^{-1/2}.
+```
+
+式 (58.18)。
+
+滞后和在共同计数截断事件上取原完整得分组，例外事件可任意定义。
+这不是把逐点二阶矩界当作上确界的期望界。
+
+最后识别相位极限。
+由 $`\mathrm{Ci}(z)=\sin z/z+O(z^{-2})`$，对每个固定 $`k`$，
+
+```math
+q_{\eta_M,k}(\theta)
+ =\frac{e^{-\theta/(2\eta_M)}}{\omega k}
+   \sin(\omega\eta_Me^{\theta/\eta_M}k)+O_I((\eta_Mk^2)^{-1})
+ \longrightarrow\frac{\sin(k(\phi+\omega\theta))}{\omega k}
+```
+
+式 (58.19)。
+
+收敛在 $`I`$ 上一致。
+只在固定滞后使用 Taylor 展开；不要求它对增长的全部滞后一致。
+(58.15) 给出有限滞后截断的联合极限，(58.17)–(58.18) 允许随后令 $`K\to\infty`$。
+极限 sine 级数的每个有限尾也满足同样的方差、第四矩及二分估计，故
+
+```math
+\mathbb E\sup_{a\in[0,2\pi]}
+ \left|\sum_{K<k\le L}\frac{\sin(ka)}k\xi_k\right|^2
+ \le CK^{-1/2},\qquad L>K.
+```
+
+式 (58.20)。
+
+这证明 $`L^2(\Omega;C)`$ 收敛及连续、奇对称、周期版本。
+令 $`D(a)=\sum_{k\ge1}\cos(ka)/k^2`$，其连续偶周期版本在
+$`|a|\le2\pi`$ 上为 $`\pi^2/6-\pi|a|/2+a^2/4`$。
+绝对收敛和积化和差给出
+
+```math
+\operatorname{Cov}(S(a),S(b))=\tfrac12[D(a-b)-D(a+b)],
+\qquad
+\operatorname{Cov}(\mathcal V(\theta),\mathcal V(\psi))
+ =\frac{8g_0}{\omega^2}
+  [D(\omega(\theta-\psi))-D(2\phi+\omega(\theta+\psi))].
+```
+
+式 (58.21)。
+
+这也证明 (58.5)。系数 $`4`$ 来自 Ci 核的 $`2`$ 与正滞后无序对的两次计数。
+协方差一般同时依赖时间差与时间和；在 $`\phi+\omega\theta\in\pi\mathbb Z`$ 时
+极限为零，允许这种孤立时刻的退化。
+
+上述所有 Gaussian 替换先在实际数据的好环境上进行。
+一次 (56.10) 仅用于整个路径及旧元组的有界测试和误差事件。
+环境界依数据概率成立；任意子列再取环境几乎处处收敛的子列，
+先固定 $`K`$，再由一致尾界令 $`K\to\infty`$，得到所述条件有界 Lipschitz 收敛。
+有限谱路径到连续二次型的距离由 (58.8) 一致控制，所以取整跳跃不妨碍 C-tight 性。
+旧轮廓由独立整组跳跃的方差钟和消失的四阶矩和保持紧性；
+旧 Fourier 场用 $`\sum_j(1+x_j^2)v_j`$ 的条件 $`H^1`$ 界。
+负 Sobolev 测度和偶极子的旧共同实现逼近由相同方差尾保留。
+支持置换等变性把先验结论传为每个固定支持的相同无条件律；
+共同判向事件补集概率一致趋零，故同样保留联合结论。
+这里没有用 TV 传递无界矩，也没有条件于已实现的旧标签噪声。
+
+式 (58.21) 说明相位限定有内容；相位相差 $`\pi`$ 给出相同 Gaussian 律，
+因此 (58.1) 的 $`2\pi`$ 相位收敛只是充分条件，不声称必要性。
+没有相位收敛时，圆周紧性提供子列，以上证明逐条识别其极限，
+但不据此宣称全部子列有同一个律。
+本定理不包含随机相位分布、增长的 $`\theta`$ 区间、其它幅度、实际后验矩收敛，
+也不去掉 (58.1) 的上方频率限制。
+Brownian bridge 的 sine 展开、Gaussian 二次型谱公式和二分连续性方法为经典工具；
+文献条件与本模型桥接的范围见 [Library 归因](../../../Library/Dynamics/iyer2025empirical.md)。
+
+## 追加锚（本行以下为增补区）
+
+## 59. 精确共振处的 Gaussian 偏移与共同 Brownian 反射
+
+**定义 59.1（共振微观尺度）。** 保持定义 54.1 的原始模型与有限截距。
+取确定性序列，满足
+
+```math
+\eta_M\longrightarrow\infty,\qquad
+\eta_M^2\delta\longrightarrow0,\qquad
+\eta_M=2m_M,\quad m_M\in\mathbb N,
+\qquad R_M=\eta_M/\delta,\quad s_M=\log R_M.
+```
+
+式 (59.1)。
+
+这等价于精确共振 $`\omega\eta_M=\pi m_M`$，$`\omega=\pi/2`$。
+不限制 $`m_M`$ 的奇偶性。
+对固定紧区间 $`I\subset\mathbb R`$ 定义
+
+```math
+z_M(\theta)=s_M+\theta/\eta_M^3,\qquad
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                      -2z_M(\theta)\sqrt\delta\,T_M\}.
+```
+
+式 (59.2)。
+
+由 (59.1)，最终 $`\eta_M\le Q^{1/4}`$、$`R_M\le Q^{3/4}`$，
+所以 $`z_M(\theta)\sqrt\delta`$ 一致趋零且最终为正。
+
+**定理 59.2（完整共振分离范围的实际路径律）。** 对 (59.1) 的每个序列，
+两种原始平稳实验均有
+
+```math
+(\mathcal R_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal R|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),\qquad A>0,
+```
+
+式 (59.3)。
+
+路径取紧区间 $`J_1`$ 拓扑且为 C-tight。
+令 $`B`$ 是 $`[0,\infty)`$ 上一条标准 Brownian motion，
+则新过程可以实现为
+
+```math
+\mathcal R(\theta)=Z_0+4\sqrt{g_0}\,B_{\rm odd}(\theta),\qquad
+B_{\rm odd}(\theta)=
+\begin{cases}B(\theta),&\theta\ge0,\\-B(-\theta),&\theta<0,
+\end{cases}
+\qquad
+Z_0\sim N\left(0,\frac{16g_0\zeta(4)}{\omega^4}\right)
+       =N(0,128g_0/45).
+```
+
+式 (59.4)。
+
+$`Z_0`$、$`B`$、$`N_2`$ 相互独立，并联合独立于整个旧 $`W_\rho`$。
+旧坐标仍为定理 56.2 的共同实现，特别是
+$`\mathcal J_\infty=b_*\gamma+I_2(H)`$。
+条件先验、无条件固定支持一致性及共同方向事件保持该定理的范围。
+两侧的 Brownian 部分来自同一条路径；对每个固定 $`A_0>0`$，
+
+```math
+\sup_{0\le\theta\le A_0}
+ |\mathcal R_M(\theta)+\mathcal R_M(-\theta)-2\mathcal R_M(0)|
+ \longrightarrow0\quad\hbox{依概率}.
+```
+
+式 (59.5)。
+
+证明。仍在同一个完整标签向量上比较。
+为分析联合路径可先把 $`I`$ 扩到包含零的固定对称紧区间。
+(58.6) 的有限谱估计及精确恒等式
+$`\mathcal Q_M=V_M+\sqrt\delta T_M`$ 使 (59.2) 的括号等于
+$`E_M(z)-2\mathfrak L Y_M^2-2z\mathcal Q_M-\mathcal J_M`$。
+定义零对角原始系数矩阵
+
+```math
+K_{\eta,\theta}(j,l)=\frac{2\eta^2}{\sqrt\delta}
+ e^{\theta/(2\eta^3)}\mathrm{Ci}
+       (\omega\eta e^{\theta/\eta^3}|j-l|),\qquad j\ne l.
+```
+
+式 (59.6)。
+
+完整计数截断上有限谱误差可取 (56.14) 的形式，因 $`z=O_I(\log Q)`$。
+它与 $`\eta^2\delta^{-1/2}Q^2\le Q^{11/4}`$ 的乘积趋零，
+因为 $`h`$ 在 $`Q^3`$ 尺度指数小。
+于是原路径一致依概率逼近 $`A^\top K_{\eta,\theta}A`$。
+取整在此有限恒等式内已受控制，未在旧弱极限中代入增长参数。
+
+先估计真实中心和耦合的成本。
+写 $`a_\theta=\omega\eta e^{\theta/\eta^3}`$、
+$`\beta_\theta=a_\theta-\pi m=\omega\eta(e^{\theta/\eta^3}-1)`$，
+则 $`|\beta_\theta|\le C_I/\eta^2`$。
+分部积分给出 $`\mathrm{Ci}(y)=\sin y/y-\cos y/y^2+O(y^{-3})`$。
+精确共振下 $`\sin(a_\theta k)=(-1)^{mk}\sin(\beta_\theta k)`$，因此
+
+```math
+|K_{\eta,\theta}(j,j+k)|\le C_I\delta^{-1/2}
+ \{\min(\eta^{-1},\eta/|k|)+|k|^{-2}\},\qquad k\ne0.
+```
+
+式 (59.7)。
+
+在完整截断的 $`O(Q^2)`$ 指标直径上，按 $`|k|=\eta^2`$ 分割调和和，得
+
+```math
+\sup_I\|K_{\eta,\theta}\|_{\rm op}
+ \le C_I\delta^{-1/2}\{\eta(1+\log Q)+1\}
+ \le C_IQ^{1/2}(1+\log Q).
+```
+
+式 (59.8)。
+
+这里矩阵作用于原始组和，尚未乘入方差权重。
+(56.11) 的精确中心向量界乘上 (59.8) 后，给出一致条件概率误差
+$`O_{\mathbb P}(Q^{-2}(1+\log Q))+o_{\mathbb P}(1)`$。
+增长核心外向量的平方范数条件期望至多 $`Q^{-60}`$，
+所以同一矩阵界也同时去除全部核心外路径项。
+旧截距、二次坐标、轮廓和偶极子的多项式范数与尾估计保持适用。
+
+在核心内，用 (56.16)–(56.17) 的同一逆分布耦合，
+把乘积标签组和替换为 $`\sqrt{v_j}g_j`$。
+$`q^{-1/8}`$ 的共同标准化误差压过上述所有多项式成本。
+再令 $`I_j=[(j-1/2)\delta,(j+1/2)\delta)`$，
+$`m_j^\circ=\int_{I_j}\rho`$，核心外置零，
+并用同一 $`g_j`$ 定义 $`G_j=\sqrt{m_j^\circ}g_j`$。
+(56.18) 的相对质量误差为 $`O_{\mathbb P}(Q^{-1}(1+\log Q))`$，
+其与 (59.8) 的乘积为
+$`O_{\mathbb P}(Q^{-1/2}(1+\log Q)^2)\to0`$。
+旧截距在核心上的原始矩阵范数只有
+$`O(Q^{1/2}(1+\log Q)^{3/2})`$，亦可作同一替换。
+对角坐标两侧各减其对应方差；额外的
+$`\delta^{-1/2}Q^{-1}(1+\log Q)`$ 仍趋零。
+所以实际整个联合对象被同一确定 Gaussian 格模型逼近。
+
+下面直接分析此模型。令
+
+```math
+w_\delta(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ,\qquad
+\bar\rho_\delta=\sum_{j\in\mathcal C_Q}(m_j^\circ/\delta)1_{I_j},
+\qquad g(z)=\int\rho(x)\rho(x+z)\,dx=g_0e^{-\kappa z^2/4}.
+```
+
+式 (59.9)。
+
+格平均的 Poincaré 界与 Gaussian 尾给出
+$`\|\bar\rho_\delta-\rho\|_2\le C\delta+Ce^{-cH_Q^2}`$。
+又 $`w_\delta(k)=\int\bar\rho_\delta(x)\bar\rho_\delta(x+k\delta)\,dx`$，
+Cauchy–Schwarz 遂得
+
+```math
+0\le w_\delta(k)\le C,\qquad
+\sup_{k\in\mathbb Z}|w_\delta(k)-g(k\delta)|
+ \le C\delta+Ce^{-cH_Q^2}.
+```
+
+式 (59.10)。
+
+这在增长的滞后尺度上仍成立。
+方差加权算子的矩阵元是
+$`K_{\eta,\theta}(j,l)\sqrt{m_j^\circ m_l^\circ}`$。
+取 Schur 权 $`\sqrt{m_j^\circ}`$，其算子范数被
+$`\sup_j\sum_l|K_{\eta,\theta}(j,l)|m_l^\circ`$ 控制。
+写 $`r=\eta^2\delta\to0`$，按
+$`1\le|k|\le\eta^2`$、$`\eta^2<|k|\le\delta^{-1}`$ 和
+$`|k|>\delta^{-1}`$ 三段分割。
+使用 $`m_j^\circ\le C\delta`$ 与 $`\sum m_j^\circ\le\gamma`$，
+(59.7) 第一项在乘 $`\delta^{-1/2}`$ 前分别至多为
+$`C\delta\eta`$、$`C\delta\eta(1+|\log r|)`$、$`C\eta\delta`$；
+倒数平方项的和至多 $`C\delta`$。
+所以加权算子 $`T_{\eta,\theta}`$ 满足
+
+```math
+\sup_{\theta\in I}\|T_{\eta,\theta}\|_{\rm op}
+ \le C_I\{\sqrt r(1+|\log r|)+\sqrt\delta\}\longrightarrow0.
+```
+
+式 (59.11)。
+
+最后一段利用 $`1/|k|\le\delta`$ 和总质量，故核心边缘的行也满足同一界。
+此处没有附加 $`r`$ 与 $`\log Q`$ 的收敛条件。
+
+记正滞后系数为
+
+```math
+b_{\eta,\theta}(k)=\eta^2e^{\theta/(2\eta^3)}\mathrm{Ci}(a_\theta k),
+\qquad
+\mathcal R_Q^G(\theta)=4\delta^{-1/2}
+ \sum_{k\ge1}b_{\eta,\theta}(k)\sum_jG_jG_{j+k}.
+```
+
+式 (59.12)。
+
+不同正滞后的无序指标对不同。Gaussian 二次矩公式因而给出
+
+```math
+\operatorname{Cov}(\mathcal R_Q^G(\theta),\mathcal R_Q^G(u))
+ =16\sum_{k\ge1}b_{\eta,\theta}(k)b_{\eta,u}(k)w_\delta(k).
+```
+
+式 (59.13)。
+
+共振展开更精确地写成
+
+```math
+b_{\eta,\theta}(k)=(-1)^{mk}\left\{
+ \frac{\eta}{\omega}e^{-\theta/(2\eta^3)}
+       \frac{\sin(\beta_\theta k)}k
+ -\frac1{\omega^2}e^{-3\theta/(2\eta^3)}
+       \frac{\cos(\beta_\theta k)}{k^2}\right\}
+ +r_{\eta,\theta}(k),\qquad
+ |r_{\eta,\theta}(k)|\le\frac{C_I}{\eta k^3}.
+```
+
+式 (59.14)。
+
+余项的 $`\ell^2`$ 范数趋零。正弦项的平方和由
+$`|\sin(\beta_\theta k)|\le\min(C_Ik/\eta^2,1)`$ 控制而一致有界，
+余弦项亦然。结合 (59.10)，所有协方差替换均可用 Cauchy–Schwarz 控制。
+余弦项在 $`\ell^2`$ 中可替换为
+$`-(-1)^{mk}/(\omega^2k^2)`$，因为
+$`|\cos(\beta k)-1|\le|\beta|k`$。
+这部分在 (59.13) 除去因子 16 后的极限为
+$`g_0\zeta(4)/\omega^4`$，且与时间参数无关。
+正弦项与该低滞后项的交叉和至多
+
+```math
+C_I\eta\sum_{k\ge1}\frac{|\sin(\beta_\theta k)|}{k^3}
+ \le C_I\eta|\beta_\theta|\sum_{k\ge1}k^{-2}
+ \le C_I/\eta\longrightarrow0.
+```
+
+式 (59.15)。
+
+对两个正弦项，先固定 $`H>0`$。在 $`k\le H\eta^2`$ 上，
+(59.10) 和 $`\eta^2\delta\to0`$ 给出
+$`\sup|w_\delta(k)-g_0|\to0`$；在其余滞后上，两系数乘积的绝对和至多
+$`C_I\eta^2\sum_{k>H\eta^2}k^{-2}\le C_I/H`$。
+先取 $`M\to\infty`$ 再取 $`H\to\infty`$，即可将权重统一换为 $`g_0`$。
+使用经典 Dirichlet Green 核恒等式
+
+```math
+\sum_{k\ge1}\frac{\sin(kx)\sin(ky)}{k^2}
+ =\frac\pi2\min(x,y)-\frac{xy}{2},\qquad 0\le x,y\le\pi.
+```
+
+式 (59.16)。
+
+其归一化可由 $`\min(x,y)-xy/\pi`$ 在 $`x=y`$ 处大小为负一的导数跳跃，
+计算 sine 系数 $`2\sin(ky)/(\pi k^2)`$ 得到；这也是第 58 章所引经典桥协方差。
+将 (59.16) 用于 $`|\beta_\theta|,|\beta_u|`$，保留 sine 的符号，
+并用 $`\eta^2\beta_\theta\to\omega\theta`$ 和 $`\pi/(2\omega)=1`$，得
+
+```math
+\lim\operatorname{Cov}(\mathcal R_Q^G(\theta),\mathcal R_Q^G(u))
+ =\frac{16g_0\zeta(4)}{\omega^4}
+  +16g_0\operatorname{sgn}(\theta u)\min(|\theta|,|u|).
+```
+
+式 (59.17)。
+
+任一参数为零时第二项取零。所有乘积中的 $`(-1)^{mk}`$ 相消，
+(59.11) 也不依赖奇偶性，故无需再取奇偶子列。
+
+为取得路径紧性，令 $`d=|\theta-u|\le1`$。
+精确积分与一次分部积分同时给出
+$`|\mathrm{Ci}(ye^l)-\mathrm{Ci}(y)|\le C\min(l,y^{-1})`$。
+这里 $`l=d/\eta^3`$、$`y\asymp\eta k`$，所以
+
+```math
+|b_{\eta,\theta}(k)-b_{\eta,u}(k)|
+ \le C_I\left\{\frac d{\eta^3}|b_{\eta,u}(k)|
+                     +\min(d/\eta,\eta/k)\right\},
+\qquad
+\sum_{k\ge1}|b_{\eta,\theta}(k)-b_{\eta,u}(k)|^2\le C_Id.
+```
+
+式 (59.18)。
+
+最后一步在 $`k=\eta^2/d`$ 处分割；即使它超过所有实际滞后，
+仍可扩展到整个正整数和，故对任意小的 $`d`$ 成立。
+第二 Gaussian 混沌的谱公式给出
+$`\mathbb EX^4=3(\mathbb EX^2)^2+48\operatorname{tr}(T_X^4)
+\le15(\mathbb EX^2)^2`$。由 (59.10)、(59.13)、(59.18)，
+
+```math
+\mathbb E|\mathcal R_Q^G(\theta)-\mathcal R_Q^G(u)|^2\le C_I|\theta-u|,
+\qquad
+\mathbb E|\mathcal R_Q^G(\theta)-\mathcal R_Q^G(u)|^4\le C_I|\theta-u|^2.
+```
+
+式 (59.19)。
+
+有限 Gaussian 路径连续，起点方差有界，因此 Kolmogorov 判据给出 $`C(I)`$ 紧性。
+这里未对无限余弦级数逐项求导后取平方和。
+
+同一 Gaussian 实现上的对角坐标是
+$`\delta^{-1/2}\sum_j(G_j^2-m_j^\circ)`$。
+其算子 $`D_Q`$ 的范数至多 $`C\sqrt\delta`$，方差趋于 $`2g_0=\nu_2`$，
+与每个零对角核的 Hilbert–Schmidt 内积恒为零。
+将它与有限多个 $`T_{\eta,\theta}`$ 作任意固定实线性组合。
+(59.11)、(59.17) 给出小算子范数、有界 Hilbert–Schmidt 范数和收敛的方差。
+若该组合的特征值为 $`\lambda_l`$，则
+
+```math
+\log\mathbb E\exp\left(it\sum_l\lambda_l(\xi_l^2-1)\right)
+ =-t^2\sum_l\lambda_l^2
+  +O_t\left(\max_l|\lambda_l|\sum_l\lambda_l^2\right).
+```
+
+式 (59.20)。
+
+误差趋零，退化组合由方差趋零处理。Cramér–Wold 先给出联合 Gaussian 极限，
+随后才由 (59.17) 的分解与对角正交性得到 $`Z_0,B,N_2`$ 的相互独立。
+极限对称点之和减两倍原点的方差为零，连续性使该等式同时对所有参数成立。
+这确定了 (59.4) 中同一条 Brownian 路径的反射关系。
+
+独立于整个旧噪声的论证仍需单独完成。
+对 $`L^2(\rho\,dx)`$ 的固定有限秩正交投影 $`P`$，
+
+```math
+\|T-(1-P)T(1-P)\|_{\rm HS}
+ \le2\sqrt{\operatorname{rank}P}\,\|T\|_{\rm op}.
+```
+
+式 (59.21)。
+
+它将每个新核及对角核接触这个有限噪声柱面的部分以趋零 $`L^2`$ 误差去掉。
+剩余二重积分独立于该柱面。配合 (59.19) 的紧性，先得路径与有限柱面的联合收敛，
+再以柱面条件期望的 $`L^1`$ 逼近处理任意有界 $`\sigma(W_\rho)`$ 可测变量。
+所以新过程与 $`N_2`$ 联合相对于整个旧噪声 mixing。
+这表示联合有界测试的因子分解；不是给定全部旧噪声后的条件律收敛。
+
+旧 Gaussian 前缀路径在同一噪声上按连续方差时钟一致收敛；端点与偶极子在 $`L^2`$ 中收敛。
+截距的核 $`H`$ 也在同一实现中保留。
+其异格矩形近似 $`H_Q^\circ`$ 满足
+$`\|H_Q^\circ-H\|_{L^2(\rho\otimes\rho)}^2
+\le C\delta(1+|\log\delta|^2)+o(1)`$：
+同格和邻格用 $`\int_0^{3\delta}(1+|\log x|^2)dx`$，
+远格用对数导数和 $`\sum_{k\ge2}\delta/k^2`$，其余用 Gaussian 尾。
+又 $`\sum G_j^2\to\gamma`$ 于 $`L^2`$，故旧截距趋于
+$`b_*\gamma+I_2(H)`$，没有另抽一个与旧场无关的截距。
+旧束的依概率收敛与前述 mixing 一起给出 (59.3) 的全部联合关系。
+
+最后在良好数据环境上合并实际有限谱、精确中心、核心截断和共同耦合误差。
+对环境任一子列取使这些条件误差界几乎处处成立的进一步子列，
+确定 Gaussian 格结论便给出条件有界 Lipschitz 距离于数据概率中趋零。
+仅一次对完整标签向量的后验总变差比较，将事件与有界测试转移到全部实际坐标。
+未转移辅助 Gaussian 模型的无界矩。
+一致逼近连续路径给出实际取整路径的 C-tight $`J_1`$ 收敛。
+支持置换使每个固定支持的无条件律等于先验混合律；
+逆方向的配对或整路径反转，以及同一个方向判定一致事件，保留全部坐标的共同实现。
+方向事件补集只以其概率进入有界测试，故无需控制该事件上的放大统计量。
+(59.5) 随后由连续极限映射得到。
+
+本条的经典 sine 桥、二次谱展开与混沌判据归因见
+[文献说明](../../../Library/Dynamics/iyer2025empirical.md)。
+新增连接是实际共振数组的放大控制、增长滞后卷积和无额外余量的 (59.11)，
+它们共同使局部反射律在原后验实验上成立。
+
+**定理 59.3（反射、截距精度与范围）。** 定理 59.2 的极限不能换成
+在正负半线上独立的 Brownian motion 加同一偏移。
+将有限截距换成 $`\widetilde{\mathcal J}_M`$ 时，原路径与替换路径之差在
+每个非空固定紧区间上一致依概率趋零，当且仅当
+
+```math
+\frac{\eta_M^2}{\sqrt\delta}
+ (\widetilde{\mathcal J}_M-\mathcal J_M)\longrightarrow0
+ \quad\hbox{依概率}.
+```
+
+式 (59.22)。
+
+证明。若两半线独立，则在固定 $`\theta>0`$ 处的反射和方差是
+$`32g_0\theta>0`$，与 (59.5) 矛盾。
+截距替换产生的路径差恰为 (59.22) 左边乘
+$`-e^{\theta/(2\eta_M^3)}`$；该乘子的绝对值在固定紧区间上一致趋一，证明充要性。
+相同弱极限不提供 (59.22) 的速率。
+若只把截距中的 $`b_*\mathcal Q_M`$ 换为 $`b_*V_M`$，
+则截距差值为 $`-b_*\sqrt\delta T_M`$，替换路径减原路径包含
+$`b_*\eta_M^2e^{\theta/(2\eta_M^3)}T_M`$，也不能由旧弱收敛略去。
+
+本章仅处理精确共振与 $`\eta_M^2\delta\to0`$。
+没有声称覆盖失谐、临界或超临界的 $`\eta_M^2\delta`$、
+增长参数区间、数据自适应频率、其它 Liouville 幅度或实际后验矩收敛。
+
+## 追加锚（本行以下为增补区）
+
+## 60. 临界共振使旧噪声重现
+
+**定义 60.1（临界共振与双场）。** 保持定义 54.1 的原始实际模型、精确中心与有限截距。
+取确定性序列
+
+```math
+\eta_M=2m_M\longrightarrow\infty,\qquad
+\zeta_M=\eta_M^2\delta\longrightarrow\zeta\in(0,\infty),
+\qquad s_M=\log(\eta_M/\delta),\qquad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+```
+
+式 (60.1)。
+
+定义实际过程
+
+```math
+\mathcal R_M(\theta)=\eta_M^{3/2}e^{z_M(\theta)/2}
+ \{\mathcal Z_M(z_M(\theta)\sqrt\delta)-\mathcal J_M
+                          -2z_M(\theta)\sqrt\delta T_M\}.
+```
+
+式 (60.2)。
+
+现在 $`s_M=(3/4)\log Q+O(1)`$，因此任意固定参数紧区间的取值点最终落在原 $`[0,U]`$ 内。
+令 $`W_\rho`$ 是旧噪声，$`W_\rho'`$ 是它的独立副本；
+在 $`m_M`$ 全为偶数的子列上令 $`W_\sigma=W_\rho`$，
+在全为奇数的子列上令 $`W_\sigma=W_\rho'`$。
+定义连续对称核
+
+```math
+q_{\zeta,\theta}(x,y)=
+\begin{cases}
+ \displaystyle\frac{2\sqrt\zeta}{\omega}
+       \frac{\sin(\omega\theta|x-y|/\zeta)}{|x-y|},&x\ne y,\\[4pt]
+ 2\theta/\sqrt\zeta,&x=y,
+\end{cases}
+\qquad \omega=\pi/2.
+```
+
+式 (60.3)。
+
+它属于 $`L^2(\rho\otimes\rho)`$；对角值是连续延拓，不改变二重 Wiener 积分。
+
+**定理 60.2（实际临界共振的奇偶联合律）。** 在 (60.1) 的每个固定奇偶子列上，
+两种原始平稳实验均有紧区间 C-tight $`J_1`$ 联合收敛
+
+```math
+(\mathcal R_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal R_\zeta^\sigma|_I,N_2,\mathcal J_\infty,Y,
+ L|_{[-A,A]},C|_{[-A,A]},Z),
+\qquad
+\mathcal R_\zeta^\sigma(\theta)=Z_0+I_2(q_{\zeta,\theta};W_\sigma),
+```
+
+式 (60.4)。
+
+其中 $`I`$ 固定且紧，$`A>0`$，
+$`Z_0\sim N(0,16g_0\zeta_{\rm R}(4)/\omega^4)`$、$`N_2\sim N(0,2g_0)`$，
+两者相互独立并联合独立于 $`(W_\rho,W_\rho')`$。
+这里 $`\zeta_{\rm R}`$ 表示 Riemann zeta 函数，区别于临界参数 $`\zeta`$。
+旧元组仍在同一个 $`W_\rho`$ 上，特别是 $`\mathcal J_\infty=b_*\gamma+I_2(H;W_\rho)`$。
+可联合保留旧固定频率紧区间上的 Fourier 场及旧负 Sobolev 测度、偶极子逼近。
+先验条件有界 Lipschitz 收敛于数据概率中成立；固定支持版本无条件且一致；
+未知方向使用同一个判向一致事件。
+
+令 $`F_\sigma(v)=W_\sigma(e^{-i\omega vx})`$，则同一实现中
+
+```math
+I_2(q_{\zeta,\theta};W_\sigma)
+ =2\sqrt\zeta\int_0^{\theta/\zeta}(|F_\sigma(v)|^2-\gamma)\,dv.
+```
+
+式 (60.5)。
+
+所以偶数支的非 Gaussian 部分由旧 Fourier 场本身生成；奇数支使用独立副本。
+
+证明。整个论证保留一个完整后验标签向量。
+(58.6)–(58.8) 的有限谱恒等式先在原数组上应用。
+放大因子为 $`\eta^2\delta^{-1/2}e^{\theta/(2\eta^3)}=O_I(Q^{3/4})`$，
+故乘上完整截断组数 $`O(Q^2)`$ 后的 Fourier 与取整误差仍趋零。
+精确抵消仍用 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$ 和原始截距。
+所得原始矩阵正是 (59.6)。
+
+先说明实际比较的估计可延伸到这里的有界 $`\zeta_M`$。
+(59.7) 的共振包络及 (59.8) 的原始算子界只用
+$`\eta\le C Q^{1/4}`$，没有使用 $`\eta^2\delta\to0`$。
+因此精确中心误差仍至多 $`O_{\mathbb P}(Q^{-2}(1+\log Q))+o_{\mathbb P}(1)`$。
+第 56 章 $`Q^{-60}`$ 尾质量去掉全部核心外向量，
+同一个逆分布耦合再将所有核心组换成独立 Gaussian 组。
+用 (56.18) 的相对质量误差和这个原始算子界，
+实际环境方差可进一步换成确定格质量
+$`m_j^\circ=\int_{I_j}\rho`$，路径误差至多
+$`O_{\mathbb P}(Q^{-1/2}(1+\log Q)^2)`$。
+旧截距、对角量和线性束在同一耦合中保持第 59 章证明里的界。
+这一阶段得到 $`G_j=\sqrt{m_j^\circ}\xi_j`$ 的同一格模型。
+下面不会把 (59.11) 的趋零结论用于临界参数。
+
+记 $`a=\theta/\eta^3`$、$`d=(j-l)\delta`$、$`\chi_j=(-1)^{mj}`$，并令
+
+```math
+b_M(\theta)=\frac{\omega\eta(e^a-1)}\delta,\qquad
+q_{M,\theta}(d)=\frac{2\sqrt{\zeta_M}}\omega e^{-a/2}
+                           \frac{\sin(b_M(\theta)d)}d.
+```
+
+式 (60.6)。
+
+在 $`d=0`$ 连续延拓。
+$`b_M(\theta)\to\omega\theta/\zeta`$ 且
+$`b'_M(\theta)=\omega e^a/\zeta_M`$。
+对固定 $`I`$，核及其时间导数对所有 $`d`$ 一致有界；
+核向 (60.3) 的收敛在固定空间紧区间上一致。
+这不要求 $`|\zeta_M-\zeta|\sqrt{\log Q}\to0`$。
+
+两次分部积分并保留共振符号，给出逐个非零整数 $`k=j-l`$ 的精确分解
+
+```math
+\frac{2\eta^2}{\sqrt\delta}e^{a/2}\mathrm{Ci}(\omega\eta e^a|k|)
+ =\chi_j\chi_l q_{M,\theta}(k\delta)
+ -\frac{2\chi_j\chi_l}{\omega^2\sqrt\delta}
+           \frac{e^{-3a/2}\cos(b_M(\theta)k\delta)}{k^2}
+ +E_M(\theta,k),
+```
+
+式 (60.7)。
+
+```math
+|E_M(\theta,k)|\le\frac{C_I}{\eta\sqrt\delta|k|^3},\qquad
+|\partial_\theta E_M(\theta,k)|
+ \le\frac{C_I}{\eta^3\sqrt\delta k^2}.
+```
+
+式 (60.8)。
+
+导数界直接来自
+$`R_3(v)=\mathrm{Ci}(v)-\sin v/v+\cos v/v^2`$ 的
+$`R_3'(v)=-2\cos v/v^3`$，并包括前因子的导数。
+(59.10) 的卷积界 $`\sum_jm_j^\circ m_{j+k}^\circ\le C\delta`$
+将余项二次型的方差与导数方差分别界为 $`C\eta^{-2}`$、$`C\eta^{-6}`$。
+对有限可微函数使用
+
+```math
+\sup_I|f|^2\le C_I\left\{\int_I|f|^2+
+              \left(\int_I|f|^2\int_I|f'|^2\right)^{1/2}\right\}.
+```
+
+式 (60.9)。
+
+取一点使其平方不超过平均值，再积分 $`(|f|^2)'`$ 即可证明。
+这使余项在路径范数中趋零。
+
+余弦项可一致换成在零点的随机常数
+
+```math
+O_Q=-\frac{2}{\omega^2\sqrt\delta}
+       \sum_{j\ne l}\frac{\chi_j\chi_l}{(j-l)^2}G_jG_l.
+```
+
+式 (60.10)。
+
+因为前因子与余弦相对一的误差至多
+$`C_I\{\eta^{-3}+\min((k\delta)^2,1)\}`$，其导数至多
+$`C_I\{\eta^{-3}+|k\delta|\min(|k\delta|,1)\}`$。
+用同一卷积界并在 $`k=1/\delta`$ 分割，二次型差及其导数的方差均至多
+$`C_I(\eta^{-6}+\delta^3)=O_I(\delta^3)`$。
+(60.9) 给出一致依概率趋零。因此格模型为
+
+```math
+O_Q+\sum_{j\ne l}q_{M,\theta}(x_j-x_l)(\chi_jG_j)(\chi_lG_l)
+                  +o_{\mathbb P}(1)\quad\hbox{于 }C(I).
+```
+
+式 (60.11)。
+
+现考察同一 Gaussian 向量上的两个线性场
+$`W_Q(f)=\sum G_jf(x_j)`$、$`W_Q^\chi(f)=\sum\chi_jG_jf(x_j)`$。
+若 $`m`$ 为偶数，两者逐样本相同。
+若 $`m`$ 为奇数，对有界区间阶梯函数 $`f,g`$，其交叉 Gram 为
+$`\sum(-1)^jm_j^\circ f(x_j)g(x_j)`$。
+相邻格成对，平滑 $`\rho`$ 的质量差与有限区间端点贡献使此和为 $`O(\delta)`$。
+各自 Gram 均趋于 $`\int fg\rho`$。
+总质量和 $`x^2`$ 尾扩展到端点、偶极子及固定频率 Fourier 测试，故
+
+```math
+(W_Q,W_Q^\chi)\Longrightarrow
+\begin{cases}(W_\rho,W_\rho),&m\text{ 偶},\\
+              (W_\rho,W_\rho'),&m\text{ 奇},
+\end{cases}
+```
+
+式 (60.12)。
+
+此处先是柱面联合收敛；所需旧路径由同一方差时钟的紧性补全。
+奇数支的独立副本由确定符号调制的极限产生，有限实验中没有重抽标签。
+
+偏移 (60.10) 的标准化矩阵 $`C_Q`$ 有算子范数 $`O(\sqrt\delta)`$，
+由 $`m_j^\circ\le C\delta`$ 和可和的 $`k^{-2}`$ 行包络得到。
+又由逐固定滞后 $`w_\delta(k)\to g_0`$，
+
+```math
+2\operatorname{tr}C_Q^2
+ =\frac8{\omega^4}\sum_{k\ne0}\frac{w_\delta(k)}{k^4}
+ \longrightarrow\frac{16g_0\zeta_{\rm R}(4)}{\omega^4}.
+```
+
+式 (60.13)。
+
+对角矩阵 $`D_Q=\operatorname{diag}(m_j^\circ/\sqrt\delta)`$ 也有趋零算子范数，
+方差趋于 $`2g_0`$，且 $`\operatorname{tr}(C_QD_Q)=0`$。
+对任意固定线性组合 $`A=cC_Q+dD_Q`$，
+(59.20) 先给出偏移与对角量的联合 Gaussian 极限。
+加入旧场与调制场的任意有限组合系数向量 $`\ell_Q`$ 时，联合特征函数为
+
+```math
+e^{-i\operatorname{tr}A}\det(1-2iA)^{-1/2}
+ \exp\{-\tfrac12\ell_Q^\top(1-2iA)^{-1}\ell_Q\}.
+```
+
+式 (60.14)。
+
+$`\|\ell_Q\|_2`$ 有界，故末项指数与 $`-\|\ell_Q\|_2^2/2`$ 的差趋零。
+配合 (60.12) 的全部 Gram 极限，这证明 $`Z_0,N_2`$ 相互独立并独立于两个场。
+没有把随规模改变的对角量或调制坐标当作固定旧变量。
+
+对固定空间紧区间上的矩形阶梯核 $`K=\sum k_{ab}1_{I_a}\otimes1_{I_b}`$，
+异格二次型恒等于
+
+```math
+\sum_{a,b}k_{ab}W_Q^\chi(I_a)W_Q^\chi(I_b)
+                    -\sum_a k_{aa}\sum_{x_j\in I_a}G_j^2.
+```
+
+式 (60.15)。
+
+块平方和的方差 $`2\sum m_j^{\circ2}`$ 趋零，均值趋于 $`\int_{I_a}\rho`$，
+故极限恰为 $`I_2(K;W_\sigma)`$。
+将 $`q_{M,\theta}`$ 在固定空间紧区间上统一逼近，再用有界核和 Gaussian 质量尾，
+即可得到 (60.11) 在有限多个时间的共同极限。
+同时对旧对数核先去掉近对角与远端，再用同一个矩形划分，保留旧 $`I_2(H;W_\rho)`$。
+新的确定迹为 $`2\theta\gamma/\sqrt\zeta`$，由异格扣除产生 Wick 中心；
+有限对角随机误差只是 $`q_{M,\theta}(0)\sqrt\delta T_Q^G=o_{\mathbb P}(1)`$。
+
+由 $`q_{M,\theta}`$ 的一致有界导数，正弦二次型的增量方差至多
+$`C_I|\theta-u|^2(\sum m_j^\circ)^2`$，第四矩至多 $`C_I|\theta-u|^4`$。
+因此它在 $`C(I)`$ 中紧，偏移为一个紧的随机常数，(60.8)–(60.10) 的余项已在路径范数中去掉。
+旧前缀、Fourier 场及负 Sobolev 坐标的共同逼近仍使用同一总质量与 $`x^2`$ 尾。
+任意有界 Gaussian 柱面测试再以 $`L^1`$ 逼近，给出整个场的独立关系。
+
+实际收敛由前述共同耦合和精确中心误差恢复，最后仅一次对完整标签向量应用后验 TV。
+它只传递事件和有界测试，不传递无界矩。
+良好环境的子列原则给出条件有界 Lipschitz 版本；
+支持置换给出固定支持的一致无条件版本。
+同一方向事件同时控制所有工作坐标，补集只以概率进入误差。
+连续格路径与实际取整路径的一致距离趋零，遂得 C-tight $`J_1`$ 结论。
+
+最后，Gaussian 乘积公式给出
+$`|F_\sigma(v)|^2-\gamma=I_2(\cos(\omega v(x-y));W_\sigma)`$。
+有限有向频率区间上的 Bochner 积分可由二重积分的等距性交换，
+其核积分为 (60.3)，证明 (60.5)。连续版本使等式同时对所有参数成立。
+
+**定理 60.3（同边缘律而不同联合律）。** 两个奇偶分支有相同过程边缘律。
+任意 $`\theta\ne0`$ 的边缘分布均非 Gaussian；在零点只有 Gaussian 偏移。
+若 $`Y=W_\rho(1)`$，则
+
+```math
+\operatorname{Cov}(\mathcal R_\zeta^{\rm even}(\theta),Y^2-\gamma)
+ =\frac{4\pi g_0\sqrt\zeta}{\omega}
+        \operatorname{erf}\left(\frac{\omega\theta}{\zeta\sqrt\kappa}\right),
+\qquad
+\operatorname{Cov}(\mathcal R_\zeta^{\rm odd}(\theta),Y^2-\gamma)=0.
+```
+
+式 (60.16)。
+
+证明。两场同律且各自独立于同分布偏移，故边缘过程同律。
+核算子 $`T_{\zeta,\theta}`$ 的实特征值为 $`(\lambda_n)`$，
+二阶混沌的经典谱公式给出第四累积量 $`48\sum\lambda_n^4`$。
+当 $`\theta\ne0`$，核在对角附近非零，$`\rho>0`$，
+所以自伴 Hilbert–Schmidt 算子非零，至少一个特征值非零。
+独立 Gaussian 偏移不改变第四累积量，证明非 Gaussian 性。
+偶数支的协方差由二阶等距公式化为
+$`(4g_0\sqrt\zeta/\omega)\int e^{-\kappa d^2/4}\sin(\omega\theta d/\zeta)/d\,dd`$。
+该积分对频率求导为 $`2\sqrt{\pi/\kappa}e^{-a^2/\kappa}`$，
+在零频率取零，积分得 $`\pi\operatorname{erf}(a/\sqrt\kappa)`$。
+奇数支由独立性取零。这些是极限变量的矩恒等式，不声称实际矩收敛。
+
+对任一规定奇偶性，选同奇偶整数 $`m_M`$ 最近于
+$`\sqrt\zeta/(2\sqrt\delta)`$，误差至多一，便有
+$`(2m_M)^2\delta-\zeta=O(\sqrt\delta)`$。
+所以两分支都可由合法确定探测尺度实现。
+奇偶性不稳定时，新过程本身仍由两子列论证收敛到共同边缘律；
+若两种奇偶性均出现无穷次，(60.16) 表明不能宣称一个不分支的旧场联合极限。
+
+**定理 60.4（已识别临界族的低参数边界）。** 在固定的 $`W_\sigma`$ 上构造
+$`I_2(q_{\zeta,\theta};W_\sigma)`$。当 $`\zeta\downarrow0`$，
+此族在每个固定 $`C(I)`$ 中趋于 $`4\sqrt{g_0}B_{\rm odd}`$，
+且相对于整个 $`W_\sigma`$ mixing；可联合附加独立偏移 $`Z_0`$。
+这是已识别 Gaussian 混沌族的极限，不通过代入定理 60.2 取得实际数组结论。
+
+证明。角频率 Fourier 变换下，sinc 核的乘子为
+$`(2\pi\sqrt\zeta/\omega)\operatorname{sgn}(\theta)
+1_{\{|\xi|<\omega|\theta|/\zeta\}}`$。
+在 Lebesgue $`L^2`$ 上以 $`\sqrt\rho`$ 共轭，Plancherel 给出
+$`\|T_{\zeta,\theta}\|_{\rm op}\le
+2\pi\|\rho\|_\infty\sqrt\zeta/\omega`$。
+二阶协方差为
+
+```math
+\frac{8\zeta}{\omega^2}\int
+  \frac{\sin(\omega\theta d/\zeta)\sin(\omega u d/\zeta)}{d^2}g(d)\,dd
+ \longrightarrow16g_0\operatorname{sgn}(\theta u)\min(|\theta|,|u|).
+```
+
+式 (60.17)。
+
+用 $`d=\zeta v`$、$`g(0)=g_0`$ 和可积的倒数平方尾支配，
+再用 $`\int\sin(av)\sin(bv)/v^2\,dv
+=\pi\operatorname{sgn}(ab)\min(|a|,|b|)`$ 即得。
+有限组合的小算子范数和有界 Hilbert–Schmidt 范数使谱特征函数趋于 Gaussian。
+同一积分恒等式给出任意符号时间的增量方差至多 $`C|\theta-u|`$，
+第二混沌第四矩至多 $`C|\theta-u|^2`$，故在 $`C(I)`$ 中紧。
+最后按 (59.21) 删除固定有限秩柱面，再作 $`L^1`$ 柱面逼近，取得 mixing。
+协方差 (60.17) 识别的是同一 Brownian motion 的奇反射。
+
+经典 Gaussian 谱、混沌独立性及 sinc Fourier 工具的适用条件见
+[文献说明](../../../Library/Dynamics/iyer2025empirical.md)。
+本章不包含失谐、随机奇偶分布、实际矩收敛、增长参数区间、其它幅度或临界参数趋零、无穷时的实际数组定理。
+
+## 追加锚（本行以下为增补区）
+
+## 61. 超临界共振的端点平方与共同实现
+
+**定义 61.1（超临界共振的锚定放大）。** 保持定义 54.1 的实际模型、完整后验向量、精确中心与有限截距。
+取确定性序列
+
+```math
+\eta=2m\longrightarrow\infty,\qquad r_*=\eta^2\delta\longrightarrow\infty,
+\qquad s=\log(\eta/\delta),\qquad s\sqrt\delta\le U/2.
+```
+
+式 (61.1)。
+
+对固定参数紧区间令 $`z_\theta=s+\theta/\eta^3`$，定义同一实际标签实现上的两个过程
+
+```math
+\mathcal V_M(\theta)=\eta^{3/2}e^{z_\theta/2}
+ \{\mathcal Z_M(z_\theta\sqrt\delta)-\mathcal J_M
+                         -2z_\theta\sqrt\delta T_M\},\qquad
+\mathcal D_M(\theta)=\sqrt{r_*}
+             \{\mathcal V_M(\theta)-\mathcal V_M(0)\}.
+```
+
+式 (61.2)。
+
+再令 $`\chi_j=(-1)^{mj}`$，$`Y_M^\chi=\sum_j\chi_jA_j`$。
+这里 $`A_j`$ 仍是定义 54.1 的精确中心组和；所有和使用完整计数截断。
+记旧解析 Fourier 场及固定谱分辨率曲线为
+
+```math
+\mathcal F_M(v)=\sum_jA_je^{-i\omega vx_j},\qquad
+\mathcal S_M(a)=E_M(a)-2\mathfrak L Y_M^2,
+\qquad \mathfrak L=\log(1/h),\quad\omega=\pi/2.
+```
+
+式 (61.3)。
+
+**定理 61.2（全超临界范围的实际端点平方律）。** 对 (61.1) 的每个固定奇偶子列，
+两种原始平稳实验均有联合收敛
+
+```math
+(\mathcal V_M|_I,\mathcal D_M|_I,T_M,\mathcal J_M,Y_M,
+ L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip},
+ \mathcal F_M|_{[0,A_F]},\mathcal S_M|_{I_S})
+\Longrightarrow
+(Z_0\mathbf1_I,\,[\theta\mapsto2\theta(Y_\sigma^2-\gamma)],
+ N_2,\mathcal J_\infty,Y,L,C,Z,\mathcal F,\mathcal S).
+```
+
+式 (61.4)。
+
+其中所有区间固定且紧，$`A,A_F>0`$；新过程对取 $`D(I;\mathbb R^2)`$ 的联合 $`J_1`$ 拓扑，
+其余 càdlàg 路径取乘积 $`J_1`$ 拓扑，且均为 C-tight。
+Fourier 坐标可以取 $`C^1([0,A_F];\mathbb C)`$ 拓扑。
+令 $`W_\rho'`$ 为旧 $`W_\rho`$ 的独立副本；偶数 $`m`$ 支令 $`Y_\sigma=Y=W_\rho(1)`$，
+奇数支令 $`Y_\sigma=W_\rho'(1)`$。此外
+
+```math
+Z_0\sim N(0,16g_0\zeta_{\rm R}(4)/\omega^4)=N(0,128g_0/45),
+\qquad N_2\sim N(0,2g_0),
+```
+
+式 (61.5)。
+
+两者相互独立，并联合独立于两个 Gaussian 场。
+所有旧坐标仍在同一旧场上；特别是
+
+```math
+\mathcal J_\infty=b_*\gamma+I_2(H;W_\rho),\qquad
+\mathcal F(v)=W_\rho(e^{-i\omega vx}),\qquad
+\mathcal S(a)=(b_*+2a)Y^2+
+ 2\int_0^{e^a}\frac{|\mathcal F(v)|^2-Y^2}{v}\,dv.
+```
+
+式 (61.6)。
+
+条件先验版本是给定数据的有界 Lipschitz 距离于数据概率中趋零；
+固定支持版本无条件且对支持位置一致。未知方向的全部坐标使用同一个判向一致事件。
+同一实际实现还满足
+
+```math
+\sup_{\theta\in I}
+ |\mathcal D_M(\theta)-2\theta\{(Y_M^\chi)^2-\mathcal Q_M\}|
+ \longrightarrow0\quad\hbox{依概率}.
+```
+
+式 (61.7)。
+
+不需要 $`r_*`$ 超过任何附加的对数速率。
+不含旧坐标的 $`(\mathcal V_M,\mathcal D_M,T_M)`$ 有不分奇偶的同一边缘极限。
+
+证明。先把 $`I`$ 扩大为包含零的固定紧区间。
+精确等式 $`\mathcal Q_M=V_M+\sqrt\delta T_M`$ 使 (61.2) 的括号等于
+$`E_M(z_\theta)-2\mathfrak L Y_M^2-2z_\theta\mathcal Q_M-\mathcal J_M`$。
+有限谱抵消在所有极限之前完成。
+定义零对角系数
+
+```math
+b_{\eta,\theta}(k)=\frac{2\eta^2}{\sqrt\delta}
+ e^{\theta/(2\eta^3)}\mathrm{Ci}(\omega\eta e^{\theta/\eta^3}|k|),
+\qquad
+d_{\eta,\theta}(k)=2\eta^3
+ \{e^{\theta/(2\eta^3)}\mathrm{Ci}(\omega\eta e^{\theta/\eta^3}|k|)
+                        -\mathrm{Ci}(\omega\eta|k|)\},\quad k\ne0.
+```
+
+式 (61.8)。
+
+第 58 章有限和积分比较在增长 $`s`$ 下给出
+
+```math
+\varepsilon_F\le C_I\{h\sqrt\lambda(1+s+\log\lambda)
+       +h^2\lambda(1+\mathfrak L+\log\lambda)+he^{-s}\}.
+```
+
+式 (61.9)。
+
+具体地，$`\sum_{n\le N}\cos(n\vartheta)/n`$ 与
+$`\mathrm{Ci}(N|\vartheta|)-\log|\vartheta|`$ 的误差至多
+$`C\{N^{-1}+|\vartheta|[1+\log(1+N|\vartheta|)]\}`$；
+权重差 $`(1+n^2)^{-1/2}-n^{-1}=O(n^{-3})`$ 贡献
+$`C\vartheta^2(1+|\log|\vartheta||)+CN^{-2}`$。
+取整由 $`d\mathrm{Ci}(e^u)/du=\cos(e^u)`$ 控制。
+这些界直接作用于有限谱，不在旧弱极限中代入增长参数。
+由 $`\log\eta=O_U(Q^{1/4})`$、$`h=\exp(-c_hQ^3+O(1))`$、$`c_h>0`$，
+以及完整截断的 $`O(Q^2)`$ 组数，有
+
+```math
+\sup_I\left|\mathcal V_M-\sum_{j\ne l}b_{\eta,\theta}(j-l)A_jA_l\right|
++\sup_I\left|\mathcal D_M-\sum_{j\ne l}d_{\eta,\theta}(j-l)A_jA_l\right|
+ \le C_I\eta^3Q^2\varepsilon_F\|A\|_2^2=o_{\mathbb P}(1).
+```
+
+式 (61.10)。
+
+这里 $`\eta^2/\sqrt\delta\le\eta^3`$ 最终成立。
+估计先在辅助乘积律下成立，最后以有界事件转回实际后验。
+
+在零时刻分部积分得
+
+```math
+b_{\eta,0}(k)=-\frac{2(-1)^{mk}}{\omega^2\sqrt\delta k^2}
+       +O\left(\frac1{\eta^2\sqrt\delta k^4}\right).
+```
+
+式 (61.11)。
+
+其主矩阵原始算子范数为 $`O(\delta^{-1/2})`$，余项范数
+$`O(\sqrt\delta/r_*)=o(1)`$，故后者可用紧的组向量范数直接舍去。
+对锚定系数作精确微分，而非对渐近展开求导，得
+
+```math
+\partial_\theta d_{\eta,\theta}(k)
+ =2e^{\theta/(2\eta^3)}\{\tfrac12\mathrm{Ci}(v)+\cos v\},
+\qquad v=\omega\eta e^{\theta/\eta^3}|k|.
+```
+
+式 (61.12)。
+
+由 $`|\mathrm{Ci}(v)|\le C/v`$，这个导数及 $`d_{\eta,\theta}`$ 在所有非零滞后上一致有界。
+因此完整截断矩阵的原始范数至多 $`C_IQ^2`$，与 $`\eta`$ 的增长无关。
+第 56 章精确中心向量误差
+$`a_M^{\rm ctr}=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})`$，
+乘这两个矩阵范数分别给出 $`O_{\mathbb P}(Q^{-9/4})+o(1)`$ 和
+$`O_{\mathbb P}(Q^{-1/2})+o(1)`$。
+这里用
+$`|X^\top KX-(X-e)^\top K(X-e)|\le\|K\|_{\rm op}(2\|X\|\|e\|+\|e\|^2)`$。
+增长核心外的平方质量至多 $`Q^{-60}`$，同一原始范数界同时去掉整个尾向量。
+原始旧对数矩阵至多 $`CQ^2(1+\log Q)`$，其中心与尾误差也趋零。
+
+归一化前 Bernoulli 核心组和的方差至少 $`q^{9/10}`$；第 56 章由 Bernoulli 局部界构造的同一逆分布耦合，
+以趋一概率同时使各组的标准化误差至多 $`q^{-1/8}`$。
+它压过上述多项式成本。再用同一标准正态变量把归一化后的核心组方差换成
+$`m_j^\circ=\int_{[(j-1/2)\delta,(j+1/2)\delta)}\rho(x)\,dx`$。
+相对误差为 $`O_{\mathbb P}(Q^{-1}(1+\log Q))`$，
+核心大小为 $`O(Q^{1/2}\sqrt{\log Q})`$。
+故锚定矩阵、零时刻矩阵与旧对数矩阵的替换误差分别至多
+
+```math
+O_{\mathbb P}(Q^{-1/2}(1+\log Q)^{3/2}),\qquad
+O_{\mathbb P}(Q^{-3/4}(1+\log Q)),\qquad
+O_{\mathbb P}(Q^{-1/2}(1+\log Q)^{5/2}).
+```
+
+式 (61.13)。
+
+对角量的中心和平方范数替换成本为相对误差乘 $`\delta^{-1/2}`$，也趋零。
+因此得到同一确定 Gaussian 格模型 $`G_j=W_\rho(1_{I_j})`$。
+所有矩估计都在辅助律内先转换为概率误差。
+
+记其零时刻主二次型为 $`O_Q`$，对角量为
+$`T_Q^\circ=\delta^{-1/2}\sum_j(G_j^2-m_j^\circ)`$。
+在标准化格基底中，两者的算子范数均至多 $`C\sqrt\delta`$。
+令 $`w_\delta(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ`$，则
+$`w_\delta(k)\to g_0`$ 对每个固定 $`k`$ 成立，且 $`w_\delta(k)\le C`$ 一致成立。
+二阶混沌等距和可和的 $`k^{-4}`$ 给出
+
+```math
+\operatorname{Var}O_Q=\frac{16}{\omega^4}
+       \sum_{k\ge1}\frac{w_\delta(k)}{k^4}
+       \longrightarrow\frac{16g_0\zeta_{\rm R}(4)}{\omega^4},\qquad
+\operatorname{Var}T_Q^\circ\longrightarrow2g_0,
+\qquad \operatorname{Cov}(O_Q,T_Q^\circ)=0.
+```
+
+式 (61.14)。
+
+最后一个等式来自零对角与对角矩阵的正交，还不能单独推出独立。
+对每个实线性组合的特征值 $`\lambda_{l,Q}`$，展开 Gaussian 二次型特征函数得
+
+```math
+\log\mathbb E e^{itI_2(K_Q)}
+ =-t^2\sum_l\lambda_{l,Q}^2
+       +O_t\left(\max_l|\lambda_{l,Q}|\sum_l\lambda_{l,Q}^2\right).
+```
+
+式 (61.15)。
+
+误差趋零，故先得到联合 Gaussian 性，再由 (61.14) 得到 $`Z_0,N_2`$ 的独立性。
+谱展开是 Nourdin–Poly Proposition 2.1 的经典结构。
+
+锚定部分保留一个非消失的秩一方向。
+由精确共振及 $`|1-\cos u|\le u^2/2`$，(61.12) 给出全空间界
+
+```math
+|\partial_\theta d_{\eta,\theta}(j-l)-2\chi_j\chi_l|
+ \le C_I\{\eta^{-1}+\eta^{-3}+|x_j-x_l|^2/r_*^2\}.
+```
+
+式 (61.16)。
+
+它不要求核心的最大位移除以 $`r_*`$ 趋零。
+Gaussian 格质量的四阶空间矩一致有界，因此相应二次型与
+$`2\theta\{(\sum_j\chi_jG_j)^2-\sum_jG_j^2\}`$ 的差 $`E_Q(\theta)`$ 满足
+
+```math
+\sup_I\mathbb E|E_Q'(\theta)|^2
+ \le C_I(\eta^{-2}+r_*^{-4}),\qquad
+\mathbb E\sup_I|E_Q(\theta)|^2
+ \le C_I(\eta^{-2}+r_*^{-4})\longrightarrow0.
+```
+
+式 (61.17)。
+
+第二步用 $`E_Q(0)=0`$、微积分基本定理与 Cauchy–Schwarz。
+异格和的对角扣除是有限恒等式；$`\sum_jG_j^2\to\gamma`$ 于 $`L^2`$，
+因为其方差 $`2\sum_j(m_j^\circ)^2=O(\delta)`$。
+(61.12) 还给出任意小参数增量的二阶矩界 $`C_I|\theta-\vartheta|^2`$。
+谱展开直接算得二阶混沌 $`\mathbb EX^4\le15(\mathbb EX^2)^2`$，
+故四阶增量界为 $`C_I|\theta-\vartheta|^4`$。
+这证明路径紧性，并与 (61.17) 一起给出统一锚定逼近。
+由 (61.2) 的有限恒等式
+$`\mathcal V_M(\theta)=\mathcal V_M(0)+\mathcal D_M(\theta)/\sqrt{r_*}`$，
+第一过程于是趋于常路径；第二过程的非平凡极限已由独立估计证明。
+
+现在识别与旧场的联合关系。
+在每格上延拓 $`\chi_Q(x)=(-1)^{mj}`$。
+偶数支它恒为一；奇数支它是周期 $`2\delta`$ 的交替方波，原函数一致为 $`O(\delta)`$。
+对任意 $`f,g\in L^2(\rho)`$，光滑紧支撑逼近与分部积分给出
+
+```math
+\int\chi_Qfg\rho\longrightarrow0\quad(m\hbox{ 为奇数}).
+```
+
+式 (61.18)。
+
+故旧 $`W_\rho(f_i)`$ 与移动 $`W_\rho(\chi_Qg_l)`$ 的任意有限 Gaussian 向量，
+其 Gram 矩阵趋于两个独立场的 Gram 矩阵。
+为了同时保留 $`O_Q,T_Q^\circ`$，令 $`P_Q`$ 投影到这些固定与移动方向的共同有限维张成空间。
+对上述任一小算子 $`K_Q`$，
+
+```math
+\|K_Q-(1-P_Q)K_Q(1-P_Q)\|_{HS}
+ \le2\sqrt{\operatorname{rank}P_Q}\,\|K_Q\|_{\rm op}\longrightarrow0.
+```
+
+式 (61.19)。
+
+保留二次型与这些线性方向精确独立，且等距保证删除误差趋零。
+这证明偏移和对角量联合独立于两个极限场，包含同时移动的符号方向。
+有限旧柱面逼近还将参考模型的结论延伸到整个旧场的有界可测测试；
+它不声称给定整个 Gaussian 场的条件律收敛。
+
+旧轮廓的格质量时钟逼近连续时钟，Brownian 连续模给出紧空间区间上的统一收敛。
+端点与偶极子由 $`L^2(\rho)`$ 逼近，桥由确定投影得到。
+旧对数核在同格方块置零、其它核心方块取格心值，其平方误差至多
+$`C\delta(1+|\log\delta|^2)+o(1)`$：
+先隔离对角宽 $`C\delta`$ 条带，外部用对数差 $`C\delta/|x-y|`$，最后用 Gaussian 尾。
+等距于是给出同一旧场上的 $`\mathcal J_\infty`$。
+以有限旧方向的核逼近它，再用 (61.19)，保留这个非线性旧坐标的联合关系。
+
+Fourier 系数及其前两阶导数在
+$`L^2([0,A_F]\times\mathbb R,dv\rho dx)`$ 中由格心值逼近；
+支配函数可取 $`C(1+|x|^4)`$。
+因此参考 Fourier 路径于 $`H^2`$ 的均方范数收敛，进而于 $`C^1`$ 收敛。
+实际中心的 Hilbert 系数平方范数至多 $`C(1+x_j^4)/B^2`$，
+第 56 章四阶加权时钟和同一中心界适用；尾、耦合与质量替换也在此范数趋零。
+对 $`\mathcal S_M`$ 可先取更大的 $`A_F>e^{\sup I_S}`$。
+函数 $`g_M(v)=(|\mathcal F_M(v)|^2-Y_M^2)/v`$ 在零处连续延拓，且
+$`g_M(v)=\int_0^1(|\mathcal F_M|^2)'(tv)\,dt`$。
+故 $`C^1`$ 收敛使它统一收敛。有限权重分解得
+
+```math
+\mathcal S_M(a)=(b_*+2a)Y_M^2+
+       2h\sum_{n\le e^a/h}g_M(nh)+o_{\mathbb P}(1)
+```
+
+式 (61.20)。
+
+权重差用 $`\sum n|(1+n^2)^{-1/2}-n^{-1}|<\infty`$，
+取整误差在固定 $`I_S`$ 为 $`O(h)(1+Y_M^2)`$。
+统一 Riemann 和给出 (61.6)，且没有改变共同噪声。
+
+全部比较至此使用一个共同核心、一个标签向量和一个 Gaussian 耦合。
+对每个确定的良好数据环境，耦合概率误差与参考弱极限误差趋零；
+环境子列原理将它转成数据概率中的条件有界 Lipschitz 收敛。
+最后仅一次使用第 56 章完整选择向量的总变差比较，作用于有界测试及误差事件。
+同一耦合把锚定平方逼近转成 (61.7)，不需要对实际无界矩传递。
+支持置换等变性给出固定支持的无条件一致结论。
+已知逆向先对齐观测；未知方向在原来错误概率 $`O(q^{-1})`$ 的一个判向事件上，
+所有组、精确中心及坐标同时与正确对齐实验相同。
+事件外的巨大放大量不影响有界测试界。
+因此概率范围与定理所述一致。
+
+**定理 61.3（相同边缘律不能决定端点耦合）。** 对非零 $`\theta`$，(61.4) 中的锚定极限 $`X_\theta`$ 满足
+
+```math
+\operatorname{cum}_4(X_\theta)=768\theta^4\gamma^4>0,\qquad
+\operatorname{Cov}(X_\theta,Y^2-\gamma)=
+ \begin{cases}4\theta\gamma^2,&m\hbox{ 为偶数},\\0,&m\hbox{ 为奇数}.\end{cases}
+```
+
+式 (61.21)。
+
+当 $`\theta>0`$ 时其支持为 $`[-2\theta\gamma,\infty)`$。
+两种奇偶性均无限出现时，包含旧端点的元组没有单一的共同弱极限。
+
+证明。写 $`Y_\sigma=\sqrt\gamma\,g`$，$`g\sim N(0,1)`$，
+其中心平方第四累积量为 $`48\gamma^4`$；乘 $`2\theta`$ 得第一式。
+偶数支使用同一平方，方差 $`2\gamma^2`$；奇数支独立，由定理 61.2 已证明的联合关系得到第二式。
+支持来自 $`g^2\in[0,\infty)`$。
+两条子列极限有不同的联合分布，因此整个元组不能收敛到同一个分布。
+这里比较的是极限律本身，不声称实际协方差或第四矩收敛。
+Nourdin–Peccati 的非中心收敛 Proposition 4.5 与 Remark 4.3 也指出：
+二阶混沌的中心 Gamma 边缘极限并不自动独立于旧 Gaussian 方向，仍需相应收缩消失。
+本例用 (61.18) 与实际有限谱估计识别了这项额外关系。
+
+## 追加锚（本行以下为增补区）
+
+## 62. 非共振载波中的圆对称能量
+
+**定义 62.1（相位间隔与锚定残差）。** 保持定义 54.1 的实际模型、完整选择窗口、精确中心及有限截距。
+取确定性序列
+
+```math
+\eta\longrightarrow\infty,\qquad \zeta_M=\eta^2\delta\longrightarrow\zeta\in(0,\infty),
+\qquad d_M=\operatorname{dist}(\omega\eta,\pi\mathbb Z),\quad d_M/\delta\longrightarrow\infty,
+\qquad s=\log(\eta/\delta),\quad z_\theta=s+\theta/\eta^3.
+```
+
+式 (62.1)。
+
+相位本身无需收敛，间隔也可趋零；不要求额外对数余量。
+令
+
+```math
+\mathcal V_M(\theta)=\eta^{3/2}e^{z_\theta/2}
+ \{\mathcal Z_M(z_\theta\sqrt\delta)-\mathcal J_M-2z_\theta\sqrt\delta T_M\},
+\qquad \mathcal D_M(\theta)=\mathcal V_M(\theta)-\mathcal V_M(0).
+```
+
+式 (62.2)。
+
+这里的锚定不含 (61.2) 的额外因子 $`\sqrt{r_*}`$。
+令 $`W_1,W_2`$ 为相互独立、也独立于旧 $`W_\rho`$ 的实 Gaussian 测度，控制测度均为 $`\rho(x)dx`$。
+按复线性积分约定定义
+
+```math
+C=(W_1+iW_2)/\sqrt2,\qquad F_C(v)=C(e^{i\omega vx}),\qquad
+\mathbb E C(f)\overline{C(g)}=\int f\bar g\rho,
+\qquad \mathbb EC(f)C(g)=0.
+```
+
+式 (62.3)。
+
+后一个等式是伪协方差为零，固定圆对称复 Gaussian 的归一化。
+
+**定理 62.2（实际非共振载波与极限能量的两侧关系）。** 在 (62.1) 下，
+两种原始平稳实验的同一完整后验向量满足紧区间 C-tight $`J_1`$ 联合收敛
+
+```math
+(\mathcal D_M|_I,T_M,\mathcal J_M,Y_M,L_M|_{[-A,A]},C_M|_{[-A,A]},Z_M^{\rm dip})
+\Longrightarrow
+(\mathcal D_\zeta|_I,N_2,\mathcal J_\infty,Y,L|_{[-A,A]},C|_{[-A,A]},Z),
+\qquad
+\mathcal D_\zeta(\theta)=2\sqrt\zeta\int_0^{\theta/\zeta}(|F_C(v)|^2-\gamma)\,dv.
+```
+
+式 (62.4)。
+
+积分按方向取值，$`I`$ 固定且紧，$`A>0`$。
+式中桥坐标 $`C(x)`$ 与复 Gaussian 测度 $`C(f)`$ 由参数种类区分。
+新过程独立于整个旧元组；$`N_2\sim N(0,2g_0)`$ 独立于三个 Gaussian 场。
+旧坐标保持同一 $`W_\rho`$，特别是 $`\mathcal J_\infty=b_*\gamma+I_2(H;W_\rho)`$。
+可联合保留任意固定频率紧区间的旧 Fourier 场（统一拓扑）与旧负 Sobolev 测度、偶极子逼近。
+条件先验版本于数据概率中以有界 Lipschitz 距离收敛；固定支持版本无条件且一致；
+未知方向使用整个元组的一个共同判向一致事件。
+不声称未锚定 $`\mathcal V_M`$ 的紧性。
+
+识别出的 $`\mathcal D_\zeta`$ 有平稳增量，非零时间边缘非 Gaussian。
+其协方差为
+
+```math
+\operatorname{Cov}(\mathcal D_\zeta(\theta),\mathcal D_\zeta(u))
+ =4\zeta\int_0^{\theta/\zeta}\int_0^{u/\zeta}c(v-w)\,dw\,dv,
+\qquad c(v)=\gamma^2e^{-\omega^2v^2/\kappa},\qquad \int_{\mathbb R}c=4g_0.
+```
+
+式 (62.5)。
+
+在同一个固定复场上，这个已识别族有如下两个边界：
+
+```math
+\mathcal D_\zeta\Longrightarrow4\sqrt{g_0}B_{\rm two}
+       \quad\hbox{于 }C(I),\quad\zeta\downarrow0,
+\qquad
+\sqrt\zeta\,\mathcal D_\zeta(\theta)
+ \longrightarrow2\theta(|C(1)|^2-\gamma)
+       \quad\hbox{于 }L^2(C(I)),\quad\zeta\to\infty.
+```
+
+式 (62.6)。
+
+这里 $`B_{\rm two}`$ 的正负半轴为独立标准 Brownian motion，零点连续拼接；
+第一收敛与整个固定 $`C`$ 所生成的 sigma 域混合。
+第二式中 $`|C(1)|^2`$ 是均值 $`\gamma`$ 的指数变量。
+这两个族边界不把 (62.4) 升级为同时改变实际 $`\zeta_M`$ 的定理。
+单侧族极限由连续 Breuer–Major 定理覆盖；下述共同谱表示还识别两侧关系与整个场的混合性。
+
+证明。首先在同一有限标签向量上作精确抵消，(62.2) 中括号等于
+$`E_M(z)-2\mathfrak L Y_M^2-2z\mathcal Q_M-\mathcal J_M`$。
+因为 $`s=(3/4)\log Q+O(1)`$，第 58 章的有限 Fourier 与取整估计乘上
+$`\eta^2\delta^{-1/2}Q^2=O(Q^{11/4})`$ 后仍趋零。
+其误差含 $`h=\exp(-c_hQ^3+O(1))`$；取整用 $`d\mathrm{Ci}(e^u)/du=\cos(e^u)`$，
+不产生额外高频因子。于是 $`\mathcal V_M`$ 统一逼近零对角 Ci 二次型，其系数为
+
+```math
+K_M(\theta,k)=\frac{2\eta^2}{\sqrt\delta}e^{\theta/(2\eta^3)}
+                  \mathrm{Ci}(\omega\eta e^{\theta/\eta^3}|k|),\quad k\ne0,
+\qquad
+\partial_\theta K_M(\theta,k)
+ =\frac2{\eta\sqrt\delta}e^{\theta/(2\eta^3)}
+       \{\tfrac12\mathrm{Ci}(\omega\eta e^{\theta/\eta^3}|k|)
+                      +\cos(\omega\eta e^{\theta/\eta^3}k)\}.
+```
+
+式 (62.7)。
+
+对原始有限取整路径不求导，只对这个光滑有限核求导。
+$`\eta\sqrt\delta=\sqrt{\zeta_M}`$ 有正下界，故导数在全部滞后与固定参数紧区间上一致有界。
+锚定原始矩阵 $`K_M(\theta)-K_M(0)`$ 的范数因此至多 $`C_IQ^2`$。
+第 56 章 Hilbert 中心界 $`O_{\mathbb P}(Q^{-5/2}+q^{-1/2})`$
+与紧的辅助组向量范数给出锚定精确中心误差 $`O_{\mathbb P}(Q^{-1/2})+o(1)`$。
+这一步使用锚定后的矩阵，未放大旧的未定速误差。
+
+在辅助乘积标签律下写中心组和为 $`U_j`$，方差为 $`v_j`$。
+记 cutoff 占据比较质量 $`a_j=m_j/B^2`$；实际一行、两行相对点估计给出
+$`\mathbb E_Sv_jv_l\le Ca_ja_l`$（$`j\ne l`$），且
+$`a_j\le C\delta e^{-c(j\delta)^2}`$，低计数部分另有多项式乘 $`e^{-c\lambda}`$ 的总界。
+这些是实际数据环境的读数估计，不是假设观测行独立。
+辅助独立组的零对角二次型等距遂给出
+
+```math
+\mathbb E_S\mathbb E_{\mathsf Q}
+ \left|\sum_{j\ne l}\mathrm{Ci}(\omega\eta e^{t/\eta^3}|j-l|)U_jU_l\right|^2
+ \le C\delta/\eta^2+Q^Ce^{-c\lambda}.
+```
+
+式 (62.8)。
+
+这里用 $`|\mathrm{Ci}(y)|\le C/y`$ 并求和 $`k^{-2}`$。
+对包含 $`I`$ 的 $`[-T,T]`$，不等式
+$`\sup_\theta|\int_0^\theta f(t)dt|^2\le T\int_{-T}^T|f(t)|^2dt`$
+使 (62.7) 的 Ci 项在锚定积分中统一消失，平方误差为 $`O(\delta^2)+Q^Ce^{-c\lambda}`$。
+
+令 $`\varphi_M=\omega\eta`$，并定义
+
+```math
+r_M(t)=\frac2{\sqrt{\zeta_M}}e^{t/(2\eta^3)},\qquad
+v_M(t)=\frac{\eta(e^{t/\eta^3}-1)}\delta,
+\qquad r_M\to2/\sqrt\zeta,\quad v_M(t)\to t/\zeta.
+```
+
+式 (62.9)。
+
+两项在固定紧区间上一致收敛。
+尚未转回后验之前，锚定量已在同一组向量上统一逼近
+
+```math
+\int_0^\theta r_M(t)\sum_{j\ne l}
+  \cos\{\varphi_M(j-l)+\omega v_M(t)(x_j-x_l)\}U_jU_l\,dt.
+```
+
+式 (62.10)。
+
+取核心 $`|j\delta|\le H_Q=\sqrt{D\log Q}`$，$`D`$ 固定且充分大。
+实际占据浓缩与局部 Stirling 展开使核心内
+$`v_j=\delta\rho(j\delta)(1+o(1))`$ 一致成立，且归一化前 Bernoulli 组和的最小方差至少 $`e^{c\lambda}`$。
+有界导数核、上述两组质量界与积分不等式，使去除核心外至少一个指标的
+平方统一误差至多 $`C_Te^{-c'H_Q^2}+Q^Ce^{-c\lambda}`$。
+旧对数核使用可积的对角对数平方界，旧对角量使用平方方差时钟；
+端点、轮廓、偶极子和紧频率场使用总质量与二阶空间矩的尾界。
+
+所有核心组使用同一逆分布耦合。
+独立 Bernoulli 和的局部误差 $`C/d`$ 给出标准化分布函数误差 $`Cd^{-1/3}`$；
+其四阶矩一致有界。若分布函数误差为 $`\varepsilon`$，单调耦合下
+$`\mathbb E|X-g|\le2T\varepsilon+C/T^3`$。
+取 $`T=\varepsilon^{-1/4}`$，再插值一阶与四阶矩，得到
+
+```math
+\mathbb E|X-g|^2\le Cd^{-1/6},\qquad
+G_j=\sqrt{v_j}g_j,\qquad
+\mathbb E\sum_{\rm core}|U_j-G_j|^2\le Ce^{-c\lambda}.
+```
+
+式 (62.11)。
+
+组间独立地在分布函数跳跃内随机化即可实现同一有限组和与这些正态坐标的耦合。
+它是概率耦合，不是离散律向连续律的总变差收敛。
+锚定矩阵、旧对数矩阵和对角量的原始范数分别至多
+$`CQ^2`$、$`CQ^2(1+\log Q)`$、$`\delta^{-1/2}`$；
+所以这个指数小向量误差同时处理整个新旧元组。
+这里保留环境方差 $`v_j`$，不另作确定格质量替换。
+
+在这一实 Gaussian 向量上定义旧场与载波场
+
+```math
+W_M(f)=\sum_jG_jf(x_j),\qquad
+C_M^{\rm car}(f)=\sum_je^{i\varphi_Mj}G_jf(x_j).
+```
+
+式 (62.12)。
+
+先固定空间区间 $`[-R,R]`$ 及有限个区间简单函数或光滑测试函数。
+其 Hermitian 协方差趋于 $`\int f\bar g\rho`$。
+载波伪协方差与旧场交叉项分别含 $`e^{2i\varphi_Mj}`$ 和 $`e^{i\varphi_Mj}`$。
+对 $`h=1,2`$，几何部分和至多 $`2/|1-e^{ih\varphi_M}|`$，且
+$`|1-e^{2i\varphi_M}|\ge4d_M/\pi`$、$`|1-e^{i\varphi_M}|\ge2d_M/\pi`$。
+对固定紧支撑有界变差权重 $`w`$，离散分部求和给出
+
+```math
+\left|\delta\sum_je^{ih\varphi_Mj}w(j\delta)\right|
+ \le\frac{C\delta}{|1-e^{ih\varphi_M}|}
+       (\|w\|_\infty+\operatorname{Var}w).
+```
+
+式 (62.13)。
+
+先按绝对质量分离环境误差：若固定区间上
+$`\varepsilon_M(R)=\sup|v_j/(\delta\rho(j\delta))-1|`$，
+则测试函数乘积的振荡 Gram 至多
+$`C_{R,f,g}\{\delta/d_M+\varepsilon_M(R)\}`$，于数据概率中趋零。
+环境误差未乘 $`1/d_M`$。
+先固定空间截断、测试与旧核分区，取数组极限，再用 Gaussian 尾移除截断；
+增长核心仅用于共同耦合，不进入有界变差常数。
+因此没有 $`(\delta/d_M)\log Q\to0`$ 或其它隐藏余量。
+在这些固定测试上先得到完整实部、虚部、旧场的 Gaussian Gram 极限；
+再以 $`L^2(\rho)`$ 等距延拓极限场，并用尾界处理所需旧坐标。
+不对任意 $`L^2`$ 等价类直接作逐点格采样。
+无需先取相位收敛子列；伪协方差不能从 Hermitian 协方差推定。
+有效窗口尺度的频率分离是经典 Fourier 机制；这里还需上述实际环境与共同后验比较。
+
+同时保留移动的旧对角量。
+其标准化矩阵 $`D_Q=\operatorname{diag}(v_j/\sqrt\delta)`$
+满足 $`\|D_Q\|_{\rm op}=O(\sqrt\delta)`$、$`2\operatorname{tr}D_Q^2\to2g_0`$。
+对任意上述移动实线性坐标向量 $`\ell_Q`$，Gaussian 积分恒等式为
+
+```math
+\mathbb E e^{i(g^\top Ag-\operatorname{tr}A)+i\ell_Q^\top g}
+ =e^{-i\operatorname{tr}A}\det(1-2iA)^{-1/2}
+       \exp\{-\tfrac12\ell_Q^\top(1-2iA)^{-1}\ell_Q\},\qquad A=tD_Q.
+```
+
+式 (62.14)。
+
+行列式对数余项至多 $`C\|A\|_{\rm op}\operatorname{tr}A^2`$，
+最后二次项与 $`\|\ell_Q\|^2`$ 的差至多 $`C\|A\|_{\rm op}\|\ell_Q\|^2`$。
+故先得到联合 Gaussian 极限，再推出 $`N_2`$ 独立于两个场。
+旧截距以同一旧场的有限矩形核逼近，块平方和趋于对应质量，
+对角条带的 $`H^2`$ 积分至多 $`C\varepsilon(1+|\log\varepsilon|^2)`$，远处为 Gaussian 尾。
+二阶等距传递逼近，保留 $`I_2(H;W_\rho)`$ 的共同实现。
+
+令 $`F_{C,M}(v)=C_M^{\rm car}(e^{i\omega vx})`$。
+任意固定频率区间上
+$`\mathbb E_G\|F_{C,M}\|_{H^1}^2\le C\sum_j(1+x_j^2)v_j\le C`$。
+一维 Sobolev 界给出统一范数与 $`1/2`$ Hölder 模的紧性；
+结合 Gram 极限，载波 Fourier 场于紧区间 $`C`$ 拓扑收敛。
+有限恒等式
+
+```math
+\sum_{j\ne l}\cos\{\varphi_M(j-l)+\omega v(x_j-x_l)\}G_jG_l
+ =|F_{C,M}(v)|^2-\sum_jG_j^2
+```
+
+式 (62.15)。
+
+给出必须保留的 Wick 扣除，$`\sum_jG_j^2\to\gamma`$ 于条件概率中成立。
+(62.9)、(62.15) 和连续映射将 (62.10) 送到 (62.4)。
+积分路径的 Lipschitz 常数被紧变量
+$`C_T(\|F_{C,M}\|_\infty^2+\sum_jG_j^2)`$ 控制，故包含任意小时间增量的路径紧性。
+有限谱路径统一逼近这些连续路径，因而确为 C-tight $`J_1`$ 收敛。
+
+旧轮廓的辅助独立组方差时钟收敛且最大跳跃趋零；
+旧 Fourier 场使用相同 $`H^1`$ 界，桥为确定投影，偶极子使用二阶空间矩。
+负 Sobolev 测度与一阶偶极子分别用点质量平移在 $`H^{-\nu}`$
+（$`\nu>1/2`$）的连续性、在 $`\nu>3/2`$ 的可微性及同一加权尾界。
+至此始终是同一组向量。
+条件近似误差的数据期望趋零给出数据概率中的条件误差控制，
+环境子列原理得到条件有界 Lipschitz 收敛。
+最后一次完整选择向量的后验总变差比较只转移有界测试与路径模事件。
+支持置换等变性给出无条件固定支持一致版本；
+原来错误概率 $`O(q^{-1})`$ 的共同方向事件同时对齐每个坐标。
+没有使用实际无界矩收敛。
+
+下面在已识别复场上辨认 (62.5)–(62.6)。
+圆对称性给出
+$`\mathbb EF_C(v)\overline{F_C(w)}=\gamma e^{-\omega^2(v-w)^2/(2\kappa)}`$，
+伪协方差为零，所以整个复 Gaussian 场平稳。
+配对公式使 $`|F_C(v)|^2-\gamma`$ 的协方差正是 (62.5) 的 $`c(v-w)`$；
+其积分为 $`2\pi g_0/\omega=4g_0`$，由此得到能量协方差与平稳增量。
+固定 $`\zeta`$ 时异号时间的协方差一般非零，不主张独立增量。
+
+在 $`L^2(\rho;\mathbb C)`$ 上对应 Hermitian 核为
+
+```math
+K_{\zeta,\theta}(x,y)=2\sqrt\zeta\int_0^{\theta/\zeta}e^{i\omega v(x-y)}\,dv
+ =\frac{2\sqrt\zeta}{\omega}
+   \frac{\sin(A(x-y))+i[1-\cos(A(x-y))]}{x-y},
+\qquad A=\omega\theta/\zeta.
+```
+
+式 (62.16)。
+
+对角按连续延拓，核的迹为 $`2\theta\gamma/\sqrt\zeta`$。
+在复线性积分约定下，Wick 积分 $`\iint K(x,y)C(dx)\overline{C(dy)}`$
+是能量本身；有限坐标的标准 Hermitian 矩阵可取 $`K^\top`$，谱与迹不变。
+不能丢掉核的虚部。
+经典谱分解给出独立标准圆对称 $`Z_n`$ 下的
+$`\sum_n\lambda_n(|Z_n|^2-1)`$；
+由于 $`|Z_n|^2`$ 为单位指数变量，方差为 $`\sum\lambda_n^2`$，
+第四累积量为 $`6\sum\lambda_n^4`$，第四矩至多方差平方的九倍。
+非零时间核在对角邻域非零，故第四累积量严格正。
+此处使用经典 Hermitian Gaussian 二次型结构，并未将实混沌的因子 $`48`$ 直接搬入。
+
+对小 $`\zeta`$，令 $`h_\theta`$ 为从零到 $`\theta`$ 的有向区间示性函数。
+将 (62.5) 改写成
+$`4\iint h_\theta(x)h_u(y)\zeta^{-1}c((x-y)/\zeta)\,dx\,dy`$。
+近似恒等核的质量为 $`4g_0`$，故极限为
+$`16g_0\min(|\theta|,|u|)`$（同号），异号为零。
+同一谱核的 Lebesgue Fourier 乘子是有向单侧频带
+$`(4\pi\sqrt\zeta/\omega)1_{(0,\omega\theta/\zeta)}`$，负时间取负的反向区间。
+经 $`\sqrt\rho`$ 共轭及 Plancherel，
+
+```math
+\|K_{\zeta,\theta}\|_{\rm op}
+ \le(4\pi/\omega)\|\rho\|_\infty\sqrt\zeta.
+```
+
+式 (62.17)。
+
+任意有限实线性组合也满足此界。
+中心复二次型的特征函数对数为
+$`-\tfrac12\operatorname{tr}K^2+O(\|K\|_{\rm op}\operatorname{tr}K^2)`$，
+所以得到联合 Gaussian 极限。删去包含任意固定复线性方向的有限秩子空间，
+Hilbert–Schmidt 误差至多 $`2\sqrt{\operatorname{rank}P}\|K\|_{\rm op}`$；
+由等距与 Gaussian 正交性，极限独立于这些方向。
+又增量方差至多 $`16g_0|\theta-u|`$，第四矩至多 $`C|\theta-u|^2`$，
+故紧区间路径紧性成立。有限柱面有界测试的 $`L^1`$ 逼近，
+把独立性延伸到整个固定复场生成的 sigma 域，得到 (62.6) 的混合版本。
+这是联合测试的因式分解，不是给定整个场的条件律收敛。
+单侧普通弱极限也可直接将连续 Breuer–Major 定理用于
+$`\sqrt{2/\gamma}\operatorname{Re}F_C`$、$`\sqrt{2/\gamma}\operatorname{Im}F_C`$
+两个独立平稳实场的 $`H_2(x)=x^2-1`$；平方相关可积且所有所需 Gaussian 矩有限。
+上述谱论证额外钉住两侧的共同频带与整个场的混合关系。
+
+最后写 $`X(v)=|F_C(v)|^2-\gamma`$。
+$`\mathbb E|X(v)-X(0)|^2=2\gamma^2(1-e^{-\omega^2v^2/\kappa})\le Cv^2`$，
+故
+
+```math
+\mathbb E\sup_{|\theta|\le T}
+ \left|\sqrt\zeta\mathcal D_\zeta(\theta)-2\theta X(0)\right|^2
+ \le4T\int_{-T}^T\mathbb E|X(t/\zeta)-X(0)|^2dt
+ \le C_T\zeta^{-2}.
+```
+
+式 (62.18)。
+
+这给出大参数的统一均方极限。
+$`C(1)=\sqrt{\gamma/2}(g_1+ig_2)`$，所以其模平方为均值 $`\gamma`$ 的指数变量。
+极限在时间 $`\theta`$ 的方差为 $`4\theta^2\gamma^2`$，第四累积量为 $`96\theta^4\gamma^4`$；
+正时间的支持为 $`[-2\theta\gamma,\infty)`$。
+实共振场还有 $`\mathbb EF(v)F(w)`$ 对应的第二个配对项，而这里该项为零。
+这解释了反射 Brownian 与两侧独立 Brownian 的区别，也说明不能不加条件地删掉 (62.1) 的相位限制。
+
+**定理 62.3（Gaussian 方差轮廓下标量载波的精确边界）。** 保持实际模型与
+$`\eta^2\delta\to\zeta\in(0,\infty)`$，暂不施加相位间隔。
+用原模型的精确中心组和 $`A_j`$ 定义
+$`\mathcal C_M^{\rm act}=\sum_j e^{i\varphi_Mj}A_j`$；在共同全行事件外沿用截断定义。
+该标量趋于 Hermitian 方差为 $`\gamma`$ 的圆对称复 Gaussian 律，
+当且仅当 $`d_M/\delta\to\infty`$。
+结论分别按定理 62.2 的条件后验与无条件固定支持口径成立。
+此充要条件只针对标量载波，不声称是非线性能量过程的充要条件。
+
+证明。上述相位无关的精确中心比较、共同耦合及总方差尾界，
+将实际载波的有界测试联合转移到 (62.12) 的 Gaussian 载波；
+这些步骤只使用调制系数模为一。充分性由 (62.13) 的两个谐波控制得到。
+若条件失败，可取子列及最近整数 $`m_M`$，使
+$`b_M=(\varphi_M-\pi m_M)/\delta\to b\in\mathbb R`$。
+Gaussian 载波的 Hermitian 方差仍趋于 $`\gamma`$，伪协方差则为
+
+```math
+\sum_j e^{2i\varphi_Mj}v_j
+ =\sum_j e^{2ib_Mx_j}v_j
+ \longrightarrow\int e^{2ibx}\rho(x)\,dx
+ =\gamma e^{-2b^2/\kappa}>0.
+```
+
+式 (62.19)。
+
+固定空间截断上的一致相位收敛与环境相对误差给出 Riemann 极限，总方差尾界移除截断。
+因为 $`\rho`$ 为偶函数，实虚部极限独立，方差分别为
+$`\gamma(1+e^{-2b^2/\kappa})/2`$ 与 $`\gamma(1-e^{-2b^2/\kappa})/2`$。
+非零参数的实部特征函数这一有界测试将其与圆对称律区分。
+转回实际后验只转移该有界测试，没有从总变差比较推断实际无界矩收敛。
+$`m_M`$ 为偶数时旧场交叉 Gram 保留调制 $`e^{ibx}`$，为奇数时交叉 Gram 因交替符号消失；
+两种奇偶的伪协方差均为 (62.19)。因此旧新场独立不等于新场圆对称。
+
+此边界依赖本模型 Gaussian 轮廓的 Fourier 变换处处严格为正。
+经典矩形窗口可有精确消零：若 $`n\ge3`$、$`\xi_j`$ 独立标准实 Gaussian，
+$`Z_n=n^{-1/2}\sum_{j=0}^{n-1}\xi_je^{2\pi ij/n}`$ 已经圆对称，
+并独立于 $`n^{-1/2}\sum_j\xi_j`$，因为两个相应几何和都为零；
+但对 $`\delta_n=1/n`$，相位间隔除以网格趋于 $`2\pi`$。
+这不属于本实际模型，也不支持普遍 Fourier 必要性。
+另一方面，取任意 $`\ell_M\to\infty`$ 且 $`\delta\ell_M\to0`$，
+令 $`m_M`$ 为 $`\sqrt\zeta/(2\sqrt\delta)`$ 的最近整数，
+$`\eta=2m_M+\delta\ell_M/\omega`$，则 $`\eta^2\delta\to\zeta`$、
+$`d_M=\delta\ell_M\to0`$ 且 $`d_M/\delta=\ell_M\to\infty`$。
+故 (62.1) 包含任意缓慢分离的合法实际谱参数。
+
+## 追加锚（本行以下为增补区）
+
+## 63. 有限多载波的共同别名簇与后验能量联合律
+
+**定义 63.1（临界窗口与相位关系）。** 沿用第 62 章的原实验、精确组电荷、有限截距及旧联合坐标，固定正整数 $p$。对 $1\le a\le p$ 取确定性序列
+
+$$
+\eta_{a,M}\to\infty,\qquad
+r_{a,M}=\eta_{a,M}^2\delta_M\to\zeta_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad \omega=\pi/2.
+$$
+
+记 $\langle t\rangle$ 为 $t$ 模 $2\pi$ 在 $(-\pi,\pi]$ 内的代表。假定下列有限组实序列各自收敛到一个有限实数，或其绝对值趋于无穷：
+
+$$
+\delta_M^{-1}\langle\phi_{a,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\pi\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\delta_M^{-1}\langle\phi_{a,M}+\phi_{b,M}\rangle.
+\tag{63.1}
+$$
+
+这里 $a=b$ 也包括在内。有限极限分别记作 $b_a^0,b_a^\pi,d_{ab}^-,d_{ab}^+$；不存在有限极限的项记作 $\infty$，不赋予无穷项符号。若 $d_{ab}^-$ 或 $d_{ab}^+$ 有限，则称 $a,b$ 属于同一别名簇。
+
+各窗口都使用同一后验标签向量。令
+
+$$
+s_{a,M}=\log(\eta_{a,M}/\delta_M),\qquad
+z_{a,M}(\theta)=s_{a,M}+\theta/\eta_{a,M}^3,
+$$
+
+$$
+V_{a,M}(\theta)=\eta_{a,M}^{3/2}e^{z_{a,M}(\theta)/2}
+\left[\mathcal Z_M(z_{a,M}(\theta)\sqrt{\delta_M})
+-J_M-2z_{a,M}(\theta)\sqrt{\delta_M}T_M\right],\qquad
+D_{a,M}(\theta)=V_{a,M}(\theta)-V_{a,M}(0).
+\tag{63.2}
+$$
+
+**定理 63.2（共同高斯载波及非高斯能量的联合分类）。** 条件 (63.1) 下，别名关系是等价关系。其每个等价类具有以下一种表示。
+
+零相位类由所有 $b_a^0$ 有限的指标组成，取原实高斯测度 $W_0=W_\rho$，并令
+
+$$
+\mathcal C_a(f)=W_0(e^{ib_a^0x}f(x)).
+\tag{63.3}
+$$
+
+$\pi$ 相位类由所有 $b_a^\pi$ 有限的指标组成，取与旧场独立的一份实高斯测度 $W_\pi$，令
+
+$$
+\mathcal C_a(f)=W_\pi(e^{ib_a^\pi x}f(x)).
+\tag{63.4}
+$$
+
+其他每一类 $L$ 可选一个代表 $a_L$、符号 $\epsilon_a\in\{-1,1\}$ 和实数 $b_a$，使
+
+$$
+\delta_M^{-1}\langle\phi_{a,M}-\epsilon_a\phi_{a_L,M}\rangle\to b_a.
+\tag{63.5}
+$$
+
+这一类取一份 proper 复高斯测度 $\mathcal C_L=(W_{L,1}+iW_{L,2})/\sqrt2$。各类的测度与 $W_0,W_\pi$ 相互独立，并定义
+
+$$
+\mathcal C_a(f)=
+\begin{cases}
+\mathcal C_L(e^{ib_ax}f(x)),&\epsilon_a=1,\\
+\overline{\mathcal C_L(e^{-ib_ax}\overline{f(x)})},&\epsilon_a=-1.
+\end{cases}
+\tag{63.6}
+$$
+
+实测度对复函数按实部与虚部延拓，所有控制测度都是 $\rho(x)dx$。在原先的两个实际实验及概率范围内，有限向量 $(D_{a,M})_{a=1}^p$ 与完整旧联合坐标共同收敛，各固定紧区间上的路径是 C-tight 的。其极限为
+
+$$
+D_a(\theta)=2\sqrt{\zeta_a}\int_0^{\theta/\zeta_a}
+\left(|\mathcal C_a(e^{i\omega vx})|^2-\gamma\right)dv.
+\tag{63.7}
+$$
+
+$N_2$ 与整个载波测度族独立。所有旧坐标仍在 $W_0$ 上，特别是 $J_\infty=b_\star\gamma+I_2(H)$。原先的先验条件 BL 收敛、固定支持下的一致无条件收敛及共同方向事件均保持。
+
+等价地，这个共同复高斯族满足
+
+$$
+\mathbb E\mathcal C_a(f)\overline{\mathcal C_b(g)}=
+\begin{cases}
+\int e^{id_{ab}^-x}f\overline g\,\rho\,dx,&d_{ab}^-\in\mathbb R,\\
+0,&d_{ab}^-=\infty,
+\end{cases}
+$$
+
+$$
+\mathbb E\mathcal C_a(f)\mathcal C_b(g)=
+\begin{cases}
+\int e^{id_{ab}^+x}fg\,\rho\,dx,&d_{ab}^+\in\mathbb R,\\
+0,&d_{ab}^+=\infty.
+\end{cases}
+\tag{63.8}
+$$
+
+这些极限数来自同一组实际相位，不能独立指定为任意矩阵元素。
+
+证明。先核对相位关系。有限差关系与有限和关系分别写成 $\phi_a=\phi_b+\delta d+o(\delta)$ 和 $\phi_a=-\phi_b+\delta d+o(\delta)$，等式均模 $2\pi$。组合两式仍是其中一种，所以关系传递。若一个闭合关系链改变了代表的符号，则 $2\phi_{a_L}=O(\delta)$ 模 $2\pi$。由 (63.1)，该类必落在零相位或 $\pi$ 相位类。非例外类因此可以一致选择符号，并沿关系链得到 (63.5)；两条同符号链所得偏移之差趋于零，异符号链将导致刚排除的情况。例外类的偏移则直接由相对 $0$ 或 $\pi$ 的唯一小提升决定。特别地，非例外代表满足
+
+$$
+\operatorname{dist}(\phi_{a_L,M},\pi\mathbb Z)/\delta_M\to\infty.
+\tag{63.9}
+$$
+
+下面先在同一个高斯参考向量上计算载波，随后才作平方映射。取独立标准实正态 $g_j$，保留实际环境方差 $v_j$，并令
+
+$$
+F_{a,M}(v)=\sum_j e^{i\phi_{a,M}j}\sqrt{v_j}g_j e^{i\omega vx_j},
+\qquad x_j=j\delta_M.
+\tag{63.10}
+$$
+
+对任一固定紧支撑光滑函数 $h$，离散分部求和给出
+
+$$
+\left|\sum_j\delta_M h(j\delta_M)e^{it_Mj}\right|
+\le C_h\frac{\delta_M}{|1-e^{it_M}|}
+\tag{63.11}
+$$
+
+只要分母不为零。若 $|\langle t_M\rangle|/\delta_M\to\infty$，右侧趋零；若 $\langle t_M\rangle/\delta_M\to d\in\mathbb R$，同一和是趋向 $\int h(x)e^{idx}dx$ 的黎曼和。先对固定光滑或区间简单测试作上述计算，再以等距延拓极限场到 $L^2(\rho)$；不对任意等价类直接逐点采样。以固定紧支撑逼近和高斯尾控制将结论扩展到所需 Fourier 测试函数的乘积。环境方差的替换误差按绝对值由总质量乘以其相对误差控制；它不再乘以 (63.11) 的分母。因此这里没有对数余量条件。
+
+在 (63.10) 的两种交叉 Gram 矩阵中分别取 $t_M=\phi_{a,M}-\phi_{b,M}$ 和 $t_M=\phi_{a,M}+\phi_{b,M}$，得到 (63.8)。与旧实线性测试的交叉项取 $t_M=\phi_{a,M}$，只在零相位类留下原场关联。在 $\pi$ 相位类，乘子 $(-1)^j$ 的自乘恒为一而旧场交叉项消失，所以该类是一份共同实副本。非例外类的自身伪协方差消失，故 proper；(63.5) 则确定共享或共轭的关系。不同类的两种交叉项都消失。实、虚部分的联合高斯性把这些 Gram 极限转成联合独立性，并直接验证 (63.3)—(63.6) 构造了同一个极限族。
+
+相位乘子模长恒为一，故在好环境子列的每个固定频率区间 $K$ 上
+
+$$
+\sup_M\mathbb E_G\|F_{a,M}\|_{H^1(K)}^2
+\le C_K\sum_j(1+x_j^2)v_j=O(1).
+\tag{63.12}
+$$
+
+$H^1(K)$ 的有界集在 $C(K)$ 中相对紧，故给出整个有限族的联合紧性。有限维 Gram 极限因此提升为共同的连续路径极限。
+
+回到实际电荷之前，对每个 $a$ 从有限 Fourier 恒等式直接提取锚定系数
+
+$$
+a_{a,M,\theta}(k)=\frac{2\eta_{a,M}^2}{\sqrt{\delta_M}}
+\left[e^{\theta/(2\eta_{a,M}^3)}\operatorname{Ci}
+(\omega\eta_{a,M}e^{\theta/\eta_{a,M}^3}|k|)
+-\operatorname{Ci}(\omega\eta_{a,M}|k|)\right],\quad k\ne0.
+\tag{63.13}
+$$
+
+其导数是
+
+$$
+\partial_\theta a_{a,M,\theta}(k)
+=\frac{2e^{\theta/(2\eta_{a,M}^3)}}{\sqrt{r_{a,M}}}
+\left[\tfrac12\operatorname{Ci}(u)+\cos u\right],
+\qquad u=\omega\eta_{a,M}e^{\theta/\eta_{a,M}^3}|k|.
+\tag{63.14}
+$$
+
+相位的精确整数部分保留在 $e^{i\phi_{a,M}j}$ 中。对 $t$ 在固定紧区间内，余相位与 $\omega t(x_j-x_k)/r_{a,M}$ 的差至多为 $C\eta_{a,M}^{-3}|x_j-x_k|$。Ci 项为 $O(\eta_{a,M}^{-1})$。利用独立参考组的零对角二次型等距式，并对导数积分，可得同一实现上的一致近似
+
+$$
+D_{a,M}(\theta)
+-\frac2{\sqrt{r_{a,M}}}\int_0^\theta
+\left(|F_{a,M}(t/r_{a,M})|^2-\sum_jv_jg_j^2\right)dt
+\longrightarrow0
+\tag{63.15}
+$$
+
+在条件概率中成立，其全部 $a$ 的联合版本由有限性得到。
+
+这里通向实际后验的误差须在新放大尺度上计算。临界条件给 $\eta_{a,M}=O(Q^{1/4})$；有限 Fourier 和 floor 误差乘以 $O(Q^{11/4})$ 仍由 $e^{-cQ^3}$ 吸收。全截止域的锚定矩阵及其导数原始范数为 $O(Q^2)$，故 Hilbert 精确中心误差至多为 $O_P(Q^{-1/2})+o_P(1)$。已有 $Q^{-60}$ 加权尾方差可同时删除全部窗口的尾向量。一份核心逆分布函数耦合把每组标准化误差控制为 $q^{-1/8}$，消去所有这些多项式损失；这里的核心未归一化 Bernoulli 方差下界是 $q^{9/10}$。同一个正态向量保留旧截距与所有旧线性坐标，不为窗口另取样。核心相对方差估计与尾界保证 (63.11)—(63.12) 的条件确定性环境极限。
+
+高斯参考的对角统计具有算子范数 $O(\sqrt\delta)$ 和方差极限 $2g_0$。对有限个旧场及全部载波的实、虚测试方向作共同有限秩投影，删除这些方向的 Hilbert–Schmidt 代价至多为投影秩平方根乘以该算子范数。剩余二次型与投影向量精确独立，谱特征函数给出正态极限 $N_2$。再以有限秩逼近旧对数核 $H$、以路径紧性保留旧过程，得到 $N_2$ 与整个载波族和旧联合坐标的独立关系。
+
+最后 $\sum_jv_jg_j^2\to\gamma$，因为其方差 $2\sum_jv_j^2=O(\delta)$。对共同连续场极限施加积分平方连续映射即得 (63.7)。参考二次型导数的二阶矩一致有界，第四增量矩至多为 $C|\theta-\psi|^4$，适用于任意小增量。实际 floor 路径由一致概率误差转为 C-tight 的 $J_1$ 路径。一次完整选择标签向量的后验 TV 比较只转移有界测试和概率事件；环境子序列论证给先验条件 BL 收敛，支持置换等变性给一致无条件结论，共同方向事件同时保留所有窗口。这些步骤不推出实际无界矩收敛。
+
+**定理 63.3（能量依赖恰由别名簇区分）。** 在定理 63.2 下，取任意 $\theta_a,\theta_b\ne0$。每个非零时间边缘都非 Gaussian；两个极限能量 $D_a(\theta_a),D_b(\theta_b)$ 独立，当且仅当 $a,b$ 属于不同别名簇。不同簇的整个过程族也相互独立。若 $a$ 在零相位类，则 $D_a(\theta)$ 与旧端点平方 $Y^2-\gamma$ 对每个 $\theta>0$ 的协方差严格为正；其余类别的整个过程与旧场独立。
+
+证明。记 $H_{ab}(v,w)=\mathbb EF_a(v)\overline{F_b(w)}$、$P_{ab}(v,w)=\mathbb EF_a(v)F_b(w)$，其中 $F_a(v)=\mathcal C_a(e^{i\omega vx})$。实高斯 Wick 公式给
+
+$$
+\operatorname{Cov}(D_a(\theta),D_b(\psi))
+=4\sqrt{\zeta_a\zeta_b}
+\int_0^{\theta/\zeta_a}\int_0^{\psi/\zeta_b}
+\left(|H_{ab}(v,w)|^2+|P_{ab}(v,w)|^2\right)dv\,dw.
+\tag{63.16}
+$$
+
+若 $d_{ab}^-$ 有限，第一项是 $|\widehat\rho(d_{ab}^-+\omega(v-w))|^2$；若 $d_{ab}^+$ 有限，第二项是 $|\widehat\rho(d_{ab}^++\omega(v+w))|^2$；相应无穷项为零。原高斯密度满足 $\widehat\rho(t)=\gamma e^{-t^2/(2\kappa)}>0$。同簇至少有一项处处为正；将两个积分改写成正向积分后，其协方差非零且符号为 $\operatorname{sgn}(\theta\psi)$，排除独立。异簇的独立来自整个高斯测度的联合独立，强于二次型零协方差。
+正时间还有 $D_a(\theta)\ge-2\gamma\theta/\sqrt{\zeta_a}$，而上述自协方差严格为正；
+非退化且有单侧界的变量不可能 Gaussian。负时间改用相应上界。
+例如同一 proper 类的两个成员取相同 $\zeta$、零偏移与相反符号，则
+$F_-(v)=\overline{F_+(-v)}$，在同一实现上 $D_-(\theta)=-D_+(-\theta)$。
+其 Hermitian 交叉项为零，伪交叉项却为 $\widehat\rho(\omega(v+w))$；
+分别重抽两个场会破坏这条路径关系。
+
+零相位类同理满足
+
+$$
+\operatorname{Cov}(D_a(\theta),Y^2-\gamma)
+=4\sqrt{\zeta_a}\int_0^{\theta/\zeta_a}
+|\widehat\rho(b_a^0+\omega v)|^2dv>0.
+\tag{63.17}
+$$
+
+其余类别使用与 $W_0$ 独立的测度，所以整个路径都与旧场独立。这是极限律的关系；没有断言有限后验能量独立或其协方差已收敛。
+
+**定理 63.4（别名结构的实际可实现性与失谐压缩）。** 任给有限个正数 $\zeta_a$、至多一个零相位类、至多一个 $\pi$ 相位类及有限多个 proper 类，任给类内有限偏移和 proper 类内符号，均可由原 $\delta_M$ 序列上的确定性临界载波实现。有限失谐的单窗口结论则是第 60 章临界过程的确定性时间平移。
+
+证明。为各 proper 类选取模符号彼此分离且不等于 $0,\pi$ 的固定相位 $\alpha_L$。在零类、$\pi$ 类和 proper 类分别设置相位目标 $\delta_Mb_a$、$\pi+\delta_Mb_a$ 和 $\epsilon_a\alpha_L+\delta_Mb_a$。选择整数 $n_{a,M}$ 使
+
+$$
+\eta_{a,M}=\frac{2\pi n_{a,M}+\text{相位目标}}\omega
+=\sqrt{\zeta_a/\delta_M}+O(1).
+\tag{63.18}
+$$
+
+最近整数选择即可做到，且最终 $\eta_{a,M}>0$。于是 $\eta_{a,M}^2\delta_M\to\zeta_a$，同时完整实现指定关系。整数整周部分调节临界宽度，模 $2\pi$ 部分调节载波关系，两者并不冲突。
+
+若 $\omega\eta_M=\pi m_M+\delta_Mb_M$ 且 $b_M\to b$，在 $m_M$ 奇偶性固定的子列上令 $\eta_{0,M}=2m_M$ 及
+
+$$
+t_M(\theta)=\eta_{0,M}^3\log(\eta_M/\eta_{0,M})
++(\eta_{0,M}/\eta_M)^3\theta.
+$$
+
+在同一有限谱分辨率处有精确恒等式
+
+$$
+D_{\eta_M}(\theta)=
+(\eta_M/\eta_{0,M})^{3/2}
+\left[V_{\eta_{0,M}}(t_M(\theta))-V_{\eta_{0,M}}(t_M(0))\right].
+\tag{63.19}
+$$
+
+$t_M(0)\to\zeta b/\omega$，且 $t_M(\theta)-t_M(0)\to\theta$ 在紧区间上一致。第 60 章的相应奇偶共同连续过程极限可以直接代入；随机常数项抵消，留下 (63.7) 中相应实类的移频积分。这个等式解释有限失谐边缘律的复用，但不能决定不同 proper 类之间的联合关系；后者由 (63.8) 的两套 Gram 极限给出。
+
+## 追加锚（本行以下为增补区）
+
+## 64. 亚临界载波的共同白噪声与观察区间的可识别性
+
+**定义 64.1（可比载波与细相位关系）。** 保留第 63 章的实际实验、有限截距和同一后验标签向量，固定载波数 $p$。取确定性参考量 $\eta_{*,M}\to\infty$，令
+
+$$
+L_M=\eta_{*,M}^2,\qquad L_M\delta_M\to0,\qquad
+\eta_{a,M}^2/L_M\to c_a\in(0,\infty),\qquad
+\phi_{a,M}=\omega\eta_{a,M},\qquad\omega=\pi/2.
+\tag{64.1}
+$$
+
+每个 $D_{a,M}$ 仍由 (63.2) 定义，先放大再在零点锚定。以 $\langle t\rangle\in(-\pi,\pi]$ 表示模 $2\pi$ 的代表，假定
+
+$$
+\frac{L_M}{\omega}\langle\phi_{a,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\pi\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}-\phi_{b,M}\rangle,\quad
+\frac{L_M}{\omega}\langle\phi_{a,M}+\phi_{b,M}\rangle
+\tag{64.2}
+$$
+
+各自具有有限实极限或绝对值趋于无穷，包括 $a=b$。后两类有限极限记为 $d^-_{ab},d^+_{ab}$。有限差或有限和关系确定共同别名簇。零类与 $\pi$ 类的偏移分别是前两类有限极限 $b_a$；其余每类选代表相位 $q_{C,M}$，取相容符号 $\sigma_a\in\{-1,1\}$ 与偏移
+
+$$
+\frac{L_M}{\omega}
+\langle\phi_{a,M}-\sigma_a q_{C,M}\rangle\longrightarrow b_a.
+\tag{64.3}
+$$
+
+相位关系的相容性与第 63 章相同，分辨率改为 $\omega/L_M$。特别是一般类满足
+$L_M\operatorname{dist}(q_{C,M},\pi\mathbb Z)\to\infty$。
+参考量 $\eta_{*,M}$ 仅规定尺度，不要求它本身是某个预先固定相位的载波。
+
+**定理 64.2（实际亚临界联合过程）。** 对每个零类或 $\pi$ 类取一份标准 Brownian motion，并令
+$B_{C,\mathrm{odd}}(t)=\operatorname{sgn}(t)B_C(|t|)$。
+对每个其余的簇取一份标准两侧 Brownian motion $B_{C,\mathrm{two}}$，其正负两半独立。
+不同簇的噪声相互独立。则各固定紧区间上的实际有限过程族联合 C-tight 收敛，其极限为
+
+$$
+D_a(\theta)=4\sqrt{g_0c_a}
+\left[B_{C,\mathrm{odd}}(b_a+\theta/c_a)-B_{C,\mathrm{odd}}(b_a)\right]
+\tag{64.4}
+$$
+
+于实类，以及
+
+$$
+D_a(\theta)=4\sigma_a\sqrt{g_0c_a}
+\left[B_{C,\mathrm{two}}(\sigma_a(b_a+\theta/c_a))
+-B_{C,\mathrm{two}}(\sigma_a b_a)\right]
+\tag{64.5}
+$$
+
+于一般类。整个 Brownian 族、$N_2$ 与旧实高斯测度 $W_\rho$ 相互独立，包括零类。旧联合坐标保持在同一 $W_\rho$ 上，特别是
+$J_\infty=b_\star\gamma+I_2(H;W_\rho)$。
+原先的先验条件 BL 收敛、固定支持下的一致无条件收敛及共同方向事件保持；实际路径取紧区间 $J_1$ 拓扑。
+
+任意有限个正比率 $c_a$、相容簇、偏移与符号均可在原合法算术序列上实现。无需对数余量，也无需一般类代表相位有通常意义的极限。
+
+证明。第 63 章的有符号关系组合证明同样适用。反向闭链迫使代表接近 $0$ 或 $\pi$；(64.2) 排除在两者之间交替的例外类，其他类可以一致定向。实现性可直接取相位目标 $\psi_{a,M}=q_C+\omega b_a/L_M$ 或
+$\psi_{a,M}=\sigma_aq_{C,M}+\omega b_a/L_M$，并选最近整数
+
+$$
+n_{a,M}=\operatorname{round}
+\frac{\omega\sqrt{c_aL_M}-\psi_{a,M}}{2\pi},\qquad
+\eta_{a,M}=\frac{2\pi n_{a,M}+\psi_{a,M}}{\omega}.
+\tag{64.6}
+$$
+
+于是 $\eta_{a,M}=\sqrt{c_aL_M}+O(1)$，相位目标精确实现。
+
+先作实际有限谱比较。记 $\eta=\eta_{a,M}$，固定紧区间 $I$。有限 Fourier 恒等式与精确中心取消给出零对角系数
+
+$$
+K_{a,\theta}(k)=2\delta^{-1/2}b_{a,\theta}(|k|),\qquad
+b_{a,\theta}(k)=\eta^2
+\left[e^{\theta/(2\eta^3)}
+\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}k)
+-\operatorname{Ci}(\omega\eta k)\right].
+\tag{64.7}
+$$
+
+全部 Fourier、权重和 floor 误差乘以至多 $O(Q^{11/4})$，仍被 $e^{-cQ^3}$ 吸收。
+这里 $\eta_a=O(Q^{1/4})$，而 $z_{a,M}(\theta)\sqrt\delta\to0$，所以原频率区间最终包含全部固定紧区间。
+对 $y\ge1$ 与有界小量 $l$，Ci 尾积分及其一次分部积分给出
+
+$$
+|\operatorname{Ci}(ye^l)-\operatorname{Ci}(y)|
+\le C\min(|l|,y^{-1}),\qquad
+|\operatorname{Ci}(y)|\le C/y.
+\tag{64.8}
+$$
+
+拆开放大因子的变化可得
+
+$$
+|b_{a,\theta}(k)|
+\le C_I\left[\min(\eta^{-1},\eta/k)+\frac1{\eta^2k}\right]
+\le C_I\min(\eta^{-1},\eta/k).
+\tag{64.9}
+$$
+
+全计数截止域上的原始矩阵范数因此至多
+$C_I\delta^{-1/2}\eta(1+\log Q)\le C_IQ^{1/2}(1+\log Q)$。
+与第 56 章的 Hilbert 精确中心界组合，新的中心误差为
+$O_P(Q^{-2}(1+\log Q))+o_P(1)$。
+同一 $Q^{-60}$ 尾向量与核心 $q^{-1/8}$ 逆分布耦合同时控制全部有限载波和旧坐标。
+此处核心 Bernoulli 方差下界 $q^{9/10}$ 是未归一化方差。
+在同一标准正态向量上改用 Gaussian 单元质量 $m_j^\circ$，相对误差
+$O_P(Q^{-1}(1+\log Q))$ 产生路径误差
+$O_P(Q^{-1/2}(1+\log Q)^2)$。
+这些是新放大尺度上的界；没有再放大旧的未量化误差。
+
+令 $G_j=\sqrt{m_j^\circ}g_j$。在共同核心上，实际向量由连续参考二次型
+$D^G_{a,M}(\theta)=\sum_{j\ne k}K_{a,\theta}(j-k)G_jG_k$
+一致概率逼近。定义
+
+$$
+w_\delta(k)=\delta^{-1}\sum_jm_j^\circ m_{j+k}^\circ,\qquad
+g(x)=\int\rho(y)\rho(y+x)\,dy.
+$$
+
+Gaussian 密度的单元平均在 $L^2$ 中逼近原密度，Cauchy–Schwarz 与平移等距给出
+
+$$
+\sup_k|w_\delta(k)-g(k\delta)|\le C\delta+Ce^{-cH_Q^2},
+\qquad 0\le w_\delta(k)\le C.
+\tag{64.10}
+$$
+
+这个估计覆盖增长的滞后。Ci 的两次分部积分还给出
+
+$$
+\ell_{a,\theta}(k)=\frac{\eta_a}{\omega k}
+\left[\sin\left((\phi_a+\omega\theta/\eta_a^2)k\right)
+-\sin(\phi_ak)\right],
+\quad
+\sup_{\theta\in I}\sum_{k\ge1}|b_{a,\theta}(k)-\ell_{a,\theta}(k)|^2\to0.
+\tag{64.11}
+$$
+
+具体地，Ci 三阶余项的 $\ell^2$ 范数为 $O(\eta_a^{-1})$，
+锚定余弦项与正弦振幅误差各为 $O(\eta_a^{-2})$。
+相位线性化误差为 $O_I(\eta_a^{-5})$；由
+$\sum_{k\ge1}\min(k|u|,2)^2/k^2\le C|u|$，
+它的系数平方和为 $O(\eta_a^{-3})$。
+同时 $\sup_{\theta\in I}\sum_k|\ell_{a,\theta}(k)|^2\le C_I$。
+这些估计先用于协方差；路径紧性另由精确系数证明。
+
+两种滞后方向和 Gaussian 配对式给出
+
+$$
+\operatorname{Cov}(D^G_{a,M}(\theta),D^G_{b,M}(\psi))
+=16\sum_{k\ge1}w_\delta(k)b_{a,\theta}(k)b_{b,\psi}(k).
+\tag{64.12}
+$$
+
+对固定 $A$，在 $k\le AL_M$ 上有 $k\delta\to0$，故 (64.10) 的权重一致趋于 $g_0$。
+剩余系数积的绝对和至多 $CL_M\sum_{k>AL_M}k^{-2}\le C/A$。
+先令 $M\to\infty$ 再令 $A\to\infty$，可以把 (64.12) 化为
+$16g_0\sum_k\ell_{a,\theta}(k)\ell_{b,\psi}(k)$，无相位间距分母。
+
+使用经典余弦级数
+$C(t)=\sum_{k\ge1}\cos(kt)/k^2
+=\pi^2/6-\pi|\langle t\rangle|/2+\langle t\rangle^2/4$。
+其唯一尖点位于 $2\pi\mathbb Z$，在代表边界 $\pi$ 处光滑。
+积化和差后，有限相位差与相位和分别留下
+
+$$
+\begin{aligned}
+\Delta_-(d;A,B)&=|d+A-B|-|d+A|-|d-B|+|d|,\\
+\Delta_+(d;A,B)&=|d+A+B|-|d+A|-|d+B|+|d|.
+\end{aligned}
+$$
+
+因此极限协方差是
+
+$$
+8g_0\sqrt{c_ac_b}
+\left[
+-1_{\{d^-_{ab}\ {\rm 有限}\}}
+\Delta_-(d^-_{ab};\theta/c_a,\psi/c_b)
++1_{\{d^+_{ab}\ {\rm 有限}\}}
+\Delta_+(d^+_{ab};\theta/c_a,\psi/c_b)
+\right].
+\tag{64.13}
+$$
+
+若某项的相位距离乘以 $L_M$ 逃逸，四个相位最终处于余弦和的同一光滑二次分支。
+其混合差分只有 $O(L_M^{-2})$，乘以 $\eta_a\eta_b=O(L_M)$ 后趋零。
+有限相位项则由尖点的绝对值给出 (64.13)。
+分别代入奇延拓与两侧 Brownian 协方差，即得 (64.4)—(64.5) 的共同协方差，包括共轭方向外侧的 $\sigma_a$。
+
+还须证明联合 Gaussian 性。把参考矩阵作用在标准正态向量上，以 $\sqrt{m_j^\circ}$ 作 Schur 权重。
+令 $r_a=\eta_a^2\delta$，由 (64.9)，滞后区间 $[1,\eta_a^2]$、
+$(\eta_a^2,\delta^{-1}]$ 和 $(\delta^{-1},\infty)$ 分别给出
+$C\sqrt{r_a}$、$C\sqrt{r_a}(1+|\log r_a|)$ 和 $C\sqrt{r_a}$。
+最后一段只需 $|k|^{-1}\le\delta$ 与总质量有界，故对边缘行同样成立。于是
+
+$$
+\sup_{\theta\in I}\|\mathcal K_{a,\theta}\|_{\rm op}
+\le C_I\sqrt{r_a}(1+|\log r_a|)\longrightarrow0.
+\tag{64.14}
+$$
+
+对角坐标的算子范数为 $O(\sqrt\delta)$，方差趋于 $2g_0$；
+它与全部新零对角矩阵的 Hilbert–Schmidt 内积精确为零。
+任何固定线性组合仍有有界 Hilbert–Schmidt 范数与趋零的算子范数。
+对其特征值展开
+$\sum_j[-it\lambda_j-\frac12\log(1-2it\lambda_j)]$
+证明联合 Gaussian 极限，随后才由零交叉协方差得到与 $N_2$ 的独立性。
+对包含有限旧线性方向的投影 $P$，删除这些方向的误差至多
+$2\sqrt{\operatorname{rank}P}\|\mathcal K\|_{\rm op}$。
+剩余二次型与这些方向精确独立。先作有限圆柱逼近，再保留旧 $H$ 的共同矩形逼近和旧路径紧性，得到与整个旧场的联合独立性。
+零类也适用这一步；决定性条件是新算子范数趋零。
+
+最后证明任意小时间增量的紧性。直接在 (64.7) 使用 (64.8)，对 $d=|\theta-\psi|\le1$ 得
+
+$$
+|b_{a,\theta}(k)-b_{a,\psi}(k)|
+\le C_I\left[\min(d/\eta_a,\eta_a/k)+\frac{d}{\eta_a^2k}\right],
+\qquad
+\sum_{k\ge1}|b_{a,\theta}(k)-b_{a,\psi}(k)|^2\le C_Id.
+\tag{64.15}
+$$
+
+第二个式子在 $k=\eta_a^2/d$ 处分割；该分点超过实际截止也不影响上界。
+Gaussian 配对与第二混沌的第四矩界因此给出
+$\mathbb E|D^G_{a,M}(\theta)-D^G_{a,M}(\psi)|^4\le C_I|\theta-\psi|^2$。
+参考路径从零出发且连续，Kolmogorov 判据给出有限向量的联合紧性。
+统一概率逼近使实际 floor 路径 C-tight。
+旧 $J$、对角和线性坐标始终使用同一耦合；其质量尾、方差时钟及固定频率路径界沿用原证明。
+一次完整标签向量的 TV 比较只转移有界测试和概率事件。
+好环境子序列给出条件 BL 收敛，支持置换等变性给出一致无条件结论，共同方向事件同时保留整个向量。
+这不转移实际无界矩。
+
+**定理 64.3（指定增量的独立性由区间交叠决定）。** 记 $I_{u,v}$ 为有向区间指示函数：
+$u<v$ 时为 $1_{(u,v]}$，$u>v$ 时为 $-1_{(v,u]}$，相等时为零。
+对极限增量 $D_a(v)-D_a(u)$，在一般类定义
+
+$$
+f_{a;u,v}(y)=\sigma_a
+I_{\sigma_a(b_a+u/c_a),\,\sigma_a(b_a+v/c_a)}(y),\qquad y\in\mathbb R,
+\tag{64.16}
+$$
+
+在实类定义
+
+$$
+f_{a;u,v}(y)=
+I_{b_a+u/c_a,\,b_a+v/c_a}(y)
++I_{b_a+u/c_a,\,b_a+v/c_a}(-y),\qquad y>0.
+\tag{64.17}
+$$
+
+同类两个增量的协方差为
+
+$$
+16g_0\sqrt{c_ac_b}\int f_{a;u,v}(y)f_{b;u',v'}(y)\,dy,
+\tag{64.18}
+$$
+
+不同类的协方差为零。任意有限组增量相互独立，当且仅当对应 Gram 矩阵的所有非对角元为零。
+两个非零单增量在同类中独立，当且仅当有效区间交集的 Lebesgue 测度为零：
+一般类使用 (64.16) 的区间，实类使用原区间在绝对值映射下的像。
+实类的折叠重数影响协方差大小，不改变零交叠判据。
+
+对有限线性读数，先在每类把函数改为
+$\sum_a\alpha_a\sqrt{c_a}f_{a;u_a,v_a}$；
+独立性等价于这些直和空间向量正交，此时可以出现带符号的抵消。
+整个限制过程的独立性则要求全部时间读数所张成的闭子空间正交。
+
+证明。把一般类的两侧 Brownian 增量写成实白噪声作用于有向指示函数，即得 (64.16)。
+奇延拓满足
+$B_{\rm odd}(t)=\mathcal W(\operatorname{sgn}(t)1_{(0,|t|]})$，
+故跨过零点时两侧贡献相加，得到 (64.17) 的正折叠。
+每个单增量的函数符号恒为 $\operatorname{sgn}(v-u)$；折叠后可以取重数二，但不能变号。
+因此两个单增量的内积在正测度交叠上不可能抵消。
+Gaussian 联合律把零内积变成独立性，并给出有限向量与闭子空间的判据。
+
+这些区别都可由 (64.6) 实现。例如取 $c_1=c_2=1$。
+在同向一般类中，$b_1=0,b_2=2$ 的正时间一读数使用区间 $[0,1]$ 和 $[2,3]$，相互独立；
+把过程观察区间增至 $[0,3]$ 后，部分读数的区间开始交叠。
+在实类中，$b_1=1,b_2=-2$ 的正时间一读数使用 $[1,2]$ 和 $[-2,-1]$，原区间不交但折叠相同，两个读数相等。
+取两个不交且等长的正径向区间，其独立等方差读数 $X_1,X_2$ 满足
+$X_1+X_2$ 与 $X_1-X_2$ 独立；这里才发生有符号抵消。
+同一一般类、零偏移、相同比率且相反方向还满足
+$D_-(\theta)=-D_+(-\theta)$：
+其两个正半轴限制相互独立，整个双向过程仍共享同一噪声。
+这些是极限律的关系，不宣称有限后验独立或其协方差收敛。
+
+**定理 64.4（单窗口的局部不可辨与全局失谐分类）。** 对单载波仅假定
+$\eta_M\to\infty$、$\eta_M^2\delta_M\to0$，无需固定奇偶性。令
+
+$$
+a_M=\frac{\eta_M^2}{\omega}
+\operatorname{principal}_{\pi}(\omega\eta_M),
+\qquad \operatorname{principal}_{\pi}\in(-\pi/2,\pi/2].
+\tag{64.19}
+$$
+
+若 $a_M\to a\in\mathbb R$，则实际锚定过程趋于
+$4\sqrt{g_0}X_a(\theta)$，其中
+$X_a(\theta)=B_{\rm odd}(a+\theta)-B_{\rm odd}(a)$。
+若 $|a_M|\to\infty$，则极限为 $4\sqrt{g_0}B_{\rm two}$。
+两者都与完整旧场及 $N_2$ 联合独立。
+实际过程在所有固定紧区间上具有一个连续的联合极限，当且仅当 $a_M$ 在实直线的一点紧化中收敛；无穷点表示绝对值逃逸。
+
+对固定 $S,T>0$，参考过程 $X_a$ 在 $[-S,T]$ 上具有标准两侧 Brownian 律，当且仅当
+
+$$
+a\in(-\infty,-T]\cup[S,\infty).
+\tag{64.20}
+$$
+
+因此实际过程在这个固定区间上趋于 $4\sqrt{g_0}B_{\rm two}$ 的充要条件是
+$\operatorname{dist}(a_M,(-\infty,-T]\cup[S,\infty))\to0$；
+在所有紧区间上同时如此的充要条件才是 $|a_M|\to\infty$。
+
+证明。单载波的自协方差中整数奇偶因子自乘消失，所以 (64.12)—(64.15) 的论证无需 (64.2) 中例外类的奇偶稳定。
+余弦和的自差分给出
+
+$$
+\begin{aligned}
+2\operatorname{Cov}(X_a(\theta),X_a(\psi))
+={}&|\theta|+|\psi|-|\theta-\psi|\\
+&+|2a+\theta+\psi|-|2a+\theta|-|2a+\psi|+|2a|.
+\end{aligned}
+\tag{64.21}
+$$
+
+有限 $a_M$ 直接趋于此式；绝对值逃逸时第二行在每个固定区间最终恒为零。
+前述小算子与紧性证明分别识别这两种实际联合极限。
+
+若 $a>0$，有
+$\operatorname{Var}X_a(\theta)-|\theta|
+=2\min\{(-a-\theta)_+,a\}$。
+因此只在 $\theta\ge-a$ 的范围内具有两侧 Brownian 的全部限制律；
+该范围内原 Brownian 时间与锚点 $a$ 均非负，独立增量给出充分性。
+负 $a$ 由时间反射得到。$a=0$ 时每个单点方差虽仍为 $|\theta|$，
+异号时间协方差为 $-\min(|\theta|,|\psi|)$，与两侧独立律不同。
+这证明 (64.20)，含边界点。
+任意不含零点的观察区间还必须核对锚点：
+例如 $a=1$、区间 $[-3,-2]$ 不经过反射中心 $-1$，
+但 $X_1(-2)=-2B(1)$ 的方差为四，不能具有方差为二的两侧 Brownian 读数。
+
+全部有向时间上的过程律识别有限的带符号参数 $a$。
+正 $a$ 的方差偏离集合是 $(-\infty,-a)$，负 $a$ 的偏离集合是 $(-a,\infty)$；
+$a=0$ 与无穷点则由异号协方差区分。
+有限参数下还有同一实现上的关系
+$X_a(\theta)+X_a(-2a-\theta)=X_a(-2a)$。
+把 $a$ 改为 $-a$ 对应时间反射，不是在保留时间方向时得到相同的律。
+
+这一族在一点紧化上连续：有限处由共同 Brownian 连续路径的平移得到，
+无穷处在任意固定紧区间最终已具有两侧 Brownian 律；
+统一界
+$\operatorname{Var}(X_a(\theta)-X_a(\psi))\le2|\theta-\psi|$
+给出共同紧性。实际过程的紧性也对相位一致。
+对子列取一点紧化中的聚点，实际极限定理与过程律的单射性给出全局收敛的充要条件。
+在固定 $[-S,T]$ 上同理使用 (64.20)，得到距离条件。
+这些都是路径律与有界测试的推论，没有利用实际矩收敛。
+
+最后，固定 $A>\max(S,T)$，取 $m_M=\lfloor Q^{1/8}\rfloor$，
+令 $b_M$ 在 $A,-A$ 间交替，设
+$\eta_M=2m_M+b_M/(4m_M^2)$。
+则 $\eta_M^2\delta_M\to0$，$a_M=b_M+o(1)$。
+该实际序列在指定有限区间上有同一个两侧 Brownian 极限，全局却有两个不同的子列极限。
+这在原实验内实现了局部读数不足以识别全局失谐的区别。
+
+## 追加锚（本行以下为增补区）
+
+## 65. 未锚定谱的失谐紧性与三种常数分量
+
+**定义 65.1（未锚定残差和统一失谐幅度）。** 保留原实际实验、固定幅度与 beta、完整固定总量后验、精确中心及定义 54.1 的有限截距。对确定性 $\eta_M\to\infty$，令
+
+$$
+r_M=\eta_M^2\delta_M,\quad s_M=\log(\eta_M/\delta_M),\quad
+s_M\sqrt{\delta_M}\le U/2,\quad
+z_M(\theta)=s_M+\theta/\eta_M^3.
+\tag{65.1}
+$$
+
+记 $\omega=\pi/2$，唯一选取
+$d_M\in(-\pi/2,\pi/2]$ 与整数 $m_M$ 使
+$\omega\eta_M=\pi m_M+d_M$。本章使用未在零点锚定的过程
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)
+&=\eta_M^{3/2}e^{z_M(\theta)/2}
+\left[\mathcal Z_M(z_M(\theta)\sqrt\delta)-J_M
+-2z_M(\theta)\sqrt\delta\,T_M\right],\\
+\mathcal D_M(\theta)&=\mathcal V_M(\theta)-\mathcal V_M(0),\qquad
+\mathcal A_M^2=\frac{\eta_M^2d_M^2}{\delta_M+|d_M|}.
+\end{aligned}
+\tag{65.2}
+$$
+
+所有时间与旧坐标均使用同一个后验标签向量。$r_M$ 表示网格尺度比，不表示原模型的固定信号幅度。
+
+**定理 65.2（实际未锚定过程的紧性充要条件）。** 在每个包含零的固定紧区间 $I$ 上，实际 $\mathcal V_M$ 的紧 $J_1$ 路径律紧，当且仅当 $\limsup_M\mathcal A_M<\infty$。条件成立时极限支撑于连续路径；加入旧联合坐标和 $T_M$ 不改变该判据。$\mathcal D_M$ 对所有满足 (65.1) 的序列均 C-tight，无需 $\mathcal A_M$ 有界。
+
+紧性同时具有两种原实验意义：每个固定支持下的一致无条件紧性，以及先验数据概率中的后验紧性。后者意为对任意 $\varepsilon,\alpha>0$，存在紧集 $K\subset D(I)$ 满足
+
+$$
+\limsup_M\Pr_{\rm data}\{\Pi_M(K^c)>\varepsilon\}\le\alpha.
+\tag{65.3}
+$$
+
+若沿某子列 $\mathcal A_M\to\infty$，则对每个有限 $R$，
+
+$$
+\Pr_{\rm data}\left\{
+\Pi_M(|\mathcal V_M(0)|>R)>1/240
+\right\}\longrightarrow1.
+\tag{65.4}
+$$
+
+这里的必要性是实际概率结论，不由实际方差发散推断。单点区间 $I=\{0\}$ 按标量结论理解。
+
+证明。先在最终放大尺度作有限恒等式比较。第 54 章的 Fourier 权重、调和项与 Ci 展开在完整计数截止域上给出
+
+$$
+\mathcal V_M(\theta)=\sum_{j\ne l}K_M(\theta,j-l)A_jA_l+o_P(1),\quad
+K_M(\theta,k)=\frac{2\eta^2}{\sqrt\delta}e^{\theta/(2\eta^3)}
+\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|).
+\tag{65.5}
+$$
+
+误差在固定时间紧区间一致。该比较使用精确的
+$\mathcal Q_M=V_M+\sqrt\delta T_M$ 和原 $J_M$，所以大项在放大前恰好取消。
+原 Fourier 误差记为 $\varepsilon_M$；其界为 $e^{-cQ^3}$ 乘以固定次幂因子。
+由 (65.1) 有 $\log\eta=O(Q^{1/4})$，故
+
+$$
+Q^2\eta^2\delta^{-1/2}\varepsilon_M\to0,
+\qquad Q^2\eta^3\varepsilon_M\to0.
+\tag{65.6}
+$$
+
+第二项预先保留给 $\sqrt r\mathcal D_M$。floor 改变 Ci 自变量的对数至多 $O(he^{-z})$，而 $d\operatorname{Ci}(v)/d\log v=\cos v$，因此这个误差也受控。上述论证允许 $\eta$ 达到 $\exp(O(Q^{1/4}))$。
+
+零点分解为正弦、余弦与余项：
+
+$$
+\begin{aligned}
+S_M(\theta,k)&=\frac{2\eta}{\omega\sqrt\delta}
+\frac{\sin[(\omega\eta+\omega\theta/\eta^2)k]}{k},\\
+C_M(k)&=-\frac{2\cos(\omega\eta k)}{\omega^2\sqrt\delta k^2},\\
+K_M(0,k)&=S_M(0,k)+C_M(k)+E_M(k),\qquad
+|E_M(k)|\le\frac{C}{\eta\sqrt\delta |k|^3}.
+\end{aligned}
+\tag{65.7}
+$$
+
+对 $h_M=1+\mathcal A_M$，先将静态矩阵除以 $h_M$。令 $D=|d_M|$。
+当 $D\le\delta$ 时，$|S_M(0,k)|/h_M\le C$；当 $D\ge\delta$ 时，
+
+$$
+\frac{|S_M(0,k)|}{h_M}
+\le\frac{C}{\sqrt{\delta D}}\min(D,|k|^{-1}).
+\tag{65.8}
+$$
+
+全截止域有至多 $CQ^2$ 个组，所以相应原始矩阵范数分别至多
+$CQ^2$ 与 $C\delta^{-1}(1+\log Q)$。余弦、余项的范数至多
+$C\delta^{-1/2}$ 与 $C/(\eta\sqrt\delta)$。
+另一方面精确微分给出
+
+$$
+\partial_\theta K_M(\theta,k)=
+\frac{2e^{\theta/(2\eta^3)}}{\eta\sqrt\delta}
+\left[\cos(\omega\eta e^{\theta/\eta^3}k)
++\tfrac12\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|)\right].
+\tag{65.9}
+$$
+
+其绝对值至多 $C_I/\sqrt r$，乘以 $\sqrt r$ 后至多 $C_I$。
+故锚定矩阵范数至多 $C_IQ^2/\sqrt r$，缩放锚定矩阵范数至多 $C_IQ^2$。
+第 56 章 Hilbert 精确中心位移
+$\|e\|_2=O_P(Q^{-5/2}+q^{-1/2})$ 因此在归一化静态量上消失；
+锚定量上的误差为 $O_P(Q^{-1/2}/\sqrt r)+o_P(1)
+=O_P(Q^{-1/4}/\eta)+o_P(1)$，缩放锚定量上的误差为 $O_P(Q^{-1/2})+o_P(1)$。
+这一步没有把任意大 $\eta$ 的未归一化原始矩阵误当成多项式有界。
+
+在同一核心 $|j\delta|\le R_c=\sqrt{D_*\log Q}$ 上保留环境方差
+$v_j=d_j/B^2$，不另换确定性质量。原实际一行、两行比较与 Stirling 界给出共同好环境：
+
+$$
+v_j=\delta\rho(j\delta)(1+o(1))\text{ 一致成立},\quad
+v_j\le C\delta e^{-c(j\delta)^2},\quad d_j\ge q^{9/10}.
+\tag{65.10}
+$$
+
+最后的下界针对未归一化 Bernoulli 方差 $d_j$。不同组的环境乘积满足
+$E_{\rm data}v_jv_l\le Ca_ja_l$，其中 $a_j$ 是比较组占用均值除以 $B^2$，具有同一 Gaussian 包络和指数小的远计数尾。
+归一化静态系数逐项至多 $C\delta^{-1/2}$，锚定导数至多 $C_I/\sqrt r$。
+由独立辅助组的二次型等距，含至少一个核心外标记的项，其平均条件方差分别至多
+
+$$
+C\delta^{-1}\left[e^{-cR_c^2}+Q^Ce^{-c\lambda}\right],\qquad
+C_Ir^{-1}\left[e^{-cR_c^2}+Q^Ce^{-c\lambda}\right].
+\tag{65.11}
+$$
+
+锚定项先积分导数再取上确界；缩放锚定项的界去掉 $r^{-1}$。
+由于 $r^{-1}\le\delta^{-1}$ 最终成立，取一个固定且充分大的 $D_*$ 即使全部尾消失。
+旧 $H$ 的对角邻域与空间尾、旧对角量和线性路径也用同一个核心。
+上述期望先对每个数据集上定义的截止组计算，再按概率删去坏数据事件，不在无界矩中丢弃事件。
+
+一次核心逆分布耦合产生 $G_j=\sqrt{v_j}\xi_j$，$\xi_j$ 为共同独立标准正态。
+核心未归一化方差指数增长，既有耦合误差乘以前述全部多项式矩阵范数仍趋零。
+因此在一次最终后验 TV 转移之前，可以同时比较
+$\mathcal V_M(0)/(1+\mathcal A_M)$、完整 $\mathcal D_M$、所需的 $\sqrt r\mathcal D_M$ 与旧联合坐标。
+这里没有推断发散静态量的未归一化比较。
+
+令 $\Gamma_M(k)=\sum_jv_jv_{j+k}$，求和仅用核心。
+(65.10) 的平方配方和固定空间内的下界给出
+
+$$
+\Gamma_M(k)\le C\delta e^{-c(k\delta)^2},\qquad
+\Gamma_M(k)\ge c_{D_0}\delta\quad(1\le k\le D_0/\delta).
+\tag{65.12}
+$$
+
+固定滞后时 $\Gamma_M(k)/\delta\to g_0$；若 $r\to0$，则对每个固定 $A$，
+该收敛在 $k\le A\eta^2$ 上一致，因为此时 $k\delta\le Ar\to0$。
+核心相对误差乘以有界的自相关质量，Gaussian 网格积分误差在有界平移上一致趋零。
+
+记 $P_M(0)=\sum_{j\ne l}S_M(0,j-l)G_jG_l$。
+两种滞后方向与 Gaussian 配对给出
+
+$$
+\operatorname{Var}_G P_M(0)
+=\frac{16\eta^2}{\omega^2\delta}
+\sum_{k\ge1}\Gamma_M(k)\frac{\sin^2(d_Mk)}{k^2}
+\asymp\eta^2\min(D,D^2/\delta)\asymp\mathcal A_M^2.
+\tag{65.13}
+$$
+
+常数对相位和 $\eta$ 一致。上界在 $D\le\delta$ 时用 Gaussian 滞后总质量，在 $D\ge\delta$ 时于 $1/D$ 分割。
+下界在前一情形取 $1\le k\le\lfloor1/\delta\rfloor$；后一情形取
+$1\le k\le\lfloor\pi/(2D)\rfloor$。
+这些区间内 $\sin(Dk)\ge2Dk/\pi$，并分别至少含 $c/\delta$ 与 $c/D$ 个整数。
+配合 (65.12) 即得下界。这样连 $D$ 离零有固定距离的情况也被覆盖，不用全域连续近似代替离散别名。
+余弦项方差一致有界，Ci 余项方差为 $O(\eta^{-2})$。
+
+还要控制任意小时间增量。令
+$b_\theta(k)=\eta^2[e^{\theta/(2\eta^3)}\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}k)-\operatorname{Ci}(\omega\eta k)]$。
+第 64 章的精确 Ci 增量论证仅使用 $\eta\to\infty$，故此处仍给出，对 $h=|\theta-\psi|\le1$，
+
+$$
+|b_\theta(k)-b_\psi(k)|
+\le C_I\left[\min(h/\eta,\eta/k)+h/(\eta^2k)\right],\quad
+\sum_{k\ge1}|b_\theta(k)-b_\psi(k)|^2\le C_Ih.
+\tag{65.14}
+$$
+
+(65.12) 与配对式使锚定 Gaussian 二次型的二阶增量至多 $C_Ih$。
+中心 Gaussian 二次型满足 $EX^4\le15(EX^2)^2$，于是四阶增量至多 $C_Ih^2$。
+Kolmogorov 判据给出锚定参考路径的一致紧性，前述统一比较给出实际 C-tightness。
+若 $\mathcal A_M$ 有界，(65.13) 又使零点紧，得到充分性。
+
+若 $\mathcal A_M\to\infty$，则 $P_M(0)/\mathcal A_M$ 的参考方差介于两个正常数之间。
+对其平方应用 Paley–Zygmund 和四阶矩界得
+
+$$
+\Pr_G\{|P_M(0)|/\mathcal A_M>\sqrt{c/2}\}\ge1/60.
+\tag{65.15}
+$$
+
+除以 $\mathcal A_M$ 后余弦和 Ci 余项均消失。先前证明的归一化比较和完整标签向量 TV 界，只对这个有界概率事件转移，即给出 (65.4)。
+任意 $J_1$ 紧集的上确界范数有界，因为 $J_1$ 收敛的时间变换保持全区间上确界；
+因此 (65.4) 足以排除紧性，不需要把内部零点的评价映射误当成处处连续。
+
+最后，(65.3) 与先验平均紧性由 Markov 不等式及
+$E\Pi_M(K^c)\le\varepsilon+\Pr\{\Pi_M(K^c)>\varepsilon\}$ 相互推出。
+原支持置换等变性使先验平均联合律恰等于每个固定支持的无条件律。
+实际 pair/path 环境估计一致，未知方向继续使用一个共同相等事件。
+这些步骤不转移实际无界矩，也不声称逐个无限数据实现上的几乎处处后验紧性。
+
+**定理 65.3（三种未锚定极限及同一端点平方）。** 令
+$Z_0\sim N(0,128g_0/45)$，$N_2\sim N(0,2g_0)$。
+在下列各子列上，过程与旧联合坐标在固定紧区间联合 C-tight 收敛。
+
+当 $r_M\to0$ 且 $a_M=\eta_M^2d_M/\omega\to a\in\mathbb R$ 时，
+
+$$
+\mathcal V_M(\theta)\Rightarrow
+Z_0+4\sqrt{g_0}B_{\rm odd}(a+\theta).
+\tag{65.16}
+$$
+
+$B_{\rm odd}$ 是同一标准 Brownian motion 的奇延拓，且 $B,Z_0,N_2$ 与整个旧实场相互独立。此分支无需固定 $m_M$ 奇偶性。
+
+当 $r_M\to\zeta\in(0,\infty)$、$d_M/\delta_M\to b$，且 $m_M$ 奇偶性固定时，
+
+$$
+\begin{aligned}
+\mathcal V_M(\theta)&\Rightarrow Z_0+I_2(q_{\zeta,b,\theta};W_\sigma),\\
+q_{\zeta,b,\theta}(x,y)&=
+\frac{2\sqrt\zeta}{\omega}\frac{\sin[(b+\omega\theta/\zeta)(x-y)]}{x-y},\\
+I_2(q_{\zeta,b,\theta};W_\sigma)&=
+2\sqrt\zeta\int_0^{b/\omega+\theta/\zeta}
+\left(|F_\sigma(v)|^2-\gamma\right)dv.
+\end{aligned}
+\tag{65.17}
+$$
+
+核在对角线上连续延拓。偶数 $m_M$ 时 $W_\sigma$ 为旧场，奇数时为其独立实副本。
+$Z_0,N_2$ 相互独立，且与两份场联合独立；旧 $J_\infty$ 始终使用旧场。
+
+当 $r_M\to\infty$、$b_M=\eta_Md_M/\sqrt\delta_M\to b$，并固定奇偶子列时，联合有
+
+$$
+\left(\mathcal V_M(\theta),\sqrt{r_M}\mathcal D_M(\theta)\right)
+\Rightarrow
+\left(Z_0+\frac{2b}{\omega}(Y_\sigma^2-\gamma),
+2\theta(Y_\sigma^2-\gamma)\right).
+\tag{65.18}
+$$
+
+$Y_\sigma=W_\sigma(1)$，两处平方是同一个随机量。第一坐标为常数路径，独立性和奇偶约定同 (65.17)。
+全部结论保留先验条件 BL 数据概率收敛、一致固定支持无条件收敛及共同方向事件。
+
+证明。三种参数条件都使 $\mathcal A_M$ 有界，因此前一定理提供未归一化共同 Gaussian 比较和路径紧性。又由
+$\eta^2|d|^2\le C(\delta+|d|)$ 得 $d\to0$。
+令 $\chi_j=(-1)^{m_Mj}$。余弦项的参考 $L^2$ 极限与
+
+$$
+O_M^\chi=-\frac2{\omega^2\sqrt\delta}
+\sum_{j\ne l}\frac{\chi_j\chi_l}{(j-l)^2}G_jG_l
+\tag{65.19}
+$$
+
+相同，因为逐个固定滞后的 $\cos(dk)\to1$，且 $k^{-4}$ 可求和。
+标准正态矩阵的算子范数为 $O(\sqrt\delta)$，参考方差趋于 $128g_0/45$。
+旧移动对角矩阵也有小算子范数，与此零对角矩阵的迹内积为零。
+联合二次型—线性型特征函数或同一有限秩删除证明：这两个量先有联合 Gaussian 极限，再与所有旧及移动符号线性方向独立。
+这给出所述 $Z_0,N_2$，不能由零协方差单独代替这一步。
+
+对固定有限个时间，(65.7) 的正弦核同样逼近完整 Ci 核扣除静态余弦项。
+具体地，Ci 三阶余项的二次均方为 $O(\eta^{-2})$；锚定余弦和正弦振幅的系数平方和为 $O(\eta^{-4})$；
+相位线性化用 $\sum k^{-2}\min(k|u|,2)^2\le C|u|$，给出 $O_I(\eta^{-3})$。
+这些有限维误差结合 (65.14) 的精确路径紧性即可使用连续极限；无需先将一个粗振幅误差乘以 $r^{-1}$。
+
+亚临界时，正弦系数为
+$2\eta\chi_j\chi_l\sin[\omega(a_M+\theta)k/\eta^2]/(\omega\sqrt\delta k)$。
+同第 64 章的滞后分割与余弦尖点计算，其协方差趋于
+$8g_0(|2a+\theta+\psi|-|\theta-\psi|)$。
+标准正态矩阵的算子范数至多 $C_I\sqrt r(1+|\log r|)\to0$。
+与 (65.19) 的协方差至多
+$C_I\eta\sum k^{-3}\min(k/\eta^2,1)=O_I(\eta^{-1})$，与旧对角量的迹内积恰为零。
+对所有这些矩阵的线性组合一起作特征函数展开，得到联合 Gaussian 极限和 (65.16) 的独立性；奇偶符号在新协方差中消失。
+
+临界时，正弦核恰好是 $\chi_j\chi_l q_{M,\theta}(x_j-x_l)$，其中
+
+$$
+q_{M,\theta}(y)=\frac{2\sqrt r}{\omega}
+\frac{\sin[(d/\delta+\omega\theta/r)y]}{y}.
+\tag{65.20}
+$$
+
+核及时间导数在固定时间紧区间全空间有界，在固定空间紧集上一致趋于 (65.17)。
+相邻单元的交替求和给出旧场与符号场的完整 Gram：偶数时两者相同，奇数时极限独立。
+共同矩形逼近同时保留旧 $H$ 和新核，块内平方扣除给出 Wick 常数。
+Gaussian 尾控制空间截断，时间紧性已由精确 Ci 获得。
+该推导无需 $r-\zeta$ 或 $d/\delta-b$ 的额外速率；积分表达式由 Gaussian 乘积公式直接得到。
+
+超临界时，$d/\delta=b_M/\sqrt r\to0$。在零点，由 $|\sin u-u|\le C|u|^3$，
+
+$$
+\left|q_{M,0}(y)-2b_M/\omega\right|\le C y^2/r.
+\tag{65.21}
+$$
+
+(65.10) 使 $\sum_{j,l}|x_j-x_l|^4v_jv_l\le C$，所以正弦二次型在参考 $L^2$ 中逼近
+$(2b_M/\omega)Q_M^\chi$，其中
+$Q_M^\chi=(\sum_j\chi_jG_j)^2-\sum_jG_j^2$。
+后者趋于同一个 $Y_\sigma^2-\gamma$。
+
+对更细的增量重新使用 (65.9)，不放大前面的未量化误差。
+置 $\tau_\eta(\theta)=\eta^3(e^{\theta/\eta^3}-1)$，则余弦中的新增空间频率为
+$b_M/\sqrt r+\omega\tau_\eta(\theta)/r=O_I(r^{-1/2})$。
+用 $|\cos u-1|\le Cu^2$、同一四阶空间界和 Ci 尾界，得到
+
+$$
+E_G\sup_{\theta\in I}
+\left|\sqrt r\sum_{j\ne l}[K_M(\theta,j-l)-K_M(0,j-l)]G_jG_l
+-2\theta Q_M^\chi\right|^2
+\le C_I\left[r^{-2}+\eta^{-6}+\delta/\eta^2\right]\to0.
+\tag{65.22}
+$$
+
+先对导数使用二次型等距，再从零积分即可取得上确界。
+(65.6) 的第二个误差预算、缩放中心界和同一耦合使该比较适用于实际过程。
+因此两坐标共享 $Q_M^\chi$，且未缩放增量消失，证明 (65.18)。
+
+最后，旧非线性截距由共同矩形逼近加入；旧路径由质量尾和方差时钟保持。
+一次完整后验向量 TV 比较只转移有界测试与误差事件，好环境子序列给出条件 BL 收敛。
+这个论证不把新过程的边缘收敛误用为与旧场的联合收敛，也没有断言实际无界矩收敛。
+
+**推论 65.4（完整子列分类与合法分离实例）。** 令 $\alpha_M=\eta_M^2d_M$。恒有
+
+$$
+\mathcal A_M^2=\frac{\alpha_M^2}{r_M+|\alpha_M|}.
+\tag{65.23}
+$$
+
+在紧性条件下，先选 $r_M$ 在 $[0,\infty]$ 中的收敛子列。
+若其极限为零，则 $\alpha_M$ 有界；若为正有限值，则 $d_M/\delta_M$ 有界；
+若为无穷，则 $\alpha_M/\sqrt{r_M}$ 有界。再抽取相应失谐参数和所需奇偶子列，
+定理 65.3 就覆盖全部所得联合极限。这里不假定原序列的参数、奇偶分布或极限律唯一。
+
+这些分支均可在同一原合法算术中实现。取 $m_M\asymp Q^c$：
+$0<c<1/4$ 时令 $\eta_M=2m_M+a/(4m_M^2)$；
+临界时取指定奇偶的 $m_M$ 最接近 $(\sqrt\zeta/2)Q^{1/4}$，再令 $\eta_M=2m_M+b\delta_M/\omega$；
+$c>1/4$ 时令 $\eta_M=2m_M+b\sqrt\delta_M/(2\omega m_M)$。
+分别得到三种指定有限参数。另取任意固定 $d_0\in(0,\pi/2)$ 并令 $\eta_M=2m_M+d_0/\omega$，
+则每种尺度中均有 $\mathcal A_M\to\infty$，从而实际未锚定谱不紧而锚定谱仍紧。
+
+在超临界分支，$b=0$ 时未缩放极限是独立 Gaussian 常数，细增量仍含端点平方；
+$b\ne0$ 时该常数含一个与细增量共享的非 Gaussian 分量。
+不同奇偶分支可有相同新过程边缘律，却与旧场有不同联合律。
+这些是已识别极限的性质，不能改写为有限后验独立性或实际矩收敛。
+
+## 追加锚（本行以下为增补区）
+
+## 66. 跨尺度共同噪声与只有两维的静态谱分量
+
+**定义 66.1（有限载波族及相对尺度块）。** 保留原固定幅度与 beta、两种实际实验、完整固定总量后验、精确中心及定义 54.1 的截距。对固定有限个确定性载波，沿同一合法样本序列令
+
+$$
+\eta_a\to\infty,\quad r_a=\eta_a^2\delta,\quad
+s_a=\log(\eta_a/\delta),\quad s_a\sqrt\delta\le U/2,
+\quad\omega\eta_a=\pi m_a+d_a,\quad d_a\in(-\pi/2,\pi/2].
+\tag{66.1}
+$$
+
+这里 $\omega=\pi/2$。先固定每个 $e_a=m_a\bmod2$，并使每个 $r_a$ 分别趋于零、某个 $\zeta_a\in(0,\infty)$ 或无穷。
+对全部亚临界载波，另要求每个 $\eta_a/\eta_b$ 在 $[0,\infty]$ 中有极限。
+有限正比值定义等价类；称其为尺度块 $\mathfrak b$。为每块选取 $L_{\mathfrak b}$，使
+
+$$
+\eta_a^2/L_{\mathfrak b}\to c_a\in(0,\infty),\qquad
+L_{\mathfrak b}\to\infty,\qquad L_{\mathfrak b}\delta\to0.
+\tag{66.2}
+$$
+
+不同块之间的尺度比趋于零或无穷。该条件是联合结论的假设，不能由每个 $r_a\to0$ 推出。
+有限载波族总能抽取满足这些条件的子列，但不因此具有全序列极限。
+各载波的 $\mathcal V_{a,M},\mathcal D_{a,M}$ 按 (65.2) 定义；超临界还保留 $\mathcal S_{a,M}=\sqrt{r_a}\mathcal D_{a,M}$。
+所有坐标使用同一个实际后验标签向量。
+
+定义两个与载波大小无关的实际统计量和两份符号场：
+
+$$
+\begin{aligned}
+O_{e,M}&=-\frac2{\omega^2\sqrt\delta}
+\sum_{j\ne l}\frac{(-1)^{e(j-l)}}{(j-l)^2}A_jA_l,
+\qquad e\in\{0,1\},\\
+F_{e,M}(v)&=\sum_j(-1)^{ej}A_je^{i\omega vx_j},
+\qquad Y_{e,M}=F_{e,M}(0).
+\end{aligned}
+\tag{66.3}
+$$
+
+在共同计数线隔离事件外将它们置零；该修改只发生在概率趋零的事件上。
+$F_{0,M}$ 是旧 Fourier 场，$Y_{0,M}$ 是旧端点。
+
+**定理 66.2（实际多尺度共同实现）。** 设 (66.1)–(66.2) 成立，且各分支满足相应有界失谐极限：
+
+$$
+\begin{array}{ll}
+r_a\to0:& a_a:=\lim\eta_a^2d_a/\omega\in\mathbb R,\\
+r_a\to\zeta_a\in(0,\infty):& b_a:=\lim d_a/\delta\in\mathbb R,\\
+r_a\to\infty:& u_a:=\lim\eta_ad_a/\sqrt\delta\in\mathbb R.
+\end{array}
+\tag{66.4}
+$$
+
+令 $W_0$ 为旧实 Gaussian 测度，控制测度为 $\rho(x)dx$；$W_1$ 为其一个独立实副本。
+写 $F_e(v)=W_e(e^{i\omega vx})$、$Y_e=W_e(1)$。
+存在共同中心 Gaussian 对 $(O_0,O_1)$，满足
+
+$$
+v_O=\operatorname{Var}O_0=\operatorname{Var}O_1=\frac{128g_0}{45},
+\qquad\operatorname{Cov}(O_0,O_1)=-\frac78v_O.
+\tag{66.5}
+$$
+
+对每个非空块—奇偶对 $(\mathfrak b,e)$，取一个标准 Brownian motion $B_{\mathfrak b,e}$，
+并记其奇延拓为 $B_{\mathfrak b,e}^{\rm odd}$。
+这些 Brownian motions、Gaussian 对 $(O_0,O_1)$、$N_2\sim N(0,2g_0)$ 和场对 $(W_0,W_1)$ 作为各块相互独立。
+在这一共同实现上，全部实际载波联合收敛为
+
+$$
+\begin{array}{ll}
+r_a\to0,\ a\in\mathfrak b:
+&\displaystyle \mathcal V_a(\theta)=O_{e_a}
++4\sqrt{g_0c_a}\,B_{\mathfrak b,e_a}^{\rm odd}((a_a+\theta)/c_a),\\[2mm]
+r_a\to\zeta_a:
+&\displaystyle \mathcal V_a(\theta)=O_{e_a}
++2\sqrt{\zeta_a}\int_0^{b_a/\omega+\theta/\zeta_a}
+(|F_{e_a}(v)|^2-\gamma)\,dv,\\[2mm]
+r_a\to\infty:
+&\displaystyle \left(\mathcal V_a(\theta),\mathcal S_a(\theta)\right)
+=\left(O_{e_a}+\frac{2u_a}{\omega}(Y_{e_a}^2-\gamma),
+2\theta(Y_{e_a}^2-\gamma)\right).
+\end{array}
+\tag{66.6}
+$$
+
+最后一行记号表示相应两个预极限坐标的联合极限。
+负端点积分按有向积分理解；每份奇延拓的正负两半使用同一个 Brownian motion。
+临界与超临界同奇偶载波始终使用同一个 $W_e$；不为每条载波另取独立场。
+
+收敛同时包括 $(O_{0,M},O_{1,M})$、两份符号 Fourier 场、$T_M$ 以及旧端点、profile、bridge、dipole、截距、固定分辨率曲线和既定固定指数 Sobolev 坐标。
+旧截距仍为 $b_\star\gamma+I_2(H;W_0)$。
+路径结论在固定紧区间为联合 C-tight 的紧 $J_1$ 收敛，Fourier 场在固定频率紧区间取 $C^1$ 拓扑。
+先验后验律在数据概率中按条件 BL 收敛；每个固定支持下为一致无条件收敛。
+未知方向使用一个共同相等事件。不声称实际无界矩收敛或有限标签独立。
+
+证明。单载波结论不能自行确定 (66.5) 或各场的共用关系；下面同时比较完整向量。
+第 65 章的最终尺度 Fourier 恒等式对有限载波取最大误差后仍成立，因为
+$\max_a\log\eta_a=O(Q^{1/4})$。有限权重和 floor 误差乘以
+$Q^2\max_a(\eta_a^2/\sqrt\delta+\eta_a^3)$ 后仍趋零。
+精确的 $\mathcal Q_M=V_M+\sqrt\delta T_M$ 和原 $J_M$ 在放大前取消大项。
+这保留了超临界细增量的预算，没有再放大旧的未量化误差。
+
+在共同截止域上，令 $K_{a,\theta}$ 为 (65.5) 的 Ci 核。
+精确共振时有
+
+$$
+K_{a,0}(k)=-\frac{2(-1)^{e_ak}}{\omega^2\sqrt\delta k^2}
++O\!\left(\frac1{\eta_a^2\sqrt\delta k^4}\right).
+\tag{66.7}
+$$
+
+静态主项原始矩阵范数为 $O(\delta^{-1/2})$。
+亚临界锚定核由精确 Ci 积分给出
+$|K_{a,\theta}(k)-K_{a,0}(k)|\le C_I\delta^{-1/2}\min(\eta_a^{-1},\eta_a/|k|)$，
+故行和至多 $C_I\delta^{-1/2}\eta_a(1+\log Q)\le C_IQ^{1/2}(1+\log Q)$。
+临界锚定核及超临界缩放锚定核的精确导数逐项有界，原始范数至多 $C_IQ^2$。
+
+有界失谐时，零点正弦项为
+
+$$
+\frac{2\eta_a}{\omega\sqrt\delta}\,
+\frac{(-1)^{e_ak}\sin(d_ak)}k.
+\tag{66.8}
+$$
+
+亚临界由 $\eta_a^2|d_a|\le C$ 得到同一行和界；临界和超临界分别由
+$d_a/\delta$ 与 $\eta_ad_a/\sqrt\delta$ 有界得到逐项有界。
+余弦项与三阶 Ci 余项仍有多项式原始范数。因此第 56 章 Hilbert 中心位移
+$O_P(Q^{-5/2}+q^{-1/2})$ 对全部坐标同时消失。
+亚临界中心误差至多 $O_P(Q^{-2}(1+\log Q))+o_P(1)$；
+临界与缩放超临界至多 $O_P(Q^{-1/2})+o_P(1)$。
+
+选一个共同核心 $|x_j|\le R_c=\sqrt{D_*\log Q}$，一次逆分布耦合得到同一组标准正态。
+未归一化 Bernoulli 方差下界 $d_j\ge q^{9/10}$ 提供 $q^{-1/8}$ 级核心向量误差；
+核心外条件平方范数至多 $Q^{-60}$，可吸收上述多项式原始范数。
+这些是同一数据好事件上的辅助比较，随后只转移有界测试和误差事件。
+
+为联合分析不同尺度，现将所有核心方差一并换成
+$m_j^\circ=\int_{(j-1/2)\delta}^{(j+1/2)\delta}\rho(x)dx$，继续使用同一组正态，记为 $G_j$。
+原局部 Stirling 展开和占用集中给出相对误差 $O_P(Q^{-1}(1+\log Q))$。
+它乘以亚临界核心范数、临界或缩放超临界核心范数、静态范数，分别给出
+
+$$
+O_P(Q^{-1/2}(1+\log Q)^2),\quad
+O_P(Q^{-1/2}(1+\log Q)^{3/2}),\quad
+O_P(Q^{-3/4}(1+\log Q)).
+\tag{66.9}
+$$
+
+旧对数核的对应误差为 $O_P(Q^{-1/2}(1+\log Q)^{5/2})$。
+对角量连同其方差中心一起替换。所有误差趋零，因而整个族已由一个确定质量 Gaussian 阵比较。
+此处使用的是定量质量替换，不是把第 65 章未量化的环境收敛乘以新增放大因子。
+
+置
+
+$$
+w_\delta(k)=\delta^{-1}\sum_{j,j+k\in\mathcal C_Q}m_j^\circ m_{j+k}^\circ,
+\qquad g(t)=\int\rho(x)\rho(x-t)dx=g_0e^{-\kappa t^2/4}.
+\tag{66.10}
+$$
+
+单元平均的 $L^2$ 逼近及 Gaussian 尾给出
+$0\le w_\delta(k)\le C$ 与
+$\sup_k|w_\delta(k)-g(k\delta)|\le C\delta+Ce^{-cR_c^2}$。
+因此两个静态参考二次型的协方差满足
+
+$$
+\operatorname{Cov}_G(O_{e,M},O_{f,M})
+=\frac{16}{\omega^4}\sum_{k\ge1}\frac{(-1)^{(e+f)k}w_\delta(k)}{k^4}
+\longrightarrow\frac{16g_0}{\omega^4}
+\sum_{k\ge1}\frac{(-1)^{(e+f)k}}{k^4}.
+\tag{66.11}
+$$
+
+因子 16 包括两个滞后方向和 Gaussian 二次型配对。
+普通四次 zeta 和交替和之比为 $-7/8$，得到 (66.5)。
+其标准正态矩阵算子范数均为 $O(\sqrt\delta)$。
+(66.7) 的余项参考方差为 $O(\eta_a^{-4})$；即使缓慢增大的 $\eta_a$ 使原始余项范数不趋零，这个方差仍趋零。
+有界失谐时，余弦差的方差由
+$C\sum_{k\ge1}(1-\cos(d_ak))^2/k^4\to0$ 控制，Ci 余项方差为 $O(\eta_a^{-2})$。
+所以静态低余弦部分始终是同一对 $O_e$；初始正弦部分仍须保留。
+
+亚临界正弦系数在 $2/\sqrt\delta$ 的单位下写为
+
+$$
+h_{a,\theta}(k)=\frac{\eta_a(-1)^{e_ak}}{\omega k}
+\sin\!\left(\frac{\omega(a_{a,M}+\theta)k}{\eta_a^2}\right),
+\qquad a_{a,M}=\eta_a^2d_a/\omega.
+\tag{66.12}
+$$
+
+固定有限维的精确 Ci 比较沿用 (65.7)、(65.14) 的估计；包络为
+$|h_{a,\theta}(k)|\le C_I\min(\eta_a^{-1},\eta_a/k)$。
+它与任一静态 $k^{-2}$ 核的加权内积为 $O_I(\eta_a^{-1})$。
+若 $q_{ab}=\eta_a/\eta_b\le1$，在 $\eta_a^2,\eta_b^2$ 两处分割可得
+
+$$
+\sum_{k\ge1}|h_{a,\theta}(k)h_{b,\psi}(k)|
+\le C_Iq_{ab}(1+|\log q_{ab}|).
+\tag{66.13}
+$$
+
+三个滞后区间的上界分别为 $Cq_{ab}$、$2Cq_{ab}\log(1/q_{ab})$ 和 $Cq_{ab}$。
+它在任何趋零的尺度比下消失，不要求额外对数分离。
+同块时先在 $k\le AL_{\mathfrak b}$ 用 $w_\delta(k)\to g_0$，其余乘积尾至多 $C/A$。
+然后使用第 64 章的周期余弦尖点恒等式：同奇偶得到
+
+$$
+16g_0\sqrt{c_ac_b}\,
+R_{\rm odd}\!\left((a_a+\theta)/c_a,(a_b+\psi)/c_b\right),
+\quad R_{\rm odd}(u,v)=\frac{|u+v|-|u-v|}2;
+\tag{66.14}
+$$
+
+异奇偶则在 $\pi$ 附近使用光滑二次段，协方差趋零。
+这决定 Brownian 块的全部交叉协方差。
+
+这些亚临界标准正态矩阵的算子范数至多
+$C_I\sqrt{r_a}(1+|\log r_a|)\to0$，由加权 Schur 界在
+$\eta_a^2$ 与 $\delta^{-1}$ 处分割得到；Gaussian 尾控制最后一段，界对行位置一致。
+精确 Ci 的任意小增量仍满足 (65.14)，故参考四阶增量至多 $C_I|\theta-\psi|^2$。
+这给出路径紧性，而不要求一个对所有滞后均成立的二次时间增量界。
+
+把两个静态二次型、所有亚临界有限时间坐标及对角量一起组成向量。
+对角算子范数为 $O(\sqrt\delta)$，与全部非对角矩阵的迹内积恰为零。
+任意固定线性组合的算子范数趋零、Hilbert–Schmidt 范数有界且方差收敛，特征函数展开为
+
+$$
+\log E\exp\!\left(it\sum_\nu\lambda_\nu(\xi_\nu^2-1)\right)
+=-t^2\sum_\nu\lambda_\nu^2
++O_t\!\left(\max_\nu|\lambda_\nu|\sum_\nu\lambda_\nu^2\right).
+\tag{66.15}
+$$
+
+因此整个小算子向量先有联合 Gaussian 极限，再由已算出的零交叉协方差得到块间独立。
+
+还需与保留的非 Gaussian 坐标联合。两份符号场在同一 Gaussian 阵上的 Hermitian 和 pseudo Gram 同时满足
+
+$$
+\begin{aligned}
+E F_e(v)\overline{F_f(w)}&=1_{e=f}\Gamma(\omega(v-w)),\\
+E F_e(v)F_f(w)&=1_{e=f}\Gamma(\omega(v+w)),\qquad
+\Gamma(t)=\gamma e^{-t^2/(2\kappa)}.
+\end{aligned}
+\tag{66.16}
+$$
+
+异奇偶的交替单元和对固定光滑测试为 $O(\delta)$，单元投影和等距再扩展到固定 $L^2$ 测试。
+四阶空间质量矩给出两场一致 $H^2$ 界及 $C^1$ 紧性。
+因此所有临界积分端点可置于一个共同固定频率紧区间，超临界平方使用相应共同端点。
+
+对每个固定有限个旧测试、两场 Fourier 测试和端点，将其共同实线性张成空间的投影记为 $P_M$。
+投影随奇偶方向移动、Gram 也可以奇异，但秩一致有界。对上述任意小算子 $K_M$，
+
+$$
+\|K_M-(1-P_M)K_M(1-P_M)\|_{\rm HS}
+\le2\sqrt{\operatorname{rank}P_M}\|K_M\|_{\rm op}\to0.
+\tag{66.17}
+$$
+
+删去部分的中心二次型在参考 $L^2$ 中消失；保留部分与全部投影线性坐标严格独立。
+先作这个有限维极限，再共同细分临界积分的矩形近似，证明小 Gaussian 块独立于整个临界和超临界非线性族。
+旧对数核 $H$ 也先作同一场上的有限张量近似，其对角条带误差为
+$O(\delta(1+|\log\delta|^2))$，空间尾由 Gaussian 质量控制。
+这一步保留旧截距，且没有把各个边缘收敛拼成联合收敛。
+仅用绝对交叉行和会产生未必消失的 $\sqrt r\log Q$；(66.17) 避免了这一额外条件。
+
+临界项的精确余弦导数给出同一场的积分，并保留有限平方扣除 $\sum_jG_j^2\to\gamma$。
+失谐初值由 (66.8) 给出积分的起始正弦部分，故完整上限为 (66.6) 所写。
+超临界初始正弦核趋于 $2u_a/\omega$ 乘以同一符号秩一核。
+细增量直接从最终缩放后的 Ci 导数估计，使用四阶空间矩得到 (65.22) 的误差
+$C_I(r_a^{-2}+\eta_a^{-6}+\delta/\eta_a^2)$。
+因此初值与细增量共享同一个 $Y_e^2-\gamma$，且整个有限载波族同时成立。
+
+旧 profile、bridge、dipole、固定分辨率曲线与 Sobolev 坐标沿相同耦合保留；
+Fourier 的 $C^1$ 紧性处理零频商的连续延拓，旧路径用方差时钟和质量尾。
+有限个路径因子各自 C-tight 给出乘积紧性，前面的共同有限维极限确定联合律。
+最后一次对完整选中标签向量使用后验 TV 界，只转移有界测试和事件。
+数据好事件子列、支持置换等变性和一个共同方向事件分别给出所述三种原实验量词，证明完毕。
+
+**推论 66.3（静态抵消、跨区间依赖与尺度条件的必要边界）。** 精确共振时，任意两条同奇偶载波无论属于哪种尺度，都有
+
+$$
+\mathcal V_{a,M}(0)-\mathcal V_{b,M}(0)\longrightarrow_P0.
+\tag{66.18}
+$$
+
+这是同一实现的抵消，不仅是两个边缘极限相同。
+设 $S=(O_0+O_1)/2$、$A=(O_0-O_1)/2$，则
+
+$$
+S\perp A,\qquad \operatorname{Var}S=\frac{8g_0}{45},
+\qquad\operatorname{Var}A=\frac{8g_0}{3},\qquad O_e=S+(-1)^eA.
+\tag{66.19}
+$$
+
+在有限核中，$S_M$ 只保留偶滞后，$A_M$ 只保留奇滞后；参考协方差恰为零，联合 Gaussian 极限使两部分独立。
+方差的 $1:15$ 分配来自偶滞后四次和占全部的 $1/16$。
+对任意固定实权重 $t_a$，载波组合的静态贡献为
+$\sum_at_aO_{e_a}$，其方差为
+
+$$
+\frac{8g_0}{45}\left(\sum_at_a\right)^2
++\frac{8g_0}{3}\left(\sum_a(-1)^{e_a}t_a\right)^2.
+\tag{66.20}
+$$
+
+它消失当且仅当两个奇偶类的权重和分别为零。
+这个判据仅取消低余弦静态分量；有失谐时，(66.6) 的初始 Brownian、能量或端点平方项还在。
+
+即使两条亚临界载波属于不同尺度块，其未锚定极限仍因共享 $O_e$ 而相关；
+锚定后才只留下独立的块噪声。
+相同奇偶的临界能量与超临界细增量还满足
+
+$$
+\operatorname{Cov}\!\left(
+2\sqrt\zeta\int_0^{\theta/\zeta}(|F_e(v)|^2-\gamma)dv,
+2\psi(Y_e^2-\gamma)\right)
+=8\psi\sqrt\zeta\int_0^{\theta/\zeta}\Gamma(\omega v)^2dv.
+\tag{66.21}
+$$
+
+当 $\theta,\psi>0$ 时严格为正；异奇偶则场导出的两项独立。
+这是已识别极限的协方差，不主张实际矩收敛。
+
+最后，取 $\eta_1=4n_M\asymp Q^{1/8}$，并交替令 $\eta_2=\eta_1$ 或 $2\eta_1$。
+二者始终精确共振、同为偶奇偶类且亚临界，各自边缘律相同。
+时间一处的动态交叉协方差在两子列分别为 $16g_0$ 与 $8g_0$，静态贡献均为 $v_O$。
+定理 66.2 给出的两个联合 Gaussian 子列律不同，故没有全序列联合极限。
+这说明相对尺度假设有实质作用；论证比较的是两个极限分布，而不是以实际方差振荡替代分布论证。
+
+所需尺度与奇偶安排均可由 $4\operatorname{round}((t_M-2e)/4)+2e$ 实现，
+分别取 $t_M=\sqrt{c_a}Q^{\xi_{\mathfrak b}}$、$\sqrt{\zeta_a}Q^{1/4}$ 或 $Q^\xi$，
+其中 $0<\xi_{\mathfrak b}<1/4<\xi$；不同亚临界块还可任意缓慢分离。
+三种失谐按第 65 章的小扰动加入，不改原样本算术。
+结论限于固定有限载波族、固定紧区间和所列子列；不外推为增长载波族、任意振荡尺度的全序列极限或全球原创性声明。
+
+## 追加锚（本行以下为增补区）
+
+## 67. 任意相位超临界斜率的完整收敛分类
+
+**定义 67.1（不限制相位的精细锚定）。** 保持定义 54.1 的实际模型、精确中心、完整选择窗口及有限截距，令
+
+```math
+\eta\to\infty,\qquad r_M=\eta^2\delta\to\infty,\qquad
+s=\log(\eta/\delta),\qquad 0\le s\sqrt\delta\le U/2,
+\qquad z_\theta=s+\theta/\eta^3,
+```
+
+```math
+\mathcal V_M(\theta)=\eta^{3/2}e^{z_\theta/2}
+ [\mathcal Z_M(z_\theta\sqrt\delta)-\mathcal J_M-2z_\theta\sqrt\delta T_M],
+\qquad
+\mathcal S_M(\theta)=\sqrt{r_M}[\mathcal V_M(\theta)-\mathcal V_M(0)].
+```
+
+式 (67.1)。
+
+取唯一约定
+
+```math
+\varphi_M=\omega\eta=\pi m_M+d_M,\qquad
+ d_M\in(-\pi/2,\pi/2],\qquad \ell_M=|d_M|/\delta,
+\qquad \omega=\pi/2.
+```
+
+式 (67.2)。
+
+在共同计数事件上令 $`Z_{\varphi,M}=\sum_j e^{i\varphi_Mj}A_j`$；在任意数据上，按实际分数组标记 $`x_g`$ 将系数定义为 $`e^{i(\varphi_M/\delta)x_g}`$。
+两者在该事件上相同。仍记 $`\mathcal Q_M=\sum_gA_g^2`$。
+令 $`W_0=W_\rho`$ 为旧实 Gaussian 测度，$`W_1`$ 为独立实副本，
+$`F_e(v)=W_e(e^{i\omega vx})`$。
+本章旧联合坐标取端点、空间累积场及桥、偶极、固定紧频段 Fourier 场、$`\mathcal J_\infty=b_*\gamma+I_2(H;W_0)`$ 和 $`N_2`$，均保留同一实现。
+
+**定理 67.2（任意相位实际归约与收敛当且仅当）。** 对每个固定紧区间 $`I`$，
+
+```math
+\sup_{\theta\in I}
+\left|\mathcal S_M(\theta)
+ -2\theta\bigl(|Z_{\varphi,M}|^2-\mathcal Q_M\bigr)\right|
+ \longrightarrow_P0.
+```
+
+式 (67.3)。
+
+不加相位假设，$`\mathcal S_M`$ 已为 C-tight。
+若 $`I`$ 含非零时刻，则其完整序列收敛，当且仅当 $`\ell_M`$ 在 $`[0,\infty]`$ 中收敛。
+对有限极限 $`\ell`$，极限为 $`2\theta E_\ell`$，其中
+
+```math
+E_\ell\overset d=
+ \lambda_+(\ell)G_+^2+\lambda_-(\ell)G_-^2-\gamma,
+\qquad
+\lambda_\pm(\ell)=\frac\gamma2(1\pm e^{-2\ell^2/\kappa}),
+```
+
+式 (67.4)。
+
+$`G_+,G_-`$ 独立标准实 Gaussian；在 $`\ell=\infty`$ 时，$`E_\infty`$ 为均值 $`\gamma`$ 的指数变量减去 $`\gamma`$。
+与全部旧坐标联合的完整序列收敛，当且仅当下列二者之一成立：
+
+- $`\ell_M\to\infty`$，此时斜率独立于整个旧场和 $`N_2`$；
+- $`\ell_M\to\ell<\infty`$ 且 $`m_M`$ 的奇偶性最终固定为 $`e`$，此时斜率为 $`2\theta\{|F_e(\ell/\omega)|^2-\gamma\}`$。
+
+有限极限时，$`d_M`$ 的符号无需稳定。只把 $`T_M`$ 添入边缘过程不改变第一个判据。
+若 $`I=\{0\}`$，过程恒零，不存在上述必要相位条件。
+结论在均匀支持先验下为条件 BL 收敛、以数据概率成立；(67.3) 的条件超差概率也以数据概率趋零。
+对每个固定支持，结论无条件且一致成立；两种平稳实验和共同方向一致事件均保留。
+
+**证明。** 首先在实际有限统计上比较。
+第 61、62 章的有限 Fourier、权重及取整余项记为 $`\varepsilon_M`$。
+本章总放大因子为 $`\eta^3`$，而 $`\log\eta=O(Q^{1/4})`$、$`h=e^{-c_hQ^3+O(1)}`$，所以
+$`Q^2\eta^3\varepsilon_M\to0`$。
+$`\mathcal Q_M=O_P(1)`$ 由辅助总方差、精确中心和有界事件比较得到。
+有限截距与平方和的抵消仍是精确恒等式；不能用一个未给速率的旧弱极限代替此比较。
+
+对非零滞后 $`k`$，令
+
+```math
+K_M(\theta,k)=\frac{2\eta^2}{\sqrt\delta}e^{\theta/(2\eta^3)}
+ \operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|).
+```
+
+式 (67.5)。
+
+实际锚定过程由 $`\sqrt{r_M}[K_M(\theta,k)-K_M(0,k)]`$ 的非对角二次型一致逼近。
+只对这个光滑有限核求导，有
+
+```math
+\sqrt{r_M}\,\partial_\theta K_M(\theta,k)
+ =2e^{\theta/(2\eta^3)}
+ \left[\cos(\omega\eta e^{\theta/\eta^3}k)
+ +\tfrac12\operatorname{Ci}(\omega\eta e^{\theta/\eta^3}|k|)\right].
+```
+
+式 (67.6)。
+
+令 $`y=k\delta`$、$`\tau_\eta(t)=\eta^3(e^{t/\eta^3}-1)`$。
+余弦相位相对 $`\varphi_Mk`$ 的变化恰为 $`\omega\tau_\eta(t)y/r_M`$。
+由 $`|\cos(u+v)-\cos u|\le|v|`$ 和 $`|\operatorname{Ci}(v)|\le C/v`$，
+
+```math
+\sup_{t\in I}\left|
+ \sqrt{r_M}\partial_tK_M(t,k)-2\cos(\varphi_Mk)\right|
+ \le C_I\left(\eta^{-1}|k|^{-1}+\eta^{-3}+|y|/r_M\right).
+```
+
+式 (67.7)。
+
+两边被比较的核还各自一致有界。
+取同一辅助独立标签向量的组和 $`U_j`$，其方差为 $`v_j`$。
+实际两行读数给出 $`\mathbb E_{\rm data}v_jv_l\le Ca_ja_l`$，$`j\ne l`$，并有
+$`\sum a_j+\sum x_j^2a_j\le C`$，低计数区域只留 $`Q^Ce^{-c\lambda}`$。
+对时间积分用 Cauchy–Schwarz，对非对角二次型用独立组等距式，遂得
+
+```math
+\mathbb E_{\rm data}\mathbb E_{\rm aux}
+ \sup_{\theta\in I}\left|
+ \int_0^\theta\sum_{j\ne l}
+ [\sqrt{r_M}\partial_tK_M(t,j-l)-2\cos(\varphi_M(j-l))]U_jU_l\,dt
+ \right|^2
+ \le C_I(\eta^{-2}+r_M^{-2})+Q^Ce^{-c\lambda}.
+```
+
+式 (67.8)。
+
+这里仅需二阶空间权重，因为
+$`\sum_{j,l}(x_j-x_l)^2a_ja_l\le4(\sum a_j)(\sum x_j^2a_j)`$。
+完整截断窗口至多 $`CQ^2`$ 组，核一致有界，所以原始矩阵范数至多 $`C_IQ^2`$。
+第 56 章的 Hilbert 精确中心误差因此只贡献 $`O_P(Q^{-1/2})+o_P(1)`$，不含 $`\eta`$ 放大，也不含静态正弦核。
+最后使用同一实向量的恒等式
+
+```math
+\sum_{j\ne l}\cos(\varphi(j-l))A_jA_l
+ =\left|\sum_je^{i\varphi j}A_j\right|^2-\sum_jA_j^2.
+```
+
+式 (67.9)。
+
+一次完整选择标签向量的 TV 比较只作用于有界事件，移除共同计数坏事件，便得 (67.3)。
+上述均方读数属于数据环境和辅助标签，不宣称实际后验矩的收敛。
+
+为识别联合律，在同一个 $`\sqrt{D\log Q}`$ 空间核心上采用第 62 章的单调分位耦合。
+非标准化 Bernoulli 方差至少 $`e^{c\lambda}`$，标准化平方耦合误差至多 $`Cd_j^{-1/6}`$；完整组向量的平方误差指数小。
+(67.6) 的原始范数 $`CQ^2`$、旧对数核的 $`CQ^2(1+\log Q)`$ 及对角核的 $`\delta^{-1/2}`$ 同时可承受该误差。
+保留随机 $`v_j`$；总质量和二阶空间尾控制线性坐标，平方方差钟控制 $`T_M`$，旧对数核按共同矩形和 Wick 减项逼近。
+这些比较全用一个向量。
+
+固定空间截断和 BV 测试后，先把环境误差以绝对质量分出，再作 Abel 求和，得到
+
+```math
+C_{R,f,g}\left(\varepsilon_{{\rm env},M}(R)
+       +\frac{\delta}{|1-e^{i\psi_M}|}\right).
+```
+
+式 (67.10)。
+
+此处 $`\psi_M=\varphi_M`$ 管旧场交叉 Gram，$`\psi_M=2\varphi_M`$ 管伪 Gram。
+固定测试和截断后先取数组极限，再移除尾部，故无额外对数余量。
+若 $`\ell_M\to\infty`$，两项振荡 Gram 均消失，而 Hermitian Gram 保留 $`\rho`$，得到独立于旧场的 proper 复 Gaussian 测度。
+若 $`d_M/\delta\to b`$ 且奇偶性为 $`e`$，
+$`e^{i\varphi_Mj}=(-1)^{ej}e^{i(d_M/\delta)x_j}`$，极限为 $`f\mapsto W_e(e^{ibx}f)`$。
+奇类交叉旧场的第一谐波消失，但自身第二谐波不消失。
+
+同一 Gaussian 向量上，$`T_M`$ 的矩阵为 $`\operatorname{diag}(v_j/\sqrt\delta)`$，算子范数 $`O(\sqrt\delta)`$。
+第 62 章的二次型加线性型联合行列式公式对任意有限个移动载波方向仍成立，余项由算子范数乘该方向范数平方控制。
+这先证明联合 Gaussian 极限，再给出 $`N_2`$ 与整个场族的独立性。
+共同旧矩形逼近保留 $`I_2(H;W_0)`$，不从分别的边缘律拼接。
+每个固定频段上的 $`H^1`$ 二阶界由 $`\sum_j(1+x_j^2)v_j`$ 控制，给出紧性及共同 Fourier 路径。
+$`\mathcal Q_M\to\gamma`$ 由辅助平方和方差 $`2\sum v_j^2+B^{-2}\sum v_j=o_P(1)`$，再转为概率事件得到。
+
+Gaussian 控制密度的 Fourier 变换给出有限 $`b`$ 时
+$`\mathbb E|Z|^2=\gamma`$、$`\mathbb EZ^2=\gamma e^{-2b^2/\kappa}`$。
+实虚部独立且方差为 (67.4)，包括 $`b=0`$ 的退化情况。
+这些谱公式是经典 Gaussian 二次型事实，出处与适用条件见 [相关文献条目](../../../Library/Dynamics/iyer2025empirical.md)。
+
+载波系数绝对值为一，辅助二阶矩一致紧，故 (67.3) 将任意相位过程一致逼近为紧斜率的连续仿射路径，证明 C-tight。
+极限能量的 Laplace 变换为
+
+```math
+\mathbb Ee^{-tE_\ell}
+ =e^{\gamma t}\left[1+2\gamma t+
+   \gamma^2(1-e^{-4\ell^2/\kappa})t^2\right]^{-1/2},\qquad t\ge0.
+```
+
+式 (67.11)。
+
+对任何 $`t>0`$，此式区分所有 $`\ell\in[0,\infty]`$。
+若 $`\ell_M`$ 收敛，每个子序列再取符号及奇偶性稳定的子序列，(67.4) 给出同一能量边缘律。
+若不收敛，紧化区间上两个不同聚点给出不同的非零时刻极限律，完整过程不能收敛。
+这是比较已识别的极限分布，不使用实际矩收敛。
+
+对有限 $`\ell`$，实测度满足 $`|F_e(-v)|^2=|F_e(v)|^2`$，所以符号变化连旧联合律也不改变。
+奇偶性却由旧端点 $`Y=W_0(1)`$ 区分：
+
+```math
+\operatorname{Cov}(|F_0(\ell/\omega)|^2-\gamma,Y^2-\gamma)
+ =2\gamma^2e^{-\ell^2/\kappa}>0,
+\qquad
+\operatorname{Cov}(|F_1(\ell/\omega)|^2-\gamma,Y^2-\gamma)=0.
+```
+
+式 (67.12)。
+
+两种奇偶性无限次出现即给出不同联合子序列律；最终固定则足够。
+$`\ell=\infty`$ 时所有相位给出同一独立 proper 端点，不再需要奇偶性条件。
+条件结论由好环境子序列、条件近似概率和一次向量比较得到；支持置换等变性给出固定支持的一致无条件结论。
+共同方向事件同时作用于全部坐标。证毕。
+
+**定理 67.3（跨临界尺度仍可共享一个能量场）。** 取有限个符合原外频范围的确定性载波，每个 $`r_{a,M}=\eta_a^2\delta`$ 或趋于 $`\zeta_a\in(0,\infty)`$，或趋于无穷。
+添入 $`\varphi_{0,M}=0`$ 表示旧场。
+假定每个实际相位差和相位和的 $`2\pi`$ 主值除以 $`\delta`$，分别收敛到有限 $`\Delta_{ab}`$、$`\Sigma_{ab}`$，或其绝对值趋于无穷；包括自身相位和。
+令 $`C_0=W_0`$，场族 $`C_a`$ 由第 63 章相同的兼容 Hermitian 与伪 Gram 确定，$`F_a(v)=C_a(e^{i\omega vx})`$。
+则共同旧坐标及 $`T_M`$ 与下列所有极限联合成立：
+
+```math
+\mathcal S_{a,M}(\theta)\Longrightarrow
+ 2\theta(|F_a(0)|^2-\gamma),\qquad r_{a,M}\to\infty,
+```
+
+```math
+\mathcal V_{a,M}(\theta)-\mathcal V_{a,M}(0)\Longrightarrow
+ \frac2{\sqrt{\zeta_a}}\int_0^\theta
+ (|F_a(t/\zeta_a)|^2-\gamma)\,dt,
+ \qquad r_{a,M}\to\zeta_a\in(0,\infty).
+```
+
+式 (67.13)。
+
+$`N_2`$ 独立于整个场族；各载波之间是否独立，由两类 Gram 共同决定。
+这些相位条件是本联合场结论的充分条件，不宣称是所有非线性能量元组收敛的必要条件。
+
+**证明。** 固定有限个载波，前一证明的同一核心、精确中心、耦合和旧矩形逼近同时适用。
+第 63 章的相位分类仅用实际相位和、差的关系以及 (67.10)，与 $`r_{a,M}`$ 的极限类别无关。
+有限极限的 Gram 分别为 $`\int f\bar g e^{i\Delta_{ab}x}\rho dx`$ 和 $`\int fg e^{i\Sigma_{ab}x}\rho dx`$；逃逸者为零。
+这些都是同一个实际 Gaussian 向量的实协方差矩阵极限，因此自动相容，不能任意拼一个两两数值表。
+每个共轭类共用一个 proper 复测度或一个实测度，反向载波用同一场的共轭，而非另抽副本。
+
+超临界坐标直接用 (67.3)。临界坐标将 (67.6) 除以 $`\sqrt{r_{a,M}}`$：Ci 项的积分均方误差为 $`O(\eta_a^{-2})`$，相位中的频率映射为
+$`\eta_a(e^{t/\eta_a^3}-1)/\delta\to t/\zeta_a`$。
+同一向量的 (67.9) 及共同 Fourier 紧性给出第二个积分极限。
+紧的场上确界控制积分路径的 Lipschitz 常数，有限取整误差一致趋零，遂得 C-tight 紧区间 $`J_1`$ 联合收敛。
+有限个原始矩阵范数都至多 $`CQ^2`$ 乘固定常数；一次完整向量比较和同一方向事件同时转移全部坐标。
+概率量词与定理 67.2 相同。证毕。
+
+**命题 67.4（频率大小分离不蕴含能量独立）。** 固定 $`\zeta>0`$、$`\psi\in(0,\pi)`$ 及 $`b\in\mathbb R`$。
+可取合法临界载波 $`\eta_c\equiv\psi/\omega\pmod4`$，距 $`\sqrt{\zeta/\delta}`$ 至多二；并取合法超临界载波
+$`\eta_s=4n_M+\psi/\omega+(b/\omega)\delta`$，其中 $`\log n_M=cQ^{1/4}+o(Q^{1/4})`$，$`0<c<U/2`$。
+它们的强度比可指数增长，但极限仍共用一个独立于旧场的 proper 测度 $`C`$，且
+
+```math
+\operatorname{Cov}\left(
+ 2\theta(|C(e^{ibx})|^2-\gamma),
+ \frac2{\sqrt\zeta}\int_0^t(|C(e^{i\omega ux/\zeta})|^2-\gamma)\,du
+ \right)
+ =\frac{4\theta\gamma^2}{\sqrt\zeta}
+   \int_0^t e^{-(b-\omega u/\zeta)^2/\kappa}\,du.
+```
+
+式 (67.14)。
+
+特别地，$`\theta,t>0`$ 时右侧严格为正。
+
+**证明。** 两相位差除以 $`\delta`$ 等于 $`b`$，自身和交叉相位和都远离 $`2\pi\mathbb Z`$。
+定理 67.3 因此给出同一场的两个调制，而非独立场。
+外频限制由 $`c<U/2`$ 和 $`\log(1/\delta)\sqrt\delta\to0`$ 满足。
+对共同 proper Gaussian 坐标用 Wick 公式
+$`\operatorname{Cov}(|Z_1|^2,|Z_2|^2)=|\mathbb EZ_1\overline Z_2|^2`$，再用 Gaussian Fourier 变换及有向积分，即得 (67.14)。
+这里只计算极限变量的协方差。证毕。
+
+## 追加锚（67 章后）
+
+## 68. 一个精确二次标量恢复全部后验组电荷
+
+**定义 68.1（实际模型的精确能量增广）。** 保持定义 39.1 的固定振幅、固定 $\beta\in(1/2,1)$、
+实际平稳独立对实验和连续路径实验，以及定义 54.1 的完整选择窗口与精确中心。
+将十进制指数记为 $d_n$：
+
+```math
+d_1=1,\quad d_{n+1}=10^{5d_n},\quad Q_n=10^{d_n},\quad
+P_n=\sum_{l\le n}10^{d_n-d_l},\quad
+\alpha=\sum_{l\ge1}10^{-d_l}
+       =\frac{\log(1+r)}{-\log(1-r)}.
+```
+
+式 (68.1)。
+
+省略序列下标，记 $a=(1+r)/2$、$b=(1-r)/2$、
+$\phi=a\log(1+r)+b\log(1-r)>0$，以及
+
+```math
+\lambda=Q^3,\quad M=2^{\lfloor\phi\lambda/(\beta\log2)\rfloor},
+\quad T=2M\lambda,\quad k_0=\lfloor a\lambda\rfloor,
+\quad l_0=\lambda-k_0,
+```
+
+```math
+z_0=k_0\log(1+r)+l_0\log(1-r),\quad q=\lfloor Me^{-z_0}\rfloor,
+\quad\tau=\log(M/q),\quad \epsilon=\frac{rq}{M-q},
+\quad w=\sqrt{\lambda/q},\quad\delta=Q^{-1/2},\quad B^2=\frac q{Q\sqrt\lambda}.
+```
+
+式 (68.2)。
+
+先正确对齐方向。对正类候选行，以原始计数 $k_i,l_i$ 定义
+
+```math
+W_i=k_i\log\frac{1+r}{1-\epsilon}
+       +l_i\log\frac{1-r}{1+\epsilon},\qquad
+J=\{i:\tau-w<W_i\le\tau+w\}.
+```
+
+式 (68.3)。
+
+在全行计数截断与格线隔离事件上，$J$ 的完整等分数组对应
+$(k_0+jQ,l_0+jP)$，$|j|\le K_M$，其中确定性 $K_M=O(Q^2)$ 覆盖整个截断窗口。
+设 $\mathscr X_M$ 为全部原始数据，$\pi_i=\mathbb P(i\in S\mid\mathscr X_M)$ 为均匀大小 $q$ 支持先验的完整后验边缘，令
+
+```math
+C_j=|J_j|,\quad R_j=|S\cap J_j|,\quad
+\mu_j=\sum_{i\in J_j}\pi_i,\quad A_j=(R_j-\mu_j)/B,
+\quad\mathcal I_M=\{j:C_j>0\},\quad D_M=\sum_jj\delta A_j.
+```
+
+式 (68.4)。
+
+空组补零至对称范围。取原数据可测方差 $V_M=B^{-2}\sum_{i\in J}p_i(1-p_i)$，
+其中 $p_i$ 为原共同校准的辅助 Bernoulli 参数，完整后验中心仍是 $\pi_i$。
+定义 54.1 的精确关系为
+
+```math
+\mathcal Q_M=\sum_jA_j^2=V_M+\sqrt\delta\,T_M.
+```
+
+式 (68.5)。
+
+考察增广观测 $(\mathscr X_M,\mathcal Q_M)$ 或等价的 $(\mathscr X_M,T_M)$。
+新增标量来自同一潜在标签实现；它不被声明为原始数据本身可计算的标签统计量。
+参数与实数读数精确已知，允许可测的精确相等检验。
+截断或隔离失败时附原始数据可见的失败旗并取默认输出。
+
+**定理 68.2（实际后验中心的不同消失阶与单标量恢复）。** 对任意固定充分大的 $D_0>1$，
+存在纯数据事件 $H_M$，使原两种实验均满足
+
+```math
+\sup_{S:|S|=q,\ \mathcal E\in\{\mathrm{pair},\mathrm{path}\}}
+ \mathbb P_S^{\mathcal E}(H_M^c)
+ \le CM^{1-D_0}+4e^{-c_*\lambda}=o(1),\qquad
+ c_*=\frac9{16}\log(9/8)-\frac1{16}>0.
+```
+
+式 (68.6)。
+
+每份 $H_M$ 内数据上，$1$ 与全部占据组的精确中心 $(\mu_j)_{j\in\mathcal I_M}$ 在 $\mathbb Q$ 上线性无关。
+因此映射
+
+```math
+(R_j)_{j\in\mathcal I_M}\longmapsto
+      \sum_{j\in\mathcal I_M}(R_j-\mu_j)^2
+```
+
+式 (68.7)。
+
+在整个 $\mathbb Z^{\mathcal I_M}$ 上单射。
+同一个可测解码器从 $(\mathscr X_M,T_M)$ 恢复全部所选组计数、组电荷与偶极，
+对每个固定支持的无条件错误概率由 (68.6) 控制。
+在均匀支持先验下，条件恢复概率于 $H_M$ 上精确为一。
+该断言不要求偶部读数，不区分组内同分数站点的个别标签。
+已知反向实验先作反向对齐；未知方向的共同判向版本，其无条件错误界只增加原来的 $O(q^{-1})$。
+
+**证明。** 先核对实际固定振幅的算术性质。
+十进制尾满足 $0<\eta_n:=\alpha-P_n/Q_n<2\,10^{-Q_n^5}$，且 $P_n<Q_n$、$P_n\equiv1\pmod {10}$。
+若 $r$ 代数，则 $1+r$、$1-r$ 是固定的非零、非一正代数数。
+Baker–Wüstholz 1993 原文第 20 页主定理，对固定代数数、固定对数支及非零整数线性形式给出
+$\log|u\log(1+r)+v\log(1-r)|>-C\log\max(e,|u|,|v|)$。
+取实自然对数、$u=Q_n$、$v=P_n$，得到
+
+```math
+0<\Lambda_n=Q_n\log(1+r)+P_n\log(1-r)
+ =[-\log(1-r)]Q_n\eta_n
+ <2[-\log(1-r)]Q_n e^{-(\log10)Q_n^5}.
+```
+
+式 (68.8)。
+
+正尾保证形式非零；固定域次数与代数高度满足该定理条件，系数高度至多 $\log Q_n$。
+其下界与 (68.8) 矛盾，故实际 $r$ 超越。这是成熟对数线性形式定理的直接应用。
+
+下面给出保留完整后验归一化的有限代数论证。
+固定数据、$M,q$ 及实际 $r$ 所选择的组集合，只在代数表达式内引入变量 $t$。
+记 $c=q/(M-q)<1$，
+
+```math
+L_i(t)=\left(\frac{1+t}{1-ct}\right)^{k_i}
+       \left(\frac{1-t}{1+ct}\right)^{l_i},\qquad
+\pi_i(t)=\frac{L_i(t)e_{q-1}(L_l(t):l\ne i)}{e_q(L_l(t):l\in C_+)},
+\quad \mu_j(t)=\sum_{i\in J_j}\pi_i(t).
+```
+
+式 (68.9)。
+
+两种实验的支持似然都是 $\prod_{i\in S}L_i(r)$ 乘支持无关因子；
+路径平稳初始分布均匀且支持无关，故没有遗漏依赖支持的路径次序因子。
+固定大小的正权重乘积律及其初等对称归一化是经典 rejective law。
+因此各 $\mu_j(t)\in\mathbb Q(t)$，在实际 $r$ 的分母严格为正。
+这里不随 $t$ 重新取窗口、分组或参数；负 $t$ 仅用于同一有理函数的代数分析。
+
+将所有 $M$ 行的 $k_i$ 按非降次序列成 $k_{(1)},\ldots,k_{(M)}$，
+记 $s_h=\sum_{u=1}^h k_{(u)}$、$s_0=0$。
+暂设每个所选组的共同计数 $k_j$ 严格大于 $k_{(q)}$，且不同组的 $k_j$ 不同。
+令 $y=1+t\downarrow0$。逐行有
+
+```math
+L_i(-1+y)=\kappa_i y^{k_i}(1+O_i(y)),\qquad
+\kappa_i=\frac{2^{l_i}}{(1+c)^{k_i}(1-c)^{l_i}}>0.
+```
+
+式 (68.10)。
+
+有限和的最低次项系数均为正，所以 $e_q(L)$ 的阶精确为 $s_q$。
+所选行 $i$ 满足 $k_i>k_{(q)}$，删除它不改变最小 $q-1$ 个计数之和；
+于是 $e_{q-1}(L_l:l\ne i)$ 的阶精确为 $s_{q-1}$。
+同组求和亦无抵消，得到
+
+```math
+\mu_j(-1+y)=a_j y^{k_j-k_{(q)}}(1+O_j(y)),\qquad a_j>0.
+```
+
+式 (68.11)。
+
+最低计数可以并列，因其领先系数相加而不相消，论证不受影响；$q=1$ 时用 $e_0=1$。
+所有占据组的指数是互异的正整数。
+若 $a_0+\sum_j b_j\mu_j(t)=0$ 是实常系数关系，先令 $y\downarrow0$ 得 $a_0=0$；
+再选 $b_j\ne0$ 中最小指数，除以对应 $y$ 次幂并取极限，得到 $b_ja_j=0$，矛盾。
+故 $1,\mu_j(t)$ 在 $\mathbb R$ 上线性无关。
+一个有理仿射关系若在超越数 $r$ 成立，清分母后即为恒零多项式，
+与此函数独立性矛盾。于是 $1,\mu_j(r)$ 在 $\mathbb Q$ 上线性无关。
+此步在每份有限数据上先完成，不交换增长维数极限与端点极限；不需要维数一致的领先系数下界。
+
+现证明上述计数分离在实际数据中以 (68.6) 的概率成立。
+原取整尺度给出
+$\log M=\phi\lambda/\beta+O(1)$、
+$\log q=\phi(1-\beta)\lambda/\beta+O(1)$、
+$\log\epsilon=-\phi\lambda+O(1)$、$\tau-z_0=O(q^{-1})$。
+因此最终 $q<M/4$、$c<1$。
+原模型的一行生成函数可直接控制实际路径行。
+对一个正类标记行，置
+$u=(z_++z_-)/2-1$、$v=(z_+-z_-)/2$、
+$A_z=(u+b_S(i)v)/(2M)$、$B_z=(v+b_S(i)u)/(2M)$，
+其中支持上的 $b_S(i)=r$，正类补集上为 $-\epsilon$。
+独立对生成函数为 $(1+A_z)^T$，平稳路径生成函数精确为
+
+```math
+e_1^{\mathsf T}
+ \begin{pmatrix}1+A_z&B_z\\ A_z&B_z\end{pmatrix}^{T}e_1.
+```
+
+式 (68.12)。
+
+这来自原转移核的秩二因式分解与 $\sum_i b_S(i)=0$。
+固定复多圆盘上，主特征值是 $1+A_z+O(M^{-2})$，系数是 $1+O(M^{-1})$，
+另一特征值贡献至多 $C2^{-T}$；展开主特征值的对数后，
+实际生成函数与 Poisson 比较函数之差至多 $C\lambda/M$ 乘对应的实部指数包络。
+信号比较均值为 $(a\lambda,b\lambda)$，背景为
+$((1-\epsilon)\lambda/2,(1+\epsilon)\lambda/2)$。
+特别地，任一固定正标记处实际生成函数最终至多比较函数的两倍，
+一致于支持位置和两种实验。这里未假设独立观测行。
+
+取 $z_+=z_-=2$ 得 $\mathbb E2^{k_i+l_i}\le2e^\lambda$。
+由 Markov 及全行并集界，选择充分大的固定 $C_0$ 可使
+
+```math
+\mathcal C_M=\{\max_{i\in C_+}(k_i+l_i)\le C_0\lambda\},
+\qquad \sup_{S,\mathcal E}\mathbb P_S^{\mathcal E}(\mathcal C_M^c)
+       \le CM^{1-D_0}.
+```
+
+式 (68.13)。
+
+在截断内，去补偿分数差是
+$[-\log(1-r)]\{\eta(k-k_0)+[P(k-k_0)-Q(l-l_0)]/Q\}$。
+有
+$\lambda\eta+\epsilon\lambda+q^{-1}=o(w)$ 与 $w=o(Q^{-1})$；
+第一式中的补偿项使用 $\epsilon\lambda/w=\epsilon\sqrt{\lambda q}\to0$，其余由原超小尾及 $q\to\infty$ 得到。
+非零整数分子有至少固定常数乘 $Q^{-1}$ 的间隔，故窗口恰选截断内的格线点。
+$P,Q$ 互素给出 $(k,l)=(k_0+jQ,l_0+jP)$，其分数严格位于窗口内部，
+且精确步长
+$[-\log(1-r)]Q\eta+\epsilon(Q-P)+O(\epsilon^2Q)>0$。
+所以不同组有不同 $j$，进而有不同 $k_j$。
+
+本振幅还提供一致的低计数储备。
+函数 $r\mapsto\log(1+r)/[-\log(1-r)]$ 严格递减，
+因为 $(1+r)\log(1+r)+(1-r)\log(1-r)$ 在零处为零、导数为 $\log((1+r)/(1-r))>0$。
+十进制构造给 $1/10\le P/Q<\alpha<1/8$，而
+$\log(31/16)/\log16>1/8$，于是 $r>15/16$、$a>31/32$、$b<1/32$。
+以 $\xi=a\lambda-k_0\in[0,1)$ 记地板误差。
+任一非负格线点满足
+
+```math
+k_j\ge k_0-\frac{l_0}{P/Q}
+ =\lambda\left(a-\frac b{P/Q}\right)-\xi\left(1+\frac1{P/Q}\right)
+ >\frac{21}{32}\lambda-11>\frac9{16}\lambda
+```
+
+式 (68.14)。
+
+最后一个不等式最终成立，且覆盖整条可行计数线。
+对每个背景行取 $z_+=9/8,z_-=1$，其正计数比较均值至多 $\lambda/2$，所以
+
+```math
+\mathbb E(9/8)^{k_i}\le2e^{\lambda/16},\qquad
+\mathbb P(k_i>9\lambda/16)\le2e^{-c_*\lambda}.
+```
+
+式 (68.15)。
+
+$c_*>0$ 由 $\log(9/8)>1/9$ 得出；严格尾保留非整数阈值。
+定义纯数据事件
+$\mathcal R_M=\{\#\{i\in C_+:k_i\le9\lambda/16\}\ge q\}$。
+若该事件失败，至少 $M-2q+1\ge M/2$ 个背景行的计数超过阈值。
+这些大计数背景行的期望总数至多 $2Me^{-c_*\lambda}$，再次用 Markov 得
+$\sup_{S,\mathcal E}\mathbb P_S^{\mathcal E}(\mathcal R_M^c)\le4e^{-c_*\lambda}$。
+概率证明中用背景身份作下界；事件和解码器不需要知道这些身份。
+取 $H_M=\mathcal C_M\cap\mathcal R_M$，其上
+$k_{(q)}\le9\lambda/16<\min_j k_j$，故 (68.11) 适用，且 (68.6) 成立。
+
+最后，两个整数向量在 (68.7) 下相同会给出
+
+```math
+2\sum_j(R_j-R'_j)\mu_j
+     =\sum_j(R_j^2-(R'_j)^2).
+```
+
+式 (68.16)。
+
+有理独立性迫使每个 $R_j=R'_j$。
+乘以已知 $B^2$ 即将相同能量转成该等式，不要求 $B$ 有理。
+可测解码器可按固定顺序枚举所有大小 $q$ 支持，选择首个与测得能量匹配者。
+每个有限规模的数据空间有限，候选有限，相等事件是 Borel 集，故该解码器可测。
+真实支持保证存在匹配；所有匹配的组计数一致，空组自动为零。
+(68.5) 用数据已知量把 $T_M$ 与能量相互转换。
+空的占据组集合只有一个组向量，结论自动成立。
+已知反向实验对齐后完全相同；未知方向在原共同判向成功事件上，分组、中心、标量与解码同时一致，
+故无条件错误界只增加该事件的 $O(q^{-1})$ 失败概率。错误方向的工作中心不被称为方向混合后验。
+此论证未使用后验乘积近似、Gaussian 替代或实际无界矩转移，
+也不给精确能量之间规模一致的分离下界、有限位数或抗噪计算保证。证毕。
+
+**推论 68.3（精确可恢复性与 Gaussian 独立极限并存）。** 原始数据与单标量 $T_M$ 在 $H_M$ 上
+决定 $D_M$，但原联合弱极限仍有
+
+```math
+(T_M,D_M)\Longrightarrow (N_2,W_\rho(x)),\qquad
+N_2\ \perp\ W_\rho,
+```
+
+式 (68.17)。
+
+并保留第 51–54 章所列旧空间对象及其条件 BL、固定支持无条件一致范围。
+若 $S_M=\operatorname{sgn}D_M$、$\operatorname{sgn}0=0$，TV 采用事件上确界约定，则先验数据概率意义下
+
+```math
+\left\|\mathcal L((T_M,S_M)\mid\mathscr X_M)
+       -\mathcal L((T_M,-S_M)\mid\mathscr X_M)\right\|_{\rm TV}\longrightarrow1.
+```
+
+式 (68.18)。
+
+**证明。** (68.17) 是原精确坐标的既有联合极限；本章只改变所讨论的信息问题，未改变这些随机变量。
+$N_2$ 与整个旧实 Gaussian 场独立，由第 51 章的共同二次型逼近与有限秩删除证明。
+在 $H_M$ 的每份数据上，成功图像与其非零符号反射图像不交，零符号子测度相同，
+所以 (68.18) 左边精确等于 $1-\mathbb P(D_M=0\mid\mathscr X_M)$。
+原偶极条件 CLT 的极限为非退化连续 Gaussian；先用固定 $[-u,u]$ 上界零原子，再令 $u\downarrow0$，
+该原子以数据概率趋零。加上 $\mathbb P(H_M^c)\to0$ 即得结论。
+与之对应，极限 $N_2$ 单独不能预测独立的 $\operatorname{sgn}W_\rho(x)$，其条件符号公平。
+这里未把增长的整个原始数据宣称为某个固定弱极限对象，也未断言统计实验等价。
+有限系统的平移整数格与精确后验中心承担可恢复性；连续 Gaussian 近似不保留该算术分离。
+不存在与弱收敛的矛盾。证毕。
+
+**推论 68.4（功率观测及其固定频率压缩）。** 固定任一非空实开区间 $I_0$，置
+$F_M(v)=\sum_jA_j e^{i\omega vj\delta}$、$P_M(v)=|F_M(v)|^2$，$\omega=\pi/2$。
+在 $H_M$ 上，$(\mathscr X_M,(P_M(v))_{v\in I_0})$ 决定所有所选组电荷。
+更存在一个依赖固定模型参数的确定性可数集 $E\subset I_0$，
+任一固定 $v_*\in I_0\setminus E$ 都使 $(\mathscr X_M,P_M(v_*))$ 对所有充分大合法规模、
+两种实验及其全部 $H_M$ 内数据同时具有该可恢复性。
+
+**证明。** 功率三角多项式的零滞后系数是 $\mathcal Q_M$。
+其指标在 $[-2K_M,2K_M]$，故在 $I_0$ 的短子区间取 $4K_M+1$ 个相位互异样本，
+乘 $z^{2K_M}$ 后用普通多项式插值就能确定全部系数，继而用定理 68.2。
+这只是精确插值，不给条件数或稳定外推界。
+对同一好数据下任意两个不同可行计数向量，能量不同使功率差成为非零实解析函数；
+其区间零集离散。每个有限规模的数据和候选集合有限，合法规模可数，
+对所有碰撞零集取并便得到确定性可数集 $E$。
+一次独立的绝对连续频率抽样几乎必然避开 $E$，同时适用于所有这些规模和数据。
+这是经典有限候选解析分离的应用，不提供某个具名频率必好的结论。
+例如若有两个占据组，固定 $q-1$ 个储备行并分别在两组各添一个标签，
+便得到同总组计数的两个可行支持；它们的 $F_M(0)$ 和 $P_M(0)$ 相同，故零频率一般不能使用。
+“一个标量”指一个精确实数，不指一个有界位数的信息通道。证毕。
+
+**定理 68.5（完整组计数与精确标量的条件离散熵率）。** 对每份原始数据 $x$，
+以完整所选组计数向量 $R$ 在均匀大小 $q$ 支持先验下的有限后验分布定义
+
+```math
+h_M(x)=-\sum_r\mathbb P(R=r\mid\mathscr X_M=x)
+                    \log_2\mathbb P(R=r\mid\mathscr X_M=x),
+\qquad 0\log_20=0.
+```
+
+式 (68.19)。
+
+$h_M^T(x)$ 则是精确实值 $T_M$ 在同一数据纤维上的有限原子分布的离散熵。置
+
+```math
+c_q=\phi(1-\beta)/\beta,\quad
+\mathcal I=\{u:a+u\ge0,\ b+\alpha u\ge0\},\quad
+J_c(v)=v\log(v/c)-v+c\quad(v\ge0),
+```
+
+```math
+I(u)=J_a(a+u)+J_b(b+\alpha u),\qquad
+\mathscr H(r,\beta)=\frac1{2\log2}\int_{\mathcal I}(c_q-I(u))_+\,du.
+```
+
+式 (68.20)。
+
+这里 $0\log0=0$，率函数使用自然对数，$\mathscr H(r,\beta)$ 有限且严格为正。
+原平稳独立对与连续路径实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta),
+\qquad
+\frac{h_M^T(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.21)。
+
+收敛在先验数据概率意义下成立，亦即对每个固定 $e>0$，上述任一偏差超过 $e$ 的概率
+在所有大小 $q$ 的确定支持抽样律下之上确界趋零。这里仍评价由均匀先验定义的熵函数，
+不改用确定支持的点质量先验。在 $x\in H_M$ 上，$h_M^T(x)=h_M(x)$，
+给定 $x,T_M$ 后组计数的离散熵精确为零。结论不涉及 Gaussian 微分熵或期望熵的收敛。
+
+**证明。** 全部占据数先在原实际数据律下定义，不条件于截断成功。
+取固定充分大的 $C_0$，使全行计数截断事件 $\mathcal C_M$ 的失败概率至多 $CM^{1-D_0}$。
+第 68.2 条的一、二行生成函数比较可在任意固定倍数的 $\lambda$ 计数范围内使用。
+具体地，对于 $k=1,2$ 个指定行，在 Cauchy 系数圆上取各半径
+$\max(n_\nu,1)/m_\nu$，其中 $m_\nu$ 是该信号或背景 Poisson 坐标的均值。
+这些半径有共同常数上界；相对 Poisson 点质量的误差最多引入
+$C\prod_\nu\sqrt{n_\nu+1}$。因此对包括零计数在内的指定元组，
+
+```math
+\mathbb P_S^{\mathcal E}\{N=\mathbf n\}
+ =\mathbb P_{\rm Pois}\{N=\mathbf n\}
+       (1+O(\lambda^{k+1}/M)),\qquad k=1,2.
+```
+
+式 (68.22)。
+
+路径行仍可相依；此处使用秩二生成函数的系数界。指定点质量的误差是相对误差，
+不能换成会淹没稀有组均值的固定加性误差。
+设 $\alpha_Q=P/Q$、$\xi=a\lambda-k_0\in[0,1)$。在全行截断内，
+整数间隙与 $\lambda(\alpha-\alpha_Q)+\epsilon\lambda+q^{-1}=o(w)$、$w=o(Q^{-1})$
+使原窗口恰由下列可行计数线元组组成，且不同元组的精确分数不同：
+
+```math
+K_M=\{j:k_j=k_0+jQ\ge0,\ l_j=l_0+jP\ge0,\ k_j+l_j\le C_0\lambda\},
+\qquad u_j=j/Q^2,\qquad |K_M|\le CQ^2.
+```
+
+式 (68.23)。
+
+令 $C_j$ 是实际全部候选行中具有该计数元组的行数；它在任意原数据上定义。
+在 $\mathcal C_M$ 上，这些正占据数给出完整窗口各组，零占据数组可补入计数向量。
+
+先核对端点。固定振幅满足 $r>15/16$，故 $a>31/32$、$b<1/32$、
+$b/\alpha\le10b<a$，于是 $\mathcal I=[u_-,\infty)$，其中 $u_-=-b/\alpha$。
+在内部
+
+```math
+I'(u)=\log((a+u)/a)+\alpha\log((b+\alpha u)/b),\qquad
+I''(u)=\frac1{a+u}+\frac{\alpha^2}{b+\alpha u}>0.
+```
+
+式 (68.24)。
+
+$I$ 在闭域连续，唯一极小值 $I(0)=0$，且 $I(u)\sim(1+\alpha)u\log u$。
+因此 $(c_q-I)_+$ 的支撑紧，且在零附近严格为正。
+左端点不能预先删除：令 $d_0=b/\alpha$、
+$I_-=(a-d_0)\log(1-d_0/a)+d_0+b$，则
+
+```math
+0<I_-<d_0+b\le11b<11/32<225/512<\phi,\qquad
+\beta_*=\frac{\phi}{\phi+I_-}\in(1/2,1).
+```
+
+式 (68.25)。
+
+最后一个下界来自 $\phi'(r)=\operatorname{atanh}r\ge r$，故 $\phi(r)\ge r^2/2$。
+当 $\beta<\beta_*$ 时积分的正区域接触左端点；等号时端点积分值为零，右邻域为正；
+当 $\beta>\beta_*$ 时左根位于内部。右根 $u_+>0$ 总是唯一。
+增大同一个固定 $C_0$，使 $U_0=(C_0-1)/(1+\alpha)>u_++1$。
+这只扩大用于估计的截断，不改变原后验或窗口。
+
+令 $\bar u_j=\max(u_j,u_-)$。网格 $K_M/Q^2$ 的两端距 $u_-,U_0$ 为 $O(Q^{-2})$；
+若合法 $u_j<u_-$，其距离实际为 $O(\lambda^{-1}+\alpha-\alpha_Q)$，只影响有界数量的格点。
+又有 $k_j/\lambda=a+u_j-\xi/\lambda$、$l_j/\lambda=b+\alpha_Q u_j+\xi/\lambda$。
+对 $0\le n\le C_0\lambda$，统一使用
+$\log(n!)=n\log n-n+O(\log\lambda)$，包括 $n=0$。
+函数 $x\log x$ 在固定非负紧区间上的模连续性为
+$C|x-y|(1+|\log|x-y||)$，故信号 Poisson 点质量 $f_j$ 满足
+
+```math
+\log f_j=-\lambda I(\bar u_j)+O(\log\lambda)
+```
+
+式 (68.26)。
+
+这一步保留零负计数端点，没有把内部 Stirling 前因子延伸到零。
+背景点质量与 $f_j$ 的精确似然比为 $e^{W_j}$，两类总行均值同为 $\lambda$。
+因此占据数的比较均值
+
+```math
+m_j=qf_j\{1+(1-q/M)e^{\tau-W_j}\}=(2+o(1))qf_j,
+\quad
+\sup_{j\in K_M}|\log m_j-\lambda(c_q-I(\bar u_j))|\le C\log Q.
+```
+
+式 (68.27)。
+
+$W_j=\tau+o(w)$ 在整个截断线一致成立，$m_j>0$，但不要求其趋无穷。
+由 (68.22) 对同组的一个或两个行指标求和，记 $\varepsilon_M=C\lambda^3/M$，得到
+
+```math
+|\mathbb E C_j-m_j|\le\varepsilon_Mm_j,
+\qquad \operatorname{Var}C_j\le C(m_j+\varepsilon_Mm_j^2).
+```
+
+式 (68.28)。
+
+对任意固定 $A>2$，Markov 给 $1+C_j\le Q^A(1+m_j)$，
+对 $m_j\ge Q^A$ 再用 Chebyshev 给 $C_j/m_j\in[1/2,3/2]$，
+这些断言同时失败的概率至多 $CQ^{2-A}+CQ^2\varepsilon_M$。
+当 $m_j<Q^A$ 时只用 $\log(1+m_j)\le A\log Q+\log2$，不要求相对集中。
+由 $|\log(1+m)-(\log m)_+|\le\log2$，同一好事件上
+
+```math
+\sup_{j\in K_M}
+ \left|\log(1+C_j)-\lambda(c_q-I(\bar u_j))_+\right|\le C_A\log Q.
+```
+
+式 (68.29)。
+
+这是全窗口对数占据数估计；空组和过渡区域 $I\approx c_q$ 都在其中。
+
+下一步仅对给定原始数据的校准辅助标签取独立乘积律 $\mathsf Q_x$。
+第 35 章的校准根满足
+$p_i=\operatorname{logistic}(W_i-\log((M-q)/q)+\theta_M)$，
+$\theta_M=O_{\mathbb P}(q^{-1/2})$，总方差 $d_{\rm all}\asymp q$。
+这些全窗口估计也可从 (68.22) 核对：在倾斜前，精确改变测度给
+混合总成功均值为 $q$，混合总 Bernoulli 方差为 $q\mathbb E_s(1-p^0)$。
+信号 Poisson 分数的均值距阈值 $O(1)$、标准差为固定正倍数的 $\sqrt\lambda$，
+其普通特征函数 CLT 使 $\mathbb E_s(1-p^0)\to1/2$。
+一、二行比较对这些有界非负函数给方差
+$C(\mu+\varepsilon_M\mu^2+M^{2-D_0})$，其中 $\mu\asymp q$。
+由于 $\varepsilon_Mq\to0$，校准总和误差为 $O_{\mathbb P}(\sqrt q)$；
+logistic 方差在位移 $\theta$ 下至少为原值的 $e^{-|\theta|}$ 倍，给出上述根估计。
+原窗口内因而有 $p_j\in[1/4,3/4]$，概率趋一。
+
+对任意固定 $p_0>0$，经典二项分布离散熵界在全部 $n\ge0$、
+$p\in[p_0,1-p_0]$ 上统一给
+
+```math
+\left|H_{\rm disc}(\operatorname{Bin}(n,p))
+       -\frac{\log(1+n)}{2\log2}\right|\le C_{p_0}.
+```
+
+式 (68.30)。
+
+下界可由 Fourier 反演的最大原子界 $C/\sqrt{n+1}$ 取得；
+上界取离散比较律 $r_k=Z^{-1}\exp(-(k-np)^2/(n+1))$，
+$Z\le C\sqrt{n+1}$，用相对熵非负性和二项方差至多 $n/4$ 即得。
+$n=0$ 单独为零。各完整组在 $\mathsf Q_x$ 下是独立的
+$\operatorname{Bin}(C_j,p_j)$；设其联合离散熵为 $\widetilde h_M(x)$，则
+
+```math
+\left|\widetilde h_M(x)-\frac1{2\log2}\sum_{j\in K_M}\log(1+C_j)\right|
+ \le CQ^2.
+```
+
+式 (68.31)。
+
+(68.29) 与网格间距 $Q^{-2}$ 给
+
+```math
+\frac{\widetilde h_M(\mathscr X_M)}{Q^5}
+ =\frac1{2\log2\,Q^2}\sum_{j\in K_M}(c_q-I(\bar u_j))_++o_{\mathbb P}(1)
+ \longrightarrow\mathscr H(r,\beta).
+```
+
+式 (68.32)。
+
+率函数正部先增后减、总变差有限，Riemann 和误差为 $O(Q^{-2})$，
+即使左端点导数无界也成立。这里 $Q^5=\lambda Q^2$：
+每组对数占据数的尺度是 $\lambda$，计数线的宏观网格数是 $Q^2$。
+
+最后在同一有限字母表上传递实际后验熵。
+信号线概率满足 $\sum_{j\in K_M}f_j\le C/(Q\sqrt\lambda)$：
+两个 Poisson 最大点质量各为 $O(\lambda^{-1/2})$，在中心区域沿正计数间距 $Q$
+求 Gaussian 上界和，余下固定比例偏移为指数尾。故实际 $|J|=O_{\mathbb P}(B^2)$，
+$d_J=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$，补集方差 $d_{J^c}\asymp q$。
+给定数据后，完整校准乘积律条件于总数 $q$ 就是精确后验，所选向量的密度比为
+
+```math
+L(S_J)=\frac{\mathsf Q_x(S_{J^c}=q-S_J)}{\mathsf Q_x(S_{\rm all}=q)}.
+```
+
+式 (68.33)。
+
+独立 Bernoulli 和的局部界
+$\sup_k|\mathbb P(S=k)-(2\pi d)^{-1/2}e^{-(k-m)^2/(2d)}|\le C/d$
+对异质参数统一成立：中心特征函数满足
+$|\psi(t)|\le e^{-2d\sin^2(t/2)}$、
+$\log\psi(t)=-dt^2/2+O(d|t|^3)$，小区间积分误差为 $O(d^{-1})$，其余为指数尾。
+总均值恰为整数 $q$；因此令 $V=S_J-\mathbb E_{\mathsf Q_x}S_J$，有
+$L(S_J)=\sqrt{d_{\rm all}/d_{J^c}}e^{-V^2/(2d_{J^c})}+O(q^{-1/2})$。
+对 $|L-1|$ 积分并用 $\mathbb E_{\mathsf Q_x}V^2=d_J$，得到一次完整所选向量比较
+
+```math
+\Delta_M=d_{\rm TV}(\mathsf P_{x,J},\mathsf Q_{x,J})
+ \le C(d_J/q+q^{-1/2})=O_{\mathbb P}(Q^{-5/2}+q^{-1/2}).
+```
+
+式 (68.34)。
+
+这里 TV 是半 $\ell^1$ 距离。计数映射收缩 TV；两种计数律都在同一个盒字母表
+$\mathcal A_x=\prod_{j\in K_M}\{0,\ldots,C_j\}$ 上，允许其中一些点在实际后验中概率为零。
+在全行截断上，$\log_2|\mathcal A_x|\le CQ^2\log_2(M+1)\le CQ^5$。
+对于同一 $D$ 点字母表、TV 为 $t$ 的两律，最大耦合及误差指示位的链式法则给
+$|H(P)-H(Q)|\le h_2(t)+t\log_2(D-1)$；$D=1$ 时两熵都为零。
+因此
+
+```math
+\frac{|h_M(x)-\widetilde h_M(x)|}{Q^5}
+ \le Q^{-5}+C\Delta_M=o_{\mathbb P}(1).
+```
+
+式 (68.35)。
+
+这不是无界熵的一般 TV 连续性断言；完整组计数字母表的对数大小界是必要的一步。
+坏数据只付其概率，以证明数据概率收敛，没有用坏事件概率乘未受控的熵。
+由 (68.32)、(68.35) 得第一条 (68.21)。定理 68.2 在 $H_M$ 上使组计数与 $T_M$
+仅为同一有限原子概率表的重标记，故熵精确相等；$\mathbb P(H_M^c)\to0$ 给第二条。
+支持置换保持这些数据可测熵函数，且在所有大小 $q$ 支持上传递，得到所述一致确定支持含义。
+共同判向成功事件上所有数据、中心、组及熵函数同时一致，原未知方向结论同样按事件概率转移。
+这不提供期望熵极限、二阶熵展开、增长维数 CLT、组内站点恢复、稳定逆或计算效率。证毕。
+
+**定理 68.6（完整组计数的最大后验原子）。** 在定理 68.5 的同一均匀支持先验下，令
+
+```math
+p_{\max,M}(x)=\max_n\mathbb P(R=n\mid\mathscr X_M=x),\qquad
+h_{\infty,M}(x)=-\log_2p_{\max,M}(x).
+```
+
+式 (68.36)。
+
+$h_{\infty,M}$ 是每份原始数据上有限计数律的最小熵。
+两种实际实验分别满足
+
+```math
+\frac{h_{\infty,M}(\mathscr X_M)}{Q^5}\longrightarrow\mathscr H(r,\beta)
+```
+
+式 (68.37)。
+
+收敛在先验数据概率下成立，并一致于确定支持的抽样律；后者仍使用均匀先验定义的函数。
+在定理 68.2 的单射事件 $H_M$ 上，精确标量 $T_M$ 的最大原子与 $p_{\max,M}$ 相等。
+
+**证明。** 继续使用 (68.23) 的完整计数线、校准乘积律 $\mathsf Q_x$ 与精确后验
+$\mathsf P_x$。在概率趋一的实际数据集上，
+$p_j\in[1/4,3/4]$、$d_{\rm all},d_{J^c}\asymp q$、
+$d_J=O_{\mathbb P}(B^2)$、$|J|=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$。
+这些估计来自定理 68.5 的实际一、二行比较与校准。
+由 (68.33) 的同一条件化，组计数的概率精确满足
+
+```math
+\mathsf P_x(R=n)=L\left(\sum_jn_j\right)
+                     \prod_j\mathbb P\{\operatorname{Bin}(C_j,p_j)=n_j\}.
+```
+
+式 (68.38)。
+
+设 $m_J=\mathbb E_{\mathsf Q_x}S_J$。
+同一个 Bernoulli 局部估计在中心分母与任意分子上给
+
+```math
+L(k)=\sqrt{d_{\rm all}/d_{J^c}}
+         e^{-(k-m_J)^2/(2d_{J^c})}+O(q^{-1/2}),\qquad
+\sup_kL(k)\le1+C(d_J/q+q^{-1/2}).
+```
+
+式 (68.39)。
+
+误差对全部整数 $k$ 统一；总均值恰为 $q$，所以分母至少为 $c/\sqrt q$。
+这是相对最大原子比较所需的密度信息，不能用 (68.34) 的加性 TV 误差替代。
+
+对于 $N\ge0$、$p\in[1/4,3/4]$，记二项最大原子为 $b_{N,p}$。
+经典 Fourier 模界给 $b_{N,p}\le C/\sqrt{1+N}$。
+另一方面，方差至多 $N/4$，半径 $\sqrt{N+1}$ 内由 Chebyshev 至少容纳 $3/4$ 的质量；
+该区间最多有 $3\sqrt{N+1}$ 个整数，故有统一下界。
+相邻概率之比为 $(N-k)p/((k+1)(1-p))$，因此可取模态
+$n^*=\lfloor(N+1)p\rfloor$，并有 $|n^*-Np|\le1$。
+$N=0$ 时单独取 $n^*=0$、$b_{0,p}=1$。于是
+
+```math
+\frac c{\sqrt{1+N}}\le b_{N,p}\le\frac C{\sqrt{1+N}},\qquad
+\left|\sum_j n_j^*-m_J\right|\le |K_M|\le CQ^2=o(\sqrt q).
+```
+
+式 (68.40)。
+
+乘积模态向量在实际后验中可行：好事件上 $|J|<q<M-|J|$，
+所以任何所选总数 $0\le k\le|J|$ 都可由补集凑成总数 $q$；所有辅助 Bernoulli 参数严格在零一之间。
+将 $k^*=\sum_jn_j^*$ 代入 (68.39)，得到
+$L(k^*)=1+O(d_J/q+Q^4/q+q^{-1/2})$。
+令 $\widetilde p_{\max,M}=\prod_jb_{C_j,p_j}$，则 (68.38) 直接给
+
+```math
+L(k^*)\widetilde p_{\max,M}\le p_{\max,M}
+       \le (\sup_kL(k))\widetilde p_{\max,M},\qquad
+\left|\log\frac{p_{\max,M}}{\widetilde p_{\max,M}}\right|
+ =O_{\mathbb P}(Q^{-5/2}+Q^4/q+q^{-1/2}).
+```
+
+式 (68.41)。
+
+所以实际与乘积最大原子的比趋一，即使二者本身都以 $Q^5$ 指数尺度趋零。
+(68.40) 又给
+
+```math
+-\log_2\widetilde p_{\max,M}
+ =\frac1{2\log2}\sum_{j\in K_M}\log(1+C_j)+O(Q^2).
+```
+
+式 (68.42)。
+
+由 (68.29) 与同一全域 Riemann 和，右边除以 $Q^5$ 趋于 $\mathscr H(r,\beta)$，
+证明 (68.37)。空组、稀有组、率函数过渡区域及零计数左端点均未删去。
+坏数据只付其概率；没有平均最小熵或平均最大原子的指数断言。
+单射事件上，$T_M$ 与 $R$ 只是同一有限概率表的重标记。
+支持置换与共同判向事件按定理 68.5 处理，得到所述一致性。证毕。
+
+**定理 68.7（Shannon 熵与最小熵的次阶差）。** 沿用定理 68.5、68.6 的全部参数、
+完整计数向量及概率含义，令
+
+```math
+\ell(r,\beta)=\operatorname{Leb}\{u\in\mathcal I:I(u)<c_q\}.
+```
+
+式 (68.43)。
+
+该长度有限且严格为正。两种实际实验分别满足
+
+```math
+\frac{h_M(\mathscr X_M)-h_{\infty,M}(\mathscr X_M)}{Q^2}
+ \longrightarrow\frac{\ell(r,\beta)}{2\log2}.
+```
+
+式 (68.44)。
+
+收敛在先验数据概率下成立，亦一致于确定支持的抽样律。
+若 $\widetilde h_M,\widetilde h_{\infty,M}$ 是同一数据上校准乘积组计数律的两种熵，则还有绝对比较
+
+```math
+h_M-\widetilde h_M=O_{\mathbb P}(Q^{-3/2}),\qquad
+h_{\infty,M}-\widetilde h_{\infty,M}=O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (68.45)。
+
+在 $H_M$ 上，精确标量 $T_M$ 的离散 Shannon 熵与最小熵之差等于 (68.44) 的分子，
+故它也满足同一极限。这里不分别给出两种熵在 $Q^2$ 阶的展开。
+
+**证明。** 首先加强 (68.34) 的密度比较。下文在给定好数据 $x$ 上以
+$\mathsf Q_x$ 表示乘积组计数律，$\mathsf P_x$ 表示精确后验计数律，
+$V=S_J-\mathbb E_{\mathsf Q_x}S_J$。
+由 (68.39)、$|\sqrt{d_{\rm all}/d_{J^c}}-1|\le Cd_J/q$、
+$1-e^{-t}\le t$ 及独立 Bernoulli 和的四阶中心矩，
+
+```math
+\mathbb E_{\mathsf Q_x}V^4\le3d_J^2+d_J,\qquad
+\chi_x^2:=\mathbb E_{\mathsf Q_x}(L(S_J)-1)^2
+ \le C\{(d_J/q)^2+q^{-1}\}.
+```
+
+式 (68.46)。
+
+这里 $d_J\le q$，$d_{J^c}\asymp q$。
+因此 $\chi_x=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+密度比只依赖组计数之和，所以对计数律仍有
+$\mathsf P_x(n)=L(\sum_j n_j)\mathsf Q_x(n)$、
+$\mathbb E_{\mathsf Q_x}L=1$；没有另行近似实际各组独立。
+
+所需二项信息量界可直接从全部原子取得。
+固定 $p_0\in(0,1/2)$，记 $f_{n,p}$ 为二项概率质量，
+$n\ge0$、$p\in[p_0,1-p_0]$。Fourier 模界及带端点的 Stirling 界给
+
+```math
+\max_k f_{n,p}(k)\le\frac C{\sqrt{n+1}},\qquad
+f_{n,p}(k)\ge\frac c{\sqrt{n+1}}
+       \exp\left(-C\frac{(k-np)^2}{n+1}\right),\quad0\le k\le n.
+```
+
+式 (68.47)。
+
+具体地，对 $n\ge1$、$z=k/n$，阶乘界给
+$\binom nk\ge c\sqrt{(n+1)/((k+1)(n-k+1))}\,e^{n[-z\log z-(1-z)\log(1-z)]}$。
+前因子至少为 $c/\sqrt{n+1}$；乘 $p^k(1-p)^{n-k}$ 后的指数为
+$-nD(z\Vert p)$。由 $\log t\le t-1$ 有
+$D(z\Vert p)\le(z-p)^2/[p(1-p)]$，包括 $z=0,1$ 的连续延拓，得下界。
+$n=0$ 的单位原子单独满足两界。
+
+令 $K\sim\operatorname{Bin}(n,p)$、$Z=-\log f_{n,p}(K)$、$\Delta=K-np$。
+于是 $-C\le Z-\tfrac12\log(n+1)\le C+C\Delta^2/(n+1)$；
+而 $\mathbb E\Delta^4\le C(n+1)^2$，故
+
+```math
+\mathbb E\{Z-\tfrac12\log(n+1)\}^2\le C,\qquad
+\operatorname{Var}(Z)\le C.
+```
+
+式 (68.48)。
+
+这些常数不随占据数增长。完整乘积计数的信息量
+$\mathcal S(n)=-\log\mathsf Q_x(n)$ 是这些独立坐标信息量之和，所以
+$\operatorname{Var}_{\mathsf Q_x}(\mathcal S)\le C|K_M|\le CQ^2$。
+以自然对数计算有限分布的熵 $h$，精确恒等式与相对熵界为
+
+```math
+\begin{aligned}
+h(\mathsf P_x)-h(\mathsf Q_x)
+ &=\mathbb E_{\mathsf Q_x}[(L-1)(\mathcal S-\mathbb E_{\mathsf Q_x}\mathcal S)]
+       -D(\mathsf P_x\Vert\mathsf Q_x),\\
+0\le D(\mathsf P_x\Vert\mathsf Q_x)
+ &\le\mathbb E_{\mathsf Q_x}L(L-1)=\chi_x^2.
+\end{aligned}
+```
+
+式 (68.49)。
+
+零密度点按 $0\log0=0$ 处理。第二行仍只用 $\log t\le t-1$ 与归一化。
+Cauchy–Schwarz 因而给
+
+```math
+|h(\mathsf P_x)-h(\mathsf Q_x)|
+ \le\chi_x\sqrt{\operatorname{Var}_{\mathsf Q_x}(\mathcal S)}+\chi_x^2
+ \le CQ(d_J/q+q^{-1/2})+C\{(d_J/q)^2+q^{-1}\}
+ =O_{\mathbb P}(Q^{-3/2}).
+```
+
+式 (68.50)。
+
+信息量的 $Q^5$ 阶均值在估计之前已精确消去。
+这是由密度的 $L^2$ 范数及乘积信息量方差控制期望，不能仅由 TV 推出。
+除以 $\log2$ 得 (68.45) 第一式；第二式由 (68.41) 直接得到。
+
+最后比较同一个二项坐标的两种熵。记自然对数下的差为
+$g(n,p)=h(\operatorname{Bin}(n,p))-h_\infty(\operatorname{Bin}(n,p))$。
+经典二项熵渐近式与模态 Stirling 估计给
+
+```math
+0\le g(n,p)\le C,\qquad g(0,p)=0,\qquad
+\sup_{p\in[p_0,1-p_0]}|g(n,p)-1/2|\longrightarrow0.
+```
+
+式 (68.51)。
+
+半 nat 常数属于经典二项熵结论，可由 Adell–Lekuona–Yu 的统一熵界与模态估计直接取得。
+此处给出适于全部占据数的验证：在模态 $k^*=np+O(1)$ 处，
+$-\log f_{n,p}(k^*)=\tfrac12\log(2\pi np(1-p))+O(n^{-1})$。
+在 $|\Delta|\le n^{5/8}$ 内，对二项相对熵作 Taylor 展开得到
+$-\log f_{n,p}(K)+\log f_{n,p}(k^*)=\Delta^2/[2np(1-p)]+O(n^{-1/8})$，
+误差对上述参数区间统一。
+补集上，(68.47) 将非负差界为 $C+C\Delta^2/n$；四阶矩给
+$\mathbb P(|\Delta|>n^{5/8})\le Cn^{-1/2}$ 及
+$\mathbb E[(\Delta^2/n)1_{\{|\Delta|>n^{5/8}\}}]\le Cn^{-1/4}$。
+故期望趋于 $\mathbb E\Delta^2/[2np(1-p)]=1/2$。
+统一有界性则由 (68.48) 与模态的双边 $(n+1)^{-1/2}$ 界给出，包括小 $n$。
+
+乘积律的熵与最小熵均逐坐标相加，故其差精确等于
+$\sum_{j\in K_M}g(C_j,p_j)$。固定 $0<e<c_q$。
+在 $I(\bar u_j)\le c_q-e$ 的格点，(68.29) 使全部 $C_j\ge e^{e\lambda/2}$，
+所以每项统一趋于 $1/2$。
+在 $I(\bar u_j)\ge c_q+e$ 的格点，(68.27)、(68.28) 给
+$\mathbb E\sum C_j\le Q^{C}e^{-e\lambda}\to0$，
+所以这些组以概率趋一全部为空，贡献精确为零。
+剩余条带 $|I(\bar u_j)-c_q|\le e$ 中只用 $0\le g\le C$。
+
+$I$ 的严格凸性及两侧单调性使水平集 $I=c_q$ 至多含两点。
+固定条带和子水平集都是有限个区间，网格间距为 $Q^{-2}$，
+投影到闭左端点只改变有界个格点。
+先令规模趋无穷，再令 $e\downarrow0$，条带长度趋零，得到
+
+```math
+\frac1{Q^2}\sum_{j\in K_M}g(C_j,p_j)
+       \longrightarrow\frac12\operatorname{Leb}\{I<c_q\}.
+```
+
+式 (68.52)。
+
+(68.45) 将其传回实际后验，换算为比特即得 (68.44)。
+若正区域接触闭左端点，其整个邻接区间仍被计入。
+这里先逐组相减，故不必排除两种熵各自可能存在的更大格点或端点修正。
+坏数据只付其概率；支持置换、未知方向的共同成功事件及 $H_M$ 上的原子重标记
+均按定理 68.5 传递。没有期望熵、参数趋端点的一致性或有限精度解码结论。证毕。
+
+
+**定理 68.8（完整后验的信息量波动与概率覆盖）。** 沿用定理 68.7，令
+
+```math
+Y_M=-\log_2\mathbb P(R\mid\mathscr X_M),\qquad
+v(r,\beta)=\frac{\ell(r,\beta)}{2(\log2)^2}>0.
+```
+
+式 (68.53)。
+
+$Y_M$ 在给定数据后仍由同一后验计数向量 $R$ 随机产生。
+两种实际实验分别满足
+
+```math
+\sup_{z\in\mathbb R}\left|
+\mathbb P\!\left\{\frac{Y_M-h_M(x)}Q\le z\,\middle|\,\mathscr X_M=x\right\}
+ -\Phi\!\left(\frac z{\sqrt{v(r,\beta)}}\right)\right|
+ \longrightarrow0
+```
+
+式 (68.54)。
+
+同一概率意义下还有 $Q^{-2}\operatorname{Var}(Y_M\mid\mathscr X_M)\to v(r,\beta)$。
+收敛以原始数据概率理解；$\Phi$ 是标准正态分布函数。
+固定 $0<\varepsilon<1$，定义
+
+```math
+N_{\varepsilon,M}(x)=\min\{|A|:\mathbb P(R\in A\mid\mathscr X_M=x)\ge1-\varepsilon\}.
+```
+
+式 (68.55)。
+
+最小值在有限后验支持的子集上取到，且
+
+```math
+\log_2N_{\varepsilon,M}(x)
+ =h_M(x)+Q\sqrt{v(r,\beta)}\,\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (68.56)。
+
+这些后验函数仍有对确定支持抽样律一致的含义；在 $H_M$ 上，精确标量 $T_M$ 的原子覆盖数相同。
+中心必须是实际纤维熵 $h_M(x)$，不是仅有一阶极限的 $Q^5\mathscr H(r,\beta)$。
+
+**证明。** 先给出二项信息量的统一矩估计。记自然对数下
+$Z_{n,p}=-\log f_{n,p}(K)$，$K\sim\operatorname{Bin}(n,p)$、$p\in[1/4,3/4]$。
+由 (68.47)，信息量减去模态信息量是非负的，并至多为
+$C+C(K-np)^2/(n+1)$。
+八阶中心矩 $\mathbb E(K-np)^8\le C(n+1)^4$ 因而给
+
+```math
+\sup_{n,p}\mathbb E|Z_{n,p}-\mathbb EZ_{n,p}|^4<\infty,\qquad
+\sup_p\left|\operatorname{Var}(Z_{n,p})-\frac12\right|\longrightarrow0
+ \quad(n\to\infty).
+```
+
+式 (68.57)。
+
+第二个极限可沿 (68.51) 的中心区间证明。
+在 $|K-np|\le n^{5/8}$ 内，信息量减模态信息量与
+$(K-np)^2/[2np(1-p)]$ 的差一致为 $O(n^{-1/8})$。
+补集上的差平方由 $C+C(K-np)^4/n^2$ 控制；八阶矩使该补集期望趋零。
+二项 CLT 对紧参数区间统一成立，其标准化四阶矩趋于三，
+所以这个二次信息量的方差趋于 $\operatorname{Var}(G^2/2)=1/2$。
+$n=0$ 时信息量恒为零；全部小 $n$ 的统一界保留。
+
+在给定好数据的辅助乘积计数律下，各组信息量独立。
+令 $s_x^2$ 为自然对数总信息量的方差。
+以 (68.52) 的正区域、空区域及固定过渡条带分解，
+(68.57) 与 $|K_M|=O(Q^2)$ 给
+
+```math
+\frac{s_x^2}{Q^2}\longrightarrow\frac\ell2,\qquad
+\frac{\sum_{j\in K_M}\mathbb E_{\mathsf Q_x}
+ |Z_{C_j,p_j}-\mathbb E_{\mathsf Q_x}Z_{C_j,p_j}|^4}{s_x^4}
+ \le\frac{CQ^2}{s_x^4}\longrightarrow0
+```
+
+式 (68.58)。
+
+这里两次收敛均在实际数据概率下；方差系数严格为正。
+独立三角阵的 Lyapunov 定理于是给辅助总信息量的条件正态极限。
+等价地，统一三阶矩与 Berry–Esseen 界在 $s_x\asymp Q$ 的事件上
+给至多 $C/Q$ 的标准化分布误差。
+再用 (68.58) 的方差极限，得到以 $Q$ 为尺度、方差为 $\ell/2$ 的极限。
+随机环境的陈述可由任意子列再取上述系数几乎处处收敛的子列得到，故不要求环境本身独立。
+
+最后处理精确后验。设 $\mathcal S=-\log\mathsf Q_x(R)$，则
+$-\log\mathsf P_x(R)=\mathcal S-\log L(S_J)$，在实际正概率原子上精确成立。
+(68.34) 使 $\mathcal S$ 的有界分布测试从乘积律传回实际律。
+由 $L\le C$ 及 $\mathsf P_x=L\mathsf Q_x$，对任意固定 $a>0$，
+
+```math
+\mathsf P_x\{-\log L>aQ\}\le e^{-aQ},\qquad
+\log L\le\log C.
+```
+
+式 (68.59)。
+
+所以 $\log L/Q$ 在实际后验中趋零；零密度点没有实际质量。
+(68.45) 又使两个精确均值之差为 $o_{\mathbb P}(Q)$。
+Slutsky 定理及连续极限分布函数的统一性给 (68.54)，并按 $\log2$ 换算方差。
+没有从 TV 直接传递无界信息量的期望。
+
+方差结论需要单独核对。对 $0\le t\le C$，函数
+$t(\log t)^2/(t-1)^2$ 在零和一处连续延拓后有界，故
+$\mathbb E_{\mathsf P_x}(\log L)^2\le C\chi_x^2$。
+独立组的信息量四阶中心矩之和与交叉二阶项给
+$\mathbb E_{\mathsf Q_x}(\mathcal S-\mathbb E_{\mathsf Q_x}\mathcal S)^4\le CQ^4$。
+以 $L-1$ 加权，再用 Cauchy–Schwarz，实际二阶中心矩与乘积值之差至多为
+$C\chi_xQ^2$，实际均值偏移至多为 $C\chi_xQ$。
+加入 $-\log L$ 的方差误差至多为 $C(Q\chi_x+\chi_x^2)$，
+重新中心化还至多贡献 $C\chi_x^2Q^2$。
+除以 $Q^2$ 并用 (68.46)、(68.58)，得所述实际方差极限。
+
+概率覆盖使用经典有限字母表信息谱不等式。
+若有限律的比特信息量为 $Y$，则 $A_b=\{Y\le b\}$ 至多有 $2^b$ 个原子；
+另一方面，任意至多 $N$ 点的集合 $A$ 和任意 $t>0$ 满足
+
+```math
+\mathbb P(A)\le\mathbb P\{Y\le\log_2N+t\}+2^{-t}.
+```
+
+式 (68.60)。
+
+因为阈值之外每个原子的概率小于 $2^{-t}/N$。
+以 $h_M+Q(\sqrt v\,\Phi^{-1}(1-\varepsilon)+a)$ 截断，
+(68.54) 给覆盖概率严格超过 $1-\varepsilon$，概率趋一；这给 (68.56) 的上界。
+若 $\log_2N\le h_M+Q(\sqrt v\,\Phi^{-1}(1-\varepsilon)-a)$，
+在 (68.60) 中取 $t=aQ/2$，其右边以数据概率趋于严格小于 $1-\varepsilon$ 的数，
+给下界。任意 $a>0$ 的夹逼即得结论。
+取整至多影响常数位数，因 $h_M/Q^5\to\mathscr H>0$ 而不影响本尺度。
+
+支持置换及未知方向的共同成功事件按定理 68.5 处理；
+$H_M$ 上单射仅重标记原子，因此也重标记达到最小覆盖数的集合。
+结论不要求实际各组独立，不给 $\varepsilon\to0$ 的一致性、期望覆盖数、
+有效枚举算法或带噪解码保证。证毕。
+
+
+## 追加锚（68 章后）
+
+## 69. 消失的测量噪声保留对角弱极限并抹去符号可恢复性
+
+**定义 69.1（同一组电荷上的隐藏测量噪声）。** 保持定义 68.1 的原实际模型、固定振幅与
+固定 $\beta\in(1/2,1)$。所有原始数据、完整窗口、精确后验中心、组电荷 $A_j$、
+原对角统计量 $T_M$ 与偶极 $D_M$ 均取同一支持标签实现。记
+
+```math
+\rho(x)=c_0e^{-\kappa x^2/2},\quad
+c_0=(4\pi\sqrt{ab})^{-1},\quad \kappa=a^{-1}+\alpha^2/b,
+\quad\gamma=\int\rho,\quad g_0=\int\rho^2,
+\quad c_q=\phi(1-\beta)/\beta.
+```
+
+式 (69.1)。
+
+取固定 $D_*=8/\kappa$，定义对称核心与独立测量噪声
+
+```math
+R_c=\sqrt{D_*\log Q},\qquad
+\mathcal K_M=\{j\in\mathbb Z:|j\delta|\le R_c\},\qquad m_M=|\mathcal K_M|,
+\qquad X_j=A_j+\sigma_M\xi_j,
+```
+
+```math
+\xi_j\overset{\mathrm{iid}}\sim N(0,1),\qquad
+\sigma_M=Q^{-2}\quad\text{或}\quad \sigma_M=e^{-c_q\lambda/100}.
+```
+
+式 (69.2)。
+
+两种噪声分别给出两个观测实验。噪声独立于原始数据及支持，其实现值不另行提供。
+在原全行截断事件上，完整等分数组恰为原计数线的组，标记 $x_j=j\delta$。
+在任意数据上，可将核心坐标定义为相应计数元组中属于原窗口的精确中心化标签和，缺组补零；
+这样定义在截断成功时与原组电荷一致。原完整 $T_M,D_M$ 在失败数据上仍按原定义取值。
+令
+
+```math
+T_M^{\mathrm{sm}}=\delta^{-1/2}
+       \left(\sum_{j\in\mathcal K_M}X_j^2-V_M\right),\qquad
+V_M=B^{-2}\sum_{i\in J}p_i(1-p_i).
+```
+
+式 (69.3)。
+
+$V_M$ 是与原对角坐标相同的原始数据可测辅助方差中心；它不被替换为实际后验平方能量期望。
+新的标量由带噪核心重新计算。
+
+**定理 69.2（实际对角尺度上的近似与联合弱极限）。** 在上述两个噪声选择下，
+原平稳独立对与连续路径实验都满足：对任意固定 $\varepsilon,\eta>0$，
+
+```math
+\mathbb P_{\mathrm{data}}
+ \left\{\mathbb P\bigl(|T_M^{\mathrm{sm}}-T_M|>\varepsilon
+                         \mid\mathscr X_M\bigr)>\eta\right\}\to0,
+\qquad
+\sup_{|S|=q}\mathbb P_S\{|T_M^{\mathrm{sm}}-T_M|>\varepsilon\}\to0.
+```
+
+式 (69.4)。
+
+第一式在均匀大小 $q$ 支持先验下，内层为精确后验及独立测量噪声；
+第二式为各确定支持的无条件抽样律。
+对第 49、51、54 章已建立的同一旧联合组束 $\mathcal B_M$，
+将对角坐标 $T_M$ 换成 $T_M^{\mathrm{sm}}$ 后联合极限不变：
+
+```math
+(T_M^{\mathrm{sm}},\mathcal B_M)\Longrightarrow(N_2,\mathcal B),
+\qquad N_2\sim N(0,2g_0),\qquad N_2\perp\mathcal W_\rho.
+```
+
+式 (69.5)。
+
+其中旧端点、偶极、固定紧区间上的剖面、桥、Fourier 场和定义 54.1 的有限截距保持原范围，
+并由同一个旧实 Gaussian 随机测度 $\mathcal W_\rho$ 驱动。
+条件 BL 收敛在先验数据概率意义下成立，无条件收敛一致于固定支持。
+
+**证明。** 给出本章需要的实际有限估计及新增的尾部精度。
+在全行计数截断内，原一、二行生成函数的系数比较给实际行概率与相应独立 Poisson
+比较概率之间相对误差 $O(\lambda^3/M)$；其路径版本来自 (68.12) 的秩二矩阵，未假设实际行独立。
+全行截断失败概率可取 $CM^{1-D_0}$，其中 $D_0$ 为任意充分大的固定数。
+以 $C_j$ 表示计数线元组的占据数，以 $f_j$ 表示信号 Poisson 点概率，记
+
+```math
+\overline C_j=qf_j\{1+(1-q/M)e^{\tau-W_j}\},\quad
+u_j=\overline C_j/B^2,\quad d_j=C_jp_j(1-p_j),\quad v_j=d_j/B^2.
+```
+
+式 (69.6)。
+
+精确改变测度关系给 $\overline C_j=2qf_j(1+O(\chi_M))$，
+其中 $\chi_M=C(q/M+\epsilon\lambda+\lambda(\alpha-P/Q)+q^{-1})$ 指数小。
+实际一、二行比较和 $d_j\le C_j/4$ 给
+
+```math
+\mathbb E C_j=\overline C_j(1+O(\lambda^3/M)),\quad
+\operatorname{Var}C_j\le C(\overline C_j+\lambda^3M^{-1}\overline C_j^2),
+```
+
+```math
+\mathbb E v_j\le C\nu_j,\qquad
+\mathbb E(v_jv_l)\le C\nu_j\nu_l\ (j\ne l),\qquad
+\mathbb E v_j^2\le C(\nu_j^2+B^{-2}\nu_j).
+```
+
+式 (69.7)。
+
+这些期望是实际数据上的方差时钟读数。
+固定标记紧集上的 Stirling 展开与上述集中给
+$v_j=\delta\rho(x_j)(1+o_{\mathbb P}(1))$ 一致成立。
+在两计数均至少为各自均值一半的范围，$\nu_j\le C\delta e^{-c x_j^2}$；
+其余截断线点的总贡献为 $Q^Ce^{-c\lambda}$。
+Riemann 和及尾界于是给
+
+```math
+V_M\to\gamma,\qquad \delta^{-1}\sum_jv_j^2\to g_0,\qquad
+\sum_jx_j^{2p}v_j\to\int x^{2p}\rho(x)\,dx
+```
+
+式 (69.8)。
+
+每个 $p$ 在取极限前固定；没有增长次数的一致性。
+共同校准还给全体方差 $d_{\mathrm{all}}\sim q/2$、
+所选方差 $d_J=O_{\mathbb P}(B^2)=o_{\mathbb P}(q)$、补集方差 $d_{J^c}\sim q/2$。
+
+给定数据，在同一个辅助乘积律 $\mathsf Q$ 中令
+
+```math
+U_j=B^{-1}\sum_{i\in J_j}(\zeta_i-p_i),\qquad
+ e_j=B^{-1}\sum_{i\in J_j}(\pi_i-p_i),\qquad
+ e_M=\frac{\sqrt{3d_J^2+d_J}}q+q^{-1/2}.
+```
+
+式 (69.9)。
+
+完整辅助标签总数条件于 $q$ 后恰为原后验 $\mathsf P$。
+第 35 章的 Bernoulli 局部极限定理及精确校准给完整所选向量的单次比较
+
+```math
+\tau_M:=d_{\mathrm{TV}}(\mathsf P_J,\mathsf Q_J)
+ \le C(d_J/q+q^{-1/2}),\qquad
+\|e\|_2\le C\sqrt{V_M}e_M,\qquad |e_j|\le C\sqrt{v_j}e_M.
+```
+
+式 (69.10)。
+
+TV 按事件上确界定义，$e_M=O_{\mathbb P}(Q^{-5/2}+q^{-1/2})$。
+中心估计由条件密度比的常数项抵消及 Cauchy–Schwarz 得到；
+对任意一组数据可测 Hilbert 系数 $f_i$，同一论证给
+$\|\sum f_i(\pi_i-p_i)\|\le C(\sum p_i(1-p_i)\|f_i\|^2)^{1/2}e_M$。
+故上述群组范数界没有逐组并集损失。
+所有矩计算留在 $\mathsf Q$ 中，只将误差事件经 (69.10) 转入实际后验。
+
+关键是对角尺度要求被删平方质量为 $o_{\mathbb P}(\sqrt\delta)$。
+令地板误差 $\xi_0=\{a\lambda\}$。线点相对 Poisson 均值的位移为
+$x_j\sqrt\lambda-\xi_0$ 与 $(P/Q)x_j\sqrt\lambda+\xi_0$。
+对 $\mu\asymp\lambda$、$|z|\le\mu/2$，Stirling 给
+
+```math
+\log\mathbb P\{\operatorname{Poi}(\mu)=\mu+z\}
+=-\tfrac12\log(2\pi\mu)-\frac{z^2}{2\mu}
+ +O(\mu^{-1}+|z|/\mu+|z|^3/\mu^2).
+```
+
+式 (69.11)。
+
+在 $|x_j|\le\lambda^{1/8}$ 上，两坐标合计余项一致为
+$O(\lambda^{-1/2}(1+|x_j|)^3+(\alpha-P/Q)(1+|x_j|)^2)=o(1)$。
+因此可取 $\nu_j\le C\delta e^{-\kappa x_j^2/4}$；
+更远截断线点之和为 $Q^Ce^{-c\lambda^{1/4}}$。
+抽出半个 Gaussian 因子后，整个格点和满足
+
+```math
+\delta\sum_{|j\delta|>R_c}e^{-\kappa(j\delta)^2/4}
+ \le e^{-\kappa R_c^2/8}\delta\sum_{j\in\mathbb Z}e^{-\kappa(j\delta)^2/8}
+ \le C Q^{-\kappa D_*/8}.
+```
+
+式 (69.12)。
+
+故 $L_M^{(0)}=\sum_{j\notin\mathcal K_M}v_j$ 在完整确定截断线上满足
+
+```math
+\mathbb E_{\mathrm{data}}L_M^{(0)}
+ \le C Q^{-\kappa D_*/8}+Q^Ce^{-c\lambda^{1/4}},
+\qquad \delta^{-1/2}\mathbb E L_M^{(0)}\to0.
+```
+
+式 (69.13)。
+
+任意固定 $D_*>2/\kappa$ 都足够，本章所选值留有余量，不声称最优。
+辅助律中被删平方和的期望为
+$L_M^{(0)}+\sum_{j\notin\mathcal K_M}e_j^2\le L_M^{(0)}+CV_Me_M^2$。
+于是对每个 $h>0$，在好数据上
+
+```math
+\mathsf P\left\{\delta^{-1/2}\sum_{j\notin\mathcal K_M}A_j^2>h
+                       \mid\mathscr X_M\right\}
+ \le\tau_M+h^{-1}\delta^{-1/2}(L_M^{(0)}+CV_Me_M^2)=o_{\mathbb P}(1).
+```
+
+式 (69.14)。
+
+这是先用辅助矩界 Markov，再转移有界事件；不把辅助期望当成实际期望。
+
+全行截断成功时有精确同向量恒等式
+
+```math
+T_M^{\mathrm{sm}}-T_M
+=-\delta^{-1/2}\sum_{j\notin\mathcal K_M}A_j^2
+ +2\sigma_M\delta^{-1/2}\sum_{j\in\mathcal K_M}A_j\xi_j
+ +\sigma_M^2\delta^{-1/2}\sum_{j\in\mathcal K_M}\xi_j^2.
+```
+
+式 (69.15)。
+
+两处同一个 $V_M$ 精确抵消。
+原平方总质量 $\mathcal Q_M\to\gamma$ 在实际后验条件概率、先验数据概率意义下成立：
+在辅助律中，$\operatorname{Var}\sum_jU_j^2\le2\sum_jv_j^2+B^{-2}V_M=o_{\mathbb P}(1)$，
+精确中心位移由 $2\|U\|_2\|e\|_2+\|e\|_2^2$ 控制，再只转移相应事件即可。
+给定任意实际电荷，(69.15) 第二项关于独立测量噪声的方差精确为
+$4\sigma_M^2\delta^{-1}\sum_{\mathcal K_M}A_j^2$。
+在 $\mathcal Q_M\le K$ 的事件上用 Chebyshev，其失败概率至多
+$4\sigma_M^2\delta^{-1}K/h^2$；先固定 $K>\gamma+1$，实际定位失败概率趋零。
+第三项非负，其噪声期望为
+
+```math
+\sigma_M^2\delta^{-1/2}m_M
+ \le C\sigma_M^2\delta^{-3/2}(1+R_c).
+```
+
+式 (69.16)。
+
+对多项式噪声，第二项方差系数为 $Q^{-7/2}$，第三项期望为
+$O(Q^{-13/4}\sqrt{\log Q})$；指数噪声更小。
+结合 (69.14)，截断失败只付概率，得到 (69.4) 第一式。
+误差概率有界，故也在先验平均下趋零。
+保持奇偶类的站点置换在大小 $q$ 支持上可迁，将原数据和标签一起置换保持所有组统计量不变；
+使用同一按 $j$ 编号的噪声，误差事件也不变。
+它在任意固定支持下的概率精确等于其先验平均，给出第二式。
+
+最后，原旧组束与 $T_M$ 的联合极限先在同一辅助律中由混合线性—二次 CLT 建立，
+再经共同有限秩核近似加入旧截距；$N_2$ 与全场的独立性已在这一步证明。
+对任意有界单位 Lipschitz 联合测试 $f$，实际同一随机实现上有
+
+```math
+\left|\mathbb E[f(T_M^{\mathrm{sm}},\mathcal B_M)-f(T_M,\mathcal B_M)
+                    \mid\mathscr X_M]\right|
+ \le\varepsilon+2\mathbb P(|T_M^{\mathrm{sm}}-T_M|>\varepsilon\mid\mathscr X_M).
+```
+
+式 (69.17)。
+
+先取规模极限再令 $\varepsilon\downarrow0$，得到条件 Slutsky 及 (69.5)。
+联合弱极限定理中出现的旧潜在坐标并不自动成为下述解码实验允许观测的坐标。证毕。
+
+**定理 69.3（所有可测解码器的符号风险）。** 令二值符号
+$S_M=1$ 当 $D_M\ge0$，$S_M=-1$ 当 $D_M<0$。
+在均匀支持先验下，存在原始数据可测 $b_M\in[0,1]$，
+使 $b_M\to0$ 于先验数据概率和 $L^1$ 中，且对每个仅观察
+$(\mathscr X_M,T_M^{\mathrm{sm}})$ 的可测二值解码器 $d_M$，
+
+```math
+\left|\mathbb P\{d_M(\mathscr X_M,T_M^{\mathrm{sm}})=S_M
+                         \mid\mathscr X_M\}-\tfrac12\right|\le b_M.
+```
+
+式 (69.18)。
+
+解码器可以随规模改变，且可以使用独立随机化；上界与解码器无关。
+因此条件 Bayes 错误率与其先验平均都趋于 $1/2$。
+更一般地，结论允许观测同一带噪向量 $X$ 的任意可测函数 $f_{\mathscr X_M}(X)$，
+只要对每份固定数据，该函数在有限核心反射
+$(\mathcal R x)_j=x_{-j}$ 下精确不变。
+例如可同时提供带噪偶部、带噪 Fourier 功率曲线和 (69.3) 的标量。
+这些观测必须由同一个 $X$ 计算，不能根据弱极限追加未平滑的标签坐标。
+
+**证明。** 先证明增长核心维数下的有限反射 TV 界。
+在 $R_c$ 核心内，(69.11) 的精度给
+
+```math
+f_j=\frac{e^{-\kappa x_j^2/2}}{2\pi\lambda\sqrt{ab}}
+ \left[1+O\{\lambda^{-1/2}(1+R_c)^3+(\alpha-P/Q)(1+R_c)^2\}\right].
+```
+
+式 (69.19)。
+
+最小期望占据数至少为 $c(q/\lambda)e^{-CR_c^2}\ge e^{c_q\lambda/2}$，最终成立。
+对相对误差阈值 $Q^{-10}$ 使用 (69.7) 及 $m_M=O(\sqrt Q\sqrt{\log Q})$ 次并集界，
+其失败概率至多
+$CQ^{20}m_M\{(\min_j\overline C_j)^{-1}+\lambda^3/M\}=o(1)$。
+共同 logistic 倾斜满足 $|\theta_M|\le1$ 的概率趋一；
+$|\log[p_j(1-p_j)]-\log[p_{-j}(1-p_{-j})]|\le|W_j-W_{-j}|$，
+所以该共同倾斜不会制造额外反射误差。
+在好数据集上可取
+
+```math
+\min_{\mathcal K_M}d_j\ge e^{c_q\lambda/3},\quad
+\sum_{\mathcal K_M}v_j\le C,\quad
+\max_{\mathcal K_M}|v_j/v_{-j}-1|\le C\alpha_M,
+```
+
+```math
+\alpha_M=\lambda^{-1/2}(1+R_c)^3+Q^{-10}
+            +(\alpha-P/Q)(1+R_c)^2+\chi_M,
+\qquad m_M\alpha_M^2\to0,\qquad m_Me_M^2\to0.
+```
+
+式 (69.20)。
+
+最后两个界分别至多为 $O(Q^{-5/2}(1+\log Q)^{7/2})+o(1)$
+与 $O(Q^{-9/2}\sqrt{1+\log Q})+o(1)$。
+仅有逐坐标方差比趋一不足以代替它们。
+
+给出所需的定量 Gaussian 耦合。
+方差为 $d\ge1$ 的标准化 Bernoulli 和 $Z$ 由局部 CLT 及在 $[-d^{1/6},d^{1/6}]$
+上的格点求和得到 Kolmogorov 误差 $Cd^{-1/3}$；区间外用 Chebyshev，且 $\mathbb EZ^4\le4$。
+对其单调分位数耦合的标准 Gaussian $G$，若 $\epsilon=Cd^{-1/3}$，
+积分分布函数差并用四阶尾界给
+$\mathbb E|Z-G|\le2T\epsilon+CT^{-3}$。
+取 $T=\epsilon^{-1/4}$，再在 $L^1,L^4$ 间插值得
+$\mathbb E|Z-G|^2\le Cd^{-1/6}$。
+独立地耦合辅助核心群组，得到同一空间上的独立 $G_j\sim N(0,v_j)$，满足
+
+```math
+\mathbb E_{\mathsf Q}\|U-G\|_2^2
+ \le C\sum_{\mathcal K_M}v_jd_j^{-1/6}\le Ce^{-c_q\lambda/18},
+\qquad \mathbb E_{\mathsf Q}\|U-G\|_2\le Ce^{-c_q\lambda/36}.
+```
+
+式 (69.21)。
+
+维数已由总方差和支付。
+Gaussian 平移公式和混合凸性给任意有限维耦合 $H,K$ 的经典平滑界
+
+```math
+d_{\mathrm{TV}}(\mathcal L(H+\sigma\xi),\mathcal L(K+\sigma\xi))
+ \le\frac{\mathbb E\|H-K\|_2}{\sqrt{2\pi}\sigma}.
+```
+
+式 (69.22)。
+
+精确中心位移在两端都保留：取 $H=U-e,K=G-e$。
+设 $\nu_M=\mathcal L(X\mid\mathscr X_M)$，参考律为
+
+```math
+P_M^G=\bigotimes_{j\in\mathcal K_M}N(-e_j,v_j+\sigma_M^2),\qquad
+ d_{\mathrm{TV}}(\nu_M,P_M^G)\le\tau_M+\eta_M^{\mathrm{sm}},
+\quad \eta_M^{\mathrm{sm}}=C\sigma_M^{-1}e^{-c_q\lambda/36}\to0.
+```
+
+式 (69.23)。
+
+指数噪声时，剩余指数为 $1/36-1/100=4/225>0$。
+若把精确中心误差直接除以该噪声，则本证明不成立；(69.23) 没有作这种替换。
+
+一维正方差 Gaussian 的亲和度为
+
+```math
+\operatorname{Aff}(N(\mu,w),N(\mu',w'))
+ =\left(\frac{2\sqrt{ww'}}{w+w'}\right)^{1/2}
+          \exp\left[-\frac{(\mu-\mu')^2}{4(w+w')}\right].
+```
+
+式 (69.24)。
+
+独立乘积的亲和度相乘。
+增加共同噪声方差只减小相对方差差，(69.20) 使反射方差的总负对数亲和度为 $O(m_M\alpha_M^2)$。
+精确均值的反射差则满足
+
+```math
+\sum_{\mathcal K_M}
+ \frac{(e_j-e_{-j})^2}{v_j+v_{-j}+2\sigma_M^2}
+ \le C m_M e_M^2.
+```
+
+式 (69.25)。
+
+由 $d_{\mathrm{TV}}\le\sqrt{1-\operatorname{Aff}^2}$ 及三角不等式，
+
+```math
+\Delta_M:=d_{\mathrm{TV}}(\nu_M,\mathcal R_\#\nu_M)
+ \le2\tau_M+2\eta_M^{\mathrm{sm}}
+                 +C\sqrt{m_M}(\alpha_M+e_M)\to0.
+```
+
+式 (69.26)。
+
+坏数据上只用 $\Delta_M\le1$，所以数据概率与先验平均收敛同时成立。
+
+还须将带噪核心符号接回原完整偶极。
+令 $D_X=\sum_{\mathcal K_M}x_jX_j$，
+$L_M^{(2)}=\sum_{j\notin\mathcal K_M}x_j^2v_j$ 与
+$N_M^{(2)}=\sigma_M^2\sum_{\mathcal K_M}x_j^2$。
+实际数据尾界给 $L_M^{(2)}\to0$，而
+$N_M^{(2)}\le C\sigma_M^2\delta^{-1}(1+R_c)^3\to0$。
+辅助律中的差平方期望由
+$H_M^{\mathrm{sgn}}=(1+Ce_M^2)L_M^{(2)}+N_M^{(2)}$ 控制。
+只转移 Chebyshev 事件，得到
+
+```math
+\mathbb P(|D_M-D_X|>h\mid\mathscr X_M)
+ \le\tau_M+H_M^{\mathrm{sgn}}/h^2.
+```
+
+式 (69.27)。
+
+参考律下 $D_X$ 是方差趋于 $\int x^2\rho=\gamma/\kappa>0$ 的 Gaussian，
+无论其均值如何，在 $[-h,h]$ 的概率均至多 $Ch$。
+经 (69.23) 转移并优化 $h$，得到
+
+```math
+r_M^{\mathrm{sgn}}:=\mathbb P(\operatorname{sgn}D_M\ne\operatorname{sgn}D_X
+                                      \mid\mathscr X_M)
+ \le C(H_M^{\mathrm{sgn}})^{1/3}+2\tau_M+\eta_M^{\mathrm{sm}}\to0.
+```
+
+式 (69.28)。
+
+此处符号在零点取 $+1$；测量噪声使 $D_X$ 连续，原 $D_M$ 的零原子也由这些界趋零。
+
+给定数据，$f(x)=\delta^{-1/2}(\|x\|_2^2-V_M)$ 精确反射不变，$D_X$ 在反射下变号。
+任一确定二值解码器的成功集
+$A=\{x:d_M(\mathscr X_M,f(x))=\operatorname{sgn}\sum_jx_jj\delta\}$
+被反射变成其补集，除去一个 $\nu_M$ 零测超平面。
+于是 $|2\nu_M(A)-1|\le\Delta_M$。
+独立随机化可先固定随机种子再积分；任意反射不变可测观测同理。
+将目标符号由 $D_X$ 换成 $D_M$，得到 (69.18)，其中好数据上可取
+$b_M=\min(1,\Delta_M/2+r_M^{\mathrm{sgn}})$，其余取一。
+所有界均不依赖解码器，所以覆盖随规模改变的任意可测规则。
+这一步依靠有限 TV 与符号耦合，未从弱收敛推断解码风险。
+带噪 Fourier 场反射后成为其共轭，故功率不变；偶部也逐点不变，所列观测都符合假设。证毕。
+
+**推论 69.4（精确信息、平滑风险与确定支持边界）。** 原数据加精确 $T_M$ 在定理 68.2
+的好事件上恢复全部组计数，条件离散熵按定理 68.5 以 Q^5 尺度增长。
+本章重新计算的 $T_M^{\mathrm{sm}}$ 与 $T_M$ 的差趋零、联合弱极限相同，
+但对原偶极符号的均匀先验 Bayes 错误率趋于 $1/2$。
+因此该实际模型中，弱极限与同一实现上的依概率接近都不足以保存任意可测解码能力。
+
+定理 69.3 的任意解码器范围不能改写为不受限制的逐确定支持结论。
+若限制解码器在保持奇偶类的站点置换下不变，则有合法的无条件扩展
+
+```math
+\sup_{d_M\ \mathrm{invariant}}\sup_{|S|=q}
+ \left|\mathbb P_S\{d_M(\mathscr X_M,T_M^{\mathrm{sm}})=S_M\}-\tfrac12\right|
+ \le\mathbb E_{\mathrm{prior}}b_M\to0.
+```
+
+式 (69.29)。
+
+**证明。** 前两句组合定理 68.2、定理 68.5 与本章两定理，保持相同精确中心、窗口、标签及数据。
+对任意固定 $S_0$，一个将 $S_0$ 写死在程序内的规则可以从数据计算
+$B^{-1}\sum_{i\in J}x_i(1_{i\in S_0}-\pi_i)$ 的符号，
+在真实支持 $S_0$ 下总是正确；这排除了不受限制的确定支持风险说法。
+对置换不变规则，成功事件在支持置换下不变，而该群在全部大小 $q$ 支持上传递。
+每个支持的成功概率因此相同，并等于先验平均；积分 (69.18) 得 (69.29)。
+已知反向实验先作原反向对齐。未知方向采用原共同判向事件，失败概率为 $O(q^{-1})$；
+在成功事件上，数据、中心、核心、标量和偶极同时一致，噪声也可保持同一实现。
+无条件误差和有界风险只增加这个失败概率，条件先验数据概率结论相应转移。
+不把错误方向的工作权重解释成一个未指定方向先验的后验。
+以上是电荷域测量噪声的结论；下面单独建立直接标量通道的比较。
+指数 $1/100$ 和核心常数只是已核验的充分选择。
+全部结果仍是原固定参数和原合法序列上的普通数学陈述，不是可行规模实验或形式核验。证毕。
+
+**定理 69.5（原标量的任意固定多项式 Gaussian 噪声）。** 固定 $p,c>0$，
+令 $G\sim N(0,1)$ 独立于原数据及支持标签，观察原标量的直接加噪版本
+
+```math
+Z_M=T_M+\upsilon_MG,\qquad \upsilon_M=cQ^{-p}.
+```
+
+式 (69.30)。
+
+噪声实现值不提供给解码器。两种实际实验中，存在原数据可测 $a_M\in[0,1]$，
+在均匀支持先验数据概率及均值意义下趋零，使所有依赖原数据与 $Z_M$ 的可测规则满足
+
+```math
+\sup_d\left|\mathbb P\{d(\mathscr X_M,Z_M)=S_M\mid\mathscr X_M\}
+                           -\tfrac12\right|\le a_M.
+```
+
+式 (69.31)。
+
+允许额外独立随机化。$(Z_M,\mathcal B_M)$ 同时保持 (69.5) 的原联合弱极限。
+这对每个固定 $p,c$ 分别成立，不对增长的 $p$ 一致，也不含指数尺度直接标量噪声。
+确定支持的无条件风险扩展仍只在置换不变规则类内成立。
+
+**证明。** 先证明密度比较所需的经典有限界。若 $G_0\sim N(0,1)$、
+$U\sim\chi^2_{m-1}$ 独立，$m=1$ 时取 $U=0$，则对充分小的 $\varepsilon\ge0$，
+
+```math
+d_{\rm TV}(\mathcal L(G_0+\varepsilon(G_0^2+U-m)),N(0,1))
+ \le\min\{1,C\varepsilon(1+\sqrt m)\}.
+```
+
+式 (69.32)。
+
+仅有随机误差趋零不够推出该 TV 结论：把正态数舍入到趋零网格，耦合误差趋零而 TV 恒为一。
+为证明 (69.32)，先取固定光滑截断 $\chi$，在 $[-1,1]$ 为一、在 $[-2,2]$ 外为零。
+置 $A=\varepsilon^{-1/2}$、$h(x)=x^2\chi(x/A)$、$F_t(x)=x+t\varepsilon h(x)$。
+有 $|h|\le x^2$、$|h'|\le C|x|$；对小 $\varepsilon$，
+$1/2\le F_t'\le3/2$ 且 $|x|/2\le|F_t(x)|\le3|x|/2$。
+$F_t$ 因而为递增双射。以 $\varphi$ 表示标准正态密度，换元及对 $t$ 积分给
+
+```math
+2d_{\rm TV}(\mathcal L(F_1(G_0)),N(0,1))
+ =\int|\varphi(x)-\varphi(F_1(x))F_1'(x)|\,dx\le C\varepsilon,
+```
+
+式 (69.33)。
+
+因为被积表达式对 $t$ 的导数绝对值至多
+$C\varepsilon(|x|^3+|x|)e^{-x^2/8}$。
+$F_1(G_0)$ 与 $G_0+\varepsilon G_0^2$ 只在 $|G_0|>A$ 上不同，
+该概率至多 $2e^{-1/(2\varepsilon)}$，所以未忽略完整二次映射远端的非单调分支。
+再作 $-\varepsilon$ 平移，用正态平移 TV 界，得到
+$d_{\rm TV}(G_0+\varepsilon(G_0^2-1),G_0)\le C\varepsilon$。
+与同一个独立 $\varepsilon(U-(m-1))$ 卷积收缩 TV；随后混合正态平移界，
+代价为 $C\varepsilon\mathbb E|U-(m-1)|\le C\varepsilon\sqrt{2(m-1)}$，得 (69.32)。
+这里没有假定 $G_0$ 与 $G_0^2$ 独立。
+
+为比较原通道，重新取固定核心常数与电荷噪声
+
+```math
+D_*^{(p)}=\frac{8(p+5/4)}\kappa,\quad
+R_c^{(p)}=\sqrt{D_*^{(p)}\log Q},\quad
+\sigma_M^{(p)}=\frac{c}{2\sqrt\gamma}Q^{-(p+1/4)},
+```
+
+```math
+\overline T_M^{(p)}=\delta^{-1/2}
+ \left[\sum_{|j\delta|\le R_c^{(p)}}(A_j+\sigma_M^{(p)}\xi_j)^2
+             -m_M(\sigma_M^{(p)})^2-V_M\right].
+```
+
+式 (69.34)。
+
+本证明以下简写核心、维数和电荷噪声为 $\mathcal K,m,\sigma$。
+$\overline T_M^{(p)}$ 是一个辅助比较观测；其已知噪声平方偏差已扣除，原观察量仍是 (69.30)。
+定理 69.3 的有限反射论证对该固定 $D_*^{(p)}$ 与 $\sigma$ 仍成立：
+$m=O(Q^{1/2}\sqrt{\log Q})$，核心最小组方差保持指数下界，
+$m\alpha_M^2\to0$、$me_M^2\to0$，而
+$\sigma^{-1}e^{-c_q\lambda/36}\to0$。
+有限核心偶极的测量噪声方差至多
+$C\sigma^2\delta^{-1}(R_c^{(p)})^3
+ =O(Q^{-2p}(\log Q)^{3/2})\to0$；
+原偶极的核心尾、精确中心误差与反集中仍按 (69.26)–(69.28) 处理。
+扣除确定的 $m\sigma^2$ 不破坏反射不变性。
+因此该比较观测已具有 (69.31) 型风险结论。
+
+现在必须把比较连回同一标签的原标量与符号。令实际核心、外部平方质量为
+
+```math
+E_c=\sum_{j\in\mathcal K}A_j^2,\qquad
+E_o=\sum_{j\notin\mathcal K}A_j^2.
+```
+
+式 (69.35)。
+
+本次所需精度是 $E_o=o_{\mathsf P}(\sigma)$，强于单独的 $E_o=o_{\mathsf P}(\sqrt\delta)$。
+(69.12)–(69.13) 对新固定核心常数给
+$\mathbb E_{\rm data}L_M^{(0)}\le CQ^{-(p+5/4)}+Q^Ce^{-c\lambda^{1/4}}$。
+逐组精确中心界还给局部版本
+$\sum_{j\notin\mathcal K}e_j^2\le Ce_M^2L_M^{(0)}$。
+先在 $e_M\le1$ 的好数据上对辅助平方尾作 Markov，再通过一次所选向量 TV 转移该事件，得到
+
+```math
+\mathsf P\{E_o/\sigma>h\mid\mathscr X_M\}
+ \le\tau_M+\frac{C L_M^{(0)}}{h\sigma}=o_{\mathbb P}(1)
+ \qquad(h>0).
+```
+
+式 (69.36)。
+
+其中 $\mathbb E L_M^{(0)}/\sigma=O(Q^{-1})+o(1)$，坏环境只付其概率。
+结合原 $\mathcal Q_M\to\gamma$，得到 $E_c\to\gamma$ 的实际条件概率结论。
+使用全局中心范数代替局部尾中心界会限制可处理的 $p$，此处不能丢掉局部化。
+
+给定任意实际标签向量与数据、且 $E_c>0$，旋转独立测量正态到核心向量的方向，
+其余平方和为独立的 $U\sim\chi^2_{m-1}$。于是该有限测量通道精确满足
+
+```math
+\overline T_M^{(p)}
+\ \stackrel{d}{=}\ T_M-\delta^{-1/2}E_o
+ +2\sigma\delta^{-1/2}\sqrt{E_c}
+   \left[G_0+\frac{\sigma}{2\sqrt{E_c}}(G_0^2+U-m)\right].
+```
+
+式 (69.37)。
+
+旋转只计算给定电荷的测量噪声律，不把电荷本身假定为 Gaussian。
+在 $E_c\in[\gamma/2,2\gamma]$ 上，(69.32) 的误差至多
+$C_\gamma\sigma(1+\sqrt m)=O(Q^{-p}(1+\log Q)^{1/4})\to0$。
+主正态标准差与 $\upsilon_M$ 之比恰为 $\sqrt{E_c/\gamma}$；
+平移量除以 $\upsilon_M$ 为 $E_o/(2\sqrt\gamma\sigma)$。
+有限正态亲和度或直接密度积分因而给每个实际标签上的通道误差界
+
+```math
+\min\left\{1,C_\gamma
+ \left[\sigma(1+\sqrt m)+|E_c/\gamma-1|+E_o/\sigma\right]\right\},
+```
+
+式 (69.38)。
+
+在上述能量区间外只用界一。对同一个完整实际后验标签律混合，
+由 (69.36) 和 $E_c\to\gamma$，这一有界误差的条件平均 $\epsilon_M(x)$ 趋零。
+即使附带完整所选标签向量 $L_J$，仍有
+
+```math
+d_{\rm TV}\!\left(
+ \mathcal L(Z_M,L_J\mid\mathscr X_M),
+ \mathcal L(\overline T_M^{(p)},L_J\mid\mathscr X_M)\right)
+ \le\epsilon_M(\mathscr X_M)\longrightarrow0.
+```
+
+式 (69.39)。
+
+收敛在先验数据概率及均值意义下成立。两端使用相同后验混合权重，
+所以原符号 $S_M$ 可随标签一起保留；单独的标量边缘 TV 不足以完成这一步。
+所有解码成功事件现在只相差 $\epsilon_M$，与比较通道的反射风险界合并即得 (69.31)。
+未把 TV 误差乘一个无界实际矩，也未从耦合接近直接推断 TV。
+
+直接噪声 $\upsilon_MG$ 本身趋零，条件 Slutsky 保持原完整旧组束的联合弱极限。
+对置换不变规则，原群作用仍保持直接标量通道与成功事件，故先验平均等于各确定支持概率；
+不受限制的确定支持反例仍如推论 69.4。未知方向只使用同一个判向成功事件。
+
+偏差修正对比较的范围有实质作用。若不扣除 $m\sigma^2$，
+其均值除以主正态尺度为 $m\sigma/(2\sqrt\gamma)
+ \asymp Q^{1/4-p}\sqrt{\log Q}$，在 $p\le1/4$ 时未趋零。
+当 $p=7/4,c=2\sqrt\gamma$ 时，$\sigma=Q^{-2}$、$D_*^{(p)}=24/\kappa$，
+该未修正偏差也趋零，故这时可直接与未扣偏差的核心平方和比较。
+本定理不作对 $p\to\infty$ 的一致断言，也不把电荷域指定指数噪声的结论移到原标量上。证毕。
+
+**定理 69.6（实际后验矩与直接噪声的信息量）。** 保持完整组计数向量 $R$、
+原标量 $T_M$ 及均匀大小 $q$ 支持先验。记
+$v_M(x)=\operatorname{Var}(T_M\mid\mathscr X_M=x)$。
+对原平稳独立对和连续路径实验，
+
+```math
+\mathbb E(T_M^2\mid\mathscr X_M)=O_{\mathbb P}(1),\qquad
+v_M(\mathscr X_M)=O_{\mathbb P}(1).
+```
+
+式 (69.40)。
+
+令 $\upsilon_M>0$ 为确定数，$G\sim N(0,1)$ 独立于原数据和全部标签，
+$Z_M=T_M+\upsilon_MG$，且噪声实现值不另行提供。
+每份固定原始数据上，以同一后验计算的互信息满足
+
+```math
+I_x(R;Z_M)=I_x(T_M;Z_M)
+ \le\frac12\log_2(1+v_M(x)/\upsilon_M^2)
+ \le\log_2^+(1/\upsilon_M)+\tfrac12\log_2(1+v_M(x)).
+```
+
+式 (69.41)。
+
+特别地，$\upsilon_M=cQ^{-p}$、固定 $p,c>0$ 时，
+$I_x(R;Z_M)\le p\log_2Q+O_{\mathbb P}(1)$。
+更一般地，只要 $\log^+(1/\upsilon_M)=o(Q^5)$，就有
+
+```math
+\frac{H_x(R\mid Z_M)}{Q^5}\longrightarrow\mathscr H(r,\beta),\qquad
+\frac{I_x(R;Z_M)}{H_x(R)}\longrightarrow0
+```
+
+式 (69.42)。
+
+这里 $H_x(R\mid Z_M)$ 是在固定数据纤维上、对 $Z_M\mid x$ 积分后的剩余离散熵；
+不是对每个单独噪声输出逐点断言。分母为零时将比值定义为零。
+所有渐近断言在先验数据概率下成立，并一致于确定支持的抽样律，
+后者仍评价均匀先验定义的数据函数。
+例如 $\upsilon_M=e^{-Q^4}$ 满足 (69.42)，但本定理不对该尺度声称 (69.31) 的符号风险结论。
+
+**证明。** 先在实际数据上取得充分的方差时钟界。
+沿 (68.23) 的全部确定截断线，信号 Poisson 点质量 $f_j$ 满足
+
+```math
+\max_j f_j\le C/\lambda,\qquad
+\sum_j f_j\le C/(Q\sqrt\lambda).
+```
+
+式 (69.43)。
+
+第一式由两个均值为固定正倍数 $\lambda$ 的 Poisson 最大原子界相乘得到。
+第二式将负计数点质量上界为 $C/\sqrt\lambda$，正计数只落在模 $Q$ 的一个剩余类。
+若 $K\sim\operatorname{Pois}(a\lambda)$，有限循环群 Fourier 反演给
+
+```math
+\mathbb P(K\equiv k_0\pmod Q)
+ \le\frac1Q\sum_{l=0}^{Q-1}
+ e^{-a\lambda(1-\cos(2\pi l/Q))}\le C/Q,
+```
+
+式 (69.44)。
+
+因为 $1-\cos(2\pi l/Q)\ge c\min(l,Q-l)^2/Q^2$，而 $\lambda/Q^2=Q\to\infty$。
+去掉不可行线点只减小此界，所以零计数端点和完整尾部均包含在内。
+用 (68.27) 的 $m_j\le Cqf_j$ 与 (68.28) 的实际一、二行比较，有
+
+```math
+\sum_jm_j\le CB^2,\qquad
+\sum_jm_j^2\le C(q/\lambda)B^2=CB^4\delta,
+```
+
+```math
+\mathbb E_{\rm data}\sum_j C_j\le CB^2,\qquad
+\mathbb E_{\rm data}\sum_j C_j^2\le C(B^2+B^4\delta).
+```
+
+式 (69.45)。
+
+这里先对任意数据定义每个截断线占据数，再取实际期望；未条件于截断成功。
+全行截断失败只付其概率，且 $d_j\le C_j/4$，因此 Markov 给
+
+```math
+V_M=O_{\mathbb P}(1),\qquad
+\sum_jv_j^2=O_{\mathbb P}(\delta),\qquad d_J=B^2V_M=o_{\mathbb P}(q).
+```
+
+式 (69.46)。
+
+这些较粗界已足够，无须从 Gaussian 弱极限推断实际矩。
+原校准仍给 $d_{\rm all}\sim q/2$、$d_{J^c}/d_{\rm all}\to1$。
+
+现在在固定数据上使用同一完整辅助 Bernoulli 乘积律 $\mathsf Q_x$ 与精确后验
+$\mathsf P_x$。由 (68.33) 及其 Bernoulli 局部估计，令
+$D_J=S_J-\mathbb E_{\mathsf Q_x}S_J$，则在概率趋一的数据集上，统一于所有所选标签，
+
+```math
+L(S_J)=a_x e^{-D_J^2/(2d_{J^c})}+\xi_x(S_J),\qquad
+ a_x=\sqrt{d_{\rm all}/d_{J^c}},\quad
+\sup|\xi_x|\le Cq^{-1/2},\quad 0\le L\le K_0.
+```
+
+式 (69.47)。
+
+$K_0$ 为固定常数。分母是总均值恰为整数 $q$ 的中心原子，至少 $c/\sqrt{d_{\rm all}}$；
+补集任意原子至多 $C/\sqrt{d_{J^c}}$，故最后一个界对遥远总数同样成立。
+由此对任意非负函数 $F$ 有
+$\mathbb E_{\mathsf P_x}F\le K_0\mathbb E_{\mathsf Q_x}F$。
+这是本证明传递实际矩的依据；TV 接近本身不具有此性质。
+
+沿用 (69.9) 的 $U_j=(n_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$，
+所以原电荷精确为 $A=U-e$，且 $e=\mathbb E_{\mathsf P_x}U$。
+在 (69.47) 中消去 $\mathbb E_{\mathsf Q_x}U=0$ 的常数项，
+由 $1-e^{-t}\le t$、Hilbert 空间 Cauchy–Schwarz 与
+$\mathbb E_{\mathsf Q_x}D_J^4\le3d_J^2+d_J$，得到
+
+```math
+\|e\|_2
+ \le C\sqrt{V_M}\left(\frac{\sqrt{3d_J^2+d_J}}q+q^{-1/2}\right)
+ =O_{\mathbb P}(Q^{-5/2}+q^{-1/2}).
+```
+
+式 (69.48)。
+
+这估计的是范数，不是范数平方；没有按组数放大中心误差。
+各组在辅助律下独立。令 $Y=\sum_jU_j^2-V_M$，Bernoulli 四阶累积量的直接展开给
+
+```math
+\mathbb E_{\mathsf Q_x}Y^2\le2\sum_jv_j^2+B^{-2}V_M,\qquad
+\mathbb E_{\mathsf Q_x}\langle U,e\rangle^2
+   =\sum_jv_je_j^2\le V_M\|e\|_2^2.
+```
+
+式 (69.49)。
+
+使用原定义 $T_M=\delta^{-1/2}(Y-2\langle U,e\rangle+\|e\|_2^2)$，
+再用 (69.47) 对整个平方作非负密度支配，得到
+
+```math
+\mathbb E_{\mathsf P_x}T_M^2
+ \le\frac{3K_0}{\delta}
+ \left(2\sum_jv_j^2+B^{-2}V_M+4V_M\|e\|_2^2+\|e\|_2^4\right).
+```
+
+式 (69.50)。
+
+第一项除以 $\delta$ 有界于数据概率，$B^{-2}/\delta=\lambda/q\to0$，
+而 (69.48) 使其余项除以 $\delta$ 后趋零，证明 (69.40)。
+坏数据上的有限矩不需要一致期望界，因此本结论不包含无条件二阶矩收敛。
+
+最后固定任一份数据，包括上述坏数据。此时 $T_M=f_x(R)$ 只有有限多个值。
+噪声通道条件于 $T_M$ 后与 $R$ 无关，链式法则给 (69.41) 的等号，
+无需调用 $R\mapsto T_M$ 的单射性。
+设 $m=\mathbb E_xT_M$、$v=v_M(x)$，$f$ 为 $Z_M$ 的有限 Gaussian 混合密度，
+$g$ 为均值 $m$、方差 $v+\upsilon_M^2$ 的 Gaussian 密度。
+以自然对数定义相对熵，经典混合恒等式为
+
+```math
+\sum_t\mathbb P_x(T_M=t)
+ D\bigl(N(t,\upsilon_M^2)\Vert g\bigr)
+ =I_x(T_M;Z_M)_{\rm nats}+D(f\Vert g)
+ =\tfrac12\log(1+v/\upsilon_M^2).
+```
+
+式 (69.51)。
+
+有限混合的对数密度有可积二次包络，故分解对数和交换有限求和合法。
+非负性给信息上界，且
+$1+v/\upsilon_M^2\le\max(1,\upsilon_M^{-2})(1+v)$。
+这是成熟 Gaussian 通道不等式在本数据纤维上的应用；新增桥梁是 (69.45)–(69.50)
+对原实际后验和精确中心的控制。
+
+由定理 68.5 与有限输入信息恒等式
+$H_x(R\mid Z_M)=H_x(R)-I_x(R;Z_M)$，立即得到 (69.42)。
+对固定多项式噪声也可直接将 $c$ 保留在
+$\tfrac12\log_2(1+v/c^2)$ 余项中。
+支持置换保持所有这些均匀先验定义的数据函数，并在大小 $q$ 支持上传递，
+故数据概率结论一致于确定支持。未知方向使用同一个判向成功事件。
+这里没有把剩余熵等同于任意指定符号的风险，也不声称期望信息极限、
+每个噪声输出的熵下界或稳定重构算法。证毕。
+
+**定理 69.7（直接加噪后完整计数恢复的条件指数）。** 对任意确定的 $\upsilon_M>0$，
+令 $Z_M=T_M+\upsilon_MG$，独立 Gaussian 噪声的实现值不另行公开。
+给定原数据 $x$，记 $p_{{\rm guess},M}(x)$ 为所有可测规则仅观察 $(x,Z_M)$
+后正确恢复完整组计数向量 $R$ 的最大条件成功概率；该概率已经对噪声输出与后验标签积分。
+若 $\log^+(1/\upsilon_M)=o(Q^5)$，则两种实际实验分别满足
+
+```math
+\frac{-\log_2p_{{\rm guess},M}(\mathscr X_M)}{Q^5}
+ \longrightarrow\mathscr H(r,\beta)
+```
+
+式 (69.52)。
+
+收敛在先验数据概率下成立，且一致于确定支持抽样律下对同一均匀先验函数的评价。
+另外，所有均匀先验解码规则的无条件成功概率之上确界趋零；
+本定理不给出这个数据平均成功概率的 $Q^5$ 指数。
+
+**证明。** 给定任意原数据，完整可行计数集合 $\mathcal F_x$ 有限。
+记其后验概率为 $p_x(n)$、原精确标量值为 $t_x(n)$，$\varphi_\upsilon$ 为方差 $\upsilon^2$
+的中心 Gaussian 密度。经典条件 Bayes 公式给
+
+```math
+p_{{\rm guess},M}(x)
+ =\int_{\mathbb R}\max_{n\in\mathcal F_x}
+             p_x(n)\varphi_{\upsilon_M}(z-t_x(n))\,\mathrm dz.
+```
+
+式 (69.53)。
+
+有限个连续函数的最大值可测；按计数向量的字典序选择第一个最大者，得到可测最优规则。
+固定规模的原数据字母表亦有限，因此各纤维规则可合为一个可测规则。
+独立随机化不能改善逐点最大值。本式不要求 $n\mapsto t_x(n)$ 单射。
+
+对任何可行计数，$n_j\ge0$、$\sum_jn_j\le q$，精确中心也满足
+$\mu_j\ge0$、$\sum_j\mu_j\le q$。故
+$0\le\sum_j(n_j-\mu_j)^2\le(\sum_jn_j+\sum_j\mu_j)^2\le4q^2$。
+原 $T_M$ 的全部可能值因此位于一个长度至多
+
+```math
+L_M=\frac{4q^2}{B^2\sqrt\delta}=4qQ^{11/4},\qquad
+\log L_M=c_qQ^3+\tfrac{11}4\log Q+O(1)
+```
+
+式 (69.54)。
+
+的区间中。区间位置为原数据可测量，不需要控制其中心。
+若所有均值在 $[a,a+L]$ 内，Gaussian 密度平移族的包络积分精确为
+$1+L/(\sqrt{2\pi}\upsilon)$：区间内取密度峰值，区间外的两条尾积分各为 $1/2$。
+在 (69.53) 中提出 $p_{\max,M}(x)$，并用忽略观测的模态规则作下界，便有
+
+```math
+p_{\max,M}(x)\le p_{{\rm guess},M}(x)
+ \le\min\left\{1,p_{\max,M}(x)
+               \left(1+\frac{L_M}{\sqrt{2\pi}\upsilon_M}\right)\right\}.
+```
+
+式 (69.55)。
+
+这是经典猜测成功率与最大泄漏界在有界均值 Gaussian 通道上的应用。
+它对每份数据成立，连截断失败的数据也包含在内；不需要后验矩、
+Gaussian 后验近似、最小标量间距或中心误差除以噪声尺度的估计。
+
+(69.54) 与噪声假设使
+$\log_2(1+L_M/(\sqrt{2\pi}\upsilon_M))=o(Q^5)$。
+对 (69.55) 取负对数，便把恢复指数夹在 $h_{\infty,M}$ 与它减去该确定开销之间；
+定理 68.6 给 (69.52)。例如 $\upsilon_M=e^{-Q^4}$ 满足条件，
+开销的自然对数至多 $Q^4+c_qQ^3+O(\log Q)$。
+正噪声条件实质必要于此计算：固定规模令噪声趋零时包络发散，不能将本界代入零噪声。
+这不把所给充分尺度条件判为最优阈值。
+
+取固定 $0<\eta<\mathscr H(r,\beta)$，有
+
+```math
+\mathbb E_{\rm prior}p_{{\rm guess},M}
+ \le\mathbb P_{\rm prior}\{-\log_2p_{{\rm guess},M}<\eta Q^5\}
+                  +2^{-\eta Q^5}\longrightarrow0.
+```
+
+式 (69.56)。
+
+可测 Bayes 规则的先验成功概率等于左边，故这是所有规则的统一界。
+第一个概率只知趋零，没有 $Q^5$ 指数控制；不能进一步给左边宣称同样指数。
+完整向量的恢复困难也不能推出某个符号或单个计数的恢复困难。
+
+保持奇偶类的站点置换同时作用于数据和支持，保持原组计数、精确中心、$T_M$ 及噪声通道。
+这些均匀先验函数因而在各大小 $q$ 支持下有相同数据分布，得到 (69.52) 的一致性。
+若解码器也置换不变，其无条件成功概率在各支持下相同，并等于先验平均，故同样趋零。
+不受限制的确定支持规则可写死 $S_0$ 并从数据直接计数组内 $S_0$ 成员，
+在真实支持为 $S_0$ 时成功率为一；因此不作这种无条件风险扩展。
+未知方向沿用同一个判向成功事件，数据概率结论按事件一致性转移，
+平均风险只增加趋零的判向错误概率，不取得新的指数结论。证毕。
+
+## 追加锚（69 章后）
+
+## 70. 完整后验 Rényi 熵谱与零阶极限的过渡
+
+**定义 70.1（原始数据纤维上的 Rényi 熵）。** 保留第 68 章的模型、完整窗口和计数向量 $R$。
+对每份原始数据 $x$，令 $\mathsf P_x$ 是均匀大小 $q$ 支持先验的精确计数后验，
+$\mathsf Q_x$ 是同一校准参数下的独立二项计数律。
+以 $\nu$ 表示熵的阶数，原计数线斜率 $\alpha$ 不变。定义
+
+```math
+H_{\nu,M}(x)=\frac{\log_2\sum_n\mathsf P_x(n)^\nu}{1-\nu}
+ \quad(0<\nu\ne1),\qquad
+H_{0,M}(x)=\log_2|\operatorname{supp}\mathsf P_x|,
+```
+
+```math
+H_{1,M}=h_M,\qquad H_{\infty,M}=h_{\infty,M},\qquad
+\widetilde H_{\nu,M}=H_\nu(\mathsf Q_x),\qquad
+A(u)=(c_q-I(u))_+.
+```
+
+式 (70.1)。
+
+$h_M,h_{\infty,M},c_q,I,\mathcal I,\ell,\mathscr H$ 均取第 68 章的定义。
+阶数为零时仅数正概率的组计数元组，不数每个元组内部的标签排列。
+这些量都在同一数据纤维上先取有限和，再取对数。
+
+**定理 70.2（固定正阶的次阶熵差与完整支持熵）。** 对每个固定
+$\nu\in(0,\infty)\setminus\{1\}$，两种实际实验分别满足
+
+```math
+H_{\nu,M}-\widetilde H_{\nu,M}=O_{\mathbb P,\nu}(Q^{-5/2}),\qquad
+\frac{H_{\nu,M}-H_{\infty,M}}{Q^2}
+ \longrightarrow\frac{\ell\log\nu}{2(\nu-1)\log2}.
+```
+
+式 (70.2)。
+
+在概率趋一的数据集上，完整实际后验支持精确为
+$\prod_{j\in K_M}\{0,\ldots,C_j\}$，故
+
+```math
+H_{0,M}=\sum_{j\in K_M}\log_2(C_j+1)=\widetilde H_{0,M},\qquad
+\frac{H_{0,M}}{Q^5}\longrightarrow2\mathscr H.
+```
+
+式 (70.3)。
+
+收敛在先验数据概率下成立，亦一致于所有大小 $q$ 确定支持的抽样律；
+后一表述评价同一均匀先验后验函数，不改用点质量先验。
+每个固定正阶的 $Q^5$ 主系数因而都是 $\mathscr H$。
+阶数一的差及阶数无穷的主项分别已由定理 68.7、68.6 给出。
+常数不要求一致于 $\nu\to1$ 或 $\nu\to\infty$。
+
+**证明。** 使用第 68 章的实际一、二行比较、完整线占据数与全局校准。
+记 $N_J=\sum_jC_j$、$d_c=d_{J^c}$。这些估计给
+
+```math
+N_J=O_{\mathbb P}(qQ^{-5/2}),\qquad d_{\rm all},d_c\sim q/2,
+\qquad d_J=O_{\mathbb P}(qQ^{-5/2}).
+```
+
+式 (70.4)。
+
+这里第一式来自实际行数，而不是从后验方差反推。
+所以以概率趋一有 $N_J<q<M-N_J$；补集 Bernoulli 参数均严格在零一之间，
+每个 $0\le\sum_jn_j\le N_J$ 都能由补集凑成总数 $q$。
+这证明完整盒支持。(68.29) 的对数占据数估计及全域 Riemann 和随即证明 (70.3)。
+
+还需要比窗口半宽更精确的参数界。
+在全行截断上，完整窗口恰为原有计数线，因而
+
+```math
+\sup_{j\in K_M}|W_j-\tau|
+ \le C\{\lambda|\alpha-P/Q|+\epsilon\lambda+q^{-1}\}
+ =o(q^{-1/2}),\qquad
+\eta_x:=\max_{j:C_j>0}|p_j-1/2|=O_{\mathbb P}(q^{-1/2}).
+```
+
+式 (70.5)。
+
+第一项的十进制尾是 $10^{-Q^5}$ 阶；第二项乘 $\sqrt q$ 的指数率为
+$-\phi+c_q/2<0$；第三项显然满足。
+又有 $\tau-\log((M-q)/q)=O(q/M)=o(q^{-1/2})$，
+加上 $O_{\mathbb P}(q^{-1/2})$ 的全局校准根即得第二式。
+空组单独置 $p_j=1/2$，不改变任何律。
+
+令 $m_J=\sum_jC_jp_j$、$D=k-m_J$。
+精确后验与乘积律的密度比仍为
+
+```math
+L_x(k)=\frac{\mathsf Q_x(S_{J^c}=q-k)}{\mathsf Q_x(S_{\rm all}=q)},\qquad
+\mathsf P_x(n)=L_x\!\left(\sum_jn_j\right)\mathsf Q_x(n).
+```
+
+式 (70.6)。
+
+(68.39) 的局部 Bernoulli 界给
+$\log L_x(k)\le C(d_J/q+q^{-1/2})$。
+远离中心的下界不能取该加性近似的对数，须另作倾斜。
+对补集定义 $K(t)=\sum_{i\notin J}\log(1-p_i+p_ie^t)$。
+logistic 方差的对数导数绝对值至多为一，所以
+
+```math
+e^{-|t|}d_c\le K''(t)\le e^{|t|}d_c.
+```
+
+式 (70.7)。
+
+在 $d_c\ge c_1q$ 且 $N_J\le c_1q/(4e)$ 的好数据上，
+每个所选总数都对应唯一 $t$，使 $K'(t)=q-k$，且
+$|t|\le C|D|/q=o(1)$，一致于完整盒。
+这是将 (70.7) 先在 $[-1,1]$ 上积分定位根，再用导数下界所得。
+倾斜后的均值恰为目标整数，方差 $d_t=K''(t)\asymp q$，
+故同一局部 Bernoulli 估计给中心原子
+$(2\pi d_t)^{-1/2}(1+O(q^{-1/2}))$。
+撤销倾斜付出 $\exp(-\mathcal I_t)$，其中
+$0\le\mathcal I_t=t(q-k)-K(t)\le C D^2/q$。
+由于 $d_{\rm all}\ge d_c$ 且 $|\log(d_t/d_c)|\le|t|$，得到
+
+```math
+-C\{D^2/q+q^{-1/2}\}\le\log L_x(k)
+ \le C\{d_J/q+q^{-1/2}\},\qquad0\le k\le N_J.
+```
+
+式 (70.8)。
+
+此式允许极端元组具有很小的密度比；并未给出一致的正常数下界。
+
+现在估计乘积计数律的幂倾斜。
+对 $f_{n,p}(k)=\binom nkp^k(1-p)^{n-k}$，令
+
+```math
+f_{n,p;\nu}(k)=\frac{f_{n,p}(k)^\nu}{\sum_h f_{n,p}(h)^\nu}
+ \propto\binom nk^\nu e^{\nu t k},\qquad t=\operatorname{logit}p.
+```
+
+式 (70.9)。
+
+这是经典 COM-binomial 指数族，在 Kadane 的参数化中成功参数为
+$\operatorname{logistic}(\nu\operatorname{logit}p)$，而非原 $p$；其计数组合因子也被取幂，
+因此不同于先对独立标签取幂再合并为计数。
+以下直接证明所需的阶数一致界。
+记未归一化权重为 $w_k$、相邻比为 $r_k=w_{k+1}/w_k$。
+当 $n\ge2$ 时
+
+```math
+\log r_{k+1}-\log r_k
+ =\nu\left\{\log\frac{n-k-1}{n-k}+\log\frac{k+1}{k+2}\right\}
+ \le-2\nu/n=:-\kappa.
+```
+
+式 (70.10)。
+
+取该律的两个独立样本 $X_1,X_2$，条件于和 $h$。
+距离 $d=|X_1-h/2|$ 的格为非负整数或正半整数；
+除零点一次、其余两次的重数外，权重为 $w_{h/2+d}w_{h/2-d}$。
+相邻距离权重比至多为 $e^{-\kappa(2d+1)}$。
+所以其对同重数折叠离散 Gaussian $e^{-\kappa d^2}$ 的密度比随距离不增，
+递增函数的期望不超过该 Gaussian 的期望。
+这一比较由递增函数与递减密度比的协方差非正直接得到。
+整数格、半整数格的 Gaussian 和与积分比较给
+$\mathbb E d^2\le C(1+\kappa^{-1})$；$\kappa\ge1$ 时先提出最小格点权重即可。
+因此
+$2\operatorname{Var}X_1=\mathbb E(X_1-X_2)^2=4\mathbb Ed^2\le C(1+n/\nu)$。
+$n=1$ 用方差至多 $1/4$，$n=0$ 为零。
+
+在 $t=0$ 处均值为 $n/2$，均值对 $t$ 的导数为 $\nu\operatorname{Var}X_1$。
+积分并用 $|\operatorname{logit}p|\le C|p-1/2|$，对 $p\in[1/4,3/4]$ 得
+
+```math
+\operatorname{Var}_{n,p;\nu}X_1\le Cn/\nu,\qquad
+|\mathbb E_{n,p;\nu}X_1-np|\le Cn|p-1/2|,\quad0<\nu\le1.
+```
+
+式 (70.11)。
+
+对每个固定 $\nu>1$，同样的结论以依赖 $\nu$ 的常数成立。
+产品律的幂倾斜仍是这些计数幂倾斜的乘积，故
+
+```math
+\mathbb E_{\mathsf Q_{x,\nu}}D^2
+ \le C\{N_J/\nu+\eta_x^2N_J^2\}\quad(0<\nu\le1).
+```
+
+式 (70.12)。
+
+固定 $\nu>1$ 时右边可写成 $C_\nu(N_J+\eta_x^2N_J^2)$。
+这已足够，无须另证每个组的幂倾斜均值偏移为 $O_\nu(1)$。
+
+在完整盒支持事件上精确有
+
+```math
+(\log2)(H_{\nu,M}-\widetilde H_{\nu,M})
+ =\frac{\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu}{1-\nu}.
+```
+
+式 (70.13)。
+
+Jensen 不等式、(70.8)、(70.12) 给，在 $0<\nu\le1$ 上一致地
+
+```math
+-C\left\{\frac{N_J}q+\frac{\nu\eta_x^2N_J^2}q+\nu q^{-1/2}\right\}
+ \le\log\mathbb E_{\mathsf Q_{x,\nu}}L_x^\nu
+ \le C\nu(d_J/q+q^{-1/2}).
+```
+
+式 (70.14)。
+
+(70.4)、(70.5) 使 $\eta_x^2N_J^2/q=O_{\mathbb P}(Q^{-5})$；
+不需要这些数据函数相互独立。
+故对固定非一正阶得到 (70.2) 第一式，$\nu>1$ 用同一固定阶矩界。
+同时已得到后续所需的更强一致性
+
+```math
+\sup_{0<\nu\le1/2}|H_{\nu,M}-\widetilde H_{\nu,M}|
+ =O_{\mathbb P}(Q^{-5/2}).
+```
+
+式 (70.15)。
+
+分母不靠近零；未将此绝对误差界一致地延伸到 $\nu=1$ 的缩小邻域。
+
+固定阶的单组结论由经典二项局部极限给出。
+具体地，紧参数区间上对全部原子都有
+
+```math
+\frac c{\sqrt{n+1}}e^{-C(k-np)^2/(n+1)}
+ \le f_{n,p}(k)\le
+\frac C{\sqrt{n+1}}e^{-c(k-np)^2/(n+1)}.
+```
+
+式 (70.16)。
+
+下界已见 (68.47)。上界在 $k/n$ 离端点有固定距离时由 Stirling 与
+$D(k/n\Vert p)\ge2(k/n-p)^2$ 得到；在其余区域，
+$|k-np|\ge cn$，粗略类型上界 $e^{-nD}$ 的额外指数衰减吸收所需的 $\sqrt{n+1}$ 因子。
+于是中心 Stirling 展开、标准化网格的 Riemann 和及 (70.16) 的尾控制给
+
+```math
+\sum_{k=0}^n f_{n,p}(k)^\nu
+ =(2\pi np(1-p))^{(1-\nu)/2}\nu^{-1/2}(1+o(1)),
+```
+
+```math
+h_\nu(f_{n,p})-h_\infty(f_{n,p})\longrightarrow
+ \frac{\log\nu}{2(\nu-1)},\qquad
+0\le h_\nu(f_{n,p})-h_\infty(f_{n,p})\le C_\nu.
+```
+
+式 (70.17)。
+
+这里 $h$ 用自然对数，阶数固定且不为一，极限对 $p\in[1/4,3/4]$ 一致；
+小 $n$ 包括零由 (70.16) 及双边模态界处理。
+其中有界差还可直接使用 Melbourne–Tkocz 对整数对数凹律的经典界
+$h_\nu-h_\infty<\log\nu/(\nu-1)$；它不要求质量序列单调，
+但不能替代这里的半倍 Gaussian 极限和趋零阶数的一致估计。
+这些单组 Gaussian 熵系数是成熟工具，不是新的抽象熵公式。
+
+产品律的两种熵都逐组相加。
+在 $I\le c_q-e$ 的固定正区域上占据数指数增长，故每组贡献趋于 (70.17) 的常数；
+在 $I\ge c_q+e$ 上实际组以概率趋一全部为空；
+过渡条带用 $C_\nu$ 界。
+先令规模趋无穷，再令 $e\downarrow0$，第 68 章的完整域网格计数给正区域长度 $\ell$。
+由定理 68.6 的最小熵比较及 (70.13) 传回实际律，即得 (70.2) 第二式。
+端点邻接区间未删除，也未分别展开两个熵的较大算术修正。
+支持置换及共同判向成功事件按第 68 章传递全部结论。证毕。
+
+**定理 70.3（阶数随规模趋零的完整过渡）。** 对任意确定序列 $0<\nu_M\le1$，若
+$Q^{-3}\log(1/\nu_M)\to s\in[0,\infty)$，则在定理 70.2 的同一概率意义下
+
+```math
+\frac{H_{\nu_M,M}}{Q^5}
+ \longrightarrow\frac1{2\log2}
+ \int_{\mathcal I}\{A(u)+\min(A(u),s)\}\,du.
+```
+
+式 (70.18)。
+
+$s=0$ 时极限为 $\mathscr H$；$s\ge c_q=\max A$ 时为 $2\mathscr H$。
+若 $Q^{-3}\log(1/\nu_M)\to\infty$，仍得到 $2\mathscr H$。
+
+**证明。** 不能把移动阶数代入 (70.17) 的固定阶展开。
+对 $0<\nu\le1/2$，将 (70.16) 取幂后求和，直接有一致双边估计
+
+```math
+\sum_k f_{n,p}(k)^\nu\asymp(n+1)^{-\nu/2}
+ \min\left\{n+1,\sqrt{\frac{n+1}{\nu}}\right\}.
+```
+
+式 (70.19)。
+
+上界同时使用全格 Gaussian 和及项数；下界在距均值不超过较小宽度的固定倍数内取格点。
+由于 $p\in[1/4,3/4]$，该区域至少含常数倍相应宽度的可行整数，指数项统一有正下界。
+小 $n$ 和零占据数单独满足同一常数界。
+置 $t=\log(n+1)$、$b_\nu=\log(1/\nu)$；对 (70.19) 取对数并除以 $1-\nu$，得
+
+```math
+\left|h_\nu(f_{n,p})-\frac12\{t+\min(t,b_\nu)\}\right|\le C.
+```
+
+式 (70.20)。
+
+额外项至多为 $\nu\log(1/\nu)/(2(1-\nu))$，在这个阶数范围一致有界。
+此估计包括 $\nu n$ 约为一的交界，无须另设空隙。
+
+将 (70.20) 沿完整计数线相加并用 (70.15)，
+再由 (68.29) 将 $\log(1+C_j)$ 换成 $Q^3A(\bar u_j)$。
+最小值对每个参数都是 Lipschitz，故在归一化 $Q^5$ 下，
+占据数替换误差为 $O_{\mathbb P}(\log Q/Q^3)$，单组有界误差之和为 $O(Q^{-3})$。
+剩下的 Riemann 和为
+
+```math
+\frac1{2\log2\,Q^2}\sum_{j\in K_M}
+ \{A(\bar u_j)+\min(A(\bar u_j),Q^{-3}\log(1/\nu_M))\}.
+```
+
+式 (70.21)。
+
+$A$ 在完整闭域连续且支撑紧；有限 $s$ 下由一致连续性及最小值的 Lipschitz 性得到 (70.18)。
+$s=\infty$ 时第二个参数最终超过 $\max A$，给两倍积分。
+
+$s>0$ 或 $s=\infty$ 时阶数最终小于 $1/2$。
+$s=0$ 时，对阶数大于 $1/2$ 的其余指标用
+$H_{1,M}\le H_{\nu_M,M}\le H_{1/2,M}$；
+两端的归一化极限都是 $\mathscr H$，与小阶子列一起完成夹逼。
+这一步允许阶数趋近一甚至等于一，没有除以趋零的 $1-\nu_M$。
+
+极端元组的条件化代价可达 $N_J^2/q$，本身无需趋零。
+真正进入幂和的是 (70.12) 的期望乘阶数：
+$\nu\mathbb E_{\mathsf Q_{x,\nu}}D^2/q
+\le C\{N_J/q+\nu\eta_x^2N_J^2/q\}=O_{\mathbb P}(Q^{-5/2})$。
+所以本模型的固定总数约束不另添一条相变条件。
+先固定正阶取规模极限、再令阶数趋零，得到 $\mathscr H$；
+先在每个有限规模令阶数趋零得到支持熵，再取规模极限，则是 $2\mathscr H$。
+(70.18) 给出这两个顺序之间的过渡。
+所有结论仍为数据概率极限，不涉及期望熵、变化的 $\beta$、负阶、
+随规模增长的阶数或噪声解码风险。证毕。
+
+## 追加锚（70 章后）
+
+## 71. 直接标量噪声下的信息谱与列表恢复
+
+**定义 71.1（带噪输出与有限列表）。** 保留第 68–69 章的原实验、完整窗口、
+均匀大小 $q$ 支持先验和精确中心。给定原始数据 $x$，记完整组计数后验为
+$\mathsf P_x$，正支撑为有限集 $\mathcal F_x$，并写
+
+```math
+\imath_x(n)=-\log_2\mathsf P_x(n),\qquad
+h_x=\mathbb E_x\imath_x(R),\qquad
+v_*=\frac{\ell}{2(\log2)^2}.
+```
+
+式 (71.1)。
+
+$h_x$ 是定理 68.8 的精确纤维熵。令 $t_x(n)$ 为定义 54.1 的原 $T_M$ 在计数元组 $n$ 上的值，
+仍使用全固定基数后验均值及原校准方差中心。观察
+
+```math
+Y=T_M+\sigma_M G,\qquad G\sim N(0,1),\qquad
+\sigma_M>0\text{ 为确定序列},\qquad
+\log^+(1/\sigma_M)=o(Q),
+```
+
+式 (71.2)。
+
+$G$ 独立于原始数据和完整标签。给定 $x$，以下概率包含 $R$ 与 $G$ 的同一联合律。
+其输出密度和输出后验为
+
+```math
+w_n(y)=\varphi_{\sigma_M}(y-t_x(n)),\qquad
+f_x(y)=\sum_{n\in\mathcal F_x}\mathsf P_x(n)w_n(y)>0,\qquad
+\mathsf P_x^y(n)=\frac{\mathsf P_x(n)w_n(y)}{f_x(y)}.
+```
+
+式 (71.3)。
+
+对整数 $K\ge0$，定义
+
+```math
+\Psi_x(K)=\sup_{\mathcal L:\,|\mathcal L_x(y)|\le K}
+ \mathbb P_x\{R\in\mathcal L_x(Y)\},\qquad
+C_x^0(K)=\max_{A\subseteq\mathcal F_x,\ |A|\le K}\mathsf P_x(A).
+```
+
+式 (71.4)。
+
+列表可随 $x,y$ 改变，其大小预算对所有输出相同。
+允许列表使用独立于原始数据、标签及 $G$ 的辅助随机性，大小约束对每次随机化都成立；
+成功率同时对该随机性平均。确定列表是其中的特例。
+称随机列表置换不变，是指保持奇偶类的站点置换作用于数据和计数目标时，
+其输出列表的条件分布按同一作用变换，即策略核等变。
+$\Psi_x$ 是对噪声输出平均的最优成功率；$C_x^0$ 是不使用新增输出的最优成功率。
+$K=0$ 时两者为零，$K\ge|\mathcal F_x|$ 时为一。
+这里没有假定标量映射 $t_x$ 单射，亦不需要第 68 章的超越性论证。
+
+**定理 71.2（信息谱稳定与列表大小的次阶极限）。** 在 (71.2) 下，两种原实际实验分别满足
+
+```math
+\sup_z\left|\mathbb P_x\left\{
+ \frac{-\log_2\mathsf P_x^Y(R)-h_x}{Q}\le z\right\}
+ -\Phi\left(\frac z{\sqrt{v_*}}\right)\right|
+ \longrightarrow0
+```
+
+式 (71.5)。
+
+收敛在原始数据概率下成立，且一致于所有大小 $q$ 的确定支持；
+该表述始终评价同一均匀先验定义的联合纤维律，未将其换成点质量先验。
+对每个固定 $z\in\mathbb R$，令 $K_x(z)=\lfloor2^{h_x+Qz}\rfloor$，则
+
+```math
+C_x^0(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}),\qquad
+\Psi_x(K_x(z))\longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.6)。
+
+对固定 $0<\varepsilon<1$，令
+
+```math
+K_{\varepsilon,M}^{\rm noisy}(x)
+ =\min\{K\in\{0,\ldots,|\mathcal F_x|\}:\Psi_x(K)\ge1-\varepsilon\}.
+```
+
+式 (71.7)。
+
+在同一概率意义下，
+
+```math
+\log_2K_{\varepsilon,M}^{\rm noisy}(x)
+ =h_x+Q\sqrt{v_*}\Phi^{-1}(1-\varepsilon)+o_{\mathbb P}(Q).
+```
+
+式 (71.8)。
+
+这是输出平均的共同列表预算。(71.5) 也在联合纤维律中积分了 $Y$，
+不声称每个输出后验各自具有同一正态信息谱。
+固定参数与精确中心均保留，不将 $h_x$ 换成其 $Q^5$ 主项。
+
+**证明。** 所需实际模型输入是定理 68.8 的原信息谱及定理 69.6 的实际矩界
+
+```math
+\sup_z\left|\mathsf P_x\{(\imath_x-h_x)/Q\le z\}
+ -\Phi(z/\sqrt{v_*})\right|\longrightarrow0,\qquad
+m_{2,x}:=\mathbb E_xT_M^2=O_{\mathbb P}(1).
+```
+
+式 (71.9)。
+
+第二式并不来自弱收敛。为明确它与当前标量的对应，沿用 69.6 的单一校准乘积律，
+置 $U_j=(R_j-C_jp_j)/B$、$e_j=(\mu_j-C_jp_j)/B$、$v_j=C_jp_j(1-p_j)/B^2$，
+$V=\sum_jv_j$、$L=d\mathsf P_x/d\mathsf Q_x$、$a_x=\|L-1\|_2$。
+其实际行数估计与精确密度计算给出
+
+```math
+V=O_{\mathbb P}(1),\qquad \sum_jv_j^2=O_{\mathbb P}(\delta),\qquad
+0\le L\le C,\qquad a_x=O_{\mathbb P}(Q^{-5/2}),\qquad
+\|e\|\le a_x\sqrt V,
+```
+
+```math
+T_M=\delta^{-1/2}\left\{\sum_j(U_j^2-v_j)-2e\cdot U+\|e\|^2\right\},
+```
+
+```math
+m_{2,x}\le\frac C\delta
+ \left\{2\sum_jv_j^2+B^{-2}V+4a_x^2V^2+a_x^4V^2\right\}
+ =O_{\mathbb P}(1).
+```
+
+式 (71.10)。
+
+其中 $B^{-2}/\delta=Q^3/q\to0$。这是对同一完整计数向量的非负平方使用密度支配，
+保留了 $\|e\|^2$ 截距；并未将 TV 接近当作矩传递。
+坏环境只进入外层数据概率，未乘以一个无界统计量。
+
+固定一个有限纤维。每个 $w_n$ 严格正且连续，故按
+$\mathsf P_x(n)w_n(y)$ 降序、以按得分排列的计数元组字典序破同分，
+取前 $K\wedge|\mathcal F_x|$ 个，得到 Borel 可测的最优列表。
+它逐点最大化有限和，因此积分后恰取得 (71.4) 的上确界；随机列表也不能超过它。
+每个 $M$ 的原始数据字母表有限，所以校准根、后验中心、预算和此选择器对 $x$ 都可测。
+同理，(71.7) 的有限最小值可测且存在。
+
+首先用信息密度连接 (71.9) 与新增输出。
+自然对数单位下的纤维互信息由定理 69.6 的经典 Gaussian 通道界控制：
+
+```math
+I_x(R;Y)=I_x(T_M;T_M+\sigma_M G)
+ \le\frac12\log\left(1+\frac{m_{2,x}}{\sigma_M^2}\right)
+ =o_{\mathbb P}(Q).
+```
+
+式 (71.11)。
+
+末式也适用于噪声增大：上界至多为
+$\tfrac12\log(1+m_{2,x})+\log^+(1/\sigma_M)$。
+全部熵积分在有限 Gaussian 混合上有定义。
+令 $i_x(n,y)=\log(w_n(y)/f_x(y))$。严格正性给精确恒等式
+
+```math
+\mathbb E_xe^{-i_x(R,Y)}
+ =\sum_n\mathsf P_x(n)\int w_n(y)\frac{f_x(y)}{w_n(y)}\,dy=1.
+```
+
+式 (71.12)。
+
+所以 $\mathbb P_x(i_x<-t)\le e^{-t}$，积分尾界得 $\mathbb E_x(i_x)_-\le1$，进而
+
+```math
+\mathbb E_x|i_x|=I_x+2\mathbb E_x(i_x)_-\le I_x+2,
+\qquad
+\mathbb P_x\{|i_x|>bQ\}\le\frac{I_x+2}{bQ}=o_{\mathbb P}(1)
+\quad(b>0).
+```
+
+式 (71.13)。
+
+这是把平均信息变成谱扰动控制所需的一步。
+仅凭一个熵数不能确定原谱；此处已另有 (71.9) 的实际条件 CLT。
+Bayes 公式又给
+
+```math
+-\log_2\mathsf P_x^Y(R)=\imath_x(R)-\frac{i_x(R,Y)}{\log2}.
+```
+
+式 (71.14)。
+
+对任意固定 $b>0$，(71.13) 及阈值两侧移动 $b/\log2$ 将 (71.5) 的误差界为
+原 Kolmogorov 误差、一个 $o_{\mathbb P}(1)$ 和正态分布在此宽度内的最大质量之和。
+先取规模极限，再令 $b\downarrow0$，即证 (71.5)。
+不需要 $T_M$ 与原信息谱独立，亦未声称信息密度对每个输出都小。
+
+对任意有限律 $p$，记其 $K$ 个最大原子的质量为 $C_p(K)$，
+其惊奇量 $-\log_2p$ 的分布函数为 $F_p$。
+直接数原子可得对任意 $K\ge1,b>0$
+
+```math
+F_p(\log_2K-b)\le C_p(K)
+ \le F_p(\log_2K+b)+2^{-b}.
+```
+
+式 (71.15)。
+
+左侧集合中每个原子的质量至少为 $2^b/K$，所以它至多有 $K$ 个元素；
+右侧则将最优 $K$ 集合中质量小于 $2^{-b}/K$ 的部分单独估计。
+这是经典一次信息谱计数界。
+对每个输出的有限后验 $\mathsf P_x^y$ 使用此式，再对 $y$ 积分，得到
+
+```math
+\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K-b\}
+ \le\Psi_x(K)
+ \le\mathbb P_x\{-\log_2\mathsf P_x^Y(R)\le\log_2K+b\}+2^{-b}.
+```
+
+式 (71.16)。
+
+因为 $h_x/Q^5\to\mathscr H>0$，对固定 $z$，以概率趋一有
+$K_x(z)\ge1$ 且 $\log_2K_x(z)=h_x+Qz+o(1)$。
+取 $b=\sqrt Q$，由 (71.5)、(71.16) 得 (71.6) 第二式；
+用原律版本的 (71.9)、(71.15) 得第一式。
+
+再置 $z_\varepsilon=\sqrt{v_*}\Phi^{-1}(1-\varepsilon)$。
+对任意固定 $a>0$，正态值在 $z_\varepsilon-a,z_\varepsilon+a$ 处严格夹住 $1-\varepsilon$。
+(71.6) 与 $\Psi_x$ 对 $K$ 的单调性使 (71.7) 以概率趋一夹在
+$\lfloor2^{h_x+Q(z_\varepsilon-a)}\rfloor$ 与
+$\lfloor2^{h_x+Q(z_\varepsilon+a)}\rfloor$ 之间。
+取对数再令 $a\downarrow0$ 即得 (71.8)，无需改变误差水平或假定数据收敛速率。
+
+还有一条直接保留原信息谱的有限上界。
+对任意半径 $R_0>0$、松弛 $t>0$，按
+$|T_M|>R_0$、$\imath_x\le\log_2K+t$ 和剩余原子分拆任意列表的成功事件，得到
+
+```math
+C_x^0(K)\le\Psi_x(K)
+ \le\mathsf P_x\{\imath_x\le\log_2K+t\}
+ +\frac{m_{2,x}}{R_0^2}
+ +2^{-t}\left(1+\frac{2R_0}{\sqrt{2\pi}\sigma_M}\right).
+```
+
+式 (71.17)。
+
+剩余原子各至多为 $2^{-t}/K$，而列表最多有 $K$ 个；
+其通道密度积分由区间 Gaussian 包络
+$\int\sup_{|u|\le R_0}\varphi_\sigma(y-u)\,dy
+=1+2R_0/(\sqrt{2\pi}\sigma)$ 控制。
+区间内取峰值、外面取最近端点，两侧尾积分相加为一，证明该公式。
+取 $R_0=Q^a$、固定 $a>0$，再取
+$t=\log_2(1+2Q^a/(\sqrt{2\pi}\sigma_M))+\sqrt Q=o(Q)$，
+(71.17) 也给出相同的成功率上界。
+这里截断的是上界证明中的输入集合，没有剪裁实际观测或更换 $T_M$。
+整个确定标量范围的对数为 $O(Q^3)$，不能代替这一步所需的 $o(Q)$ 通道代价。
+
+最后说明固定支持下的风险范围。
+保持奇偶类的站点置换把支持 $S$ 的原对／路径实验映到支持 $\pi S$，
+并保持按得分排列的计数坐标、完整先验后验、校准根、精确中心及 $t_x$。
+预算 $K_x(z)$ 置换不变；字典序仅用于给出一个可测最优列表，
+不要求这个确定的破平局规则本身等变。
+记有限置换群为 $\mathcal G_M$，取与一切观测、标签及 $G$ 独立的均匀群元 $U$。
+将上述确定最优列表记为 $\mathcal L^*$，定义
+$\widetilde{\mathcal L}_x(y;U)=U^{-1}\mathcal L^*_{Ux}(y)$，
+其中群对列表的作用来自它对计数目标的双射。
+后验质量和通道密度在该双射下保持，所以每个 $U$ 给出的拉回列表
+仍逐纤维取得最优值，且每次大小不超过 $K_x(z)$。
+对任意 $\pi\in\mathcal G_M$，以均匀群元 $U\pi$ 换元可得
+$\widetilde{\mathcal L}_{\pi x}(y;U)$ 与
+$\pi\widetilde{\mathcal L}_x(y;U)$ 同分布。
+这就在允许标量碰撞时给出等变最优策略核。
+使用同一 $G$，群在大小 $q$ 支持上传递，故任意这种策略核的积分成功率对支持相同。
+平均此恒等值等于其先验 Bayes 成功率；对称化最优策略逐纤维取得上界，因而
+
+```math
+\sup_{\substack{\mathcal L\ {\rm 置换不变的随机策略核}\\
+ |\mathcal L_x(y;U)|\le K_x(z)}}
+ \Pr_{S,G,U}\{R(S,\mathscr X)\in\mathcal L_{\mathscr X}(Y;U)\}
+ =\mathbb E_{\rm prior\ data}\Psi_{\mathscr X}(K_{\mathscr X}(z))
+ \longrightarrow\Phi(z/\sqrt{v_*}).
+```
+
+式 (71.18)。
+
+成功率有界，故数据概率收敛足以给这里的期望收敛。
+这里 $S$ 固定，概率对原实验、Gaussian 噪声及独立策略随机性平均；
+式中的 $U$ 对一般策略表示其辅助随机性，对上述最优构造则是均匀群元。
+这不提供熵或对数列表大小的期望展开。
+不限制策略的逐支持结论会被写死该支持的单元素列表推翻；(71.18) 的策略类不能删除。
+反向实验先作原整体反转；未知方向使用已有共同判向事件并耦合同一噪声，
+使全部数据函数及成功事件同时一致，误差由该事件的失败概率控制。
+
+结论包含如 $\sigma_M=e^{-\sqrt Q}$ 的噪声，未分类
+$\log(1/\sigma_M)\sim cQ$ 或更小噪声。
+(71.17) 在那个尺度留下的代价只是上界余量，不是可达增益或锐利相变。
+不涉及逐输出保证、变化的 $\varepsilon$、特定符号风险、有限精度效率或实验等价。证毕。
+
+## 追加锚（71 章后）

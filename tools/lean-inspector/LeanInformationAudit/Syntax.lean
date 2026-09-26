@@ -19,6 +19,7 @@ private def markArenaConstruction (elaborator : TermElab) : TermElab := fun stx 
   let type ← whnfR (← inferType value)
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.Arena ||
       type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena ||
+      type.isAppOf RegistrationGates.objectDomainArenaName ||
       type.isAppOf RegistrationGates.witnessArenaName then
     return mkAnnotation arenaConstructionMarker value
   return value
@@ -152,10 +153,11 @@ private def checkNativeStatement (theoremName arenaName realizationName : Name)
   let valid <- liftTermElabM do
     try
       let arenaExpr <- mkConstWithFreshMVarLevels arenaName
+      let lawArena := (← RegistrationGates.normalizeArena arenaExpr).law
       let realizationExpr <- mkConstWithFreshMVarLevels realizationName
       let expectedLaw <- mkAppM
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
-        #[arenaExpr, realizationExpr]
+        #[lawArena, realizationExpr]
       let statementExpr <- elabTerm statement (some (mkSort .zero))
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq statementExpr expectedLaw
@@ -173,7 +175,8 @@ private def addInlineLegacyRealization (theoremName arenaName realizationName : 
       let theoremInfo ← getConstInfo theoremName
       withLevelNames theoremInfo.levelParams do
         let statement := theoremInfo.type
-        let arena ← mkConstWithFreshMVarLevels arenaName
+        let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+        let arena := (← RegistrationGates.normalizeArena arenaExpr).law
         let signature ← mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature #[arena]
         let realizationType ← mkAppM
@@ -397,7 +400,10 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
         legacyArgs.size == 3 do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let validLegacy <- liftTermElabM do
-      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
+      let arenaExpr ← mkConstWithFreshMVarLevels arenaName
+      let normalized ← RegistrationGates.normalizeArena arenaExpr
+      let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+      return (← isDefEq legacyArgs[0]! expectedBridgeArena) &&
         (← isDefEq legacyArgs[1]! theoremType)
     unless validLegacy do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
@@ -538,7 +544,10 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
       legacyArgs.size == 3 do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let validLegacy <- liftTermElabM do
-    return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels lawArenaName)) &&
+    let arenaExpr ← mkConstWithFreshMVarLevels lawArenaName
+    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let expectedBridgeArena := if normalized.witness then arenaExpr else normalized.law
+    return (← isDefEq legacyArgs[0]! expectedBridgeArena) &&
       (← isDefEq legacyArgs[1]! theoremType)
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
@@ -695,5 +704,52 @@ private def elabNativeReadout : CommandElab := fun stx => do
 private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
   withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
     (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command
+
+@[command_elab registerInformationSourceTheoremCmd]
+private def elabSourceRegistration : CommandElab := fun stx => registrationTransaction do
+  let theoremName ← resolveTheorem ⟨stx[1]⟩
+  let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let recordName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[10]
+  let selection ← liftTermElabM do
+    let value ← Term.elabTermEnsuringType stx[15] (mkConst ``SourceSelection)
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    if value.hasMVar then throwError "unclassified_form:source.selection_open"
+    -- Syntax transport is evaluated, never a mathematical proposition or readout.
+    unsafe evalExpr SourceSelection (mkConst ``SourceSelection) value
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[7]⟩
+  let residual ← if stx[20].getKind == ``escapeOpenContinuation then
+      pure ({ openContinuation := true } : EscapeRecordInput)
+    else do
+      let value ← liftTermElabM <| Term.elabTerm stx[20][0] none
+      pure ({ continuation := some value } : EscapeRecordInput)
+  let info ← getConstInfo recordName
+  let source ← getConstInfo theoremName
+  let descriptor := descriptor.map (fun e => e.instantiateLevelParams info.levelParams
+    (source.levelParams.map Level.param))
+  let root := (← getEnv).header.mainModule
+  let unit := catalogQualifiedName root arenaName .anonymous theoremName theoremUnitSuffix
+  let unitDecl : Declaration := .defnDecl {
+    name := unit, levelParams := info.levelParams, type := info.type,
+    value := mkConst recordName (info.levelParams.map Level.param), hints := .abbrev, safety := .safe }
+  if isNoncomputable (← getEnv) recordName then
+    -- Retaining a mathematical record does not make its readout executable.
+    -- addDecl still sends the unchanged declaration through the kernel.
+    liftCoreM <| addDecl unitDecl
+    modifyEnv (addNoncomputable · unit)
+  else
+    liftCoreM <| addAndCompile unitDecl
+  TemplateBinding.withDeclaration {
+    theoremName, arena := arenaName, descriptor, diagnostic,
+    escapeInput := { residual with sourceSelection := some selection } } do
+    registerValidatedEntry {
+      theoremName, unitName := unit, arenaName, realizationName := recordName,
+      sourceBound := true, objectArenaName := arenaName, resolvedArenaName := arenaName,
+      registrationModuleName := root, localRegistrationNames := false }
 
 end LeanInformationAudit

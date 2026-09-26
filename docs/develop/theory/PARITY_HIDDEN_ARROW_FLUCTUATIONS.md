@@ -1492,3 +1492,1154 @@ $`q/\sqrt\lambda\gg\sqrt q`$ 阶。
 删去这个均值或只按一阶信号比例取容量，一般会移出本定理的临界窗口。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 容量修正内的混合正态标签噪声
+
+**定义 32.1（修正区间的精确后验中心）。** 沿用定义 31.1，先对齐到正确方向。
+所有条件后验均取均匀固定基数支持先验，并条件于完整数据及独立同分优先级，
+记所生的 σ 代数为 $`\mathscr D_M`$。置
+
+```math
+I_M=A_M\triangle T_M,\qquad D_M=|N_M-m_M|=|I_M|,\qquad
+\varepsilon_M=\mathrm{sgn}(N_M-m_M),\qquad
+\widehat G_M=-\frac{N_M-\mathbb E_S N_M}{\sqrt q}.
+```
+
+式 (32.1)。
+
+若 $`D_M=0`$，取 $`\varepsilon_M=0`$。
+记 $`\pi_i=\mathbb P(i\in S\mid\mathscr D_M)`$ 为精确后验包含概率。
+实际遗漏数相对于间隙阈值的修正及其后验中心为
+
+```math
+\Delta_M=|S\setminus T_M|-(q-C_M)
+       =\varepsilon_M|I_M\cap S|,\qquad
+\overline\Delta_M=\varepsilon_M\sum_{i\in I_M}\pi_i,\qquad
+\mathcal R_M=\frac{\Delta_M-\overline\Delta_M}{q^{1/4}}.
+```
+
+式 (32.2)。
+
+这里 $`\Delta_M`$ 与遗漏损失一样依赖真实支持。
+未知方向时先使用第 27 章的方向判决，对所选方向计算同样的得分、排名区间及
+正向模型后验；容量仍为定义 31.1 的确定值。
+令
+
+```math
+v_+=\pi_+(1-\pi_+),\qquad v_-=\pi_-(1-\pi_-),\qquad
+v_s(g)=v_+(-g)_++v_-g_+.
+```
+
+式 (32.3)。
+
+**定理 32.2（随机容量修正所承载的细尺度噪声）。** 在定理 31.2 的条件下，
+对两个实际平稳实验及两种方向信息情形，联合收敛为
+
+```math
+\left(
+ \widehat G_M,
+ \sqrt q\left(\frac{|S\setminus T_M|}{q}-H_{\mathcal E,m_M}^{\xi}\right),
+ \mathcal R_M
+\right)
+\ \Longrightarrow\
+\left(G,\ f_s(G)-\mu_s,\ \sqrt{v_s(G)}\,Z\right),
+```
+
+式 (32.4)。
+
+其中 $`G\sim N(0,\sigma^2)`$，$`Z\sim N(0,1)`$，二者独立。
+结论对支持一致。第三个极限条件于 $`G`$ 为中心正态，其方差由 $`G`$ 决定；
+它与 $`G`$ 不相关但不独立，且其边缘分布也不是正态。
+
+证明。先设方向已知。在均匀支持先验下，给定 $`\mathscr D_M`$ 后，
+取唯一正数 $`t`$，使下面的独立 Bernoulli 参数总和为 $`q`$。
+这个校准对任意数据都有定义；式 (27.11) 还给出总方差的界
+
+```math
+p_i=\frac{t\exp(W_i-t_B)}{1+t\exp(W_i-t_B)},\qquad
+\sum_i p_i=q,\qquad
+c q\le d_M:=\sum_i p_i(1-p_i)\le q
+```
+
+式 (32.5)。
+
+这些结论在概率趋一的后验好事件成立；$`t_B=\log((M-q)/q)`$。
+精确后验是这个独立数组条件于总数为 $`q`$ 的分布。
+$`p_i`$ 是条件化之前的校准参数，不能与 $`\pi_i`$ 混同。
+
+固定 $`L\gt0`$，暂限于 $`D_M\le L\sqrt q`$。
+给定数据，区间 $`I_M`$ 是确定集合。在独立 Bernoulli 数组中，记区间和与
+补集和为 $`Y_I,Y_O`$，其均值与方差分别记作
+$`\mu_I,\mu_O`$ 和 $`d_I,d_O`$。于是
+
+```math
+\mu_I+\mu_O=q,\qquad d_I\le D_M/4,\qquad
+ d_O=d_M-d_I\ge cq/2
+```
+
+式 (32.6)。
+
+最后一个不等式对充分大的 $`M`$ 成立。
+异质 Bernoulli 和的经典局部极限定理给出：若总方差为 $`d\to\infty`$，
+则点概率与相应正态密度的绝对误差一致为 $`O(d^{-1})`$，
+不要求各个参数统一远离零与一；参见
+[Siripraparat–Neammanee 定理 2](../../../Library/Dynamics/siripraparat2021local.md)。
+将此界分别用于全数组与补集，且利用全数组均值恰为整数 $`q`$，得
+
+```math
+\frac{\mathbb P(Y_O=q-k)}{\mathbb P(Y_I+Y_O=q)}
+ =\sqrt{\frac{d_M}{d_O}}
+      \exp\left[-\frac{(k-\mu_I)^2}{2d_O}\right]
+   +O_L(q^{-1/2}),\qquad 0\le k\le D_M.
+```
+
+式 (32.7)。
+
+因为 $`D_M\le L\sqrt q`$ 且 $`q=o(M)`$，这些 $`q-k`$ 最终均属于补集和的
+支持范围。余项对数据所选的区间及上述 $`k`$ 一致。
+
+式 (32.7) 左边是区间内整个标签向量的精确后验相对于独立乘积律的密度，
+在向量上仅通过其总数 $`k`$ 取值。
+利用 $`1-e^{-x}\le x`$、$`\mathbb E(Y_I-\mu_I)^2=d_I`$，并在独立区间律下积分，得到
+
+```math
+d_{\mathrm{TV}}\left(
+ \mathcal L((\mathbf1_{\{i\in S\}})_{i\in I_M}\mid\mathscr D_M),
+ \bigotimes_{i\in I_M}\mathrm{Bernoulli}(p_i)
+\right)
+ \le C\left(\frac{d_I}{q}+q^{-1/2}\right)
+ \le C_Lq^{-1/2}.
+```
+
+式 (32.8)。
+
+全局支持基数的条件化因此可在这个增长区间内消去，而不是假定后验标签独立。
+又因 $`0\le Y_I\le D_M`$，同一总变差界还给出精确中心的误差
+
+```math
+\left|\sum_{i\in I_M}\pi_i-\mu_I\right|
+ \le C_LD_Mq^{-1/2}=O_L(1)=o(q^{1/4}).
+```
+
+式 (32.9)。
+
+固定实数 $`u`$。对独立 Bernoulli 特征函数在
+$`u q^{-1/4}`$ 处作三阶余项展开，三阶绝对矩和不超过 $`d_I`$，故
+
+```math
+\mathbb E\exp\left[
+ iu\varepsilon_M\frac{Y_I-\mu_I}{q^{1/4}}\right]
+ =\exp\left[-\frac{u^2d_I}{2\sqrt q}\right]
+   +O_{u,L}(q^{-1/4}).
+```
+
+式 (32.10)。
+
+这个展开也覆盖很短或空的修正区间，不以 $`D_M`$ 作分母。
+结合 (32.8)–(32.9)，得到精确后验下相同的条件特征函数近似。
+由于 $`\mathbb E_S D_M^2=O(q)`$，
+$`\mathbb P_S(D_M\gt L\sqrt q)\le C/L^2`$。
+先令 $`M\to\infty`$，再令 $`L\to\infty`$，而坏事件上的特征函数误差至多为二，便得
+
+```math
+\mathbb E\left|
+ \mathbb E(e^{iu\mathcal R_M}\mid\mathscr D_M)
+       -\exp(-u^2V_M/2)
+\right|\longrightarrow0,\qquad
+V_M=\frac1{\sqrt q}\sum_{i\in I_M}p_i(1-p_i).
+```
+
+式 (32.11)。
+
+这里及条件期望中使用的是均匀支持先验。
+$`V_M`$ 使用所有数据上均有定义的校准参数。
+
+定理 31.2 的定位说明，删去的区间停在上方相邻格点层，补入的区间停在下方层。
+校准参数在这两层分别一致趋向 $`\pi_+`$ 与 $`\pi_-`$。
+再用 $`D_M/\sqrt q`$ 的紧性及取整误差，得到
+
+```math
+V_M-v_s(\widehat G_M)\longrightarrow0\quad\text{依概率},\qquad
+\widehat G_M\Longrightarrow G.
+```
+
+式 (32.12)。
+
+在 (32.11) 中乘以任意有界的 $`\widehat G_M`$ 特征函数，再取期望，
+便得到 $`(\widehat G_M,\mathcal R_M)`$ 的联合极限
+$`(G,\sqrt{v_s(G)}Z)`$。式 (31.8)、(31.13) 与精确均值转移同时给出
+粗尺度损失为 $`f_s(\widehat G_M)-\mu_s+o_P(1)`$，遂得已知方向的 (32.4)。
+整个随机向量在同时置换支持、数据和优先级后不变，其分布对每个固定支持相同。
+所以先验下的联合分布恰等于每个固定支持下的分布，结论据此转移。
+此处没有声称在固定真实支持下、条件于数据后标签仍有上述后验随机性。
+
+未知方向的全部统计量，在方向判决正确时与正确对齐版本逐项相等。
+该事件的补集概率为 $`O(q^{-1})`$，故相等耦合转移联合分布极限。
+粗尺度损失的未知方向精确风险中心仍由第 31 章的 $`O(q^{-1})`$ 夹逼处理。
+这里不把旧的 $`o(\sqrt q)`$ 误差直接用作 $`o(q^{1/4})`$ 误差；
+细尺度坐标由精确后验中心、(32.8)–(32.11) 及相等耦合单独控制。
+
+最后令 $`V=v_s(G)`$、$`R=\sqrt V Z`$。
+$`V`$ 几乎处处为正且不是常数，并有
+
+```math
+\mathbb EV=\frac{\sigma(v_++v_-)}{\sqrt{2\pi}},\qquad
+\mathbb EV^2=\frac{\sigma^2(v_+^2+v_-^2)}2,\qquad
+\mathbb ER^4=3\mathbb EV^2\gt3(\mathbb EV)^2.
+```
+
+式 (32.13)。
+
+因此 $`R`$ 不是中心正态变量。
+$`\mathbb E(R\mid G)=0`$ 给出不相关，而
+$`\mathbb E(R^2\mid G)=v_s(G)`$ 不是常数，排除独立性。
+这些矩等式属于极限随机变量，不断言实际归一化统计量的矩收敛。∎
+
+## 追加锚（本行以下为增补区）
+
+## 33. 非格点容量的线性波动与持续混合噪声
+
+**定义 33.1（非格点阈值的精确平均容量）。** 沿用定义 27.1 的实验和固定参数，
+另设 $`\log(1+r)/\log(1-r)\notin\mathbb Q`$。取确定序列
+$`s_M\to s\in\mathbb R`$，令 $`u_M=\tau_M+s_M`$。
+在正确对齐的数据上定义
+
+```math
+A_M=\{i:W_i\gt u_M\},\quad N_M=|A_M|,\quad C_M=|A_M\cap S|,
+\quad m_M=\lfloor\mathbb E_S N_M\rfloor,\quad
+\overline H_M=1-\frac{\mathbb E_S C_M}{q}.
+```
+
+式 (33.1)。
+
+支持对称性使 $`m_M`$ 为不依赖支持位置的确定容量。
+令 $`T_M`$ 选取 $`m_M`$ 个最高补偿得分，同分处仍用独立优先级。
+任意容量的固定输出风险采用定义 31.1 的公式，记为
+$`H_{\mathcal E,m_M}^{\xi}`$。置
+
+```math
+\widehat G_M=-\frac{N_M-\mathbb E_S N_M}{\sqrt q},\qquad
+p_s=\frac{e^s}{1+e^s},\qquad \sigma^2=p_*(1-p_*).
+```
+
+式 (33.2)。
+
+沿用定义 32.1 的 $`I_M,D_M,\varepsilon_M,\Delta_M,\overline\Delta_M,\mathcal R_M`$，
+但以本章的 $`A_M,T_M`$ 代入。
+已知方向时，$`\pi_i`$ 是均匀固定基数先验在完整对齐数据与优先级下的精确后验概率。
+未知方向时，先作第 27 章的方向判决，再以所选方向计算各个量和正向模型后验权重；
+仍使用 (33.1) 的确定容量与正确对齐的确定均值。
+
+**定理 33.2（光滑粗尺度不消除随机方差）。** 容量满足
+$`m_M/q\to1-p_*\in(0,1)`$。对两个实际平稳实验、两种方向信息情形，
+对支持一致地有
+
+```math
+\sqrt q\left(H_{\mathcal E,m_M}^{\xi}-\overline H_M\right)\longrightarrow0,
+```
+
+式 (33.3)。
+
+且联合收敛为
+
+```math
+\left(\widehat G_M,
+\sqrt q\left(\frac{|S\setminus T_M|}{q}-H_{\mathcal E,m_M}^{\xi}\right),
+\mathcal R_M\right)
+\Longrightarrow
+\left(G,(1-p_s)G,\sqrt{p_s(1-p_s)|G|}\,Z\right),
+```
+
+式 (33.4)。
+
+其中 $`G\sim N(0,\sigma^2)`$ 与 $`Z\sim N(0,1)`$ 独立。
+这里 $`G`$ 是第 27 章的共同 Gaussian 坐标。
+粗尺度损失极限为正态，第三个极限仍与 $`G`$ 不相关而不独立，其边缘分布不是正态。
+
+证明。先设方向已知。记 $`d_*=\varphi(z_*)/\sqrt v\gt0`$。
+[支持恢复卷 (25.7)–(25.8)](PARITY_HIDDEN_ARROW_RECOVERY.md) 的非格点局部界、
+精确换测度和实际一行比较给出
+
+```math
+\frac{\mathbb E_S C_M}{q}\longrightarrow1-p_*,\qquad
+\mathbb E_S(N_M-C_M)
+ =\frac q{\sqrt\lambda}d_*e^{-s}[1+o(1)],\qquad
+\mathrm{Var}_S(N_M-C_M)=o(q).
+```
+
+式 (33.5)。
+
+最后一式由 (25.3) 的实际两行矩转移得到。
+信号计数方差为 $`O(q)`$，故 $`\mathrm{Var}_S N_M=O(q)`$，
+并有 $`\mathbb E_S D_M^2=O(q)`$。
+全信号向量比较 (27.6)、独立 Bernoulli 中心极限定理和单行均值转移 (27.7)
+分别处理分布与精确中心，得到
+
+```math
+G_M=-\frac{C_M-\mathbb E_S C_M}{\sqrt q}\Longrightarrow G,
+\qquad \widehat G_M-G_M\longrightarrow0\quad\text{于 }L^2.
+```
+
+式 (33.6)。
+
+这同时证明容量的极限。背景均值在 (33.5) 中保留；它大于平方根基数尺度，
+不能在定义容量时删除。
+
+现在证明容量修正的定位。固定任意 $`\eta\gt0`$，取阈值两侧的窗口
+$`(u_M,u_M+\eta]`$ 与 $`[u_M-\eta,u_M]`$，记总占据数为 $`K_+,K_-`$。
+[Stone 的经典局部极限定理](../../../Library/Dynamics/stone1967local.md)
+给出固定宽度、对中心位置一致的区间概率。
+单位时间信号得分的复合 Poisson 增量非格点，且具有有限正方差；
+把实数时间拆成整数部分和有界时间余增量，即可使用该定理。
+端点原子用固定小窗口夹逼后令其宽度趋零。
+同样，在计数截断上先用 $`|W-Z|=o(1)`$ 夹住窗口，再令夹逼宽度趋零，
+便把固定得分的局部界转到补偿得分。
+
+信号窗口质量为 $`\eta d_*/\sqrt\lambda[1+o(1)]`$；
+背景窗口质量由精确换测度取得。
+对每个固定 $`\eta`$，实际占据数因此满足
+
+```math
+\mathbb E_S K_\pm\asymp_\eta\frac q{\sqrt\lambda},\qquad
+\mathrm{Var}_S K_\pm\le C_\eta\left(
+\frac q{\sqrt\lambda}+\delta_M\frac{q^2}{\lambda}+M^{2-D}\right),
+\qquad \delta_M=\frac{(\log M)^3}{n}.
+```
+
+式 (33.7)。
+
+这里 $`D`$ 是任取充分大的计数尾指数。
+两个窗口的平均大小均大于 $`\sqrt q`$。
+分别控制窗口计数的下尾以及 $`D_M`$ 超过其均值固定比例的事件，
+再交上 (27.11) 的后验好事件，得到事件 $`\mathcal H_{M,\eta}`$，使得
+
+```math
+\mathbb P_S(\mathcal H_{M,\eta}^{c})=O_\eta(\lambda/q),\qquad
+I_M\subseteq\{i:|W_i-u_M|\le\eta\}\quad\text{于 }\mathcal H_{M,\eta},
+\qquad
+\mathbb E_S[D_M\mathbf1_{\mathcal H_{M,\eta}^{c}}]=O_\eta(\sqrt\lambda).
+```
+
+式 (33.8)。
+
+最后一项使用 $`\mathbb E_S D_M^2=O(q)`$ 和 Cauchy 不等式。
+两集合都是同一得分与优先级顺序的初始片段，因此窗口包含足够位置即保证该定位；
+同分组不被假定为连续分布。
+
+在好事件中，(27.11) 与 logistic 函数的 Lipschitz 性给出
+
+```math
+\max_{i\in I_M}|\pi_i-p_s|
+\le\eta/4+\epsilon_M+C|U-q|/q,\qquad
+\epsilon_M\longrightarrow0,\qquad \mathbb E_S(U-q)^2=O(q).
+```
+
+式 (33.9)。
+
+其中确定误差包括 $`s_M-s`$、$`t_B-\tau_M`$ 和单点条件概率比余项。
+后验负协方差还使区间标签和的条件方差至多为 $`D_M/4`$，
+因此它与精确后验均值的绝对误差期望为 $`O(q^{1/4})`$。
+先对均匀支持先验作条件计算，再用支持置换等变性转到每个固定支持。
+在好事件中，以 $`p_sD_M`$ 替换后验区间均值的期望误差至多为
+$`(\eta/4+\epsilon_M)\mathbb E_S D_M+
+(C/q)\sqrt{\mathbb E_S D_M^2\,\mathbb E_S(U-q)^2}`$。
+坏事件上的真实标签项以 $`q`$ 为界，线性代理另由 (33.8) 控制。
+固定 $`\eta`$ 后令 $`M\to\infty`$，归一化误差的上极限至多为 $`C\eta`$；
+再令 $`\eta\downarrow0`$，得到
+
+```math
+\mathbb E_S\left|
+|S\setminus T_M|-[q-C_M+p_s(N_M-m_M)]\right|=o(\sqrt q).
+```
+
+式 (33.10)。
+
+这一步只使用固定窗口的迭代极限。
+非格点得分在有限样本下仍可离散，本证明没有在随样本收缩的窗口上调用密度近似。
+
+由 (33.6)、取整误差至多为一及 (33.10)，
+$`(|S\setminus T_M|-q\overline H_M)/\sqrt q`$
+与 $`(1-p_s)G_M`$ 的 $`L^1`$ 距离趋零。
+$`G_M`$ 的二阶矩一致有界且均值为零，故同时得到分布和均值结论。
+后验最高分排序的精确固定容量最优性与支持对称性，
+把已知方向的期望识别为 $`H_{\mathcal E,m_M}^{k}`$，证明 (33.3) 及粗尺度部分。
+阈值与第 27 章基数阈值间的信号概率为
+$`O(\log\lambda/\sqrt\lambda)=o(1)`$；
+两行矩转移将该带的中心化计数方差控制为 $`o(q)`$，
+所以 $`G_M`$ 与第 27 章的共同坐标联合时给出同一个 $`G`$。
+
+最后处理细尺度。第 32 章 (32.5)–(32.11) 的条件数组论证只使用
+总校准均值为 $`q`$、总方差为 $`q`$ 的固定正比例以及
+$`\mathbb E_S D_M^2=O(q)`$；这里三项仍由 (27.10)–(27.11)、(33.5)–(33.6) 成立。
+对 $`D_M\le L\sqrt q`$ 的区间，同样的补集局部界给出全向量总变差
+$`O_L(q^{-1/2})`$，其精确中心与独立中心之差为 $`O_L(1)`$。
+故在均匀支持先验下，对每个固定实数 $`t`$，
+
+```math
+\mathbb E\left|\mathbb E(e^{it\mathcal R_M}\mid\mathscr D_M)
+                  -\exp(-t^2V_M/2)\right|\longrightarrow0,\qquad
+V_M=\frac1{\sqrt q}\sum_{i\in I_M}p_i(1-p_i).
+```
+
+式 (33.11)。
+
+$`p_i`$ 仍是精确后验条件化之前的校准独立参数，区别于 $`\pi_i`$。
+(33.8) 的定位和校准公式使 $`p_i`$ 在修正区间内与 $`p_s`$ 相差
+$`O(\eta)+o_P(1)`$。利用 $`D_M/\sqrt q`$ 的紧性，先令 $`M\to\infty`$、
+再令 $`\eta\downarrow0`$，得
+
+```math
+V_M-p_s(1-p_s)|\widehat G_M|\longrightarrow0\quad\text{依概率}.
+```
+
+式 (33.12)。
+
+在 (33.11) 中乘以数据可测的 $`\widehat G_M`$ 的特征函数，再取期望，
+得到与细尺度坐标的联合极限；用 (33.10) 替换粗尺度损失即可得到 (33.4)。
+整个随机向量的置换等变性将先验下的联合分布恰好转移到每个固定支持。
+条件后验结论 (33.11) 本身不被解释为固定真实支持下的随机标签结论。
+
+未知方向统计量在方向判决正确时逐项相等于正确对齐版本，
+其补集概率为 $`O(q^{-1})`$；粗尺度风险的夹逼也为 $`O(q^{-1})`$。
+相等耦合与风险夹逼分别转移分布与精确中心。
+错误方向上的正向权重不被声称为未知方向的精确 Bayesian 后验。
+
+令 $`V=p_s(1-p_s)|G|`$。它不是常数，
+所以 $`\mathbb E(\sqrt V Z\mid G)=0`$ 与
+$`\mathbb E((\sqrt V Z)^2\mid G)=V`$ 分别给出不相关与不独立。
+又因 $`\mathbb E[(\sqrt{V}\,Z)^4]=3\mathbb E[V^2]\gt3(\mathbb E[V])^2`$，
+第三个极限不是正态。这里使用的只是极限变量的矩，
+不包含实际统计量矩收敛或 (33.3) 以外的更细平均风险展开。∎
+
+**命题 33.3（实际非格点行的收缩窗口反例）。** 存在满足定义 33.1 的序列，
+其内在偏移极限和 $`s`$ 均为零，使得对两个实际平稳实验、任意真实支持及其中任一信号行，
+令 $`w_M=\sqrt{\lambda_M/q_M}`$，都有
+
+```math
+\liminf_M\lambda_M\,
+ \mathbb P_S\{|W_i-\tau_M|\le w_M/2\}
+ \ge\frac{2}{\pi\sqrt3},\qquad
+\frac{\mathbb P_S\{|W_i-\tau_M|\le w_M/2\}}
+     {w_M/\sqrt{\lambda_M}}\longrightarrow\infty.
+```
+
+式 (33.13)。
+
+因此，本模型的非格点条件不足以保证在此收缩尺度上的相对“密度乘宽度”公式。
+
+证明。固定 $`r=1/2`$ 和任意 $`\beta\in(1/2,1)`$。
+两个跳幅为 $`h_+=\log(3/2)`$ 与 $`h_-=-\log2`$。
+若其比为有理数，便会得到某个正整数次幂的三等于某个整数次幂的二，矛盾。
+沿允许的 $`M=2^{d-1}`$，取
+
+```math
+\lambda_M=4\left\lfloor\frac{\beta\log M}{4\phi}\right\rfloor,
+\qquad q_M=\left\lfloor M e^{-\lambda_M\phi}+\tfrac12\right\rfloor,
+\qquad \mathsf T_M=2M\lambda_M,\qquad u_M=\tau_M=\log(M/q_M).
+```
+
+式 (33.14)。
+
+对充分大的 $`M`$，样本数与基数均为合法整数，且
+$`q_M=M^{1-\beta+o(1)}`$、
+$`\tau_M=\lambda_M\phi+O(q_M^{-1})`$。
+所以内在偏移趋零，阈值也满足 $`s_M=0`$。
+
+在信号比较律下，两个独立 Poisson 计数的均值
+$`3\lambda_M/4`$、$`\lambda_M/4`$ 都是整数。
+两者同时等于各自均值的事件，由经典 Stirling 公式有概率
+
+```math
+Q_r\{N_+=3\lambda_M/4,\ N_-=\lambda_M/4\}
+ \sim\frac{2}{\pi\sqrt3\,\lambda_M}.
+```
+
+式 (33.15)。
+
+在该事件上，$`Z_i=\lambda_M\phi`$，而补偿得分满足
+$`W_i-Z_i=O(a_M\lambda_M)`$，其中 $`a_M=rq_M/(M-q_M)`$。
+这些误差在所选窗口内可忽略，因为
+
+```math
+\frac{a_M\lambda_M}{w_M}
+ =O\left(\frac{q_M^{3/2}\sqrt{\lambda_M}}{M}\right)\longrightarrow0,
+\qquad
+\frac{q_M^{-1}}{w_M}\longrightarrow0.
+```
+
+式 (33.16)。
+
+因此整个计数事件最终都落在 $`|W_i-\tau_M|\le w_M/2`$ 中。
+其计数为 $`O(\log M)`$，所以
+[支持恢复卷 (21.5)](PARITY_HIDDEN_ARROW_RECOVERY.md) 的实际一行相对概率比较
+适用于两个实验；其相对误差趋零，单独的多项式小余项也是 $`o(\lambda_M^{-1})`$。
+这把 (33.15) 的下界转到实际信号行，证明 (33.13) 的第一式。
+又因 $`w_M/\sqrt{\lambda_M}=q_M^{-1/2}`$ 且
+$`\sqrt{q_M}/\lambda_M\to\infty`$，第二式随之成立。
+此反例与固定宽度局部极限定理相容，也不推断平均容量代价的更细展开。∎
+
+## 追加锚（本行以下为增补区）
+
+## 34. 临界容量窗中的随机起点过程
+
+**定义 34.1（共同排序下的容量曲线）。** 固定 $`A\gt0`$，取定义 31.1 的格点情形，
+或定义 33.1 的非格点情形。所有容量共用同一实际观测、同一补偿得分和同一组独立连续优先级。
+记相应阈值集合为 $`A_M`$，$`N_M=|A_M|`$、$`C_M=|A_M\cap S|`$，置
+
+```math
+\nu_M=\mathbb E_S N_M,\qquad
+m_M(a)=\lfloor\nu_M+a\sqrt q\rfloor\quad(-A\le a\le A),\qquad
+\overline H_M=1-\mathbb E_S C_M/q.
+```
+
+式 (34.1)。
+
+这里的期望按所选实验和正确方向对齐计算，支持位置不影响这些确定量。
+令 $`T_M(a)`$ 为前 $`m_M(a)`$ 个位置，$`I_M(a)=A_M\triangle T_M(a)`$，
+$`e_M(a)=\mathrm{sgn}(N_M-m_M(a))`$。在均匀基数先验下，
+给定全部对齐数据与优先级 $`\mathscr D_M`$，记精确后验边缘概率为 $`\pi_i`$，并定义
+
+```math
+\begin{aligned}
+\Delta_M(a)&=e_M(a)|I_M(a)\cap S|,&
+\overline\Delta_M(a)&=e_M(a)\sum_{i\in I_M(a)}\pi_i,\\[0pt]
+X_M&=-\frac{N_M-\nu_M}{\sqrt q},&
+R_M(a)&=q^{-1/4}\bigl(\Delta_M(a)-\overline\Delta_M(a)\bigr),\\[0pt]
+Y_M(a)&=\frac{|S\setminus T_M(a)|-qH_{\mathcal E,m_M(a)}^\xi}{\sqrt q},
+&\xi&\in\{k,o\}.
+\end{aligned}
+```
+
+式 (34.2)。
+
+风险沿用定义 31.1 的确定输出基数 minimax 风险。未知方向时，整条曲线只用一次
+定义 27.1 的共同方向判决；全部随机量用该判决对齐后的正向工作得分与权重。
+确定容量、$`\nu_M`$ 和 $`\overline H_M`$ 保持正确对齐定义。
+错误方向上的工作权重不定义为未知方向的精确后验。
+
+格点情形取 $`\pi_+=\mathrm{logistic}(s+h)`$、
+$`\pi_-=\mathrm{logistic}(s)`$；非格点情形取
+$`\pi_+=\pi_-=p_s=\mathrm{logistic}(s)`$。置
+
+```math
+v_\pm=\pi_\pm(1-\pi_\pm),\qquad
+f(t)=\begin{cases}(1-\pi_+)t,&t\le0,\\[0pt](1-\pi_-)t,&t\ge0.\end{cases}
+```
+
+式 (34.3)。
+
+令 $`G\sim N(0,\sigma^2)`$，$`\sigma^2=p_*(1-p_*)`$。
+令 $`B_+,B_-`$ 为相互独立且独立于 $`G`$ 的标准 Brownian 运动，定义连续过程
+
+```math
+K(t)=\begin{cases}\sqrt{v_+}\,B_+(-t),&t\le0,\\[0pt]
+-\sqrt{v_-}\,B_-(t),&t\ge0.\end{cases}
+```
+
+式 (34.4)。
+
+**定理 34.2（整条容量曲线的共同随机起点）。** 对每个固定 $`A\gt0`$，上述容量最终都合法。
+在两个实际平稳实验、两种方向信息情形下，对支持一致地有
+
+```math
+\bigl(X_M,Y_M(\cdot),R_M(\cdot)\bigr)
+\Longrightarrow
+\bigl(G,\ a\mapsto f(G+a)-\mathbb E f(G+a),\ a\mapsto K(G+a)\bigr)
+```
+
+式 (34.5)。
+
+收敛空间为 $`\mathbb R\times D[-A,A]\times D[-A,A]`$，两条曲线均取
+Skorohod $`J_1`$ 拓扑，极限路径连续。精确风险函数还满足
+
+```math
+\sup_{|a|\le A}\left|
+\sqrt q\bigl(H_{\mathcal E,m_M(a)}^\xi-\overline H_M\bigr)-\mu(a)
+\right|\longrightarrow0,\qquad
+\mu(a)=-\pi_+a+(\pi_+-\pi_-)\left[\sigma\varphi(a/\sigma)+a\Phi(a/\sigma)\right].
+```
+
+式 (34.6)。
+
+这里 $`\Phi,\varphi`$ 为标准正态分布函数与密度。
+给定 $`G=g`$，不同容量的细尺度极限具有共同协方差
+
+```math
+\mathrm{Cov}\bigl(K(g+a),K(g+b)\mid G=g\bigr)=
+\begin{cases}
+v_+\min(|g+a|,|g+b|),&g+a,g+b\le0,\\[0pt]
+v_-\min(|g+a|,|g+b|),&g+a,g+b\ge0,\\[0pt]
+0,&(g+a)(g+b)\lt0.
+\end{cases}
+```
+
+式 (34.7)。
+
+证明。先取已知方向。第 31、33 章的实际一、二行估计与信号数组比较给出
+
+```math
+X_M\Longrightarrow G,\qquad
+\sup_M\mathbb E_S X_M^2\lt\infty,\qquad
+\left\|X_M+\frac{C_M-\mathbb E_SC_M}{\sqrt q}\right\|_{L^2}\longrightarrow0,
+\qquad \nu_M/q\longrightarrow1-p_*\in(0,1).
+```
+
+式 (34.8)。
+
+最后一式证明容量合法；阈值接受的背景均值仍包含在 $`\nu_M`$ 中。
+令 $`D_M^*=\max_{|a|\le A}|N_M-m_M(a)|`$，则
+$`D_M^*\le |N_M-\nu_M|+A\sqrt q+1`$，故
+$`\mathbb E_S(D_M^*)^2=O_A(q)`$。
+
+先在先验与数据的联合概率空间处理标签。令 $`B_0=(M-q)/q`$，选择唯一 $`t\gt0`$
+使 $`p_i=t e^{W_i}/(B_0+t e^{W_i})`$ 满足 $`\sum_i p_i=q`$。
+独立 Bernoulli 标签 $`\zeta_i`$ 条件于 $`\sum_i\zeta_i=q`$，恰为精确后验。
+记 $`U=\sum_i e^{W_i}/(B_0+e^{W_i})`$。第 32 章校准估计给出一个补集概率
+$`O(q^{-1})`$ 的数据事件，在其上
+
+```math
+|\log t|\le C|U-q|/q,\qquad
+cq\le d:=\sum_i p_i(1-p_i)\le q,\qquad
+\mathbb E_S(U-q)^2=O(q).
+```
+
+式 (34.9)。
+
+固定 $`H\gt0`$，取阈值排名两侧各前 $`r_M=\lceil H\sqrt q\rceil`$ 个位置，
+依次记为 $`i_j^+`$（删除侧）与 $`i_j^-`$（添加侧）；它们的并集记为 $`J_H`$。
+两侧位置不足的概率由 (34.8) 趋零。并集大小为 $`O_H(\sqrt q)`$，
+方差 $`d_J\le |J_H|/4`$，补集方差 $`d_O=d-d_J\ge cq/2`$。
+令 $`S_J=\sum_{i\in J_H}\zeta_i`$、$`\mu_J=\mathbb E S_J`$，
+$`S_O`$ 为补集和。在独立乘积律下应用
+[Siripraparat–Neammanee 的局部定理](../../../Library/Dynamics/siripraparat2021local.md)，
+如 (32.5)–(32.8)，得到对所有可能的整数 $`k`$ 一致的比值
+
+```math
+\frac{\mathbb P(S_O=q-k)}{\mathbb P(S_J+S_O=q)}
+=\sqrt{\frac d{d_O}}\exp\left[-\frac{(k-\mu_J)^2}{2d_O}\right]
+ +O_H(q^{-1/2}).
+```
+
+式 (34.10)。
+
+分母在整数均值处为 $`(2\pi d)^{-1/2}(1+O(q^{-1/2}))`$，
+分子的一致绝对误差为 $`O(q^{-1})`$。整个标签向量的条件密度比就是
+(34.10) 在 $`k=S_J`$ 处的值。利用
+$`\mathbb E(S_J-\mu_J)^2=d_J`$ 积分，给出
+
+```math
+d_{\mathrm{TV}}\left(
+\mathcal L((1_{i\in S})_{i\in J_H}\mid\mathscr D_M),
+\bigotimes_{i\in J_H}\mathrm{Bernoulli}(p_i)\right)\le C_Hq^{-1/2},\qquad
+\sup_{I\subseteq J_H}\left|\sum_{i\in I}(\pi_i-p_i)\right|\le C_H.
+```
+
+式 (34.11)。
+
+第二个界由有界标签和与第一个界推出。这是对一个完整并集向量的一次比较，
+所有容量都取这个向量的前缀。对单点重复同一估计还得
+$`\sup_i|\pi_i-p_i|\le Cq^{-1/2}`$，无需逐坐标概率的并集界。
+
+固定 $`H`$ 的两侧排名均落在相邻格点层的概率趋一，因为每层有
+$`\asymp q/\sqrt\lambda\gg\sqrt q`$ 个位置。非格点情形先固定宽度
+$`\eta\gt0`$，用第 33 章的固定宽度局部界；两侧窗口也各包含远多于
+$`\sqrt q`$ 个位置。先令 $`M\to\infty`$、再令 $`\eta\downarrow0`$，从而
+
+```math
+\max_{j\le r_M}|p_{i_j^\pm}-\pi_\pm|\longrightarrow0
+\quad\text{依概率},\qquad
+\sup_{0\le u\le H}\left|
+q^{-1/2}\sum_{j\le\lfloor u\sqrt q\rfloor}
+ p_{i_j^\pm}(1-p_{i_j^\pm})-v_\pm u\right|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (34.12)。
+
+这一步没有使用随样本收缩窗口的相对密度公式。
+
+在网格点 $`k/\sqrt q`$ 处定义两条后验中心化前缀和
+$`P_{\pm,M}(k/\sqrt q)=q^{-1/4}\sum_{j\le k}(1_{i_j^\pm\in S}-\pi_{i_j^\pm})`$，
+并作连续线性插值。令 $`\mathcal K_M(t)=P_{+,M}(-t)`$（$`t\le0`$），
+$`\mathcal K_M(t)=-P_{-,M}(t)`$（$`t\ge0`$）。
+反射前使用连续插值，避免将右连续阶梯函数的反射误认成右连续函数。
+
+在 (34.11) 的乘积律下，换为 $`\zeta_i-p_i`$ 的两条前缀和相互独立。
+插值前的阶梯前缀和构成二维平方可积鞅；(34.12) 是其对角可预测方差时钟，交叉时钟为零。
+跳幅至多 $`q^{-1/4}`$，方差时钟跳幅至多 $`1/(4\sqrt q)`$，满足
+[Whitt 定理 2.1(ii)](../../../Library/Dynamics/whitt2007martingale.md) 的条件。
+连续插值与阶梯过程的一致距离至多为 $`q^{-1/4}`$，所以二者具有相同的连续极限。
+也可直接验证紧性：$`k`$ 项独立中心化和的四阶矩至多 $`C(k+k^2)`$；
+归一化并对插值区间分成两个端点片段与整网格中段，便得
+$`\mathbb E|P_{\pm,M}(u)-P_{\pm,M}(v)|^4\le C|u-v|^2`$。
+有界数组的 Lindeberg 条件和 (34.12) 确定有限维 Gaussian 极限。
+
+由 (34.11)，换回精确后验只改变 $`O_H(q^{-1/2})`$ 的全向量总变差，
+并带来至多 $`O_H(q^{-1/4})`$ 的一致中心位移。因此在
+$`C[-H,H]`$ 的有界 Lipschitz 距离下，
+
+```math
+d_{\mathrm{BL}}\left(
+\mathcal L(\mathcal K_M\mid\mathscr D_M),
+\mathcal L(K|_{[-H,H]})\right)\longrightarrow0
+\quad\text{依概率且在 }L^1\text{ 中}.
+```
+
+式 (34.13)。
+
+随机环境的结论可用子序列准则得到：在任一子序列抽取使 (34.9)、(34.12)
+几乎处处成立的进一步子序列，再对每个确定环境应用上述数组定理。
+距离有界，所以也有 $`L^1`$ 收敛。取有界连续实函数 $`g`$ 与有界 Lipschitz 路径函数 $`F`$，
+在 $`\mathbb E[g(X_M)F(\mathcal K_M)]`$ 中先条件于 $`\mathscr D_M`$，
+用 (34.13) 将路径函数的条件均值换成 $`\mathbb EF(K)`$，再用 (34.8)。
+由联合紧性，这些乘积测试确定联合极限，故
+$`(X_M,\mathcal K_M)\Rightarrow(G,K)`$，且两极限独立。
+这是条件过程极限产生联合独立性的经典机制，亦见
+[Pasquazzi 定理 5](../../../Library/Dynamics/whitt2007martingale.md)。
+
+精确排名参数满足
+
+```math
+t_M(a)=\frac{m_M(a)-N_M}{\sqrt q}
+=X_M+a-\frac{\{\nu_M+a\sqrt q\}}{\sqrt q},\qquad
+R_M(a)=\mathcal K_M(t_M(a)).
+```
+
+式 (34.14)。
+
+在 $`|X_M|\le L`$ 上选 $`H\gt L+A+2`$。插值斜率至多 $`q^{1/4}`$，
+故 $`\sup_a|R_M(a)-\mathcal K_M(X_M+a)|\le q^{-1/4}`$。
+连续路径上的平移映射连续，先截断起点到 $`[-L,L]`$ 应用连续映射定理，
+再以 (34.8) 的 $`\mathbb P(|X_M|\gt L)\le C/L^2`$ 去截断，得到
+$`(X_M,R_M(\cdot))\Rightarrow(G,K(G+\cdot))`$。
+
+还须对整条曲线控制平均误差。精确固定基数乘积权重后验的 Newton 不等式给出
+不同标签的非正条件协方差；因而任意 $`m`$ 个不同位置的中心化标签和条件方差
+至多 $`m/4`$。将其任意排序的前缀分解为二进制区间，每个前缀在每层至多取一个块。
+Cauchy 不等式及每层各块总长度至多 $`2m`$ 给出经典的二进制最大界
+
+```math
+\mathbb E\left[\max_{k\le m}
+\left|\sum_{j\le k}(1_{i_j\in S}-\pi_{i_j})\right|^2
+\middle|\mathscr D_M\right]\le Cm\log^2(2m).
+```
+
+式 (34.15)。
+
+它不把精确后验前缀当作鞅。两侧至多各取 $`D_M^*`$ 个位置，故
+$`\mathbb E\sup_a|\Delta_M(a)-\overline\Delta_M(a)|
+\le C_Aq^{1/4}\log M=o(\sqrt q)`$。
+
+对整个容量窗重复相邻层的占据估计，定位失败概率为 $`O_A(\lambda/q)`$；
+非格点情形固定 $`\eta`$ 后为 $`O_{A,\eta}(\lambda/q)`$。
+在好事件上，由 (34.9)、单点后验界及局部得分定位，
+$`\overline\Delta_M(a)`$ 一致接近
+$`P_M(a)=\pi_+(N_M-m_M(a))_+-\pi_-(m_M(a)-N_M)_+`$。
+其期望误差至多
+$`\epsilon_M\mathbb ED_M^*+Cq^{-1}\mathbb E[D_M^*|U-q|]
++Cq^{-1/2}\mathbb ED_M^*=o(\sqrt q)`$；非格点情形另有
+$`C\eta\mathbb ED_M^*`$，在取样本极限后令 $`\eta\downarrow0`$。
+坏事件上真实修正与其后验均值均至多 $`q`$，成本为 $`O_{A,\eta}(\lambda)`$；
+线性代理仅由 $`D_M^*`$ 控制，要另外用 Cauchy 不等式得到
+$`O_{A,\eta}(\sqrt\lambda)`$。两者均为 $`o(\sqrt q)`$。
+因此
+
+```math
+\mathbb E_S\sup_{|a|\le A}\left|
+\frac{|S\setminus T_M(a)|-q\overline H_M}{\sqrt q}
+-\{f(X_M+a)-a\}\right|\longrightarrow0.
+```
+
+式 (34.16)。
+
+这里用到 $`P_M(a)/\sqrt q=f(t_M(a))-t_M(a)`$、(34.8) 与一致舍入界。
+已知方向的后验排名规则在每个确定基数处均为精确 minimax；
+(34.8) 的二阶矩界保证一致可积，$`f`$ 的 Lipschitz 常数不依赖平移 $`a`$。
+所以 $`\mathbb Ef(X_M+a)\to\mathbb Ef(G+a)`$ 在紧容量窗上一致成立。
+取 (34.16) 的期望并减去精确中心，证明 (34.5)、(34.6)。
+公式 (34.6) 用 $`\mathbb E(G+a)_+=\sigma\varphi(a/\sigma)+a\Phi(a/\sigma)`$
+化简而得；非格点时 $`\mu(a)=-p_sa`$，粗尺度极限整条曲线为 $`(1-p_s)G`$。
+
+以上先验结论的整个联合随机元及所有上确界量均在支持、行数据与优先级的共同置换下不变。
+支持置换可迁，故先验混合分布恰等于每个固定支持的无条件联合分布。
+条件后验陈述本身仍只在先验概率空间解释。
+有限样本容量取 floor，实际曲线是右连续阶梯函数，上确界是有限个排名值的最大值；
+上述插值比较与连续极限给出所述可测 $`D`$ 空间收敛。
+
+未知方向使用一次共同判决。在其正确事件上所有容量的随机量同时与已知方向相等，
+其补集概率 $`O(q^{-1})`$ 转移整个路径分布。损失至多 $`q`$，所以一致原始平均损失
+误差为 $`O(1)`$；揭示方向与组合规则还给出
+$`0\le H_{\mathcal E,m}^{o}-H_{\mathcal E,m}^{k}\le C/q`$，对所有容量一致。
+这分别转移分布和精确风险中心，不要求组合规则在有限样本达到 minimax。
+最后，由两侧 Brownian 前缀的重叠长度得到 (34.7)。∎
+
+**推论 34.3（增量独立的精确边界）。** 定理 34.2 的容量增量曲线满足
+
+```math
+\bigl(X_M,\ a\mapsto R_M(a)-R_M(0)\bigr)
+\Longrightarrow\bigl(G,\ a\mapsto K(G+a)-K(G)\bigr).
+```
+
+式 (34.17)。
+
+第二条极限曲线独立于 $`G`$ 当且仅当 $`v_+=v_-`$。
+此时它的分布是 $`\sqrt{v_+}`$ 倍的标准双侧 Brownian 运动，且独立于粗尺度极限曲线。
+非格点情形总满足该条件；格点情形当且仅当 $`s=-h/2`$，此时粗尺度函数仍有折点。
+然而它不独立于绝对细尺度值 $`K(G)`$：在等方差情形，任意 $`0\lt a\le A`$ 都有
+
+```math
+\mathrm{Cov}\bigl(K(G+a)-K(G),K(G)\bigr)
+=-v_+\mathbb E\min(a,(-G)_+)\lt0.
+```
+
+式 (34.18)。
+
+证明。(34.17) 由连续极限上的求值与相减映射得到。
+若两侧方差相等，$`K`$ 是缩放的双侧 Brownian 运动；其平稳增量使
+$`a\mapsto K(g+a)-K(g)`$ 的整个分布不依赖确定起点 $`g`$。
+又因原始过程 $`K`$ 独立于 $`G`$，给定 $`G`$ 后的增量过程分布恒定，得到充分性。
+
+反之，对固定 $`a\gt0`$，给定 $`G=g`$ 的增量方差为
+$`\int_g^{g+a}[v_+1_{t\lt0}+v_-1_{t\gt0}]\,dt`$。
+在 $`g\lt-a`$ 和 $`g\gt0`$ 两个正概率事件上分别等于 $`av_+`$ 和 $`av_-`$；
+独立性要求它为常数，故两方差相等。
+logistic 方差是 $`1/(4\cosh^2(x/2))`$，关于 $`|x|`$ 严格递减，
+所以格点下相等恰等于 $`|s+h|=|s|`$，即 $`s=-h/2`$。
+此时仍有 $`\pi_+\gt\pi_-`$，故 $`f`$ 的两斜率不同。
+
+等方差下，给定负起点 $`g`$，前进增量与从零至该起点的原有路径重叠且符号相反，
+条件协方差为 $`-v_+\min(a,-g)`$；非负起点的条件协方差为零。
+条件均值均为零，取期望即得 (34.18)。所用矩均属于极限过程，不推断实际统计量的矩收敛。∎
+
+## 追加锚（本行以下为增补区）
+
+## 35. 整条容量窗共享的后验噪声与方差占比
+
+**定义 35.1（精确后验损失的两个尺度）。** 沿用定义 34.1 的两种实际实验、
+格点间隙或非格点阈值、固定参数与共同排序。先取正确对齐方向，所有条件后验
+均在均匀基数先验的概率空间中解释。置
+
+```math
+\overline C_M=\sum_{i\in A_M}\pi_i,\qquad
+b_M^\circ=\sqrt{q/\sqrt\lambda},\qquad
+U_M=-\frac{C_M-\overline C_M}{b_M^\circ}.
+```
+
+式 (35.1)。
+
+这里 $`b_M^\circ`$ 是噪声尺度，与格点阈值 $`b_M`$ 不同。对固定
+$`-A\le a\le A`$，定义原始遗漏数、其精确后验中心及归一化过程
+
+```math
+L_M(a)=|S\setminus T_M(a)|,\qquad
+\overline L_M(a)=q-\sum_{i\in T_M(a)}\pi_i,\qquad
+\mathcal P_M(a)=\frac{L_M(a)-\overline L_M(a)}{b_M^\circ}.
+```
+
+式 (35.2)。
+
+后验中心 $`\overline L_M(a)`$ 是数据函数，不是确定风险中心
+$`qH_{\mathcal E,m_M(a)}^\xi`$。未知方向时按定义 34.1 的同一次判决，
+使用全部正向工作权重计算 (35.1)、(35.2)。记
+$`d_*=\varphi(z_*)/\sqrt v`$，其中 $`v`$ 是定义 27.1 的信号得分方差率，置
+
+```math
+\Gamma_s=
+\begin{cases}
+d_*\log(1+e^{-s}),&\text{非格点},\\[0pt]
+d_*h\displaystyle\sum_{j=1}^{\infty}\frac1{1+e^{s+jh}},&\text{格点间隙}.
+\end{cases}
+```
+
+式 (35.3)。
+
+两种常数均严格为正且有限；格点和从阈值上方的第一层开始，不含 $`j=0`$。
+
+**定理 35.2（共同中间噪声与独立边界过程）。** 在定义 35.1 的条件下，
+两个实际平稳实验、两种方向信息情形均对支持一致地满足
+
+```math
+\bigl(X_M,\mathcal P_M(\cdot),R_M(\cdot)\bigr)
+\Longrightarrow
+\bigl(G,\ a\mapsto\sqrt{\Gamma_s}\,Z,\ a\mapsto K(G+a)\bigr).
+```
+
+式 (35.4)。
+
+收敛空间为 $`\mathbb R\times D[-A,A]\times D[-A,A]`$，两条曲线取
+$`J_1`$ 拓扑。$`G,K`$ 如定义 34.1，$`Z`$ 为独立于
+$`(G,K)`$ 的标准正态变量。特别地，$`Z`$ 也独立于整个平移过程
+$`K(G+\cdot)`$。较大的后验损失波动在紧容量窗上为同一个随机常数，
+其与容量修正之间还满足精确恒等式
+
+```math
+\mathcal P_M(a)=U_M+(\lambda/q)^{1/4}R_M(a),\qquad
+\sup_{|a|\le A}|\mathcal P_M(a)-U_M|\longrightarrow0
+\quad\text{依概率}.
+```
+
+式 (35.5)。
+
+证明。先在正确对齐的先验联合空间工作。用 (34.9) 的校准，记
+$`B_0=(M-q)/q`$、$`p_i^0=e^{W_i}/(B_0+e^{W_i})`$，并写
+$`p_i=\mathrm{logistic}(W_i-\log B_0+\theta_M)`$、$`\sum_i p_i=q`$。
+相应独立 Bernoulli 乘积律记为 $`\mathsf Q_M`$；条件于总和为 $`q`$
+就是精确固定基数后验。已有估计给出
+$`\theta_M=O_{\mathbb P}(q^{-1/2})`$，且在概率趋一的事件上
+$`cq\le d:=\sum_i p_i(1-p_i)\le q`$。
+
+先求阈值集合的辅助方差
+$`d_A^0=\sum_{i\in A_M}p_i^0(1-p_i^0)`$。
+记背景补偿为 $`a_M=rq/(M-q)`$。令 $`Q_r,Q_{-a_M}`$ 为信号与背景的 Poisson 行比较律，
+$`p^0(w)=e^w/(B_0+e^w)`$。精确换测度关系
+$`dQ_r=e^W dQ_{-a_M}`$ 给出
+
+```math
+\begin{aligned}
+&q\mathbb E_{Q_r}\bigl[p^0(W)(1-p^0(W))1_{A_M}(W)\bigr]\\[0pt]
+&\quad +(M-q)\mathbb E_{Q_{-a_M}}
+       \bigl[p^0(W)(1-p^0(W))1_{A_M}(W)\bigr]\\[0pt]
+&=q\mathbb E_{Q_r}\bigl[(1-p^0(W))1_{A_M}(W)\bigr].
+\end{aligned}
+```
+
+式 (35.6)。
+
+等式中 $`1_{A_M}(w)`$ 只表示相应确定阈值的指示函数。
+背景项换到信号律后的乘子为
+$`B_0e^{-W}=(1-p^0(W))/p^0(W)`$，故两项权重相加为 $`1-p^0(W)`$。
+
+非格点情形令 $`y=W-\tau`$。由第 33 章的固定宽度局部极限，
+测度 $`\sqrt\lambda Q_r(W-\tau\in dy)`$ 在固定有界区间上趋于
+$`d_*\,dy`$。这里使用
+[Stone 的固定宽度定理](../../../Library/Dynamics/stone1967local.md)，
+以及 $`|W-Z|\le Ca_M\log M=o(1)`$ 的计数截断补偿。
+端点原子可先用任意固定宽度 $`\eta`$ 的区间包住，再取样本极限与
+$`\eta\downarrow0`$，其质量为 $`o(\lambda^{-1/2})`$。
+因 $`\log B_0-\tau=o(1)`$，权重局部一致趋于 $`(1+e^y)^{-1}`$。
+在固定区间上以有限阶梯函数逼近该权重，再取分割网格极限。
+统一的单位窗口概率界 $`C/\sqrt\lambda`$ 与上尾权重 $`Ce^{-y}`$
+使 $`y\ge T`$ 部分乘以 $`\sqrt\lambda`$ 后至多 $`Ce^{-T}`$。
+先取样本极限，再令 $`T\to\infty`$，得到
+
+```math
+\sqrt\lambda\,\mathbb E_{Q_r}
+ \bigl[(1-p^0(W))1_{A_M}(W)\bigr]
+\longrightarrow d_*\int_s^\infty\frac{dy}{1+e^y}
+=d_*\log(1+e^{-s}).
+```
+
+式 (35.7)。
+
+严格阈值与 $`s_M\to s`$ 由同一固定宽度夹逼处理，不需要收缩窗口的相对密度近似。
+格点情形的间隙与补偿截断使接受层恰为 $`Z=b_M+jh`$、$`j\ge1`$。
+每个固定层的缩放质量趋于 $`hd_*`$，该层权重趋于
+$`(1+e^{s+jh})^{-1}`$。统一格点概率界与几何上尾允许先截取有限层再去截断，
+给出 (35.7) 左端的极限为 (35.3) 的格点常数。任意高次多项式小的计数截断尾
+在上述尺度仍可忽略。
+
+还须把比较均值变成实际数据的方差读数。记 $`\ell=\log M`$、
+$`\delta_M=\ell^3/n`$。第 27 章所用实际一、二行相对比较对任意
+$`0\le f_i\le1`$ 的确定行函数给出，若
+$`\mu=\sum_i\mathbb E_{Q_{b_i}}f_i`$，则
+
+```math
+\left|\mathbb E_S\sum_i f_i-\mu\right|
+ \le C\delta_M\mu+CM^{1-D},\qquad
+\mathrm{Var}_S\!\left(\sum_i f_i\right)
+ \le C\bigl(\mu+\delta_M\mu^2+M^{2-D}\bigr).
+```
+
+式 (35.8)。
+
+这里 $`D`$ 可取任意充分大的固定数。对行函数的层集积分一次或两次，
+即把相对概率界转为对应矩界；异行协方差误差为
+$`C\delta_M m_i m_j+CM^{-D}`$，对角项由一阶矩控制。
+因此该式适用于同一实际数据中的信号与背景混合和，不假定实际行相互独立。
+
+将 (35.8) 用于 $`p^0(W)(1-p^0(W))1_{A_M}(W)`$。
+由 (35.6)、(35.7)，$`\mu=(q/\sqrt\lambda)(\Gamma_s+o(1))\to\infty`$，
+相对方差至多
+$`C(\sqrt\lambda/q+\delta_M+M^{2-D}\lambda/q^2)=o(1)`$，相对均值误差也趋零。
+logistic 方差的对数导数绝对值至多为一，故令
+$`d_A=\sum_{i\in A_M}p_i(1-p_i)`$，有
+
+```math
+e^{-|\theta_M|}d_A^0\le d_A\le e^{|\theta_M|}d_A^0,\qquad
+\frac{d_A}{(b_M^\circ)^2}\longrightarrow\Gamma_s
+\quad\text{依概率}.
+```
+
+式 (35.9)。
+
+这以乘法方式控制随机校准误差。
+
+固定 $`H\gt0`$，令 $`B_H^+,B_H^-`$ 分别为第 34 章的删除、添加两侧
+各前 $`\lceil H\sqrt q\rceil`$ 个位置。取一次完整并集
+$`J=A_M\cup B_H^+\cup B_H^-=A_M\cup B_H^-`$，补集记为 $`O`$。
+由 (34.8)、(35.9)，在概率趋一的事件上
+
+```math
+\frac{|J|}{q}\longrightarrow1-p_*\in(0,1),\qquad
+d_J:=\sum_{i\in J}p_i(1-p_i)
+=d_A+O_H(\sqrt q)
+=\frac q{\sqrt\lambda}\bigl(\Gamma_s+o_{\mathbb P}(1)\bigr),\qquad
+d_O=d-d_J\ge cq/2.
+```
+
+式 (35.10)。
+
+第一式解释为依概率收敛。$`\sqrt q=o(q/\sqrt\lambda)`$，所以此处
+位置数为 $`q`$ 的常数量级，而方差只占总方差的趋零比例。
+还可令 $`|J|\le(1-\epsilon)q`$、$`M-|J|\gt q`$，其中 $`\epsilon\gt0`$ 固定。
+于是所有 $`0\le k\le|J|`$ 的 $`q-k`$ 都在补集 Bernoulli 和的支持中。
+
+现在固定这样的数据实现，在 $`\mathsf Q_M`$ 下记
+$`S_J=\sum_{i\in J}\zeta_i`$、$`\mu_J=\mathbb E_{\mathsf Q_M}S_J`$、
+$`V=S_J-\mu_J`$。对全体和及补集和应用
+[Siripraparat–Neammanee 定理 2](../../../Library/Dynamics/siripraparat2021local.md)，
+与 (34.10) 相同的一致局部概率估计给出
+
+```math
+r(k):=\frac{\mathsf Q_M(S_O=q-k)}{\mathsf Q_M(S_J+S_O=q)}
+=\sqrt{\frac d{d_O}}\exp\left[-\frac{(k-\mu_J)^2}{2d_O}\right]
++O(q^{-1/2}),\qquad
+ d_{\mathrm{TV}}(\mathsf P_J,\mathsf Q_J)
+\le C\left(\frac{d_J}{q}+q^{-1/2}\right)
+=O_{\mathbb P}(\lambda^{-1/2}).
+```
+
+式 (35.11)。
+
+$`\mathsf P_J`$ 表示完整向量在精确后验下的边缘律。
+分子一致绝对误差为 $`O(q^{-1})`$，分母在整数均值处为
+$`(2\pi d)^{-1/2}(1+O(q^{-1/2}))`$。
+该定理不要求单个 Bernoulli 参数与零、一一致分离。
+完整向量的密度比为 $`r(S_J)`$；利用
+$`\sqrt{d/d_O}-1=O(d_J/q)`$、$`1-e^{-x}\le x`$ 和
+$`\mathbb E_{\mathsf Q_M}V^2=d_J`$ 积分，即得总变差界。
+这里需要的是补集保留 $`q`$ 量级方差，而不是 $`|J|=O(\sqrt q)`$。
+
+精确中心另作加权估计，不能把 (35.11) 的总变差乘以 $`|J|`$。
+对任意 $`B\subseteq J`$，置
+$`V_B=\sum_{i\in B}(\zeta_i-p_i)`$、$`d_B=\mathbb E_{\mathsf Q_M}V_B^2`$。
+因乘积均值为零，在 $`\mathbb E_{\mathsf Q_M}[V_Br(S_J)]`$ 中
+密度比的常数项抵消，得到
+
+```math
+\left|\sum_{i\in B}(\pi_i-p_i)\right|
+\le \frac Cq\mathbb E_{\mathsf Q_M}(|V_B|V^2)
+  +\frac C{\sqrt q}\mathbb E_{\mathsf Q_M}|V_B|
+\le C\sqrt{d_B}
+ \left(\frac{\sqrt{3d_J^2+d_J}}q+\frac1{\sqrt q}\right).
+```
+
+式 (35.12)。
+
+最后一步用 Cauchy 不等式与独立中心化 Bernoulli 和的四阶矩界
+$`\mathbb E_{\mathsf Q_M}V^4\le3d_J^2+d_J`$。
+这是对固定数据实现同时成立的确定界，不对所有子集作概率并集估计。
+取 $`B=A_M`$ 时，除以 $`b_M^\circ`$ 后趋零；
+取两侧任一排名前缀时，$`d_B\le\lceil H\sqrt q\rceil/4`$，
+除以 $`q^{1/4}`$ 后对所有前缀一致趋零。因此同一个界转移了两种尺度的精确中心。
+
+在乘积律下取
+$`U_M^{\mathsf Q}=-(b_M^\circ)^{-1}\sum_{i\in A_M}(\zeta_i-p_i)`$，
+并用 $`\zeta_i-p_i`$ 构造 (34.13) 前的连续两侧排名过程
+$`\mathcal K_M^{\mathsf Q}`$。两侧阶梯前缀和是独立增量鞅，
+其可预测方差时钟由 (34.12) 在 $`[0,H]`$ 一致趋于 $`v_\pm u`$，
+交叉时钟为零；跳幅至多 $`q^{-1/4}`$，方差时钟跳幅至多 $`1/(4\sqrt q)`$。
+[Whitt 的鞅函数极限定理](../../../Library/Dynamics/whitt2007martingale.md)
+先适用于阶梯过程；连续插值的一致误差至多 $`q^{-1/4}`$，
+故两侧插值过程在连续路径空间紧，并趋于相应的独立 Brownian 运动。
+
+还需把接受总数与边界过程放在同一个 Gaussian 极限中。
+对任意有限个边界时刻，$`U_M^{\mathsf Q}`$ 与这些前缀值组成独立行向量和。
+任一固定线性组合的最大单行系数为
+$`O((b_M^\circ)^{-1}+q^{-1/4})=o(1)`$，所以有界 Bernoulli 行满足
+Lindeberg 条件。总数方差由 (35.9) 趋于 $`\Gamma_s`$。
+若 $`B\subseteq B_H^+`$ 为删除前缀，其与总数确有重叠，但
+
+```math
+\mathrm{Cov}_{\mathsf Q_M}\left(
+ U_M^{\mathsf Q},q^{-1/4}\sum_{i\in B}(\zeta_i-p_i)\right)
+=-\frac{d_B}{b_M^\circ q^{1/4}}
+=O_H((\lambda/q)^{1/4})\longrightarrow0.
+```
+
+式 (35.13)。
+
+添加前缀与接受集合不交，在乘积律下交叉协方差为零。
+其余协方差由同侧前缀交叠长度确定。多维 Lindeberg 定理先给出联合 Gaussian
+有限维极限，再由交叉协方差为零推出总数坐标独立于两侧过程。
+标量紧性与上述路径紧性合并，得到
+$`(U_M^{\mathsf Q},\mathcal K_M^{\mathsf Q})
+\Rightarrow(\sqrt{\Gamma_s}Z,K|_{[-H,H]})`$。
+
+将完整并集向量经同一个可测映射送到总数和所有前缀，(35.11) 的总变差收缩
+转移整个联合律；再用 (35.12) 换为精确后验中心。记后验中心化插值过程为
+$`\mathcal K_M`$。在 $`\mathbb R\times C[-H,H]`$ 的有界 Lipschitz 距离下，
+
+```math
+d_{\mathrm{BL}}\left(
+ \mathcal L((U_M,\mathcal K_M)\mid\mathscr D_M),
+ \mathcal L(\sqrt{\Gamma_s}Z,K|_{[-H,H]})\right)
+\longrightarrow0\quad\text{依概率且在 }L^1\text{ 中}.
+```
+
+式 (35.14)。
+
+随机环境可按子序列准则处理：从任一子序列抽取使 (35.9)、(35.10) 和
+方差时钟几乎处处收敛的进一步子序列，对每个这样的确定环境应用独立数组定理
+及 (35.11)、(35.12)。距离有界，从而也有 $`L^1`$ 收敛。
+这一步只断言条件弱收敛，不断言路径空间上对任意有界可测测试均可替换条件律。
+
+$`X_M`$ 是数据函数。对有界连续实函数 $`g`$ 与
+$`\mathbb R\times C[-H,H]`$ 上的有界 Lipschitz 函数 $`F`$，先计算
+$`\mathbb E[g(X_M)F(U_M,\mathcal K_M)]`$ 的条件期望，
+以 (35.14) 换成确定极限均值，再用 (34.8)。联合紧性与这些乘积测试给出
+
+```math
+(X_M,U_M,\mathcal K_M)
+\Longrightarrow(G,\sqrt{\Gamma_s}Z,K|_{[-H,H]}),
+\qquad G\ \perp\ (Z,K),\qquad Z\ \perp\ K.
+```
+
+式 (35.15)。
+
+条件极限核给出独立性的机制与
+[Pasquazzi 定理 5](../../../Library/Dynamics/whitt2007martingale.md) 一致；
+此处所需的完整并集比较、两个尺度和精确中心由上面另行建立。
+
+由 (34.14)，精确排名参数
+$`\vartheta_M(a)=(m_M(a)-N_M)/\sqrt q`$ 满足
+$`|\vartheta_M(a)-(X_M+a)|\le q^{-1/2}`$，且
+$`R_M(a)=\mathcal K_M(\vartheta_M(a))`$。
+在 $`|X_M|\le L`$ 上取 $`H\gt L+A+2`$，插值斜率界给出
+$`\sup_a|R_M(a)-\mathcal K_M(X_M+a)|\le q^{-1/4}`$。
+对连续路径应用平移映射，再以 (34.8) 的
+$`\mathbb P(|X_M|\gt L)\le C/L^2`$ 去截断，便得
+
+```math
+(X_M,U_M,R_M(\cdot))
+\Longrightarrow(G,\sqrt{\Gamma_s}Z,K(G+\cdot)),\qquad
+\sup_{|a|\le A}|R_M(a)|=O_{\mathbb P}(1).
+```
+
+式 (35.16)。
+
+嵌套初始段给出两个精确恒等式
+$`L_M(a)=q-C_M+\Delta_M(a)`$ 与
+$`\overline L_M(a)=q-\overline C_M+\overline\Delta_M(a)`$。
+相减并注意 $`q^{1/4}/b_M^\circ=(\lambda/q)^{1/4}\to0`$，
+即得 (35.5)，再由 (35.16) 得到 (35.4)。实际容量曲线是右连续阶梯函数；
+一致插值比较和连续极限给出所述 $`D`$ 空间收敛。
+
+所有联合随机元、中心与上确界均在支持、行数据及优先级的共同置换下不变。
+支持置换可迁，故先验混合的无条件分布与每个固定支持的无条件分布相同。
+条件后验论证本身仍只属于先验空间。未知方向的同一次判决在概率
+$`1-O(q^{-1})`$ 的正确事件上使全部坐标和中心同时等于正确对齐版本，
+从而转移整个联合弱极限。这里无需在错误方向事件上传递无界矩，
+也没有把工作权重定义为未知方向的 Bayesian 后验。∎
+
+## 追加锚（本行以下为增补区）

@@ -1,9 +1,11 @@
 # Contributing
 
-trureturing is a truth-discovery library. Help turn a precise question into a
-result that others can check and reuse: through examples, counterexamples,
-proofs, clearer explanations or useful tools. The current mathematical subjects
-offer concrete places to start.
+trureturing develops a scientific method for AI to discover truth and use
+checked results to guide further inquiry. Help turn a precise question into
+a result that others can check and reuse: through examples, counterexamples,
+proofs, clearer explanations or useful tools. The
+[vision and research guide](VISION.md) connects the current mathematical
+subjects to this purpose and the open research directions.
 
 You do not need to write a new proof to make a useful contribution. Public-facing
 documentation defaults to English.
@@ -26,6 +28,8 @@ the build step.
 Ask the agent to read [AGENTS.md](../AGENTS.md), [README.md](../README.md) and
 this guide. In this repository, `AGENTS.md` points to `CLAUDE.md`; both names
 lead to the same rules.
+Those rules select [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md)
+as the default thinking and answering workflow; you do not need to invoke it explicitly.
 Work that produces or checks proofs needs the [build prerequisites](#prerequisites).
 Client access, build tools, network search and independent review services
 depend on your environment; the repository skills do not install them.
@@ -37,11 +41,11 @@ and `.codex/skills` directories are aliases to it. Discovery varies by client;
 the portable way to use a skill is to ask the agent to read its canonical
 `SKILL.md` explicitly. For example, paste this into the **client conversation**:
 
-> Read skills/codex-formal-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
+> Read skills/formal-thinking-and-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
 
 | Skill | When to use it / what to provide | Work and outcome |
 | --- | --- | --- |
-| [codex-formal-answer](../skills/codex-formal-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
+| [formal-thinking-and-answer](../skills/formal-thinking-and-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
 | [codex-formalize](../skills/codex-formalize/SKILL.md) | One existing open digestion atom: “Work on atom `<atom-id>`, reusing results first.” | Searches for reusable results first, then works on formalization or settlement of that source claim; a new theorem or closure is not guaranteed. |
 | [codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md) | Externally authored material: “Ingest the document at `<path>` from `<source-URL>` under `<license>`.” | Brings reference input through the digestion workflow into open formalization atoms; ingestion is not proof. |
 | [theory-volume-template](../skills/theory-volume-template/SKILL.md) | Your own volume: “Draft a new volume on `<topic>`,” or “Append to `<volume-path>` while preserving existing atoms.” | Structures the volume for digestion while preserving existing atoms; use this for authoring and appending, and the ingest skill for externally authored material. |
@@ -53,8 +57,8 @@ contains the full workflow. A skill guides the work; [repository rules](../AGENT
 what can be claimed or admitted.
 
 If the skill appears in your client's list, [Codex](https://learn.chatgpt.com/docs/build-skills)
-lets you select it with `/skills` or mention it as `$codex-formal-answer`;
-[Claude Code](https://code.claude.com/docs/en/skills) uses `/codex-formal-answer`.
+lets you select it with `/skills` or mention it as `$formal-thinking-and-answer`;
+[Claude Code](https://code.claude.com/docs/en/skills) uses `/formal-thinking-and-answer`.
 Substitute another listed skill name for the other workflows. These are client
 inputs, not shell commands. Current Codex documentation describes repository
 discovery under `.agents/skills`; do not assume this checkout's `.codex/skills`
@@ -83,6 +87,13 @@ need a mathematical skill. A contribution request you can paste:
 
 ## Choose a starting point
 
+- **Connect a question to a research direction.** Use the
+  [research directions](VISION.md#research-directions) to identify an observation, missing relation
+  or reusable lemma that could advance an existing line. State what would
+  support or refute the proposed step, search the library first, and explain
+  what the result would enable next. New evidence should also update the
+  relevant explanation; preserve the distinction between a philosophical
+  commitment, a model, an experiment and a checked theorem.
 - **Read and explain.** Follow a [README example](../README.md#three-places-to-look)
   from explanation to Lean statement. Clarify terminology, fix a link or improve
   a translation while preserving the result's assumptions and scope.
@@ -113,13 +124,16 @@ Make and Bash, with these tools on `PATH`:
   [lakefile.toml](../lakefile.toml), with resolved dependencies in
   [lake-manifest.json](../lake-manifest.json).
 - [.NET SDK](https://dotnet.microsoft.com/en-us/download),
-  selected by [global.json](../global.json) with roll-forward disabled. The
+  selected by [global.json](../global.json) using its declared roll-forward
+  policy. The
   repository's Lean wrapper also uses .NET.
 - **Python** available as `python3` for the CI/preflight scripts, which require
   the standard-library `tomllib` module.
 
-The shell examples below use macOS/Linux conventions. The installed SDK must
-match [global.json](../global.json); a runtime alone is insufficient.
+The shell examples below use macOS/Linux conventions. Install the SDK version
+specified in [global.json](../global.json), even when its roll-forward policy
+allows a newer installed SDK: integration fixtures also exercise exact version
+selection. A runtime alone is insufficient.
 Check `dotnet --version`, `lean --version` and
 `python3 --version` from the checkout. Dependency downloads need network access;
 individual experiments may have additional prerequisites.
@@ -208,6 +222,13 @@ Commit each logical change and push it to your fork immediately; run any local
 checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
 local preflight modes are **optional** early feedback and
 diagnostics. Current remote CI checks remain **required and authoritative**.
+CI stages print progress summaries every 30 seconds and once at completion:
+the active step, latest reported work count or percentage, elapsed time, new
+information count and latest activity. Quiet stages keep reporting their last
+known progress. Set `CI_LOG_INTERVAL_SECONDS` to a positive number to change the
+interval. Warnings and errors appear immediately with their details; complete
+command output is retained in `build/ci/logs/<stage>/console.log`. Stage result
+JSON and check evidence keep their complete contents.
 Choose a mode explicitly; bare `make preflight` prints the choices and exits 2
 before any work. For delta validation, resolve the intended baseline commit and
 select the complete baseline-to-worktree scope:

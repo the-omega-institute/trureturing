@@ -1,0 +1,179 @@
+using static StrataLint.TestSupport.DeclaredTemplateUnregisteredFixture;
+using static StrataLint.TestSupport.InformationTemplateFixture;
+using System.Collections.Immutable;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using StrataLint.Engine;
+using static StrataLint.TestSupport.DeclaredTemplateFixture;
+
+namespace StrataLint.DeclaredTemplate.Tests;
+
+public sealed class DeclaredTemplateUnregisteredTests
+{
+    [Fact]
+    public void new_public_theorem_without_registration_blocks() => Observes(Build());
+
+    [Fact]
+    public void d5_payload_is_not_assessed_and_requires_mirror_for_new_theorem()
+    {
+        Observes(Build(binding: "inline"));
+    }
+
+    [Fact]
+    public void validated_owner_mirror_covers_new_theorem() => Declared(Build(binding: "mirror"));
+
+    [Fact]
+    public void validated_sidecar_does_not_replace_owner_mirror() => Observes(Build(binding: "sidecar"));
+
+    [Fact]
+    public void registration_in_another_module_does_not_replace_owner_mirror() => Observes(Build(binding: "foreign"));
+
+    [Theory]
+    [InlineData("theorem")]
+    [InlineData("lemma")]
+    public void same_name_in_base_is_not_new(string keyword) =>
+        Empty(Build(baseline: Source.Replace("theorem", keyword, StringComparison.Ordinal)));
+
+    [Fact]
+    public void private_theorem_becoming_public_requires_registration() => Observes(Build(
+        baseline: Source.Replace("theorem", "private theorem", StringComparison.Ordinal)));
+
+    [Fact]
+    public void new_private_theorem_is_exempt() => Empty(Build(
+        source: Source.Replace("theorem", "private theorem", StringComparison.Ordinal),
+        declarations: [new("_private.D5.S0.Carrier.Target.0." + Theorem, "theorem", "True", [])]));
+
+    [Theory]
+    [InlineData("def", "def")]
+    [InlineData("instance", "def")]
+    [InlineData("instance", "theorem")]
+    [InlineData("abbrev", "def")]
+    [InlineData("structure", "inductive")]
+    public void non_theorem_source_declarations_are_exempt(string keyword, string kind) => Empty(Build(
+        source: Source.Replace("theorem", keyword, StringComparison.Ordinal),
+        declarations: [new(Theorem, kind, "True", [])]));
+
+    [Theory]
+    [InlineData("def")]
+    [InlineData("opaque")]
+    [InlineData("inductive")]
+    [InlineData("constructor")]
+    [InlineData("recursor")]
+    [InlineData("axiom")]
+    public void non_theorem_report_kinds_are_exempt_without_source(string kind) => Empty(Build(
+        source: "-- generated non-theorem declarations\n", declarations: [new(Theorem, kind, "True", [])]));
+
+    [Fact]
+    public void internal_detail_theorems_are_exempt() => Empty(Build(
+        declarations: [new(Theorem + ".proof_1", "theorem", "True", []) { IncludeInStatement = false }]));
+
+    [Fact]
+    public void generated_occurrence_and_seal_companions_are_exempt() => Empty(Build(source: "-- generated companions\n",
+        declarations: [new(Theorem + ".«root/arena/catalog».__lowers_escape", "theorem", "True", []),
+            new(Theorem + "__information_unit", "def", "True", []),
+            new(Theorem + "__catalog_irredundant", "theorem", "True", [])]));
+
+    [Fact]
+    public void compiler_generated_theorems_are_exempt() => Empty(Build(
+        declarations: [new("legendreSym.congr_simp", "theorem", "True", []),
+            new(Theorem + ".eq_1", "theorem", "True", [])]));
+
+    [Fact]
+    public void handwritten_companion_suffix_does_not_exempt_theorem() => Observes(Build(
+        source: Source.Replace("target0", "target0__catalog_irredundant", StringComparison.Ordinal),
+        declarations: [new(Theorem + "__catalog_irredundant", "theorem", "True", [])]), Theorem + "__catalog_irredundant");
+
+    [Fact]
+    public void unselected_new_theorem_and_malformed_evidence_are_not_judged() => Empty(Build(selected: false, malformed: true));
+
+    [Fact]
+    public void candidate_new_module_judges_every_public_theorem()
+    {
+        var findings = Findings(Build(added: true, source: TwoTheoremSource, declarations:
+            [new(Theorem, "theorem", "True", []), new(Theorem + "_second", "theorem", "True", [])]));
+        Assert.True(findings.Count(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
+            && f.Effect == AdmissionEffect.Observe) == 2, "[FAIL] candidate_new_module_judges_every_public_theorem");
+    }
+
+    [Fact]
+    public void lemma_is_a_public_theorem() => Observes(Build(source: Source.Replace("theorem", "lemma", StringComparison.Ordinal)));
+
+    [Fact]
+    public void first_pin_uses_base_theorem_names() => Empty(Build(baseline: Source, firstPin: true));
+
+    [Fact]
+    public void rename_destination_has_no_same_path_base_theorem() => Observes(Build(added: true, renamed: true));
+
+    [Theory]
+    [InlineData("-- theorem D5.S0.Carrier.Target.target0 : True := by trivial\n")]
+    [InlineData("/- outer /- nested -/ theorem D5.S0.Carrier.Target.target0 : True := by trivial -/\n")]
+    [InlineData("def text := \"theorem D5.S0.Carrier.Target.target0 : True := by trivial\"\n")]
+    [InlineData("namespace Other\ntheorem target0 : True := by trivial\nend Other\n")]
+    [InlineData("def D5.S0.Carrier.Target.target0 : True := by trivial\n")]
+    public void nonmatching_base_text_does_not_grandfather_theorem(string baseline) => Observes(Build(baseline: baseline));
+
+    [Theory]
+    [InlineData("namespace D5\nnamespace S0.Carrier.Target\n  lemma target0 : True := by trivial\nend S0.Carrier.Target\nend D5\n")]
+    [InlineData("namespace Other\ntheorem _root_.D5.S0.Carrier.Target.target0 : True := by trivial\nend Other\n")]
+    public void qualified_base_names_are_resolved(string baseline) => Empty(Build(baseline: baseline));
+
+    [Theory]
+    [InlineData("namespace D5.S0.Carrier.Target\nlemma «target0» : True := by trivial\nend D5.S0.Carrier.Target\n")]
+    [InlineData("def quote := '\"'\ntheorem D5.S0.Carrier.Target.target0 : True := by trivial\n")]
+    public void quoted_identifiers_and_character_literals_preserve_base_names(string baseline) => Empty(Build(baseline: baseline));
+
+    [Theory]
+    [InlineData("r#")]
+    [InlineData("r##")]
+    public void raw_string_contents_are_not_base_declarations(string prefix) => Observes(Build(
+        baseline: "def text := " + prefix + "\" \" theorem " + Theorem + " : True := by trivial \" \"" + prefix[1..] + "\n"));
+
+    [Theory]
+    [InlineData("s!")]
+    [InlineData("m!")]
+    public void interpolated_string_contents_are_not_base_declarations(string prefix) => Observes(Build(
+        baseline: "def text := " + prefix + "\"{id \" theorem " + Theorem + " : True := by trivial \"}\"\n"));
+
+    [Fact]
+    public void supplementary_unicode_base_name_is_existing() => Empty(Build(
+        baseline: "theorem 𝒳 : True := by trivial\n", source: "theorem 𝒳 : True := by trivial\n",
+        declarations: [new("𝒳", "theorem", "True", [])]));
+
+    [Fact]
+    public void unvalidated_registration_does_not_cover_new_theorem() => Observes(Build(binding: "undeclared"));
+
+    [Fact]
+    public void registration_for_other_theorem_does_not_cover_new_theorem() => Observes(Build(binding: "mirror",
+        source: TwoTheoremSource, declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
+
+    [Fact]
+    public void unrelated_foreign_records_cannot_fail_selected_theorem()
+    {
+        var context = Build(binding: "foreign", malformed: true);
+        Observes(context);
+        Assert.DoesNotContain(Findings(context), f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void sl031_dispatch_blocks_unregistered_theorem()
+    {
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, Build()).Diagnostics;
+        Assert.True(diagnostics.Any(d => d.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + Theorem
+            && d.AdmissionEffect == AdmissionEffect.Observe), "[FAIL] sl031_dispatch_blocks_unregistered_theorem");
+    }
+
+    private static void Empty(DeltaRuleContext context, [CallerMemberName] string name = "") =>
+        Assert.True(Findings(context).IsEmpty, "[FAIL] " + name + ": " + string.Join("; ", Findings(context).Select(f => f.Message)));
+    private static void Observes(DeltaRuleContext context, string theorem = Theorem, [CallerMemberName] string name = "") =>
+        Assert.True(Findings(context).Any(f => f.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + theorem
+            && f.Effect == AdmissionEffect.Observe), "[FAIL] " + name);
+    private static void Declared(DeltaRuleContext context, [CallerMemberName] string name = "")
+    {
+        var findings = Findings(context);
+        Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Declared ", StringComparison.Ordinal)
+            && f.Effect == AdmissionEffect.Observe) && findings.All(f => f.Effect == AdmissionEffect.Observe),
+            "[FAIL] " + name + ": " + string.Join("; ", findings.Select(f => f.Message)));
+        Assert.DoesNotContain(findings, f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal));
+    }
+}

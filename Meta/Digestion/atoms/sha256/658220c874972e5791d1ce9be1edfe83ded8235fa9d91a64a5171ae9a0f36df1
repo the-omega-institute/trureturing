@@ -1,0 +1,6 @@
+**定理 12.3（二进制移位的精确线性比特律）。** 取 $X=\{0,1\}^{\mathbb N}$，$F(x)_j=x_{j+1}$，$o(x)=(-1)^{x_0}\in\mathbb R$。对 $H\ge0$、$0\le\varepsilon<1$，最少自主预测状态数和当前状态比特数分别为
+\[
+ S_H(\varepsilon)=2^{H+1},\qquad
+ \lceil\log_2 S_H(\varepsilon)\rceil=H+1.
+\]
+

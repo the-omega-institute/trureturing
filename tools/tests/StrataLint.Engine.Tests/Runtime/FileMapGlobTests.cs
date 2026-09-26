@@ -62,6 +62,11 @@ public sealed class FileMapGlobTests
     [InlineData("D5/A.lean", "D5/a.lean", false)]
     [InlineData("D5/a.lean", "D5/a.lean", true)]
     [InlineData("D5/a.lean", "D5/A.lean", false)]
+    [InlineData("D5/A.lean", "D5/A.lean.extra", false)]
+    [InlineData("D5/*.lean", "D5/A.cs", false)]
+    [InlineData("**/*.lean", "Result.lean", true)]
+    [InlineData("**/*.lean", "D5/Result.lean", true)]
+    [InlineData("*.lean", "D5/Result.lean", false)]
     public void MatchingIsUnchangedAcrossRepeatedAndCrossEntryUse(string pattern, string path, bool expected)
     {
         for (var iteration = 0; iteration < 2; iteration++)
@@ -69,6 +74,18 @@ public sealed class FileMapGlobTests
             Assert.Equal(expected, FileMapGlob.Create(pattern).IsMatch(path));
             Assert.Equal(expected, FileMapGlob.CreateForAdmissionPlane(pattern).IsMatch(path));
         }
+    }
+
+    [Theory]
+    [InlineData("D5/A.lean")]
+    [InlineData("D5/*.lean")]
+    [InlineData("**")]
+    public void NullPathsRetainTheMatcherDiagnostic(string pattern)
+    {
+        var strict = Assert.Throws<ArgumentNullException>(() => FileMapGlob.Create(pattern).IsMatch(null!));
+        var admission = Assert.Throws<ArgumentNullException>(() => FileMapGlob.CreateForAdmissionPlane(pattern).IsMatch(null!));
+        Assert.Equal("input", strict.ParamName);
+        Assert.Equal("input", admission.ParamName);
     }
 
     [Fact]

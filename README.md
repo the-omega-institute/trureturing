@@ -1,28 +1,57 @@
 # trureturing
 
-**A library for discovering truth.**
+**A scientific method for AI to discover truth and find its next question.**
 
-[Start your journey](#start-your-journey) · [Information escape](#information-escape) ·
+[Vision](docs/VISION.md) · [Start your journey](#start-your-journey) ·
+[Truth and computation](#truth-and-computation) · [Spacetime](#toward-holographic-spacetime) ·
+[Information escape](#information-escape) ·
 [Examples](#three-places-to-look) · [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
-trureturing pursues truth by turning questions into knowledge others can check
-and build on. The name reflects the project's intent: **true · return · Turing**
-— truth, return, and Turing computation.
+trureturing develops a scientific methodology through which AI can propose
+questions, test its own conjectures, discover the limits of its representations,
+and return checked results to a growing library. We want Turing computation to
+find direction in those results: to recognize what is missing and choose a
+fruitful next investigation. Autonomous choice of research direction is an
+ongoing research goal.
 
-**If machine learning is a black box of logic, trureturing is a white box.**
-Our guiding conviction is that **all logic can be formalized**. Pursuing it
-means making definitions and assumptions explicit, with proof steps and
-dependencies open to inspection.
+The name expresses **true · return · Turing**. Truth guides the search;
+verified knowledge returns as a premise for the next inquiry; computation
+explores the connections. We call the structure we seek the **geometry of
+logical truth**: dependencies, invariants, distinctions and the boundaries of
+what an observer can recover.
 
-Explore [information escape](#information-escape): what a result reveals,
-and what remains beyond its observations.
+The project brings together philosophical inquiry, theory, experiments and
+Lean 4 formalization. Its ambition is broad; each proof establishes its exact
+statement under its declared assumptions. The [vision and research
+guide](docs/VISION.md) connects these ideas to existing work and open research
+directions.
 
-Logic reaches beyond mathematics into philosophical and conceptual inquiry.
-What do we mean by a concept? Which assumptions carry an argument? What follows
-from them, and what would count as a counterexample? These questions belong
-here too; a formal result answers only the precise statement it proves.
+## Truth and computation
+
+Our philosophical starting point is that **truth is discovered, not created
+by the act of computing it**. In this view, **Dao (道), or God (神), names an
+encompassing network of truths and their logical relations**, within which a
+finite observer discovers connections. This is the project's metaphysical
+orientation, not a theorem about the existence of God or the physical universe.
+
+Computation still does essential work: constructing examples, exposing
+counterexamples, searching for proofs and checking them. A verified proof
+extends what the library can justify. Returning that result to the library
+lets later inquiry begin from a firmer foundation. Neither this conviction
+nor a growing proof library establishes that one program can enumerate or
+decide every truth.
+
+The repository makes part of this geometry precise. Its
+[dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+uses reachability in a dependency graph to define open sets. Its
+[recovery criterion](D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+says that, on a nonempty state space, a target admits a recovery function from
+an observation exactly when that target is constant on each observation
+fiber. Here a fiber is the set of states giving the same observation; the
+existence of a recovery function alone gives no algorithm or cost bound.
+These are precise structures with which to investigate our guiding picture.
 
 ## Start your journey
 
@@ -49,24 +78,64 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-Ask a precise question. Use computation and tests to distinguish hypotheses.
-Look for a proof, a counterexample, or the information still missing. Keep the
-checked result with its assumptions, and make the unanswered question explicit.
-People and AI can contribute; what others can reuse is the checked artifact.
+State a precise question and what would support or overturn its proposed
+answer. Search existing proofs and the literature, then use computation and
+experiments to distinguish hypotheses. Seek a proof, a counterexample, or the
+information still missing. Keep each reusable result with its assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof becomes a premise for further work. A refutation closes off a mistaken
-route. A limit on what observations reveal tells us what to ask or measure next.
-The purpose is to let understanding accumulate without losing its foundations:
-each inquiry starts with what the last one actually established.
+A proof supplies a premise; a refutation rules out a mistaken route. An
+observation limit can suggest what to measure next. When progress stalls,
+check whether the current representation can express the distinction the
+question requires. Applying this method to AI research selection still
+requires evaluation.
 
-Today, the library contains Lean 4 proofs, research inputs, experiments and
-tools for checking and recording results. Golden integers, Fibonacci weights
-and Zeckendorf representations are one research thread; the examples below
-also reach into conjecture refutation and the limits of local observations.
-The ambition is to make more of this discovery process automatic. Choosing
-the next fruitful question remains an open part of that ambition.
+The library contains Lean 4 proofs, theory inputs, experiments and checking
+tools. Golden integers, Fibonacci weights and Zeckendorf representations are
+one thread; the examples below also explore conjecture refutation and limits
+of local observation.
+
+## Toward holographic spacetime
+
+We aim to study time and space together in a **holographic spacetime geometry**:
+how a whole relational structure is represented through observations, and
+under which conditions those observations support reconstruction and action.
+This is a research program, with explicit models and open bridges to physics.
+
+[Contextual spacetime arithmetic](docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
+keeps finite event archives with time, position, causal order and provenance,
+then studies what survives a numerical projection.
+[Recursive relational observation](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+asks when observations preserve composition, shared sources and the target
+of a question. The
+[context geometry volume](docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+develops distances using allowed experiments and their responses. These
+volumes are theory inputs; their prose does not certify formal coverage.
+
+A concrete [Lean counterexample](D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+shows why the distinction matters: in its finite archive model, adding an
+inactive event can leave the current spatial readout unchanged while making
+a specified temporal composition illegal. What a snapshot preserves and what
+a history permits must therefore be checked separately in this model.
+
+The holographic direction asks which additional relations make reconstruction
+possible, at what resolution, and with what error and resource bounds.
+Identifying these models with physical spacetime, or deriving a physical
+holographic duality, remains outside the established results presented here.
+
+## A continuing research program
+
+The program follows three connected directions: scientific
+methods for AI to choose and test questions; the geometry of proof dependencies
+and observation limits; and spacetime models that retain the relations needed
+for reconstruction and lawful composition.
+
+The [research directions](docs/VISION.md#research-directions) state what evidence
+would count as progress. New proofs, counterexamples and reproducible
+experiments should sharpen the questions and improve the explanations.
+Each revision should make the same compact entrance more useful: clearer
+connections, stronger evidence and more precise boundaries.
 
 ## Information escape
 

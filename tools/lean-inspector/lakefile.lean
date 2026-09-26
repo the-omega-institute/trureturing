@@ -21,6 +21,8 @@ lean_lib LeanInformationAudit where
 lean_lib LeanInformationAuditAnalysis where
   globs := #[.submodules `LeanInformationAuditAnalysis]
 
+lean_lib InformationSourceFixture
+
 target nativeImage pkg : FilePath := do
   buildLeanO (pkg.buildDir / "c" / "native_image.o")
     (← inputFile (pkg.dir / "native_image.c") true) #[] #["-O3", "-DLEAN_EXPORTING"]
@@ -108,12 +110,13 @@ private structure UnvalidatedArtifact where
   build : JobM PUnit
   check : Array String
   productionArgs? : Option (Array String) := none
+  prepareProduction : JobM Unit := pure ()
 
 private def uncheckedArtifact (file : FilePath) (build : JobM PUnit)
     (check : Array String) : JobM UnvalidatedArtifact := do
   let inputTrace ← getTrace
   let art ← buildArtifactUnlessUpToDate file build (ext := "zip") (restore := true)
-  return ⟨file, art.path, inputTrace, ← IO.mkRef (← getTrace), build, check, none⟩
+  return ⟨file, art.path, inputTrace, ← IO.mkRef (← getTrace), build, check, none, pure ()⟩
 
 /-- Validator rejection also requires a rebuild. Preserve Lake's native job
 decision before scheduling repair production or removing rejected outputs. -/
@@ -167,6 +170,7 @@ private structure PreparedArtifact where
   env : Array (String × Option String)
   inputTrace : BuildTrace
   artifact? : Option UnvalidatedArtifact
+  prepareProduction : JobM Unit
 
 -- These private jobs are interned in Lake's invocation store. Neither data
 -- key is a public facet capable of returning an unchecked artifact.
@@ -179,13 +183,11 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let utility := (← repositoryDir pkg) / ".lake/build/lean-inspector" / "inputs" / s!"{mod.name}.json"
   let record ← readJson utility
   let claims ← strings record "claims"
-  let reported ← (← fetch <| pkg.facet `reportSourceModules).await
   let mut deps ← fetch <| pkg.facet `reportProducer
   deps := deps.mix (← inputBinFile mod.leanFile)
   deps := deps.mix (← inputBinFile utility)
   let mut exports := #[(← mod.exportInfo.fetch)]
   let mut sourceModules := #[mod]
-  sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
   -- Inspector loads this fixed judge even for an empty registration inventory.
   -- Demand its build without making this program a report data dependency.
   let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
@@ -195,17 +197,25 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
     exports := exports.push (← claim.exportInfo.fetch)
-    sourceModules := sourceModules.push claim ++ (← (← claim.transImports.fetch).await)
-  -- Compiler/Lake owns this closure. Export only local registered source
-  -- bindings; fetched packages are pinned by the registered Lake manifest.
-  let mut sourcePaths : Array String := #[]
-  for dependency in sourceModules do
-    if dependency.name != mod.name && reported.contains dependency.name then continue
-    let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
-    unless path.startsWith ".lake/" || path.startsWith "../" do
-      sourcePaths := sourcePaths.push path
-  writeBinFileIfChanged (utility.addExtension "sources.json")
-    (String.toUTF8 (Lean.toJson sourcePaths).compress)
+    sourceModules := sourceModules.push claim
+  -- Only production consumes this source whitelist. Warm artifacts still trace
+  -- the complete compiler exports below and cross the canonical validator.
+  -- Missing and rejected artifacts prepare the same Lake-owned closure before
+  -- extraction; no dependency parser or additional cache chooses its members.
+  let prepareProduction : JobM Unit := do
+    let reported ← (← JobM.runFetchM <| fetch <| pkg.facet `reportSourceModules).await
+    let mut dependencies := #[]
+    for source in sourceModules do
+      dependencies := dependencies.push source ++
+        (← (← JobM.runFetchM source.transImports.fetch).await)
+    let mut sourcePaths : Array String := #[]
+    for dependency in dependencies do
+      if dependency.name != mod.name && reported.contains dependency.name then continue
+      let path := (relPathFrom (← repositoryDir pkg) (← IO.FS.realPath dependency.leanFile)).toString
+      unless path.startsWith ".lake/" || path.startsWith "../" do
+        sourcePaths := sourcePaths.push path
+    writeBinFileIfChanged (utility.addExtension "sources.json")
+      (String.toUTF8 (Lean.toJson sourcePaths).compress)
   -- Await without mixing: recompilation must succeed, but its implementation
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
@@ -224,12 +234,14 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
     let args := #[(← repositoryDir pkg).toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]
     let build := do
+      prepareProduction
       proc { (← nativeCommand pkg (#["module"] ++ args)) with env }
       pure PUnit.unit
     let inputTrace ← getTrace
     let artifact? ← probeArtifact file build
       #["module", (← repositoryDir pkg).toString, mod.name.toString, utility.toString]
-    return ⟨file, args, env, inputTrace, artifact?.map fun row => {row with productionArgs? := some args}⟩
+    return ⟨file, args, env, inputTrace,
+      artifact?.map fun row => {row with productionArgs? := some args, prepareProduction}, prepareProduction⟩
 
 private def preparedModuleReport (mod : Module) : FetchM (Job PreparedArtifact) := do
   let key := (mod.facet `inspectorPreparedReport).key
@@ -252,6 +264,7 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArti
       setTrace (← row.outputTrace.get)
       return row
     let direct := do
+      request.prepareProduction
       proc { (← nativeCommand pkg (#["module"] ++ request.args)) with env := request.env }
       pure PUnit.unit
     let pending := request.file.addExtension "pending"
@@ -264,7 +277,9 @@ private def buildNativeModuleReport (mod : Module) : FetchM (Job UnvalidatedArti
         #["module", (← repositoryDir pkg).toString, mod.name.toString, request.args[3]!]
       -- A rejected optional output reconstructs through the same native owner,
       -- outside the initial shared production job, with cache reads disabled.
-      return {row with build := direct, productionArgs? := some request.args}
+      return {row with
+        build := direct, productionArgs? := some request.args,
+        prepareProduction := request.prepareProduction}
     finally
       if batch?.isSome then removeFileIfExists pending
 
@@ -325,9 +340,10 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
-    let requests := artifacts.filterMap fun request =>
-      if request.artifact?.isSome then none else
-        some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
+    let requests ← artifacts.filterMapM fun request => do
+      if request.artifact?.isSome then return none
+      request.prepareProduction
+      return some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)
     unless requests.isEmpty do
       discard <| runBatch pkg requests
   let batch ← registerJob "Inspector native production batch" batch
@@ -377,6 +393,8 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
       -- bounded private reconstruction through Lake, with cache reads disabled.
       unless repairs.isEmpty do
         requireRebuildAllowed
+        for (row, status) in artifacts.zip (statuses.extract 0 artifacts.size) do
+          if status != 0 then row.prepareProduction
         discard <| runBatch pkg repairs
       let mut repaired := false
       let mut trace := BuildTrace.nil "<collection>"
