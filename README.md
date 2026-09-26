@@ -9,12 +9,10 @@
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
-trureturing develops a scientific methodology through which AI can propose
-questions, test its own conjectures, discover the limits of its representations,
-and return checked results to a growing library. We want Turing computation to
-find direction in those results: to recognize what is missing and choose a
-fruitful next investigation. Autonomous choice of research direction is an
-ongoing research goal.
+trureturing develops a scientific method for AI to turn gaps in knowledge into
+questions, test conjectures, expose limits in its representations, and return
+checked results to a reusable library. We want those results to guide the next
+investigation; autonomous research selection remains a goal to evaluate.
 
 The name expresses **true · return · Turing**. Truth guides the search;
 verified knowledge returns as a premise for the next inquiry; computation
@@ -22,11 +20,10 @@ explores the connections. We call the structure we seek the **geometry of
 logical truth**: dependencies, invariants, distinctions and the boundaries of
 what an observer can recover.
 
-The project brings together philosophical inquiry, theory, experiments and
-Lean 4 formalization. Its ambition is broad; each proof establishes its exact
-statement under its declared assumptions. The [vision and research
-guide](docs/VISION.md) connects these ideas to existing work and open research
-directions.
+The project combines philosophical inquiry, theory, experiments and Lean 4
+formalization. Each proof establishes its exact statement under declared
+assumptions. The [vision and research guide](docs/VISION.md) connects this work
+to open directions.
 
 ## Truth and computation
 
@@ -36,12 +33,10 @@ encompassing network of truths and their logical relations**, within which a
 finite observer discovers connections. This is the project's metaphysical
 orientation, not a theorem about the existence of God or the physical universe.
 
-Computation still does essential work: constructing examples, exposing
-counterexamples, searching for proofs and checking them. A verified proof
-extends what the library can justify. Returning that result to the library
-lets later inquiry begin from a firmer foundation. Neither this conviction
-nor a growing proof library establishes that one program can enumerate or
-decide every truth.
+Computation constructs examples and counterexamples, searches for proofs and
+checks them. A verified proof extends what the library can justify and reuse.
+Neither this philosophical conviction nor a growing proof library establishes
+that one program can enumerate or decide every truth.
 
 The repository makes part of this geometry precise. Its
 [dependency topology](D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
@@ -51,7 +46,6 @@ says that, on a nonempty state space, a target admits a recovery function from
 an observation exactly when that target is constant on each observation
 fiber. Here a fiber is the set of states giving the same observation; the
 existence of a recovery function alone gives no algorithm or cost bound.
-These are precise structures with which to investigate our guiding picture.
 
 ## Start your journey
 
@@ -91,10 +85,9 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
-The library contains Lean 4 proofs, theory inputs, experiments and checking
-tools. Golden integers, Fibonacci weights and Zeckendorf representations are
-one thread; the examples below also explore conjecture refutation and limits
-of local observation.
+Golden integers, Fibonacci weights and Zeckendorf representations are one
+thread of the library; the examples below also explore conjecture refutation
+and limits of local observation.
 
 ## Three places to look
 
@@ -254,11 +247,9 @@ flowchart TD
     class N frontier
 ```
 
-*A schematic of inquiry, not runtime behavior or dependency data.* Questions
-can remain unresolved, and tests alone do not establish a theorem. Dashed
-paths return remaining questions to another inquiry, including when no checked
-result was obtained. Labels and shapes carry the distinction without relying
-on color.
+*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
+do not establish a theorem. Dashed paths return unresolved questions to
+another inquiry, including when no checked result was obtained.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by
