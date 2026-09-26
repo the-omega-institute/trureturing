@@ -5815,3 +5815,345 @@ $$
 当前已经有成本发散的倒数下界和二次倒数上界，尚未证明其精确指数；第 84 节的最优平方根也不补上这一缺口。第 85 节已经给出 $g>1/2000$ 及旧端点的明确有限预算；真实失效半径的精确值与最坏成本的精确发散阶仍未取得。全部新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 87. 完整失效半径具有有限代数定义
+
+**定义 87.1（同一二维仪器的实坐标）。** 本节及后续三节继续固定
+
+$$
+Q_0=|0\rangle\langle1|,\qquad
+L_0=|0\rangle\langle0|,\qquad
+\Gamma_0=(\mathcal N_0,\mathcal C_0).
+$$
+
+活动记忆为 $\mathcal H=\mathbb C^2$，结果记录为未点击与点击两个正交标签；每个结果都保留同一个二维量子后继。完整仪器写成通道
+
+$$
+\Gamma(X)=|\varnothing\rangle\langle\varnothing|\otimes\mathcal N(X)
++|\bullet\rangle\langle\bullet|\otimes\mathcal C(X).
+$$
+
+沿用第 79—83 节的
+
+$$
+\delta(\Gamma)=\frac12\|\Gamma-\Gamma_0\|_\diamond,
+\quad R=\mathfrak r_{\mathrm{fail}},
+\quad\mathfrak B_u=\{\Gamma:\delta(\Gamma)\le u\},
+\quad\mathscr K(u)=\sup_{\Gamma\in\mathfrak B_u,\rho}
+\mathbb E_\rho^\Gamma\mathsf N.
+$$
+
+每次执行始终重复自己同一个仪器。$\mathsf N$ 包括首次点击那一轮；永久未点击的成本为无穷。
+
+用两个 $4\times4$ Hermitian Choi 矩阵 $J_{\varnothing},J_\bullet$ 表示仪器，并将矩阵元实部、虚部分别作为实坐标。合法性条件准确为
+
+$$
+J_{\varnothing}\succeq0,\qquad J_\bullet\succeq0,
+\qquad \operatorname{Tr}_{\rm out}(J_{\varnothing}+J_\bullet)=I_2.
+\tag{87.1}
+$$
+
+记这些条件为 $\mathsf I(\Gamma)$。它们不固定 Kraus 秩，不删除秩退化装置。这里沿用标准 Choi 完全正性与保迹表征；参见第 73、81 节所引 Watrous 定理 2.22、2.26。
+
+**定理 87.2（全参考校准与永久失效的有理半代数关系）。** 在定义 87.1 的同一接口中，下列两个集合都有有限有理系数实多项式等式、不等式的无量词定义：
+
+$$
+\{(\Gamma,u):\mathsf I(\Gamma),\ u\ge0,\ \delta(\Gamma)\le u\},
+\qquad \mathfrak F.
+\tag{87.2}
+$$
+
+其中 $\mathfrak F$ 是存在某初态永久未点击概率为正的仪器集。因此，准确失效半径 $R$ 是实代数数，而且
+
+$$
+\frac{1601}{2000}<R\le\sqrt{\frac{11+5\sqrt5}{32}}.
+\tag{87.3}
+$$
+
+证明。固定大小的 Hermitian 矩阵正半定，当且仅当其所有主子式非负。拆开复坐标后，式（87.1）因而是有限有理多项式条件。
+
+先准确表示完整校准球。取参考空间 $\mathcal R=\mathbb C^2$ 及单位向量 $z\in\mathcal R\otimes\mathcal H$，令
+
+$$
+D_\Gamma(z)=
+[\operatorname{id}_{\mathcal R}\otimes(\Gamma-\Gamma_0)](|z\rangle\langle z|).
+$$
+
+它是 $8\times8$ Hermitian 矩阵，其矩阵元是仪器实坐标与 $z$ 实坐标的有理多项式。对 Hermitian $D$，
+
+$$
+\|D\|_1\le2u
+\iff
+\exists Y\succeq0:\quad Y^2=D^2,\quad\operatorname{Tr}Y\le2u.
+\tag{87.4}
+$$
+
+原因是 $D^2$ 的正半定平方根唯一，右侧强制 $Y=|D|$。这在零本征值与秩变化处仍成立。
+
+Hermitian 保持映射的 diamond 范数可在与输入同维的参考及纯联合输入上取得；使用 Watrous 定理 3.51、式（3.291）。因此完整距离条件准确等价于有限实量词公式
+
+$$
+\mathsf B(\Gamma,u):\quad
+\mathsf I(\Gamma),\ u\ge0,\quad
+\forall z\ \bigl[
+\|z\|^2=1\Longrightarrow
+\exists Y\succeq0:
+Y^2=D_\Gamma(z)^2,\ \operatorname{Tr}Y\le2u
+\bigr].
+\tag{87.5}
+$$
+
+参考输入的全称量词仍在，点击与未点击的量子后继也都在 $D_\Gamma(z)$ 中；这里没有用单轮标签距离替换完整距离。
+
+其次，由引理 79.1 的固定态判据，永久失效准确等价于
+
+$$
+\mathsf F(\Gamma):\quad
+\mathsf I(\Gamma),\quad
+\exists\sigma\succeq0:
+\operatorname{Tr}\sigma=1,\quad\mathcal N_\Gamma(\sigma)=\sigma.
+\tag{87.6}
+$$
+
+这也是有限有理多项式量词公式；最后的等式对仪器坐标和 $\sigma$ 坐标为双线性。使用实闭域量词消去的标准定理，式（87.5）—（87.6）可消去量词，且保持有理定义域。[^wave_real_closed_elimination]
+
+令 $\mathsf H(u)$ 表示 $u\ge0$ 且存在满足 $\mathsf F(\Gamma)$ 与 $\mathsf B(\Gamma,u)$ 的仪器。引理 79.1 的最小值取得性使 $R$ 成为下列公式唯一选出的实数：
+
+$$
+\mathsf H(R)\quad\wedge\quad
+\neg\exists v\,[0\le v<R\ \wedge\ \mathsf H(v)].
+\tag{87.7}
+$$
+
+所以单点 $\{R\}$ 有有理半代数定义。无量词定义只使用有限个非零有理多项式；若 $R$ 不是其中任何一个的根，则全部符号在其一个邻域内不变，无法只选出单点。因此 $R$ 是实代数数。式（87.3）复用定理 85.2 与第 73.2 条。$\square$
+
+本证明复用《动态充分边界与内部观察者》卷第 76 节的有限优化量词化思路，以及《相位边界》卷第 142 节的迹范数图表示；新的对象是保留全部参考与量子后继的永久失效集合。它没有计算 $R$ 的最小多项式，也没有将代数性解释为低成本计算。
+
+## 88. 无限等待的最坏值由同一有限算子方程取得
+
+**定理 88.1（最坏成本的取得、连续性与代数图）。** 对每个 $0\le u<R$，存在同一个实际仪器 $\Gamma_u\in\mathfrak B_u$ 与纯初态 $P_u$，使
+
+$$
+\mathscr K(u)=\mathbb E_{P_u}^{\Gamma_u}\mathsf N<\infty.
+\tag{88.1}
+$$
+
+函数 $\mathscr K:[0,R)\to\mathbb R$ 连续、非减，其图为有理半代数集。每个实代数参数 $u\in[0,R)$ 都给实代数数 $\mathscr K(u)$。
+
+证明。令 $\mathcal A_\Gamma=\mathcal N_\Gamma^*$。对无永久失效的固定仪器，第 66、71 节给出唯一有限成本势
+
+$$
+T_\Gamma=\sum_{n\ge0}\mathcal A_\Gamma^n(I),
+\qquad T_\Gamma\succeq0,\qquad
+T_\Gamma-\mathcal A_\Gamma(T_\Gamma)=I.
+\tag{88.2}
+$$
+
+反过来，有限 Hermitian 矩阵 $T\succeq0$ 满足最后一个方程时，正性给 $T\succeq I$。令 $M=\|T\|_\infty\ge1$，则
+
+$$
+0\preceq\mathcal A_\Gamma(T)=T-I
+\preceq(1-M^{-1})T.
+$$
+
+反复作用正映射，得到
+
+$$
+0\preceq\mathcal A_\Gamma^n(I)
+\preceq\mathcal A_\Gamma^n(T)
+\preceq(1-M^{-1})^nT\qquad(n\ge1).
+\tag{88.3}
+$$
+
+若 $M=1$，右侧对 $n\ge1$ 为零。有限和望远镜恒等式
+
+$$
+T=\sum_{j=0}^{n-1}\mathcal A_\Gamma^j(I)
++\mathcal A_\Gamma^n(T)
+$$
+
+因此收敛到式（88.2），同时保证所有初态终止与均值有限。任意 Hermitian 固定差 $X=\mathcal A_\Gamma(X)$ 满足
+$-\|X\|_\infty I\preceq X\preceq\|X\|_\infty I$；迭代并用式（88.3）可知 $X=0$，故该正解唯一。这个双向论证使有限方程承载实际无限尾和，而不只是一个成本上界证书。
+
+对每个固定 $v<R$，定理 80.2 给 $\mathfrak B_v$ 上共同的指数尾。因此式（88.2）的连续有限部分和在整个 $\mathfrak B_v$ 上一致收敛，$\Gamma\mapsto T_\Gamma$ 与
+
+$$
+M(\Gamma)=\lambda_{\max}(T_\Gamma)
+=\max_\rho\operatorname{Tr}(\rho T_\Gamma)
+$$
+
+都连续。紧性使 $M$ 在 $\mathfrak B_u$ 上取得最大值；取最大本征值的一个纯本征态即得式（88.1）。
+
+接着核对参数连续性。非减性来自校准球嵌套。若 $u_j\to u<R$，取 $v<R$ 使充分大的 $j$ 都有 $u_j\le v$。相应最优仪器的收敛子列及 $\delta$ 的连续性给
+$\limsup_j\mathscr K(u_j)\le\mathscr K(u)$。若 $u>0$，取 $\Gamma_u$，并令
+
+$$
+t_j=\min\{1,u_j/u\},\qquad
+\widehat\Gamma_j=t_j\Gamma_u+(1-t_j)\Gamma_0.
+$$
+
+逐分支凸混合仍是同接口合法仪器，且
+$\delta(\widehat\Gamma_j)=t_j\delta(\Gamma_u)\le u_j$。
+又 $\widehat\Gamma_j\to\Gamma_u$，所以
+$\liminf_j\mathscr K(u_j)\ge M(\Gamma_u)=\mathscr K(u)$。
+$u=0$ 时使用球嵌套即可得到同一下半连续性。故 $\mathscr K$ 连续。
+
+最后写出准确有限图关系。对实数 $m$，记
+
+$$
+\mathsf W(\Gamma,T,m):\quad
+T=T^\dagger\succeq0,\quad
+T-\mathcal A_\Gamma(T)=I,\quad
+mI-T\succeq0,\quad\det(mI-T)=0.
+\tag{88.4}
+$$
+
+正性和行列式条件准确给 $m=\lambda_{\max}(T)$。取迹对偶只使 $\mathcal A_\Gamma(T)$ 的坐标成为仪器坐标与 $T$ 坐标的双线性式；所以 $\mathsf W$ 是有理多项式条件。对 $0\le u<R$，$k=\mathscr K(u)$ 等价于
+
+$$
+\begin{aligned}
+&\exists\Gamma,T:\quad
+\mathsf B(\Gamma,u)\ \wedge\ \mathsf W(\Gamma,T,k),\\
+&\forall\Gamma',T',m:\quad
+[\mathsf B(\Gamma',u)\ \wedge\ \mathsf W(\Gamma',T',m)]
+\Longrightarrow m\le k.
+\end{aligned}
+\tag{88.5}
+$$
+
+存在量词合法使用了已证明的最大值取得性。$R$ 可用式（87.7）消去；对余下有限实量词应用同一量词消去定理，就得到有理半代数图。固定代数 $u$ 时，用其有理最小多项式和隔离区间指定该参数，再沿用定理 87.2 的单点论证，得到 $\mathscr K(u)$ 为实代数数。$\square$
+
+## 89. 真实等待成本具有有理幂发散主项
+
+**定理 89.1（发散阶存在并夹在一与二之间）。** 对定义 87.1 的固定模型，存在实代数数 $c>0$、有理数 $p\in[1,2]$、整数 $m\ge1$，使
+
+$$
+\boxed{
+\mathscr K(R-h)
+=c\,h^{-p}\bigl(1+O(h^{1/m})\bigr)
+\qquad(h\downarrow0).
+}
+\tag{89.1}
+$$
+
+因此其首项是单一的正系数有理幂。定理不确定 $p$ 是否为端点值，也不确定 $c$ 的数值。
+
+证明。在一个小正区间上定义
+
+$$
+g(h)=\frac1{\mathscr K(R-h)},\qquad g(0)=0.
+$$
+
+定理 88.1 的连续性与定理 80.4 的发散给 $g$ 连续、$g(h)>0$，且 $g(h)\to0$。它的图定义在实代数数域
+$\mathbb A=\overline{\mathbb Q}\cap\mathbb R$ 上。
+
+取一个正有理 $h_0<R$。闭图
+
+$$
+G=\{(h,g(h)):0\le h\le h_0\}
+$$
+
+是紧的一维半代数集，因而半解析。在原点删去该点后，充分短的图段连通，并构成穿孔邻域基。这核对了 Bierstone–Milman Lemma 6.3(1) 的条件：存在穿过原点、在零点两侧实解析的弧
+
+$$
+t\longmapsto(a(t),b(t)),
+$$
+
+其正参数小段覆盖原点附近的正向图段。[^wave_endpoint_arc] 两坐标对小 $t>0$ 都为正且不是零函数，因此
+
+$$
+a(t)=A t^m(1+O(t)),\qquad
+b(t)=B t^n(1+O(t)),\qquad A,B>0,\quad m,n\ge1.
+\tag{89.2}
+$$
+
+这里 $a'(t)>0$ 对充分小的 $t>0$ 成立，故它覆盖全部充分小的 $h>0$。由 $h=a(t)$ 得
+
+$$
+t=(h/A)^{1/m}(1+O(h^{1/m})),
+$$
+
+代入第二坐标，得到
+
+$$
+g(h)=B A^{-n/m}h^{n/m}(1+O(h^{1/m})).
+$$
+
+取 $p=n/m$ 并求倒数，即得式（89.1），暂时只有 $c=A^{n/m}/B>0$。这一步并未假定解析弧首系数 $A,B$ 是代数数。
+
+为证明 $c$ 的代数性，写 $p=r/s$，其中 $r,s$ 为正整数。正值关系 $z=h^p$ 可由 $z>0$、$z^s=h^r$ 表示，所以
+
+$$
+q(h)=h^p\mathscr K(R-h)
+$$
+
+的图仍定义在 $\mathbb A$ 上。已证明 $q(h)\to c$，故其图的闭包与直线 $h=0$ 的交集恰为单点 $(0,c)$。闭包可由有限实量词表达，例如每个正半径的开球都与原图相交；量词消去保持定义域。于是 $\{c\}$ 是 $\mathbb A$ 上半代数单点，单点论证给 $c$ 在 $\mathbb A$ 上代数，因而本身属于 $\mathbb A$。
+
+最后使用同一模型中已经证明的两侧成本界：
+
+$$
+\frac Rh\le\mathscr K(R-h)
+\le\frac{1+2h^2}{(1-R+h)h^2}.
+\tag{89.3}
+$$
+
+左式来自定理 80.4，右式来自定理 83.1；$R<1$ 保证右式首系数有限。若 $p<1$，则 $h\mathscr K(R-h)\to0$，与左式矛盾；若 $p>2$，则 $h^2\mathscr K(R-h)\to\infty$，与右式矛盾。因此 $1\le p\le2$。$\square$
+
+本证明复用《相位边界》卷第 144 节的解析弧方法，但先由第 88 节证明了当前无限等待最坏值的有限代数图。前一卷的有限终端误差幂律不能直接替代这里的均值与全装置优化证明。
+
+**推论 89.2（倍率尺度律与两个端点系数条件）。** 对每个固定 $\lambda>0$，有
+
+$$
+\lim_{h\downarrow0}
+\frac{\mathscr K(R-\lambda h)}{\mathscr K(R-h)}
+=\lambda^{-p},\qquad
+\lim_{h\downarrow0}
+\frac{\log\mathscr K(R-h)}{\log(1/h)}=p.
+\tag{89.4}
+$$
+
+若 $p=1$，则 $c\ge R$；若 $p=2$，则 $c\le(1-R)^{-1}$。
+
+证明。两个极限直接代入式（89.1）；足够小的 $h$ 使 $R-\lambda h\ge0$。两个端点系数条件分别将式（89.3）乘 $h$ 或 $h^2$ 后取极限得到。$\square$
+
+## 90. 代数最坏实现与仍未计算的临界参数
+
+**定理 90.1（同一实际实现可取代数坐标）。** 最短失效距离 $R$ 可由 Choi 矩阵元实部、虚部均为实代数数的仪器 $\Gamma_*$ 取得，并且可以同时选择具有代数矩阵元的未点击固定密度矩阵 $\sigma_*$。对每个实代数 $0\le u<R$，也可同时选择代数坐标的合法仪器 $\Gamma_u$ 与纯初态 $P_u$，使
+
+$$
+\delta(\Gamma_*)=R,\quad
+\mathcal N_{\Gamma_*}(\sigma_*)=\sigma_*,\qquad
+\mathbb E_{P_u}^{\Gamma_u}\mathsf N=\mathscr K(u).
+\tag{90.1}
+$$
+
+证明。实代数数域 $\mathbb A$ 是实闭域。实闭域量词消去给以下标准传递性质：一个只含 $\mathbb A$ 系数的有限实多项式量词公式，若在 $\mathbb R$ 中有解，则在 $\mathbb A$ 中有解。[^wave_real_closed_elimination]
+
+对最近失效仪器，把式（87.1）、（87.5）、（87.6）的共同变量 $\Gamma,\sigma$ 放在同一个公式中并固定半径 $R\in\mathbb A$。引理 79.1 保证实解存在，传递性质给代数实解。任何这样的解都有 $\delta\le R$ 且失效，最小性强制 $\delta=R$。
+
+对固定代数 $u<R$，定理 88.1 保证 $k=\mathscr K(u)\in\mathbb A$。将式（88.4）的变量 $\Gamma,T,k$ 与 $\mathsf B(\Gamma,u)$ 联合，再加入
+
+$$
+P=P^\dagger\succeq0,\qquad
+P^2=P,\qquad\operatorname{Tr}P=1,\qquad
+TP=kP.
+\tag{90.2}
+$$
+
+最大本征态保证该共同公式有实解，因此有代数解。式（88.2）与（90.2）使同一个装置和同一个纯态的实际均值等于 $k$，即式（90.1）。$\square$
+
+**命题 90.2（临界结构与数值求解的分界）。** 对上述固定接口，准确失效半径、任意代数子临界校准参数的最坏成本，以及临界发散首系数都是实代数数；临界指数为区间 $[1,2]$ 中的有理数。这些结论同时与第 85 节的显式预算相容：
+
+$$
+R>0.8005,\qquad \mathscr K(0.8)<20\,000\,010.
+$$
+
+证明。分别应用定理 87.2、88.1、89.1 及第 85 节的预算结论。$\square$
+
+其中尚未计算的量仍是 $R$ 的精确值、$p,c$ 及最优仪器的具体矩阵。量词消去提供有限定义与原则上的精确判定，不提供本节尚未执行的消元结果、可行的运算预算或样本复杂度。幂律刻画的是完整校准球中齐次仪器的最坏实际调用数；它不改变物理钟标定，不扩展到任意切换控制或无限维活动记忆。第 84 节指定暗态修复的最优平方根尺度也没有因此被改判为 $p=2$。
+
+[^wave_real_closed_elimination]: Saugata Basu, “Algorithms in Real Algebraic Geometry: A Survey”，[作者提供的 2014 年版本](https://www.math.purdue.edu/~sbasu/raag_survey2011_final-sep4-2014.pdf)。第 1.1 节（第 2 页）明确以任意实闭域为底域，并列出实数与实代数数域；第 2.1 节 Theorem 2.1（第 5 页）陈述量词消去。系数运算在输入的有序整环内，参见第 1.2 节、Definition 1.1 与 Theorem 2.27。实闭域扩张的传递性质由同一无量词公式在两个域上具有相同多项式符号直接得到。本文将这些成熟工具用于式（87.5）、（87.6）、（88.5）的具体仪器与成本合同，不把量词消去本身列为新结果。
+
+[^wave_endpoint_arc]: Edward Bierstone and Pierre D. Milman, “Semianalytic and subanalytic sets,” *Publications Mathématiques de l’IHÉS* **67** (1988), 5–42，[原文 PDF](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf)，[doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126)。Lemma 6.3(1)，印刷第 33 页，给一维半解析集在删点后局部连通条件下的实解析参数弧。第 89 节使用连续正向单值图核对条件，再用两个解析坐标的整数消失阶取得主项与余项；代数首系数由有限图闭包另证，并非该引理直接宣告。
+
+## 追加锚（本行以下为增补区）
