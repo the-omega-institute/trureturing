@@ -38353,3 +38353,1024 @@ $$
 [^phase_semianalytic_endpoint_arc]: Edward Bierstone and Pierre D. Milman, “Semianalytic and subanalytic sets,” *Publications Mathématiques de l’IHÉS* **67** (1988), 5–42, [原文 PDF](https://www.numdam.org/item/PMIHES_1988__67__5_0.pdf), [doi:10.1007/BF02699126](https://doi.org/10.1007/BF02699126)。Lemma 6.3(1)，印刷第33页，要求一维半解析集合在所取点删去该点后局部连通，给出穿过该点的实解析参数弧，其正参数段覆盖相应穿孔邻域。本文在两个单值图端点核对这些条件，再由两个解析坐标的有限整数消失阶得到有理幂主项；不使用任何未计算的有效指数界。
 
 ## 追加锚（本行以下为增补区）
+
+## 145. 实际输入支撑独立对齐的精确最小间距
+
+第143节证明不同轮次的实际接收前支撑不重合。本节进一步计算：在保持同一来源和输入位标签、允许各轮独立选择可逆编码等距时，两份支撑最接近可以到什么程度。最小值由来源主角的排序差精确决定，并可由实际编码达到。
+
+这是单轮接口表示之间的最优几何对齐。一个固定接收器还须满足第141节全部轮次的共同 Gram 条件，不能把本节的独立最优表示自动拼成共同实现。
+
+### 145.1 来源角谱与独立对齐问题
+
+固定第143节的非退化已知来源，
+
+$$
+x=|a|^2,\qquad y=|b|^2,\qquad x+y=1,\qquad 0<x,y<1.
+$$
+
+沿用
+
+$$
+t_0=1,\qquad t_j=1-yt_{j-1},\qquad
+\lambda_j=x\frac{t_{j-1}}{t_j},\qquad
+\vartheta_j=\arccos\sqrt{\lambda_j}\quad(j\ge1).
+\tag{145.1}
+$$
+
+其中 $\lambda_1=1$，故 $\vartheta_1=0$；对 $j\ge2$，$0<\lambda_j<1$。固定附加秩 $r\ge1$，令
+
+$$
+\theta_{n,1}\le\cdots\le\theta_{n,2r}
+\tag{145.2}
+$$
+
+为将 $\vartheta_n,\vartheta_{n-1}$ 各重复 $r$ 次后按非降次序排列所得的角列表，$n\ge2$。第143节命题143.1说明，它恰为第 $n+1$ 轮实际输入的两个位块之间的主角列表。
+
+固定 $n,m\ge2$ 和一个接收空间 $K$，满足
+
+$$
+\dim K\ge\max(s_n,s_m)r,\qquad
+s_2=3,\quad s_j=4\ (j\ge3).
+\tag{145.3}
+$$
+
+将两个附加空间分别识别为 $\mathbb C^r$。允许相互独立地选择
+
+$$
+W_n:S_n\otimes\mathbb C^r\longrightarrow K,\qquad
+W_m:S_m\otimes\mathbb C^r\longrightarrow K
+$$
+
+为等距映射。两份正定附加态可任意给定；本节只使用它们的支撑秩。每份实际接收前支撑必须仍按第141节的来源嵌入构造：
+
+$$
+\mathcal U_j(W_j)
+=\operatorname{ran}\!\left[
+(W_j\otimes I_B)\Pi_j(F_j\otimes I_r)\right],
+\qquad j\in\{n,m\}.
+\tag{145.4}
+$$
+
+定义独立对齐距离
+
+$$
+d^{\mathrm{geom}}_{n,m}(r,K)
+=\inf_{W_n,W_m}
+\left\|P_{\mathcal U_n(W_n)}
+      -P_{\mathcal U_m(W_m)}\right\|_{\mathrm{op}}.
+\tag{145.5}
+$$
+
+两份支撑均在同一个 $K\otimes B$ 中，比较时保留相同的物理位基。这里的独立选择不包括另行改变 $F_j$、在两份表示中采用不同的位标签，或假定存在实现这两份选择的固定接收通道。
+
+### 145.2 主角扰动的逐项界
+
+以下使用复 Hilbert 空间中的标准主角结构。正交基交叉矩阵的奇异值是主角余弦，见 Zhu 与 Knyazev，*Angles between subspaces and their tangents*，[Theorem 2.1](https://arxiv.org/html/1209.0523)。为明确本节所需的常数，下面给出相应扰动界的直接证明。
+
+**引理145.1（两端同时移动的主角界）。** 设 $A,B,A',B'$ 为同一有限维复 Hilbert 空间中的 $k$ 维子空间。用非降次序记各对的主角，并置
+
+$$
+\alpha=\theta_{\max}(A,A'),\qquad
+\beta=\theta_{\max}(B,B').
+$$
+
+则对全部 $1\le i\le k$，
+
+$$
+\boxed{
+|\theta_i(A,B)-\theta_i(A',B')|\le\alpha+\beta.
+}
+\tag{145.6}
+$$
+
+同时，
+
+$$
+\|P_A-P_{A'}\|_{\mathrm{op}}=\sin\alpha,\qquad
+\|P_B-P_{B'}\|_{\mathrm{op}}=\sin\beta.
+\tag{145.7}
+$$
+
+**证明。** 对单位向量定义复射线角距离
+
+$$
+d_{\mathrm{ray}}(u,v)=\arccos|\langle u,v\rangle|
+\in[0,\pi/2].
+$$
+
+它满足三角不等式。具体地，若 $d_{\mathrm{ray}}(u,v)=p$、
+$d_{\mathrm{ray}}(v,w)=q$ 且 $p+q<\pi/2$，调整 $u,w$ 的相位，使它们与 $v$ 的内积为非负实数，再分解为沿 $v$ 与垂直 $v$ 的部分。Cauchy–Schwarz 给出
+
+$$
+|\langle u,w\rangle|
+\ge\cos p\cos q-\sin p\sin q
+=\cos(p+q).
+$$
+
+于是 $d_{\mathrm{ray}}(u,w)\le p+q$；当 $p+q\ge\pi/2$ 时结论由距离范围直接成立。
+
+对单位 $u$，到子空间 $B$ 的角距离是
+
+$$
+\angle(u,B)
+=\inf_{\substack{v\in B\\\|v\|=1}}d_{\mathrm{ray}}(u,v)
+=\arccos\|P_Bu\|.
+\tag{145.8}
+$$
+
+由主角奇异值分解，可选 $A,A'$ 的主向量正交基 $a_j,a'_j$，满足
+$\langle a_j,a'_l\rangle=\delta_{jl}\cos\alpha_j$，
+$0\le\alpha_j\le\alpha$。定义等距同构 $Qa_j=a'_j$。对任意单位 $u=\sum_jc_ja_j$，
+
+$$
+\langle u,Qu\rangle=\sum_j|c_j|^2\cos\alpha_j\ge\cos\alpha,
+$$
+
+故 $d_{\mathrm{ray}}(u,Qu)\le\alpha$。同理存在 $B\to B'$ 的等距同构，将每条单位射线移动不超过 $\beta$。结合射线角三角不等式及（145.8），得到
+
+$$
+|\angle(u,B)-\angle(Qu,B')|\le\alpha+\beta.
+\tag{145.9}
+$$
+
+角的逐项 min–max 公式为
+
+$$
+\theta_i(A,B)
+=\min_{\substack{L\subseteq A\\\dim L=i}}
+  \ \max_{\substack{u\in L\\\|u\|=1}}\angle(u,B).
+\tag{145.10}
+$$
+
+它由 $P_AP_B|_A$ 的特征值 min–max 公式及
+$\cos^2\angle(u,B)=\langle u,P_Bu\rangle$ 得到。$Q$ 将 $A$ 中的 $i$ 维子空间一一映到 $A'$ 中的 $i$ 维子空间，把（145.9）代入（145.10）即得（145.6）。
+
+最后，在每个非零主角对应的二维主平面上，两投影之差的特征值为
+$\pm\sin\alpha_j$；零主角对应的共同方向上差为零。其余共同正交补上也为零。因此最大绝对特征值为 $\sin\alpha$，证明（145.7）的第一式；第二式同理。证毕。
+
+### 145.3 精确最小间距及达到构造
+
+**定理145.2（实际输入支撑的独立最优对齐）。** 在（145.1）—（145.5）的条件下，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,m}(r,K)
+=\sin\!\left(
+\frac12\max_{1\le i\le2r}
+|\theta_{n,i}-\theta_{m,i}|
+\right).
+}
+\tag{145.11}
+$$
+
+下确界由一对允许的实际编码等距取得。右侧在满足（145.3）后不再依赖 $K$ 的额外维数；角的重复次数相同，故它也不依赖 $r$。
+
+**证明：下界。** 对任意允许的 $W_n,W_m$，第143节的实际位块分解给出
+
+$$
+\mathcal U_n=(A\otimes|0\rangle)\oplus(B\otimes|1\rangle),
+$$
+
+$$
+\mathcal U_m=(A'\otimes|0\rangle)\oplus(B'\otimes|1\rangle),
+$$
+
+其中四个子空间维数均为 $k=2r$。它们各自的主角列表分别为
+$(\theta_{n,i})$ 与 $(\theta_{m,i})$。由于投影差在同一个位基下分块对角，
+
+$$
+\varepsilon:=\|P_{\mathcal U_n}-P_{\mathcal U_m}\|_{\mathrm{op}}
+=\max\{\|P_A-P_{A'}\|_{\mathrm{op}},
+       \|P_B-P_{B'}\|_{\mathrm{op}}\}.
+\tag{145.12}
+$$
+
+引理145.1给
+
+$$
+\max_i|\theta_{n,i}-\theta_{m,i}|
+\le\theta_{\max}(A,A')+\theta_{\max}(B,B')
+\le2\arcsin\varepsilon.
+$$
+
+移项后即得（145.11）右侧为每一对编码的下界。
+
+**证明：达到性。** 先设至少一个轮次大于等于三。由（145.3），$\dim K\ge4r=2k$。在 $K$ 中取 $k$ 个两两正交的二维平面，每个平面有正交单位基 $e_i,f_i$。对 $j\in\{n,m\}$，置
+
+$$
+\begin{aligned}
+a_{j,i}
+&=\cos(\theta_{j,i}/2)e_i+\sin(\theta_{j,i}/2)f_i,\\
+b_{j,i}
+&=\cos(\theta_{j,i}/2)e_i-\sin(\theta_{j,i}/2)f_i,
+\end{aligned}
+\tag{145.13}
+$$
+
+并令 $A_j=\operatorname{span}\{a_{j,i}\}$、
+$B_j=\operatorname{span}\{b_{j,i}\}$。同轮的交叉内积为
+
+$$
+\langle a_{j,i},b_{j,l}\rangle
+=\delta_{il}\cos\theta_{j,i},
+\tag{145.14}
+$$
+
+故这些子空间具有所需的主角列表。
+
+还需核对它们来自实际 $W_j$。来源中的
+$\mathscr H_j\otimes\mathbb C^r$ 与
+$\mathscr G_j\otimes\mathbb C^r$
+具有同一主角列表，而且两者张成整个 $S_j\otimes\mathbb C^r$：
+从 $g_j^i=\chi_{i0}^j$ 与 $h_j^i=a\chi_{i0}^j+\chi_{i1}^j$ 可以恢复全部实际档案列。选择两组来源主向量，把它们分别送到（145.13）的两组向量。两组生成向量的完整 Gram 矩阵由（145.14）保持，所以该规定良定，并延拓为
+
+$$
+W_j:S_j\otimes\mathbb C^r\longrightarrow K
+$$
+
+的等距。由真实（145.4），对应输入像恰为
+$A_j\otimes|0\rangle\oplus B_j\otimes|1\rangle$。
+
+当 $j=2$ 时，恰有 $r$ 个角为零；相应 $a_{j,i}=b_{j,i}=e_i$，每项只占一维，其余 $r$ 项各占二维。因此这一轮的编码像维数仍为 $3r$。当 $j\ge3$ 时，全部角严格大于零，编码像维数为 $4r$。构造没有把第二轮的来源空间扩成四维逻辑档案。
+
+在每个二维平面内，同一位块的两轮向量之间的角为
+$|\theta_{n,i}-\theta_{m,i}|/2$。所以（145.7）、（145.12）给
+
+$$
+\begin{aligned}
+\|P_{\mathcal U_n}-P_{\mathcal U_m}\|_{\mathrm{op}}
+&=\max_i\sin\!\left(\frac{|\theta_{n,i}-\theta_{m,i}|}{2}\right)\\
+&=\sin\!\left(\frac12\max_i|\theta_{n,i}-\theta_{m,i}|\right),
+\end{aligned}
+$$
+
+达到下界。
+
+剩下的情形是 $n=m=2$，此时（145.3）只要求 $\dim K\ge3r$。直接选择两份相同的编码等距，输入投影相同，距离为零，与（145.11）一致。无需为这个情形另添 $r$ 维空方向。证毕。
+
+对于 $n\ne m$，右侧严格为正：若排序角列表相同，主角特征值乘积相同，就会使第143节的 $\delta_n=\delta_m$，违反该节式（143.11）。因此（145.11）将支撑不重合加强为固定两轮、固定来源下的严格正距离下界。
+
+### 145.4 相邻轮次的简式与指数收缩
+
+角的排序可以用来源奇偶性明确完成。由（145.1）及 $t_j$ 的递推，
+
+$$
+\lambda_j-x=\frac{xy(-y)^{j-1}}{t_j}.
+\tag{145.15}
+$$
+
+所以奇数指标的 $\lambda_j>x$，偶数指标的 $\lambda_j<x$；相应奇数角低于 $\arccos\sqrt x$，偶数角高于它。
+
+**推论145.3（相邻接口的最小间距）。** 对 $n\ge2$，在同一附加秩 $r$ 和 $\dim K\ge4r$ 下，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,n+1}(r,K)
+=\sin\!\left(\frac12|\vartheta_{n+1}-\vartheta_{n-1}|\right).
+}
+\tag{145.16}
+$$
+
+并且
+
+$$
+\lambda_{n+1}-\lambda_{n-1}
+=\frac{x^2(-y)^{n-1}}{t_{n-1}t_{n+1}}.
+\tag{145.17}
+$$
+
+对每个固定非退化来源，$n\to\infty$ 时，
+
+$$
+\boxed{
+d^{\mathrm{geom}}_{n,n+1}(r,K)
+\sim
+\frac{x^2(1+y)^2}{4\sqrt{xy}}\;y^{n-1}.
+}
+\tag{145.18}
+$$
+
+**证明。** 两份相邻的未排序角对为
+$(\vartheta_{n-1},\vartheta_n)$、
+$(\vartheta_n,\vartheta_{n+1})$。
+由（145.15），公共角 $\vartheta_n$ 在两份排序列表中占据相同的一侧，另一侧之差为
+$|\vartheta_{n+1}-\vartheta_{n-1}|$。定理145.2即给（145.16）。
+
+利用 $t_n=x+y^2t_{n-2}$ 及
+$t_{n+1}=x+y^2t_{n-1}$，有
+
+$$
+\begin{aligned}
+\lambda_{n+1}-\lambda_{n-1}
+&=x\frac{t_nt_{n-1}-t_{n-2}t_{n+1}}
+           {t_{n-1}t_{n+1}}\\
+&=x^2\frac{t_{n-1}-t_{n-2}}{t_{n-1}t_{n+1}},
+\end{aligned}
+$$
+
+而 $t_{n-1}-t_{n-2}=(-y)^{n-1}$，得到（145.17）。
+
+最后，$t_j\to1/(1+y)$、$\lambda_j\to x$。函数
+$f(u)=\arccos\sqrt u$ 在固定 $x\in(0,1)$ 处可微，且
+$f'(x)=-1/(2\sqrt{xy})$。由中值定理，
+
+$$
+|\vartheta_{n+1}-\vartheta_{n-1}|
+\sim\frac{|\lambda_{n+1}-\lambda_{n-1}|}{2\sqrt{xy}}.
+$$
+
+结合（145.17）与 $\sin v\sim v$ 即得（145.18）。证毕。
+
+这里的渐近是固定 $a,b$ 后的轮次极限，没有宣称对趋近退化来源的参数一致。每两轮的最优几何间距严格为正，同时相邻轮次的最优间距可以指数趋零；精确区别不产生统一正分离常数。
+
+### 145.5 与共同接收及实验误差的边界
+
+任意实际共同接收器在两轮使用的 $W_n,W_m$ 都属于（145.5）的候选集，所以其输入投影距离必须满足（145.11）的下界。然而，达到性构造只对这两份接口独立选择编码；它没有检查同一固定通道、纯初始化或其余前缀的兼容性。对于共同接收器，实际距离可以严格大于这个放松问题的最小值。
+
+这个距离比较两个子空间投影，不是两个实际密度矩阵的迹距离，也不是完整参考恢复的误差。即使几何间距很小或已经准确计算，也不能由此确定七终端最优恢复误差或最小接收维数。第143节的标量读数误差与本节的投影距离属于不同度量；若要把其中一种测量或估计误差转换成另一种，仍需给出相应的取得模型与误差传播界。
+
+## 追加锚（本行以下为增补区）
+
+## 146. 两步启动的七维固定吸收器与二次振幅误差上界
+
+本节构造一族实际七维接收器。它在前两终端精确恢复，此后使用同一个平稳吸收通道，并在全部后续终端对任意来源输入及参考满足统一误差界。靠近 $b=0$ 时，该界为 $O(|b|^2)$，改进第140节直接使用退化装置给出的 $O(|b|)$ 上界。
+
+固定已知非退化复来源
+
+$$
+T|0\rangle=(a|0\rangle+b|1\rangle)_M\otimes|0\rangle_B,
+\qquad T|1\rangle=|0\rangle_M\otimes|1\rangle_B,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+
+置
+
+$$
+p=|b|^2,\quad x=1-p=|a|^2,\qquad
+|m_0\rangle=a|0\rangle+b|1\rangle,\qquad
+R_0=|m_0\rangle\langle m_0|,\quad
+R_1=|0\rangle\langle0|,\quad
+\rho_* =\frac{R_0+pR_1}{1+p}.
+\tag{146.1}
+$$
+
+误差仍比较完整参考、活动记忆与全部原档案的半迹距离。初态与来源独立，所有持久控制计入七维寄存器，只访问寄存器与最新发出位，每轮重复同一个全域 CPTP 通道。
+
+**定理146.1（七维装置的统一二次振幅上界）。** 对每份上述已知来源，存在一台满足该合同的七维装置及仅依赖终端编号的局部解码器，使前两终端误差为零，并且
+
+$$
+\boxed{
+\sup_{n\ge1}\sup_{J,\rho_{JM}}
+\frac12\left\|
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\rho)
+-\Omega_n(\rho)\right\|_1
+\le\min\{1,2\sqrt2\,p\}.
+}
+\tag{146.2}
+$$
+
+这里没有让接收器按外部轮次换门；两步启动的控制也属于同一个七维寄存器。因此特别有
+
+$$
+\boxed{\varepsilon_{7,6}(a,b)\le\min\{1,2\sqrt2\,|b|^2\}.}
+\tag{146.3}
+$$
+
+### 146.1 两份规范纯化组成同一个完整两位酉编码
+
+取两个接收 qubit $Q,R$，令 $R$ 的基与活动记忆 $M$ 的固定基对应，并定义
+
+$$
+|\operatorname{vec}A\rangle_{MR}
+=\sum_{j,k=0}^1A_{jk}|j\rangle_M|k\rangle_R.
+$$
+
+从两个初始记忆基态出发，第二终端的活动记忆边缘分别为
+
+$$
+\rho_{0,2}=xR_0+pR_1,\qquad \rho_{1,2}=R_0.
+\tag{146.4}
+$$
+
+按“记忆在前、档案按发出顺序在后”的次序，两份真实纯态为
+
+$$
+\begin{aligned}
+|\psi_0\rangle&=a|m_0\rangle_M|00\rangle+b|0\rangle_M|01\rangle,\\
+|\psi_1\rangle&=|m_0\rangle_M|10\rangle.
+\end{aligned}
+\tag{146.5}
+$$
+
+第一位档案标签不同，故两份档案扇区正交。下面给出一个定义在完整四维两位档案 $H_2$ 上的酉
+
+$$
+F_2:H_2\longrightarrow Q\otimes R,
+$$
+
+同时把它们送到所选规范纯化。
+
+令
+
+$$
+M_0=\begin{pmatrix}a^2&b\\ab&0\end{pmatrix},
+\qquad M_0M_0^*=\rho_{0,2}.
+$$
+
+$ab\ne0$ 保证 $M_0$ 可逆。定义两个 $2\times2$ 酉
+
+$$
+F_0=\left(M_0^*\rho_{0,2}^{-1/2}\right)^{\mathsf T},
+\qquad
+F_1=\begin{pmatrix}\overline a&-b\\\overline b&a\end{pmatrix},
+\tag{146.6}
+$$
+
+其中 $\mathsf T$ 是固定基中的转置。第一项酉性来自
+$\rho_{0,2}^{-1/2}M_0M_0^*\rho_{0,2}^{-1/2}=I$；第二项的两列直接正交归一。规定
+
+$$
+F_2|i,s\rangle=|i\rangle_Q\otimes F_i|s\rangle_R
+\qquad(i,s\in\{0,1\}).
+\tag{146.7}
+$$
+
+这是两个正交首位扇区上的共同受控酉，而不是按实际未知初态选择编码。由
+$M_0F_0^{\mathsf T}=\sqrt{\rho_{0,2}}$ 及
+$F_1|0\rangle=\overline a|0\rangle+\overline b|1\rangle$，可得
+
+$$
+(I_M\otimes F_2)|\psi_i\rangle
+=|i\rangle_Q\otimes
+|\operatorname{vec}\sqrt{\rho_{i,2}}\rangle_{MR},
+\qquad i=0,1,
+\tag{146.8}
+$$
+
+右侧按标记系统作固定因子重排。因此（146.8）在线性叠加和任意参考纠缠上同时成立。
+
+实际 $S_2$ 只有三维，但 $F_2$ 定义在完整四维 $H_2$ 上，包含未到达的 $|11\rangle$。这份全域酉扩展使后文的逆解码既作用于实际启动态，也作用于满秩平稳比较态，不需要把比较态假定在实际三维支撑内。
+
+### 146.2 规范纯化到共同平稳态的明确距离
+
+来源边缘通道为
+
+$$
+\mathcal T(X)=X_{00}R_0+X_{11}R_1.
+$$
+
+式（146.1）给 $\mathcal T(\rho_*)=\rho_*$，且
+
+$$
+\det\rho_* =\frac{p^2}{(1+p)^2}>0.
+\tag{146.9}
+$$
+
+令
+
+$$
+|\Xi\rangle_{MR}=|\operatorname{vec}\sqrt{\rho_*}\rangle,
+\qquad
+\delta_i=\|\sqrt{\rho_{i,2}}-\sqrt{\rho_*}\|_{\rm HS},
+\qquad \delta=\max\{\delta_0,\delta_1\}.
+\tag{146.10}
+$$
+
+**引理146.2（共同规范纯化的线性概率距离）。** 对所有 $0<p<1$，
+
+$$
+\delta_0\le\sqrt2\,p^{3/2},\qquad
+\delta_1\le\sqrt2\,p,\qquad
+\delta\le\sqrt2\,p.
+\tag{146.11}
+$$
+
+**证明。** 记 $F=R_0-R_1$。有
+
+$$
+\|F\|_{\rm HS}=\sqrt{2p},\qquad
+\rho_{0,2}-\rho_*=-\frac{p^2}{1+p}F.
+$$
+
+因为 $\rho_*$ 的最大特征值不超过一，
+$\lambda_{\min}(\rho_*)\ge\det\rho_*=p^2/(1+p)^2$。
+沿第11节的 Sylvester 方程估计，令
+$A=\sqrt{\rho_{0,2}}$、$B=\sqrt{\rho_*}$、$Z=A-B$，则
+$AZ+ZB=\rho_{0,2}-\rho_*$，故
+
+$$
+\delta_0\le
+\frac{\|\rho_{0,2}-\rho_*\|_{\rm HS}}
+{\sqrt{\lambda_{\min}(\rho_*)}}
+\le\sqrt2\,p^{3/2}.
+\tag{146.12}
+$$
+
+对第二份边缘，$\sqrt{\rho_{1,2}}=R_0$。迹一正定 $2\times2$ 矩阵的平方根公式给
+
+$$
+\sqrt{\rho_*}
+=\frac{\rho_*+\frac p{1+p}I}
+{\sqrt{1+\frac{2p}{1+p}}}.
+$$
+
+由 $\operatorname{Tr}(R_0R_1)=x=1-p$，得到精确表达
+
+$$
+\delta_1^2
+=2-2\operatorname{Tr}(R_0\sqrt{\rho_*})
+=2-2\frac{1+2p-p^2}{\sqrt{(1+p)(1+3p)}}.
+\tag{146.13}
+$$
+
+置 $L=\sqrt{(1+p)(1+3p)}$、$N=1+2p-p^2>0$。有
+
+$$
+L^2-N^2=p^2(1+4p-p^2),
+$$
+
+所以有理化后
+
+$$
+\delta_1^2
+=\frac{2p^2(1+4p-p^2)}{L(L+N)}
+\le\frac{2p^2(1+4p-p^2)}{L^2}
+\le2p^2.
+\tag{146.14}
+$$
+
+最后一步使用 $1+4p-p^2\le L^2=1+4p+3p^2$。由于 $p^{3/2}\le p$，得到（146.11）。证毕。
+
+此外，（146.14）的精确式给 $\delta_1/p\to1$，而（146.12）给 $\delta_0/p\to0$，所以本构造的两次距离证书满足 $2\delta=2p(1+o(1))$。这只是该构造所用证书的渐近式，不是最优误差的渐近式。
+
+这些计算保留任意复 $a,b$；只用到投影重叠 $|a|^2$，没有独立挑选两份最优 Uhlmann 纯化后再假定它们属于同一编码。（146.6）—（146.8）已经把两份规范纯化实现为一个共同酉。
+
+定义两个从初始记忆到 $MQR$ 的等距
+
+$$
+\begin{aligned}
+W_2|i\rangle&=|i\rangle_Q
+ |\operatorname{vec}\sqrt{\rho_{i,2}}\rangle_{MR},\\
+W_*|i\rangle&=|i\rangle_Q|\Xi\rangle_{MR}.
+\end{aligned}
+$$
+
+不同 $i$ 的差向量因 $Q$ 标签而正交，故
+$\|W_2-W_*\|_{\rm op}=\delta$。对任意参考输入 $\rho_{JM}$，真实第二终端经 $F_2$ 编码后的态 $\alpha_2$ 与比较态
+
+$$
+\beta_2=\rho_{JQ}\otimes|\Xi\rangle\langle\Xi|_{MR}
+$$
+
+满足
+
+$$
+D(\alpha_2,\beta_2)\le\delta\le\sqrt2\,p,
+\qquad D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{146.15}
+$$
+
+这里 $\rho_{JQ}$ 是将原输入的记忆基同构为 $Q$ 的同一输入态。算子范数比较在张量任意参考后保持；混合输入先纯化再偏迹，因此（146.15）不是只对两个经典基态成立。
+
+### 146.3 同一个全域七维 CPTP 通道
+
+使用第11节的平稳纯化吸收步骤。为明确其全域性，可直接这样构造固定酉
+$U_*:R\otimes B\to R\otimes B$。
+
+对 $\rho_*$ 取谱分解
+$\rho_* =\sum_{j=0}^1\lambda_j|v_j\rangle\langle v_j|$，$\lambda_j>0$。
+$|\Xi\rangle=\sum_j\sqrt{\lambda_j}|v_j\rangle_M|\overline v_j\rangle_R$。
+将一次真实发射作用于 $M$，并重排为 $M,R,B$，得到
+
+$$
+(T\otimes I_R)|\Xi\rangle
+=\sum_{j=0}^1\sqrt{\lambda_j}|v_j\rangle_M|z_j\rangle_{RB}.
+$$
+
+来源平稳性保证 $z_0,z_1$ 正交归一。规定
+$U_*z_j=|\overline v_j\rangle_R|0\rangle_B$，再任选输入正交补的正交基，映到
+$|\overline v_0\rangle|1\rangle,|\overline v_1\rangle|1\rangle$，便得到整个四维空间上的一个固定酉。它满足
+
+$$
+(I_M\otimes U_*)(T\otimes I_R)|\Xi\rangle
+=|\Xi\rangle\otimes|0\rangle_B,
+\tag{146.16}
+$$
+
+其中始终按标记系统重排。该操作只访问 $R$ 与最新位 $B$，不访问活动 $M$。
+
+现在令
+
+$$
+K=K_0\oplus K_1\oplus K_{\rm run},\qquad
+K_0=\mathbb Ce,\quad K_1=\mathbb C^2,\quad
+K_{\rm run}=Q\otimes R,\qquad \dim K=1+2+4=7.
+\tag{146.17}
+$$
+
+记三个正交块的自然嵌入为 $\iota_0,\iota_1,\iota_{\rm run}$，投影为 $P_0,P_1,P_{\rm run}$。在 $K\otimes B$ 上定义四个 Kraus 算子，每个算子在未指明的输入块上为零：
+
+$$
+\begin{aligned}
+L_0(e\otimes|s\rangle)&=\iota_1|s\rangle,\\
+L_1(\iota_1|s\rangle\otimes|t\rangle)
+&=\iota_{\rm run}F_2|s,t\rangle,\\
+L_{{\rm run},j}(\iota_{\rm run}\zeta\otimes|t\rangle)
+&=\iota_{\rm run}(I_Q\otimes I_R\otimes\langle j|)
+ (I_Q\otimes U_*)(\zeta\otimes|t\rangle),
+\qquad j=0,1.
+\end{aligned}
+\tag{146.18}
+$$
+
+于是
+
+$$
+L_0^*L_0=P_0\otimes I_B,\qquad
+L_1^*L_1=P_1\otimes I_B,\qquad
+\sum_{j=0}^1L_{{\rm run},j}^*L_{{\rm run},j}
+=P_{\rm run}\otimes I_B.
+$$
+
+四项之和为 $I_{K\otimes B}$，故
+
+$$
+\mathcal C(Y)=L_0YL_0^*+L_1YL_1^*
++\sum_{j=0}^1L_{{\rm run},j}YL_{{\rm run},j}^*
+\tag{146.19}
+$$
+
+是全域 CPTP 通道。
+
+取独立纯初态 $e\in K_0$，每轮都使用（146.19）。第一轮转存第一位到 $K_1$；第二轮把完整两位档案经同一个 $F_2$ 送入 $K_{\rm run}$；以后永久处于运行块，使用 $I_Q\otimes U_*$ 并丢弃当轮环境。实际每时刻只占一个确定块，故 Kraus 分块没有删除来源数据的块间相干。阶段标签占用的全部空间已经计入七维，运行中不调用外部轮次控制。
+
+### 146.4 完整档案解码与不累积的误差
+
+第一终端在 $K_1$ 上使用转存的逆映射，精确取回第一位；在其余输入块上准备任意固定档案态，补成全域解码器。
+
+对 $n=2+\ell\ge2$，先在运行块旁准备 $\ell$ 个纯空白位，再按逆接收次序对 $R$ 与相应新位施加 $U_*^*$，最后对 $QR$ 施加完整酉 $F_2^*$，并把两位前缀与恢复的后 $\ell$ 位按原取得顺序排列。这定义一个等距
+
+$$
+A_n:K_{\rm run}\longrightarrow B^{\otimes n},
+\qquad A_2=F_2^*.
+$$
+
+令 $\omega_n$ 为 $B^{\otimes n}$ 上任意固定密度矩阵，取
+
+$$
+\mathcal D_n(Y)=
+A_n\iota_{\rm run}^*Y\iota_{\rm run}A_n^*
++\operatorname{Tr}[(I_K-P_{\rm run})Y]\,\omega_n.
+\tag{146.20}
+$$
+
+这是全域 CPTP 解码器，只访问接收器。第一终端的全域完成同样用 $P_1$。前两终端均为真实档案的等距编码及其逆，故对全部输入和参考误差严格为零。
+
+对 $n\ge2$，将一次来源发射与运行接收合成 $MQR$ 上的同一个 CPTP 通道。式（146.16）说明比较态 $\beta_2$ 在该演化下保持不变，$JQ$ 的全部相干也保持；真实态从 $\alpha_2$ 出发执行同一演化。收缩性和（146.15）给
+
+$$
+D(\sigma_n,\beta_2)\le\delta\qquad(n\ge2),
+\tag{146.21}
+$$
+
+此处把实际运行块自然识别为 $QR$。
+
+为了与同一真实来源的目标比较，令 $G_n$ 为下述数学等距：从 $MQR$ 出发，让 $M$ 继续执行 $\ell=n-2$ 次真实发射并保留新档案，再将 $QR$ 经 $F_2^*$ 展开为前两位。由于 $F_2$ 是完整四维酉，$G_n$ 在整个 $MQR$ 上等距，特别也可作用于比较态。对真实启动态有
+
+$$
+\Omega_n=G_n\alpha_2G_n^*.
+\tag{146.22}
+$$
+
+由（146.16），逆吸收步骤在 $|\Xi\rangle$ 上逐步恢复真实发射；较早的接收操作与较晚来源发射作用于不同系统，可以按逆次序撤销。因此只在比较态上有
+
+$$
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\beta_2
+=G_n\beta_2G_n^*.
+\tag{146.23}
+$$
+
+这里 $G_n$ 可以在数学比较中作用于活动记忆，但实际解码器（146.20）完全不访问 $M$。（146.23）没有被扩大为任意启动态上的恒等式。
+
+结合通道收缩、等距保持距离和三角不等式，
+
+$$
+\begin{aligned}
+D\bigl((\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n,\Omega_n\bigr)
+&\le D(\sigma_n,\beta_2)
+ +D(G_n\beta_2G_n^*,G_n\alpha_2G_n^*)\\
+&\le2\delta\le2\sqrt2\,p.
+\end{aligned}
+\tag{146.24}
+$$
+
+估计对同一装置、全部后续终端和全部参考输入统一成立，没有每步追加新的误差项。再用密度矩阵半迹距离至多一，得到（146.2）—（146.3）。定理146.1得证。
+
+### 146.5 对六终端端点指数的实际推进
+
+按第144节定义
+$f(x)=\varepsilon_{7,6}(\sqrt x,\sqrt{1-x})$。本节的可实现装置给
+
+$$
+f(x)\le2\sqrt2\,(1-x)\qquad(x\uparrow1).
+\tag{146.25}
+$$
+
+第144节已证该端点有正系数主项
+$f(x)=c_1(1-x)^{q_1}(1+o(1))$。因而（146.25）进一步强制
+
+$$
+\boxed{q_1\ge1.}
+\tag{146.26}
+$$
+
+这个结论来自同一实际七维装置及其完整目标误差证明，不是由半代数性猜出的指数。本文没有证明 $q_1=1$，没有给出匹配下界，也没有改进 $a\to0$ 端的指数。
+
+平稳纯化吸收及两次距离比较复用第11节的方法；本节新增的可执行安排是用完整两位酉把启动压到 $1+2+4=7$ 维，并直接估计两份共同规范纯化，在 $b\to0$ 端得到二次振幅上界。没有免费提供平稳初态、免费轮次寄存器或访问来源记忆的权限，也不作 Lean kernel 核验声明。
+
+## 追加锚（本行以下为增补区）
+
+## 147. 全时域吸收器在退化端点的启动长度与误差阶
+
+第146节把精确启动缩短到两轮，得到七维装置的全时域线性误差界。本节对第11节的较长启动构造直接估计规范纯化，得到每增加一轮启动所改善的端点误差阶。误差仍对全部后续终端统一成立，维数包含启动控制；没有将有限个终端的优化装置延长为无限时域装置。
+
+### 147.1 同一来源的二维混合曲线
+
+固定已知非退化来源，令
+
+$$
+p=|b|^2\in(0,1),\qquad
+R_0=|m_0\rangle\langle m_0|,\qquad
+R_1=|0\rangle\langle0|,\qquad
+|\langle m_0,0\rangle|^2=1-p.
+$$
+
+对 $0<w<1$ 定义
+
+$$
+\rho_p(w)=(1-w)R_0+wR_1,\qquad
+v_p=\frac p{1+p},\qquad
+\rho_*=\rho_p(v_p).
+\tag{147.1}
+$$
+
+第11节的真实启动边缘可写为
+
+$$
+\begin{aligned}
+\rho_{0,T}&=\rho_p(w_{0,T}),&
+w_{0,T}&=\frac p{1+p}-\frac p{1+p}(-p)^{T-1},\\
+\rho_{1,T}&=\rho_p(w_{1,T}),&
+w_{1,T}&=\frac p{1+p}+\frac1{1+p}(-p)^{T-1}.
+\end{aligned}
+\tag{147.2}
+$$
+
+它们是同一来源执行 $T$ 轮后的两份活动记忆边缘。相应的共同档案编码保留初始逻辑标签及其与参考的相干，不是分别选择两份互不相容的纯化。
+
+对整数 $T\ge3$，置
+
+$$
+\delta_T(p)=
+\max_{i=0,1}
+\left\|\sqrt{\rho_p(w_{i,T})}-\sqrt{\rho_p(v_p)}\right\|_{\mathrm{HS}}.
+\tag{147.3}
+$$
+
+这是同一固定基下规范平方根的距离。已知相位改变只引起所有矩阵的共同酉共轭，所以该量只依赖 $p$。
+
+**引理147.1（真实启动参数所在区间）。** 对所有 $0<p<1$ 和 $T\ge3$，
+
+$$
+w_{0,T},w_{1,T},v_p\in[p(1-p),p],
+\tag{147.4}
+$$
+
+并且
+
+$$
+|w_{0,T}-v_p|=\frac{p^T}{1+p},\qquad
+|w_{1,T}-v_p|=\frac{p^{T-1}}{1+p}.
+\tag{147.5}
+$$
+
+**证明。** 两个偏差公式直接来自（147.2）。若 $T$ 为奇数，则 $T\ge3$，
+
+$$
+w_{0,T}=v_p-\frac{p^T}{1+p}\ge v_p-\frac{p^3}{1+p}=p(1-p),
+$$
+
+$$
+w_{1,T}=v_p+\frac{p^{T-1}}{1+p}\le v_p+\frac{p^2}{1+p}=p.
+$$
+
+另两端由 $w_{0,T}\le v_p\le w_{1,T}$ 得到。若 $T$ 为偶数，则 $T\ge4$，
+
+$$
+w_{1,T}=v_p-\frac{p^{T-1}}{1+p}\ge v_p-\frac{p^3}{1+p}=p(1-p),
+$$
+
+$$
+w_{0,T}=v_p+\frac{p^T}{1+p}\le v_p+\frac{p^2}{1+p}=p.
+$$
+
+另两端由 $w_{1,T}\le v_p\le w_{0,T}$ 得到。证毕。
+
+### 147.2 保留混合方向的平方根估计
+
+一般的最小本征值估计忽略了 $\rho_p(w)$ 接近纯态时允许扰动的方向。本节直接对这条实际混合曲线求导。
+
+**引理147.2（规范平方根的统一斜率界与端点极限）。** 在 $0<p\le1/2$、$p(1-p)\le w\le p$ 上，
+
+$$
+\left\|\frac{\partial}{\partial w}\sqrt{\rho_p(w)}\right\|_{\mathrm{HS}}
+\le2+\sqrt2.
+\tag{147.6}
+$$
+
+在令 $R_0=\operatorname{diag}(1,0)$ 的同一来源正交坐标中，还有一致极限
+
+$$
+\sup_{p(1-p)\le w\le p}
+\left\|
+\frac{\partial}{\partial w}\sqrt{\rho_p(w)}
+-\frac12\begin{pmatrix}0&0\\0&1\end{pmatrix}
+\right\|_{\mathrm{HS}}\longrightarrow0
+\quad(p\downarrow0).
+\tag{147.7}
+$$
+
+坐标可依赖已知来源，但对同一个 $p$ 的全部 $w$ 使用同一坐标。
+
+**证明。** 调整第二个基向量的相位，使 $R_1$ 的非对角元为非负实数。于是
+
+$$
+\rho_p(w)=
+\begin{pmatrix}
+1-pw&w\sqrt{p(1-p)}\\
+w\sqrt{p(1-p)}&pw
+\end{pmatrix}.
+\tag{147.8}
+$$
+
+因此
+
+$$
+d_p(w):=\sqrt{\det\rho_p(w)}=\sqrt{pw(1-w)},\qquad
+h_p(w):=\sqrt{1+2d_p(w)}.
+$$
+
+二维迹一正矩阵的 Cayley–Hamilton 等式给
+
+$$
+\boxed{
+\sqrt{\rho_p(w)}
+=\frac{\rho_p(w)+d_p(w)I}{h_p(w)}.
+}
+\tag{147.9}
+$$
+
+具体地，$\rho^2-\rho+d^2I=0$，故 $(\rho+dI)^2=(1+2d)\rho$；右侧正平方根由正定性唯一确定。
+
+记 $A_p(w)=\sqrt{\rho_p(w)}$。对（147.9）求导，
+
+$$
+\frac{\partial A_p}{\partial w}
+=\frac{R_1-R_0+d_p'(w)I}{h_p(w)}
+-\frac{d_p'(w)}{h_p(w)^2}A_p(w),
+\qquad
+d_p'(w)=\frac{\sqrt p(1-2w)}{2\sqrt{w(1-w)}}.
+\tag{147.10}
+$$
+
+此区间内 $w\ge p/2$、$1-w\ge1/2$，所以 $|d_p'(w)|\le1$。又有
+
+$$
+h_p(w)\ge1,\qquad
+\|R_1-R_0\|_{\mathrm{HS}}=\sqrt{2p}\le1,\qquad
+\|A_p(w)\|_{\mathrm{HS}}=1,\qquad
+\|I\|_{\mathrm{HS}}=\sqrt2.
+$$
+
+将这些量代入（147.10），得到（147.6）。
+
+对于一致极限，在区间（147.4）上 $w/p\in[1-p,1]$，故
+
+$$
+d_p'(w)\longrightarrow\tfrac12,\qquad
+d_p(w)\longrightarrow0,\qquad h_p(w)\longrightarrow1
+$$
+
+均一致成立。同时（147.8）给 $\rho_p(w)\to R_0$、$R_1-R_0\to0$；由（147.9），$A_p(w)\to R_0$ 也一致成立。代入（147.10），导数一致趋向 $(I-R_0)/2$，即（147.7）。证毕。
+
+### 147.3 启动误差的显式上界与精确主阶
+
+**定理147.3（真实规范纯化的端点阶）。** 对 $0<p\le1/2$ 和每个整数 $T\ge3$，
+
+$$
+\boxed{
+\delta_T(p)\le
+\frac{2+\sqrt2}{1+p}\,p^{T-1}.
+}
+\tag{147.11}
+$$
+
+对每个固定整数 $T\ge3$，还有
+
+$$
+\boxed{
+\delta_T(p)\sim\frac12p^{T-1}
+\quad(p\downarrow0).
+}
+\tag{147.12}
+$$
+
+**证明。** 同一个 $p$ 下的两个参数点之间，矩阵微积分给
+
+$$
+A_p(w)-A_p(v_p)
+=(w-v_p)\int_0^1
+A_p'\bigl(v_p+t(w-v_p)\bigr)\,dt.
+\tag{147.13}
+$$
+
+由引理147.1，积分路径完全位于引理147.2的区间。使用（147.6）及（147.5），得到两个距离分别至多
+
+$$
+(2+\sqrt2)\frac{p^T}{1+p},
+\qquad
+(2+\sqrt2)\frac{p^{T-1}}{1+p}.
+$$
+
+取最大值即得（147.11）。
+
+另一方面，（147.7）使（147.13）中的积分矩阵趋向 $(I-R_0)/2$，其 Hilbert–Schmidt 范数为 $1/2$。因此对 $i=0,1$，
+
+$$
+\frac{\|A_p(w_{i,T})-A_p(v_p)\|_{\mathrm{HS}}}
+{|w_{i,T}-v_p|}\longrightarrow\frac12.
+\tag{147.14}
+$$
+
+两份参数差的比为 $p$；第二项遂决定最大值，结合（147.5）得到（147.12）。这是实际矩阵距离的渐近等价，不是最优恢复误差的渐近等价。证毕。
+
+### 147.4 同一固定接收器的全时域结论
+
+沿用第11节的完整参考误差合同。对装置 $\mathfrak C$ 及其终端解码器，记
+
+$$
+\mathcal E_\infty(\mathfrak C)
+=\sup_{n\ge1}\sup_{J,\omega}
+D\!\left(
+(\operatorname{id}_{JM}\otimes\mathcal D_n)\sigma_n(\omega),
+\Omega_n(\omega)
+\right),\qquad
+D(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{147.15}
+$$
+
+**推论147.4（固定维数的全时域端点误差证书）。** 对每个整数 $T\ge3$ 和已知非退化来源，存在第11节所构造的一个固定全域 CPTP 接收器，持久维数为
+
+$$
+D_T=4T-2,
+$$
+
+从独立纯态出发，前 $T$ 个终端全部精确，并满足
+
+$$
+\mathcal E_\infty(\mathfrak C_T)\le
+\min\{1,2\delta_T(p)\}.
+\tag{147.16}
+$$
+
+特别地，在 $0<p\le1/2$ 上，
+
+$$
+\boxed{
+\mathcal E_\infty(\mathfrak C_T)
+\le
+\min\left\{1,\frac{4+2\sqrt2}{1+p}p^{T-1}\right\}.
+}
+\tag{147.17}
+$$
+
+固定 $T$ 后，这个具体构造的误差证书满足
+
+$$
+2\delta_T(p)\sim p^{T-1}.
+\tag{147.18}
+$$
+
+**证明。** 第11节的启动编码在首位标签的两个正交扇区上，同时把真实档案变成规范纯化，并保留同一未知输入与参考的相干；其与平稳比较等距的算子范数差恰为（147.3）。故全部参考输入的启动半迹误差至多 $\delta_T(p)$。
+
+平稳相干吸收门在同一比较态上固定。实际过程与比较过程以后执行同一个通道，因此它们的半迹距离在所有轮次保持不超过 $\delta_T(p)$。终端局部逆吸收解码、通道收缩性和三角不等式给 $2\delta_T(p)$，与第11节式（11.14）—（11.16）相同。这里改进的是启动距离估计，不改变物理接收通道或增加外部资源。
+
+启动扇区维数为 $1,2,3,4,\ldots,4$，运行扇区为四维，合计 $4T-2$。实际运行的扇区依次前进并最终留在运行块，故所有门可以由一个固定全域 CPTP 映射实施；终端编号只供解码器使用。最后代入定理147.3。证毕。
+
+例如，三轮启动的十维接收器具有全时域 $O(p^2)$ 误差证书，四轮启动的十四维接收器具有全时域 $O(p^3)$ 误差证书。第146节的两轮七维构造需要单独处理低秩扇区，不能把 $T=2$ 代入本节的 $4T-2$ 维数公式。
+
+这里显现的是一个可操作的边界取舍：先用有限控制保存一段真实前缀，把联合态送入接近平稳纯化的接口，再由同一个局部吸收关系维持误差。不断增长的原始档案并未被逐字存放在有限接收器中；恢复由终端解码和同一已知来源的关系结构承担。这个结果没有求出给定维数的最优误差，也没有证明每改善一阶都必须增加四维，更没有把启动轮数解释成未经标定的物理历时。
+
+本节的吸收器原理沿用第11节所核对的 Godley–Guţă 平稳纯化构造；二维平方根公式由上面的矩阵恒等式直接证明。新增的是在实际启动混合曲线上保持扰动方向后的端点估计及全时域误差证书，不作原创优先权或 Lean 验证声明。
+
+## 追加锚（本行以下为增补区）
