@@ -57206,3 +57206,397 @@ $$
 式（197.8）只核对固定来源系数的极限；变化来源的联合极限（197.6）来自第196节的一致余项，两者不能相互替代。它们共有的系数把固定满秩区间与来源趋纯区间接起来，而不同尺度上哪些后续项仍可分辨，由同一余项界决定。
 
 ## 追加锚（本行以下为增补区）
+
+## 198. 有限小噪声下的唯一恢复阈值
+
+第195节把完整来源区间上的全部等值点限制在
+$\ell=h_c\epsilon+O(\epsilon^2)$，但位置估计本身不能排除多个交点。本节通过冻结同一个接收端 instrument，控制其关于来源比例的导数，再得到最优误差的严格正差商。
+
+### 198.1 临界邻域的严格正差商
+
+固定 $\beta>0$、$\gamma\in\mathbb R$、$R>1$，保持此前的共同接收端 CPTP 任务、不可访问系统 $M$ 和全部外部参考。令
+$\Phi_\infty=\beta(R+1)/8$，$h_c>0$ 为第190节的唯一一阶零点。
+
+选取正紧区间 $I=[a,b]$，满足
+
+$$
+0<a<h_c<b,\qquad
+\Phi_a<0<\Phi_b<\Phi_\infty.
+\tag{198.1}
+$$
+
+第190节的连续性及严格过零性质保证可以这样选择。记
+
+$$
+F_\epsilon(h)=\mathscr E(\epsilon h,\epsilon).
+$$
+
+**定理198.1（统一严格正差商）。** 存在只依赖固定模型及 $I$ 的
+$c,\epsilon_0>0$，使全部 $0<\epsilon\le\epsilon_0$ 及
+$a\le h_1<h_2\le b$ 满足
+
+$$
+\boxed{
+F_\epsilon(h_2)-F_\epsilon(h_1)
+\ge c\epsilon(h_2-h_1).
+}
+\tag{198.2}
+$$
+
+即归一化最优误差
+$(F_\epsilon(h)-3/4)/\epsilon$ 在该固定邻域具有一致严格正差商。这里不要求最优恢复器唯一，也不要求最优值关于 $h$ 可微。
+
+### 198.2 冻结 instrument 的统一一阶导数
+
+先作第189节不增误差的输出标签与旗标对称化。以正旗标上的共同二结果 CP 映射
+$\Gamma=(\Gamma_0,\Gamma_1)$ 为变量，负旗标按
+$\Gamma_{j,-}=\operatorname{Ad}_Z\circ\Gamma_j\circ\operatorname{Ad}_Z$ 定义。
+其共同 Choi 约束形成固定紧集
+
+$$
+\mathcal K=\{(J_0,J_1):J_j\succeq0,\
+\operatorname{Tr}_{\mathrm{out}}(J_0+J_1)=I\}.
+$$
+
+在正旗标 Kraus 表示
+$K_{j,\alpha}=\begin{psmallmatrix}a&b\\c&d\end{psmallmatrix}$
+中，保持第189节的 Choi 矩记号
+
+$$
+A_j=\sum|a|^2,\quad B_j=\sum|b|^2,\quad
+C_j=\sum|c|^2,\quad D_j=\sum|d|^2,\quad
+N_j=\sum a\overline b,\quad M_j=\sum a\overline d.
+$$
+
+这些量不依赖 Kraus 表示。令
+$e_\epsilon(h,\Gamma)$ 为这一冻结 instrument 的完整半 diamond 误差。
+在 $A_0,A_1$ 的一个固定小邻域 $A_j\approx1/2$ 中，定义
+
+$$
+s_A=A_0+A_1,\qquad
+q=\frac{A_1}{s_A},\qquad
+\lambda=1-\frac{A_0A_1}{s_A},
+$$
+
+$$
+L_j=c_j^{\mathrm{in}}
+[\beta(B_j-A_j)+2\gamma\operatorname{Im}N_j],
+\qquad c_0^{\mathrm{in}}=1,\quad c_1^{\mathrm{in}}=R.
+$$
+
+置
+
+$$
+\mathcal N(\Gamma)=-q^2L_0-(1-q)^2L_1,
+$$
+
+$$
+\boxed{
+\mathcal P(\Gamma)
+=-\lambda+
+\frac{
+q|1-qM_0|^2+(1-q)|1-(1-q)M_1|^2
+}{\lambda}.
+}
+\tag{198.3}
+$$
+
+**引理198.2（冻结操作的统一导数展开）。** 上述邻域可固定选择，使全部
+$h\in I$、$\Gamma\in\mathcal K$ 且 $A_j$ 位于该邻域时，
+
+$$
+e_\epsilon(h,\Gamma)
+=\lambda+\epsilon[\mathcal N(\Gamma)+h\mathcal P(\Gamma)]
++O_{C^1(h)}(\epsilon^2).
+\tag{198.4}
+$$
+
+记号表示余项及其关于 $h$ 的一阶导数均不超过
+$C_I\epsilon^2$，常数与 instrument 无关。特别地，
+
+$$
+\partial_he_\epsilon(h,\Gamma)
+=\epsilon\mathcal P(\Gamma)+O(\epsilon^2),
+\tag{198.5}
+$$
+
+主系数与 $h$ 无关。
+
+**证明。** 第189节的完整参考约化将误差写成匹配偶块的最高根对参考权重的最大值；奇块半负定。在 $\epsilon=0$，该偶块的非零部分为
+
+$$
+P_{u_v}-\operatorname{diag}(vA_0,(1-v)A_1),
+\qquad u_v=(\sqrt v,\sqrt{1-v})^{\mathsf T},
+$$
+
+其最大最高根严格为 $\lambda$，唯一最大权重为
+$v=q=A_1/s_A$。在 $A_0=A_1=1/2$ 时，谱函数为
+$1/4+\sqrt{1/16+3v(1-v)/4}$，在 $v=1/2$ 的二阶导数为 $-3/2$。
+故对固定小邻域中的 $A_j$，最高根间隙、最大点附近的严格负曲率以及固定邻域以外的值差均可统一保持。
+
+置 $\tau=\sqrt\epsilon$、$\ell=h\tau^2$。
+第189节偶块关于 $\tau,h$ 和 Choi 条目解析；
+$h$ 位于一个远离零的紧区间。变换 $\tau\mapsto-\tau$ 只改变两个非对角大块的符号，是块对角酉共轭。因此简单最高根关于 $\tau$ 为偶函数。谱间隙及紧性给出其关于
+$\epsilon=\tau^2$ 的一致解析展开，且余项的 $h$ 导数也一致有界。
+
+最大参考权重由严格负曲率和隐函数定理唯一延拓，
+$v_\epsilon=q+O(\epsilon)$；固定邻域以外的值差保证它仍是全部参考上的最大点。
+把该临界点代回，得到（198.4）的统一 $C^1(h)$ 余项。
+
+还需核对主系数。在基点最大权重 $q$，最高单位向量为
+$u_q$，顶块最高根为 $\lambda$。
+噪声直接给
+$-q^2L_0-(1-q)^2L_1$。
+来源顶块的因子 $1-h\epsilon$ 给 $-h\lambda$。
+平方根来源耦合的系数矩阵为
+
+$$
+\mathsf C=P_{u_q}
+-\operatorname{diag}(qM_0,(1-q)M_1).
+$$
+
+作用于最高向量后，
+
+$$
+\mathsf C^\dagger u_q
+=
+\begin{pmatrix}
+\sqrt q(1-q\overline M_0)\\
+\sqrt{1-q}(1-(1-q)\overline M_1)
+\end{pmatrix}.
+$$
+
+耦合到的下方子空间在基点本征值为零，所以它贡献
+$h\|\mathsf C^\dagger u_q\|^2/\lambda$。
+这严格给出（198.3）；参考最大点的移动不影响一阶系数，因为基点的一阶参考导数为零。证毕。
+
+### 198.3 纯来源最优面上的非负源系数
+
+记
+
+$$
+\mathcal F=\{\Gamma\in\mathcal K:A_0=A_1=1/2,\ C_0=C_1=0\}.
+$$
+
+共同 TP 给
+$A_0+A_1=1-C_0-C_1$，所以一般基点误差有精确分解
+
+$$
+\lambda-\frac34
+=\frac{C_0+C_1}{4}
++\frac{(A_0-A_1)^2}{4(A_0+A_1)}
+\ge0.
+\tag{198.6}
+$$
+
+分母为零时基点误差为一。故 $\mathcal F$ 正好是基点最优面。
+
+在 $\mathcal F$ 上，$q=1/2,\lambda=3/4$。令
+$S_M=\operatorname{Re}(M_0+M_1)$、
+$K_M=|M_0|^2+|M_1|^2$，则
+
+$$
+\mathcal P
+=\frac7{12}-\frac23S_M+\frac16K_M,
+$$
+
+$$
+\mathcal N
+=\frac{\beta\Sigma}{8}
+-\frac\beta4(B_0+RB_1)
++\frac{\gamma\delta}{2}\operatorname{Im}N_0.
+\tag{198.7}
+$$
+
+后一式使用 $N_0+N_1=0$；它由共同 TP 与 $C_j=0$ 得到。
+
+正性给 $D_j\ge2|M_j|^2$，共同 TP 给
+$B_0+B_1+D_0+D_1=1$，所以
+
+$$
+K_M\le\frac12,\qquad S_M\le\sqrt{2K_M}.
+$$
+
+置 $m=\sqrt{K_M/2}\in[0,1/2]$，有
+
+$$
+\mathcal P
+\ge\frac7{12}-\frac43m+\frac13m^2
+=\frac{(1-2m)(7-2m)}{12}\ge0.
+\tag{198.8}
+$$
+
+若 $\mathcal P=0$，必须同时有
+$K_M=1/2$、$S_M=1$，故 $M_0=M_1=1/2$。
+于是 $D_j\ge1/2$ 和共同 TP 强制
+$D_0=D_1=1/2$、$B_0=B_1=0$。
+正性再给 $N_0=N_1=0$。因此
+
+$$
+\boxed{
+\Gamma\in\mathcal F,\quad\mathcal P(\Gamma)=0
+\quad\Longrightarrow\quad
+\mathcal N(\Gamma)=\Phi_\infty.
+}
+\tag{198.9}
+$$
+
+### 198.4 临界区间的最优器远离零源系数
+
+最优解存在于紧集 $\mathcal K$。
+当 $\epsilon\downarrow0$、$h\in I$ 时，来源和入口数据一致趋向纯来源基点；
+完整误差对固定维数通道连续，因此该收敛对 $\Gamma\in\mathcal K$ 一致。
+恒等保持构造的误差趋于 $3/4$。由（198.6），任何最优器序列的 Choi 聚点都在 $\mathcal F$。
+所以充分小 $\epsilon$ 时，全部这些最优器都位于引理198.2的固定邻域中。
+
+第191节在 $I$ 上给
+
+$$
+F_\epsilon(h)=\frac34+\epsilon\Phi_h+O(\epsilon^2)
+$$
+
+的一致值展开。取任意
+$\epsilon_n\downarrow0$、$h_n\in I$ 及相应最优器
+$\Gamma_n$，再取 $h_n\to h$、$\Gamma_n\to\Gamma$ 的子列。
+在（198.4）中保留（198.6）的非负基点缺陷，得到
+
+$$
+\Gamma\in\mathcal F,\qquad
+\mathcal N(\Gamma)+h\mathcal P(\Gamma)\le\Phi_h.
+\tag{198.10}
+$$
+
+这里只使用基点缺陷非负，没有假定它为 $o(\epsilon)$，
+也没有要求最优器以预设速度接近 $\mathcal F$。
+
+考虑紧集
+
+$$
+\mathcal A=
+\{(h,\Gamma)\in I\times\mathcal F:
+\mathcal N(\Gamma)+h\mathcal P(\Gamma)\le\Phi_h\}.
+$$
+
+最优器的聚点保证该集合非空。
+由（198.8），$\mathcal P\ge0$。
+若在 $\mathcal A$ 上取零，则（198.9）给
+$\Phi_\infty\le\Phi_h\le\Phi_b<\Phi_\infty$，矛盾。
+紧性因此给
+
+$$
+p_*:=\min_{(h,\Gamma)\in\mathcal A}\mathcal P(\Gamma)>0.
+\tag{198.11}
+$$
+
+再次用聚点反证，全部充分小噪声下、$h\in I$ 处的最优器都满足
+$\mathcal P(\Gamma)\ge p_*/2$。此处只控制源系数；
+不要求恢复器本身具有唯一极限。
+
+### 198.5 冻结端点最优器并积分
+
+固定 $h_1<h_2$，取 $h_2$ 处任意对称化最优器
+$\Gamma_2$。它位于统一解析邻域，且
+$\mathcal P(\Gamma_2)\ge p_*/2$。
+在整个 $h\in I$ 上冻结同一个 $\Gamma_2$。
+引理198.2的主系数与 $h$ 无关，因此对充分小 $\epsilon$，
+
+$$
+\partial_he_\epsilon(h,\Gamma_2)
+\ge\frac{p_*}{4}\epsilon
+\qquad(h\in I).
+$$
+
+不需要 $\Gamma_2$ 在其他 $h$ 处仍然最优。由最优值的定义，
+
+$$
+\begin{aligned}
+F_\epsilon(h_2)-F_\epsilon(h_1)
+&\ge e_\epsilon(h_2,\Gamma_2)-e_\epsilon(h_1,\Gamma_2)\\
+&=\int_{h_1}^{h_2}\partial_he_\epsilon(h,\Gamma_2)\,dh\\
+&\ge\frac{p_*}{4}\epsilon(h_2-h_1).
+\end{aligned}
+$$
+
+取 $c=p_*/4$，证明定理198.1。
+
+### 198.6 全来源区间上的唯一交点
+
+**推论198.3（有限噪声唯一恢复阈值）。**
+对全部充分小正 $\epsilon$，存在唯一
+$\ell_\epsilon\in[0,1/2]$ 使
+
+$$
+\mathscr E(\ell_\epsilon,\epsilon)=\frac34,
+$$
+
+并有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+O(\epsilon^2),\qquad
+h_\epsilon:=\frac{\ell_\epsilon}{\epsilon}=h_c+O(\epsilon).
+}
+\tag{198.12}
+$$
+
+同时，在完整来源区间 $[0,1/2]$ 上，
+
+$$
+\boxed{
+\ell<\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)<\frac34,\qquad
+\ell>\ell_\epsilon\Longrightarrow
+\mathscr E(\ell,\epsilon)>\frac34.
+}
+\tag{198.13}
+$$
+
+**证明。** 第195节保证完整来源区间上的等值集合非空，且每个等值点都满足
+$\ell/\epsilon=h_c+O(\epsilon)$，常数对全部等值点一致。
+充分小参数处，它们因此全部落入固定区间 $I$。
+定理198.1保证该区间内至多有一个等值点，故全区间恰有一个。位置估计同时继承第195节。
+纯来源端点的一阶系数 $\Phi_0<0$，固定满秩端点的一阶系数
+$\Phi_\infty>0$；充分小噪声时，两端误差因此异号于 $3/4$。
+完整最优误差连续且没有其他等值点，遂给（198.13）。证毕。
+
+这个完整分界不要求误差在整个来源区间单调。
+第195节的熵两项渐近（195.7）直接适用于该唯一阈值。
+
+### 198.7 实际参数的固定邻域
+
+对
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad R=4,
+$$
+
+可直接取 $I=[\beta/2,\beta]$。
+在此区间，圆盘极小点位于内部：
+$n_h=\gamma/(2\beta)=7/96$、
+$m_h=2h/(h+12\beta)\le2/13$，且
+
+$$
+\frac14-\left(\frac2{13}\right)^2-\left(\frac7{96}\right)^2
+=\frac{344231}{1557504}>0.
+$$
+
+第190节的内点公式给
+
+$$
+\Phi_{\beta/2}=-\frac{54363}{3764800}<0,\qquad
+\Phi_\beta=\frac{23433}{1957696}>0,
+$$
+
+$$
+\Phi_\infty-\Phi_\beta
+=\frac{126327}{1957696}>0.
+$$
+
+所以（198.1）成立，定理198.1及推论198.3直接适用。
+
+本节没有确定 $(h_\epsilon-h_c)/\epsilon$ 的极限。
+计算其系数需要完整共同 CPTP 最优值的二阶灵敏度；
+第188节可行族的二阶系数不能替代这一义务。
+
+## 追加锚（本行以下为增补区）
