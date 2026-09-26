@@ -6,14 +6,9 @@ namespace LeanInformationAuditRegTests.LegacyCausalFiniteBindings
 
 run_meta do
   let env ← getEnv
-  let excluded := #[
-    `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
-    `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
-    `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application]
-  let all := Reg.Support.SharedInformationRootContract.contract.expected ++
+  let expected := Reg.Support.SharedInformationRootContract.contract.expected ++
     Reg.Support.TemplateShadowContract.contract.expected
-  let expected := all.filter (fun row => !excluded.contains row.theoremName)
-  unless all.size == 23 && expected.size == 18 do throwError "legacy scope changed"
+  unless expected.size == 23 do throwError "legacy scope changed"
   let inventory := TemplateBinding.inventory env
   let mut selected := #[]
   for row in expected do
@@ -54,6 +49,6 @@ run_meta do
       throwError "original sensitivity accepted for a constant-true Law"
   let wire := Json.arr (← TemplateBinding.reportJson selected)
   IO.FS.writeFile ((← Repository.root) / ".lake/build/legacy-causal-final.json") (wire.compress ++ "\n")
-  logInfo "[PASS] all 18 historical occurrences validate; missing declaration/realization, wrong occurrence and changed Law reject"
+  logInfo "[PASS] all 23 historical occurrences validate; missing declaration/realization, wrong occurrence and changed Law reject"
 
 end LeanInformationAuditRegTests.LegacyCausalFiniteBindings

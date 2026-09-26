@@ -3,12 +3,18 @@ using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class LegacyContextCausalEvidenceTests
 {
     private static readonly string[] Registrations = [
+        "Reg/D5/S3/ConceptDynamics/Attribution/EndStateOmitsPreemptingCause/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Attribution/EndStateOmitsPreemptingCause/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange/InformationRoot.lean",
+        "Reg/D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange/TemplateShadow.lean",
+        "Reg/D5/S3/ConceptDynamics/InformationEscape/SystemUnit.lean",
         "Reg/D5/S3/ConceptDynamics/Aggregation/AgendaPower/InformationRoot.lean",
         "Reg/D5/S3/ConceptDynamics/Aggregation/AgendaPower/TemplateShadow.lean",
         "Reg/D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification/InformationRoot.lean",
@@ -32,7 +38,7 @@ public sealed class LegacyContextCausalEvidenceTests
     // The opt-in data are current native :report zips, including actual type material.
     // The runner must report a skip as unverified, never as acceptance.
     [SkippableFact]
-    public void eighteen_original_occurrences_pass_native_materials_source_join_and_reject_missing_or_changed_evidence()
+    public void twenty_three_original_occurrences_pass_native_materials_source_join_and_reject_missing_or_changed_evidence()
     {
         var directory = Environment.GetEnvironmentVariable("LEGACY_CAUSAL_FINAL_ARTIFACTS");
         Skip.If(string.IsNullOrEmpty(directory), "Focused native artifacts were not supplied.");
@@ -94,19 +100,47 @@ public sealed class LegacyContextCausalEvidenceTests
         sources.Add("lean-report-inputs.json", Source("lean-report-inputs.json"));
         var joined = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(sources.Values))).Snapshot;
+        // Exercise the complete production import closure with the same raw report
+        // and material reader used by production, before selecting occurrences.
+        var modules = files.Keys.Select(path => path[..^5].Replace('/', '.')).ToHashSet(StringComparer.Ordinal);
+        foreach (var file in files.Values)
+            foreach (var imported in file.Imports.Where(name => name.StartsWith("D5.", StringComparison.Ordinal)
+                || name.StartsWith("Reg.", StringComparison.Ordinal)))
+                Assert.Contains(imported, modules);
+        foreach (var catalog in new[] { "InformationRoot", "TemplateShadow", "SharedInformationRoot",
+            "UnifiedCausalRegistration" })
+            Assert.Contains("Reg/Catalogs/" + catalog + ".lean", files.Keys);
+        var completePath = Path.Combine(scratch.Path, "complete-raw-report.json");
+        RawLeanReportArtifact.WriteFile(completePath, joined, LeanAxiomReport.Create(files));
+        var complete = RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true);
+        Assert.Equal(files.Count, complete.Files.Count);
+        var completeBytes = File.ReadAllBytes(completePath);
+        foreach (var missingPath in files.Keys.Where(path => path.StartsWith("Reg/Support/Legacy", StringComparison.Ordinal)
+            || Registrations.Contains(path, StringComparer.Ordinal)))
+        {
+            var changed = JsonNode.Parse(completeBytes)!;
+            var rows = changed["modules"]!.AsArray();
+            rows.Remove(rows.Single(row => row!["source_path"]!.GetValue<string>() == missingPath));
+            File.WriteAllBytes(completePath, StructuredCanonicalWriter.WriteJson(changed.ToJsonString()).AsSpan());
+            var rejected = Assert.Throws<FormatException>(() =>
+                RawLeanReportArtifact.ReadFile(completePath, joined, validateMaterials: true));
+            Assert.Contains("Raw Lean report is missing modules:", rejected.Message, StringComparison.Ordinal);
+        }
+        File.WriteAllBytes(completePath, completeBytes);
         var selected = Registrations.Select(RepoPath.CreateKnown).ToArray();
         var evidence = InformationTemplateEvidence.Collect(joined, LeanAxiomReport.Create(files), selected);
-        Assert.Equal(18, evidence.Inventory.Count);
-        Assert.Equal(18, evidence.Occurrences.Values.Count(occurrence => occurrence.HasFourSlots));
+        Assert.Equal(23, evidence.Inventory.Count);
+        Assert.Equal(23, evidence.Occurrences.Values.Count(occurrence => occurrence.HasFourSlots));
         foreach (var path in Registrations)
         {
             var wire = JsonNode.Parse(files[path].InformationTemplates!.Value.GetRawText())!;
-            Assert.Equal(14, wire["compatibility_version"]!.GetValue<int>());
+            Assert.Equal(15, wire["compatibility_version"]!.GetValue<int>());
             var record = Assert.Single(wire["records"]!.AsArray(),
                 row => row!["registration_source_path"]!.GetValue<string>() == path)!;
             Assert.Equal("declared_validated", record["state"]!.GetValue<string>());
             var theoremName = record["key"]!["theorem"]!.GetValue<string>();
-            var sourcePath = path[4..path.LastIndexOf('/')] + ".lean";
+            var sourcePath = path.EndsWith("/SystemUnit.lean", StringComparison.Ordinal)
+                ? path[4..] : path[4..path.LastIndexOf('/')] + ".lean";
             var source = RepoPath.CreateKnown(sourcePath);
             var names = ImmutableHashSet.Create(theoremName);
             var sourceSelection = InformationTemplateTheoremSelection.Collect(joined,
@@ -119,8 +153,8 @@ public sealed class LegacyContextCausalEvidenceTests
                 LeanAxiomReport.Create(missingSourceFiles), source, RepoPath.CreateKnown(path), names));
             var realizationName = record["realization_name"]!.GetValue<string>();
             var realizationOwner = Assert.Single(LeanImportClosure.RepositoryPaths(
-                LeanAxiomReport.Create(files), RepoPath.CreateKnown(path)).Where(owner =>
-                files[owner.Value].Declarations.Any(declaration => declaration.Name == realizationName))).Value;
+                LeanAxiomReport.Create(files), RepoPath.CreateKnown(path)), owner =>
+                files[owner.Value].Declarations.Any(declaration => declaration.Name == realizationName)).Value;
             var missingRealization = new Dictionary<string, LeanFileReport>(files) {
                 [realizationOwner] = files[realizationOwner] with {
                     Declarations = files[realizationOwner].Declarations.Where(declaration => declaration.Name != realizationName)
@@ -129,7 +163,7 @@ public sealed class LegacyContextCausalEvidenceTests
             };
             Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(joined,
                 LeanAxiomReport.Create(missingRealization), selected));
-            foreach (var mutation in new[] { "missing-certificate", "retargeted-certificate", "missing-unit", "missing-realization", "wrong-occurrence" })
+            foreach (var mutation in new[] { "missing-certificate", "retargeted-certificate", "missing-unit", "missing-realization", "wrong-occurrence", "wrong-dependency-owner" })
             {
                 var changed = wire.DeepClone();
                 var changedRecord = changed["records"]!.AsArray().Single(row =>
@@ -143,6 +177,12 @@ public sealed class LegacyContextCausalEvidenceTests
                     case "missing-unit": changedRecord["unit_name"] = "Reg.Invalid.missingUnit"; break;
                     case "missing-realization": changedRecord["realization_name"] = "Reg.Invalid.missingRealization"; break;
                     case "wrong-occurrence": changedRecord["key"]!["theorem"] = "D5.Invalid.original"; break;
+                    case "wrong-dependency-owner":
+                        var dependency = Assert.Single(new[] { "argument_inputs", "extraction_inputs" }
+                            .SelectMany(field => changedRecord["certificate"]![field]!.AsArray()),
+                            input => input!["name"]!.GetValue<string>() == realizationName)!;
+                        dependency["owner"] = "Reg.Invalid.owner";
+                        break;
                 }
                 var corrupted = new Dictionary<string, LeanFileReport>(files) {
                     [path] = files[path] with { InformationTemplates = JsonSerializer.SerializeToElement(changed) }
