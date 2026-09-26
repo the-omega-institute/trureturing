@@ -14,7 +14,8 @@ escape_witness: form (2), the public conclusion `result` itself: the signed sequ
   each term with k at least 1 of that sum at n = q is divisible by q, since
   2^k C(q, k) (2k - 1)!! = q (q - 1) ... (q - k + 1) C(2k, k) (`term_dvd`), so b(q) is 1 = b(0)
   and b(q + 1) is 0 = b(1) modulo q (`b_q`, `b_q1`); the recurrence coefficient has period q
-  modulo q, so b(n + q) is b(n) modulo q for every n (`period`, `many`)
+  modulo q, so b(n + q) is b(n) modulo q for every n (`period`), and b modulo q depends only on
+  the index modulo q
 admission_basis: open-problem-resolution (issue #10354)
 Direct frozen dependencies: none (pinned Mathlib only)
 -/
@@ -22,6 +23,7 @@ Direct frozen dependencies: none (pinned Mathlib only)
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Int.ModEq
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
+import Mathlib.Data.Nat.Periodic
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.LinearCombination
 
@@ -199,23 +201,11 @@ theorem result : claim := by
       rw [show n + 1 + 1 + q = (n + q) + 2 by ring, b_rec, b_rec]
       rw [show n + q + 1 = n + 1 + q by ring]
       exact hcoef.mul (ih.1.sub ih.2)
-  have many : ∀ t n, b (n + t * q) ≡ b n [ZMOD q] := by
-    intro t
-    induction t with
-    | zero => intro n; simp
-    | succ t ih =>
-      intro n
-      rw [show n + (t + 1) * q = (n + t * q) + q by ring]
-      exact (period _).1.trans (ih n)
-  change b m ≡ b n [ZMOD q]
-  rcases le_total m n with h | h
-  · obtain ⟨t, ht⟩ := (Nat.modEq_iff_dvd' h).1 hmn
-    have : n = m + t * q := by rw [mul_comm]; omega
-    rw [this]
-    exact (many t m).symm
-  · obtain ⟨t, ht⟩ := (Nat.modEq_iff_dvd' h).1 hmn.symm
-    have : m = n + t * q := by rw [mul_comm]; omega
-    rw [this]
-    exact many t n
+  -- `b` modulo `q` is periodic with period `q`, so it depends only on the index modulo `q`
+  have hp : Function.Periodic (fun i : ℕ => b i % (q : ℤ)) q := fun i => (period i).1
+  have hm : b (m % q) % (q : ℤ) = b m % q := hp.map_mod_nat m
+  have hn : b (n % q) % (q : ℤ) = b n % q := hp.map_mod_nat n
+  change b m % q = b n % q
+  rw [← hm, ← hn, show m % q = n % q from hmn]
 
 end D5.S3.Combinatorics.DerangedMatchingCongruence
