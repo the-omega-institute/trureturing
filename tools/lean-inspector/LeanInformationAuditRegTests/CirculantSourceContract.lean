@@ -9,12 +9,19 @@ private def mustReject (rule : String) (action : MetaM Unit) : MetaM Unit := do
   unless result.contains rule do throwError "expected {rule}, got {result}"
   logInfo m!"[PASS] Circulant rejects {rule}"
 
-private def replaceAt : List String → Expr → MetaM Expr
-  | [], _ => pure (mkConst ``True)
-  | "fn" :: steps, .app f a => return .app (← replaceAt steps f) a
-  | "arg" :: steps, .app f a => return .app f (← replaceAt steps a)
-  | "body" :: steps, .forallE n d b bi => return .forallE n d (← replaceAt steps b) bi
-  | "domain" :: steps, .forallE n d b bi => return .forallE n (← replaceAt steps d) b bi
+private def replaceAt (path : List String) (value : Expr)
+    (expected : Option Expr := none) : MetaM Expr := do
+  match path, value with
+  | [], original =>
+    if let some expected := expected then
+      unless original.equal expected do throwError "original regression clause incorrectly targeted"
+    pure (mkConst ``True)
+  | "fn" :: steps, .app f a => return .app (← replaceAt steps f expected) a
+  | "arg" :: steps, .app f a => return .app f (← replaceAt steps a expected)
+  | "body" :: steps, .forallE n d b bi =>
+    return .forallE n d (← replaceAt steps b expected) bi
+  | "domain" :: steps, .forallE n d b bi =>
+    return .forallE n (← replaceAt steps d expected) b bi
   | _, _ => throwError "original regression clause absent"
 
 run_meta do
@@ -53,6 +60,14 @@ run_meta do
   mustReject "source.duplicate_occurrence" do
     discard <| (SourceScope.resolve info { selection with
       readouts := selection.readouts ++ selection.readouts }).run 524288
+  -- Check the exact instance domain before mutating only the NeZero n guard.
+  let neZeroDomain ← withLocalDeclD `n (mkConst ``Nat) fun n => do
+    return (← mkAppM ``NeZero #[n]).abstract #[n]
+  let changed ← replaceAt ["body", "domain"] definition.value (some neZeroDomain)
+  mustReject "source.statement_reconstruction" do
+    discard <| (SourceScope.reconstruct scope.expanded
+      (mkApp (mkConst ``Not) changed)).run 524288
+  logInfo m!"[PASS] Circulant rejects NeZero n binder domain mutation"
   -- The original guards, branches, quantifiers and conclusion cannot be omitted.
   for path in #[
       #["body", "body", "domain"],
