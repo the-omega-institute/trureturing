@@ -436,6 +436,46 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Theory]
+    [InlineData("argument_inputs", "valid")]
+    [InlineData("extraction_inputs", "valid")]
+    [InlineData("extraction_inputs", "owner")]
+    [InlineData("extraction_inputs", "unrelated-name")]
+    [InlineData("extraction_inputs", "missing-declaration")]
+    [InlineData("extraction_inputs", "ambiguous-declaration")]
+    [InlineData("extraction_inputs", "duplicate-dependency")]
+    [InlineData("extraction_inputs", "type-identity")]
+    [InlineData("extraction_inputs", "body-identity")]
+    public void generated_realization_dependency_resolves_exact_imported_declaration(string field, string mutation)
+    {
+        var realization = ModuleA + ".target.Fixture.Root/Fixture.arena/«catalog-name».__primitive_realization";
+        var snapshot = Snapshot((PathA, TextA));
+        var wire = JsonSerializer.SerializeToNode(Wire(declared: true))!.AsObject();
+        wire["records"]![0]!["realization_name"] = realization;
+        var dependency = JsonSerializer.SerializeToNode(new {
+            name = mutation == "unrelated-name" ? realization + ".other" : realization,
+            owner = mutation == "owner" ? "Reg.Other" : ModuleA,
+            type_identity = mutation == "type-identity" ? "invalid" : Hash("fixture type"),
+            body_identity = mutation == "body-identity" ? "invalid" : Hash("fixture body"),
+        })!;
+        var dependencies = new JsonArray(dependency);
+        if (mutation == "duplicate-dependency") dependencies.Add(dependency.DeepClone());
+        wire["records"]![0]!["certificate"]![field] = dependencies;
+        var declarations = new List<LeanDeclaration> { new(Unit, "def", "fixture unit", []) };
+        if (mutation != "missing-declaration") declarations.Add(new(realization, "def", "fixture realization", []));
+        if (mutation == "ambiguous-declaration") declarations.Add(new(realization, "def", "different declaration", [])
+            { NameKey = "ns(n0,9:different)" });
+        InformationTemplateUniverse Read()
+        {
+            var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
+            return Collect(snapshot, LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> {
+                [PathA] = new([], declarations.ToImmutableArray()) { InformationTemplates = evidence.Wire },
+            }));
+        }
+        if (mutation == "valid") Assert.True(Assert.Single(Read().Occurrences).Value.HasFourSlots);
+        else Assert.Throws<FormatException>(Read);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void ambiguous_generated_name_rejected(bool realization)
