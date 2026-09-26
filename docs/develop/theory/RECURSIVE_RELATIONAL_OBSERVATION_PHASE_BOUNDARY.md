@@ -58908,3 +58908,274 @@ $a_{\mathrm{eff}}^2/4$ 和 $t^2m^2+o_I(1)$。
 具有相同二阶代价并不使它们成为同一种操作限制。
 
 ## 追加锚（本行以下为增补区）
+
+## 203. 圆盘接触端点的完整二阶延拓
+
+第200节的严格内点条件为匹配构造提供了正的额外跳跃余量。
+本节保留原来源参数，只把构造中的稀少列参数作 $O(\epsilon)$ 调整，
+证明二阶系数可以一致延拓到该余量首次归零的端点。
+
+### 203.1 接触端点与闭区间结论
+
+固定
+
+$$
+\beta>0,\qquad 0<\gamma<\beta,\qquad R>1,
+$$
+
+保持同一共同接收端 CPTP 恢复任务、不可访问系统 $M$ 与完整外部参考。
+令
+
+$$
+n=\frac{\gamma}{2\beta}\in(0,1/2),\qquad
+m_b=\sqrt{\frac14-n^2}>0,\qquad
+h_b=\frac{3\beta Rm_b}{2-m_b}.
+\tag{203.1}
+$$
+
+对任意固定 $0<a<h_b$，取 $I=[a,h_b]$。在该区间置
+
+$$
+m=m(h)=\frac{2h}{h+3\beta R},\qquad
+B_*(h)=1-4m(h)^2-4n^2\ge0.
+\tag{203.2}
+$$
+
+$m(h)$ 严格增加，在 $h_b$ 恰等于 $m_b$；
+$B_*(h)>0$ 对 $h<h_b$ 成立，而 $B_*(h_b)=0$。
+整个闭区间仍满足驻点关系
+$h(2-m)=3\beta Rm$。一阶圆盘极小点在端点是无约束驻点第一次接触边界，故
+
+$$
+\Phi_h=-\frac{(R-1)(\beta^2+\gamma^2)}{8\beta}
++\frac{7h}{12}-\frac{4h^2}{3(h+3\beta R)}
+\qquad(h\in I).
+\tag{203.3}
+$$
+
+令 $Q_0,a_{\mathrm{eff}},Q$ 在整个闭区间按（200.2）—（200.3）的代数公式定义；
+其中
+
+$$
+a_{\mathrm{eff}}(h)
+=4\beta Rm(h)^2-\beta(3R+1)(1/4+n^2),\qquad
+Q(h)=Q_0(h)-\frac{a_{\mathrm{eff}}(h)^2}{4}
+-\gamma^2R^2m(h)^2.
+\tag{203.4}
+$$
+
+**定理203.1（接触端点的一致二阶展开）。** 在 $I=[a,h_b]$ 上，
+
+$$
+\boxed{
+\mathscr E(h\epsilon,\epsilon)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+}
+\tag{203.5}
+$$
+
+特别地，$h=h_b$ 的完整最优二阶系数就是（203.4）在该点的值，
+没有额外的二阶边界代价。
+
+### 203.2 完整下界在接触点仍成立
+
+第200节的精确平方恒等式（200.11）只使用共同 TP、
+$\gamma=2\beta n$ 及 $h(2-m)=3\beta Rm$，没有除以 $B_*$。
+它因此在整个闭区间成立。
+第200.3节的规范 Choi 对 $\Gamma^*(h)$ 在 $B_*=0$ 时仍合法；
+此时额外跳跃消失，两份结果 Choi 均为秩一。
+
+纯来源最优面上的全部平方系数仍严格为正。
+等号强制 $U=V=0$、$M_0=M_1=m$，并由同一 Gram 分解唯一确定
+$\Gamma^*(h)$，包括 $h_b$。作为 Choi 对，$\Gamma^*(h)$ 在闭区间连续；
+Kraus 秩的变化不破坏这一连续性。
+
+第191节在该有限区间给所有最优器一致的
+
+$$
+C=O_I(\epsilon^2),\qquad A_j-1/2=O_I(\epsilon).
+$$
+
+对任意最优器序列同时抽取 $h$ 和 Choi 聚点，
+非负基点缺陷使该聚点满足 $\Gamma\in\mathcal F$、$L_h(\Gamma)\le\Phi_h$。
+精确平方恒等式又给反向界和唯一性，因此紧性反证仍给
+
+$$
+\sup_{\substack{h\in I\\\Gamma\text{ 为最优器}}}
+\|\Gamma-\Gamma^*(h)\|\longrightarrow0.
+\tag{203.6}
+$$
+
+冻结操作的统一解析展开依赖 $A_j\approx1/2$、正紧 $h$ 区间以及参考谱间隙，
+不要求 Choi 正定或 $B_*>0$。第200.4节的完整参考二阶谱计算同样只代入矩，
+故其系数在端点仍为 $Q_0(h)$。因此
+$R_h(\Gamma)=Q_0(h)+o_I(1)$ 对所有最优器一致。
+
+只在占据列偏置上作 Taylor 展开的（200.20）继续有效。
+令 $x=(A_0-A_1)/(2\epsilon)$，再用（200.22）—（200.23）的复 Kraus 平方恒等式，得到
+
+$$
+\frac{e_\epsilon-3/4-\epsilon\Phi_h}{\epsilon^2}
+\ge Q_0(h)-\frac{a_{\mathrm{eff}}(h)^2}{4}
+-\frac{\gamma^2R^2}{4}(D_0+D_1)+o_I(1).
+$$
+
+式（203.6）给 $D_0+D_1=4m(h)^2+o_I(1)$，从而
+
+$$
+\mathscr E(h\epsilon,\epsilon)
+\ge\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+\tag{203.7}
+$$
+
+该下界仍包含任意复 Kraus、标签偏置及 $c$ 泄漏；
+没有因端点的秩下降而增加操作限制。
+
+### 203.3 端点的跳跃权重修复
+
+置
+
+$$
+t=\gamma R,\qquad
+x_*(h)=-\frac{a_{\mathrm{eff}}(h)}2,\qquad
+\sigma=\beta(3R+1)n^2(1+4n^2)>0.
+\tag{203.8}
+$$
+
+由（203.4）及 $t=2\beta nR$，严格有
+
+$$
+16n^2x_*(h)+16nm(h)^2t=2\sigma.
+\tag{203.9}
+$$
+
+第200节未修正构造的额外跳跃权重因此为
+$B_*(h)-2\sigma\epsilon+O_I(\epsilon^2)$。
+在 $h=h_b$，它为负，故不能把该构造直接代入端点。
+
+保持实际来源 $h$ 和 $n,t,x_*(h)$ 不变，仅在 Kraus 构造中采用
+
+$$
+\mu=\mu_\epsilon(h)=\sqrt{m(h)^2-\sigma\epsilon}.
+\tag{203.10}
+$$
+
+$m(h)$ 在 $I$ 有正下界，所以充分小 $\epsilon$ 时 $\mu$ 对全区间为正，且
+
+$$
+\mu-m=-\frac{\sigma\epsilon}{\mu+m}=O_I(\epsilon).
+\tag{203.11}
+$$
+
+定义
+
+$$
+\begin{gathered}
+p_0=\frac12+\epsilon x_*,\qquad
+p_1=\frac12-\epsilon x_*,\qquad
+a_j=\sqrt{\frac{p_j}{1+4\mu^2t^2\epsilon^2}},\qquad
+A_\Sigma=a_0^2+a_1^2,\\
+d_j=2\mu a_j,\qquad c_j=-it\epsilon d_j,\qquad b_0=i2na_0,\\
+b_1=-i\frac{2na_0^2+4\mu^2t\epsilon A_\Sigma}{a_1},\qquad
+B_{\mathrm{extra}}
+=1-|b_0|^2-|b_1|^2-d_0^2-d_1^2.
+\end{gathered}
+\tag{203.12}
+$$
+
+对正旗标使用
+
+$$
+K_j=\begin{pmatrix}a_j&b_j\\c_j&d_j\end{pmatrix},\qquad
+J=i\sqrt{B_{\mathrm{extra}}}\,|0\rangle\langle1|,
+\tag{203.13}
+$$
+
+额外 $J$ 属于结果1，负旗标仍按 $Z$ 共轭。
+
+首先核对 $B_{\mathrm{extra}}$ 的正性。由（203.12），一致有
+
+$$
+\begin{aligned}
+|b_0|^2&=2n^2+4n^2x_*\epsilon+O_I(\epsilon^2),\\
+|b_1|^2&=2n^2+(12n^2x_*+16nm^2t)\epsilon+O_I(\epsilon^2),\\
+d_0^2+d_1^2&=4m^2-4\sigma\epsilon+O_I(\epsilon^2).
+\end{aligned}
+$$
+
+利用（203.9）得
+
+$$
+\boxed{
+B_{\mathrm{extra}}(h,\epsilon)
+=B_*(h)+2\sigma\epsilon+O_I(\epsilon^2).
+}
+\tag{203.14}
+$$
+
+全部分母保持统一正下界，故 Taylor 余项在闭区间一致。
+因为 $B_*\ge0$、$\sigma>0$，充分小 $\epsilon$ 时
+$B_{\mathrm{extra}}\ge\sigma\epsilon>0$ 对整个 $I$ 成立。
+
+### 203.4 同一构造的精确 TP 与二阶代价
+
+第一列范数由（203.12）的共同分母归一化。
+两列交叉矩严格满足
+
+$$
+N_0+N_1=+i4\mu^2t\epsilon A_\Sigma,\qquad
+P_0+P_1=-i4\mu^2t\epsilon A_\Sigma,
+$$
+
+所以列正交。第二列由 $J$ 补足范数，因而
+
+$$
+K_0^\dagger K_0+K_1^\dagger K_1+J^\dagger J=I.
+\tag{203.15}
+$$
+
+这是一份真实共同接收端 instrument；额外跳跃与标签偏置、泄漏同时实现。
+
+以下平方始终相对于原目标参数 $m(h)$ 定义，不能将其一并改成 $\mu$。
+由（203.11）—（203.13），
+
+$$
+\begin{gathered}
+U=0,\qquad
+V=\sum_{j,\alpha}|d-2ma|^2
+=4(\mu-m)^2A_\Sigma=O_I(\epsilon^2),\\
+c/\epsilon+itd=0,\qquad
+M_j=2\mu a_j^2=m+O_I(\epsilon),\\
+x:=\frac{A_0-A_1}{2\epsilon}
+=\frac{x_*}{1+4\mu^2t^2\epsilon^2}
+=x_*+O_I(\epsilon^2),\\
+D_0+D_1=4\mu^2A_\Sigma=4m^2+O_I(\epsilon).
+\end{gathered}
+\tag{203.16}
+$$
+
+因此二阶归一化展开中的 $V/\epsilon$ 及
+$\sum_j|M_j-m|^2/\epsilon$ 都是 $O_I(\epsilon)$；
+修复没有产生有限的二阶惩罚。偏置平方趋零，泄漏平方严格为零，
+$D_0+D_1$ 的变化也只贡献 $o_I(1)$。
+
+构造的 Choi 对以 $O_I(\epsilon)$ 收敛到 $\Gamma^*(h)$。
+在端点，新增 $J$ 的幅度为 $O(\sqrt\epsilon)$，但其 Choi 贡献为 $O(\epsilon)$；
+在区间内，额外跳跃的 Choi 权重同样只改变 $O_I(\epsilon)$。
+所有矩都满足冻结解析展开和占据列 Taylor 估计的条件。
+将（203.16）代入（200.22）—（200.23），即得该构造的完整参考误差
+
+$$
+e_\epsilon(h)
+=\frac34+\epsilon\Phi_h+\epsilon^2Q(h)+o_I(\epsilon^2).
+\tag{203.17}
+$$
+
+它给最优值的上界，与（203.7）匹配，证明定理203.1。
+
+该证明直接构造了 $h=h_b$ 的合法操作，并先取得整个闭区间的一致界，
+不依赖交换 $\epsilon\to0$ 与 $h\to h_b$ 的极限。
+结论不覆盖 $h>h_b$ 的正约束乘子区域，也不覆盖 $\gamma=\beta$ 导致
+$m_b=h_b=0$ 的另一退化端点。
+
+## 追加锚（本行以下为增补区）
