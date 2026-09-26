@@ -20846,3 +20846,1005 @@ $$
 这一分类给出一个具体的边界容量关系：在此纤维保持合同内，将全局正缺陷压到允许的最小比例 $d/q=1/3$，会强制局部纤维保留恰好三分之二的线性方向。这个比例只属于上述算子合同；它既不是一般时空面积律，也未决定六轮实际接收器的最小容量。对未取等的 $q<3d$，本节没有给出一般纤维秩上界。
 
 ## 追加锚（本行以下为增补区）
+
+## 78. ABCBB 的公共向量与二阶矩阵缺陷禁阻
+
+本节沿用第69节的七维外置首轮六纯终端合同：同一非退化来源 $m_0=a|0\rangle+b|1\rangle$、$m_1=|0\rangle$，$ab\ne0$、$|a|^2+|b|^2=1$；接收器独立纯启动，全部持久资源计入七维 $K$，每轮使用同一个全域 CPTP 通道，活动来源与参考不可访问。固定等距位块 $V_0,V_1$ 的像相互正交。假设
+
+$$
+F=\operatorname{span}(\eta_2,\ldots,\eta_6),\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+且三条不同尾射线组成
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,C,B,B).
+\tag{78.1}
+$$
+
+以下也用 $A,B,C$ 表示单位环境代表。不同字母只表示射线不同，不预设正交。
+
+**定理78.1（ABCBB 不可能）。** 上述合同下，ABCBB 尾词不能实现七维六纯终端接收器。
+
+### 78.1 实际轮次给出的两个补空间
+
+实际早期有正交单位向量 $u,v,w$，使
+
+$$
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{78.2}
+$$
+
+特别地，$w\in H_2\cap G_2$ 是同一个实际单位向量。对 $n\ge3$，实际二维空间满足
+
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n,
+$$
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,
+\qquad P_{Q_n}H_n=Q_n.
+\tag{78.3}
+$$
+
+当前射线 $B$ 在第3、5轮具有不同后继 $C,B$。第69节引理69.2给
+
+$$
+P=G_3+G_5+G_6,\qquad\dim P=4,\qquad
+G_2=G_4=:T\subset P.
+\tag{78.4}
+$$
+
+固定 $V_1$ 把 $G_3,G_5$ 送入不同环境射线，故 $G_3\cap G_5=0$，从而 $P=G_3+G_5$，并且
+
+$$
+V_1P=(Q_4\otimes C)\dotplus(Q_6\otimes B).
+$$
+
+又因 $T\subset P$、$V_1T=Q_3\otimes B=Q_5\otimes B$，沿环境基 $B,C$ 比较纤维，得到 $Q_3=Q_5=Q_6=:Q$。固定单射性再给 $G_5=T$。令 $L=G_3$、$R=Q_4$，遂有
+
+$$
+\begin{gathered}
+G_2=G_4=G_5=T,\qquad P=L+T,\qquad L\cap T=0,\\
+V_1L=R\otimes C,\qquad V_1T=Q\otimes B,\\
+Q\perp P,\qquad R\perp T.
+\end{gathered}
+\tag{78.5}
+$$
+
+其中 $Q\perp L$ 来自第三轮，$Q\perp T$ 来自第五轮，$R\perp T$ 来自第四轮。这里没有把 $Q,R$ 判为相同。实际零位域及同轮分解为
+
+$$
+\begin{array}{c|c|c}
+\text{实际域}&V_0\text{ 像}&\text{同轮分解}\\ \hline
+H_2&L\otimes B&\operatorname{span}(a^2u+bv,w)\\
+H_3&T\otimes C&H_3\subset L\oplus Q\\
+H_4&T\otimes B&H_4\subset T\oplus R\\
+H_5&G_6\otimes B&H_5\subset T\oplus Q
+\end{array}
+\tag{78.6}
+$$
+
+令 $r=|\langle B,C\rangle|$。若 $r=0$，（78.5）的两个一位像正交，给 $L\perp T$；（78.6）的两个零位像再给 $H_2\perp H_4$。于是 $w\in H_2\cap T$ 正交于 $H_4$，违反 $P_TH_4=T$。所以只需处理
+
+$$
+0<r<1.
+\tag{78.7}
+$$
+
+由 $P\otimes B\subset V_0K$、$R\otimes C\subset V_1K$ 和跨位正交，$r>0$ 又给
+
+$$
+R\perp P.
+\tag{78.8}
+$$
+
+后续证明只需这些实际关系，不需要 $Q=R$，也不需要把某个实际尾域判为 $P\oplus Q$。
+
+### 78.2 来源系数与保留全部基旋转的矩阵方程
+
+来源的复相位不影响可达性。具体地，对活动记忆作固定对角酉换基，并对接收输入位作固定对角酉换基，可同时把 $a,b$ 化为正实数并保持 $m_1=|0\rangle$ 的系数为 $1$；接收通道随输入位换基共轭，仍是同一个固定全域通道。因此以下取 $a,b>0$。环境单位代表及终端列的共同相位可同步选择，使 $\langle C,B\rangle=r>0$。
+
+置
+
+$$
+x=a^2,\quad y=b^2,\quad t_0=1,\quad t_j=1-yt_{j-1},\qquad
+\lambda_j=x\frac{t_{j-1}}{t_j}.
+$$
+
+实际两个来源标签的归一化列，按第53节（53.14）的同轮递推，给 $H_n,G_n$ 的主角平方 $\lambda_n,\lambda_{n-1}$。本节使用
+
+$$
+p=\lambda_2,\qquad q=\lambda_4,\qquad m=\lambda_3,
+\qquad 0<p<q<m<1.
+\tag{78.9}
+$$
+
+这里 $p,q,m$ 是标量，不是早期接收向量。严格次序可直接核对：$t_2=x^2+y$，且
+
+$$
+\lambda_4-\lambda_2=\frac{x^2y^2}{t_2t_4}>0,
+\qquad
+\lambda_3-\lambda_4=\frac{xy^3}{t_3t_4}>0.
+$$
+
+本节使用的 $j=2,3,4,5$ 均满足 $0<\lambda_j<1$，这来自 $t_j=x t_{j-1}+y t_{j-2}$（$j\ge2$）。定义正对角矩阵
+
+$$
+\begin{gathered}
+\mathsf A=\operatorname{diag}(\sqrt m,\sqrt p),\qquad
+\mathsf B=(I-\mathsf A^2)^{1/2},\\
+\mathsf C=\operatorname{diag}(\sqrt q,\sqrt m),\qquad
+\mathsf D=(I-\mathsf C^2)^{1/2},\\
+\mathsf E=\operatorname{diag}(\sqrt{\lambda_5},\sqrt q),\qquad
+\mathsf F=(I-\mathsf E^2)^{1/2}.
+\end{gathered}
+\tag{78.10}
+$$
+
+黑体矩阵 $\mathsf C,\mathsf F$ 与环境射线 $C$、环境空间 $F$ 不同。所有这些对角矩阵均可逆。来源递推给
+
+$$
+1-\lambda_{j+1}=\frac{y}{x^2}\lambda_j\lambda_{j+1},
+$$
+
+所以，令 $k=\sqrt y/x$，有
+
+$$
+\mathsf D=k\mathsf A\mathsf C,\qquad
+\mathsf F=k\mathsf C\mathsf E,\qquad
+\mathsf D\mathsf E=\mathsf A\mathsf F.
+\tag{78.11}
+$$
+
+以列等距 $L_0,T_0,Q_0,R_0:\mathbb C^2\to K$ 分别表示实际 $G_3,G_4,Q_5,Q_4$ 的归一化来源列。固定一位块满足
+
+$$
+V_1L_0=R_0\otimes C,\qquad V_1T_0=Q_0\otimes B.
+$$
+
+实际 $G_5,G_2$ 与 $G_4$ 是同一个平面 $T$，但归一化基可以不同。因此存在任意酉矩阵 $U,W$，使其列分别为 $T_0U,T_0W$。令
+
+$$
+J=R_0^*Q_0,\qquad \|J\|\le1,\qquad L_0^*T_0=rJ.
+\tag{78.12}
+$$
+
+本证明保留任意 $U,W$；不预设它们对角、实或相等。来源递推给实际三个零记忆列
+
+$$
+h_3=L_0\mathsf A+Q_0W\mathsf B,\qquad
+h_4=T_0\mathsf C+R_0\mathsf D,\qquad
+h_5=T_0U\mathsf E+Q_0\mathsf F.
+\tag{78.13}
+$$
+
+每个 $h_n$ 都是两列正交等距。这里两来源标签的列正交由早期正交列和不同输入位像正交逐轮保持；归一化后，同轮 $G_n,Q_n$ 分量的系数正是（78.10）。
+
+固定零位块给 $V_0h_3=T_0\otimes C$、$V_0h_4=T_0U\otimes B$，故 $h_3^*h_4=rU$。由（78.5）、（78.8）、（78.13）展开，得到
+
+$$
+r\mathsf A J\mathsf C+\mathsf B W^*J^*\mathsf D=rU.
+\tag{78.14}
+$$
+
+还必须使用第五终端。因为 $V_0H_5=G_6\otimes B$，而 $V_0H_4=T\otimes B$，$V_0H_3=T\otimes C$，$H_3$ 去掉其在 $H_4$ 上的正交投影后，其零位像属于 $T\otimes B^\perp$。因此
+
+$$
+(I-P_{H_4})H_3\perp H_5,\qquad
+h_3^*h_5=(h_3^*h_4)(h_4^*h_5).
+$$
+
+展开实际列给
+
+$$
+r\mathsf A J U\mathsf E+\mathsf B W^*\mathsf F
+=rU(\mathsf C U\mathsf E+\mathsf D J\mathsf F).
+\tag{78.15}
+$$
+
+这一步只使用已执行的第六轮零位像，没有增加第七轮后继。
+
+### 78.3 同一个早期公共向量给出的核方向
+
+令 $e_2=(0,1)^T$。在正实来源约定下，实际第二个来源标签给
+
+$$
+w=T_0We_2=h_2e_2,\qquad V_0w=L_0e_2\otimes B.
+$$
+
+分别读取 $w$ 与 $h_4,h_3$ 的内积，并使用 $w\in T\perp Q,R$，得到
+
+$$
+e_2^*W^*\mathsf C=r e_2^*J U,\qquad
+e_2^*W^*J^*\mathsf A=r e_2^*J.
+\tag{78.16}
+$$
+
+第二式已经约去非零 $r$。写 $\kappa=\sqrt p=x/\sqrt{t_2}$，有
+
+$$
+\kappa+k\sqrt{1-\kappa^2}=\kappa^{-1}.
+$$
+
+用（78.11）、（78.16）读取（78.14）的第二行，便得
+
+$$
+e_2^*J\mathsf C=\kappa e_2^*U.
+\tag{78.17}
+$$
+
+置
+
+$$
+\xi=J^*e_2,\qquad z=We_2,\qquad
+M=\mathsf C-U^*\mathsf A J.
+$$
+
+其中 $\|z\|=1$，而（78.16）—（78.17）的伴随形式为
+
+$$
+U\mathsf C\xi=\kappa e_2,\qquad
+U\mathsf C z=r\xi,\qquad
+\mathsf A Jz=r\xi.
+\tag{78.18}
+$$
+
+特别地，
+
+$$
+Mz=0,\qquad
+\|\mathsf C\xi\|=\kappa,\qquad
+0<\|\xi\|\le\sqrt{p/q}<1.
+\tag{78.19}
+$$
+
+另外，$\mathsf A$ 的第二个对角元为 $\kappa$，所以最后一个等式给
+
+$$
+\kappa\,\xi^*z=r\xi_2.
+$$
+
+再将（78.18）的前两个等式作内积，得到
+
+$$
+\xi^*(\mathsf C^2-pI)z=0.
+\tag{78.20}
+$$
+
+这里 $\mathsf C^2-pI=\operatorname{diag}(q-p,m-p)$ 正定。
+
+### 78.4 保留任意酉的正半定缺陷恒等式
+
+（78.14）—（78.15）可消去 $W$，得到
+
+$$
+\boxed{
+\mathsf D(I-JJ^*)\mathsf D
+=-M U\mathsf C^{-1}M^*U^*\mathsf C.
+}
+\tag{78.21}
+$$
+
+为明确乘法次序，令 $S=\mathsf B W^*/r$。由（78.11），两条原方程分别等价于
+
+$$
+\mathsf A J+kS J^*\mathsf A=U\mathsf C^{-1},
+$$
+
+$$
+\mathsf A J U+kS\mathsf C
+=U\mathsf C U+k^2U\mathsf C\mathsf A J\mathsf C.
+$$
+
+第二式给
+
+$$
+kS=(U\mathsf C-\mathsf A J)U\mathsf C^{-1}
++k^2U\mathsf C\mathsf A J.
+$$
+
+代入第一式、左乘 $U^*$，并用
+$\mathsf C^{-1}-\mathsf C=k^2\mathsf A^2\mathsf C$，得到
+
+$$
+M(I-U\mathsf C^{-1}J^*\mathsf A)
+=-k^2\mathsf C\mathsf A(I-JJ^*)\mathsf A.
+$$
+
+又 $J^*\mathsf A=(\mathsf C-M^*)U^*$，所以左端为
+$M U\mathsf C^{-1}M^*U^*$。最后右乘 $\mathsf C$ 并用 $\mathsf D=k\mathsf A\mathsf C$，即得（78.21）。左端正半定，因为 $J$ 是收缩。
+
+$M$ 不能为零：否则 $\mathsf C=U^*\mathsf A J$ 将给
+
+$$
+\sqrt{qm}=|\det\mathsf C|
+=|\det\mathsf A|\,|\det J|
+\le\sqrt{mp},
+$$
+
+违反 $q>p$。结合非零核向量 $z$，$M$ 恰为秩一。
+
+### 78.5 两个坐标分支与严格矩阵矛盾
+
+先排除 $\xi_1=0$。此时 $\xi_2\ne0$，（78.20）强制 $z_2=0$，于是 $\xi^*z=0$，与（78.20）之前的 $\kappa\xi^*z=r\xi_2$ 矛盾。因此 $\xi_1\ne0$。
+
+若 $\xi_2=0$，则（78.20）给 $z_1=0$，所以 $Me_2=0$。又 $U\mathsf C\xi=\kappa e_2$ 使 $Ue_1$ 平行 $e_2$，故 $U_{11}=0$。写 $M=h e_1^*$，便有
+
+$$
+M U\mathsf C^{-1}M^*
+=h(e_1^*U\mathsf C^{-1}e_1)h^*=0.
+$$
+
+（78.21）及 $\mathsf D$ 可逆遂强制 $JJ^*=I$。这会使 $\|J^*e_2\|=1$，与（78.19）的 $\|\xi\|<1$ 矛盾。
+
+只剩 $\xi_1\xi_2\ne0$。先作同时的对角酉共轭
+
+$$
+J\mapsto G^*JG,\quad U\mapsto G^*UG,\quad W\mapsto G^*WG,\qquad
+G=\operatorname{diag}(e^{i\arg\xi_1},1).
+$$
+
+所有来源系数矩阵与 $G$ 交换，$Ge_2=e_2$；故上述矩阵方程原样保持，且可以写
+
+$$
+\xi=(s,t e^{i\beta})^T,\qquad s,t>0.
+$$
+
+记 $d_1=q-p$、$d_2=m-p$，故 $0<d_1<d_2$。由（78.20）和 $\|z\|=1$，存在相位 $\gamma$，使
+
+$$
+z=\frac{e^{i\gamma}}{N}(d_2t,-d_1s e^{i\beta})^T,\qquad
+N=\sqrt{d_2^2t^2+d_1^2s^2}.
+$$
+
+此时 $\xi^*z=e^{i\gamma}st(d_2-d_1)/N$。因为 $\kappa\xi^*z=r t e^{i\beta}$，全部幅度严格为正，所以 $e^{i\gamma}=e^{i\beta}$。置
+
+$$
+D_\beta=\operatorname{diag}(e^{-i\beta},1),\quad
+\xi_0=(s,t)^T,\quad
+z_0=(\alpha,-\delta)^T,\quad
+\alpha=\frac{d_2t}{N}>0,\quad
+\delta=\frac{d_1s}{N}>0.
+$$
+
+于是 $\alpha^2+\delta^2=1$，且
+
+$$
+\xi=e^{i\beta}D_\beta\xi_0,\qquad
+z=e^{2i\beta}D_\beta z_0.
+$$
+
+定义
+
+$$
+U_0=e^{i\beta}D_\beta^*U D_\beta,\qquad
+J_0=e^{i\beta}D_\beta^*J D_\beta,\qquad
+M_0=\mathsf C-U_0^*\mathsf A J_0.
+$$
+
+$U_0$ 仍酉、$J_0$ 仍为收缩，而且 $M=D_\beta M_0D_\beta^*$。（78.18）、（78.21）变为
+
+$$
+U_0\mathsf C\xi_0=\kappa e_2,\qquad
+U_0\mathsf C z_0=r\xi_0,\qquad M_0z_0=0,
+$$
+
+$$
+\mathsf D(I-J_0J_0^*)\mathsf D
+=-M_0U_0\mathsf C^{-1}M_0^*U_0^*\mathsf C.
+\tag{78.22}
+$$
+
+两条实向量 $\xi_0,z_0$ 线性无关，它们经 $\mathsf C$ 后仍独立；$U_0$ 将它们送到实向量 $\kappa e_2,r\xi_0$。因此 $U_0$ 是实正交矩阵。这一步是由实际向量方程推出的规范形，没有预设原始酉矩阵为实。
+
+写 $c=\sqrt q$、$d=\sqrt m$，其中 $0<c<d$。由第一条向量方程，$U_0$ 的第二行是 $(cs,dt)/\kappa$。第一行只能是 $\pm(dt,-cs)/\kappa$；第二条向量方程的第一分量为 $rs>0$，而
+
+$$
+(dt,-cs)\,(c\alpha,-d\delta)^T
+=cd(t\alpha+s\delta)>0,
+$$
+
+所以必须取正号。于是
+
+$$
+U_0=\begin{pmatrix}u&-v\\v&u\end{pmatrix},\qquad
+u=\frac{dt}{\kappa}>0,\qquad
+v=\frac{cs}{\kappa}>0,\qquad u^2+v^2=1.
+\tag{78.23}
+$$
+
+$M_0$ 为非零秩一，核包含 $z_0=(\alpha,-\delta)^T$。令 $z_\perp=(\delta,\alpha)^T$，则存在非零 $h\in\mathbb C^2$，使
+
+$$
+M_0=h z_\perp^*.
+$$
+
+直接计算得到严格正实数
+
+$$
+\begin{aligned}
+\rho
+&=z_\perp^*U_0\mathsf C^{-1}z_\perp\\
+&=u\left(\frac{\delta^2}{c}+\frac{\alpha^2}{d}\right)
++v\alpha\delta\left(\frac1c-\frac1d\right)>0.
+\end{aligned}
+\tag{78.24}
+$$
+
+故（78.22）成为
+
+$$
+\mathsf D(I-J_0J_0^*)\mathsf D
+=-\rho\,h(\mathsf C U_0h)^*\succeq0.
+\tag{78.25}
+$$
+
+令 $b=\mathsf C U_0h$。$\mathsf C U_0$ 可逆，所以 $b\ne0$。秩一矩阵 $-\rho h b^*$ 若为 Hermitian，其像与伴随的像相同，强制 $b=\tau h$，其中 $\tau$ 是实数；正半定性再给 $\tau\le0$。因 $b\ne0$，实际 $\tau<0$。因此（78.25）要求 $\mathsf C U_0$ 有严格负实特征值。
+
+然而这个实二阶矩阵满足
+
+$$
+\det(\mathsf C U_0)=cd>0,\qquad
+\operatorname{tr}(\mathsf C U_0)=u(c+d)>0.
+\tag{78.26}
+$$
+
+若其一个特征值为负实数，另一个由正行列式也必须为负实数，迹便为负，矛盾。至此 $\xi_2\ne0$ 分支也不可能。
+
+两个坐标分支全部矛盾，非正交情形被排除；结合78.1的正交情形，ABCBB 不可能。定理78.1证明完毕。
+
+本证明保留两个可能不同的实际补空间 $Q,R$，并由同一个早期公共向量导出允许的酉规范形。第六轮只通过实际 $G_6\otimes B$ 进入（78.15），未补设未来后继，也未假定六维实际域等于 $P\oplus Q$。结合第73节的 ABACA、ABBCB 排除，第69节分类中的三射线分叉类至此全部排除；其他类型仍按各自实际合同审查。一般容量区间仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{78.27}
+$$
+
+以上为普通数学证明，不宣称本节新增内容已经编译为 Lean 证明。
+
+## 追加锚（本行以下为增补区）
+
+## 79. 外置首轮的两射线交替尾词 ABABA 不可能
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯初态 $k$、七维持久接收空间 $K$、固定全域 CPTP 接收通道，以及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入 $K$，来源与参考不可由接收器访问。固定 Stinespring 位块 $V_0,V_1$ 都为等距且像相互正交。设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,B,A),
+\qquad A\ne B.
+\tag{79.1}
+$$
+
+也以 $A,B$ 表示两条射线的单位代表；相位不影响下列实际子空间和投影关系。
+
+早期正交单位组 $p,q$ 与 $u,v,w$ 满足
+
+$$
+V_0k=p\otimes\eta_1,\qquad V_1k=q\otimes\eta_1,
+\qquad V_0p=u\otimes A,\quad V_1p=v\otimes A,
+\quad V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{79.2}
+$$
+
+各 $H_n,G_n,Q_n$ 在实际 $3\le n\le6$ 时均二维，且
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n.
+\tag{79.3}
+$$
+
+两个投影都是同构，故 $H_n\cap G_n=0$。特别地，非零 $w\in H_2\cap G_2$ 是后期合同不允许重复出现的早期关系。
+
+### 79.1 两个环境的真实输入域与接收跨度
+
+定义
+
+$$
+\begin{aligned}
+R_A&=G_2+G_4+G_6,& r&=\dim R_A,\\
+E&=G_2+G_4,& e&=\dim E,\\
+O&=G_3+G_5,& s&=\dim O,\\
+D_A&=H_1+H_3+H_5,&D_B&=H_2+H_4,\\
+Q_B&=Q_3+Q_5,&Q_A&=Q_4+Q_6.
+\end{aligned}
+$$
+
+全部定义使用已经发生的轮次。特别地，$G_6$ 只进入已执行的零位像，不为它添加一位后继。固定实际位块给
+
+$$
+\begin{aligned}
+V_0D_A&=R_A\otimes A,&V_0D_B&=O\otimes B,\\
+V_1E&=Q_B\otimes B,&V_1O&=Q_A\otimes A.
+\end{aligned}
+\tag{79.4}
+$$
+
+所以 $\dim D_A=r$、$\dim D_B=s$、$\dim Q_B=e$、$\dim Q_A=s$。不同环境射线使 $D_A\cap D_B=0$ 和 $E\cap O=0$。
+
+令 $S_0=D_A+D_B=H_1+\cdots+H_5$。其零位像都在 $K\otimes F$ 中，而 $V_0k=p\otimes\eta_1$ 不在其中，因此 $k\notin S_0$。七维预算给
+
+$$
+r+s=\dim S_0\le6,
+\qquad r\ge e\ge2,
+\qquad s\ge2.
+\tag{79.5}
+$$
+
+这里没有把 $k$ 与尾域判为正交。
+
+### 79.2 非正交尾射线的维数禁阻
+
+**引理79.1（交替尾射线必须正交）。** 若七维实际合同具有（79.1）的交替尾词，则 $A\perp B$。这一步本身不使用首环境外置。
+
+**证明。** 反设 $\langle A,B\rangle\ne0$。令
+
+$$
+P=G_2+G_3+G_4+G_5+G_6,
+\qquad Q=Q_3+Q_4+Q_5+Q_6.
+$$
+
+任何实际零位块的环境与任何实际一位块的环境都具有非零内积，因为它们均为 $A$ 或 $B$。跨位正交遂使每个零位接收平面都正交于每个一位接收平面，即 $P\perp Q$。
+
+又 $E\cap O=0$、$E+O\subset P$，且 $Q$ 包含维数分别为 $e,s$ 的 $Q_B,Q_A$，所以
+
+$$
+7=\dim K\ge\dim P+\dim Q\ge e+s+\max(e,s).
+\tag{79.6}
+$$
+
+两数 $e,s$ 都至少二；其中任一至少三时，最右端至少八。因此只能 $e=s=2$，即
+
+$$
+G_2=G_4,\qquad G_3=G_5.
+$$
+
+同一个零位映射给
+
+$$
+V_0H_2=G_3\otimes B=G_5\otimes B=V_0H_4,
+$$
+
+从而 $H_2=H_4$。非零 $w\in H_2\cap G_2$ 于是落入 $H_4\cap G_4=0$，矛盾。证明完毕。
+
+### 79.3 正交尾域的维数只剩两种
+
+以下取 $A\perp B$。固定等距性和（79.4）给
+
+$$
+D_A\perp D_B,\qquad E\perp O.
+\tag{79.7}
+$$
+
+同环境跨位正交另给
+
+$$
+v\perp R_A,\qquad Q_A\perp R_A,\qquad Q_B\perp O.
+\tag{79.8}
+$$
+
+其中 $v\perp R_A$ 来自实际 $V_1p=v\otimes A$ 与 $V_0D_A=R_A\otimes A$。
+
+首先 $r=2$ 不可能。否则 $G_2=G_4=G_6$。固定一位映射使 $Q_3=Q_5$，固定零位映射又使 $H_3=H_5$。在（79.3）中，对共同的 $Q_3=Q_5$ 取正交补投影，得到
+
+$$
+G_3=P_{Q_3^\perp}H_3=P_{Q_5^\perp}H_5=G_5.
+$$
+
+于是同一个零位映射使 $H_2=H_4$，再由 $G_2=G_4$ 使早期非零 $w$ 落入 $H_4\cap G_4$，矛盾。因此 $r\ge3$。
+
+由（79.8），$v,Q_4$ 都正交于 $E\subset R_A$。实际 $H_2$ 投影到 $E$ 的像为 $G_2$，而 $H_4$ 投影到 $E$ 的像为 $G_4$。所以
+
+$$
+P_E(D_B)=G_2+G_4=E,
+\qquad s=\dim D_B\ge e.
+\tag{79.9}
+$$
+
+如果 $e=s=2$，则又有 $G_2=G_4$、$G_3=G_5$，与引理79.1末段相同的实际 $w$ 矛盾成立。故 $e=2$ 时必须 $s\ge3$。结合 $r\ge3$、$r+s\le6$，得到 $r=s=3$。若 $e\ge3$，由 $r\ge e$、$s\ge e$ 和 $r+s\le6$，又只能 $r=s=e=3$。
+
+因此全部正交候选只剩
+
+$$
+(r,s,e)=(3,3,2)\quad\text{或}\quad(3,3,3).
+\tag{79.10}
+$$
+
+### 79.4 二维一位域的图差迫出早期矛盾
+
+**引理79.2（排除 $e=2$）。** （79.10）的第一种情形不可能。
+
+**证明。** 此时 $G_2=G_4=E$。同一个零位映射给
+
+$$
+V_0H_1=G_2\otimes A=G_4\otimes A=V_0H_3,
+$$
+
+故 $H_1=H_3$，特别 $p\in H_3$。
+
+由 $v,Q_4\perp E$，两个实际平面都是 $E$ 上的图。对 $H_2$，图映射为
+
+$$
+T_2:E\to\mathbb Cv,
+\qquad T_2u=(b/a^2)v,\quad T_2w=0.
+$$
+
+对 $H_4$，图映射为 $T_4:E\to Q_4$，且（79.3）的两个满投影使 $T_4$ 为同构。对任何两个同域线性图，按它们向共同域的投影计算核，得到
+
+$$
+\dim(H_2+H_4)=\dim E+\operatorname{rank}(T_4-T_2).
+$$
+
+具体地，图和的域投影满到 $E$，其零域分量恰为所有 $(0,(T_4-T_2)x)$，所以这个等式不需要两个图正交。左侧为 $s=3$，$\dim E=2$，因此 $T_4-T_2$ 的秩为一。
+
+若 $v\notin Q_4$，则 $T_4x=T_2x$ 的共同值只能属于 $Q_4\cap\mathbb Cv=0$。$T_4$ 单射遂给 $x=0$，使 $T_4-T_2$ 秩二，矛盾。故 $v\in Q_4$。
+
+实际 $V_1p=v\otimes A$ 因而属于 $Q_4\otimes A=V_1G_3$；固定单射性迫 $p\in G_3$。此前 $p\in H_3$，与非零 $p$ 及 $H_3\cap G_3=0$ 矛盾。证明完毕。
+
+### 79.5 三维一位域使全部一位像落回尾环境
+
+**定理79.3（外置首轮 ABABA 不可能）。** 本节七维、首轮外置的实际合同不能具有尾词 $ABABA$。
+
+**证明。** 引理79.1排除非正交射线，正交情形又由（79.10）和引理79.2只剩
+
+$$
+r=s=e=3,
+\qquad R_A=E,
+\qquad E\perp O,
+\qquad\dim(E\oplus O)=6.
+\tag{79.11}
+$$
+
+由（79.8），$Q_B=Q_3+Q_5$ 正交于 $O$，且其维数为 $e=3$。实际 $H_3,H_5$ 分别包含于 $G_3\oplus Q_3$ 与 $G_5\oplus Q_5$，所以
+
+$$
+H_3+H_5\subset O\oplus Q_B,
+\qquad P_O(H_3+H_5)=G_3+G_5=O.
+$$
+
+这个和至少三维，又包含于三维 $D_A$，因此
+
+$$
+D_A=H_3+H_5\subset O\oplus Q_B,
+\qquad P_O|_{D_A}:D_A\to O\text{ 是同构}.
+\tag{79.12}
+$$
+
+所以 $D_A$ 是一个线性图 $T:O\to Q_B$。其像就是 $D_A$ 到 $Q_B$ 的投影，而实际满投影给
+
+$$
+\operatorname{im}T=Q_3+Q_5=Q_B.
+$$
+
+两边均三维，故 $T$ 也是同构。因此
+
+$$
+D_A\cap O=0.
+\tag{79.13}
+$$
+
+真实单位向量 $p$ 属于 $H_1\subset D_A$。另一方面，$V_1p=v\otimes A$ 与 $V_1E=Q_B\otimes B$ 因 $A\perp B$ 而正交，固定等距性给 $p\perp E$。
+
+如果 $p\in E\oplus O$，结合 $p\perp E$ 就有 $p\in O$；但 $p\in D_A$，（79.13）会迫 $p=0$，矛盾。于是 $p\notin E\oplus O$。由（79.11），
+
+$$
+K=E+O+\mathbb Cp.
+\tag{79.14}
+$$
+
+这三个真实一位输入域的像全都属于尾环境空间：
+
+$$
+V_1E=Q_B\otimes B,\qquad
+V_1O=Q_A\otimes A,\qquad
+V_1p=v\otimes A.
+$$
+
+故（79.14）强制 $V_1K\subset K\otimes F$。可是实际初态满足 $V_1k=q\otimes\eta_1$，其中 $q\ne0$、$\eta_1\notin F$，该向量不在 $K\otimes F$，矛盾。证明完毕。
+
+这个排除使用首轮外置对真实尾域的维数约束，再由早期 $p$ 和实际后期图映射恢复全域一位像的限制。它没有先将首轮环境改成 $B$，没有调用完整六轮周期合同，也未为 $G_6$ 添加未执行的一位后继。一般接收容量仍为
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{79.15}
+$$
+
+### 79.6 外置首轮只剩八种两射线必要尾词
+
+**推论79.4（八种剩余必要尾词）。** 在七维、前六个完整纯终端且首轮环境外置于尾环境跨度的实际合同中，五位尾词按射线首次出现命名后，只能属于
+
+$$
+\boxed{\{AAABA,\ AAABB,\ AABAA,\ ABAAA,\ ABAAB,\ ABABB,\ ABBAB,\ ABBBA\}}.
+\tag{79.16}
+$$
+
+特别地，实际尾环境至多具有两条不同射线。
+
+**证明。** 第64节已将尾环境跨度限制为至多二维；第71节的四个共同后期环境禁阻排除单射线尾部。二维尾环境且首轮外置时，第75节推论75.5给出十种必要词：上式八词以及 $ABCBB,ABABA$。定理78.1排除 $ABCBB$，定理79.3排除 $ABABA$，剩余恰为（79.16）。每一词均只使用两种射线，故得尾射线数量结论。证明完毕。
+
+（79.16）只是必要分类；没有断言八词中任一词能够由同一个实际接收器实现，也没有把一般容量区间收紧为单一数值。
+
+## 追加锚（本行以下为增补区）
+
+## 80. 缺陷维数界差一时的完整结构
+
+第77节分类了 $q=3d$ 的全部等号算子。本节处理紧接其下的 $q=3d-1$：同一缺陷合同仍强迫缺陷为正交投影，但全体输入共有一个未使用方向。对每条非零二次纤维，其准确秩为 $2d-1$。特别地，$q=5,d=2$ 的每条纤维都恰为秩三。
+
+### 80.1 合同与最小系数秩
+
+沿用第76节的有限维复 Hilbert 空间 $Q,F$、可逆 $A:F\to F$ 及
+$$
+J=\operatorname{span}\{Az\otimes z:z\in F\}.
+$$
+令 $M:Q\otimes J\to Q\otimes F$ 为收缩，并在四条不同射线上保持二次纤维。第76节引理76.1给全部射线保持及加权块式。取 $A^*A$ 的正交单位特征基，记正特征值为 $\mu,\nu$，置
+$$
+s=\mu+\nu,\qquad \Delta=s^2-\mu\nu.
+$$
+则
+$$
+M=\begin{pmatrix}
+L_0/\sqrt\mu&L_1/\sqrt s&0\\
+0&L_0/\sqrt s&L_1/\sqrt\nu
+\end{pmatrix},
+\qquad
+M(\xi\otimes Az\otimes z)=(z_0L_0+z_1L_1)\xi\otimes z.
+\tag{80.1}
+$$
+设完整正缺陷 $\mathscr D=I-MM^*$ 的秩为正整数 $d$，并假设
+$$
+q=\dim Q=3d-1,\qquad d\ge1.
+\tag{80.2}
+$$
+
+写 $\mathscr D=HH^*$，$H=(H_0,H_1):\mathbb C^d\to Q\oplus Q$ 单射。记 $X=L_0L_0^*$、$Y=L_1L_1^*$，则
+$$
+X/\mu+Y/s=I-H_0H_0^*,\qquad
+X/s+Y/\nu=I-H_1H_1^*,\qquad
+L_1L_0^*=-sH_0H_1^*.
+\tag{80.3}
+$$
+第76节的秩估计给
+$$
+\operatorname{rank}L_i\ge q-d=2d-1,\qquad
+\operatorname{rank}L_0+\operatorname{rank}L_1\le q+d=4d-1.
+$$
+两个整数秩不可能都至少为 $2d$，所以至少一个恰为 $2d-1$。必要时交换两个环境特征方向及 $\mu,\nu$，下文可设
+$$
+\operatorname{rank}L_0=2d-1=q-d.
+\tag{80.4}
+$$
+
+### 80.2 同一输入补空间迫使全部缺陷方向饱和
+
+**定理80.1（差一情形的缺陷投影与三块谱）。** 在（80.1）—（80.2）下，$\mathscr D$ 是秩 $d$ 的正交投影。令
+$$
+E_0=\ker L_0^*,\qquad E_1=\ker L_1^*,\qquad
+E_c=(E_0\oplus E_1)^\perp.
+$$
+则 $E_0\perp E_1$，维数分别为 $d,d,d-1$，并且
+$$
+X=\mu P_{E_1}+\frac{\mu^2s}{\Delta}P_{E_c},
+\qquad
+Y=\nu P_{E_0}+\frac{\nu^2s}{\Delta}P_{E_c}.
+\tag{80.5}
+$$
+
+**证明。** 由（80.4），$\dim E_0=d$。更精确的秩估计
+$\operatorname{rank}L_0\ge q-\operatorname{rank}H_0$ 使 $H_0$ 秩为 $d$，故单射。对任意 $v\in E_0$，（80.3）的交叉块给 $H_0H_1^*v=0$，所以 $H_1^*v=0$。两对角式继而给
+$$
+Yv=\nu v,\qquad H_0H_0^*v=(\mu/s)v.
+$$
+因此 $E_0\subset\operatorname{ran}H_0$；两侧维数都是 $d$，故存在满等距 $J_0:\mathbb C^d\to E_0$，满足
+$$
+H_0=\sqrt{\mu/s}\,J_0,\qquad
+H_0H_0^*=(\mu/s)P_{E_0},\qquad
+\operatorname{ran}H_1\subset W:=E_0^\perp.
+\tag{80.6}
+$$
+这里 $\dim W=2d-1$。
+
+置 $T=H_1:\mathbb C^d\to W$。解（80.3）的两个对角方程，得到相对于 $E_0\oplus W$ 的分解
+$$
+X=0\oplus X_W,\qquad
+X_W=\frac{\mu s}{\Delta}(\mu I_W+\nu TT^*)>0,
+$$
+$$
+Y=\nu I_{E_0}\oplus Y_W,\qquad
+Y_W=\frac{\nu s}{\Delta}(\nu I_W-sTT^*)\succeq0.
+\tag{80.7}
+$$
+所以 $TT^*\preceq(\nu/s)I_W$，$T^*T$ 的 $d$ 个特征值 $\lambda_i$ 均属于 $[0,\nu/s]$。
+
+令输入 $P=(\ker L_0)^\perp$、$N=\ker L_0$，维数分别为 $2d-1,d$。用 $L_0$ 的极分解把输入 $P$ 酉识别到输出 $W$，则
+$$
+L_0=
+\begin{pmatrix}
+0&0\\
+X_W^{1/2}&0
+\end{pmatrix}:W\oplus N\longrightarrow E_0\oplus W.
+$$
+（80.3）的交叉块使 $L_1P\subset E_0$，故在同一分解中
+$$
+L_1=\begin{pmatrix}B&C\\0&E\end{pmatrix},
+\qquad
+B=-\sqrt{\mu s}\,J_0T^*X_W^{-1/2}.
+\tag{80.8}
+$$
+由（80.7），计算 $L_1L_1^*$ 的各块得到
+$$
+BB^*+CC^*=\nu I_{E_0},\qquad
+EE^*=Y_W,\qquad CE^*=0.
+\tag{80.9}
+$$
+
+设 $k$ 为 $T^*T$ 中特征值 $\nu/s$ 的重数，$0\le k\le d$。$TT^*$ 在 $W$ 上的谱由 $\lambda_1,\ldots,\lambda_d$ 及另外 $d-1$ 个零构成；当 $d=1$ 时后者为空。由（80.7），
+$$
+\operatorname{rank}E=2d-1-k.
+\tag{80.10}
+$$
+另一方面，
+$$
+BB^*=\Delta J_0T^*(\mu I_W+\nu TT^*)^{-1}TJ_0^*.
+$$
+在 $J_0$ 的坐标中，$CC^*$ 的对应特征值为
+$$
+\nu-\frac{\Delta\lambda_i}{\mu+\nu\lambda_i}
+=\frac{\mu(\nu-s\lambda_i)}{\mu+\nu\lambda_i}.
+$$
+它恰在 $\lambda_i=\nu/s$ 时为零，所以
+$$
+\operatorname{rank}C=d-k.
+\tag{80.11}
+$$
+
+$C,E$ 的定义域是同一个 $d$ 维输入补空间 $N$。由于 $CE^*=0$，$\operatorname{ran}C^*$ 与 $\operatorname{ran}E^*$ 在 $N$ 内正交。因此
+$$
+(d-k)+(2d-1-k)\le d,
+\qquad 2k\ge2d-1.
+$$
+$k$ 为至多 $d$ 的整数，故必须
+$$
+k=d,\qquad T^*T=(\nu/s)I_d,\qquad C=0.
+\tag{80.12}
+$$
+这一步使用同一个实际块分解的正交秩预算，没有仅凭两个系数分别奇异断言整个铅笔奇异。
+
+令 $E_1=\operatorname{ran}T$。由（80.12），$E_1$ 为 $d$ 维且与 $E_0$ 正交。$E_c=W\ominus E_1$ 为 $d-1$ 维。代回（80.7）得到（80.5），其 $Y$ 的核恰为 $E_1$，与定理中 $E_1=\ker L_1^*$ 的定义一致。取满等距 $J_1:\mathbb C^d\to E_1$，则
+$$
+H_1=\sqrt{\nu/s}\,J_1.
+$$
+结合（80.6），$H^*H=(\mu/s+\nu/s)I_d=I_d$，故 $\mathscr D=HH^*$ 为秩 $d$ 正交投影。证明完毕。
+
+### 80.3 独立输入输出酉坐标下的完整标准形
+
+**定理80.2（差一结构及全部纤维的准确秩）。** 在（80.1）—（80.2）下，可分别给输入和输出 $Q$ 选取酉坐标，使输出分成 $d,d,d-1$ 维的三个块，输入分成 $d,d-1,d-1,1$ 维的四个块，并有
+$$
+L_0=
+\begin{pmatrix}
+\sqrt\mu I_d&0&0&0\\
+0&0&0&0\\
+0&\beta I_{d-1}&0&0
+\end{pmatrix},
+\qquad
+L_1=
+\begin{pmatrix}
+0&0&0&0\\
+\sqrt\nu I_d&0&0&0\\
+0&0&\delta I_{d-1}&0
+\end{pmatrix},
+\tag{80.13}
+$$
+其中
+$$
+\beta=\mu\sqrt{s/\Delta},\qquad
+\delta=\nu\sqrt{s/\Delta}.
+$$
+零维块在 $d=1$ 时省略。反向，这些矩阵给满足全部合同的算子。每个非零复 $z$ 都满足
+$$
+\operatorname{rank}M|_{Q\otimes(Az\otimes z)}=2d-1.
+\tag{80.14}
+$$
+
+**证明。** 用定理80.1的 $J_0,J_1$ 选输出满等距
+$$
+A_o=J_1:\mathbb C^d\to E_1,\qquad
+B_o=-J_0:\mathbb C^d\to E_0,
+$$
+以及任意满等距 $C_o:\mathbb C^{d-1}\to E_c$。它们的像两两正交。交叉块变成
+$$
+L_1L_0^*=\sqrt{\mu\nu}\,B_oA_o^*.
+$$
+令
+$$
+P_o=\mu^{-1/2}L_0^*A_o,\qquad
+\widetilde P_o=\nu^{-1/2}L_1^*B_o.
+$$
+由（80.5）它们均为等距；交叉块给 $P_o^*\widetilde P_o=I_d$，所以
+$(P_o-\widetilde P_o)^*(P_o-\widetilde P_o)=0$，即两者相同。
+
+再令
+$$
+R_o=\beta^{-1}L_0^*C_o,\qquad
+S_o=\delta^{-1}L_1^*C_o.
+$$
+由（80.5），$R_o,S_o$ 都是来自 $\mathbb C^{d-1}$ 的等距。并且
+$$
+P_o^*R_o=0,\qquad P_o^*S_o=0,\qquad R_o^*S_o=0.
+$$
+第一式来自 $A_o^*XC_o=0$，后二式来自
+$L_0L_1^*=\sqrt{\mu\nu}\,A_oB_o^*$ 及 $B_o^*C_o=0$。
+
+这三个输入像的维数之和为 $d+2(d-1)=3d-2=q-1$。其正交补记为 $N_0$，恰一维。由（80.5），
+$$
+\operatorname{ran}L_0^*=\operatorname{ran}P_o\oplus\operatorname{ran}R_o,\qquad
+\operatorname{ran}L_1^*=\operatorname{ran}P_o\oplus\operatorname{ran}S_o,
+$$
+因此 $N_0$ 被 $L_0,L_1$ 同时消去，且恰为它们的共同核。
+
+在输入坐标 $(P_o,R_o,S_o,N_0)$ 与输出坐标 $(A_o,B_o,C_o)$ 中，直接得到
+$$
+L_0P_o=\sqrt\mu A_o,\quad L_1P_o=\sqrt\nu B_o,\quad
+L_0R_o=\beta C_o,\quad L_1S_o=\delta C_o,
+$$
+$$
+L_1R_o=L_0S_o=0,\qquad L_0|_{N_0}=L_1|_{N_0}=0.
+$$
+这就是（80.13）。
+
+反向，将（80.13）代入（80.1），得到
+$$
+I-MM^*=\mathcal H\mathcal H^*,\qquad
+\mathcal H v=
+\frac{\sqrt\mu\,B_ov\otimes e_0-\sqrt\nu\,A_ov\otimes e_1}{\sqrt s}.
+$$
+$\mathcal H$ 为等距，故缺陷恰为秩 $d$ 的正交投影，$M$ 为收缩。加权块式直接验证全部二次纤维保持。
+
+最后，对非零 $z$，第一输入块在前两个输出块中给出 $d$ 维像；第二、第三输入块的联合像恰为整个第三输出块，维数 $d-1$；第四输入块为零。前两部分正交，因此总纤维秩为 $2d-1$。这对任意复 $z_0,z_1$ 且不全为零成立，证明完毕。
+
+这里的两个酉坐标分别作用于输入和输出接收因子；如同第77节，这不是同一个实际通道反复执行时可以逐轮自由换坐标的声明。
+
+### 80.4 直接和解释、d 等于一的边界与算子谱
+
+标准形（80.13）可重新排列为 $d-1$ 份第76节的三维加权锐例，加一份第72节的二维秩一缺陷块。具体地，将第一输入块及前两个输出块的前 $d-1$ 个坐标分别与第三输出块、第二和第三输入块配成三维块；余下第一输入坐标、最后一维共同输入核及前两个输出块的最后坐标构成二维块。该二维块的系数为
+$$
+L_0^{(2)}=\begin{pmatrix}\sqrt\mu&0\\0&0\end{pmatrix},
+\qquad
+L_1^{(2)}=\begin{pmatrix}0&0\\\sqrt\nu&0\end{pmatrix}.
+$$
+它每条非零纤维的秩为一，完整缺陷为秩一正交投影。
+
+当 $d=1$ 时，$q=2$，三维块数量为零，$E_c$ 及第二、第三输入块均为零维；剩下的正是上述二维块。因此证明中的维数和谱式在这一边界无需额外非零空间假设。
+
+**推论80.3（差一算子的谱）。** 在（80.1）—（80.2）下，$MM^*$ 的零特征值重数为 $d$，一特征值重数为 $5d-2$，且
+$$
+\operatorname{rank}M=5d-2.
+$$
+每条二次纤维的输入核维数为 $d$；所有这些纤维系数共同的输入核维数为一。
+
+**证明。** 输出维数为 $2q=6d-2$，而 $I-MM^*$ 为秩 $d$ 投影，故算子谱及秩如述。纤维输入维数 $3d-1$ 减去（80.14）的秩 $2d-1$ 得 $d$；共同输入核已经在定理80.2中确定为 $N_0$。证明完毕。
+
+特别地，$q=5,d=2$ 不会反驳“每条纤维秩至多 $2d$”，因为其准确秩为三。但本节只处理 $q=3d-1$，并未对所有 $q<3d-1$ 证明或反驳该一般纤维秩猜想。以上仍属于二次纤维保持算子的线性代数合同，不直接改变六轮实际接收器的一般容量区间 $7\le d_{\mathrm{CPTP},6}\le8$。
+
+## 追加锚（本行以下为增补区）
