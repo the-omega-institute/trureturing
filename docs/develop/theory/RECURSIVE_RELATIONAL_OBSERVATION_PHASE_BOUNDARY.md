@@ -59179,3 +59179,323 @@ $$
 $m_b=h_b=0$ 的另一退化端点。
 
 ## 追加锚（本行以下为增补区）
+
+## 204. Gram 缺陷控制的三阶余项与定量恢复刚性
+
+第200、203节确定了完整恢复误差的二阶系数，
+但其一致小余项尚未给出明确幂次。
+本节直接用局部 Gram 平方控制整份 Choi 对，
+将余项收紧为三阶，并给出近最优操作接近规范操作的速率。
+
+### 204.1 同一来源区间与定量目标
+
+固定 $\beta>0$、$0<\gamma<\beta$、$R>1$，
+沿用第203节的 $h_b$ 以及 $n,m(h),t,\Phi_h,Q(h)$。
+取任意固定闭区间
+
+$$
+I=[a,b],\qquad 0<a\le b\le h_b.
+\tag{204.1}
+$$
+
+保持同一接收端权限、共同 CPTP 条件和全部外部参考。
+写 $E_\epsilon(h)=\mathscr E(h\epsilon,\epsilon)$。
+$\Gamma^*(h)$ 表示第200、203节唯一的规范一阶 Choi 对。
+所有操作矩结论仍指无损旗标对称化后的代表。
+
+**定理204.1（一致三阶余项）。** 存在常数 $C_I,\epsilon_I>0$，使
+
+$$
+\boxed{
+\left|E_\epsilon(h)-\frac34-\epsilon\Phi_h-\epsilon^2Q(h)\right|
+\le C_I\epsilon^3
+\qquad(h\in I,\ 0<\epsilon<\epsilon_I).
+}
+\tag{204.2}
+$$
+
+该结论包含 $b=h_b$，不要求最优器关于参数可微，
+也不要求所有噪声处的 Kraus 秩相同。
+
+### 204.2 从两个局部平方恢复整份 Choi 对
+
+固定有限 $K\ge0$，考虑满足
+
+$$
+0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)\le K\epsilon^2
+\tag{204.3}
+$$
+
+的全部对称化 instrument。
+第191节的速率给
+
+$$
+C=C_0+C_1=O_{I,K}(\epsilon^2),\qquad
+A_j-1/2=O_{I,K}(\epsilon),\qquad
+x=\frac{A_0-A_1}{2\epsilon}=O_{I,K}(1).
+\tag{204.4}
+$$
+
+定义 $U,V$ 如（200.8），令
+
+$$
+\mathfrak d=\|\Gamma-\Gamma^*(h)\|_{\mathrm F},\qquad S=U+V.
+$$
+
+这里 Frobenius 距离取两份 Choi 差矩阵的 Frobenius 范数平方和的平方根。
+
+**引理204.2（不依赖跳跃余量的定量 Gram 恢复）。** 在（204.3）的整个类上一致有
+
+$$
+\boxed{
+\mathfrak d\le C_{I,K}(\epsilon+\sqrt U+\sqrt V).
+}
+\tag{204.5}
+$$
+
+**证明。** 对每个结果，把各 Kraus 的 $a,b,c,d$ 元素视为向量
+$\mathbf a_j,\mathbf b_j,\mathbf c_j,\mathbf d_j$。
+共同 TP 保证这些向量范数一致有界。置
+
+$$
+\mathbf v_j=\mathbf d_j-2m\mathbf a_j,\qquad
+\mathbf u_0=\mathbf b_0-i2n\mathbf a_0.
+$$
+
+则 $\|\mathbf u_0\|^2=U$、
+$\sum_j\|\mathbf v_j\|^2=V$。
+凡包含 $\mathbf c_j$ 的 Gram 条目均为
+$O(\sqrt C)=O_{I,K}(\epsilon)$。
+由 Cauchy–Schwarz，
+
+$$
+M_j=2mA_j+O(\sqrt V),\qquad
+D_j=4m^2A_j+O(\sqrt V+V).
+\tag{204.6}
+$$
+
+结果0的另两项满足
+
+$$
+N_0=-i2nA_0+O(\sqrt U),\qquad
+B_0=4n^2A_0+O(\sqrt U+U).
+\tag{204.7}
+$$
+
+定义剩余的 $b,d$ 交叉矩
+$Z_j=\sum_\alpha b_{j,\alpha}\overline{d_{j,\alpha}}$。
+两种结果均满足
+
+$$
+Z_j=2m\overline{N_j}+O(\sqrt V).
+\tag{204.8}
+$$
+
+对结果1，共同 TP 给
+
+$$
+N_1=-N_0-P,\qquad
+B_1=1-B_0-D_0-D_1,
+$$
+
+而 $|P|\le\sqrt{C(D_0+D_1)}=O_{I,K}(\epsilon)$。
+这控制了全部 Gram 条目。
+将 $A_j=1/2$、$C=U=V=0$ 代入这些关系，
+恰得到 $\Gamma^*(h)$ 的条目，包括结果1的额外跳跃权重。
+$U,V$ 在固定紧 Choi 集上一致有界，故其中的 $U,V$ 项
+也可分别吸收到常数倍的 $\sqrt U,\sqrt V$ 中。
+有限个条目合并即得（204.5）。
+整个推导没有除以 $B_*(h)$，所以也适用于接触端点。证毕。
+
+### 204.3 带明确余项的误差平方分解
+
+第200节的冻结谱与参考极大点由统一简单根和非零曲率确定。
+它们在相关紧集附近的环境实 Choi 坐标中解析，
+故二阶冻结系数 $R_h$ 的一阶导数有统一界。
+因此原来的连续性估计可以强化为
+
+$$
+|R_h(\Gamma)-Q_0(h)|\le C_I\mathfrak d.
+\tag{204.9}
+$$
+
+这个环境延拓只用于 Taylor 估计；实际操作仍在合法 Choi 集中。
+同样，沿 $A_0,A_1$ 展开的（200.20）可以定量写成
+
+$$
+L_h(\Gamma)
+=G_h(\Gamma)+\alpha(h)\epsilon x
++O_{I,K}(\epsilon^2+\epsilon\mathfrak d).
+\tag{204.10}
+$$
+
+确实，占据列位移为 $O(\epsilon)$，二阶 Taylor 余项为
+$O(\epsilon^2)$；其共同平移 $-C/2$ 也是 $O(\epsilon^2)$。
+一阶偏置导数与规范点的 $\alpha(h)$ 相差
+$O(\mathfrak d)$，相乘后给（204.10）的剩余项。
+
+令
+
+$$
+\begin{gathered}
+W=\sum_{j,\alpha}|c/\epsilon+itd|^2,\qquad
+M_{\mathrm{def}}=\sum_j|M_j-m|^2,\\
+\Delta=e_\epsilon(h,\Gamma)
+-\left[\frac34+\epsilon\Phi_h+\epsilon^2Q(h)\right].
+\end{gathered}
+$$
+
+结合（200.11）的精确 Gram 恒等式、两个平方完成和
+（204.9）—（204.10），得到
+
+$$
+\begin{aligned}
+\Delta={}&
+\epsilon^2\left[\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+\frac W4\right]
++\epsilon\left[\frac{\beta\delta}4U+\frac{\beta R}4V
++\frac h6M_{\mathrm{def}}\right]+\mathcal R,\\
+|\mathcal R|\le{}&C_{I,K}(\epsilon^3+\epsilon^2\mathfrak d)
+\le C'_{I,K}(\epsilon^3+\epsilon^2\sqrt S).
+\end{aligned}
+\tag{204.11}
+$$
+
+其中泄漏平方产生的
+$\epsilon^2t^2(m^2-(D_0+D_1)/4)$ 由
+$|D_0+D_1-4m^2|=O(\mathfrak d)$ 控制。
+基点恒等式中的
+$\epsilon^2x^2/(1-C)-\epsilon^2x^2$ 是 $O(\epsilon^4)$；
+Gram 恒等式中其余含 $C$ 的项为 $O(\epsilon^3)$。
+冻结解析余项本来就是 $O_I(\epsilon^3)$。
+因此（204.11）没有隐藏尚未取得的稀少列收敛速率。
+
+置 $k=\min\{\beta\delta/4,\beta R/4\}>0$。
+Young 不等式给
+
+$$
+C'_{I,K}\epsilon^2\sqrt S
+\le\frac k2\epsilon S+C''_{I,K}\epsilon^3.
+$$
+
+从而
+
+$$
+\boxed{
+\Delta\ge
+\epsilon^2\left[\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+\frac W4\right]
++\frac k2\epsilon S+\frac a6\epsilon M_{\mathrm{def}}
+-C''_{I,K}\epsilon^3.
+}
+\tag{204.12}
+$$
+
+### 204.4 完整上下界与三阶近优类
+
+**定理204.1的证明。** 全部精确最优器均满足（204.3），取 $K=0$。
+对它们应用（204.12），删去非负项，得到（204.2）的下界。
+
+第200节的内点匹配族以及第203节的端点修复族都满足
+
+$$
+\begin{gathered}
+\mathfrak d=O_I(\epsilon),\quad
+x+a_{\mathrm{eff}}/2=O_I(\epsilon^2),\quad W=0,\\
+U=0,\quad V=O_I(\epsilon^2),\quad
+M_{\mathrm{def}}=O_I(\epsilon^2).
+\end{gathered}
+\tag{204.13}
+$$
+
+这些合法构造此前的统一二阶展开已经保证它们属于某个固定
+$K$ 的（204.3）类，故可应用（204.11）。
+其所有显式项及余项均为 $O_I(\epsilon^3)$，得到匹配上界。
+两界合并即得（204.2）。
+端点使用 Choi 权重估计，不要求额外 Kraus 的平方根振幅可微。证毕。
+
+**推论204.3（三阶近优操作的统一速率）。**
+对任意固定有限 $K_3\ge0$，若
+
+$$
+0\le e_\epsilon(h,\Gamma)-E_\epsilon(h)\le K_3\epsilon^3,
+$$
+
+则在全部这类对称化 instrument 上一致有
+
+$$
+\boxed{
+\begin{gathered}
+U+V=O_{I,K_3}(\epsilon^2),\qquad
+M_{\mathrm{def}}=O_{I,K_3}(\epsilon^2),\\
+\|\Gamma-\Gamma^*(h)\|_{\mathrm F}=O_{I,K_3}(\epsilon),\\
+\left(x+\frac{a_{\mathrm{eff}}}{2}\right)^2+W
+=O_{I,K_3}(\epsilon).
+\end{gathered}}
+\tag{204.14}
+$$
+
+**证明。** 充分小参数处该类包含于某个固定 $K$ 的（204.3）类。
+定理204.1给 $\Delta=O_{I,K_3}(\epsilon^3)$。
+将此代入（204.12），各非负项分别受控；
+再应用（204.5）即得全部速率。证毕。
+
+### 204.5 唯一阈值和熵展开的明确余项
+
+对实际 $\beta=288/2353$、$\gamma=42/2353$、$R=4$，
+在 $h_c$ 的固定严格内点邻域应用定理204.1。
+令 $k_c=-Q(h_c)/\Phi'_{h_c}$。
+第198节的唯一阈值仍记为 $\ell_\epsilon$。
+
+**推论204.4（阈值的三阶余项与熵的对数放大界）。** 有
+
+$$
+\boxed{
+\ell_\epsilon=h_c\epsilon+k_c\epsilon^2+O(\epsilon^3).
+}
+\tag{204.15}
+$$
+
+第201节的四项熵展开因此强化为
+
+$$
+\begin{aligned}
+H_2(\ell_\epsilon)={}&
+h_c\epsilon\log_2(1/\epsilon)
++h_c\epsilon\log_2(e/h_c)
++k_c\epsilon^2\log_2(1/\epsilon)\\
+&-\left[k_c\log_2h_c+\frac{h_c^2}{2\ln2}\right]\epsilon^2
++O\bigl(\epsilon^3\log(1/\epsilon)\bigr).
+\end{aligned}
+\tag{204.16}
+$$
+
+**证明。** 写 $h_\epsilon=\ell_\epsilon/\epsilon$。
+已有 $h_\epsilon=h_c+O(\epsilon)$；
+在这一变化点使用（204.2）的一致界，得到
+
+$$
+0=\Phi_{h_\epsilon}+\epsilon Q(h_\epsilon)+O(\epsilon^2).
+$$
+
+内点上的 $\Phi$ 二次可微、$Q$ 光滑，且 $\Phi'_{h_c}>0$。
+Taylor 展开于是给
+$h_\epsilon=h_c+k_c\epsilon+O(\epsilon^2)$，证明（204.15）。
+
+置 $u_\epsilon=h_c\epsilon+k_c\epsilon^2$。
+二元熵的导数在 $u_\epsilon$ 与 $\ell_\epsilon$ 之间为
+$O(\log(1/\epsilon))$，故两处熵值相差
+$O(\epsilon^3\log(1/\epsilon))$。
+直接将 $u_\epsilon$ 代入
+
+$$
+H_2(u)=u\log_2(1/u)+\frac{u}{\ln2}-\frac{u^2}{2\ln2}+O(u^3)
+$$
+
+并展开 $\log(1+(k_c/h_c)\epsilon)$，
+给出（204.16）的四个项以及 $O(\epsilon^3)$ 的剩余量。
+合并两种误差即得结论。证毕。
+
+这里的熵仍是指定来源边缘的熵。
+本节量化的是恢复任务与来源阈值的逼近误差，
+没有改变来源、观察者权限或将该熵替换为原始档案容量。
+
+## 追加锚（本行以下为增补区）
