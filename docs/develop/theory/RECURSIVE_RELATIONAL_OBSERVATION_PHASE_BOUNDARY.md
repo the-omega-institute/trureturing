@@ -67133,3 +67133,344 @@ $$
 定理 222.2 因而给出第 221 节局部证书的回接范围：主奇异关系与正交关系之外，保留行的权重条件承担独立义务。有纯策略鞍点时，完整距离还须取与缺标签成本 $q_0$ 的较小值；无鞍点只说明 $\gamma<\delta_{\rm rot}$，其本身既不确定真实距离，也不判定旋转修复是否最近。第 222.4 节三类实际通道分别实现这些不同关系。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 223. 两端口纯事件的完备性与总秩二最近记录通道
+
+**定义 223.1（输入端口与输出端口的两种核检验）。** 对任意 $A,B\in M_2(\mathbb C)$，置
+
+$$
+\Gamma(X)=AXA^\dagger+BXB^\dagger,
+$$
+$$
+\delta_{\rm rot}
+=\min_{|c_0|^2+|c_1|^2=1}
+\|c_0A+c_1B\|_\infty^2,
+$$
+$$
+\gamma_{\rm out}
+=\max_{\|r\|=1}\lambda_{\min}(\Gamma^*(P_r)),
+\qquad
+\gamma_{\rm in}
+=\max_{\|v\|=1}\lambda_{\min}(\Gamma(P_v)).
+\tag{223.TS.2}
+$$
+这里 $P_w=|w\rangle\langle w|$，$\Gamma^*$ 是迹配对对偶。所有极值都由紧性取得。
+
+固定输出 $r$ 后，$\Gamma^*(P_r)$ 是两列 $A^\dagger r,B^\dagger r$ 的外积之和；固定输入 $v$ 后，$\Gamma(P_v)$ 是两列 $Av,Bv$ 的外积之和。两列构成的 $2\times2$ 矩阵，其左右 Gram 矩阵具有相同本征值，故
+$$
+\gamma_{\rm out}
+=\max_r\min_c\|(c_0A+c_1B)^\dagger r\|^2,
+$$
+$$
+\gamma_{\rm in}
+=\max_v\min_c\|(c_0A+c_1B)v\|^2.
+\tag{223.TS.3}
+$$
+两次一般弱极小极大不等式给
+$$
+\max(\gamma_{\rm out},\gamma_{\rm in})\le\delta_{\rm rot}.
+\tag{223.TS.4}
+$$
+两个端口均为二维，Kraus 系数空间也为二维。下述反向不等式使用这三处维数条件。一般弱极小极大与 Gram 谱对应仍是第 222 节中采用的标准中间步骤，不单独承担端口完备性。
+
+**引理 223.2（简单最优删除的端口择一性）。** 取一份使 $\delta_{\rm rot}$ 达到的酉旋转 $(M,N)$。若 $M$ 的最大奇异值简单，则
+$$
+\delta_{\rm rot}=\gamma_{\rm out}
+\quad\text{或}\quad
+\delta_{\rm rot}=\gamma_{\rm in}.
+\tag{223.TS.5}
+$$
+
+**证明。** $\delta_{\rm rot}=0$ 时由（223.TS.4）立即成立。设 $\delta_{\rm rot}>0$。对输入、输出分别换酉基，再将两个 Kraus 同除以 $\sqrt{\delta_{\rm rot}}$。所有三个优化值均按相同平方尺度变化，所以只须研究
+$$
+M=\begin{pmatrix}1&0\\0&t\end{pmatrix},
+\qquad 0\le t<1.
+\tag{223.TS.6}
+$$
+对复参数 $z$，
+$$
+F(z)=\frac{\|M+zN\|_\infty^2}{1+|z|^2}
+$$
+在 $z=0$ 达到全局最小值一。简单主奇异值的两个实方向导数为零，给 $N_{00}=0$。利用保持（223.TS.6）的左右相位及 $N$ 的整体相位，可写
+$$
+N=\begin{pmatrix}0&a\\b&c\end{pmatrix},
+\qquad a,b\ge0,\quad c=x+iy.
+\tag{223.TS.7}
+$$
+若某个非对角元为零，相应未用相位任取。
+
+当 $a^2\ge1$，固定输出 $r=|0\rangle$，有
+$$
+\Gamma^*(P_0)=P_0+a^2P_1,
+$$
+所以 $\gamma_{\rm out}\ge1$。当 $b^2\ge1$，固定输入 $v=|0\rangle$，有
+$$
+\Gamma(P_0)=P_0+b^2P_1,
+$$
+所以 $\gamma_{\rm in}\ge1$。结合（223.TS.4）即可结算。
+
+因此只需排除
+$$
+a<1,\qquad b<1.
+\tag{223.TS.8}
+$$
+置 $q=(1-a^2)(1-b^2)>0$。若 $c=0$，则 $\|N\|_\infty=\max(a,b)<1$，直接违反 $M$ 的全局最小性。
+
+以下设 $c\ne0$。令 $z=\rho e^{i\theta}$，其中 $\rho$ 可以是任意非零实数。考察 Hermitian 矩阵
+$$
+D(z)=(1+|z|^2)I-(M+zN)^\dagger(M+zN).
+\tag{223.TS.9}
+$$
+直接展开得到
+$$
+D_{00}=(1-b^2)\rho^2>0,
+$$
+以及平方完成恒等式
+$$
+\boxed{
+\frac{\det D(z)}{\rho^2}
+=q(1+\rho^2)
+-\bigl((t+ab)\cos\theta+x\rho\bigr)^2
+-\bigl((t-ab)\sin\theta-y\rho\bigr)^2.
+}
+\tag{223.TS.10}
+$$
+例如展开右侧的线性项是
+$$
+-2\rho\bigl((t+ab)x\cos\theta-(t-ab)y\sin\theta\bigr),
+$$
+二次项系数是 $q-|c|^2$；这同时保留了 $c$ 的两个复方向。
+
+实矩阵
+$$
+T_0=
+\begin{pmatrix}
+t+ab&0&x\\
+0&t-ab&-y
+\end{pmatrix}
+\tag{223.TS.11}
+$$
+必有非零核向量 $(u,v,w)$。因为 $(x,y)\ne(0,0)$，任何纯第三坐标向量都不在其核中，所以 $u^2+v^2>0$。除以 $\sqrt{u^2+v^2}$，令
+$$
+\cos\theta=\frac{u}{\sqrt{u^2+v^2}},
+\quad
+\sin\theta=\frac{v}{\sqrt{u^2+v^2}},
+\quad
+\rho=\frac{w}{\sqrt{u^2+v^2}}.
+$$
+若 $\rho\ne0$，（223.TS.10）的两个平方同时为零，故 $\det D>0$。若 $\rho=0$，同一角度下（223.TS.10）右侧在零处严格等于 $q$；取充分小非零 $\rho$，仍保持正值。
+
+两种情形都得到 $D_{00}>0$、$\det D>0$，即 $D$ 正定。因此
+$$
+\|M+zN\|_\infty^2<1+|z|^2,
+$$
+违反全局最小性。这排除了（223.TS.8），证明引理。证毕。
+
+该引理只要求全局最优，不能把任意局部驻点代入。平方完成构造可能给出远离该驻点的下降方向，正是从局部正交关系到全局端口完备性的额外内容。
+
+**定理 223.3（两个纯端口优化的全局完备性）。** 对全部 $A,B\in M_2(\mathbb C)$，有
+
+$$
+\boxed{\delta_{\rm rot}=\max(\gamma_{\rm out},\gamma_{\rm in}).}
+\tag{223.TS.14}
+$$
+
+此式允许线性相关的 Kraus 矩阵、零矩阵和重奇异值，不要求这些辅助矩阵构成 TP 通道。
+
+**证明。** 若最优删除具有简单主奇异值，结论由引理 223.2 得到。下面用显式稠密性处理全部重根情形，不预设简单最优者稠密。
+
+对归一化系数 $c$，令其 Bloch 向量为
+$$
+\xi=
+\bigl(
+2\operatorname{Re}(c_0\overline c_1),
+2\operatorname{Im}(c_0\overline c_1),
+|c_0|^2-|c_1|^2
+\bigr)\in S^2.
+$$
+令 $M_c=c_0A+c_1B$。用三 Pauli 矩阵表达 $M_cM_c^\dagger$ 的无迹部分，得到
+$$
+\text{无迹坐标}(M_cM_c^\dagger)=\alpha+T\xi,
+\tag{223.TS.12}
+$$
+其中 $\alpha\in\mathbb R^3$、$T\in M_3(\mathbb R)$ 的每个分量都是 $A,B$ 的实、虚矩阵元的实二次多项式。
+
+具体地，若无迹坐标约定为 $H\mapsto(\operatorname{Tr}(\sigma_jH)/2)_{j=1}^3$，常数项与三线性项分别来自
+$$
+H_0=\frac{AA^\dagger+BB^\dagger}{2},\quad
+H_1=\frac{AB^\dagger+BA^\dagger}{2},
+$$
+$$
+H_2=\frac{i(AB^\dagger-BA^\dagger)}2,\quad
+H_3=\frac{AA^\dagger-BB^\dagger}{2}.
+$$
+
+$M_c$ 的两个奇异值相等，当且仅当 $\alpha+T\xi=0$。若
+$$
+P(A,B):=
+\det T\,
+\left(\|\operatorname{adj}(T)\alpha\|^2-(\det T)^2\right)\ne0,
+\tag{223.TS.13}
+$$
+该方程的唯一解 $-T^{-1}\alpha$ 不在单位球面，所以没有任何归一化组合具有重奇异值；零矩阵组合也被排除。
+
+这个实多项式不恒为零。取
+$$
+A_{\rm ex}=\begin{pmatrix}2&0\\0&1\end{pmatrix},
+\qquad
+B_{\rm ex}=\begin{pmatrix}0&1\\3&0\end{pmatrix}.
+$$
+直接由（223.TS.12）的定义得到
+$$
+\alpha=(0,0,-5/4),\qquad
+T=\operatorname{diag}(7/2,-5/2,11/4).
+$$
+唯一解为 $(0,0,5/11)$，不在 $S^2$，故 $P(A_{\rm ex},B_{\rm ex})\ne0$。
+
+对任意给定 $(A,B)$，沿它到 $(A_{\rm ex},B_{\rm ex})$ 的实线段限制 $P$，得到一个在终点非零的一元多项式。它只有有限个零点；因此可以选取趋于起点的参数序列，使每份近似铅笔的任意归一化组合都具有简单主奇异值。
+
+另一方面，$\delta_{\rm rot}$、$\gamma_{\rm out}$、$\gamma_{\rm in}$ 都连续依赖 $A,B$：各单位球面上的矩阵函数一致连续，算子范数及 Hermitian 最小本征值连续，紧集上的极大极小值随一致收敛而收敛。
+
+对上述近似，每份归一化组合都具有简单主奇异值，特别是达到最小删除值的组合。因此可应用引理 223.2，再用三个极值的连续性取极限，得到所述恒等式。证毕。
+
+辅助矩阵对的稠密性只用于这个有限维代数结论，不赋予它们实际执行权限；下条距离定理单独保留共同 TP 及记录接口条件。
+
+**定理 223.4（任意记录秩 $(1,2)$ 通道的精确预算二距离）。** 采用定义 222.1 的实际 CPTP 记录通道
+
+$$
+\mathcal R(X)=P_0^Q\otimes K_0XK_0^\dagger
++P_1^Q\otimes(AXA^\dagger+BXB^\dagger),
+$$
+
+其中 $K_0\ne0$、$A,B$ 线性独立，且
+
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I.
+$$
+
+令 $d_2$ 是到同输入、同量子输出、同两经典标签、总 Choi 秩至多二的全部 CPTP 记录通道的完整半 diamond 距离，允许标签缺失；令 $q_0=\|K_0^\dagger K_0\|_\infty$。则
+
+$$
+\boxed{
+d_2=\min\!\left(
+\min_{|c_0|^2+|c_1|^2=1}\|c_0A+c_1B\|_\infty^2,
+\ \|K_0^\dagger K_0\|_\infty
+\right)
+=\min(\delta_{\rm rot},q_0).
+}
+$$
+
+若 $\delta_{\rm rot}\le q_0$，取达到最小删除值的两 Kraus 酉混合 $(M,N)$，令
+
+$$
+H=(I-M^\dagger M)^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm rot}(X)
+=P_0^Q\otimes K_0HXHK_0^\dagger
++P_1^Q\otimes NHXHN^\dagger
+$$
+
+是一份最近通道，记录秩为 $(1,1)$。若 $q_0<\delta_{\rm rot}$，令
+
+$$
+G=A^\dagger A+B^\dagger B,
+\qquad H_0=G^{-1/2}.
+$$
+
+则
+
+$$
+\mathcal S_{\rm label}(X)
+=P_1^Q\otimes
+\left(AH_0XH_0A^\dagger+BH_0XH_0B^\dagger\right)
+$$
+
+是一份最近通道，记录秩为 $(0,2)$。这些构造各自的完整半 diamond 误差都可由一个无参考纯输入与一个合法输出事件达到。不要求最近通道唯一。
+
+**证明。** 定理 222.2 已给出全范围上界
+
+$$
+d_2\le\min(\delta_{\rm rot},q_0),
+\qquad 0<\delta_{\rm rot}<1.
+$$
+
+严格小于一来自共同 TP 和结果零非零：若结果一 Choi 的小正根为 $w_-$，则
+
+$$
+\delta_{\rm rot}\le w_-
+\le1-\frac{\|K_0\|_{HS}^2}{2}<1.
+$$
+
+因此旋转删除的 $H$ 存在；当 $q_0<\delta_{\rm rot}$ 时还有 $q_0<1$，故 $G=I-K_0^\dagger K_0>0$，$H_0$ 也存在。第 219 节对全部效应范数小于一的共同右修复结论给出上面两份候选及对应完整 diamond 上界。统一右 Gram 归一化 $K_i\mapsto K_iS^{-1/2}$ 的构造已有成熟先例，可见 C. Lancien 与 A. Winter，*Approximating quantum channels by completely positive maps with small Kraus rank*，[arXiv:1711.00697v3](https://arxiv.org/abs/1711.00697v3)，第 12 页式 (21)–(23)，[Quantum 8, 1320 (2024)](https://doi.org/10.22331/q-2024-04-30-1320)。该处给出无参考迹范数误差控制；这里使用的全效应范围、完整半 diamond 锐上界由第 219 节承担。可逆右乘不改变 Kraus 矩阵族的线性独立性，故其记录秩分别严格为 $(1,1)$、$(0,2)$。若 $q_0=1$，直接使用较小的旋转删除值，不在该端点调用 $G^{-1/2}$。
+
+下面证明每个预算候选均有匹配下界。若候选结果一的 Choi 秩至多一，将其写为 $C(\cdot)C^\dagger$，包括 $C=0$。
+
+首先，取达到 $\gamma_{\rm out}$ 的单位输出 $r$。行 $r^\dagger C$ 有单位核向量 $v$，所以候选在输入 $P_v$ 上对事件“标签一且量子输出为 $r$”给零概率。目标事件概率满足
+
+$$
+\langle v,\Gamma^*(P_r)v\rangle
+\ge\lambda_{\min}(\Gamma^*(P_r))
+=\gamma_{\rm out}.
+$$
+
+其次，取达到 $\gamma_{\rm in}$ 的单位输入 $v$。选择单位 $r$ 垂直于 $Cv$；若该向量为零，任选单位 $r$。候选对同类事件仍给零概率，目标概率满足
+
+$$
+\langle r,\Gamma(P_v)r\rangle
+\ge\lambda_{\min}(\Gamma(P_v))
+=\gamma_{\rm in}.
+$$
+
+这两种合法检验分别给同一候选的完整半 diamond 距离下界；无需在同一个实验中同时达到它们。由定理 223.3，该候选的距离至少为
+
+$$
+\max(\gamma_{\rm out},\gamma_{\rm in})=\delta_{\rm rot}.
+$$
+
+若候选结果一 Choi 秩为二，总秩预算迫使其结果零块缺失。取 $K_0^\dagger K_0$ 的最大本征向量为输入，只检验标签零，得到下界 $q_0$。两类穷尽全部预算内候选，故
+
+$$
+d_2\ge\min(\delta_{\rm rot},q_0).
+$$
+
+结合上界得到精确距离。对旋转候选，选择达到 $\max(\gamma_{\rm out},\gamma_{\rm in})$ 的一个端口检验，并将候选自身的结果一 Kraus 取为 $C=NH$。上述构造给一份无参考纯输入和一个事件，概率差至少为 $\delta_{\rm rot}$；同一候选的完整半 diamond 上界又不超过它，因此该事件恰好达到完整误差。对整标签候选，最大标签零概率的输入直接给差值 $q_0$，同理达到完整误差。整个推导先给任意参考都适用的上界，再以无参考下界匹配，不预设辅助参考无用。证毕。
+
+**命题 223.5（输入端口精确补齐第 222 节的输出核间隙）。** 对定理 222.3 的合法族
+
+$$
+A_u=\sqrt a\,\operatorname{diag}(1,u),
+\qquad
+B_u=\sqrt b\,X\operatorname{diag}(1,u),
+$$
+
+$$
+0<b<a,\qquad a+b<1,\qquad0\le u\le1,
+$$
+
+有
+
+$$
+\gamma_{\rm in}=b,
+\qquad
+\gamma_{\rm out}=\min(b,au^2),
+\qquad
+\delta_{\rm rot}=b.
+$$
+
+因此两个端口中至少一个给出完整最优删除值，即使另一个端口的压缩核值为零或严格较小。
+
+**证明。** 固定输入 $v=|0\rangle$ 时，
+
+$$
+\Gamma(P_0)=aP_0+bP_1,
+$$
+
+所以 $\gamma_{\rm in}\ge b$。定义 223.1 的弱界与定理 222.3 的 $\delta_{\rm rot}=b$ 给出反向界；其余公式已在定理 222.3 计算。因此输入端口恰好补齐该族全部输出端口间隙。
+
+第 221 节局部 reset 族由输出端口证书达到最优删除值。其简单谱及隐函数定理仍承担解析最优分支、局部驻点唯一性和四阶系数；全局距离公式并不提供这些解析精细结论。定理 223.4 的适用范围也仍限定为两个 qubit 端口、结果秩 $(1,2)$、两个经典标签和总秩二预算。左右 Gram 都为二阶、简单最优反证中的实三变量核、以及两标签预算对候选的穷尽分类分别承担证明步骤；增加端口维数、Kraus 数量、标签数量或改变预算，需要另外验证这些步骤。证毕。
+
+## 追加锚（本行以下为增补区）
