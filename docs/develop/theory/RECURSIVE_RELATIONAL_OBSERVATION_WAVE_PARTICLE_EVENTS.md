@@ -982,3 +982,361 @@ $$
 证明。定理 22.3 的同一个高概率事件给出 $D(\widehat\rho,\rho)\le\zeta p_*<p_*$。在这一事件上，定理 25.2 对每个分支同时成立，得到所述结论，无需再对分支数作并集界。预算是所选恢复方法的充分上界，不声称样本复杂度最优。分支可表示有限历史，但未校准仪器、模型误差或缺失环境记忆不由该统计界控制。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 把最终点击条件写入一套新的仪器
+
+**约定 26.1（来源、支撑与输出类型）。** 沿用第 18—19 节的固定有限维仪器：未点击分支为 $\mathcal N$，点击分支为 $\mathcal C_x$，$\mathcal A=\mathcal N^*$，$B_x=\mathcal C_x^*(I)$。置
+
+$$
+F=\lim_{n\to\infty}\mathcal A^n(I),\qquad
+R=I-F\ne0,\qquad
+\mathcal D=\ker R,\qquad P=P_{\mathcal D^\perp},
+\qquad\mathcal H_P=P\mathcal H.
+$$
+
+记 $G=R^{1/2}$；$G^{-1}$ 始终指 $\mathcal H_P$ 上的逆，嵌入原空间时在 $\mathcal D$ 上补零。符号 $I_P$ 表示 $\mathcal H_P$ 的恒等。对 $r_\rho=\operatorname{Tr}(\rho R)>0$ 定义
+
+$$
+\mathcal S_R(X)=GXG,\qquad
+\tau_R(\rho)=\frac{\mathcal S_R(\rho)}{r_\rho}.
+$$
+
+新未点击分支的输入、输出都是 $\mathcal H_P$，新点击分支的输入为 $\mathcal H_P$、输出仍为原来的 $\mathcal H$。将不同结果放入正交标志直和，就得到通常意义下具有共同输出空间的仪器。这里保留点击后的量子系统，不只保存点击概率。
+
+**引理 26.2（暗空间使支撑限制与实际分支相容）。** 对任意 Kraus 表示 $\mathcal N(X)=\sum_\alpha Q_\alpha XQ_\alpha^\dagger$、$\mathcal C_x(X)=\sum_\beta L_{x\beta}XL_{x\beta}^\dagger$，有
+
+$$
+R=\mathcal A(R)+\sum_xB_x,
+\qquad P Q_\alpha(I-P)=0,
+\qquad L_{x\beta}(I-P)=0.
+$$
+
+若 $H=PHP$，则 $\mathcal A(H)=P\mathcal A(H)P$；对任意终端 Hermitian 测试 $Z$，$\mathcal C_x^*(Z)$ 也支撑在 $\mathcal H_P$。
+
+证明。由 $\mathcal A(F)=F$ 与 $\mathcal A(I)+\sum_xB_x=I$ 得到第一式。定理 18.5 说明每个 $Q_\alpha$ 保持 $\mathcal D$，每个 $L_{x\beta}$ 在 $\mathcal D$ 上为零，得到其余两个式子。由 $PQ_\alpha=PQ_\alpha P$ 与 $H=PHP$，有 $\mathcal A(H)=\sum_\alpha(PQ_\alpha P)^\dagger H(PQ_\alpha P)$，故其两侧均支撑于 $P$；这一步不要求 $H$ 自伴。点击拉回的结论由 $L_{x\beta}=L_{x\beta}P$ 同样得到。$\square$
+
+**定理 26.3（最终点击条件的量子 Doob 表示）。** 对 $X\in\mathcal L(\mathcal H_P)$ 定义
+
+$$
+\widetilde{\mathcal N}(X)
+=G\mathcal N(G^{-1}XG^{-1})G,
+\qquad
+\widetilde{\mathcal C}_x(X)
+=\mathcal C_x(G^{-1}XG^{-1}).
+$$
+
+这些分支完全正，且满足仪器完备性
+
+$$
+\widetilde{\mathcal N}^{*}(I_P)
++\sum_x\widetilde{\mathcal C}_x^{*}(I)=I_P.
+$$
+
+对原空间全部算子，有
+
+$$
+\widetilde{\mathcal N}\mathcal S_R=\mathcal S_R\mathcal N,
+\qquad
+\widetilde{\mathcal C}_x\mathcal S_R=\mathcal C_x.
+$$
+
+因而对每个 $n\ge1$ 和 $r_\rho>0$，
+
+$$
+\boxed{
+\widetilde{\mathcal C}_x\widetilde{\mathcal N}^{\,n-1}
+\bigl(\tau_R(\rho)\bigr)
+=\frac{\mathcal C_x\mathcal N^{n-1}(\rho)}{r_\rho}.
+}
+$$
+
+所以新过程复现原过程在最终点击条件下的首次点击时间、端口及各非零分支的归一化终端量子态。
+
+证明。新 Kraus 算子分别是 $GQ_\alpha G^{-1}$ 和 $L_{x\beta}G^{-1}$，完全正性直接成立。拉回恒等后相加，得到
+
+$$
+G^{-1}\left(\mathcal A(R)+\sum_xB_x\right)G^{-1}
+=G^{-1}RG^{-1}=I_P.
+$$
+
+引理 26.2 给出 $GQ_\alpha P=GQ_\alpha$ 与 $L_{x\beta}P=L_{x\beta}$，故
+
+$$
+G\mathcal N(PXP)G=G\mathcal N(X)G,
+\qquad \mathcal C_x(PXP)=\mathcal C_x(X).
+$$
+
+再用 $G^{-1}G=GG^{-1}=P$，即得两个交织恒等式。逐次代入并除以 $r_\rho$ 得到方框公式。其右端迹是原分支概率除以最终点击概率；终端分支再归一化时该公共因子抵消。$\square$
+
+**定理 26.4（条件尾项变为普通生存效果）。** 新过程从任意 $\mathcal H_P$ 上的初态出发最终点击概率为一，且
+
+$$
+\widetilde S_n
+=(\widetilde{\mathcal N}^{*})^n(I_P)
+=G^{-1}\mathcal A^n(R)G^{-1}\longrightarrow0.
+$$
+
+对定理 19.2 的 $M,q,T$，有
+
+$$
+\widetilde S_n\le q^{\lfloor n/M\rfloor}I_P,
+\qquad
+\widetilde T:=\sum_{n\ge0}\widetilde S_n=G^{-1}TG^{-1},
+\qquad
+\operatorname{Tr}\bigl(\tau_R(\rho)\widetilde T\bigr)
+=\frac{\operatorname{Tr}(\rho T)}{r_\rho}.
+$$
+
+证明。新未点击拉回为
+
+$$
+\widetilde{\mathcal N}^{*}(H)=G^{-1}\mathcal A(GHG)G^{-1}.
+$$
+
+从 $GI_PG=R$ 开始迭代；引理 26.2 保证中间算子都在 $P$ 支撑上，故相邻的 $G,G^{-1}$ 可消去，得到生存效果公式。定理 19.2 的剩余尾项趋零且被 $q^{\lfloor n/M\rfloor}R$ 控制，共轭后得到前两项。范数收敛允许逐项共轭求和。$T=PTP$，迹的循环性给出最后一式。$\square$
+
+**说明 26.5（既有工具与本处适用范围）。** 通过正算子平方根改变量子轨迹动力学是既有量子 Doob 变换机制。Carollo、Garrahan、Lesanovsky 与 Pérez-Espigares 的 [arXiv:1711.10951v2](https://arxiv.org/abs/1711.10951v2)，特别是式 (6)—(11)，处理计数偏置的开放系统动力学，包含长时及有限时间构造；Esteve 等的 [arXiv:2508.04622v1](https://arxiv.org/abs/2508.04622v1) 讨论输运优化与受限控制。本节直接证明离散首次吸收条件下、允许 $R$ 奇异时的支撑版本，不将上述文献的条件或结论逐字移植。仪器的数学存在性也不证明当前装置拥有实施这些新分支所需的控制。
+
+## 27. 条件坐标中的动态充分边界
+
+**定义 27.1（按最终点击权重归一的边界）。** 设 $\mathcal W\subseteq\operatorname{Herm}(\mathcal H)$ 为实线性空间，其中每个元素都支撑在 $P$ 上，且 $R\in\mathcal W$。令
+
+$$
+\Theta_R(H)=G^{-1}HG^{-1},\qquad
+\widetilde{\mathcal W}=\Theta_R(\mathcal W),
+\qquad
+b_{\mathcal W}(\rho)
+=\left(\frac{\operatorname{Tr}(\rho H)}{r_\rho}\right)_{H\in\mathcal W}.
+$$
+
+有限基即可给出这份边界的全部坐标。它描述已条件于最终点击的任务；若还要恢复原过程的无条件点击权重，须另保留 $r_\rho$。
+
+**定理 27.2（条件边界的拉回闭合被精确运输）。** 对任意 $H\in\mathcal W$ 及 $r_\rho>0$，
+
+$$
+\operatorname{Tr}\bigl[\tau_R(\rho)\Theta_R(H)\bigr]
+=\frac{\operatorname{Tr}(\rho H)}{r_\rho},
+\qquad
+\widetilde{\mathcal N}^{*}\Theta_R(H)=\Theta_R\mathcal A(H).
+$$
+
+因此
+
+$$
+\mathcal A(\mathcal W)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal N}^{*}(\widetilde{\mathcal W})
+\subseteq\widetilde{\mathcal W}.
+$$
+
+指定点击后测试族 $\mathcal Z_x$ 时，还有
+
+$$
+\mathcal C_x^*(\mathcal Z_x)\subseteq\mathcal W
+\iff
+\widetilde{\mathcal C}_x^*(\mathcal Z_x)
+\subseteq\widetilde{\mathcal W}.
+$$
+
+若这些包含关系成立，且每个 $\mathcal Z_x$ 包含终端恒等，则 $b_{\mathcal W}$ 对新过程的首次点击、未点击条件续接及所指定终端测试动态充分。这里的闭合指全部 $\mathcal H_P$ 状态上的同一线性表示；不据此断言受限可达来源必须具有全空间闭合。
+
+证明。第一式用 $H=PHP$ 与迹循环性。第二式由定理 26.4 的拉回公式和 $G\Theta_R(H)G=H$ 得到。$\Theta_R$ 是 $P$ 支撑 Hermitian 空间到 $\operatorname{Herm}(\mathcal H_P)$ 的线性双射，故推出第一个等价。新点击拉回满足
+
+$$
+\widetilde{\mathcal C}_x^*(Z)=\Theta_R\bigl(\mathcal C_x^*(Z)\bigr),
+$$
+
+得到第二个等价。$\Theta_R(R)=I_P$，所以新边界含恒等；对结果概率与每个后继坐标反复拉回，得到第 20 节的动态充分性。正概率后继才归一化，零概率路径不要求条件态。该证明同时说明：$\tau_R(\rho)$ 要配合变换后的仪器与测试使用，不能把原系统上任意中间测量的算子保持原样后仍声称相同条件实验。$\square$
+
+**命题 27.3（条件过程仍不能确定原来的点击权重）。** 若 $\mathcal D\ne\{0\}$，取任意暗态 $\omega_D$ 及 $\mathcal H_P$ 上的状态 $\sigma$。对 $0<t\le1$ 令 $\rho_t=(1-t)\omega_D+t\sigma$，则
+
+$$
+\tau_R(\rho_t)=\tau_R(\sigma),
+\qquad r_{\rho_t}=t\operatorname{Tr}(\sigma R).
+$$
+
+全部条件首次事件及终端态相同，而无条件最终点击概率可以不同。
+
+证明。$G\omega_DG=0$，故分子和分母同时乘 $t$。定理 26.3 随即给出条件过程相同；最后的概率公式随 $t$ 严格改变。$\square$
+
+## 28. 条件状态的精确制备成本
+
+**定义 28.1（单份未知输入的成功分支合同）。** 本节来源类是 $\mathcal H_P$ 上的全部密度矩阵。实验者知道 $R$，但不知本次输入 $\rho$；每次只取得一份输入，不允许先取得其经典完整描述或额外副本。允许任意固定完全正迹不增成功操作 $\mathcal E$，要求对全部来源都满足
+
+$$
+p_{\mathcal E}(\rho):=\operatorname{Tr}\mathcal E(\rho)>0,
+\qquad
+\frac{\mathcal E(\rho)}{p_{\mathcal E}(\rho)}=\tau_R(\rho).
+$$
+
+辅助系统及未读结果可包含在 CP 操作实现中，成功时交出的量子系统为 $\mathcal H_P$。这是一份统一量子操作的合同，不是每个已知输入可另选制备程序。
+
+**定理 28.2（精确成功操作的刚性）。** 定义 28.1 下，存在与输入无关的常数 $c>0$，使
+
+$$
+\boxed{\mathcal E(X)=cGXG.}
+$$
+
+反之，该映射满足所需条件态；它迹不增当且仅当 $cR\le I_P$。
+
+证明。写 $\mathcal E(X)=\sum_jK_jXK_j^\dagger$。对每个非零向量 $\psi\in\mathcal H_P$，输出在归一化后为 $G\psi$ 对应的纯态。正半定秩一和的每个向量 $K_j\psi$ 因而都平行于 $G\psi$，包括零向量的情形。于是 $G^{-1}K_j$ 保持每一条向量射线。在线性空间维数至少二时，取基向量及每对基向量之和，得到全部比例系数相同，因此 $G^{-1}K_j=a_jI_P$；一维时这一结论直接成立。令 $c=\sum_j|a_j|^2$，即得方框式；处处正的成功概率迫使 $c>0$。其效果为 $cR$，所以迹不增条件正是 $cR\le I_P$。$\square$
+
+**定理 28.3（最优最坏成功率）。** 令 $r_{\min},r_{\max}>0$ 为 $R|_{\mathcal H_P}$ 的最小、最大本征值。则
+
+$$
+\boxed{
+p_{\mathrm{opt}}
+:=\sup_{\mathcal E}\inf_{\rho\text{ 支撑于 }P}
+p_{\mathcal E}(\rho)
+=\frac{r_{\min}}{r_{\max}}.
+}
+$$
+
+上确界由成功 Kraus 算子 $G/\sqrt{r_{\max}}$ 达到，可补失败 Kraus 算子 $\sqrt{I_P-R/r_{\max}}$。确定性精确制备对全部来源成立，当且仅当 $R|_{\mathcal H_P}$ 是正标量乘恒等。
+
+证明。定理 28.2 给出 $c\le1/r_{\max}$，而输入取最小本征态时成功率为 $cr_{\min}$；这既给出上界，又被所述 Kraus 对达到。确定性要求 $cR=I_P$，等价于正标量形式。反向此时 $\tau_R(\rho)=\rho$，恒等通道即可。$\square$
+
+**命题 28.4（条件模拟与原始事件权重的两种合同）。** 原始过滤分支 $\mathcal S_R$ 是合法迹不增操作。对任意原空间初态 $\rho$，先执行该分支，成功后运行第 26 节的新过程，所得有限首次点击分支的未归一化终端态恰为
+
+$$
+\widetilde{\mathcal C}_x\widetilde{\mathcal N}^{\,n-1}
+\mathcal S_R(\rho)
+=\mathcal C_x\mathcal N^{n-1}(\rho).
+$$
+
+成功概率为 $r_\rho$；失败可以标记为无事件，其概率为 $1-r_\rho$。若改用最优过滤 $\mathcal S_R/r_{\max}$，每个有限事件权重同时乘 $1/r_{\max}$，条件分布与条件终端态保持相同。
+
+证明。$R\le I$ 保证原过滤合法；与失败标志分支 $X\mapsto\operatorname{Tr}[(I-R)X]$ 合成保迹操作。交织恒等式证明终端公式，最优过滤仅乘常数。该模拟在新协议中可以即时宣告失败；它没有复现原协议中无穷长的未点击记录，也没有识别同一份原始样本在未执行实验中的个体未来。$\square$
+
+## 29. 制备成功率与条件敏感度的精确对应
+
+**定义 29.1（整个来源类上的条件数）。** 假设 $\dim\mathcal H_P\ge2$，记
+
+$$
+\kappa_R=\frac{r_{\max}}{r_{\min}},\qquad
+L_R=\sup_{\rho\ne\sigma\text{ 支撑于 }P}
+\frac{D(\tau_R(\rho),\tau_R(\sigma))}{D(\rho,\sigma)},
+\qquad D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+
+两态可以为混态，且共享同一个已知 $R$。$L_R$ 是归一化状态变换的灵敏度，不是对未知仪器误差的界。
+
+**定理 29.2（条件化的锐迹距离常数）。** 定义 29.1 下，
+
+$$
+\boxed{L_R=\kappa_R.}
+$$
+
+并且全部来源满足双向界
+
+$$
+\kappa_R^{-1}D(\rho,\sigma)
+\le D(\tau_R(\rho),\tau_R(\sigma))
+\le\kappa_RD(\rho,\sigma).
+$$
+
+证明。对迹不增过滤 $\mathcal E(X)=GXG/r_{\max}$，每个来源的成功概率至少为 $r_{\min}/r_{\max}$。由定理 25.2 的概率加权收缩界得到上界。若 $r_{\min}<r_{\max}$，取相应正交本征态 $P_-,P_+$，置 $\rho=P_-$、$\sigma_\varepsilon=(1-\varepsilon)P_-+\varepsilon P_+$，其中 $0<\varepsilon<1$。则
+
+$$
+D(\rho,\sigma_\varepsilon)=\varepsilon,
+\qquad
+\frac{D(\tau_R(\rho),\tau_R(\sigma_\varepsilon))}
+{D(\rho,\sigma_\varepsilon)}
+=\frac{\kappa_R}{1+(\kappa_R-1)\varepsilon}
+\longrightarrow\kappa_R.
+$$
+
+故上界最优。若两本征值相等，$\tau_R$ 是恒等映射，来源类中存在不同两态，所以 $L_R=1=\kappa_R$。逆变换为
+
+$$
+\tau_R^{-1}(\omega)
+=\frac{G^{-1}\omega G^{-1}}{\operatorname{Tr}(\omega R^{-1})}.
+$$
+
+它对应正算子 $R^{-1}$ 的归一化过滤，谱比仍是 $\kappa_R$；用合法缩放 $r_{\min}R^{-1}\le I_P$ 重复上界论证，得到下界。$\square$
+
+**推论 29.3（制备成本与误差放大是同一谱比的两面）。** 在第 28 节的全部来源、单输入、统一 CP 操作合同及 $\dim\mathcal H_P\ge2$ 下，
+
+$$
+\boxed{
+p_{\mathrm{opt}}=\kappa_R^{-1},\qquad
+L_R=\kappa_R,\qquad
+p_{\mathrm{opt}}L_R=1.
+}
+$$
+
+证明。定理 28.3 与定理 29.2 使用同一个 $R$、同一个来源类与同一个半迹距离，直接组合即得。$\square$
+
+这给出本批“AHH”的精确内容：最终点击条件造成的最大误差放大，与精确制备该条件态时最优的最坏成功率，由同一组谱端点控制。该关系不把代数改写当作免费实验，也不把一般量子后选择都归入这份特定合同。
+
+**命题 29.4（稀有程度与条件敏感度可以分离）。** 对正数 $a$，只要 $aR\le I$，便有
+
+$$
+\tau_{aR}=\tau_R,\qquad
+\kappa_{aR}=\kappa_R,
+\qquad p_{\mathrm{opt}}(aR)=p_{\mathrm{opt}}(R),
+$$
+
+而原始过滤成功概率满足 $\operatorname{Tr}(\rho aR)=a\operatorname{Tr}(\rho R)$。
+
+证明。归一化分子、分母同时乘 $a$；最小和最大正本征值也同时乘 $a$，所以比值不变。最后一式由迹的线性性。此命题首先是效果过滤的结论：把 $R$ 缩放后若仍要求它来自某套首次点击仪器，还须另给该仪器；第 30.3 条提供一族实际实现。$\square$
+
+**命题 29.5（一维来源不能套用乘积恒等式）。** 若 $\dim\mathcal H_P=1$，则该来源类只有一个状态，最优精确制备成功率为一，且任意两来源的输出距离都为零；将最小非负 Lipschitz 常数定义为零时，$L_R=0$。
+
+证明。一维密度矩阵只有 $I_P$，归一化过滤保持它，恒等操作成功率为一。所有距离比较都发生在同一状态之间，常数零满足要求。这也是定义 29.1 排除一维的原因。$\square$
+
+## 30. 接近暗空间时的失稳与一个共同实现
+
+**定理 30.1（扩大来源类会同时失去两个统一保证）。** 假设 $\mathcal D\ne\{0\}$ 且 $\dim\mathcal H_P\ge2$。将来源扩大为原空间全部满足 $r_\rho>0$ 的密度矩阵，则 $\tau_R$ 没有有限的统一迹距离 Lipschitz 常数。任何在这个来源类上精确实现 $\tau_R$、处处具有正成功率的固定 CP 迹不增操作，其成功概率的下确界均为零。
+
+证明。取暗空间单位向量 $d$，以及 $R|_{\mathcal H_P}$ 的两个正交本征向量 $u,v$。对 $0<\varepsilon<1$，令
+
+$$
+\rho_\varepsilon=(1-\varepsilon)|d\rangle\langle d|+\varepsilon|u\rangle\langle u|,
+\quad
+\sigma_\varepsilon=(1-\varepsilon)|d\rangle\langle d|+\varepsilon|v\rangle\langle v|.
+$$
+
+输入距离为 $\varepsilon$，输出分别为两个正交本征态，距离为一，故没有有限统一常数。再令 $\mathcal E$ 为所述成功操作。对第一族，正算子
+
+$$
+(1-\varepsilon)\mathcal E(|d\rangle\langle d|)
++\varepsilon\mathcal E(|u\rangle\langle u|)
+$$
+
+必须支撑于 $\mathbb Cu$，所以 $\mathcal E(|d\rangle\langle d|)$ 支撑于该直线。对第二族同理得到支撑于 $\mathbb Cv$，从而它为零。于是 $p_{\mathcal E}(\rho_\varepsilon)=\varepsilon p_{\mathcal E}(|u\rangle\langle u|)\le\varepsilon$，下确界为零。这里只分别证明无有限常数和无正统一成功率，不将 $0\cdot\infty$ 写成恒等式。$\square$
+
+**命题 30.2（远离零事件权重的来源保留有界控制）。** 对任意来源子集 $\mathfrak S$，若有 $a>0$ 使 $r_\rho\ge a$ 对全部 $\rho\in\mathfrak S$ 成立，则过滤 $\mathcal S_R/r_{\max}$ 在该来源集上的成功率至少为 $a/r_{\max}$，并且
+
+$$
+D(\tau_R(\rho),\tau_R(\sigma))
+\le\frac{r_{\max}}aD(\rho,\sigma)
+\qquad(\rho,\sigma\in\mathfrak S).
+$$
+
+证明。该过滤在原空间上仍然合法，因为 $R/r_{\max}\le I$。成功率公式和定理 25.2 给出两式。这是来源约束下的充分界，不声称对每个受限来源类都达到最优。$\square$
+
+**命题 30.3（同一吸收仪器中的条件变换与谱比成本）。** 取正交基 $d,u,v$ 与 $0<r_1\le r_2\le1$，设置一个点击端口和以下 Kraus 算子：
+
+$$
+Q_0=|d\rangle\langle d|,
+\quad Q_1=\sqrt{1-r_1}|d\rangle\langle u|,
+\quad Q_2=\sqrt{1-r_2}|d\rangle\langle v|,
+\quad L=\sqrt{r_1}|u\rangle\langle u|+\sqrt{r_2}|v\rangle\langle v|.
+$$
+
+则最终点击效果为
+
+$$
+R=r_1|u\rangle\langle u|+r_2|v\rangle\langle v|,
+$$
+
+条件 Doob 过程在 $\operatorname{span}\{u,v\}$ 上必定第一轮点击，并保持输入的条件态；其过滤的最优最坏成功率为 $r_1/r_2$，锐条件敏感度为 $r_2/r_1$。原过程从 $u$ 或 $v$ 出发仍分别只有 $r_1,r_2$ 的最终点击概率。永久生存效果 $F=I-R$ 非投影，当且仅当 $r_1<1$。
+
+证明。直接相加得到 $\sum_{j=0}^2Q_j^\dagger Q_j+L^\dagger L=I$。任何一次未点击都进入暗态 $d$，故只有第一轮可能点击，$R=L^\dagger L$。在 $P$ 上 $G=L$，新点击 Kraus 算子 $LG^{-1}=I_P$，全部新未点击 Kraus 算子 $GQ_jG^{-1}$ 为零。成本和敏感度由第 28—29 节得到，输入本征态的点击概率由 $R$ 的对角元给出。$F$ 的本征值为 $1,1-r_1,1-r_2$；在给定参数范围内，它们全属于 $\{0,1\}$ 当且仅当 $r_1=r_2=1$，得到非投影判据。若同时把 $r_1,r_2$ 乘任意 $0<a\le1$ 并相应重建上述 Kraus 算子，条件变换和谱比不变，而原来的两点击概率均乘 $a$。$\square$
+
+**说明 30.4（关系解释与证据边界）。** 本批把第 19 节的最终事件效果与等待算子、第 20 节的动态拉回闭合、第 25 节的后选择误差连接到同一支撑变换；第 28—30 节另行写明制备任务及其极端来源。Kraus 操作、后选择和迹范数的基础沿用第 0 节所引 Watrous 教材，Doob 机制的来源见第 26.5 条。这里是有限维模型中的自包含数学推导，不主张文献原创性，也不是 Lean 编译结果。已知变换后的条件分布、能够制备条件初态、能够实施新仪器，以及原实验实际出现点击，是四个不同的要求；各自的概率、权限与来源条件都不能由另外一项代替。
+
+**说明 30.5（后选择距离的相关文献）。** Gavorová 的 *Notes on distinguishability of postselected computations*，[arXiv:2011.08487v2](https://arxiv.org/abs/2011.08487v2)，从归一化 CP 映射的非线性出发研究后选择计算之间的距离，并给出相应转换引理。本批第 29 节固定同一个过滤，比较不同输入状态，另附第 28 节的精确单输入制备合同；这与比较两个后选择过程的距离有不同的量词。第 25 节的加权界在本卷直接证明，不能仅由“量子通道收缩距离”省略归一化分母后推出。
+
+## 追加锚（本行以下为增补区）
