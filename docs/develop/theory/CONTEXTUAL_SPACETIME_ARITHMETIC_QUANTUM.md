@@ -58940,3 +58940,183 @@ $$
 本节所有检验均针对精确矩阵及精确等式。字数可以很大，未给出高效复杂度界；在有限精度数据下如何可靠判定零交织空间、平方符号与近似实化，也未由这些等式解决。实矩阵族仍可不对易，所以共同实基底的有无不能单独充当量子与经典的通用分界。
 
 ## 追加锚（本行以下为增补区）
+
+## 270. 可恢复实表示的维数—熵区域与三种对称类型
+
+第268节固定了乘积辅助扩充的形式。本节允许任意有限维完全正保迹编码，只要求一个同样完全正保迹的解码能恢复指定状态族。对共同交换子为标量的族，这个恢复条件会迫使编码在整个输入矩阵空间上可恢复。因此，辅助谱的约束可以转化为任意这类编码的精确维数—熵区域。
+
+**定义 270.1（模型可恢复实编码）。** 设 $\mathcal R$ 是 $\mathbb C^d$ 上的非空密度矩阵族，且
+
+$$
+\mathcal R'=\mathbb C I_d.
+\tag{270.1}
+$$
+
+给定正整数 $D$，一个模型可恢复实编码由两个完全正保迹复线性映射
+
+$$
+\mathcal E:M_d(\mathbb C)\longrightarrow M_D(\mathbb C),
+\qquad
+\mathcal D:M_D(\mathbb C)\longrightarrow M_d(\mathbb C)
+\tag{270.2}
+$$
+
+组成，满足 $\mathcal D\mathcal E(\rho)=\rho$ 对全部 $\rho\in\mathcal R$ 成立，并且整个 $\mathcal E(\mathcal R)$ 在同一个固定正交基底中均为实矩阵。输出可以有从未占用的维数。熵使用自然对数，约定 $0\log0=0$。
+
+若 $\mathcal R$ 有共同反酉对称，任意两个这样的对称之商是共同复线性酉对称，由标量交换子假设必为单位相位。对一个共同反酉 $T$，其平方也属于该交换子，故 $T^2=\lambda I_d$，其中 $|\lambda|=1$。结合律 $T(T^2)=(T^2)T$ 与反线性给出 $\overline\lambda=\lambda$，所以 $\lambda=\pm1$。给 $T$ 乘上单位相位不改变它的平方，因此平方符号为整个族唯一确定。
+
+以下将平方符号为正一和负一的族分别称为正型和负型；没有共同反酉对称时称为无反酉型。这是经典实型、四元数型与复型区分在本节状态族上的用法；共轭与负平方反酉结构的标准定义见 Uhlmann，*Anti- (Conjugate) Linearity*，[arXiv:1507.06545v2](https://arxiv.org/pdf/1507.06545v2)，式（114）—（115）。
+
+**定理 270.2（完整可行区域）。** 在定义270.1的条件下，每个模型可恢复实编码都满足
+
+$$
+\mathcal D\mathcal E=\operatorname{id}_{M_d(\mathbb C)}.
+\tag{270.3}
+$$
+
+此外，存在一个与输入无关的数 $h$，使对每个输入密度矩阵 $\rho$ 都有
+
+$$
+S(\mathcal E(\rho))-S(\rho)=h.
+\tag{270.4}
+$$
+
+固定输出维数 $D$ 时，所有可达的 $h$ 精确如下：
+
+$$
+\begin{array}{c|c|c}
+\text{类型}&\text{维数可行条件}&\text{全部可达熵增}\hline
+\text{正型}&D\ge d&[0,\log\lfloor D/d\rfloor]\\
+\text{负型}&D\ge2d&[\log2,\log(2\lfloor D/(2d)\rfloor)]\\
+\text{无反酉型}&\text{无有限维可行值}&\varnothing
+\end{array}
+\tag{270.5}
+$$
+
+维数未满足相应条件时，可行集合为空。负型中 $h=\log2$ 当且仅当恢复正规形的辅助态非零谱为 $(1/2,1/2)$。
+
+证明。先将只在模型上恢复的条件提升为式（270.3）。原族的共同核为零：其正交投影与每个 Hermitian 状态对易，由（270.1）只能为零或单位，迹归一化排除单位。因此全部状态的支撑共同张成输入空间；有限维性还保证某个有限凸组合是满秩态，但不要求任何单个状态满秩。
+
+对信道 $\Phi=\mathcal D\mathcal E$ 使用 Koashi–Imoto 的不扰动分解。这是既有结构定理：在状态族的共同支撑上，存在分解
+
+$$
+\mathbb C^d=\bigoplus_a H_{J,a}\otimes H_{K,a},
+\qquad
+\rho=\bigoplus_a p_a(\rho)\rho_{J,a}\otimes\tau_{K,a},
+\tag{270.6}
+$$
+
+其中 $\tau_{K,a}$ 与所选状态无关；保持全部状态的信道之 Stinespring 等距实现，在每块上对 $H_{J,a}$ 作恒等作用，只能作用于 $H_{K,a}$ 与环境。其精确来源是 Koashi、Imoto，*What is Possible Without Disturbing Partially Known Quantum States?*，[arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)，式（85）—（89）及定理3式（103）。
+
+各直和块投影都与 $\mathcal R$ 对易，所以（270.1）排除多个块。若唯一的 $H_K$ 维数大于一，取与 $\tau_K$ 对易的非平凡正交投影 $P$；这样的投影总可从 $\tau_K$ 的特征基中取得，即使它是标量矩阵也一样。于是 $I_J\otimes P$ 是 $\mathcal R$ 的非标量共同交换子，矛盾。故只有一个块，且 $\dim H_K=1$。不扰动结构遂要求 $\Phi$ 在整个输入空间上为恒等信道。这一步使用不扰动定理，不把一般完全正映射当成代数同态。
+
+由第39.1节已使用的可恢复信道正规形，存在有限维密度矩阵 $\tau$ 和等距映射 $V$，使
+
+$$
+\mathcal E(X)=V(X\otimes\tau)V^*,
+\qquad V^*V=I.
+\tag{270.7}
+$$
+
+可将辅助空间限制在 $\operatorname{supp}\tau$，令其维数为 $r=\operatorname{rank}\tau$；于是 $dr\le D$。这个既有正规形可由 Nayak、Sen，*Invertible quantum operations and perfect encryption of quantum states*，[arXiv:quant-ph/0605041v4](https://arxiv.org/pdf/quant-ph/0605041v4)，定理2.1证明中的式（2）—（3）直接取得：恢复使 Kraus 算子满足 $A_i^*A_j=\alpha_{ij}I$，将正矩阵 $\alpha$ 对角化后得到正交像的等距算子及固定混合权重。式（270.7）只作用于占用子空间，不要求 $D$ 是 $d$ 的倍数。
+
+等距变换保留非零谱，乘积态的熵相加，因此
+
+$$
+S(\mathcal E(\rho))=S(\rho)+S(\tau)
+\tag{270.8}
+$$
+
+对所有输入成立，得到 $h=S(\tau)$。
+
+令 $\mathcal S=V(\mathbb C^d\otimes\operatorname{supp}\tau)$。它是全部编码状态支撑的共同张成，故输出的共同共轭 $J$ 保持 $\mathcal S$。限制到该子空间并拉回，得到
+
+$$
+J_0=V^*(J|_{\mathcal S})V,
+\qquad J_0^2=I,
+\qquad
+J_0(\rho\otimes\tau)J_0^{-1}=\rho\otimes\tau.
+\tag{270.9}
+$$
+
+这里 $V$ 被视为从乘积支撑到 $\mathcal S$ 的酉同构。输出中未占用的维数不能与占用支撑混合以消除这一限制。
+
+先处理无反酉型，以证明任意有限扩充都不可能。将 $\tau$ 在其支撑上对角化，特征值均严格为正，写 $J_0=ZK$，其中 $Z$ 酉。对辅助指标取系统矩阵块 $B$，式（270.9）给出
+
+$$
+\lambda\rho B=\mu B\overline\rho
+\qquad(\rho\in\mathcal R),
+\qquad\lambda,\mu>0.
+\tag{270.10}
+$$
+
+取伴随、左右乘以 $B^*$ 和 $B$，得到
+
+$$
+\mu B^*B\overline\rho
+=\lambda B^*\rho B
+=\mu\overline\rho B^*B.
+$$
+
+共轭族的共同交换子也为标量，所以非零块必为 $B=\sqrt c\,U$，其中 $c>0$、$U$ 酉。对（270.10）归一化后取迹，得到 $\lambda=\mu$，继而 $U\overline\rho U^*=\rho$。因此 $UK$ 是原族的共同反酉对称。酉矩阵 $Z$ 至少有一个非零块，产生矛盾。无反酉型的可行集合为空。
+
+负型中，将定理268.2用于（270.9），每个正辅助特征值均须具有偶数重数，亦即
+
+$$
+\tau\simeq(I_2/2)\otimes\sigma.
+\tag{270.11}
+$$
+
+于是 $r=2k$，其中 $k=\operatorname{rank}\sigma$，并且
+
+$$
+2dk\le D,
+\qquad
+h=\log2+S(\sigma).
+\tag{270.12}
+$$
+
+密度矩阵的熵不超过其秩的对数，故 $h$ 位于（270.5）的负型区间中，且 $D\ge2d$。等号 $h=\log2$ 的辅助谱刻画由推论268.3给出。
+
+正型中，原族已存在共同实基底；辅助态在其特征基中也为实，所以任意 $\tau$ 都可实现共同实表示。另一方面，任何编码的正规形均有 $r\le\lfloor D/d\rfloor$，因此
+
+$$
+0\le h=S(\tau)\le\log\lfloor D/d\rfloor.
+\tag{270.13}
+$$
+
+最后证明区间中的每一点都可达。对整数 $m\ge1$，连接纯态和最大混合态的连续路径
+
+$$
+\sigma_t=(1-t)|1\rangle\langle1|+tI_m/m,
+\qquad0\le t\le1,
+\tag{270.14}
+$$
+
+熵连续，端点分别为零与 $\log m$，所以取遍该区间。正型取 $m=\lfloor D/d\rfloor$ 并令 $\tau=\sigma_t$。负型取 $m=\lfloor D/(2d)\rfloor$ 并令 $\tau=(I_2/2)\otimes\sigma_t$；定理268.2给出一个固定酉变换，使整个乘积族取实。把所得实矩阵族等距嵌入输出的前若干坐标，其余补零，即可在恰为 $D$ 的空间中实现。
+
+这些等距编码确有定义在全部输出上的恢复信道。若 $P=VV^*$，固定任意输入密度矩阵 $\omega$，可取
+
+$$
+\mathcal D(Y)
+=\operatorname{Tr}_{\rm anc}(V^*YV)
++\operatorname{Tr}[(I-P)Y]\,\omega.
+\tag{270.15}
+$$
+
+两项完全正，迹之和为 $\operatorname{Tr}Y$；在编码像上第二项为零，第一项恢复 $X$。式（270.5）的全部可行值因而达到。证毕。
+
+**命题 270.3（三种区域均有有限状态族实现）。** 取 Pauli 矩阵 $X,Y,Z$，并令 $\rho_A=(I_2+A/2)/2$。二态族 $\{\rho_X,\rho_Z\}$ 为正型；三态族 $\{\rho_X,\rho_Y,\rho_Z\}$ 为无反酉型；第267节的四态族为负型。它们各自的共同复线性交换子均只有标量。
+
+证明。与 $\rho_X,\rho_Z$ 对易等价于与 $X,Z$ 对易，因而交换子为标量；二态族本身取实。若三态族存在共同反酉对称，由 $A=4\rho_A-2I_2$，该对称也保持 $X,Y,Z$，从而保持其乘积。但
+
+$$
+\operatorname{Tr}(XYZ)=2i
+\tag{270.16}
+$$
+
+在反酉共轭下取复共轭，与保持不变矛盾。负型四态族的标量交换子和平方为负单位的对称已在第267节给出。证毕。
+
+因此，负型的最小熵增不是编码损失信息的度量：式（270.3）仍使每个输入都能完全恢复。它衡量的是在完全正可恢复操作下取得共同实表示所需的额外混合度。正型允许零熵增，负型必须至少增加 $\log2$，而无反酉型在任意有限维输出中均不可行。该结论依赖精确恢复、单一固定实基底和标量共同交换子；它不包括近似恢复、仅保持部分统计量、非完全正编码或热力学功成本。
+
+## 追加锚（本行以下为增补区）
