@@ -3,9 +3,9 @@
 **A scientific method for AI to discover truth and find its next question.**
 
 [Vision](docs/VISION.md) · [Start your journey](#start-your-journey) ·
-[Truth and computation](#truth-and-computation) · [Spacetime](#toward-holographic-spacetime) ·
-[Information escape](#information-escape) ·
-[Examples](#three-places-to-look) · [First run](#first-run) ·
+[Truth and computation](#truth-and-computation) · [Examples](#three-places-to-look) ·
+[Spacetime](#toward-holographic-spacetime) · [Information escape](#information-escape) ·
+[First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
 [Contribute](#take-part) · [Licensing](#license-and-foundations)
 
@@ -96,6 +96,49 @@ tools. Golden integers, Fibonacci weights and Zeckendorf representations are
 one thread; the examples below also explore conjecture refutation and limits
 of local observation.
 
+## Three places to look
+
+**01 · Refute a conjecture.**
+For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
+Greathouse's conjectured formula for OEIS A175406 was
+`a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
+`777451915729368`, while the actual value is one less.
+The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
+establishes `result : ¬ claim` using certified bounds on logarithms.
+This refutes the literal universal formula; neither minimality of the witness
+nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
+[Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
+
+**02 · Find what observations cannot tell you.**
+Can knowing each part of a quantum system determine the whole? The
+[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
+constructs two distinct two-qubit states: a pure Bell state and the equal
+classical mixture of `00` and `11`. Both have exactly the same reduced state
+on each qubit. Even these complete local descriptions cannot identify the
+joint state.
+
+For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
+proves that the correlation sector in the Hermitian tensor model is orthogonal
+to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This identifies
+precisely which directions the local description omits.
+[Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
+
+**03 · Build a result that holds beyond the examples.**
+Write a natural number as its unique sum of nonadjacent Fibonacci weights
+`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
+golden ratio, and call the resulting real value β(n). How far does this
+coordinate fail to preserve addition?
+
+$$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
+
+[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
+all natural inputs. Its proof combines an integer certificate with bounds on
+the conjugate coordinate. The discrepancy is also the signed count of the two
+lowest repeated-carry rules during digit normalization: a reusable connection
+between an arithmetic algorithm and an exact bound, however large the inputs.
+[Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
+[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
+
 ## Toward holographic spacetime
 
 We aim to study time and space together in a **holographic spacetime geometry**:
@@ -176,49 +219,6 @@ its proposed system is not a claim of completed implementation.
 
 Bring your own question to the [journey route](#start-your-journey), and use
 these four questions to follow what becomes distinguishable and what stays open.
-
-## Three places to look
-
-**01 · Refute a conjecture.**
-For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
-Greathouse's conjectured formula for OEIS A175406 was
-`a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
-`777451915729368`, while the actual value is one less.
-The [Lean refutation](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
-establishes `result : ¬ claim` using certified bounds on logarithms.
-This refutes the literal universal formula; neither minimality of the witness
-nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
-[Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
-
-**02 · Find what observations cannot tell you.**
-Can knowing each part of a quantum system determine the whole? The
-[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
-constructs two distinct two-qubit states: a pure Bell state and the equal
-classical mixture of `00` and `11`. Both have exactly the same reduced state
-on each qubit. Even these complete local descriptions cannot identify the
-joint state.
-
-For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
-proves that the correlation sector in the Hermitian tensor model is orthogonal
-to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This identifies
-precisely which directions the local description omits.
-[Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
-
-**03 · Build a result that holds beyond the examples.**
-Write a natural number as its unique sum of nonadjacent Fibonacci weights
-`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
-golden ratio, and call the resulting real value β(n). How far does this
-coordinate fail to preserve addition?
-
-$$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
-
-[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
-all natural inputs. Its proof combines an integer certificate with bounds on
-the conjugate coordinate. The discrepancy is also the signed count of the two
-lowest repeated-carry rules during digit normalization: a reusable connection
-between an arithmetic algorithm and an exact bound, however large the inputs.
-[Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
-[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
 
 ## What is proved, and what is open
 
