@@ -6415,3 +6415,934 @@ $$
 （30.9）没有把二维环境中的三个射线限制为两个，也没有将不同射线正交化。它只控制后三轮环境；前两轮是否属于同一个二维环境空间尚未由此证明。一般六维纯终端实现仍须满足（30.1）—（30.8）及全部跨轮 Gram 等式。标准可逆编码和共同 Stinespring工具沿第23节已读来源；本节没有以这些来源替代具体的支撑与射线推导。
 
 ## 追加锚（本行以下为增补区）
+
+## 31. 多相位边发射的商空间容量与因果接收
+
+本节研究有限状态 Markov 转移、整数边荷与完整边标签发射。实际相位在一次运行中保持不变。来源与前面的两态量子发射器不同；本节允许接收门随当前编号变化，不用于判定第29—30节的同一固定接收通道容量。
+
+**定义31.1（来源、商空间与完整联合合同）。** 取状态集 $\mathcal V=\{1,\ldots,m\}$、primitive 行随机矩阵 $P$，即某个正整数幂的全部矩阵元严格为正。记非空支持边集
+$\mathcal E=\{(i,j):P_{ij}>0\}$、$s=|\mathcal E|$。每条支持边给定整数荷 $g_{ij}\in\mathbb Z^q$。活动记忆为 $M=\mathbb C^m$，发出位为 $B=\mathbb C^{\mathcal E}$，其已知正交基保留完整边标签。对 $\theta\in\mathbb T^q=(\mathbb R/2\pi\mathbb Z)^q$，一步等距为
+
+$$
+V_\theta|i\rangle
+=\sum_{j:P_{ij}>0}\sqrt{P_{ij}}\,
+e^{i\theta\cdot g_{ij}}|i,j\rangle_B\otimes|j\rangle_M.
+\tag{31.1}
+$$
+
+不同初始状态由边标签中的起点区分，行随机性保证范数为一。置 $H_n=B^{\otimes n}$、$H_0=\mathbb C$，并递归定义
+
+$$
+T_{\theta,0}=I_M,\qquad
+T_{\theta,n+1}=(I_{H_n}\otimes V_\theta)T_{\theta,n},\qquad
+\Omega_{\theta,n}(\rho)
+=(I_J\otimes T_{\theta,n})\rho(I_J\otimes T_{\theta,n}^*).
+\tag{31.2}
+$$
+
+这里 $J$ 是任意有限参考，$\rho\in\mathcal D(J\otimes M)$ 是任意初始联合态。固定非空候选集 $\Theta\subseteq\mathbb T^q$，不要求闭或可测。允许全域 CPTP 编解码
+$\mathcal E_n:\mathcal L(H_n)\to\mathcal L(K)$、
+$\mathcal D_n:\mathcal L(K)\to\mathcal L(H_n)$，依赖已知模型、$\Theta,n,\epsilon$，但不能依赖实际相位、输入或参考，也不能访问 $J,M$。半迹距离记为 $D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1$。要求
+
+$$
+\sup_{\theta\in\Theta,\ J,\ \rho}
+D\!\left(
+(\operatorname{id}_J\otimes\mathcal D_n\mathcal E_n
+ \otimes\operatorname{id}_M)\Omega_{\theta,n}(\rho),
+\Omega_{\theta,n}(\rho)\right)\le\epsilon.
+\tag{31.3}
+$$
+
+最小 $\dim K$ 记为 $k_n^{(\epsilon)}(\Theta)$；$\epsilon=0$ 表示精确恢复，$k_0^{(\epsilon)}=1$。全部持久且携带输入信息的接收系统计入 $K$，包括经典标签和失败旗标。已知门描述、时间编号、网的取得、路由和新空白另行计量；本节不提供任意候选集的有效描述或门复杂度界。
+
+与未来终端无关的在线合同要求预先给定同一列
+
+$$
+K_0=\mathbb C,\qquad
+\mathcal C_t:\mathcal L(K_{t-1}\otimes B)\to\mathcal L(K_t),
+\qquad
+\mathcal D_t:\mathcal L(K_t)\to\mathcal L(H_t),
+\tag{31.4}
+$$
+
+在每个确定终端满足（31.3）。门可依赖当前编号，不能依赖未来终端；新环境可立即丢弃。不增加适应性停止或解码后继续运行的要求。
+
+定义标量相位加端点势差的子群
+
+$$
+\mathcal H=\left\{h\in\mathbb T^q:
+\begin{array}{l}
+\exists\,\omega\in\mathbb R,\ |z_1|=\cdots=|z_m|=1,\\
+e^{ih\cdot g_{ij}}=e^{i\omega}z_i\overline{z_j}
+\quad((i,j)\in\mathcal E)
+\end{array}\right\}.
+\tag{31.5}
+$$
+
+原环面取平坦测地距离。下文证明 $\mathcal H$ 闭；商
+$\mathcal Q=\mathbb T^q/\mathcal H$ 配距离
+
+$$
+d_{\mathcal Q}([\theta],[\varphi])
+=\min_{h\in\mathcal H}d_{\mathbb T^q}(\theta-\varphi,h).
+\tag{31.6}
+$$
+
+相位乘子、内部酉规范和量子 Markov 参数识别已有一般理论，局部参数的 $n^{-1/2}$ 高斯尺度也已有先例。[^phase_multiphase_gk] 本节另外证明此边标签模型的全局有限步估计、任意参考历史界与完整联合接收容量。
+
+**引理31.2（路径荷差与全部退化相位）。** 对支持路径
+$\gamma=(i_0,\ldots,i_n)$，记 $|\gamma|=n$、
+$g(\gamma)=\sum_{t=1}^n g_{i_{t-1}i_t}$。令 $\Lambda\le\mathbb Z^q$ 为全部同长度、同起点、同终点路径的荷差生成的整数子群，则
+
+$$
+\mathcal H=\Lambda^\perp
+=\{h:e^{ih\cdot\lambda}=1\text{ 对全部 }\lambda\in\Lambda\}.
+\tag{31.7}
+$$
+
+所以 $\mathcal H$ 闭，允许有有限多个连通分支；$\mathcal Q$ 是维数
+$r=\operatorname{rank}\Lambda$ 的连通紧环面。$r=0$ 时商为单点，不存在额外的有限非平凡离散商。
+
+证明。（31.5）沿路径相乘为 $e^{in\omega}z_{i_0}\overline{z_{i_n}}$，正向成立。反向令
+
+$$
+M_h(i,j)=P_{ij}e^{ih\cdot g_{ij}}.
+\tag{31.8}
+$$
+
+若 $h\in\Lambda^\perp$，同一 $n,i,j$ 的所有路径相位一致，故
+$|M_h^n(i,j)|=P^n(i,j)$，不存在路径时两侧均零。因此
+$\|M_h^n\|_{\infty\to\infty}=1$，其中该范数是最大绝对行和。有限维谱半径公式给 $\rho(M_h)=1$。取模一特征值
+$M_hz=e^{i\omega}z$，从最大模分量所在行的三角不等式取等号，再沿不可约支持图传播，得到所有 $|z_i|$ 相等且非零。逐行取等号于是给
+$e^{ih\cdot g_{ij}}z_j=e^{i\omega}z_i$；归一化共同模即得（31.5）。闭子群及商维数结论是有限生成整数子群的标准环面对偶结构。证明完毕。
+
+**引理31.3（统一有限步高斯衰减）。** 存在只依赖 $P,g$ 的
+$C_{\mathrm G}\ge1$、$c_{\mathrm G}>0$，使对全部 $\delta\in\mathbb T^q$、$n\ge0$，
+
+$$
+\boxed{
+\|M_\delta^n\|_{\infty\to\infty}
+\le C_{\mathrm G}
+e^{-c_{\mathrm G}n\,d_{\mathcal Q}([\delta],0)^2}.
+}
+\tag{31.9}
+$$
+
+同一右侧也控制 $|m^{-1}\mathbf1^{\mathsf T}M_\delta^n\mathbf1|$。
+
+证明。$\Lambda=0$ 时商距离恒零，取 $C_{\mathrm G}=1$ 即可。否则可从实际路径对中选有限多个荷差 $\lambda_1,\ldots,\lambda_\ell$ 生成 $\Lambda$：有限生成元各由有限个实际差的整数线性组合表示，收集所用差即可。
+
+固定顶点 $`i_*,j_*`$。primitive 性给 $N$，使任意两顶点间每个长度至少 $N$ 都有支持路径。为每对见证接同一条从 $`i_*`$ 出发的 $N$ 步前缀，再接同一条到 $`j_*`$ 的后缀。选足够大的共同总长度 $L$，使每对所需后缀长度 $L-N-|\gamma|$ 均至少为 $N$。见证的荷差不变，现在全为 $L$ 步的 $`i_*\to j_*`$ 路径对。
+
+对全部这种桥路径令 $w_\gamma=\prod_tP_{i_{t-1}i_t}>0$，置
+
+$$
+a_0=P^L(i_*,j_*)=\sum_\gamma w_\gamma>0,\qquad
+S(\delta)=M_\delta^L(i_*,j_*)
+=\sum_\gamma w_\gamma e^{i\delta\cdot g(\gamma)}.
+\tag{31.10}
+$$
+
+有精确恒等式
+
+$$
+a_0^2-|S(\delta)|^2
+=\sum_{\gamma,\gamma'}w_\gamma w_{\gamma'}
+[1-\cos(\delta\cdot(g(\gamma)-g(\gamma')))].
+\tag{31.11}
+$$
+
+各项非负。保留有限见证的项，合并重复项或减小正常数，得
+
+$$
+a_0^2-|S(\delta)|^2
+\ge c_0\sum_{a=1}^{\ell}[1-\cos(\delta\cdot\lambda_a)]
+\ge c_0c_1d_{\mathcal Q}([\delta],0)^2
+\tag{31.12}
+$$
+
+其中 $c_0,c_1>0$。第二个不等式的理由如下：三角多项式的零集恰为
+$\mathcal H$；在其统一小邻域内，取到最近群点的短实提升
+$v\perp\operatorname{Lie}(\mathcal H)$。行向量 $\lambda_a$ 在该法空间上单射，故 $\sum_a(\lambda_a\cdot v)^2$ 控制 $\|v\|^2$，而
+$1-\cos t$ 在小邻域内控制 $t^2$。邻域外由紧性及无零点取得正下界。这个论证统一处理 $\mathcal H$ 的所有连通分支。
+
+因 $a_0+|S|\le2a_0$，第 $`i_*`$ 行的绝对行和至多
+$1-a\,d_{\mathcal Q}^2$，其中 $a=c_0c_1/(2a_0)>0$；其余行至多一。取整数 $K$ 使 $P^K>0$，令
+$`b=\min_iP^K(i,i_*)>0`$、$\kappa=ab$、$T=K+L$。逐项不等式
+$|M_\delta^{K+L}|\le P^K|M_\delta^L|$ 将该亏损传播到全部起点：
+
+$$
+\|M_\delta^T\|_{\infty\to\infty}
+\le1-\kappa d_{\mathcal Q}([\delta],0)^2.
+\tag{31.13}
+$$
+
+按 $T$ 步分块，余下块的范数至多一。设
+$\Delta=\operatorname{diam}\mathcal Q$，可取
+$C_{\mathrm G}=e^{\kappa\Delta^2}$、$c_{\mathrm G}=\kappa/T$，得到（31.9）。这里直接控制有限步矩阵幂，没有略去非正规矩阵的幂常数或引入随 $n$ 增长的多项式损失。证明完毕。
+
+**引理31.4（共同标量历史比较与任意参考界）。** 令 $\pi$ 为 $P$ 的平稳分布，定义
+
+$$
+\begin{gathered}
+\beta_k=\max_i\sum_j|P^k(i,j)-\pi_j|,\quad
+B_1=\sum_{k\ge0}\beta_k,\quad B_2=\sum_{k\ge0}\beta_k^2,\\
+G_*=\max_{(i,j)\in\mathcal E}\|g_{ij}\|,\quad
+\mu=\sum_{i,j}\pi_iP_{ij}g_{ij},\quad
+C_{\mathrm{hist}}=1+G_*^2(1+4B_1+B_2).
+\end{gathered}
+\tag{31.14}
+$$
+
+primitive 性保证两个级数有限。给定已知相位历史
+$\boldsymbol\varphi=(\varphi_1,\ldots,\varphi_n)$，以每步
+$V_{\varphi_t}$ 定义虚拟等距 $T_{\boldsymbol\varphi,n}$。对实际常相位
+$\theta$，取 $\delta_t\in\mathbb R^q$ 为 $\theta-\varphi_t$ 的最短实提升，并置
+$b=\sum_t\delta_t\cdot\mu$。则
+
+$$
+\boxed{
+(T_{\theta,n}-e^{ib}T_{\boldsymbol\varphi,n})^*
+(T_{\theta,n}-e^{ib}T_{\boldsymbol\varphi,n})
+\preceq C_{\mathrm{hist}}
+\left(\sum_t\|\delta_t\|^2\right)I_M.
+}
+\tag{31.15}
+$$
+
+证明。对初态 $X_0=i$ 的 Markov 链，令
+$Y_t=\delta_t\cdot g_{X_{t-1}X_t}$、$Z=\sum_tY_t$。平稳均值与混合界给
+
+$$
+|\mathbb E_iZ-b|
+\le G_*\sum_t\beta_{t-1}\|\delta_t\|,
+\qquad
+\operatorname{Var}_iY_t\le G_*^2\|\delta_t\|^2.
+\tag{31.16}
+$$
+
+若 $s<t$，对截至第 $s$ 条边的历史 $\mathcal F_s$ 条件化，从 $X_s$ 到第 $t$ 条边的起点还需 $t-s-1$ 次转移，故
+
+$$
+|\mathbb E[Y_t\mid\mathcal F_s]-\delta_t\cdot\mu|
+\le G_*\beta_{t-s-1}\|\delta_t\|,
+\qquad
+|\operatorname{Cov}_i(Y_s,Y_t)|
+\le2G_*^2\beta_{t-s-1}\|\delta_s\|\,\|\delta_t\|.
+\tag{31.17}
+$$
+
+后一式使用 $`\mathbb E|Y_s-\mathbb E Y_s|\le2G_*\|\delta_s\|`$。方差展开中用 $2uv\le u^2+v^2$，均值偏移平方用 Cauchy–Schwarz，得到全部初态共用的
+
+$$
+\mathbb E_i(Z-b)^2
+\le G_*^2(1+4B_1+B_2)\sum_t\|\delta_t\|^2
+\le C_{\mathrm{hist}}\sum_t\|\delta_t\|^2.
+\tag{31.18}
+$$
+
+整数荷保证逐路径相位差正是 $e^{iZ}$。展开各输入列并使用
+$|e^{ix}-1|\le|x|$，其误差范数平方受（31.18）控制。不同初始 $i$ 被首条完整边标签分入正交档案扇区，因此列界提升为（31.15）的整个输入算子界。同一个 $b$ 用于所有初态，故可以张量任意参考，保留全部输入相干。证明完毕。
+
+**引理31.5（单个常量群移位保持投影漏出）。** 对已知历史定义
+
+$$
+\chi_{ij}^{n,\boldsymbol\varphi}
+=\sum_{\substack{\gamma:i\to j\\|\gamma|=n}}
+\sqrt{w_\gamma}\,
+e^{i\sum_{t=1}^n\varphi_t\cdot g_{i_{t-1}i_t}}|\gamma\rangle,\qquad
+S_n(\boldsymbol\varphi)=
+\operatorname{span}\{\chi_{ij}^{n,\boldsymbol\varphi}:i,j\in\mathcal V\}.
+\tag{31.19}
+$$
+
+不存在的路径扇区给零向量。其支撑维数至多 $m^2$，且
+$T_{\boldsymbol\varphi,n}|i\rangle=\sum_j\chi_{ij}^{n,\boldsymbol\varphi}\otimes|j\rangle$。
+若 $W_n$ 是任意这些历史支撑的线性和，$\Pi_n$ 为投影，则对每个
+$h\in\mathcal H$，
+
+$$
+T_{\theta+h,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta+h,n}
+=T_{\theta,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta,n}.
+\tag{31.20}
+$$
+
+证明。选（31.5）的 $\omega,z$。常量相移在每个端点扇区只乘
+$e^{in\omega}z_i\overline{z_j}$，因而定义一个档案端点对角酉
+$D_{h,n}$；在不合法档案基向量上可任意作对角酉延拓。它保持每个
+$S_n(\boldsymbol\varphi)$ 及其任意和 $W_n$，并与 $\Pi_n$ 交换。又有
+$T_{\theta+h,n}=(D_{h,n}\otimes I_M)T_{\theta,n}$，即得（31.20）。这里完整保留端点相干，未把不同初态分别移相。证明完毕。
+
+**定理31.6（任意候选集的单终端商空间容量）。** 令
+$\Gamma=\{[\theta]:\theta\in\Theta\}\subseteq\mathcal Q$，以商距离定义
+
+$$
+\operatorname{Pack}(\Gamma,r)=
+\max\{|A|:A\subseteq\Gamma,\ d_{\mathcal Q}(x,y)\ge r
+\text{ 对全部不同的 }x,y\in A\}.
+\tag{31.21}
+$$
+
+固定 $0<\epsilon<1$。对全部充分大的 $n$，统一于非空候选集，
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta)
+\asymp_{P,g,\epsilon}\operatorname{Pack}(\Gamma,n^{-1/2}).
+}
+\tag{31.22}
+$$
+
+具体上界对所有 $n\ge1$ 为
+
+$$
+k_n^{(\epsilon)}(\Theta)\le
+m^2\operatorname{Pack}\!\left(
+\Gamma,\frac{\epsilon}{\sqrt{2C_{\mathrm{hist}}n}}\right)+1.
+\tag{31.23}
+$$
+
+这个上界可由门依赖预定终端 $n$ 的因果接收实现。
+
+证明。紧商环面的分离集基数有有限整数上界，故最大基数由某个实际有限子集取得；包含意义下极大的分离集同时为严格同半径网。这不要求 $\Gamma$ 闭或可测。
+
+上界取尺度 $h=\epsilon/\sqrt{2C_{\mathrm{hist}}n}$ 的极大网，点数
+$N\le\operatorname{Pack}(\Gamma,h)$。为各网点任取相位代表，以其常相位支撑之和定义 $W_n$，则 $\dim W_n\le m^2N$。对实际 $\theta$，选临近网点及一个常量 $h_0\in\mathcal H$，使 $\theta+h_0$ 与该代表的原环面距离小于 $h$。由（31.15）、（31.20），
+
+$$
+T_{\theta,n}^*[(I-\Pi_n)\otimes I_M]T_{\theta,n}
+\preceq C_{\mathrm{hist}}nh^2I_M
+=\frac{\epsilon^2}{2}I_M.
+\tag{31.24}
+$$
+
+因果实现时，在每个前缀 $t\le n$ 都用这个同一终端网的全部常相位支撑之和。其维数始终至多 $m^2N$，并满足
+$W_{t+1}\subseteq W_t\otimes B$。以
+$W_0=K_0=\mathbb C$ 启动，用下一定理（31.31）—（31.33）的部分等距、吸收旗标与全域完成，累计成功恰等于终端投影。式（31.24）给所需完整联合误差；无须预先保存完整档案。
+
+下界取 $n^{-1/2}$ 分离的最大集合，点数为 $N$，并从实际 $\Theta$ 选各点代表。输入取 $m$ 维 Bell 参考态，完整纯目标记为
+$|\Psi_{\theta,n}\rangle$。路径正交性精确给
+
+$$
+\langle\Psi_{\theta,n},\Psi_{\varphi,n}\rangle
+=\frac1m\mathbf1^{\mathsf T}M_{\varphi-\theta}^n\mathbf1.
+\tag{31.25}
+$$
+
+若商维数为 $r_{\mathcal Q}$，固定紧平坦环面的局部体积比较给常数
+$C_{\mathrm{pack}}$，使距某分离点在
+$[\ell n^{-1/2},(\ell+1)n^{-1/2})$ 内的点数至多
+$C_{\mathrm{pack}}(\ell+2)^{r_{\mathcal Q}}$，对充分大 $n$ 统一成立。由（31.9），Gram 绝对行和统一有界：
+
+$$
+B_{\mathrm G}
+=C_{\mathrm G}C_{\mathrm{pack}}
+\sum_{\ell\ge0}(\ell+2)^{r_{\mathcal Q}}e^{-c_{\mathrm G}\ell^2}
+<\infty.
+\tag{31.26}
+$$
+
+商为单点时直接取 $B_{\mathrm G}=1$。平均目标态
+$\bar\rho=N^{-1}\sum_j|\Psi_{\theta_j,n}\rangle\langle\Psi_{\theta_j,n}|$
+与 Gram 矩阵具有相同非零谱，差一个 $1/N$ 因子，所以
+$\|\bar\rho\|_{\mathrm{op}}\le B_{\mathrm G}/N$。
+
+任取维数 $D$ 的合法编码及共同解码，置
+$\tau=\mathcal D_n(I_D)$，则 $\tau\succeq0$、$\operatorname{Tr}\tau=D$。
+编码后的联合密度矩阵不超过 $I_{JM}\otimes I_D$；解码正性使恢复态不超过 $I_{JM}\otimes\tau$。半迹误差至多 $\epsilon$ 给每个目标重叠至少
+$1-\epsilon$，取平均得
+
+$$
+1-\epsilon\le
+\operatorname{Tr}[\bar\rho(I_{JM}\otimes\tau)]
+\le\frac{B_{\mathrm G}m^2D}{N}.
+\tag{31.27}
+$$
+
+故 $D\ge(1-\epsilon)N/(B_{\mathrm G}m^2)$；这里 $m^2$ 正是参考与活动记忆的乘积维数。最后，固定商环面的局部打包比较将（31.23）的细尺度分离数控制为粗尺度 $n^{-1/2}$ 分离数的常数倍，常数只依赖模型及固定 $\epsilon$。上下界统一于候选集，得（31.22）。证明完毕。
+
+**定理31.7（同一套无未来终端信息的接收门）。** 给定正的非增序列
+$(u_j)_{j\ge0}$，满足 $\sum_j u_j^2\le1$。置
+
+$$
+c_*=\frac{1-2^{-1/2}}{\sqrt{2C_{\mathrm{hist}}}},
+\qquad \rho_j=c_*\epsilon u_j2^{-j/2}.
+\tag{31.28}
+$$
+
+存在同一列满足（31.4）的全域接收门，在所有确定终端、全部实际相位和任意参考输入上误差至多 $\epsilon$。令
+$k=\lfloor\log_2n\rfloor$，则
+
+$$
+\boxed{
+\dim K_n\le m^2\operatorname{Pack}(\Gamma,\rho_k)+1
+\le m^2\operatorname{Pack}\!\left(
+\Gamma,\frac{c_*\epsilon u_k}{\sqrt n}\right)+1.
+}
+\tag{31.29}
+$$
+
+证明。取嵌套有限极大 $\rho_j$ 分离集
+$A_0\subseteq A_1\subseteq\cdots\subseteq\Gamma$。因
+$\rho_{j+1}\le2^{-1/2}\rho_j$，旧网可扩张成新网。每个新节点选距小于
+$\rho_{j-1}$ 的父节点，旧节点取恒等父映射。初层任取相位代表；递归沿
+$\mathcal H$ 调整每个新节点代表，使其与已固定父节点代表的原环面距离等于商距离。紧性保证最小值取得，旧节点保留原代表。
+
+在区块 $\{2^j,\ldots,2^{j+1}-1\}$，每个第 $k$ 层叶节点使用其第 $j$ 层祖先代表为虚拟相位，再截到当前终端 $n$。这些历史全部预先固定。对实际 $\theta$，只在误差证明中选距其商点小于 $\rho_k$ 的叶，再选单个
+$h\in\mathcal H$，使 $\theta+h$ 与叶代表的原环面距离小于 $\rho_k$。沿父链的三角不等式给每个第 $j$ 块的误差至多
+$\rho_j/(1-2^{-1/2})$，故
+
+$$
+\sum_{t\le n}d_{\mathbb T^q}(\theta+h,\varphi_t)^2
+\le\frac1{(1-2^{-1/2})^2}\sum_{j\le k}2^j\rho_j^2
+\le\frac{\epsilon^2}{2C_{\mathrm{hist}}}.
+\tag{31.30}
+$$
+
+每个终端只有一个固定的 $h$，没有逐块更换群移位或修改预定历史。由（31.15）、（31.20），实际 $\theta$ 的投影漏出也受
+$\epsilon^2I_M/2$ 控制。
+
+令 $W_n$ 为当前层全部叶历史支撑之和。其维数至多 $m^2|A_k|$。若历史延长一步，
+
+$$
+\chi_{ij}^{n+1,\boldsymbol\varphi'}
+=\sum_{\ell:(\ell,j)\in\mathcal E}\sqrt{P_{\ell j}}\,
+e^{i\varphi'_{n+1}\cdot g_{\ell j}}\,
+\chi_{i\ell}^{n,\boldsymbol\varphi}\otimes|\ell,j\rangle.
+\tag{31.31}
+$$
+
+区块内部沿同一叶延长；区块边界的新叶旧前缀恰为父节点历史。因此始终
+$W_{n+1}\subseteq W_n\otimes B$。
+
+记 $\Pi_n$ 为投影。取 $W_0=K_0=\mathbb C$、$F_0=\Pi_0=I$；对
+$n\ge1$，取
+$K_n=\mathbb C^{\dim W_n}\oplus\mathbb C|\bot_n\rangle$，以 $F_n$ 将
+$W_n$ 等距编码到成功块。将 $F_n$ 在 $W_n^\perp$ 上以零延拓，所以其伴随在失败旗标上为零。定义
+
+$$
+\begin{aligned}
+L_n&=F_n\Pi_n(F_{n-1}^*\otimes I_B),\\
+\mathcal C_n(X)&=L_nXL_n^*
++\operatorname{Tr}[(I-L_n^*L_n)X]|\bot_n\rangle\langle\bot_n|.
+\end{aligned}
+\tag{31.32}
+$$
+
+前缀包含使 $`L_n^*L_n`$ 为投影，故此式全域完全正且保迹，旧旗标保持吸收。接收门和之后的来源发射作用于不同系统，可以交换。又因
+$\Pi_n(\Pi_{n-1}\otimes I_B)=\Pi_n$，连续成功 Kraus 的乘积恰为
+$F_n\Pi_n$。不存在对不同终端失败的额外并集误差。
+
+取任意固定档案态 $\tau_n$，终端解码为
+
+$$
+\mathcal D_n(Y)=F_n^*YF_n+
+\langle\bot_n|Y|\bot_n\rangle\tau_n.
+\tag{31.33}
+$$
+
+对任意初始参考输入先纯化。令纯目标漏出质量为 $d_n\le\epsilon^2/2$。成功分支与目标重叠为 $(1-d_n)^2$，所有失败项为正，因此
+
+$$
+D(\widehat\Omega,\Omega)
+\le\sqrt{1-(1-d_n)^2}\le\sqrt{2d_n}\le\epsilon.
+\tag{31.34}
+$$
+
+丢弃额外纯化参考后仍成立。全域通道可用立即丢弃的新环境实现，并按需要附加独立纯空白，不保留未计入寄存器的输入相关系统。维数计数给（31.29）。证明完毕。
+
+**推论31.8（商候选集的上下盒维与几何稀疏增长）。** 取任意固定 $\eta>0$，例如选择
+
+$$
+u_j=\frac{C_\eta}{\sqrt{(j+2)[\log(j+2)]^{1+2\eta}}},
+\qquad
+C_\eta=\left(\sum_{j\ge0}
+\frac1{(j+2)[\log(j+2)]^{1+2\eta}}\right)^{-1/2}.
+\tag{31.35}
+$$
+
+令 $\underline d,\overline d$ 分别为
+$\log\operatorname{Pack}(\Gamma,r)/\log(1/r)$ 在 $r\downarrow0$ 的下、上极限。定理31.7的同一门序列满足
+
+$$
+\liminf_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\underline d}{2},\qquad
+\limsup_{n\to\infty}\frac{\log\dim K_n}{\log n}
+=\frac{\overline d}{2}.
+\tag{31.36}
+$$
+
+任意合法门序列的相应下、上极限分别至少为这两个数。
+
+证明。细化尺度
+$`r_n=c_*\epsilon u_{\lfloor\log_2n\rfloor}/\sqrt n`$
+递减到零，相邻项之比趋于一，且 $\log(1/r_n)/\log n\to1/2$。dyadic 跳点还使用 $u_{j+1}/u_j\to1$。分离数的单调性在相邻尺度间夹逼，给出与全尺度相同的上下盒维极限。再用（31.22）的逐终端下界及（31.29）的上界即可。这需要所选预算的缓变性质，不适用于任意平方可和预算。证明完毕。
+
+若商候选集满足
+$\operatorname{Pack}(\Gamma,r)\asymp1+\log(1/r)$，则同一在线构造给
+$\dim K_n=\Theta_{P,g,\Gamma,\epsilon,\eta}(\log n)$，任意合法门序列也受相应对数下界。例如，在商环面的局部等距坐标片内取足够短的非零向量 $v$，
+$\Gamma=\{0\}\cup\{a^jv:j\ge0\}$、$0<a<1$，就满足此条件。条件必须落在商空间；原参数集沿 $\mathcal H$ 的几何序列可以投影为单点。
+
+例如，两态 $P_{ij}=1/2$、$q=2$、$g_{ij}=(i-j,\mathbf1_{\{i=j=0\}})$，状态编号为 $0,1$。第一坐标为端点势差，而路径
+$0\to0\to1$ 与 $0\to1\to1$ 的荷差为 $(0,1)$，所以
+$\Lambda=\mathbb Z(0,1)$、$\mathcal H=\mathbb T\times\{0\}$。
+原参数集 $\{(0,0)\}\cup\{(a^j,0):j\ge0\}$ 虽为几何序列，其商像却为单点，整个族有同一份至多 $m^2$ 维档案支撑，能精确常数维接收。只给原参数距离的几何上界也不足以推出对数增长。
+
+[^phase_multiphase_gk]: Mădălin Guţă and Jukka Kiukas, *Equivalence classes and local asymptotic normality in system identification for quantum Markov chains*, [arXiv:1402.3535v1](https://arxiv.org/abs/1402.3535v1)。Theorem 2 将 primitive 量子 Markov 等距的平稳输出等价刻画为相位乘子与内部酉共轭；Lemma 2 给相应模一外围谱判据。Theorem 4 对解析单参数族的有界局部参数 $\theta=\theta_0+u/\sqrt n$ 给联合系统—输出纯态的高斯极限及统计模型强收敛。§5.3 Corollary 1 说明等价规范方向的渐近每步 Fisher 信息为零，初态或端点仍可携带非广延信息。这些结论不直接给出本节任意候选集、全局有限步、任意参考和完整联合恢复的容量定理；（31.9）、（31.15）、（31.20）及前缀支撑构造承担这些额外义务。
+
+本节的前缀支撑相干接收和纯目标迹距离转换分别复用既有机制。[^phase_bcz][^phase_fvg] 商空间尺度及完整联合容量由本节的具体有限源关系推出；这里不作这些容量结论的外部原创优先权主张。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 循环荷格、精确字符容量与一维候选弧
+
+本节继续第31节的边标签来源与完整联合恢复合同。先用有限整数矩阵计算商维数，再确定全相位候选集的精确容量，并比较精确恢复与固定正误差恢复。接收门仍可依当前编号变化。以下不改判第29—30节的固定接收通道问题。
+
+**引理32.1（实际路径差格的有限矩阵表示）。** 令支持图有 $m$ 个顶点、$s$ 条边，非空且强连通；本引理暂不要求非周期。取有符号关联矩阵
+$\mathsf D\in\mathbb Z^{m\times s}$，边 $e:i\to j$ 的列为
+$\mathbf e_j-\mathbf e_i$，自环列为零。令
+
+$$
+A=\begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\end{pmatrix},
+\qquad
+G=(g_e)_{e\in\mathcal E}\in\mathbb Z^{q\times s}.
+\tag{32.1}
+$$
+
+若 $L_{\mathrm{path}}$ 为全部等长、同起终点支持路径的边计数差生成的整数群，则
+
+$$
+\boxed{
+L_{\mathrm{path}}=\ker_{\mathbb Z}A,\qquad
+\Lambda=G(\ker_{\mathbb Z}A).
+}
+\tag{32.2}
+$$
+
+而且 $\ker_{\mathbb Z}A$ 的每个元素本身就是一对实际等长、同起终点路径的计数差。商维数可计算为
+
+$$
+\boxed{
+r=\operatorname{rank}\Lambda
+=\operatorname{rank}_{\mathbb R}
+ \begin{pmatrix}\mathsf D\\\mathbf1^{\mathsf T}\\G\end{pmatrix}-m.
+}
+\tag{32.3}
+$$
+
+证明。若 $x(\gamma)\in\mathbb Z_{\ge0}^s$ 为路径边计数，则
+$\mathsf D x(\gamma)=\mathbf e_j-\mathbf e_i$、
+$\mathbf1^{\mathsf T}x(\gamma)=|\gamma|$。等长同端点路径的差在
+$\ker_{\mathbb Z}A$ 中。
+
+反向取 $z\in\ker_{\mathbb Z}A$。强连通性使每条边都位于一个有向闭走法中；将每条边所选闭走法的计数相加，得到
+$c\in\mathbb Z_{>0}^s$，满足 $\mathsf Dc=0$。取整数 $k$ 充分大，使
+$kc$ 和 $kc+z$ 每个坐标均严格为正。两份边重数都在每个顶点入出平衡，且包含全部原图边，因而各自有从同一指定顶点开始的有向 Euler 回路。其总长度相等，计数差恰为 $z$，证明第一式；施以 $G$ 即得第二式。
+
+强连通图的关联矩阵秩为 $m-1$。向量 $\mathbf1^{\mathsf T}$ 不在
+$\mathsf D$ 的行空间中：它在正循环计数 $c$ 上取正值，而
+$\mathsf D$ 的每行在 $c$ 上均为零。所以 $\operatorname{rank}A=m$。
+整数矩阵的有理核实张成其全部实核，给有理基清分母可得
+$\operatorname{span}_{\mathbb R}\ker_{\mathbb Z}A=\ker_{\mathbb R}A$。于是
+
+$$
+\operatorname{rank}\Lambda
+=\operatorname{rank}_{\mathbb R}(G|_{\ker_{\mathbb R}A})
+=\operatorname{rank}_{\mathbb R}\begin{pmatrix}A\\G\end{pmatrix}
+-\operatorname{rank}_{\mathbb R}A,
+\tag{32.4}
+$$
+
+得到（32.3）。证明完毕。
+
+这一表示既保留整数格，也消去了遍历全部路径的定义。实秩只给商维数；
+$\Lambda$ 的完整整数结构还决定 $\mathcal H=\Lambda^\perp$ 的有限连通分支，不能以未校验的浮点核代替整数格。
+
+**推论32.2（每条边各有独立相位）。** 若 $q=s$、$G=I_s$，则
+
+$$
+r=s-m,\qquad
+\mathcal H=
+\{h_e=\omega+\phi_{\mathrm s(e)}-\phi_{\mathrm t(e)}
+       \pmod{2\pi}\}.
+\tag{32.5}
+$$
+
+此时 $\mathcal H$ 是连通环面的连续像，因而连通。若进一步 $P$ primitive，取
+$\Theta=\mathbb T^s$，则每个固定 $0<\epsilon<1$ 有
+
+$$
+k_n^{(\epsilon)}(\mathbb T^s)
+\asymp_{P,\epsilon} n^{(s-m)/2}.
+\tag{32.6}
+$$
+
+取第31节的缓变平方可和预算，同一套与未来终端无关的在线门也有增长指数
+$(s-m)/2$；此处保留该预算的慢变开销，不对任意平方可和预算断言同一指数。
+
+证明。格秩由（32.3）给出。规范群的表达式就是（31.5），是
+$(\omega,\phi_1,\ldots,\phi_m)\in\mathbb T^{m+1}$ 的连续群像。维数
+$s-m$ 的固定紧平坦环面在小尺度 $\delta$ 的分离数为
+$\Theta(\delta^{-(s-m)})$；将其用于定理31.6和推论31.8即可。证明完毕。
+
+两态四边均正、边顺序为 $00,01,10,11$ 时，循环差格的一组整数基是
+
+$$
+(1,0,0,-1),\qquad(-2,1,1,0).
+\tag{32.7}
+$$
+
+所以 $r=2$，可取商相位坐标
+
+$$
+\theta_{00}-\theta_{11},\qquad
+\theta_{01}+\theta_{10}-2\theta_{00}.
+\tag{32.8}
+$$
+
+固定误差容量是 $\Theta(n)$。若两态图只有 $00,01,10$ 三边且转移
+primitive，则 $r=1$，格基为 $(-2,1,1)$，有效相位为
+$\theta_{01}+\theta_{10}-2\theta_{00}$。这些都是完整边标签模型的实例，不能凭相同指数与前文另一来源等同。
+
+**定理32.3（全相位精确容量及其在线实现）。** 对 $n\ge1$ 和端点 $i,j$，记
+$C_n(i,j)\subseteq\mathbb Z^q$ 为所有 $n$ 步支持路径 $i\to j$ 的总荷集合，并置
+
+$$
+N_n=\sum_{i,j}|C_n(i,j)|,\qquad N_0=1.
+\tag{32.9}
+$$
+
+在定义31.1的任意参考、任意初始活动记忆与完整联合恢复合同下，
+
+$$
+\boxed{k_n^{(0)}(\mathbb T^q)=N_n.}
+\tag{32.10}
+$$
+
+同一列与未来终端无关的时变在线接收门，在每个时刻 $n$ 精确使用
+$N_n$ 维记忆即可实现，不需要另加失败旗标。
+
+证明。先写共同档案支撑，再证明任意共同编解码都受此支撑的维数下界。
+对路径 $\gamma=(i_0,\ldots,i_n)$，记
+
+$$
+p(\gamma)=\prod_{t=1}^nP_{i_{t-1}i_t},\qquad
+|\gamma\rangle=
+|i_0,i_1\rangle\otimes\cdots\otimes|i_{n-1},i_n\rangle.
+\tag{32.11}
+$$
+
+对每个可达三元组 $(i,j,c)$ 定义
+
+$$
+b_{ijc}=
+\sum_{\substack{\gamma:i\to j,\ |\gamma|=n\\g(\gamma)=c}}
+\sqrt{p(\gamma)}\,|\gamma\rangle,
+\qquad
+\chi_{ij}^{(n)}(\theta)
+=\sum_{c\in C_n(i,j)}e^{i\theta\cdot c}b_{ijc}.
+\tag{32.12}
+$$
+
+所有 $b_{ijc}$ 非零，不同三元组的路径集合不交，所以它们两两正交。
+$n\ge1$ 时，完整边标签同时记录初始及终止顶点；不同端点扇区也正交。
+对每个固定相位，全部初始输入在档案侧的支撑是
+
+$$
+S_n(\theta)=
+\operatorname{span}\{\chi_{ij}^{(n)}(\theta):C_n(i,j)\ne\varnothing\}.
+\tag{32.13}
+$$
+
+不同整数荷给出的环面字符线性无关。等价地，对固定 $i,j,c$，
+
+$$
+b_{ijc}=\frac1{(2\pi)^q}
+\int_{\mathbb T^q}e^{-i\theta\cdot c}\chi_{ij}^{(n)}(\theta)\,d\theta.
+\tag{32.14}
+$$
+
+有限维子空间对积分封闭，因此
+
+$$
+W_n:=\operatorname{span}_{\theta\in\mathbb T^q}S_n(\theta)
+=\operatorname{span}\{b_{ijc}\},\qquad \dim W_n=N_n.
+\tag{32.15}
+$$
+
+支撑计数尚不足以单独证明最小物理维数。设共同编码、解码通过
+$D$ 维寄存器，恢复通道为 $\mathcal R=\mathcal D_n\mathcal E_n$。
+以 $m$ 维参考 $J$ 和归一化 Bell 初态
+$m^{-1/2}\sum_i|i\rangle_J|i\rangle_M$ 测试合同，得到纯联合态
+
+$$
+|\Psi_{\theta,n}\rangle
+=\frac1{\sqrt m}\sum_{i,j}|i\rangle_J
+ \otimes\chi_{ij}^{(n)}(\theta)\otimes|j\rangle_M.
+\tag{32.16}
+$$
+
+它在档案侧的 Schmidt 支撑正是 $S_n(\theta)$。精确保持这个完整纯态，逐项比较参考—活动记忆的矩阵元，即得
+$\mathcal R(X)=X$ 对每个 $X\in\mathcal L(S_n(\theta))$ 成立。
+
+取恢复通道的一个固定 Stinespring 等距
+$U:H_n\to H_n\otimes E$。纯态不扰动使它在每个
+$S_n(\theta)$ 上形为
+
+$$
+Ux=x\otimes e_\theta\quad(x\in S_n(\theta)),\qquad
+\|e_\theta\|=1.
+\tag{32.17}
+$$
+
+这里同一支撑内的环境向量相同：先对一组正交基的纯态使用纯输出，再对任意两基向量的叠加或其非对角矩阵元使用
+$\mathcal R=\operatorname{id}$，就强制环境向量一致。
+
+固定 $\theta$，选任意非空端点扇区 $(i,j)$。向量
+$\chi_{ij}^{(n)}(\theta)$ 非零且连续，所以当 $\varphi$ 位于 $\theta$ 的某邻域时
+
+$$
+\langle\chi_{ij}^{(n)}(\theta),\chi_{ij}^{(n)}(\varphi)\rangle\ne0.
+\tag{32.18}
+$$
+
+由 $U$ 保持内积和（32.17），该内积等于其自身乘上
+$\langle e_\theta,e_\varphi\rangle$，故
+$\langle e_\theta,e_\varphi\rangle=1$，即 $e_\theta=e_\varphi$。
+环境向量在连通环面上局部常值，因而全局相同。这里仅使用邻近相位的交叠，不要求任意远隔相位的支撑非正交。
+
+线性性于是给 $Uw=w\otimes e$ 对全部 $w\in W_n$ 成立。因此
+$\mathcal R$ 在整个 $\mathcal L(W_n)$ 上恒等，编码
+$\mathcal E_n$ 在这个算子空间上单射。比较复线性维数得到
+
+$$
+N_n^2=\dim_{\mathbb C}\mathcal L(W_n)
+\le \dim_{\mathbb C}\mathcal L(\mathbb C^D)=D^2,
+\quad\text{故 }D\ge N_n.
+\tag{32.19}
+$$
+
+上界可将 $W_n$ 等距编码，并在正交补上作任意 CPTP 完成。下面的在线实现同时给出各终端的上界。
+
+令 $W_0=K_0=\mathbb C$。由（31.31）的端点递推，对每个相位都有
+$S_{n+1}(\theta)\subseteq S_n(\theta)\otimes B$，因此
+
+$$
+W_{n+1}\subseteq W_n\otimes B.
+\tag{32.20}
+$$
+
+取 $K_n=\mathbb C^{N_n}$、$F_n:W_n\to K_n$ 为满射等距，将
+$F_n$ 在 $W_n^\perp$ 上以零延拓。设 $\Pi_n$ 为 $W_n$ 的正交投影，
+$F_0=\Pi_0=I$，则
+$`F_n^*F_n=\Pi_n`$、$`F_nF_n^*=I_{K_n}`$。在整个输入载体上定义
+
+$$
+\begin{aligned}
+L_n&=F_n\Pi_n(F_{n-1}^*\otimes I_B),\\
+\mathcal C_n(X)
+&=L_nXL_n^*
++\operatorname{Tr}[(I-L_n^*L_n)X]\,\tau_n,
+\end{aligned}
+\tag{32.21}
+$$
+
+其中 $\tau_n$ 是 $K_n$ 内任一预定密度矩阵。前缀包含（32.20）保证
+$`L_n^*L_n`$ 为投影，所以（32.21）是全域 CPTP 映射；$L_n$ 在可达支撑上等距，在其正交补上为零。实际来源对全部相位和参考输入都落在可达支撑内，补分支概率恒为零。故解码
+
+$$
+\mathcal D_n(Y)=F_n^*YF_n
+\tag{32.22}
+$$
+
+保迹并精确恢复。所有门只依赖当前编号，无需知道未来终端。它们没有要求从整个
+$K_{n-1}\otimes B$ 到 $K_n$ 存在无环境等距；所需的是可达支撑上的部分等距及全域通道完成。证明完毕。
+
+上述必要性还适用于其他连通候选参数空间：只要档案支撑向量随参数连续、始终至少有一个非零向量，共同 Stinespring 环境同样由局部非零交叠强制为全局常量。因此，精确容量等于该连通族的共同档案支撑维数。下文的闭区间候选弧直接使用这一步，不预设能够制备不同参数值的叠加输入。
+
+**定理32.4（精确与固定正误差的全环面增长阶）。** 对 primitive
+$P$，令 $r=\operatorname{rank}G(\ker_{\mathbb Z}A)$。当 $n\to\infty$ 时，
+
+$$
+N_n\asymp_{P,g}n^r.
+\tag{32.23}
+$$
+
+所以对每个固定 $0<\epsilon<1$，
+
+$$
+\boxed{
+k_n^{(0)}(\mathbb T^q)\asymp_{P,g}n^r,\qquad
+k_n^{(\epsilon)}(\mathbb T^q)
+\asymp_{P,g,\epsilon}n^{r/2}.
+}
+\tag{32.24}
+$$
+
+证明。先作上界。固定端点 $i,j$ 后，任意两个 $n$ 步路径的计数差在
+$\ker_{\mathbb Z}A$，所以相应荷差落在维数 $r$ 的实空间
+$G(\ker_{\mathbb R}A)$。每个荷的范数不超过
+$n\max_e\|g_e\|$，不同整数荷的欧氏距离至少为一。因此
+$C_n(i,j)$ 是一个 $r$ 维仿射子空间内、半径 $O(n)$ 球中的一分离集。
+以半径 $1/3$ 的互不交小球比较该仿射空间的体积，得到
+$|C_n(i,j)|=O(n^r)$。再对最多 $m^2$ 个端点对求和。若 $r=0$，每个非空扇区只有一个荷，结论同样成立。
+
+下界须产生实际可实现的荷，不能只数实仿射切片。取引理32.1中的严格正整数循环计数 $c$，置 $L=\mathbf1^{\mathsf T}c>0$。固定顶点
+$i$。primitive 性给整数 $N$，使每个长度 $t\ge N$ 都有
+$i\to i$ 支持闭走法。对 $t=N,\ldots,N+L-1$ 各选一份闭走法计数
+$r_t$。当 $n\ge N$ 时，令
+
+$$
+k=\left\lfloor\frac{n-N}{L}\right\rfloor,\qquad
+t=n-kL\in\{N,\ldots,N+L-1\},\qquad
+q_n=kc+r_t.
+\tag{32.25}
+$$
+
+它满足 $\mathsf Dq_n=0$、$\mathbf1^{\mathsf T}q_n=n$，且对所有充分大的
+$n$，每条边都有 $(q_n)_e\ge\kappa n$，其中 $\kappa>0$ 是固定常数。
+
+从整数核中选 $z_1,\ldots,z_r$，使
+$Gz_1,\ldots,Gz_r$ 实线性无关；（32.4）保证可选。取足够小的固定
+$\delta>0$，则对所有整数系数 $|\ell_a|\le\delta n$，向量
+
+$$
+q_n+\sum_{a=1}^r\ell_a z_a
+\tag{32.26}
+$$
+
+每个坐标均严格为正，仍平衡且总长为 $n$。其支持包含原图全部边，故由
+Euler 回路实现为从 $i$ 开始的 $n$ 步闭走法。线性无关性使不同
+$(\ell_1,\ldots,\ell_r)$ 给不同总荷，于是
+
+$$
+|C_n(i,i)|\ge(2\lfloor\delta n\rfloor+1)^r
+=\Omega(n^r).
+\tag{32.27}
+$$
+
+$r=0$ 时用一条实际路径即可。上下界给（32.23）。精确容量由定理32.3给出；固定正误差容量由商环面的 $r$ 维分离数与定理31.6给出。证明完毕。
+
+零误差侧区分全部相干字符，固定正误差侧的有效分辨尺度为
+$n^{-1/2}$；同一商维数控制两侧，但增长指数相差一倍。这是对具体边标签模型及完整联合合同的结论。
+
+**命题32.5（两态四边独立相位的精确有限值）。** 取两态四边转移全部正，
+$g_{00},g_{01},g_{10},g_{11}$ 为 $\mathbb Z^4$ 标准基。则对每个
+$n\ge1$，
+
+$$
+\boxed{
+N_n=n^2+n+2,\qquad
+k_n^{(0)}(\mathbb T^4)=n^2+n+2.
+}
+\tag{32.28}
+$$
+
+固定 $0<\epsilon<1$ 时仍有
+$k_n^{(\epsilon)}(\mathbb T^4)\asymp_{P,\epsilon}n$。
+
+证明。路径计数写作 $(a,b,c,d)$，分别对应 $00,01,10,11$。
+$01$ 端点扇区满足 $b=c+1$。置 $c=t\ge0$ 后，
+$a+d=n-2t-1$；每个这样的非负计数都能通过交替跨边、在访问顶点插入自环实现。因此
+
+$$
+|C_n(0,1)|
+=\sum_{t=0}^{\lfloor(n-1)/2\rfloor}(n-2t),
+\qquad |C_n(1,0)|=|C_n(0,1)|.
+\tag{32.29}
+$$
+
+$00$ 端点扇区满足 $b=c=t$。若 $t=0$，路径只能是全部 $00$ 自环，贡献一个计数；若 $t\ge1$，两态均已访问，任意
+$a,d\ge0$、$a+d=n-2t$ 都可实现。所以
+
+$$
+|C_n(0,0)|
+=1+\sum_{t=1}^{\lfloor n/2\rfloor}(n-2t+1),
+\qquad |C_n(1,1)|=|C_n(0,0)|.
+\tag{32.30}
+$$
+
+分别代入 $n=2k$ 和 $n=2k+1$ 求和，均得
+$2|C_n(0,1)|+2|C_n(0,0)|=n^2+n+2$。
+精确值由定理32.3给出，正误差阶由 $r=2$ 的定理32.4给出。证明完毕。
+
+**命题32.6（相同一维商几何，不同精确容量指数）。** 在命题32.5的同一来源中，固定
+$\alpha\in\mathbb R$，取足够小的固定 $L>0$，令候选相位仅为
+
+$$
+\Theta_\alpha=
+\{(\theta_{00},\theta_{01},\theta_{10},\theta_{11})
+=(0,0,\alpha t,t):0\le t\le L\}.
+\tag{32.31}
+$$
+
+若 $\alpha$ 无理，则
+
+$$
+k_n^{(0)}(\Theta_\alpha)=n^2+n+2
+\quad(n\ge1).
+\tag{32.32}
+$$
+
+若 $\alpha=p/q$、$p\in\mathbb Z$、$q\in\mathbb Z_{>0}$，则
+
+$$
+k_n^{(0)}(\Theta_{p/q})\asymp_{p,q}n.
+\tag{32.33}
+$$
+
+两种情形下，商候选弧的盒维数都是一；对每个固定 $0<\epsilon<1$，
+
+$$
+\boxed{
+k_n^{(\epsilon)}(\Theta_\alpha)
+\asymp_{P,\alpha,L,\epsilon}\sqrt n.
+}
+\tag{32.34}
+$$
+
+证明。固定端点 $i,j\in\{0,1\}$ 和长度 $n$，路径计数满足
+$b-c=j-i$、$a+b+c+d=n$，故 $(c,d)$ 唯一决定全部计数。沿候选弧，相位字符成为
+
+$$
+e^{i(\alpha c+d)t}.
+\tag{32.35}
+$$
+
+无理性使不同整数对 $(c,d)$ 的频率 $\alpha c+d$ 不同。有限个不同实频率的指数函数在任意非退化实区间上线性无关：若其线性组合恒为零，于区间内一点取从零到频率总数减一阶的导数，所得矩阵是乘以非零对角因子的 Vandermonde 矩阵，其行列式是非零频率差的乘积。因此，每个端点扇区按完整四边计数合成的全部向量
+$b_{ij,(a,b,c,d)}$ 仍被这条候选弧张满，共同档案支撑与完整四相位环面相同。
+
+候选闭区间连通，支撑向量连续；定理32.3的局部交叠论证强制共同恢复通道在整个共同支撑上恒等。命题32.5给其维数
+$n^2+n+2$，故得到（32.32）。这个必要性来自逐参数的精确恢复合同，不增加相位叠加输入要求。
+
+若 $\alpha=p/q$，频率变成 $(pc+qd)/q$。由于 $0\le c,d\le n$，每个端点扇区至多有 $O_{p,q}(n)$ 个不同频率。将同频率的全部路径振幅合成一个非零向量后，不同频率组仍有不交的路径支撑；上面的指数独立性及连通交叠证明使精确容量等于各端点扇区不同频率数之和。下界在
+$01$ 扇区取
+
+$$
+c=0,\quad b=1,\quad d=0,\ldots,n-1,\quad a=n-1-d.
+\tag{32.36}
+$$
+
+这些计数分别由先走 $00$ 自环、再过 $01$、最后走 $11$ 自环实现，给出
+$n$ 个不同频率 $d$。这证明（32.33）。
+
+最后，（32.8）的商坐标将整条候选弧映成 $(-t,\alpha t)$。
+这些整数坐标来自循环差格的完整基，诱导商环面与 $\mathbb T^2$ 的同构。在足够小的固定坐标片中，商的平坦距离与这些坐标的欧氏距离双侧等价；方向
+$(-1,\alpha)$ 非零，所以存在 $0<c_\alpha\le C_\alpha<\infty$，使
+
+$$
+c_\alpha|t-t'|
+\le d_{\mathcal Q}([\theta(t)],[\theta(t')])
+\le C_\alpha|t-t'|\quad(0\le t,t'\le L).
+\tag{32.37}
+$$
+
+由此
+$\operatorname{Pack}(\Gamma_\alpha,\delta)
+\asymp_{\alpha,L}\delta^{-1}$，定理31.6即给（32.34）。证明完毕。
+
+这个对照表明，精确容量指数不由候选集的商盒维数单独决定。无理性仅用于有限频率集合的严格单射；证明没有使用任何丢番图逼近速率。Vandermonde 论证只确定代数秩，不给稳定数值反演或门描述复杂度，也不声称可以通过有限测量精确认定某参数无理。
+
+本节的 Euler 回路、整数循环格、字符独立性与共同 Stinespring 机制是所用的标准中间工具。新增推导给出第31节具体来源的可达荷容量、精确在线实现及有理／无理候选弧对照；这些是普通数学结果，未在 Lean 中形式化，也不作外部原创优先权主张。
+
+## 追加锚（本行以下为增补区）
