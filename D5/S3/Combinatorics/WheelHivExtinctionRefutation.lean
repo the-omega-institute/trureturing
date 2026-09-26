@@ -20,7 +20,8 @@ escape_witness: form (2), the public conclusion `result` itself: a bit-sliced si
 admission_basis: open-problem-resolution (issue #10263)
 Direct frozen dependencies: D5/S0/Computability/PhysicalDivider/WordArithmetic: `bitsValue`
   (statement_id sha256:0af0922a52ff96d028cb9f4bec5193f78a5e7bd5682a53e4e7d741355640fe55),
-  `bitsValue_fixedBits` (sha256:17079846beefc5a86338e787baba95b7d10d646add645d512f59fd75d81488d3) and
+  `bitsValue_fixedBits` (sha256:17079846beefc5a86338e787baba95b7d10d646add645d512f59fd75d81488d3)
+  and
   `fixedBits_bitsValue` (sha256:a7e5115d9e62ba2f7af0aa652d5e4b129d6eb5a886fc3e0a12002ba1e57c4607)
 -/
 
@@ -37,18 +38,19 @@ open Lax51Proofs.RamToTM (bitsValue bitsValue_fixedBits fixedBits_bitsValue)
 
 /-!
 Espinosa-García, Figueroa, Fresán-Figueroa, Maldonado, Sánchez-Solís, *Extinction thresholds in a
-graph-based model of HIV infection dynamics*, arXiv:2608.00340v1, Section 2 and Conjecture 1. A state
-of a graph `G` is `f : V(G) → {0, 1, 2}` (healthy, infected, dead); an admissible initial state takes
-values in `{0, 1}`. With `d_{t,I}(v)` the number of infected neighbours of `v`, a healthy vertex
-becomes infected when `d ≥ 1` and stays healthy otherwise, an infected vertex dies, and a dead vertex
-is replaced by an infected one when `d ≥ R` and by a healthy one otherwise. The extinction set `𝓔(G)`
-is the set of positive `R` for which every admissible initial state reaches the all-healthy state.
-Conjecture 1: `𝓔(W_n) = {3} ∪ {R ≥ n - 1}` for even `n ≥ 12` and `𝓔(W_n) = {4} ∪ {R ≥ n - 1}` for
-odd `n ≥ 17`, where `W_n = K₁ ∨ C_{n-1}`. It fails at `n = 18`: `4 ∈ 𝓔(W_18)`.
+graph-based model of HIV infection dynamics*, arXiv:2608.00340v1, Section 2 and Conjecture 1. A
+state of a graph `G` is `f : V(G) → {0, 1, 2}` (healthy, infected, dead); an admissible initial
+state takes values in `{0, 1}`. With `d_{t,I}(v)` the number of infected neighbours of `v`, a
+healthy vertex becomes infected when `d ≥ 1` and stays healthy otherwise, an infected vertex dies,
+and a dead vertex is replaced by an infected one when `d ≥ R` and by a healthy one otherwise. The
+extinction set `𝓔(G)` is the set of positive `R` for which every admissible initial state reaches
+the all-healthy state. Conjecture 1: `𝓔(W_n) = {3} ∪ {R ≥ n - 1}` for even `n ≥ 12` and
+`𝓔(W_n) = {4} ∪ {R ≥ n - 1}` for odd `n ≥ 17`, where `W_n = K₁ ∨ C_{n-1}`. It fails at `n = 18`:
+`4 ∈ 𝓔(W_18)`.
 -/
 
-/-- The wheel `W_n = K₁ ∨ C_{n-1}` on `Fin n`: vertex `0` is the hub, joined to every other vertex, and
-the cycle visits `1, 2, …, n - 1` in order and closes from `n - 1` back to `1`. -/
+/-- The wheel `W_n = K₁ ∨ C_{n-1}` on `Fin n`: vertex `0` is the hub, joined to every other vertex,
+and the cycle visits `1, 2, …, n - 1` in order and closes from `n - 1` back to `1`. -/
 def wheelAdj (n : ℕ) (u v : Fin n) : Prop :=
   u ≠ v ∧ (u.val = 0 ∨ v.val = 0 ∨ u.val + 1 = v.val ∨ v.val + 1 = u.val ∨
     (u.val = 1 ∧ v.val = n - 1) ∨ (v.val = 1 ∧ u.val = n - 1))
@@ -117,8 +119,8 @@ private def initM : List (ℕ × ℕ) := (List.finRange 18).map fun v => (coord 
 private def allClear (s : List (ℕ × ℕ)) : Bool := s.all fun p => p.1 == 0 && p.2 == 0
 
 set_option maxRecDepth 100000 in
-/-- Conjecture 1 fails at `n = 18`: every admissible initial state of `W_18` dies out by time 25 when
-`R = 4`, so `4 ∈ 𝓔(W_18)`, while the conjectured set `{3} ∪ {R ≥ 17}` does not contain `4`. -/
+/-- Conjecture 1 fails at `n = 18`: every admissible initial state of `W_18` dies out by time 25
+when `R = 4`, so `4 ∈ 𝓔(W_18)`, while the conjectured set `{3} ∪ {R ≥ 17}` does not contain `4`. -/
 theorem result : ¬ claim := by
   have rep_lt : ∀ (b w : ℕ) (hb : b < 2 ^ w), ∀ k, rep b w k < 2 ^ (w * 2 ^ k) := by
     intro b w hb k
@@ -127,12 +129,16 @@ theorem result : ¬ claim := by
     | succ k ih =>
       simp only [rep]
       have h1 : rep b w k <<< (w * 2 ^ k) < 2 ^ (w * 2 ^ (k + 1)) := by
-        rw [Nat.shiftLeft_eq, pow_succ, show w * (2 ^ k * 2) = w * 2 ^ k + w * 2 ^ k by ring, pow_add]
+        rw [Nat.shiftLeft_eq, pow_succ, show w * (2 ^ k * 2) = w * 2 ^ k + w * 2 ^ k by ring,
+          pow_add]
         exact Nat.mul_lt_mul_of_pos_right ih (by positivity)
       have h0 : rep b w k < 2 ^ (w * 2 ^ (k + 1)) :=
-        lt_of_lt_of_le ih (Nat.pow_le_pow_right (by norm_num) (by rw [pow_succ]; nlinarith [Nat.zero_le w, pow_pos (show 0 < 2 by norm_num) k]))
+        lt_of_lt_of_le ih (Nat.pow_le_pow_right (by norm_num) (by
+          rw [pow_succ]
+          nlinarith [Nat.zero_le w, pow_pos (show 0 < 2 by norm_num) k]))
       exact Nat.or_lt_two_pow h0 h1
-  have testBit_rep : ∀ (b w : ℕ) (hb : b < 2 ^ w), ∀ k j, j < w * 2 ^ k → (rep b w k).testBit j = b.testBit (j % w) := by
+  have testBit_rep : ∀ (b w : ℕ) (hb : b < 2 ^ w), ∀ k j, j < w * 2 ^ k →
+      (rep b w k).testBit j = b.testBit (j % w) := by
     intro b w hb k
     induction k with
     | zero => intro j hj; simp [rep, Nat.mod_eq_of_lt (by simpa using hj)]
@@ -143,7 +149,8 @@ theorem result : ¬ claim := by
       · rw [ih j hjk]
         simp [show ¬ (w * 2 ^ k ≤ j) by omega]
       · have hlow : (rep b w k).testBit j = false :=
-          Nat.testBit_eq_false_of_lt (lt_of_lt_of_le (rep_lt b w hb k) (Nat.pow_le_pow_right (by norm_num) (by omega)))
+          Nat.testBit_eq_false_of_lt (lt_of_lt_of_le (rep_lt b w hb k)
+            (Nat.pow_le_pow_right (by norm_num) (by omega)))
         have hj' : j - w * 2 ^ k < w * 2 ^ k := by
           rw [pow_succ, show w * (2 ^ k * 2) = 2 * (w * 2 ^ k) by ring] at hj; omega
         rw [hlow, ih _ hj']
@@ -151,7 +158,8 @@ theorem result : ¬ claim := by
           conv_rhs => rw [show j = (j - w * 2 ^ k) + w * 2 ^ k by omega]
           rw [Nat.add_mul_mod_self_left]
         simp [show w * 2 ^ k ≤ j by omega, this]
-  have testBit_coord : ∀ (v : ℕ) (hv : v < 18) (j : ℕ) (hj : j < 2 ^ 18), (coord v).testBit j = j.testBit v := by
+  have testBit_coord : ∀ (v : ℕ) (hv : v < 18) (j : ℕ) (hj : j < 2 ^ 18),
+      (coord v).testBit j = j.testBit v := by
     intro v hv j hj
     unfold coord
     have hb : (2 ^ 2 ^ v - 1) <<< 2 ^ v < 2 ^ 2 ^ (v + 1) := by
@@ -170,7 +178,8 @@ theorem result : ¬ claim := by
     rcases (show d = 0 ∨ d = 1 by omega) with rfl | rfl
     · simp; omega
     · simp; omega
-  have testBit_ge : ∀ (all : ℕ) (j : ℕ) (hall : all.testBit j = true), ∀ (xs : List ℕ) (k : ℕ), (ge all k xs).testBit j = decide (k ≤ (xs.filter fun x => x.testBit j).length) := by
+  have testBit_ge : ∀ (all : ℕ) (j : ℕ) (hall : all.testBit j = true), ∀ (xs : List ℕ) (k : ℕ),
+      (ge all k xs).testBit j = decide (k ≤ (xs.filter fun x => x.testBit j).length) := by
     intro all j hall xs
     induction xs with
     | nil => intro k; cases k <;> simp [ge, hall]
@@ -183,7 +192,6 @@ theorem result : ¬ claim := by
         by_cases hx : x.testBit j = true
         · simp [hx]; omega
         · simp [hx]
-
   have testBit_bits : ∀ (bs : List Bool) (i : ℕ), (bitsValue bs).testBit i = bs.getD i false := by
     intro bs
     induction bs with
@@ -199,14 +207,24 @@ theorem result : ¬ claim := by
     rw [fixedBits_bitsValue] at h
     rw [h]
     exact Nat.mod_lt _ (by positivity)
-  have card_eq_length : ∀ (p : Fin 18 → Prop) [DecidablePred p], (Finset.univ.filter p).card = ((List.finRange 18).filter fun u => decide (p u)).length := by
+  have card_eq_length : ∀ (p : Fin 18 → Prop) [DecidablePred p],
+      (Finset.univ.filter p).card = ((List.finRange 18).filter fun u => decide (p u)).length := by
     intro p _
     rw [Fin.univ_def]
     rfl
-  have getD_stepM : ∀ (s : List (ℕ × ℕ)) (v : Fin 18), (stepM s).getD v.val (0, 0) = ((((all18 ^^^ ((s.getD v.val (0, 0)).1 ||| (s.getD v.val (0, 0)).2)) &&& ge all18 1 (((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map fun u => (s.getD u.val (0, 0)).1)) ||| ((s.getD v.val (0, 0)).2 &&& ge all18 4 (((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map fun u => (s.getD u.val (0, 0)).1))), (s.getD v.val (0, 0)).1) := by
+  have getD_stepM : ∀ (s : List (ℕ × ℕ)) (v : Fin 18), (stepM s).getD v.val (0, 0) =
+      ((((all18 ^^^ ((s.getD v.val (0, 0)).1 ||| (s.getD v.val (0, 0)).2)) &&&
+          ge all18 1 (((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map
+            fun u => (s.getD u.val (0, 0)).1)) |||
+        ((s.getD v.val (0, 0)).2 &&&
+          ge all18 4 (((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map
+            fun u => (s.getD u.val (0, 0)).1))), (s.getD v.val (0, 0)).1) := by
     intro s v
     simp [stepM, List.getD_eq_getElem?_getD, v.isLt]
-  have count_nb : ∀ (s : List (ℕ × ℕ)) (j : ℕ) (v : Fin 18), ((((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map fun u => (s.getD u.val (0, 0)).1).filter fun x => x.testBit j).length = infectedCount (wheelAdj 18) (decode s j) v := by
+  have count_nb : ∀ (s : List (ℕ × ℕ)) (j : ℕ) (v : Fin 18),
+      ((((List.finRange 18).filter fun u => decide (wheelAdj 18 v u)).map
+        fun u => (s.getD u.val (0, 0)).1).filter fun x => x.testBit j).length =
+      infectedCount (wheelAdj 18) (decode s j) v := by
     intro s j v
     unfold infectedCount
     rw [card_eq_length, List.filter_map, List.length_map, List.filter_filter]
@@ -224,14 +242,18 @@ theorem result : ¬ claim := by
     exact hj
   have step_decode : ∀ (s : List (ℕ × ℕ)) (j : ℕ) (hj : j < 2 ^ 18)
     (hd : ∀ v : Fin 18, ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧
-      (s.getD v.val (0, 0)).2.testBit j = true)), decode (stepM s) j = step (wheelAdj 18) 4 (decode s j) ∧ ∀ v : Fin 18, ¬ (((stepM s).getD v.val (0, 0)).1.testBit j = true ∧ ((stepM s).getD v.val (0, 0)).2.testBit j = true) := by
+      (s.getD v.val (0, 0)).2.testBit j = true)),
+      decode (stepM s) j = step (wheelAdj 18) 4 (decode s j) ∧
+        ∀ v : Fin 18, ¬ (((stepM s).getD v.val (0, 0)).1.testBit j = true ∧
+          ((stepM s).getD v.val (0, 0)).2.testBit j = true) := by
     intro s j hj hd
     have hall := all18_bit j hj
     have hge := testBit_ge all18 j hall
     constructor
     · funext v
       have hc := count_nb s j v
-      simp only [decode, getD_stepM, step, Nat.testBit_or, Nat.testBit_and, Nat.testBit_xor, hall, hge, hc]
+      simp only [decode, getD_stepM, step, Nat.testBit_or, Nat.testBit_and, Nat.testBit_xor, hall,
+        hge, hc]
       have hdv := hd v
       by_cases h1 : (s.getD v.val (0, 0)).1.testBit j = true <;>
       by_cases h2 : (s.getD v.val (0, 0)).2.testBit j = true <;>
@@ -240,7 +262,10 @@ theorem result : ¬ claim := by
       have hdv := hd v
       simp only [getD_stepM, Nat.testBit_or, Nat.testBit_and, Nat.testBit_xor, hall]
       by_cases h1 : (s.getD v.val (0, 0)).1.testBit j = true <;> simp_all
-  have iter_decode : ∀ (j : ℕ) (hj : j < 2 ^ 18), ∀ (t : ℕ) (s : List (ℕ × ℕ)), (∀ v : Fin 18, ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧ (s.getD v.val (0, 0)).2.testBit j = true)) → decode (iterM t s) j = (step (wheelAdj 18) 4)^[t] (decode s j) := by
+  have iter_decode : ∀ (j : ℕ) (hj : j < 2 ^ 18), ∀ (t : ℕ) (s : List (ℕ × ℕ)),
+      (∀ v : Fin 18, ¬ ((s.getD v.val (0, 0)).1.testBit j = true ∧
+        (s.getD v.val (0, 0)).2.testBit j = true)) →
+      decode (iterM t s) j = (step (wheelAdj 18) 4)^[t] (decode s j) := by
     intro j hj t
     induction t with
     | zero => intro s _; rfl
@@ -250,7 +275,8 @@ theorem result : ¬ claim := by
       rw [iterM, ih _ h2, h1, Function.iterate_succ_apply]
   have clear25 : allClear (iterM 25 initM) = true := by
     decide +kernel
-  have extinct : ∀ (f₀ : Fin 18 → Fin 2), (step (wheelAdj 18) 4)^[25] (fun v => (f₀ v).castSucc) = fun _ => 0 := by
+  have extinct : ∀ (f₀ : Fin 18 → Fin 2),
+      (step (wheelAdj 18) 4)^[25] (fun v => (f₀ v).castSucc) = fun _ => 0 := by
     intro f₀
     let bs : List Bool := (List.finRange 18).map fun v => decide (f₀ v = 1)
     have hlen : bs.length = 18 := by simp [bs]
@@ -290,13 +316,10 @@ theorem result : ¬ claim := by
     simp only [decode]
     rw [hv.1, hv.2]
     simp
-
   intro h
   have h18 := h.1 18 ⟨9, rfl⟩ (by norm_num)
   have h4 : (4 : ℕ) ∈ extinctionSet 18 (wheelAdj 18) := ⟨by norm_num, fun f₀ => ⟨25, extinct f₀⟩⟩
   rw [h18] at h4
   simp at h4
-
-#print axioms result
 
 end D5.S3.Combinatorics.WheelHivExtinctionRefutation
