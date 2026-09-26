@@ -53511,3 +53511,322 @@ $$
 局部与联合辅助测量的既有比较可参见 Laustsen–Verstraete–van Enk，[*Local vs. joint measurements for the entanglement of assistance*, quant-ph/0206192v2](https://arxiv.org/abs/quant-ph/0206192v2)，PDF 第 1–3 页及 §3（第 7–8 页）。其目标为两个目标量子比特的平均 concurrence，主要局部结果限制于辅助方的 von Neumann 测量；该范围不等同于这里对全部四维未知输入、任意有限 CP instrument、私有记忆和重复访问的精确恢复。上述推导不扩展到无限、可数或连续结果协议、协议闭包、SEP 类或最优成功值，也不涉及定义 399.1 的整个张量输入任务、实际物理成本或新的 $n>2$ 局部恢复构造。
 
 ## 追加锚（本行以下为增补区）
+
+## 407. 纯量子比特重复记录的正成功分支可由局部投影实现
+
+**定义 407.1（任意系统维数下的局部乘积后选择）。** 取任意整数 $d,n\ge1$，系统为单个 $S=\mathbb C^d$，固定系统基 $\{|i\rangle\}_{i=1}^d$，已知归一化纯记录为 $r_i\in\mathbb C^2$。输入是 $S$ 上任意未知态，也可与任意有限维参考 $A$ 纠缠。按定义 400.1，先完成全部记录的制备：
+
+$$
+J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n},\qquad
+\mathcal H_R=(\mathbb C^2)^{\otimes n},\qquad
+E_n=\operatorname{span}\{r_i^{\otimes n}:1\le i\le d\}.
+$$
+
+第 $a$ 位持有者只持有第 $a$ 个物理量子比特。$E_n$ 是占据的子空间，不授予新的局部张量分解或跨持有者压缩权限。制备之后不添加共享纠缠、联合记录测量或量子通信。每位持有者选择一个单位 ket $|a_a\rangle\in\mathbb C^2$，作两结果投影测量
+
+$$
+\{\Pi_a,I_2-\Pi_a\},\qquad \Pi_a=|a_a\rangle\langle a_a|,
+$$
+
+并报告经典结果。只接受所有持有者均取得第一个结果的分支；失败结果也属于完整测量。系统在记录测量期间不被操作，成功时只施加一个预先固定的终端对角酉算子 $U$，参考 $A$ 始终不被操作。投影和反馈可以依赖已知记录族及 $n$，不得依赖未知输入。
+
+沿用定义 389.1 的 ket 行坐标：$C_{ij}=\langle r_j|r_i\rangle$；在 $E_n$ 的一组正交基中，$R_n$ 的第 $i$ 行是 $r_i^{\otimes n}$ 的坐标。由命题 400.2，
+
+$$
+R_nR_n^\dagger=C^{\circ n},\qquad
+\operatorname{ran}(C^{\circ n})=\operatorname{ran}R_n.
+$$
+
+$\eta(C^{\circ n})$ 仍指第 390—391 节中允许完整联合记录测量的最优总成功量。局部接受映射 $\mathcal T$ 的精确恢复要求为 $\mathcal T=p\operatorname{id}_S$，其中 $0<p\le1$，等式在全部系统矩阵上成立，因而也须保持任意未操作参考及其与系统的纠缠。
+
+**定理 407.2（正成功存在性的全局与局部等价）。** 对定义 407.1 的每个 $d,n$ 及记录族，有
+
+$$
+\eta(C^{\circ n})>0
+\quad\Longleftrightarrow\quad
+\text{存在定义 407.1 的局部乘积投影与反馈，使 }
+\mathcal T=p\operatorname{id}_S\text{，其中 }p>0.
+$$
+
+右侧可用每位持有者各一次两结果投影测量实现，并对任意有限维 $A$ 及每个矩阵 $X_{AS}$ 满足
+
+$$
+(\operatorname{id}_A\otimes\mathcal T)(X_{AS})=pX_{AS}.
+$$
+
+证明。设左侧成立。定理 391.1 的支撑判据给出
+
+$$
+z\in\mathbb T^d\cap\operatorname{ran}R_n,\qquad z=R_nb.
+$$
+
+在上述 $E_n$ 坐标中，定义复线性泛函 $h_0(v)=\sum_\mu b_\mu v_\mu$，于是 $h_0(r_i^{\otimes n})=z_i$。它的表示 ket 的坐标为 $\overline{b_\mu}$，不能把 $b_\mu$ 本身误作该 ket 的坐标。因为 $d\ge1$ 且 $|z_i|=1$，$h_0\ne0$。由于 $E_n\subseteq\operatorname{Sym}^n(\mathbb C^2)$，令
+
+$$
+h=h_0\circ P_{E_n}:
+\operatorname{Sym}^n(\mathbb C^2)\longrightarrow\mathbb C,
+$$
+
+其中 $P_{E_n}$ 是正交投影。这个延拓只用于构造泛函，不是协议中施加的物理投影；它保持所有指定记录上的值，且 $h\ne0$。
+
+令 $e_s$ 为全部恰有 $s$ 个 $|1\rangle$ 的计算基 ket 之和除以 $\sqrt{\binom ns}$，$0\le s\le n$。这些向量是对称子空间的一组正交基，并且
+
+$$
+\begin{aligned}
+(x|0\rangle+y|1\rangle)^{\otimes n}
+ &=\sum_{s=0}^n\sqrt{\binom ns}\,x^{n-s}y^s e_s,\\
+P(x,y)&:=h\bigl((x|0\rangle+y|1\rangle)^{\otimes n}\bigr)
+ =\sum_{s=0}^n\sqrt{\binom ns}\,h(e_s)x^{n-s}y^s.
+\end{aligned}
+$$
+
+若 $P$ 恒为零，各单项式系数都为零，便有所有 $h(e_s)=0$，与 $h\ne0$ 矛盾。因此 $P$ 是非零的 $n$ 次齐次二元多项式。写 $P(t,1)$ 的次数为 $m\le n$；此多项式也非零。复多项式因式分解给出非零首项系数 $c$ 及按重数列出的根 $\lambda_1,\ldots,\lambda_m$，使
+
+$$
+P(t,1)=c\prod_{a=1}^m(t-\lambda_a),\qquad
+P(x,y)=c\,y^{n-m}\prod_{a=1}^m(x-\lambda_a y).
+$$
+
+第二式由齐次化得到，且是多项式恒等式，包含 $y=0$。当 $m=0$ 时空积为 $1$，得到 $P(x,y)=cy^n$；$y$ 的 $n-m$ 个因子保留了射影无穷远处的根。重复根照重数保留，$n=1$ 也包含在同一公式内。因此总能写成
+
+$$
+P(x,y)=c\prod_{a=1}^n\ell_a(x,y),\qquad
+\ell_a(x,y)=\alpha_a x+\beta_a y\ne0.
+$$
+
+这里使用的是经典二元齐次因式分解，其对称量子比特张量形式可参见 Aulbach–Markham–Murao，[*Geometric Entanglement of Symmetric States and the Majorana Representation*, arXiv:1010.4777v1](https://arxiv.org/abs/1010.4777v1)，§IV 式 (11)（PDF 第 4 页）的复振幅恒等式。该文式 (12) 只给重叠的绝对值；此处所需的相对相位保留在上面的复多项式恒等式中。
+
+对每个非零线性因子作实际测量所需的归一化：
+
+$$
+N_a=\sqrt{|\alpha_a|^2+|\beta_a|^2}>0,\qquad
+|a_a\rangle=\frac{\overline{\alpha_a}|0\rangle+
+                         \overline{\beta_a}|1\rangle}{N_a}.
+$$
+
+于是 $\langle a_a|(x|0\rangle+y|1\rangle)=\ell_a(x,y)/N_a$。在每个记录 $r_i$ 上取乘积，得到
+
+$$
+\begin{aligned}
+t_i&:=\prod_{a=1}^n\langle a_a|r_i\rangle
+ =\frac{h(r_i^{\otimes n})}{c\prod_{a=1}^nN_a}
+ =\gamma z_i,\\
+\gamma&:=\frac1{c\prod_{a=1}^nN_a}\ne0.
+\end{aligned}
+$$
+
+此时才使用 $r_i$ 与 $a_a$ 的归一化和 $|z_i|=1$：各重叠的模不超过 $1$，所以
+
+$$
+0<|\gamma|=|t_i|=\prod_{a=1}^n|\langle a_a|r_i\rangle|\le1.
+$$
+
+给每位持有者使用定义 407.1 的两个投影。记 $Q_{a,0}=\Pi_a$、$Q_{a,1}=I_2-\Pi_a$，完整记录测量的结果为 $\varepsilon\in\{0,1\}^n$，投影为 $Q_\varepsilon=\bigotimes_{a=1}^nQ_{a,\varepsilon_a}$。全部 $2^n$ 个结果满足
+
+$$
+\sum_{\varepsilon\in\{0,1\}^n}Q_\varepsilon
+ =\bigotimes_{a=1}^n\bigl(\Pi_a+(I_2-\Pi_a)\bigr)
+ =I_{\mathcal H_R}.
+$$
+
+因各 $Q_\varepsilon$ 是投影，这也给出完整投影 instrument 的保迹性。接受 $\varepsilon=(0,\ldots,0)$ 时，记录的输出向量固定为 $|a_1\rangle\otimes\cdots\otimes|a_n\rangle$，具体为
+
+$$
+(I_S\otimes Q_{(0,\ldots,0)})J_n|i\rangle
+ =t_i|i\rangle\otimes|a_1\rangle\otimes\cdots\otimes|a_n\rangle.
+$$
+
+故迹掉记录后的系统 Kraus 算子为 $K=\operatorname{diag}(t_1,\ldots,t_d)$。取固定对角反馈
+
+$$
+U=\operatorname{diag}(\overline{z_1},\ldots,\overline{z_d}),\qquad
+UK=\gamma I_S,
+$$
+
+便在每个矩阵 $X$ 上得到
+
+$$
+\mathcal T(X)=UKXK^\dagger U^\dagger=pX,\qquad
+p=|\gamma|^2\in(0,1].
+$$
+
+更直接地，$I_A\otimes UK=\gamma I_{A\otimes S}$，故对全部 $X_{AS}$ 都有所述等式。对归一化联合态取迹，成功概率恰为 $p$，与输入无关；归一化后恢复整个联合态。该计算同时保持非对角矩阵元，故并非只匹配系统基标签上的概率。
+
+反过来，设存在这样的局部协议。令 $V:E_n\hookrightarrow\mathcal H_R$ 为包含等距映射，将其完整乘积测量压到实际占据空间：
+
+$$
+D_\varepsilon=V^\dagger Q_\varepsilon V\succeq0,\qquad
+\sum_\varepsilon D_\varepsilon=I_{E_n}.
+$$
+
+在实际记录 $r_i^{\otimes n}$ 上，压缩前后效果的全部矩阵元相同，故各系统分支与原协议一致。它是定义 389.2 中作用于 $E_n$ 的允许全局 POVM；接受同一个结果并使用同一个反馈，便以概率 $p$ 精确恢复。因此 $\eta(C^{\circ n})\ge p>0$。这一比较没有改变局部协议中原有的物理张量因子。证毕。
+
+本定理只等价化正成功分支的存在性，不保证保留某个给定全局分支的成功概率，也不声称局部与全局最优总成功概率相等。对一个给定全局 POVM 的各效果分别作上述构造，不由此得到同时完备的局部替代测量。每次构造都使用已制备的全部 $n$ 份记录。
+
+## 408. 按记录射线数给出的逐次数充分界
+
+**引理 408.1（归一化相关矩阵的余维一支撑含有相位向量）。** 设整数 $m\ge1$，$H\in\mathbb C^{m\times m}$ 满足
+
+$$
+H\succeq0,\qquad H_{ii}=1\quad(1\le i\le m),\qquad
+\operatorname{rank}H\ge m-1.
+$$
+
+则
+
+$$
+\operatorname{ran}H\cap\mathbb T^m\ne\varnothing.
+$$
+
+证明。满秩时 $\operatorname{ran}H=\mathbb C^m$，结论立即成立。其余情形的秩为 $m-1$；$m=1$ 时归一化强制 $H=(1)$，故奇异情形必有 $m\ge2$。取分解 $H=RR^\dagger$，以 $r_i$ 记 $R$ 的第 $i$ 行 ket，则 $\|r_i\|^2=H_{ii}=1$。设 $\ker H=\operatorname{span}\{a\}$，$a\ne0$。由
+
+$$
+0=a^\dagger Ha=\|R^\dagger a\|^2
+$$
+
+得 $R^\dagger a=0$；逐坐标共轭后为
+
+$$
+\sum_{i=1}^m\overline{a_i}\,r_i=0.
+$$
+
+对每个 $j$，将第 $j$ 项移至一侧并取范数，得到长度平衡条件
+
+$$
+|a_j|\le\sum_{i\ne j}|a_i|.
+$$
+
+下面在此证明内展开所需的经典平面向量闭合判据。对任意有限列非负长度 $L_1,\ldots,L_s$，记总和为 $S$、最大值为 $M$，空列约定 $S=M=0$。可由复平面向量 $v_i$、$|v_i|=L_i$ 得到的合向量模长恰为
+
+$$
+\left\{\left|\sum_{i=1}^s v_i\right|:|v_i|=L_i\right\}
+ =[\max(0,2M-S),S].
+$$
+
+从空列的集合 $\{0\}$ 开始归纳。设前一列的可达模长区间为 $[a,b]$，再加入长度 $t\ge0$。每个已有配置都可整体旋转；对已有合向量模长 $r\in[a,b]$，与新向量夹角 $\theta\in[0,\pi]$ 时的新模长为
+
+$$
+f(r,\theta)=\sqrt{r^2+t^2+2rt\cos\theta}.
+$$
+
+每个这样的值都可达到，而任意新配置的模长也在此像中。当 $r=0$ 或 $t=0$ 时，公式仍成立且不需要指定零向量的方向。矩形 $[a,b]\times[0,\pi]$ 紧且连通，连续函数 $f$ 的像是闭区间。其最大值为 $b+t$；对固定 $r$ 的最小值为 $|r-t|$，故全局最小值为
+
+$$
+\operatorname{dist}(t,[a,b])=\max(0,a-t,t-b).
+$$
+
+将 $a=\max(0,2M-S)$、$b=S$ 代入，此下端点为
+
+$$
+\begin{aligned}
+\max(0,2M-S-t,t-S)
+ &=\max\bigl(0,2\max(M,t)-(S+t)\bigr),
+\end{aligned}
+$$
+
+上端点为 $S+t$，正是新总和与新最大值的公式，归纳完成。这同时包含零长度、全零列、零合向量以及平衡取等时的共线配置，不需要极限论证。
+
+现在取 $L_i=|a_i|$。逐项平衡等价于 $2M\le S$，故上述区间包含 $0$。于是存在 $v_i\in\mathbb C$，满足
+
+$$
+|v_i|=|a_i|,\qquad \sum_{i=1}^m v_i=0.
+$$
+
+若 $a_i\ne0$，令 $z_i=v_i/\overline{a_i}$；若 $a_i=0$，则 $v_i=0$，任选 $|z_i|=1$。因此
+
+$$
+|z_i|=1\quad\text{对所有 }i,\qquad
+ a^\dagger z=\sum_i\overline{a_i}z_i=\sum_i v_i=0.
+$$
+
+$H$ 为 Hermitian 矩阵，故 $\operatorname{ran}H=(\ker H)^\perp$，从而 $z\in\operatorname{ran}H\cap\mathbb T^m$。证毕。
+
+归一化条件在此承担实质作用：任意余维一子空间并不必含相位向量。例如超平面 $\{z:z_1=0\}$ 与 $\mathbb T^m$ 不相交；它是正半定矩阵 $\operatorname{diag}(0,1,\ldots,1)$ 的值域，但该矩阵不满足全部对角元为 $1$。
+
+**定理 408.2（不同记录射线数控制正局部恢复的充分次数）。** 在定义 407.1 的归一化纯量子比特记录族中，设不同复射影射线的个数为 $k$，即将相差单位相位的记录归为一类后共有 $k$ 类。对每一个整数
+
+$$
+n\ge\max(1,k-2),
+$$
+
+都存在定义 407.1 的完整局部乘积投影测量及终端对角反馈，其接受映射为 $p\operatorname{id}_S$，其中 $p\in(0,1]$，并保持任意有限维未操作参考。$p$ 与所选投影可依赖记录族及 $n$。这是充分界，不作一般最优阈值的断言。
+
+证明。依定理 401.3 的射线相位约定，每类选单位代表 $q_j=(x_j,y_j)$，$1\le j\le k$，写
+
+$$
+r_i=u_iq_{c(i)},\qquad |u_i|=1.
+$$
+
+先在代表元上计算齐次评价的秩。设 $\mathscr B_n$ 为复系数 $n$ 次齐次二元多项式空间，其维数为 $n+1$，评价映射为
+
+$$
+\operatorname{ev}_n:\mathscr B_n\longrightarrow\mathbb C^k,\qquad
+F\longmapsto(F(q_1),\ldots,F(q_k)).
+$$
+
+当 $n\ge k-1$ 时，定义线性式
+
+$$
+\Delta_\ell(x,y)=y_\ell x-x_\ell y,\qquad
+h_j(x,y)=\overline{x_j}x+\overline{y_j}y.
+$$
+
+不同代表射线不共线，故 $\Delta_\ell(q_j)\ne0$ 对所有 $\ell\ne j$ 成立，而 $h_j(q_j)=1$。于是以下齐次插值多项式有定义且次数为 $n$：
+
+$$
+F_j(x,y)=h_j(x,y)^{\,n-k+1}
+          \prod_{\ell\ne j}
+          \frac{\Delta_\ell(x,y)}{\Delta_\ell(q_j)},\qquad
+F_j(q_\ell)=\delta_{j\ell}.
+$$
+
+空积和零次幂均解释为常多项式 $1$，即便其底数在别处取零也不改变这个约定。这一构造不要求 $x_j$ 或 $y_j$ 非零，也没有选取共同仿射坐标图。评价映射因而满射，秩为 $k$。当 $n<k-1$ 时，在任意 $n+1$ 个代表上使用相同的次数 $n$ 构造，得到这部分评价的秩为 $n+1$；整个映射的秩至少为 $n+1$，又不能超过定义域维数，故也等于 $n+1$。
+
+以对称子空间的正交基写各 $q_j^{\otimes n}$ 为行，得到矩阵 $Q_n$。定理 407.2 证明中的对称基展开说明：每个 $F\in\mathscr B_n$ 唯一对应一个复线性泛函 $h$，使 $F(x,y)=h((x|0\rangle+y|1\rangle)^{\otimes n})$；系数中的 $\sqrt{\binom ns}$ 均非零。因此 $\operatorname{ev}_n$ 与 $Q_n$ 表示同一个评价映射，得到
+
+$$
+\operatorname{rank}Q_n
+ =\operatorname{rank}(Q_nQ_n^\dagger)
+ =\min(k,n+1).
+$$
+
+这一步是经典齐次插值的应用。复制纯态的线性独立性界见 Chefles，[*Unambiguous Discrimination Between Linearly Dependent States With Multiple Copies*, quant-ph/0105016v3](https://arxiv.org/abs/quant-ph/0105016v3)，§II（PDF 第 3–5 页），尤其式 (2.8) 的量子比特条件 $N\le C+1$，对应这里的 $k\le n+1$。该来源讨论线性独立性与无歧义判别；这里不把独立性当作相干精确恢复的必要条件。
+
+令 $H_n=Q_nQ_n^\dagger$，这是 $k\times k$ 的归一化代表 Gram 矩阵。若 $k\ge3$ 且 $n=k-2$，则 $n\ge1$、$\operatorname{rank}H_n=k-1$，引理 408.1 给出
+
+$$
+\tau\in\mathbb T^k\cap\operatorname{ran}H_n
+       =\mathbb T^k\cap\operatorname{ran}Q_n.
+$$
+
+若 $n\ge k-1$，则 $H_n$ 满秩，同样可以选择这样的 $\tau$。这覆盖 $k\ge3$ 时的全部所述次数，也覆盖 $k=2$ 时的每个 $n\ge1$。写 $\tau=Q_nb$，以这些系数定义对称子空间上的复线性泛函 $h$，便有 $h(q_j^{\otimes n})=\tau_j$。提升回原始全部系统标签，令
+
+$$
+z_i=u_i^n\tau_{c(i)}.
+$$
+
+每个 $|z_i|=1$，并且由 $h$ 的线性性，
+
+$$
+h(r_i^{\otimes n})
+ =h\bigl(u_i^n q_{c(i)}^{\otimes n}\bigr)
+ =u_i^n\tau_{c(i)}=z_i.
+$$
+
+将 $h$ 限制到 $E_n$ 并写成其行坐标泛函，即得 $z\in\operatorname{ran}R_n$。于是定理 391.1 与定理 407.2 给出所需的正局部恢复。引理 408.1 仅施于 $k\times k$ 的代表矩阵；重复标签形成的 $d\times d$ 矩阵不需要满足余维至多一。
+
+最后，若 $k=1$，则 $r_i=u_iq_1$。让每位持有者都取 $\langle a_a|=\langle q_1|$，全第一结果的幅度为 $t_i=u_i^n$，取 $U=\operatorname{diag}(\overline{u_1^n},\ldots,\overline{u_d^n})$ 即得 $UK=I_S$、$p=1$，适用于全部 $n\ge1$。各情形均对给定的 $n$ 单独构造并测量全部 $n$ 份记录，不借助成功概率关于 $n$ 的单调性，也不丢弃额外记录。证毕。
+
+**推论 408.3（四射线阈值与单个族的非必要性）。** 对定义 392.1 的四记录族，定义 407.1 的正局部精确恢复存在当且仅当整数 $n\ge2$。另一方面，可有任意多条不同记录射线在 $n=1$ 时就有这样的正恢复：对任意有限 $k\ge1$，取模 $2\pi$ 两两不同的 $\theta_1,\ldots,\theta_k$，令
+
+$$
+r_j=\frac{|0\rangle+e^{i\theta_j}|1\rangle}{\sqrt2}.
+$$
+
+此族的一记录局部分支可以取成功概率 $1/2$。因此定理 408.2 的界对单个给定记录族未必是必要条件。
+
+证明。四记录族有 $k=4$，故所有 $n\ge2$ 的存在性由定理 408.2 给出；$n=1$ 时定理 392.2 的 $\eta(C_0)=0$ 与定理 407.2 排除正局部分支。对赤道族，两个向量若共线，其相同的非零第一坐标迫使比例为 $1$，从而相位也相同，故确有 $k$ 条不同射线。取完整局部测量 $\{|0\rangle\langle0|,|1\rangle\langle1|\}$ 并只接受第一个结果，则每个 $\langle0|r_j\rangle=1/\sqrt2$，于是 $K=I_{\mathbb C^k}/\sqrt2$，反馈取恒等便有 $\mathcal T(X)=X/2$，张量任意参考后亦然。特别是 $k\ge4$ 时，$n=1<k-2$，这给出单个族中充分界非必要的实例；它不否定按所有记录族取最坏情形的界，四射线族本身已在 $k=4$ 达到阈值 $2$。证毕。
+
+四记录族的正成功存在性与定理 405.3 对每个有限局部协议的确定性恢复排除相容，两者要求的总成功概率不同。
+
+## 追加锚（本行以下为增补区）
