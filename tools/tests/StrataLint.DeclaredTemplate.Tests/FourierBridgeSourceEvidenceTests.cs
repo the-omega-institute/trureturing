@@ -13,6 +13,8 @@ public sealed class FourierBridgeSourceEvidenceTests
     [Theory]
     [InlineData("D5/S3/Fourier/IntegerCharacterCoercivity.lean",
         "D5.S3.Fourier.IntegerCharacterCoercivity.integer_character_global_coercivity", 4, 5, 6, new[] { 0, 1, 3 })]
+    [InlineData("D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean",
+        "D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation", 11, 14, 15, new[] { 7, 12 })]
     public void original_passes_production_materials_join_and_rejects_corruption(
         string sourcePath, string theoremName, int telescope, int state, int scope, int[] coordinates)
     {
