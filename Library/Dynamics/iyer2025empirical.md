@@ -1347,3 +1347,80 @@ Arratia–Goldstein–Langholz 的全标签方差正比于输入数前提仍不�
 固定支持结论为一致无条件收敛，未知方向使用共同事件。
 不声称载波数增长、适应性相位、实际无界矩收敛、有限后验独立，
 也不由锚定过程的结论推断未锚定谱的紧性。
+
+## 未锚定谱的统一失谐紧性（第 65 章）
+
+`repo-derived`：第 65 章在原 pair/path 实验、完整固定总量后验及精确有限截距下，
+证明未锚定谱紧性等价于 eta²d²/(delta+|d|) 有界。
+该单一判据不要求尺度比或相位收敛；分别沿亚临界、临界、超临界子列，
+它产生平移的奇延拓 Brownian 过程、平移的实 Gaussian Fourier 能量，以及含端点平方的常数路径。
+超临界常数与更细的锚定增量共享同一个端点平方。
+这些关系来自同一实际向量的联合比较，不由三条边缘极限定理拼接。
+
+必要性使用离散正弦方差的统一两侧界、归一化 Gaussian 二次型的四阶矩界和 Paley–Zygmund 不等式，
+得到实际后验的固定正逃逸概率。方差发散本身不足以证明实际不紧。
+归一化先于精确中心和核心比较，消除了任意大 eta 带来的原始矩阵范数障碍；
+有限 Fourier 误差和缩放增量误差分别在自己的最终尺度上估计。
+正文保留随机环境方差，不把旧的未量化误差再次放大，也不要求额外对数余量。
+
+de Jong，*A Central Limit Theorem for Generalized Quadratic Forms*，
+[DOI:10.1007/BF00354037](https://doi.org/10.1007/BF00354037)，
+Definition 2.1，印刷第 263 页；Theorem 2.1 及其后例子，第 264 页。
+该定理要求独立输入、逐变量条件均值为零的 clean 二次型、可忽略的归一化行方差和趋于三的归一化四阶矩。
+其全一非对角矩阵例子具有可忽略行影响，却收敛到中心平方量。
+本章超临界核的秩一极限正是这类障碍：小行影响不能把保留的端点平方改判为 Gaussian。
+实际观测行及固定总量标签不满足该独立输入假设，正文另证后验和耦合桥梁。
+
+Nualart–Peccati，*Central limit theorems for sequences of multiple stochastic integrals*，
+[arXiv:math/0503598v1](https://arxiv.org/abs/math/0503598v1)，Theorem 1，PDF 第 3 页；
+Nourdin–Poly 的第二混沌谱表示及累积量公式继续按前述版本使用。
+固定阶混沌、趋于单位的方差以及相应四阶矩或收缩条件是经典 Gaussian 极限机制。
+正文仅对小算子块应用这一机制；临界核和超临界秩一核保留非 Gaussian 性。
+联合二次型—线性型特征函数负责移动符号方向与移动对角量，
+随后共同矩形逼近保留旧非线性截距，不能仅靠不同混沌阶的正交性宣称独立。
+
+Bai–Ginovyan–Taqqu，*Functional Limit Theorems for Toeplitz Quadratic Functionals of Continuous time Gaussian Stationary Processes*，
+[arXiv:1501.05574v2](https://arxiv.org/abs/1501.05574v2)，Theorems 2.1、2.2、2.4，PDF 第 2–4 页。
+其输入为平稳 Gaussian 过程，具有固定差分核，积分域为增长的时间前缀。
+中心有限维定理要求 fg 的可积与平方可积性及所列方差极限；
+函数型结论另要求协方差和生成核的 Lp/Lq 条件。
+非中心定理要求指定的零频正则变差指数、指数和大于 1/2、可积性及全局 Potter 界。
+这些是中心与非中心二次过程的原始先例；改变谱相位的异质后验三角阵尚须核对另一组实际桥梁，
+不能直接替换其增长时间前缀参数。
+
+Choudhary–Kuchibhotla，*On the Lévy concentration function of Gaussian quadratic forms with applications to second order U-statistics*，
+[arXiv:2606.25441v1](https://arxiv.org/abs/2606.25441v1)，Section 3，PDF 第 7 页；Theorems 1–2，第 8–9 页。
+其对象是独立标准正态上的 sum lambda_k(Z_k²−1)+mu_k Z_k，系数平方可和，
+允许有符号特征值，所列浓集界区分由少量特征值主导的情形。
+这是 Gaussian 与中心平方量之间统一反浓集估计的近期背景。
+本章只需要固定正概率逃逸，直接证明的四阶矩与 Paley–Zygmund 界已足够；
+未借用该文更强小球估计，也未从该辅助 Gaussian 结果跳过实际后验比较。
+所阅版本第 9 页例 S1 将纯 Gaussian 浓集函数写成精确线性式；
+对标准差 sigma 的非退化 Gaussian，精确式为 2Phi(epsilon/(2sigma))−1，
+该线性式只给出上界及小 epsilon 的首项。本文不采用这个示例等号。
+
+Dette–Kühnert，*Self-normalization for Spectral Density Integrals*，
+[arXiv:2608.30018v1](https://arxiv.org/abs/2608.30018v1)，
+model (2.1)，PDF 第 2 页；Theorem 2.1、Remark 2.1，第 3 页；Proposition 2.1，第 4 页。
+其模型为系数满足所列加权可和条件的平稳 Gaussian 线性过程，正则指数在 (1/2,1]，
+序贯样本比例在 [1/2,1]。线性谱权重定理要求偶对称、Hölder 指数大于 1/2 且几乎处处非零。
+平方谱密度积分的极限还保留一份具有不同协方差时钟的 Brownian 分量，
+其序贯中心本身也需修正。该结果说明谱量的边缘替换可能遗漏联合贡献；
+它没有给出本章的失谐紧性充要条件，固定谱权重和样本前缀也不是这里的移动共振参数。
+
+Ben Hariz–Bui–Esstafa 的 2604.00642v2 固定偶权重积分周期图定理，
+以及前述 Nourdin–Rosiński、Tudor、函数型 U 过程和 Bernoulli 局部比较来源，
+继续保留其确切输入、矩、收缩、确定性和路径条件。
+Arratia–Goldstein–Langholz 的全人口方差与人数同比例前提仍不适用于 q=o(M)。
+本章只使用按总方差给出的局部界和完整向量条件化比较。
+
+Klöppelberg–Mikosch 的 DOI 10.1214/aoap/1034968236 原文端点返回 HTML；
+Terrin–Taqqu 的 DOI 10.1007/BF01061262 仅取得摘要及访问页。
+这两处未取得全文的来源不承担精确定理条件或不包含关系的判断。
+有限原始文献核对支持上述工具归属，未检得完整的本模型后验紧性与同一噪声分类陈述；
+该未命中不认证全球原创性。
+
+结论限于原幅度和 beta、确定性频率、原外层频率范围及固定紧时间区间。
+先验条件紧性在数据概率中成立，固定支持结论为一致无条件紧性；
+二者不等于每个固定支持下的条件后验声明。
+不声称实际无界矩收敛、几乎处处后验紧性、有限标签独立或无范围限制的超临界结论。
