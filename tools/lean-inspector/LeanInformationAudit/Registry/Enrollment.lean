@@ -271,6 +271,28 @@ private def ownerOf (env : Environment) (name : Name) : Option Name :=
     some ((RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule)
   else none
 
+-- A later source module may import the target for data definitions. In that
+-- case, inspect the source declaration closure rather than its import closure.
+def sourceAvoidsTargetProof (source target : Name) : CompileM Bool := do
+  let env ← getEnv
+  let some targetOwner := ownerOf env target | return false
+  let mut pending := [source]
+  let mut seen : NameSet := {}
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    charge
+    seen := seen.insert name
+    let info ← getConstInfo name
+    if name == target || (ownerOf env name == some targetOwner && info.isTheorem) then
+      return false
+    let some owner := ownerOf env name | return false
+    if owner == targetOwner || (`D5).isPrefixOf owner then
+      pending := info.type.getUsedConstants.toList ++ pending
+      if let some value := info.value? then
+        pending := value.getUsedConstants.toList ++ pending
+  return true
+
 private def independentSource (name : Name) : CompileM Bool := do
   let some identity := (← get).identityState | return false
   let env ← getEnv
@@ -279,7 +301,7 @@ private def independentSource (name : Name) : CompileM Bool := do
   if sourceOwner == env.header.mainModule || sourceOwner == targetOwner ||
       (`LeanInformationAudit).isPrefixOf sourceOwner || (`Reg).isPrefixOf sourceOwner then
     return false
-  if let some cached := (← get).independentOwners[sourceOwner]? then return cached
+  if (← get).independentOwners[sourceOwner]? == some true then return true
   let some sourceIdx := env.getModuleIdx? sourceOwner | return false
   let some targetIdx := env.getModuleIdx? targetOwner | return true
   -- The importer appends a module only after visiting its imports.
@@ -293,8 +315,8 @@ private def independentSource (name : Name) : CompileM Bool := do
     let owner := pending.back!
     pending := pending.pop
     if owner == targetOwner then
-      modify fun s => { s with independentOwners := s.independentOwners.insert sourceOwner false }
-      return false
+      unless (`D5).isPrefixOf sourceOwner do return false
+      return ← sourceAvoidsTargetProof name identity.theoremName
     if seen.contains owner then continue
     seen := seen.insert owner
     let some idx := env.getModuleIdx? owner | return false

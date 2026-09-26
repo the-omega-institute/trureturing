@@ -151,6 +151,13 @@ run_meta do
   let .defnInfo hiddenInfo ← getConstInfo ``hidden | throwError "setup"
   check "argument_theorem_helper_let_rejected" hiddenInfo.value
     (some "forbidden_dependency:dtr.argument_audit") 524288 ``identityTarget
+  let (cleanSource, _) ←
+    (TemplateAudit.sourceAvoidsTargetProof ``identity ``identityTarget).run {}
+  let (dependentSource, _) ←
+    (TemplateAudit.sourceAvoidsTargetProof ``hidden ``identityTarget).run {}
+  unless cleanSource && !dependentSource do
+    throwError "source declaration closure failed to distinguish independent data from target proof"
+  logInfo "[PASS] source_declaration_dependency_boundary"
   check "argument_theorem_instance_rejected" (mkConst ``targetDecision)
     (some "forbidden_dependency:dtr.argument_audit") 524288 ``identityTarget
   let type := (← getConstInfo ``target).type
