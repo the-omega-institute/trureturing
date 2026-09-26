@@ -153,7 +153,8 @@ private theorem massBad_not_law : ¬ massArena.Law massBad := by
     massTarget massSample at hh
   by_cases hz : massTarget massSample = (0, 0)
   · simp [hz] at hh
-  · exact hz hh.symm
+  · simp only [if_neg hz] at hh
+    exact hz hh.symm
 
 theorem massVariation : massArena.Law massRealization ∧
     ¬ massArena.Law massBad := by
@@ -225,7 +226,8 @@ private theorem distributionBad_not_law : ¬ distributionArena.Law distributionB
     distributionTarget distributionSample at hh
   by_cases hz : distributionTarget distributionSample = 0
   · simp [hz] at hh
-  · exact hz hh.symm
+  · simp only [if_neg hz] at hh
+    exact hz hh.symm
 
 theorem distributionVariation : distributionArena.Law distributionRealization ∧
     ¬ distributionArena.Law distributionBad := by
@@ -297,7 +299,8 @@ private theorem hitBad_not_law : ¬ hitArena.Law hitBad := by
   change (if hitTarget hitSample = 0 then 1 else 0) = hitTarget hitSample at hh
   by_cases hz : hitTarget hitSample = 0
   · simp [hz] at hh
-  · exact hz hh.symm
+  · simp only [if_neg hz] at hh
+    exact hz hh.symm
 
 theorem hitVariation : hitArena.Law hitRealization ∧
     ¬ hitArena.Law hitBad := by
@@ -360,12 +363,13 @@ private theorem supportBad_not_law : ¬ supportArena.Law supportBad := by
   change (if supportTarget supportSample = ∅ then Set.univ else ∅) =
     supportTarget supportSample at hh
   by_cases hz : supportTarget supportSample = ∅
-  · have hmem : (0 : ℝ) ∈ supportTarget supportSample := by
-      rw [← hh]
-      simp [hz]
-    rw [hz] at hmem
-    exact Set.not_mem_empty 0 hmem
-  · exact hz hh.symm
+  · have hne : (Set.univ : Set ℝ) = ∅ := by simpa [hz] using hh
+    have hmem : (0 : ℝ) ∈ (∅ : Set ℝ) := by
+      rw [← hne]
+      trivial
+    simpa using hmem
+  · simp only [if_neg hz] at hh
+    exact hz hh.symm
 
 theorem supportVariation : supportArena.Law supportRealization ∧
     ¬ supportArena.Law supportBad := by
