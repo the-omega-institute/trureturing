@@ -53122,3 +53122,392 @@ $$
 一般相关矩阵的充分大 Hadamard 幂属于 $\mathcal P_d$，已有 Bhat–Devendra，[*On Regions of Mixed Unitarity for Semigroups of Unital Quantum Channels*, arXiv:2512.23598v3](https://arxiv.org/abs/2512.23598v3)，Theorem 6.10（PDF 第 28 页）。这里沿用该一般性质的既有归属与命题 401.2 的乘积法，利用平方和立方的具体证书求出这一四路径例子的阈值；不将一般最终混合酉性质或环境辅助校正框架主张为新理论，也不对该具体恒等式作原创性断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 405. 有限局部记录协议中的前缀保持与确定恢复障碍
+
+**定义 405.1（每位持有者一份源记录的有限局部接口）。** 沿用定义 392.1 的四个记录向量，写成
+
+$$
+r_1=|0\rangle,\qquad r_2=|1\rangle,\qquad
+r_3=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+r_4=\frac{|0\rangle+i|1\rangle}{\sqrt2},\qquad
+P_i=|r_i\rangle\langle r_i|.
+$$
+
+固定任意正整数 $n\ge1$。输入仍是单个 $S=\mathbb C^4$ 上的任意未知态，并可与任意有限维参考 $A$ 纠缠。按定义 400.1 先完成全部 $n$ 份记录的制备：
+
+$$
+J_n|i\rangle=|i\rangle\otimes r_i^{\otimes n},\qquad
+\rho_{ASR}=(\operatorname{id}_A\otimes J_n)\rho_{AS}
+                  (\operatorname{id}_A\otimes J_n)^\dagger.
+$$
+
+此后第 $a$ 位持有者持有第 $a$ 个物理源量子比特，记录的局部分割始终是 $R=(\mathbb C^2)^{\otimes n}$。占据的联合张成空间 $E_n=\operatorname{span}\{r_i^{\otimes n}\}$ 沿用原定义；以 $E_n$ 为坐标空间不授予新的局部张量分解、跨持有者压缩或联合测量权限。
+
+允许的记录操作是一棵有限树。每个非叶节点由一位持有者在其有限维可访问工作空间上执行有限结果 instrument，各分支完全正、总和保迹；下一位操作方和操作选择可依赖已经取得的经典信息。允许自适应经典通信、粗粒化结果、私有经典或量子记忆、重复访问同一持有者以及丢弃局部寄存器。初始辅助态与整个输入及参考独立，且在持有者之间为乘积态。禁止额外共享纠缠和量子通信。在整棵记录树结束前不操作 $S$；叶子结果只控制最后的系统酉算子 $U_w$，$A$ 始终不被操作。
+
+以 $w$ 表示实际经典结果历史。若实际取得的标签后来被遗忘，可在数学求和中保留这些标签，而后续控制与反馈仍取原协议规定的相同值。粗粒化 CP 分支的未观测 Kraus 指标不因此成为可读取的经典结果。记叶子在反馈前的系统映射为 $\mathcal M_w$，反馈后为
+
+$$
+\mathcal T_w(X)=U_w\mathcal M_w(X)U_w^\dagger.
+$$
+
+确定性精确恢复要求对全部叶子求和得到 $\sum_w\mathcal T_w=\operatorname{id}_S$。后选择则须先声明接受集合 $W_{\mathrm s}$，要求 $\sum_{w\in W_{\mathrm s}}\mathcal T_w=t\operatorname{id}_S$，其中 $0\le t\le1$。这里都是全部四维矩阵上的线性映射等式；张量上 $\operatorname{id}_A$ 后，任意联合输入的接受输出为 $t\rho_{AS}$。只恢复指定经典基态、限制到某个码子空间或丢弃参考，是不同的任务。
+
+有限性逐协议要求：允许零深度树、单结果通道、零 CP 结果、提前终止与不等叶深；不在所有候选协议之间预设统一深度、记忆维数或最小正分支概率。有限局部 instrument 的自适应复合与结果粗粒化采用 Chitambar 等，[*Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)*, arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.2（PDF 第 5–6 页）的操作区分。本定义另将每棵树、每次结果集和局部工作空间限定为有限；该文区分的无界轮次与闭包不包含在下述定理的量词中。
+
+**引理 405.2（共同标签乘积族的有限前缀保持）。** 设有限非空标签集 $I$ 对每个持有者 $a\in\{1,\ldots,m\}$ 给出有限维非零复 Hilbert 空间 $H_a$ 中的归一化向量 $s_{a,i}$，$m\ge1$。假设逐个局部算子张成条件成立：
+
+$$
+\operatorname{span}_{\mathbb R}
+ \{|s_{a,i}\rangle\langle s_{a,i}|:i\in I\}
+ =\operatorname{Herm}(H_a)\qquad(1\le a\le m).
+$$
+
+对乘积准备 $\bigotimes_a s_{a,i}$ 使用定义 405.1 的有限局部树和独立乘积辅助态，但将各源空间换成 $H_a$。假设每个实际经典前缀 $h$ 的概率 $p_h$ 对共同标签 $i$ 都相同。将初始辅助态分别作局部纯化，并保留每步局部 Stinespring 膨胀中原本不可访问的输出，则对每个 $p_h>0$，从原始源空间到保留输出的线性映射具有形式
+
+$$
+L_h=\sqrt{p_h}\bigotimes_{a=1}^m V_{a,h},\qquad
+V_{a,h}:H_a\longrightarrow
+\mathcal A_{a,h}\otimes\mathcal G_{a,h},\qquad
+V_{a,h}^\dagger V_{a,h}=I_{H_a}.
+$$
+
+这里 $\mathcal A_{a,h}$ 是仍可访问的局部记忆，$\mathcal G_{a,h}$ 是只为表示而保留的不可访问寄存器；以后操作在旧 $\mathcal G_{a,h}$ 上恒等。上式在整个原始源乘积空间上成立，且每个正前缀保持各局部内积：
+
+$$
+\langle V_{a,h}s_{a,j}|V_{a,h}s_{a,i}\rangle
+ =\langle s_{a,j}|s_{a,i}\rangle.
+$$
+
+零概率前缀的保留映射在原始源空间上为零，不为其指定归一化等距映射。共同标签 $i$ 无须遍历独立局部标签的所有元组，也不要求这些相关乘积准备的投影张成全局算子空间。
+
+证明。先给出每步使用的局部算子事实。若 $E\in\operatorname{Herm}(H_a)$ 且 $\langle s_{a,i}|E|s_{a,i}\rangle=q$ 对全部 $i$ 成立，则 $E-qI$ 与全部源投影的实迹配对为零。由张成条件，它与每个 Hermitian 算子的实迹配对都为零，特别是
+
+$$
+\operatorname{Tr}[(E-qI)^2]=0.
+$$
+
+Hermitian 算子的本征值为实数，平方和为零迫使 $E=qI$。这里的信息完备性只指算子张成；这一标准含义见 D’Ariano–Perinotti–Sacchi，[*Informationally complete measurements and groups representation*, quant-ph/0310013v2](https://arxiv.org/abs/quant-ph/0310013v2)，§2、式 (4)（PDF 第 3 页）。本引理的投影是源态族，并未要求它们的和为恒等算子，也未将它们称为归一化 POVM。
+
+对每个局部初始混合辅助态 $\eta_a$ 选择纯化 $|\alpha_a\rangle$，把纯化寄存器放入该持有者的不可访问因子。原辅助态的乘积性使这些纯化仍可取为持有者之间的乘积。根节点满足 $p_\varnothing=1$，且
+
+$$
+V_{a,\varnothing}x=x\otimes|\alpha_a\rangle,
+\qquad L_\varnothing=\bigotimes_a V_{a,\varnothing}.
+$$
+
+这包括混合局部辅助态，且没有增加物理可访问资源。
+
+在任一实际节点，对一个已声明结果 $y$ 的局部 CP 映射取有限 Kraus 表示
+
+$$
+\mathcal E_y(X)=\sum_kK_{y,k}XK_{y,k}^\dagger,
+\qquad
+B_yx=\sum_kK_{y,k}x\otimes|k\rangle.
+$$
+
+则
+
+$$
+\operatorname{Tr}_{k}(B_yXB_y^\dagger)=\mathcal E_y(X),
+\qquad B_y^\dagger B_y=\sum_kK_{y,k}^\dagger K_{y,k}.
+$$
+
+新 $|k\rangle$ 因子只记入不可访问的膨胀输出，不宣布为测量结果。真正留供以后使用的私有量子或经典记忆属于 $\mathcal E_y$ 的可访问输出，不被当作垃圾移走。每次以后操作都张量上旧不可访问因子的恒等映射；部分迹与作用在可访问因子上的 CP 映射交换，故如此逐步保留全部垃圾、最后再迹掉，恰好重现原协议的顺序 CP 分支。被实际丢弃的系统不会在后续步骤重新成为控制资源。
+
+现对树作归纳。设结论在正前缀 $h$ 成立，下一步由持有者 $a$ 操作。记
+
+$$
+\widehat B_y=B_y\otimes I_{\mathcal G_{a,h}},\qquad
+E=V_{a,h}^\dagger\widehat B_y^\dagger\widehat B_yV_{a,h}
+       \in\operatorname{Herm}(H_a),
+$$
+
+其中张量因子的重排只用于把新垃圾与旧垃圾放在同一不可访问因子。条件于共同标签 $i$ 和此前缀时，其他持有者的归一化编码因子都有单位范数，因此
+
+$$
+\langle s_{a,i}|E|s_{a,i}\rangle
+ =\frac{p_{hy}}{p_h}=:q_{y\mid h},\qquad 0\le q_{y\mid h}\le1.
+$$
+
+假设使右侧与 $i$ 无关，局部算子事实给出 $E=q_{y\mid h}I_{H_a}$。这是拉回到原始源空间 $H_a$ 的效果等式，不断言物理效果在整个扩大后的可访问记忆空间上也是标量。
+
+若 $q=q_{y\mid h}>0$，置
+
+$$
+V_{a,hy}=q^{-1/2}\widehat B_yV_{a,h},\qquad
+V_{b,hy}=V_{b,h}\quad(b\ne a).
+$$
+
+直接计算 $V_{a,hy}^\dagger V_{a,hy}=q^{-1}E=I_{H_a}$，从而
+
+$$
+L_{hy}=\sqrt{p_hq}\bigotimes_bV_{b,hy}
+      =\sqrt{p_{hy}}\bigotimes_bV_{b,hy}.
+$$
+
+若 $q=0$，则
+
+$$
+(\widehat B_yV_{a,h})^\dagger(\widehat B_yV_{a,h})=0,
+\qquad \widehat B_yV_{a,h}=0.
+$$
+
+所以这一子分支在整个原始源空间上为零，其所有后继仍为零；这不要求 $\widehat B_y$ 在未占据的扩大空间上为零。只在正前缀作除法，每个零前缀都沿根到它的路径遇到一个这样的首次零子分支，因而无需给零前缀定义归一化映射。有限归纳覆盖全部节点，也覆盖重复访问、适应性改变操作方与不同终止深度。等距性质立即给出所述内积等式。证毕。
+
+本引理中保留垃圾是必要的论证步骤。例如对量子比特和 $0<q\le1$，重置分支
+
+$$
+\mathcal E(X)=q\operatorname{Tr}(X)|0\rangle\langle0|
+$$
+
+的效果为 $\mathcal E^*(I)=qI$：由 $\operatorname{Tr}\mathcal E(X)=q\operatorname{Tr}X$ 可直接读出。但它把 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$ 送到相同输出，故约化 CP 映射不是缩放等距通道。保留膨胀 $B|\psi\rangle=\sqrt q\,|0\rangle\otimes|\psi\rangle$ 后，$B^\dagger B=qI$，除以 $\sqrt q$ 才得到等距映射；迹掉第二因子则还原重置分支。后续只操作第一个因子的权限并未因此扩大。
+
+**定理 405.3（四态信息完备记录不能由有限局部树确定性精确恢复）。** 对每个固定正整数 $n\ge1$，定义 405.1 的任何有限局部协议都不能满足全部叶子的确定性精确恢复条件。此结论包括任意有限局部工作空间、粗粒化 CP 分支和反复访问；它只排除每个有限协议取得确定性精确恢复，不给出所有有限协议成功概率上确界的严格小于一界，也不给出近似恢复或无限轮次界。
+
+证明。反设存在这样的协议。直接复用定理 390.2 的秩一 Choi 正性论证：对 $|\Omega\rangle=\sum_{i=1}^4|i\rangle\otimes|i\rangle$，各 $\mathfrak J(\mathcal T_w)\succeq0$ 之和等于 $|\Omega\rangle\langle\Omega|$，故存在
+
+$$
+\mathcal T_w=p_w\operatorname{id}_S,\qquad
+p_w\ge0,\qquad \sum_wp_w=1.
+$$
+
+这包括 $p_w=0$ 的叶子。若终端标签已合并，先按定义 405.1 保留实际取得而后遗忘的经典历史，给这些历史使用原来相同的控制及反馈；对应 CP 分支仍为上述有限正分解的项。不把未观测 Kraus 标签加入历史。
+
+对任意前缀 $h$，记 $w\succeq h$ 为延伸它的终端历史。剩余有限子树完整列出全部结果，非叶 instrument 的总和保迹，末端酉反馈也保迹。因此对任意正半定输入 $X$，前缀概率权重满足
+
+$$
+\begin{aligned}
+\Pr(h\mid X)
+ &=\sum_{w\succeq h}\operatorname{Tr}[\mathcal T_w(X)]
+   =p_h\operatorname{Tr}X,\\
+p_h&=\sum_{w\succeq h}p_w,\qquad
+p_\varnothing=1,\qquad p_h=\sum_{y:\,hy\text{ 为子节点}}p_{hy}
+       \quad(h\text{ 非叶}).
+\end{aligned}
+$$
+
+对非归一化 $X$，$\Pr(h\mid X)$ 在此表示同一线性概率权重。这只是迹与概率的等式，不把前缀量子映射等同于使用不同末端反馈的叶子映射之和。若 $p_h>0$，$q_{y\mid h}=p_{hy}/p_h$ 与输入无关；若 $p_h=0$，全部后继叶子权重为零，实际准备输入上的正输出具有零迹，因而为零。不给零前缀定义条件概率。
+
+特别取输入 $|i\rangle\langle i|$，各持有者的源态恰为共同标签 $i$ 下的 $r_i$。以通常的 Pauli 矩阵 $X,Y,Z$ 记局部算子，有
+
+$$
+P_1+P_2=I_2,\qquad P_1-P_2=Z,\qquad
+2P_3-I_2=X,\qquad 2P_4-I_2=Y.
+$$
+
+$I_2,X,Y,Z$ 是 $\operatorname{Herm}(\mathbb C^2)$ 的实基，所以每位持有者的四个源投影都满足引理 405.2 的局部张成条件。它们是信息完备的态族，并不是四结果归一化 POVM。前缀概率的输入无关性给出该引理的另一个前提。于是在每个 $p_w>0$ 的叶子，保留的记录向量为
+
+$$
+\sqrt{p_w}\bigotimes_{a=1}^n V_{a,w}r_i.
+$$
+
+对系统矩阵单位 $E_{ij}=|i\rangle\langle j|$，迹掉全部可访问及不可访问的局部记录输出得到
+
+$$
+\begin{aligned}
+\mathcal M_w(E_{ij})
+ &=p_w\prod_{a=1}^n
+      \langle V_{a,w}r_j|V_{a,w}r_i\rangle\,E_{ij}\\
+ &=p_w\langle r_j|r_i\rangle^nE_{ij}.
+\end{aligned}
+$$
+
+故 $\mathcal M_w=p_w\Phi_n$，其中 $\Phi_n(X)=C_0^{\circ n}\circ X$ 正是命题 400.2 的约化通道。保留下来的局部记忆和垃圾可能改变载体，却没有改变这些 Gram 系数。
+
+有限个非负 $p_w$ 之和为一，至少有一个正叶子。由 $C_{0,12}=\langle1|0\rangle=0$ 和 $n\ge1$，该叶子满足
+
+$$
+\mathcal T_w(E_{12})=U_w\,0\,U_w^\dagger=0,
+\qquad
+p_w\operatorname{id}_S(E_{12})=p_wE_{12}\ne0,
+$$
+
+与叶子等式矛盾。$E_{12}$ 在此是检验线性映射的矩阵单位，不被主张为可单独准备的密度矩阵；全部态上的恢复等式线性延拓到全部矩阵，故这个检验合法。零深度树也有唯一正叶子，其反馈前映射就是 $\Phi_n$，受到同一矛盾约束。所有分支映射等式张量上 $\operatorname{id}_A$ 后仍成立，因而论证保持任意未操作参考及纠缠输入的量词。证毕。
+
+分支无信息框架的来源是 Gregoratti–Werner，[*Quantum Lost and Found*, quant-ph/0209025v1](https://arxiv.org/abs/quant-ph/0209025v1)，§II.A（PDF 第 3 页）。该文 Theorem 1（第 4 页）允许对完整纯环境实现任意 CP 分解，Proposition 2（第 4–5 页）的标量效果判据针对单个 Kraus 算子；它们不直接提供这里受限记录访问下的有限树结论，也不使任意粗粒化 CP 映射成为等距通道。本定理的额外推导是：全部终端分支的无信息性经完整后继求和约束每个前缀，再由局部信息完备性保持源记录内积。
+
+## 406. 两份局部记录的双结果后选择与信息完备性边界
+
+**定理 406.1（相同局部投影基给出总成功概率三分之一）。** 在定义 405.1 的 $n=2$ 接口中，令 $s=\sqrt3$，并定义两个 bra
+
+$$
+\begin{aligned}
+u&=\frac{(1-i)(1+s)}2,&
+v&=\frac{(1-i)(1-s)}2,\\
+\langle a|&=\frac{(1,u)}{\sqrt{3+s}},&
+\langle b|&=\frac{(1,v)}{\sqrt{3-s}}.
+\end{aligned}
+$$
+
+对应 ket 为 $|a\rangle=(|0\rangle+\bar u|1\rangle)/\sqrt{3+s}$ 与 $|b\rangle=(|0\rangle+\bar v|1\rangle)/\sqrt{3-s}$，其系数是上述 bra 系数的复共轭。两位持有者各自使用同一个二结果正交投影基 $\{|a\rangle,|b\rangle\}$。四个联合结果中，接受两个不同的相反结果 $(a,b)$ 与 $(b,a)$，均施加反馈
+
+$$
+U=\operatorname{diag}(1,-i,1,1).
+$$
+
+另两个结果 $(a,a)$ 与 $(b,b)$ 宣告失败。则每个接受结果的校正映射都是 $\operatorname{id}_S/6$，总接受映射是 $\operatorname{id}_S/3$。对任意有限参考 $A$ 和任意 $\rho_{AS}$，两个接受分支分别给出 $\rho_{AS}/6$，总接受输出为 $\rho_{AS}/3$。这是一个达到 $1/3$ 的构造，不是最优成功概率的断言。
+
+证明。直接计算
+
+$$
+u+v=1-i,\qquad uv=i,\qquad u\bar v=-1,\qquad
+|u|^2=2+s,\qquad |v|^2=2-s.
+$$
+
+因 $3\pm s>0$ 且 $(3+s)(3-s)=6$，有
+
+$$
+\langle a|a\rangle=\frac{1+|u|^2}{3+s}=1,\qquad
+\langle b|b\rangle=\frac{1+|v|^2}{3-s}=1,\qquad
+\langle a|b\rangle=\frac{1+u\bar v}{\sqrt6}=0.
+$$
+
+因此 $|a\rangle\langle a|+|b\rangle\langle b|=I_2$，双方投影的四个乘积结果之和为 $I_2\otimes I_2$，确实给出完整的有限局部 instrument。
+
+对结果 $(a,b)$，按 $i=1,2,3,4$ 排列的四个源重叠为
+
+$$
+\begin{aligned}
+\bigl(\langle a|r_i\rangle\langle b|r_i\rangle\bigr)_{i=1}^4
+ &=\frac1{\sqrt6}
+   \left(1,uv,\frac{(1+u)(1+v)}2,
+                   \frac{(1+iu)(1+iv)}2\right)\\
+ &=\frac1{\sqrt6}(1,i,1,1).
+\end{aligned}
+$$
+
+最后两个分子的化简分别是
+
+$$
+\frac{1+(u+v)+uv}2
+ =\frac{1+(1-i)+i}2=1,\qquad
+\frac{1+i(u+v)-uv}2
+ =\frac{1+i(1-i)-i}2=1.
+$$
+
+对另一个实际结果 $(b,a)$，第一张量因子使用 $\langle b|$、第二张量因子使用 $\langle a|$，从而直接得到
+
+$$
+\begin{aligned}
+\bigl(\langle b|r_i\rangle\langle a|r_i\rangle\bigr)_{i=1}^4
+ &=\frac1{\sqrt6}
+   \left(1,vu,\frac{(1+v)(1+u)}2,
+                   \frac{(1+iv)(1+iu)}2\right)\\
+ &=\frac1{\sqrt6}(1,i,1,1).
+\end{aligned}
+$$
+
+这是不同的正交结果；共同标签使两因子都为 $r_i$，标量乘法交换才使它们的四个振幅相同。
+
+每个秩一乘积投影后的记录输出为固定单位向量 $|a\rangle\otimes|b\rangle$ 或 $|b\rangle\otimes|a\rangle$。所以迹掉记录后，系统的单 Kraus 算子分别为
+
+$$
+K_{ab}=K_{ba}=\frac1{\sqrt6}\operatorname{diag}(1,i,1,1),
+\qquad UK_{ab}=UK_{ba}=\frac1{\sqrt6}I_4.
+$$
+
+于是对任意系统矩阵 $X$，
+
+$$
+UK_{ab}XK_{ab}^\dagger U^\dagger
+ =UK_{ba}XK_{ba}^\dagger U^\dagger=\frac16X.
+$$
+
+张量上参考恒等映射并求和即得所述联合态公式，成功概率恒为 $1/3$，完整 instrument 的总失败概率恒为 $2/3$。
+
+这两个失败结果也不能分别通过某个左侧系统酉反馈变成对全部输入的非零精确恢复分支。事实上，$K_{aa}^\dagger K_{aa}$ 在系统标签 $1,2$ 上的两个对角元为
+
+$$
+\frac1{(3+s)^2},\qquad \frac{(2+s)^2}{(3+s)^2},
+$$
+
+而 $K_{bb}^\dagger K_{bb}$ 的相应对角元为
+
+$$
+\frac1{(3-s)^2},\qquad \frac{(2-s)^2}{(3-s)^2}.
+$$
+
+两对都不相等。若左酉反馈把某一分支变成 $p\operatorname{id}_S$，对全部输入取迹便要求 $K^\dagger K=pI_4$；左乘酉算子不能改变这个效果，故不可能。
+
+最后，若第一位持有者先测量，其结果 $a$ 在系统输入 $|1\rangle\langle1|$ 与 $|2\rangle\langle2|$ 下的前缀概率分别为
+
+$$
+\Pr(a\mid |1\rangle\langle1|)=\frac1{3+s},\qquad
+\Pr(a\mid |2\rangle\langle2|)=\frac{2+s}{3+s}.
+$$
+
+它们不同。接受的两个叶子各自无信息，并不使含失败叶子的更早前缀无信息；定理 405.3 中的后继求和只有在整棵树全部叶子均精确校正时才给出输入无关权重。故本构造不满足该反证所需的确定性前提。证毕。
+
+**命题 406.2（缺少局部算子张成时的单记录反例）。** 将定义 405.1 的第四个源向量改成 $\widetilde r_4=|{-}\rangle=(|0\rangle-|1\rangle)/\sqrt2$，其余三个不变，写相应记录制备为 $\widetilde J_1$。这四个源投影只张成 $\operatorname{span}_{\mathbb R}\{I_2,X,Z\}$，但一份记录已经允许两个结果的确定性精确恢复。因而仅有局部访问限制与记录族的非正交性，不足以推出定理 405.3 那样的障碍。
+
+证明。前两个投影给出 $I_2,Z$，第三和第四个分别为 $(I_2+X)/2$ 与 $(I_2-X)/2$，所以张成空间恰为所述三维空间，不包含 $Y$。令唯一持有者测量正交基
+
+$$
+|y_\sigma\rangle=\frac{|0\rangle+\sigma i|1\rangle}{\sqrt2},
+\qquad \sigma\in\{+1,-1\},\qquad
+\langle y_\sigma|=\frac{(1,-\sigma i)}{\sqrt2}.
+$$
+
+两个向量的范数为一且彼此正交。它们与四个修改后源态的重叠为 $z_\sigma/\sqrt2$，其中
+
+$$
+z_\sigma=\left(1,-\sigma i,
+                 \frac{1-\sigma i}{\sqrt2},
+                 \frac{1+\sigma i}{\sqrt2}\right),
+\qquad |(z_\sigma)_i|=1\quad(1\le i\le4).
+$$
+
+故系统分支 $K_\sigma=\operatorname{diag}(z_\sigma)/\sqrt2$ 经反馈 $U_\sigma=\operatorname{diag}(\overline{z_\sigma})$ 后满足 $U_\sigma K_\sigma=I_4/\sqrt2$，每个校正映射为 $\operatorname{id}_S/2$。两结果求和为恒等映射，与任意有限参考的联合态也被精确恢复。
+
+这里的局部效果 $|y_\sigma\rangle\langle y_\sigma|=(I_2+\sigma Y)/2$ 并非标量，却对四个实坐标源态都具有期望 $1/2$；直接用上述重叠的模平方即可验证。引理 405.2 中从恒定期望推出标量拉回效果的步骤因此失去前提。原四态族内含非正交对，修改后的族也内含非正交对，但后者已有确定性协议，所以非正交性本身不能代替局部算子张成条件。此反例不主张信息完备性是每一种恢复障碍的必要条件，也不主张每个非信息完备记录族都可恢复。证毕。
+
+**命题 406.3（同一制备的访问差别与未使用记录的剩余因子）。** 对定义 405.1 的任意输入 $\rho_{AS}$ 和 $n\ge1$，制备后的记录边缘态为
+
+$$
+\rho_R=\operatorname{Tr}_{AS}\rho_{ASR}
+ =\sum_{i=1}^4(\rho_S)_{ii}P_i^{\otimes n},
+\qquad \rho_S=\operatorname{Tr}_A\rho_{AS},
+$$
+
+因而在物理持有者分割下可分。对同一 $J_2$，命题 402.1 已给出联合四结果确定性恢复；定理 405.3 排除有限局部确定性精确恢复，而定理 406.1 给出局部总成功 $1/3$。这三项的差别属于制备后的记录访问与接受权限，输入维数及制备保持相同。
+
+若 $n>2$，只对其中两份记录使用定理 406.1 的接受协议，并将其余 $n-2$ 份记录迹掉，则总接受映射为
+
+$$
+\frac13\Phi_{n-2},\qquad
+\Phi_{n-2}(X)=C_0^{\circ(n-2)}\circ X,
+$$
+
+而不是 $\operatorname{id}_S/3$。
+
+证明。将初态按系统基写成 $\rho_{AS}=\sum_{i,j}\rho^A_{ij}\otimes|i\rangle\langle j|$。制备后相应项为
+
+$$
+\rho^A_{ij}\otimes|i\rangle\langle j|
+ \otimes|r_i^{\otimes n}\rangle\langle r_j^{\otimes n}|.
+$$
+
+对 $A,S$ 取迹只留下 $i=j$，其系数为 $\operatorname{Tr}\rho^A_{ii}=(\rho_S)_{ii}$。这些系数非负且总和为一，得到所示乘积态凸组合。这个偏迹计算没有测量 $i$，也没有让持有者知道 $i$。完整系统—记录态仍可纠缠：例如无参考的输入 $(|1\rangle+|2\rangle)/\sqrt2$ 被送到
+
+$$
+\frac{|1\rangle|0\rangle^{\otimes n}
+      +|2\rangle|1\rangle^{\otimes n}}{\sqrt2},
+$$
+
+它在系统与记录之间有两个非零 Schmidt 系数。若保留参考，完整参考—系统—记录态也不受记录边缘可分性的无纠缠保证。按系统正交基受控制备记录，既不提供持有者之间额外共享的纠缠辅助态，也不授予制备完成后的联合恢复操作。
+
+取 $n=2$，命题 402.1 在完整联合记录空间上以四个校正分支 $\operatorname{id}_S/4$ 实现确定恢复；其一般实现归属仍为命题 400.2。局部协议只能使用定义 405.1 的物理分割，故分别适用定理 405.3 与定理 406.1。这不主张四个结果是联合协议的最少结果数，也不主张 $1/3$ 是局部最优值。
+
+对 $n>2$ 的剩余因子，在任意 $E_{ij}$ 上，每个相反接受结果及反馈从被测两记录贡献系数 $1/6$，另外每个未测记录的偏迹贡献 $\langle r_j|r_i\rangle=C_{0,ij}$。两个接受结果相加，得到
+
+$$
+E_{ij}\longmapsto\frac13(C_{0,ij})^{n-2}E_{ij}.
+$$
+
+线性延拓即为 $\Phi_{n-2}/3$，与任意参考张量恒等映射后仍成立。它仍以输入无关概率 $1/3$ 接受，但因 $n-2\ge1$，它将 $E_{12}$ 送至零，故不是 $\operatorname{id}_S/3$。物理丢弃未测记录恰好执行这个偏迹，不能消去剩余因子。证毕。
+
+局部与联合辅助测量的既有比较可参见 Laustsen–Verstraete–van Enk，[*Local vs. joint measurements for the entanglement of assistance*, quant-ph/0206192v2](https://arxiv.org/abs/quant-ph/0206192v2)，PDF 第 1–3 页及 §3（第 7–8 页）。其目标为两个目标量子比特的平均 concurrence，主要局部结果限制于辅助方的 von Neumann 测量；该范围不等同于这里对全部四维未知输入、任意有限 CP instrument、私有记忆和重复访问的精确恢复。上述推导不扩展到无限、可数或连续结果协议、协议闭包、SEP 类或最优成功值，也不涉及定义 399.1 的整个张量输入任务、实际物理成本或新的 $n>2$ 局部恢复构造。
+
+## 追加锚（本行以下为增补区）
