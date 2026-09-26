@@ -18,13 +18,13 @@ internal sealed class CompatibleResponseForgettingDocument : IScribeDocumentDefi
                     Paragraph(Text("For two states with the same numbered path responses at depth d plus one, lifting the same incoming base edge places their predecessor states in one depth-d response class. Appending that edge to each depth-d path identifies the resulting lifted paths with the original depth-(d+1) observations."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("incoming-response-fiber-card"),
-                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.incoming_response_fiber_card"),
-                H("Response classes preserve incoming counts"),
+                DescribeId.Create("incoming-response-fiber-card-step"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting.CompatibleCertificate.incoming_response_fiber_card_step"),
+                H("Deeper responses preserve incoming counts"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("Within one response class, choosing either representative gives the same number of actual incoming base edges whose lifted predecessor lies in any fixed response class. The edge identity is unchanged by the comparison, and response coherence identifies the two lifted quotient classes."))),
+                    Paragraph(Text("Two states identified by depth-(d+1) numbered path responses give the same number of actual incoming base edges whose lifted predecessor lies in any fixed depth-d response class. The bijection retains the base edge identity and uses the preceding-depth equality of its lifted states."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("compatible-square-left-forgetting"),

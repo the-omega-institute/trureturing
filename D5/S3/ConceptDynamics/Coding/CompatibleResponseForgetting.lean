@@ -235,48 +235,37 @@ private def incomingResponseFiber {p : ℕ} {M : CountMat p p} {Q : Type}
   {a : Edge M // ∃ hv : L.project v = a.target,
     Quotient.mk (L.response d) (L.lift a ⟨v, hv⟩).val = F}
 
-/-- Response-equivalent representatives count the same actual incoming edge
-    lifts into every response class. -/
-theorem incoming_response_fiber_card {p : ℕ} {M : CountMat p p} {Q : Type}
+/-- Representatives equivalent at depth d+1 count the same actual incoming
+    lifts into every depth-d response class. -/
+theorem incoming_response_fiber_card_step {p : ℕ} {M : CountMat p p} {Q : Type}
     (L : IncomingLift M Q) (d : ℕ) (F : Quotient (L.response d))
-    {v w : Q} (h : L.response d v w) :
+    {v w : Q} (h : L.response (d + 1) v w) :
     Nat.card (incomingResponseFiber L d F v) =
       Nat.card (incomingResponseFiber L d F w) := by
   classical
-  cases d with
-  | zero =>
-      have hzero := (response_zero_and_step L).1
-      rw [hzero] at h
-      change v = w at h
-      subst w
-      rfl
-  | succ d =>
-      have htransport (x y : Q) (hxy : L.response (d + 1) x y)
-          (a : Edge M) :
-          (∃ hx : L.project x = a.target,
-            Quotient.mk (L.response (d + 1)) (L.lift a ⟨x, hx⟩).val = F) →
-          (∃ hy : L.project y = a.target,
-            Quotient.mk (L.response (d + 1)) (L.lift a ⟨y, hy⟩).val = F) := by
-        rintro ⟨hx, hclass⟩
-        have hobs : L.responseReadout (d + 1) x =
-            L.responseReadout (d + 1) y := hxy
-        have hp : L.project x = L.project y := congrArg Prod.fst hobs
-        have hy : L.project y = a.target := hp.symm.trans hx
-        have hlift : L.response (d + 1)
-            (L.lift a ⟨x, hx⟩).val (L.lift a ⟨y, hy⟩).val :=
-          ((response_zero_and_step L).2 d)
-            (incoming_response_step L d hxy a hx hy)
-        exact ⟨hy, (Quotient.sound hlift).symm.trans hclass⟩
-      let e : incomingResponseFiber L (d + 1) F v ≃
-          incomingResponseFiber L (d + 1) F w := {
-        toFun x := ⟨x.val, htransport v w h x.val x.property⟩
-        invFun x := ⟨x.val,
-          htransport w v ((L.response (d + 1)).iseqv.symm h) x.val x.property⟩
-        left_inv := by intro x; apply Subtype.ext; rfl
-        right_inv := by intro x; apply Subtype.ext; rfl }
-      exact Nat.card_congr e
+  have htransport (x y : Q) (hxy : L.response (d + 1) x y)
+      (a : Edge M) :
+      (∃ hx : L.project x = a.target,
+        Quotient.mk (L.response d) (L.lift a ⟨x, hx⟩).val = F) →
+      (∃ hy : L.project y = a.target,
+        Quotient.mk (L.response d) (L.lift a ⟨y, hy⟩).val = F) := by
+    rintro ⟨hx, hclass⟩
+    have hobs : L.responseReadout (d + 1) x =
+        L.responseReadout (d + 1) y := hxy
+    have hp : L.project x = L.project y := congrArg Prod.fst hobs
+    have hy : L.project y = a.target := hp.symm.trans hx
+    have hlift := incoming_response_step L d hxy a hx hy
+    exact ⟨hy, (Quotient.sound hlift).symm.trans hclass⟩
+  let e : incomingResponseFiber L d F v ≃
+      incomingResponseFiber L d F w := {
+    toFun x := ⟨x.val, htransport v w h x.val x.property⟩
+    invFun x := ⟨x.val,
+      htransport w v ((L.response (d + 1)).iseqv.symm h) x.val x.property⟩
+    left_inv := by intro x; apply Subtype.ext; rfl
+    right_inv := by intro x; apply Subtype.ext; rfl }
+  exact Nat.card_congr e
 
-#print axioms incoming_response_fiber_card
+#print axioms incoming_response_fiber_card_step
 
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
