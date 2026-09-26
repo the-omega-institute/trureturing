@@ -236,11 +236,14 @@ assumptions and axiom dependencies as the formal basis for reuse.
 ```mermaid
 flowchart TD
     accTitle: From inquiry to reusable knowledge and the next question
-    accDescr: Ask a question, compute and test hypotheses, check a proof or refutation, and keep a reusable result. A dashed arrow leads to the next open question.
+    accDescr: Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.
     Q([Ask a precise question]) --> T[Compute and test hypotheses]
     T --> P[Check a proof or refutation]
     P --> R[[Keep a reusable result]]
     R -.-> N{What remains open?}
+    T -.-> N
+    P -.-> N
+    N -.-> Q
     classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
     classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
     classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
@@ -249,11 +252,11 @@ flowchart TD
     class N frontier
 ```
 
-*A schematic of inquiry, not runtime behavior or dependency data.* In words:
-question → computation and tests → checked proof or refutation → reusable
-result → next open question. A question can remain unresolved at any stage;
-tests alone do not establish a theorem. The dashed arrow and diamond mark the
-open frontier, so color is not needed to read the distinction.
+*A schematic of inquiry, not runtime behavior or dependency data.* Questions
+can remain unresolved, and tests alone do not establish a theorem. Dashed
+paths return remaining questions to another inquiry, including when no checked
+result was obtained. Labels and shapes carry the distinction without relying
+on color.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by
