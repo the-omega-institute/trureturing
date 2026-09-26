@@ -15144,3 +15144,333 @@ $$
 该下界使用固定尺度 $r=1$ 和一个固定补事件，未求解真实最优切向修复，也不定位使 $\gamma_r$ 最大的参数。它提供了明确的系数下界，与同一完整 tester 合同下的显式统一上界共同约束最坏渐近误差。
 
 ## 追加锚（本行以下为增补区）
+
+## 76. 最坏修复系数的有限对称约化与实代数性质
+
+### 76.1 从完整复 tester 问题到四个固定荷块
+
+第 70—75 节已经给出完整 tester 合同下的准确系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K),\qquad r\ge0,
+$$
+
+其中最小值达到，$\gamma_0=1$，$\gamma_r>1$ 对每个 $r>0$ 成立，两个参数端点的极限均为一。本节不预设最优修复的秩，也不将某个数值矩阵的零元提升为普遍结构。
+
+沿用三个量子比特的顺序 $A,B,D$，并将八个标准基向量写为
+
+$$
+\begin{gathered}
+x=|000\rangle,\quad x'=|001\rangle,\quad h=|010\rangle,\quad k=|011\rangle,\\
+j=|100\rangle,\quad y=|101\rangle,\quad z=|110\rangle,\quad z'=|111\rangle.
+\end{gathered}
+$$
+
+令 $w=x+y$、$P_0=I-ww^*/2$。对 $u\ge0$ 定义 $H(u)=H_{u^2}$，即
+
+$$
+\begin{aligned}
+H(u)={}&-\frac12\bigl[(u^2x+y)w^*+w(u^2x+y)^*\bigr]\\
+&+u(zw^*+wz^*)+(ux'-z')(ux'-z')^*.
+\end{aligned}
+\tag{76.1}
+$$
+
+它的全部矩阵元是 $u$ 的有理系数多项式。
+
+定义四阶局部酉算符
+
+$$
+U=\operatorname{diag}(1,i)_A\otimes
+\operatorname{diag}(1,-i)_B\otimes
+\operatorname{diag}(1,-i)_D.
+\tag{76.2}
+$$
+
+其互异特征值对应子空间为
+
+$$
+\begin{array}{c|c}
+1&\operatorname{span}(x,y,z)\\
+-i&\operatorname{span}(x',h,z')\\
+i&\operatorname{span}(j)\\
+-1&\operatorname{span}(k).
+\end{array}
+\tag{76.3}
+$$
+
+**定理 76.1（精确实块约化）。** 计算 $\gamma_{u^2}$ 时，可以将切向修复 $K$ 限制为相对于式（76.3）的实对称块对角矩阵。其块大小为 $3,3,1,1$；这个限制保持最优值，并存在达到最优值的此类 $K$。
+
+证明。由式（76.1），$Uw=w$ 且 $UH(u)U^*=H(u)$。若 $K\in\mathcal T$，则
+
+$$
+\operatorname{Tr}_D(UKU^*)
+=I_A\otimes U_B\dot\sigma U_B^*,
+\qquad P_0UKU^*P_0=U(P_0KP_0)U^*\succeq0.
+$$
+
+所以 $UKU^*\in\mathcal T$。另一方面，将合法 tester $C,E$ 同时变换为
+
+$$
+C'=(U_A\otimes U_B)C(U_A\otimes U_B)^*,\qquad E'=UEU^*,
+$$
+
+仍保持 $C'\succeq0$、$\operatorname{Tr}_A C'=I_B$ 和 $0\preceq E'\preceq C'\otimes I_D$。该变换可逆，因此 $N(UXU^*)=N(X)$。
+
+对 $K$ 作有限平均
+
+$$
+\mathcal A(K)=\frac14\sum_{a=0}^{3}U^aK(U^*)^a.
+\tag{76.4}
+$$
+
+凸性和 $H(u)$ 的不变性给
+
+$$
+\mathcal A(K)\in\mathcal T,
+\qquad N(H(u)-\mathcal A(K))\le N(H(u)-K).
+$$
+
+不同特征值之间的矩阵元在四项平均中消去，所以 $\mathcal A(K)$ 正好具有式（76.3）的块形。
+
+标准基中的复共轭同样保持切锥和 tester 可行集，且 $H(u)$ 为实矩阵。因此再用
+
+$$
+K_{\mathbb R}=\frac12\bigl(\mathcal A(K)+\overline{\mathcal A(K)}\bigr)
+$$
+
+替换，仍然可行且不增目标值。它是同一块形的实对称矩阵。取第 70 节保证存在的原问题最优修复，即得最优值保持及达到性。$\square$
+
+此处只约去由实际局部酉对称强制消失的块间相干；每个三维块内部的所有实相干仍被保留。
+
+**定理 76.1a（切向修复的准确十实参数表示）。** 在定理 76.1 的实块空间内，全部因果线性约束可以完全消去。具体地，令
+
+$$
+\theta=(p,t,\zeta,\alpha,\beta,d,e,f,\ell,m)\in\mathbb R^{10},
+$$
+
+相对于有序块 $(x,y,z)$、$(x',h,z')$、$(j)$、$(k)$ 定义
+
+$$
+\begin{aligned}
+K(\theta)&=M_0(\theta)\oplus M_1(\theta)\oplus[\alpha]\oplus[\beta],\\
+M_0(\theta)&=
+\begin{pmatrix}
+-p-t&d&e\\
+d&-p-\alpha&f\\
+e&f&\zeta
+\end{pmatrix},\\
+M_1(\theta)&=
+\begin{pmatrix}
+t&\ell&-e\\
+\ell&p-\beta&m\\
+-e&m&p-\zeta
+\end{pmatrix}.
+\end{aligned}
+\tag{76.4a}
+$$
+
+则 $\mathcal T$ 与实块空间的交恰由这些矩阵中满足
+
+$$
+\alpha\ge0,\qquad\beta\ge0,\qquad M_1(\theta)\succeq0,
+\qquad
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}\succeq0
+\tag{76.4b}
+$$
+
+者构成；每个这样的矩阵对应唯一的 $\theta$。因此完整 tester 系数也准确等于
+
+$$
+\gamma_{u^2}
+=\min_{\theta\text{ 满足（76.4b）}}N(H(u)-K(\theta)),
+\tag{76.4c}
+$$
+
+且这个最小值达到。没有对两个正块的秩作限制。
+
+证明。先取任意实块矩阵 $K\in\mathcal T$。因果偏迹为 $I_A\otimes\dot\sigma$；由四阶相位不变性，$\dot\sigma$ 对角且迹零，所以可唯一写为 $\operatorname{diag}(-p,p)$。定义
+
+$$
+\begin{gathered}
+t=K_{x'x'},\quad\zeta=K_{zz},\quad
+\alpha=K_{jj},\quad\beta=K_{kk},\\
+d=K_{xy},\quad e=K_{xz},\quad f=K_{yz},
+\quad\ell=K_{x'h},\quad m=K_{hz'}.
+\end{gathered}
+$$
+
+所有这些数均实。偏迹在四个 $AB$ 对角位置的约束分别为
+
+$$
+K_{xx}+t=-p,\qquad
+K_{hh}+\beta=p,\qquad
+\alpha+K_{yy}=-p,\qquad
+\zeta+K_{z'z'}=p.
+$$
+
+在非对角位置，实块形使除 $AB=00,11$ 及其转置外的所有偏迹项自动为零；该剩余位置的因果条件恰为
+
+$$
+K_{xz}+K_{x'z'}=0.
+$$
+
+这五条等式给出式（76.4a）的全部指定矩阵元。反向，逐项取 $D$ 偏迹可直接验证，式（76.4a）对任意实参数都满足
+
+$$
+\operatorname{Tr}_D K(\theta)=I_A\otimes\operatorname{diag}(-p,p).
+$$
+
+因此没有剩余的因果线性条件。上述各条矩阵元及任一因果对角和又可恢复全部参数，故参数表示唯一。
+
+再核对核压缩正性。因为 $w=x+y$，有正交子空间分解
+
+$$
+w^\perp
+=\operatorname{span}(x-y,z)
+\oplus\operatorname{span}(x',h,z')
+\oplus\mathbb Cj\oplus\mathbb Ck.
+$$
+
+实块形使核压缩在这四个子空间之间没有耦合。第一块在基 $(x-y,z)$ 中的二次型矩阵正是
+
+$$
+\begin{pmatrix}
+K_{xx}+K_{yy}-2K_{xy}&K_{xz}-K_{yz}\\
+K_{zx}-K_{zy}&K_{zz}
+\end{pmatrix}
+=
+\begin{pmatrix}
+-2p-t-\alpha-2d&e-f\\
+e-f&\zeta
+\end{pmatrix}.
+$$
+
+向量 $x-y$ 未归一化，但基变换为可逆合同变换，因此该矩阵半正定与对应子空间上的正性等价。其余三个块分别为 $M_1(\theta)$、$[\alpha]$、$[\beta]$。所以 $P_0KP_0\succeq0$ 恰等价于式（76.4b）。由第 70 节的准确切锥刻画，得到双向参数化。
+
+最后应用定理 76.1 的最优值保持及达到性，即得式（76.4c）。此处只消去了已明确的线性等式；块内相干以及核压缩的所有允许秩均保留。$\square$
+
+这一表示使修复变量从实块空间的十四维降为十个实参数，并把它自身的正性要求准确化为一个二阶正块、一个三阶正块及两个非负标量。事件范数 $N$ 仍取全部合法复 tester，后面的双向半定上界算子 继续承担其完整约束。
+
+### 76.2 保留全部事件的有限半定规划
+
+令 $\mathcal B$ 表示式（76.3）的实对称块对角矩阵空间。它作为实向量空间的维数是 $6+6+1+1=14$，不计随后施加的线性等式。
+
+**定理 76.2（系数的准确半定规划）。** $\gamma_{u^2}$ 是下列有限优化问题的达到最小值：最小化实数 $t$，变量为
+
+$$
+K,P_+,P_-\in\mathcal B,\qquad p,a_+,b_+,a_-,b_-\in\mathbb R,
+$$
+
+约束为
+
+$$
+\begin{gathered}
+P_0KP_0\succeq0,\qquad
+\operatorname{Tr}_D K=I_A\otimes\operatorname{diag}(-p,p),\\
+P_+\succeq0,\quad P_+-H(u)+K\succeq0,\\
+P_-\succeq0,\quad P_-+H(u)-K\succeq0,\\
+\operatorname{Tr}_D P_\pm=I_A\otimes\operatorname{diag}(a_\pm,b_\pm),\\
+a_++b_+\le t,\qquad a_-+b_-\le t.
+\end{gathered}
+\tag{76.5}
+$$
+
+对每个固定 $u$，上述约束都是实仿射矩阵不等式与线性等式。
+
+证明。沿用第 55 节引理 55.1 的单向支持函数 $h$ 及其达到的对偶表示。完整范数满足
+
+$$
+N(X)=\max\{h(X),h(-X)\}.
+$$
+
+所以 $N(X)\le t$ 当且仅当存在两个半定上界算子 $P_\pm$，分别满足 $P_+\succeq X$、$P_-\succeq-X$，且它们的因果偏迹质量均不超过 $t$。这是同时保留两个符号的对偶约束，并未删去非因果方向的总事件读数。
+
+先取定理 76.1 的最优 $K\in\mathcal B$，于是 $X=H(u)-K$ 也在 $\mathcal B$。对每个符号，取达到单向最优值的对偶见证，然后作式（76.4）的四项平均及复共轭平均。$P_\pm\succeq0$ 与 $P_\pm\succeq\pm X$ 均被保持，偏迹形式及质量也被保持。所得 $P_\pm$ 属于 $\mathcal B$。
+
+在偏迹等式中，有限平均同时使 $n_\pm$ 与 $U_B=\operatorname{diag}(1,-i)$ 对易，故 $n_\pm$ 对角；同样，$\dot\sigma$ 对角且迹零，恰写成 $\operatorname{diag}(-p,p)$。于是得到式（76.5）的可行点，取 $t=N(H(u)-K)$ 即达到 $\gamma_{u^2}$。
+
+反方向，任意满足式（76.5）的变量均给 $K\in\mathcal T$。第 55 节的对偶上界分别给 $h(H(u)-K)\le t$ 与 $h(K-H(u))\le t$，故 $\gamma_{u^2}\le N(H(u)-K)\le t$。两方向合并得到准确等价。$\square$
+
+因此这是一份对全部合法复 tester 有效的有限实问题。块内可以继续出现满秩矩阵；式（76.5）没有给秩另设假设。
+
+### 76.3 从有限多项式合同到实代数系数
+
+本节使用实代数几何的标准消元结论：有理系数多项式等式与不等式定义的集合，在有限次投影和补集下仍为有理系数半代数集；等价地，实闭域的一阶公式可消去量词。这是 Tarski–Seidenberg 定理及实闭域量词消去的内容，相关算法背景见 Basu–Pollack–Roy，*Algorithms in Real Algebraic Geometry*，[第二版](https://doi.org/10.1007/3-540-33099-2)。这里只使用该成熟结果，不把有限矩阵表示本身当作代数性的证明。
+
+**定理 76.3（系数图与代数参数）。** 函数 $r\mapsto\gamma_r$ 在 $r\ge0$ 上的图是有理系数半代数集。特别地，每个非负实代数参数 $r$ 都给实代数数 $\gamma_r$。
+
+证明。实对称矩阵半正定当且仅当全部主子式非负。$P_0$ 是固定有理矩阵，而 $H(u)$ 的矩阵元是有理系数多项式。因此，将式（76.5）的实变量展开后，全部可行性条件是一份有限有理多项式合同，记作 $\mathsf F(u,t,\xi)$，其中 $\xi$ 汇总矩阵与标量见证。
+
+由定理 76.2 的达到性，$u\ge0$ 时
+
+$$
+\exists\xi\;\mathsf F(u,t,\xi)
+\quad\Longleftrightarrow\quad t\ge\gamma_{u^2}.
+\tag{76.6}
+$$
+
+因而 $\gamma_{u^2}$ 的图准确由公式
+
+$$
+u\ge0,\qquad
+\exists\xi\;\mathsf F(u,t,\xi),\qquad
+\neg\exists(s,\zeta)\;\bigl[s<t\ \wedge\ \mathsf F(u,s,\zeta)\bigr]
+\tag{76.7}
+$$
+
+定义。量词消去给出其有理半代数性。再加入 $r=u^2$ 并投影掉 $u$，得到 $\gamma_r$ 的图。
+
+固定一个实代数 $r_0\ge0$。它可以由一个有理多项式及隔离该根的有理区间定义，因此再固定 $r=r_0$ 并投影后，单点集合 $\{\gamma_{r_0}\}$ 仍是有理半代数集。
+
+任何有理半代数单点都是实代数点：在一个无量词定义中只出现有限多个有理多项式；若单点坐标不是它们中任何非零多项式的根，则所有多项式的符号在该点附近不变，使定义不能只选出一个点，矛盾。因此 $\gamma_{r_0}$ 是实代数数。$\square$
+
+这里没有声称 $\gamma_r$ 是 $r$ 的一个全局有理函数，也没有通过有限个数值样本拟合代数方程。
+
+### 76.4 最坏压缩系数与最大参数集的有限代数描述
+
+**定理 76.4（最坏系数的实代数性）。** 第 71、74 节的
+
+$$
+\Gamma=\max_{r>0}\gamma_r
+$$
+
+是实代数数。最大参数集
+
+$$
+\mathcal M=\{r>0:\gamma_r=\Gamma\}
+\tag{76.8}
+$$
+
+是非空紧集，并且是有限多个实代数单点与闭区间的并；每个非退化区间的两个端点也都是正实代数数。特别地，至少存在一个正实代数参数达到最坏系数。
+
+证明。先用第 71 节的连续性、两端极限为一以及 $\Gamma>1$，将 $\mathcal M$ 限制在某个 $[a,b]\subset(0,\infty)$ 内。它是非空闭集，故紧。
+
+记定理 76.3 的图关系为 $\mathsf G(r,t)$。$\Gamma$ 是下列公式唯一选出的 $t$：
+
+$$
+\bigl[\exists r>0\;\mathsf G(r,t)\bigr]
+\ \wedge\
+\neg\exists(s,v)\;\bigl[s>0\ \wedge\ \mathsf G(s,v)\ \wedge\ v>t\bigr].
+\tag{76.9}
+$$
+
+由于 $\mathsf G$ 为有理半代数关系，量词消去使该单点集合也为有理半代数集。定理 76.3 证明末尾的单点论证给出 $\Gamma$ 的实代数性。
+
+同理，把式（76.9）与 $\mathsf G(r,t)$ 联合并消去 $t$，得到 $\mathcal M$ 的有理半代数定义。实直线上的半代数集是有限多个点与区间的并：取无量词定义中所有非零多项式的实根，相邻根之间全部符号恒定；有限个根将实线分成有限个这样的区间与点。紧性排除无界区间和缺失的有限端点，因此可写成有限个闭区间与孤立点。全部有限边界点是上述有理多项式的根，所以为实代数数。任取一个孤立点或区间端点便得到代数最大参数。$\square$
+
+结合第 75 节，本模型的同一个实代数常数满足
+
+$$
+\frac{401}{400}<\Gamma\le\frac98-\frac{23}{394240}.
+\tag{76.10}
+$$
+
+量词消去给出了原则上可终止的精确求解路线，但本节没有执行它、没有给出 $\Gamma$ 的最小多项式或隔离区间，也没有排除最大值平台。实际求解的运算成本仍是另一个问题。
+
+这里可以准确连接静态表示与继续研究的接口：完整 tester 修复合同先由局部相位对称约为固定大小的矩阵关系，再由有限多项式合同约束最坏误差及其参数。静态编码保留了可验证的优化条件；它本身不提供一次低成本的最优值计算。
+
+## 追加锚（本行以下为增补区）
