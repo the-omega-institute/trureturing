@@ -76829,3 +76829,730 @@ $$
 本节没有把任意近饱和态纳入结论，也没有建立稳健 Bell 解码或无设备信任的自检验。标准谱符号、预解式与谱扰动工具在证明内直接复用；不据该组合推导宣称文献原创性。
 
 ## 追加锚（本行以下为增补区）
+
+## 251. 两份算子响应在全部合法态中唯一确定饱和源
+
+§250在已知饱和态类内恢复了联合态。本节加强竞争态的量词：一旦两份完整算子响应来自该类中的一个源态，任何具有相同响应的归一化正半定联合态都必须等于它。竞争态不必预先满足响应饱和条件，也不必具有相同形成纠缠、参考边缘、秩或占用支撑。
+
+这项加强依赖两个步骤：由响应构造正算子，把所有相容竞争态限制到同一个核空间；再证明两份响应在该核的全部算子块上共同单射。后一步包括不同参考块之间的相干项。
+
+### 251.1 固定接口、理想响应与唯一性的量词
+
+固定输入 $H=\mathbb C^2$、已声明的有限维参考空间 $E$ 及§248的通道参数。取
+$$
+A\ge B>0,\qquad b_0^2=B,\qquad
+\ell=\sqrt{A+B},\qquad
+D=\frac\ell2,\quad U=\frac{\sqrt A}{2},\quad\delta=D-U.
+\tag{251.1}
+$$
+在已标定的输入基中，令
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X.
+\tag{251.2}
+$$
+这里 $X,Z$ 是实 Pauli 矩阵，$Y^{\mathsf T}=-Y$，而 $b_0$ 允许为负。对任意联合算子 $T$，定义线性响应
+$$
+\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T],
+\qquad w=a,b.
+\tag{251.3}
+$$
+固定一个满足§248饱和条件的源态
+$$
+\Omega\succeq0,\quad\operatorname{Tr}\Omega=1,\quad
+E_F(\Omega)=\theta\in(0,1),\quad
+ g(\Omega)=U+\delta\theta,
+\tag{251.4}
+$$
+并给定两份完整 Hermitian 矩阵
+$$
+R_a=\mathcal R_a(\Omega),\qquad R_b=\mathcal R_b(\Omega).
+\tag{251.5}
+$$
+本节证明的结论为
+$$
+\boxed{
+\left\{\Xi\succeq0:\operatorname{Tr}\Xi=1,
+\ \mathcal R_a(\Xi)=R_a,
+\ \mathcal R_b(\Xi)=R_b\right\}
+=\{\Omega\}.
+}
+\tag{251.6}
+$$
+集合中的全部态作用于同一已声明接口 $H\otimes E$。等式不涉及未纳入该接口的额外环境系统。
+
+若 $r=\dim E$，一份 Hermitian 响应矩阵包含 $r^2$ 个实坐标。给定参考端任意 Hermitian 基 $\{B_j\}_{j=1}^{r^2}$，完整响应等价于知道
+$$
+\operatorname{Tr}[B_jR_w]
+=\operatorname{Tr}[(A_w\otimes B_j)\Omega]
+\qquad(w=a,b;\ 1\le j\le r^2).
+\tag{251.7}
+$$
+因此“两份响应”包含两组矩阵层析数据，其取得合同必须覆盖这些参考坐标。
+
+### 251.2 两份响应确定占用空间及典范分块
+
+对 $R_a,R_b$ 取谱符号，核上一律取零：
+$$
+H_a=\operatorname{sign}R_a,
+\qquad H_b=\operatorname{sign}R_b,
+\qquad C=[H_a,H_b],
+\qquad\gamma=\frac{4\sqrt{AB}}{A+B}.
+\tag{251.8}
+$$
+§248的正常形给出量子块及产品块上的响应
+$$
+\begin{aligned}
+R_w\big|_{E_{\mathrm{ent}}}
+ &=\frac\theta2V(A_w^{\mathsf T}\otimes\sigma_M)V^\dagger,\\
+R_w\big|_{E_s}
+ &=q_s s_w\sqrt A\,\tau_s.
+\end{aligned}
+\tag{251.9}
+$$
+这里 $V:\mathbb C^2\otimes M\to E_{\mathrm{ent}}$ 是共同 Bell 解码的逆同构；只保留正权重块，并将 $M,E_s$ 限制到相应密度矩阵的支撑。于是 $\sigma_M,\tau_s$ 在各自空间上严格正，$A_w^2=\ell^2I_2$，每个占用块上的 $R_w$ 都可逆。因此
+$$
+E_0:=\operatorname{supp}|R_a|
+=\operatorname{supp}|R_b|
+=\operatorname{supp}\operatorname{Tr}_H\Omega.
+\tag{251.10}
+$$
+令 $P_0$ 为 $E_0$ 的正交投影。它由响应取得，无需另行给定参考边缘。§250的交换子公式给
+$$
+Q=-\frac{C^2}{\gamma^2},
+\qquad P=P_0-Q,
+\tag{251.11}
+$$
+分别为量子与产品参考空间的正交投影。它们与 $H_a,H_b$ 交换。在 $QE$ 上有
+$$
+V^\dagger H_wV=\frac{A_w^{\mathsf T}}\ell\otimes I_M;
+\tag{251.12}
+$$
+在 $PE$ 上，$H_a,H_b$ 是交换的 Hermitian 对合。
+
+对允许的符号对 $s=(s_a,s_b)$，定义
+$$
+Q_s=\frac14P(I_E+s_aH_a)(I_E+s_bH_b),
+\qquad E_s=Q_sE.
+\tag{251.13}
+$$
+当 $A>B$ 时允许集合为 $\Sigma=\{(+,+),(-,-)\}$；当 $A=B$ 时允许全部四个符号对。零投影可省略，且 $\sum_sQ_s=P$。以 $u,v$ 分别表示 $Z,X$ 的 Bloch 轴，对应产品输入方向为
+$$
+r_s=
+\begin{cases}
+s_a u,&s_a=s_b,\\
+s_a\operatorname{sgn}(b_0)v,&s_a=-s_b\ \text{且 }A=B.
+\end{cases}
+\tag{251.14}
+$$
+选对应单位向量 $|r_s\rangle$，记 $P_{r_s}=|r_s\rangle\langle r_s|$。各 $|r_s\rangle$ 都是 $Z$ 或 $X$ 的本征向量。参考空间分为
+$$
+E=E_{\mathrm{ent}}\oplus\bigoplus_{s\in\Sigma}E_s\oplus E_0^\perp.
+\tag{251.15}
+$$
+此时尚未对竞争态 $\Xi$ 施加任何关于该分块的支撑或块对角假设。
+
+### 251.3 正见证把全部竞争态限制到同一核空间
+
+定义参考正算子 $F$ 及联合 Hermitian 算子 $W,L$：
+$$
+F=\frac QD+\frac PU,
+\qquad
+W=\frac14(A_a\otimes H_a+A_b\otimes H_b),
+\qquad
+L=I_{H\otimes E}-(I_H\otimes F)W.
+\tag{251.16}
+$$
+$F$ 在 $E_0^\perp$ 上为零，并与 $H_a,H_b$ 交换，所以 $L$ 确为 Hermitian。
+
+在量子参考块中应用 $V^\dagger$，得到
+$$
+W_{\mathrm{ent}}
+=\frac{A Z\otimes Z+B X\otimes X}{2\ell}\otimes I_M,
+\qquad
+L_{\mathrm{ent}}
+=\left(I-\frac{A Z\otimes Z+B X\otimes X}{A+B}\right)\otimes I_M.
+\tag{251.17}
+$$
+$Z\otimes Z$ 与 $X\otimes X$ 交换，其共同本征向量可取四个 Bell 向量。$L$ 在 Bell 因子上的本征值为
+$$
+0,\qquad\frac{2B}{A+B},\qquad\frac{2A}{A+B},\qquad2.
+\tag{251.18}
+$$
+由于 $A,B>0$，零本征空间恰为 $\operatorname{span}\{|\Phi^+\rangle\}$，其中 $|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$。
+
+在产品符号块 $E_s$ 上，（251.2）及（251.14）给
+$$
+W_s=U(r_s\cdot\sigma)\otimes I_{E_s},
+\qquad
+L_s=(I_2-r_s\cdot\sigma)\otimes I_{E_s}\succeq0,
+\tag{251.19}
+$$
+其核为 $\operatorname{span}\{|r_s\rangle\}\otimes E_s$。在 $E_0^\perp$ 上 $L=I$。因此
+$$
+\boxed{L\succeq0,\qquad\ker L=\mathcal K,}
+\tag{251.20}
+$$
+其中
+$$
+\mathcal K=
+(I_H\otimes V)(\operatorname{span}\{|\Phi^+\rangle\}\otimes M)
+\ \oplus\!
+\bigoplus_{s\in\Sigma}
+\bigl(\operatorname{span}\{|r_s\rangle\}\otimes E_s\bigr).
+\tag{251.21}
+$$
+各直和项通过正交参考支撑区分。源态正常形保证 $\operatorname{supp}\Omega\subseteq\mathcal K$，从而 $\operatorname{Tr}(L\Omega)=0$。
+
+对任意归一化联合态 $\Xi$，偏迹公式给
+$$
+\operatorname{Tr}(L\Xi)
+=1-\frac14\operatorname{Tr}_E
+\left[F\bigl(H_a\mathcal R_a(\Xi)+H_b\mathcal R_b(\Xi)\bigr)\right].
+\tag{251.22}
+$$
+右侧只使用归一化及两份响应。若 $\Xi$ 具有（251.5）的读数，则
+$$
+\operatorname{Tr}(L\Xi)=\operatorname{Tr}(L\Omega)=0.
+\tag{251.23}
+$$
+正性进一步给
+$$
+0=\operatorname{Tr}(L\Xi)
+=\|L^{1/2}\Xi^{1/2}\|_{\mathrm{HS}}^2,
+\qquad
+\boxed{\operatorname{supp}\Xi\subseteq\mathcal K.}
+\tag{251.24}
+$$
+这同时排除了竞争态在 $E_0^\perp$ 上的权重及其与占用空间的交叉项。它没有预设竞争态饱和，也没有读取竞争态的参考边缘。
+
+### 251.4 核内所有算子块的响应注入
+
+核约束仍允许重数空间、多个产品空间及它们之间的相干项。以下证明这些剩余自由度全部被两份响应分离。
+
+**引理251.1（核内共同单射）。** 若 Hermitian 算子 $T$ 满足
+$$
+T=P_{\mathcal K}TP_{\mathcal K},
+\qquad\mathcal R_a(T)=\mathcal R_b(T)=0,
+\tag{251.25}
+$$
+则 $T=0$。
+
+**证明。** 在量子参考块应用固定坐标 $V^\dagger$。定义等距映射
+$$
+J_{\mathrm{ent}}:M\longrightarrow H\otimes(\mathbb C^2\otimes M),
+\quad z\longmapsto|\Phi^+\rangle\otimes z,
+\qquad
+J_s:E_s\longrightarrow H\otimes E_s,
+\quad e\longmapsto|r_s\rangle\otimes e.
+\tag{251.26}
+$$
+任意核内算子按这些像分块。若一个联合块的参考起终空间为 $E_t,E_s$，则其响应仍处于同一参考矩阵块；这是因为对参考投影有
+$$
+Q_s\mathcal R_w(T)Q_t
+=\mathcal R_w\bigl((I_H\otimes Q_s)T(I_H\otimes Q_t)\bigr),
+\tag{251.27}
+$$
+量子块使用 $Q$ 同理。因此不同参考块的响应不能相互抵消。
+
+先看量子—量子块。它唯一写成
+$$
+T_{\mathrm{ent},\mathrm{ent}}
+=J_{\mathrm{ent}}M_0J_{\mathrm{ent}}^\dagger
+=P_{\Phi^+}\otimes M_0,
+\qquad
+\mathcal R_a(T_{\mathrm{ent},\mathrm{ent}})
+=\frac12A_a^{\mathsf T}\otimes M_0.
+\tag{251.28}
+$$
+$A_a^2=\ell^2I_2$，所以 $A_a$ 可逆。该响应为零便迫使 $M_0=0$。
+
+再看从产品空间 $E_s$ 到量子空间的任意交叉块。它写成
+$$
+T_{\mathrm{ent},s}=J_{\mathrm{ent}}NJ_s^\dagger,
+\qquad N:E_s\longrightarrow M.
+\tag{251.29}
+$$
+对简单项，直接展开 Bell 向量得到
+$$
+\operatorname{Tr}_H
+\bigl[(A_w\otimes I)|\Phi^+,z\rangle\langle r_s,e|\bigr]
+=\frac1{\sqrt2}
+\bigl(A_w^{\mathsf T}|\overline{r_s}\rangle\otimes z\bigr)\langle e|.
+\tag{251.30}
+$$
+横线表示在（251.2）输入基中的逐坐标复共轭。令
+$$
+B_{w,s}:M\longrightarrow\mathbb C^2\otimes M,
+\qquad
+B_{w,s}z=A_w^{\mathsf T}|\overline{r_s}\rangle\otimes z.
+\tag{251.31}
+$$
+则
+$$
+\mathcal R_w(T_{\mathrm{ent},s})=\frac1{\sqrt2}B_{w,s}N,
+\qquad
+B_{w,s}^\dagger B_{w,s}=\ell^2I_M.
+\tag{251.32}
+$$
+最后一式使用实 Hermitian 矩阵 $A_w$ 的平方等式与 $|r_s\rangle$ 的单位范数。因此单取 $w=a$，响应为零已足以推出 $N=0$。$T$ 为 Hermitian，反向交叉块是其伴随，也为零。
+
+最后看任意产品—产品块，包括 $s=t$：
+$$
+T_{s,t}=J_sN_{s,t}J_t^\dagger
+=|r_s\rangle\langle r_t|\otimes N_{s,t},
+\qquad
+\mathcal R_w(T_{s,t})
+=\langle r_t|A_w|r_s\rangle N_{s,t}.
+\tag{251.33}
+$$
+两条标量系数不可能同时为零。否则，由 $\sqrt A\ne0$、$b_0\ne0$ 及（251.2），会同时有
+$$
+\langle r_t|X|r_s\rangle=0,
+\qquad\langle r_t|Z|r_s\rangle=0.
+\tag{251.34}
+$$
+但 $|r_s\rangle$ 是 $X$ 或 $Z$ 的本征向量，而 $X,Z$ 反对易；$X|r_s\rangle$ 与 $Z|r_s\rangle$ 因而是两个正交非零向量，张成 $\mathbb C^2$。非零的 $|r_t\rangle$ 不能同时与它们正交。故至少一个响应系数非零，相应零响应迫使 $N_{s,t}=0$。
+
+上述三类覆盖核内全部矩阵块，也覆盖 $A=B$ 时的四个产品方向及任意 $b_0$ 符号，所以 $T=0$。$\square$
+
+**定理251.2（全部合法竞争态中的唯一填充）。** 对任意满足（251.4）的源态，其两份响应（251.5）满足（251.6）。
+
+**证明。** 给定（251.6）左侧的任意 $\Xi$，由（251.24）得 $\operatorname{supp}\Xi\subseteq\mathcal K$。源态也支撑于该核，故 $T=\Xi-\Omega$ 满足（251.25）。引理251.1给 $T=0$，即 $\Xi=\Omega$。$\square$
+
+### 251.5 两份响应直接恢复参考边缘及第三个关联
+
+现在可以去掉§250恢复式中作为额外输入的参考边缘。由（251.9），
+$$
+|R_a|\big|_{E_{\mathrm{ent}}}
+=\frac{\theta\ell}{2}V(I_2\otimes\sigma_M)V^\dagger,
+\qquad
+|R_a|\big|_{E_s}=q_s\sqrt A\,\tau_s.
+\tag{251.35}
+$$
+因此
+$$
+\boxed{
+\rho_E=\operatorname{Tr}_H\Omega
+=\left(\frac Q\ell+\frac P{\sqrt A}\right)|R_a|.
+}
+\tag{251.36}
+$$
+这些因子在各正常形块上交换，右侧是归一化正半定矩阵，并在 $E_0^\perp$ 上为零。$Q,P$ 已由两份响应确定，所以（251.36）不需要第三份矩阵读数；$\theta=\operatorname{Tr}(Q\rho_E)$ 也随之恢复。
+
+再置
+$$
+R_Z=\frac{R_a+R_b}{2\sqrt A},
+\qquad
+R_X=\frac{R_a-R_b}{2b_0},
+\qquad
+R_Y=-\frac{i\ell^2}{4\sqrt A\,b_0}\,C\rho_E.
+\tag{251.37}
+$$
+前两式直接由（251.2）线性求解。第三式在量子块中使用 $Y^{\mathsf T}=-Y$ 及
+$$
+C\big|_{E_{\mathrm{ent}}}
+=-\frac{4i\sqrt A\,b_0}{\ell^2}V(Y\otimes I_M)V^\dagger;
+\tag{251.38}
+$$
+在产品块中，$r_s$ 位于 $X,Z$ 平面，故 $Y$ 关联与 $C$ 均为零。逐块得到 $R_Y=\mathcal R_Y(\Omega)$，其中 $\mathcal R_Y(T)=\operatorname{Tr}_H[(Y\otimes I)T]$。最终
+$$
+\boxed{
+\Omega=\frac12\bigl(
+I_2\otimes\rho_E+X\otimes R_X+Y\otimes R_Y+Z\otimes R_Z
+\bigr).
+}
+\tag{251.39}
+$$
+式（251.37）保留 $b_0$ 的符号。由定理251.2，所得态是全部归一化正半定填充中的唯一一个。
+
+### 251.6 唯一性、数据取得与文献边界
+
+这里的唯一性针对来自（251.4）源态的理想数据。一般联合态的两份响应仍可有多个合法填充；§250中的
+$$
+\Omega_\pm=\frac{I_4}{4}\pm tY\otimes Z,
+\qquad0<t<\frac14,
+\tag{251.40}
+$$
+就是响应同为零而态不同的例子。因而 $\mathcal R_a,\mathcal R_b$ 在整个态空间上并非层析完备。定理251.2证明的是这些特定饱和数据的相容纤维为单点。
+
+若输入矩阵并非已知来自饱和源，谱符号与交换子代数本身不保证（251.36）—（251.39）产生合法态。要以一个显式候选应用本定理，须验证候选归一化、正半定、具有本节正常形并回代得到原响应；这些是候选满足定理假设的条件。
+
+正见证 $L$ 可以依赖已取得的理想响应以及已标定参数；（251.22）保证其期望值由这些数据决定。把它用作数学证书，无需假定已有一个实际装置能够直接测量 $L$。本节亦未给出有噪声数据的联合态恢复误差率；§250关于谱隙的界控制旗标投影及其权重，不能直接充作（251.39）的全态误差界。
+
+关于唯一性的量词，Chen、Dawkins、Ji、Johnston、Kribs、Shultz 与 Zeng 在 *Uniqueness of quantum states compatible with given measurement results*, *Physical Review A* **88**, 012109 (2013)，[DOI:10.1103/PhysRevA.88.012109](https://doi.org/10.1103/PhysRevA.88.012109) 中，于第012109-1页明确区分纯态类中唯一的 UDP 与全部态中唯一的 UDA；第012109-2页说明低秩类与任意秩竞争态之间也须作此区分。第012109-1至2页的基态论证利用同一观测数据固定能量，第012109-3页则考察观测核中的扰动是否仍使原态保持正半定，以此描述唯一性；正性要求施加在扰动后的态上。
+
+本节采用这一量词区分与正性约束方法，并对当前混合态的退化核另外证明了完整注入性。该文关于纯态观测数或两个标量观测的结论不承担定理251.2；本节的输入是（251.7）所列的两组算子响应，也不据此宣称文献原创性。
+
+在本项目的关系语言中，这给出一种严格的共同填充机制：两份边界响应先以正性约束选定允许的联合支撑，再在该支撑上分离所有相干与混合自由度。未直接读取的参考边缘和第三条 Pauli 关联因此由合法填充条件唯一补足。边界能恢复整体，依赖的是这份实际数据暴露的约束及其核内注入性。
+
+## 追加锚（本行以下为增补区）
+
+## 252. 无响应谱隙的全态稳定恢复与平方根尺度
+
+§251证明，来自饱和源的两份完整算子响应在全部合法联合态中唯一确定原态。本节给出这一唯一性的定量版本：响应误差按矩阵迹范数计量时，全态迹范数误差具有仅依赖通道参数的平方根上界。该界不要求响应矩阵的最小非零奇异值有统一下界，也不依赖参考维数。
+
+固定三维参考中的一族实际竞争态说明，平方根尺度不能统一改进为更高阶。它与§250的旗标不稳定性相容：参考子空间的算子范数误差与带权联合态的迹范数误差，衡量的是不同恢复任务。
+
+### 252.1 固定源与误差合同
+
+沿用§251的已标定输入算子
+$$
+A_a=\sqrt A\,Z+b_0X,
+\qquad
+A_b=\sqrt A\,Z-b_0X,
+\qquad
+A\ge B>0,\quad b_0^2=B,
+\tag{252.1}
+$$
+以及
+$$
+\ell=\sqrt{A+B},\qquad D=\frac\ell2,\qquad U=\frac{\sqrt A}{2}.
+\tag{252.2}
+$$
+输入为 $H=\mathbb C^2$，参考为同一已声明的有限维空间 $E$。固定一个响应饱和源态 $\Omega$，满足
+$$
+E_F(\Omega)=\theta\in(0,1),
+\qquad g(\Omega)=U+(D-U)\theta.
+\tag{252.3}
+$$
+竞争态 $\Xi$ 为 $H\otimes E$ 上任意归一化正半定态。它的参考边缘、形成纠缠、秩和支撑不受额外限制，也不必饱和。定义
+$$
+\mathcal R_w(T)=\operatorname{Tr}_H[(A_w\otimes I_E)T],
+\qquad
+\Delta_w=\mathcal R_w(\Xi)-\mathcal R_w(\Omega),
+\qquad
+\varepsilon=\|\Delta_a\|_1+\|\Delta_b\|_1.
+\tag{252.4}
+$$
+$\|\cdot\|_1$ 为未除以二的矩阵迹范数。误差包含两份完整参考响应；只给两个标量平均值，或仅给随参考维数变化的算子范数误差，不满足这一合同。
+
+### 252.2 正见证的谱隙与竞争态泄漏
+
+用理想源的两份响应构造§251的参考谱符号 $H_a,H_b$、量子旗标 $Q$ 与产品旗标 $P_{\mathrm{prod}}$。令
+$$
+F=\frac QD+\frac{P_{\mathrm{prod}}}U,
+\qquad
+W=\frac14(A_a\otimes H_a+A_b\otimes H_b),
+\qquad
+L=I_{H\otimes E}-(I_H\otimes F)W.
+\tag{252.5}
+$$
+$H_a,H_b,F$ 在原源未占用的参考方向上按§251补零，因而 $W$ 在对应联合空间上为零，$L$ 为恒等算子。记
+$$
+\mathcal K=\ker L,
+\qquad \Pi=P_{\mathcal K}.
+\tag{252.6}
+$$
+$\Pi$ 是联合空间的核投影，须与参考量子旗标 $Q$ 区分。
+
+§251逐块计算了 $L$ 的谱。在量子块中，其非零本征值为 $2B/\ell^2,2A/\ell^2,2$；在产品块中非零本征值为二；在未占用参考方向上为一。因此
+$$
+\boxed{
+L\succeq\lambda(I-\Pi),
+\qquad
+\lambda=\frac{2B}{\ell^2}\in(0,1].
+}
+\tag{252.7}
+$$
+此谱隙只来自固定非平行轴参数，不涉及源态各密度矩阵块的最小本征值。
+
+源态满足 $\operatorname{Tr}(L\Omega)=0$。由§251的见证期望公式以及两态归一化，
+$$
+0\le\operatorname{Tr}(L\Xi)
+=-\frac14\sum_{w=a,b}\operatorname{Tr}(FH_w\Delta_w).
+\tag{252.8}
+$$
+$F$ 与 $H_w$ 交换，且
+$$
+\|FH_w\|\le\frac1U=\frac2{\sqrt A}.
+\tag{252.9}
+$$
+迹范数对偶于是给
+$$
+\operatorname{Tr}(L\Xi)
+\le\frac{\varepsilon}{4U}
+=\frac{\varepsilon}{2\sqrt A}.
+\tag{252.10}
+$$
+定义竞争态落在核外的权重
+$$
+t=\operatorname{Tr}[(I-\Pi)\Xi].
+\tag{252.11}
+$$
+结合（252.7）及 $0\le t\le1$，得到
+$$
+\boxed{
+ t\le h(\varepsilon),
+\qquad
+h(\varepsilon)=\min\left\{1,\frac{\ell^2\varepsilon}{4B\sqrt A}\right\}.
+}
+\tag{252.12}
+$$
+即使竞争态在原源未占用的参考空间中增加权重，该权重也包含在此泄漏界中。
+
+### 252.3 次归一化投影的扰动界
+
+保留核内压缩
+$$
+\Xi_{\mathcal K}=\Pi\Xi\Pi.
+\tag{252.13}
+$$
+它是迹为 $1-t$ 的正半定算子，以下不再将其除以 $1-t$。
+
+**引理252.1（投影扰动）。** 对任意密度矩阵 $\Xi$ 及正交投影 $\Pi$，有
+$$
+\boxed{
+\|\Xi-\Pi\Xi\Pi\|_1\le2\sqrt t,
+\qquad t=\operatorname{Tr}[(I-\Pi)\Xi].
+}
+\tag{252.14}
+$$
+
+**证明。** 取单位纯化向量 $|\psi\rangle$，置 $|\phi\rangle=(\Pi\otimes I)|\psi\rangle$。则 $\|\phi\|^2=1-t$，对辅助空间取偏迹分别得到 $\Xi$ 与 $\Pi\Xi\Pi$。
+
+当 $0<t<1$ 时，在投影内外两个归一化分量张成的正交基中，
+$$
+|\psi\rangle=\sqrt{1-t}\,|e\rangle+\sqrt t\,|f\rangle,
+\qquad
+|\phi\rangle=\sqrt{1-t}\,|e\rangle.
+\tag{252.15}
+$$
+故纯化上的差矩阵为
+$$
+|\psi\rangle\langle\psi|-|\phi\rangle\langle\phi|
+=
+\begin{pmatrix}
+0&\sqrt{t(1-t)}\\
+\sqrt{t(1-t)}&t
+\end{pmatrix}
+\tag{252.16}
+$$
+在该二维空间上的嵌入。两特征值异号，其迹范数为
+$$
+\sqrt{t^2+4t(1-t)}=\sqrt{t(4-3t)}\le2\sqrt t.
+\tag{252.17}
+$$
+$t=0$ 与 $t=1$ 时结论直接成立。偏迹在 Hermitian 算子的迹范数上收缩：把算子写成正负部分之差，再使用三角不等式及偏迹保迹性即可。因此偏迹后仍满足（252.14）。$\square$
+
+由（252.12）得到
+$$
+\|\Xi-\Xi_{\mathcal K}\|_1\le2\sqrt{h(\varepsilon)}.
+\tag{252.18}
+$$
+平方根项保留了核内与核外之间可能存在的相干，并没有将竞争态预先去相干。
+
+### 252.4 核内响应逆映射的维数无关界
+
+$\mathcal K$ 沿参考端分成一个量子块与至多四个产品符号块。只计非零块，记块数为 $k$，则
+$$
+k\le5;
+\qquad A>B\text{ 时 }k\le3.
+\tag{252.19}
+$$
+每一块内部的重数空间可以具有任意有限维数。
+
+**引理252.2（核内定量注入）。** 任意 Hermitian 算子 $T=\Pi T\Pi$ 满足
+$$
+\boxed{
+\|T\|_1
+\le\frac{k^2}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr)
+\le\frac{25}{\sqrt B}
+\bigl(\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1\bigr).
+}
+\tag{252.20}
+$$
+
+**证明。** 使用§251的等距映射 $J_{\mathrm{ent}}$ 与 $J_s$ 表示各核内块。若 $N$ 是两重数空间之间的矩阵，则 $J_iNJ_j^\dagger$ 与 $N$ 具有相同的非零奇异值，故迹范数相同。
+
+量子—量子块在解码坐标中为 $P_{\Phi^+}\otimes N$，其 $a$ 响应为 $A_a^{\mathsf T}\otimes N/2$。$A_a$ 的两个奇异值均为 $\ell$，因此
+$$
+\|P_{\Phi^+}\otimes N\|_1=\|N\|_1,
+\qquad
+\left\|\frac12A_a^{\mathsf T}\otimes N\right\|_1
+=\ell\|N\|_1.
+\tag{252.21}
+$$
+该块的逆范数因子为 $1/\ell\le1/\sqrt B$。
+
+量子—产品交叉块的响应，按§251完整偏迹公式，形为 $B_{a,s}N/\sqrt2$，其中
+$$
+B_{a,s}z=A_a^{\mathsf T}|\overline{r_s}\rangle\otimes z,
+\qquad
+B_{a,s}^\dagger B_{a,s}=\ell^2I.
+\tag{252.22}
+$$
+于是
+$$
+\left\|\frac1{\sqrt2}B_{a,s}N\right\|_1
+=\frac\ell{\sqrt2}\|N\|_1.
+\tag{252.23}
+$$
+其逆范数因子 $\sqrt2/\ell\le1/\sqrt B$。反向交叉块是伴随，具有相同的界。
+
+对任意产品—产品块 $|r_s\rangle\langle r_t|\otimes N$，两份响应分别为 $c_aN,c_bN$，其中
+$$
+c_w=\langle r_t|A_w|r_s\rangle.
+\tag{252.24}
+$$
+令 $x=\langle r_t|X|r_s\rangle$、$z=\langle r_t|Z|r_s\rangle$。$|r_s\rangle$ 是 $X$ 或 $Z$ 的本征向量，故 $X|r_s\rangle,Z|r_s\rangle$ 构成正交归一基。因此
+$$
+|x|^2+|z|^2=1,
+\qquad
+|c_a|^2+|c_b|^2
+=2A|z|^2+2B|x|^2\ge2B.
+\tag{252.25}
+$$
+至少一个 $|c_w|\ge\sqrt B$。该论证同时覆盖四个可能的产品方向与 $b_0<0$，也包括对角块 $s=t$。所以此类块同样具有逆因子至多 $1/\sqrt B$。
+
+令 $Q_i$ 表示各参考分块投影，量子块也包括在其中。对有序块 $T_{ij}=(I\otimes Q_i)T(I\otimes Q_j)$，响应仍在相同参考块中，并满足
+$$
+\|\mathcal R_w(T_{ij})\|_1
+=\|Q_i\mathcal R_w(T)Q_j\|_1
+\le\|\mathcal R_w(T)\|_1.
+\tag{252.26}
+$$
+对上述三类块分别应用逆界，再以三角不等式对至多 $k^2$ 个有序块求和，就得到（252.20）。$\square$
+
+常数二十五只用于给出统一显式界，不宣称最优。
+
+### 252.5 全态恢复界
+
+对任意 Hermitian 联合算子 $D_0$，$\mathcal R_w(D_0)$ 也是 Hermitian。使用 Hermitian 迹范数对偶可得
+$$
+\begin{aligned}
+\|\mathcal R_w(D_0)\|_1
+&=\sup_{\substack{K=K^\dagger\\\|K\|\le1}}
+\left|\operatorname{Tr}[(A_w\otimes K)D_0]\right|\\
+&\le\ell\|D_0\|_1.
+\end{aligned}
+\tag{252.27}
+$$
+现在取核内 Hermitian 算子
+$$
+T=\Xi_{\mathcal K}-\Omega.
+\tag{252.28}
+$$
+由（252.4）、（252.18）与（252.27），
+$$
+\begin{aligned}
+\|\mathcal R_a(T)\|_1+\|\mathcal R_b(T)\|_1
+&\le\varepsilon+2\ell\|\Xi_{\mathcal K}-\Xi\|_1\\
+&\le\varepsilon+4\ell\sqrt{h(\varepsilon)}.
+\end{aligned}
+\tag{252.29}
+$$
+引理252.2以及三角不等式便给
+$$
+\|\Xi-\Omega\|_1
+\le2\sqrt{h(\varepsilon)}
++\frac{25}{\sqrt B}
+\left(\varepsilon+4\ell\sqrt{h(\varepsilon)}\right).
+\tag{252.30}
+$$
+两份归一化态本身还满足 $\|\Xi-\Omega\|_1\le2$。将这两个上界取较小者，得到本节的定量结论。
+
+**定理252.3（无响应谱隙的全态稳定性）。** 在（252.1）—（252.4）的条件下，
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le
+\min\left\{
+2,\ \frac{25\varepsilon}{\sqrt B}
++\left(2+\frac{100\ell}{\sqrt B}\right)
+\sqrt{\min\left\{1,\frac{\ell^2\varepsilon}{4B\sqrt A}\right\}}
+\right\}.
+}
+\tag{252.31}
+$$
+特别地，固定 $A,B$ 后，右侧在 $\varepsilon\to0$ 时为 $O(\sqrt\varepsilon)$。其常数不依赖 $\theta$、参考维数、正常形密度块的最小本征值或响应最小非零奇异值。$\varepsilon=0$ 时恢复§251的唯一性。
+
+证明使用理想源的 $L,\Pi$ 来控制全部竞争态。它不要求从带噪响应稳定提取谱符号或旗标，也没有以此构造一个稳健 Bell 解码程序。
+
+若取得的是估计矩阵 $\widetilde R_a,\widetilde R_b$，并且给定误差合同
+$$
+\sum_{w=a,b}\|\widetilde R_w-\mathcal R_w(\Omega)\|_1\le\eta,
+\qquad
+\sum_{w=a,b}\|\mathcal R_w(\Xi)-\widetilde R_w\|_1\le\zeta,
+\tag{252.32}
+$$
+其中 $\Xi$ 是一个合法候选态，则 $\varepsilon\le\eta+\zeta$。由右侧关于误差的单调性，可在（252.31）中直接用 $\eta+\zeta$ 代替 $\varepsilon$。该推论以存在相应合法候选及源误差合同为前提。
+
+### 252.6 固定三维参考中的平方根锐性
+
+固定任意 $\theta\in(0,1)$ 与当前 $A,B,b_0$。令参考为
+$$
+E=\operatorname{span}\{|0\rangle_E,|1\rangle_E\}
+\oplus\operatorname{span}\{|2\rangle_E\},
+\qquad
+|\Phi\rangle=\frac{|0\rangle_H|0\rangle_E+|1\rangle_H|1\rangle_E}{\sqrt2}.
+\tag{252.33}
+$$
+输入 $|0\rangle_H$ 是 $Z$ 的正本征态。取固定饱和源
+$$
+\Omega=\theta P_\Phi+(1-\theta)P_{0_H}\otimes P_{2_E}.
+\tag{252.34}
+$$
+对 $0<s<1$，定义合法竞争态
+$$
+|\psi_s\rangle=\sqrt{1-s^2}|0\rangle_H+is|1\rangle_H,
+\qquad
+\Xi_s=\theta P_\Phi+(1-\theta)P_{\psi_s}\otimes P_{2_E}.
+\tag{252.35}
+$$
+两态在参考端具有相同边缘
+$$
+\operatorname{Tr}_H\Xi_s=\operatorname{Tr}_H\Omega
+=\operatorname{diag}\left(\frac\theta2,\frac\theta2,1-\theta\right).
+\tag{252.36}
+$$
+它们也具有相同形成纠缠 $E_F=\theta$。显式 Bell—产品分解给上界 $\theta$；参考端测量两个正交旗标后，以概率 $\theta$ 得到 Bell 态，其余为产品态。§248的平均形成纠缠单调性给反向下界 $\theta$。
+
+直接计算产品输入的读数，
+$$
+\langle\psi_s|X|\psi_s\rangle=0,
+\qquad
+\langle\psi_s|Z|\psi_s\rangle=1-2s^2.
+\tag{252.37}
+$$
+因此两条响应差均为
+$$
+\mathcal R_w(\Xi_s)-\mathcal R_w(\Omega)
+=-2(1-\theta)\sqrt A\,s^2P_{2_E},
+\qquad w=a,b,
+\tag{252.38}
+$$
+总误差为
+$$
+\varepsilon_s=4(1-\theta)\sqrt A\,s^2.
+\tag{252.39}
+$$
+联合态之差只在产品参考块中非零。由两份纯态的重叠平方 $|\langle0|\psi_s\rangle|^2=1-s^2$，
+$$
+\boxed{
+\|\Xi_s-\Omega\|_1
+=2(1-\theta)s
+=\sqrt{\frac{1-\theta}{\sqrt A}}\,\sqrt{\varepsilon_s}.
+}
+\tag{252.40}
+$$
+这给固定接口、固定理想源、固定参考边缘及固定形成纠缠下的精确平方根下界。因而任何声称对全部合法竞争态成立的统一 $o(\sqrt\varepsilon)$ 模量都失败，特别是统一 Lipschitz 界 $C\varepsilon$。
+
+对 $0<s<1$，$\Xi_s$ 的产品响应因子为 $|1-2s^2|<1$，所以它不再响应饱和。其未直接读取的 $Y$ 方向期望为
+$$
+\langle\psi_s|Y|\psi_s\rangle=2s\sqrt{1-s^2}.
+\tag{252.41}
+$$
+在 $s\to0$ 时，该相干关联一阶变化，而既定两份响应只二阶变化。这里限制的是固定 $A_a,A_b$ 接口的恢复尺度；若新增直接读取 $Y$ 的实验，数据合同随之改变。
+
+### 252.7 两种稳定性与来源约束
+
+§250的旗标恢复要求控制稀有参考方向的谱符号；即使该方向的权重趋零，旗标投影仍可能发生单位算子范数的变化。本节的联合态迹范数把方向权重计入误差，并利用 $L$ 的固定正谱隙控制偏离允许支撑的总质量。两种结论因而可以同时成立。
+
+投影扰动所用机制与标准 gentle measurement 方法一致。Watrous 的 *The Theory of Quantum Information*，第142—143页（PDF第150—151页），Proposition 3.14 与 Corollary 3.15，讨论正算子压缩的 fidelity 及归一化条件态扰动；[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。引理252.1保留次归一化压缩，已直接证明本节所需的迹范数界。核内块估计还使用有限维迹范数对偶、等距嵌入不改变非零奇异值及迹范数的张量乘法性。
+
+全态稳定恢复仍以（252.3）的理想饱和源为中心，以完整矩阵迹范数为误差合同。它既没有将任意两份矩阵变为合法来源，也没有证明任意态的两方向层析完备。正半定共同填充约束与核内定量注入共同承担恢复结论；本节不据这些标准工具的组合宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
