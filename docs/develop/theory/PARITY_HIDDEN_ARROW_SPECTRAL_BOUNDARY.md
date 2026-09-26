@@ -31190,3 +31190,378 @@ Use the all-output triangle inequality with this reference limit, (130.54)-(130.
 整数凸包体积—顶点界是经典几何。本章的新推导是固定维数的原始条件分配接口、一次支付的退化概率及其全输出解析返回；原文条件与不可直接迁移的边界见对应 Library 条目。不主张增长维数、$\gamma=3$、必要性、锐利阈值或原始数据环境上的期望极限。
 
 ## 追加锚（130 章后）
+
+## 131. 次临界负二次倾斜与原始计数的条件指数尾界
+
+第 129 章处理有限非负二次惩罚。本章在固定次临界余量内允许负惩罚，保持原始噪声范围、完整计数重数及三阶参数导数。新增的关键估计同时保留电荷权重与同一次能量观测的似然：完成平方产生的尾部代价由原有计数尾界吸收，再以正定 Gaussian 精度控制中心区域。
+
+### 131.1 固定次临界负惩罚的响应
+
+**定理 131.1（固定余量下的负倾斜响应）。**
+
+Retain the original fixed legal beta and amplitude r, legal Q sequence, lambda=Q^3, all original M,q/group/count floors, complete groups and full window. Set
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad L=\log(1/\sigma)\to\infty,
+ \quad\limsup L/Q^3<c_q/2,\qquad c_q=\phi(1-\beta)/\beta.
+\tag{131.1}
+$$
+Sigma is positive at each finite level and may tend to zero arbitrarily slowly. In one actual raw-data fiber the calibrated product COUNT law and unchanged scalar are
+$$
+ Q(n)=\prod_j\operatorname{Bin}(C_j,p_j)(n_j),\quad
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ e_j=(\mu_j-C_jp_j)/B,
+$$
+$$
+ x_j=(n_j-\mu_j)/B,\quad E(n)=\sum_jx_j^2,\quad
+ D(n)=\sum_j(x_j+e_j),\quad T(n)=(E(n)-V)/\sqrt\delta.
+\tag{131.2}
+$$
+All binomial count multiplicities stay inside every powered mass. Q as a level and Q(n) as its count law are distinguished by their arguments. There is no recalibration for the product law: the original full-q centers mu, full V and T are used everywhere.
+
+For1<=alpha<=2 define the exact finite-count law and penalty transform
+$$
+ \mu_{\alpha,y}(n)=
+ \frac{Q(n)^\alpha\exp[-\alpha(T(n)-y)^2/(2\sigma^2)]}
+ {\sum_zQ(z)^\alpha\exp[-\alpha(T(z)-y)^2/(2\sigma^2)]},
+ \quad Z_s^Q(\alpha,y)=E_{\mu_{\alpha,y}}e^{-\alpha sD^2},
+$$
+$$
+ R_s(\alpha,y)=-\alpha^{-1}
+ [\log Z_s^Q(\alpha,y)-\log Z_s^Q(\alpha,0)].
+\tag{131.3}
+$$
+The auxiliary prior Q_s(n)=Q(n)e^{-sD(n)^2}/E_Qe^{-sD^2} is well-defined for every finite-level real s because the count support is finite. Its posterior uses the SAME measurement. For negative s it is not identified with the original uniform-size-q-support law P. No unconditional approximation of Q_s is asserted.
+
+Fix eta in(0,1), S>=0 and R>=0 finite, and on that SAME fiber put
+$$
+ a_0=(1-\eta)/(4V),\qquad I_x=[-a_0,S].
+\tag{131.4}
+$$
+All empirical parameters, V and hence I_x are held fixed under alpha differentiation. Write ||F||_{3,R}=sup_{1<=alpha<=2,|y|<=R} sum_{k=0}^3|partial_alpha^k F|. The primary conclusion is
+$$
+ \sup_{s\in I_x}\left\|R_s(\alpha,y)
+       -\frac{s}{1+2\alpha sV}\sqrt\delta\,y\right\|_{3,R}
+                                      =o_{\mathbb P}(\sqrt\delta).
+\tag{131.5}
+$$
+Probability is the ACTUAL raw-data probability, uniformly over deterministic size-q supports, separately for the original stationary pair and path experiments. The suprema in s,alpha,y belong to one common fiber. No original path-row independence, spherical conditional law, independently randomized direction or separately optimized environment is introduced.
+
+On each retained tight-constant common good-event class, for a polynomial-exponential error mathcal E_Q=P(Q)exp(-bQ^3), b>0, the quantitative estimate is
+$$
+ \left\|R_s-\frac{s}{1+2\alpha sV}\sqrt\delta y\right\|_{3,R}
+ \le C_{\eta,S,R}\bigl(|s|\sqrt\delta\sigma^2+s^2\delta
+                  +|s|\delta^6+|s|\mathcal E_Q\bigr),\quad s\in I_x.
+\tag{131.6}
+$$
+Thus sup_{s in I_x,s!=0} of the left-hand error divided by |s|sqrt(delta) tends to zero in the same probability. At s=0 the error is exactly zero. Constants may depend on eta,S,R and the good-event class; eta and S do not move with Q. There is no pole crossing or phase-transition assertion.
+
+### 131.2 共同有限数组与完整鞍点
+
+On the common actual-data classes of Chapters 121, 127 and 129, with m=m_Q the number of nonempty groups,
+$$
+ m\le C\delta^{-4}=CQ^2,\quad p_j\in[1/4,3/4],\quad
+ \sum C_j\le CB^2,\quad\log q=c_qQ^3+O(1),
+$$
+$$
+ V\asymp1,\quad v_*\asymp\delta,\quad\sum v_j^2\asymp\delta,
+ \quad |e_j|\le C\delta^5\sqrt{v_j},\quad
+ \sum e_j^2\le C\delta^{10},\quad (\sum|e_j|)^2\le C\delta^6.
+\tag{131.7}
+$$
+There is a block of order1/delta with v_j comparable to delta. Empty groups are deterministic zero coordinates. Constants are support uniform. Tight-constant exhaustion will turn the deterministic estimates below into (131.5).
+
+Keep the inherited split H={j:C_j>=exp(zeta Q^3)} with fixed l,zeta satisfying L<=lQ^3 eventually, l<c_q/2, 2zeta<c_q-l and zeta<c_q/2. It is only a proof split; all definitions in (131.2)--(131.4) remain full and unchanged. For high-coordinate comparison before output conditioning set
+$$
+ X_j=-e_j+\sqrt{v_j/\alpha}\,G_j,\quad
+ E_H=\sum_HX_j^2,\quad D_G=\sum_H(X_j+e_j),\quad
+ N_\alpha\sim N(0,\eta_\alpha),\quad\eta_\alpha=\delta\sigma^2/\alpha.
+\tag{131.8}
+$$
+Here the G_j and noise are independent BEFORE conditioning. E^G_{alpha,y} conditions on E_H+N_alpha=h_y:=V+sqrt(delta)y, retaining the full original V.
+
+Use the exact full real saddle
+$$
+ K_\alpha(t)=-\tfrac12\sum_j\log(1-2tv_j/\alpha)
+       +\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
+       +\frac{\delta\sigma^2t^2}{2\alpha},\qquad K'_\alpha(t_\alpha)=V.
+\tag{131.9}
+$$
+The retained proof gives its unique real root, 1-2t_alpha v_j/alpha in[c,C], and t_alpha with its first three derivatives O(delta^-1), uniformly on[1,2]. The root at1 need not be positive. At this SAME tilt set
+$$
+ m_j=-e_j/(1-2t_\alpha v_j/\alpha),\quad
+ w_j=v_j/[\alpha(1-2t_\alpha v_j/\alpha)],\quad c_0=\sum_Hw_j,
+$$
+$$
+ W_H=K''_H(t_\alpha)\asymp\delta,\quad
+ r_H=V-K'_H(t_\alpha)=O_{C^3}(\mathcal E_Q),\quad
+ z_y=(\sqrt\delta y+r_H)/\sqrt{W_H}.
+\tag{131.10}
+$$
+K_H keeps H and the original noise. Relative derivatives of w_j,W_H are bounded through three, as are z_y and their derivatives on compact y.
+
+Let q_alpha^G be the standardized tilted density, psi_alpha its transform, and mathfrak s_alpha=partial_z log q_alpha^G. The retained block Fourier proof bounds each of the first three alpha derivatives of psi by a fixed polynomial in xi times (1+c delta xi^2)^(-c'/delta), and q_alpha^G(z_y)>=c_R>0. Every fixed polynomial is integrable against this envelope uniformly for small delta. The exact conditional high-energy mean is
+$$
+ \mathfrak h_\alpha(y)=h_y-\eta_\alpha t_\alpha
+             +\frac{\eta_\alpha}{\sqrt{W_H}}\mathfrak s_\alpha(z_y).
+\tag{131.11}
+$$
+Consequently, with all three alpha derivatives controlled,
+$$
+ c_0-V=-\eta_\alpha t_\alpha-\sum_Hm_j^2-r_H=O(\sigma^2+\delta^{10}+\mathcal E_Q),
+$$
+$$
+ \mathfrak h_\alpha(y)-c_0=\sqrt\delta y+r_H+\sum_Hm_j^2
+                  +\eta_\alpha\mathfrak s_\alpha(z_y)/\sqrt{W_H}=O(\sqrt\delta),
+$$
+$$
+ \mathfrak h_\alpha(0)-V=O(\sigma^2),\quad
+ \Delta\mathfrak h_\alpha(y)=\sqrt\delta y+\mathcal N_\alpha(y),\quad
+ \mathcal N_\alpha(y)=\frac{\eta_\alpha}{\sqrt{W_H}}
+    [\mathfrak s_\alpha(z_y)-\mathfrak s_\alpha(z_0)]
+        =O_{C^3}(\sqrt\delta\sigma^2).
+\tag{131.12}
+$$
+This is the exact finite-noise mean and correction from Chapter 129. The common displacement -eta_alpha t_alpha is retained and cancels only upon output subtraction.
+
+### 131.3 原始计数尾部的联合似然估计
+
+**引理 131.2（同一计数元组的联合尾部估计）。**
+
+This step is independent of a sharp global sub-Gaussian proxy and applies to any bounded negative penalty, not just to the subcritical range. Let e_sum=sum_j e_j and d=delta sigma^2. Cauchy--Schwarz on the SAME full tuple gives
+$$
+ D^2=(\sum_jx_j+e_{\rm sum})^2\le2mE+2e_{\rm sum}^2.
+\tag{131.13}
+$$
+For any0<=a<=A with fixed A, the EXACT original likelihood obeys
+$$
+ e^{aD^2-\alpha(E-h_y)^2/(2d)}
+ \le \exp\{2ae_{\rm sum}^2+2am h_y+4a^2m^2d/\alpha\}
+                          e^{-\alpha(E-h_y)^2/(4d)}.
+\tag{131.14}
+$$
+To verify it, use (131.13) and maximize 2amE-alpha(E-h_y)^2/(4d) over all real E. Its maximum is 2am h_y+4a^2m^2d/alpha. Restricting E>=0 can only lower that maximum. No energy or charge marginal has been optimized separately.
+
+By (131.7), the prefactor logarithm is at most
+$$
+ C_A(1+m+m^2\delta\sigma^2)
+ \le C_A(1+Q^2+Q^{7/2}\sigma^2)=O_A(Q^{7/2}),
+\tag{131.15}
+$$
+since sigma<=1 eventually. This is the missing tail comparison: fixed negative s is NOT bounded pointwise as an insertion, but its product with the energy likelihood admits (131.14). The factor exp(O(Q^{7/2})) is dominated by the original exp(-cQ^4) high-cell tail. No extra sigma-vs-delta rate enters.
+
+For completeness that raw escort tail does not require an unproved escort sub-Gaussian constant. For a high Bin(C,p) mass b, p in[1/4,3/4], its maximum is comparable to(C+1)^(-1/2), and a central block of order sqrt(C+1) has masses bounded below by a constant times(C+1)^(-1/2). Hence, uniformly1<=alpha<=2,
+$$
+ \sum b(n)^\alpha\ge c(C+1)^{(1-\alpha)/2},\qquad
+ \frac{\sum_{n\in A}b(n)^\alpha}{\sum b(n)^\alpha}
+                                      \le C\Pr_{\mathrm{Bin}(C,p)}(A).
+\tag{131.16}
+$$
+The second inequality follows from b^alpha<=b(max b)^(alpha-1). The central estimates follow from the same uniform Stirling bounds used in the retained cell proof. Hoeffding's binomial tail at standardized displacement Q^2 is at most2exp(-cQ^4), uniformly in p. The normalized unconditioned product escort factors by group. Union over m groups therefore bounds the event B_Q^c that some high standardized displacement exceeds Q^2 by P(Q)exp(-cQ^4). Low tuples are unrestricted.
+
+Multiplying this tail by (131.14) proves the required negative-penalty tail bound before any local Gaussian replacement. For mixed derivatives alpha-order<=3,s-order<=1, and any additional FIXED charge/score insertion degree, the integrand is the same exponential times fixed powers of D, the exact modal surprise $S_Q(n)=-\log\{Q(n)/\max_z Q(z)\}$ from (121.26), and lambda_y=(T-y)^2/(2sigma^2). On the finite count box, such powers cost at most exp(C_k(Q^3+L)); here sum C_j<=CB^2 and log B=O(Q^3). Reserving a further fixed fraction of the likelihood also absorbs any fixed lambda_y power, if desired. The unpenalized same-output likelihood normalizer is at least c sigma exp(-C_R/delta), by the already proved unpenalized count/Gaussian comparison.
+
+After division by that RARE denominator, all these count-tail contributions are bounded by
+$$
+ \exp\{-cQ^4+C_AQ^{7/2}+C_k(Q^3+L+\delta^{-1})\}
+                                  \le e^{-c'Q^4}
+\tag{131.17}
+$$
+for sufficiently large Q. Every power is fixed, and L=O(Q^3). This is not division of an additive total-variation error by a rare density; the likelihood and insertion were retained jointly before the tail was bounded.
+
+The same reasoning treats Gaussian comparison tails. The inequality (131.13) holds with H,E_H,D_G. The raw independent Gaussian high-coordinate tail is exp(-cQ^4). Fixed score and charge polynomials have polynomial raw Gaussian moments; Cauchy--Schwarz with higher fixed moments only changes c in the tail. A reserved likelihood fraction absorbs likelihood-score powers. Thus (131.17) holds for the Gaussian tails too. The small boundary displacement between a count cell and its Gaussian image changes Q^2 to, say, Q^2/2 and only changes c. No Gaussian approximation for extreme count atoms was made.
+
+### 131.4 次临界精度与联合加权 Gaussian 矩
+
+Use a fixed reserve inside the pole: a_+=(1-eta/2)/(4V)>a_0. On the common good events, (131.12) and sigma->0 imply for all sufficiently large Q
+$$
+ 1-2\alpha a_+c_0\ge\eta/4,\qquad
+ 1-2\alpha a_+\mathfrak h_\alpha(y)\ge\eta/4,
+             \quad1\le\alpha\le2,\quad |y|\le R.
+\tag{131.18}
+$$
+Indeed c_0/V and mathfrak h/V tend uniformly to1, and the limiting lower bound with a_+ is eta/2. All mean shifts and full V stay in the finite expressions before this margin argument. This only uses sigma->0 and delta->0. The interval is fixed under alpha differentiation.
+
+At real frequency xi set u=xi/sqrt(W_H), hat w_j=w_j/(1-2iu w_j), hat m_j=m_j/(1-2iu w_j), c(xi)=sum hat w_j and d(xi)=sum(hat m_j+e_j). Then
+$$
+ |c(\xi)|\le c_0,\quad\Re c(\xi)\ge0,\quad
+ |1+2\alpha s c(\xi)|\ge\eta/4,
+                        \quad -a_+\le s\le S.
+\tag{131.19}
+$$
+For negative s, its real part is at least1-2alpha|s|c_0; for positive s it is at least1. The complex line segment from c_0 to c(xi) lies in |z|<=c_0,Re z>=0, so the same inverse bound holds there. The real segment from c_0 to mathfrak h has the bound (131.18). All first three alpha derivatives of c are bounded, of d are O(delta^3), and of sum hat m_j^2 are O(delta^10), as in Chapter 129.
+
+There is an actual convergent Gaussian integral behind the negative insertion. For s=-v with0<=v<=a_+, put a=alpha v. The real high-coordinate precision after multiplication by exp(aD_G^2) is
+$$
+ \operatorname{diag}(w_j^{-1})-2a\boldsymbol1\boldsymbol1^T
+       \succeq (1-2ac_0)\operatorname{diag}(w_j^{-1})\succ0.
+\tag{131.20}
+$$
+This follows from(sum z_j)^2<=c_0 sum z_j^2/w_j. The e_j shifts affect its linear term, not this quadratic precision. Fourier insertion adds a purely imaginary quadratic form and does not spoil the positive real part. Completing the square is therefore legitimate for all real xi and gives, without analytic continuation from Chapter 129,
+$$
+ F_{\alpha,s}(\xi)=(1+2\alpha s c)^{-1/2}
+             \exp[-\alpha s d^2/(1+2\alpha s c)]
+\tag{131.21}
+$$
+with the branch equal to1 at s=0. It and its alpha derivatives through3 and any selected fixed number of s derivatives are uniformly bounded on[-a_+,S], with constants depending on eta,S. The exponential modulus is at most exp(C_eta,S delta^6). The global Fourier envelope from §131.2 remains integrable after multiplication by these factors.
+
+The central-cell comparison also needs joint modal/likelihood/charge moments with this growing insertion, not merely a bound on F. Here is an explicit way to obtain them. With s=-v and a=alpha v, the normalized complex Gaussian covariance and shifted Y_j=X_j+e_j mean after insertion are
+$$
+ \widetilde W=\operatorname{diag}(\widehat w_j)
+          +\frac{2a}{1-2ac}\widehat w\widehat w^T,
+ \qquad \widetilde m_{Y,j}=\widehat m_j+e_j
+                  +\frac{2a\widehat w_jd}{1-2ac}.
+\tag{131.22}
+$$
+The charge mean is d/(1-2ac) and its variance c/(1-2ac), both uniformly bounded. After dividing coordinate j by sqrt(v_j), covariance entries are bounded uniformly: |hat w_j/v_j|<=C and |hat w_j|/sqrt(v_j)<=C sqrt(v_j), with denominator bounded by (131.19). The normalized mean entries are O(delta^5)+O_eta(delta^3 sqrt(v_j)). The normalized noise variable has Fourier mean bounded by C(sigma/sqrt(delta)+sigma|xi|) and bounded variance; the charge insertion does not change its separate Gaussian factor before total-energy conditioning.
+
+Finite Gaussian pairing now bounds every FIXED joint polynomial insertion in D_G, S_G=.5sum_H(X_j+e_j)^2/v_j and the likelihood score by a fixed polynomial in m,delta^-1,|xi| times the bounded F. Summing score indices costs only a fixed power of m. Charge-only moments cost a constant because its mean and variance above are bounded. These are estimates inside the SAME Fourier integral. Integrating against the envelope and dividing by the SAME positive q_alpha^G(z_y) proves
+$$
+ E^G_{\alpha,y}\!\left[e^{\alpha vD_G^2}(1+D_G^2)^r
+                     (1+S_G+\lambda_y^G)^k\right]
+          \le C_{\eta,r,k,R}(1+m+\delta^{-1})^{N_{r,k}},
+                   \quad0\le v\le a_+,
+\tag{131.23}
+$$
+for every fixed r,k. For k=0 its bound is a constant C_eta,r,R. These are positive real expectations; complex pairing is just their exact integral evaluation. For positive s the analogous estimate follows by inserting exp(-alpha sD_G^2)<=1. No conditional independence of energy and charge is claimed.
+
+The bounds survive the exponentially small relative changes of sigma^2 used in cell-kernel comparison. At the same full saddle the changes in K_H,K'_H,W_H are respectively delta(sigma'^2-sigma^2)t_alpha^2/(2alpha), delta(sigma'^2-sigma^2)t_alpha/alpha and delta(sigma'^2-sigma^2)/alpha. They are exponential times fixed polynomials. The coordinate c_0 at that fixed saddle is unchanged, so the precision reserve persists. Compact locations, Fourier denominators and the moment bounds remain uniform.
+
+### 131.5 回到完整计数律及条件指数尾界
+
+**引理 131.3（稀有输出处的条件指数矩及尾界）。**
+
+We now prove the actual-count comparison on[-a_+,S]. This is not inherited from the nonnegative insertion in Chapter 129. On high central cells the exact modal potentials and scalar obey the retained uniform bounds
+$$
+ |S_Q-S_G-S_{\rm low}-\hbox{mode constants}|\le P(Q)e^{-\zeta Q^3/2},
+ \quad |T-T_G|\le\Delta_Q\le P(Q)[B^{-1}+B^{-2}e^{2\zeta Q^3}],
+$$
+$$
+ \Delta_Q/\sigma\le\mathcal E_Q,\qquad
+ |D-D_G|\le m/(2B)+me^{\zeta Q^3}/B\le\mathcal E_Q.
+\tag{131.24}
+$$
+The charge and energy shifts hold uniformly over ALL low tuples. Low groups remain exact powered binomials with their original normalizers and score moments. The half-exponent margin (131.1), together with the inherited choices of l,zeta, is exactly what makes the central errors exponential.
+
+On a central high cell |D_G| is polynomially bounded: Q^2 sum_H sqrt(v_j) is at most C Q^2 sqrt(mV)=O(Q^3), plus the small center shift. Therefore even for negative s the change in the charge exponent alpha|s|(D^2-D_G^2) is polynomial times an exponential, NOT a factor exponential in the size of the count box. More generally, a difference of differentiated penalty kernels is bounded by mathcal E_Q times a fixed polynomial in D_G times exp(alpha vD_G^2+C mathcal E_Q|D_G|), with v<=a_+. If a reserve is required for the last linear exponential, run (131.18)--(131.23) with eta/4 in place of eta/2: a_{++}=(1-eta/4)/(4V) is still strictly subcritical. Its fixed positive slack absorbs that linear exponential, and the leading factor mathcal E_Q is retained. This reserve is a proof device, not an extension through the pole.
+
+For tiny noise, put u=(T_G-y)/sigma and |b|<=Delta_Q/sigma. The likelihood-potential difference is at most |b||u|+b^2/2. Differentiated kernel errors have this exponential smallness times fixed polynomials and exp(C|b||u|). Young's inequality absorbs the latter into an exponentially small RELATIVE width change. §131.4 paid that width change quantitatively with the same saddle, same negative insertion and joint moments. No derivative is inferred from an ordered kernel sandwich.
+
+The exact count derivatives being compared are partial_alpha^k partial_s^j of the sums, k<=3,j<=1. Their integrands are the original exponential times polynomials in the fixed modal-plus-likelihood potential A_y=S_Q+lambda_y and D^2. A_y+sD^2 is held fixed as a function of the count tuple when alpha is differentiated. Each central error is bounded by mathcal E_Q times a Gaussian joint expectation of the form (131.23), with a finite increase in r,k and possibly the reserved penalty. Thus every differentiated central error is exponential relative to the UNPENALIZED comparison partition, with no unexplained multiplication by an extensive moment of an unbounded insertion.
+
+The complement of the central cells, for both count and Gaussian integrals and every such derivative, is paid by (131.17). This is the step for which a finite polynomial-moment estimate alone would have failed. The common comparator partition is B^|H| times the exact low escort normalizer times the Gaussian likelihood integral. High modal constants and low normalizers are kept through differentiation; their logarithmic derivatives have polynomial bounds and cancel in the conditional ratios. The proof therefore supplies, uniformly on[-a_+,S],
+$$
+ \|\partial_s^j(Z_s^Q-Z_s^G)\|_{3,R}\le\mathcal E_Q,
+                       \qquad j=0,1.
+\tag{131.25}
+$$
+Here and below a fixed polynomial or positive exponent in mathcal E_Q may change finitely many times. The tail error exp(-c'Q^4) is smaller than this scale. The argument did not assume actual negative-weight moments to prove its own comparison: it used Gaussian weighted moments for central errors and the exact full count inequality (131.14) for count tails.
+
+For s<=0, Z_s^Q and Z_s^G are at least1. For0<=s<=S, the known unpenalized conditional second-moment bounds and Jensen give both Z_s>=exp(-2SC)>0. Upper bounds and alpha/s derivatives for Z_s^G follow from (131.19),(131.21), the Fourier envelope and (131.23); count counterparts follow from (131.25). Taking logarithms with three alpha derivatives and one s derivative therefore gives
+$$
+ \sup_{-a_+\le s\le S}
+ \|\partial_s^j(\log Z_s^Q-\log Z_s^G)\|_{3,R}
+               \le\mathcal E_Q,\qquad j=0,1.
+\tag{131.26}
+$$
+At s=0 the logarithms coincide exactly, for every alpha,y. Integration of the j=1 bound from0 to s improves the j=0 error to |s| mathcal E_Q, including negative s.
+
+The same comparison with any fixed extra polynomial insertion, already paid in (131.17),(131.23)--(131.24), proves an actual same-output bridge independent of the final response formula:
+$$
+ E_{\mu_{\alpha,y}}\!\left[e^{\alpha vD^2}(1+D^2)^r
+                      (1+S_Q+\lambda_y)^k\right]
+       \le C_{\eta,r,k,R}(1+m+\delta^{-1})^{N_{r,k}},
+               \quad0\le v\le a_+.
+\tag{131.27}
+$$
+For k=0 the bound is a constant. In particular E_mu exp(alpha a_+D^2)<=C_eta,R. Since a_+-a_0=eta/(8V), for all t>=0 and0<=v<=a_0,
+$$
+ E_{\mu_{\alpha,y}}\!\left[e^{\alpha vD^2}\boldsymbol1_{\{|D|>t\}}\right]
+       \le C_{\eta,R}\exp[-\alpha\eta t^2/(8V)].
+\tag{131.28}
+$$
+This conditional exponential-tail estimate is for the ORIGINAL calibrated product COUNT posterior at the rare output, and all its hypotheses are simultaneous on the same fiber. It is not an unconditional Bernoulli proxy estimate or a surrogate-only Gaussian conclusion. No assertion about the true asymptotic threshold beyond the allowed interval is made.
+
+### 131.6 负区间上的条件变换估计
+
+We give the finite-transform argument to specify exactly how Chapter 129's analytic step extends after exponential integrability is established. For a complex insertion A define
+$$
+ \mathcal I_{\alpha,y}[A]=
+ \frac{\int e^{-i\xi z_y}\psi_\alpha(\xi)A_\alpha(\xi)\,d\xi}
+      {2\pi q_\alpha^G(z_y)}.
+\tag{131.29}
+$$
+I[1]=1. The first three alpha derivatives of an insertion bounded by a fixed polynomial in xi times a small coefficient produce the same order after inversion. All z_y derivatives and denominator inverses are bounded; the envelope controls the full frequency line.
+
+As in Chapter 129, but now within the positive-precision domain (131.19),
+$$
+ c(\xi)-c_0=\sum_H\frac{2iu w_j^2}{1-2iu w_j},\qquad
+ |\partial_\alpha^k(c(\xi)-c_0)|\le C\sqrt\delta|\xi|,
+                      \quad k\le3.
+\tag{131.30}
+$$
+This follows from sum w_j^2=O(delta), W_H comparable to delta and bounded relative derivatives. Inverse-denominator differentiation introduces only bounded factors u w_j/(1-2iu w_j). Also A(xi)=sum_H hat m_j^2 is O_C3(delta^10), and the exact insertion of high energy gives I[c+A]=mathfrak h_alpha(y).
+
+Set f_alpha,s(z)=(1+2alpha sz)^(-1/2) on the positive-precision branch. By (131.19), its composed derivatives through alpha-order3 are bounded; its second z derivative and these derivatives are bounded by C_eta,S s^2 on the entire complex segment from c_0 to c(xi). The exact integral Taylor formula is
+$$
+ f(c)=f(c_0)+f'(c_0)(c-c_0)
+      +(c-c_0)^2\int_0^1(1-u)f''(c_0+u(c-c_0))\,du.
+\tag{131.31}
+$$
+The C3 remainder is at most C_eta,S s^2 delta xi^2 before inversion and O_C3(s^2 delta) after it. The u here is just a segment parameter. Using I[c]=mathfrak h-I[A] and mathfrak h-c_0=O_C3(sqrt(delta)), a second real-segment Taylor formula gives
+$$
+ \mathcal I[f(c)]=f(\mathfrak h_\alpha(y))
+                        +O_{C^3}(s^2\delta+|s|\delta^{10}).
+\tag{131.32}
+$$
+The real segment has positive denominators by (131.18). These are expansions in the variance fluctuation, not in the penalty s, and no infinite moment series is being summed.
+
+For the exact charge insertion (131.21), d and its derivatives are O(delta^3). Consequently F_alpha,s-f_alpha,s(c)=O_C3(|s|delta^6) uniformly in all real xi and s in I_x. This bound follows by differentiating the explicit exponent with denominators at least eta/4; every term contains at least two factors from d and its derivatives. The convergent negative Gaussian integral in (131.20) justifies the formula independently of sign continuation.
+
+Fourier inversion therefore gives Z_s^G=f_alpha,s(mathfrak h)+O_C3(s^2delta+|s|delta^6). The true Z_s^G and its comparator are bounded above and bounded away from zero on the compact subcritical interval. Taking logarithms and applying (131.26) proves the sufficient bridge for the actual count law:
+$$
+ \left\|\log Z_s^Q(\alpha,y)
+       +\tfrac12\log(1+2\alpha s\mathfrak h_\alpha(y))\right\|_{3,R}
+       \le C_{\eta,S,R}(s^2\delta+|s|\delta^6)+|s|\mathcal E_Q,
+                             \quad s\in I_x.
+\tag{131.33}
+$$
+The exact high-energy mean retains all finite-noise, saddle, low-split and noncentral effects specified in (131.11). The count law on the left remains full. The absolute O_C3(delta+delta^6+exponential) conjectured bridge follows immediately, but the factors |s| and s^2 are useful for output response.
+
+### 131.7 输出相减与辅助族的信息响应
+
+**推论 131.4（次临界辅助族的信息谱响应）。**
+
+Subtract (131.33) at y and0 BEFORE replacing either mean. Exactly as dictated by (131.3),
+$$
+ R_s(\alpha,y)=\frac1{2\alpha}
+       \log\frac{1+2\alpha s\mathfrak h_\alpha(y)}
+                     {1+2\alpha s\mathfrak h_\alpha(0)}
+        +O_{C^3}(s^2\delta+|s|\delta^6+|s|\mathcal E_Q).
+\tag{131.34}
+$$
+All real denominators, including those along the relevant segments, stay above a positive multiple of eta. With d_y=Delta mathfrak h_alpha(y), the exact real Taylor formula has linear term s d_y/(1+2alpha s mathfrak h_alpha(0)) and C3 remainder O(s^2delta). By (131.12), replacing d_y by sqrt(delta)y costs O_C3(|s|sqrt(delta)sigma^2). Replacing mathfrak h_alpha(0) by V in that LINEAR coefficient costs O_C3(s^2sqrt(delta)sigma^2), absorbed into the first error for bounded |s|. This proves (131.6) with the stated sign, including negative s.
+
+On a good-event class |s| is bounded by a constant depending on V's lower bound and S. After division by |s|sqrt(delta), the error in (131.6) is at most
+$$
+ C_{\eta,S,R}\{\sigma^2+(S+a_0)\sqrt\delta+\delta^{11/2}
+                                 +\mathcal E_Q/\sqrt\delta\}\to0.
+\tag{131.35}
+$$
+Thus both the main target (131.5) and the stronger relative error hold uniformly, with exact equality at s=0. There is no additional noise-rate condition. The common term -eta_alpha t_alpha, potentially larger than sqrt(delta), was kept and canceled in Delta mathfrak h before this argument.
+
+All estimates were on one actual fiber with constants uniform over fixed supports. Exhausting the retained tight-constant classes proves convergence in actual raw-data probability, separately for pair/path experiments. Equivalently, for every positive tolerance the supremum over deterministic supports of the probability of a scaled-error exceedance tends to zero. The data-dependent interval is kept inside each realized supremum; it is not changed when alpha is differentiated.
+
+The finite auxiliary spectrum identity from Chapter 129 remains exact: if Gamma_s is the Q_s-minus-Q difference of output increments of log posterior power sums, then Gamma_s(alpha,y)=-alpha R_s(alpha,y)+alpha R_s(1,y). Applying the proved C3 error gives on I_x
+$$
+ \Gamma_s(\alpha,y)=
+ \frac{2\alpha(\alpha-1)s^2V}{(1+2sV)(1+2\alpha sV)}
+             \sqrt\delta y+o_{C^3,\mathbb P}(\sqrt\delta).
+\tag{131.36}
+$$
+This is an auxiliary-law consequence only. If desired its first three derivatives at1 give the same rational Shannon/varentropy/third-surprise output coefficients as Chapter 129, now for this negative interval, with the third-surprise coefficient24s^3V^2/(1+2sV)^4 carrying the sign of s^3. No equality of entire posteriors, unconditioned information spectrum or original full-q negative tilt is implied.
+
+The original P=L_x Q bridge is used only at the actual positive epsilon=B^2/(2d_c), exactly as in Chapters 121, 123, 125, 127 and 129. It supplies no identification of P with Q_s for negative s. Earlier positive-penalty and fixed-degree conclusions are unchanged. No statement is made at eta=0, for eta tending to0, for growing S, beyond[1,2], beyond three alpha derivatives, noncompact outputs, zero finite-level noise or the half-exponent equality boundary.
+
+Gaussian 配方、有限 Fourier 反演与累积量判据的归属和适用边界见对应 Library 条目。结论要求固定正余量，不覆盖临界端点、趋零余量或原始固定大小支持律的负倾斜识别。
+
+## 追加锚（131 章后）

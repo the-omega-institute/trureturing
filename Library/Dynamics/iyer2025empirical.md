@@ -5423,3 +5423,27 @@ Iosevich–Taylor `1103.1670v3` 的原定理要求固定齐次形状、光滑性
 Boistard–Lopuhaä–Ruiz-Gazen `1207.5654v1` 的已核原始 TeX 和第 122 章直接 Fourier 证明给出发散方差下固定有界偏移的局部 Bernoulli 比。这里 $d$ 固定，因而 $[-(2d-1)-1,2d-1]$ 仍是固定偏移集。一次共同分母展开给出完整选择响应及 $O_d(q^{-2})$ 余项；不以两次 $O(q^{-1})$ 近似相减代替。所有中心组的 $4d-1$ 种成员数均保留，原始 pair/path 联合条件法则不等于独立原始行。
 
 第 124、128 章的全输出返回按 $\rho_Q^{-1}\le CQ^3$ 逐项支付。非零半整数谐波保持物理相位、完整中心、外侧惊异标记及同一个 Gaussian 残差；先减精确先验方差，再做真实二阶参数微分与商的截断。所得积分常数仍为 $8/\sqrt3-25/6$。本章综合经典几何与原始选择律得到固定维数算术族及新的带宽充分范围，不主张全球原创性、增长维数的一致性、$\gamma=3$、必要性、零噪声或计算效率。
+
+## 追加：次临界负二次倾斜的条件指数尾界
+
+对应理论卷第 131 章。保持原始完整乘积计数律、中心、能量观测和严格半指数噪声范围，对固定 $\eta\in(0,1)$、有限 $S,R$，在同一数据纤维内取
+
+$$
+-\frac{1-\eta}{4V}\le s\le S,\qquad 1\le\alpha\le2,\quad |y|\le R.
+$$
+
+辅助族 $Q_s(n)\propto Q(n)e^{-sD(n)^2}$ 的输出响应仍为 $s\sqrt\delta\,y/(1+2\alpha sV)$，余项连同前三阶 $\alpha$ 导数在 $s\ne0$ 时除以 $|s|\sqrt\delta$ 后一致趋零。$V$ 及上述区间在参数求导时固定；概率是原始 pair/path 数据概率，结论对确定大小支持一致。负 $s$ 的辅助族没有被认作原始全 $q$ 选择律。
+
+新增联合尾界由同一元组上的 $D^2\le2mE+2(\sum_j e_j)^2$ 与原始能量似然完成平方得到。固定指数权重的代价至多为 $\exp(O(Q^{7/2}))$，可由高计数单元补集的 $\exp(-cQ^4)$ 吸收。中心单元则使用正定精度矩阵及同一 Fourier 积分内的联合加权矩，支付原始计数与 Gaussian 积分的三阶导数比较。取略大的固定次临界插入 $a_+=(1-\eta/2)/(4V)$ 后，得到原始计数条件律的 $\mathbb E e^{\alpha a_+D^2}\le C$，并由余量导出加权 Gaussian 型电荷尾界。所有估计保留同一输出分母，未把有限矩收敛换成指数可积性。
+
+Daniel Hsu、Sham M. Kakade、Tong Zhang，*A tail inequality for quadratic forms of subgaussian random vectors*，[arXiv:1110.2842v1](https://arxiv.org/abs/1110.2842v1)，[8 页原稿](https://arxiv.org/pdf/1110.2842v1)，SHA256 `25c384d7416d1b7f3938f58a970cc06220667ec8fe57271ea7da9244a98287f9`。定理 1 假设 (3) 要求对每个实向量成立的联合线性矩母函数上界；注记 2 的正二次指数矩范围为 $0\le t<1/(2\sigma_{\rm proxy}^2\|A^\top A\|)$。引理 1 由收敛 Gaussian 积分的直接配方给二次及线性插入式。这些是本章精度计算的经典背景，但该线性矩母函数假设没有自动给出原始 powered-binomial escort 或能量条件律以实际 $V$ 为精确代理方差的界。原稿 arXiv 版本戳为 2011-10-13，首页打印日期为 2024-11-27；这里不推定二者关系。
+
+Mark Rudelson、Roman Vershynin，*Hanson-Wright inequality and sub-Gaussian concentration*，[arXiv:1306.2872v1](https://arxiv.org/abs/1306.2872v1)，[9 页原稿](https://arxiv.org/pdf/1306.2872v1)，SHA256 `70cc064b9e8149cf670e78d16ab04f26ec90ad510c54772c70a0fcaeef0f2a4e`。定理 1.1 要求独立中心化坐标及共同 $\psi_2$ 界，以算子范数和 Hilbert–Schmidt 范数控制二次型偏差。其普适常数不识别本章精确次临界余量；能量条件化后也没有坐标独立性。该定理承担方法归属，原始后验的条件指数尾界由正文另行推导。原稿 arXiv 版本戳为 2013-06-12，首页打印日期为 2019-02-25。
+
+Julyan Arbel、Olivier Marchal、Hien D. Nguyen，*On strict sub-Gaussianity, optimal proxy variance and symmetry for bounded random variables*，[arXiv:1901.09188v1](https://arxiv.org/abs/1901.09188v1)，2019-01-26，[23 页原稿](https://arxiv.org/pdf/1901.09188v1)，SHA256 `c398f0aa1059e7651948bc2fa38052bd747d1cc7ee3dbed9d3e6caf7fb87af54`。命题 3.2 的局部累积量展开表明，真实方差充当全局最优 sub-Gaussian 代理方差须有第三累积量为零、第四累积量非正。第 4.1 节对命题 1.1 的 Bernoulli/binomial 证明使用 $p(1-p)(1-2p)$：非退化且 $p\ne1/2$ 时，真实方差不是精确全局代理方差。这限定了未条件化捷径的适用性，没有反驳本章通过联合能量似然得到的条件结论。这里不使用原稿后续最优代理方差公式的证明链。
+
+Yingdong Lu，*Non-asymptotic concentration of magnetization in the Curie-Weiss model at subcritical temperatures*，[arXiv:2303.00227v1](https://arxiv.org/abs/2303.00227v1)，2023-03-01，[5 页原稿](https://arxiv.org/pdf/2303.00227v1)，SHA256 `aaea9ab2d39ffda9e138d91aab865545ea41c3d047ec6e3e71e41e2852466ac4`。定理 2 的条件为逆温参数 $\beta>1$、外场 $h\ne0$，结论是速率 $n$ 的平稳 Metropolis–Hastings 磁化过程的 Ornstein–Uhlenbeck 极限。这里的 “subcritical temperature” 不对应本章的秩一精度余量，故不将其扩散或局部浓缩结论用作计数能量后验的全局尾界。
+
+Hsu、Rudelson、Arbel、Lu 四份 PDF 的文本提取分别保留 51967、53923、0、33399 字节的警告；引用以钉住的完整原稿哈希和上述可核对的条件为准。排版提取不承担公式推导。第 129 章 Abi Jaber 附录 A 的实 Gaussian 公式要求半正定惩罚；本章的负插入通过实部正定的直接配方建立。Reeves、Meckes 的独立随机投影条件仍不适用于固定电荷方向。上述范围核对不构成全球原创性认证。
+
+结论保持固定正 $\eta$、固定有限 $S,R$ 和有限层正噪声，不跨越精度极点，不处理趋零余量、增长惩罚、非紧输出或半指数等号。辅助谱的第三惊异响应系数 $24s^3V^2/(1+2sV)^4$ 随 $s^3$ 变号；它仍是辅助计数后验的输出增量差。
