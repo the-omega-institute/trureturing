@@ -36,10 +36,10 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
 
-open D5.S1.Words.Mechanical
-open D5.S1.Words.Mechanical.MechanicalDyadicBoundary
-open D5.S3.ConceptDynamics.InformationEscape
-open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+open _root_.D5.S1.Words.Mechanical
+open _root_.D5.S1.Words.Mechanical.MechanicalDyadicBoundary
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+open _root_.D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open LeanInformationAudit
 
 set_option autoImplicit false
