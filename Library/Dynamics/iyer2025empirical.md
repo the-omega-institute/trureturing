@@ -5083,3 +5083,54 @@ $$
 对两个真实同类行，固定池掩码、外部标签和线性不变量后得到上述精确条件交换律。真实类的选择只服务于固定支持下的证明，不是观察者已知隐藏支持的算法。共享锚点概率沿同一纤维是 $L_u^\circ e^{nh_Q}+L_v^\circ e^{-nh_Q}$ 的分式线性函数；其系数、全总数归一化、变化的直方图都被明确保留。分母正不蕴含导数分子有定量下界，单个固定行对也不以高概率落在选定计数线上。
 
 因此新结果是实际模型中的共同参数与合法条件概率接口；没有证明完整周期商的坏参数数目为 $o(\sqrt Q)$，也没有以人工相位先验、多个独立边缘最优值或标量局部极限替代该联合义务。普通理论文本，不作形式核验、全局原创或固定间隙已闭合声明。
+
+## 第 121 章：条件单标量惩罚与后验信息三阶累积量
+
+新增正文在原始计数后验、紧物理输出及 $L=\ln(1/\sigma)\to\infty$、$\limsup L/Q^3<c_q/2$ 下，给出后验信息三阶中心累积量的输出响应。完整经验鞍点、非中心项、计数多重度、固定总数和有限噪声均保留；实际 pair/path 结论分别成立，并对确定支撑一致。它不是环境累积量或输出平均，也不从第 119 章的 C2 误差直接求导。
+
+### Siripraparat–Neammanee：直接复用逐点局部误差
+
+Tatpon Siripraparat、Kritsana Neammanee，*A local limit theorem for Poisson binomial random variables*，ScienceAsia **47** (2021), 111–116，DOI [10.2306/scienceasia1513-1874.2021.006](https://doi.org/10.2306/scienceasia1513-1874.2021.006)。原出版 PDF 的 Theorem 2（印刷页 112）与完整证明（114–115）对独立、可异参数的 Bernoulli 和，在总方差 $d>1$ 下给出统一绝对局部误差 $O(d^{-1})$；不要求 iid 参数或固定项数。出版 PDF 可取得，文字提取存在字体编码警告，精细根号符号不全部清晰；本章只使用条件与证明可辨的粗阶数。
+
+原始校准总数均值恰为整数 $q$，完整方差 $d_{\rm all}\asymp q$，互补方差 $d_c\asymp q$。中心分母是 $(2\pi d_{\rm all})^{-1/2}(1+O(q^{-1/2}))$。将互补和的逐点误差除以该中心质量，就得到第 121 章的
+
+$$
+\sup_k|L(k)-L_0(k)|\le Cq^{-1/2},\qquad
+L_0=e^{\ell_0}e^{-\varepsilon\mathcal D^2},\qquad
+\varepsilon=\frac{B^2}{2d_c}=O(\delta^5).
+$$
+
+支持外的 Gaussian 密度由 $d\le m,N-m$ 另给指数尾界，所以不把原文有限支持上的上确界误读成未说明的全整数断言。这里的独立 Bernoulli 是同一实际数据纤维上的校准表示，不是对实际路径行独立性的假设。
+
+### 固定总数文献与不能移用的高阶范围
+
+Hélène Boistard、Hendrik P. Lopuhaä、Anne Ruiz-Gazen，*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)。该版本的 arXiv 印记为 2012-07-24，TeX 页脚为 2018-11-02；二者不强行归一。Theorem 1 及完整证明给固定阶纳入概率的 $d^{-1}$ 展开与 $O(d^{-2})$ 余项。第 3 节若干调查统计量结论另需 $\limsup N/d<\infty$，不能直接用于 $M\gg q\asymp d_{\rm all}$ 的本模型。
+
+原 Proposition 1 字面上的“任意正整数幂”版本不作依据：均匀选取偶数 $N$ 中的 $N/2$ 个对象时，每个 $\pi_i=1/2$；三个不同指标各取平方，乘积恒为 $1/64$，而 $d=N/4\to\infty$。这只排除该版本的字面高幂用法，不裁决修正版本，也不是本章原始模型的反例。固定阶纳入概率定理及一阶中心乘积的适用范围与这一限制分开保留。此次使用的完整原文及证明可读，但提取含字体警告。
+
+第 119 章已核对的 Jesse Goodman [arXiv:2005.11028v3](https://arxiv.org/abs/2005.11028v3) Theorem 6(b)/Appendix H 是带加强导数条件的 iid 鞍点 C2 结论；Kolassa–Li [arXiv:1011.5775v1](https://arxiv.org/abs/1011.5775v1) 的条件比值与 Lemma 4.1 是固定维条件反演。这些是成熟方法来源，均不提供增长维完整计数阵列的 C3 控制。
+
+### 本章补足的共同条件估计
+
+对 $0\le u,v\le2$、$1\le\alpha\le2$ 和 $k\le3$，幂与对数插入 $u^\alpha(\log u)^k$ 的统一 $1/2$-Hölder 界将逐点误差变为 $O(q^{-1/4})$，包括 $u=0$。因此无须对尾部可能极小的 $L$ 作未经控制的取对数近似。该误差直接积分于同一输出条件律，保持指数精度。
+
+余下惩罚通过同一条件 Fourier 积分中的单标量 Gaussian 电荷处理。精确插入因子为
+
+$$
+(1+2\alpha\varepsilon\mathfrak v)^{-1/2}
+\exp\!\left[-\frac{\alpha\varepsilon\mathfrak m^2}
+ {1+2\alpha\varepsilon\mathfrak v}\right].
+$$
+
+分母实部至少为 1；总电荷方差及前三阶导数一致有界，均值由原始非中心量控制。求导前先积分这一标量结构，使广延信息波动在同一输出下的连接三阶累积量中抵消，得到选择修正的 C3 范数 $O(\delta^5)$。原始高低计数组、格点舍入、稀有条件分母与噪声宽度的三阶插入另有指数精度控制，不能仅由弱收敛或 C2 误差得到。
+
+由有限配分函数的精确符号，后验信息三阶累积量满足
+
+$$
+C_{3,x}(y)-C_{3,x}(0)
+=\sqrt\delta\,t'''_1y
+ +\frac\delta2\left(\frac1{W_\alpha}\right)'''_{\alpha=1}y^2
+ +o_{\mathbb P}(1).
+$$
+
+导数作用于同一实际纤维的完整有限经验鞍点。经典累积量恒等式、单秩 Gaussian 积分和 Fourier 方法不作新定理归属；新增内容是其在原始固定总数、稀有噪声输出模型中精度充分的组合。未断言第四阶或全阶结论、复阶配分函数无零域、无限输出区间、半指数等号、期望熵或全球原创性。
