@@ -26660,3 +26660,585 @@ Boistard–Lopuhaä–Ruiz-Gazen [arXiv:1207.5654v1](https://arxiv.org/abs/1207.
 幂和与累积量恒等式、Gaussian 二次型变换、单秩行列式公式、Stirling 估计及可支配 Fourier 求导均属经典。本章新增连接是 (121.35)–(121.47) 在原始完整计数后验中的联合控制，以及由此得到的 (121.5)。原文条件与核对范围见 [Library 对应条目](../../../Library/Dynamics/iyer2025empirical.md)。这是普通数学推导；没有 Lean 核验、全局原创性、第四阶或全阶累积量、无界输出、半指数等号或零噪声结论。固定间隙周期项消失仍未解决。
 
 ## 追加锚（121 章后）
+
+## 122. 合法原始重分配消除固定间隙的算术周期项
+
+第 116 章把实际加权极限归结为共同经验中心的算术条件，第 120 章给出原始数据上的合法重分配。本章通过两个预先固定的真实信号行，把完整后验中心写成精确分式线性函数，定位其唯一平衡乘积，并在同一个实际纤维上比较相位步长与指数小的共振宽度。由此得到每个固定噪声间隙下周期项消失，并返回完整原始后验信息方差的全输出加权极限。
+
+### 122.1 实际算术条件与固定间隙结论
+
+**定理 122.1（原始固定间隙下的算术消失及加权极限）。**
+
+The fixed-gap conclusion follows by proving the arithmetic hypothesis of Proposition 116.2 for the original actual data and using the complete phase-and-tail bridge of Theorem 116.1. The new result is an actual-data arithmetic estimate, not an independent-phase assumption or a reference-array example. For every fixed nonzero integer ell,
+
+$$
+ \sup_S\Pr_S\{E^{\min}_{\ell,x}\le Q^2\}\longrightarrow0,
+ \qquad
+ E^{\min}_{\ell,x}=4\pi^2\sum_{j\in\mathcal J_x}d_j
+       \operatorname{dist}\bigl(\ell(1/2-\mu_j),\mathbb Z\bigr)^2.
+                                                        \tag{122.1}
+$$
+
+The supremum is over the original fixed supports, separately for each of the original pair and path experiments. Here mathcal J_x is Chapter 116's large-count set, not the random count vector or the period functional. The mu_j are the EXACT full-q posterior means, and d_j are the original calibrated product variances. In fact one actual central coordinate suffices for(122.1). A coordinate close to resonance would not suffice; the proof makes the probability of such closeness tend to zero at its actual exponentially small width.
+
+Consequently, for each fixed real D and all original legal scales with
+
+$$
+ \Delta_Q=\ln\mathcal B-\ln(1/\sigma)\to D,
+ \qquad \mathcal B=q/Q^{11/4},\qquad \sigma\mathcal B\to e^D>0,
+                                                        \tag{122.2}
+$$
+
+the original full selected-law statement is
+
+$$
+ \boxed{\quad \mathfrak J_x\to0,\qquad
+  \int_{\mathbb R} f_x(y)\,|D_x(y)-R_*(y)|\,dy\to0\quad}       \tag{122.3}
+$$
+
+in the same support-uniform actual raw-data probability. This is not an expectation over rare raw-data environments. It integrates the prior-defined original output law conditionally on the actual raw data.
+
+All finite subtractions remain exactly those in Chapters 113 and 116:
+
+$$
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_Hw_j^2,\quad
+ \kappa_3=8\sum_Hw_j^3,\quad \Lambda=\nu_0+\sigma^2,
+ \quad C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+$$
+$$
+ D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+ \qquad
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu.
+                                                        \tag{122.4}
+$$
+
+Vprior is the exact prior varentropy, and nu=2g_0 is the original limiting variance. Neither observed coefficients nor exact m_x=E_xY are replaced; integrating the affine subtraction still gives C_x m_x. The posterior is the original complete count law conditioned on the SAME scalar
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \qquad Y=T+\sigma G.                                  \tag{122.5}
+$$
+
+No scalar, residual G, selected count, floor, direction-alignment event or fixed support is changed. The proof works for every original fixed beta in(1/2,1), without a new parameter prior. It proves neither zero-noise validity nor a threshold at finite D.
+
+The new mechanism is a constant-score reassignment of two fixed true signal rows. Its product of likelihoods usually stays away from the one exact balancing value. On each monotone branch the central-group phase then moves by much more than its resonance width at each allocation, but its total range is less than one period. Only a bounded number of actual allocations can be resonant. The actual conditional binomial law pays their probability.
+
+### 122.2 原始数量与共同环境条件
+
+Write lambda=Q^3, a=(1+r)/2, b=(1-r)/2, and keep exactly
+
+$$
+ M=2^{\lfloor\phi\lambda/(\beta\ln2)\rfloor},\quad
+ n_{obs}=2M\lambda,\quad k_0=\lfloor a\lambda\rfloor,
+ \quad l_0=\lambda-k_0,
+$$
+$$
+ z_0=k_0\ln(1+r)+l_0\ln(1-r),\quad
+ q=\lfloor Me^{-z_0}\rfloor,\quad B_0=(M-q)/q,
+ \quad \epsilon_M=rq/(M-q).
+                                                        \tag{122.6}
+$$
+
+Here phi=a ln(1+r)+b ln(1-r)>0 and n_obs denotes sample length; it is not the energy scalar T. In particular
+
+$$
+ \ln q=c_q Q^3+O(1),\quad c_q=\phi(1-\beta)/\beta>0,
+ \quad q/M=e^{-\phi Q^3+O(1)}.                         \tag{122.7}
+$$
+
+To avoid collision with Chapter 116's notation for noise bandwidth, write the positive score increment as a_s, and write b_s for the negative increment:
+
+$$
+ a_s=\ln\frac{1+r}{1-\epsilon_M},\qquad
+ b_s=\ln\frac{1-r}{1+\epsilon_M},\qquad
+ L_i=e^{W_i}=e^{a_s k_i+b_s l_i}.                     \tag{122.8}
+$$
+
+For all sufficiently large Q these increments lie in fixed compact subsets of(0,infinity) and(-infinity,0), respectively. The likelihood of a group0 row is the deterministic L_0=exp(a_s k_0+b_s l_0). The floors give
+
+$$
+ \ln(L_0/B_0)=o(1).                                  \tag{122.9}
+$$
+
+Indeed ln(M/q)=z_0+O(q^{-1}); ln B_0 differs from it by ln(1-q/M); and ln L_0-z_0=O(lambda epsilon_M). Each error tends to zero. None is set to zero in a finite identity.
+
+The full-M-row posterior is exactly proportional to product L_i over subsets of cardinality q. Its independent-Bernoulli representation has odds t_all L_i, where
+
+$$
+ t_{all}=B_0^{-1}e^{\theta_x},\qquad
+ \sum_i\frac{t_{all}L_i}{1+t_{all}L_i}=q,
+ \qquad \theta_x=O_{P_S}(q^{-1/2}),\qquad
+ \mathcal D_{all}=\sum_i\wp_i(1-\wp_i)\asymp q.        \tag{122.10}
+$$
+
+These simultaneous calibration statements are from Chapter 68 around (68.29)–(68.30), as reused in Chapters 118 and 120. Their probability scope is uniform in fixed S for both actual experiments. Independence here belongs only to the auxiliary label family before conditioning its total; it is not row independence in the raw path data.
+
+The original row estimates give
+
+$$
+ c\,q/Q^3\le C_0\le C\,q/Q^3                       \tag{122.11}
+$$
+
+with probability tending to one, with constants depending only on the original fixed parameters. To spell out the central specialization: Chapter 68, (68.27)–(68.28) has m_0=(2+o(1))q f_0 and Var C_0<=C(m_0+epsilon'_M m_0^2), epsilon'_M=C lambda^3/M. The exact central floors give f_0=(2pi lambda sqrt(ab))^{-1}(1+O(lambda^{-1})) by the two Poisson Stirling formulas. Thus m_0 is comparable to q/Q^3 and epsilon'_M tends to zero. Chebyshev yields(122.11). This uses the original one/two-row laws, including their actual path version.
+
+Only these original good-environment facts and the already established Chapter 116 return are needed. The new proof uses the EXACT group0 mean C_0 p_* and does not need to differentiate Chapter 120's small-score center approximation.
+
+### 122.3 常数得分步长的合法原始重分配
+
+For each fixed true support S, choose two distinct labels u,v in S in advance, for example its two smallest labels. This is a proof disintegration under the fixed law P_S, not an observer's data-dependent pair-selection algorithm. All bounds below are independent of which such labels were chosen.
+
+The original aligned kernel is
+
+$$
+ P_S(x,y)=\frac{1+b_S(x)\chi(y)}{2M},\qquad
+ b_S=r1_S-\epsilon_M1_{C_+\setminus S},\qquad b_S=0\text{ on }C_-.
+                                                        \tag{122.12}
+$$
+
+The sum of b_S on each parity class is zero. For a path, conditioning its entire parity record s_0,...,s_{n_obs} factors its density into independent label probabilities at time slots:
+
+$$
+ P_S(X_t=i\mid s)=1_{\{\chi(i)=s_t\}}
+             [1+b_S(i)s_{t+1}]/M\quad(t<n_{obs}),
+                                                        \tag{122.13}
+$$
+
+with the final label uniform in its parity class. The parity bits are iid fair. This follows by summing each factor over its parity class in the exact path density, as proved in(120.15). For independent pairs the same departure-label formula holds given all pair parities; the arrival labels are uniform in their respective classes. Row counts within a multinomial array remain dependent.
+
+Let N_+,N_- count positive-departure slots followed by the indicated next parity. Given the parity record, the positive and negative departure-count arrays are independent multinomials. In particular the two signal-row pool totals have the exact law
+
+$$
+ K=k_u+k_v\sim\operatorname{Bin}(N_+,2(1+r)/M),\qquad
+ L=l_u+l_v\sim\operatorname{Bin}(N_-,2(1-r)/M),          \tag{122.14}
+$$
+
+independently conditional on parity. This is a pool statement, not independence of the individual observed rows.
+
+Let F_0 reveal the parity record, the masks of departure slots assigned to{u,v}, every outside label, and the final path label. It thus reveals K,L and all outside row counts. By(122.13),
+
+$$
+ k_u\mid F_0\sim\operatorname{Bin}(K,1/2),\qquad
+ l_u\mid F_0\sim\operatorname{Bin}(L,1/2),              \tag{122.15}
+$$
+
+independently. Now let F=F_0 vee sigma(l_u), write l=l_u and k=k_u, and condition on F. Exactly
+
+$$
+ P_S(k=j\mid F)=2^{-K}{K\choose j},\quad 0\le j\le K,
+$$
+$$
+ (k_u,l_u,k_v,l_v)=(k,l,K-k,L-l).                     \tag{122.16}
+$$
+
+A unit k-step is a reassignment of labels in positive-next-parity pool slots. It preserves every parity and every outside row count. For paths, the preceding transition still sees the same next parity; thus these are genuine positive-probability original paths. This is the lawful operation map, not a posterior likelihood intervention declared to be raw data.
+
+All posterior quantities nevertheless co-vary. In particular
+
+$$
+ L_u(k)=e^{a_s k+b_s l},\quad
+ L_v(k)=e^{a_s(K-k)+b_s(L-l)},\quad
+ B_{uv}:=L_u(k)L_v(k)=e^{a_s K+b_s L}.                 \tag{122.17}
+$$
+
+The product is F_0-measurable; the sum varies with k. The complete histogram, full-q posterior, calibration, exact finite coefficients and period functional at a hypothetical allocation are always their definitions for that whole raw outcome. No independent p_* or frozen-histogram premise is introduced.
+
+For later use, on K,L comparable to Q^3,
+
+$$
+ \max_k P_S(k\mid F)\le C Q^{-3/2},\qquad
+ P_S(|k-K/2|>Q^2\mid F)\le2e^{-cQ}.                 \tag{122.18}
+$$
+
+These follow directly from the binomial central coefficient and Hoeffding's inequality. The corresponding l bound holds conditional on F_0. The improvement over Chapter 120's(Q,P) orbit is in the arithmetic score step and width; the raw law alone is not the claimed new conclusion.
+
+### 122.4 精确行列式、符号与唯一平衡点
+
+Remove u,v from the central raw group, and let C_0^o be its remaining size. On(122.11), C_0^o is comparable to q/Q^3, since only two labels were removed. Pick the smallest-index remaining group0 label c as anchor. This choice is F_0-measurable, so it does not bias(122.16). If none exists define the auxiliary objects arbitrarily and put that outcome in the bad event; its probability tends to zero.
+
+Let F_s be the elementary symmetric polynomial of order s in the likelihoods of the M-3 rows other than u,v,c. All its coefficients are fixed given F_0. Put z=L_u+L_v and B=B_uv. The EXACT posterior inclusion of c is
+
+$$
+ p_*(z)=
+ \frac{L_0(F_{q-1}+zF_{q-2}+BF_{q-3})}
+ {F_q+L_0F_{q-1}+z(F_{q-1}+L_0F_{q-2})
+                     +B(F_{q-2}+L_0F_{q-3})}.        \tag{122.19}
+$$
+
+This is the original full-q elementary-symmetric normalizer, without a selected-total approximation. Define
+
+$$
+ U=F_{q-1}^2-F_{q-2}F_q,\qquad
+ V=F_{q-2}^2-F_{q-3}F_{q-1}.                         \tag{122.20}
+$$
+
+For all sufficiently large Q the relevant indices are interior. All likelihoods are strictly positive. Classical Newton inequalities for the polynomial product(1+L_i t) give U,V>0. The factor strengthening e_s^2>=e_{s-1}e_{s+1}(s+1)(N-s+1)/(s(N-s)) makes strictness immediate when 0<s<N. This is mature log-concavity, not a new inequality.
+
+Direct multiplication of the two affine polynomials in(122.19) gives
+
+$$
+ \frac{dp_*}{dz}=\frac{L_0(BV-U)}{Z(z)^2},\qquad
+ B_*=U/V>0.                                         \tag{122.21}
+$$
+
+The L_0-dependent cross terms cancel exactly. Therefore the sign is sign(B-B_*), and the map is constant exactly when B=B_*. Complementary pair odds genuinely can balance the susceptibility. Positivity of Z does not remove this zero. No scale estimate has been obtained by merely asserting nonconstancy.
+
+The proof needs a quantitative location and size for these Turán quantities on actual environments. We derive them from a common outside calibration, retaining the cancellation at order q^{-1}.
+
+### 122.5 支付 Turán 消去尺度的局部 Bernoulli 展开
+
+We use the following classical bounded-offset form of the Bernoulli local Edgeworth calculation. Let N be a sum of independent Bernoulli variables with integer mean n, variance d tending to infinity, and cumulants kappa_m. For each fixed bounded integer s,
+
+$$
+ P(N=n+s)=\frac1{\sqrt{2\pi d}}
+ \left[1+\frac{\kappa_4}{8d^2}-\frac{5\kappa_3^2}{24d^3}
+          -\frac{s^2}{2d}-\frac{\kappa_3s}{2d^2}
+          +O(d^{-2})\right].                         \tag{122.22}
+$$
+
+The error is uniform over all Bernoulli parameter arrays and the specified finite set of offsets. No lower bound on every parameter, bounded number of trials, or bound on number-of-trials/d is required. This is precisely the local mechanism in Boistard–Lopuhaä–Ruiz-Gazen, arXiv:1207.5654v1, equations labelled Petrov/def:fm in the proof of Lemma 1. The signs in(122.22) use the source's probabilists' Hermite convention. For clarity the uniform error needed here can be checked directly, as follows.
+
+For the centered characteristic function,
+
+$$
+ |\varphi(t)|\le \exp[-2d\sin^2(t/2)],\qquad |t|\le\pi.
+                                                        \tag{122.23}
+$$
+
+Each centered Bernoulli cumulant of order m>=2 is p(1-p) times a polynomial in p. Thus |kappa_m|<=C_m d, with the same bounds for the fixed-order analytic Taylor remainder near t=0. This statement is not asserted for the first cumulant. Fourier inversion, t=u/sqrt(d), permits restriction to |u|<=d^{1/20}, with exponentially small remaining integral by(122.23). Set a_m=kappa_m/d. The exponent other than -u^2/2 is
+
+$$
+ -i(su+a_3u^3/6)d^{-1/2}
+       +a_4u^4/(24d)+i a_5u^5/(120d^{3/2})
+       +O(d^{-2}(1+|u|^6)).                          \tag{122.24}
+$$
+
+Expanding this exponential through order d^{-3/2}, its d^{-1/2} and d^{-3/2} terms are imaginary odd polynomials, hence integrate to zero on the symmetric interval. Its d^{-1} term is
+
+$$
+ d^{-1}\left\{a_4u^4/24-\tfrac12(su+a_3u^3/6)^2\right\}.
+$$
+
+The remaining integrand is bounded by C d^{-2}(1+|u|^{12})e^{-u^2/4} after harmless enlargement of the polynomial degree if needed. Its integral is O(d^{-2}), uniformly. Gaussian moments E U^2=1, E U^4=3, E U^6=15 give(122.22). This supplies an actual local error estimate; it is not differentiation of a CLT or a C0 approximation.
+
+Write P_s=P(N=n+s), and let s range over{-2,-1,0,1}. In(122.22) the s-dependent first correction is a linear term plus -s^2/(2d). Consequently
+
+$$
+ \frac{P_s}{P_0}=1+O(d^{-1}),\qquad
+ P_0^2-P_{-1}P_1=\frac{P_0^2}{d}[1+O(d^{-1})],
+$$
+$$
+ P_{-1}^2-P_{-2}P_0=\frac{P_0^2}{d}[1+O(d^{-1})].    \tag{122.25}
+$$
+
+For example the second difference of the linear term vanishes and that of -s^2/(2d) is 1/d. The individual relative remainder is O(d^{-2}), smaller than this surviving 1/d term. These are not differences of two estimates with only O(d^{-1}) uncontrolled error.
+
+### 122.6 只用外部行校准平衡位置
+
+Choose the unique t>0 for the rows other than u,v,c such that
+
+$$
+ \sum_{i\notin\{u,v,c\}}\frac{tL_i}{1+tL_i}=q-1.
+                                                        \tag{122.26}
+$$
+
+Existence follows because q-1 lies strictly between0 and M-3. This t is F_0-measurable and stays fixed throughout the k-fiber, regardless of how the two pair likelihoods change. Let d be this outside Bernoulli variance and let x=tL_0.
+
+Compare first with the actual full-array calibration(122.10) at the observed outcome. Removing three Bernoulli terms changes the mean by at most3 and the variance by at most3/4. The desired mean q-1 differs from the removed-array mean at t_all by at most2. Under a log-odds shift h, each variance p(1-p) changes by a factor between e^{-|h|} and e^{|h|}. Since mathcal D_all is comparable to q, integrating the derivative of the mean shows
+
+$$
+ |\ln(t/t_{all})|\le C/q,\qquad d\asymp q.           \tag{122.27}
+$$
+
+It follows from(122.9)-(122.10) that, on an F_0-measurable event with probability tending to one,
+
+$$
+ |\ln(tB_0)|\le 2q^{-1/4},\quad cq\le d\le Cq,
+ \quad 1/3\le x\le3,
+ \quad cq/Q^3\le C_0^o\le Cq/Q^3.                   \tag{122.28}
+$$
+
+Here q^{-1/4} is just a deterministic slack tending to zero: theta_x=O_P(q^{-1/2}) implies its bound with probability tending to one. The event in(122.28) is defined directly by outside quantities. The observed full good event implies it, which proves its actual probability statement. It is not a claim that full calibration and the pair pool are independent.
+
+Let e_s=t^s F_s and H=product over outside(1+tL_i). In the outside Bernoulli family,
+
+$$
+ e_{q-1+s}=H P_s,\qquad E N=q-1.
+$$
+
+Thus the scaled Turán quantities are
+
+$$
+ \widetilde U=t^{2q-2}U=e_{q-1}^2-e_{q-2}e_q,
+ \quad\widetilde V=t^{2q-4}V=e_{q-2}^2-e_{q-3}e_{q-1}.
+$$
+
+By(122.25),
+
+$$
+ \frac{\widetilde U}{e_{q-1}^2}
+   =\frac1d[1+O(d^{-1})],\qquad
+ \frac{\widetilde V}{e_{q-1}^2}
+   =\frac1d[1+O(d^{-1})],
+$$
+$$
+ b_*:=t^2B_*=\widetilde U/\widetilde V=1+O(d^{-1}).    \tag{122.29}
+$$
+
+In particular the balancing product satisfies the actual common-environment comparison
+
+$$
+ \boxed{\quad \ln B_*=2\ln B_0+o(1)\quad}            \tag{122.30}
+$$
+
+on(122.28), uniformly in the fixed support. Quantitatively the error is at most4q^{-1/4}+C/q there. The random outside coefficients have not been frozen while varying the pool totals; they have been bounded by a deterministic comparison on an actual high-probability event. This is the step that permits a marginal small-ball estimate to control their balancing zero.
+
+### 122.7 实际池总数的反集中排除平衡
+
+For both experiments, with probability tending to one uniformly in S,
+
+$$
+ |N_\pm-n_{obs}/4|\le M Q.                            \tag{122.31}
+$$
+
+For pairs Var N_pm=O(n_obs). For paths their indicators are functions of two neighboring iid parity bits, hence have dependency degree at most2 and the same variance bound. Chebyshev makes the complement O(Q/M). Conditional on this parity event, (122.14) gives
+
+$$
+ E(K\mid s)=2a\lambda+O(Q),\quad
+ E(L\mid s)=2b\lambda+O(Q),
+$$
+$$
+ P\{|K-2a\lambda|>Q^2\text{ or }|L-2b\lambda|>Q^2\mid s\}
+                  \le C e^{-cQ}.                    \tag{122.32}
+$$
+
+Constants in the cutoff can be enlarged without affecting anything below. In particular both totals are comparable to Q^3. Conditional on parity, the maximum atom of K in(122.14) is at most C Q^{-3/2}. One elementary proof, also valid for its small success probability, is Fourier inversion using the binomial characteristic modulus and its variance comparable to Q^3; it gives C/sqrt(Var K). K and L in(122.14) are conditionally independent.
+
+Fix once and for all a small eta>0 with, for all large Q, a_s>=8eta. For any real deterministic center w, any fixed bounded interval width h, and any admissible L,
+
+$$
+ \Pr\{|a_sK+b_sL-w|\le h\mid s,L\}
+          \le C_h Q^{-3/2}                           \tag{122.33}
+$$
+
+on(122.31): the interval contains at most1+2h/a_s possible integers K. Its center can depend on L, as displayed. We apply this only with the deterministic w=2 ln B_0 and a fixed h, not with the random outside B_* as if it were conditionally independent.
+
+On(122.28), (122.30) gives for all large Q
+
+$$
+ \{|\ln(B_{uv}/B_*)|<\eta\}
+ \ \subset\ \{|a_sK+b_sL-2\ln B_0|<2\eta\}.         \tag{122.34}
+$$
+
+Therefore
+
+$$
+ \Pr_S\bigl((122.28)\text{ and }|\ln(B_{uv}/B_*)|<\eta\bigr)
+      \le C Q^{-3/2}+O(Q/M).                         \tag{122.35}
+$$
+
+The outside normalizer and pool product share the actual data throughout this argument. The bound follows from the deterministic enclosure(122.34), not from conditioning on outside data and assigning a new law to K. After this unconditional step, the good event and B_* are F_0-measurable and can legitimately be held fixed for the allocation argument.
+
+Combining(122.28), (122.31)-(122.32), (122.35), and the l-tail from(122.15), we obtain an F-measurable event G_Q with probability tending to one, on which all of the following hold:
+
+$$
+ C_0^o\asymp q/Q^3,\ d\asymp q,\ x\in[1/3,3],\
+ |\ln(tB_0)|\le2q^{-1/4},\quad
+ |K-2a\lambda|+|L-2b\lambda|\le C Q^2,
+$$
+$$
+ |l-L/2|\le Q^2,\qquad
+ |\ln(B_{uv}/B_*)|\ge\eta.                           \tag{122.36}
+$$
+
+This is an actual event for a pair fixed in the true support; it neither assumes that pair lies on the selected line nor uses adaptive pair selection.
+
+### 122.8 同一纤维上的精确后验中心运动
+
+Scale the pair likelihoods by the fixed outside t:
+
+$$
+ b_p=t^2 B_{uv},\quad z_k=t(L_u(k)+L_v(k)),\qquad
+ z_k=2\sqrt{b_p}\cosh(a_s(k-k_*)),
+$$
+$$
+ k_*=K/2+\frac{b_s(L-2l)}{2a_s}.                     \tag{122.37}
+$$
+
+The formula for k_* follows by equating the two exact log likelihoods. All signs, including b_s<0, remain. Let
+
+$$
+ Z_s(z)=e_q+x e_{q-1}+z(e_{q-1}+x e_{q-2})
+                          +b_p(e_{q-2}+x e_{q-3}).   \tag{122.38}
+$$
+
+Writing(122.19) with scaled odds leaves its probability unchanged. For any z,z'>=0 its EXACT finite difference is
+
+$$
+ p_*(z')-p_*(z)=
+ \frac{x\widetilde V(b_p-b_*)(z'-z)}{Z_s(z')Z_s(z)}.  \tag{122.39}
+$$
+
+The local ratios in(122.25) imply, uniformly for all z,b_p>=0 and x in[1/3,3],
+
+$$
+ c(1+z+b_p)\le Z_s(z)/e_{q-1}\le C(1+z+b_p),\quad
+ c/q\le\widetilde V/e_{q-1}^2\le C/q.               \tag{122.40}
+$$
+
+On G_Q, |ln(b_p/b_*)|>=eta and b_*=1+O(q^{-1}); hence |b_p-b_*|>=c_eta>0. For k in the conditional typical window
+
+$$
+ \mathcal I_Q=\{k\in\mathbb Z:0\le k\le K,\ |k-K/2|\le Q^2\},
+                                                        \tag{122.41}
+$$
+
+the original score means and(122.36) give
+
+$$
+ |\ln(tL_u(k))|+|\ln(tL_v(k))|\le C Q^2.             \tag{122.42}
+$$
+
+To check this without altering floors, write k=K/2+O(Q^2), l=L/2+O(Q^2), and K/2=a lambda+O(Q^2), L/2=b lambda+O(Q^2). Then W_u=phi lambda+O(Q^2)+O(lambda epsilon_M), while ln B_0=phi lambda+O(1); the same holds for v. Add ln(tB_0)=o(1). Thus b_p, z_k and the denominators in(122.39), after their e_{q-1} factor is removed, are bounded above by exp(CQ^2), and sqrt(b_p) is bounded below by exp(-CQ^2).
+
+The exact adjacent sum difference is
+
+$$
+ z_{k+1}-z_k=4\sqrt{b_p}\sinh(a_s/2)
+                           \sinh(a_s(k+1/2-k_*)).    \tag{122.43}
+$$
+
+Discard at most a fixed number of integers with |k-k_*|<=3. On each of the two remaining monotone branches, neighboring typical integers satisfy
+
+$$
+ \boxed{\quad |p_*(k+1)-p_*(k)|
+             \ge q^{-1}e^{-C Q^2}.\quad}             \tag{122.44}
+$$
+
+All constants may depend on r,beta,eta, but not Q,S,F or k. The conclusion follows from(122.39)-(122.43), keeping the exact determinant. There is no subtraction of two approximate posterior means. Since Q^2=o(Q^3), the exponential cost is subleading to occupancy.
+
+A separate exact bound controls the ENTIRE range, not a sum of per-step estimates. Put Z_s(z)=c_s+d_s z, with
+
+$$
+ c_s=e_q+x e_{q-1}+b_p(e_{q-2}+x e_{q-3}),\quad
+ d_s=e_{q-1}+x e_{q-2}.
+$$
+
+The affine ratio has range between its endpoints z=0 and z=infinity, and
+
+$$
+ |p_*(\infty)-p_*(0)|
+ =\frac{x|b_p\widetilde V-\widetilde U|}{c_s d_s}
+ \le C/q.                                           \tag{122.45}
+$$
+
+Indeed c_s/e_{q-1} is comparable to1+b_p, d_s/e_{q-1} to1, and each scaled Turán ratio is O(q^{-1}). This holds for every b_p>0, including very large or very small pair odds. The determinant may be small only in the explicitly excluded balancing region; the range bound needs no exclusion.
+
+Finally, full calibration along the fiber remains controlled. At the fixed outside t the full Bernoulli sum is q-1+x/(1+x)+p_u+p_v, differing from q by at most2 for EVERY k. The same mean-derivative argument as(122.27) gives |ln(t_all(k)/t)|<=C/q. Thus the original calibrated group0 probability stays in a fixed compact subset of(0,1) throughout the fiber, and
+
+$$
+ c C_0(k)\le d_0(k)\le C C_0(k).                    \tag{122.46}
+$$
+
+This controls the actual comparison variance used in the dual energy; it does not replace exact posterior inclusion p_*(k) by that calibrated probability.
+
+### 122.9 中央组与有界共振分配数
+
+All rows other than u,v have fixed counts given F_0. With l fixed, u can belong to the central count cell only if l=l_0 and k=k_0. Likewise v can belong only if L-l=l_0 and k=K-k_0. Discard these at most TWO allocations. At every other allocation,
+
+$$
+ C_0(k)=C_0^o=:n_0,\qquad \mu_0(k)=n_0p_*(k),\qquad
+ d_0(k)\asymp n_0.                                  \tag{122.47}
+$$
+
+The equality for mu_0 is exact because every central row has the same likelihood L_0 in the same full-q posterior. No assertion that the varied pair itself belongs to any selected group is needed. Its possible effects on other selected groups are left intact. On the original good event group0 is indeed part of the original selected window; n_0 grows exponentially, so it belongs to Chapter 116's mathcal J_x with threshold Q^3600.
+
+Fix ell!=0. On either surviving monotone k-branch consider the exact phase
+
+$$
+ F_\ell(k)=\ell(1-2n_0p_*(k)).                       \tag{122.48}
+$$
+
+Its full range has length at most C|ell|n_0/q<=C_ell Q^{-3}, by(122.45). In particular, for large Q it is shorter than1, while the resonance grid is2Z. Its adjacent spacing on the typical window is at least
+
+$$
+ s_Q=2|\ell|n_0q^{-1}e^{-C Q^2}.                    \tag{122.49}
+$$
+
+If the exact minimum dual energy is at most Q^2 and the original good event holds, its central contribution alone forces
+
+$$
+ \operatorname{dist}(F_\ell(k),2\mathbb Z)
+       \le Q/(\pi\sqrt{d_0(k)})
+       \le C Q/\sqrt{n_0}=:w_Q.                    \tag{122.50}
+$$
+
+For every original fixed beta in(1/2,1),
+
+$$
+ \frac{s_Q}{w_Q}\ge
+ c_\ell\frac{n_0^{3/2}}{qQ}e^{-C Q^2}
+ \ge c_\ell q^{1/2}Q^{-11/2}e^{-C Q^2}
+ \longrightarrow\infty,                            \tag{122.51}
+$$
+
+because ln q=c_q Q^3+O(1) with c_q>0. This is the required arithmetic precision, not merely a nonzero derivative. Both the resonance width and the changes use the SAME realization of n_0 and posterior p_*.
+
+A monotone branch of total phase length less than1 meets at most two grid neighborhoods of radius w_Q (one would suffice once w_Q is small and endpoints are specified). Since adjacent phase spacing exceeds2w_Q, each such neighborhood contains at most one retained integer k. Thus at most four branch allocations are bad. Reinsert the fixed number of discarded turning-point integers and the two group-membership exceptions: the total number of bad typical allocations is bounded by an absolute finite constant, for this fixed ell and all sufficiently large Q. Removing finitely many k does not spoil monotonicity or spacing between remaining integers; finite differences telescope with one sign on a branch.
+
+Using(122.18), for every good F-fiber,
+
+$$
+ P_S\{E^{\min}_{\ell,x}\le Q^2,\ x\text{ in the original good event}
+                       \mid F\}
+     \le C_\ell Q^{-3/2}+2e^{-cQ}.                   \tag{122.52}
+$$
+
+This inequality bounds the event by its set of possible actual allocations. It need not assume the original global good event for every hypothetical allocation; any allocation satisfying that event and the resonance inequality must obey(122.50). All structural estimates used to count those allocations already hold uniformly on the good F-fiber.
+
+Averaging(122.52), adding P_S(G_Q^c)=o(1), and adding the complement of the original good event proves(122.1). More explicitly the bound is
+
+$$
+ P_S\{E^{\min}_{\ell,x}\le Q^2\}
+ \le P_S(G_Q^c)+P_S(H_{orig}^c)+C_\ell Q^{-3/2}+2e^{-cQ}=o(1),
+                                                        \tag{122.53}
+$$
+
+uniformly in S. The bad part of G_Q due solely to near-balanced product has the new quantitative bound(122.35); its other terms are the original calibrated environment loss, central-count loss, O(Q/M), and binomial exp(-cQ) losses already identified. No unsupported rate is assigned to the inherited O_P calibration statement.
+
+### 122.10 保持同一噪声与尾部的完整商式返回
+
+For clarity, the exact Chapter 116 bridge being used is
+
+$$
+ \int f_x|D_x-R_*|=\mathfrak J_x+o_{P_S}(1),\qquad
+ \mathfrak J_x=\frac1{2\pi}\int_0^{2\pi}
+          |M_2-M_1^2/M_0|\,d\theta.                 \tag{122.54}
+$$
+
+At each fixed finite D it proves 0<c_D<=M_0<=C_D, uniform bounds on the normalized first and second marks, and the all-output integrable remainder for the ORIGINAL selected law. Its marked series(116.10)–(116.13) retain half-integer strip ell, exact physical phase, all outside surprise coefficients, the shared residual twist eta_ell=pi ell sigma mathcal B, and its h2/h4 contributions. These are not new independent Gaussians or unmarked density approximations.
+
+For every fixed ell!=0, (122.1) and the proved lattice sum bound(116.48) make that harmonic and both normalized moment marks tend to zero, uniformly in theta, in actual data probability. The polynomial mode marks are bounded by the inherited constants times a fixed polynomial in E+eta_ell^2, because the original weight-profile bounds are retained. The lattice exponential e^{-E/2} absorbs that polynomial. The remaining ell-tail is uniformly summable by the SAME residual-noise factor e^{-c_D ell^2}, as sigma mathcal B tends to e^D>0. One first truncates to finitely many ell, uses(122.1) for that finite set, and then releases the truncation. The ell=0 nonzero-dual modes are negligible by the inherited exponentially large central variances. Thus
+
+$$
+ \|M_0-1\|_\infty+\|M_1\|_\infty+\|M_2\|_\infty
+                      \longrightarrow0              \tag{122.55}
+$$
+
+in the same probability scope. Positive mass, already proved at finite D, then gives mathfrak J_x->0. Substitution in(122.54) proves(122.3), including its all-output weighted L1 conclusion.
+
+This step uses the actual selected-law weighted return, not a Gaussian toy variance, total variation transfer of an unbounded moment, or an integrated-to-pointwise inference. The reference mapping retains the unweighted core-density derivative bound (101.19), the fourth-moment clipping inequality (101.8), and the noncentral comparisons (101.22)–(101.23), exactly as paid in Chapter 116 before (116.42). No new mark derivatives are obtained from C0 errors. No separate absolute A or A^2 bound is paid at inverse noise. The original common realization, finite coefficients and covariance cancellations are carried by the complete bridge of Theorem 116.1.
+
+We did not change the centers in the period functional at all: the coordinate mu_0=C_0p_* was exact. Hence no new physical-output phase translation is suppressed. If Chapter 120's optional one-scalar representation is used instead, its exact psi and rho bounds still apply at their earlier scope; they are unnecessary for the present proof. The new argument also does not assume independence of outside surprise and actual outside energy.
+
+### 122.11 适用范围与来源
+
+结论对每个固定有限 $D$、原固定幅度和 $\beta\in(1/2,1)$ 成立。常数可依赖这些固定参数及固定谐波，未对无界 $D$ 或随 $Q$ 增长的谐波族给统一界。谐波尾部由固定正 $\sigma\mathcal B\to e^D$ 处理，不能直接外推到趋零带宽。
+
+证明中的两行在每个真实固定支撑内预先选定，不是观察者可实施的支撑估计算法。外部中央锚的选择对 $\mathcal F_0$ 可测；随机平衡乘积的反集中在条件化到 $\mathcal F_0$ 之前支付，再在同一条件纤维上计算分配数。完整直方图与后验共同分母的变化均保留，至多两个中央组成员例外单独支付。没有环境坏事件上的无界期望、零噪声、计算效率、熵／列表／双根同步扩展或阈值锐利性结论。
+
+Newton 不等式、Bernoulli 局部展开、精确有限指数族代数、二项集中及条件多项分布均属经典。Boistard–Lopuhaä–Ruiz-Gazen 的 [原局部展开](https://arxiv.org/abs/1207.5654v1) 与 Yaming Yu 的 [纳入概率原文](https://arxiv.org/abs/1005.4107v2) 分别说明所用局部精度与分式线性导数的成熟来源；Borcea–Brändén–Liggett 的 [负依赖框架](https://arxiv.org/abs/0707.2340v2) 不提供原始环境的独立性或模一混合结论。具体条件及限制见 [Library 对应条目](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章新增连接是随机平衡量到确定中心的实际比较、原始池总数的反小球界，以及在同一实现上足以压过共振宽度的后验相位运动。普通数学推导不等于 Lean 核验，有限来源核对不作全球原创性声明。
+
+## 追加锚（122 章后）
