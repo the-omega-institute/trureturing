@@ -19430,3 +19430,315 @@ $$
 
 
 ## 追加锚（本行以下为增补区）
+
+## 73. 早期共同向量的投影夹逼与两种三射线分叉排除
+
+固定同一非退化来源
+
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,
+\qquad ab\ne0,\quad |a|^2+|b|^2=1,
+$$
+
+独立纯初态、固定全域 CPTP 接收器以及前六个完整参考—活动记忆—档案纯终端合同。全部持久资源计入七维接收空间 $K$，来源与参考不可由接收器访问。沿用实际固定等距位块 $V_0,V_1$，其像相互正交。假设
+
+$$
+F=\operatorname{span}\{\eta_2,\ldots,\eta_6\},\qquad
+\dim F=2,\qquad \eta_1\notin F,
+$$
+
+本节先考察尾词
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,A,C,A),
+$$
+
+随后在第73.4节考察尾词 $ABBCB$；两种情形中的三条射线 $A,B,C$ 都两两不同。以下也用 $A,B,C$ 表示各自单位代表；环境相位只改变接收列的共同相位，不改变所用子空间和投影范数。
+
+实际早期正交单位向量满足
+
+$$
+V_0p=u\otimes A,\qquad V_1p=v\otimes A,\qquad
+V_0q=w\otimes A,
+$$
+
+$$
+H_1=\operatorname{span}(p,q),\qquad
+G_2=\operatorname{span}(u,w),\qquad
+H_2=\operatorname{span}(a^2u+bv,w).
+\tag{73.1}
+$$
+
+实际 $n\ge3$ 的 $H_n,G_n,Q_n$ 均二维，且
+
+$$
+H_n\subset G_n\oplus Q_n,\qquad G_n\perp Q_n,
+\qquad P_{G_n}H_n=G_n,\quad P_{Q_n}H_n=Q_n,
+\qquad H_n\cap G_n=0.
+\tag{73.2}
+$$
+
+**定理 73.1（ABACA 不可能）。** 上述 ABACA 尾词不能实现七维六纯终端接收器。
+
+**证明。** 分三步，不对 $G_4\cap G_6$ 的维数或首轮与尾环境的内积分类。
+
+### 73.1 三个实际后继迫出共同四加二维接口
+
+当前射线 $A$ 在第2、4轮具有不同的已见后继 $B,C$。第69节引理69.2的外置首轮饱和关系给
+
+$$
+P=G_2+G_4+G_6,\qquad \dim P=4,\qquad
+G_3=G_5=:T\subset P,\qquad \dim T=2.
+\tag{73.3}
+$$
+
+固定 $V_1$ 将 $G_2,G_4$ 分别送入环境射线 $B,C$，故 $G_2\cap G_4=0$，于是 $P=G_2+G_4$，并且
+
+$$
+V_1P=(Q_3\otimes B)\dotplus(Q_5\otimes C).
+$$
+
+因为 $T\subset P$ 且 $V_1T=Q_4\otimes A$，将 $A$ 在环境基 $B,C$ 中的两个非零坐标逐项比较，得到 $Q_4\subset Q_3\cap Q_5$。三者均二维，因此相等，记为 $Q$。再用 $G_5=T$ 和 $V_1G_5=Q_6\otimes A$，得 $Q_6=Q$。所以
+
+$$
+Q_3=Q_4=Q_5=Q_6=Q,\qquad
+\mathcal U:=V_1|_P:P\longrightarrow Q\otimes F
+\text{ 是满等距},
+$$
+
+$$
+\mathcal UG_2=Q\otimes B,\qquad
+\mathcal UG_4=Q\otimes C,\qquad
+\mathcal UT=Q\otimes A.
+\tag{73.4}
+$$
+
+三个当前 $A$ 位置使 $P\otimes A\subset V_0K$。将它与 $V_1P=Q\otimes F$ 比较，跨位正交给 $P\perp Q$。同样将 $V_1p=v\otimes A$ 与 $P\otimes A$ 比较，得到
+
+$$
+P\perp Q,\qquad v\perp P.
+\tag{73.5}
+$$
+
+还没有断言 $v\in Q$。实际四个零位域为
+
+$$
+V_0H_1=G_2\otimes A,\quad
+V_0H_2=T\otimes B,\quad
+V_0H_3=G_4\otimes A,\quad
+V_0H_4=T\otimes C.
+\tag{73.6}
+$$
+
+### 73.2 早期共同向量迫出 B 与 C 正交
+
+令 $r=|\langle B,C\rangle|$。因为 $V_0$ 是同一个等距，且（73.6）中 $H_2,H_4$ 的像具有同一接收平面 $T$，每个单位 $h\in H_2$ 都满足
+
+$$
+\|P_{H_4}h\|=r.
+\tag{73.7}
+$$
+
+同理，（73.4）的两个完整 $Q$ 纤维给每个单位 $g\in G_2$ 的关系
+
+$$
+\|P_{G_4}g\|=r.
+\tag{73.8}
+$$
+
+取同一个实际单位向量 $w\in H_2\cap G_2$。因 $w\in P$、$P\perp Q$，而 $H_4\subset G_4\oplus Q$，有
+
+$$
+P_{H_4}w=P_{H_4}P_{G_4}w.
+$$
+
+若 $r>0$，则 $z=P_{G_4}w\ne0$。正交投影保持非零向量的全部范数当且仅当该向量已经属于投影空间；由 $z\in G_4$ 及 $H_4\cap G_4=0$，必有
+
+$$
+\|P_{H_4}z\|<\|z\|.
+$$
+
+这与（73.7）、（73.8）两端同为 $r$ 矛盾。因此
+
+$$
+B\perp C.
+\tag{73.9}
+$$
+
+这一步也可读为保范数方向在两个非正交保纤维之间传播；此处直接用同一个早期向量的两个投影读数，不需要余等距或六维输入域等于 $P\oplus Q$。
+
+### 73.3 正交后继与首个实际接收向量矛盾
+
+由（73.4）、（73.6）、（73.9），
+
+$$
+G_2\perp G_4,\qquad H_2\perp H_4,\qquad H_1\perp H_3.
+\tag{73.10}
+$$
+
+第一式来自共同一位等距的正交环境 $B,C$；第二式来自共同零位等距的正交环境 $B,C$；第三式来自两个零位像 $G_2\otimes A,G_4\otimes A$ 的接收因子正交。
+
+因为 $u\in G_2$、$G_2\perp G_4$、$G_2\perp Q$，有 $u\perp H_4$。实际向量 $a^2u+bv\in H_2$ 也由（73.10）正交于 $H_4$，且 $b\ne0$，所以 $v\perp H_4$。再由 $v\perp P\supset G_4$ 与 $P_QH_4=Q$，得到
+
+$$
+v\perp Q.
+\tag{73.11}
+$$
+
+将 $V_1p=v\otimes A$ 与 $V_1P=Q\otimes F$ 比较，（73.11）使两者正交；固定 $V_1$ 等距，故 $p\perp P$。另一方面，$p\in H_1$ 及 $H_1\perp H_3$ 给 $p\perp H_3$。实际 $H_3\subset T\oplus Q$、$T\subset P$、$P_QH_3=Q$，进一步给 $p\perp Q$。于是
+
+$$
+p\perp P\oplus Q,\qquad p\perp H_4.
+\tag{73.12}
+$$
+
+现在再次读取同一实际向量 $p$ 的零位像。由 $V_0p=u\otimes A$、$V_0H_4=T\otimes C$ 及固定等距性，
+
+$$
+\|P_{H_4}p\|
+=|\langle A,C\rangle|\,\|P_Tu\|.
+$$
+
+而 $u\in G_2$ 是单位向量，（73.4）给
+
+$$
+\|P_Tu\|=|\langle B,A\rangle|.
+$$
+
+因此
+
+$$
+\|P_{H_4}p\|
+=|\langle A,C\rangle|\,|\langle B,A\rangle|>0.
+\tag{73.13}
+$$
+
+严格正来自二维环境中 $B\perp C$ 且 $A$ 不等于二者：$A$ 在这组正交环境基中的两个坐标都非零。（73.13）与（73.12）矛盾。
+
+所以 ABACA 不可能。证明完毕。
+
+ABACA 的证明覆盖全部 $\dim(G_4\cap G_6)$，没有预设共同实际输入域或 $v\in Q$。下面继续使用同一早期向量的投影夹逼，但保留两个后继接收平面可能不同。
+
+
+
+### 73.4 后继接收平面可不相同的 ABBCB 排除
+
+这一部分重新取尾词
+
+$$
+([\eta_2],[\eta_3],[\eta_4],[\eta_5],[\eta_6])=(A,B,B,C,B),
+$$
+
+其余实际来源、早期向量（73.1）和同轮满投影（73.2）均保留。这里定义的 $P,Q,R,T$ 属于本部分的同一个候选，不与前面已经排除的 ABACA 候选混合。
+
+**定理 73.2（ABBCB 不可能）。** 在相同七维外置首轮实际合同中，尾词 $ABBCB$ 不能实现六纯终端接收器。
+
+**证明。** 当前射线 $B$ 在第3、4轮具有不同后继 $B,C$。第69节引理69.2给
+
+$$
+P=G_3+G_4+G_6,\qquad \dim P=4,\qquad
+G_2=G_5=:T\subset P,\qquad \dim T=2.
+\tag{73.14}
+$$
+
+固定 $V_1$ 将 $G_3,G_4$ 分别送入不同环境射线 $B,C$，所以二者交零，张成 $P$。有
+
+$$
+V_1P=(Q_4\otimes B)\dotplus(Q_5\otimes C).
+$$
+
+因为 $T\subset P$、$V_1T=Q_3\otimes B=Q_6\otimes B$，逐环境 $B,C$ 坐标比较给 $Q_3=Q_4=Q_6=:Q$。固定 $V_1$ 的单射性又使 $G_3=T$。令 $R=Q_5$，遂有
+
+$$
+G_2=G_3=G_5=T,\qquad
+V_1T=Q\otimes B,\qquad V_1G_4=R\otimes C.
+\tag{73.15}
+$$
+
+这里没有把 $Q$ 与 $R$ 判为相同。实际零位域满足
+
+$$
+V_0H_2=T\otimes B,\qquad
+V_0H_3=G_4\otimes B,\qquad
+V_0H_4=T\otimes C.
+\tag{73.16}
+$$
+
+实际第三终端满足 $G_3\perp Q_3$，而（73.15）已给 $G_3=T$、$Q_3=Q$，故
+
+$$
+Q\perp T.
+\tag{73.17}
+$$
+
+令 $r=|\langle B,C\rangle|$。固定 $V_0$ 与（73.16）的两个完整 $T$ 纤维给每个单位 $h\in H_2$ 的精确读数
+
+$$
+\|P_{H_4}h\|=r.
+\tag{73.18}
+$$
+
+另一方面，固定 $V_1$ 与（73.15）给每个单位 $t\in T$ 的上界
+
+$$
+\|P_{G_4}t\|
+=\|P_{R\otimes C}(V_1t)\|
+\le r.
+\tag{73.19}
+$$
+
+确实，$V_1t=q\otimes B$，其中 $q\in Q$ 为单位向量；右侧实际等于 $r\|P_Rq\|$。该上界保留了 $Q,R$ 可能不同的情形。
+
+取同一个实际单位向量 $w\in H_2\cap T$。由于实际 $Q_4=Q$，所以 $H_4\subset G_4\oplus Q$，且 $w\perp Q$，有
+
+$$
+P_{H_4}w=P_{H_4}P_{G_4}w.
+\tag{73.20}
+$$
+
+若 $r>0$，则（73.18）使 $z=P_{G_4}w\ne0$。实际 $H_4\cap G_4=0$ 给正交投影的严格不等式
+
+$$
+\|P_{H_4}z\|<\|z\|.
+$$
+
+结合（73.18）—（73.20），得到
+
+$$
+r=\|P_{H_4}w\|<\|P_{G_4}w\|\le r,
+$$
+
+矛盾。因此 $B\perp C$。这使（73.15）的两个一位像正交，固定等距性遂给 $T\perp G_4$。再由（73.16）中相同环境 $B$ 的两个零位像，得到
+
+$$
+H_2\perp H_3.
+\tag{73.21}
+$$
+
+然而非零 $w\in H_2\cap T$ 将同时满足 $w\perp H_3$、$w\in T=G_3$。实际满投影 $P_TH_3=T$ 使这不可能：对任意 $t\in T$ 取 $h\in H_3$ 使 $P_Th=t$，便有 $\langle w,t\rangle=\langle w,h\rangle=0$，特别取 $t=w$ 得 $w=0$，矛盾。
+
+所以 ABBCB 不可能。证明完毕。
+
+此证明只使用真实共同位块、早期共同向量和同轮满投影；没有预设 $Q_5=Q_3$、共同六维实际域、环境非正交或未执行的后继。
+
+
+### 73.5 十三种剩余必要尾词
+
+**推论 73.3（十三种剩余必要尾词）。** 在第69节的外置首轮二维尾环境合同中，任何尚可能的五位尾词必须属于下表十三种之一：
+
+| 关系类型 | 必要尾词 |
+|---|---|
+| 两射线分叉 | AAABA, AAABB, AABAA, ABAAA, ABAAB, ABABB, ABBAB, ABBBA |
+| 三射线分叉 | ABCBB |
+| 已见后继无分叉 | ABABA, ABCAB, ABCBC, ABCCC |
+
+**证明。** 定理69.5给出十六种必要尾词；推论71.3已经用连续四轮共同纯尾环境下界排除 $ABBBB$，得到十五种。定理73.1与定理73.2进一步排除其中的 $ABACA,ABBCB$，余下恰为八种两射线分叉、一种三射线分叉与四种已见后继无分叉。证明完毕。
+
+这些逐步收缩的必要分类相容：第69节与第71节的较弱上界继续成立；本节未宣称表中任一尾词具有实际共同实现。剩余三射线分叉 $ABCBB$ 仍须核对真实的共同位块和来源列，不能从前两种模式的排除借入未证明的共同接收平面。一般接收容量仍保持
+
+$$
+7\le d_{\mathrm{CPTP},6}(a,b)\le8.
+\tag{73.22}
+$$
+
+## 追加锚（本行以下为增补区）
