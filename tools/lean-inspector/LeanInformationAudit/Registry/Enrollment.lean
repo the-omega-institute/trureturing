@@ -641,7 +641,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
     -- Abbreviations expose their checked underlying type through ordinary E5
     -- expansion, so aliases cannot hide excluded identities or finite carriers.
     let carrierAbbrev := match info with
-      | .defnInfo defn => defn.hints matches .abbrev
+      | .defnInfo defn => (defn.hints matches .abbrev)
       | _ => false
     if !carrierAbbrev && (← isType e) && !(← isProp e) && (← independentSource name) then
       match info with
