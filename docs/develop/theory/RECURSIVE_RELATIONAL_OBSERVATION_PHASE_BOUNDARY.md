@@ -47135,3 +47135,1098 @@ $\chi\le g(u)$。这里每个有限实例都满足同一实际分支、同一平
 操作结论限于第167节的常值输入、正交可读纯分支和固定纯化目标。在这个范围内，分支与活动记忆的独立性、几何缺口消失和零额外恢复损失等价；定量比较必须保留（169.12）、（169.17）、（169.22）各自的方向、谱常数和规模条件。没有新增 Lean 核验或物理测量声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 170. 真实运行通道的精确泄漏律与渐近联合逻辑
+
+第159节证明了编码逻辑轨道的精确旋转，但尚未证明任意运行态都会接近这条编码结构。本节补上这个全空间结论：代码外概率每轮恰好乘以来源参数 $p$，由此构造一份联合渐近逻辑通道，并给出带任意参考的统一几何尾界。真实启动留下的逻辑通道作为参数保留，不被替换成常值态。
+
+### 170.1 代码投影与吸收酉的一个共轭恒等式
+
+沿用第159节的来源
+
+$$
+T|0\rangle=|m_0\rangle_M|0\rangle_B,\qquad
+T|1\rangle=|0\rangle_M|1\rangle_B,\qquad
+|m_0\rangle=a|0\rangle+b|1\rangle,
+$$
+
+$$
+a,b>0,\qquad a^2+b^2=1,\qquad p=b^2.
+\tag{170.1}
+$$
+
+记
+
+$$
+\rho=\rho_*=\frac1{1+p}
+\begin{pmatrix}1&ab\\ab&p\end{pmatrix},
+\qquad
+A=\sqrt\rho,\qquad
+\eta=\det A=\frac{p}{1+p},
+$$
+
+$$
+|\Xi\rangle=\operatorname{vec}A,\qquad
+|\psi_s\rangle=(I_M\otimes Y_R^s)|\Xi\rangle,\qquad s=0,1.
+\tag{170.2}
+$$
+
+两向量正交归一，在 $M\otimes R$ 上定义代码投影及其补投影
+
+$$
+P_{\mathrm c}=P_{\psi_0}+P_{\psi_1},\qquad
+Q_{\mathrm c}=I_{MR}-P_{\mathrm c}.
+\tag{170.3}
+$$
+
+它们具有方便计算的表达式
+
+$$
+\boxed{P_{\mathrm c}=\rho\otimes I_R-\eta\,Y_M\otimes Y_R.}
+\tag{170.4}
+$$
+
+例如，令 $|\Omega\rangle=|00\rangle+|11\rangle$，直接展开得
+$P_\Omega+(I\otimes Y)P_\Omega(I\otimes Y)=I-Y\otimes Y$。
+两边用 $A\otimes I$ 夹乘，再用实对称二阶矩阵恒等式
+$AYA=(\det A)Y$，即得（170.4）。
+
+第156节规定的吸收酉 $U_{\mathrm{abs}}$ 满足
+
+$$
+(I_M\otimes U_{\mathrm{abs}})(T\otimes I_R)|\psi_s\rangle
+=|\Xi\rangle_{MR}|s\rangle_B.
+\tag{170.5}
+$$
+
+这两份纯化在接收侧的 Schmidt 支撑组成整个 $R\otimes B$，所以（170.5）已唯一确定吸收酉。
+
+**引理170.1（吸收酉的 Pauli 共轭）。** 有
+
+$$
+\boxed{
+U_{\mathrm{abs}}^*(Y_R\otimes I_B)U_{\mathrm{abs}}
+=-a I_R\otimes Y_B-bY_R\otimes X_B.
+}
+\tag{170.6}
+$$
+
+**证明。** 将 $A$ 的两个实列向量视为 $R$ 向量，记
+$u=A|0\rangle$、$v=A|1\rangle$。定义单位实向量
+
+$$
+f_0=\sqrt{1+p}\,u,\qquad
+f_1=\frac{\sqrt{1+p}}b\,v.
+\tag{170.7}
+$$
+
+由（170.2），
+
+$$
+\langle f_0,f_1\rangle=a,\qquad
+\det[f_0\ f_1]=b.
+$$
+
+因此，令 $J=-iY$ 为实平面上的正向四分之一转动，有
+
+$$
+f_1=af_0+bJf_0,\qquad
+\frac{f_0-af_1}{b}=iYf_1.
+\tag{170.8}
+$$
+
+按输出 $M=0,1$ 展开（170.5）的 $s=0$ 一支，得到
+
+$$
+U_{\mathrm{abs}}(u\otimes|0\rangle)
+=\frac vb\otimes|0\rangle,\qquad
+U_{\mathrm{abs}}(v\otimes|1\rangle)
+=\left(u-\frac abv\right)\otimes|0\rangle.
+$$
+
+$s=1$ 一支将输入 $R$ 向量左乘 $Y$，并将输出 $B$ 标签换为 $1$。归一化后，四个基向量的作用为
+
+$$
+\begin{aligned}
+f_0\otimes|0\rangle&\longmapsto f_1\otimes|0\rangle,&
+Yf_0\otimes|0\rangle&\longmapsto f_1\otimes|1\rangle,\\
+f_1\otimes|1\rangle&\longmapsto iYf_1\otimes|0\rangle,&
+Yf_1\otimes|1\rangle&\longmapsto iYf_1\otimes|1\rangle.
+\end{aligned}
+\tag{170.9}
+$$
+
+输入和输出各为正交归一基。令
+
+$$
+K=|f_0\rangle\langle f_1|
++|Yf_0\rangle\langle Yf_1|
+=aI+i bY.
+\tag{170.10}
+$$
+
+最后的等式可由（170.8）在基 $f_1,Yf_1$ 上检验。输出 $R$ 基
+$f_1,iYf_1$ 上的 $Y$ 矩阵为
+$\begin{pmatrix}0&i\\-i&0\end{pmatrix}$。按输入 $B$ 分块回拉，得到
+
+$$
+U_{\mathrm{abs}}^*(Y_R\otimes I_B)U_{\mathrm{abs}}
+=
+\begin{pmatrix}
+0&iK\\
+-iK^*&0
+\end{pmatrix}_B
+=-aI_R\otimes Y_B-bY_R\otimes X_B.
+$$
+
+证毕。
+
+### 170.2 每轮代码外概率恰好乘以 \(p\)
+
+暂不加入逻辑寄存器，定义来源发射与吸收之后丢弃 $B$ 的通道
+
+$$
+\mathcal A_{\mathrm{abs}}(X)=\sum_{s=0}^1B_sXB_s^*,
+\qquad
+B_s=(I_{MR}\otimes\langle s|_B)
+(I_M\otimes U_{\mathrm{abs}})(T\otimes I_R).
+\tag{170.11}
+$$
+
+各系统依下标作固定排序。活动记忆的来源边缘通道记为
+$\mathcal E_{\mathrm{src}}$。
+
+**引理170.2（精确泄漏恒等式）。** 有
+
+$$
+\boxed{
+\mathcal A_{\mathrm{abs}}^*(Q_{\mathrm c})=pQ_{\mathrm c}.
+}
+\tag{170.12}
+$$
+
+**证明。** 吸收酉只作用于 $R,B$，所以
+
+$$
+\mathcal A_{\mathrm{abs}}^*(\rho\otimes I_R)
+=\mathcal E_{\mathrm{src}}^*(\rho)\otimes I_R.
+$$
+
+直接代入来源等距得到
+
+$$
+T^*(Y_M\otimes Y_B)T=bX_M,\qquad
+T^*(Y_M\otimes X_B)T=-bY_M.
+\tag{170.13}
+$$
+
+由引理170.1，
+
+$$
+\mathcal A_{\mathrm{abs}}^*(Y_M\otimes Y_R)
+=-abX_M\otimes I_R+pY_M\otimes Y_R.
+\tag{170.14}
+$$
+
+另一方面，
+
+$$
+\mathcal E_{\mathrm{src}}^*(\rho)
+=
+\begin{pmatrix}
+1-\dfrac{p^2}{1+p}&0\\
+0&\dfrac1{1+p}
+\end{pmatrix},
+\qquad
+\mathcal E_{\mathrm{src}}^*(\rho)+\eta abX
+=(1-p)I+p\rho.
+\tag{170.15}
+$$
+
+把（170.14）—（170.15）代入（170.4），得
+
+$$
+\mathcal A_{\mathrm{abs}}^*(P_{\mathrm c})
+=(1-p)I+pP_{\mathrm c}.
+$$
+
+通道对偶保单位，取补投影便得到（170.12）。证毕。
+
+现在恢复逻辑寄存器 $Q$。为区分寄存器名称与补投影，在整个运行空间
+$H=M\otimes Q\otimes R$ 上写
+
+$$
+\mathsf P=I_Q\otimes P_{\mathrm c},\qquad
+\mathsf Q=I_H-\mathsf P.
+\tag{170.16}
+$$
+
+式中的张量按系统标记置换。令
+$\mathcal F=\mathcal F_{\mathrm{run}}$ 为第159节的完整真实运行通道。
+其每个 Kraus 算子在吸收分支 $s$ 和新掩码 $t$ 上具有形式
+
+$$
+\frac1{\sqrt2}(Z^tUZ^s)_Q\otimes
+\bigl((I_M\otimes Y_R^t)B_s\bigr).
+\tag{170.17}
+$$
+
+$Y_R$ 交换 $\psi_0,\psi_1$，因而保持 $P_{\mathrm c}$ 和 $Q_{\mathrm c}$。
+逻辑酉不改变 $\mathsf Q$ 的期望。由（170.12）立刻得到
+
+$$
+\boxed{\mathcal F^*(\mathsf Q)=p\mathsf Q.}
+\tag{170.18}
+$$
+
+因此对任何初始状态及任意外部参考，运行 $n$ 轮后的代码外概率恰为初始代码外概率的 $p^n$ 倍。这是算子恒等式，不依赖启动接近代码的假设。
+
+### 170.3 代码上的一步压缩合同
+
+令 $\mathcal E=\mathfrak E$ 为第159节编码，令
+$\mathcal U=\operatorname{Ad}_U$。采用第168节的联合解码器
+$\mathcal D=\Lambda_{\mathrm{joint}}$，在代码补空间的固定输出任取一份逻辑态。于是
+
+$$
+\mathcal D\mathcal E=\operatorname{id},\qquad
+\operatorname{ran}\mathcal E\subseteq
+\{X:\mathsf P X\mathsf P=X\}.
+\tag{170.19}
+$$
+
+除了已知的 $\mathcal F\mathcal E=\mathcal E\mathcal U$，还需要代码整个算子空间上的更强合同：
+
+$$
+\boxed{
+\mathcal F(\mathsf P X\mathsf P)
+=\mathcal E\mathcal U\mathcal D(\mathsf P X\mathsf P)
+\quad\text{对所有 }X.
+}
+\tag{170.20}
+$$
+
+为验证它，将代码算子写成
+
+$$
+\mathsf P X\mathsf P
+=\sum_{s,t=0}^1X_{st}^{Q}\otimes
+|\psi_s\rangle\langle\psi_t|_{MR}.
+$$
+
+吸收把 $\psi_s$ 变为 $\Xi\otimes|s\rangle_B$；按旧位纠错后，逻辑块成为
+$Z^sX_{st}Z^t$。丢弃 $B$ 消去 $s\ne t$ 的项，留下
+
+$$
+\sum_s Z^sX_{ss}Z^s
+=\mathcal D(\mathsf P X\mathsf P).
+$$
+
+再旋转并重新掩码，恰为（170.20）。该式对所有算子线性成立，故保留任意参考。这里不能只以编码像上的轨道恒等式代替整个 $\mathsf P$ 块上的合同。
+
+### 170.4 一般的几何吸引与渐近联合解码
+
+下面先给出所用有限维通道命题，随后应用于本装置。对同输入、同输出的线性映射，记
+
+$$
+d_\diamond(\Phi,\Psi)=\frac12\|\Phi-\Psi\|_\diamond.
+$$
+
+设 $\mathcal F$ 为 $H$ 上 CPTP 通道，$\mathsf P$ 为投影，
+$\mathsf Q=I-\mathsf P$。设编码
+$\mathcal E:\mathcal L(H_{\mathrm{log}})\to\mathcal L(H)$
+与解码
+$\mathcal D:\mathcal L(H)\to\mathcal L(H_{\mathrm{log}})$
+均 CPTP，$\mathcal U$ 为逻辑酉通道。假设（170.19）—（170.20）成立，并有
+$\mathcal F^*(\mathsf Q)\preceq p\mathsf Q$，其中 $0<p<1$。
+
+**定理170.3（全空间渐近逻辑投影）。** 存在 CPTP 通道
+$\Lambda_\infty:\mathcal L(H)\to\mathcal L(H_{\mathrm{log}})$，使
+
+$$
+\boxed{
+\Lambda_\infty\mathcal E=\operatorname{id},\qquad
+\Lambda_\infty\mathcal F=\mathcal U\Lambda_\infty.
+}
+\tag{170.21}
+$$
+
+令
+
+$$
+\Lambda_n=\mathcal U^{-n}\mathcal D\mathcal F^n.
+$$
+
+则
+
+$$
+\boxed{
+d_\diamond(\Lambda_\infty,\Lambda_n)
+\le\frac{2p^{n/2}}{1-\sqrt p}
+\quad(n\ge0),
+}
+\tag{170.22}
+$$
+
+以及
+
+$$
+\boxed{
+d_\diamond\!\left(
+\mathcal F^n,\mathcal E\mathcal U^n\Lambda_\infty
+\right)
+\le C_p^{\mathrm{abs}}p^{(n-1)/2},
+\qquad
+C_p^{\mathrm{abs}}=
+\frac{2(2-\sqrt p)}{1-\sqrt p},
+\quad n\ge1.
+}
+\tag{170.23}
+$$
+
+**证明。** 置
+$\mathcal Z=\mathcal F-\mathcal E\mathcal U\mathcal D$。
+由（170.20），$\mathcal Z$ 在整个 $\mathsf P$ 算子块上为零。
+
+任取带外部参考的归一化输入态 $\omega$，记
+$\omega_n=(\mathcal F^n\otimes\operatorname{id})(\omega)$。
+由泄漏上界及对偶通道的正性归纳，
+
+$$
+\operatorname{Tr}[(\mathsf Q\otimes I)\omega_n]
+\le p^n\operatorname{Tr}[(\mathsf Q\otimes I)\omega]\le p^n.
+$$
+
+投影的 gentle measurement 估计给
+
+$$
+\|\omega_n-(\mathsf P\otimes I)\omega_n
+(\mathsf P\otimes I)\|_1\le2p^{n/2}.
+\tag{170.24}
+$$
+
+$\mathcal Z$ 是两条 CPTP 通道之差；每条通道在 Hermitian 输入上收缩迹范数。因此
+
+$$
+\|(\mathcal Z\otimes\operatorname{id})(\omega_n)\|_1
+\le4p^{n/2}.
+$$
+
+这个估计与参考维数无关。用通道差的状态优化刻画 diamond 范数，得到
+
+$$
+\frac12\|\mathcal Z\mathcal F^n\|_\diamond
+\le2p^{n/2}.
+\tag{170.25}
+$$
+
+各 $\Lambda_n$ 都是 CPTP。由 $\mathcal D\mathcal E=\operatorname{id}$，
+
+$$
+\Lambda_{n+1}-\Lambda_n
+=\mathcal U^{-(n+1)}\mathcal D
+\mathcal Z\mathcal F^n.
+$$
+
+故相邻项的 $d_\diamond$ 至多为 $2p^{n/2}$。几何级数可和，$\Lambda_n$
+在有限维通道空间中收敛到 CPTP 极限 $\Lambda_\infty$；求和即得（170.22）。
+
+由代码合同有 $\mathcal F\mathcal E=\mathcal E\mathcal U$，于是
+$\Lambda_n\mathcal E=\operatorname{id}$。同时
+$\Lambda_n\mathcal F=\mathcal U\Lambda_{n+1}$。取极限得到（170.21）。
+
+最后，对 $n\ge1$，
+
+$$
+\mathcal F^n-\mathcal E\mathcal U^n\Lambda_\infty
+=
+\mathcal Z\mathcal F^{n-1}
++\mathcal E\mathcal U^n(\Lambda_{n-1}-\Lambda_\infty).
+\tag{170.26}
+$$
+
+第一项由（170.25）控制，第二项由（170.22）与通道收缩控制；两项半 diamond 范数之和为
+
+$$
+2p^{(n-1)/2}
++\frac{2p^{(n-1)/2}}{1-\sqrt p}
+=C_p^{\mathrm{abs}}p^{(n-1)/2}.
+$$
+
+证毕。
+
+定义
+
+$$
+\Pi_\infty=\mathcal E\Lambda_\infty.
+\tag{170.27}
+$$
+
+由（170.21），这是 CPTP 投影，满足
+
+$$
+\boxed{
+\Pi_\infty^2=\Pi_\infty,\qquad
+\mathcal F\Pi_\infty=\Pi_\infty\mathcal F,\qquad
+\operatorname{ran}\Pi_\infty=\operatorname{ran}\mathcal E.
+}
+\tag{170.28}
+$$
+
+在 $\ker\Pi_\infty$ 上，（170.23）给出几何衰减；其谱半径至多为
+$\sqrt p<1$。在 $\operatorname{ran}\mathcal E$ 上，
+$\mathcal F$ 与 $\mathcal U$ 由 $\mathcal E,\Lambda_\infty$ 相似。
+因此 $\mathcal F$ 的全部单位模谱及其本征算子都来自逻辑酉通道，代码外不存在额外外围模，也不存在额外外围 Jordan 链。
+
+### 170.5 本装置的全部外围谱与操作权限
+
+由（170.18）—（170.20），定理170.3适用于第159节的实际运行通道。
+其逻辑酉为
+
+$$
+U=\begin{pmatrix}3/5&-4/5\\4/5&3/5\end{pmatrix}
+=e^{-i\theta Y},
+\qquad e^{i\theta}=\frac{3+4i}{5}.
+$$
+
+$\operatorname{Ad}_U$ 在 qubit 算子空间上的谱为
+
+$$
+\boxed{
+1\quad\text{重数二},\qquad
+e^{2i\theta}=\frac{-7+24i}{25},\qquad
+e^{-2i\theta}=\frac{-7-24i}{25}.
+}
+\tag{170.29}
+$$
+
+所以整个八维运行空间的通道恰有这四维外围算子空间；其余谱的模至多为
+$\sqrt p$。这里给的是解析上界，没有声称稳定谱半径一定等于
+$\sqrt p$。
+
+$\Lambda_\infty$ 是定义在整个 $MQR$ 上的联合通道；其构造使用了
+$\mathcal D=\Lambda_{\mathrm{joint}}$。它不是只访问 $QR$ 的物理接收器，也不改变第168节的局部不可逆结论。投影
+$\Pi_\infty$ 描述运行通道的渐近结构，不增加终端解码权限。
+
+### 170.6 真实启动诱导的逻辑通道必须保留
+
+令 $\mathcal R_L$ 为第159节实际独立初始化、运行 $L$ 个启动步骤后的通道，其输入仍是原始活动记忆。定义
+
+$$
+\Theta_L=\Lambda_\infty\mathcal R_L.
+\tag{170.30}
+$$
+
+这是一条从原始来源输入到逻辑 qubit 的 CPTP 通道，包含该输入与外部参考的全部渐近残余关系。对 $k\ge1$，式（170.23）后接真实启动给
+
+$$
+\boxed{
+d_\diamond\!\left(
+\mathcal R_{L+k},
+\mathcal E\mathcal U^k\Theta_L
+\right)
+\le C_p^{\mathrm{abs}}p^{(k-1)/2}.
+}
+\tag{170.31}
+$$
+
+尚未证明 $\Theta_L$ 为常值通道。已有启动估计只给出
+
+$$
+d_\diamond(\mathcal R_L,\mathcal E\mathcal C_0)\le\delta_L,
+\qquad
+\mathcal C_0(X)=\operatorname{Tr}(X)P_{|0\rangle}.
+$$
+
+由 $\Lambda_\infty\mathcal E=\operatorname{id}$ 和收缩性，
+
+$$
+\boxed{
+d_\diamond(\Theta_L,\mathcal C_0)\le\delta_L.
+}
+\tag{170.32}
+$$
+
+这个界不能被升级为 $\Theta_L=\mathcal C_0$。几何吸引消去的是代码外部分；进入逻辑外围子空间的启动信息仍由 $\Theta_L$ 承载。
+
+### 170.7 真实误差的单圆相位表示与共同经验分布
+
+令 $z=e^{2i\varphi}\in\mathbb T$，其中
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix}.
+$$
+
+由于 $U_{\varphi+\pi}=-U_\varphi$，通道
+$\operatorname{Ad}_{U_\varphi}$ 只依赖 $z$。定义
+
+$$
+\mathcal H_L(z)=
+\mathcal E\operatorname{Ad}_{U_\varphi}\Theta_L,
+$$
+
+$$
+h_L(z)=
+\min_{\mathcal D_{\mathrm{loc}}:QR\to
+Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+\frac12
+\left\|
+(\operatorname{id}_M\otimes\mathcal D_{\mathrm{loc}})
+\mathcal H_L(z)-\mathcal W_*
+\right\|_\diamond.
+\tag{170.33}
+$$
+
+这里始终优化只访问接收端的解码器。$h_L$ 连续：相位通道连续，且任意两个输入通道的最优解码误差之差不超过它们的半 diamond 距离。一个单圆已足以参数化全部真实渐近相位，不再需要由数值谱猜测外围群。
+
+第159节的规范输出压缩将实际档案任务写为同一接收端优化，目标是
+$\operatorname{Ad}_{W_{L+k}}$，并满足
+
+$$
+d_\diamond(\operatorname{Ad}_{W_{L+k}},\mathcal W_*)
+\le\delta_{L+k}.
+$$
+
+因此（170.31）给出真实终端误差的消失尾界
+
+$$
+\boxed{
+|e_{L+k}-h_L(e^{2ik\theta})|
+\le C_p^{\mathrm{abs}}p^{(k-1)/2}+\delta_{L+k},
+\qquad k\ge1.
+}
+\tag{170.34}
+$$
+
+右侧两项都随 $k$ 趋零；第一项来自真实运行通道的全空间吸引，第二项仍是规范目标的终端误差。
+
+这不把第165节的常值入口闭式变为真实误差闭式。由（170.32）只能推出
+
+$$
+\left|h_L(e^{2i\varphi})-\mathfrak e(U_\varphi|0\rangle)\right|
+\le\delta_L.
+\tag{170.35}
+$$
+
+所以在与那条常值比较曲线相比较时，固定启动带仍须保留。式（170.34）之所以有消失尾界，是因为其相位函数保留了真实的 $\Theta_L$。
+
+由第159节，$e^{i\theta}$ 不是单位根，因此
+$e^{2im\theta}$ 对每个正整数 $m$ 都不是单位根。
+圆群上的无理旋转等分布于是给出：任取 $m\ge1$、$0\le r<m$，
+
+$$
+\boxed{
+\frac1N\sum_{j=0}^{N-1}\delta_{e_{L+r+mj}}
+\ \Longrightarrow\
+\nu_L:=(h_L)_\#m_{\mathbb T}
+\qquad(N\to\infty).
+}
+\tag{170.36}
+$$
+
+有限个不满足（170.34）起始范围的索引不影响极限。证明是在任意连续测试函数下先用（170.34）替换误差，再对
+$e^{2i(r+mj)\theta}$ 使用等分布。所有有限等差子序列因此具有同一份真实经验分布，而不仅是各自拥有某个未知相位子群的分布。
+
+若启动长度满足第159节的 $\delta_L<\lambda_*/8$，其已证振荡间隔迫使
+$h_L$ 非常数。上述共同分布结论本身不要求先证明非常数，也没有用
+$\Theta_L$ 的数值估计代替其精确结构。
+
+本节给出实际运行通道的解析泄漏律、联合渐近投影及带全部参考的统一尾界。没有新增 Lean 核验声明；终端局部解码的权限与原始来源输入的任务量词均保持不变。
+
+## 追加锚（本行以下为增补区）
+
+## 171. 有限启动留下永久原输入关联的精确证书
+
+第170节证明真实运行态会被吸引到联合编码像，但将启动所诱导的逻辑通道 $\Theta_L$ 保留为真实参数。本节在同一来源的 $p=1/2$ 实例中精确计算该通道。结果表明：每个有限整数 $L\ge3$ 都留下严格非零的原输入关联，三十四维主例 $L=9$ 也不例外。
+
+证明使用从吸收合同直接构造的有理 Kraus 矩阵和一组有理观测恒等式。数值谱与浮点拟合不承担这个结论。
+
+### 171.1 同一运行通道的有理 Kraus 表示
+
+固定
+
+$$
+a=b=\frac1{\sqrt2},\qquad p=\frac12,\qquad
+\rho_*=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\qquad
+\sqrt{\rho_*}=\frac1{\sqrt{15}}
+\begin{pmatrix}3&1\\1&2\end{pmatrix}.
+\tag{171.1}
+$$
+
+逻辑酉仍为第159节的
+
+$$
+U=\frac15\begin{pmatrix}3&-4\\4&3\end{pmatrix},
+\qquad
+c=\cos(2\theta)=-\frac7{25},
+\qquad
+s=\sin(2\theta)=\frac{24}{25}.
+\tag{171.2}
+$$
+
+在 $M\otimes R$ 的计算基 $00,01,10,11$ 中定义
+
+$$
+R_0=\frac1{10}
+\begin{pmatrix}
+3&1&4&8\\
+6&2&-2&-4\\
+3&1&0&0\\
+6&2&0&0
+\end{pmatrix},
+\qquad
+R_1=\frac1{10}
+\begin{pmatrix}
+1&-3&8&-4\\
+2&-6&-4&2\\
+1&-3&0&0\\
+2&-6&0&0
+\end{pmatrix}.
+\tag{171.3}
+$$
+
+第170节未加逻辑门与新掩码的实际吸收 Kraus 恰为
+$B_0=R_0$、$B_1=iR_1$。
+
+这些矩阵可直接从吸收酉的四向量合同推导。具体地，第170节的单位向量在此为
+
+$$
+f_0=\frac1{\sqrt{10}}\binom31,\qquad
+f_1=\frac1{\sqrt5}\binom12,\qquad
+iYf_1=\frac1{\sqrt5}\binom2{-1}.
+$$
+
+吸收分支有表达式
+
+$$
+B_j=
+\bigl(|m_0\rangle_M\otimes|f_1\rangle_R\bigr)
+\bigl(\langle0|_M\otimes\langle Y^j f_0|_R\bigr)
++
+\bigl(|0\rangle_M\otimes|iYf_1\rangle_R\bigr)
+\bigl(\langle1|_M\otimes\langle Y^j f_1|_R\bigr).
+\tag{171.4}
+$$
+
+代入以上三个向量得到（171.3），并可直接核对
+
+$$
+R_0^{\mathsf T}R_0+R_1^{\mathsf T}R_1=I_4.
+\tag{171.5}
+$$
+
+令 $J=-iY$，为实矩阵。第159节完整运行通道 $\mathcal F$ 的 Kraus 可去掉各自无效的整体相位，写成
+
+$$
+K_{t,j}
+=\frac1{\sqrt2}(Z^tUZ^j)_Q
+\otimes\bigl((I_M\otimes J_R^t)R_j\bigr),
+\qquad t,j\in\{0,1\}.
+\tag{171.6}
+$$
+
+系统按标记置换。每个矩阵都是有理矩阵除以 $\sqrt2$，所以完整 superoperator 的条目严格为有理数。这里没有把某份浮点矩阵近似成有理矩阵。
+
+### 171.2 两个联合逻辑观测的完整有理证书
+
+以下 Pauli 乘积中的第一因子属于 $M$，第二因子属于 $R$。写
+
+$$
+H_Z=Z_Q\otimes A_Z+X_Q\otimes B_Z,
+\qquad
+H_X=Z_Q\otimes A_X+X_Q\otimes B_X.
+\tag{171.7}
+$$
+
+四个 $MR$ 矩阵由下表定义：表中每项都须除以共同分母 $47060$。
+
+| $Q$ 因子 | $MR$ 因子 | $H_Z$ 的分子 | $H_X$ 的分子 |
+| --- | --- | ---: | ---: |
+| $Z$ | $I\otimes I$ | $12500$ | $5040$ |
+| $Z$ | $X\otimes I$ | $23040$ | $-3360$ |
+| $Z$ | $Z\otimes I$ | $11520$ | $-1680$ |
+| $Z$ | $Y\otimes Y$ | $-23040$ | $3360$ |
+| $X$ | $I\otimes X$ | $1848$ | $19731$ |
+| $X$ | $X\otimes X$ | $-2352$ | $16814$ |
+| $X$ | $Z\otimes X$ | $-840$ | $1299$ |
+| $X$ | $I\otimes Z$ | $-336$ | $7108$ |
+| $X$ | $X\otimes Z$ | $-336$ | $2402$ |
+| $X$ | $Z\otimes Z$ | $1680$ | $20932$ |
+
+这些是实 Hermitian 矩阵。它们满足
+
+$$
+\boxed{
+\mathcal F^*(H_Z)=cH_Z-sH_X,\qquad
+\mathcal F^*(H_X)=sH_Z+cH_X,
+}
+\tag{171.8}
+$$
+
+以及
+
+$$
+\boxed{
+\mathfrak E^*(H_Z)=Z,\qquad
+\mathfrak E^*(H_X)=X.
+}
+\tag{171.9}
+$$
+
+下面给出不依赖大矩阵谱分解的精确核对方式。定义两个四维矩阵映射
+
+$$
+L_\pm(W)=R_0^{\mathsf T}WR_0
+\ \pm\ R_1^{\mathsf T}WR_1.
+\tag{171.10}
+$$
+
+表中 $A_Z,A_X$ 与 $I_M\otimes Y_R$ 对易，
+$B_Z,B_X$ 与其反对易。由实际 Kraus（171.6）直接回拉可得
+
+$$
+\begin{aligned}
+\mathcal F^*(Z_Q\otimes A+X_Q\otimes B)
+={}&Z_Q\otimes\bigl(cL_+(A)+sL_+(B)\bigr)\\
+&+X_Q\otimes\bigl(-sL_-(A)+cL_-(B)\bigr)
+\end{aligned}
+\tag{171.11}
+$$
+
+对这两种奇偶类型的 $A,B$ 成立。因此（171.8）恰由下列四份有理 $4\times4$ 恒等式给出：
+
+$$
+\begin{aligned}
+cL_+(A_Z)+sL_+(B_Z)&=cA_Z-sA_X,\\
+-sL_-(A_Z)+cL_-(B_Z)&=cB_Z-sB_X,\\
+cL_+(A_X)+sL_+(B_X)&=sA_Z+cA_X,\\
+-sL_-(A_X)+cL_-(B_X)&=sB_Z+cB_X.
+\end{aligned}
+\tag{171.12}
+$$
+
+把（171.3）和系数表代入即可逐项相乘核对。对于（171.9），令
+$v=(3,1,1,2)^{\mathsf T}$，则
+$|\Xi\rangle=v/\sqrt{15}$；同样的有理乘法给
+
+$$
+\frac{v^{\mathsf T}A_Zv}{15}=1,\quad
+\frac{v^{\mathsf T}B_Zv}{15}=0,\quad
+\frac{v^{\mathsf T}A_Xv}{15}=0,\quad
+\frac{v^{\mathsf T}B_Xv}{15}=1.
+\tag{171.13}
+$$
+
+再用上述 $Y_R$ 奇偶性与编码定义，即得（171.9）。这些有限矩阵恒等式本身就是所需证书；有理消元只用于寻找并精确核对表中系数，不替代其明确陈述。
+
+### 171.3 证书确实对应真实渐近逻辑
+
+第170节已构造唯一由运行渐近行为确定的联合逻辑通道
+$\Lambda_\infty$。上述观测满足
+
+$$
+\boxed{
+H_Z=\Lambda_\infty^*(Z),\qquad
+H_X=\Lambda_\infty^*(X).
+}
+\tag{171.14}
+$$
+
+**证明。** 令 $H=H_Z+iH_X$，
+$\zeta=c+is=e^{2i\theta}$。式（171.8）给
+$\mathcal F^*(H)=\zeta H$，而（171.9）给
+$\mathfrak E^*(H)=Z+iX$。
+
+第170节的带参考渐近合同
+$\mathcal F^n-\mathfrak E\mathcal U^n\Lambda_\infty\to0$
+也给有限维对偶算子范数收敛。因此
+
+$$
+\zeta^nH-
+\Lambda_\infty^*(\mathcal U^*)^n(Z+iX)
+\longrightarrow0.
+$$
+
+又 $(\mathcal U^*)^n(Z+iX)=\zeta^n(Z+iX)$，且
+$|\zeta|=1$，故
+$H=\Lambda_\infty^*(Z+iX)$。取实部与虚部即得（171.14）。证毕。
+
+这一步排除了仅找到某个数值近外围方向的可能。$H_Z,H_X$ 是联合 $MQR$ 上的数学观测，不被列为只访问 $QR$ 的终端操作。
+
+### 171.4 真实启动诱导的逻辑通道闭式
+
+记原始来源计算基输入为 $P_j=|j\rangle\langle j|$，并令
+
+$$
+\rho_{j,L}=\mathcal E_{\mathrm{src}}^L(P_j).
+\tag{171.15}
+$$
+
+这是第159节规范启动纯化所用的同一索引。最后一步重置逻辑标签并施加新掩码后，真实启动通道为
+
+$$
+\mathcal R_L(X)=
+\sum_{j=0}^1X_{jj}\,
+P_0^Q\otimes\omega_{j,L}^{MR},
+$$
+
+$$
+\omega_{j,L}
+=\frac12\left(
+P_{\operatorname{vec}\sqrt{\rho_{j,L}}}
++(I_M\otimes Y_R)
+P_{\operatorname{vec}\sqrt{\rho_{j,L}}}
+(I_M\otimes Y_R)
+\right).
+\tag{171.16}
+$$
+
+原输入的非对角项在重置原规范逻辑标签时被迹掉；对角分支仍可与外部参考相关。
+
+对任意实对称 qubit 密度矩阵 $\rho_j$，第170节相同的二阶恒等式给
+
+$$
+\omega_j=\frac12
+\left(\rho_j\otimes I
+-\sqrt{\det\rho_j}\,Y\otimes Y\right).
+\tag{171.17}
+$$
+
+在（171.16）上取 $H_Z,H_X$ 的期望，所有带 $X_Q$ 的表项都消失。若
+$x_j=\operatorname{Tr}(\rho_jX)$、
+$z_j=\operatorname{Tr}(\rho_jZ)$、
+$d_j=\sqrt{\det\rho_j}$，则
+
+$$
+\begin{aligned}
+\operatorname{Tr}(Z\Theta_L(P_j))
+&=\frac{625+1152x_j+576z_j+2304d_j}{2353},\\
+\operatorname{Tr}(X\Theta_L(P_j))
+&=\frac{252-168x_j-84z_j-336d_j}{2353}.
+\end{aligned}
+\tag{171.18}
+$$
+
+这里 $\Theta_L=\Lambda_\infty\mathcal R_L$ 是第170节的真实逻辑通道。
+
+它的这两份输出均为实矩阵。事实上，（171.6）的运行 Kraus 可取实矩阵，逻辑酉也为实矩阵；第168节联合解码器的各 Kraus 可去掉整体相位取实，并在补空间选实固定输出。故
+$\mathcal U^{-n}\Lambda_{\mathrm{joint}}\mathcal F^n$
+保持实态，其极限 $\Lambda_\infty$ 也保持实态。因此两输出的 $Y$ 坐标严格为零，（171.18）已确定完整逻辑输出。
+
+为写出所有 $L$ 的简式，令
+
+$$
+D=P_{m_0}-P_0,\qquad
+z=\left(-\frac12\right)^{L-1}.
+$$
+
+来源递推满足
+$\mathcal E_{\mathrm{src}}(D)=-D/2$，
+$\rho_{0,1}=\rho_*+D/3$、
+$\rho_{1,1}=\rho_*-2D/3$，所以
+
+$$
+\rho_{0,L}=\rho_*+\frac z3D,\qquad
+\rho_{1,L}=\rho_*-\frac{2z}3D.
+\tag{171.19}
+$$
+
+定义
+
+$$
+d(t)=\det(\rho_*+tD)
+=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+w(t)=\frac43-t-4\sqrt{d(t)}.
+\tag{171.20}
+$$
+
+在这里实际出现的 $t$ 上，$d(t)>0$。代入（171.18）得到
+
+$$
+\boxed{
+\begin{aligned}
+\Theta_L(P_0)&=\tau(z/3),&
+\Theta_L(P_1)&=\tau(-2z/3),\\
+\tau(t)&=\frac12\left[
+I+\frac{84w(t)}{2353}X
++\left(1-\frac{576w(t)}{2353}\right)Z
+\right],\\
+\Theta_L(X)&=X_{00}\tau(z/3)+X_{11}\tau(-2z/3).
+\end{aligned}
+}
+\tag{171.21}
+$$
+
+这些矩阵的正性也由 $\Theta_L$ 的 CPTP 构造保证。该式给的是来源输入到渐近逻辑的真实通道，没有把联合 $\Lambda_\infty$ 当作终端可免费调用的恢复器。
+
+### 171.5 十维实例与所有有限启动的严格非零关联
+
+当 $L=3$ 时，实际状态为
+
+$$
+\rho_{0,3}=
+\begin{pmatrix}5/8&3/8\\3/8&3/8\end{pmatrix},
+\qquad
+\rho_{1,3}=
+\begin{pmatrix}3/4&1/4\\1/4&1/4\end{pmatrix}.
+\tag{171.22}
+$$
+
+其行列式平方根分别为 $\sqrt6/8$、$\sqrt2/4$。由（171.18），
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{Tr}\!\left[
+Z\bigl(\Theta_3(P_0)-\Theta_3(P_1)\bigr)\right]
+&=\frac{144(1+2\sqrt6-4\sqrt2)}{2353},\\
+\operatorname{Tr}\!\left[
+X\bigl(\Theta_3(P_0)-\Theta_3(P_1)\bigr)\right]
+&=-\frac{21(1+2\sqrt6-4\sqrt2)}{2353}.
+\end{aligned}
+}
+\tag{171.23}
+$$
+
+其中 $1+2\sqrt6>4\sqrt2$，可对两边正数平方后再用
+$8\sqrt2>9$ 核对。因此这是严格非零的精确见证。
+启动 $L=3$ 使用的总持久维数为 $4L-2=10$；第159节的通道构造适用于全部整数 $L\ge3$，其用于保证振荡间隔的额外小扰动条件不是装置构造的前提。
+
+更一般地，定义
+
+$$
+h(z)=\frac z4+\sqrt{d(z/3)}-\sqrt{d(-2z/3)}.
+\tag{171.24}
+$$
+
+式（171.18）—（171.21）给
+
+$$
+\boxed{
+\begin{aligned}
+\Delta Z_L&=\frac{2304}{2353}h(z),&
+\Delta X_L&=-\frac{336}{2353}h(z),&
+\Delta Y_L&=0,\\
+D\bigl(\Theta_L(P_0),\Theta_L(P_1)\bigr)
+&=\frac{24|h(z)|}{\sqrt{2353}},
+\end{aligned}
+}
+\tag{171.25}
+$$
+
+其中 $D(\sigma,\tau)=\|\sigma-\tau\|_1/2$。最后一式使用
+$2304=48\cdot48$、$336=48\cdot7$ 及 $2353=48^2+7^2$。
+
+**定理171.1（每个有限启动都保留原输入关联）。** 对每个整数
+$L\ge3$，有
+
+$$
+\boxed{\Theta_L(P_0)\ne\Theta_L(P_1).}
+\tag{171.26}
+$$
+
+**证明。** 记
+$A=\sqrt{d(z/3)}$、$B=\sqrt{d(-2z/3)}$、
+$C=(8-11z)/24$。直接相乘及有理化给
+
+$$
+\begin{aligned}
+h(z)(A+B+z/4)&=\frac z2(A-C),\\
+A^2-C^2&=\frac{z(16-17z)}{64}.
+\end{aligned}
+$$
+
+因此有精确正因式
+
+$$
+\boxed{
+h(z)=
+\frac{z^2(16-17z)}
+{128(A+C)(A+B+z/4)}.
+}
+\tag{171.27}
+$$
+
+在 $|z|\le1/4$ 上，
+$A^2\ge3/32$、$B^2\ge5/72$，所以 $A,B>1/4$；
+并且 $C\ge7/32$、$A+B+z/4>7/16$。
+两个分母因子均严格为正，$16-17z\ge47/4>0$。
+对于每个有限整数 $L\ge3$，有 $0<|z|\le1/4$，故
+$h(z)>0$。结合（171.25）得到结论。证毕。
+
+特别地，三十四维主例 $L=9$ 对应 $z=1/256$，所以同样严格保留原输入的这份经典关联。
+若把原输入与参考 $J$ 制备为
+$\frac12\sum_jP_j^J\otimes P_j$，其渐近逻辑联合态为
+$\frac12\sum_jP_j^J\otimes\Theta_L(P_j)$，由（171.26）可知它不是两个边缘的乘积。这里保留的是该计算基上的关联；原输入的相干项已在（171.16）中被迹掉。
+
+对启动长度的尺度还可作解析展开：
+
+$$
+h(z)=\frac9{32}z^2+O(z^3),
+$$
+
+$$
+\boxed{
+D\bigl(\Theta_L(P_0),\Theta_L(P_1)\bigr)
+\sim
+\frac{27}{4\sqrt{2353}}\,4^{-(L-1)}
+\qquad(L\to\infty).
+}
+\tag{171.28}
+$$
+
+第一式可直接由（171.27）得到：在 $z=0$ 处，
+$A=B=C=1/3$，右侧除以 $z^2$ 后的解析因子取值为 $9/32$。
+它说明残留可以随启动长度趋零，但在任一固定有限长度上并不消失。
+
+### 171.6 不能删去的是常值比较的通道差
+
+令第159节的常值比较逻辑入口为
+$\mathcal C_0(X)=\operatorname{Tr}(X)P_0$。由（171.21），两通道之差先测同一个计算基，故
+
+$$
+d_\diamond(\Theta_L,\mathcal C_0)
+=\max_{j=0,1}D(\Theta_L(P_j),P_0).
+\tag{171.29}
+$$
+
+上界对带任意参考的输入按两个正对角块用三角不等式得到，下界分别输入 $P_j$ 达到。又 $\tau(t)$ 是密度矩阵，所以由其 $Z$ 坐标知
+$w(t)\ge0$。代入（171.21），
+
+$$
+\boxed{
+d_\diamond(\Theta_L,\mathcal C_0)
+=\frac6{\sqrt{2353}}
+\max\{w(z/3),w(-2z/3)\}>0.
+}
+\tag{171.30}
+$$
+
+严格性也可直接由（171.26）得到：常值通道不可能同时等于两份不同的输出。
+
+联合编码 $\mathfrak E$ 有 CPTP 左逆，故在其前后使用通道收缩可知，它保留这里的 diamond 差值。第170节的消失尾界因而给
+
+$$
+\boxed{
+\lim_{k\to\infty}
+d_\diamond\!\left(
+\mathcal R_{L+k},
+\mathfrak E\mathcal U^k\mathcal C_0
+\right)
+=d_\diamond(\Theta_L,\mathcal C_0)>0.
+}
+\tag{171.31}
+$$
+
+这证明真实通道不能在固定有限启动后渐近替换为原常值比较通道。它没有把第159节的上界 $\delta_L$ 称为精确差值；实际差值由（171.30）给出。
+
+还必须区分通道不同与优化标量不同：两条不同的输入通道可能在某个恢复任务中具有相同的最优误差。因此（171.31）本身不证明第170节真实相位函数 $h_L$ 与第165节比较误差曲线在每个相位都不同，也没有仅凭这一通道见证判定两份误差经验分布不同。
+
+本节沿用同一真实来源、独立纯初始化、全域固定运行通道及计入持久空间的启动控制。联合观测证书没有增加只访问接收端的终端权限。所有非零结论由明确有理矩阵恒等式和根式代数推出；没有新增 Lean 核验声明。
+
+## 追加锚（本行以下为增补区）
