@@ -73270,3 +73270,387 @@ $$
 对易判据与最小约化维数是固定实际候选的精确结论；整除式是其算术约束；单纯形中间维数公式仍是单独的未解上界。它们都不意味着任意通道对、任意最优容量候选或任意实验语言具有同一参考资源需求。
 
 ## 追加锚（本行以下为增补区）
+
+## 241. 参考维数不足的显式缺口与近最坏探针的资源证书
+
+§240用共同对易性刻画了固定投影候选的全部最坏纯探针。本节进一步量化：偏离对易边缘会损失多少可观察差异；对单纯形候选，较小参考维数至少损失多少；反过来，一份纯探针若已经接近完整最坏差异，它至少需要多大 Schmidt 秩及纠缠熵。
+
+这里的显式界不声称最优，也不结算单纯形中间参考维数的精确公式。全部结论指向同一固定实际候选。
+
+### 241.1 固定候选与一般误差缺口
+
+沿用§240：输入 $A=\mathbb C^d$，$d,N\ge2$，固定全部经典记录标签及各标签的单位纯输出 $r_j$，记 $P_j=|r_j\rangle\langle r_j|$。目标与固定投影候选分别为
+$$
+\begin{aligned}
+\mathcal R(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j,\\
+\mathcal S(X)&=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j,
+\qquad
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\quad 1\le R<Nd.
+\end{aligned}
+\tag{241.1}
+$$
+令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+\qquad D_*=1-\frac R{Nd}.
+\tag{241.2}
+$$
+已知 $D_*=(1/2)\|\mathcal S-\mathcal R\|_{\diamond}$。若纯联合输入的输入边缘为密度矩阵 $\rho$，其实际半迹距离记作 $f(\rho)$。标准纯化给第 $j$ 个参考差块
+$$
+(A_j-B_j)^{\mathsf T},
+\qquad
+A_j=a\sqrt\rho\Pi_j\sqrt\rho,
+\quad
+B_j=b\sqrt\rho(I_d-\Pi_j)\sqrt\rho.
+\tag{241.3}
+$$
+与§240相同，转置不影响迹范数；参考等距变化也不影响距离。因此
+$$
+f(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{241.4}
+$$
+
+**定理 241.1（一般交换子缺口界）。** 对任意输入密度矩阵，包括奇异矩阵，
+$$
+\boxed{
+D_*-f(\rho)
+\ge\min(a,b)\sum_j
+\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+=\frac{\min(a,b)}2\sum_j
+\|[\rho,\Pi_j]\|_{\mathrm{HS}}^2.
+}
+\tag{241.5}
+$$
+该式把实际区分差异与完整最大值之间的缺额，控制在同一输入边缘、同一投影族的非对易方向上。
+
+### 241.2 正半定分支的迹范数损失
+
+**定理241.1的证明。** 先在证明内部建立所需的正矩阵估计。设 $A,B\succeq0$，$t=\operatorname{Tr}(A+B)>0$，令 $P$ 为 $A-B$ 的正谱投影，并置
+$$
+e_A=\operatorname{Tr}[(I-P)A],
+\qquad e_B=\operatorname{Tr}(PB).
+$$
+正负谱分解给
+$$
+\ell:=t-\|A-B\|_1=2(e_A+e_B).
+\tag{241.6}
+$$
+在 Hilbert–Schmidt 范数中分解
+$$
+\sqrt A\sqrt B
+=\sqrt A P\sqrt B+\sqrt A(I-P)\sqrt B.
+$$
+第一项满足
+$$
+\begin{aligned}
+\|\sqrt A P\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}(\sqrt B P A P\sqrt B)\\
+&\le\|A\|_{\mathrm{op}}\operatorname{Tr}(\sqrt B P\sqrt B)\\
+&\le\operatorname{Tr}(A)e_B.
+\end{aligned}
+\tag{241.7}
+$$
+第二项用 $B\preceq\operatorname{Tr}(B)I$，得到
+$$
+\begin{aligned}
+\|\sqrt A(I-P)\sqrt B\|_{\mathrm{HS}}^2
+&=\operatorname{Tr}[\sqrt A(I-P)B(I-P)\sqrt A]\\
+&\le\operatorname{Tr}(B)e_A.
+\end{aligned}
+\tag{241.8}
+$$
+所以三角不等式及二项 Cauchy–Schwarz 给
+$$
+\begin{aligned}
+\sqrt{\operatorname{Tr}(AB)}
+&\le\sqrt{\operatorname{Tr}(A)e_B}
++\sqrt{\operatorname{Tr}(B)e_A}\\
+&\le\sqrt{t(e_A+e_B)}.
+\end{aligned}
+\tag{241.9}
+$$
+平方后结合（241.6），得到
+$$
+\ell\ge\frac{2\operatorname{Tr}(AB)}{t}.
+\tag{241.10}
+$$
+$t=0$ 时 $A=B=0$，相应项直接为零。这里没有把不同迹权重的分支归一化成同一概率，也没有交换不等式方向。
+
+现在应用于（241.3）。设 $p_j=\operatorname{Tr}(\rho\Pi_j)\in[0,1]$，则
+$$
+t_j:=\operatorname{Tr}(A_j+B_j)
+=ap_j+b(1-p_j)
+\in[\min(a,b),\max(a,b)].
+\tag{241.11}
+$$
+由于 $a,b>0$，所有 $t_j$ 严格为正，零投影或满投影也不例外。§240的乘积计算给
+$$
+\operatorname{Tr}(A_jB_j)
+=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.12}
+$$
+又有 $\sum_jt_j=2D_*$，故
+$$
+\begin{aligned}
+D_*-f(\rho)
+&=\frac12\sum_j(t_j-\|A_j-B_j\|_1)\\
+&\ge\sum_j\frac{\operatorname{Tr}(A_jB_j)}{t_j}\\
+&\ge\frac{ab}{\max(a,b)}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{241.13}
+$$
+最后的系数为 $\min(a,b)$。在投影 $\Pi_j$ 的像与核分解中，交换子仅有互为负伴随的两个非对角块，所以
+$$
+\|[\rho,\Pi_j]\|_{\mathrm{HS}}^2
+=2\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\tag{241.14}
+$$
+这证明（241.5）。$\square$
+
+### 241.3 单纯形投影的显式谱隙
+
+现在固定§239的单纯形候选 $\mathcal S^{\triangle}$：$d\ge2$、$N\ge d+1$、$R=d+1$，活跃投影为 $\Pi_j=|u_j\rangle\langle u_j|$，$1\le j\le d+1$，其中
+$$
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\alpha I_d,
+\qquad \alpha=\frac{d+1}{d}.
+\tag{241.15}
+$$
+其余原标签使用零投影。记
+$$
+\kappa=\frac{d+1}{Nd^2},
+\qquad D_*=1-\frac{d+1}{Nd}.
+\tag{241.16}
+$$
+
+**定理 241.2（单纯形的边缘偏差证书）。** 对每份纯联合输入的输入边缘 $\rho$，
+$$
+\boxed{
+D_*-f(\rho)\ge
+\kappa\|\rho-I_d/d\|_{\mathrm{HS}}^2
+=\kappa\left(\operatorname{Tr}\rho^2-\frac1d\right).
+}
+\tag{241.17}
+$$
+
+**证明。** 令 $H=\rho-I_d/d$，则 $H$ Hermitian 且迹零。恒等部分没有投影非对角块，秩一投影还给
+$$
+\begin{aligned}
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+&=\sum_{j=1}^{d+1}
+\left[\operatorname{Tr}(\Pi_jH^2)
+-(\operatorname{Tr}(\Pi_jH))^2\right]\\
+&=\alpha\operatorname{Tr}H^2
+-\sum_{j=1}^{d+1}(\operatorname{Tr}(\Pi_jH))^2.
+\end{aligned}
+\tag{241.18}
+$$
+定义迹零 Hermitian 向量 $T_j=\Pi_j-I_d/d$，以 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 为实 Hilbert–Schmidt 内积。其 Gram 矩阵为
+$$
+\operatorname{Tr}(T_iT_j)=
+\begin{cases}
+(d-1)/d,&i=j,\\
+-(d-1)/d^2,&i\ne j.
+\end{cases}
+\tag{241.19}
+$$
+等价地，令 $n=d+1$，有
+$$
+\Gamma=
+\left(1-\frac1{d^2}\right)
+\left(I_n-\frac1n\mathbf1\mathbf1^{\mathsf T}\right).
+\tag{241.20}
+$$
+因此 $\Gamma$ 的最大本征值为 $\gamma=1-1/d^2$。对任意实系数 $c_j$、$\sum_jc_j^2=1$，
+$$
+\left|\sum_jc_j\operatorname{Tr}(T_jH)\right|
+\le\|H\|_{\mathrm{HS}}
+\left\|\sum_jc_jT_j\right\|_{\mathrm{HS}}
+\le\sqrt\gamma\|H\|_{\mathrm{HS}}.
+$$
+对系数取上确界，并使用 $\operatorname{Tr}H=0$，得到
+$$
+\sum_j(\operatorname{Tr}(\Pi_jH))^2
+=\sum_j(\operatorname{Tr}(T_jH))^2
+\le\left(1-\frac1{d^2}\right)\operatorname{Tr}H^2.
+\tag{241.21}
+$$
+代入（241.18），可得
+$$
+\sum_j\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2
+\ge\left(\frac{d+1}{d}-1+\frac1{d^2}\right)\operatorname{Tr}H^2
+=\frac{d+1}{d^2}\|H\|_{\mathrm{HS}}^2.
+\tag{241.22}
+$$
+在当前参数下，$a=d/(d+1)-1/N\ge1/N=b$，因为 $N\ge d+1$、$d\ge2$。因此定理241.1中的系数为 $b=1/N$。结合（241.22）得到（241.17）。$\square$
+
+该证明使用同一投影族的完整 Gram 关系。它没有仅凭各投影秩或各自谱推出正的统一系数。
+
+### 241.4 受限参考维数的明确区间
+
+若纯联合输入的 Schmidt 秩至多为 $h$，则 $\operatorname{rank}\rho\le h$。对非零本征值用 Cauchy–Schwarz，得到
+$$
+1=(\operatorname{Tr}\rho)^2
+\le h\operatorname{Tr}\rho^2,
+\qquad\operatorname{Tr}\rho^2\ge1/h.
+\tag{241.23}
+$$
+故（241.17）给
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})
+\le D_*-\kappa\left(\frac1h-\frac1d\right),
+\qquad1\le h\le d.
+}
+\tag{241.24}
+$$
+其中 $D_h$ 仍指同一固定通道在 Schmidt 秩至多 $h$ 的纯输入上的最坏实际半迹距离。$h<d$ 时右侧比完整值低一个明确正数；$h=d$ 时缺口项为零，与最大纠缠取等相容。
+
+在固定 $h$ 维参考系统上，任意混合联合输入可分解为纯态，每个分量的 Schmidt 秩都至多为 $h$。迹范数凸性给同一上界。更一般地，若一份混合联合态具有一个分解
+$$
+\Omega=\sum_t p_t|\psi_t\rangle\langle\psi_t|,
+\qquad p_t\ge0,\quad\sum_tp_t=1,
+\quad\operatorname{SchmidtRank}(\psi_t)\le h,
+\tag{241.25}
+$$
+即其 Schmidt number 至多为 $h$，则即使总参考空间大于 $h$，逐项应用（241.24）和凸性仍给同一上界。这一扩展依赖实际存在的分解条件，不把混合态边缘秩当作 Schmidt number。
+
+结合§240已构造的 $h+1$ 坐标子空间最大纠缠输入，得到双侧区间
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+\le1-\frac{d+1}{Nd}
+-\frac{d+1}{Nd^2}\left(\frac1h-\frac1d\right).
+}
+\tag{241.26}
+$$
+$h=1$ 的精确值已经由§239给出，仍为 $1-2/N$；$h=d$ 时两端一致。对 $1<h<d$，本式是一段已证区间，没有把左端候选式宣称为精确值。
+
+本显式界确实不总紧。取 $d=2,N=3,h=1$，有 $D_*=1/2$、$\kappa=1/4$，因此（241.24）给缺口至少 $1/8$、$D_1\le3/8$；而已知精确值是 $D_1=1/3$，真实缺口为 $1/6$。
+
+### 241.5 近最坏纯探针的必要秩与纠缠熵
+
+**定理 241.3（近最坏探针的资源证书）。** 固定同一单纯形候选。若一份归一化纯联合输入满足
+$$
+f(\rho)\ge D_*-\varepsilon,
+\qquad\varepsilon\ge0,
+\tag{241.27}
+$$
+则其输入边缘纯度、Schmidt 秩 $r$ 及纠缠熵满足
+$$
+\boxed{
+\operatorname{Tr}\rho^2
+\le\frac1d+\frac{Nd^2}{d+1}\varepsilon,
+}
+\tag{241.28}
+$$
+$$
+\boxed{
+r\ge
+\left\lceil
+\frac1{\displaystyle 1/d+\frac{Nd^2}{d+1}\varepsilon}
+\right\rceil,
+}
+\tag{241.29}
+$$
+以及
+$$
+\boxed{
+S(\rho)\ge
+\max\left\{0,
+\log_2d-
+\log_2\left(1+\frac{Nd^3}{d+1}\varepsilon\right)
+\right\}.
+}
+\tag{241.30}
+$$
+
+**证明。** 将（241.27）代入（241.17）得
+$$
+\kappa(\operatorname{Tr}\rho^2-1/d)\le\varepsilon,
+$$
+这正是（241.28）。另一方面，$\operatorname{Tr}\rho^2\ge1/r$，故
+$$
+r\ge1/\operatorname{Tr}\rho^2
+\ge\frac1{1/d+Nd^2\varepsilon/(d+1)}.
+$$
+$r$ 是整数，取上整得到（241.29）。
+
+记 $\rho$ 的正本征值为 $\lambda_i$。对凹函数 $\log_2$ 应用 Jensen 不等式，得到
+$$
+\sum_i\lambda_i\log_2\lambda_i
+\le\log_2\left(\sum_i\lambda_i^2\right),
+$$
+即
+$$
+S(\rho)=-\sum_i\lambda_i\log_2\lambda_i
+\ge-\log_2\operatorname{Tr}\rho^2.
+\tag{241.31}
+$$
+结合（241.28）及熵非负，整理即为（241.30）。由于联合输入是纯态，这里的 $S(\rho)$ 正是两侧的纠缠熵。$\square$
+
+这些是必要资源下界，不是构造充分条件，也不声称最优。$\varepsilon=0$ 时恢复 $r=d$、$S(\rho)=\log_2d$ 及最大混合输入边缘。对混合联合态，单侧边缘熵不能直接解释成纠缠熵，本推论不作这种替换。
+
+### 241.6 最小参考维数不单独给统一稳定间隔
+
+§240同接口、同谱的成对实例还可以连续变化，区分“必须使用更大参考”和“缺口有统一正下界”。固定 $d=2,N=4,R=4$，取单位 Bloch 向量 $n,m\in\mathbb R^3$，并定义
+$$
+P_n=\frac{I_2+n\cdot\sigma}{2},
+\qquad P_m=\frac{I_2+m\cdot\sigma}{2},
+\qquad
+(\Pi_1,\Pi_2,\Pi_3,\Pi_4)
+=(P_n,I_2-P_n,P_m,I_2-P_m),
+\tag{241.32}
+$$
+其中 $\sigma$ 为三份标准 Pauli 矩阵。所有参数处都满足投影和 $2I_2$、四个分支秩均一、实际输入效应 $\Pi_j/2$；每分支 Choi 矩阵的非零本征值均为 $1/2$。完整误差恒为 $D_*=1/2$。
+
+差映射的各分支 Choi 矩阵也有固定谱：
+$$
+J_{\mathcal S_j-\mathcal R_j}
+=\left(\frac12\Pi_j-\frac14I_2\right)^{\mathsf T}\otimes P_j,
+\qquad\operatorname{spec}_{\ne0}J_{\mathcal S_j-\mathcal R_j}
+=\{1/4,-1/4\}.
+\tag{241.32a}
+$$
+所以整个差 Choi 矩阵的非零谱恒为四个 $1/4$ 与四个 $-1/4$，同样不随两轴夹角变化。
+
+对 Bloch 向量为 $r$、$\|r\|\le1$ 的输入，无参考实际误差为
+$$
+\frac{|r\cdot n|+|r\cdot m|}{4}.
+$$
+在两种符号及单位球上取最大值，得到精确值
+$$
+\begin{aligned}
+U&=\frac14\max\{\|n+m\|,\|n-m\|\}\\
+&=\frac12\sqrt{\frac{1+|n\cdot m|}{2}}.
+\end{aligned}
+\tag{241.33}
+$$
+达到输入取沿较长的 $n+m$ 或 $n-m$ 方向的纯态。
+
+当 $n,m$ 不平行时，与两份非对易 qubit 投影同时对易的密度矩阵只能为 $I_2/2$，故最小参考维数恒为二。若夹角为 $0<\theta\le\pi/2$，则
+$$
+U=\frac12\cos(\theta/2),
+\qquad D_*-U=\frac12[1-\cos(\theta/2)]>0.
+\tag{241.34}
+$$
+令 $\theta\downarrow0$，最小参考维数始终为二，但这个正缺口趋于零。输入维数、标签数、总秩、全部候选分支谱、差 Choi 谱及最小参考维数在此过程中均保持不变。
+
+因此，仅保留这些离散量或谱读数，不能给整个候选族的统一正稳定间隔。单纯形的（241.17）之所以有明确系数，还使用了（241.19）—（241.20）中固定的联合投影关系。把一份固定候选的严格不足推广为整个变化族的统一下界，必须另外控制这些关系的谱隙。
+
+### 241.7 标准工具与结果边界
+
+本节的矩阵估计使用正谱检验、Hilbert–Schmidt 三角不等式及 Cauchy–Schwarz；单纯形部分使用明确计算的实 Gram 矩阵；熵证书使用 Jensen 不等式。各项都在同一实际候选和同一输入边缘上组合。
+
+关于迹距离与保真度的标准比较，可参见 J. Watrous，*The Theory of Quantum Information*，Theorem 3.33（Fuchs–van de Graaf inequalities），正文第161—163页，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。该定理的陈述针对归一化密度矩阵。本节分支 $A_j,B_j$ 通常迹不相等，因此（241.6）—（241.10）直接证明所需的未归一化估计，没有未经调整地套用归一化版本。
+
+这里得到的是固定投影候选的定量取等稳定性，以及固定单纯形候选的参考资源必要条件。它不把（241.26）提升为中间维数精确曲线，不把必要秩或熵下界当作充分条件，也不把固定候选的参考需求变成全部容量竞争者的需求。
+
+## 追加锚（本行以下为增补区）
