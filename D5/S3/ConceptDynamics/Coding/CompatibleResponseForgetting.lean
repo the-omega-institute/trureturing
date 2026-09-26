@@ -73,8 +73,17 @@ theorem unsweep_sweep {n k : ℕ} {A : CountMat n n} {B : CountMat k k}
         exact h
       simp only [sweep]
       rw [hs]
-      simp only [unsweep, Sigma.fst, Sigma.snd, Prod.fst, Prod.snd,
-        Prod.mk.eta, Sigma.eta, Equiv.symm_apply_apply, htail]
+      have hphi :
+          (phi i u).symm
+            ⟨((phi i u) ⟨j, a, s⟩).1,
+             ((phi i u) ⟨j, a, s⟩).2.1,
+             ((phi i u) ⟨j, a, s⟩).2.2⟩ = ⟨j, a, s⟩ := by
+        simpa only [Sigma.eta, Prod.mk.eta] using
+          (phi i u).symm_apply_apply ⟨j, a, s⟩
+      simp only [unsweep]
+      rw [hphi]
+      rw [htail]
+      rfl
 
 def appendPath {k : ℕ} {B : CountMat k k} :
     {d : ℕ} → {i j z : Fin k} →
