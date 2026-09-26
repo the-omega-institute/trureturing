@@ -50070,3 +50070,2517 @@ $i$ 在每个有限 $L$ 上都是精确最小点。
 本节始终保留第171节的真实原输入依赖、同一个接收端 instrument，以及第173节的完整参考最坏输入。严格下界来自 Bell 差矩阵的最大本征值，严格上界来自一份实际可实施的共同解码器；没有把线性重叠收益直接认作 diamond 误差，也不作新增 Lean 核验或原创性声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 177. 全相位分离的显式有限阈值与三十四维实例
+
+第175、176节证明了足够长启动时的全相位分离，但没有给出有限阈值。本节把等号集附近的稳定性改写为统一定量不等式：对每个合法有限启动长度 $L\ge3$，真实完整参考恢复误差在全部相位上都严格大于 $3/4$。因此十维实例 $L=3$ 与固定三十四维实例 $L=9$ 均满足真实经验分布与常值比较分布的支持下端严格分离。
+
+证明直接覆盖全部相位与全部共同 instrument，不使用相位网格或数值 SDP。所得有限长度界不是第176节精确一阶系数的替代；它承担的是显式阈值与严格正间隔。
+
+### 177.1 参数的统一有限界
+
+沿用第174、175节，记
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+t_0=z/3,\qquad t_1=-2z/3,
+$$
+
+$$
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+\mathfrak b(t)=\frac43-t+4\sqrt{d(t)},
+\qquad
+w(t)=\frac{9t^2}{\mathfrak b(t)}.
+\tag{177.1}
+$$
+
+置
+
+$$
+\epsilon=w_0=w(t_0),\qquad
+R=w_1/w_0=\frac{4\mathfrak b(t_0)}{\mathfrak b(t_1)},
+\qquad
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353}.
+\tag{177.2}
+$$
+
+对全部有限 $L\ge3$，有 $0<|t_j|\le1/6$。在这个区间上，
+
+$$
+\frac5{72}\le d(t)\le\frac18.
+$$
+
+所以
+
+$$
+\boxed{
+\frac{13}{6}<\mathfrak b(t)<3,\qquad
+\frac{z^2}{3}<\epsilon<\frac{6z^2}{13},\qquad
+\frac{26}{9}<R<\frac{72}{13}<6.
+}
+\tag{177.3}
+$$
+
+第一式使用
+$4/3-t\in[7/6,3/2]$、
+$\sqrt{d(t)}>1/4$ 与
+$4\sqrt{d(t)}\le\sqrt2<3/2$；
+其余两式由（177.1）—（177.2）直接得到。
+特别地，以下证明可以统一使用 $1\le R\le6$。
+
+### 177.2 当前相位的收益损失控制到好相位的距离
+
+固定任意一个合法共同 instrument $\mathcal D_0,\mathcal D_1$ 和任意相位
+$\varphi$。使用第175节的精确分解
+
+$$
+F(\mathcal D,\varphi,L):=f_0+f_1
+=F_0(\mathcal D,\varphi)
++\epsilon G(\mathcal D,\varphi,R).
+\tag{177.4}
+$$
+
+记
+
+$$
+\ell=1-F_0(\mathcal D,\varphi)\in[0,1].
+$$
+
+选取最近的好相位
+$\varphi_*\equiv\pi/4\pmod{\pi/2}$，将相位代表选成
+$\delta=\varphi-\varphi_*\in[-\pi/4,\pi/4]$。
+第163、175节的基点纯化重叠界给
+
+$$
+F_0(\mathcal D,\varphi)
+\le1-\frac29(1-|\sin2\varphi|)
+=1-\frac49\sin^2\delta.
+$$
+
+因此
+
+$$
+|\sin\delta|\le\frac32\sqrt\ell.
+\tag{177.5}
+$$
+
+令 $v_\varphi=U_\varphi|0\rangle$，允许选择无关的整体相位。
+同一个 instrument 定义一个逻辑效果 $0\preceq B_\mathcal D\preceq I$，
+使
+
+$$
+F_0(\mathcal D,\varphi)
+=\langle v_\varphi|B_\mathcal D|v_\varphi\rangle.
+\tag{177.6}
+$$
+
+具体地，先把目标投影 $P_\Xi$ 经
+$\operatorname{id}_M\otimes(\mathcal D_0+\mathcal D_1)$
+的对偶拉回，再经编码 $\mathfrak E^*$ 拉回即可得到
+$B_\mathcal D$；这些通道的对偶均保持效果范围。
+
+定义同一个 instrument 在好相位的损失
+$\ell_*=1-F_0(\mathcal D,\varphi_*)$。因 $\cos(\pi/8)>12/13$，有
+
+$$
+\|v_\varphi-v_{\varphi_*}\|
+=\frac{|\sin\delta|}{\cos(\delta/2)}
+\le\frac{13}{12}|\sin\delta|
+\le\frac{13}{8}\sqrt\ell.
+$$
+
+由（177.6）和三角不等式，
+
+$$
+\begin{aligned}
+\sqrt{\ell_*}
+&=\|(I-B_\mathcal D)^{1/2}v_{\varphi_*}\|\\
+&\le\|(I-B_\mathcal D)^{1/2}v_\varphi\|
++\|v_\varphi-v_{\varphi_*}\|
+\le\frac{21}{8}\sqrt\ell.
+\end{aligned}
+$$
+
+故
+
+$$
+\boxed{\ell_*\le\frac{441}{64}\ell\le7\ell.}
+\tag{177.7}
+$$
+
+其中 $\cos(\pi/8)>12/13$ 可由
+$\cos^2(\pi/8)=(2+\sqrt2)/4$ 及
+$2\cdot169^2>238^2$ 直接核对。
+好相位在这里是数学比较点，没有为接收装置增加新的运行控制，也没有为两个原输入更换两份解码器。
+
+### 177.3 好相位处的定量 Kraus 方差控制
+
+在 $\varphi_*=\pi/4$ 的接收端解掩码与旗标坐标中，基点是
+$I_Q/2\otimes P_\Xi$。另一类好相位通过第175节的接收端局部
+$J=-iY$ 协变变换化为同一计算。
+
+固定旗标 $\nu=0,1$，写 instrument 的 Kraus 为
+$K_{j,\nu,\alpha}:R\to R_{\mathrm{out}}$。它们满足
+
+$$
+\sum_{j,\alpha}
+K_{j,\nu,\alpha}^\dagger K_{j,\nu,\alpha}=I
+\quad\text{对每个 }\nu.
+\tag{177.8}
+$$
+
+对每个 Kraus，令
+
+$$
+a=\operatorname{Tr}(\rho K),\qquad
+E=K-aI,\qquad
+\|E\|_\rho^2=\operatorname{Tr}(\rho E^\dagger E).
+$$
+
+于是 $\operatorname{Tr}(\rho E)=0$。第175节的方差恒等式在非等号情形给
+
+$$
+\frac12\sum_{\nu,j,\alpha}|a_{j,\nu,\alpha}|^2=1-\ell_*,
+\qquad
+\frac12\sum_{\nu,j,\alpha}\|E_{j,\nu,\alpha}\|_\rho^2=\ell_*.
+\tag{177.9}
+$$
+
+还需要控制正交纯化 $\psi=(I\otimes Y)\Xi$ 的恢复振幅。记
+
+$$
+b=\langle\Xi|(I\otimes K)|\psi\rangle
+=\operatorname{Tr}(\rho KY).
+$$
+
+由于 $\operatorname{Tr}(\rho Y)=0$，将 $K$ 换成 $E$ 不改变 $b$。
+在加权内积
+$\langle C,E\rangle_\rho=\operatorname{Tr}(\rho C^\dagger E)$
+中，取 $C=\rho Y\rho^{-1}$，就有 $b=\langle C,E\rangle_\rho$。
+又
+
+$$
+\begin{aligned}
+\|C\|_\rho^2
+&=\operatorname{Tr}(\rho^{-1}Y\rho^2Y)\\
+&=\operatorname{Tr}\bigl(\rho^{-1}(I-\rho)^2\bigr)
+=\frac1{\det\rho}-3=6.
+\end{aligned}
+$$
+
+故加权 Cauchy–Schwarz 给
+
+$$
+\boxed{|b|^2\le6\|E\|_\rho^2.}
+\tag{177.10}
+$$
+
+令原输入权重为 $r_0=1,r_1=R$，并定义
+
+$$
+S=\frac12\sum_{\nu,j,\alpha}r_j|a_{j,\nu,\alpha}|^2,
+\qquad
+T=\frac12\sum_{\nu,j,\alpha}r_j|b_{j,\nu,\alpha}|^2.
+$$
+
+由（177.9）—（177.10），
+
+$$
+1-\ell_*\le S\le R,\qquad
+T\le6R\ell_*.
+\tag{177.11}
+$$
+
+第174节条件态的扰动方向是
+$-\beta P_\Xi+\beta P_\psi$ 加上系数为
+$\pm\gamma$ 的两个交叉项。因此
+
+$$
+\begin{aligned}
+G(\mathcal D,\varphi_*,R)
+&\le-\beta S+\beta T+2\gamma\sqrt{ST}\\
+&\le-\beta+\beta(1+6R)\ell_*
++2\gamma R\sqrt{6\ell_*}.
+\end{aligned}
+\tag{177.12}
+$$
+
+交叉项的界同时对旗标符号、结果标签和全部 Kraus 使用加权
+Cauchy–Schwarz；（177.8）始终是共同的保迹预算。
+
+### 177.4 相位变化的共同效果界
+
+为控制 $G$ 从 $\varphi_*$ 到 $\varphi$ 的变化，定义实际空间上的效果
+
+$$
+H_j=(\operatorname{id}_M\otimes\mathcal D_j)^*(P_\Xi).
+$$
+
+因为 $\mathcal D_0+\mathcal D_1$ 保迹，
+
+$$
+H_j\succeq0,\qquad H_0+H_1\preceq I.
+$$
+
+所以对 $1\le R\le6$，
+
+$$
+0\preceq H_0+RH_1\preceq RI\preceq6I.
+\tag{177.13}
+$$
+
+第175节的扰动算子为
+
+$$
+A=\gamma X-\beta Z,\qquad
+\|A\|_1=\frac{12}{\sqrt{2353}},
+\qquad
+\dot\xi^\varphi=\mathfrak E(U_\varphi A U_\varphi^\dagger).
+$$
+
+两份扰动之差为迹零 Hermitian 算子。对
+$0\preceq H\preceq RI$，先将 $H$ 中心化为 $H-(R/2)I$，得到
+$|\operatorname{Tr}(HT)|\le(R/2)\|T\|_1$。
+再用编码收缩迹范数，以及实 $XZ$ 平面上的旋转恒等式
+
+$$
+\|U_\varphi A U_\varphi^\dagger-
+U_{\varphi_*}A U_{\varphi_*}^\dagger\|_1
+=2|\sin\delta|\,\|A\|_1,
+$$
+
+便得
+
+$$
+\begin{aligned}
+|G(\mathcal D,\varphi,R)-G(\mathcal D,\varphi_*,R)|
+&\le R|\sin\delta|\,\|A\|_1\\
+&\le\frac{18R}{\sqrt{2353}}\sqrt\ell.
+\end{aligned}
+\tag{177.14}
+$$
+
+这里（177.13）中的效果是同一个 instrument 的加权和。它没有把各个原输入的收益分别按独立保迹通道估计。
+
+### 177.5 全相位、全解码器的有限参数证书
+
+把（177.7）、（177.12）、（177.14）合并，得到
+
+$$
+G(\mathcal D,\varphi,R)
+\le-\beta+7\beta(1+6R)\ell+
+\left(2\gamma R\sqrt{42}+\frac{18R}{\sqrt{2353}}\right)\sqrt\ell.
+$$
+
+明确的有理常数估计给
+
+$$
+\begin{aligned}
+259\beta&<32,&
+12\gamma\sqrt{42}+\frac{108}{\sqrt{2353}}&<4,\\
+175\beta&<22,&
+8\gamma\sqrt{42}+\frac{72}{\sqrt{2353}}&<\frac52.
+\end{aligned}
+$$
+
+这些式子可用 $\sqrt{42}<13/2$、
+$\sqrt{2353}>48$ 和分数比较核对。因此
+
+$$
+\boxed{
+\begin{aligned}
+G(\mathcal D,\varphi,R)&\le-\beta+32\ell+4\sqrt\ell
+&&\text{若 }1\le R\le6,\\
+G(\mathcal D,\varphi,R)&\le-\beta+22\ell+\frac52\sqrt\ell
+&&\text{若 }1\le R\le4.
+\end{aligned}
+}
+\tag{177.15}
+$$
+
+分别取 $(a,c)=(32,4)$ 或 $(22,5/2)$。
+将相应的（177.15）代入（177.4），若 $a\epsilon<1$，则
+
+$$
+\begin{aligned}
+F(\mathcal D,\varphi,L)
+&\le1-\beta\epsilon
+-(1-a\epsilon)\ell+c\epsilon\sqrt\ell\\
+&\le1-\beta\epsilon+
+\frac{c^2\epsilon^2}{4(1-a\epsilon)}.
+\end{aligned}
+\tag{177.16}
+$$
+
+最后一步对非负变量 $\sqrt\ell$ 完全平方。右侧不含相位或解码器参数。
+第174节的 Bell 目标投影检验给误差至少为
+$1-F/4$。故
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{\beta\epsilon}{4}
+-\frac{c^2\epsilon^2}{16(1-a\epsilon)}
+\quad
+\text{对全部相位，若 }a\epsilon<1.
+}
+\tag{177.17}
+$$
+
+这是有限参数不等式，没有使用渐近余项。
+
+### 177.6 显式阈值与三十四维支持下端严格分离
+
+**定理177.1（全部合法有限启动的全相位严格分离）。**
+对全部整数 $L\ge3$ 和全部相位，
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{19511}{2560064}\,w_0
+>\frac34.
+}
+\tag{177.18}
+$$
+
+对全部 $L\ge4$，还有较强的简式
+
+$$
+\boxed{
+e_L(\varphi)
+\ge\frac34+\frac{\beta-3/80}{4}w_0
+\ge\frac34+\frac{\beta w_0}{8}
+>\frac34+\frac{12}{2353}\,4^{-(L-1)}.
+}
+\tag{177.19}
+$$
+
+**证明。** 当 $L\ge4$ 时，$z^2\le1/64$，故（177.3）给
+$\epsilon<3/416<1/32$。取 $(a,c)=(32,4)$。
+函数 $4\epsilon/(1-32\epsilon)$ 在该区间递增，所以
+
+$$
+\frac{4\epsilon}{1-32\epsilon}
+\le\frac3{80}<\frac{\beta}{2}.
+$$
+
+代入（177.17）得到（177.19）的前两个下界。
+最后一个严格下界使用 $w_0>z^2/3$。
+
+还需单独处理 $L=3$。此时
+
+$$
+\epsilon=\frac54-\frac{\sqrt6}{2}<\frac1{39},
+\qquad t_0=\frac1{12},\qquad t_1=-\frac16.
+$$
+
+其中根式界等价于 $\sqrt6>191/78$，
+由 $6\cdot78^2=36504>36481=191^2$ 得到。
+分母在 $[-1/6,1/6]$ 严格递减，因为
+
+$$
+\mathfrak b'(t)
+=-1+\frac{2(-1/6-t)}{\sqrt{d(t)}}\le-1.
+$$
+
+所以 $t_0>t_1$ 给
+$R=4\mathfrak b(t_0)/\mathfrak b(t_1)<4$。
+取 $(a,c)=(22,5/2)$；此时
+$a\epsilon<22/39<1$，且
+
+$$
+\frac{c^2\epsilon}{4(1-a\epsilon)}
+=\frac{25\epsilon}{16(1-22\epsilon)}
+\le\frac{25}{272}<\beta.
+$$
+
+代入（177.17），再用
+
+$$
+\frac14\left(\beta-\frac{25}{272}\right)
+=\frac{19511}{2560064}>0,
+$$
+
+得到 $L=3$ 的（177.18）。
+因为 $3/80<25/272$，这个较弱系数也适用于所有
+$L\ge4$，从而（177.18）对全部 $L\ge3$ 成立。证毕。
+
+特别地，固定三十四维实例 $L=9$ 有精确根式
+
+$$
+w_0=\frac{341-6\sqrt{3230}}{256}
+=\frac1{256(341+6\sqrt{3230})}>0,
+$$
+
+其中 $341^2-36\cdot3230=1$。代入（177.19）得到
+
+$$
+\boxed{
+\min_{\zeta\in\mathbb T}h_9(\zeta)
+\ge\frac34+
+\frac{15981}{192757760(341+6\sqrt{3230})}
+>\frac34+\frac{3}{38551552}
+>\frac34.
+}
+\tag{177.20}
+$$
+
+第170节将实际运行及每个有限等差子序列的共同经验律识别为
+$\nu_9=(h_9)_\#m_{\mathbb T}$。因此其支持下端满足同一严格下界。
+常值比较分布的支持下端为 $3/4$，在该端点的每个右侧邻域均有正质量。由此
+
+$$
+\boxed{\nu_9\ne\nu_{1/9}^{\mathrm{comparison}}.}
+\tag{177.21}
+$$
+
+同样的支持下端严格分离对全部合法有限 $L\ge3$ 成立。由于第170节的实际误差与相位曲线之差趋零，（177.20）还给出三十四维实例实际误差序列的下极限严格高于 $3/4$；这里比较的是该序列的长期下限，不声称每个早期终端都已达到此界。
+
+本证书给出了全部合法有限启动的全相位严格间隔，但没有计算有限 $L$ 的精确最小值或整条曲线。结论均来自共同 instrument 的方差、相位效果和有理常数估计；三十四维实例的承重界以精确根式和有理数给出，不依赖有限网格、数值拟合或未定向舍入的小数。
+
+## 追加锚（本行以下为增补区）
+
+## 178. 同一接收边界上的两种任务给出不可比较的过程
+
+前面已经证明：有限启动保留可读的原输入经典关联，同时提高完整来源恢复的最优误差。本节把这两个事实放进同一个操作次序中。结论不是把一个误差数当作全部信息量，而是给出同一来源、同一接口维数、同一接收权限下，两条无法由局部后处理互相模拟的通道。
+
+### 178.1 固定相位、共同记忆边缘与局部后处理次序
+
+固定任意整数 $L\ge3$，取第174节的相位 $\varphi=\pi/4$。写
+
+$$
+V=U_{\pi/4},\qquad
+\tau_j=\Theta_L(P_j),\qquad
+\omega_j=\mathfrak E(V\tau_jV^*),\qquad
+\omega_*=\mathfrak E(P_+).
+$$
+
+定义同输入、同输出空间的两条通道
+
+$$
+\mathcal N_L(X)=X_{00}\omega_0+X_{11}\omega_1,
+\qquad
+\mathcal S(X)=\operatorname{Tr}(X)\omega_*.
+\tag{178.1}
+$$
+
+其输出为 $M\otimes K$，$K=Q\otimes R$ 是接收端；两条通道在 $M$ 上的边缘始终为同一个 $\rho_*$。
+
+称 $\mathcal P$ 在接收端可模拟 $\mathcal Q$，若存在 CPTP 映射
+$\Lambda:K\to K$，使
+
+$$
+\mathcal Q=(\operatorname{id}_M\otimes\Lambda)\mathcal P.
+\tag{178.2}
+$$
+
+这里没有允许操作不可访问的 $M$，也没有允许重新查询原输入。
+
+### 178.2 经典标签与完整档案恢复给出相反的任务排序
+
+对两个等先验原始输入 $P_0,P_1$，只读取 $K$ 的最佳二元判别成功率为
+
+$$
+p_{\mathrm{bit}}(\mathcal P)
+=\frac12\left(1+D\bigl(\operatorname{Tr}_M\mathcal P(P_0),
+\operatorname{Tr}_M\mathcal P(P_1)\bigr)\right).
+$$
+
+第172节给 $d_L=D(\tau_0,\tau_1)>0$，在当前相位有
+
+$$
+\boxed{
+p_{\mathrm{bit}}(\mathcal N_L)
+=\frac12+\frac{d_L}{2}\sqrt{\frac{1329}{2353}}
+>\frac12
+=p_{\mathrm{bit}}(\mathcal S).
+}
+\tag{178.3}
+$$
+
+其中 $1329=(5/9)48^2+7^2$，直接来自第172节的局部距离公式。
+
+另一方面，对原输入及全部参考的来源恢复，令
+
+$$
+e(\mathcal P)=
+\min_{\mathcal D:K\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\mathcal D)\mathcal P,
+\mathcal V_*\bigr),
+\qquad
+\mathcal V_*(X)=X\otimes P_\Xi.
+$$
+
+第165、174节分别给
+
+$$
+\boxed{
+e(\mathcal S)=\frac34,
+\qquad
+e(\mathcal N_L)=h_L(i)>\frac34.
+}
+\tag{178.4}
+$$
+
+这些任务排序都在相同的接收端权限下成立。第一项要求区分一个经典输入标签；第二项同时要求恢复输入与参考的关系，以及记忆与档案之间的目标纯化关系。
+
+### 178.3 两条通道在局部模拟次序中不可比较
+
+**定理178.1（同一接收接口上的局部不可比较）。** 对每个有限整数
+$L\ge3$，既不存在将 $\mathcal S$ 局部后处理为 $\mathcal N_L$ 的通道，也不存在将 $\mathcal N_L$ 局部后处理为 $\mathcal S$ 的通道。
+
+**证明。** $\mathcal S$ 的输出与原输入无关，任何后处理仍是常值。第171节及编码的联合左逆保证 $\omega_0\ne\omega_1$，所以它不能变成 $\mathcal N_L$。这个方向即使允许处理整个 $MK$ 也仍不可能。
+
+若存在接收端 $\Lambda$ 使
+$(\operatorname{id}_M\otimes\Lambda)\mathcal N_L=\mathcal S$，则把
+$\mathcal S$ 的最优解码器接在 $\Lambda$ 后面，就是
+$\mathcal N_L$ 的合法接收端解码器。因此
+$e(\mathcal N_L)\le e(\mathcal S)$，与（178.4）矛盾。证毕。
+
+若改为允许联合处理 $MK$，则把全部输出重置为 $\omega_*$ 就可以从
+$\mathcal N_L$ 得到 $\mathcal S$。这里的差异完全由已声明的操作权限承担：同一个联合状态可以重置，不表示其不可访问部分可以由接收端重置。
+
+### 178.4 近似模拟的一个方向具有精确误差
+
+对同输出接口的两条通道，定义接收端近似模拟误差
+
+$$
+\delta_K(\mathcal P\to\mathcal Q)
+=\min_{\Lambda:K\to K\ {\rm CPTP}}
+d_\diamond\bigl((\operatorname{id}_M\otimes\Lambda)\mathcal P,
+\mathcal Q\bigr).
+\tag{178.5}
+$$
+
+解码通道集紧，故最小值取得。
+
+**定理178.2（常值边界模拟真实入口的精确代价）。** 有
+
+$$
+\boxed{\delta_K(\mathcal S\to\mathcal N_L)=\frac{d_L}{2}.}
+\tag{178.6}
+$$
+
+**证明。** 任何 $\mathcal S$ 的局部后处理仍是某份常值通道
+$\mathcal C_\Sigma(X)=\operatorname{Tr}(X)\Sigma$。对原输入 $P_j$ 分别测试，三角不等式给
+
+$$
+\max_jD(\Sigma,\omega_j)
+\ge\frac12D(\omega_0,\omega_1)=\frac{d_L}{2}.
+$$
+
+最后一个等号来自逻辑旋转和有 CPTP 左逆的编码保持迹距离。
+
+反向取中点 $\tau_{\mathrm{mid}}=(\tau_0+\tau_1)/2$。
+第174节的接收端解掩码把 $\omega_*$ 变成均匀旗标与 $P_\Xi$ 的乘积。
+接收端丢弃旧旗标，在 $Q$ 上制备 $V\tau_{\mathrm{mid}}V^*$，然后施加编码所需的随机 $Z_Q,Y_R$ 掩码，即得到
+
+$$
+\omega_{\mathrm{mid}}
+=\mathfrak E(V\tau_{\mathrm{mid}}V^*)
+=\frac{\omega_0+\omega_1}{2}.
+$$
+
+整个操作只访问 $QR$，保持原来的 $M$ 与 $R$ 纯化关系。
+由二元测量—制备通道的完整参考距离公式，
+
+$$
+d_\diamond(\mathcal C_{\omega_{\mathrm{mid}}},\mathcal N_L)
+=\max_jD(\omega_{\mathrm{mid}},\omega_j)=\frac{d_L}{2}.
+$$
+
+这达到下界。证毕。
+
+### 178.5 反向模拟的任务证书与合法构造
+
+**命题178.3（真实入口局部模拟比较边界的严格代价）。** 有
+
+$$
+\boxed{
+0<h_L(i)-\frac34
+\le\delta_K(\mathcal N_L\to\mathcal S)
+\le\beta w_1,
+\qquad\beta=\frac{288}{2353}.
+}
+\tag{178.7}
+$$
+
+**证明。** 对任意接收端后处理 $\Lambda$，将 $\mathcal S$ 的最优来源解码器接在其后。三角不等式及通道收缩给
+
+$$
+e(\mathcal N_L)
+\le d_\diamond\bigl((\operatorname{id}_M\otimes\Lambda)\mathcal N_L,
+\mathcal S\bigr)+e(\mathcal S).
+$$
+
+取 $\Lambda$ 的最小值并用（178.4），得到严格正的下界。
+
+对上界，先执行第174节的局部解掩码并丢弃旗标。原输入 $j$ 的剩余 $MR$ 状态为
+
+$$
+(1-\beta w_j)P_\Xi+\beta w_jP_\psi.
+$$
+
+再在 $Q$ 上制备 $P_+$，施加随机 $Z_Q,Y_R$ 掩码。$P_\Xi$ 分量产生目标 $\omega_*$；$P_\psi$ 分量产生
+
+$$
+\omega_{\mathrm{swap}}
+=\frac12(P_+\otimes P_\psi+P_-\otimes P_\Xi).
+$$
+
+它与 $\omega_*=\frac12(P_+\otimes P_\Xi+P_-\otimes P_\psi)$ 的支撑正交，因此二者迹距离为一。该共同后处理在输入 $j$ 上的距离为 $\beta w_j$。两条比较通道都先测原输入计算基，故完整半 diamond 距离是两个分支距离的最大值，即
+$\beta w_1$，其中 $w_1>w_0$ 已由第171节证明。证毕。
+
+这两份近似模拟代价都是完整通道量，保留任意原输入参考；它们不是只比较某份固定态的相似度。
+
+本节将边界的任务依赖性落实为两份具体操作任务和一个受权限约束的模拟次序。相同的记忆边缘、相同的接口维数，以及某个经典任务上的严格优势，都没有抹去另一个任务所要求的关系。局部不可比较性与联合可丢弃性可同时成立。
+
+## 追加锚（本行以下为增补区）
+
+## 179. 反向局部模拟的有限误差证书与精确首项
+
+第178节给出了真实入口与常值比较边界的局部不可比较性，并精确计算了一个方向的近似模拟代价。本节收紧反向代价：在保持不可访问记忆 $M$、共同接收端 CPTP 映射及任意原输入参考的条件下，给出显式有限上下界，其差为启动扰动的二阶量。
+
+### 179.1 反向模拟等价于共同的局部纯化恢复
+
+固定任意整数 $L\ge3$，沿用第178节的
+
+$$
+\mathcal N_L(X)=X_{00}\omega_0+X_{11}\omega_1,
+\qquad
+\mathcal S(X)=\operatorname{Tr}(X)\omega_*,
+$$
+
+$$
+\omega_j=\mathfrak E(U_{\pi/4}\tau_jU_{\pi/4}^\dagger),
+\qquad
+\omega_*=\mathfrak E(P_+),
+\qquad
+K=Q\otimes R.
+\tag{179.1}
+$$
+
+记接收端反向近似模拟误差为
+
+$$
+\delta_L^{\leftarrow}
+=\min_{\Lambda:K\to K\ {\rm CPTP}}
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\Lambda)\mathcal N_L,\mathcal S
+\right).
+\tag{179.2}
+$$
+
+对输入和输出都采用第174节的接收端解掩码酉与旗标坐标变换。它们只作用于 $K$，故前后复合给合法模拟器的双射，不改变最优值。目标与两份真实输入分别变为
+
+$$
+\omega_*'=\frac{I_Q}{2}\otimes P_\Xi,
+\qquad
+\omega_j'=\frac12\sum_{\nu=0}^1P_{q_\nu}^Q\otimes\eta_{j,\nu}^{MR},
+\tag{179.3}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\eta_{j,\nu}
+={}&(1-\beta w_j)P_\Xi+\beta w_jP_\psi\\
+&+(-1)^{\nu+1}\gamma w_j
+\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr),
+\end{aligned}
+$$
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{179.4}
+$$
+
+$\Xi,\psi$ 正交，且第171、174节给
+$0<w_0<w_1<1/2$。
+
+两条比较通道都先测原输入的计算基。对任意共同模拟器，其完整半 diamond 距离恰为两个分支的半迹距离最大值：
+
+$$
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\Lambda)\mathcal N_L,\mathcal S
+\right)
+=\max_jD\bigl((\operatorname{id}_M\otimes\Lambda)(\omega_j),\omega_*\bigr).
+\tag{179.5}
+$$
+
+下界分别输入 $P_j$ 得到；上界对任意原输入参考态的两个正对角参考块用三角不等式得到。因此这一归约保留全部参考系统。
+
+**命题179.1（纯化恢复的精确局部归约）。** 有
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\min_{\Gamma:QR\to R_{\mathrm{out}}\ {\rm CPTP}}
+\max_{j=0,1}
+D\left(
+(\operatorname{id}_M\otimes\Gamma)(\omega_j'),P_\Xi
+\right).
+}
+\tag{179.6}
+$$
+
+**证明。** 对任意模拟器，丢弃输出旗标 $Q$，迹距离收缩给右侧下界。
+反过来，对任意 $\Gamma$，在其输出上附加独立的 $I_Q/2$。目标同样为
+$I_Q/2\otimes P_\Xi$，与固定态作张量积保持迹范数，故两个分支的距离不变。最后逆转接收端坐标酉，得到原接口上的合法模拟器。两方向都不操作 $M$，也不查询原输入。证毕。
+
+进一步，输入（179.3）在旗标上对角。固定旗标后，
+$\Gamma$ 给出两个 CPTP 映射
+$\Gamma_\nu:R\to R_{\mathrm{out}}$，并且
+
+$$
+\sigma_j
+=\frac12\sum_{\nu=0}^1
+(\operatorname{id}_M\otimes\Gamma_\nu)(\eta_{j,\nu}).
+\tag{179.7}
+$$
+
+反之，先读旗标再执行对应 $\Gamma_\nu$，可实现任意这样的映射对。
+两个原输入必须共用同一对 $\Gamma_0,\Gamma_1$；
+不能为 $j=0,1$ 分别选择局部恢复通道。
+
+### 179.2 单输入 Choi 预算给出新的有限下界
+
+定义
+
+$$
+B_w=
+\begin{pmatrix}
+1-\beta w&\sqrt6\,\gamma w\\
+\sqrt6\,\gamma w&6\beta w
+\end{pmatrix},
+$$
+
+$$
+\mu(w)=\lambda_{\max}(B_w)
+=\frac{1+5\beta w+
+\sqrt{(1-7\beta w)^2+24\gamma^2w^2}}2.
+\tag{179.8}
+$$
+
+**定理179.2（反向局部模拟的有限证书）。** 对每个整数 $L\ge3$，
+
+$$
+\boxed{
+1-\mu(w_1)
+\le\delta_L^{\leftarrow}
+\le\beta w_1.
+}
+\tag{179.9}
+$$
+
+**证明。** 先证明下界。对任意（179.7）的合法恢复映射对，记
+$J_\nu$ 为输入优先、未归一化的 Choi 矩阵。各旗标分别有
+
+$$
+J_\nu\succeq0,\qquad
+\operatorname{Tr}_{R_{\mathrm{out}}}J_\nu=I_R.
+\tag{179.10}
+$$
+
+固定单个原输入 $j$。第174节的显式收益向量为
+
+$$
+g_0=\operatorname{vec}\rho,\qquad
+g_1=\operatorname{vec}(-Y\rho).
+$$
+
+相应的收益算子是
+
+$$
+\begin{aligned}
+A_{j,\nu}
+={}&(1-\beta w_j)|g_0\rangle\langle g_0|
++\beta w_j|g_1\rangle\langle g_1|\\
+&+(-1)^{\nu+1}\gamma w_j
+\bigl(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\bigr).
+\end{aligned}
+\tag{179.11}
+$$
+
+其定义保证
+$\langle\Xi|\sigma_j|\Xi\rangle
+=\frac12\sum_\nu\operatorname{Tr}(J_\nu A_{j,\nu})$。
+在 Choi 输入因子上作 $\rho^{-1/2}$ 合同变换，
+两个收益向量正交且范数平方分别为 $1,6$。因而第174节的二阶证书直接给
+
+$$
+A_{j,\nu}\preceq\mu(w_j)(\rho\otimes I).
+\tag{179.12}
+$$
+
+这里不对两个原输入分配独立预算；只取其中 $j=1$ 测试任意共同恢复器。由（179.10），
+
+$$
+\begin{aligned}
+\langle\Xi|\sigma_1|\Xi\rangle
+&\le\frac{\mu(w_1)}2
+\sum_\nu\operatorname{Tr}[J_\nu(\rho\otimes I)]\\
+&=\mu(w_1).
+\end{aligned}
+\tag{179.13}
+$$
+
+纯态目标的投影检验给
+$D(\sigma_1,P_\Xi)\ge1-\langle\Xi|\sigma_1|\Xi\rangle$。
+结合（179.6），得到（179.9）的下界。
+
+对上界，取共同恢复器为丢弃旗标并保持 $R$。两个旗标的非对角项相消，所以
+
+$$
+\sigma_j=(1-\beta w_j)P_\Xi+\beta w_jP_\psi.
+$$
+
+由 $\Xi\perp\psi$，
+$D(\sigma_j,P_\Xi)=\beta w_j$。
+两分支的最大值为 $\beta w_1$，再用命题179.1即得到原接口的合法模拟器和上界。证毕。
+
+下界还可写成一个更简单的严格正数。第174节已给
+$B_w\succeq0$、$I-B_w\succ0$，并且
+
+$$
+\det(I-B_w)
+=\beta w\left(1-\frac34w\right).
+$$
+
+因此
+
+$$
+\boxed{
+1-\mu(w_1)
+\ge\beta w_1\left(1-\frac34w_1\right)
+>\frac58\beta w_1>0.
+}
+\tag{179.14}
+$$
+
+这是对反向局部模拟本身的证书。相比之下，第176节的合法均匀标签解码器给
+
+$$
+h_L(i)-\frac34\le\frac{\beta w_1}{4}.
+\tag{179.15}
+$$
+
+具体地，该解码器的误差是 $1-ab/(a+b)$，
+$a=(1-\beta w_0)/2\ge b=(1-\beta w_1)/2$；
+$ab/(a+b)\ge b/2$ 就得到（179.15）。
+故新的下界严格高于仅从来源恢复任务转移而来的
+$h_L(i)-3/4$，对全部有限 $L\ge3$ 均成立。
+
+### 179.3 Schur 恒等式控制上下界之间的二阶差
+
+**定理179.3（显式二阶余项）。** 有
+
+$$
+\boxed{
+0\le\beta w_1-\delta_L^{\leftarrow}
+\le
+\frac{6\gamma^2w_1^2}{1-7\beta w_1}
+\le\frac{32\gamma^2}{3}w_1^2.
+}
+\tag{179.16}
+$$
+
+**证明。** 对 $w=w_1$，写
+$a=1-\beta w$、$d=6\beta w$、$c=\sqrt6\,\gamma w$。
+由于 $w<1/2$、$\beta<1/8$，
+
+$$
+a-d=1-7\beta w>\frac9{16}>0.
+$$
+
+最高本征值 $\mu=\mu(w)$ 满足 $\mu\ge a>d$。
+由 $2\times2$ 特征方程，
+
+$$
+(\mu-a)(\mu-d)=c^2,
+\qquad
+0\le\mu-a
+=\frac{c^2}{\mu-d}
+\le\frac{6\gamma^2w^2}{1-7\beta w}.
+\tag{179.17}
+$$
+
+而（179.9）给
+
+$$
+0\le\beta w-\delta_L^{\leftarrow}
+\le\beta w-(1-\mu)=\mu-a.
+$$
+
+再使用 $1-7\beta w>9/16$，即得（179.16）。证毕。
+
+这个估计表明，丢弃旗标、保持 $R$ 的共同恢复器在启动长度极限中达到精确首项；允许更一般的局部通道至多在二阶余项范围内改善它。本节未将该恢复器声明为每个有限 $L$ 的精确最优解。
+
+### 179.4 两个方向的同尺度首项
+
+第171节给
+
+$$
+z=\left(-\frac12\right)^{L-1},
+\qquad
+w_1=\frac32z^2+O(z^3).
+$$
+
+由（179.16），
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\beta w_1+O(w_1^2)
+\sim\frac{432}{2353}\,4^{-(L-1)}.
+}
+\tag{179.18}
+$$
+
+另一方向由第178节精确等于 $d_L/2$。结合第172节的展开，两方向在同一个启动尺度上满足
+
+$$
+\boxed{
+\begin{aligned}
+\delta_K(\mathcal S\to\mathcal N_L)
+&\sim\frac{27}{8\sqrt{2353}}\,4^{-(L-1)},\\
+\delta_K(\mathcal N_L\to\mathcal S)
+&\sim\frac{432}{2353}\,4^{-(L-1)}.
+\end{aligned}
+}
+\tag{179.19}
+$$
+
+特别地，
+
+$$
+\boxed{
+\frac{\delta_K(\mathcal N_L\to\mathcal S)}
+{\delta_K(\mathcal S\to\mathcal N_L)}
+\longrightarrow\frac{128}{\sqrt{2353}}>1.
+}
+\tag{179.20}
+$$
+
+这些量都保留共同接收端操作与全部原输入参考。两条通道的接口维数和不可访问记忆边缘相同；若改为允许处理整个 $MK$，反向重置的代价会变为零。正的反向系数因此依赖这里明确限定的局部操作权限，不能由维数或共同边缘单独判断。
+
+## 追加锚（本行以下为增补区）
+
+## 180. 用旗标相关的弱测量严格改善有限启动恢复
+
+第176节的均匀输出解码器给出了正确的一阶恢复误差，但没有确定有限启动时的最优解。本节在同一个不可访问记忆、同一个输入参考合同下，构造一个两参数接收端 instrument。它证明：每个有限 $L\ge3$ 上，先丢旗标再均匀制备标签的解码器都不是最优；即使已经优化固定标签偏置，利用旗标相关的弱测量仍可严格改善。
+
+### 180.1 两参数的共同接收端 instrument
+
+固定 $L\ge3$ 和相位 $\varphi=\pi/4$。沿用第179节的接收端坐标，输入为
+
+$$
+\omega_j'=\frac12\sum_{\nu=0}^1P_{q_\nu}\otimes\eta_{j,\nu},
+\qquad s_\nu=(-1)^{\nu+1},
+$$
+
+$$
+\eta_{j,\nu}=(1-\beta w_j)P_\Xi+\beta w_jP_\psi
++s_\nu\gamma w_j
+\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr).
+\tag{180.1}
+$$
+
+这里 $\psi=(I\otimes Y)\Xi$、$\Xi\perp\psi$，
+$0<w_0<w_1<1/2$，
+$\beta=288/2353$、$\gamma=42/2353$。
+
+取
+
+$$
+0<r<1,\qquad |t|<\min\{r,1-r\},
+$$
+
+$$
+p_0=r,\quad p_1=1-r,\qquad t_0=t,\quad t_1=-t.
+\tag{180.2}
+$$
+
+接收端读取旗标 $\nu$ 后，在 $R$ 上使用两个 Kraus 算子
+
+$$
+K_{k,\nu}=\bigl(p_kI+s_\nu t_kY\bigr)^{1/2},
+\qquad k=0,1,
+\tag{180.3}
+$$
+
+并把结果 $k$ 写到 $Q_{\mathrm{out}}$，保留 Kraus 输出作为
+$R_{\mathrm{out}}$，随后丢弃旧旗标。因为
+
+$$
+\sum_{k=0}^1K_{k,\nu}^\dagger K_{k,\nu}
+=(p_0+p_1)I+s_\nu(t_0+t_1)Y=I,
+$$
+
+这是每个旗标上的保迹 instrument。参数 $r,t$ 只依赖已知的模型与启动长度，不依赖未知原输入 $j$；整个解码器是对两个原输入共同使用的接收端 CPTP 映射。
+
+将平方根写成
+
+$$
+K_{k,\nu}=a_kI+s_\nu b_kY,
+$$
+
+$$
+a_k=\frac{\sqrt{p_k+t_k}+\sqrt{p_k-t_k}}2,\qquad
+b_k=\frac{\sqrt{p_k+t_k}-\sqrt{p_k-t_k}}2.
+\tag{180.4}
+$$
+
+于是
+
+$$
+a_k^2+b_k^2=p_k,\qquad
+2a_kb_k=t_k,\qquad
+a_k^2-b_k^2=\sqrt{p_k^2-t_k^2}.
+\tag{180.5}
+$$
+
+因为 $Y^2=I$，这些算子在 $\Xi,\psi$ 张成的子空间内作用：
+
+$$
+(I\otimes K_{k,\nu})\Xi=a_k\Xi+s_\nu b_k\psi,\qquad
+(I\otimes K_{k,\nu})\psi=s_\nu b_k\Xi+a_k\psi.
+\tag{180.6}
+$$
+
+### 180.2 整个参考任务的精确误差公式
+
+对原输入 $j$，第173节的正确输出块记为 $\sigma_{jj}$。
+将（180.1）、（180.6）相乘并对均匀旗标求平均，非对角项因符号相反而消去，得到
+
+$$
+\sigma_{jj}=A_jP_\Xi+B_jP_\psi,
+\tag{180.7}
+$$
+
+其中
+
+$$
+\begin{aligned}
+A_0(r,t)
+&=\frac{r+(1-2\beta w_0)\sqrt{r^2-t^2}}2+\gamma w_0t,\\
+A_1(r,t)
+&=\frac{1-r+(1-2\beta w_1)\sqrt{(1-r)^2-t^2}}2-\gamma w_1t,
+\end{aligned}
+\tag{180.8}
+$$
+
+而 $B_j$ 由相应式子将平方根前的正号改为负号得到。
+两者非负，因为它们是 CP 输出在两个正交方向的系数；
+在（180.2）的严格内部，$A_j>0$。
+
+**定理180.1（该共同 instrument 的完整参考误差）。** 对上述解码器，其半 diamond 恢复误差恰为
+
+$$
+\boxed{
+e_L(r,t)=1-\frac{A_0(r,t)A_1(r,t)}{A_0(r,t)+A_1(r,t)}.
+}
+\tag{180.9}
+$$
+
+因此 $h_L(i)\le e_L(r,t)$。
+
+**证明。** 输出标签已经是经典的。对任意最坏参考权重 $q$，第173节把完整误差精确归约为
+$P_{u_q}-\operatorname{diag}(q\sigma_{00},(1-q)\sigma_{11})$
+的最大本征值，其中
+$u_q=\sqrt q\,|0\rangle\Xi+\sqrt{1-q}\,|1\rangle\Xi$。
+
+由（180.7）与 $\Xi\perp\psi$，可能的正本征值只出现在
+$|0\rangle\Xi,|1\rangle\Xi$ 的张成上，相应矩阵为
+
+$$
+\begin{pmatrix}
+q(1-A_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-A_1)
+\end{pmatrix}.
+$$
+
+其他方向半负定。第173节的二元调和计算给该最高本征值对
+$q\in[0,1]$ 的最大值为（180.9），并在
+$q=A_1/(A_0+A_1)$ 取得。这里优化的是原输入与任意参考，而不是只比较两个无参考输入。证毕。
+
+### 180.3 固定标签偏置的精确优化
+
+令
+
+$$
+\alpha_j=1-\beta w_j,\qquad
+1>\alpha_0>\alpha_1>0.
+$$
+
+当 $t=0$ 时，Kraus 为标量，解码器只丢旗标、保持 $R$，然后独立制备概率为 $r,1-r$ 的输出标签。因此
+
+$$
+A_0(r,0)=r\alpha_0,\qquad
+A_1(r,0)=(1-r)\alpha_1.
+$$
+
+**命题180.2（丢旗标后固定标签的最佳偏置）。** 在这一子族中，唯一最优参数与误差为
+
+$$
+\boxed{
+r_*=\frac{\sqrt{\alpha_1}}{\sqrt{\alpha_0}+\sqrt{\alpha_1}},
+\qquad
+e_L^{\mathrm{bias}}
+=1-\frac{\alpha_0\alpha_1}
+{(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2}.
+}
+\tag{180.10}
+$$
+
+对每个有限 $L\ge3$，
+
+$$
+\boxed{e_L^{\mathrm{bias}}<e_L^{\mathrm{unif}}.}
+\tag{180.11}
+$$
+
+**证明。** 最大化
+$A_0A_1/(A_0+A_1)$，等价于最小化
+
+$$
+\frac1{r\alpha_0}+\frac1{(1-r)\alpha_1}.
+$$
+
+该函数严格凸，导数为零等价于
+$r/(1-r)=\sqrt{\alpha_1/\alpha_0}$，由此得到（180.10）。
+均匀标签对应 $r=1/2$，其误差是
+$1-\alpha_0\alpha_1/[2(\alpha_0+\alpha_1)]$。
+因为 $\alpha_0\ne\alpha_1$，
+
+$$
+(\sqrt{\alpha_0}+\sqrt{\alpha_1})^2
+<2(\alpha_0+\alpha_1),
+$$
+
+所以最佳偏置严格改善它。证毕。
+
+### 180.4 利用旗标还可严格改善最佳固定偏置
+
+**定理180.3（全部有限启动上的严格弱测量改善）。** 对每个有限
+$L\ge3$，存在合法的 $t<0$，使
+
+$$
+\boxed{
+h_L(i)\le e_L(r_*,t)
+<e_L^{\mathrm{bias}}
+<e_L^{\mathrm{unif}}.
+}
+\tag{180.12}
+$$
+
+**证明。** 写
+$J(r,t)=A_0(r,t)A_1(r,t)/(A_0(r,t)+A_1(r,t))$。
+在 $t=0$，
+
+$$
+\partial_t A_0=\gamma w_0,\qquad
+\partial_t A_1=-\gamma w_1.
+$$
+
+因此
+
+$$
+\partial_tJ(r,0)
+=\gamma\,
+\frac{w_0A_1(r,0)^2-w_1A_0(r,0)^2}
+{(A_0(r,0)+A_1(r,0))^2}.
+\tag{180.13}
+$$
+
+在 $r=r_*$，有
+$A_0(r_*,0)/A_1(r_*,0)=\sqrt{\alpha_0/\alpha_1}$，而
+
+$$
+w_0\alpha_1-w_1\alpha_0=w_0-w_1<0.
+$$
+
+所以（180.13）严格为负。由于 $r_*\in(0,1)$，$t=0$ 是合法参数区间的内点。连续可微性保证存在充分小的负 $t$，使
+$J(r_*,t)>J(r_*,0)$，即误差严格降低。结合命题180.2和定理180.1，得到（180.12）。证毕。
+
+这里读取的是实际接收旗标与 $R$ 的关系。它没有额外取得原输入标签，也没有触及 $M$。丢弃旗标会消掉（180.1）的交叉项；旗标相关的 instrument 则把这些交叉项转为正确输出块的线性收益。
+
+### 180.5 一个显式可行族的二阶误差
+
+记
+
+$$
+\Delta w=w_1-w_0>0,\qquad
+\widehat r_L=\frac12-\frac{\beta\Delta w}{8},\qquad
+\widehat t_L=-\frac{\gamma\Delta w}{2}.
+\tag{180.14}
+$$
+
+这些参数对全部 $L\ge3$ 合法：$\Delta w<1/2$、$\beta<1/8$、
+$\gamma<1/8$ 给
+$\widehat r_L>63/128$ 且
+$|\widehat t_L|<1/32<\min\{\widehat r_L,1-\widehat r_L\}$。
+
+**命题180.4（显式弱测量族的二阶上界）。** 当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+h_L(i)
+&\le e_L(\widehat r_L,\widehat t_L)\\
+&=\frac34+\frac{\beta(w_0+w_1)}8
++\frac{3\beta^2-4\gamma^2}{64}(w_1-w_0)^2
++O(w_1^3).
+\end{aligned}
+}
+\tag{180.15}
+$$
+
+**证明。** 令 $\epsilon=w_0$、$R=w_1/w_0$；第177节保证 $R$ 留在固定紧区间，且 $R\to4$。先写
+$r=1/2+r_1\epsilon$、$t=t_1\epsilon$。在这一区域内，（180.8）与（180.9）的平方根和分母都远离零，因而 Taylor 余项可以对有界的 $R,r_1,t_1$ 统一控制。
+
+逐项展开得到
+
+$$
+\begin{aligned}
+e_L(r,t)
+={}&\frac34+\frac{\beta(1+R)}8\epsilon\\
+&+\frac{\epsilon^2}{16}
+\left[
+\beta^2(R-1)^2+4\beta(R-1)r_1
++4\gamma(R-1)t_1+16r_1^2+4t_1^2
+\right]
++O(\epsilon^3).
+\end{aligned}
+\tag{180.16}
+$$
+
+括号内对 $r_1,t_1$ 的二次式分别在
+
+$$
+r_1=-\frac{\beta(R-1)}8,\qquad
+t_1=-\frac{\gamma(R-1)}2
+$$
+
+取最小值。代入得到二阶系数
+$(3\beta^2-4\gamma^2)(R-1)^2/64$，这正是（180.14）及（180.15）。证毕。
+
+在同一变量下，最佳固定偏置与均匀输出分别满足
+
+$$
+\begin{aligned}
+e_L^{\mathrm{bias}}
+&=\frac34+\frac{\beta(w_0+w_1)}8
++\frac{3\beta^2}{64}(\Delta w)^2+O(w_1^3),\\
+e_L^{\mathrm{unif}}
+&=\frac34+\frac{\beta(w_0+w_1)}8
++\frac{\beta^2}{16}(\Delta w)^2+O(w_1^3).
+\end{aligned}
+\tag{180.17}
+$$
+
+所以显式弱测量族相对于最佳固定偏置的改善为
+$\gamma^2(\Delta w)^2/16+O(w_1^3)$，相对于均匀输出的改善为
+$(\beta^2+4\gamma^2)(\Delta w)^2/64+O(w_1^3)$。由于
+$\Delta w/w_1\to3/4$，两项对足够大的 $L$ 都严格为正。
+
+（180.15）只是合法解码器提供的二阶上界，没有将其二阶系数声明为所有接收端 CPTP 解码器的最优值。第176节的最优一阶系数保持成立；本节进一步证明，一阶最优不保证有限启动最优，且指出此前丢弃的旗标关系如何产生可计算的改善。
+
+## 追加锚（本行以下为增补区）
+
+## 181. 旗标条件小酉与反向局部模拟的最优二阶项
+
+第179节把反向局部模拟误差限制在 $\beta w_1$ 的二阶邻域内，但没有确定上界是否可以严格改善。本节构造一个只作用于接收端的旗标条件小酉，证明每个有限 $L\ge3$ 上均可严格改善该上界，并通过单输入纯化恢复的完整 CPTP 对偶证书确定真正最优的二阶系数。
+
+本节任务仍是把真实入口局部模拟为常值比较边界。它不要求输出原输入标签，因而独立于第180节的完整原输入恢复 instrument。
+
+受限通道转换的一般框架可参见 Jenčová，[《A General Theory of Comparison of Quantum Channels (and Beyond)》](https://arxiv.org/abs/2002.04240)，§3.2、定理3及注3。这里固定允许族为接收端后处理 $\operatorname{id}_M\otimes\Lambda$；不能以允许额外预处理的较大操作族替换它。以下给出当前具体来源的显式局部构造与对偶计算。
+
+### 181.1 Schmidt 坐标中的共同局部小酉
+
+采用 $\rho$ 的实 Schmidt 坐标，写
+
+$$
+\rho=\begin{pmatrix}r&0\\0&\ell\end{pmatrix},
+\qquad
+r=\frac{3+\sqrt5}{6},\quad
+\ell=\frac{3-\sqrt5}{6},
+$$
+
+$$
+\kappa=r-\ell=\frac{\sqrt5}{3},\qquad
+\Delta=r\ell=\frac19,
+\qquad
+|\Xi\rangle=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle.
+\tag{181.1}
+$$
+
+这是数学坐标选择。下文所有实际酉只作用于 $R$；换回原坐标时，使用 $R$ 上相应共轭的 Pauli 算子，不操作 $M$。
+
+沿用第179节解掩码后的两个等权旗标，记其符号为
+$s=\pm1$。令
+
+$$
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle,\qquad
+\beta=\frac{288}{2353},\quad
+\gamma=\frac{42}{2353},
+$$
+
+$$
+\eta_s(w)
+=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr).
+\tag{181.2}
+$$
+
+真实原输入 $j$ 使用 $w=w_j$，其中
+$0<w_0<w_1<1/2$。
+接收端读取旗标后施加
+
+$$
+U_s(t)=e^{-istX_R}=\cos t\,I-is\sin t\,X_R,
+\tag{181.3}
+$$
+
+再丢弃旗标。对参数 $w$ 的输出为
+
+$$
+\sigma(w,t)=\frac12\sum_{s=\pm1}
+(I_M\otimes U_s(t))\eta_s(w)(I_M\otimes U_s(t)^\dagger).
+\tag{181.4}
+$$
+
+同一个 $t$ 用于两个原输入。按第179节附加均匀输出旗标并逆转接收端坐标变换，就得到原接口上的合法共同模拟器。记
+
+$$
+d(w,t)=D(\sigma(w,t),P_\Xi),\qquad
+D_L(t)=\max_{j=0,1}d(w_j,t).
+$$
+
+第179节的完整参考归约给
+
+$$
+\delta_L^{\leftarrow}\le D_L(t).
+\tag{181.5}
+$$
+
+### 181.2 该模拟器的精确二阶矩阵与有限严格改善
+
+为避免把纯化重叠直接当作迹距离，先计算实际输出差。置
+
+$$
+b=\beta w,\qquad c=\gamma w,\qquad
+u=b+(1-2b)\sin^2t,\quad
+v=b+\sin^2t,\quad
+q=c\sin2t.
+\tag{181.6}
+$$
+
+旗标平均后的 $\sigma(w,t)$ 在偶宇称
+$|00\rangle,|11\rangle$ 与奇宇称 $|01\rangle,|10\rangle$ 之间分块。
+目标 $\Xi$ 位于偶块；偶块上的目标减实际输出恰为
+
+$$
+\boxed{
+H(w,t)=
+\begin{pmatrix}
+r(u-q)&\sqrt\Delta\,v\\
+\sqrt\Delta\,v&\ell(u+q)
+\end{pmatrix}.
+}
+\tag{181.7}
+$$
+
+该式由（181.2）—（181.4）直接相乘得到。也可先写
+$A_0=(1-b)P_\Xi+bP_\psi$、
+$T=|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|$，则
+
+$$
+\sigma(w,t)
+=\cos^2t\,A_0+\sin^2t\,X_RA_0X_R
+-ic\sin t\cos t\,[X_R,T],
+$$
+
+再取偶块即得（181.7）。
+
+奇块上的输出差为负半定。整个差是秩一投影减一份密度矩阵，至多有一个正本征值，且总迹为零。因此
+
+$$
+\boxed{
+d(w,t)=\lambda_{\max}(H(w,t))
+=\frac{
+u-\kappa q+
+\sqrt{(\kappa u-q)^2+4\Delta v^2}
+}{2}.
+}
+\tag{181.8}
+$$
+
+特别地，$H(w,0)=\beta wP_\Xi$，故
+$d(w,0)=\beta w$。对每个固定 $w>0$，其最高本征值简单。
+由（181.7）计算该固定点的导数，
+
+$$
+\boxed{
+\partial_t d(w,0)
+=\langle\Xi|\partial_tH(w,0)|\Xi\rangle
+=-2\kappa\gamma w<0.
+}
+\tag{181.9}
+$$
+
+**定理181.1（每个有限启动上的反向严格改善）。** 对每个整数
+$L\ge3$，存在对两个原输入共同使用的 $t_L>0$，使
+
+$$
+\boxed{
+\delta_L^{\leftarrow}\le D_L(t_L)<\beta w_1.
+}
+\tag{181.10}
+$$
+
+**证明。** 在 $t=0$，输入 $1$ 的误差为 $\beta w_1$，
+由（181.9）它在充分小的正 $t$ 上严格下降。
+输入 $0$ 的误差在 $t=0$ 为
+$\beta w_0<\beta w_1$，连续性保证它在某个邻域内仍小于
+$\beta w_1$。取两个邻域的共同正区间中的同一个 $t_L$，
+就得到（181.10）。参数仅依赖已知模型与 $L$，不依赖未知原输入。证毕。
+
+此处是每个固定有限 $L$ 的导数论证；其谱间隙为
+$\beta w_1>0$。下一步的启动长度极限需要另外控制这个趋零的间隙。
+
+### 181.3 联合缩放后的构造上界
+
+取固定有界实参数 $\alpha$，令 $t=\alpha w$。
+由（181.6）—（181.7），先除以 $w$ 后得到
+
+$$
+\frac{H(w,\alpha w)}{w}
+=\beta P_\Xi+wH_1(\alpha)+O(w^2),
+$$
+
+$$
+H_1(\alpha)=
+\begin{pmatrix}
+r(\alpha^2-2\gamma\alpha)&\sqrt\Delta\,\alpha^2\\
+\sqrt\Delta\,\alpha^2&\ell(\alpha^2+2\gamma\alpha)
+\end{pmatrix}.
+\tag{181.11}
+$$
+
+余项对有界 $\alpha$ 一致。此时基点最高本征值为
+$\beta$，其与另一根的间隙固定为 $\beta>0$。
+因此第176节的简单最高根扰动估计可以作用于这个缩放后的矩阵，给出
+
+$$
+\boxed{
+d(w,\alpha w)
+=\beta w+
+(\alpha^2-2\kappa\gamma\alpha)w^2+O(w^3).
+}
+\tag{181.12}
+$$
+
+这里使用
+$\langle\Xi|H_1(\alpha)|\Xi\rangle
+=\alpha^2-2\kappa\gamma\alpha$。
+这一展开没有把原矩阵的趋零谱间隙误当作固定间隙。
+
+取共同参数
+
+$$
+t_L=\kappa\gamma w_1.
+\tag{181.13}
+$$
+
+输入 $1$ 给
+
+$$
+d(w_1,t_L)
+=\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3).
+\tag{181.14}
+$$
+
+由于 $w_0/w_1\to1/4$，而 $w_1/w_0$ 有统一上界，
+（181.12）也给
+$d(w_0,t_L)=\beta w_0+O(w_1^2)$。
+因此对充分大的 $L$，输入 $1$ 仍是两者中误差较大的分支。由此得到合法共同模拟器的上界
+
+$$
+\delta_L^{\leftarrow}
+\le\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3).
+\tag{181.15}
+$$
+
+### 181.4 单输入纯化重叠的完整 CPTP 对偶证书
+
+下面证明与（181.15）匹配的下界。这里仅固定单个输入参数
+$w$，但允许每个旗标后的恢复器为任意 CPTP 映射，不限制为酉。
+
+令
+
+$$
+a=1-\beta w,\qquad b=\beta w,\qquad c=\gamma w,
+$$
+
+$$
+g_0=\operatorname{vec}\rho,\qquad
+g_1=\operatorname{vec}(-Y\rho),
+$$
+
+$$
+A_s(w)
+=a|g_0\rangle\langle g_0|
++b|g_1\rangle\langle g_1|
++sc\bigl(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\bigr).
+\tag{181.16}
+$$
+
+按输入优先的未归一化 Choi 约定，旗标 $s$ 后的纯化重叠为
+$\operatorname{Tr}(J_\Gamma A_s)$，可行条件为
+$J_\Gamma\succeq0$、
+$\operatorname{Tr}_{\mathrm{out}}J_\Gamma=I$。
+因此任何 Hermitian $\mathsf Y_s$ 满足
+
+$$
+\mathsf Y_s\otimes I-A_s\succeq0
+\tag{181.17}
+$$
+
+时，都给全部 CPTP 映射的上界
+$\operatorname{Tr}(J_\Gamma A_s)\le\operatorname{Tr}\mathsf Y_s$。
+
+定义
+
+$$
+\theta(w)=\frac12\arctan\frac{2\kappa c}{a-\kappa^2b},
+\qquad C=\cos\theta(w),\quad S=\sin\theta(w),
+$$
+
+$$
+p=aC+\kappa cS,\qquad q=\kappa bS+cC.
+\tag{181.18}
+$$
+
+当 $w$ 充分小时，分母正且这些量连续；在 $w=0$，
+$C=1,S=0,p=1,q=0$。角度定义给精确恒等式
+
+$$
+pS=\kappa qC.
+\tag{181.19}
+$$
+
+令 $U_s=C I-isS X$，并定义明确的 Hermitian 矩阵
+
+$$
+\boxed{
+\mathsf Y_s(w)=
+\begin{pmatrix}
+prC-q\ell S&is(prS+q\ell C)\\
+-is(prS+q\ell C)&p\ell C+qrS
+\end{pmatrix}.
+}
+\tag{181.20}
+$$
+
+为了核对它的互补关系，置
+$Z_s=(pI-sqY)\rho$。
+由（181.19）直接相乘得到
+
+$$
+\mathsf Y_s=Z_sU_s^\dagger.
+\tag{181.21}
+$$
+
+$U_s^{\mathsf T}=U_s$，而输入优先的酉 Choi 向量为
+$v_s=\operatorname{vec}(U_s^{\mathsf T})$。
+代入（181.16），
+
+$$
+A_s v_s=\operatorname{vec}Z_s
+=(\mathsf Y_s\otimes I)v_s.
+\tag{181.22}
+$$
+
+故 slack 矩阵
+$\mathsf S_s(w)=\mathsf Y_s(w)\otimes I-A_s(w)$
+始终具有非零核向量 $v_s$。
+
+在 $w=0$，
+
+$$
+\mathsf Y_s(0)=\rho,\qquad
+\mathsf S_s(0)=\rho\otimes I-
+|\operatorname{vec}\rho\rangle\langle\operatorname{vec}\rho|.
+$$
+
+其谱可以直接分块计算为
+
+$$
+\boxed{
+\operatorname{spec}\mathsf S_s(0)=\{0,2\Delta,r,\ell\}
+=\{0,2/9,r,\ell\}.
+}
+\tag{181.23}
+$$
+
+核为 $\operatorname{span}\{\operatorname{vec}I\}$，另外三根严格为正。
+所有矩阵条目随 $w$ 连续，因此存在 $w_*>0$，使
+$0\le w<w_*$ 时另外三根仍严格为正。由于（181.22）始终提供一个零根，
+第四根不能变为负数。所以
+$\mathsf S_s(w)\succeq0$，两个旗标均满足（181.17）。
+
+最后，
+
+$$
+\begin{aligned}
+\operatorname{Tr}\mathsf Y_s
+&=pC+\kappa qS\\
+&=aC^2+\kappa^2bS^2+2\kappa cCS\\
+&=\frac{a+\kappa^2b+
+\sqrt{(a-\kappa^2b)^2+4\kappa^2c^2}}2
+=:f(w).
+\end{aligned}
+\tag{181.24}
+$$
+
+这也恰为酉 $U_s$ 实现的重叠。
+因此，对所有足够小的 $w$，两个旗标各自的最大纯化重叠，以及它们等权平均后的最大纯化重叠，均精确等于 $f(w)$。
+结论由可行 Choi 与可行 dual 的相同值给出，不仅是酉族中的驻点条件。
+
+### 181.5 真正最优的反向模拟二阶系数
+
+从（181.24）直接展开，
+
+$$
+f(w)=1-\beta w+\kappa^2\gamma^2w^2+O(w^3).
+\tag{181.25}
+$$
+
+任意共同模拟器在输入 $1$ 上，都属于上节允许的全部局部 CPTP 恢复器之一。以目标投影 $P_\Xi$ 测试其输出，得到
+
+$$
+\delta_L^{\leftarrow}
+\ge1-f(w_1)
+=\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3).
+\tag{181.26}
+$$
+
+这里用单个输入对共同模拟任务给下界；没有为两个输入分别选择不相容的最优恢复器。
+将（181.26）与共同小酉上界（181.15）夹合，即得：
+
+**定理181.2（反向局部模拟的最优二阶启动项）。**
+当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=\beta w_1-\kappa^2\gamma^2w_1^2+O(w_1^3)
+=\beta w_1-\frac{980}{2353^2}w_1^2+O(w_1^3).
+}
+\tag{181.27}
+$$
+
+特别地，第179节简单模拟器与真正最优值之间的改善满足
+
+$$
+\boxed{
+\beta w_1-\delta_L^{\leftarrow}
+\sim\frac{980}{2353^2}w_1^2
+\sim\frac{2205}{2353^2}\,16^{-(L-1)}.
+}
+\tag{181.28}
+$$
+
+最后一个等价使用 $w_1\sim(3/2)4^{-(L-1)}$。
+第179节的精确首项 $432/2353$ 保持不变；本节确定的是从
+$\beta w_1$ 中扣除的最优二阶量。
+
+有限严格改善（181.10）适用于全部 $L\ge3$；
+精确二阶展开使用了充分小 $w$ 的 Choi slack 正性，没有给该对偶证书的显式阈值，也没有计算有限 $L$ 的精确最优模拟误差。
+所有构造只读取实际接收旗标并操作 $R$，随后使用第179节的局部重编码。不可访问的 $M$、共同 CPTP 条件以及全部原输入参考始终保持。
+
+## 追加锚（本行以下为增补区）
+
+## 182. 测量后的局部酉反馈进一步降低完整恢复的二阶误差
+
+第180节用旗标相关的 Lüders instrument 严格改善了固定标签解码器，但所得二阶项只是一个可行族的上界。本节在该 instrument 的测量之后追加局部酉反馈，构造二阶误差严格更低的共同解码器。因此第180节给出的二阶上界还可以严格降低。
+
+需要补上的关键步骤是完整参考误差的谱估计：正确块的总纯化重叠增加，并不单独保证半 diamond 误差降低。下面证明，新构造中纯化方向与其正交方向的耦合从二阶才开始，所以它们对完整参考最高本征值的影响至多为四阶。该估计同时对全部参考权重成立。
+
+### 182.1 利用来源非均匀性的局部反馈轴
+
+固定 $L\ge3$、$\varphi=\pi/4$，沿用第180节的接收端坐标。来源、纯化及其正交伙伴为
+
+$$
+\rho=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+|\Xi\rangle=\operatorname{vec}\sqrt\rho,\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+$$
+
+仍记
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353},\qquad
+\kappa=\frac{\sqrt5}{3},\qquad
+s_\nu=(-1)^{\nu+1}.
+\tag{182.1}
+$$
+
+定义只作用于 $R$ 的 Hermitian 矩阵
+
+$$
+H=\frac{-X+2Z}{\sqrt5}
+=\frac1{\sqrt5}\begin{pmatrix}2&-1\\-1&-2\end{pmatrix}.
+\tag{182.2}
+$$
+
+它满足
+
+$$
+\boxed{
+H^2=I,\qquad
+\operatorname{Tr}(\rho H)=0,\qquad
+i\operatorname{Tr}(\rho HY)=\kappa.
+}
+\tag{182.3}
+$$
+
+前两式可直接相乘取迹。第三式的符号由
+
+$$
+HY=-\frac{i}{\sqrt5}(Z+2X),\qquad
+\operatorname{Tr}(\rho X)=\frac23,\qquad
+\operatorname{Tr}(\rho Z)=\frac13
+$$
+
+给出：$i\operatorname{Tr}(\rho HY)=5/(3\sqrt5)=\sqrt5/3$。
+这个非零交叉系数来自当前非最大混合的来源。
+
+### 182.2 测量后反馈的共同 CPTP 构造
+
+取第180节的合法参数
+
+$$
+0<r<1,\qquad |t|<\min\{r,1-r\},
+$$
+
+$$
+p_0=r,\quad p_1=1-r,\qquad t_0=t,\quad t_1=-t.
+$$
+
+另取任意实数 $u$，对旗标 $\nu$ 定义局部酉
+
+$$
+U_\nu(u)=e^{i s_\nu uH}
+=\cos u\,I+i s_\nu\sin u\,H.
+$$
+
+测量后的 Kraus 算子取为
+
+$$
+\boxed{
+\widetilde K_{k,\nu}(r,t,u)
+=U_\nu(u)\bigl(p_kI+s_\nu t_kY\bigr)^{1/2}.
+}
+\tag{182.4}
+$$
+
+顺序是先作第180节的测量，再执行旗标相关的酉反馈。对两个输出结果 $k$ 使用同一个 $U_\nu(u)$。接收端将结果 $k$ 写入 $Q_{\mathrm{out}}$，保留 Kraus 输出为 $R_{\mathrm{out}}$，最后丢弃旧旗标。
+
+酉性保证
+
+$$
+\sum_k\widetilde K_{k,\nu}^\dagger\widetilde K_{k,\nu}
+=\sum_k(p_kI+s_\nu t_kY)=I.
+\tag{182.5}
+$$
+
+因此这个构造对每个合法 $r,t$ 和每个实 $u$ 都是接收端 CPTP 解码器。它只操作 $QR$，没有操作 $M$。参数依赖已知来源与启动长度，不依赖未知原输入 $j$。
+
+记其完整半 diamond 恢复误差为
+$\widetilde e_L(r,t,u)$。当 $u=0$ 时，它正是第180节的
+$e_L(r,t)$。对任意合法参数，
+
+$$
+h_L(i)\le\widetilde e_L(r,t,u).
+\tag{182.6}
+$$
+
+### 182.3 正确块的一阶结构与二阶纯化重叠
+
+写
+
+$$
+\epsilon=w_0,\qquad R=w_1/w_0,
+\qquad
+r=\frac12+r_1\epsilon,\quad
+t=t_1\epsilon,\quad u=u_1\epsilon.
+\tag{182.7}
+$$
+
+以下展开让 $R,r_1,t_1,u_1$ 留在固定有界集合中。真实 $R$ 由第177节具有统一正上下界。对原输入 $j$ 的正确输出分支，置
+
+$$
+a_0=r_1,\quad a_1=-r_1,\qquad
+b_0=t_1,\quad b_1=-t_1,\qquad
+c_0=1,\quad c_1=R.
+\tag{182.8}
+$$
+
+这些 $a_j,b_j$ 是本节的展开系数。于是
+$p_j=1/2+a_j\epsilon$、$t_j=b_j\epsilon$、$w_j=c_j\epsilon$。
+
+正确输出块为
+
+$$
+\widetilde\sigma_{jj}
+=\frac12\sum_{\nu=0}^1
+(I_M\otimes\widetilde K_{j,\nu})
+\eta_{j,\nu}
+(I_M\otimes\widetilde K_{j,\nu}^\dagger),
+$$
+
+$$
+\eta_{j,\nu}
+=P_\Xi+\epsilon c_j\left[
+\beta(P_\psi-P_\Xi)
++s_\nu\gamma\bigl(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\bigr)
+\right].
+\tag{182.9}
+$$
+
+**引理182.1（旗标平均后的正确块）。** 令
+$f_j=\langle\Xi|\widetilde\sigma_{jj}|\Xi\rangle$。有一致展开
+
+$$
+\boxed{
+\widetilde\sigma_{jj}
+=\frac12P_\Xi+
+\epsilon\left[
+a_jP_\Xi+\frac{\beta c_j}{2}(P_\psi-P_\Xi)
+\right]+O(\epsilon^2)
+}
+\tag{182.10}
+$$
+
+以及
+
+$$
+\boxed{
+\begin{aligned}
+f_j={}&\frac12+
+\left(a_j-\frac{\beta c_j}{2}\right)\epsilon\\
+&+\left[
+-\beta c_ja_j-\frac{b_j^2}{2}-\frac{u_1^2}{2}
++\kappa u_1b_j+\gamma c_jb_j
++\kappa\gamma c_ju_1
+\right]\epsilon^2
++O(\epsilon^3).
+\end{aligned}
+}
+\tag{182.11}
+$$
+
+**证明。** 按（182.4）的先后顺序展开，得到
+
+$$
+\begin{aligned}
+\widetilde K_{j,\nu}
+=\frac1{\sqrt2}\Bigl\{
+&I+\epsilon(a_jI+s_\nu b_jY+i s_\nu u_1H)\\
+&+\epsilon^2\Bigl[
+-\frac{a_j^2+b_j^2+u_1^2}{2}I
+-s_\nu a_jb_jY+i s_\nu u_1a_jH+i u_1b_jHY
+\Bigr]\Bigr\}
++O(\epsilon^3).
+\end{aligned}
+\tag{182.12}
+$$
+
+所有带单个 $s_\nu$ 的一阶项在均匀旗标平均中消失，立即得到（182.10）。
+
+为求目标重叠，定义两个恢复振幅
+
+$$
+A_{j,\nu}=\operatorname{Tr}(\rho\widetilde K_{j,\nu}),\qquad
+B_{j,\nu}=\operatorname{Tr}(\rho\widetilde K_{j,\nu}Y).
+$$
+
+由 $\operatorname{Tr}(\rho Y)=0$ 及（182.3），
+
+$$
+\begin{aligned}
+A_{j,\nu}
+&=\frac1{\sqrt2}\left[
+1+a_j\epsilon+
+\left(-\frac{a_j^2+b_j^2+u_1^2}{2}+\kappa u_1b_j\right)\epsilon^2
+\right]+O(\epsilon^3),\\
+B_{j,\nu}
+&=\frac{s_\nu}{\sqrt2}(b_j+\kappa u_1)\epsilon+O(\epsilon^2).
+\end{aligned}
+$$
+
+将它们代入精确重叠
+
+$$
+\frac12\sum_\nu\left[
+(1-\beta c_j\epsilon)|A_{j,\nu}|^2
++\beta c_j\epsilon|B_{j,\nu}|^2
++2s_\nu\gamma c_j\epsilon
+\operatorname{Re}(\overline{A_{j,\nu}}B_{j,\nu})
+\right]
+$$
+
+即得（182.11）。固定有界参数下，平方根的谱与零有统一距离，所以矩阵 Taylor 余项可一致控制。证毕。
+
+特别地，（182.10）给
+
+$$
+(I-P_\Xi)\widetilde\sigma_{jj}P_\Xi=O(\epsilon^2).
+\tag{182.13}
+$$
+
+这一步使用了同一旗标在输入条件态与反馈中的符号关联。
+
+### 182.4 保留全部参考的统一 Schur 估计
+
+以下估计说明（182.11）为什么足以控制二阶完整误差。
+
+**引理182.2（正交方向的四阶谱影响）。** 对（182.7）的有界参数族，有
+
+$$
+\boxed{
+0\le\widetilde e_L(r,t,u)
+-\left(1-\frac{f_0f_1}{f_0+f_1}\right)
+\le C\epsilon^4
+}
+\tag{182.14}
+$$
+
+当 $\epsilon$ 足够小时成立，常数 $C$ 可对该有界参数族统一选取。
+
+**证明。** 输出标签为经典的，第173节的完整参考公式给
+
+$$
+\widetilde e_L(r,t,u)=\max_{q\in[0,1]}\lambda_{\max}(C_q),
+$$
+
+$$
+C_q=P_{u_q}-\operatorname{diag}
+\bigl(q\widetilde\sigma_{00},(1-q)\widetilde\sigma_{11}\bigr),
+\qquad
+u_q=\sqrt q\,|0\rangle\Xi+\sqrt{1-q}\,|1\rangle\Xi.
+\tag{182.15}
+$$
+
+按 $\mathcal T=\operatorname{span}\{|0\rangle\Xi,|1\rangle\Xi\}$
+及其正交补分块，写
+
+$$
+C_q=\begin{pmatrix}M_q&B_q\\B_q^\dagger&D_q\end{pmatrix},
+\qquad
+M_q=\begin{pmatrix}
+q(1-f_0)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-f_1)
+\end{pmatrix}.
+\tag{182.16}
+$$
+
+这是矩阵估计中的正交分块，不为解码器增加操作 $MR$ 的权限。
+由于目标向量属于 $\mathcal T$、正确输出块半正定，始终有
+$D_q\preceq0$。由（182.13），$\|B_q\|=O(\epsilon^2)$ 对全部
+$q\in[0,1]$ 一致成立。
+
+令 $\lambda_q=\lambda_{\max}(M_q)$。由于 $f_j\to1/2$ 一致，
+对 $M_q$ 使用单位向量 $(\sqrt q,\sqrt{1-q})$ 的 Rayleigh 商，有
+
+$$
+\lambda_q\ge1-q^2f_0-(1-q)^2f_1
+\ge1-\max\{f_0,f_1\}\ge\frac14
+$$
+
+对足够小的 $\epsilon$ 及全部 $q$ 成立。
+一般地，若 $D\preceq0$、$\lambda=\lambda_{\max}(M)>0$，则
+
+$$
+0\le\lambda_{\max}\begin{pmatrix}M&B\\B^\dagger&D\end{pmatrix}-\lambda
+\le\frac{\|B\|^2}{\lambda}.
+\tag{182.17}
+$$
+
+下界取 $M$ 的最高本征向量。对任意单位向量 $(x,y)$，令
+$v=\|y\|$，其 Rayleigh 商至多为
+$\lambda-\lambda v^2+2\|B\|v\le\lambda+\|B\|^2/\lambda$，得到上界。
+应用到（182.16），得
+
+$$
+0\le\lambda_{\max}(C_q)-\lambda_q\le C\epsilon^4
+\quad\text{对全部 }q\in[0,1].
+$$
+
+因此可对两侧取 $q$ 最大值。第173、180节的二元调和公式给
+
+$$
+\max_q\lambda_q=1-\frac{f_0f_1}{f_0+f_1},
+$$
+
+从而得到（182.14）。证毕。
+
+这里没有把最坏参考权重固定为 $1/2$：两维块中的最大值仍在
+$q=f_1/(f_0+f_1)$ 取得，其偏移完整保留在调和式中；对实际最高根的误差估计则统一覆盖全部 $q$。
+
+### 182.5 共同反馈的二阶收益及显式选择
+
+记第180节二阶二次式为
+
+$$
+Q_{180}(R,r_1,t_1)
+=\frac1{16}\left[
+\beta^2(R-1)^2+4\beta(R-1)r_1+4\gamma(R-1)t_1
++16r_1^2+4t_1^2
+\right].
+\tag{182.18}
+$$
+
+将（182.11）代入（182.14），得到
+
+$$
+\boxed{
+\begin{aligned}
+\widetilde e_L(r,t,u)
+={}&\frac34+\frac{\beta(1+R)}8\epsilon\\
+&+\left[
+Q_{180}(R,r_1,t_1)
++\frac{u_1^2-\kappa\gamma(1+R)u_1}{4}
+\right]\epsilon^2
++O(\epsilon^3).
+\end{aligned}
+}
+\tag{182.19}
+$$
+
+其中来自两个正确块的项
+$\kappa u_1b_0+\kappa u_1b_1$ 相消，因为 $b_0+b_1=0$。
+共同反馈留下的总重叠改变量为
+$[-u_1^2+\kappa\gamma(1+R)u_1]\epsilon^2$。
+误差式 $1-f_0f_1/(f_0+f_1)$ 在基点 $f_0=f_1=1/2$ 对两个重叠的偏导均为 $-1/4$，
+所以得到（182.19）的符号与系数。
+
+反馈角度的二次式在
+
+$$
+u_1=\frac{\kappa\gamma(1+R)}2
+$$
+
+取最小值，贡献
+$-\kappa^2\gamma^2(1+R)^2/16$。
+现在保留原始启动变量，记
+
+$$
+\Sigma w=w_0+w_1,\qquad \Delta w=w_1-w_0,
+$$
+
+并取显式参数
+
+$$
+\boxed{
+\widehat r_L=\frac12-\frac{\beta\Delta w}{8},\qquad
+\widehat t_L=-\frac{\gamma\Delta w}{2},\qquad
+\widehat u_L=\frac{\kappa\gamma\Sigma w}{2}.
+}
+\tag{182.20}
+$$
+
+前两个参数由第180节对全部有限 $L\ge3$ 合法；第三个参数为实数，
+其指数对任意取值都是酉。因此本显式解码器对每个有限 $L\ge3$ 都合法。
+
+**定理182.3（比第180节更低的完整恢复二阶上界）。** 当 $L\to\infty$ 时，
+
+$$
+\boxed{
+\begin{aligned}
+h_L(i)
+&\le\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)\\
+&=\frac34+\frac{\beta\Sigma w}{8}
++\frac{3\beta^2-4\gamma^2}{64}(\Delta w)^2
+-\frac{5\gamma^2}{144}(\Sigma w)^2
++O(w_1^3).
+\end{aligned}
+}
+\tag{182.21}
+$$
+
+而且，存在有限 $L_0$，使全部 $L\ge L_0$ 都有
+
+$$
+\boxed{
+\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)
+<e_L(\widehat r_L,\widehat t_L).
+}
+\tag{182.22}
+$$
+
+**证明。** 将（182.20）对应的
+$r_1=-\beta(R-1)/8$、$t_1=-\gamma(R-1)/2$、
+$u_1=\kappa\gamma(1+R)/2$ 代入（182.19）。第180节给
+$Q_{180}=(3\beta^2-4\gamma^2)(R-1)^2/64$，而
+$\kappa^2/16=5/144$，即得（182.21）。$R$ 具有统一正上下界，
+故一致的 $O(\epsilon^3)$ 可写为 $O(w_1^3)$。
+
+与第180节同一组 $\widehat r_L,\widehat t_L$ 的误差相减，得到
+
+$$
+e_L(\widehat r_L,\widehat t_L)
+-\widetilde e_L(\widehat r_L,\widehat t_L,\widehat u_L)
+=\frac{5\gamma^2}{144}(\Sigma w)^2+O(w_1^3).
+\tag{182.23}
+$$
+
+由于 $\Sigma w\ge w_1>0$、$w_1\to0$，余项相对
+$(\Sigma w)^2$ 趋零；首项系数严格为正。因此充分大的 $L$ 上严格改善。证毕。
+
+本式保留 $w_0,w_1$ 本身直到二阶，没有把 $R$ 提前替换成其极限 $4$；
+故没有将真实启动展开中的较低阶修正吞入错误的余项。
+
+### 182.6 已推进的最优性边界
+
+本节给出了每个有限启动上合法的一份共同解码器，并证明它在充分长启动时严格改善第180节给出的显式 Lüders 族。增加的反馈只使用真实接收旗标和 $R$；来源的非均匀性通过（182.3）的交叉系数进入二阶收益。
+
+完整参考误差的改进由（182.14）的统一谱估计承担，不能仅凭总重叠增加得出。本节没有证明所有有限 $L$ 上这个显式反馈角度都严格改善，也没有计算全体接收端 CPTP 解码器的最优二阶系数；新的二阶表达式仍是构造性上界。第176节的最优一阶结果不变。
+
+## 追加锚（本行以下为增补区）
+
+## 183. 足够长启动时反向局部模拟的精确最优酉
+
+第181节确定了反向局部模拟的最优二阶项，但只用纯化目标本身作为下界检验。本节把检验改为候选输出差的正本征投影，得到与同一个候选酉精确匹配的 Choi 对偶。由此，对足够长的有限启动，反向模拟的完整 CPTP 最优值可以精确归约为一个解析角度分支。
+
+### 183.1 由缩放矩阵定义解析角度
+
+沿用第181节的 Schmidt 坐标和常数
+
+$$
+\rho=\operatorname{diag}(r,\ell),\quad
+r+\ell=1,\quad r\ell=\Delta=\frac19,\quad
+\kappa=r-\ell=\frac{\sqrt5}{3},
+$$
+
+$$
+\Xi=\sqrt r\,|00\rangle+\sqrt\ell\,|11\rangle,\qquad
+\psi=(I\otimes Y)\Xi,\qquad
+\beta=\frac{288}{2353},\quad\gamma=\frac{42}{2353}.
+$$
+
+对两个等权旗标 $s=\pm1$，输入为
+
+$$
+\eta_s(w)=(1-\beta w)P_\Xi+\beta wP_\psi
++s\gamma w(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|).
+$$
+
+接收端施加共同角度的条件酉
+$U_s(t)=\cos t\,I-is\sin t\,X$，然后丢弃旗标。记平均输出为
+$\sigma(w,t)$，其目标距离为 $d(w,t)=D(\sigma(w,t),P_\Xi)$。
+第181节已经给出精确二维矩阵
+
+$$
+d(w,t)=\lambda_{\max}H(w,t),\qquad
+H(w,t)=
+\begin{pmatrix}
+r(u-q)&\sqrt\Delta\,v\\
+\sqrt\Delta\,v&\ell(u+q)
+\end{pmatrix},
+\tag{183.1}
+$$
+
+$$
+u=\beta w+(1-2\beta w)\sin^2t,\quad
+v=\beta w+\sin^2t,\quad q=\gamma w\sin2t.
+$$
+
+**引理183.1（唯一的局部解析驻点分支）。** 存在 $w_*>0$ 和实解析函数
+$\alpha:(-w_*,w_*)\to\mathbb R$，满足
+
+$$
+\alpha(0)=\kappa\gamma,\qquad
+t_*(w)=w\alpha(w),\qquad
+\partial_t d(w,t_*(w))=0\quad(0<w<w_*).
+\tag{183.2}
+$$
+
+在 $\alpha=\kappa\gamma$ 的某个固定邻域中，这是唯一这样的解析驻点分支。
+
+**证明。** 将 $t=w\alpha$ 代入。$H(w,w\alpha)/w$ 的各条目在
+$w=0$ 有可去奇点，并实解析延拓为矩阵 $B(w,\alpha)$，其中
+$B(0,\alpha)=\beta P_\Xi$。其最高根在基点简单，谱间隙为
+$\beta>0$，故在 $(0,\kappa\gamma)$ 的邻域中存在实解析的本征值
+$\lambda(w,\alpha)$，且对正 $w$，
+$d(w,w\alpha)=w\lambda(w,\alpha)$。
+
+由第181节的缩放展开，
+
+$$
+\lambda(w,\alpha)
+=\beta+w(\alpha^2-2\kappa\gamma\alpha)+O(w^2).
+$$
+
+因此
+
+$$
+G(w,\alpha)=\frac{\lambda(w,\alpha)-\beta}{w}
+$$
+
+也有实解析延拓，并满足
+
+$$
+G(0,\alpha)=\alpha^2-2\kappa\gamma\alpha,\qquad
+\partial_\alpha G(0,\kappa\gamma)=0,\qquad
+\partial_\alpha^2G(0,\kappa\gamma)=2.
+$$
+
+实解析隐函数定理给出唯一的附近分支
+$\partial_\alpha G(w,\alpha(w))=0$。对正 $w$，
+
+$$
+\partial_\alpha d(w,w\alpha)=w^2\partial_\alpha G(w,\alpha)
+=w\partial_td(w,w\alpha),
+$$
+
+所以它满足（183.2）。证毕。
+
+这里还没有从驻点推断全体 CPTP 最优性。下面给出承担该结论的对偶证书。
+
+### 183.2 随候选误差变化的检验投影
+
+记
+
+$$
+\widehat t=t_*(w),\qquad C=\cos\widehat t,\quad S=\sin\widehat t.
+$$
+
+在（183.1）的偶宇称空间中，选择最高根的实单位本征向量
+
+$$
+\xi(w)=x(w)|00\rangle+y(w)|11\rangle,
+\qquad
+x(0)=\sqrt r,\quad y(0)=\sqrt\ell.
+\tag{183.3}
+$$
+
+它可以由缩放矩阵 $B(w,\alpha(w))$ 的简单最高谱投影实解析选取，
+并在缩小 $w_*$ 后满足 $x,y>0$。置
+
+$$
+D=\operatorname{diag}(\sqrt r\,x,\sqrt\ell\,y),\qquad
+\tau=\operatorname{Tr}D,\quad
+\zeta=\operatorname{Tr}(DZ).
+\tag{183.4}
+$$
+
+注意 $D$ 并未被假定为密度矩阵；$\tau$ 一般不等于一。
+在 $w=0$，$D=\rho,\tau=1,\zeta=\kappa$。
+
+对旗标 $s$ 的任意接收端通道 $\Gamma_s$，检验
+$P_{\xi(w)}$ 的收益可写成输入优先的 Choi 配对
+$\operatorname{Tr}(J_{\Gamma_s}A_s)$，其中
+
+$$
+g_0=\operatorname{vec}D,\quad
+g_1=\operatorname{vec}(-YD),
+$$
+
+$$
+A_s=a|g_0\rangle\langle g_0|+b|g_1\rangle\langle g_1|
++sc(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|),
+\tag{183.5}
+$$
+
+$$
+a=1-\beta w,\qquad b=\beta w,\qquad c=\gamma w.
+$$
+
+这来自两个振幅
+$\langle\xi|(I\otimes K)\Xi\rangle=\operatorname{Tr}(DK)$、
+$\langle\xi|(I\otimes K)\psi\rangle=\operatorname{Tr}(DKY)$。
+因此对候选酉 $U_s=C I-isS X$，检验收益为
+
+$$
+F_\xi(\widehat t)
+=a\tau^2C^2+b\zeta^2S^2+2c\tau\zeta CS,
+\tag{183.6}
+$$
+
+两个旗标给出相同的值。
+
+定义
+
+$$
+p=a\tau C+c\zeta S,\qquad
+q=b\zeta S+c\tau C.
+\tag{183.7}
+$$
+
+由于 $\xi(w)$ 是实际输出差的简单正本征向量，
+Hellmann–Feynman 公式与（183.2）给
+
+$$
+0=\partial_td(w,\widehat t)
+=-\left.\partial_t
+\langle\xi(w)|\sigma(w,t)|\xi(w)\rangle\right|_{t=\widehat t}.
+$$
+
+此导数中检验向量固定为当前的 $\xi(w)$。对（183.6）求导即得精确关系
+
+$$
+\boxed{p\tau S=q\zeta C.}
+\tag{183.8}
+$$
+
+### 183.3 一个检验同时约束全部接收端 CPTP 映射
+
+令
+
+$$
+Z_s=(pI-sqY)D,\qquad
+\mathsf Y_s=Z_sU_s^\dagger.
+\tag{183.9}
+$$
+
+若写 $D=\operatorname{diag}(d_0,d_1)$，直接相乘得到
+
+$$
+\mathsf Y_s=
+\begin{pmatrix}
+pd_0C-qd_1S&is(pd_0S+qd_1C)\\
+is(pd_1S-qd_0C)&pd_1C+qd_0S
+\end{pmatrix}.
+$$
+
+（183.8）正是
+$p(d_0+d_1)S=q(d_0-d_1)C$，故该矩阵为 Hermitian。
+酉的未归一化 Choi 向量为
+$v_s=\operatorname{vec}(U_s^{\mathsf T})$。由（183.5）—（183.7），
+
+$$
+A_sv_s=\operatorname{vec}Z_s
+=(\mathsf Y_s\otimes I)v_s.
+\tag{183.10}
+$$
+
+因此 slack
+$\mathsf Y_s\otimes I-A_s$ 始终有非零核向量 $v_s$。
+在 $w=0$，$\xi=\Xi$、$D=\rho$、$p=1,q=0,U_s=I$，所以它退化为
+
+$$
+\rho\otimes I-|\operatorname{vec}\rho\rangle
+\langle\operatorname{vec}\rho|,
+$$
+
+其谱由第181节为 $\{0,2/9,r,\ell\}$。三个非零根严格为正；
+所有条目随 $w$ 连续，且（183.10）保留精确零根。
+因此缩小 $w_*$ 后，对两个旗标均有
+
+$$
+\boxed{\mathsf Y_s\otimes I-A_s\succeq0.}
+\tag{183.11}
+$$
+
+于是每个合法的 $J_{\Gamma_s}\succeq0$、
+$\operatorname{Tr}_{\mathrm{out}}J_{\Gamma_s}=I$ 均满足
+
+$$
+\operatorname{Tr}(J_{\Gamma_s}A_s)
+\le\operatorname{Tr}\mathsf Y_s
+=p\tau C+q\zeta S
+=F_\xi(\widehat t).
+\tag{183.12}
+$$
+
+候选酉 $U_s$ 取等。这里对偶可行性来自整个四维 Choi slack，
+没有将“在酉族中驻点”直接当作“在全部 CPTP 中最优”。
+
+**定理183.2（单输入距离的精确全 CPTP 最优酉）。** 存在 $w_*>0$，使对
+$0<w<w_*$，
+
+$$
+\boxed{
+\min_{\Gamma_+,\Gamma_-\ {\rm CPTP}}
+D\left(
+\frac12\sum_{s=\pm1}(\operatorname{id}_M\otimes\Gamma_s)(\eta_s(w)),
+P_\Xi
+\right)
+=d(w,t_*(w)).
+}
+\tag{183.13}
+$$
+
+最小值由同角度的条件酉 $U_s(t_*(w))$ 取得。
+
+**证明。** 对任意一对允许通道，记其平均输出为 $\sigma_\Gamma$。
+以 $P_{\xi(w)}$ 作迹距离检验，利用（183.12），
+
+$$
+\begin{aligned}
+D(\sigma_\Gamma,P_\Xi)
+&\ge\operatorname{Tr}[P_{\xi(w)}(P_\Xi-\sigma_\Gamma)]\\
+&\ge\operatorname{Tr}[P_{\xi(w)}(P_\Xi-\sigma(w,t_*(w)))]\\
+&=d(w,t_*(w)).
+\end{aligned}
+$$
+
+最后的等号使用 $\xi(w)$ 是实际输出差的正本征向量，
+且秩一目标减密度矩阵至多有一个正本征值。
+条件酉产生 $\sigma(w,t_*(w))$，达到这个下界。证毕。
+
+### 183.4 同一酉给出真实双输入通道的精确最优值
+
+**定理183.3（足够长有限启动的精确共同模拟器）。** 存在有限整数
+$L_*$，使全部 $L\ge L_*$ 都有
+
+$$
+\boxed{
+\delta_L^{\leftarrow}
+=d(w_1,t_*(w_1))
+=\lambda_{\max}H(w_1,t_*(w_1)).
+}
+\tag{183.14}
+$$
+
+达到最小值的同一模拟器对两个原输入都施加
+$U_s(t_*(w_1))$，然后按第179节重编码。
+
+**证明。** 对任意共同模拟器，测试原输入 $1$ 并应用定理183.2，给出
+下界 $d(w_1,t_*(w_1))$。这一步允许单输入问题拥有更大的优化集合，
+因而下界方向正确。
+
+反过来，选取共同条件酉 $U_s(t_*(w_1))$。
+由引理183.1，
+$t_*(w_1)=\kappa\gamma w_1+O(w_1^2)$。
+第181节的一致缩放展开与 $w_0/w_1\to1/4$ 给
+
+$$
+d(w_1,t_*(w_1))=\beta w_1+O(w_1^2),\qquad
+d(w_0,t_*(w_1))=\beta w_0+O(w_1^2).
+$$
+
+由于 $\beta(w_1-w_0)$ 为严格正的一阶量，充分长启动时，
+输入 $1$ 的误差大于输入 $0$ 的误差。
+所以这个共同模拟器的最大分支误差恰为右侧。
+第179节把最大分支距离精确识别为保留全部原输入参考的通道距离，
+从而上下界相等。证毕。
+
+（183.14）是精确最优值的隐式解析刻画，而非只保留二阶的等价式：
+角度是（183.1）的唯一附近驻点分支，并由（183.2）规定其取支。
+它没有给出显式 $L_*$，也不将该最优性扩张到全部较短启动。
+相应二阶展开与第181节一致。
+
+本节优化的任务是恢复与不可访问记忆相联的目标纯化。它没有要求恢复原输入标签，
+因此不能将本节的精确最优酉直接认作第180、182节完整原输入恢复任务的最优解码器。
+
+## 追加锚（本行以下为增补区）
