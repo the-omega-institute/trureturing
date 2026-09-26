@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "new_lean_verification": false,
+  "scope": "Independent exact factorial-moment construction, explicit matching enumeration, all638 count moments, trial division of1025 primes, exact finite scalar sum, odd integral upper remainder and unchanged193-row policies. Candidate producer was not opened, imported or executed. Tail intervals enclose the constructed upper bound, not the actual unknown infinite prime fee. Mathematical source/halfrow scope is the separate ordinary theorem.",
+  "candidate_sha256": "cc5fb51657fa839b09aeef77f01a554d579b53e4185e63447d3c84ff781d3334",
+  "program_sha256": "1b615a4a69b38c19664261f308403ae7c8be5f49d191833bafa3a2f74a86aba0",
+  "input_sha256": {
+    "paired_five_owner_fixed_rows_certificate.json": "aef68901053153b6c6090063572b9d1e59d8c82ce5bbc5e9b8a1533f8b2bcb5e",
+    "paired_owner_fixed_rows_certificate.json": "c8a317de0b4a2e96e75811664615d2af9f473fc2b463f46d4af993b1a49adab6",
+    "four_parent_tail_fixed_schedule.json": "fa79d1c28aea101da734ac687fe9ddb6e39bc6bd212a206183e049d1e929f758",
+    "ordinary_domain_five_parent_certificate.json": "e46183469f280d262da37a9c33005e724690fc20b0106202c42c9913ed8d8ec0"
+  },
+  "all638_branch_moments_sha256": "7806de14e7c9799c9222b9cdc7577a72391f7159241a92d6e246818b7025f6e6",
+  "finite_prime_terms_sha256": "570e32b02672363ea42c36f6a3693f6da4bbf8262a427a6fe6a81ca47c7b3376",
+  "finite_prime_count": 1025,
+  "paired_count_moment7": "334087979992258328031675959229846798109333/167944130343158258073600000000",
+  "old_noncanonical_max_count_moment7": "1107696715386484741995054258907932416363/992257839837657169920000000",
+  "new_complete_five_parent_tail_interval": [
+    "42128163790099880461929021647574053192339241185114933020191809614166860022970299563/500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "21064081895049940230964510823787026596169620592557466510095904807087101270274888961/250000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  ],
+  "old_complete_five_parent_tail": "215382309954767220434928870511633/262567468948404680792561991974400000000",
+  "tail_reduction_decimal": 0.8972851081397224,
+  "attribution": {
+    "old_canonical_count_moment7": "870810010748021844658916723340424584419/436218520371839631360000000",
+    "old_canonical_prime_tail_interval": [
+      "5284523519831901575527768471555547853706177086287864522917908357036498974491160573/62500000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "3382095052692417008337771821795550626371953335224233294667461348503948809014052081/40000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    ],
+    "old_generic_prime_tail_interval": [
+      "54568285771236923814036853438422856039584710103746139144280267251045261725614550061/500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "109136571542473847628073706876845712079169420207492278288560534502109544864056566533/1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    ]
+  },
+  "policies": [
+    {
+      "kind": "RS",
+      "fixed_cutoffs": [
+        137,
+        373
+      ],
+      "allpair_sha256": "aa54e24bf0abd57937376d87caa67bccf7c00d4eb26db83aae6c6363c1fd13f9",
+      "direct_density_cutoff": 211,
+      "attribution": [
+        [
+          "inherited_generic_integer_tail",
+          397
+        ],
+        [
+          "paired_integer_tail",
+          389
+        ],
+        [
+          "old_generic_prime_tail",
+          373
+        ],
+        [
+          "old_canonical_prime_tail",
+          373
+        ],
+        [
+          "paired_prime_tail",
+          373
+        ]
+      ]
+    },
+    {
+      "kind": "elementary",
+      "fixed_cutoffs": [
+        191,
+        443
+      ],
+      "allpair_sha256": "35fe4772cb843ac4c706d4cd9977a183208c2562f43a6956cdb05c12903829b2",
+      "direct_density_cutoff": 293,
+      "attribution": [
+        [
+          "inherited_generic_integer_tail",
+          587
+        ],
+        [
+          "paired_integer_tail",
+          509
+        ],
+        [
+          "old_generic_prime_tail",
+          443
+        ],
+        [
+          "old_canonical_prime_tail",
+          443
+        ],
+        [
+          "paired_prime_tail",
+          443
+        ]
+      ]
+    }
+  ],
+  "checks": {
+    "schema scope": 1,
+    "input SHA256": 4,
+    "193 complete finite rows": 1,
+    "fixed row identity": 193,
+    "fixed full-history caps": 193,
+    "fixed thresholds": 193,
+    "no row or Euler change": 1,
+    "independent matching responses": 1,
+    "independent positive tau": 1,
+    "complete geometric mixture": 16,
+    "positive moments": 16,
+    "coordinate law formula": 15,
+    "all coordinate moments": 15,
+    "all paired product moments": 1,
+    "unnormalized mass and mean": 1,
+    "exact paired count moment": 1,
+    "positive branch moment": 638,
+    "638 reconstructed branches": 1,
+    "branch moment and identity": 638,
+    "branch method": 638,
+    "all638 branch fingerprint": 1,
+    "old canonical complete moment": 1,
+    "noncanonical runner": 1,
+    "all637 below new canonical": 1,
+    "complete allbranch moment": 1,
+    "inherited generic full moment": 1,
+    "sharp scalar coefficient": 1,
+    "original tail start": 1,
+    "halfrow cap at smallest padded argument": 1,
+    "same actual halfrow declaration": 1,
+    "old tail reconstructed": 1,
+    "paired integer baseline": 1,
+    "exact prime window": 1,
+    "directed prime scale": 1,
+    "each directed prime term": 1025,
+    "finite prime term fingerprint": 1,
+    "finite prime interval endpoints": 1,
+    "finite prime interval against exact sum": 1,
+    "odd integral residual": 1,
+    "constructed scalar interval": 1,
+    "new tail interval reconstruction": 1,
+    "same gate projection TypeI": 1,
+    "exact constructed tail saving": 1,
+    "exact constructed fractional reduction": 1,
+    "exact constructed projected gain": 1,
+    "arbitrary tail and switch unchanged": 2,
+    "policy interval ordered": 37830,
+    "density threshold separated": 37830,
+    "positivity threshold separated": 37830,
+    "18915 complete cutoff pairs": 2,
+    "allpair policy fingerprint": 2,
+    "displayed policy endpoints": 21,
+    "displayed predecessor failure": 21,
+    "finite role row counts": 2,
+    "inherited cutoff identity": 2,
+    "reproduce old complete policy": 2,
+    "new cutoff failed with old tail": 2,
+    "direct policy interval": 4,
+    "direct predecessor": 4,
+    "entire Pareto frontier": 2,
+    "attribution tail endpoints": 10,
+    "attribution cutoff and reserve": 10,
+    "attribution predecessor": 10,
+    "zero residual still misses previous cutoff": 2,
+    "prime scalar alone reaches final cutoff": 2
+  },
+  "check_count": 117207
+}
