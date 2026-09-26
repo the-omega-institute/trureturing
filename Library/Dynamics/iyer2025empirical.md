@@ -1497,3 +1497,69 @@ Fourier 尖点恒等式、交替 zeta 和、有限秩删除与 Gaussian 谱分�
 结论仅针对原固定参数、有限载波族、给定奇偶及相对尺度子列、固定紧区间和所列有界失谐。
 后验结论在先验数据概率中成立，固定支持结论为无条件；
 不声称有限后验独立、实际无界矩收敛、增长载波族或振荡相对尺度下的全序列联合收敛。
+
+## 任意相位的超临界能量分类（第 67 章）
+
+`repo-derived`：在原固定幅度、完整固定总量后验和两种实际平稳实验下，
+第 67 章先从有限 Ci 导数证明任意相位的精细锚定量一致接近同一标签向量的载波能量。
+导数核的有界性使精确中心误差不承受静态核的放大；
+相位误差在辅助均方中由 eta^(-2)+r_M^(-2) 控制，再以有界事件转移。
+由此得到模型特定的完整序列分类：边缘能量只需缩放绝对失谐收敛，
+与旧场联合时，有限失谐还要求载波奇偶性最终固定。
+带符号失谐的翻转不改变实场 Fourier 能量，但奇偶性改变它与旧端点平方的关系。
+有限个临界和超临界窗口仍由同一实际相位和、差的两类 Gram 联合决定；
+强度相差指数级也不保证能量独立。
+
+`literature-attested`：复 Gaussian 标量的能量是两个独立实平方的加权和，
+圆对称时退化为指数分布，实端点时退化为一个平方。
+这属于经典 Gaussian 二次型谱分解，不是新的一般概率定理。
+Campese 1511.00547v1 的 Definition 2.1、Remark 2.2 及特征函数固定圆对称归一化；
+本章有限失谐的两个特征值由 covariance 与 pseudo-covariance 同时计算。
+其 Theorem 4.6 的正定目标和 chaotic-vector 矩误差条件不能用来宣称能量 Gaussian，
+也没有被用于零失谐的退化端点。
+de Jong 的小行影响加第四矩条件及秩一反例、Nualart–Peccati 的固定混沌阶条件、
+Nourdin–Rosiński 的跨收缩与矩确定性边界，均保留前章的归属与适用范围。
+
+Ould Haye–Philippe，*From nonstationarity to stationarity via 1/f noise:
+discrete Fourier transforms and sample mean asymptotics for testing*，
+[arXiv:2605.28339v1](https://arxiv.org/abs/2605.28339v1)。
+Section 2，PDF 第 3–4 页，研究独立同分布、中心且四阶矩有限的创新驱动的线性过程，
+滤波系数具有所列幂律；平稳记忆参数属于 [-1/2,1/2)，积分情形另由平稳差分定义。
+Theorem 2.1，第 6 页，给出有限个首 Fourier 格频率 2pi j/n 的实虚部联合 Gaussian 极限；
+第 4–5 页的协方差矩阵不要求实虚块相同，相关加权卡方律已有明确先例。
+其中记忆参数 d 不是本章确定性失谐，线性滤波与独立创新假设也不是实际固定总量 score 数组的假设。
+这篇论文为低频非圆对称能量提供先例，没有直接给出本章精细锚定的实际误差比较、
+与旧非线性截距的共同实现或完整序列的两种不同充要条件。
+
+Rademacher–Kreiss–Paparoditis，*Frequency Domain Bootstrap for Functional Time Series*，
+[arXiv:2608.25765v1](https://arxiv.org/abs/2608.25765v1)。
+Section 2，第 4–7 页，同时保留复 Gaussian 极限的 covariance 与 relation 算子。
+Assumptions 1–4，第 13–14 页，要求中心严格平稳、八阶矩、核范数意义的自协方差可和、
+加权四阶累积量可和、指定八阶张量累积量可和、有界变差谱权重，
+以及核范数一致的谱估计、非退化性和 b³/n→0 的子采样宽度条件。
+Lemma 4.1 在这些条件下处理 bootstrap Gaussian 量的协方差与 relation。
+Theorem 4.5，第 18 页，另加 Assumption 5 的特征间隙控制与投影维数增长条件；
+其分布一致性结论还保留此前明列的原谱均值 CLT 前提。
+第 7 页说明跨频率的小协方差可在积分统计中累积，不能在最终尺度之前仅因逐项小就删除。
+这些是平稳函数值数据与谱均值 bootstrap 的结果，不是固定总量后验的微观锚定极限定理；
+本章没有调用其 bootstrap 一致性或把 covariance 当作完整的复 Gaussian 描述。
+
+Yang–Guan 2401.06403v1 Theorems 3.1–3.2、Lemma C.2 的有效窗口频率和、差分离，
+Panaretos–Tavakoli 1305.2073v1 Theorem 2.2 的精确端点与 Fourier 格频率区分，
+是本章载波分类的成熟先例，适用假设按第 62、63 章条目。
+矩形格频率可有精确正交，因此本章使用 Gaussian 方差轮廓严格正 Fourier 变换的充要性，
+不能推广为任意窗口的普遍失谐定律。
+Peligrad–Wu 的几乎处处固定频率 CLT 不替代规定三角频率的两类 Gram 检验。
+Björklund 2608.22342v1 Theorems A–B 的完全正熵假设和正谱反例仍说明二阶谱本身不足。
+
+Siripraparat–Neammanee 的 Bernoulli 局部界和 Arratia–Goldstein–Langholz 的条件采样框架，
+继续提供辅助局部比较的先例；高阶 rejective 展开并未越过其方差与增长条件直接套用。
+实际观测行保持原有依赖，后验总量约束由一次完整选择向量比较处理。
+Gaussian Gram、Wick 公式、有限秩投影及连续映射都是已知工具，
+新增内容在于其共同实际实现、最终放大尺度下的误差控制及模型特定分类。
+
+此次有限检索与原文条件核对未找到直接包含完整实际结论的定理，
+不构成全球原创性认证。Klöppelberg–Mikosch 的原文下载仍只得到 HTML，
+Terrin–Taqqu 的相关原文仍只有摘要与访问材料；未据元数据断言其精确定理不能包含某个子结论。
+本章不声称实际无界矩收敛、未锚定过程紧性、增长载波数或区间、适应性频率，
+也不把有限联合场的充分相位条件说成任意非线性能量元组的必要条件。
