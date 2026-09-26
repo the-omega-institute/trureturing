@@ -72880,3 +72880,393 @@ $$
 本文没有把该来源中的标准框架结论归作通道优化结论，也不宣称本节容量公式已由该论文证明。相干记录、非均匀目标权重、混合目标输出或不同的输入资源会改变优化问题。这里精确比较的是同一经典记录接口、同一任意纯输出目标及同一实际候选下的完整与无参考实验误差。
 
 ## 追加锚（本行以下为增补区）
+
+## 240. 投影候选的全部最坏纯探针与最小参考维数
+
+平坦 Choi 下界取等以后，还可以精确回答：哪些纯联合输入真正达到这份固定候选的完整最坏误差？答案由输入边缘与投影族的对易性决定。由此得到最小参考维数的共同约化子空间判据，以及一个只依赖输入维数与总秩的整除障碍。
+
+本节先结算这一精确判据，再对单纯形候选给出受限参考维数的已证下界与严格不足结论。中间参考维数的精确公式仍作为未证明的候选，不用数值结果替代上界。
+
+### 240.1 固定投影候选与纯化约定
+
+固定 $d,N\ge2$、输入 $A=\mathbb C^d$、量子输出 $O=\mathbb C^m$、$m\ge d$，以及 $N$ 个经典记录标签。每个标签给定单位输出 $r_j\in O$，记 $P_j=|r_j\rangle\langle r_j|$，并定义目标
+$$
+\mathcal R(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac1N\operatorname{Tr}(X)P_j.
+\tag{240.1}
+$$
+给定同一输入空间上的正交投影族，满足
+$$
+\sum_{j=1}^N\Pi_j=\frac RdI_d,
+\qquad 1\le R<Nd.
+\tag{240.2}
+$$
+各投影可为零或恒等，不要求其像彼此正交。对（240.2）取迹得 $\sum_j\operatorname{rank}\Pi_j=R$，故 $R$ 为整数。固定实际候选
+$$
+\mathcal S(X)=\sum_{j=1}^N|j\rangle\langle j|\otimes
+\frac dR\operatorname{Tr}(\Pi_jX)P_j.
+\tag{240.3}
+$$
+这份候选保迹、完全正、精确总 Choi 秩为 $R$。§233已证明
+$$
+D(\mathcal S):=\frac12\|\mathcal S-\mathcal R\|_{\diamond}
+=D_*:=1-\frac R{Nd}.
+\tag{240.4}
+$$
+以下始终研究这份固定候选，不对相同预算下其他最优候选所需的参考维数作结论。
+
+设 $|\psi\rangle\in A\otimes E$ 为归一化纯联合输入，输入边缘为
+$$
+\rho=\operatorname{Tr}_E|\psi\rangle\langle\psi|.
+\tag{240.5}
+$$
+其实际区分误差为
+$$
+\varepsilon(\psi)=\frac12
+\|[(\mathcal S-\mathcal R)\otimes\operatorname{id}_E]
+(|\psi\rangle\langle\psi|)\|_1.
+\tag{240.6}
+$$
+选择输入正交基，标准纯化取
+$$
+|\psi_\rho\rangle=
+\sum_{a=1}^d\sqrt\rho\,|a\rangle\otimes|a\rangle.
+\tag{240.7}
+$$
+它的输入边缘确为 $\rho$。输入效应 $M$ 对应的未归一化参考块为
+$$
+\operatorname{Tr}_A[(M\otimes I)|\psi_\rho\rangle
+\langle\psi_\rho|]
+=(\sqrt\rho M\sqrt\rho)^{\mathsf T}.
+\tag{240.8}
+$$
+转置相对于所选参考基。任一具有相同输入边缘的纯化，在其参考支撑上与此纯化相差一个等距映射，因而输出迹范数相同。所以（240.6）只依赖 $\rho$；下文也写作 $\varepsilon(\rho)$。整个论证不要求 $\rho$ 可逆。
+
+### 240.2 全部达到边缘的对易判据
+
+**定理 240.1（最坏纯探针的精确刻画）。** 对任意归一化纯联合输入及其输入边缘 $\rho$，
+$$
+\boxed{
+\varepsilon(\rho)=D_*
+\quad\Longleftrightarrow\quad
+[\rho,\Pi_j]=0\quad\text{对全部 }j.
+}
+\tag{240.9}
+$$
+因此全部最坏纯探针的输入边缘，恰是与整个投影族对易的密度矩阵。
+
+**证明。** 令
+$$
+a=\frac dR-\frac1N>0,
+\qquad b=\frac1N>0,
+$$
+并定义正半定矩阵
+$$
+A_j=a\sqrt\rho\,\Pi_j\sqrt\rho,
+\qquad
+B_j=b\sqrt\rho\,(I_d-\Pi_j)\sqrt\rho.
+\tag{240.10}
+$$
+按（240.8），第 $j$ 个记录块的参考差为 $(A_j-B_j)^{\mathsf T}$，另张量固定纯输出 $P_j$。记录块正交，转置不改变迹范数，$\|P_j\|_1=1$，故
+$$
+\varepsilon(\rho)=\frac12\sum_j\|A_j-B_j\|_1.
+\tag{240.11}
+$$
+逐项三角不等式给
+$$
+\|A_j-B_j\|_1\le\operatorname{Tr}A_j+\operatorname{Tr}B_j.
+\tag{240.12}
+$$
+而（240.2）与 $\operatorname{Tr}\rho=1$ 给
+$$
+\begin{aligned}
+\sum_j(\operatorname{Tr}A_j+\operatorname{Tr}B_j)
+&=a\frac Rd+b\left(N-\frac Rd\right)\\
+&=2\left(1-\frac R{Nd}\right)=2D_*.
+\end{aligned}
+\tag{240.13}
+$$
+因此全局取等当且仅当每个标签在（240.12）中取等。
+
+对任意正半定矩阵 $A,B$，有标准迹范数取等条件
+$$
+\|A-B\|_1=\operatorname{Tr}A+\operatorname{Tr}B
+\quad\Longleftrightarrow\quad AB=0.
+\tag{240.14}
+$$
+为包含奇异情形，取 $Z=\operatorname{sign}(A-B)$。由 $-I\preceq Z\preceq I$，三角上界与实际范数之差等于
+$$
+\operatorname{Tr}[(I-Z)A]+\operatorname{Tr}[(I+Z)B]\ge0.
+$$
+等号使两个非负项分别为零，因而 $A$ 的像落在 $Z$ 的 $+1$ 特征子空间，$B$ 的像落在 $-1$ 特征子空间；二者正交，即 $AB=0$。反之，正交支撑直接给（240.14）的等号。正半定性还给
+$$
+AB=0\quad\Longleftrightarrow\quad\operatorname{Tr}(AB)=0,
+\tag{240.15}
+$$
+因为 $\operatorname{Tr}(AB)=\|A^{1/2}B^{1/2}\|_{\mathrm{HS}}^2$。
+
+在（240.10）中，循环移位计算得到
+$$
+\begin{aligned}
+\operatorname{Tr}(A_jB_j)
+&=ab\operatorname{Tr}[\Pi_j\rho(I_d-\Pi_j)\rho]\\
+&=ab\|(I_d-\Pi_j)\rho\Pi_j\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{240.16}
+$$
+由于 $ab>0$，此式为零恰当且仅当 $(I_d-\Pi_j)\rho\Pi_j=0$。取伴随还得到 $\Pi_j\rho(I_d-\Pi_j)=0$，所以这恰等价于 $[\rho,\Pi_j]=0$。结合（240.11）—（240.15）及每项非负的取等缺额，得到（240.9）。$\square$
+
+该证明保留了参考块的转置，再利用范数不变性转回输入坐标；最后的对易条件针对实际输入边缘 $\rho$。证明没有对 $\rho$ 求逆，因此同样覆盖秩亏纯探针边缘。
+
+### 240.3 最小参考维数恰是最小共同约化维数
+
+称非零输入子空间 $H\subseteq A$ 为投影族的共同约化子空间，若其正交投影 $P_H$ 满足
+$$
+[P_H,\Pi_j]=0\quad\text{对全部 }j.
+\tag{240.17}
+$$
+因 $\Pi_j$ 自伴，这等价于 $H$ 对全部 $\Pi_j$ 不变；其正交补也自动不变。记
+$$
+r_{\min}=\min\{\dim H:H\ne0,\ H\text{ 是共同约化子空间}\}.
+\tag{240.18}
+$$
+整个输入空间总是其中一个，故该最小值存在。
+
+**定理 240.2（固定候选的最小参考判据）。** 达到 $D_*$ 的纯联合输入中，最小 Schmidt 秩、最小所需参考维数及（240.18）相等：
+$$
+\boxed{
+\min\{\operatorname{rank}\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,
+\ \varepsilon(\rho)=D_*\}=r_{\min}.
+}
+\tag{240.19}
+$$
+若仅允许参考维数 $h$，定义
+$$
+D_h(\mathcal S)=
+\max_{\substack{|\psi\rangle\in A\otimes\mathbb C^h\\\|\psi\|=1}}
+\varepsilon(\psi),
+\qquad 1\le h\le d.
+\tag{240.20}
+$$
+则
+$$
+\boxed{
+D_h(\mathcal S)=D_*\ \Longleftrightarrow\ h\ge r_{\min};
+\qquad h<r_{\min}\ \Longrightarrow\ D_h(\mathcal S)<D_*.
+}
+\tag{240.21}
+$$
+
+**证明。** 若 $\rho$ 达到 $D_*$，由定理240.1，它与全部 $\Pi_j$ 对易。其支撑投影作为谱投影也与这些投影对易，所以 $H=\operatorname{supp}\rho$ 是共同约化子空间，且 $\dim H=\operatorname{rank}\rho\ge r_{\min}$。
+
+反向，取最小共同约化子空间 $H$，令 $\rho=P_H/r_{\min}$。它是与全部 $\Pi_j$ 对易的密度矩阵，因此达到 $D_*$。它在 $H$ 上的最大纠缠纯化使用恰好 $r_{\min}$ 维参考。
+
+纯联合态的 Schmidt 秩等于其输入边缘秩，也等于压缩其参考支撑所需的维数，因此（240.19）成立。任意 Schmidt 秩至多 $h$、位于更大参考空间的纯态，都能压缩到 $\mathbb C^h$，而区分误差在参考等距映射下不变。
+
+最后，$A\otimes\mathbb C^h$ 的单位球面紧，$\varepsilon$ 连续，所以（240.20）的最大值实际取得。当 $h<r_{\min}$ 时，每个纯态都不能取等；紧性排除了只能逼近 $D_*$ 的情形，故最大值严格小于 $D_*$。当 $h\ge r_{\min}$ 时，嵌入前述纯化即可取等。$\square$
+
+若在同一个 $h$ 维参考系统上允许混合联合输入，分解为纯态并用迹范数凸性，得到的最大误差仍为（240.20）。所以（240.21）的严格不足也覆盖这类混合输入。本节没有给严格差距的数值下界。
+
+### 240.4 整除障碍与互素参数的强制最大纠缠
+
+**定理 240.3（参考维数的算术下界）。** 对任意共同约化子空间 $H$，设 $r=\dim H$，则
+$$
+\boxed{\frac{d}{\gcd(d,R)}\ \bigm|\ r.}
+\tag{240.22}
+$$
+因此每个达到纯态的 Schmidt 秩都被 $d/\gcd(d,R)$ 整除，特别是
+$$
+\boxed{r_{\min}\ge\frac{d}{\gcd(d,R)}.}
+\tag{240.23}
+$$
+若 $\gcd(d,R)=1$，则全部达到纯态的输入边缘唯一为
+$$
+\boxed{\rho=I_d/d,\qquad r_{\min}=d.}
+\tag{240.24}
+$$
+
+**证明。** 由于 $H$ 约化全部投影，每个限制 $\Pi_j|_H$ 仍为正交投影。将（240.2）限制到 $H$ 并取迹，得到
+$$
+\frac Rd r=\sum_j\operatorname{rank}(\Pi_j|_H)\in\mathbb Z.
+\tag{240.25}
+$$
+故 $d\mid Rr$，等价于（240.22）。达到边缘的支撑是共同约化子空间，得到 Schmidt 秩的整除结论。
+
+若 $\gcd(d,R)=1$，非零共同约化子空间只能有维数 $d$。任意达到边缘 $\rho$ 的每个非零本征值的特征子空间都共同约化；所以只能有一个本征值，且其特征子空间是整个 $A$。迹归一化迫使 $\rho=I_d/d$。反向这一边缘始终对易并取等，完成证明。$\square$
+
+算术条件给出下界；一般参数的精确最小维数仍由（240.18）决定。互素情形的结论还强于“必须满 Schmidt 秩”：全部达到纯探针都必须在整个输入上最大纠缠，允许参考端作任意等距变换。
+
+### 240.5 单纯形候选与同接口、同谱的不同参考需求
+
+对§239的单纯形候选，$N\ge d+1$、$R=d+1$，活跃投影为
+$$
+\Pi_j=|u_j\rangle\langle u_j|,
+\qquad
+\langle u_i,u_j\rangle=-1/d\quad(i\ne j),
+\qquad
+\sum_{j=1}^{d+1}\Pi_j=\frac{d+1}{d}I_d.
+\tag{240.26}
+$$
+其余原标签保留零投影。因 $\gcd(d,d+1)=1$，定理240.3立即给
+$$
+\boxed{
+\varepsilon(\rho)=1-\frac{d+1}{Nd}
+\quad\Longleftrightarrow\quad \rho=I_d/d;
+\qquad r_{\min}=d.
+}
+\tag{240.27}
+$$
+也可直接从几何读取这个事实：与秩一投影 $|u_j\rangle\langle u_j|$ 对易的 Hermitian 矩阵使 $u_j$ 成为本征向量；两个非正交本征向量的本征值必须相同。全部单纯形向量两两非正交且张成输入空间，故矩阵只能为标量。
+
+这证明每个 $h<d$ 都严格达不到该固定候选的完整最坏误差。它没有把这份候选的必要参考维数自动传给全部同预算最优候选。
+
+更强的区分来自同一接口、同一总秩、甚至相同分支 Choi 谱的两份候选。固定 $d=2,N=4,R=4$ 及相同的全部输出向量 $r_j$。令
+$$
+Q_z=|0\rangle\langle0|,
+\qquad Q_x=|+\rangle\langle+|,
+\qquad |+\rangle=(|0\rangle+|1\rangle)/\sqrt2.
+$$
+比较两组实际投影：
+$$
+\begin{aligned}
+\mathsf A&=(Q_z,Q_z,I_2-Q_z,I_2-Q_z),\\
+\mathsf B&=(Q_z,I_2-Q_z,Q_x,I_2-Q_x).
+\end{aligned}
+\tag{240.27a}
+$$
+两组之和都为 $2I_2$，每个分支秩都为一。按（240.3），实际效应均为 $E_j=\Pi_j/2$；每个分支 Choi 矩阵的唯一非零本征值都为 $1/2$，整个 Choi 矩阵的非零谱也同为四个 $1/2$。两份固定候选的完整误差都等于 $1/2$。
+
+族 $\mathsf A$ 共同对角化，存在一维共同约化子空间，所以 $r_{\min}=1$。族 $\mathsf B$ 中，与 $Q_z$ 对易的密度矩阵是计算基对角矩阵，再与 $Q_x$ 对易便迫使两对角元相同，因此唯一达到边缘为 $I_2/2$，$r_{\min}=2$。
+
+其无参考误差也能直接计算。任意输入密度矩阵写成
+$$
+\rho=\frac12
+\begin{pmatrix}
+1+r_z&r_x-ir_y\\
+r_x+ir_y&1-r_z
+\end{pmatrix},
+\qquad r_x^2+r_y^2+r_z^2\le1.
+$$
+族 $\mathsf A$ 的标签概率相对于均匀目标的总变差为 $|r_z|/2$，最大值为 $1/2$。族 $\mathsf B$ 的相应总变差为
+$$
+\frac{|r_z|+|r_x|}{4}\le\frac{\sqrt2}{4},
+\tag{240.27b}
+$$
+由 $r_x=r_z=1/\sqrt2$、$r_y=0$ 的纯态取得等号。故
+
+| 同接口候选 | 完整误差 | 无参考误差 | 最小参考维数 |
+|---|---:|---:|---:|
+| 族 $\mathsf A$ | $1/2$ | $1/2$ | $1$ |
+| 族 $\mathsf B$ | $1/2$ | $\sqrt2/4$ | $2$ |
+
+这两份实际通道说明：输入维数、标签数、总秩、每个分支秩及 Choi 谱都相同，仍不能确定最坏观察所需的参考维数。区别由投影之间能否共同约化这一联合关系承担。
+
+同一判据也连接§238的四维实例：总秩六的两个二维三线块各自共同约化，结合（240.23）得最小参考维数恰为二；其总秩十空间补具有同一共同约化结构。总秩七、九与输入维数四互素，故都必须使用四维参考和输入边缘 $I_4/4$。这里仅指§238实际给出的投影候选，不将判据套到预算十一的其他系数构造。
+
+### 240.6 单纯形的有限参考下界与未结算的中间曲线
+
+以下仍固定§239的同一单纯形候选 $\mathcal S^{\triangle}$，并使用（240.20）的参考维数限制。对每个整数 $1\le h\le d$，有实际达到的下界
+$$
+\boxed{
+D_h(\mathcal S^{\triangle})\ge
+1-\frac{h+1}{Nh}.
+}
+\tag{240.28}
+$$
+证明如下。在 $V=\mathbf1^\perp\subset\mathbb C^{d+1}$ 中，选 $h+1$ 个活跃坐标组成集合 $J$，令
+$$
+H_J=\{x\in V:x_j=0\ \text{对 }j\notin J\},
+\qquad \dim H_J=h.
+\tag{240.29}
+$$
+以 $H_J$ 和 $h$ 维参考之间的最大纠缠态为输入。对于 $j\in J$，投影 $P_{H_J}e_j$ 的范数平方为 $h/(h+1)$，候选参考块为
+$$
+\frac1h|P_{H_J}e_j\rangle\langle P_{H_J}e_j|,
+\tag{240.30}
+$$
+在选择相同基时可整体带转置，谱不变。其唯一非零本征值为 $1/(h+1)$。对全部原标签，目标参考块都是 $I_h/(Nh)$；对 $j\notin J$，候选块为零。
+
+候选减目标的正本征值仅出现在 $j\in J$，每块恰为 $1/(h+1)-1/(Nh)$，因此完整输出差的半迹范数为
+$$
+(h+1)\left(\frac1{h+1}-\frac1{Nh}\right)
+=1-\frac{h+1}{Nh}.
+\tag{240.31}
+$$
+这证明（240.28），且每个下界都有明确的 Schmidt 秩 $h$ 纯输入。
+
+两端已经精确结算：§239给 $D_1(\mathcal S^{\triangle})=1-2/N$，而（240.27）给 $D_d(\mathcal S^{\triangle})=1-(d+1)/(Nd)$。对中间整数 $1<h<d$，本节严格证明的范围是
+$$
+\boxed{
+1-\frac{h+1}{Nh}
+\le D_h(\mathcal S^{\triangle})
+<1-\frac{d+1}{Nd}.
+}
+\tag{240.32}
+$$
+左端是否总为精确值，在本节未证明；以下将缺少的统一上界写成一个等价的明确矩阵不等式。
+
+### 240.7 剩余上界的精确等价形式
+
+令 $n=d+1$。任意纯输入 $|\psi\rangle\in V\otimes\mathbb C^h$ 可唯一写成
+$$
+|\psi\rangle=\sum_{j=1}^n e_j\otimes w_j,
+\qquad
+\sum_{j=1}^n w_j=0,
+\qquad
+\sum_{j=1}^n\|w_j\|^2=1.
+\tag{240.33}
+$$
+反向，满足这些约束的向量族也给合法归一化纯输入。其参考边缘记为
+$$
+\sigma=\sum_{j=1}^n w_jw_j^{\dagger}.
+\tag{240.34}
+$$
+候选第 $j\le n$ 个参考块为 $w_jw_j^{\dagger}$，目标各原标签的参考块为 $\sigma/N$。非活跃标签的候选为零，因而其差块没有正谱。全部差块总迹为零，故实际半迹距离为
+$$
+\varepsilon(\psi)=
+\sum_{j=1}^n\operatorname{Tr}
+\left(w_jw_j^{\dagger}-\frac\sigma N\right)_+.
+\tag{240.35}
+$$
+每个括号内的 Hermitian 矩阵至多有一个正本征值：在 $w_j^\perp$ 上其二次型非正。因此它的正谱投影可取秩至多一。对任意独立的正交投影 $F_j$，$\operatorname{rank}F_j\le1$，允许 $F_j=0$，正谱变分公式给
+$$
+\begin{aligned}
+1-\varepsilon(\psi)
+=\min_{(F_j)}\bigg[
+\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\frac1N\sum_{i,j=1}^n\|F_iw_j\|^2
+\bigg].
+\end{aligned}
+\tag{240.36}
+$$
+这里 $\operatorname{Tr}(F_i\sigma)=\sum_j\|F_iw_j\|^2$，且正交投影的勾股分解给第一项。
+
+因此，候选的中间维数公式
+$$
+D_h(\mathcal S^{\triangle})\stackrel{?}{=}
+1-\frac{h+1}{Nh}
+\tag{240.37}
+$$
+尚缺的上界，准确等价于对全部满足 $\sum_jw_j=0$ 的 $h$ 维向量族以及全部上述投影族证明
+$$
+\boxed{
+N\sum_{j=1}^n\|(I_h-F_j)w_j\|^2
++\sum_{i,j=1}^n\|F_iw_j\|^2
+\ge
+\left(1+\frac1h\right)\sum_{j=1}^n\|w_j\|^2.
+}
+\tag{240.38}
+$$
+从归一化族到一般族只使用齐次性，零族两边均为零。（240.36）及其等价归约已证明；（240.38）在中间维数的一般有效性未在本节证明。对易判据只排除了小参考维数取得完整值，不能直接升级为（240.38）所需的定量上界。本节在（240.32）处保留准确的未解边界。
+
+### 240.8 来源与适用范围
+
+量子通道区分中“参考空间与输入同维总是足够，但较小维数未必足够”的标准问题，参见 D. Puzzuoli、J. Watrous，*Ancilla dimension in quantum channel discrimination*，[arXiv:1604.08197v2](https://arxiv.org/abs/1604.08197v2)，§3、Theorem 2 与 Theorem 3（PDF第5页），[DOI 10.1007/s00023-016-0537-y](https://doi.org/10.1007/s00023-016-0537-y)。原文给一般区分的参考维数背景及一族需要完整输入维数参考的通道；本节不将其例子与当前投影重置候选混为一谈，也不把本节对易判据或（240.37）归给该论文。
+
+迹范数与二元状态检验的标准联系可见 J. Watrous，*The Theory of Quantum Information*，Theorem 3.4，正文第128—129页，[作者提供的全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本节对取等所需的正交支撑条件已在（240.14）—（240.16）直接证明。
+
+本节要求 $R<Nd$，使（240.10）的两个系数严格为正。若 $R=Nd$，投影和条件迫使全部投影为恒等，候选与目标相同、误差为零，任意输入都达到；不通过除以正系数的上述步骤处理此退化点。零投影、满投影与奇异输入边缘均已包含在非退化证明内。
+
+对易判据与最小约化维数是固定实际候选的精确结论；整除式是其算术约束；单纯形中间维数公式仍是单独的未解上界。它们都不意味着任意通道对、任意最优容量候选或任意实验语言具有同一参考资源需求。
+
+## 追加锚（本行以下为增补区）
