@@ -65832,3 +65832,935 @@ $D_{\mathrm{cap}}(p)[\lambda(p)/d_2(p)]^2$。
 本节不把通道容量解释为物理面积或历时。
 
 ## 追加锚（本行以下为增补区）
+
+## 220. 小谱方向的相干结构与容量距离的精确二次修正
+
+第219节证明新增小谱权重与合法容量距离在联合端点一阶相同。本节进一步确定它们在正来源方向上的第一项差别：小谱方向本身跨输入—输出的结构，使实际距离比谱权重严格更小；转动输出检验后，可以求出这个差别的精确二次系数。
+
+固定 $\beta>0,R>1$，继续使用第213、217—219节的实际恢复模型、合法入口与共同来源。记
+$$
+p=(\epsilon,h,\nu),\qquad
+\gamma=\beta\sqrt{1-\nu},\qquad
+\ell=\epsilon h,\qquad
+\Delta(p)=\nu-\nu_b(\epsilon,h).
+\tag{220.1}
+$$
+物理参数取固定联合小箱中的 $\epsilon>0,h\ge0$，并保留原来的来源与入口约束。实际最优正旗标条件记录通道为 $\mathcal R^\sharp(p)$。沿用未归一化 Choi 约定，输入维数为二，结果标签为二元经典记录，每个标签内的量子输出也是二维。设
+$$
+\lambda(p)=\lambda_2^\sharp(p),\qquad
+d_2(p)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R^\sharp(p)-\mathcal S\|_\diamond,
+\tag{220.2}
+$$
+其中 $\mathfrak C_2$ 包含同接口的全部总 Choi 秩至多二经典记录 CPTP 通道，包括缺失某个结果的候选，不限制其量子输出为重制备态。diamond 范数保留任意外部参考。本节给出纸面推导，未作 Lean 核验。
+
+### 220.1 精确二次系数与联合误差率
+
+**定理220.1（正来源方向的尖锐二次距离修正）。** 置
+$$
+c_* =\frac4{9\beta^2R^2},\qquad
+\|p\|_1=|\epsilon|+|h|+|\nu|.
+$$
+存在固定联合小箱及常数 $C$，使其中全部合法物理参数满足
+$$
+\boxed{
+\left|d_2(p)-\lambda(p)(1-c_*h^2)\right|
+\le C\lambda(p)h^2\|p\|_1.
+}
+\tag{220.3}
+$$
+在正谱侧 $\Delta(p)>0$，相应地有
+$$
+\frac{d_2(p)}{\lambda(p)}
+=1-\frac4{9\beta^2R^2}h^2
++O\!\left(h^2\|p\|_1\right).
+\tag{220.4}
+$$
+特别地，沿任意 $p\to0$、$\epsilon>0,h>0,\Delta(p)>0$ 的合法路径，
+$$
+\boxed{
+\frac{1-d_2(p)/\lambda(p)}{h^2}
+\longrightarrow\frac4{9\beta^2R^2}.
+}
+\tag{220.5}
+$$
+这些陈述不要求正 detuning、$h$ 与 $\epsilon$ 之间有相对速率条件。非正谱侧有 $\lambda=d_2=0$，使用未除法形式（220.3）。纯来源 $h=0$ 上仍精确有 $d_2=\lambda$；正小 $h$ 且 $\lambda>0$ 时严格有 $0<d_2<\lambda$。
+
+证明由后面的两个合法界完成：旋转输出事件给距离下界；删除小谱并恢复 TP 给距离上界。两者在联合端点的二次系数相同，而不需要认定某个有限参数候选恰为最近通道。
+
+### 220.2 整张纯来源面上的解析消失
+
+第213节的实际驻点族在带符号 $t$ 的固定邻域中联合实解析，写成
+$$
+J_0=k_0k_0^\dagger,\qquad
+J_1=k_1k_1^\dagger+tww^\dagger,
+\qquad
+k_1=(a,c,b,d)^{\mathsf T},\quad w=(0,u,1,v)^{\mathsf T}.
+\tag{220.6}
+$$
+明确采用输入优先的向量化约定
+$$
+\operatorname{vec}_{\mathrm{in}}(K)
+=(K_{00},K_{10},K_{01},K_{11})^{\mathsf T},
+\qquad
+K_1=\begin{pmatrix}a&b\\c&d\end{pmatrix},\quad
+W=\begin{pmatrix}0&1\\u&v\end{pmatrix}.
+\tag{220.7}
+$$
+实际权重为
+$$
+t^\sharp=a_{\mathrm{wt}}(p)[\Delta(p)]_+,
+\qquad a_{\mathrm{wt}}>0,\quad a_{\mathrm{wt}}(0)=1.
+\tag{220.8}
+$$
+用 $a_{\mathrm{wt}}$ 区别于 Kraus 条目 $a$。带符号 $t$ 只用于解析延拓；实际 CPTP 比较使用 $t=t^\sharp\ge0$。
+
+第216节的纯来源重制备结论适用于整个固定带符号 $t$ 驻点族：在 $h=0$、正小 $\epsilon$ 及全部邻近 $(\nu,t)$ 上，有 $c=d=u=v=0$。将这些坐标限制到 $h=0$ 后，仍是 $(\epsilon,\nu,t)$ 的解析函数，并在一个开子箱为零。解析恒等式使其延伸为完整零来源参数面上的零函数。因此存在联合实解析函数，使
+$$
+\boxed{
+c=h\widehat c,\quad d=h\widehat d,\quad
+u=h\widehat u,\quad v=h\widehat v.
+}
+\tag{220.9}
+$$
+这是固定联合邻域上的精确整除。条目 $a,b$ 不要求关于 $h$ 偶对称，也未从一个没有统一控制的余项中求导。
+
+### 220.3 固定输出压缩的精确二次因子
+
+先固定量子输出事件 $P_0=|0\rangle\langle0|$。结果一的输入效应为
+$$
+B_0=K_1^\dagger P_0K_1+tW^\dagger P_0W
+=\begin{pmatrix}|a|^2&\overline a b\\a\overline b&|b|^2+t\end{pmatrix}.
+$$
+记其迹为 $T_0=|a|^2+|b|^2+t$。行列式为 $t|a|^2$，故接近一的大根 $b_+>0$ 解析，另一根精确为
+$$
+b_-=t\eta_0,\qquad \eta_0=|a|^2/b_+>0.
+\tag{220.10}
+$$
+同时，令
+$$
+T=\|k_1\|^2+t\|w\|^2,\qquad
+Q=\|k_1\|^2\|w\|^2-|\langle k_1,w\rangle|^2.
+$$
+第219节的完整 Choi 两根满足 $z^2-Tz+tQ=0$。接近一的大根记为 $\lambda_+$，另一根为
+$$
+\lambda_-=t\eta,\qquad \eta=Q/\lambda_+>0.
+\tag{220.11}
+$$
+中心有 $b_+=\lambda_+=1$、$\eta_0=\eta=1/2$。
+
+由（220.9），有精确恒等式
+$$
+T-T_0=h^2T_2,\qquad
+T_2=|\widehat c|^2+|\widehat d|^2
++t(|\widehat u|^2+|\widehat v|^2),
+\tag{220.12}
+$$
+$$
+Q=|a|^2+h^2Q_2,
+\quad
+\begin{aligned}
+Q_2={}&|a|^2(|\widehat u|^2+|\widehat v|^2)
++|b\widehat u-\widehat c|^2+|b\widehat v-\widehat d|^2\\
+&+h^2|\widehat c\widehat v-\widehat d\widehat u|^2.
+\end{aligned}
+\tag{220.13}
+$$
+第二式来自 $k_1,w$ 的六个二阶子式模方之和。
+
+两条小根方程在除去已解析确定的共同 $t$ 因子后为
+$$
+t\eta^2-T\eta+Q=0,\qquad
+t\eta_0^2-T_0\eta_0+|a|^2=0.
+$$
+这些等式在 $t=0$ 也由解析性成立。相减得到
+$$
+(\lambda_+-t\eta_0)(\eta-\eta_0)
+=h^2(Q_2-T_2\eta_0).
+$$
+分母 $\lambda_+-t\eta_0$ 在中心等于一。因此
+$$
+\boxed{
+\frac{\eta_0}{\eta}=1-h^2F,\qquad
+F=\frac{Q_2-T_2\eta_0}
+{\eta(\lambda_+-t\eta_0)}
+}
+\tag{220.14}
+$$
+是完整 $(p,t)$ 邻域中的解析恒等式，未除以物理小谱或 detuning。
+
+也可核对 $F\ge0$：$B_0$ 与完整 Choi 在输出零子空间上的压缩具有同样的谱，至多相差转置。$t>0$ 时，压缩的第二大本征值不超过完整矩阵的第二大本征值；$t<0$ 时，两者各有一个负根，压缩的最小根不小于完整矩阵的最小根。两种情形分别除以正、负 $t$，均得 $\eta_0\le\eta$。其余参数点由连续性承接。
+
+固定输出零已经能证明距离差至多为二次阶。要获得精确系数，还须允许检验的输出方向随来源移动。
+
+### 220.4 旋转输出事件与全部预算候选的检验
+
+取 $z\in\mathbb C$、$|z|<1$，令
+$$
+r(z)=\begin{pmatrix}s\\z\end{pmatrix},\qquad
+s=\sqrt{1-|z|^2}.
+$$
+两个投影 Kraus 行为
+$$
+\alpha_z=\langle r(z)|K_1
+=(sa+\overline zc,\ sb+\overline zd),
+\qquad
+\omega_z=\langle r(z)|W
+=(\overline zu,\ s+\overline zv).
+\tag{220.15}
+$$
+结果一在输出事件 $P_{r(z)}$ 下的输入效应是
+$$
+B_z=\alpha_z^\dagger\alpha_z+t\omega_z^\dagger\omega_z.
+$$
+其精确迹与行列式为
+$$
+T_z=\|\alpha_z\|^2+t\|\omega_z\|^2,\qquad
+\det B_z=tQ_z,\qquad
+Q_z=\left|\det\begin{pmatrix}\alpha_z\\\omega_z\end{pmatrix}\right|^2.
+\tag{220.16}
+$$
+在 $(p,t,z)=0$，两根为一、零，$Q_z=1/2$。大根 $b_+(p,t,z)$ 在联合邻域正且解析，小根因此精确因子化为
+$$
+b_-(p,t,z)=t\eta_z(p,t,z),\qquad
+\eta_z=Q_z/b_+.
+$$
+定义解析比值
+$$
+\gamma_{\mathrm{ev}}(p,t,z)=\frac{\eta_z(p,t,z)}{\eta(p,t)}.
+\tag{220.17}
+$$
+下标用于区别模型参数 $\gamma$。定义在 $t=0$ 仍成立；先因子化，再取正解析因子的商。
+
+对物理正谱侧，在固定足够小的联合邻域及输出图内，引理219.4给
+$$
+d_2(p)\ge b_-(p,t^\sharp,z)
+=\lambda(p)\gamma_{\mathrm{ev}}(p,t^\sharp,z).
+\tag{220.18}
+$$
+具体地，若竞争者结果一的 Choi 秩至多一，则其 Kraus $K_{1,\mathrm{comp}}$ 的行 $\langle r(z)|K_{1,\mathrm{comp}}$ 有核输入。在该输入下，竞争者对事件“结果一且量子输出为 $r(z)$”的概率为零，而目标概率至少为 $\lambda_{\min}(B_z)$。若竞争者结果一秩为二，则结果零缺失；目标结果零有统一远离零的可取得概率。在本小箱内，该概率大于 $b_-$。因此（220.18）覆盖全部总秩二候选。
+
+这里输入可以依赖被检验的候选；每个输入和输出事件都属于合法 diamond 检验。不要求该事件族给出完整 diamond 最大值。
+
+### 220.5 输出检验的局部极大与整面二次整除
+
+**引理220.2（旋转事件的联合解析最优局部选择）。** 存在关于 $(p,t)$ 联合实解析的局部输出方向 $z_*(p,t)$ 和实解析函数 $F_{\mathrm{opt}}$，使
+$$
+z_*(p,t)=hZ(p,t),\qquad
+\gamma_{\mathrm{ev}}(p,t,z_*(p,t))=1-h^2F_{\mathrm{opt}}(p,t).
+\tag{220.19}
+$$
+所选方向是上述小输出图中的严格局部极大点。
+
+**证明。** 在 $h=0$ 整面，$c=d=u=v=0$，所以
+$$
+\alpha_z=s(a,b),\qquad \omega_z=s(0,1).
+$$
+完整 Choi 仅有输出零分量，压缩效应的非零谱是完整谱的 $s^2$ 倍。由此得到整面恒等式
+$$
+\boxed{\gamma_{\mathrm{ev}}(\epsilon,0,\nu,t,z)=1-|z|^2.}
+\tag{220.20}
+$$
+把 $z$ 看成两个实变量，其 Hessian 为 $-2I_2$。隐函数定理给唯一邻近解析驻点 $z_*$；因整面上驻点为零，有真实联合整除 $z_*=hZ$。缩小固定邻域后 Hessian 仍负定，故它是严格局部极大点。
+
+由（220.14），$\gamma_{\mathrm{ev}}(p,t,0)=1-h^2F$。特别地，$h=0,z=0$ 整面上，$h$ 导数与 $z$ 梯度均为零。对
+$$
+g(p,t)=\gamma_{\mathrm{ev}}(p,t,z_*(p,t))
+$$
+应用链式法则，得到
+$$
+g(\epsilon,0,\nu,t)=1,\qquad
+g_h(\epsilon,0,\nu,t)=0.
+$$
+联合解析性于是给 $g=1-h^2F_{\mathrm{opt}}$。证毕。
+
+这里先证明整张参数面的值与一阶导数恒等式，再进行二次整除。结论不把一个固定切片的 Taylor 余项外推到移动参数，也不要求该局部极大在全部纯输出方向中全局最优。由（220.18）已得物理正谱侧的精确界
+$$
+1-d_2/\lambda\le h^2F_{\mathrm{opt}}(p,t^\sharp).
+\tag{220.21}
+$$
+
+### 220.6 实际驻点决定输出旋转的中心系数
+
+以下只为计算已经存在的联合解析函数 $F_{\mathrm{opt}}$ 的中心值，限制到 $\epsilon=\nu=t=0$ 的驻点切片。第211.15—211.17式及第213节的联合延拓给
+$$
+a=\frac1{\sqrt2},\quad c=u=v=0,\quad
+b=-i\sqrt2n,\quad d=\sqrt2m,
+$$
+$$
+m=\frac{2h}{h+3\beta R+3\rho},\qquad
+n=\frac{\beta(R-1)}{2(\beta(R-1)+2\rho)},\qquad
+m^2+n^2=\frac14.
+\tag{220.22}
+$$
+中心 $m=\rho=0,n=1/2$。直接对这组精确方程求 $h$ 导数：第一式给 $m_h=2/(3\beta R)$，约束给 $n_h=0$，第二式再给 $\rho_h=0$。置
+$$
+M=\frac2{3\beta R},\qquad D=\sqrt2M,\qquad b_*=-i/\sqrt2.
+$$
+于是 $d=Dh+O(h^2)$、$b=b_*+O(h^2)$。
+
+此切片上 $\|k_1\|=1,w=e_b$，故 $\eta=1-|b|^2=1/2+d^2$。在 $t=0$，压缩因子给精确式
+$$
+\gamma_{\mathrm{ev}}(h,z)
+=\frac{s^4}
+{(1+2d^2)\bigl(s^2a^2+|sb+\overline zd|^2\bigr)}.
+\tag{220.23}
+$$
+因 $a^2=1/2$，计算中心二阶 Taylor 项得到
+$$
+\begin{aligned}
+\gamma_{\mathrm{ev}}(h,z)
+&=1-D^2h^2-|z|^2-2Dh\operatorname{Re}(b_*z)
++O((|h|+|z|)^3)\\
+&=1-2M^2h^2-|z|^2-2Mh\operatorname{Im}z
++O((|h|+|z|)^3).
+\end{aligned}
+\tag{220.24}
+$$
+驻点因而满足 $z_*(h)=-iMh+O(h^2)$，代回得
+$$
+g(h)=1-M^2h^2+O(h^3).
+$$
+与（220.19）的联合解析因子比较，得到
+$$
+\boxed{F_{\mathrm{opt}}(0,0)=M^2=\frac4{9\beta^2R^2}.}
+\tag{220.25}
+$$
+若固定输出零，则由（220.14）得到 $F(0,0)=2M^2$。输出方向的一阶旋转将该下界的二次损失系数减半。这里只用切片计算中心系数；最终的联合统一性由整面精确因子（220.19）保证。
+
+### 220.7 小谱向量的解析选择与实际相干秩
+
+完整四维 Choi 在 $t=0$ 有退化零谱；不能直接声称其中一个零向量唯一解析。但本族的二维承载平面 $\operatorname{span}(k_1,w)$ 联合解析，且两向量始终线性独立。取解析正交标架
+$$
+e_1=\frac{k_1}{\|k_1\|},\qquad
+e_2=\frac{P_{k_1^\perp}w}{\|P_{k_1^\perp}w\|}.
+$$
+在这张二维平面内，大小两根在中心为一、零，间隙有正下界。所以小根秩一谱投影 $\Pi_-$ 联合解析。将 $\Pi_-e_2$ 归一化，其分母在中心为一，得到局部解析小谱向量
+$$
+\operatorname{vec}_{\mathrm{in}}(L)
+=\frac{\Pi_-e_2}{\|\Pi_-e_2\|},\qquad
+\|L\|_{\mathrm{HS}}=1.
+\tag{220.26}
+$$
+在 $t=0$，它精确等于 $e_2$。
+
+纯来源整面 $h=0$ 上，两支向量都只有输出零分量，故所选 $L$ 的第二输出行为零，$\det L=0$。因此
+$$
+\det L=hD_{\det}(p,t)
+\tag{220.27}
+$$
+为真实联合解析整除。规范相位改变 $D_{\det}$ 的相位，但不改变其模或 $L$ 的奇异值。
+
+中心导数可以由（220.22）直接读取。在那张切片上，$w=e_b$、$\|k_1\|=1$，所选矩阵为
+$$
+L=\frac1{\sqrt{1-2n^2}}
+\begin{pmatrix}-in&1-2n^2\\0&-2imn\end{pmatrix}.
+$$
+因 $m^2+n^2=1/4$，它的 Hilbert–Schmidt 范数为一，并有
+$$
+\det L=-\frac{2mn^2}{1-2n^2},\qquad
+\boxed{D_{\det}(0,0)=-M=-\frac2{3\beta R}\ne0.}
+\tag{220.28}
+$$
+这个非零导数来自实际驻点方程。
+
+令 $s_+\ge s_-$ 为 $L^\dagger L$ 的本征值，即奇异值平方。归一化及行列式给
+$$
+s_++s_-=1,\qquad s_+s_-=h^2|D_{\det}|^2.
+$$
+大根在中心为一，故联合解析且保持正值。因此
+$$
+\boxed{
+s_-=h^2G(p,t),\qquad
+G=\frac{|D_{\det}|^2}{s_+},\qquad G(0,0)=M^2.
+}
+\tag{220.29}
+$$
+缩小固定邻域使 $G$ 有严格正下界。于是正小 $h$ 时，小谱 Kraus 矩阵确实具有秩二；归一化小 Choi 向量跨输入—输出划分的 Schmidt 秩也为二。这与该 Choi 谱项自身为秩一正算子并不矛盾：两处的秩针对不同对象。
+
+### 220.8 保秩修复与任意失谐下的精确夹逼
+
+物理正谱侧，删除 CP 项 $\lambda L(\cdot)L^\dagger$，其输入效应为 $\lambda L^\dagger L$，算子范数为 $\delta=\lambda s_+<1$。剩下两个结果各有一个 Choi 方向。定理219.3的共同输入修复
+$$
+\mathcal S=\mathcal B\circ
+\operatorname{Ad}_{(I-\lambda L^\dagger L)^{-1/2}}
+$$
+恢复 TP，分别保持两个结果的秩，并给完整 diamond 界
+$$
+d_2\le\lambda s_+
+=\lambda(1-h^2G(p,t^\sharp)).
+\tag{220.30}
+$$
+这里使用的是对全部 $\delta<1$ 成立的修复定理；不需要单独正滤波范数公式的额外阈值。
+
+结合（220.21），得到
+$$
+\boxed{
+h^2G(p,t^\sharp)
+\le1-\frac{d_2(p)}{\lambda(p)}
+\le h^2F_{\mathrm{opt}}(p,t^\sharp),
+\qquad G(0,0)=F_{\mathrm{opt}}(0,0)=c_*.
+}
+\tag{220.31}
+$$
+两侧来自不同的合法构造，不需要它们在有限参数上实现同一最优器。
+
+在正谱侧，$t^\sharp=\widehat t(p)=a_{\mathrm{wt}}(p)\Delta(p)$ 是联合解析函数的物理限制，且 $\widehat t(0)=0$。因此 $|t^\sharp|\le C_0\|p\|_1$。由于 $G,F_{\mathrm{opt}}$ 在固定联合邻域解析并具有相同中心值，在更小紧箱有
+$$
+|G(p,t^\sharp)-c_*|
++|F_{\mathrm{opt}}(p,t^\sharp)-c_*|
+\le C_1\|p\|_1.
+\tag{220.32}
+$$
+将它直接代入（220.31），即得（220.3）—（220.5）。没有在估计步骤除以一个未经控制的 detuning 余项。
+
+$h=0$ 时精确夹逼给 $d_2=\lambda$。$h>0,\lambda>0$ 时 $G>0$，给严格上界 $d_2<\lambda$；再取小箱使 $1-h^2F_{\mathrm{opt}}>0$，得到 $d_2>0$。非正谱侧真实通道已经属于 $\mathfrak C_2$，所以 $d_2=\lambda=0$，未除法公式也成立。定理220.1证毕。
+
+### 220.9 同一任务代价的相对二次修正
+
+**推论220.3（容量代价与距离平方的二次差别）。** 在同一合法正谱侧，沿用第217节的精确关系
+$$
+E_{\le2}(p)-E(p)=\epsilon D_{\mathrm{cap}}(p)\lambda(p)^2,
+\qquad D_{\mathrm{cap}}(0)=\frac{\beta(R-1)}8.
+$$
+则
+$$
+\boxed{
+\frac{E_{\le2}-E}{\epsilon D_{\mathrm{cap}}d_2^2}
+=1+\frac8{9\beta^2R^2}h^2
++O\!\left(h^2\|p\|_1\right).
+}
+\tag{220.33}
+$$
+若 $h>0$ 且 $p\to0$，还得到
+$$
+\boxed{
+\frac1{h^2}
+\left[\frac{E_{\le2}-E}{\epsilon d_2^2}-D_{\mathrm{cap}}(p)\right]
+\longrightarrow\frac{R-1}{9\beta R^2}.
+}
+\tag{220.34}
+$$
+
+**证明。** 精确任务恒等式使（220.33）左侧等于 $(d_2/\lambda)^{-2}$。定理220.1给其分母的统一正下界以及二次展开。对 $(1-x)^{-2}$ 在零附近展开，得到二次系数 $2c_*$；额外的 $O(h^4)$ 项被 $O(h^2\|p\|_1)$ 吸收。再乘 $D_{\mathrm{cap}}(p)$，减去该同参数值，并除以 $h^2$，由连续性得到 $2c_*D_{\mathrm{cap}}(0)=(R-1)/(9\beta R^2)$。证毕。
+
+式（220.34）减去的是当前参数的 $D_{\mathrm{cap}}(p)$。若擅自换成中心常数，其本身随其它参数的变化可能在除以 $h^2$ 后占主导，不能沿任意路径作同样结论。
+
+实际来源为 $\ell=\epsilon h$。本节控制的二次项是 $h^2=\ell^2/\epsilon^2$，不构成关于原来源 $\ell$ 的统一 $O(\ell^2)$ 界。若采用无量纲 $H=h/\beta$，距离修正系数为 $4/(9R^2)$，相对任务比值的修正系数为 $8/(9R^2)$。
+
+### 220.10 边界方向的权重与可操作影响
+
+小谱本征值 $\lambda$ 给一份新增方向的权重；该方向作为输入—输出矩阵的两个奇异值，进一步决定删除它时的最大输入效应。归一化约束使两枚奇异值平方之和固定为一。纯来源上只有一个非零值；正来源把第二个值以 $h^2G$ 打开，于是最大输入效应从 $\lambda$ 降到 $\lambda(1-h^2G)$。
+
+这项改进有匹配的操作检验。固定输出零只能给二次系数 $2M^2$；让输出事件按联合解析方向 $z_*$ 转动后，检验界的系数成为 $M^2$，与合法保秩修复相合。实际联合参数上，由 $z_*=hZ$ 及 $Z(0,0)=-iM$ 得 $z_*(p,t^\sharp)=-iMh+O(|h|\|p\|_1)$。因此，对这个实际模型，边界遗漏对全部允许续接的影响已经精确到第一项来源修正，而不仅是一个谱权重计数。
+
+结论仍针对指定正旗标条件记录通道、同一个完整参考恢复任务、固定 $\beta,R$ 与小的合法联合参数。环境维数的含义限于该条件通道，不包括旧旗标读取与丢弃的整个解码器。这里的相干秩不是物理面积，修复通道的数学存在也没有增添特定装置与权限内执行的结论。
+
+这些结果使用有限维谱论、隐函数定理及第213、216—219节的实际模型前提作综合推导；未作原创性结算。有限参数下最近通道的精确形式、距离最优器与任务最优器是否重合，仍未由本节确定。
+
+## 追加锚（本行以下为增补区）
+
+## 221. 旋转删除的精确容量距离与最近记录通道
+
+第220节确定了来源方向的二次距离系数，本节进一步解决其中尚未确定的有限参数最近通道问题。关键是允许同一结果内的两个 Kraus 方向先作酉混合，再删除一份 CP 分量并恢复 TP。局部旋转驻点同时给出一项输出事件证书，使合法近似与全部竞争者的下界精确相等。
+
+固定 $\beta>0,R>1$，保留第213、217—220节的实际恢复模型、入口与共同来源约束。参数为 $p=(\epsilon,h,\nu)$，$\gamma=\beta\sqrt{1-\nu}$，真实来源为 $\ell=\epsilon h$；物理参数取固定联合小箱中的 $\epsilon>0,h\ge0$。目标仍是 qubit 输入、经典二结果与 qubit 量子输出的正旗标条件记录通道。记 $\mathfrak C_2$ 为同接口上全部合法总 Choi 秩至多二经典记录 CPTP 通道，包括缺失结果的候选，并允许任意量子输出。距离为
+$$
+d_2(\mathcal R)=\min_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond.
+$$
+全文保留任意外部参考。以下是纸面证明，未作 Lean 核验。
+
+### 221.1 谱数据与精确结论
+
+用输入优先约定
+$$
+\operatorname{vec}_{\mathrm{in}}(K)
+=(K_{00},K_{10},K_{01},K_{11})^{\mathsf T}.
+$$
+正谱侧目标通道写成
+$$
+\mathcal R(X)
+=
+|0\rangle\langle0|^Q\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|^Q\otimes
+\bigl(AXA^\dagger+\lambda LXL^\dagger\bigr),
+\tag{221.1}
+$$
+其中
+$$
+K_0^\dagger K_0+A^\dagger A+\lambda L^\dagger L=I,\qquad
+\|L\|_{\mathrm{HS}}=1,\qquad
+\operatorname{Tr}(A^\dagger L)=0.
+\tag{221.2}
+$$
+$A$ 已含主谱权重，$\alpha=\|A\|_{\mathrm{HS}}^2>\lambda>0$。
+记 $s_+\ge s_-$ 为 $L^\dagger L$ 的本征值，$s_++s_-=1$。
+原谱删除修复界为 $d_2\le k:=\lambda s_+$。
+
+对复参数 $z$，置
+$$
+D_z=1+\lambda|z|^2,\qquad
+M_z=\frac{\sqrt\lambda(L+zA)}{\sqrt{D_z}},\qquad
+N_z=\frac{A-\lambda\overline z L}{\sqrt{D_z}},
+$$
+$$
+f(z)=\frac{\|L+zA\|_\infty^2}{1+\lambda|z|^2}.
+\tag{221.3}
+$$
+$M_z,N_z$ 是结果1的另一份两 Kraus 表示，删除 $M_z$ 的效应范数为 $\lambda f(z)$。
+
+**定理221.1（局部模型的精确最近记录通道与四阶修正）。** 采用
+$$
+p=(\epsilon,h,\nu),\qquad
+t^\sharp=a_{\mathrm{wt}}(p)[\nu-\nu_b(\epsilon,h)]_+.
+$$
+在固定联合小参数箱中，存在由驻点方程唯一给出的局部解析分支
+$z_*(p,t)=h^2V(p,t)$。在实际 $t=t^\sharp$ 上，
+$$
+\boxed{
+d_2(p)=\lambda(p)f\bigl(p,t^\sharp,z_*(p,t^\sharp)\bigr).
+}
+\tag{221.4}
+$$
+保留 $K_0,N_{z_*}$，再统一右乘
+$$
+H_*=(I-M_{z_*}^\dagger M_{z_*})^{-1/2}
+\tag{221.5}
+$$
+得到一份真正距离最优的总秩二 CPTP 记录通道。它的完整 diamond 误差由一个无外部参考输入及一个输出投影事件达到。
+
+此外，存在正解析函数 $J(p,t)$，使
+$$
+\boxed{
+d_2(p)=\lambda(p)
+\bigl[s_+(p,t^\sharp)-h^4J(p,t^\sharp)\bigr],
+\qquad
+J(0,0)=\frac{64}{81\beta^4R^4}.
+}
+\tag{221.6}
+$$
+因此正小 $h$、正谱时严格有 $d_2<\lambda s_+$，并且沿任意联合正 $h$、正谱路径，
+$$
+\boxed{
+\frac{\lambda s_+-d_2}{\lambda h^4}
+\longrightarrow\frac{64}{81\beta^4R^4}.
+}
+\tag{221.7}
+$$
+不要求 detuning 与其它参数有任何幂律。非正谱侧 $\lambda=d_2=0$。
+
+### 221.2 原谱界有限参数饱和的几何条件
+
+对单位量子输出 $r$，定义
+$$
+B_r=A^\dagger P_r A+\lambda L^\dagger P_rL,\qquad
+b(r)=\lambda_{\min}(B_r).
+$$
+置 $q_0=\|K_0^\dagger K_0\|_\infty$。
+
+每个结果1秩至多一的竞争者，对事件“结果1且输出为 $r$”均有核输入，给下界 $b(r)$。若竞争者结果1秩二，则结果0缺失，标签测试给下界 $q_0$。所以对全部预算候选，
+$$
+d_2\ge\min\{b(r),q_0\}.
+\tag{221.8}
+$$
+
+**引理221.2（纯输出核事件的饱和判据）。** $b(r)\le k$，等号当且仅当
+$$
+LL^\dagger r=s_+r,\qquad
+\langle A^\dagger r,L^\dagger r\rangle=0,\qquad
+\|A^\dagger r\|^2\ge k.
+\tag{221.9}
+$$
+证明：若 $A^\dagger r\ne0$，取单位 $v\perp A^\dagger r$，则
+$$
+b(r)\le\lambda|\langle L^\dagger r,v\rangle|^2
+\le\lambda\|L^\dagger r\|^2\le\lambda s_+.
+$$
+首尾相等使每步相等，恰给（221.9）；反向时 $B_r$ 的两本征值为
+$k$ 与 $\|A^\dagger r\|^2$。若 $A^\dagger r=0$，最小根为零，不会饱和正 $k$。
+
+若 $s_+>s_-$，主左奇异方向 $r_+$ 唯一到相位。写 $L$ 的奇异基为
+$$
+L=\begin{pmatrix}\sqrt{s_+}&0\\0&\sqrt{s_-}\end{pmatrix},
+\qquad
+A=\begin{pmatrix}b&a\\c&d\end{pmatrix}.
+\tag{221.10}
+$$
+HS 正交给
+$$
+\sqrt{s_+}b+\sqrt{s_-}d=0.
+\tag{221.11}
+$$
+主方向的正交条件等价于 $b=0$。若 $s_->0$，还等价于 $b=d=0$：
+保留主 Kraus 在小谱 Kraus 的两个奇异基之间只有交叉分量。整体 HS 正交不能代替这项逐行正交。
+
+**定理221.3（谱删除上界达到真实距离的判据）。** 在 $q_0\ge k$、$\|A^\dagger r_+\|^2\ge k$、$s_+>s_-$ 及 $0<k<1$ 条件下，有完整距离的充要条件
+$$
+\boxed{
+d_2=k
+\iff
+\langle r_+,AL^\dagger r_+\rangle=0.
+}
+\tag{221.12}
+$$
+充分性由核事件与谱修复直接得到。必要性由下一节的旋转删除证明：若该标量非零，选择一个复方向使删除效应范数严格下降，即可构造距离严格小于 $k$ 的合法通道。
+
+该判据的权重与谱隙条件均在项目的联合端点邻域一致满足。
+
+### 221.3 保持原通道的旋转删除
+
+直接展开（221.3）可得
+$$
+AXA^\dagger+\lambda LXL^\dagger
+=N_zXN_z^\dagger+M_zXM_z^\dagger.
+\tag{221.13}
+$$
+等价地，这是对原 Kraus 对 $(A,\sqrt\lambda L)$ 作矩阵
+$$
+\frac1{\sqrt{D_z}}
+\begin{pmatrix}
+1&-\sqrt\lambda\,\overline z\\
+\sqrt\lambda\,z&1
+\end{pmatrix}
+$$
+的酉混合。结果标签没有变化，原共同 TP 严格保留。
+
+令 $\zeta=\langle r_+,AL^\dagger r_+\rangle$。最大奇异根简单时，
+$$
+f(z)=s_++2\operatorname{Re}(z\zeta)+O(|z|^2).
+\tag{221.14}
+$$
+若 $\zeta\ne0$，可选充分小的 $z$ 使 $f(z)<s_+$。
+删除 $M_z$ 后，缺失效应范数为
+$$
+\delta_z=\|M_z^\dagger M_z\|_\infty=\lambda f(z)<k.
+$$
+用共同输入 Gram 的逆平方根修复 TP，仍每个结果只有一个 Choi 方向。
+
+所用结果是定理219.3：若 CPTP 通道分为保留 CP 映射 $\mathcal B$ 与删除 CP 映射 $\mathcal T$，且
+$0\le\delta=\|\mathcal T^*(I)\|_\infty<1$，则
+$$
+\mathcal S=\mathcal B\circ\operatorname{Ad}_{(I-\mathcal T^*(I))^{-1/2}}
+$$
+是保留各结果秩的 CPTP 通道，且
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\le\delta.
+\tag{221.15}
+$$
+该修复使用同一输入上的损失概率与滤波变形界，对全部 $\delta<1$ 成立。因此 $\zeta\ne0$ 时有
+$d_2<k$，完成定理221.3的必要性。
+
+这里严格改进的是原谱删除的通用误差上界 $k$。没有计算 $z=0$ 的原修复候选的真实 diamond 距离，因此不能据此判定该原候选不是最近通道。
+
+### 221.4 驻点、事件与最近通道的精确证书
+
+**定理221.4（旋转驻点的完整距离证书）。** 对前述有限参数通道，取一份满足
+$$
+\partial_{\operatorname{Re}z}f(z_*)=
+\partial_{\operatorname{Im}z}f(z_*)=0
+\tag{221.16}
+$$
+的驻点。置
+$$
+S=L+z_*A,\quad D=1+\lambda|z_*|^2,\quad
+\sigma=\|S\|_\infty,\quad \delta=\lambda\sigma^2/D.
+$$
+假设 $\sigma$ 为简单最大奇异值，取单位奇异对
+$$
+Sv=\sigma r,\qquad S^\dagger r=\sigma v.
+$$
+此外假设
+$$
+\|N_{z_*}^\dagger r\|^2\ge\delta,\qquad
+q_0\ge\delta,\qquad
+0<\delta<1.
+\tag{221.17}
+$$
+
+由于 Wirtinger 导数满足
+$$
+\partial_z \|L+zA\|_\infty^2
+=\sigma\langle r,Av\rangle,
+$$
+驻点方程给
+$$
+\langle r,Av\rangle=\frac{\sigma\lambda\overline z_*}{D}.
+$$
+再用 $\langle r,(L+z_*A)v\rangle=\sigma$：
+$$
+\boxed{
+\langle r,Lv\rangle=\frac{\sigma}{D},\qquad
+\langle r,N_{z_*}v\rangle=0,\qquad
+M_{z_*}^\dagger r=\sqrt\delta\,v.
+}
+\tag{221.18}
+$$
+复共轭位置与（221.3）一致。
+
+由原通道的另一 Kraus 表示（221.13），目标结果1的压缩输入效应恰为
+$$
+B_r=\delta|v\rangle\langle v|
++N_{z_*}^\dagger|r\rangle\langle r|N_{z_*}.
+$$
+两方向正交，且第二个非零本征值为
+$\|N_{z_*}^\dagger r\|^2\ge\delta$。所以
+$$
+\lambda_{\min}(B_r)=\delta.
+$$
+结合（221.8）和（221.17），全部总秩二竞争者的距离都至少为 $\delta$；
+（221.15）的修复候选距离又至多为 $\delta$。因此
+$$
+\boxed{d_2=\delta=\lambda f(z_*).}
+\tag{221.19}
+$$
+
+该修复候选的完整 diamond 误差由同一个无参考输入 $P_v$ 达到。
+确实，$M_{z_*}^\dagger M_{z_*}v=\delta v$，故修复矩阵
+$H_*=(I-M_{z_*}^\dagger M_{z_*})^{-1/2}$ 保持 $v$ 的方向。
+由（221.18），修复候选在输入 $v$ 时对事件“标签1且输出为 $r$”的概率为零，而目标概率为 $\delta$。此下界与完整 diamond 上界相等。
+
+若进一步 $q_0>\delta$，则对任何纯输出方向 $r'$，由（221.8）和已证 $d_2=\delta$ 必有
+$\lambda_{\min}(B_{r'})\le\delta$。因此
+$$
+\boxed{
+d_2=\max_{\|r'\|=1}\lambda_{\min}(B_{r'}).
+}
+\tag{221.20}
+$$
+这里全局输出最优性由精确证书推得。证明没有预设局部输出图包含全局最优事件。定理221.4证毕。
+
+### 221.5 实际联合族的解析正交缺陷
+
+项目的实际谱族在固定带符号 $t$ 邻域解析。$A,L$ 可在
+$k_1,w$ 的解析二维支撑平面中，利用大、小根之间的谱隙解析选取。
+这不要求把完整 Choi 的退化零谱当作简单根。
+
+纯源整面 $h=0$ 上，$A,L$ 都只有输出0分量，所以
+$$
+\det L=hD_{\det}(p,t),\qquad
+D(\det)_L[A]=hE_{\det}(p,t)
+\tag{221.21}
+$$
+是联合解析整除。定义
+$$
+\mathfrak c=\operatorname{Tr}(LL^\dagger A L^\dagger).
+$$
+二维余因子恒等式为
+$$
+L^\dagger LL^\dagger
+=\|L\|_{\mathrm{HS}}^2 L^\dagger
+-\overline{\det L}\operatorname{adj}(L).
+$$
+将其与 $A$ 取迹配对，使用 $\operatorname{Tr}(AL^\dagger)=0$ 及
+$D(\det)_L[A]=\operatorname{Tr}(\operatorname{adj}(L)A)$，得到
+$$
+\mathfrak c
+=-\overline{\det L}\,D(\det)_L[A]
+=h^2Z(p,t).
+\tag{221.22}
+$$
+而 $LL^\dagger$ 的两根简单，故
+$$
+\zeta=\langle r_+,AL^\dagger r_+\rangle
+=\frac{\mathfrak c}{s_+-s_-}
+=h^2Z_\zeta(p,t)
+\tag{221.23}
+$$
+也是真正联合解析的标量；可用解析主投影定义它，不需要固定奇异向量相位。
+
+令 $M=2/(3\beta R)$。在 $\epsilon=\nu=t=0$ 的实际冻结切片，
+$$
+K_1=\begin{pmatrix}1/\sqrt2&-i\sqrt2\,n\\0&\sqrt2\,m\end{pmatrix},
+\qquad W=|0\rangle\langle1|,
+$$
+$$
+m^2+n^2=\frac14,\qquad m_h(0)=M,\qquad n_h(0)=0.
+$$
+在 $t=0$，$A=K_1$，并可选
+$$
+L=\frac{W-K_1\overline b}{\sqrt{1-|b|^2}},
+\qquad b=-i\sqrt2n.
+$$
+此切片上 $\det K_1=m$。记 $\eta=1-|b|^2$，因 $W$ 只改变上三角条目，有精确等式
+$$
+\det L=\frac{\overline b^{\,2}m}{\eta},\qquad
+D(\det)_L[K_1]=-
+\frac{2\overline b\,m}{\sqrt\eta}.
+$$
+中心 $b=-i/\sqrt2$、$\eta=1/2$，所以结合实际导数 $m_h(0)=M$ 得
+$$
+D_{\det}(0,0)=-M,\qquad
+E_{\det}(0,0)=-2iM.
+$$
+因此
+$$
+\boxed{
+Z(0,0)=Z_\zeta(0,0)=-2iM^2\ne0.
+}
+\tag{221.24}
+$$
+这些是实际冻结方程的读数，不是假设某个未知泄漏系数非零。
+正小 $h$ 下，$\zeta\ne0$，所以原谱删除界确实严格未饱和，
+$d_2<\lambda s_+$。
+
+### 221.6 解析旋转分支与统一精确解
+
+现在把（221.3）的目标写成 $f(p,t,z)$，其中数学延拓的小谱根为
+$\lambda(p,t)=t\eta(p,t)$。即使 $t=0$ 或小负 $t$，该标量函数仍在联合邻域解析：最大奇异根近一且简单，分母也严格正。只有物理 $\lambda>0$ 时才把（221.3）的 Kraus 混合解释为通道操作。
+
+在 $h=0$ 整面，$A,L$ 是 HS 正交的同输出行，故
+$$
+\boxed{
+f(\epsilon,0,\nu,t,z)
+=\frac{1+\alpha(\epsilon,0,\nu,t)|z|^2}
+{1+\lambda(\epsilon,0,\nu,t)|z|^2}.
+}
+\tag{221.25}
+$$
+其 $z=0$ Hessian 是 $2(\alpha-\lambda)I_2$，在联合箱有统一正下界。
+隐函数定理因此给唯一局部解析驻点 $z_*(p,t)$，并保持严格局部极小性。
+
+由（221.23），$f$ 在 $z=0$ 的梯度有整个 $h^2$ 因子。
+对驻点方程在 $h=0$ 求一次 $h$ 导数，得到 $z_{*,h}=0$；
+又 $z_*=0$ 在整个纯源面成立。因此
+$$
+\boxed{z_*(p,t)=h^2V(p,t)}
+\tag{221.26}
+$$
+为联合解析整除，不含 detuning 分母。
+
+在中心，$r$ 是输出0，$v$ 是小谱 Kraus 的主右奇异方向，
+$\|N_{z_*}^\dagger r\|^2=q_0=1$，而 $\delta=0$。
+连续性允许在同一个固定小箱保证（221.17），并使两项权重严格大于 $\delta$。所以定理221.4的精确证书适用于所有实际正谱参数，证明（221.4）。
+
+构造出的最近通道明确为
+$$
+\boxed{
+\mathcal S_*(X)
+=
+|0\rangle\langle0|\otimes K_0H_*XH_*K_0^\dagger
++
+|1\rangle\langle1|\otimes N_{z_*}H_*XH_*N_{z_*}^\dagger.
+}
+\tag{221.27}
+$$
+它严格 CPTP，每个结果有一个非零 Choi 方向。零谱侧取实际原通道本身，距离为零。没有声称最近通道唯一。
+
+局部旋转极小值还必为全部两 Kraus 酉旋转中的全局最小删除效应：若某个旋转给更小的删除范数，它仍小于一，精确 TP 修复将产生距离小于已证 $d_2$ 的合法通道，矛盾。无需额外遍历旋转参数。
+
+### 221.7 完整解析谱因子的四阶修正
+
+由 $z_*=h^2V$、$\nabla_z f(p,t,0)=h^2$ 乘解析向量，以及沿线段的精确积分，存在实解析函数 $J$，使
+$$
+\boxed{
+s_+(p,t)-f(p,t,z_*(p,t))=h^4J(p,t).
+}
+\tag{221.28}
+$$
+这是整个参数邻域的整除。中心 $z$ Hessian 为 $2I_2$，
+而（221.24）给线性系数
+$2h^2\operatorname{Re}(z(-2iM^2))$。
+解中心缩放驻点方程得到
+$$
+V(0,0)=-2iM^2,\qquad J(0,0)=4M^4.
+\tag{221.29}
+$$
+故可缩小邻域使 $J>0$。这证明（221.6），并给实际严格性。
+
+也可由主左奇异事件核对四阶方向。采用（221.10），记
+$\mathcal A=|a|^2,\mathcal C=|b|^2$，其压缩小根 $\mu$ 满足
+$$
+(k-\mu)(\mathcal A-\mu)=\mathcal C\,\mu.
+$$
+由（221.23），
+$$
+\mathcal C
+=\frac{|\mathfrak c|^2}{(s_+-s_-)^2s_+}
+=h^4C_4(p,t),\qquad C_4(0,0)=4M^4.
+$$
+小根又有解析因子 $\mu=\lambda\chi$，$\chi(0,0)=1$，所以
+$$
+k-\mu
+=\lambda h^4\frac{C_4\chi}{\mathcal A-\lambda\chi}.
+$$
+其中心系数同为 $4M^4$。这与精确旋转解相容；主左奇异事件在此用于核对四阶系数，已证明精确达到距离的输出方向来自旋转驻点的奇异对。
+
+实际正谱侧 $t^\sharp=\widehat t(p)$ 解析且
+$|t^\sharp|\le C\|p\|_1$，$\|p\|_1=|\epsilon|+|h|+|\nu|$。因此更定量地，
+$$
+\boxed{
+\left|d_2-\lambda
+\left(s_+-\frac{64}{81\beta^4R^4}h^4\right)\right|
+\le C'\lambda h^4\|p\|_1.
+}
+\tag{221.30}
+$$
+该式也包括零谱和纯源轴，两侧均自动消失。定理221.1证毕。
+所有结算均由完整解析因子承担，没有把固定参数的余项沿移动 detuning 外推。
+
+### 221.8 饱和与严格不等的合法实例
+
+取 $1/2<s<1$、$0<\lambda<1/4$，
+$$
+L=\operatorname{diag}(\sqrt s,\sqrt{1-s}),\quad
+A=\sqrt{1-\lambda(1-s)}\,|0\rangle\langle1|,\quad
+K_0=\sqrt{1-\lambda s}\,|0\rangle\langle0|.
+$$
+共同 TP 与 HS 正交直接成立。主输出方向的两输入行正交，且两个权重条件均成立，所以
+$$
+d_2=\lambda s.
+$$
+小谱 Kraus 的 Schmidt 秩二并不妨碍有限参数饱和。
+
+反过来，取 $0<\sigma<1/2$、$0<\lambda<1/4$，
+$$
+L=\operatorname{diag}(\sqrt{1-\sigma^2},\sigma),
+$$
+$$
+A=\sqrt{1-2\lambda}
+\begin{pmatrix}
+\sigma^2&\sqrt{1-\sigma^2}\\
+0&-\sigma\sqrt{1-\sigma^2}
+\end{pmatrix},
+\qquad
+K_0=(I-A^\dagger A-\lambda L^\dagger L)^{1/2}.
+$$
+根号内至少为 $\lambda I$，故共同 TP 合法；$A,L$ HS 正交，结果秩为
+$(1,2)$，主 Choi 根 $1-2\lambda>\lambda$。
+主左奇异方向为 $r_+=|0\rangle$，但
+$$
+\langle r_+,AL^\dagger r_+\rangle
+=\sqrt{1-2\lambda}\,\sigma^2\sqrt{1-\sigma^2}\ne0.
+$$
+两个权重条件也可直接核对：
+$$
+\|A^\dagger r_+\|^2
+=(1-2\lambda)(1-\sigma^2+\sigma^4)
+>\frac{13}{32}>\lambda(1-\sigma^2),
+$$
+而 $\operatorname{Tr}(K_0^\dagger K_0)=1+\lambda$，故
+$$
+q_0\ge\frac{1+\lambda}{2}>\lambda(1-\sigma^2).
+$$
+因此（221.12）给真实严格不等式
+$$
+d_2<\lambda(1-\sigma^2).
+$$
+当 $\sigma,\lambda\to0$，此合法族趋于同样的投影—重制备主通道。
+故整体 HS 正交及接近端点都不能替代有限参数的逐行正交判据。
+
+### 221.9 边界误差的值、实现与证书
+
+同一个旋转驻点承担了三项作用：确定完整距离的数值，构造达到该数值的合法总秩二通道，并提供认证其误差的无参考输入与输出事件。其最近性覆盖全部同接口预算候选，不局限于重制备输出；其构造则保留共同 TP 和每个结果的秩。
+
+本节由此结算第220节保留的有限参数最近通道问题。旋转分支由两个实驻点方程及局部唯一性确定，未宣称更简单的初等闭式表达，也未宣称所有最近通道唯一。距离最优器是否同时实现原恢复任务的容量最优值，仍是另一项未由本节结算的问题。
+
+四阶项比较的是 $\lambda s_+(p,t^\sharp)$ 与实际 $d_2$。其中 $s_+=1-h^2G(p,t^\sharp)$ 是当前参数的完整谱因子；若只保留其中心二次系数，所遗漏的其它参数依赖不能自动算入统一四阶余项。同理，$d_2<\lambda s_+$ 只表示这项通用谱删除上界不尖锐，不能据此判定原谱删除修复候选的真实误差或最优性。
+
+实际谱族、纯来源整面消失及中心驻点方程来自第211、213、216、220节。完整 diamond 的保秩 TP 修复与全部预算候选的核事件下界分别使用定理219.3及引理219.4。本节以有限维谱论、二维矩阵恒等式和隐函数定理连接这些前提，给出纸面综合推导，未作原创性结算。
+
+真实来源仍是 $\ell=\epsilon h$。四阶项中的 $h^4$ 是 $\ell^4/\epsilon^4$，不是噪声趋零时关于原来源 $\ell$ 的统一四阶界。容量与环境解释限于指定正旗标条件记录通道，未包含旧旗标读取与丢弃的整个解码器。数学 CPTP 实现不附加具体硬件、局域操作或既有权限内可执行性的结论。
+
+## 追加锚（本行以下为增补区）
