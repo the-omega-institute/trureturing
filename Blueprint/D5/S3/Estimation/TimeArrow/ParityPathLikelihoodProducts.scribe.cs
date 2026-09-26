@@ -25,7 +25,7 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                     Sub(F.Id("x"), Seq(F.Id("t"), Plus, D(1))), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a path x_0, ..., x_s of sign vectors, the forward likelihood of the parity kernel "
+                    "For a path x_0, ..., x_s of sign vectors and a real profile a, the forward likelihood of the parity kernel "
                         + "P_a against the uniform product reference is the product of 2^d P_a over the steps."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -55,7 +55,9 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The reference law makes the s + 1 states of a path independent and uniform on the "
-                        + "hypercube."))),
+                        + "hypercube. When |a| < 1 the forward and backward products are the likelihood ratios of "
+                        + "the forward and time-reversed path laws of P_a against this reference; the identities "
+                        + "below are stated for every real profile."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("forward-inner-product"),
@@ -91,6 +93,7 @@ internal sealed class ParityPathLikelihoodProductsDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(Module + "forward_backward_inner_product"),
                 H("Opposite directions are orthogonal after centering"),
                 StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("d"), Geq, Sp, D(1), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("b", F.Id("y")), Eq, D(0), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("chi", F.Id("y")), Sp, Call("b", F.Id("y")),
                     Eq, D(0), Sp, Rightarrow, Sp,

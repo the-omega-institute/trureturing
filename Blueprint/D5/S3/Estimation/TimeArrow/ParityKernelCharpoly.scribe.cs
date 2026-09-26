@@ -17,6 +17,7 @@ internal sealed class ParityKernelCharpolyDocument : IScribeDocumentDefinition
                     "D5/S3/Estimation/TimeArrow/ParityKernelCharpoly.charpoly_parityKernel"),
                 H("Characteristic polynomial of a balanced parity kernel"),
                 StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("d"), Geq, Sp, D(1), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("a", F.Id("y")), Eq, D(0), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("chi", F.Id("y")), Sp, Call("a", F.Id("y")),
                     Eq, D(0), Sp, Rightarrow, Sp,

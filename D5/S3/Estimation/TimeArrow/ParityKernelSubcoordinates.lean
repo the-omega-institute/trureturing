@@ -38,20 +38,6 @@ noncomputable def subcoordinateLaw {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S 
     (1 / 2 ^ d : ℝ) * (∏ t : Fin T, parityKernel a (x t.castSucc) (x t.succ)) *
       ∏ t : Fin (T + 1), (if ∀ j ∈ S, x t j = w t j then (1 : ℝ) else 0)
 
-/-- Flipping one coordinate negates the parity. -/
-private theorem parity_flip {d : ℕ} (j : Fin d) (y : Fin d → ℤˣ) :
-    parity (Function.update y j (-y j)) = -parity y := by
-  unfold parity
-  rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ j),
-    ← Finset.mul_prod_erase Finset.univ (fun i => y i) (Finset.mem_univ j)]
-  have hrest : ∏ i ∈ Finset.univ.erase j, Function.update y j (-y j) i =
-      ∏ i ∈ Finset.univ.erase j, y i := by
-    refine Finset.prod_congr rfl fun i hi => ?_
-    rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
-  rw [hrest, Function.update_self]
-  push_cast
-  ring
-
 /-- On a fiber that fixes the coordinates in a proper subset `S`, the parity sums to zero: flipping
 a free coordinate is an involution of the fiber that negates the parity. -/
 private theorem sum_parity_fiber {d : ℕ} (S : Finset (Fin d)) (hS : S ≠ Finset.univ)
@@ -74,57 +60,26 @@ private theorem sum_parity_fiber {d : ℕ} (S : Finset (Fin d)) (hS : S ≠ Fins
     intro i hi
     have hij : i ≠ j := fun h => hj (h ▸ hi)
     simp [σ, Function.update_of_ne hij, hy i hi]
+  have hflip : ∀ y : Fin d → ℤˣ, parity (Function.update y j (-y j)) = -parity y := by
+    intro y
+    unfold parity
+    rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ j),
+      ← Finset.mul_prod_erase Finset.univ (fun i => y i) (Finset.mem_univ j)]
+    have hrest : ∏ i ∈ Finset.univ.erase j, Function.update y j (-y j) i =
+        ∏ i ∈ Finset.univ.erase j, y i := by
+      refine Finset.prod_congr rfl fun i hi => ?_
+      rw [Function.update_of_ne (Finset.ne_of_mem_erase hi)]
+    rw [hrest, Function.update_self]
+    push_cast
+    ring
   have hsum : ∑ y ∈ F, parity y = ∑ y ∈ F, parity (σ y) := by
     refine Finset.sum_nbij' σ σ hmem hmem (fun y _ => hσσ y) (fun y _ => hσσ y) ?_
     intro y _
     rw [hσσ]
   have hneg : ∑ y ∈ F, parity (σ y) = -∑ y ∈ F, parity y := by
     rw [← Finset.sum_neg_distrib]
-    exact Finset.sum_congr rfl fun y _ => parity_flip j y
+    exact Finset.sum_congr rfl fun y _ => hflip y
   linarith
-
-/-- A fiber fixing the coordinates in `S` has `2 ^ (d - |S|)` elements. -/
-private theorem card_fiber {d : ℕ} (S : Finset (Fin d)) (w : Fin d → ℤˣ) :
-    ((Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j)).card : ℝ) =
-      2 ^ d / 2 ^ S.card := by
-  have hset : Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j) =
-      Fintype.piFinset (fun j => if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ) := by
-    ext y
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Fintype.mem_piFinset]
-    constructor
-    · intro h j
-      split_ifs with hj
-      · simp [h j hj]
-      · exact Finset.mem_univ _
-    · intro h j hj
-      simpa [hj] using h j
-  rw [hset, Fintype.card_piFinset]
-  have hprod : ∏ j, (if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ).card =
-      2 ^ (d - S.card) := by
-    have hcard : ∀ j, (if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ).card =
-        if j ∈ S then 1 else 2 := by
-      intro j
-      split_ifs
-      · simp
-      · rw [Finset.card_univ, Fintype.card_units_int]
-    simp_rw [hcard]
-    rw [Finset.prod_ite, Finset.prod_const_one, one_mul, Finset.prod_const]
-    congr 1
-    rw [Finset.filter_not, Finset.card_sdiff_of_subset (Finset.filter_subset _ _)]
-    simp
-  rw [hprod]
-  have hle : S.card ≤ d := by simpa using Finset.card_le_univ S
-  rw [Nat.cast_pow, Nat.cast_ofNat, eq_div_iff (by positivity), ← pow_add, Nat.sub_add_cancel hle]
-
-/-- Summing a parity kernel over a proper-subset fiber gives `2^{-|S|}`, whatever the start. -/
-private theorem sum_kernel_fiber {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finset (Fin d))
-    (hS : S ≠ Finset.univ) (x w : Fin d → ℤˣ) :
-    ∑ y ∈ Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j), parityKernel a x y =
-      1 / 2 ^ S.card := by
-  unfold parityKernel
-  rw [← Finset.sum_div, Finset.sum_add_distrib, ← Finset.mul_sum, sum_parity_fiber S hS w,
-    Finset.sum_const, nsmul_eq_mul, mul_one, mul_zero, add_zero, card_fiber]
-  field_simp
 
 /-- **Proper coordinate projections are i.i.d. uniform.** For every parity kernel on the
 `d`-dimensional sign hypercube, started from the uniform law, and every proper subset `S` of the
@@ -132,6 +87,48 @@ coordinates, the coordinates in `S` at times `0, …, T` are independent and uni
 theorem subcoordinateLaw_eq {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finset (Fin d))
     (hS : S ≠ Finset.univ) (T : ℕ) (w : Fin (T + 1) → Fin d → ℤˣ) :
     subcoordinateLaw a S T w = (1 / 2 ^ S.card) ^ (T + 1) := by
+  -- a fiber fixing the coordinates in `S` has `2 ^ (d - |S|)` elements
+  have card_fiber : ∀ w : Fin d → ℤˣ,
+      ((Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j)).card : ℝ) =
+        2 ^ d / 2 ^ S.card := by
+    intro w
+    have hset : Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j) =
+        Fintype.piFinset (fun j => if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ) := by
+      ext y
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Fintype.mem_piFinset]
+      constructor
+      · intro h j
+        split_ifs with hj
+        · simp [h j hj]
+        · exact Finset.mem_univ _
+      · intro h j hj
+        simpa [hj] using h j
+    rw [hset, Fintype.card_piFinset]
+    have hprod : ∏ j, (if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ).card =
+        2 ^ (d - S.card) := by
+      have hcard : ∀ j, (if j ∈ S then ({w j} : Finset ℤˣ) else Finset.univ).card =
+          if j ∈ S then 1 else 2 := by
+        intro j
+        split_ifs
+        · simp
+        · rw [Finset.card_univ, Fintype.card_units_int]
+      simp_rw [hcard]
+      rw [Finset.prod_ite, Finset.prod_const_one, one_mul, Finset.prod_const]
+      congr 1
+      rw [Finset.filter_not, Finset.card_sdiff_of_subset (Finset.filter_subset _ _)]
+      simp
+    rw [hprod]
+    have hle : S.card ≤ d := by simpa using Finset.card_le_univ S
+    rw [Nat.cast_pow, Nat.cast_ofNat, eq_div_iff (by positivity), ← pow_add, Nat.sub_add_cancel hle]
+  -- summing a parity kernel over a proper-subset fiber gives `2^{-|S|}` from every start
+  have sum_kernel_fiber : ∀ x w : Fin d → ℤˣ,
+      ∑ y ∈ Finset.univ.filter (fun y : Fin d → ℤˣ => ∀ j ∈ S, y j = w j), parityKernel a x y =
+        1 / 2 ^ S.card := by
+    intro x w
+    unfold parityKernel
+    rw [← Finset.sum_div, Finset.sum_add_distrib, ← Finset.mul_sum, sum_parity_fiber S hS w,
+      Finset.sum_const, nsmul_eq_mul, mul_one, mul_zero, add_zero, card_fiber w]
+    field_simp
   induction T with
   | zero =>
     unfold subcoordinateLaw
@@ -171,7 +168,7 @@ theorem subcoordinateLaw_eq {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (S : Finse
       intro xi
       simp_rw [mul_ite, mul_one, mul_zero]
       rw [← Finset.sum_filter]
-      exact sum_kernel_fiber a S hS _ _
+      exact sum_kernel_fiber _ _
     simp_rw [hlast, ← Finset.sum_mul]
     have := ih (fun t => w t.castSucc)
     unfold subcoordinateLaw at this

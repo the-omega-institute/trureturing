@@ -18,21 +18,6 @@ namespace D5.S3.Estimation.TimeArrow.ParityKernelCharpoly
 open Finset Polynomial
 open D5.S3.Estimation.TimeArrow.ParityKernelSubcoordinates
 
-/-- The parity character sums to zero over a hypercube of positive dimension; this is the
-`a = 1`, `b = 0` instance of two-step uniform mixing. -/
-private theorem sum_parity_eq_zero {d : ℕ} (hd : 1 ≤ d) :
-    ∑ y : Fin d → ℤˣ, parity y = 0 := by
-  have h := parityKernel_mul_eq_uniform hd (fun _ => 1) (fun _ => 0) (by simp) (by simp)
-    (fun _ => 1) (fun _ => 1)
-  simp only [parityKernel, zero_mul, add_zero, one_mul] at h
-  have hn : (2 : ℝ) ^ d ≠ 0 := by positivity
-  have hcard : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
-    simp [Fintype.card_units_int]
-  rw [← Finset.sum_mul, ← Finset.sum_div, Finset.sum_add_distrib, Finset.sum_const,
-    Finset.card_univ, nsmul_eq_mul, mul_one, hcard] at h
-  field_simp at h
-  linarith
-
 /-- **Characteristic polynomial of a balanced parity kernel.** If `d ≥ 1`, `∑ a = 0` and
 `∑ χ a = 0`, the parity kernel `P_a` on the `d`-dimensional sign hypercube has characteristic
 polynomial `(X - 1) X^(2^d - 1)`. -/
@@ -51,7 +36,18 @@ theorem charpoly_parityKernel {d : ℕ} (hd : 1 ≤ d) (a : (Fin d → ℤˣ) �
   have hn : (2 : ℝ) ^ d ≠ 0 := by positivity
   have hcard : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
     simp [Fintype.card_units_int]
-  have hχ := sum_parity_eq_zero hd
+  -- the parity sums to zero: the `a = 1`, `b = 0` instance of two-step uniform mixing
+  have hχ : ∑ y : Fin d → ℤˣ, parity y = 0 := by
+    have h := parityKernel_mul_eq_uniform hd (fun _ => 1) (fun _ => 0) (by simp) (by simp)
+      (fun _ => 1) (fun _ => 1)
+    simp only [parityKernel, zero_mul, add_zero, one_mul] at h
+    have hn : (2 : ℝ) ^ d ≠ 0 := by positivity
+    have hcard : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
+      simp [Fintype.card_units_int]
+    rw [← Finset.sum_mul, ← Finset.sum_div, Finset.sum_add_distrib, Finset.sum_const,
+      Finset.card_univ, nsmul_eq_mul, mul_one, hcard] at h
+    field_simp at h
+    linarith
   have hVU : V * U = !![1, 0; 0, 0] := by
     ext i j
     fin_cases i <;> fin_cases j <;>

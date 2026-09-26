@@ -32,20 +32,6 @@ noncomputable def backwardLikelihood {d : ℕ} (a : (Fin d → ℤˣ) → ℝ) (
 noncomputable def uniformPathMean {d : ℕ} (s : ℕ) (F : (Fin (s + 1) → Fin d → ℤˣ) → ℝ) : ℝ :=
   (1 / 2 ^ d : ℝ) ^ (s + 1) * ∑ x, F x
 
-private theorem card_cube (d : ℕ) : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
-  simp [Fintype.card_units_int]
-
-private theorem scale_mean {d : ℕ} (s : ℕ) (c : ℝ) :
-    (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) = c ^ s := by
-  have hne : (2 : ℝ) ^ d ≠ 0 := by positivity
-  have key : (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) =
-      ((1 / 2 ^ d) * 2 ^ d) ^ (s + 1) * c ^ s := by ring
-  rw [key, one_div_mul_cancel hne, one_pow, one_mul]
-
-private theorem parity_sq {d : ℕ} (y : Fin d → ℤˣ) : parity y * parity y = 1 := by
-  unfold parity
-  rcases Int.units_eq_one_or (∏ j, y j) with h | h <;> simp [h]
-
 /-- If every column of `M` sums to `λ`, the sum over all paths of `s` steps of the edge products
 is `2^d λ^s`: sum out the first state and induct. -/
 private theorem sum_path_prod_of_column {d : ℕ} (M : (Fin d → ℤˣ) → (Fin d → ℤˣ) → ℝ) (lam : ℝ)
@@ -53,7 +39,7 @@ private theorem sum_path_prod_of_column {d : ℕ} (M : (Fin d → ℤˣ) → (Fi
     ∑ x : Fin (s + 1) → Fin d → ℤˣ, ∏ t : Fin s, M (x t.castSucc) (x t.succ) =
       2 ^ d * lam ^ s := by
   induction s with
-  | zero => simp [card_cube]
+  | zero => simp [Fintype.card_units_int]
   | succ s ih =>
     rw [← (Fin.consEquiv (fun _ : Fin (s + 2) => Fin d → ℤˣ)).sum_comp, Fintype.sum_prod_type]
     have hsplit : ∀ (x0 : Fin d → ℤˣ) (x' : Fin (s + 1) → Fin d → ℤˣ),
@@ -77,7 +63,7 @@ private theorem sum_path_prod_of_row {d : ℕ} (M : (Fin d → ℤˣ) → (Fin d
     ∑ x : Fin (s + 1) → Fin d → ℤˣ, ∏ t : Fin s, M (x t.castSucc) (x t.succ) =
       2 ^ d * mu ^ s := by
   induction s with
-  | zero => simp [card_cube]
+  | zero => simp [Fintype.card_units_int]
   | succ s ih =>
     rw [← (Fin.snocEquiv (fun _ : Fin (s + 2) => Fin d → ℤˣ)).sum_comp, Fintype.sum_prod_type,
       Finset.sum_comm]
@@ -100,6 +86,18 @@ theorem forward_inner_product {d : ℕ} (a b : (Fin d → ℤˣ) → ℝ) (ha : 
     (hb : ∑ y, b y = 0) (s : ℕ) :
     uniformPathMean s (fun x => forwardLikelihood a s x * forwardLikelihood b s x) =
       (1 + (1 / 2 ^ d) * ∑ y, a y * b y) ^ s := by
+  have card_cube : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
+    simp [Fintype.card_units_int]
+  have parity_sq : ∀ y : Fin d → ℤˣ, parity y * parity y = 1 := by
+    intro y
+    unfold parity
+    rcases Int.units_eq_one_or (∏ j, y j) with h | h <;> simp [h]
+  have scale_mean : ∀ c : ℝ, (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) = c ^ s := by
+    intro c
+    have hne : (2 : ℝ) ^ d ≠ 0 := by positivity
+    have key : (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) =
+        ((1 / 2 ^ d) * 2 ^ d) ^ (s + 1) * c ^ s := by ring
+    rw [key, one_div_mul_cancel hne, one_pow, one_mul]
   have hcol : ∀ y, ∑ x, (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b x y) =
       2 ^ d * (1 + (1 / 2 ^ d) * ∑ y, a y * b y) := by
     intro y
@@ -118,7 +116,7 @@ theorem forward_inner_product {d : ℕ} (a b : (Fin d → ℤˣ) → ℝ) (ha : 
   unfold uniformPathMean forwardLikelihood
   simp_rw [← Finset.prod_mul_distrib]
   rw [sum_path_prod_of_column _ _ hcol s]
-  exact scale_mean s _
+  exact scale_mean _
 
 /-- **Same-direction backward inner product.** Under the same hypotheses the backward likelihoods
 have the same inner product `(1 + E[a b])^s`. -/
@@ -126,6 +124,18 @@ theorem backward_inner_product {d : ℕ} (a b : (Fin d → ℤˣ) → ℝ) (ha :
     (hb : ∑ y, b y = 0) (s : ℕ) :
     uniformPathMean s (fun x => backwardLikelihood a s x * backwardLikelihood b s x) =
       (1 + (1 / 2 ^ d) * ∑ y, a y * b y) ^ s := by
+  have card_cube : (Fintype.card (Fin d → ℤˣ) : ℝ) = 2 ^ d := by
+    simp [Fintype.card_units_int]
+  have parity_sq : ∀ y : Fin d → ℤˣ, parity y * parity y = 1 := by
+    intro y
+    unfold parity
+    rcases Int.units_eq_one_or (∏ j, y j) with h | h <;> simp [h]
+  have scale_mean : ∀ c : ℝ, (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) = c ^ s := by
+    intro c
+    have hne : (2 : ℝ) ^ d ≠ 0 := by positivity
+    have key : (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) =
+        ((1 / 2 ^ d) * 2 ^ d) ^ (s + 1) * c ^ s := by ring
+    rw [key, one_div_mul_cancel hne, one_pow, one_mul]
   have hrow : ∀ x, ∑ y, (2 ^ d * parityKernel a y x) * (2 ^ d * parityKernel b y x) =
       2 ^ d * (1 + (1 / 2 ^ d) * ∑ y, a y * b y) := by
     intro x
@@ -145,7 +155,7 @@ theorem backward_inner_product {d : ℕ} (a b : (Fin d → ℤˣ) → ℝ) (ha :
   simp_rw [← Finset.prod_mul_distrib]
   rw [sum_path_prod_of_row (fun x y => (2 ^ d * parityKernel a y x) * (2 ^ d * parityKernel b y x))
     _ hrow s]
-  exact scale_mean s _
+  exact scale_mean _
 
 /-- **Opposite directions are orthogonal after centering.** If `d ≥ 1`, `∑ b = 0` and
 `∑ χ b = 0`, then for every profile `a` the forward likelihood of `P_a` and the backward
@@ -153,6 +163,12 @@ likelihood of `P_{b}` have inner product one. -/
 theorem forward_backward_inner_product {d : ℕ} (hd : 1 ≤ d) (a b : (Fin d → ℤˣ) → ℝ)
     (hb : ∑ y, b y = 0) (hχb : ∑ y, parity y * b y = 0) (s : ℕ) :
     uniformPathMean s (fun x => forwardLikelihood a s x * backwardLikelihood b s x) = 1 := by
+  have scale_mean : ∀ c : ℝ, (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) = c ^ s := by
+    intro c
+    have hne : (2 : ℝ) ^ d ≠ 0 := by positivity
+    have key : (1 / 2 ^ d : ℝ) ^ (s + 1) * (2 ^ d * (2 ^ d * c) ^ s) =
+        ((1 / 2 ^ d) * 2 ^ d) ^ (s + 1) * c ^ s := by ring
+    rw [key, one_div_mul_cancel hne, one_pow, one_mul]
   have hrow : ∀ x, ∑ y, (2 ^ d * parityKernel a x y) * (2 ^ d * parityKernel b y x) =
       2 ^ d * 1 := by
     intro x

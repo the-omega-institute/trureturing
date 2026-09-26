@@ -37,7 +37,9 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Each real profile a on the hypercube defines the transition weights P_a(x, y). Every "
-                        + "row sums to one because the parity sums to zero over the hypercube when d >= 1."))),
+                        + "row sums to one because the parity sums to zero over the hypercube when d >= 1. "
+                        + "The weights are nonnegative, hence a Markov kernel, exactly when |a| <= 1; the "
+                        + "identities below hold for every real profile."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("coordinate-record-law"),
@@ -46,7 +48,7 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(RecordLawFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a coordinate set S and prescribed sign vectors w_0, ..., w_T, the record law is the "
+                    "For a coordinate set S and prescribed sign vectors w_0, ..., w_T, the record weight is the "
                         + "total weight, under the uniform start and the kernel P_a, of the paths whose "
                         + "coordinates in S at every time t agree with those of w_t."))),
                 DescribeRole.Definition),
@@ -65,7 +67,8 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                     Paragraph(Text(
                         "For every dimension d, every real profile a, every proper subset S of the "
                             + "coordinates, every horizon T and every record w, the record law equals "
-                            + "(2^(-|S|))^(T+1). Hence the coordinates in S of the chain started from the "
+                            + "(2^(-|S|))^(T+1). For |a| <= 1, when P_a is a Markov kernel, this says that the "
+                            + "coordinates in S of the chain started from the "
                             + "uniform law form an independent sequence of uniform vectors on {-1, 1}^S. No "
                             + "condition on a is needed; the statement concerns only the proper coordinates.")),
                     Paragraph(Text(
@@ -81,6 +84,7 @@ internal sealed class ParityKernelSubcoordinatesDocument : IScribeDocumentDefini
                 DeclarationHandle.Create(Module + "parityKernel_mul_eq_uniform"),
                 H("Two steps reach the uniform kernel"),
                 StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("d"), Geq, Sp, D(1), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("b", F.Id("y")), Eq, D(0), Comma, Sp,
                     Sum, Underscore, Grp(F.Id("y")), Sp, Call("chi", F.Id("y")), Sp, Call("b", F.Id("y")),
                     Eq, D(0), Sp, Rightarrow, Sp,
