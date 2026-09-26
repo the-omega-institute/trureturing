@@ -508,3 +508,121 @@ files are unchanged by this increment. No new CI, Lean build, Scribe
 projection, Freeze or independent-review approval is claimed. Larger flat
 supports, general repeated-label incidence, unrestricted CFMP and torus-end
 completeness remain outside the proved scope.
+
+## Continuation on 2026-09-26: Sections 88–94
+
+Baseline `e1263fe61d64b25d7b367d5922ebfee8f5374531` is retained. The new
+results stay in the existing mixed-matching theory. They remove the bound
+of three on the number of global edges in a different explicit structural
+class: one actual shared edge H, with all non-H local slots forming a
+matching. The two opposite special slots may have the same global label.
+This is written research pending independent review, not a new Lean claim.
+
+### Exact response and strict convexity
+
+For genuine cosh lengths `(r,h,h,o,h,h)`, put Q=2h^2/(r-1) and
+lambda=sqrt((h^2-1)/(Q+h^2)). The previous Sections 65–66 specialize the
+classical Luo–Yang length cosine. Dividing its positive sine/cosine
+expressions yields the exact scalar response
+
+`beta=b_lambda(theta)=atan(lambda*cot(theta/2))`, with 0<lambda<1.
+
+For D=sin(theta/2)^2+lambda^2*cos(theta/2)^2,
+
+`b'=-lambda/(2D)` and `b''=lambda*(1-lambda^2)*sin(theta)/(4D^2)>0`.
+
+This convexity concerns b_lambda, not the volume function. At fixed r,h,
+lambda is the same in different blocks even when the opposite lengths and
+target angles differ. For g>=3 genuine blocks, r>=1+2h and sum theta_i=pi,
+feasibility forces Q>cot(pi/(2g))^2 and h>=Q. Scalar Jensen then proves
+
+`sum beta_i > g*acos(tan(pi/(2g))) > pi/2`.
+
+This estimates an existing sum without replacing any tetrahedra by their
+average or assuming that an averaged length vector remains globally legal.
+
+### Arbitrary-edge-count matching theorem
+
+The actual finite connected orientable ideal triangulation has boundary
+components of genus at least two. Choose one actual global edge H and a
+nonempty set of other global labels. In every tetrahedron those other slots
+are zero, one, or two opposite edges. Assume every non-H edge has degree at
+least four. Then the SAME prescribed triangulation has genuine hyperbolic
+realization and totally geodesic boundary, with no bound on its edge count.
+
+Actual link counting gives t>E>=2 and d(H)>=4t>=12. Thus the explicit
+assignment 2pi/d(label) has corner sum at most 5pi/6 and provides the
+strict-angle premise directly at degree four. The earlier minimum-six
+strict-angle theorem is not applied outside its range.
+
+The credited Luo–Yang theorem supplies shared positive generalized lengths.
+At least one block is genuine, so H cannot carry two flat pi slots. Every
+special slot in any flat must therefore be a pi slot: n_e=m_e for non-H e.
+Saturation of a special edge would give degree two, impossible. Each selected
+special consequently has one flat occurrence and at least three genuine ones.
+
+A flat's exact threshold `(r-1)*(o-1)>=4h^2` yields a selected non-H edge
+with r>=1+2h. This edge cannot repeat in a genuine block, since its opposite
+repeat would itself meet the flat threshold. Its genuine occurrences are
+therefore in distinct blocks. Their target angles sum to pi, and the Jensen
+bound makes their disjoint H slots contribute more than 2pi. This violates
+H's actual global angle equation and excludes the entire flat set, with no
+prior restriction on the number of flat blocks.
+
+The one-H and matching conditions are essential stated hypotheses, not
+consequences of minimum degree six. Adjacent special slots allowed in the
+previous three-edge theorem are excluded here, so the full theorem classes
+are not claimed to be nested. Multiple independent H lengths cannot silently
+be treated as one shared parameter.
+
+### Actual six-degree and four-degree examples
+
+The theory supplies complete face tables for a fourteen-tetrahedron packet
+of degrees (6,6,6,66), one genus-eleven boundary link (8,84,56), and exact
+maximum initial normalized corner sum 13/33; and an eight-tetrahedron packet
+of degrees (4,4,4,36), one genus-five link (8,48,32), with maximum 11/18.
+Both have three distinct special labels forming an interaction triangle and
+a real opposite-slot self-loop. Repeated labels are not only formally allowed.
+The four-degree example is a restricted application, not unrestricted CFMP
+at degree four. No new census or homeomorphism-type priority is asserted.
+
+The resulting metrics lift to cyclic covers. Their respective counts are
+14n or 8n tetrahedra, 4n edges, and manifold Euler characteristic -10n or -4n.
+The lifted H generally splits into n actual edges. This uses metric lifting,
+not the false assertion that every cover retains the one-H hypothesis.
+
+### Executed tests and source boundaries
+
+The independent standard-library checker is
+`docs/develop/theory/cfmp_matching_reservoir_check.py`.
+Its executed bytes have Git blob `eb2cfc6038f73eeb5c142bf12d5acfb7f5db4085`.
+Both fixed tables pass face coverage, permutation parity, dual connectedness,
+actual edge identification, ordered-endpoint first returns and eight separate
+connected degree-two link-fan checks. Matching, repeated opposite labels,
+interaction triangles and rational initial angles are checked directly.
+
+With analytic seed 947488, 3000 genuine response checks include 1995 obtuse
+targets. Maximum discrepancy from the original six-variable forward formula
+is 1.4101567136215465e-14; the finite-difference derivative discrepancy is
+at most 4.430500410990135e-11. There are 950 unequal-angle shared-parameter
+stars with g=3,...,40, totaling 20425 genuine occurrences. These finite
+floating checks supplement the continuous proof; they are not interval or
+kernel certificates. A g=2 local family with h=Q=101/100, r=151/50, o_i=h
+has total selected H angle 8atan(1/sqrt(101))<2pi. It demonstrates why this
+star lemma does not automatically extend to g=2, without claiming a closed
+counterexample or optimality of the global degree-four threshold.
+
+Luo–Yang arXiv:1404.5365v2 supplies the classical formulas and maximizer
+inputs. Parsed PDF text and successful images of printed pages 2 and 21
+were read. Screenshot requests for pages 16 and 17 failed; those formula
+locations are not claimed to have been image-verified in this increment.
+CFMP remains anchored at arXiv:math/0402339, Conjecture 0.8. Repository PR
+search located #9474 and #8155. Bounded searches do not certify worldwide
+priority. Earlier source-reading and execution records retain their original
+historical attribution.
+
+The original Lean, Scribe, existing checkers and formal-status files remain
+unchanged. No Lean build, project CI, Scribe projection, Freeze or independent
+review approval is claimed. General adjacent-special incidence, multiple
+independent shared lengths, unrestricted CFMP and torus-end completeness
+remain outside this theorem.
