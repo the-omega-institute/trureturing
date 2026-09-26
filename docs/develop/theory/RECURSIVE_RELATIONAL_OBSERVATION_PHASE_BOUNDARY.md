@@ -48230,3 +48230,696 @@ $$
 本节沿用同一真实来源、独立纯初始化、全域固定运行通道及计入持久空间的启动控制。联合观测证书没有增加只访问接收端的终端权限。所有非零结论由明确有理矩阵恒等式和根式代数推出；没有新增 Lean 核验声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 172. 有限启动的残留关联可由接收端持续读出
+
+第171节证明真实渐近逻辑通道不是常值。本节进一步计算这份残留在接收端的可读程度：只访问 $Q,R$ 的终端测量，仍能持续以严格优于随机猜测的概率区分两个等先验原始计算基输入。与此同时，原输入的相干项早已在启动时被迹掉；这里保留的是经典关联。
+
+第168节已经给出任意逻辑态的局部退相干标准形，第171节已经给出真实启动的逻辑输出。本节直接复用这两项，计算接收端距离、二元读出成功率和最近常值通道的精确半径。
+
+### 172.1 同一真实启动的两份逻辑输出
+
+固定第171节的来源 $p=1/2$ 和任意有限整数 $L\ge3$。记
+
+$$
+\tau_j=\Theta_L(P_j),\qquad
+z_L=\left(-\frac12\right)^{L-1},
+\qquad
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+$$
+
+$$
+h(z)=\frac z4+\sqrt{d(z/3)}-\sqrt{d(-2z/3)},
+\qquad
+d_L=D(\tau_0,\tau_1)
+=\frac{24h(z_L)}{\sqrt{2353}}>0.
+\tag{172.1}
+$$
+
+这里始终采用 $D(\rho,\sigma)=\|\rho-\sigma\|_1/2$。
+第171节证明 $h(z_L)>0$，并给出逻辑 Bloch 向量差
+
+$$
+\Delta x=-\frac{336h(z_L)}{2353},
+\qquad
+\Delta y=0,
+\qquad
+\Delta z=\frac{2304h(z_L)}{2353}.
+\tag{172.2}
+$$
+
+令
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix},
+\qquad
+\xi_j(\varphi)
+=\operatorname{Tr}_M\mathfrak E
+(U_\varphi\tau_jU_\varphi^*).
+\tag{172.3}
+$$
+
+$\xi_j(\varphi)$ 是接收端 $Q,R$ 上的状态，没有保留对 $M$ 的访问权。
+对当前来源，第168节的局部退相干参数为
+
+$$
+\kappa=\frac{\sqrt5}{3}\in(0,1).
+\tag{172.4}
+$$
+
+### 172.2 接收端区分距离的精确相位曲线
+
+**定理172.1（经典残留的局部可读性）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\mathfrak d_L(\varphi)
+&:=D(\xi_0(\varphi),\xi_1(\varphi))\\
+&=\frac{d_L}{\sqrt{2353}}
+\sqrt{
+\kappa^2(-7\cos2\varphi+48\sin2\varphi)^2
++(7\sin2\varphi+48\cos2\varphi)^2
+}.
+\end{aligned}
+}
+\tag{172.5}
+$$
+
+特别地，
+
+$$
+\boxed{
+\min_\varphi\mathfrak d_L(\varphi)=\kappa d_L>0,
+\qquad
+\max_\varphi\mathfrak d_L(\varphi)=d_L.
+}
+\tag{172.6}
+$$
+
+**证明。** 在 Bloch 坐标中，$U_\varphi$ 将差向量变为
+
+$$
+(\Delta x\cos2\varphi+\Delta z\sin2\varphi,\ 0,\
+-\Delta x\sin2\varphi+\Delta z\cos2\varphi).
+$$
+
+第168节的接收端固定酉将局部通道化为退相干通道加独立均匀标签。因此局部半迹距离恰为变换后向量的
+$x,y$ 坐标乘以 $\kappa$，再取欧氏长度的一半。代入（172.2），并用
+$2353=7^2+48^2$，得到（172.5）。
+
+括号中的两个未加权线性组合的平方和恒为 $2353$。随相位变化，它们遍历半径 $\sqrt{2353}$ 的圆；最小值在第二坐标为零时达到，最大值在第一坐标为零时达到。这给（172.6）。证毕。
+
+此处区分的是原始输入 $j=0,1$。第163节的 Helstrom 测量区分的是混合编码的掩码标签；两者属于不同的二元判别任务。
+
+### 172.3 真实运行终端的持续二元读出
+
+令 $\mathcal R_{L+k}$ 为实际运行通道，并定义两份真实接收端状态
+
+$$
+\widehat\xi_{j,k}
+=\operatorname{Tr}_M\mathcal R_{L+k}(P_j),
+\qquad
+D_{L,k}=D(\widehat\xi_{0,k},\widehat\xi_{1,k}).
+\tag{172.7}
+$$
+
+沿用第170节的几何尾界，置
+
+$$
+\varepsilon_k=C_{\mathrm{abs}}\,2^{-(k-1)/2},
+\qquad
+C_{\mathrm{abs}}=6+2\sqrt2,
+\qquad k\ge1.
+\tag{172.8}
+$$
+
+其中
+$C_{\mathrm{abs}}=2(2-\sqrt p)/(1-\sqrt p)$ 在 $p=1/2$ 时恰为上述值。
+由全通道尾界、输入各个 $P_j$ 及取 $M$ 边缘的收缩性，
+
+$$
+D(\widehat\xi_{j,k},\xi_j(k\theta))\le\varepsilon_k.
+$$
+
+距离的反三角不等式遂给
+
+$$
+\boxed{
+|D_{L,k}-\mathfrak d_L(k\theta)|\le2\varepsilon_k.
+}
+\tag{172.9}
+$$
+
+这里不需要加入规范档案目标的 $\delta_{L+k}$，因为本节比较的是两份实际接收态；没有比较来源档案恢复目标。
+
+两原始输入等先验时，接收端最佳终端二元测量的成功概率记为
+$P_{\mathrm{guess}}(L,k)$。Helstrom 公式给
+
+$$
+\boxed{
+P_{\mathrm{guess}}(L,k)=\frac{1+D_{L,k}}2
+\ge\frac12+\frac{\kappa d_L}{2}-\varepsilon_k.
+}
+\tag{172.10}
+$$
+
+该公式也可直接证明：任意二元 POVM 以 $0\preceq E\preceq I$ 表示，其成功概率为
+$\frac12+\frac12\operatorname{Tr}[E(\widehat\xi_{0,k}-\widehat\xi_{1,k})]$；
+取差矩阵的正谱投影达到最优值。
+
+由于 $d_L>0$，存在有限 $K_L$，使全部 $k\ge K_L$ 都满足
+
+$$
+P_{\mathrm{guess}}(L,k)\ge\frac12+\frac{\kappa d_L}{4}>\frac12.
+\tag{172.11}
+$$
+
+例如只需选择 $K_L$ 使
+$\varepsilon_k\le\kappa d_L/4$ 对 $k\ge K_L$ 成立。每个终端可以采用其对应的 Helstrom 测量；这符合原任务允许选择终端解码器的权限，没有改变固定运行通道，也没有为持续接收器添加额外控制或 $M$ 访问权。本结论不要求同一个固定二元 POVM 在所有旋转相位都达到最优值。
+
+### 172.4 每个有限等差子序列具有相同的局部读出分布
+
+第159节已证明 $e^{i\theta}=(3+4i)/5$ 不是单位根。因此对任意
+$m\ge1$、$0\le r<m$，相位
+$2(r+mj)\theta$ 模 $2\pi$ 等分布。结合（172.9），得到
+
+$$
+\boxed{
+\liminf_{j\to\infty}D_{L,r+mj}=\kappa d_L,
+\qquad
+\limsup_{j\to\infty}D_{L,r+mj}=d_L.
+}
+\tag{172.12}
+$$
+
+相应猜测成功率的下、上极限分别为
+$(1+\kappa d_L)/2$ 与 $(1+d_L)/2$。
+
+还可以精确写出共同经验分布。令 $\nu_L^{\mathrm{bit}}$ 为
+$\mathfrak d_L(\varphi)$ 在均匀相位下的分布。则
+
+$$
+\frac1N\sum_{j=0}^{N-1}\delta_{D_{L,r+mj}}
+\ \Longrightarrow\ \nu_L^{\mathrm{bit}}.
+\tag{172.13}
+$$
+
+其分布函数为
+
+$$
+\nu_L^{\mathrm{bit}}((-\infty,x])=
+\begin{cases}
+0,&x<\kappa d_L,\\[2mm]
+\dfrac2\pi\arcsin
+\sqrt{\dfrac{x^2-\kappa^2d_L^2}{(1-\kappa^2)d_L^2}},
+&\kappa d_L\le x\le d_L,\\[3mm]
+1,&x>d_L.
+\end{cases}
+\tag{172.14}
+$$
+
+**证明。** 式（172.5）中的两个实坐标可写成
+$\sqrt{2353}(\sin\alpha,\cos\alpha)$，其中 $\alpha$ 是均匀相位的固定平移或反向。因此
+
+$$
+\mathfrak d_L^2
+=d_L^2\bigl(\kappa^2+(1-\kappa^2)\cos^2\alpha\bigr).
+$$
+
+均匀 $\alpha$ 的 $\cos^2\alpha$ 在 $[0,1]$ 上具有分布函数
+$2\arcsin\sqrt y/\pi$，由圆上相应弧长直接得到。代入即得（172.14）。
+实际终端与相位曲线之差趋零，故连续测试函数的 Cesàro 平均有同一极限。证毕。
+
+这个分布没有端点原子。猜测成功率的共同经验分布是其在线性映射
+$x\mapsto(1+x)/2$ 下的像。本节的读出距离分布不是第170节完整来源恢复误差 $h_L$ 的分布。
+
+### 172.5 最近常值通道的精确半径
+
+对任意逻辑状态 $\sigma$，记
+$\mathcal C_\sigma(X)=\operatorname{Tr}(X)\sigma$。由第171节，$\Theta_L$
+已经先测原输入计算基，所以
+
+$$
+d_\diamond(\Theta_L,\mathcal C_\sigma)
+=\max_{j=0,1}D(\tau_j,\sigma).
+\tag{172.15}
+$$
+
+上界对任意参考输入的两个正对角参考块使用三角不等式得到；分别输入
+$P_j$ 达到对应下界。这是完整半 diamond 距离的等式。
+
+**定理172.2（不能由任何常值通道消去的残留）。** 有
+
+$$
+\boxed{
+\inf_\sigma d_\diamond(\Theta_L,\mathcal C_\sigma)
+=\frac{d_L}{2},
+\qquad
+\sigma_{\mathrm{mid}}=\frac{\tau_0+\tau_1}{2}
+\ \text{达到最小值}.
+}
+\tag{172.16}
+$$
+
+**证明。** 三角不等式给
+
+$$
+d_L\le D(\tau_0,\sigma)+D(\sigma,\tau_1)
+\le2\max_jD(\tau_j,\sigma).
+$$
+
+取中点 $\sigma_{\mathrm{mid}}$，迹范数的齐次性使两距离都等于
+$d_L/2$，达到下界。证毕。
+
+这个半径在联合编码及逻辑旋转后仍保持：对任意相位 $\varphi$，
+
+$$
+\boxed{
+\inf_{\Sigma\in\mathcal D(MQR)}
+d_\diamond\!\left(
+\mathfrak E\operatorname{Ad}_{U_\varphi}\Theta_L,
+\mathcal C_\Sigma
+\right)
+=\frac{d_L}{2}.
+}
+\tag{172.17}
+$$
+
+上界由编码后的中点达到。对任意候选常值状态 $\Sigma$，后接联合
+CPTP 通道
+$\operatorname{Ad}_{U_\varphi}^{-1}\Lambda_{\mathrm{joint}}$
+会把它变成某个逻辑常值通道，并把编码主项还原成 $\Theta_L$。通道收缩与（172.16）给下界。这一证明使用联合映射来比较范数，没有将它加入接收端读出权限。
+
+到集合的距离对 $d_\diamond$ 是一阶 Lipschitz。由第170节，
+
+$$
+\boxed{
+\left|
+\inf_\Sigma d_\diamond(\mathcal R_{L+k},\mathcal C_\Sigma)
+-\frac{d_L}{2}
+\right|\le\varepsilon_k.
+}
+\tag{172.18}
+$$
+
+所以真实通道与其最佳常值近似之间仍有严格正的渐近半径。局部接收通道也有对应结论：在固定相位，其最近常值半径为
+$\mathfrak d_L(\varphi)/2$，直接对两份局部输出重复（172.15）—（172.16）即可。
+
+### 172.6 原来选定的常值比较并非最近常值中心
+
+第171节给原来选定的 $\mathcal C_0$ 的精确差值。令
+
+$$
+w(t)=\frac43-t-4\sqrt{d(t)}.
+$$
+
+在实际参数范围内有正分母恒等式
+
+$$
+\boxed{
+w(t)=
+\frac{9t^2}{\,4/3-t+4\sqrt{d(t)}\,}.
+}
+\tag{172.19}
+$$
+
+这是将两项平方之差有理化，因为
+$(4/3-t)^2-16d(t)=9t^2$。
+又由第171节的 $h(z_L)>0$，
+
+$$
+w(-2z_L/3)-w(z_L/3)=4h(z_L)>0.
+$$
+
+所以原 $P_0$ 常值比较的半 diamond 差恰为
+
+$$
+\boxed{
+b_L:=d_\diamond(\Theta_L,\mathcal C_0)
+=\frac6{\sqrt{2353}}\,w(-2z_L/3).
+}
+\tag{172.20}
+$$
+
+当 $L\to\infty$ 时，（172.19）给
+$w(t)\sim27t^2/8$，因此
+
+$$
+\boxed{
+b_L\sim\frac9{\sqrt{2353}}\,4^{-(L-1)},
+\qquad
+\inf_\sigma d_\diamond(\Theta_L,\mathcal C_\sigma)
+\sim\frac{27}{8\sqrt{2353}}\,4^{-(L-1)}.
+}
+\tag{172.21}
+$$
+
+两者都随启动长度趋零，却在每个固定有限 $L$ 上严格为正。它们分别衡量到原先选定常值通道的距离，以及到全部常值通道集合的距离，不能互换。
+
+### 172.7 原始量子相干与经典读出的边界
+
+第171节的真实启动通道已经满足
+
+$$
+\mathcal R_L(|0\rangle\langle1|)
+=\mathcal R_L(|1\rangle\langle0|)=0.
+\tag{172.22}
+$$
+
+以后所有运行和终端通道都是线性 CPTP 后处理，不会重新建立对这些原始输入矩阵单位的依赖。更明确地，对任意原输入与外部参考的联合态，启动后输出是
+
+$$
+\sum_j \omega_{jj}^{\mathrm{ref}}\otimes\mathcal R_L(P_j),
+\tag{172.23}
+$$
+
+其中 $\omega_{jj}^{\mathrm{ref}}\succeq0$，迹之和为一。因此它在原参考与整个保留系统之间可分；后续运行和解码仍保持这种可分性。
+
+本节的持续 Helstrom 优势说明一个经典基标签仍可由接收端读出。它不表示任意未知原始 qubit 被保存，也不表示原输入与参考的量子纠缠可以恢复。最近常值半径属于完整通道任务，但它同样不直接判定第170节的最优来源恢复误差曲线与第165节比较曲线处处不同。
+
+全部结论沿用同一真实来源、固定运行接收器及已计费启动空间。数学上比较联合通道与物理上只访问 $Q,R$ 的终端测量在全文保持区分，没有新增 Lean 或实验实现声明。
+
+## 追加锚（本行以下为增补区）
+
+## 173. 保留真实二元输入依赖的完整参考恢复归约
+
+第171节的真实渐近逻辑通道是二元测量—制备通道，但两份制备态不同。恢复原输入的任务因此不能直接套用第165节的常值入口公式。本节保留同一接收端操作对两个实际分支的共同作用，将完整参考优化精确化为二结果 instrument 和一个实参数，并给出局部经典区分能力所强制的误差下界。
+
+### 173.1 同一个局部 instrument 必须同时服务两个来源
+
+所有空间均有限维。令原输入 $A$、目标标签 $Q_{\mathrm{out}}$ 均为 qubit；$M$ 为不可访问记忆，$K$ 为接收空间，$R$ 为固定的目标纯化空间。给定两份实际归一化状态
+
+$$
+\xi_0,\xi_1\in\mathcal S(M\otimes K),
+\qquad \operatorname{Tr}_K\xi_0=\operatorname{Tr}_K\xi_1=\rho,
+$$
+
+以及 $M\otimes R$ 上固定纯化 $|\Xi\rangle$，满足
+$\operatorname{Tr}_R P_\Xi=\rho$。定义
+
+$$
+\mathcal N(X)=X_{00}\xi_0+X_{11}\xi_1,
+\qquad
+\mathcal V(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi,
+$$
+
+$$
+e=\min_{\mathcal D:K\to Q_{\mathrm{out}}R\ {\rm CPTP}}
+\frac12\left\|
+\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N
+\right\|_\diamond.
+\tag{173.1}
+$$
+
+张量因子按系统标记排序。输入及其外部参考保留在 diamond 范数中，$\mathcal D$ 无权访问 $M$。有限维 CPTP Choi 集紧、目标连续，故最小值取得。
+
+**引理173.1（共同二结果 instrument）。** （173.1）可无损限制为
+
+$$
+\mathcal D(X)=\sum_{k=0}^1P_k^{Q_{\mathrm{out}}}\otimes\mathcal D_k(X),
+\qquad
+\mathcal D_k\ {\rm CP},\quad\mathcal D_0+\mathcal D_1\ {\rm TP}.
+\tag{173.2}
+$$
+
+**证明。** $\mathcal N\operatorname{Ad}_Z=\mathcal N$，目标满足
+$\mathcal V\operatorname{Ad}_Z=\operatorname{Ad}_{Z_{Q_{\mathrm{out}}}}\mathcal V$。
+因此把解码器后接 $Z_{Q_{\mathrm{out}}}$ 共轭，其误差与原值相同：这等价于对通道差同时作输入与输出的酉变换。平均这两份解码器，diamond 范数的凸性保证误差不增，而平均结果在 $Q_{\mathrm{out}}$ 上对角。其两个对角块正是（173.2）的 CP 映射。反之每份这样的 instrument 都定义合法解码器。证毕。
+
+对一份共同 instrument，写
+
+$$
+\sigma_{kj}=(\operatorname{id}_M\otimes\mathcal D_k)(\xi_j),
+\qquad k,j\in\{0,1\}.
+\tag{173.3}
+$$
+
+四份矩阵均半正定，且对每个 $j$ 有
+$\sum_k\operatorname{Tr}\sigma_{kj}=1$。它们必须由同一对 $\mathcal D_0,\mathcal D_1$ 产生；只给各矩阵的边缘、正性和迹，通常不能刻画共同可达性。
+
+### 173.2 任意参考精确归约为一个二元权重
+
+对固定 instrument，令
+$\Delta=\mathcal V-(\operatorname{id}_M\otimes\mathcal D)\mathcal N$。
+它满足输入 $Z_A$ 与输出 $Z_{Q_{\mathrm{out}}}$ 的协变关系。对 $q\in[0,1]$，令
+
+$$
+|\phi_q\rangle_{AJ}
+=\sqrt q\,|00\rangle+\sqrt{1-q}\,|11\rangle.
+\tag{173.4}
+$$
+
+**引理173.2（对角输入边缘已足够）。** 有
+
+$$
+\frac12\|\Delta\|_\diamond
+=\max_{0\le q\le1}
+\frac12\|(\Delta\otimes\operatorname{id}_J)(P_{\phi_q})\|_1.
+\tag{173.5}
+$$
+
+**证明。** 通道差的 diamond 范数可在带参考的归一化纯输入上优化。任取这样的 $|\psi\rangle_{AJ}$，加入测试参考旗标 $F$，构造纯态
+
+$$
+|\Psi\rangle_{AJF}
+=\frac1{\sqrt2}
+\left(|\psi\rangle_{AJ}|0\rangle_F
++(Z_A\otimes I_J)|\psi\rangle_{AJ}|1\rangle_F\right).
+$$
+
+其 $A$ 边缘是原边缘的 $Z$ 平均，故为某份 $\operatorname{diag}(q,1-q)$。对输出差在 $F$ 上去相干后，两块因协变性具有相同迹范数，均为原 $\psi$ 的输出差范数。去相干收缩迹范数，所以新纯态的误差不小于原值。
+
+同一输入边缘的纯化之间存在参考侧等距；$\Psi$ 因此与（173.4）给出相同误差。每个任意参考输入都被某个 $q$ 的误差上界控制。另一方向由（173.4）本来就是允许输入得到。新增的 $F$ 只属于完整参考检验，没有成为接收装置的持久控制。证毕。
+
+### 173.3 秩一差矩阵给出精确最小最大公式
+
+引入一个仅用于匹配标签块的二维空间 $C$，定义
+
+$$
+|u_q\rangle
+=\sqrt q\,|0\rangle_C|\Xi\rangle
++\sqrt{1-q}\,|1\rangle_C|\Xi\rangle,
+$$
+
+$$
+B_{\mathcal D}(q)
+=qP_0^C\otimes\sigma_{00}
++(1-q)P_1^C\otimes\sigma_{11},
+\qquad
+f_{\mathcal D}(q)=\lambda_{\max}\bigl(P_{u_q}-B_{\mathcal D}(q)\bigr).
+\tag{173.6}
+$$
+
+**定理173.3（真实二元入口的完整参考恢复公式）。** 有
+
+$$
+\boxed{
+e=\min_{\{\mathcal D_0,\mathcal D_1\}\ {\rm instrument}}
+\max_{q\in[0,1]}f_{\mathcal D}(q).
+}
+\tag{173.7}
+$$
+
+两个极值都取得，instrument 仍在整个 $K$ 上定义。
+
+**证明。** 对输入（173.4），实际输出在参考标签 $j$、输出标签 $k$ 上分块，块为 $q_j\sigma_{kj}$，其中 $q_0=q$、$q_1=1-q$。目标纯态只位于 $j=k$ 的匹配子空间。
+
+在匹配的 $00,11$ 两块上，目标减实际输出恰为
+$P_{u_q}-B_{\mathcal D}(q)$。两个不匹配块为
+$-q\sigma_{10}$ 与 $-(1-q)\sigma_{01}$，均半负定。
+
+秩一投影减半正定矩阵至多有一个正本征值。匹配块的迹为
+$1-q\operatorname{Tr}\sigma_{00}-(1-q)\operatorname{Tr}\sigma_{11}\ge0$，故其最大本征值非负。完整输出差的迹为零，因此其半迹范数恰为全部正本征值之和，即匹配块的最大本征值。结合引理173.1—173.2即得公式。矩阵谱连续，instrument Choi 集及 $[0,1]$ 均紧，故极值取得。证毕。
+
+还可无损交换这两个极值：
+
+$$
+\boxed{
+e=\max_{q\in[0,1]}
+\min_{\{\mathcal D_0,\mathcal D_1\}\ {\rm instrument}}
+f_{\mathcal D}(q).
+}
+\tag{173.8}
+$$
+
+这里的依据是精确的凸凹结构。固定 $q$，最大本征值是 instrument 的凸函数。固定 instrument，$f_{\mathcal D}$ 是 $q$ 的凹函数：若
+$q=\lambda q_1+(1-\lambda)q_2$，取带正交参考旗标的混合输入
+$\lambda P_{\phi_{q_1}}\otimes P_0^F+(1-\lambda)P_{\phi_{q_2}}\otimes P_1^F$。
+其输入边缘为 $\operatorname{diag}(q,1-q)$，因此是 $P_{\phi_q}$ 经参考侧通道所得。迹范数收缩和旗标分块给
+
+$$
+f_{\mathcal D}(q)
+\ge\lambda f_{\mathcal D}(q_1)+(1-\lambda)f_{\mathcal D}(q_2).
+$$
+
+连续性、紧凸定义域及凸凹性满足 Sion 的 minimax 定理（原文定理3.4）的条件，得到（173.8）和一份共同鞍点。[^phase_binary_instrument_sion] 这里把 $q$ 作为凹变量、instrument Choi 对作为凸变量；连续性比所需的半连续性更强。这个交换允许选择最坏测试权重；它没有允许为 $j=0,1$ 分别使用两套不相容的解码器。
+
+### 173.4 固定 instrument 的一维阈值判据
+
+对 $t>0$，秩一半正定更新判据给
+
+$$
+f_{\mathcal D}(q)\le t
+\iff
+G_{\mathcal D,t}(q)\le1,
+$$
+
+$$
+\begin{aligned}
+G_{\mathcal D,t}(q)
+={}&q\langle\Xi|(tI+q\sigma_{00})^{-1}|\Xi\rangle\\
+&+(1-q)\langle\Xi|(tI+(1-q)\sigma_{11})^{-1}|\Xi\rangle.
+\end{aligned}
+\tag{173.9}
+$$
+
+事实上，$tI+B_{\mathcal D}(q)$ 正定；用其负二分之一次幂夹乘
+$tI+B_{\mathcal D}(q)-P_{u_q}$，正性恰等价于
+$\langle u_q|(tI+B_{\mathcal D}(q))^{-1}|u_q\rangle\le1$，展开即得。
+
+函数 $G_{\mathcal D,t}$ 对 $q$ 凹。将任一 $\sigma$ 谱分解，其对应项是非负权重下的函数
+$x/(t+\lambda x)$ 之和，且
+
+$$
+\frac{d^2}{dx^2}\frac{x}{t+\lambda x}
+=-\frac{2t\lambda}{(t+\lambda x)^3}\le0.
+$$
+
+因此检查固定 instrument 的整个参考最坏值，可等价地检查（173.9）的一维凹函数最大值；内部极大点满足导数为零，端点另行比较。这没有移除外层共同 instrument 的可达性约束，也不宣称任意符号参数下都已有闭式解。
+
+### 173.5 经典区分能力强制的下界及二分之一端点
+
+令接收端的两份局部边缘为
+
+$$
+\kappa_j=\operatorname{Tr}_M\xi_j,
+\qquad
+d_K=D(\kappa_0,\kappa_1)=\frac12\|\kappa_0-\kappa_1\|_1.
+$$
+
+**定理173.4（局部判别下界与极小端点）。** 有
+
+$$
+\boxed{e\ge\frac{3-d_K}{4}\ge\frac12.}
+\tag{173.10}
+$$
+
+而 $e=1/2$ 当且仅当存在同一份局部 instrument，使
+
+$$
+\boxed{\sigma_{00}=\sigma_{11}=P_\Xi.}
+\tag{173.11}
+$$
+
+此时 $\sigma_{10}=\sigma_{01}=0$。
+
+**证明。** 对等权 Bell 输入，用目标纯态的投影作检验。实际输出与目标的重叠为
+
+$$
+\frac14\sum_{j=0}^1\langle\Xi|\sigma_{jj}|\Xi\rangle
+\le\frac14\sum_j\operatorname{Tr}\sigma_{jj}.
+$$
+
+写 $E=\mathcal D_0^*(I_R)$，则 $0\preceq E\preceq I_K$，正确标签的迹之和为
+
+$$
+\operatorname{Tr}(E\kappa_0)+\operatorname{Tr}((I-E)\kappa_1)
+=1+\operatorname{Tr}[E(\kappa_0-\kappa_1)]\le1+d_K.
+$$
+
+最后一步是迹零 Hermitian 矩阵的正部迹公式，也即等先验二元判别的 Helstrom 界。目标投影检验给误差至少为一减上述重叠，得到（173.10）。
+
+若最优误差为 $1/2$，其达到者的两个数
+$\langle\Xi|\sigma_{jj}|\Xi\rangle$ 必须都等于一，因为各自至多为
+$\operatorname{Tr}\sigma_{jj}\le1$。正性于是强制
+$\sigma_{jj}=P_\Xi$，而每个输入分支总迹为一又使错误块为零。
+
+反之，若（173.11）成立，解码后的通道正是
+$X\mapsto\operatorname{diag}(X)\otimes P_\Xi$。qubit 去相干通道是
+$(\operatorname{id}+\operatorname{Ad}_Z)/2$，与恒等通道的半 diamond 距离为 $1/2$：酉通道距离至多一给上界，输入 $|+\rangle$ 达到。结合下界得到等号。证毕。
+
+### 173.6 只恢复原标签 qubit 的较强比较问题
+
+若把 $M,R$ 都从输出任务中迹掉，就得到仅从 $\kappa_0,\kappa_1$ 恢复原 qubit 的比较问题。任意原解码器诱导一份该任务的合法解码器，因此它的最优误差 $e_{\mathrm{bit}}$ 满足 $e\ge e_{\mathrm{bit}}$。
+
+**命题173.5（二元测量的调和型精确目标）。** 对 $0\preceq E\preceq I_K$ 置
+
+$$
+a_E=\operatorname{Tr}(E\kappa_0),\qquad
+b_E=\operatorname{Tr}((I-E)\kappa_1),
+\qquad \frac{a_Eb_E}{a_E+b_E}:=0\quad\text{若 }a_E+b_E=0.
+$$
+
+则
+
+$$
+\boxed{
+e\ge e_{\mathrm{bit}}
+=1-\max_{0\preceq E\preceq I_K}\frac{a_Eb_E}{a_E+b_E}
+\ge\frac{3-d_K}{4}.
+}
+\tag{173.12}
+$$
+
+**证明。** 在没有附加纯化目标时，引理173.1把解码器限制为二元 POVM 后制备对应计算基标签。固定正确率 $a,b$，定理173.3的矩阵变为
+
+$$
+C_q=\begin{pmatrix}
+q(1-a)&\sqrt{q(1-q)}\\
+\sqrt{q(1-q)}&(1-q)(1-b)
+\end{pmatrix}.
+$$
+
+其非负非对角元使最大本征值可在实非负单位向量 $(x,y)$ 上取得。置
+$u=\sqrt q\,x$、$v=\sqrt{1-q}\,y$，则 $u+v\le1$，二次型为
+$(1-a)u^2+2uv+(1-b)v^2$。所有系数非负，最大值可在
+$u+v=1$ 上取得；该边界上每个点都由 $q=u$、$x=\sqrt u$、$y=\sqrt v$ 实现。故
+
+$$
+\begin{aligned}
+\max_q\lambda_{\max}(C_q)
+&=\max_{0\le u\le1}
+\bigl[(1-a)u^2+2u(1-u)+(1-b)(1-u)^2\bigr]\\
+&=1-\frac{ab}{a+b}.
+\end{aligned}
+$$
+
+当 $a+b>0$，最大点 $u=q=b/(a+b)$；当 $a=b=0$，值恒为一。再对 POVM 优化得到等式。
+最后
+$ab/(a+b)\le(a+b)/4\le(1+d_K)/4$，给最后一个下界。证毕。
+
+例如，若有自伴酉 $W$ 交换 $\kappa_0,\kappa_1$，把 POVM 与其交换版本平均可使 $a=b$ 且保持 $a+b$。从 Helstrom 最优 POVM 出发就得到
+$a=b=(1+d_K)/2$，于是 $e_{\mathrm{bit}}=(3-d_K)/4$。一般不具备该对称性的分支不在这里被强制视为等正确率。
+
+### 173.7 共同边界约束与真实相位任务
+
+共同 instrument 是本节的实质约束。取 $K=R$、
+$\xi_0=\xi_1=P_\Xi$。分别为每个输入另选操作，可以各自把标签 $j$ 和纯化都完美输出；但同一个操作收到完全相同的状态，不能判断 $j$。实际 $d_K=0$，所以 $e\ge3/4$；保留 $\Xi$ 并输出完全混合标签达到 $3/4$。这与（173.11）的共同可实现条件不冲突，反而说明为何不能把它改成两份独立存在量词。
+
+对第170—172节的实际模型，取
+
+$$
+\xi_j(\varphi)=
+\mathfrak E\!\left(U_\varphi\Theta_L(P_j)U_\varphi^*\right),
+\qquad K=QR.
+$$
+
+第171节已给出两份输入态的精确有限启动表达式，编码确保两者的 $M$ 边缘都是 $\rho_*$。因此（173.7）—（173.9）直接给真实相位误差 $h_L(e^{2i\varphi})$ 的共同 instrument 优化；（173.10）与第172节的局部距离 $d_K(\varphi)$ 给
+
+$$
+h_L(e^{2i\varphi})\ge\frac{3-d_K(\varphi)}4.
+\tag{173.13}
+$$
+
+该下界记录原输入残余经典信息的规模，没有忽略恢复 $M$ 与档案之间纯化关系的额外义务。完整误差还受共同 instrument 的纯化输出约束，不由一个二元判别数单独决定。
+
+本节的精确归约是有限维凸优化与纯化方法在同一实际入口上的应用。二元判别、迹距离收缩和凸凹 minimax 是标准工具；这里未作原创性或 Lean 核验声明。真实相位曲线的进一步解析求值仍须求解上述共同可达集，不能从第171节的通道差异直接断言其与常值比较曲线处处不同。
+
+[^phase_binary_instrument_sion]: Maurice Sion, “On general minimax theorems,” *Pacific Journal of Mathematics* 8(1), 171–176 (1958), Theorem 3.4, [原文](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf)。本节只使用其紧凸定义域上的连续凸凹特例，原文允许相应的拟凸凹与半连续条件。
+
+## 追加锚（本行以下为增补区）
