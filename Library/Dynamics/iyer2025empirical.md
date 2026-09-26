@@ -4705,3 +4705,49 @@ Anderson–Darling 1952 原文入口返回 HTTP 200 的 1162 字节 HTML 阻断�
 两份 Nazarov 原 PDF 的字体提取警告及未使用定义的歧义保留为来源边界；
 所用条件和公式均已核对。有限检索不认证全局原创。
 本章未进入 Lean、消化或冻结链，也不声称更慢任意增长阶数、无界输出或 Shannon 端点已统一解决。
+
+## 第 113 章：同输出温度输运与任意发散的格点平滑间隙
+
+[谱边界卷第 113 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+证明原计数后验信息方差在所有 $L\to\infty$、
+$\Delta=\ln(q/Q^{11/4})-L\to\infty$ 下的全输出加权收敛。
+原有限噪声系数、实际经验中心、固定总数选择和 pair/path 范围均保留。
+第 111 章的格点归约和较弱补偿反例仍成立；新增结果补上归一化输出导数与尾部接口。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+原 Proposition 4.1 和 Remark 4.2 给 theta 导数的矩、累积量、协方差与热方程关系。
+其复参数域要求二次参数实部正定，并须避开 theta 零点除子才可取相应对数导数。
+本章只对正实格点归一化和求导，并用绝对收敛 Poisson 和直接控制前两次温度导数，
+没有假定复邻域无零点。
+这些成熟有限格点指数族恒等式不自行提供增长数组、原经验中心或条件方差商的统一误差。
+
+Denis S. Grebenkov，*Optimal and sub-optimal quadratic forms for non-centered Gaussian processes*，
+[arXiv:1307.0185v1](https://arxiv.org/abs/1307.0185v1)。
+原 Section II 的对象为有限实 Gaussian 向量、正定协方差和实对称二次型矩阵；
+行列式形式的非中心特征函数及累积量来自精确 Gaussian 积分。
+其中离散时间 Gaussian 过程仍是连续取值变量，不是整数格点分布。
+本章以这些经典积分为参考，并另证固定物理输出下的温度换元：
+坐标、噪声和扭转共同变换，快速输出相位保持不动。
+来源版本的 2013 年 6 月 30 日 arXiv 身份、PDF 所印 2018 年 11 月 12 日以及原 TeX 的自动日期各有其字面范围，
+不据排版日期改认版本。
+
+Cellarosi–Marklof [arXiv:1501.07661v2](https://arxiv.org/abs/1501.07661v2)
+与 Baker [arXiv:2103.05555v1](https://arxiv.org/abs/2103.05555v1)
+的原 theta、Poisson 与 Gauss 材料保持第 106、109 章所列适用边界。
+当前证明的实际输入是已经展开的两标记条带外界及第 111 章的格点质量比较；
+没有借用未验证的丢番图条件、随机相位不变测度或条件局部极限定理。
+Buhler–Gamst–Graham–Hales [arXiv:1710.08845v1](https://arxiv.org/abs/1710.08845v1)
+的原定理针对独立同分布、有界、固定格距的格点和，不直接覆盖本章数组。
+正文所需连续参考导数精度由实际权重累积量和中央坐标块的可积 Fourier 界逐项证明，
+不由通用超收敛结论猜测速率。
+
+正文的新增连接是归一化模的输出一、二阶导数分别带最大权重的一、二次幂，
+从而与增长迹相乘后仍有界；随后在完整条件商中保留平方项，并以同一律的适中区间和尾部支付全先验方差。
+核心联合密度导数是未加权估计，无界方差的转移另由第四矩裁剪承担。
+非大组能量与惊异保留联合关系，支付后才消去外部先验方差。
+这些条件不由文献中的单个有限 Gaussian 恒等式替代。
+
+按 theta 热关系、条件 Gaussian 累积量及 Stein／二次型温度关系作有限检索，
+未取得直接覆盖原标记格点条件方差结论的新定理；该未命中不证明文献中不存在结果。
+本章不声称全局原创、形式核验、固定间隙或更小间隙下的结论，也不把充分条件称作锐阈值。
