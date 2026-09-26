@@ -24,7 +24,9 @@ throughout the section, they state Conjecture 3.1 of arXiv:2608.10643v1:
 > zero transfer occurs between vertex v and 0, then v must be odd.
 
 Issue #10142 fixes the readings: vertices are `ZMod n`; `U(t)` is the matrix
-exponential of `-(i t) H`; zero transfer between `v` and `0` is read in both
+exponential of `-(i t) H`, taken as the frozen propagator
+`hamiltonianPropagator H t = exp (t • (-i) • H)` of
+`D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow`; zero transfer between `v` and `0` is read in both
 directions at once, which only strengthens the hypothesis; connectedness is
 that of the underlying undirected graph; "v is odd" means that the
 representative of `v` in `0, …, n − 1` is odd.
@@ -86,15 +88,19 @@ transfer from `0` exactly at `7` and `14`.
 
 The canonical source is
 `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.lean`. Its public
-declarations are `hermAdj`, `transition`, `ZeroTransfer`, `Oriented`,
-`Connected`, `claim`, and `result`. The frozen module state has statement
+declarations are `hermAdj`, `ZeroTransfer`, `Oriented`, `Connected`, `claim`,
+and `result`. The frozen module state has statement
 identity
-`sha256:f8d91094f08dc16cd9bd3fb303668f4fdde4ebe581b1d2680dfba374a89d3c7d`.
+`sha256:b2413157cffdbf007294c0de4cc3c07e53b6481a3d313928f43783a244b08f60`.
 The result declaration has statement identity
 `sha256:e4bd9bb53145e48ce490502c2175c76ada22eecee75a4091285b1e585a447c5b`.
 The Freeze event is
-`sha256:8e243d32aad0c3ed1c8d37c20eb2fab8707ea34872b995436e9da9435716c3f5`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:38759c7d2112465fd527290d5563153eae6dda19b82a3ec94e2f6e1c5315c897`
+and has one project-level frozen prerequisite, the module
+`D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow` (statement identity
+`sha256:ac6db85112e8f370397968c1e3e9584b6b0cf72c9768661d36f565e28d242cd8`),
+whose `hamiltonianPropagator` and `hamiltonianGenerator` the definitions and
+the proof use. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

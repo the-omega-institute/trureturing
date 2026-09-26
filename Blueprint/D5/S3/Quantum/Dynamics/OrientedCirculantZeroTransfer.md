@@ -16,21 +16,9 @@ $$\forall a \in \operatorname{ZMod}\left(n\right),\; \forall b \in \operatorname
 
 For a connection set C in Z_n the circulant graph has an arc from a to b when b - a lies in C. The Hermitian adjacency matrix has entry i on arcs, -i on reversed arcs and 0 elsewhere; for an oriented connection set no pair carries both.
 
-**Definition 1.2 (The transition matrix).**
+**Definition 1.2 (Zero transfer).**
 
-$$\forall t \in \mathbb{R},\; \operatorname{transition}\left(n, C, t\right) = \operatorname{NormedSpace.exp}\left(-\left(i \cdot t\right) \cdot \operatorname{hermAdj}\left(n, C\right)\right)$$
-
-*Formalization.* `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.transition` (`✓ std3`).
-
-*Citation.* Xingkun Song, Huiqiu Lin (2026). *Zero transfer on mixed graphs*. DOI: [10.48550/arXiv.2608.10643](https://doi.org/10.48550/arXiv.2608.10643). URL: <https://arxiv.org/abs/2608.10643v1>.
-
-*Commentary.*
-
-The continuous-time quantum walk at real time t is the matrix exponential U(t) = exp(-i t H).
-
-**Definition 1.3 (Zero transfer).**
-
-$$\operatorname{ZeroTransfer}\left(n, C, u, v\right) \Leftrightarrow (\forall t \in \mathbb{R},\; (0 \le t) \Rightarrow ((\operatorname{transition}\left(n, C, t\right))_{u, v} = 0))$$
+$$\operatorname{ZeroTransfer}\left(n, C, u, v\right) \Leftrightarrow (\forall t \in \mathbb{R},\; (0 \le t) \Rightarrow ((\operatorname{hamiltonianPropagator}\left(\operatorname{hermAdj}\left(n, C\right), t\right))_{u, v} = 0))$$
 
 *Formalization.* `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.ZeroTransfer` (`✓ std3`).
 
@@ -38,9 +26,9 @@ $$\operatorname{ZeroTransfer}\left(n, C, u, v\right) \Leftrightarrow (\forall t 
 
 *Commentary.*
 
-The graph has zero transfer from u to v when the (u, v) entry of U(t) vanishes at every time t >= 0.
+The continuous-time quantum walk at real time t is U(t) = exp(-i t H), the propagator hamiltonianPropagator H t = exp(t (-i) H) of the Hamiltonian flow module. The graph has zero transfer from u to v when the (u, v) entry of U(t) vanishes at every time t >= 0.
 
-**Definition 1.4 (Oriented connection sets).**
+**Definition 1.3 (Oriented connection sets).**
 
 $$\operatorname{Oriented}\left(C\right) \Leftrightarrow ((\neg 0 \in C) \land (\forall x \in C,\; \neg -x \in C))$$
 
@@ -52,7 +40,7 @@ $$\operatorname{Oriented}\left(C\right) \Leftrightarrow ((\neg 0 \in C) \land (\
 
 The connection set avoids 0 and contains no element together with its negative.
 
-**Definition 1.5 (Connectedness).**
+**Definition 1.4 (Connectedness).**
 
 $$(\forall a \in \operatorname{ZMod}\left(n\right),\; \forall b \in \operatorname{ZMod}\left(n\right),\; \operatorname{arc}\left(C, a, b\right) \Leftrightarrow (b - a \in C)) \land (\operatorname{Connected}\left(C\right) \Leftrightarrow (\operatorname{SimpleGraph.Connected}\left(\operatorname{SimpleGraph.fromRel}\left(\operatorname{arc}\left(C\right)\right)\right)))$$
 
@@ -64,7 +52,7 @@ $$(\forall a \in \operatorname{ZMod}\left(n\right),\; \forall b \in \operatornam
 
 The underlying undirected graph, which joins distinct a and b when b - a or a - b lies in C, is connected.
 
-**Definition 1.6 (The conjecture).**
+**Definition 1.5 (The conjecture).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; (\operatorname{NatMod}\left(n, 4\right) = 2) \Rightarrow (\forall C \in \operatorname{Finset}\left(\operatorname{ZMod}\left(n\right)\right),\; (\operatorname{Oriented}\left(C\right)) \Rightarrow ((\operatorname{Connected}\left(C\right)) \Rightarrow (\forall v \in \operatorname{ZMod}\left(n\right),\; ((\operatorname{ZeroTransfer}\left(n, C, v, 0\right)) \land (\operatorname{ZeroTransfer}\left(n, C, 0, v\right))) \Rightarrow (\operatorname{Odd}\left(\operatorname{ZMod.val}\left(v\right)\right))))))$$
 
@@ -76,7 +64,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; (\operatorname{NatMod}\left
 
 For every order n = 2 (mod 4), every oriented connection set with connected graph and every vertex v, zero transfer between v and 0 in both directions forces the representative of v in 0, ..., n - 1 to be odd. Reading zero transfer between v and 0 in both directions only strengthens the hypothesis.
 
-**Theorem 1.7 (The counterexample n = 30, C = {5, 6, 9, 20}, v = 2).**
+**Theorem 1.6 (The counterexample n = 30, C = {5, 6, 9, 20}, v = 2).**
 
 $$\neg claim$$
 
@@ -102,4 +90,4 @@ The set C is oriented, and 6 - 5 = 1 connects every vertex a to a + 1 through a 
 - Truth anchor: `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.claim`
 - Truth anchor: `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.hermAdj`
 - Truth anchor: `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.result`
-- Truth anchor: `D5/S3/Quantum/Dynamics/OrientedCirculantZeroTransfer.transition`
+- Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)

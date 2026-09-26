@@ -13,14 +13,13 @@ escape_witness: form (2), the public conclusion `result` itself: the vanishing o
   the degree-seven row recurrence `hrec` (from seven exact row products) and strong induction
   `hzero`, transferred by skew-symmetry `hzero'`, and carried through the exponential series `hexp`
 admission_basis: open-problem-resolution (issue #10142)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
+  (statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb) and
+  .hamiltonianGenerator (statement_id
+  sha256:4c0ebd78b0aa0a551d6207706ae2d39b87a3d18687dc8dcb29e00bd4e58a735a)
 -/
 
-import Mathlib.Analysis.Normed.Algebra.Exponential
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Topology.Instances.Matrix
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -29,13 +28,16 @@ namespace D5.S3.Quantum.Dynamics.OrientedCirculantZeroTransfer
 
 open scoped BigOperators Nat
 open Complex
+open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 
 /-!
 Song–Lin, *Zero transfer on mixed graphs*, arXiv:2608.10643v1, §3, Conjecture 3.1: for a
 (connected) oriented circulant graph `G(ℤ_n, C)` with `n ≡ 2 (mod 4)`, if zero transfer occurs
 between a vertex `v` and `0`, then `v` is odd. The Hermitian adjacency matrix has entry `i` on
-arcs `a → b` (`b - a ∈ C`), `-i` on reversed arcs and `0` elsewhere; the transition matrix is
-`U(t) = exp(-i t H)`; zero transfer from `u` to `v` means `U(t)_{u,v} = 0` for every `t ≥ 0`.
+arcs `a → b` (`b - a ∈ C`), `-i` on reversed arcs and `0` elsewhere; the transition matrix
+`U(t) = exp(-i t H)` is the propagator `hamiltonianPropagator H t = exp (t • (-i) • H)` of
+`D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow`; zero transfer from `u` to `v` means
+`U(t)_{u,v} = 0` for every `t ≥ 0`.
 For `n = 30`, `C = {5, 6, 9, 20}` and `v = 2`, every power of `H` has vanishing `(0, 2)` and
 `(2, 0)` entries, so zero transfer occurs between `0` and the even vertex `2`.
 -/
@@ -45,14 +47,10 @@ For `n = 30`, `C = {5, 6, 9, 20}` and `v = 2`, every power of `H` has vanishing 
 def hermAdj (n : ℕ) (C : Finset (ZMod n)) : Matrix (ZMod n) (ZMod n) ℂ :=
   Matrix.of fun a b => if b - a ∈ C then I else if a - b ∈ C then -I else 0
 
-/-- The transition matrix `U(t) = exp(-i t H)` of the continuous-time quantum walk. -/
-noncomputable def transition (n : ℕ) [NeZero n] (C : Finset (ZMod n)) (t : ℝ) :
-    Matrix (ZMod n) (ZMod n) ℂ :=
-  NormedSpace.exp (-(I * (t : ℂ)) • hermAdj n C)
-
-/-- Zero transfer from `u` to `v`: `U(t)_{u,v} = 0` for every time `t ≥ 0`. -/
+/-- Zero transfer from `u` to `v`: the entry `U(t)_{u,v}` of the transition matrix
+`U(t) = exp(-i t H)` vanishes for every time `t ≥ 0`. -/
 def ZeroTransfer (n : ℕ) [NeZero n] (C : Finset (ZMod n)) (u v : ZMod n) : Prop :=
-  ∀ t : ℝ, 0 ≤ t → transition n C t u v = 0
+  ∀ t : ℝ, 0 ≤ t → hamiltonianPropagator (hermAdj n C) t u v = 0
 
 /-- The connection set lies in `ℤ_n ∖ {0}` and is disjoint from its negation. -/
 def Oriented {n : ℕ} (C : Finset (ZMod n)) : Prop :=
@@ -213,9 +211,16 @@ theorem result : ¬ claim := by
     refine ⟨fun u v => ?_⟩
     rw [← ZMod.natCast_zmod_val u, ← ZMod.natCast_zmod_val v]
     exact (reach u.val).symm.trans (reach v.val)
+  have hU : ∀ (t : ℝ) (a b : ZMod 30), (∀ k : ℕ, (S ^ k) a b = 0) →
+      hamiltonianPropagator (hermAdj 30 C) t a b = 0 := by
+    intro t a b hab
+    have e : t • hamiltonianGenerator (hermAdj 30 C) = ((t : ℂ) * (-I)) • hermAdj 30 C := by
+      rw [hamiltonianGenerator, ← smul_smul, Complex.coe_smul]
+    show NormedSpace.exp (t • hamiltonianGenerator (hermAdj 30 C)) a b = 0
+    rw [e]
+    exact hexp _ a b fun k => hpow _ k a b (hab k)
   have hzt : ZeroTransfer 30 C 2 0 ∧ ZeroTransfer 30 C 0 2 :=
-    ⟨fun t _ => hexp _ 2 0 fun k => hpow _ k 2 0 (hzero' k),
-      fun t _ => hexp _ 0 2 fun k => hpow _ k 0 2 (hzero k)⟩
+    ⟨fun t _ => hU t 2 0 hzero', fun t _ => hU t 0 2 hzero⟩
   have hodd := h 30 (by norm_num) C hor hcon 2 hzt
   exact absurd hodd (by decide)
 

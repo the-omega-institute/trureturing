@@ -18,11 +18,8 @@ internal sealed class OrientedCirculantZeroTransferDocument : IScribeDocumentDef
             Node("hermitian-adjacency", "The Hermitian adjacency matrix", HermAdjFormula(),
                 "For a connection set C in Z_n the circulant graph has an arc from a to b when b - a lies in C. The Hermitian adjacency matrix has entry i on arcs, -i on reversed arcs and 0 elsewhere; for an oriented connection set no pair carries both.",
                 "hermAdj", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("transition", "The transition matrix", TransitionFormula(),
-                "The continuous-time quantum walk at real time t is the matrix exponential U(t) = exp(-i t H).",
-                "transition", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("zero-transfer", "Zero transfer", ZeroTransferFormula(),
-                "The graph has zero transfer from u to v when the (u, v) entry of U(t) vanishes at every time t >= 0.",
+                "The continuous-time quantum walk at real time t is U(t) = exp(-i t H), the propagator hamiltonianPropagator H t = exp(t (-i) H) of the Hamiltonian flow module. The graph has zero transfer from u to v when the (u, v) entry of U(t) vanishes at every time t >= 0.",
                 "ZeroTransfer", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("oriented", "Oriented connection sets", OrientedFormula(),
                 "The connection set avoids 0 and contains no element together with its negative.",
@@ -73,8 +70,6 @@ internal sealed class OrientedCirculantZeroTransferDocument : IScribeDocumentDef
         new Formula.Relation(left, FormulaRelationOperator.MemberOf, right);
     private static Formula Subtract(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
-    private static Formula Times(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.And, Parenthesized(right));
     private static Formula Implies(Formula left, Formula right) =>
@@ -96,18 +91,12 @@ internal sealed class OrientedCirculantZeroTransferDocument : IScribeDocumentDef
             Equal(Entry(Call("hermAdj", n, c), a, b), value))));
     }
 
-    private static Formula TransitionFormula()
-    {
-        Formula n = F.Id("n"), c = F.Id("C"), t = F.Id("t"), i = F.Id("i");
-        return Disp(All("t", Reals(), Equal(Call("transition", n, c, t),
-            Call("NormedSpace.exp", Times(new Formula.Negate(Times(i, t)), Call("hermAdj", n, c))))));
-    }
-
     private static Formula ZeroTransferFormula()
     {
         Formula n = F.Id("n"), c = F.Id("C"), t = F.Id("t"), u = F.Id("u"), v = F.Id("v");
         return Disp(Iff(Call("ZeroTransfer", n, c, u, v), All("t", Reals(),
-            Implies(AtMost(D(0), t), Equal(Entry(Call("transition", n, c, t), u, v), D(0))))));
+            Implies(AtMost(D(0), t),
+                Equal(Entry(Call("hamiltonianPropagator", Call("hermAdj", n, c), t), u, v), D(0))))));
     }
 
     private static Formula OrientedFormula()
