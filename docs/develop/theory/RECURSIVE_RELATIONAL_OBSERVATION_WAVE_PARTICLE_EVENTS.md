@@ -5249,3 +5249,569 @@ $$
 这里没有得到全量子失效半径的精确值，也没有给出严格间隔的显式正数、端点共同预算的数值或成本发散的匹配上界。结论限定于固定有限完整记忆和齐次重复，不推广到任意切换控制；第 70 节的共同后继证书仍承担那一类问题。全部新增为理论正文，未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 82. 近似暗态可以在同一完整接口内修成精确暗态
+
+本批接续第 78—81 节。先控制一次合法仪器修改所需的完整通道距离，再把它接到有限占据态，得到实际等待成本关于失效距离的定量上界。此前的严格半径分离、共同有限性与倒数下界均保留；这里仍不决定第 73 节显式失效仪器是否全局最优。
+
+本节先允许任意非零有限维活动空间 $\mathcal H$。记录空间为两个正交标签“未点击、点击”，完整输出为 $\mathcal K=\mathbb C^2\otimes\mathcal H$。仪器 $\Gamma=(\mathcal N,\mathcal C)$ 完全正且完整保迹，输出已在记录基中分块。对指定单位向量 $\psi\in\mathcal H$，记
+
+$$
+P=|\psi\rangle\langle\psi|,\qquad
+y=|\varnothing\rangle\otimes|\psi\rangle,
+\qquad
+\alpha=\langle y|\Gamma(P)|y\rangle
+=\operatorname{Tr}[P\mathcal N(P)],
+\qquad
+\varepsilon=1-\alpha.
+$$
+
+$\varepsilon$ 同时计入点击概率及未点击后离开指定纯态的部分；它一般不等于单独的点击概率。
+
+**定理 82.1（保留完整接口的纯暗态修复）。** 存在同输入、同记录及同量子输出空间的完整仪器 $\widetilde\Gamma=(\widetilde{\mathcal N},\widetilde{\mathcal C})$，满足
+
+$$
+\boxed{
+\widetilde{\mathcal N}(P)=P,\qquad
+\widetilde{\mathcal C}(P)=0,\qquad
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond
+\le\sqrt{\varepsilon}.
+} \tag{82.1}
+$$
+
+这是一个通道存在与距离定理。它不宣称不知道 $\Gamma$ 或 $\psi$ 时，单靠一次读数即可实施修复。
+
+证明。取有限 Stinespring 等距
+
+$$
+V:\mathcal H\longrightarrow\mathcal K\otimes\mathcal E,\qquad
+\Gamma(X)=\operatorname{Tr}_{\mathcal E}(VXV^\dagger),
+\qquad v=V\psi.
+$$
+
+标准等距表示见 Watrous《The Theory of Quantum Information》[推论 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf#page=97)。设
+
+$$
+\Pi_y=|y\rangle\langle y|\otimes I_{\mathcal E},
+\qquad \|\Pi_yv\|^2=\alpha.
+$$
+
+若 $\alpha=1$，输出 $\Gamma(P)$ 已完全支撑于一维空间 $\mathbb Cy$，故等于 $|y\rangle\langle y|$，直接取 $\widetilde\Gamma=\Gamma$。
+
+若 $0<\alpha<1$，令 $w=\Pi_yv/\sqrt\alpha$；若 $\alpha=0$，在 $\mathbb Cy\otimes\mathcal E$ 中任选单位向量 $w$。两种情形均有
+
+$$
+w=y\otimes e,\qquad
+\langle v,w\rangle=\sqrt\alpha,
+\qquad
+\theta=\arccos\sqrt\alpha\in(0,\pi/2].
+$$
+
+在 $v,w$ 张成的复二维平面中，令
+
+$$
+u=\frac{w-\cos\theta\,v}{\sin\theta}.
+$$
+
+于是 $v,u$ 正交归一，且 $w=\cos\theta\,v+\sin\theta\,u$。定义酉算子 $U$：
+
+$$
+Uv=\cos\theta\,v+\sin\theta\,u,\qquad
+Uu=-\sin\theta\,v+\cos\theta\,u,
+$$
+
+并在该平面的正交补上取恒等。它满足 $Uv=w$，以及整个联合空间上的算子不等式
+
+$$
+\frac{U+U^\dagger}{2}\ge\cos\theta\,I
+=\sqrt\alpha\,I. \tag{82.2}
+$$
+
+令 $V'=UV$，并先构造通道 $\Xi(X)=\operatorname{Tr}_{\mathcal E}(V'XV'^\dagger)$。它在输入 $P$ 上输出 $|y\rangle\langle y|$，但对其他输入未必已经在记录基中分块。以 $\mathcal P$ 表示实际记录空间上的去相干通道，置
+
+$$
+\widetilde\Gamma=\mathcal P\circ\Xi.
+$$
+
+这样所得通道重新具有两个 CP 记录分支，且 $P$ 的目标输出不变。因为 $\Gamma$ 原先已经是记录分块通道，$\mathcal P\circ\Gamma=\Gamma$。
+
+下面控制包含任意有限参考系统的完整距离。对任意纯联合输入 $\zeta\in\mathcal R\otimes\mathcal H$，设 $z=(I_{\mathcal R}\otimes V)\zeta$。式 (82.2) 给
+
+$$
+\operatorname{Re}\langle z|(I_{\mathcal R}\otimes U)z\rangle
+\ge\sqrt\alpha.
+$$
+
+两个归一化纯态的半迹距离因而满足
+
+$$
+\begin{aligned}
+D\!\left(
+|z\rangle\langle z|,
+(I_{\mathcal R}\otimes U)|z\rangle\langle z|
+(I_{\mathcal R}\otimes U^\dagger)
+\right)
+&=\sqrt{1-\left|\langle z|(I_{\mathcal R}\otimes U)z\rangle\right|^2}\\
+&\le\sqrt{1-\alpha}.
+\end{aligned}
+$$
+
+偏迹及记录去相干都是 CPTP 映射，不增加此距离。混合联合输入由凸性包含；通道差的纯联合输入表征见第 73 节所引 Watrous 定理 3.51。因此得到式 (82.1) 的完整 half-diamond 界。$\square$
+
+证明中的环境是同一次调用的等距表示，并非新增的持久活动记忆。按同一个修复仪器逐轮重复时，从 $P$ 出发每轮仍为 $P$ 且始终未点击；不需要把环境指标变成观察者记录。
+
+**推论 82.2（可校准模型中的纯态返回缺陷下界）。** 回到第 78 节的二维名义仪器 $\Gamma_0$，记其真实失效半径为 $R=\mathfrak r_{\mathrm{fail}}$。若 $\delta(\Gamma)\le u<R$，则对每个纯态 $P$，
+
+$$
+\boxed{
+1-\operatorname{Tr}[P\mathcal N_\Gamma(P)]
+\ge(R-u)^2.
+} \tag{82.3}
+$$
+
+证明。定理 82.1 给一个同接口失效仪器 $\widetilde\Gamma$，其与 $\Gamma$ 的距离至多为返回缺陷的平方根。由失效半径定义及三角不等式，
+
+$$
+R\le\delta(\widetilde\Gamma)
+\le u+\sqrt{1-\operatorname{Tr}[P\mathcal N_\Gamma(P)]}.
+$$
+
+因为 $R-u>0$，移项并平方即得。$\square$
+
+## 83. 有限占据态把修复距离变成二次成本上界
+
+本节固定第 78 节的完整二维接口、同一个名义仪器 $\Gamma_0$，以及第 80.1 条的 $\mathscr K(u)$。各实际装置在所有未点击轮次重复自身同一仪器；仍把永不点击轨迹的实际调用成本取为无穷。
+
+**定理 83.1（由真实失效间隔控制全校准球成本）。** 设 $R=\mathfrak r_{\mathrm{fail}}$。对每个 $0\le u<R$，令 $\Delta=R-u>0$。则
+
+$$
+\boxed{
+\frac{R}{R-u}
+\le\mathscr K(u)
+\le
+\frac{1+2(R-u)^2}{(1-u)(R-u)^2}.
+} \tag{83.1}
+$$
+
+特别地，接近真实失效半径时，已知的成本下界为倒数阶、上界至多为二次倒数阶；本条不认定其中任一指数就是精确发散阶。
+
+证明。左侧是第 80.4 条。对右侧，任取 $\Gamma\in\mathfrak B_u$、初态 $\rho$ 与有限 $n\ge1$。定义
+
+$$
+\rho_j=\mathcal N^j(\rho),\qquad
+s_j=\operatorname{Tr}\rho_j,\qquad
+\mu_n=\sum_{j=0}^{n-1}s_j
+=\mathbb E_\rho^\Gamma\min(\mathsf N,n),
+\qquad
+\sigma_n=\frac1{\mu_n}\sum_{j=0}^{n-1}\rho_j.
+$$
+
+无须假定最终点击或完整均值有限，就有 $1\le\mu_n\le n$，且 $\sigma_n$ 是密度矩阵。第 76.1 条的望远镜等式给
+
+$$
+\mathcal N(\sigma_n)-\sigma_n
+=\frac{\rho_n-\rho}{\mu_n},\qquad
+q_n:=\operatorname{Tr}\mathcal C(\sigma_n)
+=\frac{1-s_n}{\mu_n}\le\frac1{\mu_n}. \tag{83.2}
+$$
+
+置 $E=\mathcal C^*(I)$。名义仪器对 $P_0$ 必点击，所以完整校准保证
+
+$$
+\operatorname{Tr}E\ge\langle0|E|0\rangle\ge1-u. \tag{83.3}
+$$
+
+在二维空间写
+
+$$
+\sigma_n=(1-t)P+tP^\perp,\qquad
+0\le t\le\frac12,
+$$
+
+其中 $P$ 是最大本征值对应的秩一投影；当 $\sigma_n=I/2$ 时任选一个这样的投影。由 $\sigma_n\ge tI$、式 (83.2)—(83.3)，
+
+$$
+t(1-u)\le t\operatorname{Tr}E
+\le q_n\le\frac1{\mu_n}. \tag{83.4}
+$$
+
+记
+
+$$
+\varepsilon=1-\operatorname{Tr}[P\mathcal N(P)],\qquad
+\beta=\operatorname{Tr}[P\mathcal N(P^\perp)],
+\qquad
+e_P=\operatorname{Tr}(EP),\quad
+e_\perp=\operatorname{Tr}(EP^\perp).
+$$
+
+因为 $0\le P\le I$，未点击分支迹不增且与点击分支完整互补，故
+
+$$
+e_P\le\varepsilon,\qquad
+\beta\le1-e_\perp
+\le u+e_P\le u+\varepsilon. \tag{83.5}
+$$
+
+其中中间一步使用 $e_P+e_\perp=\operatorname{Tr}E\ge1-u$。另一方面，在式 (83.2) 的第一个等式上检验 $P$，得到
+
+$$
+-(1-t)\varepsilon+t\beta
+=\frac{\operatorname{Tr}(P\rho_n)-\operatorname{Tr}(P\rho)}{\mu_n}
+\ge-\frac1{\mu_n}.
+$$
+
+结合式 (83.5)，即
+
+$$
+(1-2t)\varepsilon\le tu+\frac1{\mu_n}. \tag{83.6}
+$$
+
+推论 82.2 对这个依赖于 $n,\Gamma,\rho$ 的纯态 $P$ 同样成立，给 $\varepsilon\ge\Delta^2$。由于 $1-2t\ge0$，式 (83.6) 于是推出
+
+$$
+\begin{aligned}
+\Delta^2
+&\le t(u+2\Delta^2)+\frac1{\mu_n}\\
+&\le\frac{u+2\Delta^2}{(1-u)\mu_n}
++\frac1{\mu_n}\\
+&=\frac{1+2\Delta^2}{(1-u)\mu_n}.
+\end{aligned}
+$$
+
+这里 $1-u>0$，因为第 79.2 条已给 $u<R\le c_*<1$。得到对全部有限 $\mu_n$ 同时成立的上界。最后用单调收敛得到完整均值上界，再对同一个校准球的装置及来源取上确界。整个证明没有预先调用一个可能发散的无限预解算子。$\square$
+
+**推论 83.2（用已证明的失效下界生成预算）。** 若掌握一个正数 $R_0\le R$，则对 $0\le u<R_0$，
+
+$$
+\boxed{
+\mathscr K(u)\le
+\frac{1+2(R_0-u)^2}{(1-u)(R_0-u)^2}.
+} \tag{83.7}
+$$
+
+证明。函数 $x\mapsto2+x^{-2}$ 在 $x>0$ 上递减，而 $R-u\ge R_0-u>0$，代入式 (83.1)。$\square$
+
+因此定量使用这个结果需要真实失效半径的下界。不能把第 73 节的候选上界 $c_*$ 当成 $R_0$；那会把成本上界的方向用反。对 $u<4/5$，还可以与第 76.2、76.3 条已有上界取最小值，因为它们同时约束同一批装置与来源。
+
+**推论 83.3（端点成本由严格间隔定量控制）。** 写 $g=R-4/5>0$，则
+
+$$
+\boxed{\mathscr K(4/5)\le10+\frac5{g^2}.} \tag{83.8}
+$$
+
+证明。在式 (83.1) 取 $u=4/5$、$\Delta=g$。$\square$
+
+这个公式给出了端点预算与严格间隔的明确关系。本式本身未给出 $g$ 的数值下界；第 85 节将补上一个可用的有理下界。
+
+## 84. 修好指定纯态，与找到最近失效仪器，是不同优化
+
+定理 82.1 的平方根来自同一个耦合对全部输入的作用。下面用一族原先都会终止的仪器，检验这个平方根能否统一改成线性，同时说明这不决定第 83 节成本发散的精确指数。
+
+**定义 84.1（指定暗态修复距离与自由失效距离）。** 固定纯态 $P$。在同一完整接口上定义
+
+$$
+d_P(\Gamma)=
+\inf_{\widetilde\Gamma:\,\widetilde{\mathcal N}(P)=P}
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond,
+\qquad
+d_{\mathrm{fail}}(\Gamma)=
+\inf_{\widetilde\Gamma\in\mathfrak F}
+\frac12\|\widetilde\Gamma-\Gamma\|_\diamond.
+$$
+
+前者要求把指定 $P$ 变成暗态；后者允许任何来源产生永久未点击。故总有 $d_{\mathrm{fail}}(\Gamma)\le d_P(\Gamma)$。本节的 $\Gamma$ 随参数变化，$d_{\mathrm{fail}}(\Gamma)$ 不等同于固定 $\Gamma_0$ 的半径 $R$。
+
+**定理 84.2（在原先会终止的仪器上，指定修复仍需要平方根尺度）。** 对 $0<\theta<1/2$，置 $\kappa=\theta^4$，
+
+$$
+U_\theta=
+\begin{pmatrix}
+\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta
+\end{pmatrix},\qquad
+Q_\theta=\sqrt{1-\kappa}\,U_\theta,\qquad
+L_\theta=\sqrt\kappa\,I,
+$$
+
+并以它们定义两个记录分支的完整仪器 $\Gamma_\theta$。令 $P=P_0$ 以及
+
+$$
+\varepsilon_\theta
+=1-\operatorname{Tr}[P_0\mathcal N_\theta(P_0)]
+=\kappa+(1-\kappa)\sin^2\theta.
+$$
+
+则每个初态的首次点击时间都是成功参数为 $\kappa$ 的几何分布，均值为 $1/\kappa$，而
+
+$$
+\boxed{
+\frac{\sqrt{\kappa^2+4(1-\kappa)\sin^2\theta}+\kappa}{2}
+\le d_{P_0}(\Gamma_\theta)
+\le\sqrt{\varepsilon_\theta}.
+} \tag{84.1}
+$$
+
+因此
+
+$$
+\boxed{
+\lim_{\theta\downarrow0}
+\frac{d_{P_0}(\Gamma_\theta)}{\sqrt{\varepsilon_\theta}}=1.
+} \tag{84.2}
+$$
+
+证明。完整性由 $Q_\theta^\dagger Q_\theta+L_\theta^\dagger L_\theta=I$ 成立。未点击映射每次将迹乘以 $1-\kappa$，所以全部来源具有上述几何等待律。
+
+任一把 $P_0$ 修成纯暗态的完整仪器，在该输入上的输出必为未点击块中的 $P_0$，点击块为零。原仪器对应输出则为未点击块 $(1-\kappa)P_{\theta}$ 与点击块 $\kappa P_0$，其中 $P_{\theta}=U_\theta P_0U_\theta^\dagger$。两完整输出的半迹距离为
+
+$$
+\frac12\left(\|P_0-(1-\kappa)P_\theta\|_1+\kappa\right)
+=
+\frac{\sqrt{\kappa^2+4(1-\kappa)\sin^2\theta}+\kappa}{2}.
+$$
+
+这里使用第 73.1 式的两个未归一化纯态之差公式。单个输入上的距离是完整 diamond 距离的下界，得到式 (84.1) 左侧；右侧为定理 82.1。
+
+当 $\theta\downarrow0$，有 $\kappa=\theta^4$、$\sin\theta\sim\theta$。式 (84.1) 两端均与 $\theta$ 渐近等价，且 $\sqrt{\varepsilon_\theta}\sim\theta$，夹逼得到式 (84.2)。$\square$
+
+所以即使限定为原先会终止的仪器，也不存在常数 $C<\infty$ 与指数 $p>1/2$，使所有这类指定修复都满足 $d_P(\Gamma)\le C\varepsilon^p$。特别地，统一线性缺陷界不成立。
+
+**命题 84.3（同一族的自由失效距离却恰为点击率）。** 对上述同一仪器族，
+
+$$
+\boxed{
+d_{\mathrm{fail}}(\Gamma_\theta)=\kappa=\theta^4,
+\qquad
+\frac{d_{\mathrm{fail}}(\Gamma_\theta)}
+{d_{P_0}(\Gamma_\theta)}
+\longrightarrow0.
+} \tag{84.3}
+$$
+
+证明。将点击分支置零，把未点击分支改为 $\rho\mapsto U_\theta\rho U_\theta^\dagger$，得到一个同接口的恒不点击仪器。对任意带参考的输入，两个记录块的差分别为迹范数 $\kappa$ 的负、正算子，所以完整半 diamond 距离恰为 $\kappa$，给上界。
+
+反向，任一同接口失效仪器都由第 79.1 条的固定态判据给出未点击固定密度矩阵 $\sigma$。它在该输入上的点击概率为零，而 $\Gamma_\theta$ 对任何输入的点击概率均为 $\kappa$。读取点击标签便有概率差 $\kappa$，所以完整距离至少为 $\kappa$。第一式成立，第二式结合定理 84.2 即得。$\square$
+
+因此，指定纯态修复的平方根尺度已经达到最优，也不能据此宣布第 83.1 条的二次成本上界达到最优。两者优化的是不同对象：修好一个预先指定的关系，与寻找所有可能失效关系中最近的一份。
+
+## 85. 一个显式有理间隔使旧端点具有数值预算
+
+第 78 节在单个暗态上饱和检验时排除了距离 $4/5$。现在保留同一个检验的非对角项，并给出有限误差余量，从而把严格间隔变成明确的有理数下界。本节始终使用第 78 节的同一二维完整仪器类。
+
+**引理 85.1（纯暗态失效必须满足的二阶余量）。** 设实际失效仪器的完整距离为 $\delta<1$，取其纯未点击固定态 $P_\psi$，并如第 78 节消去计算基相位。记
+
+$$
+a=|\langle0|\psi\rangle|^2,\quad b=1-a,\quad
+r=\sqrt{ab},\quad
+s=\sqrt{a^2+4b^2},\quad
+f(a)=\frac{a+s}{2}.
+$$
+
+此时 $0<a<1$、$\delta\ge a$、$\delta\ge f(a)$，并且
+
+$$
+\boxed{
+\frac{ab}{4s^2}
+\left[3a-2+s-2\sqrt{b(\delta-a)}\right]_+^2
+\le2\delta\bigl(\delta-f(a)\bigr).
+} \tag{85.1}
+$$
+
+证明。第 71.2 条的固定态构造及秩分类保证 $\delta<1$ 的失效必有纯固定态。若 $a=0$ 或 $a=1$，同条下界给 $f(a)=1$，故不可能。第 78.1 条给
+
+$$
+\mathcal N(|\psi\rangle\langle\eta|)
+=d|\psi\rangle\langle\eta|,
+\qquad
+|d|^2\le\frac{\delta-a}{b},
+$$
+
+其中 $\eta=-\sqrt b\,|0\rangle+\sqrt a\,|1\rangle$；右侧非负也给 $\delta\ge a$。
+
+现在置
+
+$$
+D=P_\psi-bP_0,\qquad
+S=\operatorname{sign}D=\frac{2D-aI}{s},
+\qquad
+Z=\operatorname{diag}_{\mathrm{record}}(S,-I),
+\qquad
+M=\frac12(\Gamma^*-\Gamma_0^*)(Z).
+$$
+
+仍有 $-\delta I\le M\le\delta I$，且
+
+$$
+\langle\psi|M|\psi\rangle=f(a),\qquad
+\langle\eta|M|\psi\rangle
+=\frac{r}{2s}\bigl(2bd-3a+2-s\bigr). \tag{85.2}
+$$
+
+为核对第二式，直接使用
+
+$$
+\langle\eta|S|\psi\rangle=\frac{2br}{s},\qquad
+\langle0|S|0\rangle=\frac{3a-2}{s},
+$$
+
+以及 $\mathcal N_0(|\psi\rangle\langle\eta|)=rP_0$、
+$\mathcal C_0(|\psi\rangle\langle\eta|)=-rP_0$ 即得。由 $\operatorname{Re}d\le|d|\le\sqrt{(\delta-a)/b}$，若方括号中的实数为正，则
+
+$$
+|\langle\eta|M|\psi\rangle|
+\ge\frac r{2s}
+\left(3a-2+s-2\sqrt{b(\delta-a)}\right).
+$$
+
+若该实数非正，使用零下界。因此左侧平方至少为式 (85.1) 左端。
+
+另一方面，正算子 $\delta I-M$ 的二维主子式非负，所以
+
+$$
+\begin{aligned}
+|\langle\eta|M|\psi\rangle|^2
+&\le(\delta-f(a))
+\bigl(\delta-\langle\eta|M|\eta\rangle\bigr)\\
+&\le2\delta(\delta-f(a)).
+\end{aligned}
+$$
+
+两式合并。$\square$
+
+**定理 85.2（实际失效半径的显式严格改进）。** 对同一个名义仪器，
+
+$$
+\boxed{
+R=\mathfrak r_{\mathrm{fail}}>
+\frac{1601}{2000}
+=\frac45+\frac1{2000}.
+} \tag{85.3}
+$$
+
+证明。置 $\delta_0=1601/2000$，假设存在实际失效仪器满足 $\delta\le\delta_0$。其纯固定态参数满足 $f(a)\le\delta_0$，且恒等式
+
+$$
+f(a)-\frac45
+=\frac{2(a-3/5)^2}{s+8/5-a} \tag{85.4}
+$$
+
+成立。先在 $0\le a\le1$ 上使用 $s\le2$，得到分母至多 $18/5$，从而 $|a-3/5|\le3/100$。因此 $57/100\le a\le63/100$。
+
+在这一区间，$s^2=5a^2-8a+4$ 递减，故 $s<26/25$。再次使用式 (85.4)，
+
+$$
+\left(a-\frac35\right)^2
+<\frac{207}{400000}
+<\left(\frac{23}{1000}\right)^2.
+$$
+
+于是
+
+$$
+\frac{577}{1000}<a<\frac{623}{1000},\qquad
+r>\frac{12}{25},\qquad
+\frac{97}{100}<s<\frac{103}{100}. \tag{85.5}
+$$
+
+后面三个有理估计可分别检验 $a(1-a)$ 与 $5a^2-8a+4$ 的端点值；两者在这个位于 $a>1/2$、$a<4/5$ 的区间上递减。
+
+定义
+
+$$
+B_0(a)=3a-2+s-2\sqrt{(1-a)(\delta_0-a)}.
+$$
+
+在式 (85.5) 区间内，根号严格为正，且
+
+$$
+B_0'(a)
+=3+\frac{5a-4}{s}
++\frac{1+\delta_0-2a}{\sqrt{(1-a)(\delta_0-a)}}
+>\frac95.
+$$
+
+确实，最后一项为正；用式 (85.5) 可得 $(5a-4)/s>-6/5$。故 $B_0$ 递增。在下端点处，
+
+$$
+s\!\left(\frac{577}{1000}\right)>\frac{128}{125},
+\qquad
+\sqrt{\left(1-\frac{577}{1000}\right)
+\left(\delta_0-\frac{577}{1000}\right)}
+<\frac{77}{250}.
+$$
+
+所以
+
+$$
+B_0(a)>
+-\frac{269}{1000}
++\frac{1024}{1000}
+-\frac{616}{1000}
+=\frac{139}{1000}.
+$$
+
+因为 $\delta\le\delta_0$，以 $\delta$ 代替 $\delta_0$ 只会使这个方括号增大。因此式 (85.2) 的非对角项满足
+
+$$
+|\langle\eta|M|\psi\rangle|
+>\frac{24}{103}\frac{139}{1000}
+>\frac3{100}. \tag{85.6}
+$$
+
+但同一正算子主子式又给
+
+$$
+|\langle\eta|M|\psi\rangle|^2
+\le2\delta_0\left(\delta_0-\frac45\right)
+=\frac{1601}{2000000}
+<\frac9{10000},
+$$
+
+与式 (85.6) 矛盾。因此没有距离至多 $\delta_0$ 的失效仪器。第 79.1 条已经证明最小失效距离取得，故其最小值也严格大于 $\delta_0$，得到结论。$\square$
+
+**推论 85.3（旧端点的明确全状态调用预算）。** 对每个完整距离至多 $4/5$ 的同接口齐次仪器，以及每个初态，
+
+$$
+\boxed{
+\mathbb E_\rho^\Gamma\mathsf N
+\le\mathscr K(4/5)
+<20\,000\,010.
+} \tag{85.7}
+$$
+
+更一般地，对所有 $0\le u<1601/2000$，可以在式 (83.7) 中使用 $R_0=1601/2000$，得到只含已给定数值的统一预算。
+
+证明。由定理 85.2，式 (83.8) 中 $g>1/2000$。于是
+
+$$
+\mathscr K(4/5)
+\le10+\frac5{g^2}
+<10+5\cdot2000^2.
+$$
+
+一般结论直接由推论 83.2。$\square$
+
+这个上界非常保守，只保证所声明的实际调用轮数有限，不声称接近最优，也不把调用数换成未经标定的物理秒。在更外侧的端点 $u=1601/2000$，第 80.2 条仍给共同有限成本，但这里使用的数值公式尚未给该新端点的有限数值；不能把它的分母置零后仍当成预算。
+
+## 86. 从接近暗态到等待成本的定量关系
+
+**结论 86.1（修复、间隔与成本的同一推导链）。** 对固定二维名义仪器，第 82—83 节建立
+
+$$
+\boxed{
+\text{某纯态返回缺陷很小}
+\ \Longrightarrow\
+\text{附近存在同接口精确暗态仪器}
+\ \Longrightarrow\
+\text{距失效仍有正间隔时，占据成本不能任意大}.
+}
+$$
+
+其中第一步允许任意有限活动维数，最后的具体成本常数使用二维占据态的谱分解、名义点击校准与齐次重复。不能删除这些条件再引用式 (83.1)。
+
+**来源与边界 86.2。** Stinespring 等距、纯态迹距离公式、CPTP 收缩性及纯联合输入的 diamond 表征是成熟工具，沿用 Watrous 定理 2.22、推论 2.27 与定理 3.51 的上述定位。本批把一个指定输入的目标输出通过联合空间的平面旋转精确实现，再对所有参考输入统一控制；有限占据态来自第 76 节，真实失效半径与成本下界来自第 79—80 节。新增内容是这些关系之间的纸面构造、定量估计与同族区分例，不主张文献原创性。
+
+当前已经有成本发散的倒数下界和二次倒数上界，尚未证明其精确指数；第 84 节的最优平方根也不补上这一缺口。第 85 节已经给出 $g>1/2000$ 及旧端点的明确有限预算；真实失效半径的精确值与最坏成本的精确发散阶仍未取得。全部新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
