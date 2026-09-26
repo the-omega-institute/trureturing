@@ -524,3 +524,386 @@ https://www.lmfdb.org/knowledge/show/ec.canonical_height .
 The Gram determinant is derived here; no regulator value is taken from
 a table or from a rank computation. These are ordinary proofs, with no
 Lean kernel certification, independent-model review or priority claim.
+
+## GNT. Golden normalization, point blow-ups and marked topology
+
+This continuation uses the SAME actual integers and order as GIR. Its
+arithmetic scheme, its real tori, its old Fibonacci mapping torus, and its
+complex comparison curve are distinct constructions. They are connected
+below by computed modules and maps. An abstract ring is not itself a
+geometric circle. No new WSS prime or prime-family decision is asserted.
+
+### GNT.0 Objects and the prior result retained
+
+Fix j>=1 and abbreviate B=B_j=L_(3^j)^2+3, theta=cuberoot(B)>0,
+k=Q(theta), O=O_k and A=Z+Z theta+Z(1+theta+theta^2)/3. GIR proves that
+A is an order, B is a noncube, and I=[O:A]=B/R, where
+R=product_(p|B,3 not dividing h_p) p. Every p|B exceeds five, and its
+exponent h_p=v_p(B) is the ORIGINAL Fibonacci initial depth. In particular
+h_p>=2 is the original WSS condition, with no index-multiplier square.
+Put D=O/A. The aim below is to compute more than its already-known order I.
+
+For p|B set h=h_p, u=B/p^h in Z_p^times, S=A tensor Z_p and T=O tensor Z_p.
+Since three is a unit here,
+
+$$S=\mathbb Z_p[\theta]\simeq\mathbb Z_p[t]/(t^3-p^h u).\tag{GNT0}$$
+
+The completed algebra can have more than one generic component. T is its
+normalization in the full finite etale Q_p-algebra, not necessarily a
+single local field. Write h=3a+r, r in {0,1,2}. Cyclic groups of order
+p^0, or of order one, mean the zero group throughout this section.
+
+### GNT.1 Exact normalization modules and the arithmetic singular locus
+
+**Theorem GNT1.** The normalization defect is
+
+$$\boxed{D\otimes\mathbb Z_p\simeq
+\mathbb Z/p^{\lfloor h/3\rfloor}\ \oplus
+\mathbb Z/p^{\lfloor2h/3\rfloor}.}\tag{GNT1}$$
+
+Its Z_p-length is
+
+$$\delta_p=\lfloor h/3\rfloor+\lfloor2h/3\rfloor
+=h+(\gcd(3,h)-3)/2.\tag{GNT2}$$
+
+**Proof.** If r=0, put alpha=theta/p^a. It satisfies alpha^3=u.
+The algebra Z_p[alpha] is finite etale because three and alpha are units,
+so it is T. The original S has basis 1,p^a alpha,p^(2a)alpha^2.
+If r=1, the same alpha satisfies alpha^3=pu, an Eisenstein polynomial.
+It is a uniformizer, T=Z_p[alpha], and the same diagonal basis comparison
+applies. Its valuations justify maximality directly: in a sum
+c_0+c_1 alpha+c_2 alpha^2, the three term valuations are distinct modulo
+three, so integrality forces every c_i to be in Z_p.
+If r=2, put pi=theta^2/p^(2a+1). Then pi^3=pu^2 is Eisenstein,
+T=Z_p[pi], theta=p^a pi^2/u and theta^2=p^(2a+1)pi.
+In the basis 1,pi,pi^2 the inclusion therefore has diagonal coefficients
+1,p^(2a+1),p^a/u. Discarding the unit and sorting gives GNT1 in all
+three cases. Their sums give GNT2. No h=1 assumption occurs.
+
+**Global corollary.** Write uniquely B=s t^2 c^3 with s,t squarefree and
+coprime, and c>0. The integer c need not be coprime to s or t. Then
+
+$$\boxed{D\simeq\mathbb Z/c\ \oplus\mathbb Z/(c^2t),\qquad I=c^3t.}\tag{GNT3}$$
+
+Indeed the two exponents in GNT1 are v_p(c) and 2v_p(c)+1_(p|t).
+Chinese remaindering gives the result. GIR proves that there is no
+normalization defect at three or outside B, so no other factors occur.
+
+**Theorem GNT2.** The closed point above p|B on the TOTAL arithmetic
+scheme Spec(A) is regular iff h_p=1. Thus its singular closed points are
+exactly the original WSS prime factors of B. Nevertheless, every such
+p has the SAME nonreduced special fiber
+
+$$S/pS\simeq\mathbb F_p[t]/(t^3).\tag{GNT4}$$
+
+**Proof.** S has maximal ideal m=(p,t) and dimension one. In the regular
+ambient local ring Z_p[t]_(p,t), the defining equation has a nonzero
+linear p-term when h=1, giving embedding dimension one. When h>=2 the
+equation lies in (p,t)^2, so dim_Fp(m/m^2)=2 and S is not regular.
+Regularity is preserved and detected by completion for this finite-type
+arithmetic local ring. Outside B, GIR gives A localized equal to its
+normalization; its nonzero prime localizations are DVRs, hence regular.
+Equation GNT4 follows by reduction for every h>=1. Regularity here is a
+property of the total one-dimensional arithmetic scheme. It is NOT the
+assertion that the map to Spec(Z) is smooth at a ramified prime. The
+standard dimension-one regular/DVR criterion is Stacks, Lemma 10.119.7,
+tag 00PD; the embedding-dimension computation is explicit above.
+
+### GNT.2 Conductor as a square ideal, with exact multiplicities
+
+Let f=(A:O)={x in O:xO subset A}, the conductor ideal. The definition is
+classical; see Conrad, *The conductor ideal of an order*, Definition 1.1.
+
+**Theorem GNT3.** For p|B the local conductor is
+
+$$\boxed{f\otimes\mathbb Z_p=
+\begin{cases}
+p^{2a}T,&h=3a,\\
+\pi^{2h-2}T,&3\nmid h,
+\end{cases}}\tag{GNT5}$$
+
+where pi is any uniformizer of the totally ramified cubic T in the
+second case. Hence length_Zp(T/fT)=2 delta_p. Globally f is the SQUARE of
+an integral O-ideal J, and
+
+$$\boxed{f=J^2,\qquad N(J)=I,\qquad N(f)=I^2.}\tag{GNT6}$$
+
+More explicitly, if P_p is the unique prime above p when 3 does not
+divide h_p, then
+
+$$J=(\theta)\prod_{p\mid B,\,3\nmid h_p}P_p^{-1}.\tag{GNT7}$$
+
+**Proof.** For any full Z_p-lattice L in the separable algebra write
+L^vee={x:Tr(xL) subset Z_p}. Monogenic trace duality gives
+S^vee=(3theta^2)^(-1)S; Conrad records this formula in the proof of
+Corollary 4.3, printed page 12. Double duality and the T-module property
+of T^vee imply
+
+$$xT\subset S\ \Longleftrightarrow\ xS^\vee\subset T^\vee
+\ \Longleftrightarrow\ x/(3\theta^2)\in T^\vee.$$
+
+For the last equivalence use 1 in S and stability under S subset T.
+Thus the conductor is 3theta^2 T^vee. If h=3a then T is etale, its
+different is a unit, and theta is p^a times a unit, giving the first
+case of GNT5. Otherwise T=Z_p[pi] with pi^3=p times a unit, so its
+different is generated by 3pi^2. Since v_pi(theta)=h, the second case
+follows. The residue degree of this ramified cubic is one; the total
+residue degree in the etale case is three. The conductor lengths are
+therefore 2h-2 and 6a, respectively, exactly 2 delta_p.
+
+For 3 not dividing h, the ideal in GNT7 has exponent h-1 at P_p. When
+h=3a it has exponent a at each prime above p. These are nonnegative and
+are half the conductor exponents. No other prime contributes, by GIR.
+Their norm exponents are delta_p, proving GNT6-GNT7. The square property
+concerns the conductor of THIS specified cubic order. It is not claimed
+for conductors of arbitrary orders or for a new WSS instance.
+
+### GNT.3 An explicit intrinsic singular-point blow-up chain
+
+For a fixed p>5 and unit u let S_h=Z_p[t]/(t^3-p^h u). For h>=2 blow up
+its singular closed point (p,t), and repeat at the singular closed point
+of the result as long as one remains. This is the intrinsic blowup of
+the arithmetic curve. It does not require an embedded normal-crossing
+resolution of an ambient surface.
+
+**Theorem GNT4.** Each step and its normalization-length contribution are
+explicit:
+
+$$\boxed{h\ge3:\ S_h\longrightarrow S_{h-3},\ t\mapsto p y,
+\quad\operatorname{length}(S_{h-3}/S_h)=3.}\tag{GNT8}$$
+
+For h=2 the blowup is the normal Eisenstein ring
+
+$$\boxed{\mathbb Z_p[v]/(v^3-p/u),\qquad t=u v^2,}
+\quad\operatorname{length}(T/S_2)=1.\tag{GNT9}$$
+
+The prescribed process reaches normalization after exactly
+
+$$\boxed{\ell(h)=\lfloor(h+1)/3\rfloor}\tag{GNT10}$$
+
+steps for h>=1. Its successive index lengths sum to delta_p in GNT2.
+
+**Proof.** The two standard affine blowup charts are S_h[t/p] and
+S_h[p/t], as in Stacks, Lemma 31.33.2, tag 01OF. Work inside the total
+quotient algebra so that extraneous p- or t-torsion from a naive chart
+presentation is discarded. For h>=3, the first chart is exactly
+Z_p[y]/(y^3-p^(h-3)u). Its basis 1,y,y^2 contains S_h with diagonal
+coefficients 1,p,p^2. In the second chart put v=p/t. Cancelling t^3
+in t^3=p^h u gives 1=t^(h-3)v^h u, so v is a unit. This entire second
+chart lies in the first. Thus the first chart covers the blowup and
+GNT8 holds, including h=3, where S_0 is finite etale.
+
+For h=2 the t-chart gives t=u v^2 and v^3=p/u. This Eisenstein ring is
+normal. The p-chart instead has p y^3=u; hence y is a unit and that
+chart lies in the t-chart. The inclusion basis is, up to units,
+1,v^2,pv and has index p. This proves GNT9. The terminal cases h=1 and
+h=0 are respectively a DVR and a finite etale algebra. Subtracting three
+until 0,1,2 remains and, in the last case, taking one extra step gives
+GNT10 and the stated sum of index lengths. This is an exact count for
+this closed-point process, not a lower bound over every possible choice
+of blowup centers or ideals.
+
+### GNT.4 An arithmetic differential module equals the earlier three-manifold torsion
+
+**Theorem GNT5.** For p|B, the module of relative Kahler differentials is
+
+$$\boxed{\Omega_{S/\mathbb Z_p}
+\simeq S/(3\theta^2)\,d\theta
+\simeq(\mathbb Z_p/(B))^2
+\simeq(\mathbb Z/p^h)^2.}\tag{GNT11}$$
+
+The two generators in the middle description are dtheta and theta dtheta.
+In particular p is WSS iff p Omega_(S/Zp) is nonzero. The F_p-dimension
+of Omega tensor F_p is two for EVERY h>=1, so that coarse tangent-space
+observation alone cannot detect the first exceptional lift.
+
+**Proof.** The polynomial conormal sequence gives the presentation by
+the derivative 3theta^2; see Stacks, Section 10.131, tag 00RM. After
+killing theta^2, the remaining relation theta^3=B kills B on each of
+the basis vectors 1,theta. Equivalently, multiplication by theta^2 on
+the basis 1,theta,theta^2 has Smith factors 1,B,B over Z_p. This proves
+the exact module statement and both consequences.
+
+For the literal manifold comparison keep the repository's OLD CG.5
+construction: Q=((1,1),(1,0)), C=Q^2, and S_0=2Q-I. For the positive
+even index n=p-(5/p)=p-1 at these block primes, form the closed oriented
+three-manifold
+
+$$M_n=(\mathbb T^2\times[0,1])/((z,1)\sim(C^n z,0)).$$
+
+The old identity C^n-I=F_n S_0 Q^n and det(S_0)=-5 are recorded in
+`Library/notes/katz2015goldeninterfaces.md`, Section 5. This old torus
+bundle and its old torsion calculation are not counted again as new.
+
+**Corollary GNT5a.** With the chosen coordinate bases there is an explicit
+Z_p-module isomorphism
+
+$$\boxed{\Omega_{S/\mathbb Z_p}
+\simeq\operatorname{Tor}H_1(M_n,\mathbb Z)[p^\infty].}\tag{GNT12}$$
+
+**Proof.** The fundamental group of the mapping torus is
+Z^2 semidirect_(C^n) Z. Abelianization gives
+H_1=Z direct-sum coker(C^n-I). At p>5, S_0 Q^n is invertible over Z_p,
+so its image lattice is F_n Z_p^2. The ORIGINAL valuation equality
+v_p(F_n)=h=v_p(B) makes the ideals (F_n) and (B) equal in Z_p. Both
+sides of GNT12 are therefore the explicitly based quotient
+Z_p^2/(B)Z_p^2. This connects the arithmetic differential and the old
+manifold using the same depth. It does not bound that depth by topology.
+
+### GNT.5 Real torus covers and the full mapping-cone homology
+
+Use the real vector space V=k tensor R, isomorphic to R times C and hence
+to R^3 as a real vector space. Minkowski embedding makes A and O full
+lattices. The identity of V induces an actual smooth finite covering
+
+$$q:\mathbb T_A=V/A\longrightarrow\mathbb T_O=V/O.$$
+
+**Theorem GNT6.** The covering has degree I and deck group D=O/A. In the
+notation B=s t^2 c^3 of GNT3 its based fundamental-group map has Smith
+form diag(1,c,c^2t). Let C(q) be its mapping cone. Then
+
+$$\boxed{\pi_1(C(q))\simeq D,\quad
+\widetilde H_1(C(q),\mathbb Z)\simeq D,}\tag{GNT13}$$
+
+$$\boxed{\widetilde H_2(C(q),\mathbb Z)
+\simeq D\oplus\mathbb Z/I,\qquad
+\widetilde H_3(C(q),\mathbb Z)\simeq\mathbb Z/I,}\tag{GNT14}$$
+
+and all other reduced integral homology groups vanish.
+
+**Proof.** Deck translations are exactly O/A, and the fiber size is its
+order I. The induced fundamental-group map is the inclusion A into O,
+whose Smith form follows from GNT3. Van Kampen for the attached cone
+quotients O by the normal closure of A; since O is abelian, this is D.
+On homology, H_m(V/L,Z)=exterior^m L for m=1,2,3, and the induced map
+is the respective exterior power of the inclusion. These maps are all
+injective. The mapping-cone long exact sequence therefore identifies
+its reduced homology with their cokernels. Their Smith factors are
+(1,c,c^2t), (c,c^2t,c^3t), and (c^3t), proving GNT13-GNT14.
+The map on H_0 is an isomorphism and there is no kernel in top degree,
+so there are no further groups. Covering theory, van Kampen, the exact
+sequence, and the exterior algebra of a torus are classical; Hatcher,
+*Algebraic Topology*, Sections 1.2-1.3, 2.1 and Example 3.16 provide the
+inputs. Here the actual lattices and every Smith factor are calculated.
+
+Both T_A and T_O by themselves are diffeomorphic to the standard three-
+torus. Arithmetic information is retained by the specified COVERING,
+not by their unmarked manifold types. C(q) is a topological CW-space;
+no smooth-manifold claim is made for that cone. Its first homology has
+nontrivial p-primary torsion exactly at WSS factors of the actual B.
+
+### GNT.6 Exact binomial comparison with complex singularities and links
+
+To make the connection to classical singularity links precise, introduce
+the separate equal-characteristic complete ring
+
+$$R_h=\mathbb C[[s,z]]/(z^3-s^h),\qquad h\ge1.$$
+
+It is a comparison model for the same exponent h. The original completed
+order has mixed characteristic. There is no asserted isomorphism from
+Spec(S) to a complex analytic germ and no topological link in C^2 assigned
+to Spec(S) by forgetting its residue characteristic.
+
+**Theorem GNT7.** The normalization quotient of R_h, as a C[[s]]-module,
+has elementary exponents floor(h/3) and floor(2h/3), exactly as in GNT1.
+It has delta invariant delta_p from GNT2, b=gcd(3,h) branches, and
+
+$$\boxed{\mu=2(h-1)=2\delta_p-b+1.}\tag{GNT15}$$
+
+The link of its convergent binomial plane curve is the torus link T(3,h).
+Its Milnor fiber has b boundary components and genus
+
+$$g=h-(b+1)/2.\tag{GNT16}$$
+
+**Proof.** For h=3a+1 or 3a+2, normalization is C[[w]], with s=w^3,
+z=w^h. Comparison with its C[[s]]-basis 1,w,w^2 gives elementary
+exponents (a,2a) or (a,2a+1). For h=3a the curve has three branches
+z=omega^i s^a. Its normalization is the product of three copies of
+C[[s]]. The invertible constant Vandermonde matrix for 1,omega,omega^2
+reduces the inclusion to diagonal 1,s^a,s^(2a). These computations prove
+the module and branch assertions. Directly, the Jacobian algebra is
+C[[s,z]]/(z^2,s^(h-1)), of dimension 2(h-1), including dimension zero
+at h=1. This proves GNT15 from the independently computed delta.
+The classical binomial link theorem identifies the link as T(3,h);
+Gorsky-Kivinen-Simental (2023), Section 6.1, Example 6.1, records this
+with its gcd component count. The Milnor fiber of a reduced complex
+plane-curve singularity is a connected surface with first Betti number
+mu and b boundary components; its Euler characteristic gives GNT16.
+The smooth h=1 case is a disk bounded by the unknot.
+
+For comparison with arithmetic branches, pass only on the arithmetic
+side to a strictly henselian unramified base. Since three is a unit, u
+has a cube root there. The tame local normalization then has one branch
+if 3 does not divide h, and three otherwise. This is a matching branch
+count and binomial calculation, not a change of characteristic isomorphism.
+
+**Information boundary.** Depths three and four both give the additive
+normalization quotient Z/p direct-sum Z/p^2, and the same delta=3.
+Thus even the full deck group of GNT6 cannot recover h by itself. Their
+geometric branch counts differ (three versus one), and their differential
+modules in GNT11 also differ. Once delta and b are both retained,
+
+$$h=\delta+(3-b)/2.$$
+
+Likewise T(3,3) has three components while T(3,4) has one. A nontrivial
+comparison link at h>=2 does not construct a WSS prime: assigning that
+h to a new ACTUAL block factor is still the missing arithmetic assertion.
+
+### GNT.7 Source roles, verification scope, and the remaining question
+
+The new ordinary proofs compute the local normalization module, total-
+scheme singularity criterion, conductor ideal, exact point-blowup process,
+Kahler module, its based connection to the old mapping-torus torsion, and
+the marked-cover homology. These are specializations of classical
+commutative algebra and topology to the fixed golden order. Global
+first-discovery priority is unestablished. They decide no previously
+undecided WSS prime family and construct no singular actual golden block.
+
+Primary source locators and precise roles:
+
+* Stacks Project, Lemma 10.119.7, tag 00PD:
+  https://stacks.math.columbia.edu/tag/00PD .
+  Dimension-one regular local/DVR/normal criteria. Total-space regularity
+  and smoothness of the structural morphism are kept separate.
+* Stacks Project, Section 10.131, tag 00RM:
+  https://stacks.math.columbia.edu/tag/00RM .
+  Kahler differentials and the polynomial conormal presentation.
+* Stacks Project, Lemma 31.33.2, tag 01OF:
+  https://stacks.math.columbia.edu/tag/01OF .
+  Affine blowup algebras S[I/a]. The two charts and index jumps above are
+  derived, not inferred by counting terms in an embedded-resolution graph.
+* Keith Conrad, *The conductor ideal of an order*, Definition 1.1 and
+  proof of Corollary 4.3, printed page 12:
+  https://kconrad.math.uconn.edu/blurbs/gradnumthy/conductor.pdf .
+  The conductor definition and monogenic trace dual. The page-12 image
+  and parsed proof were inspected. The square ideal formula above is
+  proved for this order; no unrelated quadratic-order corollary is used.
+* Allen Hatcher, *Algebraic Topology*, Chapters 1-3 (author-hosted):
+  https://pi.math.cornell.edu/~hatcher/AT/ATchapters.html .
+  Van Kampen, covering degree/index (Proposition 1.32), homology exact
+  sequences, and Example 3.16 for the torus exterior algebra. The input
+  passages were read; no generated cone is called a manifold.
+* E. Gorsky, O. Kivinen and J. Simental, *Algebra and geometry of link
+  homology: Lecture notes from the IHES 2021 Summer School*, Bulletin of
+  the London Mathematical Society 55 (2023), 537-591,
+  DOI 10.1112/blms.12761; arXiv:2108.10356.
+  The publisher's indexed Section 6.1, Example 6.1 supplies the classical
+  binomial-link identification and component count. No link-homology
+  conjecture or modern affine-Springer result is assumed. The direct
+  arXiv HTML and full publisher fetch failed; only the retrieved section
+  and publication locator are claimed inspected.
+* H. D. Nguyen, *Invariants of plane curve singularities and Plucker
+  formulas in positive characteristic*, arXiv:1412.5007:
+  https://arxiv.org/abs/1412.5007 .
+  Its abstract records the classical characteristic-zero identity
+  mu=2delta-b+1 and warns of wild corrections in other settings. GNT15
+  is checked by direct binomial computation, with no extension to an
+  arbitrary mixed-characteristic Milnor number.
+
+The prior CG.5 construction is located in the existing Katz companion;
+GIR supplies the original order, initial depths and absence of a defect
+at three. Current branch GoldenCubicBlockCongruences source descriptions
+also retain the block recurrences. No new Lean endpoint, kernel check,
+Scribe compilation or independent-model review is asserted for GNT.
+Finite algebraic tests of higher h are labelled synthetic throughout.
+Their cusps, conductors and cover groups do not furnish actual WSS samples.
