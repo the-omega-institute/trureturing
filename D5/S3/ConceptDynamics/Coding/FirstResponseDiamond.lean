@@ -18,11 +18,11 @@ namespace D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 
-def columnMembership {q r : ℕ} (class : Fin q → Fin r) : CountMat r q :=
-  fun f v => if class v = f then 1 else 0
+def columnMembership {q r : ℕ} (partition : Fin q → Fin r) : CountMat r q :=
+  fun f v => if partition v = f then 1 else 0
 
-def rowMembership {q s : ℕ} (class : Fin q → Fin s) : CountMat q s :=
-  fun u h => if class u = h then 1 else 0
+def rowMembership {q s : ℕ} (partition : Fin q → Fin s) : CountMat q s :=
+  fun u h => if partition u = h then 1 else 0
 
 def columnSelector {q r : ℕ} (representative : Fin r → Fin q) : CountMat q r :=
   fun v f => if representative f = v then 1 else 0
@@ -67,14 +67,22 @@ theorem first_response_diamond {q r s : ℕ} (C : CountMat q q)
         simp [Matrix.mul_apply, IJ, IL, rowMembership, columnMembership]
   have hleft : IL * SL = 1 := by
     ext f g
-    by_cases h : f = g <;>
-      simp [Matrix.mul_apply, IL, SL, columnMembership, columnSelector,
-        hleftRep, h, eq_comm]
+    simp [Matrix.mul_apply, Matrix.one_apply, IL, SL, columnMembership,
+      columnSelector, hleftRep, eq_comm]
   have hright : SJ * IJ = 1 := by
     ext h k
-    by_cases heq : h = k <;>
-      simp [Matrix.mul_apply, SJ, IJ, rowMembership, rowSelector,
-        hrightRep, heq, eq_comm]
+    simp only [Matrix.mul_apply, Matrix.one_apply, SJ, IJ, rowMembership,
+      rowSelector]
+    calc
+      (∑ x : Fin q, (if rightRep h = x then 1 else 0) *
+          (if rightClass x = k then 1 else 0)) =
+          ∑ x : Fin q, if x = rightRep h then
+            (if rightClass x = k then 1 else 0) else 0 := by
+              apply Finset.sum_congr rfl
+              intro x _
+              by_cases hx : x = rightRep h <;> simp [hx, eq_comm]
+      _ = if rightClass (rightRep h) = k then 1 else 0 := by simp
+      _ = if h = k then 1 else 0 := by rw [hrightRep]
   have hcol : IL * C * SL = (IL * IJ) * D := by
     calc
       IL * C * SL = IL * (IJ * D * IL) * SL := by rw [hfactor]

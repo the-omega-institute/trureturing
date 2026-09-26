@@ -8,6 +8,7 @@
 -/
 
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
+import D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 import Mathlib.Data.Fintype.Sigma
 import Mathlib.SetTheory.Cardinal.NatCard
 
@@ -18,6 +19,7 @@ namespace D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 
 open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
+open D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 
 /-- Two numbered edges with a shared, retained middle vertex. -/
 abbrev EdgePair {n k l : ℕ} (U : CountMat n k) (V : CountMat k l)
@@ -1198,6 +1200,83 @@ private theorem square_first_row_invariance
     _ = c.squareMatrix ((Fintype.equivFin (Edge R)) v)
           ((Fintype.equivFin (Edge R)) s) :=
             (c.square_row_lift_count v s).symm
+
+private noncomputable def firstLeftClass
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareIncomingLift.response 1))] :
+    Fin (Fintype.card (Edge R)) →
+      Fin (Fintype.card (Quotient (c.squareIncomingLift.response 1))) := by
+  classical
+  exact fun u => (Fintype.equivFin _)
+    (Quotient.mk _ ((Fintype.equivFin (Edge R)).symm u))
+
+private noncomputable def firstRightClass
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
+    Fin (Fintype.card (Edge R)) →
+      Fin (Fintype.card (Quotient (c.squareOutgoingLift.response 1))) := by
+  classical
+  exact fun u => (Fintype.equivFin _)
+    (Quotient.mk _ ((Fintype.equivFin (Edge R)).symm u))
+
+private noncomputable def firstLeftRep
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareIncomingLift.response 1))] :
+    Fin (Fintype.card (Quotient (c.squareIncomingLift.response 1))) →
+      Fin (Fintype.card (Edge R)) := by
+  classical
+  exact fun f => (Fintype.equivFin (Edge R))
+    (Quotient.out ((Fintype.equivFin _).symm f))
+
+private noncomputable def firstRightRep
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
+    Fin (Fintype.card (Quotient (c.squareOutgoingLift.response 1))) →
+      Fin (Fintype.card (Edge R)) := by
+  classical
+  exact fun f => (Fintype.equivFin (Edge R))
+    (Quotient.out ((Fintype.equivFin _).symm f))
+
+private theorem square_first_diamond
+    (c : CompatibleCertificate A B R S m)
+    [Fintype (Quotient (c.squareIncomingLift.response 1))]
+    [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
+    Nonempty (ExchangeChain ℕ
+      (FirstResponseDiamond.columnMembership c.firstLeftClass *
+        c.squareMatrix * FirstResponseDiamond.columnSelector c.firstLeftRep)
+      (FirstResponseDiamond.rowSelector c.firstRightRep *
+        c.squareMatrix * FirstResponseDiamond.rowMembership c.firstRightClass) 1) := by
+  classical
+  let e := Fintype.equivFin (Edge R)
+  let eL := Fintype.equivFin (Quotient (c.squareIncomingLift.response 1))
+  let eR := Fintype.equivFin (Quotient (c.squareOutgoingLift.response 1))
+  have hleftRep (f) : c.firstLeftClass (c.firstLeftRep f) = f := by
+    simp [firstLeftClass, firstLeftRep, e, eL]
+  have hrightRep (f) : c.firstRightClass (c.firstRightRep f) = f := by
+    simp [firstRightClass, firstRightRep, e, eR]
+  have hcolumns (u v) (h : c.firstLeftClass u = c.firstLeftClass v)
+      (i) : c.squareMatrix i u = c.squareMatrix i v := by
+    have hq : Quotient.mk (c.squareIncomingLift.response 1) (e.symm u) =
+        Quotient.mk (c.squareIncomingLift.response 1) (e.symm v) := by
+      exact eL.injective h
+    have hrel : c.squareIncomingLift.response 1 (e.symm u) (e.symm v) :=
+      Quotient.exact hq
+    simpa [e] using
+      c.square_first_column_invariance hrel (e.symm i)
+  have hrows (u v) (h : c.firstRightClass u = c.firstRightClass v)
+      (i) : c.squareMatrix u i = c.squareMatrix v i := by
+    have hq : Quotient.mk (c.squareOutgoingLift.response 1) (e.symm u) =
+        Quotient.mk (c.squareOutgoingLift.response 1) (e.symm v) := by
+      exact eR.injective h
+    have hrel : c.squareOutgoingLift.response 1 (e.symm u) (e.symm v) :=
+      Quotient.exact hq
+    simpa [e] using
+      c.square_first_row_invariance hrel (e.symm i)
+  obtain ⟨D, hleft, hright, chain⟩ :=
+    FirstResponseDiamond.first_response_diamond c.squareMatrix
+      c.firstLeftClass c.firstRightClass c.firstLeftRep c.firstRightRep
+      hleftRep hrightRep hcolumns hrows
+  exact chain
 
 end CompatibleCertificate
 
