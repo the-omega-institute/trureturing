@@ -113,9 +113,9 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
   change (∀ (r x : ℝ), 0 ≤ r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
       IsProbabilityMeasure (geometricAtomicMeasure r x) ∧
       geometricAtomicMeasure r x (Ioc (0 : ℝ) 1) = 1) ↔
-    (∀ _ : Unit, massReadout = massTarget)
+    massReadout = massTarget
   constructor
-  · intro h _
+  · intro h
     funext input
     change MechanicalReadoutSources.massReadout input =
       MechanicalReadoutSources.massTarget input
@@ -128,7 +128,7 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
       exact Prod.ext (isProbabilityMeasure_iff.mp hprob) hcarrier
     · simp only [MechanicalReadoutSources.massTarget, if_neg hc]
   · intro h r x hr0 hr1 hx
-    have hv := congrFun (h ())
+    have hv := congrFun h
       (MechanicalReadoutSources.MassInput.mk r x)
     have hc : 0 ≤ r ∧ r < 1 ∧ x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, hx⟩
     simp only [massReadout, massTarget, MechanicalReadoutSources.massTarget,
@@ -140,28 +140,43 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
       exact congrArg Prod.fst hv
     · exact congrArg Prod.snd hv
 
-private def massZero : MassOutput := fun _ => (0, 0)
-private def massOne : MassOutput := fun _ => (1, 1)
+private def massBadOutput : MassOutput := fun input =>
+  if massTarget input = (0, 0) then (1, 1) else (0, 0)
 
-private theorem massZero_ne_one : massZero ≠ massOne := by
+def massBad := @mechanicalReadoutRealization MassOutput
+  (Classical.decEq _) (fun _ : Unit => massBadOutput)
+
+private theorem massBad_not_law : ¬ massArena.Law massBad := by
   intro h
-  have hh := congrArg Prod.fst (congrFun h massSample)
-  exact zero_ne_one hh
-
-def massBad := @homogeneousPointwiseEqRealization Unit MassOutput
-  (Classical.decEq _) (fun _ => massZero) (fun _ => massOne)
+  have hh := congrFun h massSample
+  change (if massTarget massSample = (0, 0) then (1, 1) else (0, 0)) =
+    massTarget massSample at hh
+  by_cases hz : massTarget massSample = (0, 0)
+  · simp [hz] at hh
+  · exact hz hh.symm
 
 theorem massVariation : massArena.Law massRealization ∧
     ¬ massArena.Law massBad := by
   constructor
   · exact massBridge.equivalence.mp
       (fun r x hr0 hr1 hx => geometric_atomic_probability_and_carrier r x hr0 hr1 hx)
-  · intro h
-    exact massZero_ne_one (h ())
+  · exact massBad_not_law
 
 theorem massSensitivity : FiniteSlotSensitivity massArena.toPrimitiveLawArena := by
-  exact homogeneousPointwiseEq_sensitivity (Arena.ofFintype Unit)
-    (x := ()) (a := massZero) (b := massOne) massZero_ne_one
+  constructor
+  · intro i
+    cases i
+    let good := @mechanicalReadoutRealization MassOutput
+      (Classical.decEq _) (fun _ : Unit => massTarget)
+    refine ⟨good, massBad, ?_, ?_, ?_⟩
+    · intro j hj
+      cases j
+      exact (hj rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => massBad_not_law, fun _ => rfl⟩
+  · intro i
+    exact Fin.elim0 i
 
 theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrimitiveLawArena
     (∀ (r alpha x : ℝ), 0 ≤ r → r < 1 →
@@ -173,10 +188,10 @@ theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrim
   change (∀ (r alpha x : ℝ), 0 ≤ r → r < 1 →
       alpha ∈ Icc (0 : ℝ) 1 → x ∈ Ico (0 : ℝ) 1 →
       geometricAtomicMeasure r x (Iic alpha) =
-        ENNReal.ofReal (D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r alpha x)) ↔
-    (∀ _ : Unit, distributionReadout = distributionTarget)
+      ENNReal.ofReal (D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r alpha x)) ↔
+    distributionReadout = distributionTarget
   constructor
-  · intro h _
+  · intro h
     funext input
     change MechanicalReadoutSources.distributionReadout input =
       MechanicalReadoutSources.distributionTarget input
@@ -186,7 +201,7 @@ theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrim
       exact h input.ratio input.threshold input.phase hc.1 hc.2.1 hc.2.2.1 hc.2.2.2
     · simp only [MechanicalReadoutSources.distributionTarget, if_neg hc]
   · intro h r alpha x hr0 hr1 ha hx
-    have hv := congrFun (h ())
+    have hv := congrFun h
       (MechanicalReadoutSources.DistributionInput.mk r alpha x)
     have hc : 0 ≤ r ∧ r < 1 ∧ alpha ∈ Icc (0 : ℝ) 1 ∧
         x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, ha, hx⟩
@@ -197,27 +212,43 @@ theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrim
         (D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometricReadout r alpha x) at hv
     exact hv
 
-private def distributionZero : DistributionOutput := fun _ => 0
-private def distributionOne : DistributionOutput := fun _ => 1
+private def distributionBadOutput : DistributionOutput := fun input =>
+  if distributionTarget input = 0 then 1 else 0
 
-private theorem distributionZero_ne_one : distributionZero ≠ distributionOne := by
+def distributionBad := @mechanicalReadoutRealization DistributionOutput
+  (Classical.decEq _) (fun _ : Unit => distributionBadOutput)
+
+private theorem distributionBad_not_law : ¬ distributionArena.Law distributionBad := by
   intro h
-  exact zero_ne_one (congrFun h distributionSample)
-
-def distributionBad := @homogeneousPointwiseEqRealization Unit DistributionOutput
-  (Classical.decEq _) (fun _ => distributionZero) (fun _ => distributionOne)
+  have hh := congrFun h distributionSample
+  change (if distributionTarget distributionSample = 0 then 1 else 0) =
+    distributionTarget distributionSample at hh
+  by_cases hz : distributionTarget distributionSample = 0
+  · simp [hz] at hh
+  · exact hz hh.symm
 
 theorem distributionVariation : distributionArena.Law distributionRealization ∧
     ¬ distributionArena.Law distributionBad := by
   constructor
   · exact distributionBridge.equivalence.mp
       (fun r alpha x hr0 hr1 ha hx => geometric_atomic_apply_Iic r alpha x hr0 hr1 ha hx)
-  · intro h
-    exact distributionZero_ne_one (h ())
+  · exact distributionBad_not_law
 
 theorem distributionSensitivity : FiniteSlotSensitivity distributionArena.toPrimitiveLawArena := by
-  exact homogeneousPointwiseEq_sensitivity (Arena.ofFintype Unit)
-    (x := ()) (a := distributionZero) (b := distributionOne) distributionZero_ne_one
+  constructor
+  · intro i
+    cases i
+    let good := @mechanicalReadoutRealization DistributionOutput
+      (Classical.decEq _) (fun _ : Unit => distributionTarget)
+    refine ⟨good, distributionBad, ?_, ?_, ?_⟩
+    · intro j hj
+      cases j
+      exact (hj rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => distributionBad_not_law, fun _ => rfl⟩
+  · intro i
+    exact Fin.elim0 i
 
 theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
     (∀ (r x alpha : ℝ), x ∈ Ico (0 : ℝ) 1 → alpha ∈ Ioo (0 : ℝ) 1 →
@@ -231,10 +262,10 @@ theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
       geometricAtomicMeasure r x {alpha} =
         ∑' n : ℕ, if ∃ z : ℤ,
             (z : ℝ) = x + (((n + 1 : ℕ) : ℝ)) * alpha then
-          ENNReal.ofReal ((1 - r) ^ 2 * r ^ n) else 0) ↔
-    (∀ _ : Unit, hitReadout = hitTarget)
+        ENNReal.ofReal ((1 - r) ^ 2 * r ^ n) else 0) ↔
+    hitReadout = hitTarget
   constructor
-  · intro h _
+  · intro h
     funext input
     change MechanicalReadoutSources.hitReadout input =
       MechanicalReadoutSources.hitTarget input
@@ -244,7 +275,7 @@ theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
       exact h input.ratio input.phase input.threshold hc.1 hc.2
     · simp only [MechanicalReadoutSources.hitTarget, if_neg hc]
   · intro h r x alpha hx ha
-    have hv := congrFun (h ()) (MechanicalReadoutSources.HitInput.mk r x alpha)
+    have hv := congrFun h (MechanicalReadoutSources.HitInput.mk r x alpha)
     have hc : x ∈ Ico (0 : ℝ) 1 ∧ alpha ∈ Ioo (0 : ℝ) 1 := ⟨hx, ha⟩
     simp only [hitReadout, hitTarget, MechanicalReadoutSources.hitTarget,
       if_pos hc] at hv
@@ -254,27 +285,42 @@ theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
         ENNReal.ofReal ((1 - r) ^ 2 * r ^ n) else 0 at hv
     exact hv
 
-private def hitZero : HitOutput := fun _ => 0
-private def hitOne : HitOutput := fun _ => 1
+private def hitBadOutput : HitOutput := fun input =>
+  if hitTarget input = 0 then 1 else 0
 
-private theorem hitZero_ne_one : hitZero ≠ hitOne := by
+def hitBad := @mechanicalReadoutRealization HitOutput
+  (Classical.decEq _) (fun _ : Unit => hitBadOutput)
+
+private theorem hitBad_not_law : ¬ hitArena.Law hitBad := by
   intro h
-  exact zero_ne_one (congrFun h hitSample)
-
-def hitBad := @homogeneousPointwiseEqRealization Unit HitOutput
-  (Classical.decEq _) (fun _ => hitZero) (fun _ => hitOne)
+  have hh := congrFun h hitSample
+  change (if hitTarget hitSample = 0 then 1 else 0) = hitTarget hitSample at hh
+  by_cases hz : hitTarget hitSample = 0
+  · simp [hz] at hh
+  · exact hz hh.symm
 
 theorem hitVariation : hitArena.Law hitRealization ∧
     ¬ hitArena.Law hitBad := by
   constructor
   · exact hitBridge.equivalence.mp
       (fun r x alpha hx ha => geometric_atomic_singleton_hit r x alpha hx ha)
-  · intro h
-    exact hitZero_ne_one (h ())
+  · exact hitBad_not_law
 
 theorem hitSensitivity : FiniteSlotSensitivity hitArena.toPrimitiveLawArena := by
-  exact homogeneousPointwiseEq_sensitivity (Arena.ofFintype Unit)
-    (x := ()) (a := hitZero) (b := hitOne) hitZero_ne_one
+  constructor
+  · intro i
+    cases i
+    let good := @mechanicalReadoutRealization HitOutput
+      (Classical.decEq _) (fun _ : Unit => hitTarget)
+    refine ⟨good, hitBad, ?_, ?_, ?_⟩
+    · intro j hj
+      cases j
+      exact (hj rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => hitBad_not_law, fun _ => rfl⟩
+  · intro i
+    exact Fin.elim0 i
 
 theorem supportBridge : LegacyPrimitiveRealization supportArena.toPrimitiveLawArena
     (∀ (r x : ℝ), 0 < r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
@@ -283,9 +329,9 @@ theorem supportBridge : LegacyPrimitiveRealization supportArena.toPrimitiveLawAr
   constructor
   change (∀ (r x : ℝ), 0 < r → r < 1 → x ∈ Ico (0 : ℝ) 1 →
       (geometricAtomicMeasure r x).support = Icc (0 : ℝ) 1) ↔
-    (∀ _ : Unit, supportReadout = supportTarget)
+    supportReadout = supportTarget
   constructor
-  · intro h _
+  · intro h
     funext input
     change MechanicalReadoutSources.supportReadout input =
       MechanicalReadoutSources.supportTarget input
@@ -295,37 +341,54 @@ theorem supportBridge : LegacyPrimitiveRealization supportArena.toPrimitiveLawAr
       exact h input.ratio input.phase hc.1 hc.2.1 hc.2.2
     · simp only [MechanicalReadoutSources.supportTarget, if_neg hc]
   · intro h r x hr0 hr1 hx
-    have hv := congrFun (h ()) (MechanicalReadoutSources.SupportInput.mk r x)
+    have hv := congrFun h (MechanicalReadoutSources.SupportInput.mk r x)
     have hc : 0 < r ∧ r < 1 ∧ x ∈ Ico (0 : ℝ) 1 := ⟨hr0, hr1, hx⟩
     simp only [supportReadout, supportTarget,
       MechanicalReadoutSources.supportTarget, if_pos hc] at hv
     change (geometricAtomicMeasure r x).support = Icc (0 : ℝ) 1 at hv
     exact hv
 
-private def supportEmpty : SupportOutput := fun _ => ∅
-private def supportFull : SupportOutput := fun _ => Set.univ
+private def supportBadOutput : SupportOutput := fun input =>
+  if supportTarget input = ∅ then Set.univ else ∅
 
-private theorem supportEmpty_ne_full : supportEmpty ≠ supportFull := by
+def supportBad := @mechanicalReadoutRealization SupportOutput
+  (Classical.decEq _) (fun _ : Unit => supportBadOutput)
+
+private theorem supportBad_not_law : ¬ supportArena.Law supportBad := by
   intro h
   have hh := congrFun h supportSample
-  have hmem : (0 : ℝ) ∈ supportFull supportSample := Set.mem_univ _
-  rw [← hh] at hmem
-  simpa [supportEmpty] using hmem
-
-def supportBad := @homogeneousPointwiseEqRealization Unit SupportOutput
-  (Classical.decEq _) (fun _ => supportEmpty) (fun _ => supportFull)
+  change (if supportTarget supportSample = ∅ then Set.univ else ∅) =
+    supportTarget supportSample at hh
+  by_cases hz : supportTarget supportSample = ∅
+  · have hmem : (0 : ℝ) ∈ supportTarget supportSample := by
+      rw [← hh]
+      simp [hz]
+    rw [hz] at hmem
+    exact Set.not_mem_empty 0 hmem
+  · exact hz hh.symm
 
 theorem supportVariation : supportArena.Law supportRealization ∧
     ¬ supportArena.Law supportBad := by
   constructor
   · exact supportBridge.equivalence.mp
       (fun r x hr0 hr1 hx => geometric_atomic_support r x hr0 hr1 hx)
-  · intro h
-    exact supportEmpty_ne_full (h ())
+  · exact supportBad_not_law
 
 theorem supportSensitivity : FiniteSlotSensitivity supportArena.toPrimitiveLawArena := by
-  exact homogeneousPointwiseEq_sensitivity (Arena.ofFintype Unit)
-    (x := ()) (a := supportEmpty) (b := supportFull) supportEmpty_ne_full
+  constructor
+  · intro i
+    cases i
+    let good := @mechanicalReadoutRealization SupportOutput
+      (Classical.decEq _) (fun _ : Unit => supportTarget)
+    refine ⟨good, supportBad, ?_, ?_, ?_⟩
+    · intro j hj
+      cases j
+      exact (hj rfl).elim
+    · intro j
+      exact Fin.elim0 j
+    · exact ⟨fun _ => supportBad_not_law, fun _ => rfl⟩
+  · intro i
+    exact Fin.elim0 i
 
 theorem leftJumpBridge : LegacyPrimitiveRealization leftJumpArena.toPrimitiveLawArena
     (∀ (r x alpha : ℝ), 0 < r → r < 1 →
@@ -484,9 +547,8 @@ theorem rationalJumpSensitivity : FiniteSlotSensitivity rationalJumpArena.toPrim
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier
   in massArena
-  readout via (@homogeneousPointwiseEqRealization Unit MassOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.massReadout)
-    (fun _ : Unit => MechanicalReadoutSources.massTarget))
+  readout via (@mechanicalReadoutRealization MassOutput (Classical.decEq _)
+    (fun _ : Unit => MechanicalReadoutSources.massReadout))
   primitives massRealization.toPrimitiveBundle
   realization massBridge
   variation massVariation sensitivity massSensitivity
@@ -495,9 +557,8 @@ register_information_theorem
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic
   in distributionArena
-  readout via (@homogeneousPointwiseEqRealization Unit DistributionOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
-    (fun _ : Unit => MechanicalReadoutSources.distributionTarget))
+  readout via (@mechanicalReadoutRealization DistributionOutput (Classical.decEq _)
+    (fun _ : Unit => MechanicalReadoutSources.distributionReadout))
   primitives distributionRealization.toPrimitiveBundle
   realization distributionBridge
   variation distributionVariation sensitivity distributionSensitivity
@@ -506,9 +567,8 @@ register_information_theorem
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit
   in hitArena
-  readout via (@homogeneousPointwiseEqRealization Unit HitOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.hitReadout)
-    (fun _ : Unit => MechanicalReadoutSources.hitTarget))
+  readout via (@mechanicalReadoutRealization HitOutput (Classical.decEq _)
+    (fun _ : Unit => MechanicalReadoutSources.hitReadout))
   primitives hitRealization.toPrimitiveBundle
   realization hitBridge
   variation hitVariation sensitivity hitSensitivity
@@ -517,9 +577,8 @@ register_information_theorem
 register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support
   in supportArena
-  readout via (@homogeneousPointwiseEqRealization Unit SupportOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.supportReadout)
-    (fun _ : Unit => MechanicalReadoutSources.supportTarget))
+  readout via (@mechanicalReadoutRealization SupportOutput (Classical.decEq _)
+    (fun _ : Unit => MechanicalReadoutSources.supportReadout))
   primitives supportRealization.toPrimitiveBundle
   realization supportBridge
   variation supportVariation sensitivity supportSensitivity

@@ -69,8 +69,12 @@ abbrev SupportOutput := SupportInput → Set ℝ
 
 private def unitArena := Arena.ofFintype Unit
 
-private def equalityArena (Y : Type) [DecidableEq Y] : ObjectDomainArena.{0, 0, 0, 0} where
-  toPrimitiveLawArena := homogeneousPointwiseEqArena unitArena Y
+private def pointwiseArena (Y : Type) [DecidableEq Y] (target : Y) :
+    ObjectDomainArena.{0, 0, 0, 0} where
+  toPrimitiveLawArena := {
+    toArena := unitArena
+    signature := mechanicalReadoutSignature Y
+    Law := fun realization => realization.readout () () = target }
   Domain := ℝ
 
 local instance : DecidableEq MassOutput := Classical.decEq _
@@ -78,27 +82,19 @@ local instance : DecidableEq DistributionOutput := Classical.decEq _
 local instance : DecidableEq HitOutput := Classical.decEq _
 local instance : DecidableEq SupportOutput := Classical.decEq _
 
-def massArena := equalityArena MassOutput
-def distributionArena := equalityArena DistributionOutput
-def hitArena := equalityArena HitOutput
-def supportArena := equalityArena SupportOutput
+def massArena := pointwiseArena MassOutput MechanicalReadoutSources.massTarget
+def distributionArena := pointwiseArena DistributionOutput MechanicalReadoutSources.distributionTarget
+def hitArena := pointwiseArena HitOutput MechanicalReadoutSources.hitTarget
+def supportArena := pointwiseArena SupportOutput MechanicalReadoutSources.supportTarget
 
-def massRealization := @homogeneousPointwiseEqRealization Unit MassOutput
-  (Classical.decEq _)
-  (fun _ : Unit => MechanicalReadoutSources.massReadout)
-  (fun _ : Unit => MechanicalReadoutSources.massTarget)
-def distributionRealization := @homogeneousPointwiseEqRealization Unit DistributionOutput
-  (Classical.decEq _)
-  (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
-  (fun _ : Unit => MechanicalReadoutSources.distributionTarget)
-def hitRealization := @homogeneousPointwiseEqRealization Unit HitOutput
-  (Classical.decEq _)
-  (fun _ : Unit => MechanicalReadoutSources.hitReadout)
-  (fun _ : Unit => MechanicalReadoutSources.hitTarget)
-def supportRealization := @homogeneousPointwiseEqRealization Unit SupportOutput
-  (Classical.decEq _)
-  (fun _ : Unit => MechanicalReadoutSources.supportReadout)
-  (fun _ : Unit => MechanicalReadoutSources.supportTarget)
+def massRealization := @mechanicalReadoutRealization MassOutput
+  (Classical.decEq _) (fun _ : Unit => MechanicalReadoutSources.massReadout)
+def distributionRealization := @mechanicalReadoutRealization DistributionOutput
+  (Classical.decEq _) (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
+def hitRealization := @mechanicalReadoutRealization HitOutput
+  (Classical.decEq _) (fun _ : Unit => MechanicalReadoutSources.hitReadout)
+def supportRealization := @mechanicalReadoutRealization SupportOutput
+  (Classical.decEq _) (fun _ : Unit => MechanicalReadoutSources.supportReadout)
 
 /-- The CUT output keeps the full readout as a function of ratio, slope, and phase. -/
 abbrev JumpOutput := ℝ → ℝ → ℝ → ℝ
