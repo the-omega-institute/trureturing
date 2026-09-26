@@ -4012,3 +4012,57 @@ Gaussian 倾斜、Hermite 代数、核恒等式及 Edgeworth 方法各有经典�
 结果仅含固定紧区间上的数据概率展开，不给常数阶方差极限、
 全实线一致性、全数据期望、一般条件化方差单调性或半指数端点结论。
 所核对来源未直接给出该完整模型桥梁；这不是全球原创认证。
+
+## 第 99 章：联合根组合的算术排除
+
+对应 [理论卷第 99 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。
+共同整数关系保留同一参数、同一原层、两个取整相位及对数位移，
+因而比“两个根分别超越”多保留同步关系：根和、根差必须在实代数数
+与原 Liouville 数的有理函数域之外。切向例外和随层变动的切线仍未解决。
+
+Adamczewski–Bugeaud, *On the complexity of algebraic numbers I.
+Expansions in integer bases*, Annals of Mathematics 165 (2007),
+Section 4, Theorem E，是第 93 章核对的 $p$-进子空间定理版本。
+允许独立代数系数线性形式；无穷处欧氏范数、有限处最大范数及高度归一化
+不变。本章应用于两根的一个固定组合，不取得移动切线高度的一致界。
+有理函数预测量直接复用第 85 章；公共分母可能含 $2,5$ 之外的素因子，
+所需性质是它小于原层误差的倒数，而非整除原分母。
+
+以下原始来源用于核对共同薄带路线，未作为同步存在定理：
+
+- Li–Li–Wu, *Multiplicative Diophantine approximation with restricted
+  denominators*, [arXiv:2409.18635v1](https://arxiv.org/abs/2409.18635v1)。
+  原 TeX 的 thm1Haus、thm1HMeas、ThmSabPsi、ThmLacunary 及下界证明
+  涉及自由平面坐标、同标量对角问题或固定整数底数。
+  原序列满足相关 lacunarity 条件；缺少的是原反根非线性曲线上的两坐标
+  同时命中两个带对数位移的目标。乘积小不保证两项同时小。
+- Wang–Li–Li, *Uniform Diophantine approximation with restricted
+  denominators*, [arXiv:2302.03923v2](https://arxiv.org/abs/2302.03923v2)。
+  原定义及 Theorems 1.1–1.3 使用 $b^{a_n}$，
+  假设 $\eta=\limsup a_{n+1}/a_n<\infty$；
+  代入原 $b=10,a_n=2e_n$ 则 $\eta=\infty$。
+  没有改变原递推以满足该条件。
+- Baier–Ghosh, *Restricted simultaneous Diophantine approximation*,
+  [arXiv:1503.07107v2](https://arxiv.org/abs/1503.07107v2)。
+  原主定理假设正的无理 $k$-Diophantine 向量，$k\ge d$，
+  对几乎每个 $\alpha>0$ 给出分母和一个分子均为素数的仿射直线逼近，
+  指数为 $1/[d(3k+2)]$ 加允许余量。
+  原 $N_n$ 非素数，反根曲线非该直线；几乎处处的分母求和结论
+  未被解释为原指定层上的下界。
+- Sanford, *A Note on Diophantine Approximation with Restricted
+  Denominators*, [arXiv:2606.02620v1](https://arxiv.org/abs/2606.02620v1)。
+  原 Diophantine density 定义要求每个充分大分母和每个本原分数有一致命中。
+  命题 99.7 的本原测试分数直接否定原集合的任意正密度。
+  该结论只使用定义。原主证明约分后未交代分母仍在任意指定集合中的步骤，
+  因此不作为前提；这里没有声称反驳全文定理。
+
+Li–Li–Wu 所引矩阵环面收缩目标的 manifold-theory 预印本，
+限定检索未定位原文，没有借用未核对定理。
+这些范围和不适用条件不构成全球不存在或原创性证明。
+
+成熟工具包括子空间定理、有理分离、Taylor 展开及模运算。
+仓内综合是共同整数关系、实际对数均值分离、同层反射尺度与由根和指定的
+可计算稠密排除族。反射律以实际边缘复现为条件，没有在构造参数处证明该前提。
+完整得分组未被独立 Poisson 行替代；$E_2$ 是否非空仍未解决。
+
+## 追加锚（第 99 章来源后续增补区）
