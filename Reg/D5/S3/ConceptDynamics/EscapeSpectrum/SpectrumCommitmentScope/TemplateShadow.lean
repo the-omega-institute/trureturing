@@ -1,3 +1,4 @@
+import Reg.Support.LegacySpectrum
 import LeanInformationAudit.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
@@ -29,7 +30,11 @@ open _root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
 open FirstThreeArenas
 
 register_information_theorem _root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective in spectrumArena
-  primitives spectrumRealization.toPrimitiveBundle realization spectrum_bridge
+  readout via (@RegistrationTemplates.cutRealization SpectrumAtom (Fin 5) (inferInstanceAs (DecidableEq (Fin 5))) (fun atom => Reg.Support.LegacySpectrum.indexReadout atom))
+  primitives spectrumRealization.toPrimitiveBundle realization Reg.Support.LegacySpectrum.bridge
+  variation _root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.spectrum_lawSensitive
+  sensitivity Reg.Support.LegacySpectrum.sensitivity
+  escape from (SpectrumAtom) escape continues (open)
 end
 
 section

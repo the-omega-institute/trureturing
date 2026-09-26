@@ -19,9 +19,8 @@ def contract : RootCatalogContract := {
   baseline := InformationRootContract.contract.baseline
   companionPrefix := some rootId }
 
--- Independently translated from the existing D5 seal: only catalog, verdict,
--- unit and certificate names change to this root's generated names.
+-- Seal reference after the faithful observation/intervention arena transport.
 def expectedSealDigest : String :=
-  "f38a50d6a9696940e04d8368b1c2d6d5f9491b990b94f9083b81f757c7cbbb88"
+  "ebfbc7633da209a2a2e788a578d2ef6b463ceb9e59d90bf2f91e81d48795e8e5"
 
 end Reg.Support.SharedInformationRootContract
