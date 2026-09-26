@@ -375,18 +375,20 @@ private partial def containsIndependentCarrier (type : Expr) (depth : Nat := 0) 
       if ← containsIndependentCarrier carrier (depth + 1) then return true
     return false
   if dataTypes.contains head then return false
-  if let .forallE _ domain body _ := type then
-    return (← containsIndependentCarrier domain (depth + 1)) ||
-      (← containsIndependentCarrier body (depth + 1))
+  if let .forallE name domain body bi := type then
+    if ← containsIndependentCarrier domain (depth + 1) then return true
+    return ← binder name bi domain fun x =>
+      containsIndependentCarrier (body.instantiate1 x) (depth + 1)
   return !head.isAnonymous && (← independentSource head)
 
 private partial def hasIndependentInputCarrier (type : Expr) (depth : Nat := 0) : CompileM Bool := do
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   match type.consumeMData with
-  | .forallE _ domain body _ =>
-    return (← containsIndependentCarrier domain (depth + 1)) ||
-      (← hasIndependentInputCarrier body (depth + 1))
+  | .forallE name domain body bi =>
+    if ← containsIndependentCarrier domain (depth + 1) then return true
+    return ← binder name bi domain fun x =>
+      hasIndependentInputCarrier (body.instantiate1 x) (depth + 1)
   | _ => return false
 
 private def interfaceProjection (env : Environment) (name : Name) : Bool :=

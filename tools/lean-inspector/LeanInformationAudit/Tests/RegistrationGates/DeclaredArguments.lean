@@ -67,7 +67,7 @@ run_meta do
   check "imported_name_alias_type_rejected" (mkConst ``InformationSourceFixture.NameAlias)
     (some "forbidden_dependency:E6.closed_identity")
   check "imported_name_alias_readout_rejected" (mkConst ``InformationSourceFixture.nameReadout)
-    (some "forbidden_dependency:E6.closed_identity")
+    (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.nameReadout")
   check "imported_finite_alias_type_accepted" (mkConst ``InformationSourceFixture.BoolAlias) none
   check "imported_finite_alias_readout_rejected" (mkConst ``InformationSourceFixture.finiteReadout)
     (some "unclassified_form:E5.unsaturated_definition:InformationSourceFixture.finiteReadout")
