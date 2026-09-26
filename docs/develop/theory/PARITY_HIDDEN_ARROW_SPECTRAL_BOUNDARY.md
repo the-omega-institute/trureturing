@@ -35683,3 +35683,527 @@ The new bridge is (139.20)--(139.22), the differentiated exact prefactor with it
 The scope remains fixed tests and compact outputs, eta->0 with t->infinity, the original strict half-exponent noise condition, actual pair/path probability and support uniformity, and the auxiliary PRODUCT count law. We do not assert a full-q P theorem, Shannon or other entropy derivatives, exact finite-count symmetry, total variation to a continuous law, growing test degrees, all positive eta, a global phase diagram or formal-kernel verification. Classical conditional Gaussian, Fourier, saddlepoint and Laplace tools are not claimed as new.
 
 ## 追加锚（本行以下为增补区）
+
+## 140. 超多项式窄带宽中的精确格点局部化与原始方差熵
+
+同一整数元组上的带标记比较先通过共同残差核取得不含逆噪声的全输出界，再对精确格点辅助律进行全频轴局部化。这两个比较使用不同范数，使计数近似中的多项式误差不再乘上指数增长的谐波体积。本章在原始完整选择后验中得到 $\rho_Q\asymp e^{-Q^{1/4}}$ 下的加权方差熵极限。
+
+### 140.1 原始完整计数律与超多项式窄带宽
+
+**定理 140.1（伸展指数带宽下的原始加权方差熵极限）。** Fix the original admissible amplitude, beta in(1/2,1), and all original legal deterministic floor/scale sequences. Put
+
+$$
+ R_Q=Q^{1/4},\quad \mathcal B=q/Q^{11/4},\quad
+ \rho_Q=\sigma\mathcal B,\quad
+ 0<c_-\le\rho_Qe^{R_Q}\le c_+<\infty.                 \tag{140.1}
+$$
+
+Then, separately for the actual pair and path experiments, uniformly over deterministic true supports of size q,
+
+$$
+ \boxed{\int_{\mathbb R}f_x(y)|D_x(y)-R_*(y)|\,dy\to0}
+                                                               \tag{140.2}
+$$
+
+in the original raw-data probability. The count prior remains the complete selected full-q prior, not a known-support posterior or a Gaussian whole-law replacement. Retain exactly138.1–4's tuple, scalar and finite quantities:
+
+$$
+ \delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+ T=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2-V/\sqrt\delta,
+ \quad Y=T+\sigma G,
+$$
+$$
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_{j\in H}w_j^2,
+ \quad\kappa_3=8\sum_{j\in H}w_j^3,\quad\Lambda=\nu_0+\sigma^2,
+$$
+$$
+ C_x=A^2\kappa_3/\Lambda^3-2A\nu_0/\Lambda^2,
+ \quad D_x(y)=Vpost_x(y)-Vprior_x+A^2/\Lambda-C_xy,
+$$
+$$
+ R_*(y)=29/6-3\sqrt2+(3\sqrt2+8/\sqrt3-9)y^2/\nu,
+ \qquad\nu=2g_0.                                      \tag{140.3}
+$$
+
+Vprior is the exact centered-surprise variance of the complete count law. With the exact m_x=E_xY, the integrated statement is
+
+$$
+ \int Vpost_x(y)f_x(y)dy-Vprior_x+A^2/\Lambda-C_xm_x
+                      \to8/\sqrt3-25/6.               \tag{140.4}
+$$
+
+G is the same independent standard Gaussian before conditioning in every comparison; its posterior dependence is retained. All original groups and multiplicities remain. The auxiliary resampling pool has fixed dimension; the actual group array grows as prescribed and the bulk threshold remains unchanged. No endpoint, necessity, zero-noise, sharp-threshold, computational-efficiency or stronger-bandwidth assertion is included. Chapters 136 and 138 keep their established scopes.
+
+The bound in (124.26), $C(1+\rho^{-1})Q^{-428}$, does not vanish at this bandwidth. Equations (111.13)–(111.15) instead compare signed count moments on the same integer energy through a kernel whose $L^1$ norm is independent of noise. Section 140.6 then retains exponential errors for exact lattice localization, separately from the count approximation. Define the enlarged transition width and harmonic cutoff by
+
+$$
+L_Q=10R_Q+20\log Q,\qquad
+N_Q=\left\lceil1000\rho_Q^{-1}\sqrt{R_Q+\log Q}\right\rceil.
+\tag{140.5}
+$$
+
+The $R_Q$ term in both quantities pays the new exponential frequency volume. A cutoff with only $\sqrt{\log Q}$ would leave an insufficient Gaussian tail.
+
+### 140.2 同一原始计数池与精确响应
+
+The actual count bridge retains the following hypotheses. The original floors give
+
+$$
+ \log q=c_qQ^3+O(1),\quad q/M=e^{-\phi Q^3+O(1)},
+ \quad c_q=\phi(1-\beta)/\beta\in(0,\phi),              \tag{140.6}
+$$
+
+where phi=((1+r)/2)log(1+r)+((1-r)/2)log(1-r)>0. The exact row scores and compensated coprime relation are
+
+$$
+ a_s=\log{1+r\over1-\epsilon_M}>0,\quad
+ b_s=\log{1-r\over1+\epsilon_M}<0,\quad
+ \epsilon_M={rq\over M-q},\quad B_0={M-q\over q},
+$$
+$$
+ \gcd(P,Q)=1,\quad1/10\le P/Q<1/8,\quad
+ h_Q=Qa_s+Pb_s,\quad
+ |h_Q|\le CQ(q/M+e^{-cQ^5}).                           \tag{140.7}
+$$
+
+All floors and this nonzero defect are retained. The row likelihood is exp(a_sk+b_sl); no exact rational relation between the scores is asserted.
+
+For each deterministic true support choose two distinct true signal labels u,v in the same positive parity class by a fixed pre-data ordering. Reveal all parities, their departure-slot pool membership mask, all outside labels, and the final path label or all pair arrivals. Denote this sigma-field by F_0, its positive/negative pool totals by K_+,K_-, and the unrevealed splits assigned to u by k,l.
+
+The actual path kernel is[1+b_S(x)chi(y)]/(2M). Conditional on the parity sequence its departure weights factor as1_{chi(x)=s_t}[1+b_S(x)s_(t+1)]/M; each class sum of b_S is zero, and the final label is uniform in its class. A same-class reassignment preserves the preceding transition's parity argument. For pairs the same factorization follows from the exact pair density. Since b_S(u)=b_S(v)=r, the conditional slot choices are jointly fair, giving exactly
+
+$$
+ (k,l)\mid F_0\sim Bin(K_+,1/2)\otimes Bin(K_-,1/2).   \tag{140.8}
+$$
+
+This is the original raw-label operation, not a likelihood intervention. Neither outside calibration nor central membership is held fixed by assumption when it actually varies. The outside data are fixed, while both varying rows and the full-q normalizer co-vary through the exact response.
+
+Remove only u,v to define the auxiliary outside family, let n_0 be its central count, and choose an outside central anchor c by a fixed F_0-measurable order. Remove c also and calibrate the remaining Bernoulli family at integer mean q-1. Write its multiplier t_o, variance D_o, third cumulant kappa_3^o; x=t_oL_0, p=x/(1+x),v=p(1-p),a_3=kappa_3^o/D_o. The original all-array event implies, by removing three bounded Bernoulli terms and integrating d(mean)/d(log odds)=variance,
+
+$$
+ D_o\asymp q,\quad n_0\asymp q/Q^3,\quad
+ |\log(t_oB_0)|\le2q^{-1/4},\quad x\in[1/3,3].          \tag{140.9}
+$$
+
+It has support-uniform failure bounded by the bounds (132.19)–(132.20)
+
+$$
+ b_{env}(Q)=C\{q^{-1/2}+\zeta_Q\sqrt q+M^{-8}q^{-3/2}
+                   +Q^3/q+Q/M+M^{-9}\},\quad\zeta_Q=CQ^9/M=o(q^{-1/2}).
+                                                               \tag{140.10}
+$$
+
+The observation in(140.9) is F_0-measurable and follows from that original event; no independence from the pool totals is required. Its failure is charged once. Conditional only on parity, the positive and negative total arrays are independent multinomials and K_+,K_- have binomial marginals with means2a_0Q^3+O(Q),2b_0Q^3+O(Q). Hence, except with probability Ce^-cQ,
+
+$$
+ |K_+-2a_0Q^3|+|K_--2b_0Q^3|\le CQ^2,\quad
+ cQ^3\le K_+,K_-\le CQ^3.                              \tag{140.11}
+$$
+
+Put t=log t_o+(a_sK_++b_sK_-)/2. The original floors imply|t|<=CQ^2 here. On(140.9), |t|<2L_Q implies
+
+$$
+ |a_sK_++b_sK_--2\log B_0|<4L_Q+4q^{-1/4}.             \tag{140.12}
+$$
+
+Conditional only on parity and K_-, this contains O(1+L_Q) integer K_+ values. Its binomial maximal atom is CQ^-3/2. Crucially we have removed t_o from this necessary condition before applying the marginal law; we do not condition on all of F_0 and then invent a fresh law for K_+. The common F_0-measurable event G_Q given by(140.9–11) and2L_Q<=|t|<=CQ^2 therefore satisfies
+
+$$
+ \sup_S P_S(G_Q^c)\le b_{env}(Q)+C[e^{-cQ}+Q^{-3/2}(1+L_Q)].
+                                                               \tag{140.13}
+$$
+
+Since L_Q=O(Q^(1/4)+log Q), this is o(1), with no growing number of proof labels.
+
+The exact full-q anchor probability, with E_s the outside elementary-symmetric coefficients and c_0=1,c_1=L_u+L_v,c_2=L_uL_v, is
+
+$$
+ p_*={L_0\sum_{h=0}^2c_hE_{q-1-h}\over
+                  \sum_{h=0}^2c_h(E_{q-h}+L_0E_{q-1-h})}.
+                                                               \tag{140.14}
+$$
+
+At the SAME outside calibration let
+
+$$
+ X=a_s(k-K_+/2)+b_s(l-K_-/2),\quad
+ f_t(X)={\sinh t\over\cosh t+\cosh X},\quad
+ p_{ref}=p+{v(a_3-1)\over2D_o}.
+$$
+
+Chapter 132's uniform local Bernoulli ratio at offsets s in[-2,1] is1-(s^2+a_3s)/(2D_o)+O(D_o^-2). Average against the common auxiliary anchor Z and pair occupancy U, with s=1-Z-U. The polynomial's difference at Z=1 versus0 is2U-1-a_3, whose mean is2f_t(X)+1-a_3. Its covariance with Z is v times that mean. Dividing the positive common normalizer gives the uniform exact response estimate
+
+$$
+ p_*=p_{ref}-{v\over D_o}f_t(X)+O(q^{-2}).              \tag{140.15}
+$$
+
+This uses fixed offsets only, not a growing-order or growing-deletion expansion. It is uniform over positive pair odds. It also ensures full-array recalibration within C/q throughout the fiber. Every central membership is retained:
+
+$$
+ C_0\in\{n_0,n_0+1,n_0+2\},\quad\mu_0=C_0p_*,\quad
+ d_0\asymp C_0\asymp q/Q^3.                            \tag{140.16}
+$$
+
+The exact center identity is exchangeability of central equal-likelihood labels under the full-q law. The anchor was removed only in the auxiliary coefficient family. No varying label is assumed to lie on the selected line.
+
+### 140.3 扩大过渡窗后的共同有理水平
+
+The same lawful two-sign projection is
+
+$$
+ H=Ql-Pk\in\mathbb Z,\quad H^0=(QK_--PK_+)/2,
+ \quad\bar X=(b_s/Q)(H-H^0),\quad
+ X=\bar X+(h_Q/Q)(k-K_+/2).                            \tag{140.17}
+$$
+
+Under(140.8), Ql-Pk=h fixes one k residue modulo Q. Finite cyclic inversion gives P(k equivalent a mod Q)<=Q^-1(1+Ce^-cQ), and the negative split's maximal atom is CQ^-3/2. Summing all preimages yields
+
+$$
+ \sup_hP(H=h\mid F_0)\le CQ^{-5/2}\quad\hbox{on }G_Q.   \tag{140.18}
+$$
+
+This is not a law for an independent empirical phase. Choose a fixed large D_w. The joint split window of radius W=D_wQ^(3/2)sqrt(log Q) has conditional failure at most4Q^-204 and implies
+
+$$
+ |H-H^0|\le CQ^{5/2}\sqrt{\log Q},\quad|\bar X|\le CQ^2,
+ \quad|X-\bar X|\le\delta_X,
+$$
+$$
+ \delta_X=CQ^{3/2}\sqrt{\log Q}(q/M+e^{-cQ^5}).          \tag{140.19}
+$$
+
+All hidden preimages are included. Since|f'_t|<=1/4, this discrepancy changes f by at most delta_X/4.
+
+Remove the two projected transition bands||bar X|-|t||<L_Q. Their total number of integer H sites is at most C Q(1+L_Q), because the score step|b_s|/Q is between fixed multiples of Q^-1. Equation(140.18) pays CQ^-3/2(1+L_Q) ONCE. We subsequently estimate under the original conditional law; avoidance of this event does not create a new product law.
+
+For T>=2L, the elementary exact inequalities
+
+$$
+ |X|\le T-L\Rightarrow |f_T(X)-1|\le4e^{-L},\quad
+ |X|\ge T+L\Rightarrow |f_T(X)|\le e^{-L}               \tag{140.20}
+$$
+
+follow from f_T=sinh T/(cosh T+cosh X). Use f_t=-f_|t| for t<0. On the retained window, (140.15) thus puts the SAME posterior scalar in the F_0-measurable union
+
+$$
+ p_*\in\bigcup_{z=-1}^1[p_z-r_Q,p_z+r_Q],\quad
+ p_z=p_{ref}-vz/D_o,\quad
+ r_Q={C\over q}(e^{-L_Q}+\delta_X+q^{-1}).              \tag{140.21}
+$$
+
+The realized plateau and membership may depend on the same allocations; all nine combinations are retained.
+
+Use the original bulk J={j:d_j>=Q^3600}, containing group0 throughout this fiber. Its actual half-integer dual energy is
+
+$$
+ E^{min}_{\ell,x}=4\pi^2\sum_{j\in J}d_j
+           \operatorname{dist}(\ell(1/2-\mu_j),\mathbb Z)^2.
+                                                               \tag{140.22}
+$$
+
+If E_min(ell)<=Q^2 with1<=ell<=N_Q, the central term gives an integer h and actual C in{n_0,n_0+1,n_0+2} such that
+
+$$
+ |\ell(1/2-Cp_*)-h|\le\tau_C:=C_1Q/\sqrt C.           \tag{140.23}
+$$
+
+For each(C,z), h/ell then belongs to the interval centered at1/2-Cp_z of radius Cr_Q+tau_C. Distinct rational VALUES with denominators at most N_Q differ by at least N_Q^-2, since their cross-product numerator is a nonzero integer. Large or negative numerators cause no change. At the NEW cutoff,
+
+$$
+ N_Q^2\le C e^{2R_Q}(R_Q+\log Q),
+$$
+$$
+ 2N_Q^2\max_C(Cr_Q+\tau_C)
+ \le C(R_Q+\log Q)\{Q^{-23}e^{-8R_Q}
+   +e^{2R_Q}[Q^{-3}\delta_X+Q^{-3}/q+Q^{5/2}/\sqrt q]\}
+                         \longrightarrow0.            \tag{140.24}
+$$
+
+The exponential q and compensated-score bounds(140.6–7) pay every term. In particular the original full-q O(q^-2) and hidden-fiber errors remain adequate; they were not discarded before comparing the enlarged band.
+
+Eventually each of the nine intervals contains at most one rational value r_(C,z) with denominator at most N_Q. This value is F_0-measurable. All nonreduced representations h/ell remain included. They impose the SAME necessary condition|p_*-(1/2-r_(C,z))/C|<=tau_C/C, using ell>=1. Therefore(140.15),(140.19) imply
+
+$$
+ |f_t(\bar X)-c_{C,z}|\le\varepsilon_Q,
+ \quad c_{C,z}={D_o\over v}\left(p_{ref}-{1/2-r_{C,z}\over C}\right),
+$$
+$$
+ \varepsilon_Q=CQ^{11/2}/\sqrt q+C/q+C\delta_X
+         \le e^{-c_qQ^3/2+O(\log Q)}.                  \tag{140.25}
+$$
+
+There is NO e^-L_Q plateau error in this thin-strip tolerance. That coarser error located the common rational; the exact response now determines its exponentially narrow preimage. No independent Diophantine premise is used.
+
+On the three retained real intervals, the exact second derivative
+
+$$
+ f_t''(X)={\sinh t(\cosh^2X-\cosh t\cosh X-2)
+                         \over(\cosh t+\cosh X)^3}     \tag{140.26}
+$$
+
+has one nonzero sign. Its inflections have absolute value between|t| and|t|+log6, so L_Q excludes them by more than1. Factoring the numerator quadratic in cosh X, using|t|,|bar X|<=CQ^2 and the score step b_s/Q, gives|partial_H^2 f_t(bar X)|>=cQ^-2e^-CQ^2=:kappa_Q. Thus4epsilon_Q<kappa_Q eventually.
+
+A strongly convex or concave function with curvature magnitude at least kappa has at most two integer points in|F-c|<=epsilon when4epsilon<kappa. Three ordered integers would give, by the strong secant inequality, a middle value at most c+epsilon-kappa/2<c-epsilon in the convex case; negate F for concavity. This also covers the thin neighborhood, not only the exact level. Applied on the three intervals it leaves at most six H values per candidate. Equation(140.18) counts every hidden preimage of each H. Union over nine candidates, not N_Q harmonics, yields the NEW actual arithmetic theorem
+
+$$
+ \boxed{\sup_S P_S\{\exists1\le|\ell|\le N_Q:
+                 E^{min}_{\ell,x}\le Q^2\}
+ \le b_{env}(Q)+C[e^{-cQ}+Q^{-3/2}(1+L_Q)+Q^{-5/2}]
+                         +4Q^{-204}\longrightarrow0.} \tag{140.27}
+$$
+
+Negative harmonics have the same energy. The new window payment is O(Q^-5/4+Q^-3/2 log Q), not a hidden constant. The common environment, pool law, full-q offset, all memberships and candidate levels concern one actual realization in each experiment. This arithmetic theorem alone is not the full conclusion; the following return is essential.
+
+### 140.4 不含逆噪声的带标记计数回接
+
+Keep J={j:d_j>=Q^3600} and E={j notin J:C_j>0}. The occupancy result (111.7) gives|J|=O(Q^2), |E|=O(1), H subset J and p_j in[1/4,3/4] on the original good events. No threshold increases with Q beyond this already fixed power. All E groups retain their original binomial factors, surprise, energy and physical centers.
+
+Let Q_x be the calibrated binomial product. On J use the normalized lattice Gaussian g_j(k) proportional to exp[-(k-m_j)^2/(2d_j)], m_j=C_jp_j, d_j=C_jp_j(1-p_j); on E keep the exact binomial. This comparison Q_x^lat lives on the SAME integer tuple space, with zero-extension of binomial signed measures. Each side uses its exact coordinate-centered surprise. Equation (111.10) proves, for each fixed h<=4, full absolute signed-mass difference at most C_hd_j^-1/8; it follows from uniform Stirling on|k-m|<=d^(5/8), fixed-degree tails and exact centering. No noise enters that estimate.
+
+For h<=2 let eta_h(k)=Q_x(k)s_Q(k)^h and eta_h^lat(k)=Q_x^lat(k)s_lat(k)^h. Expand the sums of coordinate-centered surprises and telescope the products. There are at most CQ^4 mark terms and CQ^2 replacements; all remaining fixed marked factors have bounded total variation. Thus
+
+$$
+ \max_{h\le2}\|\eta_h-\eta_h^{lat}\|_{TV}\le CQ^{-444},
+                                                               \tag{140.28}
+$$
+
+where TV is full absolute mass. This is a signed-mark theorem, not scalar TV promoted to unbounded moments.
+
+For every sigma>0 the common SAME-residual kernel is
+
+$$
+ K_r(k,y)=((y-T(k))/\sigma)^{2r}\varphi_\sigma(y-T(k)),
+ \quad\int K_r(k,y)dy=E G^{2r},\quad0\le r\le2.
+$$
+
+It is nonnegative and has the displayed noise-independent signed L1 operator norm. Expanding W=s+G^2/2 gives, with q_h(y)dy=E[W^h;Y in dy],
+
+$$
+ q_h^Q-q_h^{lat}=\sum_{r=0}^h{h\choose r}2^{-r}
+                    K_r(\eta_{h-r}-\eta_{h-r}^{lat}),
+ \quad\max_{h\le2}\|q_h^Q-q_h^{lat}\|_1\le CQ^{-444}.  \tag{140.29}
+$$
+
+The scalar T(k) and its original mu,V are exactly the same. A continuous tuple replacement changing T would not have this contraction. No 1/sigma, 1/rho, density division or frequency cutoff occurs.
+
+For the complete conditional variance density q_2-q_1^2/q_0, clip the variational expression q_1^2/q_0=sup_z(2zq_1-z^2q_0) at|z|<=b. The difference is bounded in L1 by epsilon_2+2b epsilon_1+b^2 epsilon_0+(E|W|^4+E|W_lat|^4)/b^2. Both fourth target moments are CQ^4. At b=Q^10 this costs O(Q^-16)+O(Q^-424). Exact prior-variance difference is O(Q^-448). The exact Vprior=O(Q^2) mass payment and original A^2/Lambda=O(Q^(1/2)), C_x=O(Q^(1/4)) payments vanish. Bounded fourth output moments give weighted mass convergence through Cauchy–Schwarz, still independently of lower noise.
+
+The original selected/full-q law is returned by(101.9), (101.15) and (111.16)–(111.17):0<=dP_x/dQ_x<=C and a_x=||dP_x/dQ_x-1||_2=O_P(Q^-5/2). Its SAME-channel centered variance-density difference, including the log-density surprise term, costs Ca_xQ^2=o_P(1); weighted output mass costs Ca_x. This proof precedes noise and does not divide by sigma. Consequently at(140.1),
+
+$$
+ \|f_xD_x-f_{lat}D_{lat}\|_1=o_P(1),\qquad
+ \int(1+y^2)|f_x-f_{lat}|dy=o_P(1).                    \tag{140.30}
+$$
+
+D_lat subtracts its own exact prior variance and adds the ORIGINAL finite A^2/Lambda-C_xy. We do not claim decay of the old count/lattice Fourier-L1 bound here; it is bypassed by the stronger all-output signed-kernel relation actually needed for the return.
+
+### 140.5 精确实温度格点模态
+
+All statements below hold on a fixed localization of the original regularity constants. They are uniform in the support and actual centers; constants may depend on that localization and the fixed model parameters. The localization can be released after Q tends to infinity. Define
+
+$$
+ w_j=d_j/\mathcal B,\quad a_j=(\mu_j-m_j)/\sqrt{d_j},
+ \quad\epsilon=\max_{j\in J}w_j\asymp Q^{-1/4},
+$$
+$$
+ P(s)=\prod_{j\in J}(1-2isw_j)^{-1/2},\quad
+ |P(s)|\le(1+c\epsilon^2s^2)^{-c'/\epsilon^2}.          \tag{140.31}
+$$
+
+At least c epsilon^-2 central coordinates have w_j between c epsilon and epsilon. Every fixed Fourier moment of|P| is bounded; beyond c/epsilon its tail with any fixed polynomial is at most a polynomial in Q times exp(-c sqrt Q). Also||wa||=O(Q^-5/2), so on|s|<=C/epsilon the noncentral translation s wa is O(Q^-9/4). These are same-array facts, unchanged by the proof labels.
+
+Tilt the SAME joint prior by exp(uW), W=s_lat+G^2/2, and normalize for real u near0. Keep the original physical y,T,mu and intercept fixed. Write tau=1-u. The bulk factors are proportional to exp[-tau(k-m_j)^2/(2d_j)], E has its exact normalized surprise tilt, and G has variance1/tau. Centering constants cancel within the normalized tilt; none changes physical y. Let f_lat,u be this output density and g_u its continuous-J Gaussian reference with the SAME E factors, centers, intercept and residual.
+
+The real positive lattice normalization is
+
+$$
+ c_{lat}(u)=\prod_{j\in J}{\sqrt{2\pi d_j/\tau}\over
+                  \sum_{n\in\mathbb Z}e^{-\tau(n-m_j)^2/(2d_j)}}.
+$$
+
+Real Poisson summation gives, directly through two derivatives,
+
+$$
+ |c_{lat}(0)-1|+|c'_{lat}(0)|+|c''_{lat}(0)|
+                           \le C Q^4e^{-cQ^{3600}}.    \tag{140.32}
+$$
+
+For each coordinate the differentiated nonzero-dual terms are polynomials of fixed degree in d_j times exp(-c d_j); absorb these polynomials into half the exponential, then multiply over O(Q^2) factors. No d_max factor or unproved complex zero-free region is needed. This explicit exponential bound, rather than the notation 'smaller than any fixed power', will be used when summing periods.
+
+At t_ell=pi ell mathcal B and t=t_ell+s, retain exactly
+
+$$
+ \xi_{\ell k,j}=\sqrt{d_j}[\pi\ell(1-2\mu_j)-2\pi k_j],
+ \quad E_{\ell k}=\sum_J\xi_{\ell k,j}^2,\quad
+ \eta_\ell=\pi\ell\rho_Q,
+$$
+$$
+ z_{\ell k}=e^{i\pi\ell(\sum_{all}\mu_j^2-B^2V)}
+                e^{i\sum_J[\pi\ell(1-2\mu_j)-2\pi k_j]m_j},
+$$
+$$
+ H_{E,\ell}(u,s)=E_{E,u}\exp\{i\sum_E\pi\ell(1-2\mu_j)R_j
+                         +is\mathcal B^{-1}\sum_E(R_j-\mu_j)^2\}.
+$$
+
+The first two u derivatives of H_E retain its centered first/two surprise marks JOINTLY with the energy, and are bounded by a fixed constant. Completion of the same Gaussian squares gives the EXACT finite-array identity
+
+$$
+ \Psi_{\ell k}(u,s)=c_{lat}(u)z_{\ell k}
+ e^{is(\sum_Jw_ja_j^2-V/\sqrt\delta)}
+ \prod_J\left({\tau\over\tau-2isw_j}\right)^{1/2}
+$$
+$$
+ \quad\times\exp\left[-\frac12\sum_J
+ { (\xi_{\ell k,j}-2sw_ja_j)^2\over\tau-2isw_j}
+               -{(\eta_\ell+\sigma s)^2\over2\tau}\right]
+ H_{E,\ell}(u,s).                                     \tag{140.33}
+$$
+
+The inverse Fourier phase is exp[-i(t_ell+s)y]. It does not vary with u. Both signs in1-2mu and every outside term remain. In particular the residual is eta_ell+sigma s, not eta_ell followed by a different independent noise graph. The ell=k=0 integrand is EXACTLY c_lat(u) times the characteristic function of g_u. No approximate Gaussian leading term is substituted for that zero mode.
+
+Differentiate(140.33) separately at u=0 for j=0,1,2. On|s|<=1/(8epsilon), Re(1-2isw_j)^-1>=16/17; also||xi-2swa||^2>=E/2-4s^2||wa||^2 and(eta+sigma s)^2>=eta^2/2-sigma^2s^2. Product-rule determinant losses are at most CQ^4; exponent derivatives have a fixed polynomial degree in E+eta^2. Including E marks and(140.32), a convenient uniform majorant is
+
+$$
+ |\partial_u^j\Psi_{\ell k}(0,s)|
+ \le CQ^8|P(s)|(1+E_{\ell k}+\eta_\ell^2)^8
+                  e^{-(E_{\ell k}+\eta_\ell^2)/16},\quad j\le2.
+                                                               \tag{140.34}
+$$
+
+The SAME residual derivatives are exactly the normalized h2/h4 polynomials; differentiating exp[-eta^2/(2tau)] at0 gives(-eta^2/2)e^-eta²/2 and(eta^4/4-eta^2)e^-eta²/2, with eta replaced by eta+sigma s in the actual formula. No bare 1/sigma appears. For every finite Q, positive sigma and Gaussian tails justify the two differentiations and Fourier inversion on a real neighborhood. The bounds here and in Section 140.6 supply uniform absolutely summable differentiated majorants. We never differentiate a C0 approximation.
+
+### 140.6 无多项式体积误差的全频轴接口
+
+Define the integrated marked-alias sufficient quantity
+
+$$
+ \mathcal A_x(\rho)=\sum_{\ell\ne0}
+             e^{-(E^{min}_{\ell,x}+\pi^2\rho^2\ell^2)/512}.
+$$
+
+We prove the following interface for the unchanged physical array, whenever0<rho<=1:
+
+$$
+ \boxed{\max_{j\le2}\|\partial_u^j(f_{lat,u}-g_u)|_0\|_\infty
+ \le CQ^{10}\{\mathcal A_x(\rho)
+                +(1+\rho^{-1})e^{-c\sqrt Q}
+                +(1+\rho^{-1})e^{-cQ^{3600}}\}.}       \tag{140.35}
+$$
+
+All constants are independent of rho,Q and the support on the fixed good-data localization; c>0 may depend on the fixed model/localization. The weaker joint sufficient condition
+
+$$
+ Q^{200}\{\mathcal A_x(\rho)+(1+\rho^{-1})e^{-c\sqrt Q}
+                   +(1+\rho^{-1})e^{-cQ^{3600}}\}\to0 \tag{140.36}
+$$
+
+therefore controls the complete quotient below. It does not require every coordinate or every alias independently large. We use the stronger actual event(140.27) only to verify this integrated condition here.
+
+**Off the wide half-integer strips.** The uniform quadratic-Gauss calculation in (109.8)–(109.14) supplies a fixed contraction r_0<1 for each unmarked central factor outside dist(theta,(1/2)Z)<=R_0/D, with theta=t/(2pi mathcal B), D comparable q/Q^3 and fixed R_0. It follows by Dirichlet approximation: large denominators and large offsets contract by the coarse Gauss bound; the finitely many denominators>=3 contract by sqrt(2/3)<1. Exact Gaussian lattice factors satisfy the same bound, with the binomial approximation term absent (or harmlessly enlarged in the majorant). This is a statement uniform in all empirical linear centers on the entire frequency line.
+
+Reserve c sqrt Q unmarked central factors for contraction and sixteen other unmarked factors for the period-one envelope P_(D,16), whose period integral is C/D. Every marked expansion through degree2 has at most two marked coordinates and at most CQ^4 terms, so these reserves remain available. Fixed coordinate-centered moments bound the marked factors. The SAME residual factors are(1-sigma^2t^2)e^-sigma²t²/2 and(3-6sigma²t²+sigma^4t^4)e^-sigma²t²/2. Their fixed polynomials are absorbed into half the Gaussian exponent. The sum of Gaussian suprema on unit theta intervals is at most C(1+rho^-1). Therefore the unnormalized zero/one/two moment transforms have off-strip integral at most
+
+$$
+ C(1+\rho^{-1})Q^{17/4}e^{-c\sqrt Q}.
+$$
+
+To pass to NORMALIZED tilt derivatives use the exact formulas f'_0=q_1-(1/2)q_0 and f''_0=q_2-q_1-(V_lat+1/4)q_0. They follow because E W=1/2 and E W²=V_lat+3/4; V_lat=O(Q²). This costs at most Q², absorbed by Q10 in(140.35). There is no separate O(Q^-430) approximation in this argument: all factors at this step are already exact lattice Gaussian or exact retained E factors. The count replacement was completed in L1 by(140.29).
+
+**Annular part of each wide strip.** Choose a smooth cutoff chi(s), independent of u, supported on|s|<=1/(8epsilon) and equal to1 on|s|<=1/(16epsilon). The original wide strip has|s|<=C_0/epsilon for a fixed C_0. On the intervening annulus the exact Poisson identity(140.33) still holds. Re(1-2isw_j)^-1 has a positive lower bound depending only on C_0. The same two differentiations give CQ8 times a fixed polynomial in E+eta² times exp[-c(E+eta²)]|P(s)|, with different fixed c. The shifts s wa and sigma s remain small. Polynomial absorption and the nearest-dual-grid sum bound the total over k by CQ8e^-c eta²|P(s)|. Equation(140.31) makes the annular integral polynomial in Q times exp(-c sqrt Q). Summing ell costs C(1+rho^-1). This is the second exponential term on the whole line, not deletion of a frequency annulus without payment. The fixed finite polynomial powers are absorbed in Q10 or by decreasing c. No u derivative hits chi, because physical s and the cutoff are fixed.
+
+**The inner strips.** Integrate(140.34). To sum all dual vectors, absorb its polynomial into a portion of the exponential and extract exp[-(E_min+eta²)/512]. For each coordinate, a Gaussian sum over the grid of spacing2pi sqrt(d_j), with arbitrary translate, is at most1+C exp(-c'd_j) after sufficient exponent slack. At a nearest-grid tie the two terms are both exponentially small; this does not create a factor2 per coordinate. Multiplication over O(Q²) coordinates is bounded by exp[O(Q²e^-c'Q^3600)], so no C^|J| loss appears. Every fixed Fourier moment of|P| is bounded. The nonzero-ell sum is therefore CQ8 A_x(rho), with no additional rho^-1 outside that actual sum. The ell=0,k!=0 terms have energy at least4pi²d_min and contribute CQ8 exp(-cQ3600).
+
+**Exact zero mode and reference tails.** The ell=k=0 term equals c_lat(u) times the Fourier transform of g_u. Restore its full real s-axis by bounding the complement of chi with(140.31) and the same fixed two mark polynomials, costing CQ8 exp(-c sqrt Q). Its normalization error and its first two derivatives cost CQ8 exp(-cQ3600) by(140.32), since the reference transforms and their two derivatives have bounded polynomial Fourier moments. Neither cost is multiplied by an uncontrolled number of harmonics: it is one zero mode. Allowing the larger(1+rho^-1) factor on these exponential errors gives the stated convenient bound.
+
+All four pieces prove(140.35). This proof did not import124.26's weakened polynomial error. Its only lattice localization costs are displayed exponentials. No large-count cutoff changed, no E tuple disappeared, no high-order expansion order grows, and no complex theta denominator is divided by. The count-to-lattice polynomial error remains noise-free on a different normed interface, which is why it can coexist with the enlarged Fourier volume.
+
+### 140.7 伸展指数噪声下的别名总量
+
+On the common arithmetic event(140.27), split A_x at N_Q. Below it E_min>Q². Above it use the noise damping and rho²N_Q²>=10^6(R_Q+log Q). Gaussian summation with exponent slack gives
+
+$$
+ \mathcal A_x(\rho_Q)\le C(1+\rho_Q^{-1})
+   [e^{-Q^2/1024}+e^{-\pi^2\rho_Q^2N_Q^2/1024}]
+$$
+$$
+ \le C e^{R_Q}\{e^{-Q^2/1024}
+       +e^{-c_*(R_Q+\log Q)}\},\qquad
+ c_*={10^6\pi^2\over1024}>9000.                       \tag{140.37}
+$$
+
+Thus the actual marked-alias sum beats every fixed power of Q. The large cutoff is not merely an arithmetic convenience: its R_Q term is what pays the factor e^R in this tail. The off-strip/annular volume loss is bounded by Cexp(R_Q-c sqrt Q), which also beats every fixed power because R_Q=Q^(1/4). The normalization volume loss is Cexp(R_Q-cQ3600). Consequently(140.36) holds in support-uniform actual probability, and(140.35) yields, for example,
+
+$$
+ \max_{j\le2}\|\Delta_j\|_\infty\le C Q^{-400},\qquad
+ \Delta_j=\partial_u^j(f_{lat,u}-g_u)|_{u=0}.           \tag{140.38}
+$$
+
+This fixed displayed power is a consequence of the proved exponentials, not a raised approximation order. The probability cost of the common event is(140.27), paid once. No estimate of its complement's conditional varentropy is needed for convergence in raw-data probability, and no expectation theorem over rare raw environments is claimed.
+
+### 140.8 正分母、非线性条件方差和全部尾部
+
+Use the established moderate interval|y|<=h_out=sqrt(100nu log Q). The same continuous-bulk reference lower bound g_0(y)>=cQ^-60 and normalized derivative bounds|g_1|+|g_2|<=CQ4 remain valid. Their proof uses only sigma<=mathcal B^-1, unchanged original E energy at most CQ7202/mathcal B, original noncentral errors and a FIXED sufficiently high order reference expansion. Shrinking sigma improves these bounds; no reference remainder is summed over harmonics. In particular(140.38) first proves the REAL ratio F=f_lat,u/g_u at u=0 is at least1/2.
+
+The exact quotient formulas are
+
+$$
+ F-1=\Delta_0/g_0,\qquad
+ F'=\Delta_1/g_0-\Delta_0g_1/g_0^2,
+$$
+$$
+ F''=\Delta_2/g_0-2\Delta_1g_1/g_0^2
+           +\Delta_0(2g_1^2/g_0^3-g_2/g_0^2).          \tag{140.39}
+$$
+
+The largest coefficient costs Q188. Thus|partial_u² log F|<=CQ^-200 on the moderate interval. This keeps the conditional-mean-square subtraction; no posterior variance follows from a C0 approximation alone. More generally the integrated criterion(140.36) suffices because10+188<200, without requiring the uniform Q² energy bound used in (140.27).
+
+For each law the SAME normalized tilt at fixed y gives exactly
+
+$$
+ Vpost(y)-Vprior=1/2+\partial_u^2\log f_u(y)|_0.        \tag{140.40}
+$$
+
+Bayes identifies posterior surprise with s+G²/2 plus a y-only constant, while Var(s+G²/2)=Vprior+1/2 before conditioning. Subtracting the lattice/reference versions cancels the original finite A,Lambda,C_x additions and gives D_lat-D_g=partial_u²log F. Physical y is never rescaled with temperature.
+
+The moderate interval is not the whole target. For real output-mgf parameters|z|<=C sqrt(log Q), completion of each lattice Gaussian square differs from the continuous one by1+O(exp(-cd_j)), uniformly in the shifted real mean. Their product error is1+O(Q²exp(-cQ3600)). The same outside factor and residual give the exact continuous log mgf
+
+$$
+ -zV/\sqrt\delta-\frac12\sum_J\log(1-2zw_j)
+       +\sum_J{zw_ja_j^2\over1-2zw_j}
+       +\sigma^2z^2/2+\log E_E e^{zT_E}.              \tag{140.41}
+$$
+
+The large linear trace cancels. The remaining mean is O(a_x²/sqrt(delta))+O(Q7202/mathcal B), variance tends to nu and the higher terms are bounded by C[epsilon|z|³+a_x²z²+sigma²z²+|z|Q7202/mathcal B]. No lower noise bound enters. Chernoff therefore gives
+
+$$
+ P_{lat}(|Y|>h_{out})+P_g(|Y|>h_{out})\le CQ^{-40}.    \tag{140.42}
+$$
+
+The fourth target norm is CQ and fixed fourth output moments are bounded. On the tail, conditional Jensen and Cauchy–Schwarz bound the integral of posterior variance by CQ² times the square-root tail, hence O(Q^-18). Exact prior variance O(Q²), A²/Lambda=O(Q^(1/2)), C_x=O(Q^(1/4)) and the quadratic R_* have vanishing tail payments. No lower-density bound is needed there.
+
+The continuous reference comparison uses the following mapping: condition on all outside counts/Gaussians and the SAME G, then translate OUTSIDE ENERGY in the independent core density BEFORE separating surprise. The operative unweighted(101.19) derivative bound costs Cdelta^-1/2 times the outside-energy error, giving O(Q^-199.5) joint variation. Clipping (101.8) at Q10 costs O(Q^-7). Only then is outside surprise independent of core output and its EXACT prior-surprise variance canceled. The noncentral comparison (101.22) and clipping (101.23) cost O(Q^-1/4[1+(log Q)^(3/4)]). All original nonbulk counts and their marks were present before this operation. No division by sigma occurs.
+
+The purely reference calculation(101.25)–(101.31) needs sigma->0 with an upper bound, not the older actual-law quantile-coupling lower-noise restriction. It retains Lambda=nu_0+sigma² exactly and proves integral g|D_g-R_*|->0. Combine it with(140.39–42), then use(140.30) and weighted mass convergence for the fixed quadratic R_*. This proves the ORIGINAL law(140.2). The same weighted comparisons give E_xY²->nu and integrating R_* proves(140.4), keeping the exact C_xm_x. No unbounded moment convergence is inferred from weak convergence or scalar TV.
+
+### 140.9 联合费用与适用边界
+
+| Required relation | Proved cost at the new noise | Where paid |
+| --- | --- | --- |
+| Common environment and product/transition exclusions | b_env+C[Q^-5/4+Q^-3/2 log Q+e^-cQ] | Once, original raw probability |
+| All shared rational candidates | At most9; each at most6 projected integers | Full conditional two-sign law |
+| Hidden projected preimage and exact full-q remainder | delta_X and O(q^-2) | Thin strip140.25; no plateau error inserted |
+| Signed count/lattice tuple moments | CQ^-444 | Noise-free common kernel on all outputs |
+| Conditional-mean-square clipping | O(Q^-16)+O(Q^-424) | Before density division |
+| Product exact prior variance | O(Q^-448) | Finite prior and mass payment |
+| Selected full-q surprise return | Ca_xQ²=O_P(Q^-1/2) | Same channel, no inverse noise |
+| Nonzero marked aliases | CQ8 A_x(rho), with140.37 | Actual common energy and same residual |
+| Entire-axis off-strip/annular loss | CQ10 exp(R_Q-c sqrt Q) | Exact lattice stage only |
+| Lattice real normalization/dual zero-harmonic error | CQ10 exp(R_Q-cQ3600) | Two explicit real derivatives |
+| Moderate real quotient | At most CQ188 times density-derivative errors | Denominator proved before division |
+| All-output variance tails | CQ^-18 | Mgf plus conditional Jensen |
+| Outside-energy translation and noncentral reference | O(Q^-7)+O(Q^-1/4[1+(log Q)^(3/4)]) | Energy translated before surprise cancellation |
+
+There is no remaining(1+rho^-1)Q^-428 term. Its old upper bound remains valid but unusable; it is not asserted to have magically improved. The new argument uses111's signed tuple contraction for the part with polynomial approximation error and keeps exact lattice localization exponential for the period-summed part. The full original scalar, finite coefficients and auxiliary partition are unchanged. Fixed moment/derivative orders only are used. Constants depend on the original fixed parameters, bandwidth comparison constants and fixed good-event bounds, never on Q or support. Good-event constants are localized and then released in the usual tightness argument.
+
+## 追加锚（本行以下为增补区）

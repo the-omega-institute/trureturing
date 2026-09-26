@@ -5588,3 +5588,15 @@ Yingdong Lu，*Non-Asymptotic Concentration of Magnetization in the Curie-Weiss 
 两份原 PDF 的抽取分别为 45013、12732 字节，抽取警告分别为 120247、33399 字节。核对范围为第一篇的模型、定理 3.1/3.4/3.5、注记 3.2、命题 4.8 及其证明，以及第二篇的完整抽取正文；不声称复核第一篇全部证明。高斯条件化、二次型行列式、实指数倾斜、Fourier 反演、隐函数求导和多井 Laplace 方法均为成熟工具。本章新增推导是精确鞍点前因子的两次参数导数、移动尺度上的可积密度比和相对计数回接；不能对第 137 章速度尺度的误差直接求导来替代它们。
 
 原物理输出导致 $2\sqrt\eta\{r_*(Q,y)-r_*(Q,0)\}=y/\sqrt{2C_2}+o(1)$。该局部位移在主导双阱作用量中不可见，因此仅用主导井位置不足以断言零均值局部高斯极限。正文保留精确中心后才取极限，不增加 $\eta$ 或噪声的速率限制。第 137 章结论保持原范围；本章不主张离散与连续律的全变差收敛、增长测试阶数、熵导数、全局相图或全球原创性。
+
+## 谱边界第 140 章补充：共同残差核与精确格点局部化
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 140 章在原固定幅度、$\beta\in(1/2,1)$、原取整序列和完整选择后验中，将加权方差熵结论推进到 $\rho_Q\asymp\exp(-Q^{1/4})$。同一整数元组上的中心惊异有符号质量，经同一个残差核取得不含逆噪声的全输出比较；随后只对精确格点辅助律作 Poisson 局部化和两次实温度求导。前一步的多项式误差不被重复计入后一步的谐波体积。
+
+Alex Dytso、H. Vincent Poor、Shlomo Shamai (Shitz)，*A General Derivative Identity for the Conditional Mean Estimator in Gaussian Noise and Some Applications*，[arXiv:2104.01883v1](https://arxiv.org/abs/2104.01883v1)。核对原始版本中的主导数定理、附录 A 的 Bayes／商求导证明，以及条件多元累积量生成函数定理和证明。主定理假设 $Y=X+N$，$N$ 是独立非退化 Gaussian，$U-X-Y$ 成 Markov 链，并要求每个输出处 $\mathbb E[\|U\|\mid Y=y]$ 与 $\mathbb E[\|U\|\|X\|\mid Y=y]$ 有限；其结论是输出 Jacobian 等于 $K_N^{-1}\operatorname{Cov}(X,U\mid Y=y)$。源文件版本为 `2104.01883v1`，原始归档 SHA256 `07cf4ec3b4ae66ea6082537e96c060baa4accb13fd0edf7f86856ff2b4b562db`，主 TeX `Camera-Ready_v4.tex` SHA256 `ad005a76dfafcfeb9688390e40137cf3a6a4cb7572f9690b41652789270c9c16`。
+
+在本卷有限计数实验中，可以取 $X=T$、$U$ 为只依赖计数的惊异标记；但该公式含 $\sigma^{-2}$，不直接给超窄噪声下的一致估计。完整后验惊异中的 $W=s+G^2/2$ 不能直接代入这个 Markov 前提：同一残差给 $\operatorname{Cov}(W,(Y-T)^2\mid T)=\sigma^2>0$。文献的输入条件累积量和输出导数，也不同于本章在固定物理输出处取归一化惊异倾斜导数。因此它承担成熟工具归属及迁移边界，本章的固定输出方差恒等式和一致带标记估计由正文直接证明。
+
+格点 Gaussian 的 theta 表示、实矩求导及 Gauss／Poisson 工具继续归属第 111、138 章已列的 Agostini–Amendola、Ling–Luzzi–Belfiore–Stehlé 及相关原始文献；标量平坦度不能自动提供两次导数。第 140 章保留全部原外部计数、经验中心、有限 $A,\Lambda,C_x,m_x$ 及同一测量残差，证明全频轴误差为实际别名和加上 $(1+\rho_Q^{-1})e^{-c\sqrt Q}$ 与格点正规化的更小指数项。扩大过渡宽度和 Gaussian 谐波截止后，至多九个共同有理响应事件控制所有半整数谐波，整个加权 $L^1$、条件均值平方和尾部才得以回接。
+
+本章是已有共同核与格点方法在同一实际模型中的新组合及估计，不以有限文献检索宣称全局原创。结论分别在原 pair/path 数据概率下对规定大小的确定支持一致；没有零噪声、必要阈值、原始环境期望、任意更强窄带宽或计算效率结论。
