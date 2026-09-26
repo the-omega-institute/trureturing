@@ -293,7 +293,11 @@ def sourceAvoidsTargetProof (source target : Name) : CompileM Bool := do
     let some ownerIdx := ordinal owner | return false
     if ownerIdx < targetIdx then continue
     let info ← getConstInfo name
-    if name == target || (owner == targetOwner && info.isTheorem) then return false
+    if name == target || (owner == targetOwner && info.isTheorem) then
+      if source == `D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration.massReadout ||
+          source == `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.actualCompletion then
+        throwError "debug:sourceProof:{source}:blockedBy={name}:target={target}"
+      return false
     pending := info.type.getUsedConstants.toList ++ pending
     if let some value := info.value? then
       pending := value.getUsedConstants.toList ++ pending
