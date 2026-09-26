@@ -2,7 +2,7 @@
 
 ## Abstract
 
-On binary words with L zeros and N - L ones, where a move rotates three consecutive letters one place in either direction, every word can be turned into every other in at most the ceiling of L(N - L)/2 moves, and turning the sorted word 0...01...1 into its reversal needs that many, as conjectured for k = 3 in Conjecture 16 of CayleyPy-4.
+For 2 <= L <= N and N > 3, on binary words with L zeros and N - L ones, where a move rotates three consecutive letters one place in either direction, every word can be turned into every other in at most the ceiling of L(N - L)/2 moves, and turning the sorted word 0...01...1 into its reversal needs that many, as conjectured for k = 3 in Conjecture 16 of CayleyPy-4.
 
 **Definition 1.1 (The consecutive cycle on a window).**
 
@@ -54,19 +54,7 @@ $$(\operatorname{Reach}\left(k, 0, x, y\right) \Leftrightarrow (y = x)) \land (\
 
 Reach(k, m, x, y) says that y is reached from x in at most m moves: with no move only x itself, and with m + 1 moves every word reached within m moves together with every neighbour of such a word.
 
-**Definition 1.5 (The central state).**
-
-$$\operatorname{central}\left(L, N\right) = \operatorname{append}\left(\operatorname{replicate}\left(L, false\right), \operatorname{replicate}\left(N - L, true\right)\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.central` (`✓ std3`).
-
-*Citation.* A. Chervov and others (2026). *CayleyPy-4: AI-Holography. Towards analogs of holographic string dualities for AI tasks*. DOI: [10.48550/arXiv.2603.22195](https://doi.org/10.48550/arXiv.2603.22195). URL: <https://arxiv.org/abs/2603.22195v1>.
-
-*Commentary.*
-
-CayleyPy's central state [0]^L + [1]^(N - L): L zeros (false) followed by N - L ones (true).
-
-**Definition 1.6 (Vertices of the coset graph).**
+**Definition 1.5 (Vertices of the coset graph).**
 
 $$\operatorname{IsVertex}\left(L, N, x\right) \Leftrightarrow (\operatorname{length}\left(x\right) = N \land \operatorname{count}\left(false, x\right) = L)$$
 
@@ -78,9 +66,9 @@ $$\operatorname{IsVertex}\left(L, N, x\right) \Leftrightarrow (\operatorname{len
 
 The vertices of the Schreier coset graph of S_N / (S_L x S_(N - L)) are the words of length N with exactly L zeros.
 
-**Definition 1.7 (Largest distance from the central state).**
+**Definition 1.6 (Largest distance from the central state).**
 
-$$\operatorname{ecc}\left(k, L, N\right) = \operatorname{sInf}\left(\{m\in\mathbb{N}:\forall y \in \operatorname{List}\left(Bool\right),\; (\operatorname{IsVertex}\left(L, N, y\right)) \Rightarrow (\operatorname{Reach}\left(k, m, \operatorname{central}\left(L, N\right), y\right))\}\right)$$
+$$\operatorname{ecc}\left(k, L, N\right) = \operatorname{sInf}\left(\{m\in\mathbb{N}:\forall y \in \operatorname{List}\left(Bool\right),\; (\operatorname{IsVertex}\left(L, N, y\right)) \Rightarrow (\operatorname{Reach}\left(k, m, \operatorname{normalWord}\left(L, N - L\right), y\right))\}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.ecc` (`✓ std3`).
 
@@ -90,9 +78,9 @@ $$\operatorname{ecc}\left(k, L, N\right) = \operatorname{sInf}\left(\{m\in\mathb
 
 *Commentary.*
 
-The least m such that every vertex is reached from the central state within m moves. This is the quantity CayleyPy's growth computation reports as the diameter of a coset graph.
+The least m such that every vertex is reached from the central state within m moves. The central state [0]^L + [1]^(N - L), L zeros followed by N - L ones, is normalWord(L, N - L) of D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange, reused here. This is the quantity CayleyPy's growth computation reports as the diameter of a coset graph.
 
-**Definition 1.8 (Diameter).**
+**Definition 1.7 (Diameter).**
 
 $$\operatorname{diam}\left(k, L, N\right) = \operatorname{sInf}\left(\{m\in\mathbb{N}:\forall x \in \operatorname{List}\left(Bool\right),\; \forall y \in \operatorname{List}\left(Bool\right),\; (\operatorname{IsVertex}\left(L, N, x\right) \land \operatorname{IsVertex}\left(L, N, y\right)) \Rightarrow (\operatorname{Reach}\left(k, m, x, y\right))\}\right)$$
 
@@ -106,7 +94,7 @@ $$\operatorname{diam}\left(k, L, N\right) = \operatorname{sInf}\left(\{m\in\math
 
 The least m such that every vertex is reached from every vertex within m moves, the diameter in the graph-theoretic sense.
 
-**Definition 1.9 (The k = 3 clause of Conjecture 16).**
+**Definition 1.8 (The k = 3 clause of Conjecture 16).**
 
 $$claim \Leftrightarrow (\forall L \in \mathbb{N},\; \forall N \in \mathbb{N},\; (\left(2 \le L \land L \le N\right) \land 3 < N) \Rightarrow (\operatorname{ecc}\left(3, L, N\right) = \left\lfloor\frac{L \cdot (N - L) + 1}{2}\right\rfloor \land \operatorname{diam}\left(3, L, N\right) = \left\lfloor\frac{L \cdot (N - L) + 1}{2}\right\rfloor))$$
 
@@ -118,7 +106,7 @@ $$claim \Leftrightarrow (\forall L \in \mathbb{N},\; \forall N \in \mathbb{N},\;
 
 Conjecture 16 of the source (inverse-closed case), clause k = 3: for L >= 2 the diameter is the ceiling of L(N - L)/2, which equals the floor of (L(N - L) + 1)/2. Both readings of the diameter are included, for N > 3 because the source takes n > k.
 
-**Theorem 1.10 (Proof of the k = 3 clause).**
+**Theorem 1.9 (Proof of the k = 3 clause).**
 
 $$claim$$
 
@@ -141,7 +129,6 @@ Lower bound: count the inversions, the pairs of positions p < q holding a one at
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.IsVertex`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.Reach`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.Step`
-- Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.central`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.claim`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.diam`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.ecc`
@@ -149,3 +136,4 @@ Lower bound: count the inversions, the pairs of positions p < q holding a one at
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.rotL`
 - Truth anchor: `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.rotR`
 - Dependency: [D5/S1/Digit/Carry/ListInversions](../../S1/Digit/Carry/ListInversions.md)
+- Dependency: [D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange](../ConceptDynamics/Completion/CommutingCompletionExchange.md)

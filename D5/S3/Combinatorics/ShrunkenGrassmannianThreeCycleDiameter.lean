@@ -16,12 +16,14 @@ escape_witness: form (2), the public conclusion `result` itself: the lower bound
   (`budget_true`, `budget_false`) except in two parity cases, where the source ends in the other
   letter and the peeling runs from the target instead (`reach_symm`)
 admission_basis: open-problem-resolution (issue #10230)
-Direct frozen dependencies: D5/S1/Digit/Carry/ListInversions: `inv` (statement_id
+Direct frozen dependencies: D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange: `normalWord`
+  (the central state); D5/S1/Digit/Carry/ListInversions: `inv` (statement_id
   sha256:746f5581415a1e255341cd9dd423347ba85b2d2e1a58842f35a43f09f4f536e8) and `inv_window`
   (statement_id sha256:67f2816574b1b59c3e8bb25aa83e6ef6fdc230a4ffd0db75c77e5b0842659c50)
 -/
 
 import D5.S1.Digit.Carry.ListInversions
+import D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
 import Mathlib.Data.Bool.Count
 import Mathlib.Order.Lattice.Nat
 
@@ -31,6 +33,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.ShrunkenGrassmannianThreeCycleDiameter
 
 open D5.S1.Digit.Carry.ListInversions (inv inv_window)
+open D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange (normalWord)
 
 /-!
 Chervov et al., *CayleyPy-4: AI-Holography. Towards analogs of holographic string dualities for AI
@@ -63,16 +66,13 @@ def Reach (k : ℕ) : ℕ → List Bool → List Bool → Prop
   | 0, x, y => y = x
   | m + 1, x, y => Reach k m x y ∨ ∃ z, Reach k m x z ∧ Step k z y
 
-/-- CayleyPy's `central_state` `[0]^L + [1]^(N - L)`. -/
-def central (L N : ℕ) : List Bool := List.replicate L false ++ List.replicate (N - L) true
-
 /-- A vertex of the coset graph: a word of length `N` with exactly `L` zeros. -/
 def IsVertex (L N : ℕ) (x : List Bool) : Prop := x.length = N ∧ x.count false = L
 
-/-- The largest distance from the central state: the least `m` within which every vertex is reached
-from the central state. -/
+/-- The largest distance from the central state `[0]^L + [1]^(N - L)`, which is
+`normalWord L (N - L)`: the least `m` within which every vertex is reached from it. -/
 noncomputable def ecc (k L N : ℕ) : ℕ :=
-  sInf {m | ∀ y, IsVertex L N y → Reach k m (central L N) y}
+  sInf {m | ∀ y, IsVertex L N y → Reach k m (normalWord L (N - L)) y}
 
 /-- The diameter: the least `m` within which every vertex is reached from every vertex. -/
 noncomputable def diam (k L N : ℕ) : ℕ :=
@@ -409,8 +409,8 @@ theorem result : claim := by
           exact hb
 
   intro L N hL hLN hN
-  have hc : IsVertex L N (central L N) :=
-    ⟨by simp [central]; omega, by simp [central, List.count_replicate]⟩
+  have hc : IsVertex L N (normalWord L (N - L)) :=
+    ⟨by simp [normalWord]; omega, by simp [normalWord, List.count_replicate]⟩
   have hr : IsVertex L N (List.replicate (N - L) true ++ List.replicate L false) :=
     ⟨by simp; omega, by simp [List.count_replicate]⟩
   have hup : ∀ x y, IsVertex L N x → IsVertex L N y →
@@ -418,11 +418,11 @@ theorem result : claim := by
     intro x y hx hy
     have := upper N (by omega) x y hx.1 hy.1 (by rw [hx.2, hy.2])
     rwa [hx.2] at this
-  have hlow : ∀ m, Reach 3 m (central L N)
+  have hlow : ∀ m, Reach 3 m (normalWord L (N - L))
       (List.replicate (N - L) true ++ List.replicate L false) → (L * (N - L) + 1) / 2 ≤ m := by
     intro m h
     have := reach_inv m _ _ h
-    rw [inv_reversal, central, inv_central, Nat.mul_comm] at this
+    rw [inv_reversal, normalWord, inv_central, Nat.mul_comm] at this
     generalize L * (N - L) = P at *
     omega
   constructor

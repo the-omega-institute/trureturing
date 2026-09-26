@@ -12,7 +12,7 @@ internal sealed class ShrunkenGrassmannianThreeCycleDiameterDocument : IScribeDo
         LibraryNoteRef.Create("D5/L/CayleyGrowth/chervov2026cayleypy4");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "On binary words with L zeros and N - L ones, where a move rotates three consecutive letters one place in either direction, every word can be turned into every other in at most the ceiling of L(N - L)/2 moves, and turning the sorted word 0...01...1 into its reversal needs that many, as conjectured for k = 3 in Conjecture 16 of CayleyPy-4.",
+        "For 2 <= L <= N and N > 3, on binary words with L zeros and N - L ones, where a move rotates three consecutive letters one place in either direction, every word can be turned into every other in at most the ceiling of L(N - L)/2 moves, and turning the sorted word 0...01...1 into its reversal needs that many, as conjectured for k = 3 in Conjecture 16 of CayleyPy-4.",
         H("Diameter of the inverse-closed consecutive 3-cycle Schreier coset graph"),
         Blocks(
             Node("rotl", "The consecutive cycle on a window", RotFormula("rotL", D(1)),
@@ -27,14 +27,11 @@ internal sealed class ShrunkenGrassmannianThreeCycleDiameterDocument : IScribeDo
             Node("reach", "Reachability within m moves", ReachFormula(),
                 "Reach(k, m, x, y) says that y is reached from x in at most m moves: with no move only x itself, and with m + 1 moves every word reached within m moves together with every neighbour of such a word.",
                 "Reach", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
-            Node("central", "The central state", CentralFormula(),
-                "CayleyPy's central state [0]^L + [1]^(N - L): L zeros (false) followed by N - L ones (true).",
-                "central", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("vertex", "Vertices of the coset graph", VertexFormula(),
                 "The vertices of the Schreier coset graph of S_N / (S_L x S_(N - L)) are the words of length N with exactly L zeros.",
                 "IsVertex", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ecc", "Largest distance from the central state", EccFormula(),
-                "The least m such that every vertex is reached from the central state within m moves. This is the quantity CayleyPy's growth computation reports as the diameter of a coset graph.",
+                "The least m such that every vertex is reached from the central state within m moves. The central state [0]^L + [1]^(N - L), L zeros followed by N - L ones, is normalWord(L, N - L) of D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange, reused here. This is the quantity CayleyPy's growth computation reports as the diameter of a coset graph.",
                 "ecc", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("diam", "Diameter", DiamFormula(),
                 "The least m such that every vertex is reached from every vertex within m moves, the diameter in the graph-theoretic sense.",
@@ -127,13 +124,6 @@ internal sealed class ShrunkenGrassmannianThreeCycleDiameterDocument : IScribeDo
         return Disp(And(Parenthesized(zero), Parenthesized(succ)));
     }
 
-    private static Formula CentralFormula()
-    {
-        Formula l = F.Id("L"), n = F.Id("N");
-        return Disp(Equal(Call("central", l, n),
-            Append(Call("replicate", l, F.Id("false")), Call("replicate", Subtract(n, l), F.Id("true")))));
-    }
-
     private static Formula VertexFormula()
     {
         Formula l = F.Id("L"), n = F.Id("N"), x = F.Id("x");
@@ -148,7 +138,7 @@ internal sealed class ShrunkenGrassmannianThreeCycleDiameterDocument : IScribeDo
     {
         Formula k = F.Id("k"), l = F.Id("L"), n = F.Id("N"), m = F.Id("m"), y = F.Id("y");
         Formula condition = All("y", Words(), Implies(Call("IsVertex", l, n, y),
-            Call("Reach", k, m, Call("central", l, n), y)));
+            Call("Reach", k, m, Call("normalWord", l, Subtract(n, l)), y)));
         return Disp(Equal(Call("ecc", k, l, n), Least(condition)));
     }
 

@@ -91,15 +91,17 @@ cases.
 
 The canonical source is
 `D5/S3/Combinatorics/ShrunkenGrassmannianThreeCycleDiameter.lean`. Its public
-declarations are `rotL`, `rotR`, `Step`, `Reach`, `central`, `IsVertex`, `ecc`,
-`diam`, `claim`, and `result`. The frozen module state has statement identity
-`sha256:e8344cb5f04dad9abfe97d77fb1154a8f49839b29cc0b0dfe2237bd46b7b4598`.
+declarations are `rotL`, `rotR`, `Step`, `Reach`, `IsVertex`, `ecc`, `diam`,
+`claim`, and `result`; the central state is `normalWord L (N − L)` from
+`D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange`. The frozen module state has statement identity
+`sha256:8a4a2bfc4fac0ced0b8b5b4196cbc04a84d4df04947703f8e9c5c16203a138ae`.
 The result declaration has statement identity
 `sha256:b6b74d024706e5795cb0c028530f1bfa21ce010dbb32e3596f847fd0fc9b8a97`.
 The Freeze event is
-`sha256:50bdb90409a8bc8fefaf76edae15a90719261a53b35cbbb223980128c289ebd8`.
-Its project-level frozen prerequisite is
-`D5/S1/Digit/Carry/ListInversions`. The proof uses only the standard axioms
+`sha256:40eeefbcdd042b163fa1c4ea7f494f1b898e0b1e4aaeaef114a2e008b3a6d9b1`.
+Its project-level frozen prerequisites are
+`D5/S1/Digit/Carry/ListInversions` and
+`D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange`. The proof uses only the standard axioms
 `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`,
 or new axiom.
 
