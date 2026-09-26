@@ -146,9 +146,18 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var projectSet = Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx");
         new XElement("Solution", roots.Select(target =>
             new XElement("Project", new XAttribute("Path", Path.Combine(root, target))))).Save(projectSet);
+        var restoreSet = projectSet;
+        if (resourcePlan is null || resourcePlan.TestProjects.Length != 0)
+        {
+            // Package transport is registry-wide whenever tests are selected.
+            restoreSet = Path.Combine(root, CommonExecutionEvidence.RootPath, "package-restore.slnx");
+            var registry = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root));
+            new XElement("Solution", registry.Projects.Select(project =>
+                new XElement("Project", new XAttribute("Path", Path.Combine(root, project.Path))))).Save(restoreSet);
+        }
         // Keep references outside this explicit root list in the requested configuration.
         string[] buildOptions = ["-nr:false", "-m:1", "-p:ShouldUnsetParentConfigurationAndPlatform=false"];
-        Step("restore-StrataLint", "dotnet", ["restore", projectSet, "--locked-mode", .. buildOptions]);
+        Step("restore-StrataLint", "dotnet", ["restore", restoreSet, "--locked-mode", .. buildOptions]);
         Step("build", "dotnet", ["build", projectSet, "--configuration", "Release", "--no-restore", "--warnaserror", .. buildOptions,
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);

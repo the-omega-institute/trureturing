@@ -165,6 +165,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
+        Directory.Delete(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj"), recursive: true);
         EngineeringProcess.Git(root, "add", ".");
         EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
@@ -200,6 +201,9 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
         Assert.Equal(projects.Length + 2, ObservedCompilers(cold));
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
+        Assert.True(File.Exists(Path.Combine(root, "tools/tests/StrataLint.ScriptTests/obj/project.assets.json")));
+        Assert.Contains(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "package-restore.slnx")), StringComparison.Ordinal);
+        Assert.DoesNotContain(excludedProject, File.ReadAllText(Path.Combine(root, CommonExecutionEvidence.RootPath, "selected-build.slnx")), StringComparison.Ordinal);
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)));
         Assert.False(File.Exists(Path.Combine(root, "build/judge-seed/receipts", excludedProject + ".seed.json")));
