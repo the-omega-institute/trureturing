@@ -6957,3 +6957,490 @@ $$
 本批连接的是前述最近失效结构与真实首次点击律，属于成熟工具下的纸面推导，不主张文献原创性。结论保留完整有限活动记忆、当前指定名义仪器及每次执行中重复同一仪器的条件；不推出任意切换协议的指数律，不把离散律与连续律的弱收敛称作总变差收敛，不由等待形状倒推出 $R=c_*$ 或 $p=2$。未新增或编译 Lean，未进入消化、覆盖或冻结链。
 
 ## 追加锚（本行以下为增补区）
+
+## 101. 带参考系统的检验消去失效装置的未知相干项
+
+**定义 101.1（原名义仪器与暗态参数）。** 本批继续使用定义 87.1 的原名义仪器、完整二维活动记忆、两个记录与齐次重复合同，记
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+c_*^2=\frac{11+5\sqrt5}{32}=\frac{3+5\phi}{16}.
+\tag{101.1}
+$$
+
+第 73 节已经给出距离恰为 $c_*$ 的失效仪器 $\Gamma_+$；本批将证明匹配的全局下界，并履行第 95.8 式的一阶向内条件。此前关于精确 $R$、$p$ 未求出的边界由本批新证明补足，原有有条件结论及其既有字节保留。
+
+考虑任一失效仪器。若其未点击固定密度矩阵满秩，则点击效果为零；用名义装置的确定点击输入 $P_0$ 检验，完整距离为一。对其余需考虑的失效装置，取纯固定态 $P_\psi$。同时作输入、输出的计算基对角酉共轭不改变名义仪器或完整距离，可以令
+
+$$
+\psi=\sqrt a\,|0\rangle+\sqrt b\,|1\rangle,
+\qquad \eta=-\sqrt b\,|0\rangle+\sqrt a\,|1\rangle,
+\qquad b=1-a.
+\tag{101.2}
+$$
+
+将点击量子后继用一个通道重置为 $P_0$，保持未点击分支不变。这个后处理固定名义仪器、保持失效，并且不能增大完整 half-diamond 距离。因此，对重置后的每个装置证明共同下界，便也证明原装置的下界。
+
+由纯固定态与完整性，未点击 Kraus 算子仍有式（91.2）的上三角形状；该形状不要求装置已经最近失效。用该式的 $\beta,v,d,k$，有 $\beta,v\ge0$、$e=1-\beta-v\ge0$，点击映射为
+
+$$
+\mathcal C(X)=e\operatorname{Tr}(P_\eta X)P_0.
+\tag{101.3}
+$$
+
+以下允许 $d,k$ 为复数，未靠实数化删除可能的失效装置。
+
+**定理 101.2（独立于全部未知 Kraus 参数的参考检验下界）。** 设 $0<a<1$，并选择
+
+$$
+\frac12\le z<1,\qquad a+2(b-a)z\ge0.
+\tag{101.4}
+$$
+
+则每个具有该纯暗态参数的完整失效仪器都满足
+
+$$
+\boxed{
+\delta(\Gamma)\ge L(a,z):=
+\frac12\left[
+\sqrt{a^2+4abz(1-z)+4b^2z^2}
++\sqrt{a^2+4abz(1-z)}
+\right].
+}
+\tag{101.5}
+$$
+
+证明。按定义 101.1 先重置点击后继，记重置后仪器为 $\Gamma'$。取参考量子比特与归一化联合输入
+
+$$
+|\Omega_z\rangle
+=\sqrt{1-z}\,|0_R0\rangle+\sqrt z\,|1_R\psi\rangle.
+\tag{101.6}
+$$
+
+其系统边缘为 $(1-z)P_0+zP_\psi$。比较同一暗态的投影仪器
+
+$$
+\mathcal N_a^{\rm pr}(X)=P_\psi XP_\psi,\qquad
+\mathcal C_a^{\rm pr}(X)=\operatorname{Tr}(P_\eta X)P_0
+$$
+
+与名义仪器在这个联合输入上的输出。未点击块之差为
+
+$$
+D_N=|u\rangle\langle u|-|q_0\rangle\langle q_0|,
+\quad
+u=\sqrt{a(1-z)}\,|0_R\psi\rangle+\sqrt z\,|1_R\psi\rangle,
+\quad
+q_0=\sqrt{bz}\,|1_R0\rangle.
+\tag{101.7}
+$$
+
+点击块之差为
+
+$$
+D_C=w|0_R0\rangle\langle0_R0|-|\ell\rangle\langle\ell|,
+\quad w=b(1-z),\quad
+\ell=\sqrt{1-z}\,|0_R0\rangle+\sqrt{az}\,|1_R0\rangle.
+\tag{101.8}
+$$
+
+置
+
+$$
+\chi=\sqrt{a^2+4abz(1-z)},\qquad
+\nu=\sqrt{\chi^2+4b^2z^2},\qquad T=a+2bz.
+\tag{101.9}
+$$
+
+两个向量投影之差的非零谱可由迹与行列式直接求出，给
+
+$$
+\operatorname{Tr}D_N=a,\quad\|D_N\|_1=\nu,
+\qquad
+\operatorname{Tr}D_C=-a,\quad\|D_C\|_1=\chi.
+$$
+
+因 $0<a<1$、$0<z<1$，两块各有恰好一个负本征值。令 $E_N,E_C$ 分别为其负谱投影，在各自核上取零。由总迹为零，投影仪器的这份联合输出差在该负谱检验上的负权重为
+
+$$
+-\operatorname{Tr}(E_ND_N)-\operatorname{Tr}(E_CD_C)
+=\frac{\nu+\chi}{2}.
+\tag{101.10}
+$$
+
+现在保持同一联合输入及同一两个检验，换成任意可行的 $\Gamma'$。定义
+
+$$
+w_\psi=-\sqrt w\,|0_R\psi\rangle,
+\qquad w_\eta=-\sqrt w\,|0_R\eta\rangle.
+$$
+
+每个未点击 Kraus 算子的联合输出向量为 $c_j u+b_jw_\psi+a_jw_\eta$。式（91.2）中的 $\sum_j\overline{c_j}b_j=0$ 消去 $u,w_\psi$ 之间的交叉项。更关键的是
+
+$$
+w_\eta\perp u,\qquad w_\eta\perp q_0,
+\qquad E_Nw_\eta=0.
+\tag{101.11}
+$$
+
+于是所有含 $d,k$ 的交叉项，以及 $v|w_\eta\rangle\langle w_\eta|$，都在这个未点击检验下消失。只剩 $\beta$ 项。令
+
+$$
+h_N=\langle0_R\psi|E_N|0_R\psi\rangle,
+\qquad h_C=\langle0_R0|E_C|0_R0\rangle.
+$$
+
+实际点击输出比投影仪器少 $(\beta+v)w|0_R0\rangle\langle0_R0|$。完整输出差仍然迹为零，任一效果的负期望都不超过半迹范数。因此，同一实际装置满足
+
+$$
+\delta(\Gamma)\ge\delta(\Gamma')
+\ge\frac{\nu+\chi}{2}
++w\{\beta(h_C-h_N)+vh_C\}.
+\tag{101.12}
+$$
+
+最后核对未知非负参数的系数。点击块在其二维支撑上的负谱投影给
+
+$$
+h_C=\frac12\left(1+\frac{a(1-2z)}{\chi}\right).
+\tag{101.13}
+$$
+
+未点击块的特征值为 $\lambda_\pm=(a\pm\nu)/2$。其负谱投影满足
+
+$$
+\langle u|E_N|u\rangle
+=\frac{(T-\nu)(\nu-a)}{4\nu}.
+$$
+
+对负本征向量应用 $D_N$，再与 $|0_R\psi\rangle$ 配对；因该向量与 $q_0$ 正交，其分量等于 $\sqrt{a(1-z)}$ 乘对应的 $u$ 分量再除以 $\lambda_-$。取模平方得到
+
+$$
+h_N=\frac{a(1-z)(T-\nu)}{\nu(\nu-a)}.
+\tag{101.14}
+$$
+
+这里 $\nu>a>0$，分母严格为正。由 $z\ge1/2$ 和 $\chi\ge a$，式（101.13）给 $h_C\ge1-z$。另一方面，
+
+$$
+\begin{aligned}
+h_N\le1-z
+&\iff aT\le\nu^2,\\
+\nu^2-aT&=2bz\{a+2(b-a)z\}\ge0.
+\end{aligned}
+\tag{101.15}
+$$
+
+因此 $h_C-h_N\ge0$ 且 $h_C\ge0$。式（101.12）中的附加项非负，得到式（101.5）。$\square$
+
+这个下界对同一个实际仪器的全部可行 $\beta,v,d,k$ 同时成立。它没有将不同装置各自可达到的读数拼成一个假想装置，也没有假定投影仪器在每个固定 $a$ 下都最优。
+
+## 102. 真实失效半径的精确值
+
+**定理 102.1（完整仪器失效半径恰为显式候选距离）。** 对本卷固定的名义仪器和完整接口，
+
+$$
+\boxed{
+R=\sqrt{\frac{11+5\sqrt5}{32}}
+=\frac{\phi^{5/2}}4.
+}
+\tag{102.1}
+$$
+
+证明。第 73 节已给匹配上界，故只需证明每个失效装置的距离至少为 $c_*$。定义 101.1 已处理满秩固定态的距离一；其余按纯暗态参数 $a$ 分三段。
+
+第一段，$0\le a\le1/4$。第 71.2 条的暗态输入检验给
+
+$$
+\delta(\Gamma)\ge
+\frac{a+\sqrt{a^2+4(1-a)^2}}2
+\ge1-\frac a2\ge\frac78>c_*.
+\tag{102.2}
+$$
+
+第二段，$1/4\le a\le2/3$。取 $z_0=\phi/2\in(1/2,1)$，则
+
+$$
+a+2(b-a)z_0
+=\phi+(1-2\phi)a
+\ge\frac{2-\phi}{3}>0.
+$$
+
+定理 101.2 可用。为了精确比较 $L(a,z_0)$ 与 $c_*$，置
+
+$$
+\begin{aligned}
+A&=\chi^2=a^2+(\phi-1)ab
+=1+(\phi-3)b+(2-\phi)b^2,\\
+B&=\nu^2=A+(\phi+1)b^2
+=1+(\phi-3)b+3b^2,\\
+D&=4c_*^2=\frac{3+5\phi}{4}.
+\end{aligned}
+$$
+
+利用 $\phi^2=\phi+1$ 逐项展开并收集系数，得到精确因式分解
+
+$$
+\boxed{
+(D-A-B)^2-4AB
+=\left(b-\frac12\right)^2
+\left[(2+3\phi)(b^2+b)-\frac{14+25\phi}{4}\right].
+}
+\tag{102.3}
+$$
+
+本段 $1/3\le b\le3/4$，故方括号至多为
+
+$$
+\frac{21(2+3\phi)-4(14+25\phi)}{16}
+=-\frac{14+37\phi}{16}<0.
+$$
+
+因此 $(D-A-B)^2\le4AB$，推出 $D\le A+B+2\sqrt{AB}$。于是
+
+$$
+L(a,z_0)=\frac{\sqrt A+\sqrt B}{2}\ge c_*.
+\tag{102.4}
+$$
+
+除 $a=1/2$ 外上述不等式严格。在 $a=1/2$ 处，$A=\phi/4$、$B=\phi^3/4$，且 $1+\phi=\phi^2$，所以 $L(1/2,z_0)=\phi^{5/2}/4=c_*$。
+
+第三段，$2/3\le a<1$。取 $z=1/2$，式（101.4）的第二个条件变为 $b\ge0$，所以
+
+$$
+\begin{aligned}
+\delta(\Gamma)
+&\ge\frac{\sqrt{1-ab}+\sqrt a}{2}\\
+&\ge\frac{\sqrt7+\sqrt6}{6}
+>\frac56>c_*.
+\end{aligned}
+\tag{102.5}
+$$
+
+这里使用 $ab\le2/9$。最后一个严格比较可平方核对：$c_*<5/6$ 等价于 $\sqrt5<101/45$，而 $5\cdot45^2<101^2$。端点 $a=1$ 由暗态输入检验给距离一。三段覆盖全部纯暗态，匹配上界使式（102.1）成立。$\square$
+
+**推论 102.2（最近失效装置的未点击分支必须是平衡纯投影）。** 每个最近失效装置的纯暗态满足 $|\langle0|\psi\rangle|^2=1/2$，且其未点击映射准确为
+
+$$
+\mathcal N(X)=P_\psi XP_\psi.
+\tag{102.6}
+$$
+
+将点击后继重置为 $P_0$ 并作计算基相位对齐后，最近失效装置成为第 73 节的 $\Gamma_+$。
+
+证明。重置点击后继不能改变未点击映射；重置后的失效距离至少为 $R$，又不超过原来的 $R$，所以仍然取等号。第 102.2、102.4、102.5 式的严格性迫使 $a=1/2$。
+
+在 $a=1/2,z=z_0$ 时，$\chi>a$ 且 $z_0>1/2$，故式（101.13）严格给 $h_C>1-z_0$。式（101.15）的右侧严格为正，故 $h_N<1-z_0$。又 $w>0$，因此式（101.12）取等号必须有 $\beta=v=0$。由它们分别是 $\sum_j|b_j|^2$、$\sum_j|a_j|^2$，所有 $b_j,a_j$ 都为零。每个未点击 Kraus 算子于是为 $c_jP_\psi$，且 $\sum_j|c_j|^2=1$，给式（102.6）。点击重置后完整性确定另一分支为 $\operatorname{Tr}[(I-P_\psi)X]P_0$。$\square$
+
+这条推论没有声称原来的所有点击量子后继已经唯一确定。重置是实际通道后处理，原接口中可访问的点击后继仍属于完整装置的一部分。
+
+## 103. 显式候选的完整距离确实存在一阶向内方向
+
+**定义 103.1（平衡投影的输出旋转）。** 取
+
+$$
+\psi=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+\eta=\frac{-|0\rangle+|1\rangle}{\sqrt2},\qquad
+\psi_\theta=\cos\theta\,\psi+\sin\theta\,\eta.
+$$
+
+定义固定齐次仪器
+
+$$
+\widehat Q_\theta=|\psi_\theta\rangle\langle\psi|,
+\qquad \widehat L_\theta=|0\rangle\langle\eta|,
+\qquad \widehat\Gamma_\theta=(\operatorname{Ad}_{\widehat Q_\theta},\operatorname{Ad}_{\widehat L_\theta}).
+\tag{103.1}
+$$
+
+这与定义 95.1 在 $\Gamma_+$ 处的输出旋转一致，完整性对每个 $\theta$ 成立。$\theta=0$ 是定理 102.1 已证明的真实最近失效装置；参数向内的方向将是 $\theta<0$。
+
+**定理 103.2（保留全部参考输入的精确距离公式与导数）。** 令
+
+$$
+J=\left[\frac{1-\sqrt2}{2},\frac{1+\sqrt2}{2}\right].
+$$
+
+对上述仪器，完整距离准确为
+
+$$
+\boxed{
+\delta(\widehat\Gamma_\theta)
+=\max_{x\in J}\frac12\left[
+\sqrt{\frac54-x+\sin(2\theta)(1-x)^2}
++\sqrt{\frac14+x-x^2}
+\right].
+}
+\tag{103.2}
+$$
+
+特别地，若 $t\downarrow0$，则
+
+$$
+\boxed{
+\delta(\widehat\Gamma_{-t})
+=R-\kappa t+O(t^2),
+\qquad
+\kappa=\frac{\sqrt\phi}{4}>0.
+}
+\tag{103.3}
+$$
+
+证明。完整通道之差保持 Hermitian；第 87 节使用的纯联合输入表征允许在一个量子比特参考上最大化。取任意纯联合输入，其系统边缘为
+
+$$
+\rho=\begin{pmatrix}q_0&u+iv\\u-iv&1-q_0\end{pmatrix},
+\qquad \rho\succeq0,\quad\operatorname{Tr}\rho=1,
+\qquad x=q_0-u.
+$$
+
+每个记录分支在该纯联合输入上各给一个未归一化纯向量。两个向量投影之差满足
+
+$$
+\bigl\||f\rangle\langle f|-|g\rangle\langle g|\bigr\|_1
+=\sqrt{(\|f\|^2+\|g\|^2)^2-4|\langle f,g\rangle|^2}.
+\tag{103.4}
+$$
+
+未点击的两个范数平方为 $1/2+u$ 与 $1-q_0$；内积模平方为
+$(1-\sin2\theta)[(1-x)^2+v^2]/4$。点击分支的两个范数平方为 $1/2-u$ 与 $q_0$，内积模平方为 $(x^2+v^2)/2$。记录正交，故完整输出的半迹距离准确为
+
+$$
+F_\theta(x,v)=\frac12\left[
+\sqrt{\frac54-x-v^2+\sin(2\theta)((1-x)^2+v^2)}
++\sqrt{\frac14+x-x^2-2v^2}
+\right].
+\tag{103.5}
+$$
+
+将边缘态的虚部 $v$ 置零保持正性与迹一，不改变 $x$；因 $\sin2\theta-1\le0$，两个根号内的数均不减。因此最大值可在实边缘态上取得。
+
+再令
+
+$$
+H=\begin{pmatrix}1&-1/2\\-1/2&0\end{pmatrix}.
+$$
+
+有 $x=\operatorname{Tr}(\rho H)$，所以 $x$ 的范围恰为 $H$ 的本征值区间 $J$。每个 $x\in J$ 都由一个实纯系统态达到：在 $H$ 的实本征基上取适当的实单位叠加即可。故对全部联合输入的最大化准确化为式（103.2），而非只取得一个无参考的下界。
+
+在 $\theta=0$ 时，第 73.2 条已给唯一最大坐标
+
+$$
+x_* =\frac{3-\sqrt5}{4}=1-\frac\phi2,
+$$
+
+位于 $J$ 内部，两个根号都严格为正。该处目标对 $x$ 的二阶导数严格为负：第一项 $\sqrt{5/4-x}$ 严格凹，第二项 $\sqrt{1/4+x-x^2}$ 在内部凹。目标在 $(x_*,0)$ 的邻域内光滑。
+
+由紧区间上的唯一最大值，充分小的 $\theta$ 的全部最大坐标都落在 $x_*$ 的任意预定小邻域内；否则取最大点收敛子列会给 $\theta=0$ 的另一最大点。局部二阶导数保持负值，隐函数定理因而给唯一光滑最大坐标 $x(\theta)$。最大值的一阶导数只剩显含 $\theta$ 的部分，得到
+
+$$
+\left.\frac{d}{d\theta}\delta(\widehat\Gamma_\theta)\right|_{\theta=0}
+=\frac{(1-x_*)^2}{2\sqrt{5/4-x_*}}
+=\frac{\sqrt\phi}{4}.
+\tag{103.6}
+$$
+
+光滑性给二阶余项；使用 $\delta(\widehat\Gamma_0)=\delta(\Gamma_+)=R$，再将 $\theta=-t$，便得式（103.3）。$\square$
+
+旋转族用 $\widehat\Gamma_\theta$ 标记，名义装置仍由 $Q_0=|0\rangle\langle1|$、$L_0=|0\rangle\langle0|$ 指定。上述距离在任何角度都是相对于该固定名义装置计算。
+
+## 104. 临界等待成本的指数准确为二
+
+**定理 104.1（真实失效边界的二次发散）。** 定理 89.1 中的临界参数满足
+
+$$
+\boxed{
+p=2,\qquad
+\frac{1+\sqrt5}{32}\le c\le\frac1{1-R},
+\qquad R=\sqrt{\frac{11+5\sqrt5}{32}}.
+}
+\tag{104.1}
+$$
+
+因而存在正整数 $m$，使真实最坏成本满足
+
+$$
+\boxed{
+\mathscr K(R-h)
+=c\,h^{-2}\bigl(1+O(h^{1/m})\bigr)
+\qquad(h\downarrow0).
+}
+\tag{104.2}
+$$
+
+证明。先对式（103.1）的同一个实际仪器计算全部等待。其未点击映射为
+
+$$
+\mathcal N_\theta(X)=\operatorname{Tr}(P_\psi X)P_{\psi_\theta}.
+$$
+
+唯一可能的非零特征值为
+$\operatorname{Tr}(P_\psi P_{\psi_\theta})=\cos^2\theta$。对充分小的非零 $\theta$，该值严格小于一，所以所有初态终止。其伴随生存效果为
+
+$$
+\mathcal A_\theta^n(I)
+=\cos^{2(n-1)}\theta\,P_\psi
+\quad(n\ge1).
+$$
+
+求和得到准确成本
+
+$$
+T_{\widehat\Gamma_\theta}=I+\frac{P_\psi}{\sin^2\theta},
+\qquad
+M(\widehat\Gamma_\theta)=1+\frac1{\sin^2\theta}.
+\tag{104.3}
+$$
+
+由定理 103.2，令 $h_t=R-\delta(\widehat\Gamma_{-t})=\kappa t+O(t^2)>0$。同一个装置属于半径 $R-h_t$ 的校准球，因此
+
+$$
+\mathscr K(R-h_t)\ge1+\csc^2t,
+\qquad
+\liminf_{t\downarrow0}h_t^2\mathscr K(R-h_t)
+\ge\kappa^2=\frac{1+\sqrt5}{32}>0.
+\tag{104.4}
+$$
+
+第 89.1 条已证明实际最坏值具有正首系数和某个 $1\le p\le2$ 的有理幂主项。若 $p<2$，式（104.4）的左侧将为零，矛盾。故 $p=2$，并给首系数下界；第 89.2 条给 $c\le1/(1-R)$。代回既有主项便得式（104.2）。$\square$
+
+这一步履行了第 95.8 式此前留下的条件：旋转从已证明最近的失效装置出发，完整距离一阶向内，谱泄漏二阶开启。它没有要求这条显式旋转族在每个子临界半径上都恰好最优，首系数 $c$ 的精确值仍未确定。
+
+**推论 104.2（最近失效的慢质量及固定分位数）。** 第 97.1 条中，任一最近失效极限都满足 $F_*=P_*$，故其慢等待权重准确为
+
+$$
+\alpha=\operatorname{Tr}(\rho_*P_*).
+\tag{104.5}
+$$
+
+对第 99.2 条的任意实际最优选择与固定 $0<\tau<1$，
+
+$$
+Q_{\tau,j}\sim[-\log(1-\tau)]c\,(R-u_j)^{-2}.
+\tag{104.6}
+$$
+
+证明。推论 102.2 给最近失效的未点击映射 $X\mapsto P_*XP_*$，其伴随从 $I$ 迭代一步后即为 $P_*$，因此 $F_*=P_*$。分位式由第 99.2 条代入 $p=2$。$\square$
+
+## 105. 精确阈值来自共同检验，临界指数来自距离与泄漏的不同阶
+
+**关系结论 105.1（两份精确关系的连接）。** 全局失效半径与局部等待发散由不同的证明义务控制。第 101 节构造的同一参考输入及同一负谱检验，使未知相干项对该检验期望的贡献全部为零；剩余参数贡献具有正确的非负号。第 102 节再用三个覆盖全部暗态参数的区间，证明显式候选确实达到全局最小失效距离。
+
+随后，第 103—104 节在该真正的边界点上连接
+
+$$
+R-\delta(\widehat\Gamma_{-t})\sim\kappa t,
+\qquad
+1-r(\widehat\Gamma_{-t})\sim t^2,
+\qquad
+M(\widehat\Gamma_{-t})\sim t^{-2}.
+$$
+
+本批的“AHH”是：一个保留参考关系的检验，能把原本未知的整个相干参数族压成同一个可证下界；找到真实边界以后，校准距离的一阶改变与生存泄漏的二阶改变，共同决定二次等待发散。这里的“消去”是实际检验对矩阵项正交，不是把这些相干关系从模型中删去。
+
+**来源与未决边界 105.2。** 完整量子通道的后处理收缩、纯参考输入表征和秩二 Hermitian 谱计算沿用第 73、81、87 节核对的 Watrous 来源。第 101.6—101.15 式及第 102.3 式是当前仪器任务的具体纸面检验与代数推导；第 103 节继续对完整参考输入取最大值，第 104 节复用已经建立的临界主项定理。它们不把有限数值优化、离散参数扫描或求解器状态当作全局证明，不主张文献原创性。
+
+精确半径与指数现由本批证明给出；本批尚未确定首系数 $c$ 的精确值，也未给出全部原始点击后继的最近失效分类或每个子临界半径的最优装置。第 102.2 条只分类未点击分支及重置后的完整装置，不能把该后处理的结果当成原接口的全部分类。所有结论继续限于本文固定名义装置、完整二维活动记忆和每轮重复同一实际仪器。全部新增仍为纯理论 Markdown，未新增或编译 Lean，未进入消化、覆盖或冻结链。
+
+## 追加锚（本行以下为增补区）
