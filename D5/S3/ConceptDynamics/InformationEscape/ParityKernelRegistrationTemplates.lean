@@ -8,6 +8,7 @@
 
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Mathlib.Algebra.GroupWithZero.Units.Fintype
+import Mathlib.Algebra.Polynomial.Basic
 import Mathlib.Data.Real.Basic
 
 namespace D5.S3.ConceptDynamics.InformationEscape.ParityKernelRegistrationTemplates
@@ -48,6 +49,18 @@ def profilePairStepSignature : Signature where
   finiteRole := inferInstance
   nonemptyRole := inferInstance
   Output := fun _ _ => ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+/-- A finite role observes the characteristic polynomial of a kernel built from a profile.
+The parameter is the dimension; the state is the profile on the sign hypercube. -/
+@[reducible] def profileCharpolySignature : Signature where
+  Params := ℕ
+  State := fun d => (Fin d → ℤˣ) → ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => Polynomial ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 

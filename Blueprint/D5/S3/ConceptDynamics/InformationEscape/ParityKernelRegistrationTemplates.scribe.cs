@@ -50,5 +50,19 @@ internal sealed class ParityKernelRegistrationTemplatesDocument : IScribeDocumen
                         + "the uniform-reference inner products of path likelihoods as actual readouts. The "
                         + "definition is an operand for those source-bound registrations, not a theorem or a "
                         + "registration proof."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("profile-charpoly-signature"),
+                DeclarationHandle.Create(Module + "profileCharpolySignature"),
+                H("Profile characteristic-polynomial signature"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The parameter is a dimension d; states are real profiles on the sign hypercube of "
+                        + "dimension d. The sole role is Unit with a real polynomial as output; the anchor type is "
+                        + "Empty. Reg/D5/S3/Estimation/TimeArrow/ParityKernelCharpoly uses it with the "
+                        + "characteristic polynomial of the parity kernel as the actual readout. The definition "
+                        + "is an operand for that source-bound registration, not a theorem or a registration "
+                        + "proof."))),
                 DescribeRole.Definition))));
 }
