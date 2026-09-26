@@ -1,0 +1,512 @@
+{
+  "schema": "clustered101-global-phase-family-v1",
+  "kind": "clustered",
+  "actual_originals": [
+    {
+      "role": "3*7",
+      "modulus": 21,
+      "residue": 15
+    },
+    {
+      "role": "5*7",
+      "modulus": 35,
+      "residue": 16
+    },
+    {
+      "role": "15*7",
+      "modulus": 105,
+      "residue": 66
+    },
+    {
+      "role": "9*7",
+      "modulus": 63,
+      "residue": 18
+    },
+    {
+      "role": "25*7",
+      "modulus": 175,
+      "residue": 131
+    },
+    {
+      "role": "45*7",
+      "modulus": 315,
+      "residue": 216
+    },
+    {
+      "role": "75*7",
+      "modulus": 525,
+      "residue": 456
+    },
+    {
+      "role": "225*7",
+      "modulus": 1575,
+      "residue": 1206
+    },
+    {
+      "role": "3*7^2",
+      "modulus": 147,
+      "residue": 99
+    },
+    {
+      "role": "5*7^2",
+      "modulus": 245,
+      "residue": 1
+    },
+    {
+      "role": "9*7^2",
+      "modulus": 441,
+      "residue": 99
+    },
+    {
+      "role": "3*11",
+      "modulus": 33,
+      "residue": 12
+    },
+    {
+      "role": "5*11",
+      "modulus": 55,
+      "residue": 46
+    },
+    {
+      "role": "15*11",
+      "modulus": 165,
+      "residue": 36
+    },
+    {
+      "role": "9*11",
+      "modulus": 99,
+      "residue": 81
+    },
+    {
+      "role": "25*11",
+      "modulus": 275,
+      "residue": 181
+    },
+    {
+      "role": "45*11",
+      "modulus": 495,
+      "residue": 171
+    },
+    {
+      "role": "75*11",
+      "modulus": 825,
+      "residue": 381
+    },
+    {
+      "role": "225*11",
+      "modulus": 2475,
+      "residue": 756
+    },
+    {
+      "role": "3*11^2",
+      "modulus": 363,
+      "residue": 243
+    },
+    {
+      "role": "5*11^2",
+      "modulus": 605,
+      "residue": 1
+    },
+    {
+      "role": "3*13",
+      "modulus": 39,
+      "residue": 27
+    },
+    {
+      "role": "5*13",
+      "modulus": 65,
+      "residue": 41
+    },
+    {
+      "role": "15*13",
+      "modulus": 195,
+      "residue": 81
+    },
+    {
+      "role": "9*13",
+      "modulus": 117,
+      "residue": 108
+    },
+    {
+      "role": "25*13",
+      "modulus": 325,
+      "residue": 31
+    },
+    {
+      "role": "45*13",
+      "modulus": 585,
+      "residue": 396
+    },
+    {
+      "role": "75*13",
+      "modulus": 975,
+      "residue": 306
+    },
+    {
+      "role": "225*13",
+      "modulus": 2925,
+      "residue": 2556
+    },
+    {
+      "role": "3*13^2",
+      "modulus": 507,
+      "residue": 339
+    },
+    {
+      "role": "5*13^2",
+      "modulus": 845,
+      "residue": 1
+    },
+    {
+      "role": "3*17",
+      "modulus": 51,
+      "residue": 18
+    },
+    {
+      "role": "5*17",
+      "modulus": 85,
+      "residue": 36
+    },
+    {
+      "role": "15*17",
+      "modulus": 255,
+      "residue": 156
+    },
+    {
+      "role": "9*17",
+      "modulus": 153,
+      "residue": 72
+    },
+    {
+      "role": "25*17",
+      "modulus": 425,
+      "residue": 56
+    },
+    {
+      "role": "45*17",
+      "modulus": 765,
+      "residue": 261
+    },
+    {
+      "role": "75*17",
+      "modulus": 1275,
+      "residue": 381
+    },
+    {
+      "role": "225*17",
+      "modulus": 3825,
+      "residue": 756
+    },
+    {
+      "role": "3*17^2",
+      "modulus": 867,
+      "residue": 579
+    },
+    {
+      "role": "5*17^2",
+      "modulus": 1445,
+      "residue": 1
+    },
+    {
+      "role": "3*19",
+      "modulus": 57,
+      "residue": 39
+    },
+    {
+      "role": "5*19",
+      "modulus": 95,
+      "residue": 21
+    },
+    {
+      "role": "15*19",
+      "modulus": 285,
+      "residue": 231
+    },
+    {
+      "role": "9*19",
+      "modulus": 171,
+      "residue": 99
+    },
+    {
+      "role": "25*19",
+      "modulus": 475,
+      "residue": 81
+    },
+    {
+      "role": "45*19",
+      "modulus": 855,
+      "residue": 576
+    },
+    {
+      "role": "75*19",
+      "modulus": 1425,
+      "residue": 1356
+    },
+    {
+      "role": "225*19",
+      "modulus": 4275,
+      "residue": 4131
+    },
+    {
+      "role": "3*19^2",
+      "modulus": 1083,
+      "residue": 723
+    },
+    {
+      "role": "5*19^2",
+      "modulus": 1805,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*11^1",
+      "modulus": 77,
+      "residue": 1
+    },
+    {
+      "role": "9*7^1*11^1",
+      "modulus": 693,
+      "residue": 540
+    },
+    {
+      "role": "1*7^2*11^1",
+      "modulus": 539,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*11^2",
+      "modulus": 847,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*13^1",
+      "modulus": 91,
+      "residue": 1
+    },
+    {
+      "role": "9*7^1*13^1",
+      "modulus": 819,
+      "residue": 729
+    },
+    {
+      "role": "1*7^2*13^1",
+      "modulus": 637,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*13^2",
+      "modulus": 1183,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*17^1",
+      "modulus": 119,
+      "residue": 1
+    },
+    {
+      "role": "9*7^1*17^1",
+      "modulus": 1071,
+      "residue": 477
+    },
+    {
+      "role": "1*7^2*17^1",
+      "modulus": 833,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*17^2",
+      "modulus": 2023,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*19^1",
+      "modulus": 133,
+      "residue": 1
+    },
+    {
+      "role": "9*7^1*19^1",
+      "modulus": 1197,
+      "residue": 666
+    },
+    {
+      "role": "1*7^2*19^1",
+      "modulus": 931,
+      "residue": 1
+    },
+    {
+      "role": "1*7^1*19^2",
+      "modulus": 2527,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*13^1",
+      "modulus": 143,
+      "residue": 1
+    },
+    {
+      "role": "9*11^1*13^1",
+      "modulus": 1287,
+      "residue": 144
+    },
+    {
+      "role": "1*11^2*13^1",
+      "modulus": 1573,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*13^2",
+      "modulus": 1859,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*17^1",
+      "modulus": 187,
+      "residue": 1
+    },
+    {
+      "role": "9*11^1*17^1",
+      "modulus": 1683,
+      "residue": 936
+    },
+    {
+      "role": "1*11^2*17^1",
+      "modulus": 2057,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*17^2",
+      "modulus": 3179,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*19^1",
+      "modulus": 209,
+      "residue": 1
+    },
+    {
+      "role": "9*11^1*19^1",
+      "modulus": 1881,
+      "residue": 837
+    },
+    {
+      "role": "1*11^2*19^1",
+      "modulus": 2299,
+      "residue": 1
+    },
+    {
+      "role": "1*11^1*19^2",
+      "modulus": 3971,
+      "residue": 1
+    },
+    {
+      "role": "1*13^1*17^1",
+      "modulus": 221,
+      "residue": 1
+    },
+    {
+      "role": "9*13^1*17^1",
+      "modulus": 1989,
+      "residue": 1548
+    },
+    {
+      "role": "1*13^2*17^1",
+      "modulus": 2873,
+      "residue": 1
+    },
+    {
+      "role": "1*13^1*17^2",
+      "modulus": 3757,
+      "residue": 1
+    },
+    {
+      "role": "1*13^1*19^1",
+      "modulus": 247,
+      "residue": 1
+    },
+    {
+      "role": "9*13^1*19^1",
+      "modulus": 2223,
+      "residue": 495
+    },
+    {
+      "role": "1*13^2*19^1",
+      "modulus": 3211,
+      "residue": 1
+    },
+    {
+      "role": "1*13^1*19^2",
+      "modulus": 4693,
+      "residue": 1
+    },
+    {
+      "role": "1*17^1*19^1",
+      "modulus": 323,
+      "residue": 1
+    },
+    {
+      "role": "9*17^1*19^1",
+      "modulus": 2907,
+      "residue": 324
+    },
+    {
+      "role": "1*17^2*19^1",
+      "modulus": 5491,
+      "residue": 1
+    },
+    {
+      "role": "1*17^1*19^2",
+      "modulus": 6137,
+      "residue": 1
+    },
+    {
+      "role": "outside_pure",
+      "modulus": 7,
+      "residue": 0
+    },
+    {
+      "role": "outside_pure",
+      "modulus": 11,
+      "residue": 0
+    },
+    {
+      "role": "outside_pure",
+      "modulus": 13,
+      "residue": 0
+    },
+    {
+      "role": "outside_pure",
+      "modulus": 17,
+      "residue": 0
+    },
+    {
+      "role": "outside_pure",
+      "modulus": 19,
+      "residue": 0
+    },
+    {
+      "role": "central_pure_or15",
+      "modulus": 3,
+      "residue": 2
+    },
+    {
+      "role": "central_pure_or15",
+      "modulus": 9,
+      "residue": 1
+    },
+    {
+      "role": "central_pure_or15",
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "role": "central_pure_or15",
+      "modulus": 25,
+      "residue": 1
+    },
+    {
+      "role": "central_pure_or15",
+      "modulus": 15,
+      "residue": 0
+    }
+  ],
+  "scope": "One finite family of101 distinct odd numerical moduli, each with one global full residue. No higher pure originals are present."
+}
