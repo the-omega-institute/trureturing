@@ -9,11 +9,11 @@ namespace StrataLint.StageIntegration.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("Meta/FILEMAP.toml", false)]
-    [InlineData("Meta/FILEMAP.toml", true)]
-    [InlineData("README.md", false)]
-    [InlineData("README.md", true)]
-    public void RepositoryTextVerdictChangesInvalidateExecutionAndOldTrx(string path, bool replayOldTrx)
+    [InlineData("Makefile", false)]
+    [InlineData("Makefile", true)]
+    [InlineData("tools/scripts/copy-probe.sh", false)]
+    [InlineData("tools/scripts/copy-probe.sh", true)]
+    public void RegisteredProgramVerdictChangesInvalidateExecutionAndOldTrx(string path, bool replayOldTrx)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -26,28 +26,31 @@ public sealed partial class CurrentExecutionContractTests
             rows[1]!["execution_inputs"] = new JsonArray("Meta/FILEMAP.toml");
             rows[1]!["execution_filemap_paths"] = new JsonArray("docs/virtual.md");
         });
+        foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input,
+                input.EndsWith(".props", StringComparison.Ordinal) ? "<Project />\n" : "# registered program input\n");
         fixture.Write("Meta/FILEMAP.toml", "schema_version = 5\n[[files]]\npattern = \"docs/virtual.md\"\nrequire = []\n");
-        fixture.Write("README.md", "original documentation\n");
+        fixture.Write(path, "# original program\n");
         fixture.Track();
         var calls = new List<string>();
         int Run(string project, string results)
         {
             calls.Add(project);
-            var passed = project == ExecutionFixture.Second || ScanRepositoryText(fixture).Exit == 1;
+            var passed = project == ExecutionFixture.Second || ScanRegisteredProgramText(fixture).Exit == 1;
             fixture.WriteTrx(results, passed ? "Passed" : "Failed");
             return passed ? 0 : 1;
         }
-        Assert.Equal(1, ScanRepositoryText(fixture).Exit);
+        Assert.Equal(1, ScanRegisteredProgramText(fixture).Exit);
         fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, Run, TextWriter.Null));
         Assert.Equal([ExecutionFixture.First, ExecutionFixture.Second], calls);
         var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
         Seed(fixture);
 
-        // The same real grep used by the repository contract must see this text,
-        // including when it is only a TOML comment. Keep the source itself clean.
+        // The repository contract scans the registered program inputs. Keep the
+        // rejected form out of this test source itself.
         File.AppendAllText(Path.Combine(fixture.Root, path), "# cp " + string.Concat('-', 'c') + " fixture\n");
-        var scan = ScanRepositoryText(fixture);
+        var scan = ScanRegisteredProgramText(fixture);
         Assert.Equal(0, scan.Exit);
         Assert.StartsWith(path + ":", scan.Output, StringComparison.Ordinal);
         var build = fixture.Build();
@@ -170,15 +173,18 @@ public sealed partial class CurrentExecutionContractTests
         AcceptEngineering(fixture);
     }
 
-    private static (int Exit, string Output) ScanRepositoryText(ExecutionFixture fixture)
+    private static (int Exit, string Output) ScanRegisteredProgramText(ExecutionFixture fixture)
     {
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
+        var inputs = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == ExecutionFixture.First)!["execution_inputs"]!.AsArray();
         var start = new ProcessStartInfo("git")
         {
             WorkingDirectory = fixture.Root, RedirectStandardOutput = true, RedirectStandardError = true,
         };
         var cloneFlag = string.Concat('-', 'c');
         var recursiveFlag = string.Concat('-', 'R');
-        foreach (var argument in new[] { "grep", "-n", "-I", "-e", $"cp {cloneFlag}", "-e", $"\"{cloneFlag}\", \"{recursiveFlag}\"", "--", "." })
+        foreach (var argument in new[] { "grep", "-n", "-I", "-e", $"cp {cloneFlag}", "-e", $"\"{cloneFlag}\", \"{recursiveFlag}\"", "--" }
+            .Concat(inputs.Select(input => ":(glob)" + input!.ToString())))
             start.ArgumentList.Add(argument);
         using var process = Process.Start(start)!;
         var stdout = process.StandardOutput.ReadToEndAsync();
