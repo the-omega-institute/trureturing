@@ -66764,3 +66764,372 @@ $$
 真实来源仍是 $\ell=\epsilon h$。四阶项中的 $h^4$ 是 $\ell^4/\epsilon^4$，不是噪声趋零时关于原来源 $\ell$ 的统一四阶界。容量与环境解释限于指定正旗标条件记录通道，未包含旧旗标读取与丢弃的整个解码器。数学 CPTP 实现不附加具体硬件、局域操作或既有权限内可执行性的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 222. 两 Kraus 删除、纯输出核检验与缺标签竞争的全局分岔
+
+**定义 222.1（共同记录接口与两个纯策略优化）。** 输入、量子输出均为 $\mathbb C^2$，经典记录为 $Q=\{0,1\}$。取 $K_0,A,B\in M_2(\mathbb C)$，其中 $K_0\ne0$、$A,B$ 线性独立，且
+
+$$
+K_0^\dagger K_0+A^\dagger A+B^\dagger B=I.
+$$
+
+定义 CPTP 记录通道
+
+$$
+\mathcal R(X)=P_0^Q\otimes K_0XK_0^\dagger
++P_1^Q\otimes\Gamma_1(X),\qquad
+\Gamma_1(X)=AXA^\dagger+BXB^\dagger.
+$$
+
+两记录块的 Choi 秩为 $(1,2)$。令 $\mathfrak C_2$ 为同输入、同量子输出及同经典记录接口上，总 Choi 秩至多二的全部 CPTP 记录通道；允许某个记录块为零。定义完整半 diamond 距离
+
+$$
+d_2=\inf_{\mathcal S\in\mathfrak C_2}
+\frac12\|\mathcal R-\mathcal S\|_\diamond,
+\qquad
+q_0=\|K_0^\dagger K_0\|_\infty.
+$$
+
+对单位系数 $c=(c_0,c_1)\in\mathbb C^2$ 与单位量子输出向量 $r$，定义
+
+$$
+M_c=c_0A+c_1B,\qquad
+g(c,r)=\|M_c^\dagger r\|^2,
+$$
+
+$$
+\delta_{\rm rot}=\min_{\|c\|=1}\|M_c\|_\infty^2,
+\qquad
+\gamma=\max_{\|r\|=1}
+\lambda_{\min}\!\left(\Gamma_1^*(P_r)\right),
+\qquad P_r=|r\rangle\langle r|.
+$$
+
+每个单位系数 $c$ 都可以补成一个 $2\times2$ 酉矩阵的行。因此 $\delta_{\rm rot}$ 是在同一记录块的全部两 Kraus 酉混合中，删除一项的最小输入效应范数。这里 $A,B$ 已带实际 Kraus 权重，不另将其归一化。$\gamma$ 固定一个纯输出事件，再取其输入效应的最小本征值；它与允许按竞争者改变输出事件的检验具有不同量词。
+
+本节使用第 219 节的修复结论：从 CPTP 通道删去 CP 分量 $\mathcal L$，若 $E=\mathcal L^*(I)$ 满足 $\delta=\|E\|_\infty<1$，则将所有保留 Kraus 算子统一右乘 $(I-E)^{-1/2}$，得到保持各保留记录块秩的 CPTP 通道，完整半 diamond 误差不超过 $\delta$。有限维酉 Kraus 变换、Gram 矩阵的非零谱对应和弱极小极大不等式作为下述推导的标准中间工具；后者可参见钉版 Mathlib 的 `Mathlib/Order/SaddlePoint.lean`。本节关注这些工具在固定记录接口上给出的精确分岔，不把一般极小极大关系另列为新增结论。
+
+**定理 222.2（完整秩预算夹界与无谱简单性要求的证书）。** 在定义 222.1 的全部条件下，两个极值均取得，且
+
+$$
+\gamma
+=\max_{\|r\|=1}\min_{\|c\|=1}g(c,r)
+\le
+\min_{\|c\|=1}\max_{\|r\|=1}g(c,r)
+=\delta_{\rm rot}<1.
+$$
+
+真实距离满足
+
+$$
+\boxed{
+\min(\gamma,q_0)\le d_2\le\min(\delta_{\rm rot},q_0).
+}
+$$
+
+此外，$\gamma=\delta_{\rm rot}$ 当且仅当存在一份两 Kraus 酉混合 $(M,N)$ 及单位输出向量 $r$，令 $\delta=\|M\|_\infty^2$ 后同时满足
+
+$$
+\boxed{
+MM^\dagger r=\delta r,\qquad
+\langle M^\dagger r,N^\dagger r\rangle=0,\qquad
+\|N^\dagger r\|^2\ge\delta.
+}
+$$
+
+此时 $\delta=\gamma=\delta_{\rm rot}$，且
+
+$$
+\boxed{d_2=\min(\delta_{\rm rot},q_0).}
+$$
+
+证书允许 $M$ 的两个奇异值相等。若仅为检验 $\gamma=\delta_{\rm rot}$ 而允许任意 $A,B\in M_2(\mathbb C)$，不要求线性独立或共同 TP，则 $\gamma\le\delta_{\rm rot}$ 及该等号证书仍成立，包括共同值为零的情形；严格界 $\delta_{\rm rot}<1$ 和关于 $d_2$ 的结论仍使用定义 222.1 的通道条件。
+
+**证明。** 固定 $r$，令 $T_r$ 为两列分别是 $A^\dagger r$ 与 $B^\dagger r$ 的 $2\times2$ 矩阵。则
+
+$$
+\Gamma_1^*(P_r)=T_rT_r^\dagger,
+\qquad
+g(c,r)=\|T_r\overline c\|^2.
+$$
+
+$T_rT_r^\dagger$ 与 $T_r^\dagger T_r$ 的两个本征值相同，所以
+
+$$
+\min_{\|c\|=1}g(c,r)
+=\lambda_{\min}(\Gamma_1^*(P_r)).
+$$
+
+这里同时使用输入维数为二、Kraus 数量为二；不能把两个不同维数矩阵的最小本征值未经检查地等同。弱极小极大不等式给出 $\gamma\le\delta_{\rm rot}$，连续性与单位球面的紧性给出极值取得。两个变量的纯态投影集合均非凸，不能直接通过凸极小极大定理交换次序；把系数纯态换成混合态也不再表示只删除一项 Kraus 算子。
+
+记结果一 Choi 矩阵的两个正根为 $\alpha\ge\lambda>0$。由共同 TP 和 $K_0\ne0$，
+
+$$
+\alpha+\lambda=\operatorname{Tr}J_1
+=2-\operatorname{Tr}(K_0^\dagger K_0)<2,
+\qquad \lambda<1.
+$$
+
+将 Kraus 列的二维 Gram 矩阵酉对角化，可在允许的混合中取得一个 HS 范数平方为 $\lambda$ 的谱 Kraus 算子 $M$。因此
+
+$$
+\delta_{\rm rot}\le\|M\|_\infty^2
+\le\|M\|_{HS}^2=\lambda<1.
+$$
+
+对任意竞争者 $\mathcal S\in\mathfrak C_2$，若其结果一块的 Choi 秩至多一，便可写为 $X\mapsto CXC^\dagger$，包括 $C=0$。固定任意单位输出 $r$，行 $r^\dagger C$ 有单位核向量 $v$。竞争者在输入 $P_v$ 上对事件“标签一且量子输出为 $r$”给零概率，目标通道的概率为
+
+$$
+\langle v,\Gamma_1^*(P_r)v\rangle
+\ge\lambda_{\min}(\Gamma_1^*(P_r)).
+$$
+
+合法事件的概率差不超过两通道的完整半 diamond 距离。选择达到 $\gamma$ 的 $r$，得到此类竞争者的下界 $\gamma$；核输入可以依赖竞争者。
+
+若竞争者的结果一 Choi 秩为二，总秩预算迫使其结果零块缺失。选取达到 $q_0$ 的输入并只检验标签零，得到下界 $q_0$。两类穷尽全部预算内竞争者，因此 $d_2\ge\min(\gamma,q_0)$。
+
+取达到 $\delta_{\rm rot}$ 的删除项并补为 $(M,N)$。删除 $M$ 后，保留结果零的 $K_0$ 与结果一的 $N$；上面的严格小于一保证可应用第 219 节修复，得到总秩二的合法竞争者及 $d_2\le\delta_{\rm rot}$。
+
+另一方面，若 $q_0<1$，删除整个结果零块并修复保留的结果一，得到总秩二候选及 $d_2\le q_0$。若 $q_0=1$，已有 $d_2\le\delta_{\rm rot}<1=q_0$，无需在奇异端点调用逆平方根。故得到完整上界。
+
+现在证明等号证书。若所列条件成立，$\Gamma_1^*(P_r)$ 是两个正交向量 $M^\dagger r,N^\dagger r$ 的外积之和，其两本征值为 $\delta$ 与 $\|N^\dagger r\|^2$。因此
+
+$$
+\gamma\ge\delta,\qquad
+\delta_{\rm rot}\le\delta.
+$$
+
+结合弱极小极大不等式，所有量相等。
+
+反过来，设 $\gamma=\delta_{\rm rot}=\delta$。取达到最小删除值的 $M$，补为 $(M,N)$；再取达到 $\gamma$ 的 $r$。在对应系数处，
+
+$$
+\delta=\min_cg(c,r)
+\le\|M^\dagger r\|^2
+\le\max_{r'}\|M^\dagger r'\|^2
+=\delta.
+$$
+
+所以 $MM^\dagger r=\delta r$。对固定 $r$，任意组合 $xM+yN$ 的平方范数由二维 Hermitian Gram 矩阵给出。系数 $(1,0)$ 达到最小 Rayleigh 商 $\delta$，迫使非对角元为零、另一对角元不小于 $\delta$，即另外两个条件。此论证不要求简单主奇异值。若 $\delta=0$，最优 $M=0$，同一证明及零向量外积仍成立。
+
+等价地，等号当且仅当存在纯策略鞍点 $(c_*,r_*)$，使
+
+$$
+g(c_*,r)\le g(c_*,r_*)\le g(c,r_*)
+\quad\text{对所有单位 }c,r.
+$$
+
+在通道条件下，将 $\gamma=\delta_{\rm rot}$ 代入已证距离夹界，得到 $d_2=\min(\delta_{\rm rot},q_0)$。证毕。
+
+**定理 222.3（满秩 Kraus 族中的三个精确读数）。** 固定
+
+$$
+0<b<a,\qquad a+b<1,\qquad 0\le u\le1,
+$$
+
+并令
+
+$$
+D_u=\operatorname{diag}(1,u),\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+$$
+A_u=\sqrt a\,D_u,\qquad B_u=\sqrt b\,XD_u,
+$$
+
+$$
+K_{0,u}=\operatorname{diag}
+\left(\sqrt{1-a-b},\sqrt{1-(a+b)u^2}\right).
+$$
+
+以 $(K_{0,u},A_u,B_u)$ 定义共同记录通道。它对整个参数范围具有严格的记录块 Choi 秩 $(1,2)$，且
+
+$$
+\boxed{
+\delta_{\rm rot}=b,\qquad
+\gamma=\min(b,au^2),\qquad
+q_0=1-(a+b)u^2,\qquad
+d_2=\min\bigl(b,1-(a+b)u^2\bigr).
+}
+$$
+
+当 $u>0$ 时两个结果一 Kraus 矩阵均可逆、结果一总输入效应正定；其两个非零 Choi 根始终互异。因此 $0<u<\sqrt{b/a}$ 给出具有可逆 Kraus 算子的严格极小极大间隙。
+
+**证明。** 直接计算得
+
+$$
+K_{0,u}^\dagger K_{0,u}
++(a+b)D_u^2=I,
+$$
+
+所以共同 TP 成立。$K_{0,u}$ 可逆，$A_u,B_u$ 非零且 HS 正交，结果一的两正 Choi 根为
+
+$$
+a(1+u^2)>b(1+u^2)>0.
+$$
+
+当 $u>0$ 时 $D_u$ 可逆，故 $A_u,B_u$ 均可逆；结果一总输入效应为 $(a+b)D_u^2$，亦正定。
+
+任意归一化混合 $M=c_0A_u+c_1B_u$ 的首列满足
+
+$$
+\|M|0\rangle\|^2=a|c_0|^2+b|c_1|^2\ge b.
+$$
+
+因此 $\|M\|_\infty^2\ge b$。取 $M=B_u$ 时 $\|B_u\|_\infty^2=b$，得到 $\delta_{\rm rot}=b$。
+
+对任意单位输出 $r$，在固定输入 $|1\rangle$ 上取 Rayleigh 商，得到
+
+$$
+\lambda_{\min}(\Gamma_1^*(P_r))
+\le u^2(a|r_1|^2+b|r_0|^2)
+\le au^2.
+$$
+
+结合定理 222.2 的 $\gamma\le\delta_{\rm rot}=b$，有 $\gamma\le\min(b,au^2)$。取 $r=|1\rangle$ 时，
+
+$$
+\Gamma_1^*(P_1)=\operatorname{diag}(b,au^2),
+$$
+
+恰好达到该上界。$q_0$ 的公式则由 $0\le u\le1$ 和 $K_{0,u}$ 的两个对角元直接得到。
+
+真实距离需要比固定输出核值更强的下界。取任意总秩至多二的竞争者。若其结果一 Choi 秩至多一，写该分支为 $C(\cdot)C^\dagger$。固定输入 $|0\rangle$，选择单位输出 $r$ 垂直于 $C|0\rangle$；若该向量为零，任选单位 $r$。竞争者对事件“标签一且输出为 $r$”给零概率，而目标在该输入的结果一输出为
+
+$$
+\Gamma_1(P_0)=aP_0+bP_1.
+$$
+
+因此目标事件概率为
+
+$$
+a|r_0|^2+b|r_1|^2\ge b.
+$$
+
+故这类竞争者的完整半 diamond 距离至少为 $b$。若竞争者结果一的 Choi 秩为二，则结果零必缺失；输入 $|1\rangle$ 并检验标签零，得到下界 $q_0$。于是
+
+$$
+d_2\ge\min(b,q_0).
+$$
+
+上界也可显式达到。删除 $B_u$，其输入效应为
+
+$$
+E_B=B_u^\dagger B_u=bD_u^2,
+\qquad \|E_B\|_\infty=b<\frac12.
+$$
+
+共同右修复后得到 Kraus 算子
+
+$$
+K_{0,u}(I-bD_u^2)^{-1/2},\qquad
+A_u(I-bD_u^2)^{-1/2},
+$$
+
+分别保留标签零与一。它们给出秩 $(1,1)$ 候选，完整半 diamond 误差至多 $b$。
+
+若 $q_0<b$，则 $u>0$ 且 $q_0<1$。删除整个结果零块，保留 Gram 矩阵 $(a+b)D_u^2$ 严格正定。右修复后的结果一 Kraus 算子为
+
+$$
+\sqrt{\frac a{a+b}}\,I,
+\qquad
+\sqrt{\frac b{a+b}}\,X.
+$$
+
+该秩 $(0,2)$ 候选的完整半 diamond 误差至多 $q_0$。两种构造与下界合并，得到 $d_2=\min(b,q_0)$，且存在达到该距离的合法候选。证毕。
+
+**命题 222.4（权重转折、缺标签转折与证书间隙的不同含义）。** 定理 222.3 的同一合法族具有以下三类行为。
+
+第一类，取 $a=1/3,b=1/6$，则对所有 $0\le u\le1$，
+
+$$
+\delta_{\rm rot}=d_2=\frac16,
+\qquad
+\gamma=\min\left(\frac16,\frac{u^2}{3}\right).
+$$
+
+在 $0<u<1/\sqrt2$ 时，两个 Kraus 矩阵都可逆，最优删除项的主奇异值简单，两个非零 Choi 根也不同，但仍有 $\gamma<d_2$。在 $u=1$ 时，最优删除项的两个奇异值相等，而 $\gamma=\delta_{\rm rot}=d_2$。
+
+第二类，取 $a=2/3,b=1/4$。两个纯策略优化在 $u^2=3/8$ 达到相等；真实距离却在另一阈值 $u^2=9/11$ 才从保留两标签的删除候选转入缺失标签零的候选：
+
+$$
+\gamma=\min\left(\frac14,\frac23u^2\right),
+\qquad
+\delta_{\rm rot}=\frac14,
+$$
+
+$$
+d_2=
+\begin{cases}
+\frac14,&u^2\le\frac9{11},\\
+1-\frac{11}{12}u^2,&u^2\ge\frac9{11}.
+\end{cases}
+$$
+
+特别地，在 $u=1$ 有 $d_2=1/12<\gamma=\delta_{\rm rot}=1/4$，故一般不能把 $\gamma$ 无条件称为包含缺标签候选后的真实距离下界。
+
+第三类，取 $a=1/2,b=2/5,u^2=5/7$，则
+
+$$
+\delta_{\rm rot}=\frac25,
+\qquad
+\gamma=q_0=d_2=\frac5{14}.
+$$
+
+因此没有纯策略鞍点，也不推出经缺标签截断后的核事件下界对真实距离不尖锐。
+
+**证明。** 对第一类参数，$q_0=1-u^2/2\ge1/2>b$，代入定理 222.3 得全部公式。最优删除项为 $B_u$，奇异值为 $\sqrt b$ 与 $u\sqrt b$；当 $0<u<1$ 时主奇异值简单，当 $u=1$ 时重合。在主输出 $r=|1\rangle$ 上，保留项满足
+
+$$
+\|A_u^\dagger r\|^2=au^2,
+\qquad
+\|B_u^\dagger r\|^2=b,
+\qquad
+\langle A_u^\dagger r,B_u^\dagger r\rangle=0.
+$$
+
+故 $u^2=b/a$ 正是定理 222.2 证书中保留行权重从不足到足够的转折。奇异值重合本身既不是间隙的必要条件，也不是充分条件。
+
+对第二类，$b/a=3/8$，而 $q_0=b$ 等价于
+
+$$
+1-\frac{11}{12}u^2=\frac14
+\quad\Longleftrightarrow\quad u^2=\frac9{11}.
+$$
+
+代入精确距离式即得分段公式与 $u=1$ 的读数。
+
+对第三类，
+
+$$
+au^2=\frac5{14}<\frac25,
+\qquad
+q_0=1-\frac9{10}\frac57=\frac5{14}.
+$$
+
+因此 $\gamma<\delta_{\rm rot}$ 而完整夹界的两端同为 $5/14$，给出所述结论。证毕。
+
+**命题 222.5（共同输入与共同输出的端口区别）。** 定理 222.3 在 $u=0$ 的结果一块满足
+
+$$
+A_0=\sqrt a\,|0\rangle\langle0|,
+\qquad B_0=\sqrt b\,|1\rangle\langle0|.
+$$
+
+它使用共同输入方向、写入两个输出方向，有 $\gamma=0<d_2=\delta_{\rm rot}=b$。对结果一块秩至多一的候选，固定输入后按候选选择输出事件可给出下界 $b$；结果一块秩二的候选则由缺标签检验给出不小于 $b$ 的下界。两类检验均不需要纠缠参考。
+
+**证明。** 任意单位输出 $r$ 给出
+
+$$
+\Gamma_1^*(P_r)
+=(a|r_0|^2+b|r_1|^2)P_0,
+$$
+
+所以全部压缩输入效应都有共同核 $|1\rangle$，其最小本征值恒为零。反之，固定输入 $|0\rangle$ 的输出为 $aP_0+bP_1$，最小本征值为 $b$；定理 222.3 的候选相关正交事件因此给出尖锐下界。又因 $q_0=1$，该定理的距离公式给 $d_2=b$。
+
+第 221 节局部 reset 中心的两个结果一 Kraus 方向使用共同输出、读取不同输入。本命题使用共同输入、写入不同输出。交换这些端口角色会改变上述压缩核结构；单独记录 Kraus 数量与 Choi 谱权重不能代替端口身份。这里的量词差别可以明确写为：定理 222.3 对结果一块秩至多一的预算候选固定输入 $|0\rangle$，再根据该候选选择一个输出事件；结果一块秩二的候选另用输入 $|1\rangle$ 的标签零检验。$\gamma$ 则先选一个输出事件，再对全部输入取最小值。候选相关检验与固定输出核检验都可只用无参考输入，量词仍不相同。
+
+定理 222.2 因而给出第 221 节局部证书的回接范围：主奇异关系与正交关系之外，保留行的权重条件承担独立义务。有纯策略鞍点时，完整距离还须取与缺标签成本 $q_0$ 的较小值；无鞍点只说明 $\gamma<\delta_{\rm rot}$，其本身既不确定真实距离，也不判定旋转修复是否最近。第 222.4 节三类实际通道分别实现这些不同关系。证毕。
+
+## 追加锚（本行以下为增补区）
