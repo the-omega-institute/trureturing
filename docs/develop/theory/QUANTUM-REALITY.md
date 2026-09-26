@@ -51093,3 +51093,493 @@ $$
 [3]: https://arxiv.org/html/1510.02063v3 "https://arxiv.org/html/1510.02063v3"
 [4]: https://arxiv.org/abs/quant-ph/0112154 "https://arxiv.org/abs/quant-ph/0112154"
 [5]: https://arxiv.org/abs/quant-ph/0602069 "https://arxiv.org/abs/quant-ph/0602069"
+
+# 381．关系切片先于外部时间参数
+
+设 $G=(V,E,s,t)$ 是有限有向图，其底层无向图连通且 $V\ne\varnothing$，并固定根 $r\in V$。顶点表示已经声明的关系切面，不预设为外部时空点。固定非零有限维复 Hilbert 空间 $\mathcal H$，并令每条边 $e$ 携带酉运输 $U_e:\mathcal H\to\mathcal H$。把
+$\bigoplus_{v\in V}\mathcal H$ 识别为时钟标记空间 $\mathbb C^V\otimes\mathcal H$。若 $\Psi=(\psi_v)_{v\in V}$，定义
+
+$$
+A_e\Psi=\psi_{t(e)}-U_e\psi_{s(e)},\qquad
+K_G=\sum_{e\in E}\lambda_e A_e^\dagger A_e,quad \lambda_e>0.
+$$
+
+这里 $K_G$ 是关系相容性的静态约束算子；把它另行解释为实际装置的 Hamiltonian 需要额外的实现假设。
+
+## 定理 381.1（零约束的逐边判据）
+
+$$
+K_G\succeq0,\qquad
+K_G\Psi=0\Longleftrightarrow
+\psi_{t(e)}=U_e\psi_{s(e)}\quad(\forall e\in E).
+$$
+
+### 证明
+
+$$
+\langle\Psi,K_G\Psi\rangle
+=\sum_e\lambda_e\|\psi_{t(e)}-U_e\psi_{s(e)}\|^2\ge0.
+$$
+
+若 $K_G\Psi=0$，则左端为零，严格正的 $\lambda_e$ 和非负的各项迫使每项均为零。反向蕴含则由 $A_e\Psi=0$ 逐项相加得到。∎
+
+在底层无向路径上，正向经过 $e$ 使用 $U_e$，反向经过 $e$ 使用 $U_e^{-1}$，并记路径复合为 $U_\gamma$。定义根处向量共同不动子空间
+
+$$
+\mathcal F_r=
+\{x\in\mathcal H:U_\gamma x=x\text{ 对每条根处闭走法 }\gamma\}.
+$$
+
+## 定理 381.2（固定子空间与共同实现）
+
+评价映射
+
+$$
+\operatorname{ev}_r:\ker K_G\longrightarrow\mathcal F_r,\qquad
+\Psi\longmapsto\psi_r
+$$
+
+是线性双射。因此，存在归一化的共同向量切片，当且仅当 $\mathcal F_r\ne\{0\}$。一般图的核可以为零，不能由连通性单独推出归一化历史态存在。
+
+### 证明
+
+零约束沿路径递推给出 $\psi_v=U_\gamma\psi_r$。闭走法因此固定 $\psi_r$，评价映射落入 $\mathcal F_r$，且连通性使其单射。反之，取 $x\in\mathcal F_r$，对每个 $v$ 选一条根到 $v$ 的路径 $\gamma_v$，置 $\psi_v=U_{\gamma_v}x$。两条路径的差组成根处闭走法，故定义与路径选择无关，并满足全部边约束。∎
+
+形式上使用反向路径只是检验相容性，不授予观察者逆转实际过程的操作权限。图上的酉连接与向量丛 Laplacian 的直接框架可参见 Kenyon 的原始论文 [arXiv:1001.4028](https://arxiv.org/abs/1001.4028)，这里采用的是有限维、有限图的相应构造。
+
+# 382．历史态、条件切片与相干—去相干区别
+
+对链图 $0\to1\to\cdots\to N$，其中 $N\ge1$，把 $\bigoplus_{n=0}^N\mathcal H$ 识别为 $\mathbb C^{N+1}\otimes\mathcal H$。取酉 $U_0,\ldots,U_{N-1}$，令
+
+$$
+V_0=I,\qquad V_n=U_{n-1}\cdots U_0,
+$$
+
+并定义
+
+$$
+W\psi=\frac1{\sqrt{N+1}}\sum_{n=0}^N|n\rangle\otimes V_n\psi .
+$$
+
+则 $W^\dagger W=I$，且 $\operatorname{ran}W=\ker K_G$。对初态密度矩阵 $\rho_0$，令 $\Gamma=W\rho_0W^\dagger$。
+
+## 定理 382.1（历史态的条件切片）
+
+令 $P_n=|n\rangle\langle n|$。则
+
+$$
+\Pr(n)=\frac1{N+1},\qquad
+\rho_n=V_n\rho_0V_n^\dagger,
+$$
+
+并且对任意 $0\preceq F\preceq I$，
+
+$$
+\Pr(F\mid n)=\operatorname{Tr}(V_n\rho_0V_n^\dagger F).
+$$
+
+### 证明
+
+酉性给出
+
+$$
+\langle W\psi,W\phi\rangle
+=\frac1{N+1}\sum_n\langle V_n\psi,V_n\phi\rangle
+=\langle\psi,\phi\rangle .
+$$
+
+链上的每个分量满足 $V_{n+1}=U_nV_n$，故像空间正好是零约束空间。展开
+
+$$
+\Gamma=\frac1{N+1}\sum_{n,m}|n\rangle\langle m|\otimes
+V_n\rho_0V_m^\dagger
+$$
+
+并对钟空间取条件块，即得所述概率和条件态。∎
+
+对一般图，密度历史态可由任意非零 $\Psi\in\ker K_G$ 归一化后构造；若 $\ker K_G=\{0\}$，则没有这样的归一化态。链图之所以没有这个障碍，是因为它没有非平凡闭走法，$W$ 已显式给出非零核向量。Aharonov 等人的原始论文 [quant-ph/0405098v2](https://arxiv.org/abs/quant-ph/0405098) 的式 (1) 与 Claim 3.3 讨论的是电路历史态和传播项的零能量结构；这里仅借用这种历史态编码的数学形式。
+
+定义钟去相干态
+
+$$
+\Gamma_{\mathrm{diag}}
+=\frac1{N+1}\sum_n|n\rangle\langle n|\otimes V_n\rho_0V_n^\dagger .
+$$
+
+## 定理 382.2（局部钟读数不恢复跨切片相干）
+
+$\Gamma$ 与 $\Gamma_{\mathrm{diag}}$ 对所有 $P_n\otimes F$ 给出相同结果；当 $\rho_0\ne0$ 时两者不同。
+
+### 证明
+
+两态钟对角块相同，故所有 $P_n\otimes F$ 的迹相同。相干历史的 $n,m$ 块为
+
+$$
+(N+1)^{-1}V_n\rho_0V_m^\dagger ,
+$$
+
+其在 $\rho_0\ne0$ 时非零；去相干态的相应块为零。∎
+
+因此，逐切片条件概率的完全一致不能推出跨切片相干关系的一致。
+
+# 383．规范运输与绕行不变量
+
+对每个顶点选酉 $G_v$，同时定义
+
+$$
+\rho'_v=G_v\rho_vG_v^\dagger,\qquad
+F'_v=G_vF_vG_v^\dagger,\qquad
+U'_e=G_{t(e)}U_eG_{s(e)}^\dagger .
+$$
+
+## 定理 383.1（逐切面换表示）
+
+若 $\rho_{t(e)}=U_e\rho_{s(e)}U_e^\dagger$，则
+
+$$
+\rho'_{t(e)}=U'_e\rho'_{s(e)}U_e'{}^\dagger ,
+\qquad
+\operatorname{Tr}(\rho'_vF'_v)=\operatorname{Tr}(\rho_vF_v).
+$$
+
+### 证明
+
+把定义代入，邻接的 $G_v^\dagger G_v$ 消去；概率等式由迹的循环性质得到。∎
+
+在链上取 $G_n=V_n^\dagger$，则
+
+$$
+U'_n=G_{n+1}U_nG_n^\dagger=I,
+$$
+
+并可把 $\rho_n$ 全部写成 $\rho_0$，同时把变化移到 $F'_n=V_n^\dagger F_nV_n$。这是表示等价，不是免费施加的受控操作。
+
+## 定理 383.2（向量 Holonomy 与密度共轭必须分开）
+
+闭走法 $\gamma$ 的向量不动条件是 $U_\gamma x=x$，而密度不变条件是
+
+$$
+U_\gamma\rho U_\gamma^\dagger=\rho .
+$$
+
+后者只说明 $\rho$ 在共轭作用下不变，不能替代前者的共同向量条件，也不能保证 $\ker K_G\ne0$ 的向量实现。规范变换把 $U_\gamma$ 共轭为 $G_rU_\gamma G_r^\dagger$，因此保留其谱和共轭类。
+
+### 证明
+
+沿闭走法 $\gamma=e_k\cdots e_1$ 相乘边运输，变换后的中间顶点因 $G_{v_j}^\dagger G_{v_j}=I$ 逐一消去，留下
+
+$$
+U'_\gamma
+=(G_rU_{e_k}G_{v_{k-1}}^\dagger)\cdots
+(G_{v_1}U_{e_1}G_r^\dagger)
+=G_rU_\gamma G_r^\dagger .
+$$
+
+因此向量固定空间只作 $G_r$ 的酉像，密度共轭固定性则按同一等式保持。两种条件仍有严格区别：单顶点带一条闭环、$U_\gamma=-I$ 时，$U_\gamma x=x$ 强迫 $x=0$，而任意密度矩阵都满足 $(-I)\rho(-I)^\dagger=\rho$。∎
+
+# 384．实际仪器、条件化与记录
+
+令 $h$ 为已经取得的历史记录，且包含选择下一步所需的控制、参考、校准和权限。选择器只依赖已纳入的信息：
+
+$$
+a=\pi(h).
+$$
+
+对每个获准设置 $a$，取有限 instrument $\{\Phi_{a,y}\}_{y\in Y_a}$，其中每个 $\Phi_{a,y}$ 完全正且保迹不增，并且 $\sum_y\Phi_{a,y}$ 保迹。得到结果 $y$ 后追加
+
+$$
+h'=h\Vert(a,y,\text{来源与校准记录}),
+\qquad
+\sigma_{h'}=\Phi_{a,y}(\sigma_h).
+$$
+
+只对非零分支概率作归一化条件态。对与策略相容的合法词 $w=(a_1,y_1)\cdots(a_n,y_n)$，记 $\Phi_j=\Phi_{a_j,y_j}$，并令
+
+$$
+\Phi_w=\Phi_n\circ\cdots\circ\Phi_1,
+\qquad
+E_w=\Phi_1^*\circ\cdots\circ\Phi_n^*(I).
+$$
+
+## 定理 384.1（合法记录词的迹拉回）
+
+$$
+p(w)=\operatorname{Tr}(\Phi_w(\rho_0))
+=\operatorname{Tr}(\rho_0E_w).
+$$
+
+若 $p(w)>0$，则 $\rho_w=\Phi_w(\rho_0)/p(w)$。
+
+### 证明
+
+若某个前缀的迹为零，其半正定的未归一化态必为零；后续线性分支保持零态，因此该前缀的每个延伸词概率均为零，第一式仍成立。对所有前缀概率均为正的路径，逐步相乘条件概率时归一化因子望远镜消去，得到第一式。由
+
+$$
+\operatorname{Tr}(F\Phi(X))
+=\operatorname{Tr}(\Phi^*(F)X)
+$$
+
+从末端 $I$ 逐步拉回，得到第二式；非零时除以总迹即得条件态。∎
+
+此处的 $p(w)$ 是实际执行并留下记录的联合概率，不是把若干固定历史切片概率相乘。Davies–Lewis 的测量公理 [DOI:10.1007/BF01647093](https://doi.org/10.1007/BF01647093) 与 Ozawa 的 instrument 形式 [quant-ph/0107090v1](https://arxiv.org/abs/quant-ph/0107090) 给出结果分支和后继状态的标准框架。
+
+## 命题 384.2（追加记录的有限词非返回）
+
+令 $w$ 是声明接口中的有限原始记录词，$u$ 是同一接口允许的非空追加词。若物理状态、相位或某个内部寄存器在追加前后相同，则追加后的原始记录仍为 $w\Vert u$，并满足
+
+$$
+|w\Vert u|=|w|+|u|>|w|.
+$$
+
+### 证明
+
+原始记录按词的字面连接定义，非空 $u$ 具有 $|u|\ge1$；有限词长度的连接律给出等式和严格不等式。因此有限声明域内的周期返回不能等同于原始记录返回；该命题只涉及每个给定有限词，不声称有限装置拥有无限容量。∎
+
+# 385．声明的有限仪器词接口能区分什么
+
+令 $\mathcal D$ 是双方候选准备都能实际执行的共同合法域。它包含同一有限词集合 $\mathcal L$、同一策略、同一仪器分支和同一记录标签；若某一步权限只对一方存在，则该权限差异及相应失败记录必须先纳入接口，不能把它从概率读数中删去。对每个 $w\in\mathcal L$，声明相同的末端 yes 检验 $F_w$，其中 $F_w$ 是 Hermitian 且 $0\preceq F_w\preceq I$。定义未归一化的联合概率
+
+$$
+p_\rho(w,F)=\operatorname{Tr}[\Phi_w(\rho)F],
+$$
+
+它是“出现记录词 $w$ 且末端回答 yes”的联合概率，而不是条件概率 $p(F\mid w)$。定义拉回效果
+
+$$
+E_{w,F}=\Phi_w^*(F_w).
+$$
+
+完全正映射的对偶保持 Hermitian。并且
+
+$$
+0\preceq E_{w,F}\preceq\Phi_w^*(I)\preceq I.
+$$
+
+最后一个不等式来自每个分支的保迹不增性及其复合；前一个不等式来自 $0\preceq F_w\preceq I$ 和对偶的正性。因此所有候选都在同一 $\mathcal D$ 上比较，令
+
+$$
+\Delta=\rho-\sigma,\qquad
+\mathcal V_{\mathcal L}=\operatorname{span}_{\mathbb R}\{E_{w,F}:w\in\mathcal L\}.
+$$
+
+## 定理 385.1（有限合法接口的精确判据）
+
+在共同域 $\mathcal D$ 上，两准备对所有声明的 $(w,F_w)$ 给出相同末端联合概率，当且仅当
+
+$$
+\operatorname{Tr}(\Delta E)=0
+\quad\text{对所有 }E\in\mathcal V_{\mathcal L}.
+$$
+
+因而它们可由该接口区分，当且仅当 $\Delta\notin\mathcal V_{\mathcal L}^{\perp}$，其中正交取 Hermitian 矩阵上的实迹配对
+
+$$
+\langle A,B\rangle_{\mathbb R}=\operatorname{Tr}(AB)\in\mathbb R.
+$$
+
+### 证明
+
+对每个合法词，
+
+$$
+p_\rho(w,F_w)-p_\sigma(w,F_w)
+=\operatorname{Tr}((\rho-\sigma)\Phi_w^*(F_w))
+=\operatorname{Tr}(\Delta E_{w,F}).
+$$
+
+所以全部联合读数相等，当且仅当差值对生成集合为零；线性性把这等价地扩展到其有限实线性张成空间。若候选依赖不同的权限域，域成员资格和失败记录本身就是接口读数，此时上述共同域的概率判据不能抹除该差异。∎
+
+### 应用证明（相干历史与两步仪器）
+
+空词且无中间操作时，末端效果为钟对角的 $P_n\otimes F$，其确实不能检测 $\Gamma-\Gamma_{\mathrm{diag}}$ 的钟非对角块。对含操作的普通词，末端 $F$ 的对角性不推出拉回效果 $E=\Phi_w^*(F)$ 对角；必须直接要求每个拉回效果本身对角，才能应用同一相位盲结论。拉回效果的非对角性只是必要条件，未必足以区分；精确条件是存在某个声明的 $E$ 使
+
+$$
+\operatorname{Tr}\bigl[(\Gamma-\Gamma_{\mathrm{diag}})E\bigr]\ne0.
+$$
+
+因此不能声称每个允许混合的操作都能区分这两个历史。
+
+作为该应用的具体命题，考虑两个单步效果完全相同的二能级 instrument。第一仪器的 Kraus 分支为
+
+$$
+K_y=
+\begin{cases}
+|0\rangle\langle0|,&y=0,\\
+|1\rangle\langle1|,&y=1,
+\end{cases}
+$$
+
+第二仪器为 $\widetilde K_y=XK_y$，其中 $X$ 是 Pauli-$X$。则
+
+$$
+K_y^\dagger K_y=\widetilde K_y^\dagger\widetilde K_y\quad(y=0,1),
+\qquad
+\sum_yK_y^\dagger K_y=\sum_y\widetilde K_y^\dagger\widetilde K_y=I.
+$$
+
+## 命题 385.2（相同单步效果不决定两步联合权重）
+
+取初态 $|0\rangle\langle0|$，第一次结果 $y=0$，第二步末端效果 $I-|0\rangle\langle0|$。第一仪器给出的两步权重为 $0$，第二仪器给出的两步权重为 $1$。
+
+### 证明
+
+第一仪器在结果 $y=0$ 后仍把状态置于 $|0\rangle$，故末端效果的权重为 $0$。第二仪器先以 $K_0$ 得到 $|0\rangle$，再由 $X$ 置为 $|1\rangle$，故末端效果的权重为 $1$。因此单步效果生成的空间不足以决定两步接口；合法词的后继通道及其拉回效果必须一并纳入 $\mathcal V_{\mathcal L}$。∎
+
+# 386．可见能隙、周期性与驻定生成元
+
+设 $\hbar>0$，$H=H^\dagger$ 为有限维 Hamiltonian，
+
+$$
+H=\sum_aE_aP_a,\qquad
+\rho(t)=e^{-iHt/\hbar}\rho_0e^{iHt/\hbar},
+$$
+
+并令 $F=F^\dagger$ 为固定效果。定义 $f_F(t)=\operatorname{Tr}(\rho(t)F)$ 和
+
+$$
+\Omega=\{(E_a-E_b)/\hbar\}.
+$$
+
+称 $f_F$ 非恒定，若存在 $t,u$ 使 $f_F(t)\ne f_F(u)$；称其周期，若存在 $T>0$ 使 $f_F(t+T)=f_F(t)$ 对所有 $t$ 成立。
+
+## 定理 386.1（实际可见频率）
+
+$$
+f_F(t)=\sum_{\omega\in\Omega}c_\omega e^{i\omega t},\qquad
+c_\omega=\sum_{E_a-E_b=\hbar\omega}
+\operatorname{Tr}(\rho_0P_aFP_b).
+$$
+
+因此 $f_F$ 恒定，当且仅当所有 $\omega\ne0$ 的 $c_\omega$ 均为零；给定 $T>0$，
+
+$$
+f_F(t+T)=f_F(t)\ \forall t
+\Longleftrightarrow
+(e^{i\omega T}-1)c_\omega=0
+\quad\text{对每个 }\omega\in\Omega.
+$$
+
+### 证明
+
+谱分解直接给出有限指数和。不同实频率的指数函数线性独立，可由 Vandermonde 导数矩阵验证；将 $f_F(t+T)-f_F(t)$ 展开后再使用线性独立性即得周期判据。零频率项是 DC 项，不影响恒定性或周期性判据。∎
+
+### 离散时钟嵌入
+
+给定校准时刻
+
+$$
+0=t_0<t_1<\cdots<t_N,
+$$
+
+定义
+
+$$
+U_n=\exp\!\left[-\frac{iH(t_{n+1}-t_n)}{\hbar}\right],\qquad
+V_n=\exp\!\left[-\frac{iHt_n}{\hbar}\right].
+$$
+
+于是 $V_0=I$ 且 $V_{n+1}=U_nV_n$。以 $\rho(0)=\rho_0$ 为初态时，历史态的条件切片为 $\rho_n=V_n\rho_0V_n^\dagger$，并满足
+
+$$
+\operatorname{Tr}(\rho_nF)=f_F(t_n).
+$$
+
+若时间原点任取 $t_0$，则以 $\rho(t_0)$ 为初态并使用 $V_n=\exp[-iH(t_n-t_0)/\hbar]$；相应条件响应仍是同一 $f_F(t_n)$ 的取样。
+
+## 命题 386.2（二态可见振荡）
+
+取 $\hbar>0$、$\omega\ne0$，
+
+$$
+H=\frac{\hbar\omega}{2}Z,\qquad
+\rho_0=|+\rangle\langle+|,\qquad
+F_+=|+\rangle\langle+|.
+$$
+
+则 $f_+(t)=(1+\cos(\omega t))/2$，它是非恒定周期响应。
+
+### 证明
+
+$$
+|\psi(t)\rangle
+=\frac{e^{-i\omega t/2}|0\rangle+e^{i\omega t/2}|1\rangle}{\sqrt2},\qquad
+|\langle+|\psi(t)\rangle|^2=\cos^2(\omega t/2)
+=\frac{1+\cos(\omega t)}2.
+$$
+
+因 $\omega\ne0$，取例如 $t=0$ 和 $t=\pi/|\omega|$ 即得不同读数；周期为 $2\pi/|\omega|$。∎
+
+## 命题 386.3（零空间中的驻定密度）
+
+若 $K=K^\dagger$、$KW=0$ 且 $W^\dagger W=I$，则对任意密度矩阵 $\rho$，$\Gamma=W\rho W^\dagger$ 也是密度矩阵，并有
+
+$$
+K\Gamma=\Gamma K=0,\qquad e^{-isK}\Gamma e^{isK}=\Gamma\quad(\forall s\in\mathbb R).
+$$
+
+在 $K=K^\dagger$ 的假设下，上述驻定等式只需 $KW=0$，不需要 $W^\dagger W=I$；等距条件保证 $\Gamma$ 的迹为一。同样，若 $\operatorname{supp}(\Gamma)\subseteq\ker K$，则上述驻定等式成立。
+
+### 证明
+
+由 $KW=0$ 得 $K\Gamma=0$；$K=K^\dagger$ 给出 $W^\dagger K=0$，从而 $\Gamma K=0$。幂级数展开 $e^{-isK}$ 后，$K\Gamma=\Gamma K=0$ 使共轭逐项化为 $\Gamma$。支撑条件等价地给出同样的左右零作用。∎
+
+因此对任意固定记录检验 $R$，$\operatorname{Tr}(R e^{-isK}\Gamma e^{isK})=\operatorname{Tr}(R\Gamma)$ 与 $s$ 无关。这只说明该静态约束在其零空间上驻定；它不自动产生滴答、测量记录或新的后继。历史编码、物理生成元和记录形成是三个不同任务。Page–Wootters 的原始条件内部钟论文 [DOI:10.1103/PhysRevD.27.2885](https://doi.org/10.1103/PhysRevD.27.2885) 支持条件钟的关系式描述，但不替代这里的有限接口假设。
+
+# 387．别名、共同相位参考与校准
+
+设相对于共同相位参考的复响应为 $z(t)=ae^{i\omega t}$，其中 $a\ne0$，并以 $\Delta>0$ 均匀采样 $S_\Delta(z)=(z(n\Delta))_{n\ge0}$。
+
+## 定理 387.1（精确混叠判据）
+
+对 $z'(t)=a'e^{i\omega't}$，
+
+$$
+S_\Delta(z)=S_\Delta(z')
+\Longleftrightarrow
+ a=a',\quad(\omega'-\omega)\Delta\in2\pi\mathbb Z .
+$$
+
+### 证明
+
+$n=0$ 给出 $a=a'$，$n=1$ 给出 $e^{i(\omega'-\omega)\Delta}=1$。反向蕴含由整数倍采样立即成立。∎
+
+若 $\omega\Delta=2\pi k$ 且 $k\ne0$，所有样本均为 $a$，但 $z$ 仍是非恒定函数。只观察模长或没有共同相位参考时，纯相位频率不具可识别性；必须把参考、采样规则和事件对应一起声明。
+
+## 命题 387.2（相位重标定导数与恒定性）
+
+令 $\varphi:\mathbb R\to\mathbb R$ 是 $C^1$ 严格递增双射，且 $\varphi'(t)>0$。设 $\theta(t)=\omega t+\theta_0$，$\widetilde\theta(\tau)=\theta(\varphi^{-1}(\tau))$。则
+
+$$
+\frac{d\widetilde\theta}{d\tau}\bigg|_{\tau=\varphi(t)}
+=\frac{\omega}{\varphi'(t)}.
+$$
+
+并且 $\widetilde f(\tau)=f(\varphi^{-1}(\tau))$ 恒定，当且仅当 $f$ 恒定。
+
+### 证明
+
+逆函数定理给 $(\varphi^{-1})'(\varphi(t))=1/\varphi'(t)$；链式法则因此给出 $d\widetilde\theta/d\tau=\omega/\varphi'(t)$。若把重标定后的相位简记为 $\theta$，这就是 $d\theta/d\tau=\omega/\varphi'(t)$。由于 $\varphi$ 是双射，$\{\varphi^{-1}(\tau):\tau\in\mathbb R\}=\mathbb R$，故一个函数在原变量上恒定，当且仅当其与该双射复合后恒定。∎
+
+对线性校准 $\tau=at+b$（$a>0$），周期和频率按 $T_\tau=aT_t$、$\omega_\tau=\omega_t/a$ 变换。非线性重标定可改变固定数值周期的形式，却不改变事件与结果的对应关系；这不是由换坐标推出物理时间膨胀。有限相同样本也不能证明连续响应在全域恒定或具有某个全局周期。
+
+# 388．有条件的联合命题与文献边界
+
+## 定理 388.1（静态承载、条件振荡和观察运输）
+
+在有限维、给定酉边、$\hbar>0$、Hermitian $H$、初态、钟标签及共同合法 instrument 接口下：
+
+1. 静态正约束的零空间精确表达逐边合法运输；共同向量实现由根处 Holonomy 的固定子空间决定，且一般图允许零核。
+2. 链式历史态的钟条件块给出阶段态和单切片概率；相干历史与钟去相干历史的局部读数可以相同。
+3. 联合规范运输保持运输关系和迹概率，并把闭环运输变为根处共轭，因此不能消除闭环共轭类。
+4. 实际记录由合法 instrument 词、非零条件化和追加记录共同定义；不能以单切片概率乘积替代词概率。
+5. 有限接口能区分的准备恰由其共同域上的拉回 Hermitian 效果的实线性张成空间决定；单步效果不足以确定两步联合律。
+6. 可见振荡由 $(H,\rho_0,F)$ 的非零能隙系数决定；有限采样和重标定必须经过别名与共同参考条件检查。全局周期只在定理 386.1 的系数条件下成立，并非任意 $H$ 自动保证。
+7. 若把 $K_G$ 作为生成元并限制在其零空间，历史态驻定；因此静态表示不自动产生新记录。
+
+### 证明
+
+(1)–(2) 由定理 381.1–382.2，(3) 由定理 383.1–383.2，(4) 由定理 384.1 与命题 384.2，(5) 由定理 385.1 及命题 385.2，(6) 由定理 386.1、命题 386.2 和定理 387.1–命题 387.2，(7) 由命题 386.3。每一项都保留其模型假设和操作范围，不能把条件历史编码提升为宇宙实际状态，也不能把形式反向路径提升为逆向操作权。∎
+
+与上述数学构造直接相关的原始来源如下。Aharonov 等人的 [quant-ph/0405098v2](https://arxiv.org/abs/quant-ph/0405098) 式 (1) 与 Claim 3.3 是电路历史态和传播零能量项；Kenyon 的 [arXiv:1001.4028](https://arxiv.org/abs/1001.4028) §§3.1–3.3 直接给出图上的酉连接与向量丛 Laplacian 框架；Page–Wootters 的 [Phys. Rev. D 27, 2885](https://doi.org/10.1103/PhysRevD.27.2885) 支持条件内部钟的关系式；Davies–Lewis 的 [Communications in Mathematical Physics 17 (1970), 239–260](https://doi.org/10.1007/BF01647093) 与 Ozawa 的 [quant-ph/0107090v1](https://arxiv.org/abs/quant-ph/0107090) 支持 instrument 的结果分支和后继状态；Giovannetti、Lloyd、Maccone 的 [arXiv:1504.04215v2](https://arxiv.org/abs/1504.04215) 支持测量记忆的条件化讨论。它们各自只支持所列构造的相应部分。
+
+## 追加锚（本行以下为增补区）
