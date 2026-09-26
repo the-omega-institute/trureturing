@@ -293,7 +293,8 @@ private noncomputable def incomingResponseV {p : ℕ} {M : CountMat p p} {Q : Ty
 
 /-- The membership factor selects the finer response class of each column. -/
 theorem incoming_response_matrix_factor_left {p : ℕ} {M : CountMat p p}
-    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ) :
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q) (d : ℕ)
+    [Fintype (Quotient (L.response (d + 1)))] :
     incomingResponseMatrix L d = incomingResponseU L d * incomingResponseV L d := by
   classical
   ext F H
