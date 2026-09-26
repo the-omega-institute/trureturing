@@ -297,7 +297,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.6 run-local 投影的归宿
 
-**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
+**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。在共同 tracked 写路径交集模型中,按单射的键到路径映射分片可消除不同键被聚合到同一路径所产生的交集,但不保证每对变更都严格减少交集,同键改动仍可共有写路径;若该族与 tracked 路径集合不相交,则它对任意两次变更的 tracked 写路径交集贡献均为空。这里的交集是冲突风险模型,不等同于 Git 实际报告冲突;实际索引排除仍须核验,tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
 
 ### 4.7 生产链、冻结与消化状态
 
