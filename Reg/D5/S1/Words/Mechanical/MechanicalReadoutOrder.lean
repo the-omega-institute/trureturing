@@ -124,7 +124,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights
   in localOrderArena
   readout via (@mechanicalReadoutRealization PrefixOutput (Classical.decEq _)
-    (fun _ : Unit => actualPrefix))
+    (fun _ : Unit => MechanicalReadoutSources.actualPrefix))
   primitives localOrderRealization.toPrimitiveBundle
   realization orderBridge
   variation orderVariation sensitivity orderSensitivity
@@ -134,7 +134,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion
   in isometricArena
   readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => actualCompletion))
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
   primitives completionRealization.toPrimitiveBundle
   realization isometricBridge
   variation isometricVariation sensitivity isometricSensitivity

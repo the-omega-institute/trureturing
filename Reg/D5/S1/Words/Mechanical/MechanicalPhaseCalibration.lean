@@ -115,7 +115,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalPhaseCalibration.joint_phase_calibration_law
   in phaseArena
   readout via (@mechanicalReadoutRealization PhaseOutput (Classical.decEq _)
-    (fun _ : Unit => phaseReadout))
+    (fun _ : Unit => MechanicalReadoutSources.phaseReadout))
   primitives phaseRealization.toPrimitiveBundle
   realization phaseBridge
   variation phaseVariation sensitivity phaseSensitivity

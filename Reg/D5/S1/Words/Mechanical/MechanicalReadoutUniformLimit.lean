@@ -108,7 +108,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound
   in uniformBoundArena
   readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => actualCompletion))
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
   primitives completionRealization.toPrimitiveBundle
   realization uniformBridge
   variation uniformVariation sensitivity uniformSensitivity
@@ -118,7 +118,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_iterated_limit_order
   in iteratedLimitArena
   readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => actualCompletion))
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
   primitives completionRealization.toPrimitiveBundle
   realization limitBridge
   variation limitVariation sensitivity limitSensitivity

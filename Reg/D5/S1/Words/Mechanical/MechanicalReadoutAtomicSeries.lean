@@ -89,7 +89,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass
   in seriesArena
   readout via (@mechanicalReadoutRealization SeriesOutput (Classical.decEq _)
-    (fun _ : Unit => seriesReadout))
+    (fun _ : Unit => MechanicalReadoutSources.seriesReadout))
   primitives seriesRealization.toPrimitiveBundle
   realization seriesBridge
   variation seriesVariation sensitivity seriesSensitivity

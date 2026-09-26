@@ -105,7 +105,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law
   in slopeArena
   readout via (@mechanicalReadoutRealization SlopeOutput (Classical.decEq _)
-    (fun _ : Unit => slopeReadout))
+    (fun _ : Unit => MechanicalReadoutSources.slopeReadout))
   primitives slopeRealization.toPrimitiveBundle
   realization slopeBridge
   variation slopeVariation sensitivity slopeSensitivity

@@ -9,6 +9,7 @@
 import D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
 import D5.S1.Words.Mechanical.MechanicalReadoutRegularity
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,16 +27,17 @@ abbrev CompletionOutput := (ℝ → ℝ → ℝ → ℝ) × (ℝ → ℝ → ℝ
 
 /-- The complete weighted finite readout, with weights, slope, phase, and horizon retained. -/
 def actualPrefix (weights : ℕ → ℝ) (alpha x : ℝ) (n : ℕ) : ℝ :=
-  weightedPrefix weights alpha x n
+  MechanicalReadoutSources.actualPrefix weights alpha x n
 
 /-- The completed readout and every geometric finite prefix share one observation. -/
-def completedReadout (r alpha x : ℝ) : ℝ := geometricReadout r alpha x
+def completedReadout (r alpha x : ℝ) : ℝ :=
+  MechanicalReadoutSources.completedReadout r alpha x
 
 def finitePrefixReadout (r alpha x : ℝ) (n : ℕ) : ℝ :=
-  weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n
+  MechanicalReadoutSources.finitePrefixReadout r alpha x n
 
 def actualCompletion : CompletionOutput :=
-  (completedReadout, finitePrefixReadout)
+  MechanicalReadoutSources.actualCompletion
 
 def localOrderClaim (P : PrefixOutput) : Prop :=
   ∀ (alpha : ℝ), Irrational alpha → 0 < alpha → alpha < 1 →
@@ -133,10 +135,10 @@ def regularityArena : ObjectDomainArena.{0, 0, 0, 0} where
 
 def localOrderRealization :=
   @mechanicalReadoutRealization PrefixOutput (Classical.decEq _)
-    (fun _ : Unit => actualPrefix)
+    (fun _ : Unit => MechanicalReadoutSources.actualPrefix)
 
 def completionRealization :=
   @mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => actualCompletion)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration

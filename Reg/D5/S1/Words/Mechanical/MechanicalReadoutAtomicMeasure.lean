@@ -134,7 +134,7 @@ theorem massBridge : LegacyPrimitiveRealization massArena.toPrimitiveLawArena
     exact Prod.ext (isProbabilityMeasure_iff.mp hprob) hcarrier
   · intro h r x hr0 hr1 hx
     have hv := congrFun (h ())
-      (MassInput.mk r x hr0 hr1 hx)
+      (MechanicalReadoutSources.MassInput.mk r x hr0 hr1 hx)
     constructor
     · apply isProbabilityMeasure_iff.mpr
       simpa [massReadout, massTarget] using congrArg Prod.fst hv
@@ -181,7 +181,8 @@ theorem distributionBridge : LegacyPrimitiveRealization distributionArena.toPrim
     exact h input.ratio input.threshold input.phase input.ratioNonnegative
       input.ratioBelowOne input.thresholdInUnit input.phaseInUnit
   · intro h r alpha x hr0 hr1 ha hx
-    exact congrFun (h ()) (DistributionInput.mk r alpha x hr0 hr1 ha hx)
+    exact congrFun (h ())
+      (MechanicalReadoutSources.DistributionInput.mk r alpha x hr0 hr1 ha hx)
 
 private def distributionZero : DistributionOutput := fun _ => 0
 private def distributionOne : DistributionOutput := fun _ => 1
@@ -225,7 +226,7 @@ theorem hitBridge : LegacyPrimitiveRealization hitArena.toPrimitiveLawArena
     exact h input.ratio input.phase input.threshold input.phaseInUnit
       input.thresholdInterior
   · intro h r x alpha hx ha
-    exact congrFun (h ()) (HitInput.mk r x alpha hx ha)
+    exact congrFun (h ()) (MechanicalReadoutSources.HitInput.mk r x alpha hx ha)
 
 private def hitZero : HitOutput := fun _ => 0
 private def hitOne : HitOutput := fun _ => 1
@@ -263,7 +264,7 @@ theorem supportBridge : LegacyPrimitiveRealization supportArena.toPrimitiveLawAr
     exact h input.ratio input.phase input.ratioPositive input.ratioBelowOne
       input.phaseInUnit
   · intro h r x hr0 hr1 hx
-    exact congrFun (h ()) (SupportInput.mk r x hr0 hr1 hx)
+    exact congrFun (h ()) (MechanicalReadoutSources.SupportInput.mk r x hr0 hr1 hx)
 
 private def supportEmpty : SupportOutput := fun _ => ∅
 private def supportFull : SupportOutput := fun _ => Set.univ
@@ -448,7 +449,8 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_probability_and_carrier
   in massArena
   readout via (@homogeneousPointwiseEqRealization Unit MassOutput (Classical.decEq _)
-    (fun _ : Unit => massReadout) (fun _ : Unit => massTarget))
+    (fun _ : Unit => MechanicalReadoutSources.massReadout)
+    (fun _ : Unit => MechanicalReadoutSources.massTarget))
   primitives massRealization.toPrimitiveBundle
   realization massBridge
   variation massVariation sensitivity massSensitivity
@@ -458,7 +460,8 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic
   in distributionArena
   readout via (@homogeneousPointwiseEqRealization Unit DistributionOutput (Classical.decEq _)
-    (fun _ : Unit => distributionReadout) (fun _ : Unit => distributionTarget))
+    (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
+    (fun _ : Unit => MechanicalReadoutSources.distributionTarget))
   primitives distributionRealization.toPrimitiveBundle
   realization distributionBridge
   variation distributionVariation sensitivity distributionSensitivity
@@ -468,7 +471,8 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit
   in hitArena
   readout via (@homogeneousPointwiseEqRealization Unit HitOutput (Classical.decEq _)
-    (fun _ : Unit => hitReadout) (fun _ : Unit => hitTarget))
+    (fun _ : Unit => MechanicalReadoutSources.hitReadout)
+    (fun _ : Unit => MechanicalReadoutSources.hitTarget))
   primitives hitRealization.toPrimitiveBundle
   realization hitBridge
   variation hitVariation sensitivity hitSensitivity
@@ -478,7 +482,8 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support
   in supportArena
   readout via (@homogeneousPointwiseEqRealization Unit SupportOutput (Classical.decEq _)
-    (fun _ : Unit => supportReadout) (fun _ : Unit => supportTarget))
+    (fun _ : Unit => MechanicalReadoutSources.supportReadout)
+    (fun _ : Unit => MechanicalReadoutSources.supportTarget))
   primitives supportRealization.toPrimitiveBundle
   realization supportBridge
   variation supportVariation sensitivity supportSensitivity
@@ -488,7 +493,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_readout_left_jump_exact
   in leftJumpArena
   readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
-    (fun _ : Unit => jumpReadout))
+    (fun _ : Unit => MechanicalReadoutSources.jumpReadout))
   primitives jumpRealization.toPrimitiveBundle
   realization leftJumpBridge
   variation leftJumpVariation sensitivity leftJumpSensitivity
@@ -498,7 +503,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form
   in rationalJumpArena
   readout via (@mechanicalReadoutRealization JumpOutput (Classical.decEq _)
-    (fun _ : Unit => jumpReadout))
+    (fun _ : Unit => MechanicalReadoutSources.jumpReadout))
   primitives jumpRealization.toPrimitiveBundle
   realization rationalJumpBridge
   variation rationalJumpVariation sensitivity rationalJumpSensitivity

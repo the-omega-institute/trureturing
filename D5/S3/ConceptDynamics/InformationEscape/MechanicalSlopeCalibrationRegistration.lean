@@ -8,6 +8,7 @@
 
 import D5.S1.Words.Mechanical.MechanicalPhaseCalibration
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -28,11 +29,11 @@ abbrev PhaseOutput := ℝ → ℝ → ℕ → ℝ → ENNReal
 
 /-- Actual phase sets on which finite words disagree after a slope change. -/
 def slopeReadout (alpha beta : ℝ) (n : ℕ) : Set ℝ :=
-  slopeDisagreement alpha beta n
+  MechanicalReadoutSources.slopeReadout alpha beta n
 
 /-- Volume of phases on which simultaneous slope and phase changes alter a word. -/
 def phaseReadout (alpha delta : ℝ) (n : ℕ) (u : ℝ) : ENNReal :=
-  volume (jointMismatchSet alpha delta n u)
+  MechanicalReadoutSources.phaseReadout alpha delta n u
 
 local instance : DecidableEq SlopeOutput := Classical.decEq _
 local instance : DecidableEq PhaseOutput := Classical.decEq _
@@ -97,10 +98,10 @@ def phaseArena : ObjectDomainArena.{0, 0, 0, 0} where
 
 def slopeRealization :=
   @mechanicalReadoutRealization SlopeOutput (Classical.decEq _)
-    (fun _ : Unit => slopeReadout)
+    (fun _ : Unit => MechanicalReadoutSources.slopeReadout)
 
 def phaseRealization :=
   @mechanicalReadoutRealization PhaseOutput (Classical.decEq _)
-    (fun _ : Unit => phaseReadout)
+    (fun _ : Unit => MechanicalReadoutSources.phaseReadout)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration

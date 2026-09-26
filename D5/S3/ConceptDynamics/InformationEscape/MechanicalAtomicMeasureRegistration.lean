@@ -10,6 +10,7 @@ import D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -26,68 +27,43 @@ open PointwiseRegistrationTemplates
 open D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
 open scoped Topology
 
-structure MassInput where
-  ratio : ℝ
-  phase : ℝ
-  ratioNonnegative : 0 ≤ ratio
-  ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+abbrev MassInput := MechanicalReadoutSources.MassInput
 
 def massReadout (input : MassInput) : ENNReal × ENNReal :=
-  (geometricAtomicMeasure input.ratio input.phase Set.univ,
-    geometricAtomicMeasure input.ratio input.phase (Ioc (0 : ℝ) 1))
+  MechanicalReadoutSources.massReadout input
 
-def massTarget (_ : MassInput) : ENNReal × ENNReal := (1, 1)
+def massTarget (input : MassInput) : ENNReal × ENNReal :=
+  MechanicalReadoutSources.massTarget input
 
 abbrev MassOutput := MassInput → ENNReal × ENNReal
 
-structure DistributionInput where
-  ratio : ℝ
-  threshold : ℝ
-  phase : ℝ
-  ratioNonnegative : 0 ≤ ratio
-  ratioBelowOne : ratio < 1
-  thresholdInUnit : threshold ∈ Icc (0 : ℝ) 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+abbrev DistributionInput := MechanicalReadoutSources.DistributionInput
 
 def distributionReadout (input : DistributionInput) : ENNReal :=
-  geometricAtomicMeasure input.ratio input.phase (Iic input.threshold)
+  MechanicalReadoutSources.distributionReadout input
 
 def distributionTarget (input : DistributionInput) : ENNReal :=
-  ENNReal.ofReal (geometricReadout input.ratio input.threshold input.phase)
+  MechanicalReadoutSources.distributionTarget input
 
 abbrev DistributionOutput := DistributionInput → ENNReal
 
-structure HitInput where
-  ratio : ℝ
-  phase : ℝ
-  threshold : ℝ
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
-  thresholdInterior : threshold ∈ Ioo (0 : ℝ) 1
+abbrev HitInput := MechanicalReadoutSources.HitInput
 
 def hitReadout (input : HitInput) : ENNReal :=
-  geometricAtomicMeasure input.ratio input.phase {input.threshold}
+  MechanicalReadoutSources.hitReadout input
 
 def hitTarget (input : HitInput) : ENNReal :=
-  by
-    classical
-    exact ∑' n : ℕ, if ∃ z : ℤ,
-        (z : ℝ) = input.phase + (((n + 1 : ℕ) : ℝ)) * input.threshold then
-      ENNReal.ofReal ((1 - input.ratio) ^ 2 * input.ratio ^ n) else 0
+  MechanicalReadoutSources.hitTarget input
 
 abbrev HitOutput := HitInput → ENNReal
 
-structure SupportInput where
-  ratio : ℝ
-  phase : ℝ
-  ratioPositive : 0 < ratio
-  ratioBelowOne : ratio < 1
-  phaseInUnit : phase ∈ Ico (0 : ℝ) 1
+abbrev SupportInput := MechanicalReadoutSources.SupportInput
 
 def supportReadout (input : SupportInput) : Set ℝ :=
-  (geometricAtomicMeasure input.ratio input.phase).support
+  MechanicalReadoutSources.supportReadout input
 
-def supportTarget (_ : SupportInput) : Set ℝ := Icc (0 : ℝ) 1
+def supportTarget (input : SupportInput) : Set ℝ :=
+  MechanicalReadoutSources.supportTarget input
 
 abbrev SupportOutput := SupportInput → Set ℝ
 
@@ -108,20 +84,25 @@ def hitArena := equalityArena HitOutput
 def supportArena := equalityArena SupportOutput
 
 def massRealization := homogeneousPointwiseEqRealization
-  (fun _ : Unit => massReadout) (fun _ : Unit => massTarget)
+  (fun _ : Unit => MechanicalReadoutSources.massReadout)
+  (fun _ : Unit => MechanicalReadoutSources.massTarget)
 def distributionRealization := homogeneousPointwiseEqRealization
-  (fun _ : Unit => distributionReadout) (fun _ : Unit => distributionTarget)
+  (fun _ : Unit => MechanicalReadoutSources.distributionReadout)
+  (fun _ : Unit => MechanicalReadoutSources.distributionTarget)
 def hitRealization := homogeneousPointwiseEqRealization
-  (fun _ : Unit => hitReadout) (fun _ : Unit => hitTarget)
+  (fun _ : Unit => MechanicalReadoutSources.hitReadout)
+  (fun _ : Unit => MechanicalReadoutSources.hitTarget)
 def supportRealization := homogeneousPointwiseEqRealization
-  (fun _ : Unit => supportReadout) (fun _ : Unit => supportTarget)
+  (fun _ : Unit => MechanicalReadoutSources.supportReadout)
+  (fun _ : Unit => MechanicalReadoutSources.supportTarget)
 
 /-- The CUT output keeps the full readout as a function of ratio, slope, and phase. -/
 abbrev JumpOutput := ℝ → ℝ → ℝ → ℝ
 
 local instance : DecidableEq JumpOutput := Classical.decEq _
 
-def jumpReadout (r alpha x : ℝ) : ℝ := geometricReadout r alpha x
+def jumpReadout (r alpha x : ℝ) : ℝ :=
+  MechanicalReadoutSources.jumpReadout r alpha x
 
 def leftJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
   toPrimitiveLawArena := by
@@ -159,6 +140,6 @@ def rationalJumpArena : ObjectDomainArena.{0, 0, 0, 0} where
   Domain := ℝ
 
 def jumpRealization := @mechanicalReadoutRealization JumpOutput
-  (Classical.decEq _) (fun _ : Unit => jumpReadout)
+  (Classical.decEq _) (fun _ : Unit => MechanicalReadoutSources.jumpReadout)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration

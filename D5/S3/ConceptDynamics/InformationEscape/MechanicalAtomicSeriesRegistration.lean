@@ -8,6 +8,7 @@
 
 import D5.S1.Words.Mechanical.MechanicalReadoutAtomicSeries
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalDyadicRegistration
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -27,20 +28,16 @@ abbrev SeriesOutput :=
 
 /-- The three quantities compared by the atomic-series theorem. -/
 def floorSeriesReadout (r alpha x : ℝ) : ℝ :=
-  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
-    (⌊x + ((j + 1 : ℕ) : ℝ) * alpha⌋ : ℝ)
+  MechanicalReadoutSources.floorSeriesReadout r alpha x
 
 def coefficientMassReadout (r : ℝ) : ℝ :=
-  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j * ((j + 1 : ℕ) : ℝ)
+  MechanicalReadoutSources.coefficientMassReadout r
 
 def thresholdSeriesReadout (r alpha x : ℝ) : ℝ :=
-  ∑' j : ℕ, (1 - r) ^ 2 * r ^ j *
-    (∑ i ∈ range (j + 1),
-      if (((i + 1 : ℕ) : ℝ) - x) / ((j + 1 : ℕ) : ℝ) ≤ alpha then
-        (1 : ℝ) else 0)
+  MechanicalReadoutSources.thresholdSeriesReadout r alpha x
 
 def seriesReadout : SeriesOutput :=
-  (floorSeriesReadout, coefficientMassReadout, thresholdSeriesReadout)
+  MechanicalReadoutSources.seriesReadout
 
 local instance : DecidableEq SeriesOutput := Classical.decEq _
 
@@ -60,6 +57,6 @@ def seriesArena : ObjectDomainArena.{0, 0, 0, 0} where
 
 def seriesRealization :=
   @mechanicalReadoutRealization SeriesOutput (Classical.decEq _)
-    (fun _ : Unit => seriesReadout)
+    (fun _ : Unit => MechanicalReadoutSources.seriesReadout)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicSeriesRegistration

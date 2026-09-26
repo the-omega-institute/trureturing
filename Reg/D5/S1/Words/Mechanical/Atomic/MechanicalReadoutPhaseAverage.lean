@@ -92,8 +92,8 @@ register_information_theorem
   in phaseAverageArena
   readout via (@homogeneousPointwiseEqRealization Unit PhaseAverageOutput
     (Classical.decEq _)
-    (fun _ : Unit => phaseAverageIntegral)
-    (fun _ : Unit => phaseAverageVolume))
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume))
   primitives phaseAverageRealization.toPrimitiveBundle
   realization phaseAverageBridge
   variation phaseAverageVariation sensitivity phaseAverageSensitivity

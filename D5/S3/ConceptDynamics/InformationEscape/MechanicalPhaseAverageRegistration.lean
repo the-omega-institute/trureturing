@@ -9,6 +9,7 @@
 import D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+import D5.S3.ConceptDynamics.InformationEscape.MechanicalReadoutSources
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -22,20 +23,13 @@ open D5.S3.ConceptDynamics.InformationEscape
 open PointwiseRegistrationTemplates
 
 /-- The hypotheses under which the atomic phase average is a volume. -/
-structure PhaseAverageInput where
-  ratio : ℝ
-  ratioPositive : 0 < ratio
-  ratioBelowOne : ratio < 1
-  target : Set ℝ
-  targetMeasurable : MeasurableSet target
-  targetInUnit : target ⊆ Set.Icc (0 : ℝ) 1
+abbrev PhaseAverageInput := MechanicalReadoutSources.PhaseAverageInput
 
 def phaseAverageIntegral (input : PhaseAverageInput) : ENNReal :=
-  ∫⁻ x in Set.Ico (0 : ℝ) 1,
-    geometricAtomicMeasure input.ratio x input.target ∂volume
+  MechanicalReadoutSources.phaseAverageIntegral input
 
 def phaseAverageVolume (input : PhaseAverageInput) : ENNReal :=
-  volume input.target
+  MechanicalReadoutSources.phaseAverageVolume input
 
 abbrev PhaseAverageOutput := PhaseAverageInput → ENNReal
 
@@ -50,7 +44,7 @@ def phaseAverageArena : ObjectDomainArena.{0, 0, 0, 0} where
 
 def phaseAverageRealization :=
   @homogeneousPointwiseEqRealization Unit PhaseAverageOutput (Classical.decEq _)
-    (fun _ : Unit => phaseAverageIntegral)
-    (fun _ : Unit => phaseAverageVolume)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageIntegral)
+    (fun _ : Unit => MechanicalReadoutSources.phaseAverageVolume)
 
 end D5.S3.ConceptDynamics.InformationEscape.MechanicalPhaseAverageRegistration

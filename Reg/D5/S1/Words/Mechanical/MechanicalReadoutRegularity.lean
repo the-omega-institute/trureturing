@@ -79,7 +79,7 @@ register_information_theorem
   _root_.D5.S1.Words.Mechanical.MechanicalReadoutRegularity.geometric_readout_continuity_and_jump
   in regularityArena
   readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => actualCompletion))
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
   primitives completionRealization.toPrimitiveBundle
   realization regularityBridge
   variation regularityVariation sensitivity regularitySensitivity
