@@ -75195,3 +75195,346 @@ $$
 全局最优允许任意有限参考维数；达到构造只使用三维参考。本节没有证明三维是必要的，也没有宣称相同成本可在固定二维参考下取得。纯探针的熵曲线、混合探针的形成纠缠曲线、参考维数限制和实际记录可取得性，分别保留其已声明的量词范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 246. 二维参考的精确形成纠缠曲线与最优旗标的三维代价
+
+§245允许任意有限维参考，证明正交旗标混合能在所有内部容差点降低最小形成纠缠。本节求出参考支撑至多二维时的完整答案：即使允许全部混合探针，最优响应仍恰好等于同形成纠缠的纯态最优曲线。
+
+关键工具是 Wootters 对任意两比特混合态给出的等纠缠最优分解。它使二维参考的精确上界覆盖全部混合态；一族显式的秩二混合态又达到整个曲线。结合§245的严格弦界，得到内部容差下最省形成纠缠的探针恰需三维总可访问参考支撑。
+
+### 246.1 固定通道与参考维数的计量对象
+
+固定§244的实际设置记录噪声通道。输入为量子比特，原单位 Bloch 轴满足 $n\cdot m=c\in[0,1]$，设置标签以已标定概率 $p\in[0,1]$ 独立翻转，符号标签保留。所有量子输出为同一固定纯态 $P$。原设置副本和翻转种子仍不在取得接口中。
+
+记
+$$
+\begin{aligned}
+A&=\frac{1+c}{2},& K&=\frac{1-c}{2},&
+\beta&=1-2p,& B&=\beta^2K,\\
+D&=\frac12\sqrt{A+B},&
+U&=\frac12\sqrt A,&
+\delta&=D-U.
+\end{aligned}
+\tag{246.1}
+$$
+候选 $\mathcal S_p$ 的效应为
+$$
+E^{(p)}_{0,s}=\frac{I_2+s\,a_p\cdot\sigma}{4},
+\qquad
+E^{(p)}_{1,s}=\frac{I_2+s\,b_p\cdot\sigma}{4},
+\tag{246.2}
+$$
+其中 $a_p=(1-p)n+pm$、$b_p=pn+(1-p)m$；每个输出块再重置为 $P$。目标 $\mathcal R$ 的四个效应均为 $I_2/4$，输出也为 $P$。
+
+对联合探针 $\Omega$，实际半迹距离和形成纠缠分别记为
+$$
+g(\Omega)=\frac12
+\left\|[(\mathcal S_p-\mathcal R)\otimes\operatorname{id}_E](\Omega)\right\|_1,
+\tag{246.3}
+$$
+$$
+E_F(\Omega)=\inf_{\Omega=\sum_j w_j|\psi_j\rangle\langle\psi_j|}
+\sum_jw_jS(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|).
+\tag{246.4}
+$$
+形成纠缠沿用标准凸屋定义，单位为比特。它不是混合态的单侧熵。
+
+纯探针输入边缘的 Bloch 长度为 $t$ 时，已有精确曲线
+$$
+e(t)=H_2\left(\frac{1+t}{2}\right),
+\qquad
+F(t)=\frac12\sqrt{A+B-Bt^2}.
+\tag{246.5}
+$$
+令 $t(e)$ 为 $e(t)$ 的反函数，记
+$$
+G(e)=F(t(e)),\qquad e\in[0,1].
+\tag{246.6}
+$$
+在本节主范围 $B>0$ 中，$G$ 严格递增且严格凸，满足 $G(0)=U$、$G(1)=D$ 及
+$$
+G(e)<U+\delta e,\qquad 0<e<1.
+\tag{246.7}
+$$
+方向优化由§244给出，严格弦界由§245给出。$B=0$ 时 $G$ 恒为 $D=U$，另按退化情形处理。
+
+本节计量的是总可访问参考支撑维数
+$$
+r_E(\Omega):=\operatorname{rank}(\operatorname{Tr}_H\Omega).
+\tag{246.8}
+$$
+全部可读取经典旗标也属于这个参考。无论参考环境的名义 Hilbert 空间有多大，$\Omega$ 都支撑于 $H\otimes\operatorname{supp}(\operatorname{Tr}_H\Omega)$：对参考边缘支撑的正交补投影取期望，正性使该正交补上没有联合态支撑。
+
+因此 $r_E(\Omega)\le2$ 的任意联合态，都能在参考端等距压缩到至多二维，并在需要时嵌入 $\mathbb C^2$。这种参考等距变换保持输出迹范数，也保持每个纯分量的输入边缘熵。正性又保证任意纯态分解均留在原支撑内，故凸屋下确界 $E_F$ 同样保持。下面对两比特态的结果因而覆盖所有 $r_E\le2$ 的探针。
+
+### 246.2 直接复用两比特等纠缠最优分解
+
+采用 W. K. Wootters，*Entanglement of Formation of an Arbitrary State of Two Qubits*，[arXiv:quant-ph/9709029v2](https://arxiv.org/abs/quant-ph/9709029v2)，正式发表于 *Physical Review Letters* **80**, 2245（1998），[DOI:10.1103/PhysRevLett.80.2245](https://doi.org/10.1103/PhysRevLett.80.2245) 的标准结果。
+
+该文 PDF第4页式（8）—（10）给出任意两比特态的形成纠缠公式。第5页明确说明：最小平均纠缠总可由四个或更少纯态组成的分解达到，且每个分量具有相同纠缠。第7—9页构造等 concurrence 的最优分解并证明下界；第10页补全零 concurrence 情形。
+
+本节直接使用其如下具体后果，不另立为新定理：对任意 $\Omega\in\mathcal D(\mathbb C^2\otimes\mathbb C^2)$，存在分解
+$$
+\Omega=\sum_jw_j|\psi_j\rangle\langle\psi_j|,
+\qquad
+S(\operatorname{Tr}_E|\psi_j\rangle\langle\psi_j|)
+=E_F(\Omega)
+\quad(w_j>0).
+\tag{246.9}
+$$
+零形成纠缠时可取产品态分解，同样满足该式。所用结论覆盖全部两比特密度矩阵，不限于秩二态或某种矩阵形状；也不将它移用于§245的 $2\times3$ 旗标态。
+
+### 246.3 全部二维参考混合探针的精确上界
+
+**定理 246.1（二维参考的精确形成纠缠预算曲线）。** 对每个 $e\in[0,1]$，
+$$
+\boxed{
+\max\left\{
+ g(\Omega):\Omega\in\mathcal D(\mathbb C^2\otimes\mathbb C^2),\ E_F(\Omega)\le e
+\right\}=G(e).
+}
+\tag{246.10}
+$$
+把约束 $E_F(\Omega)\le e$ 改为 $E_F(\Omega)=e$，最大值仍为 $G(e)$。等价地，该结论覆盖总参考支撑至多二维的全部探针。
+
+**证明。** 对任意两比特 $\Omega$，取（246.9）的等纠缠最优分解。输出线性、迹范数凸性及§244的全部纯探针方向界给
+$$
+\begin{aligned}
+g(\Omega)
+&\le\sum_jw_jg(|\psi_j\rangle\langle\psi_j|)\\
+&\le\sum_jw_jG(E_F(\Omega))\\
+&=G(E_F(\Omega)).
+\end{aligned}
+\tag{246.11}
+$$
+$G$ 递增，故 $E_F(\Omega)\le e$ 蕴含 $g(\Omega)\le G(e)$。
+
+反向，§244已经在二维参考内给出每个 $e$ 的最优纯探针，其纠缠熵、因而形成纠缠恰为 $e$，且实际距离为 $G(e)$。于是两种约束均达到上界。$B=0$ 时相同论证使用恒定函数 $G$，结论仍成立。$\square$
+
+这里没有从 $\Omega$ 上的迹范数凸性推断形成纠缠参数上的凸性。关键是（246.9）保证每个纯分量的纠缠恰好相同，使 $G(E_F(\Omega))$ 可以逐项直接使用。
+
+**推论 246.2（二维参考的精确最小成本）。** 设
+$$
+C_2(\epsilon)=\inf\left\{
+E_F(\Omega):r_E(\Omega)\le2,\quad g(\Omega)\ge D-\epsilon
+\right\},\qquad\epsilon\ge0.
+\tag{246.12}
+$$
+$B>0$ 时，
+$$
+\boxed{
+C_2(\epsilon)=
+\begin{cases}
+H_2\!\left(
+\dfrac{1+\sqrt{4\epsilon(\sqrt{A+B}-\epsilon)/B}}2
+\right),&0\le\epsilon<\delta,\\[6pt]
+0,&\epsilon\ge\delta.
+\end{cases}
+}
+\tag{246.13}
+$$
+$B=0$ 时所有 $\epsilon\ge0$ 都有 $C_2(\epsilon)=0$。
+
+**证明。** 定理246.1说明，给定形成纠缠预算 $e$ 的混合探针可行，当且仅当 $G(e)\ge D-\epsilon$。其最小可行 $e$ 因而等于§244的纯探针反解，得到（246.13）。端点 $\epsilon=0$ 给一比特，$\epsilon\ge\delta$ 给产品态零成本。$B=0$ 时产品态已取得完整距离。$\square$
+
+### 246.4 一族真正混合的二维参考达到态
+
+下面给出同一曲线的混合态达到构造，证明（246.10）的取等并非只能依靠纯态。
+
+先设 $B>0$，因此 $c<1$。取
+$$
+u=\frac{n+m}{2\sqrt A},\qquad
+v=\frac{n-m}{2\sqrt K}.
+\tag{246.14}
+$$
+两者为正交单位轴。以 $u\cdot\sigma$ 的本征基作为输入 $|0\rangle,|1\rangle$，并选择相对相位，使 $v\cdot\sigma$ 在该基中对应 $\sigma_x$。参考也取正交基 $|0\rangle,|1\rangle$。有效轴算子因此为
+$$
+a_p\cdot\sigma=\sqrt A\,\sigma_z+\beta\sqrt K\,\sigma_x,
+\qquad
+b_p\cdot\sigma=\sqrt A\,\sigma_z-\beta\sqrt K\,\sigma_x.
+\tag{246.15}
+$$
+
+对 $C\in[0,1]$，定义
+$$
+\boxed{
+\Omega_C=\frac12\bigl(|00\rangle\langle00|+|11\rangle\langle11|\bigr)
++\frac C2\bigl(|00\rangle\langle11|+|11\rangle\langle00|\bigr).
+}
+\tag{246.16}
+$$
+这里首个指标是输入，第二个是参考。它的谱为
+$$
+\frac{1+C}{2},\quad\frac{1-C}{2},\quad0,\quad0.
+\tag{246.17}
+$$
+所以它是合法密度矩阵，$C<1$ 时是秩二混合态，$C=1$ 时为最大纠缠纯态。输入边缘与参考边缘均为 $I_2/2$，故整个族的总参考支撑恰为二维。
+
+在选定乘积基中，该矩阵为实。双自旋翻转
+$$
+\widetilde\Omega_C=(\sigma_y\otimes\sigma_y)
+\overline{\Omega_C}
+(\sigma_y\otimes\sigma_y)
+\tag{246.18}
+$$
+交换 $|00\rangle$、$|11\rangle$ 并给两者同一负号，因此 $\widetilde\Omega_C=\Omega_C$。Wootters 公式中的正矩阵于是为
+$$
+\left(\sqrt{\Omega_C}\,\widetilde\Omega_C\sqrt{\Omega_C}\right)^{1/2}
+=\left(\Omega_C^2\right)^{1/2}=\Omega_C.
+\tag{246.19}
+$$
+其有序本征值就是（246.17），所以 concurrence 恰为
+$$
+\max\left\{0,\frac{1+C}{2}-\frac{1-C}{2}\right\}=C.
+\tag{246.20}
+$$
+直接应用原文形成纠缠公式，得到
+$$
+\boxed{
+E_F(\Omega_C)=\mathcal E(C):=
+H_2\left(\frac{1+\sqrt{1-C^2}}2\right).
+}
+\tag{246.21}
+$$
+$\mathcal E$ 连续严格递增，将 $[0,1]$ 映到 $[0,1]$。
+
+现在独立计算实际距离。由（246.16）逐项偏迹，
+$$
+\operatorname{Tr}_H[(\sigma_z\otimes I_2)\Omega_C]
+=\frac12\sigma_z,
+\qquad
+\operatorname{Tr}_H[(\sigma_x\otimes I_2)\Omega_C]
+=\frac C2\sigma_x.
+\tag{246.22}
+$$
+所以报告标签 $(a,s)$ 的参考差块分别为
+$$
+\begin{aligned}
+Z_{0,s}&=\frac s8\left(\sqrt A\,\sigma_z+\beta\sqrt K\,C\sigma_x\right),\\
+Z_{1,s}&=\frac s8\left(\sqrt A\,\sigma_z-\beta\sqrt K\,C\sigma_x\right).
+\end{aligned}
+\tag{246.23}
+$$
+每个块还张量乘共同纯输出 $P$，不改变迹范数。各 Pauli 方向正交，故
+$$
+\|Z_{a,s}\|_1=\frac14\sqrt{A+BC^2}.
+\tag{246.24}
+$$
+四个经典记录块求和后乘以半迹距离系数，得到
+$$
+\boxed{
+g(\Omega_C)=\frac12\sqrt{A+BC^2}
+=G(\mathcal E(C))=G(E_F(\Omega_C)).
+}
+\tag{246.25}
+$$
+最后一个对应使用（246.5）中的 $t=\sqrt{1-C^2}$。
+
+因此每个 $0\le e<1$ 都有真正混合的二维参考态达到（246.10），而 $e=1$ 的该族端点为纯态。尤其 $C=0$ 时，$\Omega_0$ 是显式可分混合态，形成纠缠为零、响应为 $U$，但输入边缘熵仍为一。固定混合态的单侧熵不能用来替代探针的形成纠缠资源。
+
+$B=0$ 时可直接沿共同轴 $u$ 取相同族；式（246.21）保持成立，实际响应恒为 $D=U$，无需定义退化的 $v$ 方向。
+
+### 246.5 实现自由参考最小成本恰需三维支撑
+
+自由有限参考的最小形成纠缠由§245给出：当 $\delta>0$，
+$$
+C_{\mathrm{mix}}(\epsilon)=
+\max\left\{0,1-\frac\epsilon\delta\right\}.
+\tag{246.26}
+$$
+现在不仅问成本，还问达到这个全局最小成本的探针至少需要多少总参考支撑。定义
+$$
+M(\epsilon)=\min\left\{
+r_E(\Omega):
+E_F(\Omega)=C_{\mathrm{mix}}(\epsilon),\quad
+ g(\Omega)\ge D-\epsilon
+\right\}.
+\tag{246.27}
+$$
+参考遍历任意有限维空间，且包括全部可读取旗标。
+
+**定理 246.3（最省形成纠缠的最小总参考维数）。** 若 $\delta>0$，则
+$$
+\boxed{
+M(\epsilon)=
+\begin{cases}
+2,&\epsilon=0,\\
+3,&0<\epsilon<\delta,\\
+1,&\epsilon\ge\delta.
+\end{cases}
+}
+\tag{246.28}
+$$
+若 $\delta=0$，则所有 $\epsilon\ge0$ 都有 $M(\epsilon)=1$。
+
+**证明。** 先取内部容差 $0<\epsilon<\delta$，置
+$$
+\theta=1-\frac\epsilon\delta\in(0,1).
+\tag{246.29}
+$$
+如果一份探针满足 $r_E(\Omega)\le2$ 且 $E_F(\Omega)\le\theta$，定理246.1与严格弦界给
+$$
+g(\Omega)\le G(\theta)
+<U+\delta\theta=D-\epsilon.
+\tag{246.30}
+$$
+所以所有至多二维参考的混合探针都不能以自由参考最小成本满足目标。必有 $M(\epsilon)\ge3$。
+
+反向，取参考正交基 $|0\rangle,|1\rangle,|2\rangle$，复用§245的实际旗标态
+$$
+\Xi_\theta=\theta|\Phi\rangle\langle\Phi|
+ +(1-\theta)|\eta\rangle\langle\eta|,
+\tag{246.31}
+$$
+其中
+$$
+|\Phi\rangle=
+\frac{|u,+\rangle|0\rangle+|u,-\rangle|1\rangle}{\sqrt2},
+\qquad
+|\eta\rangle=|u,+\rangle|2\rangle.
+\tag{246.32}
+$$
+§245已证明同一探针同时满足
+$$
+E_F(\Xi_\theta)=\theta,
+\qquad
+ g(\Xi_\theta)=U+\delta\theta=D-\epsilon.
+\tag{246.33}
+$$
+其参考边缘为
+$$
+\operatorname{Tr}_H\Xi_\theta
+=\frac\theta2|0\rangle\langle0|
+ +\frac\theta2|1\rangle\langle1|
+ +(1-\theta)|2\rangle\langle2|.
+\tag{246.34}
+$$
+内部容差下这三个本征值均正，参考支撑恰为三维。因此 $M(\epsilon)\le3$，与下界合并得到内部结论。
+
+$\epsilon=0$ 时，最小形成纠缠为一，二维最大纠缠纯态达到完整值。一维参考支撑的联合态只能是 $\rho_H\otimes|e_0\rangle\langle e_0|$，形成纠缠为零，且响应至多 $U<D$，所以最小维数为二。
+
+$\epsilon\ge\delta$ 时，沿共同轴的产品输入配一维参考即达到所需值，形成纠缠为零。归一化态的参考支撑不可能为零维，故最小值为一。$\delta=0$ 时相同产品态已达到完整值，所以全部容差下最小维数也为一。$\square$
+
+等价地，在内部容差下有严格成本比较
+$$
+\boxed{
+C_2(\epsilon)
+>C_{\mathrm{mix}}(\epsilon)
+=C_3(\epsilon)=1-\frac\epsilon\delta,
+\qquad 0<\epsilon<\delta,
+}
+\tag{246.35}
+$$
+其中 $C_3$ 表示参考支撑至多三维时的最小形成纠缠。该结论同时给出排除所有二维替代的上界和同一三维探针的共同达到，不只是一份三维构造的可行性。
+
+### 246.6 参考维数、旗标与纠缠资源的不同职责
+
+定理246.3的三维，是总可访问参考的支撑维数。二维子空间携带最大纠缠分支，另一个正交方向保存产品分支的可读取旗标；式（246.34）显示二者确实共同占据三维支撑。若另加一个可读取经典寄存器，它也必须计入总参考，不能同时把该寄存器当作免费旁路并继续声称总维数为二。
+
+这不要求 Schmidt number 为三。输入自身只有二维，每个纯态的 Schmidt 秩至多二；旗标态（246.31）已有最大纠缠纯态与产品态的两项分解，其 Schmidt number 至多二。总参考支撑与纠缠秩衡量的是不同对象。
+
+二维混合探针仍可沿（246.16）精确达到纯态最优曲线；三维需求只在内部容差下同时追求自由参考全局最小形成纠缠时出现。它不表示所有合格探针都必须有三维参考，也不覆盖任意通道或任意维数的等纠缠分解。
+
+形成纠缠始终按凸屋指标计量，不把它识别为单次确定性 Bell 对制备数量。通道、噪声校准和原记录可取得性均承接§244；新增旗标是合法探针的制备信息，不是原设置翻转种子。标准 Wootters 结果只在其两比特范围内直接复用，本节不据这些组合推导宣称文献原创性。
+
+## 追加锚（本行以下为增补区）
