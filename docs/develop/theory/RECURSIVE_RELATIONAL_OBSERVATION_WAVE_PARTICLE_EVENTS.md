@@ -2313,3 +2313,390 @@ J. R. Norris 的 [*Probability and Measure*，第 6.2 节](https://www.statslab.
 本批把上述成熟工具、有限维谱扰动和本卷第 19、35、38—39 节连接到同一仪器族及校准任务，不主张文献原创性。共同尾速率、正谱隙和有效参数覆盖的存在与实际取得仍有区别；正文没有认证未知实验装置，也没有新增 Lean、消化覆盖或冻结结果。
 
 ## 追加锚（本行以下为增补区）
+
+## 45. 来源支撑与正尾项：一个满秩探针能够控制什么
+
+第 40—44 节要求跨装置统一控制所有初态。本批先把允许的初态支撑写进任务，再研究只含酉传播和投影探测的返回过程。一个量子比特就能实现：最终点击概率始终为一，完整等待律在总变差中连续，平均返回轮数却从二跳为一。这个现象与上一批的低点击概率例子不同，不能全部归因于最终事件变得稀有。
+
+**定义 45.1（允许来源的初始支撑）。** 保留第 40.1 条的非空紧参数空间 $\Theta$、连续完整仪器族 $\mathfrak I_\theta$ 及共同有限终端读出。另给非空允许初态集合 $\Gamma\subseteq\mathcal S(\mathcal H)$，置
+
+$$
+W=\operatorname{span}\{\operatorname{supp}\rho:\rho\in\Gamma\},
+\qquad P_W\text{ 为 }W\text{ 的正交投影},
+\qquad r=\dim W\ge1.
+$$
+
+这里 $W$ 只限定初始准备，后续演化可以离开 $W$；不在每一轮额外插入 $P_W$ 投影。对通道 $\Phi$，记 $\Phi|_W$ 为先将 $\mathcal L(W)$ 自然嵌入 $\mathcal L(\mathcal H)$、再作用 $\Phi$ 的通道。其半 diamond 距离仍允许初态与任意有限参考系统纠缠。
+
+**引理 45.2（有限来源覆盖产生忠实正测试）。** 可从 $\Gamma$ 中选出 $k\le r$ 个状态及正权重，满足
+
+$$
+\bar\rho=\sum_{i=1}^k w_i\rho_i,
+\qquad w_i>0,\quad\sum_iw_i=1,
+\qquad\operatorname{supp}\bar\rho=W.
+$$
+
+令 $\lambda>0$ 为 $\bar\rho|_W$ 的最小本征值。对每个正算子 $A\ge0$，有
+
+$$
+\boxed{
+\operatorname{Tr}(\bar\rho A)
+\le\|P_WAP_W\|_\infty
+\le\frac{\operatorname{Tr}(\bar\rho A)}\lambda.
+}
+$$
+
+证明。从任意允许态的非零支撑开始；若已取支撑的张成还不等于 $W$，就再取一个支撑不包含在当前张成中的允许态。每次维数至少增加一，至多 $r$ 次得到 $W$。任取全正权重；若 $v\in W$ 对 $\bar\rho$ 的二次型为零，则每个非负加项都为零，故 $v$ 与所有已取支撑正交，只能为零。所以 $\bar\rho|_W$ 正定。
+
+记 $A_W=P_WAP_W|_W\ge0$。由 $\operatorname{Tr}\bar\rho=1$ 得左界。又 $\bar\rho|_W\ge\lambda I_W$，故
+
+$$
+\operatorname{Tr}(\bar\rho A)
+\ge\lambda\operatorname{Tr}(A_W)
+\ge\lambda\|A_W\|_\infty,
+$$
+
+得到右界。$\square$
+
+$\bar\rho$ 在此也可以只表示 $k$ 个允许来源读数的固定加权和。若要实际随机准备这份混合态，还须允许相应经典随机化；线性推导本身不增加准备权限。
+
+**定理 45.3（忠实标量响应与完整来源支撑上的稳定性）。** 固定引理 45.2 的测试态 $\bar\rho$。下列条件等价：
+
+- 标量 $a(\theta)=\operatorname{Tr}(\bar\rho R_\theta)$ 连续。
+- $\theta\mapsto P_WR_\theta P_W$ 在算子范数下连续。
+- $\displaystyle\sup_{\theta\in\Theta}\|P_WR_{m,\theta}P_W\|_\infty\longrightarrow0$。
+- $\theta\mapsto\Phi_{\infty,\theta}|_W$ 在半 diamond 距离下连续。
+
+此外，对每个参数及截止都有精确式及探针界
+
+$$
+\boxed{
+\delta(\Phi_{\infty,\theta}|_W,\Phi_{m,\theta}|_W)
+=\|P_WR_{m,\theta}P_W\|_\infty
+\le\frac{\operatorname{Tr}(\bar\rho R_{m,\theta})}{\lambda}.
+}
+$$
+
+证明。若第一项成立，标量余项
+
+$$
+f_m(\theta)=\operatorname{Tr}(\bar\rho R_\theta)
+-\operatorname{Tr}(\bar\rho H_{m,\theta})
+=\operatorname{Tr}(\bar\rho R_{m,\theta})
+$$
+
+连续、非负、递减且逐点趋零。第 40.2 条给共同趋零，再用引理 45.2 的正算子界得到第三项。第三项使压缩效果为连续有限效果 $P_WH_{m,\theta}P_W$ 的一致极限，推出第二项。第二项当然推出第一项。
+
+第 38.2 条证明可在初态嵌入后直接使用：带参考的删失输出差仍是等迹的正、负正交块，最大迟到概率正是初始空间 $W$ 上压缩效果的最大本征值。这给出方框中的等式，无需 $W$ 对后续动力学不变。第三项于是使最终限制通道为连续有限限制通道的一致极限，推出第四项。第四项经共同点击旗标检验给第二项。最后的上界由引理 45.2 得到。$\square$
+
+因此，若固定有限来源的最终点击响应均随参数连续，它们的支撑覆盖所产生的忠实加权测试也连续，便足以保证整个 $W$ 初态类的长期输出稳定；这包括这些初态所允许的相干叠加及外部参考。这里用的是正尾项的控制，不是由几个概率读数恢复全部矩阵元。
+
+**定理 45.4（同一忠实测试对时间矩的判据）。** 在相同合同下，下列三项等价：
+
+$$
+\theta\longmapsto\operatorname{Tr}(\bar\rho T_\theta)\text{ 连续};
+\qquad
+\theta\longmapsto P_WT_\theta P_W\text{ 连续};
+\qquad
+\sup_\theta\|P_WZ_{m,\theta}P_W\|\longrightarrow0.
+$$
+
+这里 $T,Z_m$ 仍按第 43 节统计有限点击的轮数矩。
+
+证明。首项使 $\operatorname{Tr}(\bar\rho Z_{m,\theta})$ 成为连续、递减、逐点趋零的非负函数，因为每个有限矩 $M_{m,\theta}$ 连续。Dini 机制与引理 45.2 推出第三项；第三项使压缩 $T$ 为连续压缩 $M_m$ 的一致极限，推出第二项；第二项取固定迹即得首项。$\square$
+
+**命题 45.5（忠实稳定性测试不等于效果重建）。** 一个满秩初态的最终点击概率，不能一般确定完整最终点击效果。
+
+证明。在量子比特上取 $R_+=|+\rangle\langle+|$ 与 $R_-=|-\rangle\langle-|$，其中 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$。两者可分别由点击 Kraus 算子 $L_\pm=R_\pm$ 和未点击算子 $Q_\pm=I-R_\pm$ 实现；未点击后进入该装置的暗子空间，故最终点击效果就是 $R_\pm$。满秩来源 $\bar\rho=I/2$ 对两者都给概率 $1/2$，但输入 $R_+$ 时两概率分别为一与零。甚至分别测试 $P_0,P_1$ 的全部首次点击概率，也不能区分这两份效果。$\square$
+
+引理 45.2 不能套到一般 Hermitian 差 $R_+-R_-$：其忠实迹为零而算子非零。第 45.3 条是在连续有限前缀和正的单调余项之间搭桥，所得是模型族的稳定性判据；它没有把同一个初态变成信息完备层析，更没有把单次点击变成完整边界恢复。
+
+## 46. 只用酉传播和投影监测，也能出现稳定点击与均值突变
+
+本节使用 Grünbaum、Velázquez、A. H. Werner、R. F. Werner 的离散酉返回理论中已有的二态旋转例子，改写为本卷仪器记号；第 49.1 条给出原始出处及精确对应。新增连接在于来源支撑、统一尾项和固定记录抽样任务，不把返回均值的整数跳变作为本卷的新发现。
+
+**定义 46.1（量子比特的首次返回）。** 取 $\mathcal H=\operatorname{span}\{|0\rangle,|1\rangle\}$，参数 $0\le\gamma\le1$，令
+
+$$
+U_\gamma=
+\begin{pmatrix}
+\sqrt{1-\gamma}&-i\sqrt\gamma\\
+-i\sqrt\gamma&\sqrt{1-\gamma}
+\end{pmatrix},
+\qquad
+Q_\gamma=P_1U_\gamma,
+\qquad
+L_\gamma=P_0U_\gamma.
+$$
+
+每轮先执行 $U_\gamma$，再检测是否处于 $|0\rangle$；点击即停止，未点击则继续。共同初态为 $P_0$。这是一轮酉演化后接理想投影的仪器，参数也可写成 $\gamma=\sin^2\theta$、$0\le\theta\le\pi/2$。时间仍按轮数计。
+
+**定理 46.2（同一初态的精确返回律）。** 仪器完整且随参数连续。对正 $\gamma$，从 $P_0$ 出发的首次返回轮数满足
+
+$$
+\boxed{
+p_\gamma(1)=1-\gamma,
+\qquad p_\gamma(n)=\gamma^2(1-\gamma)^{n-2}\quad(n\ge2).
+}
+$$
+
+在 $\gamma=0$ 处，$p_0(1)=1$，其余概率为零。所有参数均以概率一最终点击，点击后系统态均为 $P_0$。
+
+证明。直接核对 $U_\gamma^\dagger U_\gamma=I$，所以 $Q_\gamma^\dagger Q_\gamma+L_\gamma^\dagger L_\gamma=I$；共同矩阵条目连续给完整通道连续。第一轮点击振幅为 $\sqrt{1-\gamma}|0\rangle$。对 $n\ge2$，有
+
+$$
+Q_\gamma^{n-1}|0\rangle
+=-i\sqrt\gamma(\sqrt{1-\gamma})^{n-2}|1\rangle,
+\qquad
+L_\gamma Q_\gamma^{n-1}|0\rangle
+=-\gamma(\sqrt{1-\gamma})^{n-2}|0\rangle.
+$$
+
+取模平方即得概率。对正 $\gamma$ 求和，后续概率总和为 $\gamma$，与第一轮的 $1-\gamma$ 相加为一。零参数时第一轮已经必点击。所有非零点击分支均沿 $|0\rangle$。当 $\gamma=1$，公式按非负整数幂约定读为第二轮必点击。$\square$
+
+**定理 46.3（完整等待律接近，而平均轮数不接近）。** 将等待律视为 $\{1,2,\ldots\}$ 上的经典概率分布，则
+
+$$
+\boxed{
+\operatorname{TV}(p_\gamma,p_0)=\gamma.
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathbb E_\gamma\mathsf N=2\quad(\gamma>0),
+\qquad \mathbb E_0\mathsf N=1.
+}
+$$
+
+对正 $\gamma$ 还有
+
+$$
+\mathbb E_\gamma\mathsf N^2=2+\frac2\gamma,
+\qquad
+\operatorname{Var}_\gamma(\mathsf N)=\frac2\gamma-2.
+$$
+
+证明。第一轮概率比零模型少 $\gamma$，其余轮次的总概率为 $\gamma$，所以总变差为 $\gamma$。记 $q=1-\gamma$，对 $\gamma>0$ 使用
+
+$$
+\sum_{j\ge0}q^j=\frac1\gamma,
+\quad\sum_{j\ge0}jq^j=\frac q{\gamma^2},
+\quad\sum_{j\ge0}j^2q^j=\frac{q(1+q)}{\gamma^3}.
+$$
+
+将 $n=j+2$ 代入第二轮以后的概率和，得到
+
+$$
+\mathbb E\mathsf N=q+\gamma^2\sum_{j\ge0}(j+2)q^j=2,
+\qquad
+\mathbb E\mathsf N^2=q+\gamma^2\sum_{j\ge0}(j+2)^2q^j=2+2/\gamma.
+$$
+
+减去均值平方得到方差；零参数为常数轮数一。$\square$
+
+**命题 46.4（全来源不连续与指定来源稳定并存）。** 这一仪器族的最终点击效果为
+
+$$
+R_\gamma=I\quad(\gamma>0),\qquad R_0=P_0.
+$$
+
+所以完整效果在零参数不连续，但允许来源类 $\Gamma=\{P_0\}$ 的最终点击概率恒为一，采用恒等终端读出并合并时间标签时，最终输出也恒为同一个点击态。
+
+证明。对正 $\gamma$，$Q_\gamma$ 的像位于 $|1\rangle$，且 $Q_\gamma|1\rangle=\sqrt{1-\gamma}|1\rangle$，因此对任意输入向量 $Q_\gamma^m\psi\to0$；所有初态最终点击。零参数下 $Q_0=P_1$，初态的 $|1\rangle$ 部分永久不点击，故效果为 $P_0$。指定初态结论由第 46.2 条给出。$\square$
+
+本例的初始允许支撑 $W=\operatorname{span}\{|0\rangle\}$ 不是正参数下的未点击不变空间：第一次未点击后状态为 $P_1$。第 45 节只限制初态，所以仍适用。它保证的是 $W$ 任务的稳定性，不能扩成未被允许来源覆盖的全空间稳定性。
+
+## 47. 稀有的迟到分支可以携带一个完整单位的平均时间
+
+**定理 47.1（完整等待律一致可截断）。** 对第 46 节的共同初态，记 $s_m(\gamma)=\Pr_\gamma(\mathsf N>m)$。对 $m\ge1$，
+
+$$
+s_m(\gamma)=\gamma(1-\gamma)^{m-1}.
+$$
+
+其中 $s_m(0)=0$，整数零次幂取一。其精确统一尾界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}s_1(\gamma)=1,
+\qquad
+\sup_{0\le\gamma\le1}s_m(\gamma)
+=\frac{(m-1)^{m-1}}{m^m}\sim\frac1{em}\quad(m\ge2).
+}
+$$
+
+映射 $\gamma\mapsto p_\gamma$ 在整个 $[0,1]$ 上按总变差连续。
+
+证明。对 $n>m$ 的几何级数求和得到尾公式。若 $m\ge2$，函数 $\gamma(1-\gamma)^{m-1}$ 的内部导数与 $1-m\gamma$ 同号，两端为零，故最大值在 $\gamma=1/m$ 取得。渐近式来自 $(1-1/m)^{m-1}\to e^{-1}$。$m=1$ 时尾概率就是 $\gamma$。
+
+把 $n>m$ 的所有记录替换为共同删失符号 $\partial$，得到有限字母表上的分布 $p_\gamma^{(m)}$；将它与原分布都放在 $\mathbb N_{\ge1}\cup\{\partial\}$ 上。每个有限分布依赖参数连续，且
+
+$$
+\operatorname{TV}(p_\gamma,p_\gamma^{(m)})=s_m(\gamma)
+$$
+
+一致趋零。三角不等式便给完整等待律的总变差连续性。$\square$
+
+这里只给无穷记录律的数学表示和有限删失近似，不宣称有限装置能够存下无界的原始轮数标签。
+
+**定理 47.2（概率尾收敛，但加权尾不收敛）。** 定义
+
+$$
+z_m(\gamma)=\mathbb E_\gamma[\mathsf N\,\mathbf1_{\{\mathsf N>m\}}].
+$$
+
+对 $m\ge1$、$\gamma>0$，
+
+$$
+\boxed{
+z_m(\gamma)=(1+m\gamma)(1-\gamma)^{m-1},
+\qquad z_m(0)=0.
+}
+$$
+
+对 $m\ge2$，其精确上确界为
+
+$$
+\boxed{
+\sup_{0\le\gamma\le1}z_m(\gamma)
+=\left(1+\frac1m\right)
+ \left(1-\frac1{m^2}\right)^{m-1}
+\longrightarrow1.
+}
+$$
+
+因此这些等待时间的均值虽共同不超过二，分布族却不一致可积。
+
+证明。对正参数，逐项计数给
+
+$$
+\mathbb E[\mathsf N\mathbf1_{\{\mathsf N>m\}}]
+= m s_m+\sum_{k=m}^{\infty}s_k
+=(1+m\gamma)(1-\gamma)^{m-1}.
+$$
+
+零参数下所有等待时间都为一，所以 $m\ge1$ 时尾矩为零。对 $m\ge2$，正参数表达式的导数为
+
+$$
+(1-\gamma)^{m-2}(1-m^2\gamma),
+$$
+
+最大值在 $\gamma=1/m^2$ 取得。代入即得上确界；第二因子的对数为 $(m-1)\log(1-1/m^2)\to0$，故极限为一。$m=1$ 时，正参数下 $z_1(\gamma)=1+\gamma$，零参数下仍为零，最大值为二。按非负随机变量族的一致可积尾判据，统一加权尾不趋零，正是所需反例。$\square$
+
+**命题 47.3（进入迟到分支的概率与其条件等待相抵）。** 对正 $\gamma$，第一轮未点击的概率为 $\gamma$；条件于该结果，状态变成 $P_1$，剩余轮数 $\mathsf N-1$ 具有参数 $\gamma$ 的几何分布。因此
+
+$$
+\boxed{
+\mathbb E_\gamma\mathsf N
+=1+\Pr_\gamma(\mathsf N>1)
+  \mathbb E_\gamma[\mathsf N-1\mid\mathsf N>1]
+=1+\gamma\frac1\gamma=2.
+}
+$$
+
+证明。第一轮未点击后态由 $Q_\gamma|0\rangle=-i\sqrt\gamma|1\rangle$ 给出。从 $P_1$ 出发，每轮点击概率为 $\gamma$，未点击又回到 $P_1$；故剩余轮数的分布为 $\gamma(1-\gamma)^{j-1}$、$j\ge1$，均值为 $1/\gamma$。条件全期望得到方框式。$\square$
+
+在零参数处，这个迟到条件事件概率为零，不能继续定义其归一化后继并把 $0\cdot\infty$ 当计算规则。零模型的均值直接由第一轮必点击给出。这里的单位时间贡献由同一过程的稀有后继承担，未点击分支的条件化是实质步骤。
+
+**推论 47.4（固定截止的实际运行成本不能统一逼近完整均值）。** 截止于第 $m\ge1$ 轮的运行成本为 $\min\{\mathsf N,m\}$，其均值满足
+
+$$
+\boxed{
+\mathbb E_\gamma\min\{\mathsf N,m\}
+=2-(1-\gamma)^{m-1}\quad(0\le\gamma\le1).
+}
+$$
+
+该函数对参数连续，但对任意固定 $m$，
+
+$$
+\sup_{0\le\gamma\le1}
+\left(\mathbb E_\gamma\mathsf N
+-\mathbb E_\gamma\min\{\mathsf N,m\}\right)=1.
+$$
+
+证明。整数等待时间的截断期望是 $\sum_{k=0}^{m-1}s_k$，其中 $s_0=1$。代入第 47.1 条求和；零参数下式值也为一。对正参数，完整均值与截断均值的差为 $(1-\gamma)^{m-1}$，上确界为一；零参数下差为零。$\square$
+
+这个运行成本与第 43 节的 $\mathbb E[\mathsf N\mathbf1_{\{\mathsf N\le m\}}]$ 不同：后者把未结束轨迹记为零，前者把已经执行的 $m$ 轮如实计入。两种都不应与只报告完成样本的条件均值混写。
+
+## 48. 有限条完整返回记录，仍不能统一认证平均返回时间
+
+**定义 48.1（固定来源的独立完成记录）。** 未知参数或者为零，或者为某个指定正数 $\gamma$，两假设先验相等。每次都按第 46 节从 $P_0$ 重新准备，运行到点击，独立重复 $k\ge1$ 次，只读取完整轮数 $(\mathsf N_1,\ldots,\mathsf N_k)$。不增加其他初态、控制或中途量子读出。这是固定协议的数据任务。
+
+所有参数下单条记录都以概率一完成，$k$ 条记录也如此；但正 $0<\gamma<1$ 时完成所需总仪器调用次数没有确定的有限上界。两个端点的总成本则是确定的：零参数为 $k$ 轮，$\gamma=1$ 为 $2k$ 轮。
+
+**定理 48.2（两种返回模型的精确抽样区分界）。** 在定义 48.1 下，
+
+$$
+\boxed{
+\operatorname{TV}(p_0^{\otimes k},p_\gamma^{\otimes k})
+=1-(1-\gamma)^k,
+\qquad
+P_{\mathrm{err}}^{\mathrm{opt}}=\frac{(1-\gamma)^k}{2}.
+}
+$$
+
+最优规则是：只要有一条记录超过一轮，就判断正参数；全部为一则判断零参数。
+
+证明。零模型集中在唯一数据词 $(1,\ldots,1)$；正模型赋该词概率 $(1-\gamma)^k$。一个点质量与任意概率律的总变差等于一减该点概率，给出第一式。
+
+在其余数据词上只可能是正模型。在共同数据词上，两假设的未归一化后验权重分别为 $1/2$ 和 $(1-\gamma)^k/2$，选择零模型使错误最小。所得错误正好为后者。随机化不能降低这个逐词最小错误。$\square$
+
+**推论 48.3（均值估计的非统一性）。** 记 $\mu_\eta=\mathbb E_\eta\mathsf N$。对任意可能随机化的估计量 $\widehat\mu$，有
+
+$$
+\boxed{
+\frac12\Pr_0(|\widehat\mu-1|\ge1/2)
++\frac12\Pr_\gamma(|\widehat\mu-2|\ge1/2)
+\ge\frac{(1-\gamma)^k}{2}.
+}
+$$
+
+因此不存在固定有限 $k$，使这个来源协议上的均值估计对全部 $\eta\in[0,1]$ 都以小于 $1/2$ 的共同失败概率保证误差严格小于 $1/2$。
+
+证明。把估计值与阈值 $3/2$ 比较，得到两假设分类器。若估计误差严格小于 $1/2$，分类必正确；故分类错误率不超过对应估计失败率。第 48.2 条给出下界。若共同失败概率可取 $\alpha<1/2$，令正 $\gamma\downarrow0$，右侧趋于 $1/2$，产生矛盾。$\square$
+
+误差门槛必须保留“严格小于”：若只要求误差至多 $1/2$，常数估计量 $3/2$ 已对全部参数成功。
+
+这不排除对固定已知分离量 $\gamma>0$ 取足够多样本，也不排除增加探测权限。它刻画的是零参数与任意接近零的正参数不能由固定数量的完成记录统一区分。按仪器调用计，$k$ 条记录的平均成本分别为 $k$ 和 $2k$；平均成本有界没有提供确定截止，也没有消除上述推断障碍。第 37 节的任意自适应查询结论属于另一仪器与访问合同，不能移植成此处的无条件下界。
+
+## 49. 从返回量子化到关系边界：本批得到的连接与来源
+
+本批的“AHH”是：造成不稳定平均时间的稀有性，可以藏在迟到的子历史中。第 46 节对共同来源的最终点击概率始终为一，完整等待律按总变差连续；但概率 $\gamma$ 的第一轮未点击分支，携带条件均值 $1/\gamma$ 的剩余等待。它们在每个正参数下贡献整整一个平均轮数，而零参数下这个条件事件已经不存在。
+
+因此“边界保存全部事件概率”和“边界稳定控制无界时间成本”具有不同的精度要求。第 47 节分别算出趋零的概率尾与不趋零的加权尾，第 48 节再把这种区别变成一个固定来源、固定样本数的区分障碍。这些都是同一装置、同一初态、同一记录规则中的关系，没有将不同模型的最优量拼接为一个实现。
+
+第 45 节给出另一条有用的连接：对正的迟到效果，一个在允许初始支撑上忠实的测试态可以控制该支撑上的最坏误差。这个测试能桥接稳定性，却不能重建任意效果；关键是正性与连续有限前缀，不能只凭“满秩”把单个期望值当作全部相干信息。
+
+**说明 49.1（既有量子返回结果及精确模型对应）。** F. A. Grünbaum、L. Velázquez、A. H. Werner、R. F. Werner 的 [*Recurrence for discrete time unitary evolutions*，arXiv:1202.3903v3](https://arxiv.org/abs/1202.3903v3)，发表于 *Communications in Mathematical Physics* 320（2013），研究每次酉演化后投影测试是否返回初始纯态的协议。原文定理 2 在每轮酉演化后投影监测初态、且最终返回概率为一的常返对 $(U,\phi)$ 上表明：平均返回时间有限，当且仅当初态谱测度只含有限个非零权重的不同点质量，并且均值等于这些点的个数。常返前提不能省略；它使这里的平均返回时间与本卷的有限点击时间矩相等。
+
+原文第 4.2 节例 2 已给二态旋转的平均返回时间：非退化旋转时为二，退化时为一；第 5 节讨论均值跳变附近的返回方差。第 46 节与这个例子的对应可直接写出。令
+
+$$
+V=\operatorname{diag}(1,-i),
+\qquad
+O_\theta=
+\begin{pmatrix}\cos\theta&-\sin\theta\\
+\sin\theta&\cos\theta\end{pmatrix}.
+$$
+
+则在 $0\le\theta\le\pi/2$、$\gamma=\sin^2\theta$ 下，
+
+$$
+U_\gamma=VO_\theta V^\dagger,
+\qquad VP_0V^\dagger=P_0,
+\qquad VP_1V^\dagger=P_1.
+$$
+
+所以整个准备、酉步骤和两投影都由同一个基变换对应，首次返回记录律相同。本卷的直接级数计算与这一成熟结果一致，不主张首次发现二态均值跳变。
+
+在本例中，循环空间 $\operatorname{span}\{U_\gamma^n|0\rangle:n\ge0\}$ 的维数为：零参数下一，正参数下二。后者因为 $U_\gamma|0\rangle$ 有非零 $|1\rangle$ 分量。因此这里的均值也等于这个维数。一般有限维酉返回中，该维数等于初态所覆盖的不同谱点数；此解释依赖返回初态的投影合同，不自动推广到本卷允许的任意 CP 仪器。
+
+**说明 49.2（工具、证据与适用边界）。** 第 45 节复用第 40 节的 Dini 机制、正算子的忠实迹控制，以及第 38 节含任意参考的删失通道恒等式。第 47 节的一致可积概念采用第 44.1 条所引 Norris 第 6.2 节的尾判据；第 48 节是对两点抽样实验逐词计算的标准检验界。它们在此连接到同一返回仪器，不以改换记号或综合表述声称文献原创性。
+
+本批只给纯理论定义、推导、反例与来源对应。有限来源的支撑覆盖是已给定模型条件，不能从有限次实验无误认证；完成记录数也不等于确定的仪器调用预算。时间均以轮数计，物理秒数需要额外钟标定。本文没有新增 Lean 证明、消化覆盖或冻结结果。
+
+## 追加锚（本行以下为增补区）
