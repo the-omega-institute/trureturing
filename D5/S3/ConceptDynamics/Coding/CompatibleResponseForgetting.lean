@@ -514,6 +514,55 @@ private theorem incoming_response_matrix_at_forgetting {p : ℕ} {M : CountMat p
     _ = Nat.card (Fin (M i j)) := Nat.card_congr edgeEquiv
     _ = M i j := Nat.card_fin _
 
+private inductive HExchangeChain :
+    {α β : Type} → Matrix α α ℕ → Matrix β β ℕ → ℕ → Prop where
+  | nil {α : Type} (M : Matrix α α ℕ) : HExchangeChain M M 0
+  | cons {α γ β : Type} [Fintype α] [Fintype γ]
+      (U : Matrix α γ ℕ) (V : Matrix γ α ℕ)
+      {T : Matrix β β ℕ} {length : ℕ}
+      (tail : HExchangeChain (V * U) T length) :
+      HExchangeChain (U * V) T (length + 1)
+
+private theorem HExchangeChain.trans {α β γ : Type}
+    {M : Matrix α α ℕ} {N : Matrix β β ℕ} {P : Matrix γ γ ℕ}
+    {l₁ l₂ : ℕ} (left : HExchangeChain M N l₁)
+    (right : HExchangeChain N P l₂) :
+    HExchangeChain M P (l₁ + l₂) := by
+  induction left with
+  | nil _ => simpa using right
+  | cons U V tail ih =>
+      simpa [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
+        HExchangeChain.cons U V (ih right)
+
+private theorem HExchangeChain.reverse {α β : Type}
+    {M : Matrix α α ℕ} {N : Matrix β β ℕ} {length : ℕ}
+    (chain : HExchangeChain M N length) :
+    HExchangeChain N M length := by
+  induction chain with
+  | nil M => exact HExchangeChain.nil M
+  | cons U V tail ih =>
+      have step : HExchangeChain (V * U) (U * V) 1 :=
+        HExchangeChain.cons V U (HExchangeChain.nil _)
+      simpa [Nat.add_comm] using ih.trans step
+
+private theorem incoming_response_hchain {p : ℕ} {M : CountMat p p}
+    {Q : Type} [Fintype Q] (L : IncomingLift M Q)
+    (start length : ℕ) :
+    HExchangeChain (incomingResponseMatrix L start)
+      (incomingResponseMatrix L (start + length)) length := by
+  classical
+  induction length generalizing start with
+  | zero =>
+      simpa using HExchangeChain.nil (incomingResponseMatrix L start)
+  | succ length ih =>
+      rw [incoming_response_matrix_factor_base L start]
+      refine HExchangeChain.cons (incomingResponseU L start)
+        (incomingResponseV L start) ?_
+      rw [← incoming_response_matrix_factor_step L start]
+      have hindex : start + 1 + length = start + (length + 1) := by omega
+      rw [← hindex]
+      exact ih (start + 1)
+
 /-- Every matrix edge is a particular numbered square with fixed R endpoints. -/
 noncomputable def squareMatrix (c : CompatibleCertificate A B R S m) :
     CountMat (Fintype.card (Edge R)) (Fintype.card (Edge R)) := by
