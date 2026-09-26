@@ -68244,3 +68244,326 @@ $$
 这一结果把边界容量不足解释得更具体：目标在每个输入上都提供一个概率不低于 $\kappa$ 的输出方向，而这些方向能以相位不变的方式连续拼成同一事件族。任意单 Kraus 竞争者都无法在全部输入上避开与该族正交的位置。这里起作用的是跨输入的共同关系及标准拓扑约束，最终代价仍须结合完整记录接口的结果秩预算计算。
 
 ## 追加锚（本行以下为增补区）
+
+## 226. 边界相位绕数与有理矩形通道的精确距离
+
+对定理 224.3的有理矩形矩阵对，取共同 TP 补全尺度 $1/8$，本文证明其到全部同接口、总 Choi 秩至多二记录通道的完整半 diamond 距离为
+$$
+\boxed{d_2=\frac18.}
+\tag{226.WP.1}
+$$
+新增下界覆盖任意单 Kraus 竞争者，不限于目标 Kraus 的线性张成或删除修复候选。与前一个精确例不同，本例的主输出线不能在整个 $\mathbb {CP}^1$ 上连续选取单位向量；足够的条件是圆盘上的连续选择及其边界相位绕数与线性竞争者不同。
+
+以下是纸面数学推导，没有新增或编译 Lean 证明。圆周绕数及其不可延拓性采用标准拓扑结果，不列为本文新定理。
+
+**定义 226.1（目标通道与完整候选类）。**
+
+取
+$$
+M=\begin{pmatrix}1&0\\0&19/20\\0&0\end{pmatrix},
+\qquad
+N=\begin{pmatrix}0&1/10\\2/5&0\\4/5&2\end{pmatrix},
+$$
+$$
+\Gamma(X)=MXM^\dagger+NXN^\dagger,
+\qquad
+G=M^\dagger M+N^\dagger N
+=\begin{pmatrix}9/5&8/5\\8/5&393/80\end{pmatrix}.
+\tag{226.WP.2}
+$$
+输入为 $\mathbb C^2$，量子输出为 $\mathbb C^3$。设 $E:\mathbb C^2\to\mathbb C^3$ 为前两个坐标的等距嵌入，并取
+$$
+K_0=E(I_2-G/8)^{1/2}.
+$$
+由于 $G\succeq0$ 且 $\operatorname{Tr}G=537/80<8$，根号严格正定。定义两标签记录通道
+$$
+\mathcal R(X)=
+|0\rangle\langle0|\otimes K_0XK_0^\dagger
++
+|1\rangle\langle1|\otimes\frac18\Gamma(X).
+\tag{226.WP.3}
+$$
+其 CP 与 TP 均由构造成立，两个结果分支的 Choi 秩为 $(1,2)$。
+
+$d_2$ 的竞争者是同输入、同量子输出、同经典标签且总 Choi 秩至多二的全部 CPTP 记录通道。记录输出在标签上块对角，故总 Choi 秩为两个分支 Choi 秩之和。候选可以改变结果0分支；完整通道误差始终包括两个结果分支。
+
+**定理 226.2（带边界相位的输入—事件下界）。**
+
+给定任意输入为 $\mathbb C^2$ 的 CPTP 记录通道 $\mathcal R$，固定结果 $q$ 的目标分支 $\Lambda$。对闭单位圆盘中的 $z$，取单位输入
+$$
+v(z)=\sqrt{1-|z|^2}\,f_0+zf_1.
+\tag{226.WP.4}
+$$
+假设存在圆盘上的连续单位输出向量 $r(z)$、单位向量 $r_b$、连续圆周相位 $p:S^1\to S^1$ 以及统一常数 $\alpha\ge0$，使
+$$
+\langle r(z),\Lambda(P_{v(z)})r(z)\rangle\ge\alpha
+\quad (|z|\le1),
+$$
+$$
+r(z)=p(z)r_b
+\quad (|z|=1),
+\qquad
+\deg p\ne1.
+\tag{226.WP.5}
+$$
+则对任意同接口 CPTP 记录竞争者 $\mathcal S$，只要它的结果 $q$ 分支 Choi 秩至多一，就有
+$$
+\boxed{\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\alpha.}
+\tag{226.WP.6}
+$$
+
+证明。写候选该分支为 $X\mapsto CXC^\dagger$，其中 $C$ 是任意线性算子；零分支允许 $C=0$。定义连续复函数
+$$
+F(z)=\langle r(z),Cv(z)\rangle.
+$$
+在圆盘边界上，
+$$
+F(z)=z\overline{p(z)}h,
+\qquad h=\langle r_b,Cf_1\rangle.
+\tag{226.WP.7}
+$$
+若 $h=0$，边界即有零点。若 $h\ne0$，且 $F$ 在圆盘上无零，则 $F/|F|$ 连续，并在边界上的绕数为
+$$
+1-\deg p\ne0.
+$$
+但任何可以延拓到整个圆盘的圆周映射都零伦，绕数必为零，矛盾。因此总有一个 $z$ 使 $F(z)=0$。
+
+该输入上，完整输出效果 $|q\rangle\langle q|\otimes P_{r(z)}$ 在竞争者中的概率为零，在目标中的概率至少为 $\alpha$。两份完整输出都是密度矩阵，所以这一事件概率差给出完整半 diamond 距离的下界（226.WP.6）。证毕。
+
+所用标准事实可直接取自 Hatcher《Algebraic Topology》第1章 §1.1：第29页定理1.7计算 $\pi_1(S^1)=\mathbb Z$，第32页定理1.9证明中应用圆盘不能缩回到圆周的结论。[官方章节 PDF，第9页起](https://pi.math.cornell.edu/~hatcher/AT/ATch1.pdf#page=9)。这里的新应用是将目标事件的边界相位与任意线性 $Cv$ 的相位相比较，再转为通道距离下界。
+
+条件 $\deg p\ne1$ 不能删去。例如若目标本来就是等距单 Kraus 通道 $X\mapsto UXU^\dagger$，取 $r(z)=Uv(z)$，则边界相位 $p(z)=z$ 的绕数恰为一；此时候选 $C=U$ 给 $F(z)=1$，没有零点。
+
+**引理 226.3（所有纯输入的统一主谱下界）。**
+
+对任意单位输入 $v=xf_0+yf_1$，令
+$$
+q=|y|^2,\qquad u=\operatorname{Re}(\overline xy),
+$$
+并记两列输出 $a=Mv,b=Nv$ 的 Gram 矩阵为
+$$
+T_v=\begin{pmatrix}A&k\\\overline k&B\end{pmatrix},
+\qquad
+A=\|a\|^2,\quad B=\|b\|^2,\quad k=a^\dagger b.
+\tag{226.WP.8}
+$$
+直接展开（226.WP.2）得到
+$$
+A=1-\frac{39}{400}q,
+\qquad
+B=\frac45+\frac{321}{100}q+\frac{16}{5}u,
+$$
+$$
+k=\frac1{10}\overline xy+\frac{19}{50}\overline yx.
+\tag{226.WP.9}
+$$
+又因为 $|\overline xy|^2=q(1-q)$，
+$$
+|k|^2=\frac{49}{625}q(1-q)+\frac{19}{125}u^2.
+$$
+因此
+$$
+\begin{aligned}
+\det(I_2-T_v)
+&=(1-A)(1-B)-|k|^2\\
+&=-\frac{589}{10000}q
+-\frac{9383}{40000}q^2
+-\frac{39}{125}qu
+-\frac{19}{125}u^2\\
+&=\boxed{
+-\frac{589}{10000}q
+-\frac{19}{125}\left(u+\frac{39}{38}q\right)^2
+-\frac{56597}{760000}q^2.
+}
+\end{aligned}
+\tag{226.WP.10}
+$$
+当 $q>0$，该行列式严格为负。由于 $T_v$ 是 Hermitian，其两个本征值于是分别位于一的两侧：
+$$
+\lambda_-(v)<1<\lambda_+(v).
+$$
+当 $q=0$，直接有 $T_v=\operatorname{diag}(1,4/5)$。故全部单位输入均满足
+$$
+\boxed{\lambda_+(v)\ge1,\qquad \lambda_+(v)>\lambda_-(v).}
+\tag{226.WP.11}
+$$
+$\Gamma(P_v)=[a\ b][a\ b]^\dagger$ 与 $T_v$ 具有相同的非零本征值，其第三个本征值为零。因此 $\Gamma(P_v)$ 的主本征值始终简单，且至少为一。
+
+**引理 226.4（闭圆盘上的连续主向量与边界相位）。**
+
+以下取（226.WP.4）的输入，所以 $x=\sqrt{1-|z|^2}\ge0$、$y=z$。在 $0<|z|<1$ 上，
+$$
+k=x\left(\frac1{10}z+\frac{19}{50}\overline z\right)\ne0,
+\tag{226.WP.12}
+$$
+因为 $19/50>1/10$。记
+$$
+\lambda=\lambda_+(v(z)),\qquad
+\Delta=\lambda_+(v(z))-\lambda_-(v(z))>0.
+$$
+对 $z\ne0$ 定义单位相位
+$$
+d(z)=\frac{\frac{19}{50}z+\frac1{10}\overline z}
+{\left|\frac{19}{50}z+\frac1{10}\overline z\right|}.
+\tag{226.WP.13}
+$$
+再令
+$$
+s(z)=\sqrt{\frac{\lambda-B}{\Delta}},
+\qquad
+t(z)=d(z)\sqrt{\frac{\lambda-A}{\Delta}}\quad(z\ne0),
+$$
+并在中心取 $s(0)=1,t(0)=0$。
+
+所有根号中的量均非负。中心处 $\lambda-A=0$，故 $t(z)\to0$；$d(z)$ 虽然在中心未定义，其单位模长保证这个乘积连续。$s$ 本身在全盘连续。圆盘边界处
+$$
+A=\frac{361}{400},\qquad B=\frac{401}{100},\qquad k=0,
+$$
+所以 $s=0$、$t=d$。这也证明 $s,t$ 在边界连续。
+
+在内部，由特征方程
+$$
+(\lambda-A)(\lambda-B)=|k|^2
+$$
+以及 $d=\overline k/|k|$，直接得
+$$
+T_v\binom{s}{t}=\lambda\binom{s}{t},
+\qquad |s|^2+|t|^2=1.
+\tag{226.WP.14}
+$$
+同式在中心和边界由刚才的显式值成立。定义
+$$
+\boxed{
+ r(z)=\frac{s(z)Mv(z)+t(z)Nv(z)}{\sqrt{\lambda}}.
+}
+\tag{226.WP.15}
+$$
+它在闭圆盘上连续。由（226.WP.14）可知 $\|r(z)\|=1$，且
+$$
+\Gamma(P_{v(z)})r(z)=\lambda r(z),
+\qquad
+\langle r(z),\Gamma(P_{v(z)})r(z)\rangle=\lambda\ge1.
+\tag{226.WP.16}
+$$
+没有在中心或边界通过零向量归一化。
+
+令
+$$
+r_b=\frac{Nf_1}{\|Nf_1\|}
+=\frac{\frac1{10}e_0+2e_2}{\sqrt{401/100}}.
+$$
+当 $|z|=1$，$v(z)=zf_1$，因此
+$$
+r(z)=zd(z)r_b=p(z)r_b,
+$$
+$$
+\boxed{
+ p(z)=\frac{\frac1{10}+\frac{19}{50}z^2}
+ {\left|\frac1{10}+\frac{19}{50}z^2\right|}.
+}
+\tag{226.WP.17}
+$$
+其绕数恰为二：同伦
+$$
+p_\tau(z)=
+\frac{\frac{\tau}{10}+\frac{19}{50}z^2}
+ {\left|\frac{\tau}{10}+\frac{19}{50}z^2\right|},
+\qquad0\le\tau\le1,
+$$
+分母从不为零，因 $\tau/10<19/50$，并将 $p_1=p$ 连到 $p_0(z)=z^2$。
+
+等价地，（226.WP.13）在圆周上是正定实线性映射
+$$
+z\longmapsto\frac{12}{25}\operatorname{Re}z
++i\frac7{25}\operatorname{Im}z
+$$
+的径向归一化，所以 $d:S^1\to S^1$ 为绕数一的圆周自同胚。任意候选的边界配对恰为 $F(z)=\overline{d(z)}h$，绕数为负一；若 $F$ 无零，$d^{-1}(\overline{F/h}/|F/h|)$ 将直接成为从圆盘到边界圆周的缩回。
+
+**定理 226.5（真实完整半 diamond 距离）。**
+
+对于目标（226.WP.3），将（226.WP.16）缩放 $1/8$，并在定理 226.2中取
+$$
+\Lambda=\Gamma/8,\qquad \alpha=1/8,\qquad \deg p=2.
+$$
+因此任意结果1 Choi 秩至多一的 CPTP 记录竞争者都满足
+$$
+\frac12\|\mathcal R-\mathcal S\|_\diamond\ge\frac18.
+\tag{226.WP.18}
+$$
+这对任意 $3\times2$ 单 Kraus $C_1$ 成立。
+
+若总秩至多二的竞争者结果1秩为二，它的结果0必为零。单独读取标签0的最大概率差为
+$$
+q_0=\|K_0^\dagger K_0\|_\infty
+=1-\lambda_{\min}(G)/8
+\ge1-\frac{9/5}{8}
+=\frac{31}{40}>\frac18.
+\tag{226.WP.19}
+$$
+两种情况穷尽全部预算候选，故 $d_2\ge1/8$。
+
+另一方面，删除结果1的 $M/\sqrt8$，取
+$$
+H=(I_2-M^\dagger M/8)^{-1/2},
+$$
+并将保留的 $K_0,N/\sqrt8$ 共同右乘 $H$，得到
+$$
+\mathcal S_*(X)=
+|0\rangle\langle0|\otimes K_0HXHK_0^\dagger
++
+|1\rangle\langle1|\otimes\frac18NHXHN^\dagger.
+\tag{226.WP.20}
+$$
+$H$ 可逆，两个保留 Kraus 非零，故结果 Choi 秩为 $(1,1)$。又
+$$
+H(K_0^\dagger K_0+N^\dagger N/8)H
+=H(I_2-M^\dagger M/8)H=I_2,
+$$
+所以它是合法 CPTP 记录通道。删除效应范数为
+$$
+\delta=\|M^\dagger M/8\|_\infty=\frac18<1.
+$$
+第 219 节的全缺失范数右 Gram 修复定理于是给出完整半 diamond 上界 $1/8$。结合（226.WP.18），该候选的真实误差恰为 $1/8$，并达到全体预算候选的最近距离，证明（226.WP.1）。结果0的真实分支及修复分支始终包含在上下界比较中。
+
+原来的两种标量端口证书均严格小于 $1/8$，故本例同时满足
+$$
+\boxed{
+\max(\gamma_{\mathrm{out}},\gamma_{\mathrm{in,tail}})
+<d_2=\delta_{\mathrm{rot}}=\frac18.
+}
+\tag{226.WP.21}
+$$
+唯一最优删除系数方向是 $M$ 这一既有事实，没有被用来限制任意竞争者，也不能据此宣称最近通道本身唯一。
+
+**定理 226.6（全局单位向量证书的严格限制）。**
+
+主输出本征值处处简单，所以每个纯输入的主输出线是明确的。假设还存在 $\mathbb {CP}^1$ 上连续的单位主向量 $r_{\mathrm{glob}}([v])$。在圆盘上，两个主向量只相差一个连续单位相位：
+$$
+r(z)=u(z)r_{\mathrm{glob}}([v(z)]),\qquad u:\overline{\mathbb D}\to S^1.
+$$
+边界上 $[v(z)]=[f_1]$ 恒定，故 $r_{\mathrm{glob}}([v(z)])$ 为固定向量。由（226.WP.17），$u$ 的边界绕数因此为二。这又不可能延拓到圆盘。矛盾。
+
+所以本例不存在全局连续单位主向量。这还限制了不要求取主本征向量的全局连续事件族。对未缩放分支 $\Gamma$，令
+$$
+\beta=\max_{\|v\|=1}\lambda_-(v)
+=\gamma_{\mathrm{in,tail}}(M,N).
+$$
+由（226.WP.11）、连续性与输入射影空间的紧性，有 $\beta<1$。任意全局连续单位向量 $s:\mathbb {CP}^1\to S(\mathbb C^3)$ 都满足
+$$
+\boxed{
+\inf_{\|v\|=1}
+\langle s([v]),\Gamma(P_v)s([v])\rangle
+\le\beta<1.
+}
+\tag{226.WP.22}
+$$
+
+证明。记 $P_+([v])$ 为目标输出的主本征投影。处处简单的主根及其正谱隙保证这个投影连续。若 $P_+([v])s([v])$ 对所有输入都非零，将它归一化就得到全局连续单位主向量，已证不可能。因此某个输入满足 $P_+s=0$。在主线的正交补上，$\Gamma(P_v)$ 的最大本征值为 $\lambda_-(v)$，故该输入上的事件概率至多为 $\lambda_-(v)\le\beta$，证明（226.WP.22）。
+
+特别地，在物理缩放 $\Gamma/8$ 下，任何这样的全局单位事件族，其统一概率下界均至多为 $\beta/8<1/8$。因而本例不能仅靠寻找另一份全局单位事件向量，就用定理 225.1 达到当前精确下界。
+
+可连续保存的是主输出线；圆盘上的局部单位向量绕边界两次，而线性竞争者输入向量只绕一次。两者之间非零的绕数差，正是任意单 Kraus 竞争者不能处处覆盖这一主输出关系的障碍。
+
+本文没有证明所有矩形矩阵对都具有这样的谱下界与边界绕数，也没有给出一般矩形最优距离公式。已经得到的是：有理显式例的真实 $d_2$，以及允许非平凡主输出线的可复用下界条件。未进行文献穷尽检索，不据本组合推导主张原创性。
+
+## 追加锚（本行以下为增补区）
