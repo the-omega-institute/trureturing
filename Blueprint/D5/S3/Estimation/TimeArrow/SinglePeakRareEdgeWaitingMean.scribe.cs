@@ -20,7 +20,8 @@ internal sealed class SinglePeakRareEdgeWaitingMeanDocument : IScribeDocumentDef
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Under the balanced single-peak hypotheses with 0 < r < 1, every survival mass is "
+                    "Assume chi takes the values 1 and -1, chi(z) = 1, |X| = 2M with M positive signs, M >= 2, "
+                        + "q = r/(M-1) and 0 < r < 1. Then every survival mass is "
                         + "nonnegative, the sequence is nonincreasing, and it converges to zero. Thus the "
                         + "rare edge is reached almost surely.")),
                 Paragraph(Text(
@@ -44,6 +45,7 @@ internal sealed class SinglePeakRareEdgeWaitingMeanDocument : IScribeDocumentDef
             D(1), Minus, u, Plus, p, Open, D(1), Minus, r, Close, Sp, u, Caret, Grp(D(2)),
             Plus, p, Sp, r, Sp, u, Caret, Grp(D(3)));
         return Disp(Seq(
+            Hypotheses(), Comma, Sp, D(0), Lt, r, Lt, D(1), Comma, Sp,
             p, Eq, Frac, Grp(D(1)), Grp(D(2), Lvert, Sp, F.Id("X"), Sp, Rvert), Sp, Rightarrow, Sp,
             Forall, Sp, t, Comma, Sp, D(0), Le, Sp, Survival(t), Comma, Quad, Sp,
             Survival(Seq(t, Plus, D(1))), Le, Sp, Survival(t), Comma, Quad, Sp,
@@ -53,5 +55,29 @@ internal sealed class SinglePeakRareEdgeWaitingMeanDocument : IScribeDocumentDef
             D(0), Le, Sp, u, Le, Sp, D(1), Sp, Rightarrow, Sp,
             Sum, Underscore, Grp(t, Geq, Sp, D(0)), Sp, Survival(t), Sp, u, Caret, Grp(t), Eq,
               Frac, Grp(numerator), Grp(denominator)));
+    }
+
+    private static Formula Hypotheses()
+    {
+        Formula x = F.Id("x"), m = F.Id("M");
+        return Seq(
+            Call("chi", x), Sp, InMacro, Sp, OpenBrace, Pm, Sp, D(1), CloseBrace, Comma, Sp,
+            Call("chi", F.Id("z")), Eq, D(1), Comma, Sp,
+            Lvert, Sp, F.Id("X"), Sp, Rvert, Eq, D(2), Sp, m, Comma, Sp,
+            Lvert, Sp, OpenBrace, Call("chi", x), Eq, D(1), CloseBrace, Sp, Rvert, Eq, m, Comma, Sp,
+            m, Geq, Sp, D(2), Comma, Sp,
+            F.Id("q"), Eq, Frac, Grp(F.Id("r")), Grp(m, Minus, D(1)));
+    }
+
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var result = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) result.AddRange([Comma, Sp]);
+            result.Add(args[i]);
+        }
+        result.Add(Close);
+        return Seq([.. result]);
     }
 }

@@ -82,6 +82,7 @@ internal sealed class SinglePeakRareEdgeSurvivalDocument : IScribeDocumentDefini
     {
         Formula t = F.Id("T"), p = F.Id("p"), epsilon = Varepsilon, r = F.Id("r");
         return Disp(Seq(
+            Hypotheses(), Comma, Sp,
             p, Eq, Frac, Grp(D(1)), Grp(D(2), Lvert, Sp, F.Id("X"), Sp, Rvert), Comma, Quad, Sp,
             epsilon, Sp, Eq, D(1), Minus, r, Sp, Rightarrow, Sp,
             Survival(D(0)), Eq, D(1), Comma, Quad, Sp,
@@ -92,5 +93,17 @@ internal sealed class SinglePeakRareEdgeSurvivalDocument : IScribeDocumentDefini
             Survival(Seq(t, Plus, D(2))), Minus,
             p, Sp, epsilon, Sp, Survival(Seq(t, Plus, D(1))), Minus,
             p, Sp, r, Sp, Survival(t)));
+    }
+
+    private static Formula Hypotheses()
+    {
+        Formula x = F.Id("x"), m = F.Id("M");
+        return Seq(
+            Call("chi", x), Sp, InMacro, Sp, OpenBrace, Pm, Sp, D(1), CloseBrace, Comma, Sp,
+            Call("chi", F.Id("z")), Eq, D(1), Comma, Sp,
+            Lvert, Sp, F.Id("X"), Sp, Rvert, Eq, D(2), Sp, m, Comma, Sp,
+            Lvert, Sp, OpenBrace, Call("chi", x), Eq, D(1), CloseBrace, Sp, Rvert, Eq, m, Comma, Sp,
+            m, Geq, Sp, D(2), Comma, Sp,
+            F.Id("q"), Eq, Frac, Grp(F.Id("r")), Grp(m, Minus, D(1)));
     }
 }

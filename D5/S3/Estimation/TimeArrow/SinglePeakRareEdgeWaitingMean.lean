@@ -20,41 +20,6 @@ open scoped Topology
 open D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
 open D5.S3.Estimation.TimeArrow.SinglePeakRareEdgeSurvival
 
-private theorem kernel_nonneg {X : Type*} [Fintype X]
-    (chi : X -> Real) (hchi : ∀ x, chi x = 1 ∨ chi x = -1)
-    (z : X) (hz : chi z = 1) (r q : Real) (M : Nat)
-    (hcard : Fintype.card X = 2 * M) (hM : 2 <= M)
-    (hq : q = r / ((M : Real) - 1)) (hr0 : 0 < r) (hr1 : r < 1) (x y : X) :
-    0 <= kernel chi z r q (Fintype.card X) x y := by
-  have hN : (0 : Real) < Fintype.card X := by rw [hcard]; positivity
-  have hMcast : (2 : Real) <= M := by exact_mod_cast hM
-  have hden : (1 : Real) <= (M : Real) - 1 := by linarith
-  have hq0 : 0 < q := by rw [hq]; positivity
-  have hq1 : q < 1 := by
-    rw [hq]
-    exact (div_lt_one (by linarith)).2 (by linarith)
-  rcases hchi x with hx | hx <;> rcases hchi y with hy | hy
-  all_goals by_cases hxz : x = z
-  all_goals simp [kernel, profile, region, hxz, hx, hy, hz]
-  all_goals norm_num at *
-  all_goals apply div_nonneg <;> nlinarith
-
-private theorem survival_nonneg {X : Type*} [Fintype X]
-    (chi : X -> Real) (hchi : ∀ x, chi x = 1 ∨ chi x = -1)
-    (z : X) (hz : chi z = 1) (r q : Real) (M : Nat)
-    (hcard : Fintype.card X = 2 * M) (hM : 2 <= M)
-    (hq : q = r / ((M : Real) - 1)) (hr0 : 0 < r) (hr1 : r < 1) (T : Nat) :
-    0 <= survival chi z r q T := by
-  classical
-  unfold survival
-  apply sum_nonneg
-  intro x _
-  apply mul_nonneg
-  · apply mul_nonneg (by positivity)
-    exact prod_nonneg fun t _ =>
-      kernel_nonneg chi hchi z hz r q M hcard hM hq hr0 hr1 _ _
-  · split_ifs <;> norm_num
-
 /-- **Waiting time and generating function for the rare edge.** The survival masses are nonnegative,
 nonincreasing, and converge to zero. Their sum is the tail-sum expectation `E tau`, and their
 probability generating series is the rational function of Theorem 6.4. -/
@@ -76,6 +41,31 @@ theorem survival_waiting_mean {X : Type*} [Fintype X]
               (1 / (2 * (Fintype.card X : Real))) * r * u ^ 2) /
             (1 - u + (1 / (2 * (Fintype.card X : Real))) * (1 - r) * u ^ 2 +
               (1 / (2 * (Fintype.card X : Real))) * r * u ^ 3)) := by
+  have kernel_nonneg : ∀ (chi : X -> Real) (hchi : ∀ x, chi x = 1 ∨ chi x = -1) (z : X) (hz : chi z = 1) (r q : Real) (M : Nat) (hcard : Fintype.card X = 2 * M) (hM : 2 <= M) (hq : q = r / ((M : Real) - 1)) (hr0 : 0 < r) (hr1 : r < 1) (x y : X), 0 <= kernel chi z r q (Fintype.card X) x y := by
+    intro chi hchi z hz r q M hcard hM hq hr0 hr1 x y
+    have hN : (0 : Real) < Fintype.card X := by rw [hcard]; positivity
+    have hMcast : (2 : Real) <= M := by exact_mod_cast hM
+    have hden : (1 : Real) <= (M : Real) - 1 := by linarith
+    have hq0 : 0 < q := by rw [hq]; positivity
+    have hq1 : q < 1 := by
+      rw [hq]
+      exact (div_lt_one (by linarith)).2 (by linarith)
+    rcases hchi x with hx | hx <;> rcases hchi y with hy | hy
+    all_goals by_cases hxz : x = z
+    all_goals simp [kernel, profile, region, hxz, hx, hy, hz]
+    all_goals norm_num at *
+    all_goals apply div_nonneg <;> nlinarith
+  have survival_nonneg : ∀ (chi : X -> Real) (hchi : ∀ x, chi x = 1 ∨ chi x = -1) (z : X) (hz : chi z = 1) (r q : Real) (M : Nat) (hcard : Fintype.card X = 2 * M) (hM : 2 <= M) (hq : q = r / ((M : Real) - 1)) (hr0 : 0 < r) (hr1 : r < 1) (T : Nat), 0 <= survival chi z r q T := by
+    intro chi hchi z hz r q M hcard hM hq hr0 hr1 T
+    classical
+    unfold survival
+    apply sum_nonneg
+    intro x _
+    apply mul_nonneg
+    · apply mul_nonneg (by positivity)
+      exact prod_nonneg fun t _ =>
+        kernel_nonneg chi hchi z hz r q M hcard hM hq hr0 hr1 _ _
+    · split_ifs <;> norm_num
   let s : Nat -> Real := survival chi z r q
   let p : Real := 1 / (2 * (Fintype.card X : Real))
   have hN : (0 : Real) < Fintype.card X := by rw [hcard]; positivity
