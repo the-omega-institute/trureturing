@@ -78,18 +78,18 @@ An epigraph for that exploration:
 
 ## From questions to knowledge
 
-State a precise question and what would support or overturn its proposed
-answer. Search existing proofs and the literature, then use computation and
-experiments to distinguish hypotheses. Seek a proof, a counterexample, or the
-information still missing. Keep each reusable result with its assumptions.
+Choose questions whose answers could supply missing premises, expose overlooked
+distinctions or connect existing results. Search existing proofs and literature;
+state what would support or overturn a route, then design tests that distinguish
+alternatives. Keep reusable results with their assumptions.
 
 > The last line of the ledger is always the first line of the next round.
 
-A proof supplies a premise; a refutation rules out a mistaken route. An
-observation limit can suggest what to measure next. When progress stalls,
-check whether the current representation can express the distinction the
-question requires. Applying this method to AI research selection still
-requires evaluation.
+A proof supplies a premise; a counterexample refutes a claim within its stated
+scope. An observation limit can suggest what to measure next. When progress
+stalls, check whether the representation misses a needed distinction.
+Evaluate this proposed method on withheld questions, against a stated baseline
+with matched information and resources.
 
 The library contains Lean 4 proofs, theory inputs, experiments and checking
 tools. Golden integers, Fibonacci weights and Zeckendorf representations are
