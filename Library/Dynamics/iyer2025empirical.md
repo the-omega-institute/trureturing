@@ -5227,3 +5227,21 @@ $$
 完整选择比的 Poisson–binomial 局部极限定理继续使用第 121 章已核对的 Siripraparat–Neammanee，*ScienceAsia* 47 (2021)，111–116，定理 2。独立异质 Bernoulli 与方差条件对应于同一校准总和及补集总和。Boistard `1207.5654v1` 的高次幂与版本边界继续保留，未用于本章新增响应证明。
 
 单秩 Gaussian 行列式、条件指数倾斜、Fourier 插入、Taylor 积分余项及有限配分函数微分均属经典工具。新增内容是原实际模型中非中心电荷平方减能量的定量界、原始计数的同输出转移、$\varepsilon_Q\sqrt\delta$ 首项及归一化抵消的联合推导。零噪声、半指数等号边界、非紧输出、更大阶数及原始数据全平均均未纳入。
+
+## 追加：增长谐波带的一致算术阻尼与缩带宽的全输出极限
+
+对应理论卷第 124 章。在原始固定参数、完整取整、全计数组和固定大小支持先验下，取每个固定 $0<\gamma<3/2$，令 $\rho_Q=\sigma\mathcal B\asymp Q^{-\gamma}$。新增的实际重分配估计在同一个原始数据好事件上同时控制 $N_Q=\lceil1000\rho_Q^{-1}\sqrt{\ln Q}\rceil$ 个谐波，失败概率为 $b_Q+C(N_Q+1)Q^{-3/2}+2e^{-cQ}$，其中 $b_Q\to0$ 只支付一次。它与固定物理输出处的两阶归一化实倾斜、近乎平坦的正分母及全输出尾界结合，得到原完整选中后验的加权 $L^1$ 信息方差极限。所有有限经验系数与积分项 $C_xm_x$ 均保留。
+
+Sergey G. Bobkov、Arnaud Marsiglietti，*Local limit theorems for smoothed Bernoulli and other convolutions*，[arXiv:1901.02984v1](https://arxiv.org/abs/1901.02984v1)，[原始 TeX](https://arxiv.org/src/1901.02984v1)。原始源文件 SHA256 为 `71e4c9e7979e47115de02d7576220b8ff1c6546f596c7891adcaf87d646e8ccd`，解压 TeX 为 `9ec21f4a97e55ca707be47a9dab7788eb74c2ae4dc9e5fae254c15c37c9a6de8`。使用范围为定理 1.1、1.2、7.1 的模型、完整假设与结论。
+
+其模型是 $(X+X_1+\cdots+X_n)/\sqrt n$，其中 $X_i$ 为独立对称 $\pm1$ 变量，独立平滑变量 $X$ 的律固定。以 $f$ 表示 $X$ 的特征函数，$L^2$ 正态密度收敛要求每个非零谐波上的 $f(\pi k)=0$；定理 1.1 的充分方向另有有限一阶矩和 $f'$ 平方可积条件。定理 1.2 对一致密度收敛要求有限一阶矩及 $f'$ 绝对可积。定理 7.1 假设平滑密度连续且有界变差、有限二阶矩，并要求 $f,f',f''$ 可积，结论保留周期振幅 $A_n$ 乘 Gaussian 密度，误差为 $O(\log n/\sqrt n)$。
+
+这项经典结果说明 Gaussian 平滑本身不能保证格点混叠消失。其固定平滑分布、线性和与对称独立 Bernoulli 模型不同于本章的二次三角数组、共同经验中心及固定总数选中律；它不直接给出本章的两阶惊异标记、随 $Q$ 缩小的噪声或原始模型反例。
+
+Cong Ling、Laura Luzzi、Jean-Claude Belfiore、Damien Stehlé，*Semantically Secure Lattice Codes for the Gaussian Wiretap Channel*，[arXiv:1210.6673v3](https://arxiv.org/abs/1210.6673v3)，[原始源码](https://arxiv.org/src/1210.6673v3)。源归档 SHA256 为 `6b179025d930b7bdb5f15172f805d5ca19df7e151e3305c3aceda2848ec8af84`，`Security_arxiv.tex` 为 `2d62936a3af9625665d7125700e59baf443445b78cbb53afee00f97e348de72d`。核对范围为第三节的 flatness factor 定义、表达式命题及完整 Fourier／Poisson 证明、对偶格推论、smoothing parameter 定义，以及离散 Gaussian 二阶矩引理。
+
+小 flatness factor 同时控制实密度比的上下界，提供这里在除法之前支付分母的经典关系。该文离散 Gaussian 二阶矩引理还要求改变 Gaussian 宽度后的 flatness 界，误差带明确的 $\varepsilon/(1-\varepsilon)$ 因子。单独的 $C^0$ 平坦性不能推出本章需要的两阶温度导数；编码及随机格系综的存在结果也不等于这里实际经验相位的阻尼。第 124 章保持同一残差和外围惊异—能量关系，直接对精确 Poisson 模求导并求和。
+
+固定总数选择与实际重分配所用的局部 Poisson–binomial／Turán 估计沿用第 122 章已核对的 Boistard–Lopuhaä–Ruiz-Gazen `1207.5654v1`，只使用有界偏移下的 $O(d^{-2})$ 相对精度。Yu `1005.4107v2` 的包含关系、Newton／Turán 归属及 Borcea–Brändén–Liggett `0707.2340v2` 的负相依边界仍保持原范围，不推出原 path 行独立。带中心惊异的有符号质量界与共同通道收缩复用第 111 章；Gaussian 核心全输出极限复用第 101 章纯参考部分，不延用其受旧噪声范围限制的实际量化耦合。
+
+新增的联合推导给每个固定 $\gamma<3/2$ 的充分范围。$3/2$ 来自条件二项最大原子与谐波并集的费用；这里不把它称为原模型的必要阈值，也不主张端点、零噪声、任意实输出上的点态一致收敛、原始数据全平均或全球原创性。
