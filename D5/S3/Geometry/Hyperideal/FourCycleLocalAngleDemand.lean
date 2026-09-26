@@ -347,7 +347,7 @@ theorem paired_angle_demand
           1 - Real.cos (theta / 2)^2 := eq_sub_of_add_eq htrig
       calc
         2 * Real.sin (theta / 2)^2 =
-            2 * (1 - Real.cos (theta / 2)^2) := congrArg (2 * ·) hsin_cos
+            2 * (1 - Real.cos (theta / 2)^2) := by rw [hsin_cos]
         _ = 2 - 2 * Real.cos (theta / 2)^2 := by ring
         _ = 1 - ct := by rw [hcos_sq]; ring
     calc
