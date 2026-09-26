@@ -39,6 +39,7 @@ paper states:
 
 ## Verified locator
 
+- DOI: 10.48550/arXiv.2607.02093 (resolves through doi.org to https://arxiv.org/abs/2607.02093, checked 2026-09-27).
 - URL: https://arxiv.org/abs/2607.02093v1 (the only version listed by the arXiv
   API on 2026-09-27); source file `OpenQC.tex`, section "Circuits with minimum
   depth $d$ and independent geometries", `\paragraph{Conjecture 1}` and
