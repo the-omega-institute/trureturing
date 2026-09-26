@@ -16333,3 +16333,326 @@ $$
 式（61.9）只给实际第三至第六终端所用接收因子的分解，没有声称 $V_iK\subseteq L_i\otimes E$ 对整个全域位像成立。剩余未被这些纯尾域使用的输入仍须接受同一固定通道的约束。本节尚未排除 $AAB$ 或 $ABA$ 的全部参数，未给出七维实现，也未处理早期终端全部纯的其余候选；一般六终端容量仍为 $7\le d_{\mathrm{CPTP},6}\le8$。
 
 ## 追加锚（本行以下为增补区）
+
+## 62. 七维六终端接收器的混合终端完全排除
+
+固定非退化来源
+$$
+m_0=a|0\rangle+b|1\rangle,\qquad m_1=|0\rangle,\qquad
+ab\ne0,\quad |a|^2+|b|^2=1.
+$$
+七维接收器 $K$ 独立纯启动，同一全域 CPTP 接收通道精确服务前六个完整参考—活动记忆—原档案终端，全部持久系统计费。固定同一 Stinespring 等距
+$$
+V:K\otimes\mathbb C^2\longrightarrow K\otimes E,
+\qquad V_i x=V(x\otimes|i\rangle),
+$$
+其中 $V_0,V_1$ 均等距、两像正交。每轮使用新的环境副本；旧环境可以任意纠缠，后续接收器不可访问旧环境。
+
+反设第二终端可逆附加态秩为二。沿第53节，实际第二终端编码支撑为 $Q\otimes\Gamma\subset K$，$\dim Q=3$、$\dim\Gamma=2$；$u,v,w$ 正交单位，固定附加态 $\tau_\Gamma$ 正定。置
+$$
+G=\operatorname{span}(u,w),\qquad
+H=\operatorname{span}(z,w),\qquad
+z=(a^2u+bv)/\sqrt{|a|^4+|b|^2}.
+$$
+第三轮将附加因子排入二维新环境 $F\subset E$，给同一等距 $R_\Gamma:\Gamma\to F$ 与正交单位 $s,t,r,j\in K$，使
+$$
+V_0(z\otimes\xi)=s\otimes R_\Gamma\xi,\qquad
+V_0(w\otimes\xi)=t\otimes R_\Gamma\xi,
+$$
+$$
+V_1(u\otimes\xi)=r\otimes R_\Gamma\xi,\qquad
+V_1(w\otimes\xi)=j\otimes R_\Gamma\xi.
+\tag{62.1}
+$$
+记 $A_0=\operatorname{span}(s,t)=G_3$、$B_0=\operatorname{span}(r,j)=Q_3$。
+
+第58、59节排除外部尾环境，定理61.4已把剩余候选限为两种非正交模式：
+$$
+(\eta_4,\eta_5,\eta_6)=(\alpha,\alpha,\beta)
+\quad\text{或}\quad(\alpha,\beta,\alpha),
+\quad \alpha,\beta\in F,
+\quad 0<|\langle\alpha,\beta\rangle|<1.
+\tag{62.2}
+$$
+取单位 $\xi_\alpha,\xi_\beta\in\Gamma$ 满足 $R_\Gamma\xi_\alpha=\alpha$、$R_\Gamma\xi_\beta=\beta$，简记 $H_\gamma=H\otimes\mathbb C\xi_\gamma$、$G_\gamma=G\otimes\mathbb C\xi_\gamma$。
+
+实际纯尾满足
+$$
+V_0H_{n-1}=G_n\otimes\eta_n,\qquad
+V_1G_{n-1}=Q_n\otimes\eta_n\qquad(n=4,5,6).
+\tag{62.3}
+$$
+各 $H_n,G_n,Q_n$ 二维，$C_n=G_n\oplus Q_n$，$H_n$ 到两个正交因子的投影均为同构。引理61.2又给
+$$
+L_0=A_0+G_4+G_5+G_6,\qquad
+L_1=B_0+Q_4+Q_5+Q_6,
+$$
+$$
+K=L_0\oplus L_1,\qquad L_0\perp L_1,
+\qquad\dim L_0=4,\quad\dim L_1=3,
+\tag{62.4}
+$$
+以及式（61.10）的同一来源等式
+$$
+\begin{array}{c|ccc}
+AAB&G_4=A_0&H_3=H_\alpha&Q_5=Q_4\\
+ABA&G_5=A_0&H_4=H_\beta&Q_6=Q_4.
+\end{array}
+\tag{62.5}
+$$
+这些是已用接收因子的关系，不是全域 $V_iK$ 的包含关系。
+
+### 62.1 新环境投影后的 Schmidt 容量
+
+**引理62.1（可逆逻辑态禁止低秩环境分支）。** 设当前轮开始前的联合输入已纯化，记不由接收通道作用的系统为 $B\otimes E_{\mathrm{old}}$，通道输入为 $D$，新 Stinespring 等距为
+$$
+W:D\to K\otimes E_{\mathrm{new}}.
+$$
+输出纯态 $|\Omega\rangle\in B\otimes E_{\mathrm{old}}\otimes K\otimes E_{\mathrm{new}}$ 在接收器上存在一个解码等距 $U_K$，使
+$$
+(I_B\otimes I_{E_{\mathrm{old}}}\otimes U_K\otimes I_{E_{\mathrm{new}}})
+|\Omega\rangle
+=
+|\psi\rangle_{BQ}\otimes
+|\tau\rangle_{\Gamma,E_{\mathrm{old}},E_{\mathrm{new}}}.
+\tag{62.6}
+$$
+必要时扩充解码目标中未被占据的辅助空间，使实际编码支撑上的解码延拓为全 $K$ 上的等距；这不改变（62.6）右侧的实际输出态。设 $|\psi\rangle$ 跨 $B|Q$ 的 Schmidt 秩为 $r$。
+
+给定新环境正交投影 $P$。若
+$$
+\operatorname{rank}((I_K\otimes P)W)<r,
+\tag{62.7}
+$$
+则实际输出的该环境分支为零：
+$$
+(I_{B,E_{\mathrm{old}},K}\otimes P)|\Omega\rangle=0.
+\tag{62.8}
+$$
+
+**证明。** 令 $W_P=(I_K\otimes P)W$，其像维数为 $m<r$。选择像空间的一组基 $z_1,\ldots,z_m\in K\otimes E_{\mathrm{new}}$。将任意纯输入展开后，投影输出都可写成
+$$
+|\Omega_P\rangle
+=\sum_{j=1}^m c_j\otimes z_j,
+\qquad c_j\in B\otimes E_{\mathrm{old}}.
+\tag{62.9}
+$$
+因此它在切分
+$$
+(B\otimes E_{\mathrm{old}}) \big| (K\otimes E_{\mathrm{new}})
+\tag{62.10}
+$$
+上的 Schmidt 秩至多 $m$。
+
+另一方面，$P$ 仅作用于新环境，与接收器解码 $U_K$ 对易。式（62.6）的同一实际投影输出在解码后为
+$$
+|\psi\rangle_{BQ}\otimes|\tau_P\rangle,
+\qquad |\tau_P\rangle=(I_{\Gamma,E_{\mathrm{old}}}\otimes P)|\tau\rangle.
+\tag{62.11}
+$$
+$U_K$ 只作用于（62.10）的右侧，故保持该切分的 Schmidt 秩。若 $|\tau_P\rangle\ne0$，迹掉解码后的整个右侧 $Q\otimes\Gamma\otimes E_{\mathrm{new}}$，左侧未归一化约化态为
+$$
+\rho_B\otimes\sigma_{E_{\mathrm{old}}},
+\qquad
+\rho_B=\operatorname{Tr}_Q|\psi\rangle\langle\psi|,
+\quad
+\sigma_{E_{\mathrm{old}}}
+=\operatorname{Tr}_{\Gamma,E_{\mathrm{new}}}|\tau_P\rangle\langle\tau_P|.
+\tag{62.12}
+$$
+前因子秩为 $r$，后因子是非零正算子，秩至少一。所以（62.10）的 Schmidt 秩至少 $r$，与（62.9）冲突。因此 $|\tau_P\rangle=0$，即（62.8）。证明完毕。
+
+这里使用的是包含旧环境的联合切分（62.10）。没有以终端接收器边缘秩代替该切分的 Schmidt 秩，也未要求新旧环境独立。
+
+### 62.2 同一实际第二终端的四维记忆一支撑
+
+**引理62.2（零位全域像的早期支撑约束）。** 若对某个四维 $L\subset K$，实际第二轮记忆 $|1\rangle$ 分量的接收支撑包含于 $L$，则
+$$
+L=G\otimes\Gamma.
+\tag{62.13}
+$$
+特别地，若全域 $V_0K\subseteq L\otimes E$，该条件成立。
+
+**证明。** 来源每次发射后，记忆 $|1\rangle$ 分量只来自 $m_0$ 的 $b|1\rangle$，因而仅经过固定的零位块 $V_0$。对 Bell 参考输入，第二终端理想编码两列为
+$$
+\Psi_2^0=a\,m_0\otimes u+b\,m_1\otimes v,
+\qquad\Psi_2^1=m_0\otimes w,
+$$
+并张量同一个满秩附加态 $\tau_\Gamma$。投影活动记忆为 $|1\rangle$、迹掉参考后，未归一化接收态为
+$$
+\frac{|b|^2}{2}
+\bigl(|a|^2|u\rangle\langle u|+|w\rangle\langle w|\bigr)
+\otimes\tau_\Gamma.
+\tag{62.14}
+$$
+$ab\ne0$、$\tau_\Gamma$ 正定，使其支撑恰为四维 $G\otimes\Gamma$。包含于四维 $L$ 遂给（62.13）。证明完毕。
+
+### 62.3 AAB 模式强制两个六维已用位像
+
+先取 $AAB$。固定 $V_1$ 将 $A_0$、$G_5$ 分别送到独立环境 $\alpha,\beta$，故 $A_0\cap G_5=0$；由（62.4），
+$$
+L_0=A_0+G_5.
+\tag{62.15}
+$$
+零位已用像包含
+$$
+(L_0\otimes\alpha)+((A_0+G_6)\otimes\beta).
+\tag{62.16}
+$$
+确实，第一项来自旧块 $A_0\alpha$ 及第五轮 $G_5\alpha$，第二项来自旧块 $A_0\beta$ 及第六轮 $G_6\beta$。两环境独立，故（62.16）的维数为 $4+\dim(A_0+G_6)\le7$。后一个维数只能为二或三。
+
+若它为三，（62.16）恰好饱和整个七维 $V_0K$，因此真正得到全域
+$$
+V_0K\subseteq L_0\otimes F.
+$$
+引理62.2使 $L_0=G\otimes\Gamma$。于是 $A_0\subseteq G\otimes\Gamma$，旧一位块给 $V_1A_0\subseteq B_0\otimes F$；而 $V_1A_0=Q_4\otimes\alpha$。所以 $Q_4=B_0$。再由（62.1）及固定 $V_1$ 单射性，$A_0=G_\alpha$。但（62.5）给 $H_3=H_\alpha$，非零 $w\otimes\xi_\alpha$ 遂属于 $H_3\cap G_3$，矛盾。
+
+故必为二维，得到
+$$
+G_6=A_0,\qquad H_5=H_\beta.
+\tag{62.17}
+$$
+其中后一式由 $V_0H_5=A_0\beta=V_0H_\beta$ 及单射性成立。
+
+还必须有
+$$
+Q_4\ne B_0,\qquad Q_6\ne B_0.
+\tag{62.18}
+$$
+第一项若不成立，上一段的 $A_0=G_\alpha$ 与 $H_3=H_\alpha$ 矛盾同样适用，不需要全域饱和。第二项若不成立，则 $V_1G_5=B_0\beta=V_1G_\beta$，给 $G_5=G_\beta$；与（62.17）的 $H_5=H_\beta$ 共同包含非零 $w\otimes\xi_\beta$，亦矛盾。
+
+由于 $L_1$ 三维，两组不同二维平面分别张成它：
+$$
+B_0+Q_4=L_1=B_0+Q_6.
+$$
+因此旧块与尾像在一位上包含整个六维
+$$
+L_1\otimes F
+=(L_1\otimes\alpha)+(L_1\otimes\beta)
+\subseteq V_1K.
+\tag{62.19}
+$$
+零位上则有六维
+$$
+\mathcal R_0=(L_0\otimes\alpha)+(A_0\otimes\beta)
+\subseteq V_0K.
+\tag{62.20}
+$$
+两个和都是不同环境方向的代数直和；未假设 $\alpha,\beta$ 正交。
+
+### 62.4 ABA 模式也强制相同的六维已用位像
+
+现在取 $ABA$。固定 $V_1$ 给 $A_0\cap G_4=0$，所以（62.4）使
+$$
+L_0=A_0+G_4.
+$$
+（62.5）给 $G_5=A_0$，因此零位上直接有同一六维包含（62.20）。
+
+首先 $Q_5\ne B_0$：否则（62.1）、（62.3）给 $G_4=G_\beta$，而（62.5）给 $H_4=H_\beta$，两空间共同包含非零 $w\otimes\xi_\beta$，矛盾。
+
+再证明 $Q_4\ne B_0$。反设 $Q_4=B_0$，由 $V_1A_0=B_0\alpha=V_1G_\alpha$ 得
+$$
+A_0=G_\alpha.
+$$
+记单位向量 $w_\alpha=w\otimes\xi_\alpha$、$r_*=|\langle\alpha,\beta\rangle|>0$。（62.5）给 $H_4=H_\beta$，而 $R_\Gamma$ 等距，故
+$$
+\|P_{H_4}w_\alpha\|=r_*.
+\tag{62.21}
+$$
+另一方面，（62.1）给 $V_1w_\alpha=j\otimes\alpha$，实际第五轮给 $V_1G_4=Q_5\otimes\beta$。固定等距的投影公式遂给
+$$
+\|P_{G_4}w_\alpha\|
+=r_*\|P_{Q_5}j\|\le r_*.
+\tag{62.22}
+$$
+$w_\alpha\in A_0\subset L_0$，而 $Q_4\subset L_1$，所以 $w_\alpha\perp Q_4$。实际 $H_4\subset G_4\oplus Q_4$ 到 $Q_4$ 的投影单射，故 $H_4\cap G_4=0$。有限维性因此给
+$$
+s_*:=\|P_{H_4}|_{G_4}\|<1.
+$$
+由于 $w_\alpha\perp Q_4$ 且 $H_4\subset G_4\oplus Q_4$，
+$$
+P_{H_4}w_\alpha=P_{H_4}P_{G_4}w_\alpha.
+$$
+与（62.21）、（62.22）合并得到
+$$
+r_*\le s_*\|P_{G_4}w_\alpha\|\le s_*r_*<r_*,
+$$
+矛盾。故 $Q_4\ne B_0$。
+
+（62.5）又有 $Q_6=Q_4$。所以
+$$
+B_0+Q_4=L_1=B_0+Q_5,
+$$
+旧块与尾像再次给六维包含（62.19）。至此两种模式都满足（62.19）、（62.20），并且均已证明 $Q_4\ne B_0$。
+
+### 62.5 实际第二轮不能使用剩余环境
+
+**定理62.3（秩二第二终端不可能）。** 上述七维六终端固定接收器不能有秩二的第二终端可逆附加态。
+
+**证明。** 由（62.19）、（62.20），每个位块分别有六维输入子空间被送入 $K\otimes F$。因此
+$$
+\operatorname{rank}((I_K\otimes P_{F^\perp})V_i)\le1
+\qquad(i=0,1).
+$$
+全域 $V$ 的像是两个位块像的和，故
+$$
+\operatorname{rank}((I_K\otimes P_{F^\perp})V)\le2.
+\tag{62.23}
+$$
+这里是全 Stinespring 算子投影后的线性像秩，不是接收器边缘态的秩。
+
+选 Bell 参考—来源输入，保留所有旧环境，把实际第二轮前的联合态纯化。引理62.1中取
+$$
+B=R\otimes M,\qquad D=K\otimes\mathbb C^2,
+\qquad W=V,\quad E_{\mathrm{new}}=\text{第二轮新环境}.
+$$
+完整第二终端恢复与标准可逆编码，使其输出满足（62.6）。理想逻辑态可写成
+$$
+|\psi_2\rangle
+=\frac1{\sqrt2}\left(
+ a|0\rangle_Rm_0\otimes u
++b|0\rangle_Rm_1\otimes v
++|1\rangle_Rm_0\otimes w
+\right).
+\tag{62.24}
+$$
+三个 $RM$ 系数向量线性独立：前两个因 $m_0,m_1$ 独立及 $ab\ne0$ 而独立，第三个具有正交的参考标签。所以 $|\psi_2\rangle$ 跨 $RM|Q$ 的 Schmidt 秩恰为三。
+
+式（62.23）与引理62.1遂说明：同一实际第二轮输出在新环境 $F^\perp$ 上的分支为零。
+$$
+(I_{R,M,E_{\mathrm{old}},K}\otimes P_F)|\Omega_2\rangle
+=|\Omega_2\rangle.
+\tag{62.25}
+$$
+这个结论没有要求第二轮新环境本来纯，也没有要求它与旧环境无纠缠。
+
+再由（62.19）及 $V_0K\perp V_1K$，$V_0K$ 正交于整个 $L_1\otimes F$。因此其 $F$ 分量满足
+$$
+(I_K\otimes P_F)V_0K\subseteq L_0\otimes F.
+\tag{62.26}
+$$
+因为实际第二轮完全位于（62.25）的环境分支，且来源的记忆 $|1\rangle$ 分量仅经过 $V_0$，其条件接收支撑由（62.26）包含于 $L_0$。引理62.2给
+$$
+L_0=G\otimes\Gamma.
+\tag{62.27}
+$$
+于是 $A_0\subseteq G\otimes\Gamma$；旧块使 $V_1A_0\subseteq B_0\otimes F$，而实际第四轮使 $V_1A_0=Q_4\otimes\alpha$。故 $Q_4\subseteq B_0$。两者均二维，所以 $Q_4=B_0$，与第3、4款分别证明的 $Q_4\ne B_0$ 矛盾。
+
+第58、59节已经排除外部模式，内部共同射线也已排除；最后的 $AAB,ABA$ 两类现在全部排除。因此秩二第二终端不可能。证明完毕。
+
+### 62.6 七维候选只余全部终端纯的分支
+
+**推论62.4（七维六终端的纯终端必要性）。** 同一七维接收器精确服务前六个完整参考终端时，各终端可逆编码的固定附加态都必须秩一：
+$$
+r_1=r_2=r_3=r_4=r_5=r_6=1.
+$$
+
+**证明。** 第53节的档案支撑秩给 $r_2\le2$；定理62.3排除二，故 $r_2=1$。第57节进而给 $r_1=1$。第三至第六终端的档案支撑秩为四，$4r_n\le7$ 已分别给 $r_n=1$。证明完毕。
+
+本节只将一般七维候选归约为全部终端纯，并未排除全部早期纯环境序列，也未给出七维六终端接收器。一般六终端容量仍为
+$$
+7\le d_{\mathrm{CPTP},6}\le8.
+$$
+
+
+## 追加锚（本行以下为增补区）
