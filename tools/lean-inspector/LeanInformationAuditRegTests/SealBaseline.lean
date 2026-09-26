@@ -40,7 +40,7 @@ example : D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contex
 example : D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena».__information_catalog.uniqueCaptureCount (0 : Fin 1) = 240 := by
   decide
 
-example : D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena/D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena».__information_catalog.uniqueCaptureCount
+example : D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.«Reg.Catalogs.InformationRoot/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena».__information_catalog.uniqueCaptureCount
     (0 : Fin 1) = 968 := by
   decide
 
@@ -102,7 +102,14 @@ run_meta do
         entry.occurrence.key.theoremName == row.theoremName &&
         entry.occurrence.key.registrationModule == row.registrationModuleName
       | throwError "missing production binding row"
-    unless observed.result matches .undeclared do throwError "production status changed"
-  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 11 undeclared statuses"
+    if row.theoremName ==
+        ``D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective ||
+        row.theoremName ==
+        ``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention then
+      unless observed.result matches .declaredValidated _ do
+        throwError "completed production binding regressed"
+    else
+      unless observed.result matches .undeclared do throwError "production status changed"
+  logInfo "[PASS] Reg root: 11 catalogs, 11 occurrences, 55 native companions, 2 validated and 9 undeclared statuses"
 
 end LeanInformationAudit.Tests.SealBaseline
