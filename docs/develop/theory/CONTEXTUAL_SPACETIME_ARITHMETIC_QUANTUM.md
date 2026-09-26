@@ -51436,3 +51436,271 @@ $$
 实际参数 $s$ 下，以无限制最优方向为中心的一阶变分为零；其 Hessian 与（237.28）的 Hessian 相差 $O(s)$。两个最优方向相差 $O(s)$，所以将这个 Hessian 换成临界值只产生 $O(s^3)$ 误差。代入两条方向的一阶差，就得到（237.26）。括号非零已由（237.24）的严格号证明，故 $C_*>0$。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 238. 虚性与混合预算的联合临界容量
+
+**定义 238.1（两个固定比例的全域预算）。** 固定第236、237节的实际分界任务、共同四维处理器、共轭 $C$ 和内部窗口 $K$。固定 $\lambda,\mu\ge0$，且 $\lambda^2+\mu^2>0$。允许全域解析复密度准备，要求全部信号输入精确、完整尖锐集合恰为 $\{u_1,u_3\}$、两节点最优普通双侧曲率，以及
+
+$$
+\sup_{u\in J_a}I_R^C(\rho_u)\le\lambda\varepsilon,
+\qquad
+\sup_{u\in J_a}J(\rho_u)\le\mu\varepsilon,
+\qquad J(\rho)=\sqrt{2(1-\operatorname{Tr}\rho^2)}.
+\tag{238.1}
+$$
+
+记这一类为 $\mathcal D_s^{\lambda,\mu}(\varepsilon)$，并定义
+
+$$
+Q_s^{\lambda,\mu}(\varepsilon)
+=\inf_{\rho\in\mathcal D_s^{\lambda,\mu}(\varepsilon)}
+\sup_{u\in K}I_Q(\rho_u),
+\qquad
+E_s^{\lambda,\mu}(\varepsilon)
+=\inf_{\rho\in\mathcal D_s^{\lambda,\mu}(\varepsilon)}
+\int_K I_Q(\rho_u)\,du.
+\tag{238.2}
+$$
+
+仍沿用 $L,\gamma,\kappa,\kappa_{\rm mix}$，置
+
+$$
+\kappa_{\lambda,\mu}
+=\lambda^2\kappa+\mu^2\kappa_{\rm mix}.
+\tag{238.3}
+$$
+
+**定理 238.2（联合预算的可加容量及两个首项）。** 在上述先固定 $s,K,\lambda,\mu$ 的量词下，
+
+$$
+\lim_{\varepsilon\downarrow0}\varepsilon^4
+Q_s^{\lambda,\mu}(\varepsilon)
+=\frac{L^2\gamma^2}{4\kappa_{\lambda,\mu}^2},
+\qquad
+\lim_{\varepsilon\downarrow0}\varepsilon^2
+E_s^{\lambda,\mu}(\varepsilon)
+=\frac{L^2\gamma}{2\kappa_{\lambda,\mu}}.
+\tag{238.4}
+$$
+
+任意秩的候选都满足下界；同一族处处秩至多二、实际联合支持恰为四的解析准备同时达到两个首项，并可保持任意预先固定的有限阶规范节点数据。当 $\mu=0$ 时，该族可完全为纯态；当 $\lambda=0$ 时，该族可完全为实态。定理不要求各逼近常数对预算比例或 $s\downarrow0$ 一致。
+
+证明。 先设 $\lambda,\mu>0$。对任意候选密度，在两个节点之间以 $x=\sqrt{1-p}>0$ 作复 Schur 分解
+
+$$
+\rho=\alpha\alpha^\dagger+R,\qquad
+\alpha=\frac{\rho q}{x}=xq+v+i\beta,\qquad
+Rq=0,\quad R\ge0,
+\tag{238.5}
+$$
+
+其中 $v,\beta$ 实且与 $q$ 正交。置 $t=\operatorname{Tr}R$，则
+$\|v\|^2+\|\beta\|^2=p-t$。纯度的精确公式及正性给出
+
+$$
+\begin{aligned}
+J(\rho)^2
+&=4t-2t^2-4\alpha^\dagger R\alpha-2\operatorname{Tr}R^2\\
+&\ge4(1-p)t.
+\end{aligned}
+\tag{238.6}
+$$
+
+因此固定节点区间上 $t=O_s(\mu^2\varepsilon^2)$。这个估计不要求 $R$ 为实，也不限制其秩。
+
+把虚性公式 $\frac12\|A-CAC\|_1$ 同样用于未归一化的正算子，记为 $\mathcal I(A)$。由迹范数三角不等式及 $\mathcal I(R)\le t$，
+
+$$
+|I_R^C(\rho)-\mathcal I(\alpha\alpha^\dagger)|\le t.
+\tag{238.7}
+$$
+
+而秩一项有精确表达式
+
+$$
+\mathcal I(\alpha\alpha^\dagger)^2
+=4\bigl[(1-t-\|\beta\|^2)\|\beta\|^2
+-(v^{\mathsf T}\beta)^2\bigr]
+\ge4(1-p)\|\beta\|^2.
+\tag{238.8}
+$$
+
+所以 $\beta=O_s(\lambda\varepsilon+\varepsilon^2)$。式（238.7）特别说明，复余项的虚性至多为二阶，不能抵消主秩一项的一阶虚性。
+
+第216节的秩下界和简单谱唯一性仍强制两个节点为原实规范纯态。对（238.5）的原实部 $v$ 使用第236节的延伸仿射分离面，两端异号，故存在首次过零点 $p_\varepsilon$。令 $S=\operatorname{Re}R$；它是实半正定矩阵，迹为 $t$。由紧性、（238.6）—（238.8）和实分隔性质，过零点一致趋向 $(p_0,v_0)$。
+
+在该点写 $\delta=v-v_{\rm sad}(p_\varepsilon)$。范数与矩约束的实部给出精确恒等式
+
+$$
+0=g(p_\varepsilon)
++\delta^{\mathsf T}H(p_\varepsilon)\delta
++\beta^{\mathsf T}H(p_\varepsilon)\beta
++\operatorname{Tr}(H(p_\varepsilon)S).
+\tag{238.9}
+$$
+
+其中 $\delta\perp n$，中间实项正定。因此先得到
+
+$$
+p_\varepsilon-p_0=O(\varepsilon^2),
+\qquad \delta=O(\varepsilon).
+\tag{238.10}
+$$
+
+虚矩方程为
+
+$$
+\bigl[(B^{\mathsf T}-B)v-xk\bigr]^{\mathsf T}\beta
++\operatorname{Im}\operatorname{Tr}(TR)=0.
+\tag{238.11}
+$$
+
+因 $|\operatorname{Tr}(TR)|\le t$，式（238.10）推出
+$j^{\mathsf T}\beta=O(\varepsilon^2)$。故将 $\beta$ 投影到 $j^\perp$ 只改变二阶项。另一方面，式（238.7）—（238.10）给出
+
+$$
+I_R^C(\rho)^2=4\beta^{\mathsf T}M\beta+O(\varepsilon^3).
+\tag{238.12}
+$$
+
+式（238.6）的精确等式还给出
+
+$$
+J(\rho)^2=4\operatorname{Tr}(MS)+O(\varepsilon^3).
+\tag{238.13}
+$$
+
+确实，$\alpha=xq+v_0+O(\varepsilon)$、$Rq=0$ 且 $\|R\|\le t=O(\varepsilon^2)$，所以
+$\alpha^\dagger R\alpha=v_0^{\mathsf T}Sv_0+O(\varepsilon^3)$。不需要将 $R$ 的虚部置零。
+
+分别应用两个已经证明的 Rayleigh 界，得到
+
+$$
+\begin{aligned}
+-\beta^{\mathsf T}H(p_\varepsilon)\beta
+&\le\kappa\,I_R^C(\rho)^2+O(\varepsilon^3),\\
+-\operatorname{Tr}(H(p_\varepsilon)S)
+&\le\kappa_{\rm mix}\,J(\rho)^2+O(\varepsilon^3).
+\end{aligned}
+\tag{238.14}
+$$
+
+将它们代入同一实际密度的恒等式（238.9），便有
+
+$$
+p_\varepsilon-p_0
+\le\frac{\kappa_{\lambda,\mu}}{\gamma}\varepsilon^2
++O(\varepsilon^3).
+\tag{238.15}
+$$
+
+这里两个界针对同一对象成立，尚未据此假定两者可同时达到。
+
+因为 $R\to0$ 且 $\beta\to0$ 一致，第一节点到首次过零点的短参数路径，其任何有界长度极限都落在固定临界实纯态纤维内。第236节的弧长紧性论证因此仍给出长度至少 $L-o(1)$。再用第237.12式的点态混态 SLD 迹速度界，换回 $u-u_1=2(p-p_0)$，得到（238.4）的两个下极限。
+
+下面构造同时达到两种局部容量的实际正准备。采用
+
+$$
+\rho=\alpha\alpha^\dagger+bb^{\mathsf T},
+\quad
+\alpha=xq+v+i\beta,\quad
+b\in\mathbb R^3,
+\quad
+\|v\|^2+\|\beta\|^2+\|b\|^2=p,
+\tag{238.16}
+$$
+
+其中所有非核列均与 $q$ 正交。它始终正半定且秩至多二。令其完整复矩精确等于 $a$。
+
+在实鞍点附近先消去范数约束，再用非零的虚矩导数消去一个虚坐标。剩余七个实坐标分成两个实球面方向、两个虚方向、三个实混合方向；实矩残差的二次块分别是惯性 $(1,1)$、$(1,1)$、$(2,1)$。后两块的最优负方向分别按 $\kappa(p)$ 和 $\kappa_{\rm mix}(p)$ 归一化。
+
+方程分别在 $\beta\mapsto-\beta$ 和 $b\mapsto-b$ 下保留相应奇偶性，两种反射可交换。第234节的解析矩阵平方根配方因而可以同时保持这两种反射，以及两个指定负方向的一阶微分。得到精确正规形
+
+$$
+g+z_+^2-z_-^2+Z_+^2-Z_-^2
++W_1^2+W_2^2-W_-^2=0.
+\tag{238.17}
+$$
+
+虚性方向是 $Z_-$，实混合方向是 $W_-$。令
+
+$$
+A^2=\frac{\lambda^2\kappa}{\kappa_{\lambda,\mu}},
+\qquad
+B^2=\frac{\mu^2\kappa_{\rm mix}}{\kappa_{\lambda,\mu}},
+\qquad A,B>0,\quad A^2+B^2=1.
+\tag{238.18}
+$$
+
+使用精确半圆
+
+$$
+z_+=Z_+=W_1=W_2=0,\qquad
+z_-=\sqrt g\cos\theta,\quad
+Z_-=A\sqrt g\sin\theta,\quad
+W_-=B\sqrt g\sin\theta,
+\quad0\le\theta\le\pi.
+\tag{238.19}
+$$
+
+其两端为实纯态，连接同一分离面的两侧；相同的最短实入弧和正则实出弧均可接上。
+
+在逆坐标中，两种反射保证 $b$ 在 $W_-=0$ 时消失，$\beta$ 在 $Z_-=0$ 时消失。它们的一阶微分保留前述最优方向。因此
+
+$$
+\begin{aligned}
+I_R^C(\rho)^2
+&=\frac{A^2g}{\kappa(p)}\sin^2\theta+O(g^{3/2}),\\
+J(\rho)^2
+&=\frac{B^2g}{\kappa_{\rm mix}(p)}\sin^2\theta+O(g^{3/2}).
+\end{aligned}
+\tag{238.20}
+$$
+
+第二式可直接由秩二精确公式
+$J^2=4(\|\alpha\|^2\|b\|^2-|\alpha^\dagger b|^2)$ 得到；其中虚部与混合列的交叉乘积为四阶，不改变显示的首项。第一式则因为 $bb^{\mathsf T}$ 实，完全来自 $\alpha\alpha^\dagger$。
+
+固定 $0<\eta<1$，把半圆安排在
+$g=(1-\eta)\kappa_{\lambda,\mu}\varepsilon^2+o(\varepsilon^2)$ 的窗口。由（238.18）—（238.20），两个预算都留有严格余量；这构成同一个实际状态族对两种局部界的共同达到。
+
+将第236节的调度中的过零时间系数换成
+
+$$
+T_{\lambda,\mu}=\frac{2\kappa_{\lambda,\mu}}{\gamma}.
+\tag{238.21}
+$$
+
+主实入弧在长约 $(1-\eta)T_{\lambda,\mu}\varepsilon^2$ 的区间内近乎匀速走完；半圆在随后 $\varepsilon^{5/2}$ 的区间内完成，再在固定窗口内沿实出弧离开。实弧的长度与参数导数估计保持不变。半圆两列的纯化长度为 $O(\varepsilon)$，所以颈部的平方速度峰值为 $O(\varepsilon^{-3})$、积分为 $O(\varepsilon^{-1/2})$，都不贡献所求首项。
+
+固定纯化
+
+$$
+\Omega=\alpha\otimes e_0+b\otimes e_1
+\tag{238.22}
+$$
+
+的偏迹是实际 $\rho$，故点态 SLD 单调性给出
+$I_Q(\rho)\le4(\|\Omega'\|^2-|\langle\Omega,\Omega'\rangle|^2)\le4\|\Omega'\|^2$。在主实纯入弧上这个上界等于迹速度平方。于是同一个背景同时达到
+
+$$
+\sup_K I_Q\le
+\frac{L^2+o(1)}
+{(1-\eta)^2T_{\lambda,\mu}^2\varepsilon^4},
+\qquad
+\int_KI_Q\,du\le
+\frac{L^2+o(1)}
+{(1-\eta)T_{\lambda,\mu}\varepsilon^2}.
+\tag{238.23}
+$$
+
+最后对每个固定 $\varepsilon$ 在因子层完成解析化。保持 $b$ 实、其 $q$ 分量为零、$\alpha_q=x$，将其余实坐标置于归一化球面。两个矩在背景上独立：实弧与规范尾部继承原纯态的两矩正则性，半圆则由已消去的虚矩方向和（238.17）的非零梯度给出。逐坐标多项式逼近、有限 Hermite 匹配、归一化及解析二矩修正遂可以任意精细地保留两个预算余量，并把 $K$ 上纯化一阶导数误差限制为一。正性和秩至多二始终由（238.16）保持。
+
+两种预算对归一化因子的统一误差都是局部 Lipschitz：虚性使用迹范数公式，纯度使用两个列的外积范数。节点的指定有限阶纯化数据精确保持。点态 SLD 校准和普通最优曲率由同一纯化上界与第211节的秩无关下界夹逼；全输入精确性和完整尖锐集合由完整矩与第215节的混态谱必要性给出，实际支持因此恰为四。
+
+令 $\varepsilon\downarrow0$，再令 $\eta\downarrow0$ 并作对角选择，得到两个上极限以及同族达到。
+
+若 $\mu=0$，则 $J=0$ 强制每点为纯态，直接将第236节的预算尺度换为 $\lambda\varepsilon$，得到（238.4），并保持精确纯性。若 $\lambda=0$，则 $I_R^C=0$ 强制每点为实态，直接将第237节的预算尺度换为 $\mu\varepsilon$，得到相同结论，并保持精确实性。这两个边界使用原构造，不依靠近似保持零预算。证毕。
+
+**注记 238.3（共同实现中的两种续接方向）。** 联合容量是两种平方预算的加权和。下界来自同一实际密度的 Schur 分解，上界来自同一秩二准备中的两个负方向，所以可加性并非将两种独立最优值直接拼接的假设。它保留了共同的强制入弧 $L$、临界增长率 $\gamma$ 和两种不同方向约束；正因这几项由同一实际矩几何提供，两个分别成立的预算界才能共同达到。
+
+## 追加锚（本行以下为增补区）
