@@ -74,17 +74,17 @@ public sealed partial class TheoryAtomizerTests
         var captures = baseline.Claims
             .Select(static atom => DigestionCasStore.Capture(atom.RawBytes.AsSpan()))
             .ToArray();
-        var ledger = DigestionAlignmentTests.WithAtomizer(
-            DigestionAlignmentTests.Ledger(
+        var ledger = DigestionAlignmentFixture.WithAtomizer(
+            DigestionAlignmentFixture.Ledger(
                 [],
                 baseline.Claims
-                    .Select(atom => DigestionAlignmentTests.Entry(
+                    .Select(atom => DigestionAlignmentFixture.Entry(
                         atom.Fingerprints.RawSha256["sha256:".Length..],
                         atom))
                     .ToArray()),
             AtomizerRegistry.WmId);
         var sourceBytes = Encoding.UTF8.GetBytes(CanonicalWmV03Fixture());
-        var snapshot = DigestionAlignmentTests.Snapshot(sourceBytes, captures);
+        var snapshot = DigestionAlignmentFixture.Snapshot(sourceBytes, captures);
 
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,

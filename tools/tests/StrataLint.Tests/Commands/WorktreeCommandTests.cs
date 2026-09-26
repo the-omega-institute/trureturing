@@ -299,8 +299,8 @@ public sealed partial class WorktreeCommandTests
         File.WriteAllText(
             Path.Combine(repository.Path, ".gitignore"),
             "existing-output/\r\n.echo-review.md");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture ignore policy");
+        TestGit.Run(repository.Path, "add", ".gitignore");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture ignore policy");
         var target = Path.Combine(repository.Path, "provisioned-with-ignore");
         var console = new BufferedConsole();
 
@@ -332,8 +332,8 @@ public sealed partial class WorktreeCommandTests
         const string expected =
             "/.lake/\n.caller-review-prompt.md\n.echo-review.md\n.sshx-*\n";
         File.WriteAllText(Path.Combine(repository.Path, ".gitignore"), expected);
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture complete ignore policy");
+        TestGit.Run(repository.Path, "add", ".gitignore");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture complete ignore policy");
         var target = Path.Combine(repository.Path, "provisioned-clean");
         var console = new BufferedConsole();
 
@@ -352,7 +352,7 @@ public sealed partial class WorktreeCommandTests
 
         Assert.Equal(0, exitCode);
         Assert.Equal(expected, File.ReadAllText(Path.Combine(target, ".gitignore")));
-        Assert.Equal(string.Empty, ReviewRegressionTests.RunGit(target, "status", "--porcelain"));
+        Assert.Equal(string.Empty, TestGit.Run(target, "status", "--porcelain"));
     }
 
     [Fact]
@@ -363,8 +363,8 @@ public sealed partial class WorktreeCommandTests
         var ignoreDirectory = Path.Combine(repository.Path, ".gitignore");
         Directory.CreateDirectory(ignoreDirectory);
         File.WriteAllText(Path.Combine(ignoreDirectory, "marker"), "fixture\n");
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".gitignore/marker");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "fixture invalid ignore path");
+        TestGit.Run(repository.Path, "add", ".gitignore/marker");
+        TestGit.Run(repository.Path, "commit", "-m", "fixture invalid ignore path");
         var branch = $"{WorktreeCommand.CreationNamespace}/math/ignore-write-failure";
         var target = Path.Combine(repository.Path, "ignore-write-failure");
         var console = new BufferedConsole();
@@ -463,7 +463,7 @@ public sealed partial class WorktreeCommandTests
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         var branch = $"{WorktreeCommand.CreationNamespace}/math/already-present";
-        ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
+        TestGit.Run(repository.Path, "branch", branch, "HEAD");
         var target = Path.Combine(repository.Path, "branch-conflict");
         var console = new BufferedConsole();
 
@@ -487,14 +487,15 @@ public sealed partial class WorktreeCommandTests
 
     private static void InitializeRepository(string root)
     {
-        ReviewRegressionTests.RunGit(root, "init", "--initial-branch=dev");
-        ReviewRegressionTests.RunGit(root, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(root, "init", "--initial-branch=dev");
+        TestGit.Run(root, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# worktree fixture\n");
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
-        ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
-        ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
+        StrataLint.TestSupport.RegPackageFixture.Write(root);
+        TestGit.Run(root, "add", "README.md", "lean-toolchain", "lake-manifest.json", "Reg");
+        TestGit.Run(root, "commit", "-m", "fixture baseline");
     }
 
     private static void StampCache(string root)

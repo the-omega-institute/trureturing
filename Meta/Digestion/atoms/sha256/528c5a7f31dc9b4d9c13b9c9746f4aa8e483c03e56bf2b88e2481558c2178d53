@@ -1,0 +1,7 @@
+**定义 28.1（固定参考的收缩系数）。** 对保持概率参考 $\gamma$ 的 Markov 核 $\mathcal K$，定义
+\[
+ \eta_\gamma(\mathcal K)=\sup_{0<D(\nu\Vert\gamma)<\infty}
+      \frac{D(\mathcal K\nu\Vert\gamma)}{D(\nu\Vert\gamma)}.
+\]
+对保持满秩密度矩阵 $\tau$ 的量子信道 $\Phi$，同样定义 $\eta_\tau(\Phi)$，上确界取全部 $\rho\ne\tau$。所有对数为自然对数，迹范数不含二分之一。这里固定第二个相对熵变量，不讨论对任意两个输入同时取上确界的不同系数。经典参考 $\gamma_d$ 表示 $\mathcal N(0,I_d)$；量子参考 $I_2/2$ 表示最大混合态。后者一般不是非零 Hamilton 算子在有限正温度下的 Gibbs 态。
+

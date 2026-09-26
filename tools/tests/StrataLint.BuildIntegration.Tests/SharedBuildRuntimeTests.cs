@@ -7,7 +7,7 @@ using Xunit;
 namespace StrataLint.BuildIntegration.Tests;
 
 [Collection("StrataLint.BuildIntegration.Tests process boundary")]
-public sealed class SharedBuildRuntimeTests
+public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper diagnostics)
 {
     [Fact]
     public void CompilerOwnedRuntimeMovesAndExecutesWithoutProducerOrPackagePaths()
@@ -36,7 +36,7 @@ public sealed class SharedBuildRuntimeTests
                 "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
                 "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
                     packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh",
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/ci_output.py", "tools/scripts/lib/resource-observation-lib.sh",
                      "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
@@ -153,7 +153,15 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
                     ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
             }).ToArray()));
-        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
+        // Keep resource samples inside the same process tree and ten-second guard
+        // as the restore, so a timeout retains the work observed before the kill.
+        Run("/bin/bash", "-c", """
+            set -euo pipefail
+            source tools/scripts/lib/resource-observation-lib.sh
+            export GITHUB_WORKSPACE="$PWD" RUNNER_TEMP="$PWD" RESOURCE_OBSERVATION_INTERVAL_SECONDS=1
+            resource_observe_run_periodic dotnet "$@"
+            """, "runtime-restore", "restore", testProject, "--use-lock-file", "-nr:false", "-m:1",
+            "--verbosity", "detailed", "-clp:ShowTimestamp");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
@@ -393,6 +401,7 @@ public sealed class SharedBuildRuntimeTests
         void Run(string executable, params string[] arguments)
         {
             var result = EngineeringProcess.Process(root, executable, arguments, dotnetEnvironment);
+            diagnostics.WriteLine(result.Text);
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
@@ -436,14 +445,15 @@ public sealed class SharedBuildRuntimeTests
                 }
             }
             Assert.True(result.Exit == expected, result.Text);
+            var rawOutput = File.ReadAllText(Path.Combine(root, "build/ci/logs", stage, "console.log"));
             if (stage == "build" && expected == 0)
             {
-                var processes = GraphProcesses(result.Text);
+                var processes = GraphProcesses(rawOutput);
                 Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process.GetProperty("arguments")[0].GetString()));
                 Assert.All(processes, process => Assert.Contains("-m:1",
                     process.GetProperty("arguments").EnumerateArray().Select(argument => argument.GetString())));
             }
-            return result.Text;
+            return rawOutput;
         }
         void Cache(string command, params string[] arguments)
         {

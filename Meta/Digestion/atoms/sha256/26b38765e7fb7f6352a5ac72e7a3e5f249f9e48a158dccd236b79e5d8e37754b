@@ -1,0 +1,30 @@
+**定理 28.2（Gaussian 保持核的精确相对熵系数）。** 对 $F\in\mathbb R^{d\times d}$、$\|F\|_2\le1$，令
+\[
+ \mathcal K_F(x,\cdot)=\mathcal N(Fx,I_d-FF^{\mathsf T}),
+\]
+允许退化噪声。则
+\[
+ \boxed{\eta_{\gamma_d}(\mathcal K_F)=\|F\|_2^2.}
+\]
+上界适用于所有有限相对熵输入，包括非 Gaussian 输入；当 $F\ne0$ 时，沿最大右奇异向量的任意非零平移 Gaussian 输入达到该界。
+
+**证明。** $X\sim\gamma_d$ 时输出仍为 $\gamma_d$。先考虑标量收缩核 $F=e^{-u}I_d$。对光滑、正且上下有界的参考密度 $f$，其 Ornstein–Uhlenbeck 演化 $Q_uf$ 满足
+\[
+ \frac{d}{du}\operatorname{Ent}_{\gamma_d}(Q_uf)
+ =-\int\frac{|\nabla Q_uf|^2}{Q_uf}\,d\gamma_d,
+ \qquad \nabla Q_uf=e^{-u}Q_u\nabla f.
+\]
+由加权 Cauchy–Schwarz 和参考不变性，右侧 Fisher 信息至多为 $e^{-2u}\int|\nabla f|^2/f\,d\gamma_d$。$Q_uf\to1$，由上下有界和控制收敛，其熵趋零；对上式从零到无穷积分得到 Gaussian 对数 Sobolev 不等式
+\[
+ \operatorname{Ent}_{\gamma_d}(f)\le\tfrac12\int|\nabla f|^2/f\,d\gamma_d.
+\]
+再将它用于每个 $Q_uf$，微分不等式给出 $\operatorname{Ent}(Q_uf)\le e^{-2u}\operatorname{Ent}(f)$。一般有限熵密度先截断、加入正底并归一化，再用 $Q_\varepsilon$ 平滑。截断密度的熵收敛、$L^1$ 连续性及输出相对熵的下半连续性，将结论延至全部有限熵输入。这是 Gaussian 对数 Sobolev 的标准半群证明，本文写出所需步骤。[^tcs5-gaussian]
+
+令 $s=\|F\|$。$s=0$ 时输出恒为参考，$s=1$ 时上界由数据处理给出。$0<s<1$ 时，$G=F/s$ 也是收缩，先作用 $\mathcal K_{sI}$ 再作用 $\mathcal K_G$，复合均值为 $Fx$、噪声协方差为 $I-FF^{\mathsf T}$。因此
+\[
+ D(\mathcal K_F\nu\Vert\gamma_d)
+ \le D(\mathcal K_{sI}\nu\Vert\gamma_d)
+ \le s^2D(\nu\Vert\gamma_d).
+\]
+最后取 $\nu=\mathcal N(a,I_d)$，输出为 $\mathcal N(Fa,I_d)$；两个相对熵分别为 $|a|^2/2$、$|Fa|^2/2$。最大右奇异向量给出匹配下界，亦覆盖 $s=1$。证毕。
+

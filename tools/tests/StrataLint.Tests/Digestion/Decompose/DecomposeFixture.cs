@@ -12,7 +12,7 @@ internal sealed class DecomposeFixture
     internal const string Eight = "**Theorem 1.1**\n\nThe obligations follow.\n\n"
         + "- obligation one\n- obligation two\n- obligation three\n- obligation four\n"
         + "- obligation five\n- obligation six\n- obligation seven\n- obligation eight\n\nClosing remark.\n";
-    internal static string RulesText => TheoryAtomizerDataTests.Minimal + "\n\n" + """
+    internal static string RulesText => AtomizerRulesFixture.Minimal + "\n\n" + """
         [[dialect]]
         id = "decompose-probe"
         claim = "^\\*\\*(?<kind>Theorem)\\s+(?<number>[0-9]+\\.[0-9]+)"

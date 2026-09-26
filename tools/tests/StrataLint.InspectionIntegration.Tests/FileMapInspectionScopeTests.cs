@@ -8,6 +8,19 @@ namespace StrataLint.InspectionIntegration.Tests;
 public sealed class FileMapInspectionScopeTests
 {
     [Theory]
+    [InlineData("tools/StrataLint.Cli/Commands/FileMap/FileMapConformCommand.cs")]
+    [InlineData("tools/StrataLint.FileMap/FileMapPolicy.cs")]
+    [InlineData("Meta/domains.yaml")]
+    public void RepositoryPolicyChangesInspectTheWholeTree(string changed)
+    {
+        var result = FileMapInspectionScope.Select(RepositoryRegistration(), [changed],
+            [changed, "Library/Carrier/reference.md"]);
+
+        Assert.Null(result.Paths);
+        Assert.True(result.Actors);
+    }
+
+    [Theory]
     [InlineData("Blueprint/D5/Changed.md")]
     [InlineData("Generated/Changed.json")]
     [InlineData("Evidence/D5/Changed.json")]
@@ -30,6 +43,16 @@ public sealed class FileMapInspectionScopeTests
         Assert.Equal(changes.Concat(new[] { "Data/Reference.json", "Meta/Reference.toml", "Blueprint/D5/Reference.scribe.cs" })
             .Order(StringComparer.Ordinal), result.Paths);
         Assert.NotEmpty(result.RelatedPatterns!);
+    }
+
+    [Fact]
+    public void RegPathPolicyChangeSelectsWholeTree()
+    {
+        var result = FileMapInspectionScope.Select(RepositoryRegistration(),
+            ["tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.Reg.cs"],
+            ["Reg/D5/Example.lean", "D5/Example.lean"]);
+        Assert.Null(result.Paths);
+        Assert.True(result.Actors);
     }
 
     private static RegisteredFileMapScope RepositoryRegistration()

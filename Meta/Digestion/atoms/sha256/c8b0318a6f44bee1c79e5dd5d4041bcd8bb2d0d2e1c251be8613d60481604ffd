@@ -1,0 +1,28 @@
+**定理 54.1（固定总观测增益的精确两假设风险）。** 对定义 53.1 的同一模型，任取有限个已知延迟 $t_j\in\mathbb R$ 和权重 $w_j\in\mathbb R$，测量
+\[
+ Y_j=w_jH_\varepsilon(\varphi-t_j)+\xi_j,
+ \qquad \xi_j\ \text{独立 }\mathcal N(0,\sigma^2I_6),\quad\sigma>0.
+\]
+未知初相位在 $\varphi_0=0$ 和 $\varphi_1=2\pi/3$ 两者间等先验选择。令 $E=\sum_jw_j^2$。全部可测判别器的最小错误率精确为
+\[
+ \boxed{p^*(E,\varepsilon,\sigma)
+ =\Phi\!\left(-\frac1{2\sigma}
+                   \sqrt{\frac{6E\varepsilon}{Z_\varepsilon}}\right)
+ =\Phi\!\left(-\frac{\sqrt{3E}\,l_\varepsilon}{2\sigma}\right),}
+\]
+其中 $\Phi$ 是标准正态分布函数。给定 $E$ 时，增加延迟数、改变延迟位置或重新分配权重，均不改变这一个两假设任务的最优风险。若目标错误率为 $0<\alpha<1/2$，则必要且充分的预算为
+\[
+ \boxed{E\ge \frac{4\sigma^2}{3l_\varepsilon^2}
+                 [\Phi^{-1}(1-\alpha)]^2.}
+\]
+因此固定 $\sigma,\alpha$，在本构造 $R_{H_\varepsilon}\uparrow2$ 时，所需预算满足
+\[
+ E_{\min}\sim
+ \frac{3\sigma^2[\Phi^{-1}(1-\alpha)]^2}
+      {(2-R_{H_\varepsilon})^2}.
+\]
+
+**证明。** 两个相位的第三谐波完全相同，第二和第四谐波差长平方各为三；在两者同时减去任何延迟时，平面旋转保持这些长度。因此每个 $H_\varepsilon$ 读数的均值差长平方为 $6\varepsilon/Z_\varepsilon=3l_\varepsilon^2$。堆叠全部观测后，两个 Gaussian 假设的共同协方差为 $\sigma^2I$，均值差平方恰为 $3E l_\varepsilon^2$。最优似然比检验是均值差方向上的中点阈值，直接积分一维正态尾部得到错误率。单调反演得到预算的充要条件，再用定理 53.2 的缺口与下弦增益关系得到渐近式。
+
+此处 $E$ 是总平方测量增益，不被解释为真实热量。精确值允许读取全部六维基函数，且噪声模型预先固定；未把后处理当作额外传感器，未使用量子无扰动历史。若约束 $\sum_jw_j^2\le E_0$，用满预算时最优值为上式的 $E_0$ 版本。这个实例表明，相同的观察拓扑和单射核不决定有限噪声的恢复代价。证毕。
+

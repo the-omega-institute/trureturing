@@ -1,9 +1,19 @@
 import LeanInformationAudit.Registry.Reifier
+import LeanInformationAuditInterface.RootContract
+import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
 
 open Lean
 open Lean.Meta
+
+private initialize rootCatalogExt :
+    SimplePersistentEnvExtension RootCatalogContract (Array RootCatalogContract) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
+
+
 
 private def theoremUnitName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -44,7 +54,7 @@ def arenaAliasWorkBudget : Nat := 4096
 
 /-- Elaboration provenance for a structure literal, retained across olean imports.
 Lean's structure elaborator eta-contracts field-copy literals before storing them. -/
-def arenaConstructionMarker : Name := `LeanInformationAudit.arenaConstruction
+def arenaConstructionMarker : Name := ArenaProvenance.construction
 
 private inductive AliasClosure where
   | mk (term : Expr) (bindings : List AliasClosure)
@@ -55,7 +65,8 @@ Unlike unrestricted `whnfR`, this stops at constructors, projections and recurso
 and never performs structure eta. A bare named target becomes the next owner;
 an application that constructs a value retains the last named owner.
 The single budget covers both outer aliases and all work inside applications. -/
-def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
+private def resolveCanonicalArenaUsing (declarationValue : DefinitionVal → MetaM Expr)
+    (spelling : Name) : MetaM Name := do
   let env ← getEnv
   unless env.contains spelling do return spelling
   let mut owner := spelling
@@ -68,6 +79,8 @@ def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
     match term with
     | .mdata data body =>
       if data.contains arenaConstructionMarker then return owner
+      if data.contains ArenaProvenance.unsupported then
+        throwError "IE-C003 ArenaSourceUnsupported arena={spelling} owner={owner}"
       current := .mk body bindings
     | .app fn arg =>
       arguments := .mk arg bindings :: arguments
@@ -88,10 +101,47 @@ def resolveCanonicalArenaName (spelling : Name) : MetaM Name := do
     | .const name _ =>
       if arguments.isEmpty then owner := name
       match env.find? name with
-      | some (.defnInfo info) => current := .mk info.value []
+      | some (.defnInfo info) => current := .mk (← declarationValue info) []
       | _ => return owner
     | _ => return owner
   throwError "IE-C003 ArenaResolutionBudgetExceeded arena={spelling} limit={arenaAliasWorkBudget}"
+
+/-- Acquire source construction evidence while compiling a registration. -/
+def resolveCanonicalArenaName : Name → MetaM Name :=
+  resolveCanonicalArenaUsing ArenaProvenance.declarationValue
+
+/-- Validate imported registrations using only their compiled provenance. -/
+def resolveCanonicalArenaNameFromEvidence : Name → MetaM Name :=
+  resolveCanonicalArenaUsing ArenaProvenance.compiledValue
+
+namespace RootCatalogs
+
+/-- Acquire all independent inputs while compiling a contract. A source or baseline
+row need not be registered or expected. Keep the supplied identities and membership
+unchanged; only the compiler's provenance extension receives evidence. -/
+def acquireProvenance (contract : RootCatalogContract) : MetaM Unit := do
+  for row in contract.expected ++ contract.source ++ contract.baseline do
+    discard <| resolveCanonicalArenaName row.objectArenaName
+
+def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
+  (rootCatalogExt.getState env).find? (·.rootId == rootId)
+
+/-- A root declares its contract before registering/sealing. Imported contracts
+remain keyed by their original root and cannot change a downstream root. -/
+def declare (contract : RootCatalogContract) : Elab.Command.CommandElabM Unit := do
+  let env ← getEnv
+  unless contract.rootId == env.header.mainModule do
+    throwError "IE-C028 RootContractOwnerMismatch: {contract.rootId}"
+  if (find? env contract.rootId).isSome then
+    throwError "IE-C028 DuplicateRootContract: {contract.rootId}"
+  Elab.Command.liftTermElabM <| acquireProvenance contract
+  modifyEnv fun current =>
+    let current := match contract.companionPrefix with
+      | some companionPrefix => current.registerNamespace companionPrefix
+      | none => current
+    rootCatalogExt.addEntry current contract
+
+end RootCatalogs
 
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
@@ -193,22 +243,16 @@ def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
 
 end ExpectedOccurrenceManifest
 
-def frozenInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-
-/-- Companions of imported objects belong to this compilation, not the object's module.
-Lean's private names preserve local source resolution while separating compiled roots.
-The frozen root retains its public declarations: they are part of its frozen statement
-identity and are consumed by SharedInformationRoot and SealBaseline. -/
+/-- The root contract selects published companion ownership. Without an explicit
+prefix, imported objects receive private names local to this compilation. -/
 def localCompanionName (env : Environment) (owner : Name) (suffix : String) : Name :=
   let name := owner.str suffix
-  if env.header.mainModule == frozenInformationRootId || !env.isImportedConst owner then name
-  else mkPrivateName env name
+  if !env.isImportedConst owner then name
+  else match (RootCatalogs.find? env env.header.mainModule).bind (·.companionPrefix) with
+    | some companionPrefix => companionPrefix ++ name
+    | none => mkPrivateName env name
 
-def designatedInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-
-private def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
+def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrence) :
     Array ExpectedOccurrence :=
   rows.map fun row => {
     rootId
@@ -218,23 +262,12 @@ private def snapshotExpectations (rootId : Name) (rows : Array SnapshotOccurrenc
     registrationModuleName := row.registrationModuleName
   }
 
-/-- Read-only expectations captured by SnapshotEnumerator, independently of the root. -/
-def fixedSnapshotOccurrences (rootId : Name) : Array ExpectedOccurrence :=
-  snapshotExpectations rootId fixedInformationSourceSnapshot.occurrences
-
-/-- The historical frozen root is independent of future source snapshot generation. -/
-def frozenBaselineOccurrences (rootId : Name) : Array ExpectedOccurrence :=
-  snapshotExpectations rootId frozenInformationRootBaseline
-
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  if rootId == frozenInformationRootId then
-    frozenBaselineOccurrences rootId
-  else if rootId == designatedInformationRootId then
-    fixedSnapshotOccurrences rootId
-  else
-    ExpectedOccurrenceManifest.declaredEntries env rootId
+  match RootCatalogs.find? env rootId with
+  | some contract => snapshotExpectations rootId contract.expected
+  | none => ExpectedOccurrenceManifest.declaredEntries env rootId
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
@@ -316,13 +349,29 @@ def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
 /-- Complete the declaration and definitional-equality checks shared by both phases. -/
 private def validateEntryCore (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
+  if entry.sourceBound then
+    try
+      let source ← getConstInfo entry.theoremName
+      let unit ← getConstInfo entry.unitName
+      let record ← getConstInfo entry.realizationName
+      unless source.isTheorem && unit.type.equal record.type && record.type.isAppOfArity
+          `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2 &&
+          record.levelParams.length == source.levelParams.length do
+        return .error "unclassified_form:source.registration_type"
+      unless env.contains entry.arenaName && entry.objectArenaName == entry.arenaName &&
+          entry.resolvedArenaName == entry.arenaName do
+        return .error "unclassified_form:source.arena_identity"
+      return .ok ()
+    catch _ => return .error "unclassified_form:source.registration_type"
   match validateEntryDeclarations env entry with
   | .error message => return .error message
   | .ok () => pure ()
   try
     if entry.derivedCertificate.isSome then
+      let spelling := if entry.objectArenaName.isAnonymous then entry.arenaName
+        else entry.objectArenaName
       unless entry.statementIdentity == theoremStatementIdentity env entry.theoremName &&
-          entry.resolvedArenaName == (← prepareRegistrationEntry env entry).resolvedArenaName do
+          entry.resolvedArenaName == (← resolveCanonicalArenaNameFromEvidence spelling) do
         return .error "P1.CertificateBindingMismatch: current statement identity or arena ownership"
     RegistrationReifier.validateDerivedCertificate entry
   catch e => return .error (← e.toMessageData.toString)
@@ -421,7 +470,7 @@ private def sameCertificate : Option AutoDerivedSemanticCertificate →
 def sameEntry (left right : InformationRegistryEntry) : Bool :=
   RegistrationReifier.occurrenceBinding left == RegistrationReifier.occurrenceBinding right &&
     left.catalogKind == right.catalogKind && left.statementIdentity == right.statementIdentity &&
-    left.localRegistrationNames == right.localRegistrationNames &&
+    left.localRegistrationNames == right.localRegistrationNames && left.sourceBound == right.sourceBound &&
     sameCertificate left.derivedCertificate right.derivedCertificate
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
@@ -501,7 +550,7 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
   match result with
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
-      let diagnostic ← RegistrationGates.validateFinite entry
+      let diagnostic ← if entry.sourceBound then pure none else RegistrationGates.validateFinite entry
       let type := (← getConstInfo entry.realizationName).type
       if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
           diagnostic.isSome then

@@ -1,0 +1,8 @@
+**证明。** 若给定 $d$ 维实现，每个残余函数 $f_u$ 都形如 $v\mapsto\gamma A_v\beta$，其中 $\gamma=\alpha A_u$。映射 $\gamma\mapsto(v\mapsto\gamma A_v\beta)$ 是从 $K^{1\times d}$ 到函数空间的线性映射，故 $\dim V_f\le d$。
+
+反向，在函数空间上定义线性算子
+\[
+ (T_ag)(v)=g(av).
+\]
+它满足 $T_af_u=f_{ua}$，因此保持 $V_f$。以 $f_\epsilon$ 为初态，以 $g\mapsto g(\epsilon)$ 为读出，在 $V_f$ 的一组基下使用行坐标，令 $A_a$ 表示 $T_a$。连续读入 $a_1,\ldots,a_t$ 后，状态是 $f_{a_1\cdots a_t}$，读出为 $f(a_1\cdots a_t)$。这构造一个 $\dim V_f$ 维实现。若 $V_f=\{0\}$，则 $f=0$，使用零维实现。结合前向下界得到最小性。证毕。[^lit-kiefer][^repo-hankel]
+

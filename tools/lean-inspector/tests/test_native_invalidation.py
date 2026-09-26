@@ -216,7 +216,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         def build():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=LeanInformationAudit.Registry :report'], cwd=self.root,
+                'LEAN_TARGETS=@trureturing/LeanInformationAudit.Registry :report'], cwd=self.root,
                 env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr
@@ -264,6 +264,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                         msg='[FAIL] retired_policy_binding_is_malformed'):
                     publication.validate_template_sources([dict(row, information_templates=evidence)], self.root)
 
+
+class NativeCompilerOptionsTests:
     def test_native_config_options_rebuild_and_fail_closed(self):
         # Origin evidence includes the actual executable hash. Inspector embeds
         # its source-adjacent fallback writer path, so both builds must compile
@@ -332,6 +334,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
             [publication.member(self.root / 'public.json', suffix) for suffix in publication.SUFFIXES])
         self.assertEqual(published, fresh)
 
+
+class NativeSemanticConsumerTests:
     def test_native_invalidation(self):
         self.build(targets=['Audit'])
         rows, original_report, original_materials = self.report()
@@ -530,6 +534,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertEqual(changed, {'D5.A', 'D5.B', 'Fixture'})
         self.assertEqual(result['extracted'], {'before': 4, 'warm': 3, 'clean': 4})
         self.assertTrue(result['unaffected_origin_preserved'])
+
     def test_private_transitive_definition_invalidates_utility(self):
         # Public imports hide B's definition body from A and Fixture, while
         # Inspector's private imports and transparency .all can unfold it.
@@ -625,6 +630,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertEqual(result['extracted'], {'before': 4, 'unchanged': 0, 'warm': 3, 'clean': 4})
         self.assertEqual(result['aggregated'], {'before': 1, 'unchanged': 0, 'warm': 1, 'clean': 1})
         self.assertTrue(result['unaffected_origin_preserved'])
+
     def test_exported_transitive_dependency_binding(self):
         self.build()
         self.publish()
@@ -654,6 +660,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertFalse(after, 'mutation must change actual Lean-generated semantic evidence')
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
+
     def test_exported_private_dependency_and_retired_origin(self):
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)

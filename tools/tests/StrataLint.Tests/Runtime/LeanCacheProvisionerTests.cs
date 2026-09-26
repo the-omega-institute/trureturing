@@ -557,6 +557,7 @@ public sealed partial class LeanCacheProvisionerTests
     {
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
         File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
+        StrataLint.TestSupport.RegPackageFixture.Write(root);
     }
 
     private static LeanPinSet ReadPins(string root) =>

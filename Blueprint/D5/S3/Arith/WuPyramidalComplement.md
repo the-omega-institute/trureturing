@@ -104,3 +104,4 @@ Let h be the floor of the real cube root of 6n/(k-2). For every k at least nine 
 - Truth anchor: `D5/S3/Arith/WuPyramidalComplement.upperThreshold`
 - Truth anchor: `D5/S3/Arith/WuPyramidalComplement.wu_conjecture_one`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](../ConceptDynamics/InformationEscape/RegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../ConceptDynamics/RegistrationWitnesses.md)

@@ -1,0 +1,14 @@
+**出处 21.1（经典桥与本卷推导）。** 第 17.2、17.3 条的梯度耗散和概率几何，第 18.2、18.4 条的 Gibbs 与 KL 控制，第 18.5 条的有限图热力学变分属于经典结构，本批按所需约定给出证明。第 18.3、19.2 至 19.5、20.2 至 20.5 条及第 17.4 条的具体陈述列为 `repo-derived`：它们由正文假设直接推导，未确立全球首创。第 19.3 条的费用测度等价与第 19.5 条的尖锐误差实例，约束从精确行为商迁移到优化商所需的新增信息。文献中的连续随机系统、量子耗散及 Sinkhorn 流不被假定已经在本卷完成相应形式化。
+
+[^tcs3-thermogeo]: Olga Movilla Miangolarra、Ralph Sabbagh、Artemy Kolchinsky，*Wasserstein-2 gradient flows and the geometry of entropy production in classical and quantum stochastic thermodynamics*，arXiv:2606.00698v1，2026，[原文](https://arxiv.org/pdf/2606.00698)。实际读取第 II 节式 (1)–(10) 的梯度流、自由能、连续性方程及作用量距离定义，以及第 IV 节保守/耗散几何比较的范围。该文研究不同动力学及迁移率下的距离；不能据此给任意动力学指定同一个耗散几何。此引用仅承接上述数学背景，不把本文有限观察商定理归给该文。
+
+[^tcs3-todorov]: Emanuel Todorov，*Linearly-solvable Markov decision problems*，NIPS 2006，[官方论文条目](https://papers.nips.cc/paper_files/paper/2006/hash/d806ca13ca3449af72a1ea5aedbed26a-Abstract.html)。`literature-attested` 范围：参考转移的 KL 控制费用、指数变换及线性 Bellman 结构；第 18.4 条明确控制变量为后继概率分布。
+
+[^tcs3-leonard]: Christian Léonard，*A survey of the Schrödinger problem and some of its connections with optimal transport*，DCDS 34(4), 1533–1574，2014，[作者预印本](https://arxiv.org/abs/1308.0215)。参考范围：路径相对熵、端点约束与最优传输之间的关系。本文第 18.3 条只证明有限路径纤维上的分解，不声称已经给出连续 Schrödinger 桥的存在唯一性。
+
+[^tcs3-pressure]: 第 18.5 条在有限不可约矩阵上直接使用 Perron 正特征向量、KL 非负性和有限环流分解完成证明。邻接图路径数提供热力学压力与熵的有限状态实例；它与第 12 节观察熵相认时，还需观察足以区分被计数的状态路径。计数参考和概率参考的常数项依本批定义分别保留。
+
+[^tcs3-gibbs]: 固定仓库来源：[D5/S3/Divergence/StrictGibbs.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Divergence/StrictGibbs.lean)，用于有限 KL 严格性背景；[D5/S3/Observer/DynamicProgramming/BellmanContraction.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Observer/DynamicProgramming/BellmanContraction.lean) 的 `bellman_operator_contracting_unique_fixed_point` 研究折扣预测距离的最大型算子。该声明不等同于本批未折扣、费用加权的软 Bellman 算子，不直接当作本批下降判据的证明项。
+
+[^tcs3-schur]: 仓库中已有 Schur 能量与互补块消元构件，检索到 [D5/S3/Weil/ZetaLinear/ExactStickyReduction.lean](https://github.com/the-omega-institute/trureturing/blob/11036b0baf142c8e6535e61f29d2cae83ecf7bba/D5/S3/Weil/ZetaLinear/ExactStickyReduction.lean)。其能量正定/惯性背景与本批全空间梯度流的投影问题分开计量；第 20 节给出所用二次模型的完整平方分解及动力学证明，不新增绑定包装。
+

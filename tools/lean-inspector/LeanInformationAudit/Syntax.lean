@@ -100,6 +100,8 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
   let theoremName <- resolveTheorem theoremId
   let objectArenaName <- resolveArena arenaId
+  -- Source evidence is acquired by the declaration command, before IO-free sealing.
+  discard <| liftTermElabM <| resolveCanonicalArenaName objectArenaName
   let env <- getEnv
   let statementIdentity := if statementIdentityOverride.isEmpty then
     theoremStatementIdentity env theoremName
@@ -694,17 +696,51 @@ private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
   withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
     (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
 
-@[command_elab declareInformationTemplateBindingCmd]
-private def elabBindingSidecar : CommandElab := fun stx => registrationTransaction do
-  let lawArena ← resolveArena ⟨stx[3]⟩
-  let explicitObject := stx[4].getNumArgs != 0
-  let objectArena ← if explicitObject then resolveArena ⟨stx[4][1]⟩ else pure lawArena
-  let arena ← liftTermElabM <| resolveCanonicalArenaName objectArena
-  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[8]⟩
-  if (← get).messages.hasErrors then return
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta Elab Command
+
+@[command_elab registerInformationSourceTheoremCmd]
+private def elabSourceRegistration : CommandElab := fun stx => registrationTransaction do
   let theoremName ← resolveTheorem ⟨stx[1]⟩
-  let catalogId := if explicitObject then some (catalogIdFrom ⟨stx[4][3]⟩) else none
-  TemplateBinding.declareSidecar theoremName arena catalogId descriptor diagnostic
-    (← elaborateEscapeInput stx[10] stx[11])
+  let arenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let recordName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[10]
+  let selection ← liftTermElabM do
+    let value ← Term.elabTermEnsuringType stx[15] (mkConst ``SourceSelection)
+    Term.synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    if value.hasMVar then throwError "unclassified_form:source.selection_open"
+    -- Syntax transport is evaluated, never a mathematical proposition or readout.
+    unsafe evalExpr SourceSelection (mkConst ``SourceSelection) value
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[7]⟩
+  let residual ← if stx[20].getKind == ``escapeOpenContinuation then
+      pure ({ openContinuation := true } : EscapeRecordInput)
+    else do
+      let value ← liftTermElabM <| Term.elabTerm stx[20][0] none
+      pure ({ continuation := some value } : EscapeRecordInput)
+  let info ← getConstInfo recordName
+  let source ← getConstInfo theoremName
+  let descriptor := descriptor.map (fun e => e.instantiateLevelParams info.levelParams
+    (source.levelParams.map Level.param))
+  let root := (← getEnv).header.mainModule
+  let unit := catalogQualifiedName root arenaName .anonymous theoremName theoremUnitSuffix
+  let unitDecl : Declaration := .defnDecl {
+    name := unit, levelParams := info.levelParams, type := info.type,
+    value := mkConst recordName (info.levelParams.map Level.param), hints := .abbrev, safety := .safe }
+  if isNoncomputable (← getEnv) recordName then
+    -- Retaining a mathematical record does not make its readout executable.
+    -- addDecl still sends the unchanged declaration through the kernel.
+    liftCoreM <| addDecl unitDecl
+    modifyEnv (addNoncomputable · unit)
+  else
+    liftCoreM <| addAndCompile unitDecl
+  TemplateBinding.withDeclaration {
+    theoremName, arena := arenaName, descriptor, diagnostic,
+    escapeInput := { residual with sourceSelection := some selection } } do
+    registerValidatedEntry {
+      theoremName, unitName := unit, arenaName, realizationName := recordName,
+      sourceBound := true, objectArenaName := arenaName, resolvedArenaName := arenaName,
+      registrationModuleName := root, localRegistrationNames := false }
 
 end LeanInformationAudit

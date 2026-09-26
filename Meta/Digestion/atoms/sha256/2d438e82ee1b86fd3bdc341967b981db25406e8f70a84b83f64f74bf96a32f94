@@ -1,0 +1,15 @@
+**定理 24.2（相关半群残差的条件信息公式）。** 在定义 24.1 的正定条件下，$\|Z_{s,t}\|<1$，且
+\[
+ \mathcal I(s,t)=-\tfrac12\log\det(I-Z_{s,t}Z_{s,t}^{\mathsf T}),
+\]
+\[
+ \tfrac12\|Z_{s,t}\|_F^2\le\mathcal I(s,t)
+ \le\frac{\|Z_{s,t}\|_F^2}{2(1-\|Z_{s,t}\|_2^2)}.
+\]
+另有
+\[
+ R_{s,t}=Qe^{t\Omega}P^{\mathsf T}Pe^{s\Omega}Q^{\mathsf T},\qquad
+ \|R_{s,t}\|\le\min(1,tg)\min(1,sg).
+\]
+三时刻条件独立当且仅当 $R_{s,t}=0$。只有最后一项绝对残差很小，尚不足以保证条件信息很小。
+

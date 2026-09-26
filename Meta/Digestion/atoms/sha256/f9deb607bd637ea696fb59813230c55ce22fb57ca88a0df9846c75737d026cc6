@@ -1,0 +1,24 @@
+**定理 15.2（一阶稳定模型的匹配有限外推风险阶）。** 对定义 15.1 的全部参数，
+\[
+ \min\left\{\frac{\eta H}{2T},\frac1{16}\right\}
+ \le\mathcal R_{T,H}(\eta)
+ \le\min\left\{\frac12,\frac{\eta H}{T}\right\}.
+\]
+因此在绝对常数意义下，
+\[
+ \mathcal R_{T,H}(\eta)=\Theta\bigl(\min\{1,\eta H/T\}\bigr).
+\]
+
+**证明。** 为证下界，置
+\[
+ d=\min\{2\eta/T,1/(4H)\},\qquad a=1-d,\quad b=1-2d.
+\]
+因 $0<d\le1/4$，两者均属于 $(0,1)$。对 $0\le k\le T$，幂差公式给 $0\le a^k-b^k\le kd\le2\eta$，故中点观测 $y_k=(a^k+b^k)/2$ 对两个系统都合法。又有
+\[
+ a^H-b^H=d\sum_{j=0}^{H-1}a^{H-1-j}b^j
+ \ge Hd(1-2d)^{H-1}\ge Hd/2.
+\]
+末步使用 Bernoulli 不等式以及 $Hd\le1/4$。同一数据上的任意预测值，至少对其中一个系统有误差 $(a^H-b^H)/2\ge Hd/4$，恰好给出所列下界。
+
+为证上界，把 $y_T$ 截断到 $[0,1]$ 得到 $z$，并输出 $z^{H/T}$。截断不会增大它与 $a^T$ 的距离；函数 $x\mapsto x^{H/T}$ 在 $[0,1]$ 的 Lipschitz 常数至多为 $H/T$，所以误差至多为 $\eta H/T$。恒输出 $1/2$ 的估计器误差至多为 $1/2$，择优给出右侧。下界又至少为 $\frac1{16}\min\{1,\eta H/T\}$，上界至多为 $\min\{1,\eta H/T\}$，得到匹配阶。这里全局秩已经固定为一；不确定性来自有限精度下的动力参数。证毕。[^tcs2-hankel]
+

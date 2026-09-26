@@ -1503,3 +1503,3270 @@ $$
 证明停时有限。这里只给出错误率与几乎处处停止，不断言期望停时的最优尺度。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 单峰临界窗口的正态极限与精确风险
+
+**定义 13.1（临界坐标与联合恢复率）。** 沿用定义 11.1，置
+$I=F_M(r)$、$\mu=sI$、$v$ 如 (11.4)、$\sigma^2=sv$，并记
+$\Phi$ 为标准正态分布函数。均匀先验下的最优联合恢复率定义为
+
+$$
+\mathcal S^E_{d,r}(s)=\sup_{\widehat z,\widehat\epsilon}
+ \frac1{2M}\sum_{z\in C_+,\epsilon\in\{+,-\}}
+ \mathsf P^{\epsilon,E}_{b_z,s}
+ \{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}.
+\tag{13.1}
+$$
+
+固定增量律下独立随机乘积和的临界质量逃逸见
+[Kabluchko，定理 5](../../../Library/Dynamics/kabluchko2009products.md)；
+单个隐藏枢纽模型的高斯检测与恢复窗口陈述见
+[Narang–Perkins–Wee，定理 1.1、推论 1.8](../../../Library/Dynamics/narang2026stars.md)。
+两者的分布假设均不同于本定义的两个实验。
+
+**定理 13.2（真律与异位双重加权律的联合正态极限）。** 令 $d\to\infty$，
+$r=r_d\in(0,1)$ 任意，$s=s_d$ 为整数，且 $\mu/\log M\to1$。
+在任一真参数 $(z,\epsilon)$ 下，两种实验均满足
+
+$$
+\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma}
+ \ \Longrightarrow\ N(0,1).
+\tag{13.2}
+$$
+
+对任意异位 $z\ne w$，置 $\beta=1-r^2/(2k^2)$，定义概率律
+
+$$
+\frac{d\mathsf T^{\epsilon,E}_{z,w,s}}{d\mathsf U_s^E}
+ =\frac{L^{\epsilon,E}_{b_z,s}L^{\epsilon,E}_{b_w,s}}{\beta^s}.
+\tag{13.3}
+$$
+
+在此律下，两个坐标满足
+
+$$
+\left(\frac{\log L^{\epsilon,E}_{b_z,s}-\mu}{\sigma},
+       \frac{\log L^{\epsilon,E}_{b_w,s}-\mu}{\sigma}\right)
+ \ \Longrightarrow\ N(0,I_2).
+\tag{13.4}
+$$
+
+结论不限制 $r_d$ 接近 $0$ 或 $1$ 的速度。
+
+证明。以下 $C,c>0$ 为与 $d,r,s,z,w$ 无关的常数，可在各处不同；
+所有估计只需对充分大的 $d$ 成立。置 $q=r/k$，并定义
+
+$$
+B_j(u)=\frac{(1+u)|\log(1+u)|^j+(1-u)|\log(1-u)|^j}{2}.
+$$
+
+在 $u\downarrow0$ 处展开，在 $u\uparrow1$ 处用
+$(1-u)|\log(1-u)|^j\to0$，再在中间紧区间取界，得到
+
+$$
+B_1(u)\le Cu,\quad B_3(u)\le Cu^2,\quad
+cu^2\le\phi(u),\psi(u)\le Cu^2\qquad(0<u<1).
+\tag{13.5}
+$$
+
+同样 $(1\pm u)|\log(1\pm u)|\le Cu$、$|\xi(u)|\le Cu$。
+因此 $I\asymp r^2/n$、$v\asymp I$，且 $|J|\le C/n$。
+若 $a_z(x,y)=\log(nP_{b_z}(x,y))$，则在单边真律下
+
+$$
+\mathbb E|a_z|\le Cr/n,\qquad \mathbb E|a_z|^3\le CI.
+\tag{13.6}
+$$
+
+由 (11.5)，路径方差等于 $sv(1+O(n^{-1}))$。
+因为 $P_{b_z}^2=\Pi$，任何截至第 $j$ 条边的历史与从第 $j+3$ 条边开始的
+未来相互独立：两组端点之间有两步转移，条件分布已重置为均匀律。
+故边变量构成 $2$-依赖序列；独立状态对当然也满足固定依赖阶数的条件。
+中心化后的三阶绝对矩仍至多 $CI$，而
+
+$$
+\frac{sCI}{(sv)^{3/2}}=O(\mu^{-1/2})\longrightarrow0.
+\tag{13.7}
+$$
+
+应用固定依赖阶数三角阵的 Lyapunov 中心极限定理
+[Janson，定理 4.1](../../../Library/Dynamics/janson2021mdependent.md)
+即得 (13.2)。这里调用既有中心极限定理，所需矩界与依赖结构由本核族提供。
+
+下面证明双重加权结论，只需处理正向。以 (10.5) 的 $K=K_{b_zb_w}$ 记
+
+$$
+f=1+b_zb_w,\qquad g=\chi(b_z+b_w),\qquad
+\gamma=\mathbb E(\chi f)=\mathbb E(b_zb_w)=\beta-1.
+$$
+
+有 $\mathbb E f=\beta$、$\mathbb E g=\mathbb E(\chi g)=0$，所以
+
+$$
+K^2(x,y)=\frac{\beta f(x)+\gamma g(x)}n.
+\tag{13.8}
+$$
+
+由于 $K$ 每列之和为 $\beta$，矩阵 $Q=K^\top/\beta$ 是转移核，且
+
+$$
+Q^2(x,y)=\nu(y),\qquad
+\nu(y)=\frac{\beta f(y)+\gamma g(y)}{n\beta^2},\qquad
+\sup_y|n\nu(y)-1|\le Cr^2/n.
+\tag{13.9}
+$$
+
+$Q$ 为正核，$Q^2$ 的共同一行 $\nu$ 是其平稳分布。
+最后一界来自 $|b_zb_w|\le r^2/k$、$|g|\le2r$ 及
+$|\gamma|=r^2/(2k^2)$。
+(13.3) 的路径律倒序后正是均匀启动的 $Q$ 链。
+改为 $\nu$ 启动时，整条任意长路径的全变差变化至多
+$\operatorname{TV}(\operatorname{Unif}(X),\nu)\le Cr^2/n$，
+因为后续均用同一转移核。这一界不随 $s$ 增长。
+
+先分析双重加权独立单边律
+
+$$
+T(x,y)=\frac{K(x,y)}{n\beta}.
+$$
+
+相对于第 $z$ 个真单边律，其密度为
+$(1+\chi(x)\chi(y)b_w(x))/\beta$。
+对 $y$ 的奇偶取平均给出精确均值
+
+$$
+\mathbb E_Ta_z
+=\frac{I+\mathbb E[b_w\xi(b_z)]}{\beta},\qquad
+\mathbb E[b_w\xi(b_z)]
+=-\frac{q}{n}\bigl(\xi(r)+\xi(q)\bigr).
+\tag{13.10}
+$$
+
+在 $z$、$w$、$C_+\setminus\{z,w\}$ 上分别使用
+$b_z,b_w=(r,-q),(-q,r),(-q,-q)$，以及 $|\log(1\pm q)|\le Cq$，
+由 (13.5) 得到
+
+$$
+\begin{aligned}
+|\mathbb E_Ta_z-I|&\le CI/n,\\
+|\mathbb E_Ta_z^2-(v+I^2)|&\le CI/n,\\
+\mathbb E_T|a_za_w|&\le CI/n,\\
+\mathbb E_T|a_z|&\le Cr/n,\qquad
+\mathbb E_T|a_z|^3\le CI.
+\end{aligned}
+\tag{13.11}
+$$
+
+为详核第二行，相对于真律的未归一化二阶矩修正，其绝对值至多
+
+$$
+\frac{q\psi(r)+r\psi(q)+(k-1)q\psi(q)}n
+\le Cr^3/n^2\le CI/n.
+$$
+
+归一化误差满足同一界。第三行中，在两个峰位各有一个对数因子至多 $Cq$，
+另一个因子的加权绝对一阶矩至多 $Cr$；其余非零位置的乘积至多 $Cq^2$。
+故总量至多 $C(qr/n+q^2)\le CI/n$。第一行由 (13.10) 直接得到，
+最后两界由密度至多常数及 (13.6) 得到。对 $w$ 的估计完全相同。
+
+平稳倒序 $Q$ 路径的一条边，按原方向写成 $(x,y)$，其分布为
+$\nu(y)K(x,y)/\beta=n\nu(y)T(x,y)$。
+由 (13.9)，这个额外因子对均值造成的变化至多
+$C(r^2/n)(r/n)\le CI/n$，对二阶矩造成的变化至多 $CI/n$；
+故 (13.11) 的全部界在此单边分布下仍成立。
+
+还须控制相邻边。令 $Y_j$ 为倒序链，
+$A_{i,j}=a_i(Y_{j+1},Y_j)$，其中 $i\in\{z,w\}$。
+其下一条边的条件均值为
+
+$$
+H_i(y)=\frac1\beta\sum_xK(x,y)a_i(x,y),\qquad
+\|H_i\|_\infty\le Cr/n.
+\tag{13.12}
+$$
+
+确实，对每个固定 $y$，峰位那一项的绝对值至多 $Cr/n$，
+其余 $k$ 个非零项之和至多 $Ckq/n=Cr/n$，由
+$(1\pm r)|\log(1\pm r)|\le Cr$ 得到；另一个候选因子至多 $2$。
+因此对 $\ell=1,2$，马尔可夫性给出
+
+$$
+|\mathbb E[A_{i,0}A_{j,\ell}]|
+=|\mathbb E[A_{i,0}(Q^{\ell-1}H_j)(Y_1)]|
+\le Cr^2/n^2\le CI/n.
+\tag{13.13}
+$$
+
+减去均值乘积不改变这个量级。对 $\ell\ge3$，由 $Q^2$ 的共同一行，
+两条边及其两侧历史独立，协方差为零。
+
+综合 (13.11)–(13.13)，在平稳双重加权路径下，两个对数似然的均值向量为
+$(\mu,\mu)+O(\mu/n)$，协方差矩阵为
+
+$$
+svI_2+O(sI/n),
+\tag{13.14}
+$$
+
+其中矩阵余项逐元素有界。独立状态对由 (13.11) 相加也满足此式。
+对任一固定非零线性组合，两种实验的中心化单边三阶绝对矩至多 $CI$，
+总方差渐近于相应系数平方和乘 $sv$。
+再次用 Janson 的定理及 Cramér–Wold 判据，得到以真实均值中心化的二维正态极限。
+由于 $\mu\asymp\log M$，$O(\mu/n)/\sqrt{sv}\to0$；
+再用均匀启动与平稳启动的全变差界，即得 (13.4)。反向由整体倒序或逐对交换得到。$\square$
+
+**定理 13.3（任意振幅的临界窗口与混合似然质量逃逸）。** 令
+$r_d\in(0,1)$ 任意，且整数 $s_d$ 满足
+
+$$
+\frac{s_dF_M(r_d)-\log M}{\sqrt{s_dv}}\longrightarrow t\in\mathbb R.
+\tag{13.15}
+$$
+
+置 $p=\Phi(-t)$。在两种实验各自的均匀参考律下，均有
+
+$$
+\overline L^{+,E}_{s_d}\longrightarrow p,\qquad
+\overline L^{-,E}_{s_d}\longrightarrow p
+\quad\text{依概率},
+\tag{13.16}
+$$
+
+虽然每个混合似然的期望始终为一。最坏方向风险与最优联合恢复率分别满足
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow\frac{\Phi(-t)}2,
+\qquad
+\mathcal S^E_{d,r_d}(s_d)\longrightarrow\Phi(t).
+\tag{13.17}
+$$
+
+方向已知时，最优精确定位成功率也趋于 $\Phi(t)$。
+经有限群对称化的联合最大似然规则具有相同的最坏参数成功率极限。
+
+证明。由 $v\asymp I$，(13.15) 推出
+$\mu/\log M\to1$、$\sigma\asymp\sqrt{\log M}$。
+取 $a=(\log M)^{1/4}$、$h_\pm=\log M\pm a$。
+固定任一方向，置
+
+$$
+T_z=L_z\mathbf1_{\{\log L_z\le h_-\}},\qquad
+\overline T=M^{-1}\sum_zT_z.
+$$
+
+由 (13.2) 及换测度，$\mathbb E_{\mathsf U}\overline T\to p$。
+对角二阶矩满足 $M^{-1}\mathbb E T_z^2\le e^{h_-}/M=e^{-a}\to0$。
+异位项由 (13.3)–(13.4) 满足
+
+$$
+\mathbb E_{\mathsf U}T_zT_w
+=\beta^s\mathsf T_{z,w,s}
+  \{\log L_z\le h_-,\ \log L_w\le h_-\}
+\longrightarrow p^2,
+\tag{13.18}
+$$
+
+因为 $s(1-\beta)=O(\mu/n)\to0$，且两个标准化门槛均趋于 $-t$。
+置换对称性使所有异位项完全相同，故 $\overline T\to p$ 于 $L^2$。
+中间带 $h_-<\log L_z\le h_+$ 对混合似然的期望贡献，
+等于真律下落入该带的概率，由 (13.2) 趋零。
+另一方面，参考律下任一分量超过 $e^{h_+}$ 的概率至多
+$Me^{-h_+}=e^{-a}$。三部分合起来证明 (13.16)。
+
+由 (11.12)，方向风险等于
+$\tfrac12\mathbb E_{\mathsf U}\min(\overline L^+,\overline L^-)$。
+两个混合的乘积期望由 (10.3) 精确等于一。
+对 $K>0$，
+
+$$
+\mathbb E\!\left[
+\min(\overline L^+,\overline L^-)
+\mathbf1_{\{\max(\overline L^+,\overline L^-)>K\}}\right]
+\le\frac{\mathbb E(\overline L^+\overline L^-)}K=\frac1K.
+\tag{13.19}
+$$
+
+因此最小值族一致可积；其依概率极限为 $p$，得到方向风险极限。
+这一步只使用混合之间的交叉内积，未假设两个混合独立。
+
+若方向已知，任意定位规则的成功率由 (11.14) 的分割步骤至多为
+
+$$
+\frac{e^{h_-}}M+
+\mathsf P^{\epsilon,E}_{b_z,s}\{\log L^{\epsilon,E}_{b_z,s}>h_-\}
+\longrightarrow\Phi(t).
+$$
+
+这里不再用 Chebyshev 界，而使用 (13.2)。透露方向只增加信息，
+所以它也是未知方向联合恢复率的上界。
+对联合最大似然，若真似然超过 $e^{h_+}$ 而错误候选均低于此值，恢复必成功。
+由 (11.15) 及 Markov 不等式，错误候选越界的总概率至多
+$(2M-1)e^{-h_+}\to0$；真似然越界概率由 (13.2) 趋于 $\Phi(t)$。
+这给出匹配的联合恢复下界，也给出已知方向定位的下界。
+有限群对称化保留均匀平均成功率，并使每个参数的成功率相等，
+完成最坏参数陈述。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 14. 未知振幅的临界最优判别与截断尺度
+
+**定义 14.1（只依赖维度与样本数的判别器）。** 沿用定义 11.1 的正单峰模型，
+但判别器不再知道振幅 $r$。位置仍在已知的 $C_+$ 内固定，方向未知。
+置 $\ell=\log M$、$k=M-1$，并将标量函数连续延伸到 $u=1$：
+
+$$
+F(u)=nF_M(u)=\phi(u)+k\phi(u/k),\qquad I(r)=F(r)/n.
+\tag{14.1}
+$$
+
+所有极限均沿整数 $d\to\infty$，故 $\ell=(d-1)\log2$。
+固定仅依赖 $d$ 的数列 $\eta_d\in(0,1)$ 与 $u_d>0$，满足
+$u_d\to\infty$、$u_d=o(\sqrt\ell)$。对 $s\ge1$，定义替代振幅与门槛
+
+$$
+a=a(d,s)=F^{-1}\!\left(\min\left\{\frac{n\ell}s,F(1-\eta_d)\right\}\right),
+\qquad h=\ell+u_d.
+\tag{14.2}
+$$
+
+$F$ 严格递增，故 $0<a\le1-\eta_d<1$，此逆值总存在。
+计算振幅为 $a$ 的全部 $2M$ 个候选似然 $L_{a,z,s}^{\epsilon,E}$。
+若最大值严格大于 $e^h$，输出取最大值的位置与方向，平局时均匀随机选择；
+否则独立于观测，在 $2M$ 个标签中均匀随机选择。
+$s=0$ 时也作独立均匀选择。
+
+在检测边界代入替代信号强度的既有方法见
+[Chan–Walther，§3.1、定理 4](../../../Library/Dynamics/chanwalther2015aligned.md)。
+这里的候选字典、端点截断与路径观察律由 (14.1)–(14.2) 指定。
+
+**定理 14.2（未知振幅达到同一临界曲线的充要截断条件）。**
+对于定义 14.1 的这一族判别器，下列两项等价。
+
+一、对两个实验 $E\in\{\mathrm{pair},\mathrm{path}\}$，任意
+$r_d\in(0,1)$、正整数 $s_d$ 及有限 $t\in\mathbb R$，只要
+
+$$
+\frac{s_d I(r_d)-\ell}{\sqrt{s_d v(r_d)}}\longrightarrow t,
+\tag{14.3}
+$$
+
+就有一致于真位置和方向的极限
+
+$$
+\Pr_{r_d,z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}
+ \longrightarrow\frac{\Phi(-t)}2,
+\qquad
+\Pr_{r_d,z,\epsilon}^E\{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}
+ \longrightarrow\Phi(t).
+\tag{14.4}
+$$
+
+二、沿上述维度数列有
+
+$$
+\eta_d\sqrt\ell\longrightarrow0,
+\qquad
+\frac{\log(1/\eta_d)}{\log\ell}\longrightarrow\frac12.
+\tag{14.5}
+$$
+
+条件 (14.5) 已由独立状态对实验的要求强制；满足时两个实验均有 (14.4)。
+由定理 13.3，这些曲线与知道振幅的最优曲线相同。
+这里不估计振幅，也不在固定维度对所有振幅取最坏风险。
+
+等价地，合法截断恰好具有
+
+$$
+\eta_d=\frac{\ell^{-1/2}}{g_d},\qquad
+ g_d\to\infty,\quad \log g_d=o(\log\ell).
+\tag{14.6}
+$$
+
+例如 $\eta_d=(\ell\log\ell)^{-1/2}$ 与
+$\eta_d=(\sqrt\ell\log\ell)^{-1}$ 都合法；任何固定幂次
+$\eta_d=\ell^{-b}$（$b>0$）均不能使本族判别器对所有临界振幅数列达到 (14.4)。
+
+证明。先把问题归约为真位置的替代得分。由定理 10.2，对任意振幅 $r,a$，
+异向候选的交叉似然期望为一；同向异位候选满足
+
+$$
+\mathbb E_{r,z,\epsilon}^E L_{a,w,s}^{\epsilon,E}
+ =\left(1-\frac{ra}{2k^2}\right)^s\le1\qquad(w\ne z).
+$$
+
+令 $B_d$ 为至少一个错误标签的候选超过 $e^h$ 的事件，
+$T_d=\log L_{a,z,s}^{\epsilon,E}$ 为真标签的替代得分。则
+
+$$
+\Pr(B_d)\le(2M-1)e^{-h}\le2e^{-u_d}\longrightarrow0.
+\tag{14.7}
+$$
+
+在 $B_d$ 的补集上，真候选越界就选中真标签；未越界就使用独立均匀选择。
+所以
+
+$$
+\begin{aligned}
+\Pr\{\widehat\epsilon\ne\epsilon\}
+ &=\tfrac12\Pr\{T_d\le h\}+O(e^{-u_d}),\\
+\Pr\{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}
+ &=\Pr\{T_d>h\}+O(e^{-u_d}+M^{-1}).
+\end{aligned}
+\tag{14.8}
+$$
+
+这些估计不要求截断条件，且一致于位置、方向。
+
+现证明充分性，假定 (14.5)。记 $\lambda=s/n$、$c=\log2$。
+由 (13.5) 与临界条件，
+
+$$
+I(r)\asymp v(r)\asymp r^2/n,\qquad
+sI(r)=\ell+O(\sqrt\ell),\qquad sv(r)\asymp\ell.
+\tag{14.9}
+$$
+
+单边替代对数得分在真振幅 $r$ 下的均值为
+
+$$
+m(r,a)=I(a)+(r-a)I'(a).
+\tag{14.10}
+$$
+
+这是因为转移概率关于真振幅仿射。以
+
+$$
+B(u,w)=\frac{1+u}{2}\log\frac{1+u}{1+w}
+       +\frac{1-u}{2}\log\frac{1-u}{1-w}
+$$
+
+记振幅坐标中的 Bernoulli 相对熵，精确有
+
+$$
+n\{I(r)-m(r,a)\}=B(r,a)+kB(r/k,a/k).
+\tag{14.11}
+$$
+
+以下证明总均值损失为 $o(\sqrt\ell)$。
+
+先在任意 $r\le1-\varepsilon$（固定 $\varepsilon>0$）的子列上考虑。
+截断最终不生效，$a$ 也与 $1$ 保持固定间隔，$sI(a)=\ell$，且
+$I(r)/I(a)=1+O(\ell^{-1/2})$。
+由 $F(u)\asymp u^2$ 先得 $a\asymp r$，再用 $F'(u)\ge u$ 得到
+$|r-a|=O(r/\sqrt\ell)$。
+此区间内 $F''$ 有界，$\lambda\asymp\ell/r^2$，故 Taylor 公式给出
+$s\{I(r)-m(r,a)\}=O(1)$。这也覆盖 $r\to0$ 的任意速度。
+
+余下只需处理 $r\to1$ 的子列，此时 $a\to1$、$\lambda\sim\ell/c$。
+置 $x=1-r$、$y=1-a\ge\eta_d$，以及
+
+$$
+\Delta_k(x)=F(1)-F(1-x),\qquad
+\Delta_k(x)=\tfrac{x}{2}\log(1/x)+O(x),\qquad
+F'(1-x)=\tfrac12\log(1/x)+O(1).
+\tag{14.12}
+$$
+
+余项一致于充分大的 $k$。Bernoulli 相对熵的基本界给出
+
+$$
+\begin{cases}
+ B(1-x,1-y)\le C(y-x),&x\le y,\\
+ B(1-x,1-y)\le C(x-y)(1+\log(x/y)),&x>y.
+\end{cases}
+\tag{14.13}
+$$
+
+第一界由两个 Bernoulli 概率为 $x/2\le y/2$ 直接得到；
+第二界可用两方向相对熵之和上界其中一个方向。
+
+若 $r\ge a$，截断不生效时
+$0\le F(r)-F(a)=O(\ell^{-1/2})$，凸性及 $F'(a)\to\infty$ 给出
+$r-a=o(\ell^{-1/2})$；截断生效时 $r-a\le\eta_d=o(\ell^{-1/2})$。
+由 (14.13)，峰位相对熵都是 $o(\ell^{-1/2})$。
+
+若 $r<a$，无论截断是否生效，都有
+
+$$
+0<F(a)-F(r)\le\ell/\lambda-F(r)=O(\ell^{-1/2}).
+\tag{14.14}
+$$
+
+当 $x<2y$，由导数 $F'(r)\to\infty$ 得到
+$x-y=o(\ell^{-1/2})$，再用 (14.13)。
+当 $x\ge2y$，在 $[x/2,x]$ 上积分 (14.12) 的导数得
+$x\log(1/x)=O(\ell^{-1/2})$，从而
+$x=O((\sqrt\ell\log\ell)^{-1})$。
+因此 (14.5) 给出
+
+$$
+0\le\log(x/y)
+\le\log\!\left(\frac{C}{\sqrt\ell\log\ell\,\eta_d}\right)
+=o(\log\ell).
+$$
+
+代入 (14.13) 再得峰位相对熵 $o(\ell^{-1/2})$。
+这一论证使用信息差，未要求
+$\Delta_k(\eta_d)=O(\ell^{-1/2})$；后者并非所有合法截断都满足。
+背景项满足 $kB(r/k,a/k)\le C(r-a)^2/k$，其总贡献至多 $O(\ell/k)$。
+综上，
+
+$$
+s\{I(r)-m(r,a)\}=o(\sqrt\ell).
+\tag{14.15}
+$$
+
+再核对得分的方差与正态极限。令
+
+$$
+Q(u,w)=\frac{(1+u)\log^2(1+w)+(1-u)\log^2(1-w)}2.
+$$
+
+真律下单边替代得分 $A$ 的二阶矩是
+$[Q(r,a)+kQ(r/k,a/k)]/n$。
+$r\to0$ 时 $a/r\to1$，$Q(r,a)\sim a^2\sim r^2\sim\psi(r)$；
+内部极限由连续性得到。
+$r\to1$ 时，上述信息差还给出 $|r-a|=O(\ell^{-1/2})$：
+在 $r<a$ 时用 (14.14)，在 $r\ge a$ 时用凸性或截断本身。
+利用精确仿射恒等式
+
+$$
+Q(r,a)=\psi(a)+\frac{r-a}{2}
+ \{\log^2(1+a)-\log^2(1-a)\},
+$$
+
+及 $\log(1/(1-a))\le\log(1/\eta_d)=O(\log\ell)$，
+得到修正项为 $O((\log\ell)^2/\sqrt\ell)=o(1)$。
+故 $Q(r,a)\to c^2$，与 $\psi(r)\to c^2$ 一致。
+分子中的背景二阶矩为 $O(a^2/k)$，而由 (14.15)，$m(r,a)\sim I(r)$，其平方可忽略。
+于是
+
+$$
+\operatorname{Var}_r(A)/v(r)\longrightarrow1.
+\tag{14.16}
+$$
+
+对平稳路径，记 $A_0(u)=\tfrac12\log(1-u^2)$、$B_0(u)=\operatorname{atanh}u$。
+条件于出发状态的得分均值只在 $C_+$ 非零，均匀均值与乘 $\chi$ 后的均值都是 $m$；
+条件于到达状态的均值是 $m+J_{r,a}\chi$，其中
+
+$$
+J_{r,a}=\frac{B_0(a)-kB_0(a/k)+r\{A_0(a)-A_0(a/k)\}}n.
+\tag{14.17}
+$$
+
+与 (11.7)–(11.8) 相同的条件期望计算给出
+相邻协方差 $mJ_{r,a}$，所有间隔至少二的协方差为零。
+式 (14.17) 显示 $|J_{r,a}|=O(\log\ell/n)$，故两种实验均有
+
+$$
+\operatorname{Var}_r(T_d)=sv(r)(1+o(1)).
+\tag{14.18}
+$$
+
+不需要 $J_{r,a}$ 的符号。每条替代得分的绝对值至多
+$\max\{\log2,\log(1/\eta_d)\}=O(\log\ell)=o(\sqrt\ell)$。
+因此，按总方差标准化的中心化单边得分满足 Lindeberg 条件，其指示函数最终恒为零。
+路径得分由 $P_r^2=\Pi$ 构成真正的 $2$-依赖三角阵，
+可直接应用 [Janson，定理 1.1](../../../Library/Dynamics/janson2021mdependent.md)。
+结合 (14.15) 与 (14.18)，得到两种实验中的
+
+$$
+\frac{T_d-sI(r)}{\sqrt{sv(r)}}\Longrightarrow N(0,1).
+\tag{14.19}
+$$
+
+任意振幅数列的每个子列都有一个在 $[0,1]$ 内收敛的再子列，上述各情形穷尽之，
+故不要求 $r_d$ 本身收敛。方向倒转保留对应得分分布。
+由 $u_d=o(\sqrt\ell)$、(14.3) 与 (14.8)，得到 (14.4)，充分性得证。
+
+为证明必要性，只用独立状态对，固定一个真位置和方向，并取
+
+$$
+s=\left\lfloor\frac{n\ell}{F(1)}\right\rfloor,
+\qquad \lambda=s/n.
+\tag{14.20}
+$$
+
+有 $\lambda F(1)=\ell+O(n^{-1})$、$\lambda\sim\ell/c$，
+且 $\ell/\lambda\ge F(1)$，所以截断精确生效，$a=1-\eta_d$。
+对真缺口 $x=1-r$，以 $N_+$、$N_-$ 计数峰位出发且目标奇偶分别为正、负的样本，
+它们的多项分布边缘均值为 $\lambda(1-x/2)$ 和 $\lambda x/2$。
+置 $w_d=\log(1/\eta_d)$，则
+
+$$
+T_d=\log(2-\eta_d)N_+-w_dN_-+G_d.
+\tag{14.21}
+$$
+
+背景项的均值绝对值与方差均为 $O(\ell/k)$，一致于全部截断。
+确实，背景对数因子为 $O(1/k)$，单样本带符号均值为 $O(1/(nk))$，
+二阶矩也为 $O(1/(nk))$；独立求和即得。因此 $G_d=o_P(1)$。
+
+先取 $x=\ell^{-2}$。真临界坐标趋零，$sv(r)\sim c\ell$，
+$N_-=0$ 的概率趋一，且 $(N_+-\lambda)/\sqrt\lambda\Longrightarrow N(0,1)$。
+若某子列有 $\eta_d\sqrt\ell\to A\in(0,\infty)$，展开正计数的系数得到
+
+$$
+\Pr\{T_d>h\}\longrightarrow
+\Phi\!\left(-\frac{A}{2c^{3/2}}\right)<\frac12.
+\tag{14.22}
+$$
+
+若该乘积趋无穷，正通道的均值损失超过其 $O(\sqrt\ell)$ 波动，越界概率趋零；
+这也覆盖 $\eta_d$ 不趋零，因为
+$c-\log(2-\eta_d)=-\log(1-\eta_d/2)\ge\eta_d/2$。
+概率趋零的负计数事件可以直接排除，不要求其对数权重有界。
+由 (14.8)，这些极限都违反 $t=0$ 的 (14.4)。
+子列论证迫使 $\eta_d\sqrt\ell\to0$。
+
+假定这一必要条件成立，再取任意固定 $C>0$ 及
+$x=C/(\sqrt\ell\log\ell)$。由 (14.12)、(14.20)，真临界坐标趋于
+
+$$
+t_C=-\frac{C}{4c^{3/2}}<0.
+\tag{14.23}
+$$
+
+此时 $m_-:=\mathbb EN_-\sim C\sqrt\ell/(2c\log\ell)\to\infty$，
+故 $N_-/m_-\to1$ 依概率；同时
+
+$$
+\frac{\log(2-\eta_d)N_+-\ell}{\sqrt{c\ell}}
+ \Longrightarrow N(0,1).
+\tag{14.24}
+$$
+
+令 $w_d/\log\ell$ 沿某子列趋于 $\beta\in(1/2,\infty)$。
+负计数的加权均值除以 $\sqrt{c\ell}$ 趋于 $C\beta/(2c^{3/2})$，
+其中心化部分的方差除以 $c\ell$ 为 $O(\log\ell/\sqrt\ell)\to0$。
+所以
+
+$$
+\Pr\{T_d>h\}\longrightarrow\Phi(2\beta t_C)\ne\Phi(t_C).
+\tag{14.25}
+$$
+
+此推导不需要两个计数独立。若该比值趋无穷，改用 $N_-$ 的相对集中，
+得到 $w_dN_-/\sqrt{c\ell}\to+\infty$；(14.24) 的正部分仍紧，
+故越界概率趋零，同样违反目标曲线。
+第一必要条件已保证
+
+$$
+\frac{w_d}{\log\ell}
+=\frac12+\frac{\log(1/(\eta_d\sqrt\ell))}{\log\ell},
+\qquad \liminf\frac{w_d}{\log\ell}\ge\frac12.
+$$
+
+若第二条件不成立，总能取到刚排除的一个子列。这证明必要性，亦覆盖截断数列振荡、
+或 $w_d$ 任意迅速增长的情形。(14.6) 及所列例子由 (14.5) 直接改写得到。
+这些限制属于定义 14.1 的构造，并非对一切未知振幅判别器的限制。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 15. 固定多峰的异质临界曲线与未知参数适应
+
+**定义 15.1（不同振幅的固定多峰）。** 固定已知整数 $q\ge2$，考虑 $M>2q$，
+并给定正振幅向量 $\boldsymbol r=(r_1,\ldots,r_q)\in(0,1)^q$。
+令 $\mathcal Z_{M,q}$ 为 $C_+$ 中全部有序、互异的 $q$ 元组，
+$\boldsymbol z=(z_1,\ldots,z_q)\in\mathcal Z_{M,q}$ 是整个观察期间固定的未知位置。
+记 $S=\{z_1,\ldots,z_q\}$、$R=\sum_i r_i$，定义
+
+$$
+b_{\boldsymbol z}(x)=
+\begin{cases}
+r_i,&x=z_i,\\
+-R/(M-q),&x\in C_+\setminus S,\\
+0,&x\in C_-.
+\end{cases}
+\qquad
+P_{\boldsymbol z}(x,y)=\frac{1+\chi(x)\chi(y)b_{\boldsymbol z}(x)}n.
+\tag{15.1}
+$$
+
+该向量在 $C_+$ 上的和为零，故 $P_{\boldsymbol z}\in\mathcal K_d^0$，
+平稳律均匀且 $P_{\boldsymbol z}^2=\Pi$。
+沿用定义 10.1 的独立状态对与平稳离散轨迹实验，记似然为
+$L^{\epsilon,E}_{\boldsymbol z,s}$。置 $(M)_q=M(M-1)\cdots(M-q+1)$，以及
+
+$$
+\overline L^{\epsilon,E}_{\boldsymbol r,q,s}
+ =\frac1{(M)_q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}
+ L^{\epsilon,E}_{\boldsymbol z,s},
+\qquad
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ =\inf_{\widehat\epsilon}\max_{\boldsymbol z,\epsilon}
+ \Pr_{\boldsymbol z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}.
+\tag{15.2}
+$$
+
+此风险中的判别器知道 $q,\boldsymbol r$，可随机化；重复的振幅值允许出现。
+以下 $I_i=F_M(r_i)$、$v_i=v(r_i)$ 仍取定义 13.1 的单峰函数，$q$ 不随维度增长。
+独立 Bernoulli 信号计数的极端稀疏高斯临界极限见
+[Ditzhaus–Janssen，§1.1、定理 4.10](../../../Library/Dynamics/ditzhaus2018detectability.md)；
+本定义把峰数固定，并使用有补偿的转移核。
+[Hall–Jin，式 (2.2)–(2.3) 与定理 2.1](../../../Library/Dynamics/halljin2010innovated.md)
+则固定一个随维数增长的精确支持数 $m=n^{1-\beta}$，位置无放回均匀抽取；
+其独立高斯模型的 Higher Criticism 在可检测区域内部适应未知稀疏度和强度，功效趋一。
+该结论不涉及常数峰数、各坐标的有限临界参数或下面的乘积风险极限。
+
+**定理 15.2（异质临界坐标的乘积风险）。** 对任意振幅数列
+$\boldsymbol r=\boldsymbol r_d\in(0,1)^q$ 与正整数 $s=s_d$，若每个 $i$ 都满足
+
+$$
+\frac{sI_i-\log M}{\sqrt{sv_i}}\longrightarrow t_i\in\mathbb R,
+\tag{15.3}
+$$
+
+则对两个实验 $E\in\{\mathrm{pair},\mathrm{path}\}$ 及两个方向，都有
+
+$$
+\overline L^{\epsilon,E}_{\boldsymbol r,q,s}
+ \xrightarrow[\mathsf U_s^E]{P}\prod_{i=1}^q\Phi(-t_i),
+\qquad
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ \longrightarrow\frac12\prod_{i=1}^q\Phi(-t_i).
+\tag{15.4}
+$$
+
+结论不限制各振幅接近 $0$ 或 $1$ 的速度，也不假设不同峰或不同振幅字典的似然独立。
+相同振幅时，所有 $t_i=t$，风险即为 $\Phi(-t)^q/2$。
+
+证明。记 $\ell=\log M$、$r_* =\max_i r_i$。
+由 (13.5) 与 (15.3)，一致于有限多个 $i$ 有
+
+$$
+\frac{sr_i^2}{n}\asymp\ell,\qquad
+\frac{sr_*^2}{n}\asymp\ell,\qquad r_i\asymp r_*.
+\tag{15.5}
+$$
+
+常数只需在充分大的维度成立。以下 $C_q$ 可依赖固定的 $q$。
+对每个振幅 $r_i$，令 $l_{i,z}$ 为定义 11.1 中同一样本数、方向和实验的单峰似然，
+并置
+
+$$
+R_{\boldsymbol z}=\prod_{i=1}^q l_{i,z_i}.
+\tag{15.6}
+$$
+
+该乘积尚不是概率密度。先证明一致于位置元组的比较
+
+$$
+\mathbb E_{\mathsf U_s^E}
+ |R_{\boldsymbol z}-L^{\epsilon,E}_{\boldsymbol z,s}|
+ \le C_q\ell/n\longrightarrow0.
+\tag{15.7}
+$$
+
+先取正向，置 $k=M-1$、$u_i=r_i/k$、$w=R/(M-q)$。
+在出发状态 $x\in C_+$ 上记 $\sigma=\chi(y)$。
+对数比值 $D_{\boldsymbol z}=\log(R_{\boldsymbol z}/L^{+,E}_{\boldsymbol z,s})$
+是逐边增量 $D_t$ 的和，其增量精确为
+
+$$
+D_t=
+\begin{cases}
+\displaystyle\sum_{j\ne i}\log(1-u_j\sigma),&x=z_i,\\
+\displaystyle\sum_{i=1}^q\log(1-u_i\sigma)-\log(1-w\sigma),
+ &x\in C_+\setminus S,\\
+0,&x\in C_-.
+\end{cases}
+\tag{15.8}
+$$
+
+在每个真峰位，可能奇异的因子 $1+r_i\sigma$ 已精确抵消。
+真律下 $\mathbb E(\sigma\mid x)=b_{\boldsymbol z}(x)$。
+峰位 $z_i$ 的条件均值为
+
+$$
+\sum_{j\ne i}\left\{\tfrac12\log(1-u_j^2)
+-r_i\operatorname{atanh}u_j\right\},
+$$
+
+其绝对值至多 $C_qr_*^2/n$，而条件二阶矩至多 $C_qr_*^2/n^2$。
+背景中线性项的系数满足
+
+$$
+w-\sum_i u_i
+ =R\left(\frac1{M-q}-\frac1k\right)=O_q(r_*/n^2),
+$$
+
+其余项为 $O_q(r_*^2/n^2)$。
+故背景条件均值绝对值至多 $C_qr_*^2/n^2$，条件二阶矩至多 $C_qr_*^2/n^4$。
+这些展开只涉及小参数 $u_i,w$，对全部振幅一致。
+出发状态均匀，因此
+
+$$
+|\mathbb E D_t|\le C_qr_*^2/n^2,
+\qquad \mathbb E D_t^2\le C_qr_*^2/n^3.
+\tag{15.9}
+$$
+
+路径增量构成真正的 $2$-依赖序列，这是 $P_{\boldsymbol z}^2=\Pi$ 对过去与未来
+状态块的独立性结论。由 Cauchy–Schwarz，和的方差至多 $5s\mathbb E D_t^2$；
+独立状态对也满足此上界。由 (15.5)，
+
+$$
+|\mathbb E D_{\boldsymbol z}|=O_q(\ell/n),\qquad
+\operatorname{Var}(D_{\boldsymbol z})=O_q(\ell/n^2),\qquad
+\mathbb E|D_{\boldsymbol z}|=O_q(\ell/n).
+\tag{15.10}
+$$
+
+再控制乘积的总质量。逐边乘积因子的行均值，在 $z_i$ 处为
+
+$$
+\frac{(1+r_i)\prod_{j\ne i}(1-u_j)
+ +(1-r_i)\prod_{j\ne i}(1+u_j)}2.
+\tag{15.11}
+$$
+
+这是其余 $u_j$ 的偶次初等对称和，减去 $r_i$ 乘奇次初等对称和；
+后者非负。在背景处，行均值是所有 $u_j$ 的偶次初等对称和；在 $C_-$ 为一。
+故全部行均值至多 $1+C_qr_*^2/k^2$。
+路径的非负转移乘积与独立状态对都给出
+
+$$
+\mathbb E_{\mathsf U_s^E}R_{\boldsymbol z}
+ \le(1+C_qr_*^2/k^2)^s
+ =\exp(O_q(\ell/n))=1+O_q(\ell/n).
+\tag{15.12}
+$$
+
+令 $Z=R_{\boldsymbol z}/L^{+,E}_{\boldsymbol z,s}=e^{D_{\boldsymbol z}}$。
+真律下的恒等式与不等式
+
+$$
+\mathbb E|Z-1|=\mathbb EZ-1+2\mathbb E(1-Z)_+,
+\qquad (1-e^{D_{\boldsymbol z}})_+\le|D_{\boldsymbol z}|
+$$
+
+结合 (15.10)–(15.12) 得到 (15.7)。反向由观测倒序得到。
+
+现固定方向与实验。分别对每个振幅字典应用定理 13.3，有
+
+$$
+A_i:=\frac1M\sum_zl_{i,z}\xrightarrow[\mathsf U_s^E]{P}p_i,
+\qquad p_i=\Phi(-t_i).
+\tag{15.13}
+$$
+
+真律正态极限还给出
+
+$$
+B_i:=\max_z\frac{l_{i,z}}M\xrightarrow[\mathsf U_s^E]{P}0.
+\tag{15.14}
+$$
+
+具体地，取 $a_\ell=\ell^{1/4}$、$h_\pm=\ell\pm a_\ell$。
+低于 $e^{h_-}$ 的任一项除以 $M$ 至多为 $e^{-a_\ell}$；
+中间带的归一化和之期望为对应真单峰律下
+$\Pr\{h_-<\log l_{i,z}\le h_+\}\to0$，因为标准化区间长度趋零而中心趋于有限值。
+上部则有 $\Pr_{\mathsf U_s^E}\{\max_zl_{i,z}>e^{h_+}\}\le e^{-a_\ell}$。
+这些结论证明 (15.14)，不要求不同字典彼此独立。
+
+把乘积 $\prod_i A_i$ 中的有序位置元组按是否重复分开。
+对发生 $z_i=z_j$ 的项，使用
+$\sum_z(l_{i,z}/M)(l_{j,z}/M)\le B_iA_j$，得到确定性界
+
+$$
+0\le\prod_i A_i-
+ \frac1{M^q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}R_{\boldsymbol z}
+ \le\sum_{i<j}B_i\prod_{h\ne i}A_h.
+\tag{15.15}
+$$
+
+有限多个 $A_i,B_i$ 的联合概率极限及 $M^q/(M)_q\to1$ 给出
+
+$$
+\frac1{(M)_q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}R_{\boldsymbol z}
+ \xrightarrow[\mathsf U_s^E]{P}\prod_i p_i.
+\tag{15.16}
+$$
+
+对 (15.7) 在全部位置元组上平均，真实混合与 (15.16) 的 $L^1$ 距离趋零。
+这证明 (15.4) 的第一个极限。
+
+每个核仍属 $\mathcal K_d^0$，故定理 10.2 精确给出
+
+$$
+\mathbb E_{\mathsf U_s^E}
+ [\overline L^{+,E}_{\boldsymbol r,q,s}
+  \overline L^{-,E}_{\boldsymbol r,q,s}]=1.
+\tag{15.17}
+$$
+
+两个混合的最小值平方不超过其乘积，故这些最小值一致可积，期望趋于 $\prod_i p_i$。
+保持奇偶类的状态置换在有序互异位置元组上传递，观测倒序交换两个方向。
+有限群随机对称化使均匀先验 Bayes 规则在每个真参数处有相同风险，因而
+
+$$
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ =\frac12\mathbb E_{\mathsf U_s^E}
+ \min(\overline L^{+,E}_{\boldsymbol r,q,s},
+      \overline L^{-,E}_{\boldsymbol r,q,s})
+ \longrightarrow\frac12\prod_i p_i.
+\tag{15.18}
+$$
+
+这就证明两个实验中的结论。$\square$
+
+**定理 15.3（同时不知道峰数与各振幅的最优方向判别）。**
+仍使用定义 14.1 的单峰候选字典与规则，并假定截断满足 (14.5)。
+此规则只依赖维度与样本数。对每个固定正整数 $q$ 以及满足 (15.3) 的任意
+正振幅向量数列，两个实验均有
+
+$$
+\max_{\boldsymbol z,\epsilon}
+ \Pr_{\boldsymbol z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}
+ \longrightarrow\frac12\prod_{i=1}^q\Phi(-t_i).
+\tag{15.19}
+$$
+
+因此同一个规则达到知道 $q,\boldsymbol r$ 的最优方向曲线。
+本结论不对增长的峰数取统一极限，也不在固定维度对全部振幅取最坏风险。
+
+证明。$q=1$ 已由定理 14.2 处理。固定 $q\ge2$，先取正向，记
+$T_i=\log L^{+,E}_{a,z_i,s}$，其中 $a$ 仍由 (14.2) 给定。
+候选 $i$ 的逐边得分 $A_i$ 只区分出发状态为 $z_i$、其余 $C_+$ 或 $C_-$，
+以及到达状态的奇偶。因为
+
+$$
+b_{\boldsymbol z}(z_i)=r_i,\qquad
+\sum_{x\in C_+\setminus\{z_i\}}b_{\boldsymbol z}(x)=-r_i,
+$$
+
+其单边分布与真振幅 $r_i$ 的单峰模型完全相同。
+故 (14.10)、(14.16)、(14.15) 分别给出均值 $m_i=m(r_i,a)$、单边方差
+与总均值损失。记 $J_i=J_{r_i,a}$。
+
+路径上，条件于到达状态 $y$ 的得分均值精确为 $m_i+J_i\chi(y)$；
+真转移概率对 $b_{\boldsymbol z}$ 仿射，而上述两条求和关系决定了所需的和。
+条件于出发状态的均值函数 $g_i$ 支持在 $C_+$，故
+$\mathbb E g_i=\mathbb E(\chi g_i)=m_i$，并且
+
+$$
+(P_{\boldsymbol z}g_i)(x)=m_i\{1+\chi(x)b_{\boldsymbol z}(x)\}.
+$$
+
+条件期望计算给出所有有序坐标对的时间协方差
+
+$$
+\operatorname{Cov}(A_{i,t},A_{j,t+1})=J_i m_j,
+\qquad
+\operatorname{Cov}(A_{i,t},A_{j,t+h})=0\quad(h\ge2).
+\tag{15.20}
+$$
+
+$h=2$ 时用 $\mathbb E b_{\boldsymbol z}=\mathbb E(\chi b_{\boldsymbol z})=0$；
+$h\ge3$ 由两步重置的块独立性得到。
+
+再控制同一边上异位候选的交叉矩。置 $u=a/k$。
+在两个候选的真峰位，一个对数因子为 $\log(1+a\sigma)$，另一个为
+$\log(1-u\sigma)$。当 $r_*\le1/2$ 时，(14.2)–(14.9) 给出
+$a\le Cr_*$ 且 $a$ 与 $1$ 有固定间隔，乘积绝对期望为 $O(r_*^2/k)$。
+当 $r_*>1/2$ 时，截断对数界给出 $O(\log\ell/k)=O(r_*^2\log\ell/k)$。
+其余 $C_+$ 上两个因子相同，乘积绝对值至多 $C a^2/k^2\le C r_*^2/k^2$。
+中心化减去的 $m_i m_j=O(r_*^4/n^2)$ 也被下式吸收，因此
+
+$$
+|\operatorname{Cov}(A_{i,t},A_{j,t})|
+ \le C\frac{r_*^2\log\ell}{n^2}\quad(i\ne j).
+\tag{15.21}
+$$
+
+令 $\sigma_i=\sqrt{sv_i}\asymp\sqrt\ell$。
+由 (15.20)、$m_i\sim I_i$、$|J_i|=O(\log\ell/n)$ 及 (15.5)，
+各 $T_i$ 的方差为 $\sigma_i^2(1+o(1))$，而不同坐标的协方差除以
+$\sigma_i\sigma_j$ 后为 $O(\log\ell/n)\to0$。
+对每个固定非零系数向量 $c\in\mathbb R^q$，标准化线性组合的逐边中心化增量
+
+$$
+\sum_i\frac{c_i(A_{i,t}-m_i)}{\sigma_i}
+$$
+
+绝对值为 $O_{q,c}(\log\ell/\sqrt\ell)\to0$，总和方差趋于 $\|c\|_2^2>0$。
+路径上这些增量构成 $2$-依赖三角阵，Lindeberg 指示函数最终为零。
+由 [Janson，定理 1.1](../../../Library/Dynamics/janson2021mdependent.md)
+及 Cramér–Wold 法，再用 (14.15) 将各坐标中心换成 $sI_i$，两个实验均有
+
+$$
+\left(\frac{T_i-sI_i}{\sigma_i}\right)_{i=1}^q
+ \Longrightarrow N(0,I_q).
+\tag{15.22}
+$$
+
+错误方向的任一候选在真律下期望为一；正确方向但位于 $w\notin S$ 的候选满足
+
+$$
+\mathbb E_{\boldsymbol z,+}^E L^{+,E}_{a,w,s}
+ =\left(1-\frac{aR}{2k(M-q)}\right)^s\le1.
+\tag{15.23}
+$$
+
+因此至少一个上述错误候选超过 $e^{\ell+u_d}$ 的概率至多 $2e^{-u_d}$。
+在其补集上，至少一个真峰候选越界就选对方向；全部候选未越界时使用独立均匀回退。
+故方向风险为
+
+$$
+\frac12\Pr_{\boldsymbol z,+}^E
+ \{T_i\le\ell+u_d\text{ 对所有 }i\}+O(e^{-u_d}).
+$$
+
+式 (15.22)、$u_d=o(\sqrt\ell)$ 与 (15.3) 使此式趋于 $\tfrac12\prod_i\Phi(-t_i)$。
+峰位置换与观测倒序给出全部真参数上的相同结论。
+最后应用定理 15.2 的已知参数最优风险，得证。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 16. 增补十三·稀疏支持的方向边界与行样本比较
+
+**定义 16.1（增长支持与两个统计实验）。** 令
+ $`n=2^d`$ 、 $`M=n/2`$ 、 $`\ell=\log M`$ ，沿用奇偶类
+ $`C_+,C_-`$  和符号  $`\chi`$ 。给定整数  $`1\le q\lt M/2`$
+及  $`0\lt r\lt 1`$ ，对未知且在全部观测期间固定的集合
+ $`S\subset C_+`$ 、 $`|S|=q`$ ，定义
+
+```math
+ a=\frac{rq}{M-q},\qquad
+ b_S(x)=
+ \begin{cases}r,&x\in S,\\-a,&x\in C_+\setminus S,\\0,&x\in C_-,\end{cases}
+ \qquad P_S(x,y)=\frac{1+\chi(x)\chi(y)b_S(x)}n.
+ \tag{16.1}
+```
+
+记  $`K_{S,+}=P_S`$ 、 $`K_{S,-}=P_S^{\mathsf T}`$ 。两者均严格正、
+双随机，且平方等于均匀重置核  $`\Pi`$ 。参数为
+ $`\vartheta=(S,\varepsilon)`$ ，其中  $`\varepsilon\in\{+,-\}`$ 。
+实验  $`\mathcal E_{\rm pair}`$  观察  $`s`$  个独立的均匀平稳相邻对；
+实验  $`\mathcal E_{\rm path}`$  观察均匀起点后的  $`s`$  次连续转移。
+令  $`\lambda=s/n`$ ，并以
+
+```math
+ R_{\mathcal E}(d,s,q,r)
+ =\inf_\psi\sup_{S,\varepsilon}
+   \Pr_{S,\varepsilon}^{\mathcal E}\{\psi\ne\varepsilon\}
+ \tag{16.2}
+```
+
+表示允许随机化的最坏方向错误率。下确界中的规则可知道
+ $`d,s,q,r`$ ，不知道  $`S,\varepsilon`$ 。
+另记  $`\phi(u)=\tfrac12[(1+u)\log(1+u)+(1-u)\log(1-u)]`$ 。
+
+**定理 16.2（两个方向实验的稀疏检测边界）。** 设
+
+```math
+ q=M^{1-\beta+o(1)},\qquad \tfrac12<\beta<1,\qquad r\longrightarrow0,
+ \qquad \frac{\lambda r^2}{2\ell}\longrightarrow\rho\in(0,\infty).
+ \tag{16.3}
+```
+
+定义
+
+```math
+ \rho_*(\beta)=
+ \begin{cases}
+ \beta-\tfrac12,&\tfrac12<\beta\le\tfrac34,\\[0pt]
+ (1-\sqrt{1-\beta})^2,&\tfrac34<\beta<1.
+ \end{cases}
+ \tag{16.4}
+```
+
+则对  $`\mathcal E\in\{\mathcal E_{\rm pair},\mathcal E_{\rm path}\}`$ ，
+
+```math
+ R_{\mathcal E}(d,s,q,r)\longrightarrow
+ \begin{cases}\tfrac12,&\rho<\rho_*(\beta),\\0,&\rho>\rho_*(\beta).
+ \end{cases}
+ \tag{16.5}
+```
+
+存在只使用  $`d,s`$  的同一组规则，在每条满足严格上侧条件的序列上
+实现错误率趋零；规则不需要  $`q,\beta,r`$ 。结论不涉及等号处的临界窗。
+
+式 (16.4) 的曲线及独立二项坐标的 Higher Criticism 边界是已知结果，
+见 [Mukherjee–Pillai–Lin，式 (6.1)、(6.4) 与定理 6.8(2)、6.10(2)](../../../Library/Dynamics/mukherjee2015binary.md)。
+其二项成功概率偏移对应这里的  $`r/2`$ ，文中强度参数对应  $`\rho/4`$ 。
+本定理的对象是带补偿的固定正支持及其两个实际方向观测律。
+
+**证明。** 首先由 (16.3) 得  $`\lambda/\ell\to\infty`$ 。取
+
+```math
+ \delta=(\ell/\lambda)^{1/4},\qquad
+ m_- =\lfloor(1-\delta)\lambda\rfloor,\quad
+ m_+ =\lceil(1+\delta)\lambda\rceil.
+ \tag{16.6}
+```
+
+只需考虑使  $`0\lt \delta\lt 1/2`$ 、 $`m_-\ge1`$  的充分大维数。
+
+（一）把有限观测与独立行样本耦合。对每个状态  $`x`$ ，预先取无限列
+ $`Y_{x,1},Y_{x,2},\ldots`$ ，各列内部及不同列之间全部独立，
+且  $`Y_{x,j}\sim K(x,\cdot)`$ 。由独立均匀起点出发，每次处于
+ $`x`$  就消费该列的下一项，得到精确的  $`K`$ -马尔可夫链。
+严格正性保证无限路径几乎必然访问每个状态无穷次，因此从无限路径
+提取每个状态的前  $`m`$  个后继，恰好恢复这些独立列。
+首访后继抽样是已知构造，见
+[Wolfer–Kontorovich，§6.1.1–6.1.2](../../../Library/Dynamics/wolfer2020identity.md)，
+其中也明确区分无限样本与有限期覆盖事件。
+
+对两个实际核均有  $`K^2=\Pi`$ 。所以偶数时刻状态相互独立均匀，
+奇数时刻状态也相互独立均匀；这不要求两个子序列之间独立。
+令  $`V_x=\sum_{j=0}^{s-1}{\bf1}_{\{X_j=x\}}`$  为出发次数。
+分别对两个子序列用二项 Chernoff 界，再对状态取并集，得绝对常数
+ $`c,C\gt 0`$  使
+
+```math
+ \sup_{S,\varepsilon}
+ \Pr\{\max_x|V_x-\lambda|>\delta\lambda\}
+ \le Cn\exp(-c\delta^2\lambda)=:\epsilon_M\longrightarrow0.
+ \tag{16.7}
+```
+
+整数舍入可吸收到常数中。独立相邻对的出发状态为独立均匀样本，
+满足同一界。因  $`\delta^2\lambda/\ell=\sqrt{\lambda/\ell}\to\infty`$ ，
+最后的极限成立。
+
+令  $`B_m^c(S)`$  表示  $`M`$  行、每行  $`m`$  个相互独立符号的乘积律，
+其行均值在  $`S`$  为  $`r`$ ，在  $`C_+\setminus S`$  为  $`-a`$ ；
+令  $`B_m^0`$  为全部公平符号的乘积律。从实际观测的每个正类出发状态
+提取前  $`m_-`$  个后继奇偶符号；次数不足时输出固定后备值。
+在正向律下，该输出距  $`B_{m_-}^c(S)`$  的总变差不超过  $`\epsilon_M`$ 。
+在反向律下，精确恒等式
+
+```math
+ \sum_y\chi(y)P_S^{\mathsf T}(x,y)
+ =\frac1n\sum_y\chi(y)+\frac{\chi(x)}n\sum_y b_S(y)=0
+ \tag{16.8}
+```
+
+表明每行提取符号均公平，所以输出距  $`B_{m_-}^0`$  不超过
+ $`\epsilon_M`$ 。这些都是与无限独立列的无条件耦合界；没有在覆盖
+事件条件下宣称行样本独立。
+
+反过来，给定  $`m_+`$  行长的正类符号，可模拟正向观测：在正类
+状态消费该行下一符号，再在对应奇偶类均匀选后继；在负类状态直接
+均匀选后继。路径从均匀状态开始，相邻对则每次独立均匀选出发状态。
+耗尽某行时输出固定后备观测。输入为  $`B_{m_+}^c(S)`$  时，
+输出与真实正向律的总变差至多  $`\epsilon_M`$ ；输入为
+ $`B_{m_+}^0`$  时，与完全均匀参考观测律  $`U_{\mathcal E}`$  的距离
+亦至多  $`\epsilon_M`$ 。模拟规则本身不使用  $`S,r`$ 。
+把输出的整条路径反序或交换每对的两端，即得到相应反向比较。
+
+（二）去掉背景补偿。令  $`B_m^u(S)`$  把非信号行改为公平符号，
+保留信号行均值  $`r`$ 。对  $`m=m_-`$  或  $`m_+`$ ，相对熵精确为
+
+```math
+ D(B_m^c(S)\Vert B_m^u(S))
+ =m(M-q)\phi(a)
+ =O\!\left(\frac{mr^2q^2}{M}\right)
+ =M^{1-2\beta+o(1)}\ell\longrightarrow0.
+ \tag{16.9}
+```
+
+由 Pinsker，不论固定  $`S`$  还是均匀固定基数混合，两者总变差均趋零。
+以下只需分析  $`B_m^u(S)`$ ，其中  $`m/\lambda\to1`$ 。
+
+（三）所需二项尾的对数精度。若  $`Z=m^{-1/2}\sum_{j=1}^m B_j`$ ，
+符号均值为  $`u`$ ，且  $`m/\ell\to\infty`$ 、
+ $`\sqrt m\,u/\sqrt{2\ell}\to c_0\ge0`$ ，则对固定  $`t\gt 0`$ ，
+
+```math
+ \Pr_u\{Z\ge\sqrt{2t\ell}\}
+ =M^{-(\sqrt t-c_0)_+^2+o(1)},\qquad
+ \Pr_u\{Z\le\sqrt{2t\ell}\}
+ =M^{-(c_0-\sqrt t)_+^2+o(1)}.
+ \tag{16.10}
+```
+
+阈值参数  $`t_M\to t\gt 0`$  也成立。这里仅需对数误差  $`o(\ell)`$ 。
+事实上，对小  $`u,v`$ ，
+ $`D(\operatorname{Rad}(v)\Vert\operatorname{Rad}(u)) =(v-u)^2/2+O((|u|+|v|)^4)`$ 。在所需尺度上，乘以  $`m`$  后的余项
+为  $`O(\ell^2/m)=o(\ell)`$ 。Chernoff 给出相应上界。
+下界可倾斜到均值
+ $`v=\max\{u,\sqrt{2t\ell/m}+3/\sqrt m\}`$ ，并限制样本均值
+落在  $`[v-2/\sqrt m,v+2/\sqrt m]`$ 。该区间由 Chebyshev 至少有
+ $`3/4`$  的倾斜概率，且位于上尾事件内。区间上的对数似然变化及
+倾斜中心移动仅付出  $`O(\sqrt\ell+1)=o(\ell)`$ 。
+下尾用对应的最小值和负向移动。此论证不产生  $`\log m`$  的前因子，
+故允许  $`r`$  以任意快的速度趋零。由 (16.3)，余项也可写成
+ $`O(r^2\ell)=o(\ell)`$ ，无须假设  $`r\ell\to0`$ 。
+
+（四）未知稀疏度和振幅的规则。令  $`m=m_-`$ ，各行统计量为
+ $`Z_x=m^{-1/2}\sum_j B_{x,j}`$ 。对  $`0\lt t\le1`$ ，以  $`C_t`$
+计数满足  $`Z_x\ge\sqrt{2t\ell}`$  的行，令  $`p_0(t)`$  为
+公平符号的精确二项尾概率。信号行相应概率  $`p_1(t)`$  满足
+
+```math
+ p_0(t)=M^{-t+o(1)},\qquad
+ p_1(t)=M^{-g(t,\rho)+o(1)},\quad
+ g(t,\rho)=(\sqrt t-\sqrt\rho)_+^2.
+ \tag{16.11}
+```
+
+因此均值超额为  $`q(p_1-p_0)=M^{1-\beta-g+o(1)}`$ ，
+零假设下方差不超过  $`Mp_0`$ ，备择下方差不超过  $`Mp_0+qp_1`$ 。
+足够的幂次裕量为
+
+```math
+ F(t)=\tfrac12-\beta+\tfrac t2-(\sqrt t-\sqrt\rho)_+^2>0.
+ \tag{16.12}
+```
+
+当  $`\rho\le1/4`$  时最大值在  $`t=4\rho`$ ，为
+ $`1/2-\beta+\rho`$ ；当  $`\rho\gt 1/4`$  时在  $`t=1`$ ，为
+ $`1-\beta-(1-\sqrt\rho)_+^2`$ 。最大值严格为正等价于
+ $`\rho\gt \rho_*(\beta)`$ 。
+
+具体地，置  $`J=\lceil\ell\rceil`$ 、 $`t_j=j/J`$ ，计算
+
+```math
+ H=\max_{1\le j\le J}
+ \frac{C_{t_j}-Mp_0(t_j)}{\sqrt{Mp_0(t_j)+1}},
+ \qquad \psi=\begin{cases}+,&H>\ell,\\-,&H\le\ell.\end{cases}
+ \tag{16.13}
+```
+
+公平乘积律下，Chebyshev 与并集界给出
+ $`\Pr\{H\gt \ell\}\le J/\ell^2\to0`$ 。在严格上侧，选网格点
+趋向一个满足 (16.12) 的固定  $`t`$ 。其标准化均值超额按正幂增长，
+且  $`(Mp_0+qp_1)/[q(p_1-p_0)]^2\to0`$ ，所以
+ $`\Pr\{H\gt \ell\}\to1`$ 。式 (16.9) 与无条件行提取分别将这两个
+结论送回实际正向和反向观测。各界对  $`S`$  一致，得到 (16.5) 的上侧。
+小维数的无效行长情形可任意定义规则，不影响极限。
+
+（五）固定支持先验的下界。取  $`S`$  在全部  $`q`$  元子集上均匀，
+只抽一次并用于全部观测。两个独立支持的交叠  $`J_0=|S\cap T|`$
+为超几何变量，记  $`\eta=q^2/M`$ 。由核的精确 Gram 恒等式，
+对两个实验及每个方向都成立
+
+```math
+ 1+\chi^2(\overline P_{\mathcal E}^{\varepsilon},U_{\mathcal E})
+ =\mathbb E(1+\theta(J_0-\eta))^s,
+ \qquad \theta=\frac{r^2M^2}{n(M-q)^2}.
+ \tag{16.14}
+```
+
+该恒等式亦可直接验证：令  $`T(x,y)=nP_S(x,y)P_T(x,y)`$ 。
+每列之和均为  $`1+\theta(J_0-\eta)`$ ，因为
+ $`\sum_x\chi(x)(b_S(x)+b_T(x))=0`$ 。故均匀行向量是
+ $`T`$  的左特征向量，得到路径乘积；同时转置两个核只把
+ $`T`$  转置，不改均匀端点的矩阵乘积。独立对则逐对相乘。
+
+对  $`z\ge1`$ ，用超几何阶乘矩展开得
+ $`\mathbb E z^{J_0}\le(1+(q/M)(z-1))^q\le e^{\eta(z-1)}`$ 。
+令  $`\tau=s\theta=2\rho\ell(1+o(1))`$ ，有
+
+```math
+ 1+\chi^2\le\exp\{\eta(e^\tau-1-\tau)\}\longrightarrow1
+ \quad\text{若 }\rho<\beta-\tfrac12.
+ \tag{16.15}
+```
+
+这给出  $`\beta\le3/4`$  的全部严格下侧。
+
+对  $`\beta\gt 3/4`$ ，在  $`m=m_+`$  的无补偿乘积实验中，单行似然比为
+ $`L_x=\prod_{j=1}^m(1+rB_{x,j})`$ 。定义
+ $`A_x=\{Z_x\le\sqrt{2\ell}\}`$ ，对支持混合似然  $`L`$  作截断
+
+```math
+ \widetilde L=\binom Mq^{-1}
+  \sum_{|S|=q}\prod_{x\in S}L_x{\bf1}_{A_x}\le L.
+ \tag{16.16}
+```
+
+记  $`a_1=\mathbb E_0 L_x{\bf1}_{A_x}=\Pr_r(A_x)`$ 。
+当  $`\rho\lt \rho_*(\beta)\lt 1`$  时，由 (16.10)，
+ $`q\Pr_r(A_x^c)=M^{1-\beta-(1-\sqrt\rho)^2+o(1)}\to0`$ ，
+所以  $`\mathbb E_0\widetilde L=a_1^q\to1`$ 。二次倾斜精确给出
+
+```math
+ a_2:=\mathbb E_0L_x^2{\bf1}_{A_x}
+ =(1+r^2)^m\Pr_{r_2}(A_x),\quad r_2=\frac{2r}{1+r^2},
+ \qquad a_2=M^{\kappa(\rho)+o(1)},\quad
+ \kappa(\rho)=2\rho-(2\sqrt\rho-1)_+^2.
+ \tag{16.17}
+```
+
+利用同一固定基数交叠律，
+
+```math
+ \mathbb E_0\widetilde L^2
+ =\mathbb E[a_1^{2(q-J_0)}a_2^{J_0}]
+ \le\exp\{\eta(\max\{1,a_2\}-1)\}\longrightarrow1.
+ \tag{16.18}
+```
+
+最后极限的指数条件在  $`\rho\le1/4`$  时由
+ $`1-2\beta+2\rho\lt 0`$  给出；在  $`\rho\gt 1/4`$  时化为
+ $`1-2\beta+\kappa(\rho)=2(2\sqrt\rho-\rho-\beta)\lt 0`$ ，
+恰由所论严格下侧给出。于是
+ $`\mathbb E_0|L-1|\le\mathbb E_0(L-\widetilde L) +\mathbb E_0|\widetilde L-1|\to0`$ 。
+此处先验只有正振幅，故没有把较大有符号备择类的下界直接用于其子类。
+
+由 (16.9) 和  $`m_+`$  模拟器的总变差收缩，实际正向混合趋近
+ $`U_{\mathcal E}`$ ；反序给出反向混合的同一结论。因此两方向混合的
+总变差趋零，任意规则的最坏错误率至少为其等先验 Bayes 错误率
+ $`(1-\operatorname{TV}(\overline P^+,\overline P^-))/2\to1/2`$ 。
+独立公平猜方向给出上界  $`1/2`$ ，完成严格下侧。∎
+
+**定理 16.3（按需补齐的有限样本实验比较）。** 对定义 16.1 的
+两个实验，每一维的参数集为所有  $`(S,\varepsilon)`$ ，其中  $`q,r`$
+给定。令
+ $`A=q\phi(r)+(M-q)\phi(a)`$ 。对任意  $`s\ge1`$ ，其 Le Cam 距离满足
+
+```math
+ \Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})
+ \le\sqrt{\sqrt\lambda\,A}.
+ \tag{16.19}
+```
+
+这里  $`\Delta`$  是两个方向 deficiency 的最大值，deficiency 以
+参数无关随机映射后的最坏总变差定义。两个比较映射只使用  $`d,s`$ ，
+不使用  $`S,\varepsilon,q,r`$ 。特别地，在 (16.3) 之外再有
+
+```math
+ qr\sqrt\ell\longrightarrow0,
+ \tag{16.20}
+```
+
+就有  $`\Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})\to0`$ 。
+式 (16.20) 是本比较给出的充分条件。
+
+**证明。** 从源观测中按出发状态分组，并保留每行目的状态的原次序，
+得到第  $`x`$  行的  $`V_x`$  个样本。模拟目标实验时，各行的读取位置
+重新从第一项开始；目标路径使用新的独立均匀起点，目标相邻对使用
+新的独立均匀出发状态序列。请求的行尚有已观察项时直接重放它；
+耗尽时才补一个独立均匀目的状态并继续。输出目标观测。
+这是不依赖未知参数的随机映射，不设置覆盖失败事件。
+
+固定真实核  $`K=K_\vartheta`$ ，另定义理想比较：源观测仍真实，
+但耗尽后按  $`K(x,\cdot)`$  而非均匀律补齐。无限独立行列的延迟
+揭示构造表明，给定全部有限源观测，尚未请求的各行尾部仍按原行律
+条件独立。因为源路径每次请求哪一行仅由起点和此前已揭示值决定，
+包括末状态在内的有限路径不会检视未请求项；独立相邻对的请求次序
+则由独立出发状态序列决定。因此，按真实行律补回未观察尾部后，
+完整无限行列具有原来的无条件乘积律。使用新的独立目标起点或出发
+状态序列重放这些列，所得目标边缘恰好为真实目标实验。
+
+记理想联合律为  $`J_K`$ ，均匀补齐的联合律为  $`J_U`$ ，联合观测
+包含源和目标两部分。两者的源律以及目标起点或出发状态的随机性
+相同；重放项在给定源与目标过去后确定；只有新补项的条件律不同。
+令  $`W_x`$  为目标实验从  $`x`$  出发的总次数。相对熵链式法则给出
+
+```math
+ D(J_K\Vert J_U)
+ =\sum_x\mathbb E_{J_K}(W_x-V_x)_+
+       D(K(x,\cdot)\Vert\mathrm{Unif}).
+ \tag{16.21}
+```
+
+每行新增项恰有  $`(W_x-V_x)_+`$  个；请求该项的事件在揭示它之前
+已确定，故其条件期望贡献就是对应行的相对熵。
+
+理想联合律下，源和目标的边缘均真实平稳，故
+ $`\mathbb EV_x=\mathbb EW_x=\lambda`$ 。不要求这两个计数独立。
+均值相等及 Cauchy–Schwarz 给出
+
+```math
+ \mathbb E(W_x-V_x)_+
+ =\tfrac12\mathbb E|W_x-V_x|
+ \le\tfrac12\bigl(\sqrt{\operatorname{Var}V_x}
+                      +\sqrt{\operatorname{Var}W_x}\bigr).
+```
+
+对独立相邻对，计数方差为  $`\lambda(1-1/n)\le\lambda`$ 。
+对路径，由  $`K^2=\Pi`$ ，相距至少二步的状态指示函数协方差为零，
+而  $`K(x,x)=(1+b_S(x))/n`$  在转置下不变，所以
+
+```math
+ \operatorname{Var}V_x
+ =\lambda(1-1/n)+\frac{2(s-1)b_S(x)}{n^2}
+ \le\lambda(1+1/n)\le2\lambda.
+```
+
+无论比较方向如何，均有
+ $`\mathbb E(W_x-V_x)_+\le(1+\sqrt2)\sqrt\lambda/2 \le2\sqrt\lambda`$ 。另一方面，
+
+```math
+ \sum_xD(K_\vartheta(x,\cdot)\Vert\mathrm{Unif})
+ =q\phi(r)+(M-q)\phi(a)=A.
+```
+
+正向逐行计算即可；反向相同是因为对全部转移项的和在转置下不变。
+因此 (16.21) 不超过  $`2\sqrt\lambda A`$ 。舍去源观测，用数据处理
+和 Pinsker，目标律误差不超过  $`\sqrt{\sqrt\lambda A}`$ 。两比较
+方向均成立，得到 (16.19)。
+
+在 (16.3) 下， $`A=O(qr^2)`$  且
+ $`\sqrt\lambda A=O(qr\sqrt\ell)`$ 。式 (16.20) 因而使 (16.19)
+趋零。∎
+
+## 追加锚（本行以下为增补区）
+
+## 17. 增补十四·固定振幅稀疏方向边界与有限秩路径传递
+
+**定义 17.1（固定振幅、复合泊松坐标与相界）。** 沿用定义 16.1 的状态空间、
+奇偶类、两个观测实验与方向风险。固定 $`r\in(0,1)`$，令 $`d\to\infty`$、
+$`n=2^d=2M`$、$`\ell=\log M`$，取整数 $`q=q_d`$、$`s=s_d`$ 满足
+
+```math
+q=M^{1-\beta+o(1)},\qquad \frac12<\beta<1,\qquad
+\lambda=\frac{s}{n},\qquad
+\frac{\lambda}{\ell}\longrightarrow\alpha\in(0,\infty).
+\tag{17.1}
+```
+
+每个真实支持 $`S\subset C_+`$ 的大小恰为 $`q`$，在整个观测期间固定。
+背景补偿仍记作定义 16.1 的 $`a=rq/(M-q)`$，采样系数另记为 $`\alpha`$。
+于是
+
+```math
+b_S(x)=
+\begin{cases}
+r,&x\in S,\\[0pt]
+-a,&x\in C_+\setminus S,\\[0pt]
+0,&x\in C_-,
+\end{cases}
+\qquad
+P_S(x,y)=\frac{1+b_S(x)\chi(y)}{n},\qquad
+K_{S,+}=P_S,\quad K_{S,-}=P_S^{\mathsf T}.
+\tag{17.2}
+```
+
+两个真实核均以均匀平稳分布启动。独立对实验每次独立抽取其平稳相邻对；
+路径实验观察连续 $`s`$ 次转移。记 $`\mathbb P_{S,\varepsilon}^{\mathcal E}`$
+为相应概率律，$`U_{\mathcal E}`$ 为均匀参考律，且
+
+```math
+R_{\mathcal E}(d,s,q,r)
+=\inf_\psi\max_{\substack{S\subset C_+,\ |S|=q\\ \varepsilon\in\{+,-\}}}
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{\psi\ne\varepsilon\},
+\qquad \mathcal E\in\{\mathrm{pair},\mathrm{path}\}.
+\tag{17.3}
+```
+
+规则可知道 $`d,s,q,r`$，不知道真实支持和方向；允许随机化。
+
+定义以下函数，其中上确界取遍实数 $`\theta`$：
+
+```math
+\begin{aligned}
+g_r(\theta)&=\frac{(1+r)^\theta+(1-r)^\theta}{2}-1,\\[0pt]
+h_r(\theta)&=\frac{(1+r)^\theta-(1-r)^\theta}{2},\\[0pt]
+I_{\alpha,r}(x)&=\sup_{\theta\in\mathbb R}
+ \{\theta x-\alpha g_r(\theta)\},\\[0pt]
+c_r&=2g_r'(2)-r^2,\qquad
+\alpha_0=\frac1{c_r},\qquad
+\alpha_1=\frac1{\phi(r)}.
+\end{aligned}
+\tag{17.4}
+```
+
+当 $`\alpha_0\lt \alpha\lt \alpha_1`$ 时，以 $`x_{\alpha,r}`$
+表示满足 $`I_{\alpha,r}(x)=1`$、$`x\ge\alpha\phi(r)`$ 的根，并置
+
+```math
+B_r(\alpha)=
+\begin{cases}
+\displaystyle\frac12+\frac{\alpha r^2}{2},
+ &0<\alpha\le\alpha_0,\\[0pt]
+x_{\alpha,r},&\alpha_0<\alpha<\alpha_1,\\[0pt]
+1,&\alpha\ge\alpha_1.
+\end{cases}
+\tag{17.5}
+```
+
+根的存在唯一性与两处分支的相接性在定理 17.3 中证明。
+以单坐标对数似然及零假设尾尺度优化稀疏检验，是既有稀疏混合框架，
+参见 [Cai–Wu 的一般稀疏混合研究](../../../Library/Dynamics/caiwu2014sparse.md)。
+[Kotekal 的推论 1–2、式 (10)](../../../Library/Dynamics/kotekal2022sparse.md)
+进一步直接用零假设对数似然的良速率函数给出独立污染混合的相界。
+对本章的独立复合泊松比较坐标，其矩条件与连续性条件成立；
+将 $`I_{\alpha,r}`$ 代入该式即得 (17.5) 的标量曲线。
+下面保留率函数与优化的直接计算；上述独立混合结论不替代
+(17.3) 的固定基数支持和实际马尔可夫概率律。
+下述有限秩传递、补偿似然倾斜与方向风险结论属于本仓推导（repo-derived），
+上述统计方法属于已有方法（literature-attested），不作全球原创性断言。
+
+**定理 17.2（实际双向律的有限秩母函数与相对局部泊松估计）。**
+在 (17.1)–(17.2) 下，固定 $`k\in\{1,2\}`$，任取候选行集合
+$`R\subset C_+`$、$`|R|=k`$。对每行记录出发后到达正、负奇偶类的次数：
+
+```math
+N_{x,\sigma}
+=\sum_{t=0}^{s-1}
+ \mathbf1_{\{X_t=x,\ \chi(X_{t+1})=\sigma\}},
+\qquad x\in R,\quad \sigma\in\{+1,-1\}.
+\tag{17.6}
+```
+
+独立对实验以相同方式对样本对计数。固定任何真实支持 $`S`$ 和方向
+$`\varepsilon`$，记单次事件概率为 $`p_{x,\sigma}`$、
+$`\mu_{x,\sigma}=sp_{x,\sigma}`$。这些概率精确为
+
+```math
+p_{x,\sigma}=
+\begin{cases}
+\displaystyle\frac{1+\sigma b_S(x)}{2n},&\varepsilon=+,\\[0pt]
+\displaystyle\frac1{2n},&\varepsilon=-.
+\end{cases}
+\tag{17.7}
+```
+
+令 $`\nu_{R,K}`$ 为这些精确均值所确定的 $`2k`$ 个独立泊松变量的乘积律。
+对任意固定 $`C\gt 0`$，一致于真实支持、方向、候选行及所有非负整数元组
+$`m=(m_{x,\sigma})`$、$`\sum m_{x,\sigma}\le C\ell`$，两个实验均有
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{N=m\}
+=\nu_{R,K}\{m\}
+ \left(1+O_{r,\alpha,C,k}\left(\frac{\ell^{k+1}}n\right)\right).
+\tag{17.8}
+```
+
+此外，对任意固定 $`D\gt 0`$，存在固定 $`C_D`$，使两个概率律均满足
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \left\{\sum_{x,\sigma}N_{x,\sigma}>C_D\ell\right\}
++\nu_{R,K}\left\{\sum_{x,\sigma}N_{x,\sigma}>C_D\ell\right\}
+\le M^{-D}
+\tag{17.9}
+```
+
+于充分大的维度成立。因而对任意计数事件 $`E`$，
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}\{N\in E\}
+=\nu_{R,K}(E)
+ \left(1+O_{r,\alpha,k,D}\left(\frac{\ell^{k+1}}n\right)\right)
++O(M^{-D}),
+\tag{17.10}
+```
+
+这里的乘法误差与加法余项均一致于 $`E`$。两行事件的比较始终在同一个
+真实 $`(S,\varepsilon)`$ 下进行。
+
+证明。以下 $`\mathbb E f=n^{-1}\sum_xf(x)`$ 只表示状态空间上的均匀平均。
+由于 $`q/M\to0`$，充分大的维度有 $`a\le r\lt 1`$。正向核逐行积分给出
+(17.7) 的第一式。反向时 $`b_S`$ 只支持在正类且总和为零，所以
+
+```math
+\sum_{y\in C_\sigma}P_S^{\mathsf T}(x,y)
+=\frac1n\sum_{y\in C_\sigma}(1+\chi(x)b_S(y))
+=\frac12.
+\tag{17.11}
+```
+
+再乘出发状态的平稳质量 $`1/n`$，即得第二式；候选行是否属于真实支持不影响此式。
+
+先求路径母函数。对候选行置
+
+```math
+u_x=\frac{z_{x,+}+z_{x,-}}2-1,\qquad
+v_x=\frac{z_{x,+}-z_{x,-}}2,
+\tag{17.12}
+```
+
+在 $`R`$ 外令两者为零。每条边的标记因子为
+$`w_z(x,y)=1+u_x+v_x\chi(y)`$。
+记 $`T_z(x,y)=K(x,y)w_z(x,y)`$，则均匀起点给出精确恒等式
+
+```math
+F_{K,s}(z):=\mathbb E_{S,\varepsilon}^{\mathrm{path}}
+ \prod_{x,\sigma}z_{x,\sigma}^{N_{x,\sigma}}
+=\frac1n\mathbf1^{\mathsf T}T_z^s\mathbf1.
+\tag{17.13}
+```
+
+正向令 $`b=b_S`$。逐项相乘得
+
+```math
+T_z(x,y)=\frac{f_x+h_x\chi(y)}n,\qquad
+f=1+u+bv,\quad h=b+v+bu.
+\tag{17.14}
+```
+
+$`f-1`$ 和 $`h`$ 都只支持在 $`C_+`$，而 $`\mathbb E b=0`$。
+置 $`A=\mathbb E(u+bv)`$、$`B=\mathbb E(v+bu)`$。
+算子分解 $`T_z f_0=f\,\mathbb E f_0+h\,\mathbb E(\chi f_0)`$
+将所有幂次约化为
+
+```math
+F_{P_S,s}(z)=e_1^{\mathsf T}C_+(z)^se_1,\qquad
+C_+(z)=
+\begin{pmatrix}
+1+A&B\\[0pt]
+A&B
+\end{pmatrix},
+\qquad
+A=\sum_{x,\sigma}p_{x,\sigma}(z_{x,\sigma}-1).
+\tag{17.15}
+```
+
+确切地说，取 $`\mathcal V f_0=(\mathbb E f_0,\mathbb E(\chi f_0))^{\mathsf T}`$、
+$`\mathcal U(c_1,c_2)=c_1f+c_2h`$，则 $`T_z=\mathcal U\mathcal V`$、
+$`C_+=\mathcal V\mathcal U`$、$`\mathcal V\mathbf1=e_1`$，
+且均匀行向量乘 $`\mathcal U`$ 是 $`e_1^{\mathsf T}C_+`$；
+故 (17.15) 对每个 $`s\ge0`$ 成立。
+
+反向核为 $`K(x,y)=(1+\chi(x)b(y))/n`$。
+利用 $`b(y)\chi(y)=b(y)`$ 以及 $`R\subset C_+`$，现在有
+
+```math
+T_z(x,y)=\frac{f_x+h_x\chi(y)+j_xb(y)}n,\qquad
+f=1+u,\quad h=v,\quad j=\chi+u+v.
+\tag{17.16}
+```
+
+置 $`A=\mathbb E u`$、$`G=\mathbb E v`$、
+$`D_b=\mathbb E(bu)`$、$`E_b=\mathbb E(bv)`$。
+依次用线性泛函 $`\mathbb E`$、$`\mathbb E(\chi\,\cdot)`$、
+$`\mathbb E(b\,\cdot)`$ 配合列函数 $`f,h,j`$，得到
+
+```math
+F_{P_S^{\mathsf T},s}(z)=e_1^{\mathsf T}C_-(z)^se_1,\qquad
+C_-(z)=
+\begin{pmatrix}
+1+A&G&A+G\\[0pt]
+A&G&1+A+G\\[0pt]
+D_b&E_b&D_b+E_b
+\end{pmatrix},
+\qquad
+A=\sum_{x,\sigma}p_{x,\sigma}(z_{x,\sigma}-1).
+\tag{17.17}
+```
+
+该式也包括 $`s=0`$，因为三个泛函作用于常数一分别为 $`1,0,0`$。
+因此反向母函数确实来自真实反向核，并未以公平独立行模型替代路径。
+
+现固定任意复多圆盘 $`|z_{x,\sigma}|\le R_0`$。
+两矩阵分别满足 $`C_\pm=C_{\pm,0}+O_{r,k,R_0}(n^{-1})`$，其中
+
+```math
+C_{+,0}=
+\begin{pmatrix}1&0\\[0pt]0&0\end{pmatrix},
+\qquad
+C_{-,0}=
+\begin{pmatrix}
+1&0&0\\[0pt]
+0&0&1\\[0pt]
+0&0&0
+\end{pmatrix}.
+\tag{17.18}
+```
+
+这里的估计只用候选行数固定及 $`|b|\le r`$，与真实支持大小无关。
+两个基准矩阵在特征值一处的左右特征向量均为 $`e_1`$；
+反向矩阵在零处有一个二阶幂零块。
+
+取复谱平面中的两条固定围道 $`|\zeta-1|=1/4`$ 与 $`|\zeta|=1/2`$。
+基准预解式在两围道上有一致有限范数。将
+
+```math
+(\zeta I-C_\pm)^{-1}
+=(\zeta I-C_{\pm,0})^{-1}
+\left[I-(C_\pm-C_{\pm,0})(\zeta I-C_{\pm,0})^{-1}\right]^{-1}
+\tag{17.19}
+```
+
+中的最后一项展开为一致收敛的 Neumann 级数，得到解析谱投影
+$`\mathcal P_\pm(z)=e_1e_1^{\mathsf T}+O(n^{-1})`$。
+第一条围道内始终只有一个简单特征值 $`\Lambda_\pm(z)`$。
+解析展开的一次项由基准左右特征向量给出，即矩阵扰动的第一对角元 $`A`$。
+由一致收敛的二次及以上项，
+
+```math
+\Lambda_\pm(z)=1+A(z)+O(n^{-2}),\qquad
+\kappa_\pm(z):=e_1^{\mathsf T}\mathcal P_\pm(z)e_1=1+O(n^{-1}).
+\tag{17.20}
+```
+
+这些解析对象在整个固定多圆盘上定义，包括 $`z_j=0`$；
+不要求标记变量靠近一。对第二条围道积分 $`\zeta^s`$ 乘预解式，得到
+
+```math
+F_{K,s}(z)
+=\kappa_\pm(z)\Lambda_\pm(z)^s+\mathcal R_{\pm,s}(z),
+\qquad
+|\mathcal R_{\pm,s}(z)|\le C2^{-s}.
+\tag{17.21}
+```
+
+此处直接控制整个剩余谱投影，不要求零附近特征值彼此分离或矩阵可对角化。
+在一附近取解析对数，(17.20) 给出
+$`\log\Lambda_\pm=A+O(n^{-2})`$，从而
+
+```math
+\left|F_{K,s}(z)-e^{sA(z)}\right|
+\le C\left(\frac1n+\frac{s}{n^2}\right)
+ \exp\left\{s\operatorname{Re}A(z)+C\frac{s}{n^2}\right\}
++C2^{-s}.
+\tag{17.22}
+```
+
+因 $`s\asymp n\ell`$、$`|sA|\le C\ell`$，最后的指数小项可吸收到
+$`C\ell n^{-1}\exp(s\operatorname{Re}A)`$ 中。记 $`j=(x,\sigma)`$，
+得到本证明所需的带符号误差界
+
+```math
+\left|F_{K,s}(z)-\exp\!\left(\sum_j\mu_j(z_j-1)\right)\right|
+\le C\frac{\ell}{n}
+ \exp\!\left(\sum_j\mu_j(\operatorname{Re}z_j-1)\right).
+\tag{17.23}
+```
+
+独立对的精确母函数为 $`(1+A(z))^s`$，
+由 $`\log(1+A)=A+O(n^{-2})`$ 得到相同界。
+
+接着提取系数。固定 $`\sum_jm_j\le C\ell`$，选择
+
+```math
+\rho_j=\frac{\max(m_j,1)}{\mu_j},\qquad
+\mu_j\asymp_{r,\alpha}\ell.
+\tag{17.24}
+```
+
+所有半径都有固定上界；某些半径可为 $`O(\ell^{-1})`$，但 (17.23)
+已经在包含零的整个多圆盘上成立。Cauchy 系数公式和
+$`\operatorname{Re}z_j\le\rho_j`$ 给出
+
+```math
+\left|\mathbb P\{N=m\}-\nu_{R,K}\{m\}\right|
+\le C\frac{\ell}{n}
+ \exp\!\left(\sum_j\mu_j(\rho_j-1)\right)\prod_j\rho_j^{-m_j}.
+\tag{17.25}
+```
+
+除以正的泊松乘积质量，右边的相对因子为
+
+```math
+C\frac{\ell}{n}
+\prod_j\frac{e^{v_j}m_j!}{v_j^{m_j}},
+\qquad
+v_j=\max(m_j,1),\qquad
+\frac{e^{v_j}m_j!}{v_j^{m_j}}\le C\sqrt{m_j+1}.
+\tag{17.26}
+```
+
+最后一界由 Stirling 不等式及 $`m_j=0`$ 的直接计算得到。
+共有 $`2k`$ 个因子，故额外损失为 $`O(\ell^k)`$，证明 (17.8)。
+这里使用的是倾斜后泊松质量在鞍点处的多项式界，
+没有假定原来的稀有局部质量具有多项式对数下界。
+
+最后令所有 $`z_j=2`$。由于 $`\sum_jp_j=k/n`$，(17.22) 给出
+$`F_{K,s}(2,\ldots,2)\le2e^{k\lambda}`$ 于充分大的维度成立。
+Markov 不等式于是给出
+
+```math
+\mathbb P\left\{\sum_jN_j>C_D\ell\right\}
+\le2\exp\{k\lambda-C_D\ell\log2\}.
+\tag{17.27}
+```
+
+泊松乘积律有相同界且无前因子二。取 $`C_D`$ 使指数带有大于 $`D`$
+的固定裕量，即得 (17.9)。在有界计数区求和 (17.8)，再用 (17.9)
+处理补集，得到 (17.10)。所有常数均在固定多圆盘、固定候选行数上取得，
+故具有所述一致性。∎
+
+**定理 17.3（两个实际方向实验的固定振幅尖锐相界）。**
+定义 17.1 的 $`c_r`$ 严格大于 $`\phi(r)\gt 0`$，因此
+$`0\lt \alpha_0\lt \alpha_1`$，(17.5) 中的根存在唯一。
+$`B_r`$ 在正半轴连续，在 $`(0,\alpha_1)`$ 严格递增，
+当 $`\alpha\downarrow0`$ 时趋于 $`1/2`$，在 $`\alpha_1`$ 处达到一。
+对 (17.1) 的每条序列，两个实验均满足
+
+```math
+\lim_{d\to\infty}R_{\mathcal E}(d,s,q,r)=
+\begin{cases}
+0,&\beta<B_r(\alpha),\\[0pt]
+\displaystyle\frac12,&\beta>B_r(\alpha).
+\end{cases}
+\tag{17.28}
+```
+
+上界规则可以使用已知参数；本定理不要求参数适应性。
+等号 $`\beta=B_r(\alpha)`$、随维度趋向端点的振幅，
+以及两个完整实验的渐近等价性，均不在 (17.28) 的断言范围内。
+作为这条固定振幅相界自身的端点一致性，令
+
+```math
+\beta_0(r)=B_r(\alpha_0)
+=\frac12+\frac{r^2}{2c_r}.
+\tag{17.29}
+```
+
+则有
+
+```math
+\lim_{r\downarrow0}\beta_0(r)=\frac34,\qquad
+\lim_{r\uparrow1}\beta_0(r)
+=\frac12+\frac1{2(4\log2-1)}.
+\tag{17.30}
+```
+
+这些是参数曲线的极限，不把 (17.28) 的误差界升级为对变动振幅的一致结论。
+
+证明。以下固定 $`r`$，略去 $`g_r,I_{\alpha,r}`$ 中的相应下标。
+
+先确定率函数的几何。直接微分有
+
+```math
+\begin{gathered}
+g(0)=g(1)=0,\qquad g(2)=r^2,\qquad
+g'(0)=\tfrac12\log(1-r^2)<0,\qquad g'(1)=\phi(r)>0,\\[0pt]
+g''(\theta)
+=\tfrac12\left[(1+r)^\theta\log^2(1+r)
+ +(1-r)^\theta\log^2(1-r)\right]>0.
+\end{gathered}
+\tag{17.31}
+```
+
+$`g'`$ 从负无穷严格增至正无穷，因此对每个实数 $`x`$，
+上确界由唯一 $`\theta_x`$ 取得，且
+
+```math
+x=\alpha g'(\theta_x),\qquad
+I(x)=\theta_xx-\alpha g(\theta_x),\qquad I'(x)=\theta_x.
+\tag{17.32}
+```
+
+置 $`m_1=\alpha\phi(r)`$、$`x_2=\alpha g'(2)`$。由严格凸性，
+
+```math
+g'(2)>g(2)-g(1)=r^2,\qquad
+I(m_1)=m_1,\qquad I(x_2)=\alpha c_r.
+\tag{17.33}
+```
+
+函数 $`\theta g'(\theta)-g(\theta)`$ 在 $`[1,2]`$ 上的导数为
+$`\theta g''(\theta)\gt 0`$，故 $`c_r\gt \phi(r)`$。
+若 $`\alpha\lt \alpha_1`$，则 $`I(m_1)\lt 1`$，而 $`I`$ 在
+$`[m_1,\infty)`$ 上严格递增至无穷，故有唯一根 $`x_{\alpha,r}\gt m_1`$。
+由 $`I(x)\ge x`$，且此根的最优倾斜严格大于一，还有
+$`x_{\alpha,r}\lt 1`$。
+当 $`\alpha_0\lt \alpha\lt \alpha_1`$ 时，根在 $`(m_1,x_2)`$ 内，
+其倾斜参数记为 $`\theta_0\in(1,2)`$。
+
+在 $`\alpha=\alpha_0`$ 处，根等于 $`x_2`$，且
+
+```math
+\alpha_0g'(2)
+=\frac12+\frac{\alpha_0r^2}{2}.
+\tag{17.34}
+```
+
+当 $`\alpha\uparrow\alpha_1`$ 时，根及其倾斜趋于 $`1`$。
+中间分支隐式微分给出
+$`\partial_\alpha x_{\alpha,r}=g(\theta_0)/\theta_0\gt 0`$；
+结合线性分支即证相接性、连续性和严格递增性。
+
+下面构造上界规则。对每个正类候选行，使用得分
+
+```math
+Z_u=N_{u,+}\log(1+r)+N_{u,-}\log(1-r).
+\tag{17.35}
+```
+
+先在两个独立泊松计数下计算尾。以 $`Q_v`$ 表示均值
+$`\lambda(1+v)/2`$、$`\lambda(1-v)/2`$ 的乘积律，其中
+$`v=0,r,-a`$。精确地有
+
+```math
+\mathbb E_{Q_0}e^{\theta Z_u}=e^{\lambda g(\theta)},\qquad
+\frac{dQ_r}{dQ_0}=e^{Z_u},\qquad
+\mathbb E_{Q_r}e^{tZ_u}=e^{\lambda g(1+t)}.
+\tag{17.36}
+```
+
+固定 $`x\gt 0`$。记 $`p_0(x)=Q_0\{Z_u\ge x\ell\}`$、
+$`p_1(x)=Q_r\{Z_u\ge x\ell\}`$，则
+
+```math
+p_0(x)=M^{-t(x)+o(1)},\qquad
+p_1(x)=M^{-j(x)+o(1)},\qquad
+t(x)=I(x),\qquad
+j(x)=
+\begin{cases}
+0,&x\le m_1,\\[0pt]
+I(x)-x,&x\ge m_1.
+\end{cases}
+\tag{17.37}
+```
+
+这些对数精度不要求得分的两个跳幅构成非格点分布。
+为详证下界，把 $`Q_0`$ 倾斜为密度正比于 $`e^{\theta Z_u}`$
+的概率律；两个计数仍独立，均值分别为
+$`\lambda(1+r)^\theta/2`$ 和 $`\lambda(1-r)^\theta/2`$，
+得分均值、方差为 $`\lambda g'(\theta)`$、$`\lambda g''(\theta)`$。
+选择 $`\theta=\theta_M\to\theta_x`$，使均值在 $`x\ell`$ 上方
+一个固定充分大的 $`\sqrt\ell`$ 倍数。
+限制得分在该均值两侧 $`O(\sqrt\ell)`$ 的区间内，
+Chebyshev 不等式给出固定正的倾斜概率，且整个区间落在所需上尾。
+区间上的换测度指数为 $`-I(x)\ell+o(\ell)`$；
+Chernoff 界给出匹配上界。当 $`x\gt m_1`$ 时，对 $`Q_r`$
+以正参数 $`\theta-1`$ 倾斜，得相同的论证及率 $`I(x)-x`$。
+当 $`x\lt m_1`$ 时，均值与阈值相差正的 $`\ell`$ 倍数而方差为
+$`O(\ell)`$，故 $`p_1(x)\to1`$。
+在 $`x=m_1`$ 处，相同的轻微外向倾斜给出对数率零；
+此处不把 $`M^{o(1)}`$ 解释成概率趋一。
+这些论证也适用于趋向固定 $`x`$ 的确定性阈值数列。
+
+固定一个满足 $`0\lt t(x)\le1`$ 的阈值，记
+
+```math
+T_x=\sum_{u\in C_+}\mathbf1_{\{Z_u\ge x\ell\}},\qquad
+\epsilon_M=\frac{\ell^3}{n}.
+\tag{17.38}
+```
+
+在任意一个固定真实 $`(S,\varepsilon)`$ 下，令 $`p_u`$
+为定理 17.2 的该行泊松比较律给出的尾概率，$`\mu=\sum_up_u`$。
+取 (17.10) 的 $`D`$ 充分大，例如 $`D=8`$，分别对一行和两行应用，
+得实际均值与协方差界
+
+```math
+\begin{aligned}
+\mathbb E_{S,\varepsilon}^{\mathcal E}T_x
+ &=\mu+O(\epsilon_M\mu)+O(M^{1-D}),\\[0pt]
+\left|\operatorname{Cov}_{S,\varepsilon}^{\mathcal E}
+ \left(\mathbf1_{\{Z_u\ge x\ell\}},\mathbf1_{\{Z_v\ge x\ell\}}\right)\right|
+ &\le C\epsilon_Mp_up_v+CM^{-D}\qquad(u\ne v),\\[0pt]
+\operatorname{Var}_{S,\varepsilon}^{\mathcal E}T_x
+ &\le C\{\mu+\epsilon_M\mu^2\}+CM^{2-D}.
+\end{aligned}
+\tag{17.39}
+```
+
+第二行的乘积来自同一个两行泊松比较律；两条实际边缘也在同一
+$`(S,\varepsilon)`$ 下取值，所以相减后保留所示相对乘积误差。
+
+实际反向律下 $`p_u=p_0`$ 对所有正类行精确成立。令 $`\mu_0=Mp_0`$，
+采用规则
+
+```math
+\psi_x=
+\begin{cases}
++,&T_x>\mu_0+\ell^2\sqrt{\mu_0+1},\\[0pt]
+-,&T_x\le\mu_0+\ell^2\sqrt{\mu_0+1}.
+\end{cases}
+\tag{17.40}
+```
+
+这里 $`p_0`$ 是使用实际已知 $`\lambda`$ 的精确泊松尾。
+由于 $`\epsilon_M\mu_0=\ell^3M^{-t(x)+o(1)}/2\to0`$
+且 $`\epsilon_M\sqrt{\mu_0}\to0`$，(17.39) 的均值偏移小于
+(17.40) 的阈值裕量，方差除以 $`\ell^4(\mu_0+1)`$ 趋零。
+Chebyshev 不等式遂使反向误判概率一致趋零。
+
+实际正向的信号行概率为 $`p_1`$，背景概率记为 $`p_-=Q_{-a}\{Z_u\ge x\ell\}`$。
+在 $`N_++N_-\le C\ell`$ 上，
+
+```math
+\frac{dQ_{-a}}{dQ_0}
+=(1-a)^{N_+}(1+a)^{N_-}
+=1+O(a\ell),\qquad a\ell\longrightarrow0.
+\tag{17.41}
+```
+
+结合可调的高计数余项，可取足够大的 $`C`$ 使
+$`p_-=p_0(1+O(a\ell))+O(M^{-D})`$。
+因此泊松比较均值超额满足
+
+```math
+\begin{aligned}
+\Delta_M&=(M-q)p_-+qp_1-\mu_0\\[0pt]
+ &=q(p_1-p_0)+O(q\ell p_0)+O(M^{1-D})
+ \sim qp_1=M^{1-\beta-j(x)+o(1)}.
+\end{aligned}
+\tag{17.42}
+```
+
+最后一步使用 $`t(x)-j(x)\gt 0`$：
+当 $`x\ge m_1`$ 时该差为 $`x\gt 0`$，当 $`x\lt m_1`$ 时为 $`t(x)\gt 0`$。
+故补偿背景的总变化不能吞掉信号超额。
+
+定义足够的检验裕量
+
+```math
+F(x)=\frac12-\beta+\frac{t(x)}2-j(x).
+\tag{17.43}
+```
+
+若 $`F(x)\gt 0`$，则
+
+```math
+\frac{\Delta_M}{\sqrt{\mu_0+1}}=M^{F(x)+o(1)}\longrightarrow\infty,
+\qquad
+\Delta_M=M^{F(x)+(1-t(x))/2+o(1)}\longrightarrow\infty.
+\tag{17.44}
+```
+
+(17.39) 中额外的均值误差相对于 $`\Delta_M`$ 趋零，因为
+
+```math
+\epsilon_M\frac{\mu_0}{\Delta_M}
+=\frac{\ell^3}{2}M^{\beta-(t(x)-j(x))-1+o(1)}
+\longrightarrow0.
+\tag{17.45}
+```
+
+其方差除以 $`\Delta_M^2`$ 后，普通项由 (17.44) 消失；
+额外的两行误差满足
+
+```math
+\epsilon_M\frac{\mu_0^2}{\Delta_M^2}
+=\frac{\ell^3}{2}M^{-t(x)-2F(x)+o(1)}\longrightarrow0,
+\qquad \epsilon_M\longrightarrow0.
+\tag{17.46}
+```
+
+所以 (17.40) 的正向误判概率也一致趋零。
+这里使用了全部路径转移，并且始终控制同一实际支持下的均值与方差。
+
+对 $`\alpha\lt \alpha_1`$，在 $`m_1\le x\le x_{\alpha,r}`$
+内有 $`t(x)\le1`$、$`j(x)=I(x)-x`$，于是
+
+```math
+F(x)=\frac12-\beta+x-\frac{I(x)}2,\qquad
+\frac{d}{dx}\left(x-\frac{I(x)}2\right)=1-\frac{\theta_x}{2}.
+\tag{17.47}
+```
+
+当 $`\alpha\le\alpha_0`$ 时，最大值在 $`x=x_2`$，
+其正性恰为 $`\beta\lt 1/2+\alpha r^2/2`$；
+当 $`\alpha_0\lt \alpha\lt \alpha_1`$ 时，最大值在 $`x=x_{\alpha,r}`$，
+其正性恰为 $`\beta\lt x_{\alpha,r}`$。
+这包括 $`\alpha=\alpha_0`$ 且 $`\beta\lt \beta_0(r)`$ 的情形。
+阈值只需有严格正裕量；以已知 $`\lambda/\ell`$ 代替阈值公式中的
+极限系数，连续性及 (17.37) 保留该裕量。
+
+当 $`\alpha=\alpha_1`$ 时，取固定 $`0\lt x\lt 1`$ 充分接近一，使
+$`2\beta-1\lt I(x)\lt 1`$。此时 $`x\lt m_1=1`$，有 $`p_1\to1`$，
+且 (17.43) 严格为正，因此仍用 (17.40)。
+当 $`\alpha\gt \alpha_1`$ 时，选择 $`1\lt x\lt \alpha\phi(r)`$，
+改在 $`\max_{u\in C_+}Z_u\ge x\ell`$ 时报告正向。
+由 $`I(x)\ge x\gt 1`$、(17.10) 及并集界，实际反向越界概率至多
+
+```math
+M^{1-I(x)+o(1)}+O(M^{1-D})\longrightarrow0.
+\tag{17.48}
+```
+
+在实际正向任取一个真信号行，它的比较尾概率趋一，(17.10)
+使实际尾概率也趋一，所以该最大值规则的正向误判概率趋零。
+至此证明全部严格上侧。
+
+下界直接使用真实补偿似然。先给出本核所需的增长支持谱估计。
+对任意逐边权重
+
+```math
+T(x,y)=\frac{f(x)+h(x)\chi(y)}n,\qquad
+f=1,\ h=0\text{ 在 }C_-\text{ 上},
+\tag{17.49}
+```
+
+令 $`A=\mathbb E f-1`$、$`B=\mathbb E h`$。
+(17.15) 的同一分解给出精确恒等式
+
+```math
+Z_s(T):=\frac1n\mathbf1^{\mathsf T}T^s\mathbf1
+=e_1^{\mathsf T}
+\begin{pmatrix}1+A&B\\[0pt]A&B\end{pmatrix}^{s}e_1,
+\qquad
+\det(\zeta I-C)=\zeta^2-(1+A+B)\zeta+B.
+\tag{17.50}
+```
+
+若 $`|A|+|B|\le Cq/n`$，则 (17.19)–(17.21) 的固定二维围道论证给出：
+主根为 $`1+A+O(q^2/n^2)`$，其系数为 $`1+O(q/n)`$，
+剩余贡献为 $`O(2^{-s})`$，常数与支持和交叠无关。
+对实数且逐边严格正的权重，主根和主系数均为正；
+主项至少为 $`\tfrac12\exp(-Csq/n)`$，
+故指数小余项相对于主项也趋零。因而
+
+```math
+\log Z_s(T)
+=sA+O\left(\frac{sq^2}{n^2}+\frac qn\right)
+=sA+O\left(\frac{\ell q^2}{n}\right)
+=sA+o(1).
+\tag{17.51}
+```
+
+最后两式使用 (17.1) 和 $`\beta\gt 1/2`$，且误差一致于所有这样的权重。
+若 $`A,B=O(n^{-1})`$，同理误差为 $`O(\ell/n)`$。
+独立对的对应表达式精确为 $`(1+A)^s`$，满足相同估计。
+这一步只提取一个固定二维矩阵的谱，没有在增长的坐标维度上提取系数。
+
+现在在每个实验的均匀参考律下记
+
+```math
+L_S=\frac{d\mathbb P_{S,+}^{\mathcal E}}{dU_{\mathcal E}}
+=\prod_{\text{观测边 }(x,y)}(1+b_S(x)\chi(y)),\qquad
+\overline L=\binom Mq^{-1}\sum_{|S|=q}L_S.
+\tag{17.52}
+```
+
+这些全是真实补偿概率密度，故 $`\mathbb E_UL_S=\mathbb E_U\overline L=1`$。
+设 $`S,T`$ 为独立均匀 $`q`$ 元子集、$`J=|S\cap T|`$、$`\eta=q^2/M`$。
+精确计算给出
+
+```math
+c_{ST}:=\mathbb E(b_Sb_T)
+=\frac{r^2M^2}{n(M-q)^2}(J-\eta)=:\omega_M(J-\eta),
+\qquad
+\mathbb E_U L_SL_T=(1+c_{ST})^s.
+\tag{17.53}
+```
+
+为核对第二式，逐边乘积的行函数是
+$`f=1+b_Sb_T`$、$`h=b_S+b_T`$，所以 (17.50) 中
+$`A=c_{ST}`$、$`B=0`$，其第一对角幂恰为 $`(1+c_{ST})^s`$。
+独立对逐对积分给出同一式；它亦是定理 10.2 的特例。
+
+对 $`z\ge1`$，固定基数先验的阶乘矩给出
+
+```math
+\mathbb E\binom Jh
+=\binom qh\frac{(q)_h}{(M)_h}
+\le\binom qh\left(\frac qM\right)^h,\qquad
+\mathbb Ez^J
+\le\left(1+\frac qM(z-1)\right)^q
+\le e^{\eta(z-1)}.
+\tag{17.54}
+```
+
+因此置 $`\tau=s\omega_M=\alpha r^2\ell+o(\ell)`$，有
+
+```math
+\mathbb E_U\overline L^2
+\le e^{-\tau\eta}\mathbb Ee^{\tau J}
+\le\exp\{\eta(e^\tau-1-\tau)\}
+\longrightarrow1
+\quad\text{若 }1-2\beta+\alpha r^2<0.
+\tag{17.55}
+```
+
+结合一阶矩为一，得到 $`\mathbb E_U|\overline L-1|\to0`$。
+这证明 $`\alpha\le\alpha_0`$ 的全部严格下侧。
+
+余下设 $`\alpha_0\lt \alpha\lt \alpha_1`$ 且 $`\beta\gt x_0:=x_{\alpha,r}`$。
+以之前的 $`\theta_0\in(1,2)`$ 记
+
+```math
+x_0=\alpha g'(\theta_0),\qquad
+\theta_0x_0-\alpha g(\theta_0)=1,\qquad H=x_0\ell,
+\qquad
+\widetilde L=\binom Mq^{-1}
+ \sum_{|S|=q}L_S\mathbf1_{\{Z_x\le H\ \forall x\in S\}}.
+\tag{17.56}
+```
+
+先控制截去的一阶质量。对真实信号行 $`x\in S`$，
+$`L_Se^{(\theta_0-1)Z_x}`$ 的逐边权重在第 $`x`$ 行把
+$`1+r\chi(y)`$ 换为 $`(1+r\chi(y))^{\theta_0}`$，
+其余行保留真实补偿因子。
+原来 $`\mathbb E f=1`$、$`\mathbb E h=0`$，
+该行的改变量分别为 $`g(\theta_0)`$、$`h_r(\theta_0)-r`$，所以精确地有
+
+```math
+A=\frac{g(\theta_0)}n,\qquad
+B=\frac{h_r(\theta_0)-r}{n},\qquad
+\log\mathbb E_U\!\left[L_Se^{(\theta_0-1)Z_x}\right]
+=\lambda g(\theta_0)+O(\ell/n).
+\tag{17.57}
+```
+
+由 Chernoff 不等式及换测度，
+
+```math
+\mathbb P_{S,+}^{\mathcal E}\{Z_x>H\}
+\le e^{-(\theta_0-1)H+\lambda g(\theta_0)+O(\ell/n)}
+=M^{-(1-x_0)+o(1)}.
+\tag{17.58}
+```
+
+对 $`q`$ 个信号行取并集即得
+
+```math
+0\le1-\mathbb E_U\widetilde L
+\le qM^{-(1-x_0)+o(1)}
+=M^{x_0-\beta+o(1)}\longrightarrow0.
+\tag{17.59}
+```
+
+二阶矩中先删去交叠以外的截断条件。若交叠各行得分均不超过 $`H`$，
+由于 $`\theta_0-2\lt 0`$，逐点成立
+
+```math
+\mathbf1_{\{Z_x\le H\ \forall x\in S\cap T\}}
+\le
+\exp\left\{(2-\theta_0)JH
+ +(\theta_0-2)\sum_{x\in S\cap T}Z_x\right\}.
+\tag{17.60}
+```
+
+在交叠行，$`L_SL_T`$ 的因子原为 $`(1+r\chi(y))^2`$；
+乘入 (17.60) 的倾斜后，恰变为 $`(1+r\chi(y))^{\theta_0}`$。
+因此新的 $`f,h`$ 仍满足 (17.49)，且精确均值为
+
+```math
+\begin{aligned}
+A&=c_{ST}+\frac{J}{n}\{g(\theta_0)-r^2\},\\[0pt]
+B&=\frac{J}{n}\{h_r(\theta_0)-2r\}.
+\end{aligned}
+\tag{17.61}
+```
+
+补偿项不能直接删去；它满足以下统一误差式：
+
+```math
+\begin{aligned}
+c_{ST}-\frac{Jr^2}{n}
+&=\frac{r^2}{n}
+ \left[\left(\frac{M^2}{(M-q)^2}-1\right)J
+       -\frac{Mq^2}{(M-q)^2}\right]
+=O\left(\frac{q^2}{n^2}\right),\\[0pt]
+A&=\frac{Jg(\theta_0)}n+O\left(\frac{q^2}{n^2}\right),
+\qquad |A|+|B|=O(q/n),\qquad 0\le J\le q.
+\end{aligned}
+\tag{17.62}
+```
+
+所有逐边因子为正，故可应用 (17.51)。连同 (17.62) 得到真正需要的
+增长支持倾斜界
+
+```math
+\log\mathbb E_U\!\left[
+ L_SL_T
+ \exp\left\{(\theta_0-2)\sum_{x\in S\cap T}Z_x\right\}\right]
+=\lambda Jg(\theta_0)
+ +O\left(\frac{\ell q^2}{n}\right).
+\tag{17.63}
+```
+
+误差一致于整个 $`0\le J\le q`$，且为 $`o(1)`$；
+这里并未断言信号行相互独立。
+由 (17.60)、(17.63)，令
+
+```math
+w_M=\exp\{(2-\theta_0)H+\lambda g(\theta_0)\}
+=M^{2x_0-1+o(1)},
+\tag{17.64}
+```
+
+便有
+
+```math
+\begin{aligned}
+\mathbb E_U\widetilde L^2
+&\le
+\exp\left\{O\left(\frac{\ell q^2}{n}\right)\right\}
+ \mathbb E w_M^J\\[0pt]
+&\le
+\exp\left\{O\left(\frac{\ell q^2}{n}\right)
+ +\eta(\max\{1,w_M\}-1)\right\}
+\longrightarrow1.
+\end{aligned}
+\tag{17.65}
+```
+
+最后极限的重合指数为
+$`1-2\beta+(2x_0-1)=2(x_0-\beta)\lt 0`$。
+(17.64) 中的 $`o(1)`$ 是单个交叠坐标的幂次误差；
+将它保留在 $`w_M`$ 内再用精确交叠分布求平均，
+不把随 $`J`$ 增长的误差冒充统一 $`o(1)`$。
+真正统一的乘法误差是 (17.63) 的 $`\exp(O(\ell q^2/n))`$。
+
+由 (17.59)、(17.65) 及 $`0\le\widetilde L\le\overline L`$，
+
+```math
+\mathbb E_U|\overline L-1|
+\le 1-\mathbb E_U\widetilde L
+ +\sqrt{\mathbb E_U\widetilde L^2-2\mathbb E_U\widetilde L+1}
+\longrightarrow0.
+\tag{17.66}
+```
+
+所取支持先验始终是均匀固定 $`q`$ 元正支持，只抽一次并用于全部观测。
+两段下界均使真实正向混合在总变差下趋于 $`U_{\mathcal E}`$。
+均匀参考律在整条路径反序、或逐对交换两端下不变；
+真实补偿核双随机，故这些变换把其平稳正向律精确送到平稳反向律。
+于是反向混合也趋于同一个参考律。
+两方向混合的等先验 Bayes 错误率为
+
+```math
+\frac{1-\operatorname{TV}(\overline{\mathbb P}^{\mathcal E,+},
+                         \overline{\mathbb P}^{\mathcal E,-})}{2}
+\longrightarrow\frac12.
+\tag{17.67}
+```
+
+最坏风险不小于此 Bayes 风险，独立公平猜方向的最坏风险为 $`1/2`$，
+所以得到 (17.28) 的下侧。
+当 $`\alpha\ge\alpha_1`$ 时 $`B_r(\alpha)=1`$，
+给定 $`\beta\lt 1`$ 的范围内没有严格下侧。
+整个下界没有引入无补偿反向平稳链，也没有从一、两行边缘控制推断增长支持独立性。
+
+最后核对相界的端点。由 (17.33) 有 $`c_r\gt r^2`$，故
+$`1/2\lt \beta_0(r)\lt 1`$。在零附近作偶次 Taylor 展开，得到
+
+```math
+g_r(\theta)=\frac{\theta(\theta-1)}2r^2+O(r^4),\qquad
+g_r'(2)=\frac32r^2+O(r^4),\qquad c_r=2r^2+O(r^4),
+\tag{17.68}
+```
+
+其中展开只需在 $`\theta=2`$ 的固定邻域内取一致余项。
+代入 (17.29) 即得第一极限。
+当 $`r\uparrow1`$ 时，$`(1-r)^2\log(1-r)\to0`$，所以
+
+```math
+g_r'(2)
+=\frac{(1+r)^2\log(1+r)+(1-r)^2\log(1-r)}2
+\longrightarrow2\log2,\qquad
+c_r\longrightarrow4\log2-1.
+\tag{17.69}
+```
+
+再次代入 (17.29) 得到第二极限，完成证明。∎
+
+## 追加锚（本行以下为增补区）
+
+## 18. 增补十五·固定振幅稀疏支持恢复与方向分离
+
+**定义 18.1（支持损失、方向信息与恢复相界）。** 沿用定义 16.1、17.1
+的正负奇偶类、补偿核及两个实际平稳实验。固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$、$`\alpha\in(0,\infty)`$。
+沿 $`d\to\infty`$ 取整数数列 $`q=q_d,s=s_d`$，满足
+
+```math
+n=2^d=2M,\qquad \ell=\log M,\qquad
+q=M^{1-\beta+o(1)},\qquad \lambda=\frac{s}{n},\qquad
+\frac{\lambda}{\ell}\longrightarrow\alpha,\qquad
+a=\frac{rq}{M-q}.
+\tag{18.1}
+```
+
+未知支持属于 $`\mathfrak S_q=\{S\subset C_+:|S|=q\}`$，在全部观测期间固定。
+正向核为 $`P_S(x,y)=(1+b_S(x)\chi(y))/n`$，其中 $`b_S`$ 在
+$`S,C_+\setminus S,C_-`$ 上分别取 $`r,-a,0`$；反向核为
+$`P_S^{\mathsf T}`$。实验 $`\mathcal E=\mathrm{pair}`$ 观察
+$`s`$ 个独立均匀平稳相邻对，实验 $`\mathcal E=\mathrm{path}`$
+观察均匀起点后的 $`s`$ 次连续转移。观测保留每条边的先后次序；
+未知方向指生成概率律中的参数 $`\varepsilon\in\{+,-\}`$。
+
+记 $`\mathcal A_q`$ 为输出恰好 $`q`$ 个正类状态的随机化估计规则，
+$`\mathcal A`$ 为输出任意正类子集的随机化估计规则。两种 Hamming 损失分别为
+
+```math
+L_q(T,S)=\frac{|T\triangle S|}{2q}
+=1-\frac{|T\cap S|}{q}\quad(|T|=q),\qquad
+L_{\mathrm u}(T,S)=\frac{|T\triangle S|}{q}\quad(T\subset C_+).
+\tag{18.2}
+```
+
+方向已知时先固定正向，并定义
+
+```math
+\begin{aligned}
+H_{\mathcal E,q}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A_q}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_q(\widehat S,S),\\[0pt]
+H_{\mathcal E,\mathrm u}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_{\mathrm u}(\widehat S,S),\\[0pt]
+F_{\mathcal E}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb P_{S,+}^{\mathcal E}\{\widehat S\ne S\}.
+\end{aligned}
+\tag{18.3}
+```
+
+上标 $`\mathrm k`$ 表示方向已知。将三式中的最大值改为遍历
+$`(S,\varepsilon)\in\mathfrak S_q\times\{+,-\}`$，并令规则不知
+$`\varepsilon`$，分别得到方向未知的
+$`H_{\mathcal E,q}^{\mathrm o},H_{\mathcal E,\mathrm u}^{\mathrm o},F_{\mathcal E}^{\mathrm o}`$。
+联合恢复支持与方向时，对所有输出于
+$`2^{C_+}\times\{+,-\}`$ 的随机化规则取下确界，定义错误率
+
+```math
+J_{\mathcal E}
+=\inf_{(\widehat S,\widehat\varepsilon)}
+ \max_{S\in\mathfrak S_q,\ \varepsilon\in\{+,-\}}
+ \mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}.
+\tag{18.4}
+```
+
+此处及以下下确界均取遍相应随机化规则；规则可知道 $`d,s,q,r`$，不知道
+真实支持，只有上标 $`\mathrm k`$ 的规则还可知道真实方向。
+保留 (17.4) 的 $`g_r,I_{\alpha,r},\phi(r)=g_r'(1)`$ 与 (17.5) 的
+$`B_r`$，置
+
+```math
+\alpha_A(r,\beta)=\frac{\beta}{\phi(r)},\qquad
+\alpha_E(r,\beta)
+=\min_{0\lt\theta\lt1}\frac{1-\beta\theta}{-g_r(\theta)}.
+\tag{18.5}
+```
+
+受约束选择、无约束 Hamming 风险与精确恢复概率的区别，以及似然排序的先例，见
+[Butucea–Mammen–Ndaoud–Tsybakov](../../../Library/Dynamics/butucea2023selection.md)；
+几乎全恢复与精确恢复的高斯相界见
+[Butucea–Ndaoud–Stepanova–Tsybakov](../../../Library/Dynamics/butucea2018hamming.md)。
+这些独立坐标结果不提供本模型的路径联合计数律；下述证明使用完整实际似然与定理 17.2。
+
+**定理 18.2（已知方向下两种真实实验的尖锐支持恢复）。** 对 (18.1)
+的每条序列与 $`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，有
+
+```math
+\lim_{d\to\infty}H_{\mathcal E,q}^{\mathrm k}
+=\lim_{d\to\infty}H_{\mathcal E,\mathrm u}^{\mathrm k}
+=\begin{cases}
+0,&\alpha\gt\alpha_A(r,\beta),\\[0pt]
+1,&\alpha\lt\alpha_A(r,\beta),
+\end{cases}
+\qquad
+\lim_{d\to\infty}F_{\mathcal E}^{\mathrm k}
+=\begin{cases}
+0,&\alpha\gt\alpha_E(r,\beta),\\[0pt]
+1,&\alpha\lt\alpha_E(r,\beta).
+\end{cases}
+\tag{18.6}
+```
+
+最小值 (18.5) 由唯一的 $`\theta_E\in(0,1)`$ 取得。
+方程 $`I_{\alpha,r}(\beta)=1`$ 恰有两个正根，且
+
+```math
+\alpha_L(r,\beta)\lt\alpha_A(r,\beta)\lt\alpha_E(r,\beta),\qquad
+\alpha_Eg_r'(\theta_E)=\beta,\qquad
+\theta_E\beta-\alpha_Eg_r(\theta_E)=1.
+\tag{18.7}
+```
+
+因此精确恢复使用该方程的大根。已知反向具有相同风险与结论。
+上侧存在风险一致于真实支持趋零的规则；下侧是极小极大下界，不是任意规则
+在每个预先固定支持上均失败的逐点断言。在 $`\alpha\lt\alpha_A`$ 时，
+更有：对均匀固定基数支持先验，任意 $`q`$ 元输出规则的期望恢复比例趋零。
+本定理不包含两条恢复边界上的等号情形。
+
+证明。先处理真实正向律。以 (17.6) 的出发行计数定义
+
+```math
+\begin{aligned}
+W_x&=N_{x,+}\log\frac{1+r}{1-a}
+       +N_{x,-}\log\frac{1-r}{1+a},\qquad w_x=e^{W_x},\\[0pt]
+Z_x&=N_{x,+}\log(1+r)+N_{x,-}\log(1-r),\qquad x\in C_+.
+\end{aligned}
+\tag{18.8}
+```
+
+相对于均匀参考律 $`U_{\mathcal E}`$，两种实验的完整似然精确满足
+
+```math
+L_S
+=\prod_{\text{观测边 }(x,y)}(1+b_S(x)\chi(y))
+=C_a\prod_{x\in S}w_x,\qquad
+C_a=\prod_{\substack{\text{观测边 }(x,y)\\[0pt]x\in C_+}}
+ (1-a\chi(y)).
+\tag{18.9}
+```
+
+路径起点的均匀因子在密度比中相消。固定 $`q,r`$ 后，$`C_a`$ 与
+$`S`$ 无关；此处只使用代数公因子，不引入另一个平稳背景实验。
+特别地，(18.9) 不要求不同行计数独立。
+
+令 $`\Pi`$ 为 $`\mathfrak S_q`$ 上的均匀先验，$`e_j`$ 为基本对称多项式，
+$`e_0=1`$。后验质量与包含概率差为
+
+```math
+\Pi(S\mid\mathcal D)=\frac{\prod_{x\in S}w_x}{e_q(w)},\qquad
+\pi_x:=\Pi(x\in S\mid\mathcal D),\qquad
+\pi_x-\pi_y
+=\frac{(w_x-w_y)e_{q-1}(w_{-\{x,y\}})}{e_q(w)}.
+\tag{18.10}
+```
+
+最后一式通过分别求和包含两个、一个或零个指定位置的支持直接得到。
+所有权重均为正，且 $`1\le q\lt M`$，故差式中的乘数为正。
+因此最大的 $`q`$ 个得分组成的集合 $`T_q`$ 同时最大化后验支持质量与
+$`\sum_{x\in T_q}\pi_x`$。它分别是精确错误损失、受约束 Hamming
+损失的 Bayes 规则。对精确损失，输出非 $`q`$ 元集合的后验成功概率为零，
+故扩大输出类到 $`\mathcal A`$ 不改变该结论。
+
+在截断位置的并列得分中均匀选择所需子集。任意正类状态的置换作用于全部观测，
+把真实支持 $`S`$ 的实际概率律送到置换后支持的实际概率律；
+这对独立对与完整路径都成立。规则 $`T_q`$ 对置换等变，故其两种风险均不依赖
+$`S`$，等于均匀先验 Bayes 风险。任意规则的最坏风险不小于最小 Bayes 风险，
+所以 $`T_q`$ 对这两种已知方向损失还是有限样本极小极大规则。
+这里的后验排序不含“无约束 Bayes 输出必为 $`T_q`$ 的子集”这一附加断言。
+
+下面从定理 17.2 取得恢复所需的尾估计。对任意固定一行或两行及其任意计数事件
+$`E`$，在同一个固定真实 $`(S,\varepsilon)`$ 下，(17.10) 给出
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}(E)
+=\nu_{S,\varepsilon}(E)
+ \left(1+O\!\left(\frac{\ell^{k+1}}n\right)\right)+O(M^{-D}),
+\qquad k\in\{1,2\},\quad D\gt0.
+\tag{18.11}
+```
+
+常数一致于支持、标记行与事件，$`D`$ 可取任意固定正数。
+比较律的均值精确为 (17.7) 给出的均值；正向信号行对应
+$`Q_r`$，正向背景行对应 $`Q_{-a}`$，反向出发行对应 $`Q_0`$，其中
+$`Q_v`$ 表示均值为 $`\lambda(1+v)/2,\lambda(1-v)/2`$ 的两个
+独立 Poisson 计数的概率律。这里只在所标记的一行或两行比较律内使用独立性。
+
+由 (17.9)，总计数超过 $`C_D\ell`$ 的余项可以小于任意指定的
+$`M^{-D}`$。在有界计数区，
+
+```math
+|W_x-Z_x|=O(a\ell)=o(1),\qquad
+\frac{dQ_{-a}}{dQ_0}
+=(1-a)^{N_+}(1+a)^{N_-}=1+O(a\ell).
+\tag{18.12}
+```
+
+其中 $`a\ell\to0`$ 由 (18.1) 得到。
+选取余项指数大于待估尾概率的固定指数，可知背景补偿与得分修正均不改变其对数率。
+
+暂略 $`r`$ 的下标，令 $`m=\alpha\phi(r)`$、$`I=I_{\alpha,r}`$。
+辅助得分的母函数及换测度恒等式为
+
+```math
+\mathbb E_{Q_0}e^{\theta Z}=e^{\lambda g(\theta)},\qquad
+\frac{dQ_r}{dQ_0}=e^Z,\qquad
+\mathbb E_{Q_r}e^{tZ}=e^{\lambda g(1+t)}.
+\tag{18.13}
+```
+
+由 (17.31)–(17.33)，$`g''\gt0`$，$`g'`$ 从负无穷增至正无穷；
+每个实数 $`x`$ 对应唯一 $`\theta_x`$，使
+
+```math
+x=\alpha g'(\theta_x),\qquad
+I(x)=\theta_xx-\alpha g(\theta_x),\qquad
+I'(x)=\theta_x,\qquad I(m)=m,\qquad I(x)\ge x.
+\tag{18.14}
+```
+
+置 $`K(x)=I(x)-x`$。对 $`x\gt0`$，$`I`$ 严格递增；
+对 $`0\lt x\lt m`$，有 $`0\lt\theta_x\lt1`$，所以
+$`K'(x)=\theta_x-1\lt0`$。从 (18.13) 的指数倾斜得到
+
+```math
+\begin{aligned}
+Q_{-a}\{W\ge x\ell\}&=M^{-I(x)+o(1)},&&x\gt0,\\[0pt]
+Q_r\{W\le x\ell\}&=M^{-K(x)+o(1)},&&0\lt x\lt m,\\[0pt]
+Q_r\{W\ge x\ell\}&=M^{-K(x)+o(1)},&&x\gt m.
+\end{aligned}
+\tag{18.15}
+```
+
+同一零假设率也给出 $`Q_0\{Z\ge x\ell\}=M^{-I(x)+o(1)}`$。
+严格尾事件具有相同指数；阈值系数趋向固定 $`x`$ 时也成立。
+为说明下界与格点情形，先在 $`Q_0`$ 下按 $`e^{\theta Z}`$ 倾斜。
+倾斜后的计数仍为 Poisson，得分均值与方差分别为
+$`\lambda g'(\theta)`$、$`\lambda g''(\theta)`$。
+选取 $`\theta=\theta_M\to\theta_x`$，使均值位于目标阈值所需一侧、
+距离为一个充分大的固定常数乘 $`\sqrt\ell`$。均值附近宽度为
+$`O(\sqrt\ell)`$ 的区间由 Chebyshev 不等式获得固定正概率，且完全位于目标尾内。
+换回原测度的指数为 $`-I(x)\ell+o(\ell)`$，与 Chernoff 上界匹配。
+在信号律下使用倾斜参数 $`\theta_M-1`$，得到
+$`-K(x)\ell+o(\ell)`$。最后用 (18.12) 处理补偿。
+这一论证不要求两个得分跳幅的比值无理；并列与格点均不改变严格侧的指数。
+当 $`x\lt m`$ 时，信号位于阈值之上的概率趋一；当 $`x\gt m`$ 时，
+信号位于阈值之下的概率趋一，这也直接由均值和 $`O(\ell)`$ 方差得到。
+(18.11) 将所有这些单行结论传到实际实验，且一致于真实支持。
+
+对任意同一真实律下的行事件 $`E_x`$，在某个至多含 $`M`$ 行的集合上求和，
+记 $`T=\sum_x\mathbf1_{E_x}`$、$`p_x=\nu_x(E_x)`$、
+$`\mu=\sum_xp_x`$、$`\delta_M=\ell^3/n`$。分别应用 (18.11)
+的一行式与两行式，得到
+
+```math
+\begin{aligned}
+\mathbb ET&=\mu+O(\delta_M\mu)+O(M^{1-D}),\\[0pt]
+\left|\operatorname{Cov}(\mathbf1_{E_x},\mathbf1_{E_y})\right|
+ &\le C\delta_Mp_xp_y+CM^{-D}\quad(x\ne y),\\[0pt]
+\operatorname{Var}T&\le C(\mu+\delta_M\mu^2)+CM^{2-D}.
+\end{aligned}
+\tag{18.16}
+```
+
+乘积 $`p_xp_y`$ 来自同一真实 $`(S,\varepsilon)`$ 的两行比较律，
+不把不同真实支持下的边缘相乘。于是对任何固定 $`c\gt0`$，只要比较均值
+在所考察的真实支持与方向上一致满足下列下界，就有
+
+```math
+\mu\ge M^c\quad\Longrightarrow\quad
+T/\mu\longrightarrow1\quad\text{依概率，一致于真实支持与方向}.
+\tag{18.17}
+```
+
+取固定 $`D\gt4`$ 后，(18.16) 除以 $`\mu^2`$ 即可应用 Chebyshev。
+期望为 $`o(q)`$ 或 $`o(1)`$ 的计数则用一阶矩控制。
+
+现在证明几乎全恢复。若 $`m\gt\beta`$，选取固定
+$`\beta\lt x\lt m`$。令 $`F_x`$ 为背景行中满足
+$`W\ge x\ell`$ 的个数，$`G_x`$ 为信号行中满足
+$`W\le x\ell`$ 的个数。由 $`I(x)\ge x\gt\beta`$ 及信号尾，
+
+```math
+\mathbb EF_x
+\le M^{1-I(x)+o(1)}+O(M^{1-D})=o(q),\qquad
+\mathbb EG_x=o(q),\qquad
+q-|T_q\cap S|\le F_x+G_x.
+\tag{18.18}
+```
+
+最后一式是确定性的排序界，也覆盖截断位置的并列值。
+所以 $`T_q`$ 的两种归一化 Hamming 风险均一致趋零。
+
+若 $`m\lt\beta`$，由 $`I(m)=m`$ 与连续性，可选
+$`x\gt m`$ 使 $`I(x)\lt\beta`$。背景越界数的比较均值满足
+
+```math
+\mu_0=(M-q)M^{-I(x)+o(1)},\qquad
+\frac{\mu_0}{q}=M^{\beta-I(x)+o(1)}\longrightarrow\infty.
+\tag{18.19}
+```
+
+由 (18.17)，实际背景越界数至少为 $`q`$ 的概率一致趋一。
+在该事件上，$`T_q`$ 中每个得分都不低于 $`x\ell`$；
+而每个信号到达该阈值的概率趋零。因此
+
+```math
+\sup_{S\in\mathfrak S_q}
+\mathbb E_{S,+}^{\mathcal E}\frac{|T_q\cap S|}{q}
+\le o(1)+Q_r\{W\ge x\ell\}\longrightarrow0.
+\tag{18.20}
+```
+
+$`T_q`$ 的受约束 Bayes 与极小极大最优性证明
+$`H_{\mathcal E,q}^{\mathrm k}\to1`$；其 Bayes 最优性也证明任意
+$`q`$ 元输出在均匀先验下的期望恢复比例趋零。
+
+无约束 Hamming 风险需要另外处理。固定数据后，
+$`\sum_x\pi_x=q`$。令 $`J=\{x:\pi_x\ge1/2\}`$，则
+$`|J|\le2q`$；由 (18.10) 的后验排序，
+$`\sum_{x\in J}\pi_x\le2\sum_{x\in T_q}\pi_x`$。
+无约束未归一化条件 Bayes 风险恰为
+
+```math
+\inf_{T\subset C_+}\mathbb E_\Pi(|T\triangle S|\mid\mathcal D)
+=q-\sum_x(2\pi_x-1)_+,\qquad
+\sum_x(2\pi_x-1)_+
+\le2\sum_{x\in J}\pi_x
+\le4\sum_{x\in T_q}\pi_x.
+\tag{18.21}
+```
+
+取先验与观测的联合期望，右端末项等于
+$`4\mathbb E_\Pi|T_q\cap S|=o(q)`$，其中使用 (18.20)。
+故无约束 Bayes 风险除以 $`q`$ 至少为 $`1-o(1)`$，
+极小极大风险不小于它；恒为空集的规则又给出风险恰为 $`1`$。
+这证明 $`H_{\mathcal E,\mathrm u}^{\mathrm k}\to1`$。
+这个论证既不限制无约束输出的大小，也不假设 $`J\subset T_q`$。
+
+接着确定精确恢复相界。$`g(\theta)\lt0`$ 于 $`0\lt\theta\lt1`$，
+故 (18.5) 的目标函数为正，并在两端趋于正无穷。其导数的符号是
+
+```math
+h(\theta)=\beta g(\theta)+(1-\beta\theta)g'(\theta),\qquad
+h'(\theta)=(1-\beta\theta)g''(\theta)\gt0,\qquad
+h(0)=g'(0)\lt0,\quad h(1)=(1-\beta)\phi(r)\gt0.
+\tag{18.22}
+```
+
+所以唯一最小点为 $`h(\theta_E)=0`$。
+将 (18.5) 代入此等式即得 (18.7) 的两个鞍点恒等式，特别有
+$`\alpha_E\gt\alpha_A`$。
+令 $`\theta_0\in(0,1)`$ 为 $`g'(\theta_0)=0`$ 的唯一根。
+当 $`\alpha\gt\alpha_A`$ 时，$`I_{\alpha,r}(\beta)`$ 的最优参数
+位于 $`(\theta_0,1)`$，并且
+
+```math
+\frac{\partial}{\partial\alpha}I_{\alpha,r}(\beta)
+=-g_r(\theta_\beta)\gt0,\qquad
+I_{\alpha_A,r}(\beta)=\beta\lt1,\qquad
+I_{\alpha,r}(\beta)\ge\theta_0\beta-\alpha g_r(\theta_0)
+\longrightarrow\infty.
+\tag{18.23}
+```
+
+因此这一分支有唯一根，恰为 $`\alpha_E`$。
+当 $`0\lt\alpha\lt\alpha_A`$ 时，最优参数大于一，
+$`g_r(\theta_\beta)\gt0`$，同一导数公式为负。
+对任意固定 $`t\gt1`$，有
+$`I_{\alpha,r}(\beta)\ge t\beta-\alpha g_r(t)`$；
+先令 $`\alpha\downarrow0`$，再令 $`t\to\infty`$，可知该函数在零端趋于无穷。
+故还恰有一个小根 $`\alpha_L\lt\alpha_A`$。
+小根处 $`\beta`$ 在信号均值之上，不能用作信号下尾的精确恢复界。
+
+若 $`\alpha\gt\alpha_E`$，则
+$`\beta\lt m`$、$`I(\beta)\gt1`$、
+$`K(\beta)=I(\beta)-\beta\gt1-\beta`$。
+在同一真实正向律下用 (18.11)、(18.15) 及并集界，
+
+```math
+\begin{aligned}
+\mathbb P_{S,+}^{\mathcal E}
+ \{\exists x\in C_+\setminus S:W_x\ge\beta\ell\}
+ &\le M^{1-I(\beta)+o(1)}+O(M^{1-D})\longrightarrow0,\\[0pt]
+\mathbb P_{S,+}^{\mathcal E}
+ \{\exists x\in S:W_x\le\beta\ell\}
+ &\le M^{1-\beta-K(\beta)+o(1)}+O(M^{1-D})\longrightarrow0.
+\end{aligned}
+\tag{18.24}
+```
+
+所以所有信号得分严格高于所有背景得分的概率一致趋一，$`T_q`$ 精确恢复支持。
+
+反之设 $`\alpha\lt\alpha_E`$。若 $`m\le\beta`$，则
+$`I(m)=m\le\beta\lt1`$。可取固定
+$`m\lt u\lt v`$，使 $`I(v)\lt1`$。
+背景得分至少为 $`v\ell`$ 的比较期望数是
+$`M^{1-I(v)+o(1)}\to\infty`$，所以由 (18.17) 至少存在一个的概率趋一。
+任取一条真实信号行，它的得分不超过 $`u\ell`$ 的概率也趋一，因为
+$`u\gt m`$。两个事件在同一真实律下同时出现的概率由并集界趋一，
+且 $`u\lt v`$ 排除了并列的影响。
+
+余下为 $`\beta\lt m`$ 且 $`\alpha\lt\alpha_E`$。
+由 (18.23)，$`I(\beta)\lt1`$、$`K(\beta)\lt1-\beta`$。
+可取固定 $`0\lt u\lt\beta\lt v\lt m`$，使
+
+```math
+I(v)\lt1,\qquad K(u)\lt1-\beta,\qquad
+\mu_{\mathrm b}=M^{1-I(v)+o(1)}\longrightarrow\infty,\qquad
+\mu_{\mathrm s}=M^{1-\beta-K(u)+o(1)}\longrightarrow\infty.
+\tag{18.25}
+```
+
+这里 $`\mu_{\mathrm b}`$、$`\mu_{\mathrm s}`$ 分别是背景高于
+$`v\ell`$ 与信号低于 $`u\ell`$ 的比较期望计数。
+对两个计数分别用 (18.17)，再对失败事件取并集，可知二者同时为正的概率趋一。
+不需要两个计数彼此独立。两种情形都在真实律下以趋一概率产生严格倒序的信号与背景，
+从而 $`T_q\ne S`$。$`T_q`$ 的精确损失 Bayes 与极小极大最优性遂给出
+$`F_{\mathcal E}^{\mathrm k}\to1`$，而不只是某个特定规则的失败。
+
+最后，令 $`\mathcal R`$ 为整条路径反序或每个独立对交换两端。
+由均匀平稳性，
+
+```math
+\mathcal R_*\mathbb P_{S,-}^{\mathcal E}
+=\mathbb P_{S,+}^{\mathcal E}.
+\tag{18.26}
+```
+
+它不删去转移或端点。已知反向时先施以此变换，便得到相同的最优风险。
+上述上界均一致于 $`S`$；下界则通过固定基数均匀先验作用于所有规则。
+定理得证。∎
+
+**定理 18.3（未知方向的恢复与三种信息任务的严格分离）。** 在定义 18.1
+的假设下，两种实验都满足
+
+```math
+\lim_{d\to\infty}H_{\mathcal E,q}^{\mathrm o}
+=\lim_{d\to\infty}H_{\mathcal E,\mathrm u}^{\mathrm o}
+=\begin{cases}
+0,&\alpha\gt\alpha_A,\\[0pt]
+1,&\alpha\lt\alpha_A,
+\end{cases}
+\qquad
+\lim_{d\to\infty}F_{\mathcal E}^{\mathrm o}
+=\lim_{d\to\infty}J_{\mathcal E}
+=\begin{cases}
+0,&\alpha\gt\alpha_E,\\[0pt]
+1,&\alpha\lt\alpha_E.
+\end{cases}
+\tag{18.27}
+```
+
+设 $`\alpha_D(r,\beta)`$ 是 $`B_r(\alpha_D)=\beta`$ 的唯一解，则
+
+```math
+0\lt\alpha_D(r,\beta)
+\lt\alpha_A(r,\beta)=\frac{\beta}{\phi(r)}
+\lt\frac1{\phi(r)}\lt\alpha_E(r,\beta)\lt\infty.
+\tag{18.28}
+```
+
+因而在 $`\alpha_D\lt\alpha\lt\alpha_A`$ 区间，方向错误率可一致趋零，
+但两种支持 Hamming 极小极大风险均趋一；在
+$`\alpha_A\lt\alpha\lt\alpha_E`$ 区间，几乎全支持与方向可以同时恢复，
+而精确支持及联合恢复的极小极大错误率均趋一；在 $`\alpha\gt\alpha_E`$
+区间，联合精确错误率趋零。$`\alpha\lt\alpha_D`$ 时方向极小极大错误率趋于
+$`1/2`$，支持风险的下侧结论仍成立。
+
+此外，对固定 $`\beta\in(1/2,1)`$，标量相界函数满足
+
+```math
+\lim_{r\downarrow0}\frac{r^2\alpha_A(r,\beta)}2=\beta,\qquad
+\lim_{r\downarrow0}\frac{r^2\alpha_E(r,\beta)}2
+=(1+\sqrt{1-\beta})^2.
+\tag{18.29}
+```
+
+右端是上述高斯选择文献中的两条已知归一化相界。
+(18.29) 只给出固定振幅相界函数的端点极限；(18.27) 不包含随维数变化的
+$`r`$、未知 $`q,r`$ 的适应性、任何等号情形或两个完整实验的渐近等价性。
+精确恢复的未知方向结论采用错误概率，不把它加强为未归一化期望 Hamming 损失趋零。
+
+证明。先构造贯穿几乎全恢复区间的方向规则。设
+$`m=\alpha\phi(r)\gt\beta`$，选择固定 $`\beta\lt x\lt m`$，
+在原始观测上形成 (18.8) 的出发行辅助得分 $`Z_u`$，并置
+
+```math
+T_x=\sum_{u\in C_+}\mathbf1_{\{Z_u\ge x\ell\}},\qquad
+\widehat\varepsilon=
+\begin{cases}
++,&T_x\gt q/2,\\[0pt]
+-,&T_x\le q/2.
+\end{cases}
+\tag{18.30}
+```
+
+真实正向时，每条信号行低于阈值的概率趋零，所以未越界信号数的期望为
+$`o(q)`$，Markov 不等式给出正向错误概率趋零。
+真实反向时，(17.7) 的每条出发行比较律都精确为 $`Q_0`$，故
+
+```math
+\mathbb E_{S,-}^{\mathcal E}T_x
+=M^{1-I_{\alpha,r}(x)+o(1)}+O(M^{1-D})=o(q),\qquad
+\max_{S,\varepsilon}
+\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{\widehat\varepsilon\ne\varepsilon\}\longrightarrow0.
+\tag{18.31}
+```
+
+这里使用 $`I_{\alpha,r}(x)\ge x\gt\beta`$，再用 Markov 不等式。
+不必知道极限参数：取
+$`\beta_M=\log(M/q)/\ell`$、$`\alpha_M=\lambda/\ell`$，
+将阈值系数换为 $`x_M=(\beta_M+\alpha_M\phi(r))/2`$ 即可；
+它趋向严格位于 $`\beta,m`$ 之间的常数，(18.15) 的尾估计仍适用。
+
+估计方向为反向时对同一份数据施以 $`\mathcal R`$，然后按
+$`W`$ 取最大的 $`q`$ 行。记所得支持为 $`\widehat S`$，
+记真实方向已知时对同一数据应用该排序所得支持为 $`T_q^\varepsilon`$。
+在方向判断正确的事件上两者相同，而且二者始终输出 $`q`$ 元集合，所以逐点有
+
+```math
+\begin{aligned}
+L_q(\widehat S,S)
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_q(T_q^\varepsilon,S),\\[0pt]
+L_{\mathrm u}(\widehat S,S)
+ &\le2\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_{\mathrm u}(T_q^\varepsilon,S),\\[0pt]
+\mathbf1_{\{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}}
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +\mathbf1_{\{T_q^\varepsilon\ne S\}}.
+\end{aligned}
+\tag{18.32}
+```
+
+无需拆分样本，也无需对方向估计与排序规则假设独立。
+由定理 18.2 及 (18.31) 得到 (18.27) 的全部上侧。
+向估计者揭示真实方向只能降低风险，故已知方向的 Bayes 下界也给出
+未知方向的支持下界；联合错误至少包含支持错误，得到联合下界。
+受约束风险上界为一，无约束风险由空集规则给出上界一，精确与联合错误上界也为一，
+所以这些下界确实使相应极小极大风险趋一。
+
+由定理 17.3，$`B_r`$ 从 $`1/2`$ 连续严格递增到在
+$`\alpha_1=1/\phi(r)`$ 取得的一，故 $`\alpha_D`$ 存在唯一。
+为与恢复界严格比较，记 $`\alpha_0=1/c_r`$。
+当 $`0\lt\alpha\le\alpha_0`$ 时，(17.5) 给出
+
+```math
+B_r(\alpha)-\alpha\phi(r)
+=\frac12+\alpha\left(\frac{r^2}{2}-\phi(r)\right)
+\ge\frac{g_r'(2)-\phi(r)}{c_r}\gt0.
+\tag{18.33}
+```
+
+其中 $`\phi(r)\gt r^2/2`$ 由其正项幂级数得到，
+$`g_r'(2)\gt g_r'(1)=\phi(r)`$ 由严格凸性得到。
+当 $`\alpha_0\lt\alpha\lt\alpha_1`$ 时，$`B_r(\alpha)`$
+是位于信号均值 $`\alpha\phi(r)`$ 之上的 $`I_{\alpha,r}(x)=1`$ 根，
+所以仍有同一严格比较。特别地
+$`B_r(\alpha_A)\gt\alpha_A\phi(r)=\beta`$，从而
+$`\alpha_D\lt\alpha_A`$。这也说明定理 17.3 的方向规则在整个
+几乎全恢复区间都适用。
+
+另一方面，严格凸性给出 $`0\lt\theta\lt1`$ 时
+
+```math
+-g_r(\theta)\lt\phi(r)(1-\theta),\qquad
+\frac{1-\beta\theta}{-g_r(\theta)}
+\gt\frac{1-\theta}{\phi(r)(1-\theta)}
+=\frac1{\phi(r)}.
+\tag{18.34}
+```
+
+(18.5) 的最小值在内部取得，所以
+$`\alpha_E\gt1/\phi(r)`$；又 $`\beta\lt1`$，故 (18.28) 成立。
+各开放区间的风险结论由定理 18.2、(18.27) 与定理 17.3 组合得到。
+这些下界仍是最坏风险或均匀先验下的断言；例如恒定输出某个指定支持的规则，
+在那个支持上可以没有支持错误。
+
+最后，在 $`0\le\theta\le1`$ 上作一致展开。$`g_r(0)=g_r(1)=0`$
+与关于 $`r`$ 的偶次解析展开使余项也含有 $`\theta(1-\theta)`$ 因子，故
+
+```math
+g_r(\theta)
+=-\frac{r^2}{2}\theta(1-\theta)
+ +O\!\left(r^4\theta(1-\theta)\right),\qquad
+\phi(r)=\frac{r^2}{2}+O(r^4).
+\tag{18.35}
+```
+
+由此 (18.5) 中的缩放目标函数与
+$`(1-\beta\theta)/(\theta(1-\theta))`$ 在整个开区间内有一致的相对
+$`1+O(r^2)`$ 误差。后者的唯一最小点为
+$`\theta=(1+\sqrt{1-\beta})^{-1}`$，最小值为
+$`(1+\sqrt{1-\beta})^2`$，证明 (18.29)。此处只对标量函数取极限，
+没有对 (18.11) 的常数作变动振幅的一致估计。∎
+
+## 追加锚（本行以下为增补区）
+
+## 19. 增补十六·精确支持恢复的二阶窗口与极值交错概率
+
+**定义 19.1（固定基数标度与临界偏移）。** 沿用定义 18.1 的真实平稳独立对
+与平稳路径实验及其完整观测规则。固定 $`r\in(0,1)`$、$`\beta\in(1/2,1)`$，令
+
+```math
+M=2^{d-1},\quad n=2M,\quad \ell=\log M,\quad
+q=\lfloor M^{1-\beta}\rfloor,\quad
+\lambda=s/n,\quad a=\frac{rq}{M-q}.
+\tag{19.1}
+```
+
+真实支持仍为任意未知的 $`q`$ 元子集，规则知道 $`d,s,q,r`$。记
+$`g=g_r`$，并取定理 18.2 的唯一临界点
+$`\alpha=\alpha_E(r,\beta)`$、$`\theta=\theta_E(r,\beta)\in(0,1)`$。置
+
+```math
+\gamma=-g(\theta)\gt 0,\qquad V=\alpha g''(\theta)\gt 0,\qquad
+c_M=\lambda-\alpha\ell+\frac{\log\ell}{2\gamma}.
+\tag{19.2}
+```
+
+它们满足 $`\alpha g'(\theta)=\beta`$ 与
+$`\theta\beta-\alpha g(\theta)=1`$。对 $`c\in\mathbb R`$ 定义
+
+```math
+A_c=\frac{e^{cg(\theta)}}{\theta\sqrt{2\pi V}},\qquad
+B_c=\frac{e^{cg(\theta)}}{(1-\theta)\sqrt{2\pi V}},\qquad
+p=\frac{1-\theta}{\theta},\qquad K_c=B_cA_c^p,
+\qquad
+\Psi(c)=\int_0^\infty e^{-t-K_ct^{-p}}\,dt.
+\tag{19.3}
+```
+
+非格点条件在本章指
+
+```math
+\frac{\log(1+r)}{\log(1-r)}\notin\mathbb Q.
+\tag{19.4}
+```
+
+例如 $`r=1/2`$ 满足此条件：若其比值为 $`u/v`$、$`v\gt 0`$，则
+$`(3/2)^v=(1/2)^u`$，与整数的素因子分解唯一性矛盾。
+固定宽度区间的局部极限定理采用
+[Stone](../../../Library/Dynamics/stone1967local.md) 的非格点结论；
+极值与精确恢复之间的先例及其适用边界见
+[Gao–Stoev](../../../Library/Dynamics/gaostoev2020support.md)。
+这些已有结果不提供以下实际路径律的多行比较与二阶极小极大曲线。
+
+**定理 19.2（非格点二阶窗口中的精确恢复曲线）。** 在 (19.1) 与 (19.4) 下，
+若 $`c_M\to c\in\mathbb R`$，则对
+$`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，定义 18.1 的三个完整观测风险满足
+
+```math
+F_{\mathcal E}^{\mathrm k}\longrightarrow1-\Psi(c),\qquad
+F_{\mathcal E}^{\mathrm o}\longrightarrow1-\Psi(c),\qquad
+J_{\mathcal E}\longrightarrow1-\Psi(c).
+\tag{19.5}
+```
+
+这里分别是方向已知、方向未知时的精确支持错误率，以及支持与方向的联合错误率。
+函数 $`\Psi`$ 连续、严格递增，有限 $`c`$ 时在 $`(0,1)`$ 中，且
+$`\Psi(c)\to0`$ 当 $`c\to-\infty`$，
+$`\Psi(c)\to1`$ 当 $`c\to+\infty`$。
+更一般地，若 $`c_M\to-\infty`$，三个错误率都趋于一；若
+$`c_M\to+\infty`$，三个错误率都趋于零。
+这两个无穷偏移结论只要求样本数非负，不另要求 $`\lambda/\ell\to\alpha`$。
+
+证明。先固定真实正向支持 $`S`$。以下估计一致于该支持；反向已知时由观测反转还原。
+对 $`x\in C_+`$ 记第 18 章的补偿得分为
+
+```math
+W_x=N_{x,+}\log\frac{1+r}{1-a}
+    +N_{x,-}\log\frac{1-r}{1+a},\qquad
+Z_x=N_{x,+}\log(1+r)+N_{x,-}\log(1-r).
+\tag{19.6}
+```
+
+先将定理 17.2 的比较扩展到任意固定的行数。其陈述只覆盖一行与两行，
+但证明中的有限秩表示 (17.15)、(17.17) 对支持在任意固定 $`k`$ 行的标记仍为恒等式。
+在任意固定复多圆盘上，各矩阵相对于 (17.18) 的扰动为 $`O(k/n)`$；
+$`k`$ 固定，围道与预解式界仍可选为与 $`S`$ 无关的常数。
+当 $`\lambda/\ell\to\alpha\gt 0`$ 时，同一围道展开给出
+
+```math
+\left|F_{K,s}(z)-\exp\left(\sum_j\mu_j(z_j-1)\right)\right|
+\le C_k\frac{\ell}{n}
+ \exp\left(\sum_j\mu_j(\operatorname{Re}z_j-1)\right).
+\tag{19.7}
+```
+
+其中 $`j`$ 遍历 $`2k`$ 个计数，$`\mu_j=sp_j\asymp\ell`$；
+独立对的母函数 $`(1+A(z))^s`$ 有相同界。
+对总计数不超过 $`C\ell`$ 的整数元组 $`m`$，取 Cauchy 半径
+$`\rho_j=\max(m_j,1)/\mu_j`$。这些半径具有固定上界，且多圆盘包含零。
+将系数误差除以泊松乘积质量后，Stirling 界给出
+
+```math
+C_k\frac{\ell}{n}
+ \prod_{j=1}^{2k}\frac{e^{v_j}m_j!}{v_j^{m_j}}
+\le C_{k,C}\frac{\ell^{k+1}}n,
+\qquad v_j=\max(m_j,1).
+\tag{19.8}
+```
+
+在 $`z_j=2`$ 处应用 (19.7)，再选充分大的固定计数截断，得到任意预先固定
+$`D\gt 0`$ 所需的 $`M^{-D}`$ 尾界。因此对任意固定 $`k`$ 行的计数事件 $`E`$，
+
+```math
+\mathbb P_{S,+}^{\mathcal E}(E)
+=\nu_{S,k}(E)
+ \left(1+O_{k,D}\left(\frac{\ell^{k+1}}n\right)\right)+O(M^{-D}),
+\tag{19.9}
+```
+
+$`\nu_{S,k}`$ 是精确均值的独立泊松乘积律。常数可依赖固定的
+$`r,\beta,k,D,c`$，不依赖支持、所选行或事件。此处没有增长行数的断言。
+
+现求一行的精确尾部常数。令 $`Q_0`$ 下的两计数独立且均值均为
+$`\lambda/2`$，并置 $`h_+=\log(1+r)`$、$`h_-=\log(1-r)`$、
+$`Z=h_+N_++h_-N_-`$。固定指数 $`\theta`$ 的倾斜律满足
+
+```math
+\frac{dQ_\theta}{dQ_0}=e^{\theta Z-\lambda g(\theta)},\qquad
+N_\sigma\sim\operatorname{Pois}\left(\frac{\lambda e^{\theta h_\sigma}}2\right)
+\quad\text{在 }Q_\theta\text{ 下独立}.
+\tag{19.10}
+```
+
+该复合泊松过程的单位时间增量均值为 $`g'(\theta)`$，方差为
+$`g''(\theta)\gt 0`$。它在零及两个跳幅处均有正质量；由 (19.4)，
+其支持不包含于任意平移格点。它具有任意阶指数矩，特别满足 Stone
+1967 年推论 1 的有限协方差条件。这里用的是区间局部极限定理，不是假定离散得分有密度。
+
+将时间 $`\lambda`$ 分成 $`\lfloor\lambda\rfloor`$ 个单位时间和一个独立的
+不足单位时间的余项。Stone 的结论一致于区间位置；余项的二阶矩一致有界。
+在余项绝对值不超过 $`\lambda^{1/4}`$ 的区域，平移对归一化高斯项的影响一致趋零；
+补集概率趋零，且区间概率乘以 $`\sqrt\lambda`$ 一致有界。因此，对每个固定 $`h\gt 0`$，
+
+```math
+\sup_{x\in\mathbb R}
+\left|
+\sqrt\lambda\,Q_\theta\{Z\in[x,x+h)\}
+-\frac{h}{\sqrt{2\pi g''(\theta)}}
+ \exp\left(-\frac{(x-\lambda g'(\theta))^2}{2\lambda g''(\theta)}\right)
+\right|\longrightarrow0.
+\tag{19.11}
+```
+
+余项积分中的一致有界性直接来自单位时间和的局部极限定理，故不要求余项本身有密度。
+固定 $`h`$ 时，(19.11) 给出所有区间位置上的
+$`O_h(\lambda^{-1/2})`$ 浓集界。把一个原子放入宽度 $`h`$ 的区间，
+先令 $`\lambda\to\infty`$ 再令 $`h\downarrow0`$，还得到
+
+```math
+\sqrt\lambda\sup_x Q_\theta\{Z=x\}\longrightarrow0.
+\tag{19.12}
+```
+
+对 $`u=\beta\ell+z`$、固定 $`z\in\mathbb R`$，有
+$`u-\lambda g'(\theta)=O(\log\ell)=o(\sqrt\lambda)`$。
+将 $`Z-u`$ 的正、负半轴切成固定宽度区间，在有限个区间上用 (19.11)，
+在其余区间上用上述浓集界与几何级数控制。先增加有限区间数，再使宽度趋零，得到
+
+```math
+\begin{aligned}
+\sqrt\lambda\,\mathbb E_\theta
+ [e^{-\theta(Z-u)}\mathbf1_{\{Z\gt u\}}]
+ &\longrightarrow\frac1{\theta\sqrt{2\pi g''(\theta)}},\\[0pt]
+\sqrt\lambda\,\mathbb E_\theta
+ [e^{(1-\theta)(Z-u)}\mathbf1_{\{Z\lt u\}}]
+ &\longrightarrow\frac1{(1-\theta)\sqrt{2\pi g''(\theta)}}.
+\end{aligned}
+\tag{19.13}
+```
+
+(19.12) 允许替换端点处的严格不等号。结论对有界 $`z`$ 一致，
+也允许 $`z`$ 加上趋零的确定性偏移，由单调夹逼即得。
+
+记信号泊松律为 $`Q_1`$，即两均值为 $`\lambda(1\pm r)/2`$。
+由于 $`g(1)=0`$，精确有 $`dQ_1/dQ_0=e^Z`$。
+撤去 (19.10) 的倾斜并代入 (19.2)，得到
+
+```math
+M Q_0\{Z\gt \beta\ell+z\}\longrightarrow A_ce^{-\theta z},\qquad
+q Q_1\{Z\lt \beta\ell+z\}\longrightarrow B_ce^{(1-\theta)z}.
+\tag{19.14}
+```
+
+两个尾部共享 $`e^{\lambda g(\theta)}/\sqrt\lambda`$，
+而 $`g(\theta)=-\gamma`$ 使 (19.2) 的对数修正恰好抵消平方根因子。
+$`q/M^{1-\beta}\to1`$，所以取整不改变信号侧常数。
+
+补偿的传递须保留稀有尾部的相对精度。总计数不超过 $`C\ell`$ 时，
+$`|W-Z|\le C' a\ell=o(1)`$；背景泊松律 $`Q_{-a}`$ 相对于 $`Q_0`$
+的质量比精确为 $`(1-a)^{N_+}(1+a)^{N_-}=1+o(1)`$。
+截断外用任意固定指数的尾界，在一行比较中取 $`D\gt 1`$，再用 (19.14)
+的趋零偏移稳定性，便将 (19.14) 传到补偿得分。对实际行律再应用 (19.9)，可得
+
+```math
+\begin{aligned}
+(M-q)\mathbb P_{S,+}^{\mathcal E}\{W_x\gt \beta\ell+z\}
+ &\longrightarrow A_ce^{-\theta z},&&x\notin S,\\[0pt]
+q\mathbb P_{S,+}^{\mathcal E}\{W_x\le\beta\ell+z\}
+ &\longrightarrow B_ce^{(1-\theta)z},&&x\in S.
+\end{aligned}
+\tag{19.15}
+```
+
+这一步使用非格点精确尾部及其连续偏移性质；单有 $`W-Z=o(1)`$
+不能对一般格点得分推出相同结论。
+
+为得到共同极值律，固定 $`x,y\in\mathbb R`$，令
+$`U_M(x)`$ 为背景中得分大于 $`\beta\ell+x`$ 的行数，
+$`V_M(y)`$ 为信号中得分不超过 $`\beta\ell+y`$ 的行数，
+$`T_M=U_M(x)+V_M(y)`$。所有计数均在同一个真实 $`S`$ 下。
+记 $`(z)_k=z(z-1)\cdots(z-k+1)`$。对任意固定正整数 $`k`$，
+将 $`\mathbb E(T_M)_k`$ 按背景行数 $`j`$ 展开。
+每一项有 $`\binom{k}{j}(M-q)_j(q)_{k-j}`$ 个有序不同指标。
+在 (19.9) 中取固定 $`D\gt k`$，加法余项求和后为 $`O(M^{k-D})=o(1)`$；
+乘法余项趋零。泊松比较律下不同选中行独立，故 (19.14)–(19.15) 给出
+
+```math
+\mathbb E(T_M)_k\longrightarrow
+\sum_{j=0}^k\binom{k}{j}
+ (A_ce^{-\theta x})^j(B_ce^{(1-\theta)y})^{k-j}
+=\left(A_ce^{-\theta x}+B_ce^{(1-\theta)y}\right)^k.
+\tag{19.16}
+```
+
+每个固定阶数分别选择尾指数，未令阶数随 $`M`$ 增长。
+有限阶 Bonferroni 不等式现在夹住 $`\mathbb P(T_M=0)`$：
+对每个固定截断阶数先令 $`M\to\infty`$，再让奇、偶截断阶数趋于无穷，
+其两端均为指数级数。因此
+
+```math
+\mathbb P\{U_M(x)=0,V_M(y)=0\}
+\longrightarrow
+\exp\{-A_ce^{-\theta x}-B_ce^{(1-\theta)y}\}.
+\tag{19.17}
+```
+
+只保留背景计数时，同样有 $`\mathbb P\{U_M(x)=0\}\to\exp(-A_ce^{-\theta x})`$。置
+
+```math
+B_M^*=\max_{x\notin S}W_x-\beta\ell,\qquad
+S_M^*=\min_{x\in S}W_x-\beta\ell.
+\tag{19.18}
+```
+
+(19.17) 正是事件 $`\{B_M^*\le x,S_M^*\gt y\}`$ 的极限。
+用背景边缘减去该式得到通常的二维分布函数，证明
+$`(B_M^*,S_M^*)\Rightarrow(B^*,S^*)`$，其中两者独立且
+
+```math
+\mathbb P(B^*\le z)=e^{-A_ce^{-\theta z}},\qquad
+\mathbb P(S^*\gt z)=e^{-B_ce^{(1-\theta)z}}.
+\tag{19.19}
+```
+
+这些是连续的真概率分布，边缘极限也给出紧性。
+极限差 $`S^*-B^*`$ 在零处无原子，故有限样本的边界并列概率趋零，
+严格排序与非严格排序的成功概率具有同一极限。
+
+第 18 章的完整似然为 $`L_S=C(\mathrm{data})\prod_{x\in S}e^{W_x}`$。
+均匀固定基数先验与支持置换对称性使最大 $`q`$ 个得分、边界并列时均匀随机化的规则，
+成为精确损失的有限样本 Bayes 与极小极大规则。
+其成功概率被 $`\mathbb P(B_M^*\lt S_M^*)`$ 与
+$`\mathbb P(B_M^*\le S_M^*)`$ 夹住。由 (19.19)，变量
+$`T=A_ce^{-\theta B^*}`$ 服从均值一的指数分布，于是
+
+```math
+\mathbb P(B^*\lt S^*)
+=\mathbb E\exp\{-B_ce^{(1-\theta)B^*}\}
+=\int_0^\infty e^{-t-B_cA_c^pt^{-p}}\,dt=\Psi(c).
+\tag{19.20}
+```
+
+这证明已知方向的结论，并使下界约束所有完整观测规则，而非只约束得分阈值规则。
+
+又因 $`\alpha_E\gt 1/\phi(r)\gt \alpha_A`$，第 18 章以已知有限参数定义的方向规则
+在当前尺度下一致正确。先判方向、必要时反转完整观测，再用上述排序规则；
+正确判向事件上它等于相应的方向已知规则。联合错误率至多为方向错误率加已知方向支持错误率，
+无需拆分数据或假定两事件独立。方向已知实验给出的下界与此上界夹住
+方向未知及联合风险，完成 (19.5)。这里没有未归一化期望 Hamming 损失的断言。
+
+最后，$`K_c`$ 是正数乘以 $`e^{cg(\theta)/\theta}`$，随 $`c`$ 严格递减。
+积分的严格单调性、连续性及两端极限由支配收敛得到。
+对无穷偏移，固定任意实数 $`c_0`$，以最接近
+$`n(\alpha\ell-\log\ell/(2\gamma)+c_0)`$ 的非负整数定义比较样本数；
+取整在 $`\lambda`$ 上只产生 $`O(1/n)`$ 的误差。
+增加样本后可以丢弃后缀，所以两个真实实验、三个损失的极小极大风险都随样本数不增。
+若 $`c_M\to+\infty`$，最终样本数大于每个固定 $`c_0`$ 的比较样本数；
+先取风险上极限，再令 $`c_0\to+\infty`$，得零。
+负无穷偏移的情形以反向不等式及 $`c_0\to-\infty`$ 得一。∎
+
+**定理 19.3（含格点振幅的一阶等号序列）。** 在 (19.1) 下，不要求 (19.4)。
+若 $`\lambda=\alpha_E(r,\beta)\ell+O(1)`$，则对两种真实实验都有
+
+```math
+F_{\mathcal E}^{\mathrm k}\longrightarrow0,\qquad
+F_{\mathcal E}^{\mathrm o}\longrightarrow0,\qquad
+J_{\mathcal E}\longrightarrow0.
+\tag{19.21}
+```
+
+证明。仍用 (19.10) 的固定倾斜。给定 $`N_-`$，任意宽度为固定 $`h\gt 0`$
+的得分区间至多包含 $`\lfloor h/h_+\rfloor+1`$ 个可行 $`N_+`$。
+$`N_+`$ 的均值是 $`\lambda e^{\theta h_+}/2`$，最大泊松质量为
+$`O(\lambda^{-1/2})`$，故对全部区间位置有
+
+```math
+\sup_u Q_\theta\{Z\in[u,u+h]\}\le C_h\lambda^{-1/2}.
+\tag{19.22}
+```
+
+按固定宽度区间求几何级数，不论端点是否为原子，都得到
+
+```math
+Q_0\{Z\ge u\}\le C\lambda^{-1/2}e^{\lambda g(\theta)-\theta u},\qquad
+Q_1\{Z\le u\}\le C\lambda^{-1/2}e^{\lambda g(\theta)+(1-\theta)u}.
+\tag{19.23}
+```
+
+令 $`u=\beta\ell+O(1)`$。由临界点的两个恒等式及本定理的样本数条件，
+$`M`$ 倍第一尾部、$`q`$ 倍第二尾部均为 $`O(\ell^{-1/2})`$。
+截断计数后有 $`W-Z=o(1)`$，将其用绝对值不超过一的偏移夹住即可；
+背景补偿的质量比仍为 $`1+o(1)`$。一行的实际律比较取 $`D\gt 1`$，
+经全部行的联合界，背景得分达到 $`\beta\ell`$ 或信号得分不超过
+$`\beta\ell`$ 的概率趋零。因此排序精确恢复支持。
+第 18 章的一致方向规则及同数据联合界给出其余两式。
+满足 (19.4) 时，$`\lambda/\ell\to\alpha_E`$ 本身不能推出成功：
+定理 19.2 的每条有限偏移序列也满足该比值条件，却具有严格介于零与一之间的极限错误率。∎
+
+## 追加锚（本行以下为增补区）

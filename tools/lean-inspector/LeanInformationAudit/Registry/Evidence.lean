@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Entries
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
@@ -51,6 +52,7 @@ private structure WireState where
   bytes : ByteArray := {}
   remaining : Nat := 524288
   tokens : Option (Std.HashMap String Nat) := none
+  expressions : Option (Std.HashMap ExprStructEq Nat) := none
 
 private abbrev WireM := StateT WireState (Except String)
 
@@ -67,7 +69,7 @@ private def emitLiteral (text : String) : WireM Unit := do
 
 private def emit (text : String) : WireM Unit := do
   let some tokens := (← get).tokens | emitLiteral text
-  -- Interning is plan-only. Charge every token's full input even on a hit;
+  -- Plans and source DAGs intern tokens. Charge every token's full input even on a hit;
   -- compression must not conceal logical serialization work.
   wireCharge (text.utf8ByteSize + 1)
   if let some index := tokens[text]? then
@@ -133,9 +135,18 @@ private def wireData (depth : Nat) : DataValue → WireM Unit
   | .ofInt value => do emit "int"; emit (toString value)
   | .ofSyntax value => do emit "syntax"; wireSyntax depth value
 
-private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : WireM Unit := do
+private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr)
+    (key : Expr := e) : WireM Unit := do
   if depth > 256 then throw "incomplete_closure:E8.expression_depth"
-  let child := fun x => wireExpr params (depth + 1) x
+  if let some expressions := (← get).expressions then
+    if let some index := expressions[ExprStructEq.mk key]? then
+      emit "expr-ref"
+      emit (toString index)
+      return
+    emit "expr-node"
+    modify fun state => { state with expressions := some (expressions.insert ⟨key⟩ expressions.size) }
+
+  let child := fun x k => wireExpr params (depth + 1) x k
   match e with
   | .bvar index => emit "bvar"; emit (toString index)
   | .fvar _ | .mvar _ => throw "incomplete_closure:E7.open_expression"
@@ -143,18 +154,22 @@ private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : Wir
   | .const name levels =>
     emit "const"; wireName name; emit (toString levels.length)
     for level in levels do wireLevel params level
-  | .app f a => emit "app"; child f; child a
-  | .lam _ type body bi => emit "lambda"; emit (reprStr bi); child type; child body
-  | .forallE _ type body bi => emit "forall"; emit (reprStr bi); child type; child body
+  | .app f a => emit "app"; child f key.appFn!; child a key.appArg!
+  | .lam _ type body bi =>
+    emit "lambda"; emit (reprStr bi); child type key.bindingDomain!; child body key.bindingBody!
+  | .forallE _ type body bi =>
+    emit "forall"; emit (reprStr bi); child type key.bindingDomain!; child body key.bindingBody!
   | .letE _ type value body nd =>
-    emit "let"; emit (toString nd); child type; child value; child body
+    emit "let"; emit (toString nd)
+    child type key.letType!; child value key.letValue!; child body key.letBody!
   | .lit (.natVal n) => emit "natLiteral"; emit (toString n)
   | .lit (.strVal s) => emit "stringLiteral"; emit s
   | .mdata data body =>
     emit "metadata"; emit (toString data.entries.length)
     for (key, value) in data.entries do wireName key; wireData (depth + 1) value
-    child body
-  | .proj name index body => emit "projection"; wireName name; emit (toString index); child body
+    child body key.mdataExpr!
+  | .proj name index body =>
+    emit "projection"; wireName name; emit (toString index); child body key.projExpr!
 
 /-- Domain-separated, length-prefixed raw Expr/Level identity. Binder names are
 anonymous; instances, lets and metadata retain their complete structural bytes. -/
@@ -171,6 +186,59 @@ def rawStatementIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) 
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
 
+-- Expr.eqv ignores BinderInfo; even Expr.equal compares metadata Syntax modulo
+-- source information. Build structural keys with anonymous binder names and
+-- exact metadata wire bytes. The emitted expression itself is never rewritten.
+-- This bounded independent walk also checks every occurrence's actual depth,
+-- including repeated subtrees that the subsequent wire pass will reference.
+private partial def sourceKey (e : Expr) (depth : Nat := 0) :
+    StateT Nat (Except String) Expr := do
+  if depth > 256 then throw "incomplete_closure:E8.expression_depth"
+  let remaining ← get
+  if remaining == 0 then throw "incomplete_closure:E8.source_identity_work"
+  set (remaining - 1)
+  let child := fun x => sourceKey x (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam _ t b bi => return .lam .anonymous (← child t) (← child b) bi
+  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← child b) bi
+  | .letE _ t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
+  | .mdata data b =>
+    let action : WireM Unit := do
+      emit (toString data.entries.length)
+      for (name, value) in data.entries do wireName name; wireData (depth + 1) value
+    let (_, state) ← action.run { remaining := ← get }
+    set state.remaining
+    return .mdata ⟨[(.anonymous, .ofString (String.fromUTF8! state.bytes))]⟩ (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | _ => return e
+
+/-- Canonical shared raw Expr references for source-bound contracts. This does
+not change the mathematical statement_id or the existing raw identity dialect.
+The independent key pass prevents a repeated deep subtree from hiding depth.
+Raw proof subterms, levels, metadata, lets and BinderInfo remain in the encoding. -/
+def compactRawEncoding (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    Except String (ByteArray × Nat) := do
+  let limit := min 524288 fuel
+  let (key, remaining) ← sourceKey e |>.run limit
+  let action : WireM Unit := do
+    emit "DTR-source-expr-dag-v1"
+    wireExpr params 0 e key
+  let (_, state) ← action.run { remaining, tokens := some {}, expressions := some {} }
+  if state.bytes.size > 65536 then throw "incomplete_closure:E8.source_identity_bytes"
+  return (state.bytes, limit - state.remaining)
+
+def compactRawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    Except String (String × Nat) :=
+  (compactRawEncoding params e fuel).map fun (bytes, work) => (Sha256.hex bytes, work)
+
+/-- Proof-opaque source data fingerprint, sharing repeated raw type subtrees. -/
+def compactIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    MetaM (Except String (String × Nat)) := do
+  let (erased, work) ← eraseProofs e fuel
+  return (compactRawIdentity params erased (fuel - work)).map fun (identity, cost) =>
+    (identity, cost + work)
+
 /-- The forward bridge is recognized by its type name, without importing content
 into the finite seal closure. Both bridges retain the exact statement check. -/
 def escapeForwardBridge : Name :=
@@ -180,7 +248,9 @@ def escapeWitnessBridge : Name := RegistrationGates.witnessBridgeName
 
 def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
   let type := (← getConstInfo event.realizationName).type
-  return if type.isAppOfArity escapeWitnessBridge 3 then "witness"
+  return if type.isAppOfArity
+      `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration 2 then "source-equivalence"
+    else if type.isAppOfArity escapeWitnessBridge 3 then "witness"
     else if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
 
 /-- Only closed, zero-parameter Prop definitions occurring in the original
@@ -234,7 +304,8 @@ def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
     roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
   return roots
 
-/-- Retain the inspected definitions and their repository data/type closure.
+/-- Retain the inspected definitions and their repository data/type closure,
+including Interface records and Reg support at their compiler source owners.
 Proof leaves contribute their types only; upstream data bodies remain pinned
 by the existing native/source checks. -/
 def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
@@ -252,8 +323,7 @@ def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
-    if (owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit.") &&
-        !(← isProp info.type) then
+    if Repository.isModule owner && !(← isProp info.type) then
       if let some value := info.value? then
         let (value, work) ← eraseProofs value remaining
         remaining := remaining - work
@@ -270,6 +340,10 @@ No state, chain, certificate body, or residual count is evaluated. -/
 def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInput) :
     MetaM EscapeRecordEvidence := do
   let kind ← bridgeKind event
+  if kind == "source-equivalence" then
+    let continuation : Option EscapeContinuationIdentity :=
+      if input.openContinuation then some { kind := "open" } else none
+    return { bridgeKind := kind, continuation }
   if kind == "witness" then
     let type := (← getConstInfo event.realizationName).type
     discard <| RegistrationGates.witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
@@ -357,6 +431,9 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
     emit certificate.descriptorIdentity
     emit certificate.actualIdentity
     emit certificate.escape.bridgeKind
+    if let some source := certificate.sourceBinding then
+      emit "source-binding"
+      emit source.compress
     match certificate.escape.fromObject with
     | none => emit "missing-from"
     | some origin =>
@@ -400,7 +477,7 @@ outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v6"
+    emit "DTR-checked-plan-v7"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain
@@ -414,6 +491,7 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     emit (toString plan.dependencies.size)
     for dep in plan.dependencies do
       wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
+    emit (toString plan.sourceBound)
     emit (toString plan.constructorTypes.size)
     for ast in plan.constructorTypes do wireName ast
     emit (toString plan.rules.size)
@@ -427,12 +505,12 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
   let (_, state) ← action.run { remaining := limit, tokens := some {} }
   if state.bytes.size > 65536 then throw s!"incomplete_closure:E8.plan_bytes:{state.bytes.size}"
   return (state.bytes, limit - state.remaining)
-
 def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=
   (planEncodingWithWork plan fuel).map Prod.fst
 
 def sourcePath (name : Name) : String :=
-  (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
+  (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"
+    else if (`LeanInformationAudit).isPrefixOf name then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
 private abbrev HashWorker := IO.Process.Child {
@@ -441,12 +519,12 @@ private abbrev HashWorker := IO.Process.Child {
 private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new none
 
 /-- Reuse only the fixed worker process, never a file digest. Requests carry the
-caller's current directory because isolated source fixtures may change it. The
+current repository root; copied oleans never retain the build host's root. The
 mutex keeps each request/response together; any failure retires the stream. -/
 private def fileInputBatch (paths : Array String) (readVersion : Bool := false) :
     IO (Array String × Option Nat) := do
   if paths.isEmpty && !readVersion then return (#[], none)
-  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths, toJson readVersion]
+  let request := Json.arr #[toJson (← Repository.root).toString, toJson paths, toJson readVersion]
   hashWorker.atomically do
     try
       let child ← match ← get with
@@ -535,11 +613,6 @@ private structure Snapshot where
   inputs : Array SourceInput
   data : ModuleData
 
-
-private def repositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
-    name == `Trureturing
-
 private def parseHash (text : String) : Except String UInt64 := do
   unless text.utf8ByteSize == 16 do throw "incomplete_closure:E7.native_trace_hash"
   text.toUTF8.foldlM (init := 0) fun result byte => do
@@ -605,7 +678,7 @@ private def loadedRegion (env : Environment) (path : System.FilePath) : CoreM Co
 
 private def moduleFile (env : Environment) (name : Name) : CoreM System.FilePath := do
   let path ← findOLean name
-  if repositoryModule name then discard <| loadedRegion env path
+  if Repository.isModule name then discard <| loadedRegion env path
   return path
 
 private structure Cache where
@@ -778,8 +851,8 @@ private def verifyImported (env : Environment) (name : Name)
   let artifact ← moduleFile env name
   let tracePath := artifact.withExtension "trace"
   let source := sourcePath name
-  let sourceBytes ← IO.FS.readBinFile source
-  let sourceText ← IO.FS.readFile source
+  let sourceBytes ← IO.FS.readBinFile (← Repository.source source)
+  let sourceText ← IO.FS.readFile (← Repository.source source)
   let traceBytes ← IO.FS.readBinFile tracePath
   let trace ← ofExcept <| Json.parse (← IO.FS.readFile tracePath)
   unless trace.getObjValAs? String "schemaVersion" == .ok "2025-09-10" &&
@@ -850,7 +923,7 @@ private def verifyImported (env : Environment) (name : Name)
 snapshot around a changed input in an already-loaded Environment. -/
 private partial def collect (env : Environment) (root : Name) (seen : NameSet)
     (names : Array Name) : CoreM (NameSet × Array Name) := do
-  if seen.contains root || !repositoryModule root then return (seen, names)
+  if seen.contains root || !Repository.isModule root then return (seen, names)
   let seen := seen.insert root
   if root == env.header.mainModule then return (seen, names.push root)
   let imports ← do
@@ -886,7 +959,7 @@ def validate (roots : Array Name) : CoreM Unit := do
   let mut retainedInputs : Array SourceInput := #[]
   for name in names do
     if name == env.header.mainModule then
-      unless (← IO.FS.readFile (sourcePath name)) == (← getFileMap).source do
+      unless (← IO.FS.readFile (← Repository.source (sourcePath name))) == (← getFileMap).source do
         throwError "incomplete_closure:E7.current_source:{name}"
       continue
     if let some snapshot := cache.snapshots[name]? then

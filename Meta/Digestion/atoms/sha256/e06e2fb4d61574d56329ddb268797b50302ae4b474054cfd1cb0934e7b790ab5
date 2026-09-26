@@ -1,0 +1,11 @@
+**引理 34.2（二元对称缺陷的平方收缩与完整系数）。** 对定义 34.1 的全部数据和任意联合态，
+\[
+ D(\mathcal Z_{U,s}\rho\Vert E_U\rho)
+ \le s^2D(\rho\Vert E_U\rho).
+\]
+该不等式对任意有限记忆维数一致有效，最优系数精确为 $s^2$。对满秩 $\rho$，另有
+\[
+ \operatorname{Tr}[(\rho-E_U\rho)\log\rho]
+ \ge2D(\rho\Vert E_U\rho).
+\]
+

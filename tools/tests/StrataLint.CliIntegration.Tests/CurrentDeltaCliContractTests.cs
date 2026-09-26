@@ -8,6 +8,7 @@ using StrataLint.Engine;
 using StrataLint.EngineeringScope;
 using Tomlyn;
 using Tomlyn.Model;
+using Trureturing.Truth;
 
 namespace StrataLint.CliIntegration.Tests;
 
@@ -467,6 +468,10 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("template-changed-undeclared", 1, "DTR-Undeclared")]
     [InlineData("template-unchanged", 3, "SL-022")]
     [InlineData("template-missing-evidence", 1, "DTR-Evidence")]
+    [InlineData("template-reg-only-undeclared", 0, "DTR-Undeclared")]
+    [InlineData("template-reg-only-missing-evidence", 0, "DTR-Evidence")]
+    [InlineData("template-new-owner-undeclared", 1, "DTR-Undeclared")]
+    [InlineData("template-new-owner-missing-evidence", 1, "DTR-Evidence")]
     [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
     [InlineData("premanifest-missing-base-project", 2, "base test project")]
@@ -544,7 +549,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         if (template)
         {
-            foreach (var pair in InformationTemplateFixture.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
+            AddTemplateRegistrationFixtures(fixture);
         }
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\ntools/StrataLint.Cli/bin/\n");
@@ -557,6 +562,12 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             Write(document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
         var syntheticFileMap = TomlSerializer.Deserialize<TomlTable>(
             File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+        // This fixture registers First/Second instead of the repository's path consumers.
+        foreach (var resource in ((TomlArray)syntheticFileMap["resources"]).Cast<TomlTable>())
+        {
+            resource.Remove("path_inventory");
+            resource.Remove("path_inputs");
+        }
         var syntheticEntries = new[]
         {
             "tools/tests/StrataLint.First/**",
@@ -641,6 +652,19 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             case "template-changed-undeclared":
             case "template-missing-evidence":
                 Write(RuleFixture.RingPath, fixture.Files[RuleFixture.RingPath] + "-- changed candidate module\n");
+                goto case "template-reg-only-undeclared";
+            case "template-reg-only-undeclared":
+            case "template-reg-only-missing-evidence":
+                Write(TemplateRegistrationPath, fixture.Files[TemplateRegistrationPath] + "-- changed registration producer\n");
+                break;
+            case "template-new-owner-undeclared":
+            case "template-new-owner-missing-evidence":
+                Write(RuleFixture.RingPath, fixture.Files[RuleFixture.RingPath] + TemplateTheoremSource);
+                fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
+                {
+                    Declarations = fixture.Reports[RuleFixture.RingPath].Declarations.Add(
+                        new(TemplateTheorem, "theorem", "goldenRing = 0", [])),
+                };
                 break;
             case "template-unchanged":
                 Write(AdmissionPlanePolicy.FileMapPath, File.ReadAllText(Path.Combine(root, AdmissionPlanePolicy.FileMapPath))
@@ -716,7 +740,14 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
         var candidateSnapshot = CommonExecutionEvidence.Snapshot(root);
         RawLeanReportArtifact.WriteFile(report, candidateSnapshot, template
-            ? TemplateReport(candidateSnapshot, fixture.Reports, scenario == "template-missing-evidence") : LeanAxiomReport.Create(fixture.Reports));
+            ? TemplateReport(fixture.Reports, scenario) : LeanAxiomReport.Create(fixture.Reports));
+        if (template && scenario.EndsWith("missing-evidence", StringComparison.Ordinal))
+        {
+            var wire = JsonNode.Parse(File.ReadAllBytes(report))!;
+            wire["modules"]!.AsArray().Single(module => module!["source_path"]!.GetValue<string>() == TemplateRegistrationPath)!
+                .AsObject().Remove("information_templates");
+            File.WriteAllBytes(report, StructuredCanonicalWriter.WriteJson(wire.ToJsonString()).ToArray());
+        }
         foreach (var suffix in new[] { ".sha256", ".input.attestation", ".provenance.json" })
             File.WriteAllText(report + suffix, "synthetic producer sidecar\n");
         var environment = new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new FakeLeanReportSource(null));
@@ -877,16 +908,11 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         }
         Assert.True(exit == expectedExit, $"expected exit {expectedExit}, got {exit}: {console.Output}{console.Error}");
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
-        if (scenario == "template-unchanged")
-            Assert.DoesNotContain("DTR-", console.Output + console.Error, StringComparison.Ordinal);
-        if (scenario is "template-changed-undeclared" or "template-missing-evidence")
+        if (template)
         {
-            // The registration judge only observes; the exit 1 here comes from
-            // UTILITY-MISSING on the same fixture module, never from a DTR finding.
-            var effects = System.Text.RegularExpressions.Regex.Matches(console.Output,
-                "\"AdmissionEffect\":(\\d+),\"Path\":\"[^\"]*\",\"Message\":\"DTR-");
-            Assert.True(effects.Count > 0 && effects.All(m => m.Groups[1].Value == ((int)AdmissionEffect.Observe).ToString()),
-                "[FAIL] dtr_findings_observe_only: " + console.Output);
+            Assert.Empty(console.Error);
+            AssertTemplateDelta(scenario, expectedExit, diagnostic, console.Output);
+            AssertAcceptedBaseTests(console.Output);
         }
         if (scenario is "mixed" or "mixed-block" or "retired-content-delete" or "retired-content-rename" or "valid" or "annotation")
         {
