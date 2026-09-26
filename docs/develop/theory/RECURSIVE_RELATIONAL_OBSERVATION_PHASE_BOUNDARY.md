@@ -48923,3 +48923,434 @@ $$
 [^phase_binary_instrument_sion]: Maurice Sion, “On general minimax theorems,” *Pacific Journal of Mathematics* 8(1), 171–176 (1958), Theorem 3.4, [原文](https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf)。本节只使用其紧凸定义域上的连续凸凹特例，原文允许相应的拟凸凹与半连续条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 174. 有限启动使真实最优误差在比较谷底严格升高
+
+第171节证明有限启动所诱导的逻辑通道不是常值通道，但通道不同本身不保证某个优化误差不同。本节直接检验同一来源、同一接收端权限下的完整参考恢复任务，证明每个有限 $L\ge3$ 的真实相位曲线都在常值比较曲线的一个谷底处严格升高。
+
+证明给出适用于所有共同解码器的显式下界，不把两个原输入分别交给不同解码器。所需公共 Choi 支配证书只有一个 $2\times2$ 矩阵。
+
+### 174.1 固定任务与需要比较的相位
+
+仍取第171节的 $p=1/2$ 来源，
+
+$$
+\rho=\frac13\begin{pmatrix}2&1\\1&1\end{pmatrix},
+\qquad
+|\Xi\rangle=\operatorname{vec}\sqrt\rho,
+\qquad
+|\psi\rangle=(I_M\otimes Y_R)|\Xi\rangle.
+\tag{174.1}
+$$
+
+这里 $M,R,Q$ 均为 qubit；$\operatorname{vec}$ 按
+$|m\rangle_M|r\rangle_R$ 的系数排列。目标输出
+$R_{\mathrm{out}}$ 是 $R$ 的固定二维副本。$\Xi,\psi$ 为正交单位向量，因为
+$\langle\Xi|\psi\rangle=\operatorname{Tr}(\rho Y)=0$。
+
+编码仍为
+
+$$
+\mathfrak E(\sigma)
+=\frac12\left(
+\sigma_Q\otimes P_\Xi+
+Z_Q\sigma_QZ_Q\otimes P_\psi
+\right).
+\tag{174.2}
+$$
+
+张量因子按系统标签识别。令
+
+$$
+z=\left(-\frac12\right)^{L-1},\qquad
+t_0=z/3,\qquad t_1=-2z/3,
+$$
+
+$$
+d(t)=\frac19-\frac t6-\frac{t^2}{2},
+\qquad
+w_j=\frac43-t_j-4\sqrt{d(t_j)},
+$$
+
+$$
+\tau_j=\frac12\left[
+I+\frac{84w_j}{2353}X+
+\left(1-\frac{576w_j}{2353}\right)Z
+\right].
+\tag{174.3}
+$$
+
+第171节已给出真实逻辑通道
+$\Theta_L(X)=X_{00}\tau_0+X_{11}\tau_1$。对
+
+$$
+U_\varphi=
+\begin{pmatrix}
+\cos\varphi&-\sin\varphi\\
+\sin\varphi&\cos\varphi
+\end{pmatrix},
+\qquad
+\xi_j^\varphi=\mathfrak E(U_\varphi\tau_jU_\varphi^\dagger),
+\tag{174.4}
+$$
+
+定义
+
+$$
+\mathcal N_{L,\varphi}(X)=\sum_{j=0}^1X_{jj}\xi_j^\varphi,
+\qquad
+\mathcal V_*(X)=X_{Q_{\mathrm{out}}}\otimes P_\Xi,
+$$
+
+$$
+e_L(\varphi)=
+\min_{\mathcal D:QR\to Q_{\mathrm{out}}R_{\mathrm{out}}\ {\rm CPTP}}
+d_\diamond\!\left(
+(\operatorname{id}_M\otimes\mathcal D)\mathcal N_{L,\varphi},
+\mathcal V_*
+\right).
+\tag{174.5}
+$$
+
+这里 $d_\diamond$ 为半 diamond 距离，允许任意外部参考；解码器不能操作 $M$。
+按第170节的圆变量记法，
+$e_L(\varphi)=h_L(e^{2i\varphi})$，所以本节的
+$\varphi=\pi/4$ 对应 $h_L(i)$。
+
+在该相位，第165节的常值入口比较误差恰为 $3/4$。下面证明真实任务满足
+$e_L(\pi/4)>3/4$。
+
+### 174.2 接收端解掩码后的两个等权旗标
+
+置
+
+$$
+\beta=\frac{288}{2353},\qquad
+\gamma=\frac{42}{2353}.
+\tag{174.6}
+$$
+
+在 $Q$ 的 $X$ 本征基 $|+\rangle,|-\rangle$ 中，
+$U_{\pi/4}\tau_jU_{\pi/4}^\dagger$ 的矩阵为
+
+$$
+\begin{pmatrix}
+1-\beta w_j&-\gamma w_j\\
+-\gamma w_j&\beta w_j
+\end{pmatrix}.
+\tag{174.7}
+$$
+
+考虑只作用于接收端 $QR$ 的酉
+
+$$
+W=P_+^Q\otimes I_R+P_-^Q\otimes Y_R.
+\tag{174.8}
+$$
+
+把它吸收到解码器中不会改变（174.5）的最优值。令
+$|q_r\rangle=(|+\rangle+(-1)^r|-\rangle)/\sqrt2$，
+$r=0,1$。直接展开（174.2）得到
+
+$$
+(\operatorname{id}_M\otimes\operatorname{Ad}_W)(\xi_j^{\pi/4})
+=\frac12\sum_{r=0}^1P_{q_r}^Q\otimes\eta_{j,r}^{MR},
+\tag{174.9}
+$$
+
+其中
+
+$$
+\begin{aligned}
+\eta_{j,r}
+={}&(1-\beta w_j)P_\Xi+\beta w_jP_\psi\\
+&+(-1)^{r+1}\gamma w_j
+\left(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|\right).
+\end{aligned}
+\tag{174.10}
+$$
+
+因此旗标 $r$ 总以概率 $1/2$ 出现，与原输入 $j$ 无关。条件态的支撑位于
+$\operatorname{span}\{\Xi,\psi\}$；其中的非对角项仍完整保留。
+
+为核对（174.9），在 $|+\rangle,|-\rangle$ 基中，施加 $W$ 后的两个对角块均为
+$\big((1-\beta w_j)P_\Xi+\beta w_jP_\psi\big)/2$，
+两个非对角块均为
+$-\gamma w_j(|\Xi\rangle\langle\psi|+|\psi\rangle\langle\Xi|)/2$。
+再对这个旗标矩阵对角化即得所述表达式。
+
+### 174.3 同一个解码器的 Choi 收益算子
+
+任取一个合法解码器。在旗标输入 $q_r$ 固定后，取其输出
+$Q_{\mathrm{out}}$ 的计算基对角块，得到 CP 映射
+
+$$
+\mathcal D_{k,r}:\mathcal L(R)\to\mathcal L(R_{\mathrm{out}}),
+\qquad k=0,1,
+$$
+
+且对每个 $r$，
+$\mathcal D_{0,r}+\mathcal D_{1,r}$ 保迹。
+这个构造不要求解码器的完整输出已经是经典的；仅取下述目标检验会读取的对角块。
+
+采用输入优先的、未归一化的 Choi 约定
+
+$$
+J_{k,r}=\sum_{a,b=0}^1|a\rangle\langle b|_R
+\otimes\mathcal D_{k,r}(|a\rangle\langle b|).
+$$
+
+于是
+
+$$
+J_{k,r}\succeq0,\qquad
+\operatorname{Tr}_{R_{\mathrm{out}}}(J_{0,r}+J_{1,r})=I_R.
+\tag{174.11}
+$$
+
+令原输入 $j$ 的正确输出块为 $\sigma_{jj}$，并记
+$f_j=\langle\Xi|\sigma_{jj}|\Xi\rangle$。由（174.9），
+
+$$
+f_j=\frac12\sum_{r=0}^1
+\left\langle\Xi\left|
+(\operatorname{id}_M\otimes\mathcal D_{j,r})(\eta_{j,r})
+\right|\Xi\right\rangle.
+\tag{174.12}
+$$
+
+以下显式指标式固定所有转置与共轭。对任意
+$|a\rangle=\sum_{m,k}a_{mk}|m\rangle_M|k\rangle_R$，定义
+
+$$
+g(a)_{k s}=\sum_m\overline{a_{mk}}\,\Xi_{ms}.
+\tag{174.13}
+$$
+
+直接代入 Choi 定义可得
+
+$$
+\left\langle\Xi\left|
+(\operatorname{id}_M\otimes\mathcal D)(P_a)
+\right|\Xi\right\rangle
+=\operatorname{Tr}\!\left[J_\mathcal D
+|g(a)\rangle\langle g(a)|\right].
+\tag{174.14}
+$$
+
+在本模型中，$\sqrt\rho$ 为实对称矩阵，$Y^{\mathsf T}=-Y$，故
+
+$$
+g_0:=g(\Xi)=\operatorname{vec}\rho,
+\qquad
+g_1:=g(\psi)=\operatorname{vec}(-Y\rho).
+\tag{174.15}
+$$
+
+由线性性，（174.12）中的收益算子为
+
+$$
+\begin{aligned}
+A_{j,r}
+={}&(1-\beta w_j)|g_0\rangle\langle g_0|
++\beta w_j|g_1\rangle\langle g_1|\\
+&+(-1)^{r+1}\gamma w_j
+\left(|g_0\rangle\langle g_1|+|g_1\rangle\langle g_0|\right),
+\end{aligned}
+$$
+
+$$
+f_j=\frac12\sum_r\operatorname{Tr}(J_{j,r}A_{j,r}).
+\tag{174.16}
+$$
+
+这里同一个原始解码器给出整个族 $J_{k,r}$。特别地，不能为
+$j=0$ 和 $j=1$ 分别赋予一份独立的保迹预算。
+
+### 174.4 公共二阶支配证书
+
+在 Choi 输入因子上作用 $\rho^{-1/2}$，置
+
+$$
+\widehat g_a=(\rho^{-1/2}\otimes I)g_a.
+$$
+
+有
+
+$$
+\|\widehat g_0\|^2=1,\qquad
+\langle\widehat g_0,\widehat g_1\rangle=0,\qquad
+\|\widehat g_1\|^2=6.
+\tag{174.17}
+$$
+
+前两式分别为 $\operatorname{Tr}\rho=1$ 和
+$-\operatorname{Tr}(Y\rho)=0$。对第三式，使用
+$Y\rho Y=I-\rho$。若 $\rho$ 的本征值为 $r,\ell$，则
+$r+\ell=1$、$r\ell=\det\rho=1/9$，所以
+
+$$
+\begin{aligned}
+\|\widehat g_1\|^2
+&=\operatorname{Tr}(\rho^2Y\rho^{-1}Y)\\
+&=\frac{r^2}{\ell}+\frac{\ell^2}{r}
+=\frac1{\det\rho}-3=6.
+\end{aligned}
+\tag{174.18}
+$$
+
+因此，在正交单位向量
+$\widehat g_0,\widehat g_1/\sqrt6$ 的张成上，合同变换后的
+$A_{j,r}$ 的非零矩阵为
+
+$$
+B_{w_j}^{(r)}=
+\begin{pmatrix}
+1-\beta w_j&(-1)^{r+1}\sqrt6\,\gamma w_j\\
+(-1)^{r+1}\sqrt6\,\gamma w_j&6\beta w_j
+\end{pmatrix}.
+\tag{174.19}
+$$
+
+其余正交方向为零。两个旗标的符号不影响本征值。定义
+
+$$
+\mu(w)=
+\frac{
+1+5\beta w+
+\sqrt{(1-7\beta w)^2+24\gamma^2w^2}
+}{2},
+\qquad
+\Gamma_L=\max\{\mu(w_0),\mu(w_1)\}.
+\tag{174.20}
+$$
+
+这给出对两个原输入和两个旗标均成立的公共支配：
+
+$$
+A_{j,r}\preceq\Gamma_L(\rho\otimes I_{R_{\mathrm{out}}}).
+\tag{174.21}
+$$
+
+把（174.21）与同一个 instrument 的（174.11）组合，
+
+$$
+\begin{aligned}
+f_0+f_1
+&\le\frac{\Gamma_L}{2}
+\sum_r\operatorname{Tr}\!\left[
+(J_{0,r}+J_{1,r})(\rho\otimes I)
+\right]\\
+&=\frac{\Gamma_L}{2}\sum_r\operatorname{Tr}\rho
+=\Gamma_L.
+\end{aligned}
+\tag{174.22}
+$$
+
+现在核对 $\Gamma_L<1$。对全部 $L\ge3$，
+$0<|t_j|\le1/6$，从而 $d(t_j)\ge5/72>1/16$。又
+
+$$
+w(t)=
+\frac{9t^2}{\,4/3-t+4\sqrt{d(t)}\,},
+\tag{174.23}
+$$
+
+所以 $w_j>0$；同时
+$w_j<3/2-1=1/2$。另一方面，
+
+$$
+\begin{aligned}
+\det(I-B_w^{(r)})
+&=\beta w-6(\beta^2+\gamma^2)w^2\\
+&=\frac{216}{2353}\,w\left(\frac43-w\right).
+\end{aligned}
+\tag{174.24}
+$$
+
+当 $0<w<1/2$ 时，该行列式严格为正，且
+$(I-B_w^{(r)})_{11}=\beta w>0$。故
+$I-B_w^{(r)}$ 正定，$\mu(w)<1$，得到 $\Gamma_L<1$。
+
+### 174.5 对完整参考任务的严格误差下界
+
+**定理174.1（有限启动的真实谷底升高）。** 对每个有限整数
+$L\ge3$，
+
+$$
+\boxed{
+e_L(\pi/4)=h_L(i)
+\ge1-\frac{\Gamma_L}{4}
+>\frac34.
+}
+\tag{174.25}
+$$
+
+更简单的显式证书为
+
+$$
+\boxed{
+e_L(\pi/4)
+\ge\frac34+
+\frac{54}{2353}
+\min_{j=0,1}
+\left[w_j\left(\frac43-w_j\right)\right]
+>\frac34.
+}
+\tag{174.26}
+$$
+
+**证明。** 用一个参考 qubit $A'$ 与原输入制备
+$|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2$。目标输出是纯态
+$P_\Phi^{A'Q_{\mathrm{out}}}\otimes P_\Xi^{MR_{\mathrm{out}}}$。
+真实入口已经消去原输入的非对角项，所以对任意解码器，这个纯态投影在实际输出上的通过概率恰为
+$(f_0+f_1)/4$。因此该输入上的迹距离至少为
+
+$$
+1-\frac{f_0+f_1}{4}
+\ge1-\frac{\Gamma_L}{4}.
+$$
+
+完整半 diamond 距离不小于这个特定参考输入的迹距离。对解码器取最小值仍保留下界，得到（174.25）。
+
+对于（174.26），$B_w^{(r)}$ 为半正定矩阵，其两个本征值均小于一。于是
+
+$$
+1-\mu(w)
+=\frac{\det(I-B_w^{(r)})}
+{1-\lambda_{\min}(B_w^{(r)})}
+\ge\det(I-B_w^{(r)}).
+$$
+
+代入（174.24），再对两个 $j$ 取最小值，即得（174.26）。证毕。
+
+所有参考、原输入和两个正确输出共用（174.22）中的同一保迹预算。证明没有将收益优化拆成两份互不相容的纯化扩张，也没有授权接收端访问 $M$。
+
+### 174.6 已区分的量及仍未判定的量
+
+第165节的常值比较曲线在 $\varphi=\pi/4$ 恰为 $3/4$。因此（174.25）严格区分了真实任务与常值任务的同相位最优误差，而不仅是两条输入通道。
+
+差值随相位连续，所以它在某个非空开相位弧上仍严格为正。结合第170节的消失运行尾界与相位等分布，还可得到：对每个固定有限 $L$，有一个严格正的误差间隔，在一组具有正自然密度的运行时刻上，真实误差超过同相位的常值比较误差。此处可先取一个闭包仍位于该开弧内的小弧，再用其边界的 Haar 测度为零进行等分布计数。
+
+证书的尺度也保持明确。由（174.23），当
+$z=(-1/2)^{L-1}\to0$ 时，
+
+$$
+w_0=\frac38z^2+O(z^3),\qquad
+w_1=\frac32z^2+O(z^3).
+$$
+
+故（174.26）中的显式正增量满足
+
+$$
+\frac{54}{2353}
+\min_j w_j\left(\frac43-w_j\right)
+\sim\frac{27}{2353}\,4^{-(L-1)}.
+\tag{174.27}
+$$
+
+这是所给下界证书的渐近尺度，没有将其声明为真实最优误差增量的精确渐近等式。
+
+本节尚未计算整条真实曲线，也没有仅凭同相位差异推出两份误差经验分布不同：不同的连续函数仍可能具有相同的推前分布。本节结论由显式 Choi 收益恒等式、公共半正定支配和 Bell 输入检验给出，不作新增 Lean 核验或原创性声明。
+
+## 追加锚（本行以下为增补区）
