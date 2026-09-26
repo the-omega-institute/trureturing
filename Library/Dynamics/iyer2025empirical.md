@@ -5447,3 +5447,31 @@ Yingdong Lu，*Non-asymptotic concentration of magnetization in the Curie-Weiss 
 Hsu、Rudelson、Arbel、Lu 四份 PDF 的文本提取分别保留 51967、53923、0、33399 字节的警告；引用以钉住的完整原稿哈希和上述可核对的条件为准。排版提取不承担公式推导。第 129 章 Abi Jaber 附录 A 的实 Gaussian 公式要求半正定惩罚；本章的负插入通过实部正定的直接配方建立。Reeves、Meckes 的独立随机投影条件仍不适用于固定电荷方向。上述范围核对不构成全球原创性认证。
 
 结论保持固定正 $\eta$、固定有限 $S,R$ 和有限层正噪声，不跨越精度极点，不处理趋零余量、增长惩罚、非紧输出或半指数等号。辅助谱的第三惊异响应系数 $24s^3V^2/(1+2sV)^4$ 随 $s^3$ 变号；它仍是辅助计数后验的输出增量差。
+
+## 追加：增长维数合法分配与明确近临界带宽
+
+对应理论卷第 132 章。使用预先确定的 $d_Q=\max(3,\lfloor(\log Q)^{1/3}\rfloor)$、$2d_Q-1$ 个不交标签池和 $N=\lceil1000\rho_Q^{-1}\sqrt{\log Q}\rceil$，在原始 pair/path 数据概率下得到 $\rho_Q\asymp Q^{-3}\exp((\log Q)^{3/4})$ 的完整加权 $L^1$ 信息方差极限。维数只用于概率证明，完整计数律、原始标量、物理数组、有限中心化系数及同一个 Gaussian 残差均保持不变。
+
+经典 Andrews 体积—顶点界沿 Konyagin–Sevast'yanov 面归纳路线，在第 130 章的满维、秩边界及变换后面积条件下给出显式常数递推。第 132 章证明 $\log c_d\le40d^2\log(d+1)$，再通过整数锥补维得到任意平移盒的 $\log L_d\le50d^2\log(d+1)$。对应来源仍为 Travis Dillon，*Small lattice polytopes have few vertices*，[arXiv:2606.30856v1](https://arxiv.org/abs/2606.30856v1)，原始归档 SHA256 `0105c9a16ef613cfe79d7f37c56f9ffaf277986668652c34c599b2adc2a8477a`，主 TeX SHA256 `c34d574cdeffc2d0861319ef4cd22e6c9452f73c2f1ccb978d54a58ce69f4c0c`。第 130 章已列明的原文索引和代数边界继续保留；1984 年出版商响应为 HTML，Andrews 原文路线返回 403，二者均未被当作已阅 PDF。
+
+增长偏移的局部比使用发散方差 $D$、整数均值 $n$ 的独立 Bernoulli 和，在 $|s|\le D^{1/8}$ 一致给出
+
+$$
+\frac{\Pr(N=n+s)}{\Pr(N=n)}
+=1-\frac{s^2+(\kappa_3/D)s}{2D}
+ +O\!\left((1+|s|)^4D^{-2}\right).
+$$
+
+完整证明使用固定阶累积量、Bernoulli 的全频模界及实 Fourier 积分。Boistard–Lopuhaä–Ruiz-Gazen，*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，[arXiv:1207.5654v1](https://arxiv.org/abs/1207.5654v1)，原始归档 SHA256 `258b7a04a6e18116eb0d9a8e8ae290f84b94622cc05f85bab55c546eecf9953b`，已阅 TeX SHA256 `54c68cc91f9e753e985112b4e57d09d30b57232b2c0aab0e1fc5a1bcb6842218`，提供 rejective sampling 的固定偏移方法背景。增长偏移的上述误差由正文独立给出；方差控制累积量只用于阶数至少为二的情形。
+
+Dmitry Dolgopyat、Yeor Hafouta，*Edgeworth expansions for independent bounded integer valued random variables*，[arXiv:2011.14852v2](https://arxiv.org/abs/2011.14852v2)，[原始 TeX 归档](https://arxiv.org/src/2011.14852v2)，归档 41726 字节、SHA256 `4906383d05ec79ea719480528b372fa035b84a4d6f9b532e6f970099be9498b9`，解码 TeX 137398 字节、SHA256 `e5890655891e657c273815be51c10067884cfaa5b3cbc2fc90c0c8fe7384742a`。原文定理 `ThEdgeMN` 及三角阵定理 `IntIndThmAr` 假设独立、一致有界整数变量、发散方差和固定展开阶数。其充分模条件为 $M_N\ge R(r,K)\log V_N$；辅助 Bernoulli 数组中 $K=1$ 且 $M_N=\sum\min(p_i,1-p_i)\ge D$，满足相应非共振前提。这一对应仅属于辅助独立和，不把原始观测行或经验相位向量视为独立。
+
+原文的 superstable 删除定义将删除数约束在一个预先固定的上界内；它不直接提供本章增长池数的一致响应。正文以一次共同条件分母展开得到 $O((m+2)^4/q^2)$ 余项，保留共同校准、所有 $2m+1$ 种中心组成员数和同一条实际历史。局部概率比的全部系数及误差由正文的实积分证明，不使用原稿中待核的二阶特征多项式系数或共振点邻域强化衰减显示式。
+
+全部随维数增长的损失显式出现：格点常数 $\exp(O(d^2\log d))$、盒及子集覆盖 $12^d$、原子界 $C^dQ^{-3d/2}$、一次支付的 $Cm(Q^{-3/2}+e^{-cQ})$、窗口尾部 $2mQ^{-204}$ 以及成员数因子。最终算术项的对数为
+
+$$
+-(\log Q)^{3/4}+O\!\left((\log Q)^{2/3}\log\log Q\right),
+$$
+
+同时 $(m+1)N/Q^3\to0$ 保证每个成员数只需有限个候选共振水平。第 111、124、130 章的带标记密度比较、条件均值平方截断、真实参数二阶导数及全输出尾部在 $\rho_Q^{-1}\le CQ^3$ 下逐项支付，给出原始加权 $L^1$ 结论及积分常数 $8/\sqrt3-25/6$，保留精确的 $C_xm_x$。本结论不覆盖 $\rho_Q\asymp Q^{-3}$ 端点、必要性、原始环境期望或计算效率，也不作全球原创性认证。
