@@ -52322,3 +52322,146 @@ $$
 **注记 241.3（阈值来自同一个退化参考分量）。** 次临界下界与超临界桥使用同一个 $D_*$：它既是第三节点到 $p=1$ 的平方阶距离，也决定远端半相位圆所需的最小首阶总资源。前一方向通过实际密度的参考列约束排除远端过零，后一方向通过精确矩纤维上的导数界构造允许的续接。两者针对同一任务及同一状态资源量，而非分别可达的两个独立极值。等号情形没有严格余量，以上证明不判定其代价；更细的端点展开与过渡位置约束仍须另行分析。
 
 ## 追加锚（本行以下为增补区）
+
+## 242. 合并平方预算下的精确实准备归约
+
+**定义 242.1（逐点合并的全域资源预算）。** 固定第238节的一个实际任务、共同四维处理器、实共轭 $C$ 和内部窗口 $K$。保留该节的解析性、全输入精确性、完整尖锐集合、实际支持四及两个节点的最优普通双侧曲率条件。也可同时预先指定任意有限阶实规范节点数据。对 $\delta>0$，以 $\mathcal D_{\rm pool}(\delta)$ 表示额外满足
+
+$$
+\sup_{u\in J_a}
+\sqrt{[I_R^C(\rho_u)]^2+J(\rho_u)^2}\le\delta
+\tag{242.1}
+$$
+
+的全部允许密度准备，不限制点态秩。令 $\mathcal D_{\mathbb R}(\delta)$ 为同样任务条件下满足 $C\rho_uC=\rho_u$、$\sup_uJ(\rho_u)\le\delta$ 的实密度类。分别对 $\sup_KI_Q$ 和 $\int_KI_Q\,du$ 取下确界，记为 $Q_{\rm pool},E_{\rm pool}$ 与 $Q_{\mathbb R},E_{\mathbb R}$。这里的总预算逐点合并两种资源，允许它们沿 $u$ 改变分配；这与预先分别固定两个全域上界是不同的允许类。
+
+**定理 242.2（同一准备的逐点支配与两个精确下确界）。** 对每个 $\rho\in\mathcal D_{\rm pool}(\delta)$，定义
+
+$$
+S_u=\frac{\rho_u+C\rho_uC}{2}.
+\tag{242.2}
+$$
+
+则 $S\in\mathcal D_{\mathbb R}(\delta)$，且对所有实际输入参数同时有
+
+$$
+J(S_u)^2\le[I_R^C(\rho_u)]^2+J(\rho_u)^2,
+\qquad I_Q(S_u)\le I_Q(\rho_u).
+\tag{242.3}
+$$
+
+因此对每个 $\delta>0$，
+
+$$
+Q_{\rm pool}(\delta)=Q_{\mathbb R}(\delta),
+\qquad
+E_{\rm pool}(\delta)=E_{\mathbb R}(\delta).
+\tag{242.4}
+$$
+
+更强地，对任意有限阈值 $q_0,e_0$，存在合并预算候选同时满足 $\sup_KI_Q\le q_0$、$\int_KI_Q\,du\le e_0$，当且仅当存在实允许候选同时满足这两个界。同一个映射同时改善峰值和积分，不要求两个单独下确界共享极小曲线，也不要求下确界取得或 $\delta$ 趋零。此处实密度不要求彼此对易。
+
+证明。 实部平均及其正性是既有构造，见 Hickey、Gour，*Quantifying the Imaginarity of Quantum Mechanics*，J. Phys. A **51**, 414009（2018），arXiv:1801.05123，定理3的证明；反对称块分解在 Wu 等，*Resource theory of imaginarity: quantification and state conversion*，Phys. Rev. A **103**, 032401（2021），arXiv:2103.01805，式（36）—（37）中明确使用。以下将这些工具用于保持本题全部任务条件的有限预算优化。
+
+在共轭 $C$ 的实正交基中，写 $\rho=S+iA$，其中 $S$ 实对称、$A$ 实反对称。实反对称矩阵的经典正交块分解使 Hermitian 矩阵 $iA$ 的特征值成对为 $\pm a_j$，$a_j\ge0$。用第227节已引用的虚性迹范数公式和平方迹展开，得到
+
+$$
+I_R^C(\rho)=\|iA\|_1=2\sum_ja_j,
+\qquad
+\operatorname{Tr}\rho^2
+=\operatorname{Tr}S^2+2\sum_ja_j^2.
+\tag{242.5}
+$$
+
+两式相加消去同一组平方项，给出
+
+$$
+[I_R^C(\rho)]^2+J(\rho)^2
+=J(S)^2+8\sum_{i<j}a_ia_j
+\ge J(S)^2.
+\tag{242.6}
+$$
+
+四维时只有两个可能的正数 $a_1,a_2$，故差额等于 $8a_1a_2=8|\operatorname{Pf}A|$；它为零当且仅当 $\operatorname{rank}A\le2$。这里的块分解与 Pfaffian 行列式恒等式是经典线性代数，本题使用它们比较同一实际密度的两种预算，而不另赋予它们新的优先权。
+
+接着处理点态 SLD 信息。保留两个准备的固定等概率标签，定义
+
+$$
+\Omega_u=rac12\rho_u\otimes|0\rangle\langle0|
++\frac12C\rho_uC\otimes|1\rangle\langle1|.
+\tag{242.7}
+$$
+
+若 $L_u$ 是 $\rho_u$ 的 SLD，则 $CL_uC$ 是共轭准备的 SLD，平方迹相同。因此标签态的信息为
+
+$$
+I_Q(\Omega_u)
+=\frac12I_Q(\rho_u)+\frac12I_Q(C\rho_uC)
+=I_Q(\rho_u).
+\tag{242.8}
+$$
+
+丢弃标签是固定偏迹，SLD 信息的单调性给出 $I_Q(S_u)\le I_Q(\rho_u)$。这正是第240节固定标签论证在任意混态上的使用；固定权重凸性也可见 Alipour、Rezakhani，*Quantum Metrology: Extended Convexity of Quantum Fisher Information*，arXiv:1403.8033 的式（4）的固定概率特例。整个论证在每个参数点成立，包括秩变化点，并不通过邻域连续性补定义。辅助标签不计入实际程序空间。
+
+式（242.2）是对两条已指定准备曲线取凸混合，不宣称共轭或取实部是任意未知输入上的 CPTP 通道。其实际输出仍是原四维空间中的正、归一化、解析密度矩阵，且在 $C$ 下为实。
+
+还须核对该变换保留完整任务条件。两个固定矩算子 $P,T$ 在此基中为实，实际目标矩 $p,a$ 为实，所以
+
+$$
+\operatorname{Tr}(P C\rho C)
+=\overline{\operatorname{Tr}(P\rho)}=p,
+\qquad
+\operatorname{Tr}(T C\rho C)
+=\overline{\operatorname{Tr}(T\rho)}=a.
+\tag{242.9}
+$$
+
+第二式包括虚部为零的完整复矩条件，不仅是其 Hermitian 实部。因此 $S$ 保持全部信号输入上的精确性。
+
+每个指定节点的实际状态由第216节的非临界秩界及简单谱唯一性强制为同一个实规范纯态，因此（242.2）在节点保持状态不变。点态信息不等式和精确任务的普适读出下界使
+
+$$
+I_r(u_i)\le I_Q(S_{u_i})
+\le I_Q(\rho_{u_i})=I_r(u_i),
+\tag{242.10}
+$$
+
+所以两个指定节点仍校准。再对 $u\ne u_i$ 使用（242.3），并结合第211节在校准点附近的秩无关曲率下界，得到
+
+$$
+\kappa_*(a,u_i)
+\le\liminf_{u\to u_i}
+\frac{I_Q(S_u)-I_r(u)}{(u-u_i)^2}
+\le\limsup_{u\to u_i}
+\frac{I_Q(S_u)-I_r(u)}{(u-u_i)^2}
+\le\kappa_*(a,u_i).
+\tag{242.11}
+$$
+
+因而普通双侧极限仍存在且最优。这个夹逼不假设秩变化处的 SLD 信息连续。第215节的混态谱必要性及本处理器仅有两个允许的正签名排除额外尖锐点，故完整尖锐集合保持。若预先指定有限阶实规范密度数据，线性变换（242.2）与微分可交换，并逐阶保持这些数据。
+
+实际支持也没有丢失。逐点 $S_u\ge\rho_u/2$，故 $\operatorname{supp}\rho_u\subseteq\operatorname{supp}S_u$。原准备的联合支持已经是整个四维空间，$S$ 仍在这个空间内，所以它的实际联合支持恰为四。这不要求 $S_u$ 的点态秩至多二。
+
+以上证明 $S$ 属于所需实允许类，同时给出（242.3）。每个合并预算候选都由这个同一实候选在两个目标上弱支配，所以两个实下确界分别不大于对应的合并预算下确界。反过来，实准备的 $I_R^C=0$，故 $\mathcal D_{\mathbb R}(\delta)\subseteq\mathcal D_{\rm pool}(\delta)$，给出反向不等式。这证明（242.4）。同一逐点支配还把同时满足任意两项目标阈值的候选映入实类；实类的包含关系给出逆向存在性，故联合阈值的可行性也完全相同。这些不等式同样适用于扩展实数下确界，无需另假设极小曲线存在。证毕。
+
+**定理 242.3（分别预算的有限尺度夹界）。** 对同一固定任务，给定 $\eta,\zeta\ge0$、$\delta=\sqrt{\eta^2+\zeta^2}>0$。记 $Q_{\rm joint}(\eta,\zeta),E_{\rm joint}(\eta,\zeta)$ 为分别约束 $\sup I_R^C\le\eta$、$\sup J\le\zeta$ 的两个下确界，$Q_{\rm pure}(\delta),E_{\rm pure}(\delta)$ 为原纯态允许类在 $\sup I_R^C\le\delta$ 下的两个下确界。则
+
+$$
+\begin{aligned}
+Q_{\mathbb R}(\delta)
+&\le Q_{\rm joint}(\eta,\zeta)
+\le Q_{\rm pure}(\delta),\\
+E_{\mathbb R}(\delta)
+&\le E_{\rm joint}(\eta,\zeta)
+\le E_{\rm pure}(\delta).
+\end{aligned}
+\tag{242.12}
+$$
+
+证明。 分别预算类包含于（242.1）的合并预算类，故定理242.2给出两个左界。对任意纯态候选使用第240.8式的固定权重共轭混合，取 $\tau=\eta/\delta$。第240.9式使同一密度分别满足两个预算，第240.10式使两个 Fisher 目标同时不增；其全部任务条件及零预算边按该节保持。对原纯态候选取下确界即得两个右界。此处没有将两种分别可达的最优值当成一个共同实现。证毕。
+
+**注记 242.4（资源合并与实结构的边界）。** 对合并预算，实准备在完整有限尺度优化中已经足够；对分别固定的两种预算，只能直接得到（242.12），不能把两个允许类混同。第240节的秩至多二共轭混合具有 $\operatorname{rank}\operatorname{Im}\rho\le2$，因此在（242.6）中恰好没有额外差额。一般四维密度若有两个非零反对称块，则出现严格正的 Pfaffian 差额。
+
+所有比较都固定了实际共轭与处理器；实密度曲线仍可包含彼此不对易的状态。定理既没有把这些准备改判为经典属性表，也没有构造一个对任意未知输入执行共轭的物理通道。它说明的是指定准备的资源约束与信息目标共同决定的一个精确变分归约。
+
+## 追加锚（本行以下为增补区）
