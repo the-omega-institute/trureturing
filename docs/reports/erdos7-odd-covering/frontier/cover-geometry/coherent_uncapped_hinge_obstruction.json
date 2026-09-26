@@ -1,0 +1,46 @@
+{
+  "scope": "AH9 scalar/support interface; canonical467 source selection not reconstructed; no irredundancy or whole-cover premise; no Lean claim",
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "current_prime": 23,
+  "old_height": 2,
+  "event_threshold": 32,
+  "valuation_profiles": 2187,
+  "event_profiles": 1633,
+  "actual_full_labels": 2186,
+  "actual_short_labels": 7,
+  "old_original_count": 0,
+  "old_height_two_period": 23520996524025,
+  "same_union_certificate": "short subset full; every full zero class is contained in one short zero class by literal modulus divisibility",
+  "exact": {
+    "A": "70871/3375",
+    "Lambda": "6075000000000/7235955529",
+    "mixture": "2/5",
+    "Haar_event_mass": "8435891267/7840332174675",
+    "Haar_infinite_divisor_moment": "323323/110592",
+    "Haar_infinite_divisor_moment_on_event": "680845452801113263/13006170237924864000",
+    "Haar_uncapped_hinge": "452456464149/60109213339175",
+    "Haar_uncapped_hinge_on_event": "1701702799/623971072725",
+    "R_infty": "1414458544322632571/69970656525004800",
+    "A_minus_R_infty": "274211572584785561/349853282625024000",
+    "density_max": "15705972023151/42179456335",
+    "Lambda_minus_density_max": "142592482135886205548121/305208670277457326215",
+    "uncapped_hinge": "2581992950434626793746299/2535373939370931457423625",
+    "uncapped_hinge_minus_one": "46619011063695336322674/2535373939370931457423625",
+    "short_additive_hinge": "0",
+    "actual_union_hinge": "0",
+    "density_min": "3/5"
+  },
+  "decimals": {
+    "R_infty": 20.21502461988705,
+    "density_max": 372.36070323927754,
+    "uncapped_hinge": 1.0183874300905933
+  }
+}
