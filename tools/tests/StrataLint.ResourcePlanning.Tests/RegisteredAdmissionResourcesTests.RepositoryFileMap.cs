@@ -5,8 +5,8 @@ namespace StrataLint.ResourcePlanning.Tests;
 public sealed partial class RegisteredAdmissionResourcesTests
 {
     [Theory]
-    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "push", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
-    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "pr", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "push", "StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "pr", "StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
     [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "push", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
     [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "pr", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
     [InlineData("Golden/Projection/statement-projection-expansion-v1.json", "push", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
@@ -22,7 +22,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RepositoryFileMapInputsSelectTheirCompleteConsumers(string path, string mode, string consumers)
     {
         var plan = Plan(path, "", mode);
-        Assert.Equal(WithWorktreeContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
+        Assert.Equal(OrderedConsumers(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")
+            .Concat(path.StartsWith("tools/", StringComparison.Ordinal) || path.EndsWith(".scribe.cs", StringComparison.Ordinal) || path == "lean-report-inputs.json"
+                ? new[] { WorktreeContractProject } : [])),
             Strings(plan["execution"]!["tests"]!));
         Assert.Equal(path == "lean-report-inputs.json", Strings(plan["resources"]!).Contains("engineering"));
     }

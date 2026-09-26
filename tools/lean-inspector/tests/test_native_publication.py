@@ -431,6 +431,55 @@ class NativePublicationConsumerTests:
 class NativeArtifactConsumerTests:
     """Consumers of a valid report; subsequent mutations stay private."""
 
+    def test_warm_native_artifacts_do_not_require_production_source_files(self):
+        self.build()
+        before, expected = self.stamps(), self.report()
+        inputs = native.state(self.root) / 'inputs'
+        for path in inputs.glob('*.sources.json'):
+            path.unlink()
+        self.build()
+        self.assertEqual(list(inputs.glob('*.sources.json')), [])
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(self.stamps(), before)
+        self.assertEqual(self.report(), expected)
+
+    def test_native_miss_prepares_only_its_production_sources(self):
+        self.build()
+        before = self.stamps()
+        inputs = native.state(self.root) / 'inputs'
+        for path in inputs.glob('*.sources.json'):
+            path.unlink()
+        self.write('D5/Extra.lean', 'import D5.A\ndef extra : Nat := value\n')
+        self.build()
+        self.assertEqual([path.name for path in inputs.glob('*.sources.json')],
+                         ['D5.Extra.json.sources.json'])
+        self.assertEqual({name: stamp for name, stamp in self.stamps().items() if name in before}, before)
+        self.assertEqual([json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()],
+                         [dict(kind='extract', count=1), dict(kind='aggregate', count=1)])
+        self.assertIn('D5.Extra', {row['module'] for row in self.report()[0]})
+
+    def test_native_repair_recreates_its_missing_production_sources(self):
+        self.build()
+        before, expected = self.stamps(), self.report()
+        state = native.state(self.root)
+        inputs = state / 'inputs'
+        original_sources = (inputs / 'Fixture.json.sources.json').read_bytes()
+        for path in inputs.glob('*.sources.json'):
+            path.unlink()
+        artifact = state / 'modules/Fixture.zip'
+        artifact.unlink()  # Never mutate a possible hard link into Lake's cache.
+        artifact.write_bytes(b'corrupt optional artifact')
+        repaired = self.build()
+        self.assertIn('inspector artifact rejected; rebuilding privately', repaired.stdout + repaired.stderr)
+        self.assertEqual([path.name for path in inputs.glob('*.sources.json')],
+                         ['Fixture.json.sources.json'])
+        self.assertEqual((inputs / 'Fixture.json.sources.json').read_bytes(), original_sources)
+        self.assertEqual({name: stamp for name, stamp in self.stamps().items() if name != 'Fixture'},
+                         {name: stamp for name, stamp in before.items() if name != 'Fixture'})
+        self.assertEqual([json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()],
+                         [dict(kind='extract', count=1)])
+        self.assertEqual(self.report(), expected)
+
     def test_native_module_integrity_rejections(self):
         self.build()
         state = native.state(self.root)
