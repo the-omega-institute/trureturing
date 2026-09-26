@@ -20,9 +20,6 @@ Direct frozen dependencies: D5/S3/Quantum/FockSpace/ForbiddenNeighbourDeterminan
 -/
 
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.RingTheory.Polynomial.Vieta
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
