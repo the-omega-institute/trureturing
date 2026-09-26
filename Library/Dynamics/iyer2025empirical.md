@@ -4850,3 +4850,51 @@ $\langle DF,-DL^{-1}F\rangle$ 的逆矩，配合 Hessian 算子范数和不同�
 Gaussian 累积量、Malliavin 密度判据、指数倾斜和有限 Rényi 代数均是经典结果。
 本章为原实际模型补出有界阶数曲率与全阶数连接，不把经典一般密度定理称为新发现。
 有限来源搜索不认证全局原创；固定 $\epsilon$ 的结论不自动延伸到 Shannon 端点。
+
+## 第 116 章：固定带宽的 wrapped 核与实际相位修正
+
+[谱边界卷第 116 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+在 $\ln(\sigma q/Q^{11/4})\to D\in\mathbb R$ 时保留全部半整数混叠，
+给出原后验方差熵的显式有界相位修正及全输出加权余项。
+原无修正极限等价于一个明确的经验周期积分趋零；这一实际中心断言仍未证明或反驳。
+
+Daniele Agostini、Carlos Améndola，*Discrete Gaussian distributions via theta functions*，
+[arXiv:1801.02373v2](https://arxiv.org/abs/1801.02373v2)。
+原 Proposition 4.1 和 Remark 4.2 给 theta 比特征函数及其对数参数导数的累积量，
+要求实二次部分正定，并在复杂参数上避开 theta 除子。
+热方程把协方差与二次参数导数联系起来。
+本章只对正的实 Gaussian 归一化求导，另以正 wrapped 核混合证明输出质量下界；
+没有假设个别复杂 Poisson 模或复杂 theta 值非零。
+这些有限数组恒等式不提供增长维数下的实际经验中心模一反集中。
+
+Aaron J. Hendrickson、David P. Haefner，
+*Valley-peak modulation in phase space: a law-invariant VPM and its theta-function structure*，
+[arXiv:2603.01199v3](https://arxiv.org/abs/2603.01199v3)。
+原 Section 3 的模型为 $X=\mu+(K+\sigma Z)/g$，其中 $K$ 是任意整数值变量、$Z$ 是独立标准正态。
+模一个电子单位可精确消去整数 $K$，得到只依赖噪声的 wrapped Gaussian 相位。
+其 *Wrapped Gaussian series and Jacobi theta functions* 小节同时给正 Gaussian 周期和与 Fourier/Jacobi 表示。
+这些是正文 (116.33) 采用的经典核恒等式。
+
+该文的分布不变性不消去本章的实际 $\Theta(K)$：
+原二次能量含经验线性中心，不是该文的整数仿射信号。
+正文保留共同计数相位，使用同一个正核的移位混合取得下界，
+不把相位均匀或相位与惊讶独立当作前提。
+该文的相机噪声、Poisson 大曝光和估计精度结论不被移用为后验方差熵或经验中心算术定理。
+核的归一化在正文中明确：圆周平均为一，而原 wrapped 密度积分为一。
+
+原第 68 章的完整选择中心共享初等对称多项式分母。
+其有理独立性来自固定幅度的超越性和有理函数的不同消失阶，只排除精确等式，
+不提供对偶格点附近的定量距离。
+一、二行比较给占据和剖面，不能直接当作后验中心的联合模一反集中。
+正文保留这个区别，并给充分条件及必要充分周期判据各自的结论方向。
+
+第 111、113 章的 Grebenkov、Cellarosi–Marklof、Baker 及格点 Edgeworth 来源保持原范围。
+Grebenkov 处理连续 Gaussian 二次型；Agostini–Améndola 提供真正离散 Gaussian 的 theta 运算。
+已有格点 Edgeworth 论文不直接给本章增长维数、完整选择和同一输出下的条件方差结论。
+所需定量导数展开由原特征函数乘积及固定高阶 Taylor 余项建立，
+原中心带符号质量、非线性商式和外围能量误差分别支付。
+
+有限相关检索未获得适用于这些共同后验均值的模一反集中定理。
+一般 Dirichlet/Beta 后验反集中和其他模型的周期结论不被当作可用桥梁；
+这不证明所需结果不存在，也不认证全局原创。
+新增成果是原模型中的完整相位公式与边界归约，剩余实际概率问题按正文保留。
