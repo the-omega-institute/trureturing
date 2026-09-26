@@ -46370,3 +46370,768 @@ $\sqrt{(1-\beta)^2+4\beta u}\le(1-\beta)+2\beta u/(1-\beta)$，该式可平方�
 本节将“边界应保留什么”落实为一份可恢复性等价：在已声明的正交纯分支模型中，带权条件边缘族完整决定这一任务的最优局部恢复误差。它不允许只保留平均边缘，不把不可区分或混合分支自动拆成接收端可读标签，也不把常值入口模型的精确结论移植成有限启动装置的精确误差。所有结果是有限维纸面推导，未新增 Lean 或物理实验声明。
 
 ## 追加锚（本行以下为增补区）
+## 168. 联合逻辑可逆，不代表接收边界可以独自恢复
+
+第159节的混合编码允许同一真实来源与运行接收器持续旋转逻辑态。但逻辑态保存在活动记忆与接收器的联合关系中，接收端独自能够读取的通道需要另行计算。
+
+本节给出这个局部通道的精确形式：它等价于一个 qubit 退相干通道加独立均匀标签。对本项目的非退化来源，局部表示仍然线性单射，却没有 CPTP 左逆；其最优完整参考逻辑恢复误差可以精确求出。这里恢复的是编码的逻辑输入，不是第165节已经被常值入口忘掉的原始来源输入，两个任务的目标保持区分。
+
+### 168.1 联合编码与接收边缘
+
+沿用第159节的实对称平稳密度矩阵 $\rho_*$、规范纯化
+$|\Xi\rangle_{MR}=\operatorname{vec}\sqrt{\rho_*}$ 及
+
+$$
+|\psi_j\rangle_{MR}
+=(I_M\otimes Y_R^j)|\Xi\rangle,
+\qquad j=0,1.
+\tag{168.1}
+$$
+
+对一个任意逻辑 qubit 状态 $\sigma$，联合编码为
+
+$$
+\mathfrak E(\sigma)
+=\frac12\sum_{j=0}^1
+Z_Q^j\sigma Z_Q^j\otimes P_{\psi_j},
+\tag{168.2}
+$$
+
+系统顺序按标记排列。定义接收端独自可用的通道
+
+$$
+\mathcal N_{\mathrm{loc}}(\sigma)
+:=\operatorname{Tr}_M\mathfrak E(\sigma)
+=\frac12\left(
+\sigma\otimes\rho_*+
+Z\sigma Z\otimes Y\rho_*Y
+\right)
+\quad\text{位于 }Q\otimes R.
+\tag{168.3}
+$$
+
+置
+
+$$
+\Delta=\det\rho_*,
+\qquad
+r=\lambda_{\max}(\rho_*),
+\qquad
+\ell=\lambda_{\min}(\rho_*),
+\qquad
+\kappa=r-\ell=\sqrt{1-4\Delta}.
+\tag{168.4}
+$$
+
+于是
+$r=(1+\kappa)/2$、
+$\ell=(1-\kappa)/2$。
+本项目来源满足 $0<p<1$、
+$\Delta=p^2/(1+p)^2\in(0,1/4)$，因而
+$0<\kappa<1$、$0<\ell<1/2$。
+
+定义逻辑退相干通道
+
+$$
+\mathcal D_\kappa(\sigma)
+=r\sigma+\ell Z\sigma Z.
+\tag{168.5}
+$$
+
+### 168.2 接收通道的精确局部标准形
+
+**定理168.1（退相干与独立标签）。** 存在一份固定的接收端酉
+$V_{\mathrm{loc}}$，使对所有逻辑算子 $\sigma$，
+
+$$
+\boxed{
+V_{\mathrm{loc}}\,
+\mathcal N_{\mathrm{loc}}(\sigma)\,
+V_{\mathrm{loc}}^*
+=\mathcal D_\kappa(\sigma)\otimes\frac{I_R}{2}.
+}
+\tag{168.6}
+$$
+
+因此 $\mathcal N_{\mathrm{loc}}$ 与 $\mathcal D_\kappa$ 可以互相通过 CPTP 后处理模拟；等式也在张量任意逻辑参考后成立。
+
+**证明。** 实对称 qubit 密度矩阵满足
+
+$$
+Y\rho_*Y=I-\rho_*.
+\tag{168.7}
+$$
+
+因此两矩阵对易。选择 $\rho_*$ 的接收端本征坐标，使
+$\rho_*=\operatorname{diag}(r,\ell)$。在这个坐标中，
+
+$$
+\mathcal N_{\mathrm{loc}}(\sigma)
+=\frac12\left(
+\mathcal D_\kappa(\sigma)\otimes|0\rangle\langle0|_R
++
+Z\mathcal D_\kappa(\sigma)Z\otimes|1\rangle\langle1|_R
+\right).
+\tag{168.8}
+$$
+
+再施加接收端受控酉
+
+$$
+V_{\mathrm c}
+=I_Q\otimes|0\rangle\langle0|_R
++Z_Q\otimes|1\rangle\langle1|_R
+\tag{168.9}
+$$
+
+便得到（168.6）。$V_{\mathrm{loc}}$ 是先进入上述 $R$ 本征坐标、再执行 $V_{\mathrm c}$ 的固定酉。
+
+由 $\mathcal N_{\mathrm{loc}}$ 得到 $\mathcal D_\kappa$，只需施加该酉并迹掉 $R$；反过来，向 $\mathcal D_\kappa$ 的输出添加 $I_R/2$，再施加逆酉即可得到 $\mathcal N_{\mathrm{loc}}$。全部恒等式对输入算子线性成立，故保留任意外部参考。证毕。
+
+标准形中的均匀标签就是原接收寄存器 $R$ 的坐标，不是新添持久控制。纠正可以用受控酉完成，不要求将标签写入额外档案。
+
+### 168.3 哪些关系在局部接口上被压缩
+
+对逻辑态
+
+$$
+\sigma=\frac12(I+xX+yY+zZ),
+$$
+
+有
+
+$$
+\mathcal D_\kappa(\sigma)
+=\frac12(I+\kappa xX+\kappa yY+zZ).
+\tag{168.10}
+$$
+
+因此局部接口保留 $Z$ 方向的区分距离，将两个相干方向的区分距离乘以 $\kappa$。具体地，若 $\sigma,\tau$ 的 Bloch 向量分别为
+$(x,y,z)$、$(x',y',z')$，则
+
+$$
+\boxed{
+\frac12\|
+\mathcal N_{\mathrm{loc}}(\sigma)
+-\mathcal N_{\mathrm{loc}}(\tau)
+\|_1
+=
+\frac12\sqrt{
+\kappa^2\bigl((x-x')^2+(y-y')^2\bigr)
++(z-z')^2}.
+}
+\tag{168.11}
+$$
+
+**证明。** 固定酉及添加独立归一化状态不改变迹范数，所以定理168.1把左侧化为两个退相干输出的半迹距离。无迹 Hermitian qubit 矩阵
+$aX+bY+cZ$ 的本征值是
+$\pm\sqrt{a^2+b^2+c^2}$，代入（168.10）即得。证毕。
+
+特别地，令
+$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，则
+
+$$
+\frac12\|
+\mathcal N_{\mathrm{loc}}(P_+)
+-\mathcal N_{\mathrm{loc}}(P_-)
+\|_1=\kappa<1,
+\tag{168.12}
+$$
+
+而两个计算基输入仍有局部距离一。
+
+### 168.4 最优局部逻辑恢复的完整参考误差
+
+为保持任务量词明确，定义
+
+$$
+\varepsilon_{\mathrm{loc}}
+:=
+\min_{\mathcal R:\mathcal L(QR)\to\mathcal L(Q_{\mathrm{log}})
+\ {\rm CPTP}}
+\frac12\|
+\mathcal R\mathcal N_{\mathrm{loc}}
+-\operatorname{id}_{Q_{\mathrm{log}}}
+\|_\diamond.
+\tag{168.13}
+$$
+
+目标是恢复任意逻辑输入及其参考；所有恢复操作仍限制在接收端。
+
+**定理168.2（局部恢复误差的精确值）。**
+
+$$
+\boxed{
+\varepsilon_{\mathrm{loc}}
+=\frac{1-\kappa}{2}
+=\ell
+=\lambda_{\min}(\rho_*).
+}
+\tag{168.14}
+$$
+
+**证明。** 上界取定理168.1中的酉纠正，再迹掉独立标签，所得逻辑通道为 $\mathcal D_\kappa$。因为
+
+$$
+\mathcal D_\kappa-\operatorname{id}
+=\ell(\operatorname{Ad}_Z-\operatorname{id}),
+$$
+
+而 $\operatorname{Ad}_Z$ 与恒等通道的半 diamond 距离为一——输入 $|+\rangle$ 时输出正交，通道距离不超过一——故这个恢复器的完整参考误差恰为 $\ell$。
+
+对下界，任取一份恢复通道 $\mathcal R$，记其完整参考误差为 $\varepsilon$。将（168.12）的两个输入经过同一 $\mathcal R$，迹距离收缩给
+
+$$
+D\!\left(
+\mathcal R\mathcal N_{\mathrm{loc}}(P_+),
+\mathcal R\mathcal N_{\mathrm{loc}}(P_-)
+\right)\le\kappa,
+$$
+
+其中 $D(\omega,\tau)=\|\omega-\tau\|_1/2$。各输出到对应理想输入的距离均不超过 $\varepsilon$。三角不等式于是给
+
+$$
+1=D(P_+,P_-)\le\varepsilon+\kappa+\varepsilon.
+\tag{168.15}
+$$
+
+因此 $\varepsilon\ge(1-\kappa)/2=\ell$。上、下界匹配，且上界通道满足原完整参考要求。证毕。
+
+在 $p=1/2$ 的来源上，
+
+$$
+\boxed{
+\kappa=\frac{\sqrt5}{3},
+\qquad
+\varepsilon_{\mathrm{loc}}
+=\frac{3-\sqrt5}{6}.
+}
+\tag{168.16}
+$$
+
+这个值不是第165节的 $\mathfrak e(v)$：后者比较忘掉原始来源输入的常值入口与完整来源目标，本节则恢复混合编码中的任意逻辑输入。
+
+### 168.5 线性单射仍没有合法量子逆
+
+**推论168.3（忠实表示与物理恢复不等价）。** 当
+$0<\kappa<1$ 时，$\mathcal N_{\mathrm{loc}}$ 在线性算子空间上单射，但不存在 CPTP 通道
+$\mathcal R$ 使
+
+$$
+\mathcal R\mathcal N_{\mathrm{loc}}
+=\operatorname{id}.
+\tag{168.17}
+$$
+
+**证明。** 退相干通道在 Pauli 基上的特征值为
+$1,\kappa,\kappa,1$，均非零，因此 $\mathcal D_\kappa$ 线性可逆。定理168.1中的后处理从
+$\mathcal N_{\mathrm{loc}}$ 得到 $\mathcal D_\kappa$，所以
+$\mathcal N_{\mathrm{loc}}$ 单射。
+
+另一方面，定理168.2给严格正的最优 CPTP 恢复误差，直接排除（168.17）。也可从线性逆看到障碍：
+
+$$
+\mathcal D_\kappa^{-1}(P_+)
+=\frac12(I+\kappa^{-1}X)
+\tag{168.18}
+$$
+
+有负本征值 $(1-\kappa^{-1})/2$。因此这个逆不能是定义在整个 qubit 状态空间上的正映射。
+若 $\mathcal N_{\mathrm{loc}}$ 有 CPTP 左逆，再用定理168.1的反向模拟，便会给
+$\mathcal D_\kappa$ 一个 CPTP 左逆，与上述结论矛盾。证毕。
+
+在线性像上可以唯一解回参数，不等于能从一份未知接收态合法生成原逻辑态。公式（168.18）排除的是全域正延拓；它没有否定在已知像内进行数学参数反演。
+
+### 168.6 联合可逆性及其操作边界
+
+联合编码仍有一个作用于整个 $MQR$ 的 CPTP 左逆。由于
+$\operatorname{Tr}(\rho_*Y)=0$，$\psi_0,\psi_1$ 正交。令
+
+$$
+P=P_{\psi_0}+P_{\psi_1}
+\quad\text{作用于 }M\otimes R.
+$$
+
+对联合输入 $X$，定义
+
+$$
+\begin{aligned}
+\Lambda_{\mathrm{joint}}(X)
+={}&\sum_{j=0}^1
+Z^j
+\bigl(\langle\psi_j|_{MR}X|\psi_j\rangle_{MR}\bigr)
+Z^j\\
+&+
+\operatorname{Tr}\!\left[
+((I_{MR}-P)\otimes I_Q)X
+\right]\omega_0,
+\end{aligned}
+\tag{168.19}
+$$
+
+其中 $\omega_0$ 是任意固定逻辑密度矩阵，系统按标记置换。第一行测量两个联合正交支撑并纠正逻辑 $Z$，第二行在其正交补上作固定态替换。该映射全域完全正且保迹，并满足
+
+$$
+\boxed{
+\Lambda_{\mathrm{joint}}\mathfrak E
+=\operatorname{id}.
+}
+\tag{168.20}
+$$
+
+由（168.2）逐块代入即可验证。恒等式也保留任意逻辑参考。
+
+因此同一对逻辑输入在联合编码中仍完全可区分：
+
+$$
+D(\mathfrak E(P_+),\mathfrak E(P_-))=1,
+\qquad
+D(\mathcal N_{\mathrm{loc}}(P_+),
+  \mathcal N_{\mathrm{loc}}(P_-))=\kappa.
+\tag{168.21}
+$$
+
+第一式既可由正交块直接计算，也可由编码与左逆的两次迹距离收缩得到。这给出一个明确的边界见证：被局部接口压缩的相干区分保存在联合关系中，不能由接收端单独的 CPTP 后处理恢复。
+
+$\Lambda_{\mathrm{joint}}$ 访问了 $M$ 与 $R$ 的联合支撑，所以它是数学上的联合解码，不能被列为物理接收器的允许操作。第159节的真实来源发射加固定接收步骤可以释放隐藏标签并实现逻辑旋转；那一步包含新的来源作用与新发射位，不是仅对已有 $Q,R$ 做一次免费逆映射。
+
+本节没有证明完整运行通道的全部外围模都来自 $\mathfrak E$，也没有证明有限启动残差最终消失。是否存在一个描述全空间吸引行为的联合渐近逻辑投影，以及它是否保留原始输入的残余关联，仍是独立问题。以上结果为解析纸面证明，不作数值谱计算或 Lean 核验声明。
+
+## 追加锚（本行以下为增补区）
+## 169. 条件边缘的信息量、Bures 几何与局部恢复损失
+
+第167节表明：在接收端能够区分纯分支的模型中，所有条件边缘相同才可能消除原输入遗忘之外的恢复损失。本节给这一结论接上标准量子信息量。所有量都取自同一份实际分支联合态；结论是既有保真度、相对熵和数据处理原理在该恢复任务中的有限维应用，不作为新的普适信息—扰动原理申报。
+
+### 169.1 同一份分支联合态及其几何缺口
+
+采用第167节的合同：$k$ 个正权纯分支、正交接收支撑、接收端局部 CPTP 解码器、输入维数 $d\ge2$、完整外部参考。额外要求条件边缘的平均等于目标边缘：
+
+$$
+p_j>0,\qquad \sum_{j=1}^k p_j=1,\qquad
+\sum_{j=1}^k p_j\rho_j=\rho.
+\tag{169.1}
+$$
+
+引入记录实际可读分支的经典寄存器 $J$，定义
+
+$$
+\Gamma_{JM}=\sum_j p_j|j\rangle\langle j|\otimes\rho_j,
+\qquad
+\gamma_J=\sum_j p_j|j\rangle\langle j|,
+\qquad
+\Pi_{JM}=\gamma_J\otimes\rho.
+\tag{169.2}
+$$
+
+$\Gamma$ 是同一实际混合态的分支记录；$\Pi$ 是去掉 $J$ 与 $M$ 相关性的比较态。没有将另一种不可读分解的标签加入接收权限。
+
+全文采用平方保真度、自然对数和自然单位的熵：
+
+$$
+F(a,b)=\|\sqrt a\sqrt b\|_1^2,\qquad
+S(a)=-\operatorname{Tr}(a\log a),
+\qquad
+D(a\|b)=\operatorname{Tr}[a(\log a-\log b)].
+\tag{169.3}
+$$
+
+置
+
+$$
+F_j=F(\rho_j,\rho),\qquad
+f=\sum_jp_jF_j,\qquad u=1-f,
+$$
+
+$$
+\chi=I(J:M)_\Gamma
+=D(\Gamma\|\Pi)
+=\sum_jp_jD(\rho_j\|\rho)
+=S(\rho)-\sum_jp_jS(\rho_j).
+\tag{169.4}
+$$
+
+由于 $\rho\ge p_j\rho_j$，每个 $\rho_j$ 的支撑都包含在
+$\operatorname{supp}\rho$ 中，相对熵有限。记
+$r=\operatorname{rank}\rho$；此后的谱运算均可限制在这份共同支撑上。
+
+完整参考最优误差仍记为 $e$。令
+
+$$
+\beta=d^{-2},\qquad a=e-(1-\beta).
+\tag{169.5}
+$$
+
+第167节已证明
+
+$$
+\beta u\le a\le\frac{\beta}{1-\beta}u.
+\tag{169.6}
+$$
+
+因此 $u$ 与实际优化任务的额外损失只差一个至多 $4/3$ 的上下系数比。
+
+### 169.2 Bures 缺口恰是分支与活动记忆的不独立距离
+
+采用平方 Bures 距离
+
+$$
+d_{\mathrm B}(a,b)^2=2\bigl(1-\sqrt{F(a,b)}\bigr).
+\tag{169.7}
+$$
+
+分块矩阵的平方根与迹范数分别分块计算，给出
+
+$$
+\sqrt{F(\Gamma,\Pi)}
+=\sum_jp_j\sqrt{F_j}.
+\tag{169.8}
+$$
+
+故平均条件 Bures 平方距离恰等于联合态到独立比较态的 Bures 平方距离：
+
+$$
+\mathcal B:=
+\sum_jp_jd_{\mathrm B}(\rho_j,\rho)^2
+=d_{\mathrm B}(\Gamma,\Pi)^2.
+\tag{169.9}
+$$
+
+对 $x\in[0,1]$，有
+
+$$
+1-x\le2(1-\sqrt x)\le2(1-x).
+$$
+
+逐支加权得到
+
+$$
+\boxed{u\le\mathcal B\le2u,\qquad
+\frac{\beta}{2}\mathcal B\le a
+\le\frac{\beta}{1-\beta}\mathcal B.}
+\tag{169.10}
+$$
+
+特别地，
+
+$$
+\boxed{
+a=0
+\iff u=0
+\iff\mathcal B=0
+\iff\Gamma=\gamma_J\otimes\rho
+\iff\rho_j=\rho\ \text{对全部 }j
+\iff\chi=0.
+}
+\tag{169.11}
+$$
+
+除最后一个等价外，其余直接来自正权重、保真度等于一的判据及（169.6）；相对熵等价也可由下一节的下界得到。
+
+因此，在本节合同下，读出一个与 $M$ 不独立的分支标记，就存在接收端不能消去的纯化恢复损失。这里判定的是同一联合态内的相关性及给定局部操作限制，没有断言某个读取动作产生了这些相关性，也没有把 Holevo 信息当作已被某次测量完全提取的经典信息。
+
+### 169.3 相对熵给出无谱隙条件的单向控制
+
+**定理169.1（信息量对额外损失的上界）。** 有
+
+$$
+\boxed{
+\chi\ge-\log(1-u),\qquad
+u\le1-e^{-\chi}\le\chi,
+}
+\tag{169.12}
+$$
+
+以及
+
+$$
+\boxed{
+a\le\frac{\beta}{1-\beta}(1-e^{-\chi})
+\le\frac{\beta}{1-\beta}\chi.
+}
+\tag{169.13}
+$$
+
+**证明。** 先证明所需的标准保真度—相对熵不等式。设密度矩阵
+$b$ 在所用空间上正定，$a$ 的非零谱为 $a_i$，$b$ 的谱为 $b_l$。在各自本征基中令
+
+$$
+w_{il}=a_i|\langle i|l\rangle|^2.
+$$
+
+这些数构成概率分布，并有
+
+$$
+D(a\|b)=\sum_{i,l}w_{il}\log\frac{a_i}{b_l},
+$$
+
+$$
+\operatorname{Tr}\sqrt a\sqrt b
+=\sum_{i,l}w_{il}
+\exp\left(-\frac12\log\frac{a_i}{b_l}\right)
+\ge e^{-D(a\|b)/2}.
+\tag{169.14}
+$$
+
+最后一步是指数函数的 Jensen 不等式。另一方面，
+
+$$
+\operatorname{Tr}\sqrt a\sqrt b
+\le\|\sqrt a\sqrt b\|_1=\sqrt{F(a,b)}.
+$$
+
+于是 $D(a\|b)\ge-\log F(a,b)$。在（169.1）的共同支撑上取
+$a=\rho_j,b=\rho$，再用 $-\log$ 的凸性，得到
+
+$$
+\chi\ge\sum_jp_j(-\log F_j)
+\ge-\log\left(\sum_jp_jF_j\right)
+=-\log(1-u).
+\tag{169.15}
+$$
+
+指数运算及 $1-e^{-x}\le x$ 给（169.12），与（169.6）组合得到（169.13）。证明也表明 $\chi=0$ 强制 $u=0$；反向在 $\rho_j=\rho$ 时直接成立。证毕。
+
+这条界的方向是“小 Holevo 信息蕴含小额外损失”。它没有给出不依赖谱或规模的线性反向结论。
+
+### 169.4 平均边缘具有谱下界时的双向线性控制
+
+令 $\lambda>0$ 为 $\rho$ 在其支撑上的最小本征值。
+
+**定理169.2（显式谱常数的反向界）。** 有
+
+$$
+\boxed{\chi\le\frac{2}{\lambda}u}
+\tag{169.16}
+$$
+
+及
+
+$$
+\boxed{
+\frac{\beta\lambda}{2}\chi
+\le a
+\le\frac{\beta}{1-\beta}(1-e^{-\chi})
+\le\frac{\beta}{1-\beta}\chi.
+}
+\tag{169.17}
+$$
+
+**证明。** 沿用（169.14）的谱概率，对 $\log$ 使用 Jensen 不等式：
+
+$$
+D(a\|b)
+\le\log\left(\sum_{i,l}w_{il}\frac{a_i}{b_l}\right)
+=\log\operatorname{Tr}(a^2b^{-1}).
+\tag{169.18}
+$$
+
+由 $\log x\le x-1$、迹的循环性及 $\operatorname{Tr}a=\operatorname{Tr}b=1$，
+
+$$
+\begin{aligned}
+D(a\|b)
+&\le\operatorname{Tr}(a^2b^{-1})-1\\
+&=\operatorname{Tr}\bigl((a-b)^2b^{-1}\bigr)\\
+&\le\lambda_{\min}(b)^{-1}\|a-b\|_{\mathrm{HS}}^2.
+\end{aligned}
+\tag{169.19}
+$$
+
+这里没有假设 $a$ 与 $b$ 对易。最后一步使用
+$b^{-1}\preceq\lambda_{\min}(b)^{-1}I$ 及 $(a-b)^2\succeq0$。
+
+为比较 Hilbert–Schmidt 距离与保真度，令 $X=a-b$，写成正负谱部分
+$X=X_+-X_-$。因为 $\operatorname{Tr}X=0$，
+
+$$
+\operatorname{Tr}X_+=\operatorname{Tr}X_-
+=\frac12\|a-b\|_1=:t.
+$$
+
+所以
+
+$$
+\|a-b\|_{\mathrm{HS}}^2
+=\operatorname{Tr}X_+^2+\operatorname{Tr}X_-^2
+\le2t^2
+\le2(1-F(a,b)).
+\tag{169.20}
+$$
+
+末项可由纯化直接得到：选择达到 Uhlmann 重叠的两份纯化，两纯态的半迹距离等于
+$\sqrt{1-F(a,b)}$，取边缘的迹距离收缩给
+$t\le\sqrt{1-F(a,b)}$。逐支应用（169.19）—（169.20）并加权，即得（169.16）；再用（169.6）得到（169.17）。证毕。
+
+每个固定有限维实例都有正的支撑谱常数 $\lambda$。若研究一族实例的统一界，必须另给统一下界 $\lambda\ge\lambda_0>0$；不能把逐实例的正性换成同一个常数。
+
+### 169.5 有限规模下的量子 Fano 型反向界
+
+谱可能趋近零时，仍有依赖有限规模的非线性反向界。令
+
+$$
+N=\min(k,r^2),\qquad
+h_2(x)=-x\log x-(1-x)\log(1-x).
+\tag{169.21}
+$$
+
+若 $N=1$，则 $k=1$ 或 $r=1$；结合（169.1）立即得到
+$\rho_j=\rho$，故 $u=\chi=a=0$。下面设 $N\ge2$。
+
+**定理169.3（有限规模保真度—信息量包络）。** 有
+
+$$
+\boxed{
+-\log(1-u)
+\le\chi
+\le h_2(u)+u\log(N-1),
+\qquad
+0\le u\le1-\frac1N.
+}
+\tag{169.22}
+$$
+
+**证明。** 在共同空间
+$\operatorname{supp}\rho\otimes\mathbb C^r$ 中固定 $\rho$ 的纯化
+$\Psi$。逐支选择 $\rho_j$ 的纯化 $\phi_j$，使
+
+$$
+|\langle\Psi|\phi_j\rangle|^2=F_j.
+$$
+
+定义辅助密度矩阵
+
+$$
+\tau=\sum_jp_jP_{\phi_j}.
+\tag{169.23}
+$$
+
+则 $\operatorname{Tr}_R\tau=\rho$，
+$\operatorname{rank}\tau\le N$，且
+
+$$
+\langle\Psi|\tau|\Psi\rangle=f=1-u.
+\tag{169.24}
+$$
+
+这里使用一个明确的成熟输入：Holevo 信息在部分迹下不增加，等价地，量子相对熵满足数据处理不等式。将其应用于纯态集合
+$(p_j,P_{\phi_j})$ 及其 $M$ 边缘，得到
+
+$$
+\chi\le
+S(\tau)-\sum_jp_jS(P_{\phi_j})
+=S(\tau).
+\tag{169.25}
+$$
+
+这一步引用标准数据处理定理，不宣称已由本节其余初等运算重新证明。
+
+下面核对熵界所需的范围。由 $\rho\ge p_j\rho_j$，
+
+$$
+\sqrt{\rho_j}\rho\sqrt{\rho_j}\succeq p_j\rho_j^2.
+$$
+
+正矩阵平方根的算子单调性给
+$\sqrt{F_j}\ge\sqrt{p_j}$，所以
+$f\ge\sum_jp_j^2\ge1/k$。另一方面，迹范数不小于
+Hilbert–Schmidt 范数给 $F_j\ge\operatorname{Tr}(\rho_j\rho)$，故
+
+$$
+f\ge\operatorname{Tr}\rho^2\ge\frac1r.
+$$
+
+这两条界蕴含 $f\ge1/N$。具体地，若 $N=k$ 用前一条；若 $N=r^2$ 用后一条及 $1/r\ge1/r^2$。
+
+令 $L=\lambda_{\max}(\tau)$，则 $L\ge f\ge1/N$。对秩至多为 $N$ 的密度矩阵，固定最大本征值后，其余至多 $N-1$ 个本征值均分剩余质量时熵最大，因此
+
+$$
+S(\tau)\le h_2(L)+(1-L)\log(N-1).
+\tag{169.26}
+$$
+
+右侧作为 $L$ 的函数，在 $L\ge1/N$ 上递减；其导数为
+$\log[(1-L)/((N-1)L)]\le0$。于是
+
+$$
+S(\tau)\le h_2(f)+(1-f)\log(N-1)
+=h_2(u)+u\log(N-1).
+$$
+
+结合（169.25）和定理169.1即得（169.22）。证毕。
+
+在输入维数 $d$ 固定、$N$ 一致有界的实例族中，（169.6）与（169.22）表明
+$a\to0$ 当且仅当 $\chi\to0$。这里不需要平均边缘的统一谱下界；代价是熵上界在小 $u$ 处包含 $u\log(1/u)$。
+
+该推导使用了量子 Fano 不等式的标准纯化与熵极值结构。本节保留实际纯化混合态的秩界
+$\operatorname{rank}\tau\le\min(k,r^2)$，把它接到第167节的具体恢复误差合同上。
+
+### 169.6 等号族与不能删掉的边界
+
+**两条信息量界可同时达到。** 取 $k=r=n\ge2$ 个正交纯态
+$\rho_j=|j\rangle\langle j|$，等权 $p_j=1/n$，于是
+$\rho=I/n$。此时
+
+$$
+F_j=\frac1n,\qquad
+u=1-\frac1n,\qquad
+\chi=\log n,\qquad N=n.
+\tag{169.27}
+$$
+
+（169.22）的上下界都等于 $\log n$。这些分支可由
+$\zeta_j=|j\rangle_M\otimes|j\rangle_K$ 实现，符合正交接收纯分支合同。
+
+**固定二能级也没有统一线性反向常数。** 取两个正交纯边缘，概率为
+$(1-\varepsilon,\varepsilon)$，其中 $0<\varepsilon<1/2$。同样使用上述正交产品纯分支。此时
+
+$$
+\rho=\operatorname{diag}(1-\varepsilon,\varepsilon),
+\qquad
+u=2\varepsilon(1-\varepsilon),
+\qquad
+\chi=h_2(\varepsilon).
+\tag{169.28}
+$$
+
+当 $\varepsilon\downarrow0$，
+
+$$
+\frac{\chi}{u}
+\sim\frac12\log\frac1\varepsilon\longrightarrow\infty.
+$$
+
+因此即便 $k=r=2$ 固定，也不存在适用于所有平均边缘的有限常数
+$C$，使 $\chi\le Cu$；由（169.6），对固定输入维数同样不存在统一正数 $c$，使 $a\ge c\chi$。这与定理169.2一致，因为其谱常数
+$\lambda=\varepsilon$ 正在趋零。
+
+**规模无界时，几何缺口趋零也不迫使信息量趋零。** 取 $n+1$ 个正交纯态，概率为
+$1-\varepsilon$ 与 $n$ 份 $\varepsilon/n$。则
+
+$$
+u=2\varepsilon-\varepsilon^2\left(1+\frac1n\right),
+\qquad
+\chi=h_2(\varepsilon)+\varepsilon\log n.
+\tag{169.29}
+$$
+
+令 $\varepsilon_t=1/t$，$n_t=\lceil e^t\rceil$，$t\to\infty$，便有
+$u_t\to0$ 而 $\chi_t\to1$。固定 $d$ 时，
+$a_t\le\beta u_t/(1-\beta)\to0$。所以不存在完全不依赖谱或规模、并在零点趋零的函数 $g$，能对所有这类实例保证
+$\chi\le g(u)$。这里每个有限实例都满足同一实际分支、同一平均边缘和相同接收操作合同；失去的是统一规模条件。
+
+### 169.7 成熟输入与结论范围
+
+本节的保真度—相对熵界和谱常数界已给出有限维谱证明。纯化最优重叠、平方根算子单调性及相对熵数据处理是成熟量子信息结果；其中数据处理可参见 John Watrous，
+*The Theory of Quantum Information*，Cambridge University Press，2018，
+第5章定理5.35及推论5.37：
+[作者公开书稿页面](https://cs.uwaterloo.ca/~watrous/TQI/)。
+
+量子 Fano 结构的原始来源是 Benjamin Schumacher，
+“Sending entanglement through noisy quantum channels”，
+*Physical Review A* **54**, 2614–2628 (1996)，
+[DOI:10.1103/PhysRevA.54.2614](https://doi.org/10.1103/PhysRevA.54.2614)；
+其 [arXiv 原稿](https://arxiv.org/abs/quant-ph/9604023) 第6.2节给出纯化空间中熵与保真度的 Fano 型控制。本节明确引用数据处理，并给出所需熵极值与实际秩上界的推导，不将上述成熟方法申报为本项目发明。
+
+操作结论限于第167节的常值输入、正交可读纯分支和固定纯化目标。在这个范围内，分支与活动记忆的独立性、几何缺口消失和零额外恢复损失等价；定量比较必须保留（169.12）、（169.17）、（169.22）各自的方向、谱常数和规模条件。没有新增 Lean 核验或物理测量声明。
+
+## 追加锚（本行以下为增补区）
