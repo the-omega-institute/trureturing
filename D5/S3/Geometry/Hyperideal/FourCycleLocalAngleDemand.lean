@@ -379,20 +379,31 @@ theorem paired_angle_demand
   have hroot_prod : (a - 1) * (b - 1) <
       Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
     apply (sq_lt_sq₀ (by positivity) (Real.sqrt_nonneg _)).mp
-    rw [Real.sq_sqrt]
-    · nlinarith [ha, hb]
-    · positivity
+    rw [Real.sq_sqrt (mul_nonneg (by nlinarith only [ha, sq_nonneg (a - 1)])
+      (by nlinarith only [hb, sq_nonneg (b - 1)]))]
+    calc
+      ((a - 1) * (b - 1))^2 <
+          ((a - 1) * (b - 1))^2 + 2 * (a - 1) * (b - 1) * (a + b) := by
+        positivity
+      _ = (a^2 - 1) * (b^2 - 1) := by ring
   have hroot_sum_sq : k * (k - 2) <
       (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 := by
     have hsa := Real.sq_sqrt (show 0 ≤ a^2 - 1 by nlinarith [ha])
     have hsb := Real.sq_sqrt (show 0 ≤ b^2 - 1 by nlinarith [hb])
-    have hsp := Real.sq_sqrt (show 0 ≤ (a^2 - 1) * (b^2 - 1) by positivity)
     have hprod : Real.sqrt (a^2 - 1) * Real.sqrt (b^2 - 1) =
         Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
       rw [Real.sqrt_mul (by positivity)]
-    dsimp [k]
-    rw [sq, hsa, hsb]
-    nlinarith [hroot_prod, hsp, hprod]
+    calc
+      k * (k - 2) =
+          (a^2 - 1) + (b^2 - 1) + 2 * (a - 1) * (b - 1) := by
+        dsimp [k]
+        ring
+      _ < (a^2 - 1) + (b^2 - 1) +
+          2 * Real.sqrt ((a^2 - 1) * (b^2 - 1)) := by
+        linarith only [hroot_prod]
+      _ = (Real.sqrt (a^2 - 1) + Real.sqrt (b^2 - 1))^2 := by
+        rw [add_sq, hsa, hsb, hprod]
+        ring
   have hratio_r : k / (k + 2) ≤ (r - 1) / (r + 1) := by
     apply (div_le_div_iff₀ hk2 (by linarith)).2
     nlinarith [hdom]
