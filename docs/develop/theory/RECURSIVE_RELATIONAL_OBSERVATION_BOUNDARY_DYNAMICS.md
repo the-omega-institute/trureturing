@@ -14874,3 +14874,273 @@ $$
 一致尺度轮廓同时描述固定参数下的比值极限、临界移动参数的一阶比例间隙及两端退化行为；固定参数的二阶超额仍由第69节的更精细估计承担。它只针对本候选族与完整 tester 合同；没有把 $\Gamma$ 识别为所有有限量子过程的通用常数。
 
 ## 追加锚（本行以下为增补区）
+
+## 75. 移动压缩系数的显式正下界
+
+### 75.1 一个固定尺度与最坏系数的双侧区间
+
+沿用第 70 节完整 tester 范数 $N$、闭因果切锥 $\mathcal T$ 以及准确极限系数
+
+$$
+\gamma_r=\min_{K\in\mathcal T}N(H_r-K).
+$$
+
+本节固定 $r=1$。不限制切向修复的矩阵分块或复相干，也不假设最优修复属于某个显式参数族。
+
+**定理 75.1。** 有明确的严格下界
+
+$$
+\gamma_1>\frac{401}{400}.
+\tag{75.1}
+$$
+
+因此第 71、74 节的最坏渐近系数满足
+
+$$
+\frac{401}{400}<\Gamma:=\max_{r>0}\gamma_r
+\le\frac98-\frac{23}{394240}.
+\tag{75.2}
+$$
+
+右侧使用第 73 节的显式统一上界。这给出最坏超额的明确正下界 $\Gamma-1>1/400$，不将任一端点常数识别为最优值。
+
+### 75.2 同一总事件的近饱和约束
+
+记
+
+$$
+x=|000\rangle,\quad x'=|001\rangle,\quad y=|101\rangle,
+\quad z=|110\rangle,\quad z'=|111\rangle,
+\quad j=|100\rangle,\quad w=x+y.
+$$
+
+固定任意 $K\in\mathcal T$，令 $Y=H_1-K$。切锥的准确刻画给
+
+$$
+\operatorname{Tr}_D K=I_A\otimes\dot\sigma,
+\qquad\dot\sigma=\dot\sigma^*,\quad\operatorname{Tr}\dot\sigma=0,
+\qquad P_0KP_0\succeq0,
+\tag{75.3}
+$$
+
+其中 $P_0$ 是 $w^\perp$ 上的正交投影。这里不要求 $K$ 本身为正。
+
+反设对某个
+
+$$
+0\le g\le\frac1{400}
+$$
+
+有
+
+$$
+N(Y)\le1+g.
+\tag{75.4}
+$$
+
+选择合法总事件
+
+$$
+C_+=|00\rangle\langle00|+|11\rangle\langle11|,
+\qquad\Pi_+=C_+\otimes I_D,
+\qquad X=\Pi_+Y\Pi_+.
+$$
+
+第 70 节的一阶早边缘和式（75.3）给 $\operatorname{Tr}X=1$。$X$ 的正谱投影是合法事件，所以其正谱和至多 $1+g$，负谱绝对值之和至多 $g$。在 $\operatorname{ran}\Pi_+$ 上，
+
+$$
+X+gI\succeq0,
+\qquad\langle v|X|v\rangle\le1+g
+\quad\text{对每个单位向量 }v.
+\tag{75.5}
+$$
+
+第 70 节式（70.8）在 $r=1$ 时给
+
+$$
+\begin{gathered}
+(H_{xx},H_{x'x'},H_{yy},H_{zz},H_{z'z'})=(-1,1,-1,0,1),\\
+H_{xz}=1,\qquad H_{x'z'}=-1,\qquad H_{xy}=-1.
+\end{gathered}
+\tag{75.6}
+$$
+
+由于 $z\perp w$，令 $\alpha=K_{zz}$，切向正性给 $\alpha\ge0$。而 $X_{zz}=-\alpha$，故式（75.5）给
+
+$$
+0\le\alpha\le g.
+$$
+
+在 $x,z$ 上取 $X+gI$ 的二阶主子式，得到
+
+$$
+\begin{aligned}
+|1-K_{xz}|^2
+&\le(X_{xx}+g)(g-\alpha)\\
+&\le(1+2g)g.
+\end{aligned}
+\tag{75.7}
+$$
+
+定义
+
+$$
+d_g=\sqrt{(1+2g)g},\qquad
+\ell_g=\frac{(1-d_g)^2}{1+g}.
+\tag{75.8}
+$$
+
+本节参数范围保证 $d_g<1$；因此即使 $K_{xz}$ 为任意复数，式（75.7）也给 $|K_{xz}|\ge1-d_g$。
+
+### 75.3 因果偏迹与核正性共同强迫对角质量
+
+令
+
+$$
+t=K_{x'x'},\qquad\beta=K_{z'z'},\qquad
+p=\dot\sigma_{11}=\alpha+\beta,
+\qquad s=-K_{yy}.
+$$
+
+$x',z'$ 均在 $w^\perp$，所以 $t,\beta\ge0$。式（75.5）在相应对角上还给
+
+$$
+t\le1+g,\qquad\beta\le1+g.
+\tag{75.9}
+$$
+
+因果偏迹的跨输入 $00,11$ 元为零，故
+
+$$
+K_{x'z'}=-K_{xz}.
+$$
+
+将 $P_0KP_0\succeq0$ 压缩到 $x',z'$，得到
+
+$$
+t\beta\ge|K_{x'z'}|^2=|K_{xz}|^2\ge(1-d_g)^2.
+\tag{75.10}
+$$
+
+结合式（75.9），这迫使
+
+$$
+t\ge\ell_g,\qquad\beta\ge\ell_g,
+\qquad p=\alpha+\beta\ge\ell_g.
+\tag{75.11}
+$$
+
+由于 $j\perp w$，还有 $K_{jj}\ge0$。式（75.3）在 $AB=10$ 上给 $K_{jj}+K_{yy}=-p$，所以
+
+$$
+s=p+K_{jj}\ge p\ge\ell_g.
+\tag{75.12}
+$$
+
+同一因果偏迹在 $AB=00$ 上给
+
+$$
+K_{xx}=-p-t.
+$$
+
+再使用 $x-y\perp w$ 的切向正性，
+
+$$
+0\le\langle x-y|K|x-y\rangle
+=-p-t-s-2\operatorname{Re}K_{xy}.
+$$
+
+由式（75.6），这给出同一实际方向 $Y$ 的约束
+
+$$
+\begin{gathered}
+Y_{xx}=p+t-1,\qquad Y_{yy}=s-1,\\
+\operatorname{Re}Y_{xy}\ge\frac{p+t+s}{2}-1.
+\end{gathered}
+\tag{75.13}
+$$
+
+从而
+
+$$
+\langle w|Y|w\rangle\ge2(p+t+s-2).
+\tag{75.14}
+$$
+
+至此没有删去任何未跟踪的相干项，也没有将分别可达的矩阵元界换成另一修复。
+
+### 75.4 一个固定反馈事件给出定量矛盾
+
+选择固定反馈
+
+$$
+C=\operatorname{diag}\left(\frac14,1,\frac34,0\right),
+\qquad L=C^{1/2}\otimes I_D,
+\qquad v_+=\frac{\sqrt3}{2}x+\frac12y.
+$$
+
+它满足 $\operatorname{Tr}_A C=I_B$，且 $v_+$ 为单位向量。因此
+
+$$
+E=L|v_+\rangle\langle v_+|L
+=\frac3{16}|w\rangle\langle w|
+\tag{75.15}
+$$
+
+是合法事件；它在整个推导中不随 $K$ 变化。
+
+由一阶早边缘与因果约束，同一反馈总事件的响应为
+
+$$
+\operatorname{Tr}(Y(C\otimes I_D))=-\frac34.
+$$
+
+其互补事件 $C\otimes I_D-E$ 也合法。因此，式（75.14）给
+
+$$
+\begin{aligned}
+N(Y)
+&\ge-\operatorname{Tr}\bigl(Y(C\otimes I_D-E)\bigr)\\
+&=\frac34+\frac3{16}\langle w|Y|w\rangle\\
+&\ge\frac38(p+t+s)
+\ge\frac98\ell_g.
+\end{aligned}
+\tag{75.16}
+$$
+
+现在仅需比较显式常数。若 $0\le g\le1/400$，则
+
+$$
+d_g^2=(1+2g)g\le\frac{201}{80000}<\frac1{361},
+$$
+
+最后一步等价于 $201\cdot361=72561<80000$。所以 $d_g<1/19$，式（75.8）、（75.16）给
+
+$$
+N(Y)\ge\frac98\ell_g
+>\frac98\frac{(18/19)^2}{1+g}
+=\frac{729}{722(1+g)}.
+\tag{75.17}
+$$
+
+若误差假设（75.4）成立，便必须有
+
+$$
+(1+g)^2>\frac{729}{722}.
+$$
+
+但同一参数范围内
+
+$$
+(1+g)^2\le\left(\frac{401}{400}\right)^2
+=\frac{160801}{160000}<\frac{729}{722},
+\tag{75.18}
+$$
+
+矛盾。这排除了所有满足式（75.4）的 $K\in\mathcal T$。
+
+特别地，没有切向修复能达到误差 $401/400$ 或更小。第 70 节已经证明切锥距离的极小值达到，所以严格下界（75.1）成立。再用 $\Gamma\ge\gamma_1$ 与第 73 节的显式统一上界，即得（75.2）。$\square$
+
+该下界使用固定尺度 $r=1$ 和一个固定补事件，未求解真实最优切向修复，也不定位使 $\gamma_r$ 最大的参数。它提供了明确的系数下界，与同一完整 tester 合同下的显式统一上界共同约束最坏渐近误差。
+
+## 追加锚（本行以下为增补区）
