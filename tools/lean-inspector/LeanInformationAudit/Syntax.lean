@@ -231,18 +231,22 @@ private def resolveLegacyRealization (theoremName arenaName generatedName : Name
     return (generatedName, true)
   throwError "IE-C006 StatementProofMismatch: {theoremName}"
 
-/-- Package a legacy bridge with its source theorem at one shared universe instance. -/
+/-- Keep the theorem's universes rigid while the bridge's type determines their alignment. -/
 private def alignedLegacyConstants (theoremName realizationName : Name) :
     MetaM (Expr × Expr) := do
   let theoremInfo ← getConstInfo theoremName
-  let realizationInfo ← getConstInfo realizationName
-  if realizationInfo.type.isAppOf
-      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
-      theoremInfo.levelParams.length == realizationInfo.levelParams.length then
-    let levels := theoremInfo.levelParams.map Level.param
-    return (mkConst realizationName levels, mkConst theoremName levels)
-  return (← mkConstWithFreshMVarLevels realizationName,
-    ← mkConstWithFreshMVarLevels theoremName)
+  let theoremExpr := Lean.mkConst theoremName (theoremInfo.levelParams.map Level.param)
+  let realization ← mkConstWithFreshMVarLevels realizationName
+  let realizationType ← whnfR (← inferType realization)
+  if realizationType.isAppOf
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization then
+    unless ← isDefEq realizationType.getAppArgs[1]! (← inferType theoremExpr) do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let realization ← instantiateMVars realization
+    if realization.hasLevelMVar then
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    return (realization, theoremExpr)
+  return (realization, theoremExpr)
 
 private def addLegacyUnit (theoremName realizationName unitName : Name) :
     CommandElabM Unit := do

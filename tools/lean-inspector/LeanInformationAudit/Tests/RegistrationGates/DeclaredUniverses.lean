@@ -114,6 +114,38 @@ register_information_theorem namedOccurrenceStatement in polymorphicArena
   object_arena polymorphicObjectArena catalog polymorphicNamed
   primitives polymorphicReadout.toPrimitiveBundle realization namedBridge
 
+theorem reorderedStatement.{u, v} :
+    (∀ _ : PUnit.{v + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u}) :=
+  fun _ _ => rfl
+theorem reorderedBridge.{v, u} : LegacyPrimitiveRealization polymorphicArena.{u}
+    (∀ _ : PUnit.{v + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u})
+    polymorphicReadout.{u} :=
+  ⟨fun h => h PUnit.unit, fun h _ => h⟩
+
+register_information_theorem reorderedStatement in polymorphicArena
+  primitives polymorphicReadout.toPrimitiveBundle realization reorderedBridge
+
+theorem reorderedOccurrenceStatement.{u, v} :
+    (∀ _ : PUnit.{v + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u}) :=
+  fun _ _ => rfl
+register_information_theorem reorderedOccurrenceStatement in polymorphicArena
+  object_arena polymorphicObjectArena catalog polymorphicReordered
+  primitives polymorphicReadout.toPrimitiveBundle realization reorderedBridge
+
+theorem diagonalStatement.{u, v} :
+    (∀ _ : PUnit.{v + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u}) :=
+  fun _ _ => rfl
+theorem diagonalBridge.{u} : LegacyPrimitiveRealization polymorphicArena.{u}
+    (∀ _ : PUnit.{u + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u})
+    polymorphicReadout.{u} :=
+  ⟨fun h => h PUnit.unit, fun h _ => h⟩
+
+/-- error: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.DeclaredUniverses.diagonalStatement -/
+#guard_msgs (error) in
+register_information_theorem diagonalStatement in polymorphicArena
+  primitives polymorphicReadout.toPrimitiveBundle realization diagonalBridge
+
 def finiteReadout : PrimitiveRealization DeclaredBindings.arena.signature :=
   cutRealization (fun x : Bool => x)
 
@@ -139,13 +171,24 @@ run_meta do
   for (theoremName, expectedNoncomputable) in [
       (``namedStatement, true), (``inlineStatement, true),
       (``namedOccurrenceStatement, true), (``inlineOccurrenceStatement, true),
-      (``finiteStatement, false)] do
+      (``finiteStatement, false), (``reorderedStatement, true),
+      (``reorderedOccurrenceStatement, true)] do
     let some entry := InformationRegistry.find? env theoremName
       | throwError "polymorphic registration missing: {theoremName}"
     let .defnInfo unit ← getConstInfo entry.unitName
       | throwError "polymorphic theorem unit missing: {theoremName}"
-    unless unit.levelParams == (if expectedNoncomputable then [`u] else []) do
+    let expectedLevels := if theoremName == ``reorderedStatement ||
+        theoremName == ``reorderedOccurrenceStatement then [`u, `v]
+      else if expectedNoncomputable then [`u] else []
+    unless unit.levelParams == expectedLevels do
       throwError "polymorphic theorem unit lost its universe: {theoremName}"
+    if theoremName == ``reorderedStatement ||
+        theoremName == ``reorderedOccurrenceStatement then
+      unless unit.value.getAppArgs.any
+          (· == Lean.mkConst theoremName [Level.param `u, Level.param `v]) &&
+          unit.value.getAppArgs.any
+          (· == Lean.mkConst entry.realizationName [Level.param `v, Level.param `u]) do
+        throwError "reordered theorem unit changed a universe application: {theoremName}"
     unless isNoncomputable env entry.unitName == expectedNoncomputable do
       throwError "theorem unit has the wrong computability: {theoremName}"
     checkWithKernel (mkConst entry.unitName (unit.levelParams.map Level.param))
