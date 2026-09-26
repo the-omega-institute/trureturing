@@ -60,12 +60,37 @@ What survives a change of representation? Which distinctions does an
 observation merge? What missing relation prevents a question from being
 answered? Existing work gives this picture several mathematical entry points.
 
-| Entry point | Relation under study | Existing result and scope |
-| --- | --- | --- |
-| Proof dependencies | How a declaration connects to others through dependency paths | [Dependency Alexandrov topology](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean) constructs an upper-set topology from reachability. A node's reachable upper set is its smallest open neighborhood in this topology. This describes dependencies, not physical distance. |
-| Observation and recovery | Which states share a reading, and whether that reading determines a target | The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a nonempty state space, says a target can be recovered exactly when states with the same reading have the same target value. Existence does not establish computability or a cost bound. |
-| Local and joint information | Which correlations remain unknown after observing each part separately | The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two distinct two-qubit states: a Bell pure state and the equal classical mixture of `00` and `11`. They have the same two single-qubit reduced states. This counterexample limits claims of recovering a joint state from local readings alone. |
-| Space and history | Whether a current spatial reading preserves historical conditions needed for later operations | The [hidden archive temporal-domain counterexample](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean) adds an inactive event to a finite event model, preserving the current region, selection and spatial reading while changing whether a temporal composition is legal. It does not identify the model's time labels with physical time. |
+- **Proof dependencies.** How does a declaration connect to others through dependency
+  paths?
+
+  [Dependency Alexandrov topology](../D5/S3/ConceptDynamics/DependencyTopology/AlexandrovDependencyTopology.lean)
+  constructs an upper-set topology from reachability. A node's reachable upper set is
+  its smallest open neighborhood in this topology. This describes dependencies, not
+  physical distance.
+
+- **Observation and recovery.** Which states share a reading, and does that reading
+  determine a target?
+
+  The [target recovery criterion](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean), on a
+  nonempty state space, says a target can be recovered exactly when states with the same
+  reading have the same target value. Existence does not establish computability or a
+  cost bound.
+
+- **Local and joint information.** Which correlations remain unknown after observing
+  each part separately?
+
+  The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
+  distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
+  and `11`. They have the same two single-qubit reduced states. This counterexample
+  limits claims of recovering a joint state from local readings alone.
+
+- **Space and history.** Does a current spatial reading preserve the historical
+  conditions needed for later operations?
+
+  The [hidden archive temporal-domain counterexample](../D5/S3/ConceptDynamics/Spacetime/HiddenArchiveTemporalDomain.lean)
+  adds an inactive event to a finite event model, preserving the current region,
+  selection and spatial reading while changing whether a temporal composition is legal.
+  It does not identify the model's time labels with physical time.
 
 The recovery criterion links both counterexamples. The two quantum states share local readings but differ as joint states; the two archives share
 a spatial reading but differ on a temporal operation's legality. Recovering
@@ -202,11 +227,23 @@ the project does not claim to have solved the Riemann hypothesis.
 Research routes change as evidence reveals new connections and limits.
 Three questions guide the next work:
 
-| Direction | Question to advance | Evidence of progress |
-| --- | --- | --- |
-| Scientific methods for AI | Can AI use observation blind spots to choose useful questions, connect results and revise unsuccessful routes? | Experiments with tasks and comparisons specified in advance, reproducible results, and reusable proofs or counterexamples for mathematical claims. |
-| Geometry of logical truth | Which maps connect proof dependencies, observation distinctions and recovery while preserving the relations needed by a target? | Explicit definitions and maps, proofs of the required preservation properties, and counterexamples locating missing conditions. |
-| Relational spacetime | Which shared sources and historical relations support reconstruction and legal composition at a given resolution and cost? | Reconstruction, gluing, error and resource bounds in stated models; supported correspondences and clearly identified open bridges to physics. |
+- **Scientific methods for AI.** Can AI use observation blind spots to choose useful
+  questions, connect results and revise unsuccessful routes?
+
+  **Evidence of progress:** Experiments with tasks and comparisons specified in advance,
+  reproducible results, and reusable proofs or counterexamples for mathematical claims.
+
+- **Geometry of logical truth.** Which maps connect proof dependencies, observation
+  distinctions and recovery while preserving the relations needed by a target?
+
+  **Evidence of progress:** Explicit definitions and maps, proofs of the required
+  preservation properties, and counterexamples locating missing conditions.
+
+- **Relational spacetime.** Which shared sources and historical relations support
+  reconstruction and legal composition at a given resolution and cost?
+
+  **Evidence of progress:** Reconstruction, gluing, error and resource bounds in stated
+  models; supported correspondences and clearly identified open bridges to physics.
 
 When a theorem, counterexample or reproducible experiment changes a conclusion,
 revise its explanation and the questions that follow from it. Keep these entry

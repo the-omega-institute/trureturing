@@ -282,12 +282,12 @@ Push the branch to your fork with `git push -u origin lane/governance/first-docs
 (substitute your actual branch). Open a PR against **`the-omega-institute/trureturing:dev`**;
 `main` is the release branch.
 
-Describe the concrete problem, resulting behavior or explanation, source
-evidence and verification. At the top, include the provenance required by
-[AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露): skills used (or none),
-who produced and reviewed the work, and the actual review method and scope.
-Disclose AI assistance when used. Keep the PR to useful results and necessary
-diagnostics; do not paste process transcripts.
+Describe the problem, resulting behavior or explanation, source evidence and
+verification. At the top, include [AGENTS.md §5.2](../CLAUDE.md#52-工件产地与独立性披露)
+provenance: skills used (or none), producers and reviewers, and the actual
+review method and scope. For agent work, include the host session ID and
+resume command. Disclose AI assistance. Keep useful results and necessary
+diagnostics; omit process transcripts.
 
 Arrange independent review. The repository's documented merge checks are
 `push / engineering`, `push / current` and `delta`; inspect the actual check
