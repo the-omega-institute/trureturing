@@ -15,3 +15,8 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/ObjectDomainArena.Objec
 *Commentary.*
 
 The domain records the type of objects named by the theorem. The inherited finite arena still supplies states, a typed primitive signature, and a law for the selected realization. No enumeration of the object domain is needed.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/ObjectDomainArena.ObjectDomainArena`
+- Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)
