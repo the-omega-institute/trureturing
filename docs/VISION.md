@@ -81,8 +81,9 @@ answered? Existing work gives this picture several mathematical entry points.
 
   The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
   distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
-  and `11`. They have the same two single-qubit reduced states. This counterexample
-  limits claims of recovering a joint state from local readings alone.
+  and `11`. They have the same two single-qubit reduced states. A
+  [joint expectation](../README.md#three-places-to-look) separates this pair without
+  establishing recovery of arbitrary joint states.
 
 - **Space and history.** Does a current spatial reading preserve the historical
   conditions needed for later operations?
