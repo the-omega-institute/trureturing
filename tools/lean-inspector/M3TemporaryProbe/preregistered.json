@@ -1,5 +1,5 @@
 {
-  "schema": "temporary-m3-hosted-probe-v1",
+  "schema": "temporary-m3-hosted-probe-v2",
   "source": {
     "integration_branch": "integration-ci-escape-source-0926-v2-tests",
     "installed_integration": "e30316c5024b209880cf1e47852596d2f3ac4bcc",
@@ -16,33 +16,190 @@
     "runner_availability": "unverified until the pull_request event; no fallback runner",
     "trigger": "pull_request",
     "required_jobs_unchanged": true,
-    "permissions": {"contents": "read", "actions": "read"},
+    "permissions": {
+      "contents": "read",
+      "actions": "read"
+    },
     "retries": 0,
     "per_process_seconds": 1800,
     "per_process_output_bytes": 16777216,
-    "job_timeout_minutes": 240
+    "job_timeout_minutes": 240,
+    "setup_step_minutes": {
+      "budget_anchor": 1,
+      "checkout": 3,
+      "bootstrap": 3,
+      "dotnet_sdk": 2,
+      "cache_reader": 5,
+      "cache_keys": 1,
+      "elan_restore": 2,
+      "toolchain_install": 4,
+      "dependency_restore": 3,
+      "project_restore": 3,
+      "cache_restore": 5
+    },
+    "budget": {
+      "setup_step_caps_total_seconds": 1920,
+      "probe_total_seconds": 11400,
+      "global_probe_stop_seconds_from_job_anchor": 13860,
+      "upload_seconds": 420,
+      "verdict_seconds": 60,
+      "job_seconds": 14400,
+      "unused_nominal_seconds": 600,
+      "cleanup_seconds_inside_probe": 90,
+      "finalization_seconds_inside_probe": 30,
+      "orchestration_slack_seconds_inside_probe": 60,
+      "runtime_feasibility": "unverified; finite ceilings allocate the attempt, not evidence that remote work completes; any missing phase rejects"
+    },
+    "probe_calls": [
+      {
+        "phase": "immutable_source_and_toolchain_reads",
+        "calls": 8,
+        "seconds_each": 10
+      },
+      {
+        "phase": "isolated_worktree_add",
+        "calls": 2,
+        "seconds_each": 10
+      },
+      {
+        "phase": "matching_warm",
+        "calls": 2,
+        "seconds_each": 1200
+      },
+      {
+        "phase": "tiny_module_identity",
+        "calls": 2,
+        "seconds_each": 30
+      },
+      {
+        "phase": "original_M3",
+        "calls": 4,
+        "seconds_each": 1800,
+        "census": "before, immediate scheduled, every 1 second while alive/draining, after; every observation valid",
+        "boundary_samples_per_call": 2,
+        "census_seconds_each": 2,
+        "census_output_bytes": 1048576,
+        "census_included_in_original_cap": true
+      },
+      {
+        "phase": "ImportCost",
+        "calls": 2,
+        "seconds_each": 120
+      },
+      {
+        "phase": "complete_export",
+        "calls": 2,
+        "seconds_each": 300
+      },
+      {
+        "phase": "declaration_identity",
+        "calls": 2,
+        "seconds_each": 300
+      },
+      {
+        "phase": "identity_normalizer",
+        "calls": 2,
+        "seconds_each": 10
+      },
+      {
+        "phase": "own_worktree_remove",
+        "calls": 2,
+        "seconds_each": 40,
+        "included_in_cleanup_reserve": true
+      }
+    ],
+    "bootstrap_calls": {
+      "aggregate_seconds": 150,
+      "fetch": {
+        "calls": 1,
+        "seconds_each": 60
+      },
+      "verify_commit_and_tree": {
+        "calls": 8,
+        "seconds_each": 10
+      },
+      "actual_checkout_helper": {
+        "calls": 1,
+        "seconds_each": 30
+      },
+      "note": "Aggregate deadline is stronger than sum; read-only token is ephemeral and remotes are stripped only after immutable verification."
+    },
+    "setup_program_calls": [
+      {
+        "name": "cache_reader",
+        "calls": 1,
+        "seconds": 270,
+        "output_bytes": 16777216
+      },
+      {
+        "name": "cache_keys",
+        "calls": 1,
+        "seconds": 45,
+        "output_bytes": 16777216
+      },
+      {
+        "name": "toolchain_install",
+        "calls": 1,
+        "seconds": 210,
+        "output_bytes": 16777216
+      },
+      {
+        "name": "cache_restore",
+        "calls": 1,
+        "seconds": 270,
+        "output_bytes": 16777216
+      }
+    ],
+    "output_policy": "All subprocesses owned by the Python runners: 16 MiB stdout/stderr, census 1 MiB; service-action diagnostics use platform logging. Step caps also bound checkout/SDK/cache actions. No retries."
   },
-  "samples": ["A1 baseline", "B1 final", "B2 final", "A2 baseline"],
+  "samples": [
+    "A1 baseline",
+    "B1 final",
+    "B2 final",
+    "A2 baseline"
+  ],
   "acceptance": {
-    "external_processes": ["lean", "reportInspector"],
+    "external_processes": [
+      "lean",
+      "reportInspector"
+    ],
     "boundary_samples_included": true,
     "balanced_pairs": true,
     "direct_source_execution": true,
     "imports_separate_from_timing": true,
-    "baseline_imports": {"modules": 144, "limit": 143, "interface": 6, "expected_gate": "known-baseline-limit-failure"},
-    "final_imports": {"modules": 143, "limit": 143, "interface": 6, "expected_gate": "pass"},
+    "baseline_imports": {
+      "modules": 144,
+      "limit": 143,
+      "interface": 6,
+      "expected_gate": "known-baseline-limit-failure"
+    },
+    "final_imports": {
+      "modules": 143,
+      "limit": 143,
+      "interface": 6,
+      "expected_gate": "pass"
+    },
     "export_identity_separate": true,
     "expected_normalized_export_bytes": 171790,
     "expected_normalized_export_sha256": "e4aa9d1749672910a3479d734a6d89631a6a151f12d2b8a947c23bb6d81d70ee",
     "expected_declarations": 282,
     "expected_identity_sha256": "29247e3efa9866ba16a12555b175a60cdd3a483076800747890993e607192e87",
-    "expected_axioms": ["Classical.choice", "Quot.sound", "propext"]
+    "expected_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "source_import_gate_sha256": "4c90fdd2a8e816f4a16a3e5c52f2083fe0e9e551c965890ef841e6c98c306c47",
+    "baseline_failure_diagnostic": "ImportCost: M3 closure changed: modules=144 interface=6",
+    "module_identity": "LeanInformationAudit.Tests.Seal.M3"
   },
   "disposition": {
     "temporary": true,
     "never_production_gate": true,
     "no_speedup_claim": true,
     "runtime_artifacts_outside_git": true,
-    "close_after_event_validation": true
+    "close_after_event_validation": true,
+    "never_merge": true,
+    "not_goal_completion_credit": true
   }
 }

@@ -19,31 +19,59 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 240
     steps:
+      - name: Start the finite job budget
+        timeout-minutes: 1
+        run: |
+          python3 - <<'PYTHON'
+          import json, os, pathlib, time
+          root = pathlib.Path(os.environ['RUNNER_TEMP']) / 'm3-temporary-probe'
+          root.mkdir(parents=True, exist_ok=True)
+          (root / 'summary.json').write_text(json.dumps({'accepted': False, 'incomplete': True, 'stage': 'setup'}))
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write('M3_JOB_STARTED_MONOTONIC=' + str(time.monotonic()) + '\n')
+          PYTHON
+
       - name: Check out the immutable head
+        timeout-minutes: 3
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Strip checkout remote state
+      - name: Acquire immutable history then strip checkout remote state
+        timeout-minutes: 3
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$HEAD_SHA"
+          M3_READ_TOKEN: ${{ github.token }}
+        run: |
+          python3 tools/lean-inspector/M3TemporaryProbe/probe.py --bootstrap \
+            --repository "$GITHUB_WORKSPACE" --head "$HEAD_SHA" \
+            --output "$RUNNER_TEMP/m3-temporary-probe"
 
       - name: Set up the pinned .NET SDK
+        timeout-minutes: 2
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
       - name: Build the cache reader
-        run: make -C tools dotnet
+        timeout-minutes: 5
+        run: >-
+          python3 tools/lean-inspector/M3TemporaryProbe/measure.py --aux --seconds 270
+          --sample cache-reader --cwd "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/m3-temporary-probe/setup"
+          -- make -C tools dotnet
 
       - name: Resolve cache partitions
+        timeout-minutes: 1
         id: keys
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+        run: >-
+          python3 tools/lean-inspector/M3TemporaryProbe/measure.py --aux --seconds 45
+          --sample cache-keys --cwd "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/m3-temporary-probe/setup"
+          -- python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
 
       - name: Restore pinned Lean toolchain cache
+        timeout-minutes: 2
         if: steps.keys.outputs.elan_key != ''
         uses: actions/cache/restore@v4
         with:
@@ -51,14 +79,18 @@ jobs:
           key: ${{ steps.keys.outputs.elan_key }}
 
       - name: Install the pinned Lean toolchain
+        timeout-minutes: 4
         env:
           TOOLCHAIN_FILE: ${{ github.workspace }}/lean-toolchain
         run: |
           set -euo pipefail
-          "$GITHUB_WORKSPACE/tools/scripts/workflow/install-lean-toolchain.sh" \
+          python3 tools/lean-inspector/M3TemporaryProbe/measure.py --aux --seconds 210 \
+            --sample toolchain --cwd "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/m3-temporary-probe/setup" \
+            -- "$GITHUB_WORKSPACE/tools/scripts/workflow/install-lean-toolchain.sh" \
             "$TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
 
       - name: Restore the read-only Lean dependency cache
+        timeout-minutes: 3
         id: dependency
         if: steps.keys.outputs.dependency_key != ''
         uses: actions/cache/restore@v4
@@ -68,6 +100,7 @@ jobs:
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
 
       - name: Restore the read-only Lean project cache
+        timeout-minutes: 3
         id: project
         if: steps.keys.outputs.project_key != ''
         uses: actions/cache/restore@v4
@@ -77,27 +110,21 @@ jobs:
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
 
       - name: Restore validated cache inputs
+        timeout-minutes: 5
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-
-      - name: Verify historical source reachability
-        run: |
-          set -euo pipefail
-          git fetch --no-tags --depth=1 origin \
-            53ec407c9a42ebcbbc83c3cf46129dd5faf0e751 \
-            2344decae77045d4d444b9d870fa2f0e67ff702e \
-            e30316c5024b209880cf1e47852596d2f3ac4bcc \
-            d86a54869d231cc1d358eaedd797842fec8919de
-          git cat-file -e 53ec407c9a42ebcbbc83c3cf46129dd5faf0e751^{commit}
-          git cat-file -e 2344decae77045d4d444b9d870fa2f0e67ff702e^{commit}
-          git cat-file -e e30316c5024b209880cf1e47852596d2f3ac4bcc^{commit}
-          git cat-file -e d86a54869d231cc1d358eaedd797842fec8919de^{commit}
+        run: >-
+          python3 tools/lean-inspector/M3TemporaryProbe/measure.py --aux --seconds 270
+          --sample cache-restore --cwd "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/m3-temporary-probe/setup"
+          -- python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE"
+          --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY"
+          --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
 
       - name: Run the fixed bounded probe
+        timeout-minutes: 190
         id: probe
         continue-on-error: true
         env:
@@ -113,7 +140,8 @@ jobs:
             --producer-dll "$PRODUCER_DLL" 2>&1 | tee "$OUTPUT_ROOT/probe.log"
 
       - name: Upload temporary probe artifacts
-        if: always() && steps.probe.outcome != 'skipped'
+        timeout-minutes: 7
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: m3-temporary-probe-${{ github.run_id }}-${{ github.run_attempt }}
@@ -122,5 +150,6 @@ jobs:
           retention-days: 7
 
       - name: Fail the probe when its fixed acceptance contract fails
-        if: steps.probe.outcome == 'failure'
+        timeout-minutes: 1
+        if: always() && steps.probe.outcome != 'success'
         run: exit 1
