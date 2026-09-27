@@ -232,8 +232,9 @@ counterexample. This fixed-family obstruction supplies neither. Its actionable
 consequence is that thinning or changing the reference within the stated class,
 under this complete criterion, cannot supply the desired continuation margin.
 
-[Report705](705-the-complete-square-has-a-feasible-dual-above-the-target.md)
+[Report705](705-the-complete-square-also-excludes-the-retention-target.md)
 selects all528 pairs of these33 labels and pays the resulting complete square.
 That changes the remaining fees and gives a stronger gate. The present upper
-bounds do not bound that gate from above; its own exact feasible dual remains
-above the target, so the complete-square target is unresolved.
+bounds do not bound that gate from above. Its own exact dual now excludes
+the target as well, including the stated common-source class; that conclusion
+uses its full-square certificate and does not follow from the present bound.

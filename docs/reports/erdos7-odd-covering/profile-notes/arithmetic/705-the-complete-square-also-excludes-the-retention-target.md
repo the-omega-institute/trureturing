@@ -1,17 +1,19 @@
-# The complete square has a feasible dual above the target
+# The complete square also excludes the retention target
 
 For the same actual109 source and all512 screens as
 [Report704](704-a-full-joined-dual-excludes-the-retention-target.md), replacing
 the selected33-label charge by its COMPLETE square gives the exact bound
 
     G_full(f sigma)<=U_full
-      =118279958795823862369936857351498127502543
-       /52202124862381649659046400000000000000000000
-      =0.0022658073614367333... .                    (FS1)
+      =583732141961032477557217957401777707830477
+       /316733290486180755476889600000000000000000000
+      =0.0018429769130520273... .                    (FS1)
 
 This holds for every jointly measurable retention0<=f<=1, including arbitrary
-digit depth. It remains ABOVE the target193/100000. It neither excludes that
-target nor supplies a retained field reaching it. No optimum is claimed.
+digit depth, and is strictly BELOW the target193/100000. The stated common-
+source extension below also stays strictly below that target. This excludes
+the complete-square retention target within these precise source classes.
+It supplies neither a maximizing retention nor an optimum value.
 The result is an ordinary mathematical deduction with exact integer checking,
 not new Lean verification or a resolution of unrestricted Erdős#7.
 
@@ -75,19 +77,22 @@ probabilities alpha_jt and beta_a, their debit function is
     d=sum_j r_full,j sum_t alpha_jt q_jt
        +c sum_a beta_a L_full,a.
 
-Every query mixture is bounded by its complete screen, and the layout
-mixture is bounded by K_full. Hence on the SAME source,
+Each query budget may use its own probability mixture; the query groups
+need not share a common mixture index. The layout law remains a law on
+complete layouts, so every numerical label keeps one phase across all
+of its occurrences in the561-atom expression. Every query mixture is
+bounded by its complete screen, and the layout mixture is bounded by K_full. Hence on the SAME source,
 
     G_full(f sigma)<=integral f(g-d) d sigma
                     <=integral[g-d]_+ d sigma=U_full. (FS6)
 
-This certificate has249835 query rows and229 positive complete-layout
-probabilities. Each of its507 probability budgets has integer numerators
-summing to10^12. All2125830 positive source categories are integrated, with
-544253 positive residuals and source mass305684996597/646498195200.
+This certificate has224183 query rows and31 positive complete-layout
+records, representing30 distinct layouts, within the229-record inventory.
+Each of its507 probability budgets has integer numerators summing to10^12. All2125830 positive source categories are integrated, with
+403502 positive residuals and source mass305684996597/646498195200.
 
 The witness SHA256 is
-`c54760c08e4ea7940a9b00c9b44c63625d5d532f1603e2d401243784082dda0a`.
+`b58cc01e773f193d7df92f37447a7dfea85138b228ae24efd179f5ad3669a0cd`.
 The exact residual sum gives FS1. Finitely many legal complete layouts
 suffice: they lower-bound the subtracted K_full. A positive primal claim
 would require the opposite bound on the TRUE maximum, which is not supplied
@@ -143,20 +148,27 @@ C*+sum_q[A*_q t_q+B*_q(q-t_q)/(q-1)]. The certificate recomputes all branch
 sums; all five slopes are negative, so the common endpoint is t_q=0 for all q.
 With the old central reference fixed, the result is
 
-    V_full=4311420765150753542366884950935606544727
-            /1870582105768417813094400000000000000000000
-          =0.002304855131381502... .
+    V_full=34981941233432270073089483774999080523
+            /18612757271327540428800000000000000000000
+          =0.001879460454111279... .
 
 Allowing the stated joint central variation gives
 
-    W_full=29822099110997316737073869531830137813169
-            /12927496237421662512000000000000000000000000
-          =0.0023068735479241736... .              (FS8)
+    W_full=32422396948004417943768754124441685118093
+            /17236661649895550016000000000000000000000000
+          =0.0018810137140564506... .              (FS8)
 
-These remain above the target. Separate marginal caps cannot replace the
-joint central cap, and independent per-cell source choices are not included.
+Both remain strictly below193/100000. For the joint-central/common-exterior
+class the exact remaining margin is
 
-## Exact replay and remaining question
+    193/100000-W_full
+      =844360036293993587111245875558314881907
+        /17236661649895550016000000000000000000000000>0.
+
+Separate marginal caps cannot replace the joint central cap, and independent
+per-cell source choices are not included.
+
+## Exact replay and the remaining unrestricted question
 
 The [witness](../../frontier/cover-geometry/joined33_full_square_witness.json)
 contains the fixed rational budgets, complete layouts and source identities.
@@ -172,7 +184,7 @@ python3 -I -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/joined
 
 The [result](../../frontier/cover-geometry/joined33_full_square_verify.json)
 separates exact certificate validity from the Boolean `below_target`.
-The canonical full-square replay passes1624770 explicit checks.
+The canonical full-square replay passes1448536 explicit checks.
 The default `joined` mode retains704's smaller atom selection and strict
 target checks; its exact bounds are unchanged. An independent mathematical
 audit checked the comparison direction and common-source transfer, and an
@@ -180,8 +192,11 @@ independent small computation reconstructed561 atoms and512 budgets with
 explicit compatible and incompatible CRT controls. These supplement the
 ordinary proof; they do not turn the finite computation into Lean verification.
 
-What remains unresolved here is whether this stronger complete-square gate
-reaches193/100000, or whether a different valid dual excludes that target.
-Either outcome would concern this source and criterion. The unrestricted
-problem still requires arbitrary phases, heights and prime supports to be
-handled under one actual source and one global original-label assignment.
+The stronger complete-square gate also fails to reach193/100000 for every
+retention and reference change in the stated source classes. Adding all528
+pairs therefore does not recover this continuation margin. This conclusion
+concerns the fixed33-label criterion, original actual109 source predicate
+and declared joint source variations. It does not exclude other criteria,
+label inventories or sources outside those hypotheses. The unrestricted
+problem still requires arbitrary original phases, heights and prime supports
+to be handled under one actual source and one global original-label assignment.
