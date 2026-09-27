@@ -88,10 +88,9 @@ answered? Existing work gives this picture several mathematical entry points.
 Both counterexamples hide different target values behind equal readings.
 Separating one pair need not make recovery possible.
 [Recovery](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
-requires separating **every pair with different target values**:
-the target must be constant on each observation fiber. On a nonempty state
-space, this condition ensures a recovery function exists but supplies no
-algorithm or cost bound.
+requires that **any two states with the same reading have the same target value**.
+On a nonempty state space, this condition ensures a recovery function exists
+but supplies no algorithm or cost bound.
 Connections to proof dependencies or physical spacetime require maps and checks
 of the relations, operations and error bounds they preserve.
 
