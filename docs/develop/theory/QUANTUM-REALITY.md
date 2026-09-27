@@ -69048,3 +69048,109 @@ $$
 这些有限维纸面推导不构成机器形式验证或原创优先权声明。它们没有确定一般内部 $\eta_{\mathrm{fin}}$ 的精确公式、全深度上确界是否由某棵有限树取得、同深度 $p_n$ 的参数连续性、整个 $J$ 上恢复值的两点统一 Lipschitz 界或端点导数。所比较的控制针对每个已知参数分别校准；结论不提供一个抗未知失准的共同协议、收敛速率、有效求值算法、硬件实现或总物理资源估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 439. 五射线有限恢复的可计算统一深度截止
+
+沿用第 416 节与假设 430.2 的五射线源、原始两量子比特分割及完整恢复合同：协议逐棵有限，深度计实际局部仪器节点，保留全部失败历史，同一实际标签共用全系统反馈，恢复等式对全部系统矩阵及任意未操作有限参考成立。对所有实数 $r>0$，以 $p_n(r)$、$\eta_{\mathrm{fin}}(r)$ 分别表示深度至多 $n$ 与所有有限协议的成功率上确界；第 430 节的物理桥只在严格内部使用。置
+
+$$
+A=1/\sqrt2,\qquad B=\sqrt2,\qquad I=(A,B),\qquad
+\kappa(r)=\frac{\sqrt{4+2(r^2+r^{-2})}}3,\qquad
+h(r)=\frac1{3(1+\kappa(r))},\qquad
+L(r)=2h(r),\quad U(r)=\frac1{3\kappa(r)}.
+$$
+
+**推论 439.1（有效统一截止）。** 存在一个 Turing 算法，输入任意有理数 $\varepsilon>0$，停机输出仅依赖 $\varepsilon$ 的整数 $N\ge2$，使
+
+$$
+\forall r\in\mathbb R_{>0}\ \forall n\in\mathbb N_0,\ n\ge N:\qquad
+0\le\eta_{\mathrm{fin}}(r)-p_n(r)<\varepsilon.
+$$
+
+该算法如下。令 $e=\min\{\varepsilon,1\}$，依次取 $t=2^{-j}$（$j=0,1,\ldots$），用实闭域判定找出首个满足
+
+$$
+2t<B-A,\qquad
+\forall r\in[A,A+t]\cup[B-t,B]:\quad U(r)-L(r)<e/4
+$$
+
+的 $t$，并置 $K=[A+t,B-t]$。令 $D=\{x\in\mathbb R^3:|x|^2\le1\}$，$\mathsf B(x,y)$ 表示 $(x,y)\in D^2$，$\mathsf S_r(x,y)$ 为第 436 节的纯平坦谓词，即 $|x|^2=|y|^2=1$ 且五个 Bloch 重叠乘积均为 $4h(r)$，并记 $\mathcal S_r=\{(x,y):\mathsf S_r(x,y)\}$。对六变量实多项式 $Q$，令 $\operatorname{Cert}_r(Q)$ 为下列四句的合取，所有向量量词均遍历 $\mathbb R^3$：
+
+$$
+\begin{aligned}
+&\forall x,y:\quad \mathsf B(x,y)\Rightarrow Q(x,y)\ge0,\\
+&\forall x,y:\quad \mathsf S_r(x,y)\Rightarrow Q(x,y)\ge h(r),\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{xx}Q(x,y)u\le0,\\
+&\forall x,y,u:\quad \mathsf B(x,y)\Rightarrow
+u^{\mathsf T}D^2_{yy}Q(x,y)u\le0.
+\end{aligned}
+$$
+
+依次枚举整数 $m\ge2$。写 $Q_c(x,y)=\sum_{|\alpha|\le m}c_\alpha(x,y)^\alpha$，其中 $c\in\mathbb R^{d_m}$、$d_m=\binom{m+6}{6}$；用定理 435.2 的有效公式 $\operatorname{Graph}_m(r,v)$ 判定完整停机句
+
+$$
+\boxed{\displaystyle
+\forall r\in\mathbb R:\quad
+r\in K\ \Longrightarrow\
+\exists v\in\mathbb R\ \exists c\in\mathbb R^{d_m}:\quad
+\operatorname{Graph}_m(r,v)\ \land\
+\operatorname{Cert}_r(Q_c)\ \land\
+4Q_c(0,0)-v<e/2.}
+$$
+
+首次为真时返回 $N=m$。系数 $c$ 是实量词变量，不是实数预言机输入，也不施加一阶“系数为有理数”谓词。
+
+证明。固定 $m$ 时，435.2 有效生成的 $\operatorname{Graph}_m$ 恰表示 $v=p_m(r)$。证书的两个 Hessian 条件针对完整的三维块，等价于闭积球上的分别凹性。按 435–436 的正根约定，$\sqrt2,\sqrt3,\kappa,h$ 均由有理多项式与唯一正根条件表示；只清除已知正分母。因此两次搜索中的每个判定都是有效的实闭域一阶判定，不含未知的 $\eta_{\mathrm{fin}}$。
+
+在 $[A,B]$ 上，416.1、417.1 的完整单向树每条路径只有两个局部仪器节点，并实际达到 $L(r)$，故对 $n\ge2$ 有
+
+$$
+L(r)\le p_n(r)\le\eta_{\mathrm{fin}}(r)\le U(r),\qquad
+U(r)-L(r)=\frac{1-\kappa(r)}{3\kappa(r)(1+\kappa(r))}.
+$$
+
+右端连续且在 $A,B$ 为零，故二进端点带搜索必停机，带内误差小于 $e/4$。两个端点有 $p_2=\eta_{\mathrm{fin}}=1/3$；$r>0$ 且 $r\notin[A,B]$ 时，416.1 给出 $\eta_{\mathrm{fin}}=p_n=0$。这些结论不使用跨端点的物理运输。
+
+若停机句为真，任取 $r\in K$ 及其证书。沿完整坐标树逐层应用 Jensen 不等式，再用 421.1、430.3 的根归一化，得到
+
+$$
+p_m(r)\le\eta_{\mathrm{fin}}(r)\le4Q_c(0,0),\qquad
+0\le\eta_{\mathrm{fin}}(r)-p_m(r)<e/2.
+$$
+
+这证明停机的正确性；$p_n$ 随 $n$ 单调，再结合端点带与外部值，即得全正轴结论。
+
+还须证明某个 $m$ 必通过。固定任意实数 $r_0\in K$，以 421.1 的最小分别凹包络应用 436.1，再加充分小的正有理常数，得到一个有理多项式 $q$ 和 $\delta>0$，满足
+
+$$
+\operatorname{Cert}_{r_0}(q),\qquad
+q\ge h(r_0)+\delta\ \text{于 }\mathcal S_{r_0},\qquad
+4q(0,0)-\eta_{\mathrm{fin}}(r_0)<e/8.
+$$
+
+这里是任意实参数下的存在性论证，不要求 $r_0$ 有代数编码。支撑图由连续等式在固定紧域 $D^2$ 中闭定义，且 $h$ 连续，所以同一个 $q$ 在 $r_0$ 的某邻域仍支配平坦报酬。具体地，否则可取 $r_j\to r_0$、$z_j\in\mathcal S_{r_j}$，使 $q(z_j)<h(r_j)+\delta/2$；紧性给收敛子列，闭图使极限 $z\in\mathcal S_{r_0}$，于是 $q(z)\le h(r_0)+\delta/2$，矛盾。非负性及两个 Hessian 条件不依赖参数，故该邻域内 $\operatorname{Cert}_r(q)$ 始终成立。
+
+第 438 节的 438.1 给出严格内部支撑的双向 Hausdorff 连续性；其 438.2 以此应用 430.3，得到 $\eta_{\mathrm{fin}}$ 在 $I$ 连续。缩小上述邻域便有
+
+$$
+4q(0,0)-\eta_{\mathrm{fin}}(r)<e/4.
+$$
+
+闭图与紧环境在这里只供给支撑的上半连续性；恢复值的连续性另由上述双向匹配与运输保证。紧集 $K$ 可由有限个这样的邻域覆盖，所配多项式的次数因而有某个有限共同上界 $d$。另一方面，430.3 的非有效一致收敛给出某个有限 $n_0$，使所有 $r\in I$ 均有 $\eta_{\mathrm{fin}}(r)-p_{n_0}(r)<e/4$。于是对每个 $m\ge\max\{2,d,n_0\}$，逐参数选择覆盖中的一个多项式并补零高次系数，便有
+
+$$
+4q(0,0)-p_m(r)
+=\bigl[4q(0,0)-\eta_{\mathrm{fin}}(r)\bigr]
++\bigl[\eta_{\mathrm{fin}}(r)-p_m(r)\bigr]<e/2.
+$$
+
+所以停机句最终必真。有限覆盖和一致收敛只用于证明存在一个有限的可判定停机见证；枚举能求出共同深度，无须先计算该覆盖或未知极限。证毕。
+
+给定返回的 $N$，直接使用 435.2 在整个 $I$ 上的半代数最大化选择及完整物理提升，再接上 416.1 的两个端点树和外部的全拒绝协议，得到深度至多 $N$、成功率距 $\eta_{\mathrm{fin}}$ 小于 $\varepsilon$ 的完整协议族。它具有有限分段半代数描述，保留完整空间上各分支完全正、总和保迹的仪器、实际标签、全部失败叶及全参考恢复等式。对由整数多项式和有理隔离数据给出的正实代数参数 $r$，参数代入与完整代数协议提取有效。任意实 $r$ 上的族是数学选择，不因此成为 Cauchy 名输入下的 Type-2 精确协议选择器。
+
+这里确实得到可计算的统一收敛截止；它不附带初等或实用深度率、运行复杂度或最小 $N$。结论也不判定极限的精确阈值，不给出全有限类上确界的取得性、可达无限协议或一个无需知道 $r$ 的共同仪器。
+
+本推论是既有接口的组合推导（repo-derived）：416.1、417.1、421.1、430.3、435.2、436.1–436.2 均取自本卷[固定版本 40fb7ec023342614dec1c13b19dd925932763dc9](https://github.com/the-omega-institute/trureturing/blob/40fb7ec023342614dec1c13b19dd925932763dc9/docs/develop/theory/QUANTUM-REALITY.md)。实闭域判定沿用 435–436 所引的量词消去工具。另仅使用[已发表第 438 节](https://github.com/the-omega-institute/trureturing/blob/d0c78e8e3ccca744b7cb96f8b56ce7e6093e6afb/docs/develop/theory/QUANTUM-REALITY.md)中严格内部的支撑与恢复值连续性，不依赖其端点正则性。以上为纸面推导，不作机器形式验证或原创优先权声明。
+
+## 追加锚（本行以下为增补区）
