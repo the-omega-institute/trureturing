@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="360" height="560" viewBox="0 0 360 560" role="img" aria-labelledby="title description">
   <title id="title">From inquiry to reusable knowledge and the next question</title>
-  <desc id="description">Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.</desc>
+  <desc id="description">Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.</desc>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
       <path d="M0 0 L8 4 L0 8 Z" fill="#475569"/>
@@ -11,6 +11,7 @@
     <path id="question-to-test" d="M180 82 V124"/>
     <path id="test-to-check" d="M180 188 V228"/>
     <path id="check-to-result" d="M180 292 V332"/>
+    <path id="result-to-question" d="M90 354 H70 Q60 354 60 344 V44 Q60 34 70 34 H95"/>
     <g stroke-dasharray="5 4">
       <path id="result-to-open" d="M180 396 V438"/>
       <path id="test-to-open" d="M270 156 H316 Q328 156 328 168 V478 Q328 490 316 490 H284"/>
@@ -19,6 +20,7 @@
     </g>
   </g>
   <g font-family="Arial, Helvetica, sans-serif" font-size="16" text-anchor="middle" stroke-width="1.5">
+    <text x="48" y="210" transform="rotate(-90 48 210)" font-size="14" fill="#475569">Reuse</text>
     <g id="question">
       <rect x="90" y="18" width="180" height="64" rx="32" fill="#edf2f7" stroke="#475569"/>
       <text x="180" y="44" fill="#172033"><tspan x="180">Ask a precise</tspan><tspan x="180" dy="24">question</tspan></text>
