@@ -160,7 +160,7 @@ internal sealed class ArchiveClockRecoveryDocument : IScribeDocumentDefinition
     private static Formula Y => Id("Y");
     private static Formula S => Id("S");
     private static Formula x => Id("x");
-    private static Formula xp => Id("x'");
+    private static Formula xp => Seq(Id("x"), Apos);
     private static Formula a => Id("a");
     private static Formula w => Id("w");
     private static Formula emptyWord => Seq(OpenBracket, CloseBracket);

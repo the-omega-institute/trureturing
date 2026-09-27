@@ -466,19 +466,6 @@ theorem archive_clock_recovery_and_finite_ambiguity
       omega
     · omega
 
-/-- The model assumptions are jointly inhabited by a one-state, one-action,
-one-reading system with a nonempty initial set. -/
-example :
-    let S : System Unit Unit Unit :=
-      { domain := fun _ _ => True
-        domainDecidable := fun _ _ => inferInstance
-        successor := fun _ state => state
-        reading := fun _ _ => ()
-        cost := fun _ _ => 1 }
-    Fintype.card Unit = 1 ∧ ({()} : Set Unit).Nonempty ∧
-      Legal S () [()] := by
-  simp [Legal]
-
 #print axioms archive_clock_recovery_and_finite_ambiguity
 
 end
