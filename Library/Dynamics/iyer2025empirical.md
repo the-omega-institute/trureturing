@@ -5822,3 +5822,23 @@ Lasse Leskelä，*Information divergences and likelihood ratios of Poisson proce
 版本化源归档为 46,152 字节，SHA256 `529bd2052ae36e884e1ea18080115112fd12b57e6039f7fd5c6e23b63f2facbc`；主 TeX 为 148,388 字节，SHA256 `5a359eac75e106ff54583d4ba5fa1c1d529fb8992155bc7bc8e9c2a1e420f59e`。稿件的动态日期和注释备选文本不替代固定版本身份。
 
 Barbour–Hall，*On the rate of Poisson convergence* (1984)，[DOI:10.1017/S0305004100061806](https://doi.org/10.1017/S0305004100061806)，仅核到书目信息，原始证明未取得；其最优 Chen–Stein 因子不作为正文前提。第 153 章所列 Féray–Méliot–Nikeghbali 的精确格点偏差范围保持不变，本章复用正总数位置的显式 Stirling 界和共同分数率函数，未将单行精确偏差升级为原始增长向量定理。经典工具、实际模型联合接口和带宽端点的解析比较分别归属；有限文献核对不构成全球原创性证明。
+
+## 谱边界第 156 章补充：递增局部频率与复鞍点的相对误差条件
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 156 章将原始选择计数的零点范围从固定倍数的 $t$ 推进到 $t\sqrt{\log t}$。固定局部指数标记的原始计数回接、二阶局部密度展开与明确的振幅下界共同给出相对误差，再用于区域非零性、简单零点定位和精确计数。固定正比例的 $t^2$ 范围仍需新的解析和相对误差控制。
+
+T. Bennett、C. J. Howls、G. Nemes、A. B. Olde Daalhuis，*Globally Exact Asymptotics for Integrals with Arbitrary Order Saddles*，[arXiv:1710.10073v2](https://arxiv.org/abs/1710.10073v2)，[DOI:10.1137/17M1154217](https://doi.org/10.1137/17M1154217)。首版提交为 2017 年 10 月 27 日，核对版本戳为 2018 年 2 月 8 日，出版年为 2018 年。原 PDF 为 5,524,442 字节，SHA256 `06e285acd9772ea2f15dab1a31640cccf0f862fe99ae89c86a852ca3ef876634`；34 页提取文本为 89,480 字节，无提取警告，但图形标签含控制字形，未据此宣称排版无损。
+
+已核对引言、第 2 节解析域、临界点阶数、下降路径、相邻鞍点及角域，第 3 节 (9)–(23) 的系数和轮廓推导，以及第 5 节 (40)–(43) 和完整第 5.1 节简单鞍点界 (44)。后续超渐近展开全文和附录 B、C 未作为证明导入。正文引用这些条件来定位尚缺接口，未用该文定理认证本计数阵列的复鞍点估计。
+
+其作用量 $f$ 与振幅 $g$ 须在相应下降路径域 $\Delta^{(n)}$ 的闭包上解析；路径假定终止于无穷远，且 $|f|\to\infty$。相邻鞍点集合非空且有限，初始角域避免下降路径命中另一鞍点。轮廓展开另要求 $g/f^{(N+1)/\omega_n}=o(1/|t|)$、变形区域不穿越分母极点，以及每条相邻轮廓上的绝对可积条件 (22)。$(f-f_n)^{1/\omega_n}$ 的分支由路径固定，精确余项含相邻鞍点的贡献。
+
+界 (42)、(44) 同时包含到 Stokes 方向的角距及振幅绝对值的轮廓积分，不能将其视为与解析域、相邻鞍点几何无关的统一相对误差界。第 156 章在实剖面上已有的 $C^6$ 与 Fourier 界，并不自动给出解析延拓、零自由前因子或合法变形轮廓；原始非中心项和完整选择因子也仅有实包络比较。所缺的是在指数小区域振幅下仍可用的相对原计数回接。
+
+Biskup、Borgs、Chayes、Kleinwaks、Kotecký 的 *Partition function zeros at first-order phase transitions: A general analysis*，[math-ph/0304007v2](https://arxiv.org/abs/math-ph/0304007v2)，沿用第 152、154 章核对的假设 A、B、定理 2.3 及 Rouché／零点分离范围；原 PDF SHA256 `f5a6233564fa4004a8027a4443419df87c377119df703ca25b9ef877c84f171c`。其解析非零有限体积相近似、分离的对数斜率和复余项条件尚未成为本模型的已知前提。正文的精确两区域因子分解体现相同的等模／奇数相位差结构，所需非零性与计数则直接证明。
+
+Katsevich，*The Laplace asymptotic expansion in high dimensions*，[2406.12706v3](https://arxiv.org/abs/2406.12706v3)，原 PDF SHA256 `ee891c6035366249a08e23ee6ea71553466bf1aaa83788717105fdf54dda2742`，继续在已核对的假设 2.1–2.3、定理 2.12 与注记 2.5 振幅乘密度的联合尾部条件内归属；单全局极小点假设未被移植到整个端点／内点混合。Borgs–Kotecký 的 [cond-mat/9501074v3](https://arxiv.org/abs/cond-mat/9501074v3) 保持第 150、152 章列明的轮廓／Peierls 和有限相响应范围，本章未增加定理级应用。
+
+Song，*A Uniform-in-P Edgeworth Expansion under Weak Cramér Conditions*，[1806.01431v2](https://arxiv.org/abs/1806.01431v2)，原 PDF SHA256 `0b2e34b275c033d06c5e3a800f46d5b06c5ee15ff01ea8226932849f79a708a0`，沿用第 154 章完整定义 2.1、定理 2.1、推论 2.1 的范围及提取警告。独立三角阵、正协方差、一致矩和所有充分高频的共同弱 Cramér 条件不能直接用于本选择条件下的格点电荷。本章在 $O(\sqrt{\log t})$ 的局部频率内直接积分密度余项，并支付实际格点标记的单元变化。
+
+Gaussian 变换、局部密度展开、Rouché 方法和相竞争图景为经典工具；第 156 章的新增模型推导在原始同元组上建立固定指数包络，明确支付 $t^{-\rho}$ 振幅下界下的相对误差，并保留完整有限噪声剖面。有限原文核对不证明全球原创性；实包络不能控制指数小 Fourier 振幅的例子也不构成原计数模型的反例。
