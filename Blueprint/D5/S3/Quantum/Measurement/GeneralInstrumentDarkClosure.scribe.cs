@@ -9,7 +9,7 @@ internal sealed class GeneralInstrumentDarkClosureDocument : IScribeDocumentDefi
     private const string Prefix = "D5/S3/Quantum/Measurement/GeneralInstrumentDarkClosure.";
 
     private static readonly Formula D = F.Id("d"), N = F.Id("n"), V = F.Id("V"), Vec = F.Id("v");
-    private static readonly Formula AlphaSet = F.Id("alpha"), IotaSet = F.Id("iota");
+    private static readonly Formula AlphaSet = Alpha, IotaSet = Iota;
     private static readonly Formula A = F.Id("a"), I = F.Id("i"), X = F.Id("X");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -25,15 +25,15 @@ internal sealed class GeneralInstrumentDarkClosureDocument : IScribeDocumentDefi
                     + "its dual on effects is the map above.",
                 "noClickDual", DescribeRole.Definition),
             Node("survival", "Survival effects",
-                Disp(Seq(Sub("S", D0()), Sp, Eq, Sp, F.Id("I"), Comma, Qquad,
+                Disp(Seq(Sub("S", D0()), Sp, Eq, Sp, F.Id("I"), Comma, Qquad, Sp,
                     Sub("S", Seq(N, Plus, D1())), Sp, Eq, Sp, Cal(Sub("S", N)))),
                 "The n-step survival effect is the n-fold dual no-click map applied to the identity.",
                 "survival", DescribeRole.Definition),
             Node("layer", "Dark layers",
-                Disp(Seq(Sub("D", D0()), Sp, Eq, Sp, Space(), Comma, Qquad,
+                Disp(Seq(Sub("D", D0()), Sp, Eq, Sp, Space(), Comma, Qquad, Sp,
                     Sub("D", Seq(N, Plus, D1())), Sp, Eq, Sp, OpenBrace, Vec, Sp, InMacro, Sp, Space(), Sp, Mid, Sp,
-                    Sub("L", I), Sp, Vec, Sp, Eq, Sp, D0(), Sp, F.Text("for all "), I, Comma, Sp,
-                    Sub("Q", A), Sp, Vec, Sp, InMacro, Sp, Sub("D", N), Sp, F.Text("for all "), A, CloseBrace)),
+                    Sub("L", I), Sp, Vec, Sp, Eq, Sp, D0(), Sp, F.Text, Grp(Sp, F.Id("for"), Sp, F.Id("all"), Sp), I, Comma, Sp,
+                    Sub("Q", A), Sp, Vec, Sp, InMacro, Sp, Sub("D", N), Sp, F.Text, Grp(Sp, F.Id("for"), Sp, F.Id("all"), Sp), A, CloseBrace)),
                 "A vector lies in the next layer when no click operator L_i sees it and every unread no-click branch "
                     + "sends it into the current layer.",
                 "darkLayer", DescribeRole.Definition),
@@ -62,14 +62,14 @@ internal sealed class GeneralInstrumentDarkClosureDocument : IScribeDocumentDefi
             Forall, Sp, N, Sp, Geq, Sp, D, Comma, Sp, Sub("D", N), Sp, Eq, Sp, Sub("D", D));
         Formula invariant = Seq(
             Sub("L", I), Sp, Sub("D", D), Sp, Eq, Sp, D0(), Comma, Sp,
-            Sub("Q", A), Sp, Sub("D", D), Sp, Subseteq, Sp, Sub("D", D), Sp, F.Text("for all "), I, Comma, Sp, A);
+            Sub("Q", A), Sp, Sub("D", D), Sp, Subseteq, Sp, Sub("D", D), Sp, F.Text, Grp(Sp, F.Id("for"), Sp, F.Id("all"), Sp), I, Comma, Sp, A);
         Formula maximal = Seq(
             Forall, Sp, V, Sp, Subseteq, Sp, Space(), Comma, Sp,
             Open, Sub("L", I), Sp, V, Sp, Eq, Sp, D0(), Sp, Land, Sp, Sub("Q", A), Sp, V, Sp, Subseteq, Sp, V,
-            Sp, F.Text("for all "), I, Comma, Sp, A, Close, Sp, Rightarrow, Sp, V, Sp, Subseteq, Sp, Sub("D", D));
+            Sp, F.Text, Grp(Sp, F.Id("for"), Sp, F.Id("all"), Sp), I, Comma, Sp, A, Close, Sp, Rightarrow, Sp, V, Sp, Subseteq, Sp, Sub("D", D));
         return Disp(Seq(
             complete, Sp, Rightarrow, RowBreak, Grp(),
-            kernels, Comma, Quad, stable, Comma, RowBreak, Grp(),
+            kernels, Comma, Quad, Sp, stable, Comma, RowBreak, Grp(),
             invariant, Comma, RowBreak, Grp(),
             maximal, Dot));
     }
