@@ -86232,3 +86232,1212 @@ $$
 §272的单链负性界、§269的固定正参数下界与§271的多链证书及近核估计提供所需供应；本节明确给出了参数延伸、实际直和归一化及同负性参数存在性。所有比较都保留了具体来源与完整数据中心，不据这些组合推导宣称外部文献原创性，也不附加有限副本、蒸馏或物理时间结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 274. 任意正定图权重、可逆参考过滤与相干相等拼接
+
+§271的多链来源采用特殊的单位边缘方程。实际来源经过非酉参考过滤或相干拼接后，参考边缘一般改变，图中的正定权重也可以出现跨链条目。本节证明：只要图算子 $M$ 是unipotent、权重 $Q$ 严格正，来源唯一性、标准奇异度和锐恢复指数仍由 $M$ 的最大Jordan链长控制。
+
+随后构造一个真实的成功Kraus结果，将两个独立来源相干地接成新来源。这个操作保留“两个输入都为正”与“两个输入都为负”之间的相干；成功概率明确计入，失败也是完整仪器的实际结果。新图算子为 $M_1\otimes M_2$，最大链长为 $n_1+n_2-1$，而参考维数为 $n_1n_2$。
+
+### 274.1 任意正定图来源与完整数据合同
+
+令 $E$ 为有限维非零复Hilbert空间，$d=\dim E$。设 $Q=Q^\dagger\succ0$，$M$ 为 $E$ 上的unipotent算子，即 $M-I_E$ 幂零。定义
+$$
+G_M=\begin{bmatrix}I_E&M\end{bmatrix},
+\qquad
+T(Q,M)=G_M^\dagger QG_M
+=\begin{pmatrix}
+Q&QM\\M^\dagger Q&M^\dagger QM
+\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T(Q,M)>0,\qquad
+\Omega(Q,M)=\frac1cT(Q,M).
+\tag{274.1}
+$$
+$G_M$ 满行秩，所以来源秩为 $d$。输入 $H$ 为qubit，使用固定输入 $Y$ 本征基。完整数据为
+$$
+\rho_*=\frac{Q+M^\dagger QM}{c},
+\qquad
+K_*=\mathscr K(\Omega)=\frac{2QM}{c},
+\qquad
+\mathscr K(X)=2X_{+-}.
+\tag{274.2}
+$$
+这里不要求 $\rho_*=I_E/d$。
+
+记
+$$
+m=\min\{j\ge1:(M-I_E)^j=0\}.
+\tag{274.3}
+$$
+它等于 $M$ 的最大Jordan块尺寸。对同一 $H\otimes E$ 上任意密度态 $\Xi$，完整数据误差为
+$$
+\varepsilon(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho_*\|_1
++\|\mathscr K(\Xi)-K_*\|_1.
+\tag{274.4}
+$$
+态差和完整数据误差使用未除以二的迹范数；无下标的矩阵范数为算子范数。竞争态允许任意秩、支撑及参考相干。
+
+本节将证明：完整数据纤维为单点，标准奇异度为 $m$，最优局部逆Hölder指数为 $1/(2m)$。最后一个结论在精确同边缘的竞争子类中也成立。标准奇异度始终针对原始完整数据仿射方向
+$$
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{274.5}
+$$
+
+### 274.2 标准Jordan坐标中，正定权重不改变证书链
+
+先设
+$$
+M=I_E+tJ,\qquad t=\frac14,\qquad
+J=\bigoplus_{b\in\mathcal B}J_{r_b},
+\qquad d=\sum_b r_b,\quad m=\max_b r_b,
+\tag{274.6}
+$$
+其中链分解正交，$\mathcal B$ 有限非空，但 $Q\succ0$ 可以具有任意跨链条目。令 $Q_{\mathrm c}$ 为§271的canonical块对角解：
+$$
+Q_{\mathrm c}+M^\dagger Q_{\mathrm c}M=I_E.
+\tag{274.7}
+$$
+
+所有正定权重都给出同一个核与同一个支撑：
+$$
+\mathcal N_M=\ker G_M=\{(-Mx,x):x\in E\},
+\qquad
+\operatorname{supp}T(Q,M)=\mathcal N_M^\perp.
+\tag{274.8}
+$$
+而且每个 $T(Q,M)$ 都在该支撑上严格正。核基仍是
+$$
+q_{b,j}=(-e_{b,j}-te_{b,j-1},e_{b,j}).
+\tag{274.9}
+$$
+对任何同数据PSD竞争矩阵 $T+\operatorname{diag}(D,-D)$，首层零二次型消去完整列 $De_{b,1}$，以后逐层同样消去 $De_{b,j}$。§271的这一证明只用（274.9）、Hermitian性和PSD性，不用 $Q$ 块对角。因此完整来源仍唯一。
+
+证书链也不依赖权重。设当前面支撑为 $U\supseteq\mathcal N_M^\perp$，令 $P_U$ 为正交投影。对于满足
+$$
+Y_U=P_UYP_U\succeq0,\qquad Y\in L^\perp
+\tag{274.10}
+$$
+的候选证书，
+$$
+\langle Y,T(Q,M)\rangle
+=\operatorname{Tr}(Y_UT(Q,M))=0
+\quad\Longleftrightarrow\quad
+Y_U\big|_{\mathcal N_M^\perp}=0.
+\tag{274.11}
+$$
+这是两个PSD算子零迹乘积的支撑判据；$T(Q,M)$ 在共同支撑上严格正，所以右侧不含 $Q$。这里仅要求当前面压缩PSD，不要求 $Y$ 在全空间PSD。
+
+因此 $Q$ 与 $Q_{\mathrm c}$ 具有相同的合法证书链、严格约化条件和最终相对Slater支撑。§271已经对任意低秩证书链证明最短长度为 $m$，故当前任意正定权重仍满足
+$$
+d_S=m.
+\tag{274.12}
+$$
+将偏移除以其迹 $c$ 不改变方向空间 $L$、零配对条件或最短步数。
+
+### 274.3 任意权重下的全竞争恢复上界
+
+继续使用（274.6），但不限制 $Q$ 的跨链条目。令 $T=T(Q,M)$、$T'=c\Xi$，并写
+$$
+R=\operatorname{Tr}_H\Xi-\rho_*,
+\qquad B=\mathscr K(\Xi)-K_*.
+$$
+存在Hermitian $D$，使
+$$
+T'-T=\operatorname{diag}(D,-D)+X,
+\qquad
+X=\frac c2\begin{pmatrix}R&B\\B^\dagger&R\end{pmatrix},
+$$
+$$
+\xi:=\|X\|\le\frac c2\varepsilon,
+\qquad
+\|T'\|,\|T\|\le c.
+\tag{274.13}
+$$
+这是完整数据误差的精确分解；$D$ 仍可具有全部跨链条目。
+
+对长度 $r=r_b$ 的链，令 $\iota_b:\mathbb C^r\to E$ 为等距嵌入。取
+$$
+0<\theta\le\theta_{0,b}:=
+\min\left\{1,\frac{t}{2r},\frac{\pi}{r}\right\},
+\qquad \ell=0,\ldots,r-1,
+$$
+$$
+\lambda_\ell=e^{i\ell\theta},
+\qquad z_\ell=\frac{\lambda_\ell-1}{t},
+\qquad
+x_\ell=\iota_b(1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T},
+\qquad
+v_\ell=(x_\ell,-\lambda_\ell^{-1}x_\ell).
+\tag{274.14}
+$$
+则
+$$
+G_Mv_\ell=\lambda_\ell^{-1}tz_\ell^r e_{b,r},
+\qquad
+v_\ell^\dagger\operatorname{diag}(D,-D)v_\ell=0,
+\qquad
+\|v_\ell\|^2\le2r.
+\tag{274.15}
+$$
+由PSD不等式 $(T')^2\preceq\|T'\|T'$，
+$$
+\|T'v_\ell\|^2
+\le c\left(\|Q\|t^2|z_\ell|^{2r}+2r\xi\right).
+\tag{274.16}
+$$
+同时 $\|Tv_\ell\|\le\|G_M\|\|Q\|t|z_\ell|^r$。读取误差分解的第一分量，得
+$$
+\begin{aligned}
+\|Dx_\ell\|\le{}&
+\left(\sqrt{c\|Q\|}+\|G_M\|\|Q\|\right)t|z_\ell|^r\\
+&+\sqrt{2cr\xi}+\sqrt{2r}\xi.
+\end{aligned}
+\tag{274.17}
+$$
+对 $0\le\varepsilon\le1$，可取
+$$
+A_b=
+\left(\sqrt{c\|Q\|}+\|G_M\|\|Q\|\right)t
+\left(\frac{r-1}{t}\right)^r
++c\sqrt r+\frac{c\sqrt{2r}}2
+\tag{274.18}
+$$
+使 $\max_\ell\|Dx_\ell\|\le A_b(\theta^r+\sqrt\varepsilon)$。$r=1$ 时第一项为零。
+
+§269的Lagrange系数估计给相应Vandermonde矩阵
+$$
+\|V_b^{-1}\|\le r(\pi t)^{r-1}\theta^{1-r}.
+$$
+其 $D\iota_bV_b$ 的列为完整参考向量 $Dx_\ell$，因此
+$$
+\|D\iota_b\|
+\le r^{3/2}(\pi t)^{r-1}A_b
+\theta^{1-r}(\theta^r+\sqrt\varepsilon).
+\tag{274.19}
+$$
+这控制整个列块，不只是 $D$ 的对角参考块。
+
+令
+$$
+\eta_0=\min_b\theta_{0,b}^{2r_b}>0,\qquad
+C_D=\left(\sum_b
+\left[2r_b^{3/2}(\pi t)^{r_b-1}A_b\right]^2\right)^{1/2}.
+\tag{274.20}
+$$
+对 $0<\varepsilon\le\eta_0$，各链分别取 $\theta=\varepsilon^{1/(2r_b)}$，再以Cauchy–Schwarz合并列块，得到
+$$
+\|D\|\le C_D\varepsilon^{1/(2m)}.
+\tag{274.21}
+$$
+若 $\varepsilon=0$，在（274.19）中让各 $\theta\downarrow0$，得 $D=0$、$X=0$。
+
+总参考维数为 $d$，故
+$$
+\begin{aligned}
+\|\Xi-\Omega\|_1
+&\le\frac2c\|D\|_1+\frac1c\|X\|_1\\
+&\le\frac{2d}{c}\|D\|+\frac{2d}{c}\|X\|\\
+&\le\left(\frac{2dC_D}{c}+d\right)\varepsilon^{1/(2m)}
+\end{aligned}
+\tag{274.22}
+$$
+在小误差区间成立。其余误差由态迹距至多二补全。因此存在固定有限 $C_{\mathrm{up}}$，使全部密度态满足
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon(\Xi)^{1/(2m)}\}.
+}
+\tag{274.23}
+$$
+例如可取
+$C_{\mathrm{up}}=\max\{2dC_D/c+d,\ 2\eta_0^{-1/(2m)},\ 2\}$。本证明从未要求竞争态同边缘、同秩或块对角。
+
+### 274.4 固定PSD余项保留同边缘锐性
+
+任意权重的匹配下界可直接借用canonical来源，而不重做Schur构造。取
+$$
+\gamma=\frac{\lambda_{\min}(Q)}{2\|Q_{\mathrm c}\|}>0,
+\qquad
+Q_{\mathrm r}=Q-\gamma Q_{\mathrm c}
+\succeq\frac{\lambda_{\min}(Q)}2I_E\succ0.
+\tag{274.24}
+$$
+令 $T_{\mathrm c}=T(Q_{\mathrm c},M)$。§271在一个最长块上构造了真实PSD族 $T_{\mathrm c,h}$，满足
+$$
+\operatorname{Tr}_H T_{\mathrm c,h}=I_E
+=\operatorname{Tr}_H T_{\mathrm c},
+$$
+$$
+\|T_{\mathrm c,h}-T_{\mathrm c}\|_1=\Theta(h),
+\qquad
+\|2(T_{\mathrm c,h}-T_{\mathrm c})_{+-}\|_1
+=b_0h^{2m},
+\qquad b_0>0.
+\tag{274.25}
+$$
+这里使用未归一化矩阵；其迹恒为 $d$。
+
+定义
+$$
+T_h=\gamma T_{\mathrm c,h}+T(Q_{\mathrm r},M),
+\qquad
+\Omega_h=\frac1cT_h.
+\tag{274.26}
+$$
+两项均PSD，且图矩阵对权重线性，所以
+$$
+T_h-T(Q,M)=\gamma(T_{\mathrm c,h}-T_{\mathrm c}).
+\tag{274.27}
+$$
+整个边缘精确保持：
+$$
+\begin{aligned}
+\operatorname{Tr}_H T_h
+&=\gamma I_E+Q_{\mathrm r}+M^\dagger Q_{\mathrm r}M\\
+&=Q+M^\dagger QM.
+\end{aligned}
+\tag{274.28}
+$$
+因此迹恒为 $c$，$\Omega_h$ 是与真值同边缘的合法来源，而不是仅在某个投影上的近似正矩阵。式（274.27）给
+$$
+\|\Omega_h-\Omega\|_1=\Theta(h),
+\qquad
+\varepsilon(\Omega_h)=\frac{\gamma b_0}{c}h^{2m}.
+\tag{274.29}
+$$
+任意 $\alpha>1/(2m)$ 都使误差比值至少为一个正常数乘 $h^{1-2m\alpha}$，趋向无穷。
+
+**定理274.1（标准Jordan坐标中的任意正定权重）。** 在（274.6）下，对每个 $Q\succ0$，完整数据纤维为单点，标准奇异度为 $m$，完整数据的最优局部逆指数恰为 $1/(2m)$。精确同边缘子合同具有相同最优指数。
+
+**证明。** 唯一性和奇异度由§274.2；全竞争上界是（274.23）；同边缘族（274.26）—（274.29）排除全部更大指数。$\square$
+
+### 274.5 可逆参考过滤的状态与数据双向控制
+
+令 $A:E\to E$ 可逆。对任意密度态 $X$，定义归一化参考过滤
+$$
+F_A(X)=
+\frac{(I_H\otimes A)X(I_H\otimes A^\dagger)}{s_A(X)},
+\qquad
+s_A(X)=\operatorname{Tr}(A\rho_XA^\dagger).
+\tag{274.30}
+$$
+置
+$$
+a=\lambda_{\min}(A^\dagger A)>0,\qquad
+b=\lambda_{\max}(A^\dagger A),\qquad
+\kappa=\frac ba\ge1.
+\tag{274.31}
+$$
+则 $a\le s_A(X)\le b$，而逆映射恰为 $F_{A^{-1}}$。
+
+记未归一化线性分子为 $\Phi_A(X)$。它满足
+$$
+\|\Phi_A(X)-\Phi_A(Y)\|_1\le b\|X-Y\|_1,
+\qquad
+|s_A(X)-s_A(Y)|\le b\|X-Y\|_1.
+$$
+利用 $\|\Phi_A(Y)\|_1=s_A(Y)$ 分解两个归一化分数之差，得到
+$$
+\|F_A(X)-F_A(Y)\|_1\le2\kappa\|X-Y\|_1.
+\tag{274.32}
+$$
+逆过滤的条件数也是 $\kappa$，所以
+$$
+\boxed{
+\frac1{2\kappa}\|X-Y\|_1
+\le\|F_A(X)-F_A(Y)\|_1
+\le2\kappa\|X-Y\|_1.
+}
+\tag{274.33}
+$$
+
+完整数据的变换是
+$$
+g_A(\rho,K)=
+\left(\frac{A\rho A^\dagger}{s},
+\frac{AKA^\dagger}{s}\right),
+\qquad s=\operatorname{Tr}(A\rho A^\dagger).
+\tag{274.34}
+$$
+其逆在实际数据像上为 $g_{A^{-1}}$。为给出统一数据常数，先注意任意密度态都满足 $\|K\|_1\le1$。确实，将PSD平方根按输入分成两组行，可写
+$$
+X=\begin{pmatrix}UU^\dagger&UV^\dagger\\VU^\dagger&VV^\dagger\end{pmatrix}.
+$$
+于是
+$$
+\|K\|_1=2\|UV^\dagger\|_1
+\le2\|U\|_{\mathrm{HS}}\|V\|_{\mathrm{HS}}
+\le\|U\|_{\mathrm{HS}}^2+\|V\|_{\mathrm{HS}}^2=1.
+\tag{274.35}
+$$
+这一证明允许奇异态。
+
+对两个实际数据点，记差为 $\Delta\rho,\Delta K$。边缘项按（274.32）估计，非对角项分解分子与分母的变化，给
+$$
+\|\Delta\rho'\|_1\le2\kappa\|\Delta\rho\|_1,
+$$
+$$
+\|\Delta K'\|_1
+\le\kappa\|\Delta K\|_1+\kappa^2\|\Delta\rho\|_1.
+\tag{274.36}
+$$
+因此若
+$$
+\delta_{\mathcal D}(X,Y)
+=\|\rho_X-\rho_Y\|_1+\|K_X-K_Y\|_1,
+\qquad L_{\mathcal D}=2\kappa+\kappa^2,
+$$
+则正反过滤同时给
+$$
+\boxed{
+L_{\mathcal D}^{-1}\delta_{\mathcal D}(X,Y)
+\le\delta_{\mathcal D}(F_A(X),F_A(Y))
+\le L_{\mathcal D}\delta_{\mathcal D}(X,Y).
+}
+\tag{274.37}
+$$
+
+**引理274.2（可逆过滤保留局部逆指数）。** $F_A$ 保留完整数据纤维的单点性及最优局部逆指数，也保留相应固定边缘子合同的最优指数。
+
+**证明。** $F_A$ 与逆映射给状态空间之间的双向连续对应，$g_A$ 与逆映射给实际数据像之间的对应，所以完整纤维相互对应。由（274.33）、（274.37），一个局部上界常数 $C$、指数 $\alpha$ 可运输为常数 $2\kappa C L_{\mathcal D}^{\alpha}$ 的同指数上界。逆向同理，故可用指数集合相同。
+
+若原边缘固定为 $\rho_0$，分母固定为 $s_0=\operatorname{Tr}(A\rho_0A^\dagger)$，像边缘固定为 $A\rho_0A^\dagger/s_0$；逆映射也将这个边缘类映回。因此同边缘指数同样保留。$\square$
+
+这里把 $F_A$ 用作数学坐标对应，不把它当成无条件物理通道。若要实际实现，可将成功Kraus算子缩放为 $A/\|A\|$，归一化成功态仍为 $F_A(X)$；成功/失败记录仍须保留。
+
+### 274.6 面约化运输与一般unipotent来源
+
+令 $\mathcal A=I_H\otimes A$。未归一化合同映射
+$$
+\Phi_A(X)=\mathcal A X\mathcal A^\dagger
+\tag{274.38}
+$$
+是PSD锥的可逆线性自同构，且
+$$
+\Phi_A(\operatorname{diag}(D,-D))
+=\operatorname{diag}(ADA^\dagger,-ADA^\dagger),
+\qquad \Phi_A(L)=L.
+\tag{274.39}
+$$
+对偶证书按
+$$
+Y'=\mathcal A^{-\dagger}Y\mathcal A^{-1}
+\tag{274.40}
+$$
+运输，并满足
+$$
+\langle Y',\Phi_A(X)\rangle=\langle Y,X\rangle.
+\tag{274.41}
+$$
+因此面对偶条件、$L^\perp$ 条件、固定偏移的零配对和严格约化都保持。可逆线性映射也保持相对内部；逆合同给反向运输，所以最短面约化链长度相同。
+
+对固定完整数据切片，边缘固定，$s_A(X)$ 是同一正常数。归一化仅将整个像切片除以该常数，而 $L$ 是线性空间，故方向仍为 $L$。所以
+$$
+d_S(F_A(\Omega))=d_S(\Omega).
+\tag{274.42}
+$$
+这一步使用锥自同构与对偶运输，没有假设非酉合同保持本征值或正交投影。
+
+图矩阵逐块变换为
+$$
+\Phi_A(T(Q,M))=T(Q',M'),
+\qquad
+Q'=AQA^\dagger,
+\qquad M'=A^{-\dagger}MA^\dagger.
+\tag{274.43}
+$$
+对任意unipotent $M$，选一个Jordan相似矩阵 $S$，使
+$$
+S^{-1}MS=I+\frac14J,
+\tag{274.44}
+$$
+其中 $J$ 是标准Jordan移位的直和。非零超对角可以在每个Jordan块内作对角相似缩放，故固定系数 $1/4$ 不改变块尺寸。取 $A=S^\dagger$，则（274.43）的 $M'$ 正是（274.44），而 $Q'=S^\dagger QS\succ0$。
+
+**定理274.3（任意unipotent图来源）。** 对（274.1）—（274.4）的每个固定 $Q\succ0$ 和unipotent $M$，完整数据纤维为单点，且
+$$
+\boxed{
+d_S=m,\qquad
+\alpha_{\mathrm{sharp}}=\frac1{2m}.
+}
+\tag{274.45}
+$$
+存在固定有限常数 $C$，使全部合法竞争态满足
+$$
+\|\Xi-\Omega\|_1
+\le\min\{2,C\varepsilon(\Xi)^{1/(2m)}\}.
+\tag{274.46}
+$$
+精确同边缘子合同的最优指数也为 $1/(2m)$。
+
+**证明。** 相似变换保留最大Jordan块尺寸。定理274.1适用于变换后的任意正定 $Q'$；引理274.2运输单点性、全竞争上界及同边缘锐性，（274.42）运输标准奇异度。$S$ 与过滤常数固定于当前真值，不依赖竞争态或趋零参数。$\square$
+
+这不要求 $M$ 正规，也不要求对角化。$m=1$ 时 $M=I$，来源为纯输入态与正定参考态的产品，结论给出锐指数 $1/2$。
+
+### 274.7 两个独立来源的实际相干相等结果
+
+取两份实际独立来源
+$$
+\Omega_i=\frac{T(Q_i,M_i)}{c_i},
+\qquad Q_i\succ0,\qquad
+M_i=I+t_iJ_{n_i},\qquad t_i>0,
+\qquad i=1,2.
+\tag{274.47}
+$$
+输入分别为qubit $H_i$，参考为 $E_i=\mathbb C^{n_i}$。$c_i$ 是各图矩阵的迹，不要求各参考边缘均匀。联合输入恰为 $\Omega_1\otimes\Omega_2$。
+
+在固定 $Y$ 坐标中，用 $|+\rangle,|-\rangle$ 简记两个输入基向量。固定因子重排后，对 $H_1\otimes H_2$ 施加成功Kraus算子
+$$
+W=|+\rangle\langle++|+|-\rangle\langle--|.
+\tag{274.48}
+$$
+它满足
+$$
+W^\dagger W=|++\rangle\langle++|+|--\rangle\langle--|\preceq I.
+\tag{274.49}
+$$
+失败可以由 $|f\rangle\langle+-|$ 与 $|f\rangle\langle-+|$ 两个Kraus算子组成，使用与成功输出正交的失败标记；全部效果之和为单位矩阵。这给出完整保迹仪器，而成功本身是合法的迹不增结果。参考 $E_1\otimes E_2$ 全部保留。
+
+按联合来源的四个块直接相乘，成功未归一化态为
+$$
+\begin{aligned}
+\tau
+&=(W\otimes I)(\Omega_1\otimes\Omega_2)(W^\dagger\otimes I)\\
+&=\frac{T(Q_1\otimes Q_2,M_1\otimes M_2)}{c_1c_2}.
+\end{aligned}
+\tag{274.50}
+$$
+例如上非对角块为
+$(Q_1M_1)\otimes(Q_2M_2)$，下对角块为
+$(M_1^\dagger Q_1M_1)\otimes(M_2^\dagger Q_2M_2)$，所以这确是同一个图矩阵。
+
+定义
+$$
+a_i=\operatorname{Tr}Q_i>0,\qquad
+b_i=\operatorname{Tr}(M_i^\dagger Q_iM_i)>0,
+\qquad c_i=a_i+b_i.
+\tag{274.51}
+$$
+成功概率精确为
+$$
+\boxed{
+p=\operatorname{Tr}\tau
+=\frac{a_1a_2+b_1b_2}{(a_1+b_1)(a_2+b_2)}
+\in(0,1).
+}
+\tag{274.52}
+$$
+失败概率为 $(a_1b_2+b_1a_2)/(c_1c_2)>0$。成功条件态是
+$$
+\Omega_{\mathrm{out}}
+=\frac{\tau}{p}
+=\frac{T(Q_1\otimes Q_2,M_1\otimes M_2)}
+{a_1a_2+b_1b_2}.
+\tag{274.53}
+$$
+
+单Kraus形式是合同的一部分：成功记录仅告知“相等”，不另行记录是 $++$ 还是 $--$，因此保留二者之间的相干。若用两个分别记录这两种情况的Kraus算子再丢弃该记录，成功态会失去对应的非对角块，不能使用（274.50）。下述结论针对（274.48）的具体相干仪器。
+
+### 274.8 拼接后的最大Jordan链
+
+令
+$$
+X=t_1J_{n_1}\otimes I,\qquad
+Y=t_2I\otimes J_{n_2}.
+$$
+它们交换，且
+$$
+M_1\otimes M_2-I=X+Y+XY,
+\qquad
+X^{n_1}=0,\quad Y^{n_2}=0.
+\tag{274.54}
+$$
+置 $d_0=n_1+n_2-2$。在 $(X+Y+XY)^{d_0+1}$ 中，每个单项式总次数至少为 $d_0+1$，而非零项的两次数至多分别为 $n_1-1,n_2-1$。所以
+$$
+(M_1\otimes M_2-I)^{d_0+1}=0.
+\tag{274.55}
+$$
+在第 $d_0$ 次幂中，所有次数更高的项同样为零，次数恰为 $d_0$ 的项只能每次取 $X$ 或 $Y$。唯一可能非零的次数对为 $(n_1-1,n_2-1)$，故
+$$
+\begin{aligned}
+(M_1\otimes M_2-I)^{d_0}
+&=\binom{d_0}{n_1-1}X^{n_1-1}Y^{n_2-1}\\
+&=\binom{d_0}{n_1-1}
+t_1^{n_1-1}t_2^{n_2-1}
+J_{n_1}^{n_1-1}\otimes J_{n_2}^{n_2-1}\ne0.
+\end{aligned}
+\tag{274.56}
+$$
+其中 $n_i=1$ 时相应零次幂为单位矩阵。两者均为一时，$d_0=0$，第零次幂仍为非零单位矩阵。因此最大Jordan链长恰为
+$$
+m_{\mathrm{out}}=n_1+n_2-1.
+\tag{274.57}
+$$
+
+**定理274.4（相干相等拼接的条件来源几何）。** 在（274.47）—（274.53）的实际独立来源与仪器合同下，成功条件来源的完整数据纤维唯一，并且
+$$
+\boxed{
+d_S=n_1+n_2-1,\qquad
+\alpha_{\mathrm{sharp}}=\frac1{2(n_1+n_2-1)}.
+}
+\tag{274.58}
+$$
+它的参考维数和联合秩均为 $n_1n_2$。恢复上界对成功条件态所在的整个 $H\otimes E_1\otimes E_2$ 密度态空间成立，锐下界在精确同边缘子类中成立。
+
+**证明。** $Q_1\otimes Q_2\succ0$，式（274.55）—（274.57）证明图算子unipotent及其最大链长。对（274.53）应用定理274.3即可。$\square$
+
+这允许非产品竞争态，不把竞争者限制为两个独立因子的微扰。它没有声称每条锐竞争族都必须由产品输入扰动实现，也没有把成功条件态定理当成无条件输出或原始两来源的恢复定理。
+
+### 274.9 两个二维来源的明确例子
+
+取 $n_1=n_2=2$、$t_1=t_2=1/4$。令
+$$
+J_2=\begin{pmatrix}0&1\\0&0\end{pmatrix},
+\qquad
+X_2=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad
+M_2=I_2+\frac14J_2,
+$$
+$$
+Q_2=\begin{pmatrix}1/2&-1/16\\-1/16&1/2\end{pmatrix}
+=\frac12I_2-\frac1{16}X_2.
+\tag{274.59}
+$$
+$Q_2$ 的本征值为 $7/16,9/16$，严格正。直接相乘给
+$$
+M_2^\dagger Q_2M_2
+=\frac12I_2+\frac1{16}X_2=I_2-Q_2.
+\tag{274.60}
+$$
+所以两因子各有 $a_i=b_i=1$、$c_i=2$，成功概率为 $p=1/2$。
+
+成功图的权重与算子为
+$$
+Q_{\mathrm{out}}=Q_2\otimes Q_2,\qquad
+M_{\mathrm{out}}=M_2\otimes M_2,\qquad
+c_{\mathrm{out}}=2.
+\tag{274.61}
+$$
+其边缘精确为
+$$
+\begin{aligned}
+\rho_{\mathrm{out}}
+&=\frac12\left[
+Q_2\otimes Q_2+(I_2-Q_2)\otimes(I_2-Q_2)\right]\\
+&=\frac14I_4+\frac1{256}X_2\otimes X_2.
+\end{aligned}
+\tag{274.62}
+$$
+它具有跨参考因子的非零条目，并非均匀边缘。这是任意正定图权重推广所覆盖的具体情形。
+
+由于 $J_2^2=0$，
+$$
+(M_{\mathrm{out}}-I_4)^2=\frac18J_2\otimes J_2\ne0,
+\qquad
+(M_{\mathrm{out}}-I_4)^3=0.
+\tag{274.63}
+$$
+因此成功源联合秩为四、标准奇异度为三、锐指数为 $1/6$；每个原二维因子的锐指数为 $1/4$。这里的图矩阵、成功概率、边缘和链长均由上述矩阵恒等式确定。
+
+### 274.10 多因子的同一相干操作与范围
+
+对 $k\ge1$ 份独立来源，可使用同一种相干相等Kraus算子
+$$
+W_k=|+\rangle\langle+\cdots+|
++|-\rangle\langle-\cdots-|.
+\tag{274.64}
+$$
+成功图的权重为 $\bigotimes_iQ_i$，图算子为 $\bigotimes_iM_i$，成功概率为
+$$
+p_k=\frac{\prod_i a_i+\prod_i b_i}{\prod_i(a_i+b_i)}.
+\tag{274.65}
+$$
+$k=1$ 时 $p_k=1$；$k\ge2$ 时所有混合符号串也有正概率，所以 $0<p_k<1$。若所有 $n_i=1$，则 $a_i=b_i$，故 $p_k=2^{1-k}$。
+
+令各因子的 $t_i>0$、$M_i=I+t_iJ_{n_i}$。作用在不同参考因子上的幂零矩阵彼此交换。与（274.55）—（274.56）相同的总次数论证给
+$$
+\boxed{
+m_{\mathrm{out}}=1+\sum_i(n_i-1),
+\qquad
+\dim E_{\mathrm{out}}=\prod_i n_i.
+}
+\tag{274.66}
+$$
+最高非零项的系数为
+$$
+\frac{\left(\sum_i(n_i-1)\right)!}{\prod_i(n_i-1)!}
+\prod_i t_i^{n_i-1},
+\tag{274.67}
+$$
+并乘各 $J_{n_i}^{n_i-1}$ 的非零张量积。因而定理274.3仍给 $d_S=m_{\mathrm{out}}$ 和锐指数 $1/(2m_{\mathrm{out}})$。若某个 $t_i=0$，该因子的实际最大链长为一，只在深度公式中将对应的 $n_i$ 替换为一；参考维数公式仍使用原来的 $n_i$。
+
+本节只讨论unipotent图算子及明确给出的相干相等仪器。参考维数相乘，而最长深度按（274.66）增加；这不是任意张量网络收缩的规则。正定权重、过滤条件数和所有恢复常数都固定于具体来源，不声称跨维数或跨过滤的一致常数。
+
+成功与失败始终属于同一实际仪器。本文结论针对已声明的成功条件来源，没有免费后选择、无条件副本预算或物理历时结论。若要将其转成取得成本，还需指定试验、失败处置和资源计数合同。所用Jordan相似、PSD支撑、Schur供应、Schatten范数与有限多项式论证均按正文的明确条件应用，不据组合推导宣称外部文献原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 275. 一般graph来源的单位圆唯一性与最长Jordan链恢复分类
+
+前述单链与多链构造都来自正定矩阵的graph表示。本节允许任意复矩阵 $M$ 和任意正定上块 $Q$，保留完整边缘与非对角数据，并允许全部合法竞争态。唯一性由一个精确谱条件判定：$M$ 的全部本征值必须位于单位圆。
+
+在唯一情形，标准奇异度等于最长Jordan块长度 $m$，完整数据的锐局部恢复指数恰为 $1/(2m)$。不同链可以具有不同单位相位，$Q$ 可以在链之间具有任意相干条目。离开单位圆时，则有一条连续的小参数同数据PSD来源族，直接排除唯一性。
+
+### 275.1 正定上块的graph来源与完整数据
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$ 和qubit输入 $H$。所有输入块使用同一固定 $Y$ 本征基。给定
+$$
+Q=Q^\dagger\succ0,\qquad M\in\mathbb C^{n\times n},
+\tag{275.1}
+$$
+不预先要求 $M$ 可逆。定义
+$$
+G=\begin{bmatrix}I_n&M\end{bmatrix},
+\qquad
+T=T(Q,M)=G^\dagger QG
+=\begin{pmatrix}Q&QM\\M^\dagger Q&M^\dagger QM\end{pmatrix},
+$$
+$$
+c=\operatorname{Tr}T>0,
+\qquad \Omega=\frac1cT.
+\tag{275.2}
+$$
+$G$ 满行秩，故 $\Omega$ 是秩 $n$ 的密度态。其完整数据为
+$$
+\rho=\frac{Q+M^\dagger QM}{c}\succ0,
+\qquad K=\frac{2QM}{c},
+\qquad \mathscr K(X)=2X_{+-}.
+\tag{275.3}
+$$
+本节不要求 $Q+M^\dagger QM$ 为单位矩阵。
+
+所有同数据竞争态 $\Xi$ 恰满足
+$$
+c\Xi=T+\operatorname{diag}(D,-D)\succeq0,
+\qquad D=D^\dagger.
+\tag{275.4}
+$$
+确实，同边缘使两对角差之和为零，同 $K$ 固定全部非对角块；反向这些条件也保证同数据和迹一。竞争者不限于graph形式、固定秩或某个参考块分解。
+
+记方向空间
+$$
+L=\{\operatorname{diag}(D,-D):D=D^\dagger\}.
+\tag{275.5}
+$$
+标准奇异度取固定切片 $T+L$ 的最少面对偶约化步数；除以正数 $c$ 不改变该步数。对任意合法竞争态定义完整误差
+$$
+\varepsilon_\Omega(\Xi)
+=\|\operatorname{Tr}_H\Xi-\rho\|_1
++\|\mathscr K(\Xi)-K\|_1.
+\tag{275.6}
+$$
+态差和数据差均使用未除以二的核范数；无下标的矩阵范数为算子范数。局部指数的含义与§269一致：在固定真值邻域内，对全部合法竞争态存在一个有限常数的误差幂次上界。
+
+### 275.2 离开单位圆的本征值产生连续同数据族
+
+设 $\lambda\in\operatorname{spec}(M)$ 且 $|\lambda|\ne1$。取单位左特征向量，即
+$$
+M^\dagger u=\bar\lambda u,\qquad \|u\|=1.
+\tag{275.7}
+$$
+置
+$$
+\sigma=\operatorname{sign}(|\lambda|^2-1),
+\qquad D=\sigma uu^\dagger,
+\qquad \beta=\bigl||\lambda|^2-1\bigr|>0.
+\tag{275.8}
+$$
+对参数 $\delta>0$ 定义
+$$
+T_\delta=T+\delta\operatorname{diag}(D,-D).
+\tag{275.9}
+$$
+对角和、非对角块和总迹均与原矩阵相同。下面证明一个明确的小参数区间保持PSD。
+
+令 $q=\lambda_{\min}(Q)>0$，并取
+$$
+\delta_0=
+\begin{cases}
+\min\{q/2,\ \beta q/(4|\lambda|^2)\},&\lambda\ne0,\\
+q/2,&\lambda=0.
+\end{cases}
+\tag{275.10}
+$$
+在 $0<\delta\le\delta_0$ 时，$Q+\delta D\succeq(q/2)I$。由（275.7），
+$$
+DM=\lambda D,\qquad M^\dagger D=\bar\lambda D.
+\tag{275.11}
+$$
+使用可逆剪切
+$$
+R=\begin{pmatrix}I&-M\\0&I\end{pmatrix},
+\tag{275.12}
+$$
+直接相乘得到
+$$
+R^\dagger T_\delta R
+=\begin{pmatrix}
+Q+\delta D&-\delta\lambda D\\
+-\delta\bar\lambda D&\delta\beta uu^\dagger
+\end{pmatrix}.
+\tag{275.13}
+$$
+其对上块的Schur补是
+$$
+\left[\delta\beta
+-\delta^2|\lambda|^2u^\dagger(Q+\delta D)^{-1}u\right]uu^\dagger.
+\tag{275.14}
+$$
+若 $\lambda\ne0$，方括号中的系数至少为
+$$
+\delta\beta-\frac{2\delta^2|\lambda|^2}{q}
+\ge\frac{\delta\beta}{2}>0.
+\tag{275.15}
+$$
+若 $\lambda=0$，二次项为零，系数就是 $\delta\beta>0$。因此 $T_\delta\succeq0$，且其秩为 $n+1$。
+
+**定理275.1（离圆谱阻断唯一性）。** 若 $M$ 有模长不为一的本征值，则
+$$
+\Omega_\delta=\frac1cT_\delta,
+\qquad 0<\delta\le\delta_0,
+\tag{275.16}
+$$
+是一条连续的、与 $\Omega$ 完整数据相同的不同来源族。具体地，
+$$
+\varepsilon_\Omega(\Omega_\delta)=0,
+\qquad
+\|\Omega_\delta-\Omega\|_1=\frac{2\delta}{c}>0.
+\tag{275.17}
+$$
+
+**证明。** 正性由（275.13）—（275.15）成立，总迹仍为 $c$，故归一化后合法。数据不变由（275.9）得到。$\|D\|_1=1$，所以差矩阵的两个对角块给出（275.17）。它随 $\delta$ 连续并趋向原来源。$\square$
+
+这个构造允许 $M$ 的其他本征值在单位圆上，也允许其他Jordan链；只需要一条离圆左特征向量。它给出完整数据精确相同的局部竞争者，不涉及测量噪声近似。
+
+### 275.3 可逆参考过滤的三个传递性质
+
+为处理单位圆谱，使用§274的可逆参考过滤。这里写出本节所需的精确变换和保持量。
+
+设 $F$ 为可逆参考矩阵，$H_F=I_H\otimes F$。未归一化同余变换给
+$$
+H_FT(Q,M)H_F^\dagger=T(Q_F,M_F),
+$$
+$$
+Q_F=FQF^\dagger,\qquad
+M_F=F^{-\dagger}MF^\dagger.
+\tag{275.18}
+$$
+在密度态上，变换为
+$$
+\Phi_F(\Xi)=\frac{H_F\Xi H_F^\dagger}{z_\Xi},
+\qquad
+z_\Xi=\operatorname{Tr}\bigl(F(\operatorname{Tr}_H\Xi)F^\dagger\bigr)>0.
+\tag{275.19}
+$$
+数据相应变为
+$$
+\rho_{\Phi_F(\Xi)}=\frac{F\rho_\Xi F^\dagger}{z_\Xi},
+\qquad
+K_{\Phi_F(\Xi)}=\frac{FK_\Xi F^\dagger}{z_\Xi}.
+\tag{275.20}
+$$
+逆变换为 $\Phi_{F^{-1}}$。在精确同边缘族上 $z_\Xi$ 恒定，所以精确同数据纤维双向对应。
+
+同余 $X\mapsto H_FXH_F^\dagger$ 是PSD锥的自同构，并将（275.5）的 $L$ 映到自身。合法面对偶证书按逆伴随变换，零配对和严格面包含均保持。因此标准奇异度不变；正的总迹归一化也不改变这一结论。
+
+固定过滤还保持局部幂指数。令
+$$
+\kappa_F=\|F\|^2\|F^{-1}\|^2\ge1.
+\tag{275.21}
+$$
+对任何两个密度态 $\Xi,\Omega$，分母满足
+$\|F^{-1}\|^{-2}\le z_\Xi,z_\Omega\le\|F\|^2$。乘法范数及分母差估计给
+$$
+\|\Phi_F(\Xi)-\Phi_F(\Omega)\|_1
+\le2\kappa_F\|\Xi-\Omega\|_1.
+\tag{275.22}
+$$
+在数据上同样有
+$$
+\varepsilon_{\Phi_F(\Omega)}(\Phi_F(\Xi))
+\le3\kappa_F\varepsilon_\Omega(\Xi).
+\tag{275.23}
+$$
+为核对后一系数，参考边缘差至多贡献
+$2\kappa_F\|\rho_\Xi-\rho_\Omega\|_1$；非对角数据差至多贡献
+$\kappa_F(\|K_\Xi-K_\Omega\|_1+\|\rho_\Xi-\rho_\Omega\|_1)$。
+这里使用任意实际来源的 $\|K_\Xi\|_1\le1$，对过滤后的实际来源也成立。该界可由
+$$
+U=\operatorname{diag}(I,-I),\qquad
+\left\|\frac{\Xi-U\Xi U^\dagger}{2}\right\|_1
+=2\|\Xi_{+-}\|_1=\|K_\Xi\|_1\le1
+\tag{275.24}
+$$
+直接得到。
+
+将（275.22）—（275.23）应用于 $F^{-1}$ 给反向界。因此态距离和完整数据距离都双向相差固定有限因子，真值邻域也双向对应；可用局部指数及其最优值保持。相同边缘的竞争族在过滤后仍相同边缘，所以这个子合同也保持。
+
+### 275.4 单位圆谱的规范多相位坐标
+
+现在假设 $\operatorname{spec}(M)\subseteq\{z:|z|=1\}$。Jordan标准形和每块可逆对角缩放给某个可逆 $S$，使
+$$
+S^{-1}MS
+=\bigoplus_{b\in\mathcal B}\lambda_b(I_{r_b}+tJ_{r_b}),
+\qquad |\lambda_b|=1,
+\qquad t=\frac14.
+\tag{275.25}
+$$
+确实，对标准块 $\lambda I+J_r$，对角缩放
+$\operatorname{diag}(1,\lambda t,\ldots,(\lambda t)^{r-1})$
+把超对角条目变成 $\lambda t$。所有 $\lambda_b$ 非零，所以缩放可逆。
+
+在（275.18）中取 $F^\dagger=S$，即可实现（275.25）。因此只需在过滤后的模型内证明结论；以下重新将其正定矩阵、graph矩阵和总迹记为 $Q,M,c$。参考坐标块正交，但 $Q$ 仍可有任意跨块条目。令
+$$
+n=\sum_b r_b,
+\qquad m=\max_b r_b,
+\qquad
+M=\Lambda(I+tJ),
+$$
+$$
+J=\bigoplus_bJ_{r_b},
+\qquad \Lambda=\bigoplus_b\lambda_bI_{r_b}.
+\tag{275.26}
+$$
+$\Lambda$ 酉且与 $J$ 交换。
+
+核基为
+$$
+q_{b,j}=(-Me_{b,j},e_{b,j})
+=(-\lambda_b(e_{b,j}+te_{b,j-1}),e_{b,j}),
+\qquad e_{b,0}=0.
+\tag{275.27}
+$$
+这些向量由下半部分线性独立，并张成 $\mathcal N=\ker T$。
+
+**定理275.2（单位圆谱保证完整唯一性）。** 在（275.25）中，对任意 $Q\succ0$，切片 $T(Q,M)+L$ 只有一个PSD成员。
+
+**证明。** 若 $T+\operatorname{diag}(D,-D)\succeq0$，首层 $q_{b,1}$ 的二次型为零，因为 $|\lambda_b|=1$。PSD性使整个矩阵将该向量送到零；减去原核关系后读取下半部分，得到 $De_{b,1}=0$。
+
+假设此前各层已消去。对第 $j$ 层，未知方向的二次型为
+$$
+|\lambda_b|^2(e_{b,j}+te_{b,j-1})^\dagger
+D(e_{b,j}+te_{b,j-1})-e_{b,j}^\dagger De_{b,j}=0.
+\tag{275.28}
+$$
+再次由PSD性得到 $De_{b,j}=0$。这些都是整个参考空间中的列，含全部跨链条目。逐层归纳至 $m$ 得 $D=0$。$\square$
+
+结合定理275.1与过滤纤维双射，已经得到一般合同的唯一性充要条件。
+
+### 275.5 多相位证书与任意链的最短深度
+
+令
+$$
+\mathcal N_j=\operatorname{span}\{q_{b,a}:a\le\min(j,r_b)\},
+\qquad P_j=P_{\mathcal N_j^\perp},
+\qquad \mathcal N_0=\{0\}.
+\tag{275.29}
+$$
+标准第 $j$ 面是支撑于 $\mathcal N_j^\perp$ 的PSD锥面。第一张证书仍为
+$Y_1=\sum_bq_{b,1}q_{b,1}^\dagger$。其上下对角块相同，因为上半部分的单位相位在外积中抵消。
+
+对 $1\le j<m$，取
+$$
+w_{b,j}=\left(0,te_{b,j+1}+\frac{t^2}{2}e_{b,j}\right),
+$$
+$$
+Y_{j+1}=\sum_{b:r_b>j}
+\left(q_{b,j+1}q_{b,j+1}^\dagger
++q_{b,j}w_{b,j}^\dagger+w_{b,j}q_{b,j}^\dagger\right).
+\tag{275.30}
+$$
+新外积上下对角块之差仍为
+$t(e_{b,j}e_{b,j+1}^\dagger+e_{b,j+1}e_{b,j}^\dagger)+t^2e_{b,j}e_{b,j}^\dagger$；因为 $w$ 上块为零，交叉项的下块准确抵消该差。因此 $Y_{j+1}\in L^\perp$。
+
+所有项都含真值核向量，所以 $\langle Y_{j+1},T\rangle=0$，且
+$$
+P_jY_{j+1}P_j
+=\sum_{b:r_b>j}(P_jq_{b,j+1})(P_jq_{b,j+1})^\dagger\succeq0.
+\tag{275.31}
+$$
+每步精确增加全部新首层方向，故 $m$ 步到达真值支撑，相对Slater成立。这给 $d_S\le m$。
+
+下面核对多相位不能使另一条链越层。固定 $0\le j<m$，对标准第 $j$ 面上的任意合法证书 $Y$，压缩 $S_j=P_jYP_j\succeq0$，且 $\operatorname{Tr}(S_jT)=0$。因为 $Q\succ0$，$T$ 在 $\mathcal N^\perp$ 上严格正，故 $S_j$ 的像位于 $\mathcal N\cap\mathcal N_j^\perp$。以剩余核基为列组成 $V_j$，可写
+$$
+S_j=P_jV_jCV_j^\dagger P_j,\qquad C\succeq0.
+\tag{275.32}
+$$
+$P_jV_j$ 满列秩：尾核组合若投影为零就落入旧核，违反全部核基独立性。
+
+令 $B=Y-V_jCV_j^\dagger$、$R_j=I-P_j$。由 $P_jBP_j=0$，
+$$
+B=R_jB+BR_j-R_jBR_j.
+\tag{275.33}
+$$
+旧核的上下分量均落在各链的参考前缀中。因此上述余项的两个对角尾主块都为零，包含跨链交叉项。$Y$ 的等对角条件于是成为完整尾系数的关系
+$$
+M_{\mathrm{tail}}CM_{\mathrm{tail}}^\dagger=C,
+\qquad
+M_{\mathrm{tail}}=\Lambda_{\mathrm{tail}}(I+tJ_{\mathrm{tail}}).
+\tag{275.34}
+$$
+这里 $\Lambda_{\mathrm{tail}}$ 仍为块标量酉矩阵，并与幂零的 $J_{\mathrm{tail}}$ 交换。
+
+迭代（275.34）给
+$$
+\|M_{\mathrm{tail}}^kC^{1/2}\|_{\mathrm{HS}}^2=\operatorname{Tr}C.
+\tag{275.35}
+$$
+因为 $M_{\mathrm{tail}}^k=\Lambda_{\mathrm{tail}}^k(I+tJ_{\mathrm{tail}})^k$，左侧等于 $\|(I+tJ_{\mathrm{tail}})^kC^{1/2}\|_{\mathrm{HS}}^2$。后者来自关于非负整数 $k$ 的矩阵多项式。有界性迫使该多项式为常数，比较 $k=0,1$ 得
+$$
+J_{\mathrm{tail}}C^{1/2}=0.
+\tag{275.36}
+$$
+因此当前证书的像只能落在剩余各链首向量的投影空间内，特别有
+$$
+\operatorname{ran}(P_jYP_j)\subseteq\mathcal N_{j+1}.
+\tag{275.37}
+$$
+不同相位可以进一步限制首层之间的系数，但不能放宽到更深层。
+
+最后允许任意未取最大秩的链。若 $j<m$、第 $j$ 步已删空间 $W_j\subseteq\mathcal N_j$ 且该链继续执行，下一实际证书压缩为 $S'=P_{W_j^\perp}YP_{W_j^\perp}\succeq0$。进一步压缩到 $\mathcal N_j^\perp$ 仍满足（275.37）。故对 $x\in\mathcal N_{j+1}^\perp$，有 $x^\dagger S'x=0$，PSD性给 $S'x=0$。因此
+$$
+W_{j+1}=W_j+\operatorname{ran}S'\subseteq\mathcal N_{j+1}.
+\tag{275.38}
+$$
+从 $W_0=0$ 归纳，任何少于 $m$ 步的合法链都尚未消去完整核。唯一真值秩为 $n$，当前支撑仍大于 $n$，相对Slater不可能提前成立。于是
+$$
+\boxed{d_S=m.}
+\tag{275.39}
+$$
+这个结论不要求 $Q$ 分块对角，也不要求所有 $\lambda_b$ 相同。
+
+### 275.6 任意跨链正定上块的完整误差上界
+
+继续在（275.25）的规范多相位坐标中，允许任意 $Q\succ0$。对任意竞争态 $\Xi$，记
+$$
+\Delta\rho=\operatorname{Tr}_H\Xi-\rho,
+\qquad \Delta K=\mathscr K(\Xi)-K,
+\qquad T'=c\Xi.
+$$
+则
+$$
+T'-T=\operatorname{diag}(D,-D)+X,
+\qquad
+X=\frac c2\begin{pmatrix}\Delta\rho&\Delta K\\\Delta K^\dagger&\Delta\rho\end{pmatrix},
+$$
+$$
+D=D^\dagger,
+\qquad \xi:=\|X\|\le\frac c2\varepsilon_\Omega(\Xi),
+\qquad \|T'\|,\|T\|\le c.
+\tag{275.40}
+$$
+总迹是 $c$，无需将其误换为参考维数 $n$。
+
+固定长度 $r=r_b$ 的链，令 $\iota_b:\mathbb C^r\to E$ 为其等距嵌入。对
+$$
+0<\theta\le\theta_{0,b}
+:=\min\left\{1,\frac{t}{2r},\frac\pi r\right\},
+\qquad\ell=0,\ldots,r-1,
+\tag{275.41}
+$$
+定义
+$$
+\mu_\ell=\lambda_be^{i\ell\theta},
+\qquad z_\ell=\frac{e^{i\ell\theta}-1}{t},
+$$
+$$
+x_{b,\ell}=\iota_b\bigl((1,z_\ell,\ldots,z_\ell^{r-1})^{\mathsf T}\bigr),
+\qquad
+v_{b,\ell}=(x_{b,\ell},-\mu_\ell^{-1}x_{b,\ell}).
+\tag{275.42}
+$$
+全局矩阵满足
+$$
+Mx_{b,\ell}-\mu_\ell x_{b,\ell}
+=-\lambda_bt z_\ell^r e_{b,r},
+$$
+$$
+Gv_{b,\ell}=\mu_\ell^{-1}\lambda_bt z_\ell^r e_{b,r}.
+\tag{275.43}
+$$
+相位因子模长为一，故 $v_{b,\ell}$ 对未知 $\operatorname{diag}(D,-D)$ 的二次型仍精确为零。同时 $|z_\ell|\le1/2$、$\|v_{b,\ell}\|^2\le2r$，所以
+$$
+v_{b,\ell}^\dagger Tv_{b,\ell}
+\le\|Q\|t^2|z_\ell|^{2r}.
+\tag{275.44}
+$$
+
+由 $T'\succeq0$、$\|T'\|\le c$，有
+$\|T'v\|^2\le c\,v^\dagger T'v$。结合（275.40）—（275.44），并从 $(T'-T-X)v$ 读取第一分量，得
+$$
+\begin{aligned}
+\|Dx_{b,\ell}\|
+\le{}&\bigl(\sqrt{c\|Q\|}+\|G\|\|Q\|\bigr)t|z_\ell|^r\\
+&+\sqrt{2cr\xi}+\sqrt{2r}\,\xi.
+\end{aligned}
+\tag{275.45}
+$$
+因此在 $0\le\varepsilon_\Omega(\Xi)\le1$ 时，存在固定有限 $A_b$，使
+$$
+\max_\ell\|Dx_{b,\ell}\|
+\le A_b\bigl(\theta^r+\sqrt{\varepsilon_\Omega(\Xi)}\bigr).
+\tag{275.46}
+$$
+例如可取
+$$
+A_b=
+\bigl(\sqrt{c\|Q\|}+\|G\|\|Q\|\bigr)t
+\left(\frac{r-1}{t}\right)^r
++c\sqrt r+\frac{c\sqrt{2r}}2.
+\tag{275.47}
+$$
+$r=1$ 时第一项为零。
+
+相应局部Vandermonde矩阵 $V_b$ 的节点仍为 $z_\ell$，不含块相位。Lagrange系数估计给
+$$
+\|V_b^{-1}\|\le r(\pi t)^{r-1}\theta^{1-r}.
+\tag{275.48}
+$$
+$D\iota_bV_b$ 的列为完整向量 $Dx_{b,\ell}$，所以
+$$
+\|D\iota_b\|
+\le r^{3/2}(\pi t)^{r-1}A_b
+\theta^{1-r}\bigl(\theta^r+\sqrt{\varepsilon_\Omega(\Xi)}\bigr).
+\tag{275.49}
+$$
+这控制所有落到其他链的列分量，即使 $Q$ 和 $D$ 都有跨链相干也成立。
+
+对充分小的正误差，分别选择
+$\theta=\varepsilon_\Omega(\Xi)^{1/(2r_b)}$。由 $r_b\le m$，各列块都受固定常数乘 $\varepsilon_\Omega(\Xi)^{1/(2m)}$ 控制；有限列块合并给
+$$
+\|D\|\le C_D\varepsilon_\Omega(\Xi)^{1/(2m)}.
+\tag{275.50}
+$$
+零误差时，在（275.49）中令 $\theta\downarrow0$，也得 $D=0$。最后注意归一化因子：
+$$
+\begin{aligned}
+\|\Xi-\Omega\|_1
+&\le\frac2c\|D\|_1+\frac1c\|X\|_1\\
+&\le\frac{2n}{c}\|D\|+\frac{2n}{c}\|X\|\\
+&\le\frac{2nC_D}{c}\varepsilon_\Omega(\Xi)^{1/(2m)}
++n\varepsilon_\Omega(\Xi).
+\end{aligned}
+\tag{275.51}
+$$
+在小误差区间吸收后一项，其余误差用态迹距至多二覆盖，即得固定实例的全域上界
+$$
+\boxed{
+\|\Xi-\Omega\|_1
+\le\min\{2,C_{\mathrm{up}}\varepsilon_\Omega(\Xi)^{1/(2m)}\}
+}
+\tag{275.52}
+$$
+对某个有限 $C_{\mathrm{up}}$ 成立。过滤的双向距离界将它传回原始坐标。
+
+### 275.7 任意正定上块的匹配同边缘下界
+
+上界尚需一个与同一真值对应的下界。先在规范多相位坐标中，为每条链选择§268的正定解
+$$
+Q_b^{\mathrm c}+(I+tJ_{r_b})^\dagger Q_b^{\mathrm c}(I+tJ_{r_b})=I_{r_b},
+\qquad t=1/4,
+$$
+$$
+Q_{\mathrm c}=\bigoplus_bQ_b^{\mathrm c},
+\qquad T_{\mathrm c}=T(Q_{\mathrm c},M).
+\tag{275.53}
+$$
+因为每个块的相位与其共轭相消，
+$$
+Q_{\mathrm c}+M^\dagger Q_{\mathrm c}M=I_n,
+\qquad\operatorname{Tr}T_{\mathrm c}=n.
+\tag{275.54}
+$$
+
+选一条长度 $m$ 的最长链。§269在该无相位块上给出同边缘PSD竞争族，态变化为 $\Theta(h)$，非对角数据变化为 $\Theta(h^{2m})$。对该块施加输入酉矩阵
+$$
+U_b=\operatorname{diag}(\lambda_b,1),
+\tag{275.55}
+$$
+将上非对角块乘以 $\lambda_b$，便得到所需带相位真值及其竞争族。该操作保持块正性、迹、参考边缘及所有迹范数。其他规范块保持不变，得到联合PSD矩阵族 $T_{{\mathrm c},h}$，其总迹为 $n$，对角块之和仍为 $I_n$，并满足
+$$
+\|T_{{\mathrm c},h}-T_{\mathrm c}\|_1=\Theta(h),
+\qquad
+\|2(T_{{\mathrm c},h}-T_{\mathrm c})_{+-}\|_1=\Theta(h^{2m}).
+\tag{275.56}
+$$
+各式中的上下界常数有限且严格正。该族在同一个完整参考空间内实际实现，不要求把其他块也扰成满秩。
+
+现在回到任意给定的 $Q\succ0$。取
+$$
+\alpha=\frac{\lambda_{\min}(Q)}{2\|Q_{\mathrm c}\|}>0,
+\qquad Q_{\mathrm r}=Q-\alpha Q_{\mathrm c}\succeq\frac{\lambda_{\min}(Q)}2I\succ0.
+\tag{275.57}
+$$
+graph构造对上块线性，故
+$$
+T(Q,M)=\alpha T_{\mathrm c}+T(Q_{\mathrm r},M).
+\tag{275.58}
+$$
+定义真实竞争矩阵
+$$
+\widehat T_h=\alpha T_{{\mathrm c},h}+T(Q_{\mathrm r},M)\succeq0,
+\qquad \widehat\Omega_h=\frac1c\widehat T_h.
+\tag{275.59}
+$$
+其总迹仍为 $c$，因为第一项的扰动迹为零；它的两对角块之和仍与 $T(Q,M)$ 相同。因此 $\widehat\Omega_h$ 是精确共同边缘 $\rho$ 的合法来源，而且
+$$
+\widehat T_h-T(Q,M)
+=\alpha(T_{{\mathrm c},h}-T_{\mathrm c}).
+\tag{275.60}
+$$
+固定正余项不会抵消这个差。由（275.56），
+$$
+\boxed{
+\|\widehat\Omega_h-\Omega\|_1=\Theta(h),
+\qquad
+\varepsilon_\Omega(\widehat\Omega_h)=\Theta(h^{2m}).
+}
+\tag{275.61}
+$$
+误差中的边缘项精确为零。
+
+将此族逆过滤回原始坐标。相同边缘使过滤分母恒定，所得族仍精确同边缘；（275.22）—（275.23）的双向界保持两种误差阶。两种坐标下都因此对任何 $\gamma>1/(2m)$ 满足
+$$
+\frac{\|\widehat\Omega_h-\Omega\|_1}
+{\varepsilon_\Omega(\widehat\Omega_h)^\gamma}
+\longrightarrow+\infty.
+\tag{275.62}
+$$
+这排除了同一真值处的所有更大局部指数，包括精确共同边缘子合同。
+
+### 275.8 一般graph来源的分类结论
+
+**定理275.3（单位圆谱、最短深度与锐指数）。** 对（275.1）—（275.6）的任意固定合同，下列条件等价：
+$$
+\text{完整数据纤维只有来源 }\Omega;
+\qquad
+\operatorname{spec}(M)\subseteq\{z\in\mathbb C:|z|=1\}.
+\tag{275.63}
+$$
+当这些条件成立时，令 $m$ 为 $M$ 的最大Jordan块长度，则
+$$
+\boxed{
+d_S=m,
+\qquad
+\alpha_{\mathrm{sharp}}(\Omega)=\frac1{2m}.
+}
+\tag{275.64}
+$$
+锐指数对完整竞争合同和精确同边缘子合同相同。
+
+**证明。** 若存在离圆本征值，定理275.1给连续的同数据不同来源族。若全部本征值位于单位圆，规范过滤和定理275.2给唯一性。规范多相位坐标中的最短深度由（275.39）给出，过滤保持该步数，Jordan块长度本身也在相似变换下保持。上界是（275.52），匹配同边缘下界由（275.61）—（275.62）给出，所以指数恰为 $1/(2m)$。$\square$
+
+当 $n=1$ 时，这一分类退化为标量条件 $|M|=1$，唯一来源的锐指数为 $1/2$；若 $|M|\ne1$，（275.16）仍给二维联合空间中的合法竞争族。当 $m=1$ 时，允许许多不同单位相位和任意跨链 $Q$，结论仍是一步约化与平方根恢复，并未添加正规性假设。
+
+本定理分类的是具有正定上块的秩 $n$ graph来源，竞争者始终为全部合法密度态。它没有把此结论扩展到任意更高秩来源或奇异上块，也不对这些其他来源的可识别性作判断。固定过滤、谱基变换与正余项会改变常数；这里不声称跨维数、相位变化或病态坐标变换下的一致常数。
+
+完整数据、精确共同来源和局部误差在所有步骤中保持同一合同。§268—269供应规范单链的正定构造与匹配下界，§271供应多链层级机制，§274的参考过滤结构在本节按实际归一化明确使用；多相位协方差限制和一般 $Q$ 的下界由上述矩阵证明连接。不据这些组合结论宣称外部文献原创性。
+
+## 追加锚（本行以下为增补区）
