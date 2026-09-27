@@ -521,26 +521,26 @@ theorem paired_angle_demand
       have h := Real.cos_lt_cos_of_nonneg_of_le_pi (by linarith)
         (by linarith [htheta_lt_pi, Real.pi_pos]) htheta_pos
       simpa using h
-    have hhalf_cos : 0 < Real.cos (theta / 2) :=
-      Real.cos_pos_of_mem_Ioo ⟨by linarith [Real.pi_pos], by linarith⟩
     have hhalf_ratio : 2 * t / (1 + t) = 1 - ct := by
-      dsimp [t]
-      rw [Real.tan_eq_sin_div_cos]
-      have hdouble : Real.cos theta =
-          2 * Real.cos (theta / 2)^2 - 1 := by
-        convert Real.cos_two_mul (theta / 2) using 1 <;> ring
-      field_simp [hhalf_cos.ne']
-      nlinarith [Real.sin_sq_add_cos_sq (theta / 2), hdouble, hcos_theta]
+      have hden : 0 < 1 + t := by linarith only [ht_pos]
+      apply (div_eq_iff hden.ne').2
+      nlinarith only [htan_half]
     have hsin_sq_bound : 1 - ct < Real.sin theta ^ 2 := by
       have htrig := Real.sin_sq_add_cos_sq theta
       rw [hcos_theta] at htrig
-      nlinarith
+      have hctpos : 0 < ct := by rw [← hcos_theta]; exact htheta_cos_pos
+      have hctlt : ct < 1 := by rw [← hcos_theta]; exact htheta_cos_lt_one
+      have hprod : 0 < ct * (1 - ct) :=
+        mul_pos hctpos (by linarith only [hctlt])
+      nlinarith only [htrig, hprod]
     have hcos_eta_lt_sin : Real.cos eta < Real.sin theta := by
       have hsintheta : 0 < Real.sin theta :=
         Real.sin_pos_of_pos_of_lt_pi htheta_pos htheta_lt_pi
-      rw [← sq_lt_sq₀ (le_of_lt hcos_eta) hsintheta.le]
-      rw [hhalf_ratio] at hcos_sq_bound
-      exact hcos_sq_bound.trans hsin_sq_bound
+      apply (sq_lt_sq₀ hcos_eta.le hsintheta.le).mp
+      calc
+        Real.cos eta ^ 2 < 2 * t / (1 + t) := hcos_sq_bound
+        _ = 1 - ct := hhalf_ratio
+        _ < Real.sin theta ^ 2 := hsin_sq_bound
     have htarget : Real.pi / 2 - theta < eta := by
       by_contra hn
       have hle : eta ≤ Real.pi / 2 - theta := le_of_not_gt hn
