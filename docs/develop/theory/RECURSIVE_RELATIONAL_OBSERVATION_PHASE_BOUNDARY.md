@@ -84257,3 +84257,552 @@ $$
 正性、Lagrange插值和Schur补都是这里直接使用的有限维工具；具体构造与所有极限已给出完整证明，不据其组合宣称外部文献原创性。近核向量、矩阵系数与完整数据是数学约束，未被解释为实验中免费取得的经典读数；有限副本或时间成本需要另设来源与访问合同。
 
 ## 追加锚（本行以下为增补区）
+
+## 270. 单Jordan唯一来源在固定重置接口上的四倍维数副本指数
+
+§269给出了参考维数为 $n$ 的单Jordan来源及其最优局部逆指数 $1/(2n)$。本节把同一匹配来源族交给固定的实际重置仪器，计算已知二元判别所需的独立副本数。重置前开放全部输入与参考时，预算为 $h^{-2}$ 阶；只开放完整重置输出时，预算为 $h^{-4n}$ 阶。两下界都允许任意集体终端测量。
+
+这一结论需要直接核对来源支撑与实际输出分布。单副本源迹距为一阶并不足以确定输入预算；来源的二阶支撑泄漏和二阶保真度损失共同给出输入结论。输出下界则保留所有实际记录与完整参考，不把理想响应矩阵当成一份实验直接提供的读数。
+
+### 270.1 固定来源、仪器与成功合同
+
+固定 $n\ge1$、$t=1/4$，取§268的实对称正定解
+$$
+Je_1=0,\qquad Je_j=e_{j-1}\quad(j\ge2),\qquad M=I_n+tJ,
+$$
+$$
+Q+M^\dagger QM=I_n,\qquad
+\frac7{23}I_n\preceq Q\preceq\frac{16}{23}I_n.
+\tag{270.1}
+$$
+在固定输入 $Y$ 本征基下，令
+$$
+Z=2QM,\qquad
+T_*=
+\begin{pmatrix}
+Q&QM\\M^\dagger Q&I_n-Q
+\end{pmatrix},
+\qquad
+\Omega_*=\frac1nT_*.
+\tag{270.2}
+$$
+输入 $H$ 为qubit，参考为 $E=\mathbb C^n$，完整数据映射为
+$$
+\rho_\Omega=\operatorname{Tr}_H\Omega,\qquad
+\mathscr K(\Omega)=2\Omega_{+-}.
+\tag{270.3}
+$$
+
+采用§269式（269.32）—（269.43）的同一常数与矩阵。为避免与仪器符号记录混淆，本节将（269.40）中的正数 $s$ 记作 $a>0$；因此 $C=aC_0$、$C_{nn}=a$，而 $k=ak_0>0$。定义
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,\qquad \delta_h=kh^{2n},
+$$
+$$
+\Omega_h=\frac1n
+\begin{pmatrix}
+Q+D_h&(1-\delta_h)QM\\
+(1-\delta_h)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{270.4}
+$$
+§269的精确Schur缩放证明给出 $h_0>0$，可取 $h_0\le1$，使所有 $0<h\le h_0$ 均满足 $\Omega_h\succ0$、$0<\delta_h<1$。同时
+$$
+\rho_h=\rho_*=\frac1nI_n,\qquad
+K_h=(1-\delta_h)K_*,
+\qquad K_*=\frac1nZ.
+\tag{270.5}
+$$
+理想来源 $\Omega_*$ 秩为 $n$，竞争来源秩为 $2n$；$n\ge2$ 时理想来源混合。§269式（269.59）—（269.60）还给
+$$
+\frac{2a}{n}h
+\le\|\Omega_h-\Omega_*\|_1
+\le\frac{2\|C\|_1+k\|Z\|_1}{n}h.
+\tag{270.6}
+$$
+
+固定§253的 $45^\circ$ 重置仪器：
+$$
+A_a=\frac{Z_H+X_H}{\sqrt2},\qquad
+A_b=\frac{Z_H-X_H}{\sqrt2},
+$$
+$$
+E_{w,\eta}=\frac{I_2+\eta A_w}{4},
+\qquad w\in\{a,b\},\quad\eta\in\{+1,-1\}.
+\tag{270.7}
+$$
+四个效应正半定且和为 $I_2$。量子输出统一重置为同一纯态 $P_{\mathrm{reset}}$；所有实际记录 $(w,\eta)$ 与完整参考 $E$ 均保留。
+
+未知假设 $j\in\{*,h\}$ 以等先验选定，此后提供 $m$ 份同一来源的独立副本。两种接口分别开放：
+
+- 重置前的全部联合来源 $\Omega_j^{\otimes m}$。
+- 固定仪器逐份独立作用后的完整输出 $\sigma_j^{\otimes m}$，其中 $\sigma_j=(\mathcal S_p\otimes\operatorname{id}_E)(\Omega_j)$。
+
+两接口都允许任意集体POVM、辅助处理和自适应终端测量。输出接口不开放原输入、额外设置种子或其隐藏副本，也不允许改换仪器查询其他方向。来源与通道没有共享的未建模记忆。
+
+令 $N_{\mathrm{in}}(h)$、$N_{\mathrm{out}}(h)$ 为等先验平均错误率不超过 $1/3$ 所需的最小固定整数副本数。方案知道 $h$、来源族和仪器；这里不是未知幅度的复合检验或随机停止的期望样本数。
+
+沿用
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1,\qquad
+\mathsf F(\tau,\omega)=\|\sqrt\tau\sqrt\omega\|_1
+\tag{270.8}
+$$
+作为半迹距离和未平方的根保真度。下文的常数与充分小区间均可依赖固定实例。
+
+### 270.2 一阶跨支撑变化强制二阶支撑泄漏
+
+令 $P$ 为 $\Omega_*$ 的支撑投影，$R=I-P$。由§268，
+$$
+\operatorname{ran}R
+=\operatorname{span}\{q_1,\ldots,q_n\},
+\qquad q_j=(-Me_j,e_j).
+\tag{270.9}
+$$
+记
+$$
+B=\operatorname{diag}(E_{nn},-E_{nn}),
+\qquad V=\frac anB.
+\tag{270.10}
+$$
+因为
+$(D_h)_{ij}=C_{ij}h^{2n-i-j+1}$、$C_{nn}=a$，且 $\delta_h=O(h^2)$，存在固定 $A_2\ge1$，使
+$$
+\boxed{
+\Omega_h-\Omega_*=hV+G_h,\qquad
+\|G_h\|_{\mathrm{HS}}\le A_2h^2
+\quad(0<h\le h_0).
+}
+\tag{270.11}
+$$
+这是有限矩阵多项式的余项界；$n=1$ 时非对角扰动仍是二阶。
+
+首先，核内一阶块严格为零。$M^\dagger E_{nn}M=E_{nn}$ 给
+$$
+q_i^\dagger Bq_j
+=e_i^\dagger(M^\dagger E_{nn}M-E_{nn})e_j=0,
+\qquad RVR=0.
+\tag{270.12}
+$$
+但是跨支撑的一阶块非零：
+$$
+Vq_n=-\frac an(e_n,e_n)\ne0.
+\tag{270.13}
+$$
+这个向量属于 $\operatorname{ran}P$，因为 $M^\dagger e_n=e_n$，从而它与每个 $q_j$ 正交。因此
+$$
+\beta:=\|PVR\|_{\mathrm{HS}}>0.
+\tag{270.14}
+$$
+
+定义理想支撑外质量
+$$
+\ell_h=\operatorname{Tr}(R\Omega_h).
+\tag{270.15}
+$$
+由（270.11）—（270.12）与 $\operatorname{rank}R=n$，
+$$
+0\le\ell_h=\operatorname{Tr}(RG_h)
+\le\sqrt n\,A_2h^2.
+\tag{270.16}
+$$
+
+为证明匹配下界，令
+$$
+\Lambda=\Omega_*\big|_{\operatorname{ran}P},
+\qquad \mu=\lambda_{\min}(\Lambda)>0,
+\qquad
+A_h=P\Omega_hP\big|_{\operatorname{ran}P}.
+\tag{270.17}
+$$
+充分小的 $h$ 满足 $A_h\succeq(\mu/2)I$，并且
+$$
+\|P\Omega_hR\|_{\mathrm{HS}}
+=\|hPVR+PG_hR\|_{\mathrm{HS}}
+\ge\frac\beta2h.
+\tag{270.18}
+$$
+后一个不等式只需再取 $h\le\beta/(2A_2)$。
+
+在分解 $\operatorname{ran}P\oplus\operatorname{ran}R$ 中，$\Omega_h\succeq0$ 的Schur补给
+$$
+R\Omega_hR
+\succeq(R\Omega_hP)A_h^{-1}(P\Omega_hR).
+\tag{270.19}
+$$
+$\Omega_h$ 为密度态，所以 $A_h\preceq I$、$A_h^{-1}\succeq I$。取迹得到
+$$
+\ell_h\ge\|P\Omega_hR\|_{\mathrm{HS}}^2
+\ge\frac{\beta^2}{4}h^2.
+\tag{270.20}
+$$
+
+**引理270.1（支撑泄漏的精确阶）。** 存在 $h_1\in(0,h_0]$ 与固定常数 $b_-,b_+>0$，使
+$$
+\boxed{
+b_-h^2\le\ell_h\le b_+h^2
+\qquad(0<h\le h_1).
+}
+\tag{270.21}
+$$
+可取 $b_-=\beta^2/4$、$b_+=\sqrt n\,A_2$，并将 $h_1$ 缩小到上述压缩和交叉块估计同时成立。核内一阶项为零与跨支撑一阶项非零，两者在这个推导中承担不同作用。
+
+### 270.3 未归一化压缩给出二阶保真度损失
+
+$\sqrt{\Omega_*}$ 在 $\operatorname{ran}R$ 上为零，因此
+$$
+\mathsf F(\Omega_*,\Omega_h)
+=\mathsf F(\Lambda,A_h)
+=\operatorname{Tr}\sqrt{\sqrt\Lambda A_h\sqrt\Lambda}.
+\tag{270.22}
+$$
+这里 $\operatorname{Tr}A_h=1-\ell_h$；不能把 $A_h$ 重新归一化而删掉支撑损失。
+
+置 $A_1=\|V\|_{\mathrm{HS}}+A_2$。因 $h_1\le1$，
+$$
+\|A_h-\Lambda\|_{\mathrm{HS}}\le A_1h.
+\tag{270.23}
+$$
+对 $\Lambda\succeq\mu I$、$A_h\succeq(\mu/2)I$，平方根满足
+$$
+\|\sqrt\Lambda-\sqrt{A_h}\|_{\mathrm{HS}}
+\le
+\frac{\|\Lambda-A_h\|_{\mathrm{HS}}}
+{\sqrt\mu+\sqrt{\mu/2}}.
+\tag{270.24}
+$$
+为直接证明这一估计，令 $X=\sqrt\Lambda-\sqrt{A_h}$，则
+$$
+\sqrt\Lambda X+X\sqrt{A_h}=\Lambda-A_h.
+\tag{270.25}
+$$
+分别取两平方根的正交本征基，矩阵单位组成的HS正交基使左边的Sylvester算子对角化；每个本征值都是两个正平方根本征值之和，至少为 $\sqrt\mu+\sqrt{\mu/2}$。因此得到（270.24），无需两矩阵交换。
+
+$\operatorname{Tr}(\sqrt\Lambda\sqrt{A_h})$ 为非负实数，而迹范数至少为迹的绝对值。于是
+$$
+\begin{aligned}
+\mathsf F(\Lambda,A_h)
+&\ge\operatorname{Tr}(\sqrt\Lambda\sqrt{A_h})\\
+&=\frac{\operatorname{Tr}\Lambda+\operatorname{Tr}A_h
+-\|\sqrt\Lambda-\sqrt{A_h}\|_{\mathrm{HS}}^2}{2}\\
+&\ge1-\frac{B_F}{2}h^2,
+\end{aligned}
+\tag{270.26}
+$$
+其中
+$$
+B_F=b_++
+\frac{A_1^2}{(\sqrt\mu+\sqrt{\mu/2})^2}<\infty.
+\tag{270.27}
+$$
+另一方面，Schatten Cauchy不等式给
+$$
+\mathsf F(\Lambda,A_h)^2
+\le\operatorname{Tr}\Lambda\,\operatorname{Tr}A_h
+=1-\ell_h.
+\tag{270.28}
+$$
+
+**引理270.2（源根保真度的二阶损失）。** 对 $0<h\le h_1$，
+$$
+\boxed{
+b_-h^2
+\le1-\mathsf F(\Omega_*,\Omega_h)^2
+\le B_Fh^2.
+}
+\tag{270.29}
+$$
+**证明。** 下界由（270.21）、（270.28）。由 $0\le\mathsf F\le1$，
+$1-\mathsf F^2\le2(1-\mathsf F)$，再用（270.26）得上界。$\square$
+
+因此 $1-\mathsf F=\Theta(h^2)$。尽管所有 $h>0$ 的竞争态满秩，理想态只有秩 $n$；相对熵 $D_{\mathrm{nat}}(\Omega_h\|\Omega_*)=+\infty$。输入副本下界使用保真度，未套用这个方向的有限相对熵估计。
+
+### 270.4 输入端的集体下界与逐次上界
+
+根保真度张量乘性和归一化态的迹距—保真度界给
+$$
+\begin{aligned}
+d(\Omega_*^{\otimes m},\Omega_h^{\otimes m})^2
+&\le1-\mathsf F(\Omega_*,\Omega_h)^{2m}\\
+&\le m\bigl(1-\mathsf F(\Omega_*,\Omega_h)^2\bigr)\\
+&\le mB_Fh^2.
+\end{aligned}
+\tag{270.30}
+$$
+等先验Helstrom公式要求成功率至少 $2/3$ 时半迹距离至少为 $1/3$。所以
+$$
+\boxed{
+N_{\mathrm{in}}(h)\ge\frac1{9B_Fh^2}.
+}
+\tag{270.31}
+$$
+该界覆盖所有输入与参考上的任意集体终端测量。
+
+逐份测量 $\{P,R\}$，只要有一次落在理想支撑外就判 $h$，否则判 $*$。理想假设下点击概率为零，竞争假设下每份点击概率为 $\ell_h$，故平均成功率为
+$$
+1-\frac12(1-\ell_h)^m
+\ge1-\frac12e^{-m\ell_h}.
+\tag{270.32}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{\ell_h}\right\rceil
+\le\left\lceil\frac{\ln(3/2)}{b_-h^2}\right\rceil.
+}
+\tag{270.33}
+$$
+该协议在理想假设下无错误，在另一假设下的错误率可达 $2/3$；它满足的是已经固定的等先验平均错误率目标。上下界共同给出 $N_{\mathrm{in}}=\Theta(h^{-2})$。
+
+### 270.5 全部重置输出具有共同严格正支撑
+
+省略共同纯重置因子，实际输出为
+$$
+\sigma_j=\bigoplus_{w,\eta}
+\frac{\rho_*+\eta R_w^{(j)}}4.
+\tag{270.34}
+$$
+由固定坐标关系 $K=R_Z-iR_X$，
+$$
+R_Z=\frac{K_*+K_*^\dagger}{2},\qquad
+R_X=\frac{K_*^\dagger-K_*}{2i},
+$$
+$$
+R_a=\frac{R_Z+R_X}{\sqrt2},\qquad
+R_b=\frac{R_Z-R_X}{\sqrt2}.
+\tag{270.35}
+$$
+若 $\phi_a=\pi/4$、$\phi_b=-\pi/4$，并记
+$\operatorname{Re}X=(X+X^\dagger)/2$，则
+$$
+R_w=\frac1n\operatorname{Re}(e^{i\phi_w}Z),
+\qquad
+R_w^{(h)}=(1-\delta_h)R_w.
+\tag{270.36}
+$$
+
+为证明理想输出严格正，使用§268的矩阵谱因子
+$$
+\mathcal P(\zeta)=Q^{1/2}(I+\zeta M),
+$$
+$$
+\mathcal P(\zeta)^\dagger\mathcal P(\zeta)
+=I+\operatorname{Re}(\zeta Z)
+\quad(|\zeta|=1),
+$$
+$$
+\det\mathcal P(\zeta)=\det(Q^{1/2})(1+\zeta)^n.
+\tag{270.37}
+$$
+四个 $\zeta=\eta e^{i\phi_w}$ 都不等于 $-1$，所以谱因子可逆，从而
+$$
+\boxed{
+\frac{\rho_*+\eta R_w}{4}
+=\frac1{4n}
+\mathcal P(\eta e^{i\phi_w})^\dagger
+\mathcal P(\eta e^{i\phi_w})
+\succ0.
+}
+\tag{270.38}
+$$
+竞争输出块是这个理想块与 $I_n/(4n)$ 的凸组合，故同样严格正。这里的严格正性指省略共同纯重置因子后的 $4n$ 维有效支撑，不要求在无用纯态正交补上全秩。
+
+每个固定记录块内，$\rho_*=I_n/n$，两假设都是同一个 $R_w$ 的仿射函数，所以它们同时对角化。不同记录块彼此正交，故完整 $\sigma_*,\sigma_h$ 交换；这不要求 $R_a$ 与 $R_b$ 彼此交换。
+
+### 270.6 完整输出的相对熵与任意集体测量下界
+
+令 $\lambda_{w,i}$，$1\le i\le n$，为
+$\operatorname{Re}(e^{i\phi_w}Z)$ 的本征值。（270.38）给 $|\lambda_{w,i}|<1$。全部记录与参考上的 $4n$ 项概率为
+$$
+p_{w,\eta,i}=\frac{1+\eta\lambda_{w,i}}{4n},
+\qquad
+p_{w,\eta,i}^{(h)}
+=\frac{1+\eta(1-\delta_h)\lambda_{w,i}}{4n}.
+\tag{270.39}
+$$
+它们均严格正，两组各自求和为一。
+
+利用 $\ln x\le x-1$，
+$$
+\begin{aligned}
+D_{\mathrm{nat}}(\sigma_h\|\sigma_*)
+&\le
+\sum_{w,\eta,i}
+\frac{(p_{w,\eta,i}^{(h)}-p_{w,\eta,i})^2}{p_{w,\eta,i}}\\
+&=\Gamma_n\delta_h^2,
+\end{aligned}
+\tag{270.40}
+$$
+其中
+$$
+\boxed{
+\Gamma_n=\frac1{2n}
+\sum_{w\in\{a,b\}}\sum_{i=1}^n
+\frac{\lambda_{w,i}^2}{1-\lambda_{w,i}^2}.
+}
+\tag{270.41}
+$$
+这是求和两种符号后得到的精确 $\chi^2$ 系数。它有限且严格正：§268给 $e_1^\dagger Ze_1=1$，所以每个
+$\operatorname{Re}(e^{i\phi_w}Z)$ 在 $e_1$ 上的二次型均为 $1/\sqrt2$，至少有一个非零本征值。
+
+同一分布还给
+$$
+\|\sigma_h-\sigma_*\|_1
+=\frac{\delta_h}{2n}\sum_{w,i}|\lambda_{w,i}|
+=\Theta(\delta_h).
+\tag{270.42}
+$$
+副本下界使用更强的散度控制（270.40）。
+
+若 $m$ 份输出的等先验平均成功率达到 $2/3$，Helstrom公式、自然对数Pinsker不等式和相对熵张量加性给
+$$
+\begin{aligned}
+\frac49
+&\le\|\sigma_h^{\otimes m}-\sigma_*^{\otimes m}\|_1^2\\
+&\le2mD_{\mathrm{nat}}(\sigma_h\|\sigma_*)\\
+&\le2m\Gamma_n\delta_h^2.
+\end{aligned}
+\tag{270.43}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\ge\frac{2}{9\Gamma_n\delta_h^2}
+=\frac{2}{9\Gamma_nk^2}h^{-4n}.
+}
+\tag{270.44}
+$$
+所有实际记录和完整参考都已进入这个下界。任意辅助处理或自适应终端判决仍定义开放联合输出上的二元POVM，因此也受同一界限制。
+
+### 270.7 实际符号的均值变化达到相同副本阶
+
+逐份只读取实际符号 $\eta$。记其理想均值为
+$$
+c=\frac{\operatorname{Tr}R_a+\operatorname{Tr}R_b}{2}
+=\frac{\operatorname{Tr}R_Z}{\sqrt2}
+=\frac{\sqrt2}{n}\operatorname{Tr}(QM).
+\tag{270.45}
+$$
+最后一个等式使用 $Q$ 实对称、$M$ 实，故
+$\operatorname{Tr}(M^\dagger Q)=\operatorname{Tr}(QM)$。
+
+这个均值严格正。事实上
+$$
+\operatorname{Tr}(QM)
+=\operatorname{Tr}\left(Q\,\frac{M+M^\dagger}{2}\right),
+$$
+$$
+\frac{M+M^\dagger}{2}
+=I+\frac t2(J+J^\dagger)
+\succeq(1-t)I=\frac34I.
+\tag{270.46}
+$$
+因此 $\operatorname{Tr}(QM)\ge(3/4)\operatorname{Tr}Q>0$。所有符号概率严格正又给 $c<1$。
+
+两假设下实际符号的均值和方差满足
+$$
+\mathbb E_*\eta=c,\qquad
+\mathbb E_h\eta=(1-\delta_h)c,\qquad
+\operatorname{Var}_j(\eta)\le1.
+\tag{270.47}
+$$
+取 $m$ 份独立符号的样本均值，以 $c(1-\delta_h/2)$ 为阈值：超过阈值判 $*$，否则判 $h$。两均值距阈值均为 $c\delta_h/2$。Chebyshev不等式给每一侧错误率
+$$
+P_j(\text{判错})\le\frac4{mc^2\delta_h^2}.
+\tag{270.48}
+$$
+所以
+$$
+\boxed{
+N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2\delta_h^2}\right\rceil
+=\left\lceil\frac{12}{c^2k^2}h^{-4n}\right\rceil.
+}
+\tag{270.49}
+$$
+该协议使用真实符号记录。上界可以忽略已开放的 $w$ 和参考；下界仍保留了全部输出。
+
+### 270.8 一维参考端点
+
+$n=1$ 时 $J=0$、$M=1$、$Q=1/2$。§269的常数成为
+$$
+a=\frac1{16},\qquad k=\frac1{64},\qquad \delta_h=\frac{h^2}{64},
+$$
+$$
+\Omega_*=\frac12
+\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+\Omega_h=
+\begin{pmatrix}
+1/2+h/16&(1-h^2/64)/2\\
+(1-h^2/64)/2&1/2-h/16
+\end{pmatrix}.
+\tag{270.50}
+$$
+对 $0<h\le1$，
+$$
+\det\Omega_h=\frac{h^2}{256}-\frac{h^4}{16384}>0.
+\tag{270.51}
+$$
+理想支撑为 $(1,1)/\sqrt2$，因此
+$$
+\ell_h=\frac{h^2}{128},\qquad
+\mathsf F(\Omega_*,\Omega_h)^2=1-\frac{h^2}{128}.
+\tag{270.52}
+$$
+输入仍具有二阶保真度损失。输出满足
+$$
+\lambda_a=\lambda_b=\frac1{\sqrt2},
+\qquad \Gamma_1=1,\qquad c=\frac1{\sqrt2}.
+\tag{270.53}
+$$
+故输入预算为 $\Theta(h^{-2})$，输出预算为 $\Theta(h^{-4})$，与 $4n=4$ 一致。这个端点的理想来源是纯态；混合来源结论从 $n=2$ 开始。
+
+### 270.9 同一来源族的二次方与四倍维数预算
+
+**定理270.3（单Jordan来源的实际访问代价）。** 对每个固定 $n\ge1$，采用（270.1）—（270.7）的来源和仪器，以及§270.1的等先验独立副本合同。存在 $h_1>0$ 与固定有限正常数 $b_-,B_F,\Gamma_n,c,k$，使所有 $0<h\le h_1$ 满足
+$$
+\boxed{
+\frac1{9B_Fh^2}
+\le N_{\mathrm{in}}(h)
+\le\left\lceil\frac{\ln(3/2)}{b_-h^2}\right\rceil,
+}
+\tag{270.54}
+$$
+$$
+\boxed{
+\frac{2}{9\Gamma_nk^2}h^{-4n}
+\le N_{\mathrm{out}}(h)
+\le\left\lceil\frac{12}{c^2k^2}h^{-4n}\right\rceil.
+}
+\tag{270.55}
+$$
+因此
+$$
+\boxed{
+N_{\mathrm{in}}(h)=\Theta(h^{-2}),\qquad
+N_{\mathrm{out}}(h)=\Theta(h^{-4n})
+\quad(h\downarrow0).
+}
+\tag{270.56}
+$$
+
+**证明。** 输入两界为（270.31）、（270.33）；输出两界为（270.44）、（270.49）。全部系数对固定实例有限且严格正，取整不改变渐近阶。$\square$
+
+以同一来源对的半迹距离 $d_h=\|\Omega_h-\Omega_*\|_1/2$ 表示，（270.6）给 $d_h=\Theta(h)$，故同样有
+$$
+N_{\mathrm{in}}=\Theta(d_h^{-2}),\qquad
+N_{\mathrm{out}}=\Theta(d_h^{-4n}).
+\tag{270.57}
+$$
+两端副本预算之比为 $\Theta(h^{-(4n-2)})$。
+
+来源的一阶变化包含非零跨支撑块；PSD性将它转化为二阶可检测支撑质量。固定重置仪器只留下 $h^{2n}$ 阶的响应变化，而其完整理想输出在共同支撑上严格正，式（270.40）把该变化转化为 $h^{4n}$ 阶的散度。理想完整数据的唯一性与有限取得预算由此相容。
+
+标准判别工具使用 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)：Theorem 3.4给Holevo–Helstrom界，Theorem 3.33给归一化态的根保真度—迹距界，Theorem 5.38给Pinsker不等式。该书相对熵以二为底；换成自然对数后得到本文的 $\|\tau-\omega\|_1^2\le2D_{\mathrm{nat}}(\tau\|\omega)$。本节的支撑泄漏、完整输出系数与逐次协议均由同一实际实现计算，不据此宣称外部文献原创性。
+
+这些常数和充分小区间可依赖固定参考维数与来源实例，不声称跨维数一致。结论针对已知二元来源族，不是任意来源层析或未知幅度检验。副本数也不直接给出物理历时；制备速率、每份处理时间和并行规则仍须另行指定。
+
+## 追加锚（本行以下为增补区）
