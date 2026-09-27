@@ -54034,3 +54034,467 @@ Gaussian Fourier 恒等式、Cauchy 变形、解析隐函数、端点与鞍点�
 本章不判定固定区域之外的零点分支、鞍点合并、首次 Stokes 转换或全局最近零点。原始低元组、取整、外部标签、实际非中心量与同一份噪声保留在共同数组中。第 160、162、164 章的区域／总量及分隔参数边界保持原范围；这里不把依赖人工分隔的区域零点提升为总量零点。有限区域的新证明不构成全球原创或文献检索穷尽声明。
 
 ## 追加锚（本行以下为增补区）
+
+## 178. 计数线之外的校准随机性：完整选择后验的精确间距与自适应截距小球界
+
+保持所有计数线上的重数 $C_j$ 不变，并不固定完整选择后验的校准量。本章在原始标签中构造一个与计数线分离的标签池：条件于合法揭示的信息，其类别总数是精确二项变量；每增加一个类别，完整后验的同一外部校准量下降一个介于 $c_p/q$ 与 $C_p/q$ 之间的量。该间距是精确有限差分，因而可直接控制任意预先可测区间中的原子概率。
+
+对原始 $\beta\ge2/3$，这个条件小球界排除一类此前未控制的大约化整数生成事件：$|J|$ 足够大，而实际有理截距 $m_0/J$ 的约化分母处于所给范围。法向量仍可依赖同一批隐藏标签；证明对可能的有理值取确定性并集。更小的 $|J|$ 或更大的截距分母仍缺概率界，完整物理带宽结论仍保留原范围。以下为普通数学推导，未作 Lean 认证。
+
+### 178.1 原始参数与精确校准的小球结论
+
+Keep lambda=Q^3, the original beta in(1/2,1), its prescribed Liouville amplitude r, and
+
+$$
+ A_s=\log(1+r)>0,\quad B_s=\log(1-r),\quad
+ \phi=((1+r)A_s+(1-r)B_s)/2,
+$$
+$$
+ c_q=\phi(1-\beta)/\beta,\quad c_M=c_q+\phi,\quad
+ \kappa=c_q/1000,\quad\gamma=c_q/2-5\kappa=99c_q/200.
+ \tag{178.1}
+$$
+
+Thus log q=c_q lambda+O(1), log M=c_M lambda+O(1), with the unchanged floors. As in Chapter 165 fix
+
+$$
+ \gamma<c<3\gamma/2,\quad e=(3\gamma-2c)/8>0,
+ \quad a=\gamma-e,\quad\ell=2c-\gamma+3e,\quad h=e.
+ \tag{178.2}
+$$
+
+The high-band pair has the same negative-score totals, rate, full hidden-binomial kernel and exact outside laws nu_0,nu_1. Let p=nu_0(I_0) be its EXACT outside anchor inclusion probability, the p in 167.16 and 176.9.
+
+**定理 178.1（完整外部校准的离散间距、小球界与结构化生成事件）。** Under the stated conditions, the following conclusions hold.
+
+1. A disjoint reservoir of original raw labels, with n=floor(c_* exp(kappa lambda)/(2lambda^2)) eligible pairs up to the stated trial floor, admits an exact conditional Bin(n,theta_Q) switch count, theta_Q in[1/2,2/3]. Every switch lies OFF the original count line. Hence it leaves ALL count-line multiplicities C_j, including C_0,C_1, fixed while changing the full-q calibration.
+2. On a measurable enlargement of the original good event, p is a deterministic function p(v) of that binomial count, and for ALL0<=v<n,
+
+$$
+             c_p/q\le p(v)-p(v+1)\le C_p/q.
+ \tag{178.3}
+$$
+
+Here c_p,C_p>0 are fixed original-model constants. This is an exact finite-q inequality, not a derivative of an unquantified remainder or a statement for an auxiliary Gaussian posterior.
+3. Consequently for every interval I measurable before this switch count is revealed,
+
+$$
+ P_S\{p\in I\mid\mathcal F_{178}\}
+       \le {C(1+q|I|/c_p)\over\sqrt n}
+ \tag{178.4}
+$$
+
+on that measurable enlargement. A finite union of intervals costs the sum of these bounds. The law is atomic; no density or uniform phase is asserted. The enlargement's failure and supply/hidden-tail costs are paid under the original law, before this inequality is used.
+4. For original beta>=2/3, consider the actual B165 event, with its own generated primitive normal(m_0,u,v), actual integer J=uC_0+vC_1, opposite signs uv<0, and the SAME long interval, rank/determinant origin and all nine memberships. Put
+
+$$
+ J_{\rm big}=\lceil e^{(c_q-\gamma)\lambda}\rceil,
+ \quad D_{\rm int}=\lfloor e^{\kappa\lambda/8}\rfloor,
+ \quad d_{\rm int}(m_0,J)={|J|\over\gcd(|m_0|,|J|)}.
+ \tag{178.5}
+$$
+
+Then the part satisfying |J|>=J_big and d_int(m_0,J)<=D_int has probability at most
+
+$$
+ b_{178}(Q)+\exp[-\kappa\lambda/4+O_c(\log Q)]=o(1).
+ \tag{178.6}
+$$
+
+The explicitly accounted b_178 comprises original regularity/enlargement/anchor failures, joint reservoir/pool supply failure and the selected high-pair hidden tail. This is an original-law bound for a part of the remaining LARGE-reduced-J event; its normal may depend on the same calibration switches. It is not a bound for all of 176.21.
+
+The full physical theorem remains proved only in Chapter 163's 0<c<gamma range. Chapter 165's conditional interface, the scopes of Chapters 167, 170 and 173 and Chapter 176's primitive-line estimate remain unchanged. No physical refutation, threshold, endpoint, optimality or global-originality claim is made.
+
+### 178.2 保持全部计数线读数的线外标签池
+
+Use the same k_0=floor((1+r)lambda/2), l_0=lambda-k_0 and count line(k_j,l_j)=(k_0+jQ,l_0+jP_n). The exact compensated slopes are
+
+$$
+ a_s=\log\frac{1+r}{1-\epsilon_M},\quad
+ b_s=\log\frac{1-r}{1+\epsilon_M},\quad
+ \epsilon_M={rq\over M-q}.
+ \tag{178.7}
+$$
+
+Eventually A_s/2<=a_s<=2A_s. Choose ONCE a deterministic integer
+
+$$
+ D_*\ge\max\{3,\lceil2(\log10+2)/A_s\rceil\}.
+ \tag{178.8}
+$$
+
+It depends only on the prescribed fixed amplitude. It is not chosen from a favorable data calibration and does not change the amplitude. Define k_*=k_0-D_*, l_*=l_0 and L_*=L_0 exp(-D_*a_s). For sufficiently large Q all these counts and their unit shifts are positive. Predetermine a new disjoint block of m_c=floor(exp(kappa lambda)) true-label pairs, in the fixed ordering of each deterministic true support.
+
+An eligible pair has total counts(2k_*,2l_*) and one of the three ordered count allocations
+
+$$
+ ((k_*,l_*),(k_*,l_*)),\quad
+ ((k_*+1,l_*),(k_*-1,l_*)),\quad
+ ((k_*-1,l_*),(k_*+1,l_*)).
+ \tag{178.9}
+$$
+
+Call the first category0 and the two orientations of the second category1. Their likelihood products are ALL L_*^2. The category0 sum is2L_* and category1 sum is2L_* cosh(a_s), a fixed-scale contrast, not the exponentially small cosh(Delta_Q)-1 contrast in 173. The pair weights are respectively(L_*,L_*) and(L_*exp(a_s),L_*exp(-a_s)).
+
+None of these labels belongs to ANY original count-line row: its second count is l_0, so jP_n=0 would force j=0, whereas its first count is one of k_0-D_*,k_0-D_*+1,k_0-D_*-1, all different from k_0. Here P_n>0 eventually. Thus changing any category or orientation preserves every C_j exactly. The labels remain in the full physical array and posterior. They are not discarded as “outside” coordinates.
+
+Keep Chapter 173's two count reservoirs, Chapter 170's optional gcd block, all finite low-band rare-total blocks and Chapter 165's high-band rare-total block disjoint from this one. Their combined trial count is2m_173+m_r+m_c, where log m_173=(c_q-kappa)lambda+O(1) and log m_r<=(67/68)c_q lambda+O_c(log Q), including the smaller 170 block. Hence the total labels are o(q/Q^3). There is room on the original support and central anchors remain outside all trial blocks on the original occupancy event. All counts, rates and selected views refer to ONE actual array.
+
+The new supply is elementary. For a_0=(1+r)/2,b_0=(1-r)/2, each of k_* and k_*+/-1 differs from a_0 lambda by at most D_*+2, and l_* differs from b_0 lambda by at most1. The compact near-mean Poisson bound already justified in 173 gives, eventually,
+
+$$
+ P\{\mathrm{Pois}(v_0\lambda)=k\}\ge d_{v_0}\lambda^{-1/2},
+ \quad d_{v_0}=(9\sqrt{2v_0})^{-1},\quad v_0\in\{a_0,b_0\}.
+ \tag{178.10}
+$$
+
+Indeed lambda[z log(z/v_0)-z+v_0]<=(k-v_0lambda)^2/(v_0lambda)<=1 eventually and k!<=3sqrt(k)(k/e)^k supplies that bound. D_* only changes how large Q must be; there is no displaced cubic-score rate hidden here. Set c_*=min(1/2,d_a0^2d_b0^2) and
+
+$$
+ n=\left\lfloor{c_*m_c\over2\lambda^2}\right\rfloor,
+ \qquad\log n=\kappa\lambda-6\log Q+O_r(1).
+ \tag{178.11}
+$$
+
+One specified category0 allocation already has probability at least c_*lambda^-2 in the common independent-Poisson comparison. The chance of fewer than n eligible pairs in that comparison is at most exp[-c_*m_c/(8lambda^2)]. The original joint comparison 155 is applied ONCE to all predetermined labels and costs at most
+
+$$
+ E_{\rm occ}=8(2m_{173}+m_r+m_c)/M
+                  +\sqrt{48(2m_{173}+m_r+m_c)/M}=o(1).
+ \tag{178.12}
+$$
+
+It controls bounded supply events unconditionally. It is not conditioned forward on eligibility, rare totals, or a good split. Add this new supply term to the old two-reservoir supply and finite rare-pool exp(-Q^2) terms; call their sum with(178.12) b_sup. No extra m-dependent local expansion error appears.
+
+### 178.3 合法条件二项核与可测良性事件
+
+The exact pair/path disintegrations are the same ones established in 155/170/173. Conditional on the whole parity record, the departure slots are independent choices within their parity classes, with weights[1+b_S(i)s_next]/M. Pair arrivals have the permitted independent uniform factors; a stationary path has the independent uniform terminal factor. Altering a departure label within its class preserves the predecessor's parity argument. Thus path rows are not replaced by iid rows.
+
+Reveal all trial masks and totals, outside labels, and the permitted pair arrivals or path terminal label. Inside each predetermined true-label pair the slot weights coincide, so the hidden count allocations are joint fair-binomial splits. Reveal eligibility flags for(178.9), all ineligible allocations and all but the first n eligible pairs' allocations. In the new calibration view also reveal the high-band split and all other reservoir/proof-pair allocations. Let F_178 be this sigma-field. It fixes all C_j and the actual high-pair product and split, but leaves the n new category bits hidden.
+
+For each retained pair the ratio of ONE mixed orientation to the central allocation is exactly
+
+$$
+ R_Q={\binom{2k_*}{k_*+1}\over\binom{2k_*}{k_*}}
+       ={k_*\over k_*+1}.
+$$
+
+The l-coordinate factors cancel. Hence the category probability and kernel are
+
+$$
+ \theta_Q={2R_Q\over1+2R_Q}={2k_*\over3k_*+1}
+                 \in[1/2,2/3],\qquad
+ V\mid\mathcal F_{178}\sim\mathrm{Bin}(n,\theta_Q).
+ \tag{178.13}
+$$
+
+Conditional orientations are equiprobable. To justify the selection, condition first on the complete mask/total field. Its law is a finite product. Each eligibility restriction concerns one factor. Partition by every possible retained index set and integrate the factors subsequently revealed. The remaining factors are exactly the restricted kernels above; summing the partition proves the conditional identity against all F_178-measurable tests. There is no hidden-trial union or conditioning on a favorable category count. This argument remains valid jointly with the other proof views' product kernels.
+
+The exact symmetric coefficients, p and every count-line center depend on these n allocations only through V. Equal-category orientations and permutations of the identical pair factors have no effect. Every value0<=V<=n is lawful in the conditional fiber. The “all central” configuration V=0 is an exact positive reference array, not a typical-data assumption or a deleted-reservoir array.
+
+We require a coarse good field and must not condition the binomial law on hidden-dependent regularity. Here is a deterministic enlargement argument. For positive weights w_i define the unique multiplier t solving sum_i tw_i/(1+tw_i)=q. Existence and uniqueness follow from continuity, strict increase and limits0 and the number of labels, with0<q below that number. At any log multiplier u, the derivative of the mean is the sum of Bernoulli variances. Each variance at u+z is between exp(-|z|) and exp(|z|) times its value at u.
+
+Suppose one category configuration has calibrated variance at least d_*q and central-anchor auxiliary probability in[1/4,3/4], as on the inherited full-array good event. Replacing at most2n label weights changes the mean at that same multiplier by at most2n and its variance by at most n/2. On a log interval of length16n/(d_*q), the new variance stays at least d_*q/4 eventually. The intermediate value theorem then places every category configuration's root within16n/(d_*q) of the first root. The variance remains comparable q and the anchor odds stay in a fixed compact interval. These statements are simultaneous over ALL category choices, because the bounds use only the number of changed terms, not their identities or values. No union over2^n configurations is paid.
+
+Since n=o(q), define G_178 using the V=0 root: its variance exceeds a fixed reduced multiple of q and its anchor odds lie in a slightly enlarged compact interval. Include successful joint supply, existence of anchors outside all trials, the high pair's prescribed totals and |X_high|<=h lambda. These conditions are F_178-measurable. Choose the fixed enlarged constants so the original regularity event implies G_178, and G_178 implies for EVERY V, and after ANY three-label deletion used below,
+
+$$
+ D_o\asymp q,\qquad |\log(t_o L_0)|\le\log10,
+ \qquad p_o=t_oL_0/(1+t_oL_0)\in[1/11,10/11].
+ \tag{178.14}
+$$
+
+This is possible because the root shifts just proved tend to zero; the three-label deletion changes the mean by at most3 and its root by O(1/q). Variance upper bounds follow also from variance<=mean. The original bounds are strict after a fixed enlargement. The original high-score calibration remains -ell lambda+O(1) throughout this field: its likelihood relative to L_0 is fixed by its prescribed totals, while log(t_oL_0) remains bounded.
+
+Consequently
+
+$$
+ P_S(G_{178}^c)\le b_{\rm reg}+b_{\rm env}+b_{\rm occ}
+             +b_{\rm sup}+2e^{-2h^2\lambda/V_x}=b_{178}(Q)=o(1),
+ \tag{178.15}
+$$
+
+where V_x is the original fixed positive split-tail constant 165.11. It is sufficient to assign G_178 false on unsuccessful selections. The inequality is an unconditional implication from the original good array, plus the separately paid actual selected-split tail. It never replaces the conditional kernel by its law given an unobserved good event. The same proof and bounds hold in each raw experiment, uniformly in the fixed support.
+
+### 178.4 每次仅删三标签的完整选择校准间距
+
+First let P_a(v) be the exact FULL posterior inclusion probability of the central anchor, at category count v, including the actual revealed high pair and every other label. Compare configurations v and v+1 by changing just one eligible pair from category0 to category1, keeping everything else fixed. Delete that pair and the anchor for the analysis: EXACTLY three labels. All other n-1 new pairs, both old reservoirs, selected pairs and every physical outside label remain in the symmetric coefficients.
+
+Calibrate that common outside array to integer mean q-1, with multiplier t_o, variance D_o and a_3=kappa_3,o/D_o. Chapter 132's Bernoulli ratio, in the ONLY fixed offsets s in[-2,1], is
+
+$$
+ {P(N=q-1+s)\over P(N=q-1)}
+       =1-{s^2+a_3s\over2D_o}+O(D_o^{-2}).
+ \tag{178.16}
+$$
+
+Its constants are uniform over all Bernoulli parameter arrays with large variance; no trial-count/variance ratio or minimum individual probability is required. Its proof bounds fixed cumulants of order>=2 by C_jD_o, uses the Bernoulli modulus exp[-2D_o sin^2(t/2)], integrates the fixed fourth-order real expansion and divides a center bracket1+O(D_o^-1)>0. It is not an expansion with an order growing in Q or after deleting n pairs.
+
+For completeness, the exact ratio for the anchor is
+
+$$
+ P_a(X)={L_0\sum_{z=0}^2c_zE_{q-1-z}\over
+                   \sum_{z=0}^2c_z(E_{q-z}+L_0E_{q-1-z})},
+ \quad(c_0,c_1,c_2)=(1,2L_*\cosh X,L_*^2).
+ \tag{178.17}
+$$
+
+Every term is nonnegative, and the finite full-q denominator is positive. Under the auxiliary three omitted Bernoullis let Z be the anchor and U the pair occupancy. The outside offset is s=1-Z-U. The difference of s^2+a_3s at Z=1 versus0 is2U-1-a_3. Since EU=1+f_t(X), f_t(X)=sinh(t)/(cosh(t)+cosh X), t=log(t_oL_*), the covariance with Z and positive normalization give
+
+$$
+ P_a(X)=p_{\rm ref}-{v_o\over D_o}f_t(X)+O(q^{-2}),
+ \quad p_{\rm ref}=p_o+{v_o(a_3-1)\over2D_o},
+ \quad v_o=p_o(1-p_o).
+ \tag{178.18}
+$$
+
+This is the exact fixed-offset mechanism of 145.21–22 and 163.29. Positive averaging makes the remainder uniform in all positive pair odds. At the two configurations compared, t_o,D_o,p_ref are COMMON; the pair product has not changed. No derivative of the remainder is taken.
+
+By(178.8),(178.14), t=log(t_oL_0)-D_*a_s belongs to[-T_2,-1], where T_2=log10+2D_*A_s is a fixed constant. The two splits are X=0 and X=a_s, with A_s/2<=a_s<=2A_s. Therefore
+
+$$
+ f_t(a_s)-f_t(0)
+ ={(-\sinh t)(\cosh a_s-1)\over
+                (\cosh t+\cosh a_s)(\cosh t+1)}
+ \ge \eta_*:={\sinh1(\cosh(A_s/2)-1)\over
+                 (\cosh T_2+\cosh(2A_s))(\cosh T_2+1)}>0.
+ \tag{178.19}
+$$
+
+Also v_o>=10/121 and D_o<=q. Thus, subtracting(178.18) at the two splits, the main term is at most-eta_*/(20q), using a conservative smaller constant; the absolute difference of remainders is O(q^-2). For all sufficiently large Q, uniformly in v and the entire permitted outside array,
+
+$$
+       {\eta_*\over40q}\le P_a(v)-P_a(v+1)\le C/q.
+ \tag{178.20}
+$$
+
+The upper bound uses D_o>=c q and |f_t|<=1. We used the local expansion only to prove an EXACT finite difference of the exact ratio(178.17). There is no retained O(q^-2) error in the subsequent small-ball conclusion. Uniformity over all v comes from(178.14) and the uniform fixed-offset lemma, not from adding n approximation errors or a union of n failure probabilities.
+
+We need the exact OUTSIDE calibration p(v)=nu_0(I_0) for the high pair, not merely P_a(v). Apply Chapter 165's exact one-pair identity to that high pair, separately from the comparison above. With all new reservoir labels now retained in its outside array, set
+
+$$
+ C_v=E_q(v)+P_{\rm high}E_{q-2}(v),\quad D_v=E_{q-1}(v),
+ \quad\tau_v=2D_v\sqrt{P_{\rm high}}/C_v,\quad
+ t_v={\tau_v\cosh X_{\rm high}\over1+\tau_v\cosh X_{\rm high}}.
+$$
+
+These denominators are strictly positive: the likelihoods are positive, and q,q-1,q-2 lie in the interior coefficient range. Exactly
+
+$$
+             P_a(v)=p(v)+d(v)t_v,\qquad
+             d(v)=\nu_1(I_0)-\nu_0(I_0).
+ \tag{178.21}
+$$
+
+On G_178, fixed-offset ratios for the high-pair deletion and the same mean/variance bounds give tau_v<=C exp(-ell lambda). Also |d(v)|<=C/q uniformly. One may verify the latter using(178.18) with the HIGH pair and anchor deleted, comparing X=0 with the algebraic limit |X|→infinity: f_t is bounded, the error is O(q^-2), and the exact affine identity converts the difference to d(v)/(1+tau_v). Positive finite averaging licenses the limit; no probability at an unattainable split is asserted. The tau bound follows from E_q/E_{q-1}=t_o^-1(1+O(q^-1)), E_{q-2}/E_{q-1}=t_o(1+O(q^-1)) and log(t_o sqrt(P_high))=-ell lambda+O(1). No division by a small uncontrolled normalizer is used.
+
+Since the revealed actual high split obeys |X_high|<=h lambda,
+
+$$
+        |P_a(v)-p(v)|\le Cq^{-1}e^{-(\ell-h)\lambda}
+                       \quad\hbox{for ALL }v.
+ \tag{178.22}
+$$
+
+Subtract this bound at v and v+1 from(178.20). As ell>h, it is eventually less than half the lower gap. This proves(178.3), for example c_p=eta_*/80, with some fixed C_p. Only three deletions are used at either stage, never the simultaneous deletion of both pairs and an anchor. The high pair is retained exactly in the first calculation; the entire calibration reservoir is retained exactly in the second.
+
+This distinction also resolves the scale issue: (178.22) is used to establish exact monotonic spacing, NOT substituted for p in the plane at its exponentially small tolerance. The final distribution theorem concerns exact p(v), so multiplying a polynomial approximation error by J or inverse noise never occurs.
+
+### 178.5 精确离散校准量的条件小球概率
+
+On G_178, (178.3) implies that an interval of length w contains at most1+qw/c_p of the points p(0),...,p(n). The conditional binomial in(178.13) has maximum atom at most C/sqrt(n), uniformly for theta_Q in[1/2,2/3]. For instance Fourier inversion and
+|1-theta+theta e^{it}|^2=1-4theta(1-theta)sin^2(t/2) bound each atom by a fixed Gaussian integral. Multiplying proves(178.4). For F_178-measurable intervals I_1,...,I_L,
+
+$$
+ P_S\{p\in\bigcup_{i=1}^L I_i\mid\mathcal F_{178}\}
+ \le {C\over\sqrt n}\left(L+{q\over c_p}\sum_i|I_i|\right).
+ \tag{178.23}
+$$
+
+This is a proved conditional law under the raw experiment, with the exact full-q posterior statistic as its image. It is neither a posterior latent-binomial assertion nor a fixed-normal bound with an assumed calibration distribution. The conditioning leaves precisely the new raw category bits unobserved. It can reveal all old count-square coordinates: because their blocks were disjoint and the complete selected kernel was a product, (178.13) still holds. Conversely, in each old proof view reveal the new reservoir completely; its original surviving split kernel remains valid. These compatible views concern one actual array, and their unconditional bad-event bounds may be added.
+
+The bound allows arbitrary interval locations known to F_178, including functions of the revealed old reservoirs and high split. It DOES NOT allow choosing each interval after seeing V and still treating its center as fixed. In particular p(V) is atomic, the generated normal can depend on V, and no uniform phase or independent last column is inferred. A singleton has probability at most C/sqrt(n), not zero.
+
+The all-zero reference and all category configurations retain every physical label. The n exponential factors in their generating polynomial are never approximated after a growing deletion. Supply comparison(178.12) finished before conditional revealment. The raw-data probabilities in(178.15),(178.23) have no inverse-sigma multiplier. These checks are why the result is an actual-calibration theorem usable for 176.21 rather than a monotonicity assertion about a different sampling model.
+
+### 178.6 大整数生成平面的有理截距排除
+
+This section assumes the original beta>=2/3, without modifying its prescribed amplitude or floors, and any fixed c in(178.2). Use the actual generated UNSHEARED primitive normal(m_0,u_N,v_N), its integer J=u_N C_0+v_N C_1 and s=|u_N|+|v_N|. We sometimes write u,v for u_N,v_N. All integers, calibration quantities and interval coordinates below belong to the same membership branch and the same data array. The normal may depend on V as well as on the old count-square residues.
+
+Keep the original plane construction: every integer harmonic denominator d_h with L<=|d_h|<=H_harm=2N, all its integer numerator pairs satisfying the simultaneous response constraints for some common t in[0,W], the original integer shears, rank2 origin and primitive normal, and determinant inequality
+
+$$
+ 6H_{\rm harm}^2 BW\varepsilon+6H_{\rm harm}\varepsilon^2<1.
+ \tag{178.24}
+$$
+
+Here B is the inherited response slope bound; it is not the physical B^2 below. Put L=2ceil(exp(a lambda)). The actual long interval is
+
+$$
+ [0,W]\cap\left\{t:\left|m_0+J[p(V)+d(V)t]
+       +v_N C_1z_*[h_0(V)+(h_1(V)-h_0(V))t]\right|
+                                      \le s\varepsilon/L\right\};
+ \tag{178.25}
+$$
+
+its diameter is at least the original chi/2. Here h_i=nu_i(1_{I_0+I_1=1}), z_*=tanh(Delta_Q/2), and Delta_Q is the original compensated count-line gap. Thus0<=h_i<=1, |z_*|<=C exp(-phi lambda+O(log Q)), and the EXACT p,d in(178.21) occur in this interval. No fixed-normal approximation is used.
+
+On the retained original enlargement, with constants uniform over all new switch configurations,
+
+$$
+ |u_N|,|v_N|\le K
+       \le \exp[(\gamma-2e)\lambda+O_c(Q+\log Q)],
+ \quad C_1\le Cq,\quad |d(V)|\le C/q,
+$$
+$$
+ W\le C\exp[-(\ell-h)\lambda],\quad
+ \varepsilon/L\le\exp[-(2\gamma-e)\lambda+O_c(Q+\log Q)].
+ \tag{178.26}
+$$
+
+These are the actual plane and calibration bounds of Chapters 165 and 176, with the same occupied physical block and kappa. The new reservoir is retained in every exact coefficient and does not change the geometric constants. The normal-height bound is used only as an upper bound for the actual normal; no assertion of a nonvanishing probability of attaining height K is made.
+
+Let A_178 denote the actual B165 event restricted to uv<0, J nonzero, |J|>=J_big and d_int(m_0,J)<=D_int from(178.5). Its membership still requires(178.24),(178.25), rank2, the full numerator range and all original membership predicates. These predicates are never replaced by arithmetic sufficiency claims.
+
+If(178.25) is nonempty, choose any t in it. Since0<=t<=W and the convex combination of the h_i lies in[0,1], its SAME intercept satisfies the necessary inequality
+
+$$
+ \left|p(V)+{m_0\over J}\right|
+ \le {CW\over q}+{|v_N|C_1|z_*|\over |J|}
+                         +{s\varepsilon\over L|J|}
+ \le \delta_Q,
+ \tag{178.27}
+$$
+
+where delta_Q is a deterministic upper envelope of the right side obtained from(178.26) and |J|>=J_big. There are fixed constants for which
+
+$$
+ q\delta_Q\le CW+
+ \exp[(2\gamma+c_q-\phi-2e)\lambda+O_c(Q+\log Q)]
+ +\exp[-e\lambda+O_c(Q+\log Q)].
+ \tag{178.28}
+$$
+
+For example the middle term uses qK(Cq)exp(-phi lambda)/J_big, and the last uses q(2K)(epsilon/L)/J_big; this accounts for both count factors and the actual integer denominator. Since beta>=2/3 implies phi>=2c_q,
+
+$$
+ 2\gamma+c_q-\phi-2e\le-10\kappa-2e<0.
+ \tag{178.29}
+$$
+
+All parameters in these strict exponent margins are fixed as Q grows. Thus q delta_Q tends to zero. In particular delta_Q<1 eventually. Floors and the numerator-horizon O_c(Q+log Q) costs are absorbed by those fixed positive margins. No numerical optimization or assertion that a sub-cubic term is negligible without such a margin is used.
+
+On this event -m_0/J lies within delta_Q of p(V) in[0,1], hence belongs to[-1,2]. Its reduced positive denominator is EXACTLY d_int=|J|/gcd(|m_0|,|J|). There are at most4D_int^2 rational VALUES in[-1,2] with reduced denominator at most D_int: for each denominator d there are at most3d+1 numerators, and summing over1<=d<=D_int gives at most4D_int^2. Counting also unreduced presentations is an upper bound and does not change the rational targets.
+
+These values form a DETERMINISTIC set known before V. The actual normal can select any of them adaptively, but its selection is contained in the union of all the corresponding intervals of radius delta_Q. Apply(178.23) to that union and then integrate the actual coarse field:
+
+$$
+ \begin{split}
+ P_S(A_{178}\cap G_{178}\mid\mathcal F_{178})
+ &\le {C D_{\rm int}^2(1+q\delta_Q/c_p)\over\sqrt n}\\
+ &\le \exp[-\kappa\lambda/4+O_c(\log Q)].
+ \end{split}
+ \tag{178.30}
+$$
+
+The conditional expression is understood on the measurable G_178; outside it we use its separately paid failure. All nine membership branches use the same rational-value set; inserting an additional factor9 is harmless. No K^2 normal union, independent phase, artificial real density, or assumption that the adaptive normal is fixed under this conditioning is present. Adding(178.15) proves(178.6), separately under both original raw laws.
+
+The long interval and determinant are kept in the actual event, even though the last upper bound discards some of their restrictions. We used only their NECESSARY nonemptiness consequence to map that event into a small-ball union. We do not choose a different J for the intercept and the slope, nor infer that every rational in that union generates a rank2 plane. Positivity of C_v and the original finite-q denominators was established before their use in Section 178.4.
+
+This result is separated from Chapter 176's primitive-line payment by a different structural condition. Indeed d_N=gcd(|u_N|,|v_N|)<=K, so for the actual |J|>=J_big,
+
+$$
+ {|J|\over d_N}\ge {J_{\rm big}\over K}
+ \ge\exp[(c_q-2\gamma+2e)\lambda-O_c(Q+\log Q)]
+ =\exp[(10\kappa+2e)\lambda-O_c(Q+\log Q)].
+ \tag{178.31}
+$$
+
+For every fixed0<t_*<e, this exceeds exp(t_*lambda) eventually. Thus A_178 lies in the formerly unpaid LARGE-reduced-J part, not in Chapter 176's small-J range with a marginally changed cutoff. We make no claim that A_178 has positive limiting probability before bounding it. The new calibration law(178.4) is also useful independently of this particular structured subset.
+
+Two denominator operations must not be confused. We reduced the already present rational number m_0/J to count its rational VALUES. We NEVER divide the primitive triple by d_N and declare the result integral. Primitivity implies gcd(m_0,d_N)=1; m_0/d_N may be rational. Equations(178.25–31) preserve the original m_0 and actual integer J throughout. In particular d_int need not equal |j_N|, and a small d_int is not asserted to follow from the rank condition.
+
+### 178.7 剩余实际事件与完整物理结论的边界
+
+For beta>=2/3 and any fixed t_* in(0,e), all inherited zero-branch and same-sign exclusions apply jointly with the new bound. The zero-branch requirement is phi-c_q>gamma-2e; it holds because phi-c_q>=c_q>gamma-2e. The 173/176 square conditions also hold: beta>=2/3 is inside their beta>=3/5 range, g/sqrt(n_old) decays, g/K grows, and2phi-c_q-3gamma+2e>0. All old reservoirs, Chapter 170's gcd reservoir, the new block and the fixed rare-total pools were allocated disjointly in Section 178.2, so these are lawful views of ONE array. In each old view reveal the new block fully; in the new view reveal the old blocks fully. Their unconditional error bounds may be added, without asserting independence of the coarse sigma-fields.
+
+Let R_178^act be the original-law probability of the exact generated-plane event, union over the original nine memberships, retaining uv<0, J nonzero, rank/determinant origin, the common slope/intercept, long interval, all actual coefficients and memberships, and
+
+$$
+ {|J|\over\gcd(|u_N|,|v_N|)}>\lfloor e^{t_*\lambda}\rfloor,
+ \qquad
+ \bigl(|J|<J_{\rm big}\ \ \hbox{OR}\ \
+                    d_{\rm int}(m_0,J)>D_{\rm int}\bigr).
+ \tag{178.32}
+$$
+
+Then the exact actual-law conclusion is
+
+$$
+ P_S(B_{165})\le b_{176}(Q)+b_{178}(Q)
+       +\exp[-\kappa\lambda/4+O_c(\log Q)]
+       +R_{178}^{\rm act}(Q).
+ \tag{178.33}
+$$
+
+The old b_176 includes original regularity/enlargement and joint supply failures, the Chapter 170 zero-branch cost, incomplete count-block tails, Cg/sqrt(n_old) and Chapter 176's simultaneous primitive-line cost576H_J(K/g+K^2/g^2). Replacing its supply bookkeeping by(178.12) only adds a vanishing selected fraction. Duplicate old good-event costs in(178.33) can be retained as an upper bound. No term here is multiplied by inverse rho or sigma.
+
+No estimate of R_178^act tending to zero has been proved. For |J|<J_big the intercept error in(178.27) need not be small enough at the new calibration spacing. For d_int>D_int the rational-value family has not been controlled at the conditional binomial atom scale. The slope, determinant and attainable-normal constraints may reduce that family, but this chapter proves no such further reduction and no actual-law obstruction. Neither the failure of a union bound nor formally chosen rational coefficients refutes the physical posterior theorem.
+
+The precise 176.21 comparison also matters. Its E_bar is an ENLARGED count-square event using the same generated normal and a barred interval with g-local calibration slack. The new theorem pays the ACTUAL subevent A_178 directly using a different lawful revealment. It does not automatically bound the whole corresponding barred set averaged over the old coarse law. One can upper-bound the exact residual(178.32) by its corresponding E_bar subset after the old averaged conditional TV error, retaining its actual coarse marginal; that is a sufficient unresolved interface. We do not subtract the new actual-law probability bound from the entire enlarged cardinality term and claim the difference has been paid. Either R_178^act=o(1), or a sufficient corresponding barred-residual estimate, would close the remaining probability input in this restricted-beta regime. Neither is established here.
+
+For completeness the physical target remains EXACTLY the one in 165 and 176, with delta=Q^-1/2, B^2=q/Q^(5/2), mathcal B=q/Q^(11/4), complete empirical centers and
+
+$$
+ T_{\rm phys}=\mathcal B^{-1}\sum_j(R_j-\mu_j)^2
+                    -V_{\rm phys}/\sqrt\delta,\qquad
+ Y=T_{\rm phys}+\sigma G,\qquad
+ \rho=\sigma\mathcal B\asymp e^{-cQ^3}.
+ \tag{178.34}
+$$
+
+The sum is over the COMPLETE original index set, not only H. Keep the same physical occupied H, complete full-q selected tuple prior, all low and outside labels, original energy/scalar/residual G and exact finite coefficients
+
+$$
+ A=V_H/\sqrt\delta,\quad \nu_0=2\sum_{j\in H}w_j^2,\quad
+ \kappa_3=8\sum_{j\in H}w_j^3,\quad
+ \Lambda=\nu_0+\sigma^2,\quad
+ C_x={A^2\kappa_3\over\Lambda^3}-{2A\nu_0\over\Lambda^2}.
+ \tag{178.35}
+$$
+
+Here the scalar nu_0 is a finite variance coefficient; the outside law nu_0 used earlier is distinguished by its probability-law arguments. With m_x=E_xY and D_x(y)=Vpost_x(y)-Vprior_x+A^2/Lambda-C_xy, the required statements are
+
+$$
+ \int f_x(y)|D_x(y)-R_*(y)|\,dy\longrightarrow0,\qquad
+ E_xY^2\longrightarrow\nu,\qquad \nu=2g_0,
+$$
+$$
+ R_*(y)=29/6-3\sqrt2+
+             (3\sqrt2+8/\sqrt3-9)y^2/\nu,
+$$
+$$
+ \int f_x Vpost_x-Vprior_x+A^2/\Lambda-C_xm_x
+                         \longrightarrow8/\sqrt3-25/6.
+ \tag{178.36}
+$$
+
+These limits are NOT newly proved above gamma. Chapter 163's unconditional0<c<gamma theorem is unchanged. Chapter 165's gamma<c<3gamma/2 interface still requires P_S(B165)=o(1);(178.33) leaves a missing term, even for beta>=2/3. For beta<2/3, the exact calibration small-ball law remains valid under its original fixed-model conditions, but the displayed large-J application and a wider physical conclusion are not claimed.
+
+The inherited physical proof is not silently strengthened by the new view. Its full-axis input 165.29 retains all lower-band, supply, hidden-tail,18C Q^-5/2 and environment terms, now with(178.33) in the stated regime. Conditional on closing that last probability input, log of the separate reduced-arc denominator cutoff remains O_c(Q), the original occupied variance exponent is c_q-kappa, every numerator through N is retained, and no lcm grid or per-harmonic hidden-selection union is added. Nonzero arcs expand only the occupied block; all other coordinates remain exact. The zero arc uses the full continuous J-reference and complete E=J^c law. Our new analysis deletes at most three labels at a time for a local identity; it does not delete those labels from the physical energy or posterior.
+
+Both normalized real marks, orders0,1,2, are the derivatives of the SAME normalized exp(uW_phys), at fixed physical y, with W_phys=s_lat+G^2/2. They are not derivatives of V or p(V). The paid off-arc contraction and exponential Fourier/Gaussian tails supply the existing inverse-rho costs. A raw bad-array probability in(178.33) never receives that multiplier. On the unproved common-energy event the inherited marked density error would remain CQ^-400; sigma-free signed tuple/common-kernel transport retains CQ^-444 for marks and CQ^-448 for prior variance. Fixed local expansion orders and the unchanged physical parameters remain essential.
+
+The nonlinear conditional mean square still uses q_1^2/q_0=sup_z(2zq_1-z^2q_0), clipping at |z|<=Q^10, the fourth-moment cost O(Q^-16) and signed transport O(Q^-424). The selected full-q log-density correction retains0<=h_selected<=C and L2 deviation O_P(Q^-5/2), costing C a_xQ^2=o_P(1), uniformly for every sigma>0. Real density lower bounds and quotient estimates precede logarithms; the outside energy is translated before the prior-variance cancellation. The original real mgf and fourth moments handle ALL output tails and keep the exact C_xm_x. No unmarked-TV argument supplies the squared conditional mean or surprise. These checked unchanged interfaces describe the conditional return and the missing bridge, not an unconditional proof of(178.36).
+
+### 178.8 文献归属与联合条件的未解部分
+
+正权重的固定总数选择等价于独立 Bernoulli 变量在总数条件下的分布，这一经典关系给出本章的辅助校准。Boistard、Lopuhaä 与 Ruiz-Gazen 的拒绝抽样研究使用中心 Poisson–binomial 概率之比，控制固定阶包含概率；其结论并不提供原始数据校准量的随机分布，也不处理由同一数据自适应生成的平面。版本及适用条件见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+本章所需的固定偏移 $O(D_o^{-2})$ 比值界由第 132 章的 Bernoulli Fourier 推导提供，第 145、163 章给出固定一对标签与一个锚的应用。每次比较只移出三枚标签，其他标签池全部保留在精确对称系数中；没有把指数增长的标签池当作文献中的固定删除阶数，也没有微分一个未控制的余项。第 155 章提供原始平稳对及路径的合法条件分解和联合供给比较，第 165、167 章提供高频对的同一外部仿射响应，第 170、173、176 章提供可相容的计数视图与既有事件界。
+
+新的关系是：在计数线读数完全相同的条件纤维内，仍存在可量化的原始校准随机性。式 (178.20)–(178.23) 将这种信息转成精确原子小球界；式 (178.27)–(178.31) 再通过同一生成平面的实际截距使用它。两个方向系数的公因子与截距分母的约化始终分开，不能由前者推出后者小。
+
+式 (178.32) 的剩余实际事件尚未证明趋零。新界控制实际生成事件的一个子集，不能从第 176 章整个扩大计数集合的概率中直接扣除它。剩余斜率、截距、秩、行列式和可达法向量的联合约束，仍须在同一个实现上使用。第 163 章的 $0<c<\gamma$ 结论保留；更宽范围的物理回接仍是有条件的。本章不宣称最优阈值、实际模型反例、全球原创或文献检索穷尽。
+
+## 追加锚（本行以下为增补区）
