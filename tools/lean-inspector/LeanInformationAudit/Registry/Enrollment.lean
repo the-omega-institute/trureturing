@@ -455,8 +455,10 @@ private def staticIdentity (e : Expr) : CompileM Unit := do
   if projected || (!name.isAnonymous && (InformationRegistry.hasTheorem env name ||
       isCompanionName name || RegistrationGates.isJudgeIdentity env name)) then
     throwError "forbidden_dependency:E6.registered_identity"
-  if #[`Classical.choice, `Classical.propDecidable, `of_decide_eq_true, `Lean.Expr,
-      `Lean.Name, `String].contains name then
+  -- Keep the same ordered predicate without the interpreter's array traversal.
+  if name == `Classical.choice || name == `Classical.propDecidable ||
+      name == `of_decide_eq_true || name == `Lean.Expr || name == `Lean.Name ||
+      name == `String then
     throwError "forbidden_dependency:E6.closed_identity"
 
 mutual

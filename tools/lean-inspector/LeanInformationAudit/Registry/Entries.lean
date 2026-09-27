@@ -184,24 +184,37 @@ def rejectKernelAddressSemanticUse (rootId : Name) (catalogId : CatalogId)
   .error s!"IE-C030 KernelAddressUsedAsSemanticEvidence root={rootId} \
 catalog={catalogId} address={address} consumer={consumer}"
 
+/-- Keep occurrence order for consumers and index theorem membership for the
+per-node identity guard. Both views belong to the same environment state, so
+imports, insertion and transaction rollback cannot leave the index stale.
+Only entries are persisted; the index is reconstructed on import. -/
+private structure InformationRegistryState where
+  entries : Array InformationRegistryEntry := #[]
+  theoremNames : NameSet := {}
+  deriving Inhabited
+
 private initialize informationRegistryExt :
-    SimplePersistentEnvExtension InformationRegistryEntry
-      (Array InformationRegistryEntry) ←
+    SimplePersistentEnvExtension InformationRegistryEntry InformationRegistryState ←
   registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
+    addEntryFn := fun state entry => {
+      entries := state.entries.push entry
+      theoremNames := state.theoremNames.insert entry.theoremName }
+    addImportedFn := fun ess =>
+      let entries := ess.foldl (· ++ ·) #[]
+      { entries, theoremNames := entries.foldl (fun names entry =>
+          names.insert entry.theoremName) {} }
   }
 
 def InformationRegistry.entries (env : Environment) :
     Array InformationRegistryEntry :=
-  informationRegistryExt.getState env
+  (informationRegistryExt.getState env).entries
 
 def InformationRegistry.find? (env : Environment) (theoremName : Name) :
     Option InformationRegistryEntry :=
   (entries env).find? fun entry => entry.theoremName == theoremName
 
 def InformationRegistry.hasTheorem (env : Environment) (n : Name) : Bool :=
-  (find? env n).isSome
+  (informationRegistryExt.getState env).theoremNames.contains n
 
 def InformationRegistry.hasOccurrence (env : Environment)
     (objectArena theoremName : Name) : Bool :=
@@ -271,7 +284,9 @@ def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
-      generatedCompanionSuffixes.contains suffix
+      -- Every reserved suffix starts with "__". Ordinary names avoid the
+      -- interpreted array scan; the registry remains the suffix authority.
+      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
   | _ => false
 
 /-- Complete, deterministic payload shared by prechecks, insertion and sealing.
