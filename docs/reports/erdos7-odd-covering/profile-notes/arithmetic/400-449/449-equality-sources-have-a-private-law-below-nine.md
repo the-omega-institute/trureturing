@@ -7415,7 +7415,7 @@ All checks remain active under `-O`. These finite controls verify the stated ins
 
 Under the original literal4555 and standalone premises, every source of minimum-cut value65/63 through73/63 is controlled by the source classifications above. The complete maximum77 class has bound2078/231 by AC77; every78/63 source has bound233/26 by sharp saturated-block transport; every cut at least79/63 is controlled by the large-cut estimate. Each conclusion concerns one supported probability fixed before all original numerical phase queries.
 
-The general source strata74/63,75/63 and76/63 remain unresolved. Specified profiles within these strata, including the fully active R=1 whole-column family at75/63, have their stated laws; a supplier for every source at those three values is still missing. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
+The later RC76 theorem supplies the complete75/63 and76/63 source classes with bound3572/397. The remaining general fixed-head stratum is74/63. H185, T318 and BL18 below provide local transport, a conditional common law and a selected-block alternative; simultaneous treatment of all remaining mass18 blocks is still required. Other occupancy patterns retain their separate hypotheses and are not classified merely by this four-root4555 theorem.
 
 The neighborhood criterion, GP selected-block lowerings, OM occupation criterion and five-block avoidance bridge retain their own precise conclusions. Coordinatewise integral lowerings do not establish simultaneous integral safety, and OM5 is not proved for every actual source. Neither is now required to remain an unresolved prerequisite for the maximum77 common law: AC77 supplies that law by the root-cap61/3 branch or the IA/TA/asymmetric alternatives. The root-cap61/3 test itself is not asserted to hold on every source. A small hitting family remains insufficient to rule out a good fractional law.
 
@@ -11033,4 +11033,713 @@ common M75/M76 ceiling3572/397. Independent generation of all labelled child-cos
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/three_inactive82_rootcap_control.py --output /tmp/e7_three_inactive82_replay.json
+```
+
+## Balanced value74 admits mass18.5 transport but fixed-external mass18 repair can fail
+
+Ordinary mathematics on the original actual support, with exact arithmetic
+controls; no Lean assertion. This result narrows the value74 conditional consumer.
+It neither constructs a balanced root law on every source nor settles the full
+value74 class or unrestricted Erdős #7.
+
+### H185.1. The exact remaining interface
+
+Assume the original actual network admits mass74 after its four root capacities
+are lowered to37/2. Doubling capacities gives an integral network, so choose a
+half-integral flow. Its four root totals are all37/2. The ordinary caps on
+children, private columns, entries, public leaves and columns remain7,6,2,7,21.
+
+Under the complete original maximum74 and standalone premises, failure of this balanced-cap test is already supplied. If a modified cut has capacity below74, its original capacity c and number t of inactive roots satisfy c-(5/2)t<74 and c>=74. Neither t0 nor t4 is possible: the latter has source capacity exactly74. The only integer ranges are t1 with c74..76, t2 with c74..78, and t3 with c74..81. The OC77/TP2/NP34/UF14 consumers handle the first range, B80 the second and RC76.1 the third. Thus the remaining full-source obligation can be pursued on balanced half-integral flows without assuming that every source passes the balanced-cap test.
+
+For one original root/column block, write d for its internal mass, r_i and c_j
+for its internal row/column sums, x_ij for its entries, and z_i,y_j for the
+external same-child and same-fine-label masses. They are nonnegative multiples
+of1/2 before local replacements. The coherent nonunit charge is exactly
+
+    K = 3a + 3b + 9d + 20r_i + 20c_j + 25x_ij + 5z_i + 5y_j,
+
+where a=37/2 and b<=21. The existing LC2/TB.4 estimates give every noncoherent
+query charge at most587. Every coherent block with d<=35/2 has K<=591. Thus
+only d=18 and d=37/2 require more work. Their external root totals are1/2 and0,
+and their external public-column totals are at most3 and5/2, respectively.
+
+Blocks of mass at least18 have distinct roots and distinct public columns.
+Consequently replacements preserving each block total, fixed external vectors
+and all original local caps can be made simultaneously. No selected block's
+external vector belongs to another selected block.
+
+### H185.2. Positive local theorem at mass37/2
+
+Let E be ANY actual support in a5-by7 matrix, allowing empty rows and columns.
+Let every y_j be a nonnegative multiple of1/2 with sum y_j<=5/2. Suppose E
+supports a matrix of mass37/2 satisfying
+
+    r_i<=6, c_j<=7-y_j, x_ij<=2.
+
+Then E supports another matrix of the SAME mass and caps, with the SAME y,
+such that simultaneously at every cell, including absent cells,
+
+    20r_i+20c_j+25x_ij+5y_j <=1835/6<306.          (H185)
+
+Only mass is reassigned. Every actual source incidence remains in the source.
+
+#### If the local maximum is at least19
+
+Choose a supported mass19 matrix under these same residual column caps, then
+scale it by37/38. Before scaling its augmented score is at most310, since
+20c_j+5y_j<=140 and the other terms are at most120 and50. After scaling it is
+at most
+
+    (37/38)*310 + (1/38)*(25/2) =22965/76<1835/6.
+
+The external y remains unchanged. Thus assume the local maximum is exactly37/2.
+The half-integrality of this maximum follows from doubling the network.
+
+#### Exact cut inventory
+
+Choose an exact cut. Let a be its sink-side row count, b its source-side column
+count, c the number of actual crossing entries from source-side rows to
+sink-side columns, and Y the sum of2y_j over its source-side columns. Then
+
+    12a+14b+4c-Y=37,    0<=Y<=5.
+
+There is no b=0 or b>=4 case. Its full necessary inventory is
+
+    b=1,Y=1: (a,c)=(0,6),(1,3),(2,0);
+    b=1,Y=5: (a,c)=(0,7),(1,4),(2,1);
+    b=2,Y=3: (a,c)=(0,3),(1,0);
+    b=3,Y=5: (a,c)=(0,0).
+
+All crossing entries carry2, each source-side column is saturated at7-y_j,
+each sink-side row carries6, and all backward cut entries carry zero.
+
+#### One source-side column
+
+Its y is1/2 or5/2, so every cell in that column has augmented score at most
+310-15/2=605/2. If a=0, each outside column has an even mass at most6, and its
+score is at most295. If a=2, there is at most one crossing entry, and the two
+outside rows add at most4 per outside column, so again c_j<=6 and the score
+is at most295.
+
+For a=1,c=3, an outside column with three crossing entries has three distinct
+source-side neighbors, each with crossing degree1 and at most2 additional mass
+in the inside column. Their rows therefore have mass at most4. The outside
+row's entry in such a column is at most1. These cells have scores at most270
+and285, respectively; all other outside columns have mass at most6.
+
+The remaining a=1,c=4 case has inside y=5/2 and zero external y outside it.
+There is at most one outside column A with three crossing entries. If none
+exists, all outside columns have mass at most6. Otherwise the outside row has
+at most1 in A and at least5 in its other currently positive outside-column neighbors, so it has at least
+three other such neighbors. Each other outside column has at most one crossing
+entry and residual capacity at least5. Put2 in any three of these actual
+neighbors and zero in A. This preserves that row's total6 and all caps. Every
+outside column now has mass at most6. In all cases every score is <=605/2.
+
+#### Two source-side columns
+
+Here their y values sum3/2. If a=1,c=0, each inside row has mass at most4, and
+the outside row is alone in every outside column, so the bounds are immediate.
+Assume a=0,c=3. Outside columns receive only crossing entries and have mass
+at most6, so their scores are at most295. Any inside column with positive y
+has score at most605/2. The only remaining pattern is inside residual caps
+7 and11/2, with y=(0,3/2).
+
+Fix the three crossing entries at2. If their row degrees are t_i, then
+sum t_i=3 and the inside two-column problem has row caps6-2t_i, entry caps2,
+column caps7,11/2 and total25/2. Every row cap is even. An inside cut has value
+an even integer plus a subset sum of{7,11/2}. Equality25/2 forces BOTH columns
+source-side and zero remaining contribution. In particular no inside entry
+crosses any tight cut. Every other cut has value at least13.
+
+For each row with t_i>=1, lower only its entry capacity into the cap7 column
+from2 to11/6. There are at most three such entries. Tight cuts lose nothing;
+other cuts lose at most3/6=1/2. Thus mass25/2 remains feasible. Reinsert the
+fixed original crossing entries. In a row with t_i=0 the full row mass is at
+most4, so its score is small. At a cap7 cell with t_i>=1 the entry is<=11/6 and
+its score is at most
+
+    120+140+25*(11/6)=1835/6.
+
+All remaining cells were already bounded above. This proves(H185) for this case.
+
+#### Three source-side columns
+
+If an exact cut with b=1 or2 exists, use it above. Otherwise every exact cut
+has b=3,a=c=0. The entire actual local support lies in these three columns,
+whose caps sum37/2 and are each at least9/2.
+
+Lower every entry capacity in this support from2 to31/16. A tight cut crosses
+no entry and is unchanged. Any cut of original capacity19 must contain at
+least one source-side column, because the b=0 capacities6a+2c are even. Since
+that column's cap is at least9/2, such a cut crosses at most seven entries,
+and loses at most7/16<1/2. Every other nontight cut has capacity at least39/2
+and crosses at most fifteen entries, losing at most15/16<1. All modified cuts
+therefore still have capacity at least37/2. A mass37/2 flow exists.
+
+Each row now has mass at most3*(31/16)=93/16. Its augmented score is at most
+
+    20*(93/16)+140+25*(31/16)=4875/16<1835/6.
+
+This exhausts the cut inventory and proves(H185). The cut comparisons concern
+one actual local network and unchanged external y, not independently chosen
+marginal probabilities.
+
+### H185.3. A sharp obstruction to the analogous fixed-external mass18 repair
+
+The mass18 case cannot universally be repaired while preserving its block
+mass and fixed external vectors. Use columns A,B,C,D,E,F,G, with complete
+local support
+
+    row0: A,B,C;
+    row1: A,B;
+    row2: A;
+    row3: empty;
+    row4: A,B,D,E.
+
+Set y_B=2,y_F=1 and all other y to zero. Set z_0=1/2 and all other z to zero.
+The internal row caps remain6 because min(6,7-z_i)=6. There is exactly one
+mass18 matrix under these caps:
+
+    row0: A2,B2,C2;
+    row1: A2,B2;
+    row2: A2;
+    row3: empty;
+    row4: A1,B1,D2,E2.
+
+Indeed the cut through row4's capacity6 edge and the six other actual entries
+of capacity2 has value18. Every mass18 matrix saturates those entries. The
+remaining residual capacities for row4 at A,B,D,E are respectively1,1,2,2,
+so its required total6 forces all four. This proves uniqueness, not merely
+failure of a chosen optimization algorithm.
+
+At row0/A, r=6,c=7,x=2,z=1/2,y=0, hence the augmented fine score is625/2.
+With the matching coarse values a=37/2,b=21,d=18, the exact coherent charge is
+
+    K = 3*(37/2)+3*21+9*18+625/2 =593>592.
+
+Its numerical normalized expression at total74 would be667/74=9+1/74.
+This is a LOCAL fixed-external support obstruction. It is not presented as a
+complete literal4555 source, an admissible original whole cover, or a proof
+that no other whole-source probability law can work. It shows that the
+proposed universal local repair needs a new joint argument or an added
+condition; a universal mass18 lemma with the preceding fixed data is false.
+
+### H185.4. A checkable sufficient balanced-law condition
+
+The positive theorem already gives a conditional consumer with an explicit
+additional test. Suppose the balanced half-integral value74 flow has the
+property that EVERY mass18 block has public-column total at most41/2.
+
+Replace all mass37/2 blocks using(H185). Their charge is at most
+285+1835/6=3545/6<591. Other blocks' external vectors and internal matrices
+are unchanged, because heavy blocks have distinct roots and columns.
+Every original mass18 block has
+
+    K <=8a+3b+4d+310 <=591.5.
+
+This is the existing LC2 coherent estimate with its actual b cap; all smaller
+blocks have K<=591. Noncoherent queries remain <=587. Thus one resulting
+actual law, fixed before every original query, has
+
+    Gamma_1225 <=1+(1183/2)/74=1331/148=9-1/148<9.
+
+A weaker alternative test permits b=21 for a mass18 block, provided that its
+unique externally flagged row does not contain a zero-y cell with the
+simultaneous initial values r=6,c=7,x=2. Initial half-integrality makes the
+augmented fine score a multiple of5/2; its universal upper is625/2, and
+excluding that one equality leaves it at most310. Its coherent charge is then
+at most280.5+310=590.5. This test is on one common initial flow, not a separate
+flow chosen for each query.
+
+Neither additional condition is proved automatic. The local support in H185.3
+violates it. The remaining bridge is to select or jointly alter the whole
+balanced flow so that all offending mass18/column21 blocks are controlled, or
+to supply their original complete-source support by another law.
+
+### H185.5. Exact arithmetic and local counterexample controls
+
+The [exact control](../../../frontier/cover-geometry/height-two-small-anchors/mass185_transport_and_mass18_boundary_check.py) and its [data](../../../frontier/cover-geometry/height-two-small-anchors/mass185_transport_and_mass18_boundary_check.json) verify the nine necessary mass18.5 cut types, both entry-capacity reduction budgets and all rational bounds. They also retain the actual ten-entry mass18 support, its unique feasible flow, the external vectors and every local fine score. Independent enumeration of all4096 cuts of that local network gives minimum18 with three minimizing cuts and reproduces the forced coherent charge593. This is a local support counterexample to a proposed repair, without a claim that it is itself a complete original blocker.
+
+Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/mass185_transport_and_mass18_boundary_check.py --output /tmp/e7_mass185_boundary_replay.json
+```
+
+The support-uniform transport theorem follows from H185.2's cut proof. The finite controls verify its arithmetic and the concrete obstruction; they are not an enumeration of all complete sources or new Lean verification.
+
+## T3-good actual support repairs the mass18 half-integral obstruction
+
+Ordinary exact mathematics; no Lean result. The support condition below is an
+additional check on each whole original root/column block, not a conclusion
+about arbitrary complete literal4555 sources.
+
+### T318.1. Local statement
+
+Let E be an actual support in a5-by7 matrix. Assume T3-goodness:
+
+    every three different literal rows have at least three different
+    fine-label neighbors in their actual union.
+
+For a gap root, retain its missing literal row as an empty row; the displayed
+condition then includes every original pair of its four occupied children.
+Let z_i,y_j be nonnegative multiples of1/2, with sum z_i=1/2 and sum y_j<=3.
+Suppose E supports a HALF-INTEGRAL matrix x0 of mass18 with
+
+    r_i<=6, r_i+z_i<=7, c_j+y_j<=7, x_ij<=2.
+
+Then E supports another matrix of the SAME mass, with these SAME external
+vectors and all the SAME original caps, for which simultaneously at every cell
+
+    S_ij =20r_i+20c_j+25x_ij+5z_i+5y_j <=2175/7<623/2.  (T318)
+
+The new matrix can be rational. No original incidence is removed; a law may
+assign zero to an actual incidence. The gap and full-root meanings of T3-good
+are stated explicitly, and the property must hold for the actual E.
+
+### T318.2. Higher local maximum is already safe
+
+There is exactly one flagged row i*, with z_i*=1/2. Its internal row cap remains6.
+All column capacities7-y_j are half-integral. If the local maximum is larger
+than18, it is at least37/2. Choose a supported mass37/2 matrix and scale it by
+36/37. The unscaled score is at most625/2. The unchanged external contribution
+5z_i+5y_j is at most35/2. The scaled score is therefore at most
+
+    (36/37)*(625/2)+(1/37)*(35/2)=22535/74<2175/7.
+
+It remains to consider exact local maximum18.
+
+### T318.3. Every bad entry can be lowered by half a unit
+
+The universal score bound is625/2. In the given half-integral x0 every score is
+a multiple of5/2. Equality625/2 occurs only at a cell with
+
+    i=i*, y_j=0, r_i=6, c_j=7, x_ij=2.              (bad)
+
+Call such a cell bad. Every other initial score is at most310. There are at
+most TWO bad cells: they lie in the same flagged row and in distinct columns
+of internal mass7, while the whole block has mass18.
+
+Fix one bad cell (i*,j). We prove no exact minimum cut crosses its entry edge.
+For a cut write a for sink-side rows, b for source-side columns, c for the
+number of crossing actual entry edges, and Y for the sum of2y over its
+source-side columns. An exact cut has
+
+    12a+14b+4c-Y=36,    0<=Y<=6.
+
+Forward cut arcs saturate; backward cut arcs carry zero under x0. If this cut
+crossed our entry, i* would be source-side and j sink-side. All source-side
+contributions to j would be crossing entries of mass2. Let t count them.
+The a outside rows can contribute at most2a, so
+
+    2t <=7<=2t+2a.
+
+The exact cut's full necessary inventory is
+
+    b=0,Y=0: (a,c)=(0,9),(1,6),(2,3),(3,0);
+    b=1,Y=2: (a,c)=(0,6),(1,3),(2,0);
+    b=1,Y=6: (a,c)=(0,7),(1,4),(2,1);
+    b=2,Y=0: (a,c)=(0,2);
+    b=2,Y=4: (a,c)=(0,3),(1,0);
+    b=3,Y=6: (a,c)=(0,0).
+
+For a=0, the outside column mass would be even, contradicting c_j=7.
+For a=1, necessarily t=3, and the only cases with enough crossing entries are:
+
+* b=0,c=6. Since the flagged row has mass6 and no inside columns, it owns
+  three crossing entries, including j. The other three inside rows have only
+  three actual entry edges altogether; two of them point to j. Their joint
+  actual neighborhood has at most two labels. This violates T3-goodness.
+* b=1,c=3. Every crossing entry points to j. The flagged row has only that
+  entry and the one inside-column entry, so its mass is at most4, contradiction.
+* b=1,c=4. Besides the three entries at j there is one additional crossing
+  entry. To have row mass6, the flagged row must own that extra entry as well
+  as its j entry and the inside-column entry. The other three inside rows
+  therefore have actual neighborhoods contained in{j,the inside column}.
+  This violates T3-goodness.
+
+For a=2 we need t>=2. The only inventory case with enough crossing entries is
+b=0,c=3. But the flagged row's mass6 forces all three crossing entries to be
+its own, so only one can point to j. Then column j has mass at most2+4=6,
+contradiction. Cases a>=3 have no crossing entries and cannot contain the
+selected entry. This exhausts the inventory.
+
+Thus no minimum cut crosses the bad entry. Lower only its capacity from2 to
+3/2. All tight cuts remain unchanged; all nontight cuts had half-integral
+capacity at least37/2 and lose at most1/2. The modified network still supports
+mass18. After doubling, an integral flow gives a HALF-INTEGRAL mass18 matrix
+x^(i*,j) on the same support. At this specific cell its score is at most
+
+    120+140+25*(3/2)+5/2 =300.
+
+Every other cell still has the ordinary bound625/2. The construction preserves
+z and y exactly and can be done for each of the at most two original bad cells.
+
+### T318.4. One mixture controls every cell simultaneously
+
+If there are no bad cells, keep x0. Otherwise let B be their fixed initial set
+and b=|B|, with1<=b<=2. Define ONE matrix before any cell is queried:
+
+    xbar = (5/7)x0 + (2/(7b)) sum_(e in B) x^e.
+
+It retains support, all capacities, mass18 and the external vectors. At a
+cell not initially bad, its score is at most
+
+    (5/7)*310 + (2/7)*(625/2)=2175/7.
+
+At an initially bad cell e, its own repaired component saves at least25/2,
+and hence its mixed score is at most
+
+    625/2 - (2/(7b))*(25/2) <=625/2-25/14=2175/7.
+
+This proves(T318). No independent cellwise optimization is mistaken for one
+matrix: the displayed finite convex mixture is the common matrix.
+
+### T318.5. Consequence for a balanced value74 source law
+
+Suppose the original actual network has a half-integral value74 flow with all
+four root totals37/2, and EVERY one of its mass18 blocks is T3-good on its
+ENTIRE actual block support. The latter assumption is separate from the
+original cross-root legal-pair premises.
+
+Mass18 and mass37/2 blocks have different roots and different public columns.
+Apply(T318) at every mass18 block and the mass37/2 transport(H185) at every
+mass37/2 block, keeping every external vector and every coarse block total.
+These replacements are jointly feasible because their root and column supports
+do not overlap. Thus one supported value74 law is fixed for every query.
+
+The coherent nonunit charges are bounded by
+
+    d<=35/2: 591;
+    d=18:    561/2+2175/7=8277/14;
+    d=37/2: 285+1835/6=3545/6.
+
+The existing TB.4 bound for noncoherent queries remains587. The largest bound
+is8277/14<592. Normalizing the ONE resulting law therefore gives
+
+    Gamma_1225 <=1+(8277/14)/74=9313/1036=9-11/1036<9.
+
+This closes the balanced value74 branch under the specified T3-goodness test.
+It does not prove that this test can always be achieved. The unique local
+mass18 obstruction described in the companion result is T3-bad, as its rows
+1,2,3 have joint neighborhood{A,B}. Handling actual sources whose balanced
+laws necessarily have a bad mass18 block still requires a new source bridge.
+
+### T318.6. Exact arithmetic and a nontrivial local control
+
+The [exact checker](../../../frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.py) and [data](../../../frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.json) enumerate all14 necessary exact18 cut types and the five possible bad-entry cut cases before the support contradictions. They check the half-unit capacity decrease and the fixed5/7 mixture arithmetic.
+
+A retained thirteen-entry actual local support has A,B at all five rows and C at rows0,1,2. Its ten three-row unions all contain at least three labels. With y_B=2,y_F=1,z_0=1/2 and zero other flags, the initial mass18 matrix is:
+
+    row0: A2,B2,C2; row1: A2,B1,C2; row2: A2,C2;
+    row3: A1,B2; row4: zero.
+
+The cell row0/A initially has score625/2. Moving half a unit from row0/A to row4/A preserves all fine-column totals and original capacities, and the prescribed common mixture has maximum4285/14<=2175/7 over every one of the35 local queries. All4096 cuts before and all4096 after lowering only the row0/A entry capacity to3/2 have minimum18. Independent direct enumeration reproduces these two minima and the initial/repair/mixture maxima625/2,290,4285/14. The control retains the full support, both external vectors, all three matrices and their complete score tables. It is a local transport instance, without a complete-original-blocker claim.
+
+Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/mass18_t3_good_transport_check.py --output /tmp/e7_mass18_t3_good_replay.json
+```
+
+The source-uniform conclusion uses the cut and mixture proof above, not an enumeration of all support graphs. No Lean verification is claimed.
+
+## A selected mass18 block can be lowered or supplies an existing actual-source law
+
+Ordinary finite-network mathematics, not Lean verification. All capacities,
+owners and support points below belong to one original literal4555 source.
+The argument establishes a selected-block alternative, not simultaneous
+lowering of every block in one common flow.
+
+### BL18.1. Complete-source alternative
+
+Assume the complete original literal4555 and standalone premises, and that
+the original network has maximum74. Replace each of its four occupied
+source-root capacities21 by37/2. Suppose the resulting balanced network
+has a half-integral flow of value74 with a designated root/column block of
+mass18. Then at least one of the following holds:
+
+1. The same balanced network has a half-integral value74 flow in which the
+   designated block has mass at most35/2.
+2. The entire original source has a cut with one inactive root and original
+   capacity at most77, or three inactive roots and original capacity at
+   most82. It is therefore supplied by the already established OC77/TP2/
+   NP34/UF14 or RC76.1 actual-source laws, respectively.
+
+The designated block need not be T3-good or T3-bad. The positive conclusion
+is about the complete actual source, including zero-flow actual incidences.
+
+### BL18.2. Proof by a minimum-cost potential
+
+Minimize the designated block's total over balanced value74 flows. Give
+cost1 to the selected root's child-to-private-G-prefix edges and cost0 to
+every other original edge. This is exactly the block-mass objective by
+conservation. Doubling every capacity gives an integral-capacity network,
+so a minimizing half-integral flow exists. If its designated block mass is
+less than18, it is at most35/2 and alternative1 holds. Otherwise the given
+flow forces the minimum to be exactly18; fix a half-integral minimizer f.
+
+Its residual network has no negative-cost directed cycle. With integer
+edge costs it admits an integer vertex potential pi for which
+
+    f_e>0       implies pi(head)-pi(tail)>=cost_e;
+    f_e<cap_e   implies pi(head)-pi(tail)<=cost_e.
+
+These follow from nonnegative reduced costs on residual reverse and forward
+arcs, respectively. They concern the actual half-integral capacities; no
+integrality of f beyond the earlier minimum step is needed here.
+
+All four source-root edges are saturated at37/2, since their capacities
+sum74. Write alpha=pi(R) for the selected root. Its off-G flow is exactly
+1/2. Every G private-prefix flow is at most6, hence each of this root's
+child totals is at most13/2<7. Its root-child edges are all unsaturated,
+so every actual child C has pi(C)<=alpha. A child carrying positive flow
+has pi(C)=alpha. Every positive selected-G prefix edge consequently goes
+from potential alpha to potential at least alpha+1.
+
+Set X={v:pi(v)<alpha+1}. The source belongs to X because the selected
+source-root edge is positive and has cost0, giving pi(source)<=alpha.
+The sink does not belong to X: a positive selected-G path first crosses
+to potential at least alpha+1, and all its subsequent positive cost0
+edges have nondecreasing potential. Thus X is a source-sink cut and the
+selected root and all its actual children belong to X.
+
+Let q count the selected-G prefix edges crossing X forwards. Every positive
+such prefix crosses, so the sum of their flows is18. Their capacities are6.
+Their zero-flow counterparts, if any cross, are included in q. Every other
+forward cut edge has cost0. Since potentials are integer, such a crossing
+has strictly positive potential rise and therefore is saturated. No
+positive edge crosses X backwards, because every original edge has
+nonnegative cost. Flow-cut accounting now gives the exact identity
+
+    cap_balanced(X)=74+sum_crossing_selected(6-f_e)
+                   =74+6q-18=56+6q.                 (BL18.1)
+
+Only source-root capacities are nonintegral. Let t be the number of
+occupied roots outside X. Equation(BL18.1) is integral, so t is even.
+The selected root belongs to X, leaving t=0 or2. In particular this is
+not an assumption that a local minimum cut is a global minimum cut.
+
+Now move the selected root and its entire private descendant forest to the
+sink side, keeping every public vertex's side unchanged. Call the resulting
+cut X'. The only incoming edge to this forest is its source-root edge;
+all private-to-public actual bridges point out of the forest. Thus this
+move can add only the source-root capacity, and removes at least the q
+selected prefix edges of total capacity6q. Measured in the ORIGINAL
+network, X first has capacity cap_balanced(X)+(5/2)t, and the newly crossed
+selected source-root edge has original capacity21. Consequently
+
+    cap_original(X')<=56+6q+(5/2)t-6q+21
+                     =77+(5/2)t.                   (BL18.2)
+
+The number of inactive roots is exactly t+1. For t=0 this is a one-inactive
+cut of capacity at most77; for t=2 it is a three-inactive cut of capacity
+at most82. Both are already supplied under the complete original source
+premises, using the respective consumers' own normalization arguments.
+This proves alternative2.
+
+### BL18.3. The simultaneous-flow obligation
+
+For a source outside those supplied cut branches, any selected mass18 block
+of any balanced half-integral value74 flow can individually be lowered to
+at most35/2 by another balanced half-integral value74 flow. That replacement
+can change other block masses. In particular this theorem alone does not
+produce a flow avoiding every T3-bad mass18/column21 obstruction, nor an
+occupation mixture keeping each such obstruction below a useful threshold.
+The complete maximum74 common-law branch remains open until a simultaneous
+argument or a different actual-source supplier is provided.
+
+### BL18.4. Complete actual-source control
+
+The [complete-source control](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py) and its [exact data](../../../frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.json) reuse the existing
+terminal-cap network paths and asymmetric-source premise checker. Its source
+has282 actual points: every child has every leaf of two shared columns;
+each of the three full roots has five private singleton leaves in its own
+column, and one full root has a sixth private leaf. The gap has no private
+leaf. The two shared public columns and16 private entry edges give an
+original cut42+32=74. The program supplies a matching balanced value74 flow
+whose gap/first-shared-column block has mass18.
+
+The program then solves the selected-block minimum-cost problem in the
+ENTIRE675-edge actual network, obtaining another balanced value74 flow with
+that block of mass0. It checks all480 original legal pairs, the standalone
+premise, every original capacity and conservation equation, the matching
+original cut, and the two residual-potential sign inequalities at all395
+vertices. Source, initial and minimizing atom flows, and an integer optimal
+potential are emitted as exact data. This control exercises the actual
+lowering alternative; it does not instantiate the minimum18/supplier branch
+or claim an exhaustive source search.
+
+Independent reconstruction from the saved source and atom flows, without
+either author helper, reproduces all480 pair tests, the675 edges, the two
+matching value74 flows and all1350 residual-potential sign checks. The three
+full roots in this particular control are individually robust; the control
+is not asserted to represent the unresolved nonrobust branch. The universal
+selected-block alternative follows from BL18.2, independently of this
+instance's additional structure.
+
+Reproduce from the project root with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/balanced74_selected_mass18_control.py \
+  --network-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/terminal_cap_failure_controls.py \
+  --source-helper docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-asymmetric-root-caps/asymmetric_max77_controls.py \
+  --output /tmp/e7_balanced74_selected_mass18_replay.json
+```
+
+## Two-inactive cuts through80 and the exact three-inactive83 boundary
+
+Ordinary source-preserving budget deductions reusing the existing common-law
+consumers. No new Lean result, minimum-cut saturation or arbitrary-height claim.
+All statements concern the complete original literal4555 source, its nonempty
+original fibres, original legal-pair ternary-tree premises and the unchanged
+actual network. No subsource is assumed to inherit blocking.
+
+### E80.1. Every two-inactive cut of capacity at most80 is supplied
+
+Suppose an ORIGINAL cut has at least two inactive occupied roots and capacity
+at most80. Then the unchanged source has ONE probability, chosen before all
+original numerical phase queries, with
+
+    Gamma_1225 <=2865/319<9.
+
+Use exactly the B80 cut normalization. No bridge126 can cross. Replace private
+child contributions at least8 by the incoming7 edge. Move any active root whose
+forward contribution is at least21 to the sink side. Four inactive roots are
+impossible below84. If three roots become inactive, RC76.1 applies because the
+cut is at most80<=82. If the normalized cut has capacity at most79, B80 applies.
+It remains to handle an exact80 cut with exactly two active roots.
+
+Each active root has n=4 or5, q=n-2, delta inactive children, active costs z_i
+in0..3 and total Z. Its forward contribution7delta+2Z is at most20, so delta<=2.
+Let p be the sum of its cheapest q active costs. Their whole original legal
+restriction and the other active root's cheapest restriction imply
+
+    p_1+p_2>=9-k,
+
+where k is the original public prefix token cost. The complete-fibre containment
+is exactly the one in B80; a cost3 token can be a whole column. The exact budget is
+
+    7(delta_1+delta_2+k)+2(Z_1+Z_2)=38.             (E80)
+
+Write delta=delta_1+delta_2 and Z=Z_1+Z_2.
+
+For k>=2 and delta>=2, Z>=p_1+p_2 gives cost at least
+18+7delta+5k>=42, contradicting(E80). For delta=1, both active ratios a/q are
+at least4/3, giving cost at least31+(13/3)k>38. For delta=0 and k>=3, both
+ratios are at least5/3 and the cost is at least30+(11/3)k>=41. The only remaining
+k>=2 possibility is k=2,delta=0. Then p_1+p_2>=7. For either fully active root,
+
+    Z_r >= p_r + 2 ceil(p_r/3),
+
+using the stronger gap bound if applicable. Consequently
+
+    Z >=7+2 ceil(7/3)=13,
+
+whereas(E80) gives Z=12. Thus k cannot exceed1.
+
+If k=1, parity in(E80) forces delta odd. Values delta>=3 contradict
+7delta+2Z=31 and Z>=8. Thus delta=1 and Z=12. For the partial root, its
+contribution<=20 implies Z_partial<=6, and the sorted-cost inequality implies
+p_partial<=4. Uniformly for either root type,
+
+    Z_partial >= p+ceil(p/3),
+    Z_full >= (8-p)+2ceil((8-p)/3).
+
+For p=0,1,2,3,4 the sums are respectively14,15,13,13,14, all greater than12.
+This excludes k=1 as well.
+
+Therefore k=0. If either root has delta_r>=1, then
+
+    L_r=sum_all_original_children min(3,|F_c|)
+       <=Z_r+3delta_r<=floor((20-7delta_r)/2)+3delta_r<=9.
+
+If both have delta_r=0, (E80) gives Z_1+Z_2=19, so one Z_r<=9 and again L_r<=9.
+The existing B80 complete-root clipped-cardinality supplier yields2865/319.
+The statistic L_r never replaces or truncates the actual fibres. This proves
+the advertised capacity80 extension.
+
+### E80.2. Exact three-inactive83 budget and remaining shapes
+
+For a three-inactive cut of capacity at most83, the same normalization keeps
+one active root because four inactive roots would cost84. Its budget is
+
+    7(delta+k)+2Z<=20.
+
+Every cut at most82 is already supplied by RC76.1. At exact83, all cases with
+k>=1 are still supplied by its existing small-anchor arguments:
+
+* k=1,delta=0 gives Z<=6, the same public-singleton case as RC76.1.
+* k=1,delta=1 gives Z<=3. The cheapest original restriction has private cost
+  at mostfloor(qZ/(n-1))<=2, so its whole public-plus-private projection has
+  at most three labels.
+* k=2 forces delta=0 and Z<=3. The cheapest original restriction has private
+  cost at mostfloor(qZ/n)<=1, again giving at most three complete labels.
+
+For k=0 and delta>=1, the unchanged clipped statistic satisfies
+
+    L<=Z+3delta<=9,
+
+so B80 applies. The new boundary is exactly k=delta=0,Z=10. Every original
+child is active; a cost1/2 fibre consists of at most one/two actual fine labels,
+and a cost3 fibre is contained either in three finite labels or one entire
+column. Degeneration to a smaller clipped size is supplied by L<=9.
+
+After reusing the existing complete-small-anchor, full1122*, gap12** and
+gap222* consumers, the five remaining necessary cost shapes are
+
+| root | remaining private costs |
+|---|---|
+|gap|1333|
+|gap|2233|
+|full|11233|
+|full|12223|
+|full|22222|
+
+They are new UNSUPPLIED COST PROFILES under only the stated one-root geometry,
+not assertions that all their individual actual realizations remain unsupplied.
+In particular a whole monochromatic original legal restriction uses H2, a
+complete restriction with at most three labels uses the existing small-anchor
+law, and certain spread or matched four-/five-label restrictions already use
+B4-spread/F12222.2/FM9. These are conditional consumers; the bare cost shape
+does not establish their hypotheses.
+
+### E80.3. Repository reuse boundary
+
+The checked Report449 results F1122 and F12222 require respectively two
+singleton plus two size-at-most-two fibres, or one singleton plus four such
+fibres. They do not by themselves cover11233,12223 or22222. The gap consumers
+require a singleton plus a size-at-most-two fibre or three doubles, and do not
+by themselves cover1333 or2233.
+
+Existing appearances of these shape strings in the cut77 multi-root inventory
+use additional classified active roots or different original maximum
+hypotheses. For example the private gap2222/full22222 law assumes BOTH roots'
+full bounded-fibre structures. A three-inactive83 cut leaves its other roots
+arbitrary, so that result cannot be invoked from the shape alone. Likewise the
+whole-gap1333 exclusion with two full12222 roots requires those extra roots.
+No such missing hypothesis has been silently imported here.
+
+### E80.4. Exact necessary-profile certificate
+
+[The exact inventory](../../../frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.py) and [its data](../../../frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.json) enumerate the sorted
+integer domain with active contributions<=20, original legal sizes, nonempty
+costs at k=0, and the two-root inequality when applicable. They find:
+
+    exact80/two-inactive: 11 profiles, all k=0 and all with an L<=9 witness;
+    exact83/three-inactive: 19 profiles, 14 already supplied and the five above.
+
+The script uses explicit exceptions under -I -S -B -O and requires --output.
+It does not enumerate actual source realizations or claim that a normalized
+cut is minimum. The mathematical budget argument above supplies the general
+source mapping; the finite inventory checks its boundary arithmetic.
+
+Independent enumeration of all labelled private-cost vectors gives exactly
+the same11 two-inactive and19 three-inactive normalized profiles. Both
+enumerations retain the unrestricted meaning of a whole-column token.
+Reproduce the canonical inventory with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/inactive_80_83_inventory.py --output /tmp/e7_inactive_80_83_replay.json
 ```
