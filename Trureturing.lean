@@ -52,3 +52,4 @@ import D5.S3.Zeros.ZetaIdentities
 import D5.S3.Zeros.ZetaUpgrade
 import D5.S3.QuadraticForms.ActualSignature
 import D5.S3.QuadraticForms.ConjugateHankelSignature
+import D5.S3.QuadraticForms.PolynomialSignature
