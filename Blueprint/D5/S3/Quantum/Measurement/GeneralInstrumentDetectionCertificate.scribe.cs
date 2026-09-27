@@ -47,7 +47,7 @@ internal sealed class GeneralInstrumentDetectionCertificateDocument : IScribeDoc
             Sub("L", I), Caret, Grp(Star), Sp, Sub("L", I), Sp, Eq, Sp, F.Id("I"));
         Formula bound = Seq(G, Sp, F.Id("I"), Sp, Leq, Sp, F.Id("I"), Minus, Sub("S", F.Id("d")));
         Formula decay = Seq(
-            Forall, Sp, M, Comma, Sp, Sub("S", Seq(M, F.Id("d"))), Sp, Leq, Sp,
+            Forall, Sp, M, Comma, Sp, Sub("S", Seq(M, Sp, F.Id("d"))), Sp, Leq, Sp,
             Open, D(1), Minus, G, Close, Caret, Grp(M), Sp, F.Id("I"));
         Formula summable = Seq(
             Forall, Sp, F.Rho, Sp, Geq, Sp, D(0), Sp, F.Text, Grp(Sp, F.Id("with"), Sp),
