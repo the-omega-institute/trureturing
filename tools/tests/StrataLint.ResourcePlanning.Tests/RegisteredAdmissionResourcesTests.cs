@@ -13,11 +13,13 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     private const string RegisteredReportContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
-    [InlineData("push")]
-    [InlineData("pr")]
-    public void DeclaredTemplateNativeEvidenceProvisionsLeanInEngineering(string mode)
+    [InlineData("tools/tests/StrataLint.DeclaredTemplate.Tests/FourierBridgeSourceEvidenceTests.cs", "push")]
+    [InlineData("tools/tests/StrataLint.DeclaredTemplate.Tests/FourierBridgeSourceEvidenceTests.cs", "pr")]
+    [InlineData("docs/CONTRIBUTING.md", "push")]
+    [InlineData("docs/CONTRIBUTING.md", "pr")]
+    public void DeclaredTemplateNativeEvidenceProvisionsLeanInEngineering(string input, string mode)
     {
-        var plan = Plan("tools/tests/StrataLint.DeclaredTemplate.Tests/FourierBridgeSourceEvidenceTests.cs", "", mode);
+        var plan = Plan(input, "", mode);
         var result = Python(basis.Path, """
             import json, pathlib, sys
             source, root = map(pathlib.Path, sys.argv[1:3])
@@ -27,7 +29,16 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             """, plan.ToJsonString());
         Assert.True(result.Exit == 0, result.Text);
         var requirements = JsonNode.Parse(result.Text)!;
-        Assert.Contains("test-declared-template", Strings(plan["stages"]!["engineering"]!["resources"]!));
+        var resources = Strings(plan["stages"]!["engineering"]!["resources"]!);
+        if (input == "docs/CONTRIBUTING.md")
+        {
+            Assert.Contains("engineering", resources);
+            Assert.DoesNotContain("test-declared-template", resources);
+        }
+        else
+            Assert.Contains("test-declared-template", resources);
+        Assert.Contains("tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
+            Strings(plan["execution"]!["tests"]!));
         Assert.Contains("lake", Strings(requirements["tools"]!));
         foreach (var layer in new[] { "dependency", "elan", "project" })
         {
