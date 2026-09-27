@@ -6,7 +6,7 @@ When a general no-click instrument has no definite dark direction, the survival 
 
 **Theorem 1.1 (Block decay of the survival effects).**
 
-$$\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \Rightarrow\\{}(D_{d} = 0 \Rightarrow \exists g > 0, g I \leq I-S_{d}) \land\\{}\forall g > 0, g I \leq I-S_{d} \Rightarrow \forall m, S_{m d} \leq (1-g)^{m} I \land\\{}\forall \rho \geq 0 \text{ with }\operatorname{Tr} \rho = 1, (N \mapsto \operatorname{Re} \operatorname{Tr}(\rho S_{N})) \text{ summable }\land \sum_{N} \operatorname{Re} \operatorname{Tr}(\rho S_{N}) \leq \frac{d}{g}.$$
+$$\sum_{a \in \alpha} Q_{a}^{*} Q_{a} + \sum_{i \in \iota} L_{i}^{*} L_{i} = I \Rightarrow\\{}(D_{d} = 0 \Rightarrow \exists g > 0, g I \leq I-S_{d}) \land\\{}\forall g > 0, g I \leq I-S_{d} \Rightarrow (\forall m, S_{m d} \leq (1-g)^{m} I) \land\\{}\forall \rho \geq 0 \text{ with }\operatorname{Tr} \rho = 1, (N \mapsto \operatorname{Re} \operatorname{Tr}(\rho S_{N})) \text{ summable }\land \sum_{N} \operatorname{Re} \operatorname{Tr}(\rho S_{N}) \leq \frac{d}{g}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/GeneralInstrumentDetectionCertificate.detection_certificate` (`✓ std3`). ∎
 
