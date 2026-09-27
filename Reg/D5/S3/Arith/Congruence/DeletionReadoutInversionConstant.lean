@@ -92,7 +92,7 @@ run_cmd do
     `D5.S3.Arith.Congruence.DeletionReadoutInversionConstant ++
       `deletion_readout_inversion_constant
   let identity :=
-    "sha256:29534117829d43735b68618c8e31569c1b55b4055431082148f785feb84d9af7"
+    "sha256:e966c7ce23573134dc68ddf3e326660ce55e57c5de082808fe605407e9440a1d"
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
