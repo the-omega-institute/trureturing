@@ -244,18 +244,18 @@ uniform quantitative saving needed for unrestricted Erdős #7.
 
 ## 4. Portable exact certificate
 
-[`scalar_threshold_barrier_certificate.py`](../frontier/cover-geometry/scalar_threshold_barrier_certificate.py)
+[`scalar_threshold_barrier_certificate.py`](../frontier/cover-geometry/scalar-threshold-barrier-certificate/scalar_threshold_barrier_certificate.py)
 uses Python 3.10 or later and only the standard library. It checks the
 entire grid, its strict barrier and the separated exact minimum and
 runner-up. Checks remain enabled under `-O`. Its deterministic
-[`JSON certificate`](../frontier/cover-geometry/scalar_threshold_barrier_certificate.json)
+[`JSON certificate`](../frontier/cover-geometry/scalar-threshold-barrier-certificate/scalar_threshold_barrier_certificate.json)
 contains no timestamps, paths or elapsed times. No external data file,
 source verifier, optimizer, geometry cache or Lean process is used.
 
 From any working directory, including `/`, run with absolute paths:
 
 ```sh
-python3 -I -S /path/to/trureturing/docs/reports/erdos7-odd-covering/frontier/cover-geometry/scalar_threshold_barrier_certificate.py --output /tmp/scalar_threshold_barrier_certificate.json
+python3 -I -S /path/to/trureturing/docs/reports/erdos7-odd-covering/frontier/cover-geometry/scalar-threshold-barrier-certificate/scalar_threshold_barrier_certificate.py --output /tmp/scalar_threshold_barrier_certificate.json
 ```
 
 The only input is the fixed mathematical model embedded in the producer.

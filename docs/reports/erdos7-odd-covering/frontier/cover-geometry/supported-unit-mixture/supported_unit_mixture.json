@@ -1,0 +1,901 @@
+{
+  "schema": "supported-unit-mixture-result-v1",
+  "input_sha256": "a8464d7e223410944fd612b1b7c62dddd8730f1c1c08a0a0f6c686bd8a12914b",
+  "unit_original_count": 12,
+  "test_original_count": 21,
+  "universal_product_lower": "1018473977/1252204800",
+  "universal_H12": {
+    "component_bound": "2017",
+    "E_R": "44353/233346920952152378008",
+    "E_S": "77239/3883471060463228194016",
+    "E": "23783384346518607201768945/113274501820735534684513538211585699450016",
+    "A": "859785/320852016309209519761",
+    "B": "851732557/761160327850792726027136",
+    "response": "8281287768781970749138378383436567/84358610810496863648684991366300913626775552"
+  },
+  "controls": [
+    {
+      "cutoff": 0,
+      "low_original_count": 0,
+      "high_original_count": 12,
+      "R_membership_atom_count": 1,
+      "component_count": 1,
+      "component_masks": [
+        {
+          "R_positive": [],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              24,
+              529
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              1,
+              29
+            ],
+            [
+              2,
+              31
+            ],
+            [
+              437,
+              899
+            ],
+            [
+              4,
+              841
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "4569927520992203179366583341792311133/5528400999912960579387070098496480793"
+        }
+      ],
+      "tail_assignments": [
+        {
+          "original_modulus": 23,
+          "original_residue": 0,
+          "side": "R",
+          "projection_residue": 0,
+          "projection_modulus": 23
+        },
+        {
+          "original_modulus": 29,
+          "original_residue": 0,
+          "side": "S",
+          "projection_residue": 0,
+          "projection_modulus": 29
+        },
+        {
+          "original_modulus": 31,
+          "original_residue": 0,
+          "side": "S",
+          "projection_residue": 0,
+          "projection_modulus": 31
+        },
+        {
+          "original_modulus": 667,
+          "original_residue": 1,
+          "side": "S",
+          "projection_residue": 1,
+          "projection_modulus": 29
+        },
+        {
+          "original_modulus": 713,
+          "original_residue": 2,
+          "side": "S",
+          "projection_residue": 2,
+          "projection_modulus": 31
+        },
+        {
+          "original_modulus": 20677,
+          "original_residue": 11225,
+          "side": "S",
+          "projection_residue": 437,
+          "projection_modulus": 899
+        },
+        {
+          "original_modulus": 15341,
+          "original_residue": 24,
+          "side": "R",
+          "projection_residue": 24,
+          "projection_modulus": 529
+        },
+        {
+          "original_modulus": 19343,
+          "original_residue": 4,
+          "side": "S",
+          "projection_residue": 4,
+          "projection_modulus": 841
+        },
+        {
+          "original_modulus": 529,
+          "original_residue": 5,
+          "side": "R",
+          "projection_residue": 5,
+          "projection_modulus": 529
+        },
+        {
+          "original_modulus": 841,
+          "original_residue": 6,
+          "side": "S",
+          "projection_residue": 6,
+          "projection_modulus": 841
+        },
+        {
+          "original_modulus": 14617054496157554107,
+          "original_residue": 47,
+          "side": "R",
+          "projection_residue": 47,
+          "projection_modulus": 504036361936467383
+        },
+        {
+          "original_modulus": 235994460398047850347,
+          "original_residue": 8,
+          "side": "S",
+          "projection_residue": 8,
+          "projection_modulus": 10260628712958602189
+        }
+      ],
+      "true_unit_survivor_mass": "142354079261969582121858623056866821220/160323628997475856802225032856397942997",
+      "supported_mixture_mass": "4569927520992203179366583341792311133/5528400999912960579387070098496480793",
+      "actual_mass_loss": "9826181153195689920227706144889798363/160323628997475856802225032856397942997",
+      "weighted_response_loss": "365986313596931803088220428934469823515363/14429126609772827112200252957075814869730",
+      "queries": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 667,
+          "residue": 1,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 713,
+          "residue": 2,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 20677,
+          "residue": 11225,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 15341,
+          "residue": 24,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 19343,
+          "residue": 4,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 529,
+          "residue": 5,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 841,
+          "residue": 6,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 14617054496157554107,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 235994460398047850347,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 3,
+          "residue": 1,
+          "weight": "616",
+          "old_mass": "2/3",
+          "true_outside_response": "142354079261969582121858623056866821220/160323628997475856802225032856397942997",
+          "mixture_outside_response": "4569927520992203179366583341792311133/5528400999912960579387070098496480793",
+          "weighted_unnormalized_loss": "12105855180737089981720533970504231583216/480970886992427570406675098569193828991"
+        },
+        {
+          "modulus": 115,
+          "residue": 4,
+          "weight": "1/2",
+          "old_mass": "1/5",
+          "true_outside_response": "24300/599633",
+          "mixture_outside_response": "9516397617250546619/252269940425499426233",
+          "weighted_unnormalized_loss": "706788151944337681/2522699404254994262330"
+        },
+        {
+          "modulus": 7569,
+          "residue": 8,
+          "weight": "615",
+          "old_mass": "1/18",
+          "true_outside_response": "184557111225832074593/168264050263808117297411",
+          "mixture_outside_response": "254733975529108294608596846636452/240365260865780894755959569499846991",
+          "weighted_unnormalized_loss": "17648583073116271719411930642954515/13941185130215291895845655030991125478"
+        },
+        {
+          "modulus": 219255817442363311605,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1/30",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 10619750717912153265615,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1/90",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 1587,
+          "residue": 24,
+          "weight": "17",
+          "old_mass": "1/6",
+          "true_outside_response": "22561/13791559",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "383537/82749354"
+        },
+        {
+          "modulus": 51303143564793010945,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1/5",
+          "true_outside_response": "14437/168264050263808117297411",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "8893192/841320251319040586487055"
+        },
+        {
+          "modulus": 4536327257428206447,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1/18",
+          "true_outside_response": "22561/13140731992045641142193",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "6948788/118266587928410770279737"
+        },
+        {
+          "modulus": 1395,
+          "residue": 2,
+          "weight": "600",
+          "old_mass": "1/90",
+          "true_outside_response": "4535785586902983355941172111255909027/160323628997475856802225032856397942997",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "90715711738059667118823442225118180540/480970886992427570406675098569193828991"
+        }
+      ],
+      "universal_bounds": {
+        "component_bound": "1",
+        "E_R": "529/10648",
+        "E_S": "1639/10976",
+        "E": "2907297/14609056",
+        "A": "1587/14641",
+        "B": "1988893/2151296",
+        "response": "1431728739113283/54398812160"
+      }
+    },
+    {
+      "cutoff": 12,
+      "low_original_count": 10,
+      "high_original_count": 2,
+      "R_membership_atom_count": 5,
+      "component_count": 5,
+      "component_masks": [
+        {
+          "R_positive": [
+            [
+              1,
+              23
+            ],
+            [
+              24,
+              529
+            ]
+          ],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              2,
+              23
+            ],
+            [
+              4,
+              23
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              1,
+              29
+            ],
+            [
+              437,
+              899
+            ],
+            [
+              24,
+              29
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "275255700824089208039/168264050263808117297411"
+        },
+        {
+          "R_positive": [
+            [
+              1,
+              23
+            ]
+          ],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              2,
+              23
+            ],
+            [
+              4,
+              23
+            ],
+            [
+              24,
+              529
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              1,
+              29
+            ],
+            [
+              437,
+              899
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "5992356986101197527042208900447266717/160323628997475856802225032856397942997"
+        },
+        {
+          "R_positive": [
+            [
+              2,
+              23
+            ]
+          ],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              1,
+              23
+            ],
+            [
+              4,
+              23
+            ],
+            [
+              24,
+              529
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              2,
+              31
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "9894613419987427318/252269940425499426233"
+        },
+        {
+          "R_positive": [
+            [
+              4,
+              23
+            ]
+          ],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              1,
+              23
+            ],
+            [
+              2,
+              23
+            ],
+            [
+              24,
+              529
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              4,
+              841
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "296472387306651644670/7315828272339483360757"
+        },
+        {
+          "R_positive": [],
+          "R_negative": [
+            [
+              0,
+              23
+            ],
+            [
+              5,
+              529
+            ],
+            [
+              1,
+              23
+            ],
+            [
+              2,
+              23
+            ],
+            [
+              4,
+              23
+            ],
+            [
+              24,
+              529
+            ],
+            [
+              47,
+              504036361936467383
+            ]
+          ],
+          "S_positive": [],
+          "S_negative": [
+            [
+              0,
+              29
+            ],
+            [
+              0,
+              31
+            ],
+            [
+              6,
+              841
+            ],
+            [
+              8,
+              10260628712958602189
+            ]
+          ],
+          "weight": "129421543533435549319440/168264050263808117297411"
+        }
+      ],
+      "tail_assignments": [
+        {
+          "original_modulus": 14617054496157554107,
+          "original_residue": 47,
+          "side": "R",
+          "projection_residue": 47,
+          "projection_modulus": 504036361936467383
+        },
+        {
+          "original_modulus": 235994460398047850347,
+          "original_residue": 8,
+          "side": "S",
+          "projection_residue": 8,
+          "projection_modulus": 10260628712958602189
+        }
+      ],
+      "true_unit_survivor_mass": "142354079261969582121858623056866821220/160323628997475856802225032856397942997",
+      "supported_mixture_mass": "142354079261969581832847207757774249082/160323628997475856802225032856397942997",
+      "actual_mass_loss": "289011415299092572138/160323628997475856802225032856397942997",
+      "weighted_response_loss": "11731384949190735311505757/14429126609772827112200252957075814869730",
+      "queries": [
+        {
+          "modulus": 23,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 29,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 31,
+          "residue": 0,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 667,
+          "residue": 1,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 713,
+          "residue": 2,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 20677,
+          "residue": 11225,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 15341,
+          "residue": 24,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 19343,
+          "residue": 4,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 529,
+          "residue": 5,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 841,
+          "residue": 6,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 14617054496157554107,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 235994460398047850347,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 3,
+          "residue": 1,
+          "weight": "616",
+          "old_mass": "2/3",
+          "true_outside_response": "142354079261969582121858623056866821220/160323628997475856802225032856397942997",
+          "mixture_outside_response": "142354079261969581832847207757774249082/160323628997475856802225032856397942997",
+          "weighted_unnormalized_loss": "356062063648482048874016/480970886992427570406675098569193828991"
+        },
+        {
+          "modulus": 115,
+          "residue": 4,
+          "weight": "1/2",
+          "old_mass": "1/5",
+          "true_outside_response": "24300/599633",
+          "mixture_outside_response": "296472387306651644670/7315828272339483360757",
+          "weighted_unnormalized_loss": "3/7315828272339483360757"
+        },
+        {
+          "modulus": 7569,
+          "residue": 8,
+          "weight": "615",
+          "old_mass": "1/18",
+          "true_outside_response": "184557111225832074593/168264050263808117297411",
+          "mixture_outside_response": "7645557237755597564579281146218164/6970592565107645947922827515495562739",
+          "weighted_unnormalized_loss": "125867591410207847065/41823555390645875687536965092973376434"
+        },
+        {
+          "modulus": 219255817442363311605,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1/30",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 10619750717912153265615,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1/90",
+          "true_outside_response": "0",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "0"
+        },
+        {
+          "modulus": 1587,
+          "residue": 24,
+          "weight": "17",
+          "old_mass": "1/6",
+          "true_outside_response": "22561/13791559",
+          "mixture_outside_response": "275255700824089208039/168264050263808117297411",
+          "weighted_unnormalized_loss": "85/168264050263808117297411"
+        },
+        {
+          "modulus": 51303143564793010945,
+          "residue": 8,
+          "weight": "616",
+          "old_mass": "1/5",
+          "true_outside_response": "14437/168264050263808117297411",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "8893192/841320251319040586487055"
+        },
+        {
+          "modulus": 4536327257428206447,
+          "residue": 47,
+          "weight": "616",
+          "old_mass": "1/18",
+          "true_outside_response": "22561/13140731992045641142193",
+          "mixture_outside_response": "0",
+          "weighted_unnormalized_loss": "6948788/118266587928410770279737"
+        },
+        {
+          "modulus": 1395,
+          "residue": 2,
+          "weight": "600",
+          "old_mass": "1/90",
+          "true_outside_response": "4535785586902983355941172111255909027/160323628997475856802225032856397942997",
+          "mixture_outside_response": "4535785586902983346316848578796927298/160323628997475856802225032856397942997",
+          "weighted_unnormalized_loss": "192486470649179634580/480970886992427570406675098569193828991"
+        }
+      ],
+      "universal_bounds": {
+        "component_bound": "2017",
+        "E_R": "44353/233346920952152378008",
+        "E_S": "77239/3883471060463228194016",
+        "E": "23783384346518607201768945/113274501820735534684513538211585699450016",
+        "A": "859785/320852016309209519761",
+        "B": "851732557/761160327850792726027136",
+        "response": "8281287768781970749138378383436567/84358610810496863648684991366300913626775552"
+      }
+    }
+  ],
+  "scope": "Exact scalar infinite tails and finite actual supported decompositions/queries. No full outside-period enumeration, source producer, optimizer, geometry or Lean run. Universal support and inventory-independent estimates follow the separate ordinary proof; transport capacity is not inferred."
+}

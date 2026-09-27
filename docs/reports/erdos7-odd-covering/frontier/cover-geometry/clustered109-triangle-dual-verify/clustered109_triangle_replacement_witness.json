@@ -1,0 +1,63 @@
+{
+  "schema": "clustered109-triangle-replacement-dual-v1",
+  "scope": "Same actual109 reference/head predicate and fullmode8 charges; unchanged692 fractions on all groups except32,128,160; one valid triangle mixture with total budgetc.",
+  "old_witness_sha256": "907c8b8f2a7636179893a4cdf1646be1eaf35c9da68dc0472f2c0308f0ea934e",
+  "source_sha256": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
+  },
+  "removed_groups": [
+    32,
+    128,
+    160
+  ],
+  "retained_rule": "For every old692 row outside removed_groups, keep its N/D_old exactly. Remove every old row in removed_groups.",
+  "triangle_budget": "1084133/201247200",
+  "triangle_denominator": 1000000000000,
+  "triangle_rows": [
+    [
+      0,
+      2,
+      12,
+      323049123489
+    ],
+    [
+      0,
+      3,
+      3,
+      491620148641
+    ],
+    [
+      1,
+      0,
+      10,
+      29799032598
+    ],
+    [
+      1,
+      2,
+      7,
+      71961068683
+    ],
+    [
+      1,
+      3,
+      13,
+      83570626589
+    ]
+  ],
+  "triangle_row_schema": [
+    "b3",
+    "b5",
+    "b15",
+    "numerator"
+  ],
+  "triangle_domain": [
+    3,
+    5,
+    15
+  ],
+  "triangle_coefficient": "(I[x3=b3]+I[x5=b5]+I[x15=b15])^2+2*(I[x3=b3]+I[x5=b5]+I[x15=b15])",
+  "target": "193/100000"
+}

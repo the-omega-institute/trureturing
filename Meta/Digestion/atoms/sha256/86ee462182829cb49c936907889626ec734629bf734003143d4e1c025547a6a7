@@ -1,0 +1,17 @@
+**命题 535.1（共同总量不变而位置可连续移动）。** 固定 $n,p$、$M\in(0,1)$ 与 $r\in[0,1]$。对任意 $0<\varepsilon<M/n$，令 $b=M-n\varepsilon$，构成定义 530.1 的目标族 $\mathcal Q^\varepsilon$。所有这些族都具有同样的
+
+$$
+M,\quad \rho=c(1-M),\quad
+s=\lceil n/q\rceil,\quad\tau=1/c,\quad
+|I|=\binom np,\quad|X|=n+1,\quad r,
+$$
+
+以及同一个带状态指标的完整距离矩阵：
+
+$$
+\operatorname{TV}(Q^\varepsilon_S,Q^\varepsilon_T)
+=\frac{1-M}{p}|S\setminus T|.
+$$
+
+证明：共同容量、半径与覆盖数由命题 531.1 给出。不同 $\varepsilon$ 只把同一份共同质量在公共符号和全部标签之间重新分配，不改变 $D=1-M$。两目标在公共符号及 $S\cap T$、$(S\cup T)^c$ 上相同；在 $S\setminus T$ 与 $T\setminus S$ 上各有绝对差 $D/p$。因两子集等大，这两处的元素数相同，TV 等于上式。证毕。
+

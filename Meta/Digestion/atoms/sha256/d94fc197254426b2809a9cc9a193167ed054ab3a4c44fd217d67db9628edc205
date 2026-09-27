@@ -1,0 +1,28 @@
+**命题 631.1（正可行阈值处的归约行）。** 若 $r>M$，则 $\theta>0$。在最小预算 $h_{\min}=d\theta/n$，归约类 $R=l+Dw$、$w_\circ\le u_\circ$ 中恰有一个可行残余：
+
+$$
+w_\circ=u_\circ,\qquad w_i=u_i+\frac\theta n.
+$$
+
+因此其最大重叠与联合最优值可直接写成
+
+$$
+F_*(h_{\min})=\sum_{i=1}^p\min\left(u_i+\frac\theta n,\frac1p\right),
+$$
+
+$$
+\mathcal J(r,\beta)=2rD\left[1-\sum_{i=1}^p\min\left(u_i+\frac\theta n,\frac1p\right)\right]-\beta.
+$$
+
+证明：$dv\le h_{\min}$ 与 $pv+h_{\min}\ge\theta$ 同时强制 $v=\theta/n$，此时 $H=0$。任意归约可行残余须有 $w_i\le u_i+\theta/n$，又因 $w_\circ\le u_\circ$，标签总量至少为 $1-u_\circ$。各上限的总和恰为
+
+$$
+U_n+\theta=C-u_\circ+\theta=1-u_\circ.
+$$
+
+于是所有上限必须取等号，公共坐标也取等号。该向量确实非负、总量一且满足预算，故存在与唯一性都得到证明。排序未被共同加数改变，重叠由前 $p$ 项给出。
+
+又 $r-M<rD$，因为二者相差 $M(1-r)>0$，所以 $\beta<\lambda$。此时联合值中活动的是 $2A_*-\beta$，得到末式。证毕。
+
+这份唯一性依然限定在已说明的归约类内。它也不与第 633 节的多重达到者冲突：一个是在正可行阈值上被全部质量条件钉住，另一个是在具有额外预算的不同参数切片中存在活动约束未区分的自由度。
+

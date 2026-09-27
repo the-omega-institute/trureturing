@@ -256,11 +256,11 @@ not a claim that the endpoint is attained.
 ## 5. Reproducible arithmetic and inherited numerator
 
 The standalone checker is
-[`frontier/cover-geometry/absorbed_barrier_boundary.py`](../../frontier/cover-geometry/absorbed_barrier_boundary.py).
+[`frontier/cover-geometry/absorbed_barrier_boundary.py`](../../frontier/cover-geometry/absorbed-barrier-boundary/absorbed_barrier_boundary.py).
 It has no scratch-data dependency and is read-only by default:
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/absorbed_barrier_boundary.py
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/absorbed-barrier-boundary/absorbed_barrier_boundary.py
 ```
 
 An optional `--output PATH` writes its exact rational JSON result.
@@ -421,13 +421,13 @@ over this relaxation has the same lower bound
 
 or its denominator is inadmissible at(V4).
 
-The [cellwise checker](../../frontier/cover-geometry/cellwise_barrier_boundary.py) reconstructs
+The [cellwise checker](../../frontier/cover-geometry/cellwise-barrier-boundary/cellwise_barrier_boundary.py) reconstructs
 the complete source and numerator constants using the pinned earlier
 checker, verifies the support-set decomposition and every vector identity,
 and exits zero. It does not sample barriers as a substitute for(V5).
 
 ```sh
-python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/cellwise_barrier_boundary.py
+python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/cellwise-barrier-boundary/cellwise_barrier_boundary.py
 ```
 
 The new [actual-source constraint](48-actual-source-compatibility-excludes-a-relaxed-mass-endpoint.md)

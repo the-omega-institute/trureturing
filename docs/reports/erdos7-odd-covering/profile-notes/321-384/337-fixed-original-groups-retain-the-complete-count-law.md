@@ -199,12 +199,12 @@ operators or relations involving actual future tests remain outside
 this calculation. In particular it does not construct a covering
 family or establish that the sufficient bounds are jointly attainable.
 
-The [portable exact helper](../../frontier/cover-geometry/high_rho_fixed_original_groups.py)
+The [portable exact helper](../../frontier/cover-geometry/high-rho-fixed-original-groups/high_rho_fixed_original_groups.py)
 provides the reusable fixed_group_centered operator and the fixed
 all-prior instance. The [canonical certificate](../../certificates/source_norms/cover-geometry/high_rho_fixed_original_groups.json)
 binds the current333/335 sources, ordinary proof and producer. There is
 no new Lean declaration or floating-point threshold search.
 
 ```sh
-python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/high_rho_fixed_original_groups.py --check
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/high-rho-fixed-original-groups/high_rho_fixed_original_groups.py --check
 ```

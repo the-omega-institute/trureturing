@@ -544,8 +544,8 @@ uncovered density at least \(1/Q\).
 ## 7. Exact certificate and the remaining unrestricted problem
 
 The standard-library program
-[conditional_kernel_block_certificate.py](../frontier/cover-geometry/conditional_kernel_block_certificate.py)
-and its [exact data](../frontier/cover-geometry/conditional_kernel_block_certificate.json)
+[conditional_kernel_block_certificate.py](../frontier/cover-geometry/conditional-kernel-block-certificate/conditional_kernel_block_certificate.py)
+and its [exact data](../frontier/cover-geometry/conditional-kernel-block-certificate/conditional_kernel_block_certificate.json)
 provide the finite certificate. They check all selected residual
 polynomials and fee margins, the thirteen-derivative and four-corner
 certificates for each first-root input, and the non-3 orientation
@@ -573,7 +573,7 @@ Python 3.10 or later. Optimized `-O` execution is rejected. Reproduce from
 the repository root with assertions enabled:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/conditional_kernel_block_certificate.py --output /tmp/conditional-kernel-block-certificate.json
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/conditional-kernel-block-certificate/conditional_kernel_block_certificate.py --output /tmp/conditional-kernel-block-certificate.json
 ```
 
 Known results have different scopes. The repository's source audits record

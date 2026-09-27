@@ -1,0 +1,12 @@
+**定义 727.1（两侧有限优化）。** 定义
+
+$$
+\nu=\max\left\{\sum_{S\in\mathcal F}x_S:x_S\ge0,\ \sum_{S\ni i}x_S\le1\ (i\in I)\right\},
+$$
+
+$$
+\tau=\min\left\{\sum_i y_i:y_i\ge0,\ y(S)\ge1\ (S\in\mathcal F)\right\}.
+$$
+
+前者是该有限超图的分数匹配数，后者是分数顶点覆盖数。“分数”表示允许非负实权重；这里没有把标签覆盖率解释成宗教真理的比例。
+

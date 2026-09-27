@@ -1,0 +1,384 @@
+{
+  "input_name": "two_copy_pure_anchor.json",
+  "input_sha256": "45939ae4a727d63d0e91d836b8519eea84482f8c06cfe46eb96cb082a2f78a53",
+  "scope": "three fixed new depth-two geometry candidates; one shared later-coordinate low-atom convolution, exact full tails via means",
+  "coefficient_order": [
+    "constant",
+    "q1",
+    "q2",
+    "K"
+  ],
+  "alpha_coefficients": [
+    "453101833983971/491495438353920",
+    "-35365645456019/32766362556928",
+    "-614089/339456",
+    "-3155821/169728000"
+  ],
+  "Phi_coefficients": [
+    "6704874615181/20853247134720",
+    "25234196718989/20853247134720",
+    "6704249/4299776",
+    "2079/102400"
+  ],
+  "gap_coefficients": [
+    "44887686823492905683/18097845031068042240",
+    "-27088822449555040271/6032615010356014080",
+    "-4642734307/657865728",
+    "-265958129/3462451200"
+  ],
+  "shared_stage_coefficients": [
+    {
+      "prime": 11,
+      "threshold": 2,
+      "cap": "5/3",
+      "old_rest_mean": "5/4",
+      "old_rest_low": {
+        "1": "11/14",
+        "2": "9/49",
+        "3": "9/343"
+      },
+      "hinge": [
+        "1/28",
+        "13/28",
+        "5/4",
+        "1/80"
+      ],
+      "loss": [
+        "1/84",
+        "13/84",
+        "5/12",
+        "1/240"
+      ],
+      "mass_after": [
+        "83/84",
+        "-55/84",
+        "-11/12",
+        "-11/1200"
+      ]
+    },
+    {
+      "prime": 13,
+      "threshold": 2,
+      "cap": "3/2",
+      "old_rest_mean": "35/24",
+      "old_rest_low": {
+        "1": "2/3",
+        "2": "61/231",
+        "3": "571/17787"
+      },
+      "hinge": [
+        "1/8",
+        "19/24",
+        "35/24",
+        "7/480"
+      ],
+      "loss": [
+        "1/32",
+        "19/96",
+        "35/96",
+        "7/1920"
+      ],
+      "mass_after": [
+        "643/672",
+        "-191/224",
+        "-41/32",
+        "-41/3200"
+      ]
+    },
+    {
+      "prime": 17,
+      "threshold": 4,
+      "cap": "2",
+      "old_rest_mean": "105/64",
+      "old_rest_low": {
+        "1": "23/39",
+        "2": "23783/78078",
+        "3": "2646365/78156078"
+      },
+      "hinge": [
+        "132370319/2500994496",
+        "1019930831/2500994496",
+        "2623/2496",
+        "14587/1248000"
+      ],
+      "loss": [
+        "132370319/10003977984",
+        "1019930831/10003977984",
+        "2623/9984",
+        "14587/4992000"
+      ],
+      "mass_after": [
+        "3146629459/3334659328",
+        "-9550108487/10003977984",
+        "-15415/9984",
+        "-78547/4992000"
+      ]
+    },
+    {
+      "prime": 19,
+      "threshold": 4,
+      "cap": "9/5",
+      "old_rest_mean": "945/512",
+      "old_rest_low": {
+        "1": "115/221",
+        "2": "7538137/22564542",
+        "3": "12946937747/383980811214"
+      },
+      "hinge": [
+        "10679881978039/98299087670784",
+        "61287851873975/98299087670784",
+        "149965/113152",
+        "161741/11315200"
+      ],
+      "loss": [
+        "10679881978039/491495438353920",
+        "12257570374795/98299087670784",
+        "29993/113152",
+        "161741/56576000"
+      ],
+      "mass_after": [
+        "453101833983971/491495438353920",
+        "-35365645456019/32766362556928",
+        "-614089/339456",
+        "-3155821/169728000"
+      ]
+    }
+  ],
+  "target": "257/51",
+  "candidates": {
+    "root_balanced_split25": {
+      "caps": [
+        "1/3",
+        "2/21",
+        "50/21"
+      ],
+      "R5_upper": "19/42",
+      "seed_mass": "65/84",
+      "stages": [
+        {
+          "prime": 11,
+          "threshold": 2,
+          "cap": "5/3",
+          "hinge": "19/56",
+          "loss": "19/168",
+          "mass_after": "37/56"
+        },
+        {
+          "prime": 13,
+          "threshold": 2,
+          "cap": "3/2",
+          "hinge": "9/16",
+          "loss": "9/64",
+          "mass_after": "233/448"
+        },
+        {
+          "prime": 17,
+          "threshold": 4,
+          "cap": "2",
+          "hinge": "23767726601/75029834880",
+          "loss": "23767726601/300119339520",
+          "mass_after": "132321126319/300119339520"
+        },
+        {
+          "prime": 19,
+          "threshold": 4,
+          "cap": "9/5",
+          "hinge": "281173473250765/589794526024704",
+          "loss": "56234694650153/589794526024704",
+          "mass_after": "339671304653243/982990876707840"
+        }
+      ],
+      "alpha": "339671304653243/982990876707840",
+      "Phi": "115325650801759/125119482808320",
+      "paired_gap": "1550057836318121593/12065230020712028160",
+      "query_upper": "3433952691451381579/735728045878924338",
+      "target_margin": "1550057836318121593/4169125593313904582",
+      "density_upper": "31596135322752000/339671304653243"
+    },
+    "split125_cells": {
+      "caps": [
+        "40/103",
+        "8/103",
+        "250/103"
+      ],
+      "R5_upper": "101/206",
+      "seed_mass": "311/412",
+      "stages": [
+        {
+          "prime": 11,
+          "threshold": 2,
+          "cap": "5/3",
+          "hinge": "283/824",
+          "loss": "283/2472",
+          "mass_after": "1583/2472"
+        },
+        {
+          "prime": 13,
+          "threshold": 2,
+          "cap": "3/2",
+          "hinge": "2873/4944",
+          "loss": "2873/19776",
+          "mass_after": "9791/19776"
+        },
+        {
+          "prime": 17,
+          "threshold": 4,
+          "cap": "2",
+          "hinge": "23647274107/73600695168",
+          "loss": "23647274107/294402780672",
+          "mass_after": "40703363215/98134260224"
+        },
+        {
+          "prime": 19,
+          "threshold": 4,
+          "cap": "9/5",
+          "hinge": "470957678918369/964267240961024",
+          "loss": "470957678918369/4821336204805120",
+          "mass_after": "1528798555834581/4821336204805120"
+        }
+      ],
+      "alpha": "1528798555834581/4821336204805120",
+      "Phi": "196755332039291/204560424273920",
+      "paired_gap": "110128877501532471/59177080577778042880",
+      "query_upper": "5555770599937749911/1103792557312567482",
+      "target_margin": "36709625833844157/6254824491437882398",
+      "density_upper": "52660225537920000/509599518611527"
+    },
+    "common125_outside25_root": {
+      "caps": [
+        "14/37",
+        "3/37",
+        "100/37"
+      ],
+      "R5_upper": "18/37",
+      "seed_mass": "28/37",
+      "stages": [
+        {
+          "prime": 11,
+          "threshold": 2,
+          "cap": "5/3",
+          "hinge": "359/1036",
+          "loss": "359/3108",
+          "mass_after": "1993/3108"
+        },
+        {
+          "prime": 13,
+          "threshold": 2,
+          "cap": "3/2",
+          "hinge": "517/888",
+          "loss": "517/3552",
+          "mass_after": "12325/24864"
+        },
+        {
+          "prime": 17,
+          "threshold": 4,
+          "cap": "2",
+          "hinge": "149923585117/462683981760",
+          "loss": "149923585117/1850735927040",
+          "mass_after": "255826633961/616911975680"
+        },
+        {
+          "prime": 19,
+          "threshold": 4,
+          "cap": "9/5",
+          "hinge": "1784535078535505/3637066243819008",
+          "loss": "356907015707101/3637066243819008",
+          "mass_after": "5756722437366853/18185331219095040"
+        }
+      ],
+      "alpha": "5756722437366853/18185331219095040",
+      "Phi": "741240614045003/771570143984640",
+      "paired_gap": "936539976329900629/669620266149517562880",
+      "query_upper": "20926398728761551783/4156353599778867866",
+      "target_margin": "936539976329900629/211974033588722261166",
+      "density_upper": "663518841777792000/5756722437366853"
+    }
+  },
+  "root_balanced": {
+    "alpha_coefficients_in_1_over_s": [
+      "69068401675969/122873859588480",
+      "-1715289/56576000"
+    ],
+    "Phi_coefficients_in_1_over_s": [
+      "11337205141133/15639935351040",
+      "35546717/1289932800"
+    ],
+    "gap_coefficients_in_1_over_s": [
+      "494412899276051817/502717917529667840",
+      "-2624904631/21928857600"
+    ],
+    "s_threshold": "14442192444829970821/118659095826252436080"
+  },
+  "packing_depth4": {
+    "raw_union": "4992/60025",
+    "pure5_mass": "313/625",
+    "pure7_mass": "1601/2401",
+    "normalized_union": "124800/501113",
+    "joint_NC_gap": "-1014418377035874809813/102465740249429356800000",
+    "pure5_deficit": "1/1250",
+    "pure7_deficit": "1/7203"
+  },
+  "raw_mixed_saving_needed_with_unchanged_PA_later_ledger": "6168733163201163811/1650097635185615616000",
+  "checks": {
+    "reference_primes": true,
+    "stage_thresholds": true,
+    "final_query_threshold": true,
+    "cap_contract_11": true,
+    "cap_contract_13": true,
+    "cap_contract_17": true,
+    "cap_contract_19": true,
+    "root_balanced_split25_nonnegative_atoms": true,
+    "root_balanced_split25_normalization": true,
+    "root_balanced_split25_full_mean": true,
+    "root_balanced_split25_positive_mass": true,
+    "root_balanced_split25_positive_hinge": true,
+    "root_balanced_split25_crosses_target": true,
+    "root_balanced_split25_paired_identity": true,
+    "root_balanced_split25_stage_nonnegative_11": true,
+    "root_balanced_split25_stage_nonnegative_13": true,
+    "root_balanced_split25_stage_nonnegative_17": true,
+    "root_balanced_split25_stage_nonnegative_19": true,
+    "split125_cells_nonnegative_atoms": true,
+    "split125_cells_normalization": true,
+    "split125_cells_full_mean": true,
+    "split125_cells_positive_mass": true,
+    "split125_cells_positive_hinge": true,
+    "split125_cells_crosses_target": true,
+    "split125_cells_paired_identity": true,
+    "split125_cells_stage_nonnegative_11": true,
+    "split125_cells_stage_nonnegative_13": true,
+    "split125_cells_stage_nonnegative_17": true,
+    "split125_cells_stage_nonnegative_19": true,
+    "common125_outside25_root_nonnegative_atoms": true,
+    "common125_outside25_root_normalization": true,
+    "common125_outside25_root_full_mean": true,
+    "common125_outside25_root_positive_mass": true,
+    "common125_outside25_root_positive_hinge": true,
+    "common125_outside25_root_crosses_target": true,
+    "common125_outside25_root_paired_identity": true,
+    "common125_outside25_root_stage_nonnegative_11": true,
+    "common125_outside25_root_stage_nonnegative_13": true,
+    "common125_outside25_root_stage_nonnegative_17": true,
+    "common125_outside25_root_stage_nonnegative_19": true,
+    "root_balanced_threshold_positive": true,
+    "root_balanced_min_geometry_crosses": true,
+    "root_geometry_survivor_lower": true,
+    "split125_clipped_mass": true,
+    "split125_root_cap": true,
+    "split125_cell_cap": true,
+    "outside_special_cell_mass": true,
+    "outside_other_cell_mass": true,
+    "outside_weight_total": true,
+    "outside_density_special": true,
+    "outside_density_others": true,
+    "nested_poor_root_mass_lower": true,
+    "nested_poor_root_mass_upper": true,
+    "nested_rich_root_mass_lower": true,
+    "packing_raw_depth4": true,
+    "packing_normalized_depth4": true,
+    "packing_in_retained_joint_NC_region": true,
+    "terminal_ledger_reconstruction": true,
+    "raw_mixed_saving_positive": true
+  },
+  "passed_count": 59
+}

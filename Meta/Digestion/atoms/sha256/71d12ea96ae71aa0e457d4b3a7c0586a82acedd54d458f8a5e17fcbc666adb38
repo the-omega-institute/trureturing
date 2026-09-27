@@ -1,0 +1,2 @@
+令 $`\mathcal W_\rho`$ 为实空间 $`L^2(\mathbb R,\rho(x)\,dx)`$ 上的中心 Gaussian 等距过程，
+协方差为 $`\mathbb E[\mathcal W_\rho(f)\mathcal W_\rho(g)]=\int fg\rho`$。

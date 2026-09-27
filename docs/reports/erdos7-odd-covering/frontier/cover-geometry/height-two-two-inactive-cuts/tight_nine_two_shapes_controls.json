@@ -1,0 +1,212 @@
+{
+  "result": "PASS",
+  "finite_column_patterns_per_shape": [
+    7,
+    7
+  ],
+  "whole_column_patterns_per_shape": [
+    [],
+    []
+  ],
+  "actual_controls": [
+    {
+      "shape": "11223/12222",
+      "extra": "H",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 12,
+        "1": 14,
+        "2": 10,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11223/12222",
+      "extra": "L",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 14,
+        "2": 12,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11223/12222",
+      "extra": "K",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 16,
+        "2": 10,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11223/12222",
+      "extra": "M",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 14,
+        "2": 10,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11222/12223",
+      "extra": "H",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 12,
+        "1": 14,
+        "2": 10,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11222/12223",
+      "extra": "L",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 14,
+        "2": 12,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11222/12223",
+      "extra": "K",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 16,
+        "2": 10,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11222/12223",
+      "extra": "M",
+      "four_owner_x": false,
+      "points": 224,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 14,
+        "2": 10,
+        "3": 2,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 3
+    },
+    {
+      "shape": "11222/12223",
+      "extra": "K",
+      "four_owner_x": true,
+      "points": 459,
+      "pair_tests": 480,
+      "flow": 77,
+      "cuts": [
+        77,
+        78
+      ],
+      "active_coarse_before_slack": {
+        "0": 10,
+        "1": 16,
+        "2": 10,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "max_active_fine_owner_count": 4
+    }
+  ],
+  "scope": "Necessary column-pattern checks and nine concrete original sources. General source theorem in separate proof; not Lean."
+}

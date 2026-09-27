@@ -13,8 +13,8 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/j-geometry/j_aggregate_layer_global_comparison.json'
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/j-geometry/j_family_global_comparison.py': 'a1a68369f64f2fd0cb2638822543a7943477faa54b2b47f24cd5b45c703af57d',
-    'certificates/source_norms/j-geometry/j_family_global_comparison.json': 'dd3c61290db8b3ba13c84b79c0cdba5aadc4f28dac26eb3060f6fd4634ed0d0d',
+    'frontier/j-geometry/j_family_global_comparison.py': 'b15298feda2a5772445a4f7d7b87f8384fdab9bf61be36d9d5d6abd2c6974e61',
+    'certificates/source_norms/j-geometry/j_family_global_comparison.json': 'a9d6a1ee00f455ed097882472140aecf11542c1d1cd1f694d1eaa68a1917c048',
     'frontier/cover-geometry/three_layer_product_escape.py': 'a9a16fb44398c9bde3576f3adc9d4d496cb5accc162f40a371e30eb9032f5778',
     'certificates/source_norms/cover-geometry/three_layer_product_escape.json': '3f1b933db608b59f0e6328e43919e3482bcd6c86138c1cfd8da6e82f8d09a1cb',
 }

@@ -794,8 +794,8 @@ if its graph had multiple components, a zero product of their finite
 avoidance probabilities would give a covering proper subfamily. Neither
 this consequence nor UC6 excludes general cores with multiple cycles.
 
-The [exact control program](../frontier/cover-geometry/cyclic_core_extension_controls.py)
-and [data](../frontier/cover-geometry/cyclic_core_extension_controls.json)
+The [exact control program](../frontier/cover-geometry/cyclic-core-extension-controls/cyclic_core_extension_controls.py)
+and [data](../frontier/cover-geometry/cyclic-core-extension-controls/cyclic_core_extension_controls.json)
 retain literal original labels and residues, the full-coordinate tree
 domains, extension counts, core compatibility and original-Haar counts.
 Their finite examples check the implementation and constants; the

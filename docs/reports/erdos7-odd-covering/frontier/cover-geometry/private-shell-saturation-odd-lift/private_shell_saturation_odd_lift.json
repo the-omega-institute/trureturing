@@ -1,0 +1,174 @@
+{
+  "scope": "Actual finite odd irredundant NONCOVER with every prime CRT line through every private point covered; numerical moduli REPEAT. Not an odd-distinct counterexample or a Lean result.",
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13
+  ],
+  "period": 15015,
+  "pattern_rows": [
+    {
+      "pattern": "**001",
+      "Boolean_private_word": "11001",
+      "modulus": 1001,
+      "expanded_class_count": 12,
+      "actual_private_point_count": 96
+    },
+    {
+      "pattern": "**010",
+      "Boolean_private_word": "11010",
+      "modulus": 1001,
+      "expanded_class_count": 10,
+      "actual_private_point_count": 80
+    },
+    {
+      "pattern": "*0*10",
+      "Boolean_private_word": "10110",
+      "modulus": 715,
+      "expanded_class_count": 10,
+      "actual_private_point_count": 120
+    },
+    {
+      "pattern": "*0101",
+      "Boolean_private_word": "10101",
+      "modulus": 5005,
+      "expanded_class_count": 72,
+      "actual_private_point_count": 144
+    },
+    {
+      "pattern": "0*1*0",
+      "Boolean_private_word": "01110",
+      "modulus": 273,
+      "expanded_class_count": 6,
+      "actual_private_point_count": 240
+    },
+    {
+      "pattern": "000*1",
+      "Boolean_private_word": "00011",
+      "modulus": 1365,
+      "expanded_class_count": 12,
+      "actual_private_point_count": 120
+    },
+    {
+      "pattern": "001**",
+      "Boolean_private_word": "00111",
+      "modulus": 105,
+      "expanded_class_count": 6,
+      "actual_private_point_count": 720
+    },
+    {
+      "pattern": "01*0*",
+      "Boolean_private_word": "01101",
+      "modulus": 165,
+      "expanded_class_count": 4,
+      "actual_private_point_count": 288
+    },
+    {
+      "pattern": "010**",
+      "Boolean_private_word": "01011",
+      "modulus": 105,
+      "expanded_class_count": 4,
+      "actual_private_point_count": 480
+    },
+    {
+      "pattern": "01111",
+      "Boolean_private_word": "01111",
+      "modulus": 15015,
+      "expanded_class_count": 2880,
+      "actual_private_point_count": 2880
+    },
+    {
+      "pattern": "10*00",
+      "Boolean_private_word": "10100",
+      "modulus": 2145,
+      "expanded_class_count": 2,
+      "actual_private_point_count": 12
+    },
+    {
+      "pattern": "100**",
+      "Boolean_private_word": "10011",
+      "modulus": 105,
+      "expanded_class_count": 2,
+      "actual_private_point_count": 240
+    },
+    {
+      "pattern": "10111",
+      "Boolean_private_word": "10111",
+      "modulus": 15015,
+      "expanded_class_count": 1440,
+      "actual_private_point_count": 1440
+    },
+    {
+      "pattern": "11000",
+      "Boolean_private_word": "11000",
+      "modulus": 15015,
+      "expanded_class_count": 8,
+      "actual_private_point_count": 8
+    },
+    {
+      "pattern": "11011",
+      "Boolean_private_word": "11011",
+      "modulus": 15015,
+      "expanded_class_count": 960,
+      "actual_private_point_count": 960
+    },
+    {
+      "pattern": "11100",
+      "Boolean_private_word": "11100",
+      "modulus": 15015,
+      "expanded_class_count": 48,
+      "actual_private_point_count": 48
+    },
+    {
+      "pattern": "11101",
+      "Boolean_private_word": "11101",
+      "modulus": 15015,
+      "expanded_class_count": 576,
+      "actual_private_point_count": 576
+    },
+    {
+      "pattern": "11110",
+      "Boolean_private_word": "11110",
+      "modulus": 15015,
+      "expanded_class_count": 480,
+      "actual_private_point_count": 480
+    },
+    {
+      "pattern": "11111",
+      "Boolean_private_word": "11111",
+      "modulus": 15015,
+      "expanded_class_count": 5760,
+      "actual_private_point_count": 5760
+    }
+  ],
+  "Boolean_holes": [
+    "00000"
+  ],
+  "Boolean_private_count": 19,
+  "Boolean_overlap_count": 12,
+  "binary_neighbor_checks": 95,
+  "actual_class_count": 12292,
+  "distinct_numerical_moduli": 9,
+  "classes_per_modulus": {
+    "105": 12,
+    "165": 4,
+    "273": 6,
+    "715": 10,
+    "1001": 22,
+    "1365": 12,
+    "2145": 2,
+    "5005": 72,
+    "15015": 12152
+  },
+  "actual_holes": [
+    0
+  ],
+  "actual_private_count": 14692,
+  "actual_overlap_count": 322,
+  "actual_line_membership_checks": 572988,
+  "literal_multiplicity_checks": 15015,
+  "all_expanded_APs_have_private_points": true,
+  "all_private_prime_lines_covered": true
+}

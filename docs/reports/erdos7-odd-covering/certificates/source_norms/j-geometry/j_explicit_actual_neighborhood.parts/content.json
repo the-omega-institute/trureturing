@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "2b7a7306b4ccd2c4475bcb806d78720c8c6d36e86ab215c402419cc400973bda",
+    "sha256": "1771b836c189580e32a108c4ddeffdef8753e169a7f54dadac71df9fe7f79cf7",
     "kind": "value"
   },
   "source_pin_count": {
@@ -14,7 +14,7 @@
   },
   "dual_price_inventory": {
     "path": "content/003-dual_price_inventory.json",
-    "sha256": "5408a995f268007bb04a771823cca9cc7e2ff31868ec84e27a64933e2f0e22ed",
+    "sha256": "d6c1331ea0b3384460c42bb356a176d3fc10fd032c29a9dc8cc2882c139bd255",
     "kind": "object"
   },
   "restoration": {

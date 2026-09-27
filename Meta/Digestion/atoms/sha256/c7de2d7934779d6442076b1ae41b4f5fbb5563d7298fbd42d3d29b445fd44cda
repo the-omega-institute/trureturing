@@ -1,0 +1,13 @@
+**命题 719.1（不等质量正部和的范数表达）。** 对任意概率行 $R,Q_S$ 和 $0<t\le1$，
+
+$$
+\sum_x(tR_x-Q_{S,x})_+
+=\frac12\|tR-Q_S\|_1-\frac{1-t}{2}.
+$$
+
+因此
+
+$$
+\Phi_t^{\mathcal F}(R)=\frac12\max_{S\in\mathcal F}\|tR-Q_S\|_1-\frac{1-t}{2}.
+$$
+

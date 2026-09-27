@@ -1,0 +1,29 @@
+**命题 536.2（趋向含零目标族的精确差值）。** 仍固定 $n,p,M,r$。记 $\mathcal J_0$ 为第 518 节中 $\alpha=M$ 的含零目标族预算曲线。对全部 $\eta\ge\beta$，
+
+$$
+\mathcal J_0(\eta)-\mathcal J_\varepsilon(\eta)
+=
+\min\left\{
+2(1-r)p\varepsilon,\;
+2\left(\frac1c-1\right)(\lambda-\eta)_+
+\right\}.
+$$
+
+因此 $\mathcal J_\varepsilon$ 在共同可行预算域上随 $\varepsilon\downarrow0$ 一致趋向 $\mathcal J_0$。
+
+证明：若 $\eta\ge\lambda$，两条曲线都等于 $\lambda$，右端也为零。若 $\beta\le\eta\le\lambda$，记 $H_0(\eta)=2rD-(2/c-1)\eta$，则第 518 节给出 $\mathcal J_0=H_0$。因为第二条 $2\lambda-\eta$ 不低于 $\lambda$，命题 534.1 给出
+
+$$
+\mathcal J_\varepsilon
+=\max\{2\lambda-\eta,\;H_0-2(1-r)p\varepsilon\}.
+$$
+
+而
+
+$$
+H_0-(2\lambda-\eta)
+=2(1/c-1)(\lambda-\eta)\ge0.
+$$
+
+相减便得到两非负数的最小值。它对全部可行预算都不超过 $2(1-r)p\varepsilon$，从而给出一致收敛。$r=0$ 时两曲线均为零，$r=1$ 时右端第一项为零，也符合结论。证毕。
+

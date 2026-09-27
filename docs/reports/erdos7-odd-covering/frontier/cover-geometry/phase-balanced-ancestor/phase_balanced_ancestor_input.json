@@ -1,0 +1,48 @@
+{
+  "schema": "phase-balanced-ancestor-input-v1",
+  "old_prime": 3,
+  "outside_primes": [
+    23,
+    29,
+    31
+  ],
+  "old_reference": 1,
+  "pure_axis_scale": 28,
+  "source_domination": "27/2",
+  "cases": [
+    {
+      "old_depth": 0,
+      "cycles": 1,
+      "active_outside_primes": [
+        29,
+        31
+      ]
+    },
+    {
+      "old_depth": 100,
+      "cycles": 5,
+      "active_outside_primes": [
+        29,
+        31
+      ]
+    },
+    {
+      "old_depth": 0,
+      "cycles": 1,
+      "active_outside_primes": [
+        23,
+        29,
+        31
+      ]
+    },
+    {
+      "old_depth": 100,
+      "cycles": 8,
+      "active_outside_primes": [
+        23,
+        29,
+        31
+      ]
+    }
+  ]
+}

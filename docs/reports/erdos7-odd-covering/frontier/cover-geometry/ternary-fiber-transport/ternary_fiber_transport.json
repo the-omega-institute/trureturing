@@ -1,0 +1,75 @@
+{
+  "source": "explicit fixed actual original family; new 135-point control, no old producer",
+  "originals": [
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 15,
+      "residue": 0
+    },
+    {
+      "modulus": 45,
+      "residue": 36
+    },
+    {
+      "modulus": 135,
+      "residue": 27
+    }
+  ],
+  "private_witnesses": [
+    1,
+    0,
+    36,
+    27
+  ],
+  "period": 135,
+  "survivor_count": 77,
+  "survivor_mass": "77/135",
+  "complete_ternary_fiber": {
+    "modulus": 27,
+    "residue": 0,
+    "surviving_points": [
+      54,
+      108
+    ],
+    "nu_mass": "2/77",
+    "removed_mod5_phases": [
+      0,
+      1,
+      2
+    ],
+    "surviving_mod5_phases": [
+      3,
+      4
+    ]
+  },
+  "same_law_density": "135/77",
+  "same_law_entropy_plus_all_queries_upper": "16899/4096",
+  "generic_h_lower_bound": "17/30",
+  "generic_budget_upper": "76663/18432",
+  "conditional_cap_obstruction": {
+    "Q_cofactor": 3125,
+    "mixed_original_count": 3124,
+    "full_3_height": 3124,
+    "conditional_density": 3125
+  },
+  "checks": {
+    "distinct_odd_nonunit_original_labels": true,
+    "all_original_classes_pairwise_disjoint": true,
+    "all_originals_have_private_witness": true,
+    "survivor_count_77": true,
+    "positive_same_law_fiber_mass": true,
+    "three_distinct_actual_mod5_holes": true,
+    "full_fiber_size": true,
+    "three_active_original_mixed_labels": true,
+    "same_law_density_cap": true,
+    "same_law_entropy_query_budget_upper_below_five": true,
+    "retained_cap_above_3_power6": true,
+    "generic_h_lower_bound": true,
+    "generic_G_bound_for_entire_counterexample_family": true,
+    "large_Q_cofactor_exceeds_global_density_cap": true
+  },
+  "passed_count": 14
+}

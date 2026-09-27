@@ -1,0 +1,165 @@
+{
+  "result": "PASS",
+  "divisor_order": [
+    1,
+    5,
+    7,
+    25,
+    35,
+    49,
+    175,
+    245,
+    1225
+  ],
+  "two_components": [
+    {
+      "private_J_labels": 5,
+      "psi_weight": "35/48",
+      "eta_weight": "13/48",
+      "partitions": 256,
+      "maximum": "103/12",
+      "active": [
+        {
+          "psi_queries": [],
+          "component_envelopes": [
+            "1",
+            "29"
+          ]
+        },
+        {
+          "psi_queries": [
+            5,
+            7,
+            25,
+            35,
+            49,
+            175,
+            245,
+            1225
+          ],
+          "component_envelopes": [
+            "57/5",
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "private_J_labels": 4,
+      "psi_weight": "625/833",
+      "eta_weight": "208/833",
+      "partitions": 256,
+      "maximum": "7333/833",
+      "active": [
+        {
+          "psi_queries": [],
+          "component_envelopes": [
+            "1",
+            "129/4"
+          ]
+        },
+        {
+          "psi_queries": [
+            5,
+            7,
+            25,
+            35,
+            49,
+            175,
+            245,
+            1225
+          ],
+          "component_envelopes": [
+            "57/5",
+            "1"
+          ]
+        }
+      ]
+    }
+  ],
+  "three_components": {
+    "weights": [
+      104,
+      50,
+      63
+    ],
+    "weight_denominator": 217,
+    "layouts": 46656,
+    "distinct_vectors": 31410,
+    "maximum_numerator": 136395,
+    "cap_denominator": 75,
+    "maximum": "1299/155",
+    "active": [
+      {
+        "vector_over75": [
+          285,
+          75,
+          1635
+        ],
+        "root_layout": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "column_layout": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "vector_over75": [
+          75,
+          285,
+          1815
+        ],
+        "root_layout": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "column_layout": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "vector_over75": [
+          855,
+          855,
+          75
+        ],
+        "root_layout": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "column_layout": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  "scope": "Exact query upper certificates at fixed common-law weights; actual support and cap premises are supplied by the proof. Not source enumeration, minimum-cut certification or Lean verification."
+}

@@ -1,0 +1,2976 @@
+{
+  "schema": "clustered-full5-interface-measure-v1",
+  "status": "PASS",
+  "optimizer_used": false,
+  "new_lean_verification": false,
+  "program_sha256": "9909632de65eab99d4c4917aa65595777b9650bc81fc2ca197031660ac55d97c",
+  "inputs": {
+    "clustered_global_phase_fixture.json": "4bc215b032c910224a3a23ed76edaf1e32dc8e243fe5ba474e129a1cee63e6b6",
+    "clustered_higher_pure_capacity_obstruction.json": "bbf9d977613f469b387cf60b7024092a9903b17bbac4374316c87d87c442bb99",
+    "remaining33_global_root_exclusion_certificate.json": "36e1be912a058df44a9ce3b13c89d97574620176b921e037568ceb96dd0f87d4"
+  },
+  "actual_original_count": 109,
+  "actual_central_capacities": [
+    {
+      "prime": 3,
+      "weak_leaf_residue": 4,
+      "haar_capacity": "41/729",
+      "gamma": "81/82"
+    },
+    {
+      "prime": 5,
+      "weak_leaf_residue": 2,
+      "haar_capacity": "469/15625",
+      "gamma": "1875/1876"
+    }
+  ],
+  "central_cells": 80,
+  "source_mass": "305684996597/646498195200",
+  "categories_per_coordinate": [
+    7,
+    10,
+    10,
+    10,
+    10
+  ],
+  "naive_variable_addresses": 5600000,
+  "active_category_variables": 2125830,
+  "zero_source_cells": [
+    [
+      0,
+      6
+    ]
+  ],
+  "cells_without_nonroot_at_some_coordinate": [
+    [
+      0,
+      6
+    ]
+  ],
+  "active_joint_square_atoms": 3255490850045,
+  "cell_counts": [
+    {
+      "cell": [
+        0,
+        6
+      ],
+      "active_category_counts": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "active_joint_categories": 0,
+      "active_joint_square_atoms": 0
+    },
+    {
+      "cell": [
+        0,
+        7
+      ],
+      "active_category_counts": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "active_joint_categories": 256,
+      "active_joint_square_atoms": 1618231615
+    },
+    {
+      "cell": [
+        0,
+        8
+      ],
+      "active_category_counts": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "active_joint_categories": 256,
+      "active_joint_square_atoms": 1618231615
+    },
+    {
+      "cell": [
+        0,
+        9
+      ],
+      "active_category_counts": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "active_joint_categories": 256,
+      "active_joint_square_atoms": 1618231615
+    },
+    {
+      "cell": [
+        0,
+        10
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        11
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        12
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        13
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        14
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        15
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        16
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        17
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        18
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        0,
+        19
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 9604,
+      "active_joint_square_atoms": 23175792640
+    },
+    {
+      "cell": [
+        1,
+        6
+      ],
+      "active_category_counts": [
+        2,
+        4,
+        4,
+        4,
+        4
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        2,
+        4,
+        4,
+        4,
+        4
+      ],
+      "active_joint_categories": 512,
+      "active_joint_square_atoms": 3236463230
+    },
+    {
+      "cell": [
+        1,
+        7
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        1,
+        8
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        1,
+        9
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        1,
+        10
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        11
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        12
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        13
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        14
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        15
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        16
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        17
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        18
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        1,
+        19
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        6
+      ],
+      "active_category_counts": [
+        2,
+        4,
+        4,
+        4,
+        4
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        2,
+        4,
+        4,
+        4,
+        4
+      ],
+      "active_joint_categories": 512,
+      "active_joint_square_atoms": 3236463230
+    },
+    {
+      "cell": [
+        2,
+        7
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        2,
+        8
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        2,
+        9
+      ],
+      "active_category_counts": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 3888,
+      "active_joint_square_atoms": 11916069165
+    },
+    {
+      "cell": [
+        2,
+        10
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        11
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        12
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        13
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        14
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        15
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        16
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        17
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        18
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        2,
+        19
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 20480,
+      "active_joint_square_atoms": 40811445675
+    },
+    {
+      "cell": [
+        4,
+        0
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        1
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        2
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        3
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        4
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 7776,
+      "active_joint_square_atoms": 19705658427
+    },
+    {
+      "cell": [
+        4,
+        7
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        4,
+        8
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        4,
+        9
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        4,
+        10
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        11
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        12
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        13
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        14
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        15
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        16
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        17
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        18
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        4,
+        19
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        0
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        1
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        2
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        3
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        4
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "active_category_counts": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        3,
+        6,
+        6,
+        6,
+        6
+      ],
+      "active_joint_categories": 7776,
+      "active_joint_square_atoms": 19705658427
+    },
+    {
+      "cell": [
+        5,
+        7
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        5,
+        9
+      ],
+      "active_category_counts": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "root1_categories": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "other_categories": [
+        4,
+        7,
+        7,
+        7,
+        7
+      ],
+      "active_joint_categories": 17493,
+      "active_joint_square_atoms": 35845238016
+    },
+    {
+      "cell": [
+        5,
+        10
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        11
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        12
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        13
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        14
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        15
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        16
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        17
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        18
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    },
+    {
+      "cell": [
+        5,
+        19
+      ],
+      "active_category_counts": [
+        7,
+        10,
+        10,
+        10,
+        10
+      ],
+      "root1_categories": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "other_categories": [
+        5,
+        8,
+        8,
+        8,
+        8
+      ],
+      "active_joint_categories": 49152,
+      "active_joint_square_atoms": 62339907630
+    }
+  ],
+  "central_selectors": 559,
+  "nonempty_central_selectors": 482,
+  "query_counts_per_coordinate": [
+    7,
+    10,
+    10,
+    10,
+    10
+  ],
+  "raw_outside_query_tuples": 117128,
+  "atmostone_root1_query_tuples": 87480,
+  "nonzero_outside_query_tuples": 87480,
+  "root1_zero_tuples": 29648,
+  "other_zero_tuples": 0,
+  "raw_complete_screen_count": 65474552,
+  "nonzero_complete_screen_count": 25359668,
+  "nonzero_rows_by_group": [
+    1,
+    7,
+    10,
+    66,
+    10,
+    66,
+    96,
+    608,
+    10,
+    66,
+    96,
+    608,
+    96,
+    608,
+    896,
+    5504,
+    10,
+    66,
+    96,
+    608,
+    96,
+    608,
+    896,
+    5504,
+    96,
+    608,
+    896,
+    5504,
+    896,
+    5504,
+    8192,
+    49152,
+    4,
+    26,
+    38,
+    237,
+    38,
+    237,
+    351,
+    2125,
+    38,
+    237,
+    351,
+    2125,
+    351,
+    2125,
+    3178,
+    18815,
+    38,
+    237,
+    351,
+    2125,
+    351,
+    2125,
+    3178,
+    18815,
+    351,
+    2125,
+    3178,
+    18815,
+    3178,
+    18815,
+    28349,
+    164949,
+    19,
+    124,
+    181,
+    1134,
+    181,
+    1134,
+    1677,
+    10203,
+    181,
+    1134,
+    1677,
+    10203,
+    1677,
+    10203,
+    15234,
+    90657,
+    181,
+    1134,
+    1677,
+    10203,
+    1677,
+    10203,
+    15234,
+    90657,
+    1677,
+    10203,
+    15234,
+    90657,
+    15234,
+    90657,
+    136359,
+    797535,
+    19,
+    124,
+    181,
+    1134,
+    181,
+    1134,
+    1677,
+    10203,
+    181,
+    1134,
+    1677,
+    10203,
+    1677,
+    10203,
+    15234,
+    90657,
+    181,
+    1134,
+    1677,
+    10203,
+    1677,
+    10203,
+    15234,
+    90657,
+    1677,
+    10203,
+    15234,
+    90657,
+    15234,
+    90657,
+    136359,
+    797535,
+    2,
+    12,
+    18,
+    106,
+    18,
+    106,
+    160,
+    928,
+    18,
+    106,
+    160,
+    928,
+    160,
+    928,
+    1408,
+    8064,
+    18,
+    106,
+    160,
+    928,
+    160,
+    928,
+    1408,
+    8064,
+    160,
+    928,
+    1408,
+    8064,
+    1408,
+    8064,
+    12288,
+    69632,
+    7,
+    39,
+    60,
+    335,
+    60,
+    335,
+    515,
+    2873,
+    60,
+    335,
+    515,
+    2873,
+    515,
+    2873,
+    4418,
+    24583,
+    60,
+    335,
+    515,
+    2873,
+    515,
+    2873,
+    4418,
+    24583,
+    515,
+    2873,
+    4418,
+    24583,
+    4418,
+    24583,
+    37837,
+    209797,
+    33,
+    185,
+    283,
+    1596,
+    283,
+    1596,
+    2441,
+    13759,
+    283,
+    1596,
+    2441,
+    13759,
+    2441,
+    13759,
+    21066,
+    118329,
+    283,
+    1596,
+    2441,
+    13759,
+    2441,
+    13759,
+    21066,
+    118329,
+    2441,
+    13759,
+    21066,
+    118329,
+    21066,
+    118329,
+    181463,
+    1014511,
+    33,
+    185,
+    283,
+    1596,
+    283,
+    1596,
+    2441,
+    13759,
+    283,
+    1596,
+    2441,
+    13759,
+    2441,
+    13759,
+    21066,
+    118329,
+    283,
+    1596,
+    2441,
+    13759,
+    2441,
+    13759,
+    21066,
+    118329,
+    2441,
+    13759,
+    21066,
+    118329,
+    21066,
+    118329,
+    181463,
+    1014511,
+    5,
+    28,
+    43,
+    240,
+    43,
+    240,
+    369,
+    2052,
+    43,
+    240,
+    369,
+    2052,
+    369,
+    2052,
+    3159,
+    17500,
+    43,
+    240,
+    369,
+    2052,
+    369,
+    2052,
+    3159,
+    17500,
+    369,
+    2052,
+    3159,
+    17500,
+    3159,
+    17500,
+    26977,
+    148868,
+    17,
+    87,
+    138,
+    730,
+    138,
+    730,
+    1144,
+    6154,
+    138,
+    730,
+    1144,
+    6154,
+    1144,
+    6154,
+    9586,
+    51974,
+    138,
+    730,
+    1144,
+    6154,
+    1144,
+    6154,
+    9586,
+    51974,
+    1144,
+    6154,
+    9586,
+    51974,
+    9586,
+    51974,
+    80732,
+    439058,
+    79,
+    413,
+    648,
+    3484,
+    648,
+    3484,
+    5420,
+    29526,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    5420,
+    29526,
+    45754,
+    250570,
+    45754,
+    250570,
+    387704,
+    2125830,
+    79,
+    413,
+    648,
+    3484,
+    648,
+    3484,
+    5420,
+    29526,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    5420,
+    29526,
+    45754,
+    250570,
+    45754,
+    250570,
+    387704,
+    2125830,
+    5,
+    28,
+    43,
+    240,
+    43,
+    240,
+    369,
+    2052,
+    43,
+    240,
+    369,
+    2052,
+    369,
+    2052,
+    3159,
+    17500,
+    43,
+    240,
+    369,
+    2052,
+    369,
+    2052,
+    3159,
+    17500,
+    369,
+    2052,
+    3159,
+    17500,
+    3159,
+    17500,
+    26977,
+    148868,
+    17,
+    87,
+    138,
+    730,
+    138,
+    730,
+    1144,
+    6154,
+    138,
+    730,
+    1144,
+    6154,
+    1144,
+    6154,
+    9586,
+    51974,
+    138,
+    730,
+    1144,
+    6154,
+    1144,
+    6154,
+    9586,
+    51974,
+    1144,
+    6154,
+    9586,
+    51974,
+    9586,
+    51974,
+    80732,
+    439058,
+    79,
+    413,
+    648,
+    3484,
+    648,
+    3484,
+    5420,
+    29526,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    5420,
+    29526,
+    45754,
+    250570,
+    45754,
+    250570,
+    387704,
+    2125830,
+    79,
+    413,
+    648,
+    3484,
+    648,
+    3484,
+    5420,
+    29526,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    648,
+    3484,
+    5420,
+    29526,
+    5420,
+    29526,
+    45754,
+    250570,
+    5420,
+    29526,
+    45754,
+    250570,
+    45754,
+    250570,
+    387704,
+    2125830
+  ],
+  "nonzero_outside_by_support": [
+    1,
+    7,
+    10,
+    66,
+    10,
+    66,
+    96,
+    608,
+    10,
+    66,
+    96,
+    608,
+    96,
+    608,
+    896,
+    5504,
+    10,
+    66,
+    96,
+    608,
+    96,
+    608,
+    896,
+    5504,
+    96,
+    608,
+    896,
+    5504,
+    896,
+    5504,
+    8192,
+    49152
+  ],
+  "checks": 873,
+  "scope": "Exact category/address counts for fixed109 source with all five outside coordinates and actual fullmode8 source interface. No query matrix expansion, no optimizer, no new dual or gate bound. Category averaging uses source symmetry and global-query convex averaging; source support is actual at-most-one root1.",
+  "uniform_product_outside_root_mixing_obstruction": {
+    "live_central_mass": "547/675",
+    "left_l1_bounds": [
+      "1",
+      "2/3",
+      "2/9",
+      "1"
+    ],
+    "right_l1_bounds": [
+      "1",
+      "4/15",
+      "4/75",
+      "4/5"
+    ],
+    "mode_fee_sums": [
+      "20022369716765928019493/648528127920820224000000",
+      "286422866936615159262851/1513232298481913856000000",
+      "1958833205475686566247/6826611872850739200000",
+      "216591871737546649591/16062616171413504000000",
+      "286422866936615159262851/1513232298481913856000000",
+      "1431564102749556646247/3792562151583744000000",
+      "3431208360877866790247/2275537290950246400000",
+      "3251191629068277247847/91021491638009856000000",
+      "8376624161372533192529/47786283109955174400000",
+      "3431208360877866790247/2275537290950246400000",
+      "2367716106263477772647/1365322374570147840000",
+      "2259706067177724047207/54612894982805913600000",
+      "3500212813588518118247/38399691784785408000000",
+      "3096272010022878310247/12799897261595136000000",
+      "2166754295750484684647/7679938356957081600000",
+      "1701995438614287871847/307197534278283264000000"
+    ],
+    "maximum_relaxed_integrated_debit": "202063994637274331892893/286717698659731046400000",
+    "required_integrated_reward": "109489197649/135841860000",
+    "positive_gap": "29031860337191675392867/286717698659731046400000",
+    "scope": "Refutes all pointwise dual covers whose outside query in each central-selector row is uniformly and independently mixed over every live first root at every queried coordinate. Does not refute nonuniform or correlated query mixtures, or assert a positive gate."
+  }
+}

@@ -1,0 +1,38 @@
+**定理 831.1（Wyner 量在当前参数下的闭式）。** 对 $P_\rho(x,y)=(1+\rho xy)/4$、$0\le\rho\le1$，第 783 节有限来源定义的共同信息为
+
+$$
+C(P_\rho)=\log2+h_2\!\left(\frac{1-\rho}{2}\right)
+-2h_2\!\left(\frac{1-\sqrt\rho}{2}\right).
+$$
+
+证明：任意条件独立表示中，记 $a_h=\mathbb E[X\mid H=h]$、$b_h=\mathbb E[Y\mid H=h]$。它们在 $[-1,1]$ 内，且
+
+$$
+\mathbb E a_H=\mathbb E b_H=0,\qquad
+\mathbb E[a_Hb_H]=\rho.
+$$
+
+由第 830 节、熵对正负偏置的对称性及 Jensen 不等式，
+
+$$
+\begin{aligned}
+H(X,Y\mid H)
+&=\mathbb E[f(a_H^2)+f(b_H^2)]\\
+&\le2f\!\left(\frac{\mathbb E a_H^2+\mathbb E b_H^2}{2}\right)\\
+&\le2f(\rho).
+\end{aligned}
+$$
+
+最后一步用
+
+$$
+\frac{\mathbb E a_H^2+\mathbb E b_H^2}{2}-\rho
+=\frac12\mathbb E[(a_H-b_H)^2]\ge0
+$$
+
+及 $f$ 递减。共同信息等于观察熵减去上述条件熵，因此得到下界。取各半来源，条件均值分别为 $(\sqrt\rho,\sqrt\rho)$ 和 $(-\sqrt\rho,-\sqrt\rho)$，其混合恰为 $P_\rho$，并达到条件熵上界。
+
+观察 $X$ 均匀，给定 $X$ 后 $Y$ 以 $(1-\rho)/2$ 的概率与它异号，故 $H(X,Y)=\log2+h_2((1-\rho)/2)$。代入并利用二元熵对称性得到公式。构造与表达在 $\rho=0,1$ 同样有效，端点分别给出 $0,\log2$。证毕。
+
+这是经典双对称二元源的 Wyner 共同信息公式。Xu—Liu—Chen 的第 V-A 节、式 (48)—(49) 直接给出更一般的共同二元对称通道表示与达到结果：取其 $\theta=1/2$、$a_1=(1-\sqrt\rho)/2$ 就得到本节公式。该文将双对称情形归于 Wyner，将其所述一般二元来源结果归于 Witsenhausen。本批直接读取的是该开放论文的这段陈述与后续命题 1 证明，未据此声称已通读两篇被引原论文。
+

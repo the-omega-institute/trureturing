@@ -13,7 +13,7 @@ import sys
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/moments-survival/pure_five_joint_factorial_comparison.json'
 PINS = {
-    'certificates/source_norms/moments-survival/complete_off_face_factorial_tail.json': 'e3318b7a4ed57e0cb0a15f01a8852ffd2014568fa27a929198bed9bbad692aa4',
+    'certificates/source_norms/moments-survival/complete_off_face_factorial_tail.json': '44c28ff06f1f9219c1aa1e75f8c4107b3698309b372200a37f047a502ba0cd4d',
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
     'frontier/moments-survival/whole_factorial_same_head.py': '845768cfb7c67a9683c92e4ecaacee40dfc22d6b7f6c8791b5169917650e5c24',
     'certificates/source_norms/moments-survival/whole_factorial_same_head.json': 'c47a8913749f560346af5ab2c3db756ff5b6f831863c897a87f377c9dd3c7c08',
@@ -21,9 +21,9 @@ PINS = {
     'certificates/source_norms/moments-survival/whole_quadratic_same_head.json': 'c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f',
     'frontier/moments-survival/pure_five_joint_moments.py': '4d2491befab31bd869fdf037677ea796f40c9941d1d90fbf752fb1c396913306',
     'certificates/source_norms/moments-survival/pure_five_joint_moments.json': 'e17242d61ea209ce8c26538f71acc041ef0ab8f5e29e4e5e5f3930ce991fc2d2',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
-    'frontier/moments-survival/complete_off_face_factorial_tail.py': '6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '9c888d210c1f64578ade69f66759f057c48981f250ce66c1637b626491a7ee2b',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'ed8d0d10eeff83f9cc72ee6df3872df2fd98629851a15fed073b8e0d9bfd6207',
+    'frontier/moments-survival/complete_off_face_factorial_tail.py': '475e060fda48d619f1ecb9ff512bc8fde200521c07429901f4daeafda0f23667',
 }
 
 

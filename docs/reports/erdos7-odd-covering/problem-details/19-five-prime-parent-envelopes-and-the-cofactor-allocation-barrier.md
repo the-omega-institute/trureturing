@@ -144,8 +144,8 @@ infinite profile envelope
 \]
 This fifteen-term expression is an all-height geometric sum. It is not a
 finite-height AP test. The
-[envelope certificate](../frontier/cover-geometry/k5_parent_same_law_envelope.py)
-and its [exact data](../frontier/cover-geometry/k5_parent_same_law_envelope.json)
+[envelope certificate](../frontier/cover-geometry/k5-parent-same-law-envelope/k5_parent_same_law_envelope.py)
+and its [exact data](../frontier/cover-geometry/k5-parent-same-law-envelope/k5_parent_same_law_envelope.json)
 contain both profile inductions, all fifteen support coefficients, their
 switch points, and the formula \(A+B/s\) on every resulting interval.
 
@@ -260,8 +260,8 @@ Thus 39 of the 81 parent words are blocked outside all pure classes, and
         =\frac{23}{48}+\frac1{432}>F.
  \tag{KE14}
 \]
-The [finite prefix verifier](../frontier/cover-geometry/k5_common_law_prefix_barrier.py)
-and its [exact data](../frontier/cover-geometry/k5_common_law_prefix_barrier.json)
+The [finite prefix verifier](../frontier/cover-geometry/k5-common-law-prefix-barrier/k5_common_law_prefix_barrier.py)
+and its [exact data](../frontier/cover-geometry/k5-common-law-prefix-barrier/k5_common_law_prefix_barrier.json)
 check all child-event unions, depth budgets, prefix caps, and literal
 congruence counts at heights 2, 3, 4, and 8. At height eight the blocked
 mass is \(1093/2187\). These finite checks verify the construction; the
@@ -360,6 +360,6 @@ compact JSON defaults beside the corresponding script, and `--output PATH`
 selects another destination. From the repository root:
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_parent_same_law_envelope.py
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5_common_law_prefix_barrier.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-parent-same-law-envelope/k5_parent_same_law_envelope.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/k5-common-law-prefix-barrier/k5_common_law_prefix_barrier.py
 ```

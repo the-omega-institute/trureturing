@@ -1,0 +1,188 @@
+{
+  "scope": "Exact local supplier controls; published full literal suites reused, not rerun. Ordinary mathematics, no Lean or general cut77 claim.",
+  "fixture_sha256": {
+    "forced164": "95ff9e135d85480d444dfb589d2a5f915f55bc915829e4576617a3553b1f3bf0",
+    "bad68": "e27a4737dbb75b59e38173c43a70899e1d9c89f191b4847ca657977b6cee68e8"
+  },
+  "positive164": {
+    "source_points": 164,
+    "network_edges": 1307,
+    "cut_capacity": 77,
+    "flow_value": 77,
+    "distinguished_block": {
+      "root": 0,
+      "column": 1,
+      "root_mass": 21,
+      "block_mass": 20
+    },
+    "public_boundary_capacity": 35,
+    "distinguished_private_capacity": 6,
+    "other_private_capacity": 36,
+    "public_leaf_owners": {
+      "0": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "1": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "minimum_actual_three_row_neighborhood": 3,
+    "private_child_token_costs": {
+      "0": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "1": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "2": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "3": [
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    "root_actual_column_counts": {
+      "0": 2,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    }
+  },
+  "extension165": {
+    "source_points": 165,
+    "network_edges": 1308,
+    "cut_capacity": 77,
+    "flow_value": 77,
+    "distinguished_block": {
+      "root": 0,
+      "column": 1,
+      "root_mass": 21,
+      "block_mass": 20
+    },
+    "public_boundary_capacity": 35,
+    "distinguished_private_capacity": 6,
+    "other_private_capacity": 36,
+    "public_leaf_owners": {
+      "0": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "1": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "minimum_actual_three_row_neighborhood": 3,
+    "private_child_token_costs": {
+      "0": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "1": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "2": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "3": [
+        1,
+        2,
+        2,
+        2
+      ]
+    },
+    "root_actual_column_counts": {
+      "0": 2,
+      "1": 3,
+      "2": 2,
+      "3": 2
+    },
+    "added_actual_point": [
+      1,
+      0,
+      1,
+      0
+    ],
+    "old_source_is_subset": true
+  },
+  "negative68": {
+    "source_points": 68,
+    "displayed_source_root_cut_edges": [
+      [
+        "source",
+        "r",
+        0,
+        21
+      ],
+      [
+        "source",
+        "r",
+        1,
+        21
+      ],
+      [
+        "source",
+        "r",
+        2,
+        21
+      ]
+    ],
+    "public_cut_capacity": 0,
+    "fails_supplier_boundary": true,
+    "bad_child_triple": [
+      1,
+      2,
+      3
+    ],
+    "actual_G_neighbors": [
+      0,
+      1
+    ]
+  },
+  "sorted_token_minima": {
+    "5,3": 8,
+    "4,2": 8
+  },
+  "hypothetical_other_private_requirement": 48,
+  "available_other_private_capacity": 36
+}

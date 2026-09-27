@@ -1,0 +1,16 @@
+**定义 548.1（曲线接点与构造接点）。** 以下构造只在 $0<r<1$ 使用。置
+
+$$
+\eta_a=\lambda-(1-r)a,
+\qquad
+\eta_s=\lambda-\frac{(1-r)(a+d)}2.
+$$
+
+有 $\eta_s\le\eta_a<\lambda$。两者都可以为负；若 $r>M$，则
+
+$$
+\eta_s-\beta=\frac{b(1-r)}2>0.
+$$
+
+本节下列两个区间在 $\eta_a\ge\beta$ 时覆盖 $[\beta,\eta_a]$；再与第 549 节的 $[\max(\beta,\eta_a),\lambda]$ 构造合用，才覆盖全部 $[\beta,\lambda]$。若 $\eta_a<\beta$，本节两个区间均为空，整个 $[\beta,\lambda]$ 由后一构造覆盖。$\eta_a$ 将成为两条不同斜率的交点，$\eta_s$ 只用于组织达到构造，不预先把它解释为最优值曲线的折点。
+

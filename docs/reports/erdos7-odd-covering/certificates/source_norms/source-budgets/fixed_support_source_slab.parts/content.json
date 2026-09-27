@@ -38,7 +38,7 @@
       "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
       "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
       "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
-      "certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json": "1e1b972b2756007c1f259232d4d03c49b527d5e88242b98e4300f48c3fa08f2f"
+      "certificates/source_norms/comparison-bounds/residual_shell_k_comparison.json": "c02f40a2361a6de1d221d573dd0673b942d8f407df3998617f314d1c71b60dae"
     }
   },
   "delta_bound": {
@@ -123,7 +123,7 @@
   },
   "complete_inner_comparison": {
     "path": "content/018-complete_inner_comparison.json",
-    "sha256": "d4f76402dd447bd0e694a63e198d79d5313213d55283fc91a3caae88595a42a8",
+    "sha256": "b94cd96a347db00f6ab18dbc4dd6b57a28850a62ece3531b31a57b665ee829c5",
     "kind": "value"
   }
 }

@@ -1,0 +1,839 @@
+{
+  "schema": "phase-balanced-ancestor-result-v1",
+  "input_sha256": "ab4110a23c179c2f84df7197837b6d89a174b60a21aa380d1994bb8e225a7a27",
+  "cases": [
+    {
+      "old_depth": 0,
+      "cycles": 1,
+      "original_count": 60,
+      "phase_multiplicities": {
+        "29": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "31": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "universal_scaled_expense": 56,
+      "reachable_ancestor_columns": 32,
+      "strict_deficit": 24,
+      "nonunit_Haar_deletion_upper": "1/3",
+      "conditional_source_deletion_upper": "9/2",
+      "Haar_survival_lower": "2/3",
+      "outside_period": 899,
+      "all_grouping_cuts": [],
+      "outside_point_costs": [
+        56
+      ],
+      "actual_labels_sha256": "34dfd63f92ee4feec2cd1c8f55641264f7f93b9dacc843fe13560e72f0b65966",
+      "extreme_actual_labels": [
+        {
+          "outside_prime": 29,
+          "index": 1,
+          "old_exponent": 1,
+          "modulus": 87,
+          "residue": 1
+        },
+        {
+          "outside_prime": 29,
+          "index": 29,
+          "old_exponent": 29,
+          "modulus": 1990280943581607,
+          "residue": 1303977169932778
+        },
+        {
+          "outside_prime": 31,
+          "index": 1,
+          "old_exponent": 1,
+          "modulus": 93,
+          "residue": 1
+        },
+        {
+          "outside_prime": 31,
+          "index": 31,
+          "old_exponent": 31,
+          "modulus": 19147875284802357,
+          "residue": 6176733962839471
+        }
+      ]
+    },
+    {
+      "old_depth": 100,
+      "cycles": 5,
+      "original_count": 300,
+      "phase_multiplicities": {
+        "29": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "31": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      "universal_scaled_expense": 280,
+      "reachable_ancestor_columns": 256,
+      "strict_deficit": 24,
+      "nonunit_Haar_deletion_upper": "1/1546132562196033993109383389296863818106322566003",
+      "conditional_source_deletion_upper": "1/114528337940446962452546917725693616156023893778",
+      "Haar_survival_lower": "1546132562196033993109383389296863818106322566002/1546132562196033993109383389296863818106322566003",
+      "outside_period": 899,
+      "all_grouping_cuts": [],
+      "outside_point_costs": [
+        280
+      ],
+      "actual_labels_sha256": "4935767b2c3c3bcd68af857023f72b6a611ae4f6dd27da5677f17b3fa7b37d4e",
+      "extreme_actual_labels": [
+        {
+          "outside_prime": 29,
+          "index": 1,
+          "old_exponent": 101,
+          "modulus": 44837844303684985800172118289609050725083354414087,
+          "residue": 1
+        },
+        {
+          "outside_prime": 29,
+          "index": 145,
+          "old_exponent": 245,
+          "modulus": 22756496688835810090959789422909661412907622897634986772322082273315642411461817825247118525683069293482465413898728647,
+          "residue": 13340015300352026605045393799636698069635503077923957763085358574012617965339686311351759135745247516869031449526840932
+        },
+        {
+          "outside_prime": 31,
+          "index": 1,
+          "old_exponent": 101,
+          "modulus": 47930109428077053786390885068202778361295999546093,
+          "residue": 1
+        },
+        {
+          "outside_prime": 31,
+          "index": 155,
+          "old_exponent": 255,
+          "modulus": 1436420674563828905237711130159833465513594791688134425913249852443706083840919838057018281259132631725387210585671960833717,
+          "residue": 46336150792381577588313262263220434371406283602843045997201608143345357543255478647000589718036536507270555180182966478508
+        }
+      ]
+    },
+    {
+      "old_depth": 0,
+      "cycles": 1,
+      "original_count": 83,
+      "phase_multiplicities": {
+        "23": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "29": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "31": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "universal_scaled_expense": 84,
+      "reachable_ancestor_columns": 32,
+      "strict_deficit": 52,
+      "nonunit_Haar_deletion_upper": "1/3",
+      "conditional_source_deletion_upper": "9/2",
+      "Haar_survival_lower": "2/3",
+      "outside_period": 20677,
+      "all_grouping_cuts": [
+        {
+          "R": {
+            "primes": [],
+            "expense": 0,
+            "capacity": 0,
+            "deficit": 0
+          },
+          "S": {
+            "primes": [
+              23,
+              29,
+              31
+            ],
+            "expense": 84,
+            "capacity": 32,
+            "deficit": 52
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23
+            ],
+            "expense": 22,
+            "capacity": 24,
+            "deficit": -2
+          },
+          "S": {
+            "primes": [
+              29,
+              31
+            ],
+            "expense": 56,
+            "capacity": 32,
+            "deficit": 24
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              29
+            ],
+            "expense": 22,
+            "capacity": 30,
+            "deficit": -8
+          },
+          "S": {
+            "primes": [
+              23,
+              31
+            ],
+            "expense": 56,
+            "capacity": 32,
+            "deficit": 24
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              29
+            ],
+            "expense": 44,
+            "capacity": 30,
+            "deficit": 14
+          },
+          "S": {
+            "primes": [
+              31
+            ],
+            "expense": 28,
+            "capacity": 32,
+            "deficit": -4
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              31
+            ],
+            "expense": 22,
+            "capacity": 32,
+            "deficit": -10
+          },
+          "S": {
+            "primes": [
+              23,
+              29
+            ],
+            "expense": 56,
+            "capacity": 30,
+            "deficit": 26
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              31
+            ],
+            "expense": 44,
+            "capacity": 32,
+            "deficit": 12
+          },
+          "S": {
+            "primes": [
+              29
+            ],
+            "expense": 28,
+            "capacity": 30,
+            "deficit": -2
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              29,
+              31
+            ],
+            "expense": 44,
+            "capacity": 32,
+            "deficit": 12
+          },
+          "S": {
+            "primes": [
+              23
+            ],
+            "expense": 28,
+            "capacity": 24,
+            "deficit": 4
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              29,
+              31
+            ],
+            "expense": 66,
+            "capacity": 32,
+            "deficit": 34
+          },
+          "S": {
+            "primes": [],
+            "expense": 0,
+            "capacity": 0,
+            "deficit": 0
+          }
+        }
+      ],
+      "outside_point_costs": [
+        84
+      ],
+      "actual_labels_sha256": "864c22a6b24faa007b23a2de87e5f9083e3520df6b8216b6cf90d8d7bc954070",
+      "extreme_actual_labels": [
+        {
+          "outside_prime": 23,
+          "index": 1,
+          "old_exponent": 1,
+          "modulus": 69,
+          "residue": 1
+        },
+        {
+          "outside_prime": 23,
+          "index": 23,
+          "old_exponent": 23,
+          "modulus": 2165293113021,
+          "residue": 1412147682406
+        },
+        {
+          "outside_prime": 29,
+          "index": 1,
+          "old_exponent": 1,
+          "modulus": 87,
+          "residue": 1
+        },
+        {
+          "outside_prime": 29,
+          "index": 29,
+          "old_exponent": 29,
+          "modulus": 1990280943581607,
+          "residue": 1303977169932778
+        },
+        {
+          "outside_prime": 31,
+          "index": 1,
+          "old_exponent": 1,
+          "modulus": 93,
+          "residue": 1
+        },
+        {
+          "outside_prime": 31,
+          "index": 31,
+          "old_exponent": 31,
+          "modulus": 19147875284802357,
+          "residue": 6176733962839471
+        }
+      ]
+    },
+    {
+      "old_depth": 100,
+      "cycles": 8,
+      "original_count": 664,
+      "phase_multiplicities": {
+        "23": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "29": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "31": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ]
+      },
+      "universal_scaled_expense": 672,
+      "reachable_ancestor_columns": 349,
+      "strict_deficit": 323,
+      "nonunit_Haar_deletion_upper": "1/1546132562196033993109383389296863818106322566003",
+      "conditional_source_deletion_upper": "1/114528337940446962452546917725693616156023893778",
+      "Haar_survival_lower": "1546132562196033993109383389296863818106322566002/1546132562196033993109383389296863818106322566003",
+      "outside_period": 20677,
+      "all_grouping_cuts": [
+        {
+          "R": {
+            "primes": [],
+            "expense": 0,
+            "capacity": 0,
+            "deficit": 0
+          },
+          "S": {
+            "primes": [
+              23,
+              29,
+              31
+            ],
+            "expense": 672,
+            "capacity": 349,
+            "deficit": 323
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23
+            ],
+            "expense": 176,
+            "capacity": 285,
+            "deficit": -109
+          },
+          "S": {
+            "primes": [
+              29,
+              31
+            ],
+            "expense": 448,
+            "capacity": 349,
+            "deficit": 99
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              29
+            ],
+            "expense": 176,
+            "capacity": 333,
+            "deficit": -157
+          },
+          "S": {
+            "primes": [
+              23,
+              31
+            ],
+            "expense": 448,
+            "capacity": 349,
+            "deficit": 99
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              29
+            ],
+            "expense": 352,
+            "capacity": 333,
+            "deficit": 19
+          },
+          "S": {
+            "primes": [
+              31
+            ],
+            "expense": 224,
+            "capacity": 349,
+            "deficit": -125
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              31
+            ],
+            "expense": 176,
+            "capacity": 349,
+            "deficit": -173
+          },
+          "S": {
+            "primes": [
+              23,
+              29
+            ],
+            "expense": 448,
+            "capacity": 333,
+            "deficit": 115
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              31
+            ],
+            "expense": 352,
+            "capacity": 349,
+            "deficit": 3
+          },
+          "S": {
+            "primes": [
+              29
+            ],
+            "expense": 224,
+            "capacity": 333,
+            "deficit": -109
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              29,
+              31
+            ],
+            "expense": 352,
+            "capacity": 349,
+            "deficit": 3
+          },
+          "S": {
+            "primes": [
+              23
+            ],
+            "expense": 224,
+            "capacity": 285,
+            "deficit": -61
+          }
+        },
+        {
+          "R": {
+            "primes": [
+              23,
+              29,
+              31
+            ],
+            "expense": 528,
+            "capacity": 349,
+            "deficit": 179
+          },
+          "S": {
+            "primes": [],
+            "expense": 0,
+            "capacity": 0,
+            "deficit": 0
+          }
+        }
+      ],
+      "outside_point_costs": [
+        672
+      ],
+      "actual_labels_sha256": "e1c4ee9c4ba438bd1d45049c205e425c33ca573d006affc175893be2bde51ba8",
+      "extreme_actual_labels": [
+        {
+          "outside_prime": 23,
+          "index": 1,
+          "old_exponent": 101,
+          "modulus": 35561048930508781841515817953827867816445419018069,
+          "residue": 1
+        },
+        {
+          "outside_prime": 23,
+          "index": 184,
+          "old_exponent": 284,
+          "modulus": 73141552833897212468296914642767593546292759427199136464866728683062455211919132276240151754667809702155040848146223796806980788469602663,
+          "residue": 44520945203241781502441600217336796071656462260034256978614530502733668389863819646407048894145623296963937907567266658925988306024975535
+        },
+        {
+          "outside_prime": 29,
+          "index": 1,
+          "old_exponent": 101,
+          "modulus": 44837844303684985800172118289609050725083354414087,
+          "residue": 1
+        },
+        {
+          "outside_prime": 29,
+          "index": 232,
+          "old_exponent": 332,
+          "modulus": 7356217556943244827297450050228650213702998111596752696131097024679319103913293262926093407943992384726708398519182869430017726436591476473939835526177680877389,
+          "residue": 1521976046264119619440851734530065561455792712744155730234020074071583262878612399226088291298757045115870703141899904020003667538605133063573759074381589147047
+        },
+        {
+          "outside_prime": 31,
+          "index": 1,
+          "old_exponent": 101,
+          "modulus": 47930109428077053786390885068202778361295999546093,
+          "residue": 1
+        },
+        {
+          "outside_prime": 31,
+          "index": 248,
+          "old_exponent": 348,
+          "modulus": 338499737533109022771598689863189291401095290819875883182998155324287023517927304885901199417338997867417710622819807654425360860140641442803596827279966330339171870191,
+          "residue": 251144966556822823346669995704946893620167473834101461716417986208341985190720258463733147954799901643567978849188889550057525799459185586596217000885136309606482355304
+        }
+      ]
+    }
+  ],
+  "scope": "Fixed CRT and phase-multiplicity controls for an all-law raw-transport obstruction. Arbitrary-depth proof is ordinary mathematics. The constructed families are noncovering; no unrestricted conclusion, source reconstruction or Lean verification."
+}

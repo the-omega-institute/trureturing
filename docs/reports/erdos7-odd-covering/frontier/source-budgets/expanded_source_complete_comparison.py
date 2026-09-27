@@ -22,8 +22,8 @@ DELTA, RHO = F(1, 22), F(1, 20000)
 EXPANDED_RHO = F(1, 15000)
 PINS = {
     'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b',
-    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '011a476decdc6612890e23a3ab60922d5f3aa8b8031f6cf98f8497b978836b5a',
-    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'f82b29cc441d393572fe944396462639102bdfddc82e7eeef7759a3de795d268',
+    'frontier/comparison-bounds/pure_five_complete_face_comparison.py': '9c888d210c1f64578ade69f66759f057c48981f250ce66c1637b626491a7ee2b',
+    'certificates/source_norms/comparison-bounds/pure_five_complete_face_comparison.json': 'ed8d0d10eeff83f9cc72ee6df3872df2fd98629851a15fed073b8e0d9bfd6207',
 }
 
 

@@ -571,7 +571,7 @@ prime. It does not require a new Lean declaration.
 
 The odd-domain optimum above controls the priced divisor objective.
 A comparison with actual covering costs still needs a separate proof:
-for example, [the literal root costs in report 379](../profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
+for example, [the literal root costs in report 379](../profile-notes/arithmetic/350-399/379-root-forest-disintegration-and-residue-costs.md)
 retain assigned residues and, when `5` divides `m`, weights
 `3^(1−e)g(m)` for originals `3^e m`, rather than their reciprocal
 weights `1/(3^e m)`. The optimum alone supplies no upper bound for

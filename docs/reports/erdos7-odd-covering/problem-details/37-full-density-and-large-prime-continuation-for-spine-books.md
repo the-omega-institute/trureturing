@@ -366,11 +366,11 @@ analytic prime-product premise and verification boundary.
 ## 8. Verification and scope
 
 The self-contained program
-[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine_book_density_certificate.py)
+[`spine_book_density_certificate.py`](../frontier/cover-geometry/spine-book-density-certificate/spine_book_density_certificate.py)
 checks the six exact complementary-tail sums, complete geometric moments,
 cubic remainder constant, density factors and the actual zero-fibre
 counterexample. Its
-[`output`](../frontier/cover-geometry/spine_book_density_certificate.json)
+[`output`](../frontier/cover-geometry/spine-book-density-certificate/spine_book_density_certificate.json)
 records the rational values. It does not claim machine verification of
 (BD10), the arbitrary-height reduction, or the full-density proof.
 

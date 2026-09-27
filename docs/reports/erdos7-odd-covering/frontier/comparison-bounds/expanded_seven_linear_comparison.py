@@ -10,7 +10,7 @@ import sys
 
 sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/comparison-bounds/expanded_seven_linear_comparison.json'
-PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/comparison-bounds/second_depth_seven_comparison.py': '81af9f9f98c43ec3a7b0291ce7ee2b9fb133c63314ca5b2416aabf804f15cbfb', 'certificates/source_norms/comparison-bounds/second_depth_seven_comparison.json': 'd8de7cfe3682cf77e778b1e8d067b03c0acf072a70c62a74b26190546ccfca61', 'frontier/comparison-bounds/expanded_seven_pair_comparison.py': '5a51e611c2e9b981bfe0ba1450795d13e1cf734aa32b05f1c46c3d34f7bfd503', 'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '14eb81c7551671092f42a87532d77f58e392c2474daf05c69d09147a7a731986'}
+PINS = {'certificate_io.py': '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b', 'frontier/comparison-bounds/second_depth_seven_comparison.py': '5018f2cb2d9569fe34fdebcf70eead90a532da9a0a8668dc8eaa60331733311c', 'certificates/source_norms/comparison-bounds/second_depth_seven_comparison.json': 'f57fcb8db58e77229e0b48ba0f358d7b94393c559e8234165390bcb882bcf101', 'frontier/comparison-bounds/expanded_seven_pair_comparison.py': '1f17d81d46584287a713c900d01d5371f961703883cbf4c4ff674a7fdbef8563', 'certificates/source_norms/comparison-bounds/expanded_seven_pair_comparison.json': '16f4a33374bdc2db67bf63700ab81dfdbe7ab7f08fdf3893f9ab282c373eb4b7'}
 INDICES = (1, 2, 7, 10, 17, 18, 23, 26, 32, 33, 36)
 
 

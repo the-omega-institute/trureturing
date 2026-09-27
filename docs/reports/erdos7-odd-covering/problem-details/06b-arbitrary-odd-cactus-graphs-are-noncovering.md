@@ -285,7 +285,7 @@ It uses only the Python standard library and checks that assertions are
 enabled. It can be rerun with
 
 ```sh
-python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/cactus_block_fees.py
+python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/cactus-block-fees/cactus_block_fees.py
 ```
 
 These are scalar rational inequality checks over a closed finite box. They
@@ -444,12 +444,12 @@ marginal proportions of words admitting extensions. They are not asserted
 to be lower bounds on the full original uncovered Haar density. Existence
 of compatible witnesses is what the exact block recursion provides.
 
-The supporting [finite rational certificate](../frontier/cover-geometry/cactus_block_fees.py)
-retains all 528 cutoff inequalities and their [exact values](../frontier/cover-geometry/cactus_block_fees.json).
-An independent [original-class control program](../frontier/cover-geometry/cactus_block_extension_controls.py)
+The supporting [finite rational certificate](../frontier/cover-geometry/cactus-block-fees/cactus_block_fees.py)
+retains all 528 cutoff inequalities and their [exact values](../frontier/cover-geometry/cactus-block-fees/cactus_block_fees.json).
+An independent [original-class control program](../frontier/cover-geometry/cactus-block-extension-controls/cactus_block_extension_controls.py)
 retains full prime-power coordinates, derives blocks from the actual support
 graph, and compares every conditional extension count with complete CRT
-enumeration. Its [exact data](../frontier/cover-geometry/cactus_block_extension_controls.json)
+enumeration. Its [exact data](../frontier/cover-geometry/cactus-block-extension-controls/cactus_block_extension_controls.json)
 include these controls:
 
 | Original support geometry | Original period | Uncovered residues | Original Haar survival |

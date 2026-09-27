@@ -174,7 +174,7 @@ the complete original family, not an isolated point test.
 
 ## 5. Reproducible scope
 
-The [checker](../../frontier/cover-geometry/hsw11_descendant_palette.py) uses exact prime
+The [checker](../../frontier/cover-geometry/hsw11-family/hsw11_descendant_palette.py) uses exact prime
 trial division, rational products and CRT. It verifies both sharp
 cardinality crossings, the displayed rational brackets, the six absent
 source moduli, all three repaired cylinders, and all three shifted

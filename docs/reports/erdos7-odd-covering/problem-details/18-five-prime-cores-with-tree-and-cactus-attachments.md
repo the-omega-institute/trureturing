@@ -5,8 +5,8 @@ certificates. It is not a Lean proof or a solution of unrestricted Erdős #7.
 The cylinder-profile argument is reused from
 [P3–P5 of the four-prime head theorem](10-a-four-prime-head-and-a-restricted-noncoverage-theorem.md#a-four-prime-head-and-a-restricted-noncoverage-theorem).
 The self-contained Python 3 standard-library
-[parameter certificate](../frontier/cover-geometry/five_core_cylinder_profiles.py)
-and its [exact data](../frontier/cover-geometry/five_core_cylinder_profiles.json)
+[parameter certificate](../frontier/cover-geometry/five-core-cylinder-profiles/five_core_cylinder_profiles.py)
+and its [exact data](../frontier/cover-geometry/five-core-cylinder-profiles/five_core_cylinder_profiles.json)
 reconstruct that baseline before evaluating the four changed-domain cases.
 
 ## 1. Statements and exact meaning of attachment
@@ -355,8 +355,8 @@ prime. It does not permit a five-core to be substituted for a child block in
 the cactus or four-vertex-block recursion.
 
 The independently constructed finite controls in
-[the weighted AP control](../frontier/cover-geometry/five_core_weighted_ap_controls.py)
-and its [exact data](../frontier/cover-geometry/five_core_weighted_ap_controls.json)
+[the weighted AP control](../frontier/cover-geometry/five-core-weighted-ap-controls/five_core_weighted_ap_controls.py)
+and its [exact data](../frontier/cover-geometry/five-core-weighted-ap-controls/five_core_weighted_ap_controls.json)
 test (16) against a full original-period sieve:
 
 | Original geometry | Original period | Distinct labels | Uncovered residues |

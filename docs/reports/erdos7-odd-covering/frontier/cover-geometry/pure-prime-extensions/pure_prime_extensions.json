@@ -1,0 +1,217 @@
+{
+  "scope": "Exact finite arithmetic consumer of the seven-core fixed-finite-period one-law premise. General pure-conditioning, shared original mixed-deletion and Chapter33 analytic-tail proofs remain mathematical premises; no new Lean certification.",
+  "seed_sha256": "2ff88432077332183296e76c9119791e6fa6e05cbf8476454489069c249f2e63",
+  "seed_query_R": "70874/3375",
+  "seed_density": "455625",
+  "coarse_query_R": "21",
+  "single_prime": {
+    "prime_lower_bound": 101,
+    "R_upper": "2101/78",
+    "exact_seed_R_at101": "7090775/263251",
+    "gap_below27": "5/78",
+    "density_upper": "7593750/13",
+    "haar_lower": "13/7593750"
+  },
+  "two_prime_formula": "N_coarse=(q-23)*(r-23)-463",
+  "two_prime_rows": [
+    {
+      "primes": [
+        29,
+        101
+      ],
+      "coarse_numerator": 5,
+      "coarse_mass_lower": "5/2673",
+      "exact_seed_mass_lower": "17002/9021375",
+      "coarse_haar_lower": "1/255150000"
+    },
+    {
+      "primes": [
+        31,
+        83
+      ],
+      "coarse_numerator": 17,
+      "coarse_mass_lower": "17/2349",
+      "exact_seed_mass_lower": "19162/2642625",
+      "coarse_haar_lower": "17/1120837500"
+    },
+    {
+      "primes": [
+        37,
+        59
+      ],
+      "coarse_numerator": 41,
+      "coarse_mass_lower": "41/1995",
+      "exact_seed_mass_lower": "46156/2244375",
+      "coarse_haar_lower": "41/951345000"
+    },
+    {
+      "primes": [
+        41,
+        53
+      ],
+      "coarse_numerator": 77,
+      "coarse_mass_lower": "77/1989",
+      "exact_seed_mass_lower": "259966/6712875",
+      "coarse_haar_lower": "77/947700000"
+    },
+    {
+      "primes": [
+        43,
+        47
+      ],
+      "coarse_numerator": 17,
+      "coarse_mass_lower": "17/1845",
+      "exact_seed_mass_lower": "19154/2075625",
+      "coarse_haar_lower": "17/880267500"
+    }
+  ],
+  "preceding_prime_controls": [
+    {
+      "primes": [
+        29,
+        97
+      ],
+      "coarse_numerator": -19,
+      "exact_seed_mass_lower": "-21334/2885625",
+      "scope": "Failure of this scalar sufficient criterion, not a cover or all-law obstruction."
+    },
+    {
+      "primes": [
+        31,
+        79
+      ],
+      "coarse_numerator": -15,
+      "exact_seed_mass_lower": "-1742/259875",
+      "scope": "Failure of this scalar sufficient criterion, not a cover or all-law obstruction."
+    },
+    {
+      "primes": [
+        37,
+        53
+      ],
+      "coarse_numerator": -43,
+      "exact_seed_mass_lower": "-48346/2008125",
+      "scope": "Failure of this scalar sufficient criterion, not a cover or all-law obstruction."
+    },
+    {
+      "primes": [
+        41,
+        47
+      ],
+      "coarse_numerator": -31,
+      "exact_seed_mass_lower": "-20908/1184625",
+      "scope": "Failure of this scalar sufficient criterion, not a cover or all-law obstruction."
+    }
+  ],
+  "last_pair_boundary": "For q=43, r=47 is the first distinct larger prime; r=43 is inadmissible.",
+  "monotonic_increment_coefficients": [
+    {
+      "powers": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "coefficient": "1"
+    }
+  ],
+  "tail": {
+    "reference_head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      43,
+      47
+    ],
+    "B": 3000000000,
+    "ell": 19,
+    "c": "723/721",
+    "M2": "1026827659/43877376",
+    "tau7_series_terms": [
+      "1",
+      "7/19",
+      "42/361",
+      "210/6859",
+      "840/130321",
+      "2520/2476099",
+      "5040/47045881",
+      "5040/893871739"
+    ],
+    "tau7_series": "1361328554/893871739",
+    "tau7": "64280944891382148995577674000000000/124192260071668016109483079934830023870937731",
+    "haar_lower": "17/880267500",
+    "tail_loss_upper": "147502172485353666081589281379802734375/12177377921764079684840367258873070235345104887",
+    "remaining_live_mass_lower": "657533557001749153394941174022499045910091/91330334413230597636302754441548026765088286652500",
+    "simple_strict_remaining_live_mass_lower": "1/200000000",
+    "scope": "Remaining mass under the constructed unnormalized tail law; not full-period Haar density."
+  },
+  "fixture": {
+    "period": 105,
+    "originals": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 15,
+        "residue": 1
+      },
+      {
+        "modulus": 21,
+        "residue": 2
+      },
+      {
+        "modulus": 35,
+        "residue": 1
+      },
+      {
+        "modulus": 105,
+        "residue": 8
+      }
+    ],
+    "predeletion_support_size": 48,
+    "survivor_size": 36,
+    "predeletion_atom_mass": "1/48",
+    "mixed_class_masses": {
+      "15": "1/8",
+      "21": "1/12",
+      "35": "1/24",
+      "105": "1/48"
+    },
+    "live_mass": "3/4",
+    "scalar_live_mass_lower": "19/30",
+    "survivor_nonunit_query_sum": "49/36",
+    "bad_omission_witness": 71,
+    "wrong_survivor_size_if_mod35_dropped": 37
+  }
+}

@@ -1,0 +1,6 @@
+**定义 658.1（数学结果与项目接口）。** 本批直接在原始概率行上给出四项缺额恒等式、$M\le t\le1$ 的唯一极小点、$t>M$ 的锐利全域 TV 误差界、固定公共坐标且无截断缺额时的锐利改进、$t\le M$ 的精确集合修复距离和端点锐利界，并将其接到边缘阈值、完整联合模拟器、目标扰动和有理达到例。有限排序、正负部质量搬移和 TV 事件表示是成熟数学成分；本批承担的是它们在指定目标族上的具体连接，不申报经文献确认的外部原创优先权。
+
+排序部分和与正部阈值的经典联系，可参照 Włodzimierz Ogryczak、Arie Tamir，*Minimizing the Sum of the k Largest Functions in Linear Time*，Information Processing Letters 85（2003），117—122，[论文全文](https://www.ia.pw.edu.pl/~wogrycza/publikacje/artykuly/myipl03.pdf)，第 2 节 Lemma 1 及紧接的线性规划表示，印刷页 118。该处对任意有限实向量给出最大若干项之和的阈值表示；本文不把那项通用表示或该文的固定维算法当作本批原创，也不以其算法复杂度替代本文具体稳定性常数的推导。
+
+项目 [TotalVariation/Metric](../../../D5/S3/TotalVariation/Metric.lean) 的非负、分离、三角不等式及等质量事件界，分别承接距离、唯一性和扰动关系；[AnswerabilityCriterion](../../../D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean) 承接读数纤维上的问题充分性。固定行与揭示分支的合法连接沿用第 602 节，其前提在第 647—649 节具体展开。源码阅读与普通推导不作为当前 Lean 内核或公理闭包核验；本批只有理论文字，没有新增形式化、消化覆盖、数值实验、构建或测试。
+

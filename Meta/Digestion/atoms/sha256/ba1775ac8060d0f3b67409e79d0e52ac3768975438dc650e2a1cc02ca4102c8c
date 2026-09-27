@@ -1,0 +1,29 @@
+**定理 685.1（全部原始行的最佳中心界）。** 在第 684 节的条件下，允许公共坐标变化后，精确最小系数为
+
+$$
+\boxed{\operatorname{TV}(R,R^{(t)})
+\le\frac1t\max\left\{\frac nm,\frac1{\tau_{\mathcal F}}\right\}
+\bigl[\Phi_t^{\mathcal F}(R)-cE\bigr].}
+$$
+
+证明：把标签残余写为 $a_i=(E-a_\circ)/n+h_i$，其中 $h\in H_0$，并记 $H=\frac12\sum_i|h_i|$。公共正部与被排除标签事件给出
+
+$$
+\Phi_t^{\mathcal F}(R)-cE\ge B_\circ+g_{\mathcal F}(h),\qquad
+B_\circ=(a_\circ)_+-ca_\circ\ge\frac mn|a_\circ|.
+$$
+
+另一方面，
+
+$$
+t\operatorname{TV}(R,R^{(t)})
+=\frac12\left(|a_\circ|+\sum_i|h_i-a_\circ/n|\right)
+\le |a_\circ|+H.
+$$
+
+分别用 $B_\circ$ 与 $g_{\mathcal F}\ge\tau_{\mathcal F}H$ 控制这两项，再取较大的系数，即得上界。
+
+第 684 节的标签扰动已经使 $1/(t\tau_{\mathcal F})$ 不可减小。另取足够小的非零 $s$，令 $a_\circ=s$，全部标签残余等于 $(E-s)/n$。这些原始行合法且标签处于箱体内部，每个状态的超额均为 $B_\circ$，而 $t\operatorname{TV}=|s|$。$s>0$ 给出比例 $n/(tp)$，$s<0$ 给出 $n/(td)$，故 $n/(tm)$ 也不可减小。两类见证分别确定两项，足以使最大值锐利，并不要求同一行同时达到两个不同的最坏比例。证毕。
+
+当 $\mathcal F$ 是全部 $p$ 元状态时，第 660 节的排序关系及其见证给出 $\tau_{\mathcal F}=m/(n-1)$，于是本节返回 $n/(tm)$，上一节返回 $(n-1)/(tm)$。部分状态族的标签方向可以更弱，以至于它而非公共方向决定全部原始域的最佳系数。
+

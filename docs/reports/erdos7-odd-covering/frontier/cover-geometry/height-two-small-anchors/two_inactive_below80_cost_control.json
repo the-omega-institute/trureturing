@@ -1,0 +1,2335 @@
+{
+  "clipped_cardinality_profiles": [
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        2,
+        3
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "consumer": "gap12_arbitrary_other_two",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "consumer": "gap222_arbitrary_fourth",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        2,
+        2,
+        2,
+        3
+      ],
+      "consumer": "gap222_arbitrary_fourth",
+      "n": 4
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        2,
+        2
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        2,
+        3
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        1,
+        3,
+        3
+      ],
+      "consumer": "whole_original_legal_projection_at_most3",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        2,
+        2,
+        2
+      ],
+      "consumer": "full1122_arbitrary_fifth",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "consumer": "full1122_arbitrary_fifth",
+      "n": 5
+    },
+    {
+      "clipped_sizes": [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "consumer": "full12222",
+      "n": 5
+    }
+  ],
+  "scope": "Necessary normalized integer profiles; no actual realizability or saturation claim",
+  "status": "PASS",
+  "three_counts_by_capacity": {
+    "70": 2,
+    "71": 1,
+    "72": 2,
+    "73": 2,
+    "74": 4,
+    "75": 3,
+    "76": 7,
+    "77": 8,
+    "78": 10,
+    "79": 9
+  },
+  "three_inactive": [
+    {
+      "c": 71,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 73,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 5,
+        "delta": 0,
+        "forward": 10,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 6,
+        "delta": 0,
+        "forward": 12,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 6,
+        "delta": 0,
+        "forward": 12,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 7,
+        "delta": 0,
+        "forward": 14,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 8,
+        "delta": 0,
+        "forward": 16,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 7,
+        "delta": 0,
+        "forward": 14,
+        "n": 4,
+        "p": 3,
+        "q": 2,
+        "z": [
+          1,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 8,
+        "delta": 0,
+        "forward": 16,
+        "n": 4,
+        "p": 3,
+        "q": 2,
+        "z": [
+          1,
+          2,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 8,
+        "delta": 0,
+        "forward": 16,
+        "n": 4,
+        "p": 4,
+        "q": 2,
+        "z": [
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 3,
+        "delta": 1,
+        "forward": 13,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 1,
+        "forward": 15,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 70,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 0,
+        "delta": 0,
+        "forward": 0,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 72,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 1,
+        "delta": 0,
+        "forward": 2,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "c": 74,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 2,
+        "delta": 0,
+        "forward": 4,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "c": 74,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 2,
+        "delta": 0,
+        "forward": 4,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 4,
+        "p": 1,
+        "q": 2,
+        "z": [
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 4,
+        "p": 1,
+        "q": 2,
+        "z": [
+          0,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 4,
+        "p": 2,
+        "q": 2,
+        "z": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 0,
+        "delta": 1,
+        "forward": 7,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 4,
+      "root": {
+        "Z": 1,
+        "delta": 1,
+        "forward": 9,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 2,
+      "n": 4,
+      "root": {
+        "Z": 0,
+        "delta": 0,
+        "forward": 0,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 2,
+      "n": 4,
+      "root": {
+        "Z": 1,
+        "delta": 0,
+        "forward": 2,
+        "n": 4,
+        "p": 0,
+        "q": 2,
+        "z": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "c": 73,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 5,
+        "delta": 0,
+        "forward": 10,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 75,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 6,
+        "delta": 0,
+        "forward": 12,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 7,
+        "delta": 0,
+        "forward": 14,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 7,
+        "delta": 0,
+        "forward": 14,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 8,
+        "delta": 0,
+        "forward": 16,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 8,
+        "delta": 0,
+        "forward": 16,
+        "n": 5,
+        "p": 4,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most8",
+      "k": 0,
+      "n": 5,
+      "root": {
+        "Z": 4,
+        "delta": 1,
+        "forward": 15,
+        "n": 5,
+        "p": 3,
+        "q": 3,
+        "z": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 70,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 0,
+        "delta": 0,
+        "forward": 0,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 72,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 1,
+        "delta": 0,
+        "forward": 2,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "c": 74,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 2,
+        "delta": 0,
+        "forward": 4,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "c": 74,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 2,
+        "delta": 0,
+        "forward": 4,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "c": 76,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 3,
+        "delta": 0,
+        "forward": 6,
+        "n": 5,
+        "p": 1,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 5,
+        "p": 1,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "c": 78,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 4,
+        "delta": 0,
+        "forward": 8,
+        "n": 5,
+        "p": 2,
+        "q": 3,
+        "z": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 0,
+        "delta": 1,
+        "forward": 7,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "n": 5,
+      "root": {
+        "Z": 1,
+        "delta": 1,
+        "forward": 9,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 2,
+      "n": 5,
+      "root": {
+        "Z": 0,
+        "delta": 0,
+        "forward": 0,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 2,
+      "n": 5,
+      "root": {
+        "Z": 1,
+        "delta": 0,
+        "forward": 2,
+        "n": 5,
+        "p": 0,
+        "q": 3,
+        "z": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "two_counts_by_capacity": {
+    "72": 1,
+    "74": 1,
+    "76": 5,
+    "77": 4,
+    "78": 9,
+    "79": 9
+  },
+  "two_counts_by_consumer": {
+    "complete_root_truncated_cardinality_at_most9": 21,
+    "four_original_fibres_with_one_public_plus_one_private_label": 4,
+    "whole_original_legal_projection_at_most3": 4
+  },
+  "two_inactive": [
+    {
+      "c": 72,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 74,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 6,
+          "delta": 1,
+          "forward": 19,
+          "n": 5,
+          "p": 4,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 77,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 4,
+          "delta": 1,
+          "forward": 15,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "witness_root": 1
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 5,
+          "delta": 1,
+          "forward": 17,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            2
+          ]
+        }
+      ],
+      "witness_root": 1
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 5,
+          "p": 2,
+          "q": 3,
+          "z": [
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 2,
+          "q": 3,
+          "z": [
+            0,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 77,
+      "consumer": "four_original_fibres_with_one_public_plus_one_private_label",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "four_original_fibres_with_one_public_plus_one_private_label",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "four_original_fibres_with_one_public_plus_one_private_label",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "four_original_fibres_with_one_public_plus_one_private_label",
+      "k": 1,
+      "kind": "FF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 0,
+          "forward": 12,
+          "n": 5,
+          "p": 3,
+          "q": 3,
+          "z": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 7,
+          "delta": 0,
+          "forward": 14,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 76,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            3
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 8,
+          "delta": 0,
+          "forward": 16,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 78,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 1,
+          "forward": 17,
+          "n": 4,
+          "p": 3,
+          "q": 2,
+          "z": [
+            1,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "complete_root_truncated_cardinality_at_most9",
+      "k": 0,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 6,
+          "delta": 1,
+          "forward": 19,
+          "n": 4,
+          "p": 4,
+          "q": 2,
+          "z": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Z": 9,
+          "delta": 0,
+          "forward": 18,
+          "n": 5,
+          "p": 5,
+          "q": 3,
+          "z": [
+            1,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 77,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 4,
+          "delta": 0,
+          "forward": 8,
+          "n": 4,
+          "p": 2,
+          "q": 2,
+          "z": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    },
+    {
+      "c": 79,
+      "consumer": "whole_original_legal_projection_at_most3",
+      "k": 1,
+      "kind": "GF",
+      "roots": [
+        {
+          "Z": 5,
+          "delta": 0,
+          "forward": 10,
+          "n": 4,
+          "p": 2,
+          "q": 2,
+          "z": [
+            1,
+            1,
+            1,
+            2
+          ]
+        },
+        {
+          "Z": 10,
+          "delta": 0,
+          "forward": 20,
+          "n": 5,
+          "p": 6,
+          "q": 3,
+          "z": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "witness_root": 0
+    }
+  ]
+}

@@ -5,7 +5,7 @@
   },
   "source_sha256": {
     "path": "content/001-source_sha256.json",
-    "sha256": "8f99585e173a53b53cc1a0284eb3c02ec908ed8cdb720980334bab6d290d7f66",
+    "sha256": "9a1bda078df01494caff0f8cd5a5c9cc5060f191bb34787f907bbcadb0af88e4",
     "kind": "value"
   },
   "constraint_inventory": {

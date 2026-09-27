@@ -1,0 +1,52 @@
+**定理 640.1（原始行的精确缺额分解）。** 令
+
+$$
+a_x=tR_x-l_x,\qquad E=t-M,\qquad L=\frac Dp,
+$$
+
+并对标签坐标定义
+
+$$
+z_i=\min(\max(a_i,0),L),\quad
+N=\sum_i(-a_i)_+,\quad P=\sum_i(a_i-L)_+,\quad Z=\sum_i z_i.
+$$
+
+以 $\operatorname{Top}_d(z)$ 表示 $d$ 个最大标签坐标之和，置
+
+$$
+\kappa=\operatorname{Top}_d(z)-cZ,\qquad
+B_\circ=(a_\circ)_+-ca_\circ.
+$$
+
+则对全部 $0<t\le1$ 及原始概率行 $R$，有恒等式
+
+$$
+\boxed{\Phi_t(R)-cE=B_\circ+cN+\alpha P+\kappa.}
+$$
+
+右侧四项都非负，其中
+
+$$
+B_\circ=
+\begin{cases}
+\alpha a_\circ,&a_\circ\ge0,\\
+c|a_\circ|,&a_\circ\le0.
+\end{cases}
+$$
+
+证明：对每个标签，$(a_i)_+=z_i+(a_i-L)_+$，且 $(a_i-L)_+=(a_i)_+-z_i$。因此固定状态的正部和为
+
+$$
+\mu_S=(a_\circ)_++\sum_i(a_i)_+-\sum_{i\in S}z_i.
+$$
+
+取最坏状态，扣掉最小的 $p$ 项，得到
+
+$$
+\Phi_t(R)=(a_\circ)_++P+\operatorname{Top}_d(z).
+$$
+
+另一方面，$a_i=z_i+(a_i-L)_+-(-a_i)_+$，而 $\sum_xa_x=E$，故 $Z=E-a_\circ+N-P$。把 $\operatorname{Top}_d(z)=cZ+\kappa$ 代入，即得分解。最大 $d$ 项的平均不小于全部平均，故 $\kappa\ge0$；其他项由定义及 $c,\alpha>0$ 非负。证毕。
+
+四项分别检测公共质量的偏移、标签低于底量、标签超出状态内残余上限，以及截断后标签仍不均匀。分解使用同一份 $R$；并非从四个不同实现分别取到最小值后再相加。它还可以读作“最坏值减去平均基准”：均匀抽取 $p$ 元状态时，前三项是平均障碍超过 $cE$ 的量，$\kappa$ 是最坏状态进一步高于平均的量。
+

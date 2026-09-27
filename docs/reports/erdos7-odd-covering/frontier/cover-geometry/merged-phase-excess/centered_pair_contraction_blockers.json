@@ -1,0 +1,34 @@
+[
+  {
+    "modulus": 3,
+    "private_point": 38225498559
+  },
+  {
+    "modulus": 5,
+    "private_point": 154233623140
+  },
+  {
+    "modulus": 7,
+    "private_point": 409475178392
+  },
+  {
+    "modulus": 9,
+    "private_point": 23803106923
+  },
+  {
+    "modulus": 21,
+    "private_point": 435127539118
+  },
+  {
+    "modulus": 33,
+    "private_point": 409205747369
+  },
+  {
+    "modulus": 39,
+    "private_point": 291456798179
+  },
+  {
+    "modulus": 135,
+    "private_point": 449637875486
+  }
+]

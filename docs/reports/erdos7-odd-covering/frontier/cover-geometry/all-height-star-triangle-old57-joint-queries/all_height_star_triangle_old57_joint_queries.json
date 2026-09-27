@@ -1,0 +1,294 @@
+{
+  "scope": "Finite distinct P-smooth originals: arbitrary pure heights, all mixed labels of form3^a*q^b,3^a*5^b*7^c or5^b*7^c; arbitrary fixed phases and no exponent cutoff. One uniform full-survivor law. Ordinary proof plus exact computation, not Lean or unrestricted Erdos7; no claim of G membership.",
+  "roles": [
+    "5",
+    "7",
+    "11",
+    "13",
+    "17",
+    "19",
+    "T"
+  ],
+  "optimizer_source_sha256": "aa4bd18d369ffe5912f6e9147dce70d4b69eef799d4daa02334e7f62bcee8b56",
+  "signed_integer_optimizer": {
+    "orbits": [
+      {
+        "orbit": 0,
+        "minimum_with_off": 2939540,
+        "minimum_saturated": 2939540,
+        "anchor_root_masks": [
+          60,
+          60,
+          60
+        ]
+      },
+      {
+        "orbit": 1,
+        "minimum_with_off": 3003618,
+        "minimum_saturated": 3003618,
+        "anchor_root_masks": [
+          60,
+          60,
+          60
+        ]
+      },
+      {
+        "orbit": 2,
+        "minimum_with_off": 3024138,
+        "minimum_saturated": 3024138,
+        "anchor_root_masks": [
+          67,
+          67,
+          67
+        ]
+      },
+      {
+        "orbit": 3,
+        "minimum_with_off": 3122120,
+        "minimum_saturated": 3122120,
+        "anchor_root_masks": [
+          60,
+          60,
+          60
+        ]
+      },
+      {
+        "orbit": 4,
+        "minimum_with_off": 3186026,
+        "minimum_saturated": 3186026,
+        "anchor_root_masks": [
+          67,
+          67,
+          67
+        ]
+      },
+      {
+        "orbit": 5,
+        "minimum_with_off": 3223414,
+        "minimum_saturated": 3223414,
+        "anchor_root_masks": [
+          67,
+          65,
+          67
+        ]
+      }
+    ],
+    "node_candidates": 143327232,
+    "root_convolution_candidates": 6122200320,
+    "checks_passed": 8
+  },
+  "pure_mask_count": 598,
+  "pruned_shapes": [
+    [
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        3,
+        3
+      ]
+    ],
+    [
+      [
+        2,
+        3,
+        3
+      ],
+      [
+        3,
+        3
+      ]
+    ]
+  ],
+  "denominator": 378675,
+  "literal_placement": {
+    "5": [
+      "B",
+      "B1",
+      "b0"
+    ],
+    "7": [
+      "B",
+      "B2",
+      "b1"
+    ],
+    "11": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "13": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "17": [
+      "A",
+      "A1",
+      "a4"
+    ],
+    "19": [
+      "A",
+      "A1",
+      "a1"
+    ],
+    "T": [
+      "B",
+      "B2",
+      "b4"
+    ]
+  },
+  "literal_leaf_order": [
+    "a0",
+    "a1",
+    "a2",
+    "a3",
+    "a4",
+    "b0",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8"
+  ],
+  "literal_leaf_numerators": [
+    250880,
+    185220,
+    171990,
+    171990,
+    158760,
+    50490,
+    100980,
+    151470,
+    50490,
+    25245,
+    50490,
+    75735,
+    75735,
+    75735
+  ],
+  "shallow_loss_upper": "1456937/2044845",
+  "star_tail": "7244/227205",
+  "triangle_tail": "1/405",
+  "all_height_loss_upper": "1527182/2044845",
+  "joint_query_loss_threshold": "12808334335598/16672675894875",
+  "loss_threshold_margin": "9623660209796/450162249161625",
+  "root_query_caps": {
+    "3": "2/3",
+    "5": "4/15",
+    "7": "6/35",
+    "11": "10/99",
+    "13": "12/143",
+    "17": "16/255",
+    "19": "18/323"
+  },
+  "joint_root_avoidance": "4929320269/33391182825",
+  "root_count_distribution": [
+    "4929320269/33391182825",
+    "786350622212/1836515055375",
+    "1016946752/3273645375",
+    "547659248/5650815555",
+    "28103905168/1836515055375",
+    "261188864/204057228375",
+    "11008/203853375",
+    "4096/4534605075"
+  ],
+  "root_hinges_by_threshold": [
+    "20488084/14549535",
+    "18558290224/33391182825",
+    "18588780304/141270388875",
+    "33109453456/1836515055375",
+    "18918656/13603815225",
+    "11387648/204057228375",
+    "4096/4534605075",
+    "0"
+  ],
+  "query_numerators_by_threshold": [
+    "3161/935",
+    "84425334139/33391182825",
+    "3864341559277/1836515055375",
+    "3655796868781/1836515055375",
+    "8951213417/4534605075",
+    "402532211573/204057228375",
+    "26834733883/13603815225",
+    "28700237/14549535"
+  ],
+  "query_bounds_by_threshold": [
+    "6913107/517663",
+    "835906350046/76078342795",
+    "43147691740943/4184308853725",
+    "45455098380204/4184308853725",
+    "9872881663973/836861770745",
+    "53526653406038/4184308853725",
+    "11542010958039/836861770745",
+    "13239432880/895039327"
+  ],
+  "loss_thresholds_by_threshold": [
+    "21592/31075",
+    "252105410411/336530744550",
+    "12808334335598/16672675894875",
+    "11180363970719/14836160839500",
+    "23146677408/32097890825",
+    "837815647177/1240347858750",
+    "42251308142/69086042025",
+    "30639043/59339280"
+  ],
+  "selected_threshold": 2,
+  "joint_root_hinge": "18588780304/141270388875",
+  "joint_query_numerator": "3864341559277/1836515055375",
+  "extra_inventory_budget": "9623660209796/450162249161625",
+  "extra_old713_loss": "1564361/2044845",
+  "extra_old713_query": "42546650450093/3883788208300",
+  "extra_old713_Haar": "120121/2239488",
+  "extra_old713_extended_Haar": "1438892043221/2623717851955200",
+  "pure_cap_corner_count": 128,
+  "full_Haar_survivor_lower": "517663/8957952",
+  "one_law_query_upper": "43147691740943/4184308853725",
+  "query_target_margin": "9623660209796/12552926561175",
+  "outside23_29_relative_reserve": "2405915052449/37904915498450",
+  "extended_Haar_lower": "2405915052449/655929462988800",
+  "checks": {
+    "six_signed_orbits_with_off": true,
+    "off_never_improves_saturated_minimum": true,
+    "global_minimum": true,
+    "node_candidate_count": true,
+    "root_candidate_count": true,
+    "598_disjoint_pure_masks": true,
+    "exact_two_pruned_shapes": true,
+    "literal_leaf_numerators": true,
+    "literal_witness_attains_global_minimum": true,
+    "literal_witness_has_positive_leaves": true,
+    "literal_anchor_is_maximal_avoidance": true,
+    "root_probability_total": true,
+    "threshold_two_best_for_this_loss": true,
+    "threshold_two_best_target_loss_threshold": true,
+    "all128_pure_cap_corners": true,
+    "independent_root_hinge_one": true,
+    "independent_root_hinge_two": true,
+    "complete_query_cap_sum": true,
+    "root_avoidance": true,
+    "joint_query_numerator": true,
+    "head": true,
+    "star_tail": true,
+    "triangle_complete_tail": true,
+    "all_height_loss": true,
+    "joint_query_loss_threshold": true,
+    "actual_loss_below_threshold": true,
+    "Haar_survivor": true,
+    "common_law_query": true,
+    "query_target": true,
+    "outside23_29_reserve": true,
+    "outside23_29_Haar": true,
+    "extra_inventory_budget": true,
+    "complete_old713_inventory_fits": true,
+    "extra_old713_query": true,
+    "extra_old713_extended_Haar": true
+  },
+  "passed_count": 35,
+  "Lean": "not run"
+}
