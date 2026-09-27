@@ -1,3 +1,4 @@
+import Reg.Support.LegacyRelations.Preemption
 import LeanInformationAudit.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
@@ -28,8 +29,15 @@ open _root_.D5.S3.ConceptDynamics.InformationEscapeRealizations
 open _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
 open InformationEscapeArenas.EndStateOmitsPreemptingCause
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause in endStateOmitsPreemptingCauseArena
-  primitives preemptionRealization.toPrimitiveBundle realization preemption_bridge
+register_information_theorem _root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause
+  in endStateOmitsPreemptingCauseArena
+  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
+    Reg.Support.LegacyRelations.Preemption.signature Reg.Support.LegacyRelations.Preemption.actual.readout Reg.Support.LegacyRelations.Preemption.actual.anchor)
+  realizes Reg.Support.LegacyRelations.Preemption.registration
+  finite via preemption_bridge
+  variation Reg.Support.LegacyRelations.Preemption.finite_variation sensitivity Reg.Support.LegacyRelations.Preemption.finite_sensitivity
+  escape from source (Reg.Support.LegacyRelations.Preemption.selection)
+  escape continues (open)
 end
 
 section
