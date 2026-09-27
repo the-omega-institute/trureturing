@@ -9,15 +9,17 @@ internal sealed class FourCycleLocalAngleDemandDocument : IScribeDocumentDefinit
 {
     private const string Declaration =
         "D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.paired_angle_demand";
+    private const string FlatDeclaration =
+        "D5/S3/Geometry/Hyperideal/FourCycleLocalAngleDemand.flat_transverse_gap";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Strict local angle demand for a paired hyper-ideal cosine tuple.",
-        H("Main-edge dominance forces transverse angle demand"),
+        "Local angle demand and a flat-branch length gap for paired hyper-ideal lengths.",
+        H("Paired local angle demand and flat transverse gap"),
         Blocks(
             Paragraph(Text("Use the local order (12,13,14,34,24,23) and the exact cosine "
                 + "function from FourCycleEnvelopes. The tuple is (r,a,b,o,a,b). "
-                + "The three cosine-range assumptions below concern the target angle "
-                + "and the two distinct transverse angles.")),
+                + "The first result assumes three genuine angle ranges; the second "
+                + "uses the raw cosine inequalities of a transverse flat choice.")),
             Describe.Lean(
                 DescribeId.Create("paired-fourcycle-strict-local-angle-demand"),
                 DeclarationHandle.Create(Declaration),
@@ -39,6 +41,23 @@ internal sealed class FourCycleLocalAngleDemandDocument : IScribeDocumentDefinit
                         + "ranges it uses. It does not establish the range of the distinct "
                         + "opposite-edge cosine, certify a genuine geometric tetrahedron, "
                         + "construct face pairings, or prove global hyperbolic realization."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("paired-fourcycle-flat-transverse-gap"),
+                DeclarationHandle.Create(FlatDeclaration),
+                H("The selected transverse length is larger"),
+                StatementSource.FromAuthor(F.Disp(FlatStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For r,a,b,o>1, selecting the a,a transverse pi "
+                        + "pair forces a>b and a-b at least sqrt((r+1)(o+1)). Swapping "
+                        + "a and b gives the opposite choice.")),
+                    Paragraph(Text("The squared gap follows from the axial cosine; "
+                        + "the direction follows from the difference of the transverse "
+                        + "numerators and positivity of their common denominator.")),
+                    Paragraph(Text("These are implications between raw cosine values. "
+                        + "They do not construct a flat tetrahedron, a face pairing, "
+                        + "or a global zero-curvature assignment."))),
                 DescribeRole.Theorem))));
 
     private static Formula Statement()
@@ -63,6 +82,28 @@ internal sealed class FourCycleLocalAngleDemandDocument : IScribeDocumentDefinit
         return new Formula.BindMany(FormulaQuantifier.ForAll, [.. binders],
             new Formula.Logic(premise, FormulaLogicOperator.Implies,
                 Lt(F.Pi, angleSum)));
+    }
+
+    private static Formula FlatStatement()
+    {
+        var r = F.Id("r"); var a = F.Id("a");
+        var b = F.Id("b"); var o = F.Id("o");
+        var ct = Call("cosine", r, a, b, o, a, b);
+        var ca = Call("cosine", a, b, r, a, b, o);
+        var cb = Call("cosine", b, a, r, b, a, o);
+        var premise = And(
+            Lt(F.D(1), r), Lt(F.D(1), a), Lt(F.D(1), b), Lt(F.D(1), o),
+            Le(F.D(1), ct), Le(ca, F.Seq(F.Minus, F.D(1))), Le(F.D(1), cb));
+        var conclusion = And(
+            Lt(b, a),
+            Le(Call("sqrt", F.Seq(F.Open, r, F.Plus, F.D(1), F.Close,
+                F.Cdot, F.Sp, F.Open, o, F.Plus, F.D(1), F.Close)),
+                F.Seq(a, F.Minus, b)));
+        var real = new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
+        Formula.BoundVariable[] binders = [.. new[] { "r", "a", "b", "o" }
+            .Select(name => new Formula.BoundVariable(FormulaIdentifier.Create(name), real))];
+        return new Formula.BindMany(FormulaQuantifier.ForAll, [.. binders],
+            new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion));
     }
 
     private static Formula And(params Formula[] clauses)

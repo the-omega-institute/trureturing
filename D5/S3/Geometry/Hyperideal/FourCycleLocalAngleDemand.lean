@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-genuine-angle-demand)
    anchors: []
    utility: none
-   digest: Strict angle demand under three cosine-range hypotheses. -/
+   digest: Paired local angle demand and a flat transverse length gap. -/
 
 import D5.S3.Geometry.Hyperideal.FourCycleEnvelopes
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
@@ -544,6 +544,92 @@ theorem paired_angle_demand
     change 2 * theta + beta + delta > Real.pi
     linarith only [htarget]
 
+/-- For the same paired tuple, a transverse flat choice has a unique longer
+label and a gap set by the two positive axial lengths. This uses raw cosines,
+without moving the genuine-angle formulas into a flat branch. -/
+theorem flat_transverse_gap
+    (r a b o : ℝ)
+    (hr : 1 < r) (ha : 1 < a) (hb : 1 < b) (ho : 1 < o)
+    (haxis : 1 ≤ cosine r a b o a b)
+    (hchosen : cosine a b r a b o ≤ -1)
+    (hother : 1 ≤ cosine b a r b a o) :
+    a > b ∧ Real.sqrt ((r + 1) * (o + 1)) ≤ a - b := by
+  let Dr : ℝ := rad r a b
+  let Do : ℝ := rad o a b
+  let L : ℝ := (a + b)^2 - (r - 1) * (o - 1)
+  let M : ℝ := (r + 1) * (o + 1) - (a - b)^2
+  have hrad : ∀ x y z : ℝ, 1 < x → 1 < y → 1 < z → 0 < rad x y z := by
+    intro x y z hx hy hz
+    have hx2 : 1 ≤ x^2 := by nlinarith [sq_nonneg (x - 1)]
+    have hy2 : 1 ≤ y^2 := by nlinarith [sq_nonneg (y - 1)]
+    have hz2 : 1 ≤ z^2 := by nlinarith [sq_nonneg (z - 1)]
+    have hp : 0 ≤ 2 * x * y * z := by positivity
+    unfold rad
+    linarith
+  have hDr : 0 < Dr := hrad r a b hr ha hb
+  have hDo : 0 < Do := hrad o a b ho ha hb
+  have hQ : 0 < Dr * Do := mul_pos hDr hDo
+  have hQs : 0 < Real.sqrt (Dr * Do) := Real.sqrt_pos.2 hQ
+  have hsqrt_mul : Real.sqrt (Dr * Do) = Real.sqrt Dr * Real.sqrt Do := by
+    rw [Real.sqrt_mul (le_of_lt hDr)]
+  have haxis_exact : cosine r a b o a b * Dr = numerator r a b o a b := by
+    have hrad_swap : rad r b a = Dr := by dsimp [Dr]; unfold rad; ring
+    rw [cosine, hrad_swap, div_div, ← pow_two, Real.sq_sqrt hDr.le]
+    field_simp [hDr.ne']
+  have hminus_poly : Dr - numerator r a b o a b = (r - 1) * M := by
+    dsimp [Dr, M]
+    unfold rad numerator
+    ring
+  have hminus : Dr * (1 - cosine r a b o a b) = (r - 1) * M := by
+    nlinarith [haxis_exact, hminus_poly]
+  have hM : M ≤ 0 := by
+    have hleft : Dr * (1 - cosine r a b o a b) ≤ 0 :=
+      mul_nonpos_of_nonneg_of_nonpos hDr.le (by linarith)
+    have hright : (r - 1) * M ≤ 0 := by rw [← hminus]; exact hleft
+    by_contra h
+    have hMpos : 0 < M := lt_of_not_ge h
+    exact (not_lt_of_ge hright) (mul_pos (by linarith) hMpos)
+  have hgap_sq : (r + 1) * (o + 1) ≤ (a - b)^2 := by
+    dsimp [M] at hM
+    linarith
+  have hprod : 0 < (r + 1) * (o + 1) := mul_pos (by linarith) (by linarith)
+  have hL : 0 < L := by
+    have hab : 0 < a * b := mul_pos (by linarith) (by linarith)
+    dsimp [L]
+    nlinarith [hgap_sq, hab]
+  have hca_exact : cosine a b r a b o * Real.sqrt (Dr * Do) =
+      numerator a b r a b o := by
+    unfold cosine
+    have hrad1 : rad a b o = Do := by dsimp [Do]; unfold rad; ring
+    have hrad2 : rad a r b = Dr := by dsimp [Dr]; unfold rad; ring
+    rw [hrad1, hrad2, div_div, hsqrt_mul]
+    field_simp [(Real.sqrt_pos.2 hDr).ne', (Real.sqrt_pos.2 hDo).ne']
+  have hcb_exact : cosine b a r b a o * Real.sqrt (Dr * Do) =
+      numerator b a r b a o := by
+    unfold cosine
+    have hrad1 : rad b a o = Do := by dsimp [Do]; unfold rad; ring
+    have hrad2 : rad b r a = Dr := by dsimp [Dr]; unfold rad; ring
+    rw [hrad1, hrad2, div_div, hsqrt_mul]
+    field_simp [(Real.sqrt_pos.2 hDr).ne', (Real.sqrt_pos.2 hDo).ne']
+  have hnum_diff : numerator a b r a b o - numerator b a r b a o =
+      -(a - b) * L := by
+    dsimp [L]
+    unfold numerator
+    ring
+  have hnum_order : numerator a b r a b o < numerator b a r b a o := by
+    rw [← hca_exact, ← hcb_exact]
+    exact mul_lt_mul_of_pos_right (by linarith : cosine a b r a b o <
+      cosine b a r b a o) hQs
+  have hab : 0 < a - b := by
+    have hnegative : -(a - b) * L < 0 := by rw [← hnum_diff]; linarith
+    nlinarith
+  have hsqrt_sq : (Real.sqrt ((r + 1) * (o + 1)))^2 =
+      (r + 1) * (o + 1) := Real.sq_sqrt hprod.le
+  constructor
+  · linarith
+  · nlinarith [Real.sqrt_nonneg ((r + 1) * (o + 1))]
+
 #print axioms paired_angle_demand
+#print axioms flat_transverse_gap
 
 end D5.S3.Geometry.Hyperideal.FourCycleLocalAngleDemand
