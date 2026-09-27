@@ -5874,3 +5874,17 @@ John Kolassa、Jixin Li，*Multivariate saddlepoint approximations in tail proba
 该 v1 PDF 243,038 字节，SHA256 `5d656b7446f7e5b5e67424e51a85c8cd24d78d27b16697bdf36adee9bfff67e5`；提取文本 42,535 字节，SHA256 `25be04e4f51bb29e35f4747571e5d31136d782586fe9ba40fd4c1043f0549b96`，保留 138,035 字节字体警告流。本章复用固定原文，不将新检索次数视为新知识。
 
 第 156 章所列 Bennett–Howls–Nemes–Olde Daalhuis 的解析作用量、相邻鞍点、下降轮廓和角域要求仍未自动满足。精确 erfc 端点函数、低元组和与能量积分均可能出现复零点；只有其基本 Gaussian 因子在所证半平面中非零。经典工具、原计数回接和未解决的复几何分别陈述，有限文献核对不构成全球原创性证明。
+
+## 谱边界第 159 章补充：精确指数族率与三频带共同供给
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 159 章从原 Liouville 幅度关系推出 $r>4/5$、$\log(1+r)>4/7$，再保留 Poisson 精确率 $J_v(x)=x\log(x/v)-x+v$。对实际选取的同一总数对，积分上界给 $I(\ell)<1981c_q/2000$，从而三个频带的稀有总数能在同一数组中共同取得。结合精确联合隐藏核，充分带宽范围扩到 $0<c<163c_q/400$，包含 $2c_q/5$；原完整选择律及后验方差的加权 $L^1$ 返回保持原定义。
+
+László Györfi、Peter Harremoës、Gábor Tusnády，*Some Refinements of Large Deviation Tail Probabilities*，[arXiv:1205.1005v1](https://arxiv.org/abs/1205.1005v1)，[指定版本原 TeX](https://arxiv.org/e-print/1205.1005v1)。源归档 5,938 字节，SHA256 `62f4b581dba341f23724d80fd417427c2e20ea71d19527a583290bc801fa4aa2`；提取 TeX 19,664 字节，SHA256 `c0c8d218195c3aea5ec0e4529440b0f5467425f55f86fb7c7e7057ecd450c46b`。本章核对完整 v1 正文、证明和参考文献，未从其参考文献引入未检查的定理。
+
+原文针对固定基准律的独立同分布变量，要求矩母函数在零邻域有限、固定阈值位于指数族均值范围内部且严格高于基准均值。它写出散度 $D(x)=\widehat\theta(x)x-\log Z(\widehat\theta(x))$，非格点定理使用 Bahadur–Rao 尾部前因子和固定 $1/n$ 阈值校正；格点定理用 $(1-e^{-d\widehat\theta})/d$ 替换对应项，并要求阈值为可达样本均值。二项推论明确保留 $\lceil n\mu\rceil/n$ 的取整。
+
+对基准 $\operatorname{Pois}(v)$，$\log Z(\theta)=v(e^\theta-1)$、$\widehat\theta(x)=\log(x/v)$，上述散度就是 $J_v(x)$。本章 $\lambda=Q^3$ 是整数，因此 Poisson 总数可写为 $\lambda$ 个同基准变量之和，最大格距为一。但原文的尾部渐近不等于本章的取整点概率下界，也不处理指数增长的候选池、实际路径依赖或选池后的联合隐藏核。尤其本章负号总数保持在自身均值处，不满足严格上尾条件。式 (159.14) 的含取整点概率须由有限 Stirling 单独证明，其余联合条件由第 155 章的共同总数比较承担。
+
+原文讨论中的更强非渐近不等式仍属猜想性建议，数值表不作为本章证据。这里使用精确散度关系辨别真正稀有率与二次近似；幅度推论、带符号余项积分上界和三层参数是本模型的推导。第 157 章所核对的 Beresnevich 流形计数下界仍不提供本章条件二项概率上界；初等分母分离引理保持原证明和适用范围。
+
+三组总数、尾宽、频带和校准必须在一个共同实现中满足所有严格不等式。单独扩展供给集合或分别优化三个频带都不能替代这一义务。经典概率、数论间距和 Fourier 工具分别保留其归属；本章只给充分范围，不声称端点最优、物理必要性或经全球文献检索确认的原创性。
