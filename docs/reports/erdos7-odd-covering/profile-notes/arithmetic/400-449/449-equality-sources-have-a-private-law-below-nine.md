@@ -6131,7 +6131,7 @@ Using least legal private sums with p_1+p_2>=9 leaves the following small list, 
 
 For example, full totals8,9,10 have shapes11123 or11222;11133 or11223 or12222;11233 or12223 or22222 respectively. Their least-triple costs are3,4;3,4,5;4,5,6. Gap totals8,9,10 have1133/1223/2222,1233/2223,1333/2233 with least-pair costs2/3/4,3/4,4/4. Requiring the sum at least9 gives the displayed nine possibilities. This is a necessary cost-shape list, not an assertion of actual realization.
 
-No general supplier for these nine capacity78 shapes is claimed here, and no c78 saturation is used. Whole-prefix realizations must retain their complete actual fibres. The root-cap failure(t,c)=(1,77) and these residual(t,c)=(2,78) shapes remain separate research tasks.
+The subsequent GF and PS sections supply gap2222/full22222 and full12222/full12222, respectively. The other seven capacity78 shapes remain unsupplied here. No c78 saturation is used; whole-prefix realizations must retain their complete actual fibres. The root-cap failure(t,c)=(1,77) is addressed separately below.
 
 ### Exact necessary-cost inventory
 
@@ -6141,13 +6141,473 @@ The [cost inventory program](../../../frontier/cover-geometry/height-two-two-ina
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_active_cost_inventory.json
 ```
 
+## The private gap2222/full22222 profile admits a common law
+
+This is an ordinary proof using the existing actual monochromatic supplier. It is not Lean verification.
+
+### GF.1. Statement and exact source interface
+
+Retain one ORIGINAL literal4555 source F, its four occupied first-five roots, every original child owner, its original numerical labels, and its complete actual fibres. The gap root A has four occupied children; each other occupied root has five. For every legal pair of root restrictions, the actual projected union contains a ternary seven-tree: nine distinct actual full-seven leaves in three different first-seven columns, three leaves in each. A legal gap restriction uses two occupied children; a legal full-root restriction uses three.
+
+Suppose the ENTIRE actual fibre at each of the four A children is contained in its own two-element candidate leaf set E_i, and the ENTIRE actual fibre at each of the five children of a full root B is contained in its own two-element candidate leaf set D_j. All these fibres are nonempty. Candidate sets may overlap, and a candidate leaf is not initially assumed actual at its owner. The other two full roots have their entire original fibres, without any new restriction.
+
+These hypotheses are supplied by the normalized two-inactive-root cut78 profile gap2222/full22222: no public cut support, every active child retained, and each private cost2 cut consists of two finite leaf edges. A cost2 prefix cannot be a whole-column cost3 edge. The statement below in fact does NOT need a flow, its value, cut saturation, or standalone; retaining those original premises is harmless.
+
+Then there is ONE actual supported law, fixed before all original numerical phase queries, satisfying
+
+    Gamma_1225 <= 249/28 = 9 - 3/28 < 9.             (GF1)
+
+In particular this supplies the stated capacity78 profile even when the original maximum is77. Capacity78 is never inferred saturated.
+
+### GF.2. New structural fact: four balanced candidate occurrences cannot pass all five-owner triple tests
+
+Represent a two-candidate owner by its column-count vector b: nonnegative integer entries, total2. Let s be the column-count vector of FOUR fixed candidate occurrences, allowing repeated labels across different owners. Suppose every three of five two-candidate owners have vectors b_j such that
+
+    s + b_j + b_k + b_l
+
+has at least three coordinates >=3. This is a NECESSARY condition for the corresponding actual union to contain a ternary tree; counting occurrences can overcount actual distinct leaves, never undercount them.
+
+Then s has a coordinate >=3.
+
+Proof. Suppose every coordinate of s is at most2.
+
+If s_K=2 for some column K, the total count outside K is at most2+6=8. Thus each tested triple's tree must use K. Since the total count is10 and two other branches each require3, its K count is at most4. Writing t_K for the chosen three b-coordinates gives
+
+    1 <= t_K <= 2                                      (GF2)
+
+for EVERY three-owner subset. The five nonnegative integer coordinates b_j(K) cannot have this property. At most two can be zero (otherwise choose three zeros), so at least three are positive; their triple has sum at least3. This contradicts GF2. This covers s types22 and211.
+
+The only remaining type is1111: s is1 on exactly four columns. A branch outside those four columns would require3 contributions from the b-triple, and two additional branches require at least2 each, totaling at least7; only6 are available. Therefore the tree uses three of the four columns, and the b-triple vector is EXACTLY2 on those three columns and zero elsewhere.
+
+In particular all its coordinates are even. Exchange one selected owner while retaining two others. For any pair j,k there are two other owners among the remaining three, so b_j and b_k have equal coordinatewise parity. Each b_j has total2. If the common parity is nonzero, every b_j is the SAME split vector e_H+e_L; a triple then has coordinates3,3, contrary to the required2,2,2. If the common parity is zero, every b_j is a pure vector2e_H. Every triple then needs three different H columns. Thus the five owners' H columns are pairwise distinct, although only the original four s-columns are available. This is impossible. QED.
+
+This is a finite incidence argument, not an assertion that independent column caps are attained together. Its only inputs are the original five owners and their jointly required ten triple tests.
+
+### GF.3. The four gap candidate sets have one dominant column
+
+Apply section GF.2 with s the four candidate occurrences in E_i and E_k, and b_j the D_j column vectors. Every such gap/full pair is an original legal test. Hence for EVERY pair of gap children, its four candidate occurrences contain at least three in one column.
+
+Choose a pair and its majority column K. At least one member of this pair has BOTH candidates in K. Pair that member with each remaining gap child. No other column can receive three occurrences, since that fixed member contributes nothing outside K and the other member has only two candidates. Thus every E_i meets K.
+
+Two E_i with only one K candidate each would have just two K occurrences and at most two outside occurrences in their combined four-candidate set. That pair would have no majority column, contradiction. Consequently:
+
+- all four E_i meet the SAME K;
+- at least three E_i are wholly contained in K;
+- at most one original gap child has a candidate outside K.
+
+This still concerns candidate containment. Actualness is established separately below.
+
+### GF.4. A pure gap restriction forces the full root to be an actual two-column source
+
+Fix any two of the at least three pure-K gap children. Their ENTIRE actual projection is contained in K. Pair this fixed legal restriction with any three original B children.
+
+The required ternary tree needs K: outside K, only the full triple's at most six candidates are available, insufficient for nine leaves. The two other tree branches require six DISTINCT ACTUAL leaves outside K. Therefore ALL six candidates of the selected B triple are actual at their OWN owners, mutually distinct as full-seven labels, and outside K. Their column-count vector has exactly two nonzero entries, each3.
+
+Every B owner occurs in a triple, so all ten B candidates are actual. Every pair of B owners occurs in a triple, so all ten full-seven leaf labels are pairwise distinct.
+
+Exchange one B owner in a triple while fixing two others. The column-vector difference is divisible by3, because both triple vectors have coordinates0 or3; its coordinates are also between-2 and2, because each exchanged owner has two candidates. Thus the difference vanishes. All five B column-count vectors are identical. Their total is2, and their threefold sum has two coordinates3, so the common vector is
+
+    e_H + e_L,     H != L,     H,L != K.
+
+Hence each original B child has exactly one actual H leaf and one actual L leaf. Within H the five leaves are different, and likewise within L. No actual B leaf has been discarded; complete containment plus actuality identifies its ENTIRE fibre.
+
+### GF.5. Actual K representatives at all four original gap owners
+
+Take any gap pair, including the possible non-pure owner, and any B triple. The latter supplies only H and L. The gap pair's candidates outside K number at most one, so no column other than H,L,K can acquire a third leaf. Therefore the actual ternary tree uses K, and the two gap fibres together contain at least THREE DISTINCT ACTUAL K leaves.
+
+Put
+
+    A_i = (entire actual fibre at gap owner i) intersect K.
+
+Then every A_i is a nonempty actual set of size at most2, and
+
+    |A_i union A_k| >= 3       for every i != k.        (GF3)
+
+Apply the existing four-small-set Hall fact from Report449: four nonempty sets of size at most2 satisfying GF3 have four distinct representatives. Its hypotheses have now been proved for the actual sets, not for candidates. Concretely, Hall for one, two and three owners is immediate; a four-owner union of size at most3 is impossible because a singleton forces all the other sets to be the same complementary pair, or otherwise four distinct two-subsets of a three-set would be required. Both contradict GF3.
+
+Choose y_i in A_i, all four different. These are four actual points at the four DISTINCT ORIGINAL gap child owners, in the single original column K. Uniform eta on them has child cap1/4, fine-leaf cap1/4 and atom cap1/4. Any two of the pure-K gap children give a legal restriction whose ENTIRE actual projection is in K. This restriction, not a selected replacement of those fibres, is the monochromatic anchor.
+
+### GF.6. Exact application of the existing monochromatic supplier
+
+The IA1-H4 prerequisites are now met on the original source:
+
+| IA1-H4 prerequisite | Actual object here |
+|---|---|
+| one distinguished occupied root R | original gap root A |
+| a legal restriction with entire actual projection in one column | any two pure-K original gap children, section GF.4 |
+| actual eta supported at R and that column | four points (A,i,y_i) from section GF.5 |
+| child and atom caps <=1/4 | exactly one eta point of weight1/4 at each original owner |
+| fine-leaf cap <=3/8 | distinct original y_i give the stronger1/4 |
+| pair tests with every legal restriction at every other root | unchanged literal source premise |
+| all components on the same actual source, before queries | each chosen leaf is lifted to an actual owner of its own original restriction; no phases or source data are changed |
+
+For clarity, the existing construction takes the six actual leaves in two branches OUTSIDE K from each paired ternary tree, lifts them to their actual owners at the other root, averages over all ten legal triples there, and then mixes the three other-root laws equally. Call the result psi. Its support avoids both root A and column K. Its established caps in divisor order
+
+    (1,5,7,25,35,49,175,245,1225)
+
+are
+
+    (1,1/3,1/2,1/5,1/6,1/6,1/10,1/18,1/30).
+
+Every other root is full, so each of its original children occurs in exactly3/5 of its legal triples. All nine caps apply SIMULTANEOUSLY to this single averaged psi; this is not a selection of separate optimal marginals.
+
+Use the established four-distinct-point version of the same supplier,
+
+    nu = (6/7) psi + (1/7) eta.
+
+Because the root supports AND column supports are disjoint and eta's four fine leaves differ, the simultaneous caps are precisely the existing four_in_H vector
+
+    (1,2/7,3/7,6/35,1/7,1/7,3/35,1/21,1/28).
+
+With the original ordered-LCM coefficients
+
+    (1,3,3,5,9,5,15,15,25),
+
+the same numerical-label consumer gives249/28. This is already the Report449 four-point monochromatic bound; the weaker general IA1-H4 bound503/56 also follows, but is unnecessary. No new alias or Lean specialization is introduced.
+
+### Exact controls and remaining profiles
+
+The [actual-source controls](../../../frontier/cover-geometry/height-two-two-inactive-cuts/gap_full_double_controls.py) and [exact results](../../../frontier/cover-geometry/height-two-two-inactive-cuts/gap_full_double_controls.json) check the three necessary balanced-four column cases, each over201376 five-owner multisets. Separately, two actual literal4555 sources with508 and507 points pass all480 original legal pair tests and admit the constructed common law. The second includes a candidate leaf that is absent at its original gap owner. Both measured cap envelopes are739/84, below the universal249/28 bound. These are controls of actual ownership and the common-law construction, not an exhaustive source search; no network maximum is inferred from them.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/gap_full_double_controls.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/gap_full_double_controls.json
+```
+
+This supplies the gap2222/full22222 member of TA.7's nine necessary capacity78 shapes. The next section supplies the full12222/full12222 member. Neither result by itself supplies the other seven shapes or the original-cofactor/common-law lift.
+
+## Two full12222 active roots at capacity78 admit one common law
+
+Retain one actual literal4555 source E, its original child owners, complete actual fibres and original numerical phase queries. Assume the original network, with capacities root21, child7, private column6, actual entry2, bridge126, public fine leaf7 and public column21, has maximum77. Suppose it has a normalized capacity78 cut with two inactive occupied roots, no public cut, and two fully active FULL roots A,B whose private leaf-count shapes are12222/12222. Every private cut prefix in this shape is a finite leaf.
+
+The occupied five-roots have child counts4,5,5,5. A legal restriction uses two actual children at the gap root and three at a full root. For every pair of distinct occupied roots and every such pair of restrictions, their actual seven projection contains three different columns with three distinct leaves in each. The full projection also satisfies the original standalone five-ary-tree condition. These are the original literal-source conditions; the proof never substitutes a chosen fibre for an actual fibre. As above, a root/column block is dangerous when its root total is21 and its block total is20. It is T3-bad when some literal triple of the five child rows has at most two actual neighbors in that column, including the empty padded row at the gap root when applicable.
+
+Then there is one probability supported on this same actual source, fixed before every original phase query, with
+
+    Gamma_1225 <=1385/154 = 9-1/154 <9.              (PS1)
+
+This ordinary proof uses UC1, the selected-block global lowering theorem, the pure sharp295 replacement and the simultaneous regularization estimates OM1. It is not Lean verification. It treats this entire cost shape, including its possible fourth active column; it makes no claim about the other capacity78 shapes or the outside-cofactor lift.
+
+### PS.1. One unit of cut slack and exact actual fibres
+
+The cut consists of two source-root arcs21 and eighteen private leaf arcs2, of total78. Its canonical node placement puts both inactive root subtrees sink-side. At each active root, put its root, child and private-column nodes source-side; put the eighteen selected private-leaf nodes sink-side, but every UNUSED private-leaf node SOURCE-SIDE. Put all public nodes sink-side. All actual active points are contained in the selected cut leaves, so no bridge126 crosses this cut; an unused nonactual private leaf has no actual bridge. This placement has no backward cut edge and exactly the stated eighteen private cut arcs, not all private leaves of the ambient complete tree.
+
+An integral value77 flow leaves total forward cut slack exactly1. Every one of the eighteen selected leaf arcs therefore carries at least1: a zero arc alone would have slack2. In particular every selected leaf is actual at its OWN owner, since a nonactual private leaf has no route to the public sink. Combining this with the original cut's fibre containment proves that every active fibre is EXACTLY its selected singleton or double. No actual fibre has been replaced by a chosen subset.
+
+Every actual active point carries2, except possibly one point carrying1. Alternatively all eighteen points carry2 and one inactive root carries20 rather than21. Both active root totals are at most18; only the two inactive roots can have dangerous blocks. This uses one unit of slack in a capacity78 cut, never saturation of that nonminimum cut.
+
+### PS.2. The column patterns are parallel stars with at most one exception
+
+Let u,v be the two singleton column unit vectors. Write a1,...,a4 and b1,...,b4 for the double column-count vectors, each a nonnegative integer vector of total2; two leaves in one column give 2e_g.
+
+For every two-element I,J subset of {1,2,3,4}, the original restrictions consisting of singleton plus those two doubles have ten leaf OCCURRENCES. A ternary tree among their actual labels requires at least three occurrences in three different columns. Therefore
+
+    u+v+sum_(i in I) ai+sum_(j in J) bj
+      =3*1_T+e_t                                      (PS2)
+
+for some three-column set T and some column t. This only records a necessary count consequence; it does not equate occurrences with distinct leaves.
+
+#### The branch set cannot change in an adjacent exchange
+
+Two count vectors of form(PS2) whose difference is the difference of two total2 double vectors can have different branch sets only as
+
+    3H+K+3U+3V  <->  H+3K+3U+3V.
+
+Indeed each changed branch must drop from at least3 to at most1, so the change must be exactly2 in each of H,K, exhausting the two endpoints of the exchanged double. The two double vectors must be 2H and2K, and all four named columns are distinct.
+
+Suppose this occurs within A while B's selected pair is fixed. Write b for u+v plus that fixed B pair, so |b|=6. Let i,j be the 2H,2K double owners, c the common third owner in the exchange, and d the fourth owner. Then
+
+    b+ac = H+K+3U+3V.
+
+The analogous exchange with common owner d is also between valid count vectors. Hence b+ad has the same form H+K+3U'+3V'. Their difference ad-ac is coordinatewise between -2 and2, whereas the difference of the displayed branch terms is divisible by3. Thus ad=ac and {U',V'}={U,V}.
+
+Now the valid pair{i,j} has count b+2H+2K. Its H,K coordinates are at least2. In a vector(PS2), a positive coordinate is1,3 or4, never2; they are therefore at least3. But b_H,b_K<=1 from b+ac above, so b_H=b_K=1 and ac has no H or K endpoint. The remaining b_U,b_V are3 and1 in some order, and ac=ad consists of two copies of the latter column. Pair{c,d} then has FIVE occurrences in that column, impossible in(PS2). Contradiction.
+
+Thus an adjacent swap preserves T. The graph of two-subsets is connected on each side, so ALL36 tests share one branch set T.
+
+#### Three identical doubles, and at most one exceptional root
+
+Fix a B pair and subtract the now common3*1_T. Every A pair sum differs only by its excess unit vector. If ai differs from aj, compare pairs{i,c}/{j,c} for each of the other two indices c,d. The fixed nonzero difference is e_p-e_q, which forces the excess for{i,c} and{i,d} to be the same p. Hence ac=ad=:a.
+
+If BOTH ai and aj differed from a, the four pair sums give an impossible identity
+
+    e_z+e_r=e_p+e_q,   z differs from both p and q,
+
+using {c,d}+{i,j}={i,c}+{j,d}. Thus one of ai,aj equals a. At least three A doubles have one vector D_A; likewise at least three B doubles have D_B.
+
+If both roots varied, select a regular pair or a regular/exceptional pair independently on each side. The four excess vectors would form a parallelogram e0+e3=e1+e2 with e0 different from both e1,e2. Unit vectors cannot satisfy it. At most one root varies.
+
+#### Parity and the original nonanchored triples finish the classification
+
+For two regular doubles at each root,
+
+    u+v+2D_A+2D_B=3*1_T+e_t.
+
+The singleton columns cannot agree: its left side would be even everywhere, but the right side has either two or four odd coordinates. Name the distinct singleton columns H,K. Parity forces t=L and T={H,K,L}, with
+
+    D_A+D_B=e_H+e_K+2e_L.
+
+There are only four ordered decompositions into two total2 vectors: (2L,H+K), (H+K,2L), (H+L,K+L), (K+L,H+L).
+
+The first two are impossible under the ORIGINAL full-root triple tests. Use three regular doubles at the pure-L root and singleton plus two regular doubles at the other: only L and the latter singleton column can have three leaves. The other singleton column has only two occurrences. The crossed-star decomposition is also impossible: three regular K/L doubles at A, together with singleton K plus two regular H/L doubles at B, leave H with only two occurrences. Three regular double owners exist even when an exception is present.
+
+Only the parallel H/L and K/L stars remain. Any exceptional pair changes the excess e_L to e_J, so its changed double vector is D+e_J-e_L. Thus H,K,L are distinct, A has singleton H and at least three regular H/L doubles, and B has singleton K and at least three regular K/L doubles. At most one of the eight doubles is exceptional: it replaces its L endpoint by an endpoint in J. The choice J=L is the ordinary star, J=H or K stays in the three columns, and any other J is a fourth column M. This classifies the entire actual active source without deleting any fibre.
+
+### PS.3. Fine-leaf multiplicities and dangerous columns
+
+For anchored tests using regular doubles, the H and K branches each have exactly three occurrences. Their actual labels must therefore be distinct. The regular H endpoints at A and its singleton are pairwise distinct; the analogous statement holds for K at B. An exceptional H/H or K/K double has two distinct actual endpoints, each coinciding with at most one ordinary same-column leaf. An exception into the opposite singleton column adds just one incidence. Thus every active H or K fine leaf has multiplicity at most2. A fourth-column M endpoint is unique.
+
+Without an exception, any two A L-endpoints and any two B L-endpoints must have at least three distinct labels. If two A endpoints coincide at x, all four B endpoints are pairwise distinct and avoid x. Thus a label occurring at least three times occurs at only one root, and there is at most one such label. With an exception at A, an anchored test using it and any regular A double has exactly three L occurrences. All four B L-endpoints are therefore pairwise distinct and avoid every one of the three regular A L-endpoints. Again at most one L label has multiplicity at least3. The B-exception case is symmetric.
+
+Call this possibly absent repeated fine leaf x. Every active fine leaf other than x has multiplicity at most2 and hence flow mass at most4. If x exists, at least three REGULAR double owners at one active root carry it. Its singleton and any two of those owners form an actual legal restriction with three distinct leaves in that root's singleton column and only x in L. This anchor avoids any exceptional owner. If x is absent, a singleton and two regular doubles give an anchor with three leaves in its singleton column and at most two in L.
+
+Before subtracting the possible one-unit slack, the active coarse totals are
+
+    (H,K,L)=(10,10,16), (12,10,14), or(10,12,14),
+
+or, with a fourth-column exception,
+
+    (H,K,L,M)=(10,10,14,2).
+
+Every H,K,L column has active mass at least9, and every active column has mass at most16. No inactive-root dangerous block can therefore lie in H,K,L, since20+9>21. In the three-column case all dangerous columns are outside active support. In the fourth-column case the only exception is M, whose entire active support is one actual point. A dangerous M block requires that point's mass to be1, consuming the sole cut slack; both inactive roots then have total21.
+
+### PS.4. Two bad blocks permit one safe removal
+
+Suppose an integral maximum flow has two bad-dangerous blocks r/G and s/G'. Their columns differ. At most one can lie in M, so choose r/G outside ALL active support. The other block has root mass21, block mass20 and exactly one unit outside G'.
+
+If r has an ACTUAL off-G point outside G' and different from x, the other roots contribute at most16+1 to its public column and at most4+1 to its public fine leaf. Its remaining public column capacity is at least4 and fine capacity at least2. Its actual private entry admits2, so the complement capacity C in UC1 is at least2. The old selected-root complement is replaced, not added to unchanged root mass; UC1 can remove one unit from the selected G matrix if needed to restore child7. The safe integral repair lowers r/G to19, keeps every other-root atom fixed and creates no new dangerous block.
+
+If no such point exists, the ENTIRE actual off-G support of r is contained in G' union{x}. T3-badness supplies a legal restriction at r whose G-neighborhood has at most two leaves. At a full root take its bad triple; at the gap take two actual rows from the bad literal triple, including its two actual rows when the empty row is present. Pair this with the regular active anchor from PS.3. Only G' and the anchor's singleton column can have three leaves: G has at most two, and L has at most one if x exists or at most two otherwise. This contradicts the original literal pair test. Thus the safe repair always exists.
+
+Every integral maximum flow can consequently be changed to have at most one bad-dangerous block. More generally, the same argument removes a selected bad block outside active support whenever the other inactive root has any dangerous block in a different column. All changes are on the whole actual source and preserve value77, so the cut-slack conclusions remain valid.
+
+### PS.5. The inactive-root20 case has a one-unit repair
+
+Suppose an old intrinsically bad block r/G is evaluated in a maximum flow with a_r=d_rG=20, while the other inactive root s has a bad-dangerous block in G'. Assume G is outside active support. If b_G=20, the block has no external child or public fine mass. Its internal score is at most310, giving
+
+    K<=3*20+3*20+9*20+310=610.                    (PS3)
+
+If b_G=21, the unique outside unit of s lies in G. The inactive root totals20+21 force all eighteen active atoms to have mass2. Thus G' cannot be M, where a dangerous20 block plus active mass2 would exceed21. Both G and G' are outside active support.
+
+There is an actual r point outside G union G'. Otherwise pair a T3-bad legal r restriction with any regular active anchor from PS.3. Only G' and the anchor's singleton column could branch, contradicting the original pair test. At an actual point outside both columns, all other-root fine masses are even and at most6; coarse masses are even and at most16. The outside unit of s is in G and contributes nothing there. There is therefore at least one unit of residual public fine capacity and enough public column capacity.
+
+Add1 at this actual point and remove1 from a positive r/G atom. The selected root previously lay entirely in G; its child masses there are at most6, so adding the outside unit cannot exceed child7. Entry2, private-column6 and all public caps hold. The root remains20, its G block becomes19, every other-root atom stays fixed, and no new dangerous block is created. The destination may be in M or at x: the one-unit argument uses parity derived from the root totals and does not need a two-unit residual bound there.
+
+### PS.6. A mass19 transport with two external units
+
+Let E be any subset of I x J, where |I|=5 and |J|=7. Let z_i,y_j be nonnegative integers with sum_i z_i=sum_j y_j=2. Suppose E supports a nonnegative matrix x of total19 satisfying
+
+    x_ij<=2,  r_i=sum_j x_ij<=min(6,7-z_i),
+    c_j=sum_i x_ij<=7-y_j.                          (PS4)
+
+There is another nonnegative matrix x* on the SAME E, of total19 and satisfying the SAME caps, such that, with r*,c* its marginals, for EVERY cell (including cells not in E),
+
+    20r*_i+20c*_j+25x*_ij+5z_i+5y_j<=310.          (PS5)
+
+This changes no external z or y and introduces no new actual support point. Zero rows are allowed, so it applies to the original gap root by padding its unused fifth row.
+
+#### Immediate case and basic bounds
+
+If z is2 at one row, retain x. At that row r<=5 gives (PS5)<=100+140+50+10=300; any y>0 only improves this bound because 20c+5y<=140-15y. At any other row z=0, the standard bound is120+140+50=310. Thus only the partition z=1+1 needs further work. From now on all rows have cap6 and z_i<=1.
+
+A flagged column means y_j>0; an ordinary column means y_j=0. For every matrix satisfying (PS4), a cell in a y=1 column has score at most120+120+50+5+5=300. A cell in a y=2 column has score at most120+100+50+5+10=285. An ordinary column of mass<=6 has every score<=120+120+50+5=295. Finally, a zero cell in an arbitrary ordinary column has score<=120+140+5=265. These bounds apply to all cells, not just actual positive cells. Consequently only positive cells in ordinary columns of mass greater than6 require special care.
+
+#### If the transportation maximum is at least20
+
+Use the source-row-column-sink network with row capacity6, actual entry capacity2, and column capacity7-y_j. Its integer capacities give an integral maximum. If its value is at least20, select a feasible mass20 matrix and multiply it by19/20. The internal expression S=20r+20c+25x is at most310 for an ordinary column, at most290 for a y=1 column, and at most270 for a y=2 column. After scaling, the corresponding augmented scores are at most
+
+    (19/20)310+5=599/2,
+    (19/20)290+10=571/2,
+    (19/20)270+15=543/2.
+
+All are below310. Scaling preserves support and all caps, and gives mass19.
+
+#### Otherwise the maximum and a minimum cut both equal19
+
+Take an integral maximum matrix and a minimum cut. Let I_in be the source-side rows, J_in the source-side columns, a=5-|I_in|, b=#ordinary columns in J_in, f=#flagged columns in J_in, and c=#actual entries from I_in to the sink-side columns. Each such crossing entry has capacity2.
+
+Every forward cut arc is saturated, and every backward cut arc has zero flow. Therefore:
+
+- every outside row has total6;
+- every inside column has its full cap;
+- every crossing entry has mass2;
+- an outside-row/inside-column entry has mass0, even when actual;
+- an inside row of crossing degree d_i has remaining capacity6-2d_i, and d_i<=3.
+
+All constructions below keep the outside-row/outside-column matrix and every crossing entry unchanged. They replace only entries between inside rows and inside columns, using only actual edges. An eligible neighbor of an inside column means an actual inside-row neighbor with positive remaining capacity. A full column of mass7 needs at least4 eligible neighbors; one of mass5 or6 needs at least3. These claims follow from the entry cap2 and original feasibility. A degree3 row is never eligible.
+
+#### One flagged column F of cap5
+
+Here y_F=2, and the cut equation is
+
+    6a+7b+5f+2c=19,  f in {0,1}.
+
+Its complete nonnegative solution list (f,b,a,c) is
+
+    (0,1,0,6), (0,1,1,3), (0,1,2,0),
+    (1,0,0,7), (1,0,1,4), (1,0,2,1), (1,2,0,0).
+
+The third is impossible: an inside ordinary column of mass7 would have only three inside rows, hence capacity at most6. We handle the six remaining cases.
+
+##### Case A: (f,b,a,c)=(0,1,0,6)
+
+There is one inside ordinary column A of mass7 and all five rows are inside. Let k be its number of eligible neighbors. Then k=4 or5, and the crossing degrees sum6.
+
+If k=5, put7/5 at each A neighbor. The resulting row at an A-positive cell has mass at most4+7/5, so its internal score is at most20(4+7/5)+140+25(7/5)=283; adding5z gives at most288.
+
+If k=4, let h be the number of its eligible neighbors of degree2. Then h<=3. If h=0, allocate7/4 to each. If h>=1, allocate2 to each of the 4-h degree<=1 neighbors and allocate2-1/h to each of the h degree2 neighbors. The total is7 and the row caps hold. A degree2 row has internal score
+
+    20(4+t)+140+25t=220+45t<=295,
+
+since t<=5/3. The other eligible rows have internal score<=270. Adding5z gives at most300. Noneligible A cells have x=0, so their score is at most265.
+
+All outside columns have even masses, because all their entries are crossing entries of mass2. Ordinary outside columns therefore have mass<=6; F has mass<=4. The basic bounds finish the case.
+
+##### Case B: (0,1,1,3)
+
+There is one outside row and four inside rows. Every inside row must be an eligible A neighbor, because A has mass7. Their degrees are at most2 and sum3.
+
+If a degree2 row exists, give it A mass1 and each other inside row A mass2. Otherwise allocate7/4 to each inside row. Every A-positive row then has mass<=5 and its score at A is at most275 (in fact the maximum is lower). The outside row has A entry0.
+
+For an outside ordinary column, let e be its number of crossing edges. If e<=2 its total is<=4+2=6. If e=3, the three crossing edges exhaust all crossings, so their rows have crossing degree1. Such inside rows have total<=4 and score<=275 even if this column has mass7. The outside-row entry in that column is<=1, giving score<=120+140+25+5=290. Flagged-column cells use the universal285 bound. This proves (PS5).
+
+##### Case C: (1,0,0,7)
+
+Keep the original matrix. F is inside and saturated to5; every ordinary column is outside and has an even mass at most6. The basic bounds apply directly.
+
+##### Case D: (1,0,1,4)
+
+There is one outside row; F is the only inside column, of mass5. Any outside ordinary column of crossing degree at most2 has mass<=6. If an ordinary column A has crossing degree3, it is the only one of that degree, because there are just4 crossing edges. Among its three inside neighbors at most one row h has degree2; all other inside rows have degree at most1. In particular there is no degree3 row in this situation.
+
+If h exists and is an F neighbor, redistribute F's total5 among its actual inside neighbors with x_hF<=1 and every other entry<=2. This is possible because F has at least3 such neighbors: the available modified capacities sum at least1+2+2=5. If h is not an F neighbor or does not exist, retain any feasible allocation of F. This ensures that every degree2 neighbor of A has row mass<=5; its A score is at most100+140+50+5=295. A degree1 neighbor has row mass<=4. The outside-row A entry is at most1, so its score is at most290. Other ordinary columns have mass<=6; F uses the universal285 bound. If no degree3 ordinary column exists, retain the original matrix and use the basic bounds.
+
+##### Case E: (1,0,2,1)
+
+Keep the original matrix. There are two outside rows and only one crossing entry. Every outside ordinary column has mass at most2+2+2=6. F is flagged, so all scores satisfy the basic bounds.
+
+##### Case F: (1,2,0,0)
+
+All five rows are inside, there are no crossings, and the three inside columns are F of mass5 and U,V of mass7. Allocate each column uniformly on all its actual neighbors. Each of U,V has at least4 neighbors, and F at least3. Every row has mass at most
+
+    5/3+7/4+7/4=31/6<6.
+
+At an ordinary positive cell the augmented score is at most
+
+    20(31/6)+140+25(7/4)+5=3505/12<310.
+
+At F it is at most20(31/6)+100+25(5/3)+5+10=260. All zero cells satisfy the basic bounds.
+
+#### Two flagged columns F1,F2 of cap6
+
+Here each flagged column has y=1. The cut equation is
+
+    6a+7b+6f+2c=19,  f in {0,1,2}.
+
+Parity forces b=1, and the complete list (a,f,c) is
+
+    (0,0,6), (1,0,3), (2,0,0),
+    (0,1,3), (1,1,0), (0,2,0).
+
+Again (2,0,0) is impossible because an inside ordinary column of mass7 cannot use only three inside rows.
+
+The first two cases use exactly the A allocations from Cases A and B. Every outside flagged column now has cap6 and uses the universal300 bound; the ordinary-column proofs are unchanged. It remains to check the last three cases.
+
+##### Case G: (a,f,c)=(1,1,0)
+
+Keep the original matrix. There is one outside row, and the two inside columns are ordinary A of mass7 and flagged F of mass6. Each inside row has mass<=4, because it uses at most two entries, each<=2. Every outside column is supported only at the one outside row, hence has mass<=2. Ordinary positive cells satisfy (PS5); flagged cells and zero cells use the basic bounds.
+
+##### Case H: (0,2,0)
+
+All rows are inside; the only used columns are A of mass7 and F1,F2 of mass6. Allocate each uniformly on its actual neighbors, using at least4,3,3 neighbors respectively. Every row has mass at most
+
+    7/4+2+2=23/4<6.
+
+At A the augmented score is at most20(23/4)+140+25(7/4)+5=1215/4<310. At either flag it is at most20(23/4)+120+50+5+5=295. Zero cells also satisfy the bound.
+
+##### Case I: (0,1,3)
+
+All rows are inside. There is one inside ordinary column A of mass7, one inside flagged column F of mass6, and three crossing edges of mass2. Outside ordinary columns have even mass<=6; the other flagged column uses the basic300 bound. Up to row permutation the crossing degrees have one of three patterns.
+
+- Pattern(1,1,1,0,0). Allocate A uniformly on its at least4 neighbors and F uniformly on its at least3 neighbors. At each positive A cell the total row mass is at most2+7/4+2=23/4, and its score is at most1215/4. Each row with degree1 has residual capacity4, larger than7/4+2; all caps hold.
+- Pattern(3,0,0,0,0). The degree3 row has no residual capacity and receives zero from A and F. Feasibility forces A to have all four remaining neighbors, and F at least3 among them. Allocate7/4 to each remaining A neighbor and6/k to each of F's k>=3 remaining neighbors. The four row masses are at most15/4; the high row has zero A and F entries, so its zero-cell bound applies.
+- Pattern(2,1,0,0,0). Let h be the unique degree2 row. If F has at least3 neighbors other than h, allocate F uniformly only on those neighbors and allocate A uniformly on all its at least4 neighbors. Then h has row mass<=4+7/4=23/4; the degree1 row has mass<=2+7/4+2=23/4; the other rows have mass<=15/4. All positive A scores are at most1215/4. If F has only two neighbors other than h, original feasibility forces F to use h and both these neighbors, with mass2 at each. It also forces the A entry at h to be0, because h's residual capacity is2. Hence A must have all other four rows as neighbors. Put7/4 at each of those A entries, and keep the forced F entries. The high row has mass6 but A entry0, giving A score<=265; every other row has mass<=23/4. At F every score is covered by the universal300 bound.
+
+This exhausts all minimum cuts and proves the transport lemma.
+
+#### Coherent charge at a=b=21,d=19
+
+The coherent numerator at a root/column block is
+
+    K=3a+3b+9d +20r_i+20c_j+25x_ij+5z_i+5y_j,
+
+where a is total root mass, b total public-column mass, d total block mass, r and c are the block marginals, z is the same-root mass outside the block in each child, and y is the other-root mass in the same public fine leaf.
+
+If the original flow is integral and a=b=21,d=19, then sum z=sum y=2 with nonnegative integer external coordinates. Apply the lemma to the block while fixing EVERY external atom. The replacement is supported on the original actual root/column cells, keeps total d=19 and all network caps, and gives the uniform bound
+
+    K<=63+63+171+310=607.                         (PS6)
+
+This is a simultaneous bound over all query cells, not a separate choice per query. The resulting internal block may be fractional; only the input external z,y must be integral. It covers both the y=2-at-one-leaf and y=1-at-two-leaves cases.
+
+### PS.7. Cross-component bounds and one common law
+
+Begin with an integral maximum flow f having at most one bad-dangerous block, using PS.4. If it has none, the preceding simultaneous T3 consumer gives691/77. Otherwise call its unique bad block B. The selected-block global lowering theorem supplies another integral maximum flow g in which B's root has mass at most20 or B's block has mass at most19. Apply PS.4 to normalize g if it has two bad blocks. This cannot recreate B: a repair at another root fixes it; a repair of another block at its own root leaves that repaired block19 and the entire complement only2. If the normalized g has no bad block, use that component alone. Otherwise its unique bad block B' differs from B.
+
+We bound B in g and B' in f. The T3 status here belongs to the fixed actual source, so an old intrinsically bad block that is no longer bad-dangerous must have changed its masses. If B,B' share a root or public column, the old block in the opposite component has mass at most1, and the universal coherent cap315 immediately gives a bound below610. Suppose henceforth their roots and columns both differ.
+
+#### An old block outside active support
+
+The other inactive root puts20 in B''s column and at most1 outside, while the active roots have no support in the old column G. Thus b_G<=d_rG+1. If d<=19, the original coherent formula gives
+
+    K<=3*21+3*(d+1)+9d+315<=609.
+
+If d=21, the root and public column are isolated at21 and the pure sharp295 replacement gives K<=610. The only remaining case is a=d=20, because the old intrinsically bad block is no longer dangerous. PS.5 either gives610 directly or makes an integral one-unit repair to d=19, preserving the opposite component's unique bad block. Perform any necessary such repair in each component before fractional replacements.
+
+#### An old block in M
+
+Only the fourth-column case needs this branch. The active M point always has positive mass. If a<=20, the cut-slack identity forces a=20 and every active atom to have mass2. Hence d<=19, and
+
+    K<=3*20+3*21+9*19+315=609.
+
+If a=21, the possibility d=21 is excluded by the positive active M point; d=20 is excluded because the old intrinsically bad block is no longer dangerous. Hence d<=19. If d<=18 or b<=20 the universal315 bound gives at most609. The only residual case is a=b=21,d=19, exactly PS.6. Its external child and public fine totals are both2 and integral before replacement, so its coherent charge becomes at most607, simultaneously for every query cell.
+
+Those two external public units need not occupy one leaf: they may be the active M point of mass2, or one active unit and one unit of the other inactive root at a different fine leaf. PS.6 covers both partitions. It also covers either partition of the external child mass2.
+
+#### Replacement order and the common half-mixture
+
+Perform all required integral PS.5 repairs first. Next apply PS.6, when necessary, while its external z,y are still integral. Finally apply the preceding pure/full21 and T3-good dangerous replacements elsewhere. The mass19 M block's root has only2 units outside M and hence no second dangerous or full21 block. Another full21 block cannot share its public column. Any other inactive-root dangerous replacement occurs in a different column and leaves all external M atoms fixed. Thus later regularization preserves the mass19 certificate.
+
+The mass19 replacement retains the block's total, all root and public-column totals and all other coarse-block totals, which remain integral; it also retains every fine capacity. The safe-center and noncoherent bounds underlying OM1 therefore remain applicable, even though its internal child and fine marginals can now be fractional. The other cross-component bounds above use preserved coarse data and external zeros and also survive these replacements.
+
+Each resulting component has total77 and actual support only. At its own unique bad block every coherent numerator is at most621; at the other component's unique bad block it is at most610, uniformly over the fine query label. At every remaining coherent center the preceding consumer gives613, and every noncoherent layout has numerator at most614. The single equally weighted mixture h of the two complete replaced flows satisfies
+
+    K(h)<=max(614,(621+610)/2)=1231/2,
+    Gamma_1225(h/77)<=1+(1231/2)/77
+                     =1385/154=9-1/154.           (PS7)
+
+All flow choices and replacements precede the phase queries. This is one common law on the original source, not separately optimized marginals or a claim that coordinatewise lowerings occur in one integral flow. It proves PS1 for the entire full12222/full12222 capacity78 shape.
+
+### Exact control scope
+
+The [actual-source control](../../../frontier/cover-geometry/height-two-two-inactive-cuts/two_full_12222_star_control.py), [necessary-count control](../../../frontier/cover-geometry/height-two-two-inactive-cuts/ten_occurrence_column_lemma_control.py) and [mass19 constructor](../../../frontier/cover-geometry/height-two-two-inactive-cuts/mass19_two_external_units_transport.py) address distinct finite assertions. The ordinary proofs above supply their quantified conclusions.
+
+- The actual-source control constructs459 actual points with the original owners and complete stated fibres, verifies480 literal pair tests and the standalone tree, and exhibits a value77 flow with a matching cut77 and an additional cut78 of the present shape. A common18-point law has ordered-LCM envelope79/9. Its628 explicit checks establish a nonempty actual subclass; this example also lies in the earlier exact77 supplier scope and does not test every fourth-column source.
+- The ten-occurrence control examines all28 seven-column double types,31,465 multisets of four doubles and592,884 nonnegative translations; its2,730 feasible translations all have one branch triple and at least three equal doubles. It checks the necessary count equations only, not actual fine-label compatibility or full-source realizability.
+- The exact rational mass19 constructor checks all11 feasible named minimum-cut types, all ten marked-row pairs for each type, a degree3-column repair and additional feasible finite controls. Its2,651 constructed matrices retain actual local support, total19, all entry/row/column capacities and all35 augmented score bounds310. It tests local matrices, not an enumeration of literal4555 sources.
+
+All checks use explicit failures active under Python -O. They are finite exact controls, not Lean verification and not a proof of unrestricted #7.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_full_12222_star_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/two_full_12222_star_control.json
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/ten_occurrence_column_lemma_control.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/ten_occurrence_column_lemma_control.json
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/mass19_two_external_units_transport.py --output docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-two-inactive-cuts/mass19_two_external_units_transport.json
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
-The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The two-inactive-root supplier(TA4) handles the entire(2,77) type with Gamma<=1385/154=9-1/154: the only remaining11111/12222 source profile admits a safe two-flow half-mixture. It also reduces(2,78) to nine fully active private-only cost shapes, without claiming those shapes are realized or supplied. The types(1,77) and residual(2,78) remain open in general; IF77 handles only its specified one-inactive-full-root subfamily. The root-cap test is still not asserted for every source.
+The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The two-inactive-root supplier(TA4) handles the entire(2,77) type with Gamma<=1385/154=9-1/154: the only remaining11111/12222 source profile admits a safe two-flow half-mixture. It also reduces(2,78) to nine fully active private-only cost shapes. GF supplies gap2222/full22222 with249/28, and PS supplies full12222/full12222 with1385/154, including its fourth-column exception through a mass19 local replacement that preserves both external units. The other seven shapes and general(1,77) remain outside these two results; IF77 handles its specified one-inactive-full-root subfamily. The root-cap test is still not asserted for every source.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
 range74/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1

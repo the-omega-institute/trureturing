@@ -1,0 +1,10 @@
+{
+  "scope": "Necessary ten-occurrence count equations only, not actual fibres or universal source supplier",
+  "columns": 7,
+  "double_types": 28,
+  "four_double_multisets": 31465,
+  "nonnegative_translations_tested": 592884,
+  "feasible_translations": 2730,
+  "branch_change_or_less_than_three_equal_counterexamples": 0,
+  "program_sha256": "6c2cca0356010ec0cc15ac0185a8f82db569768dfb8cf1980dac0dc9538e573e"
+}
