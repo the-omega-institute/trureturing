@@ -99,7 +99,12 @@ def filemap_policy_path(value):
 
 
 def glob(pattern):
-    string(pattern, "pattern")
+    return _compiled_glob(string(pattern, "pattern"))
+
+
+@functools.cache
+def _compiled_glob(pattern):
+    # Only the pattern determines this immutable regex, never FILEMAP or tree state.
     path(pattern)
     if "?" in pattern or any(ord(c) < 32 or ord(c) > 126 for c in pattern):
         raise ValueError(f"unsafe FILEMAP pattern: {pattern}")
@@ -115,6 +120,15 @@ def glob(pattern):
             result.append("[^/]*" if pattern[i] == "*" else re.escape(pattern[i]))
             i += 1
     return re.compile("\\A" + "".join(result) + "\\Z")
+
+
+def inventory_patterns(value, where):
+    if (not isinstance(value, list) or any(not isinstance(pattern, str) for pattern in value)
+            or value != sorted(set(value), key=ordinal)):
+        raise ValueError(where + ": expected unique ordinally sorted inventory patterns")
+    for pattern in value:
+        glob(pattern)
+    return value
 
 
 def symlink_target(entry):
@@ -206,7 +220,8 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
     if has_resources and not isinstance(data["resources"], list):
         raise ValueError("resources must be an array")
     for resource in data.get("resources", []):
-        exact(resource, {"id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials"}, "resource")
+        exact(resource, {"id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials"}
+              | ({"path_inventory", "path_inputs"} & resource.keys()), "resource")
         rid = name(resource["id"], "resource id")
         if rid in resources or resource["stage"] not in STAGES:
             raise ValueError(f"duplicate/conflicting resource or invalid stage: {rid}")
@@ -230,6 +245,10 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
             path(material)
         if materials != sorted(set(materials), key=ordinal):
             raise ValueError(f"{rid}: materials must be unique and sorted")
+        for field in ("path_inventory", "path_inputs"):
+            patterns = inventory_patterns(resource.get(field, []), rid + ":" + field)
+            if patterns and resource["stage"] != "engineering":
+                raise ValueError(f"{rid}: {field} requires an engineering resource")
         resources[rid] = resource
     if list(resources) != sorted(resources):
         raise ValueError("resource ids must be ordinally sorted")
@@ -542,17 +561,18 @@ def blob_oid(raw):
     return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\0" + raw).hexdigest()
 
 
-def worktree_entries(root):
+def worktree_entries(root, inventory=None):
     # Same effective input domain as the native ReadCurrent: indexed paths plus
     # nonignored untracked files, reading working bytes (never staged blob bytes).
-    paths = set()
+    tracked = {}
     for record in nul_fields(git(root, "ls-files", "--stage", "-z")):
         meta, raw_path = record.split(b"\t", 1)
         mode, _, stage = meta.decode("ascii").split()
         p = path(raw_path.decode("utf-8"))
-        if stage != "0" or mode not in {"100644", "100755", "120000"}:
-            raise ValueError(f"{p}: unresolved or non-regular index entry")
-        paths.add(p)
+        if stage != "0" or mode not in {"100644", "100755", "120000"} or p in tracked:
+            raise ValueError(f"{p}: unresolved, duplicate or non-regular index entry")
+        tracked[p] = mode
+    paths = set(tracked)
     paths.update(path(p.decode("utf-8")) for p in nul_fields(git(root, "ls-files", "--others", "--exclude-standard", "-z")))
     entries = {}
     ancestors = set()
@@ -566,12 +586,18 @@ def worktree_entries(root):
         try:
             mode = file.lstat().st_mode
         except FileNotFoundError:
+            if inventory is not None:
+                inventory[p] = {"index_mode": tracked.get(p), "state": "absent", "effective_mode": None, "link_target": None}
             continue
         if not (stat.S_ISREG(mode) or stat.S_ISLNK(mode)):
             raise ValueError(f"{p}: non-regular working-tree input")
-        raw = os.readlink(file).encode("utf-8") if stat.S_ISLNK(mode) else file.read_bytes()
-        entries[p] = {"mode": "120000" if stat.S_ISLNK(mode) else "100755" if mode & 0o111 else "100644",
-                      "oid": blob_oid(raw)}
+        target = os.readlink(file) if stat.S_ISLNK(mode) else None
+        raw = target.encode("utf-8") if target is not None else file.read_bytes()
+        effective_mode = "120000" if stat.S_ISLNK(mode) else "100755" if mode & 0o111 else "100644"
+        entries[p] = {"mode": effective_mode, "oid": blob_oid(raw)}
+        if inventory is not None:
+            inventory[p] = {"index_mode": tracked.get(p), "state": "symlink" if target is not None else "regular",
+                            "effective_mode": effective_mode, "link_target": target}
     return entries
 
 
@@ -584,18 +610,36 @@ def entry_changes(before, after):
             for p in sorted(before.keys() | after.keys()) if before.get(p) != after.get(p)]
 
 
+def tree_inventory(root, revision, entries):
+    # Only link bytes participate; ordinary blob identities/content are not inventory.
+    return {p: {"index_mode": entry["mode"], "state": "symlink" if entry["mode"] == "120000" else "regular",
+                "effective_mode": entry["mode"],
+                "link_target": committed_file(root, revision, p).decode("utf-8") if entry["mode"] == "120000" else None}
+            for p, entry in entries.items()}
+
+
+def inventory_changes(before, after):
+    return [{"path": p, "old": before.get(p), "new": after.get(p)}
+            for p in sorted(before.keys() | after.keys(), key=ordinal) if before.get(p) != after.get(p)]
+
+
 def local_paths(root, commit, before=None):
     identity = candidate(root, commit)
-    effective = worktree_entries(root)
-    worktree = entry_changes(tree_entries(root, identity["tree"]), effective)
+    inventory = {}
+    effective = worktree_entries(root, inventory)
+    head_entries = tree_entries(root, identity["tree"])
+    worktree = entry_changes(head_entries, effective)
     if before is None:
         # HEAD is not passing-check evidence. Without an explicit complete range,
         # select every current input, plus removed dirty endpoints for ownership.
         changes = entry_changes({}, effective) + [row for row in worktree if row["new"] is None]
+        inventory_before = {}
     else:
-        changes = entry_changes(tree_entries(root, commit_tree(root, oid(before))), effective)
+        base_entries = tree_entries(root, commit_tree(root, oid(before)))
+        changes = entry_changes(base_entries, effective)
+        inventory_before = tree_inventory(root, before, base_entries)
     origin = {"kind": "local-current-input" if before is None else "local-range", "before": before, "after": commit,
-              "worktree": worktree}
+              "worktree": worktree, "inventory_changes": inventory_changes(inventory_before, inventory)}
     data = {"schema_version": 1, "mode": "push", "candidate": {"commit": commit, "tree": None},
             "base": None, "head": None, "origin": origin,
             "complete": True, "change_count": len(changes), "changes": changes}
@@ -723,6 +767,7 @@ def make_plan(root, commit, changes_file):
         elif origin["kind"] == "local-current-input":
             before_commit = commit
     before_entries = None
+    before_resources = None
     # Only removed/renamed old endpoints consume historical registration.
     # Added and modified paths are governed by the candidate FILEMAP alone.
     if before_commit is not None and any(record["status"] in {"D", "R"} for record in data["changes"]):
@@ -730,6 +775,7 @@ def make_plan(root, commit, changes_file):
             return committed_file(root, before_commit, p)
         before_manifest = load_filemap(read_before(FILEMAP), read_before, historical=True)
         before_entries = [(glob(e["pattern"]), e) for e in before_manifest["files"]]
+        before_resources = {r["id"]: r for r in before_manifest.get("resources", [])}
     def match(p, registered_entries=entries):
         matches = [e for g, e in registered_entries if g.fullmatch(p)]
         if len(matches) != 1:
@@ -758,18 +804,37 @@ def make_plan(root, commit, changes_file):
             if p not in tree or tree[p]["mode"] not in {"100644", "100755"}:
                 raise ValueError(f"{resource['id']}: missing resource owner/material {p}")
             match(p)
+    structural = {p for p, record in paths.items() if record["status"] != "M"
+                  or record["old"]["mode"] != record["new"]["mode"]
+                  or record["new"]["mode"] == "120000" and record["old"]["oid"] != record["new"]["oid"]}
+    if local:
+        structural.update(row["path"] for row in actual["origin"]["inventory_changes"])
+    def resource_patterns(declarations, field):
+        return {rid: [glob(pattern) for pattern in resource.get(field, [])]
+                for rid, resource in declarations.items()}
+    candidate_patterns = {field: resource_patterns(resources, field) for field in ("path_inventory", "path_inputs")}
+    old_patterns = ({field: resource_patterns(before_resources, field) for field in candidate_patterns}
+                    if before_resources is not None else candidate_patterns)
     scope, required = [], set()
-    for p in sorted(paths):
-        record = paths[p]
-        removed = record["new"] is None or (record["status"] == "R" and record["old"]["path"] == p)
+    for p in sorted(set(paths) | structural):
+        record = paths.get(p)
+        removed = record is not None and (record["new"] is None or (record["status"] == "R" and record["old"]["path"] == p))
         entry = match(p, before_entries) if removed and before_entries is not None else match(p)
         if entry["runtime_disposition"] == "run-local":
             raise ValueError(f"{p}: run-local path cannot be a committed change")
-        endpoint_require = entry.get("require")
+        endpoint_require = entry.get("require") if record is not None else []
         if endpoint_require is None:
             endpoint_require = match(p)["require"]
+        endpoint_patterns = old_patterns if removed else candidate_patterns
+        inventory_require = sorted(rid for rid, patterns in endpoint_patterns["path_inventory"].items()
+                                   if p in structural and any(pattern.fullmatch(p) for pattern in patterns))
+        path_input_require = sorted(rid for rid, patterns in endpoint_patterns["path_inputs"].items()
+                                    if record is not None and any(pattern.fullmatch(p) for pattern in patterns))
+        endpoint_require = sorted(set(endpoint_require) | set(inventory_require) | set(path_input_require))
         required.update(endpoint_require)
-        scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require})
+        scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require,
+                      **({"inventory_require": inventory_require} if inventory_require else {}),
+                      **({"path_input_require": path_input_require} if path_input_require else {})})
     names(sorted(required), "selected endpoint requirements", resources)
     roots = [r for r in required if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
     selected = closure(resources, roots)
@@ -778,7 +843,7 @@ def make_plan(root, commit, changes_file):
     stages = {stage: {"resources": [r["id"] for r in active if r["stage"] == stage],
                       "status": "not-applicable" if stage == "delta" and data["mode"] != "pr" else
                       "required" if any(r["stage"] == stage for r in active) else "not-required"} for stage in STAGES}
-    execution = execution_selection(read, active, resources)
+    execution = execution_selection(read, active, resources, tree)
     return {"schema_version": 1, "status": "planned", "mode": data["mode"], "candidate": data["candidate"],
             **({"origin": data["origin"]} if push else {}),
             "base": data["base"], "head": data["head"], "filemap_sha256": filemap_digest(filemap_documents),
@@ -788,15 +853,31 @@ def make_plan(root, commit, changes_file):
             "tools": union("tools"), "cache_layers": union("cache_layers"), "materials": union("materials"), "execution": execution}
 
 
-def execution_selection(read, active, resources):
+def execution_selection(read, active, resources, available=()):
     registration = "Meta/ci-resources.json"
-    if not active:
-        return {"projects": [], "tests": [], "checks": [], "steps": [], "lean_targets": []}
-    if not any(registration in row["materials"] for row in active):
-        raise ValueError("missing declared resource execution manifest: " + registration)
-    declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
-    if not declarations <= {p for row in active for p in row["materials"]}:
-        raise ValueError("resource plan lacks declared execution inputs")
+    empty = {"projects": [], "tests": [], "checks": [], "steps": [], "lean_targets": []}
+    resource_paths = any(row.get("path_inventory") or row.get("path_inputs") for row in resources.values())
+    if not active and not resource_paths and "Meta/engineering-projects.json" not in available:
+        return empty
+    registry = strict_json_bytes(read("Meta/engineering-projects.json"))
+    projects = {row["path"]: row for row in registry["projects"]}
+    if len(projects) != len(registry["projects"]):
+        raise ValueError("duplicate engineering project registration")
+    inventories = {}
+    for project, row in projects.items():
+        inventory = row.get("execution_path_inventory")
+        if row["role"] not in {"owned-test", "cross-cutting-test"} and inventory is not None:
+            raise ValueError("unexpected execution_path_inventory: " + project)
+        inventories[project] = inventory_patterns([] if inventory is None else inventory,
+                                                 project + ":execution_path_inventory")
+    if not active and not resource_paths and not any(inventories.values()):
+        return empty
+    if active:
+        if not any(registration in row["materials"] for row in active):
+            raise ValueError("missing declared resource execution manifest: " + registration)
+        declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
+        if not declarations <= {p for row in active for p in row["materials"]}:
+            raise ValueError("resource plan lacks declared execution inputs")
     manifest = strict_json_bytes(read(registration))
     exact(manifest, {"schema", "resources"}, registration)
     if manifest["schema"] != "ci-resource-execution-v1":
@@ -814,8 +895,23 @@ def execution_selection(read, active, resources):
         rows[row["id"]] = row
     if set(rows) != set(resources):
         raise ValueError("missing resource execution registration")
-    registry = strict_json_bytes(read("Meta/engineering-projects.json"))
-    projects = {row["path"]: row for row in registry["projects"]}
+    expected = {project: set() for project in projects}
+    for rid, resource in resources.items():
+        patterns = resource.get("path_inventory", [])
+        if not patterns and not resource.get("path_inputs"):
+            continue
+        members = rows[rid]["projects"]
+        if (resource["stage"] != "engineering" or not members
+                or any(project not in projects or projects[project]["ci"] is not True
+                       or projects[project]["role"] not in {"owned-test", "cross-cutting-test"} for project in members)):
+            raise ValueError("path_inventory/path_inputs require explicitly mapped CI test projects: " + rid)
+        for project in members:
+            expected[project].update(patterns)
+    for project, patterns in inventories.items():
+        if patterns != sorted(expected[project], key=ordinal):
+            raise ValueError("execution_path_inventory differs from FILEMAP resource mapping: " + project)
+    if not active:
+        return empty
     checks = {row["id"]: row for row in strict_json_bytes(read("Meta/ci-checks.json"))["checks"]}
     selected_projects, selected_checks, steps, targets = set(), set(), set(), set()
     for resource in active:

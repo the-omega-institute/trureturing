@@ -432,5 +432,5 @@ public sealed class RepositorySymlinkTests
         Git(root, "commit", "-m", "link fixture");
     }
 
-    private static string Git(string root, params string[] arguments) => ReviewRegressionTests.RunGit(root, arguments);
+    private static string Git(string root, params string[] arguments) => TestGit.Run(root, arguments);
 }

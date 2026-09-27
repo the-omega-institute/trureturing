@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 
 internal sealed record FileMapResource(string Id, string Stage, string Owner,
     ImmutableArray<string> Prerequisites, ImmutableArray<string> Tools,
-    ImmutableArray<string> CacheLayers, ImmutableDictionary<string, string> CacheActivation, ImmutableArray<string> Materials);
+    ImmutableArray<string> CacheLayers, ImmutableDictionary<string, string> CacheActivation, ImmutableArray<string> Materials,
+    ImmutableArray<string> PathInventory = default, ImmutableArray<string> PathInputs = default);
 
 internal static partial class FileMapLoader
 {
@@ -23,7 +24,8 @@ internal static partial class FileMapLoader
         };
         var resources = tables.Select(table =>
         {
-            RequireExactKeys(table, location, "id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials");
+            RequireExactKeys(table, location, new[] { "id", "stage", "owner", "prerequisites", "tools", "cache_layers", "cache_activation", "materials" }
+                .Concat(new[] { "path_inventory", "path_inputs" }.Where(table.ContainsKey)).ToArray());
             var id = RequiredName(table, "id", location, allowNone: false);
             var stage = RequiredString(table, "stage", id);
             if (!ResourceStages.Contains(stage, StringComparer.Ordinal)) throw Invalid(id, "invalid resource stage");
@@ -41,8 +43,23 @@ internal static partial class FileMapLoader
                 ? ResourcePath(path, id) : throw Invalid(id, "material must be a path")).ToImmutableArray();
             if (!materials.SequenceEqual(materials.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)))
                 throw Invalid(id, "materials must be unique and ordinally sorted");
+            ImmutableArray<string> Patterns(string field)
+            {
+                if (!table.TryGetValue(field, out var declared)) return default;
+                if (declared is not TomlArray patterns)
+                    throw Invalid(id, field + " must be an array");
+                var values = patterns.Select(item => item is string pattern
+                    ? pattern : throw Invalid(id, field + " must contain patterns")).ToImmutableArray();
+                foreach (var pattern in values) _ = FileMapGlob.Create(pattern);
+                if (!values.SequenceEqual(values.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)))
+                    throw Invalid(id, field + " must be unique and ordinally sorted");
+                if (values.Length != 0 && stage != "engineering")
+                    throw Invalid(id, field + " requires an engineering resource");
+                return values;
+            }
             return new FileMapResource(id, stage, ResourcePath(RequiredString(table, "owner", id), id),
-                RequiredNames(table, "prerequisites", id, allowEmpty: true), tools, caches, phases, materials);
+                RequiredNames(table, "prerequisites", id, allowEmpty: true), tools, caches, phases, materials,
+                Patterns("path_inventory"), Patterns("path_inputs"));
         }).ToImmutableArray();
         var ids = resources.Select(static resource => resource.Id).ToArray();
         if (!ids.SequenceEqual(ids.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)))

@@ -143,6 +143,8 @@ internal static partial class RepositoryPathPolicy
         // planes still pass their canonical path, GID and domain checks below.
         if (entry.Pattern == value
             && !value.StartsWith("D5/", StringComparison.Ordinal)
+            && (!value.StartsWith("Reg/", StringComparison.Ordinal)
+                || value is RegManifestAgreement.LakefilePath or RegManifestAgreement.ManifestPath)
             && !value.StartsWith("Blueprint/", StringComparison.Ordinal)
             && !value.StartsWith("Evidence/", StringComparison.Ordinal)
             && !value.StartsWith("Library/", StringComparison.Ordinal)
@@ -151,6 +153,12 @@ internal static partial class RepositoryPathPolicy
             && !value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
             && !value.StartsWith("Golden/", StringComparison.Ordinal))
             return null;
+
+        if (value.StartsWith("Reg/", StringComparison.Ordinal))
+        {
+            return IsDeclarationSourcePath(value, policy)
+                ? null : Sl000(value, "noncanonical Reg declaration artifact");
+        }
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/FILEMAP.toml"
             or "Library/queries.yaml" or AssumptionRegistryPath

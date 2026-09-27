@@ -1,0 +1,10 @@
+**证明。** 写 $A=-\gamma I/2+K$，则 $K^2=(\gamma^2/4-\omega^2)I$。因此 $e^{tA}=e^{-\gamma t/2}(c_*I+s_\omega(t)K)$，其中 $c_*^2-(\gamma^2/4-\omega^2)s_\omega(t)^2=1$。直接计算
+\[
+ \operatorname{tr}(e^{tA^{\mathsf T}}e^{tA})
+ =e^{-\gamma t}(2+\gamma^2s_\omega(t)^2),\qquad
+ \det(e^{tA^{\mathsf T}}e^{tA})=e^{-2\gamma t}.
+\]
+二阶特征方程的较大根即为盒中公式。定理 28.2 给经典系数。
+
+量子 Bloch 坐标满足 $(\dot r_x,\dot r_z)^{\mathsf T}=A(r_x,r_z)^{\mathsf T}$、$\dot r_y=-\gamma r_y$。二维块的最大平方奇异值至少为其行列式的平方根 $e^{-\gamma t}$，故大于等于剩余方向的 $e^{-2\gamma t}$。定理 28.3 给相同系数。$\omega\ne0$ 时定义 29.1 的秩在深度一已满，故由定理 29.2 得严格收缩；$\omega=0$ 存在完整保留的方向。最后在小正时间使用 $s_\omega(t)=t+(\gamma^2/4-\omega^2)t^3/6+O(t^5)$，对公式取对数并展开，线性项相消，三阶项为 $-\gamma\omega^2t^3/6$。本条只识别一个精确的资源指标，不构造两个物理系统之间的状态同构。证毕。
+

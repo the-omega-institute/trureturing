@@ -1,0 +1,18 @@
+**定理 18.3（路径粗粒化的条件自由能与精确损失）。** 对满射 $q:\Omega\to\mathcal Y$，记 $r=q_\#R$，定义
+\[
+ A_\tau(y)=-\tau\log\sum_{q(\omega)=y}R(\omega\mid y)e^{-C(\omega)/\tau},
+\]
+以及纤维上的分布
+\[
+ R_\tau(\omega\mid y)=R(\omega\mid y)
+                 \exp\bigl(-(C(\omega)-A_\tau(y))/\tau\bigr).
+\]
+若 $p=q_\#P$，则
+\[
+ J_\tau(P)=\mathbb E_p A_\tau+\tau\operatorname{KL}(p\Vert r)
+    +\tau\sum_{y:p(y)>0}p(y)\operatorname{KL}\bigl(P(\cdot\mid y)\Vert R_\tau(\cdot\mid y)\bigr).
+\]
+因此给定任意粗分布 $p$，其全部提升中最小目标恰为前两项；最优提升在每个正质量纤维使用 $R_\tau(\cdot\mid y)$。
+
+**证明。** 分解 $P(\omega)=p(y)P(\omega\mid y)$、$R(\omega)=r(y)R(\omega\mid y)$，直接求和得到 KL 链式分解。对每个纤维使用定理 18.2，即将条件期望费用与条件 KL 合并为 $A_\tau$ 加上所列余项。按纤维求和完成证明，取指定条件分布即可达到下界。这里 $q$ 可以是整条路径的观察；推出的是路径级精确优化，不保证观察路径具有一阶 Markov 分解。证毕。[^tcs3-leonard]
+

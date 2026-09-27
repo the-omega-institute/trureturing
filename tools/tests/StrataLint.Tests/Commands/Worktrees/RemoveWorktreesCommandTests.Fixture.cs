@@ -96,7 +96,7 @@ public sealed partial class RemoveWorktreesCommandTests
             WorktreeCommand.Run(Main, ["remove", "--names", names], Runner);
 
         internal string Git(string root, params string[] arguments) =>
-            ReviewRegressionTests.RunGit(root, arguments);
+            TestGit.Run(root, arguments);
 
         public void Dispose() => directory.Dispose();
     }

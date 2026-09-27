@@ -142,23 +142,23 @@ public sealed partial class ProductionEnvironmentTests
         const string source = "judge/source.txt";
         const string destination = "content/destination.txt";
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repository.Path, "config", "user.name", "StrataLint Tests");
         Directory.CreateDirectory(Path.Combine(repository.Path, "judge"));
         Directory.CreateDirectory(Path.Combine(repository.Path, "content"));
         Directory.CreateDirectory(Path.Combine(repository.Path, "Meta"));
         File.WriteAllText(Path.Combine(repository.Path, source), "renamed component\n");
         File.WriteAllText(Path.Combine(repository.Path, FileMapPath),
             Manifest((FileMapPath, "judge"), (source, "judge")));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.Move(Path.Combine(repository.Path, source), Path.Combine(repository.Path, destination));
         File.WriteAllText(Path.Combine(repository.Path, FileMapPath),
             Manifest((FileMapPath, "judge"), (destination, "content")));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
         var gateway = new GitRepositoryGateway(repository.Path);
         var prepared = gateway.Prepare(baseline);
 

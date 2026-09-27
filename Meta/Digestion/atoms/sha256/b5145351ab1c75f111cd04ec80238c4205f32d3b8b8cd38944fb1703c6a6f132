@@ -1,0 +1,12 @@
+**定义 12.1（自主预测的观察覆盖数）。** 设非空紧致度量空间 $X$ 上有连续总更新 $F:X\to X$ 和连续观察 $o:X\to Y$，其中 $Y$ 为度量空间。令
+\[
+ B_H(x)=(o(x),o(Fx),\ldots,o(F^Hx)),\qquad
+ d_H(x,y)=\max_{0\le t\le H}d_Y(o(F^tx),o(F^ty)).
+\]
+以响应集 $B_H[X]$ 自身的点作球心，记半径 $\varepsilon>0$ 的最少闭球覆盖数为 $C_H(\varepsilon)$。记 $S_H(\varepsilon)$ 为定义 8.1 中同时对全部初态、时刻 $0\le t\le H$ 正确至误差 $\varepsilon$ 的最少自主状态数。定义
+\[
+ h_o(F)=\lim_{\varepsilon\downarrow0}\limsup_{H\to\infty}
+                   H^{-1}\log C_H(\varepsilon).
+\]
+本节除比特计数外使用自然对数。这是指定观察的熵；观察丢失信息时，不将它自动等同于完整系统的拓扑熵。
+

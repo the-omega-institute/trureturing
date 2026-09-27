@@ -33,3 +33,4 @@ The realization reads the supplied certificate word at the selected position wit
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CertificateWordRegistrationTemplates.certificateSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CertificateWordRegistrationTemplates.certificateWordRealization`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

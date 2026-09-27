@@ -1,0 +1,17 @@
+**命题 43.4（全局对比度一的明确非对易实例）。** 取第 41.1 条的两个二阶核心实验 $\rho^{\mathrm c}_{i,s}=\sigma_i+s\Delta_i$，令 $s\in\{+,-\}$。在维数五的直和空间构造
+\[
+ \widehat\rho_{i,s}
+ =\tfrac12\rho^{\mathrm c}_{i,s}
+   \ \oplus\ \tfrac14|s\rangle\langle s|
+   \ \oplus\ \tfrac14[1].
+\]
+则两对输出均非对易，全局 $r_1=r_2=1$，并有
+\[
+ I(\widehat{\mathsf W}_i)=\tfrac14+\tfrac12 I(\mathsf W_i^{\mathrm c}),\qquad
+ \mathfrak G(\widehat{\mathsf W}_1,\widehat{\mathsf W}_2)
+ =\tfrac14\mathfrak G(\mathsf W_1^{\mathrm c},\mathsf W_2^{\mathrm c})
+ \ge\frac{k_0-1}{4}I(\mathsf W_1^{\mathrm c})I(\mathsf W_2^{\mathrm c})>0.
+\]
+
+**证明。** 三个正交块的概率为 $1/2,1/4,1/4$，分别为 C、P、Z 类。定理 43.2 给两个精确恒等式，定理 40.2 给严格下界。P 类使全局对比度为一；核心块中 $[\sigma_i,\Delta_i]\ne0$，故整个输出对的交换子非零。本实例的精确余量约为 $0.0011091524$，只用统一 $k_0$ 的保守下界约为 $0.0001512894$。可同时对全部矩阵施任意共同酉变换，分区不必呈现为给定坐标中的显式对角块。证毕。
+

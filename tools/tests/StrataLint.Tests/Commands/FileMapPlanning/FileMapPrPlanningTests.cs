@@ -2,6 +2,8 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.EngineeringScope;
+using StrataLint.FileMap;
+using StrataLint.Scribe.Documents;
 
 namespace StrataLint.Tests;
 
@@ -52,7 +54,8 @@ public sealed class FileMapPrPlanningTests
         Assert.Equal(new[] { path }, scope.Paths);
         File.WriteAllText(fixture.Result, JsonSerializer.Serialize(scope,
             new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }));
-        var rejected = FileMapPolicy.InspectRepository(fixture.Root, scope);
+        var documentPaths = DocumentAssembly.Definitions.Select(static definition => definition.RelativePath.Value);
+        var rejected = FileMapPolicy.InspectRepository(fixture.Root, documentPaths, scope);
         var finding = Assert.Single(rejected, row => row.Code == "FILEMAP-PATH-POLICY");
         Assert.Equal(path, finding.Path);
         Assert.Contains("controlled domain vocabulary", finding.Message, StringComparison.Ordinal);
@@ -62,7 +65,7 @@ public sealed class FileMapPrPlanningTests
 
         fixture.Write("Meta/domains.yaml", TestFileMap.Domains
             + "  UnknownDomain:\n    stratum: S3\n    definition: Registered fixture domain.\n");
-        var accepted = FileMapPolicy.InspectRepository(fixture.Root, scope);
+        var accepted = FileMapPolicy.InspectRepository(fixture.Root, documentPaths, scope);
         Assert.DoesNotContain(accepted, row => row.Code == "FILEMAP-PATH-POLICY");
         Assert.Equal(rejected.Where(row => row != finding), accepted);
         fixture.AssertNoTools();
@@ -78,10 +81,11 @@ public sealed class FileMapPrPlanningTests
         const string unrelated = "Library/UnknownDomain/unselected.md";
         fixture.Write(unrelated, "unselected reference\n");
         fixture.Save();
-        var selected = FileMapPolicy.InspectRepository(fixture.Root, new FileMapInspectionScope([path], Actors: false));
+        var documentPaths = DocumentAssembly.Definitions.Select(static definition => definition.RelativePath.Value);
+        var selected = FileMapPolicy.InspectRepository(fixture.Root, documentPaths, new FileMapInspectionScope([path], Actors: false));
         Assert.Equal(rejected, selected.Any(row => row.Code == "FILEMAP-PATH-POLICY" && row.Path == path));
         Assert.DoesNotContain(selected, row => row.Code == "FILEMAP-PATH-POLICY" && row.Path == unrelated);
-        Assert.Contains(FileMapPolicy.InspectRepository(fixture.Root),
+        Assert.Contains(FileMapPolicy.InspectRepository(fixture.Root, documentPaths),
             row => row.Code == "FILEMAP-PATH-POLICY" && row.Path == unrelated);
     }
 

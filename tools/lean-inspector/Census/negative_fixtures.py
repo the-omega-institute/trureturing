@@ -30,7 +30,7 @@ def lean_env(repository):
     env = json.loads(subprocess.check_output(["lake", "env", sys.executable, "-c",
         "import os,json;print(json.dumps(dict(os.environ)))"], cwd=repository))
     env["LEAN_NUM_THREADS"] = "1"
-    env["LEAN_SRC_PATH"] = str(repository / "tools/lean-inspector") + os.pathsep + str(repository)
+    # Native Census compilation needs every source root supplied by Lake.
     return env
 
 

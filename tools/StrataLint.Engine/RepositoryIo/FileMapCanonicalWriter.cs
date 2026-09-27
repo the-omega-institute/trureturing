@@ -25,7 +25,12 @@ internal static class FileMapCanonicalWriter
                 text.AppendJoin(", ", resource.CacheActivation.OrderBy(static pair => pair.Key, StringComparer.Ordinal)
                     .Select(static pair => pair.Key + " = " + Quote(pair.Value)));
             }
-            text.Append("}, materials = ").Append(InlineList(resource.Materials)).Append(" },\n");
+            text.Append("}, materials = ").Append(InlineList(resource.Materials));
+            if (!resource.PathInventory.IsDefault)
+                text.Append(", path_inventory = ").Append(InlineList(resource.PathInventory));
+            if (!resource.PathInputs.IsDefault)
+                text.Append(", path_inputs = ").Append(InlineList(resource.PathInputs));
+            text.Append(" },\n");
         }
         text.Append("]\n\n[residence_policy]\n");
         Field("case_id", manifest.ResidencePolicy.CaseId);

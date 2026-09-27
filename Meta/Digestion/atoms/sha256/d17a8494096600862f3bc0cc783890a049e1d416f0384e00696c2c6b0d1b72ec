@@ -1,0 +1,10 @@
+**定理 28.2（Gaussian 保持核的精确相对熵系数）。** 对 $F\in\mathbb R^{d\times d}$、$\|F\|_2\le1$，令
+\[
+ \mathcal K_F(x,\cdot)=\mathcal N(Fx,I_d-FF^{\mathsf T}),
+\]
+允许退化噪声。则
+\[
+ \boxed{\eta_{\gamma_d}(\mathcal K_F)=\|F\|_2^2.}
+\]
+上界适用于所有有限相对熵输入，包括非 Gaussian 输入；当 $F\ne0$ 时，沿最大右奇异向量的任意非零平移 Gaussian 输入达到该界。
+

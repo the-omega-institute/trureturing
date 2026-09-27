@@ -36,7 +36,7 @@ internal sealed class AssertionSettlementCeilingDocument : IScribeDocumentDefini
                             + "matches, so every record receives one outcome and no record "
                             + "receives two.")),
                     Paragraph(Text(
-                        "This is the formal shape of Step 5 of the codex-formal-answer skill. "
+                        "This is the formal shape of Step 5 of the formal-thinking-and-answer skill. "
                             + "It fixes how evidence maps to an outcome; it does not decide "
                             + "whether any particular Lean statement is the user's P, which "
                             + "remains the statement-echo judgment of Step 3."))),
@@ -113,7 +113,7 @@ internal sealed class AssertionSettlementCeilingDocument : IScribeDocumentDefini
                             + "active record, and the renderer emits the draft only when every "
                             + "takeaway is permitted by the settled outcome of its key.")),
                     Paragraph(Text(
-                        "The theorem fixes the shape of Step 7 of the codex-formal-answer "
+                        "The theorem fixes the shape of Step 7 of the formal-thinking-and-answer "
                             + "skill. The mapping from prose to takeaways is a worker judgment "
                             + "outside this model; the model guarantees only that whatever the "
                             + "worker maps is bounded by the register."))),

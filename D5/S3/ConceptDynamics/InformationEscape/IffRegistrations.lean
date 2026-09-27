@@ -6,10 +6,11 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/IffRegistrations.dual_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/IffRegistrations.dualRealization
    digest: Two frozen iff theorems retain their predicates in one Boolean readout template. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates
 import D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
 import D5.S0.Certificates.SelfInterestConventionDeviationGain
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,7 +19,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape.IffRegistrations
 
 open IffRegistrationTemplates PointwiseRegistrationTemplates RegistrationTemplates LeanInformationAudit
 
-register_information_template iffRealization
+
 
 section OpenClaim
 open D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
@@ -74,18 +75,12 @@ theorem open_lawSensitive : openCodeArena.Law openRealization ∧
   exact Bool.noConfusion (h (0 : Fin 5))
 theorem open_slotSensitive : FiniteSlotSensitivity openCodeArena :=
   iff_sensitivity _ (0 : Fin 5)
-register_information_theorem open_permits_only_unsettled in openCodeArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
-    (Fin 5) (fun i => openPermissionReadout i) (fun i => openUnsettledReadout i))
-  primitives openRealization.toPrimitiveBundle realization open_bridge
-  variation open_lawSensitive sensitivity open_slotSensitive
-example : open_permits_only_unsettled.__information_unit.Statement =
-    (∀ c : Claim, permits .open c = true ↔ c = .unsettled) := rfl
+
+
 #print axioms open_bridge
 #print axioms open_lawSensitive
 #print axioms open_slotSensitive
-expect_information_occurrence open_permits_only_unsettled in openCodeArena
-  from "D5.S3.ConceptDynamics.InformationEscape.IffRegistrations"
+
 end OpenClaim
 
 section DualConvention
@@ -125,35 +120,16 @@ theorem dual_lawSensitive : dualArena.Law dualRealization ∧
   exact Bool.noConfusion (h FvF)
 theorem dual_slotSensitive : FiniteSlotSensitivity dualArena :=
   iff_sensitivity _ FvF
-register_information_theorem dual_fixed_iff in dualArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.IffRegistrationTemplates.iffRealization
-    Convention (fun convention => dualFixedReadout convention)
-    (fun convention => dualAlternativesReadout convention))
-  primitives dualRealization.toPrimitiveBundle realization dual_bridge
-  variation dual_lawSensitive sensitivity dual_slotSensitive
-example : dual_fixed_iff.__information_unit.Statement =
-    (∀ convention : Convention, dual convention = convention ↔
-      convention = FvF ∨ convention = AvA) := rfl
+
+
 #print axioms dual_bridge
 #print axioms dual_lawSensitive
 #print axioms dual_slotSensitive
-expect_information_occurrence dual_fixed_iff in dualArena
-  from "D5.S3.ConceptDynamics.InformationEscape.IffRegistrations"
+
 end DualConvention
 
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName env.header.mainModule)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0],readout[1]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.IffRegistrations

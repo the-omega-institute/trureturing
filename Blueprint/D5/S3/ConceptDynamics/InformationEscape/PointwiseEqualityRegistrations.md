@@ -153,4 +153,5 @@ The unused Fin 2 code one and origin code zero witness independent sensitivity o
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/EscapeRecord](EscapeRecord.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates](PointwiseRegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)
 - Dependency: [D5/S3/StatisticalMechanics/HardCore/SquareGridCoordinates](../../StatisticalMechanics/HardCore/SquareGridCoordinates.md)

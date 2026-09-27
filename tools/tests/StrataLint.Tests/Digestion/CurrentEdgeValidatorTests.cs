@@ -5,6 +5,8 @@ namespace StrataLint.Tests;
 public sealed class CurrentEdgeValidatorTests
 {
     [Theory]
+    [InlineData("missing-module", "target-gid-missing", "does not resolve to a current repository target", false)]
+    [InlineData("missing-pin", "target-statement-unresolved", "host module is not a member of frozen state", false)]
     [InlineData("missing", "target-declaration-missing", "resolves to 0 current report declarations", false)]
     [InlineData("ambiguous", "target-declaration-ambiguous", "resolves to 2 current report declarations", false)]
     [InlineData("non-standard-axiom", "lean-state-tail", "current report module must be Closed", true)]
@@ -20,7 +22,7 @@ public sealed class CurrentEdgeValidatorTests
             {
                 ReportDeclarations = ["unrelated"],
             },
-            "ambiguous" => new CoverSpec(),
+            "ambiguous" or "missing-module" or "missing-pin" => new CoverSpec(),
             "non-standard-axiom" => new CoverSpec
             {
                 TargetAxioms = ["customAxiom"],
@@ -28,8 +30,12 @@ public sealed class CurrentEdgeValidatorTests
             _ => throw new ArgumentOutOfRangeException(nameof(scenario)),
         };
         var inputs = spec.Materialize();
+        var currentFiles = inputs.Files.ToDictionary(static pair => pair.Key, static pair => pair.Value, StringComparer.Ordinal);
+        if (scenario == "missing-module") currentFiles.Remove(spec.ModuleGid + ".lean");
+        if (scenario == "missing-pin")
+            currentFiles.Remove(FrozenStatePath.FromModulePath(RepoPath.CreateKnown(spec.ModuleGid + ".lean")).Value);
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Files))).Snapshot;
+            SnapshotDecoder.Decode(CoverWorld.Raw(currentFiles))).Snapshot;
         var report = inputs.Report;
         if (scenario == "ambiguous")
         {

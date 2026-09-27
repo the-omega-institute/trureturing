@@ -226,3 +226,4 @@ Take f=(X-2)^2. It is nonzero, real-rooted and nonconstant, with f(1)=1. For eac
 - Truth anchor: `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.polynomialOfWord`
 - Truth anchor: `D5/S3/ArithSums/AgohAlternatingNumeratorRefutation.result`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate](../ConceptDynamics/InformationEscape/AgohCoefficientReadoutTemplate.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../ConceptDynamics/RegistrationWitnesses.md)

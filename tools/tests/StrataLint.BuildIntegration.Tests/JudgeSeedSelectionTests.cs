@@ -134,7 +134,7 @@ public sealed class JudgeSeedSelectionTests
             {
                 other["role"] = "compile-fail-proof";
                 other["ci"] = false;
-                foreach (var field in new[] { "test_partition", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths" }) other[field] = null;
+                foreach (var field in new[] { "test_partition", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths", "execution_path_inventory" }) other[field] = null;
             }
             fixture.Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         }

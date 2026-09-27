@@ -8,7 +8,11 @@
     <StartupObject>StrataLint.CliIntegration.Tests.CurrentDeltaCliContractTests</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj" />
+    <ProjectReference Include="../../StrataLint.Configuration/StrataLint.Configuration.csproj" />
     <ProjectReference Include="../../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
+    <ProjectReference Include="../../Trureturing.Truth/Trureturing.Truth.csproj" />
     <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />

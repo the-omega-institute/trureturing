@@ -1,0 +1,2 @@
+**出处 21.2（前沿几何的额外限制）。** Mathis Hardion、Hugo Lavenant，*Gradient Flows of Potential Energies in the Geometry of Sinkhorn Divergences*，arXiv:2511.14278v1，2025，[原文](https://arxiv.org/pdf/2511.14278)。实际读取引言、Theorem 1.1、Sinkhorn-JKO 定义及论文对 Theorem 4.2、7.1 的适用范围说明。作者明确指出 Sinkhorn divergence 一般不是距离的平方，极限方案收敛另有条件。因此第 17 节的测地距离不被机械替换为任意 Sinkhorn divergence；“改变几何会改变下降动力学”是本批对接该文的范围。
+

@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import base64
 import contextlib
+import datetime
 import hashlib
 import json
 import os
@@ -16,7 +17,7 @@ import tarfile
 import tempfile
 import time
 
-from lean_cache import manifest_mathlib, normalized_platform, partition_path
+from lean_cache import manifest_mathlib, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
 
 ASSET = "lean-build.tgz"
@@ -452,7 +453,7 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
     return metadata, manifest, parts, legacy
 
 
-def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
+def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False):
     metadata, manifest, parts, legacy = snapshot_manifest(partition, tag, stage, deadline,
         expected=verification, verification=verification is not None)
     assets = metadata["assets"]
@@ -515,12 +516,30 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
                 source, target = unpacked / name, lake / name
                 if not source.is_dir() or target.is_symlink():
                     continue
-                if target.exists() and (not target.is_dir() or any(target.iterdir())):
+                if target.exists() and (not target.is_dir() or (not refresh_stale and any(target.iterdir()))):
                     continue
+                (source / ".release-refreshed-at").write_text(
+                    datetime.datetime.now(datetime.timezone.utc).isoformat() + "\n", encoding="utf-8")
+                # Keep the old tree until the validated replacement is in place.
+                # A failed rollback retains its backup outside staging cleanup.
+                backup = None
                 if target.is_dir():
-                    target.rmdir()
-                source.rename(target)
+                    backup = pathlib.Path(tempfile.mkdtemp(prefix=".release-backup-", dir=lake))
+                    try:
+                        target.rename(backup / name)
+                    except BaseException:
+                        backup.rmdir()
+                        raise
+                try:
+                    source.rename(target)
+                except BaseException:
+                    if backup is not None:
+                        (backup / name).rename(target)
+                        backup.rmdir()
+                    raise
                 installed.append(name)
+                if backup is not None:
+                    shutil.rmtree(backup)
     receipt("fetch", "unpacked" if installed else "skipped",
             mode="verification" if verification is not None else "partition", resolved=tag,
             installed=installed,
@@ -540,32 +559,35 @@ def fetch_verification(root, partition, identity):
         return 1
 
 
-def fetch(root, partition, writer_owned=False):
+def fetch(root, partition, writer_owned=False, refresh_stale=False):
     if os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", "").lower() in ("1", "true"):
         receipt("fetch", "skipped", reason="Actions supplied an applicable seed")
         return 0
     try:
         deadline = operation_deadline()
         with contextlib.nullcontext() if writer_owned else cache_guard(root):
-            return fetch_locked(root, partition, deadline)
+            return fetch_locked(root, partition, deadline, refresh_stale)
     except (OSError, ImportError, ValueError) as error:
         receipt("fetch", "miss", reason=str(error), partition=partition)
         return 1
 
 
-def fetch_locked(root, partition, deadline):
+def fetch_locked(root, partition, deadline, refresh_stale=False):
     reason = "no published snapshot in this partition"
+    compatible = [partition] + [other for other in seed_partitions(root) if other != partition]
     try:
         releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
             "--json", "tagName,createdAt,isDraft"))
         for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
             tag = release.get("tagName", "")
-            if release.get("isDraft") is not False or not (tag.startswith(prefix(partition)) or legacy_tag(tag)):
+            source = partition if legacy_tag(tag) else next(
+                (candidate for candidate in compatible if tag.startswith(prefix(candidate))), None)
+            if release.get("isDraft") is not False or source is None:
                 continue
             remaining(deadline)
             try:
                 with tempfile.TemporaryDirectory(prefix="lean-fetch-") as temporary:
-                    restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline)
+                    restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline, refresh_stale=refresh_stale)
                 return 0
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
@@ -590,8 +612,12 @@ def main():
     parser.add_argument("--allow-seed", action="store_true", help=argparse.SUPPRESS)
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--refresh-stale", action="store_true",
+                        help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
     try:
+        if args.refresh_stale and (args.command != "fetch" or args.mode != "production"):
+            raise ValueError("--refresh-stale requires production fetch")
         if args.mode == "production" and (args.source_ref or args.source_commit):
             raise ValueError("explicit source parameters require verification mode")
         verification = None
@@ -606,7 +632,7 @@ def main():
         if args.command == "fetch":
             if verification is not None:
                 return fetch_verification(args.repository, partition, verification)
-            return fetch(args.repository, partition, args.writer_owned)
+            return fetch(args.repository, partition, args.writer_owned, args.refresh_stale)
         return publish(args.repository, partition, verification)
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         receipt(args.command, "miss" if args.command == "fetch" else "failed",

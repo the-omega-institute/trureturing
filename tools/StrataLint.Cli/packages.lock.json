@@ -14,12 +14,6 @@
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       },
-      "YamlDotNet": {
-        "type": "Direct",
-        "requested": "[16.3.0, )",
-        "resolved": "16.3.0",
-        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
-      },
       "Acornima": {
         "type": "Transitive",
         "resolved": "1.2.0",
@@ -36,6 +30,13 @@
         "contentHash": "ZXRAdvH6GiDeHRyd3q/km8Z44RoM6FBWHd+gen/la81mVnAdHTEsEkO5J0TCNXBymAcx5UYKt5TvgKBhaLJEow==",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
+        }
+      },
+      "stratalint.configuration": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "YamlDotNet": "[16.3.0, )"
         }
       },
       "stratalint.engine": {
@@ -56,6 +57,15 @@
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.filemap": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )"
         }
       },
       "stratalint.inspectionscope": {
@@ -134,6 +144,12 @@
         "requested": "[2026.7.1, 2026.7.1]",
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
+      },
+      "YamlDotNet": {
+        "type": "CentralTransitive",
+        "requested": "[16.3.0, )",
+        "resolved": "16.3.0",
+        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }

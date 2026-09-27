@@ -1,5 +1,6 @@
 """Release seed transport cases using a private local GitHub fake."""
 import concurrent.futures
+import datetime
 import json
 import os
 import pathlib
@@ -115,7 +116,10 @@ def extract(archive, path, *args, **kwargs):
     return result
 def rename(source, target):
     record(operation="rename", source=str(source), target=str(target))
-    if os.environ["FAKE_INSTALL_FAILURE"] == "rename":
+    if (os.environ["FAKE_INSTALL_FAILURE"] == "rename"
+            or (os.environ["FAKE_INSTALL_FAILURE"] == "install"
+                and source.parent.name.startswith(".release-")
+                and not source.parent.name.startswith(".release-backup-"))):
         raise OSError(errno.EIO, "injected rename failure")
     return original_rename(source, target)
 shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, extract, rename
@@ -144,6 +148,9 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
             status = (self.root / ".lake" / material["name"]).stat()
             self.assertEqual((material["device"], material["inode"]), (status.st_dev, status.st_ino))
         self.assertEqual({"build"}, {path.name for path in (self.root / ".lake").iterdir()})
+        refreshed = datetime.datetime.fromisoformat(
+            (self.root / ".lake/build/.release-refreshed-at").read_text().strip())
+        self.assertEqual(datetime.timedelta(0), refreshed.utcoffset())
 
     def test_restore_cleans_its_staging_on_extraction_and_installation_failure(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -180,6 +187,62 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
                 finally:
                     if kind == "directory": shutil.rmtree(build)
                     else: build.unlink()
+
+    def test_refresh_replaces_occupied_build_and_dates_install_without_touching_dependencies(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        build = self.root / ".lake/build"
+        write(build / "lib/lean/D5/A.olean", "stale local material")
+        write(build / "keep.txt", "obsolete")
+        write(build / ".release-refreshed-at", "2000-01-01T00:00:00+00:00")
+        dependency = self.root / ".lake/packages/mathlib/.lake/build/Mathlib.olean"
+        write(dependency, "dependency cache")
+        identity = dependency.stat()
+        before = datetime.datetime.now(datetime.timezone.utc)
+        result = self.transport("fetch", arguments=("--refresh-stale",), **self.installation_probe())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual("locally-produced-olean", (build / "lib/lean/D5/A.olean").read_text())
+        self.assertFalse((build / "keep.txt").exists())
+        refreshed = datetime.datetime.fromisoformat((build / ".release-refreshed-at").read_text().strip())
+        self.assertLessEqual(before, refreshed)
+        self.assertLessEqual(refreshed, datetime.datetime.now(datetime.timezone.utc))
+        self.assertEqual("dependency cache", dependency.read_text())
+        self.assertEqual((identity.st_ino, identity.st_mtime_ns),
+                         (dependency.stat().st_ino, dependency.stat().st_mtime_ns))
+        self.assertEqual({"build", "packages"}, {path.name for path in build.parent.iterdir()})
+
+    def test_failed_refresh_preserves_old_build_and_marker(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        build = self.root / ".lake/build"
+        write(build / "keep.txt", "old material")
+        write(build / ".release-refreshed-at", "2000-01-01T00:00:00+00:00")
+        expected = {str(path.relative_to(build)): path.read_bytes() for path in build.rglob("*") if path.is_file()}
+        failures = [dict(FAKE_FAIL="download"),
+                    dict(FAKE_MANIFEST_DIGEST="sha256:" + "0" * 64),
+                    self.installation_probe("extract")]
+        for failure in failures:
+            result = self.transport("fetch", arguments=("--refresh-stale",), **failure)
+            self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+            self.assertEqual(expected, {str(path.relative_to(build)): path.read_bytes()
+                                       for path in build.rglob("*") if path.is_file()})
+        # Fail only the staged-build rename, after moving the original to backup.
+        result = self.transport("fetch", arguments=("--refresh-stale",), **self.installation_probe("install"))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(expected, {str(path.relative_to(build)): path.read_bytes()
+                                   for path in build.rglob("*") if path.is_file()})
+        self.assertEqual({"build"}, {path.name for path in build.parent.iterdir()})
+
+    def test_refresh_preserves_symlink_build(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        build, donor = self.root / ".lake/build", self.root / "donor"
+        build.rename(donor)
+        build.symlink_to(donor, target_is_directory=True)
+        result = self.transport("fetch", arguments=("--refresh-stale",))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"skipped"', result.stdout)
+        self.assertTrue(build.is_symlink())
+        self.assertEqual("locally-produced-olean", (donor / "lib/lean/D5/A.olean").read_text())
+        self.assertFalse((donor / ".release-refreshed-at").exists())
 
     def test_restore_rejects_shared_lake_without_writing_to_its_target(self):
         self.assertEqual(0, self.transport("publish").returncode)
