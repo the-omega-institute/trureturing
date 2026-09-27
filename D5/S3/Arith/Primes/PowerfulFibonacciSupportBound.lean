@@ -13,6 +13,7 @@ namespace D5.S3.Arith.Primes.PowerfulFibonacciSupportBound
 
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.OriginalOddDepthSupport
+open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 open D5.S3.Arith.Powerful.PowerfulNumber
 
 /-- Prime support occurring to odd multiplicity in the original Fibonacci value. -/
@@ -101,14 +102,12 @@ private theorem finite_support_exception_budget
   rw [hSlots] at hAlCard
   omega
 
-/-- Assuming the prime-index, valuation, five-smooth classification, and
-square-class premises, the supported powerful indices form a set of at most
+/-- Assuming the prime-index, five-smooth classification, and square-class
+premises, the supported powerful indices form a set of at most
 `2 ^ |H(S)| - 4` elements. -/
 theorem powerful_fibonacci_support_bound
     (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime ∧ 5 < p)
     (hBlock : ∀ n, PrimeIndexOddFactor n)
-    (hVal : ∀ n p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
-      padicValNat p (Nat.fib n) = padicValNat p (Nat.fib (fibonacciRank p)))
     (hFiveSmooth : ∀ n, 0 < n → Powerful (Nat.fib n) →
       (∀ p, p.Prime → p ∣ n → p ≤ 5) →
       n ∈ ({1, 2, 6, 12} : Finset ℕ))
@@ -146,14 +145,14 @@ theorem powerful_fibonacci_support_bound
           (hpower.2 q hq hqFib)
       have hDepthThree : 3 ≤ padicValNat q (Nat.fib (fibonacciRank q)) := by
         have hOddN : Odd (padicValNat q (Nat.fib n)) := by
-          rw [hVal n q hq hq5 hqFib hqN]
+          rw [fibonacci_original_rank_valuation q n hq hqFib hqN]
           exact hqOdd
-        rw [← hVal n q hq hq5 hqFib hqN]
+        rw [← fibonacci_original_rank_valuation q n hq hqFib hqN]
         rcases hOddN with ⟨k, hk⟩
         omega
       exact hT q hq hq5 hqFib hqOdd hDepthThree
     have hKernel := (original_odd_depth_support S hS n hnpos
-      (hBlock n) (hVal n) hExternal).2
+      (hBlock n) hExternal).2
     have hpDvdK : p ∣ oddDepthKernel n := by
       change p ∣ (oddPrimeSupport n).prod id
       exact Finset.dvd_prod_of_mem id hpK
@@ -170,7 +169,7 @@ theorem powerful_fibonacci_support_bound
         Odd (padicValNat p (Nat.fib (fibonacciRank p))) → p ∈ (∅ : Finset ℕ) := by
       intro p hp hp5 hpFib hpN hpOdd
       have hOddN : Odd (padicValNat p (Nat.fib n)) := by
-        rw [hVal n p hp hp5 hpFib hpN]
+        rw [fibonacci_original_rank_valuation p n hp hpFib hpN]
         exact hpOdd
       have hpK : p ∈ oddPrimeSupport n := by
         exact Finset.mem_filter.mpr
@@ -180,7 +179,7 @@ theorem powerful_fibonacci_support_bound
       omega
     have hIndexSupport :=
       (original_odd_depth_support ∅ (by simp) n hnpos
-        (hBlock n) (hVal n) hExternalEmpty).1
+        (hBlock n) hExternalEmpty).1
     have hIndexSmall : ∀ p, p.Prime → p ∣ n → p ≤ 5 := by
       intro p hp hpN
       have hpH := hIndexSupport p hp hpN

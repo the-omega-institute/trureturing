@@ -6,11 +6,12 @@
    utility: none
    digest: Odd original depth bounds both Fibonacci index and squarefree-kernel support. -/
 
-import D5.S3.Arith.Primes.FiniteFibonacciRankClosure
+import D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
 namespace D5.S3.Arith.Primes.OriginalOddDepthSupport
 
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
+open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
 local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
 
@@ -149,8 +150,6 @@ index support and the squarefree kernel of the original Fibonacci value. -/
 theorem original_odd_depth_support
     (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime ∧ 5 < p)
     (n : ℕ) (hn : 0 < n) (hBlock : PrimeIndexOddFactor n)
-    (hVal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
-      padicValNat p (Nat.fib n) = padicValNat p (Nat.fib (fibonacciRank p)))
     (hExternal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
       Odd (padicValNat p (Nat.fib (fibonacciRank p))) → p ∈ S) :
     let H := fibonacciRankClosure S
@@ -184,7 +183,7 @@ theorem original_odd_depth_support
     by_cases hpIndex : p ∣ n
     · exact hSupport p hpPrime hpIndex
     · have hpOriginal : Odd (padicValNat p (Nat.fib (fibonacciRank p))) := by
-        rw [← hVal p hpPrime hpLarge hpFib hpIndex]
+        rw [← fibonacci_original_rank_valuation p n hpPrime hpFib hpIndex]
         exact hpOdd
       have hpS := hExternal p hpPrime hpLarge hpFib hpIndex hpOriginal
       exact hSeed (by simp [rankClosureSeed, hpS])

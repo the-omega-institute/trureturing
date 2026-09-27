@@ -13,11 +13,11 @@ internal sealed class PowerfulFibonacciSupportBoundDocument : IScribeDocumentDef
             Paragraph(Text(
                 "Fix a finite set S of primes greater than five and its least Fibonacci "
                     + "rank closure H(S). This theorem assumes the prime-index odd-factor "
-                    + "input, the prime-to-index valuation formula, the classification "
-                    + "of powerful Fibonacci values with five-smooth indices, and "
+                    + "input, the classification of powerful Fibonacci values with "
+                    + "five-smooth indices, and "
                     + "uniqueness of the remaining Fibonacci square classes for all "
-                    + "positive indices. These results are explicit premises in the "
-                    + "Lean statement.")),
+                    + "positive indices. These three results remain explicit premises "
+                    + "in the Lean statement; prime-to-index valuation is proved.")),
             Describe.Lean(
                 DescribeId.Create("odd-prime-support"),
                 DeclarationHandle.Create(Prefix + "oddPrimeSupport"),
@@ -47,7 +47,7 @@ internal sealed class PowerfulFibonacciSupportBoundDocument : IScribeDocumentDef
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Under the four stated premises, there is a finite set "
+                    "Under the three stated premises, there is a finite set "
                         + "containing exactly the supported powerful indices, with "
                         + "cardinality at most two to the size of H(S) minus four. "
                         + "The proof places every odd prime support inside H(S), "

@@ -28,8 +28,6 @@ def arena : Arena where
   signature := signature
   Law r := ∀ (S : Finset ℕ) (_hS : ∀ p ∈ S, p.Prime ∧ 5 < p)
     (n : ℕ) (_hn : 0 < n) (_hBlock : PrimeIndexOddFactor n)
-    (_hVal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
-      padicValNat p (Nat.fib n) = padicValNat p (Nat.fib (fibonacciRank p)))
     (_hExternal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
       Odd (padicValNat p (Nat.fib (fibonacciRank p))) → p ∈ S),
     let H := r.readout () () S
@@ -48,12 +46,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
     intro p hp _ hdiv _ _
     have hpOne : p ∣ 1 := by simpa using hdiv
     exact (hp.ne_one (Nat.dvd_one.mp hpOne)).elim
-  have hVal2 : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib 2 → ¬ p ∣ 2 →
-      padicValNat p (Nat.fib 2) = padicValNat p (Nat.fib (fibonacciRank p)) := by
-    intro p hp _ hdiv _
-    have hpOne : p ∣ 1 := by simpa using hdiv
-    exact (hp.ne_one (Nat.dvd_one.mp hpOne)).elim
-  have hbad := (h ∅ (by simp) 2 (by decide) hBlock2 hVal2 hExternal2).1
+  have hbad := (h ∅ (by simp) 2 (by decide) hBlock2 hExternal2).1
     2 Nat.prime_two (dvd_refl 2)
   change 2 ∈ (∅ : Finset ℕ) at hbad
   simp at hbad
@@ -61,8 +54,6 @@ theorem rejected_law : ¬ arena.Law rejected := by
 def registration : Registration arena
     (∀ (S : Finset ℕ) (_hS : ∀ p ∈ S, p.Prime ∧ 5 < p)
       (n : ℕ) (_hn : 0 < n) (_hBlock : PrimeIndexOddFactor n)
-      (_hVal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
-        padicValNat p (Nat.fib n) = padicValNat p (Nat.fib (fibonacciRank p)))
       (_hExternal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
         Odd (padicValNat p (Nat.fib (fibonacciRank p))) → p ∈ S),
       let H := fibonacciRankClosure S
@@ -108,7 +99,7 @@ register_information_theorem
     owner := `D5.S3.Arith.Primes.OriginalOddDepthSupport
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "body", "body", "value"]
       stateBinder := 0 }] })
   escape continues (open)
 

@@ -7,7 +7,7 @@ internal sealed class OriginalOddDepthSupportDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Arith/Primes/OriginalOddDepthSupport.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Under explicit prime-index and valuation inputs, odd original depth bounds Fibonacci index and squarefree-kernel support.",
+        "Under the prime-index odd-factor input, odd original depth bounds Fibonacci index and squarefree-kernel support.",
         H("Original odd-depth support"),
         Blocks(
             Paragraph(Text(
@@ -15,7 +15,7 @@ internal sealed class OriginalOddDepthSupportDocument : IScribeDocumentDefinitio
                     + "rank closure H(S). The classical prime-index nonsquare input is "
                     + "stated for the prime divisors of the chosen index n; it is a "
                     + "hypothesis here, not a new Lean proof of nonsquareness. The "
-                    + "prime-to-index valuation equality is also an explicit premise.")),
+                    + "prime-to-index valuation equality is proved separately.")),
             Describe.Lean(
                 DescribeId.Create("prime-index-odd-factor"),
                 DeclarationHandle.Create(Prefix + "PrimeIndexOddFactor"),
@@ -51,8 +51,8 @@ internal sealed class OriginalOddDepthSupportDocument : IScribeDocumentDefinitio
                         + "index prime and has that exact first-zero rank. If it divided "
                         + "n, maximality and closure would give a contradiction. It is "
                         + "therefore an external odd-depth factor, giving the same "
-                        + "contradiction through S. The prime-to-index valuation "
-                        + "input then puts every odd-exponent prime factor of F_n "
+                        + "contradiction through S. The proved prime-to-index valuation "
+                        + "formula then puts every odd-exponent prime factor of F_n "
                         + "in H(S), so its squarefree kernel divides the product "
                         + "of the primes in H(S)."))),
                 DescribeRole.Theorem)),
