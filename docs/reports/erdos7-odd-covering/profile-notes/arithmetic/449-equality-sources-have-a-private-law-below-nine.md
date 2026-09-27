@@ -2856,12 +2856,244 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/hei
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut71_partial2555.py
 ```
 
+## Complement budgets and a finite sequence of cut77 repairs
+
+The following ordinary finite-network theorem supplies exact repairs or explicit support obstructions for any integral value77 flow under the stated actual capacities. It does not require T3 for the selected block. Its final conditional moment bound uses the literal4555 premises above; no unrestricted arithmetic lift or Lean verification is claimed.
+
+### Fixed data and the exact quantifiers
+
+Let F be the entire actual source. Let lambda be an INTEGRAL feasible flow of value77, expressed by its nonnegative integer masses lambda(r,c,g,h) at actual points. The capacities are: root21, child7, private child/first-seven column6, actual entry2, public fine leaf7, public first-seven column21. Actual bridges have capacity126 and cannot constrain these entry masses further.
+
+Fix a root r and first-seven column G with
+
+    a_r=21,    d_(r,G)=20.
+
+The public G total is automatically20 or21. The root's total mass outside G is exactly1, at one actual point. In the theorem below ALL point masses of the other three roots are held fixed. The root r total must remain21. Child totals at r need not remain fixed, and the old positive support need not be retained.
+
+Define the other-root masses and remaining public budgets by
+
+    o_g  = sum_(r'!=r,c,h) lambda(r',c,g,h),
+    o_gh = sum_(r'!=r,c)   lambda(r',c,g,h),
+    R_g  =21-o_g,             R_gh=7-o_gh.
+
+They are nonnegative integers. For every g!=G let
+
+    A_g={h: there is an ACTUAL child c with(r,c,g,h) in F}.
+
+Previously zero actual points are included. Define
+
+    C_g=min(R_g, sum_(h in A_g) R_gh),
+    C=sum_(g!=G) C_g.                              (UC1)
+
+C measures the capacity visible in this PUBLIC complement after the other roots are fixed. It is not claimed to be the maximum root throughput at larger values: the private and child constraints have deliberately not been included. The threshold at TWO is exact.
+
+The following statements are equivalent:
+
+1. C>=2.
+2. There is an INTEGRAL value77 flow on F, with every other-root atom fixed, root r mass21 and block(r,G) mass19.
+3. There is a REAL value77 flow on F, with every other-root atom fixed, root r mass21 and block(r,G) mass strictly below20.
+
+Thus failure rules out fractional as well as integral improvements under these fixed-other-root conditions.
+
+### Constructing the repair from two public units
+
+Because all R values are integers, C>=2 allows two integer units on the actual public projection outside G, obeying every R_g and R_gh. Choose column amounts up to C_g and then fill actual fine leaves up to R_gh, stopping at total2. Lift each chosen leaf to ANY actual child at r that has that leaf. Call the resulting outside masses y. They use at most2 actual points; every entry, private column and child has y mass at most2.
+
+Keep the old20-unit G matrix x for the moment, and replace the old outside unit by y. Every private G row of x has mass at most6. A child can violate its full cap7 only when its old G row has6 and y puts both units there, giving8. There is at most one such child, because y totals2.
+
+If this child exists, remove one positive integer unit from an old G atom in that child. Its G row becomes5 and its total becomes7. If no child violates7, remove one unit from any positive old G atom. Such an atom exists because x totals20.
+
+The new G block has19 units; the outside block has2; the root still totals21. All full-child caps7 hold. Private G and G-entry caps only decrease; outside private columns and entries have mass at most2, hence obey6 and2. In public G every mass only decreases. Outside G, y was chosen within the residual public column and leaf budgets after fixing the other roots. Every new atom belongs to F. Therefore this is a feasible INTEGRAL value77 flow on the same actual source.
+
+At most four actual atoms change: the deleted G unit, the old outside unit, and at most two new outside atoms. These atoms need not share a child. In particular, there need not be any positive G atom, or even any actual G point, at a destination child.
+
+Conversely, any flow in item3 puts strictly more than1 unit outside G. Its projection is supported on A_g and bounded by R_g and R_gh, so its outside mass is at most C. Thus C>1. C is integer, hence C>=2. Item2 implies item3 directly. This proves the equivalence, including its real-flow quantifier.
+
+### If the repair is blocked, an actual support cover is forced
+
+The initial outside unit proves C>=1. Hence blocking is exactly C=1. There is then exactly one column H!=G with C_H=1; all other C_g vanish.
+
+There are two cases.
+
+**Column bottleneck.** If R_H=1, the other roots already put20 units in H. The entire available complement is capped by that single remaining column unit.
+
+**Leaf bottleneck.** If R_H>=2, then sum_(h in A_H) R_Hh=1. There is exactly one h_* in A_H with R_Hh*=1, and every other allowed H-leaf has residual0. The other roots put6 units in this critical leaf.
+
+Every other actual off-G point is covered by a saturated public prefix: at a column g with C_g=0, either R_g=0 and the whole column is saturated, or every allowed leaf has R_gh=0. In the leaf-bottleneck column H, the other allowed leaves are saturated too.
+
+Consequently there is an antichain Q of public prefixes, each having ZERO residual capacity, such that
+
+    F_r outside G is contained in union(Q) union P_*,       (UC2)
+
+where P_* is one critical column or one critical leaf with residual capacity1. The antichain can be chosen disjoint from P_* and from G: select a saturated column instead of its leaves when available; otherwise select the actual saturated fine leaves. No prefix outside the actual complement is needed.
+
+This is a statement about the ENTIRE actual off-G support, not merely positive flow atoms. It follows from the one-unit obstruction after subtracting the other-root masses, not from the local5x7 support alone. Conversely, any such actual cover by residual-zero prefixes and one residual-one prefix gives C<=1, hence blocks the fixed-other-root repair.
+
+### The other roots' total56 limits this cover
+
+The other roots together have mass77-21=56. Let
+
+    p=number of whole columns in Q,
+    l=number of fine leaves in Q,
+    epsilon=o_G in{0,1}.
+
+All prefixes in Q, the critical prefix P_*, and G are pairwise disjoint. A zero-residual column contains21 other-root units; a zero-residual leaf contains7. The critical column contains20, or the critical leaf contains6. Thus
+
+    21p+7l+20+epsilon<=56   in the column case,
+    21p+7l+ 6+epsilon<=56   in the leaf case.          (UC3)
+
+In particular,
+
+    3p+l<=5   in the column case,
+    3p+l<=7   in the leaf case.                       (UC4)
+
+So only these coarse cover shapes need be considered:
+
+| Critical prefix | Saturated columns p | Saturated leaves l |
+|---|---:|---:|
+| one column |0|at most5|
+| one column |1|at most2|
+| one leaf |0|at most7|
+| one leaf |1|at most4|
+| one leaf |2|at most1|
+
+These are necessary coverage shapes, not claims that all occur under the literal blocker hypotheses. They preserve which other-root mass paid for each saturated prefix. In particular, a fixed-other-root obstruction cannot hide arbitrarily many disjoint blocked public leaves. This narrows a subsequent literal-source or residual-closure classification to five budget families.
+
+### A cross-root release supplied by actual neighbors
+
+The following sufficient condition applies even when C=1. It preserves every root total and every public coarse-column total, but it is allowed to change another root's flow.
+
+Write the old unique outside atom as
+
+    p=(r,rho,H,k),    lambda(p)=1.
+
+Let q=(s,c,H,l) be a positive atom of ANOTHER root s!=r. It is an eligible donor when
+
+    l=k    OR    the old total public mass at(H,k) is at most6.   (UC5)
+
+This is exactly the fine-leaf condition needed for q's removal and p's addition: in the first alternative they cancel at the same leaf; in the second p has a unit of spare fine capacity. The common public H-column total will not change.
+
+If the old full-child total at(r,rho) is7, its G row has6 units. Define
+
+    J_bad={j: the old public(G,j) mass is7
+                 and lambda(r,rho,G,j)=0}.
+
+If that full-child total is at most6, define J_bad to be empty.
+
+There are at most TWO forbidden digits. In the only nonempty case, t forbidden public leaves, each of mass7, are disjoint from the six units in the distinguished G row. The public G-column total b is at most21, so
+
+    7t+6<=b<=21,      hence t<=2.                    (UC6)
+
+Suppose the same donor child(s,c) has an ACTUAL G point(s,c,G,j) with j not in J_bad. Then an actual four-atom circulation decreases d from20 to19.
+
+Add1 at p and at(s,c,G,j); remove1 at q and at a suitable old G atom x of root r. To choose x:
+
+- If the child(r,rho) was full, remove x in that same G row. If public(G,j) was also full, choose x at its fine digit j; this atom is positive by j not in J_bad. If that public leaf was not full, any positive atom of the row suffices.
+- If the child(r,rho) was not full, no particular removal row is required. If public(G,j) was full, remove a positive root-r atom at that digit. It exists because the other roots' ENTIRE G mass is at most1, while that public leaf has7. Otherwise remove any positive G atom.
+
+All four points are distinct and actual. The donor root's child total stays fixed. The recipient old outside point rises1 to2; its root's other private off-G mass was only1, so the new private column and entry are legal. At the donor's G point, the old atom and private G prefix had mass at most1, because every other root together had at most1 in G; both rise to at most2. The target G removal handles the only possible recipient-child or G fine-leaf conflict. Condition(UC5) handles the H fine-leaf conflict. Every root and public first-seven column total is unchanged, and all entry/private/public caps remain valid.
+
+In particular, any eligible donor child with at least THREE distinct actual G fine neighbors must have one outside J_bad and supplies this repair. This is an actual-neighborhood hypothesis, not a positive-flow-support hypothesis: its successful destination may previously have carried zero flow.
+
+Conversely, if no circulation in this explicitly specified family exists, EVERY eligible donor child's entire actual G-neighbor set is contained in the SAME set J_bad of at most2 digits. If the old recipient child was not full, all those donor children have no actual G point at all.
+
+The one-unit bottleneck now yields counts:
+
+- In the critical-leaf case the old recipient leaf has6 units from other roots. Each atom is at most2, so at least3 distinct other-root child owners are eligible. If no four-atom release exists, all of their G neighborhoods lie in J_bad.
+- In the critical-column case, if the old recipient fine leaf is not full, every positive other-root H atom is eligible. The other roots have20 units in H and each private child/H prefix is at most6, so there are at least4 distinct eligible child owners. Their G neighborhoods must all lie in J_bad if no release exists.
+- If the critical-column recipient fine leaf is full, the same6-unit/3-owner conclusion at that leaf applies.
+
+This transfers the obstruction from one root's bad local block to a common two-digit trap across at least3 actual donor children. These children may belong to different roots. It does not silently turn them into one root's three-row hypothesis, and it does not yet prove that the literal pair tests exclude their shared trap.
+
+### Finite repair normal form without new dangerous blocks
+
+Call a block dangerous when its root total is21 and its joint root/column mass is20. Either of the preceding repairs strictly removes its selected dangerous block and creates NO new dangerous block.
+
+For the fixed-other-root repair, the selected root still totals21, its selected block is19, and all its other blocks together total2. Every other-root atom is unchanged.
+
+For the four-atom cross-root repair, the selected root again has block19 and outside mass2. At the donor root, its target-column block had mass at most1 because the selected root already supplied20 in that public column; the donor block therefore rises to at most2. Its H-block had mass at most20 because the selected root already supplied its old outside unit in H; the donor H-block decreases to at most19. Every other joint block is unchanged, and every root total is unchanged. This proves the claim. It also proves that all joint blocks of mass21 are unchanged by these repairs: none of the modified blocks can have been21.
+
+Consequently start with any integral value77 flow on the actual source. While some dangerous block whose actual support fails T3 admits either the two-unit complement repair or a four-atom release above, perform one such repair. A root can have at most one dangerous block. Moreover dangerous blocks are disjoint sets of actual atoms and each carries20 units, so there are at most3 of them, since4*20>77. Each step strictly reduces their number and creates none. Thus this procedure terminates after at most3 repairs. Here T3 tests every three of the five literal child digits, including empty rows, against the entire actual fine support. It is a fixed source property and is not changed by the procedure.
+
+At termination, every remaining dangerous block either already satisfies T3, or satisfies BOTH of the following explicit obstruction certificates:
+
+- C=1, so its entire actual complement has the zero-prefix-plus-one-critical-prefix cover(UC2), with the budget bounds(UC3)--(UC4).
+- Every eligible donor child's entire actual target-column neighborhood is contained in the same J_bad of at most2 digits, as in(UC5)--(UC6).
+
+This is an unconditional finite normal form and certifier for the specified repair families. It is not a certificate that all global negative-cost cycles are absent. If no trapped non-T3 block remains, the known local T3 refinement applies to each remaining dangerous block; the already available treatment of full21 blocks remains applicable, yielding one actual law with Gamma<=691/77. Classifying or eliminating the simultaneously certified traps is still a genuine global cut77 gap.
+
+### Exact controls
+
+The [exact companion](../../frontier/cover-geometry/height_two_cut77_complement_transport.py) uses the two published adjacent68/164 fixture files and constructs the192-point source below directly from coordinates. Its [data](../../frontier/cover-geometry/height_two_cut77_complement_transport.json) require no external solver and are reproduced by
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_complement_transport.py
+```
+
+It recomputes actual integral flow capacities and480 selected literal pair tests for each source, enumerates EVERY multiset of two actual off-G points, compares feasibility with(UC1), and checks the repaired root, child, private and public budgets for every feasible lift. It includes previously zero actual points, and recomputes the192-point source's10000 complete literal tests and explicit cut/flow certificate.
+
+| Actual source | C | Two-unit multisets | Feasible lifts | Eligible cross-root releases |
+|---|---:|---:|---:|---:|
+| published68-point source |58|91|91|3|
+| published164-point forced20 source |1|630|0|0|
+| new192-point nonrobust source |1|820|0|3|
+
+The blocked164-point fixture has the critical common column0. The blocked192-point fixture has critical leaf(2,0) and zero column0. The companion also exhausts the actual donor/destination choices in(UC5)--(UC6) and verifies each resulting four-atom flow; the table's release counts refer to that specified family, not to all possible residual cycles.
+
+For the68-point source the program deliberately puts the two outside units at(0,3,4,0). That child has NO actual point in target columnG=1. Delete an old G unit at(0,0,1,0) and replace the old outside unit. All other roots remain pointwise fixed. The resulting common law has the complete numerical LCM upper681/77<9. This verifies the different-child part of the construction; the original same-child transfer is not its implementation.
+
+C=58 in this row must not be read as an achievable root throughput58. Only C>=2 is used, and the root retains total21.
+
+The companion separately includes capacity-only boundary controls, without claiming literal blocking for them: one has J_bad exactly{0,1} and a donor whose two actual G neighbors are both forbidden; adding a third actual neighbor creates the stated release. Another makes the recipient child nonfull and checks that a saturated destination fine leaf can be handled by deleting from a different target-root child. These distinguish the active premises of the cross-root argument from the three source fixtures, whose J_bad sets happen to be empty.
+
+### A nonrobust actual control: root-only blocking is not global blocking
+
+Use occupancy(5,5,5,4,0), with full roots0,1,2 and gap root3. At EVERY occupied child put all seven leaves in column0 and the single public leaf(2,0). At root0/column1 use the bad support
+
+    child0:0,1,2; child1:0,1; child2:0,1;
+    child3:empty; child4:0,1,3,4.
+
+At each child of roots1,2,3 include column1/fine leaf2; additionally include(2,0,1,5). At root1 child c include(3,c), at root2 child c include(4,c), and at gap child c include(2,c+1). There are192 distinct actual points.
+
+For the bad flow put the old unique20 matrix in root0/column1 and1 at(0,0,2,0). At every child of root1 put2 at its column3 private leaf and2 at its column0 leaf h=c, giving root total20. Do the analogous thing at root2 using private column4, and add1 at(2,0,1,5), giving root total21. At each gap child put2 on its private(2,c+1) point; at gap children0,1,2 put2 on(2,0), and add1 at(3,0,0,5), giving root total15. Total flow is21+20+21+15=77.
+
+There is an explicit cut consisting of public columns0 and1, public leaf(2,0), and the14 private leaf edges just described, of cost21+21+7+14*2=77. The actual bridge paths and every network cap are checked from the same source and flow in the companion. Hence its actual maximum flow and minimum cut are77.
+
+Literal blocking can also be seen directly. Any root0 triple has both column1 fine digits0,1; the tested other root supplies digit2 there. The pair then has a full branch at column0, at column1, and at that other root's private column (3,4,or2). In the gap case the two private leaves together with public(2,0) give its required3 leaves. For pairs among roots1,2,3, column0 and their two distinct private columns supply the three branches. Adjoining the literal empty children/root gives the full product-blocking statement. Globally columns0,1,2,3,4 each have at least5 actual leaves, so the standalone five-ary tree exists.
+
+No root is individually robust: root0 has only columns0 and1 capable of3 leaves; root1 has only0 and3; root2 only0 and4 (its column1 has at most2 leaves); the gap only0 and2. The companion also checks every singleton-root triple directly.
+
+Every occupied root uses more than2 first-seven columns, excluding the common-plus-exclusive-private two-column-per-root class. Moreover all5 occupied first-seven columns occur at more than3 distinct child owners. In a WC1 witness any nonpublic column can be supplied by at most the two private-column owners and the one extra-leaf owner, hence at most3 owners. Five such columns cannot fit in its3 public slots. Thus the source has no WC1 cut witness. These exclusions concern the three specified source classes, not every possible known or future supplier.
+
+The companion independently checks all480 selected pair tests, all10000 full literal tests, the standalone tree, and the1335-edge cut/flow certificate.
+
+The fixed-other-root complement has C=1, critical leaf(2,0), zero column0. Nevertheless the ACTUAL four-atom cycle
+
+    (0,0,1,0) -=1,    (0,0,2,0) +=1,
+    (3,0,2,0) -=1,    (3,0,1,2) +=1
+
+preserves every root, child and public coarse-column mass, changes root0/G mass20 to19, and gives a complete LCM upper689/77<9. Both flows satisfy every actual network cap. Thus the root-only bottleneck does not imply any of the three source classes, and cannot be substituted for the absence of a GLOBAL residual improvement.
+
+This control does NOT refute the proposed genuine global dichotomy. It has an explicit global improving cycle. Its purpose is to pin the fixed-other-root quantifier and demonstrate that the remaining bridge really involves another root's positive flow and actual unused points.
+
+### The precise global residual conditions and the remaining gap
+
+For any fixed integral maximum flow, lowering the root mass a_r is possible at the same total77 exactly when the residual graph has a path from the global source S to r: append the used reverse root arc r->S to get a circulation. Equivalently S and r lie in the same residual strongly connected component. If there is no such path, the set reachable from S is an actual global minimum cut excluding r, so the source-root21 edge crosses it and ALL maximum flows saturate that root edge. Conversely any global minimum cut crossing that edge forces a_r=21 in every maximum flow.
+
+For lowering d_(r,G), assign cost1 to actual bridges in the designated block and0 to all other original arcs; residual reverse arcs have the opposite cost. A feasible same-value flow with smaller d exists exactly when this residual graph contains a negative-cost directed cycle. The difference between two flows is a residual circulation and decomposes into cycles, so improvement forces at least one negative cycle; augmenting an integer unit on such a cycle supplies a feasible integral improvement. Absence of a negative cycle is equivalently a feasible residual vertex potential with nonnegative reduced cost on every residual arc. This is a global min-cost-flow certificate, not a single-edge mincut certificate.
+
+These standard residual facts explain why simply uncrossing a local20 mincut with a global77 cut does not yet prove the desired source dichotomy. The local block total is the sum of several network arcs; it is not one root or public-prefix edge. The new(UC1)--(UC4) bridge handles all residual improvements that hold the other roots fixed and restricts the actual complement if those fail; (UC5)--(UC6) then supply a class of actual cross-root repairs or a common two-digit neighborhood trap among their eligible donors. The192-point control shows exactly why a further cross-root closure argument remains necessary.
+
+Also T3 is a property of the ENTIRE actual block support. Changing only the flow on a fixed source cannot make that same support satisfy T3. A correct global alternative is to remove the dangerous(a,d)=(21,20) status, or to choose a flow whose remaining dangerous blocks already have the requisite actual-support property.
+
+Still unproved: if a literal cut77 source admits no global reduction of a or d for a selected bad-neighborhood block, whether the simultaneous residual closure and(UC2)--(UC4) force WC1, three robust roots, the restricted common/private class, some different known supplier, or a genuinely new supplier. No general cut77 closure follows from this note.
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. A source-level theorem selecting a repairable flow or supplying the needed reroute for every literal source remains missing.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. Excluding every terminal trap, or supplying a further global reroute, remains missing.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. General high-incidence sources in the remaining
 range72/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
