@@ -13,7 +13,7 @@ internal sealed class HeisenbergFockPolynomialDocument : IScribeDocumentDefiniti
                 "D5/S3/VertexAlgebra/HeisenbergFockPolynomial.heisenberg_fock_polynomial"),
             H("Shifted polynomial modes satisfy the Heisenberg relation"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromLiterature(
+            AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/VertexAlgebra/chulin2018heisenberg")),
             Blocks(
                 Paragraph(Text(

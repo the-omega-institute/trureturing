@@ -1,0 +1,11 @@
+**Proof.** For $k\ge0$ take $a_{k+1}=(k+1)\partial/\partial X_k$,
+$a_{-(k+1)}$ to be multiplication by $X_k$, and $a_0=0$. These are the
+rank-one charge-zero Heisenberg Fock formulas, specialized algebraically from
+the complex construction of Chu--Lin [1, Section 3.1]. Each polynomial has
+finite variable support, so sufficiently high positive modes annihilate it.
+Multiplication operators commute with each other, as do partial derivatives;
+the Leibniz rule gives the displayed mixed commutator. Also
+$a_{-(k+1)}(1)=X_k$, and monomials are finite products of these negative modes
+applied to $1$. Finally Theorem 2.1 with $K=\mathrm{id}_V$ yields the two
+coefficient-shift identities. The endomorphism $\mathrm{id}_V$ is nonzero
+because it sends the vacuum $1$ to $1\ne0$.
