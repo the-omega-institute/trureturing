@@ -5666,3 +5666,17 @@ Federico Pianoforte、Riccardo Turin，*Multivariate Poisson and Poisson process
 原始归档 17,295 字节，SHA256 `6050a143ed440fa652d8407ce0eece086cddba261c79055d0d55b0eaad97858a`；所核对 TeX 53,893 字节，SHA256 `83dc7d594e3f53a7b47e3d4d7a5a175d9bc935d66c61cbd6b603d87c9be92c9c`。该版本依赖情形证明中有一处显示式将前文 size-bias 恒等式的 $\ell_i-1$ 写为 $\ell_i-i$；这里保留这一原文缺陷的适用边界，不依赖该段。正文 (145.10) 直接计算单槽事件全变差 $p(1-e^{-p})\le p^2$，经独立最大耦合与求和得到所需界，因而不以未核验的一般 Stein 证明补足模型论证。
 
 经典 Poisson 近似与 Stirling 不作为新内容。本章的模型内推导在于：将真实槽位联合律、有利池存在性、每个固定池的合法算术交集和同一全数组的三标签删除校准接合；再用原始相对一行／两行律证明 $|j|\le Q^{13/8}$ 上的同时占据下界，支付扩大频率带内的两阶实温度标记、位移双格能量及全部输出尾部。Gauss／Poisson、theta、Weyl 及条件导数文献保留既有归属与限制。有限检索不证明全局原创性或更强结果不存在；结论不扩张至增长 $c$、必要性、零噪声或原始环境期望收敛。
+
+## 谱边界第 146 章补充：有限相权重、局部宽度与共存中心
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md) 第 146 章在原完整选择计数后验中，以精确有限剖面 $F(r)=\ell_y(r^2)-\ell_y(0)-hr$ 的内部最大点 $r_-$、曲率 $K=-F''(r_-)$ 定义 $\Lambda=F(r_-)+\log h+\tfrac12\log(2\pi/K)$。在有界 $\Lambda$ 和紧输出范围，负号条件律分为指数边界层与 Gaussian 内部阱，内部权重趋于 $e^\Lambda/(1+e^\Lambda)$。等高点处内部阱的宽度大于边界层，需要正向外场位移才能等权；无量纲外场 $\kappa$ 相对于精确有限等高点的位移主项为 $\log t/(m^2\sqrt{2/3}\,t^2)$。任意缓慢 $t\to\infty$、$\eta\to0$ 和原严格噪声余量均保留。
+
+Christian Borgs、Roman Kotecký，*Surface Induced Finite Size Effects for First Order Phase Transitions*，[arXiv:cond-mat/9501074v3](https://arxiv.org/abs/cond-mat/9501074v3)。核对 Section 3.2、完整 Theorem 3.1 及 (3.5)–(3.21)。模型要求 $d\ge2$ 的有限格子、固定有限相数、匹配轮廓表示、内部与边界面上的平移不变性；轮廓权与基态能量对参数为 $C^6$，满足 Peierls 及导数界 (3.7)–(3.9)、边界偏好限制 (3.11)，且有效衰减常数 (3.17) 为正。定理保留体积、表面、边和角贡献，给出有限相自由能指数和与相应权重 (3.20)。
+
+该文说明次主自由能对有限相权重的重要性，但没有为本卷的收缩曲率、各向异性噪声和计数后验提供可直接应用的定理。本卷没有建立满足其假设的轮廓／Peierls 表示；负电荷半轴的端点也不是该文的格子表面相，其表面位移尺度不能替换本章宽度比产生的对数位移。原 PDF 519,936 字节，SHA256 `bd64a6bbf27b3caba749ed6bf5266da597ffeaf08b555958b8f16a905c16c25a`，来源日期 1995-01-20。文字抽取含字体警告，非交叠条件的一个交集符号与散文存在冲突，未用该符号作推导前提。完整轮廓证明不在本次核对范围。
+
+A. Fernandez、E. A. Spence、A. S. Fokas，*Uniform asymptotics as a stationary point approaches an endpoint*，[arXiv:1707.07927v2](https://arxiv.org/abs/1707.07927v2)。核对开篇 Definition 1.1、(1.1)–(1.17)、完整 Theorem 1.1、Remark 1.2 及局部／全局换元讨论。其积分具有振幅 $(1-z)^{-1/2}z^{\sigma-1/2}$、特定对数振荡相位、固定 $0<\delta<1$ 和 $1/2\le\sigma<1$、随大参数变化的指定 $\lambda$ 区间，以及 (1.4)–(1.5) 限制的复射线角度。文中的 $\delta,\sigma,t$ 与本卷参数含义不同。定理针对该积分给出驻点接近端点时的一致 Fresnel 型主项。
+
+该文指出，换元后的振幅依赖大参数和端点参数时，需要逐模型证明一致误差。本章的两个位置按局部尺度仍相隔发散，且积分为正的数组依赖剖面，因此不导入该 Fresnel 定理或一般化的无条件误差保证。本章直接证明前因子导数和共同尾界。原 PDF 424,462 字节，SHA256 `b688475265e9ad344276baa0f86f9feea101596627710173e0e91f0c7c92f3af`；arXiv 页眉标 2018-01-02，标题页标 2021-06-13，原因未验证。抽取文本对驻点符号的叙述存在歧义，未据此建立数学前提；后续完整证明与全阶结果未作为已核验输入。
+
+端点 Laplace、内部 Gaussian 主项、两个正贡献相加及 logistic 正规化属于经典方法。第 146 章的模型内内容是保留有限经验／噪声项的竞争坐标，以及同一实现上的导数、尾部、逐区域计数比较和完整选择修正。Temme 关于固定振幅的假设不自动覆盖当前变化剖面；Siripraparat–Neammanee 的总方差局部界与 Arratia–Goldstein–Langholz 的条件乘积表示仍按第 143 章的精确范围使用。有限文献核对不证明全局原创性，不把静态共存律称作动力学相变。
