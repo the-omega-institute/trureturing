@@ -88320,3 +88320,449 @@ $$
 本节角度是已知的仪器设置，不是待估计的校准误差；（277.45）中的两个假设也使用相同的已知 $\theta(h)$。副本上界使用实际记录和参考测量，副本下界允许完整输出的集体测量。数学数据反演（277.15）不附带不同仪器之间的物理后处理模拟。本文合同只规定该已知二元来源对的独立副本数，不包含未知角度估计、一般来源层析或测量实现历时。
 
 ## 追加锚（本行以下为增补区）
+
+## 278. 未知共同相位的真实校准与自适应重置副本预算
+
+§277中仪器角度及其相对于来源的方向已知。本节允许来源带有一个未知、固定的共同输入相位，并把取得方向信息所消耗的副本计入总预算。对同一单Jordan来源对，实际校准之后再旋转重置设置，仍能以 $\Theta(\delta^{-1})=\Theta(h^{-2n})$ 个副本完成等先验平均错误率不超过 $1/3$ 的二元判别，而且这个保证对未知相位一致。
+
+先估计方向、再沿估计方向测量是成熟的自适应估计方法，见 Bagan等，*Purity estimation with separable measurements*，Phys. Rev. Lett. 95, 110504 (2005)，[原文](https://arxiv.org/abs/quant-ph/0509087v2)，以及 Mahler等，*Adaptive quantum state tomography improves accuracy quadratically*，Phys. Rev. Lett. 111, 183601 (2013)，[原文](https://arxiv.org/abs/1303.0436v2)。本节在既定来源和重置访问合同中直接证明有限样本的统一错误界，并给出允许保留量子参考的自适应下界。
+
+### 278.1 同一来源对的未知相位轨道
+
+固定 $n\ge1$、参考空间 $E=\mathbb C^n$、qubit输入 $H$ 及固定的 $Y$ 本征基。沿用§277的同一规范来源对：
+$$
+t=\frac14,\qquad M=I_n+tJ,\qquad
+Je_1=0,\quad Je_j=e_{j-1}\quad(j\ge2),
+$$
+$$
+Q=Q^\dagger\succ0,\qquad Q+M^\dagger QM=I_n,\qquad Z=2QM.
+\tag{278.1}
+$$
+取§269固定的矩阵 $C$ 和常数 $k>0$，记
+$$
+S_h=\operatorname{diag}(h^{n-1},h^{n-2},\ldots,1),
+\qquad D_h=hS_hCS_h,\qquad \delta=kh^{2n}.
+$$
+以 $b=0,1$ 标记两个假设，令
+$$
+\Omega_0=\frac1n
+\begin{pmatrix}
+Q&QM\\
+M^\dagger Q&I_n-Q
+\end{pmatrix},
+\qquad
+\Omega_1=\frac1n
+\begin{pmatrix}
+Q+D_h&(1-\delta)QM\\
+(1-\delta)M^\dagger Q&I_n-Q-D_h
+\end{pmatrix}.
+\tag{278.2}
+$$
+存在固定 $h_0>0$，使 $0<h\le h_0$ 时两者都是实际密度态，且 $\Omega_1\succ0$。缩小 $h_0$，以下要求
+$$
+0<\delta\le\frac12.
+\tag{278.3}
+$$
+两个来源的参考边缘都是 $I_n/n$，非对角数据分别为 $Z/n$ 与 $(1-\delta)Z/n$。
+
+对未知相位 $\phi\in\mathbb R/(2\pi\mathbb Z)$，定义
+$$
+U_\phi=\operatorname{diag}(e^{-i\phi},1),
+\qquad
+\Omega_{b,\phi}
+=(U_\phi\otimes I_n)\Omega_b(U_\phi^\dagger\otimes I_n).
+\tag{278.4}
+$$
+这些来源仍合法，且
+$$
+\rho_{b,\phi}=I_n/n,\qquad
+K_{b,\phi}:=\mathscr K(\Omega_{b,\phi})
+=(1-b\delta)e^{-i\phi}Z/n,
+\qquad \mathscr K(X)=2X_{+-}.
+\tag{278.5}
+$$
+输入酉变换同时作用于两假设，故其来源迹距离仍为 $\Theta(h)$。
+
+每次检验使用同一个固定但未知的 $\phi$，并独立提供所选假设的副本。协议知道来源族、$n$ 和 $h$，因而知道 $\delta$；协议不知道 $b$ 或 $\phi$。两假设的先验各为 $1/2$，不对 $\phi$ 加先验分布。要求的错误保证对每个固定 $\phi$ 成立。
+
+矩阵迹范数记为 $\|\cdot\|_1$，无下标矩阵范数为算子范数；二维实向量的欧氏范数记为 $\|\cdot\|_2$。状态半迹距离为
+$$
+d(\tau,\omega)=\frac12\|\tau-\omega\|_1.
+\tag{278.6}
+$$
+
+### 278.2 经典角度控制与副本计费合同
+
+一次查询选择经典实角度 $\theta$，使用§277的实际效果算子
+$$
+A_0(\theta)=\cos\theta\,Z_H+\sin\theta\,X_H,
+\qquad
+A_1(\theta)=-\sin\theta\,Z_H+\cos\theta\,X_H,
+$$
+$$
+E_{w,\eta}(\theta)=\frac{I_2+\eta A_w(\theta)}4,
+\qquad w\in\{0,1\},\quad\eta\in\{+1,-1\}.
+\tag{278.7}
+$$
+输入输出被重置为同一个固定纯态，保留全部实际记录 $(w,\eta)$ 和完整参考 $E$。每次新来源进入这个仪器就计一个副本，包括校准阶段及任何随后丢弃的结果。
+
+允许的自适应控制如下：在取得下一份来源之前，协议可对已有的记录、参考和辅助量子记忆作任意量子操作，产生一个经典控制值，并据此选择下一角度。已有量子参考可以继续保存，末尾允许全部已取得输出的共同POVM。新副本在规定重置之前保持独立，不与旧记忆联合作用，也不接受该角度仪器之外的预处理。角度控制寄存器是经典的；不允许以量子叠加相干控制新输入的角度。
+
+令
+$$
+H_0(e)=\operatorname{Re}(e^{ie}Z),
+\qquad
+H_1(e)=\operatorname{Re}(e^{i(e+\pi/2)}Z).
+\tag{278.8}
+$$
+略去共同纯重置因子后，单次完整输出为
+$$
+\sigma_{b,\phi,\theta}
+=\bigoplus_{w,\eta}
+\frac{I_n+\eta(1-b\delta)H_w(\theta-\phi)}{4n}.
+\tag{278.9}
+$$
+共同纯因子不改变迹距离或判别能力。式（278.9）也确定了相位校准的符号：估计 $\phi$ 后应选择 $\theta=\widehat\phi$。
+
+记 $N_{\rm ad}(\delta)$ 为满足下列条件的最小正整数：存在上述访问类中的协议，总查询次数至多该整数，且对每个 $\phi$ 都有
+$$
+P_{{\rm err},\phi}
+=\frac12P_{0,\phi}(\widehat b=1)
++\frac12P_{1,\phi}(\widehat b=0)
+\le\frac13.
+\tag{278.10}
+$$
+上界将采用固定整数预算。具有确定最大查询数的提前停止方案也属于该合同，可补上忽略结果的查询。仅限制期望次数、没有确定最大次数的停止合同不在此定义内。
+
+### 278.3 校准记录中的统一正振幅
+
+校准阶段固定 $\theta=0$。首先证明记录中用于定位相位的振幅不会随 $h$ 消失。
+
+规范矩阵 $Q$ 是实对称矩阵。为直接核对实性，把边界条目 $Q_{0,j},Q_{i,0}$ 记为零；由（278.1），每个条目满足
+$$
+2Q_{ij}
++t(Q_{i-1,j}+Q_{i,j-1})
++t^2Q_{i-1,j-1}
+={\bf1}_{i=j}.
+\tag{278.11}
+$$
+按 $i+j$ 递增归纳，每个条目由更早的实条目唯一确定，故全部为实数；结合 $Q=Q^\dagger$ 即得实对称性。
+
+置
+$$
+a_n=\frac{\operatorname{Tr}Z}{n}.
+\tag{278.12}
+$$
+对（278.1）取迹，并用
+$\operatorname{Tr}QJ=\operatorname{Tr}QJ^\dagger\in\mathbb R$，得到
+$$
+\begin{aligned}
+n
+&=2\operatorname{Tr}Q
++2t\operatorname{Tr}QJ
++t^2\operatorname{Tr}(J^\dagger QJ),\\
+a_n
+&=1-\frac{t^2}{n}\operatorname{Tr}(J^\dagger QJ).
+\end{aligned}
+\tag{278.13}
+$$
+由 $0\prec Q\preceq I_n$ 和 $\operatorname{Tr}(J^\dagger J)=n-1$，
+$$
+\boxed{
+1-\frac{n-1}{16n}\le a_n\le1,
+\qquad a_n\ge\frac{15}{16}.
+}
+\tag{278.14}
+$$
+
+每个真实校准记录产生一个二维实向量
+$$
+W=\bigl(2\eta{\bf1}_{w=0},\;2\eta{\bf1}_{w=1}\bigr).
+\tag{278.15}
+$$
+记
+$$
+u_\phi=(\cos\phi,\sin\phi),\qquad
+a_{b,n}=(1-b\delta)a_n.
+$$
+从（278.9）取迹计算记录概率，得到
+$$
+\mathbb E_{b,\phi}W=a_{b,n}u_\phi,
+\qquad
+a_{b,n}\ge\frac{15}{32}>\frac14.
+\tag{278.16}
+$$
+这也说明校准不需要预先判断是哪一个假设：两个均值只在正振幅上不同，方向相同。
+
+若使用 $m$ 个独立校准副本，令
+$$
+\widehat v=\frac1m\sum_{\ell=1}^mW_\ell.
+$$
+每个样本恰满足 $\|W_\ell\|_2^2=4$。独立性因此给
+$$
+\boxed{
+\mathbb E_{b,\phi}
+\|\widehat v-a_{b,n}u_\phi\|_2^2
+=\frac{4-a_{b,n}^2}{m}\le\frac4m.
+}
+\tag{278.17}
+$$
+这里已经计算了设置随机性和所有实际记录，不以只保留某个设置的样本数替代总副本数。
+
+### 278.4 不依赖校准成功事件的方向误差界
+
+若 $\widehat v\ne0$，定义
+$$
+\widehat u=\widehat v/\|\widehat v\|_2;
+$$
+若 $\widehat v=0$，固定定义 $\widehat u=(1,0)$。选一个实现
+$\widehat u=(\cos\widehat\phi,\sin\widehat\phi)$ 的角度 $\widehat\phi$。
+
+对任意 $a>0$、单位向量 $u$ 及向量 $v$，上述归一化约定满足
+$$
+\|\widehat u-u\|_2\le\frac{2\|v-au\|_2}{a}.
+\tag{278.18}
+$$
+当 $v\ne0$ 时，
+$$
+\begin{aligned}
+\|\widehat u-u\|_2
+&\le\left\|\widehat u-\frac va\right\|_2
++\left\|\frac va-u\right\|_2\\
+&=\left|1-\frac{\|v\|_2}{a}\right|
++\frac{\|v-au\|_2}{a}
+\le\frac{2\|v-au\|_2}{a}.
+\end{aligned}
+$$
+当 $v=0$ 时，左侧至多二，右侧恰二，故同一界仍成立。
+
+令 $e=\widehat\phi-\phi$ 按圆周理解。单位向量恒等式及（278.17）—（278.18）给
+$$
+1-\cos e
+=\frac12\|\widehat u-u_\phi\|_2^2,
+$$
+$$
+\boxed{
+\mathbb E_{b,\phi}(1-\cos e)
+\le\frac8{a_{b,n}^2m}.
+}
+\tag{278.19}
+$$
+特别地，在理想假设下使用 $a_n\ge1/2$，得到
+$$
+\mathbb E_{0,\phi}(1-\cos e)\le\frac{32}{m}.
+\tag{278.20}
+$$
+在两个假设下统一使用 $a_{b,n}\ge1/4$，则得到 $128/m$ 的上界。
+
+若将 $e$ 取为 $[-\pi,\pi]$ 中的代表，$1-\cos e\ge2e^2/\pi^2$，故
+$$
+\mathbb E_{b,\phi}e^2
+\le\frac{4\pi^2}{a_{b,n}^2m}
+\le\frac{64\pi^2}{m}.
+\tag{278.21}
+$$
+这给出对每个 $\phi$ 一致的均方角误差；当 $m$ 为 $\delta^{-1}$ 阶时，均方根角误差为 $O(\sqrt\delta)$。
+
+后续判别直接使用（278.19）的平均背景界。整个计算不把校准分成“成功”和“失败”事件，也不把两假设的校准分布当作相同。
+
+### 278.5 自适应设置后的固定参考点击
+
+校准之后，把全部新副本的实际角度固定为
+$$
+\theta=\widehat\phi.
+\tag{278.22}
+$$
+每个新副本都读取实际记录，并使用如下二值检测：当且仅当记录为 $(w,\eta)=(0,-1)$，且参考投影 $e_1e_1^\dagger$ 点击时，记为“点击”；其余全部结果记为“未点击”。
+
+由 $Me_1=e_1$ 和（278.1），
+$$
+2e_1^\dagger Qe_1=1,\qquad e_1^\dagger Ze_1=1.
+\tag{278.23}
+$$
+因此，条件于真实校准记录及其残角 $e$，单次点击概率精确为
+$$
+p_0(e)=\frac{1-\cos e}{4n},
+$$
+$$
+\boxed{
+p_1(e)
+=\frac{1-(1-\delta)\cos e}{4n}
+=\frac{\delta+(1-\delta)(1-\cos e)}{4n}
+\ge\frac{\delta}{4n}.
+}
+\tag{278.24}
+$$
+第二个下界对所有残角都成立。条件于校准记录，后续新副本仍独立，故第二阶段是固定点击概率的独立试验。
+
+这里使用的是已知参考向量 $e_1$。它在未知残角下的背景为 $1-\cos e=O(e^2)$。§277的 $e^{2n}$ 小谱尺度则描述已知真实残角时的最小本征值，并允许选择其对应本征方向。当 $n>1$ 时，不能把那个最小谱背景代入本节固定 $e_1$ 的检测。式（278.24）给出当前实际测量所需的准确概率。
+
+最终判决为：第二阶段任一次点击，就输出 $\widehat b=1$；若全部未点击，就输出 $\widehat b=0$。协议只使用实际校准估计选择角度，不需要知道真实残角。
+
+### 278.6 两阶段协议的明确整数预算
+
+取
+$$
+m=\left\lceil\frac{576}{\delta}\right\rceil,\qquad
+L=\left\lceil\frac{8n}{\delta}\right\rceil.
+\tag{278.25}
+$$
+第一阶段使用 $m$ 个副本，第二阶段使用 $L$ 个副本，全部计入总数。由 $0<\delta\le1/2$、$n\ge1$，
+$$
+L\le\frac{9n}{\delta}.
+\tag{278.26}
+$$
+
+理想假设下，用并合界和全期望得到
+$$
+\begin{aligned}
+P_{0,\phi}(\widehat b=1)
+&=\mathbb E_{0,\phi}\bigl[1-(1-p_0(e))^L\bigr]\\
+&\le L\,\mathbb E_{0,\phi}p_0(e)\\
+&\le\frac{8L}{nm}
+\le\frac{72}{\delta m}
+\le\frac18.
+\end{aligned}
+\tag{278.27}
+$$
+该期望取自理想假设自己的真实校准分布。
+
+扰动假设下，（278.24）对每个校准历史都给出同一个下界，故
+$$
+\begin{aligned}
+P_{1,\phi}(\widehat b=0)
+&=\mathbb E_{1,\phi}(1-p_1(e))^L\\
+&\le\exp\left(-\frac{L\delta}{4n}\right)
+\le e^{-2}<\frac14.
+\end{aligned}
+\tag{278.28}
+$$
+于是
+$$
+\boxed{
+\sup_{\phi}P_{{\rm err},\phi}\le\frac3{16}<\frac13.
+}
+\tag{278.29}
+$$
+这是一条包含真实校准副本的有限样本保证。预算为
+$$
+m+L
+=\left\lceil\frac{576}{\delta}\right\rceil
++\left\lceil\frac{8n}{\delta}\right\rceil
+=O(\delta^{-1})
+\tag{278.30}
+$$
+这里 $n$ 固定。上界校准只使用经典记录；检测阶段也只需要逐副本记录读取和参考投影。
+
+### 278.7 任意经典自适应角度下的逐查询下界
+
+对每个实角度 $e$，§277的谱因子恒等式给
+$$
+-I_n\preceq H_w(e)\preceq I_n.
+\tag{278.31}
+$$
+因此，对任意固定 $\phi,\theta$，由（278.9）的块差得到
+$$
+\begin{aligned}
+d(\sigma_{1,\phi,\theta},\sigma_{0,\phi,\theta})
+&=\frac{\delta}{4n}
+\left(\|H_0(\theta-\phi)\|_1
++\|H_1(\theta-\phi)\|_1\right)\\
+&\le\frac\delta2.
+\end{aligned}
+\tag{278.32}
+$$
+自适应协议的输出并非固定单次输出的张量幂，故以下直接对实际查询与记忆作递推。
+
+固定 $\phi$。在查询之前，对一个给定的旧记忆输入，共同控制操作产生经典标签 $x$ 和条件量子记忆：
+$$
+\omega=\sum_xp_x|x\rangle\langle x|\otimes\tau_x,
+\qquad p_x\ge0,\quad\sum_xp_x=1,\quad
+\tau_x\succeq0,\quad\operatorname{Tr}\tau_x=1.
+\tag{278.33}
+$$
+标签 $x$ 选择角度 $\theta_x$；$\tau_x$ 可以包含全部已取得参考及任意辅助量子系统，内部不要求可分。
+
+按照访问合同，新来源在重置前独立，且只使用所选经典角度。因此在两个假设下，这次查询的作用分别为
+$$
+\mathcal O_b(\omega)
+=\sum_xp_x|x\rangle\langle x|\otimes\tau_x
+\otimes\sigma_{b,\phi,\theta_x}.
+\tag{278.34}
+$$
+固定纯重置因子可以一并附加，不改变下式。因为经典块的迹范数可加且 $\|\tau_x\|_1=1$，
+$$
+\begin{aligned}
+d(\mathcal O_1(\omega),\mathcal O_0(\omega))
+&=\sum_xp_x
+d(\sigma_{1,\phi,\theta_x},\sigma_{0,\phi,\theta_x})\\
+&\le\frac\delta2.
+\end{aligned}
+\tag{278.35}
+$$
+若角度选择含连续经典随机量，以积分替代求和，迹范数凸性给同一上界。
+
+令 $\rho_b^{(j)}$ 为前 $j$ 次查询后，协议保存的全部可用寄存器状态，并记
+$$
+D_j=d(\rho_1^{(j)},\rho_0^{(j)}).
+$$
+初始辅助资源与假设无关，故 $D_0=0$。将下一次操作拆成共同控制、一次新来源查询、共同后处理。对共同操作使用迹距离收缩，对同一个查询输入切换假设使用（278.35），三角不等式给
+$$
+D_j\le D_{j-1}+\frac\delta2,
+\qquad
+D_N\le\frac{N\delta}{2}.
+\tag{278.36}
+$$
+例如在查询前的两个经典—量子状态为 $\omega_1,\omega_0$ 时，中间一步正是
+$$
+\begin{aligned}
+d(\mathcal O_1(\omega_1),\mathcal O_0(\omega_0))
+&\le d(\mathcal O_1(\omega_1),\mathcal O_1(\omega_0))\\
+&\quad+d(\mathcal O_1(\omega_0),\mathcal O_0(\omega_0))\\
+&\le d(\omega_1,\omega_0)+\frac\delta2.
+\end{aligned}
+\tag{278.37}
+$$
+这里没有要求两假设产生相同的控制历史；不同历史已经包含在第一项中。
+
+最终任意共同POVM也不能增加可区分度。Holevo–Helstrom公式使等先验错误率不超过 $1/3$ 必须满足 $D_N\ge1/3$，所以
+$$
+\boxed{N\ge\frac{2}{3\delta}.}
+\tag{278.38}
+$$
+该证明对每个固定 $\phi$ 成立，自然适用于要求所有未知 $\phi$ 一致成功的协议。它允许利用旧量子参考生成新的经典角度，并允许最终联合测量全部参考；不只是对固定角度或只保留经典记录的下界。所用迹距判别公式可见 Watrous，*The Theory of Quantum Information*，[公开原书](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Theorem 3.4。
+
+### 278.8 计入校准的锐副本阶及适用范围
+
+**定理278.1（未知共同相位的统一自适应预算）。** 对（278.1）—（278.10）的固定来源和访问合同，在充分小的 $h>0$ 下，
+$$
+\boxed{
+\frac{2}{3\delta}
+\le N_{\rm ad}(\delta)
+\le
+\left\lceil\frac{576}{\delta}\right\rceil
++\left\lceil\frac{8n}{\delta}\right\rceil.
+}
+\tag{278.39}
+$$
+因此
+$$
+\boxed{
+N_{\rm ad}(\delta)=\Theta(\delta^{-1})
+=\Theta(h^{-2n}),
+}
+\tag{278.40}
+$$
+且上界错误保证对共同未知相位 $\phi$ 一致。渐近常数可以依赖固定的 $n,Q,C,k$。
+
+**证明。** 两阶段实际协议由（278.15）、（278.22）、（278.24）定义，整数预算（278.25）满足（278.29），给上界。逐查询递推（278.36）和判别必要条件给下界（278.38）。最后代入 $\delta=kh^{2n}$，其中 $k>0$ 固定。$\square$
+
+$n=1$ 时，$Q=1/2$、$Z=1$、$a_n=1$，参考投影是整个一维参考空间，全部校准和点击公式仍成立。样本均值为零已有固定处理；相位坐标跨越 $-\pi,\pi$ 时，方向向量与 $1-\cos e$ 不变。因此这些退化记录和圆周坐标边界不会破坏统一保证。
+
+本定理与§277的已知角度结果使用不同的信息合同。这里从真实校准样本取得方向，再使固定参考检测的平均背景成为 $O(\delta)$；校准预算与检测预算同为 $\delta^{-1}$ 阶。Mahler等原文第2页所讨论的“方向误差平方决定近零概率背景”提供相同的结构解释；Bagan等原文第3—4页的方向估计后再测量方案属于这一成熟方法体系。它们的平均或渐近估计结论没有代替（278.17）—（278.29）的有限样本证明。
+
+结论要求同一固定相位贯穿校准和检测，仪器准确执行所请求的经典角度，且源副本按既定假设独立提供。相位逐副本漂移、两阶段之间变化，或另有未知角度执行误差，均需要不同的误差合同。允许在reset之前把新来源与旧记忆联合作用，或用量子相干控制选择角度，也超出（278.34）的经典受控查询表示；本节不把（278.38）外推到这些访问方式。
+
+§270的完整输入访问仍有 $\Theta(h^{-2})$ 副本阶。本节证明的是规定重置访问类中、包含未知共同相位校准的 $\Theta(h^{-2n})$ 阶，不对未受限的原输入访问增加下界，也不提供一般来源层析、未知扰动幅度估计、最优常数或物理历时结论。
+
+## 追加锚（本行以下为增补区）
