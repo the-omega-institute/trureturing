@@ -80,7 +80,7 @@ alternatives. Keep reusable results with their assumptions.
 A proof supplies a premise; a counterexample refutes a claim within its stated
 scope. An observation limit can suggest what to measure next. When progress
 stalls, check whether the representation misses a needed distinction.
-Evaluate this proposed method on withheld questions, against a stated baseline
+Evaluate on questions unused in method design, against a stated baseline
 with matched information and resources.
 
 ![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
