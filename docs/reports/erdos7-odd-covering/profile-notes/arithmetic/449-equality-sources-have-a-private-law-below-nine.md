@@ -3589,7 +3589,191 @@ The same proof works if only a designated subset A of roots receives capacity61/
 
 For this variant t(C) counts ONLY crossed source-root arcs belonging to A; the exact formula cap_new=cap_old-(2/3)t remains valid. The assertion that roots outside A can never host a bad-dangerous block is an additional actual-support/flow premise, not a consequence of their being left unmodified.
 
-The remaining question is whether the five root-cut obstruction classes above can be supplied by existing structural laws, T3 arguments or a stronger weighted-block analysis. Their low original capacities give a finite structural target, but this note neither classifies them nor establishes general cut77.
+The following supplier covers both t=3 obstruction classes by a direct actual law, including nonminimum capacity78 cuts. The other three types(t,c)=(1,77),(2,77),(2,78) remain structural targets; the previously established IF77 theorem covers its specified t=1 occupancy subfamily only. This does not establish general cut77.
+
+## Three inactive roots at capacity77 or78 admit one common law
+
+This is an ordinary proof on one actual literal4555 source, not a Lean verification. Capacity78 need not be a minimum cut; no saturation inference for it is used.
+
+### Statement and fixed actual-source premises
+
+Retain the actual4555 source and its original21,7,6,2,126,7,21 network, all original child owners and public leaf labels. Every legal pair of root restrictions has a ternary seven-tree of nine actual leaves: a full-root restriction uses three occupied children and a gap restriction two. Every occupied child's actual fibre is nonempty. Assume the original network maximum is77, and it has a cut C with cap(C)<=78 and exactly three of its four occupied roots sink-side.
+
+The conclusion is a probability supported on the SAME actual source, fixed before all original numerical phase queries, with
+
+    Gamma_1225 <=503/56<9.                          (IA1)
+
+The standalone five-tree may remain among the source premises, but the law construction below does not use it. The sole source-side root need not have flow21: at an exact77 cut its flow is14. No GP77 distinguished-root exclusion is invoked.
+
+### IA.1. Reusable puncture laws and three small mixtures
+
+Fix a legal restriction at a distinguished root R with entire actual projection F. Pair it with every legal restriction of every other occupied root. Choose a ternary tree in each actual union and lift each selected remaining leaf to an actual owner of the other restriction. Average over all legal restrictions there, then mix the three other-root laws equally. An original full child occurs with probability3/5 and an original gap child with probability1/2<=3/5. All subsequent caps therefore hold under ONE chosen law, not independent marginal choices.
+
+Caps are listed in divisor order
+
+    (1,5,7,25,35,49,175,245,1225),
+
+with ordered-LCM coefficients
+
+    (1,3,3,5,9,5,15,15,25).
+
+#### One or two actual leaves
+
+If |F|=1, remove that leaf and use the established punctured-tree law with envelope33/4.
+
+If |F|=2, remove both leaves; at least seven actual leaves remain, giving the established psi caps
+
+    (1,1/3,3/7,1/5,1/7,1/7,3/35,1/21,1/35).
+
+The legal restriction has at least two nonempty original child fibres. Its two labels can be realized at two distinct owners: if both labels initially occur only at one chosen owner, any other nonempty owner supplies one label and the first owner can supply the other. More formally, failure of a two-owner/two-label matching would force every nonempty owner to use the same single label, contrary to |F|=2. Let eta put half its mass at each of those two actual points. The existing mixture(35/37)psi+(2/37)eta has envelope328/37<9. Thus every actual legal restriction with at most two leaves is sufficient here.
+
+#### Balanced three-leaf puncture
+
+Suppose |F|<=3 and no public column contains three points of F. After deleting F from any selected ternary tree, each branch retains at least one leaf. The sum over its three branches of min(2,remaining leaf count) is at least5: the worst deletion pattern is(2,1,0), leaving(1,2,3) and truncated counts(1,2,2). Select exactly five remaining actual leaves, at most two per column, and make them uniform. The averaged psi caps are
+
+    (1,1/3,2/5,1/5,2/15,1/5,2/25,1/15,1/25).       (IA2)
+
+Two consumers of this SAME psi will be used.
+
+(B4) Suppose R also has four distinct actual leaf labels, chosen at owners with at most two selected points per owner, and at most two labels in any public column. Let eta be uniform on those four actual points. Then
+
+    nu=(25/29)psi+(4/29)eta
+
+has caps
+
+    (1,25/87,12/29,5/29,10/87,6/29,2/29,5/87,1/29)
+
+and envelope255/29<9. The two pure seven marginals use sums; all root-dependent caps use maxima because eta and psi have disjoint roots.
+
+(B5) Suppose R has five distinct actual leaf labels, with at most two selected points per owner and at most four labels in any column. Let eta be uniform on them. Then
+
+    nu=(5/6)psi+(1/6)eta
+
+has caps
+
+    (1,5/18,7/15,1/6,2/15,1/5,1/15,1/18,1/30)
+
+and envelope134/15<9. In particular the eta child/column contribution is at most(1/6)*(2/5)=1/15, exactly within the displayed cap. Five distinct owners are not required.
+
+#### An entire monochromatic legal restriction
+
+Suppose an actual legal restriction at R lies entirely in one column H. Every ternary tree paired with it has at least two three-leaf branches outside H, all supplied by the other root. Uniform mass on those six leaves, followed by the same averaging, gives psi(H)=0 and caps
+
+    (1,1/3,1/2,1/5,1/6,1/6,1/10,1/18,1/30).        (IA3)
+
+(H4) If there is an actual eta on root R and column H having child cap1/4, fine-leaf cap3/8 and atom cap1/4, set
+
+    nu=(6/7)psi+(1/7)eta.
+
+Root AND public-column supports are disjoint, so every relevant cap combines by maxima. The resulting caps are
+
+    (1,2/7,3/7,6/35,1/7,1/7,3/35,3/56,1/28),
+
+whose envelope is503/56<9. Four distinct actual H points at four distinct child owners, with eta uniform, are one sufficient realization. Other realizations are given explicitly below.
+
+(H3+2) If eta is uniform on five distinct actual points at five different R owners, exactly three in H and two outside H, the existing mixture(18/23)psi+(5/23)eta has caps
+
+    (1,6/23,11/23,18/115,3/23,4/23,9/115,1/23,1/23)
+
+and envelope206/23<9. On H the mass is3/23; outside H it is at most9/23+2/23. This is the established five-point/multiplicity3 puncture construction.
+
+(HT) If eta is supported in H with child and fine-leaf caps1/3 and atom cap1/6, the mixture(6/7)psi+(1/7)eta has every nonunit cap bounded by(6/7) times the corresponding IA3 cap. Its envelope is1+(6/7)*9=61/7<9. This will be used only for an explicit triangle of three double owners.
+
+All these laws use actual incidences. The largest displayed envelope is503/56.
+
+### IA.2. Four singleton children at a full root are sufficient
+
+Suppose four distinct original children at a full root are actual singletons; the fifth child's entire actual fibre may be arbitrary and nonempty.
+
+If two singleton labels agree, select their two owners and any third singleton owner. This is a legal restriction with at most two actual labels, already handled. Otherwise the four labels are distinct. Let M be their largest column multiplicity.
+
+- If M<=2, any three singleton owners give the balanced IA2 anchor, and their four singleton points supply B4.
+- If M=4, take three singleton owners as a monochromatic anchor and all four as the uniform H4 law.
+- Suppose M=3 in H, with the fourth singleton label outside H. The three H singleton owners are a monochromatic anchor. If the fifth fibre has any label not among the four singleton labels, choose that actual point. If it lies in H, it gives four distinct H points at four owners and H4 applies. If it lies outside H, all five chosen points satisfy H3+2.
+- Otherwise the fifth fibre is contained in the four singleton labels. If its size is at most2, use that fifth owner and two suitable singleton owners as a legal restriction with at most2 leaves. If its size is at least3, it contains at least two of the H labels. Build eta in H by giving each of the three H singleton owners mass1/4 and splitting the remaining1/4 equally between two actual H labels at the fifth owner. Child/atom caps are1/4 and each H leaf has mass at most3/8. Apply H4.
+
+Thus the four-singleton condition supplies IA1 with no restriction on the fifth fibre.
+
+### IA.3. Three singletons and two doubles at a full root are sufficient
+
+Assume the three singleton labels are distinct; otherwise their own legal triple has at most two leaves. Assume both remaining actual fibres E and F have size exactly2; if either is a singleton, section IA.2 applies. If either E or F is contained in two of the three singleton labels, pair that owner with those singleton owners and use the two-leaf law. Hence each double contains a label outside the singleton set A={u,v,w}.
+
+First suppose E and F have two different representatives outside A. Choose them, together with u,v,w, giving five distinct points at five owners.
+
+- If A is not monochromatic, its singleton triple is a balanced anchor and those five points have column multiplicity at most4, so B5 applies.
+- If A lies in H and either chosen new point lies in H, four distinct H-owner points give H4. If both chosen points lie outside H, use H3+2.
+
+It remains that the nonempty sets E outside A and F outside A have no two distinct representatives. Therefore both are the same singleton{x}, and
+
+    E={x,s}, F={x,t}, with s,t in A.
+
+If s=t, the two double owners and the singleton s form a two-leaf legal restriction. Assume s!=t.
+
+If all four labels A union{x} have column multiplicity at most2, the singleton triple is balanced and four distinct actual points give B4. Otherwise at least three of the four labels lie in a column H.
+
+- If all four lie in H, the singleton triple is a monochromatic anchor and choose x at either double owner together with the three singleton points, giving H4.
+- If A itself is the three-label H set and x is outside H, use the singleton triple as anchor. Put eta mass1/4 at the remaining singleton label A minus{s,t}; put total3/8 on each of s and t, splitting each total equally between its singleton owner and its corresponding double owner. The five owner masses are1/4,3/16,3/16,3/16,3/16. All child/atom masses are at most1/4 and fine-leaf masses at most3/8. Apply H4.
+- Otherwise H contains x and two singleton labels u,v; the third singleton is outside H. Since s!=t, at least one double, say E, has its other label in{u,v}, so its ENTIRE fibre lies in H. The two H singleton owners plus E form a monochromatic legal restriction. For eta use the two H singleton owners and both double owners, each with total1/4. If both doubles lie in H, their other labels are u and v: split each double's1/4 equally between x and its singleton label. The fine masses are3/8,3/8,1/4. If only one double lies in H, put the other double's1/4 on x and split the first double's1/4 equally between x and its H singleton label. Fine masses are again at most3/8. Apply H4.
+
+This completes the full-root11122 actual-support family.
+
+### IA.4. One singleton and three doubles at the gap are sufficient
+
+Let z be the singleton label and E1,E2,E3 the other three actual fibres, each nonempty and of size at most2. If any Ei is a singleton, pair it with z and use at most two leaves. If z belongs to Ei, the same pair again has at most two leaves. If two Ei agree, pair those two owners and use the two-leaf law. Hence it remains to consider three distinct two-element sets excluding z.
+
+They have three distinct representatives: each set has2 elements, each pair has at least3 because the sets are distinct, and the total union has at least3. Together with z these provide four distinct actual points at four owners.
+
+If the union of the three pairs has at least4 labels, the total actual gap projection has at least5. If any legal gap pair has a nonmonochromatic projection, that projection has at most3 leaves when one owner is z; more generally use a pair involving z unless all such pairs are monochromatic. Indeed if every z/Ei pair is monochromatic, all source labels lie in col(z). Otherwise choose a nonmonochromatic z/Ei pair; it is a balanced anchor. Choose five distinct actual labels including this anchor's labels. Every double owner has at most2 labels and the singleton owner one, so actual ownership can be assigned with at most2 points per owner. The chosen labels cannot all lie in one column, so their column multiplicity is at most4. Apply B5. If all labels lie in H=col(z), the above four distinct owner representatives and a z/Ei monochromatic anchor give H4.
+
+If the union of E1,E2,E3 has exactly3 labels, these three distinct pairs are the three edges of a triangle. There are four total labels including z.
+
+- If their maximum column multiplicity is at most2, any z/Ei pair is balanced and the four distinct owner representatives give B4.
+- If all four lie in H, use a z/Ei monochromatic anchor and the four distinct owner representatives for H4.
+- If exactly three lie in H and z is outside H, H consists of the triangle labels. Any two double owners give a monochromatic legal restriction. Give each double owner mass1/3, split equally over its two endpoints. Eta has child1/3, fine-leaf1/3 and atom1/6, so HT applies.
+- If exactly three lie in H and z lies in H, exactly two triangle vertices lie in H. Pair z with the unique double whose two endpoints are those two H vertices; this is a monochromatic anchor. For eta, give z mass1/4; split the H/H double's1/4 equally over its endpoints; place each of the other two double owners'1/4 on its unique H endpoint. Fine masses are1/4,3/8,3/8 and every child/atom mass is at most1/4. Apply H4.
+
+This completes the gap1222 actual-support family.
+
+### IA.5. A common leaf with four private singletons
+
+The following covers the two remaining public1 budget shapes.
+
+At a full root with private shape01111, the zero child has entire fibre{y}, and the other four fibres are contained in{y,z_i}. If any legal triple already has at most2 actual leaves, use the two-leaf law. Otherwise the four z_i are actual, pairwise distinct and different from y: a missing or repeated private label, paired with the zero owner and a suitable other owner, would give at most2 leaves. Thus all five labels are actual at their own five respective owners. Every restriction consisting of the zero owner and two others has at most3 actual labels. If all five lie in H, use a monochromatic restriction and four distinct H-owner points for H4. Otherwise one such restriction is nonmonochromatic, and the five actual labels satisfy B5.
+
+At a gap root with private shape1111, every child fibre is contained in{y,z_i}. Again handle any legal pair with at most2 actual leaves first. In the remaining case the four private z_i are actual, pairwise distinct and different from y, and y is actual at some owner; each pair's actual projection is exactly{y,z_i,z_j}. If all five labels lie in H, use any gap pair as a monochromatic anchor and the four private points for H4. Otherwise some pair is nonmonochromatic and supplies a balanced anchor. Choose all five labels, assigning each z_i to its private owner and y to any owner actually carrying it. At most one owner has two selected points, so B5 applies.
+
+### IA.6. The complete small raw budget for a three-inactive-root cut
+
+Normalize the bridge-free cut while keeping the three inactive root subtrees sink-side. No actual126 bridge can cross a cut of capacity at most78. Remove private islands and use the usual actual prefix antichains; if an active child's private raw cut cost is at least8, move that child and its private subtree sink-side, replacing that cost by its incoming7 edge. These changes do not increase capacity and do not activate any of the three inactive roots. The remaining root cannot become inactive, since four source-root edges alone would cost84. The resulting cut still has capacity77 or78 because the original maximum is77.
+
+Let n be the remaining root's occupancy, a its source-side child count, delta=n-a, k the public token cost and Z the total private token cost at its active children. Each private token costs2; each public token or inactive-child edge costs7. Each active child's cost is at most3 after normalization. The exact budget is
+
+    63+7(delta+k)+2Z = c,    c in{77,78}.
+
+Every active child has nonempty actual fibre. Thus when k=0 its private cost is at least1. Delta>=2 would already use14 or more of the residual budget at most15, leaving less than the cheapest crossing needed by any nonempty active child, so delta<=1. Parity gives exactly:
+
+| c | delta | k | Z | actual-support consequence |
+|---:|---:|---:|---:|---|
+|77|0|0|7|full11113 or11122; gap1123 or1222|
+|77|0|2|0|all active fibres lie in the same at-most-two public leaves|
+|77|1|1|0|all active fibres are the same public singleton|
+|78|0|1|4|least-cost legal restriction has at most2 leaves, except full01111 or gap1111|
+|78|1|0|4|full active1111, or gap active112|
+
+The shapes are short integer consequences, not a source enumeration. In the first row all costs are positive and at most3: five such integers totaling7 are11113 or11122; four are1123 or1222. A cost1 fibre is an actual singleton when there is no public cut; cost2 is contained in its two finite leaves. A cost3 may be a whole column, which is why full11113 invokes section IA.2 with an ARBITRARY fifth fibre rather than treating that fibre as three points.
+
+For c78/delta0/k1/Z4, at a full root every cost pattern except01111 has least-three sum at most1; at the gap every pattern except1111 has least-two sum at most1. The selected actual projection is contained in y plus those at-most-one private candidates, so the two-leaf law applies. These low-cost selections never use a whole cost3 prefix. The two exceptional shapes are section IA.5.
+
+For c78/delta1/k0/Z4, a full root has four active singleton children, so section IA.2 applies with the inactive fifth fibre left entirely unrestricted. The gap has active costs112; its two singleton owners form a legal two-leaf restriction. No blocking or standalone premise is asserted for the active source alone.
+
+All five rows are now supplied: full11113 by section IA.2, full11122 by section IA.3, gap1123 by its two singleton owners, gap1222 by section IA.4, public2/private0 and partial-public1 by the one/two-leaf laws, and the two public1 exceptions by section IA.5. Every law is on actual original points and all unused or inactive source fibres remain in E. The largest bound among the displayed constructions is503/56, giving IA1.
+
+### Scope of the three-inactive-root supplier
+
+This covers both root-cap failure branches(t,c)=(3,77),(3,78), including a nonminimum78 cut on an original maximum77 source. All original fibres remain in the source; actual support, owners and public labels are preserved under every construction. The standalone tree is not needed for this supplier.
+
+The branches(t,c)=(1,77),(2,77),(2,78) are not covered by this argument. It neither proves a general simultaneous repair theorem nor settles general cut77, the original-cofactor common-law lift, or unrestricted Erdős #7.
+
 
 ## Three cut77 strata with one inactive full root
 
@@ -5820,7 +6004,7 @@ All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are contro
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
 The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic satisfaction of the neighborhood condition for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. The two-unit complement criterion and cross-root releases give a finite procedure with at most three repairs and no new dangerous blocks. A remaining non-T3 block carries both a bounded saturated-prefix cover and a common two-digit trap on eligible donor children. The192-point source shows why root-only blockage is insufficient to rule out a global repair, even outside the three stated source classes. The entire one-inactive-full-root active profile(0,5,5,4) is now controlled by(IF77), with bound691/77. This includes every public cost and every finite or whole private-prefix realization; the proof combines actual-support exclusions with the complement repair and T3 consumer. The public-column/two-public-leaf cut supplier also gives T3 for its distinguished mass20 block under the exact matched-cut hypothesis; it can be combined with the simultaneous consumer only when the other dangerous blocks of that same flow also have T3. The global pivot theorem(GP77.1)--(GP77.8) reduces a simultaneously trapped bad block to an exact q4 minimum-cut configuration or q5 pivot capacity77,79,81, preserving actual duplicate public labels. For every exact pivot, a public G boundary leaf would require7 units while receiving at most4 from the only two eligible distinguished owners and at most1 from all other roots. Its absence forces the private-cost lower bound(GP77.9), excluding all fully active exact q4/q5 m4 profiles and the last partial gap profile. For the ORIGINAL q5 potential-level nearcuts79/81, unchanged-edge saturation rules out all other-active-root G support and strengthens the legal-pair count to k+z_B>=9. The three-other-root/public budget is at least63 and the selected-root budget at least2m+12, contradicting the actual capacity2m+69. Hence every global pivot alternative is impossible: each selected bad-T3 block admits a value77 flow lowering its root mass or block mass. Simultaneous global repair safety remains unresolved; coordinatewise lowerings need not occur in the same flow.
-The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. These five raw types are not a source-law classification; the capacity78 cases need not be original minimum cuts, and the test is not asserted for every source.
+The occupation consumer(OM3)--(OM4) supplies another route: one distribution on separately regularized integral flows gives Gamma<=2078/231 if every fixed bad block is dangerous with probability at most1/3. The root-cap test(RC1) constructs such a distribution whenever capacity61/3 on all four source-root arcs still supports value77, using an integral-flow decomposition with floor/ceil root bounds. Failure of this test is exactly witnessed by an original cut with(outside roots,capacity) in{(1,77),(2,77),(2,78),(3,77),(3,78)}. The supplier(IA1) now handles both t=3 types with Gamma<=503/56=9-1/56 by classifying their five normalized budget rows and constructing actual puncture/anchor mixtures. It does not use capacity78 saturation. The other types(1,77),(2,77),(2,78) are not covered in general; IF77 handles only its specified one-inactive-full-root subfamily. The root-cap test is still not asserted for every source.
 The complete cut70 classification and(C70) control every70/63 source with bound643/72. The complete cut71 classification and(C71-law) control every71/63 source with bound79/9. At72/63, the four sparse families and both partial public9 families have actual laws below nine, while both partial public5 and fully active public0/public2 families are impossible. All seven3555/public3/private22 shapes have bound3473/393, and all five4455/public3/private22 shapes have bound79/9. Standalone excludes two fully active public6/private15 shapes and the remaining one has bound26/3. The fully active public4/private22 family also has an actual eighteen-point law for every one of its22 necessary shapes and every finite or whole-prefix realization. This completes all fourteen cut72 families and proves(C72-law) with bound643/72. At cut73, all thirteen families and117 necessary shapes are handled:48 exclusions and69 supported-law cases. All49 fully active public3/private26 shapes have one actual uniform eighteen-point law with bound79/9, and the maximum206/23 across all families proves(C73-law). General high-incidence sources in the remaining
 range74/63 through77/63 are not thereby controlled: their high root/column incidence
 can still invalidate the earlier mixed-cap estimate. The fully active R=1
