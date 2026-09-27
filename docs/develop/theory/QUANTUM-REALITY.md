@@ -62480,7 +62480,7 @@ $$
 \begin{pmatrix}A&-B\\B&A\end{pmatrix}
 $$
 
-的所有主子式非负来精确表达 $H\succeq0$；这保留零特征值和奇异密度，不引入逆矩阵或平方根。实部、虚部、部分迹以及 Choi 等式同样是多项式条件。半代数集合在投影下保持半代数性；对实闭域上的量词消去和代数点的符号判定，使用 Basu--Pollack--Roy, *Algorithms in Real Algebraic Geometry*, Journal of the ACM 43(6) (1996), pp.1002--1045, Theorems 1.3.1--1.3.2, pp.1004--1005。
+的所有主子式非负来精确表达 $H\succeq0$；这保留零特征值和奇异密度，不引入逆矩阵或平方根。实部、虚部、部分迹以及 Choi 等式同样是多项式条件。半代数集合在投影下保持半代数性；对实闭域上的量词消去和代数点的符号判定，使用 Basu--Pollack--Roy, *On the Combinatorial and Algebraic Complexity of Quantifier Elimination*, Journal of the ACM 43(6) (1996), pp.1002--1045, Theorems 1.3.1--1.3.2, pp.1004--1005。
 
 剩下的是钻石范数的精确桥接。对任意复线性
 
@@ -62528,7 +62528,7 @@ $$
 
 所以 $\operatorname{Tr}_Y C(T)=pI_X$ 正好就是标量成功条件（转置不改变标量矩阵）。
 
-上述等价性正是 John Watrous, *Semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, p.3, Theorem 6 (p.10) 及 §3.2 (pp.11--12) 的完全有界范数半定规划：其原问题为
+上述等价性正是 John Watrous, *Simpler semidefinite programs for completely bounded norms*, arXiv:1207.5726v2, p.3, Theorem 6 (p.10) 及 §3.2 (pp.11--12) 的完全有界范数半定规划：其原问题为
 
 $$
 \max\ \operatorname{Re}\operatorname{Tr}(J_W(F)^*X_{\rm block})
