@@ -114028,3 +114028,579 @@ $$
 [^fixed_grid_endpoint_sources]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)，Proposition 3、式（7）—（11）及 Lemma 4；两来源乘积尾恒等式由第338.6节给出。Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，其光滑相容包络经第330节固定尺度构造使用；本节下界取自该构造的未启动系数，不反向使用其尾上界。
 
 ## 追加锚（本行以下为增补区）
+
+## 341. 仅核心截断网格的精度必要层数与任务临界费用
+
+第340节对保留准确首币门控、只在第 $J$ 层结束张量核心的程序给出 $J/K$ 任务临界矩下界。本节证明这一严格程序类的最坏输出误差与 $n_J^{-a}$ 双向可比，并由安全地板取得不依参考预算的逐世界 $cJ-C$ 任务下界。结合第338节的平地板族，可在共同且足够的参考预算下取得类内 $\Theta(\log(1/\delta))$ 的任务临界费用。
+
+误差下界分两种地板规模：较大地板在合法正世界趋近零增益时留下残差；较小地板在未启动环上保留不能被任务平滑消去的残差。两种情况共同覆盖全部末层地板。
+
+### 341.1 程序类、实际输出与结论
+
+固定非整数 $0<\beta<2$，令 $a=\beta/2\in(0,1)$，沿用第340节原双来源合同、参考系数与公共有理扩域
+
+$$
+n_k=Nb^k,\qquad d_k=n_k+\lfloor\rho\rfloor,\qquad
+\rho>\max(\beta,2),\qquad
+\underline c=3/5,\qquad x^\dagger=11/40.
+\tag{341.1}
+$$
+
+固定一组模型、网格及批量常数。程序先保留请求来源的第一实际 $X$，执行准确、未截断的倒数门控；触发后运行第340节的相容张量核心，只在第 $J$ 层把仍未决的核心币置零，再使用既定的 $X$ 与核心币映射输出 $Z$。
+
+各次程序允许选择不同的 $J\ge1$ 及有限地板，但到第 $J$ 层均须满足共同的
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_\eta,
+\tag{341.2}
+$$
+
+$$
+c_m n_k^a\eta_k^{-1}\le m_k^a
+ \le C_m n_k^a\eta_k^{-1},\qquad
+1<m_{k+1}/m_k\le R_m.
+\tag{341.3}
+$$
+
+地板数组仍为
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k,
+\tag{341.4}
+$$
+
+且满足到第 $J$ 层的乘积次数提升相容性。这里 $\delta_k$ 是系数地板；不把它等同于输出精度。固定门控包装具有共同有限的 $a$ 矩。
+
+记这个程序类为 $\mathfrak G$，每份程序为 $A^{[J]}$。它不包括随后对门控的截断、整棵执行树的有理化或其他扰动。核心层数有限，但门控不要求有确定的来源调用硬上限。也不要求这段有限网格已有一份无限相容延续。
+
+对世界 $w$ 与请求 $S$，令 $P_{w,S}$ 为原四格目标，$P^{A^{[J]}}_{w,S}$ 为实际输出律，定义
+
+$$
+e(A^{[J]})=
+ \sup_{w,S}\operatorname{TV}
+ (P^{A^{[J]}}_{w,S},P_{w,S}),\qquad
+T_a(A^{[J]})=\sup_{w,S}\mathbb E N_T^a,\qquad
+H_a(A^{[J]})=\sup_{w,S}\mathbb E N_H^a.
+\tag{341.5}
+$$
+
+**定理341.1（实际误差与末层尺度匹配）。** 存在只依固定模型、参考网格与共同批量常数的 $0<c_e\le C_e<\infty$，使全部 $A^{[J]}\in\mathfrak G$ 满足
+
+$$
+\boxed{
+c_e n_J^{-a}\le e(A^{[J]})\le C_e n_J^{-a}.}
+\tag{341.6}
+$$
+
+常数不依 $J$ 或该次有限地板。特别地，若 $e(A^{[J]})\le\delta$，则
+
+$$
+\boxed{
+J\ge
+ \frac{\log(1/\delta)+\log c_e-a\log N}{a\log b}.}
+\tag{341.7}
+$$
+
+这是一条由实际输出误差下界得到的必要层数关系。
+
+### 341.2 有限输出概率与误差上界
+
+令原参考下多项式与其任务延拓为
+
+$$
+L_J(x,q)=\sum_{t=0}^{d_J}\ell_{J,t}(x)b_{d_J,t}(q),\qquad
+\bar L_J(p,q)=
+ \sum_{t=0}^{d_J}\bar\ell_{J,t}(p)b_{d_J,t}(q).
+\tag{341.8}
+$$
+
+第338节的有限乘积相容归纳表明：把末层未决核心置零之后，实际核心成功概率恰为
+
+$$
+\mathcal L_J(p,q)
+ =(1-\delta_J)
+   \mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p).
+\tag{341.9}
+$$
+
+具体地，对 $k\le J$ 记
+
+$$
+\mathcal L_k(p,q)=\sum_{s,t}A_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+\mathcal U_k(p,q)=\sum_{s,t}B_{k,s,t}
+ b_{m_k,s}(p)b_{d_k,t}(q),\qquad
+G_k=\mathcal U_k-\mathcal L_k,
+$$
+
+其中 $b_{d,t}(q)=\binom{d}{t}q^t(1-q)^{d-t}$。对 $k<J$，有限乘积相容归纳还给同一实际执行中的尾等式
+$\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q)$。
+
+理由是截至第 $J$ 层的核心输出一概率为 $\mathcal L_J$，输出零概率为 $1-\mathcal U_J$，未决概率为 $\mathcal U_J-\mathcal L_J$；最后一项全部归零后，一概率不变。这个结论只使用有限层相容性。
+
+在实际世界中，$x=hc=C(1-Bp)$，核心目标为
+
+$$
+F_x(q)=\frac12+\kappa h^\beta,\qquad
+\kappa=6\varepsilon=3/8.
+\tag{341.10}
+$$
+
+记有符号偏差
+
+$$
+\Delta_J(w)=F_x(q)-\mathcal L_J(p,q).
+\tag{341.11}
+$$
+
+对一般有限网格，以下论证不预设 $\Delta_J(w)$ 在所有世界非负。误差由 $|\Delta_J(w)|$ 控制；下界将在明确世界或合法世界极限中取得正偏差。
+
+原参考包络逐点满足
+
+$$
+0\le F_x(q)-L_J(x,q)\le\Gamma_J(x,q),\qquad
+\Gamma_J(x,q)\le C_\Gamma x^\beta
+ \min\{1,(n_Jx^2)^{-\rho/2}\}.
+\tag{341.12}
+$$
+
+第338节共同任务 $C^\beta$ 界及二项均值匹配给
+
+$$
+\left|
+\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q)](p)
+ -L_J(x,q)\right|
+ \le C_{\rm sm}m_J^{-a}
+\tag{341.13}
+$$
+
+于每个实际世界成立。参考权重非负且和为一，故 $C_{\rm sm}$ 对 $J,q$ 共同；所有 $\bar L_J$ 的值均在 $[0,1]$。
+
+令 $t=n_Jx^2$，则
+
+$$
+x^\beta\min\{1,(n_Jx^2)^{-\rho/2}\}
+ =n_J^{-a}t^a\min\{1,t^{-\rho/2}\}
+ \le n_J^{-a},
+\tag{341.14}
+$$
+
+因为 $\rho>\beta=2a$。由式（341.9）、（341.12）、（341.13），
+
+$$
+\begin{aligned}
+|\Delta_J(w)|
+&\le\Gamma_J(x,q)+C_{\rm sm}m_J^{-a}+\delta_J\\
+&\le\left(C_\Gamma+\frac{C_{\rm sm}}{c_m}
+                 +\frac{N^a}{4}\right)n_J^{-a}.
+\end{aligned}
+\tag{341.15}
+$$
+
+最后一步只用 $\eta_J\le1$ 和式（341.3）。因此不需要通过无限层极限证明有限张量下多项式处处位于目标之下，也已取得所需的绝对误差上界。
+
+### 341.3 地板残差在合法端点极限中保留
+
+第327.9式的参考目标延拓为
+
+$$
+F_y(q)=\frac12+
+ \kappa y^\beta\phi\!\left(\frac{C(1-Bq)}y\right)
+ \quad(y>0),\qquad F_0(q)=1/2.
+\tag{341.16}
+$$
+
+公共有理扩域中的光滑函数 $\phi$ 支于正区间，特别有 $\phi(0)=0$。令
+
+$$
+p_0=q_0=1/B.
+$$
+
+则对所有构造域中的 $y\ge0$，
+
+$$
+F_y(q_0)=1/2.
+\tag{341.17}
+$$
+
+原参考下包络不超过 $F_y$。对任意任务格点参数 $p'\in[0,1]$，若 $C(1-Bp')\ge0$，任务延拓使用
+$y=\zeta(C(1-Bp'))$，仍有
+$\bar L_J(p',q_0)\le1/2$；负偏差侧上下系数都恒为 $1/2$。因此
+
+$$
+\bar L_J(p',q_0)\le1/2\quad(0\le p'\le1),\qquad
+\mathcal L_J(p_0,q_0)\le\frac{1-\delta_J}{2}.
+\tag{341.18}
+$$
+
+后一式使用 Bernstein 平均保序。
+
+现在只沿原合法世界取 $c=1$、$h\downarrow0$。相应
+$p(h)=q(h)=(1-h/C)/B$ 趋于 $p_0=q_0$。对固定的有限 $J,m_J,d_J$，$\mathcal L_J(p,q)$ 是有限多项式，故连续；实际核心目标
+$1/2+\kappa h^\beta$ 趋于 $1/2$。因此
+
+$$
+\lim_{h\downarrow0}
+ \Delta_J(c=1,h)
+ =\frac12-\mathcal L_J(p_0,q_0)
+ \ge\frac{\delta_J}{2}.
+\tag{341.19}
+$$
+
+从而
+
+$$
+\boxed{
+\sup_{w}|\Delta_J(w)|
+ \ge\frac{\delta_J}{2}
+ =\frac{N^a}{8}\eta_J n_J^{-a}.}
+\tag{341.20}
+$$
+
+这里的上确界只遍历严格正的合法增益。式（341.18）在端点处评价有限多项式，式（341.19）取正世界极限；没有要求程序在 $h=0$ 的附加世界执行。
+
+### 341.4 未启动世界抵抗小地板平滑
+
+取
+
+$$
+x_J=\frac{x^\dagger}{2}b^{-(J+1)/2},\qquad
+c=1,\quad h=x_J,\quad
+p_J=q_J=\frac{1-x_J/C}{B}.
+\tag{341.21}
+$$
+
+公共扩域的 $x^\dagger=11/40$、$b\ge2$ 保证
+$x^\dagger b^{-(J+1)/2}<1/4$ 对全部 $J\ge0$ 成立，所以这是严格正的合法世界。该点位于第340.2节全部当前参考环未启动的区间。逐参考系数恒等式给
+
+$$
+L_J(x_J,q_J)=\frac{1-\Omega x_J^\beta}{2},\qquad
+F_{x_J}(q_J)=\frac12+\kappa x_J^\beta,
+\qquad
+\Omega=\frac{15}{16}
+       \left(\frac2{\underline c}\right)^\beta.
+\tag{341.22}
+$$
+
+故原参考残差精确为
+
+$$
+F_{x_J}(q_J)-L_J(x_J,q_J)
+ =\left(\kappa+\frac{\Omega}{2}\right)x_J^\beta
+ =D n_J^{-a},
+\tag{341.23}
+$$
+
+其中固定常数
+
+$$
+D=\left(\kappa+\frac{\Omega}{2}\right)
+   \left(\frac{N(x^\dagger)^2}{4b}\right)^a>0.
+\tag{341.24}
+$$
+
+任务平滑的偏差由式（341.13）控制。又因
+$\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q_J)](p_J)\ge0$，
+乘上 $1-\delta_J$ 只降低核心成功概率。因此
+
+$$
+\begin{aligned}
+\Delta_J(w_J)
+&\ge D n_J^{-a}-C_{\rm sm}m_J^{-a}\\
+&\ge n_J^{-a}
+   \left(D-\frac{C_{\rm sm}}{c_m}\eta_J\right).
+\end{aligned}
+\tag{341.25}
+$$
+
+取固定阈值
+
+$$
+\theta=\min\left\{1,
+ \frac{Dc_m}{2(C_{\rm sm}+1)}\right\}>0.
+\tag{341.26}
+$$
+
+若 $\eta_J\le\theta$，式（341.25）给
+$\Delta_J(w_J)\ge(D/2)n_J^{-a}$。若 $\eta_J>\theta$，式（341.20）给
+$\sup_w|\Delta_J(w)|\ge(N^a\theta/8)n_J^{-a}$。两种情况合并得到
+
+$$
+\boxed{
+\sup_w|\Delta_J(w)|
+ \ge c_{\rm core}n_J^{-a},\qquad
+c_{\rm core}=\min\{D/2,N^a\theta/8\}>0.}
+\tag{341.27}
+$$
+
+此处没有要求末层地板足够小，也没有使用参考预算 $K$ 来取得集中条件。端点极限与未启动世界是分别适用的两支下界；它们只在同一个世界上确界中择一，不相加。
+
+### 341.5 准确首币包装的误差等式
+
+对任一请求，设请求来源成功率为 $z$，并记
+$z_0=1-z,z_1=z$。包装保留实际首枚 $X$，在 $X=x$ 条件下以准确概率 $1/(6z_x)$ 触发新鲜核心；未触发时输出公平 $Z$。
+
+当 $X=0$ 时，映射为 $Z=0$ 当且仅当核心币为一；当 $X=1$ 时，映射为 $Z=0$ 当且仅当核心币为零。条件于完整门控记录，新鲜核心成功概率仍为式（341.9），不随这份记录改变。
+
+将核心成功概率由目标 $F_x(q)$ 改为
+$\mathcal L_J(p,q)=F_x(q)-\Delta_J(w)$，对四个联合输出点，实际律减目标律恰为
+
+$$
+\begin{array}{c|rrrr}
+(X,Z)&(0,0)&(0,1)&(1,0)&(1,1)\\ \hline
+P^{A^{[J]}}_{w,S}-P_{w,S}
+&-\Delta_J/6&+\Delta_J/6&+\Delta_J/6&-\Delta_J/6 .
+\end{array}
+\tag{341.28}
+$$
+
+每个 $X$ 分支中的因子来自
+$z_x/(6z_x)=1/6$；两种 $X$ 的联合支持不交。因此按离散总变差定义，
+
+$$
+\boxed{
+\operatorname{TV}
+ (P^{A^{[J]}}_{w,S},P_{w,S})
+ =\frac12\sum_{x,z}
+   |P^{A^{[J]}}_{w,S}(x,z)-P_{w,S}(x,z)|
+ =\frac{|\Delta_J(w)|}{3}.}
+\tag{341.29}
+$$
+
+这对两种请求都成立，且不依赖偏差的符号。故
+
+$$
+e(A^{[J]})=\frac13\sup_w|\Delta_J(w)|.
+\tag{341.30}
+$$
+
+结合式（341.15）、（341.27），可取
+$c_e=c_{\rm core}/3$ 以及相应共同 $C_e$，证明定理341.1。取对数即得式（341.7）。
+
+准确门控在这里承担真实的等式条件。若随后截断门控、改变最终回退或扰动系数，式（341.28）须重新计算；本节不将它自动延伸给修改后的程序。
+
+### 341.6 安全地板强制逐世界线性任务费用
+
+第340.10节通过固定参考预算得到层数下界。当前指定数组还有一项对所有世界同时成立的任务费用下界，它不需要参考预算。
+
+**定理341.2（地板层数费用与精度费用）。** 存在只依固定类常数的 $c_{\rm lev}>0$、$C_{\rm lev}\ge0$，使每份 $A^{[J]}\in\mathfrak G$、每个合法世界及每一种请求都满足
+
+$$
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_{\rm lev}J-C_{\rm lev}.}
+\tag{341.31}
+$$
+
+因此存在共同 $c_T,\delta_0>0$，使任何 $0<\delta<\delta_0$ 及 $e(A^{[J]})\le\delta$ 的程序都在每个世界、每种请求满足
+$\mathbb E N_T^a\ge c_T\log(1/\delta)$。两项下界均不要求给定参考预算。
+
+**证明。** 固定任意合法世界。有限核心计数的离散尾和为
+
+$$
+\mathbb E R_T^a
+ =m_0^a+\sum_{k=0}^{J-1}
+    (m_{k+1}^a-m_k^a)G_k(p,q).
+\tag{341.32}
+$$
+
+由式（341.4）的逐系数非负差，$G_k(p,q)\ge\delta_k$ 在每个世界成立；同时
+
+$$
+m_k^a\delta_k
+ \ge\frac{c_mN^a}{4}
+ =:\gamma_{\rm floor}>0.
+\tag{341.33}
+$$
+
+令 $r_k=m_{k+1}^a/m_k^a>1$。利用 $r-1\ge\log r$，得到
+
+$$
+\begin{aligned}
+\mathbb E R_T^a
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}(r_k-1)\\
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}\log r_k\\
+&=m_0^a+
+  \gamma_{\rm floor}\log\frac{m_J^a}{m_0^a}.
+\end{aligned}
+\tag{341.34}
+$$
+
+这一步不需要相邻任务批量比具有大于一的共同下界。由共同双向比较和地板非增，
+
+$$
+\log\frac{m_J^a}{m_0^a}
+ \ge aJ\log b+
+       \log\frac{\eta_0}{\eta_J}
+       +\log\frac{c_m}{C_m}
+ \ge aJ\log b-\log\frac{C_m}{c_m}.
+\tag{341.35}
+$$
+
+非空类可取 $0<c_m\le C_m$。准确包装在每个世界、每种请求中都以 $1/3$ 概率触发新鲜核心，因此
+
+$$
+\begin{aligned}
+\mathbb E N_T^a
+&\ge\frac13\mathbb E R_T^a\\
+&\ge
+ \frac{\gamma_{\rm floor}a\log b}{3}J
+ -\frac{\gamma_{\rm floor}}3\log\frac{C_m}{c_m}.
+\end{aligned}
+\tag{341.36}
+$$
+
+可取
+$c_{\rm lev}=\gamma_{\rm floor}a\log b/3$、
+$C_{\rm lev}=(\gamma_{\rm floor}/3)\log(C_m/c_m)$。
+这给出逐世界的式（341.31），没有在不同层选择不同世界。
+
+若 $e(A^{[J]})\le\delta$，定理341.1的必要层数关系代入式（341.36）便得
+
+$$
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge\frac{\gamma_{\rm floor}}3\log(1/\delta)-C_T,
+\tag{341.37}
+$$
+
+其中可取固定非负常数
+
+$$
+C_T=\max\left\{0,\,
+ C_{\rm lev}
+ -\frac{\gamma_{\rm floor}}3
+       (\log c_e-a\log N)\right\}.
+$$
+
+取 $\delta_0>0$ 足够小，使
+$\log(1/\delta)\ge6C_T/\gamma_{\rm floor}$，可得
+
+$$
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_T\log(1/\delta),\qquad
+c_T=\gamma_{\rm floor}/6.}
+\tag{341.38}
+$$
+
+证毕。
+
+这一费用来自指定安全地板与任务批量的共同关系。必要精度先迫使程序使用足够多层，而这些层在每一个世界都承担式（341.34）的费用。常数和小精度阈值不依参考预算 $K$。
+
+### 341.7 无限核心的逐世界临界发散
+
+**推论341.3（无限安全地板的逐世界任务矩）。** 对第340节同一指定类的无限未截核心及其准确首币包装，每个合法世界、每一种请求均有
+
+$$
+\boxed{
+\mathbb E^{A,w,S}N_T^s=+\infty
+\qquad(s\ge a).}
+\tag{341.39}
+$$
+
+这一结论不需要 $\sum_k\eta_k<\infty$，也不要求参考临界矩有限。
+
+**证明。** 对无限核心的实际计数，只截取离散尾和的前 $J$ 项，就有
+$\mathbb E R_T^a\ge m_0^a+
+\sum_{k<J}(m_{k+1}^a-m_k^a)G_k$。式（341.33）—（341.35）逐项适用，故在任意固定世界中
+
+$$
+\mathbb E R_T^a
+ \ge\gamma_{\rm floor}aJ\log b
+   -\gamma_{\rm floor}\log(C_m/c_m)
+ \qquad\text{对全部 }J.
+$$
+
+令 $J\to\infty$ 得核心 $a$ 矩无限；准确包装的 $1/3$ 触发概率保持这一结论。整数计数对 $s\ge a$ 满足 $N_T^s\ge N_T^a$，得到所有较高阶。证毕。
+
+这是指定安全地板数组及共同任务批量所承担的逐层成本。它与逐世界几乎必有限终止相容，也不构成原目标在全部算法类中的逐世界矩下界。
+
+### 341.8 平地板族实现类内匹配
+
+为陈述最优费用，固定的类 $\mathfrak G$ 取包含第338节平地板族的一组共同常数。例如预先选定保证相容性的同一个充分大 $M$，并采用该节的安全整数批量，就能满足这一条件。前面的误差及费用下界不需要这一额外包含条件；它只用于现在的上界。
+
+对每个 $J\ge1$，取
+
+$$
+\eta_k=(J+1)^{-1}\quad(0\le k\le J),\qquad
+m_k\asymp n_k(J+1)^{1/a},
+\tag{341.40}
+$$
+
+保持同一准确、未截断的首币门控。参考临界尾和中，地板及任务平滑误差共同贡献至多常数乘
+$\sum_{k<J}\eta_k\le1$，参考局部化项由同世界求和控制。任务临界尾和中，地板及平滑项各层贡献有共同上界，局部化项的总和为 $O(J+1)$，初始任务批量也为 $O(J+1)$。
+
+由第338.30、338.33式及固定门控的 $a$ 矩，存在与 $J$ 无关的 $K_0,C_0>0$，使这份完整程序满足
+
+$$
+H_a(A_{\rm flat}^{[J]})\le K_0,\qquad
+T_a(A_{\rm flat}^{[J]})\le C_0(J+1),\qquad
+e(A_{\rm flat}^{[J]})\le C_en_J^{-a}.
+\tag{341.41}
+$$
+
+这里停止在准确门控包装完成的程序，没有采用第338.9节后续的门控截断或有限树有理化。
+
+对充分小 $\delta>0$，选择满足 $C_en_J^{-a}\le\delta$ 的最小 $J\ge1$，则 $J+1=O(\log(1/\delta))$。因此
+
+$$
+H_a(A_{\rm flat}^{[J]})\le K_0,\qquad
+T_a(A_{\rm flat}^{[J]})\le C_1\log(1/\delta),\qquad
+e(A_{\rm flat}^{[J]})\le\delta.
+\tag{341.42}
+$$
+
+定义这个严格类中的最优费用
+
+$$
+\mathcal T_a^{\mathfrak G}(\delta,K)
+ =\inf\left\{
+ T_a(A^{[J]}):
+ A^{[J]}\in\mathfrak G,\quad
+ e(A^{[J]})\le\delta,\quad
+ H_a(A^{[J]})\le K
+ \right\},
+\tag{341.43}
+$$
+
+空可行集合的下确界取 $+\infty$。
+
+**推论341.4（共同参考预算下的类内对数阶）。** 存在固定 $K_0,c,C,\delta_*>0$，使对全部 $K\ge K_0$、$0<\delta<\delta_*$，
+
+$$
+\boxed{
+c\log(1/\delta)
+ \le\mathcal T_a^{\mathfrak G}(\delta,K)
+ \le C\log(1/\delta).}
+\tag{341.44}
+$$
+
+因此每个固定 $K\ge K_0$ 都有
+
+$$
+\mathcal T_a^{\mathfrak G}(\delta,K)
+ \asymp\log(1/\delta)\qquad(\delta\downarrow0),
+\tag{341.45}
+$$
+
+且比较常数和小精度阈值可对全部 $K\ge K_0$ 共同选择。
+
+下界由定理341.2对每个可行程序成立，上界由式（341.42）的同一平地板构造给出。参考预算在这里限制可行集合，下界本身不要求参考预算有限。若 $K<K_0$，本节仍对可行程序给出同样的任务下界，但不据此断言可行或匹配。
+
+### 341.9 有效性与适用边界
+
+对于任意固定合法实参数，前述上界首先属于完整实概率策略类。若 $C,\beta$ 可计算，可按第332、336、339节准确计算所需有限系数、使用安全批量取整及有效 Hölder 门控。平地板是有理数，门控保持准确且未截断，因而同一上界在对应有效子类中也成立；类内下界对这些实际程序原样适用。
+
+这只是有效上界的充分条件。本节没有从准确目标的参数门槛反推每个有限精度程序都必须能计算 $C,\beta$，也没有把对未知实参数作有限树有理化后的程序重新视为本节的精确系数网格。
+
+必要层数来源于实际输出的两个误差下界，不由既有误差上界倒推。所得 $\Theta(\log(1/\delta))$ 是固定网格常数、指定末层核心置零及准确首币包装下的类内最优阶。它没有关闭全部自适应原目标近似策略的费用缺口，没有控制最小参考预算，也不产生确定性内部执行时间矩。
+
+本节直接使用第327节参考目标延拓和首币输出映射、第330、332节的未启动环系数、第338节有限张量输出与平地板预算，以及第340节的精确门控与实际尾恒等式。所需相容包络和次数提升沿用第338节已列的 Nacu–Peres 与 Holtz–Nazarov–Peres 接口；误差两分支、包装总变差等式、地板层数费用及类内精度必要界在本节按实际输出推导。
+
+这些是纸面数学结论，不认领 Lean 核验或修改后程序的未经证明误差下界。
+
+## 追加锚（本行以下为增补区）
