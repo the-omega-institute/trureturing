@@ -83,11 +83,11 @@ stalls, check whether the representation misses a needed distinction.
 Evaluate this proposed method on withheld questions, against a stated baseline
 with matched information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.](docs/assets/inquiry-cycle.svg)
+![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
-*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
-do not establish a theorem. Dashed paths return unresolved questions to
-another inquiry, including when no checked result was obtained.
+*A schematic of inquiry, not runtime behavior or dependency data.* Checked
+results return as premises; dashed returns carry unresolved questions, even
+without a checked result. Tests alone do not establish a theorem.
 
 Golden integers, Fibonacci weights and Zeckendorf representations are one
 thread of the library; the examples below also explore conjecture refutation
