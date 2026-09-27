@@ -7,6 +7,7 @@
    digest: Survival effects converge to the dark-space projection. -/
 
 import D5.S3.ObserverMemory.Dynamics.ResidualKernelInvariance
+import D5.S3.ObserverMemory.Dynamics.MaximalUnobservableSubspace
 import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.CStarAlgebra.Matrix
@@ -35,8 +36,6 @@ def darkProjection {d : ℕ} {ι : Type*}
     Matrix (Fin d) (Fin d) ℂ :=
   (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)).symm (darkSpace Q L).starProjection
 
-set_option maxHeartbeats 1000000 in
--- The compact-sphere norm argument and its matrix/CLM transports require extra elaboration work.
 /-- **Single-Kraus survival limit.** For a complete finite measurement with no-click operator
 `Q`, the survival effects `(Qᴴ)ᴺ Qᴺ` converge to the orthogonal projection onto the vectors never
 detected by any click operator. Consequently every matrix-weighted trace has the corresponding
@@ -96,16 +95,44 @@ theorem finite_detection_survival_limit {d : ℕ} {ι : Type*} [Fintype ι]
     simpa only [star_eq_conjTranspose] using hnorm
   have hqnorm : ‖q‖ ≤ 1 := by
     simpa only [q, Matrix.l2_opNorm_toEuclideanCLM] using hQnorm
+  let T : EuclideanSpace ℂ (Fin d) →ₗ[ℂ] EuclideanSpace ℂ (Fin d) := q.toLinearMap
+  let C : EuclideanSpace ℂ (Fin d) →ₗ[ℂ]
+      PiLp 2 (fun _ : ι => EuclideanSpace ℂ (Fin d)) :=
+    (WithLp.linearEquiv 2 ℂ (ι → EuclideanSpace ℂ (Fin d))).symm.toLinearMap.comp
+      (LinearMap.pi fun x : ι =>
+        ((Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) (L x)).toLinearMap)
+  have hC_iterate (k : ℕ) (v : EuclideanSpace ℂ (Fin d)) (x : ι) :
+      (C.comp (T ^ k) v) x = Matrix.toEuclideanLin (L x * Q ^ k) v := by
+    simp only [C, T, LinearMap.comp_apply, LinearEquiv.coe_coe,
+      WithLp.coe_symm_linearEquiv, PiLp.toLp_apply, LinearMap.pi_apply]
+    rw [← ContinuousLinearMap.toLinearMap_pow]
+    change (((Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) (L x)) *
+      ((Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) Q) ^ k) v =
+        Matrix.toEuclideanLin (L x * Q ^ k) v
+    rw [← map_pow, ← map_mul]
+    rfl
+  have hD_future : D =
+      ⨅ k : ℕ, LinearMap.ker (C.comp (T ^ k)) := by
+    ext v
+    simp only [D, darkSpace, Submodule.mem_iInf, LinearMap.mem_ker]
+    constructor
+    · intro hv k
+      apply PiLp.ext
+      intro x
+      rw [hC_iterate, PiLp.zero_apply]
+      exact hv k x
+    · intro hv k x
+      have hk := hv k
+      have hx := congrArg
+        (fun z : PiLp 2 (fun _ : ι => EuclideanSpace ℂ (Fin d)) => z x) hk
+      simpa only [hC_iterate, PiLp.zero_apply] using hx
   have hD_invariant : ∀ v, v ∈ D → q v ∈ D := by
+    have hinvariant :=
+      (D5.S3.ObserverMemory.Dynamics.MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
+        T C).2.1
+    rw [← hD_future] at hinvariant
     intro v hv
-    simp only [D, darkSpace, Submodule.mem_iInf, LinearMap.mem_ker] at hv ⊢
-    intro n x
-    change (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) (L x * Q ^ n)
-      ((Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) Q v) = 0
-    have hh := hv (n + 1) x
-    change (Matrix.toEuclideanCLM (n := Fin d) (𝕜 := ℂ)) (L x * Q ^ (n + 1)) v = 0 at hh
-    rw [← ContinuousLinearMap.mul_apply, ← map_mul, Matrix.mul_assoc]
-    simpa only [pow_succ] using hh
+    exact hinvariant hv
   have hunit : ∀ v, v ∈ D → q.adjoint (q v) = v := by
     intro v hv
     have hclick (x : ι) :
@@ -296,13 +323,14 @@ theorem finite_detection_survival_limit {d : ℕ} {ι : Type*} [Fintype ι]
         (norm_nonneg (r ^ d)) hrd_norm).comp
           (Nat.tendsto_div_const_atTop hd)
   have hq_pow_mem : ∀ N v, v ∈ D → (q ^ N) v ∈ D := by
-    intro N
-    induction N with
-    | zero => intro v hv; simpa using hv
-    | succ N ih =>
-        intro v hv
-        rw [pow_succ', ContinuousLinearMap.mul_apply]
-        exact hD_invariant _ (ih v hv)
+    intro N v hv
+    have hlin : (q ^ N) v = ((q : EuclideanSpace ℂ (Fin d) →ₗ[ℂ] _) ^ N) v := by
+      rw [← ContinuousLinearMap.toLinearMap_pow]
+      rfl
+    rw [hlin, Module.End.pow_apply]
+    have hmaps : Set.MapsTo (⇑(q : EuclideanSpace ℂ (Fin d) →ₗ[ℂ] EuclideanSpace ℂ (Fin d)))
+        D D := fun w hw => hD_invariant w hw
+    exact hmaps.iterate N hv
   have hsurvival_dark : ∀ N v, v ∈ D → (q.adjoint ^ N * q ^ N) v = v := by
     intro N
     induction N with
