@@ -2128,12 +2128,109 @@ The [actual-source control](../../frontier/cover-geometry/height_two_cut77_force
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_forced_twenty.py
 ```
 
+## An actual cut77 source requires a coarse change to repair its bad20 block
+
+This is an ordinary explicit construction with exact standard-library controls, not Lean verification. It is a counterexample to an automatic local condition and to fixed-coarse fine-only repair, not to existence of a good law. The source has three individually robust roots, so the existing three-robust-root theorem already gives a good law independently of the explicit repairs below.
+
+### The68 actual points
+
+Use(r,c,g,h) coordinates, with roots0,1,2 having children0,...,4, root3 children0,...,3 and root4 empty. Let G=1 and let J_c=(0,2,3,4,5)_c. All sets below are literal actual points, not potential prefix leaves.
+
+At root0, the G block has support
+
+    child0: fine leaves0,1,2
+    child1: fine leaves0,1
+    child2: fine leaves0,1
+    child3: empty
+    child4: fine leaves0,1,3,4.
+
+Outside G, child0 has(J_0,0), while every child c=1,...,4 has(J_c,h) for h=0,1,2. Root0 therefore has11+1+12=24 points.
+
+At root1, every child c has(J_c,h), h=0,1,2; children0,1,2 additionally have h=3,4 in their respective J_c. Also include(1,0,G,5). Root1 has15+6+1=22 points.
+
+At root2, every child c has(J_c,h), h=0,1,2, giving15 points.
+
+At root3 use only column6, with successive children's fine sets
+
+    {0}, {1,2}, {3,4}, {5,6},
+
+giving7 points. The total is24+22+15+7=68.
+
+### Literal source premises and exact cut77
+
+Each of roots0,1,2 is individually robust. At root1 or2, any three children give three distinct J columns with three leaves each. At root0, a triple omitting child0 does the same; a triple including child0 gets a three-leaf G branch from that child and three-leaf J branches from the other two. Every ternary choice of first roots includes at least one of these three robust roots, since only root3 and the empty root4 lie outside them. Therefore every literal ternary-five tree has a seven projection containing a ternary seven-tree, which meets every five-ary seven-tree.
+
+The standalone five-tree uses columns J_0,J_1,J_2,G,6: root1 supplies five leaves in each of the first three, G has at least five, and column6 has seven.
+
+There is a network cut of capacity
+
+    3*21 + 7*2 =77.
+
+Cut the source edges of roots0,1,2 and the seven private leaf edges of root3. Put all public nodes on the sink side. All other root3 nodes, except its seven actual private leaves, are on the source side; all private nodes at the other roots are on the sink side. No actual bridge crosses forward. The explicit flow below has value77, proving equality and hence minimum cut77.
+
+The [actual bad-neighborhood control](../../frontier/cover-geometry/height_two_cut77_actual_bad_neighborhood.py) and [exact data](../../frontier/cover-geometry/height_two_cut77_actual_bad_neighborhood.json) check all480 pair/subset tests,10000 complete literal product tests, the standalone tree,1211 edge capacities and all-node conservation, and every displayed cut and flow.
+
+### A bad actual near20 block, including its external fine-column flag
+
+In root0/G put the unique20 matrix
+
+    child0: (0:2,1:2,2:2)
+    child1: (0:2,1:2)
+    child2: (0:2,1:2)
+    child3: empty
+    child4: (0:1,1:1,3:2,4:2).
+
+Put one unit at(0,0,0,0). Thus root0 has mass21 and child0 has mass7.
+
+At each of roots1 and2, give every h=0,1,2 point in J_c mass2 for c=0,1 and mass1 for c=2,3,4. Each root has mass21. At root1 transfer one unit from(1,0,0,0) to(1,0,G,5), preserving its total and child mass. Put2 on each of the seven root3 points, giving14 there. The total is21+21+21+14=77.
+
+For root0/G the coarse masses are(a,d,b)=(21,20,21). The outside public unit is at fine leaf5, so the local flagged cap6 is at a column unused by this actual G support. Rows1,2,3 have neighborhood exactly{0,1}; the three-row sufficient condition fails on the ENTIRE actual support, not just the current positive flow.
+
+At the centre(r,c,g,h)=(0,0,1,0), or original CRT residue50, the eight cylinder masses are
+
+    (u5,u7,u25,u35,u49,u175,u245,u1225)
+       =(21,21,7,20,7,6,7,2).
+
+The coherent nonunit charge is621, so this particular normalized maximum flow has Gamma at least698/77>9. The control computes all1225 coherent centres and finds maximum621; it does not infer its all-layout maximum merely from that enumeration.
+
+### Every fine-only repair at these three coarse masses fails
+
+The local mass20 matrix is unique even among rational flows. A local cut uses the source-to-child4 edge6 and the seven entry edges at children0,1,2 of total14. Equality at20 forces those seven entries2 and child4 mass6. Fine columns0 and1 already receive6 each, so child4's remaining allowances are exactly(1,1,2,2) at its four neighbors. Their sum6 forces every value in the displayed matrix.
+
+Hence every feasible value77 flow on this same ACTUAL source, subject to the same eight network caps and with(a,d,b)=(21,20,21), retains internal row0 mass6, internal fine-column0 mass7 and entry2. At the same fixed coherent centre, with external child/fine-leaf contributions z,y>=0,
+
+    K=3a+3b+9d+(20*6+20*7+25*2)+5z+5y
+      =616+5z+5y>=616.
+
+Its normalized Gamma is therefore at least1+616/77=9. This permits arbitrary redistribution elsewhere in the actual source: as long as those three coarse masses stay fixed, no fine-only repair or convex mixture can give the needed strict inequality. Some coarse mass must change. This is stronger than failure of the sufficient three-row criterion.
+
+### Two explicit joint repairs
+
+A two-atom move subtracts1 from(0,0,1,0) and adds1 to(0,0,0,0). The destination rises1 to2; every cap holds. It leaves the root and child masses fixed and changes the dangerous block20 to19 and its public column21 to20. All old positive atoms remain positive. The complete numerical LCM envelope has nonunit value609, so the resulting SAME-SOURCE law satisfies
+
+    Gamma <=1+609/77=98/11<9.
+
+There is also a four-atom cycle preserving every root, every child and every public coarse column mass:
+
+    (0,0,1,0) -=1,     (0,0,0,0) +=1,
+    (1,0,0,1) -=1,     (1,0,1,5) +=1.
+
+The first two changes are the same move; the latter two compensate the public column totals through a different actual root. All four points are actual and their resulting masses are1 or2, so positivity and entry caps remain valid. The exact network check verifies the changed fine-leaf and private-prefix budgets as well. The dangerous root0/G block drops20 to19 while a=b=21 stay fixed. Its complete nonunit LCM envelope is612, giving
+
+    Gamma <=1+612/77=689/77<9.
+
+Thus a true joint coarse-block change repairs a literal cut77 example on which every fixed-(a,d,b) fine rearrangement fails. The example already lies in the known three-robust-root good-law class. It does not prove a repair exists for every remaining nonrobust cut77 source, nor does it construct an original odd covering or an outside-cofactor lift.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height_two_cut77_actual_bad_neighborhood.py
+```
+
 ## Remaining source and arithmetic gaps
 
 All sources with a literal65/63,66/63,67/63,68/63 or69/63 minimum cut are controlled without an incidence-at-most-two assumption. These cuts force actual support structure sufficient for a different law.
 The saturated-block theorem and sharp refinement control every78/63 source with bound233/26. For77/63, (SH1) controls any source admitting an integral77 flow without a coarse block of root mass21 and joint mass20; existence of such a flow is not established for every source. For
 occupancy4555, the large-cut estimate handles every cut at least79/63.
-The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. No corresponding neighborhood or rerouting supplier has been proved for every literal source.
+The neighborhood theorem also controls a value77 flow when every dangerous mass20 block satisfies its stated actual-support condition. The common-column plus exclusive-private-column source class supplies that condition after one possible integral transfer, so this entire restricted class has bound691/77. The164-point control shows that filling each such block to21 is unnecessary and can be impossible. The68-point control disproves automatic neighborhood sufficiency for an arbitrary selected maximum flow and rules out every repair that fixes its dangerous(a,d,b). It permits an explicit joint-block reroute. A source-level theorem selecting a repairable flow or supplying the needed reroute for every literal source remains missing.
 The partial-full-root70/63 profile above is controlled by(PF1), without
 settling every cut70 source. General high-incidence sources in the remaining
 range70/63 through77/63 are not thereby controlled: their high root/column incidence
