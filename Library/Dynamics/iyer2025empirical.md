@@ -3759,3 +3759,67 @@ Edgeworth／Cornish–Fisher 展开与负半对数项仍为经典内容。
 Herry–Malicet–Poly 的承重条件据原 TeX 核对。
 一个元数据检索响应为 HTTP 429，不计作已取得文献。
 该检索范围不证明全球原创性；正文的新增结论为原模型中上述关系的完整组合。
+
+## 原文对照：第 95 章的有效 Baire 输入与根数位障碍
+
+[理论卷第 95 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+构造原边缘通用集中的可计算参数，并证明有限均值复现根的有符号长数位块。
+一般可计算 Baire 选择是既有结果；需要在本模型中补齐的是它的有效输入：
+完整得分组等号判定、原取整、实际 pair/path 均值的严格有限证书，以及搜索终止性。
+
+**有效 Baire 的精确表示条件。** Vasco Brattka、Matthew Hendtlass、Alexander P. Kreuzer，
+*On the Uniform Computational Content of the Baire Category Theorem*，
+[arXiv:1510.01913v1](https://arxiv.org/abs/1510.01913v1)，
+[原 TeX](https://arxiv.org/e-print/1510.01913v1)。
+原文定义 $\mathrm{BCT}_0$ 于可计算 Polish 空间，输入为以负信息表示的
+无处稠密闭集序列；负信息是其开补集的有理球枚举。
+原 fact:BCT0-BCT1 明确陈述 $\mathrm{BCT}_0$ 可计算。
+Cauchy 表示及负信息表示按该原版核对；没有使用正信息或跳跃版本，
+也没有加入极限、泛性或真值 oracle。
+
+第 95 章对每个固定有理均值带、符号及下限层，枚举通过严格原窗条件和
+两种完整实际均值条件的 floor 单元内部有理区间。
+第 88 章的原层完整单元可用性使该开集稠密，因此它的补集具备所需负名字。
+可计算 floor 边界点的补集同样可枚举。
+一般的剩余性没有提供这个输入，不能独自保证一个可计算点。
+正文显式嵌套构造还输出原合法层及误差日程；没有把每个正实目标都说成
+无需目标名字即可沿可计算子序列实现，那会违背可数性。
+
+原文将 $\mathrm{BCT}_0$ 的可计算性追溯至 Brattka，
+*Computable versions of Baire's category theorem*，MFCS 2001，LNCS 2136，
+224–235，Theorem 6。该早期原文只核对到书目信息，未单独取得完整证明；
+承重陈述取自已读的 2015 年原版。
+同一 v1 后面的 comeager 定义／推论中存在 $X,\mathbb N^{\mathbb N},2^{\mathbb N}$
+的环境空间记号不一致；本章不用该段把 Cantor 空间结论搬到区间，
+所用定义和可计算性事实明确针对可计算 Polish 空间。
+
+**原模型的有限算法边界。** 第 68 章已经按 Baker–Wüstholz 原定理证明
+固定 $r$ 超越。由此原 $k_0,q$ 取整不在整数边界，完整得分等号化为
+有理多项式恒等判定。pair 均值是有限多项式，path 均值由原平稳
+$2M\times2M$ 标记转移矩阵幂精确给出；不以独立行或 Poisson 均值替代。
+这些证书可枚举，再由第 88 章实际相对均值与整单元下计数保证搜索终止。
+未知的渐近起始层不作为算法输入。
+这里没有新的一般可计算性定理，也没有对天文尺度有限数组实际运行该算法的主张。
+
+**正规数与前缀频率。** Verónica Becher、Pablo Ariel Heiber、Theodore A. Slaman，
+*A polynomial-time algorithm for computing absolutely normal numbers*，
+[作者原文](https://math.berkeley.edu/~slaman/papers/poly.pdf)，
+2013 年 3 月 4 日版本，13 页。
+Section 2.1 固定标准数位和 $b$-进区间；Definition 2.1 定义简单正规与正规；
+Section 2.3 的 Definition 2.3、Lemma 2.4 给数位频率偏差及其判据。
+本章只用这些经典定义，不应用该文构造绝对正规数的高效算法，
+也不据此推断原率函数的逆像保持正规性。
+
+原实际均值展开中的 $-3\ln Q$ 项使正根落在下方格点右侧、负根落在上方格点左侧，
+距离为 $3\ln Q/(Q|I'(x)|)+O(Q^{-1})$。
+由 $Q=10^{e_n}$ 得位置 $2e_n+1$ 开始、长度
+$e_n-\log_{10}e_n+O(1)$ 的零／九块。
+这些块占截止前缀的比例趋于 $1/3$，故相关数位频率上极限至少为 $1/3$，
+偏差至少为 $7/30$。任意长数位块本身不足以排除正规性；比例估计承担该结论。
+第 93 章的超越性和本章的可计算性与这一结论相容，但各自需要自己的证明。
+
+**适用范围。** 两符号日程可以不同；$E_2$ 非空或为空仍未判定，
+构造所得参数是否避开 $E_2$ 也未判定。
+根的非正规性不自动成为 $\beta$ 坐标的非正规性。
+本章不宣称实用复杂度、期望熵收敛、参数随机化或全球原创性。
+有限关系检索与上述原版条件核对，只支持所列经典归属和模型内对应。
