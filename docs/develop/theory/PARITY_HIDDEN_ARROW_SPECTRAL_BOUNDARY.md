@@ -45591,3 +45591,352 @@ The reused conditions are supplied by Chapters 153 and 155: joint trials and exa
 每个固定内部 $c$ 的两个隐藏分配尾部均趋零，全部失败项为 (157.31)。物理 Fourier 积分只在 (157.38)–(157.39) 支付逆带宽体积，选池失败概率及多项式计数误差不乘以逆噪声。结论分别用于独立配对和平稳路径，对确定真支撑与原始合法取整一致，不声称接近开放端点时的一致常数。本章未证明端点成立、必要阈值、最优范围、零噪声结论或物理相变；有限文献核对也不构成全球原创性证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 158. 保留选择和非中心性的指数精确计数回接与能量轮廓
+
+第 156 章的零点延拓受相对误差限制：多项式小的非中心或选择比较误差，不能直接除以指数小的复振幅。本章保留这些有限项，先构造原始完整计数与指定解析比较量之间的指数精确关系，再给出合法的负能量轮廓及其 Fourier 尾部。
+
+比较量包含每一个精确低计数元组、实际非中心向量和有限选择二次项；不是把物理模型改成中心 Gaussian。误差在覆盖 $|z|=O(t^2)$ 的复场域中一致，但该尺度的区域非零性、复鞍点及零点计数仍未解决。以下为普通数学推导，未作 Lean 认证。
+
+记号上，区域均值差中的 $b_{\rm boundary}$ 是边界区域均值；第 158.3 节的 $b=a-\epsilon$ 是二次作用量系数。固定轮廓常数记为 $L_0$，低计数组集合记为 $L$。
+
+### 158.1 复场尺度上的原始计数比较
+
+**定理 158.1（保留有限作用量的解析计数比较）。** Keep the original full-q selected count law P_x, eta->0, t=eta/sqrt(delta)->infinity arbitrarily slowly, and positive sigma->0 under the strict original margin. For J=B,I,- let N_P^J(h,y) be the original raw region normalizer, with R_c=-D, B={0<R_c<=s}, I={R_c>s}, -={R_c>0}, and s=xi r_sc. Here xi ranges in a fixed permitted compact subset of (0,sqrt(2/3)). Define the explicit comparator G_J below using the SAME exact low tuples and high-block noncentral Gaussian coordinates, and the finite selection correction epsilon=B^2/(2d_c), without replacing it by zero.
+
+On every inherited common tight-constant actual-data class, for every fixed H,R, there are b0>0, C_H and a fixed polynomial P_H such that, simultaneously for |h|<=H h_sc in the COMPLEX plane, |y|<=R and every permitted separator,
+$$
+ |N_P^J(h,y)-G_J(h,y)|
+ \le \sigma P_H(Q)\exp\{-b_0Q^3+C_Ht^2\},\qquad J=B,I,-.
+ \tag{158.1}
+$$
+Both sides being compared are entire in h. Constants depend on the original fixed parameters, compact/tight class and the positive noise-margin reserve, not on an added eta/noise rate. This is an absolute analytic approximation at the natural raw sigma scale; it is exponentially accurate in Q^3 even at the desired complex-field scale. No polynomial delta^4 error is divided by a small oscillatory amplitude.
+
+At the actual h0=h_equal^P and actual regional mean gap d=i-b_boundary from Chapter 150, d comparable to r_sc and h_sc d comparable to t^2. Thus every fixed disk |z|<=c t^2, z=d(h-h0), lies in some domain |h|<=H h_sc of (158.1). All statements concern one realized array and are simultaneous over that disk. Exhausting the common classes gives the original actual-data probability scope, separately for pair and path and uniformly over deterministic size-q supports. There is no deterministic empirical m limit and no independence assumption for data-dependent h0,d or field choices.
+
+We additionally prove an exact representation for G_J along w=-lambda+i tau, with lambda=L0 eta/delta and fixed sufficiently large L0. Its integrand is holomorphic in the half-plane Re w<-lambda/2 and entire in h. The Gaussian determinant, variance and quadratic precision factors are nonzero there, and the charge integral is evaluated exactly by endpoint/erfc functions. We prove absolute convergence and a uniform tail estimate
+$$
+ |G_J- G_J^{\,|\tau|\le T_0/\delta}|
+ \le \sigma P_H(Q)\exp\{C_Ht^2-c_{T_0}/\delta\}
+ \quad\hbox{for each fixed }T_0>0.
+ \tag{158.2}
+$$
+This is useful because t^2=eta^2/delta=o(delta^-1). It is not a claim that G_J or its erfc factor is zero-free.
+
+For example, wherever a separately justified lower bound |G_J|>=(sigma/h_sc)exp(-M t^2) holds, (158.1) gives the legitimate relative estimate
+$$
+ |N_P^J/G_J-1|
+ \le h_{\rm sc}P_H(Q)e^{-b_0Q^3+(C_H+M)t^2}=o(1).
+ \tag{158.3}
+$$
+That lower bound is an explicit remaining condition, not an assumption silently imposed on the primary target. At a zero of the total normalizer one would instead need a contour lower bound for a competing-amplitude approximation. Neither lower bound is established here.
+
+### 158.2 完整选择计数的精确生成积分
+
+Distinguish the level Q from the auxiliary product count law Q_x. All complete original groups, floors, multiplicities and original centers are retained:
+$$
+ \delta=Q^{-1/2},\quad B^2=q\delta^5,\quad
+ Q_x(n)=\prod_j {C_j\choose n_j}p_j^{n_j}(1-p_j)^{C_j-n_j},
+$$
+$$
+ v_j=C_jp_j(1-p_j)/B^2,\quad V=\sum_jv_j,\quad
+ C_2=\delta^{-1}\sum_jv_j^2,\quad
+ x_j=(n_j-\mu_j)/B,\quad e_j=(\mu_j-C_jp_j)/B,
+$$
+$$
+ E=\sum_jx_j^2,\quad D=\sum_j(x_j+e_j),\quad
+ T=(E-V)/\sqrt\delta,\quad H_y=V+\sqrt{\delta}\,y,
+$$
+$$
+ a=(2V)^{-1}+\eta,\quad
+ m=\sqrt{2V^4/C_2},\quad r_{\rm sc}=m\sqrt{\eta/\delta},\quad
+ h_{\rm sc}=\eta r_{\rm sc}.
+ \tag{158.4}
+$$
+The admitted regime is exactly
+$$
+ \limsup\log(1/\sigma)/Q^3<c_q/2,\qquad
+ \log q=c_qQ^3+O(1),\quad c_q=\phi(1-\beta)/\beta,
+ \tag{158.5}
+$$
+with eta->0 and t->infinity. In particular sigma may tend to zero arbitrarily slowly. On the common data classes, c<=V,C2<=C, v_*<=C delta, n_g<=C delta^-4, at least c/delta variances lie in [c delta,C delta], and ||e||<=C delta^5. Also (sum|e_j|)^2<=C delta^6 and sum C_j<=CB^2.
+
+The original row scores W_i give calibrated independent Bernoulli probabilities p_i=logistic(W_i-log((M-q)/q)+theta_M), sum_i p_i=q. Conditioning ALL these labels on total q is exactly the original full-q support law: the common odds multiplier cancels on size-q subsets. Let J0 be the union of the complete observed groups, N_J0=sum C_j, k=sum n_j, m_J0=sum C_jp_j. With the outside labels unmodified,
+$$
+ A_c(z)=\prod_{i\notin J0}(1-p_i+p_i z),\quad
+ p_{\rm all}=[z^q]\prod_i(1-p_i+p_i z)>0,
+$$
+$$
+ P_x(n)=L_x(k)Q_x(n),\quad L_x(k)=[z^{q-k}]A_c(z)/p_{\rm all},
+ \qquad BD=k-m_{J0}.
+ \tag{158.6}
+$$
+This literal identity is given in Chapter 143 from the original complete-count and calibrated-label identities, including (68.33), (68.38) and (70.6). It is not a new conditioning model. In particular the total-support constraint does not set D to zero. The original mu cancels only in the linear identity BD=k-m_J0, never in the energy E.
+
+Here is a faithful exact original generating integral. Set
+$$
+ H_j(w,z)=\sum_{n=0}^{C_j}{C_j\choose n}p_j^n(1-p_j)^{C_j-n}
+                e^{w(n-\mu_j)^2/B^2}z^n,\quad H(w,z)=\prod_jH_j(w,z),
+$$
+$$
+ D_k=(k-m_{J0})/B,\quad
+ \mathcal K_J=\{k:0\le k\le N_{J0},\ -D_k\in J\}.
+ \tag{158.7}
+$$
+For ANY real c, w=c+i tau,
+$$
+ N_P^J(h,y)=\frac{\sigma\sqrt\delta}{\sqrt{2\pi}\,p_{\rm all}}
+ \int_{\mathbb R}e^{\delta\sigma^2w^2/2-wH_y}
+ \sum_{k\in\mathcal K_J}[z^k]H(w,z)[z^{q-k}]A_c(z)
+                   e^{aD_k^2+hD_k}\,d\tau .
+ \tag{158.8}
+$$
+Indeed, for each real E, Gaussian Fourier inversion on the shifted line says
+$$
+ e^{-(E-H_y)^2/(2\delta\sigma^2)}
+ =\frac{\sigma\sqrt\delta}{\sqrt{2\pi}}
+ \int_{\mathbb R}e^{\delta\sigma^2(c+i\tau)^2/2+(c+i\tau)(E-H_y)}d\tau.
+ \tag{158.9}
+$$
+Expanding the finite product H, and then grouping the finite sum by k, proves (158.8). Every coefficient in (158.7) is entire in w. Coefficients may equivalently be written on any fixed positive-radius Cauchy circles in z; these are finite polynomials with their exact binomial multiplicities. All sums and contour exchanges in (158.8) are absolutely justified by exp(-delta sigma^2 tau^2/2) times a finite real-envelope sum, locally uniformly in h. Thus (158.8) is exact and entire in h. It does NOT assert that H_j, a regional sum, or its logarithm is nonzero. Positivity of real coefficients is not used as a complex nonvanishing claim.
+
+### 158.3 保留有限选择作用量
+
+Let d_c=sum_{i outside J0}p_i(1-p_i), d_all=d_c+B^2V. The retained actual classes have d_c,d_all comparable to q and N_J0<q<M-N_J0. Thus every original count k is completable by the outside labels. Siripraparat--Neammanee Theorem2 gives a variance-only uniform local error C/d for any independent heterogeneous Bernoulli sum of variance d tending to infinity. Applied to the outside sum and the full calibrated sum, whose mean is exactly q, it gives
+$$
+ [z^{q-k}]A_c(z)=(2\pi d_c)^{-1/2}e^{-B^2D_k^2/(2d_c)}+O(q^{-1}),
+$$
+$$
+ p_{\rm all}=(2\pi d_{\rm all})^{-1/2}+O(q^{-1}).
+ \tag{158.10}
+$$
+The denominator is at least c/sqrt(q). Dividing, including its relative error, yields the UNIFORM full-box decomposition
+$$
+ L_x(k)=e^{\ell_0-\epsilon D_k^2}+r_x(k),\qquad
+ |r_x(k)|\le Cq^{-1/2},
+$$
+$$
+ \ell_0=\tfrac12\log(d_{\rm all}/d_c),\quad
+ \epsilon=B^2/(2d_c)=O(\delta^5),\quad \ell_0=O(\delta^5).
+ \tag{158.11}
+$$
+These are exact finite empirical coefficients. Chapter 143 already gives formula (158.11); here its analytic Gaussian factor is retained throughout the insertion. The later envelope |L-1|<=C(delta^5+q^-1/2+epsilon D^2) loses information needed at complex amplitudes. We do not use that envelope to discard the action. Nor do we claim that (158.11) is an exact equality of posteriors without its displayed remainder.
+
+Write b=a-epsilon, which is positive eventually. Define on the ORIGINAL product count box
+$$
+ \widetilde N_J(h,y)=e^{\ell_0}E_{Q_x}
+ [\mathbf1_{-D\in J}e^{bD^2+hD-(E-H_y)^2/(2\delta\sigma^2)}].
+ \tag{158.12}
+$$
+For complex h, the modulus of the difference between N_P^J and (158.12) is bounded by Cq^-1/2 times the same positive product-count numerator with a and Re h, by (158.11) before any normalization. The growing-field domination
+$$
+ (\Re h)D\le\eta D^2+(\Re h)^2/(4\eta),\qquad
+ |h|\le Hh_{\rm sc}\Longrightarrow |h|^2/\eta=O_H(t^2)
+ \tag{158.13}
+$$
+and the joint likelihood/modal bound of Chapters 137 and 150 imply that this numerator is <=sigma P_H(Q)e^{C_Ht^2}. Hence
+$$
+ |N_P^J-\widetilde N_J|
+ \le \sigma P_H(Q)e^{-c_qQ^3/2+C_Ht^2+O(1)}.
+ \tag{158.14}
+$$
+The outside-label correction is now exponentially small on the original Q^3 scale. The finite epsilon D^2 term, which could not safely be discarded in a relative oscillatory comparison, has been incorporated into b.
+
+### 158.4 精确低计数组与非中心 Gaussian 比较
+
+Use the same high block H={j:C_j>=exp(zeta Q^3)}, with fixed l,zeta satisfying log(1/sigma)<=lQ^3 eventually, l<c_q/2 and 2zeta<c_q-l. Let L be its complement; the letter L in this paragraph denotes the low group set, while the fixed contour constant below is denoted L0. For each exact low tuple n_L, with its exact product-binomial probability p_L(n_L), define
+$$
+ c_L=\sum_{j\in L}(n_j-C_jp_j)/B,\qquad
+ u_L=\sum_{j\in L}(n_j-\mu_j)^2/B^2.
+ \tag{158.15}
+$$
+Let Y_j, j in H, be independent centered Gaussians with variances v_j, and set
+$$
+ D_G=c_L+\sum_HY_j,\qquad
+ E_G=u_L+\sum_H(Y_j-e_j)^2.
+ \tag{158.16}
+$$
+In particular the mean shifts e_H are NOT replaced by zero. The signed negative-charge noncentral mean is handled automatically by (158.16); no even-in-D reflection is imposed. Define
+$$
+ G_J(h,y)=e^{\ell_0}\sum_{n_L}p_L(n_L)
+ E_H[\mathbf1_{-D_G\in J}
+       e^{bD_G^2+hD_G-(E_G-H_y)^2/(2\delta\sigma^2)}].
+ \tag{158.17}
+$$
+This is a specified comparator for the original count sum, not a redefinition of P. Every low tuple is kept in (158.17), with the SAME physical H_y and full V. Deterministic/empty groups are interpreted literally. Uniformly over low tuples,
+$$
+ |c_L|\le P(Q)e^{-(c_q/2-\zeta)Q^3},\qquad
+ 0\le u_L\le P(Q)e^{-(c_q-2\zeta)Q^3}.
+ \tag{158.18}
+$$
+These follow from C_j<exp(zeta Q^3), n_g<=CQ^2, B^2=q delta^5 and the original e bounds. Their smallness is used only for estimates; the terms remain in (158.17).
+
+The central high-cell lift of Chapter 137 gives a log-density error and charge/residual displacement <=mathcalE_Q=P(Q)e^{-b1Q^3}, b1>0. Keeping the low contributions exactly as in (158.16) only removes the low-deletion part of that error. With T_G=(E_G-V)/sqrt(delta), the same bounds hold for |D-D_G| and |T-T_G|/sigma. On central cells D_G is polynomially bounded. Consequently the change of exp(bD^2+hD) is bounded by P_H(Q)mathcalE_Q times its positive real envelope, for ALL |h|<=Hh_sc; the imaginary field costs |h|mathcalE_Q, not exp(|Im h||D|).
+
+For the likelihood put v0=(T_G-y)/sigma, u0=(T-T_G)/sigma. Its logarithmic difference is -u0v0-u0^2/2. Young's inequality absorbs the error into a neighboring real width, and the exact log-width derivative inserts v0^2. The retained same-energy Gaussian bound with fixed modal/charge/likelihood-score marks is sigma P_H(Q)e^{C_Ht^2}, uniformly for widths in [sigma/2,2sigma]. The central lift error is therefore sigma P_H(Q)e^{-b1Q^3+C_Ht^2}; no inverse-sigma derivative is taken. Exact low probabilities are summed only after the uniform estimate.
+
+The excluded count cells have probability P(Q)e^{-cQ^4}. On every full tuple D^2<=2n_gE+2(sum|e_j|)^2. Completing the square in the SAME E, after (158.13), bounds the full insertion/likelihood by exp(CQ^(7/2)+C_Ht^2) times a real energy Gaussian. Since sigma^-1 costs exp(O(Q^3)) under (158.5), excluded counts and excluded Gaussian cells contribute at most sigma e^{-c'Q^4}. The cut discrepancies at D=0 and D=-s have exponentially thin widths; the joint density/score bound pays them by sigma P_H(Q)mathcalE_Q e^{C_Ht^2}. The original lattice spacing 1/B is exponentially small; floor choices and a possible D=0 atom are included in this strip payment. No discrete-versus-continuous total variation assertion is made.
+
+Combining these estimates gives
+$$
+ |\widetilde N_J-G_J|\le\sigma P_H(Q)e^{-b_1Q^3+C_Ht^2}.
+ \tag{158.19}
+$$
+Together with (158.14), this proves (158.1), possibly decreasing b0. Crucially, the O(delta^4) centered/noncentral interpolation of Chapter 156 never enters: both the count lift and G retain e. We also never replace the exact low mixture by a single optimally chosen low tuple. This establishes an original-model analytic approximation on the whole requested complex-field scale, not just a reference-Gaussian identity.
+
+### 158.5 联合变换与合法能量半平面
+
+We now supply an explicit, useful analytic representation for (158.17). Put C=diag(v_j:j in H), V_H=sum_H v_j. For Re w<1/(2v_*), u complex, completing the Gaussian square gives the EXACT joint transform
+$$
+ M_H(w,u)=E_H e^{w\sum(Y_j-e_j)^2+u\sum Y_j}
+ =\prod_H(1-2wv_j)^{-1/2}
+ \exp\left\{\sum_H\left[w e_j^2+
+ \frac{v_j(u-2we_j)^2}{2(1-2wv_j)}\right]\right\}.
+ \tag{158.20}
+$$
+Use the analytic square roots equal to one at w=0. Every denominator has positive real part on that half-plane, so (158.20) is holomorphic and NONZERO there, entire in u. This is a statement about the joint Gaussian transform, not about the regional normalizer. Its real-envelope bound |M_H(w,u)|<=M_H(Re w,Re u) follows directly from its expectation and proves local dominated analyticity. No noisy-density logarithm has been assumed.
+
+Define
+$$
+ S(w)=\sum_H\frac{v_j}{1-2wv_j},\quad
+ m_H(w)=-2w\sum_H\frac{v_je_j}{1-2wv_j},
+$$
+$$
+ Z_E(w)=\prod_H(1-2wv_j)^{-1/2}
+            \exp\left\{\sum_H\frac{we_j^2}{1-2wv_j}\right\},
+$$
+$$
+ \mu_L(w)=c_L+m_H(w),\quad A(w)=\frac1{2S(w)}-b,\quad
+ B_L(w,h)=h+\mu_L(w)/S(w).
+ \tag{158.21}
+$$
+The noncentral signs follow from the linear term -2we_jY_j in w(Y_j-e_j)^2. In particular on negative charge D_G=-r the charge exponent is -A r^2-B_L r. This keeps the actual sign of e; replacing it by an even centered profile would change the finite representation.
+
+Choose a fixed L0 sufficiently large on the common data class and set lambda=L0 eta/delta. We claim on the open half-plane
+$$
+ \mathcal U_Q=\{w:\Re w<-\lambda/2\},\qquad
+ \Re A(w)\ge c\eta>0,\quad \Re S(w)>0.
+ \tag{158.22}
+$$
+For real x<0, S(x)>0. For w=x+i tau let a_j=v_j/(1-2xv_j)>0. Then S(w)=sum a_j/(1-2i tau a_j), and Cauchy--Schwarz gives
+$$
+ |S(w)|^2\le\left(\sum a_j\right)
+                   \sum\frac{a_j}{1+4\tau^2a_j^2}
+             = S(x)\Re S(w).
+$$
+Thus Re(1/S(w))>=1/S(x), uniformly for ALL real tau. Since S(x) increases in x, it is enough to bound x=-lambda/2. The exact variance expansion, with a uniform elementary resolvent remainder, is
+$$
+ S(-\lambda/2)=V_H-\lambda\sum_Hv_j^2+O(\lambda^2\sum_Hv_j^3)
+             =V-L0\eta C_2+O(\eta^2)+o_{\exp}(1).
+ \tag{158.23}
+$$
+Here sum v_j^3=O(delta^2), and high/full discrepancies are exponentially small. Hence
+$$
+ [2S(-\lambda/2)]^{-1}-b
+   =\eta\{L0 C_2/(2V^2)-1\}+\epsilon+O(\eta^2)+o_{\exp}(1).
+ \tag{158.24}
+$$
+Taking L0 larger than a fixed multiple of sup V^2/C2 proves (158.22) for every admitted sequence. The half-plane and margin are derived from an exact finite variance, not from a complex formal saddle. S,A,Z_E and their chosen square roots are holomorphic and nonzero in this domain; their principal square roots have positive real part where applicable.
+
+### 158.6 端点积分和完整复场
+
+For Re A>0 and B complex, define
+$$
+ \mathcal T_-(A,B)=\int_0^\infty e^{-Ar^2-Br}dr
+   =\frac{\sqrt\pi}{2\sqrt A}e^{B^2/(4A)}
+                 \operatorname{erfc}\!\left(\frac B{2\sqrt A}\right),
+$$
+$$
+ \mathcal T_I(A,B;s)=\frac{\sqrt\pi}{2\sqrt A}e^{B^2/(4A)}
+            \operatorname{erfc}\!\left(\sqrt{A}\,s+\frac B{2\sqrt A}\right),
+ \quad \mathcal T_B=\mathcal T_- -\mathcal T_I.
+ \tag{158.25}
+$$
+The first expressions are Gaussian integrals over (0,infinity), (s,infinity), and (0,s), respectively. They are holomorphic on Re A>0 and entire in B, by domination on compact parameter sets. Completing the square for positive real A and real B and then analytic continuation proves the erfc identities with their specified branch. A difference of endpoint terms is kept exactly; no cancellation-prone series is silently truncated.
+
+On (158.22), the following is an exact identity:
+$$
+ K_J(w,h)=\sum_{n_L}p_L(n_L)e^{wu_L}
+ \frac{Z_E(w)}{\sqrt{2\pi S(w)}}e^{-\mu_L(w)^2/(2S(w))}
+             \mathcal T_J(A(w),B_L(w,h);s)
+$$
+$$
+ \hspace{22mm}=\sum_{n_L}p_L(n_L)E_H[
+       \mathbf1_{-D_G\in J}e^{wE_G+bD_G^2+hD_G}].
+ \tag{158.26}
+$$
+For real w<-lambda/2 this follows by tilting the high Gaussian by exp(w sum(Y-e)^2): its charge mean is m_H(w), variance S(w), and total tilt mass is Z_E(w). Add the exact c_L,u_L and integrate the charge D_G=-r over the specified interval. For complex w, both sides are holomorphic on the connected half-plane by (158.22) and the real Gaussian envelope; the identity theorem gives (158.26). This is a lawful continuation from a convergent real integral, not an unproved continuation of ell_y.
+
+The desired comparator is now
+$$
+ G_J(h,y)=\frac{e^{\ell_0}\sigma\sqrt\delta}{\sqrt{2\pi}}
+ \int_{\mathbb R}e^{\delta\sigma^2(-\lambda+i\tau)^2/2
+                           -(-\lambda+i\tau)H_y}
+                       K_J(-\lambda+i\tau,h)d\tau.
+ \tag{158.27}
+$$
+To prove it, apply the pointwise kernel identity (158.9) DIRECTLY at c=-lambda and use (158.22) for Fubini. One must not start by interchanging an unconditioned supercritical Gaussian integral on c=0: that interchange need not exist. This negative contour keeps the SAME energy likelihood jointly with the quadratic charge insertion. Formula (158.27) retains every finite sigma term, the exact noncentral resolvent, finite epsilon, low tuple, full V and physical y. It also retains the full shifted complex h in B_L. Nothing is expanded in h/h0 when z is order t^2.
+
+All displayed determinant/variance/precision/exponential prefactors of an individual low-tuple integrand are nonzero. The functions mathcalT_J, the low-tuple sum and the final energy integral may have zeros; no contrary assertion is made. Their nonvanishing is precisely different from that of the elementary factors.
+
+### 158.7 不支付逆噪声的轮廓支配
+
+We prove more than absolute convergence from sigma>0. Under the real energy tilt w=-lambda, the high covariance is C_lambda=diag(v_j/(1+2lambda v_j)). Conditional on the SAME charge, its covariance is
+$$
+ A_\lambda=C_\lambda-
+       C_\lambda\mathbf1\mathbf1^TC_\lambda/S(-\lambda).
+ \tag{158.28}
+$$
+The factors exp(bD_G^2+(Re h)D_G) and the region restriction depend only on the charge, so do not change (158.28). The original variance block survives because lambda v_*=O(eta)->0. A rank-one subtraction removes at most one of its c/delta eigenvalues bounded below by c delta. Conditional means remain real. The exact characteristic function of their noncentral squared norm therefore has modulus bounded by
+$$
+ \det(I+4\tau^2 A_\lambda^2)^{-1/4}
+       \le(1+c\delta^2\tau^2)^{-c'/\delta}.
+ \tag{158.29}
+$$
+The extra noncentral modulus factor is <=1 for real means. The low energy is deterministic given its tuple; exp(i tau u_L) and exp(i(Im h)D_G) have modulus one. Integrating first conditionally on charge, then over the exact low tuple, gives
+$$
+ |K_J(-\lambda+i\tau,h)|
+ \le(1+c\delta^2\tau^2)^{-c'/\delta}
+                        K_{\rm all}(-\lambda,\Re h),
+ \tag{158.30}
+$$
+where all means integration over every real charge, not the negative region alone. This estimate has no inverse sigma and no exponential dependence on Im h. It is a same-realization conditional covariance bound, not a product of marginal optima.
+
+For |Re h|<=Hh_sc, elementary Gaussian integration at real -lambda proves
+$$
+ e^{\lambda H_y+\delta\sigma^2\lambda^2/2}
+ K_{\rm all}(-\lambda,\Re h)\le P_H(Q)e^{C_Ht^2}.
+ \tag{158.31}
+$$
+Here are the scale payments. The log determinant in Z_E(-lambda) is <=-lambda V_H+C lambda^2 delta. Its noncentral energy term is nonpositive. The tilted charge mean obeys |m_H(-lambda)|<=C lambda delta^(11/2)=C eta delta^(9/2); add the exponentially small c_L. The charge quadratic has precision at least c eta by (158.22), so its Gaussian integral costs at most C eta^-1/2 times exp(C_H h_sc^2/eta+o(1)). The exponent h_sc^2/eta is O(t^2). Multiplication by e^{lambda H_y} cancels -lambda V_H up to O_R(t) and exponentially small high/full errors. Finally delta sigma^2 lambda^2=L0^2 sigma^2 t^2 is retained exactly and is O(t^2), because sigma<=1 eventually. All remaining factors are polynomial in Q, as eta>=sqrt(delta) eventually. Low exp(-lambda u_L)<=1 and the exact low probabilities sum to one. This proves (158.31) without requiring sigma to decrease at a faster rate.
+
+The integral of (158.29) over tau is O(delta^-1/2). To check it, write v=delta tau: below |v|=1 use log(1+cv^2)>=c1v^2, and above it bound one fixed integrable power times exp(-c2/delta). Thus (158.27),(158.30),(158.31) imply
+$$
+ |G_J(h,y)|\le\sigma P_H(Q)e^{C_Ht^2}.
+ \tag{158.32}
+$$
+The sigma sqrt(delta) prefactor cancels the delta^-1/2 integration scale. No inverse sigma has been introduced into the error budget or the holomorphic domain.
+
+For |tau|>=T0/delta, peel off half of the exponent in (158.29); its remaining supremum is at most exp(-c_T0/delta). Integrating the other half costs only a polynomial in Q. Formula (158.2) follows. The noise factor exp(-delta sigma^2 tau^2/2) is nonincreasing in modulus and was not needed for this uniform tail bound. Dominated convergence with the same bound on compact h domains proves the entire analyticity of (158.27), consistently with (158.17). Fixed h derivatives can be treated by charge marks or by Cauchy's formula after enlarging H. This does not justify a growing-order cumulant truncation.
+
+### 158.8 已解决的比较误差与未解决的零点几何
+
+There are now three distinct levels, all on the original realization. Formula(158.8) is an EXACT finite count/coefficient representation with full selection, centers and residual. Formula(158.27) is an EXACT analytic representation of the specified noncentral, low-tuple Gaussian comparator with the finite selection action retained. The approximation (158.1) connects that comparator back to the ORIGINAL selected counts with exponentially small Q^3 error throughout a complex domain containing |z|=O(t^2).
+
+This improves the method at Chapter 156's relative-error obstruction: the previous delta^4 noncentral error and delta^5/epsilon D^2 selection error are not unavoidable physical errors. They were costs of comparing to a centered/selection-free profile. Here e is retained and the stronger additive q^-1/2 coefficient remainder is used only after retaining exp(ell0-epsilon D^2). The selected-model mismatch is then small relative to any amplitude at least (sigma/h_sc)exp(-M t^2), by (158.3). The Fourier-tail error (158.2) has the same reserve because t^2=o(delta^-1). No polynomial error has been divided by exp(-ct^2).
+
+What is STILL OPEN is a proof that the relevant regional energy integrals possess suitable nonzero complex amplitudes and the claimed competing saddles, with lower bounds and relative saddle errors uniformly on a fixed scaled-field neighborhood. The safe contour is an integration domain, not a steepest-descent contour through those saddles. The real positive precision A(w) on that contour does not imply that the region integral after energy inversion is zero-free. The exact erfc functions may have complex zeros, and their contributions can cancel in the remaining integral. The exact finite original sum being entire does not change these facts.
+
+Accordingly no fixed c_*, no new t^2 labeled zero locations, no one-to-one/no-extra count at that scale and no nonlinear limit curve in z/t^2 are claimed. Those primary clauses remain open. The local and increasing-frequency zero results of Chapters 154 and 156 and all prior real conclusions retain their stated scope. The original-law representation removes the noncentral/selection comparison obstacle. The remaining obstacle is analytic saddle/nonvanishing geometry, with an explicit exponentially accurate original-model interface now available if that geometry can be proved.
+
+The Gaussian square completion, real coefficient local limit theorem, Fourier inversion and rank-one covariance conditioning are classical. The model-specific synthesis is their quantitatively joint use here: same selected count array, rare physical likelihood, complex fields of size h_sc, exact low tuples and actual noncentral centers, with no extra eta/noise rate. This is ordinary mathematics, not a Lean/kernel or independent-model certification and not a global originality claim.
+
+### 158.9 方法归属与继续延拓所需的条件
+
+有限系数提取、Gaussian Fourier 反演、平方配方、实局部极限定理和给定线性统计后的秩一协方差公式均为成熟工具。本章的新组合是把它们同时作用于同一选择计数数组、同一稀薄物理似然和完整复场，保留所有低计数组、非中心向量及有限选择作用量，并逐项支付误差。
+
+Siripraparat–Neammanee 的实局部质量界在实际整数计数上先给出 (158.10)，再在分母有下界的条件下得到全计数箱一致的 (158.11)；它没有被用于复参数。Kolassa–Li 的条件反演与鞍点比值分析提供相关方法背景，但其固定维独立同分布设置及实统计量范围不自动覆盖这里的三角数组、指数窄观测和复振幅零点。第 158.5–158.7 节直接证明可交换积分的半平面和尾部界，没有援用未验证的复零点自由区域。版本与原文条件见 [Library 补充](../../../Library/Dynamics/iyer2025empirical.md)。
+
+原始计数的整个函数、比较量的整个函数、以及被积函数中若干非零因子是不同层次的结论。后两者都不保证区域归一化量非零。要得到固定正比例 $t^2$ 编号的简单零点及无额外零点计数，还需对相关复鞍点和轮廓下界作统一控制；(158.3) 仅说明一旦这些下界建立，原计数误差具有足够余量。本章不给出该尺度的新零点位置或相位曲线，也不反驳其存在。
+
+## 追加锚（本行以下为增补区）
