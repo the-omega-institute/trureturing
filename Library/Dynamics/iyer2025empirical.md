@@ -2910,3 +2910,163 @@ DOI 10.3390/math13020323，及预稿 DOI 10.20944/preprints202412.0740.v1，
 书目已定位，三个原始获取入口返回 HTTP 403；未核对其定理条件，不作为证明前置。
 本章不主张一般加权局部极限的新原则、全球原创性、形式验证，
 也不宣称去除首项后的后验熵常数修正、熵响应方差收敛或每个输出的统一结论。
+
+## 第 83 章：剩余类同步与 Liouville 多项式根排除
+
+[理论卷第 83 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+保留原固定幅度、原合法十进制分母、精确 Gamma 等系数曲线、完整得分组和共同规模取整。
+利用全部剩余类，把实际双根同步构造的对数均值界改进为
+$C(1+\sqrt{d\omega}+d^2/Q)$，其中 $\omega$ 是精确切线截距的单侧整数差。
+它同时给出长度为 $\ell$ 的区间中、$Q\ge C\ell^{-3/2}$ 时的
+$C(1+\ell^{-1/2})$ 逐层界。固定参数的无限同步仍需要一个统一有限界，
+或正文所列尚未证明的单侧相位复现条件；逐层构造不自动闭合此缺口。
+
+另一个结果在原合法序列上排除所有非零内部根 $\Pi(\vartheta)$，$\Pi\in\mathbb Q[X]$。
+低次多项式的过度格点对齐不能补偿实际均值中的 $3\ln Q$ 前因子；
+次数至少三时，$\Pi''(\vartheta)/2$ 在固定有理格之外留下分离相位。
+正文给出两个明确允许的无理正根参数，并分别算出趋零均值及相邻格点的指数分离。
+这是经典 Taylor、整除和 Liouville 超越论证在原模型上的组合；
+没有宣称新的通用多项式小数部分理论，也未将结论延伸到任意有理函数。
+
+D. R. Heath-Brown，*Small solutions of quadratic congruences*，1985，87–93，
+[原刊 DOI:10.1017/S0017089500006091](https://doi.org/10.1017/S0017089500006091)。
+原文引言及 Theorems 1–3 处理整数齐次二次型的非零小同余解；
+Theorem 1 限素数模数和至少四个变量，Theorem 2 在四变量下附加行列式的模素数条件。
+其四变量证明通过二维各向同性子空间和行列式为 $p^2$ 的整数子格工作。
+原文本层中有损坏的上标和卷号数字，这些不清晰数值不作为此处核验常数。
+原计数问题具有实系数曲率、移动的非齐次截距、固定原分母和两个受约束指标；
+新增自由齐次化变量或把十进制模数当素数，均不保持原问题。
+因此该结果不提供正文所缺的单侧相位命中。
+
+Cheuk Fung (Joshua) Lau，*Simultaneously Small Fractional Parts of Polynomials*，
+[arXiv:2407.01611v1](https://arxiv.org/abs/2407.01611v1)。
+原 TeX 主定理 `thm:MainTheorem` 对实多项式 $f_1,\ldots,f_k$ 要求全部 $f_i(0)=0$，
+在给定宽度乘积与搜索长度关系下寻找一个共同正整数 $n<x$。
+显示范围使用 $d(d-1)$，此处仅按 $d\ge2$ 比较，不从其正整数措辞外推到 $d=1$。
+原模型的精确切线带非零截距与单侧目标，减去常数会改变命中事件；
+Gamma 曲线也不是固定多项式，且其三阶误差在所需尺度上不能直接删去。
+全区间的某个 $n<x$ 不同时保证原稀疏合法分母和局部父区间。
+上述原假设因而不能消除第 83 章的 $\omega$。
+
+Kiseok Yeon，*Small fractional parts of polynomials and mean values of exponential sums*，
+[arXiv:2210.03085v1](https://arxiv.org/abs/2210.03085v1)。
+Theorem 1.1 在 $k\ge6$、$s\ge k(k+1)/2$ 下，对无常数项的加性单项式形式
+从自由整数向量盒中取得 $X^{-1+\epsilon}$ 小数部分界。
+Theorem 1.2 的正幂次数满足 $k_1\ge6$、$2\le t<k_1$，并要求
+$s>k_1^2+k_1+2\lceil\sigma(1-k_1)\rceil$；
+$\sigma$ 由原文 (1.4) 中缺失幂次确定。
+这些多个自由加性变量不是原精确系数图和整数剩余类约束已经拥有的自由度，
+不能通过增加变量直接取得原共同规模单元。
+
+N. G. Moshchevitin，*On small fractional parts of polynomials*，
+[arXiv:0711.1753v1](https://arxiv.org/abs/0711.1753v1)。
+Theorem 1 假设 $t_{n+1}/t_n=1+\gamma/n+O(n^{-1-\epsilon_1})$，$\gamma,\epsilon_1>0$，
+讨论可选择乘子 $\alpha$ 的回避集合
+$\liminf n\log n\,\|\alpha t_n\|>0$。
+原定理写维数严格大于 $\gamma/(\gamma+1)$，末尾证明只总结不小于该值；
+此处不使用其严格维数断言。原源文件按声明的 cp866 解码后仍有部分乱码注释，
+所用英文条件和 ASCII 数学不受此影响，注释内容不承重。
+原合法 $N_n$ 的超稀疏增长不满足该比值假设，固定非线性截距也不是可自由选择的乘子。
+
+Yuval Peres、Wilhelm Schlag，*Two Erdős problems on lacunary sequences: Chromatic number and Diophantine approximation*，
+[arXiv:0706.0223v1](https://arxiv.org/abs/0706.0223v1)。
+主定理对整数序列 $n_{j+1}/n_j\ge1+\epsilon$，$0<\epsilon<1/4$，
+给出一个乘子 $\theta\in(0,1)$，使
+$\inf_j\|\theta n_j\|>c\epsilon/|\log\epsilon|$。
+原 TeX `thm:dio` 在 $n_{j+M}>2n_j$、$M\ge4$、$240c_0\le1$ 时，
+给半径 $c_0/(M\log_2M)$ 的全部目标邻域之补交非空。
+原 $N_n$ 满足其稀疏增长条件，故该文确实给可选的回避乘子。
+它不判定指定乘子，也不保证由同一率曲线关联的两根共同返回。
+第 83 章的明确多项式根排除由原小数展开和对数前因子直接证明，未由一般稀疏性推断。
+
+另取得的 *Small solutions of quadratic congruences and small fractional parts of quadratic forms*
+扫描原件 [DOI:10.4064/aa-37-1-241-248](https://doi.org/10.4064/aa-37-1-241-248)
+未取得可读的定理正文，不作为证明前提。
+这些条件核对仅说明已查原文不能直接补齐当前固定分母的同步缺口；
+不构成没有更强结果或全局原创性的断言。
+$E_2$ 的存在性、锐利维数及指定双均值的共同实现仍未解决。
+
+## 关联补充 84：噪声衰减校正与后验熵的常数阶二次响应
+
+[谱边界卷](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)
+第 84 章在第 82 章的同一计数实现和同一带噪声输出上，确定后验熵的常数阶项。
+自然单位下，需扣除的首阶线性项是
+$\gamma y/[\sqrt\delta(\nu+\sigma_M^2)]$，完整噪声范围仍为
+$\ln(1/\sigma_M)\to\infty$、$\ln(1/\sigma_M)=o(Q^3)$。
+扣除后，输出积分 $L^1$ 剖面为
+$(1/2-2/\sqrt3)(y^2-\nu)/\nu-\tfrac12\ln\nu$。
+未校正分母 $\nu$ 给同一剖面的充要条件是 $\sigma_M^2=o(\sqrt\delta)$；
+合法序列 $\sigma_M=Q^{-1/16}$ 则使未校正余量在实际条件输出概率下逃离每个有界区间。
+
+Gaussian 回归的噪声衰减、分部积分、Hermite 二次多项式与
+Edgeworth 展开的思想都是成熟工具。新增推导的范围是：实际观测方差和的定量速率、
+完整后验的未尺度化中心信息比较、含精确中心的两次分部积分余项、
+最终噪声尺度上的返回估计，以及由此得到的模型特定剖面和实际反例。
+本条不把一般加权展开或二阶 Gaussian 微积分称作新理论。
+
+Ivan Nourdin 与 Giovanni Peccati 的
+*Stein's method and exact Berry–Esseen asymptotics for functionals of Gaussian fields*，
+[arXiv:0803.0458v3](https://arxiv.org/abs/0803.0458v3)，
+[DOI:10.1214/09-AOP461](https://doi.org/10.1214/09-AOP461)，
+提供精确 Gaussian 逼近误差与一项 Edgeworth 修正。
+核对的是 2009 年 12 月 9 日 v3 的 32 页作者／IMS 电子重印本；
+原件说明其页码及排版与期刊版不同。
+Theorem 3.1 位于 PDF 第 11—12 页：中心变量 $F_n\in\mathbb D^{1,2}$、
+绝对连续律、方差趋一，Stein 因子误差
+$\varphi(n)=\{\mathbb E(1-\langle DF_n,-DL^{-1}F_n\rangle)^2\}^{1/2}$
+有限、最终为正且趋零，并要求 $F_n$ 与标准化 Stein 因子误差联合趋于
+具有单位边缘方差的二元正态。结论包含 Kolmogorov 界及每个固定阈值的归一化 CDF 误差。
+PDF 第 13 页 Proposition 3.3 再要求精确单位方差、有限第三绝对矩及
+统一 $2+\varepsilon$ 阶矩，得到
+
+$$
+\Pr(F_n\le z)-\Phi(z)+\frac{\mathbb EF_n^3}{6}\Phi'''(z)
+ =o_z(\varphi(n)).
+$$
+
+这一固定阈值结论不能直接替代增长信息权下的全直线 $L^1$ 带符号密度展开。
+第 84 章的累积量常数符合这一经典机制，证明则另行支付实际离散后验、
+移动核心以及精细噪声的误差。该 v3 的原始源码端点返回 403；
+所需命题取自可读 PDF，未将源码访问失败记为已读 TeX。
+
+Ciprian A. Tudor 与 Nakahiro Yoshida 的
+*High order asymptotic expansion for Wiener functionals*，
+[arXiv:1909.09019v1](https://arxiv.org/abs/1909.09019v1)，
+给出更强的一般多项式加权展开。
+核对的是 2019 年 9 月 19 日提交、题页日期 9 月 20 日的 57 页 v1 PDF
+及其原始 TeX；[2023 年期刊 DOI](https://doi.org/10.1016/j.spa.2023.07.001)
+仅作书目关联，不断言两版本相同。
+对象是固定维 Wiener 泛函向量与确定正定目标矩阵。
+PDF 第 10 页 [A1] 要求所有 $r>1$ 的统一 Sobolev 正则性、
+二阶 Gamma 因子到非奇异矩阵的多项式 Sobolev 速率；
+第 11 页 [A2] 要求中心高阶 Gamma 因子的指定 Sobolev $O(N^{-q})$
+及 $L^r$ 中的 $o(N^{-q})$；第 15 页 [A3] 给出阶数关系
+$q_0(k+1)>q$、$\xi(\ell-d)>q$、$\ell_1>p+1+d$
+及期望 Gamma 因子的加权速率。
+PDF 第 17 页 Proposition 1 给截断局部密度的加权一致逼近；
+第 19 页 Theorem 1 在这些假设下对所有满足
+$|g(x)|\le a(1+|x|)^b$ 的可测函数统一给 $o(N^{-q})$ 期望逼近，
+每个固定 $a,b>0$ 均可。它覆盖真正的多项式加权测试，不能缩称为只对光滑或紧支撑函数的结果。
+
+将本章 Gaussian 参考对标准化后，该理论提供候选通用路线；
+但 $S_G$ 的方差随核心增长，其标准化、再放大的成本必须进入全部 Gamma 因子速率。
+本章未仅凭“二者是二次型”就断言 [A1]—[A3] 成立，
+而是给出所需的有限恒等式及显式 $O(\sqrt\delta)$ 二阶导数余项。
+这不证明该 Gaussian 特例超出上述一般理论。
+
+第 82 章已核对的 Herry–Malicet–Poly
+[arXiv:2303.02628v3](https://arxiv.org/abs/2303.02628v3)
+Corollary 10(a) 继续直接覆盖有限 chaos 参考的 $W^{2,1}$ 导数收敛；
+正文的 Fourier 分块计算同时记录独立半块所需的一致常数。
+已核对的 Nourdin–Peccati [arXiv:0712.2940v5](https://arxiv.org/abs/0712.2940v5)
+提供 Gaussian 导数／散度对偶。
+Nourdin–Viens 的全局正 Stein 核下界并未在此假设；
+Hu–Lu–Nualart 原文 Theorem 4.4 的既有印刷维度问题也未作为前提使用。
+含噪声的有限恒等式必须保留 $v_G+\sigma_M^2$，这些通用引用不能删除该项。
+
+文献检索范围为 Gaussian 精确误差、Wiener 多项式加权展开与条件二次型，
+未命中的关键词结果不构成不存在或全球原创证明。
+第 84 章结论是普通数学文本，未作 Lean、摄入、覆盖或冻结声明。
+它证明输出积分 $L^1$、同一实现的有界联合极限及纤维内第一平均；
+不宣称余量方差／高阶矩收敛、每个输出控制、无界数据平均、
+零噪声、$L_M$ 与 $Q^3$ 同阶的噪声、解码效率或实验等价性。

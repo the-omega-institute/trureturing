@@ -118,7 +118,9 @@ private theorem identity_hermitian_ne_zero (d : Nat) [NeZero d] :
     congrArg Subtype.val hzero
   exact one_ne_zero hvalue
 
-private theorem bounded_monotone_has_equal_step
+/-- A monotone natural-number sequence bounded by `terminalRank` has two equal consecutive terms
+within `terminalRank - rankAt 0` steps. -/
+theorem bounded_monotone_has_equal_step
     (rankAt : Nat → Nat) (terminalRank : Nat)
     (hmono : Monotone rankAt) (hbound : ∀ n, rankAt n ≤ terminalRank) :
     ∃ m ≤ terminalRank - rankAt 0, rankAt m = rankAt (m + 1) := by

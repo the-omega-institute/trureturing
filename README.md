@@ -78,16 +78,16 @@ alternatives. Keep reusable results with their assumptions.
 > The last line of the ledger is always the first line of the next round.
 
 A proof supplies a premise; a counterexample refutes a claim within its stated
-scope. An observation limit can suggest what to measure next. When progress
-stalls, check whether the representation misses a needed distinction.
-Evaluate this proposed method on withheld questions, against a stated baseline
+scope. An obstruction can suggest [what to investigate next](docs/VISION.md#how-ai-can-find-its-next-direction).
+When progress stalls, check whether the representation misses a needed distinction.
+Evaluate on questions unused in method design, against a stated baseline
 with matched information and resources.
 
-![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Dashed paths return unresolved questions from testing, proof checking or results to the next inquiry.](docs/assets/inquiry-cycle.svg)
+![Ask a question, test hypotheses, check a proof or refutation, and keep a reusable result. Solid return reuses results as premises; dashed returns carry unresolved questions.](docs/assets/inquiry-cycle.svg)
 
-*A schematic of inquiry, not runtime behavior or dependency data.* Tests alone
-do not establish a theorem. Dashed paths return unresolved questions to
-another inquiry, including when no checked result was obtained.
+*A schematic of inquiry, not runtime behavior or dependency data.* Checked
+results return as premises; dashed returns carry unresolved questions, even
+without a checked result. Tests alone do not establish a theorem.
 
 Golden integers, Fibonacci weights and Zeckendorf representations are one
 thread of the library; the examples below also explore conjecture refutation
@@ -206,19 +206,18 @@ capture does not mean worthlessness: another occurrence can carry the same
 distinction. Information here is contextual; this supplies neither a universal
 value score nor a historical novelty judgment.
 
-The judge is **under development**. Its current **declared-template findings
-are Observe warnings and do not block admission**, as specified in
-[A5.5 of the repository specification](docs/develop/spec/golden-ledger-repo-spec.md)
-and implemented in the
-[rule source](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs).
-Other admission checks retain their own effects. The rule's delta selection
-determines which modules to inspect; it is separate from the mathematical
-comparison within one current catalog above. The wider design is described
-in the [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md);
-its proposed system is not a claim of completed implementation.
+The judge is **under development**. Its declared-template findings are
+**Observe warnings that do not block admission**
+([specification, A5.5](docs/develop/spec/golden-ledger-repo-spec.md);
+[implementation](tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs)).
+Other admission checks still apply. Module selection for this rule is
+separate from the fixed-catalog comparison above.
+The [Normative Draft](docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md)
+describes a wider design whose implementation remains incomplete.
 
-Bring your own question to the [journey route](#start-your-journey), and use
-these four questions to follow what becomes distinguishable and what stays open.
+[Example 02](#three-places-to-look) adds `X⊗X` expectations to separate a locally
+indistinguishable pair. Which pairs, if any, remain indistinguishable after
+adding this readout?
 
 ## What is proved, and what is open
 

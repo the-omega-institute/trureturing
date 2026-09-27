@@ -11008,3 +11008,757 @@ $\operatorname{Var}(N_0^2/2)=1/2$，得到 (82.23)。
 也未确定去除 $Q^{1/4}$ 项后的后验熵常数项。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 83. 全剩余类同步界与 Liouville 多项式根的排除
+
+**定义 83.1（精确切线的单侧相位）。** 沿用第 81 章的原模型、完整得分组、
+实际均值 $\bar c_{Q,j}^{\mathcal E}(\beta)$、$N=Q^2$、等系数曲线 $G_Q$、
+自然对数系数 $\ell_Q$、负根映射 $\Psi$ 和同一规模单元 $\mathcal J_{Q,L}$。
+固定紧参数区间 $K\Subset(\beta_*,1)$，并一次选定稍大的内部根邻域。
+对该邻域斜率范围中的既约有理数 $s=p/d$，$d\ge1$、$-d<p<0$，定义
+
+$$
+\Psi'(u)=s,\qquad G_Q'(t)=s,\qquad
+h_Q(x)=G_Q(x)-sx,\qquad
+\omega_{Q,p,d}=\lceil dh_Q(t)\rceil-dh_Q(t)\in[0,1).
+\tag{83.1}
+$$
+
+这里 $t=Nu+O_K(Q^{-1})$。$h_Q$ 在 $t$ 达到严格极小值；
+因此需要从上方接近整数的相位，不能以无向距离 $\|dh_Q(t)\|$ 替代 $\omega$。
+切线分母 $d$ 是辅助整数，原计数分母始终为 $N$。
+
+**定理 83.2（保留全部剩余类的实际同步界）。** 存在只依赖 $K$ 的常数 $C$，
+使充分大的原合法 $Q$ 下，任意上述斜率且 $d\le Q^{2/3}$，都可找到原整数
+$j>0$、$k<0$ 和一个共同规模整数 $L$，使该原单元位于选定参数邻域，并且
+
+$$
+\max_{\mathcal E\in\{pair,path\}}
+\max_{i\in\{j,k\}}\left|\ln\bar c_{Q,i}^{\mathcal E}(\beta)\right|
+\le C\left(1+\sqrt{d\omega_{Q,p,d}}+\frac{d^2}{Q}\right)
+\quad(\beta\in\mathcal J_{Q,L}).
+\tag{83.2}
+$$
+
+正根代理均值 $2^L\chi_{Q,j}$ 同时位于 $[2^{-1/2},2^{1/2}]$。
+单元中点 $\beta_{Q,L}$ 满足
+
+$$
+|\beta_{Q,L}-F(u)|
+\le C\left(\frac{\sqrt{\omega_{Q,p,d}/d}}Q
+             +\frac d{Q^2}+\frac{\ln Q}{Q^3}\right).
+\tag{83.3}
+$$
+
+特别地，最坏相位下的对数均值界是 $C(1+\sqrt d)$。
+这改进定理 81.3 证明中的 $d$ 阶界；它仍不是固定参数的无限层复现。
+
+证明。由定理 81.2，在固定的放大根邻域内
+$c/N\le G_Q''\le C/N$。令 $m=\lceil dh_Q(t)\rceil$。
+由于 $p,d$ 互素，恰有一个剩余类 $r\pmod d$ 满足
+
+$$
+pr+m\equiv0\pmod d.
+\tag{83.4}
+$$
+
+这使 $m/d$ 成为该剩余类上的合法整数配对截距。
+严格凸性给 $x_*\ge t$，使 $h_Q(x_*)=m/d$，并且积分曲率界给
+
+$$
+0\le x_*-t\le CQ\sqrt{\omega_{Q,p,d}/d}.
+\tag{83.5}
+$$
+
+$\omega=0$ 时取 $x_*=t$。选取 $j\equiv r\pmod d$ 且 $|j-x_*|\le d/2$，
+再令 $k=(pj+m)/d\in\mathbb Z$。两点仍在固定内部根邻域中，因而 $j>0>k$。
+利用 $h_Q'(t)=0$ 和积分导数界，得到
+
+$$
+\begin{aligned}
+|G_Q(j)-k|
+ &=|h_Q(j)-m/d|\\
+ &\le \frac C N\bigl(|x_*-t|+d\bigr)d
+ \le C\left(\frac{\sqrt{d\omega_{Q,p,d}}}{Q}+\frac{d^2}{Q^2}\right),\\
+|j-Nu|&\le C\left(Q\sqrt{\omega_{Q,p,d}/d}+d+Q^{-1}\right).
+\end{aligned}
+\tag{83.6}
+$$
+
+精确等值关系 $\ell_Q(G_Q(j))=\ell_Q(j)$ 及 $|\ell_Q'|\le CQ$ 因此给
+
+$$
+|\ln\chi_{Q,j}-\ln\chi_{Q,k}|
+\le C\left(\sqrt{d\omega_{Q,p,d}}+d^2/Q\right).
+\tag{83.7}
+$$
+
+取 $L$ 为 $-\ell_Q(j)/\ln2$ 的最近整数，即得正根代理均值界。
+原 Stirling 公式给 $\beta_{Q,L}=F(j/N)+O_K(\ln Q/Q^3)$，从而得到 (83.3)。
+这里对两根只选一次 $L$，其原 $q$、补偿和全部取整随该同一单元确定。
+
+还须将代理均值接回实际依赖行。第 72、74 章的实际标记行系数估计与全组尾界给
+
+$$
+\bar c_{Q,i}^{\mathcal E}(\beta)
+ =2^{L_0(\beta)}\chi_{Q,i}(1+o(1))+O(M^{-10}),
+\tag{83.8}
+$$
+
+误差在选定截断、紧参数区间及两个实验上统一。
+在本构造中代理均值位于 $\exp(\pm C Q^{1/3})$ 内，
+而 $M=\exp(\Theta_K(Q^3))$，所以加性尾误差也可相对化。
+这证明 (83.2)，没有以独立 Poisson 行替代实际路径。
+最后 $\omega<1$ 且 $d^2/Q\le\sqrt d$，给最坏相位界。证毕。
+
+上述证明直接积分精确曲率，没有丢弃自然 $O(Q)$ 指标窗口中的三阶项。
+该项在 $G_Q$ 中为 $O(Q^{-1})$，乘回 $|\ell_Q'|=O(Q)$ 后可留下常数误差；
+仅解一个未计余项的二次同余式不足以给指定均值比。
+
+**推论 83.3（随区间长度变化的逐层界）。** 对固定 $K$ 中任意非空开子区间 $J$，
+记其长度为 $\ell\le1$。存在只依赖 $K$ 的 $C,Q_0$，使每个原合法
+
+$$
+Q\ge\max(Q_0,C\ell^{-3/2})
+\tag{83.9}
+$$
+
+都有一个原共同单元 $\mathcal J_{Q,L}\subset J$，其两根实际均值的对数绝对值
+不超过 $C(1+\ell^{-1/2})$，对 pair/path 同时成立。
+
+证明。$F$ 和 $\Psi'$ 在固定紧区间上有非零导数，
+故 $J$ 的中部对应一个长度与 $\ell$ 同阶的斜率区间。
+用分母 $\lceil C_1/\ell\rceil$ 的网格在该区间中部选有理数，再约分，
+得 $d\le C_0/\ell$。条件 (83.9) 保证 $d\le Q^{2/3}$。
+(83.3) 的位移和单元长度 $O(Q^{-3})$ 之和小于到 $J$ 边界的固定比例距离，
+而 (83.2) 至多为 $C(1+\sqrt d)$，得到结论。
+即使 $J$ 随 $Q$ 变化，只要满足 (83.9)，相对误差仍在上述
+$\exp(\pm C Q^{1/3})$ 范围内统一成立。证毕。
+
+**命题 83.4（可变分母的充分相位条件与精确对偶修正）。** 若一个固定 $A<\infty$ 满足
+
+$$
+d\le\sqrt Q,\qquad d\omega_{Q,p,d}\le A,
+\tag{83.10}
+$$
+
+则定理 83.2 的对数均值界可统一取为 $C_K(1+\sqrt A)$，允许 $d$ 随层增长。
+若能在一个固定紧参数区间内、每个父区间的固定内部子区间中，于任意晚期合法层找到
+满足 (83.10) 的切线，则可构造一个 $E_2$ 中的固定参数。
+这一相位复现前提尚未证明；仅一个保持同一有限界的嵌套分支也已足够。
+
+更精确地，令 $g_Q(x)=N^{-1}G_Q(Nx)$，并定义
+
+$$
+\begin{aligned}
+R_Q(x)&=\frac{A_Q(\Psi(x))-A_Q(x)}{I'(\Psi(x))},\\
+\mathcal L(s)&=\Psi(u)-su,\qquad \Psi'(u)=s,\\
+\mathcal L_Q(s)&=g_Q(u_Q)-su_Q,\qquad g_Q'(u_Q)=s.
+\end{aligned}
+\tag{83.11}
+$$
+
+$A_Q$ 精确取 (76.13)。则在固定紧斜率区间上统一有
+
+$$
+dh_Q(t)=Nd\mathcal L(p/d)+\frac dQ R_Q(u)+O_K(d/Q^4).
+\tag{83.12}
+$$
+
+证明。代入 (83.2) 即得统一均值界；(83.3) 的位移至多为
+$C_K(1+\sqrt A)(1/(Qd)+d/Q^2+\ln Q/Q^3)$，趋于零。
+若所述相位前提成立，可逐次在父区间内部选共同单元，再取其内部闭子区间嵌套。
+交点是同一个 $\beta$；两均值在同一紧正区间，抽取共同子序列即给正有限联合极限。
+pair/path 的相对比较 (83.8) 保证同一极限对，全部规模取整仍共同。
+
+为证对偶展开，在 (81.9) 中使用 Binet 余项的各固定阶导数界，
+对精确等值方程隐式展开，得到
+
+$$
+g_Q=\Psi+Q^{-3}R_Q+O_K(Q^{-6})
+\quad\text{于每个所需固定有限阶 }C^k\text{ 范数中}.
+\tag{83.13}
+$$
+
+这里 $I'$ 在负根邻域与零分离；$P/Q-\vartheta$ 的误差小于任何所需固定逆幂。
+因此 $u_Q=u-Q^{-3}R_Q'(u)/\Psi''(u)+O_K(Q^{-6})$。
+在 $g_Q(u_Q)-su_Q$ 中，关于 $u_Q-u$ 的一阶项因 $\Psi'(u)=s$ 抵消，
+故 $\mathcal L_Q(s)=\mathcal L(s)+Q^{-3}R_Q(u)+O_K(Q^{-6})$。
+乘以 $Nd$ 即得 (83.12)。证毕。
+
+当 $d\asymp\sqrt Q$ 时，(83.12) 的 $d/Q$ 修正与目标宽度 $A/d$ 同阶。
+因此原率曲线的截距不能无条件替代精确 Gamma 截距。
+推论 83.3 仅给随父区间缩小而增长的界，尚未建立 (83.10)，也不能据此交换量词证明 $E_2$ 非空。
+
+**定理 83.5（所有有理多项式像的原率根排除）。** 令 $\Pi\in\mathbb Q[X]$ 为固定多项式。
+若 $x=\Pi(\vartheta)\ne0$ 是某个固定允许参数的内部率根，则该根沿原合法序列
+没有正有限实际均值子序列。特别地，在 $\beta\in(\beta_*,1)$ 时，若任一根如此表示，
+则 $\beta\notin E_2$。这同时适用于原 pair/path 实验。
+
+证明。定理 81.4 的实际均值局部化说明，正有限均值要求存在整数 $j$，使
+
+$$
+QI'(x)(j-Nx)+3\ln Q-C_Q(x;\beta)=O(1),
+\tag{83.14}
+$$
+
+其中 $C_Q$ 精确取 (81.19)，在该固定内部根上一致有界。
+特别地 $\|Nx\|=O(\ln Q/Q)$。若 $Nx$ 反而距离某个整数 $o(Q^{-1})$，
+该整数留下的 $3\ln Q$ 漂移也无法由有界 $C_Q$ 消去。
+
+记 $\vartheta_{n-1}=P_{n-1}/Q_{n-1}$。原十进制序列有
+
+$$
+\vartheta=\vartheta_{n-1}+Q_n^{-1}+\epsilon_n,
+\qquad 0<\epsilon_n<2\,10^{-Q_n^5}.
+\tag{83.15}
+$$
+
+取正整数 $D$ 清除 $\Pi$ 的全部系数分母。若 $m=\deg\Pi$，则充分大时
+
+$$
+A_n=D\left[Q_n^2\Pi(\vartheta_{n-1})
+                  +Q_n\Pi'(\vartheta_{n-1})\right]\in\mathbb Z.
+\tag{83.16}
+$$
+
+这是因为 $Q_n=10^{e_n}$、$e_n/e_{n-1}\to\infty$，
+故每个 $Q_{n-1}^i$，$i\le m$，最终整除 $Q_n^2$，
+而 $i\le m-1$ 时最终整除 $Q_n$。仅对固定多项式使用这条整除关系。
+在 $\vartheta$ 处展开，并保留来自前一截断的导数项，得到
+
+$$
+Q_n^2\Pi(\vartheta)
+ =\frac{A_n}{D}+\frac12\Pi''(\vartheta)
+       -\frac{\Pi'''(\vartheta)}{3Q_n}+O_\Pi(Q_n^{-2}).
+\tag{83.17}
+$$
+
+具体地，令 $h=\vartheta-\vartheta_{n-1}$，则
+$\Pi(\vartheta)-\Pi(\vartheta-h)-h\Pi'(\vartheta-h)
+=\Pi''(\vartheta)h^2/2-\Pi'''(\vartheta)h^3/3+O_\Pi(h^4)$；
+以 $Q_n$ 替换 $Q_n^2h$ 的误差由 (83.15) 吸收。
+
+原 $\vartheta$ 为超越数：若非零整数多项式 $R$ 在其上为零，
+则充分大的不同有理逼近 $P_n/Q_n$ 不是 $R$ 的根，因而
+$|R(P_n/Q_n)|\ge Q_n^{-\deg R}$；
+均值定理及原尾界却给 $|R(P_n/Q_n)|\le C_R10^{-Q_n^5}$，矛盾。
+若 $m\ge3$，$\Pi''(\vartheta)/2$ 因此无理，并且
+
+$$
+\Delta_\Pi=\operatorname{dist}(\Pi''(\vartheta)/2,D^{-1}\mathbb Z)>0.
+\tag{83.18}
+$$
+
+由 $\mathbb Z\subset D^{-1}\mathbb Z$ 和 (83.17)，
+$\|Q_n^2\Pi(\vartheta)\|\ge\Delta_\Pi/2$ 最终成立，与 (83.14) 矛盾。
+
+若 $m\le2$，$\Pi''/2$ 为分母整除 $D$ 的有理数，其余高阶项消失。
+(83.15) 更给
+
+$$
+Q_n^2\Pi(\vartheta)\in D^{-1}\mathbb Z+o(Q_n^{-B})
+\quad\text{对每个固定 }B>0.
+\tag{83.19}
+$$
+
+若 (83.14) 成立，离整数至少 $1/D$ 的非整数格点首先被排除，
+所以相应 $D^{-1}\mathbb Z$ 格点必须就是整数，且 $j-Nx=o(Q^{-1})$。
+(83.14) 遂变成 $3\ln Q-C_Q(x;\beta)=O(1)$，再次矛盾。证毕。
+
+低次无理根的障碍是对格点过度精确的对齐不能补偿对数前因子；
+次数至少三时，二阶导数留下与整数分离的固定相位。
+这两种机制均使用原合法分母，而非以稀疏性猜测等分布。
+排除集可数，包含第 81 章的稠密有理根参数族；它不穷尽允许参数。
+有理函数在有理逼近处的分母未必整除十的幂，故本定理未扩展到任意有理函数或解析函数。
+
+**例 83.6（两个明确的允许无理根参数）。** 令
+
+$$
+x_1=\vartheta/100,\qquad x_3=\vartheta^3/100,\qquad
+\beta_i=\frac\phi{\phi+I(x_i)},\quad i\in\{1,3\}.
+\tag{83.20}
+$$
+
+两者均严格位于 $(\beta_*,1)$，具有无理正根，并且均不属于 $E_2$。
+为核对参数合法性，原级数给 $1/10<\vartheta<11/100$。
+$f(r)=\ln(1+r)/[-\ln(1-r)]$ 严格递减，
+而 $f(1-2^{-11})<1/11<\vartheta$，所以 $b>2^{-12}$。
+由 $121\cdot4096<10^6$ 得 $\vartheta^2/100<b$，于是
+
+$$
+0<x_3<x_1<b/\vartheta<u_*.
+\tag{83.21}
+$$
+
+最后一个严格不等式来自 $I(-t)>I(t)$ 及端点连续性，
+在 $t=b/\vartheta$ 处给 $I(t)<I(u_-)$。
+
+在 $\beta_1$，原 $Q_n$ 最终被 $100$ 整除，
+$j_n=Q_nP_n/100$ 为整数，且 $Nx_1-j_n$ 小于每个固定逆幂。
+精确均值展开给
+
+$$
+\bar c_{Q_n,j_n}^{\mathcal E}(\beta_1)
+ =Q_n^{-3}\exp(C_{Q_n}(x_1;\beta_1)+o(1))\longrightarrow0.
+\tag{83.22}
+$$
+
+它被两个固定正常数乘 $Q_n^{-3}$ 夹住；相邻格点的对数均值则相差 $Q_n$ 阶。
+在 $\beta_3$，令 $t=\vartheta_{n-1}$，原整除关系给
+
+$$
+\{N x_3\}=\frac{3t}{100}+\frac1{100Q_n}+o(Q_n^{-B})
+ \longrightarrow c_3:=3\vartheta/100\in(0,1).
+\tag{83.23}
+$$
+
+充分大时没有模一回绕。令 $j_0=\lfloor Nx_3\rfloor$，则
+
+$$
+\begin{aligned}
+\ln\bar c_{Q,j_0}^{\mathcal E}(\beta_3)&=QI'(x_3)c_3+o(Q)\to+\infty,\\
+\ln\bar c_{Q,j_0+1}^{\mathcal E}(\beta_3)&=-QI'(x_3)(1-c_3)+o(Q)\to-\infty.
+\end{aligned}
+\tag{83.24}
+$$
+
+(83.8) 在这里仍可相对使用，因为这些均值为 $\exp(O(Q))$，远高于 $M^{-10}$ 尾误差。
+两个例子的负根是否单独复现未由此判定，因而不能从正根排除推出整个熵残差趋于零。
+
+本章保留原支持置换下的固定支持一致范围、原后验和方向对齐，
+没有改变实际路径观测、完整得分组或共用规模取整。
+先前的单根结果与 $E_2$ 维数上界保持原范围。
+$E_2$ 的非空性、空性、锐利维数以及指定双均值的共同实现仍未解决。
+
+## 追加锚（本行以下为增补区）
+
+## 84. 噪声衰减校正后的后验熵常数项
+
+**定义 84.1（同一输出上的精确熵余量）。** 沿用定义 82.1 的原计数向量、
+精确后验中心标量 $T$、同一个测量噪声 $G$、$Y=T+\sigma_MG$、
+先验预测密度 $f_x$ 及自然单位熵 $h_x^{\rm nat},\mathsf H_{{\rm post},x}$。
+仍假定 $L_M=\ln(1/\sigma_M)\to\infty$、$L_M=o(Q^3)$，且
+$\delta=Q^{-1/2}$、$\nu=2g_0$、$c=\tfrac12\ln\nu$。令
+
+$$
+\begin{aligned}
+g_3&=\int_{\mathbb R}\rho(t)^3dt,
+&A_M^\sigma&=\frac\gamma{\sqrt\delta(\nu+\sigma_M^2)},\\
+C_*&=\nu-\frac{4\gamma g_3}{\nu},
+&b_{\rm sur}&=\frac{C_*}{\nu^2},\qquad
+b_{\rm ent}=b_{\rm sur}-\frac1{2\nu},\\
+\mathcal H(y)&=b_{\rm ent}(y^2-\nu)-c,
+&R_M^\sigma(y)&=\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M-A_M^\sigma y.
+\end{aligned}
+\tag{84.1}
+$$
+
+所有数据函数的收敛仍指：对每个 $\varepsilon>0$，在两种原实际实验中分别有
+$\sup_{S:|S|=q}\Pr_S^{\mathscr X}(|F_M(\mathscr X)|>\varepsilon)\to0$。
+条件期望始终使用均匀支持先验定义的纤维核，输出积分使用 $f_x(y)dy$。
+本章精化第 82 章的首阶响应；其精确熵中心不换成 $Q^5$ 阶等价式。
+
+**定理 84.2（带噪声方差的常数阶熵展开）。** 对定义 84.1 的每个噪声序列，
+
+$$
+\int f_x(y)|R_M^\sigma(y)-\mathcal H(y)|dy\longrightarrow0.
+\tag{84.2}
+$$
+
+更强的中间结论为
+
+$$
+\int f_x(y)\left|
+ \mathbb E_x[S_x(R)-h_x^{\rm nat}\mid Y=y]
+ -A_M^\sigma y-b_{\rm sur}(y^2-\nu)\right|dy\longrightarrow0.
+\tag{84.3}
+$$
+
+原 Gaussian 空间剖面 $\rho(t)=c_0e^{-\kappa t^2/2}$ 给
+
+$$
+\frac{\gamma g_3}{g_0^2}=\frac2{\sqrt3},\qquad
+b_{\rm sur}=\frac{1-2/\sqrt3}{\nu},\qquad
+\mathcal H(y)=\left(\frac12-\frac2{\sqrt3}\right)
+                  \frac{y^2-\nu}{\nu}-\frac12\ln\nu.
+\tag{84.4}
+$$
+
+特别地，常数阶中心化二次响应的系数为负。
+分母中的 $\sigma_M^2$ 保留了测量对首阶回归的衰减；
+仅有 $\sigma_M\to0$ 并不足以在常数精度删除它。
+
+证明。先加强实际方差剖面的精度。
+使用第 82 章同一个移动核心 $\mathcal C$、外部集 $\mathcal O$ 及 $v_j,e_j,a_x$，有
+
+$$
+V_{\mathcal C}=\sum_{\mathcal C}v_j=\gamma+O_{\mathbb P}(\delta),\qquad
+\nu_M=2\delta^{-1}\sum_{\mathcal C}v_j^2=\nu+O_{\mathbb P}(\delta),\qquad
+\delta^{-2}\sum_{\mathcal C}v_j^3\longrightarrow g_3.
+\tag{84.5}
+$$
+
+为取得前两式的速率，取固定足够大的 $K$，令 $H_Q=\sqrt{K\ln Q}$。
+由于原核心半径满足 $R_M^2/(L_M+\ln Q+1)\to\infty$，这个较小核心最终包含于 $\mathcal C$。
+在 $|j\delta|\le H_Q$ 上，原信号 tuple 的 Stirling 展开给
+
+$$
+f_j^{\rm sig}
+ =\frac{e^{-\kappa(j\delta)^2/2}}{2\pi\lambda\sqrt{ab}}
+ \left[1+O\left(\frac{1+H_Q^3}{\sqrt\lambda}\right)\right].
+\tag{84.6}
+$$
+
+两种 tuple 坐标仍是其均值的固定正比例，三阶率函数余项、取整误差及
+Liouville 斜率误差都被右侧控制。精确混合均值满足
+$m_j/(2qf_j^{\rm sig})=1+O(w+q/M)$，校准参数还满足
+$\sup_{i\in J}|p_i-1/2|=O_{\mathbb P}(w+q^{-1/2}+q/M)$。
+对实际一行、两行精度使用相对阈值 $Q^{-2}$ 的并合 Chebyshev，失败概率至多为
+
+$$
+CQ^4(1+H_Q/\delta)
+ [e^{-c_q\lambda+O(H_Q^2+\ln Q)}+e_{\rm row}]\longrightarrow0.
+\tag{84.7}
+$$
+
+路径行之间的依赖仍由原 $e_{\rm row}$ 项支付。在所得事件上
+
+$$
+\sup_{|j\delta|\le H_Q}
+ \left|\frac{v_j}{\delta\rho(j\delta)}-1\right|
+ \le O\left(Q^{-2}+\frac{1+H_Q^3}{\sqrt\lambda}\right)
+      +O_{\mathbb P}(w+q^{-1/2}+q/M)=o_{\mathbb P}(\delta).
+\tag{84.8}
+$$
+
+对 $\rho,\rho^2,\rho^3$，逐格积分导数给全直线 Riemann 和误差
+不超过 $\delta\|g'\|_1=O(\delta)$。
+选择足够大的 $K$，原第一、第二质量尾界使实际尾部
+$\sum_{|j\delta|>H_Q}v_j$ 及 $\delta^{-1}\sum_{|j\delta|>H_Q}v_j^2$
+均为 $o_{\mathbb P}(\delta^2)$：先对确定 tuple 占据数作期望界，再用 Markov；
+不在坏环境上平均无界量。三次尾和则用核心内 $\max v_j\le C\delta$，
+有 $\delta^{-2}\sum_{\mathcal C,|j\delta|>H_Q}v_j^3\le C\sum_{|j\delta|>H_Q}v_j$。
+这证明 (84.5)，无需三行独立性或第三占据矩。
+
+接着保留第 82 章比较中的未尺度化误差。定义带符号密度
+
+$$
+q_x(y)=\mathbb E_{P_x}[(S_x-h_x^{\rm nat})\varphi_{\sigma_M}(y-T)],\qquad
+q_G(y)=\mathbb E[S_G\varphi_{\sigma_M}(y-T^{\rm G})],\qquad
+S_G=\frac12\sum_{\mathcal C}(Z_j^2-1).
+\tag{84.9}
+$$
+
+这里 $T^{\rm G}$ 正是 (82.7)，精确中心和外部中心截距均保留。
+(82.4)—(82.10) 在乘 $\sqrt\delta$ 之前分别给
+
+$$
+\begin{aligned}
+\|q_x-q_x^{\rm prod}\|_1
+ &\le C(Qa_x+a_x+a_x^2)=O_{\mathbb P}(Q^{-3/2}),\\
+\|q_x^{\rm prod}-\mathbb E[s\varphi_{\sigma_M}(\,\cdot-T^{\rm G})]\|_1
+ &\le CQ\sqrt{D_M/\sigma_M}\longrightarrow0,\\
+\|q_x-q_G\|_1&\longrightarrow0.
+\end{aligned}
+\tag{84.10}
+$$
+
+第二行的额外 $Q$ 因子由 (82.8) 支付；
+第三行还使用乘积律下外部中心信息的精确抵消，以及核心量化信息误差的指数小界。
+这是整个实际后验的中心信息比较，不是由无权 TV 推出无界信息量的收敛。
+
+令 $g_x$ 为 $T^{\rm G}+\sigma_MG_0$ 的辅助密度。
+同一耦合还给 $\epsilon_x:=\|f_x-g_x\|_1\le a_x+CD_M/\sigma_M$。
+实际与参考输出的二阶矩有界于固定高概率环境类，故 Cauchy–Schwarz 给
+
+$$
+\|y(f_x-g_x)\|_1
+ \le [\mathbb E_xY^2+\mathbb E(T^{\rm G}+\sigma_MG_0)^2]^{1/2}\epsilon_x^{1/2},
+\qquad
+\delta^{-1/2}\|y(f_x-g_x)\|_1\longrightarrow0.
+\tag{84.11}
+$$
+
+最后一式用 $\delta^{-1}a_x=O_{\mathbb P}(Q^{-2})$ 及 (82.8)。
+因此从参考密度返回实际密度时，大小为 $\delta^{-1/2}$ 的线性系数也已付清。
+
+现在建立二阶密度导数的统一界。仍按第 82 章模四分块，令
+$T_A=T_0+T_2$、$T_B=T_1+T_3$。
+对全和及这两个半和的特征函数，(82.12) 及独立分块给
+$|\psi(t)|\le m_\delta(t)$、$|\psi'(t)|\le Cm_\delta(t)$。
+于是对各自密度 $h$ 和 $k=1,2$，Plancherel 给
+
+$$
+\begin{aligned}
+\|h^{(k)}\|_2^2+\|yh^{(k)}\|_2^2
+ &\le C_k\int\big[|t|^{2k}|\psi(t)|^2
+       +|kt^{k-1}\psi(t)+t^k\psi'(t)|^2\big]dt\le C_k,\\
+\|h^{(k)}\|_1&\le C_k,\qquad
+\int_{|y|>H}|h^{(k)}(y)|dy\le C_kH^{-1/2}.
+\end{aligned}
+\tag{84.12}
+$$
+
+Fourier 反演将弱导数识别为连续导数。
+全和的特征函数趋于 $e^{-\nu t^2/2}$；多项式加权的 $m_\delta$ 支配、
+(84.12) 的空间尾界及卷积收缩共同给
+
+$$
+\|g_x^{(k)}-\varphi_\nu^{(k)}\|_1\longrightarrow0,
+\qquad \|g_x^{(k)}\|_1\le C_k,\qquad k=1,2.
+\tag{84.13}
+$$
+
+一般导数极限仍由 Herry–Malicet–Poly 的既有理论覆盖；
+显式半块界用于下一步，没有 $\sigma_M^{-2}$ 代价。
+
+令 $w_j=v_j/\sqrt\delta$、$c_j=e_j/\sqrt{v_j}$，并置
+
+$$
+\begin{aligned}
+a_0&=\sum_{\mathcal C}w_j=V_{\mathcal C}/\sqrt\delta,\\
+\mu_G&=\mathbb ET^{\rm G}=\delta^{-1/2}\|e\|^2,\\
+v_G&=\operatorname{Var}(T^{\rm G})
+ =2\sum_{\mathcal C}w_j^2+4\sum_{\mathcal C}w_j^2c_j^2,\\
+\Lambda_G&=v_G+\sigma_M^2,\qquad A_G=a_0/\Lambda_G.
+\end{aligned}
+\tag{84.14}
+$$
+
+逐项非中心量 $c_j$ 不要求小；需要的是
+$\max w_j\le C\sqrt\delta$、$\sum w_j^2\le C$ 及
+$\sum w_j^2c_j^2=\delta^{-1}\sum v_je_j^2\le C\|e\|^2=O_{\mathbb P}(a_x^2)$。
+好环境上 $\Lambda_G$ 一致远离零。
+
+第一次 Gaussian 分部积分给
+
+$$
+\begin{aligned}
+q_G(y)&=-\mathbb E[\mathcal A\varphi_{\sigma_M}'(y-T^{\rm G})],\\
+\mathcal A&=\sum_{\mathcal C}w_jZ_j(Z_j-c_j),\qquad
+\mathcal A_c=\mathcal A-a_0
+ =\sum_{\mathcal C}[w_j(Z_j^2-1)-w_jc_jZ_j].
+\end{aligned}
+\tag{84.15}
+$$
+
+另一方面，对任意适当光滑测试函数 $h$，逐坐标分部积分给
+$\mathbb E[(T^{\rm G}-\mu_G)h(T^{\rm G})]=\mathbb E[\mathcal B h'(T^{\rm G})]$，其中
+
+$$
+\mathcal B=2\sum_{\mathcal C}w_j^2(Z_j-c_j)(Z_j-2c_j),\qquad
+\mathcal B_c=\mathcal B-v_G
+ =\sum_{\mathcal C}[2w_j^2(Z_j^2-1)-6w_j^2c_jZ_j].
+\tag{84.16}
+$$
+
+取 $h(t)=\varphi_{\sigma_M}(y-t)$，并用
+$(y-t)\varphi_{\sigma_M}(y-t)=-\sigma_M^2\varphi_{\sigma_M}'(y-t)$，得到精确含噪声恒等式
+
+$$
+(y-\mu_G)g_x(y)=-\Lambda_Gg_x'(y)
+ -\mathbb E[\mathcal B_c\varphi_{\sigma_M}'(y-T^{\rm G})].
+\tag{84.17}
+$$
+
+消去 (84.15) 中的 $g_x'$，有
+$q_G-A_G(y-\mu_G)g_x=-\mathbb E[(\mathcal A_c-A_G\mathcal B_c)\varphi_{\sigma_M}']$。
+写
+
+$$
+\mathcal A_c-A_G\mathcal B_c
+ =\sum_{\mathcal C}[h_j(Z_j^2-1)+k_jZ_j],\qquad
+h_j=w_j-2A_Gw_j^2,\quad k_j=-w_jc_j+6A_Gw_j^2c_j.
+\tag{84.18}
+$$
+
+第二次分部积分给
+
+$$
+\begin{aligned}
+q_G(y)-A_G(y-\mu_G)g_x(y)
+ &=\mathbb E[\mathcal C_M\varphi_{\sigma_M}''(y-T^{\rm G})],\\
+\mathcal C_M&=\sum_{\mathcal C}
+ [2h_jw_jZ_j(Z_j-c_j)+2k_jw_j(Z_j-c_j)].
+\end{aligned}
+\tag{84.19}
+$$
+
+固定 $\sigma_M>0$ 时这些核导数有界，Gaussian 多项式可积，故两次操作均合法。
+其均值和中心部分分别为
+
+$$
+\begin{aligned}
+C_M=\mathbb E\mathcal C_M
+ &=2\sum w_j^2-4A_G\sum w_j^3
+       +2\sum w_j^2c_j^2-12A_G\sum w_j^3c_j^2,\\
+\mathcal C_M-C_M
+ &=\sum [d_j(Z_j^2-1)+l_jZ_j],\\
+d_j&=2w_j^2-4A_Gw_j^3,\qquad
+l_j=-4w_j^2c_j+16A_Gw_j^3c_j.
+\end{aligned}
+\tag{84.20}
+$$
+
+此处 $d_j$ 只表示多项式系数。
+因为 $A_G=O(\delta^{-1/2})$，两个半核心上相应中心贡献 $J_A,J_B$ 均满足
+
+$$
+\mathbb EJ_l^2
+ \le C\sum(w_j^4+w_j^4c_j^2)
+ \le C\delta\left(\sum w_j^2+\sum w_j^2c_j^2\right)\le C\delta.
+\tag{84.21}
+$$
+
+条件于 $A$ 半块后，将二阶导数交给独立的 $B$ 半块密度 $h_B$。
+Fubini、(84.12) 与卷积收缩使相应 $L^1$ 范数至多为
+$\mathbb E|J_A|\|h_B''\|_1\le C\sqrt\delta$；另一项相同。因此
+
+$$
+\|q_G-A_G(y-\mu_G)g_x-C_Mg_x''\|_1\le C\sqrt\delta.
+\tag{84.22}
+$$
+
+这一步不使用 $S_G$ 随核心增长的方差，也不支付测量核的逆噪声导数范数。
+由 (84.5)，非中心修正为 $O_{\mathbb P}(a_x^2)$，且
+
+$$
+4A_G\sum w_j^3
+ =\frac{4V_{\mathcal C}}{\Lambda_G}\delta^{-2}\sum v_j^3,
+\qquad C_M\longrightarrow C_*.
+\tag{84.23}
+$$
+
+此外 (84.5) 给 $v_G=\nu+O_{\mathbb P}(\delta)+O_{\mathbb P}(a_x^2)$，从而
+
+$$
+|A_G-A_M^\sigma|
+ =O_{\mathbb P}(\sqrt\delta+\delta^{-1/2}a_x^2)\longrightarrow0,
+\qquad |A_G\mu_G|=O_{\mathbb P}(\delta^{-1}a_x^2)\longrightarrow0.
+\tag{84.24}
+$$
+
+现在用 (84.10)—(84.13)、(84.22)—(84.24) 回到实际密度，得到
+
+$$
+\|q_x-A_M^\sigma y f_x-C_*\varphi_\nu''\|_1\longrightarrow0.
+\tag{84.25}
+$$
+
+每项误差均已单独支付：带权后验比较、参考回归余项、确定系数替换、
+精确中心截距，以及 (84.11) 中被大系数放大的密度差。
+实际四阶输出矩由 (82.27) 给出，结合 $\|f_x-\varphi_\nu\|_1\to0$，分割 $|y|\le H$ 后得到
+$\|(1+y^2)(f_x-\varphi_\nu)\|_1\to0$。
+又 $\varphi_\nu''=(y^2-\nu)\varphi_\nu/\nu^2$，所以 (84.25) 等价于 (84.3)。
+只在已带 $f_x$ 权的积分内除以严格正密度，没有断言低密度输出上的逐点回归。
+
+最后由 (82.23) 的实际条件信息均值，
+
+$$
+\int f_x(y)\left|\mathbb E_x[H_M\mid y]
+                         -c-\frac{y^2-\nu}{2\nu}\right|dy\longrightarrow0.
+\tag{84.26}
+$$
+
+将其从 (84.3) 减去，再使用精确 Bayes 恒等式 (82.19)，即得 (84.2)。
+积分 $\rho,\rho^2,\rho^3$ 得到 (84.4)。全程保留同一实际向量、观测和方向一致事件。
+未知方向仅传递有界失败概率，不将无界熵乘以方向失败概率。证毕。
+
+**命题 84.3（删除噪声校正的精确边界与实际反例）。** 令
+
+$$
+R_M^0(y)=\mathsf H_{{\rm post},x}(y)-h_x^{\rm nat}+L_M
+                      -\frac\gamma{\nu\sqrt\delta}y,\qquad
+ d_M=\frac{\sigma_M^2}{\sqrt\delta},\qquad
+ k_M=\frac{\gamma d_M}{\nu(\nu+\sigma_M^2)}.
+\tag{84.27}
+$$
+
+则对原完整噪声范围始终有
+
+$$
+\int f_x(y)|R_M^0(y)+k_My-\mathcal H(y)|dy\longrightarrow0.
+\tag{84.28}
+$$
+
+$R_M^0$ 本身具有 (84.2) 的同一二次剖面，当且仅当 $\sigma_M^2=o(\sqrt\delta)$。
+若 $d_M\to d<\infty$，其剖面为 $\mathcal H(y)-\gamma d y/\nu^2$。
+若 $d_M\to\infty$，则对每个固定 $K<\infty$，
+
+$$
+\Pr_x(|R_M^0(Y)|\le K)\longrightarrow0.
+\tag{84.29}
+$$
+
+例如合法噪声 $\sigma_M=Q^{-1/16}$ 满足 $L_M=(\ln Q)/16=o(Q^3)$，
+而 $d_M=Q^{1/8}\to\infty$；它是原实际模型中常数阶余量不紧的反例。
+
+证明。精确系数差为
+$A_M^\sigma-\gamma/(\nu\sqrt\delta)=-k_M$，直接给 (84.28)。
+记其积分误差为 $E_M(x)\to0$，两次三角不等式给
+
+$$
+\left|\int f_x|R_M^0-\mathcal H|-k_M\mathbb E_x|Y|\right|\le E_M(x).
+\tag{84.30}
+$$
+
+实际加权密度收敛给 $\mathbb E_x|Y|\to\sqrt{2\nu/\pi}>0$，
+而 $k_M\to0$ 恰等价于 $d_M\to0$，于是得充要条件及有限比率情形。
+若 $k_M\to\infty$，由实际二阶矩紧性，
+
+$$
+\mathbb E_x|R_M^0(Y)/k_M+Y|
+ \le\frac{\mathbb E_x|\mathcal H(Y)|+E_M(x)}{k_M}\longrightarrow0.
+\tag{84.31}
+$$
+
+所以对 $\eta>0$，
+
+$$
+\Pr_x(|R_M^0(Y)|\le K)
+ \le\Pr_x(|Y|\le\eta+K/k_M)
+    +\eta^{-1}\mathbb E_x|R_M^0(Y)/k_M+Y|.
+\tag{84.32}
+$$
+
+先取规模极限，再令 $\eta\downarrow0$；极限 Gaussian 在零点无原子，得到 (84.29)。
+这是实际条件概率的逃逸结论，没有从参考方差发散推断不紧。
+噪声比率振荡时仍适用 (84.28)，可分别取有限比率或发散比率子列。
+完整分母覆盖任意慢的噪声衰减；固定阶 Taylor 截断不具有这一保证。证毕。
+
+**推论 84.4（同一实现上的二次极限与纤维平均）。** 条件有界 Lipschitz 距离按定义 84.1 趋零地，
+
+$$
+\mathcal L_x\!\left(T,Y,G,H_M,R_M^\sigma(Y)\right)
+\Longrightarrow
+\mathcal L\!\left(\sqrt\nu Z,\sqrt\nu Z,N,
+ c+\frac{Z^2-N^2}{2},
+ \left(\frac12-\frac2{\sqrt3}\right)(Z^2-1)-c\right),
+\tag{84.33}
+$$
+
+其中 $Z,N$ 独立标准正态。并且
+$\mathbb E_xR_M^\sigma(Y)\to-c$；即使命题 84.3 的未校正余量逃逸，
+仍有 $\mathbb E_xR_M^0(Y)\to-c$。
+
+证明。(84.2) 提供同一联合向量最后坐标的条件 $L^1$ 替换，
+与第 79 章的信息联合极限组合即得 (84.33)。实际矩界给
+$\mathbb E_xY^2\to\nu$，所以 $\mathbb E_x\mathcal H(Y)\to-c$。
+未校正情形只差 $-k_M\mathbb E_xY$。精确中心展开与选中密度比较给
+
+$$
+\mathbb E_xY=\mathbb E_{P_x}T
+ =O_{\mathbb P}(a_x+\delta^{-1/2}a_x^2),\qquad k_M\le C\delta^{-1/2},
+\tag{84.34}
+$$
+
+故该差仍趋零。稳定的纤维平均与输出余量不紧可以同时成立。
+本章只证明余量的输出积分 $L^1$，未证明其方差或更高矩收敛。
+有界误差事件可先验平均，再以奇偶类内支持置换不变性传为
+确定支持的无条件联合结论；这不把确定支持条件输出律等同于先验预测律。
+所有熵换为 bits 时，将熵、$L_M$、线性系数及二次剖面同时除以 $\ln2$。
+未断言每个输出、无界数据平均、$L_M$ 与 $Q^3$ 同阶的噪声、零噪声、
+有限精度解码效率或实验等价性。证毕。
+
+## 追加锚（本行以下为增补区）
