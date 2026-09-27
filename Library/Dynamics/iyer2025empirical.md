@@ -6289,3 +6289,22 @@ $$
 第 188 章所述 Kontoyiannis–Harremoës–Johnson 依赖指标界仍需总相关项；本章以整个条件直方图的估计支付该项所代表的联合信息问题。经典工具与本模型的新增连接分别归属；不主张检索穷尽、全球原创性、全部数据后验熵或共同层同步结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 谱边界卷第 190 章补充：原始概率律中的共同近共振
+
+对应 [谱边界卷第 190 章](../../docs/develop/theory/PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)。归属为 `repo-derived`：把原完整选择后验的交换身份与补偿尺度、同一数组上的整数重数及一维鸽巢逼近结合，在每个原固定 $\beta>3/4$、$c>3c_q/2$ 下，证明指定正项 Fourier 总和具有支持一致的正期望下界。pair 与平稳依赖 path 分别成立；实际经验事件概率、非中心项、噪声和谐波截断均在正文支付。结论阻断该正项均值充分判据，不构成原后验方差熵的物理反例。
+
+Francesco Cellarosi、Tariq Osman，*Bounds for Smooth Theta Sums with Rational Parameters*，[arXiv:2306.11119v2](https://arxiv.org/abs/2306.11119v2)，[固定版本原始 TeX](https://arxiv.org/src/2306.11119v2)。核对其完整 Introduction、Uniform Bounds 中 `L2.1Bdd` 引理及所给证明、`remark-size-constant`，以及所给 Gaussian theta 应用推导。该局部引理要求 $\operatorname{dist}(\xi_2,\mathbb Z^k)>0$、$f\in\mathcal S_\eta$、$\eta>k$ 和 $y\ge1/2$；常数显式为
+
+$$
+C(k,\xi_2,\eta)
+=2^{(2\eta-k)/4}\sum_{n\in\mathbb Z^k}\|n-\xi_2\|^{-\eta}.
+$$
+
+证明对 theta 展开取绝对值，应用衰减范数，再求和上述收敛级数；常数在相位趋近格点时发散。这个上界不提供原经验占据分布，也不给第 190 章需要的近共振下界或增长维数下的一致常数。
+
+Introduction 中的光滑权重主定理要求至少一对参数等于 $(a/(2m),b/(2m))$，其中 $a,b,m$ 均为奇数且 $\gcd(a,b,m)=1$，并保留维数、分母、参数及权重的常数依赖。该条件未被证明适用于这里的原经验后验，所以该主定理不承担 (190.18) 的证明前提；其所引重尾分类及随机 Lebesgue 参数结论也不转移。Gaussian 应用中的数值优化和若干显示式的字面归一化记法不用于本章。所核对的局部引理及证明只界定非共振上界的适用边界。
+
+第 190 章实际下界由正文的有限鸽巢证明和仓内原模型关系推出。经典逼近工具、既有原模型关系及本章的新组合分别归属；不宣称新的 theta 定理、原始物理阈值、检索穷尽或 Lean 认证。
+
+## 追加锚（本行以下为增补区）

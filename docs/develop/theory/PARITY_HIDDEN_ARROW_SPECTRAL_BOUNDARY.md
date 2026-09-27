@@ -59087,3 +59087,284 @@ All attained mean scales are included without additional hypotheses. The exponen
 Poisson 条件化、多项分配、Stirling 界、格点 Fourier 反演、Chernoff、相对熵链式分解、数据处理与 Poisson 精确均值投影均为经典工具。本模型内新增的是精确首项平滑、整个稀有直方图的条件似然比较，以及共同总数响应的加权支付；它们共同给出 (189.1)。相关原始来源与可迁移范围见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。这些普通数学推导不构成 Lean 核验证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 190. 原始概率律中的共同近共振：正项 Fourier 上界的非消失下界
+
+第 163 章的物理结论成立于每个固定 $0<c<\gamma=99c_q/200$。本章考察把非零有理弧的绝对值上界在原始数据律下取平均这一延伸路线。完整后验在原计数线上具有一个共同的单标签包含概率，组间偏差由第 167 章的有限选择补偿控制。整数经验重数使一次一维鸽巢逼近同时对齐整个占据块；在一段固定长度的频率偏移区间内，该项保持正的质量。
+
+**定理 190.1（正项总和的原始概率下界）。** 保留原始振幅、补偿和所有取整。对每个固定 $\beta\in(3/4,1)$ 及 $c>3c_q/2$，分别在原实际 pair 实验和平稳依赖 path 实验中，一致于每个预先确定的合法支持，存在固定有限 $W\ge1$，使下文定义的同一正项总和满足
+
+$$
+\inf_{S_{\rm true}}\mathbb E_{S_{\rm true}}
+ [\mathbf1_{\mathcal R_Q}\mathcal A_Q]
+ \ge\frac1{16e\sqrt W}>0
+ \quad\text{对所有充分大的 }Q.
+\tag{190.1}
+$$
+
+因此要求 $\sup_{S_{\rm true}}\mathbb E[\mathbf1_{\mathcal R_Q}\mathcal A_Q]\le Q^{-500}$ 的充分判据在该参数范围内不成立。例如 $3c_q/2<c<2c_q$ 给出一个明确的非空固定区间。结论针对正项上界；它不判定原后验方差熵在 $c>\gamma$ 时的极限，也不改变第 163 章已得到的范围。
+
+### 190.1 同一原始数组上的正项总和
+
+沿用
+
+$$
+\lambda=Q^3,\quad A_s=\log(1+r),\quad B_s=\log(1-r),\quad
+\phi=\frac{(1+r)A_s+(1-r)B_s}{2},
+$$
+$$
+c_q=\phi\frac{1-\beta}{\beta},\quad c_M=c_q+\phi,\quad
+\log q=c_q\lambda+O(1),\quad\log M=c_M\lambda+O(1),\quad
+\kappa=c_q/1000.
+\tag{190.2}
+$$
+
+第 163 章原占据块为 $\mathcal C=\{|j|\le\lfloor a_{\rm occ}Q^2\rfloor\}$，其中 $a_{\rm occ}>0$ 为该章固定常数，最低方差为 $d_*=q e^{-\kappa\lambda}$。物理核心 $H$、所有低群及外部群均保留。设
+
+$$
+\mathcal B=q/Q^{11/4},\quad\rho=\sigma\mathcal B\asymp e^{-c\lambda},\quad
+m_j=C_jp_j,\quad d_j=C_jp_j(1-p_j),\quad
+w_j=d_j/\mathcal B,\quad a_j=(\mu_j-m_j)/\sqrt{d_j}.
+\tag{190.3}
+$$
+
+$C_j$ 是实际整数经验重数；$p_j$ 来自原完整数组的同一个辅助校准乘子，所有候选标签的校准概率之和为 $q$；$\mu_j$ 是完整大小为 $q$ 的选择后验中的精确组计数均值。辅助乘积律记作 $Q_x$，实际选择计数律记作 $P_x$。不以确定均值替换这些量。
+
+使用第 163 章的原有理弧截断，定义
+
+$$
+\eta=\exp\!\left[-\frac{c\lambda+2Q^2}{a_{\rm occ}Q^2}\right],\quad
+\mathfrak a=(400/\eta)^2,\quad\mathfrak b=\lceil\mathfrak a\rceil,\quad
+V_R=c\lambda+\log\mathfrak b+\log Q,
+$$
+$$
+N=\lceil1000\mathfrak b\rho^{-1}\sqrt{V_R}\rceil,\qquad
+S_{\rm arc}=2\pi\mathfrak a\mathcal B/d_*.
+\tag{190.4}
+$$
+
+于是 $\log\mathfrak b=O_c(Q)$、$\log N=c\lambda+O_c(Q+\log Q)$、$\log S_{\rm arc}=\kappa\lambda+O_c(Q+\log Q)$。对既约有理数 $p/b$，令
+
+$$
+\chi_{b,s}=\frac{bs}{\pi\mathcal B},\qquad
+\vartheta_j=(2p+\chi_{b,s})\mu_j-\chi_{b,s}m_j,
+$$
+$$
+a_{p,b}(s)=\sum_{j\in\mathcal C}
+ \frac{4\pi^2d_j}{b^2(1+4s^2w_j^2)}
+ \operatorname{dist}(\vartheta_j,\mathbb Z)^2,\qquad
+P_{\mathcal C}(s)=\prod_{j\in\mathcal C}(1-2isw_j)^{-1/2},
+$$
+$$
+\mathcal A_Q=
+\sum_{1\le b\le\mathfrak b}
+\sum_{\substack{0<|p|\le N\\(p,b)=1}}
+\int_{-S_{\rm arc}}^{S_{\rm arc}}
+ |P_{\mathcal C}(s)|
+ e^{-a_{p,b}(s)/8-(2\pi p\rho/b+\sigma s)^2/8}\,ds.
+\tag{190.5}
+$$
+
+这是从原有理弧展开取绝对值、支付格点求和后得到的正项上界；其中未展开的其余群因子被上界化，而原物理律仍保留它们。分母、分子、噪声、占据块及偏移积分范围均未调整。该式在下述正则事件上定义；为使无条件期望处处有定义，将其在该事件之外延拓为零。
+
+$\mathcal R_Q$ 表示第 163 章使用的原计数、校准、占据及矩正则事件，不含同时非零谐波高能量要求。其补事件在两种实际实验中分别具有支持一致的 $o(1)$ 概率。所需原输入为：块内 $d_j\ge d_*$、$p_j\in[1/4,3/4]$；第 111、142 章的
+
+$$
+h_x=\frac{dP_x}{dQ_x},\qquad
+a_x=\|h_x-1\|_{L^2(Q_x)}=O_{\mathbb P}(Q^{-5/2});
+\tag{190.6}
+$$
+
+以及第 87 章实际权重剖面所给出的 $\sum_{\mathcal C}w_j^2$ 支持一致紧性。这些原始概率估计先于待考察的正项均值判据，不以该判据为前提。
+
+### 190.2 支付同一原始事件及实际中心误差
+
+取固定 $W\ge1$，使两种实验分别满足
+
+$$
+\limsup_{Q\to\infty}\sup_{S_{\rm true}}
+ \mathbb P_{S_{\rm true}}\!\left\{\sum_{\mathcal C}w_j^2>W\right\}<1/8.
+$$
+
+可取两种实验所需常数的较大者。令 $E_Q$ 为 $\mathcal R_Q$、原校准及占据事件、$\{a_x\le1\}$ 和 $\{\sum_{\mathcal C}w_j^2\le W\}$ 的交。对充分大的 $Q$，后一个尾概率至多 $1/4$，其余新增补事件概率为 $o(1)$，所以
+
+$$
+E_Q\subset\mathcal R_Q,\qquad
+\inf_{S_{\rm true}}\mathbb P_{S_{\rm true}}(E_Q)\ge1/2.
+\tag{190.7}
+$$
+
+这里只相加同一实际数组上的失败概率，不要求事件独立，也不把固定紧性局部化升级为概率趋一。在 $E_Q$ 上，完整校准和 $p_j\ge1/4$ 给
+
+$$
+\sum_{\mathcal C}C_j\le4q,\qquad
+\sum_{\mathcal C}d_j\le q,\qquad
+V_{\mathcal C}:=\sum_{\mathcal C}d_jC_j^2\le16q^3.
+\tag{190.8}
+$$
+
+最后一步使用 $\max_{\mathcal C}C_j\le4q$。由同一选择律的精确身份及 Cauchy–Schwarz，
+
+$$
+|\mu_j-m_j|
+=|\mathbb E_{Q_x}[(R_j-m_j)(h_x-1)]|
+\le\sqrt{d_j}\,a_x,
+\qquad \|wa\|_2\le\sqrt W\quad\text{在 }E_Q\text{ 上}.
+\tag{190.9}
+$$
+
+该估计同时对所有块坐标成立，无坐标并集代价；它比较固定数据下的两个后验计数律，并不赋予原 path 行独立性。
+
+### 190.3 精确完整后验中的共同标量
+
+原补偿和计数线为
+
+$$
+\epsilon_M=\frac{rq}{M-q},\quad
+a_s=A_s-\log(1-\epsilon_M),\quad
+b_s=B_s-\log(1+\epsilon_M),\quad
+\Delta_Q=Qa_s+P_nb_s.
+$$
+
+组 $j$ 的原计数对是 $(k_0+jQ,l_0+jP_n)$，故精确有 $\log(L_j/L_0)=j\Delta_Q$。第 167 章用原 Liouville 关系
+$0<\alpha_L-P_n/Q\le2e^{-(\log10)Q^5}$，其中 $\alpha_L=A_s/(-B_s)$，证明
+
+$$
+\Delta_Q\sim r(1-\alpha_L)Qq/M>0,\qquad
+|\Delta_Q|\le C_rQq/M.
+\tag{190.10}
+$$
+
+其主项来自补偿展开 $(1-P_n/Q)\epsilon_M+O(\epsilon_M^2)$，不能用更小的 Liouville 余项代替。
+
+令 $\pi_j$ 是完整大小为 $q$ 的后验中组 $j$ 单个标签的包含概率。$E_Q$ 保证 $C_0>0$，故 $\pi_0$ 有定义。交换一对分别位于组 $j$ 和组 $0$ 的标签，所有其余标签及同一个正归一化量 $e_q(L_{\rm all})$ 保留。第 167 章的交换配对给
+
+$$
+\pi_j-\pi_0=\frac{L_j-L_0}{L_j+L_0}
+             P_x(I_j+I_0=1).
+$$
+
+用 $|\tanh t|\le|t|$ 及 $|j|\le a_{\rm occ}Q^2$ 得到
+
+$$
+|\pi_j-\pi_0|\le|j\Delta_Q|/2\le D_Q:=C'_rQ^3q/M,
+\qquad \mu_j=C_j\pi_j.
+\tag{190.11}
+$$
+
+这是同一完整后验的同时确定界。$\pi_0$ 可以任意依赖全部数据和共同校准；无需连续分布或非原子性。偏差 $D_Q$ 将在乘上选定谐波后支付。
+
+### 190.4 一个实际谐波对齐全部整数重数
+
+令 $H_Q=\lceil128\pi q^{3/2}\rceil$。对任意实数 $z$ 及整数 $H\ge1$，把 $0,z,\ldots,Hz$ 的 $H+1$ 个小数部分放入 $H$ 个长度为 $1/H$ 的半开区间；其中两点同区间，其差给出整数 $1\le p\le H,k$ 使 $|pz-k|\le1/H$。该论证包括有理数及重复小数部分。
+
+在每个 $E_Q$ 数组上，对 $z=2\pi_0,H=H_Q$ 应用此事实。取最小可行正整数 $p_x$ 并确定性处理 $k$ 的并列值；这是完整有限数据的可测函数。因为 $C_j$ 为整数，同一个向量 $(kC_j)_j$ 属于原 Fourier 格点。由 (190.8)、(190.11)，
+
+$$
+\operatorname{dist}(2p_x\mu_j,\mathbb Z)
+\le C_j/H_Q+2H_QC_jD_Q,
+$$
+$$
+\sqrt{a_{p_x,1}(0)}
+\le2\pi\sqrt{V_{\mathcal C}}(H_Q^{-1}+2H_QD_Q)
+\le\frac{8\pi q^{3/2}}{H_Q}+16\pi q^{3/2}H_QD_Q.
+\tag{190.12}
+$$
+
+第一项至多 $1/16$。第二项为 $O_r(Q^3q^4/M)$，而
+
+$$
+\log(Q^3q^4/M)=(3c_q-\phi)\lambda+O(\log Q),\qquad
+\phi-3c_q=\phi\frac{4\beta-3}{\beta}>0.
+\tag{190.13}
+$$
+
+所以充分大时第二项也至多 $1/16$，一致于 $E_Q$ 内所有实际数组及合法支持、取整。于是 $\sqrt{a_{p_x,1}(0)}\le1/8$。此处每个坐标使用相同的 $\pi_0,p_x,k$ 和补偿偏差，没有组合分别可达的最优值。
+
+### 190.5 固定长度区间内的质量及原始概率积分
+
+单点 $s=0$ 的共振不足以给出积分下界。取 $s_0=1/(16\sqrt W)\le1/16$，在整个 $|s|\le s_0$ 区间使用相同的整数向量 $(kC_j)_j$。实际相位为
+
+$$
+\vartheta_j=2p_x\mu_j+\frac{s(\mu_j-m_j)}{\pi\mathcal B}.
+$$
+
+三角不等式、分母 $1+4s^2w_j^2\ge1$ 和 (190.9) 给
+
+$$
+\sqrt{a_{p_x,1}(s)}
+\le\frac{8\pi q^{3/2}}{H_Q}+16\pi q^{3/2}H_QD_Q
+       +2|s|\|wa\|_2
+\le1/8+1/8=1/4.
+\tag{190.14}
+$$
+
+这支付了实际非中心量 $\mu_j-m_j$，没有把它设为零。同一区间内，由 $\log(1+t)\le t$，
+
+$$
+|P_{\mathcal C}(s)|
+=\exp\!\left[-\frac14\sum_{\mathcal C}\log(1+4s^2w_j^2)\right]
+\ge\exp\!\left[-s^2\sum_{\mathcal C}w_j^2\right]
+\ge e^{-1/256}.
+\tag{190.15}
+$$
+
+条件 $c>3c_q/2$ 同时给出
+
+$$
+H_Q/N\longrightarrow0,\qquad
+H_Q\rho=\exp[-(c-3c_q/2)\lambda+O(1)]\longrightarrow0,
+\qquad \sigma s_0\longrightarrow0.
+\tag{190.16}
+$$
+
+因此充分大时 $1\le p_x\le H_Q\le N$、$(p_x,1)=1$、$s_0\le S_{\rm arc}$，且区间内 $|2\pi p_x\rho+\sigma s|\le1$。该谐波及区间都包含在原总和中。保留这一项即得
+
+$$
+\mathcal A_Q(x)
+\ge2s_0\exp[-1/256-1/128-1/8]
+=2s_0e^{-35/256}\ge2s_0/e
+\quad(x\in E_Q).
+\tag{190.17}
+$$
+
+允许 $p_x$ 依数据变化，是因为正项总和本来已经含有每个候选分子；这里没有对数据选定的法向量套用固定法向量的条件概率估计。由 $E_Q\subset\mathcal R_Q$ 及 (190.7)，在同一原始实际律下积分得到
+
+$$
+\mathbb E_{S_{\rm true}}[\mathbf1_{\mathcal R_Q}\mathcal A_Q]
+\ge(2s_0/e)\mathbb P_{S_{\rm true}}(E_Q)
+\ge\frac1{16e\sqrt W}.
+\tag{190.18}
+$$
+
+这证明定理 190.1。原 path 依赖由其已建立的实际正则事件概率支付，不替换为未条件化独立行或固定总数纤维上的 Poisson 律。没有新选稀有池、删除物理坐标、给校准赋予虚构密度，也没有把原坏事件概率乘以逆噪声。
+
+对任何合法揭示信息 $\mathcal F$，同一点态下界还给
+$\mathbb E[\mathbf1_{\mathcal R_Q}\mathcal A_Q\mid\mathcal F]
+\ge(2s_0/e)\mathbb P(E_Q\mid\mathcal F)$。
+因此使用计数直方图分解时，隐藏变量所影响的好事件必须保留其实际条件权重；再对原粗粒度律积分仍得到 (190.18)。无须宣称每个条件直方图都良好。
+
+### 190.6 方法反例的方向与未解决范围
+
+两项严格条件承担不同义务：$c>3c_q/2$ 让一次 $q^{3/2}$ 尺度的逼近落入噪声窗口；$\beta>3/4$ 使加权补偿误差 $Q^3q^4/M$ 消失。任一条件失败，只说明本证明不适用。$c=3c_q/2$、$\beta=3/4$、$\gamma<c\le3c_q/2$ 及 $\beta\le3/4$ 的正项均值问题不由本章判定；不存在端点或最优阈值结论。
+
+正项总和的来源是原标记 Fourier 差的上界，其方向为
+
+$$
+\max_{k\le2}\left\|\left.\partial_u^k(f_{{\rm lat},u}-g_u)
+                  \right|_{u=0}\right\|_\infty
+\le C Q^{20}\mathcal A_Q+r_Q.
+\tag{190.19}
+$$
+
+展开保留的完整物理量是同一 $T$、$Y=T+\sigma G$、完整选择归一化量和由同一归一化实倾斜 $\exp(uW_{\rm phys})$ 产生的两阶标记。取绝对值时损失了复相位、相消及未展开的其余群因子。(190.18) 是右侧正项量的下界，不能反向推出左侧差、其标记导数或条件方差的下界。它因而不反驳第 163 章式 (163.4) 所述物理极限在更宽范围内成立的可能性。
+
+实际谐波总量仍有 $\exp(c\lambda+O_c(Q+\log Q))$ 的规模；本章的下界只需保留其中一个已经包含的正积分，不需要乘上全部谐波数。相应上界问题需要支付整个总量。后验方差熵的更宽范围仍要求控制完整标记差、非线性条件均值平方、原选择对数密度和全部输出尾部。
+
+### 190.7 归属与新增关系
+
+鸽巢有理逼近、交换配对、Cauchy–Schwarz 及概率局部化是经典工具。第 167 章已给原补偿尺度和完整后验交换关系；第 87、111、142、163 章提供本证明实际使用的权重、选择、中心及占据输入。本章的新增连接是将共同包含概率、整数经验重数、有限选择补偿和完整噪声截断放在同一实际实现中，得到支付事件概率后的正项积分下界。
+
+固定参数 theta 和的非共振上界不能直接提供这里随数据变化且可趋近格点的相位常数。相关原始来源及其适用条件见 [Library 归属](../../../Library/Dynamics/iyer2025empirical.md)。本章为普通数学推导，未作 Lean 核验证明，也不主张文献检索穷尽或全球原创性。
+
+## 追加锚（本行以下为增补区）
