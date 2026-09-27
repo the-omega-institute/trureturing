@@ -10602,15 +10602,14 @@ and two public4. The public3 profile with one inactive child at an
 otherwise active full root has different owner averages and is NOT
 covered. In that profile the child's sampling probability is3/4, not
 3/5, and standalone exterior labels may lie at its unrestricted fifth
-child; neither difference is discarded. Its closure is a separate
-obligation. The nonpartial11113 profile likewise requires a separate
-supplier. Its cost3 fibre can occupy a new entire column L: an original
+child; neither difference is discarded. It is supplied by UF14 below. The nonpartial11113 profile likewise requires that
+separate supplier. Its cost3 fibre can occupy a new entire column L: an original
 pair can have branches G,H_clean,L and ignore the two selected H3
 singletons. The inactive root then need not have three exterior
 labels, so NP34.1 cannot be invoked without an additional argument.
 Both shapes do, however, have four classified fibres at one full root,
 an unrestricted fifth fibre, and two clean full roots; that shared
-structural interface is left to the separate supplier.
+structural interface is handled by UF14, without the invalid inactive-root inference.
 The unrestricted outside-cofactor and height lifts also
 remain outside this theorem.
 
@@ -10650,3 +10649,226 @@ labels; the other uses three L labels there and only two inactive
 exterior labels. Both pass the original480 legal pairs and standalone
 five-tree. They disprove an automatic three-exterior-label bridge for
 11113, not the desired below-nine law conclusion.
+
+## An unrestricted original fifth child supplies the two remaining public3 profiles
+
+This is ordinary mathematics with an exact finite query certificate, not a Lean
+result. It proves a common-law supplier on a complete original height-two source.
+It uses neither minimum-cut saturation nor an inherited premise on a subsource.
+
+### UF14.1. Complete-source hypotheses and conclusion
+
+Keep four original five-coordinate roots A,B,C,Q. The full roots A,B,C each have
+five original children and legal restrictions of size three. Q is the original
+gap root, with four children and legal restrictions of size two. All original
+legal root-pair restrictions have a ternary seven-tree, and the full original
+source has a standalone five-tree. Fibres and actual owners are never removed.
+
+There are four different seven-columns G,H_A,H_B,H_C with this actual support:
+
+* Four specified original children of A have their entire fibres contained in
+  G together with one private fine label in H_A, actual at that child. These four
+  private labels are distinct. The fifth original child c* is arbitrary.
+* All five children of each R=B,C have their entire fibres contained in G
+  together with one actual private fine label in H_R. The five private labels
+  at each root are distinct.
+* Q has arbitrary complete original fibres.
+
+Thus there are fourteen private points at different original child owners, and
+all their fine labels are distinct. Public G support can be any subset of G;
+in particular the theorem applies both to a whole public-column prefix and to
+three public fine leaves. No assumed completeness of a public fibre is needed.
+
+There is ONE actual probability law nu, chosen before all numerical residue
+queries, with
+
+    Gamma_1225(nu) <= 2779/323 = 9 - 128/323.
+
+Here Gamma is the supremum of the second moment of the sum of the nine numerical
+cylinder indicators for divisors D=(1,5,7,25,35,49,175,245,1225), with one residue
+query for each divisor. Every residue remains a literal CRT coordinate.
+
+### UF14.2. One public law, obtained from original pairs
+
+At A select a triple uniformly among the four specified children. At B and C
+select an original triple uniformly among all five children. Select the three
+restrictions independently. Each pair is an ORIGINAL legal pair. Its actual
+support lies in G and its two distinct private columns. A ternary seven-tree
+therefore must have a G branch with three distinct actual fine labels.
+
+For each fixed triple of selected restrictions, apply the existing [Report443](443-one-supported-law-couples-rows-and-tree-prefixes.md)
+supported-law theorem at depth one, with m=3, q=2 and leaf cap1/3, to the actual
+root/fine incidences in G. All its two-root projections contain at least three
+labels, exactly as required. It supplies a probability with simultaneous caps
+
+    root <= 1/2, fine label <= 1/3, root/fine label <= 2/9.
+
+Lift each incidence to one actual child owner inside its selected original
+restriction, and average these laws over the independent restriction choices.
+Call the resulting law kappa. It is supported on G and on A,B,C, with zero mass
+at c* and Q. An A child is selected with probability3/4; a B or C child with3/5.
+The conditional caps hence give, under this SAME kappa,
+
+    A child <= 3/8, A child/fine <= 1/6;
+    B,C child <= 3/10, B,C child/fine <= 2/15.
+
+The root, fine and root/fine caps above persist under averaging. No separate
+marginal optimization is combined, and no pair premise is applied after deletion.
+
+### UF14.3. Exterior labels have actual retained owners
+
+Choose a branch column K of the original standalone five-tree outside the four
+columns G,H_A,H_B,H_C. That tree has five distinct branch columns, so K exists,
+and contains five distinct actual fine labels. None can occur at any of the
+four classified A children or at B,C. Therefore every such label has an actual
+owner either at A's retained fifth child c* or at Q. Choose three different
+labels and one such actual owner for each. Their owners can coincide or can be
+distributed between A and Q. There is no assertion that Q alone supplies three.
+
+### UF14.4. A fixed actual law and a joint cylinder table
+
+In units1/1615, put weight80 at each private point, give kappa total weight360,
+and put weight45 at each of the three chosen exterior points. Normalization is
+
+    14*80 + 360 + 3*45 = 1615.
+
+Collapse B,C only for upper estimates to root type R. Keep root types A,R,Q.
+Collapse H_B,H_C only for upper estimates to column type H_R; keep column types
+G,H_A,H_R,K. Each actual queried root or column still means one literal root or
+column. The collapse merely allows extra compatibilities. It does NOT sum two
+original roots or columns into one cylinder.
+
+The following are simultaneous cylinder caps for nu, in units1/1615:
+
+| divisor | A | R | Q |
+|---|---:|---:|---:|
+|5|635|580|135|
+|25|215|188|135|
+
+| divisor | G | H_A | H_R | K |
+|---|---:|---:|---:|---:|
+|7|360|320|400|135|
+|49|120|80|80|45|
+
+For divisors involving both coarse coordinates, rows are A,R,Q and columns are
+G,H_A,H_R,K:
+
+    35:   ((180,320,0,135), (180,0,400,0), (0,0,0,135))
+    175:  ((135, 80,0,135), (108,0, 80,0), (0,0,0,135))
+    245:  (( 80, 80,0, 45), ( 80,0, 80,0), (0,0,0, 45))
+    1225: (( 60, 80,0, 45), ( 48,0, 80,0), (0,0,0, 45)).
+
+The divisor1 cap is1615. For example the A root cap is4*80+360/2+3*45=635.
+An A classified child has at most80+360*3/8=215; c* has at most3*45=135, so
+these are alternatives, not additive contributions to the same child. In K,
+each fine label has exactly one chosen point and weight45, but a child/column
+can carry all135. These inequalities explicitly allow exterior points at both
+A and Q. The zero entries come from the actual law's separated column support.
+
+### UF14.5. Complete finite certificate for all original queries
+
+For each divisor d choose one literal residue a_d. The indicator product for
+d,e is empty unless their residues are compatible modulo gcd(d,e); otherwise
+it is one cylinder at lcm(d,e). Its mass is bounded by the table above, using
+the actual root and column of the joint residue.
+
+Record the coarse root type for the six divisors divisible by5 and the coarse
+column type for the six divisible by7. Reject pairs whose specified coarse
+root types differ, or whose specified coarse column types differ. All other
+pairs are charged by the cap for their LCM and surviving coordinates. Ignoring
+higher-digit disagreements can only increase the answer. Merging B with C and
+H_B with H_C likewise only adds potentially nonempty terms.
+
+An actual query whose root or column has no law support can be mapped to any
+supported type. Every affected actual indicator product had mass zero, while
+the replacement is charged a nonnegative upper amount. Products of unaffected
+queries retain their original upper bounds. Thus no omitted unused root/column
+category is needed to dominate every original numerical query.
+
+The exact certificate enumerates all
+
+    3^6 * 4^6 = 2,985,984
+
+coarse query layouts. For every one, the ordered-pair sum is at most13895 in
+units1/1615. Its exact maximum is attained only at the coarse layout assigning
+all six root coordinates to R and all six column coordinates to H_R. This is a
+maximum of the RELAXED cap table, not a claim of simultaneous attainability in
+an original source. Consequently
+
+    Gamma_1225(nu) <= 13895/1615 = 2779/323 < 9.
+
+The Python certificate constructs unary and pair potentials on the six column
+queries. Independent direct ordered-pair enumeration, deriving each table entry
+from the private, public and exterior components, reproduces all729 root-specific
+maxima and the same overall maximum. The certificate uses explicit exceptions;
+normal and optimized execution retain the checks.
+
+### UF14.6. Scope and reusable applications
+
+The geometric hypothesis covers both the cost3 public profile with one original
+cut-inactive full child and the nonpartial11113 profile, PROVIDED the latter's
+four singleton children and two clean roots have the stated distinct private
+columns and actual labels. The fifth11113 child may carry a whole new column;
+it need not lie in H_A. No minimum-flow value or exact77 saturation is used.
+
+The original complete source survives unchanged, including c* and Q. The
+probability is supported on selected actual points, as allowed by the common-law
+consumer; source deletion and a new blocking assumption are not part of this
+construction. This is a finite height-two supplier. It does not provide the
+arbitrary-height or outside-cofactor lift needed for unrestricted Erdős #7.
+
+#### Exact bridges for the two remaining one-inactive cost profiles
+
+For the partial profile, the original source cut has an inactive gap,
+four active private-cost1 children at A, one cut-inactive original child
+c*, and clean11111 roots B,C. For11113, the gap is again inactive,
+A has four private-cost1 children and a private-cost3 fifth child,
+and B,C are clean11111. Both have public prefix cost3. In either case
+each of the fourteen cost1 children has its COMPLETE fibre in P plus
+its own singleton candidate; c* may be treated as arbitrary without
+changing or deleting any point. A cost3 whole column is not replaced
+by three nominated leaves.
+
+The pure geometric argument is Report449's common clean-root exchange
+and IG.7 before its saturation paragraph. To spell out the required
+bridge, first pair clean B and C triples. If P is three fine labels,
+their three plus six private candidates form a tight nine-candidate
+cover of an original ternary tree. All nine must be distinct and
+actual. Exchanging a selected child changes a coordinatewise0-or3
+column-count vector by a difference of two unit vectors; consequently
+each clean family's private labels lie in one column, H_B or H_C.
+These columns differ, and the three P labels occupy a third column G.
+If P is a whole column G, its complement has only six candidates;
+the same argument forces two complete private branches outside G.
+
+Pair any triple of the four cost1 A children with a B triple. In both
+public forms this is again the same tight count outside G. The four
+A singleton candidates are actual at their own owners and distinct;
+any two of these children can be exchanged while keeping the other
+two fixed, so their column is one H_A outside G,H_B. Repeating with
+C excludes H_C. Actual ownership follows from complete-fibre
+containment: each private candidate is outside P and differs from
+every other selected private candidate, so its original owner is the
+only selected fibre able to supply it.
+
+Thus all four columns are distinct and all fourteen singleton fibres
+have exactly the source containment required in UF14.1. Both fifth
+fibres remain arbitrary. The standalone premise is the original one,
+so UF14.2--UF14.5 apply directly. The partial profile and the entire
+11113 profile therefore both admit2779/323, including a whole new
+column at the fifth owner and zero exterior labels at the gap.
+
+### UF14.7. Exact controls and reproducibility
+
+The [joint-query certificate](../../../frontier/cover-geometry/height-two-small-anchors/partial_k3_query_certificate.py) and its [data](../../../frontier/cover-geometry/height-two-small-anchors/partial_k3_query_certificate.json) retain all729 root-specific maxima for the2,985,984 coarse layouts. The proof above maps every original numerical query into this complete finite domain with termwise domination.
+
+The [actual-source controls](../../../frontier/cover-geometry/height-two-small-anchors/partial_k3_actual_controls.py) and their [data](../../../frontier/cover-geometry/height-two-small-anchors/partial_k3_actual_controls.json) retain all2390 original numerical points in eight complete sources. They cover both finite and whole public G, exterior mass entirely at the fifth child, entirely at the gap, and split between those owners. Two sources put an entire new K column at the fifth child with no K label at the gap. All3840 original legal pairs,14136 numerical cylinders and9800 centred numerical queries pass. Independent reconstruction from the retained numerical sources reproduces these checks. Centred controls test the concrete laws; the complete coarse-query certificate supplies the all-phase upper bound.
+
+Reproduce with:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/partial_k3_query_certificate.py --output /tmp/e7_partial_k3_query_replay.json
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/height-two-small-anchors/partial_k3_actual_controls.py --output /tmp/e7_partial_k3_actual_replay.json
+```
+
+These are ordinary proofs and exact finite certificates, without new Lean verification.
