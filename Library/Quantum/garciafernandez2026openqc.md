@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2607.02093v1
 claim: "The paper builds open-boundary Yang-Baxter integrable quantum circuits for every configuration of -kappa inhomogeneities (Theorems 1 and 2) and conjectures that the minimum circuit depth with kappa_- such sites is (N + 3)/2 - kappa_- for odd N (Conjecture 1) and (N + 4)/2 - kappa_- for even N (Conjecture 2)."
 strata_touched:
   - D5/S3/Quantum/Dynamics/OpenIntegrableCircuitDepthRefutation
+  - D5/S3/Quantum/Dynamics/OpenIntegrableCircuitMinDepth
 license: citation-only
 triage: anchor
 ---
