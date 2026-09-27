@@ -66,6 +66,8 @@ make show-atom ATOM_ID=<id>
 
 Never quote the projection as authoritative. Prefer an atom with few unresolved subitems and an elementary, self-contained statement.
 
+Formalization always runs through the digestion chain (`CLAUDE.md` §1.2). If the content you intend to formalize has no atom yet, atomize that part first: add any missing theory text under §3.8, run `make ingest SOURCE="<id> <path>"`, then select the resulting atom and deposit and cover it in the same delivery. Only an external open-problem resolution admitted under §3.2 may freeze through `make deposit-uncovered`.
+
 Triage the claim class before committing to it; each class below is named by landed outcomes, not speculation:
 
 - **Best odds — concrete certificate/computation claims** whose data is inside the atom text (a walk value, a finite identity, explicit witnesses): these close with `decide`/`norm_num` and have the highest landed success rate.

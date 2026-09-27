@@ -74,7 +74,7 @@ answered? Existing work gives this picture several mathematical entry points.
   The [local marginal correlation blind spot](../D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean) gives two
   distinct two-qubit states: a Bell pure state and the equal classical mixture of `00`
   and `11`. They have the same two single-qubit reduced states. A
-  [joint expectation](../README.md#three-places-to-look) separates this pair without
+  [joint expectation](../README.md#02--find-what-observations-cannot-tell-you) separates this pair without
   establishing recovery of arbitrary joint states.
 
 - **Space and history.** Does a current spatial reading preserve the historical
@@ -88,10 +88,9 @@ answered? Existing work gives this picture several mathematical entry points.
 Both counterexamples hide different target values behind equal readings.
 Separating one pair need not make recovery possible.
 [Recovery](../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
-requires separating **every pair with different target values**:
-the target must be constant on each observation fiber. On a nonempty state
-space, this condition ensures a recovery function exists but supplies no
-algorithm or cost bound.
+requires that **any two states with the same reading have the same target value**.
+On a nonempty state space, this condition ensures a recovery function exists
+but supplies no algorithm or cost bound.
 Connections to proof dependencies or physical spacetime require maps and checks
 of the relations, operations and error bounds they preserve.
 
@@ -159,10 +158,25 @@ uses three windows onto variables: one permits pairs with `x=y`, another
 `y=z`, and the third `x≠z`. Their allowed records agree on every overlap:
 either value of the shared variable is permitted. Yet no joint record
 satisfies all three constraints. Finding relations that make local agreement
-sufficient is the task; the tree criterion below gives one answer. Connecting
-these record models to physical spacetime remains a research question.
+sufficient is the task; the tree criterion below gives one answer.
 
-Existing work offers several connected routes:
+The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
+assumes nonempty local record sets on a finite tree: each recorded variable's
+occurrences form a connected subtree, and neighbors allow exactly the same
+joint assignments on their full overlap. Every allowed local record extends
+across all recorded variables, satisfying every local constraint.
+Do all completions of a fixed local record agree on the target value?
+Additional global constraints can exclude every extension.
+Unique completion, original-history recovery and computational cost require
+further results.
+
+Here, holography names a research direction concerning wholes and observations.
+This guide establishes no physical holographic duality, area law or model of
+the universe. Correspondences between discrete event times, logical dependency
+depth and physical spacetime coordinates require their own definitions,
+proofs and, where applicable, empirical tests.
+
+Theory inputs explore several routes:
 
 - [Contextual spacetime arithmetic](develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)
   begins with finite event archives that retain time labels, positions, causal
@@ -184,21 +198,6 @@ Existing work offers several connected routes:
   explore correspondences between observation structures. Each transfer must
   check the specific conditions on quantum states, probability laws, training
   data and allowed operations.
-
-The [tree extension theorem](../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)
-applies to nonempty local record sets on a finite tree. Each recorded variable
-must occur on a connected subtree, and neighbors must allow exactly the same
-joint assignments on their full overlap. Every allowed local record extends
-to the union of the local variable sets, satisfying every local constraint.
-Do all completions of a fixed local record agree on the target value?
-Unique completion, original-history recovery and computational cost require
-further results.
-
-Here, holography names a research direction concerning wholes and observations.
-This guide establishes no physical holographic duality, area law or model of
-the universe. Correspondences between discrete event times, logical dependency
-depth and physical spacetime coordinates require their own definitions,
-proofs and, where applicable, empirical tests.
 
 ## What can serve as the next premise
 
