@@ -38390,3 +38390,353 @@ $$
 本章的信息逃逸只相对于所列摘要：完整可实现 $w$ 已分类本允许族，而不同潜在分划律 $p,p'$ 若给相同 $w$，其差别不是可观察逃逸。这里没有给经验性性别结论提供前提，也不从可见性推出披露政策或道德义务；有限例子不证明逃逸必然无限持续。数学范围仍有明确空缺：一般有序 $w,v$ 的最优反向缺损没有被（539.6）求出，仅有给定核的误差及上界；（539.15）只精确解决到恒等实验的识别目标；近似而非精确前向序需要另行控制流的违约量，本章不提供该推广；无序比较也不能只靠成对差。这些均为所列假设下的纸面证明与边界，不是 Lean 内核认证或消化覆盖结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 540. 近似前向模拟的恢复率与成对摘要的信息逃逸
+
+### 定义 540.1（近似前向、成对剖面与联合表数据）
+
+固定有限非空状态集 $A$，$n=|A|$，以及两个同一子集字母表上的 CAR 剖面 $w,v$。写
+
+$$
+W_i(B)=\mathbf 1_{\{i\in B\}}w_B,
+\qquad
+V_i(C)=\mathbf 1_{\{i\in C\}}v_C,
+\qquad \varnothing\ne B,C\subseteq A .
+\tag{540.1}
+$$
+
+这里 $W_i,V_i$ 是状态 $i$ 的半 $L^1$ 概率行。给定一个对所有状态共用的状态无关随机核 $H(C\mid B)$，定义
+
+$$
+f_{BC}=w_BH(C\mid B),\qquad
+F_i(B,C)=\mathbf 1_{\{i\in B\}}f_{BC},\qquad
+Q_i(C)=\sum_BF_i(B,C),
+\tag{540.2}
+$$
+
+并令
+
+$$
+\varepsilon_i=\operatorname{TV}(Q_i,V_i),
+\qquad
+\eta=\max_{i\ne j}\left|\Delta_{ij}\right|,
+\qquad
+\Delta_{ij}=r_{ij}(v)-r_{ij}(w),
+\tag{540.3}
+$$
+
+其中 $r_{ij}(w)=\sum_{B\supseteq\{i,j\}}w_B$，$r_{ij}(v)$ 同理，且 $\varepsilon=\max_i\varepsilon_i$。在近似情形 $\Delta_{ij}$ 可以为负；它不是单独的损失预算。假设只有这一份 $H$，而不是为每个 $i$ 另选一个核。有限字母表上的核集合是紧的，故前向缺损的下确界达到；若 $H$ 取到 $d(w\mathbin{\to}v)$，则 $\varepsilon=\max_i\varepsilon_i$ 可以正是该最优前向缺损（也可以只把它当作给定核的统一误差）。
+
+### 定理 540.2（近似联合表与显式反向恢复率）
+
+在定义 540.1 的条件下，存在一个状态无关核 $R(B\mid C)$，使每个状态 $i$ 满足
+
+$$
+\operatorname{TV}(V_iR,W_i)\le
+b_i:=\frac12\sum_{j\ne i}
+\bigl(\Delta_{ij}+\varepsilon_i+\varepsilon_j\bigr).
+\tag{540.4}
+$$
+
+每一项 $\Delta_{ij}+\varepsilon_i+\varepsilon_j$ 都是非负数。因而
+
+$$
+ d(v\mathbin{\to}w)
+ \le \min\left\{1,\max_i b_i\right\}
+ \le \min\left\{1,\frac{(n-1)\eta}{2}+(n-1)\varepsilon\right\}.
+\tag{540.5}
+$$
+
+当 $n=1$ 时空和为零，恢复误差为零。
+
+证明：先对每个 $i$ 和 $C$ 定义
+
+$$
+ a_i(C)=
+ \begin{cases}
+ \min\{1,V_i(C)/Q_i(C)\},&Q_i(C)>0,\\
+ 1,&Q_i(C)=0,
+ \end{cases}
+ \qquad
+ t_i(B,C)=a_i(C)F_i(B,C).
+\tag{540.6}
+$$
+
+若 $Q_i(C)>0$，则 $0\le t_i$ 且 $\sum_Bt_i(B,C)=\min\{Q_i(C),V_i(C)\}$；若 $Q_i(C)=0$，这一和也为零。因此
+
+$$
+ u_i(B)=W_i(B)-\sum_Ct_i(B,C)\ge0,
+ \qquad
+ z_i(C)=V_i(C)-\sum_Bt_i(B,C)\ge0,
+\tag{540.7}
+$$
+
+并且
+
+$$
+ \sum_Bu_i(B)=\sum_Cz_i(C)=\operatorname{TV}(Q_i,V_i)=\varepsilon_i.
+\tag{540.8}
+$$
+
+$u_i$ 只在 $i\in B$ 时可能非零：若 $i\notin B$，则 $W_i(B)=F_i(B,C)=0$。同样，$z_i$ 只在 $i\in C$ 时可能非零：若 $i\notin C$，则 $V_i(C)=0$，而 $Q_i(C)>0$ 时（540.6）给出 $a_i(C)=0$，$Q_i(C)=0$ 时 $t_i$ 仍为零。定义联合表
+
+$$
+ g_i(B,C)=
+ \begin{cases}
+ t_i(B,C)+u_i(B)z_i(C)/\varepsilon_i,&\varepsilon_i>0,\\
+ t_i(B,C),&\varepsilon_i=0.
+ \end{cases}
+\tag{540.9}
+$$
+
+乘积补项非负，且由（540.8）可知 $g_i$ 的 $B$ 边缘为 $W_i$、$C$ 边缘为 $V_i$。上述支撑说明每个正质量格点都满足 $i\in B\cap C$。这是一个单状态表，不把 $i$ 交给最后的核读取。
+
+对 $i\ne j$，令
+
+$$
+ O_{ij}=\sum_{B,C}\min\{g_i(B,C),g_j(B,C)\}.
+\tag{540.10}
+$$
+
+$F_i,F_j$ 的公共部分恰是 $i,j\in B$ 的格点，质量为 $r_{ij}(w)$。从 $F_i$ 到 $t_i$ 删除的总质量是 $\varepsilon_i$，从 $F_j$ 到 $t_j$ 删除的总质量是 $\varepsilon_j$，故逐点不等式
+
+$$
+ \min(t_i,t_j)\ge \min(F_i,F_j)-(F_i-t_i)-(F_j-t_j)
+$$
+
+求和后，再用 $g_i\ge t_i,g_j\ge t_j$，得到
+
+$$
+ O_{ij}\ge r_{ij}(w)-\varepsilon_i-\varepsilon_j.
+\tag{540.11}
+$$
+
+而 $g_i,g_j$ 的 $C$ 边缘都等于 $v_C$；它们的共同支撑只能落在同时含 $i,j$ 的 $C$ 上。于是
+
+$$
+ \begin{aligned}
+ \frac12\sum_{C\supseteq\{i,j\}}\sum_B|g_i(B,C)-g_j(B,C)|
+ &=r_{ij}(v)-O_{ij}\\
+ &\le \Delta_{ij}+\varepsilon_i+\varepsilon_j.
+ \end{aligned}
+\tag{540.12}
+$$
+
+左侧非负，故这也证明了（540.4）中的每个有符号预算非负。注意这里只能把 $\Delta_{ij}$ 作为带两个边缘误差的项使用；近似前向并不保证 $\Delta_{ij}\ge0$。
+
+对 $v_C>0$ 定义
+
+$$
+ R(B\mid C)=\frac{1}{|C|v_C}\sum_{j\in C}g_j(B,C).
+\tag{540.13}
+$$
+
+由每个 $g_j$ 的 $C$ 边缘为 $v_C$，右式对 $B$ 求和为一。对 $v_C=0$ 的 $C$ 任取一个概率行；这不会被任何 $g_j$ 的正质量使用。该补全只依赖观测到的 $C$，所以 $R$ 是一个核而不是一族按状态选择的规则。
+
+把 $g_i$ 看成带有 $C$ 标签的联合律，$V_iR$ 是把同一个 $C$ 上的联合律按 $|C|^{-1}$ 平均后再忘掉 $C$。忘掉标签只会收缩 TV；对每个 $C\ni i$，凸性给出
+
+$$
+ \operatorname{TV}\!\left(g_i(\cdot,C),\frac1{|C|}\sum_{j\in C}g_j(\cdot,C)\right)
+ \le \frac1{|C|}\sum_{j\in C}\operatorname{TV}(g_i(\cdot,C),g_j(\cdot,C)).
+\tag{540.14}
+$$
+
+其中 $j=i$ 项为零，而 $i,j\in C$ 且 $j\ne i$ 时 $|C|\ge2$，所以 $|C|^{-1}\le1/2$。对 $C$ 求和并应用（540.12），得到
+
+$$
+ \operatorname{TV}(V_iR,W_i)
+ \le \frac12\sum_{j\ne i}
+ \frac12\sum_{C\supseteq\{i,j\}}\sum_B|g_i-g_j|
+ \le b_i.
+\tag{540.15}
+$$
+
+这里第一处的 $1/2$ 已包含在每一对联合子表的 TV 定义中，故最后正是（540.4）的系数。再由 $\Delta_{ij}\le|\Delta_{ij}|\le\eta$、$\varepsilon_i,\varepsilon_j\le\varepsilon$，每行至多有 $n-1$ 项，得（540.5），并以 $1$ 截断。
+
+若所有 $\varepsilon_i=0$，则 $Q_i=V_i$，故 $a_i=1$、$u_i=z_i=0$，从而 $g_i=F_i$。此时（540.13）化为
+
+$$
+ R(B\mid C)=\frac{|B|f_{BC}}{|C|v_C}\quad(B\subseteq C),
+\tag{540.16}
+$$
+
+在 $v_C=0$ 时仍任意补全，正是定理 539.2 的核（539.5）；（540.15）退化为其半成对和界。因而这里是在 $\varepsilon=0$ 处逐字恢复 539，而不是仅比较一个较弱的极限。证毕。
+
+定理中的补项是单个残差耦合：$u_i z_i/\varepsilon_i$ 的两个边缘分别补齐 $B$ 与 $C$，不需要任何正权重下界，也不需要 Hoffman 型误差常数。它只证明一个明确构造的恢复核的上界；（540.5）没有声称 $\eta$ 或 $\varepsilon$ 的系数最优。
+
+### 推论 540.3（实际 $q$ 纤维的投影与拼接）
+
+设实际支撑只含有限行 $(i,q)$，其实际纤维为 $A_q$，$n_q=|A_q|$。令
+
+$$
+ O_q=\{(q,C):\varnothing\ne C\subseteq A_q\}.
+$$
+
+取一个固定的 $b_q\in O_q$，定义后处理 $P_q$：它固定 $O_q$ 中的输出，把所有不在 $O_q$ 中的输出送到 $b_q$。对任意候选核 $H$，在观测到源 $q$ 后定义
+
+$$
+ H^{\sharp}(\cdot\mid(q,B))=H(\cdot\mid(q,B))P_q.
+\tag{540.17}
+$$
+
+每个真实源行都支撑在 $O_q$，目标行也支撑在 $O_q$，故 $V_{i,q}P_q=V_{i,q}$，而 TV 收缩给出
+
+$$
+ \operatorname{TV}(W_{i,q}H^{\sharp},V_{i,q})
+ \le \operatorname{TV}(W_{i,q}H,V_{i,q}).
+\tag{540.18}
+$$
+
+因此先在每个实际 $A_q$ 上应用定理 540.2，再按观测到的 $q$ 拼成一个全局核，得到
+
+$$
+ d_{\mathrm{global}}=\max_{q:\,A_q\ne\varnothing}d_q,
+\tag{540.19}
+$$
+
+其中最大值只遍历实际出现的纤维。反向方向由任意全局核限制到每个 $q$ 得到，正向方向由各个 $R_q$ 按已观测 $q$ 拼接得到；没有加入不存在的 $(i,q)$ 行，也没有把分别可行的局部律当成一个共同的公开分划律。$n_q=1$ 的纤维按定理 540.2 的空和处理。
+
+### 定理 540.4（整种子、零权重重建与风险双边带）
+
+设 $E_w,E_v$ 是第 538.2 节的原始公开实验，$C_v:E_v\to W_v$ 是规范化核，$J_w:W_w\to E_w$ 是整种子重建核。令 $R$ 为定理 540.2 或推论 540.3 得到的规范核，并置
+
+$$
+ R_{\mathrm{raw}}=C_v\,R\,J_w.
+\tag{540.20}
+$$
+
+则对每条实际行 $s$，
+
+$$
+ \operatorname{TV}((E_v)_sR_{\mathrm{raw}},(E_w)_s)
+ \le \operatorname{TV}((W_v)_sR,(W_w)_s)\le b_s.
+\tag{540.21}
+$$
+
+$J_w$ 在 $w_B=0$ 的输入行必须任意补成概率行；近似恢复的 $V_iR$ 可以到达这些 $B$，这里不以“不可达”作理由。式（540.21）直接由 Markov 后处理的 TV 收缩得到，即使质量进入零权重行也成立。反向、正向两边都与第 538.2 节的精确双向映射复合，故原始整种子实验与规范实验的有向缺损相等。
+
+若 $e_s=\operatorname{TV}((W_w)_sH,(W_v)_s)$ 是给定近似前向核的逐行误差，且 $b_s$ 是反向核保证，则对任意先验 $\pi$ 和 $[0,1]$ 损失 $\lambda$ 有
+
+$$
+ -\sum_s\pi_s e_s
+ \le \mathcal R_{E_v}(\pi,\lambda)-\mathcal R_{E_w}(\pi,\lambda)
+ \le \sum_s\pi_s b_s.
+\tag{540.22}
+$$
+
+左侧由 $H$ 把 $E_w$ 近似送到 $E_v$，右侧由 $R_{\mathrm{raw}}$ 把 $E_v$ 送回 $E_w$；对每个固定决策规则，风险差的绝对值受相应行 TV 控制，再对先验求和并取下确界即可。近似前向时不能沿用 539.3 的“风险差非负”；（540.22）是有效的两侧先验风险带。先验平均量也不等同于最大状态缺损，零先验行仍受逐态核约束。
+
+### 定理 540.5（偶数匹配—擦除族的两向精确缺损）
+
+令 $n\ge4$ 为偶数，$A=\{1,\ldots,n\}$。匹配实验 $M$ 的唯一非零块权重为
+
+$$
+ w^M_{\{i,j\}}=\frac1{n-1}\quad(i\ne j),
+\tag{540.23}
+$$
+
+擦除实验 $E_\gamma$（$0\le\gamma\le1$）的块权重为
+
+$$
+ w^{E_\gamma}_{\{i\}}=1-\gamma,
+ \qquad w^{E_\gamma}_{A}=\gamma.
+\tag{540.24}
+$$
+
+则
+
+$$
+ d(E_\gamma\mathbin{\to}M)=\gamma\left(1-\frac2n\right),
+ \qquad
+ d(M\mathbin{\to}E_\gamma)=\frac{1-\gamma}{2}.
+\tag{540.25}
+$$
+
+证明：两实验可在一个共同公开概率空间实现。取独立的 $Z\sim\operatorname{Bernoulli}(\gamma)$ 与均匀完美匹配 $P$，公开整个 $(Z,P)$ 及观测块。$M$ 忽略 $Z$，输出 $P$ 中含真实状态的二点块；$E_\gamma$ 在 $Z=0$ 输出单点，在 $Z=1$ 输出 $A$，忽略 $P$。偶数性正是存在完美匹配的条件；奇数集不能由全二点块组成。
+
+从 $E_\gamma$ 到 $M$ 的达到核，在输入单点 $\{i\}$ 时均匀输出包含 $i$ 的二点集，在输入 $A$ 时均匀输出全部 $\binom n2$ 个二点集。对状态 $i$，每个相邻二点的质量为
+
+$$
+ \frac{1-\gamma}{n-1}+\frac{\gamma}{\binom n2},
+$$
+
+目标质量是 $1/(n-1)$；相邻二点的总亏损与非相邻二点的总盈余都为 $\gamma(1-2/n)$，故 TV 正是该值。
+
+任取一个从 $E_\gamma$ 到二点字母表的核 $H$，令 $D=H(\cdot\mid A)$，并令 $I_i$ 为含 $i$ 的二点输出集合。目标 $M_i(I_i^c)=0$，所以
+
+$$
+ \operatorname{TV}((E_\gamma)_iH,M_i)
+ \ge \gamma D(I_i^c).
+\tag{540.26}
+$$
+
+对 $i$ 平均时，任意二点输出恰含两个状态，其他输出不含于任何 $I_i$，因而
+
+$$
+ \frac1n\sum_iD(I_i^c)=1-\frac2nD\{C:|C|=2\}\ge1-\frac2n.
+\tag{540.27}
+$$
+
+最大行误差至少为平均值，得到第一式的任意核下界。等价地，这是一个有界决策证书：行动为二点集、损失为真实状态不在行动中；$M$ 的风险为零，而 $E_\gamma$ 的最小风险为 $\gamma(1-2/n)$。
+
+反向达到核从任意二点 $B$ 输出 $A$ 的概率为 $\gamma$，否则均匀输出 $B$ 的端点。状态 $i$ 下，$A$ 的质量为 $\gamma$，正确单点的质量为 $(1-\gamma)/2$，错误单点的总质量为 $(1-\gamma)/2$，故 TV 为 $(1-\gamma)/2$。
+
+为证明任意反向核的下界，对每个状态定义分数
+
+$$
+ g_i(C)=
+ \begin{cases}
+ 1,&C=\{i\},\\
+ 1/2,&C=A,\\
+ 0,&\text{其他}.
+ \end{cases}
+\tag{540.28}
+$$
+
+对任意二点输入 $B$ 和任意输出 $C$，都有 $\sum_{i\in B}g_i(C)\le1$。于是对均匀先验和任意核 $H$，
+
+$$
+ \frac1n\sum_i\int g_i\,d(M_iH)
+ \le\frac1{n(n-1)}\sum_{B:|B|=2}\int\sum_{i\in B}g_i\,dH(\cdot\mid B)
+ \le\frac12.
+\tag{540.29}
+$$
+
+而每个目标行的分数期望为 $1-\gamma/2$。TV 支配任意 $[0,1]$ 分数期望的差，故最大行 TV 至少为 $(1-\gamma)/2$。这覆盖所有输出字母，包括目标支撑外的输出；它也可表述为行动为全部状态标签及一个拒答动作的有界决策证书，拒答损失恒为 $1/2$。证毕。
+
+在 $\gamma=1/(n-1)$ 时，两族的成对剖面逐项相同，故 $\eta=0$，而
+
+$$
+ \varepsilon=d(E_\gamma\to M)=\frac{n-2}{n(n-1)},
+ \qquad
+ d(M\to E_\gamma)=\frac{n-2}{2(n-1)},
+ \qquad
+ \frac{d(M\to E_\gamma)}{\varepsilon}=\frac n2.
+\tag{540.30}
+$$
+
+因此偶数 $n$ 增长时，成对摘要完全不变、前向误差趋于零，而反向缺损趋于 $1/2$。任何在 $\eta=0$ 时形如 $d(v\to w)\le C_n\varepsilon$ 的普适系数都必须满足 $C_n\ge n/2$。这只给出必要下界；定理 540.2 的统一系数是 $n-1$，没有声称其最优。
+
+最小例子是 $n=4,\gamma=1/3$：$M$ 的六个二点块中每个权重为 $1/3$，$E_{1/3}$ 以 $2/3$ 输出真实单点、以 $1/3$ 输出全集；两向缺损分别为 $1/6$ 与 $1/3$，比值为 $2=n/2$。等成对剖面在所有偶数 $n\ge4$ 上给出同一增长序列。奇数时全二点匹配的公共分划不存在，所以不能把该公开实现直接延伸到奇数。
+
+### 注记 540.6（成对摘要的逃逸、原目的与全任务互换）
+
+在 CAR 类中，$r_{ij}$ 确实决定每一个单独二态实验的碰撞概率；保持全部 $r_{ij}$ 就保持这些分离的二态任务。它没有决定所有状态怎样共享同一个输出表。匹配实验和擦除实验的成对摘要相同，却在“返回一个含真实状态的二点列表”和“允许拒答的识别”两个任务上分别给出不同风险；故摘要逃逸是相对于所选摘要的联合表示缺口，不是说现实凭空产生了新信息，也不是把一个实验排成对所有任务都更好。原目的若为非恒定目标，直接复用命题 539.7 的嵌入；本族的常数目标只用于清楚地隔离比较任务。
+
+这一区别不能被解释为“定义任意所以现实任意”。第 538.1–538.4 节已经固定实际支撑、公开种子、观察权限和共同分划律；第 539.1–539.8 节固定有向缺损、风险和原目的。维特根斯坦《哲学研究》§§65–69 只提供一种解释性对应：可考察交错相似，并可为一个特定目的划界；这些段落不是概率论、CAR 或缺损定理。这里没有经验性性别结论、披露义务或必然无穷逃逸结论。
+
+后续的精确问题是：在同样的 CAR、共同 $H$、逐态 $\varepsilon_i\le\varepsilon$ 和 $\eta=\max|\Delta_{ij}|$ 条件下，是否总有
+
+$$
+ d(v\to w)\le
+ \min\left\{1,\frac12\max_i\sum_{j\ne i}(\Delta_{ij})_+ +\frac n2\varepsilon\right\}?
+\tag{540.31}
+$$
+
+式（540.30）说明其中的 $n/2$ 不能在这一公共族上降为维数无关的常数；它没有证明（540.31）的普适充分性。该问题与本章已证的 $n-1$ 系数界保持分开。
+
+来源边界如下。Torgersen, *Comparison of Experiments when the Parameter Space is Finite*, Z. Wahrscheinlichkeitstheorie verw. Geb. 16 (1970), 219–249, DOI [10.1007/BF00534598](https://doi.org/10.1007/BF00534598)，第 220 页说明有界损失与半 $L^1$ 约定之间的因子二转换；第 230 页的测试比较使用所有有符号线性组合，而不只是原始二态对；第 235 页给出比较性加逐对等价推出整体等价的定性结论及缺少比较性时的失败。这里的（540.9）–（540.15）是有限联合表的直接构造，未把那些定性条件当成当前速率。
+
+Peña、Vera、Zuluaga, *An algorithm to compute the Hoffman constant of a system of linear constraints*, arXiv:1804.08418v1 (2018), Proposition 5 的误差界要求非空解纤维并引入依赖约束矩阵的 Hoffman 常数；它不提供（540.5）的显式 $n$ 率，因此本章不以该一般误差界替代联合表证明。仓内 [第 538.2、538.4 节](FORMAL_CONCEPT_DYNAMICS.md)、[第 539.1–539.8 节](FORMAL_CONCEPT_DYNAMICS.md) 提供公共分划、精确映射、成对摘要和原目的接口；[D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.lean](../../../D5/S3/Estimation/DecisionRisk/AsymmetricFamilyDeficiency.lean) 及其风险注入模块讨论的是非 CAR 的不对称正似然列，不能替代本章的公共匹配/擦除族。以上是所用来源的范围，不构成全局优先性声明。
+
+## 追加锚（本行以下为增补区）
