@@ -3,6 +3,7 @@ import Reg.Support.DependentFamily
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Estimation.ErrorExponents.SymmetricBinomialChiSquare
+open _root_.D5.S3.TotalVariation.Bhattacharyya
 open LeanInformationAudit
 open scoped BigOperators
 
@@ -30,13 +31,23 @@ def arena : Arena where
   Law R := ∀ (B : ℕ) (z : ℝ), |z| ≤ 1 →
     (∀ k ∈ Finset.range (B + 1), 0 ≤ p_z B (R.readout () B z) k) ∧
     (∑ k ∈ Finset.range (B + 1), p_z B z k) = 1 ∧
+    (∀ k ≤ B, p_z B z k / p_0 B k =
+      ((1 + z) ^ k * (1 - z) ^ (B - k) +
+        (1 - z) ^ k * (1 + z) ^ (B - k)) / 2) ∧
     chiSquare B z = ((1 + z ^ 2) ^ B + (1 - z ^ 2) ^ B) / 2 - 1 ∧
       chiSquare B z =
         ∑ j ∈ Finset.Icc 1 (B / 2), (B.choose (2 * j) : ℝ) * z ^ (4 * j) ∧
     chiSquare B z ≤ Real.cosh (B * z ^ 2) - 1 ∧
     (∀ δ : ℝ, 0 < δ → δ ≤ 1 / 4 → (B : ℝ) * δ ≤ 1 →
       z ^ 2 = 2 * δ - δ ^ 2 → chiSquare B z ≤ 3 * ((B : ℝ) * δ) ^ 2) ∧
-    1 - f B z ^ 2 ≤ chiSquare B z
+    (|z| < 1 →
+      (∀ k ∈ Finset.range (B + 1), 0 < p_z B z k) ∧
+      0 < bhattacharyya
+        (fun k : Fin (B + 1) => p_0 B k)
+        (fun k : Fin (B + 1) => p_z B z k)) ∧
+    1 - bhattacharyya
+      (fun k : Fin (B + 1) => p_0 B k)
+      (fun k : Fin (B + 1) => p_z B z k) ^ 2 ≤ chiSquare B z
 
 theorem actual_law : arena.Law actual := by
   intro B z hz

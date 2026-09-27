@@ -43,15 +43,6 @@ internal sealed class SymmetricBinomialChiSquareDocument
                     "The chi-square defect is the second likelihood-ratio moment under the central law, minus one."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("root-fidelity"),
-                DeclarationHandle.Create(Prefix + "f"),
-                H("Root fidelity"),
-                StatementSource.FromAuthor(FidelityFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The root fidelity sums the geometric means of the central and symmetric-mixture masses."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("exact-symmetric-binomial-chi-square-defect"),
                 DeclarationHandle.Create(Prefix + "symmetric_binomial_chi_square"),
                 H("Exact symmetric-binomial chi-square defect"),
@@ -60,15 +51,17 @@ internal sealed class SymmetricBinomialChiSquareDocument
                 Blocks(
                     Paragraph(Text(
                         "For absolute bias at most one, the symmetric mixture is nonnegative and normalized. "
-                            + "Its chi-square defect is both the average of two binomial powers minus one and "
-                            + "the finite sum of its positive even terms.")),
+                            + "Its likelihood ratio has the closed symmetric sign-product form. Its chi-square "
+                            + "defect is both the average of two binomial powers minus one and the finite sum "
+                            + "of its positive even terms.")),
                     Paragraph(Text(
                         "The even terms are bounded by the corresponding hyperbolic-cosine series. For the "
                             + "quadratic parameterization z squared equals 2 delta minus delta squared, the "
                             + "small-argument series comparison gives a quadratic defect bound.")),
                     Paragraph(Text(
-                        "The squared root-fidelity loss is no larger than the chi-square defect. This follows "
-                            + "by comparing the squared root likelihood-ratio gap with the squared likelihood-ratio gap."))),
+                        "In the strict interior, every mixture mass and the Bhattacharyya affinity are positive. "
+                            + "The squared affinity loss is no larger than the chi-square defect, by comparing "
+                            + "the squared root likelihood-ratio gap with the squared likelihood-ratio gap."))),
                 DescribeRole.Theorem))));
 
     private static Formula Fn(string name, params Formula[] arguments)
@@ -108,9 +101,17 @@ internal sealed class SymmetricBinomialChiSquareDocument
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 
-    private static Formula FiniteSum(Formula index, Formula upper, Formula summand) =>
-        Seq(Sum, Sp, Underscore, Grp(index, Sp, Eq, Sp, D(0)),
-            Caret, Grp(upper), Sp, summand);
+    private static Formula Range(Formula block) =>
+        Fn("range", Seq(block, Sp, Plus, Sp, D(1)));
+
+    private static Formula Fin(Formula size) => Fn("Fin", size);
+
+    private static Formula Lambda(Formula binder, Formula domain, Formula body) =>
+        Seq(Open, binder, Colon, Sp, domain, Close, Sp, Mapsto, Sp, body);
+
+    private static Formula FiniteSum(Formula index, Formula block, Formula summand) =>
+        Seq(Sum, Sp, Underscore,
+            Grp(index, Sp, InMacro, Sp, Range(block)), Sp, summand);
 
     private static Formula Pz(Formula block, Formula bias, Formula index) =>
         Seq(Grp(F.Id("p"), Underscore, Grp(F.Id("z"))),
@@ -123,11 +124,16 @@ internal sealed class SymmetricBinomialChiSquareDocument
     private static Formula Chi(Formula block, Formula bias) =>
         Fn("chiSquare", block, bias);
 
-    private static Formula Fidelity(Formula block, Formula bias) =>
-        Fn("f", block, bias);
-
     private static Formula Choose(Formula block, Formula index) =>
         Fn("choose", block, index);
+
+    private static Formula Affinity(Formula block, Formula bias, Formula index)
+    {
+        Formula domain = Fin(Seq(block, Sp, Plus, Sp, D(1)));
+        return Fn("bhattacharyya",
+            Lambda(index, domain, Pzero(block, index)),
+            Lambda(index, domain, Pz(block, bias, index)));
+    }
 
     private static Formula PzRight(Formula block, Formula bias, Formula index)
     {
@@ -170,15 +176,16 @@ internal sealed class SymmetricBinomialChiSquareDocument
             FiniteSum(index, block, summand), Sp, Minus, Sp, D(1), Dot));
     }
 
-    private static Formula FidelityFormula()
+    private static Formula LikelihoodRight(Formula block, Formula bias, Formula index)
     {
-        Formula block = F.Id("B"), bias = F.Id("z"), index = F.Id("k");
-        Formula radicand = Mul(Pzero(block, index), Pz(block, bias, index));
-        return Disp(Seq(
-            Forall, Sp, Typed(block, Naturals()), Comma, Sp,
-            Typed(bias, Reals()), Comma, Sp,
-            Fidelity(block, bias), Sp, Eq, Sp,
-            FiniteSum(index, block, Seq(Sqrt, Sp, Grp(radicand))), Dot));
+        Formula complement = Seq(block, Sp, Minus, Sp, index);
+        Formula first = Mul(
+            Pow(Seq(D(1), Sp, Plus, Sp, bias), index),
+            Pow(Seq(D(1), Sp, Minus, Sp, bias), complement));
+        Formula second = Mul(
+            Pow(Seq(D(1), Sp, Minus, Sp, bias), index),
+            Pow(Seq(D(1), Sp, Plus, Sp, bias), complement));
+        return Div(Seq(first, Sp, Plus, Sp, second), D(2));
     }
 
     private static Formula TheoremFormula()
@@ -198,6 +205,11 @@ internal sealed class SymmetricBinomialChiSquareDocument
             Grp(evenIndex, Sp, InMacro, Sp, Fn("Icc", D(1), halfBlock)), Sp,
             Mul(Choose(block, Mul(D(2), evenIndex)), Pow(bias, Mul(D(4), evenIndex))));
         Formula blockBiasSquared = Mul(block, biasSquared);
+        Formula likelihoodRatio = Seq(
+            Forall, Sp, Typed(index, Naturals()), Comma, Sp,
+            index, Sp, Le, Sp, block, Sp, Rightarrow, Sp,
+            Div(Pz(block, bias, index), Pzero(block, index)),
+            Sp, Eq, Sp, LikelihoodRight(block, bias, index));
         Formula deltaPremises = Seq(
             D(0), Sp, Lt, Sp, delta, Sp, Land, Sp,
             delta, Sp, Le, Sp, Div(D(1), D(4)), Sp, Land, Sp,
@@ -208,8 +220,14 @@ internal sealed class SymmetricBinomialChiSquareDocument
             Forall, Sp, Typed(delta, Reals()), Comma, Sp,
             Open, deltaPremises, Close, Sp, Rightarrow, Sp,
             chi, Sp, Le, Sp, Mul(D(3), Pow(Mul(block, delta), D(2))));
+        Formula affinity = Affinity(block, bias, index);
+        Formula strictPositive = Seq(
+            Abs(bias), Lt, Sp, D(1), Sp, Rightarrow, Sp, Open,
+            Open, Forall, Sp, index, Sp, InMacro, Sp, Range(block), Comma, Sp,
+            D(0), Sp, Lt, Sp, Pz(block, bias, index), Close, Sp, Land, Sp,
+            D(0), Sp, Lt, Sp, affinity, Close);
         Formula fidelityBound = Seq(
-            D(1), Sp, Minus, Sp, Pow(Fidelity(block, bias), D(2)),
+            D(1), Sp, Minus, Sp, Pow(affinity, D(2)),
             Sp, Le, Sp, chi);
 
         return Disp(new Formula.Aligned([
@@ -217,15 +235,17 @@ internal sealed class SymmetricBinomialChiSquareDocument
                 Typed(bias, Reals()), Comma),
             Seq(Grp(), Abs(bias), Le, Sp, D(1), Sp, Rightarrow, Sp, OpenBracket),
             Seq(Grp(), Open, Forall, Sp, index, Sp, InMacro, Sp,
-                Fn("range", D(0), block), Comma, Sp,
+                Range(block), Comma, Sp,
                 D(0), Sp, Le, Sp, Pz(block, bias, index), Close, Sp, Land, Sp),
             Seq(Grp(), FiniteSum(index, block, Pz(block, bias, index)),
                 Sp, Eq, Sp, D(1), Sp, Land, Sp),
+            Seq(Grp(), Open, likelihoodRatio, Close, Sp, Land, Sp),
             Seq(Grp(), chi, Sp, Eq, Sp, closed, Sp, Land, Sp),
             Seq(Grp(), chi, Sp, Eq, Sp, evenSum, Sp, Land, Sp),
             Seq(Grp(), chi, Sp, Le, Sp, Fn("cosh", blockBiasSquared),
                 Sp, Minus, Sp, D(1), Sp, Land, Sp),
-            Seq(Grp(), deltaBound, Sp, Land, Sp),
+            Seq(Grp(), Open, deltaBound, Close, Sp, Land, Sp),
+            Seq(Grp(), Open, strictPositive, Close, Sp, Land, Sp),
             Seq(Grp(), fidelityBound, CloseBracket, Dot)
         ]));
     }

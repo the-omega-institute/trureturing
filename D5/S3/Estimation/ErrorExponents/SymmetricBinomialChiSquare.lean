@@ -10,10 +10,14 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Tactic
+import D5.S3.TotalVariation.Hellinger
 
 open scoped BigOperators
 
 namespace D5.S3.Estimation.ErrorExponents.SymmetricBinomialChiSquare
+
+open D5.S3.TotalVariation.Bhattacharyya
+open D5.S3.TotalVariation.Hellinger
 
 noncomputable def p_z (B : ℕ) (z : ℝ) (k : ℕ) : ℝ :=
   (1 / 2 : ℝ) * (B.choose k : ℝ) *
@@ -26,19 +30,26 @@ noncomputable def p_0 (B : ℕ) (k : ℕ) : ℝ :=
 noncomputable def chiSquare (B : ℕ) (z : ℝ) : ℝ :=
   ∑ k ∈ Finset.range (B + 1), (p_z B z k) ^ 2 / p_0 B k - 1
 
-noncomputable def f (B : ℕ) (z : ℝ) : ℝ :=
-  ∑ k ∈ Finset.range (B + 1), Real.sqrt (p_0 B k * p_z B z k)
-
 theorem symmetric_binomial_chi_square
     (B : ℕ) (z : ℝ) (hz : |z| ≤ 1) :
     (∀ k ∈ Finset.range (B + 1), 0 ≤ p_z B z k) ∧
     (∑ k ∈ Finset.range (B + 1), p_z B z k) = 1 ∧
+    (∀ k ≤ B, p_z B z k / p_0 B k =
+      ((1 + z) ^ k * (1 - z) ^ (B - k) +
+        (1 - z) ^ k * (1 + z) ^ (B - k)) / 2) ∧
     chiSquare B z = ((1 + z ^ 2) ^ B + (1 - z ^ 2) ^ B) / 2 - 1 ∧
       chiSquare B z = ∑ j ∈ Finset.Icc 1 (B / 2), (B.choose (2 * j) : ℝ) * z ^ (4 * j) ∧
     chiSquare B z ≤ Real.cosh (B * z ^ 2) - 1 ∧
     (∀ δ : ℝ, 0 < δ → δ ≤ 1 / 4 → (B : ℝ) * δ ≤ 1 →
       z ^ 2 = 2 * δ - δ ^ 2 → chiSquare B z ≤ 3 * ((B : ℝ) * δ) ^ 2) ∧
-    1 - f B z ^ 2 ≤ chiSquare B z := by
+    (|z| < 1 →
+      (∀ k ∈ Finset.range (B + 1), 0 < p_z B z k) ∧
+      0 < bhattacharyya
+        (fun k : Fin (B + 1) => p_0 B k)
+        (fun k : Fin (B + 1) => p_z B z k)) ∧
+    1 - bhattacharyya
+      (fun k : Fin (B + 1) => p_0 B k)
+      (fun k : Fin (B + 1) => p_z B z k) ^ 2 ≤ chiSquare B z := by
   classical
   have ha : 0 ≤ (1 + z) / 2 := by linarith [(abs_le.mp hz).1]
   have hb : 0 ≤ (1 - z) / 2 := by linarith [(abs_le.mp hz).2]
@@ -100,6 +111,16 @@ theorem symmetric_binomial_chi_square
     rw [div_pow, div_pow, div_pow, div_pow]
     field_simp [hpow]
     rw [← hpow]
+    ring
+  have hlikelihood_ratio (k : ℕ) (hk : k ≤ B) :
+      p_z B z k / p_0 B k =
+        ((1 + z) ^ k * (1 - z) ^ (B - k) +
+          (1 - z) ^ k * (1 + z) ^ (B - k)) / 2 := by
+    have hkrange : k ∈ Finset.range (B + 1) := by
+      simpa only [Finset.mem_range, Nat.lt_add_one_iff] using hk
+    rw [hpz_likelihood k hkrange]
+    field_simp [(hp0_pos k hkrange).ne']
+    dsimp [L]
     ring
   have hsecond :
       (∑ k ∈ Finset.range (B + 1), p_0 B k * L k ^ 2) =
@@ -241,9 +262,7 @@ theorem symmetric_binomial_chi_square
           1 + ∑ j ∈ Finset.Icc 1 (B / 2),
             (B.choose (2 * j) : ℝ) * x ^ (2 * j) := by
       have hsets : Finset.Ioc 0 (B / 2) = Finset.Icc 1 (B / 2) := by
-        ext n
-        simp only [Finset.mem_Ioc, Finset.mem_Icc]
-        omega
+        rfl
       rw [Finset.Icc_eq_cons_Ioc (by omega : 0 ≤ B / 2), Finset.sum_cons]
       rw [hsets]
       norm_num
@@ -265,7 +284,6 @@ theorem symmetric_binomial_chi_square
         ∑ j ∈ Finset.Icc 1 (B / 2), (B.choose (2 * j) : ℝ) * z ^ (4 * j) :=
     hchi_exact.trans heven_expansion
   let u : ℝ := (B : ℝ) * z ^ 2
-  have hu_nonneg : 0 ≤ u := by dsimp [u]; positivity
   have hterm (j : ℕ) :
       (B.choose (2 * j) : ℝ) * z ^ (4 * j) ≤
         u ^ (2 * j) / (2 * j).factorial := by
@@ -366,7 +384,7 @@ theorem symmetric_binomial_chi_square
     nlinarith
   have hdelta : ∀ δ : ℝ, 0 < δ → δ ≤ 1 / 4 → (B : ℝ) * δ ≤ 1 →
       z ^ 2 = 2 * δ - δ ^ 2 → chiSquare B z ≤ 3 * ((B : ℝ) * δ) ^ 2 := by
-    intro δ hδ hδquarter hBδ hzδ
+    intro δ _ _ hBδ hzδ
     have hB0 : 0 ≤ (B : ℝ) := by positivity
     have hzsqupper : z ^ 2 ≤ 2 * δ := by rw [hzδ]; nlinarith [sq_nonneg δ]
     have hu0 : 0 ≤ (B : ℝ) * z ^ 2 := mul_nonneg hB0 (sq_nonneg z)
@@ -401,45 +419,56 @@ theorem symmetric_binomial_chi_square
             intro k hk
             exact (hpz_likelihood k hk).symm
       _ = 1 := hpz_sum
-  have hf_repr : f B z =
-      ∑ k ∈ Finset.range (B + 1), p_0 B k * Real.sqrt (L k) := by
-    rw [f]
-    apply Finset.sum_congr rfl
-    intro k hk
-    rw [hpz_likelihood k hk]
-    calc
-      Real.sqrt (p_0 B k * (p_0 B k * L k)) =
-          Real.sqrt ((p_0 B k) ^ 2) * Real.sqrt (L k) := by
-            rw [show p_0 B k * (p_0 B k * L k) = (p_0 B k) ^ 2 * L k by ring]
-            exact Real.sqrt_mul (sq_nonneg _) _
-      _ = p_0 B k * Real.sqrt (L k) := by
-            rw [Real.sqrt_sq_eq_abs, abs_of_pos (hp0_pos k hk)]
+  have hp0_fin :
+      (∀ k : Fin (B + 1), 0 ≤ p_0 B k) ∧
+        ∑ k : Fin (B + 1), p_0 B k = 1 := by
+    constructor
+    · intro k
+      exact (hp0_pos k (Finset.mem_range.mpr k.isLt)).le
+    · rw [Fin.sum_univ_eq_sum_range]
+      exact hp0_sum
+  have hpz_fin :
+      (∀ k : Fin (B + 1), 0 ≤ p_z B z k) ∧
+        ∑ k : Fin (B + 1), p_z B z k = 1 := by
+    constructor
+    · intro k
+      exact hpz_nonneg k (Finset.mem_range.mpr k.isLt)
+    · rw [Fin.sum_univ_eq_sum_range]
+      exact hpz_sum
   have hroot_variance :
       (∑ k ∈ Finset.range (B + 1),
-          p_0 B k * (Real.sqrt (L k) - 1) ^ 2) = 2 * (1 - f B z) := by
+          p_0 B k * (Real.sqrt (L k) - 1) ^ 2) =
+        2 * (1 - bhattacharyya
+          (fun k : Fin (B + 1) => p_0 B k)
+          (fun k : Fin (B + 1) => p_z B z k)) := by
     calc
       (∑ k ∈ Finset.range (B + 1),
           p_0 B k * (Real.sqrt (L k) - 1) ^ 2) =
-          ∑ k ∈ Finset.range (B + 1),
-            (p_0 B k * L k + p_0 B k -
-              2 * (p_0 B k * Real.sqrt (L k))) := by
-                apply Finset.sum_congr rfl
-                intro k hk
-                calc
-                  p_0 B k * (Real.sqrt (L k) - 1) ^ 2 =
-                      p_0 B k * (Real.sqrt (L k) ^ 2 + 1 -
-                        2 * Real.sqrt (L k)) := by ring
-                  _ = p_0 B k * L k + p_0 B k -
-                      2 * (p_0 B k * Real.sqrt (L k)) := by
-                        rw [Real.sq_sqrt (hL_nonneg k hk)]
-                        ring
-      _ = (∑ k ∈ Finset.range (B + 1), p_0 B k * L k) +
-          (∑ k ∈ Finset.range (B + 1), p_0 B k) -
-          2 * (∑ k ∈ Finset.range (B + 1),
-            p_0 B k * Real.sqrt (L k)) := by
-              rw [Finset.sum_sub_distrib, Finset.sum_add_distrib,
-                Finset.mul_sum]
-      _ = 2 * (1 - f B z) := by rw [hp0L_sum, hp0_sum, ← hf_repr]; ring
+          ∑ k : Fin (B + 1),
+            p_0 B k * (Real.sqrt (L k) - 1) ^ 2 := by
+        exact (Fin.sum_univ_eq_sum_range
+          (fun k : ℕ => p_0 B k * (Real.sqrt (L k) - 1) ^ 2) (B + 1)).symm
+      _ =
+          hellingerSq
+            (fun k : Fin (B + 1) => p_0 B k)
+            (fun k : Fin (B + 1) => p_z B z k) := by
+        rw [hellingerSq]
+        apply Finset.sum_congr rfl
+        intro k _
+        have hk : (k : ℕ) ∈ Finset.range (B + 1) := Finset.mem_range.mpr k.isLt
+        rw [hpz_likelihood k hk]
+        calc
+          p_0 B k * (Real.sqrt (L k) - 1) ^ 2 =
+              Real.sqrt (p_0 B k) ^ 2 * (Real.sqrt (L k) - 1) ^ 2 := by
+                rw [Real.sq_sqrt (hp0_pos k hk).le]
+          _ = (Real.sqrt (p_0 B k) -
+              Real.sqrt (p_0 B k * L k)) ^ 2 := by
+                rw [Real.sqrt_mul (hp0_pos k hk).le]
+                ring
+      _ = 2 * (1 - bhattacharyya
+          (fun k : Fin (B + 1) => p_0 B k)
+          (fun k : Fin (B + 1) => p_z B z k)) :=
+        hellinger_sq_eq_two_sub _ _ hp0_fin hpz_fin
   have hchi_variance : chiSquare B z =
       ∑ k ∈ Finset.range (B + 1), p_0 B k * (L k - 1) ^ 2 := by
     have hchi_L : chiSquare B z =
@@ -474,7 +503,33 @@ theorem symmetric_binomial_chi_square
               (Real.sqrt (L k) + 2) := le_add_of_nonneg_right hprod
       _ = (Real.sqrt (L k) ^ 2 - 1) ^ 2 := by ring
       _ = (L k - 1) ^ 2 := by rw [hs]
-  exact ⟨hpz_nonneg, hpz_sum, hchi_exact, hchi_even, hchi_cosh, hdelta, by
+  have hstrict : |z| < 1 →
+      (∀ k ∈ Finset.range (B + 1), 0 < p_z B z k) ∧
+      0 < bhattacharyya
+        (fun k : Fin (B + 1) => p_0 B k)
+        (fun k : Fin (B + 1) => p_z B z k) := by
+    intro hzlt
+    have ha_pos : 0 < (1 + z) / 2 := by linarith [(abs_lt.mp hzlt).1]
+    have hb_pos : 0 < (1 - z) / 2 := by linarith [(abs_lt.mp hzlt).2]
+    have hpz_pos (k : ℕ) (hk : k ∈ Finset.range (B + 1)) : 0 < p_z B z k := by
+      have hkB : k ≤ B := by simpa only [Finset.mem_range, Nat.lt_add_one_iff] using hk
+      have hchoose : 0 < (B.choose k : ℝ) := by
+        exact_mod_cast Nat.choose_pos hkB
+      rw [p_z]
+      positivity
+    refine ⟨hpz_pos, ?_⟩
+    rw [bhattacharyya]
+    apply Finset.sum_pos'
+    · intro k _
+      exact (Real.sqrt_pos.2 (mul_pos
+        (hp0_pos k (Finset.mem_range.mpr k.isLt))
+        (hpz_pos k (Finset.mem_range.mpr k.isLt)))).le
+    · refine ⟨0, Finset.mem_univ _, ?_⟩
+      exact Real.sqrt_pos.2 (mul_pos
+        (hp0_pos 0 (by simp))
+        (hpz_pos 0 (by simp)))
+  exact ⟨hpz_nonneg, hpz_sum, hlikelihood_ratio, hchi_exact, hchi_even, hchi_cosh,
+    hdelta, hstrict, by
     have hroot_le_chi :
         (∑ k ∈ Finset.range (B + 1),
             p_0 B k * (Real.sqrt (L k) - 1) ^ 2) ≤ chiSquare B z := by
@@ -483,8 +538,15 @@ theorem symmetric_binomial_chi_square
       intro k hk
       exact mul_le_mul_of_nonneg_left (hroot_point k hk) (hp0_pos k hk).le
     calc
-      1 - f B z ^ 2 ≤ 2 * (1 - f B z) := by
-        nlinarith [sq_nonneg (1 - f B z)]
+      1 - bhattacharyya
+          (fun k : Fin (B + 1) => p_0 B k)
+          (fun k : Fin (B + 1) => p_z B z k) ^ 2 ≤
+          2 * (1 - bhattacharyya
+            (fun k : Fin (B + 1) => p_0 B k)
+            (fun k : Fin (B + 1) => p_z B z k)) := by
+        nlinarith [sq_nonneg (1 - bhattacharyya
+          (fun k : Fin (B + 1) => p_0 B k)
+          (fun k : Fin (B + 1) => p_z B z k))]
       _ ≤ chiSquare B z := hroot_variance.symm.trans_le hroot_le_chi⟩
 #print axioms symmetric_binomial_chi_square
 
