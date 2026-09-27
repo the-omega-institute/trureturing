@@ -65639,3 +65639,490 @@ $$
 右端与 $r$ 无关并趋于零，故得到物理统一结论。仪器的局部完全正、条件复合、粗粒标签和可分实现约定可参照 Chitambar 等，《Everything You Always Wanted to Know About LOCC (But Were Afraid to Ask)》，[arXiv:1210.4583v2](https://arxiv.org/abs/1210.4583v2)，§2.1–2.3；这里使用的精确对象是上述假设中的完整原始记录空间和全系统、全参考恢复等式。闭包紧性、分别凹包络和有限分裂是背景数学构造；它们在此处仅作为已写出的直接证明所需的背景，不改变本定理的量词。整个结论只涉及所声明有限类中的上确界，不使用可分最优值、固定深度严格障碍或任何无限协议的可达性。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 431. 固定根精确支撑上的上半连续正则化与最小深度位移
+
+**定义 431.1（完整有限分裂树与深度值）。** 设 $I$ 为有限指标集，每个复 Hilbert 空间 $\mathcal H_i$ 满足 $1\le\dim\mathcal H_i<\infty$，并记
+
+$$
+\mathcal D(\mathcal H_i)
+=\{P\in\operatorname{Herm}(\mathcal H_i):P\succeq0,\ \operatorname{tr}P=1\},
+\qquad X=\prod_{i\in I}\mathcal D(\mathcal H_i).
+$$
+
+沿用定义430.1的完整树约定：以 $A\in X$ 为根的坐标树 $\mathsf T$ 是一棵自身有限的有根树，每个节点 $v$ 带标签 $P_v\in X$。每个内部节点选择一个坐标 $i=i(v)$，有有限非空的子节点集，并满足
+
+$$
+P_{v,i}=\sum_j\lambda_{vj}P_{vj,i},\qquad
+\lambda_{vj}\ge0,\qquad \sum_j\lambda_{vj}=1,
+\qquad P_{vj,h}=P_{v,h}\quad(h\ne i).
+$$
+
+有限分支数不设统一上界；选择的坐标可以重复，也可以依节点而变。允许提前终止、不同叶深和单子节点分解。所有零权、剩余及失败分支均保留。深度是各根叶路径上的内部节点数的最大值，单子节点也计数。节点权重 $w_v$ 是根到该节点的边概率之积，根权重为 $1$。
+
+固定 $0\le H<\infty$。对任意函数 $f:X\to[0,H]$，不加可测性条件，定义
+
+$$
+\operatorname{val}_f(\mathsf T)=\sum_{\ell\text{ 为叶}}w_\ell f(P_\ell),\qquad
+T_n^f(A)=\sup_{\operatorname{depth}(\mathsf T)\le n}\operatorname{val}_f(\mathsf T),
+\qquad T_\infty^f(A)=\sup_{n\in\mathbb N_0}T_n^f(A).
+$$
+
+深度零的树只有根叶，故 $T_0^f(A)=f(A)$。上确界遍历完整的有限树，不预设存在最优树。
+
+加性效果树的根局部因子是 $X_{\varnothing,i}=A_i$。在选择坐标 $i$ 的内部节点，要求
+
+$$
+X_{v,i}=\sum_jX_{vj,i},\qquad X_{vj,i}\succeq0,
+\qquad X_{vj,h}=X_{v,h}\quad(h\ne i).
+$$
+
+若叶的所有 $a_{\ell,i}=\operatorname{tr}X_{\ell,i}$ 都严格为正，其收益为
+
+$$
+\left(\prod_i a_{\ell,i}\right)
+f\left(\left(\frac{X_{\ell,i}}{a_{\ell,i}}\right)_i\right).
+$$
+
+若任一迹为零，该叶收益定义为零，不对零迹作除法。加性树同样保留全部节点并采用同一深度计数。
+
+这种保持重心的有限分裂，与方向凸性及有限阶层合测度中的原子分裂有共同的代数形式。方向凸性及分别凸性的关系见 Matoušek–Plecháč，*On Functional Separately Convex Hulls*，Discrete & Computational Geometry 19 (1998), 105–130，[doi:10.1007/PL00009331](https://doi.org/10.1007/PL00009331)；有限次原子分裂见 Müller–Šverák，*Convex integration for Lipschitz mappings and counterexamples to regularity*，Annals of Mathematics 157 (2003), §2, 717–719，[doi:10.4007/annals.2003.157.715](https://doi.org/10.4007/annals.2003.157.715)。这里允许的变化发生在单个完整矩阵坐标内，收益取上确界；这些方向和优化方向须与文献中的具体定义区分，文献中连续函数、开域及凸下包络的结论不直接给出下述任意有界收益的深度比较。
+
+**定义 431.2（先限制支撑的上半连续包络）。** 固定根 $A=(A_i)_{i\in I}$，令
+
+$$
+S_i=\operatorname{supp}A_i=(\ker A_i)^\perp,\qquad
+r_i=\operatorname{rank}A_i\ge1,\qquad
+X_A=\prod_{i\in I}\mathcal D(S_i),
+$$
+
+$$
+J=\{i\in I:r_i\ge2\},\qquad s=s(A)=|J|,\qquad g=f|_{X_A}.
+$$
+
+以零延拓将 $\mathcal D(S_i)$ 视为 $\mathcal D(\mathcal H_i)$ 的子集。$X_A$ 上取距离
+
+$$
+d(z,y)=\max_{i\in I}\|z_i-y_i\|_{\mathrm{op}}.
+$$
+
+只在此精确支撑乘积内定义
+
+$$
+\bar g(z)=\overline g^{\,X_A}(z)
+=\inf_{\delta>0}\ \sup\{g(y):y\in X_A,\ d(y,z)<\delta\}.
+$$
+
+这是 $g$ 在 $X_A$ 上的最小上半连续上界；等价地，它是截断下图
+
+$$
+K_g=\{(z,t):z\in X_A,\ 0\le t\le g(z)\}
+$$
+
+在 $X_A\times[0,H]$ 中闭包的上边界。上半连续函数与闭下图的对应是标准的半连续分析结构，参见 Royset，*Approximations of Semicontinuous Functions with Applications to Stochastic Optimization and Statistical Estimation*，Mathematical Programming 184 (2020), §2, 292–293，[doi:10.1007/s10107-019-01413-z](https://doi.org/10.1007/s10107-019-01413-z)。这里使用的定义域是非空闭集 $X_A$，收益有限有界；下文直接证明所需包络性质，不使用函数族的紧性或下图收敛定理。
+
+当 $I=\varnothing$ 时，$X=X_A$ 是只含空元组的单点集，距离恒为零，空标量积为 $1$，$s=0$；因没有可选坐标，只有根叶树。所有密度因子的空间仍要求维数至少为一，不引入零维密度空间。
+
+**定理 431.3（固定根的精确正则化位移及其最小性）。** 在定义431.1与431.2的全部假设下，对每个固定根 $A$、每个 $f:X\to[0,H]$ 及每个 $n\in\mathbb N_0$，有
+
+$$
+\boxed{
+T_n^f(A)=T_n^g(A)
+\le T_n^{\bar g}(A)
+\le T_{n+s(A)}^g(A)=T_{n+s(A)}^f(A).
+}
+$$
+
+含 $g$ 或 $\bar g$ 的值均在支撑域 $X_A$ 上计算。因此
+
+$$
+\boxed{T_\infty^f(A)=T_\infty^g(A)=T_\infty^{\bar g}(A).}
+$$
+
+坐标树与加性效果树有保持树形、分支数、所选坐标、深度和总收益的双向翻译，所以以上断言对两种树均成立。零因子的密度装饰不要求在来回翻译中唯一恢复。支撑限制通过对首条零权边之下的整棵子树作相容重标记实现，不删除任何零权节点。
+
+更具体地，所有逆算子仅取在 $S_i$ 上。设
+
+$$
+\Omega_i=I_{S_i}/r_i,\qquad \Omega=(\Omega_i)_i,
+\qquad L_i(P)=\frac{A_i^{-1/2}PA_i^{-1/2}}{r_i},
+$$
+
+$$
+q_i(P)=\operatorname{tr}L_i(P),\qquad
+\phi_i(P)=\frac{L_i(P)}{q_i(P)},\qquad
+\psi_i(B)=\frac{A_i^{1/2}BA_i^{1/2}}{\operatorname{tr}(A_iB)},
+$$
+
+$$
+h_i(B)=r_i\operatorname{tr}(A_iB),\qquad
+h(B)=\prod_i h_i(B_i),\qquad G(B)=h(B)g(\psi(B)).
+$$
+
+$\phi=\prod_i\phi_i$ 与 $\psi=\prod_i\psi_i$ 是 $X_A$ 上互逆的同胚，$\phi(A)=\Omega$，$h$ 连续且严格为正。若 $\bar G$ 表示 $G$ 在同一支撑域的上半连续包络，则
+
+$$
+\boxed{
+\bar G(B)=h(B)\bar g(\psi(B)),\qquad
+T_m^g(A)=T_m^G(\Omega),\qquad
+T_m^{\bar g}(A)=T_m^{\bar G}(\Omega)
+\quad(m\in\mathbb N_0).
+}
+$$
+
+定义针对完整收益类的最小位移
+
+$$
+d_{\min}(A,H)=\min\left\{d\in\mathbb N_0:
+\ \forall f:X\to[0,H]\ \forall n\in\mathbb N_0,
+\ T_{n+d}^f(A)\ge
+T_n^{\overline{\,f|_{X_A}\,}^{\,X_A}}(A)\right\}.
+$$
+
+则该集合非空，并且
+
+$$
+\boxed{
+d_{\min}(A,H)=
+\begin{cases}
+s(A),&H>0,\\
+0,&H=0.
+\end{cases}
+}
+$$
+
+当 $H>0$ 时，每个固定根都有同一个形式的尖锐见证
+
+$$
+f_A^\sharp(z)=
+\begin{cases}
+H,&z_i\ne A_i\text{ 对每个 }i\in J,\\
+0,&\text{否则},
+\end{cases}
+\qquad z\in X.
+$$
+
+其支撑限制 $g_A^\sharp$ 满足
+
+$$
+\overline{g_A^\sharp}^{\,X_A}\equiv H,\qquad
+T_m^{f_A^\sharp}(A)=0\quad(0\le m<s),\qquad
+T_s^{f_A^\sharp}(A)=H.
+$$
+
+若 $s=0$，见证中的空合取取真，故该见证恒等于 $H$，关于 $m<s$ 的断言为空。对任意收益，$s=0$ 时 $X_A$ 为单点，所有 $T_n^f(A)$ 都等于 $f(A)$；空指标集也遵循此约定。
+
+**证明。** 先核对完整树接口及支撑限制，再证明中心根的提取不等式，最后运输到固定根并给出最小性见证。
+
+**（一）完整翻译、权重守恒与精确支撑。** 从坐标树出发，令根处 $a_{\varnothing,i}=1$、$X_{\varnothing,i}=A_i$。在一个 $i$ 分裂上置
+
+$$
+a_{vj,i}=a_{v,i}\lambda_{vj},\qquad
+X_{vj,i}=a_{vj,i}P_{vj,i},
+$$
+
+并保持其余坐标的 $a$ 与 $X$ 不变。归纳给出 $X_{v,i}=a_{v,i}P_{v,i}$ 和
+
+$$
+\sum_jX_{vj,i}=X_{v,i},\qquad
+w_v=\prod_i a_{v,i}.
+$$
+
+此式在零概率处仍成立，因此两种叶收益一致。
+
+反向翻译时，对正迹局部因子用其归一化密度作标签。若被分裂的 $X_{v,i}$ 有正迹，令
+
+$$
+\lambda_{vj}=\frac{\operatorname{tr}X_{vj,i}}{\operatorname{tr}X_{v,i}}.
+$$
+
+正迹子因子取其归一化密度；零迹子因子为零，赋予父节点在该坐标的密度标签。若父局部因子的迹已为零，则它及其所有子因子均为零；任选一个和为 $1$ 的非负概率向量，所有子节点在该坐标都沿用父标签。其余坐标保持不变，并在后继节点递归采用同一规则。每个分裂都是合法凸分解，即使它位于总权重为零的子树内也如此。对每个节点，权重仍等于局部迹之积：一旦该积为零，至少一个零因子在全部后继上持续为零，相应节点权重也持续为零。全部形状、分支数、坐标选择和深度都得到保留；零因子的任意密度装饰不构成唯一性断言。
+
+每个坐标分裂的子权重之和为父权重。对有限树归纳，得到
+
+$$
+\sum_{\ell\text{ 为叶}}w_\ell=1,\qquad
+0\le T_n^f(A)\le H,\qquad T_n^f(A)\le T_{n+1}^f(A).
+$$
+
+现在考虑正权节点的支撑。若 $P_{v,i}$ 支撑于 $S_i$，对 $u\in S_i^\perp$ 有
+
+$$
+0=\langle u,P_{v,i}u\rangle
+=\sum_j\lambda_{vj}\langle u,P_{vj,i}u\rangle.
+$$
+
+各项非负，故每个 $\lambda_{vj}>0$ 的子节点都满足 $\langle u,P_{vj,i}u\rangle=0$。由正半定性，$\|P_{vj,i}^{1/2}u\|^2=0$，从而 $P_{vj,i}u=0$。未选坐标不变，因此从根归纳可知所有正权节点的全部坐标都在根支撑内。
+
+对从正权节点 $v$ 出发的每一条零概率边，把它下面的整个子树的元组标签都改为 $P_v$，同时保留原来的每条边概率、每个内部节点选择的坐标、全部节点和全部叶。入边的零概率使父节点凸分解不变；子树内部各分裂是同一个元组的常值凸分解，因而仍合法。不同的首条零概率边之下的子树互不相交，这一规则相容地处理全部零权节点。所得树的所有标签都在 $X_A$ 内，正权叶标签及全部叶贡献保持不变。反向则把任一支撑树的局部密度零延拓到原空间。因此对每个 $m$，
+
+$$
+T_m^f(A)=T_m^g(A).
+$$
+
+在加性表示中同样可直接看到 $0\preceq X_{v,i}\preceq A_i$，故所有局部因子均支撑于 $S_i$，包括零因子。这里限制的是数学标签和收益的定义域，没有加入物理滤波操作。
+
+**（二）包络的局部性质。** 记 $u=\bar g$。每个邻域都包含中心点，故 $g\le u\le H$。给定 $z$ 与 $\varepsilon>0$，可取 $\delta>0$ 使
+
+$$
+\sup_{d(y,z)<\delta}g(y)<u(z)+\varepsilon.
+$$
+
+若 $d(x,z)<\delta/2$，则 $B(x,\delta/2)\subset B(z,\delta)$，于是 $u(x)<u(z)+\varepsilon$，这证明 $u$ 上半连续。若 $v\ge g$ 上半连续，取足够小的邻域使 $v(y)<v(z)+\varepsilon$，即得 $u(z)\le v(z)+\varepsilon$；令 $\varepsilon\downarrow0$，得 $u\le v$。
+
+对每个 $z$ 和每个 $\eta>0$，邻域上确界的定义给出一个 $z'\in X_A$，使
+
+$$
+d(z,z')<\eta,\qquad g(z')\ge\bar g(z)-\eta.
+$$
+
+特别地，可以选择 $z_j\to z$ 且 $g(z_j)\to u(z)$。若 $0\le t\le u(z)$，则 $(z_j,\min\{t,g(z_j)\})\in K_g$ 并趋于 $(z,t)$。反之，若 $(z_j,t_j)\in K_g$ 趋于 $(z,t)$，对任意 $\delta>0$ 最终有 $t_j\le\sup_{B(z,\delta)}g$，故 $t\le u(z)$。所以
+
+$$
+\overline{K_g}=\{(z,t):z\in X_A,\ 0\le t\le\bar g(z)\},
+$$
+
+这也核对了定义431.2与截断下图定义的一致性。以上论证不涉及可测选择。
+
+**（三）中心根只需为非单点坐标增加一次分裂。** 先在 $\prod_i\mathcal D(S_i)$ 的中心根 $\Omega$ 证明：对任意 $F:X_A\to[0,1]$，
+
+$$
+T_{n+s}^F(\Omega)\ge T_n^{\bar F}(\Omega).
+$$
+
+若 $s=0$，定义域为单点，$F=\bar F$，断言立即成立。以下设 $s\ge1$，令 $r_*=\max_{i\in J}r_i$。固定一棵深度至多 $n$ 的完整有限树 $\mathsf T$，用 $\bar F$ 计算其值为 $V$。再固定任意 $\eta>0$。对每个正权叶 $\ell$ 的原标签 $z_\ell$，选一个联合标签 $z'_\ell$，满足
+
+$$
+d(z_\ell,z'_\ell)<\eta,\qquad
+F(z'_\ell)\ge\bar F(z_\ell)-\eta.
+$$
+
+这只要求对该树的有限多个叶各作一次选择。置
+
+$$
+c=(1+r_*\eta)^{-1}\in(0,1),\qquad
+D_i(X)=cX+(1-c)\operatorname{tr}(X)\frac{I_{S_i}}{r_i}.
+$$
+
+$D_i$ 是未归一化 Hermitian 矩阵上的正线性保迹映射，固定 $\Omega_i$，把零映到零，并且保持每个加性分裂。对坐标树的每个节点施加 $D_i$ 时，它也保持原边概率的凸分解。对全部坐标和全部节点同时施加此映射，所得树根仍为 $\Omega$，树形、深度及各叶权重均不变；当 $r_i=1$ 时 $D_i$ 就是恒等映射。
+
+固定一个变换后的正权叶，暂记其原标签和目标为 $z,z'$。对每个 $i\in J$ 定义
+
+$$
+R_i=c(z_i-z'_i)+(1-c)\frac{I_{S_i}}{r_i}.
+$$
+
+因为 $\|z_i-z'_i\|_{\mathrm{op}}<\eta$ 且 $1-c=c r_*\eta$，有
+
+$$
+\begin{aligned}
+R_i&\succeq
+\left(-c\eta+\frac{1-c}{r_i}\right)I_{S_i}
+=c\eta\left(\frac{r_*}{r_i}-1\right)I_{S_i}\succeq0,\\
+\operatorname{tr}R_i&=1-c,\qquad
+D_i(z_i)=cz'_i+R_i.
+\end{aligned}
+$$
+
+故 $Q_i=R_i/(1-c)$ 是密度矩阵，并有完整二叉分解
+
+$$
+D_i(z_i)=cz'_i+(1-c)Q_i.
+$$
+
+固定 $J$ 的一个次序，依次执行这些坐标分裂，每次只在选中的 $z'_i$ 子节点上继续，另一个剩余子节点立即终止并保留。前面已选坐标保持其目标值，后面尚未分裂的坐标仍为 $D_i(z_i)$；非 $J$ 坐标只有一个密度值，已等于目标，因而无须增加节点。若原叶权重为 $w$，最终目标叶标签恰为 $z'$，其权重为 $wc^s$，第 $j$ 次分裂的剩余叶权重为 $w(1-c)c^{j-1}$。它们满足
+
+$$
+wc^s+\sum_{j=1}^s w(1-c)c^{j-1}=w.
+$$
+
+在每个原正权叶实施这一有限构造，原零权叶全部保留。所得完整有限树深度至多 $n+s$；每条新增剩余分支都保留其非负收益，不作成功分支条件化。因此其值至少为
+
+$$
+c^s\sum_{\ell:w_\ell>0}w_\ell F(z'_\ell)
+\ge c^s(V-\eta)\ge c^sV-\eta.
+$$
+
+固定实数 $T_{n+s}^F(\Omega)$ 遂对每个 $\eta>0$ 满足
+
+$$
+T_{n+s}^F(\Omega)\ge(1+r_*\eta)^{-s}V-\eta.
+$$
+
+只在这个数值不等式中令 $\eta\downarrow0$，得到 $T_{n+s}^F(\Omega)\ge V$；随后才对最初固定的深度至多 $n$ 的树取上确界，得到所需比较。这里各 $\eta$ 对应的树可以不同，没有选择最优树，也没有构造极限树。若收益界是任意 $M>0$，对 $F/M$ 应用结论，再利用正比例缩放与邻域上确界相容，即得同一比较；$M=0$ 时直接成立。
+
+**（四）固定根的归一化合同及全收益运输。** 因 $A_i$ 在 $S_i$ 上严格正定，对每个支撑密度 $P,B$ 都有 $q_i(P)>0$ 和 $\operatorname{tr}(A_iB)>0$。未归一化映射的逆为
+
+$$
+L_i^{-1}(Y)=r_iA_i^{1/2}YA_i^{1/2}.
+$$
+
+直接代入可得
+
+$$
+\phi_i(\psi_i(B))=B,\qquad
+\psi_i(\phi_i(P))=P,\qquad
+q_i(\psi_i(B))=\frac1{h_i(B)},
+$$
+
+$$
+L_i(A_i)=\Omega_i,\qquad q_i(A_i)=1,\qquad \phi_i(A_i)=\Omega_i.
+$$
+
+分子连续、分母严格为正，故 $\phi_i,\psi_i$ 连续且互逆。对一个坐标凸分解 $P_i=\sum_j\lambda_jP_{j,i}$，定义
+
+$$
+B_i=\phi_i(P_i),\qquad B_{j,i}=\phi_i(P_{j,i}),\qquad
+\lambda'_j=\lambda_j\frac{q_i(P_{j,i})}{q_i(P_i)}.
+$$
+
+由 $L_i$ 的线性，$\lambda'_j\ge0$、$\sum_j\lambda'_j=1$，并且 $B_i=\sum_j\lambda'_jB_{j,i}$。逆概率公式是
+
+$$
+\lambda_j=\lambda'_j\frac{h_i(B_{j,i})}{h_i(B_i)}.
+$$
+
+零概率在两方向中恰好保持为零；变换适用于所有节点标签，包括零权子树。故这给出支撑域坐标树与中心根坐标树之间保持全部形状及深度的双射。对加性树，逐因子施加 $L_i$ 及 $L_i^{-1}$ 就得到对应的线性双射，所有零因子仍是零。
+
+沿任一根叶路径，将每条边的概率修正因子相乘。对于同一坐标，历次变化的分子分母相消；其余步骤该坐标不变，所以即使坐标重复选择或依节点自适应选择，仍有
+
+$$
+w'_\ell
+=w_\ell\prod_i\frac{q_i(P_{\ell,i})}{q_i(A_i)}
+=\frac{w_\ell}{h(B_\ell)},\qquad B_\ell=\phi(P_\ell).
+$$
+
+该等式也适用于 $w_\ell=0$，因为所有 $q_i$ 都正且有限，不曾除以边概率。于是逐叶成立
+
+$$
+w'_\ell G(B_\ell)
+=\frac{w_\ell}{h(B_\ell)}h(B_\ell)g(\psi(B_\ell))
+=w_\ell g(P_\ell).
+$$
+
+这是全部收益的运输等式，涵盖零收益、剩余及失败叶；没有只运输一组目标点。取两方向的树上确界，得 $T_m^g(A)=T_m^G(\Omega)$。
+
+记 $\lambda_i^-$ 与 $\lambda_i^+$ 为 $A_i|_{S_i}$ 的最小与最大本征值。因 $B_i$ 为密度矩阵，
+
+$$
+0<a:=\prod_i r_i\lambda_i^-
+\le h(B)\le b:=\prod_i r_i\lambda_i^+<\infty,
+\qquad 0\le G(B)\le Hb.
+$$
+
+这些界针对固定根成立。空积时 $a=b=h=1$。
+
+设 $u(B)=g(\psi(B))$。同胚及其逆把每个点的邻域基互相运输，故邻域上确界定义给出
+
+$$
+\bar u(B)=\bar g(\psi(B)).
+$$
+
+还须把连续权因子一起纳入包络。固定 $B$ 及 $\varepsilon>0$；连续性保证某个 $\delta_0>0$ 使 $d(C,B)<\delta_0$ 时 $|h(C)-h(B)|<\varepsilon$。因 $0\le u\le H$，对所有 $0<\delta<\delta_0$ 有
+
+$$
+h(B)\sup_{d(C,B)<\delta}u(C)-H\varepsilon
+\le\sup_{d(C,B)<\delta}G(C)
+\le h(B)\sup_{d(C,B)<\delta}u(C)+H\varepsilon.
+$$
+
+令 $\delta\downarrow0$，再令 $\varepsilon\downarrow0$，得到
+
+$$
+\bar G(B)=h(B)\bar u(B)=h(B)\bar g(\psi(B)).
+$$
+
+把上一段的全收益运输用于 $\bar g$，遂有 $T_m^{\bar g}(A)=T_m^{\bar G}(\Omega)$。这一步同时运输函数及其权因子，不能只对 $g\circ\psi$ 取包络后丢掉 $h$。
+
+若 $H>0$，令 $M=Hb>0$。第三步适用于 $G/M$，且 $\overline{G/M}=\bar G/M$，故缩放后得到
+
+$$
+T_{n+s}^g(A)
+=T_{n+s}^G(\Omega)
+\ge T_n^{\bar G}(\Omega)
+=T_n^{\bar g}(A).
+$$
+
+若 $H=0$，全部收益恒为零，同样成立。再由 $g\le\bar g$ 和第一步的支撑等式，得到定理的完整有限深度不等式链。
+
+归一化中出现的
+
+$$
+\alpha_i(P)=\frac1{\operatorname{tr}(A_i^{-1}P)}
+$$
+
+仅是使 $A_i^{-1/2}PA_i^{-1/2}$ 迹为一的因子。它不必等于半正定序中的最大提取系数，后者为
+
+$$
+\max\{t\ge0:A_i-tP\succeq0\}
+=\frac1{\|A_i^{-1/2}PA_i^{-1/2}\|_{\mathrm{op}}}.
+$$
+
+确实，合同变换把左侧约束化为 $I-tA_i^{-1/2}PA_i^{-1/2}\succeq0$，其允许的最大 $t$ 由最大本征值决定。在 $A_i=P=I_2/2$ 时，这两个数分别是 $1/2$ 和 $1$。上述合同是树的数学坐标变换，不提供免费的物理滤波步骤或物理实现权限。
+
+**（五）全体有限深度的上确界相等。** 由 $g\le\bar g$，有 $T_\infty^g(A)\le T_\infty^{\bar g}(A)$。另一方面，已经证明的位移比较给出
+
+$$
+T_\infty^{\bar g}(A)
+=\sup_{n\ge0}T_n^{\bar g}(A)
+\le\sup_{n\ge0}T_{n+s}^g(A)
+\le T_\infty^g(A).
+$$
+
+结合支撑等式即得结论。这只使用有界实数上确界，不需要统一收敛、函数族紧性或无限树。
+
+**（六）每个固定根上的最小性。** 设 $H>0$ 且 $s\ge1$。对每个 $i\in J$，因 $r_i\ge2$，存在非零无迹 Hermitian 矩阵 $B_i$，通过缩放可使
+
+$$
+0<\|B_i\|_{\mathrm{op}}<\lambda_i^-.
+$$
+
+于是 $A_i+B_i$ 与 $A_i-B_i$ 都是不同于 $A_i$ 的支撑密度。进一步缩小 $B_i$，可使它们任意接近 $A_i$，故 $A_i$ 不是 $\mathcal D(S_i)$ 的孤立点。集合 $\mathcal D(S_i)\setminus\{A_i\}$ 相对开且稠密：除了被移除的 $A_i$ 外每点已在该集合中，而 $A_i$ 是其极限点。因而
+
+$$
+\mathcal U_A=
+\prod_{i\in J}\bigl(\mathcal D(S_i)\setminus\{A_i\}\bigr)
+\times\prod_{i\notin J}\mathcal D(S_i)
+$$
+
+在按原指标次序排列的 $X_A$ 内开且稠密。$g_A^\sharp$ 在 $\mathcal U_A$ 上等于 $H$，其他点为零，所以每个非空邻域的收益上确界都是 $H$，即 $\overline{g_A^\sharp}^{\,X_A}\equiv H$。
+
+若一棵树深度至多 $m<s$，每条根叶路径至多经过 $m$ 个内部节点，因而至多选择过 $m$ 个不同坐标。该路径上至少有一个 $i\in J$ 从未被选择，叶标签的这个坐标仍等于 $A_i$，于是该叶收益为零。论证不依赖分支数，也不受重复坐标、依节点选择、单子节点或提前终止影响。所有叶收益都为零，故 $T_m^{f_A^\sharp}(A)=0$。
+
+另一方面，将 $J$ 排成一个固定次序。轮到坐标 $i$ 时，在当时的每条分支上实施
+
+$$
+A_i=\tfrac12(A_i+B_i)+\tfrac12(A_i-B_i).
+$$
+
+这个坐标此前未动，因此父标签确为 $A_i$。保留两个子分支并在下一层处理下一个坐标。所得完整二叉树深度恰为 $s$，有 $2^s$ 个叶，每叶权重 $2^{-s}$，每个非单点坐标都不同于根坐标，所以每叶收益为 $H$。其总值为 $H$；由第一步的上界，$T_s^{f_A^\sharp}(A)=H$。
+
+任何 $d\in\mathbb N_0$ 且 $d<s$ 的位移若试图对该固定根及全部收益成立，在 $n=0$ 和这个见证处就必须满足不可能的比较
+
+$$
+0=T_d^{f_A^\sharp}(A)
+\ge T_0^{\overline{g_A^\sharp}^{\,X_A}}(A)=H>0.
+$$
+
+故 $d_{\min}(A,H)\ge s$，而充分性已给出 $d_{\min}(A,H)\le s$，于是相等。这里必要性只用 $n=0$，其量词是对完整收益类取最小通用位移。
+
+若 $s=0$，每个根支撑因子都是一维，$X_A$ 为单点；支撑限制后 $g=\bar g$，所有树值都等于 $f(A)$，最小非负位移为零。此时 $f_A^\sharp\equiv H$，其深度零值已为 $H$。若 $H=0$，无论 $s$ 为何，唯一收益均为零，最小位移同样为零。若 $I=\varnothing$，只有根叶树，所有 $T_n$ 等于空元组处的收益，全部公式也成立。
+
+**（七）支撑次序与位移断言的边界。** 取单坐标空间 $\mathbb C^2$、秩一根 $A=|0\rangle\langle0|$，并令 $H>0$，
+
+$$
+f(P)=\begin{cases}0,&P=A,\\ H,&P\ne A.\end{cases}
+$$
+
+所有正权后继都支撑在一维空间 $\operatorname{supp}A$，故都等于 $A$，从而 $T_m^f(A)=0$ 对每个 $m$ 成立。精确支撑域只有 $A$，所以 $g=\bar g=0$。但环境域 $\mathcal D(\mathbb C^2)$ 内的 $A$ 可由
+
+$$
+(1-\varepsilon)|0\rangle\langle0|+\varepsilon|1\rangle\langle1|,
+\qquad \varepsilon\downarrow0,
+$$
+
+这些收益为 $H$ 的不同密度逼近，因此环境域的包络在 $A$ 处为 $H$，并且在整个环境域恒为 $H$。若先取环境包络再限制，连 $n=0$ 的比较都无法由任何有限位移成立。这证明支撑限制与闭包的先后次序是结论的必要部分。
+
+精确值 $s(A)$ 衡量的是同一个固定根上、对全部有界非负收益成立的正则化比较。某个单独收益可以需要更小位移，例如支撑上已上半连续的收益直接满足 $g=\bar g$。本结论不为所有收益给出统一的收敛速度下界，也不声称任意深度都存在同样大小的收敛误差。$\square$
+
+## 追加锚（本行以下为增补区）
